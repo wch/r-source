@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.117 $ ';
+my $revision = ' $Revision: 1.118 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1257,7 +1257,7 @@ sub check_pkg {
 		$cmd .= " 2>&1" if($R::Vars::OSTYPE eq "unix");
 		$cmd .= " $pkgdir";
 		if(R_system($cmd)) {
-		    $log-error();
+		    $log->error();
 		    $log->print("Could not create DVI version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
 		    exit(1);
