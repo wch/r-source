@@ -1004,7 +1004,7 @@ SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
 
 static SEXP frameAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
-	int i, j, ii, jj, ij, k;
+	int i, ii;
 	int nr, nc, ncy;
 	int nrs, ncs;
 	SEXP sr, sc, ss, xp, yp;
@@ -1142,7 +1142,7 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP subs, x, y;
-	int i, nsubs;
+	int nsubs;
 	RCNTXT cntxt;
 
 	CAR(args) = eval(CAR(args), rho);
@@ -1217,7 +1217,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	SEXP dims, index, names, subs, x, y, obj;
+	SEXP dims, index, names, subs, x, y;
 	int i, ndims, nsubs, offset, which;
 	RCNTXT cntxt;
 

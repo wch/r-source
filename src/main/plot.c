@@ -433,7 +433,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	GSavePars();
 	GP->xpd = 1;
 	ProcessInlinePars(args);
-	/* GP->lwd = DP->lwd;		/* override inline lwd */
+	/* GP->lwd = DP->lwd;	*/	/* override inline lwd */
 	GP->adj = 0.5;
 	GP->font = GP->fontaxis;
 	GP->cex = GP->cex * GP->cexbase;
@@ -1131,7 +1131,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP adj, cex, col, font, text;
 	double line, at, adjx, adjy;
-	int i, side, outer;
+	int side, outer;
 	int newsave;
 
 	GCheckState();

@@ -93,7 +93,7 @@ static int SegDir(double xend, double yend, double *x, double *y, int *i, int *j
 	/* Search seglist for a segment with endpoint (xend, yend). */
 	/* The cell entry direction is dir, and if tail=1/0 we are */
 	/* building the tail/head of a contour.  The matching segment */
-	/* is pointed to by seg and the updated segment list (with
+	/* is pointed to by seg and the updated segment list (with */
 	/* the matched segment stripped is returned by the funtion. */
 
 static SEGP SegUpdate(double xend, double yend, int dir, int tail, SEGP seglist, SEGP* seg)

@@ -162,7 +162,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return x;
 }
 
-static printList(SEXP s)
+static void printList(SEXP s)
 {
 	int i, taglen;
 	SEXP dims, t, newcall;
@@ -260,7 +260,7 @@ static printList(SEXP s)
 
 static void PrintExpression(SEXP s)
 {
-	SEXP u, v, nms;
+	SEXP u, v;
 	int i, n;
 
 	PROTECT(u = v = allocList(LENGTH(s)+1));

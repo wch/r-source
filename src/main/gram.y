@@ -1066,8 +1066,6 @@ SEXP R_ParseVector(SEXP text, int n, int *status)
 	}
 }
 
-static int prompt_type;
-
 static char *Prompt(SEXP prompt, int type)
 {
 	if(type == 1) {
@@ -1362,8 +1360,6 @@ int yyerror(char *s)
 
 static void CheckFormalArgs(SEXP formlist, SEXP new)
 {
-	int i;
-
 	while( formlist != R_NilValue ) {
 		if(TAG(formlist) == new ) {
 			error("Repeated formal argument.\n");
@@ -1532,7 +1528,6 @@ static int SymbolValue(int c)
 static int token()
 {
 	int c, kw;
-	char *p;
 
 	if(SavedToken) {
 		c = SavedToken;
@@ -1542,8 +1537,6 @@ static int token()
 		return c;
 	}
 		
-    again:
-
 	c = SkipSpace();
 
 	if (c == '#') c = SkipComment();

@@ -124,7 +124,7 @@ int GetOptionDigits(SEXP rho)
 */
 static SEXP SetOption(SEXP tag, SEXP value)
 {
-	SEXP opt, old, s, t;
+	SEXP opt, old, t;
 
 	t = opt = SYMVALUE(Options());
 	if(!isList(opt))

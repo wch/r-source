@@ -419,7 +419,7 @@ SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP ans, env, envp, s;
-	int all, i, k, pos;
+	int all, i, k;
 
 	checkArity(op, args);
 

@@ -630,7 +630,6 @@ static void X11_Close(void)
 
 static void X11_StartPath()
 {
-	int lwd;
 	SetColor(GP->col);
 	SetLinetype(GP->lty, GP->lwd);
 	if(hardcopy) {

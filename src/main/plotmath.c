@@ -1293,10 +1293,8 @@ static BBOX superscriptBBox(SEXP superscript)
 
 static BBOX supBBox(SEXP expr)
 {
-	BBOX result;
 	SEXP body = CADR(expr);
 	SEXP superscript = CADDR(expr);
-	double supShift;
 	int supsub = 0;
 
 	if (formulaExpression(body))
@@ -1836,9 +1834,6 @@ static void drawAbs(SEXP expr)
 	BBOX bodyBBox = elementBBox(expr);
 	double height = bboxHeight(bodyBBox);
 	double depth = bboxDepth(bodyBBox);
-	double width = bboxWidth(bodyBBox);
-	double savedX = currentX;
-	double savedY = currentY;
 
 	moveUp(-depth);
 	GStartPath();
@@ -1916,7 +1911,7 @@ static BBOX curlyBBox(SEXP expr)
 
 static void drawFormula(SEXP);
 
-static drawCurly(SEXP expr)
+static void drawCurly(SEXP expr)
 {
 	drawFormula(CADR(expr));
 }
@@ -2012,7 +2007,6 @@ static void drawItalic(SEXP expr)
 static BBOX plainBBox(SEXP expr)
 {
   BBOX result = nullBBox();
-  SEXP body = CADR(expr);
   int savedFont = getFont();
 
   plainFont();

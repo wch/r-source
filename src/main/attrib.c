@@ -391,7 +391,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 
 SEXP do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	SEXP s, t;
+	SEXP s;
 	checkArity(op, args);
 	s = CAR(args);
 	if(isVector(s) || isList(s) || isLanguage(s))
@@ -464,7 +464,7 @@ SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP dimnamesgets(SEXP vec, SEXP val)
 {
 	SEXP dims, top;
-	int i, k, n;
+	int i, k;
 
 	PROTECT(vec);
 	PROTECT(val);

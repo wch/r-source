@@ -197,7 +197,7 @@ static SEXP vectorSubset(SEXP x, SEXP s, SEXP call)
 
 SEXP matrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 {
-	SEXP a, attr, p, q, result, sr, sc;
+	SEXP a, attr, p, result, sr, sc;
 	int nr, nc, nrs, ncs;
 	int i, j, ii, jj, ij, iijj;
 
@@ -767,7 +767,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static int pstrmatch(SEXP target, char * input, int slen)
 {
-	int t,k,perfect;
+	int t,k;
 
 	if(target==R_NilValue) return -1;
 
@@ -790,7 +790,7 @@ static int pstrmatch(SEXP target, char * input, int slen)
 SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP x, y, nlist;
-	int slen, posi, s, perfect, idx;
+	int slen, posi, s, idx;
 	char *input;
 
 	checkArity(op, args);

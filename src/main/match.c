@@ -140,8 +140,8 @@ SEXP matchArg(SEXP tag, SEXP * list)
 
 SEXP matchArgs(SEXP formals, SEXP supplied)
 {
-	int i, nargs, seendots;
-	SEXP mp, f, a, b, dots, actuals;
+	int i, seendots;
+	SEXP f, a, b, dots, actuals;
 
 	actuals = R_NilValue;
 	for(f=formals ; f!=R_NilValue ; f=CDR(f)) {

@@ -18,6 +18,7 @@
  */
 
 #include "Defn.h"
+#include "FFDecl.h"
 
 	/* Fourier Transform for Univariate Spatial and Time Series */
 
@@ -108,7 +109,7 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP z, d;
-	int i, inv, maxf, maxp, n, nseg, nspn, p;
+	int i, inv, maxf, maxp, n, p;
 	double *work;
 	int *iwork;
 	char *vmax;

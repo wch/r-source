@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -50,7 +50,7 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
 			Rprintf("stack imbalance in %s, %d then %d\n",
 				PRIMNAME(op), save, R_PPStackTop);
 		}
-	} 
+	}
 	else if (TYPEOF(op) == BUILTINSXP) {
 		int save = R_PPStackTop;
 		PROTECT(args = evalList(args, rho));
@@ -63,22 +63,22 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
 		}
 	}
 	else if (TYPEOF(op) == CLOSXP) {
-		ans = applyClosure(call, op, args, rho, newrho); 
+		ans = applyClosure(call, op, args, rho, newrho);
 	}
 	return ans;
 }
 
 
-	/*  newintoold  -  a destructive matching of arguments;
+	/*  newintoold	-  a destructive matching of arguments;
 	 *  newargs comes first; any element of oldargs with
 	 *  a name that matches a named newarg is deleted; the
 	 *  two resulting lists are appended and returned S
 	 *  says they do this (white book) but doesn't seem to. */
-	
 
-static SEXP newintoold(SEXP new, SEXP old) 
+
+static SEXP newintoold(SEXP new, SEXP old)
 {
-	if( new==R_NilValue) 
+	if( new==R_NilValue)
 		return R_NilValue;
 	CDR(new) = newintoold(CDR(new),old);
 	while( old != R_NilValue ) {
@@ -98,26 +98,26 @@ static SEXP matchmethargs(SEXP oldargs, SEXP newargs)
 }
 
 /*  usemethod  -  calling functions need to evaluate the object
- *  (== 2nd argument).  They also need to ensure that the
+ *  (== 2nd argument).	They also need to ensure that the
  *  argument list is set up in the correct manner.
- *	 
+ *
  *    1. find the context for the calling function (i.e. the generic)
  *	 this gives us the unevaluated arguments for the original call
  *
  *    2. create an environment for evaluating the method and insert
- *       a handful of variables (.Generic, .Class and .Method) into
- *       that environment. Also copy any variables in the env of the
- *       generic that are not formal (or actual) arguments.
+ *	 a handful of variables (.Generic, .Class and .Method) into
+ *	 that environment. Also copy any variables in the env of the
+ *	 generic that are not formal (or actual) arguments.
  *
  *    3. fix up the argument list; it should be the arguments to the
- *       generic matched to the formals of the method to be invoked */
+ *	 generic matched to the formals of the method to be invoked */
 
 int usemethod(char *generic, SEXP obj, SEXP call, SEXP args, SEXP rho, SEXP *ans)
 {
-	SEXP class, method, sxp, t, s, cloenv, matchedarg;
+	SEXP class, method, sxp, t, s, matchedarg;
 	SEXP op, formals, newrho, newcall;
-        char buf[512];
-        int i, j, nclass, matched;
+	char buf[512];
+	int i, j, nclass, matched;
 	RCNTXT *cptr;
 
 		/* Get the context which UseMethod was called from. */
@@ -135,7 +135,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args, SEXP rho, SEXP *ans
 		formals=FORMALS(op);
 		for(s=FRAME(cptr->cloenv);s!=R_NilValue;s=CDR(s)) {
 			matched=0;
-			for(t=formals;t!=R_NilValue;t=CDR(t)) 
+			for(t=formals;t!=R_NilValue;t=CDR(t))
 				if(TAG(t) == TAG(s))
 					matched=1;
 			if(!matched)
@@ -218,7 +218,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 		meth=R_MissingArg;
 
-	if( nargs >= 2 ) 
+	if( nargs >= 2 )
 		PROTECT(obj = eval(CADR(args), env));
 	else {
 		cptr = R_GlobalContext;
@@ -233,7 +233,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 			PROTECT(meth = mkString(CHAR(PRINTNAME(CAR(cptr->call)))));
 		PROTECT(obj = GetObject(cptr));
 	}
-			
+
 	if(TYPEOF(meth) != STRSXP || LENGTH(meth) < 1 || strlen(CHAR(STRING(meth)[0])) == 0)
 		errorcall(call, "first argument must be a method name\n");
 
@@ -247,25 +247,25 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 		error("no applicable method for \"%s\"\n", buf);
 }
 
-/* 
+/*
    if NextMethod has any arguments the first must be the generic
    the second the object and any remaining are matched with the
    formals of the chosen method
-  
+
 */
 #define ARGUSED(x) LEVELS(x)
 
 SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	char buf[128],*pt, *pb;
+	char buf[128];
 	SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
 	SEXP sysp, m, formals, actuals, tmp, newcall;
 	RCNTXT *cptr;
-	int nargs,i,j;
+	int i,j;
 	SEXP group,realgroup;
 
 	cptr=R_GlobalContext;
-	
+
 	cptr->callflag = CTXT_GENERIC;
 
 	/* get the env NextMethod was called from */
@@ -288,7 +288,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	actuals = matchArgs(formals, cptr->promargs);
 
 	/* we can't duplicate because it would force the promises */
-	/* so we do our own duplication of the promargs           */
+	/* so we do our own duplication of the promargs		  */
 	PROTECT(matchedarg = allocList(length(cptr->promargs)));
 	for( t=matchedarg, s=cptr->promargs; t != R_NilValue; t=CDR(t), s=CDR(s)){
 		CAR(t) = CAR(s);
@@ -302,7 +302,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 				ARGUSED(s) = 1;
 				if( CAR(m) == R_MissingArg ) {
 					tmp = findVarInFrame(FRAME(cptr->cloenv), TAG(s));
-					if (tmp == R_MissingArg) 
+					if (tmp == R_MissingArg)
 						break;
 				}
 				CAR(t) = mkPROMISE(TAG(s), cptr->cloenv);
@@ -322,13 +322,13 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 		t = findVarInFrame(FRAME(env),s);
 		if( t != R_NilValue && t != R_MissingArg ) {
 			TYPEOF(t)= LISTSXP; /* a safe mutation */
-			s =matchmethargs(matchedarg,t); 
+			s =matchmethargs(matchedarg,t);
 			UNPROTECT(1);
 			PROTECT(matchedarg=s);
 		}
 	}
 	else
-		errorcall(call,"wrong argument ...\n"); 
+		errorcall(call,"wrong argument ...\n");
 
 	class = dynamicfindVar(install(".Class"),R_GlobalContext);
 
@@ -342,7 +342,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	generic = eval(CAR(args), env);
 	if( generic == R_NilValue ) {
 		generic = dynamicfindVar(install(".Generic"), R_GlobalContext);
-		if( generic == R_UnboundValue) 
+		if( generic == R_UnboundValue)
 			generic = mkString(CHAR(PRINTNAME(CAR(cptr->call))));
 	}
 
@@ -350,7 +350,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	if( !isString(generic) || length(generic) > 1 )
 		errorcall(call,"invalid generic argument to NextMethod\n");
-	if( strlen(CHAR(STRING(generic)[0])) == 0 ) 
+	if( strlen(CHAR(STRING(generic)[0])) == 0 )
 		errorcall(call,"generic function not specified\n");
 
 	group=dynamicfindVar(install(".Group"),R_GlobalContext);
@@ -364,7 +364,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (strlen(CHAR(STRING(group)[0])) == 0 )
 	  group=generic;
 
-	/* we need the value of i on exit from the for loop to figure out 
+	/* we need the value of i on exit from the for loop to figure out
 	   how many classes to drop
 	*/
 
@@ -403,7 +403,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 			if( !isFunction(nextfun) )
 				error("No method to invoke\n");
 			if (TYPEOF(nextfun) == CLOSXP )
-				if(INTERNAL(t) != R_NilValue ) 
+				if(INTERNAL(t) != R_NilValue )
 					nextfun = INTERNAL(t);
 				else
 					error("No method to invoke\n");
@@ -415,13 +415,13 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(j = 0 ; j< length(s) ; j++ )
 		STRING(s)[j] = duplicate(STRING(class)[i++]);
 	setAttrib(s,install("previous"),class);
-	defineVar(install(".Class"),s, m); 
+	defineVar(install(".Class"),s, m);
 	PROTECT(method=mkString(buf));
 	defineVar(install(".Method"), method, m);
 	method=install(buf);
 
 	defineVar(install(".Generic"), generic, m);
-	
+
 	defineVar(install(".Group"),realgroup,m);
 
 	CAR(newcall) = method;
@@ -465,7 +465,7 @@ void RemoveClass(SEXP x, char *name)
 
 	if(isObject(x)) {
 		PROTECT(x);
-		class = getAttrib(x, R_ClassSymbol);  
+		class = getAttrib(x, R_ClassSymbol);
 		nclass = length(class);
 		nmatch = 0;
 		for(i=0 ; i<nclass ; i++)

@@ -147,7 +147,7 @@ donefill:
 	if( strip ) {
 		while( isspace(*--bufp) )
 			;
-		*bufp++;
+		bufp++;
 	}
 
 
@@ -314,7 +314,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines, int flush, SEX
 
 static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush, SEXP stripwhite)
 {
-	SEXP a, ans, b, bns, new, old, w;
+	SEXP a, ans, b, new, old, w;
 	char buffer[MAXELTSIZE];
 	int blksize, c, i, j, n, nc, linesread, colsread, strip, bch;
 	int badline;
@@ -456,7 +456,7 @@ done:
 SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP ans, file, sep, what, stripwhite;
-	int i, c, nlines, nmax, nskip, type, flush;
+	int i, c, nlines, nmax, nskip, flush;
 	char *filename;
 
 	checkArity(op, args);
@@ -659,7 +659,7 @@ donecf:
 
 SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-        SEXP cvec, a, b, rval, dup, levs, dims, names;
+        SEXP cvec, a, rval, dup, levs, dims, names;
         int i, j, len, numeric, asIs;
 	char *endp, *tmp;
 
@@ -748,7 +748,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	int c,first;
+	int c;
 	char buffer[MAXELTSIZE], *bufp = buffer;
 	SEXP ans;
 

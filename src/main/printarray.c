@@ -74,7 +74,7 @@ static void printFactorMatrix(SEXP sx, int offset, int r, int c, SEXP rl, SEXP c
 	SEXP sw;
 	int *x, *w;
 	int width, rlabw, clabw;
-	int i, j, jmin, jmax, k;
+	int i, j, jmin, jmax;
 
 	if (!isNull(rl)) formatString(STRING(rl), r, &rlabw, 0);
 	else rlabw = IndexWidth(r + 1) + 3;
@@ -466,7 +466,7 @@ static int CountColumns(SEXP x)
 
 void printDataFrame(SEXP x)
 {
-	SEXP s, t, rl, cl, sd, se, sw;
+	SEXP s, rl, cl, sd, se, sw;
 	SEXP object, offset, clabel, levels;
 	int *w, *d, *e, r, c, k, itmp;
 	int rlabw;

@@ -334,7 +334,7 @@ static void printcomment(SEXP s)
 static void deparse2buff(SEXP s)
 {
 	int fop, lookahead, lbreak = 0;
-	SEXP op, cmnt, t;
+	SEXP op, t;
 	char tpb[120];
 
 	switch (TYPEOF(s)) {

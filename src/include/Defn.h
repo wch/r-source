@@ -341,7 +341,7 @@ extern int	R_BrowseLevel;		/* how deep the browser is */
 		/* File Input/Output */
 extern int	R_Interactive;		/* Non-zero during interactive use */
 extern int	R_Quiet;		/* Be as quiet as possible */
-/* extern int	R_Console;		/* Console active flag */
+/* extern int	R_Console; */		/* Console active flag */
 extern FILE*	R_Inputfile;		/* Current input flag */
 extern FILE*	R_Consolefile;		/* Console output file */
 extern FILE*	R_Outputfile;		/* Output file */
@@ -525,10 +525,12 @@ void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 int isArray(SEXP);
 int isComplex(SEXP);
 char *R_ExpandFileName(char*);
+int isEnvironment(SEXP);
 int isExpression(SEXP);
 int isExpressionObject(SEXP);
 int isFactor(SEXP);
 int isFrame(SEXP);
+int isFinite(double);
 int isFunction(SEXP);
 int isInteger(SEXP);
 int isLanguage(SEXP);
@@ -594,6 +596,7 @@ void PrintDefaults(SEXP);
 void PrintGreeting(void);
 void PrintValue(SEXP);
 void PrintValueEnv(SEXP, SEXP);
+void PrintValueRec(SEXP);
 SEXP promiseArgs(SEXP, SEXP);
 void protect(SEXP);
 char *R_alloc(long, int);

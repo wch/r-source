@@ -133,7 +133,7 @@ static int InstallVar(SEXP var)
 
 void CheckRHS(SEXP v)
 {
-	int i, j, ind;
+	int i, j;
 	SEXP s, t;
 
 	while ((isList(v) || isLanguage(v)) && v != R_NilValue ) {
@@ -993,7 +993,6 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static SEXP ExpandDots(SEXP object, SEXP value)
 {
-	int paren;
 	SEXP op;
 
 	if(TYPEOF(object) == SYMSXP) {
@@ -1190,8 +1189,6 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
  *
  *  Q: Is this really needed, or can we get by with less info?
  */
-
-static SEXP SubsetSymbol;
 
 static SEXP ProcessDots(SEXP dots, char *buf)
 {

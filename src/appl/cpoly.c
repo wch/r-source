@@ -390,7 +390,6 @@ static int fxshft_(int *l2, double *zr, double *zi, int *conv)
 
 static int vrshft_(int l3, double *zr, double *zi, int *conv)
 {
-	int i__1;
 	static int bool, b;
 	static int i, j;
 	static double r1, r2, mp, ms, tp, relstp;
@@ -678,9 +677,6 @@ static double cauchy_(int *nn, double *pt, double *q)
 static double scale_(int *nn, double *pt, double *eta, double *infin,
 	double *smalno, double *base)
 {
-	/* System generated locals */
-	int i__1;
-
 	/* Local variables */
 	static int i, l;
 	static double x, hi, sc, lo, min_, max_;
@@ -834,5 +830,6 @@ static int mcon_(double *eta, double *infiny, double *smalno, double *base)
 	*eta = DBL_EPSILON;
 	*infiny = DBL_MAX;
 	*smalno = DBL_MIN;
+	return 0;
 }
 #endif

@@ -905,7 +905,7 @@ static unsigned int ScaleColor(double x)
 	return (unsigned int)(255*x);
 }
 
-static setpalette(char **palette)
+static void setpalette(char **palette)
 {
 	int i;
 	for(i=0 ; (i<COLOR_TABLE_SIZE)&&palette[i] ; i++)
