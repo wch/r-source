@@ -1,6 +1,3 @@
-% file nottem.Rd
-% copyright (C) 1994-9 W. N. Venables and B. D. Ripley
-%
 \name{nottem}
 \alias{nottem}
 \title{
@@ -12,14 +9,14 @@
 }
 \usage{data(nottem)}
 \source{
-  Anderson, O.D. (1976)
+  Anderson, O. D. (1976)
   \emph{Time Series Analysis and Forecasting: The Box-Jenkins approach.}
   Butterworths. Series R.
 }
 \examples{
 \dontrun{data(nottem)
 nott <- window(nottem, end=c(1936,12))
-fit <- arima0(nott,order=c(1,0,0), list(order=c(2,1,0), period=12))
+fit <- arima(nott,order=c(1,0,0), list(order=c(2,1,0), period=12))
 nott.fore <- predict(fit, n.ahead=36)
 ts.plot(nott, nott.fore$pred, nott.fore$pred+2*nott.fore$se,
         nott.fore$pred-2*nott.fore$se, gpars=list(col=c(1,1,4,4)))

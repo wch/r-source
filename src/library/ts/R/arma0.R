@@ -319,7 +319,7 @@ arima0.diag <- function(object, gof.lag = 10)
     abline(h = 0.05, lty = 2, col = "blue")
 }
 
-tsdiag.arima0 <- function(object, gof.lag = 10, ...)
+tsdiag.Arima <- tsdiag.arima0 <- function(object, gof.lag = 10, ...)
 {
     ## plot standardized residuals, acf of residuals, Ljung-Box p-values
     oldpar<- par(mfrow = c(3, 1))

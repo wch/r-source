@@ -48,6 +48,15 @@ R_CallMethodDef CallEntries[] = {
     {"Invtrans", (DL_FUNC) &Invtrans, 2},
     {"Gradtrans", (DL_FUNC) &Gradtrans, 2},
     {"ARMAtoMA", (DL_FUNC) &ARMAtoMA, 3},
+    {"KalmanLike", (DL_FUNC) &KalmanLike, 10},
+    {"KalmanFore", (DL_FUNC) &KalmanFore, 7},
+    {"ARIMA_undoPars", (DL_FUNC) &ARIMA_undoPars, 2},
+    {"ARIMA_transPars", (DL_FUNC) &ARIMA_transPars, 3},
+    {"ARIMA_Invtrans", (DL_FUNC) &ARIMA_Invtrans, 2},
+    {"ARIMA_Gradtrans", (DL_FUNC) &ARIMA_Gradtrans, 2},
+    {"ARIMA_Like", (DL_FUNC) &ARIMA_Like, 9},
+    {"ARIMA_CSS", (DL_FUNC) &ARIMA_CSS, 6},
+    {"convolve", (DL_FUNC) &convolve, 2},
     {NULL, NULL, 0}
 };
 

@@ -22,7 +22,7 @@ ARMAtoMA(ar = numeric(0), ma = numeric(0), lag.max)
     Methods}, Second Edition.  Springer.
 }
 
-\seealso{\code{\link{arima0}}, \code{\link{ARMAacf}}.}
+\seealso{\code{\link{arima}}, \code{\link{ARMAacf}}.}
 
 \examples{
 ARMAtoMA(c(1.0, -0.25), 1.0, 10)

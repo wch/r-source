@@ -81,4 +81,18 @@ SEXP Gradtrans(SEXP pG, SEXP x);
 SEXP Invtrans(SEXP pG, SEXP x);
 
 SEXP ARMAtoMA(SEXP ar, SEXP ma, SEXP lag_max);
+
+SEXP KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT, SEXP sV, 
+		SEXP sh, SEXP sPn, SEXP sUP, SEXP op);
+SEXP KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, 
+		SEXP sV, SEXP sh);
+SEXP ARIMA_undoPars(SEXP sin, SEXP sarma);
+SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans);
+SEXP ARIMA_Invtrans(SEXP in, SEXP sarma);
+SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma);
+SEXP ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta, SEXP sa, 
+		SEXP sP, SEXP sPn, SEXP sUP, SEXP giveResid);
+SEXP ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta, SEXP sncond, 
+	       SEXP giveResid);
+SEXP convolve(SEXP a, SEXP b);
 #endif
