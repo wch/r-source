@@ -125,7 +125,7 @@ static void commands_source_cb(GtkWidget *widget, gpointer data)
 
 static void graphics_new_cb(GtkWidget *widget, gpointer data)
 {
-  R_gtk_terminal_run("X11()\n");
+  R_gtk_terminal_run("gtk()\n");
 }
 
 static void graphics_close_cb(GtkWidget *widget, gpointer data)
