@@ -71,6 +71,8 @@ BUG FIXES
     o   Document that postscript(file="") sends the output directly to
 	the default printer.
 
+    o   ts.union(, dframe=T) had a long-standing typo, now works.
+
 
 		CHANGES IN R VERSION 1.0.0
 
