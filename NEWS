@@ -11,6 +11,8 @@
 
 NEW FEATURES
 
+    o	Function chull() for planar convex hulls.
+
     o	pairs.formula() allows formula notations for scatter plot matrix.
 
 
