@@ -28,7 +28,8 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   By default the database is attached in position 2 in the search path,
   immediately after the \R global environment and before all previously
   loaded packages and previously attached databases. This can be altered
-  with the \code{pos} option.
+  to attach later in the search path with the \code{pos} option, but you
+cannot attach at \code{pos=1}.
 
   Note that by default assignment is not performed in an attached
   database. Attempting to modify a variable or function in an attached
