@@ -949,22 +949,28 @@ function(package, dir, lib.loc = NULL)
         ## Rd objects).
         aliases <-
             unlist(strsplit(sub("^# aliases: *", "", aliases), " +"))
-        ## Argh.  Now there are good reasons for keeping \S4method{}{}
-        ## as is, but of course this is not what the aliases use ...
-        ## <FIXME>
-        ## Should maybe use topicName(), but in any case, we should have
-        ## functions for converting between the two forms, see also the
-        ## code for undoc().
-        aliases <- sub("([^,]+),(.+)-method$",
-                       "\\\\S4method{\\1}{\\2}",
-                       aliases)
-        ## </FIXME>
-        aliases <- gsub("\\\\%", "%", aliases)
-        ## Remove trailing '~' used for dealing with objects with
-        ## multiple \usage.
-        lsArgs <- sub("~+$", "", lsArgs)
-        lsArgsNotInAliases <-
-            lsArgs[! lsArgs %in% c(aliases, ".__Usage__.")]
+        ## Do not test for objects in \usage without alias if there is
+        ## an alias ending in '-deprecated' (see Deprecated.Rd).
+        if(!any(grep("-deprecated$", aliases))) {
+            ## Argh.  There are good reasons for keeping \S4method{}{} 
+            ## as is, but of course this is not what the aliases use ...
+            ## <FIXME>
+            ## Should maybe use topicName(), but in any case, we should
+            ## have functions for converting between the two forms, see
+            ## also the code for undoc().
+            aliases <- sub("([^,]+),(.+)-method$",
+                           "\\\\S4method{\\1}{\\2}",
+                           aliases)
+            ## </FIXME>
+            aliases <- gsub("\\\\%", "%", aliases)
+            ## Remove trailing '~' used for dealing with objects with
+            ## multiple \usage.
+            lsArgs <- sub("~+$", "", lsArgs)
+            lsArgsNotInAliases <-
+                lsArgs[! lsArgs %in% c(aliases, ".__Usage__.")]
+        }
+        else
+            lsArgsNotInAliases <- character()
 
         if((length(argsInUsageMissingInArgList) > 0)
            || any(duplicated(argsInArgList))
