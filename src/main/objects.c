@@ -930,13 +930,13 @@ SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 	   error("Something went wrong:  the internal pointer for
 	   standardGeneric was not set"); */
     }
-
+    PROTECT(args);
     PROTECT(arg = CAR(args));
     PROTECT(fdef = get_this_generic(args));
 
     value = (*ptr)(arg, env, fdef);
   
-    UNPROTECT(2);
+    UNPROTECT(3);
     return value;
 }
 
@@ -992,7 +992,7 @@ SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 	errorcase = TRUE;
     }
     if(errorcase) {
-	error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", or \"set\"", code_string);
+	error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", \"set\", or \"suppress\"", code_string);
 	return R_NilValue;
     }
     switch(TYPEOF(op)) {
@@ -1086,22 +1086,30 @@ argument to standardGeneric.
 */
 static SEXP get_this_generic(SEXP args)
 {
-    SEXP rval = NULL; 
-    int i;
-    RCNTXT *cptr;
+    SEXP rval = NULL; static SEXP gen_name;
+    int i, n;
+    RCNTXT *cptr; char *fname;
 
     /* a second argument to the call, if any, is taken as the function */
     if(CDR(args) != R_NilValue)
 	return CAR(CDR(args));
-    /* else use sys.function(0):  TO DO: should check that this is a generic? */
+    /* else use sys.function (this is fairly expensive-- would be good
+     * to force a second argument if possible) */
     PROTECT(args);
+    if(!gen_name)
+	gen_name = install("generic");
     cptr = R_GlobalContext;
-    /* TO DO:  1- the limit should be sys.nframe() with an error
-     * message; 2- should test is(rval, "genericFunction") */
-    for(i=0; ; i++) {
+    fname = CHAR(asChar(CAR(args)));
+    n = framedepth(cptr);
+    /* check for a matching "generic" slot */
+    for(i=0;  i<n; i++) {
 	rval =  R_sysfunction(i, cptr);
-	if(isObject(rval))
-	    break;
+	if(isObject(rval)) {
+	    SEXP generic = getAttrib(rval, gen_name);
+	    if(TYPEOF(generic) == STRSXP &&
+	       !strcmp(CHAR(asChar(generic)), fname))
+	        break;
+	}
     }
     UNPROTECT(1);
     return(rval);
