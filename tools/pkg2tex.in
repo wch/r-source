@@ -1,5 +1,5 @@
 #! @PERL@
-### $Id: pkg2tex.in,v 1.1 2000/01/01 18:30:20 hornik Exp $
+### $Id: pkg2tex.in,v 1.2 2000/01/04 12:26:14 hornik Exp $
 
 ## Create a single pkgname-pkg.tex file from the Latex subdirectories
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
@@ -28,13 +28,13 @@ use Getopt::Long;
 
 my $help;
 
-my $REVISION = '$Revision: 1.1 $';
-my $VERSION;
-my $NAME;
+my $revision = ' $Revision: 1.2 $ ';
+my $version;
+my $name;
 
-($NAME = $0) =~ s|.*/||;
-$REVISION =~ / ([\d\.]*) /;
-$VERSION = $1;
+($name = $0) =~ s|.*/||;
+$revision =~ / ([\d\.]*) /;
+$version = $1;
 
 GetOptions("help|h" => \$help);
 &usage() if $help;
@@ -101,8 +101,8 @@ sub do_trailer {
 
 sub usage {
 
-    print "$NAME version $VERSION\n";
-    print "Usage: $NAME [--help/-h] file ..." ;
+    print "$name version $version\n";
+    print "Usage: $name [--help/-h] file ..." ;
 
     exit 0;
 }
