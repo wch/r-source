@@ -2,6 +2,11 @@
 
 NEW FEATURES
 
+    o   Data files are now also documented using the Rd format, all
+        data documentation in the base package has been converted
+        accordingly. Rd files for data have a \keyword{datasets} as
+        identifier.
+
     o   new function mahalanobis() for Mahalanobis distance
 
     o	quantile.default() now handles Inf's correctly.
