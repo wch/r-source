@@ -745,10 +745,6 @@ Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 2809 *
-Subject: sweave provoked segfault
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Mon, 21 Apr 2003 17:01:53 -0400
 * PR# 4184 *
 Subject: getGenerics is wrong in 1.8.0 alpha
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -760,24 +756,51 @@ From:   "methods"       "methods" "methods" "methods"  "methods"
 From:   "methods"    "methods"
 Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 ..body<- is fixed. Should Compare and Complex show up as base?
-* PR# 5150 *
-Subject: CONGRATULATIONS!!!!YOU HAVE WON.
-From: MEGA LOTTERY INTERNATIONAL <megalottery@hotmail.com>
-Date: Mon, 17 Nov 2003 19:45:16 +0000
-* PR# 5151 *
-Subject: =?EUC-KR?B?KLGksO0pIMG+t67BpiC6wMX1IMD9vuDH/CC+0MPgvrK3ubHixesgvNKws0Ag?=
-From: "매직파워" <ghldnjs30@hanmir.com>
-Date: Tue, 18 Nov 2003 05:34:36 +0900
-* PR# 5152 *
-Subject: PLEASE ENDEAVOUR TO UTILIZE THIS FUND AS I HAVE INSTRUCTED
-From: "SERENA JONES" <ciranajoness@netscape.net>
-From: Mrs Serena Jones
-Date: Mon, 17 Nov 2003 22:41:59
-* PR# 5153 *
-Subject: STOP-PAYING For Your PAY-PER-VIEW, Movie Channels, Mature Channels...howard
-From: "Sung Lucas" <g61btcvohq@yahoo.com>
-Date: Mon, 17 Nov 2003 19:14:26 -0300
-* PR# 5154 *
-Subject: Business Assistance
-From: ENGR MARK SITHEMBELE <sithembele11@netscape.net>
-Date: Mon, 17 Nov 2003 23:57:41 +0100
+* PR# 5165 *
+Subject: [R] help page of 'filled.contour': mistake in spelling
+From: Wolfram Fischer <wolfram@fischer-zim.ch>
+Date: Tue, 18 Nov 2003 12:00:30 +0100
+* PR# 5172 *
+Subject: plot, plot, methods, crash
+From: "Simon Fear" <Simon.Fear@synequanon.com>
+Date: Tue, 18 Nov 2003 16:33:48 -0000
+* PR# 5173 *
+Subject: plot, plot, methods, crash
+From: "Simon Fear" <Simon.Fear@synequanon.com>
+Date: Tue, 18 Nov 2003 16:33:48 -0000
+* PR# 5174 *
+Subject: Order your medication in the comfort of your home!leadsman
+From: "Marie Whalen" <7bnukzyo@fastmail.fm>
+Date: Tue, 18 Nov 2003 22:29:08 GMT
+* PR# 5175 *
+Subject: ePHARMACY Wholesale - LEV.ITRA, VIE.AGRA, Celebrex - INTERNET PRICES...gerald
+From: "Colette Williamson" <qvloi4ap@yahoo.com>
+Date: Tue, 18 Nov 2003 23:23:34 +0400
+* PR# 5177 *
+Subject: PLEASE GET TO ME ASAP
+From: HINSTY ANDERSON <hinsty@netscape.net>
+Date: Tue, 18 Nov 2003 21:19:58 +0100
+* PR# 5178 *
+Subject: ,.Pro football players big secrets zxmmn yee gelgsxze
+From: "Curtis Navarro" <marilyn@msn.com>
+Date: Tue, 18 Nov 03 18:10:18 GMT
+* PR# 5179 *
+Subject: ...Celebrity's Biggest secrets revealed  cjq
+From: "Elma Yeager" <kelly@msn.com>
+Date: Wed, 19 Nov 03 05:14:15 GMT
+* PR# 5180 *
+Subject: PLEASE GET TO ME ASAP
+From: HINSTY ANDERSON <hinsty@netscape.net>
+Date: Tue, 18 Nov 2003 23:26:20 +0100
+* PR# 5181 *
+Subject: ,.Big Computer answers xzyefglfzr
+From: "Tod Bowden" <kelly@msn.com>
+Date: Wed, 19 Nov 03 04:27:39 GMT
+* PR# 5182 *
+Subject: 질문에 대한 답변입니다. fdbzokbblh  
+From: "김현아" <huna@korea.com>
+Date: Tue, 18 Nov 03 17:41:38 GMT
+* PR# 5183 *
+Subject: ship worldwide vi-agra substitution 
+From: "Leah Bermudez" <m43czxx@prodigy.net>
+Date: Tue, 18 Nov 03 17:44:57 GMT
