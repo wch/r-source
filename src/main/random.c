@@ -21,23 +21,59 @@
 #include "Defn.h"
 #include "Mathlib.h"
 
-extern int ix_seed;
-extern int iy_seed;
-extern int iz_seed;
+static void FixupSeeds()
+{
+    /* Dependeing on RNG, set 0 values to non-0, etc. */
+    int j;
+    switch(RNG_kind) {
+    case WICHMANN_HILL:
+    case MARSAGLIA_MULTICARRY:
+    case SUPER_DUPER:
+/*
+    case MERSENNE_TWISTER:
+*/
+	if(!i1_seed) i1_seed++;
+	if(!i2_seed) i2_seed++;
+	for(j=0; j < RNG_Table[RNG_kind].n_seed - 2; j++)
+	    if(!i_seed[j]) i_seed[j]++;
 
-static int naflag = 0;
+	break;
 
+    case RAND:/* no read-access to seed */
+
+    }
+}
+/* maybe put this into ../nmath/sunif.c -- since it is close to that code */
 static void Randomize()
 {
     srand((int)time(NULL));
-    ix_seed = abs(rand() % 30269);
-    iy_seed = abs(rand() % 30307);
-    iz_seed = abs(rand() % 30323);
+    switch(RNG_kind) {
+    case WICHMANN_HILL:
+	i1_seed = abs(rand() % 30269);
+	i2_seed = abs(rand() % 30307);
+	i3_seed = abs(rand() % 30323);
+	break;
+    case MARSAGLIA_MULTICARRY:
+	break;
+    case SUPER_DUPER:
+	break;
+/*
+    case MERSENNE_TWISTER:
+	break;
+*/
+    case RAND:
+	break;
+    }
+    FixupSeeds();
 }
 
 static void GetSeeds()
 {
+  /* Get  .Random.seed  into proper variables */
+    int len_seed, j;
     SEXP seeds;
+    len_seed = RNG_Table[RNG_kind].n_seed;
+
     seeds = findVar(R_SeedsSymbol, R_GlobalEnv);
     if (seeds == R_UnboundValue) {
 	Randomize();
@@ -45,32 +81,109 @@ static void GetSeeds()
     else {
 	if (seeds == R_MissingArg)
 	    error(".Random.seed is a missing argument with no default\n");
-	if (!isVector(seeds) || LENGTH(seeds) < 3)
+	if (!isVector(seeds) || LENGTH(seeds) < len_seed)
 	    error("missing or invalid random number seeds\n");
 	seeds = coerceVector(seeds, INTSXP);
-	ix_seed = INTEGER(seeds)[0]; if (!ix_seed) ix_seed++;
-	iy_seed = INTEGER(seeds)[1]; if (!iy_seed) iy_seed++;
-	iz_seed = INTEGER(seeds)[2]; if (!iz_seed) iz_seed++;
+	switch(RNG_kind) {
+	case WICHMANN_HILL:
+	case MARSAGLIA_MULTICARRY:
+	case SUPER_DUPER:
+	case MERSENNE_TWISTER:
+	case RAND:
+	    i1_seed = INTEGER(seeds)[0];
+	    i2_seed = INTEGER(seeds)[1];
+	    for(j=2; j < len_seed; j++)
+		i_seed[j-2] = INTEGER(seeds)[j];
+	}
+	FixupSeeds();
     }
 }
 
 static void PutSeeds()
 {
+    int len_seed, j;
     SEXP seeds;
-    PROTECT(seeds = allocVector(INTSXP, 3));
-    INTEGER(seeds)[0] = ix_seed;
-    INTEGER(seeds)[1] = iy_seed;
-    INTEGER(seeds)[2] = iz_seed;
+    len_seed = RNG_Table[RNG_kind].n_seed;
+
+    PROTECT(seeds = allocVector(INTSXP, len_seed));
+    switch(RNG_kind) {
+    case WICHMANN_HILL:
+    case MARSAGLIA_MULTICARRY:
+    case SUPER_DUPER:
+    case MERSENNE_TWISTER:
+    case RAND:
+	
+	INTEGER(seeds)[0] = i1_seed;
+	INTEGER(seeds)[1] = i2_seed;
+	for(j=2; j < len_seed; j++)
+	    INTEGER(seeds)[j] = i_seed[j-2];
+    }
     setVar(R_SeedsSymbol, seeds, R_GlobalEnv);
     UNPROTECT(1);
 }
+
+static void RNGkind(RNGtype newkind)
+{
+/* Choose a new kind of RNG.
+ * Initialize its seed by calling the old RNG's sunif() 
+ */
+    GetSeeds();
+    switch(newkind) {
+    case WICHMANN_HILL:
+	i1_seed = (int)(sunif() * 30269);
+	i2_seed = (int)(sunif() * 30307);
+	i3_seed = (int)(sunif() * 30323);
+      break;
+    case MARSAGLIA_MULTICARRY:
+	/* ... */
+      break;
+    case SUPER_DUPER:
+	/* ... */
+      break;
+    case MERSENNE_TWISTER:
+	/* ... */
+	error("RNGkind: \"Mersenne-Twister\" not yet available!\n");
+      break;
+
+
+    case RAND:
+	srand((unsigned int)sunif()*UINT_MAX);
+      break;
+    default:
+      error("RNGkind: unimplemented RNG kind %d\n", newkind);
+    }
+    RNG_kind = newkind;
+    FixupSeeds();
+    PutSeeds();
+}
+
+SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP r;
+    RNGtype kind, oldkind;
+
+    checkArity(op,args);
+    oldkind = RNG_kind;
+    r = CAR(args);
+    if(length(r)) { /* set a new RNG kind */
+      kind = asInteger(r);
+      RNGkind(kind);
+    }
+    r = allocVector(INTSXP, 1);
+    INTEGER(r)[0] = oldkind;
+    return r;
+}
+
+/*------ Part without RNGkind dependency ------------------------*/
+
+static int naflag = 0;
 
 static void invalid(SEXP call)
 {
     errorcall(call, "invalid arguments\n");
 }
 
-static void random1(double (*f) (), double * a, int na, double * x, int n)
+static void random1(double (*f) (), double *a, int na, double *x, int n)
 {
     double ai;
     int i;
@@ -141,8 +254,8 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
-static void random2(double (*f) (), double * a, int na, double * b, int nb,
-		    double * x, int n)
+static void random2(double (*f) (), double *a, int na, double *b, int nb,
+		    double *x, int n)
 {
     double ai, bi; int i;
     errno = 0;
@@ -222,8 +335,8 @@ SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
-static void random3(double (*f) (), double * a, int na, double * b, int nb,
-		    double * c, int nc, double * x, int n)
+static void random3(double (*f) (), double *a, int na, double *b, int nb,
+		    double *c, int nc, double *x, int n)
 {
     double ai, bi, ci;
     int i;
@@ -310,53 +423,6 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  "with replacement" case.
  */
 
-/* Sort into descending order (heapsort) */
-
-static void revsort(int n, double *ra, int *rb)
-{
-    int l, j, ir, i;
-    double rra;
-    int rrb;
-
-    ra--; rb--;
-
-    l = (n >> 1) + 1;
-    ir = n;
-
-    for (;;) {
-        if (l > 1) {
-	    l = l - 1;
-	    rra = ra[l];
-	    rrb = rb[l];
-        }
-        else {
-	    rra = ra[ir];
-	    rrb = rb[ir];
-	    ra[ir] = ra[1];
-	    rb[ir] = rb[1];
-	    if (--ir == 1) {
-		ra[1] = rra;
-		rb[1] = rrb;
-		return;
-	    }
-        }
-        i = l;
-        j = l << 1;
-        while (j <= ir) {
-	    if (j < ir && ra[j] > ra[j + 1]) ++j;
-	    if (rra > ra[j]) {
-		ra[i] = ra[j];
-		rb[i] = rb[j];
-		j += (i = j);
-	    }
-	    else
-		j = ir + 1;
-        }
-        ra[i] = rra;
-        rb[i] = rrb;
-    }
-}
-
 /* Unequal probability sampling; with-replacement case */
 
 static void ProbSampleReplace(int n, double *p, int *perm, int nans, int *ans)
@@ -370,11 +436,11 @@ static void ProbSampleReplace(int n, double *p, int *perm, int nans, int *ans)
 	perm[i] = i + 1;
 
     /* sort the probabilities into descending order */
-    revsort(n, p, perm);
+    revsort(p, perm, n);
 
     /* compute cumulative probabilities */
     for (i = 1 ; i < n; i++)
-	p[i] = p[i - 1] + p[i];
+	p[i] += p[i - 1];
 
     /* compute the sample */
     for (i = 0; i < nans; i++) {
@@ -401,7 +467,7 @@ static void ProbSampleNoReplace(int n, double *p, int *perm,
 
     /* Sort probabilities into descending order */
     /* Order element identities in parallel */
-    revsort(n, p, perm);
+    revsort(p, perm, n);
 
     /* Compute the sample */
     totalmass = 1;
@@ -466,7 +532,7 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
 	sum += p[i];
     }
     if (npos == 0 || (!replace && k > npos))
-	errorcall(call, "insufficient positive probabilies\n");
+	errorcall(call, "insufficient positive probabilities\n");
     for (i = 0; i < n; i++)
 	p[i] = p[i] / sum;
 }
@@ -531,15 +597,4 @@ void seed_out(long *ignored)
 {
     PutSeeds();
 }
-
-/*
-double unif_rand(void)
-{
-	sunif();
-}
-
-double norm_rand(void)
-{
-	snorm();
-}
-*/
+/* unif_rand == sunif , norm_rand == snorm   via 'define' in Mathlib.h */
