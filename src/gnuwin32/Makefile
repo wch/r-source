@@ -83,7 +83,7 @@ rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
 ## package tools to install them properly
 ## need ctest as it is in the main .Rprofile.
 INITPACKAGES = base tools ctest
-Rcode:
+Rcode: fixed/fixdesc 
 	@$(ECHO) "  making bootstrap versions of packages ..."
 	@for pkg in $(INITPACKAGES); do \
 	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
@@ -95,7 +95,7 @@ Rcode:
 	@$(ECHO) "  ... done"
 
 
-rpackage: fixed/fixdesc ../../library/R.css
+rpackage: ../../library/R.css
 	@$(MAKE) --no-print-directory $(PKGS)
 
 rinstaller:
