@@ -548,8 +548,12 @@ BUG FIXES
 
     o	range(numeric(0)) is now c(Inf, -Inf), as it was documented to be.
 
-    o   print.ts was occasionally making rounding errors in the labels
+    o   print.ts() was occasionally making rounding errors in the labels
 	for multiple calendar time series.
+
+    o   Rdconv was not handling nested \describe{} constructs when
+	converting to HTML (PR#1257) and not fixing up mal-formed
+	\item fields in \describe{} when converting to text (PR#1330).
 
 
 	**************************************************
