@@ -366,10 +366,10 @@ tkpager <- function(file, header, title, delete.file)
         tt <- tktoplevel()
         tkwm.title(tt, if (length(title))
                    title[(i-1) %% length(title)+1] else "")
-        txt <- tktext(tt, bg="grey90", font="courier",
-                      yscrollcommand=function(...)tkset(scr,...))
+        txt <- tktext(tt, bg="grey90", font="courier")
         scr <- tkscrollbar(tt, repeatinterval=5,
                            command=function(...)tkyview(txt,...))
+	tkconfigure(txt,yscrollcommand=function(...)tkset(scr,...))
         tkpack(txt, side="left", fill="both", expand=TRUE)
         tkpack(scr, side="right", fill="y")
 
