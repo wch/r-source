@@ -13,7 +13,7 @@ object@name
 object@name <- value
 
 slot(object, name)
-slot(object, name) <- value
+slot(object, name, check = TRUE) <- value
 
 slotNames(x)
 }
@@ -26,7 +26,12 @@ slotNames(x)
   \item{x}{Either the name of a class or an object from that class.
     Print \code{\link{getClass}(class)} to see the full description of
     the slots.}
-}
+  \item{check}{If \code{TRUE}, check the assigned value for validity
+    as the value of this slot.  You should never set this to
+    \code{FALSE} in normal use, since the result can create invalid objects.
+    }
+    
+  }
 \details{
   The \code{"@"} operator and the \code{slot} function extract or
   replace the formally defined slots for the object.  The operator
