@@ -94,6 +94,8 @@ if($opt_html){
 format STDOUT =
   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<< @<<<<<< 
   $manfilebase, $textflag, $htmlflag, $latexflag
+.
+
 foreach $manfile (@mandir) {
     if($manfile =~ /\.Rd$/i){
         $manfilebase = basename($manfile, (".Rd", ".rd"));
