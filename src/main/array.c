@@ -208,7 +208,7 @@ SEXP DropDims(SEXP x)
 		if (INTEGER(dims)[i] != 1 && VECTOR(dimnames)[i] != R_NilValue)
 		    havenames = 1;
 	    if (havenames) {
-		newnames = allocVector(VECSXP, n);
+		PROTECT(newnames = allocVector(VECSXP, n));
 		for (i = 0, n= 0; i < ndims; i++) {
 		    if (INTEGER(dims)[i] != 1)
 			VECTOR(newnames)[n++] = VECTOR(dimnames)[i];
@@ -220,7 +220,10 @@ SEXP DropDims(SEXP x)
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, newdims);
 	if (dimnames != R_NilValue)
+	{
 	    setAttrib(x, R_DimNamesSymbol, newnames);
+	    UNPROTECT(1);
+	}
 	UNPROTECT(2);
     }
     UNPROTECT(1);
