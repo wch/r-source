@@ -160,6 +160,9 @@ BUG FIXES
     o	Loading .Random.seed could very rarely and with some
 	generators reject a value as NA_INTEGER when it was valid.
 
+    o   save(..., ascii=TRUE) created broken files when saving strings
+        containing special characters (ASCII code > 127).
+	
 
 
 		CHANGES IN R VERSION 1.2.0

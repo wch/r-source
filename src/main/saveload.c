@@ -1204,7 +1204,9 @@ static void OutStringAscii(FILE *fp, char *x)
             case '\?': fprintf(fp, "\\?");  break;
             case '\'': fprintf(fp, "\\'");  break;
             case '\"': fprintf(fp, "\\\""); break;
-            default  : fprintf(fp, "\\%03o", x[i]); break;
+		/* cannot print char in octal mode -> cast to unsigned
+		   char first */
+            default  : fprintf(fp, "\\%03o", (unsigned char) x[i]); break;
             }
         }
         else fputc(x[i], fp);
