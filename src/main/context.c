@@ -382,6 +382,10 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
 
 /* some real insanity to keep Duncan sane */
 
+/* This should find the caller's environment (it's a .Internal) and
+   then get the context of the call that owns the environment.  As it
+   is, it will restart the wrong function if used in a promise.
+   L.T. */
 SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
@@ -392,8 +396,8 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return(R_NilValue);
     for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext;
 	    cptr = cptr->nextcontext) {
-	if (cptr->callflag & CTXT_FUNCTION) {
-		cptr->callflag = CTXT_RESTART;
+        if (cptr->callflag & CTXT_FUNCTION) {
+		SET_RESTART_BIT_ON(cptr->callflag);
 		break;
 	}
     }

@@ -303,8 +303,8 @@ enum {
     CTXT_RETURN	  = 12,
     CTXT_BROWSER  = 16,
     CTXT_GENERIC  = 20,
-    CTXT_RESTART  = 28,
-    CTXT_BUILTIN  = 32  /* used in profiling */
+    CTXT_RESTART  = 32,
+    CTXT_BUILTIN  = 64  /* used in profiling */
 };
 
 /*
@@ -317,8 +317,14 @@ CCO   0 0 0 1 0 0  = 8
 BRO   0 0 0 0 1 0  = 16
 RET   0 0 1 1 0 0  = 12
 GEN   0 0 1 0 1 0  = 20
-RES   0 0 1 1 1 0  = 28
+RES   0 0 0 0 0 0 1 = 32
+BUI   0 0 0 0 0 0 0 1 = 64
 */
+
+#define IS_RESTART_BIT_SET(flags) ((flags) & CTXT_RESTART)
+#define SET_RESTART_BIT_ON(flags) (flags |= CTXT_RESTART)
+#define SET_RESTART_BIT_OFF(flags) (flags &= ~CTXT_RESTART)
+
 /* Miscellaneous Definitions */
 #define streql(s, t)	(!strcmp((s), (t)))
 

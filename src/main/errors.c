@@ -101,7 +101,7 @@ void onsigusr1()
     /* Bail out if there is a CTXT_RESTART on the stack--do we really
        want this? */
     for (c = R_GlobalContext; c; c = c->nextcontext) {
-	if (c->callflag == CTXT_RESTART) {
+	if (IS_RESTART_BIT_SET(c->callflag)) {
 	    inError=0;
 	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
 	}
@@ -438,7 +438,7 @@ void jump_to_toplevel()
     for (c = R_GlobalContext; c; c = c->nextcontext) {
 	if (c->callflag == CTXT_RETURN || c->callflag == CTXT_GENERIC )
 	    nback++;
-	if (c->callflag == CTXT_RESTART) {
+	if (IS_RESTART_BIT_SET(c->callflag)) {
 	    inError=0;
 	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
 	}
@@ -478,7 +478,7 @@ void jump_now()
 
     /* find the jump target; do the jump if target is a CTXT_RESTART */
     for (c = R_GlobalContext; c; c = c->nextcontext) {
-	if (c->callflag == CTXT_RESTART) {
+	if (IS_RESTART_BIT_SET(c->callflag)) {
 	    inError=0;
 	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
 	}
@@ -711,7 +711,7 @@ void R_ReturnOrRestart(SEXP val, SEXP env, Rboolean restart)
     for (c = R_GlobalContext; c; c = c->nextcontext) {
 	if (c->callflag & mask && c->cloenv == env)
 	    findcontext(mask, env, val);
-	else if (restart && c->callflag == CTXT_RESTART)
+	else if (restart && IS_RESTART_BIT_SET(c->callflag))
 	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
 	else if (c->callflag == CTXT_TOPLEVEL)
 	    error("No function to return from, jumping to top level");
@@ -724,7 +724,7 @@ void R_JumpToToplevel(Rboolean restart)
 
     /* Find the target for the jump */
     for (c = R_GlobalContext; c != NULL; c = c->nextcontext) {
-	if (restart && c->callflag == CTXT_RESTART)
+	if (restart && IS_RESTART_BIT_SET(c->callflag))
 	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
 	else if (c->callflag == CTXT_TOPLEVEL)
 	    break;
