@@ -148,7 +148,7 @@ arima(x, order = c(0, 0, 0),
   \item{aic}{the AIC value corresponding to the log-likelihood. Only
     valid for \code{method = "ML"} fits.}
 
-  \item{residuals}{the standardized residuals.}
+  \item{residuals}{the fitted innovations.}
 
   \item{call}{the matched call.}
 
