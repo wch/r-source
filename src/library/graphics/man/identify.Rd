@@ -32,16 +32,20 @@ identify(x, \dots)
   part of the value of the call.
 }
 \details{
-  If in addition, \code{plot} is \code{TRUE}, the point is labelled with
+  \code{identify} is only supported on screen devices such as
+  \code{X11}, \code{windows} and \code{quartz}.  On other devices the
+  call will do nothing.
+  
+  If \code{plot} is \code{TRUE}, the point is labelled with
   the corresponding element of \code{text}.
-
   The labels are placed either below, to the left, above or to the right
   of the identified point, depending on where the cursor was.
 
 #ifdef unix
-  The identification process is terminated by pressing any mouse button
-  other than the first.  With the quartz() device the process is 
-  terminated by pressing the ESC key.
+  For the usual \code{\link{X11}} device the identification process is
+  terminated by pressing any mouse button other than the first.
+  For the \code{\link{quartz}} device the process is terminated by
+  pressing the \code{ESC} key.
 #endif
 #ifdef windows
   The identification process is terminated by clicking the second button
@@ -49,9 +53,9 @@ identify(x, \dots)
   menu on the graphics window.
 #endif
  
-  On most devices which support \code{locator}, successful selection of
+  On most devices which support \code{identify}, successful selection of
   a point is indicated by a bell sound unless
-  \code{\link{options}(locatorBell=FALSE)}} has been set.
+  \code{\link{options}(locatorBell=FALSE)} has been set.
 
   If the window is resized or hidden and then exposed before the identification
   process has terminated, any labels drawn by \code{identify}

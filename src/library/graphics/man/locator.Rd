@@ -9,7 +9,8 @@
 locator(n = 512, type = "n", \dots)
 }
 \arguments{
-  \item{n}{the maximum number of points to locate.}
+  \item{n}{the maximum number of points to locate.  Valid values start
+    at 1.}
   \item{type}{One of \code{"n"}, \code{"p"}, \code{"l"} or
     \code{"o"}. If \code{"p"} or \code{"o"} the points are
     plotted; if \code{"l"}  or \code{"o"} they are joined by lines.}
@@ -22,13 +23,18 @@ locator(n = 512, type = "n", \dots)
   i.e., the one specified by \code{\link{par}("usr")}.
 }
 \details{
+  \code{locator} is only supported on screen devices such as
+  \code{X11}, \code{windows} and \code{quartz}.  On other devices the
+  call will do nothing.
+  
   Unless the process is terminated prematurely by the user (see below)
   at most \code{n} positions are determined.
 
 #ifdef unix
-  The identification process can be terminated by pressing any mouse
-  button other than the first. With the quartz() device the process
-  is terminated by pressing the ESC key.
+  For the usual \code{\link{X11}} device the identification process is
+  terminated by pressing any mouse button other than the first.
+  For the \code{\link{quartz}} device the process is terminated by
+  pressing the \code{ESC} key.
 #endif
 #ifdef windows
   The identification process can be terminated by clicking the second
