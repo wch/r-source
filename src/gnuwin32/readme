@@ -47,6 +47,11 @@ manuals for R, which unpack into @RWVER@/doc/manual.
 
 You should install at least one of the text help and the compiled HTML help.
 
+WARNING: we have had reports that Dr Solomon's VirusScan interferes
+with rwinst.exe to the extent of making the PC unusable.  If you have
+this, please either disable it during installation or install
+manually.  No other virus-checking software seems to exhibit this fault.
+
 
 Usage
 =====
@@ -97,7 +102,7 @@ facilities needed for interactive use, including command-line editing
 Batch use: At its simplest, Rterm.exe can be used in a batch mode by
 commands like
 
-Rterm.exe --vsize=10M --nsize=400k --no-restore --no-save < infile > outfile
+Rterm.exe --no-restore --no-save < infile > outfile
 
 although users will probably want to set up simple .bat or .cmd files
 to run batch jobs.
