@@ -36,6 +36,12 @@
     ## and detach functions look for cacheMetaData and call it if it's found.
     for(i in rev(seq(along = search())))
       cacheMetaData(as.environment(i), TRUE)
+    # make assignments for new class and class<- functions diretly into base
+    # if base is defined in a name space
+    if (! identical(environment(log), .GlobalEnv)) { # check if namespace used
+        assign("class", get("class"), env = NULL)
+        assign("class<-", get("class<-"), env = NULL)
+    }
 }
 
 ### The following code is only executed when dumping

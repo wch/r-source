@@ -324,7 +324,7 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 void setup_Rmainloop(void)
 {
     volatile int doneit;
-    SEXP cmd;
+    SEXP cmd, baseEnv;
     FILE *fp;
 
     InitConnections(); /* needed to get any output at all */
@@ -388,6 +388,17 @@ void setup_Rmainloop(void)
 
     R_Warnings = R_NilValue;
 
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (getenv("R_USE_NAMESPACE_DISPATCH") != NULL)
+	R_SetUseNamespaceDispatch(TRUE);
+    if (getenv("R_USE_BASE_NAMESPACE") != NULL)
+	baseEnv = R_BaseNamespace;
+    else
+	baseEnv = R_NilValue;
+#else
+    baseEnv = R_NilValue;
+#endif
+
     /* On initial entry we open the base language package and begin by
        running the repl on it.
        If there is an error we pass on to the repl.
@@ -409,7 +420,7 @@ void setup_Rmainloop(void)
 #endif
     if (!doneit) {
 	doneit = 1;
-	R_ReplFile(fp, R_NilValue, 0, 0);
+	R_ReplFile(fp, baseEnv, 0, 0);
     }
     fclose(fp);
 
@@ -418,8 +429,8 @@ void setup_Rmainloop(void)
        drop through to further processing.
     */
 
-    R_LoadProfile(R_OpenSysInitFile(), R_NilValue);
-    R_LoadProfile(R_OpenSiteFile(), R_NilValue);
+    R_LoadProfile(R_OpenSysInitFile(), baseEnv);
+    R_LoadProfile(R_OpenSiteFile(), baseEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.
