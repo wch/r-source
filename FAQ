@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-39 2004-08-04
+Version 1.9-40 2004-08-05
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1423,6 +1423,10 @@ distributions of R.)
      ColorBrewer palettes for drawing nice maps shaded according to a
      variable.
 
+*RCurl*
+     Allows one to compose HTTP requests to fetch URIs, post forms, etc.,
+     and process the results returned by the Web server.
+
 *RMySQL*
      An interface between R and the MySQL database system.
 
@@ -1477,6 +1481,10 @@ distributions of R.)
      An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It
      also provides an interactive R slave environment in which distributed
      statistical computing can be carried out.
+
+*Rstem*
+     Interface to Snowball implementation of Porter's word stemming
+     algorithm.
 
 *Rwave*
      An environment for the time-frequency analysis of 1-D signals (and
