@@ -12,9 +12,7 @@
 %- methods:
 \alias{plot.data.frame}
 %
-\alias{[.AsIs}
 \alias{as.data.frame.AsIs}
-% FIXME: I(.) is not documented enough; "AsIs" does not appear anywhere
 \alias{as.data.frame.character}
 \alias{as.data.frame.complex}
 \alias{as.data.frame.data.frame}
@@ -101,6 +99,7 @@ row.names(x) <- names
   converted to factors.
 }
 \seealso{
+  \code{\link{I}},
   \code{\link{print.data.frame}},
   \code{\link{read.table}},
   \code{\link{Math.data.frame}} etc, about

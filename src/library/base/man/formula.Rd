@@ -3,11 +3,9 @@
 \usage{
 y ~ model
 formula(x, \dots)
-as.formula(object, env=parent.frame())
-I(x)
+as.formula(object, env = parent.frame())
 }
 \alias{~}
-\alias{I}
 \alias{formula}
 \alias{formula.default}
 \alias{formula.formula}
@@ -15,7 +13,6 @@ I(x)
 \alias{formula.data.frame}
 \alias{as.formula}
 \alias{print.formula}
-\alias{print.AsIs}
 \description{
   The generic function \code{formula} and its specific methods provide a
   way of extracting formulae which have been included in other objects.
@@ -67,7 +64,7 @@ I(x)
   in model formulae, there can be confusion between
   arithmetic and symbolic operator use.
 
-  To avoid this confusion, the function \code{I()}
+  To avoid this confusion, the function \code{\link{I}()}
   can be used to bracket those portions of a model
   formula where the operators are used in their
   arithmetic sense.  For example, in the formula
@@ -88,10 +85,12 @@ I(x)
   \code{env} is explicitly given.
 }
 \value{
-  All the functions above produce an object
-  of class \code{formula} which contains a symbolic model formula.
+  All the functions above produce an object of class \code{"formula"}
+  which contains a symbolic model formula.
 }
 \seealso{
+  \code{\link{I}}.
+  
   For formula manipulation: \code{\link{terms}}, and \code{\link{all.vars}};
   for typical use: \code{\link{lm}}, \code{\link{glm}}, and
   \code{\link{coplot}}.
@@ -103,8 +102,8 @@ typeof(fo)# R internal : "language"
 terms(fo)
 
 environment(fo)
-environment(as.formula("y~x"))
-environment(as.formula("y~x",env=new.env()))
+environment(as.formula("y ~ x"))
+environment(as.formula("y ~ x",env=new.env()))
 
 
 ## Create a formula for a model with a large number of variables:
