@@ -619,6 +619,7 @@ SEXP FixupFont(SEXP, int);
 SEXP FixupCol(SEXP, unsigned int);
 SEXP FixupCex(SEXP, double);
 SEXP FixupLwd(SEXP, double);
+SEXP FixupVFont(SEXP);
 
 
 
@@ -691,6 +692,12 @@ void GEndPath(DevDesc*);
 void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, DevDesc*);
 
+void GVText(double x, double y, int unit, char* s, int typeface, int fontindex,
+	    double xadj, double yadj, double rot, DevDesc *dd);
+double GVStrWidth(const unsigned char *s, int typeface, int fontindex,
+		  int unit, DevDesc *dd);
+double GVStrHeight(const unsigned char *s, int typeface, int fontindex,
+		   int unit, DevDesc *dd);
 
 /*-------------------------------------------------------------------
  *
@@ -798,5 +805,10 @@ unsigned int ScaleColor(double x);
 char* RGB2rgb(unsigned int, unsigned int, unsigned int);
 
 int StrMatch(char *s, char *t);
+
+/* some functions that plot.c needs to share with plot3d.c */
+SEXP CreateAtVector(double*, double*, int, int);
+void GetAxisLimits(double, double, double*, double*);
+SEXP labelformat(SEXP);
 
 #endif
