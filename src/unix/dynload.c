@@ -107,14 +107,6 @@ static CFunTabEntry CFunTab[] =
 #define RTLD_NOW  2
 #endif
 
-#ifndef RTLD_GLOBAL
-#define	RTLD_GLOBAL 4
-#endif
-
-#ifndef RTLD_LOCAL
-#define	RTLD_LOCAL 0
-#endif
-
 #ifdef DL_SEARCH_PROG
 static void *dlhandle;
 #endif
@@ -177,12 +169,17 @@ static int AddDLL(char *path, int asLocal, int now)
     void *handle;
     char *dpath;
     int i;
+    int openFlag = 0;
+    static int computeDLOpenFlag(int asLocal, int now); /* Defined below. */
+
     if(CountDLL == MAX_NUM_DLLS) {
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
 	return 0;
     }
-    handle = dlopen(path,(asLocal != 0 ? RTLD_LOCAL : RTLD_GLOBAL) 
-                           | (now != 0 ? RTLD_NOW : RTLD_LAZY));
+
+    openFlag = computeDLOpenFlag(asLocal, now);
+
+    handle = dlopen(path,openFlag);
     if(handle == NULL) {
 	strcpy(DLLerror, dlerror());
 	return 0;
@@ -204,13 +201,81 @@ static int AddDLL(char *path, int asLocal, int now)
     return 1;
 }
 
-#if 0
-void
-foo()
+
+ /* 
+
+    Computes the flag to be passed as the second argument to dlopen(),
+    controlling whether the local or global symbol integration
+    and lazy or eager resolution of the undefined symbols.
+    The arguments determine which of each of these possibilities
+    to use and the results are or'ed together. We need a separate
+    routine to keep things clean(er) because some symbolic constants
+    may not  be defined, such as RTLD_LOCAL on certain Solaris 2.5.1
+    and Irix 6.4    boxes. In such cases, we emit a warning message and 
+    use the default by not modifying the value of the flag.
+
+    Called only by AddDLL().
+  */
+static int
+computeDLOpenFlag(int asLocal, int now)
 {
- printf("Internal foo()\n");fflush(stdout);
-}
+ static char *warningMessages[] = {
+  "Explicit local dynamic loading not supported on this platform. Using default.",
+  "Explicit global dynamic loading not supported on this platform. Using default.",
+  "Explicit non-lazy dynamic loading not supported on this platform. Using default.",
+  "Explicit lazy dynamic loading not supported on this platform. Using default."
+ };
+  /* Define a local macro for issuing the warnings.
+     This allows us to redefine it easily so that it only emits the warning
+     once as in
+         DL_WARN(i) if(warningMessages[i]) {\
+                     warning(warningMessages[i]); \
+                     warningMessages[i] = NULL; \
+    	            }
+     or to control the emission via the options currently in effect at call time.
+   */
+#define DL_WARN(i) \
+   if(asInteger(GetOption(install("warn"),R_NilValue)) == 1 || \
+         asInteger(GetOption(install("verbose"),R_NilValue)) > 0) \
+                      warning(warningMessages[i]);
+
+ int openFlag = 0; /* Default value so no-ops for undefined flags should do nothing
+                      in the resulting dlopen(). */
+
+
+#undef RTLD_LOCAL
+
+if(asLocal != 0) {
+#ifndef RTLD_LOCAL
+  DL_WARN(0)
+#else
+  openFlag = RTLD_LOCAL;
 #endif
+} else {
+#ifndef RTLD_GLOBAL
+  DL_WARN(1)
+#else
+  openFlag = RTLD_GLOBAL;
+#endif
+}
+
+if(now != 0) {
+#ifndef RTLD_NOW
+  DL_WARN(2)
+#else
+  openFlag |= RTLD_NOW;
+#endif
+} else {
+#ifndef RTLD_LAZY
+  DL_WARN(3)
+#else
+  openFlag |= RTLD_LAZY;
+#endif
+}
+
+ return(openFlag);
+}
+
 
 	/* R_FindSymbol checks whether one of the libraries */
 	/* that have been loaded contains the symbol name and */

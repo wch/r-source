@@ -68,16 +68,27 @@ symbols are actually resolved and for regular users to all with
 `FALSE' so that missing symbols can be ignored and the available ones
 can be called.
 
-There is a short discussion of these additional arguments with some
-example code available at 
-\url{http://cm.bell-labs.com/stat/duncan/R/dynload}.
-
 The initial motivation for adding these was to avoid such termination
 in the \code{_init()} routines of the Java virtual machine
 library. However, symbols loaded locally may not be (read probably)
 available to other DLLs. Those added to the global table are available
 to all other elements of the application and so can be shared across
 two different DLLs.
+
+Some systems do not provide (explicit) support for local/global and
+lazy/eager symbol resolution. This can be the source of subtle bugs.
+One can arrange to have warning messages emitted when unsupported
+options are used. This is done by setting either of the options
+\code{verbose} or \code{warn} to be non-zero via the
+\code{\link{options}} function.  Currently, we know of only 2
+platforms that do not provide a value for local load
+(RTLD_LOCAL). These are IRIX6.4 and unpatched versions of Solaris
+2.5.1. 
+
+
+There is a short discussion of these additional arguments with some
+example code available at 
+\url{http://cm.bell-labs.com/stat/duncan/R/dynload}.
 }
 \note{
 The creation of shared libraries and the runtime linking of them
