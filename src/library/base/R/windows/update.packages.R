@@ -71,7 +71,8 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
     }
     if(is.null(CRAN)) {
         for(pkg in pkglist) zip.unpack(pkg, lib)
-        return()
+        link.html.help()
+        return(invisible())
     }
     localcran <- length(grep("^file:", CRAN)) > 0
     pkgs <- NULL
@@ -108,6 +109,7 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
     }
     else
         unlink(tmpd)
+    invisible()
 }
 
 
