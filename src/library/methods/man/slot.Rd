@@ -17,6 +17,7 @@ slot(object, name)
 slot(object, name, check = TRUE) <- value
 
 slotNames(x)
+}
 %% .slotNames(x)
 %%
 %% NOTA BENE: We shouldn't advertize .slotNames() --
