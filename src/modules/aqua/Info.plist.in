@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
-<plist version="0.9">
+<!DOCTYPE plist PUBLIC>
+<plist version="1.0">
 <dict>
-        <key>CFBundleDevelopmentRegion</key>
-        <string>English</string>
-        <key>CFBundleGetInfoString</key>
-        <string>R @VERSION@</string>
-        <key>CFBundleIdentifier</key>
-        <string>org.r-project.r-framework</string>
-        <key>CFBundleInfoDictionaryVersion</key>
-        <string>6.0</string>
-        <key>CFBundleName</key>
-        <string>R</string>
-        <key>CFBundlePackageType</key>
-        <string>FMWK</string>
-        <key>CFBundleShortVersionString</key>
-        <string>@VERSION@</string>
-        <key>CFBundleSignature</key>
-        <string>????</string>
-        <key>CFBundleVersion</key>
-        <string>@VERSION@</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>R</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Darwin port of R @VERSION@, the GNU 'S' language</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.r-project.R</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>R</string>
+	<key>CFBundlePackageType</key>
+	<string>FMWK</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@VERSION@</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>R @VERSION@</string>
 </dict>
 </plist>
 
