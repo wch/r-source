@@ -2033,6 +2033,9 @@ distributions of R.)
 *gridBase*
      Integration of base and grid graphics.
 
+*gsl*
+     Wrapper for special functions of the Gnu Scientific Library (GSL).
+
 *gss*
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.

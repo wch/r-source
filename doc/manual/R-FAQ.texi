@@ -2248,6 +2248,8 @@ Generalized Regression Analysis and Spatial Predictions for R.
 Miscellaneous functions written/maintained by Gregory R. Warnes.
 @item gridBase
 Integration of base and grid graphics.
+@item gsl
+Wrapper for special functions of the Gnu Scientific Library (GSL).
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
