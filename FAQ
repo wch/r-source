@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-13, 2003-05-27
+Version 1.7-14, 2003-06-01
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -2244,35 +2244,77 @@ Currently, there are
    The Bioconductor Project (http://www.bioconductor.org) produces an open
 source software framework that will assist biologists and statisticians
 working in bioinformatics, with primary emphasis on inference using DNA
-microarrays.  Currently, the following R packages can be obtained from
-<http://www.bioconductor.org/packages/devel/html/>, with more packages
-under development.
+microarrays.  The following R packages are contained in the current release
+of BioConductor, with more packages under development.
 
 *AnnBuilder*
-     Processing information from Unigene, LocusLink, and Gene Ontology
-     Consortium, storing the data to tables in a local database, and
-     generating XML annotation files.
+     Assemble and process genomic annotation data, from databases such as
+     GenBank, the Gene Ontology Consortium, LocusLink, UniGene, the UCSC
+     Human Genome Project.
 
 *Biobase*
-     Base functions for Bioconductor.
+     Object-oriented representation and manipulation of genomic data (S4
+     class structure).
+
+*DynDoc*
+     Functionality to create and interact with dynamic documents, vignettes,
+     and other navigable documents.
+
+*RBGL*
+     An interface between the graph package and the Boost graph libraries,
+     allowing for fast manipulation of graph objects in R.
 
 *ROC*
-     Utilities for ROC, with uarray focus.
+     Receiver Operating Characteristic (ROC) approach for identifying genes
+     that are differentially expressed in two types of samples.
+
+*Rgraphviz*
+     An interface with Graphviz for plotting graph objects in R.
+
+*Ruuid*
+     Creates Universally Unique ID values (UUIDs) in R.
+
+*SAGElyzer*
+     Locates genes based on SAGE tags.
 
 *affy*
      Methods for Affymetrix Oligonucleotide Arrays.
 
+*affycomp*
+     Graphics toolbox for assessment of Affymetrix expression measures.
+
+*affydata*
+     Affymetrix data for demonstration purposes.
+
 *annotate*
-     Annotation for microarrays.
+     Associate experimental data in real time to biological metadata from
+     web databases such as GenBank, LocusLink and PubMed.  Process and store
+     query results.  Generate HTML reports of analyses.
 
 *edd*
-     Expression density diagnostics.
+     Expression density diagnostics: graphical methods and pattern
+     recognition algorithms for distribution shape classification.
 
 *genefilter*
-     Basic functions for filtering genes.
+     Tools for sequentially filtering genes using a wide variety of
+     filtering functions.  Example of filters include: number of missing
+     value, coefficient of variation of expression measures, ANOVA p-value,
+     Cox model p-values.  Sequential application of filtering functions to
+     genes.
 
 *geneplotter*
-     Basic functions for plotting genetic data.
+     Graphical tools for genomic data, for example for plotting expression
+     data along a chromosome or producing color images of expression data
+     matrices.
+
+*graph*
+     Classes and tools for creating and manipulating graphs within R.
+
+*hexbin*
+     Binning functions, in particular hexagonal bins for graphing.
+
+*limma*
+     Linear models for microarray data.
 
 *marrayClasses*
      Class definitions for pre-normalized and normalized cDNA microarray
@@ -2292,26 +2334,36 @@ under development.
      Functions for diagnostic plots for pre- and post-normalization cDNA
      microarray intensity data: boxplots, scatter-plots, color images.
 
+*marrayTools*
+     Miscellaneous functions used in the functional genomics core facility
+     in UCB and UCSF.
+
 *multtest*
-     Multiple testing procedures.  Includes resampling-based multiple
-     testing procedures for controlling the family-wise error rate (FWER):
-     Bonferroni, Hochberg (1988), Holm (1979), Sidak, Westfall & Young
-     (1993) (referred to as minP and maxT).  Also includes procedures for
-     controlling the false discovery rate (FDR): Benjamini & Hochberg
-     (1995), Benjamini & Yekutieli (2001) step-up procedures.  These
-     procedures are implemented for tests based on t-statistics,
-     F-statistics, paired t-statistics,  block F-statistics, Wilcoxon
-     statistics.  Results are reported in terms of adjusted p-values.  The
-     procedures are directly applicable to identify differentially
-     expressed genes in DNA microarray experiments.
+     Multiple testing procedures for controlling the family-wise error rate
+     (FWER) and the false discovery rate (FDR).  Tests can be based on t-
+     or F-statistics for one- and two-factor designs, and permutation
+     procedures are available to estimate adjusted p-values.
+
+*reposTools*
+     Tools for dealing with file repositories and allow users to easily
+     install, update, and distribute packages, vignettes, and other files.
 
 *rhdf5*
-     An HDF5 interface for R.
+     Storage and retrieval of large datasets using the HDF5 library and file
+     format.
 
 *tkWidgets*
-     R based Tk widgets to provide user interfaces.
+     Widgets in Tcl/Tk that provide functionality for Bioconductor packages.
 
-   These packages will soon be made available via CRAN as well.
+*vsn*
+     Calibration and variance stabilizing transformations for both
+     Affymetrix and cDNA array data.
+
+*widgetTools*
+     Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
+     interfaces.
+
+   These packages will eventually also be made available via CRAN as well.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*
