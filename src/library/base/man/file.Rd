@@ -52,6 +52,7 @@ dirname(path)
   \code{file.copy} works in a similar way to \code{file.append} but with
   the arguments in the natural order for copying. Copying to existing
   destination files is skipped unless \code{overwrite = TRUE}.
+  The \code{to} argument can specify a single existing directory.
 
   \code{dir.create} creates the last element of the path. It returns a
   logical, true for success.
@@ -79,7 +80,9 @@ file.create("A")
 file.append("A", rep("B", 10))
 if(interactive()) file.show("A")
 file.copy("A", "C")
-
+dir.create("tmp")
+file.copy(c("A", "B"), "tmp")
+unlink(c("tmp/*", "tmp"))
 file.remove("A","B", "C")
 
 basename(file.path("","p1","p2","p3","filename"))

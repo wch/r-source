@@ -40,7 +40,9 @@ file.copy <- function(from, to, overwrite=FALSE)
 {
     if (!(nf <- length(from))) stop("no files to copy from")
     if (!(nt <- length(to)))   stop("no files to copy to")
-    if (nf > nt)               stop("more `from' files than `to' files")
+    if (nt == 1 && file.exists(to) && file.info(to)$isdir)
+        to <- file.path(to, from)
+    else if (nf > nt)  stop("more `from' files than `to' files")
     if(!overwrite) {
         if(nt > nf) from <- rep(from, length = nt)
         exists <- file.exists(from)
@@ -72,13 +74,16 @@ file.access <- function(names, modes = 0)
 format.octmode <- function(x)
 {
     if(!inherits(x, "octmode")) stop("calling wrong method")
-    y <- x
-    ans <- character(length(y))
+    isna <- is.na(x)
+    y <- x[!isna]
+    ans0 <- character(length(y))
     while(any(y > 0)) {
         z <- y%%8
         y <- floor(y/8)
-        ans <- paste(z, ans, sep="")
+        ans0 <- paste(z, ans0, sep="")
     }
+    ans <- rep("NA", length(x))
+    ans[!isna] <- ans0
     ans
 }
 as.character.octmode <- .Alias(format.octmode)

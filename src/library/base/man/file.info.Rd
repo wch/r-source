@@ -66,5 +66,6 @@ may not be supplied on a non-POSIX Unix system.
   
 \examples{
 file.info(dir("."))
+file.info("no-such-file-exists")
 }
 \keyword{file}
