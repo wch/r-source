@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-8, 2002-01-18
+@set FAQ-VERSION 1.4-9, 2002-01-21
 @set REL-VERSION 1.4.0
 @c %**end of header
 
@@ -1808,6 +1808,9 @@ visualization.
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with @SPLUS{}'' by W. Venables and B. Ripley.  Contained in
 the @file{VR} bundle.
+@item spatstat
+Data analysis and modelling of two-dimensional point patterns, including
+multitype points and spatial covariates.
 @item splancs
 Spatial and space-time point pattern analysis functions.
 @item sptests

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-8, 2002-01-18
+Version 1.4-9, 2002-01-21
 Kurt Hornik
 
 
@@ -1621,6 +1621,10 @@ works, was published in the Journal of Statistical Software
      Functions for kriging and point pattern analysis from "Modern Applied
      Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
      the `VR' bundle.
+
+*spatstat*
+     Data analysis and modelling of two-dimensional point patterns,
+     including multitype points and spatial covariates.
 
 *splancs*
      Spatial and space-time point pattern analysis functions.
