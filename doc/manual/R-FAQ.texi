@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-49, @value{FAQ-YEAR}-10-03
-@set REL-VERSION 1.7.1
+@set FAQ-VERSION 1.8-0, @value{FAQ-YEAR}-10-07
+@set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -2382,6 +2382,8 @@ Package for time series analysis with emphasis on non-linear modelling.
 @item twostage
 Functions for optimal design of two-stage-studies using the Mean Score
 method.
+@item udunits
+Interface to Unidata's routines to convert units.
 @item vardiag
 Interactive variogram diagnostics.
 @item vcd
