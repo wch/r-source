@@ -12,11 +12,13 @@ was used.
 
 The File|Change Dir...|Browse dialog could cause R to crash.
 
-Fixed bug in versioned install of binary package bundles.
+Fixed a bug in versioned install of binary package bundles.
 
 Help for max.col was not being found in CHTML help: we have worked around
 a bug in HHW.
 
+The maximum allowed `pointsize' for a windows() device has been
+increased to 48: some people have much bigger screens these days.
 
 
 rw1070

@@ -201,7 +201,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   encoding, the standard for PDF.
 
   If you change the encoding, it is your responsibility to ensure that
-  the PostScript font contains the glyphs used .  One issue here is the Euro
+  the PostScript font contains the glyphs used.  One issue here is the Euro
   symbol which is in the WinAnsi and MacRoman encodings but may well not
   be in the PostScript fonts.  (It is in the URW variants; it is not in
   the supplied Adobe Font Metric files.)
