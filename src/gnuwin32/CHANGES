@@ -87,6 +87,8 @@ rproxy fixed so LAPACK gets loaded properly by (D)COM server.
 Fixed installer so share/texmf files are installed with developer option.
 (Sweave.sty continues to be installed in main option.)
 
+Fixed MakePkg so that Rd files with missing line ends at EOF are corrected.
+
 
 rw1071
 ======

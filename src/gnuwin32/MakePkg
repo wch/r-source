@@ -241,7 +241,7 @@ ifneq ($(strip $(PKGMANFILES)),)
 	@$(RM) -rf $(DPKG)/man
 	@$(MKDIR) -p $(DPKG)/man
 	@for rdfile in $^; do \
-	  $(CAT) $${rdfile}; echo '\eof'; \
+	  $(CAT) $${rdfile}; echo; echo '\eof'; \
 	done > $(DPKG)/man/$(PKG).Rd
 else
 	@$(ECHO) "  no man files in this package"
