@@ -22,8 +22,9 @@ objects(name, pos= -1, envir = as.environment(pos),
   \item{all.names}{a logical value.  If \code{TRUE}, all
     object names are returned.  If \code{FALSE}, names which begin with a
     \samp{.} are omitted.}
-  \item{pattern}{an optional regular expression, see \code{\link{grep}}.
-    Only names matching \code{pattern} are returned.}}
+  \item{pattern}{an optional \link{regular expression}. Only names
+    matching \code{pattern} are returned.}
+}
 \details{
   The \code{name} argument can specify the  environment from which
   object names are taken in one of several forms:

@@ -5,9 +5,9 @@
 \description{
   Allows for searching the help system for documentation matching a
   given character string in the (file) name, alias, title, or keyword
-  entries (or any combination thereof), using either fuzzy matching or
-  regular expression matching.  Names and titles of the matched help
-  entries are nicely displayed.
+  entries (or any combination thereof), using either \link{fuzzy matching}
+  or \link{regular expression} matching.  Names and titles of the
+  matched help entries are displayed nicely.
 }
 \usage{
 help.search(pattern, fields = c("alias", "concept", "title"),
@@ -51,7 +51,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     be matched consists of alphanumeric characters, whitespace or a dash
     only, approximate (fuzzy) matching via \code{\link{agrep}} is used
     unless the string has fewer than 5 characters; otherwise, it is
-    taken to contain a regular expression to be matched via
+    taken to contain a \link{regular expression} to be matched via
     \code{\link{grep}}.  If \code{FALSE}, approximate matching is not
     used.  Otherwise, one can give a numeric or a list specifying the
     maximal distance for the approximate match, see argument

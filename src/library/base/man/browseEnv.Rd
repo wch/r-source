@@ -15,8 +15,8 @@ browseEnv(envir = .GlobalEnv, pattern, excludepatt = "^last\\.warning",
 \arguments{
   \item{envir}{an \code{\link{environment}} the objects of which are to
     be browsed.}
-  \item{pattern}{a regular expression for object subselection is passed
-    to the internal \code{\link{ls}()} call.}
+  \item{pattern}{a \link{regular expression} for object subselection
+    is passed to the internal \code{\link{ls}()} call.}
   \item{excludepatt}{a regular expression for \emph{dropping} objects
     with matching names.}
   \item{html}{is used on non Macintosh machines to display the workspace

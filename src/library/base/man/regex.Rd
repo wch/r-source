@@ -20,7 +20,7 @@
   \emph{Perl-like} regular expressions used by \code{grep(perl = TRUE)}.
 
   Other functions which use regular expressions (often via the use of
-  \code{grep} include \code{apropos}, \code{browseEnv},
+  \code{grep}) include \code{apropos}, \code{browseEnv},
   \code{help.search}, \code{list.files}, \code{ls} and \code{strsplit}.
   These will all use \emph{extended} regular expressions, unless
   \code{strsplit} is called with argument \code{extended = FALSE}.
@@ -78,6 +78,7 @@
       Printable characters: \code{[:alnum:]}, \code{[:punct:]} and space.}
     
     \item{\code{[:punct:]}}{Punctuation characters: \code{! " # $ \% & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` \{ | \} ~}.}
+%'"`  keep Emacs Rd mode happy
 
     \item{\code{[:space:]}}{
       Space characters: tab, newline, vertical tab, form feed, carriage
@@ -144,7 +145,7 @@
   substring previously matched by the Nth parenthesized subexpression of
   the regular expression.
 
-  When the code attempts to support traditional
+  The code attempts to support traditional
   usage by assuming that \code{\{} is not special if it would be the start
   of an invalid interval specification.  (POSIX allows this behavior as
   an extension.)

@@ -10,7 +10,7 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
 }
 \arguments{
   \item{path}{a character vector of full path names.}
-  \item{pattern}{an optional regular expression.  Only file names
+  \item{pattern}{an optional \link{regular expression}.  Only file names
     which match the regular expression will be returned.}
   \item{all.files}{a logical value. If \code{FALSE}, only the
     names of visible files are returned.  If \code{TRUE},
