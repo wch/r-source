@@ -18,13 +18,13 @@ all Ä library
 
 
 ## ------------- library -----------
-PACKAGES =  boot cluster foreign grid KernSmooth lattice mgcv ¶
-            nlme rpart survival class MASS spatial nnet
-LIBF = cluster foreign grid KernSmooth lattice mgcv ¶
-       nlme rpart survival class MASS spatial nnet
-DATA = boot cluster KernSmooth lattice MASS nlme rpart spatial survival
-DEMO = lattice
-INST = class grid lattice MASS nlme nnet spatial survival
+PACKAGES =  mvtnorm #sn #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+LIBF = mvtnorm #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+
+DATA = #sn #akima bootstrap EMV evd gss pcurve qtl sm tripack
+DEMO = #
+INST = #evd qtl sm
+
 
 
 library Ä mainfiles Libfiles datafiles instfiles help demofiles
@@ -73,7 +73,8 @@ Libfiles Ä $OutOfDate
 	   if ! `Exists -d {RHOME}library:{pkg}:libs`
 	    NewFolder {RHOME}library:{pkg}:libs
 	   end
-	   Duplicate -y :makefiles:{pkg}.mac  ::library:{pkg}:src:Makefile.mac
+	   SetFile -c 'ttxt' -t 'TEXT' :makefiles:{pkg}.mac
+	   translate ¶0x0a ¶0x0d <:makefiles:{pkg}.mac >::library:{pkg}:src:Makefile.mac
 	   Directory ::library:{pkg}:src
 	   Make -f Makefile.mac >build
 	   build
@@ -90,7 +91,7 @@ datafiles Ä $OutOfDate
 	    NewFolder {RHOME}library:{pkg}:data
 	   end
 	   Duplicate -y ::library:{pkg}:data:00Index ¶
-	    ::library:{pkg}:data:Å.Å {RHOME}library:{pkg}:data
+	    ::library:{pkg}:data:Å {RHOME}library:{pkg}:data
 	  end
 	 end 
 
@@ -110,7 +111,7 @@ demofiles Ä $OutOfDate
 	   NewFolder {RHOME}library:{pkg}:demo
 	  end
 	  Duplicate -y ::library:{pkg}:demo:00Index ¶
-         ::library:{pkg}:demo:Å.Å {RHOME}library:{pkg}:demo
+         ::library:{pkg}:demo:Å {RHOME}library:{pkg}:demo
 	 end
 	end 
 

@@ -1,8 +1,8 @@
 # This Makefile is inted as a facility to
-# build recommended packages and their
+# build Bioconductor packages and their
 # help files
 #
-# Jago April 2002, Stefano M. Iacus
+# Jago June 2002, Stefano M. Iacus
 #
 #
 
@@ -18,13 +18,15 @@ all Ä library
 
 
 ## ------------- library -----------
-PACKAGES =  boot cluster foreign grid KernSmooth lattice mgcv ¶
-            nlme rpart survival class MASS spatial nnet
-LIBF = cluster foreign grid KernSmooth lattice mgcv ¶
-       nlme rpart survival class MASS spatial nnet
-DATA = boot cluster KernSmooth lattice MASS nlme rpart spatial survival
-DEMO = lattice
-INST = class grid lattice MASS nlme nnet spatial survival
+PACKAGES =  tkWidgets ROC multtest marrayNorm marrayInput marrayClasses 
+             geneplotter genefilter edd Biobase annotate affy
+LIBF = multtest genefilter affy
+
+DATA = multtest marrayInput genefilter Biobase annotate affy
+DEMO = affy
+INST = tkWidgets ROC multtest marrayNorm marrayInput marrayClasses 
+       geneplotter genefilter edd Biobase annotate affy
+
 
 
 library Ä mainfiles Libfiles datafiles instfiles help demofiles
