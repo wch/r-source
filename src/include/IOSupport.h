@@ -17,7 +17,17 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/*
+ *  I/O Support for Consoles and Character Vectors
+ *
+ *  This code provides analogues for the stdio routines "fgetc" and
+ *  "ungetc" for "consoles" and character vectors.  These routines
+ *  are used for parsing input from the console window and character
+ *  vectors.
+ */
+
 #include <stdio.h>
+#include "Defn.h"
 
 #define IOBSIZE 4096
 
@@ -27,7 +37,35 @@ typedef struct BufferListItem {
 } BufferListItem;
 
 typedef struct IoBuffer {
-	BufferListItem	*startbuf;
-	BufferListItem	*activebuf;
-	int		activeoffset;
+	BufferListItem	*start_buf;		/* First buffer item */
+	BufferListItem	*write_buf;		/* Write pointer location */
+	char		*write_ptr;		/* Write pointer location */
+	int		 write_offset;		/* Write pointer location */
+	BufferListItem	*read_buf;		/* Read pointer location */
+	char		*read_ptr;		/* Read pointer location */
+	int		 read_offset;		/* Read pointer location */
 } IoBuffer;
+
+
+typedef struct TextBuffer {
+	char	*vmax;				/* Memory stack top */
+	char	*buf;				/* Line buffer */
+	char	*bufp;				/* Line buffer location */
+	SEXP	text;				/* String Vector */
+	int	ntext;				/* Vector length */
+	int	offset;				/* Offset within vector */
+} TextBuffer;
+
+int R_IoBufferInit(IoBuffer*);
+int R_IoBufferFree(IoBuffer*);
+int R_IoBufferReadReset(IoBuffer*);
+int R_IoBufferWriteReset(IoBuffer*);
+int R_IoBufferGetc(IoBuffer*);
+int R_IoBufferUngetc(int, IoBuffer*);
+int R_IoBufferPutc(int, IoBuffer*);
+int R_IoBufferPuts(char*, IoBuffer*);
+
+int R_TextBufferInit(TextBuffer*, SEXP);
+int R_TextBufferFree(TextBuffer*);
+int R_TextBufferGetc(TextBuffer*);
+int R_TextBufferUngetc(int, TextBuffer*);

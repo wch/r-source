@@ -63,7 +63,7 @@
 #include <time.h>
 
 #define HSIZE		211	/* The size of the hash table for symbols */
-#define MAXELTSIZE	512	/* The largest number of characters in a string */
+#define MAXELTSIZE	512	/* The largest string size */
 #define MAXIDSIZE	512	/* Largest symbol size possible */
 
 	/* Fundamental Data Types:  These are largely Lisp */
@@ -405,32 +405,28 @@ void GCircle(double x, double y, double radius, int col, int border);
 void call_R(char *func, long nargs, void **arguments, char **modes, long *lengths, char **names, long nres, char **results);
 void printRealVector(double * x, int n, int index);
 int StringFalse(char *name);
-SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho);
 
+		/* Platform Dependent Gui Hooks */
 
-		/* Gui Hooks */
 #define	R_CONSOLE	1
 #define	R_FILE		2
 #define R_TEXT		3
 
-void R_SetInput(int);		/* Set the input stream */
-int cget(void);			/* Get a character from input */
-void uncget(void);		/* Unget characters from input */
+int	R_ReadConsole(char*, char*, int, int);
+void	R_WriteConsole(char*, int);
+void	R_ResetConsole(void);
+void	R_FlushConsole(void);
+void	R_ClearerrConsole(void);
+void	R_Busy(int);
+void	R_CleanUp(int);
+void	R_StartUp(void);
 
-#include "RFront.h"
-/* These are defined in rfrontend_api.h */
-/*void writecons(char*, int);
-int ReadKBD(char*, int);
-void WriteConsole(void);
-void ResetConsole(void);
-void FlushConsole(void);
-void ClearerrConsole(void);
-void RBusy(int);
-void RCleanUp(int);
-void RStartUp(void);*/
+		/* Defined in main.c */
 
+char	*R_PromptString(int, int);
 
 		/* Internally Used Functions */
+
 SEXP allocArray(SEXPTYPE, SEXP);
 SEXP allocMatrix(SEXPTYPE, int, int);
 SEXP allocSExp(SEXPTYPE);
@@ -524,6 +520,7 @@ SEXP install(char*);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 int isArray(SEXP);
 int isComplex(SEXP);
+char *R_ExpandFileName(char*);
 int isExpression(SEXP);
 int isExpressionObject(SEXP);
 int isFactor(SEXP);
@@ -607,7 +604,6 @@ char *Rsprintf(char*, ...);
 void Rvprintf(const char*, va_list);
 void rsort(double *x, int);
 int Rstrlen(char*);
-void ResetComment();
 SEXP R_LoadFromFile(FILE*);
 void R_SaveGlobalEnv(void);
 void R_SaveToFile(SEXP, FILE*, int);
