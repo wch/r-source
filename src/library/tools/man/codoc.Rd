@@ -45,7 +45,7 @@ codocData(package, lib.loc = NULL)
 }
 \note{
   The default for \code{use.values} is going to be changed from
-  \code{FALSE} to \code{NULL}, right after release of \R version 1.8.0.
+  \code{FALSE} to \code{NULL} for \R version 1.9.0 and later.
 }
 \details{
   The purpose of \code{codoc} is to check whether the documented usage
