@@ -59,7 +59,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
 \seealso{
   The \dQuote{R Data Import/Export} manual.
-  
+
   \code{\link{read.table}}, \code{\link{write}}.
 
   \code{\link[MASS]{write.matrix}} in package \pkg{MASS}.
@@ -70,7 +70,8 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
 ## To write a CSV file for input to Excel one might use
 write.table(x, file = "foo.csv", sep = ",", col.names = NA)
 ## and to read this file back into R one needs
-read.table("file.csv", header = TRUE, sep = ",", row.names=1)
-}}
+read.table("foo.csv", header = TRUE, sep = ",", row.names=1)
+}
+}
 \keyword{print}
 \keyword{file}
