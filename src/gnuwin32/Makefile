@@ -5,6 +5,7 @@ WINHELP=CHM # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw1010
+RVER=$(shell cut -d' ' -f1 ../../VERSION)
 
 RHOME=$(shell cd ../..; perl src/gnuwin32/pwd.pl)# must be absolute path
 RLIB=$(RHOME)/library

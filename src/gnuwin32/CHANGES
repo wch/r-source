@@ -38,10 +38,6 @@ the DLL interface is incompatible.
 
 The R DLL and executables now have standard Windows version information.
 
-
-rw1002
-======
-
 Makefile target zipdata-% to zip up data directories in packages.
 
 

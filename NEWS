@@ -146,13 +146,21 @@ BUG FIXES
 
     o	Fixed problem in usemethod() where CAR(call) could be non-symbol.
 
+    o	R CMD Rd2dvi now sorts files alphabetically.
+
     o	is.qr() checks not only for $qr, but also for $rank & $qraux, PR#482.
+
+    o	Fixed bug in undoc() - requiring new `chdir' argument for sys.source()
 
     o	postscript() now uses the options "papersize" and "printcmd"
 	rather than the values of R_PAPERSIZE in the environment
 	and R_PRINTCMD found at build time.
 
+    o	\deqn{} fix in R-exts.texi, PR#523.
+
     o	system() is now (partially) functional on systems without popen.
+
+    o	print.ftable() now returns its argument.
 
     o	count.fields and read.table now have the same default quote = "\"'".
 
@@ -167,6 +175,8 @@ BUG FIXES
 
     o	strheight("X") with no active device would segfault.
 
+    o	ave(1:3) now works (as when is.null(list()) was TRUE years ago).
+
     o	by() works when embedded in a function.
 
     o	aggregate() applied to multiple time series lost the series names.
@@ -178,7 +188,12 @@ BUG FIXES
 
     o	rpois(*, lambda) now works when lambda > .Machine$integer.max
 
+    o	keep.source was not set correctly before the base package was
+	loaded, some functions in the base package had the source
+	kept.  The memory usage should now be reduced by ca 1Mb.
+
     o	M <- 2 ; print(ppr(.., nterms = M))  now works.
+
 
 		CHANGES IN R VERSION 1.0.1
 
