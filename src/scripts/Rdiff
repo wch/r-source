@@ -21,13 +21,21 @@ case "${ffile}" in
   *)
     pattern=${pattern}'|^<environment)'
     ;;
-esac  
+esac
 
-tmpfile=${TMPDIR-/tmp}/${ffile}-d.${$}
-
-if test ${ffile} = '-' ; then 
+if test ${ffile} = '-' ; then
   ffile=''
+  bfile=''
+else
+  if test -f ${ffile} ; then
+      bfile=`basename "${ffile}"`
+  else
+      echo "no valid file ${ffile}"
+      exit 1
+  fi
 fi
+
+tmpfile=${TMPDIR-/tmp}/${bfile}-d.${$}
 
 sed -e "${script}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
 (sed -e "${script}" ${tfile} | \
