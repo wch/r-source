@@ -222,7 +222,8 @@ DEPRECATED & DEFUNCT
 
     o	print.coefmat() is deprecated in favour of printCoefmat()
 	(which is identical apart from the default for na.print which
-	is changed from "" to "NA").
+	is changed from "" to "NA", and better handling of the 0-rank
+	case where all coefficients are missing).
 
     o	codes() and codes<-() are deprecated, as almost all uses
 	misunderstood what they actually do.
@@ -239,6 +240,8 @@ DEPRECATED & DEFUNCT
 
     o	Classes "lm.null" and "glm.null" are deprecated and all of their
 	methods have been removed.
+
+    o	Method weights.lm(), a copy of weights.default(), has been removed.
 
 
 INSTALLATION CHANGES

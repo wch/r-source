@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-06-30)
+Version 1.8.0 Under development (unstable) (2003-07-01)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2636,7 +2636,8 @@ Response: y
           Df  Sum Sq Mean Sq F value Pr(>F)
 Residuals 10 2.74036 0.27404               
 > predict(fit)
- [1] 0 0 0 0 0 0 0 0 0 0
+ 1  2  3  4  5  6  7  8  9 10 
+ 0  0  0  0  0  0  0  0  0  0 
 > predict(fit, data.frame(x=x), se=TRUE)
 $fit
  [1] 0 0 0 0 0 0 0 0 0 0
@@ -2687,6 +2688,20 @@ $residual.scale
 
 > variable.names(fit) #should be empty
 character(0)
+> model.matrix(fit)
+
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+10
+attr(,"assign")
+numeric(0)
 > 
 > (fit <- lm(y ~ x + 0))
 
@@ -2774,6 +2789,20 @@ $residual.scale
 
 > variable.names(fit) #should be empty
 character(0)
+> model.matrix(fit)
+   x
+1  0
+2  0
+3  0
+4  0
+5  0
+6  0
+7  0
+8  0
+9  0
+10 0
+attr(,"assign")
+[1] 1
 > 
 > (fit <- glm(y ~ 0))
 

@@ -270,7 +270,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     }
     Qr <- object$qr
     if (is.null(z$terms) || is.null(Qr))
-	stop("invalid \'lm\' object:  no terms or qr component")
+	stop("invalid \'lm\' object:  no terms nor qr component")
     n <- NROW(Qr$qr)
     rdf <- n - p
     if(rdf != z$df.residual)
@@ -397,8 +397,6 @@ print.summary.lm <-
     invisible(x)
 }
 
-## KH on 1998/07/10: update.default() is now used ...
-
 residuals.lm <-
     function(object,
              type = c("working","response", "deviance","pearson", "partial"),
@@ -421,15 +419,15 @@ fitted.lm <- function(object, ...)
     if(is.null(object$na.action)) object$fitted.values
     else napredict(object$na.action, object$fitted.values)
 }
+
 coef.lm <- function(object, ...) object$coefficients
+
 ## need this for results of lm.fit() in drop1():
 weights.default <- function(object, ...)
 {
     if(is.null(object$na.action)) object$weights
     else naresid(object$na.action, object$weights)
 }
-
-weights.lm <- weights.default
 
 
 deviance.lm <- function(object, ...)
@@ -721,6 +719,7 @@ predict.lm <-
 effects.lm <- function(object, set.sign = FALSE, ...)
 {
     eff <- object$effects
+    if(is.null(eff)) stop("object has no effects component")
     if(set.sign) {
 	dd <- coef(object)
 	if(is.matrix(eff)) {
@@ -740,15 +739,15 @@ model.matrix.lm <- function(object, ...)
 {
     if(n <- match("x", names(object), 0)) object[[n]]
     else {
-        if(length(object$coefficients) == 0) {
-            rval <- matrix(ncol=0, nrow=length(object$residuals))
-            attr(rval,"assign") <- integer(0)
-            rval
-        } else {
+#         if(length(object$coefficients) == 0) {
+#             rval <- matrix(ncol=0, nrow=length(object$residuals))
+#             attr(rval,"assign") <- integer(0)
+#             rval
+#         } else {
             data <- model.frame(object, xlev = object$xlevels, ...)
             NextMethod("model.matrix", data = data,
                        contrasts = object$contrasts)
-        }
+#        }
     }
 }
 

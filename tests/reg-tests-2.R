@@ -978,6 +978,7 @@ predict(fit)
 predict(fit, data.frame(x=x), se=TRUE)
 predict(fit, type="terms", se=TRUE)
 variable.names(fit) #should be empty
+model.matrix(fit)
 
 (fit <- lm(y ~ x + 0))
 summary(fit)
@@ -986,6 +987,7 @@ predict(fit)
 predict(fit, data.frame(x=x), se=TRUE)
 predict(fit, type="terms", se=TRUE)
 variable.names(fit) #should be empty
+model.matrix(fit)
 
 (fit <- glm(y ~ 0))
 summary(fit)

@@ -3,7 +3,6 @@
 \alias{formula.lm}
 \alias{residuals.lm}
 \alias{weights}
-\alias{weights.lm}
 \alias{weights.default}
 \title{Accessing Linear Model Fits}
 \usage{
@@ -14,8 +13,8 @@
 weights(object, \dots)
 }
 \arguments{
-  \item{object, x}{an object of class \code{lm}, usually, a result of a
-    call to \code{\link{lm}}.}
+  \item{object, x}{an object inheriting from class \code{lm}, usually
+    the result of a call to \code{\link{lm}} or \code{\link{aov}}.}
   \item{\dots}{further arguments passed to or from other methods.}
   \item{type}{the type of residuals which should be returned.}
 }
@@ -32,7 +31,7 @@ weights(object, \dots)
   square root of the weights used in fitting.  The partial residuals
   are a matrix with each column formed by omitting a term from the
   model.  In all these, zero weight cases are never omitted (as opposed
-  to the standardized \code{\link{rstudent}} and \code{}similarobservations
+  to the standardized \code{\link{rstudent}} residuals).
 
 }
 \seealso{
