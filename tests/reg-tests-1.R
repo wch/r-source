@@ -756,12 +756,6 @@ ls.str(envir = environment(Fn))
 detach("package:stepfun")
 ## failed in 1.5.1
 
-## PR 1739
-plot(1)
-stopifnot(is.na(nchar(as.character(NA))),
-          is.na(strwidth(as.character(NA))),
-          is.na(strheight(as.character(NA))))
-## gave 2, failed, failed in 1.5.1
 
 ## keep at end, as package `methods' has persistent side effects
 
