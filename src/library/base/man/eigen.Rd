@@ -26,6 +26,9 @@ as components of a list.
     eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
     \code{TRUE}.}
 }
+\note{To compute the determinant of a matrix (do you \emph{really} need it?),
+    it is much more efficient to use the QR decomposition, see \code{\link{qr}}.
+}
 \references{
 Smith, B. T, J. M. Boyle, J. J. Dongarra, B. S. Garbow, Y. Ikebe,
 V. Klema, C. B. Moler (1976).
