@@ -217,15 +217,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     vmaxset(vmax);
     return R_NilValue;
 }
-#else
-SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    gcall = call;
-    DeviceUnavailable("X11");
-}
-#endif
 
-#if defined(Unix) && defined(Gnome)
 SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
@@ -256,11 +248,17 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 #else
+SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    gcall = call;
+    DeviceUnavailable("X11");
+}
+
 SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     gcall = call;
     DeviceUnavailable("Gnome");
 }
-#endif /* Gnome */
+#endif
 
 
