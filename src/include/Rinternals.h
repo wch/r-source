@@ -351,6 +351,8 @@ typedef struct SEXPREC *SEXP;
 #define BCODE_CONSTS(x) CDR(x)
 #define BCODE_EXPR(x)	TAG(x)
 #define isByteCode(x)	(TYPEOF(x)==BCODESXP)
+#else
+#define isByteCode(x)	FALSE
 #endif
 
 /* Pointer Protection and Unprotection */
