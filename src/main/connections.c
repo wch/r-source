@@ -100,7 +100,7 @@ Rconnection getConnection(int n)
 }
 
 int getActiveSink(int n){
-  if (n>=R_SinkNumber || n<0) 
+  if (n>=R_SinkNumber || n<0)
     return 0;
   if (R_SinkSplit[R_SinkNumber-n])
     return SinkCons[R_SinkNumber-n-1];
@@ -357,7 +357,7 @@ static double file_seek(Rconnection con, double where, int origin, int rw)
 	pos = this->wpos;
 	this->last_was_write = TRUE;
     }
-    if(where == NA_REAL) return pos;
+    if(ISNA(where)) return pos;
 
     switch(origin) {
     case 2: whence = SEEK_CUR; break;
@@ -831,7 +831,7 @@ static int gzfile_fgetc(Rconnection con)
     /* -- sometimes! gzgetc may still return EOF */
     if(gzeof(fp)) return R_EOF;
     c = gzgetc(fp);
-    if (c == EOF) 
+    if (c == EOF)
 	return R_EOF;
     else
 	return con->encoding[c];
@@ -850,7 +850,7 @@ static double gzfile_seek(Rconnection con, double where, int origin, int rw)
     }
     if(where >= 0) {
 	res = gzseek(fp, (z_off_t) where, whence);
-	if(res == -1) 
+	if(res == -1)
 	    warning("seek on a gzfile connection returned an internal error");
     }
     return (double) pos;
@@ -1258,7 +1258,7 @@ static double clp_seek(Rconnection con, double where, int origin, int rw)
     Rclpconn this = con->private;
     int newpos, oldpos = this->pos;
 
-    if(where == NA_REAL) return oldpos;
+    if(ISNA(where)) return oldpos;
 
     switch(origin) {
     case 2: newpos = this->pos + (int)where; break;
@@ -1305,7 +1305,7 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
     int i, len = size * nitems, used = 0;
     char c, *p = (char *)ptr, *q = this->buff + this->pos;
 
-    if(!con->canwrite) 
+    if(!con->canwrite)
 	error("clipboard connection is open for reading only");
 
     /* clipboard requires CRLF termination */
@@ -2837,7 +2837,7 @@ SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	tlen = strlen(CHAR(STRING_ELT(object, i)));
 	if (tlen > len) len = tlen;
 	tlen = INTEGER(nchars)[i];
-	if (tlen > len) len = tlen;	
+	if (tlen > len) len = tlen;
     }
     buf = (char *) R_alloc(len + slen, sizeof(char));
 
@@ -3027,7 +3027,7 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(errcon == NA_LOGICAL) error("invalid value for type");
     tee = asLogical(CADDDR(args));
     if(tee == NA_LOGICAL) error("invalid value for split");
-    
+
     if(!errcon) {
 	/* allow space for cat() to use sink() */
 	if(icon >= 0 && R_SinkNumber >= NSINKS - 2)
@@ -3179,7 +3179,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(PRIMVAL(op)) { /* call to file() */
 	    if(strlen(url) == 0) open ="w+";
 #ifdef Win32
-	    if(strcmp(url, "clipboard") == 0 || 
+	    if(strcmp(url, "clipboard") == 0 ||
 	       strncmp(url, "clipboard-", 10) == 0)
 		con = newclp(url, strlen(open) ? open : "r");
 	    else
@@ -3392,7 +3392,7 @@ static int gzcon_byte(Rgzconn priv)
         priv->s.next_in = priv->inbuf;
     }
     priv->s.avail_in--;
-    return *(priv->s.next_in)++;    
+    return *(priv->s.next_in)++;
 }
 
 
@@ -3447,7 +3447,7 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    start = priv->s.next_out;
 	    crc = 0;
 	    for (n = 0; n < 4; n++) {
-		crc >>= 8; 
+		crc >>= 8;
 		crc += ((uLong)gzcon_byte(priv) << 24);
 	    }
 	    if (crc != priv->crc) {
@@ -3648,7 +3648,7 @@ SEXP do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "bad write indicators");
 
     timeout = asReal(CADDR(args));
-    
+
     PROTECT(insockfd = allocVector(INTSXP, nsock));
     PROTECT(val = allocVector(LGLSXP, nsock));
 
@@ -3661,7 +3661,7 @@ SEXP do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     Rsockselect(nsock, INTEGER(insockfd), LOGICAL(val), LOGICAL(write),
 		timeout);
-    
+
     UNPROTECT(2);
     return val;
 }

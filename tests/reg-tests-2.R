@@ -1320,6 +1320,7 @@ seek(zz, 0, "start")
 readBin(zz, "character", 100)  # is confused by embedded nul.
 seek(zz, 0, "start")
 readChar(zz, length(xx)) # correct
+seek(zz) # make sure current position is reported properly
 close(zz)
 unlink("testbin")
 
