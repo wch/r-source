@@ -12,8 +12,8 @@
 \usage{
 symbols(x, y, circles, squares, rectangles, stars,
         thermometers, boxplots, inches=TRUE, add=FALSE,
-        fg=1, bg=NA, xlab = "", ylab = "", xlim = NULL,
-        ylim = NULL, \dots)
+        fg=1, bg=NA, xlab = NULL, ylab = NULL, main = NULL,
+        xlim = NULL, ylim = NULL, \dots)
 }
 \arguments{
   \item{x}{a vector giving the x coordinates of the symbols.}
@@ -49,8 +49,9 @@ symbols(x, y, circles, squares, rectangles, stars,
         the value of the \code{col} graphics parameter).}
   \item{bg}{if specified, the symbols are filled with this color.
     The default is to leave the symbols unfilled. }
-  \item{xlab}{the x label of the plot.}  
+  \item{xlab}{the x label of the plot.}
   \item{ylab}{the y label of the plot.}
+  \item{main}{a main title for the plot.}
   \item{xlim}{numeric of length 2 giving the x limits for the plot.}
   \item{ylim}{numeric of length 2 giving the y limits for the plot.}
   \item{\dots}{graphics parameters can also be passed to this function.}
@@ -66,6 +67,9 @@ symbols(x, y, circles, squares, rectangles, stars,
   \emph{The Elements of Graphing Data.}
   Monterey, California: Wadsworth.
 }
+\seealso{\code{\link{stars}} for drawing \emph{stars} with a bit more
+  flexibility; \code{\link{sunflowerplot}}.
+}
 \examples{
 x <- 1:10
 y <- runif(10)
@@ -73,11 +77,13 @@ z <- runif(10)
 symbols(x, y, thermometers=cbind(.5, 1, z), inches=.5)
 
 data(trees)
+## Note that  example(trees)  shows more sensible plots!
 attach(trees)
 ## Girth is diameter in inches
 symbols(Height, Volume, circles=Girth/24, inches=FALSE,
-        xlab="Height", ylab="Volume")
+        main="Trees' Girth")# xlab and ylab automatically
 detach()
 }
 \keyword{aplot}
 \keyword{hplot}
+\keyword{multivariate}

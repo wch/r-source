@@ -259,7 +259,7 @@ NEW FEATURES
 	This format provides support for some new internal data types,
 	produces smaller save files when saving code, and provides a basis
 	for a more flexible serialization mechanism.
-     
+
     o   save() now takes a version argument to specify the workspace file
         format version to use.  The version used in R 1.3 is version 1
 	Version 2 is the new default format.
@@ -331,12 +331,16 @@ NEW FEATURES
 	that link a variable to a function (useful for example for linking
 	an R variable to an internal C global).
 
-    o   The internal download.file() etc now allow URLs of the form
+    o	The internal download.file() etc now allow URLs of the form
 	ftp://user@foo.bar/ and ftp://user:pass@foo.bar/
 
-    o   Added function file.rename().
+    o	Added function file.rename().
 
-    o    .Alias has been removed from all R sources and deprecated.
+    o	.Alias has been removed from all R sources and deprecated.
+
+    o	symbols() now has automatical xlab and ylab and a main argument
+	which eliminates a wrong warning.
+
 
 BUG FIXES
 
