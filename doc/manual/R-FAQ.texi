@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-11, 2002-06-19
+@set FAQ-VERSION 1.5-12, 2002-06-20
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -427,7 +427,7 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c Linux binaries as of 2002-06-19:
 @c
 @c debian   2.2 i386  1.5.0  Douglas Bates <bates@stat.wisc.edu>
-@c          3.0 i386  1.5.0  Dirk Eddelbuettel <edd@debian.org>
+@c          3.0 i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
 @c linuxppc 5.0 ppc   1.5.0  Alex Buerkle <buerkla@uwec.edu>
 @c mandrake 8.1 i386  1.5.0  Michele Alzetta <mikalzet@libero.it>
 @c          8.2 i386  1.5.1  Michele Alzetta <mikalzet@libero.it>
@@ -1791,6 +1791,8 @@ Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
 @item muhaz
 Hazard function estimation in survival analysis.
+@item multcomp
+Multiple comparison procedures for the one-way layout.
 @item multiv
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
