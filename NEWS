@@ -209,10 +209,14 @@ BUG FIXES
 
     o   dlnorm() returns zero for negative x argument (PR#1781)
 
-    o   printing 0 in octmode gave "" not "0". (PR#1759)
+    o   Printing 0 in octmode gave "" not "0". (PR#1759)
 
     o   anova.glm() was ignoring a `dispersion' argument if given
 	multiple objects. (PR#1807)
+
+    o	model.matrix() with a `rhs ~ .' formula included columns with
+	duplicated names in the data frame, which caused subsequent
+	confusion (e.g. in prediction from the object).
 
 
 	**************************************************
