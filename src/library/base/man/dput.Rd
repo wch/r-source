@@ -11,7 +11,7 @@ dput(x, file = "")
 dget(file)
 }
 \arguments{
-  \item{}{an object.}
+  \item{x}{an object.}
   \item{file}{either a character string naming a file or a
     connection. \code{""} indicates output to the console.}
 }
