@@ -22,7 +22,7 @@
     indicating that an intercept is to be fit.}
   \item{order}{A vector of the same length as \code{term.labels}
     indicating the order of interaction for each term }
-  \item{response} {The index of the variable (in variables) of the
+  \item{response}{The index of the variable (in variables) of the
     response (the left hand side of the formula).}
   \item{offset}{If the model contains \code{\link{offset}} terms there
     is an \code{offset} attribute indicating which terms are offsets}

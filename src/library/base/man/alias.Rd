@@ -40,7 +40,7 @@ alias.lm(object, complete = TRUE, partial = FALSE,
   correlations induced by the design.
 }
 \value{
-  A list (of \code{\link{class} "listof"}) containing components
+  A list (of \code{\link[base]{class} "listof"}) containing components
   \item{Model}{Description of the model; usually the formula.}
   \item{Complete}{A matrix with columns corresponding to effects that
     are linearly dependent on the rows; may be of class \code{"mtable"}
