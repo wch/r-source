@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-3     the R Development Core Team
+ *  Copyright (C) 2000-4     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,13 +29,6 @@ Rboolean stub_GnomeDeviceDriver(DevDesc *dd, char *display,
 			   double width, double height, double pointsize)
 {
     error("the gnome device is not loaded in this version of R");
-    return FALSE;
-}
-
-Rboolean stub_GTKDeviceDriver(DevDesc *dd, char *display, double width, 
-			  double height, double pointsize)
-{
-    error("the gtk device is only available with --gui=GNOME");
     return FALSE;
 }
 

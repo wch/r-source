@@ -184,7 +184,6 @@ int Rf_initialize_R(int ac, char **av)
     }
 
     ptr_GnomeDeviceDriver = stub_GnomeDeviceDriver;
-    ptr_GTKDeviceDriver = stub_GTKDeviceDriver;
     ptr_R_GetX11Image = R_GetX11Image;
 #ifdef HAVE_X11
     if(useX11) {
