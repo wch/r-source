@@ -64,6 +64,8 @@ x$name
 }
 \seealso{
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
+
+  \code{\link{Syntax}} for operator precedence.
 }
 \examples{
 x <- 1:12; m <- matrix(1:6,nr=2); li <- list(pi=pi, e = exp(1))

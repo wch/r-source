@@ -1,4 +1,12 @@
 \name{Control}
+\alias{Control}
+\alias{if}
+\alias{else}
+\alias{for}
+\alias{while}
+\alias{repeat}
+\alias{break}
+\alias{next}
 \title{Control Flow}
 \usage{
 if(cond) expr
@@ -9,13 +17,6 @@ repeat expr
 break
 next
 }
-\alias{if}
-\alias{else}
-\alias{for}
-\alias{while}
-\alias{repeat}
-\alias{break}
-\alias{next}
 \description{
 These are the basic control-flow constructs of the \R language.
 They function in much the same way as control statements

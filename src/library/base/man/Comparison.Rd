@@ -36,7 +36,10 @@ x != y
   For numerical values, remember \code{==} and \code{!=} do not allow
   for the finite representation of fractions, nor for rounding error.
   Using \code{\link{all.equal}} with \code{identical} is almost
-  always preferable. See the examples.
+  always preferable.  See the examples.
+}
+\seealso{
+  \code{\link{Syntax}} for operator precedence.
 }
 \examples{
 x <- rnorm(20)

@@ -42,8 +42,10 @@ unless \code{y == 0} where the result is \code{\link{NA}} or
     way provided they are conformable.
 }
 \seealso{
-\code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special
-mathematical functions.
+  \code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special
+  mathematical functions.
+
+  \code{\link{Syntax}} for operator precedence.
 }
 \examples{
 x <- -1:12

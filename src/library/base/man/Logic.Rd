@@ -33,7 +33,11 @@ xor(x, y)
 
   \code{xor} indicates elementwise exclusive OR.
 }
-\seealso{\code{\link{TRUE}} or \code{\link{logical}}.}
+\seealso{
+  \code{\link{TRUE}} or \code{\link{logical}}.
+
+  \code{\link{Syntax}} for operator precedence.
+}
 \examples{
 y <- 1 + (x <- rpois(50, lambda=1.5) / 4 - 1)
 x[(x > 0) & (x < 1)]    # all x values between 0 and 1
