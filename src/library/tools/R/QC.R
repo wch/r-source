@@ -24,8 +24,7 @@ function(package, dir, lib.loc = NULL)
         ## Load package into codeEnv.
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
-        codeEnv <-
-            as.environment(paste("package", package, sep = ":"))
+        codeEnv <- .packageEnv(package)
 
         codeObjs <- ls(envir = codeEnv, all.names = TRUE)
     }
@@ -232,15 +231,33 @@ function(package, dir, lib.loc = NULL)
             mlist <- methods::getMethodsMetaData(f, codeEnv)
             meths <- methods::linearizeMlist(mlist, FALSE)
             classes <- methods::slot(meths, "classes")
+            ## Don't look for doc on a generated default method.
             default <-
                 as.logical(lapply(classes,
                                   function(x)
                                   identical(all(x == "ANY"), TRUE)))
-            if(any(default)) {
-                ## Don't look for doc on a generated default method.
-                if(methods::is(methods::finalDefaultMethod(mlist),
-                               "derivedDefaultMethod"))
-                    classes <- classes[!default]
+            if(any(default)
+               && methods::is(methods::finalDefaultMethod(mlist),
+                              "derivedDefaultMethod")) {
+                classes <- classes[!default]
+            }
+            ## Exclude methods inherited from the 'appropriate' parent
+            ## environment.
+            makeSigs <- function(cls)
+                unlist(lapply(cls, paste, collapse = "#"))
+            penv <- .Internal(getRegisteredNamespace(as.name(package)))
+            if(is.environment(penv))
+                penv <- parent.env(penv)
+            else
+                penv <- parent.env(codeEnv)
+            mlistFromPenv <- methods::getMethodsMetaData(f, penv)
+            if(!is.null(mlistFromPenv)) {
+                classesFromPenv <-
+                    methods::slot(methods::linearizeMlist(mlistFromPenv),
+                                  "classes")
+                ind <- is.na(match(makeSigs(classes),
+                                   makeSigs(classesFromPenv)))
+                classes <- classes[ind]
             }
             sigs <- sapply(classes, paste, collapse = ",")
             if(length(sigs))
@@ -316,8 +333,7 @@ function(package, dir, lib.loc = NULL,
         ## Load package into codeEnv.
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
-        codeEnv <-
-            as.environment(paste("package", package, sep = ":"))
+        codeEnv <- .packageEnv(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
 
@@ -780,8 +796,7 @@ function(package, lib.loc = NULL)
     ## Load package into codeEnv.
     if(!isBase)
         .loadPackageQuietly(package, lib.loc)
-    codeEnv <-
-        as.environment(paste("package", package, sep = ":"))
+    codeEnv <- .packageEnv(package)
 
     if(!.isMethodsDispatchOn())
         return(badRdObjects)
@@ -931,8 +946,7 @@ function(package, lib.loc = NULL)
     ## Load package into codeEnv.
     if(!isBase)
         .loadPackageQuietly(package, lib.loc)
-    codeEnv <-
-        as.environment(paste("package", package, sep = ":"))
+    codeEnv <- .packageEnv(package)
 
     ## Could check here whether the package has any variables or data
     ## sets (and return if not).
@@ -1348,8 +1362,7 @@ function(package, dir, lib.loc = NULL)
         ## Load package into codeEnv.
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
-        codeEnv <-
-            as.environment(paste("package", package, sep = ":"))
+        codeEnv <- .packageEnv(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
 
@@ -1760,8 +1773,7 @@ function(package, dir, lib.loc = NULL)
         ## Load package into codeEnv.
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
-        codeEnv <-
-            as.environment(paste("package", package, sep = ":"))
+        codeEnv <- .packageEnv(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
 
@@ -1949,11 +1961,7 @@ function(package, dir, lib.loc = NULL)
                 ind <- depends %in% .packages()
                 if(any(ind)) {
                     envList <-
-                        c(envList,
-                          lapply(depends[ind],
-                                 function(p)
-                                 as.environment(paste("package", p,
-                                                      sep = ":"))))
+                        c(envList, lapply(depends[ind], .packageEnv))
                 }
             }
         }
@@ -2063,8 +2071,7 @@ function(package, dir, lib.loc = NULL)
             nsS3methodsList <- getNamespaceInfo(package, "S3methods")
         }
         else
-            codeEnv <-
-                as.environment(paste("package", package, sep = ":"))
+            codeEnv <- .packageEnv(package)
     }
 
     else {
@@ -2376,6 +2383,12 @@ function(x)
      && (length(x[[2]]) > 1)
      && is.symbol(x[[3]]))
 }
+
+### * .packageEnv
+
+.packageEnv <-
+function(packageName)
+    as.environment(paste("package", packageName, sep = ":"))
 
 ### * .parseTextAsMuchAsPossible
 
