@@ -400,15 +400,14 @@ In the near future, Mac binaries will also be made available in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-03-03:
+@c Linux binaries as of 2001-04-20:
 @c
 @c debian   2.2 i386  1.2.2  Doug Bates <bates@stat.wisc.edu>
 @c          2.3 i386  1.2.2  Doug Bates <bates@stat.wisc.edu>
 @c linuxppc 5.0 ppc   1.2.2  Alex Buerkle <buerkle@hawaii.edu>
 @c mandrake 7.2 i386  1.2.2  Michele Alzetta <mikalzet@libero.it>
-@c redhat   6.x alpha 1.1.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c redhat   6.x alpha 1.2.2  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.2.2  Martyn Plummer <plummer@iarc.fr>
-@c              sparc 1.1.1  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
 @c          7.x alpha 1.2.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.2.2  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.0 i386  1.2.2  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
@@ -416,10 +415,10 @@ In the near future, Mac binaries will also be made available in the
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 2.2/2.3 packages for the i386 platform (now part of the Debian
 distribution and maintained by Doug Bates), Red Hat 6.x/7.x packages for
-the alpha and i386 platforms and 6.x packages for the sparc platform
-(maintained by Naoki Takebayashi, Martyn Plummer, and Vin Everett,
-respectively), SuSE 7.0 i386 packages by Albrecht Gebhardt, Mandrake 7.2
-i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs by Alex Buerkle.
+the alpha and i386 platforms (maintained by Naoki Takebayashi and Martyn
+Plummer, respectively), SuSE 7.0 i386 packages by Albrecht Gebhardt,
+Mandrake 7.2 i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs by
+Alex Buerkle.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
