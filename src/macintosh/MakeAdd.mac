@@ -18,10 +18,10 @@ all Ä library
 
 
 ## ------------- library -----------
-PACKAGES =  sgeostat #Rwave #quantreg #quadprog #pspline#multiv#mda #mclust #cclust #rgenoud #bqtl #VLMC #wavethresh #xtable #ISwR #gld vegan splancs lokern gllm geoRglm geoR exactRankTests chron #labstatR #gee ape tseries mvtnorm sn acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack scatterplot3d
-LIBF = sgeostat #Rwave #quantreg #quadprog #pspline#multiv ##mda #mclust #cclust #rgenoud #bqtl #VLMC #wavethresh ##gld vegan splancs lokern gllm geoRglm geoR exactRankTests chron #gee tseries mvtnorm acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+PACKAGES =  locfit #ellipse #sgeostat #Rwave #quantreg #quadprog #pspline#multiv#mda #mclust #cclust #rgenoud #bqtl #VLMC #wavethresh #xtable #ISwR #gld vegan splancs lokern gllm geoRglm geoR exactRankTests chron #labstatR #gee ape tseries mvtnorm sn acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack scatterplot3d
+LIBF = locfit ##sgeostat #Rwave #quantreg #quadprog #pspline#multiv ##mda #mclust #cclust #rgenoud #bqtl #VLMC #wavethresh ##gld vegan splancs lokern gllm geoRglm geoR exactRankTests chron #gee tseries mvtnorm acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
 
-DATA = sgeostat #Rwave #quantreg #mda #mclust ##bqtl #VLMC #wavethresh #xtable #ISwR #vegan splancs lokern gllm geoRglm geoR exactRankTests #labstatR #tseries sn akima bootstrap EMV evd gss pcurve qtl sm tripack
+DATA = locfit #sgeostat #Rwave #quantreg #mda #mclust ##bqtl #VLMC #wavethresh #xtable #ISwR #vegan splancs lokern gllm geoRglm geoR exactRankTests #labstatR #tseries sn akima bootstrap EMV evd gss pcurve qtl sm tripack
 DEMO = #
 INST = #mclust ##ISwR #geoRglm geoR #labstatR #evd qtl sm
 
@@ -95,8 +95,10 @@ datafiles Ä $OutOfDate
 	   if ! `Exists -d {RHOME}library:{pkg}:data`
 	    NewFolder {RHOME}library:{pkg}:data
 	   end
+	  if  `Exists {::library:{pkg}:data:00Index`
 	   Duplicate -y ::library:{pkg}:data:00Index ¶
 	    ::library:{pkg}:data:Å {RHOME}library:{pkg}:data
+	  end
 	  end
 	 end 
 
