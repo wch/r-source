@@ -5,6 +5,6 @@
 
 .Last.lib <- function(libpath) {
     .C("delTcl", PACKAGE="tcltk")
-    dyn.unload(file.path(libpath, "libs",
-                         paste("tcltk", .Platform$"dynlib.ext", sep="")))
+#    dyn.unload(file.path(libpath, "libs",
+#                         paste("tcltk", .Platform$"dynlib.ext", sep="")))
 }
