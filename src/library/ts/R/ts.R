@@ -30,8 +30,8 @@ arima.sim <- function(model, n, rand.gen = rnorm,
     d <- 0
     if(!is.null(ord <- model$order)) {
         if(length(ord) != 3) stop("`model$order' must be of length 3")
-        if(p != ord{1]) stop("inconsistent specification of ar order")
-        if(q != ord{3]) stop("inconsistent specification of ma order")
+        if(p != ord[1]) stop("inconsistent specification of ar order")
+        if(q != ord[3]) stop("inconsistent specification of ma order")
         d <- ord[2]
         if(d != round(d) || d < 0)
             stop("number of differences must be a positive integer")
