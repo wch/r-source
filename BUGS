@@ -616,3 +616,19 @@ Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
 Subject: difftime arithmetic
 From: B.Rowlingson@lancaster.ac.uk
 Date: Wed, 4 Dec 2002 17:58:49 +0100 (MET)
+* PR# 2348 *
+Subject: baby boomers, set back the clock iqbqf
+From: cyawinston <ncmdevin@hotmail.com>
+Date: Wed, 4 Dec 2002 15:43:49 -0800
+* PR# 2349 *
+Subject: [R] NA in first panel of xyplot causes error
+From: Wolfram Fischer <wolfram@fischer-zim.ch>
+Date: Thu, 5 Dec 2002 15:32:32 +0100
+* PR# 2350 *
+Subject: Bugs in Version 1.6.1  (2002-11-01), Windows Edition
+From: "Li, James [PRDUS Non-J&J]" <JLi2@prdus.jnj.com>
+Date: Thu, 5 Dec 2002 10:13:42 -0500 
+* PR# 2351 *
+Subject: Re: [Rd] Bugs in Version 1.6.1  (2002-11-01), Windows Edition
+From: ripley@stats.ox.ac.uk
+Date: Thu, 5 Dec 2002 16:21:08 +0000 (GMT)
