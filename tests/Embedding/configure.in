@@ -1,8 +1,0 @@
-AC_INIT(RNamedCall.c)
-
-# Unix-specific for the moment!
-
-if ! test -e ../../bin/libR.so ; then
-  echo "You must configure R to be compiled as a shared library."
-  echo "Use configure --enable-R-shlib"
-fi
