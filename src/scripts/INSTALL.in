@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.39 $'
+revision='$Revision: 1.40 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -21,7 +21,7 @@ Options:
   -h, --help		print short help message and exit
   -l, --library=LIB	install packages to library tree LIB
       --no-docs		do not build and install documentation
-      --use-zip-date	collect data files in zip archive
+      --use-zip-data	collect data files in zip archive
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine \`--use-zip-data' and \`--use-zip-help'
   -v, --version		print version info and exit
