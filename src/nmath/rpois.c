@@ -74,6 +74,9 @@ double rpois(double mu)
     static double muprev = 0.0;
     static double muold = 0.0;
 
+    if (mu<=0.0) 
+	return(0.0);
+
     if (mu != muprev) {
 	if (mu >= 10.0) {
 	    /* case a. (recalculation of s,d,l */
