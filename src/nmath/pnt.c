@@ -79,6 +79,14 @@ double pnt(double t, double df, double delta)
 	tt = -tt;
 	del = -del;
     }
+
+    if (df > 4e5) { /*-- Fixme: test should depend on `df', `tt' AND `del' ! */
+	/* Approx. from	 Abramowitz & Stegun 26.7.10 (p.949) */
+	s = one/(4.*df);
+	del = - (tt*(1. - s) - del)/sqrt(1. + tt*tt*2.*s);
+	goto finis; /* pnorm(-del, 1,0) */
+    }
+
     /* initialize twin series */
     /* Guenther, J. (1978). Statist. Computn. Simuln. vol.6, 199. */
 
@@ -101,9 +109,9 @@ double pnt(double t, double df, double delta)
 	  return zero;
 	}
 #ifdef DEBUG_pnt
-        REprintf("it  1e5*(godd,  geven)       p         q          s    "
+	REprintf("it  1e5*(godd,  geven)       p	 q	    s	 "
 	       /* 1.3 1..4..7.9 1..4..7.9  1..4..7.9 1..4..7.9 1..4..7.9_ */
-		 "        pnt(*)      errbd\n");
+		 "	  pnt(*)      errbd\n");
 	       /* 1..4..7..0..3..6 1..4..7.9*/
 #endif
 	q = M_SQRT_2dPI * p * del;
@@ -138,7 +146,7 @@ double pnt(double t, double df, double delta)
 	    }
 	    errbd = two * s * (xodd - godd);
 #ifdef DEBUG_pnt
-	    REprintf("%3d %#9.4g %#9.4g  %#9.4g %#9.4g %#9.4g %#14.10g %#9.4g\n",
+	    REprintf("%3d %#9.4g %#9.4g	 %#9.4g %#9.4g %#9.4g %#14.10g %#9.4g\n",
 		     it, 1e5*godd, 1e5*geven, p,q, s, tnc, errbd);
 #endif
 	    if(errbd < errmax) goto finis;/*convergence*/

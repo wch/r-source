@@ -20,13 +20,14 @@ pairs.default <- function(x, labels, panel=points, main = NULL,
     on.exit(par(opar))
     for (i in 1:nc) for (j in 1:nc) {
 	if (i == j) {
-	    plot(x[, j], x[, i], xlab = "", ylab = "", axes = FALSE, type = "n",
-		 ...)
+	    plot(x[, j], x[, i], xlab = "", ylab = "", axes = FALSE,
+                 type = "n", ...)
 	    box()
 	    text(mean(par("usr")[1:2]), mean(par("usr")[3:4]), labels[i])
 	}
 	else {
-	    plot(x[, j], x[, i], type="n", xlab = "", ylab = "", axes = FALSE, ...)
+	    plot(x[, j], x[, i], type="n", xlab = "", ylab = "", axes =
+                 FALSE, ...)
 	    box()
 	    panel(x[, j], x[, i], ...)
 	}
@@ -39,7 +40,21 @@ pairs.default <- function(x, labels, panel=points, main = NULL,
 	if (i == nc & 2 * floor(j/2) != j)
 	    axis(1)
     }
-    if (!is.null(main)) mtext(main, 3, 3, TRUE, 0.5,
-			      cex=cex.main, font=font.main)
+    if (!is.null(main))
+        mtext(main, 3, 3, TRUE, 0.5, cex = cex.main, font = font.main)
     invisible(NULL)
 }
+
+pairs.formula <- function(formula, data = NULL, subset, na.action, ...)
+{
+    if (missing(na.action))
+        na.action <- options()$na.action
+    m <- match.call(expand.dots = FALSE)
+    if (is.matrix(eval(m$data, sys.parent())))
+        m$data <- as.data.frame(data)
+    m$... <- NULL
+    m[[1]] <- as.name("model.frame")
+    mf <- eval(m, sys.parent())
+    pairs(mf, ...)
+}
+

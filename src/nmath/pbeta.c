@@ -24,7 +24,7 @@
  *  DESCRIPTION
  *
  *    Returns distribution function of the beta distribution.
- *    (The incomplete beta ratio).
+ *    ( = The incomplete beta ratio I_x(p,q) ).
  *
  *  NOTES
  *
@@ -40,6 +40,8 @@
 
 #include "Mathlib.h"
 
+/* This is called from	qbeta(.) in a root-finding loop --- be FAST! */
+
 double pbeta_raw(double x, double pin, double qin)
 {
     double ans, c, finsum, p, ps, p1, q, term, xb, xi, y;
@@ -50,11 +52,11 @@ double pbeta_raw(double x, double pin, double qin)
     static double sml = 0;
     static double alnsml = 0;
 
-    if (eps == 0) {
-        eps = d1mach(3);
-        alneps = log(eps);
-        sml = d1mach(1);
-        alnsml = log(sml);
+    if (eps == 0) {/* initialize machine constants ONCE */
+	eps = d1mach(3);
+	alneps = log(eps);
+	sml = d1mach(1);
+	alnsml = log(sml);
     }
 
     y = x;
@@ -64,75 +66,78 @@ double pbeta_raw(double x, double pin, double qin)
     /* swap tails if x is greater than the mean */
 
     if (p / (p + q) < x) {
-        y = 1 - y;
-        p = qin;
-        q = pin;
+	y = 1 - y;
+	p = qin;
+	q = pin;
     }
 
     if ((p + q) * y / (p + 1) < eps) {
 
 	/* tail approximation */
 
-        ans = 0;
-        xb = p * log(fmax2(y, sml)) - log(p) - lbeta(p, q);
-        if (xb > alnsml && y != 0)
-            ans = exp(xb);
-        if (y != x || p != pin)
-            ans = 1 - ans;
+	ans = 0;
+	xb = p * log(fmax2(y, sml)) - log(p) - lbeta(p, q);
+	if (xb > alnsml && y != 0)
+	    ans = exp(xb);
+	if (y != x || p != pin)
+	    ans = 1 - ans;
     }
     else {
+	/*___ FIXME ___:  This takes forever (or ends wrongly) 
+	  when (one or) both p & q  are huge 
+	*/
 
-        /* evaluate the infinite sum first.  term will equal */
-        /* y^p / beta(ps, p) * (1 - ps)-sub-i * y^i / fac(i) */
+	/* evaluate the infinite sum first.  term will equal */
+	/* y^p / beta(ps, p) * (1 - ps)-sub-i * y^i / fac(i) */
 
-        ps = q - floor(q);
-        if (ps == 0)
-            ps = 1;
-        xb = p * log(y) - lbeta(ps, p) - log(p);
-        ans = 0;
-        if (xb >= alnsml) {
-            ans = exp(xb);
-            term = ans * p;
-            if (ps != 1) {
-                n = fmax2(alneps/log(y), 4.0);
+	ps = q - floor(q);
+	if (ps == 0)
+	    ps = 1;
+	xb = p * log(y) - lbeta(ps, p) - log(p);
+	ans = 0;
+	if (xb >= alnsml) {
+	    ans = exp(xb);
+	    term = ans * p;
+	    if (ps != 1) {
+		n = fmax2(alneps/log(y), 4.0);
 		for(i=1 ; i<= n ; i++) {
-                    xi = i;
-                    term = term * (xi - ps) * y / xi;
-                    ans = ans + term / (p + xi);
-                }
-            }
-        }
-
-        /* now evaluate the finite sum, maybe. */
-
-        if (q > 1) {
-            xb = p * log(y) + q * log(1 - y) - lbeta(p, q) - log(q);
-            ib = fmax2(xb / alnsml, 0.0);
-            term = exp(xb - ib * alnsml);
-            c = 1 / (1 - y);
-            p1 = q * c / (p + q - 1);
-
-            finsum = 0;
-            n = q;
-            if (q == n)
-                n = n - 1;
-	    for(i=1 ; i<=n ; i++) {
-                if (p1 <= 1 && term / eps <= finsum)
-                    break;
-                xi = i;
-                term = (q - xi + 1) * c * term / (p + q - xi);
-                if (term > 1) {
-                    ib = ib - 1;
-                    term = term * sml;
+		    xi = i;
+		    term = term * (xi - ps) * y / xi;
+		    ans = ans + term / (p + xi);
 		}
-                if (ib == 0)
-                    finsum = finsum + term;
-            }
-            ans = ans + finsum;
-        }
-        if (y != x || p != pin)
-            ans = 1 - ans;
-        ans = fmax2(fmin2(ans, 1.0), 0.0);
+	    }
+	}
+
+	/* now evaluate the finite sum, maybe. */
+
+	if (q > 1) {
+	    xb = p * log(y) + q * log(1 - y) - lbeta(p, q) - log(q);
+	    ib = fmax2(xb / alnsml, 0.0);
+	    term = exp(xb - ib * alnsml);
+	    c = 1 / (1 - y);
+	    p1 = q * c / (p + q - 1);
+
+	    finsum = 0;
+	    n = q;
+	    if (q == n)
+		n = n - 1;
+	    for(i=1 ; i<=n ; i++) {
+		if (p1 <= 1 && term / eps <= finsum)
+		    break;
+		xi = i;
+		term = (q - xi + 1) * c * term / (p + q - xi);
+		if (term > 1) {
+		    ib = ib - 1;
+		    term = term * sml;
+		}
+		if (ib == 0)
+		    finsum = finsum + term;
+	    }
+	    ans = ans + finsum;
+	}
+	if (y != x || p != pin)
+	    ans = 1 - ans;
+	ans = fmax2(fmin2(ans, 1.0), 0.0);
     }
     return ans;
 }

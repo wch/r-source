@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -140,7 +141,7 @@ double qbeta(double alpha, double p, double q)
 
 	for (i_pb=0; i_pb < 1000; i_pb++) {
 		y = pbeta_raw(xinbta, pp, qq);
-		/* y = pbeta_raw2(xinbta, pp, qq, logbeta); */
+		/* y = pbeta_raw2(xinbta, pp, qq, logbeta) -- to SAVE CPU; */
 #ifdef IEEE_754
 		if(!FINITE(y))
 #else

@@ -49,79 +49,88 @@ static struct {
 Family[] = {
 
     { "AvantGarde",
-      "AvantGarde-Book",		 "agw_____",
-      "AvantGarde-Demi",		 "agd_____",
-      "AvantGarde-BookOblique",		 "agwo____",
-      "AvantGarde-DemiOblique",		 "agdo____",
-      "Symbol",				 "sy______", },
-
+      {{ "AvantGarde-Book",			"agw_____" },
+       { "AvantGarde-Demi",			"agd_____" },
+       { "AvantGarde-BookOblique",		"agwo____" },
+       { "AvantGarde-DemiOblique",		"agdo____" },
+       { "Symbol",				"sy______" }}
+    },
+    
     { "Bookman",
-      "Bookman-Light",			 "bkl_____",
-      "Bookman-Demi",			 "bkd_____",
-      "Bookman-LightItalic",		 "bkli____",
-      "Bookman-DemiItalic",		 "bkdi____",
-      "Symbol",				 "sy______", },
+      {{ "Bookman-Light",			"bkl_____" },
+       { "Bookman-Demi",			"bkd_____" },
+       { "Bookman-LightItalic",			"bkli____" },
+       { "Bookman-DemiItalic",			"bkdi____" },
+       { "Symbol",				"sy______" }}
+    },
 
     { "Courier",
-      "Courier",			 "com_____",
-      "Courier-Bold",			 "cob_____",
-      "Courier-Oblique",		 "coo_____",
-      "Courier-BoldOblique",		 "cobo____",
-      "Symbol",				 "sy______", },
-
+      {{ "Courier",				"com_____" },
+       { "Courier-Bold",			"cob_____" },
+       { "Courier-Oblique",			"coo_____" },
+       { "Courier-BoldOblique",			"cobo____" },
+       { "Symbol",				"sy______" }}
+    },
+	  
     { "Helvetica",
-      "Helvetica",			 "hv______",
-      "Helvetica-Bold",			 "hvb_____",
-      "Helvetica-Oblique",		 "hvo_____",
-      "Helvetica-BoldOblique",		 "hvbo____",
-      "Symbol",				 "sy______", },
+      {{ "Helvetica",				"hv______" },
+       { "Helvetica-Bold",			"hvb_____" },
+       { "Helvetica-Oblique",			"hvo_____" },
+       { "Helvetica-BoldOblique",		"hvbo____" },
+       { "Symbol",				"sy______" }}
+    },
 
 #ifdef NOTYET
     { "Helvetica-Condensed",
-      "Helvetica-Condensed",		 "hvc_____",
-      "Helvetica-Condensed-Bold",	 "hvcb____",
-      "Helvetica-Condensed-Oblique",	 "hvcdo___",
-      "Helvetica-Condensed-BoldObl",	 "hvnbo___",
-      "Symbol",				 "sy______", },
+      {{ "Helvetica-Condensed",			"hvc_____" },
+       { "Helvetica-Condensed-Bold",		"hvcb____" },
+       { "Helvetica-Condensed-Oblique",		"hvcdo___" },
+       { "Helvetica-Condensed-BoldObl",		"hvnbo___" },
+       { "Symbol",				"sy______" }}
+    },
 #endif
 
     { "Helvetica-Narrow",
-      "Helvetica-Narrow",		 "hvn_____",
-      "Helvetica-Narrow-Bold",		 "hvnb____",
-      "Helvetica-Narrow-Oblique",	 "hvno____",
-      "Helvetica-Narrow-BoldOblique",	 "hvnbo___",
-      "Symbol",				 "sy______", },
+      {{ "Helvetica-Narrow",			"hvn_____" },
+       { "Helvetica-Narrow-Bold",		"hvnb____" },
+       { "Helvetica-Narrow-Oblique",		"hvno____" },
+       { "Helvetica-Narrow-BoldOblique",	"hvnbo___" },
+       { "Symbol",				"sy______" }}
+    },
 
     { "NewCenturySchoolbook",
-      "NewCenturySchlbk-Roman",		 "ncr_____",
-      "NewCenturySchlbk-Bold",		 "ncb_____",
-      "NewCenturySchlbk-Italic",	 "nci_____",
-      "NewCenturySchlbk-BoldItalic",	 "ncbi____",
-      "Symbol",				 "sy______", },
+      {{ "NewCenturySchlbk-Roman",		"ncr_____" },
+       { "NewCenturySchlbk-Bold",		"ncb_____" },
+       { "NewCenturySchlbk-Italic",		"nci_____" },
+       { "NewCenturySchlbk-BoldItalic",		"ncbi____" },
+      { "Symbol",				"sy______" }}
+    },
 
     { "Palatino",
-      "Palatino-Roman",			 "por_____",
-      "Palatino-Bold",			 "pob_____",
-      "Palatino-Italic",		 "poi_____",
-      "Palatino-BoldItalic",		 "pobi____",
-      "Symbol",				 "sy______", },
+      {{ "Palatino-Roman",			"por_____" },
+       { "Palatino-Bold",			"pob_____" },
+       { "Palatino-Italic",			"poi_____" },
+       { "Palatino-BoldItalic",			"pobi____" },
+       { "Symbol",				"sy______" }}
+    },
 
     { "Times",
-      "Times-Roman",			 "tir_____",
-      "Times-Bold",			 "tib_____",
-      "Times-Italic",			 "tii_____",
-      "Times-BoldItalic",		 "tibi____",
-      "Symbol",				 "sy______", },
+      {{ "Times-Roman",				"tir_____" },
+       { "Times-Bold",				"tib_____" },
+       { "Times-Italic",			"tii_____" },
+       { "Times-BoldItalic",			"tibi____" },
+       { "Symbol",				"sy______" }}
+    },
 
-    NULL
+    { NULL }
 };
 
 /* These are the file extensions used on metrics files. */
 
 static char *Extension[] = {
-    "afm",    /* AdobeStandardEncoding (Unused) */
-    "lt1",    /* ISOLatin1Encoding */
-    "lt2",    /* ISOLatin2Encoding */
+    "afm",			/* AdobeStandardEncoding (Unused) */
+    "lt1",			/* ISOLatin1Encoding */
+    "lt2",			/* ISOLatin2Encoding */
     0
 };
 
@@ -359,7 +368,7 @@ double PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
     int sum = 0;
     for ( ; *p; p++) {
 	if (*p == '-' && isdigit(p[1]))
-	    sum += metrics->CharInfo[PS_minus].WX;
+	    sum += metrics->CharInfo[(int)PS_minus].WX;
 	else
 	    sum += metrics->CharInfo[*p].WX;
     }

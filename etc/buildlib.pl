@@ -133,7 +133,7 @@ sub read_functiontitles {
 		if(-r "$lib/$pkg/TITLE"){
 		    open rtitle, "< $lib/$pkg/help/00Titles";
 		    while(<rtitle>){
-			/^(\S*)\s*(.*)/;
+			/^([^\t]*)\s*(.*)/;
 			my $alias = $1;
 			$tit{$alias} = $2 . " ($pkg)";
 		    }
@@ -168,7 +168,7 @@ sub read_htmlindex {
 		if(-r "$lib/$pkg/help/AnIndex"){
 		    open ranindex, "< $lib/$pkg/help/AnIndex";
 		    while(<ranindex>){
-			/^(\S*)\s*\t(.*)/;
+			/^([^\t]*)\s*\t(.*)/;
 			$htmlindex{$1} = "$pkg/html/$2.$HTML";
 		    }
 		    close ranindex;
@@ -195,7 +195,7 @@ sub read_anindex {
 		if(-r "$lib/$pkg/help/AnIndex"){
 		    open ranindex, "< $lib/$pkg/help/AnIndex";
 		    while(<ranindex>){
-			/^(\S*)\s*\t(.*)/;
+			/^([^\t]*)\s*\t(.*)/;
 			$anindex{$1} = $2;
 		    }
 		    close ranindex;

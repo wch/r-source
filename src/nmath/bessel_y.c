@@ -232,6 +232,8 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	b, c, d, e, f, g, h, p, q, r, s, d1, d2, q0, pa,pa1, qa,qa1,
 	en, en1, nu, ex,  ya,ya1, twobyx, den, odd, aye, dmu, x2, xna;
 
+    en1 = ya = ya1 = 0;		/* -Wall */
+
     ex = *x;
     nu = *alpha;
     if (*nb > 0 && 0. <= nu && nu < 1.) {

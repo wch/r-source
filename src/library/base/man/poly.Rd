@@ -15,9 +15,16 @@ constant polynomial of degree 0.
 }
 \value{
   A matrix with rows corresponding to points in \code{x} and columns
-  corresponding to the degree, with attribute \code{"degree"} specifying
-  the degrees of the columns.}
+  corresponding to the degree, with attributes \code{"degree"} specifying
+  the degrees of the columns and \code{"coefs"} which contains the
+  centring and normalization constants used in constructing the
+  orthogonal polynomials.}
 \author{B.D. Ripley}
+
+\note{This routine is intended for statistical purposes such as
+    \code{contr.poly}: it does not attempt to orthogonalize to
+    machine accuracy.
+}
 
 \seealso{\code{\link{contr.poly}}}
 

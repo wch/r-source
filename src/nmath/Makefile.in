@@ -45,8 +45,8 @@ OBJS =	\
 	dnbeta.o pnbeta.o \
 	pnf.o pnt.o \
 	ptukey.o qtukey.o \
-	dwilcox.o pwilcox.o qwilcox.o rwilcox.o \
-	dsignrank.o psignrank.o qsignrank.o rsignrank.o
+	wilcox.o \
+	signrank.o
 
 LIB = libmath.a
 

@@ -644,200 +644,200 @@ static struct {
     int code;
 }
 SymbolTable[] = {
-    "space",	      32,
-    "exclam",	      33,
-    "universal",      34,
-    "numbersign",     35,
-    "existential",    36,
-    "percent",	      37,
-    "ampersand",      38,
-    "suchthat",	      39,
-    "parenleft",      40,
-    "parenright",     41,
-    "asteriskmath",   42,
-    "plus",	      43,
-    "comma",	      44,
-    "minus",	      45,
-    "period",	      46,
-    "slash",	      47,
-    "0",	      48,
-    "1",	      49,
-    "2",	      50,
-    "3",	      51,
-    "4",	      52,
-    "5",	      53,
-    "6",	      54,
-    "7",	      55,
-    "8",	      56,
-    "9",	      57,
-    "colon",	      58,
-    "semicolon",      59,
-    "less",	      60,
-    "equal",	      61,
-    "greater",	      62,
-    "question",	      63,
-    "congruent",      64,
+    { "space",		 32 },
+    { "exclam",		 33 },
+    { "universal",	 34 },
+    { "numbersign",	 35 },
+    { "existential",	 36 },
+    { "percent",	 37 },
+    { "ampersand",	 38 },
+    { "suchthat",	 39 },
+    { "parenleft",	 40 },
+    { "parenright",	 41 },
+    { "asteriskmath",	 42 },
+    { "plus",		 43 },
+    { "comma",		 44 },
+    { "minus",		 45 },
+    { "period",		 46 },
+    { "slash",		 47 },
+    { "0",		 48 },
+    { "1",		 49 },
+    { "2",		 50 },
+    { "3",		 51 },
+    { "4",		 52 },
+    { "5",		 53 },
+    { "6",		 54 },
+    { "7",		 55 },
+    { "8",		 56 },
+    { "9",		 57 },
+    { "colon",		 58 },
+    { "semicolon",	 59 },
+    { "less",		 60 },
+    { "equal",		 61 },
+    { "greater",	 62 },
+    { "question",	 63 },
+    { "congruent",	 64 },
 
-    "Alpha",	      65,    /* Upper Case Greek Characters */
-    "Beta",	      66,
-    "Chi",	      67,
-    "Delta",	      68,
-    "Epsilon",	      69,
-    "Phi",	      70,
-    "Gamma",	      71,
-    "Eta",	      72,
-    "Iota",	      73,
-    "theta1",	      74,
-    "Kappa",	      75,
-    "Lambda",	      76,
-    "Mu",	      77,
-    "Nu",	      78,
-    "Omicron",	      79,
-    "Pi",	      80,
-    "Theta",	      81,
-    "Rho",	      82,
-    "Sigma",	      83,
-    "Tau",	      84,
-    "Upsilon",	      85,
-    "sigma1",	      86,
-    "Omega",	      87,
-    "Xi",	      88,
-    "Psi",	      89,
-    "Zeta",	      90,
+    { "Alpha",		 65 },	 /* Upper Case Greek Characters */
+    { "Beta",		 66 },
+    { "Chi",		 67 },
+    { "Delta",		 68 },
+    { "Epsilon",	 69 },
+    { "Phi",		 70 },
+    { "Gamma",		 71 },
+    { "Eta",		 72 },
+    { "Iota",		 73 },
+    { "theta1",		 74 },
+    { "Kappa",		 75 },
+    { "Lambda",		 76 },
+    { "Mu",		 77 },
+    { "Nu",		 78 },
+    { "Omicron",	 79 },
+    { "Pi",		 80 },
+    { "Theta",		 81 },
+    { "Rho",		 82 },
+    { "Sigma",		 83 },
+    { "Tau",		 84 },
+    { "Upsilon",	 85 },
+    { "sigma1",		 86 },
+    { "Omega",		 87 },
+    { "Xi",		 88 },
+    { "Psi",		 89 },
+    { "Zeta",		 90 },
 
-    "bracketleft",    91,    /* Miscellaneous Special Characters */
-    "therefore",      92,
-    "bracketright",   93,
-    "perpendicular",  94,
-    "underscore",     95,
-    "radicalex",      96,
+    { "bracketleft",	 91 },	/* Miscellaneous Special Characters */
+    { "therefore",	 92 },
+    { "bracketright",	 93 },
+    { "perpendicular",	 94 },
+    { "underscore",	 95 },
+    { "radicalex",	 96 },
 
-    "alpha",	      97,    /* Lower Case Greek Characters */
-    "beta",	      98,
-    "chi",	      99,
-    "delta",	     100,
-    "epsilon",	     101,
-    "phi",	     102,
-    "gamma",	     103,
-    "eta",	     104,
-    "iota",	     105,
-    "phi1",	     106,
-    "kappa",	     107,
-    "lambda",	     108,
-    "mu",	     109,
-    "nu",	     110,
-    "omicron",	     111,
-    "pi",	     112,
-    "theta",	     113,
-    "rho",	     114,
-    "sigma",	     115,
-    "tau",	     116,
-    "upsilon",	     117,
-    "omega1",	     118,
-    "omega",	     119,
-    "xi",	     120,
-    "psi",	     121,
-    "zeta",	     122,
+    { "alpha",		 97 },	/* Lower Case Greek Characters */
+    { "beta",		 98 },
+    { "chi",		 99 },
+    { "delta",		100 },
+    { "epsilon",	101 },
+    { "phi",		102 },
+    { "gamma",		103 },
+    { "eta",		104 },
+    { "iota",		105 },
+    { "phi1",		106 },
+    { "kappa",		107 },
+    { "lambda",		108 },
+    { "mu",		109 },
+    { "nu",		110 },
+    { "omicron",	111 },
+    { "pi",		112 },
+    { "theta",		113 },
+    { "rho",		114 },
+    { "sigma",		115 },
+    { "tau",		116 },
+    { "upsilon",	117 },
+    { "omega1",		118 },
+    { "omega",		119 },
+    { "xi",		120 },
+    { "psi",		121 },
+    { "zeta",		122 },
 
-    "braceleft",     123,    /* Miscellaneous Special Characters */
-    "bar",	     124,
-    "braceright",    125,
-    "similar",	     126,
+    { "braceleft",	123 },	/* Miscellaneous Special Characters */
+    { "bar",		124 },
+    { "braceright",	125 },
+    { "similar",	126 },
 
-    "Upsilon1",	     161,    /* Lone Greek */
-    "minute",	     162,
-    "lessequal",     163,
-    "fraction",	     164,
-    "infinity",	     165,
-    "florin",	     166,
-    "club",	     167,
-    "diamond",	     168,
-    "heart",	     169,
-    "spade",	     170,
-    "arrowboth",     171,
-    "arrowleft",     172,
-    "arrowup",	     173,
-    "arrowright",    174,
-    "arrowdown",     175,
-    "degree",	     176,
-    "plusminus",     177,
-    "second",	     178,
-    "greaterequal",  179,
-    "multiply",	     180,
-    "proportional",  181,
-    "partialdiff",   182,
-    "bullet",	     183,
-    "divide",	     184,
-    "notequal",	     185,
-    "equivalence",   186,
-    "approxequal",   187,
-    "ellipsis",	     188,
-    "arrowvertex",   189,
-    "arrowhorizex",  190,
-    "carriagereturn",191,
-    "aleph",	     192,
-    "Ifraktur",	     193,
-    "Rfraktur",	     194,
-    "weierstrass",   195,
-    "circlemultiply",196,
-    "circleplus",    197,
-    "emptyset",	     198,
-    "intersection",  199,
-    "union",	     200,
-    "propersuperset",201,
-    "reflexsuperset",202,
-    "notsubset",     203,
-    "propersubset",  204,
-    "reflexsubset",  205,
-    "element",	     206,
-    "notelement",    207,
-    "angle",	     208,
-    "gradient",	     209,
-    "registerserif", 210,
-    "copyrightserif",211,
-    "trademarkserif",212,
-    "product",	     213,
-    "radical",	     214,
-    "dotmath",	     215,
-    "logicaland",    217,
-    "logicalor",     218,
-    "arrowdblboth",  219,
-    "arrowdblleft",  220,
-    "arrowdblup",    221,
-    "arrowdblright", 222,
-    "arrowdbldown",  223,
-    "lozenge",	     224,
-    "angleleft",     225,
-    "registersans",  226,
-    "copyrightsans", 227,
-    "trademarksans", 228,
-    "summation",     229,
-    "parenlefttp",   230,
-    "parenleftex",   231,
-    "parenleftbt",   232,
-    "bracketlefttp", 233,
-    "bracketleftex", 234,
-    "bracketleftbt", 235,
-    "bracelefttp",   236,
-    "braceleftmid",  237,
-    "braceleftbt",   238,
-    "braceex",	     239,
-    "angleright",    241,
-    "integral",	     242,
-    "integraltp",    243,
-    "integralex",    244,
-    "integralbt",    245,
-    "parenrighttp",  246,
-    "parenrightex",  247,
-    "parenrightbt",  248,
-    "bracketrighttp",249,
-    "bracketrightex",250,
-    "bracketrightbt",251,
-    "bracerighttp",  252,
-    "bracerightmid", 253,
-    "bracerightbt",  254,
+    { "Upsilon1",	161 },	/* Lone Greek */
+    { "minute",		162 },
+    { "lessequal",	163 },
+    { "fraction",	164 },
+    { "infinity",	165 },
+    { "florin",		166 },
+    { "club",		167 },
+    { "diamond",	168 },
+    { "heart",		169 },
+    { "spade",		170 },
+    { "arrowboth",	171 },
+    { "arrowleft",	172 },
+    { "arrowup",	173 },
+    { "arrowright",	174 },
+    { "arrowdown",	175 },
+    { "degree",		176 },
+    { "plusminus",	177 },
+    { "second",		178 },
+    { "greaterequal",	179 },
+    { "multiply",	180 },
+    { "proportional",	181 },
+    { "partialdiff",	182 },
+    { "bullet",		183 },
+    { "divide",		184 },
+    { "notequal",	185 },
+    { "equivalence",	186 },
+    { "approxequal",	187 },
+    { "ellipsis",	188 },
+    { "arrowvertex",	189 },
+    { "arrowhorizex",	190 },
+    { "carriagereturn", 191 },
+    { "aleph",		192 },
+    { "Ifraktur",	193 },
+    { "Rfraktur",	194 },
+    { "weierstrass",	195 },
+    { "circlemultiply", 196 },
+    { "circleplus",	197 },
+    { "emptyset",	198 },
+    { "intersection",	199 },
+    { "union",		200 },
+    { "propersuperset", 201 },
+    { "reflexsuperset", 202 },
+    { "notsubset",	203 },
+    { "propersubset",	204 },
+    { "reflexsubset",	205 },
+    { "element",	206 },
+    { "notelement",	207 },
+    { "angle",		208 },
+    { "gradient",	209 },
+    { "registerserif",	210 },
+    { "copyrightserif", 211 },
+    { "trademarkserif", 212 },
+    { "product",	213 },
+    { "radical",	214 },
+    { "dotmath",	215 },
+    { "logicaland",	217 },
+    { "logicalor",	218 },
+    { "arrowdblboth",	219 },
+    { "arrowdblleft",	220 },
+    { "arrowdblup",	221 },
+    { "arrowdblright",	222 },
+    { "arrowdbldown",	223 },
+    { "lozenge",	224 },
+    { "angleleft",	225 },
+    { "registersans",	226 },
+    { "copyrightsans",	227 },
+    { "trademarksans",	228 },
+    { "summation",	229 },
+    { "parenlefttp",	230 },
+    { "parenleftex",	231 },
+    { "parenleftbt",	232 },
+    { "bracketlefttp",	233 },
+    { "bracketleftex",	234 },
+    { "bracketleftbt",	235 },
+    { "bracelefttp",	236 },
+    { "braceleftmid",	237 },
+    { "braceleftbt",	238 },
+    { "braceex",	239 },
+    { "angleright",	241 },
+    { "integral",	242 },
+    { "integraltp",	243 },
+    { "integralex",	244 },
+    { "integralbt",	245 },
+    { "parenrighttp",	246 },
+    { "parenrightex",	247 },
+    { "parenrightbt",	248 },
+    { "bracketrighttp", 249 },
+    { "bracketrightex", 250 },
+    { "bracketrightbt", 251 },
+    { "bracerighttp",	252 },
+    { "bracerightmid",	253 },
+    { "bracerightbt",	254 },
 
-    NULL,	       0,
+    { NULL,		  0 },
 };
 
 static int SymbolCode(SEXP expr)
@@ -1165,6 +1165,8 @@ static BBOX RenderAtom(SEXP expr, int draw)
 	return RenderNumber(expr, draw);
     else if (StringAtom(expr))
 	return RenderString(expr, draw);
+
+    return NullBBox();		/* -Wall */
 }
 
 
@@ -1203,20 +1205,22 @@ static BBOX RenderSpace(SEXP expr, int draw)
     }
     else
 	error("invalid mathematical annotation\n");
+
+    return NullBBox();		/* -Wall */
 }
 
 static SymTab BinTable[] = {
-    "*",		052,	/* Binary Operators */
-    "+",		053,
-    "-",		055,
-    "/",		057,
-    ":",		072,
-    "%+-%",	       0261,
-    "%*%",	       0264,
-    "%/%",	       0270,
-    "%intersection%",  0307,
-    "%union%",	       0310,
-    NULL,		  0
+    { "*",		 052 },	/* Binary Operators */
+    { "+",		 053 },
+    { "-",		 055 },
+    { "/",		 057 },
+    { ":",		 072 },
+    { "%+-%",		0261 },
+    { "%*%",		0264 },
+    { "%/%",		0270 },
+    { "%intersection%", 0307 },
+    { "%union%",	0310 },
+    { NULL,		   0 }
 };
 
 static int BinAtom(SEXP expr)
@@ -1331,7 +1335,11 @@ static BBOX RenderBin(SEXP expr, int draw)
 	bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
 	return CombineBBoxes(bbox, RenderElement(CADR(expr), draw));
     }
-    else error("invalid mathematical annotation\n");
+    else
+	error("invalid mathematical annotation\n");
+
+    return NullBBox();		/* -Wall */
+
 }
 
 
@@ -1386,7 +1394,7 @@ static BBOX RenderSup(SEXP expr, int draw)
     BBOX bodyBBox, subBBox, supBBox;
     SEXP body = CADR(expr);
     SEXP sup = CADDR(expr);
-    SEXP sub;
+    SEXP sub = R_NilValue;	/* -Wall */
     STYLE style = GetStyle();
     double savedX = CurrentX;
     double savedY = CurrentY;
@@ -1584,10 +1592,10 @@ static struct {
     int code;
 }
 AccentTable[] = {
-    "hat",	      94,
-    "ring",	     176,
-    "tilde",	     126,
-    NULL,	       0,
+    { "hat",		 94 },
+    { "ring",		176 },
+    { "tilde",		126 },
+    { NULL,		  0 },
 };
 
 static int AccentCode(SEXP expr)
@@ -2107,18 +2115,18 @@ static BBOX RenderInt(SEXP expr, int draw)
 #define OperatorSymbolMag  1.25
 
 static SymTab OpTable[] = {
-    "prod",	     S_PRODUCT,
-    "sum",	     S_SUM,
-    "union",	     S_UNION,
-    "intersect",     S_INTERSECTION,
-    "lim",	     N_LIM,
-    "liminf",	     N_LIMINF,
-    "limsup",	     N_LIMINF,
-    "inf",	     N_INF,
-    "sup",	     N_SUP,
-    "min",	     N_MIN,
-    "max",	     N_MAX,
-    NULL,	     0
+    { "prod",		S_PRODUCT },
+    { "sum",		S_SUM },
+    { "union",		S_UNION },
+    { "intersect",	S_INTERSECTION },
+    { "lim",		N_LIM },
+    { "liminf",		N_LIMINF },
+    { "limsup",		N_LIMINF },
+    { "inf",		N_INF },
+    { "sup",		N_SUP },
+    { "min",		N_MIN },
+    { "max",		N_MAX },
+    { NULL,		0 }
 };
 
 static int OpAtom(SEXP expr)
@@ -2173,6 +2181,7 @@ static BBOX RenderOp(SEXP expr, int draw)
     BBOX opBBox = RenderOpSymbol(CAR(expr), 0);
     double width = bboxWidth(opBBox);
     double hshift, lvshift, uvshift;
+    lvshift = uvshift = 0;	/* -Wall */
     if (nexpr > 2) {
 	SetSubStyle(style);
 	lowerBBox = RenderElement(CADDR(expr), 0);
@@ -2402,36 +2411,36 @@ static BBOX RenderCurly(SEXP expr, int draw)
 				/* Binary Relationships */
 
 SymTab RelTable[] = {
-    "<",		 60,	/* less */
-    "==",		 61,	/* equal */
-    ">",		 62,	/* greater */
-    "%=~%",		 64,	/* congruent */
-    "!=",		185,	/* not equal */
-    "<=",		163,	/* less or equal */
-    ">=",		179,	/* greater or equal */
-    "%==%",		186,	/* equivalence */
-    "%~~%",		187,	/* approxequal */
+    { "<",		 60 },	/* less */
+    { "==",		 61 },	/* equal */
+    { ">",		 62 },	/* greater */
+    { "%=~%",		 64 },	/* congruent */
+    { "!=",		185 },	/* not equal */
+    { "<=",		163 },	/* less or equal */
+    { ">=",		179 },	/* greater or equal */
+    { "%==%",		186 },	/* equivalence */
+    { "%~~%",		187 },	/* approxequal */
 
-    "%<->%",		171,	/* Arrows */
-    "%<-%",		172,
-    "%up%",		173,
-    "%->%",		174,
-    "%down%",		175,
-    "%<=>%",		219,
-    "%<=%",		220,
-    "%dblup%",		221,
-    "%=>%",		222,
-    "%dbldown%",	223,
+    { "%<->%",		171 },	/* Arrows */
+    { "%<-%",		172 },
+    { "%up%",		173 },
+    { "%->%",		174 },
+    { "%down%",		175 },
+    { "%<=>%",		219 },
+    { "%<=%",		220 },
+    { "%dblup%",	221 },
+    { "%=>%",		222 },
+    { "%dbldown%",	223 },
 
-    "%supset%",		201,	/* Sets (TeX Names) */
-    "%supseteq%",	202,
-    "%notsubset%",	203,
-    "%subset%",		204,
-    "%subseteq%",	205,
-    "%in%",		206,
-    "%notin%",		207,
+    { "%supset%",	201 },	/* Sets (TeX Names) */
+    { "%supseteq%",	202 },
+    { "%notsubset%",	203 },
+    { "%subset%",	204 },
+    { "%subseteq%",	205 },
+    { "%in%",		206 },
+    { "%notin%",	207 },
 
-    NULL,		 0,
+    { NULL,		  0 },
 };
 
 static int RelAtom(SEXP expr)
@@ -2460,6 +2469,8 @@ static BBOX RenderRel(SEXP expr, int draw)
 	return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw));
     }
     else error("invalid mathematical annotation\n");
+
+    return NullBBox();		/* -Wall */
 }
 
 

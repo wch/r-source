@@ -46,10 +46,15 @@ install-html:
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
 	done
 	@for f in $(srcdir)/html/search/*.class \
-	          $(srcdir)/html/search/*.html  \
-		  $(top_builddir)/doc/html/search/index.txt; do \
+	          $(srcdir)/html/search/*.html; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html/search; \
 	done
+	@if test -f $(top_builddir)/doc/html/search/index.txt \
+	         -a "$(top_builddir)" != "$(rhome)"; then \
+	  $(INSTALL_DATA) $(top_builddir)/doc/html/search/index.txt \
+	                  $(rhome)/doc/html/search; \
+	fi
+
 install-man:
 	@echo "Installing man pages ..."
 	@(cd $(srcdir); \

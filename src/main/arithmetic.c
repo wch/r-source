@@ -269,7 +269,7 @@ static SEXP binary(SEXP op, SEXP args)
 
     if (!(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y))) {
 	errorcall(lcall, "non-numeric argument to binary operator\n");
-	return R_NilValue;/*-Wall*/
+	return R_NilValue;	/* -Wall */
     }
 
     mismatch = 0;
@@ -278,8 +278,8 @@ static SEXP binary(SEXP op, SEXP args)
     xts = isTs(x);
     yts = isTs(y);
 
-    /* if either x or y is a matrix with length 1 and the other */
-    /* is a vector we want to coerce the matrix to be a vector */
+    /* If either x or y is a matrix with length 1 and the other is a
+       vector, we want to coerce the matrix to be a vector. */
 
     /* FIXME: Danger Will Robinson.
      * -----  We might be trashing arguments here.
@@ -344,8 +344,12 @@ static SEXP binary(SEXP op, SEXP args)
 	    PROTECT(tsp = getAttrib(y, R_TspSymbol));
 	    PROTECT(class = getAttrib(y, R_ClassSymbol));
 	}
+    } else {
+	class = tsp = R_NilValue; /* -Wall */
     }
-    if (mismatch) warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length\n");
+    
+    if (mismatch)
+	warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length\n");
 
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
 	x = CAR(args) = coerceVector(x, CPLXSXP);

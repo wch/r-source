@@ -2,7 +2,7 @@ dnl configure.in
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 1998 R Core Team
+dnl Copyright (C) 1998, 1999 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -154,7 +154,9 @@ AC_PROG_RANLIB
 AC_PROG_YACC
 
 AC_CHECK_PROG(AR, ar, ar)
-AC_CHECK_PROG(RATFOR, ratfor, ratfor)
+AC_SUBST(AR)
+ARFLAGS=${ARFLAGS-"rc"}
+AC_SUBST(ARFLAGS)
 
 AC_PATH_PROG(LATEX, latex, false)
 AC_PATH_PROG(DVIPS, dvips, false)
@@ -171,8 +173,7 @@ AC_PATH_PROG(PERL, perl)
 if test -n "${PERL}"; then
   AC_MSG_CHECKING(whether perl is perl 5)
   perl_version=`${PERL} -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
-  if test ${perl_version} -ge 5
-  then
+  if test ${perl_version} -ge 5; then
     NO_PERL5=false
     AC_MSG_RESULT(yes)
   else
@@ -219,20 +220,6 @@ case ${host} in
 esac
 
 ## FORTRAN compiler
-##
-## We need these before trying to find libf2c.
-
-if test -z "${AR}"; then
-  AR=ar
-fi
-AC_SUBST(AR)
-
-if test -z "${ARFLAGS}"; then
-  ARFLAGS="rc"
-fi
-AC_SUBST(ARFLAGS)
-
-AC_PROG_RANLIB
 
 ## If we haven't been forced to use a particular FORTRAN compiler, try
 ## to find one using one of the several common names.
@@ -281,7 +268,7 @@ else
   if test -z "${F77}"; then
     AC_CHECK_PROGS(F2C, f2c)
   else
-    f77_output=`${F77} -v 2>&1 | grep "GNU F77"`
+    f77_output=`${F77} -v 2>&1 | grep "GNU F77\|egcs\|g77"`
     if test -n "${f77_output}"; then
       f77_is_g77=true
     fi
@@ -302,7 +289,7 @@ main() { try_(); }
 EOF
   ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
     conftest.c conftestf.o 1>/dev/null 2>/dev/null
-  if test $? = 0; then
+  if test ${?} = 0; then
     AC_MSG_RESULT(yes)
     AC_DEFINE(HAVE_F77_UNDERSCORE)
   else
@@ -311,7 +298,7 @@ main() { try(); }
 EOF
     ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
       conftest.c conftestf.o 1>/dev/null 2>/dev/null
-    if test $? = 0; then
+    if test ${?} = 0; then
       AC_MSG_RESULT(no)
     else
       AC_MSG_ERROR([Nothing worked - cannot use FORTRAN])
@@ -331,26 +318,18 @@ EOF
 	$(FC) $(FFLAGS) $(FPICFLAGS) -c $< -o $@
 EOF
 elif test -n "${F2C}"; then
-### -- I cannibalized most of the following out of octave 2.0.5,
-### -- I have only a vague idea how it works... (-pd)
-
-### Not necessary (?)
-#  AC_DEFINE(F77_APPEND_UNDERSCORE, 1)
-#  AC_MSG_RESULT([defining F77_APPEND_UNDERSCORE to be 1])
-
-### This seems to be necessary on some Linux system.
-### -- you bet! -pd
-
-  cat > conftest.$ac_ext << EOF
+  ## I cannibalized most of the following out of octave 2.0.5, I have
+  ## only a vague idea how it works... (-pd) 
+  ##
+  ## This seems to be necessary on some Linux system.
+  ## -- you bet! -pd
+  cat > conftest.${ac_ext} << EOF
 int MAIN_ () { return 0; }
 int MAIN__ () { return 0; }
 EOF
-
-### XXX FIXME XXX -- these shouldn't be fixed names, eh?
-
+  ## XXX FIXME XXX -- these shouldn't be fixed names, eh?
   R_conflib=libconflib.a
   R_obj_ext=o
-
   if AC_TRY_EVAL(ac_compile); then
     $AR $ARFLAGS $R_conflib conftest.$R_obj_ext 1>&AC_FD_CC
     if test -n "$RANLIB"; then
@@ -372,8 +351,8 @@ EOF
     AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
   fi
   f77_rules_frag_top=Makefrag.top
-  ### for some reason these can't be .f.c/.f.o, at least in GNU make
-  ### this probably makes *other* makes useless... (-pd)
+  ## for some reason these can't be .f.c/.f.o, at least in GNU make
+  ## this probably makes *other* makes useless... (-pd)
   cat << \EOF > ${f77_rules_frag_top}
 %.c : %.f
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
@@ -503,28 +482,27 @@ elif test ${SIZEOF_LONG} -eq 4; then
   AC_DEFINE(LONG_32_BITS)
 fi
   
-## Check for nasty OSF sprintf bug
-
-# AC_MSG_CHECKING(for osf sprintf bug)
-# AC_TRY_RUN(
-# changequote(<<, >>)dnl
-# <<
-# #include <stdio.h>
-# char buf[100];
-# main()
-# {
-# sprintf(buf, "%*.*f",3,0,100.0); /* printf("%s\n", buf); */
-# sprintf(buf, "%*.*f",1,0,1.0); /* printf("%s\n", buf); */
-# if(strcmp(buf,"1")) exit(666);
-# else exit(0);
-# }
-# >>,
-# changequote([, ])dnl
-# AC_DEFINE(HAVE_OSF_SPRINTF_NOBUG)
-# AC_MSG_RESULT(no),
-# AC_DEFINE(HAVE_OSF_SPRINTF_BUG)
-# AC_MSG_RESULT(yes),
-# AC_MSG_ERROR(You can't cross compile R))
+case ${host} in
+  *irix*)
+    AC_MSG_CHECKING(whether compilers need -OPT:IEEE_NaN_inf=ON)
+    AC_TRY_RUN(
+      changequote(<<, >>)dnl
+      <<
+      #include <math.h>
+      #include <ieeefp.h>
+      int main () {
+        double x = 0;
+        fpsetmask(0); x = x / x; return (x != x);
+      }
+      >>,
+      changequote([, ])dnl
+      AC_MSG_RESULT(yes)
+      CFLAGS="${CFLAGS} -OPT:IEEE_NaN_inf=ON"
+      FFLAGS="${FFLAGS} -OPT:IEEE_NaN_inf=ON",
+      AC_MSG_RESULT(no),
+      AC_MSG_WARN(cannot determine when cross-compiling))
+    ;;
+esac    
 
 ##  DLL linking.
 
@@ -603,6 +581,16 @@ case "${host}" in
     ;;
   *sgi*)
     SHLIBLDFLAGS="-shared"
+    if ${cc_is_gcc}; then
+      CPICFLAGS=-fPIC
+    else
+      CPICFLAGS=-KPIC
+    fi
+    if ${f77_is_g77}; then
+      FPICFLAGS=-fPIC
+    else
+      FPICFLAGS=-PIC
+    fi
     ;;
   *hpux*)
     AC_DEFINE(USE_BUILTIN_RINT)
