@@ -203,6 +203,7 @@ NEW FEATURES
 	source.url() are now deprecated, and hence method="socket' in
 	download.file() is.  Use url connections instead.
 
+    o	Formerly deprecated function getenv() is now defunct.
 
 
 BUG FIXES

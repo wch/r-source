@@ -19,6 +19,7 @@
 \alias{system.test}
 \alias{dotplot}
 \alias{stripplot}
+\alias{getenv}
 %
 \description{
   The functions listed here are no longer part of \R as they are not
@@ -47,9 +48,12 @@ system.test(.)
 % Removed in 1.3.0
 dotplot(\dots)
 stripplot(\dots)
+getenv(\dots)
 % </Removed 1.3.0>
 }
 \details{
+  \code{.Defunct} is the function to which defunct functions are set.
+  
   \code{category} has been an old-S function before there were factors;
   should be replaced by \code{\link{factor}} throughout!
 
@@ -65,8 +69,8 @@ stripplot(\dots)
 
   \code{dotplot} and \code{stripplot} have been renamed to
   \code{\link{dotchart}} and \code{\link{stripchart}}, respectively.
-  
-  \code{.Defunct} is the function to which defunct functions are set.
+
+  \code{getenv} has been replaced by \code{\link{Sys.getenv}}.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}

@@ -9,13 +9,6 @@
 		  sep = ""))
 }
 
-## Deprecated in 1.2.0
-getenv <- function(x) {
-    .Deprecated("Sys.getenv")
-    Sys.getenv(x)
-}
-## </Deprecated>
-
 ## Deprecated in 1.3.0
 "httpclient" <-
     function (url, port = 80, error.is.fatal = TRUE, check.MIME.type = TRUE,
