@@ -1120,12 +1120,6 @@ case "${host_os}" in
     dylib_ldflags="-dynamiclib"
     MAJR_VERSION=`echo "${PACKAGE_VERSION}" | sed  -e "s/[[\.]][[1-9]]$/.0/"` 
     LIBR_LDFLAGS="-dynamiclib -install_name libR.dylib -compatibility_version ${MAJR_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
-    ## <FIXME>
-    ## We need '-framework Carbon' because currently the Quartz device
-    ## driver gets linked to the main binary and hence also the R dylib.
-    ## Change once the driver is modularized.
-    ## R_SH_VAR_ADD(LIBR_LDFLAGS, [-framework Carbon])
-    ## </FIXME>
     RLAPACK_LDFLAGS="-install_name \$(Rexeclibdir)/libRlapack.dylib"
     ;;
   hpux*)
