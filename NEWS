@@ -184,6 +184,9 @@ NEW FEATURES
 
      o 	New function mapply(), a multivariate lapply().
 
+     o	New function r2dtable() for generating random samples of two-way
+	tables with given marginals using Patefield's algorithm.
+
 
 INSTALLATION CHANGES
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 
 #include <Defn.h>
 #include <R_ext/Random.h>
+#include <R_ext/Applic.h>	/* for rcont2() */
 #include <Rmath.h>		/* for rxxx functions, MATH_CHECK  */
 
 static void invalid(SEXP call)
@@ -439,4 +440,66 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     PutRNGstate();
     UNPROTECT(1);
     return y;
+}
+
+SEXP
+R_r2dtable(SEXP n, SEXP r, SEXP c)
+{
+    int nr, nc, *row_sums, *col_sums, i, *jwork;
+    int n_of_samples, n_of_cases;
+    double *fact;
+    SEXP ans, *tables;
+
+    nr = length(r);
+    nc = length(c);
+
+    /* Note that the R code in r2dtable() also checks for missing and
+       negative values.
+       Should maybe do the same here ...
+    */
+    if(!isInteger(n) || (length(n) == 0) ||
+       !isInteger(r) || (nr == 0) ||
+       !isInteger(c) || (nc == 0))
+	error("invalid arguments");
+
+    n_of_samples = INTEGER(n)[0];
+    row_sums = INTEGER(r);
+    col_sums = INTEGER(c);
+
+    /* Compute total number of cases as the sum of the row sums.
+       Note that the R code in r2dtable() also checks whether this is
+       the same as the sum of the col sums.
+       Should maybe do the same here ...
+    */
+    n_of_cases = 0;
+    jwork = row_sums;
+    for(i = 0; i < nr; i++)
+	n_of_cases += *jwork++;
+
+    /* Log-factorials from 0 to n_of_cases + 1. */
+    fact = (double *) R_alloc(n_of_cases + 1, sizeof(double));
+    fact[0] = 0.;
+    for(i = 1; i <= n_of_cases; i++)
+	fact[i] = lgammafn((double) (i + 1));
+
+    jwork = (int *) R_alloc(nc, sizeof(int));
+
+    PROTECT(ans = allocVector(VECSXP, n_of_samples));
+    tables = (SEXP *) R_alloc(n_of_samples, sizeof(SEXP));
+
+    GetRNGstate();
+
+    for(i = 0; i < n_of_samples; i++) {
+	PROTECT(tables[i] = allocMatrix(INTSXP, nr, nc));
+	rcont2(&nr, &nc, row_sums, col_sums, &n_of_cases, fact, 
+	       jwork, INTEGER(tables[i]));
+	SET_VECTOR_ELT(ans, i, tables[i]);
+	UNPROTECT(1);
+    }
+
+    PutRNGstate();
+    
+    UNPROTECT(1);
+    
+    return(ans);
 }

@@ -1,4 +1,4 @@
-/**
+/*
  *  This file replaces the previously used ROUTINES file and is used to
  *  explicitly register native routines that are located in the R
  *  executable (e.g. R.bin, Rgui.exe) but which are intended to be
@@ -34,19 +34,20 @@
 
 #include "basedecl.h"
 
-/*
-  Omitted (relative to those in ROUTINES)
-fft_factor
-fft_work
-fdhess
-optif9
+/* Omitted (relative to those in ROUTINES):
+   
+   fft_factor
+   fft_work
+   fdhess
+   optif9
 
- These can still be called directly in native code in a package.
- They are just not exported here for access via the .C(), .Call(), 
- .Fortran() or .External() interfaces.
+   These can still be called directly in native code in a package.
+   They are just not exported here for access via the .C(), .Call(), 
+   .Fortran() or .External() interfaces.
 
- If these omitted routines are not visible to package DLLs/shared libraries on some platforms, 
- the package should be linked against Rdll.lib or libR.so or the equivalent on that platform.
+   If these omitted routines are not visible to package DLLs/shared
+   libraries on some platforms, the package should be linked against
+   Rdll.lib or libR.so or the equivalent on that platform.
 */
 
 R_NativePrimitiveArgType R_approx_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
@@ -82,7 +83,8 @@ R_NativePrimitiveArgType spline_eval_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, IN
 
 R_NativePrimitiveArgType stemleaf_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
 
-/* Note the ANYSXP in the first place. Doesn't quite work. Needs investigation.
+/* Note the ANYSXP in the first place.
+   Doesn't quite work.  Needs investigation.
    See the odd first argument in the routine's definition.
 */
 R_NativePrimitiveArgType str_signif_t[] = {ANYSXP, INTSXP, STRSXP, INTSXP, INTSXP, STRSXP, STRSXP, STRSXP};
@@ -138,7 +140,7 @@ static R_CMethodDef cMethods [] = {
 #endif
     CDEF(R_tabulate),
 
-/* Sockets */    
+    /* Sockets */    
     CDEF(Rsockconnect),
     CDEF(Rsockopen),
     CDEF(Rsocklisten),
@@ -146,11 +148,11 @@ static R_CMethodDef cMethods [] = {
     CDEF(Rsockread),
     CDEF(Rsockwrite),
 
-/* nmath cleanup */
+    /* nmath cleanup */
     {"signrank_free", (DL_FUNC)&signrank_free, 0, NULL},
     {"wilcox_free", (DL_FUNC)&wilcox_free, 0, NULL},
 
-/* bandwidth selectors */
+    /* bandwidth selectors */
     CDEF(band_ucv_bin),
     CDEF(band_bcv_bin),
     CDEF(band_phi4_bin),
@@ -166,7 +168,7 @@ static R_CMethodDef cMethods [] = {
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static R_CallMethodDef callMethods [] = {
-/* lapack */
+    /* lapack */
     CALLDEF(La_svd, 7),
     CALLDEF(La_rs, 3),
     CALLDEF(La_rg, 2),
@@ -180,22 +182,27 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(La_chol2inv, 2),
     CALLDEF(La_chol, 1),
 
-/* in ../main/unique.c to use hashing */
+    /* In @file{../main/unique.c} to use hashing. */
     CALLDEF(Rrowsum_matrix, 4),
     CALLDEF(Rrowsum_df, 4),
 
-/* Top-level task callbacks */ 
+    /* Top-level task callbacks */ 
     CALLDEF(R_getTaskCallbackNames, 0),
     CALLDEF(R_removeTaskCallback, 1),
     CALLDEF(R_addTaskCallback, 4),
 
-/* Reflectance for the dynamically loaded native symbols */
+    /* Reflectance for the dynamically loaded native symbols. */
     CALLDEF(R_getSymbolInfo, 2),
 
-/* mapply */
+    /* mapply */
     CALLDEF(do_mapply, 4),
 
-/* Methods related routines. */
+    /* in ../main/random.c to generate 'sequences' of random 2-d tables
+     * using Patefield's algorithm.
+     */
+    CALLDEF(R_r2dtable, 3),
+
+    /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),
     CALLDEF(R_traceOnOff, 1),
     {NULL, NULL, 0}
@@ -213,7 +220,7 @@ static R_ExternalMethodDef externalMethods [] = {
 
 #define FDEF(name)  {#name, (DL_FUNC) &F77_SYMBOL(name), -1, NULL}
 R_FortranMethodDef fortranMethods[] = {
-/* Linpack */
+    /* Linpack */
     FDEF(ch2inv),
     FDEF(chol),
     FDEF(cg),
