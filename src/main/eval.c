@@ -619,6 +619,149 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     return (tmp);
 }
 
+/* **** FIXME: This code is factored out of applyClosure.  If we keep
+   **** it we should change applyClosure to run through this routine
+   **** to avoid code drift. */
+static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+			  SEXP newrho)
+{
+    SEXP body, tmp;
+    RCNTXT cntxt;
+
+    body = BODY(op);
+
+    begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist, op);
+
+    /* The default return value is NULL.  FIXME: Is this really needed
+       or do we always get a sensible value returned?  */
+
+    tmp = R_NilValue;
+
+    /* Debugging */
+
+    SET_DEBUG(newrho, DEBUG(op));
+    if (DEBUG(op)) {
+	Rprintf("debugging in: ");
+	PrintValueRec(call,rho);
+	/* Find out if the body is function with only one statement. */
+	if (isSymbol(CAR(body)))
+	    tmp = findFun(CAR(body), rho);
+	else
+	    tmp = eval(CAR(body), rho);
+	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
+	   && !strcmp( PRIMNAME(tmp), "for")
+	   && !strcmp( PRIMNAME(tmp), "{")
+	   && !strcmp( PRIMNAME(tmp), "repeat")
+	   && !strcmp( PRIMNAME(tmp), "while")
+	   )
+	    goto regdb;
+	Rprintf("debug: ");
+	PrintValue(body);
+	do_browser(call,op,arglist,newrho);
+    }
+
+ regdb:
+
+    /*  It isn't completely clear that this is the right place to do
+	this, but maybe (if the matchArgs above reverses the
+	arguments) it might just be perfect.  */
+
+#ifdef  HASHING
+#define HASHTABLEGROWTHRATE  1.2
+    {
+	SEXP R_NewHashTable(int, double);
+	SEXP R_HashFrame(SEXP);
+	int nargs = length(arglist);
+	HASHTAB(newrho) = R_NewHashTable(nargs, HASHTABLEGROWTHRATE);
+	newrho = R_HashFrame(newrho);
+    }
+#endif
+#undef  HASHING
+
+    /*  Set a longjmp target which will catch any explicit returns
+	from the function body.  */
+
+    if ((SETJMP(cntxt.cjmpbuf))) {
+	if (R_ReturnedValue == R_RestartToken) {
+	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
+	    R_ReturnedValue = R_NilValue;  /* remove restart token */
+	    PROTECT(tmp = eval(body, newrho));
+	}
+	else
+	    PROTECT(tmp = R_ReturnedValue);
+    }
+    else {
+	PROTECT(tmp = eval(body, newrho));
+    }
+
+    endcontext(&cntxt);
+
+    if (DEBUG(op)) {
+	Rprintf("exiting from: ");
+	PrintValueRec(call, rho);
+    }
+    UNPROTECT(1);
+    return (tmp);
+}
+
+/* **** FIXME: Temporary code to execute S4 methods in a way that
+   **** preserves lexical scope. */
+
+static SEXP R_dot_Generic = NULL;
+static SEXP R_dot_Method = NULL;
+static SEXP R_dot_Methods = NULL;
+static SEXP R_dot_defined = NULL;
+static SEXP R_dot_target = NULL;
+
+SEXP R_execMethod(SEXP op, SEXP rho)
+{
+    SEXP call, arglist, callerenv, newrho, next, val;
+
+    if (R_dot_Generic == NULL) {
+	R_dot_Generic = install(".Generic");
+	R_dot_Method = install(".Method");
+	R_dot_Methods = install(".Methods");
+	R_dot_defined = install(".defined");
+	R_dot_target = install(".target");
+    }
+
+    /* create a new environment frame enclosed by the lexical
+       environment of the method */
+    PROTECT(newrho = Rf_NewEnvironment(R_NilValue, R_NilValue, CLOENV(op)));
+
+    /* copy the bindings for the formal environment from the top frame
+       of the internal environment of the generic call to the new
+       frame */
+    for (next = FORMALS(op); next != R_NilValue; next = CDR(next)) {
+	val = findVarInFrame(rho, TAG(next));
+	/**** check for unbound value--should not happen */
+	defineVar(TAG(next), val, newrho);
+    }
+
+    /* copy the bindings of the spacial dispatch variables in the top
+       frame of the generic call to the new frame */
+    defineVar(R_dot_defined, findVarInFrame(rho, R_dot_defined), newrho);
+    defineVar(R_dot_Method, findVarInFrame(rho, R_dot_Method), newrho);
+    defineVar(R_dot_target, findVarInFrame(rho, R_dot_target), newrho);
+
+    /* copy the bindings for .Generic and .Methods.  We know (I think)
+       that they are in the second frame, so we could use that. */
+    defineVar(R_dot_Generic, findVar(R_dot_Generic, rho), newrho);
+    defineVar(R_dot_Methods, findVar(R_dot_Methods, rho), newrho);
+
+    /* The calling environment should either be the environment of the
+       generic, rho, or the environment of the caller of the generic,
+       the current sysparent. */
+    callerenv = R_GlobalContext->sysparent; /* or rho? */
+
+    /* get the rest of the stuff we need from the current context,
+       execute the method, and return the result */
+    call = R_GlobalContext->call;
+    arglist = R_GlobalContext->promargs;
+    val = R_execClosure(call, op, arglist, callerenv, newrho);
+    UNPROTECT(1);
+    return val;
+}
 
 static SEXP EnsureLocal(SEXP symbol, SEXP rho)
 {

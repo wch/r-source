@@ -600,8 +600,17 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	f = R_loadMethod(f, fname, ev);
     switch(TYPEOF(f)) {
     case CLOSXP:
+#define IGNORE_LEXICAL_SCOPE
+#ifdef IGNORE_LEXICAL_SCOPE
       PROTECT(val = BODY(f)); nprotect++;
 	val =  eval(val, ev);
+#else
+	{
+	    SEXP R_execMethod(SEXP, SEXP);
+	    PROTECT(f); nprotect++; /* is this needed?? */
+	    val = R_execMethod(f, ev);
+	}
+#endif
 	break;
     case SPECIALSXP: case BUILTINSXP:
 	/* primitives  can't be methods; they arise only as the
