@@ -36,23 +36,18 @@ SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 /* This code places a limit on the depth to which eval can recurse. */
 
 /* Now R correctly handles user breaks
-   Jago, 4 Jun 2001, Stefano M. Iacus
+   This is the fastest way to do handle user breaks
+   and performance are no rather good. 
+   Jago, 13 Jun 2001, Stefano M. Iacus
 */
-extern RgnHandle sMouseRgn;
-extern UInt32 sSleepTime;
 extern Boolean Interrupt;
 
 void isintrpt()
 {
-    EventRecord event;
-    
-    if(!Interrupt)
+   if(!Interrupt)
      return;
      
-    WaitNextEvent( everyEvent  , &event ,sSleepTime , nil);
-    if ((event.modifiers & cmdKey) &&
-	((event.message & charCodeMask) == '.')) {
-	FlushEvents(keyDownMask, 0);
+   if(CheckEventQueueForUserCancel()){  
 	Rprintf("\n");
 	error("user break");
 	raise(SIGINT);
@@ -575,9 +570,10 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 
     /*  Set a longjmp target which will catch any explicit returns
 	from the function body.  */
+
     if ((SETJMP(cntxt.cjmpbuf))) {
 	if (R_ReturnedValue == R_DollarSymbol) {
-	    SET_RESTART_BIT_OFF(cntxt.callflag);  /* turn restart off */
+	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
 	    R_GlobalContext = &cntxt;      /* put the context back */
 	    PROTECT(tmp = eval(body, newrho));
 	}
