@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-29, @value{FAQ-YEAR}-12-31
+@set FAQ-VERSION 1.8-30, @value{FAQ-YEAR}-01-07
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1713,6 +1713,9 @@ G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SenSrivastava
 Collection of datasets from ``Regression Analysis, Theory, Methods and
 Applications'' by A. Sen and M. Srivastava, 1990, Springer-Verlag.
+@item SoPhy
+Soil Physics Tools: simulation of water flux and solute transport in
+soil.
 @item SparseM
 Basic linear algebra for sparse matrices.
 @item StatDataML
