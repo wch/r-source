@@ -667,6 +667,8 @@ BUG FIXES
 	but giving nonsensical results.  Those are not documented
 	valid values for lty. (PR#3217)
     
+    o   Internals for complex assignment did not check that function name
+	was a symbol, which could cause a segfault.
 
 
 

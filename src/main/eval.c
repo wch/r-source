@@ -1171,6 +1171,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(rhs); /* To get the loop right ... */
 
     while (isLanguage(CADR(expr))) {
+	if (TYPEOF(CAR(expr)) != SYMSXP)
+	    error("invalid function in complex assignment");
 	if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
 	    error("overlong name in %s ", CHAR(PRINTNAME(CAR(expr))));
 	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
@@ -1187,6 +1189,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	lhs = CDR(lhs);
 	expr = CADR(expr);
     }
+    if (TYPEOF(CAR(expr)) != SYMSXP)
+	error("invalid function in complex assignment");
     if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
 	error("overlong name in %s ", CHAR(PRINTNAME(CAR(expr))));
     sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
