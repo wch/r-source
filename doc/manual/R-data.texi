@@ -1704,7 +1704,7 @@ zz <- pipe(paste("sed s/\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 ## now look at the output file:
-file.show(outfile, delete.file = TRUE)
+file.show("outfile", delete.file = TRUE)
 
 ## capture R output: use examples from help(lm)
 zz <- textConnection("ex.lm.out", "w")
