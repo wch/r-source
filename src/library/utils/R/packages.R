@@ -177,16 +177,16 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
     if(any(ok)) { # we have at least one bundle installed
         for(b in unique(instp[ok, "Bundle"]))
             if(!is.na(b)) {
-                ok <- which(instp[, "Bundle"] == b)
-                contains <- instp[ok[1], "Contains"]
+                ok1 <- which(instp[, "Bundle"] == b)
+                contains <- instp[ok1[1], "Contains"]
                 if(!is.na(contains)) {
-                    contains <- strsplit(contains, "[:space]+")
-                    if(!all(contains %in% instp[ok, "Package"]))
+                    contains <- strsplit(contains, "[[:space:]]+")[[1]]
+                    if(!all(contains %in% instp[ok1, "Package"]))
                         warning("bundle ", sQuote(b),
                                 " is incompletely installed")
                 }
-                new <- setdiff(strsplit(available[b, "Contains"], "[:space]+"),
-                               instp[ok, "Package"])
+                new <- setdiff(strsplit(available[b, "Contains"], "[[:space:]]+")[[1]],
+                               instp[ok1, "Package"])
                 if(length(new))
                     warning("bundle ", sQuote(b), " has extra contents ",
                             paste(sQuote(new), collapse = ", "))
