@@ -136,6 +136,10 @@ NEW FEATURES
 
     o	New function manova() and summary method.
 
+    o	New functions Sys.getlocale() and Sys.setlocale() to query and
+	set aspects of the locale of the R process, and
+	Sys.localeconv() to find the default decimal point, etc.
+
 
 BUG FIXES
 

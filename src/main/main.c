@@ -336,8 +336,9 @@ void setup_Rmainloop(void)
     /* internal structures. */
 
 #ifdef HAVE_LOCALE_H
-    setlocale(LC_CTYPE,"");/*- make ISO-latin1 etc. work LOCALE users */
+    setlocale(LC_CTYPE,"");/*- make ISO-latin1 etc. work for LOCALE users */
     setlocale(LC_COLLATE,"");/*- alphabetically sorting */
+    setlocale(LC_TIME,"");/*- names and defaults for date-time formats */
     /* setlocale(LC_MESSAGES,""); */
 #endif
     InitMemory();

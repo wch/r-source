@@ -39,7 +39,7 @@ read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", \dots)
   \item{quote}{the set of quoting characters. To disable quoting
     altogether, use \code{quote=""}.}
 
-  \item{dec}{the character used in the fike for decimal points.}
+  \item{dec}{the character used in the file for decimal points.}
 
   \item{row.names}{a vector of row names.  This can be a vector giving
     the actual row names, or a single number giving the column of the

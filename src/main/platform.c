@@ -653,3 +653,134 @@ SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue; /* -Wall */
 }
 #endif
+
+#ifdef HAVE_LOCALE_H
+#include <locale.h>
+#endif
+
+
+SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef HAVE_LOCALE_H
+    SEXP ans;
+    int cat;
+    char *p;
+    
+    checkArity(op, args);
+    cat = asInteger(CAR(args));
+    if(cat == NA_INTEGER || cat < 0)
+	error("invalid `category' argument");
+    switch(cat) {
+    case 1: cat = LC_ALL; break;
+    case 2: cat = LC_COLLATE; break;
+    case 3: cat = LC_CTYPE; break;
+    case 4: cat = LC_MONETARY; break;
+    case 5: cat = LC_NUMERIC; break;
+    case 6: cat = LC_TIME; break;
+    }
+    p = setlocale(cat, NULL);
+    PROTECT(ans = allocVector(STRSXP, 1));
+    if(p) SET_STRING_ELT(ans, 0, mkChar(p));
+    else  SET_STRING_ELT(ans, 0, mkChar(""));
+    UNPROTECT(1);
+    return ans;  
+#else
+    return R_NilValue;
+#endif
+}
+
+SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef HAVE_LOCALE_H
+    SEXP locale = CADR(args), ans;
+    int cat;
+    char *p;
+    
+    checkArity(op, args);
+    cat = asInteger(CAR(args));
+    if(cat == NA_INTEGER || cat < 0)
+	error("invalid `category' argument");
+    if(!isString(locale) || LENGTH(locale) != 1)
+	error("invalid `locale' argument");
+    switch(cat) {
+    case 1: cat = LC_ALL; break;
+    case 2: cat = LC_COLLATE; break;
+    case 3: cat = LC_CTYPE; break;
+    case 4: cat = LC_MONETARY; break;
+    case 5: cat = LC_NUMERIC; break;
+    case 6: cat = LC_TIME; break;
+    }
+    p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+    PROTECT(ans = allocVector(STRSXP, 1));
+    if(p) SET_STRING_ELT(ans, 0, mkChar(p));
+    else  SET_STRING_ELT(ans, 0, mkChar(""));
+    UNPROTECT(1);
+    return ans;
+#else
+    return R_NilValue;
+#endif
+}
+
+
+
+SEXP do_localeconv(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#ifdef HAVE_LOCALE_H
+    SEXP ans, ansnames;
+    struct lconv *lc = localeconv();
+    int i = 0;
+    char buff[20];
+
+    PROTECT(ans = allocVector(STRSXP, 18));
+    PROTECT(ansnames = allocVector(STRSXP, 18));
+    SET_STRING_ELT(ans, i, mkChar(lc->decimal_point));
+    SET_STRING_ELT(ansnames, i++, mkChar("decimal_point"));
+    SET_STRING_ELT(ans, i, mkChar(lc->thousands_sep));
+    SET_STRING_ELT(ansnames, i++, mkChar("thousands_sep"));
+    SET_STRING_ELT(ans, i, mkChar(lc->grouping));
+    SET_STRING_ELT(ansnames, i++, mkChar("grouping"));
+    SET_STRING_ELT(ans, i, mkChar(lc->int_curr_symbol));
+    SET_STRING_ELT(ansnames, i++, mkChar("int_curr_symbol"));
+    SET_STRING_ELT(ans, i, mkChar(lc->currency_symbol));
+    SET_STRING_ELT(ansnames, i++, mkChar("currency_symbol"));
+    SET_STRING_ELT(ans, i, mkChar(lc->mon_decimal_point));
+    SET_STRING_ELT(ansnames, i++, mkChar("mon_decimal_point"));
+    SET_STRING_ELT(ans, i, mkChar(lc->mon_thousands_sep));
+    SET_STRING_ELT(ansnames, i++, mkChar("mon_thousands_sep"));
+    SET_STRING_ELT(ans, i, mkChar(lc->mon_grouping));
+    SET_STRING_ELT(ansnames, i++, mkChar("mon_grouping"));
+    SET_STRING_ELT(ans, i, mkChar(lc->positive_sign));
+    SET_STRING_ELT(ansnames, i++, mkChar("positive_sign"));
+    SET_STRING_ELT(ans, i, mkChar(lc->negative_sign));
+    SET_STRING_ELT(ansnames, i++, mkChar("negative_sign"));
+    sprintf(buff, "%d", (int)lc->int_frac_digits);
+    SET_STRING_ELT(ans, i, mkChar(buff));
+    SET_STRING_ELT(ansnames, i++, mkChar("int_frac_digits"));
+    sprintf(buff, "%d", (int)lc->frac_digits);
+    SET_STRING_ELT(ans, i, mkChar(buff));
+    SET_STRING_ELT(ansnames, i++, mkChar("frac_digits"));
+    sprintf(buff, "%d", (int)lc->p_cs_precedes);
+    SET_STRING_ELT(ans, i, mkChar(buff));
+    SET_STRING_ELT(ansnames, i++, mkChar("p_cs_precedes"));
+    sprintf(buff, "%d", (int)lc->p_sep_by_space);
+    SET_STRING_ELT(ans, i, mkChar(buff));
+    SET_STRING_ELT(ansnames, i++, mkChar("p_sep_by_space"));
+    sprintf(buff, "%d", (int)lc->n_cs_precedes);
+    SET_STRING_ELT(ans, i, mkChar(buff));
+    SET_STRING_ELT(ansnames, i++, mkChar("n_cs_precedes"));
+    sprintf(buff, "%d", (int)lc->n_sep_by_space);
+    SET_STRING_ELT(ans, i, mkChar(buff));
+    SET_STRING_ELT(ansnames, i++, mkChar("n_sep_by_space"));
+    sprintf(buff, "%d", (int)lc->p_sign_posn);
+    SET_STRING_ELT(ans, i, mkChar(buff));
+    SET_STRING_ELT(ansnames, i++, mkChar("p_sign_posn"));
+    sprintf(buff, "%d", (int)lc->n_sign_posn);
+    SET_STRING_ELT(ans, i, mkChar(buff));
+    SET_STRING_ELT(ansnames, i++, mkChar("n_sign_posn"));
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    UNPROTECT(2);
+    return ans;
+#else
+    return R_NilValue;
+#endif
+}

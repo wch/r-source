@@ -615,6 +615,9 @@ FUNTAB R_FunTab[] =
 {"dirname",	do_dirname,	0,	11,	1,	PP_FUNCALL},
 {"Sys.info",	do_sysinfo,	0,	11,	0,	PP_FUNCALL},
 {"Sys.sleep",	do_syssleep,	0,	11,	1,	PP_FUNCALL},
+{"getlocale",	do_getlocale,	0,	11,	1,	PP_FUNCALL},
+{"setlocale",	do_setlocale,	0,	11,	2,	PP_FUNCALL},
+{"localeconv",	do_localeconv,	0,	11,	0,	PP_FUNCALL},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL},
