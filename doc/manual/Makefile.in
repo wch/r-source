@@ -335,7 +335,8 @@ install-html:
 install-info: info $(infodir)/dir
 	@echo "installing R info pages ..."
 	@for f in $(OBJECTS_INFO:.info=.info*); do \
-	  $(INSTALL_DATA) $${f} $(infodir); \
+	  $(INSTALL_DATA) $${f} "$(infodir)"; \
+	  $(R_GZIPCMD) -f "$(infodir)/$${f}"; \
 	done
 	@echo "updating '$(infodir)/dir' ..."
 	@for f in $(OBJECTS_INFO); do \
@@ -349,11 +350,12 @@ install-pdf: pdf installdirs
 	done
 
 $(infodir)/dir:
-	@$(MKINSTALLDIRS) $(infodir)
-	$(INSTALL_DATA) $(srcdir)/dir $(infodir)
+	@$(MKINSTALLDIRS) "$(infodir)"
+	$(INSTALL_DATA) "$(srcdir)/dir" "$(infodir)"
 
 uninstall:
-	@if test -f $(infodir)/R-data.info; then \
+	@if test -f "$(infodir)/R-data.info" \
+	     || test -f "$(infodir)/R-data.info.gz"; then \
 	  $(MAKE) uninstall-info; \
 	fi
 	@echo "uninstalling $(subdir) ..."
@@ -370,7 +372,7 @@ uninstall-info:
 	    || echo "you need to adjust $(infodir)/dir manually"; \
 	done
 	@for f in $(OBJECTS_INFO:.info=.info*); do \
-	  rm -f $(infodir)/$${f}; \
+	  rm -f "$(infodir)/$${f}" "$(infodir)/$${f}.gz" ; \
 	done
 uninstall-pdf:
 	@echo "uninstalling R manuals in PDF format ..."
