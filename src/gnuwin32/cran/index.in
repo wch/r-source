@@ -13,6 +13,12 @@
 <p>This directory contains a binary distribution of R-@RVER@ to run on Windows 95, 98, ME,
 NT4.0, 2000 and XP on Intel/clone chips.</p>
 
+<p>Patches
+to this release are incorporated in the build available <a href="rpatched.html">here</a>.</p>
+
+<p>A build of the development version (which will eventually become the next major release of R)
+is available <a href="rdevel.html">here</a>.</p>
+
 <p>In this directory:</p>
 
 <table width="90%" border="0">
@@ -22,7 +28,7 @@ NT4.0, 2000 and XP on Intel/clone chips.</p>
     <td width="81%">Installation and other instructions.</td>
   </tr>
   <tr>
-    <td width="19%" valign="top"><a href="CHANGES">CHANGES</a></td>
+    <td width="19%" valign="top"><a href="CHANGES.@RWVER@">CHANGES.@RWVER@</a></td>
     <td width="81%">New features of this version.</td>
   </tr>
   <tr>
@@ -54,6 +60,6 @@ including upgrade advice.</p>
 
 <hr>
 
-<p>Last modified: January 12, 2004, by Duncan Murdoch</p>
+<p>Last change: @DATE@, by Duncan Murdoch</p>
 </body>
 </html>
