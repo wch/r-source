@@ -61,10 +61,11 @@ double lgammacor(double x)
     static double xmax = 0;
     double tmp;
 
-    if (nalgm == 0) {
+    if (nalgm == 0) {/* initialize machine dependent constants _ONCE_ */
 	nalgm = chebyshev_init(algmcs, 15, d1mach(3));
-	xbig = 1 / sqrt(d1mach(3));
+	xbig = 1 / sqrt(d1mach(3)); /* ~ 94906265.6 for IEEE double */
 	xmax = exp(fmin2(log(d1mach(2) / 12), -log(12 * d1mach(1))));
+		/* ~= 3.745 e306 for IEEE double */
     }
 
     if (x < 10) {
