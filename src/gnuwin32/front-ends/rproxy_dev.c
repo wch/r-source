@@ -28,8 +28,9 @@
 #include <Rconfig.h>
 #endif
 
-#include "Defn.h"
-#include "Graphics.h"
+#include <Defn.h>
+#include <Graphics.h>
+#include <Rdevices.h>
 #include <stdio.h>
 #include <windows.h>
 
@@ -108,6 +109,7 @@ static void R_Proxy_Graphics_Circle (double pX,
 				     R_GE_gcontext *gc,
 				     NewDevDesc* pDD)
 {
+/*  OutputDebugString("R_Proxy_Graphics_Circle()\n"); */
   if (__graphics_device)
     {
       __graphics_device->vtbl->circle (__graphics_device,
@@ -423,6 +425,7 @@ static void R_Proxy_Graphics_MetricInfo (int pC,
 }
 
 /* 01-01-25 | baier | new paramters */
+/* 04-09-27 | baier | startcol, startfill */
 int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     char* pDisplay,
 			     double pWidth,
@@ -434,8 +437,8 @@ int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 {
   pDD->startfont = 1;
   pDD->startps = pPointSize;
-  pDD->startcol = 0;
-  pDD->startfill = NA_INTEGER;
+  pDD->startcol = R_RGB(0, 0, 0);
+  pDD->startfill = R_TRANWHITE;
   pDD->startlty = LTY_SOLID;
   pDD->startgamma = 1;
 
@@ -508,10 +511,10 @@ int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
   pDD->canRotateText = 1;
   pDD->canResizeText = 1;
   pDD->canClip = 1;
+  pDD->displayListOn = 1;
 
   /* initialise x11 device description (most of the work */
   /* has been done in X11_Open) */
 
-  pDD->displayListOn = 1;
   return 1;
 }

@@ -87,6 +87,10 @@ all the other packages needed to run those specified.
 Improvements to file("clipboard") connections -- see ?file plus some
 more warnings e.g. if the clipboard becomes full.
 
+Memory leaks were fixed in rproxy.dll (used in (D)COM).  A break
+to the debugger during rproxy.dll startup may be triggered by setting 
+the DEBUG_RPROXY environment variable.
+
 
 
 rw1091

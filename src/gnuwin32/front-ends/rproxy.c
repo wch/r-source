@@ -531,6 +531,14 @@ int SYSCALL EXPORT SC_Proxy_get_object (SC_Proxy_Object** obj,
 {
   R_Proxy_Object_Impl* proxy_object = NULL;
 
+  /* break to debugger */
+  if(getenv("DEBUG_RPROXY")) {
+    OutputDebugString("Debugging of rproxy.dll initiated, breaking to debugger\n");
+    DebugBreak();
+  } else {
+    OutputDebugString("No Debugging of rproxy\n");
+  }
+
   if (obj == NULL)
     {
       return SC_PROXY_ERR_INVALIDARG;
