@@ -1187,6 +1187,7 @@ sub nroff_tables {
 #==************************** txt ******************************
 
 use Text::Wrap;
+use Text::Tabs;
 
 sub rdoc2txt { # (filename); 0 for STDOUT
 
@@ -1224,11 +1225,23 @@ sub rdoc2txt { # (filename); 0 for STDOUT
     close txtout;
 }
 
-
+## Underline section headers
 sub txt_header {
 
     my $header = $_[0];
-    '_' . join '_', split //, $header;
+    $header =~ s/\\//go;
+#    '_' . join '_', split //, $header;
+    my @letters = split //, $header;
+    my $out = "", $a;
+    for($l = 0; $l <= $#letters; $l++){
+	$a = @letters[$l];
+	if($a =~ /[A-Za-z0-9]/) {
+	    $out .= '_' . $a;
+	} else {
+	    $out .= $a;
+	}
+    }
+    return $out;
 }
 
 ### Convert a Rdoc text string to txt
@@ -1251,7 +1264,6 @@ sub text2txt {
     $text =~ s/\t/ /g;
 
     $text = txt_tables($text);
-#    $text =~ s/\\cr\n?/\n.br\n/sgo;
 
     $text =~ s/\n\s*\n/\n\n/sgo;
     $text =~ s/\\dots/\\&.../go;
@@ -1305,8 +1317,9 @@ sub text2txt {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$eqn =~ s/\\([^&])/$1/go;
+	$eqn =~ s/^\n*//o;
 	$eqn =~ s/\n*$//o;
-	$text =~ s/\\deqn(.*)$id/\n.DS B\n$eqn\n.DE\n/s;
+	$text =~ s/\\deqn(.*)$id/\n\n.DS B\n$eqn\n.DE\n\n/s;
     }
 
     $list_depth=0;
@@ -1327,33 +1340,6 @@ sub text2txt {
     unmark_brackets($text);
 }
 
-sub txt_parse_lists {
-
-    my $text = $_[0];
-
-    my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\itemize|\\enumerate") &&
-	  $text =~ /\\itemize|\\enumerate/){
-	my ($id, $innertext) = get_arguments("deqn", $text, 1);
-	if($innertext =~ /\\itemize/){
-	    my $tmptext = html_parse_lists($innertext);
-	    $text = s/\\itemize$id(.*)$id/\\itemize$id$tmptext$id/s;
-	}
-	elsif($innertext =~ /\\enumerate/){
-	    my $tmptext = html_parse_lists($innertext);
-	    $text = s/\\enumerate$id(.*)$id/\\enumerate$id$tmptext$id/s;
-	}
-	else{
-	    if($text =~ /\\itemize|\\enumerate/){
-		$text = replace_command($text, "itemize", "<UL>", "</UL>");
-		$text = replace_command($text, "enumerate", "<OL>", "</OL>");
-		$text =~ s/\\item\s+/<li>/go;
-	    }
-	}
-    }
-
-    $text;
-}
 
 sub code2txt {
 
@@ -1363,7 +1349,7 @@ sub code2txt {
     $text =~ s/\\%/%/go;
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
-    $text =~ s/\\n/\\\\n/g;
+#    $text =~ s/\\n/\\\\n/g;
 
     $text = undefine_command($text, "link");
     $text = undefine_command($text, "dontrun");
@@ -1373,31 +1359,62 @@ sub code2txt {
 }
 
 
+
+# generate wrapped text, undo tabifying, zap empty lines to \n
+sub mywrap {
+    my ($pre1, $pre2, $text) = @_;
+
+    my $ntext = wrap($pre1, $pre2, $text);
+    my @lines = split /\n/, $ntext;
+    my $out = "", $line;
+    foreach $line (@lines) {
+	$line = expand $line;
+	$line =~ s/^\s+$//o;
+	$out .= $line . "\n";
+    }
+    $out =~ s/\n$//;
+    return $out;
+}
+
 # Print text indent and filled: will put out a leading blank line.
-sub txt_fill { # file, "text to be formatted"
-    my ($text) = @_;
-    my $INDENT = 5;
-    my $indent =" " x $INDENT;
+sub txt_fill { # pre1, base, "text to be formatted"
+    my ($pre1, $base, $text) = @_;
+    my $INDENT = $base;
+    my $indent = " " x $INDENT;
 
 # first split by paragraphs
 
     $text =~ s/\\&//go;
     $text =~ s/\\ / /go;
+    $text =~ s/\\_/_/go;
+    $text =~ s/\\$/\$/go;
+    $text =~ s/\\#/#/go;
+    $text =~ s/\\%/%/go;
     my @paras = split /\n\n/, $text;
-    $indent1 = $indent2 = $indent;
+    $indent1 = $pre1; $indent2 = $indent;
     foreach $para (@paras) {
+	# strip leading white space
+	$para  =~ s/^\s+//;
+	my $para0 = $para;
+	$para0 =~ s/\n\s*/ /go;
 	# check for a item in itemize etc
 	if ($para =~ s/^[\n]*\.ti //) {
 	    $indent1 = $indent;
-	    $indent2 = $indent1. (" " x 3);
+	    $indent2 = $indent1 . (" " x 3);
 	}
         # check for .in command
 	if ($para =~ s/^[\n]*\.in (.*)/\1/) {
 	    $INDENT = $INDENT + $para;
-	    $indent = " " x $INDENT;
+	    $indent1 = $indent2 = $indent = " " x $INDENT;
         # check for a \deqn block
-	} elsif ($para =~ s/^[\n]*\.DS B\n(.*)[\n]+\.DE/\1/) {
-	    print txtout "\n", wrap(" " x 10, " " x 10, $para), "\n";
+	} elsif ($para0 =~ s/^\s*\.DS B\s*(.*)\.DE/\1/) {
+	    $para0 =~ s/\s*$//o;
+	    if(length($para0) > 65) {
+		print txtout "\n", " ", $para0, "\n";
+	    } else {
+		my $shift = int((70 - length($para0))/2);
+		print txtout "\n", " " x $shift, $para0, "\n";
+	    }
 	# check for a \tabular block
 	} elsif ($para =~ s/^\.TS\n//) {
 	    my @blocks = split /\n/, $para;
@@ -1411,7 +1428,7 @@ sub txt_fill { # file, "text to be formatted"
 	    # Now split by \cr blocks
 	    my @blocks = split /\\cr/, $para;
 	    foreach $text (@blocks) {
-		print txtout wrap($indent1, $indent2, $text), "\n";
+		print txtout mywrap($indent1, $indent2, $text), "\n";
 		$indent1 = $indent2;
 	    }
 	}
@@ -1428,7 +1445,7 @@ sub txt_print_block {
 	print txtout "\n";
 	print txtout txt_header($title), ":\n";
 	$ntext = text2txt($blocks{$block});
-	txt_fill($ntext);
+	txt_fill("     ", 5, $ntext);
     }
 }
 
@@ -1448,7 +1465,14 @@ sub txt_print_codeblock {
 	$ntext = "\n". $ntext;
 	$ntext =~ s/\\&\././go;
 	foreach $line (split /\n/, $ntext) {
-	    print txtout $indent, $line, "\n";
+	    $line =~ s/\\\\/\\/go;
+	    $line =~ s/^\t/        /o;
+	    $line =~ s/^\s+$//o;
+	    if(length($line) > 0) {
+		print txtout $indent, $line, "\n";
+	    } else {
+		print txtout "\n";
+	    }
 	}
     }
 }
@@ -1458,7 +1482,6 @@ sub txt_print_codeblock {
 sub txt_print_argblock {
 
     my ($block,$title) = @_;
-    my $indent = " " x 10;
 
     if(defined $blocks{$block}){
 
@@ -1471,7 +1494,7 @@ sub txt_print_argblock {
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
 	    if($begin){
-		txt_fill(text2txt($begin));
+		txt_fill("     ", 5, text2txt($begin));
 		$text =~ s/^$begin//s;
 	    }
 	    my $loopcount = 0;
@@ -1482,16 +1505,19 @@ sub txt_print_argblock {
 		$arg =~ s/\\&//go;
 		$desc = text2txt($desc);
 		$arg0 = $arg.": ";
-		$short = length($indent) - length($arg0);
+		$short = 10 - length($arg0);
 		$arg0 = " " x $short. $arg0 if $short > 0;
-		$desc =~ s/\n/ /go;
-		print txtout "\n", wrap($arg0, $indent, $desc), "\n";
+		if (length($desc) > 0) {
+		    txt_fill($arg0, 10, $desc);
+		} else {
+		    print txtout "\n", $arg0, "\n";
+		}
 		$text =~ s/.*$id//s;
 	    }
-	    txt_fill(text2txt($text));
+	    txt_fill("     ", 5, text2txt($text));
 	}
 	else{
-	    txt_fill(text2txt($text));
+	    txt_fill("     ", 5, text2txt($text));
 	}
     }
 }
@@ -1504,7 +1530,7 @@ sub txt_print_sections {
     for($section=0; $section<$max_section; $section++){
 	print txtout "\n";
 	print txtout txt_header($section_title[$section]), ":\n";
-	txt_fill(text2txt($section_body[$section]));
+	txt_fill("     ", 5, text2txt($section_body[$section]));
     }
 }
 
@@ -1561,6 +1587,33 @@ sub txt_tables {
 	    }
 	}
 
+	# need to map chars before width calculations. Not perfect,
+	# but otherwise need to postpone this.
+	$arg =~ s/\\dots/\\&.../go;
+	$arg =~ s/\\ldots/\\&.../go;
+	$arg =~ s/\\le/<=/go;
+	$arg =~ s/\\ge/>=/go;
+	$arg =~ s/\\%/%/sgo;
+	$arg =~ s/\\\$/\$/sgo;
+
+	$arg =~ s/\\Gamma/Gamma/go;
+	$arg =~ s/\\alpha/alpha/go;
+	$arg =~ s/\\Alpha/Alpha/go;
+	$arg =~ s/\\pi/pi/go;
+	$arg =~ s/\\mu/mu/go;
+	$arg =~ s/\\sigma/sigma/go;
+	$arg =~ s/\\Sigma/Sigma/go;
+	$arg =~ s/\\lambda/lambda/go;
+	$arg =~ s/\\beta/beta/go;
+	$arg =~ s/\\epsilon/epsilon/go;
+	$arg =~ s/\\left\(/\(/go;
+	$arg =~ s/\\right\)/\)/go;
+	$arg =~ s/\\R/R/go;
+	$arg =~ s/---/--/go;
+	$arg =~ s/--/-/go;
+	$arg =~ s/$EOB/\{/go;
+	$arg =~ s/$ECB/\}/go;
+	$arg =~ s/\\&//sgo;
 	my @colwidths, $colwidth, $left, $right;
 	my $table = "\n\n.TS\n";
 	for($l = 0; $l < $#colformat; $l++){
@@ -1571,26 +1624,31 @@ sub txt_tables {
 	# now do the real work: split into lines and columns
 	# first scan them and get the field widths.
 	my @rows = split(/\\cr/, $arg);
+	my $tmp;
 	for($k = 0; $k <= $#rows; $k++){
 	    my @cols = split(/\\tab/, $rows[$k]);
 	    die("Error:\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    for($l = 0; $l <= $#cols; $l++){
-		$cols[$l] =~ s/^\s*//;
-		$cols[$l] =~ s/\s*$//;
-		$colwidth = length($cols[$l]);
+		$tmp = $cols[$l];
+		$tmp =~ s/^\s*//;
+		$tmp =~ s/\s*$//;
+		$tmp = unmark_brackets($tmp);
+		$colwidth = length($tmp);
 		if ($colwidth > $colwidths[$l]) {
 		    $colwidths[$l] = $colwidth;
 		}
 	    }
 	}
 	for($k = 0; $k <= $#rows; $k++){
+	    $table .= "  "; # indent by two
 	    my @cols = split(/\\tab/, $rows[$k]);
 	    for($l = 0; $l <= $#cols; $l++){
 		$cols[$l] =~ s/^\s*//;
 		$cols[$l] =~ s/\s*$//;
-		$colwidth = length($cols[$l]);
+		$tmp = unmark_brackets($cols[$l]);
+		$colwidth = length($tmp);
 		if ($colformat[$l] eq "r") {
 		    $left = $colwidths[$l] - $colwidth
 		} elsif ($colformat[$l] eq "c") {
@@ -1600,11 +1658,15 @@ sub txt_tables {
 		}
 		# 2 is the column gap
 		$right = $colwidths[$l] - $colwidth + 2 - $left;
-		$table .= " " x $left . $cols[$l]. " " x $right;
+		if ($l == $#cols) {
+		    $right = 0; # don't need to right-pad end.
+		}
+		$table .= " " x $left . $cols[$l] . " " x $right;
 	    }
 	    $table .= "\n";
 	}
 	$table .= "\n";
+	$table =~ s/--/---/go; # will get undone again by text2txt
 
 	$text =~ s/\\tabular.*$id/$table/s;
     }
