@@ -15,6 +15,9 @@ Rgui.exe.manifest has been added to get XP-style widgets on Windows XP.
 Some logical colour names have been changed to get consistent colour
 schemes on Windows XP.
 
+The books in the contents of CHTML for packages were not being sorted
+correctly.
+
 
 
 rw1041

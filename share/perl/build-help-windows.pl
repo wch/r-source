@@ -280,6 +280,7 @@ sub open_hhp {
     "\n\n[FILES]\n00Index.html\n";
 }
 
+sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 
 sub build_chm_toc {
     open(tocfile, ">../chm/$pkg.toc")
