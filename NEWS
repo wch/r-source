@@ -162,6 +162,10 @@ BUG FIXES
 	logical whereas it could appear to work and give wrong answers
 	with e.g. a numeric 'subset' argument.
 
+    o   package grid:
+
+	- Fixed bug in grid.text() when "rot" argument has length 0.
+          (reported by Emmanuel Paradis)
 
 
 	**************************************************

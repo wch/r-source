@@ -1,3 +1,10 @@
+Changes from grid_2.0.1 to grid_2.1.0:
+------------------------------------
+
+1.  Fixed bug in grid.text() when "rot" argument has length 0.
+    (privately reported by Emmanuel Paradis)
+
+
 Changes from grid_2.0.0 to grid_2.0.1:
 ------------------------------------
 

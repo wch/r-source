@@ -462,7 +462,7 @@ validDetails.text <- function(x) {
       !is.unit(x$y))
     stop("x and y must be units")
   x$rot <- as.numeric(x$rot)
-  if (!all(is.finite(x$rot)))
+  if (!all(is.finite(x$rot)) || length(x$rot) == 0)
     stop("Invalid rot value")
   valid.just(x$just)
   x$check.overlap <- as.logical(x$check.overlap)
