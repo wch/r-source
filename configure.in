@@ -404,8 +404,11 @@ else
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
 fi
 
-if test "${FC}" = g77; then
+if ${f77_is_g77}; then
   FFLAGS=${FFLAGS-"-O2"}
+  AC_CHECK_LIB(f2c, f_open, FLIBS="${FLIBS} -lf2c",
+    AC_CHECK_LIB(g2c, f_open, FLIBS="${FLIBS} -lg2c")
+  )
 fi
 
 AC_SUBST(FC)
@@ -558,7 +561,7 @@ SHLIBEXT=so
 #
 #  Damn!  It seems that this can lead to using the wrong options
 #  if the CC we have differs from that which imake knows about.
-#  Lets always use -fpic when CC=gcc.
+#  Lets always use -fpic when CC is gcc.
 #
 #  As a final safeguard, any options specified in config.site will
 #  override anything we discover below.
@@ -581,7 +584,7 @@ else
     Please set CPICFLAGS, FPICFLAGS and SHLIBLDFLAGS in \`config.site'.])
 fi
 
-if test "${CC}" = gcc; then
+if ${cc_is_gcc}; then
   cpicflags=-fpic
 fi
 
