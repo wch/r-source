@@ -75,7 +75,8 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
 
 static void unregisterOne(GEDevDesc *dd, int systemNumber) {
     if (dd->gesd[systemNumber] != NULL) {
-	(dd->gesd[systemNumber]->callback)(GE_FinaliseState, dd);
+	(dd->gesd[systemNumber]->callback)(GE_FinaliseState, dd, 
+					   R_NilValue);
 	free(dd->gesd[systemNumber]);
 	dd->gesd[systemNumber] = NULL;
     }
@@ -119,7 +120,7 @@ static void registerOne(GEDevDesc *dd, int systemNumber, GEcallback cb) {
 	(GESystemDesc*) malloc(sizeof(GESystemDesc));
     if (dd->gesd[systemNumber] == NULL)
 	error("unable to allocate memory (in GEregister)");
-    cb(GE_InitState, dd);
+    cb(GE_InitState, dd, R_NilValue);
     dd->gesd[systemNumber]->callback = cb;
 }
 
@@ -250,13 +251,16 @@ void GEunregisterSystem(int registerIndex)
  * It calls back to registered graphics systems and passes on the event
  * so that the graphics systems can respond however they want to.
  */
-void GEHandleEvent(GEevent event, NewDevDesc *dev)
+SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data)
 {
     int i;
+    SEXP result = R_NilValue;
     DevDesc* dd = GetDevice(devNumber((DevDesc*) dev));
     for (i=0; i<numGraphicsSystems; i++)
 	if (registeredSystems[i] != NULL)
-	    (registeredSystems[i]->callback)(event, (GEDevDesc*) dd);
+	    result = (registeredSystems[i]->callback)(event, (GEDevDesc*) dd, 
+						      data);
+    return result;
 }
 
 /****************************************************************
@@ -1870,7 +1874,78 @@ void GEcopyDisplayList(int fromDevice)
      */
     for (i=0; i<numGraphicsSystems; i++) 
 	if (dd->gesd[i] != NULL)
-	    (dd->gesd[i]->callback)(GE_CopyState, dd);
+	    (dd->gesd[i]->callback)(GE_CopyState, dd, R_NilValue);
+    GEplayDisplayList(dd);
+    if (!dd->dev->displayListOn)
+	initDisplayList((DevDesc*) dd);
+}
+
+/****************************************************************
+ * GEcreateSnapshot
+ ****************************************************************
+ */
+
+/* Create a recording of the current display,
+ * including enough information from each registered 
+ * graphics system to be able to recreate the display
+ * The structure created is an SEXP which nicely hides the
+ * internals, because noone should be looking in there anyway
+ * The product of this call can be stored, but should only
+ * be used in a call to GEplaySnapshot.
+ */
+
+SEXP GEcreateSnapshot(GEDevDesc *dd)
+{
+    int i;
+    SEXP snapshot;
+    SEXP state;
+    /* Create a list with one spot for the display list 
+     * and one spot each for the registered graphics systems
+     * to put their graphics state
+     */
+    PROTECT(snapshot = allocVector(VECSXP, 1 + numGraphicsSystems));
+    /* The first element of the snapshot is the display list.
+     */
+    SET_VECTOR_ELT(snapshot, 0, dd->dev->displayList);
+    /* For each registered system, obtain state information,
+     * and store that in the snapshot.
+     */
+    for (i=0; i<numGraphicsSystems; i++)
+	if (dd->gesd[i] != NULL) {
+	    PROTECT(state = (dd->gesd[i]->callback)(GE_SaveSnapshotState, dd,
+						    R_NilValue));
+	    SET_VECTOR_ELT(snapshot, i + 1, state);
+	    UNPROTECT(1);
+	}
+    UNPROTECT(1);
+    return snapshot;
+}
+
+/****************************************************************
+ * GEplaySnapshot
+ ****************************************************************
+ */
+
+/* Recreate a saved display using the information in a structure
+ * created by GEcreateSnapshot.
+ */
+
+void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd)
+{
+    /* Only have to set up information for as many graphics systems
+     * as were registered when the snapshot was taken.
+     */
+    int i, numSystems = LENGTH(snapshot) - 1;
+    /* Reset the snapshot state information in each registered 
+     * graphics system
+     */
+    for (i=0; i<numSystems; i++) 
+	if (dd->gesd[i] != NULL)
+	    (dd->gesd[i]->callback)(GE_RestoreSnapshotState, dd, 
+				    VECTOR_ELT(snapshot, i + 1));
+    /* Replay the display list
+     */
+    dd->dev->displayList = VECTOR_ELT(snapshot, 0);
     GEplayDisplayList(dd);
     if (!dd->dev->displayListOn)
 	initDisplayList((DevDesc*) dd);

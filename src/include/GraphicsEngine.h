@@ -36,16 +36,23 @@ typedef enum {
      * the bits required for the display list to draw faithfully
      * on the new device.
      */
-    GE_CopyState = 3
+    GE_CopyState = 3,
+    /* Create a snapshot of the system state that is sufficient
+     * for the current "image" to be reproduced
+     */
+    GE_SaveSnapshotState = 4,
+    /* Restore the system state that is saved by GE_SaveSnapshotState
+     */
+    GE_RestoreSnapshotState = 5
 } GEevent;
 
 /* The full definition should be ...
- *    typedef void (* GEcallback)(GEvent, *GEDevDesc);
+ *    typedef SEXP (* GEcallback)(GEvent, *GEDevDesc, SEXP);
  *
  * ... but I could not figure out how to use *GEDevDesc before
  * the definition of GEDevDesc.
  */
-typedef void (* GEcallback)();
+typedef SEXP (* GEcallback)();
 
 typedef struct {
     /* An array of information about each graphics system that
@@ -86,7 +93,7 @@ void GEregisterWithDevice(GEDevDesc *dd);
 int GEregisterSystem(GEcallback callback);
 void GEunregisterSystem(int registerIndex);
 
-void GEHandleEvent(GEevent event, NewDevDesc *dev);
+SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data);
 
 double fromDeviceX(double value, GEUnit to, GEDevDesc *dd); 
 double toDeviceX(double value, GEUnit from, GEDevDesc *dd);
@@ -176,3 +183,5 @@ double GEStrHeight(char *str, int font, double cex, double ps, GEDevDesc *dd);
 
 GEDevDesc* GEcurrentDevice();
 void GEcopyDisplayList(int fromDevice);
+SEXP GEcreateSnapshot(GEDevDesc *dd);
+void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd);

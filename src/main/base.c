@@ -8,15 +8,17 @@
 
 int baseRegisterIndex;
 
-void baseCallback(GEevent task, GEDevDesc *dd) {
+SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
     GEDevDesc *curdd;
     GESystemDesc *sd;
     NewDevDesc *dev;
     GPar *ddp; 
+    SEXP state;
+    SEXP result = R_NilValue;
     switch (task) {
     case GE_FinaliseState:
 	sd = dd->gesd[baseRegisterIndex];
-	free(sd->systemSpecific);
+	free((baseSystemState*) sd->systemSpecific);
 	sd->systemSpecific = NULL;
 	break;
     case GE_InitState:
@@ -65,7 +67,24 @@ void baseCallback(GEevent task, GEDevDesc *dd) {
     case GE_Redraw:
 	playDisplayList((DevDesc*) dd);
 	break;
+    case GE_SaveSnapshotState:
+	PROTECT(state = allocVector(INTSXP,
+				    /* Got this formula from devga.c
+				     * Not sure why the "+ 1"
+				     * Rounding up?
+				     */
+				    1 + sizeof(GPar) / sizeof(int)));
+	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dpSaved),
+		 (GPar*) INTEGER(state));
+	result = state;
+	UNPROTECT(1);
+	break;
+    case GE_RestoreSnapshotState:
+	copyGPar((GPar*) INTEGER(data),
+		 &(((baseSystemState*) sd->systemSpecific)->dpSaved));	
+	break;
     }
+    return result;
 }
 
 /* Register the base graphics system with the graphics engine
