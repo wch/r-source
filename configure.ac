@@ -258,8 +258,6 @@ AC_ARG_WITH([recommended-packages],
                  @<:@yes@:>@])],
 [R_ARG_USE(recommended_packages)],
 [use_recommended_packages=yes])
-AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
-               [test "x${use_recommended_packages}" = xyes])
 
 ### ** Precious variables.
 
@@ -1044,6 +1042,8 @@ AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "x${BLAS_LIBS}" != x])
 
 ### * Checks for system services.
 
+AC_SUBST(R_GUIS)
+
 ## X11.
 ## Here we use the standard X11 search macro.
 ## We force the use of -lX11 (perhaps this is not necessary).
@@ -1065,8 +1065,6 @@ R_GNOME
 if test "${use_gnome}" = yes; then
   R_GUIS="${R_GUIS} gnome";
 fi
-
-AC_SUBST(R_GUIS)
 
 ## Aqua
 R_AQUA
@@ -1165,6 +1163,13 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${X_LIBS} ${TCLTK_LIBS} \
 done
 ## </FIXME>
 AC_SUBST(R_LD_LIBRARY_PATH)
+
+## Recommended packages.
+if test "${use_recommended_packages}" = yes; then
+  R_RECOMMENDED_PACKAGES
+fi
+AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
+               [test "x${use_recommended_packages}" = xyes])
 
 ### * Win32 overrides
 case "${host_os}" in
@@ -1312,6 +1317,7 @@ R is now configured for ${host}
 
   Source directory:          ${srcdir}
   Installation directory:    ${prefix}
+
   C compiler:                ${C_compiler}
   C++ compiler:              ${CXX_compiler}
   Fortran compiler:          ${Fortran_compiler}
@@ -1323,6 +1329,8 @@ R is now configured for ${host}
 
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
+
+  Recommended packages:      ${use_recommended_packages} 
 ])
 if test -n "${warn_F77_and_F2C}"; then
   AC_MSG_WARN([${warn_F77_and_F2C}])

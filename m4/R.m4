@@ -1903,7 +1903,6 @@ caddr_t hello() {
 	       [r_cv_zlib_mmap=yes]))
 ])# _R_ZLIB_MMAP
 
-
 ## R_PCRE
 ## ------
 ## Try finding pcre library and headers.
@@ -1924,9 +1923,8 @@ if test "${have_pcre}" = yes; then
 fi
 ])# R_PCRE
 
-
 ## R_BZLIB
-## ------
+## -------
 ## Try finding bzlib library and headers.
 ## We check that both are installed,
 ## and that BZ2_bzlibVersion is in the library.
@@ -1941,7 +1939,6 @@ if test "${have_bzlib}" = yes; then
   LIBS="-lbz2 ${LIBS}"
 fi
 ])# R_BZLIB
-
 
 ## R_SYS_POSIX_LEAPSECONDS
 ## -----------------------
@@ -1974,6 +1971,27 @@ if test "x${r_cv_sys_posix_leapseconds}" = xyes; then
 	     seconds, as required by POSIX.])
 fi
 ])# R_SYS_POSIX_LEAPSECONDS
+
+### * Miscellaneous
+
+## R_RECOMMENDED_PACKAGES
+## ----------------------
+## See if the sources for the recommended packages are available.
+AC_DEFUN([R_RECOMMENDED_PACKAGES],
+[AC_CACHE_CHECK([for recommended packages],
+                [r_cv_misc_recommended_packages],
+[r_cv_misc_recommended_packages=yes
+recommended_pkgs=`grep '^R_PKGS_RECOMMENDED *=' ${srcdir}/Makeconf.in | \
+  sed 's/.*=//'`
+for pkg in ${recommended_pkgs}; do
+  n_pkg=`ls ${srcdir}/src/library/Recommended/${pkg}_*.tar.gz | wc -l`
+  if test ${n_pkg} -ne 1; then
+    r_cv_misc_recommended_packages=no
+    break
+  fi
+done])
+use_recommended_packages=${r_cv_misc_recommended_packages}
+])# R_RECOMMENDED_PACKAGES
 
 ### Local variables: ***
 ### mode: outline-minor ***
