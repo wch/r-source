@@ -1717,6 +1717,10 @@ distributions of R.)
 *dispmod*
      Functions for modelling dispersion in GLMs.
 
+*distr*
+     An object orientated implementation of distributions and some
+     additional functionality.
+
 *dr*
      Functions, methods, and datasets for fitting dimension reduction
      regression, including pHd and inverse regression methods SIR and SAVE.
