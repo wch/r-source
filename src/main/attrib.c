@@ -40,28 +40,36 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	SEXP s, blank;
 	int len, i, any;
 
+	if (isString(name)) name = install(CHAR(STRING(name)[0]));
 
-	if (isString(name))
-		name = install(CHAR(STRING(name)[0]));
-	if ((name == R_NamesSymbol) && (isList(vec) || isLanguage(vec))) {
-		len = length(vec);
-		PROTECT(s = allocVector(STRSXP, len));
-		blank = mkChar("");
-		i = 0;
-		any = 0;
-		for (; vec != R_NilValue; vec=CDR(vec),i++) {
-			if (TAG(vec) == R_NilValue)
-				STRING(s)[i] = blank;
-			else if (isSymbol(TAG(vec))) {
-				any = 1;
-				STRING(s)[i] = PRINTNAME(TAG(vec));
+	if (name == R_NamesSymbol) {
+		if(isVector(vec) || isList(vec) || isLanguage(vec)) {
+			s = getAttrib(vec, R_DimSymbol);
+			if(TYPEOF(s) == INTSXP && length(s) == 1) {
+				s = getAttrib(vec, R_DimNamesSymbol);
+				if(!isNull(s)) return CAR(s);
 			}
-			else
-				error("getAttrib: invalid type for TAG\n");
 		}
-		UNPROTECT(1);
-		if (any) return (s);
-		return R_NilValue;
+		if(isList(vec) || isLanguage(vec)) {
+			len = length(vec);
+			PROTECT(s = allocVector(STRSXP, len));
+			blank = mkChar("");
+			i = 0;
+			any = 0;
+			for (; vec != R_NilValue; vec=CDR(vec),i++) {
+				if (TAG(vec) == R_NilValue)
+					STRING(s)[i] = blank;
+				else if (isSymbol(TAG(vec))) {
+					any = 1;
+					STRING(s)[i] = PRINTNAME(TAG(vec));
+				}
+				else
+					error("getAttrib: invalid type for TAG\n");
+			}
+			UNPROTECT(1);
+			if (any) return (s);
+			return R_NilValue;
+		}
 	}
 	for (s = ATTRIB(vec); s != R_NilValue; s = CDR(s))
 		if (TAG(s) == name) {
@@ -320,10 +328,13 @@ SEXP do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP namesgets(SEXP vec, SEXP val)
 {
 	int i;
-	SEXP s,rval;
+	SEXP s, rval;
 
 	PROTECT(vec);
 	PROTECT(val);
+
+		/* Ensure that the labels are indeed */
+		/* a vector of character strings */
 
 	if( isList(val) )
 		if( !isVectorizable(val) )
@@ -338,12 +349,27 @@ SEXP namesgets(SEXP vec, SEXP val)
 			UNPROTECT(1);
 			val = rval;
 		}
-	else
-		val = coerceVector(val, STRSXP);
+	else val = coerceVector(val, STRSXP);
 	UNPROTECT(1);
 	PROTECT(val);
 
+		/* Check that the lengths and types are compatible */
+
 	checkNames(vec, val);
+
+		/* Special treatment for one dimensional arrays */
+
+	if(isVector(vec) || isList(vec) || isLanguage(vec)) {
+		s = getAttrib(vec, R_DimSymbol);
+		if(TYPEOF(s) == INTSXP && length(s) == 1) {
+			PROTECT(val = CONS(val, R_NilValue));
+			setAttrib(vec, R_DimNamesSymbol, val);
+			UNPROTECT(3);
+			return vec;
+		}
+	}
+
+		/* Cons-cell based objects */
 
 	if (isList(vec) || isLanguage(vec)) {
 		i=0;
@@ -368,14 +394,8 @@ SEXP do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP s, t;
 	checkArity(op, args);
 	s = CAR(args);
-	if(isVector(s) || isList(s) || isLanguage(s)) {
-		t = getAttrib(s, R_DimSymbol);
-		if(TYPEOF(t) == INTSXP && length(t) == 1) {
-			t = getAttrib(s, R_DimNamesSymbol);
-			if(!isNull(t)) return CAR(t);
-		}
-		else return getAttrib(s, R_NamesSymbol);
-	}
+	if(isVector(s) || isList(s) || isLanguage(s))
+		return getAttrib(s, R_NamesSymbol);
 	return R_NilValue;
 }
 
