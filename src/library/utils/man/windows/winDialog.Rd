@@ -14,9 +14,9 @@ winDialogString(message, default)
 \arguments{
   \item{type}{character. The type of dialog box. It will have the
     buttons implied by its name.}
-  \item{message}{character. The information field of the dialog box.}
+  \item{message}{character. The information field of the dialog
+    box. Limited to 255 chars (by Windows, checked by R).}
   \item{default}{character. The default string.}
-}
 }
 \value{
   For \code{winDialog} a character string giving the name of the button

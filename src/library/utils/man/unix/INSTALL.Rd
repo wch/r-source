@@ -57,6 +57,13 @@
   image.  Options to be passed to R when creating the save image can be
   specified via \option{--save=ARGS}.
 
+  Options \option{--lazy}, \option{--no-lazy}, \option{--lazy-data} and
+  \option{--no-lazy-data} control where the \R objects and the datasets
+  are made available for lazy loading.  (These options are overridden by
+  any values set in the DESCRIPTION file.)  The default is
+  \option{--no-lazy --no-lazy-data} except that lazy-loading is used for
+  package with more than 50kB of \R code and no saved image.
+
   If the attempt to install the package fails, leftovers are removed.
   If the package was already installed, the old version is restored.
 
@@ -65,7 +72,7 @@
 
 \section{Packages using the methods package}{
   Packages that require the methods package, and that use functions such
-  as \code{\link[methods]{setMethod}} or \code{\link[methods]{setClass}},
+  as \code{\link{setMethod}} or \code{\link{setClass}},
   should be installed by creating a binary image.
 
   The presence of a file named

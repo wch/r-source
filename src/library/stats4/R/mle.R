@@ -302,5 +302,3 @@ setMethod("update", "mle", function (object, ..., evaluate = TRUE)
     }
     if (evaluate) eval(call, parent.frame()) else call
 })
-
-.onLoad <- function(lib, pkg) require(methods)

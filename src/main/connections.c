@@ -265,7 +265,10 @@ static Rboolean file_open(Rconnection con)
 	warning("cannot open file `%s'", name);
 	return FALSE;
     }
-    if(temp) unlink(name);
+    if(temp) {
+	unlink(name);
+	free(name);
+    }
     this->fp = fp;
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
@@ -1512,7 +1515,8 @@ static void text_destroy(Rconnection con)
     Rtextconn this = (Rtextconn)con->private;
 
     free(this->data);
-    this->cur = this->nchars = 0;
+    /* this->cur = this->nchars = 0; */
+    free(this);
 }
 
 static int text_fgetc(Rconnection con)
@@ -1586,7 +1590,7 @@ static void outtext_close(Rconnection con)
 static void outtext_destroy(Rconnection con)
 {
     Routtextconn this = (Routtextconn)con->private;
-    free(this->lastline);
+    free(this->lastline); free(this);
 }
 
 #define LAST_LINE_LEN 256
@@ -2425,6 +2429,17 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    PROTECT(ans = allocVector(LGLSXP, n));
 	    p = (void *) LOGICAL(ans);
+	} else if (!strcmp(what, "raw")) {
+	    sizedef = 1; mode = 1;
+	    if(size == NA_INTEGER) size = sizedef;
+	    switch (size) {
+	    case 1:
+		break;
+	    default:
+		error("raw is always of size 1");
+	    }
+	    PROTECT(ans = allocVector(RAWSXP, n));
+	    p = (void *) RAW(ans);
 	} else if (!strcmp(what, "numeric") || !strcmp(what, "double")) {
 	    sizedef = sizeof(double); mode = 2;
 	    if(size == NA_INTEGER) size = sizedef;
@@ -2582,6 +2597,11 @@ SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(size != sizeof(Rcomplex))
 		error("size changing is not supported for complex vectors");
 	    break;
+	case RAWSXP:
+	    if(size == NA_INTEGER) size = 1;
+	    if(size != 1)
+		error("size changing is not supported for raw vectors");
+	    break;
 	default:
 	    error("That type is unimplemented");
 	}
@@ -2658,6 +2678,9 @@ SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	case CPLXSXP:
 	    memcpy(buf, COMPLEX(object), size * len);
+	    break;
+	case RAWSXP:
+	    memcpy(buf, RAW(object), len); /* size = 1 */
 	    break;
 	}
 
@@ -3312,7 +3335,7 @@ static void gzcon_close(Rconnection con)
 	err = deflateEnd(&(priv->s));
 	/* NB: these must be little-endian */
 	putLong(icon, priv->crc);
-	putLong(icon, priv->s.total_in);
+	putLong(icon, (uLong)(priv->s.total_in & 0xffffffff));
     } else err = inflateEnd(&(priv->s));
     if(priv->inbuf) {free(priv->inbuf); priv->inbuf = Z_NULL;}
     if(priv->outbuf) {free(priv->outbuf); priv->outbuf = Z_NULL;}
@@ -3320,14 +3343,34 @@ static void gzcon_close(Rconnection con)
     con->isopen = FALSE;
 }
 
+static int gzcon_byte(Rgzconn priv)
+{
+    Rconnection icon = priv->con;
+
+    if (priv->z_eof) return EOF;
+    if (priv->s.avail_in == 0) {
+	priv->s.avail_in = icon->read(priv->inbuf, 1, Z_BUFSIZE, icon);
+        if (priv->s.avail_in == 0) {
+            priv->z_eof = 1;
+            return EOF;
+        }
+        priv->s.next_in = priv->inbuf;
+    }
+    priv->s.avail_in--;
+    return *(priv->s.next_in)++;    
+}
+
+
 static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     Rgzconn priv = (Rgzconn)con->private;
     Rconnection icon = priv->con;
-    Bytef *start = (Bytef*)ptr, buf[4];
+    Bytef *start = (Bytef*)ptr;
     uLong crc;
     int n;
+
+    if (priv->z_err == Z_STREAM_END) return 0;  /* EOF */
 
     if (priv->nsaved >= 0) { /* non-compressed mode */
 	size_t len = size*nitems;
@@ -3367,11 +3410,17 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    priv->crc = crc32(priv->crc, start,
 			      (uInt)(priv->s.next_out - start));
 	    start = priv->s.next_out;
-	    /* CRC is little-endian on file */
-	    icon->read(&buf, 1, sizeof(uLong), icon);
 	    crc = 0;
-	    for (n = 0; n < 4; n++) {crc <<= 8; crc += buf[n];}
-	    if (crc != priv->crc) priv->z_err = Z_DATA_ERROR;
+	    for (n = 0; n < 4; n++) {
+		crc >>= 8; 
+		crc += ((uLong)gzcon_byte(priv) << 24);
+	    }
+	    if (crc != priv->crc) {
+		priv->z_err = Z_DATA_ERROR;
+		REprintf("crc error %x %x\n", crc, priv->crc);
+	    }
+	    /* finally, get (and ignore) length */
+	    for (n = 0; n < 4; n++) gzcon_byte(priv);
 	}
 	if (priv->z_err != Z_OK || priv->z_eof) break;
     }

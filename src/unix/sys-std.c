@@ -671,6 +671,7 @@ void Rstd_Busy(int which)
    If ask = SA_SUICIDE, no save, no .Last, possibly other things.
  */
 
+
 void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     unsigned char buf[1024];
@@ -767,7 +768,7 @@ int Rstd_ShowFiles(int nfile, 		/* number of files */
 
     if (nfile > 0) {
         if (pager == NULL || strlen(pager) == 0) pager = "more";
-	filename = R_tmpnam(NULL, R_TempDir);
+	filename = R_tmpnam(NULL, R_TempDir); /* mallocs result */
         if ((tfp = fopen(filename, "w")) != NULL) {
 	    for(i = 0; i < nfile; i++) {
 		if (headers[i] && *headers[i])
@@ -789,6 +790,7 @@ int Rstd_ShowFiles(int nfile, 		/* number of files */
 	snprintf(buf, 1024, "%s < %s", pager, filename);
 	res = R_system(buf);
 	unlink(filename);
+	free(filename);
 	return (res != 0);
     }
     return 1;

@@ -42,7 +42,6 @@ lowess(x, y = NULL, f = 2/3, iter=3, delta = 0.01 * diff(range(xy$x[o])))
   formula based version of \code{lowess} (with different defaults!).
 }
 \examples{
-data(cars)
 plot(cars, main = "lowess(cars)")
 lines(lowess(cars), col = 2)
 lines(lowess(cars, f=.2), col = 3)

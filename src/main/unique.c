@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -163,6 +163,16 @@ static int sequal(SEXP x, int i, SEXP y, int j)
 	return STRING_ELT(x, i) == STRING_ELT(y, j);
 }
 
+static int rawhash(SEXP x, int indx, HashData *d)
+{
+    return scatter((unsigned int) (RAW(x)[indx]), d);
+}
+
+static int rawequal(SEXP x, int i, SEXP y, int j)
+{
+    return (RAW(x)[i] == RAW(y)[j]);
+}
+
 /* Choose M to be the smallest power of 2 */
 /* not less than 4*n and set K = log2(M) */
 static void MKsetup(int n, HashData *d)
@@ -203,6 +213,11 @@ static void HashTableSetup(SEXP x, HashData *d)
 	d->hash = shash;
 	d->equal = sequal;
 	MKsetup(LENGTH(x), d);
+	break;
+    case RAWSXP:
+	d->hash = rawhash;
+	d->equal = rawequal;
+	MKsetup(256, d);
 	break;
     }
     d->HashTable = allocVector(INTSXP, d->M);
@@ -311,6 +326,11 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (LOGICAL(dup)[i] == 0)
 		SET_STRING_ELT(ans, k++, STRING_ELT(x, i));
+	break;
+    case RAWSXP:
+	for (i = 0; i < n; i++)
+	    if (LOGICAL(dup)[i] == 0)
+		RAW(ans)[k++] = RAW(x)[i];
 	break;
     }
     return ans;
@@ -629,7 +649,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	funcall = VECTOR_ELT(funcall, 0);
 
     if (TYPEOF(funcall) != LANGSXP) {
-	b = deparse1(funcall, 1, TRUE, FALSE);
+	b = deparse1(funcall, 1, SIMPLEDEPARSE);
 	errorcall(call, "%s is not a valid call", CHAR(STRING_ELT(b, 0)));
     }
 
@@ -686,7 +706,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     /* It must be a closure! */
 
     if (TYPEOF(b) != CLOSXP) {
-	b = deparse1(b, 1, TRUE, FALSE);
+	b = deparse1(b, 1, SIMPLEDEPARSE);
 	errorcall(call, "%s is not a function", CHAR(STRING_ELT(b, 0)));
     }
 
@@ -694,7 +714,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     expdots = asLogical(CAR(CDDR(args)));
     if (expdots == NA_LOGICAL) {
-	b = deparse1(CADDR(args), 1, TRUE, FALSE);
+	b = deparse1(CADDR(args), 1, SIMPLEDEPARSE);
 	errorcall(call, "%s is not a logical", CHAR(STRING_ELT(b, 0)));
     }
 
@@ -982,5 +1002,47 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(3);
     }
     UNPROTECT(1);
+    return ans;
+}
+
+/* use hashing to improve object.size. Here we want equal CHARSXPs, 
+   not equal contents. */
+
+static int csequal(SEXP x, int i, SEXP y, int j)
+{
+    return STRING_ELT(x, i) == STRING_ELT(y, j);
+}
+
+static void HashTableSetup1(SEXP x, HashData *d)
+{
+    d->hash = shash;
+    d->equal = csequal;
+    MKsetup(LENGTH(x), d);
+    d->HashTable = allocVector(INTSXP, d->M);
+}
+
+SEXP csduplicated(SEXP x)
+{
+    SEXP ans;
+    int *h, *v;
+    int i, n;
+    HashData data;
+
+    if(TYPEOF(x) != STRSXP)
+	error("csduplicated not called on a STRSXP");
+    n = LENGTH(x);
+    HashTableSetup1(x, &data);
+    PROTECT(data.HashTable);
+    ans = allocVector(LGLSXP, n);
+    UNPROTECT(1);
+    h = INTEGER(data.HashTable);
+    v = LOGICAL(ans);
+
+    for (i = 0; i < data.M; i++)
+	h[i] = NIL;
+
+    for (i = 0; i < n; i++)
+	v[i] = isDuplicated(x, i, &data);
+
     return ans;
 }

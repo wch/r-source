@@ -17,7 +17,8 @@
 \alias{Compare}
 \alias{Complex}
 \alias{Math2}
-\alias{group generic}
+\alias{group generic} % used in class.Rd
+\concept{group generic}
 \title{Group Generic Functions}
 \description{
   Group generic functions can be defined with either S3 and S4 methods
@@ -76,7 +77,7 @@ Complex(z)
   the first three groups.
   (There are also a \code{\link{ordered}} method for \code{Ops},
   \code{\link{POSIXt}} methods for \code{Math} and \code{Ops}, as well as a
-  \code{\link[stats]{ts}} method for \code{Ops} in package \pkg{stats}.)
+  \code{\link{ts}} method for \code{Ops} in package \pkg{stats}.)
   
 %   A function \emph{\code{f}} belonging to one of these groups must be
 %   \code{\link{.Internal}} or \code{\link{.Primitive}} and will
@@ -161,8 +162,8 @@ Complex(z)
   expecting one argument, but three expect two.)
 }
 \section{S4 Group Dispatching}{
-  When package \pkg{methods} is attached, formal (S4) methods can be
-  defined for groups.
+  When package \pkg{methods} is attached (which it is by default),
+  formal (S4) methods can be defined for groups.
   
   The functions belonging to the various groups are as follows:
   \describe{
@@ -188,13 +189,19 @@ Complex(z)
   should not be called directly.
 
   All the functions in these groups (other than the group generics
-  themselves) are basic functions in R.  They are not by default S4 generic
+  themselves) are basic functions in \R.  They are not by default S4 generic
   functions, and many of them are defined as primitives, meaning that
   they do not have formal arguments.  However, you can still define
   formal methods for them.  The effect of doing so is to create an S4 generic
   function with the appropriate arguments, in the environment where the
   method definition is to be stored.  It all works more or less as you
   might expect, admittedly via a bit of trickery in the background.
+
+  Note: currently those members which are not primitive functions have
+  to have been converted to S4 generic functions (preferably
+  \emph{before} setting an S4 group generic method) as it only sets
+  methods for known S4 generics.  This can be done by a call to
+  \code{setGeneric}, for example \code{setGeneric("round", group="Math2")}.
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr
@@ -205,7 +212,7 @@ Complex(z)
   Chambers, J. M. (1998) \emph{Programming with Data.} Springer, pp. 352--4.
 }
 \seealso{
-  \code{\link[utils]{methods}} for methods of non-Internal generic functions.
+  \code{\link{methods}} for methods of non-Internal generic functions.
 }
 \examples{
 methods("Math")

@@ -58,7 +58,6 @@ model.matrix(object, \dots)
   \code{\link{terms}}
 }
 \examples{
-data(trees)
 ff <- log(Volume) ~ log(Height) + log(Girth)
 str(m <- model.frame(ff, trees))
 mat <- model.matrix(ff, m)

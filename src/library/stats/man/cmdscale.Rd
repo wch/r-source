@@ -92,7 +92,6 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   in package \pkg{MASS}.
 }
 \examples{
-data(eurodist)
 loc <- cmdscale(eurodist)
 x <- loc[,1]
 y <- -loc[,2]

@@ -76,13 +76,11 @@ ftable(x, \dots)
 }
 \examples{
 ## Start with a contingency table.
-data(Titanic)
 ftable(Titanic, row.vars = 1:3)
 ftable(Titanic, row.vars = 1:2, col.vars = "Survived")
 ftable(Titanic, row.vars = 2:1, col.vars = "Survived")
 
 ## Start with a data frame.
-data(mtcars)
 x <- ftable(mtcars[c("cyl", "vs", "am", "gear")])
 x
 ftable(x, row.vars = c(2, 4))

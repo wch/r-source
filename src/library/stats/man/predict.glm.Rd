@@ -10,8 +10,8 @@
 }
 \arguments{
   \item{object}{a fitted object of class inheriting from \code{"glm"}.}
-  \item{newdata}{optionally, a new data frame from which to make the
-    predictions.  If omitted, the fitted linear predictors are used.}
+  \item{newdata}{optionally, a data frame in which to look for variables with
+    which to predict.  If omitted, the fitted linear predictors are used.}
   \item{type}{the type of prediction required.  The default is on the
     scale of the linear predictors; the alternative \code{"response"}
     is on the scale of the response variable.  Thus for a default
@@ -45,7 +45,13 @@
   \item{residual.scale}{A scalar giving the square root of the
     dispersion used in computing the standard errors.}
 }
-
+\note{
+  Variables are first looked for in \code{newdata} and then searched for
+  in the usual way (which will include the environment of the formula
+  used in the fit).  As from \R 2.0.0 a warning will be given if the
+  variables found are not of the same length as those in \code{newdata}
+  if it was supplied.
+}
 \seealso{
   \code{\link{glm}}, \code{\link{SafePrediction}}
 }

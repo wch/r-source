@@ -75,7 +75,6 @@ fligner.test(x, \dots)
 }
 \examples{
 % FIXME: could use something more interesting here
-data(InsectSprays)
 plot(count ~ spray, data = InsectSprays)
 fligner.test(InsectSprays$count, InsectSprays$spray)
 fligner.test(count ~ spray, data = InsectSprays)

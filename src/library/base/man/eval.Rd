@@ -42,6 +42,11 @@ local(expr, envir = new.env())
   \code{eval.parent(expr, n)} is a shorthand for \code{eval(expr,
     parent.frame(n))}.
 
+  If \code{envir} is a data frame or list, it is copied into a temporary
+  environment, and the copy is used for evaluation.  So if \code{expr}
+  changes any of the components named in the data frame/list, the changes
+  are lost.
+
   \code{local} evaluates an expression in a local environment.  It is
   equivalent to \code{evalq} except the its default argument creates a
   new, empty environment.  This is useful to create anonymous recursive

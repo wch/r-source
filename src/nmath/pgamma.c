@@ -175,7 +175,5 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 	return(arg);
     /* else */
     /* sum = exp(arg); and return   if(lower_tail) sum  else 1-sum : */
-    return (lower_tail) ? exp(arg)
-	: (log_p ? (arg > -M_LN2 ? log(-expm1(arg)) : log1p(-exp(arg)))
-                 : -expm1(arg));
+    return (lower_tail) ? exp(arg) : (log_p ? R_Log1_Exp(arg) : -expm1(arg));
 }

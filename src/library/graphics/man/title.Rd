@@ -47,7 +47,6 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   \code{\link{plotmath}} for details on mathematical annotation.
 }
 \examples{
-data(cars)
 plot(cars, main = "") # here, could use main directly
 title(main = "Stopping Distance versus Speed")
 

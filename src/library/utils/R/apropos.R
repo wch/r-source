@@ -29,8 +29,7 @@ find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE) {
 # 	what <- gsub("([.[])", "\\\\\\1", paste("^",what,"$", sep=""))
     len.s <- length(sp <- search())
     ind <- logical(len.s)
-    if((check.mode <- mode != "any"))
-	nam <- character(len.s)
+    check.mode <- mode != "any"
     for (i in 1:len.s) {
         if(simple.words) {
             li <- ls(pos = i, all.names = TRUE)

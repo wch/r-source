@@ -42,13 +42,13 @@
     \item{.Object = "traceable"}{
       Objects of a class that extends \code{traceable} are used to
       implement debug tracing (see \link{traceable-class} and
-      \code{\link[base]{trace}}).
+      \code{\link{trace}}).
 
       The \code{initialize} method for these classes takes special
       arguments \code{def, tracer, exit, at, print}.  The first of these
       is the object to use as the original definition (e.g., a
       function).  The others correspond to the arguments to
-      \code{\link[base]{trace}}.
+      \code{\link{trace}}.
     }
 
     \item{.Object = "environment"}{

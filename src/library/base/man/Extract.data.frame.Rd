@@ -122,7 +122,6 @@ x$name <- value
   \code{\link{data.frame}}, \code{\link{Extract}}.
 }
 \examples{
-data(swiss)
 sw <- swiss[1:5, 1:4]  # select a manageable subset
 
 sw[1:3]      # select columns

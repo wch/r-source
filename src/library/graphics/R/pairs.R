@@ -1,13 +1,13 @@
 pairs <- function(x, ...) UseMethod("pairs")
 
 pairs.formula <-
-function(formula, data = NULL, ..., subset, na.action = na.pass)
+function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
 {
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$... <- NULL
-    m$na.action <- na.pass # force in this default
+    m$na.action <- stats::na.pass # force in this default
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     pairs(mf, ...)

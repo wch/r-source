@@ -463,7 +463,7 @@ FUNTAB R_FunTab[] =
 {"substrgets",	do_substrgets,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"strsplit",	do_strsplit,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"abbreviate",	do_abbrev,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"make.names",	do_makenames,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"make.names",	do_makenames,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"grep",	do_grep,	1,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"sub",		do_gsub,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"gsub",	do_gsub,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
@@ -478,7 +478,12 @@ FUNTAB R_FunTab[] =
 {"chartr",	do_chartr,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"sprintf",	do_sprintf,	1,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"make.unique",	do_makeunique,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-
+{"charToRaw",	do_charToRaw,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"rawToChar",	do_rawToChar,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"rawShift",	do_rawShift,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"intToBits",	do_intToBits,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"rawToBits",	do_rawToBits,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"packBits",	do_packBits,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Type Checking (typically implemented in ./coerce.c ) */
 
@@ -572,9 +577,9 @@ FUNTAB R_FunTab[] =
 {"loadFromConn",do_loadFromConn,0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"serializeToConn",	do_serializeToConn,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"unserializeFromConn",	do_unserializeFromConn,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"deparse",	do_deparse,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"dput",	do_dput,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"dump",	do_dump,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"deparse",	do_deparse,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"dput",	do_dput,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"dump",	do_dump,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"substitute",	do_substitute,	0,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"quote",	do_quote,	0,	0,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"quit",	do_quit,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
@@ -623,7 +628,7 @@ FUNTAB R_FunTab[] =
 {"qsort",	do_qsort,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"radixsort",	do_radixsort,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"order",	do_order,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"rank",	do_rank,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"rank",	do_rank,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"missing",	do_missing,	1,	0,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"nargs",	do_nargs,	1,	0,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"scan",	do_scan,	0,	11,	16,	{PP_FUNCALL, PREC_FN,	0}},
@@ -710,15 +715,16 @@ FUNTAB R_FunTab[] =
 
 /* Device Drivers */
 
-{"PS",		do_PS,		0,	111,   16,	{PP_FUNCALL, PREC_FN,	0}},
+{"PS",		do_PS,		0,	111,   17,	{PP_FUNCALL, PREC_FN,	0}},
 {"PicTeX",	do_PicTeX,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"XFig",	do_XFig,	0,	111,   11,	{PP_FUNCALL, PREC_FN,	0}},
 {"PDF",		do_PDF,		0,	111,   10,	{PP_FUNCALL, PREC_FN,	0}},
+{"Type1FontInUse", do_Type1FontInUse, 0, 111,   1,      {PP_FUNCALL, PREC_FN,	0}},
 #ifdef Win32
 {"devga",	do_devga,	0,	111,   15,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 #ifdef Unix
-{"X11",		do_X11,		0,	111,	10,	{PP_FUNCALL, PREC_FN,	0}},
+{"X11",		do_X11,		0,	111,	11,	{PP_FUNCALL, PREC_FN,	0}},
 {"Quartz",	do_Quartz,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
@@ -766,7 +772,7 @@ FUNTAB R_FunTab[] =
 {"contourLines",do_contourLines,0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"image",	do_image,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"dend",	do_dend,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
-{"dend.window",	do_dendwindow,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
+{"dend.window",	do_dendwindow,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"replay",	do_replay,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"erase",	do_erase,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 /*{"dotplot",	do_dotplot,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}}, */

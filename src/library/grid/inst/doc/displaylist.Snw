@@ -18,7 +18,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
-library(graphics)
+library(grDevices)
 library(grid)
 ps.options(pointsize=12)
 options(width=60)
@@ -255,7 +255,10 @@ An important additional step here is that I turn off the graphics engine
 display list for the base graphics also (otherwise I would
 get multiple copies of the base graphics output).  
 
-<<results=hide>>=
+% produce figure, but don't include 
+% (to avoid par setting contamination between code segments)
+
+<<results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
 if ("gridBase" %in% .packages()) {
 engine.display.list(FALSE)
 dev.control(displaylist="inhibit")
@@ -277,7 +280,10 @@ The following reproduces the last example from the
 {\tt legend()} help page, but produces output which can be
 resized without the legend going crazy.
 
-<<results=hide>>=
+% produce figure, but don't include 
+% (to avoid par setting contamination between code segments)
+
+<<results=hide, fig=TRUE, include=FALSE>>=
 drawDetails.mylegend <- function(grob, grob.wrapped, recording) {
    x <- 0:64/64
    y <- sin(3*pi*x)
@@ -298,6 +304,23 @@ The main problem here is that redrawing \grid{}'s display list
 is slower than redrawing the graphics engine display list.
 This is just the price that must be paid in order to obtain the
 advantages of using \grid{}'s display list.
+
+% Turn engine display list back on 
+% in case other code is run in same session as this vignette
+
+<<echo=FALSE, results=hide>>=
+engine.display.list(TRUE)
+dev.control(displaylist="enable")
+
+@
+
+% Start a new page
+% Not echoed, not evaluated
+% ONLY here for checkVignettes so that all output doesn't
+% end up on one enormous page
+
+<<eval=FALSE, echo=FALSE>>=
+grid.newpage()
 
 @
 \end{document}

@@ -192,9 +192,9 @@ static char *string_adj(char *target, char *orig, char *repl,
 SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, rep, vec, ans;
-    int i, j, n, ns, nmatch, offset, re_nsub;
+    int i, j, n, ns, nns, nmatch, offset, re_nsub;
     int global, igcase_opt, options = 0, erroffset;
-    char *s, *t, *u;
+    char *s, *t, *u, *uu;
     const char *errorptr;
     pcre *re_pcre;
     pcre_extra *re_pe;
@@ -220,7 +220,6 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr, 
 			   &erroffset, tables);
-    pcre_free((void *)tables);
     if (!re_pcre) errorcall(call, "invalid regular expression");
     re_nsub = pcre_info(re_pcre, NULL, NULL);
     re_pe = pcre_study(re_pcre, 0, &errorptr);
@@ -249,8 +248,9 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* end NA handling */
 	s = CHAR(STRING_ELT(vec, i));
 	t = CHAR(STRING_ELT(rep, 0));
-	ns = strlen(s);
-	while (pcre_exec(re_pcre, re_pe, s, ns, 0, 0, ovector, 30) >= 0) {
+	nns = ns = strlen(s);
+	while (pcre_exec(re_pcre, re_pe, s+offset, nns-offset, 0, 0, 
+			 ovector, 30) >= 0) {
 	    nmatch += 1;
 	    if (ovector[0] == 0)
 		offset++;
@@ -266,12 +266,10 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    SET_STRING_ELT(ans, i, allocString(ns));
 	    offset = 0;
-	    nmatch = 0;
 	    s = CHAR(STRING_ELT(vec, i));
 	    t = CHAR(STRING_ELT(rep, 0));
-	    u = CHAR(STRING_ELT(ans, i));
-	    ns = strlen(s);
-	    while (pcre_exec(re_pcre, NULL, s+offset, ns-offset, 0, 0, 
+	    uu = u = CHAR(STRING_ELT(ans, i));
+	    while (pcre_exec(re_pcre, re_pe, s+offset, nns-offset, 0, 0, 
 			     ovector, 30) >= 0) {
 		for (j = 0; j < ovector[0]; j++)
 		    *u++ = s[offset+j];
@@ -292,6 +290,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     (pcre_free)(re_pe);
     (pcre_free)(re_pcre);
+    pcre_free((void *)tables);
     UNPROTECT(1);
     return ans;
 }
@@ -316,7 +315,6 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), 0, &errorptr, 
 			   &erroffset, tables);
-    pcre_free((void *)tables);
     if (!re_pcre) errorcall(call, "invalid regular expression");
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
@@ -339,6 +337,7 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     (pcre_free)(re_pcre);
+    pcre_free((void *)tables);
     setAttrib(ans, install("match.length"), matchlen);
     UNPROTECT(2);
     return ans;

@@ -1,3 +1,13 @@
+.hsearch_db <- local({
+    hdb <- NULL
+    function(new) {
+        if(!missing(new))
+            hdb <<- new
+        else
+            hdb
+    }
+})
+
 help.search <-
 function(pattern, fields = c("alias", "concept", "title"),
 	 apropos, keyword, whatis, ignore.case = TRUE,
@@ -9,9 +19,14 @@ function(pattern, fields = c("alias", "concept", "title"),
     ### Argument handling.
     TABLE <- c("alias", "concept", "keyword", "name", "title")
 
+    ## Simplified version of tools:::wrong_args().
+    .wrong_args <- function(args, msg)
+        paste("argument", sQuote(args), msg)
+
     if(!missing(pattern)) {
 	if(!is.character(pattern) || (length(pattern) > 1))
-	    stop(sQuote("pattern"), " must be a single character string")
+	    stop(.wrong_args("pattern",
+                             "must be a single character string"))
 	i <- pmatch(fields, TABLE)
 	if(any(is.na(i)))
 	    stop("incorrect field specification")
@@ -19,14 +34,16 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    fields <- TABLE[i]
     } else if(!missing(apropos)) {
 	if(!is.character(apropos) || (length(apropos) > 1))
-	    stop(sQuote("apropos"), " must be a single character string")
+	    stop(.wrong_args("apropos",
+                             "must be a single character string"))
 	else {
 	    pattern <- apropos
 	    fields <- c("alias", "title")
 	}
     } else if(!missing(keyword)) {
 	if(!is.character(keyword) || (length(keyword) > 1))
-	    stop(sQuote("keyword"), " must be a single character string")
+	    stop(.wrong_args("keyword",
+                             "must be a single character string"))
 	else {
 	    pattern <- keyword
 	    fields <- "keyword"
@@ -34,7 +51,8 @@ function(pattern, fields = c("alias", "concept", "title"),
 	}
     } else if(!missing(whatis)) {
 	if(!is.character(whatis) || (length(whatis) > 1))
-	    stop(sQuote("whatis"), " must be a single character string")
+	    stop(.wrong_args("whatis",
+                             "must be a single character string"))
 	else {
 	    pattern <- whatis
 	    fields <- "alias"
@@ -46,69 +64,59 @@ function(pattern, fields = c("alias", "concept", "title"),
     if(is.null(lib.loc))
 	lib.loc <- .libPaths()
 
-    ## <FIXME>
-    ## Currently, the information used for help.search is stored in
-    ## package-level CONTENTS files.  As it is expensive to build the
-    ## help.search db, we use a global file cache for this information
-    ## if possible.  This is wrong because multiple processes or threads
-    ## use the same cache (no locking!), and we should really save the
-    ## information in one (thread-local) global table, e.g. as a local
-    ## variable in the environment of help.search(), or something that
-    ## can go in a 'shelf' (but not necessarily to a specific file) if
-    ## memory usage is an issue.  Argh.
-    ## </FIXME>
+    if(!missing(help.db))
+        warning(.wrong_args("help.db", "is deprecated"))
+        
 
-    ### Set up the help db.
-    if(is.null(help.db) || !file.exists(help.db))
+    ### Set up the hsearch db.
+    db <- eval(.hsearch_db())
+    if(is.null(db))
 	rebuild <- TRUE
     else if(!rebuild) {
-	## Try using the saved help db.
-        db <- try(.readRDS(file = help.db), silent = TRUE)
-        if(inherits(db, "try-error"))
-            load(file = help.db)
-	## If not a list (pre 1.7 format), rebuild.
-	if(!is.list(db) ||
-        ## If no information on concepts (pre 1.8 format), rebuild.
-           length(db) < 4 ||
 	## Need to find out whether this has the info we need.
 	## Note that when looking for packages in libraries we always
 	## use the first location found.  Hence if the library search
 	## path changes we might find different versions of a package.
-	## Thus we need to rebuild the help db in case the specified
+	## Thus we need to rebuild the hsearch db in case the specified
 	## library path is different from the one used when building the
-	## help db (stored as its "LibPaths" attribute).
-           !identical(lib.loc, attr(db, "LibPaths")) ||
-	## We also need to rebuild the help db in case an existing dir
-	## in the library path was modified more recently than the db,
-	## as packages might have been installed or removed.
-           any(file.info(help.db)$mtime <
+	## hsearch db (stored as its "LibPaths" attribute).
+        if(!identical(lib.loc, attr(db, "LibPaths")) ||
+           ## We also need to rebuild the hsearch db in case an existing
+           ## dir in the library path was modified more recently than
+           ## the db, as packages might have been installed or removed.
+           any(attr(db, "mtime") <
 	       file.info(lib.loc[file.exists(lib.loc)])$mtime)
            )
 	    rebuild <- TRUE
     }
     if(rebuild) {
-	## Check whether we can save the help db lateron.
-	save.db <- FALSE
-        dir <- file.path(tempdir(), ".R")
-	dbfile <- file.path(dir, "help.db")
-	if((tools::file_test("-d", dir)
-            || ((unlink(dir) == 0) && dir.create(dir)))
-	   && (unlink(dbfile) == 0))
-	    save.db <- TRUE
+        ## Check whether we can save the hsearch db lateron.
+        if(all(is.na(mem.limits()))) {
+            save_db <- save_db_to_memory <- TRUE
+        }
+        else {
+            save_db <- save_db_to_memory <- FALSE
+            dir <- file.path(tempdir(), ".R")
+            db_file <- file.path(dir, "hsearch.rds")
+            if((tools::file_test("-d", dir)
+                || ((unlink(dir) == 0) && dir.create(dir)))
+               && (unlink(db_file) == 0))
+                save_db <- TRUE
+        }
 
         ## If we cannot save the help db only use the given packages.
-        ## <FIXME>
+        ## <NOTE>
         ## Why don't we just use the given packages?  The current logic
         ## for rebuilding cannot figure out that rebuilding is needed
         ## the next time (unless we use the same given packages) ...
-        packagesInHelpDB <- if(!is.null(package) && !save.db)
+        packages_in_hsearch_db <- if(!is.null(package))
             package
         else
             .packages(all.available = TRUE, lib.loc = lib.loc)
-        ## </FIXME>
+        ## </NOTE>
 
-	## Create the help db.
-	contentsDCFFields <-
+	## Create the hsearch db.
+	contents_DCF_fields <-
 	    c("Entry", "Aliases", "Description", "Keywords")
         np <- 0
 	if(verbose)
@@ -125,37 +133,37 @@ function(pattern, fields = c("alias", "concept", "title"),
         ## indices into its rows, and finally create the base, aliases
         ## and keyword information in rbind() calls on the columns.
         ## This is *much* more efficient than building incrementally.
-        dbMat <- vector("list", length(packagesInHelpDB) * 4)
-        dim(dbMat) <- c(length(packagesInHelpDB), 4)
+        dbMat <- vector("list", length(packages_in_hsearch_db) * 4)
+        dim(dbMat) <- c(length(packages_in_hsearch_db), 4)
 
-	for(p in packagesInHelpDB) {
+	for(p in packages_in_hsearch_db) {
             np <- np + 1
 	    if(verbose)
 		cat("", p, if((np %% 5) == 0) "\n")
             ## skip stub packages
-            if(p %in% c("ctest", "eda", "lqs", "mle", "modreg", "mva",
-                        "nls", "stepfun", "ts")) next
+            if(p %in% tools:::.get_standard_package_names()$stubs)
+                next
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
-		stop("could not find package ", sQuote(p))
+		stop(paste("could not find package", sQuote(p)))
 
-            if(file.exists(hsearchFile <-
+            if(file.exists(hsearch_file <-
                            file.path(path, "Meta", "hsearch.rds"))) {
-                hDB <- .readRDS(hsearchFile)
+                hDB <- .readRDS(hsearch_file)
             }
             else {
                 hDB <- contents <- NULL
                 ## Read the contents info from the respective Rd meta
                 ## files.
-                if(file.exists(contentsFile <-
+                if(file.exists(contents_file <-
                                file.path(path, "Meta", "Rd.rds"))) {
-                    contents <- .readRDS(contentsFile)
+                    contents <- .readRDS(contents_file)
                 }
-                else if(file.exists(contentsFile
+                else if(file.exists(contents_file
                                     <- file.path(path, "CONTENTS"))) {
                     contents <-
-                        read.dcf(contentsFile,
-                                 fields = contentsDCFFields)
+                        read.dcf(contents_file,
+                                 fields = contents_DCF_fields)
                 }
                 ## If we found Rd contents information ...
                 if(!is.null(contents)) {
@@ -165,8 +173,9 @@ function(pattern, fields = c("alias", "concept", "title"),
                 }
                 else {
                     ## otherwise, issue a warning.
-                    warning("No Rd contents for package ",
-                            sQuote(p), " in ", sQuote(dirname(path)))
+                    warning(paste("No Rd contents for package",
+                                  sQuote(p), "in",
+                                  sQuote(dirname(path))))
                 }
             }
             if(!is.null(hDB)) {
@@ -194,21 +203,25 @@ function(pattern, fields = c("alias", "concept", "title"),
         ## with the number of the package in the global index.
         for(i in which(sapply(db, NROW) > 0)) {
             db[[i]][, "ID"] <-
-                paste(rep.int(seq(along = packagesInHelpDB),
+                paste(rep.int(seq(along = packages_in_hsearch_db),
                               sapply(dbMat[, i], NROW)),
                       db[[i]][, "ID"],
                       sep = "/")
         }
 
-	## Maybe save the help db
-	## <FIXME>
-	## Shouldn't we serialize instead?
-	if(save.db) {
-	    attr(db, "LibPaths") <- lib.loc
-	    .saveRDS(db, file = dbfile)
-	    options(help.db = dbfile)
-	}
-	## </FIXME>
+        if(save_db) {
+            attr(db, "LibPaths") <- lib.loc
+            attr(db, "mtime") <- Sys.time()
+            if(save_db_to_memory)
+                .hsearch_db(db)
+            else {
+                ## If we cannot save to memory, serialize to a file ...
+                .saveRDS(db, file = db_file)
+                ## and store a promise to unserialize from this file.
+                .hsearch_db(substitute(.readRDS(con),
+                                       list(con = db_file)))
+            }
+        }
     }
 
     ### Matching.
@@ -220,14 +233,14 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    NROW(db$Keywords), " keywords),\n",
 	    sep = "")
     if(!is.null(package)) {
-	## Argument 'package' was given but we built a larger help db to
-	## save for future invocations.	 Need to check that all given
+	## Argument 'package' was given but we built a larger hsearch db
+        ## to save for future invocations.  Need to check that all given 
 	## packages exist, and only search the given ones.
-	posInHelpDB <-
+	pos_in_hsearch_db <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0)
-	if(any(posInHelpDB) == 0)
-	    stop("could not find package ",
-                 sQuote(package[posInHelpDB == 0][1]))
+	if(any(pos_in_hsearch_db) == 0)
+	    stop(paste("could not find package",
+                       sQuote(package[pos_in_hsearch_db == 0][1])))
 	db <-
 	    lapply(db,
 		   function(x) {
@@ -309,8 +322,11 @@ function(pattern, fields = c("alias", "concept", "title"),
     y
 }
 
-print.hsearch <-
-function(x, ...)
+print.hsearch <- function(x,...){
+  printhsearchInternal(x,...)
+}
+
+printhsearchInternal  <- function(x, ...)
 {
     fields <- paste(x$fields, collapse = " or ")
     type <- switch(x$type, fuzzy = "fuzzy", "regular expression")
@@ -339,4 +355,6 @@ function(x, ...)
                                  "matching", sQuote(x$pattern),
                                  "using", type, "matching.")))
     }
+
+    invisible(x)
 }

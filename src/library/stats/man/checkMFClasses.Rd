@@ -36,4 +36,4 @@
 
   \code{.getXlevels} returns a named character vector, or \code{NULL}.
 }
-\keyword{internal}
+\keyword{utilities}

@@ -34,8 +34,6 @@ cutree(tree, k = NULL, h = NULL)
   \code{\link{hclust}}, \code{\link{dendrogram}} for cutting trees themselves.
 }
 \examples{
-data(USArrests)
-
 hc <- hclust(dist(USArrests))
 
 cutree(hc, k=1:5)#k = 1 is trivial

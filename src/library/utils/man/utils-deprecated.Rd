@@ -9,7 +9,6 @@
 \usage{
 }
 \seealso{
-  \code{\link{utils-defunct}},
   \code{\link{Deprecated}}, \code{\link{Defunct}}
 }
-\keyword{internal}
+\keyword{misc}

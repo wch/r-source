@@ -17,7 +17,6 @@ splineKnots(object)
 }
 \author{Douglas Bates and Bill Venables}
 \examples{
-data( women )
 ispl <- interpSpline( weight ~ height, women )
 splineKnots( ispl )
 }

@@ -54,7 +54,6 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 x <- c("abcd", "efgh", "abce")
 abbreviate(x, 2)
 
-data(state)
 (st.abb <- abbreviate(state.name, 2))
 table(nchar(st.abb))# out of 50, 3 need 4 letters
 }

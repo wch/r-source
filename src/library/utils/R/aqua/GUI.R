@@ -1,9 +1,9 @@
-if(.Platform$GUI == "AQUA") {
-
     browse.pkgs <- function(where = c("CRAN","BIOC"),
                             type = c("binary","source"), global = FALSE)
    {
-       where <- match.arg(where)
+     if (.Platform$GUI!="AQUA")
+       stop("This function is intended to work with the Aqua GUI")
+     where <- match.arg(where)
        type <- match.arg(type)
        installed.packages() -> x
        x[,1] -> i.pkgs
@@ -48,6 +48,8 @@ if(.Platform$GUI == "AQUA") {
                                    type = c("binary", "source"),
                                    in.place = TRUE)
    {
+     if (.Platform$GUI!="AQUA")
+       stop("This function is intended to work with the Aqua GUI")
        where <- match.arg(where)
        type <- match.arg(type)
 
@@ -95,8 +97,15 @@ if(.Platform$GUI == "AQUA") {
        }
    }
 
+"data_by_name"<-function(datanames){
+  aliases<-sub("^.+ +\\((.+)\\)$","\\1",datanames)
+  data(list=ifelse(aliases=="",datanames,aliases))
+}
+
     data.manager <- function()
     {
+     if (.Platform$GUI!="AQUA")
+       stop("This function is intended to work with the Aqua GUI")
         data() -> x
         x$results[,3] -> dt
         x$results[,1] -> pkg
@@ -106,12 +115,14 @@ if(.Platform$GUI == "AQUA") {
 
         for(i in load.idx) {
             cat("loading dataset:", dt[i],"\n")
-            data(list = dt[i])
+            data_by_name( dt[i])
         }
     }
 
     package.manager <- function()
     {
+     if (.Platform$GUI!="AQUA")
+       stop("This function is intended to work with the Aqua GUI")
         .packages() -> loaded.pkgs
         library() -> x
         x <- x$results[x$results[,1] != "base",]
@@ -139,26 +150,31 @@ if(.Platform$GUI == "AQUA") {
 
     }
 
-    flush.console <- function() .Internal(flush.console())
+flush.console <- function() {if (.Platform$GUI=="AQUA") .Internal(flush.console())}
 
-    print.hsearch <- function(x,...)
-    {
-        db <- x$matches
-        if (NROW(db) == 0) {
+print.hsearch <- function(x,...)
+  {
+        if (.Platform$GUI=="AQUA"){
+          db <- x$matches
+          if (NROW(db) == 0) {
             writeLines(strwrap(paste("No help files found matching",
                                      sQuote(x$pattern), "using", x$type,
                                      "matching\n\n")))
-        } else {
+          } else {
             wtitle <- paste("Help topics matching", sQuote(x$pattern))
             showhelp <- which(.Internal(hsbrowser(db[,"topic"], db[,"Package"],
                                                   db[,"title"],  wtitle)))
             for(i in showhelp)
-                help(db[i,"topic"], package = db[i,"Package"])
-        }
-        invisible(x)
-    }
+              print(help(db[i,"topic"], package = db[i,"Package"]))
+          }
+          invisible(x)
+        } else
+          printhsearchInternal(x,...)
+}
 
 Rapp.updates <- function() {
+  if (.Platform$GUI!="AQUA")
+       stop("This function is intended to work with the Aqua GUI")
  readLines("http://cran.r-project.org/bin/macosx/VERSION") -> cran.ver
 
  strsplit(cran.ver,"\\.") -> ver
@@ -182,40 +198,8 @@ Rapp.updates <- function() {
 
 }
 
-}else{ # NOT AQUA
 
-    browse.pkgs <- function(where = c("CRAN","BIOC"),
-                            type = c("binary","source"), global = FALSE)
-    {
-        warning("This function is intended to work with the Aqua GUI")
-    }
 
-    browse.update.pkgs <- function(where = c("CRAN", "BIOC"),
-                                   type = c("binary", "source"),
-                                   in.place = TRUE)
-    {
-        warning("This function is intended to work with the Aqua GUI")
-    }
-
-    data.manager <- function()
-    {
-        warning("This function is intended to work with the Aqua GUI")
-    }
-
-    package.manager <- function()
-    {
-        warning("This function is intended to work with the Aqua GUI")
-    }
-
-    flush.console <- function(){
-        warning("This function is intended to work with the Aqua GUI")
-    }
-
-    Rapp.updates <- function() {
-        warning("This function is intended to work with the Aqua GUI")
-    }
-
-}
 
 ## edited from windows/install.packages
 ##

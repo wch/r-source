@@ -33,7 +33,6 @@ expand.model.frame(model, extras, envir=environment(formula(model)),
 \seealso{\code{\link{model.frame}},\code{\link{predict}}}
 
 \examples{
-data(trees)
 model <- lm(log(Volume) ~ log(Girth) + log(Height), data=trees)
 expand.model.frame(model, ~ Girth) # prints data.frame like
 

@@ -30,7 +30,6 @@
   \code{\link{princomp}}
 }
 \examples{
-data(USArrests)
 summary(pc.cr <- princomp(USArrests, cor=TRUE))
 print(summary(princomp(USArrests, cor=TRUE),
               loadings = TRUE, cutoff = 0.2), digits = 2)

@@ -29,7 +29,7 @@ args(name)
 }
 \seealso{
   \code{\link{formals}},
-  \code{\link[utils]{help}}.
+  \code{\link{help}}.
 }
 \examples{
 args(c)            # -> NULL (c is a 'primitive' function)

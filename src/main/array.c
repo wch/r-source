@@ -146,6 +146,11 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			COMPLEX(snr)[i + j * nr] = na_cmplx;
 	    }
 	    break;
+	case RAWSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    RAW(snr)[i + j * nr] = 0;
+	    break;
 	}
     }
     UNPROTECT(1);
@@ -787,6 +792,10 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_VECTOR_ELT(r, i,
 			   VECTOR_ELT(a, (i / ncol) + (i % ncol) * nrow));
 	break;
+    case RAWSXP:
+	for (i = 0; i < len; i++)
+	    RAW(r)[i] = RAW(a)[(i / ncol) + (i % ncol) * nrow];
+	break;
     default:
 	goto not_matrix;
     }
@@ -940,6 +949,13 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     case VECSXP:
 	for (j=0, i=0; i<len; i++) {
 	    SET_VECTOR_ELT(r, i, VECTOR_ELT(a, j));
+	    CLICKJ;
+	}
+	break;
+
+    case RAWSXP:
+	for (j=0, i=0; i<len; i++) {
+	    RAW(r)[i] = RAW(a)[j];
 	    CLICKJ;
 	}
 	break;

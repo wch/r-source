@@ -113,7 +113,6 @@ mantelhaen.test(Rabbits, exact = TRUE, alternative = "greater")
 ## => p = 0.020
 
 ## UC Berkeley Student Admissions
-data(UCBAdmissions)
 mantelhaen.test(UCBAdmissions)
 ## No evidence for association between admission and gender
 ## when adjusted for department.  However,

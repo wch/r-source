@@ -41,8 +41,9 @@ You need a recent version of the Mingw port of gcc from
 http://sourceforge.net/projects/mingw/.  There will be a distribution
 called something like MinGW-3.1.0-1.exe (which is built from
 gcc-3.2.3).  Earlier versions may work, but mingw-runtime >= 3.0 and
-w32api >= 2.0 are essential.  The released versions of gcc-3.3.1 have
-also been tested.
+w32api >= 2.0 are essential.  The release of gcc-3.3.1 and the release
+candidates of 3.4.1 have also been tested successfully, but the
+release candidates of gcc-3.3.3 and gcc-3.4.0 did not work.
 
 
 The Windows port of perl5, available via
@@ -239,8 +240,8 @@ executable to be debugged as the full path to the R front-end.
 
 Extra care is needed when referencing variables (rather than
 functions) exported from R.dll.  These must be declared
-__declspec(dllimport) (as in R's own header files).  A list of the
-relevant variables is in the file `exported-vars'.
+__declspec(dllimport) (as in R's own header files).  The list of the
+relevant variables is at the end of the file 'R.exp'.
 
 VC++ lacks some standard functions such as isnan and isfinite.  To use
 R's macros you will need

@@ -19,7 +19,6 @@
   \code{\link{data.frame}}
 }
 \examples{
-data(OrchardSprays)
 plot(OrchardSprays[1], method="jitter")
 plot(OrchardSprays[c(4,1)])
 plot(OrchardSprays)

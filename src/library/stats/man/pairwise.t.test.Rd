@@ -21,7 +21,6 @@ pairwise.t.test(x, g, p.adjust.method=p.adjust.methods, pool.sd=TRUE, \dots)
 \seealso{ \code{\link{t.test}}, \code{\link{p.adjust}}}
 
 \examples{
-data(airquality)
 attach(airquality)
 Month <- factor(Month, labels = month.abb[5:9])
 pairwise.t.test(Ozone, Month)

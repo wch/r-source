@@ -3,8 +3,8 @@
 \alias{print.checkVignettes}
 \title{Check Package Vignettes}
 \description{
-  Check all \code{\link[utils]{Sweave}} files of a package by running
-  \code{\link[utils]{Sweave}} and/or \code{\link[utils]{Stangle}} on them. All
+  Check all \code{\link{Sweave}} files of a package by running
+  \code{\link{Sweave}} and/or \code{\link{Stangle}} on them. All
   R source code files found after the tangling step are
   \code{\link{source}}ed to check whether all code can be
   executed without errors.

@@ -96,8 +96,7 @@ matplot(x, outer(x, 1:8, function(x, k) sin(k*pi * x)),
 matplot(x, outer(x, 1:4, function(x, k) sin(k*pi * x)),
         pch = letters[1:4], type = c("b","p","o"))
 
-data(iris)                  # is data.frame with 'Species' factor
-table(iris$Species)
+table(iris$Species) # is data.frame with 'Species' factor
 iS <- iris$Species == "setosa"
 iV <- iris$Species == "versicolor"
 op <- par(bg = "bisque")

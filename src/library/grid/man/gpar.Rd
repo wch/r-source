@@ -55,8 +55,16 @@ get.gpar(names = NULL)
   and this specification will be honoured
   on all devices.
 
-  The specification of \code{fontface} follows the R base graphics
+  The specification of \code{fontface} can be an integer or a string.
+  If an integer, then it
+  follows the R base graphics
   standard:  1 = plain, 2 = bold, 3 = italic, 4 = bold italic.
+  If a string, then valid values are: \code{"plain"},
+  \code{"bold"}, \code{"italic"}, \code{"oblique"}, and
+  \code{"bold.italic"}.
+  For the special case of the HersheySerif font family,
+  \code{"cyrillic"}, \code{"cyrillic.oblique"}, and \code{"EUC"}
+  are also available.
   
   Specifying the value \code{NULL} for a parameter is the same as not
   specifying any value for that parameter, except for \code{col} and

@@ -8,28 +8,29 @@
             e1 <- as.character(e1Expr)
         eval(substitute(help(TOPIC), list(TOPIC = e1)))
     }
-  else {
-      ## interpret e1 as a type, but to allow customization, do NOT force
-      ## arbitrary expressions to be single character strings (so that methods
-      ## can be defined for topicName).
+    else {
+        ## interpret e1 as a type, but to allow customization, do NOT
+        ## force arbitrary expressions to be single character strings
+        ## (so that methods can be defined for topicName).
         if(is.name(e1Expr))
             e1 <- as.character(e1Expr)
-      e2Expr <- substitute(e2)
-    if(is.name(e2Expr))
-      e2 <- as.character(e2Expr)
+        e2Expr <- substitute(e2)
+        if(is.name(e2Expr))
+            e2 <- as.character(e2Expr)
         else if(is.call(e2Expr) && identical(e1, "method"))
             return(.helpForCall(e2Expr, parent.frame(), FALSE))
-    topic <- topicName(e1, e2)
-    doHelp <- .tryHelp(topic)
-    if(inherits(doHelp, "try-error")) {
-        stop(paste("no documentation of type \"", e1,
-                   "\" and topic \"", e2,
-                   "\" (or error in processing help)", sep=""))
+        topic <- topicName(e1, e2)
+        doHelp <- .tryHelp(topic)
+        if(inherits(doHelp, "try-error")) {
+            stop(paste("no documentation of type \"", e1,
+                       "\" and topic \"", e2,
+                       "\" (or error in processing help)", sep=""))
+        }
     }
-  }
 }
 
-topicName <- function(type, topic) {
+topicName <- function(type, topic)
+{
     if((length(type) == 0) || (length(topic) == 0))
         character(0)
     else
@@ -37,17 +38,19 @@ topicName <- function(type, topic) {
 }
 
 .helpForCall <- function(expr, envir, doEval = TRUE) {
-    f <- expr[[1]] # the function specifier
-    where <- topenv(envir) # typically .GlobalEnv
+    f <- expr[[1]]                      # the function specifier
+    where <- topenv(envir)              # typically .GlobalEnv
     if(is.name(f))
         f <- as.character(f)
-    if(!.isMethodsDispatchOn() || !isGeneric(f, where = where)){
+    if(!.isMethodsDispatchOn() || !isGeneric(f, where = where)) {
         if(!is.character(f) || length(f) != 1)
-            stop("The object of class \"", class(f), "\" in the function call \"",
-                 deparse(expr), "\"could not be used as a documentation topic")
+            stop("The object of class \"", class(f),
+                 "\" in the function call \"", deparse(expr),
+                 "\"could not be used as a documentation topic")
         h <- .tryHelp(f)
         if(inherits(h, "try-error"))
-            stop("No methods for \"", f, "\" and no documentation for it as a function")
+            stop("No methods for \"", f,
+                 "\" and no documentation for it as a function")
     }
     else {
         ## allow generic function objects or names
@@ -66,12 +69,14 @@ topicName <- function(type, topic) {
             argExpr <- elNamed(call, arg)
             if(!is.null(argExpr)) {
                 simple <- (is.character(argExpr) || is.name(argExpr))
-                ## TODO:  ideally, if doEval is TRUE, we would like to create
-                ## the same context used by applyClosure in eval.c, but then
-                ## skip the actual evaluation of the body.  If we could create
-                ## this environment then passing it to selectMethod is closer to
-                ## the semantics of the "real" function call than the code below.
-                ## But, seems to need a change to eval.c and a flag to the evaluator.
+                ## TODO:  ideally, if doEval is TRUE, we would like to
+                ## create the same context used by applyClosure in
+                ## eval.c, but then skip the actual evaluation of the
+                ## body.  If we could create this environment then
+                ## passing it to selectMethod is closer to the semantics
+                ## of the "real" function call than the code below.
+                ## But, seems to need a change to eval.c and a flag to
+                ## the evaluator.  
                 if(doEval || !simple) {
                     argVal <- try(eval(argExpr, envir))
                     if(is(argVal, "try-error"))
@@ -100,8 +105,15 @@ topicName <- function(type, topic) {
 }
 
 .tryHelp <- function(topic) {
-    opts <- options(error= function()TRUE, show.error.messages = FALSE)
+    opts <- options(error = function() TRUE,
+                    show.error.messages = FALSE)
     on.exit(options(opts))
-    try(do.call("help", list(topic)))
+    x <- try(do.call("help", list(topic)))
+    ## If something was found, actually show it via print().
+    ## Otherwise, give an error.
+    if(!inherits(x, "try-error") && length(x))
+        print(x)
+    else
+        try(stop())
+    ## Argh ...
 }
-

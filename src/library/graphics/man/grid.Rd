@@ -35,7 +35,6 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted", lwd = NULL,
 plot(1:3)
 grid(NA, 5, lwd = 2) # grid only in y-direction
 
-data(iris)
 ## maybe change the desired number of tick marks:  par(lab=c(mx,my,7))
 op <- par(mfcol = 1:2)
 with(iris,

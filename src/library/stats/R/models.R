@@ -253,6 +253,13 @@ model.frame.default <-
     function(formula, data = NULL, subset = NULL, na.action = na.fail,
 	     drop.unused.levels = FALSE, xlev = NULL,...)
 {
+    ## first off, establish if we were passed a data frame 'newdata'
+    ## and note the number of rows.
+    possible_newdata <-
+        !missing(data) && is.data.frame(data) &&
+    identical(deparse(substitute(data)), "newdata") &&
+    (nr <- nrow(data)) > 0
+
     ## were we passed just a fitted model object?
     if(!missing(formula) && nargs() == 1 && is.list(formula)
        && all(c("terms", "call") %in% names(formula))) {
@@ -302,6 +309,14 @@ model.frame.default <-
     if(is.null(predvars)) predvars <- vars
     varnames <- as.character(vars[-1])
     variables <- eval(predvars, data, env)
+    if(possible_newdata && length(variables)) {
+        ## need to do this before subsetting and na.action
+        nr2 <- max(sapply(variables, NROW))
+        if(nr2 != nr)
+            warning(paste("'newdata' had", nr,
+                          "rows but variable(s) found have",
+                          nr2, "rows"), call.=FALSE)
+    }
     if(is.null(attr(formula, "predvars"))) {
         for (i in seq(along = varnames))
             predvars[[i+1]] <- makepredictcall(variables[[i]], vars[[i+1]])

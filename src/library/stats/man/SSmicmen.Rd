@@ -28,7 +28,6 @@ SSmicmen(input, Vm, K)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data( Puromycin )
 PurTrt <- Puromycin[ Puromycin$state == "treated", ]
 SSmicmen( PurTrt$conc, 200, 0.05 )  # response only
 Vm <- 200; K <- 0.05

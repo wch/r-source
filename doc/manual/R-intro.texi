@@ -2550,14 +2550,14 @@ to @code{detach}, but it is much safer to always use a name, for example
 by @code{detach(lentils)} or @code{detach("lentils")}
 
 @quotation
-@strong{NOTE}: With the current release of @R{} the search path can
+@strong{Note}: With the current release of @R{} the search path can
 contain at most 20 items.  Avoid attaching the same data frame more than
 once.  Always detach the data frame as soon as you have finished using
 its variables.
 @end quotation
 
 @quotation
-@strong{NOTE}: With the current release of @R{} lists and data frames
+@strong{Note}: With the current release of @R{} lists and data frames
 can only be attached at position 2 or above.  It is not possible to
 directly assign into an attached list or data frame (thus, to some
 extent they are static).
@@ -2832,7 +2832,7 @@ data(infert)
 @noindent
 In most cases this will load an @R{} object of the same name, usually a
 data frame.  However, in a few cases it loads several objects, so see the
-on-line help for the object to see what to expect.
+on-line help for the object to see what to expect.  
 
 @subsection Loading data from other R packages
 
@@ -2840,8 +2840,8 @@ To access data from another package, use the @code{package} argument,
 for example
 
 @example
-data(package="stats")
-data(Puromycin, package="stats")
+data(package="rpart")
+data(Puromycin, package="datasets")
 @end example
 
 If a package has been attached by @code{library}, its datasets are
@@ -3399,7 +3399,7 @@ category.  This is a useful function, mostly used in connection with
 boxplots.  See the @code{help} facility for further details.)
 
 @quotation
-@strong{WARNING}: @code{for()} loops are used in @R{} code much less
+@strong{Warning}: @code{for()} loops are used in @R{} code much less
 often than in compiled languages.  Code that takes a `whole object' view
 is likely to be both clearer and faster in @R{}.
 @end quotation
@@ -6377,7 +6377,7 @@ need to adapt the discussion slightly.
 @item
 Login, start your windowing system.  You should also have the file
 @file{morley.tab} in your working directory.  If not, seek the local
-expert (or get it yourself from the @file{base/data} subdirectory of the
+expert (or get it yourself from the @file{datasets/data} subdirectory of the
 default @R{} library tree).  If you have, proceed.
 @item $ R
 Start @R{} as appropriate for your platform.
@@ -6839,11 +6839,6 @@ Convert S documentation to Rd format.
 @item config
 (UNIX only) Obtain configuration information.
 @end table
-
-The first five tools (i.e., @code{BATCH}, @code{COMPILE}, @code{SHLIB},
-@code{INSTALL}, and @code{REMOVE}) can also be invoked ``directly''
-without the @code{CMD} option, i.e., in the form @code{R @var{command}
-@var{args}}.
 
 Use
 

@@ -51,7 +51,6 @@ unique(c(3:5, 11:8, 8 + 0:5))
 length(unique(sample(100, 100, replace=TRUE)))
 ## approximately 100(1 - 1/e) = 63.21
 
-data(iris)
 unique(iris)
 }
 \keyword{manip}

@@ -135,7 +135,6 @@ step(object, scope, scale = 0,
 example(lm)
 step(lm.D9)  
 
-data(swiss)
 summary(lm1 <- lm(Fertility ~ ., data = swiss))
 slm1 <- step(lm1)
 summary(slm1)

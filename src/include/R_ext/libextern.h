@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001  The R Development Core Team.
+ *  Copyright (C) 2001, 2004  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* don't disallow including this one for than once */
+/* don't disallow including this one more than once */
+
+/* This is intended to be called from other header files, so not callable
+   from C++ */
 
 #undef LibExtern
 #undef LibImport

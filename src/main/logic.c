@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2003   The R Development Core Team.
+ *  Copyright (C) 1999-2004   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,10 @@
 static SEXP lunary(SEXP, SEXP, SEXP);
 static SEXP lbinary(SEXP, SEXP, SEXP);
 static SEXP binaryLogic(int code, SEXP s1, SEXP s2);
+static SEXP binaryLogic2(int code, SEXP s1, SEXP s2);
 
 
+/* & | ! */
 SEXP do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
@@ -47,6 +49,7 @@ SEXP do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 }
 
+#define isRaw(x) (TYPEOF(x) == RAWSXP)
 static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 {
 /* logical binary : "&" or "|" */ 
@@ -55,7 +58,8 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     mismatch = 0;
     x = CAR(args);
     y = CADR(args);
-    if (!isNumeric(x) || !isNumeric(y))
+    if (isRaw(x) && isRaw(y)) {
+    } else if (!isNumeric(x) || !isNumeric(y))
 	errorcall(call, "operations are possible only for numeric or logical types");
     tsp = R_NilValue;		/* -Wall */
     class = R_NilValue;		/* -Wall */
@@ -112,9 +116,16 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     if(mismatch)
 	warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
 
-    x = SETCAR(args, coerceVector(x, LGLSXP));
-    y = SETCADR(args, coerceVector(y, LGLSXP));
-    PROTECT(x = binaryLogic(PRIMVAL(op), x, y));
+    if (isRaw(x) && isRaw(y)) {
+	PROTECT(x = binaryLogic2(PRIMVAL(op), x, y));
+    } else {
+	if (!isNumeric(x) || !isNumeric(y))
+	    errorcall(call, "operations are possible only for numeric or logical types");
+	x = SETCAR(args, coerceVector(x, LGLSXP));
+	y = SETCADR(args, coerceVector(y, LGLSXP));
+	PROTECT(x = binaryLogic(PRIMVAL(op), x, y));
+    }
+    
 
     if (dims != R_NilValue) {
 	setAttrib(x, R_DimSymbol, dims);
@@ -146,12 +157,12 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 
     len = LENGTH(arg);
     if(len == 0) return(allocVector(LGLSXP, 0));
-    if (!isLogical(arg) && !isNumeric(arg))
+    if (!isLogical(arg) && !isNumeric(arg) && !isRaw(arg))
 	errorcall(call, "invalid argument type");
     PROTECT(names = getAttrib(arg, R_NamesSymbol));
     PROTECT(dim = getAttrib(arg, R_DimSymbol));
     PROTECT(dimnames = getAttrib(arg, R_DimNamesSymbol));
-    PROTECT(x = allocVector(LGLSXP, len));    
+    PROTECT(x = allocVector(isRaw(arg)?RAWSXP:LGLSXP, len));    
     switch(TYPEOF(arg)) {
     case LGLSXP:
 	for (i = 0; i < len; i++)
@@ -168,6 +179,10 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 	    LOGICAL(x)[i] = ISNAN(REAL(arg)[i]) ?
 		NA_LOGICAL : REAL(arg)[i] == 0;
 	break;
+    case RAWSXP:
+	for (i = 0; i < len; i++)
+	    RAW(x)[i] = 0xFF ^ RAW(arg)[i];
+	break;
     }
     if(names != R_NilValue) setAttrib(x, R_NamesSymbol, names);
     if(dim != R_NilValue) setAttrib(x, R_DimSymbol, dim);
@@ -176,6 +191,7 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
     return x;
 }
 
+/* && || */
 SEXP do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /*  &&	and  ||	 */
@@ -274,8 +290,43 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
+static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
+{
+    int i, n, n1, n2;
+    int x1, x2;
+    SEXP ans;
+
+    n1 = LENGTH(s1);
+    n2 = LENGTH(s2);
+    n = (n1 > n2) ? n1 : n2;
+    if (n1 == 0 || n2 == 0) {
+	ans = allocVector(RAWSXP, 0);
+	return ans;
+    }
+    ans = allocVector(RAWSXP, n);
+
+    switch (code) {
+    case 1:		/* & : AND */
+	for (i = 0; i < n; i++) {
+	    x1 = RAW(s1)[i % n1];
+	    x2 = RAW(s2)[i % n2];
+	    RAW(ans)[i] = x1 & x2;
+	}
+	break;
+    case 2:		/* | : OR */
+	for (i = 0; i < n; i++) {
+	    x1 = RAW(s1)[i % n1];
+	    x2 = RAW(s2)[i % n2];
+	    RAW(ans)[i] = x1 | x2;
+	}
+	break;
+    }
+    return ans;
+}
+
 static void checkValues(int * x, int n, Rboolean *haveFalse, Rboolean *haveTrue, Rboolean *haveNA);
 
+/* all, any */
 SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, s, t;

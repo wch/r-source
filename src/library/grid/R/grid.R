@@ -76,7 +76,7 @@ pushViewport <- function(..., recording=TRUE) {
     vps <- list(...)
     lapply(vps, push.vp, recording)
   }
-  current.viewport()
+  invisible()
 }
 
 # Helper functions called from C
@@ -127,7 +127,7 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
   else
     result <- grid.Call.graphics("L_downvppath", name$path, name$name, strict)
   if (result) {
-    # Enforce the gpar settings for the viewport 
+    # Enforce the gpar settings for the viewport
     pvp <- grid.Call("L_currentViewport")
     set.gpar(pvp$gpar)
     # Record the viewport operation
@@ -137,7 +137,7 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
   } else {
     stop(paste("Viewport", name, "was not found"))
   }
-  current.viewport()
+  invisible(result)
 }
 
 # Similar to down.viewport() except it starts searching from the
@@ -193,7 +193,7 @@ popViewport <- function(n=1, recording=TRUE) {
       record(n)
     }
   }
-  current.viewport()
+  invisible()
 }
 
 up.vp <- function(last.one, recording) {
@@ -225,7 +225,7 @@ upViewport <- function(n=1, recording=TRUE) {
       record(n)
     }
   }
-  current.viewport()
+  invisible()
 }
 
 # Function to obtain the current viewport
@@ -300,7 +300,10 @@ grid.newpage <- function(recording=TRUE) {
   .Call("L_initViewportStack", PACKAGE="grid")
   if (recording) {
     .Call("L_initDisplayList", PACKAGE="grid")
-    for (fun in getHook("grid.newpage")) try(fun())
+    for (fun in getHook("grid.newpage"))  {
+        if(is.character(fun)) fun <- get(fun)
+        try(fun())
+    }
   }
   invisible()
 }

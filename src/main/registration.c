@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2003	The R Development Core Team.
+ *  Copyright (C) 2002-2004	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,6 @@
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/Applic.h>
-#include <R_ext/Rlapack.h>
 
 #include "basedecl.h"
 
@@ -187,6 +186,7 @@ static R_CMethodDef cMethods [] = {
 
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
+
 static R_CallMethodDef callMethods [] = {
     /* lapack */
     CALLDEF(La_svd, 7),
@@ -218,7 +218,9 @@ static R_CallMethodDef callMethods [] = {
 
     /* Reflectance for the dynamically loaded native symbols. */
     CALLDEF(R_getSymbolInfo, 2),
-
+    CALLDEF(R_getDllTable, 0),
+    CALLDEF(R_getRegisteredRoutines, 1),
+ 
     /* mapply */
     CALLDEF(do_mapply, 4),
 
@@ -253,7 +255,7 @@ static R_CallMethodDef callMethods [] = {
 };
 
 
-#define EXTDEF(name)  {#name, (DL_FUNC) &name}
+#define EXTDEF(name)  {#name, (DL_FUNC) &name, -1}
 
 static R_ExternalMethodDef externalMethods [] = {
     EXTDEF(call_dqags),

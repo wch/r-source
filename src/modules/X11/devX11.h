@@ -60,7 +60,7 @@ typedef enum {
 
 
 Rboolean newX11DeviceDriver(DevDesc*, char*, double, double, double, double, 
-			    X_COLORTYPE, int, int, int, SEXP);
+			    X_COLORTYPE, int, int, int, SEXP, int);
 
 
 	/********************************************************/
@@ -98,6 +98,7 @@ typedef struct {
     int fontsize;			/* Size in points */
     int basefontface;			/* Typeface */
     int basefontsize;			/* Size in points */
+    char basefontfamily[500];           /* Initial font family */
 
     /* X11 Driver Specific */
     /* Parameters with copy per X11 device. */
@@ -118,7 +119,7 @@ typedef struct {
     int usefixed;
     XFontStruct *fixedfont;
     XFontStruct *font;
-    char fontfamily[500];
+    char fontfamily[500];               /* CURRENT fontfamily */
     char symbolfamily[500];
     X_GTYPE type;			/* Window or pixmap? */
     int npages;				/* counter for a pixmap */
@@ -128,6 +129,7 @@ typedef struct {
 
     Rboolean handleOwnEvents;           /* Flag indicating whether events will be handled externally from R (TRUE),
                                            or whether R is to handle the events (FALSE) */
+    int res_dpi;			/* used for png/jpeg */
 } newX11Desc;
 
 
@@ -138,7 +140,7 @@ int      Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd
 Rboolean newX11_Open(NewDevDesc *dd, newX11Desc *xd, 
 		     char *dsp, double w, double h, 
 		     double gamma_fac, X_COLORTYPE colormodel, 
-		     int maxcube, int bgcolor, int canvascolor);
+		     int maxcube, int bgcolor, int canvascolor, int res);
 
 #endif /* R_X11_DEVICE */
 

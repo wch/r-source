@@ -96,7 +96,6 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{\code{\link{nlsModel}}}
 \examples{
-data( DNase )
 DNase1 <- DNase[ DNase$Run == 1, ]
 ## using a selfStart model
 fm1DNase1 <- nls( density ~ SSlogis( log(conc), Asym, xmid, scal ), DNase1 )
@@ -113,8 +112,8 @@ fm3DNase1 <- nls( density ~ Asym/(1 + exp(( xmid - log(conc) )/scal ) ),
                   start = list( Asym = 3, xmid = 0, scal = 1 ),
                   trace = TRUE )
 summary( fm3DNase1 )
+
 ## weighted nonlinear regression
-data(Puromycin)
 Treated <- Puromycin[Puromycin$state == "treated", ]
 weighted.MM <- function(resp, conc, Vm, K)
 {

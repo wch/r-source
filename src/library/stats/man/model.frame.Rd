@@ -99,7 +99,6 @@ model.frame(formula, \dots)
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
-data(cars)
 data.class(model.frame(dist ~ speed, data = cars))
 }
 \keyword{models}

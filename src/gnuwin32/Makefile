@@ -11,10 +11,13 @@ all:
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
+R_EXE = $(RHOME)/bin/rterm.exe
 else
 RHOME = $(shell perl pwd.pl ../..)
 PKGD = $(shell perl pwd.pl $(PKGDIR))
 endif
+
+REXE = $(R_EXE) --vanilla --slave
 
 RPREFIX = $(shell perl fixed/rwver.pl ../../VERSION)
 
@@ -37,20 +40,19 @@ OPTFLAGS_M=$(OPTFLAGS)
 
 ifneq ($(strip $(BUILD)),CROSS)
 R-DLLFLAGS = -mwindows
-## needed for gcc-3.2.2 but not 3.2 nor 3.2.3
-## R-DLLFLAGS = -mwindows -Wl,--allow-multiple-definition
 else
 R-DLLFLAGS = -mwindows
 endif
 R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
+dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c devga.c dodevga.c dynload.c edit.c editor.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
   sys-win32.c system.c
 OBJS = $(SOURCES:.c=.o) e_pow.o
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
-EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/xdr.a \
-   ../extra/zlib/libz.a ../extra/pcre/libRpcre.a ../extra/bzip2/libbz2.a
+EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/libxdr.a \
+   ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a
 
 PKGS = $(foreach i,$(R_PKGS_BASE) ,pkg-$i)
 PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
@@ -77,6 +79,8 @@ front-ends/Rpwd.exe:
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild:
 	@$(MAKE) --no-print-directory fixfiles
+	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
+	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll libR.a
@@ -97,11 +101,51 @@ Rcode: fixed/fixdesc
 	done
 	@$(ECHO) "  ... done"
 
+LAZY_PKGS = graphics grDevices grid stats utils # methods is done directly
 
 rpackage: ../../library/R.css
+ifeq ($(strip $(HELP)),YES)
+	@$(ECHO)
+	@$(ECHO) -n "writing help indices for package:"
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(ECHO) -n " $${pkg}" ; \
+	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg}; \
+	done
+	@$(ECHO)
+endif
 	@for pkg in $(PKGS); do \
 	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
 	done
+	@$(ECHO)
+ifeq ($(strip $(BUILD)),CROSS)
+	@if ! test -f ../../library/base/R/base.rdb ; then \
+	  echo "preparing package base for lazy loading" ; \
+	  echo "tools:::makeLazyLoading(\"base\", lib.loc=\"$(RLIB)\")" | \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null; \
+	fi
+else
+	@if ! test -f ../../library/base/R/base.rdb ; then \
+	  echo "preparing package base for lazy loading" ; \
+	  (cat ../library/tools/R/makeLazyLoad.R \
+	    ../library/base/makebasedb.R; \
+	    echo "makeLazyLoading(\"base\")") | \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
+	fi
+endif
+	@if ! test -f ../../library/tools/R/tools.rdb ; then \
+	  echo "preparing package tools for lazy loading" ; \
+	  (cat ../library/tools/R/makeLazyLoad.R; \
+	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null ; \
+	fi
+	@for pkg in $(LAZY_PKGS); do \
+	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) \
+	  BUILD=$(BUILD) RLIB=$(RLIB) R_START_PACKAGES=NULL\
+	  -C ../library/$${pkg} -f $(RHOME)/src/gnuwin32/MakePkg lazyload; \
+	done
+	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) \
+	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
+
 	@$(MAKE) --no-print-directory vignettes
 
 rlibs:
@@ -153,7 +197,7 @@ libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
 
 R.exp: R.exp1
-	@(diff R.exp R.exp1 > /dev/null) || $(CP) R.exp1 R.exp
+	@(diff R.exp R.exp1 > /dev/null 2>&1) || $(CP) R.exp1 R.exp
 
 R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	@$(ECHO) EXPORTS > $@
@@ -168,7 +212,7 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 ../extra/zlib/libz.a:
 	$(MAKE) --no-print-directory -C ../extra/zlib -f Makefile.win
 
-../extra/pcre/libRpcre.a:
+../extra/pcre/libpcre.a:
 	$(MAKE) --no-print-directory -C ../extra/pcre -f Makefile.win
 
 ../extra/bzip2/libbz2.a:
@@ -234,30 +278,24 @@ endif
 endif
 
 base-HELP = ziponly
+datasets-HELP = ziponly
 graphics-HELP = ziponly
 methods-HELP = ziponly
 stats-HELP = ziponly
 utils-HELP = ziponly
-
-base-ZIPDATA = zip
-stats-ZIPDATA = zip
+stats4-SAVE = true
 
 MASS-HELP = ziponly
-MASS-ZIPDATA = zip
 boot-HELP = ziponly
-boot-ZIPDATA = zip
 cluster-HELP = ziponly
 cluster-ZIPDATA = zip
 grid-HELP = ziponly
-grid-ZIPDATA = zip
 lattice-HELP = ziponly
 lattice-ZIPDATA = zip
 nlme-HELP = ziponly
 nlme-ZIPDATA = zip
 rpart-HELP = ziponly
-rpart-ZIPDATA = zip
 survival-HELP = ziponly
-survival-ZIPDATA = zip
 
 # need special-case handling for bundle, as --auto-zip is not enabled
 dse1-HELP = ziponly
@@ -267,9 +305,10 @@ bundle-%:
 	@+$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
-	  -f $(RHOME)/src/gnuwin32/MakePkg
+	@$(MAKE) --no-print-directory SAVE=$($*-SAVE) \
+          DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
+	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
 	fi
@@ -315,21 +354,30 @@ pkgcheck-%:
 	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
 	fi
 
+lazyload-%:
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -C $(PKGD)/$* SPKG=$(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
+
+lazydata-%:
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
+
 ziphelp-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziphelp-$*
 
 ziponly-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziponlyhelp-$*
 
+## must be careful not to zip up a dir setup for lazy-data
 zipdata-%:
-	@$(ECHO) "  zipping data"
-	@(cd $(RLIB)/$*/data; \
-	  if test -f Rdata.zip ; then \
-	    unzip -qou Rdata; \
-	  fi; \
-	  $(RM) Rdata.zip filelist ; \
-	  ls -1 > filelist; \
-	  zip -rmq9X Rdata * -x filelist 00Index)
+	@if ! test -f ../../library/$*/data/Rdata.rdb ; then \
+	  $(ECHO) "  zipping data" ; \
+	  (cd $(RLIB)/$*/data; \
+	    if test -f Rdata.zip ; then \
+	      unzip -qou Rdata; \
+	    fi; \
+	    $(RM) Rdata.zip filelist ; \
+	    ls -1 > filelist; \
+	    zip -rmq9X Rdata * -x filelist 00Index) ;\
+	fi
 
 data-%:
 	@$(ECHO) "  not zipping data"
@@ -349,7 +397,7 @@ clean: cleanwin $(PKGCLEAN)
 	done
 
 distclean veryclean: clean clean-recommended
-	$(RM) -r ../../bin ../../lib ../../library ../../modules
+	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
@@ -368,6 +416,7 @@ distclean veryclean: clean clean-recommended
 	../../etc/rgb.txt ../../share/make/wintests.mk \
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
+	$(MAKE) -C ../include -f Makefile.win distclean
 	-$(MAKE) -C installer distclean
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
@@ -422,26 +471,19 @@ docs manuals:
 #	@$(MAKE) --no-print-directory ziponly-base
 
 vignettes:
-ifeq ($(strip $(BUILD)),CROSS)
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d "../library/$${pkg}/inst/doc"; then \
 	    echo "building/updating vignettes for package '$${pkg}' ..."; \
-	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(R_EXE) --vanilla --slave  > /dev/null; \
+	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(REXE) > /dev/null; \
 	  fi; \
 	done
-else
-	@for pkg in $(R_PKGS_BASE); do \
-	  if test -d "../library/$${pkg}/inst/doc"; then \
-	    echo "building/updating vignettes for package '$${pkg}' ..."; \
-	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | ../../bin/Rterm.exe --vanilla --slave R_DEFAULT_PACKAGES="utils,tools" > /dev/null; \
-	  fi; \
-	done
-endif
 	@rm -rf .vignettes # force cleanup
 
 ## ===================== Maintainer targets ========================
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
+RVER-PAT = $(shell if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then echo "-patched"; else echo ""; fi)
+
 
 docfiles:
 	$(MAKE) -f Makefile.docfiles
@@ -449,14 +491,18 @@ docfiles:
 bitmapdll:
 	$(MAKE) -C bitmap
 
-CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)/Recommended
+CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)$(RVER-PAT)/Recommended
 
 rsync-recommended:
 	@(cd ../library; \
 	rsync -rvCt --delete --exclude=Makefile.in --exclude=.cvsignore \
-	  --include=*.tar.gz --exclude=*.tgz $(CRANREC) . ); \
+	  --include=*.tar.gz --exclude=*.tgz --exclude=".svn" $(CRANREC) . ); \
 	$(RM) ../library/Recommended/*.tgz; \
 	(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
+
+link-recommended:
+	$(RM) ../library/Recommended/*.tgz
+	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
 ../library/%/DESCRIPTION: ../library/Recommended/%.tgz
 	@$(ECHO) "---- $*"
@@ -464,16 +510,26 @@ rsync-recommended:
 
 unpack-recommended:
 	@$(ECHO) "--- Unpacking recommended packages"
-	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION ; done
+	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION || exit 1; done
 
 clean-recommended:
 	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(RM) -r ../library/$${i} ; done
 
+# this is really tricky for a bundle.
+# also note that as we are not using Rcmd INSTALL we do not get info
+# on LazyLoad / LazyData from the DESCRIPTION files.
+R_PKGS_RECOMMENDED_LAZYDATA = boot rpart
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
+	@$(MAKE) --no-print-directory PKGDIR=../library/VR lazyload-MASS \
+	  lazyload-class lazyload-nnet lazyload-spatial \
+	lazydata-MASS lazydata-spatial
 	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
-	  $(MAKE) --no-print-directory pkg-$$p; \
+	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p || exit 1; \
+	done
+	@for p in $(R_PKGS_RECOMMENDED_LAZYDATA); do \
+	  $(MAKE) --no-print-directory lazydata-$$p || exit 1; \
 	done
 
 rinstaller:

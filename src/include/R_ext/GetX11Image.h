@@ -20,10 +20,17 @@
 #ifndef GETX11IMAGE_H_
 #define GETX11IMAGE_H_
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /* used by package tkrplot */
 
 Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight);
 /* pximage is really (XImage **) */
 
+#ifdef  __cplusplus
+}
+#endif
 
 #endif

@@ -159,7 +159,9 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
 	    error("error code %d from Lapack routine dsyev", info);
     } else {
 	int liwork, *iwork, itmp, m;
-	double vl, vu, abstol = 0.0;
+	double vl = 0.0, vu = 0.0, abstol = 0.0; 
+	/* valgrind seems to think vu should be set, but it is documented 
+	   not to be used if range='a' */
 	int il, iu, *isuppz;
 
 	range[0] = 'A';
@@ -967,7 +969,7 @@ static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
 /* ------------------------------------------------------------ */
 
 
-#include <R_ext/Rlapack.h>
+#include <Rmodules/Rlapack.h>
 #include <R_ext/Rdynload.h>
 
 void

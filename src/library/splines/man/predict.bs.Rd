@@ -34,7 +34,6 @@
   %%-- FIXME: These are not in R (and wont ever ?!): \code{lo}, \code{s}
 }
 \examples{
-data(women)
 basis <- ns(women$height, df = 5)
 newX <- seq(58, 72, len = 51)
 # evaluate the basis at the new data

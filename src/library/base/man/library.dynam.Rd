@@ -8,7 +8,7 @@
   already, or unloads it.
 }
 \usage{
-library.dynam(chname, package = .packages(), lib.loc = NULL,
+library.dynam(chname, package = NULL, lib.loc = NULL,
               verbose = getOption("verbose"),
               file.ext = .Platform$dynlib.ext, \dots)
 library.dynam.unload(chname, libpath,
@@ -19,7 +19,8 @@ library.dynam.unload(chname, libpath,
 \arguments{
   \item{chname}{a character string naming a shared library to load.}
   \item{package}{a character vector with the names of packages to search
-    through.}
+    through, or \code{NULL}.  By default, all packages in the search
+    path are used.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}
@@ -60,10 +61,17 @@ library.dynam.unload(chname, libpath,
   storing this information: this variable is now defunct.
 }
 \value{
-  \code{library.dynam} returns a character vector with the names of
-  packages which have used it in the current \R session to load shared
-  libraries.  This vector is returned as \code{\link{invisible}}, unless
-  the \code{chname} argument is missing.
+  If \code{chname} is not specified, \code{library.dynam} returns a
+  character vector with the names of packages which have used it in the
+  current \R session to load shared libraries. This vector is returned
+  as \code{\link{invisible}}, unless  the \code{chname} argument is
+  missing.
+
+  If \code{chname} is specifed, the return value is an object
+  of class \code{DLLInfo} that identifies the DLL and can be used
+  in future calls.  For packages that have namespaces, a list
+  of these objects is stored in the namespace's environment for
+  use at run-time.
 
   \code{library.dynam.unload} returns the updated character vector, invisibly.
 }
@@ -73,10 +81,10 @@ library.dynam.unload(chname, libpath,
   \code{\link{.libPaths}}
 
 #ifdef unix
-  \code{\link[utils]{SHLIB}} for how to create suitable shared libraries.
+  \code{\link{SHLIB}} for how to create suitable shared libraries.
 #endif
 #ifdef windows
-  \code{\link[utils]{SHLIB}} for how to create suitable DLLs.
+  \code{\link{SHLIB}} for how to create suitable DLLs.
 #endif
 }
 \references{

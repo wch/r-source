@@ -68,7 +68,7 @@ libnmath_a_OBJECTS = $(OBJECTS)
 noinst_LTLIBRARIES = libnmath.la
 libnmath_la_SOURCES = $(SOURCES)
 libnmath_la_OBJECTS = $(OBJECTS:.o=.lo)
-@USE_LIBTOOL_TRUE@libnmath_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+@USE_LIBTOOL_TRUE@libnmath_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
 
 all: Makefile Makedeps R
 
@@ -113,7 +113,7 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
-	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
         done

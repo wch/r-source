@@ -31,7 +31,7 @@ aqua_la = R_aqua$(SHLIB_EXT)
 Rexecmodulesdir_LTLIBRARIES = $(aqua_la)
 aqua_la_SOURCES = $(SOURCES)
 aqua_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@aqua_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
+@USE_LIBTOOL_TRUE@aqua_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 aqua_la_LIBADD = $(LIBR)
 
 all: Makefile Makedeps R  Info.plist Contents/Info.plist
@@ -53,7 +53,7 @@ $(aqua_la): $(aqua_la_OBJECTS) $(aqua_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(aqua_la_LDFLAGS) $(aqua_la_OBJECTS) $(aqua_la_LIBADD)
 ## <FIXME>
 ## Not sure if we want to do this ...
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
+	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 Contents/Info.plist: $(srcdir)/Contents/Info.plist.in $(top_builddir)/config.status
@@ -64,14 +64,14 @@ Info.plist: $(srcdir)/Info.plist.in $(top_builddir)/config.status
 
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(aqua_la) $(Rexecmodulesdir)/R_aqua$(SHLIB_EXT)
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(aqua_la) $(Rexecmodulesdir)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(aqua_la) "$(Rexecmodulesdir)/R_aqua$(SHLIB_EXT)"
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(aqua_la) "$(Rexecmodulesdir)"
 installdirs:
-	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
+	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecmodulesdir)/R_aqua$(SHLIB_EXT)
+	@rm -f "$(Rexecmodulesdir)/R_aqua$(SHLIB_EXT)"
 
 mostlyclean: clean
 clean:
@@ -90,7 +90,7 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
-	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done

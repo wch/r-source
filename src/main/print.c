@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2003	The R Development Core Team.
+ *  Copyright (C) 2000-2004	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -188,8 +188,8 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(!isNull(CAR(args))) {
 	R_print.gap = asInteger(CAR(args));
-	if (R_print.gap == NA_INTEGER || R_print.gap < 1 || R_print.gap > 10)
-	    errorcall(call, "invalid gap parameter");
+	if (R_print.gap == NA_INTEGER || R_print.gap < 0)
+	    errorcall(call, "'gap' must be non-negative integer");
     }
     args = CDR(args);
 
@@ -290,6 +290,9 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    pbuf = Rsprintf("\"%s\"", CHAR(STRING_ELT(tmp, 0)));
 		} else
 		pbuf = Rsprintf("Character,%d", LENGTH(tmp));
+		break;
+	    case RAWSXP:
+		pbuf = Rsprintf("Raw,%d", LENGTH(tmp));
 		break;
 	    case LISTSXP:
 	    case VECSXP:
@@ -422,6 +425,10 @@ static void printList(SEXP s, SEXP env)
 		pbuf = Rsprintf("Character,%d", LENGTH(CAR(s)));
 		break;
 
+	    case RAWSXP:
+		pbuf = Rsprintf("Raw,%d", LENGTH(CAR(s)));
+		break;
+
 	    case LISTSXP:
 		pbuf = Rsprintf("List,%d", length(CAR(s)));
 		break;
@@ -499,7 +506,7 @@ static void PrintExpression(SEXP s)
     SEXP u;
     int i, n;
 
-    u = deparse1(s, 0, TRUE, FALSE);
+    u = deparse1(s, 0, SIMPLEDEPARSE);
     n = LENGTH(u);
     for (i = 0; i < n ; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i)));
@@ -535,7 +542,7 @@ void PrintValueRec(SEXP s,SEXP env)
 	break;
     case SYMSXP: /* Use deparse here to handle backtick quotification
 		  * of "weird names" */
-	t = deparse1(s, 0, TRUE, FALSE);
+	t = deparse1(s, 0, SIMPLEDEPARSE);
 	Rprintf("%s\n", CHAR(STRING_ELT(t, 0)));
 	break;
     case SPECIALSXP:
@@ -554,7 +561,7 @@ void PrintValueRec(SEXP s,SEXP env)
     case LANGSXP:
 	t = getAttrib(s, R_SourceSymbol);
 	if (isNull(t))
-	    t = deparse1(s, 0, TRUE, FALSE);
+	    t = deparse1(s, 0, SIMPLEDEPARSE);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING_ELT(t, i)));
 #ifdef BYTECODE
@@ -586,6 +593,7 @@ void PrintValueRec(SEXP s,SEXP env)
     case REALSXP:
     case STRSXP:
     case CPLXSXP:
+    case RAWSXP:
 	PROTECT(t = getAttrib(s, R_DimSymbol));
 	if (TYPEOF(t) == INTSXP) {
 	    if (LENGTH(t) == 1) {

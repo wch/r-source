@@ -1,10 +1,6 @@
-START-INFO-DIR-ENTRY
-* R FAQ: (R-FAQ).               The R statistical system FAQ.
-END-INFO-DIR-ENTRY
-
-   R FAQ
+R FAQ
 Frequently Asked Questions on R
-Version 1.9-24 2004-06-15
+Version 1.9-45 2004-08-14
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -12,16 +8,13 @@ Kurt Hornik
 Table of Contents
 *****************
 
-
 R FAQ
-
 1 Introduction
   1.1 Legalese
   1.2 Obtaining this document
   1.3 Citing this document
   1.4 Notation
   1.5 Feedback
-
 2 R Basics
   2.1 What is R?
   2.2 What machines does R run on?
@@ -39,7 +32,6 @@ R FAQ
   2.11 Can I use R for commercial purposes?
   2.12 Why is R named R?
   2.13 What is the R Foundation?
-
 3 R and S
   3.1 What is S?
   3.2 What is S-PLUS?
@@ -49,9 +41,7 @@ R FAQ
     3.3.3 Others
   3.4 Is there anything R can do that S-PLUS cannot?
   3.5 What is R-plus?
-
 4 R Web Interfaces
-
 5 R Add-On Packages
   5.1 Which add-on packages exist for R?
     5.1.1 Add-on packages in R
@@ -64,12 +54,10 @@ R FAQ
   5.4 How can add-on packages be removed?
   5.5 How can I create an R package?
   5.6 How can I contribute to R?
-
 6 R and Emacs
   6.1 Is there Emacs support for R?
   6.2 Should I run R from within Emacs?
   6.3 Debugging R from within Emacs
-
 7 R Miscellanea
   7.1 Why does R run out of memory?
   7.2 Why does sourcing a correct file fail?
@@ -97,17 +85,15 @@ R FAQ
   7.24 Why do lattice/trellis graphics not work?
   7.25 How can I sort the rows of a data frame?
   7.26 Why does the help.start() search engine not work?
-
+  7.27 Why did my .Rprofile stop working when I updated R?
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
   8.3 How can I inspect R objects when debugging?
   8.4 How can I change compilation flags?
-
 9 R Bugs
   9.1 What is a bug?
   9.2 How to report a bug
-
 10 Acknowledgments
 
 
@@ -220,7 +206,7 @@ addition, a large group of individuals has contributed to R by sending code
 and bug reports.
 
    Since mid-1997 there has been a core group (the "R Core Team") who can
-modify the R source code CVS archive.  The group currently consists of Doug
+modify the R source code archive.  The group currently consists of Doug
 Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik,
 Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
 Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian Ripley,
@@ -248,7 +234,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-The current released version is 1.9.0.  Based on this
+The current released version is 1.9.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -261,27 +247,8 @@ in r-devel.
 Sources, binaries and documentation for R can be obtained via CRAN, the
 "Comprehensive R Archive Network" (see *Note What is CRAN?::).
 
-   Sources are also available via anonymous rsync.  Use
-
-     rsync -rptC --delete rsync.R-project.org::MODULE R
-
-to create a copy of the source tree specified by MODULE in the subdirectory
-`R' of the current directory, where MODULE specifies one of the three
-existing flavors of the R sources, and can be one of `r-release' (current
-released version), `r-patched' (patched released version), and `r-devel'
-(development version).  The rsync trees are created directly from the
-master CVS archive and are updated hourly.  The `-C' and in the `rsync'
-command is to cause it to skip the CVS directories.  Further information on
-`rsync' is available at `http://rsync.samba.org/rsync/'.
-
-   Note that the sources available via rsync do not include the recommended
-packages, whereas these are included in the tarballs of released versions.
-To install the appropriate sources for the recommended packages, run
-`./tools/rsync-recommended' from the top-level of the R sources that you
-pulled by rsync.
-
-   The sources of the development version are also available via anonymous
-CVS.  See `http://anoncvs.R-project.org' for more information.
+   Sources are also available via `https://svn.r-project.org/R/', the R
+Subversion repository, but currently not via anonymous rsync (or CVS).
 
 2.5 How can R be installed?
 ===========================
@@ -396,11 +363,11 @@ port of R for Macintosh is no longer supported.
 The `bin/linux' directory of a CRAN site contains Debian
 stable/testing/unstable packages for the i386 platform (now part of the
 Debian distribution and maintained by Dirk Eddelbuettel), Mandrake
-9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9/Fedora1
-i386, 7.x alpha, and Fedora1 x86_64 packages by Martyn Plummer, Naoki
-Takebayashi, and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386
-and 9.0/9.1 i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages
-by Susunu Tanimura.
+9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat
+8.x/9/Fedora1/Fedora2 i386 and Fedora1 x86_64 packages by Martyn Plummer
+and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386 and 9.0/9.1
+i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages by Susunu
+Tanimura.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -576,8 +543,8 @@ mailing lists devoted to R.
 
 Convenient access to information on these lists, subscription, and archives
 is provided by the web interface at
-`http://www.stat.math.ethz.ch/mailman/listinfo/'.  One can also subscribe
-(or unsubscribe) via email, e.g. to R-help by sending `subscribe' (or
+`http://stat.ethz.ch/mailman/listinfo/'.  One can also subscribe (or
+unsubscribe) via email, e.g. to R-help by sending `subscribe' (or
 `unsubscribe') in the _body_ of the message (not in the subject!) to
 <R-help-request@lists.R-project.org>.
 
@@ -642,7 +609,7 @@ See `http://cran.R-project.org/mirrors.html' for a complete list of
 mirrors.  Please use the CRAN site closest to you to reduce network load.
 
    From CRAN, you can obtain the latest official release of R, daily
-snapshots of R (copies of the current CVS trees), as gzipped and bzipped
+snapshots of R (copies of the current source trees), as gzipped and bzipped
 tar files, a wealth of additional contributed code, as well as prebuilt
 binaries for various operating systems (Linux, Mac OS Classic, Mac OS X,
 and MS Windows).  CRAN also provides access to documentation on R, existing
@@ -653,7 +620,7 @@ mailing lists and the R Bug Tracking system.
 <cran@R-project.org>.  Note that CRAN generally does not accept submissions
 of precompiled binaries due to security reasons.
 
-     *Note:*  It is very important that you indicate the copyright
+     *Note*:  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...)  in your submission.
 
    Please always use the URL of the master site when referring to CRAN.
@@ -754,7 +721,7 @@ Chambers and coauthors, which are also the primary references for S.
 
    * John M. Chambers (1998), "Programming with Data," New York: Springer,
      ISBN 0-387-98503-4
-     (<http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/>).
+     (`http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/').
 
      This "_Green Book_" describes version 4 of S, a major revision of S
      designed by John Chambers to improve its usefulness at every stage of
@@ -963,7 +930,7 @@ to safeguard against possible crashes.  Other possibilities are logging
 your sessions, or have your R commands stored in text files which can be
 read in using `source()'.
 
-     *Note:*  If you run R from within Emacs (see *Note R and Emacs::), you
+     *Note*:  If you run R from within Emacs (see *Note R and Emacs::), you
      can save the contents of the interaction buffer to a file and
      conveniently manipulate it using `ess-transcript-mode', as well as
      save source copies of all functions and data used.
@@ -1130,11 +1097,10 @@ same time being as compatible as possible with S.
 
    * In S, `dump()', `dput()' and `deparse()' are essentially different
      interfaces to the same code.  In R from version 2.0.0, this is only
-     true if the same values are passed in the `forDisplay' and `useSource'
-     arguments, but by default they are not.  By default `dump()' tries to
-     write code that will evaluate to reproduce the object, whereas
-     `dput()' and `deparse()' default to options for producing deparsed
-     code that is readable.
+     true if the same `control' argument is used, but by default it is not.
+     By default `dump()' tries to write code that will evaluate to
+     reproduce the object, whereas `dput()' and `deparse()' default to
+     options for producing deparsed code that is readable.
 
 
    There are also differences which are not intentional, and result from
@@ -1220,7 +1186,13 @@ and one without) as well as the original code are available from
 The R distribution comes with the following packages:
 
 *base*
-     Base R functions and datasets.
+     Base R functions (and datasets before R 2.0).
+
+*datasets*
+     Base R datasets (added in R 2.0).
+
+*grDevices*
+     Graphics devices for base and grid graphics (added in R 2.0).
 
 *graphics*
      R functions for base graphics.
@@ -1398,13 +1370,28 @@ distributions of R.)
      Markov chain Monte Carlo (MCMC) package: functions for posterior
      simulation for a number of statistical models.
 
+*MNP*
+     Fitting Bayesian Multinomial Probit models via Markov chain Monte
+     Carlo.  Along with the standard Multinomial Probit model, it can also
+     fit models with different choice sets for each observation and
+     complete or partial ordering of all the available alternatives.
+
 *MPV*
      Data sets from the book "Introduction to Linear Regression Analysis"
      by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
      Sons.
 
+*Malmig*
+     An implementation of Malecot migration model together with a number of
+     related functions.
+
 *Matrix*
      A Matrix package.
+
+*NADA*
+     Methods described in "Nondetects And Data Analysis: Statistics for
+     Censored Environmental Data" by Dennis R. Helsel, 2004, John Wiley and
+     Sons.
 
 *NISTnls*
      A set of test nonlinear least squares examples from NIST, the U.S.
@@ -1412,6 +1399,11 @@ distributions of R.)
 
 *Oarray*
      Arrays with arbitrary offsets.
+
+*PBSmapping*
+     Software evolved from fisheries research conducted at the Pacific
+     Biological Station (PBS) in Nanaimo, British Columbia, Canada.  Draws
+     maps and implements other GIS procedures.
 
 *PHYLOGR*
      Manipulation and analysis of phylogenetically simulated data sets (as
@@ -1438,8 +1430,16 @@ distributions of R.)
      ColorBrewer palettes for drawing nice maps shaded according to a
      variable.
 
+*RCurl*
+     Allows one to compose HTTP requests to fetch URIs, post forms, etc.,
+     and process the results returned by the Web server.
+
 *RMySQL*
      An interface between R and the MySQL database system.
+
+*RNetCDF*
+     An interface to Unidata's NetCDF library functions (version 3) and
+     furthermore access to Unidata's udunits calendar conversions.
 
 *RODBC*
      An ODBC database interface.
@@ -1481,13 +1481,14 @@ distributions of R.)
      A platform-independent basic-statistics GUI (graphical user interface)
      for R, based on the *tcltk* package.
 
-*RmSQL*
-     An interface between R and the mSQL database system.
-
 *Rmpi*
      An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It
      also provides an interactive R slave environment in which distributed
      statistical computing can be carried out.
+
+*Rstem*
+     Interface to Snowball implementation of Porter's word stemming
+     algorithm.
 
 *Rwave*
      An environment for the time-frequency analysis of 1-D signals (and
@@ -1506,7 +1507,7 @@ distributions of R.)
 
 *SenSrivastava*
      Collection of datasets from "Regression Analysis, Theory, Methods and
-     Applications" by A. Sen and M. Srivastava, 1990, Springer-Verlag.
+     Applications" by A. Sen and M. Srivastava, 1990, Springer.
 
 *SoPhy*
      Soil Physics Tools: simulation of water flux and solute transport in
@@ -1528,6 +1529,9 @@ distributions of R.)
      Johnson distributions, normal scores and generalized hypergeometric
      distributions).
 
+*UNF*
+     Tools for creating universal numeric fingerprints for data.
+
 *VLMC*
      Functions, classes & methods for estimation, prediction, and simulation
      (bootstrap) of VLMC (Variable Length Markov Chain) models.
@@ -1540,6 +1544,10 @@ distributions of R.)
 
 *abind*
      Combine multi-dimensional arrays.
+
+*accuracy*
+     A suite of tools designed to test and improve the accuracy of
+     statistical computation.
 
 *acepack*
      ACE (Alternating Conditional Expectations) and AVAS (Additivity and
@@ -1752,6 +1760,9 @@ distributions of R.)
      Functions, methods, and datasets for fitting dimension reduction
      regression, including pHd and inverse regression methods SIR and SAVE.
 
+*drfit*
+     Dose-response data evaluation.
+
 *dse*
      Dynamic System Estimation, a multivariate time series package.
      Contains *dse1* (the base system, including multivariate ARMA and state
@@ -1770,6 +1781,10 @@ distributions of R.)
      Component Analysis, Latent Class Analysis, support vector machines, and
      fuzzy clustering, shortest path computation, bagged clustering, and
      some more.
+
+*eba*
+     Fitting and testing probabilistic choice models, especially the BTL,
+     elimination-by-aspects (EBA), and preference tree (Pretree) models.
 
 *effects*
      Graphical and tabular effect displays, e.g., of interactions, for
@@ -1816,6 +1831,26 @@ distributions of R.)
 *exactRankTests*
      Computes exact p-values and quantiles using an implementation of the
      Streitberg/Roehmel shift algorithm.
+
+*fBasics*
+     The Rmetrics module for "Markets, basic statistics, and date and time
+     management".  Rmetrics is an environment and software collection for
+     teaching financial engineering and computational finance
+     (`http://www.Rmetrics.org/').
+
+*fExtremes*
+     The Rmetrics module for "Beyond the Sample, Dealing with Extreme
+     Values".
+
+*fOptions*
+     The Rmetrics module for "The Valuation of Options".
+
+*fSeries*
+     The Rmetrics module for "The Dynamical Process Behind Financial
+     Markets".
+
+*faraway*
+     Functions and datasets for books by Julian Faraway.
 
 *fastICA*
      Implementation of FastICA algorithm to perform Independent Component
@@ -1868,8 +1903,19 @@ distributions of R.)
 *g.data*
      Create and maintain delayed-data packages (DDP's).
 
+*gRbase*
+     A package for graphical modelling in R.  Defines S4 classes for
+     graphical meta data and graphical models, and illustrates how
+     hierarchical log-linear models may be implemented and combined with
+     *dynamicGraph*.
+
 *gafit*
      Genetic algorithm for curve fitting.
+
+*gam*
+     Functions for fitting and working with Generalized Additive Models, as
+     described in chapter 7 of the White Book, and in "Generalized Additive
+     Models" by T. Hastie and R. Tibshirani (1990).
 
 *gap*
      Genetic analysis package for both population and family data.
@@ -1979,6 +2025,11 @@ distributions of R.)
      Hierarchical Partitioning: variance partition of a multivariate data
      set.
 
+*hierfstat*
+     Estimation of hierarchical F-statistics from haploid or diploid genetic
+     data with any numbers of levels in the hierarchy, and tests for the
+     significance of each F and variance components.
+
 *homals*
      Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 
@@ -2051,7 +2102,7 @@ distributions of R.)
 *lasso2*
      Routines and documentation for solving regression problems while
      imposing an L1 constraint on the estimates, based on the algorithm of
-     Osborne et al. (1998)
+     Osborne et al. (1998).
 
 *lattice*
      Lattice graphics, an implementation of Trellis Graphics functions.
@@ -2167,12 +2218,19 @@ distributions of R.)
 *merror*
      Accuracy and precision of measurements.
 
+*mfp*
+     Multiple Fractional Polynomials.
+
 *mgcv*
      Routines for GAMs and other genralized ridge regression problems with
      multiple smoothing parameter selection by GCV or UBRE.  _Recommended_.
 
 *mimR*
      An R interface to MIM for graphical modeling in R.
+
+*mitools*
+     Tools to perform analyses and combine results from multiple-imputation
+     datasets.
 
 *mix*
      Estimation/multiple imputation programs for mixed categorical and
@@ -2350,6 +2408,9 @@ distributions of R.)
      Functions for import, export, plotting and other manipulations of
      bitmapped images.
 
+*plotrix*
+     Various useful functions for enhancing plots.
+
 *pls.pcr*
      Multivariate regression by PLS and PCR.
 
@@ -2425,6 +2486,12 @@ distributions of R.)
      likelihood.  Can be used for multivariate models and random effects
      models.
 
+*reldist*
+     Functions for the comparison of distributions, including nonparametric
+     estimation of the relative distribution PDF and CDF and numerical
+     summaries as described in "Relative Distribution Methods in the Social
+     Sciences" by Mark S. Handcock and Martina Morris, 1999, Springer.
+
 *relimp*
      Functions to facilitate inference on the relative importance of
      predictors in a linear or generalized linear model.
@@ -2450,6 +2517,11 @@ distributions of R.)
      Functions for simple fixed and random effects meta-analysis for
      two-sample comparison of binary outcomes.
 
+*rmetasim*
+     An interface between R and the metasim simulation engine.  Facilitates
+     the use of the metasim engine to build and run individual based
+     population genetics simulations.
+
 *rpart*
      Recursive PARTitioning and regression trees.  _Recommended_.
 
@@ -2462,6 +2534,10 @@ distributions of R.)
 
 *rqmcmb2*
      Markov chain marginal bootstrap for quantile regression.
+
+*rrcov*
+     Functions for robust location and scatter estimation and robust
+     regression with high breakdown point.
 
 *rsprng*
      Provides interface to SPRNG (Scalable Parallel Random Number
@@ -2535,7 +2611,7 @@ distributions of R.)
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
-     Bowman and A. Azzalini (1997), Oxford University Press.
+     Bowman and A. Azzalini, 1997, Oxford University Press.
 
 *sma*
      Functions for exploratory (statistical) microarray analysis.
@@ -2637,6 +2713,9 @@ distributions of R.)
 *tapiR*
      Tools for accessing (UK) parliamentary information in R.
 
+*taskPR*
+     Task-Parallel R package.
+
 *tensor*
      Tensor product of arrays.
 
@@ -2663,6 +2742,9 @@ distributions of R.)
 *udunits*
      Interface to Unidata's routines to convert units.
 
+*urn*
+     Functions for sampling without replacement (simulated urns).
+
 *urca*
      Unit root and cointegration tests for time series data.
 
@@ -2679,6 +2761,10 @@ distributions of R.)
 
 *verify*
      Construction of test suites using verify objects.
+
+*vioplot*
+     Violin plots, which are a combination of a box plot and a kernel
+     density plot.
 
 *waveslim*
      Basic wavelet routines for time series analysis.
@@ -2721,6 +2807,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
+
+*rcom*
+     R COM Client Interface and internal COM Server.
 
 *runStat*
      Running median and mean.
@@ -2944,8 +3033,8 @@ of Bioconductor, with more packages under development.
      Locates genes based on SAGE tags.
 
 *SNAData*
-     Data from the book "Social Network Analysis" by Wasserman & Faust
-     (1999).
+     Data from the book "Social Network Analysis" by Wasserman & Faust,
+     1999.
 
 *aCGH*
      Classes and functions for Array Comparative Genomic Hybridization data.
@@ -3236,11 +3325,11 @@ at the R prompt.
    This produces something like
 
      Packages in `/home/me/lib/R':
-     
+
      mystuff       My own R functions, nicely packaged but not documented
-     
+
      Packages in `/usr/local/lib/R/library':
-     
+
      KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
      MASS          Main Package of Venables and Ripley's MASS
      base          The R base package
@@ -3325,9 +3414,8 @@ running R.  So, simply using it and communicating problems is certainly of
 great value.
 
    One place where functionality is still missing is the modeling software
-as described in "Statistical Models in S" (see *Note What is S?::);
-Generalized Additive Models (*note Are GAMs implemented in R?::) and some
-of the nonlinear modeling code are not there yet.
+as described in "Statistical Models in S" (see *Note What is S?::); some of
+the nonlinear modeling code is not there yet.
 
    The R Developer Page (http://developer.R-project.org/) acts as an
 intermediate repository for more or less finalized ideas and plans for the
@@ -3381,7 +3469,7 @@ can be found at `http://stat.ethz.ch/ESS/'.
 
    ESS comes with detailed installation instructions.
 
-   For help with ESS, send email to <ESS-help@stat.ethz.ch>.
+   For help with ESS, send email to <ESS-help@stat.math.ethz.ch>.
 
    Please send bug reports and suggestions on ESS to
 <ESS-bugs@stat.math.ethz.ch>.  The easiest way to do this from is within
@@ -3735,8 +3823,14 @@ interest, use
 
      title(substitute(hat(a) == ahat, list(ahat = ahat)))
 
-(note that it is `==' and not `=').  There are more worked examples in the
-mailing list achives.
+(note that it is `==' and not `=').  Sometimes `bquote()' gives a more
+compact form, e.g.,
+
+     title(bquote(hat(a) = .(ahat)))
+
+where subexpressions enclosed in `.()' are replaced by their values.
+
+   There are more worked examples in the mailing list achives.
 
 7.16 What are valid names?
 ==========================
@@ -3783,11 +3877,14 @@ language:
 7.17 Are GAMs implemented in R?
 ===============================
 
-There is a `gam()' function for Generalized Additive Models in package
-*mgcv*, but it is not an exact clone of what is described in the White Book
-(no `lo()' for example).  Package *gss* can fit spline-based GAMs too.  And
-if you can accept regression splines you can use `glm()'.  For gaussian
-GAMs you can use `bruto()' from package *mda*.
+Package *gam* from CRAN implements all the Generalized Additive Models
+(GAM) functionality as described in the GAM chapter of the White Book.  In
+particular, it implements backfitting with both local regression and
+smoothing splines, and is extendable.  There is a `gam()' function for GAMs
+in package *mgcv*, but it is not an exact clone of what is described in the
+White Book (no `lo()' for example).  Package *gss* can fit spline-based
+GAMs too.  And if you can accept regression splines you can use `glm()'.
+For gaussian GAMs you can use `bruto()' from package *mda*.
 
 7.18 Why is the output not printed when I source() a file?
 ==========================================================
@@ -3965,6 +4062,21 @@ and of browsers.  For further details please consult section "Enabling
 search in HTML help" in `R Installation and Administration'.  This manual is
 included in the R distribution, *note What documentation exists for R?::,
 and its HTML version is linked from the HTML search page.
+
+7.27 Why did my .Rprofile stop working when I updated R?
+========================================================
+
+Did you read the `NEWS' file?  For functions that are not in the *base*
+package you need to specify the correct package namespace, since the code
+will be run _before_ the packages are loaded.  E.g.,
+
+     ps.options(horizontal = FALSE)
+     help.start()
+
+needs to be
+
+     graphics::ps.options(horizontal = FALSE)
+     utils::help.start()
 
 8 R Programming
 ***************

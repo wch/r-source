@@ -34,11 +34,13 @@
       and all the nodes specifically due to it, but not for the 
       space for its name nor for builtins it references
 */
+SEXP csduplicated(SEXP x);  /* from unique.c */
 
 static unsigned long objectsize(SEXP s)
 {
     int i;
     unsigned long cnt = 0, vcnt = 0;
+    SEXP tmp, dup;
     
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -64,6 +66,9 @@ static unsigned long objectsize(SEXP s)
     case SPECIALSXP:
     case BUILTINSXP:
 	break;
+    case RAWSXP:
+	vcnt = BYTE2VEC(length(s));
+	break;
     case CHARSXP:
 	vcnt = BYTE2VEC(length(s)+1);
 	break;
@@ -79,8 +84,12 @@ static unsigned long objectsize(SEXP s)
 	break;
     case STRSXP:
 	vcnt = PTR2VEC(length(s));
-	for (i = 0; i < length(s); i++)
-	    vcnt += BYTE2VEC(strlen(CHAR(STRING_ELT(s, i))) + 1);
+	dup = csduplicated(s);
+	for (i = 0; i < length(s); i++) {
+	    tmp = STRING_ELT(s, i);
+	    if(tmp != NA_STRING && !LOGICAL(dup)[i]) 
+		cnt += objectsize(tmp);
+	}
 	break;
     case DOTSXP:
 	break;

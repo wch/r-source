@@ -16,14 +16,15 @@ predict (object, \dots)
 }
 \details{
   Most prediction methods which similar to fitting linear models have an
-  argument \code{newdata} specifiying the explanatory variables to be
-  used for prediction.  Some considerable attempts are made to match up
+  argument \code{newdata} specifiying the first place to look for
+  explanatory variables to be used for prediction.
+  Some considerable attempts are made to match up
   the columns in \code{newdata} to those used for fitting, for example
   that they are of comparable types and that any factors have the same
   level set in the same order (or can be transformed to be so).
 
-  Time series prediction methods have an argument \code{n.ahead}
-  specifying how many time steps ahead to predict.
+  Time series prediction methods in package \pkg{stats} have an argument
+  \code{n.ahead} specifying how many time steps ahead to predict.
 
   Many methods have a logical argument \code{se.fit} saying if standard
   errors are to returned.
@@ -39,15 +40,15 @@ predict (object, \dots)
   \code{\link{predict.loess}},
   \code{\link{predict.nls}},
   \code{\link{predict.poly}},
-  \code{\link[stats:princomp]{predict.princomp}},
+  \code{\link{predict.princomp}},
   \code{\link{predict.smooth.spline}}.
 
   For time-series prediction,
-  \code{\link[stats:ar]{predict.ar}},
+  \code{\link{predict.ar}},
   \code{\link{predict.Arima}},
-  \code{\link[stats:arima0]{predict.arima0}},
+  \code{\link{predict.arima0}},
   \code{\link{predict.HoltWinters}},
-  \code{\link[stats:StructTS]{predict.StructTS}}.
+  \code{\link{predict.StructTS}}.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

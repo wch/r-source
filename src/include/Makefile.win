@@ -1,0 +1,49 @@
+#-*- Makefile -*-
+include ../gnuwin32/MkRules
+R_HOME=../..
+
+## keep these in step with ./Makefile.in
+SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rgraphics.h Rinternals.h
+OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
+GW32_HEADERS = config.h psignal.h
+
+all: fixh
+	@echo 'installing C headers'
+	@mkdir -p $(R_HOME)/include/R_ext
+	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) $(R_HOME)/include
+	@cp -p R_ext/*.h $(R_HOME)/include/R_ext
+	@cp -p ../gnuwin32/graphapp/graphapp.h ../gnuwin32/graphapp/ga.h \
+	  $(R_HOME)/include
+
+version: Rversion.h
+
+fixh: $(GW32_HEADERS) $(OBJ_HEADERS)
+	@$(ECHO) done > fixh
+
+config.h: ../gnuwin32/fixed/h/config.h
+	@cp $< $@
+
+psignal.h: ../gnuwin32/fixed/h/psignal.h
+	@cp $< $@
+
+Rconfig.h: config.h $(R_HOME)/tools/GETCONFIG
+	@$(SED) -e 1d $(R_HOME)/tools/GETCONFIG > GC
+	@sh GC > Rconfig.h
+	@$(RM) GC
+
+Rversion.h: $(R_HOME)/date-stamp $(R_HOME)/VERSION
+	@$(SED) -e 1d $(R_HOME)/tools/GETVERSION > $(R_HOME)/tools/GV
+	@sh $(R_HOME)/tools/GV > $@
+	@$(RM) $(R_HOME)/tools/GV
+
+Rmath.h0: Rmath.h0.in $(R_HOME)/VERSION
+	@$(SED) -e 's/@RMATH_HAVE_LOG1P@/# define HAVE_LOG1P 1/'  \
+	  -e /@RMATH_HAVE_EXPM1@/d  \
+	  -e  's/@RMATH_HAVE_WORKING_LOG1P@/# define HAVE_WORKING_LOG1P 1/' \
+	  -e "s/@PACKAGE_VERSION@/`sed 's/\([^ ]*\).*/\1/' < $(R_HOME)/VERSION`/" $< > Rmath.h0
+
+Rmath.h: Rmath.h0
+	@sh $(R_HOME)/tools/copy-if-change $< $@
+
+distclean:
+	$(RM) -f Rmath.h0 fixh

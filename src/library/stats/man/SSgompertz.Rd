@@ -29,7 +29,6 @@ SSgompertz(x, Asym, b2, b3)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data(DNase )
 DNase.1 <- subset(DNase, Run == 1)
 SSlogis(log(DNase.1$conc), 4.5, 2.3, 0.7)  # response only
 Asym <- 4.5; b2 <- 2.3; b3 <- 0.7

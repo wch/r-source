@@ -346,7 +346,7 @@ data.frame <-
     if(any(noname))
 	vnames[noname] <- paste("Var", 1:length(vnames), sep = ".")[noname]
     if(check.names)
-	vnames <- make.names(vnames)
+	vnames <- make.names(vnames, unique=TRUE)
     names(value) <- vnames
     if(!mrn) { # row.names arg was supplied
         if(length(row.names) == 1 && nr != 1) {  # one of the variables
@@ -1070,7 +1070,7 @@ as.matrix.data.frame <- function (x)
         if(!is.logical(xj)) all.logical <- FALSE
 	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj))
 	   || (!is.null(cl <- attr(xj, "class")) && # numeric classed objects to format:
-	       any(cl == c("Date", "POSIXct", "POSIXlt"))))
+	       any(cl %in% c("Date", "POSIXct", "POSIXlt"))))
 	    non.numeric <- TRUE
 	if(!is.atomic(xj))
 	    non.atomic <- TRUE

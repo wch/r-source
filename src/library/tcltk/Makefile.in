@@ -46,15 +46,9 @@ all: Makefile DESCRIPTION
 	    echo "$${tmp}") \
 	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
-	@if test -d $(srcdir)/data; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
-	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
-	  done; \
-	fi
 	@if test -d $(srcdir)/demo; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
-	  for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
+	  for f in `ls -d $(srcdir)/demo/* | sed -e '/CVS/d' -e '/00Index/d'`; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
 	  done; \
 	fi
@@ -68,6 +62,7 @@ all: Makefile DESCRIPTION
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \
 	    for rdfile in $(srcdir)/man/*.Rd; do \
+	      echo "% --- Source file: $${rdfile} ---"; \
 	      cat $${rdfile}; echo '\eof'; \
 	    done >> $${f}; \
 	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \

@@ -171,6 +171,7 @@ typedef struct {
     Rboolean buffered;
     int timeafter, timesince;
     SEXP psenv;
+    double res_dpi;
 } gadesc;
 
 rect getregion(gadesc *xd)
@@ -283,7 +284,7 @@ void UnLoad_Rbitmap_Dll();
 static void SaveAsPng(NewDevDesc *dd, char *fn);
 static void SaveAsJpeg(NewDevDesc *dd, int quality, char *fn);
 static void SaveAsBmp(NewDevDesc *dd, char *fn);
-static void SaveAsBitmap(NewDevDesc *dd);
+static void SaveAsBitmap(NewDevDesc *dd, int res);
 
 static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, char *name)
 {
@@ -389,7 +390,7 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       (double)0, ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, 0, "", "R Graphics Output"))
+		       0, 1, 0, "", "R Graphics Output", R_NilValue))
 	/* horizontal=F, onefile=F, pagecentre=T, print.it=F */
 	PrivateCopyDevice(dd, ndd, "postscript");
 }
@@ -446,7 +447,7 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
-			1, "R Graphics Output"))
+			1, "R Graphics Output", R_NilValue, 1, 4))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
 
@@ -1524,6 +1525,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	if (!xd->gawin)
 	    return FALSE;
     } else if (!strncmp(dsp, "png:", 4) || !strncmp(dsp,"bmp:", 4)) {
+	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
 	if(R_OPAQUE(canvascolor))
 	    xd->bg = dd->startfill = GArgb(canvascolor, 1.0);
 	else
@@ -1554,6 +1556,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	}
     } else if (!strncmp(dsp, "jpeg:", 5)) {
         char *p = strchr(&dsp[5], ':');
+	xd->res_dpi = (xpos == NA_INTEGER) ? 0 : xpos;
 	xd->bg = dd->startfill = GArgb(canvascolor, 1.0);
         xd->kind = JPEG;
 	if (!p) return FALSE;
@@ -1839,7 +1842,7 @@ static void GA_NewPage(R_GE_gcontext *gc,
     if ((xd->kind == PNG || xd->kind == JPEG || xd->kind == BMP)
 	&& xd->needsave) {
 	char buf[600];
-	SaveAsBitmap(dd);
+	SaveAsBitmap(dd, xd->res_dpi);
 	snprintf(buf, 600, xd->filename, xd->npage);
 	if ((xd->fp = fopen(buf, "wb")) == NULL)
 	    error("Unable to open file `%s' for writing", buf);
@@ -1873,6 +1876,14 @@ static void GA_NewPage(R_GE_gcontext *gc,
     SH;
 }
 
+static void deleteGraphMenus(int devnum)
+{
+    char prefix[15];
+
+    sprintf(prefix, "$Graph%i", devnum);
+    windelmenus(prefix);
+}
+
 	/********************************************************/
 	/* device_Close is called when the device is killed	*/
 	/* this function is responsible for destroying any 	*/
@@ -1896,8 +1907,9 @@ static void GA_Close(NewDevDesc *dd)
 	hide(xd->gawin);
 	del(xd->bm);
 	if (xd == GA_xd) GA_xd = NULL;
+	deleteGraphMenus(devNumber((DevDesc*) dd) + 1);
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
-      SaveAsBitmap(dd);
+      SaveAsBitmap(dd, xd->res_dpi);
     }
     del(xd->font);
     del(xd->gawin);
@@ -2547,7 +2559,7 @@ static unsigned long privategetpixel2(void *d,int i, int j)
 }
 
 /* This is the device version */
-static void SaveAsBitmap(NewDevDesc *dd)
+static void SaveAsBitmap(NewDevDesc *dd, int res)
 {
     rect r, r2;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2562,13 +2574,13 @@ static void SaveAsBitmap(NewDevDesc *dd)
 	    if (xd->kind == PNG)
 		R_SaveAsPng(data, xd->windowWidth, xd->windowHeight,
 			    privategetpixel2, 0, xd->fp,
-			    R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
+			    R_OPAQUE(xd->bg) ? 0 : xd->pngtrans, res) ;
 	    else if (xd->kind == JPEG)
 		R_SaveAsJpeg(data, xd->windowWidth, xd->windowHeight,
-			     privategetpixel2, 0, xd->quality, xd->fp) ;
+			     privategetpixel2, 0, xd->quality, xd->fp, res) ;
 	    else
 		R_SaveAsBmp(data, xd->windowWidth, xd->windowHeight,
-			    privategetpixel2, 0, xd->fp);
+			    privategetpixel2, 0, xd->fp, res);
 	    free(data);
 	} else
 	    warning("processing of the plot ran out of memory");
@@ -2604,7 +2616,7 @@ static void SaveAsPng(NewDevDesc *dd,char *fn)
     if(data) {
 	png_rows = r2.width;
 	R_SaveAsPng(data, xd->windowWidth, xd->windowHeight,
-		    privategetpixel2, 0, fp, 0) ;
+		    privategetpixel2, 0, fp, 0, 0) ;
 	free(data);
     } else
 	warning("processing of the plot ran out of memory");
@@ -2637,7 +2649,7 @@ static void SaveAsJpeg(NewDevDesc *dd,int quality,char *fn)
     if(data) {
 	png_rows = r2.width;
 	R_SaveAsJpeg(data,xd->windowWidth, xd->windowHeight,
-		     privategetpixel2, 0, quality, fp) ;
+		     privategetpixel2, 0, quality, fp, 0) ;
 	free(data);
     } else
 	warning("processing of the plot ran out of memory");
@@ -2672,7 +2684,7 @@ static void SaveAsBmp(NewDevDesc *dd,char *fn)
     if(data) {
 	png_rows = r2.width;
 	R_SaveAsBmp(data, xd->windowWidth, xd->windowHeight,
-		    privategetpixel2, 0, fp) ;
+		    privategetpixel2, 0, fp, 0) ;
 	free(data);
     } else
 	warning("processing of the plot ran out of memory");
@@ -2721,3 +2733,34 @@ int getDeviceHandle(int dev)
     if (!xd) return(0);
     return(getHandle(xd->gawin));
 }
+
+/* This assumes a menuname of the form $Graph<nn>Main, $Graph<nn>Popup, $Graph<nn>LocMain,
+   or $Graph<nn>LocPopup where <nn> is the
+   device number.  We've already checked the $Graph prefix. */
+
+menu getGraphMenu(char* menuname)
+{
+    int devnum;
+    GEDevDesc *gdd;
+    gadesc *xd;
+
+    menuname = menuname + 6;
+    devnum = atoi(menuname);
+    if(devnum < 1 || devnum > R_MaxDevices)
+    	error("invalid graph device number");
+
+    while (('0' <= *menuname) && (*menuname <= '9')) menuname++;
+
+    gdd = (GEDevDesc*) GetDevice(devnum - 1);
+
+    if(!gdd) error("invalid device");
+
+    xd = (gadesc *) gdd->dev->deviceSpecific;
+
+    if(!xd || xd->kind != SCREEN) error("bad device");
+
+    if (strcmp(menuname, "Main") == 0) return(xd->mbar);
+    else if (strcmp(menuname, "Popup") == 0) return(xd->grpopup);
+    else return(NULL);
+}
+

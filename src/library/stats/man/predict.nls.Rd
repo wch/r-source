@@ -21,27 +21,27 @@
 }
 \arguments{
  \item{object}{An object that inherits from class \code{nls}.}
- \item{newdata}{A named list or data frame with values of the input
-     variables for the model in \code{object}.  If \code{newdata} is
-     missing the fitted values at the original data points are returned.}
+ \item{newdata}{A named list or data frame in which to look for variables with
+   which to predict.  If \code{newdata} is
+   missing the fitted values at the original data points are returned.}
  \item{se.fit}{A logical value indicating if the standard errors of the
-     predictions should be calculated.  Defaults to \code{FALSE}.  At
-     present this argument is ignored.}
+   predictions should be calculated.  Defaults to \code{FALSE}.  At
+   present this argument is ignored.}
  \item{scale}{A numeric scalar.  If it is set (with optional
-     \code{df}), it is used as the residual standard deviation in the
-     computation of the standard errors, otherwise this information is
-     extracted from the model fit. At present this argument is ignored.}
+   \code{df}), it is used as the residual standard deviation in the
+   computation of the standard errors, otherwise this information is
+   extracted from the model fit. At present this argument is ignored.}
  \item{df}{A positive numeric scalar giving the number of degrees of
-     freedom for the \code{scale} estimate. At present this argument is
-     ignored.}
+   freedom for the \code{scale} estimate. At present this argument is
+   ignored.}
  \item{interval}{A character string indicating if prediction intervals
-     or a confidence interval on the mean responses are to be
-     calculated. At present this argument is ignored.}
+   or a confidence interval on the mean responses are to be
+   calculated. At present this argument is ignored.}
  \item{level}{A numeric scalar between 0 and 1 giving the confidence
-     level for the intervals (if any) to be calculated.  At present
-     this argument is ignored.} 
+   level for the intervals (if any) to be calculated.  At present
+   this argument is ignored.} 
  \item{\dots}{Additional optional arguments.  At present no optional
-     arguments are used.}
+   arguments are used.}
 }
 \value{
   \code{predict.nls} produces a vector of predictions.
@@ -59,8 +59,14 @@
   The model fitting function \code{\link{nls}},
   \code{\link{predict}}.
 }
+\note{
+  Variables are first looked for in \code{newdata} and then searched for
+  in the usual way (which will include the environment of the formula
+  used in the fit).  As from \R 2.0.0 a warning will be given if the
+  variables found are not of the same length as those in \code{newdata}
+  if it was supplied.
+}
 \examples{
-data( BOD )
 fm <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 predict(fm)              # fitted values at observed times
 ## Form data plot and smooth line for the predictions

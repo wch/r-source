@@ -62,6 +62,68 @@
 #include <R_ext/eventloop.h>
 
 #include <Carbon/Carbon.h>
+extern Rboolean useaqua; /* from src/unix/system.c */
+extern Rboolean CocoaGUI; /* from src/unix/system.c */
+extern Rboolean useCocoa; /* from src/unix/system.c */
+
+/*
+ -------------------------------------------------------- Cocoa interface functions ------
+ */
+
+/* feature constants - return value of cocoaInitializeBundle (if positive) is a bit mask of those constants, which define the functionality provided by the bundle */
+#define cocoa_basic 0x0001 /* basic functionality */
+#define cocoa_loop  0x0002 /* event loop functionality */
+#define cocoa_menu  0x0004 /* if set, Cocoa provides its own menu, Carbon should skip menu creation */
+
+int cocoaFeatures=0; /* defines the capabilities of the currently loaded bundle */
+
+CFBundleRef cocoaBundleRef = NULL; /* reference to the currently loaded bundle */
+
+/* Cocoa functions - if the function is optional you (in aquaconsole) must check for its presence before calling! */
+
+/*===feature group: cocoa_basic (mandatory group - all Cocoa bundles must implement this group) */
+/* - initialize Cocoa; takes userInput callback function as argument; returns bitmask for cocoaFeatures */
+int (*cocoaInitializeBundle)(int (*callBack)(const char *));
+void (*cocoaDeInitializeBundle)(void);
+
+/* the following functions return 0 on success and !=0 on failure */
+/* - makes Cocoa window active; the window number should be 0 since we have only the main window atm. */
+int (*cocoaSelectWindow)(int);
+/* - writes string to the console (usually R output) */
+int (*cocoaWriteConsole)(CFStringRef);
+/* - writes the prompt to the console */
+int (*cocoaWritePrompt)(CFStringRef);
+/* - writes echo of the input in the console; if not provided, cocoaWriteConsole is used instead */
+int (*cocoaWriteUserInput)(CFStringRef); /* optional - use WriteConsole if this one is NULL */
+/* - tells Cocoa whether R is busy (parameter=1) or idle (parameter=0) */
+int (*cocoaRisBusy)(int); /* optional */
+
+/*===feature group: cocoa_loop */
+/* - if defined, this function is called in the internal R event loop; parameter is always 0 atm */
+int (*cocoaProcessEvents)(int);
+
+/*===feature group: cocoa_menu */
+/* - this function is called after initialization such as that Cocoa may build the application menu */
+int (*cocoaSetupMenu)(int); /* optional - menu may already have been created in initializeBundle */
+
+static void loadRGUIBundle(CFBundleRef *bundlePtr);
+static int userInput(const char *text);
+void RGUI_WriteConsole(char *str, int len);
+int RGUI_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory);
+void RGUI_WritePrompt(char *prompt);
+
+
+/*
+ -------------------------------------------------------- END OF Cocoa IF ------
+ */
+OSStatus SetUpGUI(void);
+CFBundleRef RBundle = NULL;
+CFURLRef    RbundleURL = NULL;
+
+#define inputBufferSize 32768
+static char inputBuffer[inputBufferSize];
+
+
 static DL_FUNC Rdlsym(void *handle, char const *name)
 {
     char buf[MAXIDSIZE+1];
@@ -85,15 +147,90 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, ptr_FocusOnConsole,
         ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser, ptr_InitAquaIO,
 		ptr_RSetConsoleWidth;
 
+DL_FUNC ptr_R_ProcessEvents;
+
 
 void R_ProcessEvents(void);
+OSStatus StartUpGUI(void){
+    IBNibRef 	nibRef = NULL;
+    OSErr	err = noErr;
+	WindowRef ConsoleWindow;
+		
+    loadRGUIBundle(&cocoaBundleRef);
 
-/* #define AQUA_POLLED_EVENTS 1 */
+
+    /* if the bundle is loaded and at least basic features are provided,
+     * we can use the bundle instead of the Carbon window */
+    if (cocoaBundleRef && ((cocoaFeatures&cocoa_basic)>0))
+        CocoaGUI=true; 
+    else
+		return(-1000);
+
+    if (CocoaGUI && cocoaSelectWindow) cocoaSelectWindow(0);
+
+
+    /* ptr_R_ReadConsole = Rstd_ReadConsole; */
+    ptr_R_ReadConsole = RGUI_ReadConsole;
+    /* if(!ptr_R_ReadConsole) R_Suicide("Cannot load R_ReadConsole"); */
+    ptr_R_WriteConsole = RGUI_WriteConsole;
+
+    
+guifailure:
+if(nibRef)
+DisposeNibReference(nibRef);
+
+return(err);
+}
+
+void RGUI_WriteConsole(char *str, int len)
+{
+    if (CocoaGUI) {
+        if (cocoaWriteConsole) {
+            CFStringRef text = CFStringCreateWithCString(NULL, str, kCFStringEncodingMacRoman);
+            if(text){
+				cocoaWriteConsole(text);
+				CFRelease(text);
+				text = NULL;
+			}
+        }
+    } 
+}
+
+
+
+int RGUI_ReadConsole(char *prompt, unsigned char *buf, int len,
+					  int addtohistory)
+{
+	OSStatus 	err = noErr;
+	int 		txtlen;
+	fprintf(stderr,"RGUI_ReadConsole:\n");
+	if(CocoaGUI)  {
+		RGUI_WritePrompt(prompt);
+		cocoaProcessEvents(0);
+		
+		txtlen = strlen(inputBuffer);
+		strncpy(buf,inputBuffer,len);
+		fprintf(stderr,"\nbuffer='%s'",inputBuffer);
+	}
+    return(1);
+}
+
+
+
  
-#ifdef AQUA_POLLED_EVENTS 
-static void (* otherPolledEventHandler)(void);
-static void	Raqua_ProcessEvents2(void);
-#endif
+void RGUI_WritePrompt(char *prompt) {
+    if (CocoaGUI) {
+        if (cocoaWritePrompt) {
+            CFStringRef text = CFStringCreateWithCString(NULL, prompt, kCFStringEncodingMacRoman);
+            if(text){
+				cocoaWritePrompt(text);
+            	CFRelease(text);
+				text = NULL;
+			}
+        }
+    } 
+}
+
 
 /* This is called too early to use moduleCdynload */
 void R_load_aqua_shlib(void)
@@ -101,6 +238,9 @@ void R_load_aqua_shlib(void)
     char aqua_DLL[PATH_MAX], buf[1000], *p;
     void *handle;
     struct stat sb;
+
+	if(StartUpGUI()==noErr)
+		return;
 
     p = getenv("R_HOME");
     if(!p) {
@@ -176,10 +316,6 @@ void R_load_aqua_shlib(void)
     ptr_RSetConsoleWidth = Rdlsym(handle, "RSetConsoleWidth");
     if(!ptr_RSetConsoleWidth) R_Suicide("Cannot load RSetConsoleWidth");
 
-#ifdef AQUA_POLLED_EVENTS 
-    otherPolledEventHandler = R_PolledEvents;
-    R_PolledEvents = Raqua_ProcessEvents2;  
-#endif
 }
 
 
@@ -191,7 +327,6 @@ SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 #if defined(HAVE_X11)
 extern SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho); /* from src/unix/X11.c */
 #endif
-extern Rboolean useaqua; /* from src/unix/system.c */
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -232,12 +367,14 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 
 void InitAquaIO(void);
 void InitAquaIO(void){
- ptr_InitAquaIO();
+ if(!CocoaGUI)
+	ptr_InitAquaIO();
 }
 
 void RSetConsoleWidth(void);
 void RSetConsoleWidth(void){
- ptr_RSetConsoleWidth();
+ if(!CocoaGUI)
+	ptr_RSetConsoleWidth();
 }
 
 void R_ProcessEvents(void)
@@ -247,12 +384,20 @@ void R_ProcessEvents(void)
     EventTargetRef theTarget;
     bool	conv = false;
 
-    if(!useaqua){
+    if(!useaqua | !useCocoa){
       if (R_interrupts_pending)
        onintr();
-      return;
     }
- 
+
+	if(useCocoa)
+		ptr_R_ProcessEvents();
+
+    /*    
+    if(CocoaGUI)
+	cocoaProcessEvents(0);
+    return;
+    */
+
     theTarget = GetEventDispatcherTarget();
     if(CheckEventQueueForUserCancel())
       onintr();
@@ -272,42 +417,93 @@ void R_ProcessEvents(void)
 
 
 
-#ifdef AQUA_POLLED_EVENTS 
-extern WindowRef ConsoleWindow;     
-static void	Raqua_ProcessEvents2(void)
-{
-    EventRef theEvent;
-    EventRecord	outEvent;
-    EventTargetRef theTarget = GetEventDispatcherTarget();
-    bool	conv = false;
-     ProcessSerialNumber ourPSN;
-   
-   if(otherPolledEventHandler)
-      otherPolledEventHandler();
 
-/*    if (GetCurrentProcess(&ourPSN) == noErr)
-        (void)SetFrontProcess(&ourPSN);
-*/
-    if(CheckEventQueueForUserCancel())
-       onintr();
-     
- /*
- 
-    if(ReceiveNextEvent(0, NULL,kEventDurationNoWait,true,&theEvent)== noErr){
-        conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
-    
-        if(conv && (outEvent.what == kHighLevelEvent))
-            AEProcessAppleEvent(&outEvent);
-         
-        SendEventToEventTarget (theEvent, theTarget);
-        ReleaseEvent(theEvent);
-            
-    }
- */   
+enum
+{
+	kOpenCocoaWindow = 'COCO'
+};
+
+static int userInput(const char *text) {
+	strncpy(inputBuffer,text,inputBufferSize-2);
+	return 0;
 }
-#endif
+
+/* The RGUI.bundle is assumed to be installed in $R_HOME:/bin/Frameworks/ */
+static void loadRGUIBundle(CFBundleRef *bundlePtr) 
+{
+	CFURLRef baseURL = NULL;
+	CFURLRef CocoabundleURL = NULL;
+	CFStringRef   RGUI_path;
+	OSStatus (*funcPtr)(void *);
+	char tmp[300];
+	char bundle_path[PATH_MAX], buf[1000], *p;
+
+    p = getenv("R_HOME");
+    if(!p) {
+		sprintf(buf, "R_HOME was not set");
+		R_Suicide(buf);
+    }
+    strcpy(bundle_path, p);
+    strcat(bundle_path, "/bin/Frameworks/RGUI.bundle");
+	RGUI_path = CFStringCreateWithCString(kCFAllocatorDefault, bundle_path, kCFStringEncodingMacRoman);
+	CocoabundleURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, RGUI_path, kCFURLPOSIXPathStyle, false);
+	if(RGUI_path)
+		CFRelease(RGUI_path);
+	 CFStringGetCString(CFURLGetString(CocoabundleURL),tmp,255, kCFStringEncodingMacRoman);
+
+
+	*bundlePtr = CFBundleCreate(kCFAllocatorDefault, CocoabundleURL);
+	if (*bundlePtr) {
+		/* set pointers to all known Cocoa functions. unsupported functions will be 0 */
+		cocoaInitializeBundle = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("initializeBundle"));
+		cocoaDeInitializeBundle = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("DeInitializeBundle"));
+		cocoaSelectWindow = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("selectWindow"));
+		cocoaWriteConsole = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writeConsole"));
+		cocoaWritePrompt = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writePrompt"));
+		cocoaWriteUserInput = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writeUserInput"));
+		cocoaRisBusy = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("RisBusy"));
+		cocoaSetupMenu = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("setupMenu"));
+		cocoaProcessEvents = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("processEvents"));
+		
+		if (!cocoaInitializeBundle)
+			REprintf("Cocoa bundle found, but initializeBundle function is not present. The bundle won't be used.\n");
+		else
+			cocoaFeatures=(*cocoaInitializeBundle)(userInput);
+
+
+		/* we perform sanity checks for each feature set to prevent segfaults due to undefined functions */
+		if (((cocoaFeatures&cocoa_basic)>0) && ((!cocoaWriteConsole)||(!cocoaWritePrompt))) {
+			REprintf("Cocoa bundle advertizes basic features, but at least one feature was not found! Disabling bundle.\n");
+			cocoaFeatures=0;
+		}
+		if (((cocoaFeatures&cocoa_loop)>0) && ((!cocoaProcessEvents))) {
+			REprintf("Cocoa bundle advertizes event loop features, but at least one feature was not found! Disabling bundle.\n");
+			cocoaFeatures=0;
+		}
+	} else fprintf(stderr,"\nCannot load the Cocoa GUI");
+
+	
+	if(CocoabundleURL){
+		CFRelease(CocoabundleURL);
+		CocoabundleURL = NULL;
+	}
+CantCreateBundleURL:
+
+		if(baseURL){
+			CFRelease(baseURL);
+			baseURL = NULL;
+		}
+CantCopyURL:
+CantFindMainBundle:
+		return;
+}
+
 
 #else
+
+
+
+
 
 void R_load_aqua_shlib()
 {

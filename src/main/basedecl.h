@@ -60,6 +60,9 @@ SEXP R_removeTaskCallback(SEXP);
 SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_getSymbolInfo(SEXP, SEXP);
+SEXP R_getDllTable();
+SEXP R_getRegisteredRoutines(SEXP);
+
 SEXP R_isMethodsDispatchOn(SEXP);
 SEXP R_traceOnOff(SEXP);
 

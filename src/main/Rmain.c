@@ -31,8 +31,6 @@ int main(int ac, char **av)
 {
     Rf_initialize_R(ac, av);
 
-
-
     mainloop();
     /*++++++  in ../main/main.c */
     return 0;

@@ -65,9 +65,10 @@ DISTFILES = Makefile.in Makefile.win \
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
 PCRE_CPPFLAGS = @BUILD_PCRE_TRUE@ -I$(top_srcdir)/src/extra/pcre
+XDR_CPPFLAGS = @BUILD_XDR_TRUE@ -I$(top_srcdir)/src/extra/xdr
 
 ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
-  $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
+  $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
 ## use an explicit library: there might be an unsatisfactory -lz around
 R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
@@ -111,7 +112,7 @@ libR_la_LIBADD = @LTLIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
   $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR)
 libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 ## </FIXME>
-@USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+@USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
 LIBR_LDFLAGS = @LIBR_LDFLAGS@
 
 all: Makefile Makedeps R
@@ -146,7 +147,7 @@ $(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 @WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L../../lib -lR
 
 install-bin-local: $(R_binary)
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-bin
+	@$(MAKE) rhome="$(abs_top_builddir)" install-bin
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
@@ -166,7 +167,7 @@ $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 ## </FIXME>
 
 install-lib-local: $(libR_la)
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
+	@$(MAKE) rhome="$(abs_top_builddir)" install-lib
 
 ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo:
 	(cd $(@D); $(MAKE) $(@F))
@@ -180,30 +181,30 @@ install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
 installdirs:
-	@$(MKINSTALLDIRS) $(Rexecbindir) $(Rexecbindir)/exec
-	@$(MKINSTALLDIRS) $(Rexeclibdir)
-install-bin:installdirs
+	@$(MKINSTALLDIRS) "$(Rexecbindir)" "$(Rexecbindir)/exec"
+	@$(MKINSTALLDIRS) "$(Rexeclibdir)"
+install-bin: installdirs
 ## <FIXME> Temporary precautionary clearout 
-	@rm -f $(Rexecbindir)/R.bin
+	@rm -f "$(Rexecbindir)/R.bin"
 ## </FIXME>
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) $(Rexecbindir)/exec/R
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir)/exec/R"
 install-lib: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
 ## <FIXME>
 ## This is just a temporary expedient for backwards compatibility.
 ## May have an actual libR.so file in R_HOME/bin from earlier builds
-	@rm -f $(Rexecbindir)/$(libR_la)
-	@ln -s $(Rexeclibdir)/$(libR_la) $(Rexecbindir)
+	@rm -f "$(Rexecbindir)/$(libR_la)"
+	@ln -s "$(Rexeclibdir)/$(libR_la)" "$(Rexecbindir)"
 ## </FIXME>
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) "$(Rexeclibdir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecbindir)/exec/R $(Rexecbindir)/R.bin
-	@rmdir $(Rexecbindir) 2>/dev/null \
+	@rm -f "$(Rexecbindir)/exec/R" "$(Rexecbindir)/R.bin"
+	@rmdir "$(Rexecbindir)" 2>/dev/null \
 	  || echo "  subdir $(Rexecbindir) not removed"
-	@rm -f $(Rexeclibdir)/libR$(DYLIB_EXT)
-	@rmdir $(Rexeclibdir) 2>/dev/null \
+	@rm -f "$(Rexeclibdir)/libR$(DYLIB_EXT)"
+	@rmdir "$(Rexeclibdir)" 2>/dev/null \
 	  || echo "  subdir $(Rexeclibdir) not removed"
 
 mostlyclean: clean

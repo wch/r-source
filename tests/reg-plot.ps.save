@@ -37,11 +37,6 @@
        closepath clip newpath } def
 /rgb { setrgbcolor } def
 /s   { scalefont setfont } def
-/R   { /Font1 findfont } def
-/B   { /Font2 findfont } def
-/I   { /Font3 findfont } def
-/BI  { /Font4 findfont } def
-/S   { /Font5 findfont } def
 1 setlinecap 1 setlinejoin
 % end   .ps.prolog
 %%IncludeResource: font Helvetica
@@ -119,7 +114,7 @@ np
 767.11 91.44 m
 0 -7.20 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 103.58 65.52 (0.6) .5 0 0 t
 269.46 65.52 (0.8) .5 0 0 t
 435.34 65.52 (1.0) .5 0 0 t
@@ -162,7 +157,7 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 435.34 36.72 (Index) .5 0 0 t
 30.96 304.84 (0) .5 0 90 t
@@ -194,7 +189,7 @@ np
 623.64 91.44 m
 0 -7.20 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 247.05 65.52 (0) .5 0 0 t
 372.58 65.52 (5) .5 0 0 t
 498.11 65.52 (10) .5 0 0 t
@@ -231,7 +226,7 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 14 def B 14 s
+/ps 14 def /Font2 findfont 14 s
 0 0 0 rgb
 435.34 542.73 (Centred chars in default char set \(ISO Latin1\)) .5 0 0 t
 221.95 91.44 648.74 518.24 cl
@@ -366,7 +361,7 @@ np
 221.95 493.13 m
 426.79 0 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 247.05 166.76 ( ) .5 0 0 t
 272.16 162.45 (!) .5 0 0 t
@@ -579,7 +574,7 @@ ep
 bp
 47.52 54.72 808.77 547.76 cl
 18.00 18.00 823.89 577.28 cl
-/ps 6 def R 6 s
+/ps 6 def /Font1 findfont 6 s
 0 0 0 rgb
 81.25 70.17 (50-54) 0 0 0 t
 81.25 87.78 (55-59) 0 0 0 t
@@ -709,7 +704,7 @@ o
 477.80 494.93 1.35 c p1
 731.55 512.54 1.35 c p1
 18.00 18.00 823.89 577.28 cl
-/ps 6 def R 6 s
+/ps 6 def /Font1 findfont 6 s
 0 0 0 rgb
 46.19 527.99 (Rural Male) 0 0 0 t
 46.19 404.73 (Rural Female) 0 0 0 t
@@ -764,7 +759,7 @@ np
 0 -493.04 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 7 def B 7 s
+/ps 7 def /Font2 findfont 7 s
 0 0 0 rgb
 465.11 560.00 (Death Rates in Virginia - 1940) .5 0 0 t
 ep
@@ -772,7 +767,7 @@ ep
 bp
 106.56 128.16 778.53 488.72 cl
 18.00 18.00 823.89 577.28 cl
-/ps 18 def R 18 s
+/ps 18 def /Font1 findfont 18 s
 0 0 0 rgb
 168.56 134.56 (50-54) 0 0 0 t
 168.56 147.43 (55-59) 0 0 0 t
@@ -902,7 +897,7 @@ o
 531.28 450.08 4.05 c p1
 720.84 462.96 4.05 c p1
 18.00 18.00 823.89 577.28 cl
-/ps 18 def R 18 s
+/ps 18 def /Font1 findfont 18 s
 0 0 0 rgb
 63.36 469.36 (Rural Male) 0 0 0 t
 63.36 379.22 (Rural Female) 0 0 0 t
@@ -957,7 +952,7 @@ np
 0 -360.56 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 22 def B 22 s
+/ps 22 def /Font2 findfont 22 s
 0 0 0 rgb
 521.80 525.10 (Death Rates in Virginia - 1940) .5 0 0 t
 ep
@@ -1071,7 +1066,7 @@ np
 6.64 0.86 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 435.34 36.72 (Time) .5 0 0 t
 30.96 304.84 (t1) .5 0 90 t
@@ -1107,7 +1102,7 @@ np
 760.47 91.44 m
 0 -7.20 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 96.95 65.52 (0) .5 0 0 t
 229.65 65.52 (20) .5 0 0 t
 362.36 65.52 (40) .5 0 0 t
@@ -1471,7 +1466,7 @@ np
 6.64 0.60 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 435.34 36.72 (Time) .5 0 0 t
 30.96 304.84 (cbind\(t1, 10 * t1, t1 - 4\)) .5 0 90 t
@@ -1507,7 +1502,7 @@ np
 760.47 91.44 m
 0 -7.20 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 96.95 65.52 (0) .5 0 0 t
 229.65 65.52 (20) .5 0 0 t
 362.36 65.52 (40) .5 0 0 t
@@ -1592,7 +1587,7 @@ np
 767.11 91.44 m
 0 -7.20 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 177.31 65.52 (2) .5 0 0 t
 324.76 65.52 (4) .5 0 0 t
 472.21 65.52 (6) .5 0 0 t
@@ -1635,7 +1630,7 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 435.34 36.72 (Index) .5 0 0 t
 30.96 304.84 (1:10) .5 0 90 t
@@ -1689,7 +1684,7 @@ np
 780.93 91.44 m
 0 -7.20 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 89.76 65.52 (60) .5 0 0 t
 204.95 65.52 (65) .5 0 0 t
 320.15 65.52 (70) .5 0 0 t
@@ -1729,7 +1724,7 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 435.34 36.72 (Height) .5 0 0 t
 30.96 304.84 (Volume) .5 0 90 t
@@ -2806,7 +2801,7 @@ np
 77.04 511.21 m
 8.54 0 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 102.96 159.94 (0) .5 0 90 t
 102.96 247.76 (2) .5 0 90 t
 102.96 335.57 (4) .5 0 90 t
@@ -2820,10 +2815,10 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 14 def B 14 s
+/ps 14 def /Font2 findfont 14 s
 0 0 0 rgb
 435.34 542.73 (mgp < 0: all ticks and labels inside `frame') .5 0 0 t
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 117.36 304.84 (x^2 - 1.2) .5 0 90 t
 77.04 91.44 793.65 518.24 cl
 0 0.8039 0 rgb
@@ -2873,7 +2868,7 @@ np
 501.70 159.94 m
 0 8.53 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 236.29 177.22 (-1) .5 0 0 t
 368.99 177.22 (0) .5 0 0 t
@@ -2905,14 +2900,14 @@ ep
 bp
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
-/ps 14 def B 14 s
+/ps 14 def /Font2 findfont 14 s
 0 0 0 rgb
 435.34 542.73 (x) .5 0 0 t
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 435.34 65.52 (Admit) .5 0 0 t
 59.76 304.84 (Gender) .5 0 90 t
 77.04 91.44 793.65 518.24 cl
-/ps 8 def R 8 s
+/ps 8 def /Font1 findfont 8 s
 0 0 0 rgb
 224.84 509.87 (Admitted) .5 0 0 t
 579.92 510.65 (Rejected) .5 0 0 t
@@ -3105,14 +3100,14 @@ ep
 bp
 77.04 91.44 793.65 518.24 cl
 18.00 18.00 823.89 577.28 cl
-/ps 14 def B 14 s
+/ps 14 def /Font2 findfont 14 s
 0 0 0 rgb
 435.34 542.73 (x) .5 0 0 t
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 435.34 65.52 (x label) .5 0 0 t
 59.76 304.84 (YY) .5 0 90 t
 77.04 91.44 793.65 518.24 cl
-/ps 8 def R 8 s
+/ps 8 def /Font1 findfont 8 s
 0 0 0 rgb
 224.84 509.87 (Admitted) .5 0 0 t
 579.92 510.65 (Rejected) .5 0 0 t
@@ -3332,7 +3327,7 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 30.96 304.84 (tt <- table\(c\(rep\(0, 7\), rep\(1, 4\), rep\(5, 3\)\)\)) .5 0 90 t
 ep
@@ -3395,7 +3390,7 @@ np
 77.04 502.43 m
 -7.20 0 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 59.76 107.25 (0) .5 0 90 t
 59.76 163.70 (1) .5 0 90 t
 59.76 220.16 (2) .5 0 90 t
@@ -3412,7 +3407,7 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 30.96 304.84 (tt) .5 0 90 t
 77.04 91.44 793.65 518.24 cl
@@ -3420,13 +3415,13 @@ o
 0.75 setlinewidth
 [] 0 setdash
 368.99 220.16 95.43 -28.86 r p1
-/ps 12 def S 12 s
+/ps 12 def /Font5 findfont 12 s
 390.59 198.70 (q) 0 0 0 t
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 390.90 204.67 (^) 0 0 0 t
-/ps 12 def S 12 s
+/ps 12 def /Font5 findfont 12 s
 399.62 198.70 (=) 0 0 0 t
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 408.99 198.70 (3.141593) 0 0 0 t
 ep
 %%Page: 14 14
@@ -3468,7 +3463,7 @@ np
 716.07 91.44 m
 0 -7.20 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 103.58 65.52 (0) .5 0 0 t
 205.66 65.52 (2) .5 0 0 t
 307.74 65.52 (4) .5 0 0 t
@@ -3518,7 +3513,7 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 435.34 36.72 (x) .5 0 0 t
 30.96 304.84 (ECDF) .5 0 90 t
@@ -3603,7 +3598,7 @@ np
 767.11 91.44 m
 0 -7.20 l
 o
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 177.31 65.52 (2) .5 0 0 t
 324.76 65.52 (4) .5 0 0 t
 472.21 65.52 (6) .5 0 0 t
@@ -3646,12 +3641,12 @@ np
 0 -426.80 l
 o
 18.00 18.00 823.89 577.28 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 435.34 36.72 (Index) .5 0 0 t
 30.96 304.84 (1:10) .5 0 90 t
 77.04 91.44 793.65 518.24 cl
-/ps 12 def R 12 s
+/ps 12 def /Font1 findfont 12 s
 0 0 0 rgb
 103.58 104.10 (o) .5 0 0 t
 251.03 191.93 (x) .5 0 0 t

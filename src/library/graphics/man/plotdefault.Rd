@@ -81,7 +81,6 @@
   \code{\link{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.
 }
 \examples{
-data(cars)
 Speed <- cars$speed
 Distance <- cars$dist
 plot(Speed, Distance, panel.first = grid(8,8),

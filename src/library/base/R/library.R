@@ -20,8 +20,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(!is.na(built <- fields[1, "Built"])) {
             builtFields <- strsplit(built, ";", fixed=TRUE)[[1]]
             builtunder <- substring(builtFields[1], 3)
-            if(nchar(builtunder) &&
-               compareVersion(current, builtunder) < 0) {
+            ## must be >= 2.0.0
+            if(!nchar(builtunder) || compareVersion("2.0.0", builtunder) > 0)
+                stop("package ", fields[1, "Package"], " was built before R 2.0.0: please re-install it", call. = FALSE)
+            ## warn if later than this version
+            if(compareVersion(current, builtunder) < 0) {
                 warning(paste("package", fields[1, "Package"],
                               "was built under R version", builtunder),
                         call. = FALSE)
@@ -149,7 +152,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 "has been moved back to package", sQuote("MASS"), "\n")
             have.VR <- "package:MASS" %in% search()
             if(!have.VR) {
-                if(require(MASS, quietly=TRUE))
+                if(require("MASS", quietly=TRUE))
                     cat("Package", sQuote("MASS"),
                         "has now been loaded\n")
                 else {
@@ -177,8 +180,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	       if (!(package %in% pkgDirs)) {
 		   ## Need to find the highest version available
 		   vers <- unlist(lapply(pkgDirs, libraryPkgVersion))
-		   pos <- libraryMaxVersPos(vers)
-		   if (length(pos) > 0) package <- pkgDirs[pos]
+		   vpos <- libraryMaxVersPos(vers)
+		   if (length(vpos) > 0) package <- pkgDirs[vpos]
                }
            }
         }
@@ -219,17 +222,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                    c("Package", "Depends", "Built"))
             testRversion(descfields)
 
-            ## Check for inconsistent naming
-            if(descfields[1, "Package"] != libraryPkgName(package)) {
-            	warning(paste("Package", sQuote(package), "not found.\n",
-			"Using case-insensitive match",
-            		sQuote(descfields[1, "Package"]), ".\n",
-			"Future versions of R will require exact matches."),
-			call.=FALSE)
-            	package <- descfields[1, "Package"]
-            	pkgname <- paste("package", package, sep = ":")
-            	newpackage <- is.na(match(pkgname, search()))
-	    }
+            ## The check for inconsistent naming is now in .find.package
+
             if(is.character(pos)) {
                 npos <- match(pos, search())
                 if(is.na(npos)) {
@@ -240,13 +234,18 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 } else pos <- npos
             }
             if(newpackage) {
+                ## temporary kludge
+                if(! pkgname %in% c("package:lattice", "package:nlme"))
+                    .getRequiredPackages(descfile)
 		## If the name space mechanism is available and the package
 		## has a name space, then the name space loading mechanism
 		## takes over.
 		if (packageHasNamespace(package, which.lib.loc)) {
 		    tt <- try({
 			ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
-			env <- attachNamespace(ns, pos = pos)
+                        dataPath <- file.path(which.lib.loc, package, "data")
+			env <- attachNamespace(ns, pos = pos,
+                                               dataPath = dataPath)
 		    })
 		    if (inherits(tt, "try-error"))
 			if (logical.return)
@@ -282,6 +281,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		else if(verbose)
 		    warning(paste("Package ", sQuote(package),
 				  "contains no R code"))
+                ## lazy-load data sets if required
+                dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
+                if(file.exists(paste(dbbase, ".rdb", sep="")))
+                    lazyLoad(dbbase, loadenv)
+                ## lazy-load a sysdata database if present
+                dbbase <- file.path(which.lib.loc, package, "R", "sysdata")
+                if(file.exists(paste(dbbase, ".rdb", sep="")))
+                    lazyLoad(dbbase, loadenv)
 		## now transfer contents of loadenv to an attached frame
 		env <- attach(NULL, pos = pos, name = pkgname)
 		## detach does not allow character vector args
@@ -396,8 +403,18 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         for(lib in lib.loc) {
             a <- .packages(all.available = TRUE, lib.loc = lib)
             for(i in sort(a)) {
-                title <- packageDescription(i, lib.loc = lib, field="Title")
-                if(is.na(title)) title <- ""
+                ## all packages installed under 2.0.0 should have package.rds
+                ## but we have not checked.
+                file <- system.file("Meta", "package.rds", package = i,
+                                    lib.loc = lib)
+                title <- if(file != "") .readRDS(file)["Title"] else NA
+#                 if(title == "") {
+#                     file <- system.file("DESCRIPTION", package = i,
+#                                         lib.loc = lib)
+#                     title <- if(file != "") read.dcf(file, field="Title")[1,1] else ""
+#                 }
+                if(is.na(title))
+                    title <- " ** No title available (pre-2.0.0 install?)  ** "
                 db <- rbind(db, cbind(i, lib, title))
             }
             if(length(a) == 0)
@@ -426,31 +443,38 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 }
 
 library.dynam <-
-function(chname, package = .packages(), lib.loc = NULL, verbose =
+function(chname, package = NULL, lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
-    .Dyn.libs <- .dynLibs()
+    #.Dyn.libs <- .dynLibs()
+    .Dyn.libs <- getLoadedDLLs()
+
     if(missing(chname) || (ncChname <- nchar(chname)) == 0)
         return(.Dyn.libs)
     ncFileExt <- nchar(file.ext)
     if(substr(chname, ncChname - ncFileExt + 1, ncChname) == file.ext)
         chname <- substr(chname, 1, ncChname - ncFileExt)
-    if(is.na(match(chname, .Dyn.libs))) {
+    if(TRUE || is.na(match(chname, .Dyn.libs))) {
         for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
             file <- file.path(pkg, "libs",
                               paste(chname, file.ext, sep = ""))
-            if(file.exists(file)) break
-            else
-                file <- ""
+            if(file.exists(file)) break else file <- ""
         }
-        if(file == "") {
+        if(file == "")
             stop(paste("shared library", sQuote(chname), "not found"))
+        which <- sapply(.Dyn.libs, function(x) x$path == file)
+        if(any(which)) {
+            if(verbose)
+                cat("DLL", file, "already loaded\n")
+            return(.Dyn.libs[[ seq(along=.Dyn.libs)[which] ]])
         }
         if(verbose)
             cat("now dyn.load(", file, ") ...\n", sep = "")
-        dyn.load(file, ...)
+        dll <- dyn.load(file, ...)
         .dynLibs(c(.Dyn.libs, chname))
+        return(dll)
     }
+#XXX
     invisible(.dynLibs())
 }
 
@@ -565,8 +589,9 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
 }
 
-.path.package <- function(package = .packages(), quiet = FALSE)
+.path.package <- function(package = NULL, quiet = FALSE)
 {
+    if(is.null(package)) package <- .packages()
     if(length(package) == 0) return(character(0))
     s <- search()
     searchpaths <-
@@ -589,61 +614,136 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
 }
 
 .find.package <-
-    function(package, lib.loc = NULL, quiet = FALSE,
-             verbose = getOption("verbose"))
+function(package = NULL, lib.loc = NULL, quiet = FALSE,
+         verbose = getOption("verbose"))
 {
-    .file_path_as_absolute <- function(x) {
-        ## Note that we cannot use tools::file_path_as_absolute() here,
-        ## as cyclic name space dependencies are not supported.  Argh.
-        ## This version is simpler: we only need it for directories
-        ## already known to exist.
-        cwd <- getwd(); on.exit(setwd(cwd))
-        setwd(path.expand(x))
-        getwd()
+    if(is.null(package) && is.null(lib.loc) && !verbose) {
+        ## We only want the paths to the attached packages.
+        return(.path.package())
     }
 
-    useAttached <- FALSE
+    use_attached <- FALSE
+    if(is.null(package)) {
+        package <- .packages()
+    }
     if(is.null(lib.loc)) {
-        useAttached <- TRUE
+        use_attached <- TRUE
         lib.loc <- .libPaths()
     }
 
-    n <- length(package)
-    if(n == 0) return(character(0))
+    if(!length(package)) return(character())
 
-    bad <- character(0)                 # names of packages not found
-    paths <- character(0)               # paths to packages found
+    bad <- character(0)
+    out <- character(0)
 
     for(pkg in package) {
-        fp <- file.path(lib.loc, pkg)
-        if(useAttached)
-            fp <- c(.path.package(pkg, TRUE), fp)
-        ## Note that we cannot use tools::file_test() here, as cyclic
-        ## name space dependencies are not supported.  Argh.
-        fp <- unique(fp[file.exists(fp) &
-                        file.exists(file.path(fp, "DESCRIPTION"))])
-        if(length(fp) == 0) {
+        if(any(grep("_", pkg))) {
+            ## The package "name" contains the version info.
+            ## Note that .packages() is documented to return the "base
+            ## names" of all currently attached packages.  In the case
+            ## of versioned installs, this seems to contain both the
+            ## package name *and* the version number (not sure if this
+            ## is a bug or a feature).
+            pkg_has_version <- TRUE
+            pkg_regexp <- paste(pkg, "$", sep = "")
+        }
+        else {
+            pkg_has_version <- FALSE
+            pkg_regexp <- paste(pkg, "($|_)", sep = "")
+        }
+        paths <- character()
+        for(lib in lib.loc) {
+            dirs <- list.files(lib,
+                               pattern = paste("^", pkg_regexp,
+                               sep = ""),
+                               full = TRUE)
+            ## Note that we cannot use tools::file_test() here, as
+            ## cyclic name space dependencies are not supported.  Argh.
+            paths <- c(paths,
+                       dirs[file.info(dirs)$isdir &
+                            file.exists(file.path(dirs,
+                                                  "DESCRIPTION"))])
+        }
+        if(use_attached
+           && any(pos <- grep(paste("^package:", pkg_regexp,
+                                    sep = ""),
+                              search()))) {
+            dirs <- sapply(pos, function(i) {
+                if(is.null(env <- as.environment(i)))
+                    system.file()
+                else
+                    attr(env, "path")
+            })
+            paths <- c(as.character(dirs), paths)
+        }
+        ## As an extra safety measure, only use the paths we found if
+        ## their DESCRIPTION file registers the given package and has a
+        ## valid version.  Actually, we should really exclude all
+        ## candidates with "bad" DESCRIPTION metadata, but we cannot use
+        ## tools:::check_package_description() for a full check here.
+        ## (But then packages installed with R 2.0 or better must have
+        ## valid DESCRIPTION metadata anyways.)
+        if(length(paths)) {
+            paths <- unique(paths)
+            db <- lapply(paths, function(p) {
+                info <- try(read.dcf(file.path(p, "DESCRIPTION"),
+                                     c("Package", "Version"))[1, ],
+                            silent = TRUE)
+                if(inherits(info, "try-error"))
+                    c(NA, NA)
+                else
+                    info
+            })
+            db <- do.call("rbind", db)
+            ok <- (apply(!is.na(db), 1, all)
+                   & (db[, "Package"] == sub("_.*", "", pkg))
+                   & (regexpr("([[:digit:]]+[.-]){1,}[[:digit:]]+",
+                              db[, "Version"])) > -1)
+            paths <- paths[ok]
+        }
+        if(length(paths) == 0) {
             bad <- c(bad, pkg)
             next
         }
-        afp <- .file_path_as_absolute(fp[1])
-        if(verbose && (length(fp) > 1))
-            warning(paste("package ", sQuote(pkg),
-                          " found more than once,\n",
-                          "using the one found in ",
-                          sQuote(dirname(afp)),
-                          sep = ""))
-        paths <- c(paths, afp)
+        if(length(paths) > 1) {
+            ## If a package was found more than once ...
+            ## * For the case of an exact version match (if the "name"
+            ##   already contained the version), use the first path;
+            ## * Otherwise, be consistent with the current logic in
+            ##   library(): if there are matching non-versioned paths,
+            ##   use the first of these; otherwise, use the first path
+            ##   with the highest version.  (Actually, we should really
+            ##   return the path to the highest version which has
+            ##   resolvable dependencies against the current version of
+            ##   R ...)
+            paths <- if(pkg_has_version) {
+                paths[1]
+            }
+            else if(any(pos <- which(basename(paths) == pkg)))
+                paths[pos][1]
+            else {
+                versions <- package_version(db[ok, "Version"])
+                pos <- min(which(versions == max(versions)))
+                paths <- paths[pos][1]
+            }
+            if(verbose)
+                warning(paste("package ", sQuote(pkg),
+                              " found more than once,\n",
+                              "using the one found in ",
+                              sQuote(paths),
+                              sep = ""))
+        }
+        out <- c(out, paths)
     }
 
     if(!quiet && (length(bad) > 0)) {
-        if(length(paths) == 0)
+        if(length(out) == 0)
             stop("none of the packages were found")
         for(pkg in bad)
             warning(paste("there is no package called", sQuote(pkg)))
     }
 
-    paths
+    out
 }
 
 print.packageInfo <- function(x, ...)
@@ -681,3 +781,23 @@ print.packageInfo <- function(x, ...)
 
 manglePackageName <- function(pkgName, pkgVersion)
     paste(pkgName, "_", pkgVersion, sep = "")
+
+.getRequiredPackages <- function(file="DESCRIPTION", quietly = FALSE)
+{
+    req <- read.dcf(file, fields = "Depends")[,1]
+    if(!is.na(req)) {
+        sch <- search()
+        ## keep in step with tools:::.check_package_depends
+        pkgs <- unlist(strsplit(req, ","))
+        pkgs <- gsub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , pkgs)
+        for(pkg in pkgs) {
+            if(pkg == "R") next
+            if (!paste("package", pkg, sep = ":") %in% sch ) {
+                if (!quietly) cat("Loading required package:", pkg, "\n")
+                library(pkg, character.only = TRUE, logical = TRUE) ||
+                stop("package '", pkg, "' could not be loaded", call. = FALSE)
+            }
+        }
+    }
+    invisible()
+}

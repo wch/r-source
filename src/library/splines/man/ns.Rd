@@ -60,7 +60,6 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
   \code{\link{predict.ns}}, \code{\link{SafePrediction}}
 }
 \examples{
-data(women)
 ns(women$height, df = 5)
 summary(fm1 <- lm(weight ~ ns(height, df = 5), data = women))
 

@@ -41,9 +41,9 @@ is.table(x)
   \code{\link[base]{class}} \code{"table"}, an array of integer values.
 
   There is a \code{summary} method for objects created by \code{table}
-  or \code{\link[stats]{xtabs}}, which gives basic information and performs a
+  or \code{\link{xtabs}}, which gives basic information and performs a
   chi-squared test for independence of factors (note that the function
-  \code{\link[stats]{chisq.test}} in package \pkg{ctest} currently only
+  \code{\link{chisq.test}} in package \pkg{ctest} currently only
   handles 2-d tables).
 
   \code{as.table} and \code{is.table} coerce to and test for contingency
@@ -53,7 +53,7 @@ is.table(x)
   \code{"table"} can be used to convert the array-based representation
   of a contingency table to a data frame containing the classifying
   factors and the corresponding counts (the latter as component
-  \code{Freq}).  This is the inverse of \code{\link[stats]{xtabs}}.
+  \code{Freq}).  This is the inverse of \code{\link{xtabs}}.
 }
 \details{
   If the argument \code{dnn} is not supplied, the internal function
@@ -66,7 +66,7 @@ is.table(x)
   Only when \code{exclude} is specified (i.e., not by default), will
   \code{table} drop levels of factor arguments potentially.
 }
-\seealso{Use \code{\link[stats]{ftable}} for printing (and more) of
+\seealso{Use \code{\link{ftable}} for printing (and more) of
   multidimensional tables.
 }
 \references{
@@ -78,15 +78,12 @@ is.table(x)
 require(stats) # for rpois and xtabs
 ## Simple frequency distribution
 table(rpois(100,5))
-data(warpbreaks)
 attach(warpbreaks)
 ## Check the design:
 table(wool, tension)
-data(state)
-table(state.division, state.region)
 detach()
+table(state.division, state.region)
 
-data(airquality)
 # simple two-way contingency table
 with(airquality, table(cut(Temp, quantile(Temp)), Month))
 
@@ -96,7 +93,7 @@ table(a, sample(a), deparse.level = 0) # dnn is c("", "")
 table(a, sample(a), deparse.level = 2) # dnn is c("a", "sample(a)")
 
 ## xtabs() <-> as.data.frame.table() :
-data(UCBAdmissions) ## already a contingency table
+UCBAdmissions ## already a contingency table
 DF <- as.data.frame(UCBAdmissions)
 class(tab <- xtabs(Freq ~ ., DF)) # xtabs & table
 ## tab *is* "the same" as the original table:

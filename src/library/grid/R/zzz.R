@@ -34,3 +34,13 @@ assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
     }
     library.dynam.unload("grid", libpath)
 }
+
+.gridplot.hook <- function()
+{
+    pushViewport(viewport(width=unit(1, "npc") - unit(1, "lines"),
+			  x=0, just="left"))
+    grid.text(paste("help(", ..nameEx, ")"),
+	      x=unit(1, "npc") + unit(0.5, "lines"),
+	      y=unit(0.8, "npc"), rot=90,
+	      gp=gpar(col="orchid"))
+}

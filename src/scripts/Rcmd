@@ -24,8 +24,8 @@ fi
 TEXINPUTS=".:${R_HOME}/share/texmf:${TEXINPUTS}"
 export TEXINPUTS
 
-. ${R_HOME}/etc/Renviron
-export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ${R_HOME}/etc/Renviron`
+. "${R_HOME}/etc/Renviron"
+export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' "${R_HOME}/etc/Renviron"`
 
 case "${1}" in
   perl)

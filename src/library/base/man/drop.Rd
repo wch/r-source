@@ -22,7 +22,7 @@ drop(x)
   \code{drop} directly.
 }
 \seealso{
-  \code{\link[stats]{drop1}} which is used for dropping terms in models.
+  \code{\link{drop1}} which is used for dropping terms in models.
 }
 \examples{
 dim(drop(array(1:12, dim=c(1,3,1,1,2,1,2))))# = 3 2 2

@@ -16,7 +16,9 @@
 \arguments{
   \item{libname}{a character string giving the library directory where
     the package defining the namespace was found.}
-  \item{pkgname}{a character string giving the name of the name space.}
+  \item{pkgname}{a character string giving the name of the package,
+    including the version number if the package was installed with
+    \code{--with-package-versions}.}
   \item{libpath}{a character string giving the complete path to the package.}
 }
 \details{
@@ -55,6 +57,9 @@
   \code{.onUnload}.  Use \code{.onAttach} only for actions that are
   needed only when the package becomes visible to the user, for example
   a start-up message.
+
+  If a package was installed with \code{--with-package-versions}, the
+  \code{pkgname} supplied will be something like \code{tree_1.0-16}.
 }
 \seealso{
   \code{\link{setHook}} shows how users can set hooks on the same events.

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2003  The R Development Core Team.
+ *  Copyright (C) 1998--2004  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -377,6 +377,7 @@ static R_size_t R_NodesInUse = 0;
   case REALSXP: \
   case CPLXSXP: \
   case WEAKREFSXP: \
+  case RAWSXP: \
     break; \
   case STRSXP: \
   case EXPRSXP: \
@@ -670,6 +671,9 @@ static void ReleaseLargeFreeVectors(void)
 	    switch (TYPEOF(s)) {	/* get size in bytes */
 	    case CHARSXP:
 		size = LENGTH(s) + 1;
+		break;
+	    case RAWSXP:
+		size = LENGTH(s);
 		break;
 	    case LGLSXP:
 	    case INTSXP:
@@ -1622,7 +1626,7 @@ SEXP cons(SEXP car, SEXP cdr)
   the namelist argument to be shorter than the valuelist; in this
   case the remaining values must be named already.  (This is useful
   in cases where the entire valuelist is already named--namelist can
-  then be R_NilValue
+  then be R_NilValue.)
 
   The valuelist is destructively modified and used as the
   environment's frame.
@@ -1710,6 +1714,9 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     switch (type) {
     case NILSXP:
 	return R_NilValue;
+    case RAWSXP:
+	size = BYTE2VEC(length);
+	break;
     case CHARSXP:
 	size = BYTE2VEC(length + 1);
 	break;
@@ -1988,9 +1995,9 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, nms;
     int i;
 
-    PROTECT(ans = allocVector(INTSXP, 24));
-    PROTECT(nms = allocVector(STRSXP, 24));
-    for (i = 0; i < 24; i++) {
+    PROTECT(ans = allocVector(INTSXP, 25));
+    PROTECT(nms = allocVector(STRSXP, 25));
+    for (i = 0; i < 25; i++) {
         INTEGER(ans)[i] = 0;
         SET_STRING_ELT(nms, i, R_BlankString);
     }
@@ -2004,6 +2011,7 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(nms, SPECIALSXP, mkChar("SPECIALSXP"));
     SET_STRING_ELT(nms, BUILTINSXP, mkChar("BUILTINSXP"));
     SET_STRING_ELT(nms, CHARSXP, mkChar("CHARSXP"));
+    SET_STRING_ELT(nms, RAWSXP, mkChar("RAWSXP"));
     SET_STRING_ELT(nms, LGLSXP, mkChar("LGLSXP"));
     SET_STRING_ELT(nms, INTSXP, mkChar("INTSXP"));
     SET_STRING_ELT(nms, REALSXP, mkChar("REALSXP"));

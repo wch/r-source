@@ -11,7 +11,7 @@ function(topic, package = NULL, lib.loc = NULL)
     paths <- paths[tools::file_test("-d", file.path(paths, "doc"))]
 
     vignettes <-
-        lapply(paths, 
+        lapply(paths,
                function(dir) {
                    tools::list_files_with_type(file.path(dir, "doc"),
                                                "vignette")
@@ -67,19 +67,8 @@ function(topic, package = NULL, lib.loc = NULL)
             entries <- NULL
             ## Check for new-style 'Meta/vignette.rds' ...
             if(file.exists(INDEX <-
-                           file.path(dir, "Meta", "vignette.rds"))) {
+                           file.path(dir, "Meta", "vignette.rds")))
                 entries <- .readRDS(INDEX)
-            }
-            else {
-                ## ... if not found, let tools:::.build_vignette_index()
-                ## do the job, including worrying about old-style
-                ## 'doc/00Index.dcf' files.
-                ## <FIXME>
-                ## Currently not exported, should it be?
-                entries <-
-                    tools:::.build_vignette_index(file.path(dir, "doc"))
-                ## </FIXME>
-            }
             if(NROW(entries) > 0)
                 vDB <-
                     rbind(vDB,

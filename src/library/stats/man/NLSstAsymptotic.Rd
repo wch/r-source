@@ -25,7 +25,6 @@ NLSstAsymptotic(xy)
 \author{Jose Pinheiro and Douglas Bates}
 \seealso{\code{\link{SSasymp}}}
 \examples{
-data( Loblolly )
 Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
 NLSstAsymptotic(sortedXyData(expression(age), expression(height), Lob.329 ))
 }

@@ -9,7 +9,7 @@
   given as their arguments into the correct units for plotting with
   graphics functions.  Usually, this only makes sense when normal
   coordinates are used, i.e., \emph{no} \code{log} scale (see the
-  \code{log} argument to \code{\link[graphics]{par}}).
+  \code{log} argument to \code{\link{par}}).
 
   \code{xyinch} does the same for a pair of numbers \code{xy},
   simultaneously.
@@ -37,7 +37,6 @@ cm(1)# = 2.54
 
 ## plot labels offset 0.12 inches to the right
 ## of plotted symbols in a plot
-data(mtcars)
 with(mtcars, {
     plot(mpg, disp, pch=19, main= "Motor Trend Cars")
     text(mpg + xinch(0.12), disp, row.names(mtcars),

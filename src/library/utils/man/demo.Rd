@@ -7,7 +7,7 @@
 }
 \usage{
 demo(topic, device = getOption("device"),
-     package = .packages(), lib.loc = NULL,
+     package = NULL, lib.loc = NULL,
      character.only = FALSE, verbose = getOption("verbose"))
 }
 \arguments{
@@ -18,7 +18,8 @@ demo(topic, device = getOption("device"),
     displayed.}
   \item{device}{the graphics device to be used.}
   \item{package}{a character vector giving the packages to look into for
-    demos.  By default, all packages in the search path are used.}
+    demos, or \code{NULL}.  By default, all packages in the search path
+    are used.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded

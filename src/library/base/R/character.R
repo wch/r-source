@@ -56,9 +56,9 @@ abbreviate <-
     x
 }
 
-make.names <- function(names, unique = FALSE)
+make.names <- function(names, unique = FALSE, allow_ = TRUE)
 {
-    names <- .Internal(make.names(as.character(names)))
+    names <- .Internal(make.names(as.character(names), allow_))
     if(unique) names <- make.unique(names)
     names
 }

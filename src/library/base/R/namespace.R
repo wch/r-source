@@ -87,7 +87,7 @@ getExportedValue <- function(ns, name) {
     get(name, env = asNamespace(pkg), inherits=FALSE)
 }
 
-attachNamespace <- function(ns, pos = 2) {
+attachNamespace <- function(ns, pos = 2, dataPath = NULL) {
     runHook <- function(hookname, env, ...) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
@@ -107,6 +107,10 @@ attachNamespace <- function(ns, pos = 2) {
     attr(env, "path") <- nspath
     exports <- getNamespaceExports(ns)
     importIntoEnv(env, exports, ns, exports)
+    if(!is.null(dataPath)) {
+        dbbase <- file.path(dataPath, "Rdata")
+        if(file.exists(paste(dbbase, ".rdb", sep=""))) lazyLoad(dbbase, env)
+    }
     runHook(".onAttach", ns, dirname(nspath), nsname)
     lockEnvironment(env, TRUE)
     on.exit()
@@ -241,16 +245,28 @@ loadNamespace <- function (package, lib.loc = NULL,
             sys.source(codeFile, env, keep.source = keep.source)
         else warning(paste("Package ", sQuote(package), "contains no R code"))
 
-        # partial loading stops at this point
+        ## partial loading stops at this point
+        ## -- used in preparing for lazy-loading
         if (partial) return(ns)
+
+        # lazy-load any sysdata
+        dbbase <- file.path(package.lib, package, "R", "sysdata")
+        if (file.exists(paste(dbbase, ".rdb", sep=""))) lazyLoad(dbbase, env)
 
         # register any S3 methods
         registerS3methods(nsInfo$S3methods, package, env)
 
         # load any dynamic libraries
-        for (lib in nsInfo$dynlibs)
-            library.dynam(lib, package, package.lib)
+        # We provide a way out for cross-building where we can't dynload
+        if(!nchar(Sys.getenv("R_CROSS_BUILD"))) {
+            dlls = list()
+            for (lib in nsInfo$dynlibs) {
+               dlls[[lib]]  = library.dynam(lib, package, package.lib)
+            }
+            setNamespaceInfo(env, "DLLs", dlls)
+        }
         addNamespaceDynLibs(env, nsInfo$dynlibs)
+
 
         # run the load hook
         runHook(".onLoad", env, package.lib, package)
@@ -603,7 +619,7 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
         miss <- expnames[! expnames %in% ex]
         stop("object(s) ", paste(sQuote(miss), collapse=", "),
              " are not exported by ",
-             sQuote(paste("namespace", getNamespaceName(expenv), sep=";"))
+             sQuote(paste("namespace", getNamespaceName(expenv), sep=":"))
              )
     }
     expnames <- unlist(lapply(expnames, get, env = exports, inherits = FALSE))
@@ -667,6 +683,7 @@ namespaceExport <- function(ns, vars) {
     }
 }
 
+## NB this needs a decorated name, foo_ver, if appropriate
 packageHasNamespace <- function(package, package.lib) {
     namespaceFilePath <- function(package, package.lib)
         file.path(package.lib, package, "NAMESPACE")

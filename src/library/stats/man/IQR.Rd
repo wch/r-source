@@ -29,7 +29,6 @@ IQR(x, na.rm = FALSE)
  \code{\link{range}}, \code{\link{quantile}}.
 }
 \examples{
-data(rivers)
 IQR(rivers)
 }
 \keyword{univar}

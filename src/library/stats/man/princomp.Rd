@@ -22,8 +22,6 @@ princomp(x, \dots)
   \item{data}{an optional data frame containing the variables in the
     formula \code{formula}.  By default the variables are taken from
     \code{environment(formula)}.}
-  \item{x}{a numeric matrix or data frame which provides the data for the
-    principal components analysis.}
   \item{subset}{an optional vector used to select rows (observations) of the
     data matrix \code{x}.}
   \item{na.action}{a function which indicates what should happen
@@ -31,6 +29,8 @@ princomp(x, \dots)
     the \code{na.action} setting of \code{\link{options}}, and is
     \code{\link{na.fail}} if that is unset. The \dQuote{factory-fresh}
     default is \code{\link{na.omit}}.}
+  \item{x}{a numeric matrix or data frame which provides the data for the
+    principal components analysis.}
   \item{cor}{a logical value indicating whether the calculation should
     use the correlation matrix or the covariance matrix.}
   \item{scores}{a logical value indicating whether the score on each
@@ -43,7 +43,8 @@ princomp(x, \dots)
   \item{\dots}{arguments passed to or from other methods. If \code{x} is
     a formula one might specify \code{cor} or \code{scores}.}
   \item{object}{Object of class inheriting from \code{"princomp"}}
-  \item{newdata}{Data frame in which to predict}
+  \item{newdata}{An optional data frame in which to look for variables with
+    which to predict.  If omitted, the scores are used.}
 }
 \description{
   \code{princomp} performs a principal components analysis on the given
@@ -115,7 +116,6 @@ princomp(x, \dots)
 \examples{
 ## The variances of the variables in the
 ## USArrests data vary by orders of magnitude, so scaling is appropriate
-data(USArrests)
 (pc.cr <- princomp(USArrests))  # inappropriate
 princomp(USArrests, cor = TRUE) # =^= prcomp(USArrests, scale=TRUE)
 ## Similar, but different:

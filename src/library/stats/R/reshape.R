@@ -37,6 +37,23 @@ reshape <-
                 drop <- names(data) %in% drop
             data <- data[,if (is.logical(drop)) !drop else -drop, drop = FALSE]
         }
+
+        ## store information for back-transformation.
+        undoInfo <- list(varying = varying,v.names = v.names,
+                                         idvar = idvar,timevar = timevar)
+
+        ## multiple id variables
+        if (length(idvar)>1){
+               repeat({
+                   tempidname<-basename(tempfile("tempID"))
+                   if (!(tempidname %in% names(data))) break
+               })
+               data[,tempidname]<-interaction(data[,idvar],drop=TRUE)
+               idvar<-tempidname
+               drop.idvar<-TRUE
+           } else drop.idvar<-FALSE
+
+
         d <- data
         all.varying <- unlist(varying)
         d <- d[,!(names(data) %in% all.varying),drop = FALSE]
@@ -71,8 +88,11 @@ reshape <-
             rval <- rbind(rval,d)  ##inefficient. So sue me.
         }
 
-        attr(rval,"reshapeLong") <- list(varying = varying,v.names = v.names,
-                                         idvar = idvar,timevar = timevar)
+        ## if we created a temporary id variable, drop it
+        if (drop.idvar)
+            rval[,idvar]<-NULL 
+        
+        attr(rval,"reshapeLong") <- undoInfo
         return(rval)
     } ## re..Long()
 
@@ -85,23 +105,40 @@ reshape <-
             data <- data[,if (is.logical(drop)) !drop else -drop, drop = FALSE]
         }
 
+        undoInfo <- list(v.names = v.names,  timevar = timevar,idvar = idvar)
+
+        orig.idvar<-idvar
+        if (length(idvar)>1){
+            repeat({
+                tempidname<-basename(tempfile("tempID"))
+                if (!(tempidname %in% names(data))) break
+            })
+            data[,tempidname]<-interaction(data[,idvar],drop=TRUE)
+            idvar<-tempidname
+            drop.idvar<-TRUE
+        } else drop.idvar<-FALSE
+        
         ## times <- sort(unique(data[,timevar]))
         ## varying and times must have the same order
         times <- unique(data[,timevar])
         if (any(is.na(times)))
             warning("There are records with missing times, which will be dropped.")
-
+        undoInfo$times<-times
+        
         if (is.null(v.names))
-            v.names <- names(data)[!(names(data) %in% c(timevar,idvar))]
+            v.names <- names(data)[!(names(data) %in% c(timevar,idvar,orig.idvar))]
 
         if (is.null(varying))
             varying <- outer(v.names,times,paste,sep = ".")
         if (is.list(varying))
             varying <- do.call("rbind",varying)
 
+        undoInfo$varying<-varying
+
+        
         CHECK <- TRUE
         if (CHECK) {
-            keep <- !(names(data) %in% c(timevar,v.names,idvar))
+            keep <- !(names(data) %in% c(timevar,v.names,idvar,orig.idvar))
             if(any(keep)) {
                 rval <- data[keep]
                 tmp <- data[,idvar]
@@ -129,12 +166,21 @@ reshape <-
         if (!is.null(new.row.names))
             row.names(rval) <- new.row.names
 
-        attr(rval,"reshapeWide") <- list(varying = varying,v.names = v.names,
-                                       timevar = timevar,idvar = idvar,times = times)
+        ## temporary id variable to be dropped.
+        if (drop.idvar) rval[,idvar]<-NULL
+
+        ## information for back-transformation
+        attr(rval,"reshapeWide") <- undoInfo
+
         rval
     } ## re..Wide()
 
     ## Begin reshape()
+
+    if (missing(direction)){
+        undo <- c("wide","long")[c("reshapeLong","reshapeWide")%in% names(attributes(data))]
+        if (length(undo)==1) direction<-undo
+    }
     direction <- match.arg(direction, c("wide", "long"))
     if (!is.null(varying) && is.atomic(varying) && direction == "long")
         varying <- guess(varying)
@@ -152,7 +198,7 @@ reshape <-
                reshapeWide(data, idvar = idvar, timevar = timevar,
                            varying = varying, v.names = v.names, drop = drop,
                            new.row.names = new.row.names)
-       }
+           }
 
        },
            "long" =

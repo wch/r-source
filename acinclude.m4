@@ -202,17 +202,21 @@ fi
 
 ## _R_PROG_MAKEINFO_VERSION
 ## ------------------------
-## Building the R Texinfo manuals requires Makeinfo v4 or better.
+## Building the R Texinfo manuals requires Makeinfo v4.5 or better.
 ## Set shell variable r_cv_prog_makeinfo_v4 to 'yes' if a recent
 ## enough Makeinfo is found, and to 'no' otherwise.
 AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
-[AC_CACHE_CHECK([whether makeinfo version is at least 4],
+[AC_CACHE_CHECK([whether makeinfo version is at least 4.5],
                 [r_cv_prog_makeinfo_v4],
 [makeinfo_version=`${MAKEINFO_CMD} --version | \
-  grep "^makeinfo" | sed 's/[[^)]]*) \(.\).*/\1/'`
-if test -z "${makeinfo_version}"; then
+  grep "^makeinfo" | sed 's/[[^)]]*) \(.*\)/\1/'`
+makeinfo_version_maj=`echo ${makeinfo_version} | cut -f1 -d.`
+makeinfo_version_min=`echo ${makeinfo_version} | cut -f2 -d.`
+if test -z "${makeinfo_version_maj}" \
+     || test -z "${makeinfo_version_min}"; then
   r_cv_prog_makeinfo_v4=no
-elif test ${makeinfo_version} -lt 4; then
+elif test ${makeinfo_version_maj} -lt 4 \
+     || test ${makeinfo_version_min} -lt 5; then
   r_cv_prog_makeinfo_v4=no
 else
   r_cv_prog_makeinfo_v4=yes
@@ -2508,6 +2512,39 @@ case $r_cv_c_inline in
 esac
 ])# R_C_INLINE
 
+## R_FUNC_FTELL
+## ------------
+## See if your system time functions do not count leap seconds, as
+## required by POSIX.
+AC_DEFUN([R_FUNC_FTELL],
+[AC_CACHE_CHECK([whether ftell works correctly on files opened for append],
+                [r_cv_working_ftell],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <stdio.h>
+
+main() {
+    FILE *fp;
+    int pos;
+    
+    fp = fopen("testit", "wb");
+    fwrite("0123456789\n", 11, 1, fp);
+    fclose(fp);
+    fp = fopen("testit", "ab");
+    pos = ftell(fp);
+    fclose(fp);
+    unlink("testit");
+    exit(pos != 11);
+}
+]])],
+              [r_cv_working_ftell=yes],
+              [r_cv_working_ftell=no],
+              [r_cv_working_ftell=no])])
+if test "x${r_cv_working_ftell}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_FTELL, 1,
+            [Define if your ftell works correctly on files opened for append.])
+fi
+])# R_FUNC_FTELL
 
 ### Local variables: ***
 ### mode: outline-minor ***

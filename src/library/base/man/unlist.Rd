@@ -36,7 +36,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   a list (and might be unchanged).  Non-vector elements of the list
   (for example language elements such as names, formulas and calls)
   are not coerced, and so a list containing one or more of these remains a
-  list.  (The effect of unlisting an \code{\link[stats]{lm}} fit is a list which
+  list.  (The effect of unlisting an \code{\link{lm}} fit is a list which
   has individual residuals as components,)
 }
 \value{

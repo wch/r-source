@@ -50,7 +50,7 @@ rwilcox(nn, m, n)
   S-PLUS uses a different (but equivalent) definition of the Wilcoxon
   statistic.
 }
-\author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
+\author{Kurt Hornik}
 \seealso{
   \code{\link{wilcox.test}} to calculate the statistic from data, find p
   values and so on.

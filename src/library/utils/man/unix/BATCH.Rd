@@ -28,8 +28,7 @@ R CMD BATCH [options] infile [outfile]
   (EOL) mark) are processed correctly.
 
   Using \code{R CMD BATCH} sets the GUI to \code{"none"}, so none of
-  \code{\link[graphics]{x11}}, \code{\link[graphics]{jpeg}}
-  and \code{\link[graphics]{png}} are available.
+  \code{\link{x11}}, \code{\link{jpeg}} and \code{\link{png}} are available.
 }
 \note{
   Unlike \code{Splus BATCH}, this does not run the \R process in the

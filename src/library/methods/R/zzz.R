@@ -9,7 +9,6 @@
   ##  - define the classes needed to represent methods
   function(libname, pkgname, where)
 {
-    library.dynam(pkgname, pkgname)
     if(missing(where)) {
         where <- match(paste("package:", pkgname, sep=""), search())
         if(is.na(where)) {
@@ -78,17 +77,14 @@
     }
 }
 
-.First.lib <- ..First.lib  ## will be overwritten on loading
-
 .onLoad <- function(libname, pkgName) {
     env <- environment(sys.function())
     doSave <- identical(get(".saveImage", envir = env), FALSE)
     ..First.lib(libname, pkgName, env)
     if(doSave) {
-        rdafile <- file.path(.Library, "methods", "R", "all.rda")
-        vars <- objects(env, all=TRUE)
-        vars <- vars[vars != ".__NAMESPACE__."]
-        save(list = vars, file = rdafile, envir = env, compress = TRUE)
+        dbbase <- file.path(libname, pkgName, "R", pkgName)
+        ns <- asNamespace(pkgName)
+        tools:::makeLazyLoadDB(ns, dbbase)
     }
 }
 
@@ -99,7 +95,6 @@
 
 
 .onAttach <- function(libname, pkgName) {
-#    ..First.lib(libname, pkgName)
     env <- environment(sys.function())
     ## unlock some bindings that must be modifiable to set methods
     unlockBinding(".BasicFunsList", env)
@@ -109,20 +104,5 @@
     methods:::.onUnload(libpath)
 }
 
-### The following code is only executed when dumping
-### with no namespace for "methods"
-local({
-    env <- topenv()
-    rdafile <- file.path(.Library, "methods", "R", "all.rda")
-    libname <- pkgname <- .packageName
-    assign(".saveImage", FALSE, env)
-    if(identical(env, .GlobalEnv)) {
-        .First.lib(libname, pkgname, env)
-        save(list = objects(env, all=TRUE), file = rdafile,
-                   compress = TRUE, envir = env)
-    }
-    else {
-        message("Saving namespace image ...")
-    }
-}
-)
+.saveImage <- FALSE
+message("Saving namespace image ...")

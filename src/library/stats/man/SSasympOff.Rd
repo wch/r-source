@@ -33,7 +33,6 @@ SSasympOff(input, Asym, lrc, c0)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data( CO2 )
 CO2.Qn1 <- CO2[CO2$Plant == "Qn1", ]
 SSasympOff( CO2.Qn1$conc, 32, -4, 43 )  # response only
 Asym <- 32; lrc <- -4; c0 <- 43

@@ -7,7 +7,8 @@
 }
 \usage{
 read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
-         skip = 0, row.names, col.names, n = -1, \dots)
+         skip = 0, row.names, col.names, n = -1, buffersize = 2000,
+         \dots)
 }
 \arguments{
   \item{file}{
@@ -18,7 +19,8 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
     function call.
   }
   \item{widths}{integer vector, giving the widths of the fixed-width
-    fields (of one line).}
+    fields (of one line), or list of integer vectors giving widths for
+    multiline records}
   \item{header}{a logical value indicating whether the file contains the
     names of the variables as its first line.}
   \item{sep}{character; the separator used internally; should be a
@@ -30,6 +32,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   \item{col.names}{see \code{\link{read.table}}.}
   \item{n}{the maximum number of records (lines) to be read, defaulting
     to no limit.}
+  \item{buffersize}{Maximum number of lines to read at one time}
   \item{\dots}{further arguments to be passed to
     \code{\link{read.table}}.}
 }
@@ -38,8 +41,18 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   which is called internally.
 }
 \details{
+  Multiline records are concatenated to a single line before processing.
   Fields that are of zero-width or are wholly beyond the end of the line
   in \code{file} are replaced by \code{NA}.
+  
+  Negative-width fields are used to indicate columns to be skipped, eg
+  \code{-5} to skip 5 columns. These fields are not seen by
+  \code{read.table} and so should not be included in a \code{col.names}
+  or \code{colClasses} argument.
+  
+  Reducing the  \code{buffersize} argument may reduce memory use when
+  reading large files with long lines. Increasing \code{blocksize} may
+  result in faster processing when enough memory is available.
 }
 \author{
   Brian Ripley for \R version: original \code{Perl} by Kurt Hornik.
@@ -49,9 +62,13 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
 ff <- tempfile()
 cat(file=ff, "123456", "987654", sep="\n")
 read.fwf(ff, width=c(1,2,3))    #> 1 23 456 \\ 9 87 654
+read.fwf(ff, width=c(1,-2,3))   #> 1 456 \\ 9 654
 unlink(ff)
 cat(file=ff, "123", "987654", sep="\n")
 read.fwf(ff, width=c(1,0, 2,3))    #> 1 NA 23 NA \\ 9 NA 87 654
+unlink(ff)
+cat(file=ff, "123456", "987654", sep="\n")
+read.fwf(ff, width=list(c(1,0, 2,3), c(2,2,2)))    #> 1 NA 23 456 98 76 54
 unlink(ff)
 }
 \keyword{file}

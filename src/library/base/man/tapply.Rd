@@ -47,7 +47,7 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \seealso{
   the convenience functions \code{\link{by}} and
-  \code{\link[stats]{aggregate}} (using \code{tapply});
+  \code{\link{aggregate}} (using \code{tapply});
   \code{\link{apply}},
   \code{\link{lapply}} with its versions
   \code{\link{sapply}} and \code{\link{mapply}}.
@@ -58,7 +58,6 @@ groups <- as.factor(rbinom(32, n = 5, p = .4))
 tapply(groups, groups, length) #- is almost the same as
 table(groups)
 
-data(warpbreaks)
 ## contingency table from data.frame : array with named dimnames
 tapply(warpbreaks$breaks, warpbreaks[,-1], sum)
 tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum)
@@ -71,7 +70,6 @@ tapply(1:n, fac, range)
 tapply(1:n, fac, quantile)
 
 ## example of ... argument: find quarterly means
-data(presidents)
 tapply(presidents, cycle(presidents), mean, na.rm = TRUE)
 
 ind <- list(c(1, 2, 2), c("A", "A", "B"))

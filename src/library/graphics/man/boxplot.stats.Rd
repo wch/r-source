@@ -39,7 +39,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 }
 \details{
   The two \dQuote{hinges} are versions of the first and third quartile,
-  i.e., close to \code{\link[stats]{quantile}(x, c(1,3)/4)}.  The hinges equal
+  i.e., close to \code{\link{quantile}(x, c(1,3)/4)}.  The hinges equal
   the quartiles for odd \eqn{n} (where \code{n <- length(x)}) and
   differ for even \eqn{n}. Where the quartiles only equal observations
   for \code{n \%\% 4 == 1} (\eqn{n\equiv 1 \bmod 4}{n = 1 mod 4}),
@@ -73,7 +73,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   \emph{Graphical Methods for Data Analysis.}  Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[stats]{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.
+  \code{\link{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.
 }
 \examples{
 x <- c(1:100, 1000)

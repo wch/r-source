@@ -7,7 +7,6 @@ S3method(print, classRepresentation)
 
 export(.BasicClasses)
 export(.BasicFunsList)
-export(.First.lib)
 export(.TraceWithMethods)
 export(.untracedFunction)
 export(".__C__(")
@@ -296,6 +295,3 @@ export(validSlotNames)
 ## the next 2 would not be needed if R_initMethods looked in the namespace, not globalenv
 export(.ShortPrimitiveSkeletons)
 export(.EmptyPrimitiveSkeletons)
-
-## used in ..First.lib, may disappear if ONLY a namespace version is needed
-export(.saveImage)

@@ -49,7 +49,8 @@ int internal_ShowFile(char *, char *);
 
 int winaddmenu(char * name, char *errmsg);
 int winaddmenuitem(char * item, char * menu, char * action, char *errmsg);
-int windelmenu(char * menu, char *errmsg);
+int windelmenu(char * menu, char *errmsg); /* delete one menu and its items and submenus */
+void windelmenus(char * prefix); /* delete all menus which start with a certain prefix */
 int windelmenuitem(char * item, char * menu, char *errmsg);
 
 int numwinmenus(void);

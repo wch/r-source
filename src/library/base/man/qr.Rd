@@ -115,7 +115,7 @@ as.qr(x)
 \seealso{
   \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for
   reconstruction of the matrices.
-  \code{\link{solve.qr}},  \code{\link[stats]{lsfit}},
+  \code{\link{solve.qr}},  \code{\link{lsfit}},
   \code{\link{eigen}}, \code{\link{svd}}.
 
   \code{\link{det}} (using \code{qr}) to compute the determinant of a matrix.

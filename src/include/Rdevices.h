@@ -20,6 +20,10 @@
 #ifndef DEVICES_H_
 #define DEVICES_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <Rgraphics.h>
 #include <R_ext/Boolean.h>
 
@@ -46,6 +50,11 @@
 void InitGraphics(void);
 /* Kill all active devices (used at shutdown). */
 void KillAllDevices(void);
+/*
+ * Free the font and encoding structures used by
+ * PostScript, Xfig, and PDF devices
+ */
+void freeType1Fonts(void);
 
 /* Drivers from ../main/devices.c , 
  * description there;   platform-specific drivers in platform directories! */
@@ -56,7 +65,7 @@ PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, Rboolean);
 Rboolean 
 PSDeviceDriver(DevDesc*, char*, char*, char*, char**,
 	       char*, char*, char*, double, double, Rboolean, double, 
-	       Rboolean, Rboolean, Rboolean, char*, char*);
+	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
 Rboolean 
 XFigDeviceDriver(DevDesc*, char*, char*, char*,
 		 char*, char*, double, double, 
@@ -64,7 +73,7 @@ XFigDeviceDriver(DevDesc*, char*, char*, char*,
 Rboolean
 PDFDeviceDriver(DevDesc* dd, char *, char *, char *, 
 		char *, char *, double, double, double,
-		int, char*);
+		int, char*, SEXP, int, int);
 
 
 
@@ -124,6 +133,8 @@ void killDevice(int);
 /* ...NO DOC... */
 void addDevice(DevDesc *);
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif

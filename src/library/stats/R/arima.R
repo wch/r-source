@@ -279,11 +279,13 @@ arima <- function(x, order = c(0, 0, 0),
                     coef[ind] <- maInvert(coef[ind])
             }
             if(any(coef[mask] != res$par))  {  # need to re-fit
+                oldcode <- res$convergence
                 res <- optim(coef[mask], armafn, method = "BFGS",
                              hessian = TRUE,
                              control = list(maxit = 0,
                              parscale = optim.control$parscale),
                              trans = TRUE)
+                res$convergence <- oldcode
                 coef[mask] <- res$par
             }
             ## do it this way to ensure hessian was computed inside

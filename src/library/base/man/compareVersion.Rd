@@ -21,7 +21,7 @@ compareVersion(a, b)
   optionally missing (in which case the version number is older than
   those with the components present). 
 }
-\seealso{\code{\link{library}}, \code{\link[utils]{packageStatus}}.}
+\seealso{\code{\link{library}}, \code{\link{packageStatus}}.}
 \examples{
 compareVersion("1.0", "1.0-1")
 compareVersion("7.2-0","7.1-12")

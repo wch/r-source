@@ -30,7 +30,7 @@ internet_la = internet$(SHLIB_EXT)
 Rexecmodulesdir_LTLIBRARIES = $(internet_la)
 internet_la_SOURCES = $(SOURCES)
 internet_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@internet_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
+@USE_LIBTOOL_TRUE@internet_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 internet_la_LIBADD = $(LIBR)
 
 all: Makefile Makedeps R
@@ -52,18 +52,18 @@ $(internet_la): $(internet_la_OBJECTS) $(internet_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(internet_la_LDFLAGS) $(internet_la_OBJECTS) $(internet_la_LIBADD)
 ## <FIXME>
 ## Not sure if we want to do this ...
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
+	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(internet_la) $(Rexecmodulesdir)/internet$(SHLIB_EXT)
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(internet_la) $(Rexecmodulesdir)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(internet_la) "$(Rexecmodulesdir)/internet$(SHLIB_EXT)"
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(internet_la) "$(Rexecmodulesdir)"
 installdirs:
-	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
+	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecmodulesdir)/internet$(SHLIB_EXT)
+	@rm -f "$(Rexecmodulesdir)/internet$(SHLIB_EXT)"
 
 mostlyclean: clean
 clean:

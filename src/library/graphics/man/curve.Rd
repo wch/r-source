@@ -42,7 +42,7 @@ curve(expr, from, to, n = 101, add = FALSE, type = "l",
   For \dQuote{expensive} \code{expr}essions, you should use smarter tools.
 }
 \seealso{
-  \code{\link[stats]{splinefun}} for spline interpolation, \code{\link{lines}}.
+  \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
 }
 \examples{
 op <- par(mfrow=c(2,2))

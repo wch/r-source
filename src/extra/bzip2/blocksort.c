@@ -389,7 +389,7 @@ void fallbackSort ( UInt32* fmap,
 /*---------------------------------------------*/
 
 /*---------------------------------------------*/
-/* Solaris cc objects to inlining functions whose names start wtih `main' */
+/* Solaris cc objects to inlining functions whose names start with `main' */
 static
 R_INLINE
 Bool BZmainGtU ( UInt32  i1, 

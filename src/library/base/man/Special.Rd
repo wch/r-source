@@ -77,7 +77,7 @@ lfactorial(x)
   miscellaneous mathematical functions and \code{\link{Bessel}} for the
   real Bessel functions.
 
-  For the incomplete gamma function see \code{\link[stats]{pgamma}}.
+  For the incomplete gamma function see \code{\link{pgamma}}.
 }
 \examples{
 choose(5, 2)

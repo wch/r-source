@@ -1,64 +1,67 @@
 ## useDynLib("grid") # done in .onLoad
 
+import(grDevices)
+
 export(
        # Conversion of units
        "convertUnit", "convertX", "convertY",
        "convertWidth", "convertHeight",
        # Deprecated conversion functions
-       "convertNative", 
+       "convertNative",
        "grid.convertWidth", "grid.convertX", "grid.convertY",
        "grid.convert", "grid.convertHeight",
 
-       "current.viewport", "current.vpTree", 
+       "current.viewport", "current.vpTree",
        "current.transform",
-       "engine.display.list", 
-       "gpar", "get.gpar", 
-       "grid.collection", 
-       "grid.copy", "grid.display.list", "grid.draw", 
-       "grid.grill", 
+       "engine.display.list",
+       "gpar", "get.gpar",
+       "grid.collection",
+       "grid.copy", "grid.display.list", "grid.draw",
+       "grid.grill",
        "grid.layout", "grid.locator",
-       "grid.newpage", 
-       "grid.plot.and.legend", 
-       "grid.pretty", 
-       "grid.show.layout", "grid.show.viewport", 
+       "grid.newpage",
+       "grid.plot.and.legend",
+       "grid.pretty",
+       "grid.show.layout", "grid.show.viewport",
 
        "unit",
        "is.unit",
        "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
        "stringWidth", "stringHeight", "grobWidth", "grobHeight",
-       "absolute.size", 
+       "absolute.size",
 
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
-       "pop.viewport", "push.viewport", 
+       "pop.viewport", "push.viewport",
        "popViewport", "pushViewport",
-       "dataViewport", "plotViewport", 
-       "downViewport", "upViewport", "seekViewport", 
-       
+       "dataViewport", "plotViewport",
+       "downViewport", "upViewport", "seekViewport",
+
        "drawDetails", "preDrawDetails", "postDrawDetails",
-       "editDetails", 
+       "editDetails",
        "validDetails",
        "heightDetails", "widthDetails",
-       
+
 #       "height", "heightDetails",
-#       "width", "widthDetails", 
+#       "width", "widthDetails",
 
        # Creating and modifying grobs (and gTrees)
        "grid.grob",
-       "grob", "gList", "gTree", "gPath", 
+       "grob", "gList", "gTree", "gPath",
        "grid.get", "grid.set", "grid.add", "grid.remove", "grid.edit",
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
 #       "childNames",
+	"gTreeChildren",
 
        # Creating and drawing predefined grobs and gTrees
        "grid.arrows", "grid.circle",
-       "grid.line.to", "grid.lines", "grid.move.to",        
+       "grid.line.to", "grid.lines", "grid.move.to",
        "grid.points", "grid.polygon",
        "grid.rect", "grid.segments", "grid.text",
-       "grid.xaxis", "grid.yaxis", 
+       "grid.xaxis", "grid.yaxis",
        "arrowsGrob", "circleGrob", "linesGrob", "lineToGrob", "moveToGrob",
        "pointsGrob", "polygonGrob", "rectGrob", "segmentsGrob", "textGrob",
        "xaxisGrob", "yaxisGrob",
-       
+
        # Frames and packing
        "grid.frame", "grid.pack", "grid.place",
        "frameGrob", "packGrob", "placeGrob"
@@ -98,6 +101,7 @@ S3method("print", "grob")
 S3method("print", "unit")
 S3method("print", "viewport")
 S3method("print", "path")
+S3method("print", "gpar")
 
 ## S3 methods for exported generics in grid
 S3method("unit.length", "unit")
@@ -131,8 +135,12 @@ S3method("editDetails", "xaxis")
 S3method("editDetails", "yaxis")
 S3method("grobHeight", "grob")
 S3method("grobHeight", "gList")
+S3method("grobHeight", "gPath")
+S3method("grobHeight", "default")
 S3method("grobWidth", "grob")
 S3method("grobWidth", "gList")
+S3method("grobWidth", "gPath")
+S3method("grobWidth", "default")
 S3method("heightDetails", "default")
 S3method("heightDetails", "frame")
 S3method("heightDetails", "rect")

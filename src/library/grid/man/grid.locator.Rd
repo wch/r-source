@@ -23,6 +23,9 @@ grid.locator(unit = "native")
 \value{
   A unit object representing the location of the mouse click within the
   current viewport, in the specified coordinate system.
+
+  If the user did not click mouse button 1, the function
+  (invisibly) returns \code{NULL}.
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{viewport}}, \code{\link{unit}},

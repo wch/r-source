@@ -44,7 +44,7 @@ plot(x, y, \dots)
   For simple scatter plots, \code{\link{plot.default}} will be used.
   However, there are \code{plot} methods for many \R objects,
   including \code{\link{function}}s, \code{\link{data.frame}}s,
-  \code{\link[stats]{density}} objects, etc.  Use \code{methods(plot)} and
+  \code{\link{density}} objects, etc.  Use \code{methods(plot)} and
   the documentation for these.
 
   The two step types differ in their x-y preference: Going from
@@ -57,7 +57,6 @@ plot(x, y, \dots)
   methods; \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
 }
 \examples{
-data(cars)
 plot(cars)
 lines(lowess(cars))
 

@@ -35,7 +35,7 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
   There is a \code{summary} method for contingency table objects created
   by \code{table} or \code{xtabs}, which gives basic information and
   performs a chi-squared test for independence of factors (note that the
-  function \code{\link[stats]{chisq.test}} in package \pkg{ctest}
+  function \code{\link{chisq.test}} in package \pkg{ctest}
   currently only handles 2-d tables).
 
   If a left hand side is given in \code{formula}, its entries are simply
@@ -52,7 +52,6 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
   \code{xtabs} (see the \code{DF} example below).
 }
 \examples{
-data(esoph)
 ## 'esoph' has the frequencies of cases and controls for all levels of
 ## the variables 'agegp', 'alcgp', and 'tobgp'.
 xtabs(cbind(ncases, ncontrols) ~ ., data = esoph)
@@ -61,7 +60,6 @@ ftable(xtabs(cbind(ncases, ncontrols) ~ ., data = esoph))
 ## In particular if we have fewer factors ...
 ftable(xtabs(cbind(ncases, ncontrols) ~ agegp, data = esoph))
 
-data(UCBAdmissions)
 ## This is already a contingency table in array form.
 DF <- as.data.frame(UCBAdmissions)
 ## Now 'DF' is a data frame with a grid of the factors and the counts
@@ -72,7 +70,6 @@ xtabs(Freq ~ Gender + Admit, DF)
 ## And for testing independence ...
 summary(xtabs(Freq ~ ., DF))
 
-data(warpbreaks)
 ## Create a nice display for the warp break data.
 warpbreaks$replicate <- rep(1:9, len = 54)
 ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))

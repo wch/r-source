@@ -46,7 +46,6 @@ lines(x, \dots)
   \code{\link{par}} for how to specify colors.
 }
 \examples{
-data(cars)
 # draw a smooth line through a scatter plot
 plot(cars, main="Stopping Distance versus Speed")
 lines(lowess(cars))

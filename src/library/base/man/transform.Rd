@@ -37,7 +37,6 @@ transform(x, \dots)
     \code{\link{data.frame}}
 }
 \examples{
-data(airquality)
 transform(airquality, Ozone = -Ozone)
 transform(airquality, new = -Ozone, Temp = (Temp-32)/1.8)
 

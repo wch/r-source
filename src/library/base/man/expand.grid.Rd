@@ -19,7 +19,7 @@ expand.grid(\dots)
   components of a list.
 
   Attribute \code{"out.attrs"} is a list which gives the dimension and
-  dimnames for use by \code{\link[stats]{predict}} methods.
+  dimnames for use by \code{\link{predict}} methods.
 }
 
 \references{

@@ -53,7 +53,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[utils]{demo}} which uses \code{source};
+  \code{\link{demo}} which uses \code{source};
   \code{\link{eval}}, \code{\link{parse}} and \code{\link{scan}};
   \code{\link{options}("keep.source")}.
 }

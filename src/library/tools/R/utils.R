@@ -64,7 +64,16 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
 {
     ## Return the paths or names of the files in @code{dir} with
     ## extension in @code{exts}.
-    files <- list.files(dir, all.files = all.files)
+    ## Might be in a zipped dir on Windows
+    if(file.exists(file.path(dir, "filelist")) &&
+       any(file.exists(file.path(dir, c("Rdata.zip", "Rex.zip", "Rhelp.zip")))))
+    {
+        files <- readLines(file.path(dir, "filelist"))
+        if(!all.files)
+            files <- grep("^[^.]", files, value = TRUE)
+    } else {
+        files <- list.files(dir, all.files = all.files)
+    }
     files <- files[sub(".*\\.", "", files) %in% exts]
     if(full.names)
         files <- if(length(files) > 0)
@@ -86,14 +95,14 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
     exts <- .make_file_exts(type)
     files <-
         list_files_with_exts(dir, exts, all.files = all.files,
-                          full.names = full.names)
+                             full.names = full.names)
 
     if(type %in% c("code", "docs")) {
         OSdir <- file.path(dir, .OStype())
         if(file_test("-d", OSdir)) {
             OSfiles <-
                 list_files_with_exts(OSdir, exts, all.files = all.files,
-                                  full.names = FALSE)
+                                     full.names = FALSE)
             OSfiles <-
                 file.path(if(full.names) OSdir else .OStype(),
                           OSfiles)
@@ -111,9 +120,9 @@ delimMatch <-
 function(x, delim = c("\{", "\}"), syntax = "Rd")
 {
     if(!is.character(x))
-        stop("argument x must be a character vector")
+        stop(.wrong_args("x", "must be a character vector"))
     if((length(delim) != 2) || any(nchar(delim) != 1))
-        stop("incorrect value for delim")
+        stop(.wrong_args("delim", "must specify two single characters"))
     if(syntax != "Rd")
         stop("only Rd syntax is currently supported")
 
@@ -141,7 +150,9 @@ function(file, pdf = FALSE, clean = FALSE,
             texi2dvi <- "texi2dvi"
     }
 
-    yy <- system(paste(texi2dvi, quiet, pdf, clean, file))
+    yy <- system(paste(.shell_quote(texi2dvi),
+                       quiet, pdf, clean,
+                       .shell_quote(file)))
     if(yy > 0) stop(paste("running texi2dvi on", file, "failed"))
 }
 
@@ -164,6 +175,20 @@ function()
 {
     OS <- Sys.getenv("R_OSTYPE")
     if(nchar(OS)) OS else .Platform$OS.type
+}
+
+### ** .capture_output_from_print
+
+.capture_output_from_print <-
+function(x, ...)
+{
+    ## Better to provide a simple variant of utils::capture.output()
+    ## ourselves (so that bootstrapping R only needs base and tools).
+    file <- textConnection("out", "w", local = TRUE)
+    sink(file)
+    on.exit({ sink(); close(file) })
+    print(x, ...)
+    out
 }
 
 ### ** .get_internal_S3_generics
@@ -220,7 +245,7 @@ function(nsInfo)
         paste(S3_methods_list[idx, 1],
               S3_methods_list[idx, 2],
               sep = ".")
-    S3_methods_list    
+    S3_methods_list
 }
 
 ### ** .get_S3_group_generics
@@ -238,6 +263,19 @@ function()
     lines <- grep("^.*\\\|([^:]*):.*", lines, value = TRUE)
     lines <- sub("^.*\\\|([^:]*):.*", "\\1", lines)
     lines
+}
+
+### ** .get_standard_package_names
+
+.get_standard_package_names <-
+function()
+{
+    lines <- readLines(file.path(R.home(), "share", "make", "vars.mk"))
+    lines <- grep("^R_PKGS_[[:upper:]]+ *=", lines, value = TRUE)
+    out <- strsplit(sub("^R_PKGS_[[:upper:]]+ *= *", "", lines), " +")
+    names(out) <-
+        tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
+    out
 }
 
 ### ** .is_primitive
@@ -380,16 +418,16 @@ function(package)
              stats = c("anova.lmlist", "fitted.values", "lag.plot",
              "influence.measures", "t.test"),
              utils = c("close.socket", "flush.console",
-             "update.packages") 
+             "update.packages")
              )
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]
     if(!length(thisPkg)) character(0) else thisPkg
 }
 
-### ** .packageApply
+### ** .package_apply
 
-.packageApply <-
+.package_apply <-
 function(packages = NULL, FUN, ...)
 {
     ## Apply FUN and extra '...' args to all given packages.
@@ -400,6 +438,16 @@ function(packages = NULL, FUN, ...)
     out <- lapply(packages, FUN, ...)
     names(out) <- packages
     out
+}
+
+### ** .read_Rd_lines_quietly
+
+.read_Rd_lines_quietly <-
+function(con)
+{
+    ## Read lines from a connection to an Rd file, trying to suppress
+    ## "incomplete final line found by readLines" warnings.
+    .try_quietly(readLines(con))
 }
 
 ### ** .read_description
@@ -421,7 +469,22 @@ function(dfile)
         stop(paste("file", sQuote(dfile), "is not in valid DCF format"))
     db
 }
-    
+
+### ** .shell_quote
+
+.shell_quote <-
+function(x)
+{
+    ## Quote elements of a character vector x for passing them to a
+    ## (Bourne) shell.
+    ## Currently only does simple single quoting (so that embedded
+    ## whitespace is taken care of).
+    ## <FIXME>
+    ## We already have utils::shQuote() which is much better ...
+    sQuote(x)
+    ## </FIXME>
+}
+
 ### ** .source_assignments
 
 .source_assignments <-
@@ -445,6 +508,34 @@ function(file, envir)
     invisible()
 }
 
+### .source_assignments_in_code_dir
+
+.source_assignments_in_code_dir <-
+function(dir, env)
+{
+    ## Combine all code files in @code{dir}, read and parse expressions,
+    ## and successively evaluated the top-level assignments in
+    ## @code{env}.
+    con <- tempfile("Rcode")
+    on.exit(unlink(con))
+    if(!file.create(con))
+        stop(paste("unable to create", con))
+    if(!all(file.append(con, list_files_with_type(dir, "code"))))
+        stop("unable to write code files")
+    .source_assignments(con, env)
+}
+    
+### ** .strip_whitespace
+
+.strip_whitespace <-
+function(x)
+{
+    ## Strip leading and trailing whitespace.
+    x <- sub("^[[:space:]]*", "", x)
+    x <- sub("[[:space:]]*$", "", x)
+    x
+}
+
 ### ** .try_quietly
 
 .try_quietly <-
@@ -465,6 +556,26 @@ function(expr)
         stop(yy)
     yy
 }
+
+### ** .wrong_args
+
+.wrong_args <-
+function(args, msg)
+{
+    len <- length(args)
+    if(len == 0)
+        character()
+    else if(len == 1)
+        paste("argument", sQuote(args), msg)
+    else
+        paste("arguments",
+              paste(c(rep.int("", len - 1), "and "),
+                    sQuote(args),
+                    c(rep.int(", ", len - 1), ""),
+                    sep = "", collapse = ""),
+              msg)
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

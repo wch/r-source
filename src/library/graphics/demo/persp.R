@@ -39,7 +39,6 @@ title(main = sinc.exp)
 
 ## (2) Visualizing a simple DEM model
 
-data(volcano)
 z <- 2 * volcano        # Exaggerate the relief
 x <- 10 * (1:nrow(z))   # 10 meter spacing (S to N)
 y <- 10 * (1:ncol(z))   # 10 meter spacing (E to W)

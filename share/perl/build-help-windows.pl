@@ -27,7 +27,7 @@ use R::Utils;
 fileparse_set_fstype; # Unix, in case one gets anything else.
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "htmllists", "chm");
+		 "dosnames", "htmllists", "chm", "index");
 GetOptions (@knownoptions) || usage();
 
 $OSdir = "windows";
@@ -89,7 +89,9 @@ if($opt_chm) {
     open_hhp($pkg);
 }
 build_index($lib, $dest, $chmdir);
-
+if($opt_index){
+    exit 0;
+}
 
 if($opt_chm) {
     build_chm_toc();

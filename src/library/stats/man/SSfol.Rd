@@ -34,7 +34,6 @@ SSfol(Dose, input, lKe, lKa, lCl)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data( Theoph )
 Theoph.1 <- Theoph[ Theoph$Subject == 1, ]
 SSfol( Theoph.1$Dose, Theoph.1$Time, -2.5, 0.5, -3 )  # response only
 lKe <- -2.5; lKa <- 0.5; lCl <- -3

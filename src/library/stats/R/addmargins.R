@@ -17,7 +17,6 @@ function( A,
 #-------------------------------------------------------------
     # How many dimensions of A, and how many side do we touch?
 
-    n.dim <- length( dim( A ) )
     n.sid <- length( margin )
 
     # Check if FUN was specified
@@ -36,16 +35,16 @@ function( A,
     }
 
     if (!miss.FUN) {
-	
+
 	# Recursive function to add names to unnamed list components
-	
+
 	add.names <- function(thelist) {
 	    n <- names(thelist)
 	    if (is.null(n)) n <- rep("", length(thelist))
 	    for (i in seq(along=thelist)[-1]) {
 		if (!is.call(thelist[[i]])) {
 		    if (n[i] == "") n[i] <- as.character(thelist[[i]])
-		} else if (as.character(thelist[[i]][[1]]) == "list") 
+		} else if (as.character(thelist[[i]][[1]]) == "list")
 			thelist[[i]] <- add.names(thelist[[i]])
 	    }
 	    names(thelist) <- n
@@ -54,10 +53,10 @@ function( A,
 	FUN <- eval(add.names(substitute(FUN)))
 	if ( is.null( names( FUN ) ) ) names( FUN ) <- rep("", length(FUN) )
     }
-    
+
     # At this point FUN is a list with names wherever we could figure them out, blanks
     # otherwise
-    
+
     if( length( FUN ) != n.sid ){
 	if( length( FUN ) > 1 ){
 	    stop( "Length of FUN, ", length( FUN ),
@@ -78,7 +77,7 @@ function( A,
     fnames <- list( )
 
     # Use the names from FUN and also
-    # possibly the names from sublists of FUN.  Replace blanks with 
+    # possibly the names from sublists of FUN.  Replace blanks with
     # constructed names
     #
 
@@ -94,7 +93,7 @@ function( A,
 	    } else {
 		fnames[[i]] <- paste( topname, ".", fnames[[i]], sep = "" )
 	    }
-	} else 
+	} else
 	    if ( fnames[[i]] == "" ) fnames[[i]] <- paste("Margin", margin[i])
     }
 
@@ -128,7 +127,7 @@ function( A,
 	newdim <- dim( A )
 	newdim[margin] <- newdim[margin] + n.mar
 	newdimnames <- dimnames( A )
-	newdimnames[[margin]] <- c( newdimnames[[margin]], fnames )              
+	newdimnames[[margin]] <- c( newdimnames[[margin]], fnames )
 
 	# Number of elements in the expanded array
 	#
@@ -136,7 +135,7 @@ function( A,
 
 	# The positions in the vector-version of the new table
 	# where the original table values goes, as a vector of Ts and Fs
-	#    
+	#
 	skip <- prod( dim( A )[1:margin] )
 	runl <- skip / dim( A )[margin]
 	apos <- rep( c(rep( TRUE, skip ), rep( FALSE, n.mar*runl )),
@@ -153,7 +152,7 @@ function( A,
 	# Then sucessively compute and fill in the required margins
 	#
 	for( i in 1:n.mar ) {
-	    mtab <- if( n.dim>1 ) { 
+	    mtab <- if( n.dim>1 ) {
 			apply( A, (1:n.dim)[-margin], FUN[[i]] )
 		    } else { FUN[[i]]( A ) }
 	    # Vector the same length as the number of margins

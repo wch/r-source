@@ -75,7 +75,6 @@ logLik(lmx) # using print.logLik() method
 str(logLik(lmx))
 
 ## lm method
-data(attitude)
 (fm1 <- lm(rating ~ ., data = attitude))
 logLik(fm1)
 logLik(fm1, REML = TRUE)

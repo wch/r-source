@@ -130,9 +130,9 @@ str.default <-
 		else if(mod == "char") { mod <- "chr"; char.like <- TRUE }
 		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
-		    di <- dim(object)
-		    di <- P0(ifelse(di>1, "1:",""), di,
-			     ifelse(di>0, "" ," "))
+		    di. <- dim(object)
+		    di <- P0(ifelse(di. > 1, "1:",""), di.,
+			     ifelse(di. > 0, "" ," "))
 		    le.str <- paste(c("[", P0(di[-length(di)], ", "),
 				      di[length(di)], "]"), collapse = "")
 		    std.attr <- "dim" #- "names"
@@ -268,9 +268,13 @@ str.default <-
 		ob <- if(le > iv.len) object[seq(len=iv.len)] else object
 		ao <- abs(ob <- ob[!is.na(ob)])
 	    }
+            else if(iSurv)
+                le <- length(object <- as.character(object))
 	    if(int.surv || (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
 			    all(ob == signif(ob, digits.d)))) {
-		v.len <- iv.len
+		if(!iSurv || di.[2] == 2)
+                    ## use integer-like length
+                    v.len <- iv.len
 		format.fun <- function(x)x
 	    } else {
 		v.len <- round(1.25 * v.len)
@@ -331,21 +335,27 @@ str.default <-
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects
 }# end of `str.default()'
 
-## An extended `ls()' using str() :
-ls.str <- function(pos = 1, pattern, ..., envir = as.environment(pos),
-		   mode = "any", max.level = 1, give.attr = FALSE)
+## An extended `ls()' whose print method will use str() :
+ls.str <-
+    function(pos = 1, pattern, ..., envir = as.environment(pos), mode = "any")
 {
-    n <- length(nms <- ls(..., envir = envir, pattern = pattern))
-    r <- character(n)
-    for(i in seq(length = n))
-	if(exists(nam <- nms[i], envir = envir, mode = mode)) {
-	    cat(nam, ": ")
-	    r[i] <- nam
-	    str(get(nam, envir = envir, mode = mode),
-		max.level = max.level, give.attr = give.attr)
-	}
-    invisible(r)
+    nms <- ls(..., envir = envir, pattern = pattern)
+    r <- sapply(nms, function(n)
+                if(exists(n, envir= envir, mode= mode)) n else as.character(NA))
+    structure(r[!is.na(r)], envir = envir, mode = mode, class = "ls_str")
 }
 
 lsf.str <- function(pos = 1, ..., envir = as.environment(pos))
     ls.str(pos = pos, envir = envir, mode = "function", ...)
+
+print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
+{
+    stopifnot(is.environment(E <- attr(x, "envir")))
+    M <- attr(x, "mode")
+    for(nam in x) {
+        cat(nam, ": ")
+        str(get(nam, envir = E, mode = M),
+            max.level = max.level, give.attr = give.attr, ...)
+    }
+    invisible(x)
+}

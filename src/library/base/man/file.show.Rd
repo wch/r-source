@@ -52,7 +52,7 @@ file.show(\dots, header = rep("",nfiles), title = "R Information",
 \seealso{
   \code{\link{files}},
   \code{\link{list.files}},
-  \code{\link[utils]{help}}.
+  \code{\link{help}}.
 }
 \examples{
 file.show(file.path(R.home(), "COPYRIGHTS"))

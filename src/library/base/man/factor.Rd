@@ -125,7 +125,7 @@ as.ordered(x)
   \code{\link{[.factor}} for subsetting of factors.
 
   \code{\link{gl}} for construction of \dQuote{balanced} factors and
-  \code{\link[stats]{C}} for factors with specified contrasts.
+  \code{\link{C}} for factors with specified contrasts.
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
   levels, and \code{\link{unclass}} to get integer codes.
 }

@@ -31,7 +31,6 @@ rect.hclust(tree, k = NULL, which = NULL, x = NULL, h = NULL,
   \code{\link{hclust}}, \code{\link{identify.hclust}}.
 }
 \examples{
-data(USArrests)
 hca <- hclust(dist(USArrests))
 plot(hca)
 rect.hclust(hca, k=3, border="red")

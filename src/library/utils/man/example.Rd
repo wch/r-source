@@ -7,7 +7,7 @@
   \code{dontshow}, see Details below.
 }
 \usage{
-example(topic, package = .packages(), lib.loc = NULL,
+example(topic, package = NULL, lib.loc = NULL,
         local = FALSE, echo = TRUE, verbose = getOption("verbose"),
         setRNG = FALSE,
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
@@ -15,8 +15,9 @@ example(topic, package = .packages(), lib.loc = NULL,
 \arguments{
   \item{topic}{name or literal character string: the online
     \code{\link{help}} topic the examples of which should be run.}
-  \item{package}{a character vector with package names.  By default,
-    all packages in the search path are used.}
+  \item{package}{a character vector giving the package names to look
+    into for example code, or \code{NULL}.  By default, all packages in
+    the search path are used.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
@@ -79,7 +80,7 @@ example("smooth", package="stats", lib.loc=.Library)
 r1 <- example(quantile, setRNG = TRUE)
 x1 <- rnorm(1)
 u <- runif(1)
-## identical randum numbers
+## identical random numbers
 r2 <- example(quantile, setRNG = TRUE)
 x2 <- rnorm(1)
 stopifnot(identical(r1, r2))

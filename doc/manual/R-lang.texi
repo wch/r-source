@@ -1730,10 +1730,101 @@ warning.
 @node Subset assignment,  , Indexing other structures, Indexing
 @subsection Subset assignment
 @cindex assignment
-subassignment
+@cindex complex assignment
 
-what is really going on is that... something about *tmp* (internally, @R{}
-tries to avoid duplication as far as possible).
+Assignment to subsets of a structure is a special case of a general mechanisms for complex assignment:
+@smallexample
+x[3:5] <- 13:15
+@end smallexample
+The result of this commands is as if the following had been executed
+@smallexample
+`*tmp*` <- x
+x <- "[<-"(`*tmp*`,3:5, value=13:15)
+@end smallexample
+
+The same mechanism can be applied to other functions than @code{[}.  The assignment function has the same name with  @code{<-} pasted on. Its last argument, which must be called @code{value}, is the new value to be assigned.
+@smallexample
+names(x) <- c("a","b")
+@end smallexample
+is equivalent to
+@smallexample
+`*tmp*` <- x
+x <- "names<-"(`*tmp*`, value=c("a","b"))
+@end smallexample
+
+Nesting of complex assignments is evaluated recursively
+@smallexample
+names(x)[3] <- "Three"
+@end smallexample
+is equivalent to
+@smallexample
+`*tmp*` <- x
+x <- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
+@end smallexample
+
+
+
+Complex assignments in the enclosing environment (using @code{<<-}) are also permitted:
+@smallexample
+names(x)[3] <<- "Three"
+@end smallexample
+is equivalent to 
+@smallexample
+`*tmp*` <<- get(x, envir=parent.env(), inherits=TRUE)
+names(`*tmp*`)[3] <- "Three"
+x <<- `*tmp*`
+@end smallexample
+and so to
+@smallexample
+`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+x <<- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
+@end smallexample
+
+Only the target variable is evaluated in the enclosing environment, so 
+@smallexample
+e<-c(a=1,b=2)
+i<-1
+local(@{
+   e <- c(A=10,B=11)
+   i <-2
+   e[i] <<- e[i]+1
+@})
+@end smallexample
+ uses the local value of @code{i} on both the LHS and RHS, and the local value of @code{e} on the RHS of the superassignment statement.  It sets @code{e} in the outer environment to
+@smallexample
+ a  b 
+ 1 12
+@end smallexample
+That is, the superassignment is equivalent to the three lines
+@smallexample
+`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*`[i] <- e[i]+1
+x <<- `*tmp*`
+@end smallexample
+
+Similarly
+@smallexample
+x[is.na(x)] <<- 0
+@end smallexample
+is equivalent to 
+@smallexample
+`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*`[is.na(x)] <- 0
+x <<- `*tmp*`
+@end smallexample
+and not to
+@smallexample
+`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*`[is.na(`*tmp*`)] <- 0
+x <<- `*tmp*`
+@end smallexample
+These two candidate interpretations differ only if there is also a
+local variable @code{x}.  It is a good idea to avoid having a local
+variable with the same name as the target variable of a
+superassignment.  As this case was handled incorrectly in versions
+1.9.1 and earlier there must not be a serious need for such code.
+
+
 
 @c  Example session sketch
 @c  @example
@@ -2666,7 +2757,7 @@ on until all the elements of the class attribute have been exhausted.
 If no method has been found at that point then the method
 @code{@var{generic}.@var{default}} is used.  If the first argument to
 the generic function has no class attribute then
-@code{@var{generic}.@var{default}} is used.
+@code{@var{generic}.@var{default}} is used.  Since the introduction of namespaces the methods may not be accessible by their names (i.e. @code{get("@var{generic}.@var{class}")} may fail), but they will be accessible by @code{getS3method("@var{generic}","@var{class}")}.
 
 @cindex object
 Any object can have a @code{class} attribute.  This attribute can have
@@ -3139,7 +3230,7 @@ the variables are looked up.  For example:
 
 Notice that quoting was necessary to substitute the @code{x}.  This kind
 of construction comes in handy in connection with the facilities for
-putting math expression in graphs, as the flowing case shows
+putting math expression in graphs, as the following case shows
 
 @smallexample
 > plot(0)
@@ -3221,6 +3312,27 @@ Notice that one should not use @code{eval(ylab)} in this situation.  If
 @code{ylab} is a language or expression object, then that would cause
 the object to be evaluated as well, which would not at all be desirable
 if a math expression like @code{quote(log[e](y))} was being passed.
+
+
+A variant on @code{substitute} is @code{bquote}, which is used to replace some subexpressions with their values.  The example from above
+@smallexample
+> plot(0)
+> for (i in 1:4)
++   text(1, 0.2 * i,
++        substitute(x[ix] == y, list(ix = i, y = pnorm(i))))
+@end smallexample
+could be written more compactly as
+@smallexample
+plot(0)
+for(i in 1:4)
+   text(1, 0.2*i, bquote( x[.(i)] == .(pnorm(i)) ))
+@end smallexample
+
+The expression is quoted except for the contents of @code{.()}
+subexpressions, which are replaced with their values. There is an
+optional argument to compute the values in a different
+environment. The syntax for @code{bquote} is borrowed from the LISP
+backquote macro.
 
 @node More on evaluation, Evaluation of expression objects, Substitutions, Computing on the language
 @section More on evaluation
@@ -4194,14 +4306,14 @@ Although not strictly tokens, stretches of whitespace characters (spaces
 and tabs) serve to delimit tokens in case of ambiguity, (compare
 @code{x<-5} and @code{x < -5}).
 
-Semicolons (@samp{;}) are used to separate elementary
-@cindex expression
-expressions.
 
 Newlines have a function which is a combination of token separator and
-expression terminator.  If an expression can terminate at the end of the
-line the parser will assume it does so, otherwise the newline is treated
-as whitespace.
+expression terminator.  If an expression can terminate at the end of
+the line the parser will assume it does so, otherwise the newline is
+treated as whitespace.  Semicolons (@samp{;}) may be used to separate
+elementary @cindex expression
+expressions on the same line.
+
 
 Special rules apply to the @code{else} keyword: inside a compound
 expression, a newline before @code{else} is discarded, whereas at the

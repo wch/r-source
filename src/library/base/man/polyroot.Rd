@@ -32,7 +32,7 @@ polyroot(z)
   \emph{Comm. ACM}, \bold{15}, 97--99.
 }
 \seealso{
-  \code{\link[stats]{uniroot}} for numerical root finding of arbitrary
+  \code{\link{uniroot}} for numerical root finding of arbitrary
   functions;
   \code{\link{complex}} and the \code{zero} example in the demos
   directory.

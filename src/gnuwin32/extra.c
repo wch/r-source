@@ -429,7 +429,8 @@ SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     type = CHAR(STRING_ELT(CAR(args), 0));
     message = CADR(args);
-    if(!isString(message) || length(message) != 1)
+    if(!isString(message) || length(message) != 1 || 
+       strlen(CHAR(STRING_ELT(message, 0))) > 255)
 	error("invalid `message' argument");
     if (strcmp(type, "ok")  == 0) {
 	askok(CHAR(STRING_ELT(message, 0)));
@@ -455,7 +456,8 @@ SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     message = CAR(args);
-    if(!isString(message) || length(message) != 1)
+    if(!isString(message) || length(message) != 1 || 
+       strlen(CHAR(STRING_ELT(message, 0))) > 255)
 	error("invalid `message' argument");
     def = CADR(args);
     if(!isString(def) || length(def) != 1)
@@ -1074,7 +1076,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "default must be a character string");
     p = CHAR(STRING_ELT(def, 0));
     if(strlen(p) >= MAX_PATH) errorcall(call, "default is overlong");
-    strcpy(path, p);
+    strcpy(path, R_ExpandFileName(p));
     temp = strchr(path,'/');
     while (temp) {
 	*temp = '\\';

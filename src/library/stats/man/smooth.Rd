@@ -92,7 +92,6 @@ x <- c(8:10,10, 0,0, 9,9)
 plot(x, main = "breakdown of  3R  and  S  and hence  3RSS")
 matlines(cbind(smooth(x,"3R"),smooth(x,"S"), smooth(x,"3RSS"),smooth(x)))
 
-data(presidents)
 presidents[is.na(presidents)] <- 0 # silly
 summary(sm3 <- smooth(presidents, "3R"))
 summary(sm2 <- smooth(presidents,"3RSS"))

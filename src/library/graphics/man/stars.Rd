@@ -108,7 +108,6 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   documented as here.
 }
 \examples{
-data(mtcars)
 stars(mtcars[, 1:7], key.loc = c(14, 2),
       main = "Motor Trend Cars : stars(*, full = F)", full = FALSE)
 stars(mtcars[, 1:7], key.loc = c(14, 1.5),
@@ -126,7 +125,6 @@ stars(mtcars[, 1:7], len = 0.6, key.loc = c(1.5, 0),
       main = "Motor Trend Cars", draw.segments = TRUE,
       frame.plot=TRUE, nrow = 4, cex = .7)
 
-data(USJudgeRatings)
 ## scale linearly (not affinely) to [0, 1]
 USJudge <- apply(USJudgeRatings, 2, function(x) x/max(x))
 Jnam <- row.names(USJudgeRatings)

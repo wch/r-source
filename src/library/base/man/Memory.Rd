@@ -40,7 +40,7 @@ mem.limits(nsize = NA, vsize = NA)
   to catch attempts to allocate excessive amounts of memory which may
   cause other processes to run out of resources.  The default is the
   smaller of the amount of physical RAM in the machine and 1024Mb.
-  See also \code{\link[utils]{memory.limit}}.)
+  See also \code{\link{memory.limit}}.)
 #endif
 
   To understand the options, one needs to know that \R maintains
@@ -101,13 +101,13 @@ mem.limits(nsize = NA, vsize = NA)
 
 \seealso{
   \code{\link{gc}} for information on the garbage collector,
-  \code{\link[utils]{object.size}(a)} for the (approximate) size of \R object
+  \code{\link{object.size}(a)} for the (approximate) size of \R object
   \code{a}.  \code{\link{memory.profile}} for profiling the usage of
   cons cells.
 #ifdef windows
 
-  \code{\link[utils]{memory.size}} to monitor total memory usage,
-  \code{\link[utils]{memory.limit}} for the current limit.
+  \code{\link{memory.size}} to monitor total memory usage,
+  \code{\link{memory.limit}} for the current limit.
 #endif
 }
 

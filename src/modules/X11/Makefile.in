@@ -32,7 +32,7 @@ R_X11_la = R_X11$(SHLIB_EXT)
 Rexecmodulesdir_LTLIBRARIES = $(R_X11_la)
 R_X11_la_SOURCES = $(SOURCES)
 R_X11_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@R_X11_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
+@USE_LIBTOOL_TRUE@R_X11_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 R_X11_la_LIBADD = $(ALL_X_LIBS) $(BITMAP_LIBS) $(LIBR)
 
 all: Makefile Makedeps R
@@ -54,18 +54,18 @@ $(R_X11_la): $(R_X11_la_OBJECTS) $(R_X11_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(R_X11_la_LDFLAGS) $(R_X11_la_OBJECTS) $(R_X11_la_LIBADD) $(LIBS)
 ## <FIXME>
 ## Not sure of we want to do this ...
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
+	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) $(Rexecmodulesdir)/R_X11$(SHLIB_EXT)
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(R_X11_la) $(Rexecmodulesdir)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(Rexecmodulesdir)/R_X11$(SHLIB_EXT)"
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(R_X11_la) "$(Rexecmodulesdir)"
 installdirs:
-	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
+	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecmodulesdir)/R_X11$(SHLIB_EXT)
+	@rm -f "$(Rexecmodulesdir)/R_X11$(SHLIB_EXT)"
 
 mostlyclean: clean
 clean:

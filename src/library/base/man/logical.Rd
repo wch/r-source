@@ -40,8 +40,8 @@ is.logical(x)
 
   \code{as.logical} attempts to coerce its argument to be of logical
   type.  For \code{\link{factor}}s, this uses the \code{\link{levels}}
-  (labels) and not the \code{\link{codes}}.  Like
-  \code{\link{as.vector}} it strips attributes including names.
+  (labels).  Like \code{\link{as.vector}} it strips attributes including
+  names.
 
   \code{is.logical} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of logical type or not.

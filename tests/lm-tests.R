@@ -62,7 +62,6 @@ all.equal(print(anova(roller.lm0), signif.st=FALSE),
 ###  more regression tests for lm(), glm(), etc :
 
 ## moved from ?influence.measures:
-data(LifeCycleSavings)
 lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
 (IM <- influence.measures(lm.SR))
 summary(IM)

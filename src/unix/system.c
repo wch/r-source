@@ -76,6 +76,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 int R_ChooseFile(int new, char *buf, int len)
 { return ptr_R_ChooseFile(new, buf, len); }
 
+
 void (*ptr_gnome_start)(int ac, char **av, Rstart Rp);
 
 void R_setStartTime(void); /* in sys-unix.c */
@@ -87,6 +88,8 @@ void R_load_gnome_shlib(void); /* in dynload.c */
 	and in unix/aqua.c
 */
 Rboolean useaqua = FALSE;
+Rboolean CocoaGUI = FALSE;
+Rboolean useCocoa = FALSE;
 #endif
 
 
@@ -151,6 +154,8 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef HAVE_AQUA
 	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
 		useaqua = TRUE;
+	    else if(!strcmp(p, "cocoa") || !strcmp(p, "COCOA"))
+		useCocoa = TRUE;
 #endif
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
@@ -274,8 +279,8 @@ int Rf_initialize_R(int ac, char **av)
     fpu_setup(1);
 
 #ifdef HAVE_AQUA
-    if(useaqua)
-	R_StartConsole(TRUE);
+    if(useaqua & !CocoaGUI)
+		R_StartConsole(TRUE);
 #endif
 
  return(0);

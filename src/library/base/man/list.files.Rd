@@ -45,7 +45,7 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
   and \code{\link{files}} for many more file handling functions and 
   \code{\link{file.choose}} 
 #ifdef windows
-and \code{\link[utils]{choose.files}}
+and \code{\link{choose.files}}
 #endif
 for interactive selection.}
 \examples{

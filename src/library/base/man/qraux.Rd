@@ -11,7 +11,7 @@ qr.R(qr, complete = FALSE)
 \arguments{
   \item{qr}{object representing a QR decomposition.  This will
     typically have come from a previous call to \code{\link{qr}} or
-    \code{\link[stats]{lsfit}}.}
+    \code{\link{lsfit}}.}
   \item{complete}{logical expression of length 1.  Indicates whether an
     arbitrary  orthogonal completion of the \eqn{\bold{Q}} or
     \eqn{\bold{X}} matrices is to be made, or whether the \eqn{\bold{R}}
@@ -58,7 +58,6 @@ qr.R(qr, complete = FALSE)
   \code{\link{qr.qy}}.
 }
 \examples{
-data(LifeCycleSavings)
 p <- ncol(x <- LifeCycleSavings[,-1]) # not the 'sr'
 qrstr <- qr(x)   # dim(x) == c(n,p)
 qrstr $ rank # = 4 = p

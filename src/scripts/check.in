@@ -26,6 +26,7 @@ use File::Copy;
 use File::Find;
 use File::Path;
 use Getopt::Long;
+use IO::File;
 use R::Dcf;
 use R::Logfile;
 use R::Rdtools;
@@ -37,7 +38,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.188 $ ';
+my $revision = ' $Revision: 1.193 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -56,7 +57,7 @@ my $opt_vignettes = 1;
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
-R::Vars::error("R_HOME", "R_CMD", "R_EXE");
+R::Vars::error("R_HOME", "R_EXE");
 
 my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
@@ -133,34 +134,6 @@ if($opt_latex) {
     unlink(<Rtextest$$.*>);
     chdir($startdir);
     $log->close();
-}
-
-## Get the valid keywords for later.
-my %standard_keywords = ();
-open(KEYWORDS,
-     "< " . &file_path(${R::Vars::R_HOME}, "doc", "KEYWORDS.db"))
-  or die "Error: cannot open file 'doc/KEYWORDS.db' for reading\n";
-while(<KEYWORDS>) {
-    if(/^.*\|([^:]*):.*/) {
-	$standard_keywords{$1} = 1;
-    }
-}
-close(KEYWORDS);
-
-## Get the names of base and recommended packages and stubs for later.
-my @R_pkgs_base = ();
-my @R_pkgs_recommended = ();
-my @R_pkgs_stubs = ();
-open(MAKEVARS,
-     "< " . &file_path(${R::Vars::R_HOME}, "share", "make", "vars.mk"))
-  or die "Error: cannot open file 'share/make/vars.mk' for reading\n";
-while(<MAKEVARS>) {
-    @R_pkgs_base =
-	split(/ +/, $2) if(/^(R_PKGS_BASE *=)(.*)/);
-    @R_pkgs_recommended =
-	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
-    @R_pkgs_stubs =
-	split(/ +/, $2) if(/^(R_PKGS_STUBS *=)(.*)/);
 }
 
 ## This is the main loop over all packages to be checked.
@@ -264,10 +237,23 @@ foreach my $pkg (@ARGV) {
 		    (($opt_install =~ /^check/) ||
 		     $ENV{"R_CHECK_USE_INSTALL_LOG"} ||
 		     !(-t STDIN && -t STDOUT));
-		my $cmd = "${R::Vars::R_CMD} INSTALL -l";
-		$cmd .= " " . &shell_quote_file_path($library);
-		$cmd .= " --fake" if($opt_install eq "fake");
-		$cmd .= " " . &shell_quote_file_path($pkgdir);
+		my $INSTALL_opts = "";
+		$INSTALL_opts = "--fake" if($opt_install eq "fake");
+		my $cmd;
+		if($WINDOWS) {
+		    $cmd = join(" ",
+				("Rcmd.exe INSTALL -l",
+				 &shell_quote_file_path($library),
+				 "$INSTALL_opts",
+				 &shell_quote_file_path($pkgdir)));
+		} else {
+		    $cmd = join(" ",
+				(&shell_quote_file_path(${R::Vars::R_EXE}),
+				 "CMD INSTALL -l",
+				 &shell_quote_file_path($library),
+				 "$INSTALL_opts",
+				 &shell_quote_file_path($pkgdir)));
+		}
 		if(!$use_install_log) {
 		    ## Case A: No redirection of stdout/stderr from
 		    ## installation.
@@ -493,12 +479,43 @@ sub check_pkg {
     }
     if(scalar(@bad_files) > 0) {
 	$log->error();
-	$log->print("Found the following files with " .
+	$log->print("Found the following file(s) with " .
 		    "non-portable file names:\n");
 	$log->print("  " . join("\n  ", @bad_files) . "\n");
 	$log->print(wrap("", "",
 			 ("These are not valid file names",
 			  "on all R platforms.\n",
+			  "Please rename the files and try again.\n",
+			  "See section 'Package structure'",
+			  "in manual 'Writing R Extensions'.\n")));
+	exit(1);
+    }
+
+    ## next check for name clashes on case-insensitive file systems
+    ## (that is on Windows).
+    %seen = (); 
+    my @duplicated = ();
+    sub check_case_names {
+	my $file_path = lc($File::Find::name);
+	if($seen{$file_path}) {push(@duplicated, $file_path);}
+	$seen{$file_path}  = 1;
+    }
+    if($in_bundle) {
+	chdir(dirname($pkgdir)); # more portable than '..'?
+	find(\&check_case_names, $pkgname);
+	chdir($pkgname);
+    }
+    else {
+	find(\&check_case_names, ".");
+    }
+    if(scalar(@duplicated) > 0) {
+	$log->error();
+	$log->print("Found the following file(s) with " .
+		    "duplicate lower-cased file names:\n");
+	$log->print("  " . join("\n  ", @duplicated) . "\n");
+	$log->print(wrap("", "",
+			 ("File names must not differ just by case",
+			  "to be usable on all R platforms.\n",
 			  "Please rename the files and try again.\n",
 			  "See section 'Package structure'",
 			  "in manual 'Writing R Extensions'.\n")));
@@ -595,201 +612,66 @@ sub check_pkg {
 
     ## Check DESCRIPTION meta-information.
 
-    if($in_bundle) {		# join DESCRIPTION and DESCRIPTION.in
-	$log->checking("for file 'DESCRIPTION.in'");
-        if(-r "DESCRIPTION.in") {
-	    my $description_in = new R::Dcf("DESCRIPTION.in");
-	    foreach my $key (keys(%$description)) {
-		$description_in->{$key} = $description->{$key};
-	    }
-	    ## From now on use $description_in instead of $description
-	    ## in this subroutine.
-	    $description = $description_in;
-	    $log->result("OK");
-	    $log->message("joining DESCRIPTION and DESCRIPTION.in");
+    ## If we just installed the package (via R CMD INSTALL), we already
+    ## validated the package DESCRIPTION metadata.  Otherwise, let us be
+    ## defensive about this ...
+
+    if(!$opt_install || ($opt_install eq "skip") || $is_base_pkg) {
+	my ($dfile, $dir);
+	if($is_base_pkg) {
+	    $dfile = "DESCRIPTION.in";
+	}
+	elsif(!$in_bundle) {
+	    $dfile = "DESCRIPTION";
 	}
 	else {
-	    $log->result("NO");
-	    exit(1);
-	}
-    }
-
-    my @msg_DESCRIPTION
-      = ("See the information on DESCRIPTION files",
-	 "in section 'Creating R packages'",
-	 "of the 'Writing R Extensions' manual.\n");
-
-    $log->checking("DESCRIPTION meta-information");
-
-    ## Mandatory entries in DESCRIPTION:
-    ##   Package, Version, License, Description, Title, Author,
-    ##   Maintainer.
-
-    foreach my $field (qw(Package Version License Description Title
-			  Author Maintainer)) {
-	if(!$description->{$field}) {
-	    $log->error();
-	    $log->print("No DESCRIPTION $field field found.\n");
-	    $log->print(wrap("", "", @msg_DESCRIPTION));
-	    exit(1);
-	}
-    }
-
-    if($description->{"Package"} !~ /^[a-z][a-z\d\.]*$/i) {
-	$log->error();
-	$log->print("Malformed package name.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
-    if($description->{"Package"} ne $pkgname) {
-	$log->error();
-	$log->print("DESCRIPTION Package field differs from dir	name.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
-    ## check if this is a name clash with an existing or past base package.
-    ## The stub packages are handled specially in library()
-    if(!$is_base_pkg) {
-        my $found = 0;
-        foreach my $p (@R_pkgs_base) {
-	    if($description->{"Package"} eq $p) {
-		$found = 1;
-		break;
+	    ## Bundles are a bit tricky, as their package (DESCRIPTION)
+	    ## metadata come from merging the bundle DESCRIPTION file
+	    ## with the package DESCRIPTION.in one.  Hence, we
+	    ## concatenate these files to a temporary one.
+	    $log->checking("for file 'DESCRIPTION.in'");
+	    if(-r "DESCRIPTION.in") {
+		$log->result("OK");
 	    }
-	}
-	if($found != 0) {
-	    $log->error();
-	    $log->print("Invalid package name.\n");
-	    $log->print("This is the name of a base package.\n");
-	    exit(1);
-	}
-        $found = 0;
-        foreach my $p (@R_pkgs_stubs) {
-	    if($description->{"Package"} eq $p) {
-		$found = 1;
-		break;
-	    }
-	}
-	if($found != 0) {
-	    $log->error();
-	    $log->print("Invalid package name.\n");
-	    $log->print(wrap("", "",
-			     ("This name was used for a base package",
-			      "and is remapped by library().\n")));
-	    exit(1);
-	}
-    }
-
-    if(($description->{"Version"} !~ /^\d+([.-]\d+)+$/)
-       && !$is_base_pkg) {
-	## Package sources from the R distribution have '@VERSION@' in
-	## their 'DESCRIPTION.in' files ...
-	$log->error();
-	$log->print("Malformed package version.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
-
-    if(($description->{"Maintainer"} !~ /^[^<>]*<[^<>@]+@[^<>@]+> *$/) &&
-       ($description->{"Maintainer"} !~ /ORPHANED/)) {
-	$log->error();
-	$log->print("Malformed Maintainer field.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
-
-    ## Optional entries in DESCRIPTION:
-    ##   Depends/Suggests, Namespace, Priority.
-    ## These must be correct if present.
-
-    if($description->{"Depends"} || $description->{"Suggests"}) {
-	my @dependencies = split(/\,\s*/, ($description->{"Depends"},
-					   $description->{"Suggests"}));
-	my @matches;
-	my ($is_bad_dep_op, $is_bad_dep_version);
-	my ($bad_dep_value, @bad_dep_error);
-	foreach my $dep (@dependencies) {
-	    @matches =
-	      ($dep =~ /^\s*([\w\.]+)(\s*\(([^) ]+)\s+([^) ]+)\))?\s*$/);
-            ## The entry is malformed if there is no match, or there is
-            ## a match but the dep_op is different from '<=' or '>', or
-	    ## the dep_version does not only consist of digits, '.' or
-	    ## '-'.
-	    $is_bad_dep_op =
-	      (($matches[2] ne "<=") && ($matches[2] ne ">="));
-	    $is_bad_dep_version = ($matches[3] =~ /[^\d\.\-]/);
-	    if(!($matches[0])
-	       || ($matches[1]
-		   && ($is_bad_dep_op || $is_bad_dep_version))) {
-		$bad_dep_entry = $dep;
-		if(!($matches[0])) {
-		    @bad_dep_error =
-		      ("Entries must be names of packages, optionally",
-		       "followed by '<=' or '>=', white space, and a",
-		       "valid version number in parentheses.\n");
-		}
-		elsif($is_bad_dep_op) {
-		    @bad_dep_error =
-			("Infeasible comparison operator '$matches[2]'.\n",
-			 "Only operators '<=' and '>=' are possible.\n");
-		}
-		elsif($is_bad_dep_version) {
-		    @bad_dep_error =
-			("Infeasible version number '$matches[3]'.\n",
-			 "Version numbers must only contain digits,",
-			 "'.' or '-'.\n");
-		}
-		break;
-	    }
-	}
-	if($bad_dep_entry) {
-	    $log->error();
-	    $log->print("Malformed Depends or Suggests field.\n");
-	    $log->print("Offending entry is: '$bad_dep_entry'.\n");
-	    $log->print(wrap("", "", @bad_dep_error));
-	    $log->print(wrap("", "", @msg_DESCRIPTION));
-	    exit(1);
-	}
-    }
-
-    if($description->{"Namespace"}) {
-	if($description->{"Namespace"} ne $description->{"Package"}) {
-	    $log->error();
-	    $log->print("Namespace and Package fields differ.\n");
-	    $log->print(wrap("", "", @msg_DESCRIPTION));
-	    exit(1);
-	}
-    }
-
-    if($description->{"Priority"}) {
-	if($description->{"Priority"}
-	   =~ /^(base|recommended|defunct-base)/i) {
-	    ## Simplify matters by treating high priority packages and
-	    ## base stubs together.
-	    my $found = 0;
-	    foreach my $p (@R_pkgs_base,
-			   @R_pkgs_recommended,
-			   @R_pkgs_stubs) {
-		if($description->{"Package"} eq $p) {
-		    $found = 1;
-		    break;
-		}
-	    }
-	    if(!$found) {
-		$log->error();
-		$log->print("Invalid Priority field.\n");
-		$log->print(wrap("", "",
-				 ("Packages with priorities 'base' or",
-				  "'recommended' or 'defunct-base'",
-				  "must already be known to R.\n")));
-		$log->print(wrap("", "", @msg_DESCRIPTION));
+	    else {
+		$log->result("NO");
 		exit(1);
 	    }
+	    ## Checking metadata currently also includes verifying that
+	    ## the package name and "directory name" are the same.
+	    $dir = &file_path(${R::Vars::TMPDIR}, "check$$");
+	    mkdir($dir, 0755)
+		or die ("Error: cannot create directory '$dir'\n");
+	    $dir = &file_path($dir, $pkgname);
+	    mkdir($dir, 0755)
+		or die ("Error: cannot create directory '$dir'\n");
+	    $dfile = &file_path($dir, "DESCRIPTION");
+	    my $fh = new IO::File($dfile, "w")
+		or die "Error: cannot open file '$dpath' for writing\n";
+	    my @lines = (&read_lines(&file_path(dirname($pkgdir),
+						"DESCRIPTION")),
+			 &read_lines("DESCRIPTION.in"));
+	    @lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+	    $fh->print(join("\n", @lines), "\n");
+	    $fh->close();
 	}
+
+	$log->checking("DESCRIPTION meta-information");
+    
+	my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES='tools'");
+	rmtree(dirname($dir)) if($in_bundle);
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->error();
+	    $log->print(join("\n", @out) . "\n");
+	    exit(1);
+	}
+	
+	$log->result("OK");
     }
-
-    $log->result("OK");
-
+    
     ## Check package dependencies.
 
     ## Try figuring out whether the package dependencies can be resolved
@@ -866,7 +748,7 @@ sub check_pkg {
 	}
 	else {
 	    my $dir = "demo";
-	    my $Rcmd = "tools:::.check_demo_index(\"$dir\")\n";
+	    my $Rcmd = "options(warn=1)\ntools:::.check_demo_index(\"$dir\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
@@ -881,7 +763,7 @@ sub check_pkg {
        && &list_files_with_type(&file_path("inst", "doc"),
 				"vignette")) {
 	my $dir = &file_path("inst", "doc");
-	my $Rcmd = "tools:::.check_vignette_index(\"$dir\")\n";
+	my $Rcmd = "options(warn=1)\ntools:::.check_vignette_index(\"$dir\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
@@ -1059,7 +941,7 @@ sub check_pkg {
 	  ("See section 'Generic functions and methods'",
 	   "of the 'Writing R Extensions' manual.\n");
 
-	my $Rcmd;
+	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
 	}
@@ -1084,15 +966,14 @@ sub check_pkg {
     ## named 'value'.
 
     if(-d "R") {
-	$log->checking("for replacement functions with final arg not " .
-		       "named 'value'");
+	$log->checking("replacement functions");
 
 	my @msg_replace_funs =
 	  ("In R, the argument of a replacement function",
 	   "which corresponds to the right hand side",
-	   "must be named 'value'.");
+	   "must be named 'value'.\n");
 
-	my $Rcmd;
+	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "checkReplaceFuns(package = \"${pkgname}\")\n";
 	}
@@ -1127,7 +1008,7 @@ sub check_pkg {
 	  ("See section 'System and foreign language interfaces'",
 	   "of the 'Writing R Extensions' manual.\n");
 
-	my $Rcmd;
+	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
 	}
@@ -1157,7 +1038,7 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("Rd files");
 
-	my $Rcmd = "tools:::check_Rd_files_in_man_dir(\"man\")\n";
+	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
@@ -1186,7 +1067,7 @@ sub check_pkg {
     if(((-d "R") || (-d "data")) && (-d "man")) {
 	$log->checking("for missing documentation entries");
 
-	my $Rcmd;
+	my $Rcmd= "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "undoc(package = \"${pkgname}\")\n";
 	}
@@ -1229,7 +1110,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in functions.
 	if(-d "R") {
-	    my $Rcmd;
+	    my $Rcmd = "options(warn=1)\n";
 	    if($opt_install) {
 		$Rcmd .= "codoc(package = \"${pkgname}\")\n";
 	    }
@@ -1249,7 +1130,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
-	    my $Rcmd = "codocData(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1)\ncodocData(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	    @out = grep(!/^\>/, @out);
@@ -1262,7 +1143,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in S4 classes.
 	if($opt_install && (-d "R")) {
-	    my $Rcmd = "codocClasses(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1)\ncodocClasses(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	    @out = grep(!/^\>/, @out);
@@ -1287,9 +1168,9 @@ sub check_pkg {
 	my @msg_doc_files =
 	  ("Functions with \\usage entries",
 	   "need to have the appropriate \\alias entries,",
-	   "and all their arguments documented.");
+	   "and all their arguments documented.\n");
 
-	my $Rcmd;
+	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "checkDocFiles(package = \"${pkgname}\")\n";
 	}
@@ -1382,13 +1263,16 @@ sub check_pkg {
   		     "${pkgname} ${Rexdir} ".
   		     "> ${pkgname}-Ex.R";
         } else {
-	    $cmd = join(" ",
-			("${R::Vars::R_CMD} perl",
-			 &file_path(${R::Vars::R_HOME}, "share", "perl",
-				    "massage-Examples.pl"),
-			 "${pkgname}",
-			 &shell_quote_file_path(${Rexdir}),
-			 "> ${pkgname}-Ex.R"));
+	    $cmd =
+		join(" ",
+		     (&shell_quote_file_path(${R::Vars::R_EXE}),
+		      "CMD perl",
+		      &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+							"share", "perl",
+							"massage-Examples.pl")),
+		      "${pkgname}",
+		      &shell_quote_file_path(${Rexdir}),
+		      "> ${pkgname}-Ex.R"));
         }
 
  	if(R_system($cmd)) {
@@ -1405,12 +1289,19 @@ sub check_pkg {
 	$log->checking("examples");
 
 	if($opt_use_gct) {
-            $cmd = "(echo 'gctorture(TRUE)'; cat ${pkgname}-Ex.R) " .
-	      "| ${R::Vars::R_EXE} ${R_opts} > ${pkgname}-Ex.Rout 2>&1";
+            $cmd = join(" ",
+			("(echo 'gctorture(TRUE)';",
+			 "cat ${pkgname}-Ex.R) |",
+			 &shell_quote_file_path(${R::Vars::R_EXE}),
+			 "${R_opts}",
+			 "> ${pkgname}-Ex.Rout 2>&1"));
 	}
 	else {
-            $cmd = "${R::Vars::R_EXE} ${R_opts} " .
-	      "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout 2>&1";
+            $cmd = join(" ",
+			(&shell_quote_file_path(${R::Vars::R_EXE}),
+			 "${R_opts}",
+			 "< ${pkgname}-Ex.R",
+			 "> ${pkgname}-Ex.Rout 2>&1"));
 	}
 	if(R_system($cmd)) {
 	    $log->error();
@@ -1470,9 +1361,10 @@ sub check_pkg {
 	foreach my $file (&list_files($testsrcdir)) {
 	    copy($file, basename($file));
 	}
-        my $makefiles = "-f " . &file_path(${R::Vars::R_HOME},
-					   "share", "make",
-					   "tests.mk");
+        my $makefiles = "-f " .
+	    &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+					      "share", "make",
+					      "tests.mk"));
         if($WINDOWS) {
             $makefiles = "-f ${R::Vars::R_HOME}/share/make/wintests.mk";}
         my $makevars = "";
@@ -1555,7 +1447,7 @@ sub check_pkg {
 	if($opt_vignettes) {
 	    ## Should checking the vignettes assume the system default
 	    ## packages, or just base?
-	    my $Rcmd = "library(tools)\n";
+	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
             ## A base package does not get installed during check.
 	    if(!$is_base_pkg && $opt_install) {
 		$Rcmd .= "checkVignettes(package = \"${pkgname}\", " .
@@ -1649,9 +1541,19 @@ sub check_pkg {
 	else {
 	    if($HAVE_LATEX) {
 		$log->checking("DVI version of manual");
-		my $cmd = "${R::Vars::R_CMD} Rd2dvi --batch --no-preview";
-		$cmd .= " -o ${pkgname}-manual.dvi >/dev/null 2>&1";
-		$cmd .= " $pkgdir";
+		my $cmd;
+		if($WINDOWS) {
+		    $cmd = join(" ",
+				("Rcmd.exe Rd2dvi --batch --no-preview",
+				 "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
+				 "$pkgdir"));
+		} else {
+		    $cmd = join(" ",
+				(&shell_quote_file_path("${R::Vars::R_EXE}"),
+				 "CMD Rd2dvi --batch --no-preview",
+				 "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
+				 "$pkgdir"));
+		}
 		if(R_system($cmd)) {
 		    $log->error();
 		    $log->print("LaTeX errors when creating DVI version.\n");
@@ -1674,7 +1576,7 @@ pkgdirs.  A variety of diagnostic checks on directory structure, index
 and control files are performed.  The package is installed into the log
 directory (which includes the translation of all Rd files into several
 formats), and the Rd files are tested by LaTeX (if available).  All
-examples and tests provided by the package are tested if they run
+examples and tests provided by the package are tested to see if they run
 successfully.
 
 Options:

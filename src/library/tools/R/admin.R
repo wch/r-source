@@ -4,43 +4,78 @@
 function(dir, outDir)
 {
     ## Function for taking the DESCRIPTION package meta-information,
-    ## at least partially checking it, and installing it with the
-    ## 'Built:' fields added.  Note that from 1.7.0 on, packages without
+    ## checking/validating it, and installing it with the 'Built:'
+    ## field added.  Note that from 1.7.0 on, packages without
     ## compiled code are not marked as being from any platform.
-    db <- .read_description(file.path(dir, "DESCRIPTION"))
-    ## Check for fields needed for what follows.
-    ## <FIXME>
-    ## In fact, more fields are 'required' as per R CMD check.
-    ## Eventually we should have the same tests here.
-    ## Maybe have .check_package_description() for this?
-    ## Should also include the above, of course.
-    requiredFields <- c("Package", "Title", "Description")
-    if(any(i <- which(is.na(match(requiredFields, names(db)))))) {
-        stop(paste("required fields missing from DESCRIPTION:",
-                   paste(requiredFields[i], collapse = " ")))
+
+    ## Check first.  Note that this also calls .read_description(), but
+    ## .check_package_description() currently really needs to know the
+    ## path to the DESCRIPTION file, and returns an object with check
+    ## results and not the package metadata ...
+    ok <- .check_package_description(file.path(dir, "DESCRIPTION"))
+    if(any(as.integer(sapply(ok, length))) > 0) {
+        stop(paste("Invalid DESCRIPTION file",
+                   paste(.capture_output_from_print(ok),
+                         collapse = "\n"),
+                   sep = "\n\n"))
     }
-    ## </FIXME>
+        
+    db <- .read_description(file.path(dir, "DESCRIPTION"))
     OS <- Sys.getenv("R_OSTYPE")
     OStype <- if(nchar(OS) && OS == "windows")
         "i386-pc-mingw32"
     else
         R.version$platform
-    writeLines(c(formatDL(names(db), db, style = "list"),
-                 paste("Built: R ",
-                       paste(R.version[c("major", "minor")],
-                             collapse = "."),
-                       "; ",
-                       if(file_test("-d", file.path(dir, "src"))) OStype
-                       else "",
-                       "; ",
-                       ## Prefer date in ISO 8601 format.
-                       ## Could also use
-                       ##   format(Sys.time(), "%a %b %d %X %Y")
-                       Sys.time(),
-                       "; ",
-                       .OStype(),
-                       sep = "")),
+    db["Built"] <-
+        paste("R ",
+              paste(R.version[c("major", "minor")],
+                    collapse = "."),
+              "; ",
+              if(file_test("-d", file.path(dir, "src"))) OStype
+              else "",
+              "; ",
+              ## Prefer date in ISO 8601 format.
+              ## Could also use
+              ##   format(Sys.time(), "%a %b %d %X %Y")
+              Sys.time(),
+              "; ",
+              .OStype(),
+              sep = "")
+    
+    writeLines(formatDL(names(db), db, style = "list"),
                file.path(outDir, "DESCRIPTION"))
+
+    outMetaDir <- file.path(outDir, "Meta")
+    if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
+         stop(paste("cannot open directory", sQuote(outMetaDir)))
+    .saveRDS(db, file.path(outMetaDir, "package.rds"))
+    
+    invisible()
+}
+
+### * .vinstall_package_descriptions_as_RDS
+
+.vinstall_package_descriptions_as_RDS <-
+function(dir, packages)
+{
+    ## For the given packages installed in @file{dir}, install their
+    ## DESCRIPTION package metadata as R metadata.
+    ## Really only useful for base packages under Unix.
+    ## See @file{src/library/Makefile.in}.
+    
+    for(p in unlist(strsplit(packages, "[[:space:]]+"))) {
+        meta_dir <- file.path(dir, p, "Meta")
+        if(!file_test("-d", meta_dir) && !dir.create(meta_dir))
+            stop(paste("cannot open directory", sQuote(meta_dir)))
+        package_info_dcf_file <- file.path(dir, p, "DESCRIPTION")
+        package_info_rds_file <- file.path(meta_dir, "package.rds")
+        if(file_test("-nt",
+                     package_info_rds_file,
+                     package_info_dcf_file))
+            next
+        .saveRDS(.read_description(package_info_dcf_file),
+                 package_info_rds_file)
+    }
     invisible()
 }
 
@@ -57,7 +92,7 @@ function(dir, outDir)
     ## specific sorting.
     curLocale <- Sys.getlocale("LC_COLLATE")
     on.exit(Sys.setlocale("LC_COLLATE", curLocale), add = TRUE)
-    ## (Guaranteed to work as per the Sys,setlocale() docs.)
+    ## (Guaranteed to work as per the Sys.setlocale() docs.)
     lccollate <- "C"
     if(Sys.setlocale("LC_COLLATE", lccollate) != lccollate) {
         ## <NOTE>
@@ -134,16 +169,17 @@ function(dir, outDir)
     codeFiles <- file.path(codeDir, codeFiles)
 
     if(!file_test("-d", outDir) && !dir.create(outDir))
-        stop("cannot open directory", sQuote(outDir))
+        stop(paste("cannot open directory", sQuote(outDir)))
     outCodeDir <- file.path(outDir, "R")
     if(!file_test("-d", outCodeDir) && !dir.create(outCodeDir))
-        stop("cannot open directory", sQuote(outCodeDir))
+        stop(paste("cannot open directory", sQuote(outCodeDir)))
     outFile <- file.path(outCodeDir, db["Package"])
     ## <NOTE>
     ## It may be safer to do
     ##   writeLines(sapply(codeFiles, readLines), outFile)
     ## instead, but this would be much slower ...
-    if(!file.create(outFile)) stop("unable to create ", outFile)
+    if(!file.create(outFile))
+        stop(paste("unable to create", outFile))
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
     if(!all(file.append(outFile, codeFiles)))
@@ -159,7 +195,7 @@ function(dir, outDir)
 .install_package_indices <-
 function(dir, outDir)
 {
-    options(warn=1) # to ensure warnings get seen
+    options(warn = 1)                   # to ensure warnings get seen
     if(!file_test("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
     if(!file_test("-d", outDir))
@@ -171,11 +207,12 @@ function(dir, outDir)
         if(!file.copy(file.path(dir, "INDEX"),
                       file.path(outDir, "INDEX"),
                       overwrite = TRUE))
-            stop("unable to copy INDEX to ", file.path(outDir, "INDEX"))
+            stop(paste("unable to copy INDEX to",
+                       file.path(outDir, "INDEX")))
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
-         stop("cannot open directory", sQuote(outMetaDir))
+         stop(paste("cannot open directory", sQuote(outMetaDir)))
     .install_package_Rd_indices(dir, outDir)
     .install_package_vignette_index(dir, outDir)
     .install_package_demo_index(dir, outDir)
@@ -230,12 +267,14 @@ function(dir, outDir)
 
     ## If there is no @file{INDEX} file in the package sources, we
     ## build one.
-    ## <FIXME>
-    ## Maybe also save this in RDS format then?
+    ## <NOTE>
+    ## We currently do not also save this in RDS format, as we can
+    ## always do
+    ##   .build_Rd_index(.readRDS(file.path(outDir, "Meta", "Rd.rds"))
     if(!file_test("-f", file.path(dir, "INDEX")))
         writeLines(formatDL(.build_Rd_index(contents)),
                    file.path(outDir, "INDEX"))
-    ## </FIXME>
+    ## </NOTE>    
 
     if(file_test("-d", dataDir)) {
         .saveRDS(.build_data_index(dataDir, contents),
@@ -266,7 +305,7 @@ function(dir, outDir)
     ## </FIXME>
     outVignetteDir <- file.path(outDir, "doc")
     if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
-        stop("cannot open directory", sQuote(outVignetteDir))
+        stop(paste("cannot open directory", sQuote(outVignetteDir)))
 
     ## If there is an HTML index in the @file{inst/doc} subdirectory of
     ## the package source directory (@code{dir}), we do not overwrite it
@@ -301,6 +340,36 @@ function(dir, outDir)
     invisible()
 }
 
+### * .install_package_demo_index
+
+.install_package_demo_index <-
+function(dir, outDir)
+{
+    demoDir <- file.path(dir, "demo")
+    if(!file_test("-d", demoDir)) return(invisible())
+    demoIndex <- .build_demo_index(demoDir)
+    .saveRDS(demoIndex,
+             file = file.path(outDir, "Meta", "demo.rds"))
+    invisible()
+}
+
+### * .vinstall_package_indices
+
+.vinstall_package_indices <-
+function(src_dir, out_dir, packages)
+{
+    ## For the given packages with sources rooted at @file{src_dir} and
+    ## installations rooted at @file{out_dir}, install the package
+    ## indices.
+    ## Really only useful for base packages under Unix.
+    ## See @file{src/library/Makefile.in}.
+
+    for(p in unlist(strsplit(packages, "[[:space:]]+")))
+        tools:::.install_package_indices(file.path(src_dir, p),
+                                         file.path(out_dir, p))
+    invisible()
+}
+
 ### * .install_package_vignettes
 
 .install_package_vignettes <-
@@ -317,7 +386,7 @@ function(dir, outDir)
     outDir <- file_path_as_absolute(outDir)
     outVignetteDir <- file.path(outDir, "doc")
     if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
-        stop("cannot open directory", sQuote(outVignetteDir))
+        stop(paste("cannot open directory", sQuote(outVignetteDir)))
     ## For the time being, assume that no PDFs are available in
     ## vignetteDir.
     vignettePDFs <-
@@ -399,20 +468,6 @@ function(dir, outDir)
     invisible()
 }
 
-
-### * .install_package_demo_index
-
-.install_package_demo_index <-
-function(dir, outDir)
-{
-    demoDir <- file.path(dir, "demo")
-    if(!file_test("-d", demoDir)) return(invisible())
-    demoIndex <- .build_demo_index(demoDir)
-    .saveRDS(demoIndex,
-             file = file.path(outDir, "Meta", "demo.rds"))
-    invisible()
-}
-
 ### * .install_package_namespace_info
 
 .install_package_namespace_info <-
@@ -426,10 +481,27 @@ function(dir, outDir)
     nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
-        stop("cannot open directory", sQuote(outMetaDir))
+        stop(paste("cannot open directory", sQuote(outMetaDir)))
     .saveRDS(nsInfo, nsInfoFilePath)
     invisible()
 }
+
+### * .vinstall_package_namespaces_as_RDS
+
+.vinstall_package_namespaces_as_RDS <-
+function(dir, packages)
+{
+    ## For the given packages installed in @file{dir} which have a
+    ## NAMESPACE file, install the namespace info as R metadata.
+    ## Really only useful for base packages under Unix.
+    ## See @file{src/library/Makefile.in}.
+    
+    for(p in unlist(strsplit(packages, "[[:space:]]+")))
+        .install_package_namespace_info(file.path(dir, p),
+                                        file.path(dir, p))
+    invisible()
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

@@ -38,14 +38,14 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.80 $ ';
+my $revision = ' $Revision: 1.81 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-R::Vars::error("R_HOME", "R_CMD");
+R::Vars::error("R_HOME", "R_EXE");
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
@@ -119,11 +119,22 @@ foreach my $pkg (@ARGV) {
 	mkdir("$libdir", 0755)
 	    or die "Error: cannot create directory '$libdir'\n";
 
-	if(R_system(join(" ",
-			 ("${R::Vars::R_CMD} INSTALL -l",
-			  &shell_quote_file_path($libdir),
-			  "$INSTALL_opts",
-			  &shell_quote_file_path($pkg))))) {
+	my $cmd;
+	if($WINDOWS) {
+	    $cmd = join(" ",
+			("Rcmd.exe INSTALL -l",
+			 &shell_quote_file_path($libdir),
+			 "$INSTALL_opts",
+			 &shell_quote_file_path($pkg)));
+	} else {
+	    $cmd = join(" ",
+			(&shell_quote_file_path(${R::Vars::R_EXE}),
+			 "CMD INSTALL -l",
+			 &shell_quote_file_path($libdir),
+			 "$INSTALL_opts",
+			 &shell_quote_file_path($pkg)));
+	}
+	if(R_system($cmd)) {
 	    $log->error("installation failed");
 	}
 	print("\n");
@@ -193,7 +204,7 @@ foreach my $pkg (@ARGV) {
 	if($WINDOWS) {
 	    R_system(join(" ",
 			  ("zip -r9X",
-			   &shell_quote_file_path($filepath.zip),
+			   &shell_quote_file_path($filepath.".zip"),
 			   "$pkgs $top_level_files")));
 	}
 	else {

@@ -120,7 +120,7 @@
 \seealso{
   \code{\link{.Last}} for final actions before termination.
 
-  For profiling code, see \code{\link[utils]{Rprof}}.
+  For profiling code, see \code{\link{Rprof}}.
 }
 \examples{
 \dontrun{

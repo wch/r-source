@@ -191,7 +191,6 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   and its derivatives.
 }
 \examples{
-data(cars)
 attach(cars)
 plot(speed, dist, main = "data(cars)  &  smoothing splines")
 cars.spl <- smooth.spline(speed, dist)

@@ -1,6 +1,8 @@
 mahalanobis <- function(x, center, cov, inverted=FALSE, tol.inv = 1e-7)
 {
     x <- if(is.vector(x)) matrix(x, ncol=length(x)) else as.matrix(x)
+    ## save speed in customary case:
+    ## if(any(center != 0))
     x <- sweep(x, 2, center)# = (x - center)
 
     ## The following would be considerably faster for  small nrow(x) and

@@ -2,7 +2,6 @@ library(ts)
 .proctime00 <- proc.time()
 
 ### ar
-data(lh)
 ar(lh)
 ar(lh, method = "burg")
 ar(lh, method = "ols")
@@ -10,21 +9,18 @@ ar(lh, FALSE, 4) # fit ar(4)
 ar.ols(lh)
 ar.ols(lh, FALSE, 4) # fit ar(4) by OLS
 
-data(LakeHuron)
 ar(LakeHuron)
 ar(LakeHuron, method = "burg")
 ar(LakeHuron, method = "ols")
 ar(LakeHuron, method = "mle")
 
-data(sunspot)
 ar(sunspot.year, method = "yw")
 ar(sunspot.year, method = "burg")
 ar(sunspot.year, method = "ols")
 ar(sunspot.year, method = "mle")
 
 
-### tests using presidents
-data(presidents) # contains missing values
+### tests using presidents, contains missing values
 acf(presidents, na.action = na.pass)
 pacf(presidents, na.action = na.pass)
 ## graphs in example(acf) suggest order 1 or 3
@@ -35,7 +31,6 @@ tsdiag(fit3)
 
 
 ### tests of arima:
-data(lh); data(USAccDeaths)
 arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
 arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
       method = "CSS") # drops first 13 observations.
@@ -70,7 +65,6 @@ arima(x = LakeHuron, order = c(2, 0, 0), xreg = trend,
 
 
 ### model selection from WWWusage
-data(WWWusage)
 aics <- matrix(, 6, 6, dimnames=list(p=0:5, q=0:5))
 for(q in 1:5) aics[1, 1+q] <- arima(WWWusage, c(0,1,q),
     optim.control = list(maxit = 500))$aic
@@ -82,7 +76,6 @@ round(aics - min(aics, na.rm=TRUE), 2)
 
 
 ### nottem
-data(nottem)
 nott <- window(nottem, end=c(1936,12))
 fit <- arima(nott,order=c(1,0,0), list(order=c(2,1,0), period=12))
 nott.fore <- predict(fit, n.ahead=36)
@@ -90,14 +83,12 @@ ts.plot(nott, nott.fore$pred, nott.fore$pred+2*nott.fore$se,
         nott.fore$pred-2*nott.fore$se, gpars=list(col=c(1,1,4,4)))
 
 ### StructTS
-data(UKgas)
 (fit <- StructTS(log10(UKgas), type = "BSM"))
 (fit <- StructTS(log10(UKgas), type = "BSM", fixed=c(0, NA, NA, NA)))
 (fit <- StructTS(log10(UKgas), type = "BSM", fixed=c(NA, 0, NA, NA)))
 (fit <- StructTS(log10(UKgas), type = "BSM", fixed=c(NA, NA, NA, 0)))
 
 ### from AirPassengers
-data(AirPassengers)
 ## The classic `airline model', by full ML
 (fit <- arima(log10(AirPassengers), c(0, 1, 1),
               seasonal = list(order=c(0, 1 ,1), period=12)))

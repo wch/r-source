@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2003	The R Development Core Team.
+ *  Copyright (C) 1998--2004	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -299,6 +299,7 @@ SEXP eval(SEXP e, SEXP rho)
     case REALSXP:
     case STRSXP:
     case CPLXSXP:
+    case RAWSXP:
     case SPECIALSXP:
     case BUILTINSXP:
     case ENVSXP:
@@ -515,18 +516,21 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     if (DEBUG(op)) {
 	Rprintf("debugging in: ");
 	PrintValueRec(call,rho);
-	/* Find out if the body is function with only one statement. */
-	if (isSymbol(CAR(body)))
-	    tmp = findFun(CAR(body), rho);
-	else
-	    tmp = eval(CAR(body), rho);
-	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
-	   && !strcmp( PRIMNAME(tmp), "for")
-	   && !strcmp( PRIMNAME(tmp), "{")
-	   && !strcmp( PRIMNAME(tmp), "repeat")
-	   && !strcmp( PRIMNAME(tmp), "while")
-	   )
-	    goto regdb;
+	/* Is the body a bare symbol (PR#6804) */
+	if (!isSymbol(body) & !isVectorAtomic(body)){
+		/* Find out if the body is function with only one statement. */
+		if (isSymbol(CAR(body)))
+			tmp = findFun(CAR(body), rho);
+		else
+			tmp = eval(CAR(body), rho);
+		if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
+		   && !strcmp( PRIMNAME(tmp), "for")
+		   && !strcmp( PRIMNAME(tmp), "{")
+		   && !strcmp( PRIMNAME(tmp), "repeat")
+		   && !strcmp( PRIMNAME(tmp), "while")
+			)
+			goto regdb;
+	}
 	Rprintf("debug: ");
 	PrintValue(body);
 	do_browser(call,op,arglist,newrho);
@@ -1124,7 +1128,12 @@ SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  out efficiently using previously computed components.
  */
 
-static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, R_varloc_t tmploc)
+/*
+  For complex superassignment  x[y==z]<<-w
+  we want x required to be nonlocal, y,z, and w permitted to be local or nonlocal.
+*/
+
+static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal,  R_varloc_t tmploc)
 {
     SEXP val, nval, nexpr;
     if (isNull(expr))
@@ -1134,8 +1143,8 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, R_varloc_t tmploc)
 	if(forcelocal) {
 	    nval = EnsureLocal(expr, rho);
 	}
-	else {
-	    nval = eval(expr, rho);
+	else {/* now we are down to the target symbol */
+	  nval = eval(expr, ENCLOS(rho));
 	}
 	UNPROTECT(1);
 	return CONS(nval, expr);
@@ -1497,7 +1506,7 @@ void CheckFormals(SEXP ls)
 
 SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP encl;
+    SEXP encl, x, xptr;
     volatile SEXP expr, env, tmp;
 
     int frame;
@@ -1519,7 +1528,10 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(env);
 	break;
     case VECSXP:
-	env = NewEnvironment(R_NilValue, VectorToPairList(CADR(args)), encl);
+	x = VectorToPairList(CADR(args));
+	for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr))
+	    SET_NAMED(CAR(xptr) , 2);
+	env = NewEnvironment(R_NilValue, x, encl);
 	PROTECT(env);
 	break;
     case INTSXP:
@@ -2547,6 +2559,7 @@ static void checkVectorSubscript(SEXP vec, int k)
     case STRSXP:
     case VECSXP:
     case EXPRSXP:
+    case RAWSXP:
 	if (k < 0 || k >= LENGTH(vec))
 	    error("subscript out of bounds");
 	break;
@@ -2565,6 +2578,7 @@ static SEXP numVecElt(SEXP vec, SEXP idx)
     case INTSXP: return ScalarInteger(INTEGER(vec)[i]);
     case LGLSXP: return ScalarLogical(LOGICAL(vec)[i]);
     case CPLXSXP: return ScalarComplex(COMPLEX(vec)[i]);
+    case RAWSXP: return ScalarRaw(RAW(vec)[i]);
     default:
 	error("not a simple vector");
 	return R_NilValue; /* keep -Wall happy */

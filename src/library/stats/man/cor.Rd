@@ -75,7 +75,7 @@ cov2cor(V)
   For \code{cor()}, if \code{method} is \code{"kendall"} or
   \code{"spearman"}, Kendall's \eqn{\tau}{tau} or Spearman's
   \eqn{\rho}{rho} statistic is used to estimate a rank-based measure of
-  association.  These are more robust and have be recommended if the
+  association.  These are more robust and have been recommended if the
   data do not necessarily come from a bivariate normal distribution.\cr
   For \code{cov()}, a non-Pearson method is unusual but available for
   the sake of completeness.  Note that \code{"spearman"} basically
@@ -98,8 +98,7 @@ cov2cor(V)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{cor.test}} (package \pkg{ctest}) for confidence
-  intervals (and tests).
+  \code{\link{cor.test}} for confidence intervals (and tests).
   
   \code{\link{cov.wt}} for \emph{weighted} covariance computation.
 
@@ -114,7 +113,6 @@ var(1:5,1:5)# 2.5
 cor(1:10,2:11)# == 1
 
 ## Correlation Matrix of Multivariate sample:
-data(longley)
 (Cl <- cor(longley))
 ## Graphical Correlation Matrix:
 symnum(Cl) # highly correlated
@@ -135,7 +133,6 @@ stopifnot(all.equal(Cl, cov2cor(cov(longley))),
             cov2cor(cov(longley, method="kendall"))))
 
 ##--- Missing value treatment:
-data(swiss)
 C1 <- cov(swiss)
 range(eigen(C1, only=TRUE)$val) # 6.19	1921
 swM <- swiss

@@ -5,10 +5,10 @@ Notes for Windows Maintainers
 achieved by overrides in the configure script.
 
 You will need a copy of sh.exe in /bin.  Then with the R sources in
-/R/rw1070, I used in /TEMP/R (any other directory will do, except the
+/R/rw2000, I used in /TEMP/R (any other directory will do, except the
 sources)
 
-/R/rw1070/configure --build=i386-pc-mingw32
+sh /R/rw2000/configure --build=i386-pc-mingw32
 
 This ran fairly slowly, producing a src/include/config.h that differs
 only in that
@@ -22,7 +22,7 @@ Also, watch out for versions of the header files.  For example,
 <strings.h> was in mingw-runtime-1.2 and later, but not in the
 Mingw-1.1 bundle.
 
-BDR 2002-04-15, 2003-02-10
+BDR 2002-04-15, 2003-02-10, 2004-06-28
 
 2) The Makefiles for building a distribution have been reorganized.  Now
 all of the decisions about what files go into the distributables are made
@@ -38,17 +38,17 @@ You need VC++6 and a Windows command-line window.
 
 Run "\Program Files\Microsoft Visual Studio\VC98\Bin\VCVARS32.BAT"
 
-cd tcl8.4.5\win
+cd tcl8.4.x\win
 nmake -nologo -f makefile.vc release winhelp
 nmake -f makefile.vc install
-cd ..\..\tk8.4.5\win
-nmake -nologo -f makefile.vc TCLDIR=..\..\tcl8.4.5 release winhelp
+cd ..\..\tk8.4.x\win
+nmake -nologo -f makefile.vc TCLDIR=..\..\tcl8.4.x release winhelp
 nmake -f makefile.vc install
 
 Now copy /Program Files/Tcl to say /R/Tcl and (in any reasonable shell)
 cd /R/Tcl
 rm bin/tclpip84.dll bin/tclsh84.exe bin/wish.exe
 rm -rf lib/*.lib lib/tk8.4/demos lib/tk8.4/images
-cp .../tcl8.4.5/license.terms .
+cp .../tcl8.4.x/license.terms .
 
 BDR 2004-01-09

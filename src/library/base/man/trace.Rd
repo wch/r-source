@@ -8,7 +8,7 @@
 \alias{.primUntrace}
 \description{
   A call to \code{trace} allows you to insert debugging code (e.g., a
-  call to \code{\link{browser}} or \code{\link[utils]{recover}}) at chosen
+  call to \code{\link{browser}} or \code{\link{recover}}) at chosen
   places in any function.  A call to \code{untrace} cancels the tracing.
   Specified methods can be traced the same way, without tracing all
   calls to the function.  Trace code can be any \R expression.  Tracing
@@ -71,7 +71,7 @@ tracingState(on = NULL)
   If the argument \code{tracer} or \code{exit} is the name of a
   function, the tracing expression will be a call to that function, with
   no arguments.  This is the easiest and most common case, with the
-  functions \code{\link{browser}} and \code{\link[utils]{recover}} the
+  functions \code{\link{browser}} and \code{\link{recover}} the
   likeliest candidates; the former browses in the frame of the function
   being traced, and the latter allows browsing in any of the currently
   active calls.
@@ -121,7 +121,7 @@ tracingState(on = NULL)
 
   Tracing a method is basically just like tracing a function, with the
   exception that the traced version is stored by a call to
-  \code{\link[methods]{setMethod}} rather than by direct assignment, and so is
+  \code{\link{setMethod}} rather than by direct assignment, and so is
   the untraced version after a call to \code{untrace}.
 
   The version of \code{trace} described here is largely compatible with
@@ -157,7 +157,7 @@ tracingState(on = NULL)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{browser}} and \code{\link[utils]{recover}}, the likeliest
+  \code{\link{browser}} and \code{\link{recover}}, the likeliest
   tracing functions;
   also, \code{\link{quote}} and \code{\link{substitute}} for
   constructing general expressions.

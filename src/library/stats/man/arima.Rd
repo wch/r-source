@@ -155,7 +155,7 @@ arima(x, order = c(0, 0, 0),
 
   \item{series}{the name of the series \code{x}.}
 
-  \item{convergence}{the value returned by \code{\link{optim}}.}
+  \item{code}{the convergence value returned by \code{\link{optim}}.}
 
   \item{n.cond}{the number of initial observations not used in the fitting.}
 
@@ -201,23 +201,20 @@ arima(x, order = c(0, 0, 0),
 }
 
 \examples{
-data(lh)
 arima(lh, order = c(1,0,0))
 arima(lh, order = c(3,0,0))
 arima(lh, order = c(1,0,1))
 
 arima(lh, order = c(3,0,0), method = "CSS")
 
-data(USAccDeaths)
 arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
 arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
       method = "CSS") # drops first 13 observations.
 # for a model with as few years as this, we want full ML
 
-data(LakeHuron)
 arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
 
-data(presidents) # contains NAs
+## presidents contains NAs
 ## graphs in example(acf) suggest order 1 or 3
 (fit1 <- arima(presidents, c(1, 0, 0)))
 tsdiag(fit1)

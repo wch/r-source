@@ -93,15 +93,12 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
     Analysis.} Springer Verlag, NY, pp. 368--370.
 }
 \examples{
-data(lh)
 ar(lh, method="burg")
 ar.ols(lh)
 ar.ols(lh, FALSE, 4) # fit ar(4)
 
-data(BJsales)
 ar.ols(ts.union(BJsales, BJsales.lead))
 
-data(EuStockMarkets)
 x <- diff(log(EuStockMarkets))
 ar.ols(x, order.max=6, demean=FALSE, intercept=TRUE)
 }

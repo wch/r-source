@@ -27,7 +27,7 @@
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[graphics]{strwidth}} giving width of strings for plotting;
+  \code{\link{strwidth}} giving width of strings for plotting;
   \code{\link{paste}}, \code{\link{substr}}, \code{\link{strsplit}}
 }
 \examples{

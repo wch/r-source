@@ -1,9 +1,9 @@
 #! /bin/sh
 # texi2dvi --- produce DVI (or PDF) files from Texinfo (or LaTeX) sources.
-# $Id: texi2dvi,v 1.4 2003/09/25 06:15:28 hornik Exp $
+# $Id: texi2dvi,v 1.3 2004/02/17 16:59:46 karl Exp $
 #
 # Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2001,
-# 2002, 2003 Free Software Foundation, Inc.
+# 2002, 2003, 2004 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,19 +20,19 @@
 # program's maintainer or write to: The Free Software Foundation,
 # Inc.; 59 Temple Place, Suite 330; Boston, MA 02111-1307, USA.
 #
-# Original author: Noah Friedman <friedman@gnu.org>.
+# Original author: Noah Friedman.
 #
 # Please send bug reports, etc. to bug-texinfo@gnu.org.
 # If possible, please send a copy of the output of the script called with
 # the `--debug' option when making a bug report.
 
 # This string is expanded by rcs automatically when this file is checked out.
-rcs_revision='$Revision: 1.4 $'
+rcs_revision='$Revision: 1.3 $'
 rcs_version=`set - $rcs_revision; echo $2`
 program=`echo $0 | sed -e 's!.*/!!'`
-version="texi2dvi (GNU Texinfo 4.6) $rcs_version
+version="texi2dvi (GNU Texinfo 4.7) $rcs_version
 
-Copyright (C) 2003 Free Software Foundation, Inc.
+Copyright (C) 2004 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
 under the terms of the GNU General Public License.
 For more information about these matters, see the files named COPYING."
@@ -68,10 +68,10 @@ TeX tuning:
   -t, --command=CMD    insert CMD in copy of input file;
    or --texinfo=CMD    multiple values accumulate
 
-The values of the BIBTEX, LATEX (or PDFLATEX), MAKEINDEX, MAKEINFO, TEX
-(or PDFTEX), and TEXINDEX environment variables are used to run those
-commands, if they are set.  Any CMD strings are added after @setfilename
-for Texinfo input, in the first line for LaTeX input.
+The values of the BIBTEX, LATEX (or PDFLATEX), MAKEINDEX, MAKEINFO,
+TEX (or PDFTEX), TEXINDEX, and THUMBPDF environment variables are used
+to run those commands, if they are set.  Any CMD strings are added
+after @setfilename for Texinfo input, in the first line for LaTeX input.
 
 Email bug reports to <bug-texinfo@gnu.org>,
 general questions and discussion to <help-texinfo@gnu.org>.
@@ -94,7 +94,7 @@ textra=         # Extra TeX commands to insert in the input file.
 textra_cmd=     # sed command to insert TEXTRA where appropriate
 tmpdir=${TMPDIR:-/tmp}/t2d$$  # avoid collisions on 8.3 filesystems.
 txincludes=     # TEXINPUTS extensions, with trailing colon
-txiprereq=19990129 # minimum texinfo.tex version to have macro expansion
+txiprereq=19990129 # minimum texinfo.tex version with macro expansion
 verbose=false   # echo for verbose mode
 
 orig_pwd=`pwd`
@@ -113,13 +113,33 @@ CDPATH=${ZSH_VERSION+.}$path_sep
 # In case someone crazy insists on using grep -E.
 : ${EGREP=egrep}
 
+# return true if program $1 is somewhere in PATH, else false.
+# 
+findprog () {
+  foundprog=false
+  for dir in `echo $PATH | tr "$path_sep" " "`; do
+    if test -x "$dir/$1"; then  # does anyone still need test -f?
+      foundprog=true
+      break
+    fi
+  done
+  $foundprog
+}
+
+# Report an error and exit with failure.
+fatal () {
+  echo "$0: $*" >&2
+  exit 1
+}
+
 # Save TEXINPUTS so we can construct a new TEXINPUTS path for each file.
-# Unfortunately bibtex and makeindex do not read TEXINPUTS.
+# Likewise for bibtex and makeindex.
 tex_envvars="BIBINPUTS BSTINPUTS INDEXSTYLE TEXINPUTS"
 for var in $tex_envvars; do
   eval ${var}_orig=\$$var
   export $var
 done
+
 
 # Push a token among the arguments that will be used to notice when we
 # ended options/arguments parsing.
@@ -207,6 +227,39 @@ case $# in
   ;;
 esac
 
+
+# We can't do much without tex.
+# 
+if findprog ${TEX:-tex}; then :; else cat <<EOM
+You don't have a working TeX binary (${TEX:-tex}) installed anywhere in
+your PATH, and texi2dvi cannot proceed without one.  If you want to use
+this script, you'll need to install TeX (if you don't have it) or change
+your PATH or TEX environment variable (if you do).  See the --help
+output for more details.
+
+For information about obtaining TeX, please see http://www.tug.org.  If
+you happen to be using Debian, you can get it with this command:
+  apt-get install tetex-bin
+EOM
+  exit 1
+fi
+
+
+# We want to use etex (or pdftex) if they are available, and the user
+# didn't explicitly specify.  We don't check for elatex and pdfelatex
+# because (as of 2003), the LaTeX team has asked that new distributions
+# use etex by default anyway.
+# 
+# End up with the TEX and PDFTEX variables set to what we are going to use.
+if test -z "$TEX"; then
+  if findprog etex; then TEX=etex; else TEX=tex; fi
+fi
+#
+if test -z "$PDFTEX"; then
+  if findprog pdfetex; then PDFTEX=pdfetex; else PDFTEX=pdftex; fi
+fi
+
+
 # Prepare the temporary directory.  Remove it at exit, unless debugging.
 if test -z "$debug"; then
   trap "cd / && rm -rf $tmpdir" 0 1 2 15
@@ -216,17 +269,18 @@ fi
 (umask 077 && mkdir $tmpdir) || exit 1
 
 # Prepare the tools we might need.  This may be extra work in some
-# cases, but improves the readibility of the script.
+# cases, but improves the readability of the script.
 utildir=$tmpdir/utils
 mkdir $utildir || exit 1
 
 # A sed script that preprocesses Texinfo sources in order to keep the
-# iftex sections only.  We want to remove non TeX sections, and
-# comment (with `@c texi2dvi') TeX sections so that makeinfo does not
-# try to parse them.  Nevertheless, while commenting TeX sections,
-# don't comment @macro/@end macro so that makeinfo does propagate
-# them.  Unfortunately makeinfo --iftex --no-ifhtml --no-ifinfo
-# doesn't work well enough (yet) to use that, so work around with sed.
+# iftex sections only.  We want to remove non TeX sections, and comment
+# (with `@c texi2dvi') TeX sections so that makeinfo does not try to
+# parse them.  Nevertheless, while commenting TeX sections, don't
+# comment @macro/@end macro so that makeinfo does propagate them.
+# Unfortunately makeinfo --iftex --no-ifinfo doesn't work well enough
+# (yet), makeinfo can't parse the TeX commands, so work around with sed.
+#
 comment_iftex_sed=$utildir/comment.sed
 cat <<EOF >$comment_iftex_sed
 /^@tex/,/^@end tex/{
@@ -237,12 +291,6 @@ cat <<EOF >$comment_iftex_sed
   /^@c texi2dvi@macro/,/^@c texi2dvi@end macro/{
     s/^@c texi2dvi//
   }
-}
-/^@html/,/^@end html/{
-  s/^/@c (texi2dvi)/
-}
-/^@ifhtml/,/^@end ifhtml/{
-  s/^/@c (texi2dvi)/
 }
 /^@ifnottex/,/^@end ifnottex/{
   s/^/@c (texi2dvi)/
@@ -307,7 +355,12 @@ else
 fi
 
 # Enable tracing
-test "$debug" = t && set -x
+if test "$debug" = t; then
+  exec 6>&1
+  set -x
+else
+  exec 6>/dev/null
+fi
 
 # 
 # TeXify files.
@@ -317,7 +370,7 @@ for command_line_filename in ${1+"$@"}; do
 
   # If the COMMAND_LINE_FILENAME is not absolute (e.g., --debug.tex),
   # prepend `./' in order to avoid that the tools take it as an option.
-  echo "$command_line_filename" | $EGREP '^(/|[A-z]:/)' >/dev/null \
+  echo "$command_line_filename" | $EGREP '^(/|[A-z]:/)' >&6 \
   || command_line_filename="./$command_line_filename"
 
   # See if the file exists.  If it doesn't we're in trouble since, even
@@ -423,7 +476,7 @@ for command_line_filename in ${1+"$@"}; do
   # Otherwise, guess from the file extension.
   if test -n "$set_language"; then
     language=$set_language
-  elif sed 1q "$command_line_filename" | grep 'input texinfo' >/dev/null; then
+  elif sed 1q "$command_line_filename" | grep 'input texinfo' >&6; then
     language=texinfo
   else
     language=
@@ -444,6 +497,7 @@ for command_line_filename in ${1+"$@"}; do
       else
         tex=${PDFLATEX:-pdflatex}
       fi
+      thumbpdf=${THUMBPDF:-thumbpdf}
       ;;
 
     *)
@@ -452,9 +506,9 @@ for command_line_filename in ${1+"$@"}; do
       texindex=${TEXINDEX:-texindex}
       textra_cmd='/^@setfilename/a'
       if test $oformat = dvi; then
-        tex=${TEX:-tex}
+        tex=$TEX
       else
-        tex=${PDFTEX:-pdftex}
+        tex=$PDFTEX
       fi
       # Unless required by the user, makeinfo expansion is wanted only
       # if texinfo.tex is too old.
@@ -466,12 +520,20 @@ for command_line_filename in ${1+"$@"}; do
         # We don't need to use [0-9] to match the digits since anyway
         # the comparison with $txiprereq, a number, will fail with non
         # digits.
-        txiversion_tex=txiversion.tex
-        echo '\input texinfo.tex @bye' >$tmpdir/$txiversion_tex
         # Run in the tmpdir to avoid leaving files.
-        eval `cd $tmpdir >/dev/null &&
-              $tex $txiversion_tex 2>/dev/null |
-              sed -n 's/^.*\[\(.*\)version \(....\)-\(..\)-\(..\).*$/txiformat=\1 txiversion="\2\3\4"/p'`
+	(
+           cd $tmpdir
+	   echo '\input texinfo.tex @bye' >txiversion.tex
+	   # Be sure that if tex wants to fail, it is not interactive:
+	   # close stdin.
+           $tex txiversion.tex </dev/null
+	) >$tmpdir/txiversion.out 2>$tmpdir/txiversion.err
+	if test $? != 0; then
+	  cat $tmpdir/txiversion.out
+	  cat $tmpdir/txiversion.err >&2
+	  fatal "texinfo.tex appears to be broken, quitting."
+        fi
+	eval `sed -n 's/^.*\[\(.*\)version \(....\)-\(..\)-\(..\).*$/txiformat=\1 txiversion="\2\3\4"/p' $tmpdir/txiversion.out`
         $verbose "texinfo.tex preloaded as \`$txiformat', version is \`$txiversion' ..."
         if test "$txiprereq" -le "$txiversion" >/dev/null 2>&1; then
           makeinfo=
@@ -481,13 +543,18 @@ for command_line_filename in ${1+"$@"}; do
         # As long as we had to run TeX, offer the user this convenience:
         test "$txiformat" = Texinfo && escape=@
       fi
+      thumbpdf=${THUMBPDF:-thumbpdf}
       ;;
   esac
 
+  # Go to $tmpdir to try --help, since old versions that don't accept
+  # --help will generate a texput.log.
+  tex_help=`cd $tmpdir >/dev/null && $tex --help </dev/null 2>&1`
+
   # If possible, make TeX report error locations in GNU format.
   tex_args=
-  case `$tex --help </dev/null 2>&1` in
-   *file-line-error-style*) tex_args='--file-line-error-style';;
+  case $tex_help in
+    *file-line-error-style*) tex_args="$tex_args --file-line-error-style";;
   esac
 
   # Tell TeX to be batch if requested.  (\batchmode does not show
@@ -560,13 +627,11 @@ $textra" "$filename_input" >$filename_xtr
            && grep '^\\bibstyle[{]' "$filename_noext.aux" \
            && (grep 'Warning:.*Citation.*undefined' "$filename_noext.log" \
                || grep 'No file .*\.bbl\.' "$filename_noext.log")) \
-          >/dev/null 2>&1; \
+          >&6 2>&1; \
     then
       $verbose "Running $bibtex $filename_noext ..."
-      if $bibtex "$filename_noext" >&5; then :; else
-        echo "$0: $bibtex exited with bad status, quitting." >&2
-        exit 1
-      fi
+      $bibtex "$filename_noext" >&5 ||
+        fatal "$bibtex exited with bad status, quitting."
     fi
 
     # What we'll run texindex on -- exclude non-index files.
@@ -587,10 +652,8 @@ $textra" "$filename_input" >$filename_xtr
     # nonexistent.
     if test -n "$texindex" && test -n "$index_files"; then
       $verbose "Running $texindex $index_files ..."
-      if $texindex $index_files 2>&5 1>&2; then :; else
-         echo "$0: $texindex exited with bad status, quitting." >&2
-         exit 1
-      fi
+      $texindex $index_files 2>&5 1>&2 ||
+         fatal "$texindex exited with bad status, quitting."
     fi
 
     # Finally, run TeX.
@@ -613,7 +676,7 @@ $textra" "$filename_input" >$filename_xtr
     # subdirs, since texi2dvi does not try to compare xref files in
     # subdirs.  Performing xref files test is still good since LaTeX
     # does not report changes in xref files.
-    if grep "Rerun to get" "$filename_noext.log" >/dev/null 2>&1; then
+    if grep "Rerun to get" "$filename_noext.log" >&6 2>&1; then
       finished=
     fi
 
@@ -646,7 +709,28 @@ $textra" "$filename_input" >$filename_xtr
 
     # If finished, exit the loop, else rerun the loop.
     test -n "$finished" && break
-  done
+  done # while :;
+
+  # If we were using thumbpdf and producing PDF, then run thumbpdf
+  # and TeX one last time.
+  if test $oformat = pdf \
+     && test -r "$filename_noext.log" \
+     && grep 'thumbpdf\.sty'  "$filename_noext.log" >&6 2>&1; \
+  then
+    $verbose "Running $thumbpdf $filename_noext ..."
+    $thumbpdf "$filename_noext" >&5 ||
+      fatal "$thumbpdf exited with bad status, quitting."
+
+    $verbose "Running $cmd ..."
+    if $cmd >&5; then :; else
+      echo "$0: $tex exited with bad status, quitting." >&2
+      echo "$0: see $filename_noext.log for errors." >&2
+      test "$clean" = t \
+	&& cp "$filename_noext.log" "$orig_pwd"
+      exit 1
+    fi
+  fi
+
 
   # If we were in clean mode, compilation was in a tmp directory.
   # Copy the DVI (or PDF) file into the directory where the compilation
@@ -674,5 +758,5 @@ $textra" "$filename_input" >$filename_xtr
   fi
 done
 
-$verbose "$0 done."
+$verbose "$0: done."
 exit 0 # exit successfully, not however we ended the loop.

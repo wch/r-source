@@ -20,10 +20,11 @@ OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 INT_HEADERS = Defn.h Errormsg.h Fileio.h Graphics.h IOStuff.h \
   Internal.h Parse.h Print.h Rconnections.h Rdynpriv.h Startup.h
 
-DISTFILES = Makefile.in README $(INT_HEADERS) $(SRC_HEADERS) \
+DISTFILES = Makefile.in Makefile.win README $(INT_HEADERS) $(SRC_HEADERS) \
   config.h.in stamp-h.in Rmath.h0.in
 
 SUBDIRS = R_ext
+SUBDIRS_WITH_NO_BUILD = Rmodules
 
 TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.ts)
 
@@ -59,7 +60,7 @@ $(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/stamp-h.in
 $(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.ac $(top_srcdir)/aclocal.m4
 	@cd $(top_srcdir) && $(AUTOHEADER)
 	@echo timestamp > $@ 2> /dev/null
-Rconfig.h: config.h
+Rconfig.h: config.h $(top_srcdir)/tools/GETCONFIG
 	@$(SHELL) $(top_srcdir)/tools/GETCONFIG > $@
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(SHELL) $(top_srcdir)/tools/GETVERSION > $@
@@ -79,20 +80,20 @@ install: installdirs
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(SRC_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/include; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/include"; \
 	done
 	@for f in $(OBJ_HEADERS); do \
-	  $(INSTALL_DATA) $${f} $(rhome)/include; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/include"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/include
+	@$(MKINSTALLDIRS) "$(rhome)/include"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	@rm -rf $(rhome)/include
+	@rm -rf "$(rhome)/include"
 
 mostlyclean: clean
 clean:
@@ -117,5 +118,10 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  chmod 755 $(distdir)/$${d}; \
 	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
+	done
+	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
+	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
+	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done

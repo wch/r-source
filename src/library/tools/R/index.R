@@ -27,21 +27,26 @@ function(dataDir, contents)
 
     if(!file_test("-d", dataDir))
         stop(paste("directory", sQuote(dataDir), "does not exist"))
-    dataFiles <- list_files_with_type(dataDir, "data")
-    ## <FIXME> to avoid name clashes CO2 is stored as zCO2.R
-    dataTopics <- unique(basename(file_path_sans_ext(dataFiles)))
-    dataTopics[dataTopics == "zCO2"] <- "CO2"
+    ## dataFiles <- list_files_with_type(dataDir, "data")
+    dataTopics <- list_data_in_pkg(dataDir=dataDir)
     if(!length(dataTopics)) return(matrix("", 0, 2))
-    dataTopics <- sort(dataTopics)
-    dataIndex <- cbind(dataTopics, "")
+    names(dataTopics) <- paste(names(dataTopics), "/", sep="")
+    datasets <- unlist(dataTopics)
+    names(datasets) <- sub("/[^/]*$", "", names(datasets))
+    datasets <- sort(datasets)
+    dataIndex <- cbind(datasets, "")
     ## Note that NROW(contents) might be 0.
-    if(NROW(contents)) {
+    if(length(datasets) && NROW(contents)) {
         aliasIndices <-
             rep(1 : NROW(contents), sapply(contents$Aliases, length))
-        idx <- match(dataTopics, unlist(contents$Aliases), 0)
+        idx <- match(datasets, unlist(contents$Aliases), 0)
         dataIndex[which(idx != 0), 2] <-
             contents[aliasIndices[idx], "Title"]
     }
+    if(length(datasets))
+        dataIndex[, 1] <-
+            as.vector(ifelse(datasets == names(datasets), datasets,
+                             paste(datasets, " (", names(datasets), ")", sep="")))
     dimnames(dataIndex) <- NULL
     dataIndex
 }
@@ -88,34 +93,34 @@ function(demoDir)
 {
     if(!file_test("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
-    infoFromBuild <- .build_demo_index(demoDir)
-    infoFromIndex <- try(read.00Index(file.path(demoDir, "00Index")))
-    if(inherits(infoFromIndex, "try-error"))
+    info_from_build <- .build_demo_index(demoDir)
+    info_from_index <- try(read.00Index(file.path(demoDir, "00Index")))
+    if(inherits(info_from_index, "try-error"))
         stop(paste("cannot read index information in file",
                    sQuote(file.path(demoDir, "00Index"))))
-    badEntries <-
-        list(missingFromIndex =
-             infoFromBuild[grep("^[[:space:]]*$",
-                                infoFromBuild[ , 2]),
-                           1],
-             missingFromDemos =
-             infoFromIndex[!infoFromIndex[ , 1]
-                           %in% infoFromBuild[ , 1],
-                           1])
-    class(badEntries) <- "check_demo_index"
-    badEntries
+    bad_entries <-
+        list(missing_from_index =
+             info_from_build[grep("^[[:space:]]*$",
+                                  info_from_build[ , 2]),
+                             1],
+             missing_from_demos =
+             info_from_index[!info_from_index[ , 1]
+                             %in% info_from_build[ , 1],
+                             1])
+    class(bad_entries) <- "check_demo_index"
+    bad_entries
 }
 
 print.check_demo_index <-
 function(x, ...)
 {
-    if(length(x$missingFromIndex) > 0) {
+    if(length(x$missing_from_index) > 0) {
         writeLines("Demos with missing or empty index information:")
-        print(x$missingFromIndex)
+        print(x$missing_from_index)
     }
-    if(length(x$missingFromDemos) > 0) {
+    if(length(x$missing_from_demos) > 0) {
         writeLines("Demo index entries without corresponding demo:")
-        print(x$missingFromDemos)
+        print(x$missing_from_demos)
     }
     invisible(x)
 }

@@ -17,5 +17,5 @@ y ~ model
   Chapter 2 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
-\seealso{\code{\link[stats]{formula}}}
+\seealso{\code{\link{formula}}}
 \keyword{models}

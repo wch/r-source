@@ -3,7 +3,6 @@
 ## They are used by lm and glm in base R, and by
 ## packages MASS, rpart and survival.
 
-data(airquality)
 dim(airquality)
 nd <- airquality[c(6,25:27), ]
 

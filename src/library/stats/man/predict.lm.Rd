@@ -14,7 +14,8 @@
 }
 \arguments{
   \item{object}{Object of class inheriting from \code{"lm"}}
-  \item{newdata}{Data frame in which to predict}
+  \item{newdata}{An optional data frame in which to look for variables with
+    which to predict.  If omitted, the fitted values are used.}
   \item{se.fit}{A switch indicating if standard errors are required.}
   \item{scale}{Scale parameter for std.err. calculation}
   \item{df}{Degrees of freedom for scale}
@@ -53,6 +54,12 @@
   \item{df}{degrees of freedom for residual}
 }
 \note{
+  Variables are first looked for in \code{newdata} and then searched for
+  in the usual way (which will include the environment of the formula
+  used in the fit).  As from \R 2.0.0 a warning will be given if the
+  variables found are not of the same length as those in \code{newdata}
+  if it was supplied.
+  
   Offsets specified by \code{offset} in the fit by \code{\link{lm}}
   will not be included in predictions, whereas those specified by an
   offset term in the formula will be.

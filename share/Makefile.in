@@ -35,59 +35,61 @@ docs:
 
 install: install-message installdirs install-sources
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/share
-	@$(MKINSTALLDIRS) $(rhome)/share/R
+	@$(MKINSTALLDIRS) "$(rhome)/share"
+	@$(MKINSTALLDIRS) "$(rhome)/share/R"
 	@if test -n "$(GNOME_IF_FILES)"; then \
-	  $(MKINSTALLDIRS) $(rhome)/share/glade; \
+	  $(MKINSTALLDIRS) "$(rhome)/share/glade"; \
 	fi
-	@$(MKINSTALLDIRS) $(rhome)/share/make
-	@$(MKINSTALLDIRS) $(rhome)/share/perl
+	@$(MKINSTALLDIRS) "$(rhome)/share/make"
+	@$(MKINSTALLDIRS) "$(rhome)/share/perl"
 	@for d in $(SUBDIRS_SHARE_PERL); do \
-	  $(MKINSTALLDIRS) $(rhome)/share/perl/$${d}; \
+	  $(MKINSTALLDIRS) "$(rhome)/share/perl/$${d}"; \
 	done
-	@$(MKINSTALLDIRS) $(rhome)/share/sh
-	@$(MKINSTALLDIRS) $(rhome)/share/texmf
+	@$(MKINSTALLDIRS) "$(rhome)/share/sh"
+	@$(MKINSTALLDIRS) "$(rhome)/share/texmf"
 install-message:
 	@echo "installing share ..."
 install-sources: installdirs
 	@for f in $(srcdir)/R/*.R; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/share/R; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/share/R"; \
 	done
 	@if test -n "$(GNOME_IF_FILES)"; then \
 	  for f in $(srcdir)/glade/*.glade; do \
-	    $(INSTALL_DATA) $${f} $(rhome)/share/glade; \
+	    $(INSTALL_DATA) $${f} "$(rhome)/share/glade"; \
 	  done; \
 	fi
 	@for f in $(srcdir)/make/*.mk; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/share/make; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/share/make"; \
 	done
 	@for d in $(SUBDIRS_SHARE_PERL); do \
 	  for f in $(srcdir)/perl/$${d}/*.pm; do \
-	    $(INSTALL_DATA) $${f} $(rhome)/share/perl/$${d}; \
+	    $(INSTALL_DATA) $${f} "$(rhome)/share/perl/$${d}"; \
 	  done; \
 	done
 	@for f in $(srcdir)/perl/*.pl; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/share/perl; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/share/perl"; \
 	done
 	@for f in $(srcdir)/sh/*.sh; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/share/sh; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/share/sh"; \
 	done
 	@for f in $(srcdir)/texmf/*.sty \
 		  $(srcdir)/texmf/*.fd; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/share/texmf; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/share/texmf"; \
 	done
 install-strip: install
 
 uninstall:
 	@echo "uninstalling share ..."
-	@rm -rf $(rhome)/share
+	@rm -rf "$(rhome)/share"
 
+## we cannot remove make/vars.mk until distclean as etc/Makeconf includes it.
 mostlyclean:
 clean:
+
+distclean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -rf $(SUBDIRS_WITH_NO_BUILD); \
 	fi
-distclean:
 	-@rm -f Makefile
 maintainer-clean: distclean
 
@@ -98,7 +100,7 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
-	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done

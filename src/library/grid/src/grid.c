@@ -395,8 +395,8 @@ find.in.children <- function(name, children) {
   return(result)
 }
 */
-static SEXP findViewport(SEXP name, SEXP strict, SEXP vp);
-static SEXP findInChildren(SEXP name, SEXP strict, SEXP children) 
+static SEXP findViewport(SEXP name, SEXP strict, SEXP vp, int depth);
+static SEXP findInChildren(SEXP name, SEXP strict, SEXP children, int depth) 
 {
     SEXP childnames = childList(children);
     int n = LENGTH(childnames);
@@ -407,17 +407,17 @@ static SEXP findInChildren(SEXP name, SEXP strict, SEXP children)
     while (count < n && !found) {
 	result = findViewport(name, strict,
 			      findVar(install(CHAR(STRING_ELT(childnames, count))),
-				      children));
-	found = LOGICAL(VECTOR_ELT(result, 0))[0];
+				      children),
+			      depth);
+	found = INTEGER(VECTOR_ELT(result, 0))[0] > 0;
 	count = count + 1;
     }
     if (!found) {
-	SEXP temp, false;
+	SEXP temp, zeroDepth;
 	PROTECT(temp = allocVector(VECSXP, 2));
-	PROTECT(false = allocVector(LGLSXP, 1));
-	LOGICAL(false)[0] = FALSE;
-	temp = allocVector(VECSXP, 2);
-	SET_VECTOR_ELT(temp, 0, false);
+	PROTECT(zeroDepth = allocVector(INTSXP, 1));
+	INTEGER(zeroDepth)[0] = 0;
+	SET_VECTOR_ELT(temp, 0, zeroDepth);
 	SET_VECTOR_ELT(temp, 1, R_NilValue);
 	UNPROTECT(2);
 	result = temp;
@@ -439,22 +439,22 @@ find.viewport <- function(name, pvp) {
       find.in.children(name, pvp$children)
 }
 */
-static SEXP findViewport(SEXP name, SEXP strict, SEXP vp) 
+static SEXP findViewport(SEXP name, SEXP strict, SEXP vp, int depth) 
 {
-    SEXP result, false, true;
+    SEXP result, zeroDepth, curDepth;
     PROTECT(result = allocVector(VECSXP, 2));
-    PROTECT(false = allocVector(LGLSXP, 1));
-    LOGICAL(false)[0] = FALSE;
-    PROTECT(true = allocVector(LGLSXP, 1));
-    LOGICAL(true)[0] = TRUE;
+    PROTECT(zeroDepth = allocVector(INTSXP, 1));
+    INTEGER(zeroDepth)[0] = 0;
+    PROTECT(curDepth = allocVector(INTSXP, 1));
+    INTEGER(curDepth)[0] = depth;
     /* 
      * If there are no children, we fail
      */
     if (noChildren(viewportChildren(vp))) {
-	SET_VECTOR_ELT(result, 0, false);
+	SET_VECTOR_ELT(result, 0, zeroDepth);
 	SET_VECTOR_ELT(result, 1, R_NilValue);
     } else if (childExists(name, viewportChildren(vp))) {
-	SET_VECTOR_ELT(result, 0, true);
+	SET_VECTOR_ELT(result, 0, curDepth);
 	SET_VECTOR_ELT(result, 1, 
 		       /*
 			* Does this do inherits=FALSE?
@@ -467,10 +467,11 @@ static SEXP findViewport(SEXP name, SEXP strict, SEXP vp)
 	 * Otherwise recurse into children
 	 */
 	if (LOGICAL(strict)[0]) {
-	    SET_VECTOR_ELT(result, 0, false);
+	    SET_VECTOR_ELT(result, 0, zeroDepth);
 	    SET_VECTOR_ELT(result, 1, R_NilValue);
 	} else {
-	    result = findInChildren(name, strict, viewportChildren(vp));
+	    result = findInChildren(name, strict, viewportChildren(vp),
+				    depth + 1);
 	}
     }
     UNPROTECT(3);
@@ -491,8 +492,9 @@ SEXP L_downviewport(SEXP name, SEXP strict)
      * Try to find the named viewport
      */
     SEXP found, vp;
-    PROTECT(found = findViewport(name, strict, gvp));
-    if (LOGICAL(VECTOR_ELT(found, 0))[0]) {
+    int depth = 1;
+    PROTECT(found = findViewport(name, strict, gvp, depth));
+    if (INTEGER(VECTOR_ELT(found, 0))[0]) {
 	vp = doSetViewport(VECTOR_ELT(found, 1), FALSE, FALSE, dd);
 	/* Set the value of the current viewport for the current device
 	 * Need to do this in here so that redrawing via R BASE display
@@ -535,10 +537,10 @@ static SEXP growPath(SEXP pathsofar, SEXP name)
 }
 
 static SEXP findvppath(SEXP path, SEXP name, SEXP strict, 
-		       SEXP pathsofar, SEXP vp);
+		       SEXP pathsofar, SEXP vp, int depth);
 static SEXP findvppathInChildren(SEXP path, SEXP name, 
 				 SEXP strict, SEXP pathsofar,
-				 SEXP children) 
+				 SEXP children, int depth) 
 {
     SEXP childnames = childList(children);
     int n = LENGTH(childnames);
@@ -552,18 +554,17 @@ static SEXP findvppathInChildren(SEXP path, SEXP name,
 			     children));
 	PROTECT(newpathsofar = growPath(pathsofar,
 					VECTOR_ELT(vp, VP_NAME)));
-	result = findvppath(path, name, strict, newpathsofar, vp);
-	found = LOGICAL(VECTOR_ELT(result, 0))[0];
+	result = findvppath(path, name, strict, newpathsofar, vp, depth);
+	found = INTEGER(VECTOR_ELT(result, 0))[0] > 0;
 	count = count + 1;
 	UNPROTECT(2);
     }
     if (!found) {
-	SEXP temp, false;
+	SEXP temp, zeroDepth;
 	PROTECT(temp = allocVector(VECSXP, 2));
-	PROTECT(false = allocVector(LGLSXP, 1));
-	LOGICAL(false)[0] = FALSE;
-	temp = allocVector(VECSXP, 2);
-	SET_VECTOR_ELT(temp, 0, false);
+	PROTECT(zeroDepth = allocVector(INTSXP, 1));
+	INTEGER(zeroDepth)[0] = 0;
+	SET_VECTOR_ELT(temp, 0, zeroDepth);
 	SET_VECTOR_ELT(temp, 1, R_NilValue);
 	UNPROTECT(2);
 	result = temp;
@@ -573,19 +574,19 @@ static SEXP findvppathInChildren(SEXP path, SEXP name,
 }
 			   
 static SEXP findvppath(SEXP path, SEXP name, SEXP strict, 
-		       SEXP pathsofar, SEXP vp) 
+		       SEXP pathsofar, SEXP vp, int depth) 
 {
-    SEXP result, false, true;
+    SEXP result, zeroDepth, curDepth;
     PROTECT(result = allocVector(VECSXP, 2));
-    PROTECT(false = allocVector(LGLSXP, 1));
-    LOGICAL(false)[0] = FALSE;
-    PROTECT(true = allocVector(LGLSXP, 1));
-    LOGICAL(true)[0] = TRUE;
+    PROTECT(zeroDepth = allocVector(INTSXP, 1));
+    INTEGER(zeroDepth)[0] = 0;
+    PROTECT(curDepth = allocVector(INTSXP, 1));
+    INTEGER(curDepth)[0] = depth;
     /* 
      * If there are no children, we fail
      */
     if (noChildren(viewportChildren(vp))) {
-	SET_VECTOR_ELT(result, 0, false);
+	SET_VECTOR_ELT(result, 0, zeroDepth);
 	SET_VECTOR_ELT(result, 1, R_NilValue);
 	
     } 
@@ -595,7 +596,7 @@ static SEXP findvppath(SEXP path, SEXP name, SEXP strict,
      */
     else if (childExists(name, viewportChildren(vp)) &&
 	     pathMatch(path, pathsofar, strict)) {
-	SET_VECTOR_ELT(result, 0, true);
+	SET_VECTOR_ELT(result, 0, curDepth);
 	SET_VECTOR_ELT(result, 1, 
 		       /*
 			* Does this do inherits=FALSE?
@@ -604,7 +605,7 @@ static SEXP findvppath(SEXP path, SEXP name, SEXP strict,
 			       viewportChildren(vp)));
     } else {
 	result = findvppathInChildren(path, name, strict, pathsofar,
-				      viewportChildren(vp));
+				      viewportChildren(vp), depth + 1);
     }
     UNPROTECT(3);
     return result;
@@ -624,8 +625,9 @@ SEXP L_downvppath(SEXP path, SEXP name, SEXP strict)
      * Try to find the named viewport
      */
     SEXP found, vp;
-    PROTECT(found = findvppath(path, name, strict, R_NilValue, gvp));
-    if (LOGICAL(VECTOR_ELT(found, 0))[0]) {
+    int depth = 1;
+    PROTECT(found = findvppath(path, name, strict, R_NilValue, gvp, depth));
+    if (INTEGER(VECTOR_ELT(found, 0))[0]) {
 	vp = doSetViewport(VECTOR_ELT(found, 1), FALSE, FALSE, dd);
 	/* Set the value of the current viewport for the current device
 	 * Need to do this in here so that redrawing via R BASE display
@@ -1742,6 +1744,11 @@ SEXP L_circle(SEXP x, SEXP y, SEXP r)
 				      dd);
 	rr = fmin2(rr1, rr2);
 	rr = toDeviceWidth(rr, GE_INCHES, dd);
+	/*
+	 * A negative radius is invalid
+	 */
+	if (rr < 0)
+	    error("Invalid circle radius (must be non-negative)");
 	/* The graphics engine only takes device coordinates
 	 */
 	xx = toDeviceX(xx, GE_INCHES, dd);
@@ -1761,7 +1768,7 @@ SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just)
     double xx, yy, ww, hh;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
-    int i, nx, ny, nw, nh, maxn;
+    int i, ny, nw, nh, maxn;
     LViewportContext vpc;
     R_GE_gcontext gc;
     LTransform transform;
@@ -2133,10 +2140,15 @@ SEXP L_locator() {
     PROTECT(answer = allocVector(REALSXP, 2));
     /*
      * Get a mouse click
+     * Fails if user did not click mouse button 1
      */
-    dd->dev->locator(&x, &y, dd->dev);
-    REAL(answer)[0] = fromDeviceX(x, GE_INCHES, dd);
-    REAL(answer)[1] = fromDeviceY(y, GE_INCHES, dd);
+    if (dd->dev->locator(&x, &y, dd->dev)) {
+	REAL(answer)[0] = fromDeviceX(x, GE_INCHES, dd);
+	REAL(answer)[1] = fromDeviceY(y, GE_INCHES, dd);
+    } else {
+	REAL(answer)[0] = NA_REAL;
+	REAL(answer)[1] = NA_REAL;	
+    }
     UNPROTECT(1);
     return answer;
 }

@@ -158,8 +158,8 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 \seealso{
   \code{\link{print.loadings}},
   \code{\link{varimax}}, \code{\link{princomp}},
-  \code{\link{ability.cov}}, \code{\link{Harman23.cor}},
-  \code{\link{Harman74.cor}}
+  \code{\link[datasets]{ability.cov}}, \code{\link[datasets]{Harman23.cor}},
+  \code{\link[datasets]{Harman74.cor}}
 }
 
 \examples{

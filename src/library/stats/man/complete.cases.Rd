@@ -21,7 +21,6 @@ complete.cases(\dots)
   \code{\link{na.fail}}.
 }
 \examples{
-data(airquality)
 x <- airquality[, -1] # x is a regression design matrix
 y <- airquality[,  1] # y is the corresponding response
 

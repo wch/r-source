@@ -14,8 +14,8 @@ capabilities(what = NULL)
 }
 \value{
   A named logical vector. Current components are
-    \item{jpeg}{Is the \code{\link[graphics]{jpeg}} function operational?}
-    \item{png}{Is the \code{\link[graphics]{png}} function operational?}
+    \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
+    \item{png}{Is the \code{\link{png}} function operational?}
     \item{tcltk}{Is the \pkg{tcltk} package operational?}
     \item{X11}{(Unix)  Are \code{X11} and the data editor available?}
     \item{GNOME}{(Unix)  Is the GNOME GUI in use and are \code{GTK} and
@@ -23,8 +23,8 @@ capabilities(what = NULL)
     \item{libz}{Is \code{\link{gzfile}} available?  From \R 1.5.0 this
       will always be true.}
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
-      \code{\link[utils]{download.file}} available?}
-    \item{sockets}{Are \code{\link[utils]{make.socket}} and related functions
+      \code{\link{download.file}} available?}
+    \item{sockets}{Are \code{\link{make.socket}} and related functions
       available?}
     \item{libxml}{Is there support for integrating \code{libxml} with
       the \R event loop?}

@@ -28,6 +28,10 @@
 #ifndef RMATH_H
 #define RMATH_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /*-- Mathlib as part of R --  define this for standalone : */
 /* #undef MATHLIB_STANDALONE */
 
@@ -317,9 +321,9 @@ double  Rlog1p(double);
 #undef trunc
 #define	trunc	ftrunc
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
+
+/* log(1 - exp(x))  in stable form: */
+#define R_Log1_Exp(x)   ((x) > -M_LN2 ? log(-expm1(x)) : log1p(-exp(x)))
 
 	/* R's versions with !R_FINITE checks */
 
@@ -553,6 +557,8 @@ double	fprec(double, double);
 double	fround(double, double);
 double	fsign(double, double);
 double	ftrunc(double);
+
+
 
 
 /* ----------------- Private part of the header file ------------------- */

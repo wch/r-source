@@ -79,9 +79,9 @@ as.dist(m, diag = FALSE, upper = FALSE)
   to the number of columns used.  If all pairs are excluded when calculating a
   particular distance, the value is \code{NA}.
 
-  The functions \code{as.matrix.dist()} and \code{as.dist()} can be used
-  for conversion between objects of class \code{"dist"} and conventional
-  distance matrices and vice versa.
+  The \code{"dist"} method of \code{as.matrix()} and \code{as.dist()}
+  can be used for conversion between objects of class \code{"dist"}
+  and conventional distance matrices.
 }
 \value{
   An object of class \code{"dist"}.

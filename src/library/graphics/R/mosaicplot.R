@@ -337,7 +337,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
 
 mosaicplot.formula <-
 function(formula, data = NULL, ...,
-         main = deparse(substitute(data)), subset, na.action = na.omit)
+         main = deparse(substitute(data)), subset, na.action = stats::na.omit)
 {
     main # force evaluation here
     m <- match.call(expand.dots = FALSE)

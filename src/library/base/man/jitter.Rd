@@ -48,7 +48,7 @@ jitter(x, factor=1, amount = NULL)
 }
 \author{Werner Stahel and Martin Maechler, ETH Zurich}
 \seealso{
-  \code{\link[stats]{rug}} which you may want to combine with \code{jitter}.
+  \code{\link{rug}} which you may want to combine with \code{jitter}.
 }
 \examples{
 round(jitter(c(rep(1,3),  rep(1.2, 4), rep(3,3))), 3)

@@ -24,7 +24,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
-library(graphics)
+library(grDevices)
 library(grid)
 ps.options(pointsize=12)
 options(width=60)
@@ -483,9 +483,6 @@ the best solution is to just use a \grid{} function rather than
 a \gTree{}, and wait for me to implement some ideas for speeding things
 up!}.
 
-<<splomgrob, eval=FALSE, echo=FALSE>>=
-smg <- splom(df, draw=FALSE)
-
 <<fig=TRUE>>=
 cellname <- function(i, j) {
   paste("cell", i, j, sep="")
@@ -543,6 +540,9 @@ grid.edit("plot21::xlab", label="", redraw=FALSE)
 grid.edit("plot32::ylab", label="", redraw=FALSE)
 grid.edit("plot21::xaxis", label=FALSE, redraw=FALSE)
 grid.edit("plot32::yaxis", label=FALSE)
+
+<<splomgrob, eval=FALSE, echo=FALSE>>=
+smg <- splom(df, draw=FALSE)
 
 <<fig=TRUE, echo=FALSE, results=hide>>=
 <<splomgrob>>
@@ -617,4 +617,13 @@ All of this may seem a bit irrelevant to interactive use, but it
 does provide a basis for creating an editable plot interface like 
 M Kondrin's {\tt Rgrace} package.
 
+% Start a new page
+% Not echoed, not evaluated
+% ONLY here for checkVignettes so that all output doesn't
+% end up on one enormous page
+
+<<eval=FALSE, echo=FALSE>>=
+grid.newpage()
+
+@
 \end{document} 

@@ -4,7 +4,6 @@ opar <- par(ask = interactive() &&
             (.Device %in% c("X11", "GTK", "windows","quartz")))
 # For source
 
-data(volcano)
 x <- 10*(1:nrow(volcano)); x.at <- seq(100, 800, by=100)
 y <- 10*(1:ncol(volcano)); y.at <- seq(100, 600, by=100)
 

@@ -10,7 +10,7 @@
   % -------------------- grep -nw DispatchOrEval src/*/*[ch]
   %                         --------------
   The following builtin functions are \emph{generic} as well, i.e., you
-  can write \code{\link[utils]{methods}} for them:
+  can write \code{\link{methods}} for them:
 
   \code{\link{[}},            % do_subset()          [subset.c:464]
   \code{\link{[[}},           % do_subset2()         [subset.c:567]
@@ -56,6 +56,6 @@
   \code{\link{is.symbol}}.
 }
 \seealso{
-  \code{\link[utils]{methods}} for the methods of non-Internal generic functions.
+  \code{\link{methods}} for the methods of non-Internal generic functions.
 }
 \keyword{methods}

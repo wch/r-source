@@ -1,0 +1,21 @@
+citHeader("To cite R in publications use:")
+
+citEntry(entry="Manual",
+         title = "R: A language and environment for statistical computing",
+         author = person(last="R Development Core Team"),
+         organization = "R Foundation for Statistical Computing",
+         address      = "Vienna, Austria",
+         year         = version$year,
+         note         = "ISBN 3-900051-00-3",
+         url          = "http://www.R-project.org",
+         
+         textVersion = 
+         paste("R Development Core Team (", version$year, "). ", 
+               "R: A language and environment for statistical computing. ",
+               "R Foundation for Statistical Computing, Vienna, Austria. ",
+               "ISBN 3-900051-00-3, URL http://www.R-project.org.",
+               sep="")
+         )
+
+citFooter("We have invested a lot of time and effort in creating R,",
+          "please cite it when using it for data analysis.")

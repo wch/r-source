@@ -1,22 +1,34 @@
 export(.helpForCall, .tryHelp)
 
 export("?", CRAN.packages, Rprof, apropos, assignInNamespace,
-       browseEnv, browseURL, bug.report, capture.output, close.socket,
-       contrib.url, data.entry, dataentry, de, de.ncols, de.restore,
-       de.setup, debugger, demo, download.file, download.packages,
-       dump.frames, edit, emacs, example, file.edit, find, fix, fixInNamespace,
-       getAnywhere, getFromNamespace, getS3method, head, help,
-       help.search, help.start, history, install.packages,
+       as.person, as.personList, bibtex, browseEnv, browseURL,
+       bug.report, capture.output, citation, citEntry, citHeader,
+       citFooter, close.socket, contrib.url, data, data.entry,
+       dataentry, de, de.ncols, de.restore, de.setup, debugger, demo,
+       download.file, download.packages, dump.frames, edit, emacs,
+       example, file.edit, find, fix, fixInNamespace, getAnywhere,
+       getFromNamespace, getS3method, head, help, help.search,
+       help.start, history, index.search, install.packages,
        installed.packages, limitedLabels, loadhistory, ls.str,
        lsf.str, make.packages.html, make.socket, menu, methods,
-       object.size, old.packages, package.contents,
-       package.skeleton, packageStatus, page, pico, prompt,
-       promptData, read.fwf, read.socket, recover, remove.packages,
+       object.size, old.packages, package.contents, package.skeleton,
+       packageDescription, packageStatus, page, person, personList,
+       pico, prompt, promptData, readCitationFile, read.fwf,
+       read.fortran, read.socket, recover, remove.packages,
        savehistory, shQuote, str, summaryRprof, tail, topicName,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.socket, wsbrowser, xedit, xemacs)
 
 S3method("[", getAnywhere)
+S3method(as.character, person)
+S3method(as.character, personList)
+S3method(as.person, default)
+S3method(as.personList, default)
+S3method(as.personList, person)
+S3method(bibtex, citation)
+S3method(bibtex, citationList)
+S3method(bibtex, person)
+S3method(bibtex, personList)
 S3method(edit, data.frame)
 S3method(edit, default)
 S3method(edit, matrix)
@@ -24,9 +36,14 @@ S3method(head, data.frame)
 S3method(head, default)
 S3method(head, "function")
 S3method(head, matrix)
+S3method(print, citation)
+S3method(print, citationList)
 S3method(print, getAnywhere)
 S3method(print, hsearch)
+S3method(print, "help_files_with_topic")
 S3method(print, MethodsFunction)
+S3method(print, packageDescription)
+S3method(print, packageIQR)
 S3method(print, packageStatus)
 S3method(print, socket)
 S3method(prompt, data.frame)
@@ -47,11 +64,11 @@ export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
        RtangleWritedoc, RweaveLatexOptions, RweaveChunkPrefix,
        RweaveEvalWithOpt, RweaveTryStop, SweaveHooks)
 
-if(.Platform$OS.type == "unix") {
+if(tools:::.OStype() == "unix") {
 export(nsl)
 }
 
-if(.Platform$OS.type == "windows") {
+if(tools:::.OStype() == "windows") {
 export(DLL.version, Filters, choose.files, fixup.libraries.URLs,
 	 fixup.package.URLs, flush.console, getIdentification,
 	 getWindowsHandle, getWindowTitle, link.html.help,

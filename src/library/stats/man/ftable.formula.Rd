@@ -53,7 +53,6 @@
   \code{\link{table}}.
 }
 \examples{
-data(Titanic)
 Titanic
 x <- ftable(Survived ~ ., data = Titanic)
 x

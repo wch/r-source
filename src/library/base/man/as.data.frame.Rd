@@ -51,7 +51,7 @@ is.data.frame(x)
   data frame.  Similarly, each column of a matrix is converted separately.
   This can be overridden if the object has a class which has
   a method for \code{as.data.frame}: two examples are
-  matrices of class \code{"\link[stats]{model.matrix}"} (which are
+  matrices of class \code{"\link{model.matrix}"} (which are
   included as a single column) and list objects of class
   \code{"\link{POSIXlt}"} which are coerced to class
   \code{"\link{POSIXct}"}.

@@ -48,10 +48,9 @@
 \seealso{
   \code{\link{hist}},
   \code{\link{stem}},
-  \code{\link[stats]{density}}.
+  \code{\link{density}}.
 }
 \examples{
-data(women)
 (wwt <- hist(women$weight, nc= 7, plot = FALSE))
 plot(wwt, labels = TRUE) # default main & xlab using wwt$xname
 plot(wwt, border = "dark blue", col = "light blue",

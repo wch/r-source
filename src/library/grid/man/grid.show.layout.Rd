@@ -6,19 +6,24 @@
   Grid layout.
 }
 \usage{
-grid.show.layout(l, newpage=TRUE,
+grid.show.layout(l, newpage=TRUE, bg = "light grey",
              cell.border = "blue", cell.fill = "light blue",
-             cell.label = TRUE, vp = NULL) 
+             cell.label = TRUE, label.col = "blue",
+             unit.col = "red", vp = NULL) 
 }
 \arguments{
   \item{l}{A Grid layout object.}
   \item{newpage}{A logical value indicating whether to move on
     to a new page before drawing the diagram.}
+  \item{bg}{The colour used for the background.}
   \item{cell.border}{The colour used to draw the borders of the cells
     in the layout.}
   \item{cell.fill}{The colour used to fill the cells in the layout.}
   \item{cell.label}{A logical indicating whether the layout cells
     should be labelled.}
+  \item{label.col}{The colour used for layout cell labels.}
+  \item{unit.col}{The colour used for labelling the widths/heights of
+    columns/rows.}
   \item{vp}{A Grid viewport object (or NULL).}
 }
 \details{
@@ -28,7 +33,8 @@ grid.show.layout(l, newpage=TRUE,
   with white and framed with a black border, and the layout regions
   are filled with light blue and framed with a blue border.
   The diagram is annotated with the widths and heights (including units)
-  of the columns and rows of the layout using red text.
+  of the columns and rows of the layout using red text. (All colours
+  are defaults and may be customised via function arguments.)
 }
 \value{
   None.

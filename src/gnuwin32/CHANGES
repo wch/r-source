@@ -10,7 +10,7 @@ rw2000
 Added Rgui script editor by Chris Jackson.  Supports object name
 in window caption in edit() and fix().
 
-Changed preferences menu "Finish" to "OK".
+Changed preferences menu button "Finish" to "OK".
 
 Changed search order for user home directory to use "My Documents" 
 directory after HOME and before HOMEDRIVE/HOMEPATH.
@@ -20,8 +20,34 @@ getIdentification().
 
 Added function getWindowsHandle().
 
-windows() device has new 'bg' argument to set the background colour
-(which still defaults to "transparent").
+The windows() device has a new 'bg' argument to set the background
+colour (which still defaults to "transparent").
+
+C headers files are now installed into R_HOME/include rather than
+R_HOME/src/include (as on Unix).
+
+choose.files() now expands '~' to the user's home directory, as 
+most other file system functions do.
+
+(For those building R:) The Makefile now aborts if sub-makes in any of
+several for-loops fail.
+
+R BATCH|SHLIB|INSTALL|REMOVE no longer work: use Rcmd or R CMD (as
+required under Unix) instead.
+
+Rcmd INSTALL now does a `safe installation': it moves away any
+existing installation of the packages, and moves them back if it
+fails.  In any case, a failed installation is removed.  Bundles are
+processed differently, by combining the DESCRIPTION and DESCRIPTION.in
+files and processing each package separately.
+
+Installation of a bundle now fails as soon as installing any component
+package fails.
+
+winMenuAdd() and winMenuAddItem() now allow addition of menu items to
+the console and graphics windows and their popup menus.  Repeated
+addition of the same menu no longer leads to duplicate menus.
+winMenuDel() now deletes all submenus and items within the menu.
 
 
 

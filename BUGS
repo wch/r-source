@@ -199,6 +199,7 @@ Date: Mon, 20 Oct 2003 14:17:42 -0400
 Subject: Core dump when calling tclvalue
 From: mckay@gmr.com
 Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
+..it would seem that we're just not failing gracefully
 * PR# 5315 *
 Subject: O2 optimization produces wrong code
 From: jean.coursol@math.u-psud.fr
@@ -214,11 +215,6 @@ Subject: [R] lattice: levelplot: error: min not meaningful for factor
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Mon, 22 Dec 2003 17:29:49 +0100
 ..Not documented to work, but intended to.
-* PR# 6597 *
-Subject: summary.rpart() in rpart package
-From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
-Date: Tue, 17 Feb 2004 17:07:02 -0600
-..Unreadable, and no response to follow-up.
 * PR# 6701 *
 Subject: lookup.xport in foreign ignoring some datasets
 From: Svetlana Eden <svetlana.eden@vanderbilt.edu>
@@ -233,6 +229,24 @@ Date: Sun, 25 Apr 2004 00:23:42 +0200 (CEST)
 Subject: foreign package:  reading epiinfo
 From: giles.crane@doh.state.nj.us
 Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
+..request for example file met no response
+* PR# 6904 *
+Subject: Failure to preserve package attribute when coercing S4 objects
+From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
+Date: Fri, 21 May 2004 15:04:10 +0100
+* PR# 6978 *
+Subject: inheritance problem in multcomp package
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Sun, 13 Jun 2004 21:35:50 -0400
+* PR# 6989 *
+Subject: read.epiinfo makes field char part of variable name
+From: giles.crane@doh.state.nj.us
+Date: Thu, 17 Jun 2004 17:52:32 +0200 (CEST)
+..part of foreign
+* PR# 7007 *
+Subject: lme4 fails to install on R-1.9/FreeBSD-5.2
+From: wb@arb-phys.uni-dortmund.de
+Date: Tue, 22 Jun 2004 20:53:01 +0200 (CEST)
 
 Directory:  Analyses
 
@@ -267,6 +281,17 @@ Subject: Incorrect handling of NA's in cor()
 From: msa@biostat.mgh.harvard.edu
 Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
 ..matter of debate
+* PR# 6986 *
+Subject: Bug in FEXACT: gave negative key
+From: Francis Clark <fc@maths.uq.edu.au>
+Date: Thu, 17 Jun 2004 20:00:31 +1000 (EST)
+..From fisher.test!
+..Probably just a poor error message
+* PR# 7037 *
+Subject: R crashes
+From: cornulier@cebc.cnrs.fr
+Date: Wed, 30 Jun 2004 22:06:27 +0200 (CEST)
+..crash in cor, reproducible on Linux
 
 Directory:  Documentation
 
@@ -428,6 +453,10 @@ Date: Tue, 13 Apr 2004 01:45:28 +0200 (CEST)
 Subject: postscript image problem
 From: jonathan_lees@unc.edu
 Date: Tue, 13 Apr 2004 23:38:56 +0200 (CEST)
+* PR# 7031 *
+Subject: vfont and title()
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Tue, 29 Jun 2004 10:23:47 -0400
 
 Directory:  In-Out
 
@@ -611,32 +640,41 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 ..Incorrect result confirmed on RH8.0 and segfault on Windows (BDR)
 ..The segfault is under a call to regexec: PCRE is not used.
 ..If perl=TRUE is included, this works, fast.
+* PR# 7022 *
+Subject: Bug in parse(text = <long polynom>)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 25 Jun 2004 09:19:32 +0200
+* PR# 7027 *
+Subject: Problem with hasArg and the ... argument
+From: j.j.goeman@lumc.nl
+Date: Mon, 28 Jun 2004 11:12:27 +0200 (CEST)
+..Problem is if sys.function() should be changed or its docs.  See further 
+..discussion on R-devel.
 
 Directory:  Macintosh
 
-* PR# 6882 *
-Subject: Darwin Framework and Application Install Directory Improvements
-From: ch-r@bobobeach.com
-Date: Thu, 13 May 2004 20:55:36 +0200 (CEST)
-..Lots of assertions, no evidence of a bug.
 * PR# 6903 *
 Subject: Memory Leak in OS X versions?
 From: dvanbrunt@well-wired.com
 Date: Fri, 21 May 2004 15:24:05 +0200 (CEST)
-* PR# 6920 *
-Subject: cannot start help
-From: Kuo-Chen Chan <kuochen@mac.com>
-Date: Fri, 28 May 2004 00:55:54 -0400
-..MacOS X, no actual error described.
 * PR# 6940 *
 Subject: Crash in OSX
 From: murray.pung@studentmail.newcastle.edu.au
 Date: Sat,  5 Jun 2004 04:36:52 +0200 (CEST)
-* PR# 6964 *
-Subject: Re: [Rd] =?iso-8859-1?q?Can=B4t_start_help_and_update_on_Mac_=28PR?=
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 10 Jun 2004 12:37:06 +0100 (BST)
-..Grabbled header: part of PR#6920
+* PR# 7030 *
+Subject: input file and console command size limit
+From: jerome.mutterer@ibmp-ulp.u-strasbg.fr
+Date: Tue, 29 Jun 2004 09:00:36 +0200 (CEST)
+..On R Aqua on MacOS X
+* PR# 7036 *
+Subject: Installation of R 1.9 on Mac OS X 10.3
+From: deejemon@eudoramail.com
+Date: Wed, 30 Jun 2004 03:26:05 +0200 (CEST)
+* PR# 7047 *
+Subject: DSTEIN error
+From: weigand.stephen@charter.net
+Date: Sat,  3 Jul 2004 05:09:36 +0200 (CEST)
+..Mac OS X BLAS problem
 
 Directory:  Misc
 
@@ -824,10 +862,18 @@ Subject: R fails to build on AFS
 From: Atro.Tossavainen+rproject@helsinki.fi
 Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
 ..insufficent information: what was the error message?
+* PR# 7062 *
+Subject: fedora core 2 + bitmap() + ghostscript
+From: Piers Dunstan <Piers.Dunstan@csiro.au>
+Date: Wed, 07 Jul 2004 10:01:42 +1000
 
 Directory:  TooMuchAtOnce
 
-none
+* PR# 7008 *
+Subject: dates
+From: gilescrane@doh.state.nj.us
+Date: Tue, 22 Jun 2004 22:18:41 +0200 (CEST)
+..Nothing to reproduce here
 
 Directory:  Windows
 
@@ -882,51 +928,67 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Re: [R] Error message during debug
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Tue, 20 Apr 2004 14:15:05 -0400
-* PR# 6904 *
-Subject: Failure to preserve package attribute when coercing S4 objects
-From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
-Date: Fri, 21 May 2004 15:04:10 +0100
-* PR# 6961 *
-Subject: bug in  bandwidths.R (function bw.nrd0)
-From: "Zhang, Yunyu" <Yunyu_Zhang@dfci.harvard.edu>
-Date: Wed, 9 Jun 2004 10:14:03 -0400 
-* PR# 6967 *
-Subject: na.omit and class conversion
-From: mark0060@tc.umn.edu
-Date: Thu, 10 Jun 2004 19:00:25 +0200 (CEST)
-* PR# 6975 *
-Subject: can't create a POSIXct from an actual Unix timestamp
-From: phil@google.com
-Date: Sun, 13 Jun 2004 06:54:07 +0200 (CEST)
-* PR# 6976 *
-Subject: Ehh, U Have Small Pen-i-s, Help Urself month talk strength 
-From: "Delphine Eugene" <fqvhkk6tbjg@jetcity.com>
-Date: Sun, 13 Jun 2004 03:49:36 -0400
-* PR# 6977 *
-Subject: The original software at only a fraction of the cost! ;-) impregnable
-From: "Alfonzo Brown" <Katie@lopezclub.com>
-Date: Sun, 13 Jun 2004 21:12:42 -0500
-* PR# 6978 *
-Subject: inheritance problem in multcomp package
+* PR# 7039 *
+Subject: segfault in apply with "==" and double
+From: chabrier@toulouse.inra.fr
+Date: Thu,  1 Jul 2004 12:26:26 +0200 (CEST)
+* PR# 7052 *
+Subject: Rd2txt bug
+From: "Dorer, David" <DDORER@PARTNERS.ORG>
+Date: Mon, 5 Jul 2004 11:39:18 -0400 
+* PR# 7055 *
+Subject: Wrong object type produced - LANGSXP should be LISTSXP
+From: bauerda@ieee.org
+Date: Tue,  6 Jul 2004 20:25:04 +0200 (CEST)
+* PR# 7068 *
+Subject: Bug in Make or configure: spaces in path
+From: williams.elliot@bls.gov
+Date: Thu,  8 Jul 2004 01:50:10 +0200 (CEST)
+* PR# 7072 *
+Subject: Reproducible Rterm crash.
 From: "Richard M. Heiberger" <rmh@temple.edu>
-Date: Sun, 13 Jun 2004 21:35:50 -0400
-* PR# 6979 *
-Subject: Windows XP Professional with Office will be only $50! andrews
-From: Bettye Austin <Anna@pcmail.com.tw>
-Date: Mon, 14 Jun 2004 00:44:45 -0200
-* PR# 6980 *
-Subject: Windows XP Professional with Office will be only $50! tomato
-From: "Todd Peck" <Sonja@radiomexico.com>
-Date: Mon, 14 Jun 2004 10:16:10 +0600
-* PR# 6981 *
-Subject: New powerful weightloss for you.
-From: "Cornelia Carlisle" <carlisle_jo@pagegallery.se>
-Date: Mon, 14 Jun 2004 05:39:45 +0100
-* PR# 6982 *
-Subject: out-of-date information in R for Mac OS X FAQ
-From: d.firth@warwick.ac.uk
-Date: Tue, 15 Jun 2004 12:50:38 +0200 (CEST)
-* PR# 6983 *
-Subject: tapply/barplot
-From: "Hjellvik Vidar" <Vidar.Hjellvik@imr.no>
-Date: Tue, 15 Jun 2004 14:20:05 +0200
+Date: Fri, 9 Jul 2004 15:27:56 -0400
+* PR# 7075 *
+Subject: read.table, read.fwf, and na.strings
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Sat, 10 Jul 2004 17:21:01 -0400
+* PR# 7082 *
+Subject: names in `getAnywhere' object don't match docs
+From: rpeng@jhsph.edu
+Date: Mon, 12 Jul 2004 23:36:05 +0200 (CEST)
+* PR# 7083 *
+Subject: Re: [Rd] read.table, read.fwf, and na.strings
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Tue, 13 Jul 2004 00:06:24 -0400
+* PR# 7084 *
+Subject: text(x, y, labels) - recycling problems and RFC
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 13 Jul 2004 18:21:57 +0200
+* PR# 7085 *
+Subject: $21446
+From: "Leopoldo Rosado" <l.rosado_xk@4b.es>
+Date: Tue, 13 Jul 2004 15:05:48 -0500
+* PR# 7086 *
+Subject: umask problem
+From: Karel =?iso-8859-1?Q?Kulhav=FD?= <clock@twibright.com>
+Date: Wed, 14 Jul 2004 06:19:07 +0000
+* PR# 7087 *
+Subject: S.pecial S.tock S.ituation - FCON
+From: "Santos Boone" <iqcmqibdlxce@yahoo.com>
+Date: Wed, 14 Jul 2004 16:16:36 +0200 (CEST)
+* PR# 7088 *
+Subject: Re: [R] constrOptim and function with additional parameters?
+From: Duncan Murdoch <dmurdoch@pair.com>
+Date: Wed, 14 Jul 2004 10:25:07 -0400
+* PR# 7089 *
+Subject: Re: [R] constrOptim and function with additional parameters?
+From: "Roger D. Peng" <rpeng@jhsph.edu>
+Date: Wed, 14 Jul 2004 10:38:28 -0400
+* PR# 7090 *
+Subject: Online notice
+From: "WebCamFan" <xmbrgqw@hush.com>
+Date: Wed, 14 Jul 2004 17:30:34 -0200
+* PR# 7091 *
+Subject: tracing something in a namespace
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Wed, 14 Jul 2004 15:32:59 -0400

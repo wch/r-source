@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-05-10), ISBN 3-900051-00-3
+Version 2.0.0 Under development (unstable) (2004-08-08), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -24,7 +24,6 @@ Buggy version of Kinderman-Ramage generator used. in: RNGkind("Marsaglia-Multica
 > 
 > ### moved from various .Rd files
 > ## abbreviate
-> data(state)
 > for(m in 1:5) {
 +   cat("\n",m,":\n")
 +   print(as.vector(abbreviate(state.name, minl=m)))
@@ -366,9 +365,9 @@ NULL data frame with 0 rows
 NULL data frame with 0 rows
 > !identical(d00, d000)
 [1] TRUE
-> dput(d00, forDisplay=FALSE)
+> dput(d00)
 structure(list(), .Names = character(0), row.names = character(0), class = "data.frame")
-> dput(d000, forDisplay=FALSE)
+> dput(d000)
 structure(list(), row.names = character(0), class = "data.frame")
 > stopifnot(identical(d, cbind(d, d0)),
 +           identical(d, cbind(d0, d)),
@@ -899,7 +898,6 @@ $B$subset
 > # [1] TRUE
 > 
 > ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
-> data(attenu)
 > summary(attenu)
      event            mag           station         dist       
  Min.   : 1.00   Min.   :5.000   117    :  5   Min.   :  0.50  
@@ -1095,7 +1093,6 @@ Error in summary.manova(gofX.manova) : residuals have rank 3 < 4
 > 
 > ## Prior to 1.3.0 dist did not handle missing values, and the
 > ## internal C code was incorrectly scaling for missing values.
-> data(trees)
 > z <- as.matrix(t(trees))
 > z[1,1] <- z[2,2] <- z[3,3] <- z[2,4] <- NA
 > dist(z, method="euclidean")
@@ -1502,7 +1499,6 @@ x    1  2
 > 
 > 
 > ## Chong Gu 2002-Feb-8: `.' not expanded in drop1
-> data(HairEyeColor)
 > lab <- dimnames(HairEyeColor)
 > HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex),
 +                  Fr=as.vector(HairEyeColor))
@@ -2022,7 +2018,6 @@ attr(,".Environment")
 <environment: R_GlobalEnv>
 > ## both tt and tt2 re-ordered the formula < 1.7.0
 > ## now try with a dot
-> data(warpbreaks)
 > terms(breaks ~ ., data = warpbreaks)
 breaks ~ wool + tension
 attr(,"variables")
@@ -2473,7 +2468,6 @@ x3  0.81       -0.97
 > 
 > 
 > ## list-like indexing of data frames with drop specified
-> data(women)
 > women["height"]
    height
 1      58
@@ -3243,7 +3237,7 @@ Error in "[.data.frame"(x, 1, c("a", "c")) :
 [36] str           subset        summary       t             tail         
 [41] transform     unique        unstack      
 > meth2gen("dendrogram")
-[1] [[      cut     plot    print   reorder rev     str    
+[1] [[      cut     labels  plot    print   reorder rev     str    
 > ## --> the output may need somewhat frequent updating..
 > 
 > 
@@ -4019,10 +4013,20 @@ attr(,".Environment")
 Error in try(x[-c(1, NA)]) : only 0's may mix with negative subscripts
 > ## worked on some platforms, segfaulted on others in 1.8.1
 > 
+> 
 > ## vector 'border' (and no 'pch', 'cex' nor 'bg'):
-> data(InsectSprays)
 > boxplot(count ~ spray, data = InsectSprays, border=2:7)
 > ## gave warnings in 1.9.0
+> 
+> summary(as.Date(paste("2002-12", 26:31, sep="-")))
+        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"2002-12-26" "2002-12-27" "2002-12-28" "2002-12-28" "2002-12-29" "2002-12-31" 
+> ## printed all "2002.-12-29" in 1.9.1 {because digits was too small}
+> as.matrix(data.frame(d = as.POSIXct("2004-07-20")))
+  d           
+1 "2004-07-20"
+> ## gave a warning in 1.9.1
+> 
 > 
 > ## Dump should quote when necessary (PR#6857)
 > x <- quote(b)
@@ -4051,4 +4055,92 @@ quote(b)
                           a  aa 
  21  22  23  24  25  26 100 102 
 > ##
+> 
+> 
+> ## tests of raw type
+> # tests of logic operators
+> x <- "A test string"
+> (y <- charToRaw(x))
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67
+> (xx <- c(y, as.raw(0), charToRaw("more")))
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67 00 6d 6f 72 65
+> 
+> !y
+ [1] be df 8b 9a 8c 8b df 8c 8b 8d 96 91 98
+> y & as.raw(15)
+ [1] 01 00 04 05 03 04 00 03 04 02 09 0e 07
+> y | as.raw(128)
+ [1] c1 a0 f4 e5 f3 f4 a0 f3 f4 f2 e9 ee e7
+> 
+> # tests of binary read/write
+> zz <- file("testbin", "wb")
+> writeBin(xx, zz)
+> close(zz)
+> zz <- file("testbin", "rb")
+> (yy <- readBin(zz, "raw", 100))
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67 00 6d 6f 72 65
+> seek(zz, 0, "start")
+[1] 18
+> readBin(zz, "integer", n=100, size = 1) # read as small integers
+ [1]  65  32 116 101 115 116  32 115 116 114 105 110 103   0 109 111 114 101
+> seek(zz, 0, "start")
+[1] 18
+> readBin(zz, "character", 100)  # is confused by embedded nul.
+[1] "A test string" ""             
+Warning message: 
+incomplete string at end of file has been discarded 
+> seek(zz, 0, "start")
+[1] 18
+> readChar(zz, length(xx)) # correct
+[1] "A test string\0more"
+> close(zz)
+> unlink("testbin")
+> 
+> # tests of ASCII read/write.
+> cat(xx, file="testascii")
+> scan("testascii", what=raw(0))
+Read 18 items
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67 00 6d 6f 72 65
+> unlink("testascii")
+> ##
+> 
+> 
+> ## Example of prediction not from newdata as intended.
+> set.seed(1)
+> y <- rnorm(10)
+> x  <- cbind(1:10, sample(1:10)) # matrix
+> xt <- cbind(1:2,  3:4)
+> (lm1 <- lm(y ~ x))
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)           x1           x2  
+     0.4359      -0.1376       0.1539  
+
+> predict(lm1, newdata = data.frame(x= xt))
+          1           2           3           4           5           6 
+ 1.83760728  0.93041126  0.17714205  0.19350695  1.13343277  0.84194402 
+          7           8           9          10 
+ 0.08867482  0.25896653  0.27533143 -0.47793778 
+Warning message: 
+'newdata' had 2 rows but variable(s) found have 10 rows 
+> ## warns as from 2.0.0
+> 
+> 
+> ## eval could alter a data.frame/list second argument
+> data(trees)
+> a <- trees
+> eval(quote({Girth[1]<-NA;Girth}),a)
+ [1]   NA  8.6  8.8 10.5 10.7 10.8 11.0 11.0 11.1 11.2 11.3 11.4 11.4 11.7 12.0
+[16] 12.9 12.9 13.3 13.7 13.8 14.0 14.2 14.5 16.0 16.3 17.3 17.5 17.9 18.0 18.0
+[31] 20.6
+> a[1, ]
+  Girth Height Volume
+1   8.3     70   10.3
+> trees[1, ]
+  Girth Height Volume
+1   8.3     70   10.3
+> ## both a and trees got altered in 1.9.1
 > 

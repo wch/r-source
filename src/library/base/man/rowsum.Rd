@@ -43,7 +43,7 @@ rowsum(x, group, reorder = TRUE, \dots)
 }
 
 \seealso{
-  \code{\link{tapply}}, \code{\link[stats]{aggregate}}, \code{\link{rowSums}}
+  \code{\link{tapply}}, \code{\link{aggregate}}, \code{\link{rowSums}}
 }
 \examples{
 x <- matrix(runif(100), ncol=5)

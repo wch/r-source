@@ -15,7 +15,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
-library(graphics)
+library(grDevices)
 library(grid)
 ps.options(pointsize=12)
 options(width=60)
@@ -394,6 +394,15 @@ layout.  Future effort will be put into speeding up the creation of
 unit objects.
 \end{enumerate}
 
+% Start a new page
+% Not echoed, not evaluated
+% ONLY here for checkVignettes so that all output doesn't
+% end up on one enormous page
+
+<<eval=FALSE, echo=FALSE>>=
+grid.newpage()
+
+@
 \end{document}
 
 

@@ -60,7 +60,6 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
   Monterey, CA: Wadsworth.
 }
 \examples{
-data(VADeaths)
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940")
 op <- par(xaxs="i")# 0 -- 100\%
 dotchart(t(VADeaths), xlim = c(0,100),

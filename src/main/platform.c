@@ -664,9 +664,10 @@ static void count_files(char *dnp, int *count,
 			     R_FileSep, de->d_name);
 		    stat(p, &sb);
 		    if((sb.st_mode & S_IFDIR) > 0) {
-			 count_files(p, count, allfiles, recursive,
-				     pattern, reg);
-			 continue;
+			if (strcmp(de->d_name, ".") && strcmp(de->d_name, ".."))
+				count_files(p, count, allfiles, recursive,
+				   	    pattern, reg);
+			continue;
 		    }
 		}
 #endif
@@ -698,14 +699,16 @@ static void list_files(char *dnp, char *stem, int *count, SEXP ans,
 			     R_FileSep, de->d_name);
 		    stat(p, &sb);
 		    if((sb.st_mode & S_IFDIR) > 0) {
-			if(stem)
-			    snprintf(stem2, PATH_MAX, "%s%s%s", stem,
-				     R_FileSep, de->d_name);
-			else
-			    strcpy(stem2, de->d_name);
-			list_files(p, stem2, count, ans, allfiles, recursive,
+			if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
+			    if(stem)
+			    	snprintf(stem2, PATH_MAX, "%s%s%s", stem,
+				         R_FileSep, de->d_name);
+			    else
+			    	strcpy(stem2, de->d_name);
+			    list_files(p, stem2, count, ans, allfiles, recursive,
 				   pattern, reg);
-			 continue;
+		    	}
+			continue;
 		    }
 		}
 #endif
@@ -746,7 +749,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifndef HAVE_STAT
     if(recursive) {
 	warningcall(call,
-		    "`recursive = TRUE' is not supported on this platform");
+		    "'recursive = TRUE' is not supported on this platform");
 	recursive = FALSE;
     }
 #endif
@@ -956,7 +959,7 @@ SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     cat = asInteger(CAR(args));
     if(cat == NA_INTEGER || cat < 0)
-	error("invalid `category' argument");
+	error("invalid 'category' argument");
     switch(cat) {
     case 1: cat = LC_ALL; break;
     case 2: cat = LC_COLLATE; break;
@@ -989,9 +992,9 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     cat = asInteger(CAR(args));
     if(cat == NA_INTEGER || cat < 0)
-	error("invalid `category' argument");
+	error("invalid 'category' argument");
     if(!isString(locale) || LENGTH(locale) != 1)
-	error("invalid `locale' argument");
+	error("invalid 'locale' argument");
     switch(cat) {
     case 1: cat = LC_ALL; break;
     case 2: cat = LC_COLLATE; break;
@@ -1244,7 +1247,7 @@ SEXP do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
     hp = gethostbyname(name);
 
     if(hp == NULL) {		/* cannot resolve the address */
-	warning("nsl() was unable to resolve host `%s'", name);
+	warning("nsl() was unable to resolve host '%s'", name);
     } else {
 	if (hp->h_addrtype == AF_INET) {
 	    struct in_addr in;
@@ -1282,7 +1285,7 @@ SEXP do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* mkdir is defined in <sys/stat.h> */
 SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  path, ans;
+    SEXP path, ans;
     int res, show;
 
     checkArity(op, args);
@@ -1291,7 +1294,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid path argument");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
-    res = mkdir(CHAR(STRING_ELT(path, 0)), 0777);
+    res = mkdir(R_ExpandFileName(CHAR(STRING_ELT(path, 0))), 0777);
     if(show && res && errno == EEXIST)
 	warning("'%s' already exists", CHAR(STRING_ELT(path, 0)));
     PROTECT(ans = allocVector(LGLSXP, 1));
@@ -1317,7 +1320,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     /* need DOS paths on Win 9x */
     for(p = dir; *p != '\0'; p++)
 	if(*p == '/') *p = '\\';
-    res = mkdir(dir);
+    res = mkdir(R_ExpandFileName(dir));
     if(show && res && errno == EEXIST)
 	warning("'%s' already exists", dir);
     PROTECT(ans = allocVector(LGLSXP, 1));

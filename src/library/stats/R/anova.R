@@ -60,7 +60,7 @@ printCoefmat <-
     if(any(r.ind <- !((1:nc) %in% c(cs.ind,tst.ind,zap.ind, if(has.Pvalue)nc))))
 	Cf[, r.ind] <- format(xm[, r.ind], digits=digits)
     okP <- if(has.Pvalue) ok[, -nc] else ok
-    x0 <- xm[okP]==0 != (as.numeric(Cf[okP])==0)
+    x0 <- (xm[okP]==0) != (as.numeric(Cf[okP])==0)
     if(length(not.both.0 <- which(x0 & !is.na(x0)))) {
 	## not.both.0==TRUE:  xm !=0, but Cf[] is: --> fix these:
 	Cf[okP][not.both.0] <- format(xm[okP][not.both.0], digits= max(1,digits-1))

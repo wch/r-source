@@ -41,7 +41,6 @@ SSweibull(x, Asym, Drop, lrc, pwr)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}, \code{\link{SSasymp}}
 }
 \examples{
-data(ChickWeight)
 Chick.6 <- subset(ChickWeight, (Chick == 6) & (Time > 0))
 SSweibull(Chick.6$Time, 160, 115, -5.5, 2.5 )  # response only
 Asym <- 160; Drop <- 115; lrc <- -5.5; pwr <- 2.5

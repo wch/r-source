@@ -1,6 +1,9 @@
 PACKAGE = @PACKAGE@
 VERSION = @VERSION@
 
+abs_top_srcdir = @abs_top_srcdir@
+abs_top_builddir = @abs_top_builddir@
+
 include $(top_srcdir)/share/make/vars.mk
 
 AR = @AR@
@@ -17,7 +20,7 @@ CFLAGS = @CFLAGS@
 CPICFLAGS = @CPICFLAGS@
 CPPFLAGS = @CPPFLAGS@
 DEFS = @DEFS@
-DISTDIR_TAR_EXCLUDE = --exclude=CVS --exclude=Makefile --exclude="*.o" --exclude="*$(SHLIB_EXT)"
+DISTDIR_TAR_EXCLUDE = --exclude=.svn --exclude=CVS --exclude=Makefile --exclude="*.o" --exclude="*$(SHLIB_EXT)"
 DVIPS = @DVIPS@
 DYLIB_EXT = @DYLIB_EXT@
 DYLIB_LD = @DYLIB_LD@
@@ -46,6 +49,7 @@ LATEX = @LATEX@
 LDFLAGS = @LDFLAGS@
 LIBGLADE_CFLAGS = @LIBGLADE_CFLAGS@
 LIBGLADE_LIBS = @LIBGLADE_LIBS@
+LIBM = @LIBM@
 LIBR = @LIBR@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@

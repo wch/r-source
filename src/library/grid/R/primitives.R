@@ -23,7 +23,7 @@ moveToGrob <- function(x=0, y=0,
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  grob(x=x, y=y, 
+  grob(x=x, y=y,
        name=name, vp=vp, cl="move.to")
 }
 
@@ -58,7 +58,7 @@ lineToGrob <- function(x=1, y=1,
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  grob(x=x, y=y, 
+  grob(x=x, y=y,
        name=name, gp=gp, vp=vp, cl="line.to")
 }
 
@@ -169,7 +169,6 @@ validDetails.arrows <- function(x) {
       stop("x and y must be units")
   } else {
     lineThing <- getGrob(x, grobName)
-    cl <- class(lineThing)
     # The grob can only be a "lines" or "segments"
     # (splines would be another candidate if they existed)
     if (!(inherits(lineThing, "lines") ||
@@ -278,7 +277,7 @@ grid.arrows <- function(x=c(0.25, 0.75), y=0.5,
                         angle=30, length=unit(0.25, "inches"),
                         ends="last", type="open",
                         name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
-  ag <- arrowsGrob(x=x, y=y, 
+  ag <- arrowsGrob(x=x, y=y,
                    default.units=default.units,
                    grob=grob, angle=angle, length=length,
                    ends=ends, type=type,
@@ -328,7 +327,7 @@ drawDetails.polygon <- function(x, recording=TRUE) {
     for (i in unique(id)) {
       index[[count]] <- as.integer((1:length(x$x))[id == i])
       count <- count + 1
-    } 
+    }
     grid.Call.graphics("L_polygon", x$x, x$y, index)
   }
 }
@@ -385,7 +384,7 @@ circleGrob <- function(x=0.5, y=0.5, r=0.5,
     r <- unit(r, default.units)
   grob(x=x, y=y, r=r, name=name, gp=gp, vp=vp, cl="circle")
 }
-              
+
 grid.circle <- function(x=0.5, y=0.5, r=0.5,
                         default.units="npc",
                         name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
@@ -438,7 +437,7 @@ rectGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
   grob(x=x, y=y, width=width, height=height, just=just,
        name=name, gp=gp, vp=vp, cl="rect")
 }
-            
+
 grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
                       width=unit(1, "npc"), height=unit(1, "npc"),
                       just="centre", default.units="npc",
@@ -489,7 +488,7 @@ textGrob <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  grob(label=label, x=x, y=y, 
+  grob(label=label, x=x, y=y,
        just=just, rot=rot, check.overlap=check.overlap,
        name=name, gp=gp, vp=vp, cl="text")
 }
@@ -554,7 +553,7 @@ grid.points <- function(x=runif(10),
                         default.units="native",
                         name=NULL, gp=gpar(),
                         draw=TRUE, vp=NULL) {
-  pg <- pointsGrob(x=x, y=y, pch=pch, size=size, 
+  pg <- pointsGrob(x=x, y=y, pch=pch, size=size,
                    default.units=default.units,
                    name=name, gp=gp, vp=vp)
   if (draw)

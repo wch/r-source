@@ -22,8 +22,6 @@
 #define DEFN_H_
 
 #define COUNTING
-/* allows underscore in syntactic names, as from 1.9.0 */
-#define UNDERSCORE_IN_NAMES 1
 
 #define BYTECODE
 #define NEW_CONDITION_HANDLING
@@ -576,6 +574,8 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define DispatchOrEval		Rf_DispatchOrEval
 # define duplicated		Rf_duplicated
 # define dynamicfindVar		Rf_dynamicfindVar
+# define EncodeRaw              Rf_EncodeRaw
+# define EncodeString           Rf_EncodeString
 # define endcontext		Rf_endcontext
 # define errorcall		Rf_errorcall
 # define ErrorMessage		Rf_ErrorMessage
@@ -680,6 +680,17 @@ SEXP R_GetVarLocSymbol(R_varloc_t);
 Rboolean R_GetVarLocMISSING(R_varloc_t);
 void R_SetVarLocValue(R_varloc_t, SEXP);
 
+/* deparse option bits */
+
+#define KEEPINTEGER 		1
+#define QUOTEEXPRESSIONS 	2
+#define SHOWATTRIBUTES 		4
+#define USESOURCE 		8
+#define WARNINCOMPLETE 		16
+/* common combinations of the above */
+#define SIMPLEDEPARSE		0
+#define FORSOURCING		31
+
 /* Other Internally Used Functions */
 
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
@@ -689,7 +700,7 @@ void CheckFormals(SEXP);
 void CleanEd(void);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
-SEXP deparse1(SEXP,Rboolean,Rboolean,Rboolean);
+SEXP deparse1(SEXP,Rboolean,int);
 SEXP deparse1line(SEXP,Rboolean);
 int DispatchOrEval(SEXP, SEXP, char*, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
@@ -828,6 +839,7 @@ int yywrap(void);
 
 /* ../../main/printutils.c : */
 int	Rstrlen(SEXP, int);
+char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, int);
 
 /* Macros for suspending interrupts */

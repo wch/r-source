@@ -21,8 +21,9 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
     consistency of length and names.}
   \item{check.names}{logical.  If \code{TRUE} then the names of the
     variables in the data frame are checked to ensure that they are
-    syntactically valid variable names.  If necessary they are adjusted
-    (by \code{\link{make.names}}) so that they are.}
+    syntactically valid variable names and are not duplicated.
+    If necessary they are adjusted (by \code{\link{make.names}})
+    so that they are.}
 }
 \value{
   A data frame, a matrix-like structure whose columns may be of
@@ -71,7 +72,7 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
 }
 \seealso{
   \code{\link{I}},
-  \code{\link[graphics]{plot.data.frame}},
+  \code{\link{plot.data.frame}},
   \code{\link{print.data.frame}},
   \code{\link{row.names}},
   \code{\link{[.data.frame}} for subsetting methods,

@@ -1,6 +1,12 @@
 \name{symbols}
 \alias{symbols}
-\title{Draw symbols on a plot}
+\concept{circle}
+\concept{star}
+\concept{square}
+\concept{rectangle}
+\concept{thermometer}
+\concept{boxplot}
+\title{Draw Symbols (Circles, Squares, Stars, Thermometers, Boxplots) on a Plot}
 \description{
   This function draws symbols on a plot.  One of six symbols;
   \emph{circles}, \emph{squares}, \emph{rectangles}, \emph{stars},
@@ -94,7 +100,6 @@ symbols(x, y, thermometers = z3, inches=FALSE)
 text(x,y, apply(format(round(z3, dig=2)), 1, paste, collapse = ","),
      adj = c(-.2,0), cex = .75, col = "purple", xpd=NA)
 
-data(trees)
 ## Note that  example(trees)  shows more sensible plots!
 N <- nrow(trees)
 attach(trees)

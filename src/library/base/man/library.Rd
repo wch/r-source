@@ -41,7 +41,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 .Last.lib(libpath)
 
 .packages(all.available = FALSE, lib.loc = NULL)
-.path.package(package = .packages(), quiet = FALSE)
+.path.package(package, quiet = FALSE)
 .find.package(package, lib.loc = NULL, quiet = FALSE,
               verbose = getOption("verbose"))
 .libPaths(new)
@@ -80,13 +80,15 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package loading is printed.}
   \item{save}{logical or environment.  If \code{TRUE}, a call to
-  \code{require} from the source for a package will save the name of
-  the required package in the variable \code{".required"}, allowing
-  function \code{\link{detach}} to warn if a required package is
-  detached. See section \sQuote{Packages that require other packages} below.}
+    \code{require} from the source for a package will save the name of
+    the required package in the variable \code{".required"}, allowing
+    function \code{\link{detach}} to warn if a required package is
+    detached. See section \sQuote{Packages that require other packages} below.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
-  \item{pkgname}{a character string giving the name of the package.}
+  \item{pkgname}{a character string giving the name of the package,
+    including the version number if the package was installed with
+    \code{--with-package-versions}.}
   \item{libpath}{a character string giving the complete path to the
     package.}
   \item{all.available}{logical; if \code{TRUE} return a character vector
@@ -116,7 +118,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   change in future versions.  In earlier versions of R, only the names
   of all available packages were returned; use \code{.packages(all =
     TRUE)} for obtaining these.  Note that
-  \code{\link[utils:update.packages]{installed.packages}()}
+  \code{\link{installed.packages}()}
   returns even more information.
 
   \code{library(help = somename)} computes basic information about the
@@ -212,7 +214,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   new package.  The saved package names are used by
   \code{\link{detach}} when a package is detached to warn if other
   packages still require the detached package.  Also, if a package is
-  installed with saved image (see \link[utils]{INSTALL}), the saved package
+  installed with saved image (see \link{INSTALL}), the saved package
   names are used to require these packages when the new package is attached.}
 \section{Formal methods}{
   \code{library} takes some further actions when package \pkg{methods}
@@ -241,16 +243,10 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   because of potential problems with line endings and OS-specific help
   files.
 
-  \code{library} and \code{require} use the underlying file system
-  services to locate the libraries, with the result that on
-  case-sensitive file systems package names are case-sensitive
-  (i.e., \code{library(foo)} is different from
-  \code{library(Foo)}), but they are not distinguished on
-  case-insensitive file systems such as MS Windows.  A warning
-  is issued if the user specifies a name which isn't a perfect match
-  to the package name, because future versions of \R will require
-  exact matches.
-
+  As of version 2.0.0, the package name given to \code{library} and
+  \code{require} must match the name given in the package's
+  \code{DESCRIPTION} file exactly, even on case-insensitive file systems
+  such as MS Windows.
 }
 \author{
   R core;
@@ -261,9 +257,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{autoload}},
   \code{\link{library.dynam}}, \code{\link{data}},
-  \code{\link[utils]{install.packages}} and
-  \code{\link[utils]{installed.packages}};
-  \code{\link[utils]{INSTALL}}, \code{\link[utils]{REMOVE}}.
+  \code{\link{install.packages}} and
+  \code{\link{installed.packages}};
+  \code{\link{INSTALL}}, \code{\link{REMOVE}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

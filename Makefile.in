@@ -82,11 +82,11 @@ install: installdirs
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome); \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)"; \
 	done
 @WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
 @WANT_R_FRAMEWORK_TRUE@		@(sed 's/^LIBR =.*/LIBR = -framework R/' \
-@WANT_R_FRAMEWORK_TRUE@		  $(top_builddir)/etc/Makeconf > $(rhome)/etc/Makeconf)
+@WANT_R_FRAMEWORK_TRUE@		  $(top_builddir)/etc/Makeconf > "$(rhome)/etc/Makeconf")
 @WANT_R_FRAMEWORK_TRUE@		@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/R > \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/RR)
@@ -96,18 +96,18 @@ install: installdirs
 
 
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)
+	@$(MKINSTALLDIRS) "$(rhome)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@for f in $(INSTFILES); do \
-	  rm -f $(rhome)/$${f}; \
+	  rm -f "$(rhome)/$${f}"; \
 	done
-	@rm -rf $(Rexecbindir) $(Rexeclibdir)
-	@rm -rf $(rhome)/demos
-	@rm -rf $(rhome)/gnome
+	@rm -rf "$(Rexecbindir)" "$(Rexeclibdir)"
+	@rm -rf "$(rhome)/demos"
+	@rm -rf "$(rhome)/gnome"
 
 
 mostlyclean: clean
@@ -120,7 +120,7 @@ clean:
 distclean: clean
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
-	-@rm -rf bin include library modules gnome
+	-@rm -rf bin include lib library modules gnome
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool
 maintainer-clean: distclean
@@ -155,7 +155,7 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
-	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done

@@ -168,18 +168,15 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail, demean = TRUE,
 }
 
 \examples{
-data(lh)
 ar(lh)
 ar(lh, method="burg")
 ar(lh, method="ols")
 ar(lh, FALSE, 4) # fit ar(4)
 
-data(sunspot)
 (sunspot.ar <- ar(sunspot.year))
 predict(sunspot.ar, n.ahead=25)
 ## try the other methods too
 
-data(BJsales)
 ar(ts.union(BJsales, BJsales.lead))
 ## Burg is quite different here, as is OLS (see ar.ols)
 ar(ts.union(BJsales, BJsales.lead), method="burg")

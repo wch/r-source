@@ -24,7 +24,6 @@ ave(x, \dots, FUN = mean)
 \examples{
 ave(1:3)# no grouping -> grand mean
 
-data(warpbreaks)
 attach(warpbreaks)
 ave(breaks, wool)
 ave(breaks, tension)

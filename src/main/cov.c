@@ -397,13 +397,13 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (nrows(y) != n)
 		errorcall(call, "incompatible dimensions");
 	    ncy = ncols(y);
+	    ansmat = (1);
 	}
 	else {
 	    if (length(y) != n)
 		errorcall(call, "incompatible dimensions");
 	    ncy = 1;
 	}
-	ansmat = (ansmat || isMatrix(y));
     }
     args = CDR(args);
     /* Arg.3:  method */
@@ -485,8 +485,8 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    UNPROTECT(1);
     if(sd_0)/* only in cor() */
 	warningcall(call, "The standard deviation is zero");
+    UNPROTECT(1);
     return ans;
 }

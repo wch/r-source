@@ -39,7 +39,6 @@ lag(x, \dots)
 \seealso{\code{\link{diff}}, \code{\link{deltat}} }
 
 \examples{
-data(UKLungDeaths)
 lag(ldeaths, 12) # starts one year earlier
 }
 \keyword{ts}

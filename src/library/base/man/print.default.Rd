@@ -22,8 +22,9 @@
     (\code{\link{character}}s) should be printed with surrounding quotes.}
   \item{na.print}{a character string which is used to indicate
     \code{\link{NA}} values in printed output, or \code{NULL} (see Details)}
-  \item{print.gap}{an integer, giving the spacing between adjacent columns
-    in printed matrices and arrays, or \code{NULL} meaning 1.}
+  \item{print.gap}{a non-negative integer \eqn{\le 1024}{<= 1024},
+    giving the spacing between adjacent \dQuote{columns} in printed
+    vectors, matrices and arrays, or \code{NULL} meaning 1.}
   \item{right}{logical, indicating whether or not strings should be
     right-aligned. The default is left-alignment.}
   \item{\dots}{further arguments to be passed to or from other
@@ -32,7 +33,7 @@
 \details{
   Prior to \R 1.7.0, \code{print.matrix} did not
   print attributes and did not have a \code{digits} argument.
-  
+
   The default for printing \code{NA}s is to print \code{NA} (without
   quotes) unless this is a character \code{NA} \emph{and} \code{quote =
     FALSE}, when \code{<NA>} is printed.
@@ -47,7 +48,7 @@
   default values (for the methods called) of the other arguments.
 
   When the \pkg{methods} package is attached, \code{print} will call
-  \code{\link[methods]{show}} for methods with formal classes if called
+  \code{\link{show}} for methods with formal classes if called
   with no optional arguments.
 }
 \seealso{The generic \code{\link{print}}, \code{\link{options}}.

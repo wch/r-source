@@ -6,7 +6,6 @@ RNGversion("1.6.2")
 
 ### moved from various .Rd files
 ## abbreviate
-data(state)
 for(m in 1:5) {
   cat("\n",m,":\n")
   print(as.vector(abbreviate(state.name, minl=m)))
@@ -66,8 +65,8 @@ str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
 (d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
 (d000 <- data.frame()) #but not quite the same as d00:
 !identical(d00, d000)
-dput(d00, forDisplay=FALSE)
-dput(d000, forDisplay=FALSE)
+dput(d00)
+dput(d000)
 stopifnot(identical(d, cbind(d, d0)),
           identical(d, cbind(d0, d)),
           identical(d, rbind(d,d.0)),
@@ -292,7 +291,6 @@ test.list
 # [1] TRUE
 
 ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
-data(attenu)
 summary(attenu)
 summary(attenu, digits = 5)
 summary(data.matrix(attenu), digits = 5)# the same for matrix
@@ -373,7 +371,6 @@ try(summary(gofX.manova))
 
 ## Prior to 1.3.0 dist did not handle missing values, and the
 ## internal C code was incorrectly scaling for missing values.
-data(trees)
 z <- as.matrix(t(trees))
 z[1,1] <- z[2,2] <- z[3,3] <- z[2,4] <- NA
 dist(z, method="euclidean")
@@ -547,7 +544,6 @@ predict(fit, newdata=data[1:2, ])
 
 
 ## Chong Gu 2002-Feb-8: `.' not expanded in drop1
-data(HairEyeColor)
 lab <- dimnames(HairEyeColor)
 HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex),
                  Fr=as.vector(HairEyeColor))
@@ -767,7 +763,6 @@ stopifnot(identical(tt, tt2))
 terms(delete.response(tt))
 ## both tt and tt2 re-ordered the formula < 1.7.0
 ## now try with a dot
-data(warpbreaks)
 terms(breaks ~ ., data = warpbreaks)
 terms(breaks ~ . - tension, data = warpbreaks)
 terms(breaks ~ . - tension, data = warpbreaks, simplify = TRUE)
@@ -925,7 +920,6 @@ summary(fit, cor = TRUE)
 
 
 ## list-like indexing of data frames with drop specified
-data(women)
 women["height"]
 women["height", drop = FALSE]  # same with a warning
 women["height", drop = TRUE]   # ditto
@@ -1274,10 +1268,16 @@ x <- 1:3
 try(x[-c(1, NA)])
 ## worked on some platforms, segfaulted on others in 1.8.1
 
+
 ## vector 'border' (and no 'pch', 'cex' nor 'bg'):
-data(InsectSprays)
 boxplot(count ~ spray, data = InsectSprays, border=2:7)
 ## gave warnings in 1.9.0
+
+summary(as.Date(paste("2002-12", 26:31, sep="-")))
+## printed all "2002.-12-29" in 1.9.1 {because digits was too small}
+as.matrix(data.frame(d = as.POSIXct("2004-07-20")))
+## gave a warning in 1.9.1
+
 
 ## Dump should quote when necessary (PR#6857)
 x <- quote(b)
@@ -1296,3 +1296,54 @@ names(x) <- rep("", 26)
 x[c("a", "aa", "aa")] <- 100:102
 x
 ##
+
+
+## tests of raw type
+# tests of logic operators
+x <- "A test string"
+(y <- charToRaw(x))
+(xx <- c(y, as.raw(0), charToRaw("more")))
+
+!y
+y & as.raw(15)
+y | as.raw(128)
+
+# tests of binary read/write
+zz <- file("testbin", "wb")
+writeBin(xx, zz)
+close(zz)
+zz <- file("testbin", "rb")
+(yy <- readBin(zz, "raw", 100))
+seek(zz, 0, "start")
+readBin(zz, "integer", n=100, size = 1) # read as small integers
+seek(zz, 0, "start")
+readBin(zz, "character", 100)  # is confused by embedded nul.
+seek(zz, 0, "start")
+readChar(zz, length(xx)) # correct
+close(zz)
+unlink("testbin")
+
+# tests of ASCII read/write.
+cat(xx, file="testascii")
+scan("testascii", what=raw(0))
+unlink("testascii")
+##
+
+
+## Example of prediction not from newdata as intended.
+set.seed(1)
+y <- rnorm(10)
+x  <- cbind(1:10, sample(1:10)) # matrix
+xt <- cbind(1:2,  3:4)
+(lm1 <- lm(y ~ x))
+predict(lm1, newdata = data.frame(x= xt))
+## warns as from 2.0.0
+
+
+## eval could alter a data.frame/list second argument
+data(trees)
+a <- trees
+eval(quote({Girth[1]<-NA;Girth}),a)
+a[1, ]
+trees[1, ]
+## both a and trees got altered in 1.9.1

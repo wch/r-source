@@ -15,7 +15,7 @@ mosaicplot(x, \dots)
                    type = c("pearson", "deviance", "FT"), \dots)
 
 \method{mosaicplot}{formula}(formula, data = NULL, \dots,
-          main = deparse(substitute(data)), subset, na.action = na.omit)
+          main = deparse(substitute(data)), subset, na.action = stats::na.omit)
 }
 \arguments{
   \item{x}{a contingency table in array form, with optional category
@@ -48,7 +48,7 @@ mosaicplot(x, \dots)
     4.}
   \item{margin}{a list of vectors with the marginal totals to be fit in
     the log-linear model.  By default, an independence model is fitted.
-    See \code{\link[stats]{loglin}} for further information.}
+    See \code{\link{loglin}} for further information.}
   \item{cex.axis}{The magnification to be used for axis annotation,
     as a multiple of \code{par("cex")}.}
   \item{las}{numeric; the style of axis labels, see \code{\link{par}}.}
@@ -131,15 +131,13 @@ mosaicplot(x, \dots)
 }
 \seealso{
   \code{\link{assocplot}},
-  \code{\link[stats]{loglin}}.
+  \code{\link{loglin}}.
 }
 \examples{
-data(Titanic)
 mosaicplot(Titanic, main = "Survival on the Titanic", color = TRUE)
 ## Formula interface for tabulated data:
 mosaicplot(~ Sex + Age + Survived, data = Titanic, color = TRUE)
 
-data(HairEyeColor)
 mosaicplot(HairEyeColor, shade = TRUE)
 ## Independence model of hair and eye color and sex.  Indicates that
 ## there are significantly more blue eyed blonde females than expected
@@ -153,7 +151,6 @@ mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 
 ## Formula interface for raw data: visualize crosstabulation of numbers
 ## of gears and carburettors in Motor Trend car data.
-data(mtcars)
 mosaicplot(~ gear + carb, data = mtcars, color = TRUE, las = 1)
 mosaicplot(~ gear + carb, data = mtcars, color = 2:3, las = 1)# color recycling
 }

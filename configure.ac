@@ -171,7 +171,7 @@ AC_ARG_ENABLE([R-shlib],
 [want_R_shlib="${want_R_framework}"])
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
 if test "${want_R_shlib}" = yes; then
-  LIBR="-L\$(R_HOME)/bin -lR"
+  LIBR="-L\$(R_HOME)/lib -lR"
 else
   LIBR=
 fi
@@ -198,6 +198,7 @@ if test x"${use_strict_barrier}" = xyes; then
             [Define to enable provoking compile errors on write barrier
              violation.])
 fi
+
 
 ### ** Optional packages.
 
@@ -1232,6 +1233,7 @@ fi
 R_FUNC_LOG
 R_FUNC_LOG1P
 R_FUNC_STRPTIME
+R_FUNC_FTELL
 
 ## BLAS.
 ## <NOTE>
@@ -1419,8 +1421,12 @@ AC_CONFIG_FILES(
   src/library/Makefile
   src/library/base/DESCRIPTION
   src/library/base/Makefile
+  src/library/datasets/DESCRIPTION
+  src/library/datasets/Makefile
   src/library/graphics/DESCRIPTION
   src/library/graphics/Makefile
+  src/library/grDevices/DESCRIPTION
+  src/library/grDevices/Makefile
   src/library/grid/DESCRIPTION
   src/library/grid/Makefile
   src/library/grid/src/Makefile
@@ -1548,6 +1554,9 @@ if test "${use_maintainer_mode}" = yes; then
 fi
 if test "${use_strict_barrier}" = yes; then
   R_SH_VAR_ADD(r_options, [strict barrier], [, ])
+fi
+if test "${use_lazy_loading}" = yes; then
+  R_SH_VAR_ADD(r_options, [lazy loading], [, ])
 fi
 
 AC_MSG_RESULT(

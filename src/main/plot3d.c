@@ -421,13 +421,13 @@ int findGapUp(double *xxx, double *yyy, int ns, double labelDistance,
 	/* Find a gap big enough for the label
 	   use several segments if necessary
 	*/
-	dX = xxx[jjj] - xxx[jjj - n - 1];
+	dX = xxx[jjj] - xxx[jjj - n - 1]; /* jjj - n - 1 == 0 */
 	dY = yyy[jjj] - yyy[jjj - n - 1];
 	dXC = GConvertXUnits(dX, USER, INCHES, dd);
 	dYC = GConvertYUnits(dY, USER, INCHES, dd);
 	distanceSum = hypot(dXC, dYC);
-	jjj = (jjj + 1);
-	n += 1;
+	jjj++;
+	n++;
     }
     if (distanceSum < labelDistance)
 	return 0;
@@ -447,18 +447,18 @@ int findGapDown(double *xxx, double *yyy, int ns, double labelDistance,
 	/* Find a gap big enough for the label
 	   use several segments if necessary
 	*/
-	dX = xxx[jjj] - xxx[jjj + n + 1];
+	dX = xxx[jjj] - xxx[jjj + n + 1]; /*jjj + n + 1 == ns -1 */
 	dY = yyy[jjj] - yyy[jjj + n + 1];
 	dXC = GConvertXUnits(dX, USER, INCHES, dd);
 	dYC = GConvertYUnits(dY, USER, INCHES, dd);
 	distanceSum = hypot(dXC, dYC);
 	jjj--;
-	n -= 1;
+	n++;
     }
     if (distanceSum < labelDistance)
 	return 0;
     else
-	return -n;
+	return n;
 }
 
 /* 
@@ -1359,7 +1359,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
  */
 SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP oargs, c, x, y, z, vfont, col, lty, lwd, labels;
+    SEXP oargs, c, x, y, z, vfont, col, rawcol, lty, lwd, labels;
     int i, j, nx, ny, nc, ncol, nlty, nlwd;
     int ltysave, colsave, lwdsave;
     double cexsave;
@@ -1424,7 +1424,8 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     args = CDR(args);
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    rawcol = CAR(args);
+    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
     ncol = length(col);
     args = CDR(args);
 
@@ -1514,9 +1515,10 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
 	if (Rf_gpptr(dd)->lty == NA_INTEGER)
 	    Rf_gpptr(dd)->lty = ltysave;
-	Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
-	if (Rf_gpptr(dd)->col == NA_INTEGER)
+	if (isNAcol(rawcol, i, ncol))
 	    Rf_gpptr(dd)->col = colsave;
+	else 
+	    Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
 	Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
 	if (Rf_gpptr(dd)->lwd == NA_REAL)
 	    Rf_gpptr(dd)->lwd = lwdsave;

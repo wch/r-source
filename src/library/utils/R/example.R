@@ -1,6 +1,5 @@
-
 example <-
-function(topic, package = .packages(), lib.loc = NULL, local = FALSE,
+function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
 	 prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
@@ -35,7 +34,7 @@ function(topic, package = .packages(), lib.loc = NULL, local = FALSE,
 	library(pkg, lib = lib, character.only = TRUE)
     if(!is.logical(setRNG) || setRNG) {
 	## save current RNG state:
-	if((has.seed <- exists(".Random.seed", envir = .GlobalEnv))) {
+	if((exists(".Random.seed", envir = .GlobalEnv))) {
 	    oldSeed <- get(".Random.seed", envir = .GlobalEnv)
 	    on.exit(assign(".Random.seed", oldSeed, envir = .GlobalEnv))
 	} else {

@@ -52,11 +52,11 @@ objects(name, pos= -1, envir = as.environment(pos),
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[utils]{apropos}} (or \code{\link[utils]{find}})
+  \code{\link{apropos}} (or \code{\link{find}})
   for finding objects in the whole search path;
   \code{\link{grep}} for more details on \dQuote{regular expressions};
   \code{\link[base]{class}},
-  \code{\link[utils]{methods}}, etc., for
+  \code{\link{methods}}, etc., for
   object-oriented programming.
 }
 \examples{

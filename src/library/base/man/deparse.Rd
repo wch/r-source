@@ -1,5 +1,6 @@
 \name{deparse}
 \alias{deparse}
+\alias{.deparseOpts}
 \title{Expression Deparsing}
 \description{
   Turn unevaluated expressions into character strings.
@@ -7,7 +8,7 @@
 \usage{
 deparse(expr, width.cutoff = 60,
         backtick = mode(expr) \%in\% c("call", "expression", "("),
-        forDisplay = TRUE, useSource = FALSE)
+        control = "showAttributes")
 }
 \arguments{
   \item{expr}{any \R expression.}
@@ -15,10 +16,8 @@ deparse(expr, width.cutoff = 60,
     at which line-breaking is tried.}
   \item{backtick}{logical indicating whether symbolic names should be
     enclosed in backticks if they don't follow the standard syntax.}
-  \item{forDisplay}{logical indicating that the intention is to display the results
-  rather than to re-parse them}
-  \item{useSource}{logical indicating whether to use the saved source
-  when deparsing a function}
+  \item{control}{character vector of deparsing options.  See the details
+  below.}
 }
 \details{
   This function turns unevaluated expressions (where \dQuote{expression}
@@ -36,18 +35,36 @@ deparse(expr, width.cutoff = 60,
   symbols but only composite expressions. This is a compromise to
   avoid breaking existing code.
 
-  With \code{forDisplay = TRUE}, the deparsing is intended to be readable,
-  but perhaps incomplete:  for example, attributes are not generally shown.
+  The \code{control} argument is a vector containing some of the
+  following strings.  Partial string matching is used:
+  \describe{
+      \item{\code{keepInteger}}{Surround integer vectors by \code{as.integer()},
+      	    so they are not converted to floating point when re-parsed.}
+      \item{\code{quoteExpressions}}{Surround expressions with \code{quote()},
+            so they are not evaluated when re-parsed.}
+      \item{\code{showAttributes}}{If the object has attributes (other than
+            a \code{source} attribute), use \code{structure()} to display them as 
+            well as the object value.}
+      \item{\code{useSource}}{If the object has a \code{source} attribute,
+            display that instead of deparsing the object.  Currently
+            only applies to function definitions.}
+      \item{\code{warnIncomplete}}{Some exotic objects such
+            as \link[base:delay]{promises}, \link[base:environment]{environments}, 
+            external pointers, etc. can not be deparsed properly.  This option causes
+            a warning to be issued if any of those were present.}
+      \item{\code{all}}{An abbreviated way to specify all of the options 
+      	    listed above.  May not be used with other options.}
+ }
   
-  The \code{forDisplay = FALSE} option requests a more accurate
-  but less readable deparsing of complex objects, bringing \code{deparse()}
-  closer to being an inverse of \code{parse()}.  However, not all 
+  For the most readable (but perhaps incomplete) display, use \code{control = NULL}.
+  This displays the object's value, but not its attributes.  The default
+  is to display the attributes as well, but not to use any of the other
+  options to make the result parseable.
+  
+  Using \code{control = "all"} comes closest
+  to making \code{deparse()} an inverse of \code{parse()}.  However, not all 
   objects are deparseable even with this option.  A warning will be
   issued if the function recognizes that it is being asked to do the impossible.
-    
-  To display saved source rather than deparsing the internal representation 
-  use \code{useSource = TRUE}.  \R currently saves source only for
-  function definitions.
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual
@@ -78,7 +95,7 @@ deparse(e)
 deparse(e, backtick=TRUE)
 e <- quote(`foo bar`+1)
 deparse(e)
-deparse(e, forDisplay = FALSE)
+deparse(e, control = "all")
 }
 \keyword{programming}
 \keyword{manip}

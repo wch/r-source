@@ -41,7 +41,7 @@ rowMeans(x, na.rm = FALSE, dims = 1)
   missing values with \code{na.rm = TRUE}), that
   component of the output is set to \code{0} (\code{*Sums}) or \code{NA}
   (\code{*Means}), consistent with \code{\link{sum}} and
-  \code{\link[stats]{mean}}.
+  \code{\link{mean}}.
 }
 \seealso{
   \code{\link{apply}}, \code{\link{rowsum}}
@@ -63,7 +63,6 @@ rowSums(x, na.rm = TRUE); colSums(x, na.rm = TRUE)
 rowMeans(x, na.rm = TRUE); colMeans(x, na.rm = TRUE)
 
 ## an array
-data(UCBAdmissions)
 dim(UCBAdmissions)
 rowSums(UCBAdmissions); rowSums(UCBAdmissions, dims = 2)
 colSums(UCBAdmissions); colSums(UCBAdmissions, dims = 2)

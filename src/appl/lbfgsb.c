@@ -575,7 +575,7 @@ static void mainlb(int n, int m, double *x,
     int info;
     double time;
     int nfgv, ifun, iter, nint;
-    char word[3];
+    char word[4]; /* allow for terminator */
     double time1, time2;
     int i, iback, k;
     double gdold;
@@ -585,7 +585,7 @@ static void mainlb(int n, int m, double *x,
     double theta;
     double dnorm;
     int nskip, iword;
-    double xstep, stpmx;
+    double xstep = 0.0, stpmx; /* xstep is printed before being used */
     double gd, dr, rr;
     int ileave;
     int itfile;

@@ -36,7 +36,9 @@ xor(x, y)
   \code{xor} indicates elementwise exclusive OR.
 
   Numeric and complex vectors will be coerced to logical values, with
-  zero being false and all non-zero values being true.
+  zero being false and all non-zero values being true.  Raw vectors are
+  handled without any coercion for \code{!}, \code{&} and \code{|}, with
+  these operators being applied bitwise (so \code{!} is the 1-complement).
   
   The operators \code{!}, \code{&} and \code{|} are generic functions:
   methods can be written for them individually or via the
@@ -55,6 +57,9 @@ xor(x, y)
 }
 \seealso{
   \code{\link{TRUE}} or \code{\link{logical}}.
+
+  \code{\link{any}} and \code{\link{all}} for OR and AND on many scalar
+  arguments.
 
   \code{\link{Syntax}} for operator precedence.
 }

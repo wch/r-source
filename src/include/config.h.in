@@ -387,6 +387,9 @@
 /* Define if finite() is correct for -Inf/NaN/Inf. */
 #undef HAVE_WORKING_FINITE
 
+/* Define if your ftell works correctly on files opened for append. */
+#undef HAVE_WORKING_FTELL
+
 /* Define if isfinite() is correct for -Inf/NaN/Inf. */
 #undef HAVE_WORKING_ISFINITE
 

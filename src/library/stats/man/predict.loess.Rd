@@ -9,8 +9,8 @@
 }
 \arguments{
  \item{object}{an object fitted by \code{loess}.}
- \item{newdata}{an optional data frame specifying points at which to do
-   the predictions. If missing, the original data points are used.}
+ \item{newdata}{an optional data frame in which to look for variables with
+    which to predict.  If missing, the original data points are used.}
  \item{se}{should standard errors be computed?}
  \item{\dots}{arguments passed to or from other methods.}
 }
@@ -41,11 +41,17 @@
   B.D. Ripley, based on the \code{cloess} package of Cleveland,
   Grosse and Shyu.
 }
+\note{
+  Variables are first looked for in \code{newdata} and then searched for
+  in the usual way (which will include the environment of the formula
+  used in the fit).  As from \R 2.0.0 a warning will be given if the
+  variables found are not of the same length as those in \code{newdata}
+  if it was supplied.
+}
 
 \seealso{\code{\link{loess}}}
 
 \examples{
-data(cars)
 cars.lo <- loess(dist ~ speed, cars)
 predict(cars.lo, data.frame(speed=seq(5, 30, 1)), se=TRUE)
 # to get extrapolation

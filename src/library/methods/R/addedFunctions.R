@@ -137,7 +137,7 @@ message <-
 
 hasArg <- function(name) {
     aname <- as.character(substitute(name))
-    fnames <- names(formals(sys.function(1)))
+    fnames <- names(formals(sys.function(sys.parent())))
     if(is.na(match(aname, fnames))) {
         if(is.na(match("...", fnames)))
             FALSE

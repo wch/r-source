@@ -43,21 +43,21 @@ R: $(OBJECTS)
 install: installdirs
 	@echo "installing $(subdir) ..."
 	@for f in $(OBJECTS) $(EXPORTFILES); do \
-	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
+	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/etc
+	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"
 install-strip: install
 
 uninstall:
 	@echo "uninstalling $(subdir) ..."
-	@if test -d $(rhome)/$(subdir) \
-	  && test "`cd $(rhome); $(GETWD)`" \
+	@if test -d "$(rhome)/$(subdir)" \
+	  && test "`cd \"$(rhome)\"; $(GETWD)`" \
 	       != "`cd $(top_builddir); $(GETWD)`"; then \
-	  (cd $(rhome)/etc && \
+	  (cd "$(rhome)/$(subdir)" && \
 	    rm -f $(OBJECTS) $(EXPORTFILES)); \
-	  rmdir $(rhome)/etc 2> /dev/null \
-	    || echo "  subdir etc not removed"; \
+	  rmdir "$(rhome)/$(subdir)" 2> /dev/null \
+	    || echo "  subdir $(subdir) not removed"; \
 	fi
 
 mostlyclean: clean

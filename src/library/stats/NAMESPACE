@@ -26,8 +26,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        inverse.gaussian, IQR, is.empty.model, is.mts, is.ts, lines.ts,
        lm, lm.fit, lm.influence, lm.wfit, logLik, loglin, lowess,
        ls.diag, ls.print, lsfit, mad, mahalanobis, make.link,
-       make.tables.aovproj, make.tables.aovprojlist, makepredictcall,
-       manova, median, model.extract, model.frame,
+       makepredictcall, manova, median, model.extract, model.frame,
        model.frame.aovlist, model.frame.default, model.frame.glm,
        model.frame.lm, model.matrix, model.matrix.default,
        model.matrix.lm, model.offset, model.response, model.tables,
@@ -52,15 +51,15 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        residuals.lm, rexp, rf, rgamma, rgeom, rhyper, rlnorm, rlogis,
        rmultinom, rnbinom, rnorm, rpois, rsignrank, rstandard,
        rstandard.glm, rstandard.lm, rstudent, rstudent.glm,
-       rstudent.lm, rt, runif, rweibull, rwilcox, sd, se.aov,
-       se.aovlist, se.contrast, spline, splinefun, start, stat.anova,
-       step, summary.aov, summary.aovlist, summary.glm, summary.infl,
-       summary.lm, summary.manova, summary.mlm, symnum, termplot,
-       terms, terms.aovlist, terms.default, terms.formula,
-       terms.terms, time, ts, tsp, "tsp<-", TukeyHSD, TukeyHSD.aov,
-       uniroot, update, update.default, update.formula, var,
-       variable.names, vcov, weighted.mean, weighted.residuals,
-       weights, window, write.ftable, xtabs, pbirthday, qbirthday)
+       rstudent.lm, rt, runif, rweibull, rwilcox, sd, se.contrast,
+       spline, splinefun, start, stat.anova, step, summary.aov,
+       summary.aovlist, summary.glm, summary.infl, summary.lm,
+       summary.manova, summary.mlm, symnum, termplot, terms,
+       terms.aovlist, terms.default, terms.formula, terms.terms, time,
+       ts, tsp, "tsp<-", TukeyHSD, TukeyHSD.aov, uniroot, update,
+       update.default, update.formula, var, variable.names, vcov,
+       weighted.mean, weighted.residuals, weights, window, "window<-",
+       write.ftable, xtabs, pbirthday, qbirthday)
 
 
 importFrom(graphics, identify, lines, plot)
@@ -225,6 +224,7 @@ S3method(weights, default)
 S3method(weights, glm)
 S3method(window, default)
 S3method(window, ts)
+S3method("window<-", ts)
 
 
 ## from ctest
@@ -300,10 +300,13 @@ S3method(summary, ppr)
 
 ## from mva
 
-export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
-       cophenetic, cutree, dist, factanal, hclust, heatmap, kmeans,
-       loadings, order.dendrogram, plclust, prcomp, princomp, promax,
-       rect.hclust, reorder, screeplot, varimax)
+export(as.dist, as.hclust, biplot, cancor, cmdscale,
+       cophenetic, cutree, dist, factanal, hclust, kmeans,
+       loadings, plclust, prcomp, princomp, promax,
+       rect.hclust, screeplot, varimax)
+## dendro*
+export(as.dendrogram, dendrapply, heatmap, is.leaf,
+       order.dendrogram, reorder)
 
 ## methods which are documented but not exported
 ## export(as.hclust.default, as.matrix.dist,
@@ -324,13 +327,17 @@ S3method(biplot, prcomp)
 S3method(cut, dendrogram)
 S3method(format, dist)
 S3method(identify, hclust)
+S3method(labels, dendrogram)
 S3method(names, dist)
 S3method("names<-", dist)
 S3method(plot, dendrogram)
 S3method(plot, hclust)
 S3method(plot, prcomp)
 S3method(plot, princomp)
+S3method(predict, prcomp)
 S3method(predict, princomp)
+S3method(prcomp, default)
+S3method(prcomp, formula)
 S3method(princomp, default)
 S3method(princomp, formula)
 S3method(print, dendrogram)

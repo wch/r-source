@@ -85,7 +85,7 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	    1
 	} else ceiling(n.leg / ncol)
 
-    if(has.pch <- !missing(pch)) {
+    if(has.pch <- !missing(pch) && length(pch) > 0) {
 	if(is.character(pch) && !is.na(pch[1]) && nchar(pch[1]) > 1) {
 	    if(length(pch) > 1)
 		warning("Not using pch[2..] since pch[1] has multiple chars")

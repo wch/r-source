@@ -40,25 +40,32 @@ R:
 	@for pkg in profile $(R_PKGS_BASE); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
+	@echo "tools:::.vinstall_package_descriptions_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
+	  R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null
 	@echo "installing parsed NAMESPACE files"
 	@rm -f $(top_builddir)/library/tools/Meta/nsInfo.rds
-	@for pkg in $(R_PKGS_BASE) ; do \
-	  if test -f "$(srcdir)/$${pkg}/NAMESPACE"; then \
-          echo "tools:::.install_package_namespace_info(\"$(top_builddir)/library/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
-	    | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null ; \
-          fi ; \
-	done
+	@echo "tools:::.vinstall_package_namespaces_as_RDS(\"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
+	  R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
 	  $(top_builddir)/library
 
 docs:
 	@echo "building all R object docs (text, HTML, LaTeX, examples)"
+	@$(MAKE) help-indices
 	@$(MAKE) Rdfiles
 	@$(R_CMD_BUILD_HELP) --htmllists
 	@$(MAKE) vignettes
 	@$(MAKE) indices
 	@touch stamp-docs
 
+help-indices:
+	@if @NO_PERL5@; then \
+	  echo "you need Perl version 5 to build the R object docs"; \
+	  exit 1; \
+	fi
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) --index $(srcdir)/$${pkg}; \
+	done
 Rdfiles:
 	@if @NO_PERL5@; then \
 	  echo "you need Perl version 5 to build the R object docs"; \
@@ -82,11 +89,9 @@ vignettes:
 	  done; \
 	fi
 indices:
-	@for pkg in $(R_PKGS_BASE); do \
-	  ( echo "tools:::.install_package_indices(\"$(srcdir)/$${pkg}\","; \
-	    echo " \"$(top_builddir)/library/$${pkg}\")") | \
-	      R_DEFAULT_PACKAGES=tools LC_COLLATE=C $(R_EXE) --slave > /dev/null; \
-	done
+	@echo "building/updating package indices ..."
+	@echo "tools:::.vinstall_package_indices(\"$(srcdir)\", \"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
+	  R_DEFAULT_PACKAGES=tools LC_COLLATE=C $(R_EXE) --slave > /dev/null
 	@cat $(top_builddir)/library/*/CONTENTS \
 	  > $(top_builddir)/doc/html/search/index.txt
 
@@ -102,18 +107,18 @@ examples:
 
 install: installdirs
 	@echo "installing packages ..."
-	@cp -r $(top_builddir)/library $(rhome) || \
+	@cp -r $(top_builddir)/library "$(rhome)" || \
 	  (cd $(top_builddir)/library; \
-	    $(TAR) cf - . | (cd $(rhome)/library; $(TAR) xmof -))
+	    $(TAR) cf - . | (cd "$(rhome)/library"; $(TAR) xmof -))
 	@echo "  building HTML index ..."
-	@$(R_CMD_BUILD_HELP) --rhome $(rhome) --htmllists
+	@$(R_CMD_BUILD_HELP) --rhome "$(rhome)" --htmllists
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/library
+	@$(MKINSTALLDIRS) "$(rhome)/library"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@echo "uninstalling packages ..."
-	@(cd $(rhome)/library; \
+	@(cd "$(rhome)/library"; \
 	  for p in $(R_PKGS); do rm -rf $${p}; done)
 	rm -f R.css
 

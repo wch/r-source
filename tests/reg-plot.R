@@ -34,7 +34,6 @@ par(pty="m")
 
 ### Prior to 1.2.2, the label sizes were unaffected by cex.
 
-data(VADeaths)
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940", cex = 0.5)
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940", cex = 1.5)
 
@@ -52,7 +51,6 @@ plot(1:10, type="n")
 polygon(c(1, 3, 3, 1), c(1, 1, 3, 3), col="yellow", border="red", lty="blank")
 rect(6, 6, 10, 10,  col="blue", border="red", lty="blank")
 ## in 1.5.0 all omit the fill colours.
-data(trees)
 with(trees, symbols(Height, Volume, circles=Girth/24, inches=FALSE,
                     lty="blank", bg="blue"))
 ## in 1.5.0 ignored the lty.
@@ -71,7 +69,6 @@ axis(1, pos = 0, at=c(-2,2,3), lty = lt, col=4)
 mtext(side=1,"note the x-ticks on the other side of the bars")
 
 ## plot.table(): explicit xlab and ylab for non-1D
-data(UCBAdmissions)
 plot(UCBAdmissions)# default x- and y-lab
 plot(UCBAdmissions, xlab = "x label", ylab = "YY")# wrong in 1.5.1
 ##   axis suppression

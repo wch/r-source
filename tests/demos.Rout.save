@@ -1,6 +1,6 @@
 
-R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2003-12-20), ISBN 3-900051-00-3
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 2.0.0 Under development (unstable) (2004-07-28), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -56,9 +56,9 @@ Type 'q()' to quit R.
     "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
 
-Number of base objects:		 992 
-Number of builtin functions:	 965 
-	 starting with 'is.' :	  42 
+Number of base objects:		 1065 
+Number of builtin functions:	 1036 
+	 starting with 'is.' :	  43 
 
 > is.primitive <- function(obj) is.function(obj) && 
     is.null(args(obj))
@@ -85,39 +85,40 @@ Number of builtin functions:	 965
         rr <- lappl .... [TRUNCATED] 
 
 > is.ALL(NULL)
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : NA 
-is.function    : . 
-is.infinite    :  
-is.integer     : . 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.na          : NA 
-is.name        : . 
-is.nan         :  
-is.null        : | 
-is.numeric     : . 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : | 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : . 
-is.vector      : . 
+is.array           : . 
+is.atomic          : | 
+is.call            : . 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : . 
+is.environment     : . 
+is.expression      : . 
+is.factor          : . 
+is.finite          : NA 
+is.function        : . 
+is.infinite        :  
+is.integer         : . 
+is.language        : . 
+is.list            : . 
+is.logical         : . 
+is.matrix          : . 
+is.na              : NA 
+is.name            : . 
+is.nan             :  
+is.null            : | 
+is.numeric         : . 
+is.object          : . 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : | 
+is.qr              : . 
+is.real            : . 
+is.recursive       : . 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : . 
+is.vector          : . 
 
 > is.ALL(NULL, true.only = TRUE)
 [1] "is.atomic"   "is.null"     "is.pairlist"
@@ -138,185 +139,190 @@ is.vector      : .
 [1] TRUE
 
 > is.ALL(1:5)
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | | | | | 
-is.function    : . 
-is.infinite    : . . . . . 
-is.integer     : | 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.na          : . . . . . 
-is.name        : . 
-is.nan         : . . . . . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : . 
-is.vector      : | 
+is.array           : . 
+is.atomic          : | 
+is.call            : . 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : . 
+is.environment     : . 
+is.expression      : . 
+is.factor          : . 
+is.finite          : | | | | | 
+is.function        : . 
+is.infinite        : . . . . . 
+is.integer         : | 
+is.language        : . 
+is.list            : . 
+is.logical         : . 
+is.matrix          : . 
+is.na              : . . . . . 
+is.name            : . 
+is.nan             : . . . . . 
+is.null            : . 
+is.numeric         : | 
+is.object          : . 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : . 
+is.qr              : . 
+is.real            : . 
+is.recursive       : . 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : . 
+is.vector          : | 
 
 > is.ALL(array(1:24, 2:4))
-is.array       : | 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | | | | | | | | | | | | | | | | | | | | | | | | 
-is.function    : . 
-is.infinite    : . . . . . . . . . . . . . . . . . . . . . . . . 
-is.integer     : | 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.na          : . . . . . . . . . . . . . . . . . . . . . . . . 
-is.name        : . 
-is.nan         : . . . . . . . . . . . . . . . . . . . . . . . . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : . 
-is.vector      : . 
+is.array           : | 
+is.atomic          : | 
+is.call            : . 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : . 
+is.environment     : . 
+is.expression      : . 
+is.factor          : . 
+is.finite          : | | | | | | | | | | | | | | | | | | | | | | | | 
+is.function        : . 
+is.infinite        : . . . . . . . . . . . . . . . . . . . . . . . . 
+is.integer         : | 
+is.language        : . 
+is.list            : . 
+is.logical         : . 
+is.matrix          : . 
+is.na              : . . . . . . . . . . . . . . . . . . . . . . . . 
+is.name            : . 
+is.nan             : . . . . . . . . . . . . . . . . . . . . . . . . 
+is.null            : . 
+is.numeric         : | 
+is.object          : . 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : . 
+is.qr              : . 
+is.real            : . 
+is.recursive       : . 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : . 
+is.vector          : . 
 
 > is.ALL(1 + 3)
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : | 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | 
-is.function    : . 
-is.infinite    : . 
-is.integer     : . 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.na          : . 
-is.name        : . 
-is.nan         : . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : | 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : . 
-is.vector      : | 
+is.array           : . 
+is.atomic          : | 
+is.call            : . 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : | 
+is.environment     : . 
+is.expression      : . 
+is.factor          : . 
+is.finite          : | 
+is.function        : . 
+is.infinite        : . 
+is.integer         : . 
+is.language        : . 
+is.list            : . 
+is.logical         : . 
+is.matrix          : . 
+is.na              : . 
+is.name            : . 
+is.nan             : . 
+is.null            : . 
+is.numeric         : | 
+is.object          : . 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : . 
+is.qr              : . 
+is.real            : | 
+is.recursive       : . 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : . 
+is.vector          : | 
 
 > e13 <- expression(1 + 3)
 
 > is.ALL(e13)
-is.array       : . 
-is.atomic      : . 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : | 
-is.factor      : . 
-is.finite      : . 
-is.function    : . 
-is.infinite    : . 
-is.integer     : . 
-is.language    : | 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.na          : . 
-is.name        : . 
-is.nan         : . 
-is.null        : . 
-is.numeric     : . 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : | 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : NA 
-is.vector      : | 
+is.array           : . 
+is.atomic          : . 
+is.call            : . 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : . 
+is.environment     : . 
+is.expression      : | 
+is.factor          : . 
+is.finite          : . 
+is.function        : . 
+is.infinite        : . 
+is.integer         : . 
+is.language        : | 
+is.list            : . 
+is.logical         : . 
+is.matrix          : . 
+is.na              : . 
+is.name            : . 
+is.nan             : . 
+is.null            : . 
+is.numeric         : . 
+is.object          : . 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : . 
+is.qr              : . 
+is.real            : . 
+is.recursive       : | 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : NA 
+is.vector          : | 
 
 > is.ALL(substitute(expression(a + 3), list(a = 1)), 
     true.only = TRUE)
 [1] "is.call"      "is.language"  "is.recursive"
 
 > is.ALL(y ~ x)
-is.array       : . 
-is.atomic      : . 
-is.call        : | 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : NA 
-is.function    : . 
-is.infinite    : . . . 
-is.integer     : . 
-is.language    : | 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.na          : NA 
-is.name        : . 
-is.nan         : . . . 
-is.null        : . 
-is.numeric     : . 
-is.object      : | 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : | 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : NA 
-is.vector      : . 
+is.array           : . 
+is.atomic          : . 
+is.call            : | 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : . 
+is.environment     : . 
+is.expression      : . 
+is.factor          : . 
+is.finite          : NA 
+is.function        : . 
+is.infinite        : . . . 
+is.integer         : . 
+is.language        : | 
+is.list            : . 
+is.logical         : . 
+is.matrix          : . 
+is.na              : NA 
+is.name            : . 
+is.nan             : . . . 
+is.null            : . 
+is.numeric         : . 
+is.object          : | 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : . 
+is.qr              : . 
+is.real            : . 
+is.recursive       : | 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : NA 
+is.vector          : . 
 
 > is0 <- is.ALL(numeric(0))
 
@@ -339,18 +345,22 @@ logical(0)
 > is0 <- unlist(is0)
 
 > is0
-      is.array      is.atomic        is.call   is.character     is.complex 
-         FALSE           TRUE          FALSE          FALSE          FALSE 
- is.data.frame      is.double is.environment  is.expression      is.factor 
-         FALSE           TRUE          FALSE          FALSE          FALSE 
-   is.function     is.integer    is.language        is.list     is.logical 
-         FALSE          FALSE          FALSE          FALSE          FALSE 
-     is.matrix        is.name        is.null     is.numeric      is.object 
-         FALSE          FALSE          FALSE           TRUE          FALSE 
-    is.ordered    is.pairlist          is.qr        is.real   is.recursive 
-         FALSE          FALSE          FALSE           TRUE          FALSE 
-     is.symbol       is.table    is.unsorted      is.vector 
-         FALSE          FALSE          FALSE           TRUE 
+          is.array          is.atomic            is.call       is.character 
+             FALSE               TRUE              FALSE              FALSE 
+        is.complex      is.data.frame          is.double     is.environment 
+             FALSE              FALSE               TRUE              FALSE 
+     is.expression          is.factor        is.function         is.integer 
+             FALSE              FALSE              FALSE              FALSE 
+       is.language            is.list         is.logical          is.matrix 
+             FALSE              FALSE              FALSE              FALSE 
+           is.name            is.null         is.numeric          is.object 
+             FALSE              FALSE               TRUE              FALSE 
+        is.ordered is.package_version        is.pairlist              is.qr 
+             FALSE              FALSE              FALSE              FALSE 
+           is.real       is.recursive          is.symbol           is.table 
+              TRUE              FALSE              FALSE              FALSE 
+       is.unsorted          is.vector 
+             FALSE               TRUE 
 
 > ispi <- unlist(is.ALL(pi))
 
@@ -367,39 +377,40 @@ logical(0)
 [1] "is.array"   "is.atomic"  "is.integer" "is.matrix"  "is.numeric"
 
 > is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")))
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | | | | | | | 
-is.function    : . 
-is.infinite    : . . . . . . . 
-is.integer     : | 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.na          : . . . . . . . 
-is.name        : . 
-is.nan         : . . . . . . . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : . 
-is.vector      : | 
+is.array           : . 
+is.atomic          : | 
+is.call            : . 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : . 
+is.environment     : . 
+is.expression      : . 
+is.factor          : . 
+is.finite          : | | | | | | | 
+is.function        : . 
+is.infinite        : . . . . . . . 
+is.integer         : | 
+is.language        : . 
+is.list            : . 
+is.logical         : . 
+is.matrix          : . 
+is.na              : . . . . . . . 
+is.name            : . 
+is.nan             : . . . . . . . 
+is.null            : . 
+is.numeric         : | 
+is.object          : . 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : . 
+is.qr              : . 
+is.real            : . 
+is.recursive       : . 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : . 
+is.vector          : | 
 
 > is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
     true.only = TRUE)
@@ -412,74 +423,76 @@ is.vector      : |
 > lm.xy <- lm(y ~ x)
 
 > is.ALL(lm.xy)
-is.array       : . 
-is.atomic      : . 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : . . . . . . . . . . . . 
-is.function    : . 
-is.infinite    : . . . . . . . . . . . . 
-is.integer     : . 
-is.language    : . 
-is.list        : | 
-is.logical     : . 
-is.matrix      : . 
-is.na          : . . . . . . . . . . . . 
-is.name        : . 
-is.nan         : . . . . . . . . . . . . 
-is.null        : . 
-is.numeric     : . 
-is.object      : | 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : | 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : NA 
-is.vector      : . 
+is.array           : . 
+is.atomic          : . 
+is.call            : . 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : . 
+is.environment     : . 
+is.expression      : . 
+is.factor          : . 
+is.finite          : . . . . . . . . . . . . 
+is.function        : . 
+is.infinite        : . . . . . . . . . . . . 
+is.integer         : . 
+is.language        : . 
+is.list            : | 
+is.logical         : . 
+is.matrix          : . 
+is.na              : . . . . . . . . . . . . 
+is.name            : . 
+is.nan             : . . . . . . . . . . . . 
+is.null            : . 
+is.numeric         : . 
+is.object          : | 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : . 
+is.qr              : . 
+is.real            : . 
+is.recursive       : | 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : NA 
+is.vector          : . 
 
 > is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")))
-is.array       : . 
-is.atomic      : | 
-is.call        : . 
-is.character   : . 
-is.complex     : . 
-is.data.frame  : . 
-is.double      : . 
-is.environment : . 
-is.expression  : . 
-is.factor      : . 
-is.finite      : | | | | | | | 
-is.function    : . 
-is.infinite    : . . . . . . . 
-is.integer     : | 
-is.language    : . 
-is.list        : . 
-is.logical     : . 
-is.matrix      : . 
-is.na          : . . . . . . . 
-is.name        : . 
-is.nan         : . . . . . . . 
-is.null        : . 
-is.numeric     : | 
-is.object      : . 
-is.ordered     : . 
-is.pairlist    : . 
-is.qr          : . 
-is.real        : . 
-is.recursive   : . 
-is.symbol      : . 
-is.table       : . 
-is.unsorted    : . 
-is.vector      : | 
+is.array           : . 
+is.atomic          : | 
+is.call            : . 
+is.character       : . 
+is.complex         : . 
+is.data.frame      : . 
+is.double          : . 
+is.environment     : . 
+is.expression      : . 
+is.factor          : . 
+is.finite          : | | | | | | | 
+is.function        : . 
+is.infinite        : . . . . . . . 
+is.integer         : | 
+is.language        : . 
+is.list            : . 
+is.logical         : . 
+is.matrix          : . 
+is.na              : . . . . . . . 
+is.name            : . 
+is.nan             : . . . . . . . 
+is.null            : . 
+is.numeric         : | 
+is.object          : . 
+is.ordered         : . 
+is.package_version : . 
+is.pairlist        : . 
+is.qr              : . 
+is.real            : . 
+is.recursive       : . 
+is.symbol          : . 
+is.table           : . 
+is.unsorted        : . 
+is.vector          : | 
 
 > is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
     true.only = TRUE)
@@ -690,15 +703,11 @@ In addition: Warning messages:
 
 > title(main = "1000 Normal Random Variates", font.main = 3)
 
-> data("iris")
-
 > pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
     font.main = 4, pch = 19)
 
 > pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
     pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
-
-> data("volcano")
 
 > x <- 10 * 1:nrow(volcano)
 
@@ -747,8 +756,6 @@ In addition: Warning messages:
 
 > par(bg = "cornsilk")
 
-> data(quakes)
-
 > coplot(lat ~ long | depth, data = quakes, pch = 21, 
     bg = "green3")
 
@@ -762,8 +769,6 @@ In addition: Warning messages:
 
 > opar <- par(ask = interactive() && (.Device %in% c("X11", 
     "GTK", "windows", "quartz")))
-
-> data(volcano)
 
 > x <- 10 * (1:nrow(volcano))
 
@@ -816,8 +821,6 @@ In addition: Warning messages:
     font.main = 4)
 
 > example(filled.contour)
-
-flld.c> data(volcano)
 
 flld.c> filled.contour(volcano, color = terrain.colors, asp = 1)
 
@@ -899,8 +902,6 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > title(sub = ".")
 
 > title(main = sinc.exp)
-
-> data(volcano)
 
 > z <- 2 * volcano
 
@@ -1155,8 +1156,6 @@ smooth> plot(x, main = "breakdown of  3R  and  S  and hence  3RSS")
 smooth> matlines(cbind(smooth(x, "3R"), smooth(x, "S"), smooth(x, 
     "3RSS"), smooth(x)))
 
-smooth> data(presidents)
-
 smooth> presidents[is.na(presidents)] <- 0
 
 smooth> summary(sm3 <- smooth(presidents, "3R"))
@@ -1233,5 +1232,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  3.07 0.13 3.2 0 0 
+Time elapsed:  2.92 0.11 3.06 0 0 
 > 

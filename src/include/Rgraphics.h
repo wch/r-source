@@ -48,11 +48,13 @@ extern "C" {
  *	At present only 0 and >0 are used, with no semi-transparent.
  */
 #define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16))
+#define R_RGBA(r,g,b,a)	((r)|((g)<<8)|((b)<<16)|((a)<<24))
 #define R_RED(col)	(((col)	   )&255)
 #define R_GREEN(col)	(((col)>> 8)&255)
 #define R_BLUE(col)	(((col)>>16)&255)
 #define R_ALPHA(col)	(((col)>>24)&255)
 #define R_OPAQUE(col)	(R_ALPHA(col) == 0)
+#define R_TRANSPARENT(col) (R_ALPHA(col) == 255)
 
 /*
  *	Some Notes on Line Textures

@@ -210,7 +210,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   and \code{\link{residuals}}. Further, \code{\link{lm}} for
   non-generalized \emph{linear} models.
 
-  \code{\link{esoph}}, \code{\link{infert}} and
+  \code{\link[datasets]{esoph}}, \code{\link[datasets]{infert}} and
   \code{\link{predict.glm}} have examples of fitting binomial glms.
 }
 \author{
@@ -283,7 +283,6 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 \dontrun{
 ## Need the anorexia data from a recent version of the package 'MASS':
 library(MASS)
-data(anorexia)
 }
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
             family = gaussian, data = anorexia)

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000  the R Development Core Team
+ *  Copyright (C) 2000-4  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -107,6 +107,10 @@ SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case STRSXP:
 	    for (j = 0, inr = i*nr; j < nr; j++)
 		SET_STRING_ELT(X1, j, STRING_ELT(X, j + inr));
+	    break;
+	case RAWSXP:
+	    for (j = 0, inr = i*nr; j < nr; j++)
+		RAW(X1)[j] = RAW(X)[j + inr];
 	    break;
 	default:
 	    error("unsupported type of array in apply");

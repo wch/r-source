@@ -38,14 +38,13 @@ mean(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[stats]{weighted.mean}}, \code{\link{mean.POSIXct}}
+  \code{\link{weighted.mean}}, \code{\link{mean.POSIXct}}
 }
 \examples{
 x <- c(0:10, 50)
 xm <- mean(x)
 c(xm, mean(x, trim = 0.10))
 
-data(USArrests)
 mean(USArrests, trim = 0.2)
 }
 \keyword{univar}

@@ -60,7 +60,7 @@ noinst_LTLIBRARIES = libappl.la
 ## </FIXME>
 libappl_la_SOURCES = $(SOURCES)
 libappl_la_OBJECTS = $(OBJECTS:.o=.lo)
-@USE_LIBTOOL_TRUE@libappl_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+@USE_LIBTOOL_TRUE@libappl_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
 
 all: Makefile Makedeps R
 

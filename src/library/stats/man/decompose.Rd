@@ -42,12 +42,11 @@ Y[t] = T[t] * S[t] + e[t]
   \item{type}{The value of \code{type}}
 }
 \author{
-  David Meyer \email{david.meyer@ci.tuwien.ac.at}
+  David Meyer \email{David.Meyer@wu-wien.ac.at}
 }
 \seealso{\code{\link{stl}}}
 
 \examples{
-data(co2)
 m <- decompose(co2)
 m$figure
 plot(m)

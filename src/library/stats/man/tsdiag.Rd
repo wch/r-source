@@ -34,13 +34,11 @@ tsdiag(object, gof.lag, \dots)
 }
 
 \examples{
-\dontrun{data(lh)
-fit <- arima(lh, c(1,0,0))
+\dontrun{fit <- arima(lh, c(1,0,0))
 tsdiag(fit)
 
 ## see also examples(arima)
 
-data(JohnsonJohnson)
 (fit <- StructTS(log10(JohnsonJohnson), type="BSM"))
 tsdiag(fit)
 }}

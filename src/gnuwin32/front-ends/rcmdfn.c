@@ -51,8 +51,6 @@ void rcmdusage (char *RCMD)
 	    "  Rd2txt   Convert Rd format to text.\n",
 	    "  Sd2Rd    Convert S documentation to Rd format.\n");
 
-    if(strcmp(RCMD, "R CMD") == 0)
-	fprintf(stderr, "For the first four 'CMD' may be omitted.\n");
     fprintf(stderr, "\n%s%s%s%s",
 	    "Use\n  ", RCMD, " command --help\n",
 	    "for usage information for each command.\n\n");    

@@ -40,18 +40,18 @@
 #include "dpq.h"
 
 double dbinom_raw(double x, double n, double p, double q, int give_log)
-{ 
+{
     double f, lc;
 
     if (p == 0) return((x == 0) ? R_D__1 : R_D__0);
     if (q == 0) return((x == n) ? R_D__1 : R_D__0);
 
-    if (x == 0) { 
+    if (x == 0) {
 	if(n == 0) return R_D__1;
 	lc = (p < 0.1) ? -bd0(n,n*q) - n*p : n*log(q);
 	return( R_D_exp(lc) );
     }
-    if (x == n) { 
+    if (x == n) {
 	lc = (q < 0.1) ? -bd0(n,n*p) - n*q : n*log(p);
 	return( R_D_exp(lc) );
     }
@@ -64,17 +64,18 @@ double dbinom_raw(double x, double n, double p, double q, int give_log)
 }
 
 double dbinom(double x, double n, double p, int give_log)
-{ 
+{
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(n) || ISNAN(p)) return x + n + p;
 #endif
 
-  if (p < 0 || p > 1 || R_D_notnnegint(n)) ML_ERR_return_NAN;
-  R_D_nonint_check(x);
-  
-  n = R_D_forceint(n);
-  x = R_D_forceint(x);
+    if (p < 0 || p > 1 || R_D_negInonint(n))
+	ML_ERR_return_NAN;
+    R_D_nonint_check(x);
 
-  return dbinom_raw(x,n,p,1-p,give_log);
+    n = R_D_forceint(n);
+    x = R_D_forceint(x);
+
+    return dbinom_raw(x,n,p,1-p,give_log);
 }

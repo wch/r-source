@@ -33,7 +33,6 @@ sweep(x, MARGIN, STATS, FUN="-", \dots)
 }
 \examples{
 require(stats) # for median
-data(attitude)
 med.att <- apply(attitude, 2, median)
 sweep(data.matrix(attitude), 2, med.att)# subtract the column medians
 }

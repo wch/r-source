@@ -1,6 +1,5 @@
 \name{update.packages}
 \alias{update.packages}
-\alias{installed.packages}
 \alias{CRAN.packages}
 \alias{old.packages}
 \alias{download.packages}
@@ -16,12 +15,12 @@
 update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method, instlib = NULL,
-                ask=TRUE, available=NULL, destdir=NULL,
-		installWithVers=FALSE)
+                ask = TRUE, available = NULL, destdir = NULL,
+		installWithVers = FALSE)
 
-installed.packages(lib.loc = NULL, priority = NULL)
 CRAN.packages(CRAN = getOption("CRAN"), method,
               contriburl = contrib.url(CRAN))
+
 old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
              method, available = NULL)
@@ -29,10 +28,11 @@ old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = getOption("CRAN"),
                   contriburl = contrib.url(CRAN), method)
+
 install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method, available = NULL, destdir = NULL,
-		 installWithVers = FALSE)
+		 installWithVers = FALSE, dependencies = FALSE)
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
@@ -40,18 +40,23 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \item{CRAN}{character, the base URL of the CRAN mirror to use, i.e.,
     the URL of a CRAN root such as \code{"http://cran.r-project.org"}
     (the default) or its Statlib mirror,
-    \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
+    \code{"http://lib.stat.cmu.edu/R/CRAN"}.
+#ifdef windows
+    Can also be \code{NULL} to install from local \code{.zip} files.
+#endif
+  }
   \item{contriburl}{URL of the contrib section of CRAN. Use this argument
     only if your CRAN mirror is incomplete, e.g., because you burned
     only the contrib section on a CD.  Overrides argument \code{CRAN}.}
   \item{method}{Download method, see \code{\link{download.file}}.}
   \item{pkgs}{character vector of the short names of
-    packages whose current versions should be downloaded from \code{CRAN}.}
+    packages whose current versions should be downloaded from
+    \code{CRAN}.
+#ifdef windows
+    If \code{CRAN = NULL}, a vector of file names of \code{.zip} files.
+#endif
+  }
   \item{destdir}{directory where downloaded packages are stored.}
-  \item{priority}{character vector or \code{NULL} (default).  If
-    non-null, used to select packages; \code{"high"} is equivalent to
-    \code{c("base","recommended")}.  To select all packages without an
-    assigned priority, use \code{priority = "NA"}.}
   \item{available}{list of packages available at CRAN as returned by
     \code{CRAN.packages}.}
   \item{lib,instlib}{character string giving the library directory where to
@@ -60,20 +65,25 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
     and installed.}
   \item{installWithVers}{If \code{TRUE}, will invoke the install the
     package such that it can be referenced by package version}
+  \item{dependencies}{logical indicating to also install uninstalled
+    packages on which these packages depend (and so on recursively).
+#ifdef windows
+    Not used if \code{CRAN = NULL}.
+#endif
+  }
 }
 \details{
-  \code{installed.packages} scans the \file{DESCRIPTION} files of each
-  package found along \code{lib.loc} and returns a list of package
-  names, library paths and version numbers.  \code{CRAN.packages}
-  returns a similar list, but corresponding to packages currently
-  available in the contrib section of CRAN, the comprehensive R archive
-  network.  The current list of packages is downloaded over the internet
-  (or copied from a local CRAN mirror). Both functions use
-  \code{\link{read.dcf}} for parsing the description files.
-  \code{old.packages} compares the two lists and reports installed
-  packages that have newer versions on CRAN.
+  \code{CRAN.packages} returns a matrix of package details corresponding
+  to packages/bundles currently available in the contrib section of
+  CRAN, the comprehensive R archive network.  The current list of
+  packages is downloaded over the internet (or copied from a local CRAN
+  mirror).
+  
+  \code{old.packages} compares the information from \code{CRAN.packages}
+  with that from \code{\link{installed.packages}} and reports installed
+  packages/bundles that have newer versions on CRAN.
 
-  \code{download.packages} takes a list of package names and a
+  \code{download.packages} takes a list of package/bundle names and a
   destination directory, downloads the newest versions of the package
   sources and saves them in \code{destdir}.  If the list of available
   packages is not given as argument, it is also directly obtained from
@@ -82,9 +92,9 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
 
   The main function of the bundle is \code{update.packages}.  First a
   list of all packages found in \code{lib.loc} is created and compared
-  with the packages available on CRAN.  Outdated packages are reported
-  and for each outdated package the user can specify if it should be
-  automatically updated.
+  with the packages available on CRAN.  Packages with a newer version
+  are reported and for each one the user can specify if it should be
+  updated.
 #ifdef unix
   If so, the package sources are downloaded from
   CRAN and installed in the respective library path (or \code{instlib}
@@ -96,7 +106,7 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \code{instlib} if specified).
 #endif
 
-  \code{install.packages} can be used to install new packages, it
+  \code{install.packages} can be used to install new packages.  It
   takes a vector of package names and a destination library, downloads
   the packages from CRAN and installs them. If the library
   is omitted it defaults to the first directory in \code{.libPaths()}, with
@@ -115,7 +125,25 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   packages are installed.  (They will always be deleted at the end of
   the \R session.)
 }
+\value{
+  For \code{CRAN.packages}, a matrix with one row per package/bundle,
+  row names the package names and column names \code{"Package"}, 
+  \code{"Version"}, \code{"Priority"}, \code{"Bundle"},
+  \code{"Depends"}, \code{"Suggests"} and \code{"Contains"}.
+
+  For \code{old.packages}, a matrix with one row per package/bundle
+  and column names \code{"Package"}, \code{"LibPath"},
+  \code{"Installed"} and \code{"CRAN"}.  (The last two columns are
+  version numbers.)
+
+  For \code{download.packages}, a two-column matrix of names and
+  destination file names, for those packages/bundles successfully downloaded.
+
+  \code{install.packages} and \code{update.packages} have no return value.
+}
 \seealso{
+  \code{\link{installed.packages}}.
+  
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 
@@ -123,9 +151,5 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \code{\link{INSTALL}}, \code{\link{REMOVE}},
 #endif
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
-}
-\examples{
-str(ip <- installed.packages(priority = "high"))
-ip[, c(1,3:5)]
 }
 \keyword{utilities}

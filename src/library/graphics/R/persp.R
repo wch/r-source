@@ -41,7 +41,10 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
                          box, axes, nticks, ticktype,
                          as.character(xlab), as.character(ylab),
                          as.character(zlab), ...))
-    for(fun in getHook("persp")) try(fun())
+    for(fun in getHook("persp")) {
+        if(is.character(fun)) fun <- get(fun)
+        try(fun())
+    }
     if(!is.null(main) || !is.null(sub))
         title(main = main, sub = sub, ...)
     invisible(r)

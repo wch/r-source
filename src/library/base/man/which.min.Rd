@@ -41,7 +41,6 @@ which.min(x)
 which.max(x)
 
 ## it *does* work with NA's present:
-data(presidents, package="stats")
 presidents[1:30]
 range(presidents, na.rm = TRUE)
 which.min(presidents)# 28
