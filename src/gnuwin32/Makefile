@@ -43,10 +43,13 @@ else
 R-DLLFLAGS = -mwindows
 endif
 R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
-SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
+#SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
+SOURCES = console.c dataentry.c devga.c dodevga.c dynload.c edit.c extra.c \
+   opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
+    sys-common.c sys-win32.c system.c
 OBJS = $(SOURCES:.c=.o) # e_pow.o
 MAINLIBS = libmain.a libappl.a libmath.a
-EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a\
+EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a ../extra/pcre/libRpcre.a \
    ../extra/bzip2/libbz2.a
 
 PKGS = $(foreach i,$(PACKAGES) $(R_PKGS_STUBS),pkg-$i)

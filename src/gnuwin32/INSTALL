@@ -113,11 +113,19 @@ Note 2: we have had reports that earlier versions of Norton Anti-Virus
 lock up the machine when windres is run, so you may need to disable
 it. (Norton Anti-Virus 2002 causes no problems.)
 
-Note 3: By default Doug Lea's malloc in the file src/gnuwin32/malloc.c is
-used.  You can opt out of this by commenting the line LEA_MALLOC=YES
-in MkRules, in which case the Windows malloc is used.  The one
-in crtdll.dll is unlikely to be satisfactory: the one in msvcrt.dll
-does work but imposes a considerable performance penalty.
+Note 3: By default Doug Lea's malloc in the file src/gnuwin32/malloc.c
+is used for R's internal memory allocations.  You can opt out of this
+by commenting the line LEA_MALLOC=YES in MkRules, in which case the
+malloc in msvcrt.dll is used.  This does work but imposes a
+considerable performance penalty.
+
+Note 4: You can run a parallel make by e.g.
+
+	make -j2
+
+but this is only likely to be worthwhile on a dual-processor (or
+perhaps a hyperthreaded P4) machine with ample (at least 384Mb) of
+memory.
 
 
 You can test a build by (optionally) building the recommended packages
