@@ -1483,6 +1483,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1919:      /* vector     <- vector     */
 	case 2020:	/* expression <- expression */
 
+            if( NAMED(y) ) y = duplicate(y);
 	    VECTOR(x)[offset] = y;
 	    break;
 
