@@ -353,6 +353,7 @@ int isTs(SEXP);
 int isUnordered(SEXP);
 int isUserBinop(SEXP);
 int isValidString(SEXP);
+int isValidStringF(SEXP);
 int isVector(SEXP);
 int isVectorizable(SEXP);
 int isVectorAtomic(SEXP);

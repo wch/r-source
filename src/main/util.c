@@ -230,6 +230,12 @@ int isValidString(SEXP x)
     return isString(x) && LENGTH(x) > 0 && !isNull(STRING(x)[0]);
 }
 
+/* non-empty ("") valid string :*/
+int isValidStringF(SEXP x)
+{
+    return isValidString(x) && CHAR(STRING(x)[0])[0];
+}
+
 int isSymbol(SEXP s)
 {
     return TYPEOF(s) == SYMSXP;
