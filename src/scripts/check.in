@@ -242,7 +242,7 @@ foreach my $pkg (@ARGV) {
 		my $cmd;
 		if($WINDOWS) {
 		    $cmd = join(" ",
-				("${R::Vars::R_CMD} INSTALL -l",
+				("Rcmd.exe INSTALL -l",
 				 &shell_quote_file_path($library),
 				 "$INSTALL_opts",
 				 &shell_quote_file_path($pkgdir)));
@@ -747,7 +747,7 @@ sub check_pkg {
 	}
 	else {
 	    my $dir = "demo";
-	    my $Rcmd = "tools:::.check_demo_index(\"$dir\")\n";
+	    my $Rcmd = "options(warn=1)\ntools:::.check_demo_index(\"$dir\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
@@ -762,7 +762,7 @@ sub check_pkg {
        && &list_files_with_type(&file_path("inst", "doc"),
 				"vignette")) {
 	my $dir = &file_path("inst", "doc");
-	my $Rcmd = "tools:::.check_vignette_index(\"$dir\")\n";
+	my $Rcmd = "options(warn=1)\ntools:::.check_vignette_index(\"$dir\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
@@ -940,7 +940,7 @@ sub check_pkg {
 	  ("See section 'Generic functions and methods'",
 	   "of the 'Writing R Extensions' manual.\n");
 
-	my $Rcmd;
+	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
 	}
@@ -972,7 +972,7 @@ sub check_pkg {
 	   "which corresponds to the right hand side",
 	   "must be named 'value'.\n");
 
-	my $Rcmd;
+	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "checkReplaceFuns(package = \"${pkgname}\")\n";
 	}
@@ -1007,7 +1007,7 @@ sub check_pkg {
 	  ("See section 'System and foreign language interfaces'",
 	   "of the 'Writing R Extensions' manual.\n");
 
-	my $Rcmd;
+	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
 	}
@@ -1037,7 +1037,7 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("Rd files");
 
-	my $Rcmd = "tools:::check_Rd_files_in_man_dir(\"man\")\n";
+	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
@@ -1066,7 +1066,7 @@ sub check_pkg {
     if(((-d "R") || (-d "data")) && (-d "man")) {
 	$log->checking("for missing documentation entries");
 
-	my $Rcmd;
+	my $Rcmd= "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "undoc(package = \"${pkgname}\")\n";
 	}
@@ -1109,7 +1109,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in functions.
 	if(-d "R") {
-	    my $Rcmd;
+	    my $Rcmd = "options(warn=1)\n";
 	    if($opt_install) {
 		$Rcmd .= "codoc(package = \"${pkgname}\")\n";
 	    }
@@ -1129,7 +1129,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
-	    my $Rcmd = "codocData(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1)\ncodocData(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	    @out = grep(!/^\>/, @out);
@@ -1142,7 +1142,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in S4 classes.
 	if($opt_install && (-d "R")) {
-	    my $Rcmd = "codocClasses(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1)\ncodocClasses(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 	    @out = grep(!/^\>/, @out);
@@ -1169,7 +1169,7 @@ sub check_pkg {
 	   "need to have the appropriate \\alias entries,",
 	   "and all their arguments documented.\n");
 
-	my $Rcmd;
+	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
 	    $Rcmd .= "checkDocFiles(package = \"${pkgname}\")\n";
 	}
@@ -1446,7 +1446,7 @@ sub check_pkg {
 	if($opt_vignettes) {
 	    ## Should checking the vignettes assume the system default
 	    ## packages, or just base?
-	    my $Rcmd = "library(tools)\n";
+	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
             ## A base package does not get installed during check.
 	    if(!$is_base_pkg && $opt_install) {
 		$Rcmd .= "checkVignettes(package = \"${pkgname}\", " .
@@ -1540,12 +1540,19 @@ sub check_pkg {
 	else {
 	    if($HAVE_LATEX) {
 		$log->checking("DVI version of manual");
-		my $cmd =
-		    join(" ",
-			 (&shell_quote_file_path("${R::Vars::R_EXE}"),
-			  "CMD Rd2dvi --batch --no-preview",
-			  "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
-			  "$pkgdir"));
+		my $cmd;
+		if($WINDOWS) {
+		    $cmd = join(" ",
+				("Rcmd.exe Rd2dvi --batch --no-preview",
+				 "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
+				 "$pkgdir"));
+		} else {
+		    $cmd = join(" ",
+				(&shell_quote_file_path("${R::Vars::R_EXE}"),
+				 "CMD Rd2dvi --batch --no-preview",
+				 "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
+				 "$pkgdir"));
+		}
 		if(R_system($cmd)) {
 		    $log->error();
 		    $log->print("LaTeX errors when creating DVI version.\n");
