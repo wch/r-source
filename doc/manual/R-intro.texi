@@ -6364,7 +6364,7 @@ Make a contour map of @math{f}; add in more lines for more detail.
 @code{fa} is the ``asymmetric part'' of @math{f}.  (@code{t()} is
 transpose).
 
-@item contour(x, y, fa, nint=15)
+@item contour(x, y, fa, nlevels=15)
 Make a contour plot, @dots{}
 
 @item par(oldpar)
