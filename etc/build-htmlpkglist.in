@@ -24,6 +24,11 @@ require "$RHOME/etc/buildlib.pl";
 
 build_htmlpkglist("$RHOME/library");
 
+%anindex = read_anindex("$RHOME/library");
+%htmlindex = read_htmlindex("$RHOME/library");
+
+build_htmlfctlist("$RHOME/library");
+
 
 sub usage {
 

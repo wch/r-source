@@ -115,6 +115,40 @@ sub read_titles {
     %tit;
 }
 
+### Read the titles of all installed functions into an hash array
+
+sub read_functiontitles {
+
+    my $lib = $_[0];
+
+    my %tit;
+    my $pkg;
+
+    opendir lib, $lib;
+    my @libs = readdir(lib);
+    closedir lib;
+
+    foreach $pkg (@libs) {
+	if(-d "$lib/$pkg"){
+	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
+		if(-r "$lib/$pkg/TITLE"){
+		    open rtitle, "< $lib/$pkg/help/00Titles";
+		    while(<rtitle>){
+			/^(\S*)\s*(.*)/;
+			my $alias = $1;
+			$tit{$alias} = $2 . " ($pkg)";
+		    }
+		    close rtitle;
+		}
+	    }
+	}
+    }
+
+    close titles;
+    %tit;
+}
+
+
 ### Read all aliases into two hash arrays with basenames ant
 ### (relative) html-paths.
 
@@ -136,7 +170,7 @@ sub read_htmlindex {
 		    open ranindex, "< $lib/$pkg/help/AnIndex";
 		    while(<ranindex>){
 			/^(\S*)\s*(.*)/;
-			$htmlindex{$1} = "../../$pkg/html/$2.$HTML";
+			$htmlindex{$1} = "$pkg/html/$2.$HTML";
 		    }
 		    close ranindex;
 		}
@@ -226,7 +260,7 @@ sub build_index {
 
     $anindex = "$lib/$pkg/help/AnIndex";
     open(anindex, ">${anindex}.in");
-
+    
     my %alltitles;
     my $naliases;
     my $nmanfiles;
@@ -249,6 +283,7 @@ sub build_index {
 	    close rdfile;
 	    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
 	    my $rdtitle = $1;
+	    $rdtitle =~ s/\n/ /sg;
 
 	    print anindex "$rdname\t$manfilebase\n";
 	    $alltitles{$rdname} = $rdtitle;
@@ -258,7 +293,6 @@ sub build_index {
 		$alias = $1;
 		$alias =~ s/\\%/%/g;
 		print anindex "$alias\t$manfilebase\n";
-		print titleindex "$alias\t$title\n";
 		$alltitles{$alias} = $rdtitle;
 		$naliases++;
 	    }
@@ -271,6 +305,7 @@ sub build_index {
     unlink ("$anindex.in");
 
     open(anindex, "<$anindex");
+    open(titleindex, ">$lib/$pkg/help/00Titles");
     open(htmlfile, ">$lib/$pkg/html/00Index.$HTML");
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
@@ -297,6 +332,7 @@ sub build_index {
 	    print htmlfile "<table width=100%>\n";
 	    $firstletter = $aliasfirst;
 	}
+	print titleindex "$alias\t$alltitles{$alias}\n";
 	print htmlfile "<TR><TD width=25%><A HREF=\"$file.$HTML\">" .
 	    "$alias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";
     }
@@ -304,10 +340,58 @@ sub build_index {
     print htmlfile "</TABLE>\n";
     print htmlfile "</BODY>\n";
 
+    close titleindex;
     close htmlfile;
     close anindex;
 
     build_htmlpkglist($lib);
+}
+
+
+sub build_htmlfctlist {
+
+    my $lib = $_[0];
+    
+    my %htmltitles = read_functiontitles($lib);
+    my $key;
+
+    open(htmlfile, ">$RHOME/doc/html/function.$HTML");
+
+    print htmlfile html_pagehead("All Installed Functions", ".");
+
+    print htmlfile html_alphabet();
+
+    print htmlfile html_title2("-- Operators, Global Variables, ... --");
+    print htmlfile "\n<p>\n<table width=100%>\n";
+    foreach $alias (sort(keys %htmltitles)) {
+	print htmlfile "<TR><TD width=25%>" .
+	    "<A HREF=\"../../library/$htmlindex{$alias}\">" .
+	    "$alias</A></TD>\n<TD>$htmltitles{$alias}</TD></TR>\n"
+		unless $alias =~ /^[a-z]/;
+    }
+    print htmlfile "\n</table>\n<p>\n<table width=100%>\n";
+    
+    my $firstletter = "";
+    foreach $alias (sort(keys %htmltitles)) {
+	$aliasfirst = substr($alias, 0, 1);
+	if($aliasfirst =~ /[a-z]/){
+	    if($aliasfirst ne $firstletter){
+		print htmlfile "</table>\n";
+		print htmlfile "<a name=\"" . uc $aliasfirst . "\">\n";
+		print htmlfile html_title2("-- " . uc $aliasfirst . " --");
+		print htmlfile "<table width=100%>\n";
+		$firstletter = $aliasfirst;
+	    }
+	    print htmlfile "<TR><TD width=25%>" .
+		"<A HREF=\"../../library/$htmlindex{$alias}\">" .
+		    "$alias</A></TD>\n<TD>$htmltitles{$alias}</TD></TR>\n";
+	}
+    }
+    
+    print htmlfile "</TABLE>\n";
+    print htmlfile "</BODY>\n";
+    
+    close htmlfile;
 }
 
 

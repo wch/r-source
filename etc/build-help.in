@@ -69,6 +69,7 @@ print "\n";
 if($opt_html){
     %anindex = read_anindex($lib);
     %htmlindex = read_htmlindex($lib);
+    build_htmlfctlist($lib);
 }
 
 foreach $manfile (@mandir) {
