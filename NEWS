@@ -190,6 +190,9 @@ NEW FEATURES
      o	Recursive indexing of lists is allowed, so x[[c(4,2)]] is
 	shorthand for x[[4]][[2]] etc.  (Wishlist PR#1588)
 
+     o	summaryRprof() now prints times with a precision appropriate
+	to the sampling interval, rather than always to 2dp.
+
 
 INSTALLATION CHANGES
 
@@ -327,13 +330,16 @@ BUG FIXES
 	used, and that conversion neither respected `digits' nor
 	`quote'.
 
-    o	Rprof() gave misleading results for too small values of
+    o	Rprof() might gave misleading results for too small values of
 	`interval' and in practice the default 20ms was about as small
 	as is advisable on Linux.  Now the interval is forced to be at
 	least one clock tick.
 
     o	summary.data.frame() was not giving interpretable results when
 	the data frame contained a data frame as a column. (PR#1891)
+
+    o	delete.response() might re-order the rhs terms so prediction
+	might fail or even give incorrect results. (PR#2206)
 
 
 

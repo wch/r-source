@@ -63,16 +63,43 @@ terms.default <- function(x, ...) {
 
 terms.terms <- function(x, ...) x
 print.terms <- function(x, ...) print.default(unclass(x))
+
+### do this `by hand' as prone to re-ordering.
+# delete.response <- function (termobj)
+# {
+#     f <- formula(termobj)
+#     if (length(f) == 3) f[[2]] <- NULL
+#     tt <- terms(f, specials = names(attr(termobj, "specials")),
+#                 keep.order = TRUE)
+#     attr(tt, "intercept") <- attr(termobj, "intercept")
+#     if (length(formula(termobj)) == 3)
+#         attr(tt, "predvars") <- attr(termobj, "predvars")[-2]
+#     tt
+# }
+
 delete.response <- function (termobj)
 {
-    f <- formula(termobj)
-    if (length(f) == 3) f[[2]] <- NULL
-    tt <- terms(f, specials = names(attr(termobj, "specials")))
-    attr(tt, "intercept") <- attr(termobj, "intercept")
-    if (length(formula(termobj)) == 3)
-        attr(tt, "predvars") <- attr(termobj, "predvars")[-2]
-    tt
+    a <- attributes(termobj)
+    y <- a$response
+    if(!is.null(y) && y) {
+        termobj[[2]] <- NULL
+        a$response <- 0
+        a$variables <- a$variables[-(1+y)]
+        a$predvars <- a$predvars[-(1+y)]
+        if(length(a$factors))
+            a$factors <- a$factors[-y, , drop = FALSE]
+        if(length(a$offset))
+            a$offset <- ifelse(a$offset > y, a$offset-1, a$offset)
+        if(length(a$specials))
+            for(i in 1:length(a$specials)) {
+                b <- a$specials[[i]]
+                a$specials[[i]] <- ifelse(b > y, b-1, b)
+            }
+        attributes(termobj) <- a
+    }
+    termobj
 }
+
 
 reformulate <- function (termlabels, response=NULL)
 {
