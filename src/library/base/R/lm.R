@@ -187,7 +187,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     }
     z$coefficients <- coef
     z$residuals <- z$residuals/wts
-    z$fitted.values <- (y - z$residuals) + offset
+    z$fitted.values <- (y - z$residuals)
     z$weights <- w
     if (zero.weights) {
 	coef[is.na(coef)] <- 0
@@ -195,19 +195,20 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 	if (ny > 1) {
 	    save.r[ok, ] <- z$residuals
 	    save.r[nok, ] <- y0 - f0
-	    save.f[ok, ] <- z$fitted.values
-	    save.f[nok, ] <- f0
+	    save.f[ok, ] <- z$fitted.values + offset[ok,]
+	    save.f[nok, ] <- f0 + offset[nok,]
 	}
 	else {
 	    save.r[ok] <- z$residuals
 	    save.r[nok] <- y0 - f0
-	    save.f[ok] <- z$fitted.values
-	    save.f[nok] <- f0
+	    save.f[ok] <- z$fitted.values + offset[ok]
+	    save.f[nok] <- f0 + offset[nok]
 	}
 	z$residuals <- save.r
 	z$fitted.values <- save.f
 	z$weights <- save.w
-    }
+    } else
+        z$fitted.values <- z$fitted.values + offset    
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
 	  "weights", "rank")],
       list(assign = attr(x, "assign"),
