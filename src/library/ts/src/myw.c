@@ -51,8 +51,9 @@ void multi_yw(double *acf, int *pn, int *pomax, int *pnser, double *coef,
     double aicmin;
     Array acf_array, p_forward, p_back, v_forward, v_back;
     Array *A, *B;
-    int dim[] = {omax+1, nser, nser};
+    int dim[3];
 
+    dim[0] = omax+1; dim[1] = dim[2] = nser;
     acf_array = make_array(acf, dim, 3);
     p_forward = make_array(pacf, dim, 3);
     v_forward = make_array(var, dim, 3);

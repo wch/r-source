@@ -109,6 +109,7 @@ Array make_array(double vec[], int dim[], int ndim)
                }
                break;
            default:
+               break;
        }
     }
    
@@ -141,16 +142,20 @@ Array make_zero_array(int dim[], int ndim)
 
 Array make_matrix(double vec[], int nrow, int ncol)
 {
-   int dim[] = {nrow, ncol};
+   int dim[2];
 
+   dim[0] = nrow;
+   dim[1] = ncol;
    return make_array(vec, dim, 2);
 }
 
 Array make_zero_matrix(nrow, ncol)
 {
-   int dim[] = {nrow, ncol};
+   int dim[2];
    Array a;
 
+   dim[0] = nrow;
+   dim[1] = ncol;
    a = make_zero_array(dim, 2);
    return a;
 }
@@ -185,6 +190,7 @@ Array subarray(Array a, int index)
             ARRAY1(b) = ARRAY1(a) + offset;
             break;
         default:
+            break;
     }
 
 

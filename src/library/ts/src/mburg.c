@@ -54,11 +54,12 @@ void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
         int *vmethod)
 {
     int i, j, m, omax = *pomax, n = *pn, nser=*pnser, order=*porder;
-    int dim1[] = {omax+1, nser, nser};
+    int dim1[3];
     double aicmin;
     Array xarr, resid_f, resid_b, resid_f_tmp;
     Array *A, *B, P, V;
 
+    dim1[0] = omax+1; dim1[1] = dim1[2] = nser;
     A = (Array *) R_alloc(omax+1, sizeof(Array));
     B = (Array *) R_alloc(omax+1, sizeof(Array));
     for (i = 0; i <= omax; i++) {
