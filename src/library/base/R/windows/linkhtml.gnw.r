@@ -37,6 +37,7 @@ make.packages.html <- function(lib.loc=.Library)
             "</td></tr>\n", file=out, sep="")
     }
     cat("</table>\n</body></html>\n", file=out)
+    close(out)
     invisible(pg)
 }
 
@@ -85,6 +86,7 @@ make.function.html <- function(lib.loc=.Library)
         cat("</table>\n", file=out)
     }
     cat("</body>", file=out)
+    close(out)
     invisible(fun)
 }
 
