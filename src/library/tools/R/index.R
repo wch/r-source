@@ -36,16 +36,17 @@ function(dataDir, contents)
     datasets <- sort(datasets)
     dataIndex <- cbind(datasets, "")
     ## Note that NROW(contents) might be 0.
-    if(NROW(contents)) {
+    if(length(datasets) && NROW(contents)) {
         aliasIndices <-
             rep(1 : NROW(contents), sapply(contents$Aliases, length))
         idx <- match(datasets, unlist(contents$Aliases), 0)
         dataIndex[which(idx != 0), 2] <-
             contents[aliasIndices[idx], "Title"]
     }
-    dataIndex[, 1] <-
-        as.vector(ifelse(datasets == names(datasets), datasets,
-                         paste(datasets, " (", names(datasets), ")", sep="")))
+    if(length(datasets))
+        dataIndex[, 1] <-
+            as.vector(ifelse(datasets == names(datasets), datasets,
+                             paste(datasets, " (", names(datasets), ")", sep="")))
     dimnames(dataIndex) <- NULL
     dataIndex
 }
