@@ -913,7 +913,12 @@ SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 	    SET_HASHASH(c, 1);
 	}
 	hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
-	R_HashSet(hashcode, symbol, HASHTAB(rho), value);
+	frame = R_HashGetLoc(hashcode, symbol, HASHTAB(rho));
+	if (frame != R_NilValue) {
+	  SETCAR(frame, value);
+	  return symbol;
+	}
+	else return R_NilValue;
     }
     return R_NilValue;
 }
