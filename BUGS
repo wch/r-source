@@ -122,6 +122,10 @@ Date: 30 Jan 2001 00:27:13 -0500
 Subject: termplot fails for composite non-factor terms
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
+--Neither of the proposed changes actually works in sufficient generality.
+--
+--The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
+--the data right is a project for 1.3
 * PR# 837 *
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -237,38 +241,11 @@ none
 
 Directory:  incoming
 
-* PR# 849 *
-Subject: 
-From: Ian Wilson <I.Wilson@maths.abdn.ac.uk>
-Date: Thu, 15 Feb 2001 18:07:49 +0000
-* PR# 843 *
-Subject: Minor doc bug
-From: bwheeler@echip.com (Bob Wheeler)
-Date: Fri, 09 Feb 2001 12:35:03 -0500
-* PR# 842 *
-Subject: dnbinom(,size<1,)=0
-Subject: Re: [R] Goodness of fit to Poisson / NegBinomial
-From: Thomas Lumley <tlumley@u.washington.edu>
-From: Yudi Pawitan <yudi@stat.ucc.ie>
-Date: Thu, 8 Feb 2001 11:44:21 -0800 (PST)
-Date: Thu, 08 Feb 2001 17:10:23 +0000
-* PR# 845 *
-Subject: Bug in pictex output.
-From: Patrick Lindsey <patrick.lindsey@luc.ac.be>
-Date: Sun, 11 Feb 2001 14:53:20 +0100 (MET)
-* PR# 844 *
-Subject: default data= arg to glm()
-From: pperkins@ucsd.edu
-Date: Fri, 9 Feb 2001 23:04:42 +0100 (MET)
 * PR# 848 *
 Subject: X11 device doesn't handle destroy events correcly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 13 Feb 2001 17:40:46 -0500
-* PR# 847 *
-Subject: RE: [R] silly question about spec
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 13 Feb 2001 12:20:53 +0100 (CET)
-* PR# 846 *
-Subject: Sticky levels
-From: bwheeler@echip.com (Bob Wheeler)
-Date: Mon, 12 Feb 2001 19:37:52 -0500
+* PR# 845 *
+Subject: Bug in pictex output.
+From: Patrick Lindsey <patrick.lindsey@luc.ac.be>
+Date: Sun, 11 Feb 2001 14:53:20 +0100 (MET)
