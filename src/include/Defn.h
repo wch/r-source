@@ -171,6 +171,9 @@ typedef struct {
 #define PRVALUE(x)	((x)->u.promsxp.value)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
 
+/* Hashing Macros */
+#define HASHASH(x)      ((x)->sxpinfo.gp)
+#define HASHVALUE(x)    ((x)->u.vecsxp.truelength)
 
 /* Vector Heap Structure */
 typedef struct {
@@ -567,6 +570,7 @@ void PrintWarnings(void);
 SEXP promiseArgs(SEXP, SEXP);
 void RemoveClass(SEXP, char *);
 SEXP R_LoadFromFile(FILE*, int);
+extern int R_Newhashpjw(char*);
 FILE* R_OpenLibraryFile(char *);
 void R_PreserveObject(SEXP);
 void R_ReleaseObject(SEXP);
