@@ -1,6 +1,6 @@
 \name{UCBAdmissions}
 \alias{UCBAdmissions}
-\title{Student admissions at UC Berkeley}
+\title{Student Admissions at UC Berkeley}
 \usage{data(UCBAdmissions)}
 \description{
   Aggregate data on applicants to graduate school at Berkeley for the
