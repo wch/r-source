@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-4, 2000-07-17
+@set FAQ-VERSION 1.1-5, 2000-07-25
 @set REL-VERSION 1.1.0
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1261,6 +1261,8 @@ the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with @SPLUS{}''.  Contained in the @file{VR}
 bundle.
+@item Matrix
+A Matrix package.
 @item NISTnls
 A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology.
@@ -1456,8 +1458,6 @@ contains
 @table @strong
 @item HTML
 Functions for exporting R objects as @HTML{} tables.
-@item Matrix
-A Matrix package.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RPgSQL
