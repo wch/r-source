@@ -86,7 +86,10 @@ SEXP eval(SEXP e, SEXP rho)
 	R_Visible = 1;
 	if (e == R_DotsSymbol)
 	    error("... used in an incorrect context\n");
-	tmp = findVar(e, rho);
+	if( DDVAL(e) )
+		tmp = ddfindVar(e,rho);
+	else
+		tmp = findVar(e, rho);
 	if (tmp == R_UnboundValue)
 	    error("Object \"%s\" not found\n", CHAR(PRINTNAME(e)));
 	else if (tmp == R_MissingArg) {

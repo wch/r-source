@@ -204,6 +204,7 @@ typedef struct {
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
 #define SYMVALUE(x)	((x)->u.symsxp.value)
 #define INTERNAL(x)	((x)->u.symsxp.internal)
+#define DDVAL(x)	((x)->sxpinfo.gp) /* for ..1, ..2 etc */
 
 /* Vector Access Macros */
 #define LENGTH(x)	((x)->u.vecsxp.length)
@@ -504,6 +505,7 @@ void copyVector(SEXP, SEXP);
 SEXP CreateTag(SEXP);
 void CustomPrintValue(SEXP,SEXP);
 void DataFrameClass(SEXP);
+SEXP ddfindVar(SEXP, SEXP);
 void defineVar(SEXP, SEXP, SEXP);
 SEXP deparse1(SEXP,int);
 SEXP dimgets(SEXP, SEXP);

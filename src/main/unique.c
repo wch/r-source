@@ -509,8 +509,27 @@ static SEXP ExpandDots(SEXP s, int expdots)
     CDR(s) = ExpandDots(CDR(s), expdots);
     return s;
 }
+static SEXP subDots(SEXP rho) 
+{
+    SEXP rval, dots, a, b;
+    int len,i;
+    char tbuf[10];
 
-extern SEXP substituteList(SEXP, SEXP);
+    dots = findVarInFrame(FRAME(rho), R_DotsSymbol);
+    len = length(dots);
+    PROTECT(rval=allocList(len));
+    for(a=dots, b=rval, i=1; a!=R_NilValue; a=CDR(a), b=CDR(b), i++) {
+	if( isSymbol(PREXPR(CAR(a))) || isLanguage(PREXPR(CAR(a))) ) {
+		sprintf(tbuf,"..%d",i);
+		CAR(b) = mkSYMSXP(mkChar(tbuf), R_UnboundValue);
+	}
+	else
+		CAR(b) = PREXPR(CAR(a));
+    }
+    UNPROTECT(1);
+    return rval;
+}
+
 
 SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -581,7 +600,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     t2 = R_MissingArg;
     for (t1=actuals ; t1!=R_NilValue ; t1 = CDR(t1) ) {
 	if (CAR(t1) == R_DotsSymbol) {
-		t2 = substituteList(list1(R_DotsSymbol), sysp); 
+		t2 = subDots(sysp); 
 		break; 
 #ifdef NEWDOTS
 		t2 = findVarInFrame(FRAME(sysp), R_DotsSymbol);

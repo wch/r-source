@@ -139,6 +139,31 @@ SEXP findVar(SEXP symbol, SEXP rho)
     return (SYMVALUE(symbol));
 }
 
+/*  Find a ... in an environment */
+SEXP ddfindVar(SEXP symbol, SEXP rho)
+{
+    int i;
+    SEXP vl;
+
+    /* first look for the .. symbol itself */
+    vl = findVarInFrame(FRAME(rho), symbol);
+    if( vl != R_UnboundValue )
+	return(vl);
+
+    i = DDVAL(symbol);
+    vl = findVarInFrame(FRAME(rho), R_DotsSymbol);
+    if( vl != R_UnboundValue ) {
+	if (length(vl) > i ) {
+		vl = nthcdr(vl, i-1);
+		return(CAR(vl));
+	}
+	else
+	   error("The ... list does not contain %d elements\n",i);
+    }
+    else
+        error("..%d used in an incorrect context, no ... to look in\n",i);
+}
+
 
 /* Return R_UnboundValue if the symbol isn't located and the calling */
 /* function needs to handle the errors. */

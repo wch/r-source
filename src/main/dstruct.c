@@ -89,16 +89,37 @@ SEXP mkChar(char *name)
 /*  mkSYMSXP - return a symsxp with the string  */
 /*             name inserted in the name field  */
 
-SEXP mkSYMSXP(SEXP name, SEXP value)
+static int ddVal(SEXP name)
 {
-    SEXP c;
-    PROTECT(name);
-    PROTECT(value);
-    c = allocSExp(SYMSXP);
-    PRINTNAME(c) = name;
-    SYMVALUE(c) = value;
-    UNPROTECT(2);
-    return c;
+    char buf[128], *endp, *val;
+    int rval;
+
+    strcpy(buf, CHAR(name));
+    if( !strncmp(buf,"..",2) && strlen(buf) > 2 ) {
+        val = buf; val++; val++;
+	rval = strtol(val, &endp, 10);
+        if( *endp != '\0')
+		return 0;
+	else
+		return rval;
+    }
+    return 0;
+}
+
+SEXP mkSYMSXP(SEXP name, SEXP value)
+
+{
+	SEXP c;
+	int i;
+	PROTECT(name);
+	PROTECT(value);
+	i = ddVal(name);
+	c = allocSExp(SYMSXP);
+	PRINTNAME(c) = name;
+	SYMVALUE(c) = value;
+	DDVAL(c) = i;
+	UNPROTECT(2);
+	return c;
 }
 
 
