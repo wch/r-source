@@ -20,7 +20,7 @@
 
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
-$VERSION = "0.1.5";
+$VERSION = "0.1.6";
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE! 
 @blocknames = ("name", "title", "usage", "arguments", "description", 
@@ -81,7 +81,7 @@ sub Rdconv {
 # Mark each matching opening and closing bracket with a unique id.
 # Idea and original code from latex2html
 sub mark_brackets {
-	
+    
     $complete_text =~ s/^\\{|([^\\])\\{/$1$EOB/gso;
     $complete_text =~ s/^\\}|([^\\])\\}/$1$ECB/gso;
     
@@ -90,6 +90,7 @@ sub mark_brackets {
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
     }
 }
+
 
 sub unmark_brackets {
     my $text = $_[0];
@@ -542,13 +543,22 @@ sub rdoc2nroff {
 
 
 # Convert a Rdoc text string to nroff
+#   $_[0]: text to be converted
+#   $_[1]: (optional) indentation of paragraphs. default = $INDENT
+
 sub text2nroff {
 
     my $text = $_[0];
-
+    if($_[1]){
+	my $indent = $_[1];
+    }
+    else{
+	my $indent = $INDENT;
+    }
+    
     $text =~ s/^\.|([\n\(])\./$1\\\&./g;
      
-    $text =~ s/\n\s*\n/\n.IP \"\" $INDENT\n/sgo;
+    $text =~ s/\n\s*\n/\n.IP \"\" $indent\n/sgo;
     $text =~ s/\\dots/\\&.../go;
     $text =~ s/\\ldots/\\&.../go;
     $text =~ s/\\cr\n?/\n/sgo;
@@ -681,14 +691,15 @@ sub nroff_print_argblock {
 		$arg = text2nroff($arg);
 		$desc = text2nroff($desc);
 		print "\n";
-		print ".LP\n";
-		print ".in +$TAGOFF\n";
+#		print ".LP\n";
+#		print ".in +$TAGOFF\n";
+		print ".IP \"\" $TAGOFF\n";
 		print ".ti -\\w\@$arg:\\ \@u\n";
 		print "$arg:\\ $desc\n";
-		print ".in -$TAGOFF\n";
+#		print ".in -$TAGOFF\n";
 		$text =~ s/.*$id//s;
 	    }
-	    print text2nroff($text), "\n";
+	    print text2nroff($text, $TAGOFF), "\n";
 	}
 	else{
 	    print text2nroff($text), "\n";
