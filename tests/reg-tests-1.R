@@ -3093,3 +3093,16 @@ DF2 <- rbind(DF, DF)
 (rn <- rownames(DF2$x))
 stopifnot(identical(rn, c(rownames(x), rownames(x))))
 ## names were always preserved in 1.9.x, but rbind dropped names and dimnames.
+
+
+## cumsum etc dropped names
+x <- rnorm(10)
+names(x) <- nm <- letters[1:10]
+stopifnot(identical(names(cumsum(x)), nm),
+          identical(names(cumprod(x)), nm),
+          identical(names(cummax(x)), nm),
+          identical(names(cummin(x)), nm))
+x <- x+1i
+stopifnot(identical(names(cumsum(x)), nm),
+          identical(names(cumprod(x)), nm))
+## 1.9.x dropped names

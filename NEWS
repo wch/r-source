@@ -62,6 +62,8 @@ NEW FEATURES
 	and the time should be linear in the longer of the lengths
 	(but more memory is used).
 
+    o	cumsum/prod/max/min() now preserve names.
+
 
 UTILITIES
 
