@@ -180,6 +180,10 @@
 \def\codedash{-\discretionary{}{}{}}
 \def\Rd@code#1{\texttt{#1}\egroup}
 
+\def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\Rd@AsIsX}
+\def\Rd@AsIs@dospecials{\do\$\do\&\do\#\do\^\do\_\do\%\do\~}
+\def\Rd@AsIsX#1{\normalfont #1\egroup}
+
 \IfFileExists{ae.sty}{\setboolean{Rd@has@ae}{true}}{}
 \ifthenelse{\boolean{Rd@use@ae}\and\boolean{Rd@has@ae}}{%
   \usepackage[T1]{fontenc}

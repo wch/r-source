@@ -7,7 +7,7 @@
 ##  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.28 $'
+revision='$Revision: 1.29 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
@@ -126,6 +126,21 @@ Rdconv_dir_or_files_to_LaTeX () {
 
 }
 
+Rd_DESCRIPTION_to_LaTeX () {
+  ## Typeset the contents of a DESCRIPTION file in a LaTeX description
+  ## list.
+  ## Usage:
+  ##   Rd_DESCRIPTION_to_LaTeX FILE
+  fields=`sed '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
+  echo "\\begin{description}"
+  echo "\\raggedright{}"
+  for f in `echo "${fields}" | sed '/Package/d; /Bundle/d;'`; do
+    text=`get_dcf_field ${f} ${1}`
+    echo "\\item[${f}] \\AsIs{${text}}"
+  done
+  echo "\\end{description}"
+}
+
 is_bundle=no
 file_sed='s/[_$]/\\&/g'
 
@@ -140,7 +155,8 @@ if test -d "${1}"; then
       title=${title-"Bundle \`${bundle_name}'"}
     else
       echo "Hmm ... looks like a package"
-      title=${title-"Package \`${1}'"}
+      package_name=`get_dcf_field Package "${1}/DESCRIPTION"`
+      title=${title-"Package \`${package_name}'"}
       dir=${1}/man
     fi
   else
@@ -191,6 +207,9 @@ if test ${is_bundle} = no; then
 \\par\\bigskip{\\large \\today}
 \\end{center}
 EOF
+  if test -f ${1}/DESCRIPTION; then
+    Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
+  fi
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
 \\pagenumbering{Roman}
@@ -200,6 +219,10 @@ else
 {\\textbf{\\Huge ${title}}}
 \\par\\bigskip{\\large \\today}
 \\end{center}
+\\par\\bigskip
+EOF
+  Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
+  cat >> ${build_dir}/Rd2.tex <<EOF
 \\vfill\\vfill
 \\end{titlepage}
 EOF
@@ -219,6 +242,10 @@ EOF
   for p in ${bundle_pkgs}; do
     echo "Bundle package: \`${p}'"
     echo "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
+    if test -f ${1}/${p}/DESCRIPTION.in; then
+      Rd_DESCRIPTION_to_LaTeX ${1}/${p}/DESCRIPTION.in \
+        >> ${build_dir}/Rd2.tex
+    fi
     Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${1}/${p}/man
     echo "\\clearpage{}" >> ${build_dir}/Rd2.tex
   done
