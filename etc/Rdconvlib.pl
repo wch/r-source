@@ -1165,8 +1165,10 @@ sub nroff_tables {
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    for($l=0; $l<$#cols; $l++){
+		$cols[$l] =~ s/^\s*(.*)\s*$/$1/;
 		$table .= "$cols[$l]\t";
 	    }
+	    $cols[$#cols] =~ s/^\s*(.*)\s*$/$1/;
 	    $table .= "$cols[$#cols]\n";
 	}
 	$table .= ".TE\n";
@@ -1437,7 +1439,7 @@ sub text2latex {
     $text =~ s/\\dddeqn/\\deqn/og;
 
     $text =~ s/&/\\&/go;
-    $text =~ s/\\R /\\R\{\} /go;
+    $text =~ s/\\R(\s+)/\\R\{\}$1/go;
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\cr/\\\\\{\}/go;
     $text =~ s/\\tab(\s+)/&$1/go;
