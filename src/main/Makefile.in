@@ -109,7 +109,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(Rexecbin_PROGRAMS)
-	@@WANT_R_SHLIB_TRUE@$(MAKE) $(Rexeclib_LTLIBRARIES)
+@WANT_R_SHLIB_TRUE@	@$(MAKE) $(Rexeclib_LTLIBRARIES)
 	@(cd ../unix && $(MAKE) DLLs)
 
 ../include/config.h ../include/Rversion.h:

@@ -81,7 +81,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(noinst_LIBRARIES)
-	@@WANT_R_SHLIB_TRUE@$(MAKE) stamp-lo
+@WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
 libnmath.a: $(libnmath_a_OBJECTS)
 	$(AR) cr $@ $(libnmath_a_OBJECTS)
