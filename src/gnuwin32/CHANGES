@@ -32,6 +32,9 @@ The installer now offers the option of a `quick launch icon" for R
 par(ask = TRUE) now takes input from the graphics window, rather than
 from the console.
 
+Rcmd REMOVE works more similarly to Unix, setting the default library
+from R_LIBS if the latter is set.
+
 
 
 R 2.0.1 patched

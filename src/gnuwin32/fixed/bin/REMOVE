@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000 R Development Core Team
+# Copyright (C) 2000, 2004 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.7 $ ';
+my $revision = ' $Revision: 1.8 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -38,10 +38,10 @@ my @knownoptions = ("help|h", "library|l:s", "version|v");
 			
 GetOptions (@knownoptions) || usage();
 R_version($name, $version) if $opt_version;
-usage() if $opt_help;
 
 my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
+usage() if $opt_help;
 
 my $startdir = cwd();
 if($opt_library){
@@ -50,9 +50,13 @@ if($opt_library){
     $library = cwd();
     chdir($startdir);
 } else {
-    $library = $R_HOME . "/library";
+    if (defined $ENV{'R_LIBS'}) {
+	$library = $ENV{'R_LIBS'};
+	$library =~ s/\s*;.*$//;
+    } else {
+	$library = $R_HOME . "/library";
+    }
 }
-
 
 ## this is the main loop over all packages to be installed
 my $pkg;
@@ -66,19 +70,23 @@ foreach $pkg (@ARGV) {
 
 print("\n");
 ## re-make the HTML indices
-system("make -C $R_HOME/src/gnuwin32/help RHOME=$R_HOME indices");
+system("make -C $R_HOME/src/gnuwin32/help --no-print-directory RHOME=$R_HOME indices");
 
 
 sub usage {
     print STDERR <<END;
 Usage: R CMD $name [options] pkgs
 
-Remove the add-on packages specified by pkgs from the default library
-tree (${R_HOME}/library) or the tree specified via \`--library\'.
+Remove the add-on packages specified by pkgs.  The library tree to
+remove from can be specified via '--library'.  By default, packages are
+removed from the library tree rooted at the first directory given in the
+environment variable R_LIBS if this is set, and from the
+default R library tree ($R_HOME/library) otherwise.
 
 Options:
+  -h, --help		print short help message and exit
+  -v, --version		print REMOVE version info and exit
   -l, --library=LIB	remove packages from library tree LIB
-  -v, --version		print version info and exit
 
 Report bugs to <r-bugs\@r-project.org>.
 END
