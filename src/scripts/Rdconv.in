@@ -26,7 +26,7 @@ use Getopt::Long;
 use File::Basename;
 use Cwd;
 
-my $revision = ' $Revision: 1.9 $ ';
+my $revision = ' $Revision: 1.10 $ ';
 my $version;
 my $name;
 
@@ -37,7 +37,7 @@ $version = $1;
 sub version {
   print STDERR <<END;
 Rdconv $version
-Copyright (C) 1997 Fritz Leisch.
+Copyright (C) 1997-2000 R Core Development Team
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty.    
 END
@@ -46,7 +46,7 @@ END
 
 sub usage {
   print STDERR <<END;
-Usage: $name [options] FILE
+Usage: R CMD $name [options] FILE
 
 Convert R documentation in FILE to other formats such as plain text,
 HTML or LaTeX.
