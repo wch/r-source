@@ -56,7 +56,8 @@ BUG FIXES
     o   example() will allow (again) aliased topic names. 
 
     o   HTML help file conversions will find hyperlinks in the main 
-	library as well as the current library.
+	library as well as the current library. Links containing `<'
+        or `>' now work properly.
 
     o   Rdconv conversion of \section{}{}s to Sd corrected.
 
