@@ -85,8 +85,10 @@ BUG FIXES
 	partial=TRUE for factors whose levels were not in
 	lexicographical order.
 
-    o   a serious performance flaw in as() computations was fixed (the
+    o   A serious performance flaw in as() computations was fixed (the
         methods were not being cached properly.)
+
+    o	model.frame(~1, data) always returned 1 row. (PR#2958)
 
 
 
