@@ -73,6 +73,9 @@ BUG FIXES
 	set, as documented.  Previously it was read unless R_ENVIRON
 	pointed to an actual file.
 
+    o	Startup.Rd described the proceesing under Unix-alikes but
+	incorrectly implied it happened that way on the Windows and
+	MacOS ports.  Neither use Renviron.site, for example.
 
     
 
