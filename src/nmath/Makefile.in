@@ -20,7 +20,8 @@ OBJS =	\
 	sign.o fsign.o fsquare.o fcube.o \
 	imax2.o imin2.o \
 	chebyshev.o logrelerr.o lgammacor.o gammalims.o \
-	gamma.o lgamma.o beta.o lbeta.o polygamma.o \
+	gamma.o lgamma.o gamma_cody.o beta.o lbeta.o polygamma.o \
+	bessel_i.o bessel_j.o bessel_k.o bessel_y.o \
 	choose.o \
 	snorm.o sunif.o sexp.o \
 	dgamma.o pgamma.o qgamma.o rgamma.o \
