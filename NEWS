@@ -626,6 +626,8 @@ BUG FIXES
     o   Eliminated a race condition that could cause segfaults when a SIGINT
 	was received while handling an earlier SIGINT.
 
+    o   rect(lty = "blank") was incorrectly drawing with a dashed line.
+
 
 
 	**************************************************
