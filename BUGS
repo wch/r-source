@@ -157,37 +157,6 @@ Subject:  las=1 with log axis
 From: Peter Dalgaard BSA <pd@pubhealth.ku.dk>
 Date: Wed, 27 Jun 2001 11:54:06 +0200
 
-Directory:  incoming
-
-* PR# 1042 *
-Subject: cannot assign to NULL dimnames
-From: htang@hpl.hp.com
-Date: Tue, 7 Aug 2001 21:14:50 +0200 (MET DST)
-* PR# 1043 *
-Subject: R 1.3.0 bug: after "y _ 10; x[[1]] _ y", assigning to "y[1]" modifies "x"
-From: buhr@stat.wisc.edu (Kevin Buhr)
-Date: 07 Aug 2001 15:37:57 -0500
-* PR# 1044 *
-Subject: Polymarsall.c
-From: pleu@hotmail.com
-Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
-* PR# 1045 *
-Subject: Palette changes on redraw
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 08 Aug 2001 19:08:01 +0200
-* PR# 1046 *
-Subject: bug (and fix) in seq.POSIXt
-From: David Middleton <dmiddleton@fisheries.gov.fk>
-Date: Thu, 9 Aug 2001 16:03:54 -0200 
-* PR# 1047 *
-Subject:  [<-.data.frame bug 
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 10 Aug 2001 07:45:44 +0100
-* PR# 1048 *
-Subject: bug in dummy.coef.lm?
-From: Adrian Baddeley <adrian@maths.uwa.edu.au>
-Date: Fri, 10 Aug 2001 16:23:52 +0800 (WST)
-
 Directory:  In-Out
 
 none
@@ -288,3 +257,34 @@ none
 Directory:  Windows
 
 none
+
+Directory:  incoming
+
+* PR# 1042 *
+Subject: cannot assign to NULL dimnames
+From: htang@hpl.hp.com
+Date: Tue, 7 Aug 2001 21:14:50 +0200 (MET DST)
+* PR# 1043 *
+Subject: R 1.3.0 bug: after "y _ 10; x[[1]] _ y", assigning to "y[1]" modifies "x"
+From: buhr@stat.wisc.edu (Kevin Buhr)
+Date: 07 Aug 2001 15:37:57 -0500
+* PR# 1044 *
+Subject: Polymarsall.c
+From: pleu@hotmail.com
+Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
+* PR# 1045 *
+Subject: Palette changes on redraw
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 08 Aug 2001 19:08:01 +0200
+* PR# 1046 *
+Subject: bug (and fix) in seq.POSIXt
+From: David Middleton <dmiddleton@fisheries.gov.fk>
+Date: Thu, 9 Aug 2001 16:03:54 -0200 
+* PR# 1047 *
+Subject:  [<-.data.frame bug 
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 10 Aug 2001 07:45:44 +0100
+* PR# 1048 *
+Subject: bug in dummy.coef.lm?
+From: Adrian Baddeley <adrian@maths.uwa.edu.au>
+Date: Fri, 10 Aug 2001 16:23:52 +0800 (WST)
