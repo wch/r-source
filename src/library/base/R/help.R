@@ -4,7 +4,7 @@ index.search <- function(topic, path, file="AnIndex", type="help")
     .Internal(index.search(topic, path, file, .Platform$file.sep, type))
 
 help <-
-    function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
+    function (topic, offline = FALSE, package = .packages(),
               lib.loc = .lib.loc, verbose = getOption("verbose"),
               htmlhelp = getOption("htmlhelp"))
 {
@@ -30,7 +30,10 @@ help <-
         else if (!is.na(match(topic, c("%*%"))))
             topic <- "matmult"
         type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
-        INDICES <- system.file(pkg=package, lib=lib.loc)
+        INDICES <-
+            if(missing(lib.loc)) .path.package(package)
+            else system.file(pkg = package, lib = lib.loc)
+#        INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
         if (length(file) && file != "") {
             if (verbose)

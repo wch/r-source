@@ -21,10 +21,12 @@ library <-
 		}
 		else stop(txt)
 	    }
+            lib.loc <- unique(lib.loc)
 	    which.lib.loc <-
 		lib.loc[match(packagedir[1], file.path(lib.loc, package))]
 	    if (length(packagedir) > 1) {
-		warning(paste("Package `", package, "' found more than once,\n  ",
+		warning(paste("Package `", package,
+                              "' found more than once,\n  ",
 			      "using the one found in `", which.lib.loc,
 			      "'", sep = ""))
 	    }
@@ -206,15 +208,18 @@ provide <- function(package) {
 
 .path.package <- function(package = .packages())
 {
+    if(length(package) == 0) return(character(0))
     s <- search()
-    searchpaths <- lapply(1:length(s), function(i) attr(pos.to.env(i), "path"))
+    searchpaths <- lapply(1:length(s),
+                          function(i) attr(pos.to.env(i), "path"))
     searchpaths[[length(s)]] <- system.file()
-    package <- paste("package", package, sep=":")
-    pos <- match(package, s)
-    if(any(is.na(pos))) {
-        miss <- paste(substr(package[is.na(pos)], 9, 100), collapse=", ")
-        warning(paste("package(s)", miss, "are not loaded"))
-        pos <- pos[!is.na(pos)]
+    pkgs <- paste("package", package, sep=":")
+    pos <- match(pkgs, s)
+    if(any(m <- is.na(pos))) {
+        miss <- paste(package[m], collapse=", ")
+        if(all(m)) error(paste("none of the packages are not loaded"))
+        else warning(paste("package(s)", miss, "are not loaded"))
+        pos <- pos[!m]
     }
     unlist(searchpaths[pos], use.names=FALSE)
 }

@@ -7,9 +7,9 @@
   the available data sets.
 }
 \usage{
-data(\dots, list = character(0), package = .packages()),
+data(\dots, list = character(0), package = .packages(),
      lib.loc = .lib.loc)
-show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
+show.data(package = .packages(), lib.loc = .lib.loc)
 }
 \arguments{
   \item{\dots}{a sequence of \code{name}s or character strings}
@@ -50,16 +50,27 @@ show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
   displayed.
  
   If no data sets are specified, \code{data} calls \code{show.data}.
-  \code{show.data} looks for a file \file{00Index} (failing that the
-  deprecated convention of \file{index.doc}) in a \file{data}
+  \code{show.data} looks for a file \file{00Index} in a \file{data}
   directory of each specified package, and uses these files to prepare
   a listing. If there is a \file{data} area but no index a warning is
   given: such packages are incomplete.
 
   If \code{lib.loc} is not specified, the packages are searched for
-  amongst those already loaded. If \code{lib.loc} is specified,
+  amongst those already loaded, followed by the \code{data} directory
+  (if any) of the currrent working directory.
+  If \code{lib.loc} is specified,
   they are searched for in the specified libraries, even if they are
   already loaded from another library.
+
+  To just look in the \code{data} directory of the current working
+  directory, set \code{package = NULL}.
+}
+\note{
+  The data files can be many small files. On some file systems it is
+  desirable to save space, and the text files in the \file{help} directory
+  of an installed package can be zipped up as a zip archive
+  \file{Rdata.zip}. You will need to proved a single-column file
+  \file{filelist} of file names.
 }
 
 \seealso{

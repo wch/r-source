@@ -17,12 +17,19 @@ NEW FEATURES
     o	Header files in R_ext must be given explicitly as e.g.
 	"R_ext/Mathlib.h".
 
-    o	new function  log1p(x) := log(1 + x) , accurate for |x| << 1.
+    o	New function  log1p(x) := log(1 + x) , accurate for |x| << 1.
 
     o   HTML searches can now select between any combination of
         titles, keywords and object names. The keyword list of
         SearchEngine.html is automatically built from KEYWORDS.db.
         Missing links are now resolved using the search engine.
+
+    o   A data subdirectory of the working directory will be
+	searched for data, by default after all the loaded packages
+	(including base).
+
+    o	Data directories can now be zipped as Rdata.zip, provided a
+        list of contents is provided in file `filelist'.
 
 
 BUG FIXES
@@ -30,21 +37,30 @@ BUG FIXES
     o	printutils.c compiles on platforms where va_list is not
 	a pointer.
 
-    o	tempfile("") now works on all Unix platforms, and
-	tempfile("a b c") returns a single name (with spaces in).
-
     o	The internal code for strsplit no longer destroys other
 	internal structures, e.g. postscript file output on Linux.
 
-    o	The search semantics of data() and example() have changed
-	(see the help pages). In particular, they will normally
+    o   nlm had a conversion-to-C error that could cause an infinite
+        loop.
+
+    o	tempfile("") now works on all Unix platforms, and
+	tempfile("a b c") returns a single name (with spaces in).
+
+    o	The search semantics of data(), example() and help() have changed
+	(see their help pages). In particular, they will normally
 	look in the package which was loaded, even if it is not in
-	one of the libraries given in .lib.loc.
+	one of the libraries given in .lib.loc.  Autoloads are no
+	longer included in the search (as they searched whole objects,
+	not the autoloaded objects).
 
     o	The documentation for .Rd files said & must be entered as \&
 	but only the unescaped form was processed correctly. Now both
 	are accepted but & is preferred.
 
+    o   list.files now skips non-existent/unreadable directories with 
+	a warning, rather that failing with an error.
+
+    o	Lots of help example now tidy up the files they created.
 
 
 	**************************************************

@@ -1,7 +1,7 @@
 \name{help}
 \title{Documentation}
 \usage{
-help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
+help(topic, offline = FALSE, package = .packages()
      lib.loc = .lib.loc, verbose = getOption("verbose"),
 #ifdef unix
      htmlhelp = getOption("htmlhelp"))
@@ -72,10 +72,11 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 #endif
 }
 \note{
-  Currently, you only get help for \R objects in your
+  You will only get help for \R objects in your
   \code{\link{search}()} path, i.e., \code{help(dist)} will only work after
-  \code{\link{library}(mva)}.
-  \emph{This is bound to be changed in the future.}
+  \code{\link{library}(mva)}. To look in all the packages in all the
+  current libraries, use
+  \code{help(topic, package=.packages(all=T), lib.loc=.lib.loc)}
 
   The help files can be many small files. On some file systems it is
   desirable to save space, and the text files in the \file{help} directory
