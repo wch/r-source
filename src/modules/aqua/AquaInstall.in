@@ -9,7 +9,6 @@ subdir=src/modules/aqua
 top_srcdir=@top_srcdir@
 
 
-
 here=`pwd`;
 cp ${top_srcdir}/src/modules/aqua/R.fix /Applications/StartR.app/RAqua.app/Contents/
 cd /Applications/StartR.app/RAqua.app/Contents

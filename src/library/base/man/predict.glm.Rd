@@ -1,4 +1,6 @@
 \name{predict.glm}
+\alias{predict.glm}
+\concept{regression}
 \title{Predict Method for GLM Fits}
 \usage{
 \method{predict}{glm}(object, newdata = NULL,
@@ -6,7 +8,6 @@
             se.fit = FALSE, dispersion = NULL, terms = NULL,
             na.action = na.pass, \dots)
 }
-\alias{predict.glm}
 \arguments{
   \item{object}{a fitted object of class inheriting from \code{"glm"}.}
   \item{newdata}{optionally, a new data frame from which to make the
