@@ -269,7 +269,7 @@ removeClass <-
         for(pos in extWhere)
             rm(list = what, pos = pos)
         if(removeSubclassLinks && is(fullDef, "classRepresentation"))
-            .removeSubclassLinks(ClassDef@className, classDef@package, fullDef@subclasses)
+            .removeSubclassLinks(fullDef)
     }
     TRUE
 }
