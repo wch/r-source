@@ -33,7 +33,7 @@ $\t\$%
 @macro Rcopyright{}
 Copyright @copyright{} 2000--2001 R Development Core Team
 @end macro
-@macro Rcopyright99{}
+@macro RcopyrightN{}
 Copyright @copyright{} 1999--2001 R Development Core Team
 @end macro
 
