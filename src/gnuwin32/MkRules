@@ -1,8 +1,8 @@
 #-*- Makefile -*-
 .SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d
 
-# Alternatives CYGWIN (-mno-cygwin), MINGW32 (mingw32 gcc), CROSS (Linux)
-BUILD=MINGW32
+# Alternatives MINGW (mingw32 gcc), CROSS (Linux)
+BUILD=MINGW
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
@@ -12,15 +12,7 @@ HHWDIR=C:/Program Files/HTML Help Workshop
 TCL_HOME = c:/packages/Tcl
 TCL_VERSION = 83
 
-ifeq ($(strip $(BUILD)),CYGWIN)
-BINPREF=
-MINGW32CFLAG=-mno-cygwin -mwin32
-MINGW32LDFLAG=-mno-cygwin
-FLIBS=-lg2c
-AWK=gawk
-endif
-
-ifeq ($(strip $(BUILD)),MINGW32)
+ifeq ($(strip $(BUILD)),MINGW)
 BINPREF=
 MINGW32CFLAG=
 MINGW32LDFLAG=
