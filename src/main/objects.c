@@ -1283,7 +1283,7 @@ SEXP R_do_new_object(SEXP class_def)
 	      CHAR(asChar(e)));
     }
     e = R_do_slot(class_def, s_className);
-    value = R_do_slot(class_def, s_prototype);
+    value = duplicate(R_do_slot(class_def, s_prototype));
     setAttrib(value, R_ClassSymbol, e);
     return value;
 }
