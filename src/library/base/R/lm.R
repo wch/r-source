@@ -616,12 +616,15 @@ predict.lm <-
 	    } else scale^2
 	if(type != "terms") {
 	    XRinv <-
-		if(missing(newdata) && (is.null(w) || all(w > 0)))
-		    if(is.null(w))
-			 qr.Q(object$qr)[, p1, drop = FALSE]
-		    else qr.Q(object$qr)[, p1, drop = FALSE] / sqrt(w)
+		if(missing(newdata) && is.null(w))
+		    qr.Q(object$qr)[, p1, drop = FALSE]
 		else
 		    X[, piv] %*% qr.solve(qr.R(object$qr)[p1, p1])
+#	NB:
+#	 qr.Q(object$qr)[, p1, drop = FALSE] / sqrt(w)
+#	looks faster than the above, but it's slower, and doesn't handle zero
+#	weights properly
+#
 	    ip <- drop(XRinv^2 %*% rep(res.var, p))
 	}
     }
