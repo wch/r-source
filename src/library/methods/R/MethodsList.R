@@ -125,38 +125,29 @@ insertMethod <-
                 el(methods, which) <- def
         }
         slot(mlist, whichMethods) <- methods
-        if(identical(whichMethods, "allMethods")) {
-            which <- match(Class, names(methods))
-            if(!is.na(which))  ## except for the delete case (not legal for allMethods)
-                mlist@fromClass[[which]] <- fromClass
-        }
-        mlist
     }
     ## else, recursively merge
-    else if(identical(whichMethods, "allMethods")) {
-        if(!is.null(elNamed(mlist@allMethods, Class)))
-            fromClass <- Class
-        if(is(def, "MethodsList")) {
+    else {
+        if(identical(whichMethods, "allMethods") && is(def, "MethodsList")) {
+            if(!is.null(elNamed(mlist@allMethods, Class)))
+                fromClass <- Class
             newArg <- as.character(def@argument)
             newDefs <- def@allMethods
             newSigs <- as.list(names(newDefs))
+            for(j in seq(along=newDefs))
+                current <- 
+                    Recall(current, newSigs[[j]], newArg, newDefs[[j]], whichMethods, envir = envir)
+            elNamed(slot(mlist, whichMethods), Class) <- current
         }
-        else {
-            newArg <- character()
-            newSigs <- list(character())
-            newDefs <- list(def)
-        }
-        for(j in seq(along=newDefs))
-            current <- 
-                Recall(current, newSigs[[j]], newArg, newDefs[[j]], whichMethods, envir = envir)
-        elNamed(slot(mlist, whichMethods), Class) <- current
-        which <- match(Class, names(slot(mlist, whichMethods)))
+        else 
+            elNamed(slot(mlist, whichMethods), Class) <-
+                Recall(current, signature[-1], args[-1], def, whichMethods, envir = envir)
+    }
+    if(identical(whichMethods, "allMethods")) {
+        which <- match(Class, names(mlist@allMethods))
         if(!is.na(which))  ## except for the delete case (not legal for allMethods)
             mlist@fromClass[[which]] <- fromClass
     }
-    else 
-        elNamed(slot(mlist, whichMethods), Class) <-
-            Recall(current, signature[-1], args[-1], def, whichMethods, envir = envir)
     mlist
 }
 
@@ -421,7 +412,7 @@ matchSignature <-
     n <- length(names)
     value <- rep("ANY", n)
     value[which] <- sigClasses
-    while(value[n] == "ANY")
+    while(n > 0 && value[n] == "ANY")
         n <- n-1
     length(value) <- n
     value
