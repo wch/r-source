@@ -176,6 +176,7 @@ foreach $pkg (@ARGV){
             my $op = $1;
             my $ver = $2;
 	    my $Rversion = $ENV{'R_VERSION'};
+	    ## <FIXME> This thinks 1.9.1 > 1.10.0 </FIXME>
 	    if ($op eq ">=" && $ver) {
 		die "This R is version $Rversion\n".
 		    "    package \`$pkgname' requires R $ver or later\n"

@@ -782,13 +782,14 @@ do_install () {
     dep_version=`set - ${depends}; echo ${2}`
     ## Currently, only operators '<=' and '>=' are supported.  Hence we
     ## check this, and also whether we found a version string.
+    ## <FIXME> This thinks 1.9.1 > 1.10.0 </FIXME>
     if (test "${dep_operator}" = "<=" \
            || test "${dep_operator}" = ">=") \
          && test -n "${dep_version}"; then
       dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
       if test ${dep_ok} -eq 0; then
         error "This R is version ${R_VERSION}"
-        echo "       package '${pkg_name}' depends on R ${dep_version}" >&2
+        echo "       package '${pkg_name}' needs R ${dep_operator} ${dep_version}" >&2
         do_exit_on_error
       fi
     else
