@@ -7,6 +7,7 @@
 # needs "sed" to be found at
 # ftp://sunsite.cnlab-switch.ch/software/platform/macos/src/mpw_c/
 #
+#
 
 # Creates FFDecl.h
 	sed  -e '/^\#/d' ¶
