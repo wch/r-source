@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-25, 2000-11-14
+@set FAQ-VERSION 1.1-26, 2000-11-15
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1107,6 +1107,10 @@ In R, if @code{x} is a list, then @code{x[i] <- NULL} and @code{x[[i]]
 these is incompatible with S, where it is a no-op.  (Note that you can
 set elements to @code{NULL} using @code{x[i] <- list(NULL)}.)
 
+@c @item
+@c In R @code{x[-4]} fails if @code{x} is not @code{NULL} but has fewer
+@c than 4 elements.  In S it has no effect.
+
 @item
 In S, the functions named @code{.First} and @code{.Last} in the
 @file{.Data} directory can be used for customizing, as they are executed
@@ -1387,6 +1391,8 @@ Binary file stream support functions.
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+@item XML
+Facilities for reading XML documents and DTDs.
 @item acepack
 ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
