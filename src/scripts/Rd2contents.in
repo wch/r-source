@@ -4,13 +4,13 @@ use File::Basename;
 
 while(<$ARGV[0]/man/*.Rd>){
 
+    my $file = basename($_, (".Rd", ".rd"));
+
     $ARGV[0] =~ /([^\/]*)$/;
     my $pkg =$1;
-    my $file = $_;
 
     open(rdfile, "<$_");
     undef $text;
-    $file =~ s+.*/man/(.*)\.Rd+$1+o;
 
     while(<rdfile>){
 	$text .= $_;
