@@ -12,7 +12,7 @@
 \usage{
 windows(width = 7, height = 7, pointsize = 12,
         record = getOption("graphics.record"),
-        rescale = c("R", "fit", "fixed"))
+        rescale = c("R", "fit", "fixed"), xpinch, ypinch)
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
@@ -32,6 +32,7 @@ bringToTop(which = dev.cur())
   \item{record}{logical: sets the initial state of the flag for
     recording plots.}
   \item{resize}{controls the action for resizing plots.}
+  \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and vertically.}
   \item{which}{a device number.}
 }
 
@@ -60,6 +61,11 @@ bringToTop(which = dev.cur())
   If the \code{filename} is omitted for a \code{win.metafile} device, the
   output is copied to the clipboard when the device is closed. A
   \code{win.metafile} device can only be used for a single page.
+
+  By default a screen device asks Windows for the number of pixels per
+  inch.  This can be overridden (it is often wrong) by specifying
+  \code{xpinch} and \code{ypinch} or the corresponding options
+  \code{"xpinch"} and \code{"ypinch"}.
 
   If a screen device is re-sized, the default behaviour is to redraw the
   plot(s) as if the new size had been specified originally.  Using

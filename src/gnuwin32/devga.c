@@ -40,6 +40,16 @@
 extern console RConsole;
 extern Rboolean AllDevicesKilled;
 
+/* these really are globals: per machine, not per window */
+static double user_xpinch = 0.0, user_ypinch = 0.0;
+
+void GAsetunits(double xpinch, double ypinch)
+{
+    user_xpinch = xpinch;
+    user_ypinch = ypinch;
+}
+
+
 
 	/********************************************************/
 	/* This device driver has been documented so that it be	*/
@@ -185,6 +195,7 @@ static void SaveAsPng(DevDesc *dd,char *fn);
 static void SaveAsJpeg(DevDesc *dd,int quality,char *fn);
 static void SaveAsBmp(DevDesc *dd,char *fn);
 static void SaveAsBitmap(DevDesc *dd);
+void  R_ProcessEvents();
 
 static void PrivateCopyDevice(DevDesc *dd,DevDesc *ndd, char *name)
 {
@@ -229,8 +240,7 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 {
     SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
     DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
-    char family[256], encoding[256], paper[256], bg[256], fg[256], 
-	**afmpaths = NULL;
+    char family[256], paper[256], bg[256], fg[256], **afmpaths = NULL;
 
     if (!ndd) {
 	R_ShowMessage("Not enough memory to copy graphics window");
@@ -247,7 +257,6 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 
     /* Set default values... */
     strcpy(family, "Helvetica");
-    strcpy(encoding, "ISOLatin1.enc");
     strcpy(paper, "default");
     strcpy(bg, "white");
     strcpy(fg, "black");
@@ -274,7 +283,7 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding, bg, fg,
+    if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, bg, fg,
 		       GConvertXUnits(1.0, NDC, INCHES, dd),
 		       GConvertYUnits(1.0, NDC, INCHES, dd),
 		       (double)0, dd->gp.ps, 0, 1, 0, ""))
@@ -1088,8 +1097,14 @@ setupScreenDevice(DevDesc *dd, gadesc *xd, double w, double h,
     double dw, dw0, dh, d;
 
     xd->kind = SCREEN;
-    dw = dw0 = (int) (w / pixelWidth(NULL));
-    dh = (int) (h / pixelHeight(NULL));
+    if (R_finite(user_xpinch) && user_xpinch > 0.0)
+	dw = dw0 = (int) (w * user_xpinch);
+    else
+	dw = dw0 = (int) (w / pixelWidth(NULL));
+    if (R_finite(user_ypinch) && user_ypinch > 0.0)
+	dh = (int) (w * user_ypinch);
+    else
+	dh = (int) (h / pixelHeight(NULL));
     if (resize != 3) {
 	if ((dw / devicewidth(NULL)) > 0.85) {
 	    d = dh / dw;
