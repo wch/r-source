@@ -206,7 +206,8 @@ static SEXP EnsureString(SEXP s)
 
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP argi, argnames, namei, names, options, s, tag, value;
+    SEXP argi= R_NilValue, argnames= R_NilValue, namei= R_NilValue,
+	names, options, s, tag, value;/* = R_Nil..: -Wall */
     int i, k, n;
 
     /* Locate the options values in the symbol table. */

@@ -314,7 +314,7 @@ static SEXP binary(SEXP op, SEXP args)
 	else if (xarray) {
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
 	}
-	else if (yarray) {
+	else /*(yarray)*/ {
 	    PROTECT(dims = getAttrib(y, R_DimSymbol));
 	}
 	PROTECT(xnames = getAttrib(x, R_DimNamesSymbol));
@@ -345,7 +345,7 @@ static SEXP binary(SEXP op, SEXP args)
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(class = getAttrib(x, R_ClassSymbol));
 	}
-	else if (yts) {
+	else /*(yts)*/ {
 	    if (length(y) < length(x))
 		ErrorMessage(lcall, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(y, R_TspSymbol));
