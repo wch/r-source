@@ -240,8 +240,6 @@ foreach $pkg (@ARGV){
 	print "*** lazydata is $lazydata ***\n" if($opt_debug);
 
 	my $opt = "";
-
-	$opt = "DPKG=$dpkg";;
 	if($opt_auto_zip || $opt_build) {
 	    my $dir = $pkgdir. "/" . $pkgname . "/data";
 	    if(-d $dir && 
@@ -281,6 +279,7 @@ foreach $pkg (@ARGV){
 	    $opt = $opt . " $pkgname-HELP=ziponly"
 		if ($opt_use_zip || $opt_use_zip_help);
 	}
+	$opt = $opt . " DPKG=$dpkg";;
 #	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
     	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library SAVE=$save $opt $helpflags $makecmd-$pkgname");
 	if($res) {
