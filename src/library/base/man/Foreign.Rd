@@ -120,7 +120,7 @@ trace.
 
 The third is that lists are passed as a single \R \code{SEXP} with
 \code{DUP=FALSE}, not as an array of \code{SEXP}. This means the
-accessor macros in \code{Rinternals.h} are needed to get at the list
+accessor macros in \file{Rinternals.h} are needed to get at the list
 elements and the lists cannot be passed to \code{call_S}/\code{call_R}.
 
 1.  If your C/Fortran routine calls back any \R function including
