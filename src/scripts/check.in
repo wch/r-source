@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.47.4.2 $ ';
+my $revision = ' $Revision: 1.47.4.3 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -131,12 +131,12 @@ if($opt_latex) {
 }
 
 ## get the valid keywords for later ...
-my %validKeywords = ();
+my %standard_keywords = ();
 open(KEYWORDS, "< ${R_HOME}/doc/KEYWORDS.db") ||
     die "Cannot open \`KEYWORDS.db'";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
-	$validKeywords{$1} = 1;
+	$standard_keywords{$1} = 1;
     }
 }
 close KEYWORDS;
@@ -145,8 +145,6 @@ close KEYWORDS;
 $#ARGV >= 0 || die "Error: no packages were specified";
 my $pkg;
 foreach $pkg (@ARGV) {
-    my $is_bundle = 0;
-
     ## $pkg should be the path to the package (bundle) root source
     ## directory, either absolute or relative to $startdir.
     ## $pkgdir is the corresponding absolute path.
@@ -181,27 +179,46 @@ foreach $pkg (@ARGV) {
 	    $ENV{'R_LIBS'} = "$library:$R_LIBS";
 	}
     }
-    
-    print "\n";
-    if(system("${R_CMD} INSTALL -l $library $pkgdir")) {
-	$log->error("installation failed");
-	exit(1);
-    }
-    print("\n");
-    
+
     my $description;
-    $log->checking("for file \`$pkgname/DESCRIPTION'");
-    if(-r "$pkgdir/DESCRIPTION") {
-	$description = new R::Dcf("$pkgdir/DESCRIPTION");
-	$log->result("OK");
-    }
-    else {
-	$log->result("NO");
-	exit(1);
+    my $is_base_pkg = 0;
+    ## Package sources from the R distribution are special.  They have a
+    ## `DESCRIPTION.in' file (instead of `DESCRIPTION'), with Version
+    ## field containing `@VERSION@' for substitution by configure.  We
+    ## test for such packages by looking for `DESCRIPTION.in' with
+    ## Priority `base', and skip the installation test for such
+    ## packages.
+    if(-r "$pkgdir/DESCRIPTION.in") {
+	$description = new R::Dcf("$pkgdir/DESCRIPTION.in");
+	if($description->{"Priority"} eq "base") {
+	    $log->message("looks like \`${pkgname}' is a base package");
+	    $log->message("skipping installation test");
+	    $is_base_pkg = 1;
+	}
     }
 
+    if(!$is_base_pkg) {
+	print "\n";
+	if(system("${R_CMD} INSTALL -l $library $pkgdir")) {
+	    $log->error("installation failed");
+	    exit(1);
+	}
+	print("\n");
+    
+	$log->checking("for file \`$pkgname/DESCRIPTION'");
+	if(-r "$pkgdir/DESCRIPTION") {
+	    $description = new R::Dcf("$pkgdir/DESCRIPTION");
+	    $log->result("OK");
+	}
+	else {
+	    $log->result("NO");
+	    exit(1);
+	}
+    }
+
+    my $is_bundle = 0;
     if($description->{"Contains"}) {
-	$log->message("Looks like \`${pkgname}' is a package bundle");
+	$log->message("looks like \`${pkgname}' is a package bundle");
 	$is_bundle = 1;
 	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
 	my $ppkg = "";
@@ -210,7 +227,7 @@ foreach $pkg (@ARGV) {
 	    $log->setstars("**");
 	    chdir($startdir);
 	    check_pkg("$pkgdir/$ppkg", $pkgoutdir, $startdir, $library,
-		      $is_bundle, $description, $log);
+		      $is_bundle, $description, $log, $is_base_pkg);
 	    $log->setstars("*");
 	}
     }
@@ -218,7 +235,7 @@ foreach $pkg (@ARGV) {
 	$is_bundle = 0;
 	chdir($startdir);
 	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
-		  $is_bundle, $description, $log);
+		  $is_bundle, $description, $log, $is_base_pkg);
     }
     
     if($log->{"warnings"}) {
@@ -234,7 +251,7 @@ foreach $pkg (@ARGV) {
 sub check_pkg {
 
     my ($pkg, $pkgoutdir, $startdir, $library,
-	$in_bundle, $description, $log) = @_;
+	$in_bundle, $description, $log, $is_base_pkg) = @_;
     my ($pkgdir, $pkgname);
     
     ## $pkg is the argument we received from the main loop.
@@ -333,13 +350,15 @@ sub check_pkg {
 	exit(1);
     }
     $log->result("OK");
-    
+
     $log->checking("DESCRIPTION Version field");
     if(! $description->{"Version"}) {
 	$log->error("no DESCRIPTION Version field found");
 	exit(1);
     }
-    if($description->{"Version"} =~ /[^\d\.\-]/) {
+    if(($description->{"Version"} =~ /[^\d\.\-]/) && !$is_base_pkg) {
+	## Package sources from the R distribution have `@VERSION@' in
+	## their `DESCRIPTION.in' files ...
 	$log->error("Version may only contain digits, \`.' and \`-'");
 	exit(1);
     }
@@ -396,17 +415,17 @@ sub check_pkg {
 		my $arg = $1;
 		if($arg =~ /\.so$/) {
                     $any++;
-                    $log->error("  library.dynam used with extension .so");
+                    $log->error("  library.dynam used with extension \`.so'");
 	            exit(1);
                 }
 		if($arg =~ /\.sl$/) {
                     $any++;
-                    $log->error("  library.dynam used with extension .sl");
+                    $log->error("  library.dynam used with extension \`.sl'");
 	            exit(1);
                 }
 		if($arg =~ /\.dll$/) {
                     $any++;
-                    $log->error("  library.dynam used with extension .dll");
+                    $log->error("  library.dynam used with extension \`.dll'");
 	            exit(1);
                 }
 	    }
@@ -495,7 +514,7 @@ sub check_pkg {
 	    }
             foreach $key (keys(%keywords)) {
                 push(@{$badkeywords{$rdfile}}, $key)
-                    unless $validKeywords{$key};
+                    unless $standard_keywords{$key};
             }
 	}
 
@@ -587,7 +606,9 @@ sub check_pkg {
 	## With the current heuristics codoc() may throw an error even
 	## though the documentation is valid.  Change this when we know
 	## what must be valid R code, similar to the above for undoc().
-	@out = grep {/^(\$| *\[|Multiple|Error)/} @out;
+	@out = grep {/^(\$| *\[|\t+|Multiple|Error)/} @out;
+	## Also, the `\t+' in the above is ugly, but needed to catch the
+	## pretty-printing in errorcall() for non-NULL call ...
 	if($#out>=0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
