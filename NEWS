@@ -75,6 +75,12 @@ NEW FEATURES
     o	Added colorRamp() and colorRampPalette() functions for color 
 	interpolation.
 
+    o	confint() has stub methods for classes "glm" and "nls" that
+	invoke those in package MASS.  This avoids using the "lm"
+	method for "glm" objects if MASS is not attached.
+
+	confint() has a default method using asymptotic normality.
+
     o	contr.SAS() has been moved from the 'nlme' package to the
 	'stats' package.
 

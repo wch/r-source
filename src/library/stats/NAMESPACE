@@ -5,29 +5,29 @@ export(.checkMFClasses, .getXlevels, .MFclass)
 
 export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        aggregate.default, aggregate.ts, AIC, alias, anova, anova.glm,
-       anova.glmlist, anova.lm, anova.lmlist, anova.mlm, aov,
-       approx, approxfun,
-       as.formula, as.ts, ave, binomial, bw.bcv, bw.nrd, bw.nrd0,
-       bw.SJ, bw.ucv, C, case.names, cbind.ts, coef, coefficients,
-       complete.cases, confint, constrOptim, contr.SAS, contr.helmert,
-       contr.poly, contr.sum, contr.treatment, contrasts,
-       "contrasts<-", convolve, cooks.distance, cor, cov, cov.wt,
-       cov2cor, covratio, cycle, D, dbeta, dbinom, dcauchy, dchisq,
-       delete.response, deltat, density, deriv, deriv.default,
-       deriv.formula, deriv3, deriv3.default, deriv3.formula,
-       deviance, dexp, df, df.residual, dfbeta, dfbetas, dffits,
-       dgamma, dgeom, dhyper, diff.ts, dlnorm, dlogis, dmultinom,
-       dnbinom, dnorm, dpois, drop.scope, drop.terms, drop1,
-       dsignrank, dt, dummy.coef, dunif, dweibull, dwilcox,
-       eff.aovlist, effects, estVar, end, expand.model.frame, extractAIC,
-       factor.scope, family, fft, fitted, fitted.values, fivenum,
-       formula, frequency, ftable, Gamma, gaussian, glm, glm.control,
-       glm.fit, hasTsp, hat, hatvalues, hatvalues.lm, influence,
-       influence.measures, integrate, interaction.plot,
-       inverse.gaussian, IQR, is.empty.model, is.mts, is.ts, lines.ts,
-       lm, lm.fit, lm.influence, lm.wfit, logLik, loglin, lowess,
-       ls.diag, ls.print, lsfit, mad, mahalanobis, make.link,
-       makepredictcall, manova, mauchley.test, median, model.extract, model.frame,
+       anova.glmlist, anova.lm, anova.lmlist, anova.mlm, aov, approx,
+       approxfun, as.formula, as.ts, ave, binomial, bw.bcv, bw.nrd,
+       bw.nrd0, bw.SJ, bw.ucv, C, case.names, cbind.ts, coef,
+       coefficients, complete.cases, confint, confint.default,
+       constrOptim, contr.SAS, contr.helmert, contr.poly, contr.sum,
+       contr.treatment, contrasts, "contrasts<-", convolve,
+       cooks.distance, cor, cov, cov.wt, cov2cor, covratio, cycle, D,
+       dbeta, dbinom, dcauchy, dchisq, delete.response, deltat,
+       density, deriv, deriv.default, deriv.formula, deriv3,
+       deriv3.default, deriv3.formula, deviance, dexp, df,
+       df.residual, dfbeta, dfbetas, dffits, dgamma, dgeom, dhyper,
+       diff.ts, dlnorm, dlogis, dmultinom, dnbinom, dnorm, dpois,
+       drop.scope, drop.terms, drop1, dsignrank, dt, dummy.coef,
+       dunif, dweibull, dwilcox, eff.aovlist, effects, estVar, end,
+       expand.model.frame, extractAIC, factor.scope, family, fft,
+       fitted, fitted.values, fivenum, formula, frequency, ftable,
+       Gamma, gaussian, glm, glm.control, glm.fit, hasTsp, hat,
+       hatvalues, hatvalues.lm, influence, influence.measures,
+       integrate, interaction.plot, inverse.gaussian, IQR,
+       is.empty.model, is.mts, is.ts, lines.ts, lm, lm.fit,
+       lm.influence, lm.wfit, logLik, loglin, lowess, ls.diag,
+       ls.print, lsfit, mad, mahalanobis, make.link, makepredictcall,
+       manova, mauchley.test, median, model.extract, model.frame,
        model.frame.aovlist, model.frame.default, model.frame.glm,
        model.frame.lm, model.matrix, model.matrix.default,
        model.matrix.lm, model.offset, model.response, model.tables,
@@ -90,7 +90,10 @@ S3method(coef, aov)
 S3method(coef, default)
 S3method(coef, listof)
 S3method(coef, summary.nls)
+S3method(confint, default)
+S3method(confint, glm)
 S3method(confint, lm)
+S3method(confint, nls)
 S3method(cooks.distance, glm)
 S3method(cooks.distance, lm)
 S3method(cycle, default)
