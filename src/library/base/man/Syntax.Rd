@@ -10,7 +10,7 @@
   \tabular{ll}{
     \code{[ [[}\tab indexing\cr
     \code{::}\tab name space/variable name separator\cr
-    \code{$ @ ::}\tab component / slot extraction\cr
+    \code{$ @}\tab component / slot extraction\cr
     \code{^}\tab exponentiation (right to left)\cr
     \code{- +}\tab unary minus and plus\cr
     \code{:}\tab sequence operator\cr
