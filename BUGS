@@ -326,26 +326,24 @@ Date: Mon, 1 Apr 2002 22:19:07 +0200 (MET DST)
 Subject: configure script fails on comment in tkConfig.sh
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Tue, 30 Apr 2002 16:41:51 +0200 (CEST)
+--Looks like a conspiracy between a shell problem and an oddity in Tk 8.0 rather
+--than an R problem. Good to know for the workaround though. The comment in
+--TK_XINCLUDES has since disappeared, at least in Tk 8.3.3.
 * PR# 1501 *
 Subject: configure error: Maybe change CFLAGS or FFLAGS?
 From: ale@ini.phys.ethz.ch
 Date: Wed, 1 May 2002 15:23:14 +0200 (MET DST)
-* PR# 1656 *
-Subject: command line editing does not work
-From: Petr.Savicky@cuni.cz
-Date: Tue, 11 Jun 2002 19:51:24 +0200
-* PR# 1657 *
-Subject: command line editing does not work (2)
-From: Petr.Savicky@cuni.cz
-Date: Tue, 11 Jun 2002 20:20:11 +0200
+--Tried to use fort77 on RedHat, should likely try g77 instead.
 * PR# 1658 *
 Subject: make install fails - index.html not found
 From: dhouston@bio.ri.ccf.org
 Date: Tue, 11 Jun 2002 22:14:07 +0200 (MET DST)
+--Missing perl??
 * PR# 1676 *
 Subject: R configure.in makes bad alpha assumptions
 From: mcmahill@mtl.mit.edu
 Date: Sat, 15 Jun 2002 19:21:09 -0400 (EDT)
+--Probably fixed in 1.5.1
 * PR# 1825 *
 Subject: bug in R-1.5.1 for Mac OS X installer
 From: Kow Kuroda <kkuroda@crl.ucsd.edu>
@@ -355,14 +353,17 @@ Date: Mon, 22 Jul 2002 16:40:26 -0700
 Subject: R config failure on solaris
 From: "Siva Ginjupalli" <gsivrao@hotmail.com>
 Date: Wed, 24 Jul 2002 20:08:49 +0000
+--Missing info on R version and compilers.
 * PR# 1937 *
 Subject:  Inconsistent use of Perl? 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Sat, 24 Aug 2002 18:41:09 +0800
+--Some packages require Perl v 5.005
 * PR# 1995 *
 Subject:  2002-09-08 1.6.0 build fails in Recommended 
 From: <stvjc@channing.harvard.edu>
 Date: Sun, 8 Sep 2002 23:57:39 -0400 (EDT)
+--I think this got cleared up...
 * PR# 1996 *
 Subject:  config checks for --with-gnome need update 
 From: <stvjc@channing.harvard.edu>
@@ -596,26 +597,6 @@ Date: Wed, 11 Sep 2002 15:17:53 +0200 (MET DST)
 Subject: R_HOME/etc/Renviron.site not interpreted on windows
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Thu, 12 Sep 2002 13:34:55 +0200
-* PR# 2013 *
-Subject: TRUST
-From: "JOHN  AUDU" <johnaudu@ecplaza.net>
-Date: Fri, 13 Sep 2002 22:42:33 +0100
-* PR# 2014 *
-Subject: TRUST
-From: "JOHN  AUDU" <johnaudu@ecplaza.net>
-Date: Fri, 13 Sep 2002 22:43:11 +0100
-* PR# 2015 *
-Subject: Worm Klez.E immunity
-From: mts <mts@lebanon-online.com.lb>
-Date: Fri, 13 Sep 2002 18:15:58 -0500
-* PR# 2016 *
-Subject: Contents
-From: neo_su_2000 <neo_su_2000@mail.taipeilink.net>
-Date: Sat, 14 Sep 2002 06:51:13 -0300
-* PR# 2017 *
-Subject: 괌쎌Ξ�~  빌몰좽か겋グ
-From: mlpi_uy_rff03dw@amazon.com
-Date: 14 Sep 2002 07:31:52 +0800
 * PR# 2018 *
 Subject: missing data in stripchart
 From: baron@CATTELL.psych.upenn.edu
@@ -624,7 +605,27 @@ Date: Sat, 14 Sep 2002 19:35:32 +0200 (MET DST)
 Subject: p.s. regarding stripchart missing-data report
 From: Jonathan Baron <baron@cattell.psych.upenn.edu>
 Date: Sat, 14 Sep 2002 13:48:34 -0400
-* PR# 2020 *
-Subject: Scrolling
-From: web_master <web_master@videoflicks.com>
-Date: Sun, 15 Sep 2002 13:00:25 -0400 (EDT)
+* PR# 2023 *
+Subject: mosaicplot enhancements
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Mon, 16 Sep 2002 12:00:26 +0200
+* PR# 2024 *
+Subject: Contents
+From: cran <cran@r-project.org>
+Date: Mon, 16 Sep 2002 12:00:10 -0500
+* PR# 2025 *
+Subject: installing
+From: W.Amos@zoo.cam.ac.uk (Bill Amos)
+Date: Mon, 16 Sep 2002 18:15:27 +0100
+* PR# 2026 *
+Subject: (광고)"로버트할리"의 속성영어비법 공개! 무료로 샘플테잎을 보내드립니다!
+From: 세스영어<hyun10310@kornet.net>
+Date: Tue, 17 Sep 2002 11:47:41 +0900
+* PR# 2027 *
+Subject: (광고)"로버트할리"의 속성영어비법 공개! 무료로 샘플테잎을 보내드립니다!
+From: 세스영어<hyun10310@kornet.net>
+Date: Tue, 17 Sep 2002 11:47:49 +0900
+* PR# 2028 *
+Subject: Please Assist Me
+From: Godwin Olehi <ole48104@yahoo.com>
+Date: Mon, 16 Sep 2002 21:37:52 +0200
