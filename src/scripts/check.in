@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.164 $ ';
+my $revision = ' $Revision: 1.165 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -738,10 +738,10 @@ sub check_pkg {
        && $opt_install) {
 	$log->checking("package dependencies");
 	my @required_packages = ();
-	my @dependencies = split(/\,/,
-				 ($description->{"Depends"},
-				  $description->{"Suggests"},
-				  $description->{"Package"}));
+	my @dependencies =
+	  (split(/\,/, $description->{"Depends"}),
+	   split(/\,/, $description->{"Suggests"}),
+	   $description->{"Package"});
 	## According to FL, everything listed in Depends or Suggests
 	## should be available for successfully running R CMD check.
 	## \VignetteDepends{} entries not "required" by the package code
