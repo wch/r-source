@@ -129,7 +129,7 @@ mostlyclean: clean
 clean:
 	-@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* Makedeps
 distclean: clean
-	-@rm -f *.R*bak *.R*bakk .RData sink-examp.txt Makefile
+	-@rm -f *.R*bak *.R*bakk *.R*prev .RData sink-examp.txt Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
