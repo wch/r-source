@@ -16,6 +16,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+/* <UTF8> chars are handled as whole strings. */
+
 /* Whittle's algorithm for autoregression estimation
 
    multi_yw  is the interface to R. It also handles model selection using AIC
@@ -38,15 +40,16 @@
 #include "qr.h"
 
 void multi_yw(double *acf, int *pn, int *pomax, int *pnser, double *coef,
-   double *pacf, double *var, double *aic, int *porder, int *puseaic);
+	      double *pacf, double *var, double *aic, int *porder, 
+	      int *puseaic);
 static void whittle(Array acf, int nlag, Array *A, Array *B, Array p_forward,
-   Array v_forward, Array p_back, Array v_back);
-static void whittle2 (Array acf, Array Aold, Array Bold, int lag, char *direction,
-    Array A, Array K, Array E);
+		    Array v_forward, Array p_back, Array v_back);
+static void whittle2 (Array acf, Array Aold, Array Bold, int lag, 
+		      char *direction, Array A, Array K, Array E);
 
 
 void multi_yw(double *acf, int *pn, int *pomax, int *pnser, double *coef,
-   double *pacf, double *var, double *aic, int *porder, int *useaic)
+	      double *pacf, double *var, double *aic, int *porder, int *useaic)
 {
     int i, m;
     int  omax = *pomax, n = *pn, nser=*pnser, order=*porder;
@@ -142,15 +145,15 @@ static void whittle(Array acf, int nlag, Array *A, Array *B, Array p_forward,
 
 }
 
-static void whittle2 (Array acf, Array Aold, Array Bold, int lag, char *direction,
-    Array A, Array K, Array E)
+static void whittle2 (Array acf, Array Aold, Array Bold, int lag, 
+		      char *direction, Array A, Array K, Array E)
 {
 
     int d, i, nser=DIM(acf)[1];
     char *vmax;
     Array beta, tmp, id;
 
-    d = direction == "forward";
+    d = strcmp(direction, "forward") == 0;
 
     vmax = vmaxget();
 
