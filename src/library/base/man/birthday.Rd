@@ -3,10 +3,10 @@
 \alias{pbirthday}
 \title{Probability of coincidences}
 \description{
-Computes approximate answers to a generalised "birthday
-paradox" problem. \code{pbirthday} computes the probability of a
-coincidence and \code{qbirthday} computes the number of observations
-needed to have a specified probability of coincidence.
+  Computes approximate answers to a generalised ``birthday paradox''
+  problem. \code{pbirthday} computes the probability of a coincidence
+  and \code{qbirthday} computes the number of observations needed to
+  have a specified probability of coincidence.
 }
 \usage{
 qbirthday(prob = 0.5, classes = 365, coincident = 2)
@@ -27,18 +27,19 @@ pbirthday(n, classes = 365, coincident = 2)
   \item{pbirthday}{Probability of the specified coincidence}  
 }
 \details{
- The birthday paradox is that a very small number of
-people, 23, suffices to have  a 50-50 chance that two of them have the
-same birthday.  This function generalises the calculation to
-probabilities other than 0.5, numbers of coincident events other than 2,
-and numbers of classes other than 365.
+ The birthday paradox is that a very small number of people, 23,
+ suffices to have  a 50-50 chance that two of them have the same
+ birthday.  This function generalises the calculation to probabilities
+ other than 0.5, numbers of coincident events other than 2, and numbers
+ of classes other than 365.
 
-This formula is approximate, as the example below shows. For
-\code{coincident=2} the exact computation is straightforward and may be
-preferable. 
+ This formula is approximate, as the example below shows.  For
+ \code{coincident=2} the exact computation is straightforward and may be
+ preferable. 
 }
-\references{Diaconis P, Mosteller F. "Methods for studying coincidences" 
-JASA 84:853-861}
+\references{
+  Diaconis P, Mosteller F., ``Methods for studying coincidences''.
+  JASA 84:853-861}
 \examples{
  ## the standard version
 qbirthday() 
@@ -61,4 +62,4 @@ abline(0,1)
 plot(1-x1,1-x2,log="xy",xlab="approximate",ylab="exact")
 abline(0,1)
 }
-\keyword{distribution}%-- one or more ...
+\keyword{distribution}

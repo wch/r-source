@@ -8,7 +8,7 @@
 pkg::name
 }
 \arguments{
-  \item{pgk}{package name symbol or string literal.}
+  \item{pkg}{package name symbol or string literal.}
   \item{name}{variable name symbol or string literal.}
 }
 \details{

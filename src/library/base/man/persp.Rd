@@ -70,11 +70,11 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   \item{axes}{should ticks and labels be added to the box.  The
     default is \code{TRUE}.  If \code{box} is \code{FALSE} then no
     ticks or labels are drawn.}
-  \item{ticktype}{character: "simple" draws just an arrow parallel to
-    the axis to indicate direction of increase; "detailed" draws normal
-    ticks as per 2D plots.}
+  \item{ticktype}{character: \code{"simple"} draws just an arrow
+    parallel to the axis to indicate direction of increase;
+    \code{"detailed"} draws normal ticks as per 2D plots.}
   \item{nticks}{the (approximate) number of tick marks to draw on the
-    axes.  Has no effect if \code{ticktype} is "simple".}
+    axes.  Has no effect if \code{ticktype} is \code{"simple"}.}
   \item{\dots}{additional graphical parameters (see \code{\link{par}}).}
 }
 \value{

@@ -2,10 +2,10 @@
 \alias{package.skeleton}
 \title{Create a skeleton for a new package}
 \description{
-\code{package.skeleton} automates some of the setup for a new
-package. It creates directories, saves functions and data to appropriate
-places, and creates skeleton help files and \code{README} files
-describing further steps in packaging.
+  \code{package.skeleton} automates some of the setup for a new
+  package.  It creates directories, saves functions and data to
+  appropriate places, and creates skeleton help files and \file{README}
+  files describing further steps in packaging.
 }
 \usage{
 package.skeleton(name="anRpackage", list, environment=.GlobalEnv, 
@@ -23,7 +23,7 @@ package.skeleton(name="anRpackage", list, environment=.GlobalEnv,
   used for its side-effects.
 }
 
-\references{Read the "Writing R Extensions" manual for more details }
+\references{Read the \emph{Writing R Extensions} manual for more details }
 \seealso{\code{\link{install.packages}}}
 
 \examples{
@@ -36,5 +36,5 @@ package.skeleton(name="anRpackage", list, environment=.GlobalEnv,
 }
 }
 
-\keyword{file}%-- one or more ...
-\keyword{utilities}%-- one or more ...
+\keyword{file}
+\keyword{utilities}

@@ -62,22 +62,22 @@
 
   Next, if a function \code{.First} is found on the search path,
   it is executed as \code{.First()}.
-  Finally,  function \code{.First.sys()} in the base package is run.
+  Finally, function \code{.First.sys()} in the base package is run.
   This calls \code{\link{require}} to attach the default packages
   specified by \code{\link{options}("defaultPackages")}.
 
-  A function \code{.First} (and \code{\link{.Last}}) can be defined
-  in appropriate \code{.Rprofile} or \code{Rprofile.site} files
-  or have been saved in \file{.RData}.  If you want a different set of
-  packages than \code{methods} and \code{ctest} when you start, insert
-  a call to \code{\link{options}} in the
-  \code{.Rprofile} or \code{Rprofile.site} file.  For example,
-  \code{options(defaultPackages = character())} will attach no extra
-  packages on startup.  Alternatively, set \code{R_DEFAULT_PACKAGES=NULL}
-  as an environment variable before running \R.
+  A function \code{.First} (and \code{\link{.Last}}) can be defined in
+  appropriate \file{.Rprofile} or \file{Rprofile.site} files or have
+  been saved in \file{.RData}.  If you want a different set of packages
+  than the default ones when you start, insert a call to
+  \code{\link{options}} in the \file{.Rprofile} or \file{Rprofile.site}
+  file.  For example, \code{options(defaultPackages = character())} will
+  attach no extra packages on startup.  Alternatively, set
+  \code{R_DEFAULT_PACKAGES=NULL} as an environment variable before
+  running \R.
 
   The commands history is read from the file specified by the
-  environment variable \code{R_HISTFILE} (default \code{.Rhistory})
+  environment variable \code{R_HISTFILE} (default \file{.Rhistory})
   unless \code{--no-restore-history} was specified (or
   \code{--no-restore}).
 

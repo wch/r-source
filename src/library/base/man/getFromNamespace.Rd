@@ -38,7 +38,7 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   \code{getFromNamespace} returns the object found (or gives an error).
 
   \code{fixInNamespace} is invoked for its side effect of changing the
-  the object in the namespace.
+  object in the namespace.
 }
 
 \seealso{

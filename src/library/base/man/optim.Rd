@@ -201,9 +201,9 @@ optim(par, fn, gr = NULL,
   translated by \code{p2c} and then hand-optimized.  Dr Nash has agreed
   that the code can be made freely available.
 
-  The code for method \code{"L-BFGS-B"} is based on Fortran code by
-  Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib
-  (file \code{opt/lbfgs_bcm.shar}: another version is in \code{toms/778}).
+  The code for method \code{"L-BFGS-B"} is based on Fortran code by Zhu,
+  Byrd, Lu-Chen and Nocedal obtained from Netlib (file
+  \file{opt/lbfgs\_bcm.shar}: another version is in \file{toms/778}).
 
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
