@@ -229,6 +229,9 @@ NEW FEATURES
         library this can be substantially faster than the previous
         code.
 
+    o	R CMD Rd2dvi has better support for producing reference manuals
+	for packages and package bundles.
+
 
 
 BUG FIXES
