@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-33, @value{FAQ-YEAR}-07-28
+@set FAQ-VERSION 1.7-34, @value{FAQ-YEAR}-07-29
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1515,6 +1515,9 @@ Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
 @item CoCoAn
 Constrained Correspondence Analysis.
+@item DAAG
+Various data sets used in examples and exercises in ``Data Analysis and
+Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
 @item DBI
 A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
@@ -1810,6 +1813,8 @@ distribution, quantile and density functions to univariate, bivariate
 and (for simulation) multivariate parametric extreme value
 distributions, and provides fitting functions which calculate maximum
 likelihood estimates for univariate and bivariate models.
+@item exactLoglinTest
+Monte Carlo exact tests for log-linear models.
 @item exactRankTests
 Computes exact @math{p}-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm.
