@@ -32,7 +32,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   used to set elements of vectors, names, attributes, etc.
 
   Note that assignment to an attached list or data frame changes the
-  attached copy and not the orginal object: see \code{\link{attach}}.
+  attached copy and not the original object: see \code{\link{attach}}.
 }
 \value{
   This function is invoked for its side effect, which is assigning

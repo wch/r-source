@@ -13,7 +13,7 @@ make.packages.html(lib.loc = .libPaths())
 }
 \details{
   This sets up the links from packages in libraries to the \file{.R}
-  subdirectory of the per-sesson directory (see \code{\link{tempdir}})
+  subdirectory of the per-session directory (see \code{\link{tempdir}})
   and then creates the \file{packages.html} and \file{index.txt} files
   to point to those links.
 

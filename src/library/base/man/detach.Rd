@@ -21,7 +21,7 @@ detach(name, pos = 2, version)
 }
 \description{
   Detach a database, i.e., remove it from the \code{\link{search}()} path
-  of available \R objects. Usually, this either a \code{\link{data.frame}}
+  of available \R objects. Usually, this is either a \code{\link{data.frame}}
   which has been \code{\link{attach}}ed or a package which was required
   previously.
 }

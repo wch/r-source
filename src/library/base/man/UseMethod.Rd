@@ -71,7 +71,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   Name spaces can register methods for generic functions.  To support
   this, \code{UseMethod} and \code{NextMethod} search for methods in
   two places: first in the environment in which the generic function
-  is called, and then in the registration data base for the
+  is called, and then in the registration database for the
   environment in which the generic is defined (typically a name space).
   So methods for a generic function need to either be available in the
   environment of the call to the generic, or they must be registered.

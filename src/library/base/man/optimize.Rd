@@ -45,7 +45,7 @@ optimise(f = , interval = , lower = min(interval),
   and \eqn{x_0} is the final abscissa \code{optimize()$minimum}.\cr
   If \code{f} is a unimodal function and the computed values of \code{f}
   are always unimodal when separated by at least \eqn{\epsilon}{eps *}
-  \eqn{ |x| + (tol/3)}, then \eqn{x_0} approximates the abcissa of the
+  \eqn{ |x| + (tol/3)}, then \eqn{x_0} approximates the abscissa of the
   global minimum of \code{f} on the interval \code{lower,upper} with an
   error less than \eqn{\epsilon}{eps *}\eqn{ |x_0|+ tol}.\cr
   If \code{f} is not unimodal, then \code{optimize()} may approximate a

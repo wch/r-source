@@ -25,7 +25,7 @@ is.numeric(x)
 }
 \details{
   \code{is.numeric} is  generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
 
   Note that factors are false for \code{is.numeric} but true for
   \code{\link{is.integer}}.

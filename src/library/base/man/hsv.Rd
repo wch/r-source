@@ -13,7 +13,7 @@ hsv(h=1, s=1, v=1, gamma=1)
     \dQuote{hue}, \dQuote{saturation} and \dQuote{value} to be combined
     to form a vector of colors.  Values in shorter arguments are
     recycled.}
-  \item{gamma}{a \dQuote{gamma correction}}
+  \item{gamma}{a \dQuote{gamma correction} exponent, \eqn{\gamma}}
 }
 \value{
   This function creates a vector of \dQuote{colors} corresponding to the
@@ -23,7 +23,7 @@ hsv(h=1, s=1, v=1, gamma=1)
 }
 \section{Gamma correction}{
   For each color, \eqn{(r,g,b)} in RGB space (with all values in \eqn{[0,1]}),
-  the final color corresponds to \eqn{(r^gamma, g^gamma, b^gamma)}.
+  the final color corresponds to \eqn{(r^{\gamma}, g^{\gamma}, b^{\gamma})}.
 }
 \seealso{
   \code{\link{rainbow}},

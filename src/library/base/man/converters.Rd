@@ -24,7 +24,7 @@ removeCConverter(id)
 }
 \arguments{
 \item{id}{either a number or a string identifying the element of interest in the converter
-   list. A string sis matched against the description strings for each element to identify
+   list. A string is matched against the description strings for each element to identify
    the element. Integers are specified starting at 1 (rather than 0).}
 
 \item{status}{a logical value specifying whether the element is to be considered

@@ -30,11 +30,11 @@ napredict(omit, x, \dots)
   These are utility functions used to allow \code{\link{predict}} and
   \code{\link{resid}} methods for modelling functions to compensate for
   the removal of \code{NA}s in the fitting process.  They are used by
-  the default, \code{"lm"} and \code{"glm"} methods, and by further
+  the default \code{"lm"} and \code{"glm"} methods, and by further
   methods in packages \pkg{MASS}, \pkg{rpart} and \pkg{survival}.
 
-  The default methods do nothing.  The method for the \code{na.exclude}
-  action to pad the object with \code{NA}s in the correct positions to
+  The default methods do nothing.  The default method for the \code{na.exclude}
+  action is to pad the object with \code{NA}s in the correct positions to
   have the same number of rows as the original data frame.
 
   Currently \code{naresid} and \code{napredict} are identical, but

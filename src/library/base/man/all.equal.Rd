@@ -47,7 +47,8 @@ all.equal(target, current, \dots)
     If \code{scale} is positive, absolute comparisons are after scaling
     (dividing) by \code{scale}.
 
-    For complex arguments, \code{\link{Mod}} of difference is used.
+    For complex arguments, the modulus \code{\link{Mod}} of the difference 
+    is used.
 
     \code{attr.all.equal} is used for comparing
     \code{\link{attributes}}, returning \code{NULL} or \code{character}.

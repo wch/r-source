@@ -35,7 +35,7 @@ lcm(x)
     latter, then it must have the same dimensions as \code{mat} and
     each value in the matrix must be either \code{0} or \code{1}.}
   \item{n}{number of figures to plot.}
-  \item{x}{a dimension to be intepreted as a number of centimetres.}
+  \item{x}{a dimension to be interpreted as a number of centimetres.}
 }
 \details{
     Figure \eqn{i} is allocated a region composed from a subset

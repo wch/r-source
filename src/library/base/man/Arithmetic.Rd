@@ -25,7 +25,7 @@ They return numeric vectors containing the result of the element
 by element operations.  The elements of shorter vectors are recycled
 as necessary (with a \code{\link{warning}} when they are recycled only
 \emph{fractionally}).  The operators are \code{+} for addition,
-\code{-} for subtraction \code{*} for multiplication, \code{/} for
+\code{-} for subtraction, \code{*} for multiplication, \code{/} for
 division and \code{^} for exponentiation.
 
 \code{\%\%} indicates \code{x mod y} and \code{\%/\%} indicates integer

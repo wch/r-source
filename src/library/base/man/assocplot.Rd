@@ -15,7 +15,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   \item{col}{a character vector of length two giving the colors used for
     drawing positive and negative Pearson residuals, respectively.}
   \item{space}{the amount of space (as a fraction of the average
-    rectangle width and height) left between each rectange.}
+    rectangle width and height) left between each rectangle.}
   \item{main}{overall title for the plot.}
   \item{xlab}{a label for the x axis.  Defaults to the name of the row
     variable in \code{x} if non-\code{NULL}.}

@@ -35,7 +35,7 @@ is.integer(x)
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of integer type or not.
   \code{is.integer} is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
   Note that factors are true for \code{is.integer} but false for
   \code{\link{is.numeric}}.
 }

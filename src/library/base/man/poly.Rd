@@ -31,7 +31,7 @@ polym(\dots, degree = 1)
   A matrix with rows corresponding to points in \code{x} and columns
   corresponding to the degree, with attributes \code{"degree"} specifying
   the degrees of the columns and \code{"coefs"} which contains the
-  centring and normalization constants used in constructing the
+  centering and normalization constants used in constructing the
   orthogonal polynomials.  The matrix is given class
   \code{c("poly", "matrix")} as from \R 1.5.0.
 
@@ -45,7 +45,7 @@ polym(\dots, degree = 1)
   
   The orthogonal polynomial is summarized by the coefficients, which can
   be used to evaluate it via the three-term recursion given in Kennedy
-  \& Gentle (1980, pp. 343-4), and use in the \dQuote{predict} part of
+  \& Gentle (1980, pp. 343-4), and used in the \dQuote{predict} part of
   the code.
 }
 \note{

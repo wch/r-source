@@ -15,7 +15,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   }
   \item{adj}{adjustment for each string. For strings parallel
     to the axes, \code{adj=0} means left or bottom alignment, and
-    \code{adj=1} means right or top aligment.
+    \code{adj=1} means right or top alignment.
     If \code{adj} is not a finite value (the default), the value
     \code{par("las")} determines the adjustment. For strings plotted
     parallel to the axis the default is to centre the string.}
@@ -46,7 +46,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   the device region rather than the plot region.
 
   Parameter \code{las} will determine the orientation of the string(s).
-  For strings plotted perpendicular to the axis the default justifcation
+  For strings plotted perpendicular to the axis the default justification
   is to place the end of the string nearest the axis on the specified line.
 
   Note that if the text is to be plotted perpendicular to the axis,

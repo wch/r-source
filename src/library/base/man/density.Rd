@@ -99,7 +99,7 @@ density(x, bw = "nrd0", adjust = 1,
   \item{N}{the sample size after elimination of missing values.}
   \item{call}{the call which produced the result.}
   \item{data.name}{the deparsed name of the \code{x} argument.}
-  \item{has.na}{logical, for compatibility (always FALSE).}
+  \item{has.na}{logical, for compatibility (always \code{FALSE}).}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -43,7 +43,7 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
     \code{TRUE} \emph{and} \code{x} has at least 4 columns \emph{and}
     the last column name of \code{x} starts with \code{"Pr("}.}
   \item{has.Pvalue}{logical; if \code{TRUE}, the last column of \code{x}
-    contains P values; in that case, it is printed \emph{iff}
+    contains P values; in that case, it is printed if and only if
     \code{P.values} (above) is true.}
   \item{eps.Pvalue}{number,..}
   \item{na.print}{a character string to code \code{\link{NA}} values in

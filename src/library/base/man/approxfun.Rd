@@ -24,10 +24,10 @@ approxfun(x, y = NULL,       method="linear",
   \item{n}{If \code{xout} is not specified, interpolation takes place at
     \code{n} equally spaced points spanning the interval [\code{min(x)},
     \code{max(x)}].}
-  \item{yleft}{the value to be returned when input \code{x} values
+  \item{yleft}{the value to be returned when input \code{x} values are
     less than \code{min(x)}. The default is defined by the value
     of \code{rule} given below.}
-  \item{yright}{the value to be returned when input \code{x} values
+  \item{yright}{the value to be returned when input \code{x} values are
     greater than \code{max(x)}. The default is defined by the value
     of \code{rule} given below.}
   \item{rule}{an integer describing how interpolation is to take place

@@ -25,7 +25,7 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
     (by \code{\link{make.names}}) so that they are.}
 }
 \value{
-  A data frame, a matrix-like stucture whose columns may be of
+  A data frame, a matrix-like structure whose columns may be of
   differing types (numeric, logical, factor and character and so on).
 }
 \details{
@@ -48,7 +48,7 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
   If row names are not supplied in the call to \code{data.frame}, the
   row names are taken from the first component that has suitable names,
   for example a named vector or a matrix with rownames or a data frame.
-  (If that component is subsequently recycled the names are discarded,
+  (If that component is subsequently recycled, the names are discarded
   with a warning.)  If \code{row.names} was supplied as \code{NULL} or no
   suitable component was found the row names are the integer sequence
   starting at one.

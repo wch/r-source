@@ -10,7 +10,7 @@ fivenum(x, na.rm = TRUE)
 }
 \arguments{
   \item{x}{numeric, maybe including \code{\link{NA}}s and
-    +/-\code{\link{Inf}}s.}
+    \eqn{\pm}{+/-}\code{\link{Inf}}s.}
   \item{na.rm}{logical; if \code{TRUE}, all \code{\link{NA}} and
     \code{\link{NaN}}s are dropped, before the statistics are computed.}
 }

@@ -38,7 +38,7 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
     colors in the plot.}
  \item{col}{an explicit set of colors to be used in the plot.
     This argument overrides any palette function specification.}
- \item{plot.title}{statements which add titles the main plot.}
+ \item{plot.title}{statements which add titles to the main plot.}
  \item{plot.axes}{statements which draw axes (and a \code{\link{box}})
    on the main plot.  This overrides the default axes.}
  \item{key.title}{statements which add titles for the plot key.}

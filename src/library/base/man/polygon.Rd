@@ -29,7 +29,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   \item{border}{the color to draw the border.  The default, \code{NULL},
     uses \code{\link{par}("fg")}.  Use \code{border = NA} to omit borders.
     
-    For compatibility with S, \code{border} can also be logical, it
+    For compatibility with S, \code{border} can also be logical, in
     which case \code{FALSE} is equivalent to \code{NA} (borders omitted)
     and \code{TRUE} is equivalent to \code{NULL} (use the foreground colour),
   }
@@ -60,7 +60,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
 }
 \section{Bugs}{
   The present shading algorithm can produce incorrect results for
-  self-intesecting polygons.
+  self-intersecting polygons.
 }
 \author{The code implementing polygon shading was donated by
   Kevin Buhr \email{buhr@stat.wisc.edu}.}

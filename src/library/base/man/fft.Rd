@@ -35,7 +35,7 @@ mvfft(z, inverse = FALSE)
   its discrete Fourier transform.  This is useful for analyzing
   vector-valued series.
 
-  The FFT is fastest when the length of of the series being transformed
+  The FFT is fastest when the length of the series being transformed
   is highly composite (i.e., has many factors).  If this is not the
   case, the transform may take a long time to compute and will use a
   large amount of memory.

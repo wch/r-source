@@ -272,7 +272,7 @@ getOption(x)
     \code{na.action} \tab \code{na.omit} \tab
     \code{ts.eps} \tab \code{1e-5}\cr
     \code{error} \tab \code{NULL} \tab
-    \code{show.error.messags} \tab \code{TRUE} \cr
+    \code{show.error.messages} \tab \code{TRUE} \cr
     \code{warn} \tab \code{0}\tab
     \code{warning.length} \tab \code{1000}\cr
     \code{echo} \tab \code{TRUE} \tab

@@ -7,7 +7,7 @@ mad(x, center = median(x), constant = 1.4826, na.rm = FALSE,
 \alias{mad}
 \arguments{
   \item{x}{a numeric vector.}
-  \item{center}{Optionally, the centre: defauls to the median.}
+  \item{center}{Optionally, the centre: defaults to the median.}
   \item{constant}{scale factor.}
   \item{na.rm}{if \code{TRUE} then \code{NA} values are stripped
     from \code{x} before computation takes place.}

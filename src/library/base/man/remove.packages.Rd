@@ -12,7 +12,7 @@ remove.packages(pkgs, lib, version)
     removed.}
   \item{lib}{a character string giving the library directory to move the
     packages from.}
-  \item{version}{A character string specifying a specific version of the
+  \item{version}{A character string specifying a version of the
     package to remove.  If none is provided, the system will remove an
     unversioned install of the package.}
 }

@@ -59,7 +59,7 @@ png(filename ="Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
 }
 \section{Warning}{
   If you plot more than one page on one of these devices and do not
-  include somthing like \code{\%d} for the sequence number in
+  include something like \code{\%d} for the sequence number in
   \code{file}, the file will contain the last page plotted.
 }
 \note{

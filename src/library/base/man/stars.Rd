@@ -75,7 +75,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \item{lty}{line type used for drawing.}
   \item{xpd}{logical or NA indicating if clipping should be done, see
     \code{\link{par}(xpd = .)}.}
-  \item{mar}{argument to \code{\link{par}(mar = *)}, typically chosing
+  \item{mar}{argument to \code{\link{par}(mar = *)}, typically choosing
     smaller margings than by default.}
   \item{\dots}{further arguments, passed to the first call of
     \code{plot()}, see \code{\link{plot.default}} and to

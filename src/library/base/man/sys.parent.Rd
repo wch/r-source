@@ -56,7 +56,7 @@ parent.frame(n = 1)
 
   \code{sys.nframe} returns the number of the current frame in that
   list. \code{sys.function} gives the definition of the function
-  curently being evaluated in the frame \code{n} generations back.
+  currently being evaluated in the frame \code{n} generations back.
   
   \code{sys.frames} gives a list of all the active frames and
   \code{sys.parents} gives the indices of the parent frames of each

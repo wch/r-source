@@ -28,7 +28,7 @@ print(x, \dots)
     printed with surrounding quotes.}
   \item{max.levels}{integer, indicating how many levels should be
     printed for a factor; if \code{0}, no extra "Levels" line will be
-    printed.  The default, \code{NULL}, entails chosing \code{max.levels}
+    printed.  The default, \code{NULL}, entails choosing \code{max.levels}
     such that the levels print on one line of width \code{width}.}
   \item{width}{only used when \code{max.levels} is NULL, see above.}
   \item{digits}{minimal number of \emph{significant} digits, see

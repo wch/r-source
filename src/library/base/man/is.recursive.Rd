@@ -17,7 +17,7 @@ is.recursive(x)
   \item{x}{object to be tested.}
 }
 \details{
-  These are generic: you can write methods to handle of specific classes
+  These are generic: you can write methods to handle specific classes
   of objects, see \link{InternalMethods}.
 }
 \references{

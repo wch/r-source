@@ -79,7 +79,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     printed.}
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package loading is printed.}
-  \item{save}{logical or environment.  IF \code{TRUE}, a call to
+  \item{save}{logical or environment.  If \code{TRUE}, a call to
   \code{require} from the source for a package will save the name of
   the required package in the variable \code{".required"}, allowing
   function \code{\link{detach}} to warn if a required package is

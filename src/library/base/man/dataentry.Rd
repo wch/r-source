@@ -73,7 +73,7 @@ de(\dots, Modes = list(), Names = NULL)
   right or down will scroll the grid as needed: there is no constraint
   to the rows or columns currently in use.
 
-  The are alternative ways to navigate using the keys.  Return and
+  There are alternative ways to navigate using the keys.  Return and
   (keypad) Enter and LineFeed all move down. Tab moves right and
   Shift-Tab move left.  Home moves to the top left.
 

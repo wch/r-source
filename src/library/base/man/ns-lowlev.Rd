@@ -28,7 +28,7 @@ saveNamespaceImage(package, rdafile, lib.loc = NULL,
   \item{package}{string naming the package/name space to load.}
   \item{lib.loc}{character vector specifying library search path.}
   \item{keep.source}{logical specifying whether to retain source.}
-  \item{partial}{logical; if true, stop just after laoding code.}
+  \item{partial}{logical; if true, stop just after loading code.}
   \item{declarativeOnly}{logical; disables \code{.Import}, etc, if true.}
 }
 \description{

@@ -27,7 +27,7 @@ as.call(x)
   %NO We don't differentiate between expressions and function calls.
   %NO So \code{is.call} is the same as \code{is.expression}.
   It is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
   
   Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
   The first element of the list becomes the function part of the call,

@@ -15,7 +15,7 @@ browser()
   place.
 
   Local variables can be listed with \code{ls}, and manipulated with \R
-  expressions typed to this sub-interpreter.  The interpreter copy is
+  expressions typed to this sub-interpreter.  The sub-interpreter can be
   exited by typing \code{c}.  Execution then resumes at the statement
   following the call to \code{browser}.
 

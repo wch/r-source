@@ -55,7 +55,7 @@ alist(\dots)
   whereas \code{is.pairlist} only returns \code{TRUE} in the latter case.
 
   \code{is.list} and \code{is.pairlist} are generic: you can write
-  methods to handle of specific classes of objects, see \link{InternalMethods}.
+  methods to handle specific classes of objects, see \link{InternalMethods}.
 
   An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This
   is different from \code{list()}.

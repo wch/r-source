@@ -65,7 +65,7 @@ parent.env(env) <- value
   in the near future.
 
   \code{is.environment} is generic: you can write methods to handle
-  of specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.
 }
 \seealso{
   The \code{envir} argument of \code{\link{eval}}.

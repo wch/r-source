@@ -35,8 +35,8 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
   }
 }
 \details{
-  The Levensthein edit distance is used as measure of approximateness:
-  it is the the total number of insertions, deletions and substitutions
+  The Levenshtein edit distance is used as measure of approximateness:
+  it is the total number of insertions, deletions and substitutions
   required to transform one string into another.
 
   The function is a simple interface to the \code{apse} library

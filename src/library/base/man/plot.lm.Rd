@@ -91,7 +91,7 @@ plot(lm.SR)
 plot(lm.SR, id.n = NULL)               # no id's
 plot(lm.SR, id.n = 5, labels.id = NULL)# 5 id numbers
 
-## Fit a smmooth curve, where applicable:
+## Fit a smooth curve, where applicable:
 plot(lm.SR, panel = panel.smooth)
 ## Gives a smoother curve
 plot(lm.SR, panel = function(x,y) panel.smooth(x, y, span = 1))

@@ -26,7 +26,7 @@ range(\dots, na.rm = FALSE)
   \code{\link[base]{Methods}}.
 
   If \code{na.rm} is \code{FALSE}, \code{NA}
-  and \code{NaN} values in any of the arguments will cause NA values
+  and \code{NaN} values in any of the arguments will cause \code{NA} values
   to be returned, otherwise \code{NA} values are ignored.
 
   If \code{finite} is \code{TRUE}, the minimum
