@@ -439,7 +439,7 @@ static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
     PROTECT(B = duplicate(Bin));
     Qdims = INTEGER(coerceVector(getAttrib(qr, R_DimSymbol), INTSXP));
     n = Qdims[0];
-    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    Bdims = INTEGER(coerceVector(getAttrib(Bin, R_DimSymbol), INTSXP));
     if(Bdims[0] != n)
 	error("rhs should have %d not %d rows", n, Bdims[0]);
     nrhs = Bdims[1];
@@ -456,7 +456,7 @@ static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
 		     work, &lwork, &info);
     if (info != 0)
 	error("error code %d from Lapack routine zunmqr", info);
-    F77_CALL(ztrtrs)("U", "N", "N", &n, &nrhs,
+    F77_CALL(ztrtrs)("U", "N", "N", &k, &nrhs,
 		     COMPLEX(qr), &n, COMPLEX(B), &n, &info);
     if (info != 0)
 	error("error code %d from Lapack routine ztrtrs", info);
@@ -864,7 +864,7 @@ static SEXP modqr_coef_real(SEXP Q, SEXP Bin)
 		     work, &lwork, &info);
     if (info != 0)
 	error("error code %d from Lapack routine dormqr", info);
-    F77_CALL(dtrtrs)("U", "N", "N", &n, &nrhs,
+    F77_CALL(dtrtrs)("U", "N", "N", &k, &nrhs,
 		     REAL(qr), &n, REAL(B), &n, &info);
     if (info != 0)
 	error("error code %d from Lapack routine dtrtrs", info);
