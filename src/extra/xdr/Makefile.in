@@ -11,9 +11,10 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-XDR_CFLAGS = -I$(srcdir)
+XDR_CPPFLAGS = -I$(srcdir)
+ALL_CPPFLAGS = $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 ## make with CPICFLAGS so can be used with a shared library
-ALL_CPPFLAGS = $(XDR_CFLAGS) $(R_XTRA_CPPFLAGS) $(CPICFLAGS) $(CPPFLAGS) $(DEFS)
+ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 
 SOURCES = xdr.c xdr_float.c xdr_mem.c xdr_stdio.c
 HEADERS = rpc/auth.h rpc/auth_uni.h rpc/bcopy.h rpc/clnt.h rpc/netdb.h \

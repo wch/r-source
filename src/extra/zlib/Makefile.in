@@ -11,9 +11,10 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-ZLIB_CFLAGS = -I$(srcdir)@USE_MMAP_ZLIB_TRUE@ -DUSE_MMAP
+ZLIB_CPPFLAGS = -I$(srcdir) @USE_MMAP_ZLIB_TRUE@ -DUSE_MMAP
+ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 ## make with CPICFLAGS so can be used with a shared library
-ALL_CPPFLAGS = $(ZLIB_CFLAGS) $(R_XTRA_CPPFLAGS) $(CPICFLAGS) $(CPPFLAGS) $(DEFS)
+ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 
 SOURCES = adler32.c compress.c crc32.c deflate.c gzio.c infblock.c \
   infcodes.c inffast.c inflate.c inftrees.c infutil.c trees.c uncompr.c \
