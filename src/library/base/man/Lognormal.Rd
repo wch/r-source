@@ -1,10 +1,10 @@
 \name{Lognormal}
 \title{The Log Normal Distribution}
 \usage{
-dlnorm(x, meanlog=0, sdlog=1)
-plnorm(q, meanlog=0, sdlog=1)
-qlnorm(p, meanlog=0, sdlog=1)
-rlnorm(n, meanlog=0, sdlog=1)
+dlnorm(x, meanlog = 0, sdlog = 1)
+plnorm(q, meanlog = 0, sdlog = 1)
+qlnorm(p, meanlog = 0, sdlog = 1)
+rlnorm(n, meanlog = 0, sdlog = 1)
 }
 \alias{dlnorm}
 \alias{plnorm}
@@ -32,11 +32,4 @@ rlnorm(n, meanlog=0, sdlog=1)
 \seealso{
   \code{\link{dnorm}}, etc.
 }
-\examples{
-}
 \keyword{distribution}
-
-
-
-
-

@@ -27,8 +27,8 @@ rcauchy(n, location = 0, scale = 1)
   for all \eqn{x}.
 }
 \seealso{
-  \code{\link{dt}} for the T distribution which generalizes 
-  \code{dcauchy(*, l = 0,s = 1)}.
+  \code{\link{dt}} for the t distribution which generalizes 
+  \code{dcauchy(*, l = 0, s = 1)}.
 }
 \examples{
 dcauchy(-1:4) == 1 / (pi*(1 + (-1:4)^2))

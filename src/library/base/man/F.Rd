@@ -34,8 +34,8 @@ rf(n, n1, n2)
   for \eqn{x > 0}.
 }
 \seealso{
-  \code{\link{dt}} for Student's T distribution which is (almost)
-  equivalent to \code{*F(\dots, n2 = 1)}.
+  \code{\link{dt}} for Student's t distribution which is (almost)
+  equivalent to \code{*f(\dots, n2 = 1)}.
 }
 \examples{
 df(1,1,1) == dt(1,1)

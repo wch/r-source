@@ -56,12 +56,12 @@ prop.test(x, n, p = NULL, alternative = "two.sided",
 
   Finally, if \code{p} is given and there are more than 2 groups, the
   null tested is that the underlying probabilities of success are those
-  given by \code{p}.  The alternative is always "two.sided", the
+  given by \code{p}.  The alternative is always \code{"two.sided"}, the
   returned confidence interval is \code{NULL}, and continuity correction
   is never used.
 }
 \value{
-  A list with class "htest" containing the following components:
+  A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of Pearson's chi-square test statistic.}
   \item{parameter}{the degrees of freedom of the approximate chi-square
     distribution of the test statistic.}

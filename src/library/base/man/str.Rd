@@ -1,5 +1,5 @@
 \name{str}
-\title{Compactly display "structure" of an arbitrary R object}
+\title{Compactly Display the Structure of an Arbitrary R Object}
 \usage{
 str(object, max.level = 0, vec.len = 4, digits.d = 3,
     give.attr = TRUE, give.length = TRUE,
@@ -23,9 +23,9 @@ lsf.str(...)
     factors (from .5 to 3) depending on the kind of vector.  Default 4.}
   \item{digits.d}{number of digits for numerical components (as for
     \code{\link{print}}).}
-  \item{give.attr}{logical; if \code{TRUE} (= default), show attributes
+  \item{give.attr}{logical; if \code{TRUE} (default), show attributes
     as sub structures.}
-  \item{give.length}{logical; if \code{TRUE} (= default), indicate
+  \item{give.length}{logical; if \code{TRUE} (default), indicate
     length (as \code{[1:\dots]}).}
   \item{wid}{the page width to be used.  The default is the currently
     active \code{\link{option}("width")}.}

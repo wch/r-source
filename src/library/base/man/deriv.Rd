@@ -22,7 +22,8 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
   \code{deriv} is a \emph{generic} function with a default and a
   \code{\link{formula}} method.  It returns a \code{\link{call}} for
   computing the \code{expr} and its (partial) derivatives,
-  simultaneously.  It uses so called \emph{"algorithmic derivatives"}.
+  simultaneously.  It uses so-called \emph{``algorithmic
+    derivatives''}.
 
   Currently, \code{deriv.formula} just calls \code{deriv.default} after
   extracting the expression to the right of \code{~}.

@@ -31,14 +31,13 @@ rnorm(n, mean=0, sd=1)
   \deqn{
     f(x) =
     \frac{1}{\sqrt{2\pi}\sigma} e^{-(x-\mu)^2/2\sigma^2}}{
-    f(x) =
-    1/(sqrt(2 pi) sigma) e^-((x - mu )^2/(2 sigma^2))
+    f(x) = 1/(sqrt(2 pi) sigma) e^-((x - mu)^2/(2 sigma^2))
   }
   where \eqn{\mu}{mu} is the mean of the distribution and
   \eqn{\sigma}{sigma} the standard deviation.
 }
 \seealso{
-  \code{LINK{dlnorm}} for the \emph{Log}normal distribution.
+  \code{\link{dlnorm}} for the \emph{Log}normal distribution.
 }
 \examples{
 dnorm(0) == 1/ sqrt(2*pi)
