@@ -442,32 +442,30 @@ order.dendrogram <- function(x) {
 
 reorder <- function(x, ...) UseMethod("reorder")
 
-reorder.dendrogram <- function(x, wts, ...)
+reorder.dendrogram <- function(x, wts, agglo.FUN = sum, ...)
 {
     if( !inherits(x, "dendrogram") )
 	stop("we require a dendrogram")
+    agglo.FUN <- match.fun(agglo.FUN)
     oV <- function(x, wts) {
-	if( isLeaf(x) ) {
+	if(isLeaf(x)) {
 	    attr(x, "value") <- wts[x[1]]
 	    return(x)
 	}
-###--- FIXME: This works only for binary dendrograms !
-	if(length(x) != 2)
-	    stop("reorder()ing of non-binary dendrograms not yet implemented")
-	## insert/compute 'wts' recursively down the branches:
-	left  <- oV(x[[1]], wts)
-	right <- oV(x[[2]], wts)
-	lV <- attr(left, "value")
-	rV <- attr(right, "value")
-	attr(x, "value") <- lV+rV
-	if( lV > rV ) {
-	    x[[1]] <- right
-	    x[[2]] <- left
-	} else {
-	    x[[1]] <- left
-	    x[[2]] <- right
-	}
-	x
+        k <- length(x)
+        if(k == 0) stop("invalid (length 0) node in dendrogram")
+        vals <- numeric(k)
+        ##branch <- vector("list", k)
+        for(j in 1:k) {
+            ## insert/compute 'wts' recursively down the branches:
+            b <- oV(x[[j]], wts)
+            x[[j]] <- b
+            vals[j] <- attr(b, "value")
+        }
+        iOrd <- sort.list(vals)
+	attr(x, "value") <- agglo.FUN(vals[iOrd])
+        x[] <- x[iOrd]
+        x
     }
     midcache.dendrogram( oV(x, wts) )
 }
