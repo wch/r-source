@@ -45,6 +45,19 @@ Changes from grid_1.8.0 to grid_1.9.0:
 	grid.rect(vp="A", gp=gpar(fill="red"))
 	grid.rect(vp=vpPath("A", "B"), gp=gpar(fill="blue"))
 
+8.  Added engine.display.list() function.  This allows the user to
+    tell grid NOT to use the graphics engine display list and to handle
+    ALL redraws using its own display list (including redraws after
+    device resizes and copies).
+
+    This provides a way to avoid some of the problems with resizing
+    a device when you have used grid.convert(), or the gridBase package,
+    or even base functions such as legend().
+
+    There is a document discussing the use of display lists in grid
+    on the grid web site 
+    (http://www.stat.auckland.ac.nz/~paul/grid/grid.html)
+
 
 Changes from grid_1.8.0 to grid_1.8.1:
 ------------------------------------
