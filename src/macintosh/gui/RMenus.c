@@ -102,7 +102,6 @@
 #include "Defn.h"
 #include <Scrap.h>
 #include "Graphics.h"
-#include "PicComments.h"
 #include <Rdevices.h>
 
 /*         DEFINE CONSTANTS        */
