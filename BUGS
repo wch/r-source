@@ -100,6 +100,10 @@ Subject: nlme: failed augPred with NA in an unused column
 From: dieter.menne@menne-biomed.de
 Date: Fri, 5 Jul 2002 08:32:32 +0200 (MET DST)
 --nlme needs an update as suggested in the followup
+* PR# 1901 *
+Subject: svm seg faults
+From: stefan.boehringer+science@uni-bochum.de
+Date: Tue, 13 Aug 2002 14:12:17 +0200 (MET DST)
 
 Directory:  Analyses
 
@@ -551,11 +555,11 @@ Date: Tue, 16 Jul 2002 16:59:22 -0400
 Subject:  You requested this report 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Tue, 6 Aug 2002 16:57:54 +0800
-* PR# 1884 *
-Subject: dput to full filesystem is silent
-From: stvjc@channing.harvard.edu
-Date: Wed, 7 Aug 2002 20:31:28 +0200 (MET DST)
 * PR# 1891 *
 Subject: summary.data.frame with compound elements problem
 From: b.rowlingson@lancaster.ac.uk
 Date: Fri, 9 Aug 2002 10:35:43 +0200 (MET DST)
+* PR# 1899 *
+Subject: interaction.plot() legend too narrow when mfcol > 2
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 13 Aug 2002 09:36:15 +0200
