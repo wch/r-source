@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-03-21).
+   <p>The current version of this document is 1.9.0 (2004-03-22).
 
    ISBN 3-900051-02-X
 
@@ -126,9 +126,9 @@ i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
 rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
    <p>In addition, binary distributions are available for most common Linux
-distributions, and for Mac OS X (Darwin) with X11.  See the <small>FAQ</small>
-for current details.  These are installed in platform-specific ways.  So
-for the rest of this chapter we consider only building from the sources.
+distributions, and for Mac OS X (Darwin) with and without X11.  See the
+<small>FAQ</small> for current details.  These are installed in platform-specific
+ways.  So for the rest of this chapter we consider only building from the sources.
 
 <a name="Simple%20compilation"></a>
 
@@ -354,9 +354,50 @@ disc).
    <p>For further details, including how to make the documentation and how to
 cross-compile, see <code>src/gnuwin32/INSTALL</code>.
 
+<a name="Installing%20R%20under%20Mac%20OS%20X"></a>
+
+<h2 class="chapter">4 Installing R under Mac OS X</h2>
+
+<p>The <code>bin/macosx</code> directory of a <small>CRAN</small> site contains
+binaries for a base distribution and a large number of add-on packages
+from <small>CRAN</small> to run on Mac OS X version 10.2.0 or higher.
+
+   <p>The simplest way is to use <code>R.dmg.sit</code>.  Just double-click on the icon and the
+archive will be expanded as an image di file. Read the <code>ReadMe.txt</code> inside the
+disk image and follow the instructions.
+
+   <p>See the <a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">R for Mac OS X <small>FAQ</small></a> for more details.
+
+<a name="Building%20from%20source%20on%20Mac%20OS%20X"></a>
+
+<h3 class="section">4.1 Building from source on Mac OS X</h3>
+
+<p>If you want to build this port from the sources, you can read the above
+mentioned <a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">R for Mac OS X <small>FAQ</small></a> for full details. You will need to collect and install some tools
+as explained in the document. Than you have to expand the R sources and
+configure R appropriately, for example
+
+<pre class="smallexample">     tar zxvf R-1.9.0.tgz
+     cd R-1.9.0
+     ./configure --with-blas='-framework vecLib' --with-lapack --with-aqua
+     make
+     </pre>
+
+<p>sit back and wait. The last option <code>--with-aqua</code> is needed only if you want a Console GUI. 
+The first two options are strongly recommended.
+
+   <p>R is by default configured and installed as a framework called <code>R.framework</code>. The
+default path for <code>R.framework</code> is <code>/Library/Frameworks</code> but this can be changed
+at configure time specifying the flag <code>--enable-R-framework[=DIR]</code> or at install
+time as
+<pre class="smallexample">     make prefix=/where/you/want/R.framework/to/go install
+     </pre>
+
+<p>the <code>R.framework</code> has not to be specified in the path.
+
 <a name="Add-on%20packages"></a>
 
-<h2 class="chapter">4 Add-on packages</h2>
+<h2 class="chapter">5 Add-on packages</h2>
 
 <p>This chapter applies to Unix-like and Windows versions of R.
 
@@ -369,7 +410,7 @@ setting the environment variable <code>R_LIBS</code> or using the R function
 
 <a name="Installing%20packages"></a>
 
-<h3 class="section">4.1 Installing packages</h3>
+<h3 class="section">5.1 Installing packages</h3>
 
 <p>Packages may be distributed in source form or compiled binary form. 
 Installing source packages requires that compilers and tools
@@ -424,7 +465,7 @@ interface to <code>install.packages</code>, <code>update.packages</code> and
 
 <a name="Updating%20packages"></a>
 
-<h3 class="section">4.2 Updating packages</h3>
+<h3 class="section">5.2 Updating packages</h3>
 
 <p>The command <code>update.packages()</code> is the simplest way to ensure that
 all the packages on your system are up to date.  Set the <code>CRAN</code>
@@ -445,7 +486,7 @@ intended to become the default package manager for future versions of R.
 
 <a name="Removing%20packages"></a>
 
-<h3 class="section">4.3 Removing packages</h3>
+<h3 class="section">5.3 Removing packages</h3>
 
 <p>Packages can be removed in a number of ways.  From a command prompt they
 can be removed by
@@ -958,20 +999,13 @@ libraries with the exception of the ATLAS BLAS libraries.
 
 <h3 class="subsection">B.7.2 Mac OS X</h4>
 
-<p>You can build R as a Unix application on Mac OS X.  You will need the
-DevTools, <code>f2c</code> or <code>g77</code>, and the <code>dlcompat</code>
-library.  You will also need to install an X sub-system or configure
-with <code>--without-x</code>.
+<p>You can build R as a Unix application on Mac OS X.  You will need Apple Developer
+Tools, <code>f2c</code> or <code>g77</code>.  You will also need to install an X sub-system
+or configure with <code>--without-x</code>. The X window manager is part of the
+standard Mac OS X distribution since Mac OS X version 10.3.
 
-   <p><code>f2c</code>, <code>g77</code>, the <code>dlcompat</code> library, and X server
-and support libraries are available from the Fink project
-(<a href="http://fink.sourceforge.net">http://fink.sourceforge.net</a>).  At the time of writing
-<code>f2c</code> and <code>g77</code> were not available as part of the Fink
-binary distribution and needed to be installed directly; for example for
-<code>g77</code> use
-
-<pre class="smallexample">     fink install g77
-     </pre>
+   <p>For more information on how to find these tools please read the
+<a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">R for Mac OS X <small>FAQ</small></a>.
 
    <p>The <code>vecLib</code> library of Mac OS X &gt;= 10.2.2 can be used <em>via</em> the
 configuration options
@@ -981,8 +1015,7 @@ configuration options
 <p>to provide higher-performance versions of the BLAS and LAPACK routines. 
 With <code>gcc 3.1</code> that appears to be the only way to build R, as
 the Fortran support routines in <code>libg2c</code> cannot be linked into a
-dynmaic library.  (We have had reports of success with pre-release
-versions of <code>gcc 3.3</code>.)
+dynamic library.  (We have had reports of success with <code>gcc 3.3</code>.)
 
 <a name="Solaris"></a>
 
@@ -1403,6 +1436,7 @@ of practice at porting R to new platforms <small class="enddots">....</small>
 <li>Help pages: <a href="#Simple%20compilation">Simple compilation</a>
 <li>HP-UX: <a href="#HP-UX">HP-UX</a>
 <li>Installation: <a href="#Installation">Installation</a>
+<li>Installing R under Mac OS X: <a href="#Installing%20R%20under%20Mac%20OS%20X">Installing R under Mac OS X</a>
 <li>Installing under Unix: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>Installing under Windows: <a href="#Installing%20R%20under%20Windows">Installing R under Windows</a>
 <li>IRIS: <a href="#IRIX">IRIX</a>
