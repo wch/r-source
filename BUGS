@@ -219,23 +219,27 @@ none
 
 Directory:  incoming
 
-* PR# 859 *
-Subject: apply on data.frame does not work properly
-From: sergei@stams.strath.ac.uk
-Date: Fri, 2 Mar 2001 18:14:30 +0100 (MET)
-* PR# 856 *
-Subject: "}  {" problem in Rd files
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Mon, 26 Feb 2001 11:10:01 -0500
+* PR# 860 *
+Subject: Context problem with ... and rbind
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sat, 3 Mar 2001 20:59:04 +0000 (GMT)
 * PR# 855 *
 Subject: %*% in examples
 From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
 Date: Mon, 26 Feb 2001 13:48:39 +0100 (MET)
-* PR# 858 *
-Subject: docs + packages
-From: Adelchi Azzalini <aa@gwen.stat.unipd.it>
-Date: Thu, 01 Mar 2001 10:09:22 +0100
 * PR# 857 *
 Subject: Plotting points on a filled.contour plot
 From: marchini@stats.ox.ac.uk
 Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
+* PR# 856 *
+Subject: "}  {" problem in Rd files
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Mon, 26 Feb 2001 11:10:01 -0500
+* PR# 859 *
+Subject: apply on data.frame does not work properly
+From: sergei@stams.strath.ac.uk
+Date: Fri, 2 Mar 2001 18:14:30 +0100 (MET)
+* PR# 858 *
+Subject: docs + packages
+From: Adelchi Azzalini <aa@gwen.stat.unipd.it>
+Date: Thu, 01 Mar 2001 10:09:22 +0100
