@@ -1,0 +1,13 @@
+confint-methods         ~~ Methods for Function confint in Package
+                        '.GlobalEnv' ~~
+mle-class               Class "mle" ~~~
+mle                     Maximum likelihood estimation
+plot-methods            ~~ Methods for Function plot in Package
+                        '.GlobalEnv' ~~
+profile-methods         ~~ Methods for Function profile in Package
+                        '.GlobalEnv' ~~
+profile.mle-class       Class "profile.mle"; Profiling information for
+                        "mle" object
+summary-methods         ~~ Methods for Function summary in Package
+                        '.GlobalEnv' ~~
+summary.mle-class       Class "summary.mle", summary of "mle" objects
