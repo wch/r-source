@@ -254,9 +254,6 @@ none
 
 Directory:  System-specific
 
-* PR# 214 *
-From: Charles Taylor <charles@amsta.leeds.ac.uk>
-Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
 * PR# 246 *
 Subject: R-Coda on rs6000-ibm-aix4.2.1.0
 From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
@@ -266,17 +263,6 @@ Date: Wed, 11 Aug 1999 08:49:47 +0200
 Subject: bug: R says "Floating exception" on DEC-Alpha w/OSF1
 From: "Michael Thompson" <mlthomps@yayoi.mt.m-kagaku.co.jp>
 Date: Thu, 19 Aug 1999 06:03:06 +0900
-* PR# 260 *
-Subject: Re: Compiling R under Caldera Open Linux 2.2
-Subject: Compilation of R under Caldera OpenLinux 2.2
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sun, 29 Aug 1999 19:38:13 +1000 (EST)
---workaround is to install missing libg2c.a. See also PR#268 for success report
-* PR# 268 *
-Subject: Re: Compiling R under Caldera Open Linux 2.2
-From: "Jack N." <jnf@pcisys.net>
-Date: Mon, 06 Sep 1999 08:03:02 -0600
---Followup: See PR#260
 
 Directory:  TooMuchAtOnce
 
