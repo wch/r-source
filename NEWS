@@ -114,6 +114,10 @@ NEW FEATURES
 
     o	hist.POSIXt() can now pass arguments to hist.default()
 
+    o	A triple colon operators can be used to access values of internal
+	variables in a name space (i.e. a:::b is the value of the internal
+	variable b in name space a).
+
 
 DEPRECATED & DEFUNCT
 

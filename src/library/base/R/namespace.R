@@ -52,6 +52,11 @@ getExportedValue <- function(ns, name) {
     name <- as.character(substitute(name))
     getExportedValue(pkg, name)
 }
+":::" <- function(pkg,name){
+    pkg <- as.character(substitute(pkg))
+    name <- as.character(substitute(name))
+    get(name, env = asNamespace(pkg))
+}
 attachNamespace <- function(ns, pos = 2) {
     runHook <- function(hookname, env, ...) {
         if (exists(hookname, envir = env, inherits = FALSE)) {

@@ -135,7 +135,7 @@ static int	xxvalue(SEXP, int);
 %token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR
-%token		NS_GET
+%token		NS_GET NS_GET_INT
 
 %left		'?'
 %left		LOW WHILE FOR REPEAT
@@ -156,7 +156,7 @@ static int	xxvalue(SEXP, int);
 %left		UMINUS UPLUS
 %right		'^'
 %left		'$' '@'
-%left		NS_GET
+%left		NS_GET NS_GET_INT
 %nonassoc	'(' '[' LBB
 
 %%
@@ -224,6 +224,10 @@ expr	: 	NUM_CONST			{ $$ = $1; }
 	|	SYMBOL NS_GET STR_CONST		{ $$ = xxbinary($2,$1,$3); }
 	|	STR_CONST NS_GET SYMBOL		{ $$ = xxbinary($2,$1,$3); }
 	|	STR_CONST NS_GET STR_CONST	{ $$ = xxbinary($2,$1,$3); }
+	|	SYMBOL NS_GET_INT SYMBOL	{ $$ = xxbinary($2,$1,$3); }
+	|	SYMBOL NS_GET_INT STR_CONST	{ $$ = xxbinary($2,$1,$3); }
+	|	STR_CONST NS_GET_INT SYMBOL	{ $$ = xxbinary($2,$1,$3); }
+	|	STR_CONST NS_GET_INT STR_CONST	{ $$ = xxbinary($2,$1,$3); }
 	|	expr '$' SYMBOL			{ $$ = xxbinary($2,$1,$3); }
 	|	expr '$' STR_CONST		{ $$ = xxbinary($2,$1,$3); }
 	|	expr '@' SYMBOL			{ $$ = xxbinary($2,$1,$3); }
@@ -1790,8 +1794,14 @@ static int token()
 	return EQ_ASSIGN;
     case ':':
 	if (nextchar(':')) {
-	    yylval = install("::");
-	    return NS_GET;
+            if (nextchar(':')) {
+		yylval = install(":::");
+		return NS_GET_INT;
+	    }
+	    else {
+		yylval = install("::");
+		return NS_GET;
+	    }
 	}
 	if (nextchar('=')) {
 	    yylval = install(":=");
