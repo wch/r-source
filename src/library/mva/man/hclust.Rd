@@ -182,7 +182,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   contributed to STATLIB by F. Murtagh.
 }
 \seealso{
-  \code{\link{kmeans}}.
+  \code{\link{cutree}}, \code{\link{dendrogram}}, \code{\link{kmeans}}.
 }
 \examples{
 library(mva)
