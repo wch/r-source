@@ -43,6 +43,7 @@ NEW FEATURES
     o	`hessian' argument added to deriv and its methods.  A new function
 	deriv3() provides identical capabilities to deriv() except that
 	`hessian' is TRUE by default.
+	deriv(*,*, func = TRUE) for convenience.
 
     o	New components in .Machine give the sizes of long, long long
 	and long double C types (or 0 if they do not exist).

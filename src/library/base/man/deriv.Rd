@@ -28,7 +28,9 @@ deriv3.formula(expr, namevec, function.arg, tag, hessian)
     one for \code{D(.)}) with
     respect to which derivatives will be computed.}
   \item{function.arg}{If specified, a character vector of arguments for
-    a function return. \bold{Note:} this is incompatible with S.}
+    a function return, or a function (with empty body) or \code{TRUE},
+    the latter indicating that a function with argument names
+    \code{namevec} should be used. \bold{Note:} this is incompatible with S.}
   \item{tag}{character; the prefix to be used for the locally created
     variables in result.}
   \item{hessian}{a logical value indicating whether the second derivatives
@@ -105,6 +107,8 @@ stopifnot(eval(D.sc) ==
           attr(eval(dxy),"gradient")[,"x"])
 
 ## function returned:
+deriv(y ~ sin(cos(x) * y), c("x","y"), func = TRUE)
+
 deriv(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
      c("b0", "b1", "th", "x") )
 
