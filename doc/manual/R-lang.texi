@@ -3923,12 +3923,13 @@ is itself an @R{} object and can be saved and otherwise manipulated
 within the @R{} system.
 
 @menu
-* The parsing process::         
+* The parsing process::    
+* Comments::
 * Tokens::                      
 * Expressions::                 
 @end menu
 
-@node The parsing process, Tokens, Parser, Parser
+@node The parsing process, Comments, Parser, Parser
 @comment  node-name,  next,  previous,  up
 @section The parsing process
 
@@ -4008,7 +4009,23 @@ but there are a couple of awkward exceptions, mostly involving
 expressions that weren't generated from a textual representation in the
 first place.
 
-@node Tokens, Expressions, The parsing process, Parser
+@node Comments, Tokens, The parsing process, Parser
+@comment  node-name,  next,  previous,  up
+@section Comments
+
+@cindex comments
+Comments in @R{} are ignored by the parser.  Any text from a 
+@findex @code{#}
+@code{#} character
+to the end of the line is taken to be a comment, unless
+the @code{#} character is inside a quoted string. For example, 
+
+@smallexample
+> x <- 1  # This is a comment...
+> y <- "  #... but this is not."
+@end smallexample
+
+@node Tokens, Expressions, Comments, Parser
 @comment  node-name,  next,  previous,  up
 @section Tokens
 
