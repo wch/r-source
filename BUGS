@@ -148,6 +148,11 @@ Subject: survival bug?
 From: Pius Korner <korner@eco.umnw.ethz.ch>
 Date: Mon, 27 Jan 2003 17:28:11 +0100
 ..Needs to resubmit in more useful format.
+* PR# 2520 *
+Subject: Apparent parser problem
+From: "Jim Rogers" <jrogers@cantatapharm.com>
+Date: Sat, 1 Feb 2003 16:51:41 -0500
+..Its an ESS or XEmacs problem. I redirected him to ESS-bugs.
 
 Directory:  Analyses
 
@@ -551,46 +556,10 @@ Directory:  incoming
 Subject: apropos() with partial name
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
-* PR# 2508 *
-Subject: *NEW***COPY ANY DVD TO CD****
-From: "Allen Platt" <Christopher945i45@yahoo.com>
-Date: Thu, 30 Jan 03 14:56:51 GMT
-* PR# 2509 *
-Subject: Fw: forget dieting! qjgai
-From: joselyn <tobias@juno.com>
-Date: Thu, 30 Jan 2003 06:11:00 -0800
-* PR# 2510 *
-Subject: °°° Copy Any DVD with a CD Burner °°°
-From: "Freeman Walton" <Jillian3497i45@yahoo.com>
-Date: Thu, 30 Jan 03 18:23:45 GMT
 * PR# 2511 *
 Subject: Possible bug in socketConnection
 From: DEd@novonordisk.com
 Date: Fri, 31 Jan 2003 11:04:13 +0100 (MET)
-* PR# 2512 *
-Subject: hist
-From: "Pam Surko" <surko@salk.edu>
-Date: Fri, 31 Jan 2003 09:22:17 -0800
-* PR# 2513 *
-Subject: minor error in documentation of pmax in base
-From: Jonathan Baron <baron@cattell.psych.upenn.edu>
-Date: Fri, 31 Jan 2003 12:35:55 -0500
-* PR# 2514 *
-Subject: summary.table parameter bug
-From: "Russell Reeve" <rreeve@liposcience.com>
-Date: Fri, 31 Jan 2003 16:53:51 -0500
-* PR# 2515 *
-Subject: SINCERE PROPOSITION
-From: "PROFESSOR FRANK OBI" <professorfranko@netscape.com>
-Date: Fri, 31 Jan 2003 15:34:14 -0800
-* PR# 2516 *
-Subject: We are looking for USA's waste paper 3#,11# supplier. Order quatity:2000tons/month.
-From: "Edward Zhang - Hengxing Industry&Trading" <edwards@beelink.com>
-Date: Sat, 1 Feb 2003 07:41:26 +0800
-* PR# 2517 *
-Subject: deviance.Rd
-From: Alec Stephenson <a.stephenson@lancaster.ac.uk>
-Date: Sat, 1 Feb 2003 10:15:59 +0000 (GMT)
 * PR# 2518 *
 Subject: AIC.default
 From: Alec Stephenson <a.stephenson@lancaster.ac.uk>
@@ -599,31 +568,28 @@ Date: Sat, 1 Feb 2003 10:17:10 +0000 (GMT)
 Subject: removeMethods (methods) does not work in my examples
 From: ripley@stats.ox.ac.uk
 Date: Sat, 1 Feb 2003 20:27:31 +0000 (GMT)
-* PR# 2520 *
-Subject: Apparent parser problem
-From: "Jim Rogers" <jrogers@cantatapharm.com>
-Date: Sat, 1 Feb 2003 16:51:41 -0500
-* PR# 2521 *
-Subject: °°° Copy Any DVD with a CD Burner °°°
-From: "Salvatore Owens" <Gloria545y5@hotmail.com>
-Date: Sat, 01 Feb 03 17:23:09 GMT
-* PR# 2522 *
-Subject: don't fall prey to destuctive viruses
-From: "Carmen Gregg" <Roscoe3498u45@aol.com>
-Date: Sat, 01 Feb 03 21:09:30 GMT
-* PR# 2523 *
-Subject: no computer should be without...
-From: "Wendy Kirkpatrick" <Gloria545y5@hotmail.com>
-Date: Sun, 02 Feb 03 20:14:12 GMT
-* PR# 2524 *
-Subject: Highest Paying
-From: Paula Kuhn <my3sonsbbb@earthlink.net>
-Date: Sun, 02 Feb 2003 21:33:03 -0500
-* PR# 2525 *
-Subject: CONFIDENTIAL BUSINESS PROPOSAL
-From: SODINDO MALINGA <sodindo2001@netscape.net>
-Date: Mon, 03 Feb 2003 14:15:17 -0800
-* PR# 2526 *
-Subject: summary.table bug in parameter (and fix)
-From: "Russell Reeve" <rreeve@liposcience.com>
-Date: Mon, 3 Feb 2003 12:15:48 -0500
+* PR# 2527 *
+Subject: #1 best-selling Internet Marketing course online
+From: Paula Kuhn <pkuhn3@yahoo.com>
+Date: Sat, 01 Feb 2003 22:59:50 -0500
+* PR# 2528 *
+Subject: °í°´´ÔÀÇ Àü¿ù Ä«µå »ç¿ë ³»¿ª¼­ ÀÔ´Ï´Ù.
+From: ±èÇýÁø<your@mail.com>
+Date: Tue, 4 Feb 2003 05:16:01 +0100 (MET)
+* PR# 2529 *
+Subject: [±¤°í]¾ÆÁÖ ÁÁÀº ÀÌ¸ÞÀÏ ÃßÃâ±â,¹ß¼Û±â°¡ ÀÖÀ¾´Ï´Ù.@
+From: ¼ÒÇÁÆ® 777<bangkiss@lycos.co.kr>
+Date: Tue, 4 Feb 2003 15:38:55 +0100 (MET)
+* PR# 2530 *
+Subject: Bug in configure script for Solaris v9 arch with libsunperf
+From: "Pacey, Mike" <m.pacey@lancaster.ac.uk>
+Date: Tue, 4 Feb 2003 16:46:19 -0000 
+* PR# 2531 *
+Subject: ANTHONY  THABO  ( Urgent business proposal )
+From: ANTHONY  THABO <an800th@lycos.com>
+Date: Tue, 04 Feb 2003 20:02:13 +0100
+* PR# 2532 *
+Subject: Send 20 Advertisements to Customers with your targeted Demographics for the cost of 1 piece of Direct Postal Mail
+From: "lochard" <lochard@edirectquotes.com>
+Date: Tue, 4 Feb 2003 20:21:05 +0100 (MET)
+Date: Tue, 4 Feb 2003 11:22:19 -0800
