@@ -450,10 +450,14 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 		dd->gp.numrows = dd->dp.numrows = nrow;
 		dd->gp.numcols = dd->dp.numcols = ncol;
 		dd->gp.lastFigure = dd->dp.lastFigure = nrow*ncol;
-		dd->gp.currentFigure = dd->dp.currentFigure = 
-			dd->gp.order[row-1][col-1] - 1;
+		dd->dp.mfind = dd->gp.mfind = 1;
+		dd->dp.currentFigure = (col-1)*nrow + row - 1;
+		if (dd->dp.currentFigure == 0)
+			dd->dp.currentFigure = dd->dp.lastFigure;
+		dd->gp.currentFigure = dd->dp.currentFigure; 
 		dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
 		dd->gp.layout = dd->dp.layout = 0;
+		dd->gp.new = dd->dp.new = 1;
 		if (nrow > 2 || ncol > 2) {
 			dd->gp.cexbase = dd->dp.cexbase = 0.5;
 			dd->gp.mex = dd->dp.mex = 1.0;

@@ -1423,7 +1423,16 @@ static void subRegion(double *left, double *right, double *bottom, double *top,
 void currentFigureLocation(int *row, int *col, DevDesc *dd)
 {
 	int maxcol, maxrow;
-	figureExtent(col, &maxcol, row, &maxrow, dd->gp.currentFigure, dd);
+	if (dd->gp.layout)
+		figureExtent(col, &maxcol, row, &maxrow, dd->gp.currentFigure, dd);
+	else if (dd->gp.mfind) {
+		*row = (dd->gp.currentFigure - 1)%dd->gp.numrows;
+		*col = (dd->gp.currentFigure - 1)/dd->gp.numcols;
+	}
+	else {
+		*row = (dd->gp.currentFigure - 1)/dd->gp.numrows;
+		*col = (dd->gp.currentFigure - 1)%dd->gp.numcols;
+	}
 }
 
 /*  mapNDC2Dev -- transformation from NDC to Dev  */
