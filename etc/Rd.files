@@ -22,4 +22,4 @@ then
 else
 	(cd $MANdir; ls -1A *.Rd)
 fi
-
+exit 0
