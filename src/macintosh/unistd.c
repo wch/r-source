@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  file devMacintosh.c
+ *  file unistd.c
  *  Copyright (C) 1998-1999  Ross Ihaka
  *                2000-2001  Stefano M. Iacus and the R core team
  *
@@ -48,18 +48,27 @@
 
 #define min(a,b) ((a) <= (b) ? (a) : (b))
 
+
+char *getcwd(char * buf, int size);
+int chdir(const char * path);
+
+extern Boolean RunningOnCarbonX(void);
+
 /* local typedefs */
 
 
 static OSErr error;
 
-
+#ifdef __MRC__
+static char cwdir[FILENAME_MAX];
+#endif
 
 /*
  *	int chdir(const char *path)
  *
  *		Changes the current working directory (actually changes lowmem globals
  *		SFSaveDisk and CurDirStore which are used by open to open a file).
+ *      Fixed to work on OS X when compiled with MRC
  */
 int chdir(const char * path)
 {
@@ -84,11 +93,18 @@ int chdir(const char * path)
 	/* if we reach here we have an error */
 	if (err != noErr)
 		errno = err;
+		
+#ifdef __MRC__
+    if( RunningOnCarbonX()) {
+     ConvertHFSPathToUnixPath(path, (char *)&cwdir) ;
+     bsd_chdir(cwdir);
+    }
+#endif
+
+			
 	return (err == noErr ? 0 : -1);
 }
 
- 
- 
  
 /*
  *	char *getcwd(char *buf, int size)
@@ -122,9 +138,7 @@ char *getcwd(char * buf, int size)
 	
     HUnlock((Handle) fullPath);
 
-/*
-     ConvertUnixPathToHFSPath( theUnixDirectory , hfsPath );
-*/
+
      error = noErr;
 	}
 
