@@ -67,7 +67,7 @@ BUG FIXES
     o   The font colors are now set correctly in the input frame after 
         preferences changes
 
-	o   The cpu usage was very high in previous releases of R (Aqua) 
+    o   The cpu usage was very high in previous releases of R (Aqua) 
         due to idle timers implementation. Now removed with a new 
         internal design to refresh the Aqua console.
 
