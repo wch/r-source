@@ -29,6 +29,13 @@ Directory:  Accuracy
 Subject: bug with var(rep(1e30, 3))
 From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
 Date: Wed, 26 Dec 2001 13:03:31 +0100
+* PR# 1664 *
+Subject: Bug in rnorm.
+From: Rolf Turner <rolf@math.unb.ca>
+Date: Thu, 13 Jun 2002 16:35:59 -0300 (ADT)
+--Strange interaction between "Marsaglia-Multicarry" generator and
+--"Kinderman-Ramage" 
+--method for normal variates. Apparently, switching either of them will help.
 
 Directory:  Add-ons
 
@@ -79,18 +86,7 @@ Date: Thu, 13 Jun 2002 08:21:50 +0200
 
 Directory:  Analyses
 
-* PR# 1531 *
-Subject: cut.dendrogram
-From: "Grum, Mikkel" <M.GRUM@CGIAR.ORG>
-Date: Thu, 09 May 2002 03:17:17 -0700
---see #1552 (fixed for 1.5.1)
-* PR# 1552 *
-Subject: RE: cut.dendrogram
-Subject: Re: cut.dendrogram
-From: "Grum, Mikkel" <M.GRUM@CGIAR.ORG>
-From: Martin Maechler
-Date: Tue, 14 May 2002 06:22:17 -0700
---fixed for 1.5.1
+none
 
 Directory:  Documentation
 
@@ -107,10 +103,6 @@ Subject: cex/col/etc. in title(): documentation?
 From: Ben Bolker <ben@zoo.ufl.edu>
 Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
 --MM:actually the documentation still could elaborate a bit..
-* PR# 1442 *
-Subject: Undocumenten in: R INSTALL --help
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Mon, 8 Apr 2002 17:19:20 +0200 (CEST)
 * PR# 1554 *
 Subject: R-admin docs, Installing packages
 From: david.firth@nuffield.ox.ac.uk
@@ -385,15 +377,7 @@ Date: Wed, 22 Aug 2001 21:56:33 -0500
 Subject: crash bug in get("function.name")()
 From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
-* PR# 1247 *
-Subject: Mishandling missing "..."
-From: David Brahm  <brahm@alum.mit.edu>
-Date: Mon, 7 Jan 2002 10:52:09 -0500
-* PR# 1548 *
-Subject: prettyNum inserts leading commas
-From: David Brahm  <brahm@alum.mit.edu>
-Date: Mon, 13 May 2002 14:21:08 -0400
---fixed for 1.5.1 (using the suggestion)
+--Still segfaults in 1.5.1 
 
 Directory:  Macintosh
 
@@ -440,6 +424,8 @@ Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
 Subject: R 1.3.1 fails 'make check' on arm in the Bessel example
 From: Dirk Eddelbuettel <edd@debian.org>
 Date: Thu, 20 Sep 2001 23:54:19 -0500
+--This platform turned out to have badly broken FPU behaviour. Given up, at 
+--least for now .
 * PR# 1140 *
 Subject: Possible bug, Rprof() and scan(pipe())
 From: Don MacQueen <macq@llnl.gov>
@@ -502,23 +488,10 @@ Directory:  incoming
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1655 *
-Subject: ReadLines(con2)
-From: SGEIGER <SGEIGER@indiana.edu>
-Date: Tue, 11 Jun 2002 12:32:44 +0800 (CST)
-* PR# 1660 *
-Subject: documentation error for quantile
-From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
-Date: Wed, 12 Jun 2002 23:01:00 +0200
-* PR# 1664 *
-Subject: Bug in rnorm.
-From: Rolf Turner <rolf@math.unb.ca>
-Date: Thu, 13 Jun 2002 16:35:59 -0300 (ADT)
-* PR# 1665 *
-Subject: BUSINESS PROPOSAL
-From: "DR.SIJUWADE TAYLOR" <Sijuwade_Taylor@lycos.com>
-Date: Thu, 13 Jun 2002 22:01:37
-* PR# 1666 *
-Subject: Maritime Newsletter (Week 24)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Fri, 14 Jun 2002 06:17:39 +0900
+* PR# 1669 *
+Subject: minor quirk in rnbinom
+Subject: Re: [R] minor quirk in rnbinom
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Fri, 14 Jun 2002 18:49:24 +0200
+Date: Fri, 14 Jun 2002 18:47:59 +0200
