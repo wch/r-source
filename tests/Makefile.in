@@ -205,7 +205,7 @@ test-Specific:
 test-Packages:
 	@for p in $(R_PKGS_BASE); do \
 	  echo "checking package '$${p}'"; \
-	  R_CHECK_FF_CALLS=yes $(top_builddir)/bin/R CMD check \
+	  R_CHECK_FF_CALLS=yes $(top_builddir)/bin/R CMD check --no-perms \
 	    $(top_srcdir)/src/library/$${p} || echo; \
 	done
 
@@ -377,7 +377,7 @@ test-Packages-Recommended:
 	    echo "checking package '$${p}'"; \
 	  fi; \
 	  R_LIBS= R_CHECK_FF_CALLS=yes \
-	    $(top_builddir)/bin/R CMD check --install=skip \
+	    $(top_builddir)/bin/R CMD check --no-perms --install=skip \
 	    --library="$(top_builddir)/library" Packages/$${p} || echo; \
 	done
 
