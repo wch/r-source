@@ -3,9 +3,10 @@ barplot <- function(height, ...) UseMethod("barplot")
 barplot.default <-
     function(height, width = 1, space = NULL, names.arg = NULL,
 	     legend.text = NULL, beside = FALSE, horiz = FALSE,
-	     col = heat.colors(NR), border = par("fg"), main = NULL,
-	     xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
-	     axes = TRUE, inside = TRUE, plot = TRUE, ...)
+	     col = heat.colors(NR), border = par("fg"),
+	     main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+	     xlim = NULL, ylim = NULL,
+	     axes = TRUE, axisnames = TRUE, inside = TRUE, plot = TRUE, ...)
 {
     if (!missing(inside)) .NotYetUsed("inside")
     if (!missing(border)) .NotYetUsed("border")
@@ -14,7 +15,7 @@ barplot.default <-
 	space <- if (is.matrix(height) && beside) c(0, 1) else 0.2
     space <- space * mean(width)
 
-    if (plot && missing(names.arg))
+    if (plot && axisnames && missing(names.arg))
 	names.arg <-
 	    if(is.matrix(height)) colnames(height) else names(height)
 
@@ -73,15 +74,14 @@ barplot.default <-
 		       horizontal=horiz, col = col)
 	    }
 	}
-	if (!is.null(names.arg)) { # specified or from {col}names
+	if (axisnames && !is.null(names.arg)) { # specified or from {col}names
 	    at.l <- if (length(names.arg) != length(w.m)) {
 		if (length(names.arg) == NC) # i.e. beside (!)
 		    apply(w.m, 2, mean)
 		else
 		    stop("incorrect number of names")
 	    } else w.m
-	    axis(if(horiz) 2 else 1, 
-	         at = at.l, labels = names.arg, lty = 0)
+	    axis(if(horiz) 2 else 1, at = at.l, labels = names.arg, lty = 0)
 	}
 	if (!is.null(legend.text)) {
 	    legend.col <- col
@@ -94,7 +94,7 @@ barplot.default <-
 		   legend = legend.text, fill = legend.col,
 		   xjust = 1, yjust = 1)
 	}
-	title(main = main, xlab = xlab, ylab = ylab, ...)
+	title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
 	if (axes) axis(if(horiz) 1 else 2)
 	invisible(w.m)
     } else w.m

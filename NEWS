@@ -8,22 +8,29 @@ NEW FEATURES
 
     o	zero.R tries to find the zero DLL is a system-independent way.
 
-    o   lty=0 now (again) makes lines invisible. Looks better for
-    	barplot label axis.
+    o	lty=0 now (again) makes lines invisible. Looks better for
+	barplot label axis.
 
     o	collected warnings before an error are no longer lost but
 	are printed after the error message (unless the error makes
 	this impossible).
 
+    o	New error handling using
+	options ( error = expression(..) ,  warning.expr = ... ).
+	REPLACING version 0.65.1's  options(error.halt = T/F)
+
+    o	barplot.default() has new `axisnames' (and `sub') arguments, easily
+	allowing suppression of bar labeling.
+
 
 BUG FIXES
 
-    o 	Problems with realloc on some systems in AllocBuffer
+    o	Problems with realloc on some systems in AllocBuffer
 
-    o   Problem with formatReal on non-IEEE systems
+    o	Problem with formatReal on non-IEEE systems
 
-    o   Switch to <tt> in HTML pages since Linux Netscape mangles
-        Courier.
+    o	Switch to <tt> in HTML pages since Linux Netscape mangles
+	Courier.
 
     o	demos/dynload/Makefile used macros that gave incorrect build
 	on some non-GNU makes.
@@ -102,13 +109,13 @@ NEW FEATURES
 	this is available, and so is always consistent with the ordering
 	used by sort().
 
-    o	sapply  has a new argument USE.NAMES=TRUE  and now returns a named
-        result when its input was a character.
+    o	sapply	has a new argument USE.NAMES=TRUE  and now returns a named
+	result when its input was a character.
 
-    o	plot.stepfun  has new arguments  lty and lwd.
+    o	plot.stepfun  has new arguments	 lty and lwd.
 
-    o   x labels in boxplot now handled differently, so that math
-    	expressions are allowed.
+    o	x labels in boxplot now handled differently, so that math
+	expressions are allowed.
 
     o	postscript() argument `onefile' now does something, and there
 	is a new paper type `special' and new argument `pagecentre'.
@@ -360,7 +367,7 @@ BUG FIXES
     o	log(0) gives -Inf on all architectures.
 
     o	When persp() was the first graphics command given to R it gave
-	the error "plot.new() has not been called yet".  This no
+	the error "plot.new() has not been called yet".	 This no
 	longer happens.
 
     o	pgamma() gave 0 or 1 for extreme arguments too soon.
@@ -393,9 +400,9 @@ BUG FIXES
     o	a clipping problem for plots when there non-zero outer margins
 	has been fixed.	 This problem used to affect coplot() and pairs().
 
-    o   get("zzz", mode="xxx") missed promise objects.
+    o	get("zzz", mode="xxx") missed promise objects.
 
-    o   match.fun failed when a data frame was attached containing a
+    o	match.fun failed when a data frame was attached containing a
 	"length" variable (e.g.)
 
 
