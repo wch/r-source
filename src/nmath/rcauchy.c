@@ -24,7 +24,7 @@
  *
  *  DESCRIPTION
  *
- *    Random variates from the normal distribution.
+ *    Random variates from the Cauchy distribution.
  */
 
 #include "nmath.h"
