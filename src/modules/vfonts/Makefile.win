@@ -4,11 +4,12 @@ include ../../gnuwin32/MkRules
 all: makeMakedeps ../../../modules/vfonts.dll
 
 MODULE=vfonts
-SOURCES=g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
+CSOURCES=g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
+FSOURCES=
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
-OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
+OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 
 ../../../modules/$(MODULE).dll: $(MODULE).dll
 	$(MKDIR) -p ../../../modules
@@ -18,15 +19,10 @@ DLLLIBS=-L../../gnuwin32 -lR
 $(MODULE).dll: $(OBJS)
 
 clean:
-	rm Makedeps *.d *.o $(MODULE).def $(MODULE).dll
+	$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
 
 # Dependencies
-CSOURCES=$(wildcard *.c)
-DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
-
-.c.d:
-	@echo "making $@ from $<"
-	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

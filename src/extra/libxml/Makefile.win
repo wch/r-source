@@ -6,20 +6,16 @@ all: makeMakedeps ../../gnuwin32/Rlibxml.a
 OPTFLAGS=-O2 -Wall -pedantic
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -fnative-struct
 
-SOURCES=nanoftp.c nanohttp.c
-OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
+CSOURCES=nanoftp.c nanohttp.c
+OBJS=$(CSOURCES:.c=.o)
 
 ../../gnuwin32/Rlibxml.a: $(OBJS)
 
 clean:
-	rm *.o
+	$(RM) Makedeps *.d *.o
 
 # Dependencies
-DEPS=$(foreach i, $(SOURCES), $(basename $i).d)
-
-.c.d:
-	@echo "making $@ from $<"
-	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

@@ -87,7 +87,7 @@ fixshare: ./share/tests.mk
 	$(ECHO) done > fixshare	
 
 clean:
-	$(RM) *~ */*~ fixr fixh fixbin fixetc
+	$(RM) *~ */*~ fixhtml fixh fixbin fixetc fixshare
 
 ../../../doc/html/search/SearchEngine.html:../../../doc/KEYWORDS.db
 	(cd ../../../doc; \

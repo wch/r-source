@@ -22,10 +22,6 @@ connections-CFLAGS=-I../gnuwin32/bitmap/zlib -I../gnuwin32
 CSOURCES=$(wildcard *.c)
 DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
 
-.c.d:
-	@echo "making $@ from $<"
-	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
-
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
 	@cat $(DEPS) >> Makedeps

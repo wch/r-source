@@ -60,6 +60,10 @@ NM=$(BINPREF)nm
 CPP=$(CC) -E
 RESCOMP=$(BINPREF)windres
 
+.c.d:
+	@echo "making $@ from $<"
+	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+
 .c.o:
 	$(CC)  $(CFLAGS) $($*-CFLAGS) -c $< -o $@
 

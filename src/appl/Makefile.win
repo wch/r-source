@@ -5,18 +5,15 @@ CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 CSOURCES=$(wildcard *.c)
 FSOURCES=$(wildcard *.f)
-OBJS=$(foreach i, $(CSOURCES) $(FSOURCES), $(basename $i).o)
+OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
 
 all: makeMakedeps ../gnuwin32/libappl.a
 
 ../gnuwin32/libappl.a: $(OBJS)
 
 # Dependencies
-DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
+DEPS=$(CSOURCES:.c=.d)
 
-.c.d:
-	@echo "making $@ from $<"
-	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

@@ -30,7 +30,7 @@ endif
 R-DLLFLAGS = -mwindows
 R-DLLLIBS = -L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
 SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
-OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
+OBJS = $(SOURCES:.c=.o)
 MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a em.a bitmap/zlib/libz.a
 
@@ -219,7 +219,7 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../modules/vfonts -f Makefile.win clean
 
 distclean veryclean: clean
-	$(RM) -rf R.exp globalvar.h ../../bin ../../library
+	$(RM) -rf R.exp globalvar.h ../../bin ../../library ../../modules
 	$(RM) -f ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/version.h 
 	$(RM) -f ../library/*/src/*.o ../library/*/src/*.a
@@ -409,12 +409,8 @@ docsdist: docs
 ## ============= End of maintainer targets ========================
 
 # Dependencies
-CSOURCES = $(wildcard *.c)
-DEPS = $(foreach i, $(CSOURCES), $(basename $i).d)
-
-.c.d:
-	@echo "making $@ from $<"
-	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+CSOURCES=$(wildcard *.c)
+DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

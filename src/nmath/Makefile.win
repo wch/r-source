@@ -5,22 +5,15 @@ all: makeMakedeps ../gnuwin32/libmath.a
 
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
-SOURCES=$(wildcard *.c *.f)
-OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
-
-#fround.o: fround.c
-#	$(CC) -I../include  -o $@ -c $<
+CSOURCES=$(wildcard *.c)
+FSOURCES=$(wildcard *.f)
+OBJS=$(CSOURCES:.c=.o) $(CSOURCES:.f=.o)
 
 
 ../gnuwin32/libmath.a: $(OBJS)
 
 # Dependencies
-CSOURCES=$(wildcard *.c)
-DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
-
-.c.d:
-	@echo "making $@ from $<"
-	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
