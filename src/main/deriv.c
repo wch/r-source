@@ -824,6 +824,7 @@ static SEXP Prune(SEXP lst)
 
 SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+/* deriv.default(expr, namevec, function.arg, tag, hessian) */
     SEXP ans, ans2, expr, funarg, names;
     int f_index, *d_index, *d2_index;
     int i, j, k, nexpr, nderiv=0, hessian;
@@ -832,20 +833,26 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     InitDerivSymbols();
     PROTECT(exprlist = LCONS(install("{"), R_NilValue));
-    if (isExpression(CAR(args))) PROTECT(expr = VECTOR_ELT(CAR(args), 0));
+    /* expr: */
+    if (isExpression(CAR(args))) 
+	PROTECT(expr = VECTOR_ELT(CAR(args), 0));
     else PROTECT(expr = CAR(args));
     args = CDR(args);
+    /* namevec: */
     names = CAR(args);
     if (!isString(names) || (nderiv = length(names)) < 1)
 	errorcall(call, "invalid variable names");
     args = CDR(args);
+    /* function.arg: */
     PROTECT(funarg = duplicate(CAR(args)));
     args = CDR(args);
+    /* tag: */
     tag = CAR(args);
     if (!isString(tag) || length(tag) < 1
 	|| length(STRING_ELT(tag, 0)) < 1 || length(STRING_ELT(tag, 0)) > 60)
 	errorcall(call, "invalid tag");
     args = CDR(args);
+    /* hessian: */
     hessian = asLogical(CAR(args));
     /* NOTE: FindSubexprs is destructive, hence the duplication */
     PROTECT(ans = duplicate(expr));
@@ -965,9 +972,13 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     if (hessian) { SETCAR(ans, AddHess()); ans = CDR(ans); }
     /* .value */
     SETCAR(ans, install(".value"));
-    /* Prune the expression list */
-    /* removing eliminated sub-expressions */
+    /* Prune the expression list removing eliminated sub-expressions */
     SETCDR(exprlist, Prune(CDR(exprlist)));
+
+    if (TYPEOF(funarg) == LGLSXP && LOGICAL(funarg)[0]) { /* fun = TRUE */
+	funarg = names;
+    }
+
     if (TYPEOF(funarg) == CLOSXP) {
 	SET_BODY(funarg, exprlist);
     }
@@ -976,14 +987,14 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	funarg = allocSExp(CLOSXP);
 	ans = allocList(length(names));
 	SET_FORMALS(funarg, ans);
-	for(i=0 ; i<length(names) ; i++) {
+	for(i = 0; i < length(names); i++) {
 	    SET_TAG(ans, install(CHAR(STRING_ELT(names, i))));
 	    SETCAR(ans, R_MissingArg);
 	    ans = CDR(ans);
 	}
+	UNPROTECT(1);
 	SET_BODY(funarg, exprlist);
 	SET_CLOENV(funarg, R_GlobalEnv);
-	UNPROTECT(1);
     }
     else {
 	funarg = allocVector(EXPRSXP, 1);
