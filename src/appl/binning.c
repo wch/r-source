@@ -17,9 +17,10 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Mathlib.h"
+/*#include "Mathlib.h"*/
 #include "Error.h"
 #include "Arith.h"
+#include "Applic.h"
 
 /* bincode  cuts up the data using half open intervals defined as [a,b)
    bincode2 cuts up the data using half open intervals defined as (a,b]
@@ -28,9 +29,8 @@
      There would have to be 'n' extra "if" evaluations only ... ?
 
 */
-int
-bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
-	int *include_border, int *naok)
+void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
+	     int *include_border, int *naok)
 {
     int i, lo, hi;
     int n, nb1, new;
@@ -57,12 +57,10 @@ bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 	    }
 	} else if (! *naok)
 	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
-    return 0;
 }
 
-int
-bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
-	 int *include_border, int *naok)
+void bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
+	      int *include_border, int *naok)
 {
     int i, lo, hi;
     int n, nb1, new;
@@ -89,7 +87,6 @@ bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
 	    }
 	} else if (! *naok)
 	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
-    return 0;
 }
 
 
@@ -128,5 +125,4 @@ bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 	    }
 	} else if (! *naok)
 	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
-    return 0;
 }
