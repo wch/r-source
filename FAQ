@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-53 2004-09-26
+Version 1.9-54 2004-09-28
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1811,6 +1811,9 @@ distributions of R.)
 *ebayesthresh*
      Empirical Bayes thresholding and related methods.
 
+*edci*
+     Edge Detection and Clustering in Images.
+
 *effects*
      Graphical and tabular effect displays, e.g., of interactions, for
      linear and generalised linear models.
@@ -1832,6 +1835,9 @@ distributions of R.)
      E-statistics (energy) tests for comparing distributions: multivariate
      normality, Poisson test, multivariate k-sample test for equal
      distributions, hierarchical clustering by e-distances.
+
+*epsi*
+     Edge Preserving Smoothing for Images.
 
 *evd*
      Functions for extreme value distributions.  Extends simulation,
@@ -1994,6 +2000,10 @@ distributions of R.)
 *glmmML*
      A Maximum Likelihood approach to generalized linear models with random
      intercept.
+
+*gmp*
+     Arithmetic "without limitations" using the GNU Multiple Precision
+     library.
 
 *gpclib*
      General polygon clipping routines for R based on Alan Murta's C
