@@ -620,7 +620,10 @@ extractAIC <- function(fit, scale, k = 2, ...) UseMethod("extractAIC")
 extractAIC.coxph <- function(fit, scale, k = 2, ...)
 {
     edf <- length(fit$coef)
-    c(edf, -2 * fit$loglik[2] + k * edf)
+    if(edf > 0)
+        c(edf, -2 * fit$loglik[2] + k * edf)
+    else
+        c(0, -2 * fit$loglik)
 }
 
 extractAIC.survreg <- function(fit, scale, k = 2, ...)
