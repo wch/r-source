@@ -452,7 +452,7 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, AttrGetter dng,
     case STRSXP:
 	dnames = dng(x, R_DimNamesSymbol);
 	if (dnames == R_NilValue)
-	    error(_("no dimnames attribute for array"));
+	    error(_("no 'dimnames' attribute for array"));
 	dnames = VECTOR_ELT(dnames, dim);
 	return stringSubscript(s, ns, nd, dnames, strg, &stretch, in);
     case SYMSXP:

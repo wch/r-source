@@ -1256,7 +1256,7 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     fundef = prim_generics[offset];
     if(!fundef || TYPEOF(fundef) != CLOSXP)
-	error(_("primitive function \"%s\" has been set for methods but no  generic function supplied"),
+	error(_("primitive function \"%s\" has been set for methods but no generic function supplied"),
 	      PRIMNAME(op));
     /* To do:  arrange for the setting to be restored in case of an
        error in method search */

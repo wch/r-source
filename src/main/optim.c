@@ -521,7 +521,7 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
     B = Lmatrix(n);
     f = fminfn(n0, b, ex);
     if (!R_FINITE(f))
-	error(_("initial value in vmmin is not finite"));
+	error(_("initial value in 'vmmin' is not finite"));
     if (trace) Rprintf("initial  value %f \n", f);
     *Fmin = f;
     funcount = gradcount = 1;
@@ -1043,7 +1043,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	if (strncmp(task, "FG", 2) == 0) {
 	    f = fminfn(n, x, ex);
 	    if (!R_FINITE(f))
-		error(_("L-BFGS-B needs finite values of fn"));
+		error(_("L-BFGS-B needs finite values of 'fn'"));
 	    fmingr(n, x, g, ex);
 	} else if (strncmp(task, "NEW_X", 5) == 0) {
 	    if(trace == 1 && (iter % nREPORT == 0)) {
