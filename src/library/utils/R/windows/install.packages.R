@@ -7,23 +7,20 @@
 {
     unpackPkg <- function(pkg, pkgname, lib, installWithVers = FALSE)
     {
-        ## the `spammy' (his phrase) comments are from Gentry
-        ## However, at least some of his many errors have been removed
-
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.
         tmpDir <- tempfile(, lib)
         if (!dir.create(tmpDir))
-            stop('Unable to create temp directory ', tmpDir)
+            stop(sprintf(gettext("unable to create temp directory '%s'"),
+                         tmpDir), domain = NA, call. = FALSE)
         cDir <- getwd()
         on.exit(setwd(cDir), add = TRUE)
         res <- zip.unpack(pkg, tmpDir)
         setwd(tmpDir)
         res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
         if(!is.na(res) && res) {
-            cat("package", sQuote(pkgname),
-                gettext("successfully unpacked and MD5 sums checked\n"))
+            cat(sprintf(gettext("package '%s' successfully unpacked and MD5 sums checked\n"), pkgname))
             flush.console()
         }
 
@@ -40,8 +37,7 @@
             for (curPkg in pkgs) res <- res &
             tools::checkMD5sums(pkgname, file.path(tmpDir, curPkg))
             if(!is.na(res) && res) {
-                cat("bundle", sQuote(pkgname),
-                    gettext("successfully unpacked and MD5 sums checked\n"))
+                cat(sprintf(gettext("bundle '%s' successfully unpacked and MD5 sums checked\n"), pkgname))
                 flush.console()
             }
         } else pkgs <- pkgname
@@ -62,13 +58,16 @@
                 ## Move the new package to the install lib and
                 ## remove our temp dir
                 ret <- file.rename(file.path(tmpDir, curPkg), instPath)
-                if(!ret) warning("unable to move temp installation ",
-                                 sQuote(file.path(tmpDir, curPkg)),
-                                 " to ",
-                                 sQuote(instPath), call. = FALSE)
+                if(!ret)
+                    warning(sprintf(gettext(
+                   "unable to move temp installation '%d' to '%s'"),
+                                    file.path(tmpDir, curPkg), instPath),
+                            domain = NA, call. = FALSE)
             } else
-                stop("cannot remove prior installation of package ",
-                     sQuote(curPkg), call. = FALSE)
+                stop(sprintf(gettext(
+                     "cannot remove prior installation of package '%s'"),
+                             curPkg),
+                     domain = NA, call. = FALSE)
         }
         setwd(cDir)
         unlink(tmpDir, recursive=TRUE)
@@ -87,12 +86,11 @@
     inuse <- sub("^package:", "", inuse[grep("^package:", inuse)])
     inuse <- pkgnames %in% inuse
     if(any(inuse)) {
-        if(sum(inuse) == 1)
-            warning("package ", pkgnames[inuse],
-                    " is in use and will not be installed", call. = FALSE)
-        else
-            warning("packages ", paste(pkgnames[inuse], collapse=", "),
-                    " are in use and will not be installed", call. = FALSE)
+        warning(sprintf(ngettext(sum(inuse),
+                "package %s is in use and will not be installed",
+                "packages %s are in use and will not be installed"),
+                        paste(pkgnames[inuse], collapse=", ")),
+                call. = FALSE, domain = NA)
         pkgs <- pkgs[!inuse]
         pkgnames <- pkgnames[!inuse]
     }
@@ -116,22 +114,27 @@
     bundles <- .find_bundles(available)
     for(bundle in names(bundles))
         pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
-    if(dependencies && !oneLib) {
-        warning("Do not know which element of 'lib' to install dependencies into\n", "skipping dependencies")
-        dependencies <- FALSE
+    depends <- is.character(dependencies) ||
+    (is.logical(dependencies) && dependencies)
+    if(depends && is.logical(dependencies))
+        dependencies <-  c("Depends", "Imports", "Suggests")
+    if(depends && !oneLib) {
+        warning("Do not know which element of 'lib' to install dependencies into\nskipping dependencies")
+        depends <- FALSE
     }
-    if(dependencies) { # check for dependencies, recursively
+    if(depends) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
         repeat {
             if(any(miss <- ! p1 %in% row.names(available))) {
-                cat(gettext("dependencies "),
-                    paste(sQuote(p1[miss]), sep=", "),
-                    gettext(" are not available"), "\n\n", sep ="")
+                cat(sprintf(ngettext(sum(miss),
+                                     "dependency %s is not available",
+                                     "dependencies %s are not available"),
+                    paste(sQuote(p1[miss]), sep=", ")), "\n\n", sep ="")
                 flush.console()
             }
             p1 <- p1[!miss]
-            deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
+            deps <- as.vector(available[p1, dependencies])
             deps <- .clean_up_dependencies(deps, available)
             if(!length(deps)) break
             toadd <- deps[! deps %in% c("R", have, pkgs)]
@@ -145,7 +148,9 @@
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
-            cat(gettext("also installing the dependencies "),
+            cat(ngettext(length(added),
+                         "also installing the dependency ",
+                         "also installing the dependencies "),
                 paste(sQuote(added), collapse=", "), "\n\n", sep="")
             flush.console()
             pkgnames <- pkgs # not zips, now
@@ -157,7 +162,7 @@
                                    type = "win.binary")
 
     if(!is.null(foundpkgs)) {
-        update <- cbind(pkgs, lib)
+        update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
         for(lib in unique(update[,"LibPath"])) {
             oklib <- lib==update[,"LibPath"]
@@ -181,20 +186,7 @@
 
 menuInstallPkgs <- function(type = getOption("pkgType"))
 {
-    a <- available.packages(contrib.url(getOption("repos"), type=type))
-    if(NROW(a)) {
-        contains <- .find_bundles(a, FALSE)
-        extras <- unlist(lapply(names(contains), function(x)
-                                paste(contains[[x]], " (", x, ")", sep="")))
-        p <- sort(as.vector(c(a[, 1], extras)))
-        sel <- select.list(p, , TRUE)
-        if(!length(sel)) return(invisible())
-        bundles <- grep("(", sel, fixed = TRUE)
-        if(length(bundles)) sel[bundles] <-
-            sub("[^(]*\\((.*)\\)", "\\1" , sel[bundles])
-        install.packages(unique(sel), .libPaths()[1], available=a,
-                         dependencies=TRUE, type = type)
-    }
+    install.packages(NULL, .libPaths()[1], dependencies=TRUE, type = type)
 }
 
 menuInstallLocal <- function()
@@ -222,5 +214,6 @@ zip.unpack <- function(zipname, dest)
         } else {
             .Internal(int.unzip(zipname, NULL, dest))
         }
-    } else stop("zipfile ", zipname, " not found")
+    } else stop(sprintf(gettext("zipfile '%s' not found"), zipname),
+                domain = NA)
 }

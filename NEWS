@@ -550,6 +550,9 @@ PACKAGE INSTALLATION CHANGES
 	If 'pkgs' is omitted install.packages() will use a listbox to
 	display the available packages, on suitable systems.
 
+	'dependencies' can be a character vector to allow only some
+	levels of dependencies (e.g. not "Suggests") to be requested.
+
     o	There is a new possible value update.packages(ask="graphics")
 	that uses a widget to (de)select packages, on suitable systems.
 

@@ -6,21 +6,34 @@ install.packages <-
              installWithVers = FALSE, dependencies = FALSE,
              type = getOption("pkgType"))
 {
+    explode_bundles <- function(a)
+    {
+        contains <- .find_bundles(a, FALSE)
+        extras <- unlist(lapply(names(contains), function(x)
+                                paste(contains[[x]], " (", x, ")", sep="")))
+        sort(as.vector(c(a[, 1], extras)))
+    }
+
     if(missing(pkgs) || !length(pkgs)) {
         if(.Platform$OS.type == "unix" &&
                   capabilities("tcltk") && capabilities("X11")) {
             if(is.null(available))
                 available <- available.packages(contriburl = contriburl,
                                                 method = method)
-            pkgs <- tcltk::tk_select.list(available[, 1],
-                                          multiple = TRUE, title ="Packages")
+            if(NROW(available)) {
+                a <- explode_bundles(available)
+                pkgs <- tcltk::tk_select.list(a, multiple = TRUE,
+                                              title ="Packages")
+            }
             if(!length(pkgs)) stop("no packages were specified")
          } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
             if(is.null(available))
                 available <- available.packages(contriburl = contriburl,
                                                 method = method)
-            pkgs <- select.list(available[, 1], multiple = TRUE,
-                               title = "Packages")
+            if(NROW(available)) {
+                a <- explode_bundles(available)
+                pkgs <- select.list(a, multiple = TRUE, title = "Packages")
+            }
             if(!length(pkgs)) stop("no packages were specified")
         } else
             stop("no packages were specified")
@@ -73,8 +86,9 @@ install.packages <-
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
                          shQuote(update[i, 1]))
             if(system(cmd) > 0)
-                warning("Installation of package ", sQuote(update[i, 1]),
-                        " had non-zero exit status")
+                warning(sprintf(gettext(
+                 "installation of package '%s' had non-zero exit status"),
+                                sQuote(update[i, 1])), domain = NA)
         }
         return(invisible())
     }
@@ -88,9 +102,13 @@ install.packages <-
             stop('Unable to create temp directory ', tmpd)
     }
 
-    if(dependencies && !oneLib) {
-        warning("Do not know which element of 'lib' to install dependencies into\n", "skipping dependencies")
-        dependencies <- FALSE
+    depends <- is.character(dependencies) ||
+    (is.logical(dependencies) && dependencies)
+    if(depends && is.logical(dependencies))
+        dependencies <-  c("Depends", "Imports", "Suggests")
+    if(depends && !oneLib) {
+        warning("Do not know which element of 'lib' to install dependencies into\nskipping dependencies")
+        depends <- FALSE
     }
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
@@ -98,18 +116,19 @@ install.packages <-
     bundles <- .find_bundles(available)
     for(bundle in names(bundles))
         pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
-    if(dependencies) { # check for dependencies, recursively
+    if(depends) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
         repeat {
             if(any(miss <- ! p1 %in% row.names(available))) {
-                cat(gettext("dependencies "),
-                    paste(sQuote(p1[miss]), sep=", "),
-                    gettext(" are not available"), "\n\n", sep ="")
+                cat(sprintf(ngettext(sum(miss),
+                                     "dependency %s is not available",
+                                     "dependencies %s are not available"),
+                    paste(sQuote(p1[miss]), sep=", ")), "\n\n", sep ="")
                 flush.console()
             }
             p1 <- p1[!miss]
-            deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
+            deps <- as.vector(available[p1, dependencies])
             deps <- .clean_up_dependencies(deps, available)
             if(!length(deps)) break
             toadd <- deps[! deps %in% c("R", have, pkgs)]
@@ -123,7 +142,9 @@ install.packages <-
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
-            cat(gettext("also installing the dependencies "),
+            cat(ngettext(length(added),
+                         "also installing the dependency ",
+                         "also installing the dependencies "),
                 paste(sQuote(added), collapse=", "), "\n\n", sep="")
             flush.console()
         }
@@ -136,7 +157,7 @@ install.packages <-
     ## at this point pkgs may contain duplicates,
     ## the same pkg in different libs
     if(!is.null(foundpkgs)) {
-        update <- cbind(pkgs, lib)
+        update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
         found <- pkgs %in% foundpkgs[, 1]
         files <- foundpkgs[match(pkgs[found], foundpkgs[, 1]), 2]
@@ -155,8 +176,9 @@ install.packages <-
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]), update[i, 3])
             status <- system(cmd)
             if(status > 0)
-                warning("Installation of package ", sQuote(update[i, 1]),
-                        " had non-zero exit status")
+                warning(sprintf(gettext(
+                 "installation of package '%s' had non-zero exit status"),
+                                sQuote(update[i, 1])), domain = NA)
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettext("The downloaded packages are in "),

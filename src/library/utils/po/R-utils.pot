@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-22 08:26\n"
+"POT-Creation-Date: 2005-02-25 17:39\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,10 +170,10 @@ msgstr ""
 msgid "using the one found in"
 msgstr ""
 
-msgid "invalid data argument"
+msgid "invalid 'data' argument"
 msgstr ""
 
-msgid "invalid modes argument"
+msgid "invalid 'modes' argument"
 msgstr ""
 
 msgid "can only handle vector and factor elements"
@@ -308,28 +308,13 @@ msgstr ""
 msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
 msgstr ""
 
-msgid "Installation of package"
-msgstr ""
-
-msgid "had non-zero exit status"
+msgid "installation of package '%s' had non-zero exit status"
 msgstr ""
 
 msgid "Unable to create temp directory"
 msgstr ""
 
-msgid "Do not know which element of 'lib' to install dependencies into"
-msgstr ""
-
-msgid "skipping dependencies"
-msgstr ""
-
-msgid "dependencies"
-msgstr ""
-
-msgid "are not available"
-msgstr ""
-
-msgid "also installing the dependencies"
+msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
 msgstr ""
 
 msgid "The downloaded packages are in"
@@ -569,6 +554,9 @@ msgstr ""
 msgid "has no PDF"
 msgstr ""
 
+msgid "select.list() cannot be used non-interactively"
+msgstr ""
+
 msgid "Enter zero or more numbers separated by space"
 msgstr ""
 
@@ -623,31 +611,25 @@ msgstr ""
 msgid "yourself"
 msgstr ""
 
-msgid "successfully unpacked and MD5 sums checked"
+msgid "unable to create temp directory '%s'"
+msgstr ""
+
+msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr ""
 
 msgid "malformed bundle DESCRIPTION file, no Contains field"
 msgstr ""
 
-msgid "unable to move temp installation"
+msgid "bundle '%s' successfully unpacked and MD5 sums checked"
 msgstr ""
 
-msgid "to"
+msgid "unable to move temp installation '%d' to '%s'"
 msgstr ""
 
-msgid "cannot remove prior installation of package"
+msgid "cannot remove prior installation of package '%s'"
 msgstr ""
 
-msgid "is in use and will not be installed"
-msgstr ""
-
-msgid "packages"
-msgstr ""
-
-msgid "are in use and will not be installed"
-msgstr ""
-
-msgid "zipfile"
+msgid "zipfile '%s' not found"
 msgstr ""
 
 msgid "updating HTML package descriptions"
@@ -676,3 +658,21 @@ msgstr ""
 
 msgid "Download of package"
 msgstr ""
+
+msgid "cannot remove prior installation of package"
+msgstr ""
+
+msgid        "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "also installing the dependency "
+msgid_plural "also installing the dependencies "
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "package %s is in use and will not be installed"
+msgid_plural "packages %s are in use and will not be installed"
+msgstr[0]    ""
+msgstr[1]    ""

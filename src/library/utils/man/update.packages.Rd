@@ -90,7 +90,8 @@ contrib.url(repos, type = getOption("pkgType"))
     package/bundle archive files (as created by \code{R CMD build --binary}).
 #endif
     If this is a zero-length character vector, a listbox of available
-    packages is presented where possible.
+    packages (including those contained in bundles) is presented where
+    possible.
   }
   \item{destdir}{directory where downloaded packages are stored.}
   \item{available}{an object listing packages available at the repositories
@@ -114,6 +115,8 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{dependencies}{logical indicating to also install uninstalled
     packages on which these packages depend/suggest/import
     (and so on recursively).  Not used if \code{repos = NULL}.
+    Can also be a character vector, a subset of
+    \code{c("Depends", "Imports", "Suggests")}.
   }
   \item{type}{character, indicating the type of package to download and
     install.
