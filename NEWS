@@ -108,6 +108,9 @@ BUG FIXES
     o   A bug could produce apparent loops in formal method selection when
         inheritance was restricted (used for the as() function).
 
+    o	Empty expressions as in return(x,) could generate subsequent
+	segfaults: they are now errors.  (PR#2880)
+
 
 
 		CHANGES IN R VERSION 1.7.0
