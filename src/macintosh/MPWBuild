@@ -36,7 +36,7 @@
 ###  Jago Nov 11 2001, Stefano M. Iacus
 ###  (`iacus-ng' recently released, so it can't be bug free)
 ###
-###  Last update: April 14th 2002
+###  Last update: May 11th 2002
 ###   
 ###  bug report or optimization hints can be sent to
 ###
@@ -59,6 +59,8 @@ if "{fileList}"
   delete -y "{f}.tmp"
  end
 end
+
+SetFile -c 'ttxt' -t 'TEXT' "::unix:devQuartz.c"
 
 Duplicate -y :tools:FF_CREATE :tools:FF_CREATE.ux
 translate ¶0x0a ¶0x0d <:tools:FF_CREATE.ux >:tools:FF_CREATE
@@ -148,7 +150,7 @@ set FortList  "`Files ::appl:Å.f` `Files ::main:Å.f`"
 
 set RSrc  "`Files ::main:Å.c` `Files ::nmath:Å.c` ¶
              `Files ::appl:Å.c` `Files ::extra:xdr:Å.c` ¶
-              ::unix:dynload.c"
+              ::unix:dynload.c ::unix:devQuartz.c"
 
 set MacSrc  "`Files Å.c` `Files :edit:Å.c` `Files :extra:Å.c` ¶
               `Files :dll:Å.c` `Files :print:Å.c` ¶
