@@ -95,6 +95,6 @@ file.remove("A", "B", "C")
 basename(file.path("","p1","p2","p3","filename"))
 dirname(file.path("","p1","p2","p3","filename"))
 
-path.expand("~/foo")
+path.expand(c("~", "~/foo", "~someuser"))# 3rd expands only if...
 }
 \keyword{file}
