@@ -63,8 +63,8 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
     install the packages.  Recycled as needed.}
   \item{ask}{logical indicating to ask before packages are actually
     downloaded and installed.}
-  \item{installWithVers}{If \code{TRUE}, will invoke the install the
-    package such that it can be referenced by package version}
+  \item{installWithVers}{If \code{TRUE}, will invoke the install of the
+    package such that it can be referenced by package version.}
   \item{instlib}{character string giving the library directory where to
     install the packages.}
   \item{dependencies}{logical indicating to also install uninstalled
