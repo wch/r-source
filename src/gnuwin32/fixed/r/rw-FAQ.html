@@ -169,9 +169,9 @@ Optionally, you can download the installer, <tt>rwinst.exe</tt>.
 <h3>
 1.2)&nbsp;<a NAME="q12"></a>How do I install R for Windows?</h3>
 
-First, you need Windows 95 or 98 or NT4: Windows 3.11+win32s will not
-work. Your file system must allow long file names (as is likely except
-perhaps for some network-mounted systems).
+First, you need Windows 95 or 98 or NT4 or 2000: Windows 3.11+win32s
+will not work. Your file system must allow long file names (as is
+likely except perhaps for some network-mounted systems).
 
 <p>The simplest way is to run the installer (double-click on the icon
 for rwinst.exe and navigate its wizard-like pages).  Alternatively,
@@ -332,8 +332,8 @@ directory or your home directory, for example
       R_VSIZE=10M
       R_NSIZE=400k
 </pre>
-The order of search is the command line then <tt>.Renviron</tt> then
-the inherited environment.
+The order of precedence is the command line then <tt>.Renviron</tt>
+then the inherited environment.
 
 
 <p>You can also build packages anywhere, but that is much trickier: it
@@ -386,8 +386,8 @@ from the Unix/GNU-Linux version of R?</h3>
 <ul>
 <li>
 R commands can be interrupted by <tt>Esc</tt> in <tt>rgui.exe</tt> and
-<tt>Ctrl-break</tt> in <tt>rterm.exe</tt>: <tt>Ctrl-C</tt> is used for
-copying in the GUI version.</li>
+<tt>Ctrl-break</tt> or <tt>Ctrl-C</tt> in <tt>rterm.exe</tt>:
+<tt>Ctrl-C</tt> is used for copying in the GUI version.</li>
 
 <li>
 Command-line editing is always available, but is much simpler than the

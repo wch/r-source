@@ -7,7 +7,7 @@ be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
 many important contributions by Brian Ripley.
 
-See Announce or CHANGES for the new features of this version.
+See CHANGES for the new features of this version.
 
 
 Installation

@@ -65,12 +65,16 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
 install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
                              method="auto", available=NULL)
 {
-    localcran <- length(grep("^file:", CRAN)) > 0
-    pkgs <- NULL
     if(missing(lib) || is.null(lib)) {
         lib <- .lib.loc[1]
         warning(paste("argument `lib' is missing: using", lib))
     }
+    if(is.null(CRAN)) {
+        for(pkg in pkglist) zip.unpack(pkg, lib)
+        return()
+    }
+    localcran <- length(grep("^file:", CRAN)) > 0
+    pkgs <- NULL
     tmpd <- tempfile("Rinstdir")
     shell(paste("mkdir", tmpd))
     pkgs <- download.packages(pkglist, destdir=tmpd,

@@ -1,10 +1,10 @@
 .SUFFIXES: .c .f .o .a .def .exp .dll .exe .d
 
-# Alternatives CYGWIN (-B20.1), MINGW32 (mingw32 gcc), CROSS (Linux)
+# Alternatives CYGWIN (--no-cygwin), MINGW32 (mingw32 gcc), CROSS (Linux)
 BUILD=MINGW32
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
-# not requested. No spaces allowed.
+# not requested. No spaces allowed.)
 HHWDIR=C:/PROGRA~1/HTMLHE~1
 
 ifeq ($(strip $(BUILD)),CYGWIN)
@@ -25,9 +25,8 @@ AWK=gawk
 endif 
 
 ifeq ($(strip $(BUILD)),CROSS)
-BINPREF=i386-mingw32-
-HEADER=/home/guido/mingw32/i386-mingw32/include
-HEADER=/home/markov/ripley/R-X/i386-mingw32/include
+BINPREF=i586-mingw32-
+HEADER=/packages/R-X/i586-mingw32/include
 MINGW32CFLAG=-isystem $(HEADER)
 MINGW32LDFLAG= 
 FLIBS=-lg2c

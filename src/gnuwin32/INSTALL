@@ -16,7 +16,7 @@ First collect the tools that you need.
 Building on Windows
 -------------------
 
-We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
+We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan from
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
 cat; we have packaged a set at CRAN/bin/windows/windows-NT/base/etc/tools.zip
@@ -30,11 +30,11 @@ It is also possible to use earlier mingw32 compilers or cygwin-b20.1
 with the --no-cygwin flag, but we suggest you do so only if you have a
 working setup from building earlier versions of R.  We have also
 successfully used the variant of mingw32 that uses the MSVCRT run-time 
-system (under gcc-2.95 but not earlier versions).
+system (under gcc-2.95.x but not earlier versions).
 Be aware that not all Windows machines have MSVCRT.DLL installed.
 
-(If you want to use cygwin, we suggest you upgrade to gcc-2.95 by
-installing the files gcc-2.95-cygb20.tar.gz and gcc-2.95-mingw-extra.tar.gz
+(If you want to use cygwin, we suggest you upgrade to gcc-2.95.2 by
+installing the files gcc-2.95.2-cygb20.tar.gz and gcc-2.95.2-mingw-extra.tar.gz
 from ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
 
 perl5, available via http://www.perl.com/CPAN/ports.
@@ -104,15 +104,15 @@ You can test a build by `make check': expect some differences in the tests
 of print routines.
 
 
-Cross-building on i386 Linux
+Cross-building on i586 Linux
 ----------------------------
 
-You will need i386-mingw32 cross-compilers installed: see
+You will need i586-mingw32 cross-compilers installed: see
 
-http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
+ftp://ftp.objsw.com/pub/crossgcc/linux-x-win32
 
-and ensure that these are in your path. You will need Perl and nroff
-installed.
+for source and binary distributions, and ensure that these are in your
+path. You will need Perl and nroff installed.
 
 You also need: the R source (R-0.90.0.tgz), and to build the installer,
 unzip5.40.zip from any Info-ZIP mirror.
@@ -123,7 +123,8 @@ Then: untar R-0.90.0.tgz somewhere
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Edit Makefile to set the type(s) of help that you want built. (You
-will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll.)
+will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll,
+so set WINHELP to NO.)
 
 Set the environment variable TEMP to, say, /tmp, and make.
 

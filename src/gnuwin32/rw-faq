@@ -70,7 +70,7 @@ There is also information on the use of R for Windows in the Venables
 
 1.1) Where can I find the latest version?
 
-Go to any CRAN site (see http://cran-r.project.org/mirrors.html for a
+Go to any CRAN site (see http://cran.r-project.org/mirrors.html for a
 list), navigate to the bin/windows/windows-NT/base directory and collect the
 files you need. You will need at least the files
 
@@ -87,9 +87,9 @@ Optionally, you can download the installer, rwinst.exe.
 
 1.2) How do I install R for Windows?
 
-First, you need Windows 95 or 98 or NT4: Windows 3.11+win32s will not
-work. Your file system must allow long file names (as is likely except
-perhaps for some network-mounted systems).
+First, you need Windows 95 or 98 or NT4 or 2000: Windows 3.11+win32s
+will not work. Your file system must allow long file names (as is
+likely except perhaps for some network-mounted systems).
 
 The simplest way is to run the installer (double-click on the icon for
 rwinst.exe and navigate its wizard-like pages).  Alternatively, choose
@@ -227,8 +227,8 @@ or your home directory, for example
       R_VSIZE=10M
       R_NSIZE=400k
 
-The order of search is the command line (flags before variables) then
-.Renviron then the inherited environment.
+The order of precedence is the command line (flags before variables)
+then .Renviron then the inherited environment.
 
 You can also build packages anywhere, but that is much trickier: it is
 simpler to install a private copy of R to do the building.
@@ -272,8 +272,8 @@ If those all hold true, this works for us.
 3.1) What should I expect to behave differently from the Unix/GNU-Linux
 version of R?
 
-   * R commands can be interrupted by Esc in rgui.exe and Ctrl-break in
-     rterm.exe: Ctrl-C is used for copying in the GUI version.
+   * R commands can be interrupted by Esc in rgui.exe and Ctrl-break 
+     or Ctrl-C in rterm.exe: Ctrl-C is used for copying in the GUI version.
    * Command-line editing is always available, but is much simpler than the
      readline-based editing on Unix. For rgui.exe, the menu item `Help |
      Console' will give details.

@@ -3,17 +3,17 @@ rw0900
 
 We made a determined attempt to quote paths which might contain spaces,
 and almost all cases work. Be careful with external unzip, pager and editor
-that these do handle quoted paths.
+programs that these do handle quoted paths.
 
-Rterm can be interrupted by Ctrl+C as well as Ctrl-Break. 'Fast
-typing' should not give problems in interactive use.
+Rterm can be interrupted by Ctrl-C as well as Ctrl-Break. Fast
+typing should not give problems in interactive use.
 
 Better formatting of math expressions in graphics labels, legends, ...
 (but only if font is True Type since it seems not possible to get
 per-char font metric information for raster fonts).
 
 Support for GIF format bitmaps has been removed, but support for PNG, 
-JPEG and  BMP has been added. This can be done via the File menu on the
+JPEG and BMP has been added. This can be done via the File menu on the
 graphics window, savePlot() or dev.print to the new devices png(), bmp() 
 and jpeg(), which can also be used directly.
 
@@ -21,6 +21,14 @@ PDF versions of the (draft) manuals are available in file rw0900d.zip
 and install into rw0900/doc/manuals.  These can be read in Acrobat
 Reader from the Manuals sub-menu of the Help menu provided they and
 the reader (http://www.adobe.com) are installed.
+
+The installer will install packages in the library directory if the
+installation directory path ends in rw0900.
+
+You can install packages by
+
+    install.packages("/path/to/mypkg.zip", CRAN=NULL)
+
 
 
 rw0651
