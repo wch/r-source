@@ -28,12 +28,12 @@ removeGeneric(f, where)
 standardGeneric(f)
 
 dumpMethod(f, signature, file, where, def)
-findFunction(f, generic=TRUE)
+findFunction(f, generic = TRUE, where = topenv(parent.frame()))
 dumpMethods(f, file, signature, methods, where)
 signature(\dots)
 
-removeMethods(f, where)
-setReplaceMethod(f, \dots)
+removeMethods(f, where = topenv(parent.frame()), all = TRUE)
+setReplaceMethod(f, \dots, where = topenv(parent.frame()))
 
 getGenerics(where, searchForm = FALSE)
 allGenerics(where, searchForm = FALSE)
@@ -54,11 +54,11 @@ callGeneric(\dots)
       exist as formal function objects (for efficiency and historical
       reasons), regardless of whether methods have been defined for
       them.  A call to \code{isGeneric} tells you whether methods have
-      been defined for this primitive function, anywhere in the
-      current search list, or in the specified position \code{where}.  In contrast,
-      a call to \code{\link{getGeneric}} will return what the generic
-      for that function would be, even if no methods have been currently
-      defined for it.
+      been defined for this primitive function, anywhere in the current
+      search list, or in the specified position \code{where}.  In
+      contrast, a call to \code{\link{getGeneric}} will return what the
+      generic for that function would be, even if no methods have been
+      currently defined for it.
     }
 
     \item{\code{removeGeneric}, \code{removeMethods}:}{
