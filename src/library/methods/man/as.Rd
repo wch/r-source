@@ -32,7 +32,7 @@ as(object, Class, strict=TRUE)
 
 as(object, Class) <- value
 
-setAs(from, to, def, replace, where = 1)
+setAs(from, to, def, replace, where = topenv(parent.frame()))
 
 }
 \section{Summary of Functions}{
@@ -40,7 +40,7 @@ setAs(from, to, def, replace, where = 1)
     \item{\code{as}:}{
       Returns the version of this object coerced to be the given
       \code{Class}.
-  
+
       If the corresponding \code{is} relation is true, it will be used.
       In particular, if the relation has a coerce method, the method
       will be invoked on \code{object}.
@@ -108,8 +108,9 @@ setAs(from, to, def, replace, where = 1)
     \code{setAs} will do the conversion.) }
   \item{replace}{If supplied, the function to use as a replacement
     method.}
-  \item{where}{ The position or environment in which to store the resulting method for
-    \code{coerce}; by default, the global environment. }
+  \item{where}{the position or environment in which to store the
+    resulting method for \code{coerce}.}
+  %% FIXME: ; by default, the ... environment.}
 }
 
 %% <FIXME>
@@ -193,7 +194,7 @@ setAs(from, to, def, replace, where = 1)
 %% Currently Rdconv cannot deal with markup in section titles.
 %% \section{The Function \code{as} Used in Replacements}{
 \section{The Function `as' Used in Replacements}{
-  %% </FIXME>    
+  %% </FIXME>
   When \code{as} appears on the left of an assignment, the intuitive
   meaning is \dQuote{Replace the part of \code{object} that was inherited from
   \code{Class} by the \code{value} on the right of the assignment.}
@@ -255,7 +256,7 @@ datatypes.  For example, \code{as(x, "numeric")} uses the existing
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }

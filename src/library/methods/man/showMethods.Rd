@@ -6,17 +6,17 @@
   possibly restricted to those involving specified classes.
 }
 \usage{
-showMethods(f=character(), where=-1, classes=NULL, includeDefs=FALSE, 
-            inherited=TRUE, printTo = stdout())
+showMethods(f = character(), where = topenv(parent.frame()), classes = NULL,
+            includeDefs = FALSE, inherited = TRUE, printTo = stdout())
 }
 \arguments{
-  \item{f}{ One or more function names.  If omitted, all functions
+  \item{f}{one or more function names.  If omitted, all functions
     will be examined. }
   \item{where}{If \code{where} is supplied, the methods definition from
     that position will be used; otherwise, the current definition is
     used (which will include inherited methods that have arisen so far
     in the session). If \code{f} is omitted, \code{where} controls
-    where to look for generic functions.} 
+    where to look for generic functions.}
   \item{classes}{ If argument \code{classes} is supplied, it is a vector
     of class names that restricts the displayed results to those methods
     whose signatures include one or more of those classes. }
@@ -27,7 +27,7 @@ showMethods(f=character(), where=-1, classes=NULL, includeDefs=FALSE,
     included and marked as inherited. Note that an inherited method
     will not usually appear until it has been used in this session.
     See \code{\link{selectMethod}} if you want to know what method is
-    dispatched for particular classes of arguments.} 
+    dispatched for particular classes of arguments.}
   \item{printTo}{The connection on which the printed information will be
     written.  If \code{printTo} is \code{FALSE}, the output will be
     collected as a character vector and returned as the value of the
@@ -55,13 +55,13 @@ showMethods(f=character(), where=-1, classes=NULL, includeDefs=FALSE,
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }
 \seealso{
   \code{\link{setMethod}}, and \code{\link{GenericFunctions}}
-  for other tools involving methods; 
+  for other tools involving methods;
   \code{\link{selectMethod}} will show you the method dispatched for a
   particular function and signature of classes for the arguments.
 }

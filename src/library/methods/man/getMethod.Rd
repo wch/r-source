@@ -30,8 +30,9 @@ existsMethod(f, signature = character(), where)
 
 hasMethod(f, signature=character(), where)
 
-selectMethod(f, signature, optional=FALSE, useInherited,
-             mlist=getMethods(f), fdef = getGeneric(f))
+selectMethod(f, signature, optional = FALSE, useInherited = TRUE,
+             mlist = (if (is.null(fdef)) NULL else getMethods(fdef)),
+             fdef = getGeneric(f, !optional))
 
 MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
                   useInherited, fdef, resetAllowed)
@@ -185,7 +186,7 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }

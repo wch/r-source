@@ -6,8 +6,8 @@
   Create and save a formal method for a given function and list of classes.
 }
 \usage{
-setMethod(f, signature=character(), definition, where=1, valueClass,
-          sealed = FALSE)
+setMethod(f, signature=character(), definition, where= topenv(parent.frame()),
+          valueClass = NULL, sealed = FALSE)
 
 removeMethod(f, signature, where)
 }
@@ -21,8 +21,8 @@ removeMethod(f, signature, where)
   \item{definition}{ A function definition, which will become the method
     called when the arguments in a call to \code{f} match the
     classes in \code{signature}, directly or through inheritance. }
-  \item{where}{ The database in which to store the definition of the
-    method; by default, the current global environment.
+  \item{where}{the database in which to store the definition of the
+    method; % FIXME: by default, the ... environment.
 
     For \code{removeMethod}, the default is the location of the (first)
     instance of the method for this signature.}
@@ -93,7 +93,7 @@ removeMethod(f, signature, where)
   \code{f}.  (What actually happens is that a local function is
   created inside the method, with its formal arguments, and the method
   is re-defined to call that local function.)
- 
+
   Method dispatch tries to match the class of the actual arguments in a
   call to the available methods collected for \code{f}.  Roughly, for
   each formal argument in turn, we look for the best match (the exact
@@ -114,7 +114,7 @@ removeMethod(f, signature, where)
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }
