@@ -108,13 +108,13 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void
   }
 } /* fdhess */
 
-static void d1fcn(int n, double *x, double *g, void *state)
+static void d1fcn_dum(int n, double *x, double *g, void *state)
 {
 /*	dummy routine to prevent unsatisfied external diagnostic
  *	when specific analytic gradient function not supplied. */
 }
 
-static void d2fcn(int nr, int n, double *x, double *h, void *state)
+static void d2fcn_dum(int nr, int n, double *x, double *h, void *state)
 {
 /*	dummy routine to prevent unsatisfied external diagnostic
  *	when specific analytic hessian function not supplied. */
@@ -1876,8 +1876,8 @@ grdchk(int n, double *x, fcn_p fcn, void *state, double f, double *g,
 static void
 heschk(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
        void *state, double f, double *g, double *a, double *typsiz,
-       double *sx, double rnf, double analtl, int iagflg, double
-       *udiag, double *wrk1, double *wrk2, int *msg)
+       double *sx, double rnf, double analtl, int iagflg, double *udiag,
+       double *wrk1, double *wrk2, int *msg)
 {
 /* Check analytic hessian against estimated hessian
  *	 (this may be done only if the user supplied analytic hessian
@@ -1961,8 +1961,9 @@ heschk(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 } /* heschk */
 
 static void
-optstp(int n, double *xpls, double fpls, double *gpls, double *x, int
-       itncnt, int *icscmx, int *itrmcd, double gradtl, double steptl,
+optstp(int n, double *xpls, double fpls, double *gpls, double *x,
+       int itncnt, int *icscmx, int *itrmcd, 
+       double gradtl, double steptl,
        double *sx, double fscale, int itnlim, int iretcd, int mxtake,
        int *msg)
 {
@@ -2316,14 +2317,13 @@ optdrv_end(int nr, int n, double *xpls, double *x, double *gpls,
 } /* optdrv_end */
 
 static void
-optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
-       d2fcn, void *state, double *typsiz, double fscale, int method,
-       int iexp, int *msg, int ndigit, int itnlim, int iagflg, int
-       iahflg, double dlt, double gradtl, double stepmx, double
-       steptl, double *xpls, double *fpls, double *gpls, int *itrmcd,
+optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn, 
+       void *state, double *typsiz, double fscale, int method,
+       int iexp, int *msg, int ndigit, int itnlim, int iagflg, int iahflg,
+       double dlt, double gradtl, double stepmx, double steptl, 
+       double *xpls, double *fpls, double *gpls, int *itrmcd,
        double *a, double *udiag, double *g, double *p, double *sx,
-       double *wrk0, double *wrk1, double *wrk2, double *wrk3, int
-       *itncnt)
+       double *wrk0, double *wrk1, double *wrk2, double *wrk3, int *itncnt)
 {
 /* Driver for non-linear optimization problem  -- called by optif0() & optif9()
 
@@ -2717,8 +2717,8 @@ optif0(int nr, int n, double *x, fcn_p fcn, void *state,
   /* Function Body */
   dfault(n, x, &wrk[nr], &fscale, &method, &iexp, &msg, &ndigit,
 	 &itnlim, &iagflg, &iahflg, &dlt, &gradtl, &stepmx, &steptl);
-  optdrv(nr, n, x, (fcn_p)fcn, (fcn_p)d1fcn, (d2fcn_p)d2fcn, state,
-	 &wrk[nr * 3], fscale, method, iexp, &msg, ndigit,
+  optdrv(nr, n, x, (fcn_p)fcn, (fcn_p)d1fcn_dum, (d2fcn_p)d2fcn_dum,
+	 state, &wrk[nr * 3], fscale, method, iexp, &msg, ndigit,
 	 itnlim, iagflg, iahflg, dlt, gradtl, stepmx, steptl,
 	 xpls, fpls, gpls, itrmcd, a, wrk, &wrk[nr], &wrk[nr * 2],
 	 &wrk[nr * 4], &wrk[nr * 5], &wrk[nr * 6], &wrk[nr * 7],
