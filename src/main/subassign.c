@@ -1402,11 +1402,11 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* new case in 1.7.0, one vector index for a list */
 	    if(isVectorList(x) && length(thesub) > 1) {
 		for(i = 0; i < len - 1; i++) {
-		    if(!isVectorList(x))
+		    if(LENGTH(x) == 0 || !isVectorList(x))
 			error("recursive indexing failed at level %d\n", i+1);
 		    off = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 				    length(x), /*partial ok*/TRUE, i);
-		    if(off < 0)
+		    if(off < 0 || off >= LENGTH(x))
 			error("no such index at level %d\n", i+1);
 		    xup = x;
 		    recursed = TRUE;

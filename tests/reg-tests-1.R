@@ -3221,4 +3221,15 @@ print(x)
 x1 <- ts(c(1:10, NA))
 y1 <- ts(rnorm(11))
 lm(y1 ~ x1)
+lm(y1 ~ x1 + I(x1^2)) # second term has two classes
 ## failed in 1.9.1
+
+
+## range checks missing in recursive assignments (PR#7196)
+l <- list()
+try(l[[2:3]] <- 1)
+l <- list(x=2)
+try(l[[2:3]] <- 1)
+l <- list(x=2, y=3)
+l[[2:3]] <- 1
+## first two segfaulted in 1.9.x

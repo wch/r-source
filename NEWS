@@ -534,6 +534,8 @@ BUG FIXES
 
     o	write.table() did not escape quotes in column names.  (PR#7171)
 
+    o	Range checks missing in recursive assignments using [[ ]]. (PR#7196)
+
 
 
 
