@@ -14,17 +14,18 @@ par(\dots, no.readonly = FALSE)
   Parameters can be set by specifying them as arguments to \code{par} in
   \code{tag = value} form, or by passing them as a list of tagged values.
 }
-\details{The former values are returned in an
-  invisible tagged list.  Such a list can be passed as an argument to
-  \code{par} to restore the parameter values.
-  Use \code{par(no.readonly = TRUE)} for the full list in that case.
+\details{
+  The former values are returned in an invisible tagged list.  Such a
+  list can be passed as an argument to \code{par} to restore the
+  parameter values.  Use \code{par(no.readonly = TRUE)} for the full
+  list in that case.
 
   Parameters are queried by giving vectors of character strings to
   \code{par}.  In this case, the values are returned in a tagged list.
 
   \code{par()} (no arguments) or \code{par(no.readonly=TRUE)} is used to
-  get \emph{all} the graphical parameters (as named list).
-  Their names are currently taken from the variable \code{.Pars}.
+  get \emph{all} the graphical parameters (as named list).  Their names
+  are currently taken from the variable \code{.Pars}.
   \code{.Pars.readonly} contains the names of the \code{par} arguments
   which are \emph{readonly}.
 
@@ -186,7 +187,7 @@ par(\dots, no.readonly = FALSE)
     axis labels and axis line.  The default is \code{c(3, 1, 0)}.}
   \item{mkh}{The height in inches of symbols to be drawn when the value
     of \code{pch} is an integer.
-%%--- FIXME ---
+    %%--- FIXME ---
     \bold{Completely ignored currently}.}
   \item{new}{logical, defaulting to \code{FALSE}.  If set to
     \code{TRUE}, the next high-level plotting command (actually
