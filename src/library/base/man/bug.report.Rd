@@ -7,7 +7,8 @@ bug.report(subject = "", ccaddress = getenv("USER"),
            file = "R.bug.report")
 }
 \arguments{
-  \item{subject}{Subject of the email}
+  \item{subject}{Subject of the email. Please do not use single quotes
+    (\code{'}) in the subject!}
   \item{ccaddress}{Optional email address for copies (default is current
     user).  Use \code{ccaddress = FALSE} for no copies.}
   \item{method}{Submission method.}
