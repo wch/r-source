@@ -216,8 +216,8 @@ clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
 	-$(MAKE) -C ../nmath/standalone -f Makefile.win distclean
-#	-$(MAKE) -C ../extra/libxml -f Makefile.win clean
 	-$(MAKE) -C ../modules -f Makefile.win clean
+	-$(MAKE) -C ../../tests -f Makefile.win clean
 
 distclean veryclean: clean
 	$(RM) -rf R.exp globalvar.h ../../bin ../../library ../../modules
@@ -255,11 +255,8 @@ cleanwin:
 check test: test-Specific pkgtests
 
 test-Specific:
-	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
-	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME)
-
-test-Reg:
-	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME) test-Reg
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win clean
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win RHOME=$(RHOME)
 
 
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
