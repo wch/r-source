@@ -45,7 +45,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
     if (!tmp) tmp = getenv("R_HOME");
-    for (n = 1; n < 1000; n++) {
+    for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
         sprintf(tm, "%s\\%s%d", tmp, tn, rand());
         if ((h = FindFirstFile(tm, &fd)) == INVALID_HANDLE_VALUE) {
