@@ -516,14 +516,14 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
     switch(TYPEOF(fdef)) {
     case CLOSXP:
         f_env = CLOENV(fdef);
-	mlist = findVar(s_dot_Methods, f_env);
+	PROTECT(mlist = findVar(s_dot_Methods, f_env)); nprotect++;
 	if(mlist == R_UnboundValue)
             mlist = R_NilValue;
 	prim_case = FALSE;
 	break;
     case SPECIALSXP: case BUILTINSXP:
         f_env = R_NilValue;
-	mlist = R_primitive_methods(fdef);
+	PROTECT(mlist = R_primitive_methods(fdef)); nprotect++;
 	prim_case = TRUE;
 	break;
     default: error("Invalid type for generic function \"%s\": \"%s\"",
