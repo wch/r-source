@@ -56,6 +56,11 @@ my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
 usage() if $opt_help;
 
+if($opt_debug) {
+    print "\nOption -d or --debug is accepted for compatibility with Unix.\n";
+    print "However, it does nothing.\n\n";
+}
+
 my $startdir = cwd();
 my $library;
 if($opt_library){
@@ -88,7 +93,7 @@ if((-e "$R_HOME/doc/html/R.css") && !(-e "$library/R.css")) {
     system("cp $R_HOME/doc/html/R.css $library/R.css");
 }
 
-## this is the main loop over all packages to be installed
+## this is the main loop over all packages/bundles to be installed
 my $pkg;
 foreach $pkg (@ARGV){
     # remove misguided trailing separator (/ or \)
@@ -126,7 +131,6 @@ foreach $pkg (@ARGV){
     my $pkgoutdir = "$library/$pkgname";
     die "  *** can't install into source directory ***\n" 
 	if $canonpkg eq $pkgoutdir;
-    rmtree($pkgoutdir) if (-d $pkgoutdir);
     $pkgdir = Win32::GetShortPathName($pkgdir) if $pkgdir =~ / /;
 
     my $makecmd = "pkg";
@@ -147,9 +151,9 @@ foreach $pkg (@ARGV){
 
     if($description->{"Depends"}) {
 	my $depends = $description->{"Depends"};
-	if($depends =~ /\bR *\(([^) ]+) *([^) ]+)\)/) { # regexp from check
+	if($depends =~ /\bR *\(([^\) ]+) *([^\) ]+)\)/) { # regexp from check
             my $op = $1;
-            my $ver = $2; 
+            my $ver = $2;
 	    my $Rversion = $ENV{'R_VERSION'};
 	    if ($op eq ">=" && $ver) {
 		die "This R is version $Rversion\n".
@@ -176,8 +180,39 @@ foreach $pkg (@ARGV){
     my $opt = "";
     my $dpkg = $library. "/" . $pkgname;
     if($opt_with_package_versions) {
-        $dpkg = $dpkg . "_" . $description->{"Version"};
+	if($is_bundle) {
+	    print "\n*** Installing a bundle with package versions is not supported ***\n\n";
+	} else {
+	    $dpkg = $dpkg . "_" . $description->{"Version"};
+	    $decpkgname = $pkgname . "_" . $description->{"Version"};
+	}
+    } else {
+	$decpkgname = $pkgname;
     }
+
+    ## Now we are ready to install
+    my $lockdir = $library . "/" . "00LOCK";
+    if(-d $lockdir || -f $lockdir) {
+	print "Failed to lock directory '${library}' for modifying\n";
+	print "Try removing '${lockdir}'\n";
+	exit 3;
+    }
+    mkpath($lockdir);
+    if(! -d $lockdir) {
+	print "Failed to lock directory '${library}' for modifying\n";
+	print "Permission problem?\n";
+	exit 3;
+    }
+    # if exists, move existing installation to $lockdir
+    if($is_bundle) {
+	foreach $ppkg (@bundlepkgs) {
+	    $dppkg = $library. "/" . $ppkg;
+	    system("mv $dppkg $lockdir") if -d $dppkg;
+	}
+    } else {
+	system("mv $dpkg $lockdir") if -d $dpkg;
+    }
+
     if(!$is_bundle) {
 	$opt = "DPKG=$dpkg";;
         if($opt_auto_zip || $opt_build) {
@@ -244,27 +279,27 @@ foreach $pkg (@ARGV){
 		chdir($currentDir);
 	    }
 	}
-    }
 
-    if($lazyload) {
-	my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
-	if($is_bundle) {
-	    foreach $ppkg (@bundlepkgs) {$cmd .= " lazyload-$ppkg";}
-	} else {
-	    $cmd .= " lazyload-$pkgname";
+	if($lazyload) {
+	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
+	    if($is_bundle) {
+		foreach $ppkg (@bundlepkgs) {$cmd .= " lazyload-$ppkg";}
+	    } else {
+		$cmd .= " lazyload-$pkgname";
+	    }
+	    system($cmd);
 	}
-	system($cmd);
-    }
 
-    if($lazydata) {
-	my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
-	if($is_bundle) {
-	    foreach $ppkg (@bundlepkgs) {$cmd .= " lazydata-$ppkg";}
-	} else {
-	    $cmd .= " lazydata-$pkgname";
+	if($lazydata) {
+	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
+	    if($is_bundle) {
+		foreach $ppkg (@bundlepkgs) {$cmd .= " lazydata-$ppkg";}
+	    } else {
+		$cmd .= " lazydata-$pkgname";
+	    }
+	    system($cmd);
 	}
-	system($cmd);
-    }
+    } # end of if($res)
 
     system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_clean && $is_bundle == 0);
 
@@ -279,7 +314,28 @@ foreach $pkg (@ARGV){
 	rmtree("R.INSTALL");
     }
     print("\n");
-    if(!$res) {print("\* DONE\n");} else {exit $res;}
+    if(!$res) {
+	print("\* DONE\n");
+    } else {
+	if($is_bundle) {
+	    foreach $ppkg (@bundlepkgs) { rmtree($library . $ppkg); }
+	} else {
+	    rmtree($dpkg);
+	}
+	# move back any previously installed packages
+	if($is_bundle) {
+	    foreach $ppkg (@bundlepkgs) {
+		$dppkg = $lockdir. "/" . $ppkg;
+		system("mv $dppkg $library") if -d $dppkg;
+	    }
+	} else {
+	    $dppkg = $lockdir . "/" . $decpkgname;
+	    system("mv $dppkg $library") if -d $dppkg;
+	}
+    }
+    # wipe out lockdir
+    rmtree($lockdir);
+    exit $res;
 }
 
 
@@ -304,17 +360,17 @@ Options:
   --lazy                use lazy loading
   --no-lazy             do not use lazy loading (current default)
   --lazy-data           use lazy loading for data
+  --fake		do minimal install for testing purposes
   -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
-      --docs=TYPE	type(s) of documentation to build and install
-      --with-package-versions
-                        allow for multiple versions of the same package
-      --use-zip-data	collect data files in zip archive
-      --use-zip-help	collect help and examples into zip archives
-      --use-zip		combine \`--use-zip-data\' and \`--use-zip-help\'
-      --auto-zip	select whether to zip automatically
-      --build		zip-up the installation. Implies --auto-zip
-      --fake		do minimal install for testing purposes
+  --docs=TYPE	        type(s) of documentation to build and install
+  --with-package-versions
+			allow for multiple versions of the same package
+  --use-zip-data	collect data files in zip archive
+  --use-zip-help	collect help and examples into zip archives
+  --use-zip		combine \`--use-zip-data\' and \`--use-zip-help\'
+  --auto-zip	        select whether to zip automatically
+  --build		zip-up the installation. Implies --auto-zip
 
 TYPE can be "none" or "normal" or "chm" (the default) or "all"
 

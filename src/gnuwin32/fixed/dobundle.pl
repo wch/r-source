@@ -14,6 +14,8 @@ while(<bundledesc>) {
 }
 close bundledesc;
 
+my $res;
+
 foreach $pkg (@pkgs) {
     print "\n---- Building package $pkg from bundle $bundle -----";
     open pkgdesc, "> $srcdir/$bundle/$pkg/DESCRIPTION" 
@@ -34,5 +36,6 @@ foreach $pkg (@pkgs) {
     close pkgdesc;
     $cmd = "make PKGDIR=$srcdir/$bundle RLIB=$destdir pkg-$pkg";
 #    print "$cmd\n";
-    system($cmd);
+    $res = system($cmd);
+    if($res) { exit 3; }
 }

@@ -20,8 +20,8 @@ getIdentification().
 
 Added function getWindowsHandle().
 
-The windows() device has new 'bg' argument to set the background colour
-(which still defaults to "transparent").
+The windows() device has a new 'bg' argument to set the background
+colour (which still defaults to "transparent").
 
 C headers files are now installed into R_HOME/include rather than
 R_HOME/src/include (as on Unix).
@@ -34,6 +34,13 @@ several for-loops fail.
 
 R BATCH|SHLIB|INSTALL|REMOVE no longer work: use Rcmd or R CMD (as
 required under Unix) instead.
+
+Rcmd INSTALL now does a `safe installation': it moves away any existing 
+installation of the packages, and moves them back if it fails.  In any case,
+a failed installation is removed.
+
+Installation of a bundle now fails as soon as installing any component
+package fails.
 
 
 
