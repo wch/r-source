@@ -13,7 +13,7 @@
 
 /*----------- DEBUGGING -------------*/
 /* #define DEBUG
-/* rather use  make CFLAGS='-DDEBUG -g -I/usr/local/include -I../include'
+ * rather use  make CFLAGS='-DDEBUG -g -I/usr/local/include -I../include'
 
  * -- Feb.1, 1998 (R 0.62 alpha); M.Maechler:  still have
  - INFINITE loop \

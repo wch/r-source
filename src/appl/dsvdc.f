@@ -103,7 +103,7 @@ c     internal variables
 c
       integer i,iter,j,jobu,k,kase,kk,l,ll,lls,lm1,lp1,ls,lu,m,maxit,
      *        mm,mm1,mp1,nct,nctp1,ncu,nrt,nrtp1
-      double precision ddot,t,r
+      double precision ddot,t
       double precision b,c,cs,el,emm1,f,g,dnrm2,scale,shift,sl,sm,sn,
      *                 smm1,t1,test,ztest
       logical wantu,wantv

@@ -32,7 +32,7 @@
 
 double dnchisq(double x, double df, double lambda)
 {
-	double dens, i, lambda2, psum, sum, term, weight;
+	double dens, i, lambda2, psum, sum, weight;
 	static int maxiter = 100;
 	static double eps = 1.e-14;
 

@@ -248,6 +248,7 @@ c
       tiny = (tiny/eps)*100.0
       huge = 1.0d0/tiny
 c
+      dmach = 0.0d0
       if (job .eq. 1) dmach = eps
       if (job .eq. 2) dmach = tiny
       if (job .eq. 3) dmach = huge

@@ -106,8 +106,7 @@ c
 c
 c     internal variables.
 c
-      integer info,j,jj,kk,m
-      double precision t
+      integer info,j,jj,kk
 c
 c     reduce x.
 c

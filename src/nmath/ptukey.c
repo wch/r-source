@@ -311,7 +311,7 @@ double ptukey(double q, double rr, double cc, double df)
     };
     double ans, f2, f21, f2lf, ff4, otsum, qsqz, rotsum,
 	t1, twa1, ulen, wprb;
-    int i, ii, it, j, jj;
+    int i, j, jj;
 
 #ifdef IEEE_754
     if (ISNAN(q) || ISNAN(rr) || ISNAN(cc) || ISNAN(df)) {
@@ -427,6 +427,5 @@ double ptukey(double q, double rr, double cc, double df)
   L400:
     if (ans > eps)
 	ans = 1.0;
-  L900:
     return ans;
 }
