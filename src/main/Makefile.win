@@ -13,6 +13,7 @@ gram.c: ;
 
 saveload-CFLAGS=-I../extra/xdr
 connections-CFLAGS=-I../extra/zlib
+dounzip-CFLAGS=-I../extra/zlib
 
 ../gnuwin32/libmain.a: $(OBJS)
 
