@@ -42,7 +42,8 @@ parse.description <- function(desc)
  \item{desc}{A character vector with each element containing one line of
    a package description file.}
  \item{lib,instlib}{A character string giving the library directory where to
-   install the packages.}
+     install the packages.}
+}
 \description{
     These functions can be used to automatically compare the version
     numbers of installed packages with the newest available version on
@@ -55,7 +56,7 @@ parse.description <- function(desc)
     names, library paths and version numbers.
     \code{CRAN.packages()} returns a similar list, but corresponding to
     packages currently available in the contrib section of CRAN, the
-    comprehensive R arcvhive network. The current list of packages is
+    comprehensive R archive network. The current list of packages is
     downloaded over the internet (or copied from a local CRAN
     mirror). Both functions use
     \code{parse.description()} for parsing the description files.
