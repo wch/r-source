@@ -55,12 +55,6 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 6 Sep 1999 11:04:03 +0200
-* PR# 308 *
-Subject:  R abnormal exit when plotting lm 
-From: Ulf Mehlig <umehlig@uni-bremen.de>
-Date: Tue, 2 Nov 1999 22:18:23 +0100
---Problem with X using plot.lm.
---Has been traced to strange char metrics of " " in URW fonts by PD.
 * PR# 365 *
 Subject: plot math - segfault and "frac", "^" bug(s)..
 From: Martin Maechler <maechler@stat.math.ethz.ch>
