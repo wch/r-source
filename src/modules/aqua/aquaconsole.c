@@ -344,14 +344,14 @@ void Raqua_StartConsole(void)
         SetRect(&OutFrame,0,0,WinFrame.right,WinFrame.bottom-110);
         SetRect(&InFrame,0,WinFrame.bottom-100,WinFrame.right,WinFrame.bottom);
                 
-        frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask; 
+        frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNMonostyledTextMask; 
         frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
 		
 
         err = TXNNewObject(NULL, ConsoleWindow, &OutFrame, frameOptions, kTXNTextEditStyleFrameType,
                             kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleOutObject,
                             &OutframeID, 0);
-        frameOptions = kTXNShowWindowMask | kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
+        frameOptions = kTXNMonostyledTextMask|kTXNShowWindowMask | kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
 		
         err = TXNNewObject(NULL, ConsoleWindow, &InFrame, frameOptions, kTXNTextEditStyleFrameType,
                             kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleInObject,
@@ -1370,7 +1370,7 @@ int NewEditWindow(char *fileName)
     FILE *fp;
                           
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
-    frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask;
+    frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask|kTXNMonostyledTextMask;
 
     SetRect(&WinBounds, 400, 400, 400 +400, 400 + 400 ) ;
     
@@ -1551,7 +1551,7 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     int flen,i,j;
                           
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
-    frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
+    frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask|kTXNMonostyledTextMask;
 
     SetRect(&WinBounds, 400, 400, 400 +400, 400 + 400 ) ;
     
