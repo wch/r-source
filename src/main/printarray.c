@@ -76,6 +76,12 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
     }
     jmin = 0;
     jmax = 0;
+    if (c == 0) {
+	for (i = 0; i < r; i++)
+	    MatrixRowLabel(rl, i, rlabw, lbloff);
+	Rprintf("\n");
+	return;
+    }
     while (jmin < c) {
 	width = rlabw;
 	do {
@@ -145,6 +151,12 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
     }
     jmin = 0;
     jmax = 0;
+    if (c == 0) {
+	for (i = 0; i < r; i++)
+	    MatrixRowLabel(rl, i, rlabw, lbloff);
+	Rprintf("\n");
+	return;
+    }
     while (jmin < c) {
 	width = rlabw;
 	do {
@@ -221,6 +233,12 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
     }
     jmin = 0;
     jmax = 0;
+    if (c == 0) {
+	for (i = 0; i < r; i++)
+	    MatrixRowLabel(rl, i, rlabw, lbloff);
+	Rprintf("\n");
+	return;
+    }
     while (jmin < c) {
 	width = rlabw;
 	do {
@@ -311,6 +329,12 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 
     jmin = 0;
     jmax = 0;
+    if (c == 0) {
+	for (i = 0; i < r; i++)
+	    MatrixRowLabel(rl, i, rlabw, lbloff);
+	Rprintf("\n");
+	return;
+    }
     while (jmin < c) {
 	width = rlabw;
 	do {
@@ -387,6 +411,12 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
     }
     jmin = 0;
     jmax = 0;
+    if (c == 0) {
+	for (i = 0; i < r; i++)
+	    MatrixRowLabel(rl, i, rlabw, lbloff);
+	Rprintf("\n");
+	return;
+    }
     while (jmin < c) {
 	width = rlabw;
 	do {
@@ -435,6 +465,10 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 	error("too few row labels");
     if ((cl!=R_NilValue) && (c>length(cl)))
 	error("too few column labels");
+    if (r == 0 && c == 0) {
+	Rprintf("<0 x 0 matrix>\n");
+	return;
+    }
     switch (TYPEOF(x)) {
     case LGLSXP:
 	printLogicalMatrix(x, offset, r, c, rl, cl, rn, cn);
