@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.185 $ ';
+my $revision = ' $Revision: 1.186 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -321,7 +321,7 @@ foreach my $pkg (@ARGV) {
 		    @lines = grep(/$warn_re/, @lines);
 		    ## Ignore install time readLines() warnings about
 		    ## files with incomplete final lines.  Most of these
-		    ## come from .installPackageIndices(), and should be
+		    ## come from .install_package_indices(), and should be
 		    ## safe to ignore ...
 		    $warn_re = "Warning: incomplete final line " .
 			"found by readLines";
@@ -412,22 +412,18 @@ sub check_pkg {
     ## Build list of exclude patterns.
 
     my @exclude_patterns = R::Utils::get_exclude_patterns();
-    ## <FIXME>
-    ## This is not right for bundles where the build ignore pattern
-    ## file is in the top-level bundle dir.  We could fix this by
-    ## using '../.Rbuildignore' instead, but then e.g.
-    ##   find(\&find_wrong_perms_A, ".");
-    ##   find(\&find_wrong_perms_B, ".");
-    ## are wrong because the exclude patterns are relative to '..'.
-    if(-f "./.Rbuildignore") {
-	open(RBUILDIGNORE, "./.Rbuildignore");
+    my $exclude_file = ".Rbuildignore";
+    ## This is a bit tricky for bundles where the build ignore pattern
+    ## file is in the top-level bundle dir.
+    $exclude_file = &file_path(dirname($pkgdir), $exclude_file);
+    if(-f $exclude_file) {
+	open(RBUILDIGNORE, "< $exclude_file");
 	while(<RBUILDIGNORE>) {
-	    chop;
+	    chop;	    
 	    push(@exclude_patterns, $_) if $_;
 	}
 	close(RBUILDIGNORE);
     }
-    ## </FIXME>
 
     ## Check for portable file names.
 
@@ -464,7 +460,7 @@ sub check_pkg {
     my @bad_files = ();
     sub find_wrong_names {
 	my $file_path = $File::Find::name;
-	$file_path =~ s/^[^\/]*\///;
+	$file_path =~ s/^\.[^\/]*\///;
 	foreach my $p (@exclude_patterns) {
 	    if($WINDOWS) {
 		## Argh: Windows is case-honoring but not
@@ -487,7 +483,14 @@ sub check_pkg {
 		     $file_name));
 	}
     }
-    find(\&find_wrong_names, ".");
+    if($in_bundle) {
+	chdir(dirname($pkgdir)); # more portable than '..'?
+	find(\&find_wrong_names, $pkgname);
+	chdir($pkgname);
+    }
+    else {
+	find(\&find_wrong_names, ".");
+    }
     if(scalar(@bad_files) > 0) {
 	$log->error();
 	$log->print("Found the following files with " .
@@ -524,7 +527,7 @@ sub check_pkg {
 	## Phase A.  Directories at least 700, files at least 400.
 	sub find_wrong_perms_A {
 	    my $filename = $File::Find::name;
-	    $filename =~ s/^[^\/]*\///;
+	    $filename =~ s/^\.[^\/]*\///;
 	    foreach my $p (@exclude_patterns) {
 		## Unix only, so no special casing for Windows.
 		return 0 if($filename =~ /$p/);
@@ -536,7 +539,14 @@ sub check_pkg {
 		push(@bad_files, $filename);
 	    }
 	}
-        find(\&find_wrong_perms_A, ".");
+	if($in_bundle) {
+	    chdir(dirname($pkgdir)); # more portable than '..'?
+	    find(\&find_wrong_perms_A, $pkgname);
+	    chdir($pkgname);
+	}
+	else {
+	    find(\&find_wrong_perms_A, ".");
+	}
         if(scalar(@bad_files) > 0) {
 	    $log->error();
 	    $log->print("Found the following files with " .
@@ -586,8 +596,8 @@ sub check_pkg {
     ## Check DESCRIPTION meta-information.
 
     if($in_bundle) {		# join DESCRIPTION and DESCRIPTION.in
+	$log->checking("for file 'DESCRIPTION.in'");
         if(-r "DESCRIPTION.in") {
-	    $log->checking("for file 'DESCRIPTION.in'");
 	    my $description_in = new R::Dcf("DESCRIPTION.in");
 	    foreach my $key (keys(%$description)) {
 		$description_in->{$key} = $description->{$key};
@@ -806,13 +816,14 @@ sub check_pkg {
 	## package vignette must require its own package, which otoh is
 	## not required in the package DESCRIPTION file.
 	## Namespace imports must really be in Depends.
-	my $Rcmd = "tools:::.checkPackageDepends(\"${pkgname}\")\n";
+	my $Rcmd = "tools:::.check_package_depends(\"${pkgname}\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    ## <FIXME>
 	    ## These should really all be errors ...
+	    ## Change this for 2.1 at least, once stubs are fully gone.
 	    if(grep(/^Packages required but not available:/, @out)) {
 		$log->error();
 		$log->print(join("\n", @out) . "\n");
@@ -855,7 +866,7 @@ sub check_pkg {
 	}
 	else {
 	    my $dir = "demo";
-	    my $Rcmd = "tools:::.checkDemoIndex(\"$dir\")\n";
+	    my $Rcmd = "tools:::.check_demo_index(\"$dir\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
@@ -870,7 +881,7 @@ sub check_pkg {
        && &list_files_with_type(&file_path("inst", "doc"),
 				"vignette")) {
 	my $dir = &file_path("inst", "doc");
-	my $Rcmd = "tools:::.checkVignetteIndex(\"$dir\")\n";
+	my $Rcmd = "tools:::.check_vignette_index(\"$dir\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
@@ -1076,9 +1087,10 @@ sub check_pkg {
 	$log->checking("for replacement functions with final arg not " .
 		       "named 'value'");
 
-	## <FIXME>
-	##   @msg_replace_funs
-	## </FIXME>
+	my @msg_replace_funs =
+	  ("In R, the argument of a replacement function",
+	   "which corresponds to the right hand side",
+	   "must be named 'value'.");
 
 	my $Rcmd;
 	if($opt_install) {
@@ -1099,6 +1111,7 @@ sub check_pkg {
 	    $log->warning();
 	    ## </NOTE>
 	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_replace_funs));
 	}
 	else {
 	    $log->result("OK");
@@ -1149,7 +1162,7 @@ sub check_pkg {
 
 	@Rd_files = sort(@Rd_files);
 
-	## <FIXME>
+	## <NOTE>
 	## The code below tries to deal with common problems in Rd
 	## files, such as unbalanced braces, missing mandatory tags or
 	## duplicated tags which must be unique, etc.  This is tricky:
@@ -1158,7 +1171,7 @@ sub check_pkg {
 	## must be unique).  So at least in theory, for Rd files which
 	## use preprocessor conditionals, one would need to repeat the
 	## tests for at least all supported OS types.  Argh ...
-	## </FIXME>
+	## </NOTE>
 
 	my @mandatory_tags = qw(name alias title description keyword);
 	my @unique_tags = qw(name title description usage arguments
@@ -1377,10 +1390,6 @@ sub check_pkg {
     if($opt_codoc && (-d "man")) {
 	$log->checking("for code/documentation mismatches");
 
-	## <FIXME>
-	##   @msg_codoc
-	## </FIXME>
-
 	my $any = 0;
 
 	## Check for code/documentation mismatches in functions.
@@ -1395,18 +1404,12 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
 
-	    ## <FIXME>
-	    ## With the current heuristics codoc() may throw an error
-	    ## even though the documentation is valid.  Change this when
-	    ## we know what must be valid R code, similar to the above
-	    ## for undoc().
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
 		$any++;
 		$log->warning();
 		$log->print(join("\n", @out) . "\n");
 	    }
-	    ## </FIXME>
 	}
 
 	## Check for code/documentation mismatches in data sets.
@@ -1446,9 +1449,10 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("Rd \\usage sections");
 
-	## <FIXME>
-	##   @msg_doc_files
-	## </FIXME>
+	my @msg_doc_files =
+	  ("Functions with \\usage entries",
+	   "need to have the appropriate \\alias entries,",
+	   "and all their arguments documented.");
 
 	my $Rcmd;
 	if($opt_install) {
@@ -1464,6 +1468,8 @@ sub check_pkg {
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_doc_files));
+	    $log->print(wrap("", "", @msg_writing_Rd));
 	}
 	else {
 	    $log->result("OK");
@@ -1699,10 +1705,10 @@ sub check_pkg {
 	    $pdf_file =~ s/\.[[:alpha:]]+$/.pdf/;
 	    push(@bad_vignettes, $file) unless(-f $pdf_file);
 	}
-        ## A base package may not have PDFs to avoid blowing
-        ## out the ditribution size
-        ## NOTE it is assumed that base packages can be
-        ## woven (i.e., that they only contain "standard" LaTeX)
+        ## A base package may not have PDFs to avoid blowing out the
+	## distribution size.  *Note* that it is assumed that base
+	## packages can be woven (i.e., that they only contain
+	## "standard" LaTeX).
 	if(!$is_base_pkg && scalar(@bad_vignettes) > 0) {
 	    $log->warning();
 	    $any++;
@@ -1712,11 +1718,10 @@ sub check_pkg {
 
 	## Can we run the code in the vignettes?
 	if($opt_vignettes) {
-	    ## <FIXME>
 	    ## Should checking the vignettes assume the system default
 	    ## packages, or just base?
 	    my $Rcmd = "library(tools)\n";
-            ## A base package does not get installed during check
+            ## A base package does not get installed during check.
 	    if(!$is_base_pkg && $opt_install) {
 		$Rcmd .= "checkVignettes(package = \"${pkgname}\", " .
 		         "lib.loc = \"${library}\", " .
@@ -1726,7 +1731,6 @@ sub check_pkg {
 		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\")\n";
 	    }
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	    ## </FIXME>
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
 	    @out = grep(!/^[[:alnum:]]*\>/, @out);
 	    if(scalar(@out) > 0) {
