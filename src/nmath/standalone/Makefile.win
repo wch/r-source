@@ -9,7 +9,7 @@ else
  DLLFLAGS=-s 
 endif
 
-all: cpy
+all:
 	$(MAKE) -f Makefile.win cpy
 	$(MAKE) -f Makefile.win makeMakedeps
 	$(MAKE) -f Makefile.win Rmath.a Rmath.dll libRmath.a
@@ -63,10 +63,9 @@ SOURCES_NMATH = \
 	wilcox.c \
 	signrank.c
 DEPENDS = $(SOURCES_NMATH:.c=.d)
-OBJECTS = sunif.o $(SOURCES_NMATH:.c=.o)
 
 Rmath.dll: Rmath.a
-Rmath.a: $(OBJECTS) 
+Rmath.a: sunif.o $(SOURCES_NMATH:.c=.o)
 
 # Dependencies
 makeMakedeps: $(DEPENDS)
