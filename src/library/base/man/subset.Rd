@@ -12,7 +12,7 @@ subset(x, \dots)
 
 \method{subset}{default}(x, subset, \dots)
 
-\method{subset}{matrix}(x, subset, drop = FALSE, \dots)
+\method{subset}{matrix}(x, subset, select, drop = FALSE, \dots)
 
 \method{subset}{data.frame}(x, subset, select, drop = FALSE, \dots)
 }
@@ -29,7 +29,7 @@ subset(x, \dots)
   This is a generic function, with methods supplied for matrices, data
   frames and vectors (including lists).  Packages and users can add
   further methods.
-  
+
   For ordinary vectors, the result is simply
   \code{x[subset & !is.na(subset)]}.
 
