@@ -1290,7 +1290,8 @@ SEXP do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP path, ans;
-    int res, show;
+    int res, show, recursive;
+    char *p, dir[PATH_MAX];
 
     checkArity(op, args);
     path = CAR(args);
@@ -1298,9 +1299,21 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid path argument");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
-    res = mkdir(R_ExpandFileName(CHAR(STRING_ELT(path, 0))), 0777);
+    recursive = asLogical(CADDR(args));
+    if(recursive == NA_LOGICAL) recursive = 0;
+    strcpy(dir, R_ExpandFileName(CHAR(STRING_ELT(path, 0))));
+    if(recursive) {
+	p = dir;
+	while((p = strchr(p+1, '/'))) {
+	    *p = '\0';
+	    res = mkdir(dir, 0777);
+	    if(res && errno != EEXIST) goto end;
+	    *p = '/';
+	}
+    }    
+     res = mkdir(dir, 0777);
     if(show && res && errno == EEXIST)
-	warning("'%s' already exists", CHAR(STRING_ELT(path, 0)));
+	warning("'%s' already exists", dir);
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = (res==0);
     UNPROTECT(1);
@@ -1312,7 +1325,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  path, ans;
     char *p, dir[MAX_PATH];
-    int res, show;
+    int res, show, recursive;
 
     checkArity(op, args);
     path = CAR(args);
@@ -1320,13 +1333,25 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid path argument");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
-    strcpy(dir, CHAR(STRING_ELT(path, 0)));
+    recursive = asLogical(CADDR(args));
+    if(recursive == NA_LOGICAL) recursive = 0;
+    strcpy(dir, R_ExpandFileName(CHAR(STRING_ELT(path, 0))));
     /* need DOS paths on Win 9x */
     for(p = dir; *p != '\0'; p++)
 	if(*p == '/') *p = '\\';
-    res = mkdir(R_ExpandFileName(dir));
+    if(recursive) {
+	p = dir;
+	while((p = strchr(p+1, '\\'))) {
+	    *p = '\0';
+	    res = mkdir(dir);
+	    if(res && errno != EEXIST) goto end;
+	    *p = '\\';
+	}
+    }    
+    res = mkdir(dir);
     if(show && res && errno == EEXIST)
 	warning("'%s' already exists", dir);
+end:
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = (res==0);
     UNPROTECT(1);

@@ -10,7 +10,7 @@ file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = FALSE)
 file.symlink(from, to)
-dir.create(path, showWarnings = TRUE)
+dir.create(path, showWarnings = TRUE, recursive = FALSE)
 }
 \alias{file.append}
 \alias{file.copy}
@@ -26,6 +26,8 @@ dir.create(path, showWarnings = TRUE)
   \item{path}{a character vector containing a single path name.}
   \item{overwrite}{logical; should the destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
+  \item{recursive}{logical: should elements of the path other than the
+    last be created?  If true, like Unix's \code{mkdir -p}.}
 }
 \description{
   These functions provide a low-level interface to the computer's
@@ -65,7 +67,8 @@ dir.create(path, showWarnings = TRUE)
   which support them.  The \code{to} argument can specify a single
   existing directory.
   
-  \code{dir.create} creates the last element of the path.
+  \code{dir.create} creates the last element of the path, unless
+  \code{recursive = TRUE}.
 }
 \value{
   \code{dir.create} and \code{file.rename} return a logical,

@@ -38,11 +38,14 @@ NEW FEATURES
     o	ecdf() now has jumps of the correct size (a multiple of 1/n)
 	if there are ties.  (wished by PR#7292).
 
-    o   Printing of arrays now honours the 'right' argument also if there
+    o   Printing of arrays now honours the 'right' argument if there
         are more than two dimensions.
 
-    o   Tabular printing of numbers now has headers right-justified, as they
-        were prior to version 1.7.0 (spotted by Rob Baer).
+    o	Tabular printing of numbers now has headers right-justified, as
+        they were prior to version 1.7.0 (spotted by Rob Baer).
+
+    o   dir.create() has a new argument 'recursive' serving the same
+	purpose as Unix's mkdir -p.
 
 
 DOCUMENTATION
