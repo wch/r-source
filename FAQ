@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-20, 2002-08-31
+Version 1.5-21, 2002-09-12
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -345,7 +345,7 @@ not on other platforms).  The Windows version of R was created by Robert
 Gentleman, and is now being developed and maintained by Duncan Murdoch
 <murdoch@stats.uwo.ca> and Brian D. Ripley <Brian.Ripley@r-project.org>.
 
-   For most installations the installer `rw1060.exe' will be the easiest
+   For most installations the installer `SetupR.exe' will be the easiest
 tool to use.
 
    See the "R for Windows FAQ"
@@ -1896,6 +1896,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *pls*
      Univariate Partial Least Squares Regression.
+
+*runStats*
+     Running median and mean.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
