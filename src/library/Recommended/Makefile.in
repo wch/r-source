@@ -38,7 +38,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 ## RG says that with FreeBSD Make calling INSTALL does not work without
 ## explicitly passing down MAKE ('unrecognized option -w ...').  But
 ## what is really going on?
-	MAKE=$(MAKE) $(R) CMD INSTALL -l $(top_builddir)/library $<
+	MAKE="$(MAKE)" $(R) CMD INSTALL -l $(top_builddir)/library $<
 ## </FIXME>
 	@touch $@
 
