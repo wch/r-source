@@ -51,7 +51,9 @@ pmin(\dots, na.rm=FALSE)
   \code{\link{dim}}) are transferred from the first argument (if applicable).
 }
 \seealso{
-  \code{\link{range}}.
+  \code{\link{range}} (\emph{both} min and max) and
+  \code{\link{which.min}} (\code{which.max}) for the \emph{arg min},
+  i.e., the location where an extreme value occurs.
 }
 \examples{
 min(5:1,pi)
