@@ -529,9 +529,6 @@ extern Rboolean R_no_underline		INI_as(FALSE);
 /* smallest decimal exponent, needed in format.c, set in Init_R_Machine */
 extern int R_dec_min_exponent		INI_as(-308);
 
-/* should .First be loaded? */
-extern Rboolean R_LoadDotFirst		INI_as(TRUE);
-
 #ifdef __MAIN__
 # undef extern
 # undef LibExtern

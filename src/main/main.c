@@ -544,7 +544,7 @@ void setup_Rmainloop(void)
        At this point we try to invoke the .First Function.
        If there is an error we continue. */
 
-    doneit = !R_LoadDotFirst;
+    doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);
@@ -563,7 +563,7 @@ void setup_Rmainloop(void)
     /* Try to invoke the .First.sys function, which loads the default packages.
        If there is an error we continue. */
 
-    doneit = !R_LoadDotFirst;
+    doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);
