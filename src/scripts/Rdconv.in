@@ -27,7 +27,7 @@ use Getopt::Long;
 use R::Rdconv;
 use R::Utils;
 
-my $revision = ' $Revision: 1.18 $ ';
+my $revision = ' $Revision: 1.19 $ ';
 my $version;
 my $name;
 
@@ -76,7 +76,7 @@ $OSdir = $opt_os if $opt_os;
 $out = 0;
 if(defined $opt_o) {
     if(length($opt_o)) { $out = $opt_o; }
-    else { $out = $ARGV[0]; $out =~ s/.Rd$//; }
+    else { $out = $ARGV[0]; $out =~ s/.Rd$//i; }
 }
 $out = 0 if $out eq "-";
 

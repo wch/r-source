@@ -574,6 +574,9 @@ BUG FIXES
     o	NA || x , NA && y (etc) do not give errors anymore, but work as
 	the "|" and "&" operators and as documented (PR#749).
 
+    o   R CMD Rdconv handles now .Rd in all cases as input file
+        extension correctly. 
+
 
 
 
