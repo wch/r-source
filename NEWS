@@ -515,6 +515,15 @@ PACKAGE INSTALLATION CHANGES
 	If the repository provides the information, install.packages()
 	will now accept the name of a package in a bundle.
 
+    o	The option used is now getOption("repos") not getOption("CRAN")
+	and it is initially set to a dummy value.  Its value can be a
+	character vector (preferably named) giving one or several
+	repositories.
+
+	A new function chooseCRANmirror() will select a CRAN mirror.
+	This is called automatically if the contrib.url() encounters
+	the initial dummy value of getOption("repos")
+
     o	New function new.packages() to report uninstalled packages
 	available at the requested repositories.  This also reports
 	incomplete bundles.
@@ -534,7 +543,8 @@ PACKAGE INSTALLATION CHANGES
 	is complete.
 
     o	packageStatus() is now built on top of *.packages, and gains a
-	'method' argument.
+	'method' argument.  It defaults to the same repositories as
+	the other tools, those specified by getOption("repos").
 
 
 BUG FIXES

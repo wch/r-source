@@ -1,6 +1,6 @@
 install.packages <- function(pkgs, lib, repos = CRAN,
                              contriburl = contrib.url(repos, type),
-                             CRAN = getOption("CRAN"),
+                             CRAN = getOption("repos"),
                              method, available = NULL, destdir = NULL,
                              installWithVers = FALSE, dependencies = FALSE,
                              type)
@@ -121,7 +121,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
 download.packages <- function(pkgs, destdir, available = NULL,
                               repos = CRAN,
                               contriburl = contrib.url(repos, type),
-                              CRAN = getOption("CRAN"),
+                              CRAN = getOption("repos"),
                               method, type)
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
@@ -166,12 +166,43 @@ download.packages <- function(pkgs, destdir, available = NULL,
     retval
 }
 
+chooseCRANmirror <- function(graphics = TRUE)
+{
+    m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
+    if(graphics && capabilities("tcltk") && capabilities("X11")) {
+        tcltk:::CRANmirrorWidget(m)
+    } else {
+        res <- menu(m[,1], , "CRAN mirror")
+        if(res > 0) {
+            repos <- getOption("repos")
+            URL <- m[res, "URL"]
+            repos["CRAN"] <- gsub("/$", "", m[res, "URL"])
+            options(repos = repos)
+        }
+    }
+}
+
 contrib.url <- function(repos, type = c("source", "mac.binary"))
 {
     type <- if(missing(type)) "source" else match.arg(type)
-    switch(type,
+
+    if("@CRAN@" %in% repos && interactive()) {
+        cat(gettext("--- Please select a CRAN mirror for use in this session ---\n"))
+        chooseCRANmirror()
+        m <- match("@CRAN@", repos)
+        nm <- names(repos)
+        repos[m] <- getOption("repos")["CRAN"]
+        if(is.null(nm)) nm <- rep("", length(repos))
+        nm[m] <- "CRAN"
+        names(repos) <- nm
+    }
+    if("@CRAN@" %in% repos) stop("trying to use CRAN without setting a mirror")
+
+    res <- switch(type,
            source = paste(gsub("/$", "", repos), "/src/contrib", sep = ""),
            mac.binary = paste(gsub("/$", "", repos), "/bin/macosx/",
            version$major, ".", substr(version$minor, 1, 1), sep = "")
            )
+    names(res) <- names(repos)
+    res
 }

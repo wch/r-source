@@ -26,7 +26,7 @@ options(show.coef.Pvalues = TRUE)
 options(keep.source = interactive())
 options(warn = 0)
 options(help.try.all.packages = FALSE)
-options(CRAN = "http://cran.r-project.org")
+options(repos = c(CRAN="@CRAN@"))
 options(BIOC = "http://www.bioconductor.org")
 
 options(timeout = 60)

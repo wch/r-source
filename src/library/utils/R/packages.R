@@ -1,5 +1,5 @@
 available.packages <-
-    function(contriburl = contrib.url(getOption("CRAN")), method)
+    function(contriburl = contrib.url(getOption("repos")), method)
 {
     .checkRversion <- function(x) {
         if(is.na(xx <- x["Depends"])) return(TRUE)
@@ -50,7 +50,7 @@ available.packages <-
     res
 }
 
-CRAN.packages <- function(CRAN = getOption("CRAN"), method,
+CRAN.packages <- function(CRAN = getOption("repos"), method,
                           contriburl = contrib.url(CRAN))
     available.packages(contriburl = contriburl, method = method)
 
@@ -66,7 +66,7 @@ simplifyRepos <- function(repos, type)
 
 update.packages <- function(lib.loc = NULL, repos = CRAN,
                             contriburl = contrib.url(repos, type),
-                            CRAN = getOption("CRAN"),
+                            CRAN = getOption("repos"),
                             method, instlib = NULL, ask = TRUE,
                             available = NULL, destdir = NULL,
 			    installWithVers = FALSE,
@@ -124,7 +124,7 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
 
 old.packages <- function(lib.loc = NULL, repos = CRAN,
                          contriburl = contrib.url(repos),
-                         CRAN = getOption("CRAN"),
+                         CRAN = getOption("repos"),
                          method, available = NULL, checkBuilt = FALSE)
 {
     if(is.null(lib.loc))
@@ -189,7 +189,7 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
 
 new.packages <- function(lib.loc = NULL, repos = CRAN,
                          contriburl = contrib.url(repos),
-                         CRAN = getOption("CRAN"),
+                         CRAN = getOption("repos"),
                          method, available = NULL)
 {
     if(is.null(lib.loc)) lib.loc <- .libPaths()

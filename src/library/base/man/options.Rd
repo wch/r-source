@@ -212,9 +212,12 @@ getOption(x)
       \code{\link{X11}} devices.}
 #endif
 
-    \item{\code{CRAN}:}{The URL of the preferred CRAN node for use by
+    \item{\code{repos}:}{The URLs of the repositories for use by
       \code{\link{update.packages}}.  Defaults to
-      \url{http://cran.r-project.org}.}
+      \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
+      prompt for a CRAN mirror.  To avoid this, use something like
+      \code{options(repos=c(CRAN="http://my.local.cran/R"))}.
+    }
 
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods

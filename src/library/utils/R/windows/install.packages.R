@@ -1,6 +1,6 @@
 install.packages <- function(pkgs, lib, repos = CRAN,
                              contriburl = contrib.url(repos, type),
-                             CRAN = getOption("CRAN"),
+                             CRAN = getOption("repos"),
                              method, available = NULL, destdir = NULL,
                              installWithVers = FALSE, dependencies = FALSE,
                              type)
@@ -125,7 +125,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
 
 .install.binary <- function(pkgs, lib, repos = CRAN,
                              contriburl = contrib.url(repos),
-                             CRAN = getOption("CRAN"),
+                             CRAN = getOption("repos"),
                              method, available = NULL, destdir = NULL,
                              installWithVers = FALSE, dependencies = FALSE)
 {
@@ -315,7 +315,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
 download.packages <- function(pkgs, destdir, available = NULL,
                               repos = CRAN,
                               contriburl = contrib.url(repos, type),
-                              CRAN = getOption("CRAN"),
+                              CRAN = getOption("repos"),
                               method, type)
 {
     if(missing(type)) type <- "binary"
@@ -408,20 +408,20 @@ menuRepositories <- function()
         res <- match(res, a[[1]])
         repos <- a[["URL"]]
         names(repos) <- row.names(a)
-        CRAN <- getOption("CRAN")["CRAN"]
+        CRAN <- getOption("repos")["CRAN"]
         if(!is.na(CRAN)) repos["CRAN"] <- CRAN
-        options(CRAN=repos[res])
+        options(repos=repos[res])
     }
 }
 
-chooseCRANmirror <- function()
+chooseCRANmirror <- function(graphics = TRUE)
 {
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
     URL <- m[m[, 1] == select.list(m[,1], , FALSE, "CRAN mirror"), 'URL']
     if(length(URL)) {
-        CRAN <- getOption("CRAN")
+        CRAN <- getOption("repos")
         CRAN["CRAN"] <- gsub("/$", "", URL[1])
-        options(CRAN = CRAN)
+        options(repos = CRAN)
     }
 }
 
@@ -435,19 +435,21 @@ contrib.url <- function(repos, type = c("binary", "source"))
         chooseCRANmirror()
         m <- match("@CRAN@", repos)
         nm <- names(repos)
-        repos[m] <- getOption("CRAN")["CRAN"]
+        repos[m] <- getOption("repos")["CRAN"]
         if(is.null(nm)) nm <- rep("", length(repos))
         nm[m] <- "CRAN"
         names(repos) <- nm
     }
     if("@CRAN@" %in% repos) stop("trying to use CRAN without setting a mirror")
-    if(type == "binary") {
+    res <- if(type == "binary") {
         ver <- paste(R.version$major, substring(R.version$minor, 1, 1),
                      sep = ".")
         paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/")
     } else {
         paste(gsub("/$", "", repos), "src", "contrib", sep="/")
     }
+    names(res) <- names(repos)
+    res
 }
 
 

@@ -10,12 +10,12 @@ R 2.1.0
 Support for seek() on > 2Gb files has been added.
 
 You will be asked to select a CRAN mirror when downloading/updating
-packages unless options("CRAN") has already been set in your session,
+packages unless options("repos") has already been set in your session,
 e.g. in your .Rprofile file or from the 'Select CRAN mirror' menu
 item.  (In batch use, not having set a mirror will lead to an error.)
 BDR's supplementary collection is now included in the default
-options("CRAN"): if you want to include it explicitly set something like
-options(CRAN=c(some_cran_mirror, http://www.stats.ox.ac.uk/pub/RWin"))
+options("repos"): if you want to include it explicitly set something like
+options(repos=c(some_cran_mirror, http://www.stats.ox.ac.uk/pub/RWin"))
 
 There is a new item on the Packages menu to set repositories, e.g.
 CRAN, Bioconductor, Omegahat.  You can modify the list (and its

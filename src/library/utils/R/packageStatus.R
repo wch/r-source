@@ -11,8 +11,7 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method)
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
     if(is.null(repositories))
-        repositories <- contrib.url(c(CRAN = getOption("CRAN"),
-                                      BIOC = getOption("BIOC")))
+        repositories <- contrib.url(getOption("repos"))
 
     ## convert character matrices to dataframes
     char2df <- function(x)
@@ -110,7 +109,7 @@ print.packageStatus <- function(x, ...)
     cat("Number of installed packages:\n")
     print(table(x$inst$LibPath, x$inst$Status))
 
-    cat("\nNumber of available packages (each package counted only once):\n")
+    cat("\nNumber of available packages (each package/bundle counted only once):\n")
     print(table(x$avail$Repository, x$avail$Status))
     invisible(x)
 }
