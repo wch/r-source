@@ -1,0 +1,29 @@
+#
+# ${RHOME}/src/library/mva/src/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../../..
+
+include $(top_builddir)/etc/Makeconf
+MKINSTALLDIRS = $(top_srcdir)/aux/mkinstalldirs
+
+pkg = mva
+OBJS = dblcen.o dist.o hclust.o kmns.o
+
+
+all: $(pkg).$(SHLIBEXT)
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs
+	@cp $< $(top_builddir)/library/$(pkg)/libs
+
+$(pkg).$(SHLIBEXT): $(OBJS)
+	$(SHLIBLD) $(SHLIBLDFLAGS) -o $@ $<
+
+mostlyclean: clean
+clean:
+	@rm -f *.o *.$(SHLIBEXT)
+distclean:
+	@rm -f Makefile
+maintainer-clean: distclean
