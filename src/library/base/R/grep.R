@@ -70,13 +70,14 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
         if(is.null(max.distance$all))
             max.distance$all <- 0.1
         max.insertions <- max.deletions <- max.substitutions <-
-            max.distance <- max.distance$all
+            max.distance$all
         if(!is.null(max.distance$deletions))
             max.deletions <- max.distance$deletions
         if(!is.null(max.distance$insertions))
             max.insertions <- max.distance$insertions
         if(!is.null(max.distance$substitutions))
             max.substitutions <- max.distance$substitutions
+        max.distance <- max.distance$all        
         ## transform percentages
         if(max.distance < 1)
             max.distance <- ceiling(n * max.distance)
