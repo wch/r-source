@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-10-04
+Version 2.0.2004-10-08
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2063,6 +2063,9 @@ distributions of R.)
 *homals*
      Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 
+*hopach*
+     Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
+
 *httpRequest*
      Implements HTTP Request protocols (GET, POST, and multipart POST
      requests).
@@ -2629,6 +2632,10 @@ distributions of R.)
      Functions for fitting general linear Structural Equation Models (with
      observed and unobserved variables) by the method of maximum likelihood
      using the RAM approach.
+
+*seqinr*
+     Exploratory data analysis and data visualization for biological
+     sequence (DNA and protein) data.
 
 *seqmon*
      Sequential monitoring of clinical trials.
