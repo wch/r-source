@@ -1,9 +1,15 @@
-getenv <- function(x)
-{
-    if (missing(x))
-        stop("In this version of R, only getenv(aVar) is implemented\n")
-    else
-        structure(.Internal(getenv(x)), names = x)
+getenv <- function(x) {
+    if (missing(x)) {
+	x <- strsplit(.Internal(getenv(character())), "=")
+	v <- n <- character(LEN <- length(x))
+	for (i in 1:LEN) {
+	    n[i] <- x[[i]][1]
+	    v[i] <- paste(x[[i]][-1], collapse = "=")
+	}
+	structure(v, names = n)
+    } else {
+	structure(.Internal(getenv(x)), names = x)
+    }
 }
 
 help.start <- function(gui = "irrelevant", browser = "irrelevant")

@@ -95,16 +95,16 @@ char *R_ExpandFileName(char *s)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
+#include <windows.h>
 SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j;
     char *s;
-    char **e;
+    char *e;
     SEXP ans;
 
-    char *_env[1];
+    char *envir;
 
-    _env[0] = NULL;
     checkArity(op, args);
 
     if (!isString(CAR(args)))
@@ -112,10 +112,12 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
     i = LENGTH(CAR(args));
     if (i == 0) {
-	for (i = 0, e = _env; *e != NULL; i++, e++);
+	envir = (char *) GetEnvironmentStrings();
+	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1);
 	PROTECT(ans = allocVector(STRSXP, i));
-	for (i = 0, e = _env; *e != NULL; i++, e++)
-	    STRING(ans)[i] = mkChar(*e);
+	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1) {
+	    STRING(ans)[i] = mkChar(e);
+	}
     } else {
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (j = 0; j < i; j++) {
@@ -146,7 +148,6 @@ SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef HAVE_TIMES
 
-#include <windows.h> /* for DWORD, GetTickCount */
 static DWORD StartTime;
 
 void setStartTime(void)
