@@ -64,10 +64,10 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
     /* NULL the gesd array
      */
     int i;
-    for (i=0; i<MAX_GRAPHICS_SYSTEMS; i++)
-	dd->gesd[i] = NULL;
     if (!dd)
 	error("Not enough memory to allocate device (in addDevice)");
+    for (i=0; i<MAX_GRAPHICS_SYSTEMS; i++)
+	dd->gesd[i] = NULL;
     dd->newDevStruct = 1;
     dd->dev = dev;
     return dd;
