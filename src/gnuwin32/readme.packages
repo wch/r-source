@@ -66,7 +66,7 @@ You will need zip installed, of course. Just run
 
 	make ziponly-mypkg
 
-after building it.  Target `ziphelp-mypkg' will make the zip files
+after building mypkg.  Target `ziphelp-mypkg' will make the zip files
 but not remove the separate files: this can be used for testing.
 
 

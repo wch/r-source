@@ -131,7 +131,7 @@ It depends what you want to print.
      dev.print().
    * You can print from the R console or pager by File | Print.
    * You can print help files from the page or HTML browser.
-   * If you have configured RHOME/bin/helpPRINT.bat and have latex installed
+   * If you have configured RHOME\bin\helpPRINT.bat and have latex installed
      you can print help files by help(fn_name, offline=T).
 
 
@@ -145,9 +145,9 @@ path_to_R\bin\rterm.exe --vsize 10M --nsize 250k  --no-restore --no-save < %1 > 
 
 1.8) Can I use rw06xx with ESS and emacs?
 
-Yes. Some time soon versions of ESS (5.1.6 has prototype support for rw0633)
-will come with support for this version of R. If yours does not, try editing
-essd-r.el to have
+Yes. Some time soon versions of ESS will come with support for this
+version of R (5.1.7 has prototype support). If yours does not, try
+editing essd-r.el to have
 
       (inferior-ess-start-args . "--ess"))
 
@@ -198,7 +198,7 @@ OR use a package by, e.g.
 
 How you set an environment variable is system specific: in 9x you can set
 them in autoexec.bat or in an MS-DOS window from which you launch
-Rgui/Rterm. Under NT you can use the control panel. You can also set them on
+Rgui / Rterm. Under NT you can use the control panel. You can also set them on
 the command line, for example in the shortcut you could have
 
       path_to_R\bin\rgui.exe --vsize 10M --nsize 300k RLIBS=e:/R/library
@@ -352,9 +352,9 @@ languages.
 
 5.3) When using Rgui, the output to the console seems to be delayed.
 
-This is deliberate: the console output is buffered and re-written in chunks
-to be less distracting. You can turn buffering off or on from the Misc menu:
-Ctrl-W toggles the setting.
+This is deliberate: the console output is buffered and re-written in
+chunks to be less distracting. You can turn buffering off or on from
+the Misc menu or the right-click menu: Ctrl-W toggles the setting.
 
 If you are sourcing R code or writing from a function, there is another
 option. A call to the R function flush.console() will write out the buffer
@@ -366,10 +366,10 @@ and so update the console.
 
 6.1) How can I compile R from source?
 
-Get the R sources. Suppose you want to compile R-0.64.1.
+Get the R sources. Suppose you want to compile R-0.64.2.
 
-      tar zxvf R-0.64.1.tgz (ignore warnings about aux)
-      cd R-0.64.1
+      tar zxvf R-0.64.2.tgz
+      cd R-0.64.2
       cd src\gnuwin32
 
 Now read the README and set up all the tools needed. Then you can just use
@@ -433,4 +433,4 @@ http://sourceware.cygnus.com/cygwin) and provides a graphical user
 interface to gdb.
 
   ------------------------------------------------------------------------
-Last edited 26 May 1999 by Brian Ripley ripley@stats.ox.ac.uk
+Last edited 29 June 1999 by Brian Ripley ripley@stats.ox.ac.uk

@@ -12,6 +12,34 @@ More support for building R into other applications: see the examples
 in the front-ends directory of the source distribution.
 
 
+rw0642
+======
+
+There are few Windows-specific enhancements: rw0642 (and R-0.64.2) is
+bug-fixing release.
+
+If options(pager="console") then files are listed in the console
+window, as happened prior to rw0640.
+
+On request, we have enabled `pagerstyle = singlewindow' in MDI mode,
+although we do not recommend this combination.
+
+The file HOME\.Renviron is read (it was HOME\Renviron, and the
+documentation used both names). Only the last line was successfully
+processed in rw0641.
+
+unlink() on non-existent files no longer causes a crash.
+
+Generally TAB will move between fields in dialog boxes, and return and
+escape will work (selecting OK and Cancel) in the Change Directory
+dialog box.
+
+The installer will allow several packages to be selected, and will
+install them in sequence. It should give more informative messages on
+some error conditions. Usually return will select Next or Finish,
+escape will select Cancel and B Back.
+
+
 rw0641
 ======
 

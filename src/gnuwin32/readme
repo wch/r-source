@@ -253,7 +253,7 @@ unzip5.40.zip from any Info-Zip mirror.
 
 Then: untar R-0.65.0.tgz somewhere,
 
-	cd /somewhere/R-0.64.1/src/gnuwin32 
+	cd /somewhere/R-0.50.0/src/gnuwin32 
 
 edit MkRules to set the appropriate paths as needed
 
