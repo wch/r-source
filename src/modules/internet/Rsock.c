@@ -418,6 +418,7 @@ int R_SockOpen(int port)
 int R_SockListen(int sockp, char *buf, int len)
 {
     check_init();
+    R_SocketWait(sockp, 0);
     return Sock_listen(sockp, buf, len, NULL);
 }
 
