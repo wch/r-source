@@ -19,7 +19,6 @@ parse(file = "", n = NULL, text = NULL, prompt = "?")
     as if they were lines of a file.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
-    \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
