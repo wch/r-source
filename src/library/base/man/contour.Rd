@@ -1,12 +1,11 @@
 \name{contour}
 \title{Display Contours}
 \usage{
-contour(x = seq(0,1,len=nrow(z)), y = seq(0,1,len=ncol(z)),
-        z, nlevels = 10,
-        levels = pretty(range(z, na.rm = TRUE), nlevels),
+contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
+        nlevels = 10, levels = pretty(range(z, na.rm = TRUE), nlevels),
         labcex = 0,
-	xlim = range(x,na.rm=TRUE), ylim = range(y,na.rm=TRUE),
-        col = par("fg"), lty = par("lty"), add = FALSE)
+        xlim = range(x, na.rm = TRUE), ylim = range(y, na.rm = TRUE),
+        col = par("fg"), lty = par("lty"), add = FALSE, ...)
 }
 \alias{contour}
 \arguments{
@@ -24,12 +23,14 @@ contour(x = seq(0,1,len=nrow(z)), y = seq(0,1,len=ncol(z)),
   \item{xlim, ylim}{x- and y-limits}
   \item{col}{color for the lines drawn}
   \item{lty}{line type for the lines drawn}
-  \item{add}{logical. if \code{TRUE}, add to a current plot.}
+  \item{add}{logical. If \code{TRUE}, add to a current plot.}
+  \item{\dots}{additional graphical parameters (see \code{\link{par}})
+    and the arguments to \code{\link{title}} may also be supplied.}
 }
 \description{
   Draws contour lines for the desired levels.
   There is currently no documentation about the algorithm.
-  The source code is in \emph{\$RHOME/src/main/plot3d.c}.
+  The source code is in \emph{\$RHOME/src/main/plot.c}.
 }
 \seealso{
   \code{\link{image}} and the graphics demo which can be invoked as
@@ -37,21 +38,21 @@ contour(x = seq(0,1,len=nrow(z)), y = seq(0,1,len=ncol(z)),
 }
 \examples{
 x <- -6:16
-op <- par(mfrow=c(2,2))
+op <- par(mfrow = c(2, 2))
 contour(outer(x, x))
-z <- outer(x, sqrt(abs(x)), FUN="/")
-##Should not be necessary:
+z <- outer(x, sqrt(abs(x)), FUN = "/")
+## Should not be necessary:
 z[!is.finite(z)] <- NA
-  image(x,x, z)
-contour(x,x, z, col="pink", add=T)
-contour(x,x, z, ylim=c(1,6))
-contour(x,x, z, ylim=c(-6,6), nlev = 20, lty=2)
+image(x, x, z)
+contour(x, x, z, col = "pink", add = TRUE)
+contour(x, x, z, ylim = c(1, 6))
+contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2)
 par(op)
 
 ## Persian Rug Art:
-x <- y <- seq(-4*pi, 4*pi, len=27)
+x <- y <- seq(-4*pi, 4*pi, len = 27)
 r <- sqrt(outer(x^2, y^2, "+"))
-opar <- par(mfrow=c(2,2), mar=rep(0,4))
+opar <- par(mfrow = c(2, 2), mar = rep(0, 4))
 for(f in pi^(0:3)) contour(cos(r^2)*exp(-r/f))
 
 data("volcano")
