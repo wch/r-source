@@ -1109,10 +1109,16 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+static SEXP forcePromise(SEXP e);
+
 SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval;
 
+    if (TYPEOF(op) == PROMSXP) {
+	op = forcePromise(op);
+	SET_NAMED(op, 2);
+    }
     if (length(args) < 2)
 	WrongArgCount("lambda");
     CheckFormals(CAR(args));
@@ -2208,7 +2214,11 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 
 static SEXP cmp_relop(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
 {
-    SEXP op = SYMVALUE(opsym); /**** check for promise here?? */
+    SEXP op = SYMVALUE(opsym);
+    if (TYPEOF(op) == PROMSXP) {
+	op = forcePromise(op);
+	SET_NAMED(op, 2);
+    }
     if (isObject(x) || isObject(y)) {
 	SEXP args, ans;
 	args = CONS(x, CONS(y, R_NilValue));
@@ -2239,7 +2249,11 @@ static SEXP cmp_arith1(SEXP call, SEXP op, SEXP x)
 
 static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y)
 {
-    SEXP op = SYMVALUE(opsym); /**** check for promise here?? */
+    SEXP op = SYMVALUE(opsym);
+    if (TYPEOF(op) == PROMSXP) {
+	op = forcePromise(op);
+	SET_NAMED(op, 2);
+    }
     if (isObject(x) || isObject(y)) {
 	SEXP args, ans;
 	args = CONS(x, CONS(y, R_NilValue));
@@ -2886,6 +2900,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	/* get the function */
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	value = SYMVALUE(symbol);
+	if (TYPEOF(value) == PROMSXP) {
+	    value = forcePromise(value);
+	    SET_NAMED(value, 2);
+	}
 	if(TRACE(value)) {
 	  Rprintf("trace: ");
 	  PrintValue(symbol);
@@ -2906,6 +2924,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	/* get the function */
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	value = SYMVALUE(symbol);
+	if (TYPEOF(value) == PROMSXP) {
+	    value = forcePromise(value);
+	    SET_NAMED(value, 2);
+	}
 	if (TYPEOF(value) != BUILTINSXP)
 	  error(_("not a BUILTIN function"));
 	if(TRACE(value)) {
@@ -3047,6 +3069,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP symbol = CAR(call);
 	SEXP fun = SYMVALUE(symbol);
+	if (TYPEOF(value) == PROMSXP) {
+	    value = forcePromise(value);
+	    SET_NAMED(value, 2);
+	}
 	if(TRACE(fun)) {
 	  Rprintf("trace: ");
 	  PrintValue(symbol);
