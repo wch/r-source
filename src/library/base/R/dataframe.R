@@ -264,7 +264,15 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	    else vnames[[i]] <- paste(vnames[[i]], namesi, sep=".")
 	}
 	else if(length(namesi) > 0) vnames[[i]] <- namesi
-	else if(no.vn[[i]]) vnames[[i]] <- deparse(object[[i]])[1]
+	else if (no.vn[[i]]) {
+            tmpname <- deparse(object[[i]])[1]
+            if( substr(tmpname,1,2) == "I(" ) {
+                ntmpn <- nchar(tmpname)
+                if(substr(tmpname, ntmpn, ntmpn) == ")")
+                    tmpname <- substr(tmpname,3,ntmpn-1)
+            }
+            vnames[[i]] <-tmpname
+        }
 	nrows[[i]] <- length(rowsi)
 	if(missing(row.names) && (nrows[[i]] > 0) && (rowsi[[1]] != ""))
 	    row.names <- data.row.names(row.names, rowsi, i)
