@@ -15,7 +15,8 @@ quantile(x, \dots)
          names = TRUE, type = 7, \dots)
 }
 \arguments{
-  \item{x}{numeric vectors whose sample quantiles are wanted.}
+  \item{x}{numeric vectors whose sample quantiles are wanted.  Missing
+    values are ignored.}
   \item{probs}{numeric vector of probabilities with values in \eqn{[0,1]}.}
   \item{na.rm}{logical; if true, any \code{\link{NA}} and \code{NaN}'s
     are removed from \code{x} before the quantiles are computed.}
@@ -106,7 +107,7 @@ quantile(x, \dots)
   The default method is type 7, as used by S and by \R < 2.0.0.
 }
 \author{
-  of the version of \R 2.0.0, Ivan Frohne and Rob J Hyndman.
+  of the version used in \R >= 2.0.0, Ivan Frohne and Rob J Hyndman.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

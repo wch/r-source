@@ -17,7 +17,8 @@ polym(\dots, degree = 1)
 }
 \arguments{
  \item{x, newdata}{a numeric vector at which to evaluate the
-   polynomial. \code{x} can also be a matrix.}
+   polynomial. \code{x} can also be a matrix.  Missing values are not
+   allowed in \code{x}.}
  \item{degree}{the degree of the polynomial}
  \item{coefs}{for prediction, coefficients from a previous fit.}
  \item{object}{an object inheriting from class \code{"poly"}, normally
@@ -32,8 +33,8 @@ polym(\dots, degree = 1)
   corresponding to the degree, with attributes \code{"degree"} specifying
   the degrees of the columns and \code{"coefs"} which contains the
   centering and normalization constants used in constructing the
-  orthogonal polynomials.  The matrix is given class
-  \code{c("poly", "matrix")} as from \R 1.5.0.
+  orthogonal polynomials.  The matrix has given class
+  \code{c("poly", "matrix")}.
 
   Other cases of \code{poly} and \code{polym}, and \code{predict.poly}:
   a matrix.
