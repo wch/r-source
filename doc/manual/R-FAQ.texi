@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-25
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-29
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1860,6 +1860,14 @@ examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SIN
 A SINful approach to selection of Gaussian Graphical Markov Models.
+@item SciViews
+A bundle of packages to implement a full reusable GUI API for R.
+Contains @strong{svGUI} with the main GUI features, @strong{svDialogs}
+for the dialog boxes, @strong{svIO} for data import/export,
+@strong{svMisc} with miscellaneous supporting functions, and
+@strong{svViews} providing views and report features (views are
+@acronym{HTML} presentations of the content of R objects, combining
+text, tables and graphs in the same document).
 @item SenSrivastava
 Collection of datasets from ``Regression Analysis, Theory, Methods and
 Applications'' by A. Sen and M. Srivastava, 1990, Springer.
@@ -2076,12 +2084,12 @@ regression, including pHd and inverse regression methods SIR and SAVE.
 @item drfit
 Dose-response data evaluation.
 @item dse
-Dynamic System Estimation, a multivariate time series package.  Contains
-@strong{dse1} (the base system, including multivariate ARMA and state
-space models), @strong{dse2} (extensions for evaluating estimation
+Dynamic System Estimation, a multivariate time series package bundle.
+Contains @strong{dse1} (the base system, including multivariate ARMA and
+state space models), @strong{dse2} (extensions for evaluating estimation
 techniques, forecasting, and for evaluating forecasting model),
 @strong{tframe} (functions for writing code that is independent of the
-representation of time). and @strong{setRNG} (a mechanism for generating
+representation of time), and @strong{setRNG} (a mechanism for generating
 the same random numbers in S and R).
 @item dynamicGraph
 Interactive graphical tool for manipulating graphs.
