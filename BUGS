@@ -645,7 +645,7 @@ Date: Thu, 12 Dec 2002 23:43:14 +0100 (MET)
 Subject: Minor glitch in building documentation
 From: Peter Rye <prye@shiraz.apana.org.au>
 Date: 12 Dec 2002 23:47:22 +1100
-* PR# 2372 *
-Subject: slow down aging dljw
-From: dfcqkennedi <mvtiana@msn.com>
-Date: Thu, 12 Dec 2002 23:12:13 -0800
+* PR# 2374 *
+Subject: quantreg package - predict method for rq objects
+From: John Maindonald <u9801539@leonard.anu.edu.au>
+Date: Sat, 14 Dec 2002 20:46:34 +1100 (EST)
