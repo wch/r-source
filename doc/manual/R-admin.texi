@@ -155,10 +155,12 @@ subdirectory @file{R} of the current directory, where @var{module}
 specifies one of the four existing flavors of the R sources, and can be
 one of @samp{r-release} (current released version), @samp{r-patched}
 (patched released version), and @samp{r-devel} (development version).
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The @option{-C} option in the @command{rsync} command
-is to cause it to skip the CVS directories.  Further information on
-@command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
+(These flavors are described in the R FAQ,
+@uref{http://www.ci.tuwien.ac.at/~hornik/R/}.)  The rsync trees are
+created directly from the master CVS archive and are updated hourly.
+The @option{-C} option in the @command{rsync} command is to cause it to
+skip the CVS directories.  Further information on @command{rsync} is
+available at @uref{http://rsync.samba.org/rsync/}.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top

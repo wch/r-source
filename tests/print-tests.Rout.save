@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Patched (2003-04-19)
+Version 1.7.0 Patched (2003-05-15)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -402,21 +402,20 @@ b 1.2+11i 2.4+23.141593i
 > # " (font-locking: closing the string above)
 > 
 > # test format.data.frame on former AsIs's.
-> RNGversion("1.6.2")
 > set.seed(321)
 > dd <- data.frame(x = 1:5, y = rnorm(5), z = c(1, 2, NA, 4, 5))
 > model <- glm(y ~ x, data = dd, subset = 1:4, na.action = na.omit)
 > expand.model.frame(model, "z", na.expand = FALSE)
            y x z
-1  0.9976322 1 1
-2 -0.5900230 2 2
-4 -0.3715109 4 4
+1  1.7049032 1 1
+2 -0.7120386 2 2
+4 -0.1196490 4 4
 > expand.model.frame(model, "z", na.expand = TRUE)
            y x  z
-1  0.9976322 1  1
-2 -0.5900230 2  2
-3  1.6192917 3 NA
-4 -0.3715109 4  4
+1  1.7049032 1  1
+2 -0.7120386 2  2
+3 -0.2779849 3 NA
+4 -0.1196490 4  4
 > 
 > ## print.table() changes affecting summary.data.frame
 > data(attenu)

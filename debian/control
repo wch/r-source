@@ -63,6 +63,7 @@ Package: r-gnome
 Section: gnome
 Architecture: any
 Depends: r-base-core (= ${Source-Version}), ${shlibs:Depends}
+Recommends: r-cran-gtkdevice
 Description: GNU R Gnome gui for statistical computing system
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
@@ -250,8 +251,8 @@ Description: GNU R collection of recommended packages
  along with the source of R itself. The package comprises 
  the following packages:
   - KernSmooth: Functions for kernel smoothing for Wand & Jones (1995)
-  - VR: The MASS, class, nnet and spatial libraries from Venables and
-    Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
+  - VR: The MASS, class, nnet and spatial packages from Venables and
+    Ripley, `Modern Applied Statistics with S-PLUS' (4th edition).
   - boot: Bootstrap R (S-Plus) Functions from the book "Bootstrap Methods 
     and Their Applications" by A.C. Davison and D.V. Hinkley (1997).
   - cluster: Functions for clustering (by Rousseeuw et al.)
