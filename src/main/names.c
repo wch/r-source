@@ -529,12 +529,19 @@ FUNTAB R_FunTab[] =
 #endif
 {"nextn",	do_nextn,	0,	11,	2,	PP_FUNCALL,	0},
 
+/* Device Drivers */
+
+{"X11",		do_X11,		0,	111,	4,	PP_FUNCALL,	0},
+{"PS",		do_PS,		0,	111,	9,	PP_FUNCALL,	0},
+
 /* Graphics */
 
 {"dev.control",	do_devcontrol,	0,	111,	0, 	PP_FUNCALL,	0},
 {"dev.copy",	do_devcopy,	0,	111,	1, 	PP_FUNCALL,	0},
 {"dev.cur",	do_devcur,	0,	111,	0,	PP_FUNCALL,	0},
+/*
 {"device",	do_device,	0,	111,	3,	PP_FUNCALL,	0},
+*/
 {"dev.next",	do_devnext,	0,	111,	1,	PP_FUNCALL,	0},
 {"dev.off",	do_devoff,	0,	111,	1,	PP_FUNCALL,	0},
 {"dev.prev",	do_devprev,	0,	111,	1,	PP_FUNCALL,	0},
@@ -566,8 +573,7 @@ FUNTAB R_FunTab[] =
 {"contour",	do_contour,	0,	11,	6,	PP_FUNCALL,	0},
 {"image",	do_image,	0,	11,	5,	PP_FUNCALL,	0},
 {"dend",	do_dend,	0,	111,	6,	PP_FUNCALL,	0},
-{"save.plot",	do_saveplot,	0,	101,	1,	PP_FUNCALL,	0},
-{"print.plot",	do_printplot,	0,	101,	0,	PP_FUNCALL,	0},
+{"dend.window",	do_dendwindow,	0,	111,	6,	PP_FUNCALL,	0},
 {"replay", 	do_replay,	0,	111,	0,	PP_FUNCALL, 	0},
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL,	0},
 

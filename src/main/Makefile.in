@@ -34,6 +34,7 @@ OBJS=		arithmetic.o \
 		debug.o \
 		deparse.o \
 		deriv.o \
+		devices.o \
 		dotcode.o \
 		dstruct.o \
 		duplicate.o \

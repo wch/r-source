@@ -56,7 +56,8 @@ static FontMetricInfo metrics[5]; 		/* font metrics */
 
 	/* Device Driver Entry Point */
 
-int PSDeviceDriver(DevDesc*, SEXP, int, SEXP, int);
+int PSDeviceDriver(DevDesc*, char*, char*, char*,
+		char*, char*, double, double, double, double);
 
 	/* Device Driver Actions */
 
@@ -101,10 +102,12 @@ static int    matchfamily(char *name);
 	/*  npars[3] = pointsize                 */
 
 
-int PSDeviceDriver(DevDesc *dd, SEXP rcpars, int ncpars, SEXP rnpars, int nnpars)
+int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
+		char *bg, char *fg, double width, double height,
+		double horizontal, double ps)
 {
-	/* if need to bail out with some sort of "error" then */
-	/* must free(dd) */
+	/* If we need to bail out with some sort of "error" */
+	/* then we must free(dd) */
 
 	int i;
 	char *cpars[20];
@@ -114,17 +117,7 @@ int PSDeviceDriver(DevDesc *dd, SEXP rcpars, int ncpars, SEXP rnpars, int nnpars
 
 		/* Check and extract the device parameters */
 
-	if(ncpars != 5 || nnpars != 4) {
-		free(dd);
-		error("invalid device parameters (postscript)\n");
-	}
-
-        /* get C pointers for R parameter values */
-        for (i=0 ; i<ncpars ; i++)
-                cpars[i] = CHAR(STRING(rcpars)[i]);
-        npars = REAL(rnpars);
-
-	if(strlen(cpars[0]) > 127) {
+	if(strlen(file) > 127) {
 		free(dd);
 		error("filename to long in postscript\n");
 	}
@@ -137,15 +130,15 @@ int PSDeviceDriver(DevDesc *dd, SEXP rcpars, int ncpars, SEXP rnpars, int nnpars
 	/* free(pd) */
 
 	/* initialise postscript device description */
-	strcpy(pd->filename, cpars[0]);
-	strcpy(pd->papername, cpars[1]);
-	pd->fontfamily = matchfamily(cpars[2]);
-	pd->bg = str2col(cpars[3]);
-	pd->col = str2col(cpars[4]);
-	pd->width = npars[0];
-	pd->height = npars[1];
-	pd->landscape = npars[2];
-	pointsize = floor(npars[3]);
+	strcpy(pd->filename, file);
+	strcpy(pd->papername, paper);
+	pd->fontfamily = matchfamily(family);
+	pd->bg = str2col(bg);
+	pd->col = str2col(fg);
+	pd->width = width;
+	pd->height = height;
+	pd->landscape = horizontal;
+	pointsize = floor(ps);
 	if(pd->bg == NA_INTEGER && pd->col == NA_INTEGER) {
 		free(dd);
 		free(pd);
