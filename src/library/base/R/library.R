@@ -24,6 +24,13 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 		else stop(txt)
             }
             which.lib.loc <- dirname(pkgpath)
+            # if the name space mechanism is available and the package
+            # has a name space, then the name space loading mechanism
+            # takes over.
+            if (exists("packageHasNamespace") &&
+                packageHasNamespace(package, which.lib.loc))
+                return(doNamespaceLibrary(package, which.lib.loc, lib.loc,
+                                          logical.return))
             codeFile <- file.path(which.lib.loc, package, "R", package)
 	    ## create environment (not attached yet)
 	    loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
