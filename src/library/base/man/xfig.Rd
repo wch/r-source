@@ -10,7 +10,7 @@
   \code{xfig} and \code{postscript}.
 }
 \usage{
-xfig(file = ifelse(onefile, "Rplots.fig", "Rplot%03d.fig"),
+xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
      onefile = FALSE, \dots)
 }
 \arguments{
@@ -47,7 +47,7 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot%03d.fig"),
 %%>>> REAL DOC in SOURCE:    ../../../main/devices.c  &   ../../../unix/devPS.c
 \details{
   Although \code{xfig} can produce multiple plots in one file, the XFig
-  format does not say how to separate or view them. So
+  format does not say how to separate or view them.  So
   \code{onefile=FALSE} is the default.
 }
 \note{
