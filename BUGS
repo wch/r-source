@@ -221,6 +221,14 @@ Date: Fri, 08 Feb 2002 14:27:01 +0100
 Subject: mgp parameter in par()
 From: mh.smith@niwa.cri.nz
 Date: Tue, 19 Mar 2002 06:11:49 +0100 (MET)
+* PR# 1470 *
+Subject: color of axis lines
+From: gray@jimmy.harvard.edu
+Date: Sat, 20 Apr 2002 22:21:44 +0200 (MET DST)
+* PR# 1476 *
+Subject: Bug: persp and colors
+From: oliver.niggemann@acterna.com
+Date: Tue, 23 Apr 2002 09:41:37 +0200 (MET DST)
 
 Directory:  In-Out
 
@@ -423,10 +431,6 @@ none
 
 Directory:  incoming
 
-* PR# 1470 *
-Subject: color of axis lines
-From: gray@jimmy.harvard.edu
-Date: Sat, 20 Apr 2002 22:21:44 +0200 (MET DST)
 * PR# 1471 *
 Subject: Rprof segfault
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -435,7 +439,7 @@ Date: 20 Apr 2002 23:48:01 +0200
 Subject: predict.*bSpline() bugs extrapolating for deriv >= 1
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 22 Apr 2002 12:30:12 +0200
-* PR# 1475 *
-Subject: Quit R by pressing button (tcltk)
-From: strach.joachim@web.de
-Date: Mon, 22 Apr 2002 23:21:12 +0200 (MET DST)
+* PR# 1479 *
+Subject: ??±??? ±?????´?´?. ???ú ?±?¡??????!!   [??-º?]
+From: ?¶¾?¶? <comgon@hot.com>
+Date: Wed, 24 Apr 2002 04:25:55 +0900
