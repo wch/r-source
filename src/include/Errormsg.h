@@ -55,7 +55,37 @@
 #define R_MSG_list_vec	"applies only to lists and vectors"
 #define R_MSG_list_vec2	"() applied to non-(list or vector)"
 
-/* Packaged Error & Warning Messages ==> ./R_ext/Error.h */
+/*---- Packaged Error & Warning Messages ---- 
+ *---- ================================= ----*/
+
+/* ---> Handling & I18n 
+ * via ErrorMessage() and WarningMessage() in ../../main/errors.c */
+
+typedef enum {
+    /* Argument list length and type errors */
+
+    ERROR_NUMARGS = 1,
+    ERROR_ARGTYPE = 2,
+    ERROR_INCOMPAT_ARGS = 3,
+
+    /* General type and length incompatibilities */
+
+    ERROR_TSVEC_MISMATCH = 100,
+
+    ERROR_UNIMPLEMENTED	= 9998,
+    ERROR_UNKNOWN = 9999
+} R_ERROR;
+
+
+typedef enum {
+
+    WARNING_coerce_NA	= 101,
+    WARNING_coerce_INACC= 102,
+    WARNING_coerce_IMAG = 103,
+
+    WARNING_UNKNOWN = 9999
+} R_WARNING;
+
 
 #endif
 
