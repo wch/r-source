@@ -1,10 +1,9 @@
 #! @PERL@
-#-*- perl -*- (for Rdconv.in ..)
 
 ## Convert R documentation into HTML, LaTeX and text format
 
 # Copyright (C) 1997 Friedrich Leisch
-# Copyright (C) 2000 The R Core Development Team
+# Copyright (C) 2000, 2002 The R Core Development Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,14 +25,63 @@
 use Getopt::Long;
 use R::Rdconv;
 use R::Utils;
+use R::Vars;
 
-my $revision = ' $Revision: 1.22 $ ';
+my $revision = ' $Revision: 1.23 $ ';
 my $version;
 my $name;
 
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
+
+## <NOTE>
+## Used in Rdconv.pm and Rdlists.pm ...
+my $OSdir = $R::Vars::OSTYPE;
+## </NOTE>
+
+my @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
+		    "o|output:s", "os|OS=s" => \$OSdir);
+GetOptions (@knownoptions) || &usage();
+&R_version($name, $version) if $opt_v;
+&usage() if $opt_h;
+
+my $out = 0;
+if(defined $opt_o) {
+    if(length($opt_o)) {
+	$out = $opt_o;
+    }
+    else {
+	$out = $ARGV[0];
+	$out =~ s/.Rd$//i;
+    }
+}
+$out = 0 if $out eq "-";
+
+my %types_and_exts = ("txt", "",
+		      "html", ".html",
+		      "latex", ".tex",		      
+		      "Sd", ".d",
+		      "Ssgm", ".sgml",
+		      "example", ".R");
+
+my $opt_type_ok = 0;
+
+foreach my $type (keys(%types_and_exts)) {
+    if($opt_type =~ /$type/i) {
+	if(defined $opt_o && length($opt_o) == 0) {
+	    $out .= $types_and_exts{$type};
+	}
+	Rdconv($ARGV[0], $opt_type, $opt_debug, $out);
+	$opt_type_ok = 1;
+	last;
+    }
+}
+
+if(!$opt_type_ok) {
+    print STDERR "Unknown type: options are " .
+	join(", ", sort(keys(%types_and_exts))) . ".\n";
+}
 
 sub usage {
   print STDERR <<END;
@@ -47,16 +95,16 @@ Options:
   -v, --version		print version info and exit
   -d, --debug		turn on debugging (increase verbosity)
   -t, --type=TYPE	convert to format TYPE
-  -o, --output=OUT	use \`OUT\' as the output file
-      --os=NAME		use OS subdir \`NAME\' (unix, mac or windows)
-      --OS=NAME		the same as \`--os\'.
+  -o, --output=OUT	use 'OUT' as the output file
+      --os=NAME		use OS subdir 'NAME' (unix, mac or windows)
+      --OS=NAME		the same as '--os'
 
-Possible format specifications are \`txt\' (plain text), \`html\',
-\`latex\', \`Sd\' (old S documentation format), \`Ssgm\' 
-(new S documentation format) and \`example\' (extract R code in the examples).
+Possible format specifications are 'txt' (plain text), 'html', 'latex',
+'Sd' (old S documentation format), 'Ssgm' (new S documentation format),
+and 'example' (extract R code in the examples).
 
-The default is to send output to stdout, which is also given by \`-o -\'.
-Using \`-o \"\"\' will choose an output filename by removing a \`.Rd\'
+The default is to send output to stdout, which is also given by '-o -'.
+Using '-o ""' will choose an output filename by removing a '.Rd'
 extension from FILE and adding a suitable extension.
   
 Email bug reports to <r-bugs\@r-project.org>.
@@ -64,49 +112,7 @@ END
   exit 0;
 }
 
-## <FIXME>
-## Currently, R_OSTYPE is always set on Unix/Windows.
-my $OSdir = R_getenv("R_OSTYPE", "mac");
-## </FIXME>
-
-@knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
-		 "o|output:s", "os|OS:s");
-GetOptions (@knownoptions) || &usage();
-&R_version($name, $version) if $opt_v;
-&usage() if $opt_h;
-
-$OSdir = $opt_os if $opt_os;
-$out = 0;
-if(defined $opt_o) {
-    if(length($opt_o)) { $out = $opt_o; }
-    else { $out = $ARGV[0]; $out =~ s/.Rd$//i; }
-}
-$out = 0 if $out eq "-";
-
-usage() if $opt_help;
-
-if($opt_type =~ /html/i){
-    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".html"; }
-    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
-}
-elsif($opt_type =~ /txt/i){
-    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
-}
-elsif($opt_type =~ /Sd/i){
-    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".d"; }
-    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
-}
-elsif($opt_type =~ /Ssgm/i){
-    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".sgml"; }
-    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
-}
-elsif($opt_type =~ /latex/i){
-    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".tex"; }
-    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
-}
-elsif($opt_type =~ /example/i){
-    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".R"; }
-    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
-} else {
-    print STDERR "Unknown type: options are txt, html, latex, Sd, example\n";
-}
+### Local Variables: ***
+### mode: perl ***
+### perl-indent-level: 4 ***
+### End: ***
