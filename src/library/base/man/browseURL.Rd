@@ -35,12 +35,15 @@ browseURL(url, browser = getOption("browser"))
   Netscape 4.x, 6.2.x (but not 6.0/1), Opera 5/6 and Mozilla >= 0.9.5),
   Galeon, KDE konqueror (via kfmclient) and the GNOME interface to
   Mozilla.  Netscape 7.0 behaves slightly differently, and you will need
-  to open it first.
+  to open it first.  Note that the type of browser is determined from
+  its name, so this mechanism will only be used if the browser is
+  installed under its canonical name.
 
   Because \code{"-remote"} will use any browser displaying on the X
   server (whatever machine it is running on), the remote control
   mechanism is only used if \code{DISPLAY} points to the local host.
-  This may not allow displaying more than one URL at a time.
+  This may not allow displaying more than one URL at a time from a
+  remote host.
 }
 #endif
 #ifdef windows
