@@ -902,3 +902,13 @@ if(require(survival)) {
     detach("package:survival")
 }
 ## were different, the last one failed in 1.6.2 (at least)
+
+
+## PR#3058  printing with na.print and right=TRUE
+a <- matrix( c(NA, "a", "b", "10",
+               NA, NA,  "d", "12",
+               NA, NA,  NA,  "14"),
+            byrow=T, ncol=4 )
+print(a, right=TRUE, na.print=" ")
+print(a, right=TRUE, na.print="----")
+## misaligned in 1.7.0

@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Patched (2003-05-18)
+Version 1.7.0 Patched (2003-05-20)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2356,4 +2356,22 @@ Loading required package: survival
   ..$ : chr [1:2] "time" "status"
  - attr(*, "type")= chr "right"
 > ## were different, the last one failed in 1.6.2 (at least)
+> 
+> 
+> ## PR#3058  printing with na.print and right=TRUE
+> a <- matrix( c(NA, "a", "b", "10",
++                NA, NA,  "d", "12",
++                NA, NA,  NA,  "14"),
++             byrow=T, ncol=4 )
+> print(a, right=TRUE, na.print=" ")
+     [,1] [,2] [,3] [,4]
+[1,]       "a"  "b" "10"
+[2,]            "d" "12"
+[3,]                "14"
+> print(a, right=TRUE, na.print="----")
+     [,1] [,2] [,3] [,4]
+[1,] ----  "a"  "b" "10"
+[2,] ---- ----  "d" "12"
+[3,] ---- ---- ---- "14"
+> ## misaligned in 1.7.0
 > 
