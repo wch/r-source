@@ -274,7 +274,13 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define CAD4R(e)	CAR(CDR(CDR(CDR(CDR(e)))))
 #define CONS(a, b)	cons((a), (b))		/* data lists */
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
+#define NEW_BINDING_FLAGS
+#ifdef NEW_BINDING_FLAGS
+#define MISSING_MASK	15 /* reserve 4 bits--only 2 uses now */
+#define MISSING(x)	((x)->sxpinfo.gp & MISSING_MASK)/* for closure calls */
+#else
 #define MISSING(x)	((x)->sxpinfo.gp)	/* for closure calls */
+#endif
 #ifndef USE_WRITE_BARRIER
 #define SETCAR(x,v)	(CAR(x)=(v))
 #define SETCADR(x,v)	(CADR(x)=(v))
@@ -283,7 +289,16 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SETCAD4R(x,v)	(CAD4R(x)=(v))
 #define SETCDR(x,y)	do {SEXP X=(x), Y=(y); if(X != R_NilValue) CDR(X)=Y; else error("bad value");} while (0)
 #endif
+#ifdef NEW_BINDING_FLAGS
+#define SET_MISSING(x,v) do { \
+  SEXP __x__ = (x); \
+  int __v__ = (v); \
+  int __other_flags__ = __x__->sxpinfo.gp & ~MISSING_MASK; \
+  __x__->sxpinfo.gp = __other_flags__ | __v__; \
+} while (0)
+#else
 #define SET_MISSING(x,v)	(((x)->sxpinfo.gp)=(v))
+#endif
 
 /* Closure Access Macros */
 #define FORMALS(x)	((x)->u.closxp.formals)
