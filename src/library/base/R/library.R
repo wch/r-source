@@ -59,8 +59,8 @@ library <-
     checkConflicts <- function(package, pkgname, pkgpath, nogenerics)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
-                       ".Random.seed", ".First.lib", ".packageName",
-                       ".noGenerics")
+                       ".Random.seed", ".First.lib", ".Last.lib",
+                       ".packageName", ".noGenerics")
         sp <- search()
         lib.pos <- match(pkgname, sp)
         ## ignore generics not defined for the package
