@@ -50,20 +50,20 @@
  *	R uses a 24-bit color model.  Colors are specified in 32-bit
  *	integers which are partitioned into 4 bytes as follows.
  *
- *		<-- most sig        least sig -->
+ *		<-- most sig	    least sig -->
  *		+-------------------------------+
- *		|   0   | blue  | green |  red  |
+ *		|   0	| blue	| green |  red	|
  *		+-------------------------------+
  *
  *	The red, green and blue bytes can be extracted as follows.
  *
- *		red   = ((color      ) & 255)
+ *		red   = ((color	     ) & 255)
  *		green = ((color >>  8) & 255)
  *		blue  = ((color >> 16) & 255)
  */
 
 #define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16))
-#define R_RED(col)	(((col)    )&255)
+#define R_RED(col)	(((col)	   )&255)
 #define R_GREEN(col)	(((col)>> 8)&255)
 #define R_BLUE(col)	(((col)>>16)&255)
 #define COLOR_TABLE_SIZE 256
@@ -90,14 +90,14 @@
 
 #define DEVICE	0	/* native device coordinates (rasters) */
 #define NDC	1	/* normalised device coordinates x=(0,1), y=(0,1) */
-#define INCHES 13 	/* inches x=(0,width), y=(0,height) */
+#define INCHES 13	/* inches x=(0,width), y=(0,height) */
 #define NIC	6	/* normalised inner region coordinates (0,1) */
 #define OMA1	2	/* outer margin 1 (bottom) x=NIC, y=LINES */
 #define OMA2	3	/* outer margin 2 (left) */
 #define OMA3	4	/* outer margin 3 (top) */
 #define OMA4	5	/* outer margin 4 (right) */
 #define NFC	7	/* normalised figure region coordinates (0,1) */
-#define NPC     16	/* normalised plot region coordinates (0,1) */
+#define NPC	16	/* normalised plot region coordinates (0,1) */
 #define USER	12	/* user/data/world corrdinates */
 			/* x=(xmin,xmax), y=(ymin,ymax) */
 #define MAR1	8	/* figure margin 1 (bottom) x=USER(x), y=LINES */
@@ -123,8 +123,8 @@ typedef struct {
 } GTrans;
 
 struct colorDataBaseEntry {
-	char *name;     /* X11 Color Name */
-	char *rgb;      /* #RRGGBB String */
+	char *name;	/* X11 Color Name */
+	char *rgb;	/* #RRGGBB String */
 	unsigned int code;  /* Internal R Color Code */
 };
 
@@ -182,7 +182,7 @@ typedef struct {
 		/* level (e.g., do_lines, do_axis, do_plot_xy, ...) */
 
 	int	state;		/* Plot State */
-	int 	valid;		/* valid layout ? */
+	int	valid;		/* valid layout ? */
 
 	/* GRZ-like Graphics Parameters */
 		/* ``The horror, the horror ... '' */
@@ -221,7 +221,7 @@ typedef struct {
 	int	smo;		/* Curve smoothness */
 	double	srt;		/* String Rotation */
 	double	tck;		/* Tick size as in S */
-	double  tcl;            /* Tick size in "lines" */
+	double	tcl;		/* Tick size in "lines" */
 	double	tmag;		/* **R ONLY** Title Magnification */
 	int	type;		/* type of plot desired */
 	double	xaxp[3];	/* X Axis annotation */
@@ -232,7 +232,7 @@ typedef struct {
 	int	xaxs;		/* X Axis style */
 	int	xaxt;		/* X Axis type */
 	int	xpd;		/* Clip to plot region indicator */
-	int 	oldxpd;
+	int	oldxpd;
 	double	yaxp[3];	/* Y Axis annotation */
 	int	yaxs;		/* Y Axis style */
 	int	yaxt;		/* Y Axis type */
@@ -259,21 +259,21 @@ typedef struct {
 
 		/* Layout Parameters */
 
-	int     layout;		/* has a layout been specified */
+	int	layout;		/* has a layout been specified */
 
-	int 	numrows;
-	int 	numcols;
-	int 	currentFigure;
-	int 	lastFigure;
+	int	numrows;
+	int	numcols;
+	int	currentFigure;
+	int	lastFigure;
 	double	heights[MAX_LAYOUT_ROWS];
-	double 	widths[MAX_LAYOUT_COLS];
-	int 	cmHeights[MAX_LAYOUT_ROWS];
-	int 	cmWidths[MAX_LAYOUT_COLS];
-	int 	order[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
-	int 	rspct;	/* 0 = none, 1 = full, 2 = see respect */
-	int 	respect[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
+	double	widths[MAX_LAYOUT_COLS];
+	int	cmHeights[MAX_LAYOUT_ROWS];
+	int	cmWidths[MAX_LAYOUT_COLS];
+	int	order[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
+	int	rspct;	/* 0 = none, 1 = full, 2 = see respect */
+	int	respect[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
 
-	int     mfind;          /* By row/col indicator */
+	int	mfind;		/* By row/col indicator */
 
 		/* Layout parameters which can be set directly by the */
 		/* user (e.g., par(fig=c(.5,1,0,1))) or otherwise are */
@@ -283,32 +283,32 @@ typedef struct {
 	double	fig[4];		/* (current) Figure size (proportion) */
 				/* [0] = left, [1] = right */
 				/* [2] = bottom, [3] = top */
-	double  fin[2];		/* (current) Figure size (inches) */
+	double	fin[2];		/* (current) Figure size (inches) */
 				/* [0] = width, [1] = height */
-	int 	fUnits;		/* (current) figure size units */
-	int 	defaultFigure;	/* calculate figure from layout ? */
+	int	fUnits;		/* (current) figure size units */
+	int	defaultFigure;	/* calculate figure from layout ? */
 	double	plt[4];		/* (current) Plot size (proportions) */
 				/* [0] = left, [1] = right */
 				/* [2] = bottom, [3] = top */
-	double  pin[2];		/* (current) plot size (inches) */
+	double	pin[2];		/* (current) plot size (inches) */
 				/* [0] = width, [1] = height */
-	int 	pUnits;		/* (current) plot size units */
-	int 	defaultPlot;	/* calculate plot from figure - margins ? */
+	int	pUnits;		/* (current) plot size units */
+	int	defaultPlot;	/* calculate plot from figure - margins ? */
 
 		/* Layout parameters which are set directly by the user */
 
 	double	mar[4];		/* Plot margins in lines */
-	double  mai[4];		/* Plot margins in inches */
+	double	mai[4];		/* Plot margins in inches */
 				/* [0] = bottom, [1] = left */
 				/* [2] = top, [3] = right */
-	int 	mUnits;		/* plot margin units */
+	int	mUnits;		/* plot margin units */
 	double	mex;		/* Margin expansion factor */
 	double	oma[4];		/* Outer margins in lines */
-	double  omi[4];		/* outer margins in inches */
+	double	omi[4];		/* outer margins in inches */
 	double	omd[4];		/* outer margins in NDC */
 				/* [0] = bottom, [1] = left */
 				/* [2] = top, [3] = right */
-	int 	oUnits;		/* outer margin units */
+	int	oUnits;		/* outer margin units */
 	int	pty;		/* Plot type */
 
 		/* Layout parameters which can be set by the user, but */
@@ -319,14 +319,14 @@ typedef struct {
 				/* [2] = ymin, [3] = ymax */
 
 		/* The logged usr parameter;  if xlog, use logusr[0:1] */
-		/*                            if ylog, use logusr[2:3] */
+		/*			      if ylog, use logusr[2:3] */
 
 	double logusr[4];
 
 		/* Layout parameter: Internal flags */
 
 	int	new;		/* Clean plot ? */
-	int 	devmode;	/* creating new image or adding to existing one */
+	int	devmode;	/* creating new image or adding to existing one */
 
 		/* Coordinate System Mappings */
 		/* These are only used internally (i.e., cannot be */
@@ -352,7 +352,7 @@ typedef struct {
 
 		/* udpated per DevNewPlot and if ndc2dev changes */
 
-	GTrans 	inner2dev;	/* Inner region to device */
+	GTrans	inner2dev;	/* Inner region to device */
 
 		/* udpated per device resize */
 
@@ -388,12 +388,12 @@ typedef struct {
 } GPar;
 
 typedef struct {
-	GPar dp;          	/* current device default parameters */
+	GPar dp;		/* current device default parameters */
 	GPar gp;		/* current device current parameters */
-	GPar dpSaved; 		/* saved device default parameters */
-	void *deviceSpecific;   /* pointer to device specific parameters */
-	int displayListOn;    	/* toggle for display list status */
-	SEXP displayList;     	/* display list */
+	GPar dpSaved;		/* saved device default parameters */
+	void *deviceSpecific;	/* pointer to device specific parameters */
+	int displayListOn;	/* toggle for display list status */
+	SEXP displayList;	/* display list */
 } DevDesc;
 
 		/* Drivers from ../main/devices.c , description there: */
@@ -402,6 +402,17 @@ int PSDeviceDriver(DevDesc*, char*, char*, char*,
 		   char*, char*, double, double, double, double);
 
 int PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, int);
+
+
+/*ifdef Unix : ../unix/devX11.h	 only in few places*/
+
+#ifdef Win32
+int WinDeviceDriver(char**, int, double*, int);
+#endif
+
+#ifdef Macintosh
+int MacDeviceDriver(char**, int, double*, int);
+#endif
 
 
 		/* User Callable Functions */
