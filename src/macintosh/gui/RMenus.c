@@ -1832,6 +1832,7 @@ void DoFileChoice(SInt16 menuItem, WindowPtr window)
 	}
 	else
 	    DoNew(true);
+	    ShowWindow(Edit_Windows[Edit_Window - 1]);
 	break;
 
     case kItemShow:
