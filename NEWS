@@ -143,6 +143,9 @@ BUG FIXES
     o	tools:::.getInternalS3generics() was omitting all the members
 	of the S3 group generics, which also accept methods for members.
 
+    o	Some BLASes were returning NA %*% 0 as 0 and some as NA.  Now
+	slower but more careful code is used if NAs are present. (PR#4582)
+
 
 
 

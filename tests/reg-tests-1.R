@@ -2831,3 +2831,8 @@ stopifnot(is.na(strptime("2003-22-20", format="%Y-%m-%d")))
 # stopifnot(is.na(strptime("2003 22 20", format="%Y %m %d")))
 stopifnot(is.na(ISOdate(year=2003, month=22, day=20)))
 ## several after the first gave non-NA values in 1.8.1 on some broken OSes
+
+
+## PR#4582 %*% with NAs
+stopifnot(is.na(NA %*% 0), is.na(0 %*% NA))
+## depended on the BLAS in use.

@@ -315,43 +315,63 @@ SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static void matprod(double *x, int nrx, int ncx,
 		    double *y, int nry, int ncy, double *z)
-{
 #ifdef IEEE_754
+{
     char *transa = "N", *transb = "N";
-    int i;
-    double one = 1.0, zero = 0.0;
-    if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-        F77_CALL(dgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
-			x, &nrx, y, &nry, &zero, z, &nrx);
-    }
-    else { /* zero-extent operations should return zeroes */
-	for(i = 0; i < nrx*ncy; i++) z[i] = 0;
-    }
-#else
+    int i,  j, k;
+    double one = 1.0, zero = 0.0, sum;
+    Rboolean have_na = FALSE;
 
+    if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
+	/* Don't trust the BLAS to handle NA/NaNs correctly: PR#4582
+	 * The test is only O(n) here
+	 */
+	for (i = 0; i < nrx*ncx; i++)
+	    if (ISNAN(x[i])) {have_na = TRUE; break;}
+	if (!have_na) 
+	    for (i = 0; i < nry*ncy; i++)
+		if (ISNAN(y[i])) {have_na = TRUE; break;}
+	if (have_na) {
+	    for (i = 0; i < nrx; i++)
+		for (k = 0; k < ncy; k++) {
+		    sum = 0.0;
+		    for (j = 0; j < ncx; j++)
+			sum += x[i + j * nrx] * y[j + k * nry];
+		    z[i + k * nrx] = sum;
+		}
+	} else
+	    F77_CALL(dgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
+			    x, &nrx, y, &nry, &zero, z, &nrx);
+    } else /* zero-extent operations should return zeroes */
+	for(i = 0; i < nrx*ncy; i++) z[i] = 0;
+}
+#else
+{
 /* FIXME - What about non-IEEE overflow ??? */
 /* Does it really matter? */
 
     int i, j, k;
     double xij, yjk, sum;
 
-    for (i = 0; i < nrx; i++)
-	for (k = 0; k < ncy; k++) {
-	    z[i + k * nrx] = NA_REAL;
-	    sum = 0.0;
-	    for (j = 0; j < ncx; j++) {
-		xij = x[i + j * nrx];
-		yjk = y[j + k * nry];
-		if (ISNAN(xij) || ISNAN(yjk))
-		    goto next_ik;
-		sum += xij * yjk;
+    if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
+	for (i = 0; i < nrx; i++)
+	    for (k = 0; k < ncy; k++) {
+		z[i + k * nrx] = NA_REAL;
+		sum = 0.0;
+		for (j = 0; j < ncx; j++) {
+		    xij = x[i + j * nrx];
+		    yjk = y[j + k * nry];
+		    if (ISNAN(xij) || ISNAN(yjk)) goto next_ik;
+		    sum += xij * yjk;
+		}
+		z[i + k * nrx] = sum;
+	    next_ik:
+		;
 	    }
-	    z[i + k * nrx] = sum;
-	next_ik:
-	    ;
-	}
-#endif
+    } else /* zero-extent operations should return zeroes */
+	for(i = 0; i < nrx*ncy; i++) z[i] = 0;
 }
+#endif
 
 #ifdef HAVE_DOUBLE_COMPLEX
 /* ZGEMM - perform one of the matrix-matrix operations    */
