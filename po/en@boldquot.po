@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 15:22+0000\n"
-"PO-Revision-Date: 2005-02-08 15:22+0000\n"
+"POT-Creation-Date: 2005-02-10 09:29+0000\n"
+"PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1075,7 +1075,7 @@ msgstr "number of columns of matrices must match (see arg %d)"
 msgid "invalid add argument"
 msgstr "invalid add argument"
 
-#: src/main/builtin.c:66 src/main/errors.c:898
+#: src/main/builtin.c:66 src/main/errors.c:955
 msgid "invalid number of arguments"
 msgstr "invalid number of arguments"
 
@@ -1355,15 +1355,15 @@ msgstr "strtrim() requires a character vector"
 msgid "invalid 'width' argument"
 msgstr "invalid ‘[1mwidth[0m’ argument"
 
-#: src/main/coerce.c:88 src/main/errors.c:913
+#: src/main/coerce.c:88 src/main/errors.c:970
 msgid "NAs introduced by coercion"
 msgstr "NAs introduced by coercion"
 
-#: src/main/coerce.c:90 src/main/errors.c:914
+#: src/main/coerce.c:90 src/main/errors.c:971
 msgid "inaccurate integer conversion in coercion"
 msgstr "inaccurate integer conversion in coercion"
 
-#: src/main/coerce.c:92 src/main/errors.c:915
+#: src/main/coerce.c:92 src/main/errors.c:972
 msgid "imaginary parts discarded in coercion"
 msgstr "imaginary parts discarded in coercion"
 
@@ -1413,8 +1413,8 @@ msgid "argument must have length at least 1"
 msgstr "argument must have length at least 1"
 
 #: src/main/coerce.c:1311
-msgid "illegal length 0 argument"
-msgstr "illegal length 0 argument"
+msgid "invalid length 0 argument"
+msgstr "invalid length 0 argument"
 
 #: src/main/coerce.c:1326
 msgid "invalid argument list"
@@ -1489,7 +1489,7 @@ msgstr "alpha level %g, not in [0,1]"
 msgid "alpha level %d, not in 0:255"
 msgstr "alpha level %d, not in 0:255"
 
-#: src/main/colors.c:84 src/main/errors.c:899 src/main/logic.c:164
+#: src/main/colors.c:84 src/main/errors.c:956 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "invalid argument type"
 
@@ -1526,8 +1526,8 @@ msgid "rgb must have 3 rows (internally)"
 msgstr "rgb must have 3 rows (internally)"
 
 #: src/main/complex.c:55
-msgid "illegal complex unary operator"
-msgstr "illegal complex unary operator"
+msgid "invalid complex unary operator"
+msgstr "invalid complex unary operator"
 
 #: src/main/complex.c:171
 msgid "unimplemented complex operation"
@@ -2146,7 +2146,7 @@ msgstr ""
 msgid "No loop to break from, jumping to top level"
 msgstr "No loop to break from, jumping to top level"
 
-#: src/main/context.c:276 src/main/errors.c:995
+#: src/main/context.c:276 src/main/errors.c:1052
 msgid "No function to return from, jumping to top level"
 msgstr "No function to return from, jumping to top level"
 
@@ -2167,8 +2167,8 @@ msgid "only positive arguments are allowed"
 msgstr "only positive arguments are allowed"
 
 #: src/main/context.c:389 src/main/context.c:412
-msgid "illegal frame number"
-msgstr "illegal frame number"
+msgid "invalid frame number"
+msgstr "invalid frame number"
 
 #: src/main/context.c:401 src/main/context.c:424
 msgid "not that many enclosing functions"
@@ -2257,7 +2257,7 @@ msgstr "Could not allocate memory for Encodebuf"
 #: src/main/plot.c:2008 src/main/plot.c:2098 src/main/plot.c:2388
 #: src/main/plot.c:2588 src/main/plot.c:2831 src/main/plot.c:3424
 #: src/main/plot.c:3500 src/main/plot.c:3753 src/main/plot3d.c:1383
-#: src/main/sprintf.c:80
+#: src/main/sprintf.c:104
 msgid "too few arguments"
 msgstr "too few arguments"
 
@@ -2694,8 +2694,8 @@ msgid "first arg (table) not of type ENVSXP, from R_HashVector2Hash"
 msgstr "first arg (table) not of type ENVSXP, from R_HashVector2Hash"
 
 #: src/main/envir.c:667
-msgid "illegal cached value in R_GetGlobalCache"
-msgstr "illegal cached value in R_GetGlobalCache"
+msgid "invalid cached value in R_GetGlobalCache"
+msgstr "invalid cached value in R_GetGlobalCache"
 
 #: src/main/envir.c:719
 msgid "cannot unbind in the base environment"
@@ -2809,9 +2809,13 @@ msgstr "invalid ‘[1mifnotfound[0m’ argument"
 msgid "wrong length for 'ifnotfound' argument"
 msgstr "wrong length for ‘[1mifnotfound[0m’ argument"
 
-#: src/main/envir.c:1834 src/main/envir.c:1859
-msgid "\"missing\" illegal use of missing"
-msgstr "“[1mmissing[0m” illegal use of missing"
+#: src/main/envir.c:1834
+msgid "invalid use of missing"
+msgstr "invalid use of missing"
+
+#: src/main/envir.c:1859
+msgid "missing can only be used for arguments"
+msgstr "missing can only be used for arguments"
 
 #: src/main/envir.c:1914
 msgid "attach: invalid object name"
@@ -2953,154 +2957,166 @@ msgstr "length of import and export names must match"
 msgid "exported symbol '%s' has no value"
 msgstr "exported symbol ‘[1m%s[0m’ has no value"
 
-#: src/main/errors.c:124 src/main/errors.c:159
+#: src/main/errors.c:125 src/main/errors.c:160
 msgid "interrupts suspended; signal ignored"
 msgstr "interrupts suspended; signal ignored"
 
-#: src/main/errors.c:233
+#: src/main/errors.c:234
 msgid "invalid option \"warning.expression\""
 msgstr "invalid option “[1mwarning.expression[0m”"
 
-#: src/main/errors.c:261
+#: src/main/errors.c:262
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "(converted from warning) %s"
 
-#: src/main/errors.c:266
+#: src/main/errors.c:267
 #, c-format
 msgid "Warning in %s : "
 msgstr "Warning in %s : "
 
-#: src/main/errors.c:270
+#: src/main/errors.c:271
 msgid "Warning: "
 msgstr "Warning: "
 
-#: src/main/errors.c:326 src/main/errors.c:343 src/main/errors.c:432
+#: src/main/errors.c:327 src/main/errors.c:344 src/main/errors.c:433
 msgid "Lost warning messages\n"
 msgstr "Lost warning messages\n"
 
-#: src/main/errors.c:356
+#: src/main/errors.c:357
 msgid "Warning message:\n"
 msgstr "Warning message:\n"
 
-#: src/main/errors.c:365
+#: src/main/errors.c:366
 msgid "Warning messages:\n"
 msgstr "Warning messages:\n"
 
-#: src/main/errors.c:377
+#: src/main/errors.c:378
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "There were %d warnings (use warnings() to see them)\n"
 
-#: src/main/errors.c:380
+#: src/main/errors.c:381
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr "There were 50 or more warnings (use warnings() to see the first 50)\n"
 
-#: src/main/errors.c:423
+#: src/main/errors.c:424
 msgid "Error during wrapup: "
 msgstr "Error during wrapup: "
 
-#: src/main/errors.c:446
+#: src/main/errors.c:447
 msgid "Error in "
 msgstr "Error in "
 
-#: src/main/errors.c:457 src/main/errors.c:460
+#: src/main/errors.c:458 src/main/errors.c:461
 #, c-format
 msgid "Error: "
 msgstr "Error: "
 
-#: src/main/errors.c:469 src/main/errors.c:1030
+#: src/main/errors.c:470 src/main/errors.c:1087
 msgid "In addition: "
 msgstr "In addition: "
 
-#: src/main/errors.c:603
+#: src/main/errors.c:604
 msgid "invalid option \"error\"\n"
 msgstr "invalid option “[1merror[0m”\n"
 
-#: src/main/errors.c:679
+#: src/main/errors.c:680
 msgid "Execution halted\n"
 msgstr "Execution halted\n"
 
-#: src/main/errors.c:741 src/main/errors.c:800
-msgid "invalid 'domain' value"
-msgstr "invalid ‘[1mdomain[0m’ value"
-
-#: src/main/errors.c:742
+#: src/main/errors.c:714
 msgid "invalid 'string' value"
 msgstr "invalid ‘[1mstring[0m’ value"
 
-#: src/main/errors.c:805
+#: src/main/errors.c:741 src/main/errors.c:832 src/main/errors.c:857
+msgid "invalid 'domain' value"
+msgstr "invalid ‘[1mdomain[0m’ value"
+
+#: src/main/errors.c:800
+msgid "invalid 'n'"
+msgstr "invalid ‘[1mn[0m’"
+
+#: src/main/errors.c:802
+msgid "'msg1' must be a character string"
+msgstr "‘[1mmsg1[0m’ must be a character string"
+
+#: src/main/errors.c:804
+msgid "'msg2' must be a character string"
+msgstr "‘[1mmsg2[0m’ must be a character string"
+
+#: src/main/errors.c:862
 msgid "invalid 'dirname' value"
 msgstr "invalid ‘[1mdirname[0m’ value"
 
-#: src/main/errors.c:841
+#: src/main/errors.c:898
 msgid " [invalid string in stop(.)]"
 msgstr " [invalid string in stop(.)]"
 
-#: src/main/errors.c:867
+#: src/main/errors.c:924
 msgid " [invalid string in warning(.)]"
 msgstr " [invalid string in warning(.)]"
 
-#: src/main/errors.c:883
+#: src/main/errors.c:940
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "incorrect number of arguments to “[1m%s[0m”"
 
-#: src/main/errors.c:889
+#: src/main/errors.c:946
 #, c-format
 msgid "Unimplemented feature in %s"
 msgstr "Unimplemented feature in %s"
 
-#: src/main/errors.c:901
+#: src/main/errors.c:958
 msgid "time-series/vector length mismatch"
 msgstr "time-series/vector length mismatch"
 
-#: src/main/errors.c:902
+#: src/main/errors.c:959
 msgid "incompatible arguments"
 msgstr "incompatible arguments"
 
-#: src/main/errors.c:904
+#: src/main/errors.c:961
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "unimplemented feature in %s"
 
-#: src/main/errors.c:905
+#: src/main/errors.c:962
 msgid "unknown error (report this!)"
 msgstr "unknown error (report this!)"
 
-#: src/main/errors.c:917
+#: src/main/errors.c:974
 msgid "unknown warning (report this!)"
 msgstr "unknown warning (report this!)"
 
-#: src/main/errors.c:1011
+#: src/main/errors.c:1068
 msgid "top level inconsistency?"
 msgstr "top level inconsistency?"
 
-#: src/main/errors.c:1111
+#: src/main/errors.c:1168
 msgid "bad handler data"
 msgstr "bad handler data"
 
-#: src/main/errors.c:1259
+#: src/main/errors.c:1316
 msgid "error message not a string"
 msgstr "error message not a string"
 
-#: src/main/errors.c:1333
+#: src/main/errors.c:1390
 msgid "handler or restart stack mismatch in old restart"
 msgstr "handler or restart stack mismatch in old restart"
 
-#: src/main/errors.c:1359 src/main/errors.c:1375
+#: src/main/errors.c:1416 src/main/errors.c:1432
 msgid "bad error message"
 msgstr "bad error message"
 
-#: src/main/errors.c:1417
+#: src/main/errors.c:1474
 msgid "bad restart"
 msgstr "bad restart"
 
-#: src/main/errors.c:1449
+#: src/main/errors.c:1506
 msgid "restart not on stack"
 msgstr "restart not on stack"
 
-#: src/main/errors.c:1467
+#: src/main/errors.c:1524
 msgid "not in a try context"
 msgstr "not in a try context"
 
@@ -3951,31 +3967,31 @@ msgstr "problem with term %d in model.matrix: no columns are assigned"
 msgid "term names will be truncated"
 msgstr "term names will be truncated"
 
-#: src/main/names.c:910
+#: src/main/names.c:911
 msgid "string argument required"
 msgstr "string argument required"
 
-#: src/main/names.c:918
+#: src/main/names.c:919
 msgid "no such primitive function"
 msgstr "no such primitive function"
 
-#: src/main/names.c:1031
+#: src/main/names.c:1032
 msgid "attempt to use zero-length variable name"
 msgstr "attempt to use zero-length variable name"
 
-#: src/main/names.c:1033
+#: src/main/names.c:1034
 msgid "symbol print-name too long"
 msgstr "symbol print-name too long"
 
-#: src/main/names.c:1059
+#: src/main/names.c:1060
 msgid "invalid .Internal() argument"
 msgstr "invalid .Internal() argument"
 
-#: src/main/names.c:1062
+#: src/main/names.c:1063
 msgid "invalid internal function"
 msgstr "invalid internal function"
 
-#: src/main/names.c:1064
+#: src/main/names.c:1065
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no internal function “[1m%s[0m”"
@@ -4333,12 +4349,12 @@ msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm is inefficient for 1-d problems"
 
 #: src/main/optimize.c:472
-msgid "illegal gradient tolerance in nlm"
-msgstr "illegal gradient tolerance in nlm"
+msgid "invalid gradient tolerance in nlm"
+msgstr "invalid gradient tolerance in nlm"
 
 #: src/main/optimize.c:474
-msgid "illegal iteration limit in nlm"
-msgstr "illegal iteration limit in nlm"
+msgid "invalid iteration limit in nlm"
+msgstr "invalid iteration limit in nlm"
 
 #: src/main/optimize.c:476
 msgid "minimization function has no good digits in nlm"
@@ -5384,8 +5400,8 @@ msgid "comparison of these types is not implemented"
 msgstr "comparison of these types is not implemented"
 
 #: src/main/relop.c:395
-msgid "illegal comparison with complex values"
-msgstr "illegal comparison with complex values"
+msgid "invalid comparison with complex values"
+msgstr "invalid comparison with complex values"
 
 #: src/main/saveload.c:309
 msgid "a I read error occurred"
@@ -6018,53 +6034,58 @@ msgstr "‘[1mfmt[0m’ is not a character string of length 1"
 
 #: src/main/sprintf.c:55
 #, c-format
-msgid "string length exceeds maximal buffer length %d"
-msgstr "string length exceeds maximal buffer length %d"
+msgid "'fmt' length exceeds maximal buffer length %d"
+msgstr "‘[1mfmt[0m’ length exceeds maximal buffer length %d"
 
-#: src/main/sprintf.c:73
+#: src/main/sprintf.c:59
+msgid "only 100 arguments are allowed"
+msgstr "only 100 arguments are allowed"
+
+#: src/main/sprintf.c:79
 msgid "unrecognised format at end of string"
 msgstr "unrecognised format at end of string"
 
-#: src/main/sprintf.c:83
+#: src/main/sprintf.c:90 src/main/sprintf.c:97
+#, c-format
+msgid "reference to non-existent argument %d"
+msgstr "reference to non-existent argument %d"
+
+#: src/main/sprintf.c:109
 msgid "zero-length argument"
 msgstr "zero-length argument"
 
-#: src/main/sprintf.c:90
+#: src/main/sprintf.c:117
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "use format %d or %i for logical objects"
 
-#: src/main/sprintf.c:103
+#: src/main/sprintf.c:130
 #, c-format
-msgid "use format %d or %i for integer objects"
-msgstr "use format %d or %i for integer objects"
+msgid "use format %d, %i or %x for integer objects"
+msgstr "use format %d, %i or %x for integer objects"
 
-#: src/main/sprintf.c:116
+#: src/main/sprintf.c:143
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr "use format %f, %e or %g for numeric objects"
 
-#: src/main/sprintf.c:150
+#: src/main/sprintf.c:177
 #, c-format
 msgid "use format %s for character objects"
 msgstr "use format %s for character objects"
 
-#: src/main/sprintf.c:152
+#: src/main/sprintf.c:179
 msgid "Likely truncation of character string"
 msgstr "Likely truncation of character string"
 
-#: src/main/sprintf.c:158
+#: src/main/sprintf.c:184
 msgid "unsupported type"
 msgstr "unsupported type"
 
-#: src/main/sprintf.c:171
+#: src/main/sprintf.c:197
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr "String length exceeds buffer size of %d"
-
-#: src/main/sprintf.c:179
-msgid "Unused arguments"
-msgstr "Unused arguments"
 
 #: src/main/startup.c:68
 msgid "R_LibraryFileName: buffer too small"
@@ -6784,8 +6805,8 @@ msgstr "B (%d x %d) must be compatible with A (%d x %d)"
 #: src/modules/lapack/Lapack.c:376 src/modules/lapack/Lapack.c:714
 #: src/modules/lapack/Lapack.c:748 src/modules/lapack/Lapack.c:793
 #, c-format
-msgid "argument %d of Lapack routine %s had illegal value"
-msgstr "argument %d of Lapack routine %s had illegal value"
+msgid "argument %d of Lapack routine %s had invalid value"
+msgstr "argument %d of Lapack routine %s had invalid value"
 
 #: src/modules/lapack/Lapack.c:383 src/modules/lapack/Lapack.c:434
 #: src/modules/lapack/Lapack.c:477 src/modules/lapack/Lapack.c:518

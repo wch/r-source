@@ -310,8 +310,8 @@ update-po: Makefile
 	$(MAKE) update-gmo
 	$(MAKE) RGui.pot-update
 
-R_PKGS_PO= base grDevices graphics splines stats stats4 tcltk tools utils
-R_PKGS_SRC_PO= grDevices splines stats tools
+R_PKGS_PO= base grDevices graphics grid methods splines stats stats4 tcltk tools utils
+R_PKGS_SRC_PO= grDevices grid methods splines stats tools
 R_EXE = $(top_builddir)/bin/R --vanilla
 
 update-pkg-po: remove-potcdate.sed

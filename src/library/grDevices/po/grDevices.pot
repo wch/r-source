@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-06 11:40+0000\n"
+"POT-Creation-Date: 2005-02-10 09:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,11 +100,11 @@ msgstr ""
 msgid "Object .ps.prolog is not a character vector"
 msgstr ""
 
-#: devPS.c:1844 devPS.c:4171 devQuartz.c:1391 devWindows.c:696
+#: devPS.c:1844 devPS.c:4171 devQuartz.c:1391 devWindows.c:703
 msgid "Invalid line end"
 msgstr ""
 
-#: devPS.c:1863 devPS.c:4190 devQuartz.c:1411 devWindows.c:709
+#: devPS.c:1863 devPS.c:4190 devQuartz.c:1411 devWindows.c:716
 msgid "Invalid line join"
 msgstr ""
 
@@ -324,7 +324,7 @@ msgstr ""
 msgid "unable to start device Quartz"
 msgstr ""
 
-#: devQuartz.c:1013 devWindows.c:531
+#: devQuartz.c:1013 devWindows.c:538
 msgid "Invalid font specification"
 msgstr ""
 
@@ -336,109 +336,141 @@ msgstr ""
 msgid "Quartz device not available on this platform"
 msgstr ""
 
-#: devWindows.c:570
+#: devWindows.c:273 devWindows.c:305 devWindows.c:368
+msgid "Not enough memory to copy graphics window"
+msgstr ""
+
+#: devWindows.c:278 devWindows.c:310 devWindows.c:373
+msgid "No device available to copy graphics window"
+msgstr ""
+
+#: devWindows.c:577
 msgid "Font family not found in Windows font database"
 msgstr ""
 
-#: devWindows.c:1685
+#: devWindows.c:988
+msgid "plot history seems corrupted"
+msgstr ""
+
+#: devWindows.c:995
+msgid "no plot history!"
+msgstr ""
+
+#: devWindows.c:1692
 #, c-format
 msgid "filename too long in %s() call"
 msgstr ""
 
-#: devWindows.c:1689 devWindows.c:1714
+#: devWindows.c:1696 devWindows.c:1721
 msgid "Unable to load Rbitmap.dll"
 msgstr ""
 
-#: devWindows.c:1698 devWindows.c:1723
+#: devWindows.c:1705 devWindows.c:1730
 msgid "Unable to allocate bitmap"
 msgstr ""
 
-#: devWindows.c:1704 devWindows.c:1729 devWindows.c:2007
+#: devWindows.c:1711 devWindows.c:1736 devWindows.c:2014
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr ""
 
-#: devWindows.c:1720
+#: devWindows.c:1727
 msgid "filename too long in jpeg() call"
 msgstr ""
 
-#: devWindows.c:1747
+#: devWindows.c:1754
 msgid "filename too long in win.metafile() call"
 msgstr ""
 
-#: devWindows.c:1757
+#: devWindows.c:1764
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr ""
 
-#: devWindows.c:1759
+#: devWindows.c:1766
 msgid "Unable to open clipboard to write metafile"
 msgstr ""
 
-#: devWindows.c:1769
+#: devWindows.c:1776
 msgid "can't find any fonts"
 msgstr ""
 
-#: devWindows.c:1994
+#: devWindows.c:1973
+msgid "Insufficient memory for resize. Killing device"
+msgstr ""
+
+#: devWindows.c:2001
 msgid "A clipboard metafile can store only one figure."
 msgstr ""
 
-#: devWindows.c:2628
+#: devWindows.c:2437 devWindows.c:2969
+msgid "R Graphics"
+msgstr ""
+
+#: devWindows.c:2635
 msgid "option 'windowsTimeouts' should be integer"
 msgstr ""
 
-#: devWindows.c:2649
+#: devWindows.c:2656
 msgid "invalid device number in savePlot"
 msgstr ""
 
-#: devWindows.c:2651
+#: devWindows.c:2658
 msgid "invalid device in savePlot"
 msgstr ""
 
-#: devWindows.c:2654
+#: devWindows.c:2661
 msgid "invalid filename argument in savePlot"
 msgstr ""
 
-#: devWindows.c:2659
+#: devWindows.c:2666
 msgid "invalid type argument in savePlot"
 msgstr ""
 
-#: devWindows.c:2681
+#: devWindows.c:2688
 msgid "unknown type in savePlot"
 msgstr ""
 
-#: devWindows.c:2756 devWindows.c:2792 devWindows.c:2824 devWindows.c:2859
+#: devWindows.c:2763 devWindows.c:2799 devWindows.c:2831 devWindows.c:2866
 msgid "processing of the plot ran out of memory"
 msgstr ""
 
-#: devWindows.c:2884
+#: devWindows.c:2779 devWindows.c:2812 devWindows.c:2845
+msgid "Impossible to load Rbitmap.dll"
+msgstr ""
+
+#: devWindows.c:2851
+msgid "Impossible to open "
+msgstr ""
+
+#: devWindows.c:2891
 msgid "invalid width or height in devWindows"
 msgstr ""
 
-#: devWindows.c:2889
+#: devWindows.c:2896
 msgid "invalid value of 'recording' in devWindows"
 msgstr ""
 
-#: devWindows.c:2893
+#: devWindows.c:2900
 msgid "invalid value of 'resize' in devWindows"
 msgstr ""
 
-#: devWindows.c:2901
+#: devWindows.c:2908
 msgid "invalid value of 'canvas' in devWindows"
 msgstr ""
 
-#: devWindows.c:2912
+#: devWindows.c:2919
 msgid "invalid value of 'buffered' in devWindows"
 msgstr ""
 
-#: devWindows.c:2918
+#: devWindows.c:2925
 msgid "invalid value of 'bg' in devWindows"
 msgstr ""
 
-#: devWindows.c:2937
+#: devWindows.c:2944
 msgid "unable to start device devWindows"
 msgstr ""
 
-#: devWindows.c:3006
+#: devWindows.c:3014
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr ""

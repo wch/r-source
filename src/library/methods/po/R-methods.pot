@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-05 17:34\n"
+"POT-Creation-Date: 2005-02-10 09:32\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,9 @@ msgid "Methods may not be defined for primitive function \""
 msgstr ""
 
 msgid "\" in this version of R"
+msgstr ""
+
+msgid "\""
 msgstr ""
 
 msgid "\" is not one of the basic functions"
@@ -63,6 +66,9 @@ msgid "The member classes must be defined: not true of"
 msgstr ""
 
 msgid "character"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "Unable to create union class:  could not set members"
@@ -225,6 +231,9 @@ msgid "Invalid first argument: should be the name of the first argument in the d
 msgstr ""
 
 msgid "duplicate element names in MethodsList at level"
+msgstr ""
+
+msgid ":"
 msgstr ""
 
 msgid "Element"
