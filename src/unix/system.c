@@ -95,6 +95,16 @@
  *    void  R_RestoreGlobalEnv(void)
  *    void  R_SaveGlobalEnv(void)
  *
+ *  The following functions perform file manipulations of various
+ *  types.  The following function can be used to view a file.
+ *
+ *    int R_ShowFile(char *file)
+ *
+ *  This function appends the contents of the second file to the
+ *  first.
+ *
+ *    int R_AppendFile(char *file1, char *file2)
+ *
  *  Platform dependent functions.
  *
  *    SEXP  do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -828,32 +838,30 @@ int __main() {return 0;}
 
 static char *Append_ErrMsg = "unable to open file %s for appending\n";
 
-int R_AppendFile(char *file1, char *file2)
+void R_AppendFile(char *file1, char *file2)
 {
     FILE *fp1, *fp2;
     char buf[APPENDBUFSIZE];
     int nchar;
-    if((fp1 = fopen(file1, "wa")) == NULL) {
+    if((fp1 = fopen(file1, "a")) == NULL) {
 	error("unable to open file %s for appending\n", file1);
     }
     if((fp2 = fopen(file2, "r")) == NULL) {
 	fclose(fp1);
-	error("unable to open file %s for appending\n", file2);
+	error("unable to open file %s for reading\n", file2);
     }
     while((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
-	if(fwrite(buf, 1, APPENDBUFSIZE, fp2) != APPENDBUFSIZE)
+	if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
 	    goto append_error;
-    if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != nchar)
+    if(fwrite(buf, 1, nchar, fp1) != nchar)
 	goto append_error;
     fclose(fp1);
     fclose(fp2);
-    return 1;
  append_error:
     error("error writing to file %s\n", file1);
-    return 0;
 }
 
-int R_ShowFile(char *file)
+void R_ShowFile(char *file)
 {
     FILE *fp;
     int c;
@@ -862,5 +870,4 @@ int R_ShowFile(char *file)
     while ((c = getc(fp)) != EOF)
 	putchar(c);
     fclose(fp);
-    return 1;
 }

@@ -36,10 +36,11 @@ SEXP do_appendfile(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP fn1, fn2;
     checkArity(op, args);
     fn1 = CAR(args);
+    fn2 = CADR(args);
     if (!isString(fn1) || length(fn1) < 1 || STRING(fn1)[0] == R_NilValue)
-        errorcall(call, "invalid filename\n");
+        errorcall(call, "invalid first filename\n");
     if (!isString(fn2) || length(fn2) < 1 || STRING(fn2)[0] == R_NilValue)
-        errorcall(call, "invalid filename\n");
+        errorcall(call, "invalid second filename\n");
     R_AppendFile(CHAR(STRING(fn1)[0]), CHAR(STRING(fn2)[0]));
     return R_NilValue;
 }

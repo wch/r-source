@@ -539,6 +539,7 @@ FUNTAB R_FunTab[] =
 /* Platform Dependent Functions */
 
 {"show.file",	do_showfile,	0,	111,	1,	PP_FUNCALL},
+{"append.file",	do_appendfile,	0,	111,	2,	PP_FUNCALL},
 
 
 /* Complex Valued Functions */
