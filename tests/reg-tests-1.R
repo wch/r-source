@@ -2409,6 +2409,12 @@ d0 <- ISOdate(2001,1,1)[0] # length 0 POSIX
 stopifnot(identical(rd0, as.POSIXlt(d0)))
 ## 2nd line gave floating point exception (in format(*)!)
 
+## New det() function
+stopifnot(det(m <- cbind(1, c(1, 1))) == 0,
+          determinant(m           )$mod == -Inf,
+          determinant(m, log=FALSE)$mod == 0)
+## gave error for singular matrices in earlier Aug.2003
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
