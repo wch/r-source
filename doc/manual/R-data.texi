@@ -45,9 +45,18 @@ notice identical to this one except for the removal of this paragraph
 Copyright @copyright{} 2000 R Development Core Team
 @end titlepage
 
+@ifnothtml
 @contents
+@end ifnothtml
 
+@ifnottex
 @node Top, Acknowledgements, (dir), (dir)
+@top R Data Import/Export
+
+This is a guide to importing and exporting data to and from R.
+
+The current version of this document is @value{VERSION}.
+@end ifnottex
 
 @menu
 * Acknowledgements::            
@@ -91,6 +100,8 @@ principal authors of the packages mentioned are
 @end multitable
 @end quotation
 
+Brian Ripley is the author of the support for connections.
+
 
 @node Introduction, Spreadsheet-like data, Acknowledgements, Top
 @chapter Introduction
@@ -119,7 +130,7 @@ comment that they prefer to do data manipulation in SAS and then use
 allow functionality developed in languages such as @code{Java},
 @code{perl} and @code{python} to be directly integrated with @R{} code,
 making the use of facilities in these languages even more
-appropriate. (See the @pkg{Java}, @pkg{RSPerl} and @pkg{RSPython}
+appropriate.  (See the @pkg{Java}, @pkg{RSPerl} and @pkg{RSPython}
 packages.)
 
 
@@ -130,7 +141,7 @@ packages.)
 It is also worth remembering that @R{} like @Sl{} comes from the Unix
 tradition of small re-usable tools, and it can be rewarding to use tools
 such as @code{awk} and @code{perl} to manipulate data before import or
-after export. The case study in Becker, Chambers & Wilks (1988, Chapter
+after export.  The case study in Becker, Chambers & Wilks (1988, Chapter
 9) is an example of this, where Unix tools were used to check and
 manipulate the data before input to @Sl{}.  @R{} itself takes that
 approach, using @code{perl} to manipulate its databases of help files
@@ -142,7 +153,7 @@ available, including on Windows.
 @menu
 * Imports::                     
 * Export to text files::        
-* XML::        
+* XML::                         
 @end menu
 
 @node Imports, Export to text files, Introduction, Introduction
@@ -169,7 +180,7 @@ In a few cases, data have been stored in a binary form for compactness
 and speed of access.  One application of this that we have seen several
 times is imaging data, which is normally stored as a stream of bytes as
 represented in memory, possibly preceded by a header.  Such data formats
-are discussed in @ref{Binary files}.
+are discussed in @ref{Binary files} and @ref{Binary connections}.
 
 For much larger databases it is common to handle the data using a
 database management system (DBMS).  There is once again the option of
@@ -260,7 +271,7 @@ changed by argument @code{na}.  Note that @code{NaN}s are treated as
 By default strings are quoted (including the row and column names).
 Argument @code{quote} controls quoting of character and factor variables.
 
-Some care is needed if the strings contain embedded quotes. Three
+Some care is needed if the strings contain embedded quotes.  Three
 useful forms are
 
 @smallexample
@@ -286,7 +297,7 @@ a file, and thereby capture the output of (possibly implicit)
 @code{print} statements.  This is not usually the most efficient route,
 and the @code{options(width)} setting may need to be increased.
 
-@node XML, , Export to text files, Introduction  
+@node XML,  , Export to text files, Introduction
 @section XML
 @cindex XML
 
@@ -373,7 +384,7 @@ names override the header line (if present).
 Normally looking at the file will determine the field separator to be
 used, but with white-space separated files there may be a choice between
 @code{sep = ""} which uses any white space (spaces, tabs or newlines) as
-a separator, @code{sep = " "} and @code{sep = "\t"}. Note that the
+a separator, @code{sep = " "} and @code{sep = "\t"}.  Note that the
 choice of separator affects the input of quoted strings.
 
 @item @strong{Quoting}
@@ -431,7 +442,7 @@ use argument @code{strip.white = TRUE}.
 
 @item @strong{Blank lines}
 
-By default, @code{read.table} ignores empty lines. This can be changed
+By default, @code{read.table} ignores empty lines.  This can be changed
 by setting @code{blank.lines.skip = FALSE}, which will only be useful in
 conjunction with @code{fill = TRUE}, perhaps to indicate missing data in
 a regular layout.
@@ -474,7 +485,7 @@ cards, and is still sometimes used to save file space.
 
 @findex read.fwf
 Function @code{read.fwf} provides a simple way to read such files,
-specifying a vector of field widths. The function reads the file into
+specifying a vector of field widths.  The function reads the file into
 memory as whole lines, splits the resulting character strings, writes
 out a temporary tab-separated file and then calls @code{read.table}.
 This is adequate for small files, but for anything more complicated we
@@ -668,7 +679,7 @@ may be unavoidable if the originating system is not available.
 @findex write.dta
 
 Import and export facilities for Stata @file{.dta} files are provided by
-package @pkg{foreign} on @acronym{CRAN}. (Formerly this was a separate
+package @pkg{foreign} on @acronym{CRAN}.  (Formerly this was a separate
 package @pkg{stataread}.) This is a binary file format, and files from
 versions 5.0 and 6.0 of Stata can be read and written by functions
 @code{read.dta} and @code{write.dta}.
@@ -699,7 +710,7 @@ return a list of data frames.
 Package @pkg{Rstreams} on @acronym{CRAN} contains a function
 @code{readSfile} which can read binary objects produced by S-PLUS 3.x,
 4.x or 2000 on Unix or Windows (and can read them on a different
-OS). This is able to read many but not all @Sl{} objects: in particular
+OS).  This is able to read many but not all @Sl{} objects: in particular
 it can read vectors, matrices and data frames and lists containing
 those.
 
@@ -856,7 +867,7 @@ The first of these selects two columns from the @R{} data frame
 subsets on a third column and asks the results be sorted.  The second
 performs a database @emph{join} on two tables @code{student} and
 @code{school} and returns four columns.  The third and fourth queries do
-some cross-tabulation and return counts or averages. (The five
+some cross-tabulation and return counts or averages.  (The five
 aggregation functions are COUNT(*) and SUM, MAX, MIN and AVG, each
 applied to a single column.)
 
@@ -866,7 +877,7 @@ OR), and ORDER BY to sort the result.  Unlike data frames, rows in RDBMS
 tables are best thought of as unordered, and without an ORDER BY
 statement the ordering is indeterminate.  You can sort (in
 lexicographical order) on more than one column by separating them by
-commas. Placing DESC after an ORDER BY puts the sort in descending
+commas.  Placing DESC after an ORDER BY puts the sort in descending
 order.
 
 SELECT DISTINCT queries will only return one copy of each distinct row
@@ -971,7 +982,7 @@ Package @pkg{RPgSQL} at @uref{http://rpgsql.sourceforge.net/} and on
 PostgreSQL}.
 
 PostgreSQL is described by its developers as `the most advanced open
-source database server' (Momjian, 2000). It would appear to be buildable
+source database server' (Momjian, 2000).  It would appear to be buildable
 for most Unix-alike OSes and Windows (under Cygwin or U/Win).
 PostgreSQL has most of the features of the commercial RDBMSs.
 
@@ -982,7 +993,7 @@ interfaces.
 @findex db.read.table
 @findex db.write.table
 To make use of @pkg{RPgSQL}, first open a connection to a database using
-@code{db.connect}. (Currently only one connection can be open at a
+@code{db.connect}.  (Currently only one connection can be open at a
 time.)  Once a connection is open an @R{} data frame can be copied to a
 PostgreSQL table by @code{db.write.table}, whereas @code{db.read.table}
 copies a PostgreSQL table to an @R{} data frame.
@@ -1044,7 +1055,7 @@ Connected to database "testdb" on ""
 Alabama          13.2     236       58 21.2
 Alaska           10.0     263       48 44.5
    ...
-## set up a proxy data frame. Remember USArrests has been removed
+## set up a proxy data frame.  Remember USArrests has been removed
 > bind.db.proxy("USArrests")
 ## USArrests is now a proxy, so all accesses are to the database
 > USArrests[, "Rape"]
@@ -1101,7 +1112,7 @@ iOBDC} on Unix/Linux, and an installed driver for your database system.
 The @uref{http://www.jepstone.net/FreeODBC/, FreeODBC project} is a
 repository of information related to @acronym{ODBC}.
 
-Two groups of interface functions are provided. The @code{odbc*} group
+Two groups of interface functions are provided.  The @code{odbc*} group
 provide a low-level interface to the basic @acronym{ODBC} functions: see
 the help page (@code{?RODBC}) for details.  The @code{sql*} group
 provide an interface between @R{} data frames and @acronym{SQL} tables.
@@ -1234,14 +1245,14 @@ function @code{close}.
 @findex dbExecStatement
 @acronym{SQL} queries can be sent by either @code{dbExec} or
 @code{dbExecStatement}.  @code{dbExec} sends the query and retrieves the
-results as a list. (It will fail unless the results are from a
+results as a list.  (It will fail unless the results are from a
 SELECT-like statement.)  @code{dbExecStatement} sends the query and
 returns an object of class @code{"MySQLResultSet"} which can be used to
 retrieve the results, and subsequently used to @code{close} the result.
 
 @findex fetch
 Function @code{fetch} is used to retrieve some or all of the rows in the
-query result, as a list. The function @code{hasCompleted} indicates if
+query result, as a list.  The function @code{hasCompleted} indicates if
 all the rows have been fetched, and @code{getRowCount} returns the
 number of rows in the result.
 
@@ -1290,7 +1301,7 @@ have to work harder using direct @acronym{SQL} statements.
 
 Package @pkg{RmSQL} on @acronym{CRAN} provides an interface to the Mini
 @acronym{SQL} database system (also known as mSQL,
-@url{http://www.hughes.com.au}, Yarger @emph{et al.@:}, 1999). The
+@url{http://www.hughes.com.au}, Yarger @emph{et al.@:}, 1999).  The
 package documentation describes mSQL as
 @quotation
 Note that mSQL is NOT GPL licenced but free of charge for universities
@@ -1308,7 +1319,7 @@ functionality.
 @findex msqlStoreResult
 @findex msqlFreeResult
 A database connection is opened by first selecting a host with
-@code{msqlConnect} and then a database by @code{msqlSelect}. The
+@code{msqlConnect} and then a database by @code{msqlSelect}.  The
 connection is closed by a call to @code{msqlClose}.  Then an
 @acronym{SQL} query is sent by a call to @code{msqlQuery}, and the
 results stored by a call to @code{msqlStoreResult}.  When a query is
@@ -1319,7 +1330,7 @@ finished with, the result can be freed by @code{msqlFreeResult}.
 @findex msqlNumRows
 Once the result of a query has been stored, the values can be retrieved
 row by row using @code{msqlFetchRow}.  This fetches the rows in order
-unless the position is reset by a call to @code{msqlDataSeek}. A call to
+unless the position is reset by a call to @code{msqlDataSeek}.  A call to
 @code{msqlNumRows} gives the total number of rows in the result.
 
 No example is given here as the basic interface makes any example
@@ -1385,7 +1396,7 @@ lines of text separated by one of the standard end-of-line marks
 readlines(stream, n = 1, bufsize = 256, eol)
 @end example
 @noindent
-where by default the @code{eol} line is detected automatically.
+where by default the @code{eol} mark is detected automatically.
 
 
 @findex writeint
@@ -1452,6 +1463,7 @@ change.  Their potential is not yet fully realised.
 * Output to connections::       
 * Input from connections::      
 * Listing and manipulating connections::  
+* Binary connections::          
 @end menu
 
 
@@ -1524,9 +1536,7 @@ runs an OS command and makes its standard output available for @R{}
 input from that connection.
 
 More types of connections are planned, including reading from and
-writing to sockets and URLs.  It is also planned to support binary file
-reading and writing on connections along the lines of package
-@pkg{Rstreams}.
+writing to sockets and URLs.
 
 
 @node Output to connections, Input from connections, Types of connections, Connections
@@ -1610,6 +1620,14 @@ unlink("ex.data")
 
 ## read listing of current directory (Unix)
 readLines(pipe("ls -1"))
+
+# remove trailing commas from an input file.
+# Suppose we are given a file `data' containing
+450, 390, 467, 654,  30, 542, 334, 432, 421,
+357, 497, 493, 550, 549, 467, 575, 578, 342,
+446, 547, 534, 495, 979, 479
+# Then read this by
+scan(pipe("sed -e s/,$// data"), sep=",")
 @end smallexample
 
 @menu
@@ -1653,7 +1671,7 @@ Read 4 items
 
 Pushback is only available for connections opened for input in text mode.
 
-@node Listing and manipulating connections,  , Input from connections, Connections
+@node Listing and manipulating connections, Binary connections, Input from connections, Connections
 @section Listing and manipulating connections
 @cindex Connections
 
@@ -1666,6 +1684,64 @@ including closed and terminal connections, by @code{showConnections(all
 @findex seek
 The generic function @code{seek} can be used to read and (on some
 connections) reset the current position for reading or writing.
+Unfortunately it depends on OS facilities which may be unreliable
+(e.g. with text files under Windows).
+
+@node Binary connections,  , Listing and manipulating connections, Connections
+@section Binary connections
+@cindex Binary files
+
+@findex readBin
+@findex writeBin
+@R{} version 1.2.1 adds functions @code{readBin} and @code{writeBin} to
+read and write from binary connections.  A connection is opened in
+binary mode by appending @code{"b"} to the mode specification, that is
+using mode @code{"rb"} for reading, and mode @code{"wb"} or @code{"ab"}
+(where appropriate) for writing.  The functions have arguments
+
+@smallexample
+readBin(con, what, n = 1, size = NA, endian = .Platform$endian) 
+writeBin(object, con, size = NA, endian = .Platform$endian) 
+@end smallexample
+
+In each case @code{con} is a connection which will be opened if
+necessary for the duration of the call, and if a character string is
+given it is assumed to specify a file name.
+
+It is slightly simpler to describe writing, so we will do that first.
+@code{object} should be an atomic vector object, that is a vector of
+mode @code{numeric}, @code{integer}, @code{logical}, @code{character} or
+@code{complex}, without attributes.  By default this is written to the
+file as a stream of bytes exactly as it is represented in memory.
+
+@code{readBin} reads a stream of bytes from the file and interprets them
+as a vector of mode given by @code{what}.  This can be either an object
+of the appropriate mode (e.g. @code{what=integer()}) or a character
+string describing the mode (one of the five given in the previous
+paragraph or @code{"double"} or @code{"int"}).  @code{size} specifies
+the maximum number of vector elements to read from the connection: if
+fewer are available a shorter vector will be returned.
+
+The remaining two arguments are used to write or read data for
+interchange with another program or another platform.  By default binary
+data is transferred directly from memory to the connection or @emph{vice
+versa}.  This will not suffice if the file is to be transferred to a
+machine with a different architecture, but between almost all @R{}
+platforms the only change needed is that of byte-order.  Intel
+@code{ix86}-based machines, Compaq Alpha and Vaxen are
+@emph{little-endian}, whereas Sun Sparc, mc680x0 series, IBM R6000, SGI
+and most others are @emph{big-endian}.  (Network byte-order (as used by
+XDR, eXternal Data Representation) is big-endian.)  To transfer to or
+from other programs we may need to do more, for example to read 16-bit
+integers or write single-precision real numbers.  This can be done using
+the @code{size} argument, which (usually) allows sizes 1, 2, 4, 8 for
+integers and logicals, and sizes 4, 8 and perhaps 12 or 16 for reals.
+Transferring at different sizes can lose precision, and should not be
+attempted for vectors containing @code{NA}'s.
+
+Character strings are read and written in C format, that is as a string
+of bytes terminated by a zero byte.  Package @pkg{Rstreams} provides
+more flexibility, for files.
 
 @node Network interfaces, References, Connections, Top
 @chapter Network interfaces
@@ -1778,16 +1854,16 @@ CORBA calls in @R{}.  More information is available from the
 
 @noindent
 R.@: A.@: Becker, J.@: M.@: Chambers and A.@: R.@: Wilks (1988)
-@emph{The New S Language. A Programming Environment for Data Analysis
+@emph{The New S Language.  A Programming Environment for Data Analysis
 and Graphics.}  Wadsworth & Brooks/Cole.
 
 @noindent
 J.@: Bowman, S.@: Emberson and M.@: Darnovsky (1996) @emph{The
-Practical @acronym{SQL} Handbook. Using Structured Query Language.}
+Practical @acronym{SQL} Handbook.  Using Structured Query Language.}
 Addison-Wesley.
 
 @noindent
-J.@: M.@: Chambers (1998) @emph{Programming with Data. A Guide to the S
+J.@: M.@: Chambers (1998) @emph{Programming with Data.  A Guide to the S
 Language.} Springer-Verlag.
 
 @noindent
@@ -1799,11 +1875,12 @@ with C++} Addison-Wesley.
 
 @noindent
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
-Draft book from @uref{http://www.postgresql.org/docs/awbook.html}.
+Addison-Wesley.
+Also downloadable at @uref{http://www.postgresql.org/docs/awbook.html}.
 
 @noindent
 T.@: M.@: Therneau and P.@: M.@: Grambsch (2000) @emph{Modeling Survival
-Data. Extending the Cox Model.} Springer-Verlag.
+Data.  Extending the Cox Model.} Springer-Verlag.
 
 @noindent
 E.@: J.@: Yarger, G.@: Reese and T.@ King (1999) @emph{MySQL & mSQL}.

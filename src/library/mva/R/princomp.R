@@ -51,11 +51,11 @@ princomp <- function(x, cor = FALSE, scores = TRUE, covmat = NULL,
     edc
 }
 
-print.princomp <- function(x)
+print.princomp <- function(x, ...)
 {
     cat("Call:\n"); dput(x$call)
     cat("\nStandard deviations:\n")
-    print(x$sdev)
+    print(x$sdev, ...)
     cat("\n", length(x$scale), " variables and ", x$n.obs,
         "observations.\n")
     invisible(x)

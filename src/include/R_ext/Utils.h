@@ -62,7 +62,7 @@ void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
 Rboolean StringFalse(char*);
 Rboolean StringTrue(char*);
-Rboolean isBlankString(unsigned char *);
+Rboolean isBlankString(char *);
 
 double 	R_strtod(char *c, char **end);
 

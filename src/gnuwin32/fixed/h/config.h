@@ -167,6 +167,12 @@
 /* The number of bytes in a long.  */
 #define SIZEOF_LONG 4
 
+/* The number of bytes in a long double.  */
+#define SIZEOF_LONG_DOUBLE 12
+
+/* The number of bytes in a long long.  */
+#define SIZEOF_LONG_LONG 8
+
 /* Define if you have the access function.  */
 #define HAVE_ACCESS 1
 

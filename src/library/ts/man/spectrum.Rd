@@ -1,60 +1,23 @@
 \name{spectrum}
 \alias{spectrum}
-\alias{plot.spec}
-\alias{plot.spec.coherency}
-\alias{plot.spec.phase}
 \alias{spec}
 \title{Spectral Density Estimation}
+\description{
+  The \code{spectrum} function estimates the spectral density of a
+  time series.
+}
 \usage{
-spectrum(x, method = c("pgram","ar"), plot = TRUE, ...)
-plot.spec(spec.obj, add = FALSE, ci = 0.95,
-          log = c("yes", "dB", "no"), ci.col = "blue", ci.lty = 3, 
-          plot.type = c("marginal", "coherency", "phase"), ...)
+spectrum(x, method = c("pgram", "ar"), plot = TRUE, \dots)
 }
 \arguments{
   \item{x}{A univariate or multivariate time series.}
-
   \item{method}{String specifying the method used to estimate the
     spectral density.  Allowed methods are \code{"pgram"} (the default)
     and \code{"ar"}.} 
-
   \item{plot}{logical. If \code{TRUE} then the spectral density is
     plotted.}
-
   \item{\dots}{Further arguments to specific spec methods or
     \code{plot.spec}.}
-
-  \item{spec.obj}{An object of class \code{"spec"}.}
-
-  \item{add}{logical. If \code{TRUE} then lines are added to the
-    existing plot.}
-
-  \item{ci}{Coverage probability for confidence interval.  Plotting of
-    the confidence bar is omitted unless \code{ci} is strictly
-    positive.}
-
-  \item{log}{If \code{"dB"}, plot on log10 (decibel) scale (as S-PLUS),
-    otherwise use conventional log scale or linear scale. Logical values
-    are also accepted.  The default is \code{"yes"} unless
-    \code{options(ts.S.compat = TRUE)} has been set, when it is
-    \code{"dB"}.}
-
-  \item{ci.col, ci.lty}{Colour for plotting confidence bar, colour and
-    line type for confidence intervals for coherency and phase.}
-
-  \item{plot.type}{For multivariate time series, the type of plot
-    required. Only the first character is needed.}
-
-  \item{\dots}{Further graphical parameters.}
-}
-\description{
-  The \code{spectrum} function estimates the spectral density of a
-  time series. This is a wrapper function which calls the methods
-  \code{\link{spec.pgram}} and \code{\link{spec.ar}}.
-
-  The generic function \code{plot} has a method for \code{spec} objects:
-  for multivariate time series it plots the marginal spectra of the
-  series or pairs plots of the coherency and phase of the cross-spectra.
 }
 \value{
   An object of class \code{"spec"}, which is a list containing at
@@ -86,12 +49,15 @@ plot.spec(spec.obj, add = FALSE, ci = 0.95,
   The result is returned invisibly if \code{plot} is true.
 }
 \details{
+  \code{spectrum} is a wrapper function which calls the methods
+  \code{\link{spec.pgram}} and \code{\link{spec.ar}}.
+  
   The spectrum here is defined with scaling \code{1/frequency(x)},
-  following S-PLUS. This makes the spectral density a density over the
-  range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
-  common scaling is \eqn{2\pi} and range  \eqn{(-0.5, 0.5]}
-  (e.g., Bloomfield) or 1 and range \eqn{(-\pi, \pi]}.
-
+  following S-PLUS.  This makes the spectral density a density over the
+  range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more common
+  scaling is \eqn{2\pi} and range \eqn{(-0.5, 0.5]} (e.g., Bloomfield)
+  or 1 and range \eqn{(-\pi, \pi]}.
+  
   If available, a confidence interval will be plotted by
   \code{plot.spec}: this is asymmetric, and the width of the centre
   mark indicates the equivalent bandwidth.
@@ -114,8 +80,11 @@ plot.spec(spec.obj, add = FALSE, ci = 0.95,
   pages 437--442.)
 }
 \author{Martyn Plummer, B.D. Ripley}
-\seealso{\code{\link{spec.pgram}}}
-
+\seealso{
+  \code{\link{spec.ar}},
+  \code{\link{spec.pgram}};
+  \code{\link{plot.spec}}.
+}
 \examples{
 ## Examples from Venables & Ripley
 ## spec.pgram

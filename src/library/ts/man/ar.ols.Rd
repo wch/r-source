@@ -3,7 +3,7 @@
 \title{Fit Autoregressive Models to Time Series by OLS}
 \usage{
 ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
-       intercept = demean, series)
+       intercept = demean, series, \dots)
 }
 \arguments{
   \item{x}{A univariate or multivariate time series.}
@@ -25,6 +25,8 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
 
   \item{series}{names for the series.  Defaults to
     \code{deparse(substitute(x))}.}
+
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \description{
   Fit an autoregressive time series model to the data by ordinary

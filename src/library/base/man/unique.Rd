@@ -1,19 +1,23 @@
 \name{unique}
-\title{Extract Unique Elements}
-\usage{
-unique(x)
-}
 \alias{unique}
-\arguments{
-  \item{x}{an atomic vector}
-}
+\title{Extract Unique Elements}
 \description{
   \code{unique} returns a vector like \code{x} but with duplicate
   elements removed.  If an element is equal to one with a smaller index,
   it is removed.
 }
+\usage{
+unique(x, incomparables = FALSE)
+}
+\arguments{
+  \item{x}{an atomic vector.}
+  \item{incomparables}{a vector of values that cannot be compared.
+    Currently, \code{FALSE} is the only possible value, meaning that all
+    values can be compared.}
+}
 \seealso{
-  \code{\link{duplicated}} which gives the indices of duplicated elements.
+  \code{\link{duplicated}} which gives the indices of duplicated
+  elements.
 }
 \examples{
 unique(c(3:5, 11:8, 8 + 0:5))

@@ -45,8 +45,7 @@ perl5, available via http://www.activestate.com/Products/ActivePerl/
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
-http://msdn.microsoft.com/workshop/author/htmlhelp/.
-
+http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm.
 
 If you want to make Window help files you will need hcrtf.exe from a
 Windows compiler installation (this has been available for download at
@@ -65,11 +64,11 @@ must edit MkRules and set BUILD=CYGWIN.)
 
 BEWARE: if you have Norton Anti-Virus you may need to disable it.
 
-BEWARE: Don't expect this to work is the path to RHOME contains spaces.
+BEWARE: Don't expect this to work if the path to R_HOME contains spaces.
 
 Then
 
-	cd RHOME\src\gnuwin32
+	cd R_HOME\src\gnuwin32
 	make libR.a
 
 which might take several minutes. (We have seen times from 30 secs to
@@ -83,7 +82,7 @@ At this point there are two approaches:
 
 1) Streamlined way
 
-Assuming that ...\rw1020\bin is in your path, use
+Assuming that ...\rw1021\bin is in your path, use
 
 	Rcmd INSTALL package
 
@@ -102,9 +101,9 @@ TYPE can be "none" or "normal" or "chm" (the default) or "winhlp" or "all"
 2) Manual `full-control'
 
 For each package you want to install, unpack it to a directory, say
-mypkg, in RHOME\src\library, and run
+mypkg, in R_HOME\src\library, and run
 
-	cd RHOME\src\gnuwin32
+	cd R_HOME\src\gnuwin32
 	make pkg-mypkg
 
 
@@ -162,6 +161,8 @@ You will need zip installed. Just run
 after building mypkg.  This is recommended if you have either many small
 data files (as in package Devore5) or a few large data files.
 
+This is an option to Rcmd INSTALL.
+
 
 Checking and building packages
 ==============================
@@ -170,9 +171,16 @@ The equivalent of `R CMD check mypkg' on Unix is
 
 	Rcmd check mypkg
 
-Use `Rcmd check --help' for full details.
+Use `Rcmd check --help' for full details.  There is an analogous call for
+build.
 
-This is an option to Rcmd INSTALL.
+You may need to set TMPDIR to a suitable temporary directory: the
+default is c:\TEMP.
+
+These have been used successfully under NT/2000.  We have seen
+problems with some Perl versions on Win 95/8/ME.  make pkgcheck-mypkg
+will perform the tests of the examples and tests directory, as far
+as we know on all OSes.
 
 
 Debugging
@@ -242,7 +250,8 @@ Using other compilers and languages
 To use C++ see the section in the R for Windows FAQ.  You can include
 C++ code in packages as from R 1.1.1, and the supplied Makefiles will
 compile with g++ and link the DLL using g++ (and hence link against
-libstc++.a).
+libstc++.a).  Use of C++ I/O may or may not work, and has been seen
+to crash R.
 
 For other compilers you will need to arrange to produce a DLL with
 cdecl (also known as _cdecl or __cdecl) linkage.  The mingw32 port

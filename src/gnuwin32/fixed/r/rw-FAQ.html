@@ -12,7 +12,7 @@
 <body>
 <h1 align="center">R for Windows FAQ</h1>
 
-<h2>Version for <tt>rw1020</tt></h2>
+<h2>Version for <tt>rw1021</tt></h2>
 
 <address>B. D. Ripley</address>
 
@@ -38,22 +38,29 @@ How do I install R for Windows?</a></li>
 it?</a></li>
 
 <li><a href=
+"#There%20seems%20to%20be%20a%20limit%20on%20the%20memory%20it%20uses!">
+2.4 There seems to be a limit on the memory it uses!</a></li>
+
+<li><a href=
 "#How%20can%20I%20keep%20workspaces%20for%20different%20projects%20in%20different%20directories%3f">
-2.4 How can I keep workspaces for different projects in different
+2.5 How can I keep workspaces for different projects in different
 directories?</a></li>
 
-<li><a href="#How%20do%20I%20print%20from%20R%3f">2.5 How do I
+<li><a href="#How%20do%20I%20print%20from%20R%3f">2.6 How do I
 print from R?</a></li>
 
-<li><a href="#Can%20I%20use%20R%20BATCH%3f">2.6 Can I use <code>R
+<li><a href="#Can%20I%20use%20R%20BATCH%3f">2.7 Can I use <code>R
 BATCH</code>?</a></li>
 
 <li><a href=
-"#Can%20I%20use%20rwXxxx%20with%20ESS%20and%20emacs%3f">2.7 Can I
+"#Can%20I%20use%20rwXxxx%20with%20ESS%20and%20emacs%3f">2.8 Can I
 use rwXxxx with ESS and emacs?</a></li>
 
 <li><a href="#What%20are%20HOME%20and%20working%20directories%3f">
-2.8 What are HOME and working directories?</a></li>
+2.9 What are HOME and working directories?</a></li>
+
+<li><a href="#R%20can't%20find%20my%20file">2.10 R can't find my
+file, but I know it is there!</a></li>
 </ul>
 </li>
 
@@ -84,6 +91,10 @@ fails.</a></li>
 
 <li><a href="#Package%20TclTk%20does%20not%20work.">3.6 Package
 TclTk does not work.</a></li>
+
+<li><a href=
+"#Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work.">3.7
+Hyperlinks in Compiled HTML sometimes do not work.</a></li>
 </ul>
 </li>
 
@@ -188,7 +199,7 @@ specific to that version. The main R FAQ can be found at</p>
 
 <p>The information here applies only to recent versions of R for
 Windows, (<code>rw1020</code> or later); the current version is
-often called something like <code>rw1020</code> (although not
+often called something like <code>rw1021</code> (although not
 officially).</p>
 
 <hr>
@@ -255,10 +266,31 @@ installation.</p>
 <p>If you want to set up another project, make a new shortcut or
 use the existing one, and change the `Start in' field of the
 Properties. <a name=
+"There%20seems%20to%20be%20a%20limit%20on%20the%20memory%20it%20uses!">
+</a></p>
+
+<h2>2.4 There seems to be a limit on the memory it uses!</h2>
+
+<p>Indeed there is. It is set by the command-line flag <code>
+--max-mem-size</code> and defaults to the smaller of the amount of
+physical RAM in the machine and 256Mb. It can be set to any amount
+over 10M. Be aware though that Windows has (in most versions) a
+maximum amount of user virtual memory of 2Gb, and parts of this can
+be reserved by processes but not used. R itself reserves 256Mb on
+startup. Because of the way the memory manager works, it is
+possible that there will be free memory but R will not be able to
+reserve it.</p>
+
+<p>Use <code>?Memory</code> and <code>?memory.size</code> for
+information about memory usage.</p>
+
+<p>R can be compiled to use a different memory manager which may be
+better at using large amounts of memory, but is substantially
+slower (making R several times slower on some tasks). <a name=
 "How%20can%20I%20keep%20workspaces%20for%20different%20projects%20in%20different%20directories%3f">
 </a></p>
 
-<h2>2.4 How can I keep workspaces for different projects in
+<h2>2.5 How can I keep workspaces for different projects in
 different directories?</h2>
 
 <p>Create a separate shortcut for each project: see Q2.3. All the
@@ -266,7 +298,7 @@ paths to files used by R are relative to the starting directory, so
 setting the `Start in' field automatically helps separate projects.
 <a name="How%20do%20I%20print%20from%20R%3f"></a></p>
 
-<h2>2.5 How do I print from R?</h2>
+<h2>2.6 How do I print from R?</h2>
 
 <p>It depends what you want to print.</p>
 
@@ -287,7 +319,7 @@ help(fn_name, offline=TRUE)</code>.</li>
 
 <a name="Can%20I%20use%20R%20BATCH%3f"></a> 
 
-<h2>2.6 Can I use <code>R BATCH</code>?</h2>
+<h2>2.7 Can I use <code>R BATCH</code>?</h2>
 
 <p>Yes, if you have Perl installed. The Windows analogue is <code>
 Rcmd BATCH</code>: use <code>Rcmd BATCH --help</code> for full
@@ -304,7 +336,7 @@ path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
 <a name="Can%20I%20use%20rwXxxx%20with%20ESS%20and%20emacs%3f"></a>
 
 
-<h2>2.7 Can I use rwXxxx with ESS and emacs?</h2>
+<h2>2.8 Can I use rwXxxx with ESS and emacs?</h2>
 
 <p>Yes. The latest versions of ESS (e.g. 5.1.18) come with support
 for this version of R, and there is support for interrupting the R
@@ -315,7 +347,7 @@ process from ESS (by <code>C-c C-c</code>).</p>
 mailing lists. <a name=
 "What%20are%20HOME%20and%20working%20directories%3f"></a></p>
 
-<h2>2.8 What are HOME and working directories?</h2>
+<h2>2.9 What are HOME and working directories?</h2>
 
 <p>Several places in the documentation use these terms.</p>
 
@@ -336,7 +368,22 @@ ${HOMEDRIVE}${HOMEPATH}</code>.<br>
 If all of these fail, the current working directory is used.</p>
 
 <p>You can find this from R code by <code>
-Sys.getenv("R_USER")</code>.</p>
+Sys.getenv("R_USER")</code>. <a name=
+"R%20can't%20find%20my%20file"></a></p>
+
+<h2>2.10 R can't find my file, but I know it is there!</h2>
+
+<p>How did you specify it? Backslashes have to be doubled in R
+character strings, so for example one needs <code>
+"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"</code>. Make life
+easier for yourself by using forward slashes as path separators:
+they do work under Windows.</p>
+
+<p>Another possible source of grief is spaces in folder names. We
+have tried to make R work on paths with spaces in, but lots of
+people writing for Unix do not bother. So it is worth trying the
+alternative short name (something like <code>PROGRA~1</code>; you
+can get if from the Properties).</p>
 
 <hr>
 <a name="Packages"></a> 
@@ -360,12 +407,12 @@ rwinst.exe</code>. Perhaps even easier is to use the R function
 <p>If there is not a binary version or that is not up-to-date or
 you prefer compiling from source, get <code>rwXxxxsp.zip</code>
 from the distribution (see Q1.1) and unpack it in <code>
-rwXxxx</code>. Then <code>cd src\gnuwin32</code> and read <code>
-README.packages</code>. You will need to collect and install
-several tools to use this. Once you have done so, installation is
-easy: just run <code>Rcmd INSTALL pkgname</code>. To check the
-package (run all the examples on its help pages and in its test
-suite, if any) use <code>Rcmd check pkgname</code>. <a name=
+rwXxxx</code>. Then read the <code>readme.packages</code>. You will
+need to collect and install several tools to use this. Once you
+have done so, installation is easy: just run <code>Rcmd INSTALL
+pkgname</code>. To check the package (run all the examples on its
+help pages and in its test suite, if any) use <code>Rcmd check
+pkgname</code>. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rwXxxx%2flibrary%20directory">
 </a></p>
 
@@ -497,7 +544,21 @@ containing the Tcl and Tk DLLs in your path). You then need to set
 the environment variable <code>TCL_LIBRARY</code>, to something
 like <code>c:/Program Files/Tcl/lib/tcl8.3</code>. (The startup
 code for the package will warn you if this is unset, and Q3.2
-explains how to set them.)</p>
+explains how to set them. NB: do not quote the path, even if as
+here it contains spaces.) <a name=
+"Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work."></a></p>
+
+<h2>3.7 Hyperlinks in Compiled HTML sometimes do not work.</h2>
+
+<p>Unfortunately, hyperlinks in compiled HTML files used from R are
+being interpreted relative to the current working directory of the
+R process, not relative to the <code>pkg.chm</code> file. This was
+not discovered until <code>rw1021</code>, so only files made with
+that version are working correctly. Remake the package under <code>
+rw1021</code> or later to cure this.</p>
+
+<p>If you explore the installed <code>.chm</code> from Windows
+Explorer, the links will work.</p>
 
 <hr>
 <a name="Windows%20Features"></a> 
@@ -851,8 +912,8 @@ console, call <code>R_FlushConsole()</code> and then <code>
 R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2000 November 30 by Brian Ripley <code><a
-href="mailto:ripley@stats.ox.ac.uk">
+<address>Last edited 2001 January 3 by Brian Ripley <code><a href=
+"mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>
 </html>

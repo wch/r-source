@@ -3,9 +3,9 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-YEAR 2000
-@set FAQ-VERSION 1.2-2, 2000-12-13
-@set REL-VERSION 1.2.0
+@set FAQ-YEAR 2001
+@set FAQ-VERSION 1.2-18, 2001-01-13
+@set REL-VERSION 1.2.1
 @set DEV-VERSION 1.3.0
 @c %**end of header
 
@@ -36,6 +36,7 @@ FORTRAN
 @end titlepage
 
 @ifinfo
+@c We do not really see this in info, but in plain text output.
 R FAQ                            @*
 Frequently Asked Questions on R  @*
 Version @value{FAQ-VERSION}      @*
@@ -44,29 +45,22 @@ Kurt Hornik                      @*
 @sp 2
 @end ifinfo
 
+@ifnothtml
+@contents
+@end ifnothtml
+
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top R FAQ
 @ifhtml
 @html
-<html>
-<head>
-<TITLE>R FAQ</TITLE>
-</head>
-
-<body>
-<h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
 <h2>Version @value{FAQ-VERSION}</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 @end html
 @end ifhtml
-
-@contents
-
-@ifinfo
-@sp 2
-@end ifinfo
-
-@node Top, Introduction, (dir), (dir)
+@end ifnottex
 
 @menu
 * Introduction::                
@@ -241,7 +235,7 @@ systems.
 
 The current version of R will configure and build under a number of
 common Unix platforms including i386-freebsd, i386-linux,
-ix86-sun-solaris, ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4,
+i386-sun-solaris, ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4,
 rs6000-ibm-aix, hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
@@ -330,7 +324,7 @@ the ``R Extension Writers Guide'', in the @file{doc/manual}
 subdirectory.  These files can be previewed and printed using standard
 programs such as @command{xdvi} and @command{dvips}.  You can also use
 @kbd{make pdf} to build PDF (Portable Document Format) version of the
-manuals, and view these using Acrobat.  Manuals written in the
+manuals, and view these using e.g.@: Acrobat.  Manuals written in the
 @acronym{GNU} Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone @acronym{GNU}
 Info; use @kbd{make info} to create these versions (note that this
@@ -415,28 +409,29 @@ A binhexed self-extracting archive containing a pre-alpha port of R
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000-11-17:
+@c Linux binaries as of 2000-12-29:
 @c
-@c debian   2.2 i386  1.1.1  Doug Bates
-@c          2.3 i386  1.1.1  Doug Bates
-@c linuxppc 5.0 ppc   1.1.1  Alex Buerkle <buerkle@hawaii.edu>
-@c mandrake 7.1 i386  1.1.1  Michele Alzetta <mikalzet@libero.it>
+@c debian   2.2 i386  1.2.0  Doug Bates <bates@stat.wisc.edu>
+@c          2.3 i386  1.2.0  Doug Bates <bates@stat.wisc.edu>
+@c linuxppc 5.0 ppc   1.2.0  Alex Buerkle <buerkle@hawaii.edu>
+@c mandrake 7.1 i386  1.2.0  Michele Alzetta <mikalzet@libero.it>
+@c          7.2 i386  1.2.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x alpha 1.1.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
+@c              i386  1.2.0  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.1.1  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
-@c          7.x i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
-@c suse     5.3 i386  1.0.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.4 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          7.x alpha 1.2.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.2.0  Martyn Plummer <plummer@iarc.fr>
+@c suse     6.4 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 @c          7.0 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 2.2/2.3 packages for the i386 platform (now part of the Debian
-distribution and maintained by Doug Bates), Red Hat 6.x packages for the
-alpha and sparc platforms and 6.x/7.x packages for the i386 platform
-(maintained by Naoki Takebayashi, Vin Everett, and Martyn Plummer,
-respectively), SuSE 5.3/6.4/7.0 i386 packages by Albrecht Gebhardt,
-Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc 5.0 RPMs by
-Alex Buerkle.
+distribution and maintained by Doug Bates), Red Hat 6.x/7.x packages for
+the alpha and i386 platforms and 6.x packages for the sparc platform
+(maintained by Naoki Takebayashi, Martyn Plummer, and Vin Everett,
+respectively), SuSE 6.4/7.0 i386 packages by Albrecht Gebhardt, Mandrake
+7.1/7.2 i386 packages by Michele Alzetta, and Linuxppc 5.0 RPMs by Alex
+Buerkle.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1131,13 +1126,15 @@ startup file @file{@env{$@w{R_HOME}}/library/base/R/Rprofile}.  Then, it
 searches for a site-wide startup profile unless the command line option
 @option{--no-site-file} was given.  The name of this file is taken from
 the value of the @env{R_PROFILE} environment variable.  If that variable
-is unset, the default is @file{@env{$R_HOME}/etc/Rprofile}.  Then,
-unless @option{--no-init-file} was given, R searches for a file called
+is unset, the default is @file{@env{$R_HOME}/etc/Rprofile}.  This code
+is loaded in package @strong{base}.  Then, unless
+@option{--no-init-file} was given, R searches for a file called
 @file{.Rprofile} in the current directory or in the user's home
-directory (in that order) and sources it.  It also loads a saved image
-from @file{.RData} in case there is one (unless @option{--no-restore}
-was specified).  If needed, the functions @code{.First()} and
-@code{.Last()} should be defined in the appropriate startup profiles.
+directory (in that order) and sources it into the user workspace.  It
+then loads a saved image of the user workspace from @file{.RData}
+ in case there is one (unless @option{--no-restore} was specified).  If
+needed, the functions @code{.First()} and @code{.Last()} should be
+defined in the appropriate startup profiles.
 
 @item
 In R, @code{T} and @code{F} are just variables being set to @code{TRUE}
@@ -1345,8 +1342,8 @@ Resistant regression and covariance estimation.
 MODern REGression: smoothing and local methods.
 @item mva
 MultiVariate Analysis.  Currently contains code for principal
-components, canonical correlations, metric multidimensional scaling, and
-hierarchical and @math{k}-means clustering.
+components, canonical correlations, metric multidimensional scaling,
+factor analysis, and hierarchical and @math{k}-means clustering.
 @item nls
 Nonlinear regression routines.
 @item splines
@@ -1456,9 +1453,14 @@ time).
 @item e1071
 Miscellaneous functions used at the Department of Statistics at TU Wien
 (E1071), including moments, short-time Fourier transforms, Independent
-Component Analysis, and simulation of a Wiener process.
+Component Analysis, Latent Class Analysis, reading and writing of images
+in portable anymap format, simulation of a Wiener process, support
+vector machines, and fuzzy clustering.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
+@item exactRankTests
+Computes exact @math{p}-values and quantiles using an implementation of
+the Streitberg/Roehmel shift algorithm.
 @item fdim
 Functions for calculating fractal dimension.
 @item foreign
@@ -1515,12 +1517,16 @@ multiple smoothing parameter selection by GCV or UBRE.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
+@item muhaz
+Hazard function estimation in survival analysis.
 @item multilm
 A basic method for fitting and testing multivariate linear models,
 including stabilized test procedures by Laeuter et.@: al.
 @item multiv
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
+@item mvnmle
+ML estimation for multivariate normal data with missing values.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
 @item nlme
@@ -1638,9 +1644,8 @@ Finding D-optimal experimental designs.
 @item dseplus
 Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
-@item exactDistr
-Exact distributions for rank tests by means of an implementation of the
-Streit@-berg/Roehmel shift algorithm.
+@item ensemble
+Ensembles of tree classifiers.
 @item funfits
 An integrated set of functions for fitting curves and surfaces including
 thin plate splines, kriging and neural networks.
@@ -1655,15 +1660,21 @@ Read data from netCDF files.
 Nonparametric confidence intervals for the ratios of medians.
 @item regexp
 Simple regular expression interface.
-@item timeslab
-Time series routines.
+@item write.snns
+Function for writing a @acronym{SNNS} pattern file from a data frame or
+matrix.
 @end table
 
 Directory @file{src/contrib/Omegahat} contains yet unreleased packages
-from the @uref{http://www.omegahat.org, Omegahat Project for Statistical
-Computing}.  Currently, there are
+from the @uref{http://www.omegahat.org/, Omegahat Project for
+Statistical Computing}.  Currently, there are
 
 @table @strong
+@item CORBA
+Dynamic CORBA client/server facilities for R.  Connects to other
+CORBA-aware applications developed in arbitrary languages, on different
+machines and allows R functionality to be exported in the same way to
+other applications.
 @item Java
 An interface from R to Java to create and call Java objects and
 methods.
@@ -1674,6 +1685,9 @@ M. Chambers, 1998, Springer NY.
 @item RSPerl
 An interface from R to an embedded, persistent Perl interpreter,
 allowing one to call arbitrary Perl subroutines, classes and methods.
+@item SLanguage
+Functions and C support utilities to support S language programming
+that can work in both R and @SPLUS{}.
 @end table
 
 @email{jlindsey@@luc.ac.be, Jim Lindsey} has written a collection of R
@@ -1733,12 +1747,21 @@ trees are rooted.  You do not have to specify the default tree in
 @env{R_LIBS}.  E.g., to use a private tree in @file{$HOME/lib/R} and a
 public site-wide tree in @file{/usr/local/lib/R-contrib}, put
 
-@example
+@smallexample
 R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
-@end example
+@end smallexample
 
 @noindent
-into your (Bourne) shell profile or your @file{~/.Renviron} file.
+into your (Bourne) shell profile or even preferably, add the line
+
+@smallexample
+R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+@end smallexample
+
+@noindent
+your @file{~/.Renviron} file.  (Note that no @code{export} statement is
+needed or allowed in this file; see the on-line help for @code{Startup}
+for more information.)
 
 @node How can add-on packages be used?, How can add-on packages be removed?, How can add-on packages be installed?, R Add-On Packages
 @section How can add-on packages be used?
@@ -1766,7 +1789,6 @@ base         The R base package
 class        Functions for classification
 cluster      Functions for clustering
 ctest        Classical tests
-date         Functions for handling dates
 eda          Exploratory Data Analysis
 gee          Generalized Estimating Equation models
 locfit       Local regression, likelihood and density estimation
@@ -1793,8 +1815,8 @@ library(@var{pkg})
 You can then find out which functions it provides by typing one of
 
 @example
-help(package = @var{pkg})
 library(help = @var{pkg})
+help(package = @var{pkg})
 @end example
 
 You can unload the loaded package @var{pkg} by
@@ -1858,14 +1880,8 @@ certainly of great value.
 
 One place where functionality is still missing is the modeling software
 as described in ``Statistical Models in S'' (see @ref{What is S?});
-Generalized Additive Models (@strong{gam}) and some of the nonlinear
-modeling code are not there yet.
-
-@c FIXME:
-@c Simon Wood <snw@mcs.st-and.ac.uk> says that for GAMs,
-@c   You might want to try the packages mgcv, which has a version of
-@c   gam(), or gss which will fit a wide range of spline models.
-@c Something about this should be added once it is proven to work.
+Generalized Additive Models (@pxref{Are GAMs implemented in R?}) and
+some of the nonlinear modeling code are not there yet.
 
 The @uref{http://developer.r-project.org/, R Developer Page} acts as an
 intermediate repository for more or less finalized ideas and plans for
@@ -2025,6 +2041,7 @@ dir /opt/R/src/unix
 * What are the enclosing and parent environments?::  
 * How can I substitute into a plot label?::  
 * What are valid names?::       
+* Are GAMs implemented in R?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -2101,16 +2118,16 @@ available.
 @node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellanea
 @section Why does sourcing a correct file fail?
 
-R sometimes has problems parsing a file which does not end in a newline.
-This can happen for example when Emacs is used for editing the file and
-@code{next-line-add-newlines} is set to @code{nil}.  To avoid the
-problem, either set @code{require-final-newline} to a non-@code{nil}
-value in one of your Emacs startup files, or make sure R-mode (@pxref{Is
-there Emacs support for R?}) is used for editing R source files (which
-locally ensures this setting).
+Versions of R prior to 1.2.1 may have had problems parsing files not
+ending in a newline.  Earlier R versions had a similar problem when
+reading in data files.  This should no longer happen.
 
-Earlier R versions had a similar problem when reading in data files, but
-this should have been taken care of now.
+@c  This can happen for example when Emacs is used for editing the file and
+@c  @code{next-line-add-newlines} is set to @code{nil}.  To avoid the
+@c  problem, either set @code{require-final-newline} to a non-@code{nil}
+@c  value in one of your Emacs startup files, or make sure R-mode (@pxref{Is
+@c  there Emacs support for R?}) is used for editing R source files (which
+@c  locally ensures this setting).
 
 @node How can I set components of a list to NULL?, How can I save my workspace?, Why does sourcing a correct file fail?, R Miscellanea
 @section How can I set components of a list to NULL?
@@ -2423,7 +2440,7 @@ title(substitute(hat(a) == ahat, list(ahat = ahat)))
 (note that it is @samp{==} and not @samp{=}).  There are more worked
 examples in the mailing list achives.
 
-@node What are valid names?,  , How can I substitute into a plot label?, R Miscellanea
+@node What are valid names?, Are GAMs implemented in R?, How can I substitute into a plot label?, R Miscellanea
 @section What are valid names?
 
 When creating data frames using @code{data.frame} or @code{read.table},
@@ -2470,6 +2487,23 @@ to do with names in the language, but it is traditional to call these
 strings file ``names''.
 @end enumerate
 
+@node Are GAMs implemented in R?,  , What are valid names?, R Miscellanea
+@section Are GAMs implemented in R?
+
+There is a @code{gam()} function for Generalized Additive Models in
+package @strong{mgcv}, but it is not an exact clone of what is described
+in the White Book (no @code{lo()} for example).  Package @strong{gss}
+can fit spline-based GAMs too.  And if you can accept regression splines
+you can use @code{glm()}.  For gaussian GAMs you can use @code{bruto()}
+from package @strong{mda}.  The long-term plan is to have something
+better than @code{gam()} for additive models, perhaps along the lines of
+BRUTO.
+
+@c FIXME:
+@c Simon Wood <snw@mcs.st-and.ac.uk> says that for GAMs,
+@c   You might want to try the packages mgcv, which has a version of
+@c   gam(), or gss which will fit a wide range of spline models.
+@c Something about this should be added once it is proven to work.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming

@@ -102,11 +102,13 @@ The information here applies only to recent versions of R for Windows,
 * Where can I find the latest version?::  
 * How do I install R for Windows?::  
 * How do I run it?::            
+* There seems to be a limit on the memory it uses!::  
 * How can I keep workspaces for different projects in different directories?::  
 * How do I print from R?::      
 * Can I use R BATCH?::          
 * Can I use rwXxxx with ESS and emacs?::  
 * What are HOME and working directories?::  
+* R can't find my file::        
 @end menu
 
 @node Where can I find the latest version?, How do I install R for Windows?, Installation and Usage, Installation and Usage
@@ -155,7 +157,7 @@ environment variables at the end of the Target field, for example
 @code{R_LIBS=e:/R/library}.
 
 
-@node How do I run it?, How can I keep workspaces for different projects in different directories?, How do I install R for Windows?, Installation and Usage
+@node How do I run it?, There seems to be a limit on the memory it uses!, How do I install R for Windows?, Installation and Usage
 @section How do I run it?
 
 Just double-click on the shortcut you prepared at installation.
@@ -163,8 +165,27 @@ Just double-click on the shortcut you prepared at installation.
 If you want to set up another project, make a new shortcut or use the
 existing one, and change the `Start in' field of the Properties.
 
+@node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, How do I run it?, Installation and Usage
+@section There seems to be a limit on the memory it uses!
 
-@node How can I keep workspaces for different projects in different directories?, How do I print from R?, How do I run it?, Installation and Usage
+Indeed there is.  It is set by the command-line flag
+@code{--max-mem-size} and defaults to the smaller of the amount of
+physical RAM in the machine and 256Mb.  It can be set to any amount over
+10M.  Be aware though that Windows has (in most versions) a maximum
+amount of user virtual memory of 2Gb, and parts of this can be reserved
+by processes but not used.  R itself reserves 256Mb on startup.  Because
+of the way the memory manager works, it is possible that there will be
+free memory but R will not be able to reserve it.
+
+Use @code{?Memory} and @code{?memory.size} for information about memory
+usage.
+
+R can be compiled to use a different memory manager which may be better
+at using large amounts of memory, but is substantially slower (making R
+several times slower on some tasks).
+
+
+@node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?
 
 Create a separate shortcut for each project: see Q2.3. All the paths to
@@ -212,7 +233,7 @@ For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
 
 
-@node What are HOME and working directories?,  , Can I use rwXxxx with ESS and emacs?, Installation and Usage
+@node What are HOME and working directories?, R can't find my file, Can I use rwXxxx with ESS and emacs?, Installation and Usage
 @section What are HOME and working directories?
 
 Several places in the documentation use these terms.
@@ -231,6 +252,19 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
 
+@node R can't find my file,  , What are HOME and working directories?, Installation and Usage
+@section R can't find my file, but I know it is there!
+
+How did you specify it?  Backslashes have to be doubled in R character
+strings, so for example one needs
+@code{"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"}.
+Make life easier for yourself by using forward slashes as path
+separators: they do work under Windows.
+
+Another possible source of grief is spaces in folder names.  We have
+tried to make R work on paths with spaces in, but lots of people writing
+for Unix do not bother. So it is worth trying the alternative short name
+(something like @code{PROGRA~1}; you can get if from the Properties).
 
 @newchap{}
 @node Packages, Windows Features, Installation and Usage, Top
@@ -244,6 +278,7 @@ You can find this from R code by @code{Sys.getenv("R_USER")}.
 * My functions are not found by the HTML help search system.::  
 * Loading a package fails.::    
 * Package TclTk does not work.::  
+* Hyperlinks in Compiled HTML do not work.::  
 @end menu
 
 @node Can I install packages (libraries) in this version?, I don't have permission to write to the rwXxxx/library directory, Packages, Packages
@@ -259,12 +294,12 @@ check out its help page.
 
 If there is not a binary version or that is not up-to-date or you prefer
 compiling from source, get @code{rwXxxxsp.zip} from the distribution
-(see Q1.1) and unpack it in @code{rwXxxx}. Then @code{cd src\gnuwin32}
-and read @code{README.packages}. You will need to collect and install
-several tools to use this. Once you have done so, installation is easy:
-just run @code{Rcmd INSTALL pkgname}. To check the package (run all the
-examples on its help pages and in its test suite, if any) use @code{Rcmd
-check pkgname}.
+(see Q1.1) and unpack it in @code{rwXxxx}.  Then read the
+@file{readme.packages}.  You will need to collect and install several
+tools to use this.  Once you have done so, installation is easy: just run
+@code{Rcmd INSTALL pkgname}. To check the package (run all the examples
+on its help pages and in its test suite, if any) use @code{Rcmd check
+pkgname}.
 
 @node I don't have permission to write to the rwXxxx/library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
 @section I don't have permission to write to the @file{rwXxxx/library} directory.
@@ -370,7 +405,7 @@ If there is no @code{Built:} line or version tab, the package was
 compiled too long ago.
 
 
-@node Package TclTk does not work.,  , Loading a package fails., Packages
+@node Package TclTk does not work., Hyperlinks in Compiled HTML do not work., Loading a package fails., Packages
 @section Package TclTk does not work.
 
 For package tcltk to work (try @code{demo(tkdensity)} or @code{demo(tkttest)})
@@ -380,8 +415,21 @@ and install it. (That will put the @file{bin} directory containing the
 Tcl and Tk DLLs in your path).  You then need to set the environment variable
 @code{TCL_LIBRARY}, to something like @code{c:/Program
 Files/Tcl/lib/tcl8.3}.  (The startup code for the package will warn you
-if this is unset, and Q3.2 explains how to set them.)
+if this is unset, and Q3.2 explains how to set them.  NB: do not quote
+the path, even if as here it contains spaces.)
 
+@node  Hyperlinks in Compiled HTML do not work.,  , Package TclTk does not work., Packages
+@section Hyperlinks in Compiled HTML sometimes do not work.
+
+Unfortunately, hyperlinks in compiled HTML files used from R are being
+interpreted relative to the current working directory of the R process,
+not relative to the @code{pkg.chm} file.  This was not discovered until
+@code{rw1021}, so only files made with that version are working
+correctly.  Remake the package under @code{rw1021} or later to cure
+this.
+
+If you explore the installed @code{.chm} from Windows Explorer, the
+links will work.
 
 
 @newchap{}
@@ -726,14 +774,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 November 30 by Brian Ripley
+Last edited 2001 January 3 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 November 30 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 January 3 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

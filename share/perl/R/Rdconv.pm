@@ -1,7 +1,7 @@
 # Subroutines for converting R documentation into text, HTML, LaTeX
 # and R (Examples) format
 
-# Copyright (C) 1997-2000 R Development Core Team
+# Copyright (C) 1997-2001 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -567,19 +567,21 @@ sub text2html {
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
 	$htmlfile = $main::htmlindex{$argkey};
-	if($htmlfile){
+	if($htmlfile && !length($opt)){
 	    if($using_chm) {
-		if ($htmlfile =~ s+^$pkg/html/++) {
+		if ($htmlfile =~ s+^$pkgname/html/++) {
 		    # in the same chm file
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
 		    $base =~ s+/html$++;
-		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
+		    $htmlfile = mklink($base, $topic);
 #		    print "$htmlfile\n";
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		}
-		$text =~
-		    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 	    } else {
 		$text =~
 		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
@@ -593,8 +595,9 @@ sub text2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
-		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
+		    $htmlfile = mklink($opt, $topic . ".html");
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
 		}
@@ -689,19 +692,22 @@ sub code2html {
 	$argkey =~ s/&amp;/&/go;
 	$htmlfile = $main::htmlindex{$argkey};
 
-	if($htmlfile){
+	if($htmlfile && !length($opt)){
 	    if($using_chm) {
-		if ($htmlfile =~ s+^$pkg/html/++) {
+		if ($htmlfile =~ s+^$pkgname/html/++) {
 		    # in the same chm file
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
 		    $base =~ s+/html$++;
-		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
+#		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
+		    $htmlfile = mklink($base, $topic);
 #		    print "$htmlfile\n";
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		}
-		$text =~
-		    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 	    } else {
 		$text =~
 		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
@@ -715,9 +721,10 @@ sub code2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
+#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
+		    $htmlfile = mklink($opt, $topic . ".html");
 #		    print "$htmlfile\n";
-       		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+       		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
 		}
@@ -993,7 +1000,7 @@ sub rdoc2txt { # (filename); 0 for STDOUT
 
     $INDENT = 3;  # indent for \itemize and \enumerate first line
     $INDENTD = 0; # indent for \describe list first line
-    $INDENTDD = 7; # indent for \describe list bodies
+    $INDENTDD = 5; # indent for \describe list bodies
 
     if ($pkgname) {
 	my $pad = 75 - length($blocks{"name"}) - length($pkgname) - 30;
@@ -1135,8 +1142,8 @@ sub text2txt {
     # handle "\describe"
     $text = replace_command($text,
 			    "describe",
-			    "\n.in +$INDENTD\n",
-			    "\n.in -$INDENTD\n");
+			    "\n.in +$INDENTDD\n",
+			    "\n.in -$INDENTDD\n");
     while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
@@ -1270,8 +1277,8 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	}
 	# check for a item in describe etc
 	if ($para =~ s/^[\n]*\.tide ([^\n]+)\n//) {
-	    $indent1 = " " x $INDENT . txt_header($1);
-	    $indent2 = $indent . (" " x $INDENTDD);
+	    $indent1 = " " x ($INDENT - $INDENTDD) . txt_header($1);
+	    $indent2 = $indent;
 	}
         # check for .in or .inen command
 	if ($para =~ s/^[\n]*\.in([^\ ]*) (.*)/\2/) {
@@ -2244,6 +2251,7 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $using_chm = 1;
+    $nlink = 0;
     print $htmlout (chm_functionhead(striptitle($blocks{"title"}), $pkgname,
 				   $blocks{"name"}));
 
@@ -2263,9 +2271,30 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
     html_print_block("seealso", "See Also");
     html_print_codeblock("examples", "Examples");
 
+    JScript() if $using_chm && $nlink > 0;
     print $htmlout (html_functionfoot());
     if($_[0]) { close $htmlout; }
     $using_chm = 0;
+}
+
+sub mklink {
+    $nlink++;
+    "onclick=\"findlink('" . $_[0] . "', '" . $_[1] . "')\" " .
+       "style=\"text-decoration: underline; color: blue; cursor: hand\""
+}
+
+sub JScript {
+    print $htmlout <<END
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+END
 }
 
 # Local variables: **

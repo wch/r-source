@@ -24,6 +24,7 @@
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
+#include <R_ext/Complex.h>
 /* #include <fcntl.h> not yet */
 
 /* Win32 does have popen, but it does not work in GUI applications,
@@ -54,11 +55,11 @@ int NextConnection()
 Rconnection getConnection(int n)
 {
     Rconnection con = NULL;
-    
+
     if(n < 0 || n == NA_INTEGER || !(con = Connections[n]))
 	error("invalid connection");
     return con;
-   
+
 }
 
 /* ------------------- null connection functions --------------------- */
@@ -97,14 +98,14 @@ static int null_fflush(Rconnection con)
     return 0;
 }
 
-static size_t null_read(void *ptr, size_t size, size_t nitems, 
+static size_t null_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     error("read not enabled for this connection");
     return 0; /* -Wall */
 }
 
-static size_t null_write(const void *ptr, size_t size, size_t nitems, 
+static size_t null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     error("write not enabled for this connection");
@@ -119,15 +120,16 @@ static void file_open(Rconnection con)
 /*    int fd, flags; */  /* fcntl does not exist on Windows */
 
     fp = R_fopen(R_ExpandFileName(con->description), con->mode);
-    if(!fp) error("cannot open file `%s'", 
+    if(!fp) error("cannot open file `%s'",
 		  R_ExpandFileName(con->description));
     ((Rfileconn)(con->private))->fp = fp;
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
-    if(strlen(con->mode) >= 2 && con->mode[2] == 'b') con->text = FALSE;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
-  
+    con->save = -1000;
+
 /*    if(!con->blocking) {
 	fd = fileno(fp);
 	flags = fcntl(fd, F_GETFL);
@@ -156,11 +158,8 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
 static int file_fgetc(Rconnection con)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
-#ifdef Win32
-    return fgetc(fp); /* R_fgetc fails on Windows */
-#else
-    return R_fgetc(fp);
-#endif
+    int c = fgetc(fp);
+    return feof(fp) ? R_EOF : c;
 }
 
 static int file_ungetc(int c, Rconnection con)
@@ -173,7 +172,7 @@ static long file_seek(Rconnection con, int where)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
     long pos = ftell(fp);
-    
+
     if(where >= 0) fseek(fp, where, SEEK_SET);
     return pos;
 }
@@ -181,7 +180,7 @@ static long file_seek(Rconnection con, int where)
 static int file_fflush(Rconnection con)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
-    
+
     return fflush(fp);
 }
 
@@ -192,7 +191,7 @@ static size_t file_read(void *ptr, size_t size, size_t nitems,
     return fread(ptr, size, nitems, fp);
 }
 
-static size_t file_write(const void *ptr, size_t size, size_t nitems, 
+static size_t file_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
@@ -249,8 +248,10 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || length(sfile) != 1)
-	error("invalid `description' argument");
+    if(!isString(sfile) || length(sfile) < 1)
+	errorcall(call, "invalid `description' argument");
+    if(length(sfile) > 1)
+	warning("only first element of `description' argument used");
     file = CHAR(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
@@ -289,8 +290,9 @@ static void pipe_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w');
     con->canread = !con->canwrite;
-    if(strlen(con->mode) >= 2 && con->mode[2] == 'b') con->text = FALSE;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    con->save = -1000;
 }
 
 static void pipe_close(Rconnection con)
@@ -346,6 +348,10 @@ static Rconnection newpipe(char *description, char *mode)
 }
 #endif
 
+#ifdef Win32
+extern Rconnection newWpipe(char *description, char *mode);
+#endif
+
 SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef HAVE_POPEN
@@ -356,22 +362,26 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     scmd = CAR(args);
-    if(!isString(scmd) || length(scmd) != 1)
-	errorcall(call, "invalid `description' argument");
+    if(!isString(scmd) || length(scmd) < 1)
+	error("invalid `description' argument");
+    if(length(scmd) > 1)
+	warning("only first element of `description' argument used");
     file = CHAR(STRING_ELT(scmd, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
-	errorcall(call, "invalid `open' argument");
+	error("invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
-#ifdef Win32
-    if(CharacterMode != RTerm) {
-	error("pipe connections are not available under RGui");
-	return R_NilValue; /* -Wall */
-    }
-#endif
 
     ncon = NextConnection();
-    con = Connections[ncon] = newpipe(file, strlen(open) ? open : "r");
+#ifdef Win32
+    if(CharacterMode != RTerm)
+	con = newWpipe(file, strlen(open) ? open : "r");
+    else
+	con = newpipe(file, strlen(open) ? open : "r");
+#else
+    con = newpipe(file, strlen(open) ? open : "r");
+#endif
+    Connections[ncon] = con;
 
     /* open it if desired */
     if(strlen(open)) con->open(con);
@@ -380,6 +390,10 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     INTEGER(ans)[0] = ncon;
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("pipe"));
+#ifdef Win32
+    if(CharacterMode != RTerm)
+	SET_STRING_ELT(class, 0, mkChar("pipeWin32"));
+#endif
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     UNPROTECT(2);
@@ -396,8 +410,8 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 /* The size of the console buffer */
 #define CONSOLE_BUFFER_SIZE	1024
 
-static char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
-static char *ConsoleBufp;
+static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
+static unsigned char *ConsoleBufp;
 static int  ConsoleBufCnt;
 
 static int ConsoleGetchar()
@@ -409,7 +423,7 @@ static int ConsoleGetchar()
 	}
 	R_ParseCnt++;
 	ConsoleBufp = ConsoleBuf;
-	ConsoleBufCnt = strlen(ConsoleBuf);
+	ConsoleBufCnt = strlen((char *)ConsoleBuf);
 	ConsoleBufCnt--;
     }
     return *ConsoleBufp++;
@@ -491,6 +505,7 @@ static Rconnection newterminal(char *description, char *mode)
     new->read = &null_read;
     new->write = &null_write;
     new->nPushBack = 0;
+    new->save = -1000;
     new->private = NULL;
     return new;
 }
@@ -528,7 +543,7 @@ SEXP do_stdout(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* Switch output to connection number icon, or to console if < 0 
+/* Switch output to connection number icon.
    We don't close the old connection.
  */
 void switch_stdout(int icon)
@@ -536,11 +551,14 @@ void switch_stdout(int icon)
     if(icon == R_OutputCon) return;
     if(icon >= 3) {
 	Rconnection con = getConnection(icon); /* checks validity */
-	if(!con->isopen) con->open(con);
+	if(!con->isopen) {
+	    con->open(con);
+	    if(R_SinkCon_to_close == 0) R_SinkCon_to_close = 2;
+	}
 	R_OutputCon = icon;
     } else if(icon == 0)
 	error("cannot switch output to stdin");
-    else if(icon == 2) 
+    else if(icon == 2)
 	error("cannot switch output to stderr");
     else {
 	R_OutputCon = 1;
@@ -590,6 +608,7 @@ static void text_init(Rconnection con, SEXP text)
 
 static void text_open(Rconnection con)
 {
+    con->save = -1000;
 }
 
 static void text_close(Rconnection con)
@@ -664,6 +683,7 @@ static Rconnection newtext(char *description, SEXP text)
     new->write = &null_write;
     new->nPushBack = 0;
     new->private = (void*) malloc(sizeof(struct textconn));
+    new->save = -1000;
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error("allocation of text connection failed");
@@ -695,7 +715,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     Routtextconn this = (Routtextconn)con->private;
     char buf[BUFSIZE], *b = buf, *p, *q, *vmax = vmaxget();
-    int res = 0, usedRalloc = FALSE, buffree, 
+    int res = 0, usedRalloc = FALSE, buffree,
 	already = strlen(this->lastline);
     SEXP tmp;
 
@@ -818,6 +838,7 @@ static Rconnection newouttext(char *description, SEXP sfile, char *mode)
     new->write = &null_write;
     new->nPushBack = 0;
     new->private = (void*) malloc(sizeof(struct outtextconn));
+    new->save = -1000;
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error("allocation of text connection failed");
@@ -846,10 +867,10 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     ncon = NextConnection();
-    if(!strlen(open) || strncmp(open, "r", 1) == 0) 
+    if(!strlen(open) || strncmp(open, "r", 1) == 0)
 	con = Connections[ncon] = newtext(desc, stext);
     else if (strncmp(open, "w", 1) == 0 || strncmp(open, "a", 1) == 0)
-	con = Connections[ncon] = 
+	con = Connections[ncon] =
 	    newouttext(CHAR(STRING_ELT(stext, 0)), sfile, open);
     else
 	errorcall(call, "unsupported mode");
@@ -863,8 +884,6 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     classgets(ans, class);
     UNPROTECT(2);
     return ans;
-    
-    return R_NilValue;
 }
 
 /* ------------------- open, close, seek --------------------- */
@@ -875,7 +894,7 @@ SEXP do_open(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con=NULL;
     SEXP sopen;
     char *open;
-    
+
     checkArity(op, args);
     i = asInteger(CAR(args));
     con = getConnection(i);
@@ -932,15 +951,12 @@ SEXP do_isseekable(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
+void con_close(int i)
 {
-    int i, j;
+    int j;
     Rconnection con=NULL;
-    
-    checkArity(op, args);
-    i = asInteger(CAR(args));
+
     con = getConnection(i);
-    if(i < 3) error("cannot close standard connections");
     if(con->isopen) con->close(con);
     con->destroy(con);
     free(con->class);
@@ -953,6 +969,18 @@ SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     free(Connections[i]);
     Connections[i] = NULL;
+}
+
+
+SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int i;
+
+    checkArity(op, args);
+    i = asInteger(CAR(args));
+    if(i < 3) error("cannot close standard connections");
+    if(i == R_SinkCon) error("cannot close sink connection");
+    con_close(i);
     return R_NilValue;
 }
 
@@ -979,8 +1007,26 @@ int Rconn_fgetc(Rconnection con)
 {
     char *curLine;
     int c;
-    
-    if(con->nPushBack <= 0 ) return con->fgetc(con);
+
+    if(con->nPushBack <= 0) {
+	/* map CR or CRLF to LF */
+	if (con->save != -1000) {
+	    c = con->save;
+	    con->save = con->save2;
+	    con->save2 = -1000;
+	    return c;
+	}
+	c = con->fgetc(con);
+	if (c == '\r') {
+	    c = con->fgetc(con);
+	    if (c != '\n') {
+		con->save2 = con->save;
+		con->save = (c != '\r') ? c : '\n';
+		return('\n');
+	    }
+	}
+	return c;
+    }
     curLine = con->PushBack[con->nPushBack-1];
     c = curLine[con->posPushBack++];
     if(con->posPushBack >= strlen(curLine)) {
@@ -990,6 +1036,13 @@ int Rconn_fgetc(Rconnection con)
 	con->posPushBack = 0;
 	if(con->nPushBack == 0) free(con->PushBack);
     }
+    return c;
+}
+
+int Rconn_ungetc(int c, Rconnection con)
+{
+    con->save2 = con->save;
+    con->save = c;
     return c;
 }
 
@@ -1018,7 +1071,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     con = getConnection(asInteger(CAR(args)));
     n = asInteger(CADR(args));
-    if(n == NA_INTEGER) 
+    if(n == NA_INTEGER)
 	errorcall(call, "invalid value for `n'");
     ok = asLogical(CADDR(args));
     if(ok == NA_LOGICAL)
@@ -1028,7 +1081,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     wasopen = con->isopen;
     if(!wasopen) con->open(con);
     buf = (char *) malloc(buf_size);
-    if(!buf) 
+    if(!buf)
 	error("cannot allocate buffer in readLines");
     nn = (n < 0) ? 1000 : n; /* initially allocate space for 1000 lines */
     nnn = (n < 0) ? INT_MAX : n;
@@ -1036,14 +1089,14 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     for(nread = 0; nread < nnn; nread++) {
 	if(nread >= nn) {
 	    ans2 = allocVector(STRSXP, 2*nn);
-	    for(i = 0; i < nn; i++) 
+	    for(i = 0; i < nn; i++)
 		SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
 	    nn *= 2;
 	    UNPROTECT(1); /* old ans */
 	    PROTECT(ans = ans2);
 	}
 	nbuf = 0;
-	while((c = Rconn_fgetc(con)) != EOF) {
+	while((c = Rconn_fgetc(con)) != R_EOF) {
 	    if(nbuf == buf_size) {
 		buf_size *= 2;
 		buf = (char *) realloc(buf, buf_size);
@@ -1054,7 +1107,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	buf[nbuf] = '\0';
 	SET_STRING_ELT(ans, nread, mkChar(buf));
-	if(c == EOF) goto no_more_lines;
+	if(c == R_EOF) goto no_more_lines;
     }
     UNPROTECT(1);
     free(buf);
@@ -1067,10 +1120,10 @@ no_more_lines:
 	nread++;
 	warningcall(call, "incomplete final line");
     }
-    if(n < nnn && !ok) 
+    if(n < nnn && !ok)
 	errorcall(call, "too few lines read");
     PROTECT(ans2 = allocVector(STRSXP, nread));
-    for(i = 0; i < nread; i++) 
+    for(i = 0; i < nread; i++)
 	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
     UNPROTECT(2);
     return ans2;
@@ -1103,28 +1156,377 @@ SEXP do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
     wasopen = con->isopen;
     if(!wasopen) con->open(con);
     for(i = 0; i < length(text); i++)
-	writecon(con, "%s%s", CHAR(STRING_ELT(text, i)), 
+	writecon(con, "%s%s", CHAR(STRING_ELT(text, i)),
 		 CHAR(STRING_ELT(sep, 0)));
     if(!wasopen) con->close(con);
     return R_NilValue;
 }
 
-#if 0
 /* ------------------- read, write  binary --------------------- */
 
-
-SEXP do_readraw(SEXP call, SEXP op, SEXP args, SEXP env)
+static void swapb(void *result, int size)
 {
-    checkArity(op, args);
-    return R_NilValue;
+    int i;
+    char *p = result, tmp;
+
+    if (size == 1) return;
+    for (i = 0; i < size/2; i++) {
+	tmp = p[i];
+	p[i] = p[size - i - 1];
+	p[size - i - 1] = tmp;
+    }
 }
 
-SEXP do_writeraw(SEXP call, SEXP op, SEXP args, SEXP env)
+static SEXP readOneString(Rconnection con)
 {
-    checkArity(op, args);
-    return R_NilValue;
+    char *buf, *p, *new;
+    int ibfs = 500, pos, m;
+
+    buf = (char *) R_alloc(ibfs, sizeof(char));
+    for(pos = 0; pos < 10000; pos++) {
+	p = buf + pos;
+	m = con->read(p, sizeof(char), 1, con);
+	if(!m) return R_NilValue;
+	if(*p == '\0') break;
+	if(pos >= ibfs - 1) {
+	    new = (char *) R_alloc(2*ibfs, sizeof(char));
+	    memcpy(new, buf, pos+1);
+	    buf = new;
+	    ibfs *= 2;
+	}
+    }
+    return mkChar(buf);
 }
+
+/* readBin(con, what, n, swap) */
+SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans = R_NilValue, swhat;
+    int i, size, swap, n, m = 0, sizedef= 4, mode = 1;
+    char *what;
+    void *p = NULL;
+    Rboolean wasopen;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    i = asInteger(CAR(args)); args = CDR(args);
+    if(i == NA_INTEGER || !(con = Connections[i]))
+	error("invalid connection");
+    if(con->text) error("can only read from a binary connection");
+    swhat = CAR(args); args = CDR(args);
+    if(!isString(swhat) || length(swhat) != 1)
+	error("invalid value of `what'");
+    what = CHAR(STRING_ELT(swhat, 0));
+    n = asInteger(CAR(args)); args = CDR(args);
+    if(n == NA_INTEGER || n < 0) error("invalid value of `n'");
+    size = asInteger(CAR(args)); args = CDR(args);
+    swap = asLogical(CAR(args));
+    if(swap == NA_LOGICAL)
+	error("invalid value of `swap'");
+    if(!con->canread)
+	error("cannot read from this connection");
+
+    wasopen = con->isopen;
+    if(!wasopen) con->open(con);
+
+    if(!strcmp(what, "character")) {
+	SEXP onechar;
+	PROTECT(ans = allocVector(STRSXP, n));
+	for(i = 0, m = i+1; i < n; i++) {
+	    onechar = readOneString(con);
+	    if(onechar != R_NilValue) {
+		SET_STRING_ELT(ans, i, onechar);
+		m++;
+	    } else break;
+	}
+    } else if(!strcmp(what, "complex")) {
+	if(size == NA_INTEGER) size = sizeof(Rcomplex);
+	if(size != sizeof(Rcomplex))
+	    error("size changing is not supported for complex vectors");
+	PROTECT(ans = allocVector(CPLXSXP, n));
+	p = (void *) COMPLEX(ans);
+	m = con->read(p, size, n, con);
+	if(swap)
+	    for(i = 0; i < m; i++) {
+		swapb(&(COMPLEX(ans)[i].r), sizeof(double));
+		swapb(&(COMPLEX(ans)[i].i), sizeof(double));
+	    }
+    } else {
+	if (!strcmp(what, "integer") || !strcmp(what, "int")) {
+	    sizedef = sizeof(int); mode = 1;
+	    if(size == NA_INTEGER) size = sizedef;
+	    switch (size) {
+	    case sizeof(signed char):
+	    case sizeof(short):
+	    case sizeof(int):
+#if SIZE_LONG == 8
+	    case sizeof(long):
+#elif SIZEOF_LONG_LONG == 8
+	    case sizeof(long long):
 #endif
+		break;
+	    default:
+		error("That size is unknown on this machine");
+	    }
+	    PROTECT(ans = allocVector(INTSXP, n));
+	    p = (void *) INTEGER(ans);
+	} else if (!strcmp(what, "logical")) {
+	    sizedef = sizeof(int); mode = 1;
+	    if(size == NA_INTEGER) size = sizedef;
+	    switch (size) {
+	    case sizeof(signed char):
+	    case sizeof(short):
+	    case sizeof(int):
+#if SIZE_LONG == 8
+	    case sizeof(long):
+#elif SIZEOF_LONG_LONG == 8
+	    case sizeof(long long):
+#endif
+		break;
+	    default:
+		error("That size is unknown on this machine");
+	    }
+	    PROTECT(ans = allocVector(LGLSXP, n));
+	    p = (void *) LOGICAL(ans);
+	} else if (!strcmp(what, "numeric") || !strcmp(what, "double")) {
+	    sizedef = sizeof(double); mode = 2;
+	    if(size == NA_INTEGER) size = sizedef;
+	    switch (size) {
+	    case sizeof(double):
+	    case sizeof(float):
+#if SIZE_LONG_DOUBLE > 8
+	    case sizeof(long double):
+#endif
+		break;
+	    default:
+		error("That size is unknown on this machine");
+	    }
+	    PROTECT(ans = allocVector(REALSXP, n));
+	    p = (void *) REAL(ans);
+	}
+	if(size == sizedef) {
+	    m = con->read(p, size, n, con);
+	    if(swap && size > 1)
+		for(i = 0; i < m; i++) swapb((char *)p+i*size, size);
+	} else {
+	    char * buf = R_alloc(1, size);
+	    int s;
+	    if(mode == 1) {
+		for(i = 0, m = 0; i < n; i++) {
+		    s = con->read(buf, size, 1, con);
+		    if(s) m++; else break;
+		    if(swap && size > 1) swapb(buf, size);
+		    switch(size) {
+		    case sizeof(signed char):
+			INTEGER(ans)[i] = (int)*((signed char *)buf);
+			break;
+		    case sizeof(short):
+			INTEGER(ans)[i] = (int)*((short *)buf);
+			break;
+#if SIZE_LONG == 8
+		    case sizeof(long):
+			INTEGER(ans)[i] = (int)*((long *)buf);
+			break;
+#elif SIZEOF_LONG_LONG == 8
+		    case sizeof(long long):
+			INTEGER(ans)[i] = (int)*((long long *)buf);
+			break;
+#endif
+		    }
+		}
+	    } else if (mode == 2) {
+		for(i = 0, m = 0; i < n; i++) {
+		    s = con->read(buf, size, 1, con);
+		    if(s) m++; else break;
+		    if(swap && size > 1) swapb(buf, size);
+		    switch(size) {
+		    case sizeof(float):
+			REAL(ans)[i] = (double)*((float *)buf);
+			break;
+#if SIZE_LONG_DOUBLE > 8
+		    case sizeof(long double):
+			REAL(ans)[i] = (double)*((long double *)buf);
+			break;
+#endif
+		    }
+		}
+	    }
+	}
+    }
+    if(!wasopen) con->close(con);
+    if(m < n) {
+	PROTECT(ans = lengthgets(ans, m));
+	UNPROTECT(1);
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+/* writeBin(object, con, swap) */
+SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP object;
+    int i, j, size, swap, len, n=0;
+    char *s, *buf;
+    Rboolean wasopen;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    object = CAR(args);
+    if(!isVectorAtomic(object))
+	error("`x' is not an atomic vector type");
+    i = asInteger(CADR(args));
+    if(i == NA_INTEGER || !(con = Connections[i]))
+	error("invalid connection");
+    if(con->text) error("can only write to a binary connection");
+    size = asInteger(CADDR(args));
+    swap = asLogical(CADDDR(args));
+    if(swap == NA_LOGICAL)
+	error("invalid value of `swap'");
+    if(!con->canwrite)
+	error("cannot write to this connection");
+    len = LENGTH(object);
+    if(len == 0) return R_NilValue;
+
+    wasopen = con->isopen;
+    if(!wasopen) con->open(con);
+
+    if(TYPEOF(object) == STRSXP) {
+	for(i = 0; i < len; i++) {
+	    s = CHAR(STRING_ELT(object, i));
+	    n = con->write(s, sizeof(char), strlen(s) + 1, con);
+	    if(!n) {
+		warning("problem writing to connection");
+		break;
+	    }
+	}
+    } else {
+	switch(TYPEOF(object)) {
+	case LGLSXP:
+	case INTSXP:
+	    if(size == NA_INTEGER) size = sizeof(int);
+	    switch (size) {
+	    case sizeof(signed char):
+	    case sizeof(short):
+	    case sizeof(int):
+#if SIZE_LONG == 8
+	    case sizeof(long):
+#elif SIZEOF_LONG_LONG == 8
+	    case sizeof(long long):
+#endif
+		break;
+	    default:
+		error("That size is unknown on this machine");
+	    }
+	    break;
+	case REALSXP:
+	    if(size == NA_INTEGER) size = sizeof(double);
+	    switch (size) {
+	    case sizeof(double):
+	    case sizeof(float):
+#if SIZE_LONG_DOUBLE > 8
+	    case sizeof(long double):
+#endif
+		break;
+	    default:
+		error("That size is unknown on this machine");
+	    }
+	    break;
+	case CPLXSXP:
+	    if(size == NA_INTEGER) size = sizeof(Rcomplex);
+	    if(size != sizeof(Rcomplex))
+		error("size changing is not supported for complex vectors");
+	    break;
+	default:
+	    error("That type is unimplemented");
+	}
+	buf = R_alloc(len, size);
+	switch(TYPEOF(object)) {
+	case LGLSXP:
+	case INTSXP:
+	    switch (size) {
+	    case sizeof(int):
+		memcpy(buf, INTEGER(object), size * len);
+		break;
+#if SIZE_LONG == 8
+	    case sizeof(long):
+	    {
+		long l1;
+		for (i = 0, j = 0; i < len; i++, j += size) {
+		    l1 = (long) INTEGER(object)[i];
+		    memcpy(buf + j, &l1, size);
+		}
+		break;
+	    }
+#elif SIZEOF_LONG_LONG == 8
+	    case sizeof(long long):
+	    {
+		long long ll1;
+		for (i = 0, j = 0; i < len; i++, j += size) {
+		    ll1 = (long long) INTEGER(object)[i];
+		    memcpy(buf + j, &ll1, size);
+		}
+		break;
+	    }
+#endif
+	    case 2:
+	    {
+		short s1;
+		for (i = 0, j = 0; i < len; i++, j += size) {
+		    s1 = (short) INTEGER(object)[i];
+		    memcpy(buf + j, &s1, size);
+		}
+		break;
+	    }
+	    case 1:
+		for (i = 0; i < len; i++)
+		    buf[i] = (signed char) INTEGER(object)[i];
+		break;
+	    }
+	    break;
+	case REALSXP:
+	    switch (size) {
+	    case sizeof(double):
+		memcpy(buf, REAL(object), size * len);
+		break;
+	    case sizeof(float):
+	    {
+		float f1;
+		for (i = 0, j = 0; i < len; i++, j += size) {
+		    f1 = (float) REAL(object)[i];
+		    memcpy(buf+j, &f1, size);
+		}
+		break;
+	    }
+#if SIZE_LONG_DOUBLE > 8
+	    case sizeof(long double):
+	    {
+		long double ld1;
+		for (i = 0, j = 0; i < len; i++, j+=size) {
+		    ld1 = (long double) REAL(object)[i];
+		    memcpy(buf+j, &ld1, size);
+		}
+		break;
+	    }
+#endif
+	    }
+	    break;
+	case CPLXSXP:
+	    memcpy(buf, COMPLEX(object), size * len);
+	    break;
+	}
+
+	if(swap && size > 1)
+	    for(i = 0; i < len; i++) swapb(buf+size*i, size);
+
+	/* write it now */
+	n = con->write(buf, size, len, con);
+	if(n < len) warning("problem writing to connection");
+    }
+
+    if(!wasopen) con->close(con);
+    return R_NilValue;
+}
 
 /* ------------------- push back text  --------------------- */
 
@@ -1154,7 +1556,7 @@ SEXP do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
     nexists = con->nPushBack;
     if((n = length(stext)) > 0) {
 	if(nexists > 0) {
-	    q = con->PushBack = 
+	    q = con->PushBack =
 		(char **) realloc(con->PushBack, (n+nexists)*sizeof(char *));
 	} else {
 	    q = con->PushBack = (char **) malloc(n*sizeof(char *));
@@ -1179,7 +1581,7 @@ SEXP do_pushbacklength(SEXP call, SEXP op, SEXP args, SEXP env)
     int i;
     Rconnection con = NULL;
     SEXP ans;
-    
+
     i = asInteger(CAR(args));
     if(i == NA_INTEGER || !(con = Connections[i]))
 	error("invalid connection");
@@ -1213,10 +1615,10 @@ SEXP do_getallconnections(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
     checkArity(op, args);
     for(i = 0; i < NCONNECTIONS; i++)
-	if(Connections[i] && Connections[i]->isopen) n++;
+	if(Connections[i]) n++;
     PROTECT(ans = allocVector(INTSXP, n));
     for(i = 0; i < NCONNECTIONS; i++)
-	if(Connections[i]) 
+	if(Connections[i])
 	    INTEGER(ans)[j++] = i;
     UNPROTECT(1);
     return ans;
@@ -1226,7 +1628,7 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, names;
     Rconnection Rcon;
-    
+
     checkArity(op, args);
     Rcon = getConnection(asInteger(CAR(args)));
     PROTECT(ans = allocVector(VECSXP, 7));

@@ -6,7 +6,7 @@ manova <- function(...)
     if(inherits(result, "aovlist")) {
         for(i in seq(along=result)) {
             if(!inherits(result[[i]], "maov")) stop("need multiple response")
-            class(result[[i]]) <- c("manova", class(results[[i]]))
+            class(result[[i]]) <- c("manova", class(result[[i]]))
         }
         attr(result, "call") <- Call
     } else {

@@ -5,7 +5,7 @@ WINHELP = BOTH# NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
-RPREFIX = rw1020
+RPREFIX = rw1021
 
 RHOME = $(shell perl pwd.pl ../..)# must be absolute path
 RLIB = $(RHOME)/library
@@ -179,11 +179,9 @@ pkgcheck-%:
 
 ziphelp-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
 ziponly-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
 zipdata-%:
 	(cd $(RLIB)/$*/data; ls -1 > filelist; \
@@ -235,6 +233,10 @@ check test: test-Specific pkgtests
 test-Specific:
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME)
+
+test-Reg:
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME) test-Reg
+
 
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
@@ -343,7 +345,7 @@ packagedist:
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
-	  maketitle pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
+	  maketitle.awk pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32

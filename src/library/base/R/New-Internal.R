@@ -55,11 +55,11 @@ args <- function(name).Internal(args(name))
 ##- "attr<-" <- function(x, which, value).Internal("attr<-"(x, which, value))
 
 cbind <- function(..., deparse.level=1) {
-    if(deparse.level != 1) stop("cbind(.) does not accept deparse.level in R.")
+    if(deparse.level != 1) .NotYetUsed("deparse.level != 1")
     .Internal(cbind(...))
 }
 rbind <- function(..., deparse.level=1) {
-    if(deparse.level != 1) stop("rbind(.) does not accept deparse.level in R.")
+    if(deparse.level != 1) .NotYetUsed("deparse.level != 1")
     .Internal(rbind(...))
 }
 
@@ -80,7 +80,7 @@ do.call <- function(what,args).Internal(do.call(what,args))
 drop <- function(x).Internal(drop(x))
 duplicated <- function(x, incomparables = FALSE) {
     if(!is.logical(incomparables) || incomparables)
-	stop("duplicated(incomparables != FALSE) not yet available in R.")
+	.NotYetUsed("incomparables != FALSE")
     .Internal(duplicated(x))
 }
 format.info <- function(x).Internal(format.info(x))
@@ -105,20 +105,26 @@ mem.limits <- function(nsize=NA, vsize=NA)
 
 nchar <- function(x).Internal(nchar(x))
 
-##=== FAILS: [	format(pi, dig=2) doesn't work afterwards ]
-##- on.exit <- function(expression, add = FALSE) {
-##-   if(!is.logical(add) || add)
-##-	stop("on.exit(.., add != FALSE) does not yet work in R.")
-##-  .Internal(on.exit(expression))
-##- }
-
 plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
     .Internal(plot.window(xlim, ylim, log, asp, ...))
 polyroot <- function(z).Internal(polyroot(z))
 rank <- function(x, na.last = TRUE) {
-    if(!is.logical(na.last) || !na.last)
-	stop("rank(na.last != TRUE) does not yet work in R.")
-    .Internal(rank(x))
+    nas <- is.na(x)
+    y <- .Internal(rank(x[!nas]))
+    if(!is.na(na.last) && any(nas)) {
+        if(na.last) {
+            ## NOTE that the internal code gets NAs reversed
+            x[!nas] <- y
+            x[nas] <- seq(from = length(y) + 1, to = length(x))
+        }
+        else {
+            len <- sum(nas)
+            x[!nas] <- y + len
+            x[nas] <- 1 : len
+        }
+        y <- x
+    }
+    y
 }
 readline <- function(prompt="").Internal(readline(prompt))
 search <- function().Internal(search())
@@ -134,11 +140,14 @@ searchpaths <- function()
 
 sink <- function(file=NULL, append = FALSE)
 {
+    closeOnExit <- FALSE
     if(is.null(file)) file <- 1
-    else if(is.character(file)) file <- file(file, ifelse(append, "a", "w"))
-    else if(!inherits(file, "connection"))
+    else if(is.character(file)) {
+        file <- file(file, ifelse(append, "a", "w"))
+        closeOnExit <- TRUE
+    } else if(!inherits(file, "connection"))
         stop("`file' must be NULL, a connection or a character string")
-    .Internal(sink(file, append))
+    .Internal(sink(file, append, closeOnExit))
 }
 
 ##-- DANGER ! ---   substitute(list(...))  inside functions !!!
@@ -147,10 +156,12 @@ sink <- function(file=NULL, append = FALSE)
 t.default <- function(x).Internal(t.default(x))
 typeof <- function(x).Internal(typeof(x))
 
-unique <- function(x){
-    z<-.Internal(unique(x))
-    if (is.factor(x))
-	z <- factor(z,levels=1:nlevels(x),labels=levels(x))
+unique <- function(x, incomparables = FALSE) {
+    if(!is.logical(incomparables) || incomparables)
+	.NotYetUsed("incomparables != FALSE")
+    z <- .Internal(unique(x))
+    if(is.factor(x))
+	z <- factor(z, levels = 1:nlevels(x), labels = levels(x))
     z
 }
 

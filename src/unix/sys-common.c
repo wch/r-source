@@ -663,18 +663,27 @@ static void Putenv(char *a, char *b)
 
 
 #define BUF_SIZE 255
+#define MSG_SIZE 2000
 static int process_Renviron(char *filename)
 {
     FILE *fp;
-    char *s, *p, sm[BUF_SIZE], *lhs, *rhs;
+    char *s, *p, sm[BUF_SIZE], *lhs, *rhs, msg[MSG_SIZE+50];
+    int errs = 0;
 
-    if (!filename || !(fp = fopen(filename,"r"))) return 0;
+    if (!filename || !(fp = fopen(filename, "r"))) return 0;
+    sprintf(msg, "\n   File %s contains invalid line(s)", filename);
 
     while(fgets(sm, BUF_SIZE, fp)) {
 	sm[BUF_SIZE] = '\0';
 	s = rmspace(sm);
 	if(strlen(s) == 0 || s[0] == '#') continue;
-	if(!(p = strchr(s, '='))) continue;
+	if(!(p = strchr(s, '='))) {
+	    errs++;
+	    if(strlen(msg) < MSG_SIZE) {
+		strcat(msg, "\n      "); strcat(msg, s);
+	    }
+	    continue;
+	}
 	*p = '\0';
 	lhs = rmspace(s);
 	rhs = findterm(rmspace(p+1));
@@ -682,6 +691,10 @@ static int process_Renviron(char *filename)
 	if(strlen(lhs) && strlen(rhs)) Putenv(lhs, rhs);
     }
     fclose(fp);
+    if (errs) {
+	strcat(msg, "\n   They were ignored\n");
+	R_ShowMessage(msg);
+    }
     return 1;
 }
 

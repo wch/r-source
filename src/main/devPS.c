@@ -34,7 +34,7 @@
 
 #define PS_minus_default 45
 /* wrongly was 177 (plusminus);
-   hyphen = 45 or 173;	(n-dash not available as code!)
+   hyphen = 173;   (endash not available as code!)
    175 = "¯" (macron)
 */
 static char PS_minus = PS_minus_default;/*-> TODO: make this a ps.option() !*/
@@ -284,13 +284,13 @@ static char charnames[256][25];
 static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
 {
     char *p = buf, charname[25];
-    int nchar, i;
+    int nchar, nchar2=-1, i;
     short WX;
 
     if (!MatchKey(buf, "C ")) return 0;
     p = SkipToNextItem(p);
     sscanf(p, "%d", &nchar);
-    if (nchar < 0) return 1;
+    if (nchar < 0 && !ISOLatin1) return 1;
     p = SkipToNextKey(p);
 
     if (!MatchKey(p, "WX")) return 0;
@@ -302,13 +302,17 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
     p = SkipToNextItem(p);
     if(ISOLatin1) {
 	sscanf(p, "%s", charname);
+#ifdef DEBUG_PS
+	Rprintf("char name %s\n", charname);
+#endif
+	/* a few chars appear twice in ISOLatin1 */
+	nchar = nchar2 = -1;
 	for (i = 32; i < 256; i++)
 	    if(!strcmp(charname, ISOLatin1Encoding[i-32])) {
-		nchar = i;
-		strcpy(charnames[i], charname);
-		break;
+		strcpy(charnames[i], charname); 
+		if(nchar == -1) nchar = i; else nchar2 = i;
 	    }
-	if (i > 255) return 1;
+	if (nchar == -1) return 1;
     } else {
 	sscanf(p, "%s", charnames[nchar]);
     }
@@ -331,6 +335,23 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
 	    metrics->CharInfo[nchar].BBox[2],
 	    metrics->CharInfo[nchar].BBox[3]);
 #endif
+    if (nchar2 > 0) {
+	metrics->CharInfo[nchar2].WX = WX;
+	sscanf(p, "%hd %hd %hd %hd",
+	       &(metrics->CharInfo[nchar2].BBox[0]),
+	       &(metrics->CharInfo[nchar2].BBox[1]),
+	       &(metrics->CharInfo[nchar2].BBox[2]),
+	       &(metrics->CharInfo[nchar2].BBox[3]));
+
+#ifdef DEBUG_PS
+	Rprintf("nchar = %d %d %d %d %d %d\n", nchar2,
+		metrics->CharInfo[nchar2].WX,
+		metrics->CharInfo[nchar2].BBox[0],
+		metrics->CharInfo[nchar2].BBox[1],
+		metrics->CharInfo[nchar2].BBox[2],
+		metrics->CharInfo[nchar2].BBox[3]);
+#endif
+    }
     return 1;
 }
 
@@ -365,7 +386,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 			  char *fontname, int ISOLatin1)
 {
     char buf[BUFSIZE], *p;
-    int mode, i = 0, ii, nKPX=0;
+    int mode, i = 0, j, ii, nKPX=0;
     FILE *fp;
 
     if(strchr(fontpath, FILESEP[0])) strcpy(buf, fontpath);
@@ -380,6 +401,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
     for (ii = 0; ii < 256; ii++) {
 	charnames[ii][0] = '\0';
 	metrics->CharInfo[ii].WX = 0;
+	for(j = 0; j < 4; j++) metrics->CharInfo[ii].BBox[j] = 0;
     }
     while (fgets(buf, BUFSIZE, fp)) {
 	switch(KeyType(buf)) {

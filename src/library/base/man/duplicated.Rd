@@ -6,13 +6,14 @@ duplicated(x, incomparables = FALSE)
 \alias{duplicated}
 \arguments{
   \item{x}{an atomic vector}
-  \item{incomparables}For S compatibility. Other values are not yet
-  implemented in \R.}
+  \item{incomparables}{a vector of values that cannot be compared.
+    Currently, \code{FALSE} is the only possible value, meaning that all
+    values can be compared.}
 }
 \description{
-  Determines which elements of a vector are duplicates
-  of elements with smaller subscripts, and returns a
-  logical vector indicating which elements are duplicates.
+  Determines which elements of a vector are duplicates of elements with
+  smaller subscripts, and returns a logical vector indicating which
+  elements are duplicates.
 }
 \seealso{\code{\link{unique}}.}
 \examples{

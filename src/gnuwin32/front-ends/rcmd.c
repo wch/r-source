@@ -34,7 +34,7 @@ int main (int argc, char **argv)
        launch %R_HOME%\bin\$*
      */
     int i, res, status = 0;
-    char *RHome, PERL5LIB[MAX_PATH], PATH[MAX_PATH], RHOME[MAX_PATH],
+    char *RHome, PERL5LIB[MAX_PATH], PATH[10000], RHOME[MAX_PATH],
 	*p, cmd[10000], Rversion[25];
 
     RHome = getRHOME();

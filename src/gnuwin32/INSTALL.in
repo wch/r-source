@@ -56,7 +56,8 @@ mirrors, and included in our tools.zip).
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
-http://msdn.microsoft.com/workshop/author/htmlhelp/.
+http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm
+
 
 If you want to make Window help files you will need hcrtf.exe from a
 Windows compiler installation (this has been available for download at
@@ -114,7 +115,8 @@ in crtdll.dll is unlikely to be satisfactory, but the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
 
 You can test a build by `make check': expect some differences in the
-tests of the print routines.
+tests of the print routines.  You may need to set TMPDIR to a suitable
+temporary directory: the default is c:\TEMP.
 
 
 Building bitmap device support

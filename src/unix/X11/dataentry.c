@@ -840,7 +840,7 @@ static void closerect(void)
 	    /* do it this way to ensure NA, Inf, ...  can get set */
 	    char *endp;
 	    double new = R_strtod(buf, &endp);
-	    Rboolean warn = !isBlankString((unsigned char *)endp);
+	    Rboolean warn = !isBlankString(endp);
 	    if (TYPEOF(cvec) == STRSXP) {
 		tvec = allocString(strlen(buf));
 		strcpy(CHAR(tvec), buf);

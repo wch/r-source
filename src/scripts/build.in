@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.19 $ ';
+my $revision = ' $Revision: 1.19.2.5 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -51,6 +51,8 @@ my $R_exe = "${R_HOME}/bin/R";
 
 if($WINDOWS){
     $tmpdir = R_getenv("TMPDIR", "/TEMP");
+    die "Please set TMPDIR to a valid temporary directory\n" 
+	unless (-d $TMPDIR);
     $R_exe = "Rterm.exe";
     $MAKE = "make";
     @knownoptions = ("help|h", "version|v", "binary", "docs:s",
@@ -173,12 +175,22 @@ foreach $pkg (@ARGV){
 	$exclude = "$tmpdir/Rbuild.$$";
 	open exclude, "> $exclude" ||
 	    die "Cannot write to \`$exclude'\n";
-	find(\&findExcludeFiles, $pkg);
+	binmode exclude if $WINDOWS;
+	@excludepatterns = ("^.Rbuildignore\$", "\~\$");
+	if(-f "$pkg/.Rbuildignore") {
+	    open(RBUILDIGNORE, "$pkg/.Rbuildignore");
+	    while(<RBUILDIGNORE>) {
+		chop;
+		push(@excludepatterns, $_);
+	    }
+	    close(RBUILDIGNORE);
+	}
+	chdir("$pkg/..");
+	find(\&findExcludeFiles, "$pkgname");
 	close exclude;
 	
 	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
 	$log->message("building \`$filename.gz'");
-	chdir("$pkg/..");
 	my $filepath = "$startdir/$filename";
 	if($WINDOWS) {
 	    ## workaround for paths in Cygwin tar
@@ -202,16 +214,17 @@ sub deleteJunkFiles {
 }
 
 sub findExcludeFiles {
-
-    print exclude "$File::Find::name\n" if (-d $_ && /^check$/);
-    print exclude "$File::Find::name\n" if (-d $_ && /^chm$/);
-    print exclude "$File::Find::name\n" if (-d $_ && /[Oo]ld$/);
+    print exclude "$File::Find::name\n" if(-d $_ && /^check$/);
+    print exclude "$File::Find::name\n" if(-d $_ && /^chm$/);
+    print exclude "$File::Find::name\n" if(-d $_ && /[Oo]ld$/);
     print exclude "$File::Find::name\n" if /^GNUMakefile$/;
     print exclude "$File::Find::name\n" if /^CVS$/;
-    print exclude "$File::Find::name\n" if /\~$/;
+    my $filename = $File::Find::name;
+    $filename =~ s/^[^\/]*\///;
+    foreach $p (@excludepatterns) {
+	print exclude "$File::Find::name\n" if($filename =~ /$p/);
+    }
 }
-    
-	
 
 
 #**********************************************************

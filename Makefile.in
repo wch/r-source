@@ -10,14 +10,17 @@ top_builddir = .
 include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
-INSTFILES = AUTHORS COPYING COPYRIGHTS FAQ MIRROR-SITES NEWS \
-	RESOURCES THANKS
+INSTFILES = AUTHORS COPYING COPYRIGHTS FAQ NEWS RESOURCES THANKS
 DISTFILES = $(INSTFILES) \
 	BUGS ChangeLog INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
 	acconfig.h acinclude.m4 aclocal.m4 \
 	config.site configure configure.in \
 	date-stamp
+## FIXME:
+## Update when releasing 1.3.0
+CLEANFILES = $(INSTFILES) MIRROR-SITES
+## </FIXME>
 SUBDIRS = src afm demos doc etc share tests tools
 
 GZIP = --best
@@ -74,8 +77,10 @@ install: installdirs
 ## Automake.
 	@echo "installing executables ..."
 	@$(INSTALL_PROGRAM) bin/R.bin $(rhome)/bin
-	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(rhome)/bin/R
-	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(bindir)/R
+	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
+	  > $(rhome)/bin/R
+	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
+	  > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
 	@for f in `find bin -type f -print \
 	             | grep -v '^bin/R$$' \
@@ -133,17 +138,13 @@ uninstall:
 	@echo "  rebuilding help index ..."
 	@(cd $(rhome)/library; \
 	  cat */TITLE > LibIndex 2> /dev/null || echo "" > LibIndex)
-	@echo "  rebuilding HTML index ..."
-	@if test -x $(rhome)/bin/R -a -f $(rhome)/bin/build-help; then \
-	  $(rhome)/bin/R CMD build-help --rhome $(rhome) --htmllists; \
-	fi
 	@echo "uninstalling headers ..."
 	@rm -rf $(rhome)/include
 	@echo "uninstalling executables ..."
 	@rm -rf $(rhome)/bin
 	@rm -rf $(rhome)/gnome
 	@rm -f $(bindir)/R
-	@for f in $(INSTFILES); do \
+	@for f in $(CLEANFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
 	@for d in afm demos doc etc share; do \
@@ -156,7 +157,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f $(INSTFILES); \
+	  rm -f $(CLEANFILES); \
 	fi
 distclean: clean
 	@for d in $(SUBDIRS); do \
@@ -165,9 +166,12 @@ distclean: clean
 	@rm -rf bin include library gnome
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool
+## FIXME:
+## This should really do something!
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
+## </FIXME>
 
 dist: dist-unix
 dist-unix: distdir

@@ -1,12 +1,14 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-2, 2000-12-13
+Version 1.2-18, 2001-01-13
 Kurt Hornik
 
 
 Table of Contents
 *****************
 
+
+R FAQ
 
 1 Introduction
   1.1 Legalese
@@ -72,6 +74,7 @@ Table of Contents
   7.15 What are the enclosing and parent environments?
   7.16 How can I substitute into a plot label?
   7.17 What are valid names?
+  7.18 Are GAMs implemented in R?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -86,7 +89,8 @@ Table of Contents
 10 Acknowledgments
 
 
-
+R FAQ
+*****
 
 1 Introduction
 **************
@@ -132,7 +136,7 @@ site (*Note What is CRAN?::).
 1.3 Citing this document
 ========================
 
-   In publications, please refer to this FAQ as Hornik (2000), "The R FAQ"
+   In publications, please refer to this FAQ as Hornik (2001), "The R FAQ"
 and give the above, _official_ URL.
 
 1.4 Notation
@@ -207,7 +211,7 @@ project ("GNU S").
 systems.
 
    The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux, ix86-sun-solaris,
+common Unix platforms including i386-freebsd, i386-linux, i386-sun-solaris,
 ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
 hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 
@@ -216,7 +220,7 @@ hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix/Windows version is 1.2.0, the unstable one is
+   The current stable Unix/Windows version is 1.2.1, the unstable one is
 1.3.0.  Typically, new features are introduced in the development versions;
 updates of stable versions are for bug fixes mostly.  The version for the
 Mac is pre-alpha.
@@ -278,7 +282,7 @@ LaTeX versions of the documentation are built.
 Extension Writers Guide", in the `doc/manual' subdirectory.  These files
 can be previewed and printed using standard programs such as `xdvi' and
 `dvips'.  You can also use `make pdf' to build PDF (Portable Document
-Format) version of the manuals, and view these using Acrobat.  Manuals
+Format) version of the manuals, and view these using e.g. Acrobat.  Manuals
 written in the GNU Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone GNU Info; use `make
 info' to create these versions (note that this requires `makeinfo' version
@@ -340,11 +344,11 @@ more details.
 
    The `bin/linux' directory of a CRAN site contains Debian 2.2/2.3
 packages for the i386 platform (now part of the Debian distribution and
-maintained by Doug Bates), Red Hat 6.x packages for the alpha and sparc
-platforms and 6.x/7.x packages for the i386 platform (maintained by Naoki
-Takebayashi, Vin Everett, and Martyn Plummer, respectively), SuSE
-5.3/6.4/7.0 i386 packages by Albrecht Gebhardt, Mandrake 7.1 i386 packages
-by Michele Alzetta, and Linuxppc 5.0 RPMs by Alex Buerkle.
+maintained by Doug Bates), Red Hat 6.x/7.x packages for the alpha and i386
+platforms and 6.x packages for the sparc platform (maintained by Naoki
+Takebayashi, Martyn Plummer, and Vin Everett, respectively), SuSE 6.4/7.0
+i386 packages by Albrecht Gebhardt, Mandrake 7.1/7.2 i386 packages by
+Michele Alzetta, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -864,13 +868,14 @@ the same time being as compatible as possible with S.
      for a site-wide startup profile unless the command line option
      `--no-site-file' was given.  The name of this file is taken from the
      value of the `R_PROFILE' environment variable.  If that variable is
-     unset, the default is ``$R_HOME'/etc/Rprofile'.  Then, unless
-     `--no-init-file' was given, R searches for a file called `.Rprofile'
-     in the current directory or in the user's home directory (in that
-     order) and sources it.  It also loads a saved image from `.RData' in
-     case there is one (unless `--no-restore' was specified).  If needed,
-     the functions `.First()' and `.Last()' should be defined in the
-     appropriate startup profiles.
+     unset, the default is ``$R_HOME'/etc/Rprofile'.  This code is loaded
+     in package *base*.  Then, unless `--no-init-file' was given, R
+     searches for a file called `.Rprofile' in the current directory or in
+     the user's home directory (in that order) and sources it into the user
+     workspace.  It then loads a saved image of the user workspace from
+     `.RData'  in case there is one (unless `--no-restore' was specified).
+     If needed, the functions `.First()' and `.Last()' should be defined in
+     the appropriate startup profiles.
 
    * In R, `T' and `F' are just variables being set to `TRUE' and `FALSE',
      respectively, but are not reserved words as in S and hence can be
@@ -1042,7 +1047,7 @@ works, was published in the Journal of Statistical Software
 *mva*
      MultiVariate Analysis.  Currently contains code for principal
      components, canonical correlations, metric multidimensional scaling,
-     and hierarchical and k-means clustering.
+     factor analysis, and hierarchical and k-means clustering.
 
 *nls*
      Nonlinear regression routines.
@@ -1176,10 +1181,16 @@ works, was published in the Journal of Statistical Software
 *e1071*
      Miscellaneous functions used at the Department of Statistics at TU Wien
      (E1071), including moments, short-time Fourier transforms, Independent
-     Component Analysis, and simulation of a Wiener process.
+     Component Analysis, Latent Class Analysis, reading and writing of
+     images in portable anymap format, simulation of a Wiener process,
+     support vector machines, and fuzzy clustering.
 
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.
+
+*exactRankTests*
+     Computes exact p-values and quantiles using an implementation of the
+     Streitberg/Roehmel shift algorithm.
 
 *fdim*
      Functions for calculating fractal dimension.
@@ -1256,6 +1267,9 @@ works, was published in the Journal of Statistical Software
      A collection of artificial and real-world machine learning benchmark
      problems, including the Boston housing data.
 
+*muhaz*
+     Hazard function estimation in survival analysis.
+
 *multilm*
      A basic method for fitting and testing multivariate linear models,
      including stabilized test procedures by Laeuter et. al.
@@ -1263,6 +1277,9 @@ works, was published in the Journal of Statistical Software
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
+
+*mvnmle*
+     ML estimation for multivariate normal data with missing values.
 
 *mvtnorm*
      Multivariate normal and t distributions.
@@ -1401,9 +1418,8 @@ these a try, of course.  This area of CRAN currently contains
      Extensions to *dse*, the Dynamic Systems Estimation multivariate time
      series package.  Contains PADI, juice and monitoring extensions.
 
-*exactDistr*
-     Exact distributions for rank tests by means of an implementation of the
-     Streitberg/Roehmel shift algorithm.
+*ensemble*
+     Ensembles of tree classifiers.
 
 *funfits*
      An integrated set of functions for fitting curves and surfaces
@@ -1425,12 +1441,18 @@ these a try, of course.  This area of CRAN currently contains
 *regexp*
      Simple regular expression interface.
 
-*timeslab*
-     Time series routines.
+*write.snns*
+     Function for writing a SNNS pattern file from a data frame or matrix.
 
    Directory `src/contrib/Omegahat' contains yet unreleased packages from
-the Omegahat Project for Statistical Computing (http://www.omegahat.org).
+the Omegahat Project for Statistical Computing (http://www.omegahat.org/).
 Currently, there are
+
+*CORBA*
+     Dynamic CORBA client/server facilities for R.  Connects to other
+     CORBA-aware applications developed in arbitrary languages, on different
+     machines and allows R functionality to be exported in the same way to
+     other applications.
 
 *Java*
      An interface from R to Java to create and call Java objects and
@@ -1444,6 +1466,10 @@ Currently, there are
 *RSPerl*
      An interface from R to an embedded, persistent Perl interpreter,
      allowing one to call arbitrary Perl subroutines, classes and methods.
+
+*SLanguage*
+     Functions and C support utilities to support S language programming
+     that can work in both R and S-PLUS.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*
@@ -1493,7 +1519,13 @@ E.g., to use a private tree in `$HOME/lib/R' and a public site-wide tree in
 
      R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
 
-into your (Bourne) shell profile or your `~/.Renviron' file.
+into your (Bourne) shell profile or even preferably, add the line
+
+     R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+
+your `~/.Renviron' file.  (Note that no `export' statement is needed or
+allowed in this file; see the on-line help for `Startup' for more
+information.)
 
 5.3 How can add-on packages be used?
 ====================================
@@ -1517,7 +1549,6 @@ at the R prompt.
      class        Functions for classification
      cluster      Functions for clustering
      ctest        Classical tests
-     date         Functions for handling dates
      eda          Exploratory Data Analysis
      gee          Generalized Estimating Equation models
      locfit       Local regression, likelihood and density estimation
@@ -1540,8 +1571,8 @@ at the R prompt.
 
    You can then find out which functions it provides by typing one of
 
-     help(package = PKG)
      library(help = PKG)
+     help(package = PKG)
 
    You can unload the loaded package PKG by
 
@@ -1587,8 +1618,8 @@ certainly of great value.
 
    One place where functionality is still missing is the modeling software
 as described in "Statistical Models in S" (see *Note What is S?::);
-Generalized Additive Models (*gam*) and some of the nonlinear modeling code
-are not there yet.
+Generalized Additive Models (*note Are GAMs implemented in R?::) and some
+of the nonlinear modeling code are not there yet.
 
    The R Developer Page (http://developer.r-project.org/) acts as an
 intermediate repository for more or less finalized ideas and plans for the
@@ -1729,15 +1760,9 @@ available.
 7.2 Why does sourcing a correct file fail?
 ==========================================
 
-   R sometimes has problems parsing a file which does not end in a newline.
-This can happen for example when Emacs is used for editing the file and
-`next-line-add-newlines' is set to `nil'.  To avoid the problem, either set
-`require-final-newline' to a non-`nil' value in one of your Emacs startup
-files, or make sure R-mode (*note Is there Emacs support for R?::) is used
-for editing R source files (which locally ensures this setting).
-
-   Earlier R versions had a similar problem when reading in data files, but
-this should have been taken care of now.
+   Versions of R prior to 1.2.1 may have had problems parsing files not
+ending in a newline.  Earlier R versions had a similar problem when reading
+in data files.  This should no longer happen.
 
 7.3 How can I set components of a list to NULL?
 ===============================================
@@ -2044,6 +2069,17 @@ language:
      system for reading, writing, etc.  It really has nothing much to do
      with names in the language, but it is traditional to call these
      strings file "names".
+
+7.18 Are GAMs implemented in R?
+===============================
+
+   There is a `gam()' function for Generalized Additive Models in package
+*mgcv*, but it is not an exact clone of what is described in the White Book
+(no `lo()' for example).  Package *gss* can fit spline-based GAMs too.  And
+if you can accept regression splines you can use `glm()'.  For gaussian
+GAMs you can use `bruto()' from package *mda*.  The long-term plan is to
+have something better than `gam()' for additive models, perhaps along the
+lines of BRUTO.
 
 8 R Programming
 ***************

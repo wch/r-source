@@ -129,15 +129,21 @@ all.equal.list <- function(target, current, ...)
     nt <- names(target)
     nc <- names(current)
     iseq <-
-	if(length(nt) && length(nc)) {
-	    if(any(not.in <- (c.in.t <- match(nc, nt, 0)) == 0))
-		msg <- c(msg, paste("Components not in target:",
-				    paste(nc[not.in], collapse = ", ")))
-	    if(any(not.in <- match(nt, nc, 0) == 0))
-		msg <- c(msg, paste("Components not in current:",
-				    paste(nt[not.in], collapse = ", ")))
-	    nt[c.in.t]
-	} else if(length(target) == length(current)) {
+        ## <FIXME>
+        ## Commenting this eliminates PR#674, and assumes that lists are
+        ## regarded as generic vectors, so that they are equal iff they
+        ## have identical names attributes and all components are equal.
+        ## if(length(nt) && length(nc)) {
+        ##     if(any(not.in <- (c.in.t <- match(nc, nt, 0)) == 0))
+        ## 	msg <- c(msg, paste("Components not in target:",
+        ## 			    paste(nc[not.in], collapse = ", ")))
+        ##     if(any(not.in <- match(nt, nc, 0) == 0))
+        ## 	msg <- c(msg, paste("Components not in current:",
+        ## 			    paste(nt[not.in], collapse = ", ")))
+        ##     nt[c.in.t]
+        ## } else
+        ## </FIXME>
+        if(length(target) == length(current)) {
 	    seq(along = target)
 	} else {
 	    nc <- min(length(target), length(current))

@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.27 $ ';
+my $revision = ' $Revision: 1.27.2.4 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -72,6 +72,8 @@ my $TMPDIR = R_getenv("TMPDIR", "/tmp");
 my $R_exe = "${R_HOME}/bin/R";
 if($WINDOWS){
     $TMPDIR = R_getenv("TMPDIR", "/TEMP");
+    die "Please set TMPDIR to a valid temporary directory\n" 
+	unless (-d $TMPDIR);
     $R_exe = "Rterm.exe";
     $MAKE = "make";
     $LATEX = "latex";
@@ -120,7 +122,7 @@ if($opt_latex){
 
 ## this is the main loop over all packages to be checked
 my $pkg;
-$#ARGV <=1 || die "no packages were specified";
+$#ARGV >=0 || die "no packages were specified";
 foreach $pkg (@ARGV){
     my $is_bundle=0;
     $pkg =~ s/\/$//;
@@ -137,10 +139,10 @@ foreach $pkg (@ARGV){
 	    exit(1);
 	}
     }
-
+    
     $log = new R::Logfile("$pkgoutdir/00check.log");
     $log->message("using log directory $pkgoutdir");
-
+    
     if(! $opt_library){
 	$library = $pkgoutdir;
 	if($WINDOWS){
@@ -150,13 +152,14 @@ foreach $pkg (@ARGV){
 	    $ENV{'R_LIBS'} = "$library:$R_LIBS";
 	}
     }
-
+    
     print "\n";
     if(system("${R_CMD} INSTALL -l $library $pkg")){
 	$log->error("installation failed");
+	exit(1);
     }
     print("\n");
-
+    
     my $description;
     $log->checking("for file \`$pkg/DESCRIPTION'");
     if(-r "$pkg/DESCRIPTION"){
@@ -167,8 +170,7 @@ foreach $pkg (@ARGV){
 	$log->result("NO");
 	exit(1);
     }
-
-	
+    
     if($description->{"Contains"}){
 	$log->message("Looks like \`${pkg}' is a package bundle");
 	$is_bundle=1;
@@ -197,10 +199,6 @@ foreach $pkg (@ARGV){
     $log->close();
     print("\n");
 }
-
-    
-
-
 
 #**********************************************************
 
@@ -244,12 +242,11 @@ sub check_pkg {
 	
     }
 
-
     ## mandatory entries in DESCRIPTION:
     ##   Package, Title, Version, License, Author
-    $log->checking("DESCRIPTION Package entry");
+    $log->checking("DESCRIPTION Package field");
     if(! $description->{"Package"}){
-	$log->error("no DESCRIPTION Package entry found");
+	$log->error("no DESCRIPTION Package field found");
 	exit(1);
     }
     if($description->{"Package"} ne basename($dir)){
@@ -257,10 +254,10 @@ sub check_pkg {
 	exit(1);
     }
     $log->result("OK");
-
-    $log->checking("DESCRIPTION Version entry");
+    
+    $log->checking("DESCRIPTION Version field");
     if(! $description->{"Version"}){
-	$log->error("no DESCRIPTION Version entry found");
+	$log->error("no DESCRIPTION Version field found");
 	exit(1);
     }
     if($description->{"Version"} =~ /[^\d\.\-]/){
@@ -269,19 +266,31 @@ sub check_pkg {
     }
     $log->result("OK");
     
-    my $entry;
-    foreach $entry (qw(Title License Author)){
-	$log->checking("DESCRIPTION $entry entry");
-	if(! $description->{$entry}){
-	    $log->error("no DESCRIPTION $entry entry found");
+    my $field;
+    foreach $field (qw(Title License Author)){
+	$log->checking("DESCRIPTION $field field");
+	if(! $description->{$field}){
+	    $log->error("no DESCRIPTION $field field found");
 	    exit(1);
 	}
 	$log->result("OK");
     }
+    ## FIXME:
+    ## Currently only give warning about missing `Maintainer' field.
+    ## Should be required in 1.3.0.
+    ## Also add check whether the field gives ONE email address only.
+    $log->checking("DESCRIPTION Maintainer field");
+    if(!$description->{"Maintainer"}) {
+	$log->warning();
+	$log->message("  no DESCRIPTION Maintainer field found");
+    }
+    else {
+	$log->result("OK");
+    }
+    ## </FIXME>
     
-
     ## check Rd documentation files
-
+    
     if(-d "man"){
 	$log->checking("Rd files");
 	my @rdfiles;
@@ -296,8 +305,8 @@ sub check_pkg {
 	}
 	if($#badfiles>=0){
 	    $log->error("  Cannot handle Rd file names containing \`<'.\n" .
-		    "  These are not legal file names on all R platforms.\n" .
-		    "  Please rename the following files and try again:");
+			"  These are not legal file names on all R platforms.\n" .
+			"  Please rename the following files and try again:");
 	    $log->message("    " . join("\n    ", @badfiles));
 	    exit(1);
 	}
@@ -310,7 +319,7 @@ sub check_pkg {
 			    seealso examples note author synopsis);
 	my %badmandatory;
 	my %badunique;
-
+	
 	## create hash allTags with all tags found in mandatory Tags and
 	## uniqueTags 
 	my $tag;
@@ -363,14 +372,13 @@ sub check_pkg {
 			      join("\n    ", @{$badunique{$tag}}));
 	    }
 	}
-	    
+
 	$log->result("OK") unless $any;
     }
 
-          
     ## Check for undocumented objects
 
-    if(-d "R" && -d "man"){
+    if(((-d "R") || (-d "data")) && -d "man") {
 	$log->checking("for undocumented objects");
 
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
@@ -385,7 +393,6 @@ sub check_pkg {
         close Rout;
         unlink($Rcmd);
         unlink($Rout);
-
 
 	my @err = grep {s/^Error *//} @out;
 	@out = grep {/^ *\[/} @out;
@@ -406,7 +413,7 @@ sub check_pkg {
 
     chdir($pkgoutdir);
 
-    if($opt_examples && <$library/$pkgname/R-ex/*.R>){
+    if($opt_examples && <$library/$pkgname/R-ex/*.R>) {
 	$log->creating("${pkgname}-Ex.R");
         my $iszipped = 0;
         my $massage = "massage-Examples";
@@ -436,9 +443,9 @@ sub check_pkg {
 	$log->result("OK");
     }
 
-    if($opt_tests && (-d "$startdir/$pkg/tests")){
+    if($opt_tests && (-d "$startdir/$pkgname/tests")){
         $log->checking("tests");
-        my $testsrcdir="$startdir/$pkg/tests";
+        my $testsrcdir="$startdir/$pkgname/tests";
         my $testdir="$pkgoutdir/tests";
         if(! -d $testdir){
             if(! mkdir($testdir, 0755)){
@@ -513,6 +520,7 @@ sub check_pkg {
             while(<file>){
                 print manual $_;
             }
+            close file;
         }
         print manual "\\end\{document\}\n";
         close manual;

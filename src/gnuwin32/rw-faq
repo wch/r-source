@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw1020
+Version for rw1021
 Brian Ripley
 
 
@@ -14,11 +14,13 @@ Table of Contents
   2.1 Where can I find the latest version?
   2.2 How do I install R for Windows?
   2.3 How do I run it?
-  2.4 How can I keep workspaces for different projects in different directories?
-  2.5 How do I print from R?
-  2.6 Can I use `R BATCH'?
-  2.7 Can I use rwXxxx with ESS and emacs?
-  2.8 What are HOME and working directories?
+  2.4 There seems to be a limit on the memory it uses!
+  2.5 How can I keep workspaces for different projects in different directories?
+  2.6 How do I print from R?
+  2.7 Can I use `R BATCH'?
+  2.8 Can I use rwXxxx with ESS and emacs?
+  2.9 What are HOME and working directories?
+  2.10 R can't find my file, but I know it is there!
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
@@ -27,6 +29,7 @@ Table of Contents
   3.4 My functions are not found by the HTML help search system.
   3.5 Loading a package fails.
   3.6 Package TclTk does not work.
+  3.7 Hyperlinks in Compiled HTML sometimes do not work.
 
 4 Windows Features
   4.1 What should I expect to behave differently from the Unix version of R?
@@ -64,7 +67,7 @@ that version. The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows,
 (`rw1020' or later); the current version is often called something like
-`rw1020' (although not officially).
+`rw1021' (although not officially).
 
 
 2 Installation and Usage
@@ -119,14 +122,32 @@ Just double-click on the shortcut you prepared at installation.
 If you want to set up another project, make a new shortcut or use the
 existing one, and change the `Start in' field of the Properties.
 
-2.4 How can I keep workspaces for different projects in different directories?
+2.4 There seems to be a limit on the memory it uses!
+====================================================
+
+Indeed there is.  It is set by the command-line flag `--max-mem-size'
+and defaults to the smaller of the amount of physical RAM in the
+machine and 256Mb.  It can be set to any amount over 10M.  Be aware
+though that Windows has (in most versions) a maximum amount of user
+virtual memory of 2Gb, and parts of this can be reserved by processes
+but not used.  R itself reserves 256Mb on startup.  Because of the way
+the memory manager works, it is possible that there will be free memory
+but R will not be able to reserve it.
+
+Use `?Memory' and `?memory.size' for information about memory usage.
+
+R can be compiled to use a different memory manager which may be better
+at using large amounts of memory, but is substantially slower (making R
+several times slower on some tasks).
+
+2.5 How can I keep workspaces for different projects in different directories?
 ==============================================================================
 
 Create a separate shortcut for each project: see Q2.3. All the paths to
 files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
-2.5 How do I print from R?
+2.6 How do I print from R?
 ==========================
 
 It depends what you want to print.
@@ -144,7 +165,7 @@ It depends what you want to print.
      installed you can print help files by `help(fn_name,
      offline=TRUE)'.
 
-2.6 Can I use `R BATCH'?
+2.7 Can I use `R BATCH'?
 ========================
 
 Yes, if you have Perl installed.  The Windows analogue is `Rcmd BATCH':
@@ -155,7 +176,7 @@ file might contain (as one line)
 
      path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 
-2.7 Can I use rwXxxx with ESS and emacs?
+2.8 Can I use rwXxxx with ESS and emacs?
 ========================================
 
 Yes. The latest versions of ESS (e.g. 5.1.18) come with support for this
@@ -165,7 +186,7 @@ ESS (by `C-c C-c').
 For help with ESS, please send email to <ESS-help@stat.ethz.ch>, not
 the R mailing lists.
 
-2.8 What are HOME and working directories?
+2.9 What are HOME and working directories?
 ==========================================
 
 Several places in the documentation use these terms.
@@ -184,6 +205,20 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by `Sys.getenv("R_USER")'.
 
+2.10 R can't find my file, but I know it is there!
+==================================================
+
+How did you specify it?  Backslashes have to be doubled in R character
+strings, so for example one needs
+`"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+for yourself by using forward slashes as path separators: they do work
+under Windows.
+
+Another possible source of grief is spaces in folder names.  We have
+tried to make R work on paths with spaces in, but lots of people writing
+for Unix do not bother. So it is worth trying the alternative short name
+(something like `PROGRA~1'; you can get if from the Properties).
+
 
 3 Packages
 **********
@@ -200,11 +235,11 @@ directory, using `unzip' or similar, or using the installer
 
 If there is not a binary version or that is not up-to-date or you prefer
 compiling from source, get `rwXxxxsp.zip' from the distribution (see
-Q1.1) and unpack it in `rwXxxx'. Then `cd src\gnuwin32' and read
-`README.packages'. You will need to collect and install several tools
-to use this. Once you have done so, installation is easy: just run
-`Rcmd INSTALL pkgname'. To check the package (run all the examples on
-its help pages and in its test suite, if any) use `Rcmd check pkgname'.
+Q1.1) and unpack it in `rwXxxx'.  Then read the `readme.packages'.  You
+will need to collect and install several tools to use this.  Once you
+have done so, installation is easy: just run `Rcmd INSTALL pkgname'. To
+check the package (run all the examples on its help pages and in its
+test suite, if any) use `Rcmd check pkgname'.
 
 3.2 I don't have permission to write to the `rwXxxx/library' directory.
 =======================================================================
@@ -304,7 +339,20 @@ install it. (That will put the `bin' directory containing the Tcl and
 Tk DLLs in your path).  You then need to set the environment variable
 `TCL_LIBRARY', to something like `c:/Program Files/Tcl/lib/tcl8.3'.
 (The startup code for the package will warn you if this is unset, and
-Q3.2 explains how to set them.)
+Q3.2 explains how to set them.  NB: do not quote the path, even if as
+here it contains spaces.)
+
+3.7 Hyperlinks in Compiled HTML sometimes do not work.
+======================================================
+
+Unfortunately, hyperlinks in compiled HTML files used from R are being
+interpreted relative to the current working directory of the R process,
+not relative to the `pkg.chm' file.  This was not discovered until
+`rw1021', so only files made with that version are working correctly.
+Remake the package under `rw1021' or later to cure this.
+
+If you explore the installed `.chm' from Windows Explorer, the links
+will work.
 
 
 4 Windows Features
@@ -578,5 +626,5 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2000 November 30 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 2001 January 3 by Brian Ripley <ripley@stats.ox.ac.uk>
 

@@ -168,8 +168,7 @@ glm.fit <-
 
 	if (all(!good)) {
 	    conv <- FALSE
-	    warning(paste("No observations informative at iteration",
-			  iter))
+	    warning(paste("No observations informative at iteration", iter))
 	    break
 	}
 	z <- (eta - offset)[good] + (y - mu)[good]/mu.eta.val[good]
@@ -195,7 +194,8 @@ glm.fit <-
 	## calculate updated values of eta and mu with the new coef:
 	start <- coef <- fit$coefficients
 	start[fit$pivot] <- coef
-	eta[good] <- drop(x[good, , drop=FALSE] %*% start)
+#	eta[good] <- drop(x[good, , drop=FALSE] %*% start)
+	eta <- drop(x %*% start)
 	mu <- linkinv(eta <- eta + offset)
 	dev <- sum(dev.resids(y, mu, weights))
 	if (control$trace)
@@ -210,7 +210,8 @@ glm.fit <-
 		    stop("inner loop 1; can't correct step size")
 		ii <- ii+1
 		start <- (start + coefold)/2
-		eta[good] <- drop(x[good, , drop=FALSE] %*% start)
+#		eta[good] <- drop(x[good, , drop=FALSE] %*% start)
+		eta <- drop(x %*% start)
 		mu <- linkinv(eta <- eta + offset)
 		dev <- sum(dev.resids(y, mu, weights))
 	    }
@@ -228,7 +229,7 @@ glm.fit <-
 		    stop("inner loop 2; can't correct step size")
 		ii <- ii + 1
 		start <- (start + coefold)/2
-		eta[good] <- drop(x[good, , drop=FALSE] %*% start)
+#		eta[good] <- drop(x[good, , drop=FALSE] %*% start)
 		mu <- linkinv(eta <- eta + offset)
 	    }
 	    boundary <- TRUE
@@ -665,4 +666,10 @@ model.frame.glm <-
         eval(fcall, env)
     }
     else formula$model
+}
+
+weights.glm <- function(object, type = c("prior", "working"), ...)
+{
+    type <- match.arg(type)
+    if(type == "prior") object$prior.weights else object$weights
 }

@@ -1,10 +1,10 @@
-% $Id: NLSstAsymptotic.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
+% $Id: NLSstAsymptotic.Rd,v 1.3.14.1 2001/01/08 20:35:33 bates Exp $
 \name{NLSstAsymptotic}
 \title{Fit the Asymptotic Regression Model}
 \alias{NLSstAsymptotic}
 \alias{NLSstAsymptotic.sortedXyData}
 \usage{
-NLSstAsymptotic(xy, yval)
+NLSstAsymptotic(xy)
 }
 \arguments{
  \item{xy}{a \code{sortedXyData} object}

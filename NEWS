@@ -6,6 +6,220 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.2.1
+
+
+NEW FEATURES
+
+    o	New functions factanal(), varimax(), promax() and examples in
+	package mva.
+
+    o	New functions readBin() and writeBin() to transfer binary data
+	to and from connections.
+
+    o	merge() is partially moved to C to reduce its memory usage.
+
+    o	library(help = PKG) now displays the contents of the package's
+	DESCRIPTION file in addition to its INDEX.
+
+    o	Sd2Rd can handle S4-style documentation too: see `Writing R
+	Extensions'.
+
+    o	prompt() now also works with a character argument (useful for
+	producing many *.Rd files in a loop).
+
+    o	The Unix front-end shell script now ignores a value for R_HOME
+	found in the environment.
+
+    o	Connections functions such as file() now accept a description of
+	length > 1, with a warning.
+
+    o	All text-mode connections now accept input with LF, CR or CRLF
+	line endings.  This means that readLines() can be used on DOS
+	files and source() on Mac files, for example.
+
+	Also, CRLF-terminated files can be used as stdin on Unix, and
+	files with last lines without an EOL mark can be used as stdin
+	and source()-ed on Unix and Windows.
+
+    o	DESCRIPTION file has a new recommended `Maintainer:' field.
+
+    o	stars() now uses a larger "cex" for the labels, and cex and lwd
+	are now arguments. Further, the argument names (xlim, ylim,
+	axes) are now consistent with other plot functions.  The key symbol
+	is not clipped anymore into the plot region by default.
+
+    o	Date-time quantities are now printed with the timezone, if known.
+
+    o	R CMD build now ignores all files specified (via Perl regexps)
+	in file `.Rbuildignore' in the top-level source	directory of a
+	package.
+
+    o	Horizontal boxplots are possible with  horizontal = TRUE.
+
+    o	all.equal() on lists now compares them as generic vectors, that
+	is they are equal if have identical names attributes and
+	all components are equal.
+
+    o	Invalid lines in .Renviron now give warnings when R is started.
+
+    o	Argument `na.last' implemented for rank().
+
+
+BUG FIXES
+
+    o   There have been many small improvements/corrections in the
+	documentation. In particular:
+
+	The help pages for lm and glm now describe the fitted objects.
+
+	is.vector() is now correctly documented: complex vectors and
+	lists return TRUE.
+
+    o   The default sortedXyData constructor in the nls package now
+        handles missing values in the response.
+
+    o	On startup, file .RData is now restored *after* the site and
+	user profiles are loaded (if at all).  This is as previously
+	documented.
+
+    o	as.POSIXlt (and *ct) operating on a character string
+	only extracted the date (and not the time) in some cases.
+
+    o	as.POSIXct() on character objects was ignoring `tz'.
+
+    o	codoc(ignore.generic.functions = TRUE) works again.
+
+    o	Explicitly close files opened by sink() for OSes (such as
+	Windows) that benefit from it.
+
+    o	Prevent closing the sink connection (which would be a silly
+	thing to do).
+
+    o	showConnections(all = TRUE) was sometimes counting connections
+	incorrectly, and so not showing some closed ones.
+
+    o	ts(1:10, start= c(1999,6), end = c(2000,3), frequency = 12)
+	now prints both years (as it should).
+
+    o	Monthly multivariate time series now print proper month names
+	in all cases.
+
+    o	print.stl(), print.princomp() and print.prcomp() now pass on
+	`digits =' etc.
+
+    o	prompt() now produces a \usage{} line for data frames and
+	other datasets, as documented in `Writing R Extensions'.
+
+    o	glm() now returns correct linear predictor and fitted values
+	for zero-weight cases.
+
+    o	scan(strip.white=TRUE) and readline() could give incorrect
+	answers when an input field was empty or blank.
+
+    o	dchisq() now behaves better for large values of its ncp parameter.
+
+    o	besselJ(*, nu) is now ok for nu < 1; fix improves accuracy of
+	other values by a few bits as well.
+
+    o	The convergence criterion in the Fortran SVD code has been
+	changed to circumvent spurious convergence errors when
+	comparing extended-precision quantities on ix86 Linux (and
+	some compilers and options).
+
+    o	Rdindex now handles multi-line \title{}'s correctly.
+
+    o	Add weights.glm() so that plot.lm() gets the correct weights from
+	glm objects (the ones that go with deviance residuals not the
+	working residuals).
+
+    o	Printing a language object (e.g. a formula) in a list was
+	clobbering the buffer holding the tag labels which then were
+	lost in subsequent lines of printout (PR#746).
+
+    o	aic in family() objects is now computed more precisely using
+	dxxxx(log=TRUE).  For binomial fits the value was wrong for
+	models specified via proportions and weights (PR#796).
+
+	Avoid NaN values in aic where n = 0 occurs.
+
+    o	Using non-integer numbers of successes in a binomial glm (as
+	formerly in demo(lm.glm)) now gives a warning, as the theory and
+	in particular the AIC value is not applicable.
+
+    o	demo(is.things) works again {is.ALL() doesn't call methods
+	anymore}.
+
+    o	persp(*, nticks = nn) now works (better) for too small nn.
+	persp(*, main = t1, sub= t2) now work (as always documented).
+
+    o	Printing of attributes of a list element no longer precedes
+	`attr' by the tag (PR#715).
+
+    o	It is no longer possible to use df[foo] to select non-existent
+	columns in df and so create an invalid object of class
+	"data.frame" (PR#698).
+
+    o	edit.data.frame() was trying to set row.names on a list, which
+	is no longer allowed.
+
+    o	In the \link[pkg]{topic}, `pkg' was not being used if `topic'
+	was found in a package in .lib.loc.  Now `pkg' is always used.
+
+    o	plot() with small relative ranges gave an error, which e.g. broke
+	library(ts); plot(stl(ts(rep(1:7, 15), freq = 7), s.win = "per"))
+
+    o	Using scan() with a 0-length `what' argument now gives an error
+	message rather than a segfault.
+
+    o	Loading .Random.seed could extremely rarely and with some
+	generators reject a value as NA_INTEGER when it was valid.
+
+    o   save(..., ascii=TRUE) created broken files when saving strings
+        containing special characters (ASCII code > 127).
+
+    o	mean(c(1,NA,NA,NA)[-1], trim = .1, na.rm = TRUE) doesn't give an
+	error anymore.
+
+    o	As the supplied afm files are not properly in the ISOLatin1
+	encoding, the font metric for "-" was wrong since 0.63 on a
+	postscript/xfig device, and randomly wrong in 1.2.0.  It will
+	now be correct (but the files remain incorrect: C45 is "minus"
+	not "hyphen" and there are missing slots).
+
+	Metrics for the duplicated characters (acute, dieresis,
+	macron, space) in ISOLatin1 encoding are now correct for both
+	occurrences: previously only one was present.
+
+    o	The data-time functions try harder to guess the DST setting
+	when the OS does not know, as some OSes were printing times
+	in DST if this was marked as unknown.
+
+    o	Setting par(pty=) after par(pin=) or par(plt=) was having no
+	effect until the margins were set.
+
+    o	Nested \describe sections in .Rd files have (again) nested
+	indentation when converted to text.
+
+    o	Concatenation of C strings by ## is no longer used, to avoid
+	spurious warnings from some recent versions of gcc.
+
+    o	dev.copy2eps() allows a `paper' argument to be passed to
+	postscript().
+
+    o	file.show() handles the case of zero files better.
+
+    o	formula.lm uses object$formula if it exists, in preference 
+	to object$terms.
+
+    o	strsplit() is corrected for an empty split pattern.
+
+    o	kronecker() now does a better job when creating dimnames.
+
+    o	Better handling of input dimnames in fourfoldplot().
+
+
+
 		CHANGES IN R VERSION 1.2.0
 
 
@@ -53,7 +267,7 @@ NEW FEATURES
 	calling anovalist.lm() directly.
 
     o	anova() for multiple lm and glm objects no longer truncates the
-	formula printed. There is much more extensive documentation 
+	formula printed. There is much more extensive documentation
 	for anova() methods.
 
     o	New method as.data.frame.table() for converting the array-based
@@ -99,7 +313,7 @@ NEW FEATURES
     o	New convenience function file.copy().
 
     o	file.show() allows `pager' argument to be an R function, and
-	consequently, the `pager' option can be an R function. 
+	consequently, the `pager' option can be an R function.
 
     o	Formatting (and printing) of data.frames with complex objects is
 	improved.  toString was added as a new function.
@@ -146,9 +360,9 @@ NEW FEATURES
 	with savehistory() and displayed with history(), under Windows
 	and under Unix using the readline or GNOME interfaces.
 
-    o	mad() has new (logical) arguments "low" and "high" (the first 
+    o	mad() has new (logical) arguments "low" and "high" (the first
 	giving S compatibility).
-	
+
     o	New function manova() and summary method.
 
     o	Function mantelhaen.test() in package ctest now can deal with
@@ -168,7 +382,7 @@ NEW FEATURES
 
     o	nlm(check.analyticals = TRUE) now warns if the supplied
 	gradient and/or hessian are of the wrong length.
-     
+
     o	New function object.size() to give approximate memory allocation.
 
     o	optim() now checks the length of an analytical gradient at
@@ -197,11 +411,11 @@ NEW FEATURES
     o	plot.hclust() allows arguments main, sub, etc, and has non-empty
 	defaults for these.
 
-    o	plot.ts(x,y) now allows to suppress labels and lines; 
+    o	plot.ts(x,y) now allows to suppress labels and lines;
 	it is better documented.
 
     o	The postscript() driver now allows a user-specified family so,
-	for example, one can use the same fonts in diagrams as in 
+	for example, one can use the same fonts in diagrams as in
 	running text.
 
     o	The postscript() driver allows its prolog to be changed (by an
@@ -218,8 +432,8 @@ NEW FEATURES
     o	New readLines() function to read a file line-by-line.
 
     o	New functions reshapeLong() and reshapeWide() emulating Stata's
-        reshape command. These are still labeled experimental and
-        might be improved (or removed) in later versions.
+	reshape command. These are still labeled experimental and
+	might be improved (or removed) in later versions.
 
     o	row.names() and row.names<-() are now generic functions which
 	call rownames() as their default method and have methods for
@@ -244,12 +458,12 @@ NEW FEATURES
 
     o	smooth() in package eda has a better default (3RS3R instead of
 	3RSR) and more arguments, e.g. `twiceit' for some S
-	compatibility and kind = "3R" for running medians of 3.
+	compatibility and `kind = "3R"' for running medians of 3.
 
     o	strsplit() has a new argument `extended' controlling whether to
 	use extended (the default) or basic regular expressions for
 	splitting.
-	
+
     o	Sys.getenv() becomes the preferred name for getenv(), which is
 	now deprecated.
 
@@ -271,26 +485,26 @@ NEW FEATURES
 	`date' and `chron'; unlike those packages these support
 	functions know about time zones (if the OS does).
 
-    o	tcltk library now has tkpager() which is designed to be used
+    o	tcltk package now has tkpager() which is designed to be used
 	by file.show() and shows help pages etc. in separate text
-	widgets. 
+	widgets.
 
     o	tcltk is now more careful about removing the objects
 	representing widgets in the R workspace when the windows are
-	destroyed (e.g. using window manager controls)	
+	destroyed (e.g. using window manager controls)
 
-    o	tcltk library has had several canvas functions implemented.
-    
+    o	tcltk package has had several canvas functions implemented.
+
     o	tcltk now wraps callbacks to R in a try() construct - the
 	nonlocal return from R's error handling could bring the Tk
-	system into a strange state.  
+	system into a strange state.
 
-    o	New demos for tcltk: tkfaq, tkfilefind, tkcanvas. 
+    o	New demos for tcltk: tkfaq, tkfilefind, tkcanvas.
 
     o	termplot() now has an `ask' argument.
 
     o	terms() creates objects which now inherit from class "formula",
-	so for example as.formula(terms.object) needs to replaced by 
+	so for example as.formula(terms.object) needs to be replaced by
 	formula(terms.object).
 
     o	traceback() is now printed un-quoted and labelled by the
@@ -318,8 +532,8 @@ NEW FEATURES
     o	The R Language Manual (`R-lang.texi') is now included and built
 	in the same way as the other manuals.
 
-    o   The R manuals (R-intro, R-exts, ...) are converted to HTML
-        format (if the necessary texinfo tools are available) and
+    o	The R manuals (R-intro, R-exts, ...) are converted to HTML
+	format (if the necessary texinfo tools are available) and
 	linked into the top HTML help page.
 
     o	The header file `R.h' and those included from it are now usable
@@ -377,7 +591,7 @@ NEW FEATURES
 	under Unix.  Use configure with option `--enable-R-shlib' or do
 	`make libR' in directory `src/main' to create the shared
 	library.
-	
+
 	There is also a linker front-end `R CMD LINK' which is useful
 	for creating executable programs linked against the R shared
 	library.
@@ -408,7 +622,7 @@ BUG FIXES
 	now all use the more accurate algorithms of dbinom() and dpois();
 	More limits are computed correctly, e.g. dgeom(Inf,*), or
 	dnbinom(*,*,p=0), and integer argument coercion is more consistent.
-	
+
     o	dbeta(x, a,b) was giving NaN and Inf for large a and b.
 
     o	The math functions now (again!) return NaN (not NA)
@@ -432,9 +646,9 @@ BUG FIXES
 
     o	glm() now follows lm() in dropping unused factor levels when fitting.
 
-    o   hist() now labels y-axis Density rather than Relative Frequency
-        if freq=FALSE. The `intensities' component of the result is
-	now deprecated and `density' should be used instead. 
+    o	hist() now labels y-axis Density rather than Relative Frequency
+	if freq=FALSE. The `intensities' component of the result is
+	now deprecated and `density' should be used instead.
 
     o	hsv() truncation bug fixed (hopefully correctly this time...)
 
@@ -466,16 +680,16 @@ BUG FIXES
 
     o	pairs() now obeys an "cex = " argument, and so does panel.smooth().
 
-    o   pf() had a bug in the code handling large noncentrality
-        parameters, going all the way back to the original Appl.Stat.
+    o	pf() had a bug in the code handling large noncentrality
+	parameters, going all the way back to the original Appl.Stat.
 	algorithm (PR#752). This affected pbeta() as well.
 
     o	phantom(expr) in plotmath was used to calculate the bounding
-	boxes, but the space was not actually used in typesetting the 
+	boxes, but the space was not actually used in typesetting the
 	expression (PR#622).
 
-    o   Problem with subsetting and "..." arguments in plot.formula()
-        (PR#757)
+    o	Problem with subsetting and "..." arguments in plot.formula()
+	(PR#757)
 
     o	plot.lm() has a better default for its `ask' argument.
 
@@ -542,7 +756,7 @@ BUG FIXES
 	when there are repeated x points.
 
     o	stars() fix (for 0/NA columns) PR#739.
-	
+
     o	data(state)'s  state.abb  has been corrected to use official
 	2-letter abbrevations.
 
@@ -589,7 +803,7 @@ BUG FIXES
     o	R CMD Rd2dvi now again works with file names containing "_" or "$".
 
     o	R CMD Rdconv now handles .rd as input file extension correctly
-        in all cases.
+	in all cases.
 
     o	make install could fail if there were no shared libraries to
 	install (e.g. on vanilla Solaris).
@@ -602,8 +816,8 @@ BUG FIXES
     o	NA || x , NA && y (etc) do not give errors anymore, but work as
 	the "|" and "&" operators and as documented (PR#749).
 
-    o   Coercing lists to functions failed if argument list was empty.
-        (PR#743). Also coercing functions to lists was wrong when the
+    o	Coercing lists to functions failed if argument list was empty.
+	(PR#743). Also coercing functions to lists was wrong when the
 	body was a single constant.
 
 
@@ -679,10 +893,10 @@ BUG FIXES
 	These functions no longer add and subtract n zeros when there's no
 	offset.	 They are now documented somewhat.
 
-    o	Some HTML files used src="R.css" instead of href="R.css"
-	causing some browsers to ignore the style sheet. R.css now
-	passes the w3c CSS validator and gives the intended results
-	with Internet Explorer. R.css is copied to all library directories.
+    o	Some HTML files used src="R.css" instead of href="R.css" causing
+	some browsers to ignore the style sheet.  `R.css' now passes the
+	w3c CSS validator and gives the intended results with Internet
+	Explorer.  `R.css' is copied to all library directories.
 
     o	The data editor no longer crashes when entries contain more than
 	45 characters, and works correctly if the field width is
@@ -1067,7 +1281,7 @@ BUG FIXES
     o	Warnings from .Last or closing devices are printed where
 	sensible (e.g. not on GNOME nor Windows console).
 
-    o	add1.glm() and drop1.glm gave() incorrect results in the "Chisq"
+    o	add1.glm() and drop1.glm() gave incorrect results in the "Chisq"
 	test option when the scale was estimated.
 
     o	aggregate() applied to multiple time series lost the series names.

@@ -70,24 +70,21 @@
 #ifdef Unix
 # define OSTYPE      "unix"
 # define FILESEP     "/"
-# define DYNLOADEXT  "." ## SHLIB_EXT
 #endif /* Unix */
 
 #ifdef Macintosh
 # define OSTYPE      "mac"
 # define FILESEP     ":"
-# define DYNLOADEXT  ".dll"
 #endif /* Macintosh */
 
 #ifdef Win32
 # define OSTYPE      "windows"
 # define FILESEP     "/"
-# define DYNLOADEXT  ".dll"
 #endif /* Win32 */
 
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)	x ## _
-# define F77_QSYMBOL(x)	#x ## "_"
+# define F77_QSYMBOL(x)	#x "_"
 #else
 # define F77_SYMBOL(x)	x
 # define F77_QSYMBOL(x) #x
@@ -430,6 +427,7 @@ extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
 extern FILE*	R_Sinkfile	INI_as(NULL);	/* Sink file */
 extern int	R_OutputCon	INI_as(1);	/* Output connection */
 extern int	R_SinkCon	INI_as(1);	/* Sink connection */
+extern int	R_SinkCon_to_close	INI_as(0);
 
 /* Objects Used In Parsing  */
 extern SEXP	R_CommentSxp;	    /* Comments accumulate here */

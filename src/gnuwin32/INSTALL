@@ -56,7 +56,8 @@ mirrors, and included in our tools.zip).
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
-http://msdn.microsoft.com/workshop/author/htmlhelp/.
+http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm
+
 
 If you want to make Window help files you will need hcrtf.exe from a
 Windows compiler installation (this has been available for download at
@@ -87,11 +88,11 @@ and run
 	make BUILD=MINGW32 or CYGWIN
 
 
-Note 1: the file rw1020\unzip\unzip32.dll is not in the source
+Note 1: the file rw1021\unzip\unzip32.dll is not in the source
 distribution. It can be found in file unz541dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
-The file rw1020\bin\Rchtml.dll is only built if CHM help is specified
+The file rw1021\bin\Rchtml.dll is only built if CHM help is specified
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
@@ -114,13 +115,14 @@ in crtdll.dll is unlikely to be satisfactory, but the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
 
 You can test a build by `make check': expect some differences in the
-tests of the print routines.
+tests of the print routines.  You may need to set TMPDIR to a suitable
+temporary directory: the default is c:\TEMP.
 
 
 Building bitmap device support
 ------------------------------
 
-The file rw1020\bin\Rbitmap.dll is not built automatically:
+The file rw1021\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.  You
 can just copy this from a binary distribution.
 
