@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-12, 2003-05-25
+Version 1.7-13, 2003-05-27
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1313,6 +1313,10 @@ distributions of R.)
 
 *RandomFields*
      Creating random fields using various methods.
+
+*Rcmdr*
+     A platform-independent basic-statistics GUI (graphical user interface)
+     for R, based on the *tcltk* package.
 
 *RmSQL*
      An interface between R and the mSQL database system.

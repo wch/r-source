@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-12, @value{FAQ-YEAR}-05-25
+@set FAQ-VERSION 1.7-13, @value{FAQ-YEAR}-05-27
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1588,6 +1588,9 @@ and wind profiles for data collected by radiosondes (the typical weather
 balloon-borne instrument).
 @item RandomFields
 Creating random fields using various methods.
+@item Rcmdr
+A platform-independent basic-statistics GUI (graphical user interface)
+for R, based on the @strong{tcltk} package.
 @item RmSQL
 An interface between R and the mSQL database system.
 @c @item Rnotes
