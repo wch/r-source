@@ -101,7 +101,7 @@ mem.limits(nsize = NA, vsize = NA)
 
 \seealso{
   \code{\link{gc}} for information on the garbage collector,
-  \code{\link{object.size}(a)} for the (approximate) size of \R object
+  \code{\link[utils]{object.size}(a)} for the (approximate) size of \R object
   \code{a}.  \code{\link{memory.profile}} for profiling the usage of
   cons cells.
 #ifdef windows
