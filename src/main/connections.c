@@ -734,7 +734,7 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- gzipped file connections --------------------- */
 
-#ifdef HAVE_LIBZ
+#if defined(HAVE_LIBZ) && defined(HAVE_ZLIB_H)
 #include <zlib.h>
 
 static void gzfile_open(Rconnection con)
@@ -889,7 +889,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     error("zlib is not available on this system");
-    return R_NilValue; /* -Wall */
+    return R_NilValue;		/* -Wall */
 }
 #endif
 
