@@ -332,3 +332,7 @@ Date: Tue, 8 Feb 2000 12:29:29 +0100 (MET)
 Subject: strsplit
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Tue, 8 Feb 2000 12:58:09 +0100 (MET)
+* PR# 425 *
+Subject: Row subsetting of data frames
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Wed, 09 Feb 2000 18:46:07 +0100 (CET)
