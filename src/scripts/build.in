@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.46 $ ';
+my $revision = ' $Revision: 1.47 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -308,14 +308,28 @@ sub prepare_pkg {
     updateRdIndex("INDEX", "man", 0, $log);
     updateRdIndex("data/00Index", "man", 1, $log) if(-d "data");
 
-    if(!$opt_no_vignettes && (-d "inst/doc")) {
-	if(list_files_with_exts("inst/doc", $vignette_exts_re)) {
+    if((-d "inst/doc")
+       && list_files_with_exts("inst/doc", $vignette_exts_re)) {
+	if(!$opt_no_vignettes) {
 	    $log->creating("vignettes");
 	    my $Rcmd = "library(tools); buildVignettes(dir='.')\n";
 	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
-	    $log->result("done");
-	    updateVignetteIndex("inst/doc/00Index.dcf", "inst/doc", $log);
+	    ## <NOTE>
+	    ## buildVignettes() currently partially returns strings
+	    ## starting with 'Error:' rather than errors.
+	    my @err = grep(/^Error|\[\d+\] *\"Error:/, @out);
+	    ## </NOTE>
+	    if($#err >= 0) {
+		@out = grep(!/^\>/, @out);
+		$log->error();
+		$log->print(join("\n", @out) . "\n");
+		exit(1);
+	    }
+	    else {
+		$log->result("OK");
+	    }
 	}
+	updateVignetteIndex("inst/doc/00Index.dcf", "inst/doc", $log);
     }
 
     1;
