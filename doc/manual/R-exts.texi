@@ -124,6 +124,7 @@ installation) for the tools that you need to have installed.
 * Writing package vignettes::   
 * Submitting a package to CRAN::  
 * Package name spaces::         
+* Writing portable packages::   
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -1108,7 +1109,7 @@ respected.  Of course, @code{R CMD build} automatically creates valid
 file names.
 
 
-@node Package name spaces,  , Submitting a package to CRAN, Creating R packages
+@node Package name spaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
 @section Package name spaces
 @cindex name spaces
 
@@ -1458,6 +1459,80 @@ exportClasses(c1, c2)
 @noindent
 respectively.
 
+
+@node Writing portable packages,  , Package name spaces, Creating R packages
+@section Writing portable packages
+
+@code{R CMD check} provides a basic set of checks, but often further
+problems emerge when people try to install and use packages submitted to
+@acronym{CRAN} -- many of these involve compiled code.  Here are some
+further checks that you can do to make sure your package is portable.
+
+@itemize
+
+@item
+If your package has a @file{configure} script, provide a
+@file{configure.win} script to be used on Windows.  The @acronym{CRAN}
+binary packages for Windows are built automatically, and if your package
+does not build without intervention it is unlikely to be easily
+available to a high proportion of @R{} users.
+
+@item
+Do be very careful with passing arguments between @R{}, C and
+@acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
+on most @R{} platforms (including those used by the @acronym{CRAN}
+maintainers), but 64-bit on many modern Unix and Linux platforms.  It is
+rather unlikely that use @code{long} in C code has been thought through:
+if you need a longer type than @code{int} you should use a configure
+test for @code{long long} and define your own typedef to be @code{long}
+or @code{long long}, or use a suitable type (such as @code{size_t}).
+Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
+in C on all @R{} platforms.
+
+@item
+Errors in memory allocation and reading/writing outside arrays are very
+common causes of crashes (e.g. segfaults) on some machines.  If you have
+access to Linux on an @code{ix86} platform you can use @code{valgrind}
+(@uref{http://valgrind.kde.org/}) to look out for possible problems.
+To run some examples under @code{valgrind} use something like
+
+@smallexample
+R -d "valgrind --tool=memtest --leak-check=yes" --vanilla < mypkg-Ex.R
+@end smallexample
+
+@noindent
+where @file{mypkg-Ex.R} is a set of examples, e.g. the file created in
+@file{mypkg.Rcheck} by @code{R CMD check}.  Occasionally this reports
+memory reads of `uninitialised values' that are the result of compiler
+optimization, so can be worth checking under unoptimized compiles.  We
+know there will be some small memory leaks from @code{readlione} and
+@R{} itself -- these are memory areas that are in use right up to the
+end of the @R{} session.
+
+@item
+The Mac OS X linker has some restrictions not found on other platforms.
+Try to ensure that C entry points shared between source files are
+declared as @code{extern} in all but one of the files.
+
+@item
+Many platforms will allow unsatisfied entry points in compiled code, but
+will crash the application (here @R{}) if they are ever used.  Some
+(notably Windows) will not.  Looking at the output of
+@example
+nm -pg mypkg.so  # or other extension such as .sl or .dylib
+@end example
+@noindent
+and checking if any of the symbols marked @code{U} is unexpected is a
+good way to avoid this.
+
+@item
+Conflicts between symbols in DLLs are handled in very platform-specific
+ways.  Good ways to avoid trouble are to make as many symbols as
+possible static (check with @code{nm -pg}), and to use unusual names, as
+well as ensuring you have used the @code{PACKAGE} argument that @code{R
+CMD check} checks for.
+
+@end itemize
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files
@@ -6015,7 +6090,10 @@ t.data.frame <- function(x)
 Also consider @code{predict.glm}: it happens that in @R{} for historical
 reasons it calls @code{predict.lm} directly, but in principle (and in S
 originally and currently) it could use @code{NextMethod}.
-(@code{NextMethod} seems under-used in the @R{} sources.)
+(@code{NextMethod} seems under-used in the @R{} sources.  Do be aware
+that there as S/R differences in this area, and the example above works
+because there is a @emph{next} method, the default method, not that a
+new method is selected when the class is changed.)
 
 @emph{Any} method a programmer writes may be invoked from another method
 by @code{NextMethod}, @emph{with the arguments appropriate to the
