@@ -61,6 +61,19 @@ TZ=+0100
 # Default: RHISTSIZE=512
 RHISTSIZE=512
 
+# Undocumented feature
+# R can handle user breaks to
+# interrupt lengthy calculations
+# or output. As this code is not
+# yet optimized, by default R
+# does not accept user breaks.
+# If the "Interrupt" switch
+# is set to TRUE then R intercept
+# user breaks. With this swtich on
+# R is a bit slower than with the
+# switch off
+# Default: Interrupt=FALSE
+
 # Wheter to show or source a file
 # You should set this to TRUE if you
 # want Alpha  be your external editor
