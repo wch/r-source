@@ -523,6 +523,8 @@ reconcilePropertiesAndPrototype <-
       StandardPrototype <- defaultPrototype()
       slots <-  validSlotNames(allNames(properties))
       dataPartClass <- elNamed(properties, ".Data")
+      if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass)))
+          stop("\"", dataPartClass, "\" is not a valid data part class (must be a basic class or a virtual class combining basic classes)")
       if((!is.null(dataPartClass) || length(superClasses) > 0)
          && is.na(match("VIRTUAL", superClasses))) {
           ## Look for a data part in the super classes, either an inherited
@@ -992,16 +994,18 @@ setDataPart <- function(object, value) {
 }
 
 .validDataPartClass <- function(cl) {
-    value <- elNamed(getSlots(cl), ".Data")
+    ClassDef <- getClass(cl, TRUE)
+    value <- elNamed(ClassDef@slots, ".Data")
     if(is.null(value)) {
         if(identical(cl, "structure"))
             value <- "vector"
         else if((extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
             value <- cl
         else {
-            ClassDef <- getClass(cl)
-            if(identical(getVirtual(ClassDef), TRUE) &&
-               length(getProperties(ClassDef)) == 0)
+            if(identical(ClassDef@virtual, TRUE) &&
+               length(getProperties(ClassDef)) == 0 &&
+               length(ClassDef@subclasses) > 0 &&
+               all(!is.na(match(names(ClassDef@subclasses), .BasicClasses))))
                 value <- cl
         }
     }
