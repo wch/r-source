@@ -546,12 +546,13 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	n = fabs(axp[2]) + 0.25;
 	dn = n;
 	rng = axp[1] - axp[0];
-	small = fabs(rng) * FLT_EPSILON;
+	small = fabs(rng)/(100.0*dn);
 	at = allocVector(REALSXP, n + 1);
-	for(i=0 ; i<=n ; i++)
+	for(i=0 ; i<=n ; i++) {
 	    REAL(at)[i] = axp[0] + (i / dn) * rng;
 	    if (fabs(REAL(at)[i]) < small)
 		REAL(at)[i] = 0;
+        }
     }
     else {
 	n = (axp[2] + 0.5);
