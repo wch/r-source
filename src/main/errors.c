@@ -41,14 +41,95 @@ void warningcall(SEXP call, char *format, ...)
     REvprintf(format, ap);
     va_end(ap);
 }
+
+#define BUFSIZE 8192
 void warning(const char *format,...)
 {
-    va_list(ap);
-    REprintf("Warning: ");
-    va_start(ap, format);
-    REvprintf(format, ap);
-    va_end(ap);
+    int w, slen;
+    SEXP names, s;
+    char buf[BUFSIZE];
+    RCNTXT *cptr;
+
+    w = asInteger(GetOption(install("warn"), R_NilValue));
+    if(w<0)  /* ignore */
+        return;
+    else if(w>=2) { /* it's an error */
+        va_list(ap);
+        va_start(ap, format);
+        slen = vsprintf(buf, format, ap);
+        va_end(ap); 
+        error("(converted from warning) %s\n", buf);
+        return;
+    }
+    else if(w==1) { /* print as they happen */
+        va_list(ap);
+        REprintf("Warning: ");
+        va_start(ap, format);
+        REvprintf(format, ap);
+        va_end(ap);
+        REprintf("\n");
+        return;
+    }
+    else if(w==0) { 
+	va_list(ap);
+        va_start(ap, format);
+	if(!R_CollectWarnings) {
+		R_Warnings = allocVector(VECSXP, 50);
+		names = allocVector(STRSXP, 50);
+		setAttrib(R_Warnings, R_NamesSymbol, names);
+	}
+	if( R_CollectWarnings > 49 ) 
+		return;
+        cptr=R_GlobalContext->nextcontext;
+	s = R_GlobalContext->sysparent;
+	while (cptr->callflag != CTXT_RETURN && cptr->nextcontext != NULL)
+		cptr = cptr->nextcontext;
+	VECTOR(R_Warnings)[R_CollectWarnings] = cptr->call;
+        slen = vsprintf(buf, format, ap);
+        va_end(ap); 
+	names = CAR(ATTRIB(R_Warnings));
+	STRING(names)[R_CollectWarnings++] = mkChar(buf);
+        return;
+    } 
 }
+
+void PrintWarnings(void) 
+{
+    int i;
+    char* pout;
+    SEXP names, s, t;
+
+    if( R_CollectWarnings == 1 ) {
+	REprintf("Warning message: \n");
+	names = CAR(ATTRIB(R_Warnings));
+	REprintf("%s in : %s \n", CHAR(STRING(names)[0]),
+                CHAR(STRING(deparse1(VECTOR(R_Warnings)[0],0))[0]));
+    }
+    else if( R_CollectWarnings <= 10 ) {
+        REprintf("Warning messages: \n");
+	names = CAR(ATTRIB(R_Warnings));
+	for(i=0; i<R_CollectWarnings; i++) {
+	    REprintf("%d: %s in : %s \n",i+1, CHAR(STRING(names)[i]),
+		CHAR(STRING(deparse1(VECTOR(R_Warnings)[i], 0))[0]));
+	}
+    }
+    else {
+	REprintf("There were %d warnings (use warnings() to see them)\n", R_CollectWarnings);
+    }
+    /* now truncate and install last.warning */
+    PROTECT(s = allocVector(VECSXP, R_CollectWarnings));
+    PROTECT(t = allocVector(STRSXP, R_CollectWarnings));
+    names = CAR(ATTRIB(R_Warnings));
+    for(i=0; i<R_CollectWarnings; i++) {
+	VECTOR(s)[i] = VECTOR(R_Warnings)[i];
+	VECTOR(t)[i] = VECTOR(names)[i];
+    }
+    setAttrib(s, R_NamesSymbol, t);
+    defineVar(install("last.warning"), s, R_GlobalEnv);
+    UNPROTECT(2);
+    return;
+}
+
 
 void errorcall(SEXP call, char *format,...)
 {
@@ -169,10 +250,10 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     if (CAR(args) != R_NilValue) {
 	CAR(args) = coerceVector(CAR(args), STRSXP);
-	warning("%s\n", CHAR(STRING(CAR(args))[0]));
+	warning("%s", CHAR(STRING(CAR(args))[0]));
     }
     else
-	warning("%s\n", "");
+	warning("%s", "");
     return CAR(args);
 }
 

@@ -427,6 +427,9 @@ extern int	R_DirtyImage;	    /* Current image dirty */
 extern int	R_Init;		    /* Do we have an image loaded */
 extern FILE*	R_FileRef;	    /* the environment file pointer  */
 
+/* Warnings/Errors */
+extern int      R_CollectWarnings;  /* the number of warnings */
+extern SEXP     R_Warnings;         /* the warnings and their calls */
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
@@ -654,6 +657,7 @@ void PrintGreeting(void);
 void PrintValue(SEXP);
 void PrintValueEnv(SEXP, SEXP);
 void PrintValueRec(SEXP, SEXP);
+void PrintWarnings(void);
 SEXP promiseArgs(SEXP, SEXP);
 SEXP protect(SEXP);
 SEXP R_LoadFromFile(FILE*);

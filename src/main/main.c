@@ -139,6 +139,11 @@ int	R_Unnamed = 1;		    /* Use default name? */
 int	R_DirtyImage = 0;	    /* Current image dirty */
 int	R_Init = 0;		    /* Do we have an image loaded */
 
+/* Error/Warning Globals */
+/* perhaps these can be stuck into a context?? */
+
+int    R_CollectWarnings = 0;       /* Collect warnings into one spot */
+SEXP   R_Warnings;                  /* The warnings */
 
 static int ParseBrowser(SEXP, SEXP);
 
@@ -246,6 +251,12 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	}
 	if (browselevel)
 	    Reset_C_alloc();
+
+	if (!browselevel) {
+	    R_Warnings = R_NilValue;
+            R_CollectWarnings = 0;
+        }
+
 	R_PPStackTop = savestack;
 	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status);
 
@@ -274,6 +285,8 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	    UNPROTECT(1);
 	    if (R_Visible)
 		PrintValueEnv(R_CurrentExpr, rho);
+	    if (R_CollectWarnings)
+		PrintWarnings();
 	    R_IoBufferWriteReset(&R_ConsoleIob);
 	    prompt_type = 1;
 	    break;
