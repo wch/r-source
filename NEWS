@@ -273,8 +273,13 @@ NEW FEATURES
 	Also na.exclude(), a variant on na.omit() that is handled
 	differently by naresid() and napredict().
 
+    o	New argument `nsmall' to format.default(), for S-PLUS
+	compatibility (and used in various packages).
+
     o	Generic function logLik() moved from nls to base, as well as
 	logLik.lm() from nlme.
+
+
 
 
 BUG FIXES

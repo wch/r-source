@@ -632,7 +632,7 @@ SEXP labelformat(SEXP labels)
 	UNPROTECT(1);
 	break;
     case REALSXP:
-	formatReal(REAL(labels), n, &w, &d, &e);
+	formatReal(REAL(labels), n, &w, &d, &e, 0);
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 	    strp = EncodeReal(REAL(labels)[i], 0, d, e);
@@ -641,7 +641,7 @@ SEXP labelformat(SEXP labels)
 	UNPROTECT(1);
 	break;
     case CPLXSXP:
-	formatComplex(COMPLEX(labels), n, &w, &d, &e, &wi, &di, &ei);
+	formatComplex(COMPLEX(labels), n, &w, &d, &e, &wi, &di, &ei, 0);
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 	    strp = EncodeComplex(COMPLEX(labels)[i], 0, d, e, 0, di, ei);

@@ -208,7 +208,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
     w = INTEGER(sw);
 
     for (j = 0; j < c; j++) {
-	formatReal(&x[j * r], r, &w[j], &d[j], &e[j]);
+	formatReal(&x[j * r], r, &w[j], &d[j], &e[j], 0);
 	if (!isNull(cl))
 	    clabw = strlen(CHAR(STRING_ELT(cl, j)));
 	else
@@ -294,7 +294,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
     for (j = 0; j < c; j++) {
 	formatComplex(&x[j * r], r,
 		      &wr[j], &dr[j], &er[j],
-		      &wi[j], &di[j], &ei[j]);
+		      &wi[j], &di[j], &ei[j], 0);
 	if (!isNull(cl))
 	    clabw = strlen(CHAR(STRING_ELT(cl, j)));
 	else

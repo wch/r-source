@@ -294,14 +294,14 @@ SEXP StringFromInteger(int x, int *warn)
 SEXP StringFromReal(double x, int *warn)
 {
     int w, d, e;
-    formatReal(&x, 1, &w, &d, &e);
+    formatReal(&x, 1, &w, &d, &e, 0);
     return mkChar(EncodeReal(x, w, d, e));
 }
 
 SEXP StringFromComplex(Rcomplex x, int *warn)
 {
     int wr, dr, er, wi, di, ei;
-    formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei);
+    formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
     return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei));
 }
 

@@ -56,8 +56,8 @@ extern "C" {
 /* Computation of printing formats */
 void formatLogical(int*,int,int*);
 void formatInteger(int*,int,int*);
-void formatReal(double*, int, int*, int*, int*);
-void formatComplex(Rcomplex*, int, int*, int*, int*, int*, int*, int*);
+void formatReal(double*, int, int*, int*, int*, int);
+void formatComplex(Rcomplex*, int, int*, int*, int*, int*, int*, int*, int);
 
 long Decode2Long(char *p, int *ierr);
 /* Formating of values */

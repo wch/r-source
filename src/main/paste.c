@@ -140,13 +140,13 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* format.default(x, trim) : ../library/base/R/format.R 
+/* format.default(x, trim, nsmall) : ../library/base/R/format.R 
  * --------------   See "FIXME" in that file ! 
  */
 SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y;
-    int i, n, trim=0;
+    int i, n, trim=0, nsmall=0;
     int w, d, e;
     int wi, di, ei;
     char *strp;
@@ -155,8 +155,12 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 
     switch (length(args)) {
     case 1:
-	trim = 0;
 	break;
+    case 3:
+	nsmall = asInteger(CADDR(args));
+	if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
+	    errorcall(call, "invalid \"nsmall\" argument");
+	/* drop through */
     case 2:
 	trim = asLogical(CADR(args));
 	if (trim == NA_INTEGER)
@@ -199,7 +203,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     case REALSXP:
-	formatReal(REAL(x), n, &w, &d, &e);
+	formatReal(REAL(x), n, &w, &d, &e, nsmall);
 	if (trim) w = 0;
 	PROTECT(y = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
@@ -210,7 +214,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     case CPLXSXP:
-	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei);
+	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
 	if (trim) wi = w = 0;
 	PROTECT(y = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
@@ -274,12 +278,12 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     case REALSXP:
-	formatReal(REAL(x), n, &w, &d, &e);
+	formatReal(REAL(x), n, &w, &d, &e, 0);
 	break;
 
     case CPLXSXP:
 	wi = di = ei = 0;
-	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei);
+	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, 0);
 	n = -1;/* complex 'code' */
 	break;
 

@@ -362,7 +362,7 @@ char *EncodeElement(SEXP x, int indx, int quote)
 	EncodeInteger(INTEGER(x)[indx], w);
 	break;
     case REALSXP:
-	formatReal(&REAL(x)[indx], 1, &w, &d, &e);
+	formatReal(&REAL(x)[indx], 1, &w, &d, &e, 0);
 	EncodeReal(REAL(x)[indx], w, d, e);
 	break;
     case STRSXP:
@@ -371,7 +371,7 @@ char *EncodeElement(SEXP x, int indx, int quote)
 	break;
     case CPLXSXP:
 	formatComplex(&COMPLEX(x)[indx], 1,
-		      &w, &d, &e, &wi, &di, &ei);
+		      &w, &d, &e, &wi, &di, &ei, 0);
 	EncodeComplex(COMPLEX(x)[indx],
 		      w, d, e, wi, di, ei);
 	break;

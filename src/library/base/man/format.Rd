@@ -5,7 +5,7 @@ format(x, \dots)
 format.AsIs(x, width = 12, \dots)
 format.data.frame(x, \dots, justify = "none") 
 format.default(x, trim = FALSE, digits = getOption("digits"),
-               justify = c("left", "right", "none"))
+               nsmall = 0, justify = c("left", "right", "none"))
 format.factor(x, \dots)
 format.pval(pv, digits = max(1, getOption("digits") - 2),
             eps = .Machine$double.eps, na.form = "NA")
@@ -28,6 +28,9 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
     \code{\link{numeric} x}. This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits.}
+  \item{nsmall}{number of digits which will always appear to the right of
+    the decimal point in formatting real/complex numbers in
+    non-scientific formats. Allowed values \code{0 <= nsmall <= 20}.}
   \item{justify}{should character vector be left-justified,
     right-justified or left alone.  When justifying, the field width is
     that of the longest string.}
@@ -51,7 +54,7 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
 
   The function \code{\link{formatC}} provides a rather more flexible
   formatting facility for numbers, but does \emph{not} provide a common
-  format for several numbers.
+  format for several numbers, nor it is platform-independent.
 
   \code{format.data.frame} formats the data frame column by column,
   applying the appropriate method of \code{format} for each column.
@@ -74,6 +77,10 @@ format(1:10)
 zz <- data.frame("(row names)"= c("aaaaa", "b"), check.names=FALSE)
 format(zz)
 format(zz, justify="left")
+
+## use of nsmall
+format(13.7)
+format(13.7, nsmall=3)
 
 ## handling of quotes
 zz <- data.frame(a=I("abc"), b=I("def\"gh"))

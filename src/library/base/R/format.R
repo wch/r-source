@@ -8,7 +8,7 @@ format <- function(x, ...) UseMethod("format")
 ### The new (1.2) switch "character" would be faster in .Internal()
 ### combine with "width = ", and format.char() below!
 
-format.default <- function(x, trim = FALSE, digits = NULL,
+format.default <- function(x, trim = FALSE, digits = NULL, nsmall = 0,
 			   justify = c("left", "right", "none"))
 {
     f.char <- function(x, justify) {
@@ -35,7 +35,8 @@ format.default <- function(x, trim = FALSE, digits = NULL,
 			 paste, collapse=", "),
 	   call=, expression=, "function"=, "(" = deparse(x),
 	   ##else: numeric, complex, ??? :
-	   structure(.Internal(format(x, trim = trim)), names=names(x)))
+	   structure(.Internal(format(x, trim = trim, small=nsmall)),
+                     names=names(x)))
 }
 ## NOTE: Currently need non-default format.dist() -> ../../mva/R/dist.R
 

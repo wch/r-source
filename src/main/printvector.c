@@ -93,7 +93,7 @@ void printRealVector(double *x, int n, int indx)
     int i, w, d, e, labwidth=0, width;
 
     DO_first_lab;
-    formatReal(x, n, &w, &d, &e);
+    formatReal(x, n, &w, &d, &e, 0);
     w += R_print.gap;
 
     for (i = 0; i < n; i++) {
@@ -111,7 +111,7 @@ void printComplexVector(Rcomplex *x, int n, int indx)
     int i, w, wr, dr, er, wi, di, ei, labwidth=0, width;
 
     DO_first_lab;
-    formatComplex(x, n, &wr, &dr, &er, &wi, &di, &ei);
+    formatComplex(x, n, &wr, &dr, &er, &wi, &di, &ei, 0);
 
     w = wr + wi + 2;	/* +2 for "+" and "i" */
     w += R_print.gap;
@@ -233,7 +233,7 @@ static void printNamedIntegerVector(int * x, int n, SEXP * names)
 		   Rprintf("%s%*s", EncodeInteger(x[k],w), R_print.gap,""))
 
 #undef INI_F_REAL
-#define INI_F_REAL	int d, e; formatReal(x, n, &w, &d, &e)
+#define INI_F_REAL	int d, e; formatReal(x, n, &w, &d, &e, 0)
 
 static void printNamedRealVector(double * x, int n, SEXP * names)
     PRINT_N_VECTOR(INI_F_REAL,
@@ -242,7 +242,7 @@ static void printNamedRealVector(double * x, int n, SEXP * names)
 #undef INI_F_CPLX
 #define INI_F_CPLX					\
     int wr, dr, er, wi, di, ei;				\
-    formatComplex(x, n, &wr, &dr, &er, &wi, &di, &ei);	\
+    formatComplex(x, n, &wr, &dr, &er, &wi, &di, &ei, 0);	\
     w = wr + wi + 2
 
 #undef P_IMAG_NA
