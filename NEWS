@@ -165,6 +165,11 @@ NEW FEATURES
 
     o	New convenience wrappers write.csv() and write.csv2().
 
+    o	The regular expression code is now based on that in glibc
+	2.3.3.  It has a stricter conformance to POSIX, so braces may
+	need to be escaped where before they did not (but could have
+	been).
+
 
 UTILITIES
 

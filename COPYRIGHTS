@@ -204,10 +204,10 @@ src/main/vsnprintf.c
 
 
 src/main/regex.c
+   Copyright (C) 2002, 2003 Free Software Foundation, Inc.
 src/main/Rregex.h
-
-   Copyright (C) 1993, 94, 95, 96, 97, 98, 99 Free Software Foundation, Inc.
-   Copyright (C) 1985,89,90,91,92,93,95,96,97,98 Free Software Foundation, Inc.
+   Copyright (C) 1985,1989-93,1995-98,2000,2001,2002,2003
+   Free Software Foundation, Inc.
 
 
 src/extra/xdr/*

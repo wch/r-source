@@ -1485,3 +1485,10 @@ write.table(x3) # matrix, so loses class
 x4
 write.table(x4) # preserves class, does not quote
 ##
+
+
+## Problem with earlier regexp code spotted by KH
+grep("(.*s){2}", "Arkansas", v = TRUE)
+grep("(.*s){3}", "Arkansas", v = TRUE)
+grep("(.*s){3}", state.name, v = TRUE)
+## Thought Arkansas had 3 s's.

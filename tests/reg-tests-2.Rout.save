@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-12-26), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-12-28), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4466,4 +4466,14 @@ b 2 2
 "5" 5 2005-01-05
 "6" 6 2005-01-06
 > ##
+> 
+> 
+> ## Problem with earlier regexp code spotted by KH
+> grep("(.*s){2}", "Arkansas", v = TRUE)
+[1] "Arkansas"
+> grep("(.*s){3}", "Arkansas", v = TRUE)
+character(0)
+> grep("(.*s){3}", state.name, v = TRUE)
+[1] "Massachusetts" "Mississippi"  
+> ## Thought Arkansas had 3 s's.
 > 

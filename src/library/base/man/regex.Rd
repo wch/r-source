@@ -160,10 +160,10 @@
   substring previously matched by the Nth parenthesized subexpression of
   the regular expression.
 
-  The current code attempts to support traditional usage by assuming
+  Before \R 2.1.0 \R attempted to support traditional usage by assuming
   that \code{\{} is not special if it would be the start of an invalid
   interval specification.  (POSIX allows this behaviour as an extension but
-  we advise users not to rely on it.)
+  we no longer support it.)
 }
 \section{Basic Regular Expressions}{
   This section covers the regular expressions allowed if
