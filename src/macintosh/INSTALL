@@ -56,6 +56,10 @@ f2clib directory of Mac F2C distribution. This file conflicts
 with the standard "fp.h" in the Apple Universal Libraries that
 is needed in order to use IEEE 754 arithmetics.
 
+If you use ABSoft Fortran Compiler you should use option -N15 to add
+trailing underscores to fortran subroutines. Thanks to Andreas Papritz
+and Jan Deleew.
+
 Once you have built the R application, copy the "R" binary from
 "src/macintosh/bin" in the folder where you put also the "library"
 directory (with all packages built), the "afm", "demos" and "tests"
