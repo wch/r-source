@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-40, @value{FAQ-YEAR}-02-13
+@set FAQ-VERSION 1.8-42, @value{FAQ-YEAR}-02-19
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1463,15 +1463,13 @@ Apache under Linux and in principle should run on any platform that
 supports R and a web server provided that the installer has the
 necessary security permissions.
 
-@strong{Rcgi} is a CGI WWW interface to R by
-@email{mjr@@stats.mth.uea.ac.uk, Mark J. Ray}.  It had the ability to
-use ``embedded code'': you could mix user input and code, allowing the
-@HTML{} author to do anything from load in data sets to enter most of
-the commands for users without writing CGI scripts.  Graphical output
-was possible in PostScript or GIF formats and the executed code was
-presented to the user for revision.  However, it is not clear if the
-project is still active and recent attempts to contact the author or
-find the package have failed.  
+@strong{Rcgi} is a CGI WWW interface to R by @email{mjr@@dsl.pipex.com,
+MJ Ray}.  It had the ability to use ``embedded code'': you could mix
+user input and code, allowing the @HTML{} author to do anything from
+load in data sets to enter most of the commands for users without
+writing CGI scripts.  Graphical output was possible in PostScript or GIF
+formats and the executed code was presented to the user for revision.
+However, it is not clear if the project is still active.
 @c URL no longer seems to work ...
 @c See @uref{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
 Currently, a modified version of @strong{Rcgi} by
@@ -1574,6 +1572,8 @@ Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item BradleyTerry
 Specify and fit the Bradley-Terry model and structured versions.
+@item BsMD
+Bayes screening and model discrimination follow-up designs.
 @item CDNmoney
 Components of Canadian monetary aggregates.
 @item CGIwithR
@@ -2042,6 +2042,9 @@ Score tests for association of traits with haplotypes when linkage phase
 is ambiguous.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
+@item hett
+Functions for the fitting and summarizing of heteroscedastic
+t-regression.
 @item hier.part
 Hierarchical Partitioning: variance partition of a multivariate data
 set.
@@ -2070,6 +2073,11 @@ The functions may be divided into the following groups; maxima/minima,
 order statistics, peaks over thresholds and point processes.
 @item its
 An S4 class for handling irregular time series.
+@item kernlab
+Kernel-based machine learning methods including support vector machines.
+@c <FIXME 1.9.0>
+(Currently in @file{1.9.0/Other}.)
+@c </FIXME>
 @item knnTree
 Construct or predict with @math{k}-nearest-neighbor classifiers, using
 cross-validation to select @math{k}, choose variables (by forward or
@@ -2154,8 +2162,11 @@ Maximally selected rank and Gauss statistics with several p-value
 approximations.
 @item mclust
 Model-based cluster analysis: the 2002 version of MCLUST.
-@item mclust1998
-Model-based cluster analysis: the 1998 version of MCLUST.
+@c <COMMENT>
+@c Moved to Archive on 2004-02-19 as requested by the maintainer.
+@c @item mclust1998
+@c Model-based cluster analysis: the 1998 version of MCLUST.
+@c </COMMENT>
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -2199,6 +2210,9 @@ Multiple comparison procedures for the one-way layout.
 @item multidim
 Multidimensional descriptive statistics: factorial methods and
 classification.
+@item multinomRob
+Overdispersed multinomial regression using robust (LQD and tanh)
+estimation.
 @item multiv
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
@@ -2343,6 +2357,10 @@ Breiman's random forest classifier.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
+@item ref
+Functions for creating references, reading from and writing ro
+references and a memory efficient refdata type that transparently
+encapsulates matrices and data frames.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.

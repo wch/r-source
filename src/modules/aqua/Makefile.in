@@ -18,10 +18,10 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = AquaReadMe.txt  Raete.r Makefile.in Info.plist.in Contents/Info.plist.in \
+DISTFILES = AquaReadMe.txt  Raete.r Makefile.in Info.plist.in \
   $(SOURCES) $(HEADERS)
 
-SUBDIRS_WITH_NO_BUILD = Contents RAqua
+SUBDIRS_WITH_NO_BUILD = Contents
 
 ## <FIXME>
 ## Change to 'aqua.la' when using libtool for shlibs.

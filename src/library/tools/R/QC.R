@@ -1143,8 +1143,8 @@ function(package, dir, lib.loc = NULL)
                    txt <- gsub(methodRE, "\"\\\\\\1\"", txt)
                    .parseTextAsMuchAsPossible(txt)
                })
-    ind <- sapply(dbUsages,
-                  function(x) !is.null(attr(x, "badLines")))
+    ind <- as.logical(sapply(dbUsages,
+                             function(x) !is.null(attr(x, "badLines"))))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
     dbArgumentNames <- lapply(db, .getRdArgumentNames)
 

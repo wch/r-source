@@ -83,9 +83,9 @@ static SEXP gcall;
    This allows to assign values "past the end" of the vector or list.
    Note that, unlike S, we only extend as much as is necessary. 
 */
-static SEXP EnlargeVector(SEXP x, int newlen)
+static SEXP EnlargeVector(SEXP x, R_len_t newlen)
 {
-    int i, len;
+    R_len_t i, len;
     SEXP newx, names, newnames;
 
     /* Sanity Checks */
@@ -292,7 +292,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level, SEXP call)
 static SEXP DeleteListElements(SEXP x, SEXP which)
 {
     SEXP include, xnew, xnames, xnewnames;
-    int i, ii, len, lenw;
+    R_len_t i, ii, len, lenw;
     len = length(x);
     lenw = length(which);
     /* calculate the length of the result */

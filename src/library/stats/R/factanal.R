@@ -275,6 +275,7 @@ varimax <- function(x, normalize = TRUE, eps = 1e-5)
     z <- x %*% TT
     if(normalize) z <- z * sc
     dimnames(z) <- dimnames(x)
+    class(z) <- "loadings"
     list(loadings = z, rotmat = TT)
 }
 
@@ -292,5 +293,6 @@ promax <- function(x, m = 4)
     z <- x %*% U
     U <- xx$rotmat %*% U
     dimnames(z) <- dn
+    class(z) <- "loadings"
     list(loadings = z, rotmat = U)
 }

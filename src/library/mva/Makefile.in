@@ -11,7 +11,7 @@ subdir = src/library/mva
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = DESCRIPTION.in Makefile.in NAMESPACE
+DISTFILES = DESCRIPTION.in Makefile.in
 
 pkg = mva
 
@@ -22,12 +22,6 @@ all: Makefile DESCRIPTION
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
-	  if test -f $(srcdir)/$${f}; then \
-	    $(INSTALL_DATA) $(srcdir)/$${f} \
-	      $(top_builddir)/library/$(pkg); \
-	  fi; \
-	done
 	@if test -f DESCRIPTION; then \
 	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
 	  (tmp="Built: R $(VERSION); "; \
@@ -38,24 +32,6 @@ all: Makefile DESCRIPTION
 	    echo "$${tmp}") \
 	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
-	@if test -d $(srcdir)/data; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
-	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
-	  done; \
-	fi
-	@if test -d $(srcdir)/man; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  (f=$${TMPDIR:-/tmp}/R$$$$; \
-	    for rdfile in $(srcdir)/man/*.Rd; do \
-	      cat $${rdfile}; echo '\eof'; \
-	    done >> $${f}; \
-	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
-	fi
-	@if test -d src; then \
-	  (cd src && $(MAKE)) || exit 1; \
-	fi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -64,9 +40,7 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 
 mostlyclean: clean
 clean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 distclean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 

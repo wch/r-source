@@ -3418,7 +3418,7 @@ but we would like to set the @code{dimnames} of the result.  Although
 @group
 SEXP out(SEXP x, SEXP y)
 @{
-  int i, j, nx, ny;
+  R_len_t i, j, nx, ny;
   double tmp;
   SEXP ans, dim, dimnames;
 @end group
@@ -3714,7 +3714,7 @@ Now for the version in @R{}-internal style.  Only the C code changes.
 
 SEXP convolve2(SEXP a, SEXP b)
 @{
-  int i, j, na, nb, nab;
+  R_len_t i, j, na, nb, nab;
   double *xa, *xb, *xab;
   SEXP ab;
 
@@ -3954,7 +3954,7 @@ with C code
 @group
 SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 @{
-  int i, n = length(list);
+  R_len_t i, n = length(list);
   SEXP ans;
 
   if(!isNewList(list)) error("`list' must be a list");
@@ -3981,7 +3981,7 @@ obscure) to do this in C code.  The following is based on the code in
 @group
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 @{
-  int i, n = length(list);
+  R_len_t i, n = length(list);
   SEXP R_fcall, ans;
 
   if(!isNewList(list)) error("`list' must be a list");

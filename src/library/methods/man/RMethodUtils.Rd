@@ -114,7 +114,8 @@ addNextMethod(method, f, mlist, optional, envir)
       error or returns \code{NULL} according to the value of
       \code{mustFind}.  By default, searches in the top-level
       environment (normally the global environment, but adjusted to
-      work correctly when package code is evaluated from the function \code{\link{library}}.
+      work correctly when package code is evaluated from the function
+      \code{\link{library}}).
 
       Primitive functions are dealt with specially, since there is never
       a formal generic definition for them.  The value returned is the
@@ -268,7 +269,6 @@ addNextMethod(method, f, mlist, optional, envir)
       methods defined suitably for ordinary methods and for methods with
       calls to \code{\link{callNextMethod}}.
     }
-  }
 
     \item{\code{makeGeneric}:}{
       Makes a generic function object corresponding to the given
@@ -351,5 +351,6 @@ addNextMethod(method, f, mlist, optional, envir)
       function body).
     }
 
+  }
 }
 \keyword{internal}

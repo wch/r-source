@@ -67,7 +67,10 @@ OutputDir=.
 WizardSmallImageFile=R.bmp
 UsePreviousAppDir=no
 ChangesAssociations=yes
-Compression=bzip
+Compression=lzma
+END
+
+my $lines2=<<END;
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
@@ -92,6 +95,8 @@ Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; Value
 END
 
 print insfile $lines;
+print insfile "SolidCompression=yes\n";
+print insfile $lines2;
 print insfile <<END;
 
 [Icons]
@@ -117,6 +122,7 @@ Name: "tcl"; Description: "Support Files for library(tcltk)"; Types: user full c
 END
 
 print minifile $lines;
+print minifile $lines2;
 print minifile <<END;
 
 [Types]

@@ -323,8 +323,7 @@ function(package)
     ## round.POSIXt is a method for S3 and S4 group generics with
     ## deliberately different arg names.
     stopList <-
-        list(base = c("all.names", "all.vars", "anova.lmlist",
-             "fitted.values",
+        list(base = c("all.equal", "all.names", "all.vars",
              "format.char", "format.info", "format.pval",
              "kappa.tri",
              "max.col",
@@ -344,9 +343,10 @@ function(package)
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
              sm = "print.graph",
-             stats = c("influence.measures", "t.test"),
-             ts = "lag.plot",
-             utils = c("close.socket", "flush.console", "update.packages")
+             stats = c("anova.lmlist", "fitted.values", "lag.plot",
+             "influence.measures", "t.test"),
+             utils = c("close.socket", "flush.console",
+             "update.packages") 
              )
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]

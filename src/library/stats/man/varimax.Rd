@@ -29,7 +29,7 @@ promax(x, m = 4)
 \value{
   A list with components
   \item{loadings}{The \sQuote{rotated} loadings matrix,
-    \code{x \%*\% rotmat}.}
+    \code{x \%*\% rotmat}, of class \code{"loadings"}.}
   \item{rotmat}{The \sQuote{rotation} matrix.}
 }
 \references{
@@ -50,9 +50,9 @@ promax(x, m = 4)
 
 \examples{
 data(swiss)
-## varimax with normalize = T is the default
+## varimax with normalize = TRUE is the default
 fa <- factanal( ~., 2, data = swiss)
-varimax(fa$loadings, normalize = FALSE)
-promax(fa$loadings)
+varimax(loadings(fa), normalize = FALSE)
+promax(loadings(fa))
 }
 \keyword{multivariate}

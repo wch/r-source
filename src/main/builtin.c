@@ -460,11 +460,11 @@ SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* vector(mode="logical", length=0) */
 SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int len, i;
+    R_len_t len, i;
     SEXP s;
     SEXPTYPE mode;
     checkArity(op, args);
-    len = asInteger(CADR(args));
+    len = asVecSize(CADR(args));
     s = coerceVector(CAR(args), STRSXP);
     if (length(s) == 0)
 	error("vector: zero-length type argument");
@@ -508,9 +508,9 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* (if it is vectorizable). We could probably be fairly */
 /* clever with memory here if we wanted to. */
 
-SEXP lengthgets(SEXP x, int len)
+SEXP lengthgets(SEXP x, R_len_t len)
 {
-    int lenx, i;
+    R_len_t lenx, i;
     SEXP rval, names, xnames, t;
     if (!isVector(x) && !isVectorizable(x))
 	error("can not set length of non-vector");
@@ -589,7 +589,7 @@ SEXP lengthgets(SEXP x, int len)
 
 SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int len;
+    R_len_t len;
     SEXP x;
     checkArity(op, args);
     x = CAR(args);
@@ -597,7 +597,7 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
        error("length<- invalid first argument");
     if (length(CADR(args)) != 1)
        error("length<- invalid second argument");
-    len = asInteger(CADR(args));
+    len = asVecSize(CADR(args));
     if (len == NA_INTEGER)
        error("length<- missing value for length");
     return lengthgets(x, len);

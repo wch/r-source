@@ -1183,3 +1183,12 @@ aov(y ~ a + b - 1 + Error(c), data=test.df)
 ## Note this is unbalanced and not a good example
 
 binom.test(c(800,10))# p-value < epsilon
+
+
+## Misleading error messages on integer overflow
+## Uwe Ligges, R-devel, 2004-02-19
+try(numeric(2^31))
+try(matrix( , 2^31, 1))
+try(matrix( , 2^31/10, 100))
+try(array(dim=c(2^31/10, 100)))
+## reported negative values (really integer NA) for R < 1.9.0

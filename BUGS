@@ -266,6 +266,10 @@ Subject: return() undocumented
 From: Scot@Wilcoxon.Org
 Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
 ..He meant in R-lang
+* PR# 6570 *
+Subject: Spelling
+From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
+Date: 11 Feb 2004 01:13:32 +0100
 
 Directory:  Graphics
 
@@ -575,15 +579,6 @@ Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
 ..According to Simon Urbanek this is a java security issue.  With RAqua a good
 ..alternative is starting HTML 
 ..help and then using help.search() or  Help|Search Help on...
-* PR# 5529 *
-Subject: R OS X panther?
-From: Bronwyn Carlisle <bronwyn@biocadmin.otago.ac.nz>
-Date: Fri, 5 Dec 2003 12:47:55 +1300
-..Probably not an R bug
-* PR# 5674 *
-Subject: R.app should ignore -psn command line argument
-From: ellis@stat.harvard.edu
-Date: Wed, 10 Dec 2003 19:18:15 +0100 (CET)
 * PR# 6438 *
 Subject: R crash 
 From: sstoddar@uiuc.edu
@@ -817,87 +812,51 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Bug
 From: huan.huang@bnpparibas.com
 Date: Fri,  6 Feb 2004 18:40:05 +0100 (CET)
-* PR# 6561 *
-Subject: Returned mail
-Subject: Mail Delivery System
-From: mailgate01@metso.com
-From: r-bugs@r-project.org
-Date: Mon, 09 Feb 2004 15:13:09 -0600
-Date: Mon, 9 Feb 2004 16:08:45 -0500
-* PR# 6562 *
-Subject: FWD: Have Pills V|a|lium + v|@GRa ~ XAna/x/ ` %RND_MED_VIC+0DIN $ Pnt3rmin ( Som@  PI6nH
-From: "emerson orton" <bj.orton@rr.com>
-Date: Mon, 09 Feb 2004 09:36:04 -0400
-* PR# 6563 *
-Subject: Re:
-From: "Jeremiah Pryor" <veakadwteqdta@europe.com>
-Date: Tue, 10 Feb 2004 03:31:37 -0600
-* PR# 6564 *
-Subject: Business Proposition:Respond ASAP
-From: Bola Adeosho <'bolaadeosho@gawab.com>
-Date: Tue, 10 Feb 2004 13:00:26 +0000 (GMT)
-* PR# 6565 *
-Subject: V1agra has been replaced by the more effective Cia1is! zBX lU
-From: "Laura" <Vanessa@excite.com>
-Date: Wed, 11 Feb 2004 06:07:28 +0400
-* PR# 6566 *
-Subject: Returned mail: see transcript for details
-Subject: Status
-From: Mail Delivery Subsystem <MAILER-DAEMON@ual.es>
-From: r-bugs@biostat.ku.dk
-Date: Tue, 10 Feb 2004 18:05:09 +0100 (MET)
-Date: Tue, 10 Feb 2004 18:06:41 +0100
-* PR# 6567 *
-Subject: Virus Alert
-From: antivirus@ual.es
-Date: Tue, 10 Feb 2004 18:05:17 +0100
-* PR# 6568 *
-Subject: Virus Alert
-From: antivirus@ual.es
-Date: Tue, 10 Feb 2004 18:39:28 +0100
-* PR# 6569 *
-Subject: Re:
-From: "Joe Hagan" <jtlvujcybsfv@seductive.com>
-Date: Tue, 10 Feb 2004 16:51:46 -0600
-* PR# 6570 *
-Subject: Spelling
-From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
-Date: 11 Feb 2004 01:13:32 +0100
-* PR# 6571 *
-Subject: sugper viagrga slayer  bunts
-From: "R.n.griffiths" <bobbyannotated@asiamail.com>
-Date: Wed, 11 Feb 2004 06:44:15 +0000
-* PR# 6572 *
-Subject: Mail delivery failed: returning message to sender
-Subject: Server Report
-From: Mail Delivery System <Mailer-Daemon@lfallback1.lnd.ops.eu.uu.net>
-From: r-bugs@biostat.ku.dk
-Date: Wed, 11 Feb 2004 07:04:44 +0000
-Date: Wed, 11 Feb 2004 01:32:20 -0500
-* PR# 6573 *
-Subject: Re: Hello
-From: "Quanta IT" <void@void.com>
-Date: Wed, 11 Feb 2004 10:02:15 +0100
-* PR# 6574 *
-Subject: Re: Hello
-From: "Zancolo' Olga - Direzione Amministrativa (auto reply)" <olga.zancolo@unimib.it>
-Date: Wed, 11 Feb 2004 12:37:09 +0100
-* PR# 6575 *
-Subject: VÍRUS ENCONTRADO NA MENSAGEM DESTINADA A sofia@facic.fuom.br
-Subject: Hi
-From: admlab@facic.fuom.br
-From: r-bugs@r-project.org
-Date: Thu, 12 Feb 2004 04:54:48 -0300
-Date: Fri, 2 Feb 2001 05:02:18 -0200
-* PR# 6576 *
-Subject: HEALTH CARE SECTOR: NEWS On Tubercin and FDA Testing--R-bugs 37608693
-From: "Helen Hammond" <ktkqglbfw@personal.ro>
-Date: Fri, 13 Feb 2004 00:20:35 -0500
-* PR# 6577 *
-Subject: Re: incommunicable boylston
-From: "Edward Potter" <sxhaaxyb@winning.com>
-Date: Fri, 13 Feb 2004 07:54:02 -0600
-* PR# 6578 *
-Subject: death hut ababa barth
-From: "Donn Brandon" <pherfhkhrcjjb@att.net>
-Date: Fri, 13 Feb 2004 10:04:01 -0500
+* PR# 6588 *
+Subject: limitation
+From: Ming Lo <fnlo@ust.hk>
+Date: Mon, 16 Feb 2004 20:24:54 +0800 (HKT)
+* PR# 6591 *
+Subject: R-bugs I found your addie ano
+From: "Lee Law" <NEWVWD@wsdc3sx.com>
+Date: Tue, 17 Feb 2004 15:56:21 -0400
+* PR# 6592 *
+Subject: Youre not gonna believe this man!
+From: "Natalie ." <dygmhnsdvvdhk@apexmail.com>
+Date: Mon, 16 Feb 2004 22:52:41 -0600
+* PR# 6593 *
+Subject: Macintosh
+From: dspublic@earthlink.net
+Date: Tue, 17 Feb 2004 06:10:00 +0100 (CET)
+* PR# 6594 *
+Subject: typo in help(names)?
+From: weigand@mayo.edu
+Date: Tue, 17 Feb 2004 16:24:08 +0100 (CET)
+* PR# 6595 *
+Subject: Your message to R-announce awaits moderator approval
+From: r-announce-bounces@stat.math.ethz.ch
+Date: Tue, 17 Feb 2004 16:12:30 +0100
+* PR# 6596 *
+Subject: "Out of memory" while building R with perl 5.8.2
+From: vangyzen@stat.duke.edu
+Date: Tue, 17 Feb 2004 20:32:01 +0100 (CET)
+* PR# 6597 *
+Subject: summary.rpart() in rpart package
+From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
+Date: Tue, 17 Feb 2004 17:07:02 -0600
+* PR# 6598 *
+Subject: src/scripts/Makefile bug
+From: Atro Tossavainen <atossava@cc.helsinki.fi>
+Date: Wed, 18 Feb 2004 14:45:24 +0200 (EET)
+* PR# 6599 *
+Subject: warning
+From: bw@bwdigitronik.ch
+Date: Wed, 18 Feb 2004 16:53:58 +0100
+* PR# 6600 *
+Subject: R would not quit (bug?)
+From: Michael Herron <Michael.C.Herron@Dartmouth.EDU>
+Date: Wed, 18 Feb 2004 14:27:07 -0500
+* PR# 6601 *
+Subject: Process R segmentation with strsplit()
+From: "wolski" <wolski@molgen.mpg.de>
+Date: Thu, 19 Feb 2004 19:05:49 +0100
