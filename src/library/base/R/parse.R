@@ -3,6 +3,8 @@
 parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
                   white = FALSE)
 {
+    if (!is.null(text) && length(as.character(text)) == 0)
+        return(expression())
     if(is.character(file))
         if(file == "") file <- stdin()
         else {

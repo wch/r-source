@@ -506,6 +506,8 @@ BUG FIXES
 
    o	t(x) behaves when x is a (multivariate) time series. (PR#1998)
 
+   o    parse(text=x) would parse from stdin if length(x) was zero
+
 
 
 		CHANGES IN R VERSION 1.5.1

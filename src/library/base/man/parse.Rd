@@ -11,7 +11,8 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", white = FALSE)
     then input is taken from the console.}
   \item{n}{the number of statements to parse.  If \code{n} is negative
     the file is parsed in its entirety.}
-  \item{text}{character. The text to parse, quoted.}
+  \item{text}{character vector. The text to parse. Elements are treated
+    as if they were lines of a file.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{options("prompt")[[1]]}.}
   \item{white}{if \code{TRUE} then any white space separates expressions
