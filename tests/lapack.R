@@ -10,7 +10,7 @@ str(s <- La.svd(X)); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
-str(s <- La.svd(X, method = "dgesdd")); D <- diag(s$d)
+str(s <- La.svd(X, method = "dgesvd")); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
@@ -20,7 +20,7 @@ stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
 X <- cbind(1, 1:7)
-str(s <- La.svd(X, method = "dgesdd")); D <- diag(s$d)
+str(s <- La.svd(X, method = "dgesvd")); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
@@ -30,10 +30,10 @@ La.svd(X, nu = 0)
 stopifnot(dim(s$u) == c(7,7))
 La.svd(X, nv = 0)
 
-La.svd(X, nu = 0, method = "dgesdd")
-(s <- La.svd(X, nu = 7, method = "dgesdd"))
+La.svd(X, nu = 0, method = "dgesvd")
+(s <- La.svd(X, nu = 7, method = "dgesvd"))
 stopifnot(dim(s$u) == c(7,7))
-La.svd(X, nv = 0, method = "dgesdd")
+La.svd(X, nv = 0, method = "dgesvd")
 
 # test of complex case
 
@@ -60,7 +60,7 @@ La.eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real eigenvalues
 La.eigen(cbind( 1,3:1,1:3))
 La.eigen(cbind(-1,c(1:2,0),0:2)) # complex values
 
-La.eigen(cbind(c(1,-1),c(-1,1)), method = "dsyevr")
+La.eigen(cbind(c(1,-1),c(-1,1)), method = "dsyev")
 
 
 set.seed(1234)
@@ -74,7 +74,7 @@ stopifnot(
  abs(sm %*% V - V %*% diag(lam))          < 60*Meps,
  abs(sm       - V %*% diag(lam) %*% t(V)) < 60*Meps)
 
-em <- La.eigen(sm, method = "dsyevr"); V <- em$vect
+em <- La.eigen(sm, method = "dsyev"); V <- em$vect
 print(lam <- em$values) # ordered DEcreasingly
 
 stopifnot(
@@ -83,7 +83,7 @@ stopifnot(
 
 # check only.values = TRUE too
 La.eigen(sm, only.values = TRUE)
-La.eigen(sm, only.values = TRUE, method = "dsyevr")
+La.eigen(sm, only.values = TRUE, method = "dsyev")
 
 
 ## symmetric = FALSE
@@ -123,7 +123,7 @@ sm <- matrix(rnorm(25), 5, 5)
 sm <- 0.5 * (sm + t(sm))
 eigenok(sm, eigen(sm))
 eigenok(sm, La.eigen(sm))
-eigenok(sm, La.eigen(sm, method="dsyevr"))
+eigenok(sm, La.eigen(sm, method="dsyev"))
 eigenok(sm, La.eigen(sm, sym=FALSE))
 
 sm[] <- as.complex(sm)
