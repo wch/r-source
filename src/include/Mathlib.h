@@ -97,7 +97,7 @@
 #else/* Mathlib standalone */
 
 #include <stdio.h>
-# define MATHLIB_ERROR(fmt,x)   { printf(fmt,x); exit(1) }
+# define MATHLIB_ERROR(fmt,x)	{ printf(fmt,x); exit(1) }
 # define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
 # define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
 # define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
@@ -105,15 +105,21 @@
 #endif
 
 #define ME_NONE		0
+/*	no error */
 #define ME_DOMAIN	1
+/*	argument out of domain */
 #define ME_RANGE	2
-#define ME_NOCONV	3
-#define ME_PRECISION	4
-#define ME_UNDERFLOW	5
+/*	value out of range */
+#define ME_NOCONV	4
+/*	process did not converge */
+#define ME_PRECISION	8
+/*	does not have "full" precision */
+#define ME_UNDERFLOW	16
+/*	and underflow occured (important for IEEE)*/
 
-#undef ML_PRECISION_WARNINGS
 
 #ifdef IEEE_754
+
 # ifdef HAVE_IEEE754_H
 #  include <ieee754.h> /* newer Linuxen */
 # else
@@ -221,14 +227,14 @@ double	lfastchoose(double, double);
 
 	/* Bessel Functions of All Kinds */
 
-double  bessel_i(double, double, double);
-double  bessel_j(double, double);
-double  bessel_k(double, double, double);
-double  bessel_y(double, double);
-void    I_bessel(double*, double*, long*, long*, double*, long*);
-void    J_bessel(double*, double*, long*,        double*, long*);
-void 	K_bessel(double*, double*, long*, long*, double*, long*);
-void	Y_bessel(double*, double*, long*,        double*, long*);
+double	bessel_i(double, double, double);
+double	bessel_j(double, double);
+double	bessel_k(double, double, double);
+double	bessel_y(double, double);
+void	I_bessel(double*, double*, long*, long*, double*, long*);
+void	J_bessel(double*, double*, long*,	 double*, long*);
+void	K_bessel(double*, double*, long*, long*, double*, long*);
+void	Y_bessel(double*, double*, long*,	 double*, long*);
 
 	/* Beta and Related Functions */
 
