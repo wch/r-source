@@ -105,6 +105,9 @@ BUG FIXES
 
     o	Error messages of do.call(), e.g., are now spaced properly.
 
+    o   scan() recognises quoted strings again. The default for the
+        quote= argument got set wrongly when it was introduced.
+
 
 		CHANGES IN R VERSION 1.1.0
 
