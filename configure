@@ -576,7 +576,7 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_STATUS "Alpha"
+#define R_STATUS "Unstable"
 EOF
 
 cat >> confdefs.h <<\EOF
@@ -584,11 +584,11 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_DAY "22"
+#define R_DAY "31"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MONTH "February"
+#define R_MONTH "March"
 EOF
 
 cat >> confdefs.h <<\EOF
