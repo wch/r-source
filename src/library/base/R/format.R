@@ -264,7 +264,7 @@ prettyNum <-
        length(i.big <- grep(P0("[0-9]{", big.interval + 1,",}"), B.))
        ) { ## add `big.mark' in decimals before "." :
         B.[i.big] <-
-            revStr(gsub(P0("([0-9]{",big.interval,"})"),
+            revStr(gsub(P0("([0-9]{",big.interval,"})\\B"),
                         P0("\\1",big.mark), revStr(B.[i.big])))
     }
     if(nchar(small.mark) &&

@@ -136,7 +136,7 @@ plotNodeLimit <- function(x1, x2, subtree, center){
 
 cut.dendrogram <- function(x, h, ...)
 {
-    LOWER <- NULL
+    LOWER <- list()
     X <- 1
 
     assignNodes <- function(subtree, h){
@@ -161,7 +161,3 @@ cut.dendrogram <- function(x, h, ...)
 
     list(upper=assignNodes(x, h), lower=LOWER)
 }
-
-
-
-

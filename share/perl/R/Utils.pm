@@ -66,14 +66,14 @@ sub file_path {
     my $filesep = "/";
     my $outpath ="";
     my $v;
-    
+
     if($R::Vars::OSTYPE eq "mac") {
      foreach $v (@args) {
       $v =~ s/:\z//;
-     }         
+     }
      $filesep = ":";
     }
-    
+
     join($filesep, @args);
 }
 
@@ -204,7 +204,7 @@ sub formatDL {
     $Text::Wrap::columns = $width; # fill column
 
     $description =~ s/^\s*//;	# remove leading whitespace
-    
+
     my $txt;
     my $prefix = " " x $indent;
     if($style eq "table") {

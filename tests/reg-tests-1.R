@@ -667,3 +667,32 @@ stopifnot(identical(l2, "aa.bb this should be added"))
 ## 1.5.0 gave l2 printing as l.
 
 
+## PR 1530 drop inconsistency for data frames
+DF <- data.frame(x = 1:3, y = c("A","D","E"), z = c(6,9,10))
+a1 <- DF[1,1:3]
+xx <- DF[1,]
+a2 <- xx[, 1:3]
+a3 <- DF[1,1:3, drop = TRUE]
+a4 <- xx[, 1:3, drop = TRUE]
+stopifnot(identical(a1, a2), identical(a3, a4))
+## <= 1.5.0 had a2 == a3.
+
+
+## PR 1536 rbind.data.frame converts logical to factor
+df <- data.frame(a = 1:10)
+df$b <- df$a < 5
+ddf <- rbind(df, df)
+stopifnot(!is.factor(ddf$b))
+## 1.5.0 had b as a factor.
+
+## PR 1548 : prettyNum inserted leading commas
+stopifnot(prettyNum(123456, big.mark=",") == "123,456")
+
+## PR 1552: cut.dendrogram
+library(cluster)
+data(flower)
+ dfl <- daisy(flower, type = list(asymm = 3))
+hdfl <- hclust(dfl, method = "average")
+ddfl <- as.dendrogram(hdfl)
+cdfl <- cut(ddfl, h = 0.31311)## error in 1.5.0
+
