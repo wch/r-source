@@ -62,7 +62,7 @@ methods <- function (generic.function, class)
         genfun <- get(generic.function, mode = "function",
                       envir = parent.frame())
 	name <- paste("^", generic.function, ".", sep = "")
-        name <- gsub("([.[$])", "\\\\\\1",name)
+        name <- gsub("([.[$+*])", "\\\\\\1",name)
         info <- info[grep(name, row.names(info)), ]
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
         ## check that there are all functions

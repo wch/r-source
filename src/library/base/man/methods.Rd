@@ -58,8 +58,10 @@ methods(generic.function, class)
 \examples{
 methods(summary)
 methods(class = "aov")
-methods("[[")  ##- does not list the C-internal ones...
-methods("$<-") # replacement function
+methods("[[")    ##- does not list the C-internal ones...
+methods("$<-")   # replacement function
+methods("+")     # binary operator
+methods("Math")  # group generic
 \dontrun{methods(print)
 }}
 \keyword{methods}
