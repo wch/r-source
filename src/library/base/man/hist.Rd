@@ -34,7 +34,8 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
   \item{include.lowest}{logical; if \code{TRUE},
     an `x[i]' equal to the `breaks' value will be included in the first
-    (or last, for \code{right = FALSE}) bar.}
+    (or last, for \code{right = FALSE}) bar.  This will be ignored (with
+    a warning) unless \code{breaks} is a vector.}
   \item{right}{logical; if \code{TRUE}, the histograms cells are
     right-closed (left open) intervals.}
   \item{density}{the density of shading lines, in lines per inch.

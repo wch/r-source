@@ -25,6 +25,10 @@ hist.default <-
     if(use.br)
         breaks <- sort(breaks)
     else {                              # construct vector of breaks
+        if(!include.lowest) {
+            include.lowest <- TRUE
+            warning("include.lowest ignored as `breaks' is not a vector")
+        }
         if(is.character(breaks)) {
             breaks <- match.arg(tolower(breaks),
                                 c("sturges", "fd",

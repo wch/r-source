@@ -128,6 +128,11 @@ NEW FEATURES
      o	legend() has a new `plot' argument.  Setting it `FALSE' gives
 	size information without plotting (suggested by U.Ligges).
 
+     o  To guard against unthinking use, `include.lowest' in
+	hist.default is now ignored, with a warning, unless `breaks'
+	is a vector.  (It either generated an error or had no effect,
+	depending how prettification of the range operated.)
+
 
 INSTALLATION CHANGES
 
