@@ -849,6 +849,27 @@ static int file_ungetc(int c)
     return ungetc(c, R_Inputfile);
 }
 
+static SEXP R_Parse1(int *status)
+{
+    switch(yyparse()) {
+    case 0:                     /* End of file */
+        *status = PARSE_EOF;
+        break;
+    case 1:                     /* Syntax error / incomplete */
+        *status = PARSE_ERROR;
+        if (EndOfFile) *status = PARSE_INCOMPLETE;
+        break;
+    case 2:                     /* Empty Line */
+        *status = PARSE_NULL;
+        break;
+    case 3:                     /* Valid expr '\n' terminated */
+    case 4:                     /* Valid expr ';' terminated */
+        *status = PARSE_OK;
+        break;
+    }  
+    return R_CurrentExpr;
+}
+
 SEXP R_Parse1File(FILE *fp, int gencode, int *status)
 {
     ParseInit();
@@ -856,22 +877,7 @@ SEXP R_Parse1File(FILE *fp, int gencode, int *status)
     R_Inputfile = fp;
     xxgetc = file_getc;
     xxungetc = file_ungetc;
-    switch(yyparse()) {
-    case 0:			/* End of file */
-	*status = PARSE_EOF;
-	break;
-    case 1:			/* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if (EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
-    case 2:			/* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:			/* Valid expr '\n' terminated */
-    case 4:			/* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
-    }
+    R_Parse1(status);
     R_Inputfile = NULL;
     return R_CurrentExpr;
 }
@@ -900,23 +906,7 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, int *status)
     iob = buffer;
     xxgetc = buffer_getc;
     xxungetc = buffer_ungetc;
-    switch(yyparse()) {
-    case 0:			/* End of file */
-	*status = PARSE_EOF;
-	if(EndOfFile == 2) *status = PARSE_INCOMPLETE;
-	break;
-    case 1:			/* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if(EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
-    case 2:			/* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:			/* Valid expr '\n' terminated */
-    case 4:			/* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
-    }
+    R_Parse1(status);
     return R_CurrentExpr;
 }
 
@@ -944,259 +934,118 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, int *status)
     txtb = textb;
     xxgetc = text_getc;
     xxungetc = text_ungetc;
-    switch(yyparse()) {
-    case 0:			/* End of file */
-	*status = PARSE_EOF;
-	break;
-    case 1:			/* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if(EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
-    case 2:			/* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:			/* Valid expr '\n' terminated */
-    case 4:			/* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
-    }
+    R_Parse1(status);
     return R_CurrentExpr;
 }
+
 #define GENERAL
 #ifdef GENERAL
 
-static int savechar;
-static int (*R_fetchchar)();
 
-static int general_getc(void)
-{
-    int c;
-    if (savechar) {
-	c = savechar;
-	savechar = 0;
-    }
-    else {
-	c = R_fetchchar();
-	if (c == EOF) {
-	    EndOfFile = 1;
-	    return R_EOF;
-	}
-	if (c == '\n') R_ParseError += 1;
-	return c;
-    }
-}
-
-static int general_ungetc(int c)
-{
-    if (c == '\n') R_ParseError -= 1;
-    savechar = c;
-    return c;
-}
-
-SEXP R_Parse1General(int (*fetchchar)(), int gencode, int *status)
+SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
+		     int gencode, int *status)
 {
     ParseInit();
     GenerateCode = gencode;
-    R_fetchchar = fetchchar;
-    xxgetc = general_getc;
-    xxungetc = general_ungetc;
-    switch(yyparse()) {
-    case 0:			/* End of file */
-	*status = PARSE_EOF;
-	break;
-    case 1:			/* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if (EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
-    case 2:			/* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:			/* Valid expr '\n' terminated */
-    case 4:			/* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
-    }
+    xxgetc = g_getc;
+    xxungetc = g_ungetc;
+    R_Parse1(status);
     return R_CurrentExpr;
 }
 #endif
 
+SEXP R_Parse(int n, int *status)
+{
+    int i;
+    SEXP t, rval;
+    if (n >= 0) {
+        PROTECT(rval = allocVector(EXPRSXP, n));
+        for (i = 0 ; i < n ; i++) {
+        try_again:
+	    ParseInit();
+            t = R_Parse1(status);
+            switch(*status) {
+            case PARSE_NULL:
+                goto try_again;
+                break;
+            case PARSE_OK:
+                VECTOR(rval)[i] = t;
+                break;
+            case PARSE_INCOMPLETE:
+            case PARSE_ERROR:
+            case PARSE_EOF:
+                rval = R_NilValue;
+                break;
+            }
+        }
+        UNPROTECT(1);
+        return rval;
+    }  
+    else {
+        PROTECT(t = NewList());
+        for(;;) {
+	    ParseInit();
+            rval = R_Parse1(status);
+            switch(*status) {
+            case PARSE_NULL:
+                break;
+            case PARSE_OK:
+                t = GrowList(t, rval);
+                break;
+            case PARSE_INCOMPLETE:
+            case PARSE_ERROR:
+                UNPROTECT(1);
+                return R_NilValue;
+                break;
+            case PARSE_EOF:
+                t = CDR(t);
+                rval = allocVector(EXPRSXP, length(t));
+                for (n = 0 ; n < LENGTH(rval) ; n++) {
+                    VECTOR(rval)[n] = CAR(t);
+                    t = CDR(t);
+                }
+                UNPROTECT(1);
+                *status = PARSE_OK;
+                return rval;
+                break;
+            }
+        }
+    }  
+}
+
 SEXP R_ParseFile(FILE *fp, int n, int *status)
 {
-    SEXP rval, t;
-    int i;
+    GenerateCode = 1;
     R_ParseError = 1;
-    if (n >= 0) {
-	PROTECT(rval = allocVector(EXPRSXP, n));
-	for (i = 0 ; i < n ; i++) {
-	try_again:
-	    t = R_Parse1File(fp, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		goto try_again;
-		break;
-	    case PARSE_OK:
-		VECTOR(rval)[i] = t;
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-	    case PARSE_EOF:
-		rval = R_NilValue;
-		break;
-	    }
-	}
-	UNPROTECT(1);
-	return rval;
-    }
-    else {
-	PROTECT(t = NewList());
-	for(;;) {
-	    rval = R_Parse1File(fp, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		break;
-	    case PARSE_OK:
-		t = GrowList(t, rval);
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-		UNPROTECT(1);
-		return R_NilValue;
-		break;
-	    case PARSE_EOF:
-		t = CDR(t);
-		rval = allocVector(EXPRSXP, length(t));
-		for (n = 0 ; n < LENGTH(rval) ; n++) {
-		    VECTOR(rval)[n] = CAR(t);
-		    t = CDR(t);
-		}
-		UNPROTECT(1);
-		*status = PARSE_OK;
-		return rval;
-		break;
-	    }
-	}
-    }
+    R_Inputfile = fp;
+    xxgetc = file_getc;
+    xxungetc = file_ungetc;
+    return R_Parse(n, status);
 }
 
 SEXP R_ParseVector(SEXP text, int n, int *status)
 {
-    SEXP rval, t;
+    SEXP rval;
     TextBuffer textb;
-    int i;
     R_TextBufferInit(&textb, text);
-    if (n >= 0) {
-	PROTECT(rval = allocVector(EXPRSXP, n));
-	for (i = 0 ; i < n ; i++) {
-	try_again:
-	    t = R_Parse1Vector(&textb, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		goto try_again;
-		break;
-	    case PARSE_OK:
-		VECTOR(rval)[i] = t;
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-	    case PARSE_EOF:
-		rval = R_NilValue;
-		break;
-	    }
-	}
-	UNPROTECT(1);
-	R_TextBufferFree(&textb);
-	return rval;
-    }
-    else {
-	PROTECT(t = NewList());
-	for(;;) {
-	    rval = R_Parse1Vector(&textb, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		break;
-	    case PARSE_OK:
-		t = GrowList(t, rval);
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-		R_TextBufferFree(&textb);
-		UNPROTECT(1);
-		return R_NilValue;
-		break;
-	    case PARSE_EOF:
-		R_TextBufferFree(&textb);
-		t = CDR(t);
-		rval = allocVector(EXPRSXP, length(t));
-		for (n = 0 ; n < LENGTH(rval) ; n++) {
-		    VECTOR(rval)[n] = CAR(t);
-		    t = CDR(t);
-		}
-		UNPROTECT(1);
-		*status = PARSE_OK;
-		return rval;
-		break;
-	    }
-	}
-    }
+    txtb = &textb;
+    GenerateCode = 1;
+    R_ParseError = 1;
+    xxgetc = text_getc;
+    xxungetc = text_ungetc;
+    rval = R_Parse(n, status);
+    R_TextBufferFree(&textb);
+    return rval;
 }
 
 #ifdef GENERAL
-SEXP R_ParseGeneral(int (*fetchchar)(), int n, int *status)
+SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n, int *status)
 {
-    SEXP rval, t;
-    int i;
+    GenerateCode = 1;
     R_ParseError = 1;
-    if (n >= 0) {
-	PROTECT(rval = allocVector(EXPRSXP, n));
-	for (i = 0 ; i < n ; i++) {
-	try_again:
-	    t = R_Parse1General(fetchchar, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		goto try_again;
-		break;
-	    case PARSE_OK:
-		VECTOR(rval)[i] = t;
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-	    case PARSE_EOF:
-		rval = R_NilValue;
-		break;
-	    }
-	}
-	UNPROTECT(1);
-	return rval;
-    }
-    else {
-	PROTECT(t = NewList());
-	for(;;) {
-	    rval = R_Parse1General(fetchchar, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		break;
-	    case PARSE_OK:
-		t = GrowList(t, rval);
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-		UNPROTECT(1);
-		return R_NilValue;
-		break;
-	    case PARSE_EOF:
-		t = CDR(t);
-		rval = allocVector(EXPRSXP, length(t));
-		for (n = 0 ; n < LENGTH(rval) ; n++) {
-		    VECTOR(rval)[n] = CAR(t);
-		    t = CDR(t);
-		}
-		UNPROTECT(1);
-		*status = PARSE_OK;
-		return rval;
-		break;
-	    }
-	}
-    }
+    xxgetc = ggetc;
+    xxungetc = gungetc;
+    return R_Parse(n, status);
 }
 #endif
 

@@ -247,3 +247,24 @@ SEXP do_Rhome(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error("unable to determine R home location\n");
     return mkString(path);
 }
+
+SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP file, ans;
+    int i, nfile;
+    FILE *fp;
+    checkArity(op, args);
+    if (!isString(file = CAR(args)))
+        errorcall(call, "invalid file argument\n");
+    nfile = length(file);
+    ans = allocVector(LGLSXP, nfile);
+    for(i = 0; i < nfile; i++) {
+	LOGICAL(ans)[i] = 0;
+        if (STRING(file)[i] != R_NilValue)
+	    if (fp = fopen(CHAR(STRING(file)[i]), "r")) {
+		LOGICAL(ans)[i] = 1;
+		fclose(fp);
+            }
+    }
+    return ans;
+}

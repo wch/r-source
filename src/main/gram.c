@@ -1,5 +1,5 @@
 
-/*  A Bison parser, made from ./gram.y
+/*  A Bison parser, made from ../../././src/main/gram.y
  by  GNU Bison version 1.25
   */
 
@@ -39,7 +39,7 @@
 #define	UMINUS	289
 #define	UPLUS	290
 
-#line 1 "./gram.y"
+#line 1 "../../././src/main/gram.y"
 
 /*
  *  R : A Computer Langage for Statistical Data Analysis
@@ -470,7 +470,7 @@ static const short yycheck[] = {     0,
     40,    41,    -1,    -1,    44,    45,    46,    47
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
-#line 3 "/usr/share/misc/bison.simple"
+#line 3 "/usr/local/pkg/bison/share/bison.simple"
 
 /* Skeleton output parser for bison,
    Copyright (C) 1984, 1989, 1990 Free Software Foundation, Inc.
@@ -663,7 +663,7 @@ __yy_memcpy (char *to, char *from, int count)
 #endif
 #endif
 
-#line 196 "/usr/share/misc/bison.simple"
+#line 196 "/usr/local/pkg/bison/share/bison.simple"
 
 /* The user can define YYPARSE_PARAM as the name of an argument to be passed
    into yyparse.  The argument should have type void *.
@@ -968,300 +968,300 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 139 "./gram.y"
+#line 139 "../../././src/main/gram.y"
 { return 0; ;
     break;}
 case 2:
-#line 140 "./gram.y"
+#line 140 "../../././src/main/gram.y"
 { return xxvalue(NULL,2); ;
     break;}
 case 3:
-#line 141 "./gram.y"
+#line 141 "../../././src/main/gram.y"
 { return xxvalue(yyvsp[-1],3); ;
     break;}
 case 4:
-#line 142 "./gram.y"
+#line 142 "../../././src/main/gram.y"
 { return xxvalue(yyvsp[-1],4); ;
     break;}
 case 5:
-#line 143 "./gram.y"
+#line 143 "../../././src/main/gram.y"
 { YYABORT; ;
     break;}
 case 6:
-#line 146 "./gram.y"
+#line 146 "../../././src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 7:
-#line 147 "./gram.y"
+#line 147 "../../././src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 8:
-#line 148 "./gram.y"
+#line 148 "../../././src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 9:
-#line 149 "./gram.y"
+#line 149 "../../././src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 10:
-#line 151 "./gram.y"
+#line 151 "../../././src/main/gram.y"
 { yyval = xxexprlist(yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 11:
-#line 152 "./gram.y"
+#line 152 "../../././src/main/gram.y"
 { yyval = xxparen(yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 12:
-#line 154 "./gram.y"
+#line 154 "../../././src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 13:
-#line 155 "./gram.y"
+#line 155 "../../././src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 14:
-#line 156 "./gram.y"
+#line 156 "../../././src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 15:
-#line 157 "./gram.y"
+#line 157 "../../././src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 16:
-#line 158 "./gram.y"
+#line 158 "../../././src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 17:
-#line 160 "./gram.y"
+#line 160 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 18:
-#line 161 "./gram.y"
+#line 161 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 19:
-#line 162 "./gram.y"
+#line 162 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 20:
-#line 163 "./gram.y"
+#line 163 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 21:
-#line 164 "./gram.y"
+#line 164 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 22:
-#line 165 "./gram.y"
+#line 165 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 23:
-#line 166 "./gram.y"
+#line 166 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 24:
-#line 167 "./gram.y"
+#line 167 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 25:
-#line 168 "./gram.y"
+#line 168 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 26:
-#line 169 "./gram.y"
+#line 169 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 27:
-#line 170 "./gram.y"
+#line 170 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 28:
-#line 171 "./gram.y"
+#line 171 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 29:
-#line 172 "./gram.y"
+#line 172 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 30:
-#line 173 "./gram.y"
+#line 173 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 31:
-#line 174 "./gram.y"
+#line 174 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 32:
-#line 175 "./gram.y"
+#line 175 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 33:
-#line 176 "./gram.y"
+#line 176 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 34:
-#line 178 "./gram.y"
+#line 178 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 35:
-#line 179 "./gram.y"
+#line 179 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[0],yyvsp[-2]); ;
     break;}
 case 36:
-#line 181 "./gram.y"
+#line 181 "../../././src/main/gram.y"
 { yyval = xxdefun(yyvsp[-5],yyvsp[-3],yyvsp[0]); ;
     break;}
 case 37:
-#line 182 "./gram.y"
+#line 182 "../../././src/main/gram.y"
 { yyval = xxfuncall(yyvsp[-3],yyvsp[-1]); ;
     break;}
 case 38:
-#line 183 "./gram.y"
+#line 183 "../../././src/main/gram.y"
 { yyval = xxif(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 39:
-#line 184 "./gram.y"
+#line 184 "../../././src/main/gram.y"
 { yyval = xxifelse(yyvsp[-4],yyvsp[-3],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 40:
-#line 185 "./gram.y"
+#line 185 "../../././src/main/gram.y"
 { yyval = xxfor(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 41:
-#line 186 "./gram.y"
+#line 186 "../../././src/main/gram.y"
 { yyval = xxwhile(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 42:
-#line 187 "./gram.y"
+#line 187 "../../././src/main/gram.y"
 { yyval = xxrepeat(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 43:
-#line 188 "./gram.y"
+#line 188 "../../././src/main/gram.y"
 { yyval = xxsubscript(yyvsp[-4],yyvsp[-3],yyvsp[-2]); ;
     break;}
 case 44:
-#line 189 "./gram.y"
+#line 189 "../../././src/main/gram.y"
 { yyval = xxsubscript(yyvsp[-3],yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 45:
-#line 190 "./gram.y"
+#line 190 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 46:
-#line 191 "./gram.y"
+#line 191 "../../././src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 47:
-#line 192 "./gram.y"
+#line 192 "../../././src/main/gram.y"
 { yyval = xxnxtbrk(yyvsp[0]); ;
     break;}
 case 48:
-#line 193 "./gram.y"
+#line 193 "../../././src/main/gram.y"
 { yyval = xxnxtbrk(yyvsp[0]); ;
     break;}
 case 49:
-#line 197 "./gram.y"
+#line 197 "../../././src/main/gram.y"
 { yyval = xxcond(yyvsp[-1]); ;
     break;}
 case 50:
-#line 200 "./gram.y"
+#line 200 "../../././src/main/gram.y"
 { yyval = xxifcond(yyvsp[-1]); ;
     break;}
 case 51:
-#line 203 "./gram.y"
+#line 203 "../../././src/main/gram.y"
 { yyval = xxforcond(yyvsp[-3],yyvsp[-1]); ;
     break;}
 case 52:
-#line 207 "./gram.y"
+#line 207 "../../././src/main/gram.y"
 { yyval = xxexprlist0(); ;
     break;}
 case 53:
-#line 208 "./gram.y"
+#line 208 "../../././src/main/gram.y"
 { yyval = xxexprlist1(yyvsp[0]); ;
     break;}
 case 54:
-#line 209 "./gram.y"
+#line 209 "../../././src/main/gram.y"
 { yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 55:
-#line 210 "./gram.y"
+#line 210 "../../././src/main/gram.y"
 { yyval = yyvsp[-1]; AddComment(CAR(yyval));;
     break;}
 case 56:
-#line 211 "./gram.y"
+#line 211 "../../././src/main/gram.y"
 { yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 57:
-#line 212 "./gram.y"
+#line 212 "../../././src/main/gram.y"
 { yyval = yyvsp[-1];;
     break;}
 case 58:
-#line 215 "./gram.y"
+#line 215 "../../././src/main/gram.y"
 { yyval = xxsublist1(yyvsp[0]); ;
     break;}
 case 59:
-#line 216 "./gram.y"
+#line 216 "../../././src/main/gram.y"
 { yyval = xxsublist2(yyvsp[-3],yyvsp[0]); ;
     break;}
 case 60:
-#line 219 "./gram.y"
+#line 219 "../../././src/main/gram.y"
 { yyval = xxsub0(); ;
     break;}
 case 61:
-#line 220 "./gram.y"
+#line 220 "../../././src/main/gram.y"
 { yyval = xxsub1(yyvsp[0]); ;
     break;}
 case 62:
-#line 221 "./gram.y"
+#line 221 "../../././src/main/gram.y"
 { yyval = xxsymsub0(yyvsp[-1]); ;
     break;}
 case 63:
-#line 222 "./gram.y"
+#line 222 "../../././src/main/gram.y"
 { yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 64:
-#line 223 "./gram.y"
+#line 223 "../../././src/main/gram.y"
 { yyval = xxsymsub0(yyvsp[-1]); ;
     break;}
 case 65:
-#line 224 "./gram.y"
+#line 224 "../../././src/main/gram.y"
 { yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 66:
-#line 225 "./gram.y"
+#line 225 "../../././src/main/gram.y"
 { yyval = xxnullsub0(); ;
     break;}
 case 67:
-#line 226 "./gram.y"
+#line 226 "../../././src/main/gram.y"
 { yyval = xxnullsub1(yyvsp[0]); ;
     break;}
 case 68:
-#line 229 "./gram.y"
+#line 229 "../../././src/main/gram.y"
 { yyval = xxnullformal(); ;
     break;}
 case 69:
-#line 230 "./gram.y"
+#line 230 "../../././src/main/gram.y"
 { yyval = xxfirstformal0(yyvsp[0]); ;
     break;}
 case 70:
-#line 231 "./gram.y"
+#line 231 "../../././src/main/gram.y"
 { yyval = xxfirstformal1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 71:
-#line 232 "./gram.y"
+#line 232 "../../././src/main/gram.y"
 { yyval = xxaddformal0(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 72:
-#line 233 "./gram.y"
+#line 233 "../../././src/main/gram.y"
 { yyval = xxaddformal1(yyvsp[-4],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 73:
-#line 236 "./gram.y"
+#line 236 "../../././src/main/gram.y"
 { EatLines = 1; ;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
-#line 498 "/usr/share/misc/bison.simple"
+#line 498 "/usr/local/pkg/bison/share/bison.simple"
 
   yyvsp -= yylen;
   yyssp -= yylen;
@@ -1457,7 +1457,7 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 238 "./gram.y"
+#line 238 "../../././src/main/gram.y"
 
 
 
@@ -2072,6 +2072,27 @@ static int file_ungetc(int c)
     return ungetc(c, R_Inputfile);
 }
 
+static SEXP R_Parse1(int *status)
+{
+    switch(yyparse()) {
+    case 0:                     /* End of file */
+        *status = PARSE_EOF;
+        break;
+    case 1:                     /* Syntax error / incomplete */
+        *status = PARSE_ERROR;
+        if (EndOfFile) *status = PARSE_INCOMPLETE;
+        break;
+    case 2:                     /* Empty Line */
+        *status = PARSE_NULL;
+        break;
+    case 3:                     /* Valid expr '\n' terminated */
+    case 4:                     /* Valid expr ';' terminated */
+        *status = PARSE_OK;
+        break;
+    }  
+    return R_CurrentExpr;
+}
+
 SEXP R_Parse1File(FILE *fp, int gencode, int *status)
 {
     ParseInit();
@@ -2079,22 +2100,7 @@ SEXP R_Parse1File(FILE *fp, int gencode, int *status)
     R_Inputfile = fp;
     xxgetc = file_getc;
     xxungetc = file_ungetc;
-    switch(yyparse()) {
-    case 0:			/* End of file */
-	*status = PARSE_EOF;
-	break;
-    case 1:			/* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if (EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
-    case 2:			/* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:			/* Valid expr '\n' terminated */
-    case 4:			/* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
-    }
+    R_Parse1(status);
     R_Inputfile = NULL;
     return R_CurrentExpr;
 }
@@ -2123,23 +2129,7 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, int *status)
     iob = buffer;
     xxgetc = buffer_getc;
     xxungetc = buffer_ungetc;
-    switch(yyparse()) {
-    case 0:			/* End of file */
-	*status = PARSE_EOF;
-	if(EndOfFile == 2) *status = PARSE_INCOMPLETE;
-	break;
-    case 1:			/* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if(EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
-    case 2:			/* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:			/* Valid expr '\n' terminated */
-    case 4:			/* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
-    }
+    R_Parse1(status);
     return R_CurrentExpr;
 }
 
@@ -2167,259 +2157,118 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, int *status)
     txtb = textb;
     xxgetc = text_getc;
     xxungetc = text_ungetc;
-    switch(yyparse()) {
-    case 0:			/* End of file */
-	*status = PARSE_EOF;
-	break;
-    case 1:			/* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if(EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
-    case 2:			/* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:			/* Valid expr '\n' terminated */
-    case 4:			/* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
-    }
+    R_Parse1(status);
     return R_CurrentExpr;
 }
+
 #define GENERAL
 #ifdef GENERAL
 
-static int savechar;
-static int (*R_fetchchar)();
 
-static int general_getc(void)
-{
-    int c;
-    if (savechar) {
-	c = savechar;
-	savechar = 0;
-    }
-    else {
-	c = R_fetchchar();
-	if (c == EOF) {
-	    EndOfFile = 1;
-	    return R_EOF;
-	}
-	if (c == '\n') R_ParseError += 1;
-	return c;
-    }
-}
-
-static int general_ungetc(int c)
-{
-    if (c == '\n') R_ParseError -= 1;
-    savechar = c;
-    return c;
-}
-
-SEXP R_Parse1General(int (*fetchchar)(), int gencode, int *status)
+SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
+		     int gencode, int *status)
 {
     ParseInit();
     GenerateCode = gencode;
-    R_fetchchar = fetchchar;
-    xxgetc = general_getc;
-    xxungetc = general_ungetc;
-    switch(yyparse()) {
-    case 0:			/* End of file */
-	*status = PARSE_EOF;
-	break;
-    case 1:			/* Syntax error / incomplete */
-	*status = PARSE_ERROR;
-	if (EndOfFile) *status = PARSE_INCOMPLETE;
-	break;
-    case 2:			/* Empty Line */
-	*status = PARSE_NULL;
-	break;
-    case 3:			/* Valid expr '\n' terminated */
-    case 4:			/* Valid expr ';' terminated */
-	*status = PARSE_OK;
-	break;
-    }
+    xxgetc = g_getc;
+    xxungetc = g_ungetc;
+    R_Parse1(status);
     return R_CurrentExpr;
 }
 #endif
 
+SEXP R_Parse(int n, int *status)
+{
+    int i;
+    SEXP t, rval;
+    if (n >= 0) {
+        PROTECT(rval = allocVector(EXPRSXP, n));
+        for (i = 0 ; i < n ; i++) {
+        try_again:
+	    ParseInit();
+            t = R_Parse1(status);
+            switch(*status) {
+            case PARSE_NULL:
+                goto try_again;
+                break;
+            case PARSE_OK:
+                VECTOR(rval)[i] = t;
+                break;
+            case PARSE_INCOMPLETE:
+            case PARSE_ERROR:
+            case PARSE_EOF:
+                rval = R_NilValue;
+                break;
+            }
+        }
+        UNPROTECT(1);
+        return rval;
+    }  
+    else {
+        PROTECT(t = NewList());
+        for(;;) {
+	    ParseInit();
+            rval = R_Parse1(status);
+            switch(*status) {
+            case PARSE_NULL:
+                break;
+            case PARSE_OK:
+                t = GrowList(t, rval);
+                break;
+            case PARSE_INCOMPLETE:
+            case PARSE_ERROR:
+                UNPROTECT(1);
+                return R_NilValue;
+                break;
+            case PARSE_EOF:
+                t = CDR(t);
+                rval = allocVector(EXPRSXP, length(t));
+                for (n = 0 ; n < LENGTH(rval) ; n++) {
+                    VECTOR(rval)[n] = CAR(t);
+                    t = CDR(t);
+                }
+                UNPROTECT(1);
+                *status = PARSE_OK;
+                return rval;
+                break;
+            }
+        }
+    }  
+}
+
 SEXP R_ParseFile(FILE *fp, int n, int *status)
 {
-    SEXP rval, t;
-    int i;
+    GenerateCode = 1;
     R_ParseError = 1;
-    if (n >= 0) {
-	PROTECT(rval = allocVector(EXPRSXP, n));
-	for (i = 0 ; i < n ; i++) {
-	try_again:
-	    t = R_Parse1File(fp, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		goto try_again;
-		break;
-	    case PARSE_OK:
-		VECTOR(rval)[i] = t;
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-	    case PARSE_EOF:
-		rval = R_NilValue;
-		break;
-	    }
-	}
-	UNPROTECT(1);
-	return rval;
-    }
-    else {
-	PROTECT(t = NewList());
-	for(;;) {
-	    rval = R_Parse1File(fp, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		break;
-	    case PARSE_OK:
-		t = GrowList(t, rval);
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-		UNPROTECT(1);
-		return R_NilValue;
-		break;
-	    case PARSE_EOF:
-		t = CDR(t);
-		rval = allocVector(EXPRSXP, length(t));
-		for (n = 0 ; n < LENGTH(rval) ; n++) {
-		    VECTOR(rval)[n] = CAR(t);
-		    t = CDR(t);
-		}
-		UNPROTECT(1);
-		*status = PARSE_OK;
-		return rval;
-		break;
-	    }
-	}
-    }
+    R_Inputfile = fp;
+    xxgetc = file_getc;
+    xxungetc = file_ungetc;
+    return R_Parse(n, status);
 }
 
 SEXP R_ParseVector(SEXP text, int n, int *status)
 {
-    SEXP rval, t;
+    SEXP rval;
     TextBuffer textb;
-    int i;
     R_TextBufferInit(&textb, text);
-    if (n >= 0) {
-	PROTECT(rval = allocVector(EXPRSXP, n));
-	for (i = 0 ; i < n ; i++) {
-	try_again:
-	    t = R_Parse1Vector(&textb, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		goto try_again;
-		break;
-	    case PARSE_OK:
-		VECTOR(rval)[i] = t;
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-	    case PARSE_EOF:
-		rval = R_NilValue;
-		break;
-	    }
-	}
-	UNPROTECT(1);
-	R_TextBufferFree(&textb);
-	return rval;
-    }
-    else {
-	PROTECT(t = NewList());
-	for(;;) {
-	    rval = R_Parse1Vector(&textb, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		break;
-	    case PARSE_OK:
-		t = GrowList(t, rval);
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-		R_TextBufferFree(&textb);
-		UNPROTECT(1);
-		return R_NilValue;
-		break;
-	    case PARSE_EOF:
-		R_TextBufferFree(&textb);
-		t = CDR(t);
-		rval = allocVector(EXPRSXP, length(t));
-		for (n = 0 ; n < LENGTH(rval) ; n++) {
-		    VECTOR(rval)[n] = CAR(t);
-		    t = CDR(t);
-		}
-		UNPROTECT(1);
-		*status = PARSE_OK;
-		return rval;
-		break;
-	    }
-	}
-    }
+    txtb = &textb;
+    GenerateCode = 1;
+    R_ParseError = 1;
+    xxgetc = text_getc;
+    xxungetc = text_ungetc;
+    rval = R_Parse(n, status);
+    R_TextBufferFree(&textb);
+    return rval;
 }
 
 #ifdef GENERAL
-SEXP R_ParseGeneral(int (*fetchchar)(), int n, int *status)
+SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n, int *status)
 {
-    SEXP rval, t;
-    int i;
+    GenerateCode = 1;
     R_ParseError = 1;
-    if (n >= 0) {
-	PROTECT(rval = allocVector(EXPRSXP, n));
-	for (i = 0 ; i < n ; i++) {
-	try_again:
-	    t = R_Parse1General(fetchchar, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		goto try_again;
-		break;
-	    case PARSE_OK:
-		VECTOR(rval)[i] = t;
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-	    case PARSE_EOF:
-		rval = R_NilValue;
-		break;
-	    }
-	}
-	UNPROTECT(1);
-	return rval;
-    }
-    else {
-	PROTECT(t = NewList());
-	for(;;) {
-	    rval = R_Parse1General(fetchchar, 1, status);
-	    switch(*status) {
-	    case PARSE_NULL:
-		break;
-	    case PARSE_OK:
-		t = GrowList(t, rval);
-		break;
-	    case PARSE_INCOMPLETE:
-	    case PARSE_ERROR:
-		UNPROTECT(1);
-		return R_NilValue;
-		break;
-	    case PARSE_EOF:
-		t = CDR(t);
-		rval = allocVector(EXPRSXP, length(t));
-		for (n = 0 ; n < LENGTH(rval) ; n++) {
-		    VECTOR(rval)[n] = CAR(t);
-		    t = CDR(t);
-		}
-		UNPROTECT(1);
-		*status = PARSE_OK;
-		return rval;
-		break;
-	    }
-	}
-    }
+    xxgetc = ggetc;
+    xxungetc = gungetc;
+    return R_Parse(n, status);
 }
 #endif
 
