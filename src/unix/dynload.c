@@ -232,7 +232,7 @@ static void getFullDLLPath(SEXP call, char *buf, char *path)
 #ifdef HAVE_GETCWD
 	if(!getcwd(buf, PATH_MAX))
 #endif
-	    errorcall(call, _("can't get working directory!"));
+	    errorcall(call, _("cannot get working directory!"));
 	strcat(buf, "/");
 	strcat(buf, path);
     }
