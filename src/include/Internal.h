@@ -112,6 +112,7 @@ SEXP do_basename(SEXP, SEXP, SEXP, SEXP);
 SEXP do_begin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bind(SEXP, SEXP, SEXP, SEXP);
 SEXP do_body(SEXP, SEXP, SEXP, SEXP);
+SEXP do_bodyCode(SEXP, SEXP, SEXP, SEXP);
 SEXP do_box(SEXP, SEXP, SEXP, SEXP);
 SEXP do_break(SEXP, SEXP, SEXP, SEXP);
 SEXP do_browser(SEXP, SEXP, SEXP, SEXP);

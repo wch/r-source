@@ -129,7 +129,7 @@ static Rboolean compute_identical(SEXP x, SEXP y)
     }
     case CLOSXP:
 	return(compute_identical(FORMALS(x), FORMALS(y)) &&
-	       compute_identical(BODY(x), BODY(y)) &&
+	       compute_identical(BODY_EXPR(x), BODY_EXPR(y)) &&
 	       CLOENV(x) == CLOENV(y) ? TRUE : FALSE);
     case SPECIALSXP:
     case BUILTINSXP:
