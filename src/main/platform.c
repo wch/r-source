@@ -29,23 +29,6 @@
  *  two functions should probably be amalgamated.
  */
 
-#ifdef Unix
-#define OSTYPE      "Unix"
-#define FILESEP     "/"
-#define DYNLOADEXT  ".so"
-#endif
-
-#ifdef Macintosh
-#define OSTYPE      "Macintosh"
-#define FILESEP     ":"
-#define DYNLOADEXT  ".dll"
-#endif
-
-#ifdef Win32
-#define OSTYPE      "Windows"
-#define FILESEP     "\\"
-#define DYNLOADEXT  ".dll"
-#endif
 
 static char *R_OSType = OSTYPE;
 static char *R_FileSep = FILESEP;

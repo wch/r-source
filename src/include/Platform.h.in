@@ -127,6 +127,28 @@
 /* Printing Command */
 #define R_PRINTCMD	""
 
+/* for platform.c to put in .Platform */
+#ifdef Unix
+#define OSTYPE      "Unix"
+#define FILESEP     "/"
+#define DYNLOADEXT  ".so"
+/* should be
+#define DYNLOADEXT  ".@SHLIBEXT@"
+*/
+#endif
+
+#ifdef Macintosh
+#define OSTYPE      "Macintosh"
+#define FILESEP     ":"
+#define DYNLOADEXT  ".dll"
+#endif
+
+#ifdef Win32
+#define OSTYPE      "Windows"
+#define FILESEP     "\\"
+#define DYNLOADEXT  ".dll"
+#endif
+
 #define R_PLATFORM	"UNKNOWN"
 #define R_CPU		"UNKNOWN"
 #define R_VENDOR	"UNKNOWN"
