@@ -73,6 +73,11 @@ path.expand(path)
 
   \code{path.expand} expands path(s) by replacing a leading tilde by the
   user's home directory (if defined on that platform).
+#ifdef unix
+  On \emph{some Unix} versions, a leading \code{~user} will expand to the home
+  directory of \code{user}, but not on Unix versions without
+  \code{readline} installed.
+#endif
 }
 \author{
   Ross Ihaka, Brian Ripley
@@ -95,6 +100,6 @@ file.remove("A", "B", "C")
 basename(file.path("","p1","p2","p3","filename"))
 dirname(file.path("","p1","p2","p3","filename"))
 
-path.expand(c("~", "~/foo", "~someuser"))# 3rd expands only if...
+path.expand("~/foo")
 }
 \keyword{file}
