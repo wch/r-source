@@ -1,2 +1,2 @@
-quit <- function(save = "ask").Internal(quit(save))
+quit <- function(save = "default").Internal(quit(save))
 q <- .Alias(quit)

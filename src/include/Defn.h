@@ -208,9 +208,12 @@ enum {
 
 #define SA_NORESTORE 0
 #define SA_RESTORE   1
-#define SA_SAVEASK   1
+
+#define SA_DEFAULT   1
 #define SA_NOSAVE    2
 #define SA_SAVE      3
+#define SA_SAVEASK   4
+#define SA_SUICIDE   5
 
 
 /*--- Global Variables ---------------------------------------------------- */

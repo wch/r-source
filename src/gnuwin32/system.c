@@ -98,7 +98,7 @@
  *  These functions save and restore the user's global environment.
  *  The system specific aspect of this is what files are used.
  *
- *    void  R_CleanUp(int ask)
+ *    void  R_CleanUp(int saveact)
 
  *  This function invokes any actions which occur at system termination.
  *
@@ -144,13 +144,12 @@
  *  Get the R ``home directory'' as a string.
  *
  *
- *  7) PLATFORM INDEPENDENT FUNCTIONS
+ *  7) PLATFORM DEPENDENT FUNCTIONS
  *
  *    SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP rho)
  *    SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
  *    SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP rho)
  *    SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
  *    SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
  *
  */
@@ -167,10 +166,9 @@
 #include <windows.h>
 #include "run.h"
 #include "Startup.h"
-/* #include "Rversion.h"*/
 
-static int DefaultSaveAction = SA_SAVEASK;
-static int DefaultRestoreAction = SA_NORESTORE;
+static int SaveAction = SA_DEFAULT;
+static int RestoreAction = SA_NORESTORE;
 static int LoadSiteFile = True;
 static int LoadInitFile = True;
 static int DebugInitFile = False;
@@ -434,17 +432,35 @@ void R_ClearerrConsole()
 
 	/*--- File Handling Code ---*/
 
-
-
+static HaveHOME=-1;
+static UserHOME[PATH_MAX]
+static newFileName[PATH_MAX]
 char *R_ExpandFileName(char *s)
 {
     return s;
+    char *p;
+    
+    if(s[0] != '~') return s;
+    if(HaveHOME < 0) {
+	p = getenv("HOME");
+	if(p && strlen(p)) {
+	    strcpy(UserHOME, p);
+	    strcat(UserHOME, FILESEP);
+	    HaveHOME = 1;
+	} else
+	    HaveHOME = 0;
+    }
+    if(HaveHOME > 0){
+	strcpy(newFileName, UserHOME);
+	strcat(newFileName, s);
+	return newFileName;
+    } else return s;
 }
 
 
 FILE *R_OpenLibraryFile(char *file)
 {
-    char  buf[256];
+    char buf[256];
     FILE *fp;
 
     sprintf(buf, "%s/library/base/R/%s", R_Home, file);
@@ -454,7 +470,7 @@ FILE *R_OpenLibraryFile(char *file)
 
 FILE *R_OpenSysInitFile(void)
 {
-    char  buf[256];
+    char buf[256];
     FILE *fp;
 
     sprintf(buf, "%s/library/base/R/Rprofile", R_Home);
@@ -464,7 +480,7 @@ FILE *R_OpenSysInitFile(void)
 
 FILE *R_OpenSiteFile(void)
 {
-    char  buf[256];
+    char buf[256];
     FILE *fp;
 
     fp = NULL;
@@ -478,6 +494,7 @@ FILE *R_OpenSiteFile(void)
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
     }
+
     return fp;
 }
 
@@ -495,6 +512,7 @@ FILE *R_OpenInitFile(void)
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
     }
+
     return fp;
 }
 
@@ -576,8 +594,8 @@ void R_SetParams(Rstart Rp)
     R_Slave = Rp->R_Slave;
     R_Interactive = Rp->R_Interactive;
     R_Verbose = Rp->R_Verbose;
-    DefaultRestoreAction = Rp->RestoreAction;
-    DefaultSaveAction = Rp->SaveAction;
+    RestoreAction = Rp->RestoreAction;
+    SaveAction = Rp->SaveAction;
     LoadSiteFile = Rp->LoadSiteFile;
     LoadInitFile = Rp->LoadInitFile;
     DebugInitFile = Rp->DebugInitFile;
@@ -660,7 +678,7 @@ int cmdlineoptions(int ac, char **av)
 
     while (--ac) {
 	if (**++av == '-') {
-	    if (!strcmp(*av, "-V") || !strcmp(*av, "--version")) {
+	    if (!strcmp(*av, "--version")) {
 		PrintVersion(s);
 		Rprintf(s);
 		R_ShowMessage(s);
@@ -834,7 +852,11 @@ int cmdlineoptions(int ac, char **av)
 	else
 	    Rp->nsize = value;
     }
-    if (!R_Interactive && DefaultSaveAction == SA_SAVEASK)
+/*
+ *  Since users' expectations for save/no-save will differ, we decided
+ *  that they should be forced to specify in the non-interactive case.
+ */    
+    if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
     R_SetParams(Rp);
@@ -852,45 +874,47 @@ void R_InitialData(void)
     R_RestoreGlobalEnv();
 }
 
-	/* R_CleanUp is invoked at the end of the session to give */
-	/* the user the option of saving their data.  If ask=1 the */
-	/* user is asked their preference, if ask=2 the answer is */
-	/* assumed to be "no" and if ask=3 the answer is assumed to */
-	/* be "yes".  When R is being used non-interactively, and */
-	/* ask=1, the value is changed to 3.  The philosophy is */
-	/* that saving unwanted data is less bad than non saving */
-	/* data that is wanted. */
+/* 
+   R_CleanUp is invoked at the end of the session to give the user the
+   option of saving their data.
+   If ask == SA_SAVEASK the user should be asked if possible (and this
+   option should not occur in non-interactive use).
+   If ask = SA_SAVE or SA_NOSAVE the decision is known.
+   If ask = SA_DEFAULT use the SaveAction set at startup.
+   In all these cases run .Last() unless quitting is cancelled.
+   If ask = SA_SUICIDE, no save, no .Last, possibly other things.
+ */
 
-void R_dot_Last(void); /* in main.c */
+void R_dot_Last(void);		/* in main.c */
 
-void R_CleanUp(int ask)
-{
-    int   ans = 0;
-
-    if (R_DirtyImage) {
-	R_ClearerrConsole();
-	R_FlushConsole();
-	if ((CharacterMode != RGui) && !R_Interactive && (ask == 1))
-	    ask = DefaultSaveAction;
-	if (ask == SA_SAVEASK)
-	    ans = R_yesnocancel("Save workspace image?");
-	else if (ask == SA_NOSAVE)
-	    ans = NO;
-	else if (ask == SA_SAVE)
-	    ans = YES;
-
-	switch (ans) {
-	  case YES:
-	    R_dot_Last();
-	    R_SaveGlobalEnv();
-	    break;
-	  case NO:
-	    R_dot_Last();
-	    break;
-	  case CANCEL:
-	    jump_to_toplevel();
-	    break;
+    if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
+	saveact = SaveAction;
+    
+    if(saveact == SA_SAVEASK) 
+	if(R_Interactive) {
+	    switch (R_yesnocancel("Save workspace image?")) {
+	    case YES:
+		saveact = SA_SAVE;
+		break;
+	    case NO:
+		saveact = SA_NOSAVE;
+		break;
+	    case CANCEL:
+		jump_to_toplevel();
+		break;
+	    }
 	}
+    
+    switch (saveact) {
+    case SA_SAVE:
+	R_dot_Last();
+	if(R_DirtyImage) R_SaveGlobalEnv();
+	break;
+    case SA_NOSAVE:
+	R_dot_Last();
+	break;
+    case SA_SUICIDE:
+    default:
     }
     CleanEd();
     closeAllHlpFiles();
@@ -906,7 +930,7 @@ void R_CleanUp(int ask)
 
 void R_SaveGlobalEnv(void)
 {
-    FILE *fp = R_fopen(".RData", "wb");
+    FILE *fp = R_fopen(".RData", "wb"); /* binary file */
     if (!fp)
 	error("can't save data -- unable to open ./.RData\n");
     R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
@@ -916,9 +940,8 @@ void R_SaveGlobalEnv(void)
 void R_RestoreGlobalEnv(void)
 {
     FILE *fp;
-
-    if (DefaultRestoreAction == SA_RESTORE) {
-	if (!(fp = R_fopen(".RData", "rb"))) {
+    if(RestoreAction == SA_RESTORE) {
+	if(!(fp = R_fopen(".RData", "rb"))) { /* binary file */
 	    /* warning here perhaps */
 	    return;
 	}
@@ -953,10 +976,10 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int   i, j;
+    int i, j;
     char *s;
     char **e;
-    SEXP  ans;
+    SEXP ans;
 
     char *_env[1];
 
@@ -1120,8 +1143,7 @@ void R_Suicide(char *s)
 
     sprintf(pp, "Fatal error: %s\n", s);
     R_ShowMessage(pp);
-    R_CleanUp(2);
-    /* 2 means don't save anything and it's an unrecoverable abort */
+    R_CleanUp(SA_SUICIDE);
 }
 
 
@@ -1132,26 +1154,6 @@ int MAIN__() {return 0;}
 int __main() {return 0;}
 */
 
-/* New / Experimental API elements */
-
-#ifdef DEFUNCT
-int R_ShowFile(char *file, char *title)
-{
-    FILE *fp;
-    char  buf[1024];
-    char *pager;
-    int   c;
-
-    pager = getenv("PAGER");
-    if (pager == NULL)
-	pager = "notepad.exe";
-    sprintf(buf, "%s %s", pager, file);
-    if (runcmd(buf, 0, 1, "") != 0)
-	return 0;
-    else
-	return 1;
-}
-#endif
 
 /* This function can be used to display the named files with the */
 /* given titles and overall title.  On GUI platforms we could */
@@ -1254,6 +1256,5 @@ int R_HiddenFile(char *name)
 int R_FileExists(char *path)
 {
     struct stat sb;
-
     return stat(R_ExpandFileName(path), &sb) == 0;
 }
