@@ -296,8 +296,8 @@ print.summary.lm <-
     resid <- x$residuals
     df <- x$df
     rdf <- df[2]
-    cat(if(!is.null(x$w) && diff(range(x$w))) "Weighted",
-        "Residuals:\n")
+    cat(if(!is.null(x$w) && diff(range(x$w))) "Weighted ",
+        "Residuals:\n", sep="")
     if (rdf > 5) {
 	nam <- c("Min", "1Q", "Median", "3Q", "Max")
 	rq <- if (length(dim(resid)) == 2)
@@ -309,7 +309,7 @@ print.summary.lm <-
     else if (rdf > 0) {
 	print(resid, digits = digits, ...)
     } else { # rdf == 0 : perfect fit!
-	cat("ALL",df[1],"residuals are 0: no residual degrees of freedom!\n")
+	cat("ALL", df[1], "residuals are 0: no residual degrees of freedom!\n")
     }
     if (nsingular <- df[3] - df[1])
 	cat("\nCoefficients: (", nsingular,
