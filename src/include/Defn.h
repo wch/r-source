@@ -173,7 +173,6 @@ typedef struct {
 	int	eval;		/* evaluate args? */
 	int	arity;		/* function arity */
 	int	gram;		/* pretty-print info */
-	int	mark;		/* mark info for restore */
 } FUNTAB;
 
 	/* General Cons Cell Attributes */
