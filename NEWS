@@ -4,7 +4,7 @@
 	*						 *
 	**************************************************
 
-
+	
 		CHANGES IN R VERSION 0.64.2
 
 NEW FEATURES
@@ -13,7 +13,7 @@ NEW FEATURES
 	Deprecated version & Version for new  R.version & R.Version. 
 
     o	R CMD Rd2dvi  has builtin "Usage" help and works for multiple files.
-    	Useful for automatic reference manual of a package.
+	Useful for automatic reference manual of a package.
 	(doc/manual/lib2tex is more efficient for installed packages, however).
 
 
