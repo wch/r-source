@@ -18,17 +18,17 @@
  *
  *
  *  EXPORTS	printMatrix()
- *	     	printArray()
+ *		printArray()
  *
  *  See ./printutils.c	 for general remarks on Printing
- *                       and the Encode.. utils.
+ *			 and the Encode.. utils.
  *
  *  See ./format.c	 for the  format_FOO_  functions used below.
  */
 
 
 /*
- *  FIXME: named-dimname printing implemented for integer arrays only 
+ *  FIXME: named-dimname printing implemented for integer arrays only
  */
 
 #include "Defn.h"
@@ -95,9 +95,9 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
 	formatString(STRING(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
-    
+
     if (rn) {
-        rnw = strlen(rn);
+	rnw = strlen(rn);
 	if ( rnw < rlabw + MIN_LBLOFF )
 	    lbloff = MIN_LBLOFF;
 	else
@@ -279,8 +279,8 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 }
 
 static void printStringMatrix(SEXP sx, int offset, int r, int c,
-			      int quote, int right, SEXP rl, SEXP cl, 
-			      char *rn, char *cn) 
+			      int quote, int right, SEXP rl, SEXP cl,
+			      char *rn, char *cn)
 {
     SEXP sw;
     SEXP *x;
@@ -395,10 +395,10 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 	    dn1 = VECTOR(dimnames)[1];
 	    has_dimnames = 1;
 	    dnn = getAttrib(dimnames, R_NamesSymbol);
-            has_dnn = !isNull(dnn);
+	    has_dnn = !isNull(dnn);
 	    if ( has_dnn ) {
-	        rn = CHAR(STRING(dnn)[0]);
-	        cn = CHAR(STRING(dnn)[1]);
+		rn = CHAR(STRING(dnn)[0]);
+		cn = CHAR(STRING(dnn)[1]);
 	    }
 	}
 	for (i = 0; i < nb; i++) {
@@ -407,14 +407,14 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 	    for (j = 2 ; j < ndim; j++) {
 		l = (i / k) % INTEGER(dim)[j] + 1;
 		if (has_dimnames &&
-		    ((dn = VECTOR(dimnames)[j]) != R_NilValue))
+		    ((dn = VECTOR(dimnames)[j]) != R_NilValue)) {
 		    if ( has_dnn )
-		        Rprintf(", %s = %s",
+			Rprintf(", %s = %s",
 				CHAR(STRING(dnn)[j]),
 				CHAR(STRING(dn)[l - 1]));
 		    else
-		        Rprintf(", %s", CHAR(STRING(dn)[l - 1]));
-		else
+			Rprintf(", %s", CHAR(STRING(dn)[l - 1]));
+		} else
 		    Rprintf(", %d", l);
 		k = k * INTEGER(dim)[j];
 	    }
