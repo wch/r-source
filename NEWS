@@ -37,6 +37,8 @@ BUG FIXES
 
     o	pmin() and pmax() now preserve attributes.
 
+    o	handle null models arising in drop1(), step, etc.
+
 
 		CHANGES IN R VERSION 0.63
 
