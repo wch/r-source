@@ -244,7 +244,9 @@ The @samp{Description} field should give a comprehensive description of
 what the package does.  One can use several (complete) sentences, but
 only one paragraph.
 
-The @samp{Title} field should give a short description of the package.
+The @samp{Title} field should give a short description of the
+package. Some package listings may truncate the title to 65 characters
+in order to keep the overall size of the listing limited.
 It should be capitalized, not use any markup, not have any continuation
 lines, and not end in a period.  Older versions of @R{} used a separate
 file @file{TITLE} for giving this information; this is now defunct, and
