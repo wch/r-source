@@ -120,6 +120,7 @@ static int InstallVar(SEXP var)
     SEXP v;
     int indx;
     /* Check that variable is legitimate */
+    if (isString(var)) var = install(CHAR(STRING_ELT(var, 0)));
     if (!isSymbol(var) && !isLanguage(var) && !isZeroOne(var))
 	error("invalid term in model formula");
     /* Lookup/Install it */
@@ -175,9 +176,10 @@ static void ExtractVars(SEXP formula, int checkonly)
 {
     int len, i;
     SEXP v;
+
     if (isNull(formula) || isZeroOne(formula))
 	return;
-    if (isSymbol(formula)) {
+    if (isSymbol(formula)|| isString(formula)) {
 	if (!checkonly) {
 	    if (formula == dotSymbol && framenames != R_NilValue) {
 		haveDot = TRUE;
@@ -256,7 +258,7 @@ static void ExtractVars(SEXP formula, int checkonly)
 	InstallVar(formula);
 	return;
     }
-    error("invalid model formula");
+    error("invalid model formula in ExtractVars");
 }
 
 
@@ -571,7 +573,7 @@ static SEXP EncodeVars(SEXP formula)
 	else intercept = 1;
 	return R_NilValue;
     }
-    if (isSymbol(formula)) {
+    if (isSymbol(formula) || isString(formula)) {
 	if (formula == dotSymbol && framenames != R_NilValue) {
 	    /* prior to 1.7.0 this made term.labels in reverse order. */
 	    SEXP r = R_NilValue, v = R_NilValue; /* -Wall */
@@ -640,7 +642,7 @@ static SEXP EncodeVars(SEXP formula)
 	SetBit(term, InstallVar(formula), 1);
 	return CONS(term, R_NilValue);
     }
-    error("invalid model formula");
+    error("invalid model formula in EncodeVars");
     return R_NilValue;/*NOTREACHED*/
 }
 

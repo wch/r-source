@@ -70,6 +70,10 @@ as.formula(object, env = parent.frame())
   arithmetic sense.  For example, in the formula
   \code{y ~ a + I(b+c)}, the term \code{b+c} is to be
   interpreted as the sum of \code{b} and \code{c}.
+
+  As from \R 1.7.1 variable names can be quoted in formulae, to allow
+  use of non-syntactic names.  Note that this does not apply to
+  variables used in functions in formulae. 
 }
 \section{Environments}{
   A formula object has an associated environment, and

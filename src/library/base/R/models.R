@@ -116,11 +116,11 @@ drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
 
 
 "[.terms" <-function (termobj, i) {
-        resp <- if (attr(termobj, "response")) 
+        resp <- if (attr(termobj, "response"))
                 termobj[[2]]
         else NULL
         newformula <- attr(termobj, "term.labels")[i]
-        if (length(newformula) == 0) 
+        if (length(newformula) == 0)
                 newformula <- 1
         newformula <- reformulate(newformula, resp)
         environment(newformula)<-environment(termobj)
@@ -134,11 +134,16 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
                           simplify = FALSE, ...)
 {
     fixFormulaObject <- function(object) {
+        needsQuoting <- function(x)
+            if(make.names(x) != x) paste('"',x,'"', sep="") else x
+
 	tmp <- attr(terms(object), "term.labels")
+        tmp <- sapply(tmp, needsQuoting)
 	form <- formula(object)
 	lhs <- if(length(form) == 2) NULL else paste(deparse(form[[2]]),collapse="")
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
+        browser()
 	formula(paste(lhs, "~", rhs))
     }
 
