@@ -13,7 +13,8 @@ function(lines)
         .get_Rd_metadata_from_Rd_lines(lines[!is.na(nchar(lines, "c"))],
                                        "encoding")
     if(length(encoding)) {
-        if(Sys.getlocale("LC_CTYPE") != "C") {
+        if((Sys.getlocale("LC_CTYPE") != "C")
+           && capabilities("iconv")) {
             encoding <- encoding[1]     # Just making sure ...
             if(.is_ASCII(encoding))
                 lines <- utils::iconv(lines, encoding, "")
@@ -29,8 +30,12 @@ function(lines)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
-        ## Could this fail in a non-C locale?
-        lines <- utils::iconv(lines, "latin1", "")
+        if(capabilities("iconv"))
+            lines <- utils::iconv(lines, "latin1", "")
+        else
+            stop("Found invalid multi-byte character data.", "\n",
+                 "Cannot re-encode because iconv is not available.", "\n",
+                 "Try running R in a single-byte locale.")
     }
 
     ## Strip Rd first.

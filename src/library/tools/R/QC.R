@@ -2738,7 +2738,8 @@ function(dfile)
     ## Determine encoding and re-encode if necessary and possible.
     if("Encoding" %in% names(db)) {
         encoding <- db["Encoding"]
-        if(Sys.getlocale("LC_CTYPE") != "C")
+        if((Sys.getlocale("LC_CTYPE") != "C")
+           && capabilities("iconv"))
             db <- utils::iconv(db, encoding, "")
     }
     else if(!all(.is_ISO_8859(db))) {
@@ -2751,7 +2752,13 @@ function(dfile)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
-        db <- utils::iconv(db, "latin1", "")
+        if(capabilities("iconv"))
+            db <- utils::iconv(db, "latin1", "")
+        else
+            stop("Found invalid multi-byte character data.", "\n",
+                 "Cannot re-encode because iconv is not available.", "\n",
+                 "Try running R in a single-byte locale.")
+
     }
 
     ## Mandatory entries in DESCRIPTION:

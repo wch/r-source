@@ -117,7 +117,12 @@ SweaveReadFile <- function(file, syntax)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
-        text <- iconv(text, "latin1", "")
+        if(capabilities("iconv"))
+            text <- iconv(text, "latin1", "")
+        else
+            stop("Found invalid multi-byte character data.", "\n",
+                 "Cannot re-encode because iconv is not available.", "\n",
+                 "Try running R in a single-byte locale.")
     }
     ## </FIXME>
 
