@@ -98,11 +98,15 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else filename = DefaultFileName;
 
     if (x != R_NilValue) {
+	SEXP t;
+
 	if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
 	    errorcall(call, "unable to open file\n");
-	x = deparse1(x, 0);
-	for (i=0; i<LENGTH(x); i++)
-	    fprintf(fp, "%s\n", CHAR(STRING(x)[i]));
+	t = getAttrib(x, R_SourceSymbol);
+	if (isNull(t))
+	    t = deparse1(x, 0);
+	for (i = 0 ; i < LENGTH(t) ; i++)
+	    fprintf(fp, "%s\n", CHAR(STRING(t)[i]));
 	fclose(fp);
     }
 
