@@ -571,9 +571,8 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, dims, dimnames, index, subs, x;
-    int i, ndims, nsubs, offset = 0;
-    int drop = 1;
+    SEXP ans;
+    SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 
     /* If the first argument is an object and there is */
     /* an approriate method, we dispatch to that method, */
@@ -587,7 +586,16 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Method dispatch has failed. */
     /* We now run the generic internal code. */
 
-    PROTECT(args = ans);
+    return do_subset2_dflt(call, op, ans, rho);
+}
+
+SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, dims, dimnames, index, subs, x;
+    int i, ndims, nsubs, offset = 0;
+    int drop = 1;
+
+    PROTECT(args);
     ExtractDropArg(args, &drop);
     x = CAR(args);
 
@@ -723,8 +731,8 @@ pstrmatch(SEXP target, SEXP input, int slen)
 */
 SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, input, nlist, ans;
-    int slen;
+    SEXP input, nlist, ans;
+    SEXP R_subset3_dflt(SEXP, SEXP);
 
     checkArity(op, args);
 
@@ -752,14 +760,17 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(DispatchOrEval(call, "$", args, env, &ans, 0))
 	return(ans);
-    PROTECT(args = ans);
 
-#ifdef AAA
-    PROTECT(x = eval(CAR(args), env));
-#else
-    x = CAR(args);
-#endif
-    input = STRING_ELT(CADR(args), 0);
+    return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0));
+}
+
+SEXP R_subset3_dflt(SEXP x, SEXP input)
+{
+    SEXP y, nlist, ans;
+    int slen;
+
+    PROTECT(x);
+    PROTECT(input);
 
     /* Optimisation to prevent repeated recalculation */
     slen = strlen(CHAR(input));
@@ -770,7 +781,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     if (isPairList(x)) {
 	SEXP xmatch=R_NilValue;
 	int havematch;
-	UNPROTECT(1);
+	UNPROTECT(2);
 	havematch = 0;
 	for (y = x ; y != R_NilValue ; y = CDR(y)) {
 	    switch(pstrmatch(TAG(y), input, slen)) {
@@ -796,7 +807,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (isVectorList(x)) {
 	int i, n, havematch, imatch=-1;
 	nlist = getAttrib(x, R_NamesSymbol);
-	UNPROTECT(1);
+	UNPROTECT(2);
 	n = length(nlist);
 	havematch = 0;
 	for (i = 0 ; i < n ; i = i + 1) {
@@ -820,7 +831,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	return R_NilValue;
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     return R_NilValue;
 }
 
