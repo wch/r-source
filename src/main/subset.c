@@ -522,8 +522,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return x;
     }
     subs = CDR(args);
-    if(0 == (nsubs = length(subs)))
-	errorcall(call, "no index specified");
+    nsubs = length(subs);
     type = TYPEOF(x);
     PROTECT(dim = getAttrib(x, R_DimSymbol));
     ndim = length(dim);
@@ -552,8 +551,8 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* This is the actual subsetting code. */
     /* The separation of arrays and matrices is purely an optimization. */
 
-    if(nsubs == 1)
-	ans = VectorSubset(ax, CAR(subs), call);
+    if(nsubs < 2)
+	ans = VectorSubset(ax, (nsubs == 1 ? CAR(subs) : R_MissingArg), call);
     else {
 	if (nsubs != length(dim))
 	    errorcall(call, "incorrect number of dimensions");
@@ -870,4 +869,3 @@ SEXP R_subset3_dflt(SEXP x, SEXP input)
     UNPROTECT(2);
     return R_NilValue;
 }
-
