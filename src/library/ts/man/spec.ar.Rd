@@ -12,7 +12,7 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action,
   \item{order}{The order of the AR model to be fitted.  If omitted,
     the order is chosen by AIC.}
   \item{plot}{Plot the periodogram?}
-  \item{na.action}{NA action function.}
+  \item{na.action}{\code{NA} action function.}
   \item{method}{\code{method} for \code{ar} fit.}
   \item{\dots}{Graphical arguments passed to \code{\link{plot.spec}}.}
 }

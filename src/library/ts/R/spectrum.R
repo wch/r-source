@@ -2,9 +2,9 @@
 spectrum <- function (..., method = c("pgram", "ar"))
 {
     switch(match.arg(method),
-           pgram = spec.pgram(...),
-           ar = spec.ar(...)
-           )
+	   pgram = spec.pgram(...),
+	   ar	 = spec.ar(...)
+	   )
 }
 
 ## spec.taper based on code by Kurt Hornik

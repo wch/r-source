@@ -8,24 +8,25 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
            plot = FALSE, na.action, \dots)
 }
 \arguments{
-  \item{x}{A univariate or multivariate time series.}
-  \item{spans}{Vector of odd integers giving the widths of modified
+  \item{x}{univariate or multivariate time series.}
+  \item{spans}{vector of odd integers giving the widths of modified
     Daniell smoothers to be used to smooth the periodogram.}
-  \item{kernel}{Alternatively, a kernel smoother of class
+  \item{kernel}{alternatively, a kernel smoother of class
     \code{"tskernel"}.}
-  \item{taper}{Proportion of data to taper.  A split cosine bell taper
+  \item{taper}{proportion of data to taper.  A split cosine bell taper
     is applied to this proportion of the data at the beginning and
     end of the series.}
+  \item{pad}{proportion of data to pad. Zeros are added to the end of
+    the series to increase its length by the proportion \code{pad}.}
+  \item{fast}{logical; if \code{TRUE}, pad the series to a highly composite
+    length.}
   \item{demean}{logical. If \code{TRUE}, subtract the mean of the
     series.}
   \item{detrend}{logical. If \code{TRUE}, remove a linear trend from
     the series. This will also remove the mean.}
-  \item{pad}{Proportion of data to pad. Zeros are added to the end of
-    the series to increase its length by the proportion \code{pad}.}
-  \item{plot}{Plot the periodogram?}
-  \item{fast}{If \code{TRUE}, pad the series to a highly composite
-    length.}
-  \item{\dots}{Graphical arguments passed to \code{plot.spec}.}
+  \item{plot}{plot the periodogram?}
+  \item{na.action}{\code{NA} action function.}
+  \item{\dots}{graphical arguments passed to \code{plot.spec}.}
 }
 \description{
   \code{spec.pgram} calculates the periodogram using a fast Fourier
