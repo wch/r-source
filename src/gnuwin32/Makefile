@@ -389,7 +389,7 @@ packagedist:
 	$(CP) ../../etc/Makeconf-tests $(RPREFIX)/etc
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(CP) -pr windlgs $(RPREFIX)/src/library
-	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
+	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
 docsdist: docs
