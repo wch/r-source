@@ -475,13 +475,13 @@ DEPRECATED & DEFUNCT
 
     o	La.eigen() is deprecated now eigen() uses LAPACK by default.
 
-    o	tetragamma() and pentagamma() are deprecated, since now
+    o	tetragamma() and pentagamma() are deprecated, since they are
 	equivalent to psigamma(, deriv=2) and psigamma(, deriv=3).
 
     o	LTRUE/LFALSE in Rmath.h have been removed: they were
 	deprecated in 1.2.0.
 
-    o	pacakge.contents() has been deprecated.
+    o	package.contents() has been deprecated.
 
 
 INSTALLATION CHANGES
@@ -541,8 +541,9 @@ BUG FIXES
 
     o	methods(class = "lqs") does not produce extraneous entries anymore.
 
-    o	Calling a method that uses NextMethod() no longer produces the
-	erroneous error message 'function is not a closure'.
+    o	Directly calling a method that uses NextMethod() no longer
+	produces the erroneous error message 'function is not a
+	closure'.
 
     o	chisq.test(x, simulate.p.value = TRUE) could hang in an infinite
 	loop or segfault, as r2dtable() did, when the entries in x where
@@ -559,7 +560,7 @@ BUG FIXES
 	valid range 1...5.
 
     o	qchisq(1-e, .., ncp=.) did not terminate for small e.
-	 (PR#6421 (PR#875))
+	(PR#6421 (PR#875))
 
     o	contrasts() turns a logical variable into a factor.  This now
 	always has levels c("FALSE", "TRUE") even if only one (or
@@ -760,7 +761,7 @@ BUG FIXES
 	argument is not ok.
 
     o	All uses of dir.create() check the return value.
-	donwload.packages() checks that destdir exists and is a directory.
+	download.packages() checks that destdir exists and is a directory.
 
     o	Methods dispatch corrects an error that failed to find
 	methods for classes that extend sealed classes (class unions
@@ -775,7 +776,9 @@ BUG FIXES
     o	1:2 * 1e-100  now prints with correct number of spaces.
 
     o   Negative subscripts that were out of range or NA were not handled
-        correctly.
+        correctly.  Mixing negative and NA subscripts is now caught as
+        an error: it was not caught on some platforms and segfaulted
+        on others.
 
     o   gzfile() connections had trouble at EOF when used on uncompressed
 	file.
