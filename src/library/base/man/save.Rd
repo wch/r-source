@@ -1,7 +1,8 @@
 \name{save}
 \title{Save R Objects}
 \usage{
-save(\dots, list = character(0), file = "", ascii = FALSE, version = NULL, envir = parent.frame())
+save(\dots, list = character(0), file = "", ascii = FALSE,
+     version = NULL, envir = parent.frame())
 save.image(file = ".RData")
 }
 \alias{save}
@@ -17,7 +18,7 @@ save.image(file = ".RData")
     which leads to a more compact binary file being written.}
   \item{version}{the workspace format version to use.  NULL specifies
     the current default format.  Other values are not used yet.}
-  \item{envir}{environment so search for objects to be saved.}
+  \item{envir}{environment to search for objects to be saved.}
   }
 }
 \description{
@@ -31,9 +32,9 @@ save.image(file = ".RData")
   happens with \code{\link{q}("yes")}.
 }
 \details{
-  Almost all current \R platforms (including Windows) use the XDR
-  representation of binary objects in binary save-d files, and these are
-  portable across all XDR-compliant implementations.
+  Almost all current \R platforms (including Windows and Macintosh)
+  use the XDR representation of binary objects in binary save-d files,
+  and these are portable across all XDR-compliant implementations.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}}.
