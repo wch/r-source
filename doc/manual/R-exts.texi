@@ -290,7 +290,7 @@ field.
 using @code{library(@var{pkgname})} must be listed in the @samp{Depends}
 field.
 @item All packages that are needed to successfully run @code{R CMD
-check} on the package must be listed either in @samp{Depends} or
+check} on the package must be listed in one of @samp{Depends} or
 @samp{Suggests} or @samp{Imports}.
 @end itemize
 @noindent
