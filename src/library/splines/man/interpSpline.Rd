@@ -6,6 +6,8 @@ interpSpline(obj1, obj2, bSpline, period, na.action)
 \alias{interpSpline}
 \alias{interpSpline.default}
 \alias{interpSpline.formula}
+\alias{print.bSpline}
+\alias{print.ppolySpline}
 \arguments{
  \item{obj1}{Either a numeric vector of \code{x} values or a formula.}
  \item{obj2}{If \code{obj1} is numeric this should be a numeric vector
