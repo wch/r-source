@@ -61,6 +61,9 @@ local(expr, envir = new.env())
 \seealso{
   \code{\link{expression}}, \code{quote}, \code{\link{sys.frame}},
   \code{\link{parent.frame}}, \code{\link{environment}}.
+
+  Further, \code{\link{force}} to \emph{force} evaluation, typically of
+  function arguments.
 }
 \note{
   Due to the difference in scoping rules, there are some differences
