@@ -18,7 +18,7 @@ INSTFILES = \
 	faq.html \
 	packages-foot.html \
 	packages-head.html \
-	resource.html \
+	resources.html \
 	template.html \
 	thanks.html
 DISTFILES = Makefile.in $(INSTFILES) index-default.html
