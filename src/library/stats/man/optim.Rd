@@ -1,6 +1,8 @@
 \name{optim}
 \alias{optim}
 \title{General-purpose Optimization}
+\concept{minimization}
+\concept{maximization}
 \description{
   General-purpose optimization based on Nelder--Mead, quasi-Newton and
   conjugate-gradient algorithms. It includes an option for
@@ -16,7 +18,7 @@ optim(par, fn, gr = NULL,
  \item{par}{Initial values for the parameters to be optimized over.}
  \item{fn}{A function to be minimized (or maximized), with first
    argument the vector of parameters over which minimization is to take
-   place. It should return a scalar result.}
+   place.  It should return a scalar result.}
  \item{gr}{A function to return the gradient for the \code{"BFGS"},
    \code{"CG"} and \code{"L-BFGS-B"} methods.  If it is \code{NULL}, a
    finite-difference approximation will be used.
