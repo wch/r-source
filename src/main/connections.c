@@ -17,12 +17,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME>
-   Uses byte-level access, mainly OK.
-   The meaning of nchars in read/writeChar needs to be resolved - it is
-     currently nbytes.
- */
-
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
