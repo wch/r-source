@@ -127,7 +127,7 @@ static SEXP EnlargeVector(SEXP x, int newlen)
 	for (i = 0; i < len; i++)
 	    SET_STRING_ELT(newx, i, STRING_ELT(x, i));
 	for (i = len; i < newlen; i++)
-	    SET_STRING_ELT(newx, i, R_BlankString);
+	    SET_STRING_ELT(newx, i, NA_STRING); /* was R_BlankString  < 1.6.0 */
 	break;
     case EXPRSXP:
     case VECSXP:

@@ -81,13 +81,17 @@ BUG FIXES
 
     o	read.dcf() had a memory leak.
 
-    o	setting "tcl = a" in a highlevel graphic function worked almost
+    o	Setting "tcl = a" in a highlevel graphic function worked almost
 	as if par(tcl = a) was called (i.e. was persistent).  Further,
 	after par(tcl= <.>), highlevel graphic setting of tcl didn't work
 	anymore.  "tck" has now S' default -0.01 (when tcl=NA).
 
     o   data() was not checking if ./data was a directory before
 	warning.
+
+    o   Assignment beyond the end of character strings was filling
+	with "", whereas changing the length extended with NA_STRING.
+	Now NA_STRING is used for both.
 
 
 
