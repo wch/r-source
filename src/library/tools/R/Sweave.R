@@ -97,7 +97,16 @@ SweaveSyntaxNoweb <-
          docopt = "\\\\SweaveOpts{([^}]*)}",
          docexpr = "\\\\Sexpr{([^}]*)}",
          extension = "\\.[rsRS]?nw$",
-         syntaxname = "\\\\SweaveSyntax{([^}]*)}")
+         syntaxname = "\\\\SweaveSyntax{([^}]*)}",
+         trans = list(
+             doc = "^@",
+             code = "<<\\1>>",
+             coderef = "^<<\\1>>",
+             docopt = "\\\\SweaveOpts{\\1}",
+             docexpr = "\\\\Sexpr{\\1}",
+             extension = ".Snw",
+             syntaxname = "\\\\SweaveSyntax{SweaveSyntaxNoweb}")
+         )
 
 class(SweaveSyntaxNoweb) <- "SweaveSyntax"
 
@@ -106,6 +115,14 @@ SweaveSyntaxLatex$doc <-  "^[[:space:]]*\\\\end{Scode}"
 SweaveSyntaxLatex$code <- "^[[:space:]]*\\\\begin{Scode}{?([^}]*)}?.*"
 SweaveSyntaxLatex$coderef <- "^[[:space:]]*\\\\Scoderef{([^}]*)}.*"
 SweaveSyntaxLatex$extension <- "\\.[rsRS]tex$"
+
+SweaveSyntaxLatex$trans$doc <-  "\\\\end{Scode}"
+SweaveSyntaxLatex$trans$code <- "\\\\begin{Scode}{\\1}"
+SweaveSyntaxLatex$trans$coderef <- "\\\\Scoderef{\\1}"
+SweaveSyntaxLatex$trans$syntaxname <- "\\\\SweaveSyntax{SweaveSyntaxLatex}"
+SweaveSyntaxLatex$trans$extension <- ".Stex"
+
+###**********************************************************
 
 SweaveGetSyntax <- function(file){
 
@@ -117,6 +134,36 @@ SweaveGetSyntax <- function(file){
     }
     return(SweaveSyntaxNoweb)
 }
+
+
+SweaveSyntConv <- function(file, syntax, output=NULL)
+{
+    if(is.character(syntax))
+        syntax <- get(syntax)
+
+    if(class(syntax) != "SweaveSyntax")
+        stop("Target syntax not of class `SweaveSyntax'.\n")
+    
+    if(is.null(syntax$trans))
+        stop("Target syntax contains no translation table.\n")
+             
+    syntax <- SweaveGetSyntax(file)
+    text = readLines(file)
+    if(is.null(output))
+        output = sub(syntax$extension, syntax$trans$extension, basename(file))
+
+    TN = names(syntax$trans)
+    
+    for(n in TN){
+        if(n!="extension")
+            text = gsub(syntax[[n]], syntax$trans[[n]], text)
+    }
+    
+    cat(text, file=output, sep="\n")
+    cat("Wrote file", output, "\n")
+}
+        
+
 
 
 ###**********************************************************
@@ -207,8 +254,7 @@ RweaveLatexSetup <-
     output <- file(output, open="w+")
     
     if(stylepath)
-        styfile <- file.path(.path.package("tools"),
-                             "Sweave", "Sweave")
+        styfile <- file.path(R.home(),"share","texmf","Sweave")
     else
         styfile <- "Sweave"
 
