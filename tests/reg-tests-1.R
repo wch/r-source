@@ -3395,3 +3395,10 @@ weight <- c(ctl, trt)
 lm.D9 <- lm(weight ~ group)
 stopifnot(labels(lm.D9) == "group")
 ## failed in 2.0.1, giving length 0
+
+
+## sprintf had no length check (PR#7554)
+a <- matrix (ncol=100, nrow=100, data=c(1,2,3,4,5))
+a.serial <- serialize(a, NULL, ascii=TRUE)
+try(sprintf('foo: %s\n', a.serial))
+## seqfaulted in 2.0.1

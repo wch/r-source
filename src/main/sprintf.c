@@ -140,7 +140,12 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* NA_STRING will be printed as `NA' */
 		    if (strcspn(fmt, "s") >= strlen(fmt))
 			error("%s", "use format %s for character objects");
-		    sprintf(bit, fmt, CHAR(STRING_ELT(CAR(args), 0)));
+		    if(strlen(CHAR(STRING_ELT(CAR(args), 0))) > MAXLINE)
+			warning("%s",
+				"Likely truncation of character string in %s");
+		    snprintf(bit, MAXLINE, fmt, 
+			     CHAR(STRING_ELT(CAR(args), 0)));
+		    bit[MAXLINE] = '\0';
 		    break;
 		default:
 		    errorcall(call, "unsupported type");
@@ -156,7 +161,8 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 
 	if (strlen(outputString) + strlen(bit) > MAXLINE)
-	    errorcall(call, "String length exceeds buffer");
+	    errorcall(call, "String length exceeds buffer size of %d", 
+		      MAXLINE);
 	strcat(outputString, bit);
     }
 
