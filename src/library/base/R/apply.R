@@ -47,7 +47,7 @@ apply <- function(X, MARGIN, FUN, ...)
     if(!ans.list)
 	ans.list <- any(unlist(lapply(ans, length)) != l.ans)
     if(!ans.list && length(ans.names)) {
-        all.same <- sapply(ans, function(x) all(names(x) == ans.names))
+        all.same <- sapply(ans, function(x) identical(names(x), ans.names))
         if (!all(all.same)) ans.names <- NULL
     }
     len.a <- if(ans.list) d2 else length(ans <- unlist(ans, recursive = FALSE))
