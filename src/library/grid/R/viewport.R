@@ -29,6 +29,8 @@ valid.viewport <- function(x, y, width, height, just,
     stop("Invalid yscale in viewport")
   if (!is.numeric(angle) || length(angle) != 1)
     stop("Invalid angle in viewport")
+  if (!(is.null(layout) || is.layout(layout)))
+    stop("Invalid layout in viewport")
   if (!is.null(layout.pos.row))
     layout.pos.row <- as.integer(rep(range(layout.pos.row), length.out=2))
   if (!is.null(layout.pos.col))
