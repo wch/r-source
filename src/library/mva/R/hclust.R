@@ -100,7 +100,7 @@ plot.hclust <-
     order <- as.double(order(x$order))
 
     labels <-
-	if(missing(labels)){
+	if(missing(labels) || is.null(labels)) {
 	    if (is.null(x$labels))
 		paste(1:(n+1))
 	    else
