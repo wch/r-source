@@ -1420,14 +1420,14 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 	/*  I m a g e   R e n d e r i n g  */
 
 
-/* image(x, y, z, zlim, col) */
+/* image(x, y, z, col, breaks) */
 SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP oargs, sx, sy, sz, szlim, sc;
-    double *x, *y, *z;
+    SEXP oargs, sx, sy, sz, sc;
+    double *x, *y;
+    int *z, tmp;
     unsigned *c;
-    double xlow, zmin = 0., zmax = 0.;
-    int i, j, nx, ny, nz, ic, nc, colsave, xpdsave;
+    int i, j, nx, ny, nc, colsave, xpdsave;
     DevDesc *dd = CurrentDevice();
 
     GCheckState(dd);
@@ -1446,38 +1446,17 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     sz = CAR(args);
-    internalTypeCheck(call, sz, REALSXP);
-    nz = length(sz);
+    internalTypeCheck(call, sz, INTSXP);
     args = CDR(args);
 
-    szlim = CAR(args);
-    internalTypeCheck(call, szlim, REALSXP);
-    if (length(szlim) != 2 ||
-       !R_FINITE(REAL(szlim)[0]) ||
-       !R_FINITE(REAL(szlim)[1]) ||
-       (zmin = REAL(szlim)[0]) > (zmax = REAL(szlim)[1]))
-	errorcall(call, "invalid z limits");
-    if(zmin == zmax) {/* fix them up, as in graphics.c's GScale(): */
-	if(zmin == 0) {
-	    zmin = -1;
-	    zmax =  1;
-	}
-	else {
-	    xlow = .4 * fabs(zmin);
-	    zmin -= xlow;
-	    zmax += xlow;
-	}
-    }
-    args = CDR(args);
-
-    PROTECT(sc = FixupCol(CAR(args), NA_INTEGER));
-    nc = length(sc);
+    PROTECT(sc = FixupCol(CAR(args), NA_INTEGER));   
+    nc = LENGTH(sc);
 
     /* Shorthand Pointers */
 
     x = REAL(sx);
     y = REAL(sy);
-    z = REAL(sz);
+    z = INTEGER(sz);
     c = (unsigned*)INTEGER(sc);
 
     /* Check of grid coordinates */
@@ -1497,13 +1476,13 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->gp.xpd = 0;
 
     GMode(1, dd);
-
+    
     for (i = 0; i < nx - 1 ; i++) {
 	for (j = 0; j < ny - 1; j++) {
-	    if (R_FINITE(z[i + j * (nx - 1)])) {
-		ic = floor((nc - 1) * (z[i + j * (nx-1)]-zmin)/(zmax - zmin) + 0.5);
-		GRect(x[i], y[j], x[i+1], y[j+1], USER, c[ic], NA_INTEGER, dd);
-	    }
+	    tmp = z[i + j * (nx - 1)];
+	    if (tmp >= 0 && tmp < nc && tmp != NA_INTEGER)
+		GRect(x[i], y[j], x[i+1], y[j+1], USER, c[tmp], 
+		      NA_INTEGER, dd);
 	}
     }
     GMode(0, dd);
