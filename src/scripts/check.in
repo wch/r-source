@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.141 $ ';
+my $revision = ' $Revision: 1.142 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -440,6 +440,7 @@ sub check_pkg {
 	    exit(1);
 	}
 
+	my $any = 0;
 	## Phase B.  Text files (as determined by their extensions)
 	## should really be mode 644.
 	@bad_files = ();
@@ -467,6 +468,7 @@ sub check_pkg {
 	}
 	find(\&find_wrong_perms_B, ".");
 	if($#bad_files >= 0) {
+	    $any++;
 	    $log->warning();
 	    $log->print("Found the following text files with " .
 			"incorrect permissions:\n");
@@ -477,9 +479,36 @@ sub check_pkg {
 			      "sources) should be exactly 644.\n",
 			      "Please fix permissions.\n")));
 	}
-	else {
-	    $log->result("OK");
+	## Phase C.  Top-level scripts 'configure' and 'cleanup' should
+	## really be mode at least 555, or they will not be necessarily
+	## be used (or should we rather change *that*?)
+	@bad_files = ();
+	foreach my $filename ("configure", "cleanup") {
+	    ## This is a bit silly ...
+	    my $ignore = 0;
+	    foreach my $p (@exclude_patterns) {
+		if($filename =~ /$p/) {
+		    $ignore = 1;
+		    last;
+		}
+	    }
+	    if(!$ignore
+	       && (-f $filename)
+	       && (((stat $filename)[2] & 00555) < oct("555"))) {
+		push(@bad_files, $filename);
+	    }
 	}
+	if($#bad_files >= 0) {
+	    $log->warning() unless($any);
+	    $any++;
+	    $log->print(wrap("", "",
+			     "The following files should most likely",
+			     "be executable (for everyone):\n"));
+	    $log->print("  " . join("\n  ", @bad_files) . "\n");
+	    $log->print(wrap("", "",
+			     "Please fix permissions.\n"));
+	}
+	$log->result("OK") unless($any);
     }
 
     ## Check DESCRIPTION meta-information.
