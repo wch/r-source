@@ -44,10 +44,10 @@ static void mdimenu(menuitem m) {
 menu newmdimenu() {
    menu m ;
    if (!ismdi()) return NULL;
-   m = newmenu(_("Windows"));
-   setvalue(newmenuitem(_("Cascade"),0,mdimenu),1);
-   setvalue(newmenuitem(_("Tile"),0,mdimenu),2);
-   setvalue(newmenuitem(_("Arrange Icons"),0,mdimenu),3);
+   m = newmenu(G_("Windows"));
+   setvalue(newmenuitem(G_("Cascade"),0,mdimenu),1);
+   setvalue(newmenuitem(G_("Tile"),0,mdimenu),2);
+   setvalue(newmenuitem(G_("Arrange Icons"),0,mdimenu),3);
    current_menubar->menubar = m;
    return m;
 }
@@ -88,7 +88,7 @@ static int addmenuitemarray(menu m,MenuItem a[]) {
   while (a[i].nm) {
     if (!strcmp(a[i].nm,"@STARTMENU")) {
          i += 1;
-         ma = newsubmenu(m, _(a[i].nm));
+         ma = newsubmenu(m, G_(a[i].nm));
     }
     else if (!strcmp(a[i].nm,"@ENDMENU")) {
          i += 1;
@@ -106,7 +106,7 @@ static int addmenuitemarray(menu m,MenuItem a[]) {
          ma = a[i].m;
     }
     else {
-         if (!(a[i].m = newmenuitem(_(a[i].nm), a[i].key, a[i].fn))) return 0;
+         if (!(a[i].m = newmenuitem(G_(a[i].nm), a[i].key, a[i].fn))) return 0;
     }
     i += 1;
   }

@@ -837,7 +837,7 @@ void consolepaste(control c)
            strcat(p->clp, pc);
         }
         else {
-           R_ShowMessage(_("Not enough memory"));
+           R_ShowMessage(G_("Not enough memory"));
         }
         GlobalUnlock(hglb);
     }
@@ -877,7 +877,7 @@ void consolepastecmds(control c)
 	    CleanTranscript(pc, new);
         }
         else {
-	    R_ShowMessage(_("Not enough memory"));
+	    R_ShowMessage(G_("Not enough memory"));
         }
         GlobalUnlock(hglb);
     }
@@ -936,11 +936,11 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
     }
 
     if (!(hglb = GlobalAlloc(GHND, ll))){
-        R_ShowMessage(_("Insufficient memory: text not copied to the clipboard"));
+        R_ShowMessage(G_("Insufficient memory: text not copied to the clipboard"));
         return;
     }
     if (!(s = (char *)GlobalLock(hglb))){
-        R_ShowMessage(_("Insufficient memory: text not copied to the clipboard"));
+        R_ShowMessage(G_("Insufficient memory: text not copied to the clipboard"));
         return;
     }
 #ifdef SUPPORT_MBCS
@@ -982,7 +982,7 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
     *s = '\0';
     GlobalUnlock(hglb);
     if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-        R_ShowMessage(_("Unable to open the clipboard"));
+        R_ShowMessage(G_("Unable to open the clipboard"));
         GlobalFree(hglb);
         return;;
     }
@@ -1536,7 +1536,7 @@ void consoleresize(console c, rect r)
     del(BM);
     BM = newbitmap(r.width, r.height, 2);
     if (!BM) {
-       R_ShowMessage(_("Insufficient memory. Please close the console"));
+       R_ShowMessage(G_("Insufficient memory. Please close the console"));
        return ;
     }
     if(!p->lbuf) return;;    /* don't implement resize if no content
@@ -1589,7 +1589,7 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
        consolefn = gnewfont(NULL, fnname, fnsty, fnpoints, 0.0);
     if (!consolefn) {
        sprintf(msg,
-	       _("Font %s-%d-%d  not found.\nUsing system fixed font"),
+	       G_("Font %s-%d-%d  not found.\nUsing system fixed font"),
                fontname, fontsty | FixedWidth, pointsize);
        R_ShowMessage(msg);
        consolefn = FixedFont;
@@ -1640,7 +1640,7 @@ void consoleprint(console c)
 		 fontsty, pointsize, 0.0);
     if (!f) {
 	/* Should not happen but....*/
-	sprintf(msg, _("Font %s-%d-%d  not found.\nUsing system fixed font"),
+	sprintf(msg, G_("Font %s-%d-%d  not found.\nUsing system fixed font"),
 		strcmp(fontname, "FixedFont") ? fontname : "Courier New",
 		fontsty, pointsize);
 	R_ShowMessage(msg);

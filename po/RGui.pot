@@ -1,0 +1,679 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-03 18:59+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: console.c:840 console.c:880
+msgid "Not enough memory"
+msgstr ""
+
+#: console.c:939 console.c:943
+msgid "Insufficient memory: text not copied to the clipboard"
+msgstr ""
+
+#: console.c:985
+msgid "Unable to open the clipboard"
+msgstr ""
+
+#: console.c:1539
+msgid "Insufficient memory. Please close the console"
+msgstr ""
+
+#: console.c:1592 console.c:1643 preferences.c:216
+#, possible-c-format
+msgid ""
+"Font %s-%d-%d  not found.\n"
+"Using system fixed font"
+msgstr ""
+
+#: dataentry.c:217
+msgid "invalid argument"
+msgstr ""
+
+#: dataentry.c:264
+msgid "invalid type for value"
+msgstr ""
+
+#: dataentry.c:278
+msgid "invalid device"
+msgstr ""
+
+#: dataentry.c:326
+msgid "dataentry: internal memory problem"
+msgstr ""
+
+#: dataentry.c:620 dataentry.c:1114
+msgid "dataentry: internal memory error"
+msgstr ""
+
+#: dataentry.c:739 dataentry.c:752
+msgid "internal type error in dataentry"
+msgstr ""
+
+#: dataentry.c:919
+msgid "dataentry: expression too long"
+msgstr ""
+
+#: dataentry.c:1502
+msgid "Cell width(s)"
+msgstr ""
+
+#: dataentry.c:1507
+msgid "Cell width"
+msgstr ""
+
+#: dataentry.c:1510
+msgid "variable"
+msgstr ""
+
+#: dataentry.c:1549
+msgid ""
+"Navigation.\n"
+"  Keyboard: cursor keys move selection\n"
+"\tTab move right, Shift+Tab moves left\n"
+"\tPgDn or Ctrl+F: move down one screenful\n"
+"\tPgUp or Ctrl+B: move up one screenful\n"
+"\tHome: move to (1,1) cell\n"
+"\tEnd: show last rows of last column.\n"
+"   Mouse: left-click in a cell, use the scrollbar(s).\n"
+"\n"
+"Editing.\n"
+"  Type in the currently hightlighted cell\n"
+"  Double-click in a cell for an editable field\n"
+"\n"
+"Misc.\n"
+"  Ctrl-L redraws the screen, auto-resizing the columns\n"
+"  Ctrl-C copies selected cell\n"
+"  Ctrl-V pastes to selected cell\n"
+"  Right-click menu for copy, paste, autosize currently selected column\n"
+"\n"
+msgstr ""
+
+#: dataentry.c:1555 dataentry.c:1649 editor.c:715 rui.c:1104
+msgid "Help"
+msgstr ""
+
+#: dataentry.c:1557
+msgid "Copy selected cell"
+msgstr ""
+
+#: dataentry.c:1558
+msgid "Paste to selected cell"
+msgstr ""
+
+#: dataentry.c:1559
+msgid "Autosize column"
+msgstr ""
+
+#: dataentry.c:1561 pager.c:293
+msgid "Stay on top"
+msgstr ""
+
+#: dataentry.c:1563 dataentry.c:1641 pager.c:295 pager.c:458
+msgid "Close"
+msgstr ""
+
+#: dataentry.c:1613
+msgid "Data Editor"
+msgstr ""
+
+#: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1054
+msgid "File"
+msgstr ""
+
+#: dataentry.c:1643 editor.c:681 pager.c:460 rui.c:1075
+msgid "Edit"
+msgstr ""
+
+#: dataentry.c:1644
+msgid "Copy  \tCTRL+C"
+msgstr ""
+
+#: dataentry.c:1645
+msgid "Paste \tCTRL+V"
+msgstr ""
+
+#: dataentry.c:1646
+msgid "Delete\tDEL"
+msgstr ""
+
+#: dataentry.c:1648
+msgid "Cell widths ..."
+msgstr ""
+
+#: dataentry.c:1650
+msgid "Data editor"
+msgstr ""
+
+#: editor.c:438 pager.c:170 pager.c:190
+msgid "No RGui console to paste to"
+msgstr ""
+
+#: editor.c:538
+msgid "R EDITOR\n"
+msgstr ""
+
+#: editor.c:540
+msgid "A standard text editor for editing and running R code.\n"
+msgstr ""
+
+#: editor.c:542
+msgid "RUNNING COMMANDS\n"
+msgstr ""
+
+#: editor.c:543
+msgid "To run a line or section of R code, select the code and either\n"
+msgstr ""
+
+#: editor.c:544
+msgid "     Press Ctrl-R\n"
+msgstr ""
+
+#: editor.c:545
+msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
+msgstr ""
+
+#: editor.c:546
+msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
+msgstr ""
+
+#: editor.c:547
+msgid ""
+"This will copy the selected commands to the console and evaluate them.\n"
+msgstr ""
+
+#: editor.c:548
+msgid ""
+"If there is no selection, this will just run the current line and advance\n"
+msgstr ""
+
+#: editor.c:549
+msgid "the cursor by one line.\n"
+msgstr ""
+
+#: editor.c:561 editor.c:636 editor.c:697
+msgid "Run line or selection"
+msgstr ""
+
+#: editor.c:563 editor.c:682
+msgid "Undo"
+msgstr ""
+
+#: editor.c:565 editor.c:685
+msgid "Cut"
+msgstr ""
+
+#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:1019 rui.c:1076
+msgid "Copy"
+msgstr ""
+
+#: editor.c:567 editor.c:689 rui.c:1023 rui.c:1077
+msgid "Paste"
+msgstr ""
+
+#: editor.c:568 editor.c:691
+msgid "Delete"
+msgstr ""
+
+#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:1081
+msgid "Select all"
+msgstr ""
+
+#: editor.c:628 pager.c:414 rui.c:1007
+msgid "Open script"
+msgstr ""
+
+#: editor.c:632
+msgid "Save script"
+msgstr ""
+
+#: editor.c:640 pager.c:434
+msgid "Return focus to Console"
+msgstr ""
+
+#: editor.c:643
+msgid "Print script"
+msgstr ""
+
+#: editor.c:645 pager.c:429 rui.c:1035
+msgid "Print"
+msgstr ""
+
+#: editor.c:664 pager.c:451 rui.c:1056
+msgid "New script"
+msgstr ""
+
+#: editor.c:666 pager.c:452 rui.c:1057
+msgid "Open script..."
+msgstr ""
+
+#: editor.c:668
+msgid "Save"
+msgstr ""
+
+#: editor.c:670
+msgid "Save as..."
+msgstr ""
+
+#: editor.c:673 pager.c:453 rui.c:1070
+msgid "Print..."
+msgstr ""
+
+#: editor.c:676
+msgid "Close script"
+msgstr ""
+
+#: editor.c:679 rui.c:1073
+msgid "Exit"
+msgstr ""
+
+#: editor.c:695 rui.c:1082
+msgid "Clear console"
+msgstr ""
+
+#: editor.c:699
+msgid "Run all"
+msgstr ""
+
+#: editor.c:702
+msgid "Find..."
+msgstr ""
+
+#: editor.c:704
+msgid "Replace..."
+msgstr ""
+
+#: editor.c:707 rui.c:1086
+msgid "GUI preferences..."
+msgstr ""
+
+#: editor.c:716
+msgid "Editor"
+msgstr ""
+
+#: editor.c:772
+msgid "Maximum number of editors reached"
+msgstr ""
+
+#: editor.c:777
+msgid "Unable to create editor window"
+msgstr ""
+
+#: editor.c:786
+msgid "Untitled"
+msgstr ""
+
+#: pager.c:77
+msgid "Error opening file"
+msgstr ""
+
+#: pager.c:84
+msgid "Insufficient memory to display file in internal pager"
+msgstr ""
+
+#: pager.c:162 pager.c:174 pager.c:194 rui.c:216 rui.c:243
+msgid "No selection"
+msgstr ""
+
+#: pager.c:289 pager.c:419 pager.c:463
+msgid "Paste to console"
+msgstr ""
+
+#: pager.c:290 pager.c:424 pager.c:465
+msgid "Paste commands to console"
+msgstr ""
+
+#: pager.c:455 rui.c:1071
+msgid "Save to File..."
+msgstr ""
+
+#: pager.c:470
+msgid "View"
+msgstr ""
+
+#: pager.c:499
+msgid "Unable to create pager window"
+msgstr ""
+
+#: preferences.c:223
+#, possible-c-format
+msgid ""
+"Font %s-%d-%d has variable width.\n"
+"Using system fixed font"
+msgstr ""
+
+#: rui.c:104
+msgid "R files (*.R)"
+msgstr ""
+
+#: rui.c:105
+msgid "Select file to source"
+msgstr ""
+
+#: rui.c:126 rui.c:142
+msgid "R images (*.RData)"
+msgstr ""
+
+#: rui.c:127
+msgid "Select image to load"
+msgstr ""
+
+#: rui.c:143
+msgid "Save image in"
+msgstr ""
+
+#: rui.c:157 rui.c:171 rui.c:1139
+msgid "All files (*.*)"
+msgstr ""
+
+#: rui.c:158
+msgid "Load history from"
+msgstr ""
+
+#: rui.c:172
+msgid "Save history in"
+msgstr ""
+
+#: rui.c:225 rui.c:234
+msgid "No text available"
+msgstr ""
+
+#: rui.c:283
+msgid "Name of data frame or matrix"
+msgstr ""
+
+#: rui.c:290
+#, possible-c-format
+msgid "'%s' cannot be found"
+msgstr ""
+
+#: rui.c:350
+msgid "Are you sure?"
+msgstr ""
+
+#: rui.c:424
+msgid "Help on"
+msgstr ""
+
+#: rui.c:465
+msgid "Search help"
+msgstr ""
+
+#: rui.c:480
+msgid "Apropos"
+msgstr ""
+
+#: rui.c:807
+#, possible-c-format
+msgid "Error at line %d of file %s"
+msgstr ""
+
+#: rui.c:848
+msgid "Can only drag-and-drop .R, .RData and .rda files"
+msgstr ""
+
+#: rui.c:901
+msgid "Packages"
+msgstr ""
+
+#: rui.c:902
+msgid "Load package..."
+msgstr ""
+
+#: rui.c:904
+msgid "Set CRAN mirror..."
+msgstr ""
+
+#: rui.c:906
+msgid "Install package(s) from CRAN..."
+msgstr ""
+
+#: rui.c:908
+msgid "Update packages from CRAN"
+msgstr ""
+
+#: rui.c:911
+msgid "Install package(s) from local zip files..."
+msgstr ""
+
+#: rui.c:914
+msgid "Install package(s) from Bioconductor..."
+msgstr ""
+
+#: rui.c:916
+msgid "Update packages from Bioconductor"
+msgstr ""
+
+#: rui.c:928
+msgid "FAQ on R"
+msgstr ""
+
+#: rui.c:930
+msgid "FAQ on R for &Windows"
+msgstr ""
+
+#: rui.c:939 rui.c:942
+msgid "Manuals (in PDF)"
+msgstr ""
+
+#: rui.c:943
+msgid "An &Introduction to R"
+msgstr ""
+
+#: rui.c:946
+msgid "R &Reference Manual"
+msgstr ""
+
+#: rui.c:949
+msgid "R Data Import/Export"
+msgstr ""
+
+#: rui.c:952
+msgid "R Language Definition"
+msgstr ""
+
+#: rui.c:955
+msgid "Writing R Extensions"
+msgstr ""
+
+#: rui.c:963
+msgid "R functions (text)..."
+msgstr ""
+
+#: rui.c:964
+msgid "Html help"
+msgstr ""
+
+#: rui.c:966
+msgid "Search help..."
+msgstr ""
+
+#: rui.c:968
+msgid "Apropos..."
+msgstr ""
+
+#: rui.c:970
+msgid "R Project home page"
+msgstr ""
+
+#: rui.c:971
+msgid "CRAN home page"
+msgstr ""
+
+#: rui.c:973
+msgid "About"
+msgstr ""
+
+#: rui.c:1011
+msgid "Load image"
+msgstr ""
+
+#: rui.c:1015
+msgid "Save image"
+msgstr ""
+
+#: rui.c:1027
+msgid "Copy and paste"
+msgstr ""
+
+#: rui.c:1031
+msgid "Stop current computation"
+msgstr ""
+
+#: rui.c:1055
+msgid "Source R code..."
+msgstr ""
+
+#: rui.c:1058
+msgid "Display file(s)..."
+msgstr ""
+
+#: rui.c:1060
+msgid "Load Workspace..."
+msgstr ""
+
+#: rui.c:1061
+msgid "Save Workspace..."
+msgstr ""
+
+#: rui.c:1063
+msgid "Load History..."
+msgstr ""
+
+#: rui.c:1065
+msgid "Save History..."
+msgstr ""
+
+#: rui.c:1068
+msgid "Change dir..."
+msgstr ""
+
+#: rui.c:1078
+msgid "Paste commands only"
+msgstr ""
+
+#: rui.c:1080
+msgid "Copy and Paste"
+msgstr ""
+
+#: rui.c:1084
+msgid "Data editor..."
+msgstr ""
+
+#: rui.c:1088
+msgid "Misc"
+msgstr ""
+
+#: rui.c:1089
+msgid "Stop current computation           \tESC"
+msgstr ""
+
+#: rui.c:1092
+msgid "Break to debugger"
+msgstr ""
+
+#: rui.c:1094
+msgid "Buffered output"
+msgstr ""
+
+#: rui.c:1096
+msgid "List objects"
+msgstr ""
+
+#: rui.c:1097
+msgid "Remove all objects"
+msgstr ""
+
+#: rui.c:1098
+msgid "List &search path"
+msgstr ""
+
+#: rui.c:1105
+msgid "Console"
+msgstr ""
+
+#: rui.c:1140
+msgid "Select file"
+msgstr ""
+
+#: rui.c:1187
+msgid "'mname' is limited to 100 chars"
+msgstr ""
+
+#: rui.c:1227
+#, possible-c-format
+msgid "menu %s does not exist"
+msgstr ""
+
+#: rui.c:1269
+msgid "Only 16 menus are allowed"
+msgstr ""
+
+#: rui.c:1273
+msgid "'menu' is limited to 50 chars"
+msgstr ""
+
+#: rui.c:1283
+msgid "base menu does not exist"
+msgstr ""
+
+#: rui.c:1298
+msgid "failed to allocate menu"
+msgstr ""
+
+#: rui.c:1310
+msgid "too many menu items have been created"
+msgstr ""
+
+#: rui.c:1314 rui.c:1425
+msgid "menu + item is limited to 100 chars"
+msgstr ""
+
+#: rui.c:1322 rui.c:1394
+msgid "menu does not exist"
+msgstr ""
+
+#: rui.c:1340 rui.c:1353 rui.c:1358
+msgid "failed to allocate char storage"
+msgstr ""
+
+#: rui.c:1366
+msgid "failed to allocate menuitem"
+msgstr ""
+
+#: rui.c:1415
+msgid "menu not found"
+msgstr ""
+
+#: rui.c:1433
+msgid "menu or item does not exist"
+msgstr ""
+
+#: graphapp/gmenus.c:47
+msgid "Windows"
+msgstr ""
+
+#: graphapp/gmenus.c:48
+msgid "Cascade"
+msgstr ""
+
+#: graphapp/gmenus.c:49
+msgid "Tile"
+msgstr ""
+
+#: graphapp/gmenus.c:50
+msgid "Arrange Icons"
+msgstr ""

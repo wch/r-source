@@ -74,14 +74,14 @@ static xbuf file2xbuf(char *name, int del)
     f = CreateFile(name, GENERIC_READ, FILE_SHARE_READ,
 		   NULL, OPEN_EXISTING, 0, NULL);
     if (f == INVALID_HANDLE_VALUE) {
-	R_ShowMessage(_("Error opening file"));
+	R_ShowMessage(G_("Error opening file"));
 	return NULL;
     }
     vv = GetFileSize(f, NULL);
     p = (char *) malloc((size_t) vv + 1);
     if (!p) {
 	CloseHandle(f);
-	R_ShowMessage(_("Insufficient memory to display file in internal pager"));
+	R_ShowMessage(G_("Insufficient memory to display file in internal pager"));
 	return NULL;
     }
     ReadFile(f, p, vv, &rr, NULL);
@@ -159,7 +159,7 @@ static void pagercopy(control m)
     control c = getdata(m);
 
     if (consolecancopy(c)) consolecopy(c);
-    else R_ShowMessage(_("No selection"));
+    else R_ShowMessage(G_("No selection"));
 }
 
 static void pagerpaste(control m)
@@ -167,11 +167,11 @@ static void pagerpaste(control m)
     control c = getdata(m);
 
     if (CharacterMode != RGui) {
-        R_ShowMessage(_("No RGui console to paste to"));
+        R_ShowMessage(G_("No RGui console to paste to"));
         return;
     }
     if (!consolecancopy(c)) {
-        R_ShowMessage(_("No selection"));
+        R_ShowMessage(G_("No selection"));
         return;
     } else {
         consolecopy(c);
@@ -187,11 +187,11 @@ static void pagerpastecmds(control m)
     control c = getdata(m);
 
     if (CharacterMode != RGui) {
-        R_ShowMessage(_("No RGui console to paste to"));
+        R_ShowMessage(G_("No RGui console to paste to"));
         return;
     }
     if (!consolecancopy(c)) {
-        R_ShowMessage(_("No selection"));
+        R_ShowMessage(G_("No selection"));
         return;
     } else {
         consolecopy(c);
@@ -285,14 +285,14 @@ static int pageraddfile(char *wtitle, char *filename, int deleteonexit)
 }
 
 static MenuItem PagerPopup[] = {		   /* Numbers used below */
-    {N_("Copy"), pagercopy, 'C', 0},			   /* 0 */
-    {N_("Paste to console"), pagerpaste, 'V', 0},	   /* 1 */
-    {N_("Paste commands to console"), pagerpastecmds, 0, 0},   /* 2 */
-    {N_("Select all"), pagerselectall, 'A', 0},		   /* 3 */
+    {GN_("Copy"), pagercopy, 'C', 0},			   /* 0 */
+    {GN_("Paste to console"), pagerpaste, 'V', 0},	   /* 1 */
+    {GN_("Paste commands to console"), pagerpastecmds, 0, 0},   /* 2 */
+    {GN_("Select all"), pagerselectall, 'A', 0},		   /* 3 */
     {"-", 0, 0, 0},
-    {N_("Stay on top"), pagerstayontop, 0, 0},		   /* 5 */
+    {GN_("Stay on top"), pagerstayontop, 0, 0},		   /* 5 */
     {"-", 0, 0, 0},
-    {N_("Close"), pagerclose, 0, 0},			   /* 7 */
+    {GN_("Close"), pagerclose, 0, 0},			   /* 7 */
     LASTMENUITEM
 };
 
@@ -411,27 +411,27 @@ static pager pagercreate()
 	gsetcursor(tb, ArrowCursor);
         addto(tb);
         MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
-        MCHECK(addtooltip(bt, _("Open script")));
+        MCHECK(addtooltip(bt, G_("Open script")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;	
         MCHECK(bt = newtoolbutton(copy1_image, r, pagerpaste));
-        MCHECK(addtooltip(bt, _("Paste to console")));
+        MCHECK(addtooltip(bt, G_("Paste to console")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
         MCHECK(bt = newtoolbutton(copy1_image, r, pagerpastecmds));
-        MCHECK(addtooltip(bt, _("Paste commands to console")));
+        MCHECK(addtooltip(bt, G_("Paste commands to console")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
         MCHECK(bt = newtoolbutton(print_image, r, pagerprint));
-        MCHECK(addtooltip(bt, _("Print")));
+        MCHECK(addtooltip(bt, G_("Print")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
         MCHECK(bt = newtoolbutton(console_image, r, pagerconsole));
-        MCHECK(addtooltip(bt, _("Return focus to Console")));
+        MCHECK(addtooltip(bt, G_("Return focus to Console")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
     }
@@ -447,27 +447,27 @@ static pager pagercreate()
     setdata(PagerPopup[7].m, c);
     MCHECK(m = newmenubar(pagermenuact));
     setdata(m, c);
-    MCHECK(newmenu(_("File")));
-    MCHECK(m = newmenuitem(_("New script"), 'N', menueditornew));
-    MCHECK(m = newmenuitem(_("Open script..."), 'O', menueditoropen));
-    MCHECK(m = newmenuitem(_("Print..."), 0, pagerprint));
+    MCHECK(newmenu(G_("File")));
+    MCHECK(m = newmenuitem(G_("New script"), 'N', menueditornew));
+    MCHECK(m = newmenuitem(G_("Open script..."), 'O', menueditoropen));
+    MCHECK(m = newmenuitem(G_("Print..."), 0, pagerprint));
     setdata(m, c);
-    MCHECK(m = newmenuitem(_("Save to File..."), 0, pagersavefile));
+    MCHECK(m = newmenuitem(G_("Save to File..."), 0, pagersavefile));
     setdata(m, c);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem(_("Close"), 0, pagerclose));
+    MCHECK(m = newmenuitem(G_("Close"), 0, pagerclose));
     setdata(m, c);
-    MCHECK(newmenu(_("Edit")));
-    MCHECK(p->mcopy = newmenuitem(_("Copy"), 'C', pagercopy));
+    MCHECK(newmenu(G_("Edit")));
+    MCHECK(p->mcopy = newmenuitem(G_("Copy"), 'C', pagercopy));
     setdata(p->mcopy, c);
-    MCHECK(p->mpaste = newmenuitem(_("Paste to console"), 'V', pagerpaste));
+    MCHECK(p->mpaste = newmenuitem(G_("Paste to console"), 'V', pagerpaste));
     setdata(p->mpaste, c);
-    MCHECK(p->mpastecmds = newmenuitem(_("Paste commands to console"), 0, pagerpastecmds));
+    MCHECK(p->mpastecmds = newmenuitem(G_("Paste commands to console"), 0, pagerpastecmds));
     setdata(p->mpastecmds, c);
-    MCHECK(m = newmenuitem(_("Select all"), 'A', pagerselectall));
+    MCHECK(m = newmenuitem(G_("Select all"), 'A', pagerselectall));
     setdata(m, c);
     if (!pagerMultiple) {
-	MCHECK(newmenu(_("View")));
+	MCHECK(newmenu(G_("View")));
 	for (i = 0; i < PAGERMAXKEPT; i++) {
 	    sprintf(pagerTitles[i], "&%c.  ", 'A' + i);
 	    MCHECK(pagerMenus[i] = newmenuitem(&pagerTitles[i][1], 0,
@@ -496,7 +496,7 @@ static pager pagercreate()
 static pager newpager1win(char *wtitle, char *filename, int deleteonexit)
 {
     if (!pagerInstance && !(pagerInstance = pagercreate())) {
-        R_ShowMessage(_("Unable to create pager window"));
+        R_ShowMessage(G_("Unable to create pager window"));
         return NULL;
     }
     if (!pageraddfile(wtitle, filename, deleteonexit)) return NULL;

@@ -715,6 +715,7 @@ int cmdlineoptions(int ac, char **av)
     R_size_t value;
     char *p;
     char  s[1024];
+    char localedir[PATH_MAX+20];
     structRstart rstart;
     Rstart Rp = &rstart;
     MEMORYSTATUS ms;
@@ -722,6 +723,12 @@ int cmdlineoptions(int ac, char **av)
 
     /* ensure R_Home gets set early: we are in rgui or rterm here */
     R_Home = getRHOME();
+    /* need this for moduleCdynload for iconv.dll */
+    InitFunctionHashing();
+    sprintf(RHome, "R_HOME=%s", R_Home);
+    putenv(RHome);
+    strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
+    bindtextdomain("RGui", localedir);
 
 #ifdef _R_HAVE_TIMING_
     R_setStartTime();
