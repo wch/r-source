@@ -48,7 +48,7 @@ NEW FEATURES
     o   The Mac OS X version now produces an R framework for easier linking
 	of R into other programs. As a result, R.app is now relocatable.
 
-    o   Command-line Mac OS X doesn't attempt to guess whether you are 
+    o   Command-line Mac OS X doesn't attempt to guess whether you are
 	running an X server: the default graphical device is pdf()
 
     o	The perl=TRUE argument to grep/regexpr/(g)sub() now uses
@@ -380,6 +380,8 @@ BUG FIXES
 
     o	postscript() could crash if given a font value outside the
 	valid range 1...5.
+
+    o	qchisq(1-e, ..., ncp=.) did not terminate. (PR#6421 (& PR#875))
 
 
 

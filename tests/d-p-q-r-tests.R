@@ -158,6 +158,17 @@ pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
 xB <- c(2000,1e6,1e50,Inf)
 for(df in c(0.1, 1, 10))
     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
+all.equal(qchisq(0.025,31,ncp=1,lower.tail=FALSE),# inf.loop PR#875
+          49.77662465615, tol= 1e-11)
+## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
+psml <- 2^-(10:54)
+q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
+q1 <- qchisq(1 -psml, df=1.2, ncp=10)
+p0 <- pchisq(q0, df=1.2, ncp=10, lower.tail=FALSE)
+p1 <- pchisq(q1, df=1.2, ncp=10, lower.tail=FALSE)
+iO <- 1:10
+all.equal(q0[iO], q1[iO])
+all.equal(p0[iO], psml[iO], tol = 0.08)# bad tol (0.0744 on 386-Linux).
 
 ##--- Beta (need more):
 
