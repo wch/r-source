@@ -89,7 +89,8 @@ NEW FEATURES
 	`--name=VALUE' form; the old `--name VALUE' is deprecated.
 	Old-style command line options `-v' and `-n' are now defunct.
 
-    o	par("cxy") { == par("cin")/par("pin") } for S compatibility.
+    o	par("cxy") { == par("cin")/par("pin") in user coordinates} 
+	for S compatibility.
 
     o	If R_PAPERSIZE is not specified otherwise, configure now tries
 	to compute it by calling paperconf.
@@ -149,6 +150,10 @@ NEW FEATURES
 
     o	options("expressions") now does something, and the evaluation
 	depth is checked on all platforms (not just Macintosh).
+
+    o	The default number of cons cells (`nsize') is now 350k (it
+	was 250k).  This reflects the added base code and packages,
+	and increases memory usage by about 2Mb (on a 32-bit machine).
 
 
 BUG FIXES
