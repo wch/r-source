@@ -90,6 +90,7 @@ help.search(pattern, fields = c("alias", "title"),
 \examples{
 help.search("linear models")    # In case you forgot how to fit linear
                                 # models
+help.search("non-existent topic")
 \dontrun{
 help.search("print")            # All help pages with topics or title
                                 # matching `print'
