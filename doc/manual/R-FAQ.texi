@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-29, 2003-02-03
+@set FAQ-VERSION 1.6-30, 2003-02-04
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1800,6 +1800,11 @@ capabilities, plus some support for interaction.  @emph{Recommended}.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
+@item gstat
+multivariable geostatistical modelling, prediction and simulation.
+Includes code for variogram modelling; simple, ordinary and universal
+point or block (co)kriging, sequential Gaussian or indicator
+(co)simulation, and map plotting functions.
 @item gtkDevice
 GTK graphics device driver that may be used independently of the R-GNOME
 interface and can be used to create R devices as embedded components in

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-29, 2003-02-03
+Version 1.6-30, 2003-02-04
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1594,6 +1594,12 @@ distributions of R.)
 *gss*
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.
+
+*gstat*
+     multivariable geostatistical modelling, prediction and simulation.
+     Includes code for variogram modelling; simple, ordinary and universal
+     point or block (co)kriging, sequential Gaussian or indicator
+     (co)simulation, and map plotting functions.
 
 *gtkDevice*
      GTK graphics device driver that may be used independently of the
