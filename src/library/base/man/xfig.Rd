@@ -21,7 +21,7 @@ xfig(file = "Rplots.fig", onefile = FALSE, \dots)
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file. If false, assume only one page per file and generate a
     file number containing the page number.}
-  \item{\dots}{further options for \code{xfig()}.}
+  \item{\dots}{further options for \code{xfig()}, such as:}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"A4"}, \code{"Letter"} and \code{"Legal"} (and these can be
     lowercase).  A further choice is \code{"default"}, which is the
