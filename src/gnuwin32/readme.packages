@@ -34,12 +34,13 @@ compiled from the sources.
 BEWARE: `Native' ports of make are _not_ suitable (including that at
 the mingw site).  There were also problems with several earlier
 versions of the cygwin tools and dll.  To avoid frustration, please
-use our tool set, and make sure it is at the front of your path.
+use our tool set, and make sure it is at the front of your path
+(including beofre the Windows system directories).
 
 You need a recent version of the Mingw port of gcc from
 http://sourceforge.net/projects/mingw/.  There will be a distribution
 called something like MinGW-3.1.0-1.exe (which is built from
-gcc-3.2.3).  Earlier versions may work, but mingw-runtime >= 2.0 and
+gcc-3.2.3).  Earlier versions may work, but mingw-runtime >= 3.0 and
 w32api >= 2.0 are essential.  The released versions of gcc-3.3.1 have
 also been tested.
 
@@ -178,12 +179,8 @@ This is an option to R CMD INSTALL.
 Checking and building packages
 ==============================
 
-The equivalent of `R CMD check mypkg' on Unix is
-
-	R CMD check mypkg
-
-Use `R CMD check --help' for full details.  There is an analogous call for
-build.
+`R CMD check mypkg' can be used just as on Unix.  Use `R CMD check
+--help' for full details.  There is an analogous call for build.
 
 You may need to set TMPDIR to (the absolute path to) a suitable
 temporary directory: the default is c:/TEMP.  (Use forward slashes,
@@ -193,8 +190,9 @@ work around this.)
 
 These have been used successfully under NT/2000/XP.  We have seen
 problems with some Perl versions on Win 95/98/ME, but believe these
-are now resolved.  make pkgcheck-mypkg will perform the tests of the
-examples and tests directory, as far as we know on all versions of Windows.
+are now resolved.  `make pkgcheck-mypkg' will perform the tests of the
+examples and tests directory, as far as we know on all versions of
+Windows.
 
 
 Building the package reference manual
@@ -204,7 +202,7 @@ See the Writing R Extensions manual for full instructions on converting
 package help files to DVI or PDF format.  If you have the necessary tools 
 installed,
 
-	R CMD rd2dvi.sh --pdf mypkg
+	R CMD rd2dvi --pdf mypkg
 	
 will use LaTeX to build a PDF version of the reference manual.	
 
@@ -340,8 +338,9 @@ It may well be simpler to use
 	R CMD INSTALL -l /R/library /mysources/mypkg
 
 Once again, if the paths contain spaces use the short forms, although
-Rcmd INSTALL will attempt to convert the paths if needed (but they
-will need to be quoted on the command line).
+R CMD INSTALL will attempt to convert the paths if needed (but they
+will need to be quoted on the command line, probably by double
+quotes).
 
 
 Cross-building packages on Linux

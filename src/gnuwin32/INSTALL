@@ -76,6 +76,9 @@ zip.exe, unzip.exe, hhc.exe
 
 Do not use spaces nor unnecessary quotes in your PATH variable.
 
+Make sure all of the above are before the Windows system directories
+(especially that containing FIND.EXE).
+
 Do not have our toolset and any other version of cygwin1.dll in your path.
 
 
