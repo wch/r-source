@@ -2,6 +2,7 @@
 \title{Hierarchical Clustering}
 \alias{hclust}
 \alias{plot.hclust}
+\alias{print.hclust}
 \description{
   Performs a hierarchical cluster analysis on a set of dissimilarities.
 }
@@ -57,6 +58,14 @@ plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
     crossings of the branches.}
 
   \item{labels}{labels for each of the objects being clustered.}
+
+  \item{call}{the call which produced the result.}
+
+  \item{method}{the cluster method that has been used.}
+
+  \item{dist.method}{the distance that has been used to create \code{d}
+    (only returned if the distance object has a \code{"method"}
+    attribute).}
 }
 \details{
   This function performs a hierarchical cluster analysis
