@@ -34,7 +34,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.56 $ ';
+my $revision = ' $Revision: 1.57 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -767,6 +767,7 @@ sub check_pkg {
 	foreach my $file (@srcfiles) {
 	    open(SRCFILE, "< $file")
 	      or die "cannot open \`$file' for reading\n";
+            binmode(SRCFILE);  # for Windows
 	    while(<SRCFILE>) {
 		chop;
 		if($_ =~ /\r$/) {
