@@ -184,7 +184,9 @@ NEW FEATURES
         now possible and follows the conventions for comma-separated
         files. This should make it easier to read the "continental
         CSV" format (fields separated by semicolon and using comma as
-        decimal point).
+        decimal point).  The set of quoting characters has also been
+        made optional.
+
 
     o	HDF5 support is gone from the R distribution, and provided by an
 	add-on package.
