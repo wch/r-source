@@ -402,6 +402,8 @@ FILE *R_OpenSiteFile(void)
     fp = NULL;
 
     if (LoadSiteFile) {
+	if ((fp = R_fopen(getenv("R_PROFILE"), "r")))
+	    return fp;
 	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
 	    return fp;
 	sprintf(buf, "%s/etc/Rprofile", R_Home);
@@ -615,7 +617,7 @@ int main(int ac, char **av)
     R_Consolefile = stdout;
     R_Outputfile = stdout;
     R_Sinkfile = NULL;
-    if((R_Home = getenv("RHOME")) == NULL) {
+    if((R_Home = R_HomeDir()) == NULL) {
 	R_Suicide("R home directory is not defined");
     }
 
@@ -956,12 +958,14 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 	    for(i = 0; i < nfile; i++) {
 		if (headers[i] && *headers[i])
 		    fprintf(tfp, "%s\n\n", headers[i]);
-		if ((fp = fopen(file[i], "r")) != NULL) {
+		if ((fp = R_fopen(R_ExpandFileName(file[i]), "r"))
+		    != NULL) {
 		    while ((c = fgetc(fp)) != EOF)
 			fputc(c, tfp);
 		    fprintf(tfp, "\n");
 		    fclose(fp);
-		    if(del) unlink(file[i]);
+		    if(del)
+			unlink(R_ExpandFileName(file[i]));
 		}
 		else
 		    fprintf(tfp, "NO FILE %s\n\n", file[i]);
@@ -981,7 +985,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 
 char *R_HomeDir()
 {
-    return getenv("RHOME");
+    return getenv("R_HOME");
 }
 
 /* Prompt the user for a file name.  Return the length of */
