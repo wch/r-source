@@ -26,7 +26,7 @@ SSPKG=$(SPKG)/$(SRC)
 
 LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc \
 	$(SSPKG)/*.cpp $(SSPKG)/*.C)
-ifeq ($(strip $(LSOURCES) $(SSPKG)/Makefile.win),)
+ifeq ($(strip $(LSOURCES)),)
   LOBJS=
   DYNLIB=
 else
