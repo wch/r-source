@@ -140,7 +140,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   vector \code{.ps.prolog}.  This is marked in the output, and can be
   changed by changing that vector.  (This is only advisable for
   PostScript experts: the standard version is in
-  \code{namespace:graphics}.)
+  \code{namespace:grDevices}.)
 
   \code{ps.options} needs to be called before calling \code{postscript},
   and the default values it sets can be overridden by supplying
@@ -173,7 +173,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   these easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
   \code{"URWTimes" == "NimbusRom"} are also supported.
 
-  It is also possible to specify \code{family="ComputerModern"}. This
+  It is also possible to specify \code{family = "ComputerModern"}. This
   is intended to use with the Type 1 versions of the TeX CM fonts.  It
   will normally be possible to include such output in TeX or LaTeX
   provided it is processed with \code{dvips -Ppfb -j0} or the equivalent
@@ -198,7 +198,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   The \code{.afm} files for the first four fonts do not need to be in
   the correct encoding, but that for the symbol font must be.
 
-  When \code{family="ComputerModern"} is used, the italic/bold-italic
+  When \code{family = "ComputerModern"} is used, the italic/bold-italic
   fonts used are slanted fonts (\code{cmsl10} and \code{cmbxsl10}).  To
   use text italic fonts instead, use
   \code{family = c("CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
