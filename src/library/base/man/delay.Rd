@@ -25,6 +25,10 @@ delay(x, env = .GlobalEnv)
   If promises are kept inside an \code{\link{environment}} or
   \code{\link{list}}, they can be accessed in several ways without
   evaluation, see the examples below.
+
+  When a promise is eventually forced, it is evaluated within the
+  environment specified by \code{env} (who contents may have changed in
+  the meantime).
 }
 \examples{
 x <- delay({
@@ -37,8 +41,8 @@ x^2 #- yippee
 x^2 #- simple number
 
 e <- (function(x, y = 1, z) environment())(1+2, "y", {cat(" HO! "); pi+2})
-(le <- as.list(e))# a list with three promise components
-utils::str(le)# even shows what's promised
+(le <- as.list(e)) # a list with three promise components
+utils::str(le)     # even shows what's promised
 
 le$z # prints; does not eval
 ez <- le$z

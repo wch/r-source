@@ -17,7 +17,7 @@ force(x)
   an implicit assignment in a loop or an apply function.
 }
 \note{
-  \code{force} does not force \link[delay]{promises}.
+  \code{force} does not force the evaluation of \link[delay]{promises}.
 }
 \examples{
 f <- function(y) function() y
