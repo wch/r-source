@@ -200,18 +200,21 @@ the @R{} sources.
 @cindex Installing under Unix
 
 @R{} will configure and build under a number of common Unix platforms
-including i386-freebsd, @var{cpu}-linux-gnu for the i386, alpha, arm,
-hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.@:
-@uref{http://buildd.debian.org/build.php?&pkg=r-base}),
-i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
-rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
+including i386-freebsd, @var{cpu}-linux-gnu for the i386, alpha, amd64,
+arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.@:
+@uref{http://buildd.debian.org/build.php?&pkg=r-base}) and
+sparc-sun-solaris, as well as probably (it is tested less frequently on
+these) i386-netbsd, i386-openbsd, i386-sun-solaris,
+powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4, rs6000-ibm-aix and
+hppa-hp-hpux.
 
 @cindex Linux
 @cindex Mac OS X
 In addition, binary distributions are available for most common Linux
-distributions, and for Mac OS X (Darwin) with and without X11.  See the 
-@acronym{FAQ} for current details.  These are installed in platform-specific 
-ways.  So for the rest of this chapter we consider only building from the sources.
+distributions, and for Mac OS X (Darwin) with and without X11.  See the
+@acronym{FAQ} for current details.  These are installed in
+platform-specific ways.  So for the rest of this chapter we consider
+only building from the sources.
 
 @menu
 * Simple compilation::          
@@ -350,14 +353,14 @@ make info     @r{to create info files (not @samp{refman}).}
 @end smallexample
 
 You will not be able to build the info files unless you have
-@command{makeinfo} version 4 or later installed (and some Linux
-distributions have 3.12).
+@command{makeinfo} version 4 or later installed.
 
 The DVI versions can be previewed and printed using standard programs
 such as @command{xdvi} and @command{dvips}.  The PDF versions can be
-viewed using Acrobat Reader or (recent versions of) ghostscript: they
-have hyperlinks that can be followed in Acrobat Reader.  The info files
-are suitable for reading online with Emacs or the standalone GNU Info.
+viewed using Acrobat Reader or (fairly recent versions of) ghostscript:
+they have hyperlinks that can be followed in Acrobat Reader.  The info
+files are suitable for reading online with Emacs or the standalone GNU
+Info.
 
 @node Installation,  , Making the manuals, Installing R under Unix
 @section Installation
@@ -446,10 +449,9 @@ work.
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-The simplest way is to use @file{@value{RWVERSION}.exe} or
-@file{miniR.exe}.  Just double-click on the icon and follow the
-instructions.  If you installed @R{} this way you can uninstall it from the
-Control Panel.
+Installation is @emph{via} the installers @file{@value{RWVERSION}.exe}
+or @file{miniR.exe}.  Just double-click on the icon and follow the
+instructions.  You can uninstall @R{} from the Control Panel.
 
 See the @uref{http://cran.r-project.org/bin/windows/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
@@ -820,7 +822,7 @@ but not single-precision nor complex routines.
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
-@code{libsunperf} on Solaris and @code{vecLib} on Mac OS X 10.2.2).
+@code{libsunperf} on Solaris and @code{vecLib} on Mac OS X).
 However, the likely performance gains are thought to be small (and may
 be negative), and the default is not to search for a suitable LAPACK
 library.  You can specify a specific LAPACK library or a search for a
@@ -943,6 +945,12 @@ set) or on the command line as
 @end smallexample
 
 @noindent
+If you are building in a directory different from the sources, there can
+be copies of @file{config.site} in the source and the build directories,
+and both will be read (in that order).  To force a single file to be
+read, set the environment variable @env{CONFIG_SITE} to the location of
+the file.
+
 These variables are @emph{precious}, implying that they do not have to
 be exported to the environment, are kept in the cache even if not
 specified on the command line and checked for consistency between two
@@ -976,7 +984,7 @@ a full path.
 If you find you need to alter configure variables, it is worth noting
 that some settings may be cached in the file @file{config.cache}, and it
 is a good idea to remove that file (if it exists) before re-configuring.
-Note that caching is turned @emph{off} by default; use the command line
+Note that caching is turned @emph{off} by default: use the command line
 option @option{--config-cache} (or @option{-C}) to enable caching.
 
 @node Using make, Using FORTRAN, Configuration variables, Configuration on Unix
@@ -1313,7 +1321,7 @@ CXXFLAGS="-xO5 -xlibmil -dalign"
 in @file{config.site}.
 
 
-For 64-bit compilation with @command{gcc} 3.2.x and 3.3.x we used
+For 64-bit compilation with @command{gcc} 3.2.x and later we used
 
 @smallexample
 CC="gcc -m64"
