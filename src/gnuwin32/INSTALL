@@ -35,11 +35,11 @@ release.  There are also problems with version 1.1.1 of the
 cygwin1.dll and we have used 1.1.2. To avoid frustration, please use
 our tool set.
 
-It is also possible to use the compilers from the cygwin 1.1 release
-with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
-binutils* bundles.)   As of R 1.1.0 it is no longer possible to build
-R with the cygwin-b20.1 release, but you will probably be able to use
-that to build packages.  You will need to ensure that you have
+It may also be possible to use the compilers from the cygwin 1.1
+release with the -mno-cygwin flag.  (You will need the cygwin*, gcc*
+and binutils* bundles.)  As of R 1.1.0 it is no longer possible to
+build R with the cygwin-b20.1 release, but you will probably be able
+to use that to build packages.  You will need to ensure that you have
 only one version of cygwin1.dll in your path (and there is one in our
 tools distribution).
 
