@@ -58,13 +58,13 @@ B. D. Ripley                                @*
 @node Top, Introduction, (dir), (dir)
 
 @menu
-* Introduction::
-* Installation and Usage::
-* Packages::
-* Windows Features::
-* Workspaces::
-* The R Console and Fonts::
-* Building from Source::
+* Introduction::                
+* Installation and Usage::      
+* Packages::                    
+* Windows Features::            
+* Workspaces::                  
+* The R Console and Fonts::     
+* Building from Source::        
 @end menu
 
 
@@ -90,26 +90,26 @@ The information here applies only to recent versions of R for Windows,
 @chapter Installation and Usage
 
 @menu
-* Where can I find the latest version?::
-* How do I install R for Windows?::
-* Can I customize the installation?::
-* How do I run it?::
-* Can I run R from a CD or USB drive?::
-* How do I UNinstall R?::
-* What's the best way to upgrade?::
-* There seems to be a limit on the memory it uses!::
-* How can I keep workspaces for different projects in different directories?::
-* How do I print from R?::
-* Can I use R CMD BATCH?::
-* Can I use @RWVER@ with ESS and (X)emacs?::
-* What are HOME and working directories?::
-* How do I set environment variables?::
-* R can't find my file::
-* Does R use the Registry?::
-* Does R support automation?::
-* The internet download functions fail.::
-* Entering certain characters crashes Rgui.::
-* Other strange crashes.::
+* Where can I find the latest version?::  
+* How do I install R for Windows?::  
+* Can I customize the installation?::  
+* How do I run it?::            
+* Can I run R from a CD or USB drive?::  
+* How do I UNinstall R?::       
+* What's the best way to upgrade?::  
+* There seems to be a limit on the memory it uses!::  
+* How can I keep workspaces for different projects in different directories?::  
+* How do I print from R?::      
+* Can I use R CMD BATCH?::      
+* Can I use @RWVER@ with ESS and (X)emacs?::  
+* What are HOME and working directories?::  
+* How do I set environment variables?::  
+* R can't find my file::        
+* Does R use the Registry?::    
+* Does R support automation?::  
+* The internet download functions fail.::  
+* Entering certain characters crashes Rgui.::  
+* Other strange crashes.::      
 @end menu
 
 
@@ -585,14 +585,14 @@ that is causing the error.
 
 
 @menu
-* Can I install packages into libraries in this version?::
-* I don't have permission to write to the @RWVER@\library directory::
-* The packages I installed do not appear in the HTML help system::
-* My functions are not found by the HTML help search system.::
-* Loading a package fails.::
-* Package TclTk does not work.::
-* Hyperlinks in Compiled HTML do not work.::
-* update.packages() fails::
+* Can I install packages into libraries in this version?::  
+* I don't have permission to write to the @RWVER@\library directory::  
+* The packages I installed do not appear in the HTML help system::  
+* My functions are not found by the HTML help search system.::  
+* Loading a package fails.::    
+* Package TclTk does not work.::  
+* Hyperlinks in HTML do not work.::  
+* update.packages() fails::     
 @end menu
 
 
@@ -707,7 +707,7 @@ tab of the @code{Properties}, or use the @code{DLL.version} function
 inside R.)
 
 
-@node Package TclTk does not work., Hyperlinks in Compiled HTML do not work., Loading a package fails., Packages
+@node Package TclTk does not work., Hyperlinks in HTML do not work., Loading a package fails., Packages
 @section Package TclTk does not work.
 
 For package @code{tcltk} to work (try @code{demo(tkdensity)} or
@@ -746,7 +746,7 @@ Currently links to the @code{base}, @code{datasets}, @code{utils},
 @code{grDevices}, @code{graphics} and @code{stats} packages are fixed.
 
 
-@node update.packages() fails,  , Hyperlinks in Compiled HTML do not work., Packages
+@node update.packages() fails,  , Hyperlinks in HTML do not work., Packages
 @section @code{update.packages()} fails
 
 You may not be able to update a package which is in use: Windows `locks'
@@ -763,10 +763,10 @@ need to unset it temporarily.
 @chapter Windows Features
 
 @menu
-* What should I expect to behave differently from the Unix version::
-* I hear about some nifty features.::
-* Circles appear as ovals on screen::
-* How do I move focus to a graphics window or the console?::
+* What should I expect to behave differently from the Unix version::  
+* I hear about some nifty features.::  
+* Circles appear as ovals on screen::  
+* How do I move focus to a graphics window or the console?::  
 @end menu
 
 
@@ -868,9 +868,9 @@ act on it).
 
 
 @menu
-* My workspace gets saved in a strange place.  How do I stop this?::
-* How do I store my workspace in a different place?::
-* Can I load workspaces saved under Unix/GNU-Linux or MacOS?::
+* My workspace gets saved in a strange place.  How do I stop this?::  
+* How do I store my workspace in a different place?::  
+* Can I load workspaces saved under Unix/GNU-Linux or MacOS?::  
 @end menu
 
 
@@ -905,10 +905,10 @@ interchangeable (for the same 2.x.? version of R, at least).
 
 
 @menu
-* I would like to be able to use Japanese fonts::
-* I don't see characters with accents at the R console::
-* The output to the console seems to be delayed::
-* Long lines seem to be truncated.::
+* I would like to be able to use Japanese fonts::  
+* I don't see characters with accents at the R console::  
+* The output to the console seems to be delayed::  
+* Long lines seem to be truncated.::  
 @end menu
 
 
@@ -984,14 +984,14 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 @chapter Building from Source
 
 @menu
-* How can I compile R from source?::
-* Can I use a fast BLAS?::
-* How do I include compiled C code?::
-* How do I debug code that I have compiled and dyn.load-ed?::
-* How do I include C++ code?::
-* The output from my C code disappears.::
-* The output from my Fortran code disappears.::
-* The console freezes when my compiled code is running::
+* How can I compile R from source?::  
+* Can I use a fast BLAS?::      
+* How do I include compiled C code?::  
+* How do I debug code that I have compiled and dyn.load-ed?::  
+* How do I include C++ code?::  
+* The output from my C code disappears.::  
+* The output from my Fortran code disappears.::  
+* The console freezes when my compiled code is running::  
 @end menu
 
 
