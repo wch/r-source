@@ -1,0 +1,110 @@
+
+R : Copyright 2001, The R Development Core Team
+Version 1.3.0 Under development (unstable) (2001-05-02)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type `license()' or `licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type `contributors()' for more information.
+
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
+
+> ## tests of boundary cases in read.table()
+> # empty file
+> file.create("foo1")
+[1] TRUE
+> try(read.table("foo1")) # fails
+Error in read.table("foo1") : no lines available in input
+> read.table("foo1", col.names=LETTERS[1:4])
+[1] A B C D
+<0 rows> (or 0-length row.names)
+> unlink("foo1")
+> 
+> # header only
+> cat("head\n", file = "foo2")
+> read.table("foo2")
+    V1
+1 head
+> try(read.table("foo2", header=TRUE)) # fails in 1.2.3
+[1] head
+<0 rows> (or 0-length row.names)
+> unlink("foo2")
+> # header detection
+> cat("head\n", 1:2, "\n", 3:4, "\n", file = "foo3")
+> read.table("foo3", header=TRUE)
+  head
+1    2
+3    4
+> read.table("foo3", header=TRUE, col.names="V1")
+  V1
+1  2
+3  4
+> read.table("foo3", header=TRUE, row.names=1)
+  head
+1    2
+3    4
+> read.table("foo3", header=TRUE, row.names="row.names")
+  head
+1    2
+3    4
+> read.table("foo3", header=TRUE, row.names="head") # fails in 1.2.3
+  row.names
+2         1
+4         3
+> 
+> # wrong col.names
+> try(read.table("foo3", header=TRUE, col.names=letters[1:4]))
+Error in scan(file = file, what = what, sep = sep, quote = quote, skip = 0,  : 
+	line 1 did not have 4 elements
+In addition: Warning message: 
+header and `col.names' are of different lengths in: read.table("foo3", header = TRUE, col.names = letters[1:4]) 
+> unlink("foo3")
+> 
+> # incomplete last line
+> cat("head\n", 1:2, "\n", 3:4, file = "foo4")
+> read.table("foo4", header=TRUE)
+  head
+1    2
+3    4
+Warning message: 
+incomplete final line in: readLines(con, n, ok) 
+> unlink("foo4")
+> 
+> # blank last line
+> cat("head\n\n", 1:2, "\n", 3:4, "\n\n", file = "foo5")
+> read.table("foo5", header=TRUE)
+  head
+1    2
+3    4
+> 
+> # test of fill
+> read.table("foo5", header=FALSE, fill=TRUE, blank.lines.skip=FALSE) # fails in 1.2.3
+    V1 V2
+1 head NA
+2      NA
+3    1  2
+4    3  4
+5      NA
+> unlink("foo5")
+> 
+> cat("head\n", 1:2, "\n", 3:5, "\n", 6:9, "\n", file = "foo6")
+> try(read.table("foo6", header=TRUE))
+Error in read.table("foo6", header = TRUE) : 
+	more columns than column names
+> try(read.table("foo6", header=TRUE, fill=TRUE))
+Error in read.table("foo6", header = TRUE, fill = TRUE) : 
+	more columns than column names
+> read.table("foo6", header=FALSE, fill=TRUE)
+    V1 V2 V3 V4
+1 head NA NA NA
+2    1  2 NA NA
+3    3  4  5 NA
+4    6  7  8  9
+> unlink("foo6")
+> 
+> ## end of tests
+> 
