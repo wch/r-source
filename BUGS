@@ -296,12 +296,6 @@ Directory:  System-specific
 Subject: X11 device doesn't handle destroy events correcly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 13 Feb 2001 17:40:46 -0500
-* PR# 1002 *
-Subject: core dump running modreg-Ex.R
-From: WhiteG@dfo-mpo.gc.ca
-Date: Thu, 28 Jun 2001 19:14:18 +0200 (MET DST)
---Only reported on SGI, solved by removing optimization.
---Needs debugging there.
 * PR# 1020 *
 Subject: .Call and Mandrake 8.0
 From: lcottret@yahoo.fr
@@ -312,6 +306,7 @@ Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
 Subject: make check failure on SGI-IRIX6.5
 From: laurent@cbs.dtu.dk
 Date: Mon, 16 Jul 2001 15:06:17 +0200 (MET DST)
+--bus error is almost certainly the same as PR#1002, solved for 1.4.0
 * PR# 1057 *
 Subject: crt1.o skipped at configure time ?
 From: laurent@cbs.dtu.dk
@@ -339,6 +334,8 @@ Date: Tue, 23 Oct 2001 13:50:26 -0700
 Subject: Problem testing R version 1.3.1 on SGI Irix
 From: Gordon Lack <gml4410@ggr.co.uk>
 Date: Fri, 26 Oct 2001 19:04:04 +0100
+--error from using SGI libblas (not reported on other systems?)
+--use --without-blas
 
 Directory:  TooMuchAtOnce
 
@@ -362,3 +359,11 @@ Directory:  incoming
 Subject: a patch to tapply
 From: Vadim Ogranovich <vograno@arbitrade.com>
 Date: Thu, 29 Nov 2001 14:48:35 -0600
+* PR# 1210 *
+Subject: multi.line=FALSE does not work in scan()
+From: Vadim Ogranovich <vograno@arbitrade.com>
+Date: Mon, 10 Dec 2001 20:34:34 -0600
+* PR# 1211 *
+Subject: crash bug in get("function.name")()
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
