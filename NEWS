@@ -335,6 +335,10 @@ NEW FEATURES
     o	The edit.matrix() and edit.data.frame() editors can now handle
 	logical data.
 
+    o   Classes and methods can be `sealed', by using the
+        corresponding argument to setClass or setMethod.  New
+        functions isSealedClass() and isSealedMethod() test sealing.
+
 
 INSTALLATION CHANGES
 
