@@ -1,0 +1,72 @@
+Preliminary time-series package for R 0.65
+==========================================
+
+This is a preliminary version of a time-series package; at present
+the functionality is somewhat limited.
+
+Functions in base R:
+-------------------
+
+ts		Create a (univariate or multivariate) ts object
+[.ts		Subsetting method for ts objects.
+as.ts, is.ts	Coercion and membership functions
+plot, print	Methods for plot and print
+
+aggregate	Computes summaries (e.g. sum) over disjoint time intervals
+diff		Lagged differences of a time series
+end		Time of last observation
+frequency	Number of observations per unit of time
+start		Time of first observation
+time		Create time series giving the times of observations
+tsp, tsp<-	Get and set time-series attributes
+window		Subset to a time window
+
+
+Functions in package ts:
+-----------------------
+
+acf		Autocovariance and autocorrelation function
+ar              Wrapper for autoregression estimation functions
+ar.yw           Estimate autoregression model by solving Yule-Walker equations
+cpgram		Plot cumulative periodogram of univariate time series
+cycle		Create time series giving the positions in a cycle 
+		of a time series
+deltat		Return time interval between observations
+embed           Embedding a time series
+lag		Compute lagged version of time series
+na.omit.ts	na.omit method for time series
+pacf		Partial autocorrelation function
+plot.acf        Plot autocorrelation function
+plot.spec       Plot spectral density estimate
+spec.ar	        Estimate spectral density by autoregression
+spec.pgram      Estimate spectral density from periodogram
+spec.taper      Taper by cosine bell
+spectrum        Wrapper for spectral density estimation functions
+stl		Seasonal decomposition using loess
+ts.intersect	Bind time series as multivariate ts over the common time base
+ts.union	Bind time series as multivariate ts over their total time base
+
+TODO
+
+ar.burg		maybe
+arima.forecast
+arima.mle
+arima.sim
+filter		Linear filtering
+
+
+Datasets in base R:
+------------------
+
+airmiles        Passenger-Miles on US Airlines 1937-1960
+co2             Moana Loa Atmospheric CO2 Concentrations
+nhtemp          Yearly Average Temperatures in New Haven CT
+presidents      Quarterly Approval Ratings for US Presidents
+sunspots        Monthly Mean Relative Sunspot Numbers
+uspop		Populations Recorded by the US Census
+
+
+Datasets in package ts:
+----------------------
+
+See data(package=ts)

@@ -5964,6 +5964,8 @@ trap 'rm -fr `echo "Makeconf
   src/library/mva/Makefile
   src/library/mva/src/Makefile
   src/library/stepfun/Makefile
+  src/library/ts/Makefile
+  src/library/ts/src/Makefile
   src/main/Makefile
   src/nmath/Makefile
   src/scripts/Makefile
@@ -6162,6 +6164,8 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/library/mva/Makefile
   src/library/mva/src/Makefile
   src/library/stepfun/Makefile
+  src/library/ts/Makefile
+  src/library/ts/src/Makefile
   src/main/Makefile
   src/nmath/Makefile
   src/scripts/Makefile

@@ -7,6 +7,13 @@
 
 NEW FEATURES
 
+    o	Preliminary version of package ts for time-series analysis.
+	This has fairly complete S-PLUS compatibility, but more features
+	are planned. See library(help=ts) for more details.
+
+    o	The presence of object .conflicts.OK in a package suppresses
+	conflict checking in library().
+
     o	na.omit() and na.fail() now are generic.
 
     o	New generic function all.equal();
@@ -20,7 +27,7 @@ NEW FEATURES
 	has been specified: if these are specified they set the default.
 
     o	Limited capability for tilde expansion of file names even without
-	readline.
+	readline (on Unix, and on Windows).
 
     o	New environment variables `R_HISTFILE' and `R_HISTSIZE' for the
 	name and size of the history file.

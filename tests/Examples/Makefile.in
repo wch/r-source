@@ -15,7 +15,7 @@ DISTFILES = Makefile.in
 
 R = $(top_builddir)/bin/R --vanilla
 
-PKGS = base eda lqs modreg mva stepfun
+PKGS = base eda lqs modreg mva stepfun ts
 EX_IN = $(PKGS:=-Ex.R)
 EX_OUT = $(EX_IN:.R=.Rout)
 .SUFFIXES:
