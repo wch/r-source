@@ -65,7 +65,7 @@ BUG FIXES
         due to idle timers implementation. Now removed with a new 
         internal design to refresh the Aqua console.
 
-	o   Saving the content of a quartz graphics device and then 
+    o   Saving the content of a quartz graphics device and then 
         resizing caused a crash (PR#1991). Now fixed.
 
 INSTALLATION CHANGES
