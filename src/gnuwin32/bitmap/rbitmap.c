@@ -452,7 +452,6 @@ int R_SaveAsBmp(void  *d, int width, int height,
   BMPDW(0); /* biCompression=BI_RGB */
   BMPDW(0); /* biSizeImage (with BI_RGB not needed)*/
   lres = (long)(0.5 + res/0.0254);
-  Rprintf("%d %d %x\n", res, lres, lres);
   BMPLONG(lres); /* XPels/M <- used only by Windows?*/
   BMPLONG(lres); /* XPels/M */
   BMPDW(biClrUsed); /* biClrUsed */
