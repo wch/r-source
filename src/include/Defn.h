@@ -436,7 +436,7 @@ extern FILE*	R_FileRef;	    /* the environment file pointer  */
 #define	R_FILE		2
 #define R_TEXT		3
 
-int	R_ReadConsole(char*, char*, int, int);
+int	R_ReadConsole(char*, unsigned char*, int, int);
 void	R_WriteConsole(char*, int);
 void	R_ResetConsole(void);
 void	R_FlushConsole(void);
