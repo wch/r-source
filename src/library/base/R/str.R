@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.7 1998/10/05 08:32:21 maechler Exp $
+    ## $Id: str.R,v 1.8 1998/11/12 18:06:40 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -41,7 +41,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## -------------------------------------------------------------------------
-    ## $Id: str.R,v 1.7 1998/10/05 08:32:21 maechler Exp $
+    ## $Id: str.R,v 1.8 1998/11/12 18:06:40 maechler Exp $
 
     oo <- options(digits = digits.d)
     ##was .Options $ digits <- digits.d # only in this function frame !
@@ -63,8 +63,9 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    deparse(object)  else { dp <- deparse(ao); dp[-length(dp)] },"\n")
     } else if (is.null(object))
 	cat(" NULL\n")
-    else if((i.l <- is.list(object)) || is.pairlist(object)) {
-	if(le == 0) { cat(" ",if(!i.l)"pair","list()\n",sep="")
+    else if(is.list(object)) {
+	i.pl <- is.pairlist(object)
+        if(le == 0) { cat(" ", if(i.pl)"pair", "list()\n",sep="")
 		      return(invisible()) }
 	is.d.f <- is.data.frame(object)
 	if(is.d.f ||
@@ -75,7 +76,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    ##---- str.default	is a 'NextMethod' : omit the 'List of ..' ----
 	    std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
 	} else {
-	    cat(if(i.l) "List" else "Dotted pair list",
+	    cat(if(i.pl) "Dotted pair list" else "List",
 		" of ", le, "\n", sep="")
 	}
 	if (max.level==0 || nest.lev < max.level) {
