@@ -1,7 +1,7 @@
 table <- function (..., exclude = c(NA, NaN),
-   dnn = list.names(..., deparse.level = deparse.level), deparse.level = 1) 
+   dnn = list.names(...), deparse.level = 1) 
 {
-    list.names <- function(..., deparse.level) {
+    list.names <- function(...) {
         l <- as.list(substitute(list(...)))[-1]
         nm <- names(l)
         fixup <- if (is.null(nm)) 

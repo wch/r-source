@@ -121,7 +121,8 @@ NEW FEATURES
 
     o	hdf5{read|write} now allow more kinds of attributes and add support
 	for HDF5 version 1.2 (or newer)	thanks to Marcus G. Daniels.
-	Configure checks for HDF5 1.2 availability.
+	Configure checks for HDF5 1.2 availability, older versions will 
+	no longer work. 
 
 
 
@@ -196,6 +197,10 @@ BUG FIXES
     o	a clipping problem for plots when there non-zero outer margins
 	has been fixed.	 This problem used to affect coplot() and pairs().
 
+    o   get("zzz", mode="xxx") missed promise objects.
+
+    o   match.fun failed when a data frame was attached containing a 
+	"length" variable (e.g.)
 
 
 	**************************************************
