@@ -911,9 +911,11 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 				u = CAR(t);
 				k = LENGTH(u);
 				mrows = (isMatrix(u)) ? nrows(u) : 1;
+				if ( k == 0 )
+					mrows = 0;
 				for (i = 0; i < mrows; i++)
 					for (j = 0; j < cols; j++)
-						STRING(result)[i + n + (j * rows)] = STRING(u)[(i + j * mrows) % k];
+						STRING(result)[i + n + (j * rows)] =  STRING(u)[(i + j * mrows) % k] ;
 				n += mrows;
 			}
 		}
