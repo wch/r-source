@@ -60,7 +60,7 @@ NEW FEATURES
     o	Functions as.single and single now have the effect with
 	.C and .Fortran of passing a numeric argument as float/REAL
 	rather than as double/DOUBLE PRECISION, by setting the
-	attribute "Csingle".
+	attribute "Csingle". See ?Foreign for details.
 
 
 BUG FIXES
@@ -93,7 +93,7 @@ BUG FIXES
     o	lm.influence failed when there were undetermined coefficients, PR#280.
 
     o	problem with function()... inside saved functions because arg count
-	increased to accommodate stored source. (incorrect number of
+	increased to accommodate stored source. (Incorrect number of
 	arguments to "lambda")
 
     o	improvements to generation of HTML help files: should work
@@ -107,7 +107,7 @@ BUG FIXES
     o	na.omit.ts and na.contiguous now preserve time-series attributes.
 
     o	more automatic testing ("make check") using options(error.halt=FALSE)
-	lead to the elimination of half a dozen of seg.fault possibilities.
+	led to the elimination of half a dozen of seg.fault possibilities.
 
     o	family quasi handles zero observations with var=mu^2 more correctly.
 
@@ -117,6 +117,10 @@ BUG FIXES
     o	rowsum failed with a matrix and a single group (drop=FALSE needed).
 
     o	deriv(y ~ <expr>(x)) now works as well as  deriv(~ <expr>(x)).
+
+    o	qr over-estimated ranks in some degenerate cases.
+	qr did not work correctly if n < p and the first n cols were
+	rank-deficient.
 
 
 		CHANGES IN R VERSION 0.65.0
