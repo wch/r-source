@@ -20,7 +20,7 @@ download.file <- function(url, destfile, method,
             stop("No download method found")
     }
     if(method == "internal")
-        status <- .Internal(download(url, destfile, quiet, mode))
+        status <- .Internal(download(url, destfile, quiet, mode, cacheOK))
     else if(method == "wget") {
         extra <- if(quiet) " --quiet" else ""
         if(!cacheOK) extra <- paste(extra, "--cache=off")
