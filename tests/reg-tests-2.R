@@ -1338,3 +1338,12 @@ xt <- cbind(1:2,  3:4)
 (lm1 <- lm(y ~ x))
 predict(lm1, newdata = data.frame(x= xt))
 ## warns as from 2.0.0
+
+
+## eval could alter a data.frame/list second argument
+data(trees)
+a <- trees
+eval(quote({Girth[1]<-NA;Girth}),a)
+a[1, ]
+trees[1, ]
+## both a and trees got altered in 1.9.1

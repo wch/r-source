@@ -359,6 +359,10 @@ BUG FIXES
 
     o   debug() works on trivial functions instead of crashing (PR#6804)
 
+    o   eval() could alter a data.frame/list second argument, so
+	with(trees, Girth[1] < NA) altered 'trees' (and any copy of
+	'trees' too).
+
 
 
 

@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-07-24), ISBN 3-900051-00-3
+Version 2.0.0 Under development (unstable) (2004-08-08), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4127,4 +4127,20 @@ Coefficients:
 Warning message: 
 'newdata' had 2 rows but variable(s) found have 10 rows 
 > ## warns as from 2.0.0
+> 
+> 
+> ## eval could alter a data.frame/list second argument
+> data(trees)
+> a <- trees
+> eval(quote({Girth[1]<-NA;Girth}),a)
+ [1]   NA  8.6  8.8 10.5 10.7 10.8 11.0 11.0 11.1 11.2 11.3 11.4 11.4 11.7 12.0
+[16] 12.9 12.9 13.3 13.7 13.8 14.0 14.2 14.5 16.0 16.3 17.3 17.5 17.9 18.0 18.0
+[31] 20.6
+> a[1, ]
+  Girth Height Volume
+1   8.3     70   10.3
+> trees[1, ]
+  Girth Height Volume
+1   8.3     70   10.3
+> ## both a and trees got altered in 1.9.1
 > 
