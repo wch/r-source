@@ -25,10 +25,10 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
     }
     In the last three cases the number is a suggestion only.
   }
-  \item{freq}{logical; if \code{TRUE}, the
-    histogram graphic is to present a representation of frequencies, i.e,
-    the \code{counts} component of the result; if \code{FALSE},
-    \emph{relative} frequencies (``probabilities''), the \code{rel.freqs},
+  \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
+    representation of frequencies, the \code{counts} component of
+    the result; if \code{FALSE}, \emph{relative} frequencies
+    (``probabilities''), component\code{density},
     are plotted.   Defaults to \code{TRUE} \emph{iff} \code{breaks} are
     equidistant (and \code{probability} is not specified).}
   \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
