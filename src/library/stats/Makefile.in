@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = COPYRIGHTS.modreg DESCRIPTION.in Makefile.in \
-  NAMESPACE SOURCES.ts install.R
+  NAMESPACE SOURCES.ts
 
 pkg = stats
 
