@@ -168,10 +168,15 @@ none
 
 Directory:  incoming
 
-* PR# 534 *
-Subject: wsfe bug report just made
-From: mallen@tntech.edu
-Date: Thu, 4 May 2000 19:20:35 +0200 (MET DST)
+* PR# 535 *
+Subject:  axis() deficiency 
+From: William.Venables@cmis.CSIRO.AU (Bill Venables)
+Date: Sat, 6 May 2000 10:33:32 +1000 (EST)
+* PR# 528 *
+Subject: Wrong SEs in predict.lm(..., type="terms")
+Subject: Wrong SEs in predict.lm(..., type="terms")
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Wed, 26 Apr 2000 12:42:00 +1000 (EST)
 * PR# 526 *
 Subject: INSTALL_SCRIPT during installation
 From: "Johnny C. Lam" <lamj@stat.cmu.edu>
@@ -180,28 +185,27 @@ Date: Wed, 19 Apr 2000 11:27:52 -0400
 Subject: na.omit fails for matrices
 From: Sergei Zuyev <sergei@stams.strath.ac.uk>
 Date: Mon, 17 Apr 2000 11:52:28 +0100
-* PR# 529 *
-Subject: graphics: par(mfg=c(i,j,r,c))
-From: Craig.Mckinstry@pnl.gov
-Date: Fri, 28 Apr 2000 17:36:35 +0200 (MET DST)
-* PR# 528 *
-Subject: Wrong SEs in predict.lm(..., type="terms")
-Subject: Wrong SEs in predict.lm(..., type="terms")
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Wed, 26 Apr 2000 12:42:00 +1000 (EST)
-* PR# 531 *
-Subject: Possible bug in factor
-From: Murray Smith <mh.smith@auckland.ac.nz>
-Date: Wed, 03 May 2000 11:48:35 +1200
 * PR# 530 *
 Subject: rpois hangs
 From: kjetikj@astro.uio.no
 Date: Sun, 30 Apr 2000 21:01:02 +0200 (MET DST)
-* PR# 533 *
-Subject: acepack, akima and tripack will not load 
-From: mallen@tntech.edu
-Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
+* PR# 529 *
+Subject: graphics: par(mfg=c(i,j,r,c))
+From: Craig.Mckinstry@pnl.gov
+Date: Fri, 28 Apr 2000 17:36:35 +0200 (MET DST)
 * PR# 532 *
 Subject: Bug report -- 1.0.1, HP-UX
 From: Russ Lenth <russell-lenth@uiowa.edu>
 Date: Wed, 03 May 2000 12:15:26 -0500
+* PR# 531 *
+Subject: Possible bug in factor
+From: Murray Smith <mh.smith@auckland.ac.nz>
+Date: Wed, 03 May 2000 11:48:35 +1200
+* PR# 534 *
+Subject: wsfe bug report just made
+From: mallen@tntech.edu
+Date: Thu, 4 May 2000 19:20:35 +0200 (MET DST)
+* PR# 533 *
+Subject: acepack, akima and tripack will not load 
+From: mallen@tntech.edu
+Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
