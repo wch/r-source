@@ -634,6 +634,9 @@ BUG FIXES
 	Using more than one plot with a non-white background and with
 	onefile=FALSE could segfault.
 
+    o	sprintf() did not check for buffer overflow on character
+	strings.  (PR#7554)
+
 
 
 		CHANGES IN R VERSION 2.0.1

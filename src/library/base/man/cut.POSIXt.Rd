@@ -35,6 +35,10 @@
     week start on Mondays or Sundays?}
   \item{right, \dots}{arguments to be passed to or from other methods.}
 }
+\details{
+  Using both \code{right = TRUE} and \code{include.lowest = TRUE}
+  will include both ends of the range of dates.
+}
 \value{
   A factor is returned, unless \code{labels = FALSE} which returns
   the integer level codes.

@@ -12,16 +12,15 @@ sprintf(fmt, \dots)
 \arguments{
   \item{fmt}{a format string, which should be single-byte characters in
     a non-UTF-8 multibyte locale.}
-  \item{\dots}{values to be passed into \code{fmt}. Only logical,
+  \item{\dots}{values to be passed into \code{fmt}.  Only logical,
     integer, real and character vectors are accepted, and only the first
-    value is read from each vector.}
+    element is read from each vector.}
 }
 \details{
   This is a wrapper for the system \code{sprintf} C-library function.  
-  Attempts are made to
-  check that the mode of the values passed match the format supplied,
-  and \R's special values (\code{NA}, \code{Inf}, \code{-Inf} and
-  \code{NaN}) are handled correctly.
+  Attempts are made to check that the mode of the values passed match
+  the format supplied, and \R's special values (\code{NA}, \code{Inf},
+  \code{-Inf} and \code{NaN}) are handled correctly.
   
   The following is abstracted from K&R (see References, below).  The
   string \code{fmt} contains normal characters, which are passed through
@@ -61,6 +60,9 @@ sprintf(fmt, \dots)
     \item{a space}{Prefix a space if the first number is not a sign}
     \item{\code{0}}{For numbers, pad to the field width with leading zeros}
   }
+
+  The result has a length limit, probably 8192 characters, and attempts
+  to exceed this may result in an error, or truncation with a warning.
 }
 
 \value{

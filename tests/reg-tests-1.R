@@ -3393,6 +3393,14 @@ lm.D9 <- lm(weight ~ group)
 stopifnot(labels(lm.D9) == "group")
 ## failed in 2.0.1, giving length 0
 
+
+## sprintf had no length check (PR#7554)
+a <- matrix (ncol=100, nrow=100, data=c(1,2,3,4,5))
+a.serial <- serialize(a, NULL, ascii=TRUE)
+try(sprintf('foo: %s\n', a.serial))
+## seqfaulted in 2.0.1
+
+
 ## all/any did not coerce as the Blue Book described.
 for(x in c("F", "FALSE", "T", "TRUE", "NA")) {
     print(all(x))
@@ -3401,6 +3409,7 @@ for(x in c("F", "FALSE", "T", "TRUE", "NA")) {
 all(list())
 any(list())
 ## all failed in 2.0.1 with 'incorrect argument type'
+
 
 ##---- named dimnames of  %*% and crossprod() -- matrices and 1-d arrays:
 tst1 <- function(m) {
@@ -3440,6 +3449,7 @@ tst2(a1,a2)
 tst2(a1,a3)
 tst2(a2,a3)
 ## end {testing named dimnames for %*% and crossprod()}
+
 
 ## -- coercing as.data.frame(NULL) to a pairlist didn't work
 y<-1:10

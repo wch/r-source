@@ -5,7 +5,7 @@ ppoints(n, a = ifelse(n <= 10, 3/8, 1/2))
 }
 \alias{ppoints}
 \arguments{
-  \item{n}{either the number of points generate or a vector of
+  \item{n}{either the number of points generated or a vector of
     observations.}
   \item{a}{the offset fraction to be used; typically in \eqn{(0,1)}.}
 }
