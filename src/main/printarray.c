@@ -39,13 +39,24 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 {
     SEXP sw;
     int *x, *w;
-    int width, rlabw, clabw;
+    int width, rlabw, clabw, rnw;
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
 	formatString(STRING(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
+
+    if (rn) {
+	rnw = strlen(rn);
+	if ( rnw < rlabw + MIN_LBLOFF )
+	    lbloff = MIN_LBLOFF;
+	else
+	    lbloff = rnw - rlabw;
+
+	rlabw += lbloff;
+    }
+
     sw = allocVector(INTSXP, c);
     x = INTEGER(sx) + offset;
     w = INTEGER(sw);
@@ -69,7 +80,15 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 	    jmax++;
 	}
 	while (jmax < c && width + w[jmax] < R_print.width);
-	Rprintf("%*s", rlabw, " ");
+
+	if (cn != NULL)
+	    Rprintf("%*s%s\n", rlabw, "", cn);
+
+	if (rn != NULL)
+	    Rprintf("%*s", -rlabw, rn);
+	else
+	    Rprintf("%*s", rlabw, "");
+
 	for (j = jmin; j < jmax ; j++)
 	    MatrixColumnLabel(cl, j, w[j]);
 	for (i = 0; i < r; i++) {
@@ -156,13 +175,24 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
     SEXP sd, se, sw;
     double *x;
     int *d, *e, *w;
-    int width, rlabw, clabw;
+    int width, rlabw, clabw, rnw;
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
 	formatString(STRING(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
+
+    if (rn) {
+	rnw = strlen(rn);
+	if ( rnw < rlabw + MIN_LBLOFF )
+	    lbloff = MIN_LBLOFF;
+	else
+	    lbloff = rnw - rlabw;
+
+	rlabw += lbloff;
+    }
+
     PROTECT(sd = allocVector(INTSXP, c));
     PROTECT(se = allocVector(INTSXP, c));
     sw = allocVector(INTSXP, c);
@@ -191,7 +221,15 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
 	    jmax++;
 	}
 	while (jmax < c && width + w[jmax] < R_print.width);
-	Rprintf("%*s", rlabw, " ");
+
+	if (cn != NULL)
+	    Rprintf("%*s%s\n", rlabw, "", cn);
+
+	if (rn != NULL)
+	    Rprintf("%*s", -rlabw, rn);
+	else
+	    Rprintf("%*s", rlabw, "");
+
 	for (j = jmin; j < jmax ; j++)
 	    MatrixColumnLabel(cl, j, w[j]);
 	for (i = 0; i < r; i++) {
@@ -211,13 +249,24 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
     SEXP sdr, ser, swr, sdi, sei, swi, sw;
     complex *x;
     int *dr, *er, *wr, *di, *ei, *wi, *w;
-    int width, rlabw, clabw;
+    int width, rlabw, clabw, rnw;
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
 	formatString(STRING(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
+
+    if (rn) {
+	rnw = strlen(rn);
+	if ( rnw < rlabw + MIN_LBLOFF )
+	    lbloff = MIN_LBLOFF;
+	else
+	    lbloff = rnw - rlabw;
+
+	rlabw += lbloff;
+    }
+
     PROTECT(sdr = allocVector(INTSXP, c));
     PROTECT(ser = allocVector(INTSXP, c));
     PROTECT(swr = allocVector(INTSXP, c));
@@ -259,7 +308,15 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 	    jmax++;
 	}
 	while (jmax < c && width+w[jmax] < R_print.width);
-	Rprintf("%*s", rlabw, " ");
+
+	if (cn != NULL)
+	    Rprintf("%*s%s\n", rlabw, "", cn);
+
+	if (rn != NULL)
+	    Rprintf("%*s", -rlabw, rn);
+	else
+	    Rprintf("%*s", rlabw, "");
+
 	for (j = jmin; j < jmax ; j++)
 	    MatrixColumnLabel(cl, j, w[j]);
 	for (i = 0; i < r; i++) {
@@ -285,13 +342,24 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
     SEXP sw;
     SEXP *x;
     int *w;
-    int width, rlabw, clabw;
+    int width, rlabw, clabw, rnw;
     int i, j, jmin, jmax, lbloff = 0;
 
     if (!isNull(rl))
 	formatString(STRING(rl), r, &rlabw, 0);
     else
 	rlabw = IndexWidth(r + 1) + 3;
+
+    if (rn) {
+	rnw = strlen(rn);
+	if ( rnw < rlabw + MIN_LBLOFF )
+	    lbloff = MIN_LBLOFF;
+	else
+	    lbloff = rnw - rlabw;
+
+	rlabw += lbloff;
+    }
+
     sw = allocVector(INTSXP, c);
     x = STRING(sx)+offset;
     w = INTEGER(sw);
@@ -311,7 +379,15 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
 	    jmax++;
 	}
 	while (jmax < c && width + w[jmax] + R_print.gap < R_print.width);
-	Rprintf("%*s", rlabw, " ");
+
+	if (cn != NULL)
+	    Rprintf("%*s%s\n", rlabw, "", cn);
+
+	if (rn != NULL)
+	    Rprintf("%*s", -rlabw, rn);
+	else
+	    Rprintf("%*s", rlabw, "");
+
 	if (right) {
 	    for (j = jmin; j < jmax ; j++)
 		RightMatrixColumnLabel(cl, j, w[j]);
