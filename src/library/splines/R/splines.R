@@ -1,8 +1,7 @@
-### $Id: splines.R,v 1.4 2002/01/19 11:13:00 ripley Exp $
+### $Id: splines.R,v 1.5 2002/02/25 08:19:28 maechler Exp $
 
-bs <-
-    function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
-             Boundary.knots = range(x))
+bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
+               Boundary.knots = range(x))
 {
     nx <- names(x)
     x <- as.vector(x)
@@ -21,7 +20,7 @@ bs <-
         nIknots <- df - ord + (1 - intercept)
         if(nIknots < 0) {
             nIknots <- 0
-            warning(paste("df was too small; have used ", ord - (1 - intercept)))
+            warning("df was too small; have used  ", ord - (1 - intercept))
         }
         knots <-
             if(nIknots > 0) {
@@ -67,9 +66,8 @@ bs <-
     basis
 }
 
-ns <-
-    function(x, df = NULL, knots = NULL, intercept = FALSE,
-             Boundary.knots = range(x))
+ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
+               Boundary.knots = range(x))
 {
     nx <- names(x)
     x <- as.vector(x)
@@ -133,8 +131,7 @@ ns <-
     basis
 }
 
-predict.bs <-
-    function(object, newx, ...)
+predict.bs <- function(object, newx, ...)
 {
     if(missing(newx))
         return(object)
@@ -143,8 +140,7 @@ predict.bs <-
     do.call("bs", a)
 }
 
-predict.ns <-
-    function(object, newx, ...)
+predict.ns <- function(object, newx, ...)
 {
     if(missing(newx))
         return(object)
