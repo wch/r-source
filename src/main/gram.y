@@ -1704,6 +1704,23 @@ static int StringValue(int c)
 		}
 	    }
 	}
+#ifdef SUPPORT_MBCS
+       else if(mbcslocale) {
+           int i, clen;
+           wchar_t wc = L'\0';
+           clen = utf8locale ? utf8clen(c): mbcs_get_next(c, &wc);
+           for(i = 0; i < clen - 1; i++){
+               YYTEXT_PUSH(c,yyp);
+               c = xxgetc();
+               if (c == R_EOF) break;
+               if (c == '\n') {
+                   xxungetc(c);
+                   c = '\\';
+               }
+           }
+           if (c == R_EOF) break;
+       }
+#endif /* SUPPORT_MBCS */
 	YYTEXT_PUSH(c, yyp);
     }
     YYTEXT_PUSH('\0', yyp);
