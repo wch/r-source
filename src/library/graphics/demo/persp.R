@@ -3,10 +3,11 @@
 
 ## make sure a device is open
 if(dev.cur() <= 1) get(getOption("device"))()
-## is FALSE in demo() {using source()}:
 ## if(dev.interactive())
-## Use a ``portable'' (;-) hack instead:
-is.dev.interactive <- eval(body(dev.interactive)[[3]])
+## is FALSE in demo() {using source()}:
+## Fix it later, copy its code for now
+is.dev.interactive <- .Device %in% c("X11", "GTK", "gnome", 
+				"quartz", "windows", "JavaGD")
 op <- par(ask = is.dev.interactive)
 
 ## (1) The Obligatory Mathematical surface.
