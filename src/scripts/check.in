@@ -30,7 +30,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.14 $ ';
+my $revision = ' $Revision: 1.15 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -78,13 +78,42 @@ if($opt_library){
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
     $library=getcwd();
-    $ENV{'R_LIBS'} = "$library:$R_LIBS";
+    if($WINDOWS){
+	$ENV{'R_LIBS'} = "$library;$R_LIBS";
+    }
+    else{
+	$ENV{'R_LIBS'} = "$library:$R_LIBS";
+    }
+	
     chdir($startdir);
 }
 
 my $R_opts = "--vanilla";
 $R_opts .= " --nsize=$opt_nsize" if $opt_nsize;
 $R_opts .= " --vsize=$opt_vsize" if $opt_vsize;
+
+if($opt_latex){
+    my $log = new R::Logfile();
+    $log->checking("for working latex");
+    open(texfile, "> $TMPDIR/Rtextest$$.tex") ||
+	die "cannot write to Rtextest$$.tex\n";
+    print texfile "\\documentclass\{article\}\\begin\{document\}" .
+	"test\\end\{document\}\n";
+    close texfile;
+    chdir($TMPDIR);
+    if(system("$LATEX Rtextest$$ > Rtextest$$.out")){
+	$log->result("NO");
+	$HAVE_LATEX=0;
+    }
+    else{
+	$log->result("OK");
+	$HAVE_LATEX=1;
+    }
+    unlink(<Rtextest$$.*>);
+    chdir($startdir);
+    $log->close();
+}
+
 
 ## this is the main loop over all packages to be checked
 my $pkg;
@@ -104,7 +133,7 @@ foreach $pkg (@ARGV){
 	}
     }
 
-    my $log = new R::Logfile("$pkgoutdir/00check.log");
+    $log = new R::Logfile("$pkgoutdir/00check.log");
     $log->message("using log directory $pkgoutdir");
 
     if(! $opt_library){
@@ -396,7 +425,7 @@ sub check_pkg {
   	    exit(1);
   	}
         if($iszipped) {
-            system("rm ${library}/${pkgname}/R-ex/*.R")
+            unlink(<${library}/${pkgname}/R-ex/*.R>);
         }
 
 	$log->result("OK");
@@ -430,8 +459,8 @@ sub check_pkg {
             open makevars, "> Makevars";
             print makevars "makevars = -f Makevars\n";
             print makevars "srcdir = $testdir\n";
-            ## unix passes R_LIBS correctly through environment
-            print makevars "R_LIBS = $library\n" if $WINDOWS; 
+            ## at least windows does not pass env correctly to make
+            print makevars "R_LIBS = $ENV{'R_LIBS'}\n"; 
             print makevars "VPATH = \$(srcdir)\n\n";
             print makevars "test-src-1=";
             while(<$testdir/*.R>){
@@ -448,7 +477,7 @@ sub check_pkg {
             $makevars = " -f Makevars";
         }
         print "\n";
-        if(system("$MAKE $makefiles $make vars")){
+        if(system("$MAKE $makefiles $makevars")){
             $log->error();
             exit(1);
         }
@@ -482,7 +511,7 @@ sub check_pkg {
         print manual "\\end\{document\}\n";
         close manual;
         $log->result("OK");
-        if((-x $LATEX) || $WINDOWS){
+        if($HAVE_LATEX){
             $log->checking("${pkgname}-manual.tex");
             print "\n";
             if(system("$LATEX ${pkgname}-manual")){
