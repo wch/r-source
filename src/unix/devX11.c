@@ -792,7 +792,7 @@ static char *weight[] = {"medium", "bold"};
 
 /* Bitmap of the Adobe design sizes */
 
-static unsigned int adobe_sizes = 0x0403175D;
+static unsigned int adobe_sizes = 0x0403165D;
 
 #define MAXFONTS 64
 #define CLRFONTS 16 /* Number to free when cache runs full */
