@@ -206,7 +206,7 @@ static double MuSpace()
 /*
  *  Mathematics Layout Parameters
  *
- *  The TeXBook, Appendex G, Page 447.
+ *  The TeXBook, Appendix G, Page 447.
  *
  *  These values are based on an inspection of TeX metafont files
  *  together with some visual simplification.
@@ -2861,7 +2861,7 @@ void GMathText(double x, double y, int coords, SEXP expr,
     else
 	CurrentY = ReferenceY;
     CurrentAngle = rot;
-    rot = rot / 90 * M_PI_half;/* radians */
+    rot *= M_PI_half / 90 ;/* radians */
     CosAngle = cos(rot);
     SinAngle = sin(rot);
     RenderElement(expr, 1);
