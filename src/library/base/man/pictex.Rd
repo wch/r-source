@@ -17,6 +17,12 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   This function produces graphics suitable for inclusion in TeX and
   LaTeX documents.
 }
+\details{
+  This driver does not have any font metric information, so the use of
+  \code{\link{plotmath}} is not supported.
+
+  Multiple plots will be placed as separate environments in the output file.
+}
 \references{
   Knuth, D. E. (1984)
   \emph{The TeXbook.}
