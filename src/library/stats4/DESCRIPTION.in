@@ -1,5 +1,5 @@
 Package: stats4
-Title: Statistical functions using S4 classes
+Title: Statistical Functions using S4 Classes
 Version: @VERSION@
 Priority: base
 Author: R Development Core Team and contributors worldwide

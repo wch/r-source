@@ -3368,3 +3368,9 @@ if(.Platform$OS.type == "windows") {
 stopifnot(identical(sum(1:4, NA, n = 78, na.rm = TRUE), 88))
 ## was 11 in 2.0.1
 
+
+## segfault from text, P Ehlers, R-devel 2004-11-24
+plot(1:10)
+loc <- list(5, 6)
+try(text(loc, labels = "a"))
+## segfaulted in 2.0.1
