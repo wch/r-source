@@ -2,7 +2,7 @@
 @c %**start of header
 @setfilename R-intro.info
 @settitle An Introduction to R
-@set VERSION $Revision: 1.1 $
+@set VERSION $Revision: 1.2 $
 @setchapternewpage on
 @c %**end of header
 
@@ -96,6 +96,7 @@ approved by the R Development Core Team.
 * Statistical models in R::     
 * Graphics::                    
 * A sample session::            
+* Invoking R::                  
 * The command line editor::     
 * Function and variable index::  
 * Concept index::               
@@ -6055,7 +6056,7 @@ and these can be accessed from @R{} via the package @pkg{xgobi}.
 Windows, and @R{} interfaces are available for each.
 
 
-@node A sample session, The command line editor, Graphics, Top
+@node A sample session, Invoking R, Graphics, Top
 @appendix A sample session
 
 The following session is intended to introduce to you some features of
@@ -6289,8 +6290,84 @@ workspace, and for an exploratory session like this, you probably do not
 want to save it.
 @end table
 
+@node Invoking R, The command line editor, A sample session, Top
+@appendix Invoking R
 
-@node The command line editor, Function and variable index, A sample session, Top
+The command @samp{R} can be used both for starting the main @R{} program
+with a variety of options, or, via the @code{R CMD} interface, as a
+wrapper to various @R{} tools (e.g., for processing files in @R{}
+documentation format or manipulating add-on packages) which are not
+intended to be called ``directly''.
+
+Most options control what happens at the beginning and at the end of an
+@R{} session.  The startup mechanism is as follows (see also the on-line
+help for topic @samp{Startup} for more information).
+
+@itemize @bullet
+@item
+If a file @file{.Renviron} in the current directory, or failing that if
+the file pointed to by the environment variable @env{R_ENVIRON}, or if
+that is not set, the file @file{.Renviron} in the user's home directory,
+exists, it is sourced to set environment variables.  Sourcing is
+suppressed by the flag @option{--no-environ}.  The variables are
+exported automatically, provided that they are set in lines of the form
+@samp{@var{name}=@var{value}}.  Variables you might want to set include
+@env{R_PAPERSIZE} (the default paper size), @env{R_PRIMTCMD} (the
+default print command), @env{R_LIBS} (controls the list of @R{} library
+trees searched for add-on packages), and @env{R_VSIZE} and @env{R_NSIZE}
+(see further below).
+
+@item
+Then @R{} searches for the site-wide startup profile unless the command
+line option @option{--no-site-file} was given.  The name of this file is
+taken from the value of the @env{R_PROFILE} environment variable.  If
+that variable is unset, the default is @file{$R_HOME/etc/Rprofile}.
+
+@item
+Then, unless @option{--no-init-file} was given, @R{} searches for a file
+called @file{.Rprofile} in the current directory or in the user's home
+directory (in that order) and sources it.
+
+@item
+It also loads a saved image from @file{.RData} if there is one (unless
+@option{--no-restore} was specified).
+
+@item
+Finally, if a function @code{.First} exists, it is executed.  This
+function (as well as @code{.Last} which is executed at the end of the
+@R{} session) can be defined in the appropriate startup profiles, or
+reside in @file{.RData}. 
+@end itemize
+
+In addition, there are options for controlling the memory available to
+the @R{} process (see the on-line help for topic @samp{Memory} for more
+information).  Currently, @R{} uses a @emph{static} memory model.  This
+means that when it starts up, it asks the operating system to reserve a
+fixed amount of memory for it.  The size of this chunk cannot be changed
+subsequently. Hence, it can happen that not enough memory was allocated,
+e.g., when trying to read large data sets into @R{}.  The command line
+options @option{--nsize} and @option{--vsize} (or the corresponding
+environment variables @env{R_NSIZE} and @env{R_VSIZE}) can be used for
+controlling the memory available for fixed and variable sized objects.
+
+@R{} accepts the following command line options.
+
+@table @code
+@item --save
+@item --no-save
+Control whether data sets should be saved or not at the end of the @R{}
+session.  If neither is given in an interactive session, the user is
+asked for the desired behavior when ending the session with @kbd{q()};
+in batch mode, one of these must be specified.
+
+@item --restore
+@item --no-restore
+Control whether saved images (file @file{.Rdata} in the directory where
+@R{} was started) should be restored (this is the default) or not.
+@end table
+
+
+@node The command line editor, Function and variable index, Invoking R, Top
 @appendix The command line editor
 
 @section Preliminaries
@@ -6300,7 +6377,8 @@ configured for compilation under UNIX, an inbuilt command line editor
 allowing recall, editing and re-submission of prior commands is used.
 
 It can be disabled (useful for usage with ESS@footnote{The `Emacs Speaks
-Statistics' package; see the URL @uref{http://ess.stat.wisc.edu/}}).
+Statistics' package; see the URL @uref{http://ess.stat.wisc.edu/}})
+using the startup option @option{--no-readline}.
 
 Windows versions of @R{} have somewhat simpler command-line editing:
 see @samp{Console} under the @samp{Help} menu of the GUI.
