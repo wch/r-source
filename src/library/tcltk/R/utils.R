@@ -28,8 +28,8 @@ tk_select.list <-
     Cancel <- tkbutton(buttons, text = "Cancel", command = onCancel)
     tkpack(OK, Cancel, side="left", fill="x", padx="2m")
 
-    scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 100
-    ## allow for win furniture and buttons
+    scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 200
+    ## allow for win furniture and buttons, and for e.g. KDE panel
     ht <- min(length(list), scht %/% 20) # a guess of font height
     box <- tklistbox(dlg, height = ht,
                      listvariable = lvar, bg = "white",
