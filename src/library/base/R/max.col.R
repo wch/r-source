@@ -10,7 +10,8 @@ max.col <- function(m)
        as.integer(n),
        as.integer(ncol(m)),
        rmax = integer(n),
-       NAOK=TRUE
+       NAOK = TRUE,
+       PACKAGE = "base"
        )$rmax
 }
 
