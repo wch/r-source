@@ -69,13 +69,10 @@ Options:
   --silent              Same as --quiet
   --slave               Make R run as quietly as possible
   --verbose             Print more information about progress
-  -d NAME, 
-     --debugger=NAME,
-     --debugger NAME    Run R through debugger NAME
-  --gui=TYPE, 
-     --gui type		Use TYPE as GUI; possible values are \`X11'
+  -d NAME, --debugger=NAME
+                        Run R through debugger NAME
+  --gui=TYPE		Use TYPE as GUI; possible values are \`X11'
 			(default) and \`GNOME'
-  -g, --gnome           same as --gui=GNOME
 
 Commands:
   BATCH			Run R in batch mode
@@ -105,23 +102,34 @@ debugger=
 gui=X11
 while test -n "${1}"; do
   case ${1} in
-    RHOME)
+    RHOME|--print-home)
       echo ${R_HOME}; exit 0 ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
       cmd="${1}"; shift; exec sh "${R_HOME}/bin/${cmd}" "${@}" ;;
     CMD)
       shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
     -g|--gnome)
-      #echo "option \`${1}' is defunct, use \`--gui=GNOME'"
-      #exit 1
-      gui=GNOME
+      echo "option \`${1}' is defunct, use \`--gui=GNOME'"
+      exit 1
+      ;;
+    --gui)
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then
+	gui="${2}"; shift
+      else
+	echo "ERROR: option \`${1}' requires an argument"
+	exit 1
+      fi
       ;;
     --gui=*)
       gui=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-    --gui)
-      gui="${2}"; shift ;;
     -d|--debugger)
-      debugger="${2}"; shift ;;
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
+	debugger="${2}"; shift
+      else
+	echo "ERROR: option \`${1}' requires an argument"
+	exit 1
+      fi
+      ;;
     --debugger=*)
       debugger=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --no-environ)
@@ -140,8 +148,7 @@ while test -n "${1}"; do
 done
 
 # R_HOME may have moved, so check (or you get "GUI X11 is not supported")
-if [ ! -x  ${R_HOME} ]
-then
+if [ ! -x ${R_HOME} ]; then
   echo "R_HOME = \`${R_HOME}' not found"
   exit 1
 fi

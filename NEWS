@@ -54,6 +54,8 @@ NEW FEATURES
         break user code if it has renamed the dispatch argument and
         uses the original name for a different argument.
 
+    o	Long-named command line options also allow `--name VALUE'.
+
 
 BUG FIXES
 
