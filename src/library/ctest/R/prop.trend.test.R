@@ -1,6 +1,6 @@
 prop.trend.test <- function (x, n, score = 1:length(x)) 
 {
-    method <- "Chi Square Test for Trend in Proportions"
+    method <- "Chi-squared Test for Trend in Proportions"
     dname <- paste(deparse(substitute(x)), "out of", deparse(substitute(n)))
     dname <- paste(dname, ",\n using scores:", paste(score, collapse = " "))
     freq <- x/n
