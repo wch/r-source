@@ -437,10 +437,9 @@ makes available for loading using @code{data()}.  Currently, data files
 can have one of three types as indicated by their extension: plain R
 code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
 @file{.csv}), or @code{save()} images (@file{.RData} or @file{.rda}).
-(As from @R{} 1.5.0 one can assume that all ports of @R{} have the same
-binary (XDR) format and can read compressed images.  For portability to
-earlier versions use images saved with @code{save(, ascii = TRUE,
-version = 1)}.)  Note that R code should be ``self-sufficient'' and not
+(All ports of @R{} use the same binary (XDR) format and can read
+compressed images.  Use images saved with @code{save(, compress = TRUE)}
+to save space.)  Note that R code should be ``self-sufficient'' and not
 make use of extra functionality provided by the package, so that the
 data file can also be used without having to load the package.  It is no
 longer necessary to provide a @file{00Index} file in the @file{data}
