@@ -370,14 +370,11 @@ cleanwin:
 #                          ===== testing ======
 
 # tests
-check test: test-Specific pkgtests test-Reg
+check test: pkgtests test-Basic
 
-test-Specific:
+test-Basic:
 	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win clean
 	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win RHOME=$(RHOME)
-
-test-Reg:
-	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win RHOME=$(RHOME) test-Reg
 
 
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
