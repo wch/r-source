@@ -11,8 +11,6 @@ OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 gram.c: ;
 
 saveload-CFLAGS=-I../gnuwin32/xdr
-character-CFLAGS=-I../regex
-platform-CFLAGS=-I../regex
 
 ../gnuwin32/libmain.a: $(OBJS)
 

@@ -2,7 +2,18 @@
 #
 # ${R_HOME}/doc/manual/Makefile.win
 
-PAPER = a4
+srcdir = .
+top_srcdir = ../..
+
+SOURCES_TEXI = R-FAQ.texi R-exts.texi
+
+OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
+OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
+OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
+
+R_PAPERSIZE = a4
+R_RD4PDF = ae,hyper
+
 PDFLATEX = pdflatex
 PDFTEX = pdftex
 MAKEINDEX = makeindex
@@ -12,9 +23,6 @@ R_PKGS=base eda lqs modreg mva nls splines stepfun ts
 
 # set the next to `ae' to omit the hyperlinks
 PDF=pdf
-
-srcdir = .
-top_srcdir = ../..
 
 pkgsrcs = $(R_PKGS:=-pkg.tex)
 
@@ -30,16 +38,17 @@ lib2tex.pl: lib2tex.in
 	$(PDFTEX) $<
 	$(PDFTEX) $<
 
-pdf: refman.pdf R-exts.pdf
+pdf: refman.pdf $(OBJECTS_PDF)
 
 refman.tex: lib2tex.pl refman.top $(srcdir)/refman.bot
-	@echo "creating $(subdir)/$@"
-	@(cat refman.top; \
+	@echo "creating $@"
+	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	  echo "\\documentclass[$${opt}]{book}"; \
+	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
+	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > $@
-
-refman.top: $(srcdir)/refman.top.in
-	sed -e s/@R_PAPERSIZE@/$(PAPER)/ $^ > $@
 
 version.tex: ../../bin/rterm.exe $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
@@ -58,12 +67,12 @@ FORCE:
 refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@echo " PDF LaTeX documentation: Reference Index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
-	@TEXINPUTS="$(PDF);.;" \
+	@TEXINPUTS=".;" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
-	@TEXINPUTS="$(PDF);.;" \
+	@TEXINPUTS=".;" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@TEXINPUTS="$(PDF);.;" \
+	@TEXINPUTS=".;" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 
 R-exts.pdf: R-exts.texi version.texi 
@@ -85,6 +94,6 @@ clean:
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs
 distclean: clean
 	@-rm -f version.tex *-pkg.tex lib2tex.pl \
-	  refman.tex refman.top *.pdf
+	  refman.tex *.pdf
 maintainer-clean: distclean
 

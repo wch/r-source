@@ -24,7 +24,7 @@ R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS=libmain.a libappl.a libmath.a
-EXTRALIBS=../regex/rx.a ga.a gl.a xdr.a em.a
+EXTRALIBS=ga.a gl.a xdr.a em.a
 
 LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
 PKGS=$(foreach i, $(PACKAGES), pkg-$i)
@@ -52,7 +52,6 @@ rlibs:
 	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ../nmath OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
-	$(MAKE) -C ../regex OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
 	$(MAKE) -C ./xdr
@@ -177,7 +176,6 @@ cleanwin:
 	   .RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
-	$(MAKE) -C ../regex -f Makefile.win clean
 	$(MAKE) -C getline clean
 	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean

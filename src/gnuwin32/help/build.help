@@ -22,7 +22,7 @@
 # Suite 330, Boston, MA  02111-1307  USA.
 #
 # ${R_HOME}/bin/build-help
-# Usage:  build-help [options]  [pkg] [lib]
+# Usage: build-help [options] [pkg] [lib]
 # Install all help files for package pkg to library lib
 # (defaults are `${R_HOME}/src/library/base' and the default library,
 #  `${R_HOME}/library', respectively).
