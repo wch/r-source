@@ -39,7 +39,7 @@ if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 @blocknames = ("name", "title", "usage", "arguments", "format",
 	       "description", "details", "value", "references",
 	       "source", "seealso", "examples", "author", "note",
-	       "synopsis");
+	       "synopsis", "docType");
 
 ## These may appear multiply but are of simple structure:
 @multiblocknames = ("alias", "keyword");
@@ -132,13 +132,9 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	}
 	next if $skipping > 0;
 	next if /^\s*%/o;	# completely drop full comment lines
-	## <FIXME>
-	## Argh.  This is a terrible hack.  Go away!
-	next if /^\\docType/;
-	## </FIXME>
 	my $loopcount = 0;
-	while(checkloop($loopcount++, $_, "\\%") &&
-	      s/^\\%|([^\\])\\%/$1escaped_percent_sign/go){};
+	while(checkloop($loopcount++, $_, "\\%")
+	      && s/^\\%|([^\\])\\%/$1escaped_percent_sign/go) {};
 	s/^([^%]*)%.*$/$1/o;
 	s/escaped_percent_sign/\\%/go;
 	$complete_text .= $_;
@@ -536,8 +532,8 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $using_chm = 0;
-    print $htmlout (html_functionhead(striptitle($blocks{"title"}), $pkgname,
-				    $blocks{"name"}));
+    print $htmlout (html_functionhead(html_striptitle($blocks{"title"}),
+				      $pkgname, $blocks{"name"}));
 
     html_print_block("description", "Description");
     html_print_codeblock("usage", "Usage");
@@ -557,6 +553,17 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 
     print $htmlout (html_functionfoot());
 }
+
+sub html_striptitle {
+    ## Call striptitle(), and handle LaTeX single and double quotes.
+    my ($text) = @_;
+    $text = striptitle($text);
+    $text =~ s/\`\`/&ldquo;/g;
+    $text =~ s/\'\'/&rdquo;/g;
+    $text =~ s/\`/\'/g;		# @samp{'} could be an apostroph ...
+    $text;
+}
+
 
 ## Convert a Rdoc text string to HTML, i.e., convert \code to <tt> etc.
 sub text2html {
@@ -926,7 +933,7 @@ sub html_print_sections {
     my $section;
 
     for($section=0; $section<$max_section; $section++){
-	html_print_a_section($section_title[$section],
+	html_print_a_section(html_striptitle($section_title[$section]),
 			     $section_body[$section]);
     }
 }
@@ -1116,7 +1123,7 @@ sub rdoc2txt { # (filename); 0 for STDOUT
 	print $txtout  $blocks{"name"}, " " x $pad,
 	"package:$pkgname", " " x $pad,"R Documentation\n\n";
     }
-    print $txtout (txt_header(striptitle($blocks{"title"})), "\n");
+    print $txtout (txt_header(txt_striptitle($blocks{"title"})), "\n");
     txt_print_block("description", "Description");
     txt_print_codeblock("usage", "Usage");
     txt_print_argblock("arguments", "Arguments");
@@ -1135,6 +1142,15 @@ sub rdoc2txt { # (filename); 0 for STDOUT
 
     print $txtout "\n";
     if($_[0]) { close $txtout; }
+}
+
+sub txt_striptitle {
+    ## Call striptitle(), and handle LaTeX style single/double quotes.
+    my ($text) = @_;
+    $text = striptitle($text);
+    $text =~ s/(\`\`|\'\')/\"/g;
+    $text =~ s/\`/\'/g;
+    $text;
 }
 
 ## Underline section headers
@@ -1631,7 +1647,7 @@ sub txt_print_sections {
 
     for($section=0; $section<$max_section; $section++){
 	print $txtout "\n";
-	print $txtout txt_header($section_title[$section]), ":\n";
+	print $txtout txt_header(txt_striptitle($section_title[$section])), ":\n";
 	txt_fill("     ", 5, text2txt($section_body[$section]));
     }
 }
