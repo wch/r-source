@@ -41,6 +41,10 @@ Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
 ..R 1.7.1 incorporates the two suggestions of the 2nd followup:
 ..  r = sqrt(-2 * log (a)) and ...(log1p(-a) + log (qq))...
 ..
+* PR# 5727 *
+Subject: Bug in pbinom?
+From: Volkmar Liebscher <liebscher@gsf.de>
+Date: Fri, 12 Dec 2003 11:18:12 +0100
 
 Directory:  Add-ons
 
@@ -248,6 +252,10 @@ Subject: documentation of "scope": possible error + cleanup
 From: htang@hpl.hp.com
 Date: Sat, 15 Nov 2003 00:00:17 +0100 (CET)
 ..Comments on R-lang
+* PR# 5730 *
+Subject: proofreading corrections (cvs)
+From: Brian Gough <bjg@network-theory.co.uk>
+Date: Fri, 12 Dec 2003 15:50:38 +0000
 
 Directory:  Graphics
 
@@ -778,78 +786,6 @@ From:   "methods"       "methods" "methods" "methods"  "methods"
 From:   "methods"    "methods"
 Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 ..body<- is fixed. Should Compare and Complex show up as base?
-* PR# 5564 *
-Subject: Mortgage rates- as low as 2.95% r
-From: "Nathan Goldberg" <v7nmbw@ilink.net>
-Date: Sun, 07 Dec 2003 03:36:40 -0600
-* PR# 5565 *
-Subject: They're giving away access to this video?
-From: "Julie Kincaid" <ggop876dxk@bslinc.com>
-Date: Sat, 06 Dec 2003 16:47:50 -0500
-* PR# 5566 *
-Subject: Regain your youth!
-From: "Rodolfo Newsome" <zwcacqx@verizon.com>
-Date: Sat, 06 Dec 03 18:03:48 GMT
-* PR# 5567 *
-Subject: Assitance
-From: kadiri1414@netscape.net
-Date: Sun, 7 Dec 2003 00:03:28 GMT
-* PR# 5568 *
-Subject: Re: into some clever bbzzuxvadpy
-From: "Albino" <2fkoygoegq@yahoo.com.hk>
-Date: Sun,  7 Dec 2003 01:10:54 +0100 (CET)
-* PR# 5569 *
-Subject: No need to age!
-From: "April Eldridge" <ezj2vy@attbi.com>
-Date: Sat, 06 Dec 03 22:21:10 GMT
-* PR# 5570 *
-Subject: Re: %RND_UC_CHAR[2-8], as if rooted
-From: "Ventura Becky" <uzskgwebfq@yahoo.com.hk>
-Date: Sun, 07 Dec 2003 02:42:19 +0100
-* PR# 5571 *
-Subject: Attention to all Men!
-From: "Tamera Washington" <f30gpcgw@ericness.com>
-Date: Wed, 31 Dec 69 18:00:00 GMT
-* PR# 5572 *
-Subject: System Email Error
-From: "Wilbert Miller" <w_miller_zh@microsoft.hr>
-Date: Sun, 07 Dec 2003 09:07:07 +0000
-* PR# 5573 *
-Subject: Can't go to the beach?  FDA diet pills prescribed online free naoi
-From: "Katherine Harris" <5nsmntpxj@nmshowcase.com>
-Date: Sun, 07 Dec 03 00:39:09 GMT
-* PR# 5574 *
-Subject: Re: EYD, into some clever
-From: "Christa Larkin" <otdyido@yahoo.ca>
-Date: Sun, 07 Dec 2003 04:04:06 -0300
-* PR# 5575 *
-Subject: Give me a break...Ok     cornerstone
-From: "Candy Dugan" <jxlkha@yahoo.com>
-Date: Sun, 07 Dec 2003 06:11:22 -0100
-* PR# 5576 *
-Subject: Same day shipping for XP, Office, Adobe, Autocad OEM software licensor
-From: "Marlene Mills" <84jzrrd@internet-e-mail.com>
-Date: Sun, 07 Dec 2003 04:40:54 GMT
-* PR# 5577 *
-Subject: X.anax - Get Online
-From: "Stevie Cunningham" <muqr24qf@nmstc.ca>
-Date: Sun, 07 Dec 03 10:58:44 GMT
-* PR# 5578 *
-Subject: FWD. Paris taped a little XXX home footage, ala "Pam & Tommy"
-From: "Winfred Stover" <gpvo98tte@netzero.net>
-Date: Wed, 17 Dec 03 13:04:07 GMT
-* PR# 5579 *
-Subject: 2003 Antivirus is here
-From: "farmer8" <bdouglasvinhtvu@yahoo.com>
-Date: Sun, 7 Dec 2003 01:30:11 -0800
-* PR# 5580 *
-Subject: Fw: Its all about LEVITRA now
-From: "Marcos Barnard" <xlbxpil1@Delphi.com>
-Date: Sun, 07 Dec 2003 05:40:39 -0400
-* PR# 5581 *
-Subject: Re: LJIHMY, with some sort
-From: "Rowe" <gzaogjwhyishb@yahoo.ca>
-Date: Sun, 07 Dec 2003 14:17:14 +0200
 * PR# 5582 *
 Subject: Can't find away to get your medication?o
 From: "Ann Dickson" <abjjlkysr@prontomail.com>
@@ -1303,10 +1239,6 @@ Date: Thu, 11 Dec 2003 16:15:03 -0800
 Subject: FWD:FWD:More inches, No pílÌs
 From: "Ned Field" <bakhachd_ahlquist7143179@netcityhk.com>
 Date: Tue, 16 Dec 03 21:21:54 GMT
-* PR# 5697 *
-Subject: Failed installation on Mac OSX 10.3
-From: Brian Beckage <Brian.Beckage@uvm.edu>
-Date: Thu, 11 Dec 2003 10:39:06 -0500
 * PR# 5698 *
 Subject: What is G.E.N.ERIC VI.A.G.R.A?
 From: "Miriam Mcclendon" <vldplltvry@dans.com>
@@ -1415,18 +1347,10 @@ Date: Fri, 12 Dec 03 09:25:24 GMT
 Subject: accumulate massive wealth tueqj
 From: nvwjohn <qbrjpeter157_3862@hotmail.com>
 Date: Fri, 12 Dec 2003 01:49:04 -0800
-* PR# 5725 *
-Subject: legend() graphics output  bug
-From: gasser@websource.ch
-Date: Fri, 12 Dec 2003 10:51:39 +0100 (CET)
 * PR# 5726 *
 Subject: A specialy holiday gift for you yuosnlvauh ymw pt
 From: "" <dscc.dla.mil@pubhealth.ku.dk>
 Date: Fri, 12 Dec 2003 12:54:28 +0300
-* PR# 5727 *
-Subject: Bug in pbinom?
-From: Volkmar Liebscher <liebscher@gsf.de>
-Date: Fri, 12 Dec 2003 11:18:12 +0100
 * PR# 5728 *
 Subject: Christmas Rolex Sale – Only $65 - $140!! Free SHIPPING till Christmas!!   r-bugs@biostat.ku.dk .
 From: "Jerry Case" <>
@@ -1435,10 +1359,6 @@ Date: Fri, 12 Dec 03 15:43:38 GMT
 Subject: Fw:Invest like the pros xddpxknudstuwyjxyzei
 From: "Hal Finley" <ujrvsy397@bellsouth.net>
 Date: Fri, 12 Dec 03 11:46:44 GMT
-* PR# 5730 *
-Subject: proofreading corrections (cvs)
-From: Brian Gough <bjg@network-theory.co.uk>
-Date: Fri, 12 Dec 2003 15:50:38 +0000
 * PR# 5731 *
 Subject: FWD:NEW:The worlds Only enlargement pill
 From: "Robby Burks" <babatundkiaer_3952193@boardermail.com>
@@ -1697,3 +1617,143 @@ Date: Sun, 14 Dec 2003 23:09:51 +0100
 Subject: G'e'n'e'r'l'c' V'l'a'g'r'a' 0nly $1.66
 From: "Marilyn Howard" <6wucni@msn.com>
 Date: Mon, 15 Dec 03 14:05:04 GMT
+* PR# 5795 *
+Subject: No Prescripiton Needed - Online Drugstore
+From: "Trenton Rubin" <duczo43bes@fonecards.com>
+Date: Sun, 14 Dec 03 18:41:14 GMT
+* PR# 5796 *
+Subject: LOW-COST V-i-@-g-r-a v cklefxkkfk
+From: "Meagan Dejesus" <lu882xrxq@yahoo.com>
+Date: Thu, 15 Dec 05 16:11:44 GMT
+* PR# 5797 *
+Subject: Best Toy of 2003 r
+From: "Rick Pina" <101lkodi@altavista.co.kr>
+Date: Mon, 15 Dec 2003 02:14:54 GMT
+* PR# 5798 *
+Subject: Quit you job!
+From: "Guadalupe Fletcher" <w88qtvjhu@attbi.com>
+Date: Mon, 15 Dec 03 02:47:09 GMT
+* PR# 5799 *
+Subject: honnie biczer
+From: "Russell Blackburn" <25bwlws@data-trade.com>
+Date: Sun, 14 Dec 03 19:12:29 GMT
+* PR# 5800 *
+Subject:         Corel Draw and Corel Ventura 241107
+From: 241107@aol.com
+Date: Mon, 15 Dec 2003 04:48:52 -0500
+* PR# 5801 *
+Subject: Hot Program
+From: <hawkins3ifgyv@msn.com>
+Date: Sun, 14 Dec 2003 17:13:26 -0700
+* PR# 5802 *
+Subject: Good for 48 hours!
+From: "refugio" <gll_21@hotmail.com>
+Date: Mon, 15 Dec 2003 05:55:12 GMT
+* PR# 5803 *
+Subject: Re: PNRF, was carrying several
+From: "Angeline Vickers" <xuyrglvmttsm@china.com>
+Date: Sun, 14 Dec 2003 16:31:02 -0100
+* PR# 5804 *
+Subject: What is G.E.N.ERIC VI.A.G.R.A? szy  gpynjxof
+From: "Terrence Barber" <mkjtrpssul@earthlink.net>
+Date: Thu, 15 Dec 05 21:39:31 GMT
+* PR# 5805 *
+Subject: art FREE Downloadable MP3 & DVD Collection..
+From: mailkele_kele_2007@hotmail.com
+Date: Sat, 01 Nov 2003 02:09:38 -0800
+* PR# 5806 *
+Subject: Get Ambie.n, Som.a, Proza.c and more ONLINE
+From: "Genaro Summers" <ea494tj@bsimedia.com>
+Date: Mon, 15 Dec 03 06:20:54 GMT
+* PR# 5807 *
+Subject: The only source for the pill
+From: "Chrystal Welsh" <fastdellato_las3581335@wongfaye.com>
+Date: Thu, 18 Dec 03 13:36:00 GMT
+* PR# 5808 *
+Subject: BENEFIT BUSINESS
+From: "IBRAHIM AHMED" <ibrahimahmed77@epatra.com>
+Date: Mon, 15 Dec 2003 02:15:35 -0800
+* PR# 5809 *
+Subject: (±¤°í) »ç¶ûÇÏ´Â ±×³à¸¦ À§ÇÑ ±ôÂ¦ ÀÌº¥Æ®!!@
+From: ¿µ¿µ»ç¸ð²É¹è´Þ <reject@0035.co.kr>
+Date: Mon, 15 Dec 2003 20:06:43 +0900
+* PR# 5810 *
+Subject: Hey I bought my Man the pill
+From: "Jonathon Marino" <ganifeillolay657_1155@china139.com>
+Date: Sat, 20 Dec 03 21:21:01 GMT
+* PR# 5811 *
+Subject: Nasty times with the rich and famous qs z ef x
+From: "Franklin Montgomery" <58pakafx@peoplepc.com>
+Date: Mon, 15 Dec 2003 08:08:26 -0400
+* PR# 5812 *
+Subject: Nasty times with the rich and famous ihw
+From: "Marcel Fritz" <eupn825@peoplepc.com>
+Date: Mon, 15 Dec 2003 05:04:33 -0700
+* PR# 5813 *
+Subject: R-bugs your email address
+From: "Neva Bruner" <gltpdzwyesqhf@yahoo.com>
+Date: Sun, 14 Dec 2003 11:30:07 -0200
+* PR# 5814 *
+Subject: R-bugs thanks for everything
+From: "Tod Larkin" <vatncosqvbzxen@yahoo.com>
+Date: Sun, 14 Dec 2003 07:55:42 -0600
+* PR# 5815 *
+Subject: FWD: Forget sp@m blockers...
+From: "Wilmer Griffin" <u62yklq@msn.com>
+Date: Mon, 15 Dec 2003 17:34:01 +0200
+* PR# 5816 *
+Subject:                                     WINNING NOTIFICATION
+From: MRS IRENE MOORE <irenemoore@yehey.com>
+Date: Mon, 15 Dec 2003 16:58:36 -0800
+* PR# 5817 *
+Subject: HELLO MYFRIEND
+From: james chapell <jameschapell@fsmail.net>
+Date: Mon, 15 Dec 2003 18:36:44 +0100
+* PR# 5818 *
+Subject: rep.int
+From: youngg@battelle.org
+Date: Mon, 15 Dec 2003 17:35:25 +0100 (CET)
+* PR# 5819 *
+Subject: Free-Standing Furnace Heater CRnAGztNfr
+From: "jeff" <brija02a@netzero.com>
+Date: Mon, 15 Dec 03 11:37:09 Eastern Standard Time
+* PR# 5820 *
+Subject: www.viagra-rowe.net
+From: <viagra4moreeqkmvxdo@yahoo.com>
+Date: Mon, 15 Dec 2003 05:46:02 -0900
+* PR# 5821 *
+Subject: (±¤°í) Çê°³ ´Ù½Ã¸¶ ¹«·á ¼±Âø¼ø...,@
+From: AD Town <bzsss111766699y@yahoo.com>
+Date: Mon, 15 Dec 2003 10:33:05 -0800 (PST)
+* PR# 5822 *
+Subject: A: Guaranteed weight |oss program cvwbhofemw
+From: "Roderick Welsh" <plxpnnp49@address.com>
+Date: Tue, 16 Dec 03 06:36:50 GMT
+* PR# 5823 *
+Subject: Soltero/a... db u jtyiawruhpcqwom
+From: "Caronlina Stegman" <paula18102@yahoo.com.mx>
+Date: Mon, 15 Dec 03 14:09:05 GMT
+* PR# 5824 *
+Subject: WINNING  NOTIFICATION
+From: IRENE VAN GILL <diamond1cashlott@netscape.net>
+Date: Mon, 15 Dec 2003 20:23:08 +0000
+* PR# 5825 *
+Subject: Re: increase emotional stability  er
+From: "Andrea Brantley" <gennakoebel@about.com>
+Date: Mon, 15 Dec 2003 22:06:58 +0100
+* PR# 5826 *
+Subject: Cäsh ín on äTM traffic
+From: "Lolita Owen" <liiwbqvtsqfk@yahoo.com>
+Date: Tue, 16 Dec 2003 00:28:27 -0600
+* PR# 5827 *
+Subject: Please Open For Important Infromation
+From: "Nancy Jorgensen" <gbf395p7@uymail.com>
+Date: Tue, 16 Dec 03 02:29:15 GMT
+* PR# 5828 *
+Subject: >>Hey I bought my Man the pill
+From: "Misty Vinson" <fran_cispaltonji5995142@china139.com>
+Date: Thu, 18 Dec 03 20:50:29 GMT
+* PR# 5829 *
+Subject: Memory issues in "aggregate"
+From: znmeb@aracnet.com
+Date: Tue, 16 Dec 2003 00:15:45 +0100 (CET)
