@@ -29,7 +29,7 @@ double qlogis(double x, double location, double scale)
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}
-	if(x <= 0) return location;
+	if(x <= 0) return ML_NEGINF;
 	if(x == 1) return ML_POSINF;
 	return location + scale * log(x / (1.0 - x));
 }

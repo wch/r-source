@@ -29,7 +29,9 @@ double plogis(double x, double location, double scale)
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}
-	if(x < location) return 0;
-	if(!finite(x)) return 1;
+	if(!finite(x)) {
+		if (x > 0) return 1;
+		else return 0;
+	}
 	return 1.0 / (1.0 + exp(-(x - location) / scale));
 }
