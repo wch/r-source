@@ -28,7 +28,7 @@ clean:
 # Rlapack.* section
 Rlapack: ../../../bin/Rlapack.dll ../../../lib/libRlapack.a
 
-Rlapack.dll: double.o cmplx.o Rlapackrc.o
+Rlapack.dll: dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
 	@$(ECHO) LIBRARY Rlapack > Rlapack.def
 	@$(ECHO) EXPORTS >> Rlapack.def
 	@$(NM) $^ > Defs
