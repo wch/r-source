@@ -57,10 +57,10 @@ supsmu(x, y, wt = rep(1, length(y)), span = "cv", periodic = FALSE,
 
 \examples{
 data(cars)
-attach(cars)
-plot(speed, dist)
-lines(supsmu(speed, dist))
-lines(supsmu(speed, dist, bass=7), lty=2)
-detach()
+with(cars, {
+    plot(speed, dist)
+    lines(supsmu(speed, dist))
+    lines(supsmu(speed, dist, bass = 7), lty = 2)
+    })
 }
 \keyword{smooth}
