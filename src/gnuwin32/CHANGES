@@ -24,6 +24,7 @@ line.  (PR#5593)
 
 Fixed junk character at start of a pipe(). (PR#5053)
 
+Rproxy.dll would cause a crash when transferring large amounts of data.
 
 
 rw1081
