@@ -90,12 +90,12 @@ static SEXP EnlargeVector(SEXP x, R_len_t newlen)
 
     /* Sanity Checks */
     if (!isVector(x))
-	error("attempt to enlarge non-vector");
+	error(_("attempt to enlarge non-vector"));
 
     /* Enlarge the vector itself. */
     len = length(x);
     if (LOGICAL(GetOption(install("check.bounds"), R_NilValue))[0])
-	warning("assignment outside vector/list limits (extending from %d to %d)",
+	warning(_("assignment outside vector/list limits (extending from %d to %d)"),
 		len, newlen);
     PROTECT(x);
     PROTECT(newx = allocVector(TYPEOF(x), newlen));
@@ -286,7 +286,8 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level, SEXP call)
 
     default:
 	errorcall(call, 
-		  "incompatible types (%d) in subassignment type fix", which);
+		  _("incompatible types (%d) in subassignment type fix"),
+		  which);
 
     }
 
@@ -378,7 +379,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     if(length(y) > 1)
 	for(i = 0; i < n; i++)
 	    if(INTEGER(indx)[i] == NA_INTEGER)
-		error("NAs are not allowed in subscripted assignments");
+		error(_("NAs are not allowed in subscripted assignments"));
 
     /* Here we make sure that the LHS has */
     /* been coerced into a form which can */
@@ -390,9 +391,9 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     if ((TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP) || y != R_NilValue) {
 	if (n > 0 && ny == 0)
-	    errorcall(call, "nothing to replace with");
+	    errorcall(call, _("nothing to replace with"));
 	if (n > 0 && n % ny)
-	    warning("number of items to replace is not a multiple of replacement length");
+	    warning(_("number of items to replace is not a multiple of replacement length"));
     }
 
 
@@ -631,7 +632,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     SEXP sr, sc, dim;
 
     if (!isMatrix(x))
-	error("incorrect number of subscripts on matrix");
+	error(_("incorrect number of subscripts on matrix"));
 
     nr = nrows(x);
     ny = LENGTH(y);
@@ -649,10 +650,10 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     if(ny > 1) {
 	for(i = 0; i < nrs; i++)
 	    if(INTEGER(sr)[i] == NA_INTEGER)
-		error("NAs are not allowed in subscripted assignments");
+		error(_("NAs are not allowed in subscripted assignments"));
 	for(i = 0; i < ncs; i++)
 	    if(INTEGER(sc)[i] == NA_INTEGER)
-		error("NAs are not allowed in subscripted assignments");
+		error(_("NAs are not allowed in subscripted assignments"));
     }
 
     n = nrs * ncs;
@@ -663,9 +664,9 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
        </TSL>  */
 
     if (n > 0 && ny == 0)
-	errorcall(call, "nothing to replace with");
+	errorcall(call, _("nothing to replace with"));
     if (n > 0 && n % ny)
-	errorcall(call, "number of items to replace is not a multiple of replacement length");
+	errorcall(call, _("number of items to replace is not a multiple of replacement length"));
 
     which = SubassignTypeFix(&x, &y, 0, 1, call);
 
@@ -863,7 +864,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	}
 	break;
     default:
-	error("incompatible types (case %d) in matrix subset assignment", 
+	error(_("incompatible types (case %d) in matrix subset assignment"), 
 	      which);
     }
     UNPROTECT(2);
@@ -881,7 +882,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     PROTECT(dims = getAttrib(x, R_DimSymbol));
     if (dims == R_NilValue || (k = LENGTH(dims)) != length(s))
-	error("incorrect number of subscripts");
+	error(_("incorrect number of subscripts"));
 
     subs = (int**)R_alloc(k, sizeof(int*));
     indx = (int*)R_alloc(k, sizeof(int));
@@ -911,15 +912,15 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     }
 
     if (n > 0 && ny == 0)
-	errorcall(call, "nothing to replace with");
+	errorcall(call, _("nothing to replace with"));
     if (n > 0 && n % ny)
-	errorcall(call, "number of items to replace is not a multiple of replacement length");
+	errorcall(call, _("number of items to replace is not a multiple of replacement length"));
 
     if (ny > 1) { /* check for NAs in indices */
 	for (i = 0; i < k; i++)
 	    for (j = 0; j < bound[i]; j++)
 		if (subs[i][j] == NA_INTEGER)
-		    error("NAs are not allowed in subscripted assignments");
+		    error(_("NAs are not allowed in subscripted assignments"));
     }
 
     offset[0] = 1;
@@ -1042,7 +1043,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    break;
 
 	default:
-	    error("incompatible types (%d) in array subset assignment", 
+	    error(_("incompatible types (%d) in array subset assignment"), 
 		  which);
 	}
     next_i:
@@ -1067,7 +1068,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     int i, ii, n, nx, ny, stretch=1;
 
     if (length(s) > 1)
-	error("invalid number of subscripts to list assign");
+	error(_("invalid number of subscripts to list assign"));
 
     PROTECT(indx = makeSubscript(x, CAR(s), &stretch));
     n = length(indx);
@@ -1093,9 +1094,9 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     nx = length(x);
 
     if (n > 0 && ny == 0)
-	errorcall(call, "nothing to replace with");
+	errorcall(call, _("nothing to replace with"));
     if (n > 0 && n % ny)
-	errorcall(call, "no of items to replace is not a multiple of replacement length");
+	errorcall(call, _("no of items to replace is not a multiple of replacement length"));
 
     if (stretch) {
 	yi = allocList(stretch - nx);
@@ -1180,7 +1181,7 @@ static SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
     default:
 	dims = getAttrib(x, R_DimSymbol);
 	if (dims == R_NilValue || LENGTH(dims) != length(subs))
-	    error("incorrect number of subscripts");
+	    error(_("incorrect number of subscripts"));
 
 	PROTECT(ax = allocArray(STRSXP, dims));
 	for (px = x, i = 0; px != R_NilValue; px = CDR(px))
@@ -1212,7 +1213,7 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 {
     SEXP p;
     if (length(args) < 2)
-	error("SubAssignArgs: invalid number of arguments");
+	error(_("SubAssignArgs: invalid number of arguments"));
     *x = CAR(args);
     if(length(args) == 2) {
 	*s = R_NilValue;
@@ -1313,7 +1314,7 @@ SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	errorcall(call, "object is not subsettable");
+	errorcall(call, _("object is not subsettable"));
 	break;
     }
 
@@ -1417,7 +1418,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* ENVSXP special case first */
     if( TYPEOF(x) == ENVSXP) {
       if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
-	error("wrong args for environment subassignment");
+	error(_("wrong args for environment subassignment"));
       defineVar(install(CHAR(STRING_ELT(CAR(subs),0))), y, x);
       UNPROTECT(1);
       return(x);
@@ -1427,9 +1428,9 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isVector(x)) {
 	Rboolean recursed = FALSE;
 	if (!isVectorList(x) && LENGTH(y) > 1)
-	    error("more elements supplied than there are to replace");
+	    error(_("more elements supplied than there are to replace"));
 	if (nsubs == 0 || CAR(subs) == R_MissingArg)
-	    error("[[]] with missing subscript");
+	    error(_("[[ ]] with missing subscript"));
 	if (nsubs == 1) {
 	    SEXP thesub = CAR(subs);
 	    int i = -1, len = length(thesub);
@@ -1437,18 +1438,19 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(isVectorList(x) && length(thesub) > 1) {
 		for(i = 0; i < len - 1; i++) {
 		    if(LENGTH(x) == 0 || !isVectorList(x))
-			error("recursive indexing failed at level %d\n", i+1);
+			error(_("recursive indexing failed at level %d\n"), 
+			      i+1);
 		    off = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 				    length(x), /*partial ok*/TRUE, i);
 		    if(off < 0 || off >= LENGTH(x))
-			error("no such index at level %d\n", i+1);
+			error(_("no such index at level %d\n"), i+1);
 		    xup = x;
 		    recursed = TRUE;
 		    x = VECTOR_ELT(x, off);
 		}
 	    }
 	    if (recursed && !isVectorList(x) && LENGTH(y) > 1)
-		error("more elements supplied than there are to replace");
+		error(_("more elements supplied than there are to replace"));
 	    offset = OneIndex(x, thesub, length(x), 0, &newname, i);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
@@ -1458,13 +1460,13 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		return xtop;
 	    }
 	    if (offset < 0)
-		error("[[]] subscript out of bounds");
+		error(_("[[ ]] subscript out of bounds"));
 	    if (offset >= LENGTH(x))
 		    stretch = offset + 1;
 	}
 	else {
 	    if (ndims != nsubs)
-		error("[[]] improper number of subscripts");
+		error(_("[[ ]] improper number of subscripts"));
 	    PROTECT(indx = allocVector(INTSXP, ndims));
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
@@ -1475,7 +1477,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		subs = CDR(subs);
 		if (INTEGER(indx)[i] < 0 ||
 		    INTEGER(indx)[i] >= INTEGER(dims)[i])
-		    error("[[]] subscript out of bounds");
+		    error(_("[[ ]] subscript out of bounds"));
 	    }
 	    offset = 0;
 	    for (i = (ndims - 1); i > 0; i--)
@@ -1602,7 +1604,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 
 	default:
-	    error("incompatible types (%d) in [[ assignment", which);
+	    error(_("incompatible types (%d) in [[ assignment"), which);
 	}
 	/* If we stretched, we may have a new name. */
 	/* In this case we must create a names attribute */
@@ -1639,7 +1641,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else {
 	    if (ndims != nsubs)
-		error("[[]] improper number of subscripts");
+		error(_("[[ ]] improper number of subscripts"));
 	    PROTECT(indx = allocVector(INTSXP, ndims));
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
@@ -1649,7 +1651,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		subs = CDR(subs);
 		if (INTEGER(indx)[i] < 0 ||
 		    INTEGER(indx)[i] >= INTEGER(dims)[i])
-		    error("[[]] subscript (%d) out of bounds", i+1);
+		    error(_("[[ ]] subscript (%d) out of bounds"), i+1);
 	    }
 	    offset = 0;
 	    for (i = (ndims - 1); i > 0; i--)
@@ -1661,7 +1663,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	xtop = x;
 	UNPROTECT(1);
     }
-    else errorcall(call, "object is not subsettable");
+    else errorcall(call, _("object is not subsettable"));
 
     UNPROTECT(1);
     SET_NAMED(xtop, 0);
@@ -1690,7 +1692,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     else if(isString(nlist) )
 	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
     else {
-	errorcall(call, "invalid subscript type");
+	errorcall(call, _("invalid subscript type"));
 	return R_NilValue; /*-Wall*/
     }
 
@@ -1770,7 +1772,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	SEXP names;
 
 	if (!(isNewList(x) || isExpression(x))) {
-	    warning("Coercing LHS to a list");
+	    warning(_("Coercing LHS to a list"));
 	    REPROTECT(x = coerceVector(x, VECSXP), pxidx);
 	}
 	names = getAttrib(x, R_NamesSymbol);

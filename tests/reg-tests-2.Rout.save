@@ -4032,7 +4032,7 @@ attr(,".Environment")
 > ## negative subscripts could be mixed with NAs
 > x <- 1:3
 > try(x[-c(1, NA)])
-Error in try(x[-c(1, NA)]) : only 0's may mix with negative subscripts
+Error in try(x[-c(1, NA)]) : only 0's may be mixed with negative subscripts
 > ## worked on some platforms, segfaulted on others in 1.8.1
 > 
 > 

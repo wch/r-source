@@ -236,7 +236,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    RAW(result)[ij] = (Rbyte) 0;
 		    break;
 		default:
-		    error("matrix subscripting not handled for this type");
+		    error(_("matrix subscripting not handled for this type"));
 		    break;
 		}
 	    }
@@ -263,7 +263,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    RAW(result)[ij] = RAW(x)[iijj];
 		    break;
 		default:
-		    error("matrix subscripting not handled for this type");
+		    error(_("matrix subscripting not handled for this type"));
 		    break;
 		}
 	    }
@@ -420,7 +420,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		RAW(result)[i] = (Rbyte) 0;
 	    break;
 	default:
-	    error("matrix subscripting not handled for this type");
+	    error(_("matrix subscripting not handled for this type"));
 	    break;
 	}
 	if (n > 1) {
@@ -649,7 +649,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else {
 	if (nsubs != length(getAttrib(x, R_DimSymbol)))
-	    errorcall(call, "incorrect number of dimensions");
+	    errorcall(call, _("incorrect number of dimensions"));
 	if (nsubs == 2)
 	    ans = MatrixSubset(ax, subs, call, drop);
 	else
@@ -728,16 +728,16 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     subs = CDR(args);
     if(0 == (nsubs = length(subs)))
-	errorcall(call, "no index specified");
+	errorcall(call, _("no index specified"));
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
     if(nsubs > 1 && nsubs != ndims)
-	errorcall(call, "incorrect number of subscripts");
+	errorcall(call, _("incorrect number of subscripts"));
 
     /* split out ENVSXP for now */
     if( TYPEOF(x) == ENVSXP ) {
       if( nsubs != 1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
-	error("wrong arguments for subsetting an environment");
+	error(_("wrong arguments for subsetting an environment"));
       ans = findVarInFrame(x, install(CHAR(STRING_ELT(CAR(subs),
 						      0))));
       UNPROTECT(1);
@@ -758,11 +758,11 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(isVectorList(x) && length(CAR(subs)) > 1) {
 	    for(i = 0; i < len - 1; i++) {
 		if(!isVectorList(x))
-		    error("recursive indexing failed at level %d\n", i+1);
+		    error(_("recursive indexing failed at level %d\n"), i+1);
 		offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 				   length(x), /*partial ok*/TRUE, i);
 		if(offset < 0 || offset >= length(x))
-		    error("no such index at level %d\n", i+1);
+		    error(_("no such index at level %d\n"), i+1);
 		x = VECTOR_ELT(x, offset);
 	    }
 	}
@@ -895,7 +895,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     else if(isString(nlist) )
 	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
     else {
-	errorcall_return(call, "invalid subscript type");
+	errorcall_return(call, _("invalid subscript type"));
     }
 
     /* replace the second argument with a string */

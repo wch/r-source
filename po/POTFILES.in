@@ -71,6 +71,11 @@ src/main/source.c
 src/main/split.c
 src/main/sprintf.c
 src/main/startup.c
+src/main/summary.c
+src/main/subassign.c
+src/main/subscript.c
+src/main/subset.c
+src/main/sysutils.c
 src/main/unique.c
 src/main/util.c
 src/main/version.c

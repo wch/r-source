@@ -64,18 +64,18 @@ double R_FileMtime(char *path)
 {
     struct stat sb;
     if (stat(R_ExpandFileName(path), &sb) != 0)
-	error("cannot determine file modification time of %s", path);
+	error(_("cannot determine file modification time of %s"), path);
     return sb.st_mtime;
 }
 #else
 Rboolean R_FileExists(char *path)
 {
-    error("file existence is not available on this system");
+    error(_("file existence is not available on this system"));
 }
 
 double R_FileMtime(char *path)
 {
-    error("file modification time is not available on this system");
+    error(_("file modification time is not available on this system"));
     return 0.0; /* not reached */
 }
 #endif
@@ -138,13 +138,13 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     pattern = CAR(args); n1 = length(pattern);
     tempdir = CADR(args); n2 = length(tempdir);
     if (!isString(pattern))
-        errorcall(call, "invalid filename pattern");
+        errorcall(call, _("invalid filename pattern"));
     if (!isString(tempdir))
-        errorcall(call, "invalid tempdir");
+        errorcall(call, _("invalid tempdir"));
     if (n1 < 1)
-	errorcall(call, "no patterns");
+	errorcall(call, _("no pattern"));
     if (n2 < 1)
-	errorcall(call, "no tempdir");
+	errorcall(call, _("no tempdir"));
     slen = (n1 > n2) ? n1 : n2;
     PROTECT(ans = allocVector(STRSXP, slen));
     for(i = 0; i < slen; i++) {
@@ -216,7 +216,7 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (!isString(CAR(args)))
-	errorcall(call, "wrong type for argument");
+	errorcall(call, _("wrong type for argument"));
 
     i = LENGTH(CAR(args));
     if (i == 0) {
@@ -272,7 +272,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (!isString(vars = CAR(args)))
-	errorcall(call, "wrong type for argument");
+	errorcall(call, _("wrong type for argument"));
 
     n = LENGTH(vars);
     PROTECT(ans = allocVector(LGLSXP, n));
@@ -282,7 +282,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 #else
-    error("`putenv' is not available on this system");
+    error(_("'putenv' is not available on this system"));
     return R_NilValue; /* -Wall */
 #endif
 }
@@ -315,11 +315,11 @@ static void iconv_Init(void)
 	    ptr_iconv_close = R_FindSymbol("libiconv_close", "iconv", NULL);
 	    ptr_iconvlist = R_FindSymbol("libiconvlist", "iconv", NULL);
 	    if(!ptr_iconv)
-		error("failed to find symbols in iconv.dll");
+		error(_("failed to find symbols in iconv.dll"));
 	}
     }
     if(initialized < 0)
-	error("iconv.dll is not available on this system");
+	error(_("iconv.dll is not available on this system"));
 }
 #undef iconv
 #undef iconv_open
@@ -385,20 +385,20 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     } else {
 	if(TYPEOF(x) != STRSXP)
-	    errorcall(call, "'x' must be a character vector");
+	    errorcall(call, _("'x' must be a character vector"));
 	if(!isString(CADR(args)) || length(CADR(args)) != 1)
-	    errorcall(call, "invalid 'from' argument");
+	    errorcall(call, _("invalid 'from' argument"));
 	if(!isString(CADDR(args)) || length(CADDR(args)) != 1)
-	    errorcall(call, "invalid 'to' argument");
+	    errorcall(call, _("invalid 'to' argument"));
 	if(!isString(CADDDR(args)) || length(CADDDR(args)) != 1)
-	    errorcall(call, "invalid 'sub' argument");
+	    errorcall(call, _("invalid 'sub' argument"));
 	if(STRING_ELT(CADDDR(args), 0) == NA_STRING) sub = NULL;
 	else sub = CHAR(STRING_ELT(CADDDR(args), 0));
 
 	obj = iconv_open(CHAR(STRING_ELT(CADDR(args), 0)),
 			 CHAR(STRING_ELT(CADR(args), 0)));
 	if(obj == (iconv_t)(-1))
-	    errorcall(call, "unsupported conversion");
+	    errorcall(call, _("unsupported conversion"));
 	PROTECT(ans = duplicate(x));
 	R_AllocStringBuffer(0, &cbuff);  /* just default */
 	for(i = 0; i < LENGTH(x); i++) {
@@ -447,7 +447,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 #else
-    error("`iconv' is not available on this system");
+    error(_("'iconv' is not available on this system"));
     return R_NilValue; /* -Wall */
 #endif
 }
@@ -481,20 +481,20 @@ int Riconv_close (void *cd)
 #else
 void * Riconv_open (char* tocode, char* fromcode)
 {
-    error("`iconv' is not available on this system");
+    error(_("'iconv' is not available on this system"));
     return (void *)-1;
 }
 
 size_t Riconv (void *cd, char **inbuf, size_t *inbytesleft, 
 	       char **outbuf, size_t *outbytesleft)
 {
-    error("`iconv' is not available on this system");
+    error(_("'iconv' is not available on this system"));
     return 0;
 }
 
 int Riconv_close (void * cd)
 {
-    error("`iconv' is not available on this system");
+    error(_("'iconv' is not available on this system"));
     return -1;
 }
 #endif
