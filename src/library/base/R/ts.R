@@ -184,7 +184,7 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
     if(is.null(xlim)) xlim <- range(time.x)
     if(is.null(ylim)) ylim <- range(x[is.finite(x)])
     plot.new()
-    plot.window(xlim, ylim, log)
+    plot.window(xlim, ylim, log, ...)
     if(is.matrix(x)) {
 	for(i in 1:ncol(x))
 	    lines.default(time.x, x[,i],
