@@ -1153,7 +1153,7 @@ static SEXP get_this_generic(SEXP args)
     n = framedepth(cptr);
     /* check for a matching "generic" slot */
     for(i=0;  i<n; i++) {
-	rval =	R_sysfunction(i, cptr);
+	SEXP rval = R_sysfunction(i, cptr);
 	if(isObject(rval)) {
 	    SEXP generic = getAttrib(rval, gen_name);
 	    if(TYPEOF(generic) == STRSXP &&

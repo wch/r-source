@@ -57,7 +57,10 @@ cov(x, y = NULL, use = "all.obs")
   observation (whereas S-plus has been returning \code{NaN}),
   and from \R 1.2.3 fail if \code{x} has length zero.
 }
-\seealso{\code{\link{cov.wt}} for \emph{weighted} covariance
+\seealso{
+  \code{\link[ctest]{cor.test}} (pkg \code{ctest}) for confidence
+  intervals (and tests).\cr
+  \code{\link{cov.wt}} for \emph{weighted} covariance
   computation, \code{\link{sd}} for standard deviation (vectors).
 }
 \examples{
