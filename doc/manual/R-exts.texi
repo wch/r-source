@@ -65,17 +65,17 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::
-* Creating R packages::
-* Writing R documentation files::
-* Tidying and profiling R code::
-* System and foreign language interfaces::
-* The R API::
-* Generic functions and methods::
-* R (internal) programming miscellanea::
-* R coding standards::
-* Function and variable index::
-* Concept index::
+* Acknowledgements::            
+* Creating R packages::         
+* Writing R documentation files::  
+* Tidying and profiling R code::  
+* System and foreign language interfaces::  
+* The R API::                   
+* Generic functions and methods::  
+* R (internal) programming miscellanea::  
+* R coding standards::          
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -117,12 +117,12 @@ Unix-alikes that is done by @code{R CMD INSTALL}.  Under Windows,
 installation) for the tools that you need to have installed.
 
 @menu
-* Package structure::
-* Configure and cleanup::
-* Checking and building packages::
-* Writing package vignettes::
-* Submitting a package to CRAN::
-* Package name spaces::
+* Package structure::           
+* Configure and cleanup::       
+* Checking and building packages::  
+* Writing package vignettes::   
+* Submitting a package to CRAN::  
+* Package name spaces::         
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -159,10 +159,10 @@ The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
-* The DESCRIPTION file::
-* The INDEX file::
-* Package subdirectories::
-* Package bundles::
+* The DESCRIPTION file::        
+* The INDEX file::              
+* Package subdirectories::      
+* Package bundles::             
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -592,7 +592,7 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 
 
 @menu
-* Using Makevars::
+* Using Makevars::              
 @end menu
 
 @node Using Makevars,  , Configure and cleanup, Configure and cleanup
@@ -964,7 +964,9 @@ for specifying a name space for a package is to place a @file{NAMESPACE}
 file in the top level package directory.  This file contains @emph{name
 space directives} describing the imports and exports of the name space.
 Additional directives register any shared objects to be loaded and any
-S3-style methods that are provided.
+S3-style methods that are provided.  Note that although the file looks
+like @R{} code (and often has @R{}-style comments) it is not processed
+as @R{} code and no conditional processing is currently supported.
 
 Like other packages, packages with name spaces are loaded and attached
 to the search path by calling @code{library}.  Only the exported
@@ -973,9 +975,30 @@ imports variables from other packages will cause these other packages to
 be loaded as well (unless they have already been loaded), but they will
 @emph{not} be placed on the search path by these implicit loads.
 
-Exports are specified using the @code{export} directive.
-A directive of the form
+Name spaces are @emph{sealed} once they are loaded.  Sealing means that
+imports and exports cannot be changed and that internal variable
+bindings cannot be changed.  Sealing allows a simpler implementation
+strategy for the name space mechanism.  Sealing also allows code
+analysis and compilation tools to accurately identify the definition
+corresponding to a global variable reference in a function body.
 
+@menu
+* Specifying imports and exports::  
+* Registering S3 methods::      
+* Load hooks::                  
+* An example::                  
+* Summary -- converting an existing package::  
+* Name spaces with formal classes and methods::  
+@end menu
+
+
+@node Specifying imports and exports, Registering S3 methods, Package name spaces, Package name spaces
+@subsection Specifying imports and exports
+
+Exports are specified using the @code{export} directive in the
+@file{NAMESPACE} file.  A directive of the form
+
+@findex export
 @smallexample
 export(f, g)
 @end smallexample
@@ -989,6 +1012,7 @@ For packages with many variables to export it may be more convenient to
 specify the names to export with a regular expression using
 @code{exportPattern}.  The directive
 
+@findex exportPattern
 @smallexample
 exportPattern("^[^\\.]")
 @end smallexample
@@ -1002,6 +1026,7 @@ other packages need to be imported explicitly using the directives
 imports all exported variables from the specified package(s).  Thus the
 directives
 
+@findex import
 @smallexample
 import(foo, bar)
 @end smallexample
@@ -1012,6 +1037,7 @@ specifies that all exported variables in the packages @pkg{foo} and
 package are needed, then they can be imported using @code{importFrom}.
 The directive
 
+@findex importFrom
 @smallexample
 importFrom(foo, f, g)
 @end smallexample
@@ -1029,6 +1055,9 @@ in the @file{NAMESPACE} file, so this approach is usually not
 recommended.  Evaluating @code{foo::f} will cause package @pkg{foo} to
 be loaded, but not attached, if it was not loaded already.
 
+@node Registering S3 methods, Load hooks, Specifying imports and exports, Package name spaces
+@subsection Registering S3 methods
+
 The standard method for S3-style @code{UseMethod} dispatching might fail
 to locate methods defined in a package that is imported but not attached
 to the search path.  To ensure that these methods are available the
@@ -1037,6 +1066,7 @@ imported and register the methods using @code{S3method} directives.  If
 a package defines a function @code{print.foo} intended to be used as a
 @code{print} method for class @code{foo}, then the directive
 
+@findex S3method
 @smallexample
 S3method(print, foo)
 @end smallexample
@@ -1051,19 +1081,36 @@ defined in a package that does not use a name space should be exported,
 and the package defining and exporting the method should be attached to
 the search path if the methods are to be found.
 
+
+@node Load hooks, An example, Registering S3 methods, Package name spaces
+@subsection Load hooks
+
+@findex .onLoad
+@findex .onAttach
 Packages with name spaces do not use the @code{.First.lib} function.
 Since loading and attaching are distinct operations when a name space is
 used, separate hooks are provided for each.  These hook functions are
 called @code{.onLoad} and @code{.onAttach}.  They take the same
 arguments as @code{.First.lib}; they should be defined in the package
-but not exported.  Packages are not likely to need @code{.onAttach};
-code to set options and load shared objects should be placed in a
-@code{.onLoad} function, or use made of the @code{useDynLib} directive
-described next.
+but not exported.   
+
+@findex .Last.lib
+@findex .onUnload
+However, packages with name spaces @emph{do} use the @code{.Last.lib}
+function.  There is also a hook @code{.onUnload} which is called when
+the name space is unloaded (via a call to @code{unloadNamespace}) with
+argument the full path to the directory in which the package was
+installed.
+
+Packages are not likely to need @code{.onAttach} (except perhaps for a
+start-up banner); code to set options and load shared objects should be
+placed in a @code{.onLoad} function, or use made of the @code{useDynLib}
+directive described next.
 
 The @code{useDynLib} directive allows shared objects that need to be
 loaded to be specified in the @file{NAMESPACE} file.  The directive
 
+@findex useDynLib
 @smallexample
 useDynLib(foo)
 @end smallexample
@@ -1074,6 +1121,12 @@ registers the shared object @code{foo} for loading with
 package code has been loaded and before running the load hook function.
 Packages that would only need a load hook function to load a shared
 object can use the @code{useDynLib} directive instead.
+
+User-level hooks are also available: see the help on function
+@code{setUserOnLoadHook}.
+
+@node An example, Summary -- converting an existing package, Load hooks, Package name spaces
+@subsection An example
 
 As an example consider two packages named @pkg{foo} and @pkg{bar}.  The
 @R{} code for package @pkg{foo} in file @file{foo.R} is
@@ -1144,6 +1197,8 @@ in @pkg{bar} the function @code{c} is defined to be equivalent to
 @code{sum}, but in @pkg{foo} the variable @code{c} refers to the
 standard function @code{c} in @pkg{base}.
 
+@node Summary -- converting an existing package, Name spaces with formal classes and methods, An example, Package name spaces
+@subsection Summary -- converting an existing package
 
 To summarize, converting an existing package to use a name space involves
 several simple steps:
@@ -1163,12 +1218,70 @@ several simple steps:
 Some code analysis tools to aid in this process are currently under
 development.
 
-Name spaces are @emph{sealed} once they are loaded.  Sealing means that
-imports and exports cannot be changed and that internal variable
-bindings cannot be changed.  Sealing allows a simpler implementation
-strategy for the name space mechanism.  Sealing also allows code
-analysis and compilation tools to accurately identify the definition
-corresponding to a global variable reference in a function body.
+@node Name spaces with formal classes and methods,  , Summary -- converting an existing package, Package name spaces
+@subsection Name spaces with formal classes and methods
+
+Some additional steps are needed for packages which make use of formal
+(S4-style) classes and methods (unless these are purely used
+internally).  There needs to be an @code{.onLoad} action to
+ensure that the methods package is loaded @emph{and} attached:
+@smallexample
+.onLoad <- function(lib, pkg) require(methods)
+@end smallexample
+and any classes and methods which are to be exported need to be declared
+as such in the @file{NAMESPACE} file.  For example, the now-defunct
+@pkg{mle} package had
+
+@findex exportClasses
+@findex exportMethods
+@smallexample
+importFrom(graphics, plot)
+importFrom(stats, profile, confint)
+exportClasses("mle", "profile.mle", "summary.mle")
+exportMethods("confint", "plot", "profile", "summary", "show")
+@end smallexample
+All formal classes need to be listed in an @code{exportClasses}
+directive.  All generics for which formal methods are defined need to be
+declared in an @code{exportMethods} directive, and where the generics
+are formed by taking over existing functions, those functions need to be
+imported (explicitly unless they are defined in the @code{base}
+namespace).
+
+In addition, a package using classes and methods defined in another
+package needs to import them, with directives
+
+@findex importClassesFrom
+@findex importMethodsFrom
+@smallexample
+importClassesFrom(package, ...)
+importMethodsFrom(package, ...)
+@end smallexample
+listing the classes and functions with methods respectively.  Suppose we
+had two small packages @pkg{A} and @pkg{B} with @pkg{B} using @pkg{A}.
+Then they could have @code{NAMESPACE} files
+@quotation
+@cartouche
+@smallexample
+export(f1, ng1)
+exportMethods("[")
+exportClasses(c1)
+@end smallexample
+@end cartouche
+@end quotation
+and
+@quotation
+@cartouche
+@smallexample
+importFrom(A, ng1)
+importClassesFrom(A, c1)
+importMethodsFrom(A, f1)
+export(f4, f5)
+exportMethods(f6, "[")
+exportClasses(c1, c2)
+@end smallexample
+@end cartouche
+@end quotation
+respectively.
 
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
@@ -1176,16 +1289,16 @@ corresponding to a global variable reference in a function body.
 @cindex Documentation, writing
 
 @menu
-* Rd format::
-* Sectioning::
-* Marking text::
-* Lists and tables::
-* Cross-references::
-* Mathematics::
-* Insertions::
-* Indices::
-* Platform-specific sections::
-* Processing Rd format::
+* Rd format::                   
+* Sectioning::                  
+* Marking text::                
+* Lists and tables::            
+* Cross-references::            
+* Mathematics::                 
+* Insertions::                  
+* Indices::                     
+* Platform-specific sections::  
+* Processing Rd format::        
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
@@ -1257,9 +1370,9 @@ files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
 @menu
-* Documenting functions::
-* Documenting data sets::
-* Documenting S4 classes and methods::
+* Documenting functions::       
+* Documenting data sets::       
+* Documenting S4 classes and methods::  
 @end menu
 
 @node Documenting functions, Documenting data sets, Rd format, Rd format
@@ -2038,8 +2151,8 @@ distribution for installing source packages to be installed.)
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::
-* Profiling R code::
+* Tidying R code::              
+* Profiling R code::            
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -2116,7 +2229,7 @@ recommended for the source code of @R{} itself.
 @cindex Profiling
 @findex Rprof
 
-It is possible to profile @R{} code on most Unix-like versions of @R{},
+It is possible to profile @R{} code on most Unix-like versions of @R{}:
 @R{} has to be built to enable this, by supplying the option
 @option{--enable-R-profiling}, profiling being enabled in a default
 build.  Profiling is also available on Windows.
@@ -2126,8 +2239,8 @@ page can be consulted for full details.  Profiling works by recording at
 fixed intervals (by default every 20 msecs) which @R{} function is being
 used, and recording the results in a file (default @file{Rprof.out} in
 the working directory).  Then the function @code{summaryRprof} or the
-command-line utility @code{R CMD Rprof @var{Rprof.out}} can be used to summarize the
-activity.
+command-line utility @code{R CMD Rprof @var{Rprof.out}} can be used to
+summarize the activity.
 
 As an example, consider the following code (from Venables & Ripley,
 2002).
@@ -2220,21 +2333,29 @@ script that may be much faster than @code{summaryRprof} for large files
 Two warnings: profiling does impose a small performance penalty, and the
 output files can be very large if long runs are profiled.
 
+Profiling short runs can sometimes give misleading results.  @R{} from
+time to time performs @emph{garbage collection} to reclaim unused
+memory, and this takes an appreciable amount of time which profiling
+will charge to whichever function happens to provoke it.  It may be
+useful to compare profiling code immediately after a call to @code{gc()}
+with a profiling run without a preceding call to @code{gc}.
+
+
 @node System and foreign language interfaces, The R API, Tidying and profiling R code, Top
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Interface functions .C and .Fortran::
-* dyn.load and dyn.unload::
-* Registering native routines::
-* Creating shared objects::
-* Interfacing C++ code::
-* Handling R objects in C::
-* Interface functions .Call and .External::
-* Evaluating R expressions from C::
-* Parsing R code from C::
-* Debugging::
+* Operating system access::     
+* Interface functions .C and .Fortran::  
+* dyn.load and dyn.unload::     
+* Registering native routines::  
+* Creating shared objects::     
+* Interfacing C++ code::        
+* Handling R objects in C::     
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
+* Parsing R code from C::       
+* Debugging::                   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -2922,13 +3043,13 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::
-* Allocating storage::
-* Details of R types::
-* Attributes::
-* Classes::
-* Handling lists::
-* Finding and setting variables::
+* Garbage Collection::          
+* Allocating storage::          
+* Details of R types::          
+* Attributes::                  
+* Classes::                     
+* Handling lists::              
+* Finding and setting variables::  
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -3445,9 +3566,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::
-* Calling .External::
-* Missing and special values::
+* Calling .Call::               
+* Calling .External::           
+* Missing and special values::  
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -3841,8 +3962,8 @@ called) and two argument values, the first unnamed and the second named.
 Setting the type makes this a call which can be evaluated.
 
 @menu
-* Zero-finding::
-* Calculating numerical derivatives::
+* Zero-finding::                
+* Calculating numerical derivatives::  
 @end menu
 
 @node Zero-finding, Calculating numerical derivatives, Evaluating R expressions from C, Evaluating R expressions from C
@@ -4209,8 +4330,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::
-* Inspecting R objects::
+* Finding entry points::        
+* Inspecting R objects::        
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -4386,19 +4507,19 @@ $7 = 5
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::
-* Error handling::
-* Random numbers::
-* Missing and IEEE values::
-* Printing::
-* Calling C from FORTRAN and vice versa::
-* Numerical analysis subroutines::
-* Optimization::
-* Integration::
-* Utility functions::
-* Allowing interrupts::
-* Platform and version information::
-* Standalone Mathlib::
+* Memory allocation::           
+* Error handling::              
+* Random numbers::              
+* Missing and IEEE values::     
+* Printing::                    
+* Calling C from FORTRAN and vice versa::  
+* Numerical analysis subroutines::  
+* Optimization::                
+* Integration::                 
+* Utility functions::           
+* Allowing interrupts::         
+* Platform and version information::  
+* Standalone Mathlib::          
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -4448,8 +4569,8 @@ be eliminated by defining @code{R_NO_REMAP} and prepending @code{Rf_} to
 @cindex Memory allocation from C
 
 @menu
-* Transient::
-* User-controlled::
+* Transient::                   
+* User-controlled::             
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -4562,7 +4683,7 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error handling from FORTRAN::
+* Error handling from FORTRAN::  
 @end menu
 
 @node Error handling from FORTRAN,  , Error handling, Error handling
@@ -4705,7 +4826,7 @@ output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
 
 @menu
-* Printing from FORTRAN::
+* Printing from FORTRAN::       
 @end menu
 
 @node Printing from FORTRAN,  , Printing, Printing
@@ -4826,10 +4947,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::
-* Mathematical functions::
-* Utilities::
-* Mathematical constants::
+* Distribution functions::      
+* Mathematical functions::      
+* Utilities::                   
+* Mathematical constants::      
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -5631,7 +5752,7 @@ Here there might be justifiable exceptions, which will need careful
 documentation.
 
 @menu
-* Adding new generics::
+* Adding new generics::         
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -5684,8 +5805,8 @@ foo.default <- base::foo
 @appendix R (internal) programming miscellanea
 
 @menu
-* .Internal and .Primitive::
-* Testing R code::
+* .Internal and .Primitive::    
+* Testing R code::              
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea
