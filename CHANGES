@@ -2,8 +2,14 @@
 
 NEW FEATURES
 
-    o	Rdconv: new tabular environment, new sections Format and
-        Source, new output format Sd for S documentation
+    o   system.file()  [now documented] returns all files matched by
+	wildcards.
+
+    o   data() now supports the new .tab and .tbr file format, for
+	data to be read by  read.table(), with and w/o `header = T'.
+
+    o	Rdconv: new tabular environment, new sections `\format' and
+        `\source', new output format `-type Sd' for S documentation
 
     o	.First.lib() now implemented; called by library() after loading
 	a package.
