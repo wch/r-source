@@ -189,11 +189,11 @@ latex installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @node Can I use R BATCH?, Can I use rwXxxx with ESS and emacs?, How do I print from R?, Installation and Usage
 @section Can I use @code{R BATCH}?
 
-No, but you can set up a batch file using @code{rterm.exe}. A sample batch file
+No, but you can set up a batch file using @code{Rterm.exe}. A sample batch file
 might contain (as one line)
 
 @example
-path_to_R\bin\rterm.exe --vsize=10M --nsize=500k --no-restore --no-save < %1 > %1.out
+path_to_R\bin\Rterm.exe --vsize=10M --nsize=500k --no-restore --no-save < %1 > %1.out
 @end example
 
 @node Can I use rwXxxx with ESS and emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
@@ -290,7 +290,7 @@ control panel or the properties of `My Computer'. You can also set them
 on the command line, for example in the shortcut you could have
 
 @example
-path_to_R\bin\rgui.exe --vsize=10M R_LIBS=e:/R/library
+path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
 @end example
 @noindent
 and you can set variables in a file @file{.Renviron} in the working directory
@@ -362,20 +362,25 @@ If those all hold true, this works for us.
 @section  What should I expect to behave differently from the Unix version of R?
 
 @itemize @bullet
-@item R commands can be interrupted by @key{Esc} in @code{rgui.exe}
-and @key{Ctrl-break} or @key{Ctrl-C} in @code{rterm.exe}: @key{Ctrl-C} 
+@item R commands can be interrupted by @key{Esc} in @code{Rgui.exe}
+and @key{Ctrl-break} or @key{Ctrl-C} in @code{Rterm.exe}: @key{Ctrl-C} 
 is used for copying in the GUI version.
+
 @item Command-line editing is always available, but is much simpler than the
-readline-based editing on Unix. For @code{rgui.exe}, the menu item `Help |
+readline-based editing on Unix. For @code{Rgui.exe}, the menu item `Help |
 Console' will give details.
-@item The commands history is saved between sessions only on
-@code{rgui.exe}, and it is always saved.
+
+@item The commands history is always saved between sessions
+.
 @item Using @code{help.start()} does not automatically send help requests to the
 browser: use @code{options(htmlhelp=T)} to turn this on.
+
 @item The HTML help system can only access packages installed in the standard
 place.
+
 @item Paths to files (e.g. in @code{source()}) can be specified with either "/" or
 "\\".
+
 @item @code{system()} is slightly different: see its help page and that
 of @code{shell()}.
 @end itemize
@@ -513,6 +518,7 @@ scrollbar or the @key{CTRL+arrow} keys to scroll horizontally.
 * How do I include C++ code?::  
 * The output from my C code disappears.::  
 * The output from my Fortran code disappears.::  
+* The console freezes when my compiled code is running::  
 @end menu
 
 @node How can I compile R from source?, How do I debug code that I have compiled and dyn.load-ed?, Building from Source, Building from Source
@@ -659,26 +665,38 @@ console. (This will work with @code{Rterm.exe}.)  Use @code{Rprintf} or
 @code{REprintf} instead. These are declared in header file
 @file{R_ext/PrtUtil.h}.
 
-@node  The output from my Fortran code disappears.,  , The output from my C code disappears., Building from Source
+Note that output from the console is delayed (@pxref{The output to the
+console seems to be delayed}), so that you will not normally see any
+output before returning to the R prompt.
+
+@node  The output from my Fortran code disappears., The console freezes when my compiled code is running, The output from my C code disappears., Building from Source
 @section  The output from my Fortran code disappears. Why?
 
 Writing to Fortran output writes to a file, not the @code{Rgui} console.
 Use one of the subroutines @code{dblepr}, @code{intpr} or @code{realpr}
 documented in the @emph{`Writing R Extensions'} manual.
 
+@node  The console freezes when my compiled code is running,  , The output from my Fortran code disappears., Building from Source
+@section The console freezes when my compiled code is running.
+
+The console, pagers and graphics window all run in the same thread
+as the R engine.  To allow the console etc to respond to Windows events,
+call @code{R_ProcessEvents()} periodically from your compiled code.
+If you want output to be updated on the console, call 
+@code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
 @ifhtml
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 May 12 by Brian Ripley
+Last edited 2000 May 20 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 May 12 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 May 20 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

@@ -47,6 +47,7 @@ Table of Contents
   7.3 How do I include C++ code?
   7.4 The output from my C code disappears. Why?
   7.5 The output from my Fortran code disappears. Why?
+  7.6 The console freezes when my compiled code is running.
 
 
 
@@ -142,10 +143,10 @@ It depends what you want to print.
 2.6 Can I use `R BATCH'?
 ========================
 
-No, but you can set up a batch file using `rterm.exe'. A sample batch
+No, but you can set up a batch file using `Rterm.exe'. A sample batch
 file might contain (as one line)
 
-     path_to_R\bin\rterm.exe --vsize=10M --nsize=500k --no-restore --no-save < %1 > %1.out
+     path_to_R\bin\Rterm.exe --vsize=10M --nsize=500k --no-restore --no-save < %1 > %1.out
 
 2.7 Can I use rwXxxx with ESS and emacs?
 ========================================
@@ -224,7 +225,7 @@ launch `Rgui' / `Rterm'. Under Windows NT/2000 you can use the control
 panel or the properties of `My Computer'. You can also set them on the
 command line, for example in the shortcut you could have
 
-     path_to_R\bin\rgui.exe --vsize=10M R_LIBS=e:/R/library
+     path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
 
 and you can set variables in a file `.Renviron' in the working directory
 or your home directory, for example
@@ -281,16 +282,15 @@ If those all hold true, this works for us.
 4.1 What should I expect to behave differently from the Unix version of R?
 ==========================================================================
 
-   * R commands can be interrupted by <Esc> in `rgui.exe' and
-     <Ctrl-break> or <Ctrl-C> in `rterm.exe': <Ctrl-C> is used for
+   * R commands can be interrupted by <Esc> in `Rgui.exe' and
+     <Ctrl-break> or <Ctrl-C> in `Rterm.exe': <Ctrl-C> is used for
      copying in the GUI version.
 
    * Command-line editing is always available, but is much simpler than
-     the readline-based editing on Unix. For `rgui.exe', the menu item
+     the readline-based editing on Unix. For `Rgui.exe', the menu item
      `Help | Console' will give details.
 
-   * The commands history is saved between sessions only on `rgui.exe',
-     and it is always saved.
+   * The commands history is always saved between sessions .
 
    * Using `help.start()' does not automatically send help requests to
      the browser: use `options(htmlhelp=T)' to turn this on.
@@ -527,6 +527,10 @@ The `Rgui.exe' console is a Windows application: writing to `stdout' or
 `Rterm.exe'.)  Use `Rprintf' or `REprintf' instead. These are declared
 in header file `R_ext/PrtUtil.h'.
 
+Note that output from the console is delayed (*note The output to the
+console seems to be delayed::), so that you will not normally see any
+output before returning to the R prompt.
+
 7.5 The output from my Fortran code disappears. Why?
 ====================================================
 
@@ -534,7 +538,16 @@ Writing to Fortran output writes to a file, not the `Rgui' console.
 Use one of the subroutines `dblepr', `intpr' or `realpr' documented in
 the _`Writing R Extensions'_ manual.
 
+7.6 The console freezes when my compiled code is running.
+=========================================================
+
+The console, pagers and graphics window all run in the same thread as
+the R engine.  To allow the console etc to respond to Windows events,
+call `R_ProcessEvents()' periodically from your compiled code.  If you
+want output to be updated on the console, call `R_FlushConsole()' and
+then `R_ProcessEvents()'.
 
 
-Last edited 2000 May 12 by Brian Ripley <ripley@stats.ox.ac.uk>
+
+Last edited 2000 May 20 by Brian Ripley <ripley@stats.ox.ac.uk>
 

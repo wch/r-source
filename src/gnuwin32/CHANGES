@@ -10,9 +10,11 @@ rw1010
 There is now a GUI preferences editor on the Edit menu in Rgui.
 
 A data entry editor is now implemented.  This is similar to the Unix
-one (see ?dataentry) with the additional feature that double-clicking
-in a cell turns it into an editable field (entered as a new value
-by navigating away from the cell), and there is a right-click popup menu.
+one (see ?dataentry: that has itself been considerably enhanced in
+parallel with the Windows version) with the additional feature that
+double-clicking in a cell turns it into an editable field (entered as
+a new value by navigating away from the cell), and there is a
+right-click popup menu.
 
 Rterm will now load and save the commands history (as Rgui does).
 There is a new item on the File menu in Rgui to save the commands
@@ -57,6 +59,8 @@ be called from menus, with a worked example of a t test done in three
 ways.  More details of graphapp, including a tutorial and a reference
 manual, are at http://www.cs.usyd.edu.au/~loki/GraphApp.
 
+Rdconv.bat no longer depends on having a Unix-compatible `cat' program
+in your path.
 
 A long-standing bug in the (vertical) alignment of symbols in plotmath
 has been corrected.

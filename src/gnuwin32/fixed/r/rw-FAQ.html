@@ -64,6 +64,7 @@
 <li><a href="#How%20do%20I%20include%20C++%20code%3f">7.3 How do I include C++ code?</a>
 <li><a href="#The%20output%20from%20my%20C%20code%20disappears.">7.4 The output from my C code disappears. Why?</a>
 <li><a href="#The%20output%20from%20my%20Fortran%20code%20disappears.">7.5 The output from my Fortran code disappears. Why?</a>
+<li><a href="#The%20console%20freezes%20when%20my%20compiled%20code%20is%20running">7.6 The console freezes when my compiled code is running.</a>
 </ul>
 </ul>
 
@@ -176,10 +177,10 @@ latex installed you can print help files by <code>help(fn_name, offline=TRUE)</c
 
 <h2>2.6 Can I use <code>R BATCH</code>?</h2>
 
-<p>No, but you can set up a batch file using <code>rterm.exe</code>. A sample batch file
+<p>No, but you can set up a batch file using <code>Rterm.exe</code>. A sample batch file
 might contain (as one line)
 
-<pre>path_to_R\bin\rterm.exe --vsize=10M --nsize=500k --no-restore --no-save &lt; %1 &gt; %1.out
+<pre>path_to_R\bin\Rterm.exe --vsize=10M --nsize=500k --no-restore --no-save &lt; %1 &gt; %1.out
 </pre>
 
 <a name="Can%20I%20use%20rwXxxx%20with%20ESS%20and%20emacs%3f"></a>
@@ -270,7 +271,7 @@ launch <code>Rgui</code> / <code>Rterm</code>. Under Windows NT/2000 you can use
 control panel or the properties of `My Computer'. You can also set them
 on the command line, for example in the shortcut you could have
 
-<pre>path_to_R\bin\rgui.exe --vsize=10M R_LIBS=e:/R/library
+<pre>path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
 </pre>
 
 <p>and you can set variables in a file <code>.Renviron</code> in the working directory
@@ -338,20 +339,25 @@ installing the package.
 <h2>4.1 What should I expect to behave differently from the Unix version of R?</h2>
 
 <ul>
-<li>R commands can be interrupted by &lt;Esc&gt; in <code>rgui.exe</code>
-and &lt;Ctrl-break&gt; or &lt;Ctrl-C&gt; in <code>rterm.exe</code>: &lt;Ctrl-C&gt;
-is used for copying in the GUI version. 
+<li>R commands can be interrupted by &lt;Esc&gt; in <code>Rgui.exe</code>
+and &lt;Ctrl-break&gt; or &lt;Ctrl-C&gt; in <code>Rterm.exe</code>: &lt;Ctrl-C&gt;
+is used for copying in the GUI version.
+
 <li>Command-line editing is always available, but is much simpler than the
-readline-based editing on Unix. For <code>rgui.exe</code>, the menu item `Help |
-Console' will give details. 
-<li>The commands history is saved between sessions only on
-<code>rgui.exe</code>, and it is always saved. 
+readline-based editing on Unix. For <code>Rgui.exe</code>, the menu item `Help |
+Console' will give details.
+
+<li>The commands history is always saved between sessions
+. 
 <li>Using <code>help.start()</code> does not automatically send help requests to the
-browser: use <code>options(htmlhelp=T)</code> to turn this on. 
+browser: use <code>options(htmlhelp=T)</code> to turn this on.
+
 <li>The HTML help system can only access packages installed in the standard
-place. 
+place.
+
 <li>Paths to files (e.g. in <code>source()</code>) can be specified with either "/" or
-"\\". 
+"\\".
+
 <li><code>system()</code> is slightly different: see its help page and that
 of <code>shell()</code>. 
 </ul>
@@ -615,6 +621,9 @@ console. (This will work with <code>Rterm.exe</code>.)  Use <code>Rprintf</code>
 <code>REprintf</code> instead. These are declared in header file
 <code>R_ext/PrtUtil.h</code>.
 
+<p>Note that output from the console is delayed (see <a href="#The%20output%20to%20the%20console%20seems%20to%20be%20delayed">The output to the console seems to be delayed</a>), so that you will not normally see any
+output before returning to the R prompt.
+
 <a name="The%20output%20from%20my%20Fortran%20code%20disappears."></a>
 
 <h2>7.5 The output from my Fortran code disappears. Why?</h2>
@@ -623,9 +632,19 @@ console. (This will work with <code>Rterm.exe</code>.)  Use <code>Rprintf</code>
 Use one of the subroutines <code>dblepr</code>, <code>intpr</code> or <code>realpr</code>
 documented in the <em>`Writing R Extensions'</em> manual.
 
+<a name="The%20console%20freezes%20when%20my%20compiled%20code%20is%20running"></a>
+
+<h2>7.6 The console freezes when my compiled code is running.</h2>
+
+<p>The console, pagers and graphics window all run in the same thread
+as the R engine.  To allow the console etc to respond to Windows events,
+call <code>R_ProcessEvents()</code> periodically from your compiled code. 
+If you want output to be updated on the console, call
+<code>R_FlushConsole()</code> and then <code>R_ProcessEvents()</code>.
+
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 May 12 by Brian Ripley
+Last edited 2000 May 20 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 
