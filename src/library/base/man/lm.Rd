@@ -58,7 +58,7 @@ This is the same as \code{first+second+first:second}.
 }
 \value{
   \code{lm} returns an object of \code{\link{class}} \code{"lm"}.
-  
+
 The functions \code{summary} and \code{\link{anova}} are used to
 obtain and print a summary and analysis of variance table of the results.
 The generic accessor functions \code{coefficients},
@@ -67,7 +67,7 @@ extract various useful features of the value returned by \code{lm}.
 }
 \seealso{
   \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for
-  the ANOVA table. 
+  the ANOVA table.
   The generic functions \code{\link{coefficients}}, \code{\link{effects}},
   \code{\link{residuals}}, \code{\link{fitted.values}};
   \code{\link{lm.influence}} for regression diagnostics, and
@@ -83,5 +83,7 @@ weight <- c(ctl,trt)
 anova(lm.D9 <- lm(weight~group))
 summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept
 summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
+
+plot(lm.D9)# Residuals, Fitted,..
 }
 \keyword{regression}

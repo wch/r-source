@@ -15,6 +15,7 @@ formula(x)
 fitted.values(x)
 residuals(x)
 weights(x)
+plot(x)
 
 print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
               symbolic.cor = p > 4, signif.stars= TRUE, ...)
@@ -35,6 +36,7 @@ print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{residuals.lm}
 \alias{weights}
 \alias{weights.lm}
+\alias{plot.lm}
 \alias{print.lm}
 \alias{print.lm.null}
 \alias{print.summary.lm}
