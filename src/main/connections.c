@@ -947,6 +947,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- bzipped file connections --------------------- */
 
 #if defined(HAVE_BZLIB)
+#undef ERROR /* for compilation on Windows */
 #include <bzlib.h>
 
 static Rboolean bzfile_open(Rconnection con)
