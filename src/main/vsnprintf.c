@@ -789,30 +789,5 @@ int vsnprintf (char *str, size_t count, const char *fmt, va_list args)
 }
 #endif /* !HAVE_VSNPRINTF */
 
-#ifndef HAVE_SNPRINTF
-/* VARARGS3 */
-#ifdef HAVE_STDARGS
-int snprintf (char *str,size_t count,const char *fmt,...)
-#else
-int snprintf (va_alist) va_dcl
-#endif
-{
-#ifndef HAVE_STDARGS
-  char *str;
-  size_t count;
-  char *fmt;
-#endif
-  VA_LOCAL_DECL;
-  int total;
-    
-  VA_START (fmt);
-  VA_SHIFT (str, char *);
-  VA_SHIFT (count, size_t );
-  VA_SHIFT (fmt, char *);
-  total = vsnprintf(str, count, fmt, ap);
-  VA_END;
-  return total;
-}
-#endif /* !HAVE_SNPRINTF */
 #endif /* !HAVE_SNPRINTF || !HAVE_VSNPRINTF */
 

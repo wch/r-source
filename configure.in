@@ -2,7 +2,7 @@ dnl configure.in
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 1998, 1999, 2000, 2001 R Core Team
+dnl Copyright (C) 1998 - 2002 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -456,11 +456,9 @@ AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii isnan matherr memcpy \
-  memmove mempcpy mkfifo popen putenv rint setenv snprintf strcoll \
+  memmove mempcpy mkfifo popen putenv rint setenv strcoll \
   stat strptime system times unsetenv)
-AC_REPLACE_FUNCS(strdup)
-## This is tricky: vsnprintf.c can substitute for both snprintf and vsnprintf
-AC_REPLACE_FUNCS(vsnprintf)
+AC_REPLACE_FUNCS(snprintf strdup vsnprintf)
 AC_SEARCH_LIBS(connect, [socket])
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
 AC_SEARCH_LIBS(xdr_string, [nsl])
