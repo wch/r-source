@@ -1,3 +1,23 @@
+Changes from grid_1.9.0 to grid_2.0.0:
+------------------------------------
+
+1.  Calculation of number of circles to draw in circleGrob now
+    looks at length of y and r as well as length of x.
+
+2.  Calculation of number of rectangles to draw in rectGrob now
+    looks at length of y, w, and h as well as length of x.
+
+3.  All primitives (rectangles, lines, text, ...) now handle 
+    non-finite values (NA, Inf, -Inf, NaN) for locations and
+    sizes.
+
+    Non-finite values for locations, sizes, and scales of
+    viewports result in error messages.
+
+    There is a new vignette("nonfinite") which describes this
+    new behaviour.
+
+
 Changes from grid_1.9.0 to grid_1.9.1:
 ------------------------------------
 

@@ -102,6 +102,7 @@ format.octmode <- function(x, ...)
     if(!inherits(x, "octmode")) stop("calling wrong method")
     isna <- is.na(x)
     y <- x[!isna]
+    class(y) <- NULL
     ans0 <- character(length(y))
     z <- NULL
     while(any(y > 0) || is.null(z)) {
@@ -119,6 +120,14 @@ print.octmode <- function(x, ...)
 {
     print(format(x), ...)
     invisible(x)
+}
+
+"[.octmode" <- function (x, i)
+{
+    cl <- oldClass(x)
+    y <- NextMethod("[")
+    oldClass(y) <- cl
+    y
 }
 
 system.file <-
