@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-35, 2001-12-12
+@set FAQ-VERSION 1.3-36, 2001-12-14
 @set REL-VERSION 1.3.1
 @c %**end of header
 
@@ -683,6 +683,8 @@ and is currently being mirrored daily at
 @tab (PlanetMirror, Australia)
 @item @uref{http://cran.ch.r-project.org/}
 @tab (ETH Z@"urich, Switzerland)
+@item @uref{http://cran.de.r-project.org/}
+@tab (APP, Germany)
 @item @uref{http://cran.dk.r-project.org/}
 @tab (SunSITE, Denmark)
 @item @uref{http://cran.hu.r-project.org/}
