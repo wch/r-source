@@ -4769,11 +4769,11 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 
 @itemize @bullet
 @item
-An @acronym{ANSI} C compiler.  If you do not have access to the
-@acronym{ANSI} standard, refer to the 2nd edition of Brian W. Kernighan
-& Dennis M. Ritchie, @cite{The C Programming Language}.  Any extensions,
-such as @acronym{POSIX}, must be tested for, typically using Autoconf
-(@pxref{Configure and cleanup}).
+An ISO 9899, also known as ISO C89 or @acronym{ANSI} C compiler.  If you
+do not have access to this C standard, refer to the 2nd edition of Brian
+W. Kernighan & Dennis M. Ritchie, @cite{The C Programming Language}.
+Any extensions, such as @acronym{POSIX} or ISO C99, must be tested for,
+typically using Autoconf (@pxref{Configure and cleanup}).
 
 @item
 A FORTRAN 77 compiler or @command{f2c}, the FORTRAN-to-C converter.
