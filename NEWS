@@ -357,7 +357,7 @@ NEW FEATURES
 	loaded). Some serious testing will be going on, but it should
 	have no effect unless specifically asked for.
 
-    o	str() now shows ordered factors differently than unordered ones.
+    o	str() now shows ordered factors different from unordered ones.
 
     o	princomp.factor() now has principal argument `formula', so
 	update() can be used.
@@ -366,6 +366,9 @@ NEW FEATURES
 	knows about many objects that look like methods but are not.
 
     o	symnum() has a new logical argument `abbr.colnames'.
+
+    o	summary(<logical>) now mentions NA's as suggested by
+	Göran Broström.
 
 
 INSTALLATION CHANGES
