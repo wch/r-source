@@ -84,10 +84,10 @@ function (x, y, weights = rep(1, nobs), start = NULL, etastart=NULL,
   conv <- FALSE
   nobs <- NROW(y)
   nvars <- NCOL(x)
-  # define weights and offset if needed
+  ## define weights and offset if needed
   if (is.null(weights)) 
     weights <- rep(1, nobs)
-  # get family functions
+  ## get family functions
   if (is.null(offset)) 
     offset <- rep(0, nobs)
   variance <- family$variance
@@ -106,10 +106,11 @@ function (x, y, weights = rep(1, nobs), start = NULL, etastart=NULL,
   eval(family$initialize, sys.frame(sys.nframe()))
   if (NCOL(y) > 1) 
     stop("y must be univariate unless binomial")
-  if(!is.null(etastart)) eta <- etastart
+  eta<-
+  if(!is.null(etastart))  etastart
   else {
     if (is.null(start)) {
-      # calculate initial estimate of eta and mu:
+      ## calculate initial estimate of eta and mu:
       start <- c(0.5, rep(0, nvars - 1))
       linkfun <- family$linkfun
       if (validmu(mustart)) {
@@ -125,9 +126,9 @@ function (x, y, weights = rep(1, nobs), start = NULL, etastart=NULL,
       }
     }
     else if (length(start) != nvars) 
-      stop(paste("Length of start should equal", nvars, "and correspond to initial coefs for", 
-                 deparse(xnames)))
-    eta <- as.vector(if (NCOL(x) == 1) x * start else x %*% start)
+      stop(paste("Length of start should equal", nvars,
+	"and correspond to initial coefs for", deparse(xnames)))
+    as.vector(if (NCOL(x) == 1) x * start else x %*% start)
   }
   mu <- linkinv(eta + offset)
   if (!(validmu(mu) && valideta(eta))) 
@@ -141,6 +142,8 @@ function (x, y, weights = rep(1, nobs), start = NULL, etastart=NULL,
       mu.eta.val[ina] <- mu.eta(mu)[ina]
     if (any(is.na(mu.eta.val))) 
       stop("NAs in d(mu)/d(eta)")
+
+       ## calculate z and w using only values where mu.eta != 0
     good <- mu.eta.val != 0
     if (all(!good)) {
       conv <- FALSE
@@ -152,8 +155,9 @@ function (x, y, weights = rep(1, nobs), start = NULL, etastart=NULL,
     x <- as.matrix(x)
     ngoodobs <- as.integer(nobs - sum(!good))
     ncols <- as.integer(1)
-    # call linpack code
-    fit <- .Fortran("dqrls", qr = x[good, ] * w, n = as.integer(ngoodobs), 
+    ## call linpack code
+    fit <- .Fortran("dqrls",
+                    qr = x[good, ] * w, n = as.integer(ngoodobs), 
                     p = nvars, y = w * z, ny = ncols,
                     tol = min(1e-07, control$epsilon/1000),
                     coefficients = mat.or.vec(nvars, 1),
@@ -164,6 +168,7 @@ function (x, y, weights = rep(1, nobs), start = NULL, etastart=NULL,
     if (nobs < fit$rank) 
       stop(paste("X matrix has rank", fit$rank, "but only", 
                  nobs, "observations"))
+    ## calculate updated values of eta and mu with the new coef:
     start <- coef <- fit$coefficients
     start[fit$pivot] <- coef
     eta[good] <- if (nvars == 1) 
@@ -185,7 +190,7 @@ function (x, y, weights = rep(1, nobs), start = NULL, etastart=NULL,
     dev <- sum(dev.resids(y, mu, weights))
     if (control$trace) 
       cat("Deviance =", dev, "Iterations -", iter, "\n")
-    # check for divergence
+    ## check for divergence
     boundary <- FALSE
     ## check for fitted values outside domain.
     if (any(is.na(dev)) || any(is.na(coef))) {
@@ -234,7 +239,8 @@ function (x, y, weights = rep(1, nobs), start = NULL, etastart=NULL,
       devold <- dev
       coefold <- coef
     }
-  }
+  }#-------------- end IRLS iteration ----------------------
+
   if (!conv) warning("Algorithm did not converge")
   if (boundary) warning("Algorithm stopped at boundary value")
   if (fit$rank != nvars) {
