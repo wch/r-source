@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-3, 2000/04/01
+Version 1.0-5, 2000/04/07
 Kurt Hornik
 
 
@@ -1183,6 +1183,9 @@ works, was published in the Journal of Statistical Software
 *xgobi*
      Interface to the XGobi and XGvis programs for graphical data analysis.
 
+*zmatrix*
+     Matrices with numeric indices starting at zero rather than one.
+
 See CRAN `src/contrib/INDEX' for more information.
 
    There is also a CRAN `src/contrib/Devel' directory which contains
@@ -1198,6 +1201,13 @@ these a try, of course.  This area of CRAN currently contains
 
 *RPgSQL*
      An interface between R and the PostgreSQL database system.
+
+*cmprsk*
+     Estimation, testing and regression modeling of subdistribution
+     functions in competing risks.
+
+*cxx*
+     A small C++ test package.
 
 *dopt*
      Finding D-optimal experimental designs.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.0-3, 2000/04/01
+@set FAQ-VERSION 1.0-5, 2000/04/07
 @set REL-VERSION 1.0.0
 @set DEV-VERSION 1.1.0
 @c %**end of header
@@ -1401,6 +1401,8 @@ Additional code for time series analysis.
 Software to perform 1-d and 2-d wavelet statistics and transforms.
 @item xgobi
 Interface to the XGobi and XGvis programs for graphical data analysis.
+@item zmatrix
+Matrices with numeric indices starting at zero rather than one.
 @end table
 
 @noindent
@@ -1419,6 +1421,11 @@ Functions for exporting R objects as @HTML{} tables.
 An interface between R and the MySQL database system.
 @item RPgSQL
 An interface between R and the PostgreSQL database system.
+@item cmprsk
+Estimation, testing and regression modeling of subdistribution functions
+in competing risks.
+@item cxx
+A small C++ test package.
 @item dopt
 Finding D-optimal experimental designs.
 @item foreign
