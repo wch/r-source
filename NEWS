@@ -531,6 +531,9 @@ BUG FIXES
 	method = "constant".  stepfun(), ecdf() and plot.stepfun() do so
 	as well.
 
+    o	AIC.lm/default was failing if multiple objects and k were
+	specified.  (PR#2518)
+
 
 
 	**************************************************

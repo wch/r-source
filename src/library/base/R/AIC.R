@@ -18,12 +18,11 @@ AIC.default <- function(object, ..., k = 2)
 				      function(el)
 				      c(attr(el, "df"), AIC(el, k = k)))))
 	names(val) <- c("df", "AIC")
-	row.names(val) <- as.character(match.call()[-1])
+        Call <- match.call()
+        Call$k <- NULL
+	row.names(val) <- as.character(Call[-1])
 	val
-    }
-    else {
-	AIC(logLik(object), k = k)
-    }
+    } else AIC(logLik(object), k = k)
 }
 
 

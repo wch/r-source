@@ -2018,12 +2018,22 @@ plot(sf <- stepfun(2, 3:4))
 detach(2)
 ## failed in 1.6.2
 
+
 ## PR#2541, cbind (and rbind) with zero-length components
 y <- matrix(0,1,0)
 cbind(y, integer(0))
 y <- matrix(0,0,1)
 rbind(y, integer(0))
 ## gave fatal error in 1.6.2, since miscalculated no of rows/cols.
+
+
+## PR#2518 multiple objects in AIC.default.
+lm1 <- lm(y ~ x, list(x=1:10, y=jitter(1:10)))
+lm2 <- lm(y ~ x, list(x=1:10, y=jitter(1:10)))
+AIC(lm1, lm2)
+AIC(lm1, lm2,  k=2)
+## second failed in 1.6.2
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
