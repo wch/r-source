@@ -2793,7 +2793,6 @@ stopifnot(identical(dim(x), as.integer(c(0, 3))))
 library(stepfun)
 try(stepfun(c(), 1)(2))# > Error
 ## segfaults in 1.8.1 and earlier
-<<<<<<< reg-tests-1.R
 
 
 ## PR#4955 now allow embedded newlines in quoted fields in read.table
