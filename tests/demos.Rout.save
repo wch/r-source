@@ -703,15 +703,11 @@ In addition: Warning messages:
 
 > title(main = "1000 Normal Random Variates", font.main = 3)
 
-> data("iris")
-
 > pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
     font.main = 4, pch = 19)
 
 > pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
     pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
-
-> data("volcano")
 
 > x <- 10 * 1:nrow(volcano)
 
@@ -760,8 +756,6 @@ In addition: Warning messages:
 
 > par(bg = "cornsilk")
 
-> data(quakes)
-
 > coplot(lat ~ long | depth, data = quakes, pch = 21, 
     bg = "green3")
 
@@ -775,8 +769,6 @@ In addition: Warning messages:
 
 > opar <- par(ask = interactive() && (.Device %in% c("X11", 
     "GTK", "windows", "quartz")))
-
-> data(volcano)
 
 > x <- 10 * (1:nrow(volcano))
 
@@ -829,8 +821,6 @@ In addition: Warning messages:
     font.main = 4)
 
 > example(filled.contour)
-
-flld.c> data(volcano)
 
 flld.c> filled.contour(volcano, color = terrain.colors, asp = 1)
 
@@ -912,8 +902,6 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > title(sub = ".")
 
 > title(main = sinc.exp)
-
-> data(volcano)
 
 > z <- 2 * volcano
 
@@ -1167,8 +1155,6 @@ smooth> plot(x, main = "breakdown of  3R  and  S  and hence  3RSS")
 
 smooth> matlines(cbind(smooth(x, "3R"), smooth(x, "S"), smooth(x, 
     "3RSS"), smooth(x)))
-
-smooth> data(presidents)
 
 smooth> presidents[is.na(presidents)] <- 0
 
