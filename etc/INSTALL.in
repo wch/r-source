@@ -15,14 +15,24 @@ if [ "$1" = "-html" ]; then shift; IHTML=;  fi
 if [ "$1" ]
 then
     pkg=$1
-    test -d ${pkg} || ( echo "Package \`${pkg}' does not exist"; exit 1 )
+    if ! test -d ${pkg}
+    then
+	echo "Package \`${pkg}' does not exist"
+	exit 1
+    fi
 else
-    echo "usage:  R INSTALL <options> pkg [lib]" && exit 1
+    echo "usage:  R INSTALL <options> pkg [lib]"
+    exit 1
 fi
 
 lib=${2:-${RHOME}/library}
-mkdir -p ${lib} || ( echo "Cannot write to \`${lib}'"; exit 1 )
-lib=`cd ${lib}; pwd`
+if mkdir -p ${lib}
+then
+    lib=`cd ${lib}; pwd`
+else    
+    echo "Cannot write to \`${lib}'"
+    exit 1
+fi
 
 src=@LIBSRC@
 
@@ -33,7 +43,7 @@ echo "Installing package \`${pkg}' ..."
 
 if test -d ${src}
 then
-    echo "objs"
+    echo "libs"
     (cd ${src}; make CC="@CC@" CFLAGS="@CFLAGS@ @PICFLAGS@ -I${RHOME}/include" SHLIBLDFLAGS="@SHLIBLDFLAGS@" FC="@FC@" FFLAGS="@FFLAGS@ @FPICFLAGS@")
     mkdir -p ${lib}/${pkg}/libs
     cp ${src}/*.so ${lib}/${pkg}/libs
