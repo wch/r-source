@@ -2245,6 +2245,11 @@ unique(f)
 ## both failed in 1.7.1
 
 
+## data failed with some multiple inputs
+data(cars, women)
+## failed in 1.7.1
+
+
 ## body() and formals() looked in different places
 bar <- function(x=NULL)
 {

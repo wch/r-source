@@ -131,9 +131,9 @@ function(..., list = character(0),
         if(length(files) > 1) {
             ## more than one candidate
             o <- match(fileExt(files), dataExts, nomatch = 100)
-            paths <- dirname(files)
-            paths <- factor(paths, levels=paths)
-            files <- files[order(paths, o)]
+            paths0 <- dirname(files)
+            paths0 <- factor(paths0, levels=paths0)
+            files <- files[order(paths0, o)]
         }
         if(length(files) > 0) {
             for(file in files) {
