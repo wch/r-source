@@ -220,6 +220,8 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
             if (se.fit) se <- rep(sqrt(object$var.pred), n.ahead)
         }
         pred <- pred + rep(object$x.mean, n.ahead)
+        if(!is.null(xint <- object$x.intercept))
+            pred <- pred + rep(xint, n.ahead)
     }
     pred <- ts(pred, start = st + dt, frequency=xfreq)
     if(se.fit) return(pred, se) else return(pred)

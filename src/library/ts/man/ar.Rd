@@ -59,40 +59,49 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
     selecting the complexity by AIC.
 }
 \details{
-    \code{ar} is just a wrapper for the functions \code{ar.yw},
-    \code{ar.burg}, \code{ar.ols} and \code{ar.mle}.
+  For definiteness, note that the AR coefficients have the sign in
 
-    Order selection is done by AIC if \code{aic} is true. This is
-    problematic, as of the methods here only \code{ar.mle} performs
-    true maximum likelihood estimation. The AIC is computed as if the variance
-    estimate were the MLE, omitting the determinant term from the
-    likelihood. Note that this is not the same as the Gaussian likelihood
-    evaluated at the estimated parameter values. In \code{ar.yw} the
-    variance matrix of the innovations is computed from the fitted
-    coefficients and the autocovariance of \code{x} and in \code{ar.ols}
-    from the variance matrix of the residuals.
+  (x[t] - m) = a[0] + a[1]*(x[t-1] - m) + ... +  a[p]*(x[t-p] - m) + e[t]
 
-    \code{ar.burg} allows two methods to estimate the innovations
-    variance and hence AIC. Method 1 is to use the update given by
-    the Levinson-Durbin recursion (Brockwell and Davis, 1991, (8.2.6)
-    on page 242), and follows S-PLUS. Method 2 is the mean of the sum
-    of squares of the forward and backward prediction errors
-    (as in Brockwell and Davis, 1996, page 145). Percival and Walden
-    (1998) discuss both.
+  and a[0] is zero except to an OLS fit (which can fit non-stationary
+  models).
+  
+  \code{ar} is just a wrapper for the functions \code{ar.yw},
+  \code{ar.burg}, \code{ar.ols} and \code{ar.mle}.
+  
+  Order selection is done by AIC if \code{aic} is true. This is
+  problematic, as of the methods here only \code{ar.mle} performs
+  true maximum likelihood estimation. The AIC is computed as if the variance
+  estimate were the MLE, omitting the determinant term from the
+  likelihood. Note that this is not the same as the Gaussian likelihood
+  evaluated at the estimated parameter values. In \code{ar.yw} the
+  variance matrix of the innovations is computed from the fitted
+  coefficients and the autocovariance of \code{x} and in \code{ar.ols}
+  from the variance matrix of the residuals.
+  
+  \code{ar.burg} allows two methods to estimate the innovations
+  variance and hence AIC. Method 1 is to use the update given by
+  the Levinson-Durbin recursion (Brockwell and Davis, 1991, (8.2.6)
+  on page 242), and follows S-PLUS. Method 2 is the mean of the sum
+  of squares of the forward and backward prediction errors
+  (as in Brockwell and Davis, 1996, page 145). Percival and Walden
+  (1998) discuss both.
 
-    Remember that \code{ar} includes by default a constant in the model, by
-    removing the overall mean of \code{x} before fitting the AR model,
-    or (\code{ar.ols} or \code{ar.mle}) estimating an additive constant.
+  Remember that \code{ar} includes by default a constant in the model, by
+  removing the overall mean of \code{x} before fitting the AR model,
+  or (\code{ar.mle}) estimating a constant to subtract or
+  (\code{ar.ols}) subtracting the mean and estimating an additive
+  constant.
 
-    \code{ar.ols} fits the general AR model (containing an intercept
-    if \code{demean = TRUE}) to a possibly non-stationary and/or
-    multivariate system of series \code{x}. The resulting
-    unconstrained least squares estimates are consistent, even if
-    some of the series are non-stationary and/or co-integrated.
+  \code{ar.ols} fits the general AR model (containing an intercept
+  if \code{demean = TRUE}) to a possibly non-stationary and/or
+  multivariate system of series \code{x}. The resulting
+  unconstrained least squares estimates are consistent, even if
+  some of the series are non-stationary and/or co-integrated.
 }
 \value{
-    For \code{ar} and its methods a list of class \code{"ar"} with
-    the following elements:
+  For \code{ar} and its methods a list of class \code{"ar"} with
+  the following elements:
   \item{order}{The order of the fitted model.  This is chosen by
       minimizing the AIC if \code{aic=TRUE}, otherwise it is \code{order.max}.}
   \item{ar}{Estimated autoregression coefficients for the fitted model.}
@@ -101,6 +110,8 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
       autoregressive model.}
   \item{x.mean}{The estimated mean of the series used in fitting and for
       use in prediction.}
+  \item{x.intercept}{(\code{ar.ols} only.) The intercept in the model for
+    \code{x - x.mean}.}
   \item{aic}{The value of the \code{aic} argument.}
   \item{n.used}{The number of observations in the time series.}
   \item{order.max}{The value of the \code{order.max} argument.}

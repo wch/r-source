@@ -71,14 +71,14 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     y <- embed(x, m+1)
     AA <- A[[m - order.min + 1]]
     if(demean) {
-        x.mean <- AA[, 1]
+        xint <- AA[, 1]
         ar <- AA[, -1]
         if (m > 0) X <- cbind(rep(1,nrow(y)), y[, (nser+1):ncol(y)])
         else X <- as.matrix(rep(1, nrow(y)))
     } else {
         if (m > 0) X <- y[, (nser+1):ncol(y)]
         else X <- matrix(0, nrow(y), 0)
-        x.mean <- rep(0, nser)
+        xint <- NULL
         ar <- AA
     }
     Y <- t(y[, 1:nser, drop=FALSE])
@@ -108,7 +108,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         attr(E, "class") <- "ts"
     }
     res <- list(order = m, ar = ar, var.pred = var.pred,
-                x.mean = x.mean + xm, aic = aic,
+                x.mean = xm, x.intercept = xint, aic = aic,
                 n.used = n.used, order.max = order.max,
                 partialacf = NULL, resid = E, method = "Unconstrained LS",
                 series = series, frequency = xfreq, call = match.call(),
