@@ -75,7 +75,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
     if(length(log) && log != "") {
 	log <- strsplit(log, NULL)[[1]]
 	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
-	    n <- sum(ii)
+	    n <- as.integer(sum(ii))
 	    warning(sprintf(ngettext(n,
                             "one x value <= 0 omitted from logarithmic plot",
                             "%d x values <= 0 omitted from logarithmic plot"),
@@ -83,7 +83,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 	    x[ii] <- NA
 	}
 	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
-	    n <- sum(ii)
+	    n <- as.integer(sum(ii))
 	    warning(sprintf(ngettext(n,
                             "one y value <= 0 omitted from logarithmic plot",
                             "%d y values <= 0 omitted from logarithmic plot"),

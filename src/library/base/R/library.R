@@ -669,7 +669,7 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
             if(all(m))
                 stop("none of the packages are loaded")
             else
-                warning(sprintf(ngettext(sum(m),
+                warning(sprintf(ngettext(as.integer(sum(m)),
                                          "package %s is not loaded",
                                          "packages %s are not loaded"),
                                 paste(package[m], collapse=", ")),
