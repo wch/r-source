@@ -26,7 +26,12 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   \item{col}{the color for filling the polygon.
     The default, \code{NA}, is to leave polygons unfilled.}
   \item{border}{the color to draw the border.  The default, \code{NULL},
-    uses \code{\link{par}("fg")}.  Use \code{border=0} to omit borders.}
+    uses \code{\link{par}("fg")}.  Use \code{border = NA} to omit borders.
+    
+    For compatibility with S, \code{border} can also be logical, it
+    which case \code{FALSE} is equivalent to \code{NA} (borders omitted)
+    and \code{TRUE} is equivalent to \code{NULL} (use the foreground colour),
+  }
   \item{lty}{the line type to be used, as in \code{\link{par}}.}
   \item{xpd}{(where) should clipping take place?  Defaults to
     \code{\link{par}("xpd")}.}
@@ -62,6 +67,8 @@ polygon(x, y = NULL, density = NULL, angle = 45,
 \seealso{
   \code{\link{segments}} for even more flexibility, \code{\link{lines}},
   \code{\link{rect}}, \code{\link{box}}, \code{\link{abline}}.
+
+  \code{\link{par}} for how to specify colors.
 }
 \examples{
 x <- c(1:9,8:1)

@@ -43,6 +43,8 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
   \code{\link{box}} for the ``standard'' box around the plot;
   \code{\link{polygon}} and \code{\link{segments}} for flexible line
   drawing.
+
+  \code{\link{par}} for how to specify colors.
 }
 \examples{
 ## set up the plot region:

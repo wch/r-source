@@ -38,8 +38,8 @@ NEW FEATURES
     o   The objects created in the methods package to represent
 	classes, generic functions, method definitions, and
 	inheritance relations now themselves belong to true classes.  In
-        particular,  the "classRepresentation" objects follow the description
-        in "Programming with Data" (section 7.6)
+        particular, the "classRepresentation" objects follow the description
+        in "Programming with Data" (section 7.6).
 
     o	New methods ([[, print, str) and extended plot() method
 	for "dendrogram" class.
@@ -270,7 +270,7 @@ BUG FIXES
     o	pdf() has been protected against the user who specified
 	non-existent fonts. (PR#1748)
 
-    o   dlnorm() returns zero for negative x argument (PR#1781)
+    o   dlnorm() returns zero for negative x argument. (PR#1781)
 
     o   Printing 0 in octmode gave "" not "0". (PR#1759)
 
@@ -284,7 +284,7 @@ BUG FIXES
 	model.matrix() was sometimes incorrectly determining the first
 	factor in a formula without an intercept.
 
-    o   termplot() now needs data= argument more rarely (PR#828)
+    o   termplot() now needs data= argument more rarely. (PR#828)
 
     o   abline() on log scale doesn't draw -ve points. (PR#1243)
 
@@ -315,6 +315,9 @@ BUG FIXES
 
     o	zero-column matrices were not being printed at all, not even
 	the row names.
+
+    o	polygon()'s `border' argument was incorrectly documented: in
+	particular `border = 0' plots in background colour.
 
 
 

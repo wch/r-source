@@ -36,8 +36,7 @@ points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
       \item \code{pch=25}: triangle point down.
     }
   }
-  \item{col}{color code or name, see \code{\link{colors}},
-    \code{\link{palette}}.}
+  \item{col}{color code or name, see \code{\link{par}}.}
   \item{bg}{background (``fill'') color for open plot symbols}
   \item{cex}{character expansion}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}
