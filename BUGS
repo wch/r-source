@@ -71,6 +71,10 @@ Subject: Matrix identification bug
 From: hyu@stats.uwo.ca
 Date: Tue, 5 Mar 2002 21:19:46 +0100 (MET)
 --seems to be about Matrix package, not solve
+* PR# 1580 *
+Subject: R bug in cluster package
+From: David Hitchcock <dhitchco@stat.ufl.edu>
+Date: Mon, 20 May 2002 14:33:24 -0400
 
 Directory:  Analyses
 
@@ -246,6 +250,18 @@ Date: Tue, 23 Apr 2002 09:41:37 +0200 (MET DST)
 Subject: pictex 
 From: luchini@ehess.cnrs-mrs.fr
 Date: Thu, 2 May 2002 12:23:21 +0200 (MET DST)
+* PR# 1653 *
+Subject: coplot behaviour
+From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
+Date: Mon, 10 Jun 2002 20:11:02 +0200
+* PR# 1654 *
+Subject: R 1.5.0: axis() does not honor the xaxp argument
+From: "Robert D. Merithew" <merithew@ccmr.cornell.edu>
+Date: Tue, 11 Jun 2002 09:29:39 -0400 (EDT)
+* PR# 1659 *
+Subject:  mtext() alignment of perpendicular text 
+From: p.murrell@auckland.ac.nz
+Date: Wed, 12 Jun 2002 13:29:45 +1200 (NZST)
 
 Directory:  In-Out
 
@@ -288,6 +304,18 @@ Date: Tue, 30 Apr 2002 16:41:51 +0200 (CEST)
 Subject: configure error: Maybe change CFLAGS or FFLAGS?
 From: ale@ini.phys.ethz.ch
 Date: Wed, 1 May 2002 15:23:14 +0200 (MET DST)
+* PR# 1656 *
+Subject: command line editing does not work
+From: Petr.Savicky@cuni.cz
+Date: Tue, 11 Jun 2002 19:51:24 +0200
+* PR# 1657 *
+Subject: command line editing does not work (2)
+From: Petr.Savicky@cuni.cz
+Date: Tue, 11 Jun 2002 20:20:11 +0200
+* PR# 1658 *
+Subject: make install fails - index.html not found
+From: dhouston@bio.ri.ccf.org
+Date: Tue, 11 Jun 2002 22:14:07 +0200 (MET DST)
 
 Directory:  Language
 
@@ -473,47 +501,11 @@ Directory:  incoming
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1580 *
-Subject: R bug in cluster package
-From: David Hitchcock <dhitchco@stat.ufl.edu>
-Date: Mon, 20 May 2002 14:33:24 -0400
-* PR# 1624 *
-Subject: cluster installation hangs or too many args
-From: felix@sprintlabs.com
-Date: Sun, 2 Jun 2002 02:45:54 +0200 (MET DST)
-* PR# 1640 *
-Subject: Tcl8.0.4 missing function?! 
-From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
-Date: Wed, 05 Jun 2002 18:56:37 +0200
-* PR# 1651 *
-Subject: Crashing R
-From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
-Date: Mon, 10 Jun 2002 18:39:58 +0200
-* PR# 1652 *
-Subject: BUGS.R-PROJECT.ORG
-From: Christine Hall <return@trafficmagnet.net>
-Date: Tue, 11 Jun 2002 2:18:50 +0800
-* PR# 1653 *
-Subject: coplot behaviour
-From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
-Date: Mon, 10 Jun 2002 20:11:02 +0200
-* PR# 1654 *
-Subject: R 1.5.0: axis() does not honor the xaxp argument
-From: "Robert D. Merithew" <merithew@ccmr.cornell.edu>
-Date: Tue, 11 Jun 2002 09:29:39 -0400 (EDT)
 * PR# 1655 *
 Subject: ReadLines(con2)
 From: SGEIGER <SGEIGER@indiana.edu>
 Date: Tue, 11 Jun 2002 12:32:44 +0800 (CST)
-* PR# 1656 *
-Subject: command line editing does not work
-From: Petr.Savicky@cuni.cz
-Date: Tue, 11 Jun 2002 19:51:24 +0200
-* PR# 1657 *
-Subject: command line editing does not work (2)
-From: Petr.Savicky@cuni.cz
-Date: Tue, 11 Jun 2002 20:20:11 +0200
-* PR# 1658 *
-Subject: make install fails - index.html not found
-From: dhouston@bio.ri.ccf.org
-Date: Tue, 11 Jun 2002 22:14:07 +0200 (MET DST)
+* PR# 1660 *
+Subject: documentation error for quantile
+From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
+Date: Wed, 12 Jun 2002 23:01:00 +0200
