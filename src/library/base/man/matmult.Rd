@@ -1,15 +1,18 @@
 \name{matmult}
-\title{Matrix Multiplication}
-\usage{
-a \%*\% b
-}
 \alias{\%*\%}
 \alias{matmult}
+\title{Matrix Multiplication}
 \description{
   Multiplies two matrices, if they are conformable.
   If one argument is a vector, it will be coerced to a either a row or column
   matrix to make the two arguments conformable.
   If both are vectors it will return the inner product.
+}
+\usage{
+a \%*\% b
+}
+\arguments{
+  \item{a, b}{numeric or complex matrices or vectors.}
 }
 \value{
   The matrix product.  Use \code{\link{drop}} to get rid of dimensions
