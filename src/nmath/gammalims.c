@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 1999-2000  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,11 +36,15 @@
 
 #include "nmath.h"
 
-/* FIXME: We need an ifdef'ed version of this which gives  */
-/* the exact values when we are using IEEE 754 arithmetic. */
-
 void gammalims(double *xmin, double *xmax)
 {
+/* FIXME: Even better: If IEEE, #define these in ../include/R_ext/Mathlib.h
+	  and don't call gammalims() at all
+*/
+#ifdef IEEE_754
+    *xmin = -170.5674972726612;
+    *xmax =  171.61447887182298;/*(3 Intel/Sparc architectures)*/
+#else
     double alnbig, alnsml, xln, xold;
     int i;
 
@@ -83,4 +88,6 @@ find_xmax:
 
 done:
     *xmin = fmax2(*xmin, -(*xmax) + 1);
+#endif
 }
+
