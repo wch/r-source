@@ -1,3 +1,7 @@
+### Unimplemented Idea {for amount = NULL ?}
+### Really "optimal" (e.g. for rug()), use a non-constant amount,
+### e.g. use "d" = diff(xx)  BEFORE  taking min()...
+
 jitter <- function(x, factor = 1, amount=NULL)
 {
     z <- diff(r <- range(x[is.finite(x)]))

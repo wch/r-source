@@ -792,6 +792,7 @@ fi
 echo "using libraries \`${BITMAP_LIBS}' for bitmap functions"
 AC_SUBST(BITMAP_LIBS)
 
+R_BITMAPS
 
 ## Saving.
 

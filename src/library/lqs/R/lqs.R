@@ -113,7 +113,7 @@ lqs.default <-
 	     as.integer(quantile), as.integer(lts), as.integer(adj),
 	     as.integer(samp), as.integer(ps), as.integer(nsamp),
 	     crit=double(1), sing=integer(1), bestone=integer(ps),
-	     coefficients=double(p), as.integer(k0), as.double(beta),
+	     coefficients=double(p), as.double(k0), as.double(beta),
              PACKAGE="lqs"
 	     )[c("crit", "sing", "coefficients", "bestone")]
     z$sing <- paste(z$sing, "singular samples of size", ps, "out of", nsamp)

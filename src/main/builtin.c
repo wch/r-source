@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999,2000  The R Development Core Team.
+ *  Copyright (C) 1999-2000  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
     expr = CAR(args);
     env = eval(CADR(args), rho);
     if (!isEnvironment(env))
-	errorcall(call, "invalid argument");
+	errorcall(call, R_MSG_IA);
     return mkPROMISE(expr, env);
 }
 
@@ -58,8 +58,7 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	addit = (LOGICAL(add)[0] == 1);
 	break;
     default:
-	errorcall(call, "invalid number of arguments");
-	code = R_NilValue;/* for -Wall */
+	errorcall_return(call, "invalid number of arguments");
     }
     ctxt = R_GlobalContext;
     while (ctxt != R_ToplevelContext && !(ctxt->callflag & CTXT_FUNCTION) )

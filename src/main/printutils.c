@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999, 2000  The R Development Core Team
+ *  Copyright (C) 1999--2000  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -425,9 +425,9 @@ void Rvprintf(const char *format, va_list arg)
     }
     else {
 	char buf[BUFSIZE], *p = buf, *vmax = vmaxget();
+#ifdef HAVE_VSNPRINTF
 	int res;
 
-#ifdef HAVE_VSNPRINTF
 	res = vsnprintf(p, BUFSIZE, format, arg);
 	if(res >= BUFSIZE) { /* res is the desired output length */
 	    p = R_alloc(res+1, sizeof(char));

@@ -113,14 +113,27 @@ dev.print <- function(device = postscript,  ...)
     oc[[1]] <- as.name("dev.copy")
     oc$device <- device
     din <- par("din"); w <- din[1]; h <- din[2]
-    if(missing(device)) {
+    if(missing(device)) { ## safe way to recognize postscript
         if(is.null(oc$file)) oc$file <- ""
         hz <- oc$horizontal
+        wp <- 8; wh <- 10
+        paper <- oc$paper
+        if(is.null(paper)) paper <- ps.options()$paper
+        if(paper == "default") paper <- getOption("papersize")
+        paper <- tolower(paper)
+        if(paper == "a4") {wp <- 8; hp <- 14.0 - 0.5}
+        ## Letter is defaults.
+        if(paper == "legal") {wp <- 8.27 - 0.5; hp <- 11.69 - 0.5}
+        if(paper == "executive") {wp <- 7.25 - 0.5; hp <- 10.5 - 0.5}
         if(is.null(hz)) hz <- ps.options()$horizontal
-        h0 <- ifelse(hz, 8, 10)
-        if(h > h0) {w <- w * h0 /h; h<- h0 }
-        w0 <- ifelse(hz, 10, 8)
-        if(w > w0) { h <- h * w0 /w;  w <- w0}
+        if(w > wp && w < hp && h < wp) { horizontal <- TRUE }
+        else if (h > wp && h < hp && w < wp) { horizontal <- FALSE }
+        else {
+            h0 <- ifelse(hz, wp, wh)
+            if(h > h0) {w <- w * h0 /h; h<- h0 }
+            w0 <- ifelse(hz, wh, wp)
+            if(w > w0) { h <- h * w0 /w;  w <- w0}
+        }
         if(is.null(oc$pointsize)) {
             pt <- ps.options()$pointsize
             oc$pointsize <- pt * w/din[1]

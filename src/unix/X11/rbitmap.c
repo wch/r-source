@@ -50,7 +50,7 @@
 void R_ShowMessage(char *msg);
 #include "Error.h"
 
-#ifdef HAVE_PNG_H
+#ifdef HAVE_PNG
 
 #include "png.h"
 #include <setjmp.h>
@@ -228,7 +228,7 @@ int R_SaveAsPng(void  *d, int width, int height,
 #endif /* HAVE_PNG */
 
 
-#ifdef HAVE_JPEGLIB_H
+#ifdef HAVE_JPEG
 
 #include <jpeglib.h>
 

@@ -3055,3 +3055,62 @@ SEXP do_replay(SEXP call, SEXP op, SEXP args, SEXP env)
     playDisplayList(dd);
     return R_NilValue;
 }
+
+SEXP do_getDL(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd = CurrentDevice();
+    checkArity(op, args);
+    return dd->displayList;
+}
+
+SEXP do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd = CurrentDevice();
+    SEXP theList;
+    int ask;
+
+    checkArity(op, args);
+    if(!isList(theList = CAR(args)))
+       errorcall(call, "invalid argument");
+    if (theList != R_NilValue) {
+	ask = dd->gp.ask;
+	dd->gp.ask = 1;
+	GReset(dd);
+	while (theList != R_NilValue) {
+	    SEXP theOperation = CAR(theList);
+	    SEXP op = CAR(theOperation);
+	    SEXP args = CDR(theOperation);
+	    PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
+            if (!dd->gp.valid) break;
+	    theList = CDR(theList);
+	}
+	dd->gp.ask = ask;
+    }    
+    return R_NilValue;
+}
+
+SEXP do_getGPar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP GP;
+    int lGPar = 1 + sizeof(GPar) / sizeof(int);
+    DevDesc *dd = CurrentDevice();
+
+    checkArity(op, args);
+    GP = allocVector(INTSXP, lGPar);
+    copyGPar(&dd->dpSaved, (GPar *) INTEGER(GP));    
+    return GP;
+}
+
+SEXP do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd = CurrentDevice();
+    int lGPar = 1 + sizeof(GPar) / sizeof(int);
+    SEXP GP;
+    
+    checkArity(op, args);
+    GP = CAR(args);
+    if (!isInteger(GP) || length(GP) != lGPar)
+	errorcall(call, "invalid graphics parameter list");
+    copyGPar((GPar *) INTEGER(GP), &dd->dpSaved);    
+    return R_NilValue;
+}

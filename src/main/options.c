@@ -169,7 +169,7 @@ void InitOptions(void)
 {
     SEXP t, val, v;
     char *p;
-    
+
     PROTECT(v = val = allocList(13));
 
     TAG(v) = install("prompt");
@@ -429,7 +429,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else {
 	    if (!isString(argi) || LENGTH(argi) <= 0)
-		errorcall(call, "invalid argument");
+		errorcall(call, R_MSG_IA);
 	    VECTOR(value)[i] = duplicate(CAR(FindTaggedItem(options,
 				     install(CHAR(STRING(argi)[0])))));
 	    STRING(names)[i] = STRING(argi)[0];

@@ -778,17 +778,31 @@ AC_DEFUN(AM_CONDITIONAL, [
     $1_FALSE=
   fi
 ])
+
+
 dnl
-dnl R_LIB_TCLTK
+dnl R_BITMAPS
 dnl
-AC_DEFUN(R_LIB_TCLTK,
-  [ AC_CHECK_LIB(tk, Tk_MainLoop,
-      [ AC_DEFINE(HAVE_TCLTK)
-        TCLTK_LIBS="-ltk -ltcl"
-	use_tcltk=yes
-	AC_SUBST(TCLTK_LIBS)
-      ],[use_tcltk=no])
+AC_DEFUN(R_BITMAPS, [
+BITMAP_LIBS=
+AC_CHECK_HEADER(jpeglib.h, [
+  AC_CHECK_LIB(jpeg, jpeg_destroy_compress, 
+    [ 
+      BITMAP_LIBS=-ljpeg
+      AC_DEFINE(HAVE_JPEG)
+    ], , ${LIBS})
   ])
+AC_CHECK_HEADER(png.h, [
+  AC_CHECK_LIB(png, png_create_write_struct, 
+    [
+      BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
+      AC_DEFINE(HAVE_PNG)
+    ], , ${LIBS})
+  ])
+echo "using libraries \`${BITMAP_LIBS}' for bitmap functions"
+AC_SUBST(BITMAP_LIBS)
+])
+
 dnl
 dnl R_TCLTK
 dnl
@@ -837,3 +851,8 @@ dnl Local Variables: ***
 dnl mode: sh ***
 dnl sh-indentation: 2 ***
 dnl End: ***
+
+
+
+
+

@@ -1,5 +1,6 @@
 \name{plot.lm}
 \alias{plot.lm}
+\alias{plot.mlm}%which is .NotYetImplemented()
 \title{Plot Diagnostics for an lm Object}
 \usage{
 plot.lm(x, which = 1:4,

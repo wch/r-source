@@ -194,11 +194,15 @@ FUNTAB R_FunTab[] =
 {"remove",	do_remove,	0,	111,	3,	PP_FUNCALL},
 {"duplicated",	do_duplicated,	0,	11,	1,	PP_FUNCALL},
 {"unique",	do_duplicated,	1,	11,	1,	PP_FUNCALL},
+{"which.min",	do_first_min,	1,	11,	1,	PP_FUNCALL},
+{"which.max",	do_first_max,	1,	11,	1,	PP_FUNCALL},
+{"unique",	do_duplicated,	1,	11,	1,	PP_FUNCALL},
 {"match",	do_match,	0,	11,	3,	PP_FUNCALL},
 {"pmatch",	do_pmatch,	0,	11,	3,	PP_FUNCALL},
 {"charmatch",	do_charmatch,	0,	11,	2,	PP_FUNCALL},
 {"match.call",	do_matchcall,	0,	11,	3,	PP_FUNCALL},
 {"complete.cases",do_compcases,	0,	11,	1,	PP_FUNCALL},
+
 {"attach",	do_attach,	0,	111,	3,	PP_FUNCALL},
 {"detach",	do_detach,	0,	111,	1,	PP_FUNCALL},
 {"search",	do_search,	0,	11,	0,	PP_FUNCALL},
@@ -444,7 +448,7 @@ FUNTAB R_FunTab[] =
 {"chartr",	do_chartr,	1,	11,	3,	PP_FUNCALL},
 
 
-/* Type Checking */
+/* Type Checking (typically implemented in ./coerce.c ) */
 
 {"is.null",	do_is,		NILSXP,	1,	1,	PP_FUNCALL},
 {"is.logical",	do_is,		LGLSXP,	1,	1,	PP_FUNCALL},
@@ -492,18 +496,13 @@ FUNTAB R_FunTab[] =
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
 {"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},
 {"commandArgs", do_commandArgs, 0,      11,     0,      PP_FUNCALL},
-{"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 #ifdef Win32
 {"system",	do_system,	0,	11,	3,	PP_FUNCALL},
 #else
 {"system",	do_system,	0,	11,	2,	PP_FUNCALL},
 #endif
-#ifdef Unix
-{"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
-#endif
 #ifdef Win32
 {"unlink",	do_unlink,	0,	11,	1,	PP_FUNCALL},
-{"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
 {"flush.console",do_flushconsole,0,     11,     0,      PP_FUNCALL},
@@ -601,10 +600,12 @@ FUNTAB R_FunTab[] =
 {"list.files",  do_listfiles,   0,      11,     4,      PP_FUNCALL},
 {"file.exists", do_fileexists,  0,      11,     1,      PP_FUNCALL},
 {"file.choose", do_filechoose,  0,      11,     1,      PP_FUNCALL},
+{"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 {"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
 {"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},
 {"index.search",do_indexsearch, 0,      11,     5,      PP_FUNCALL},
+{"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 {"getwd",	do_getwd,	0,	11,	0,	PP_FUNCALL},
 {"setwd",	do_setwd,	0,	11,	1,	PP_FUNCALL},
 {"basename",	do_basename,	0,	11,	1,	PP_FUNCALL},
@@ -675,6 +676,10 @@ FUNTAB R_FunTab[] =
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL},
 {"persp",	do_persp,	0,	111,	4,	PP_FUNCALL},
 {"filledcontour",do_filledcontour,0,    111,    5,      PP_FUNCALL},
+{"getDL",	do_getDL,	0,	111,	0,	PP_FUNCALL},
+{"playDL",	do_playDL,	0,	111,	1,	PP_FUNCALL},
+{"getGPar",	do_getGPar,	0,	111,	0,	PP_FUNCALL},
+{"setGPar",	do_setGPar,	0,	111,	1,	PP_FUNCALL},
 
 /* Objects */
 
@@ -848,8 +853,7 @@ SEXP install(char *name)
     strcpy(buf, name);
     hashcode = R_Newhashpjw(buf);
     i = hashcode % HSIZE;
-    /* Check to see if the symbol is already present. */
-    /* If it is return it. */
+    /* Check to see if the symbol is already present;  if it is, return it. */
     for (sym = R_SymbolTable[i]; sym != R_NilValue; sym = CDR(sym))
 	if (strcmp(buf, CHAR(PRINTNAME(CAR(sym)))) == 0)
 	    return (CAR(sym));

@@ -103,7 +103,7 @@ You can test a build by `make check': expect some differences in the tests
 of the print routines.
 
 
-Cross-building on i586 Linux
+Cross-building on ix86 Linux
 ----------------------------
 
 You will need i386-mingw32 cross-compilers installed and in your path.
@@ -147,7 +147,7 @@ Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.
 
 Edit Makefile to set the type(s) of help that you want built. (You
-will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll,
+will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
 so set WINHELP to NO.)
 
 Packages can be made in the same way as natively: see the file
@@ -177,7 +177,7 @@ There is no provision to make DVI versions of the manuals, although
 The fptex distribution of TeX (from
 ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4alpha3/ at present)
 includes both pdftex and makeinfo 4.0 (in texinfo.zip).  (The cygwin
-one, even in release 1.1, is 3.12.)
+makeinfo, even in release 1.1, is 3.12.)
 
 
 

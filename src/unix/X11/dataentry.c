@@ -112,7 +112,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (!isList(indata) || !isList(colmodes))
 	errorcall(call, "invalid argument");
-    
+
     /* initialize the constants */
 
     bufp = buf;
@@ -598,7 +598,7 @@ void jumppage(int dir)
 	    if(w < 0) {
 		colmin = i + 1;
 		break;
-	    }   
+	    }
 	}
 	ccol = wcol - colmin;
 	doHscroll(oldcol);
@@ -917,11 +917,11 @@ static int findcell()
     Window root, child;
 
     closerect();
-    XQueryPointer(iodisplay, iowindow, &root, &child, 
+    XQueryPointer(iodisplay, iowindow, &root, &child,
 		  &xr, &yr, &xw, &yw, &keys);
 
-    if(keys & Button1Mask) { /* left click
-	
+    if(keys & Button1Mask) { /* left click */
+
 	/* check to see if the click was in the header */
 
 	if (yw < hwidth + bwidth) {
@@ -956,7 +956,7 @@ static int findcell()
 	    ccol = wcol;
 	    crow = wrow;
 	}
-    }    
+    }
     if(keys & Button2Mask) { /* Paste: eventually */
     }
     highlightrect();
@@ -1028,17 +1028,37 @@ static void doSpreadKey(int key, DEEvent * event)
 	advancerect(RIGHT);
     else if (iokey == XK_Up)
 	advancerect(UP);
+    else if (iokey == XK_Page_Up) {
+	int i = rowmin - nhigh + 2;
+	jumpwin(colmin, max(1, i));
+    }
+    else if (iokey == XK_Page_Down)
+	jumpwin(colmin, rowmax);
     else if ((iokey == XK_BackSpace) || (iokey == XK_Delete)) {
 	if (clength > 0) {
 	    clength--;
 	    bufp--;
 	    printstring(buf, clength, crow, ccol, 1);
 	} else bell();
-    } else if (iokey == XK_Tab) {
+    }
+    else if (iokey == XK_Tab) {
 	if(CheckShift(event)) advancerect(LEFT);
 	else advancerect(RIGHT);
-    } else if (iokey == XK_Home)
+    }
+    else if (iokey == XK_Home) {
 	jumpwin(1, 1);
+	downlightrect();
+	crow = ccol = 1;
+	highlightrect();
+    }
+    else if (iokey == XK_End) {
+	int i = ymaxused - nhigh + 2;
+	jumpwin(xmaxused, max(i, 1));
+	downlightrect();
+	crow = ymaxused - rowmin + 1;
+	ccol = 1;
+	highlightrect();
+    }
     else if (IsModifierKey(iokey)) {
     }
     else
@@ -1163,7 +1183,7 @@ int initwin()
 
     if ((iodisplay = XOpenDisplay(NULL)) == NULL) return (1);
     XSetErrorHandler(R_X11Err);
-    XSetIOErrorHandler(R_X11IOErr);	
+    XSetIOErrorHandler(R_X11IOErr);
 
     /* Get Font Loaded if we can */
 
@@ -1277,7 +1297,7 @@ int initwin()
     bwidth = attribs.border_width;
     fullwindowWidth = attribs.width;
     fullwindowHeight = attribs.height;
- 
+
 
     /* set the active rectangle to be the upper left one */
     crow = 1;
@@ -1307,7 +1327,7 @@ static void copyarea(int src_x, int src_y, int dest_x, int dest_y)
 {
     int mx = max(src_x, dest_x), my = max(src_y, dest_y);
     XCopyArea(iodisplay, iowindow, iowindow, iogc, src_x, src_y,
-	      fullwindowWidth - mx, fullwindowHeight - my, 
+	      fullwindowWidth - mx, fullwindowHeight - my,
 	      dest_x, dest_y);
     Rsync();
 }

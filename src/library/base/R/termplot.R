@@ -17,7 +17,7 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
     ## Defaults:
     if (is.null(xlabs))
 	xlabs <- nmt
-    if (is.null(ylab)) # "link(.)" really is only for  glm() alikes...
+    if (is.null(ylab)) 
 	ylab <- substitute(link(foo),
                            list(foo=formula(model)[[2]]))
     if (is.null(main))
@@ -59,10 +59,10 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
 	    ff <- mf[,nmt[i]]
 	    ll <- levels(ff)
 	    xlims <- range(seq(along=ll)) + c(-.5, .5)
+            xx <- codes(ff) ##need if rug or partial
 	    if(rug) {
 		xlims[1] <- xlims[1]-0.07*diff(xlims)
 		xlims[2] <- xlims[2]+0.03*diff(xlims)
-		xx <- codes(ff)
 	    }
 	    plot(1,0, type = "n", xlab = xlabs[i], ylab = ylab,
                  xlim = xlims, ylim = ylims, main = main[i], ...)

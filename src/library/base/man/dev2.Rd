@@ -33,7 +33,9 @@ dev.control(displaylist)
   \code{width}, \code{height} and \code{pointsize} are specified
   the plot dimensions will be taken from the current device, shrunk
   if necessary to fit on the paper. (\code{pointsize} is rescaled if the
-  plot is shrunk.)
+  plot is shrunk.)  If \code{horizontal} is not specified and the plot
+  can be printed at full size by switching its value this is done
+  instead of shrinking the plot region.
 
   \code{dev.copy2eps} is similar to \code{dev.print} but produces an
   EPSF output file.  Unless otherwise specified \code{width} and

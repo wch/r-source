@@ -500,8 +500,7 @@ the buffer and so update the console.
 
 They only @strong{seem} to be truncated: that $ at the end indicates you
 can scroll the window to see the rest of the message. Use the horizontal
-scrollbar or the @key{CTRL+arrow} keys to scroll horizontally, or the
-horizontal scrollbar.
+scrollbar or the @key{CTRL+arrow} keys to scroll horizontally.
 
 
 @newchap{}
@@ -621,26 +620,29 @@ You need to do two things:
  @code{extern "C"}.
 
 (b) Include the C++ libraries in the link to make the DLL. Suppose
-@file{X.cc} contains your C++ code, and @file{X_R.cc} is the
-wrapper. Then build the DLL by (@code{gcc-2.95.x})
+@file{X.cc} contains your C++ code, and @file{X_main.cc} is the wrapper,
+as in the example in `Writing R Extensions'. Then build the DLL by
+(@code{gcc-2.95.x})
 
 @example
-g++ -c X.cc X_R.cc
-dlltool --export-all-symbols --output-def X.def X_R.o
-dllwrap -o X.dll --def X.def X.o X_R.o -lstdc++
+g++ -c X.cc X_main.cc
+dlltool --export-all-symbols --output-def X.def X_main.o
+dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
 @end example
 @noindent
 or (VC++)
 
 @example
-cl /MT /c X.cpp X_R.cpp
-link /dll /out:XX.dll /export:X_main X.obj X_R.obj
+cl /MT /c X.cpp X_main.cpp
+link /dll /out:XX.dll /export:X_main X.obj X_main.obj
 @end example
 @noindent
 and call the entry point(s) in @code{X_R}, such as @code{X_main}.
 Construction of static variables will occur when the DLL is loaded, and
 destruction when the DLL is unloaded, usually when R terminates.
 
+Note that you may not see the messages from this example in the GUI
+console: see the next section.
 
 @node  The output from my C code disappears., The output from my Fortran code disappears., How do I include C++ code?, Building from Source
 @section  The output from my C code disappears. Why?
@@ -663,14 +665,14 @@ documented in the @emph{`Writing R Extensions'} manual.
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 April 28 by Brian Ripley
+Last edited 2000 May 10 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 April 28 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 May 10 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

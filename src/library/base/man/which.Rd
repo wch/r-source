@@ -27,7 +27,8 @@ which(x, arr.ind = FALSE)
 }
 \author{Werner Stahel and Peter Holzer \email{holzer@stat.math.ethz.ch},
     for the array case.}
-\seealso{\code{\link{Logic}}}
+\seealso{\code{\link{Logic}}, \code{\link{which.min}} for the index of
+  the minimum or maximum.}
 \examples{
 which(LETTERS == "R")
 which(ll <- c(T,F,T,NA,F,F,T))#> 1 3 7

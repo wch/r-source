@@ -17,10 +17,7 @@ interaction(\dots, drop=FALSE)
 \value{
   A factor which represents the interaction of the given factors.
 }
-
-\seealso{
-\code{\link{factor}}.
-}
+\seealso{\code{\link{factor}}.}%% even more ":" for factors!
 
 \examples{
 a <- gl(2, 2, 8)

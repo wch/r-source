@@ -30,3 +30,7 @@ which <- function(logic, arr.ind = FALSE)
     }
     wh
 }
+
+which.min <- function(x) .Internal(which.min(x))
+which.max <- function(x) .Internal(which.max(x))
+

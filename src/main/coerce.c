@@ -983,7 +983,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
-	errorcall(call, "invalid \"mode\" of argument");
+	errorcall_return(call, R_MSG_mode);
 
     if (!strcmp("function", (CHAR(STRING(CADR(args))[0]))))
 	type = CLOSXP;
@@ -1004,7 +1004,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     case ANYSXP: /* any */
 	break;
     default:
-	errorcall(call, "invalid mode");
+	errorcall_return(call, R_MSG_mode);
     }
     ans = ascommon(call, CAR(args), type);
     switch(TYPEOF(ans)) {/* keep attributes for these:*/
@@ -1247,7 +1247,8 @@ SEXP do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, a;
     checkArity(op, args);
     if (!isString(CADR(args)) || LENGTH(CADR(args)) <= 0)
-	errorcall(call, "invalid \"mode\" of argument");
+	errorcall_return(call, R_MSG_mode);
+
     PROTECT(ans = allocVector(LGLSXP, 1));
     if (streql(CHAR(STRING(CADR(args))[0]), "any")) {
 	LOGICAL(ans)[0] = isVector(CAR(args));/* from ./util.c */
@@ -1289,7 +1290,8 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
-	errorcall(call, "is.na applies only to lists and vectors");
+	errorcall_return(call, "is.na " R_MSG_list_vec);
+
 #endif
     x = CAR(args);
     n = length(x);
@@ -1358,7 +1360,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	warningcall(call, "is.na() applied to non-(list or vector)");
+	warningcall(call, "is.na" R_MSG_list_vec2);
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
     }
@@ -1389,7 +1391,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
-	errorcall(call, "is.nan applies only to lists and vectors");
+	errorcall_return(call, "is.nan " R_MSG_list_vec);
 #endif
     x = CAR(args);
     n = length(x);
@@ -1454,7 +1456,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	warningcall(call, "is.nan() applied to non-(list or vector)");
+	warningcall(call, "is.nan" R_MSG_list_vec2);
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
     }
@@ -1479,7 +1481,7 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
-	errorcall(call, "is.finite applies only to lists and vectors");
+	errorcall_return(call, "is.finite " R_MSG_list_vec);
 #endif
     x = CAR(args);
     n = length(x);
@@ -1529,7 +1531,7 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
-	errorcall(call, "is.infinite applies only to list and vectors");
+	errorcall_return(call, "is.infinite " R_MSG_list_vec);
 #endif
     x = CAR(args);
     n = length(x);
@@ -1584,7 +1586,7 @@ SEXP do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(rfun = eval(CAR(args), rho));
     if (!isString(rfun) || length(rfun) <= 0 ||
 	streql(CHAR(STRING(rfun)[0]), ""))
-	errorcall(call, "first argument must be a character string");
+	errorcall_return(call, R_MSG_A1_char);
     PROTECT(rfun = install(CHAR(STRING(rfun)[0])));
     PROTECT(evargs = duplicate(CDR(args)));
     for (rest = evargs; rest != R_NilValue; rest = CDR(rest))
@@ -1605,10 +1607,10 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CADR(args);
 
     if (!isString(fun) || length(fun) <= 0 || CHAR(STRING(fun)[0]) == '\0')
-	    errorcall(call, "first argument must be a string");
+	errorcall_return(call, R_MSG_A1_char);
 
     if (!isNull(args) && !isNewList(args))
-	errorcall(call, "second argument must be a list");
+	errorcall_return(call, R_MSG_A2_list);
     n = length(args);
     names = getAttrib(args, R_NamesSymbol);
 

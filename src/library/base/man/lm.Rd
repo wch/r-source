@@ -63,7 +63,7 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
   \code{lm} is used to fit linear models.
   It can be used to carry out regression,
   single stratum analysis of variance and
-  analysis of covariance (although \code{aov} may provide a more
+  analysis of covariance (although \code{\link{aov}} may provide a more
   convenient interface for these).
 }
 \details{
@@ -80,7 +80,10 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
   the same as \code{first+second+first:second}.
 }
 \value{
-  \code{lm} returns an object of \code{\link{class}} \code{"lm"}.
+  \code{lm} returns an object of \code{\link{class}} \code{"lm"} or for
+  multiple responses of class \code{c("mlm", "lm")}.
+%% actually also c("lm.null","lm") and c("mlm.null", "lm.null", "mlm", "lm")
+%% but I'm still not sure that this should be `it' for the future.. {MM}.
 
   The functions \code{summary} and \code{\link{anova}} are used to
   obtain and print a summary and analysis of variance table of the results.
@@ -90,7 +93,7 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
 }
 \seealso{
   \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for
-  the ANOVA table. \code{\link{aov}} for a different interface.
+  the ANOVA table; \code{\link{aov}} for a different interface.
 
   The generic functions \code{\link{coefficients}}, \code{\link{effects}},
   \code{\link{residuals}}, \code{\link{fitted.values}}.
