@@ -130,7 +130,7 @@ set of tools at
 
     http://www.stats.ox.ac.uk/pub/bdr/RWin/i386cross.tar.bz2
 
-(Just unpack this somewhere are put its bin directory in your path.)
+(Just unpack this somewhere and put its bin directory in your path.)
 
 You will need Perl, zip and unzip installed.
 
