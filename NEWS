@@ -504,6 +504,10 @@ BUG FIXES
 	
     o	match() does NOT use "as.character()" anymore, fixes PR#741.
 
+    o	Rd's \describe{} constructs are converted better to text
+	output, and \items of >=22 chars now work.
+
+
 
 	**************************************************
 	*						 *
