@@ -2,363 +2,56 @@
 			INSTALLING R UNDER UNIX
 
 
-GENERALITIES
-
 This document concerns building and installing R from sources.  Pre-made
 binaries are made available for some systems with varying regularity and
 can be obtained from CRAN (see the RESOURCES file).
 
-R will configure and build under a number of common Unix-like platforms
-(including i386-freebsd, i386-linux, i386-sun-solaris, ppc-linux,
-mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
-hppa-hp-hpux, sparc-linux, and sparc-sun-solaris) and on Windows
-9x/NT/2000 (see `src/gnuwin32/INSTALL').  In general it is relatively
-easy to adapt R to new platforms.  See the section on new platforms for
-details.
+For building on Windows 9x/ME/NT/2000 see the file `src/gnuwin32/INSTALL':
+to build under Classic MacOS see the file `src/macintosh/INSTALL'.
 
-
-GETTING AND UNPACKING THE SOURCES
-
-The simplest way is to download the most recent `R-x.y.z.tgz' package,
-and unpack them with
-
-	tar xvfz R-x.y.z.tgz
-
-on systems that have GNU tar installed.  On other systems you need at
-least to have the `gzip' program installed.  Then you can use
-
-	gzip -dc R-x.y.z.tgz | tar xvf -
-
-If you need to transport the sources on floppy disks, you can download
-the `R-x.y.z.tgz-split.*' files and paste them together at the
-destination with
-
-	cat R-x.y.z.tgz-split.* > R-x.y.z.tgz
-
-and proceed as above.  If you want the build to be usable by a group
-of users, set umask before unpacking so that the files will be
-readable by the target group (e.g. umask 022 to be usable by all
-users).
-
-Finally, for minor-minor releases (x.y.z with z != 0), a patch against
-the preceding release is made available in `R-x.y.{z-1}-x.y.z.diff.gz'
-(e.g., R-0.63.2-0.63.3.diff.gz), which is generally a much shorter file
-that the `.tgz' files.  Such a file can be applied to the sources of the
-previous version by changing to the top directory of it and
-
-	gzip -dc /path/to/it/R-x.y.{z-1}-x.y.z.diff.gz | patch -E -p1
-
-Beware that this does not necessarily work if the older sources have
-been modified (e.g., by building in their directories).
+The main source of information on installation is the `R Installation
+and Administration Manual', an HTML copy of which is available as file
+`doc/html/R-admin.html'.  Please read that before installing R.  But
+if you are impatient, read on but please refer to the manual to
+resolve any problems.
 
 
 SIMPLE COMPILATION
 
-Choose a place to install the R tree (R is not just a binary, but has
-additional data sets, help files, font metrics etc).  Let's call this
-place R_HOME.  Untar the source code.  This should create directories
-src, doc, and several more.  Issue the following commands:
+As you are reading this file, you have unpacked the R sources and are
+presumably in the top directory.  Issue the following commands:
 
 	./configure
 	make
 
-(See USING MAKE below if your make is not called `make'.)
+(If your make is not called make, set the environment variable MAKE to
+its name, and use the name throughout these instructions.)
+This will take a while, giving you time to read `R-admin.html'.
 
 Then check the built system worked correctly, by
 
 	make check
 
-Failures are not necessarily problems as they might be caused by missing
-functionality, but you should look carefully at any reported discrepancies.
-
-If these commands execute successfully, the R binary will be copied to
-the `${R_HOME}/bin' directory.  In addition, a shell script front-end
-called "R" will be created and copied to the same directory.  You can
-copy this script to a place where users can invoke it, for example to
-`/usr/local/bin/R'.  You could also copy the man page `R.1' to a place
-where your man reader finds it, such as `/usr/local/man/man1'.  If you
-want to install the complete R tree to, e.g., `/usr/local/lib/R', see
-section INSTALLATION below.
-
-You do not necessarily have to build R in the top-level source directory
-(say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run
-
-	TOP_SRCDIR/configure
-	make
-
-and so on, as described further below.  This has the advantage of always
-keeping your source tree ``clean''.  (You may need GNU make to allow
-this.)
-
-If you need or want to set certain configure variables to something
-other than their default, you can do that by either editing the file
-`config.site' (which documents all the variables you might want to set)
-or on the command line as
-
-	VAR="..." ./configure		   # Bourne shell compatibles
-	(setenv VAR "..."; ./configure)	   # C shell
-
-One common variable to change is R_PAPERSIZE, which defaults to a4, not
-letter.
-
-If you have libraries and header files, e.g., for GNU readline, in
-non-system directories, use the variables LIBS (for libraries) and
-CPPFLAGS (for header files), respectively, to specify these locations.
-These default to `/usr/local/lib' and `/usr/local/include' to catch the
-most common cases.  If libraries are still not found, then maybe your
-compiler/linker does not support re-ordering of `-L' and `-l' flags
-(this has been reported to be a problem on HP-UX with native cc).  In
-this case, use a different compiler (or a front end shell script which
-does the re-ordering).
-
-If you find you need to alter configure variables, it is worth noting
-that some settings are cached in the file `config.cache', and it is a
-good idea to remove that file before re-configuring.
-
-Make will also build plain text help pages as well as HTML and LaTeX
-versions of the R object documentation (the three kinds can also be
-generated separately using `make help', `make html' and `make latex').
-Note that you need Perl version 5, available via
-http://www.perl.com/CPAN/, to build this documentation.  If this is not
-available on your system, you can obtain PDF versions of the
-documentation files via the Comprehensive R Archive Network (CRAN), see
-the file `RESOURCES' for information on CRAN.
-
-Now rehash if necessary, type `R', and read the R manuals and the R FAQ
-(files `FAQ' or `doc/html/faq.html' or the latest version at
-http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
-
-The GNOME interface for R will only be built if you specify it: see the
-GNOME section below.
-
-
-MAKING THE MANUALS
-
-There is a set of manuals that can be built from the sources,
-
-	refman		Printed versions of all the help pages.
-	R-FAQ		R FAQ (which is already built for you).
-	R-intro		``An Introduction to R''.
-	R-data		``R Data Import/Export''.
-	R-exts		``Writing R Extensions''.
-	R-lang		``The R Language Definition''.
-
-To make these, cd to the `doc/manual' directory and use
+and make the manuals by (as many options as preferred from)
 
 	make dvi	to create DVI versions
 	make pdf	to create PDF versions
-	make info	to create info files (not refman)
-
-You will not be able to build the info files unless you have makeinfo
-version 4 or later installed (and some Linux distributions have 3.12).
-
-The DVI versions can be previewed and printed using standard programs
-such as `xdvi' and `dvips'.  The PDF versions can be viewed using
-Acrobat Reader or (recent versions of) ghostscript: they have
-hyperlinks that can be followed in Acrobat Reader.  The info files are
-suitable for reading online with Emacs or the standalone GNU Info.
+	make info	to create info files
 
 
 INSTALLATION
 
-After
+You do not need to install R to run it: you can run R by the script
+`bin/R' which you can link or copy to any convenient place in your path.
 
-	./configure
-	make
-	make check
-
-have been completed successfully, you can install the complete R tree
-to your system by typing
+For a site-wide installation, use
 
 	make install
-
-This will install to the following directories:
-
-	${prefix}/bin		the front-end shell script
-	${prefix}/man/man1	the man page
-	${prefix}/lib/R		all the rest (libraries, on-line help
-				system, ...)
-
-where prefix is determined during configuration (typically `/usr/local')
-and can be set by running configure with the option
-
-	./configure --prefix=/where/you/want/R/to/go
-
-This installs the R executable to `/where/you/want/R/to/go/bin', and so
-on.  The prefix of the installation directories can also be seen in the
-status message that is displayed at the end of configure.  You can
-install into another directory by using
-
-	make prefix=/path/to/here install
-
-To install DVI, info and PDF versions of the manuals, use one or more of
-
 	make install-dvi
 	make install-info
 	make install-pdf
 
-To ensure that the installed tree is usable by the right group of
-users, set umask appropriately (perhaps to 022) before unpacking the
-sources and throughout the build process.
+choosing to install the manuals that you made.
 
-
-USING MAKE
-
-To compile R, you will most likely find it easiest to use GNU make.  On
-Solaris 2.6/7/8 in particular, you need a version of GNU make different
-from 3.77; 3.79 works fine, as does the Sun make.
-
-To build in a separate directory you need a make that uses the VPATH
-variable, for example GNU make, or Sun make on Solaris 2.7/8 (but not
-earlier).
-
-If you want to use a make by another name, for example if your GNU make
-is called `gmake', you need to set MAKE at configure time, for example
-
-	MAKE=gmake ./configure      (sh, bash)
-	env MAKE=gmake ./configure  (csh)
-
-
-USING FORTRAN
-
-To compile R, you need a FORTRAN compiler or f2c, the FORTRAN-to-C
-converter.  The default is to search for g77, f77, xlf, cf77, cft77,
-pgf77, fl32, af77, fort77, f90, xlf90, pgf90, epcf90, f95, xlf95, lf95,
-g95, and fc (in that order), and then for f2c, and use whichever is
-found first; if none is found, R cannot be compiled.  The search
-mechanism can be changed using the `--with-g77', `--with-f77', and
-`--with-f2c' command line options to configure.  If your FORTRAN
-compiler is in a non-standard location, you should set the enviroment
-variable PATH accordingly before running configure.
-
-If your FORTRAN libraries are in slightly peculiar places, you should
-also look at LD_LIBRARY_PATH to make sure that all libraries are on this
-path.
-
-You must set whatever compilation flags (if any) are needed to ensure
-that FORTRAN `integer' is equivalent to a C int pointer and FORTRAN
-`double precision' is equivalent to a C double pointer.  This is checked
-during the configuration process.
-
-
-BUILDING THE GNOME INTERFACE
-
-This interface is experimental, incomplete and not currently being
-developed. It provides a console and a graphics device (gtk(); the x11()
-device can also be used).  Many of the `features' of the console are
-currently stubs.
-
-The GNOME interface for R will only be built if you specify it by
-running configure with the `--with-gnome' option.  For example, you
-might run
-
-	./configure --with-gnome
-
-but please check you have all the requirements first.  It is advisable
-to have reasonably-up-to-date versions of the gnome and gtk+ libraries
-(later than those in RedHat 6.0, for example).  You can find the
-versions you have by
-
-	gnome-config --version
-	gtk-config --version
-
-We know 1.0.10 and 1.2.3 suffice. You need the following RPMs and
-their dependencies installed:
-
-	gnome-libs
-	gnome-libs-devel
-	gtk+
-	gtk+-devel
-	glib
-	glib-devel
-
-You will need also libglade 0.5 or later for correct behaviour.  For
-more information on libglade and to download the source, see
-http://www.daa.com.au/~james/gnome/.  The sources are also available
-from the GNOME ftp site (ftp.gnome.org and mirrors).  RPMs are in RedHat
-6.1 and later.
-
-libglade needs libxml 1.4 or later, the source for which is available
-from the GNOME ftp site (ftp.gnome.org and mirrors).
-
-
-COMPILE AND LOAD FLAGS
-
-A wide range of flags can be set in the file config.site or via
-environment variables.  We have already mentioned
-
-	CPPFLAGS	extra include flags
-	LIBS		libraries and `-L/lib/path' flags
-
-and others include
-
-	CFLAGS		debugging and optimization flags, C
-	MAIN_CFLAGS	ditto, for compiling the main program
-	SHLIB_CFLAGS	  or shared libraries
-	FFLAGS		debugging and optimization flags, Fortran
-	MAIN_FFLAGS	ditto, for compiling the main program
-	SHLIB_FFLAGS	  or shared libraries
-	MAIN_LDFLAGS	additional flags for the main link
-	SHLIB_LDFLAGS	additional flags for the linking shared libraries
-
-Library paths specified as -L/lib/path in LIBS are collected together
-and prepended to LD_LIBRARY_PATH, so there should be no need for
--R or -rpath flags.
-
-To compile a profiling version of R, one might for example want to use
-MAIN_CFLAGS=-pg, MAIN_FFLAGS=-pg, MAIN_LDFLAGS=-pg on platforms where
--pg cannot be used with position-independent code.
-
-
-BUILDING ON MAC OS X
-
-You can build R as a Unix application on MacOS X.  You will need the
-DevTools,
-
-  f2c (ftp://netlib.bell-labs.com/netlib/f2c.tar)
-     Compile with c++ or  comment out sigcatch(0) in line 520 of main.c.
-
-  dlcompat libraries 
-     (http://fink.sourceforge.net/files/dlcompat-20010123.tar.gz)
-
-and either install a X sub-system or configure with --without-x.
-If you want them, you will need to install readline and Tcl/Tk.
-
-
-
-NEW PLATFORMS (Standards Hah!)
-
-There are a number of sources of problems when installing R on a new
-hardware/os platform.
-
- 1. Floating Point Arithmetic: R supports the POSIX, SVID and IEEE
-    models for floating point arithmetic.  The POSIX and SVID models
-    provide no problems.  The IEEE model however can be a pain.	 The
-    problem is that there is no agreement on how to set the signalling
-    behavior;  sgi/irix and i386 linux require no special action, freebsd
-    requires a call to (the macro) fpsetmask(0) and osf1 requires
-    that computation be done with a `-ieee_with_inexact' flag etc ...
-    On a new platform you must find out the magic recipe and add some
-    code to make it work.  This can often be done via the file
-    `config.site' which resides in the top level directory.
-
- 2. Shared Libraries: There seems to be very little agreement across
-    platforms on what needs to be done to build shared libraries.
-    there are many different combinations of flags for the compilers
-    and loaders.  The technique we use is to interrogate the X window
-    system about what it does (using xmkmf).  This often works, but
-    you may have to manually override the results.  Scanning the cc(1)
-    and ld(1) manual entries usually reveals the correct incantation.
-    Once you know the recipe you can modify the file config.site
-    (following the instructions therein) so that the build will use
-    these options.
-
-If you do manage to get R running on a new platform please let us know
-about it so we can modify the configuration procedures to include that
-platform.
-
-If you are having trouble getting R to work on your platform please
-feel free to get in touch to ask questions.  We've had a fair amount
-of practice at porting R to new platforms ...
-
-	R Core Members
+This installs to the default location (typically `/usr/local') for your
+platform: see the manual for other options.

@@ -77,7 +77,7 @@ The current version of this document is @value{VERSION}.
 
 Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}, the ``Comprehensive R Archive Network''. See
-the file @file{RESOURCES} for information on CRAN.
+the file @file{RESOURCES} for information on @acronym{CRAN}.
 
 
 @menu
@@ -103,7 +103,7 @@ least to have the @code{gzip} program installed.  Then you can use
 
 If you need to transport the sources on floppy disks, you can download
 the @code{R-x.y.z.tgz-split.*} files and paste them together at the
-destination with
+destination with (Unix)
 @smallexample
 	cat R-x.y.z.tgz-split.* > R-x.y.z.tgz
 @end smallexample
@@ -117,7 +117,7 @@ users).
 Finally, for minor-minor releases (@code{x.y.z} with @code{z != 0} ), a
 patch against the preceding release is made available in
 @code{R-x.y.@{z-1@}-x.y.z.diff.gz} (e.g., @code{R-1.2.2-1.2.3.diff.gz}),
-which is generally a much shorter file that the @code{.tgz} files.  Such
+which is generally a much smaller file that the @code{.tgz} files.  Such
 a file can be applied to the sources of the previous version by changing
 to the top directory of it and
 @smallexample
@@ -145,8 +145,8 @@ one of @samp{r-release} (latest released version),
 @samp{r-release-patched} (latest released version with patches applied),
 and @samp{r-devel} (current development version).  The rsync trees are
 created directly from the master CVS archive and are updated hourly.
-The @option{-C} option in the rsync command is to cause it to skip the
-CVS directories.  Further information on rsync is available at
+The @option{-C} option in the @code{rsync} command is to cause it to skip the
+CVS directories.  Further information on @code{rsync} is available at
 @uref{http://rsync.samba.org/rsync/}.
 
 
@@ -164,7 +164,7 @@ Unix-like platforms, including @code{i386-freebsd}, @code{i386-linux},
 @cindex Linux
 @cindex MacOS X
 In addition, binary distributions are available for most common Linux
-distributions, Compaq Alpha systems running Unix 4.0, and for MacOS X.
+distributions, Compaq Alpha systems running OSF1, and for MacOS X.
 See the FAQ for current details.  These are installed in
 platform-specific ways.  So for the rest of this chapter we consider
 only building from the sources.
@@ -179,15 +179,16 @@ only building from the sources.
 @node Simple Compilation, Making the Manuals, Installing R under Unix, Installing R under Unix
 @section Simple Compilation
 
-First review the essential and useful tools and libraries in the
-Appendix @ref{Essential and Useful Other Programs}, and install those
+First review the essential and useful tools and libraries in
+@ref{Essential and Useful Other Programs}, and install those
 you want or need.
 
 @findex R_HOME
 Choose a place to install the @R{} tree (@R{} is not just a binary, but
-has additional data sets, help files, font metrics etc).  Let's call
+has additional data sets, help files, font metrics etc).  Let us call
 this place @file{R_HOME}.  Untar the source code.  This should create
-directories @code{src}, @code{doc}, and several more.  Issue the following commands:
+directories @code{src}, @code{doc}, and several more.  Issue the
+following commands:
 
 @findex configure
 @smallexample
@@ -206,15 +207,15 @@ Then check the built system worked correctly, by
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported discrepancies.
 
-If these commands execute successfully, the @R{} binary will be copied to
-the @file{$@{R_HOME@}/bin} directory.  In addition, a shell script
+If these commands execute successfully, the @R{} binary will be copied
+to the @file{$@{R_HOME@}/bin} directory.  In addition, a shell-script
 front-end called @file{R} will be created and copied to the same
 directory.  You can copy this script to a place where users can invoke
 it, for example to @file{/usr/local/bin/R}.  You could also copy the man
 page @file{R.1} to a place where your @code{man} reader finds it, such
 as @file{/usr/local/man/man1}.  If you want to install the complete @R{}
-tree to, e.g., @file{/usr/local/lib/R}, see section @ref{Installation}.
-Note: you do not @emph{need} to install @R{}: you can run it from where it was
+tree to, e.g., @file{/usr/local/lib/R}, see @ref{Installation}.  Note:
+you do not @emph{need} to install @R{}: you can run it from where it was
 built.
 
 You do not necessarily have to build @R{} in the top-level source directory
@@ -236,7 +237,7 @@ versions of the @R{} object documentation (the three kinds can also be
 generated separately using @code{make help}, @code{make html} and
 @code{make latex}).  Note that you need Perl version 5: if this
 is not available on your system, you can obtain PDF versions of the
-documentation files via CRAN.
+documentation files via @acronym{CRAN}.
 
 Now @code{rehash} if necessary, type @code{R}, and read the @R{} manuals
 and the @R{} FAQ (files @file{FAQ} or @file{doc/html/faq.html} or the
@@ -249,23 +250,39 @@ latest version at
 
 There is a set of manuals that can be built from the sources,
 
-@smallexample
-	refman		Printed versions of all the help pages.
-	R-FAQ		R FAQ (which is already built for you).
-	R-intro		``An Introduction to R''.
-	R-data		``R Data Import/Export''.
-	R-admin		``R Installation and Administration''.
-	R-exts		``Writing R Extensions''.
-	R-lang		``The R Language Definition''.
-@end smallexample
+@table @code
+@item 	refman
+Printed versions of all the help pages.
+
+@item 	R-FAQ
+R FAQ (which is already built for you).
+
+@item 	R-intro
+``An Introduction to R''.
+
+@item 	R-data
+``R Data Import/Export''.
+
+@item 	R-admin
+``R Installation and Administration''.
+
+@item 	R-exts
+``Writing R Extensions''.
+
+@item 	R-lang
+``The R Language Definition''.
+@end table
 
 To make these, @code{cd} to the @file{doc/manual} directory and use
 
-@smallexample
-	make dvi	to create DVI versions
-	make pdf	to create PDF versions
-	make info	to create info files (not refman)
-@end smallexample
+@table @code
+@item	make dvi
+to create DVI versions
+@item	make pdf
+to create PDF versions
+@item	make info
+to create info files (not refman)
+@end table
 
 
 You will not be able to build the info files unless you have
@@ -298,12 +315,14 @@ to your system by typing
 @noindent
 This will install to the following directories:
 
-@smallexample
-	$@{prefix@}/bin		the front-end shell script
-	$@{prefix@}/man/man1	the man page
-	$@{prefix@}/lib/R		all the rest (libraries, on-line help
-				system, ...)
-@end smallexample
+@table @code
+@item	$@{prefix@}/bin
+the front-end shell script
+@item	$@{prefix@}/man/man1
+the man page
+@item	$@{prefix@}/lib/R
+all the rest (libraries, on-line help system, @dots{})
+@end table
 @noindent
 where @code{prefix} is determined during configuration (typically
 @code{/usr/local}) and can be set by running @code{configure} with the option
@@ -408,7 +427,7 @@ more than one library, if course.
 
 To install packages from source on Unix use
 @smallexample
-        R CMD INSTALL -l /path/to/library pkg1 pkg2 ...
+R CMD INSTALL -l /path/to/library pkg1 pkg2 ...
 @end smallexample
 @noindent
 The part @code{-l /path/to/library} can be omitted, when the first
@@ -417,30 +436,30 @@ library in @code{R_LIBS} is used if set, otherwise the main library
 
 The Windows equivalent is
 @smallexample
-        Rcmd INSTALL -l /path/to/library pkg1 pkg2 ...
+Rcmd INSTALL -l /path/to/library pkg1 pkg2 ...
 @end smallexample
 
 @findex install.packages 
 Alternatively, packages can be downloaded and installed for within @R{}.
-First set the option @code{CRAN} to your nearest CRAN mirror, for
+First set the option @code{CRAN} to your nearest @acronym{CRAN} mirror, for
 example
 @smallexample
-        options(CRAN = "cran.us.r-project.org")
+> options(CRAN = "cran.us.r-project.org")
 @end smallexample
 @noindent
 Then download and install package @code{foo} by
 @smallexample
-        install.packages("foo")
+> install.packages("foo")
 @end smallexample
 @noindent
 Unless the library is specified (argument @code{lib}) the first library
 in @code{.lib.loc} is used.
 
 What this does is different on Unix and Windows. On Unix it consults the
-list of available source packages on CRAN, downloads the latest version
-of the @code{foo} sources, and installs it (via @code{R CMD INSTALL}).
-On Windows it looks at the list of @emph{binary} versions of packages
-and downloads the latest version (if any).
+list of available source packages on @acronym{CRAN}, downloads the
+latest version of the @code{foo} sources, and installs it (via @code{R
+CMD INSTALL}).  On Windows it looks at the list of @emph{binary}
+versions of packages and downloads the latest version (if any).
 
 On Windows @code{install.packages} can also install a binary package
 from a local @code{zip} file by setting argument @code{CRAN} to @code{NULL}
@@ -455,7 +474,7 @@ all the packages on your system are up to date. Set the @code{CRAN}
 option as in the previous section. The @code{update.packages()}
 downloads the list of available packages and their current versions,
 compares it with those installed and offers to fetch and install any
-that have later versions on CRAN.
+that have later versions on @acronym{CRAN}.
 
 @node Removing packages,  , Updating packages, Add-on Packages
 @section Removing packages
@@ -466,19 +485,19 @@ Packages can be removed in a number of ways.  From a command prompt they
 can be removed by
 
 @smallexample
-        R CMD REMOVE -l /path/to/library pkg1 pkg2 ...
+R CMD REMOVE -l /path/to/library pkg1 pkg2 ...
 @end smallexample
 @noindent
 (Unix) or
 @smallexample
-        Rcmd REMOVE -l /path/to/library pkg1 pkg2 ...
+Rcmd REMOVE -l /path/to/library pkg1 pkg2 ...
 @end smallexample
 @noindent
 (Windows).
 
 From a running @R{} process they can be removed by
 @smallexample
-        remove.packages(c("pkg1", "pkg2"), lib="/path/to/library")
+> remove.packages(c("pkg1", "pkg2"), lib="/path/to/library")
 @end smallexample
 
 Finally, in most installations one can just remove the package directory
@@ -499,7 +518,7 @@ Unix-like platforms, or which will be used by @R{} if found by
 @node Essential Programs, Useful Libraries and Programs, Essential and Useful Other Programs, Essential and Useful Other Programs
 @section Essential Programs
 
-You need a means of compiling C and FORTRAN (see @ref{Using Fortran}).
+You need a means of compiling C and @sc{Fortran} (see @ref{Using Fortran}).
 Some add-on packages also need a C++ compiler.
 
 You will need Perl version 5, available via
@@ -540,7 +559,8 @@ The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate libraries installed: @code{jpeg} version 6 or @code{libpng}
 and @code{libz} respectively.
 
-The @code{bitmap} and @code{dev2bitmap} devices make use of GhostScript.
+The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
+(@uref{www.cs.wisc.edu/~ghost}).
 
 @menu
 * Tcl/Tk::                      
@@ -644,7 +664,7 @@ locations.  These default to @file{/usr/local/lib} and
 @file{/usr/local/include} to catch the most common cases.  If libraries
 are still not found, then maybe your compiler/linker does not support
 re-ordering of @code{-L} and @code{-l} flags (this has been reported to be a
-problem on HP-UX with native @code{cc}).  In this case, use a different
+problem on HP-UX with the native @code{cc}).  In this case, use a different
 compiler (or a front end shell script which does the re-ordering).
 
 If you find you need to alter configure variables, it is worth noting
@@ -675,10 +695,10 @@ variable @code{MAKE} at configure time, for example
 
 @node Using Fortran, Compile and Load Flags, Using make, Configuration on Unix
 @section Using Fortran
-@cindex Fortran
+@cindex @sc{Fortran}
 
-To compile @R{}, you need a FORTRAN compiler or @code{f2c}, the
-FORTRAN-to-C converter (@uref{www.netlib.org/f2c}).  The default is to
+To compile @R{}, you need a @sc{Fortran} compiler or @code{f2c}, the
+@sc{Fortran}-to-C converter (@uref{www.netlib.org/f2c}).  The default is to
 search for @code{g77}, @code{f77}, @code{xlf}, @code{cf77},
 @code{cft77}, @code{pgf77}, @code{fl32}, @code{af77}, @code{fort77},
 @code{f90}, @code{xlf90}, @code{pgf90}, @code{epcf90}, @code{f95},
@@ -686,17 +706,17 @@ search for @code{g77}, @code{f77}, @code{xlf}, @code{cf77},
 and then for @code{f2c}, and use whichever is found first; if none is
 found, @R{} cannot be compiled.  The search mechanism can be changed
 using the @code{--with-g77}, @code{--with-f77}, and @code{--with-f2c}
-command line options to @code{configure}.  If your FORTRAN compiler is
+command line options to @code{configure}.  If your @sc{Fortran} compiler is
 in a non-standard location, you should set the environment variable
 @code{PATH} accordingly before running @code{configure}.
 
-If your FORTRAN libraries are in slightly peculiar places, you should
+If your @sc{Fortran} libraries are in slightly peculiar places, you should
 also look at @code{LD_LIBRARY_PATH} to make sure that all libraries are
 on this path.
 
 You must set whatever compilation flags (if any) are needed to ensure
-that FORTRAN @code{integer} is equivalent to a C @code{int} pointer and
-FORTRAN @code{double precision} is equivalent to a C @code{double}
+that @sc{Fortran} @code{integer} is equivalent to a C @code{int} pointer and
+@sc{Fortran} @code{double precision} is equivalent to a C @code{double}
 pointer.  This is checked during the configuration process.
 
 @node Compile and Load Flags, Building the GNOME Interface, Using Fortran, Configuration on Unix
@@ -704,24 +724,34 @@ pointer.  This is checked during the configuration process.
 
 A wide range of flags can be set in the file @file{config.site} or via
 environment variables.  We have already mentioned
-@smallexample
-	CPPFLAGS	extra include flags
-	LIBS		libraries and `-L/lib/path' flags
-@end smallexample
+@table @code
+@item	CPPFLAGS
+extra include flags
+@item	LIBS
+libraries and @file{-L/lib/path} flags
+@end table
 @noindent
 and others include
-@smallexample
-	CFLAGS		debugging and optimization flags, C
-	MAIN_CFLAGS	ditto, for compiling the main program
-	SHLIB_CFLAGS	  or shared libraries
-	FFLAGS		debugging and optimization flags, Fortran
-	MAIN_FFLAGS	ditto, for compiling the main program
-	SHLIB_FFLAGS	  or shared libraries
-	MAIN_LDFLAGS	additional flags for the main link
-	SHLIB_LDFLAGS	additional flags for the linking shared libraries
-@end smallexample
+@table @code
+@item	CFLAGS
+debugging and optimization flags, C
+@item	MAIN_CFLAGS
+ditto, for compiling the main program
+@item	SHLIB_CFLAGS
+or shared libraries
+@item	FFLAGS
+debugging and optimization flags, Fortran
+@item	MAIN_FFLAGS
+ditto, for compiling the main program
+@item	SHLIB_FFLAGS
+for shared libraries
+@item	MAIN_LDFLAGS
+additional flags for the main link
+@item	SHLIB_LDFLAGS
+additional flags for the linking shared libraries
+@end table
 @noindent
-Library paths specified as @code{-L/lib/path} in @code{LIBS} are
+Library paths specified as @file{-L/lib/path} in @code{LIBS} are
 collected together and prepended to @code{LD_LIBRARY_PATH}, so there
 should be no need for @code{-R} or @code{-rpath} flags.
 
@@ -781,10 +811,10 @@ options, by
 @smallexample
   --with-gnome            use GNOME, or specify its prefix [no]
   --with-gnome-includes=DIR
-                          specify location of GNOME headers []
-  --with-gnome-libs=DIR   specify location of GNOME libs []
+                          specify location of GNOME headers
+  --with-gnome-libs=DIR   specify location of GNOME libs
   --with-libglade-config=LIBGLADE_CONFIG
-                          specify location of libglade-config []
+                          specify location of libglade-config
 @end smallexample
 
 
@@ -822,7 +852,7 @@ platform.
 
 If you are having trouble getting @R{} to work on your platform please
 feel free to get in touch to ask questions.  We've had a fair amount
-of practice at porting R to new platforms ....
+of practice at porting R to new platforms @dots{}.
 
 
 @node Function and variable index, Concept index, New Platforms, Top

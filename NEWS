@@ -238,6 +238,11 @@ NEW FEATURES
     o	lm() now passes `...' to the low level functions for regression
 	fitting.
 
+    o	New manual `R Installation and Administration' with fuller
+	details on the installation process: file `INSTALL' is now a
+	brief introduction referencing that manual
+
+
 
 BUG FIXES
 
