@@ -989,6 +989,10 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     SEXP frame, c;
     R_DirtyImage = 1;
     if (rho != R_NilValue) {
+#ifdef USE_GLOBAL_CACHE
+	if (IS_GLOBAL_FRAME(rho))
+	    R_FlushGlobalCache(symbol);
+#endif
 	if (HASHTAB(rho) == R_NilValue) {
 	    frame = FRAME(rho);
 	    while (frame != R_NilValue) {
@@ -999,10 +1003,6 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 		}
 		frame = CDR(frame);
 	    }
-#ifdef USE_GLOBAL_CACHE
-	    if (IS_GLOBAL_FRAME(rho))
-		R_FlushGlobalCache(symbol);
-#endif
 	    SET_FRAME(rho, CONS(value, FRAME(rho)));
 	    SET_TAG(FRAME(rho), symbol);
 	}
@@ -1018,8 +1018,12 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 		SET_HASHTAB(rho, R_HashResize(HASHTAB(rho)));
 	}
     }
-    else
+    else {
+#ifdef USE_GLOBAL_CACHE
+	R_FlushGlobalCache(symbol);
+#endif
 	SET_SYMVALUE(symbol, value);
+    }
 }
 
 
