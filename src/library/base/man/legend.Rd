@@ -60,7 +60,7 @@ matplot(c(1,8), c(0,4.5), type = "n", xlab = "Length", ylab = "Width",
 leg.txt <- c("    Setosa Petals", "    Setosa Sepals",
              "Versicolor Petals", "Versicolor Sepals")
 y.leg <- c( 4, 3, 2.2, 1.5, .9)
-cexv  <- c( 1, .8, .6, .4, .25)
+cexv  <- c( 1, .8, .6, .4, .25) * if(.Device=="Postscript") 1.2 else 1
 for (i in seq(cexv))
   legend(1, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 
@@ -83,9 +83,13 @@ for(ll in c("","x","y","xy")) {
   abline(1,1)
   lines(2:3,3:4, col=2) #
   points(2,2, col=3)    #
-  rect(2,3,3,2, col=4)  #
-  legend(list(x=2,y=8), legend = leg.txt, col=2:3, pch=1:2, lty=1, merge=T)
+  rect(2,3,3,2, col=4)
+  text(c(3,3),2:3, c("rect(2,3,3,2, col=4)",
+                     "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0,.3))
+  legend(list(x=2,y=8), legend = leg.txt, col=2:3, pch=1:2,
+         lty=1, merge=T)#, trace=T)
 }
+par(mfrow=c(1,1))
 
 ##-- Math expressions:  ------------------------------
 plot(x, sin(x), type="l", col = 2,xlab=expression(phi),ylab=expression(f(phi)))
@@ -100,6 +104,6 @@ abline(v = mean(x),   col=2, lty=2, lwd=2)
 abline(v = median(x), col=3, lty=3, lwd=2)
 ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
     		   hat(x) == median(x[i], i==1,n))
-legend(4,30, ex12, col = 2:3, lty=2:3) # lwd = 2 does not yet work in PS
+legend(4.1, 30, ex12, col = 2:3, lty=2:3, lwd=2)
 }
 \keyword{aplot}
