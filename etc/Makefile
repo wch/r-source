@@ -41,5 +41,6 @@ clean:
 	@rm -f COMPILE INSTALL SHLIB
 	@(cd $(Ex_Tests); make $@)
 
-distclean realclean: clean
+distclean realclean:
+	@rm -f COMPILE INSTALL SHLIB
 	@rm -fr $(Ex_Tests) $(CleanMe)
