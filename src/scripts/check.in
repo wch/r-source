@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.93 $ ';
+my $revision = ' $Revision: 1.94 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -57,7 +57,7 @@ my $opt_use_gct = 0;
 my $opt_codoc = 1;
 my $opt_perms = 1;
 my $opt_install = 1;
-my $opt_sweave = 1;
+my $opt_vignettes = 1;
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
@@ -66,7 +66,7 @@ R::Vars::error("R_HOME", "R_CMD", "R_EXE");
 my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
 		    "use-gct" => \$opt_use_gct, "no-codoc", "no-perms",
-		    "no-install", "no-sweave");
+		    "no-install", "no-vignettes");
 GetOptions (@knownoptions) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -79,7 +79,7 @@ $opt_latex = 0 if $opt_no_latex;
 $opt_codoc = 0 if $opt_no_codoc;
 $opt_perms = 0 if $opt_no_perms;
 $opt_install = 0 if $opt_no_install;
-$opt_sweave = 0 if $opt_no_sweave;
+$opt_vignettes = 0 if $opt_no_vignettes;
 
 my $startdir = cwd();
 $opt_outdir = $startdir unless $opt_outdir;
@@ -1018,7 +1018,7 @@ sub check_pkg {
 
     chdir($pkgoutdir);
 
-    if($opt_sweave && (-d &file_path($pkgdir, "inst", "doc"))) {
+    if($opt_vignettes && (-d &file_path($pkgdir, "inst", "doc"))) {
 	$log->checking(join("",
 			    ("Sweave files in '",
 			     &file_path("inst", "doc"),
@@ -1132,7 +1132,7 @@ Options:
       --no-examples     do not run the examples in the Rd files
       --no-install      skip installation and associated tests
       --no-tests        do not run code in tests subdirectory
-      --no-sweave       do not check vignettes in Sweave format
+      --no-vignettes    do not check vignettes in Sweave format
       --no-latex        do not run LaTeX on help files
       --use-gct         use 'gctorture(TRUE)' when running examples/tests
 

@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.40 $ ';
+my $revision = ' $Revision: 1.41 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -56,7 +56,8 @@ my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 my @excludepatterns = R::Utils::get_exclude_patterns();
 
 my @knownoptions = ("help|h", "version|v", "binary", "no-docs",
-		    "use-zip", "use-zip-help", "use-zip-data", "force");
+		    "use-zip", "use-zip-help", "use-zip-data",
+		    "force", "no-vignettes");
 
 if($WINDOWS) {
     die "Please set TMPDIR to a valid temporary directory\n"
@@ -280,19 +281,15 @@ sub prepare_pkg {
 
     updateRdIndex("INDEX", "man", 0, $log);
     updateRdIndex("data/00Index", "man", 1, $log) if(-d "data");
-    if(glob("inst/doc/*.[rRsS]nw inst/doc/*.[rRsS]tex")) {
-	$log->creating("vignettes");
-	my $Rcmd = "library(tools); buildVignettes(dir='.')\n";
-	my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
-	@out = grep(!/^\>/, @out);
-	if($#out>=0) {
-	    $log->error();
-	    $log->print(join("\n", @out) . "\n");
+
+    if(!$opt_no_vignettes){
+	if(glob("inst/doc/*.[rRsS]nw inst/doc/*.[rRsS]tex")) {
+	    $log->creating("vignettes");
+	    my $Rcmd = "library(tools); buildVignettes(dir='.')\n";
+	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
+	    $log->result("done");
+	    updateVignetteIndex("inst/doc/00Index.dcf", "inst/doc", $log);
 	}
-	else {
-	    $log->result("OK");
-	}	
-	updateVignetteIndex("inst/doc/00Index.dcf", "inst/doc", $log);
     }
 
     1;
@@ -410,6 +407,7 @@ Options:
   -v, --version		print version info and exit
 
   --force               force overwriting of (index) files
+  --no-vignettes        do not rebuild package vignettes
 
   --binary              build pre-compiled binary packages, with options:
 END
