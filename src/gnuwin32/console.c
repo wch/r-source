@@ -1699,7 +1699,6 @@ static pager pagercreate()
 	RECT *pR = RgetMDIsize();
 	w0 = pR->right;
 	h0 = pR->bottom;
-	Rprintf("w0 %d h0 %d\n", w0, h0);
     } else {
 	w0 = devicewidth(NULL);
 	h0 = deviceheight(NULL);
