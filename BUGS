@@ -180,20 +180,7 @@ none
 
 Directory:  incoming
 
-* PR# 511 *
-Subject: Bug in qbinom?
-From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
-Date: Fri, 7 Apr 2000 17:22:24 +0200 
-* PR# 509 *
-Subject: write.table with rows and cols
-From: edd@debian.org
-Date: Tue, 4 Apr 2000 01:23:32 +0200 (MET DST)
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
-* PR# 463 *
-Subject: Bug in read.table
-From: "E. S. Venkatraman" <venkat@biosta.mskcc.org>
-Date: Tue, 29 Feb 2000 17:47:54 -0500 (EST)
---looks like quote arguments to read.table/count.fields needs to be set
