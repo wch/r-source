@@ -925,7 +925,11 @@ AK2anova.out <-
         data=AA)
 ## failed in 1.5.1
 
-
+## as.character was silently truncating expressions to 60 chars
+q2 <- expression(c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19))
+(q3 <- as.character(q2))
+stopifnot(nchar(q3) == 68)
+## was 61 in 1.5.1
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
