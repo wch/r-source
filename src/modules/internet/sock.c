@@ -131,6 +131,41 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons((short)port);
 
+#ifndef Win32
+    /* According to Stephens (1998) "Unix Network Programming, Vol 1",
+       pp. 194 on UNIX we need to set the SO_REUSEADDR socket option
+       if we want to be able to have a server create several
+       connections that are open simultaneously.  If this option is
+       not set, the call to `bind' will fail when attempting to open
+       another server socket on a given port if a connection made to
+       that port is still alive. This is not an issue if each socket
+       connection is handled and terminated before the next server
+       socket is created.  Stephens recommends setting SO_REUSEADDR on
+       all servers.  Even with this option set it remains impossible
+       to establish two simultaneous servers on the same IPADDR/port
+       combination.  Tcl 8.3 uses the bit of code used here in
+       tclUnixChan.c, so it should work on most UNIX platforms.
+
+       Unfortunately things are different on Windows.  According to
+       Quinn and Shute (1996) "Windows Sockets Network Programming",
+       pp. 305, Windows sockets are quite happy to allow two servers
+       to use the same IPADDR/port, with unpredictable results, if
+       SO_REUSEADDR is set.  So setting this option on Windows is not
+       a good idea.  It is unclear whether it is possible on WIndows
+       to establish a new server socket while a connection from a
+       previous server socket is still active.
+
+       This would be less of an issue, but would not entirely
+       disappear as an issue. if the R interface separated the
+       `socket'/`bind'/`listen' part of setting up a server socked,
+       which is only needed once per server instance, from the
+       `accept' part, which is needed for each connection.  LT */
+    {
+	int val = 1;
+	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &val, sizeof(val));
+    }
+#endif
+
     if ((bind(sock, (struct sockaddr *)&server, sizeof(server)) < 0) ||
 	(listen(sock, MAXBACKLOG) < 0))
 	return Sock_error(perr, errno, 0);

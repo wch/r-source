@@ -286,6 +286,10 @@ C-LEVEL FACILITIES
 	repeatedly from code loaded by .C().  (They did not free
 	memory until .C() returned in earlier versions of R.)
 
+    o	Server sockets on non-Windows platforms now set the SO_REUSEADDR
+	socket option.  This allows a server to create simultanous
+	connections to several clients.
+
 
 BUG FIXES
 
