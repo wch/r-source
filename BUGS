@@ -25,12 +25,6 @@ actual reference number, of course!).
 
 Directory:  Accuracy
 
-* PR# 699 *
-Subject: bug in pnorm
-From: ratjamm@alum.mit.edu
-Date: Fri, 20 Oct 2000 21:46:18 +0200 (MET DST)
---fixed for 1.2
---accuracy issues in pnorm
 * PR# 631 *
 Subject: svd error 
 From: =?iso-8859-1?Q?J=F6rg?= Polzehl <polzehl@wias-berlin.de>
@@ -77,15 +71,10 @@ none
 
 Directory:  Graphics
 
-* PR# 726 *
-Subject: par(las=.)  gives wrong "adj" for mtext()
+* PR# 750 *
+Subject: abline() does not obey "xpd" (clipping rules)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 7 Nov 2000 13:03:58 +0100
-* PR# 693 *
-Subject:  Bug report
-From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
-Date: Thu, 12 Oct 2000 14:08:31 +1100
---grid problem: note a report on 0.90.1 and nothing to reproduce this
+Date: Mon, 27 Nov 2000 18:27:11 +0100
 * PR# 660 *
 Subject: identify.default ignores any setting of cex.
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -97,6 +86,15 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
+* PR# 726 *
+Subject: par(las=.)  gives wrong "adj" for mtext()
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 7 Nov 2000 13:03:58 +0100
+* PR# 693 *
+Subject:  Bug report
+From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
+Date: Thu, 12 Oct 2000 14:08:31 +1100
+--grid problem: note a report on 0.90.1 and nothing to reproduce this
 
 Directory:  In-Out
 
@@ -109,6 +107,10 @@ Date: Thu, 31 Aug 2000 07:28:02 +0200 (MET DST)
 
 Directory:  Installation
 
+* PR# 733 *
+Subject: gnome-support problems
+From: olav@melvin.jordforsk.no
+Date: Fri, 10 Nov 2000 10:55:31 +0100 (MET)
 * PR# 697 *
 Subject: build errors in configure script
 From: flip@skidmore.edu
@@ -276,47 +278,18 @@ none
 
 Directory:  incoming
 
-* PR# 752 *
-Subject: non-centrality parameter in pf()
-From: Jerome Asselin <jerome@stat.ubc.ca>
-Date: Tue, 28 Nov 2000 11:43:06 -0800 (PST)
-* PR# 734 *
-Subject:  Assigning into a dataframe 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 10 Nov 2000 16:00:31 GMT
-* PR# 733 *
-Subject: gnome-support problems
-From: olav@melvin.jordforsk.no
-Date: Fri, 10 Nov 2000 10:55:31 +0100 (MET)
-* PR# 739 *
-Subject: Bug in stars.R
-From: Tom Dye <tdye@lava.net>
-Date: Sun, 19 Nov 2000 21:48:16 -1000 (HST)
---fixed for 1.2
-* PR# 737 *
-Subject: Bug in R 1.1.1 dev.print() with fix
-From: frost@pocketmail.com
-Date: Fri, 17 Nov 2000 20:45:58 +0100 (MET)
+* PR# 753 *
+Subject: Re: [R] Step function
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Wed, 29 Nov 2000 10:30:26 -0800 (PST)
 * PR# 741 *
 Subject: match() is not correct for "close numerics"
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 21 Nov 2000 16:15:23 +0100
-* PR# 740 *
-Subject:  contour documentation 
+* PR# 734 *
+Subject:  Assigning into a dataframe 
 From: J.C.Rougier@durham.ac.uk
-Date: Tue, 21 Nov 2000 08:58:41 GMT
-* PR# 743 *
-Subject: Re: [Rd] How do you construct a function from a list?
-From: dmurdoch@pair.com (Duncan Murdoch)
-Date: Wed, 22 Nov 2000 12:57:19 GMT
-* PR# 745 *
-Subject: RE: [Rd] lm() appears to fail with large number of variables (PR#
-From: Bill.Venables@CMIS.CSIRO.AU
-Date: Thu, 23 Nov 2000 06:53:43 +1000
-* PR# 744 *
-Subject: lm() appears to fail with large number of variables
-From: r@marksmucker.com
-Date: Wed, 22 Nov 2000 21:28:59 +0100 (MET)
+Date: Fri, 10 Nov 2000 16:00:31 GMT
 * PR# 747 *
 Subject: Bug in args with no defaults
 From: dmurdoch@pair.com (Duncan Murdoch)
@@ -325,6 +298,10 @@ Date: Sun, 26 Nov 2000 20:14:30 GMT
 Subject: printing of lists
 From: David Firth <david.firth@nuffield.oxford.ac.uk>
 Date: Fri, 24 Nov 2000 12:31:33 +0000
+* PR# 743 *
+Subject: Re: [Rd] How do you construct a function from a list?
+From: dmurdoch@pair.com (Duncan Murdoch)
+Date: Wed, 22 Nov 2000 12:57:19 GMT
 * PR# 749 *
 Subject: (NA || x) and (NA && y)  {another "bug" }
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -333,11 +310,11 @@ Date: Mon, 27 Nov 2000 09:25:38 +0100
 Subject: Problem with NAs using chisq.test()
 From: kjetikj@astro.uio.no
 Date: Sun, 26 Nov 2000 21:21:22 +0100 (MET)
+* PR# 752 *
+Subject: non-centrality parameter in pf()
+From: Jerome Asselin <jerome@stat.ubc.ca>
+Date: Tue, 28 Nov 2000 11:43:06 -0800 (PST)
 * PR# 751 *
 Subject: BUG: polyroot()
 From: "Li Dongfeng" <mavip1@inet.polyu.edu.hk>
 Date: Tue, 28 Nov 2000 13:24:33 +0800
-* PR# 750 *
-Subject: abline() does not obey "xpd" (clipping rules)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Nov 2000 18:27:11 +0100
