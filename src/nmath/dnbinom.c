@@ -47,6 +47,12 @@ double dnbinom(double x, double n, double p, int give_log)
     if (x < 0 || !R_FINITE(x)) return R_D__0;
     x = R_D_forceint(x);
 
-    prob = dbinom_raw(n-1,n+x-1,p,1-p,give_log);
-    return((give_log) ? log(p) + prob : p*prob);
+    if(R_D_nonint(n)) {
+	return R_D_exp(lfastchoose(x + n - 1, x)
+		       + n * log(p) + x * log(1 - p));
+    } 
+    else { /* n is integer */
+	prob = dbinom_raw(n-1, n+x-1, p, 1-p, give_log);
+	return((give_log) ? log(p) + prob : p*prob);
+    }
 }
