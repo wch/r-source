@@ -194,10 +194,12 @@ provide <- function(name) {
 
 .packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
     if(all.available) {
-        a <- list.files(lib.loc, all.files=FALSE, full.names=FALSE)
+        a <- list.files(lib.loc[file.exists(lib.loc)], all.files =
+                        FALSE, full.names = FALSE) 
 	ans <- character(0)
 	for (name in a) {
-	    pkg <- system.file(file.path("R",name), pkg=name, lib=lib.loc)
+	    pkg <- system.file(file.path("R", name), pkg = name, lib =
+                               lib.loc) 
 	    if (pkg != "") ans <- c(ans,name)
 	}
 	return(ans)
