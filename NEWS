@@ -19,9 +19,17 @@ USER-VISIBLE CHANGES
 	about name spaces possibly being unavailable on load.
 
     o	det() uses an LU decomposition and LAPACK.  The `method'
-	argument to det no longer has any effect.
+	argument to det() no longer has any effect.
+
 
 NEW FEATURES
+
+    o	R CMD check accepts "ORPHANED" as package maintainer. Package
+	maintainers can now officially orphanize a package, i.e.,
+	resign from maintaining a package.
+
+    o	format.info() now also works with `nsmall' in analogy with
+	format.default()
 
     o	There is a GUI (RAqua) for Mac OS X
 
@@ -301,7 +309,7 @@ NEW FEATURES
 	workspace.  Previously the first place a variable of that name
 	was found on the search path was used.
 
-    o	bquote does partial substitution like LISP backquote.
+    o	bquote() does partial substitution like LISP backquote.
 
     o	dt(*, ncp = V)	is now implemented, thanks to Claus Ekstroem.
 
@@ -422,6 +430,69 @@ UTILITIES
 
 BUG FIXES
 
+    o	cut.POSIXt() now passes on ... to cut.default(), as documented.
+
+    o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
+	the length incorrectly.
+
+    o	On some machines the internal rounding used in postscript() was
+	imperfect, causing unnecessarily verbose output (-0.00 instead of
+	0) and problems with make check.
+
+    o	pacf() was failing if called on a one-column matrix.
+
+    o	$<- did not duplicate when it needed to.
+
+    o	methods("$") and methods("$<-") were failing to find methods.
+
+    o	Recursive indexing of lists had too little error-checking.
+	(related to PR#3324)
+
+    o	get() and exists() were ignoring the `mode' argument for
+	variables in base.  The error message for get() now mentions
+	the mode requested if not "any".  A bug in setting the NAMED
+	field in do_get was fixed.
+
+    o	Removed warning about names in persistent strings when a
+	namespace is saved.
+
+    o	The apparently never used `method' argument to loess() did not
+	work.  (PR#3332)
+
+    o	Fixed some malformed error messages in methods package.
+
+    o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
+
+    o	lsfit() was returning incorrect residuals for 0-rank fits.
+
+    o	sort() and unique.default() were failing on 0-level factors.
+
+    o	sapply() for matrix result does not return list(NULL,NULL) dimnames
+	anymore.
+
+    o	lm.influence() called on a 0-rank fit either crashed or produced
+	incorrect output.
+
+    o	str(x) gives better output when x is of mode "(".
+
+    o	Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
+	corrected.
+
+    o	format(*, nsmall = m) with m > 0 now returns exponential format
+	less often.
+
+    o	file.copy() ignored the overwrite argument. (PR#3529)
+
+    o	The length of a string specification of lty is now checked: it
+	should be 2, 4, 6 or 8.
+
+    o	Rd conversion was limiting a file to 1000 pairs of braces,
+	without any warning.  Now the limit is 10000, with a warning.
+	(PR#3400)
+
+    o	data() sometimes failed with multiple files, as the paths
+	variable got corrupted.
+
     o	pnorm(x, 1, 0) does not give NaN anymore;
 	also, pnorm(x, m, s=Inf) == lim{s -> Inf} pnorm(x,m,s).
 	Similar changes for dnorm(), cf PR#1218.
@@ -525,86 +596,6 @@ BUG FIXES
 	*	       1.7 SERIES NEWS			 *
 	*						 *
 	**************************************************
-
-
-		CHANGES IN R VERSION 1.7.2
-
-
-NEW FEATURES
-
-    o	R CMD check accepts "ORPHANED" as package maintainer. Package
-	maintainers can now officially orphanize a package, i.e.,
-	resign from maintaining a package.
-
-    o	format.info() now also works with `nsmall' in analogy with
-	format.default()
-
-
-BUG FIXES
-
-    o	cut.POSIXt() now passes on ... to cut.default(), as documented.
-
-    o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
-	the length incorrectly.
-
-    o	On some machines the internal rounding used in postscript() was
-	imperfect, causing unnecessarily verbose output (-0.00 instead of
-	0) and problems with make check.
-
-    o	pacf() was failing if called on a one-column matrix.
-
-    o	$<- did not duplicate when it needed to.
-
-    o	methods("$") and methods("$<-") were failing to find methods.
-
-    o	Recursive indexing of lists had too little error-checking.
-	(related to PR#3324)
-
-    o	get() and exists() were ignoring the `mode' argument for
-	variables in base.  The error message for get() now mentions
-	the mode requested if not "any".  A bug in setting the NAMED
-	field in do_get was fixed.
-
-    o	Removed warning about names in persistent strings when a
-	namespace is saved.
-
-    o	The apparently never used `method' argument to loess() did not
-	work.  (PR#3332)
-
-    o	Fixed some malformed error messages in methods package.
-
-    o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
-
-    o	lsfit() was returning incorrect residuals for 0-rank fits.
-
-    o	sort() and unique.default() were failing on 0-level factors.
-
-    o	sapply() for matrix result does not return list(NULL,NULL) dimnames
-	anymore.
-
-    o	lm.influence() called on a 0-rank fit either crashed or produced
-	incorrect output.
-
-    o	str(x) gives better output when x is of mode "(".
-
-    o	Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
-	corrected.
-
-    o	format(*, nsmall = m) with m > 0 now returns exponential format
-	less often.
-
-    o	file.copy() ignored the overwrite argument. (PR#3529)
-
-    o	The length of a string specification of lty is now checked: it
-	should be 2, 4, 6 or 8.
-
-    o	Rd conversion was limiting a file to 1000 pairs of braces,
-	without any warning.  Now the limit is 10000, with a warning.
-	(PR#3400)
-
-    o	data() sometimes failed with multiple files, as the paths
-	variable got corrupted.
-
 
 
 		CHANGES IN R VERSION 1.7.1
