@@ -80,11 +80,12 @@ makePrototypeFromClassDef <-
         NULL
     snames <- names(properties)
     if(!is.na(match(".Data", snames))) {
+        dataPartClass <- elNamed(properties, ".Data")
         ## check the data part
-        if(!is(prototype, elNamed(properties, ".Data")))
+        if(!(isVirtualClass(dataPartClass) || is(prototype, dataPartClass)))
             stop(paste("Prototype has class \"",
                        data.class(prototype), "\", but the data part specifies class \"",
-                       elNamed(properties, ".Data"),"\"", sep=""))
+                       dataPartClass,"\"", sep=""))
         snames <- snames[-match(".Data", snames)]
     }
     for(j in seq(along = properties)) {
