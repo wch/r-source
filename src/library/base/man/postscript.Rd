@@ -120,8 +120,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \code{"printcmd"} is empty and will give an error if \code{print.it=TRUE}
   is used.  Suitable commands to spool a PostScript file to a printer
   can be found in \file{RedMon} suite available from
-  \url{http://www.cs.wisc.edu/~ghost/rjl.html}.  The command will be run
-  in a minimized window.   GSView 4.0 provides
+  \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be run
+  in a minimized window.   GSView 4.x provides
   \code{gsprint.exe} which may be even more convenient (it requires
   GhostScript version 6.0 or later).
 #endif
