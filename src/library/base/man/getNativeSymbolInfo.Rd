@@ -23,7 +23,7 @@ getNativeSymbolInfo(name, PACKAGE)
 }
 \arguments{
   \item{name}{the name of the native symbol as used in a call
-    to \code{\link{is.loaded}}, etc. Note that Fortran symbols should be
+    to \code{\link{is.loaded}}, etc.  Note that Fortran symbols should be
     supplied as-is, not wrapped in \code{symbol.For}.
   }
   \item{PACKAGE}{an optional argument that specifies to which
@@ -92,6 +92,7 @@ getNativeSymbolInfo(name, PACKAGE)
   objects directly as callback objects.
 }
 \seealso{
+  \code{\link{getgetDLLRegisteredRoutines}},
   \code{\link{is.loaded}},
   \code{\link{.C}},
   \code{\link{.Fortran}},

@@ -397,6 +397,8 @@ BUG FIXES
     o	The print method for getDLLRegisteredRoutines() was badly
 	designed, and failed for all the standard packages' DLLs.
 
+    o	getDLLRegisteredRoutines.character() was broken.
+
 
 
 		CHANGES IN R VERSION 2.0.1

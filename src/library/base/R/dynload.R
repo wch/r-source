@@ -44,7 +44,7 @@ getDLLRegisteredRoutines <- function(dll)
 
 getDLLRegisteredRoutines.character <- function(dll)
 {
-    dlls <- getLoadeddDLLs()
+    dlls <- getLoadedDLLs()
     w <- sapply(dlls, function(x) x$name == dll || x$path == dll)
 
     if(!any(w))
@@ -54,7 +54,7 @@ getDLLRegisteredRoutines.character <- function(dll)
     if(sum(w) > 1)
         warning("Multiple DLLs match ", dll, ". Using ", dll$path)
 
-    getDLLRegisteredRoutines(dll)
+    getDLLRegisteredRoutines(dlls[[dll]])
 }
 
 
