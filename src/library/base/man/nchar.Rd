@@ -18,8 +18,16 @@
   will be required.
 }
 \value{
-  The number of characters as the string will be printed (integer
-  \code{2} for a missing string).
+  An integer vector giving the number of characters in each string
+  (up to the first \code{nul} character).  Missing values are regarded
+  as having two characters, for \code{"NA"}.
+}
+\note{
+  This does \strong{not} give the number of characters that will be used
+  to print the string, although it was documented to do so up to \R
+  2.0.1.  Because of escape sequences for non-printable characters, the
+  latter may be greater.  Also, it is possible (but unsupported) that
+  multichar sequences might be displayed as a single character.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -36,6 +44,6 @@ nchar(x)
 # 5  6  6  1 15
 
 nchar(deparse(mean))
-# 23  1 16 45 11 64  2 17 50 43  2 17  1
+# 18 17
 }
 \keyword{character}
