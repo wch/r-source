@@ -11,11 +11,23 @@ use File::Basename;
 use Cwd;
 use Getopt::Long;
 
-$OSdir ="unix";
+my $revision = ' $Revision: 1.19 $ ';
+my $version;
+my $name;
 
-@knownoptions = ("rhome:s", "html", "nroff", "latex", "example", "debug",
-		 "dosnames", "htmllists");
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
+
+@knownoptions = ("rhome:s", "html", "nroff", "latex", "example", "debug|d",
+		 "dosnames", "htmllists", "help|h", "version|v");
 GetOptions (@knownoptions) || usage();
+
+version() if $opt_version;
+usage() if $opt_help;
+
+
+$OSdir ="unix";
 
 $cwd=getcwd();
 if($opt_rhome){
@@ -210,11 +222,37 @@ if($opt_example){
     }
 }
 
-sub usage {
-
-    print "Usage: build-help [--rhome dir] [--html] [--nroff] [--latex]\n" .
-      "                   [--example] [--dosnames] [--htmllists] [--debug]\n" .
-      "                   [pkg] [lib]\n";
-
-    exit 0;
+sub version {
+  print STDERR <<END;
+$name $version
+Copyright (C) 1997-2000 R Core.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty.    
+END
+  exit 0;
 }
+
+sub usage {
+  print STDERR <<END;
+Usage: $name [options] [pkg] [lib]
+
+Install all help files for package pkg to library lib
+
+Options:
+  -h, --help		print short help message and exit
+  -v, --version		print version info and exit
+  -d, --debug           print debugging information
+  --rhome               R home directory, defaults to environment R_HOME
+  --html                build HTML files    (default is all)
+  --nroff               build text files    (default is all)
+  --latex               build LaTeX files   (default is all)
+  --example             build example files (default is all)
+  --htmllists           build HTML function and package lists
+  --dosnames            use 8.3 filenames
+  
+      
+Email bug reports to <r-bugs\@lists.r-project.org>.
+END
+  exit 0; 
+}
+
