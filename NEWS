@@ -56,10 +56,6 @@ USER-VISIBLE CHANGES
 	as well as the recommended packages `KernSmooth', `MASS',
 	`boot', `class', `nnet', `rpart' and `spatial'.
 
-    o   libraries can now be loaded with version numbers. This allows
-	for multiple versions of files to be installed (and potentially 
-	loaded). Some serious testing will be going on, but it should 
-        have no effect unless specifically asked for.
 
 NEW FEATURES
 
@@ -350,6 +346,10 @@ NEW FEATURES
     o   unique.default() now works for POSIXct objects, and hence so
 	does factor().
 
+    o   libraries can now be loaded with version numbers. This allows
+	for multiple versions of files to be installed (and potentially 
+	loaded). Some serious testing will be going on, but it should 
+        have no effect unless specifically asked for.
 
 
 INSTALLATION CHANGES
@@ -624,7 +624,7 @@ BUG FIXES
 	the specified frame rather than one inferred from the call.
 
     o	match.call() now uses the definition of the actual function being
-	evaluated  rather than one inferred from the call.
+	evaluated rather than one inferred from the call.
 
     o	abbreviate(*, dot = TRUE) now only adds a "." where abbreviations
 	did happen.
