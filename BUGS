@@ -394,3 +394,23 @@ Directory:  incoming
 Subject:  R CMD check 
 From: hoffmann@wsl.ch
 Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
+* PR# 1261 *
+Subject: R_140 AND RHL_72 AND Packages
+From: Patrick Gonin <gonin@genethon.fr>
+Date: Wed, 15 Jan 2003 13:25:17 +0100
+* PR# 1262 *
+Subject: La.eigen() segfaults (asymmetric , only.values = TRUE)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 15 Jan 2002 14:20:21 +0100
+* PR# 1263 *
+Subject: labels returned by cut() when include.lowest=T
+From: stephen@cogsci.ed.ac.uk
+Date: Tue, 15 Jan 2002 17:12:37 +0100 (MET)
+* PR# 1264 *
+Subject: typos in hist.Rd
+From: stephen@cogsci.ed.ac.uk
+Date: Tue, 15 Jan 2002 20:54:54 +0100 (MET)
+* PR# 1265 *
+Subject: Re:New project
+From: "" <email@ewasher.org>
+Date: Tue, 15 Jan 2002 21:43:17 +0100 (MET)
