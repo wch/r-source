@@ -209,7 +209,7 @@ model.frame.default <-
     if(missing(na.action)) {
 	if(!is.null(naa <- attr(data, "na.action")) & mode(naa)!="numeric")
 	    na.action <- naa
-	else if(!is.null(naa <- options("na.action")[[1]]))
+	else if(!is.null(naa <- getOption("na.action")))
 	    na.action <- naa
     }
     if(missing(data))
