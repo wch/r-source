@@ -195,6 +195,52 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+static char * Runix_tmpnam(char * prefix)
+{
+    char *tmp, tm[PATH_MAX], tmp1[PATH_MAX], *res;
+    unsigned int n, done = 0, pid;
+
+    tmp = getenv("TMP");
+    if (!tmp) tmp = getenv("TEMP");
+    if(tmp) strcpy(tmp1, tmp);
+    else strcpy(tmp1, "/tmp");
+    pid = (unsigned int) getpid();
+    for (n = 0; n < 100; n++) {
+	/* try a random number at the end */
+        sprintf(tm, "%s/%sR%xS%x", tmp1, prefix, pid, rand());
+        if (!R_FileExists(tm)) { done = 1; break; }
+    }
+    if(!done)
+	error("cannot find unused tempfile name");
+    res = (char *) malloc((strlen(tm)+1) * sizeof(char));
+    strcpy(res, tm);
+    return res;
+}
+
+SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  ans;
+    char *tn, *tm;
+    int i, slen=0 /* -Wall */;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)) || (slen = LENGTH(CAR(args))) < 1)
+	errorcall(call, "invalid file name argument");
+    PROTECT(ans = allocVector(STRSXP, slen));
+    for(i = 0; i < slen; i++) {
+	tn = CHAR(STRING(CAR(args))[i]);
+	/* try to get a new file name */
+	tm = Runix_tmpnam(tn);
+	STRING(ans)[i] = mkChar(tm);
+	free(tm);
+    }
+    UNPROTECT(1);
+    return (ans);
+}
+
 /*
  *  helpers for start-up code
  */

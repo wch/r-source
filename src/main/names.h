@@ -57,7 +57,6 @@ SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 
 #ifdef Win32
 SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
-SEXP do_tempfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
@@ -321,6 +320,7 @@ SEXP do_switch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_symbol(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sys(SEXP, SEXP, SEXP, SEXP);
 SEXP do_system(SEXP, SEXP, SEXP, SEXP);
+SEXP do_tempfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_termsform(SEXP, SEXP, SEXP, SEXP);
 SEXP do_text(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tilde(SEXP, SEXP, SEXP, SEXP);

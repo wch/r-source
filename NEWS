@@ -50,14 +50,14 @@ NEW FEATURES
     o	New functions by() and merge() to split and join data frames.
 
     o   Generic methods now do "match before dispatch", so
-        plot(pch=2, y ~ x) invokes plot.formula. Notice that this will
+        plot(pch=2, y ~ x) invokes plot.formula.  Notice that this will
         break user code if it has renamed the dispatch argument and
         uses the original name for a different argument.
 
     o	Long-named command-line options also allow `--name VALUE'.
 
     o   arima0() now uses optim() rather than nlm(), and is thereby
-	normally faster and gives more accurate solutions. Perhaps
+	normally faster and gives more accurate solutions.  Perhaps
 	more importantly, it fails to converge much less often.
 
 
@@ -74,14 +74,16 @@ BUG FIXES
     o   (0.99.0a) edit.data.frame() now handles character vectors
         better, provided they were generated with I().
 
-    o   (0.99.0a) attempt to special-case print buffer allocation
+    o   (0.99.0a) Attempt to special-case print-buffer allocation
 	with just a format argument was abandoned, since there is
-	no portable way of doing it and it caused compile problem 
+	no portable way of doing it and it caused compile problem
 	on Alpha.
 
-    o	tempfile("") now works on all Unix platforms, and
+    o   tempfile("") now works on all Unix platforms, and
 	tempfile("a b c") returns a single name (with spaces in).
-	The documentation no longer (incorrectly) guarantees uniqueness.
+	The file names are now unique across processes (Unix), are
+	guaranteed not to exist and very likely to be unique within
+	an R session.
 
     o	The search semantics of data(), example() and help() have changed
 	(see their help pages). In particular, they will normally
@@ -99,7 +101,7 @@ BUG FIXES
 
     o	Lots of help examples now tidy up the files they created.
 
-    o	library(help=foo) lists only contents of first version if 
+    o	library(help=foo) lists only contents of first version if
 	multiple matches are found on lib.loc.
 
     o	C functions fprec() and fround() [= R's signif() and round()],

@@ -489,6 +489,7 @@ FUNTAB R_FunTab[] =
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
 {"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},
 {"commandArgs", do_commandArgs, 0,      11,     0,      PP_FUNCALL},
+{"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 #ifdef Win32
 {"system",	do_system,	0,	11,	3,	PP_FUNCALL},
 #else
@@ -498,7 +499,6 @@ FUNTAB R_FunTab[] =
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 #endif
 #ifdef Win32
-{"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 {"unlink",	do_unlink,	0,	11,	1,	PP_FUNCALL},
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},

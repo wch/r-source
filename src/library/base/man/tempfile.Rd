@@ -20,25 +20,30 @@ tempfile(pattern = "file")
 \details{
   If \code{pattern} has length greater than one then the result is of the
   same length giving a temporary file name for each component of
-  \code{pattern}. Duplicates in \code{pattern} may result in
-  duplicated names.
+  \code{pattern}. 
 
   The names are very likely to be unique among calls to \code{tempfile}
-  in an \R session and across simultaneous \R sessions, but this is
-  not guaranteed.
+  in an \R session and across simultaneous \R sessions.  The filenames are
+  guaranteed not to be currently in use.
+
+#ifdef unix
+  The file name is made of the pattern, the process number in hex and a
+  random suffix in hex. The filenames will be in the directory given by
+  the first found of the environment variables \code{TMP}, \code{TEMP},
+  or \code{"/tmp"}.
+#endif
 #ifdef windows
-  
   The filenames will be in the directory given by the first found of
   the environment variables \code{TMP}, \code{TEMP} and \code{R\_USER}
   (see \code{\link{Rconsole}}). If the path to the directory contains
   a space in any of the components, the path returned will use the
-  shortnames version of the path. The filenames are guaranteed not to
-  be currently in use.
+  shortnames version of the path. 
 #endif
 }
 \seealso{\code{\link{unlink}} for deleting files.}
 #ifdef unix
 \examples{
+tempfile(c("ab", "a b c"))   # give file name with spaces in!
 ## One possibility of getting ALL environment variables;
 ## compare with `getenv':
 fun <- function() {
