@@ -12,6 +12,7 @@ BUG FIXES
     o   fixed the function "Check for R updates" that worked only 
         on patches and not on full release changes.
 
+    o   fixed the clipping problem in the quartz device
 
 CHANGES IN R (AQUA) VERSION 1.9.0
 
