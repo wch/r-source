@@ -777,7 +777,12 @@ will do the computations as complex numbers.
 @R{} has a number of facilities for generating commonly used sequences
 of numbers.  For example @code{1:30} is the vector @code{c(1, 2,
 @dots{}, 29, 30)}.
+@c <NOTE>
+@c Info cannot handle ':' as an index entry.
+@ifnotinfo
 @findex :
+@end ifnotinfo
+@c </NOTE>
 The colon operator has highest priority within an expression, so, for
 example @code{2*1:15} is the vector @code{c(2, 4, @dots{}, 28, 30)}.
 Put @code{n <- 10} and compare the sequences @code{1:n-1} and
