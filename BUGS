@@ -336,3 +336,15 @@ Date: Wed, 10 Nov 1999 10:39:01 +0000 (GMT)
 Subject: plot() bugs
 From: wsi@gcal.ac.uk
 Date: Wed, 10 Nov 1999 14:19:25 +0100 (MET)
+* PR# 318 *
+Subject: dimname'less array breaks apply
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Wed, 10 Nov 1999 16:49:33 -0800 (PST)
+* PR# 319 *
+Subject:  expand.grid returns vector for single arg 
+From: cberry@tajo.ucsd.edu (Charles C. Berry)
+Date: Wed, 10 Nov 1999 18:41:22 -0800 (PST)
+* PR# 320 *
+Subject: tapply not simplifying to vector?
+From: Matthew Wiener <mcw@ln.nimh.nih.gov>
+Date: Wed, 10 Nov 1999 22:54:37 -0500 (EST)
