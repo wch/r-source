@@ -102,8 +102,7 @@ static int R_call_lang(ClientData clientData,
 		  int argc,
 		  char *argv[])
 {
-    int i;
-    SEXP expr, env, fun, alist;
+    SEXP expr, env;
 
     expr = (SEXP) strtoul(argv[1], NULL, 16);
     env  = (SEXP) strtoul(argv[2], NULL, 16);
@@ -190,7 +189,7 @@ SEXP dotTclcallback(SEXP args)
 {
     SEXP ans, callback = CADR(args), env;
 
-    char *rval;
+    char *rval = NULL; /* -Wall */
 
     if (isFunction(callback))
         rval = callback_closure(callback);
