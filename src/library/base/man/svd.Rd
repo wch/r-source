@@ -66,23 +66,11 @@ D <- diag(s$d)
 stopifnot(abs(X - s$u \%*\% D \%*\% t(s$v)) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) \%*\% X \%*\% s$v) < Eps)#  D = U' X V
 
-str(s <- La.svd(X)); D <- diag(s$d)
-stopifnot(abs(X - s$u \%*\% D \%*\% s$vt) < Eps)#  X = U D V'
-stopifnot(abs(D - t(s$u) \%*\% X \%*\% t(s$vt)) < Eps)#  D = U' X V
-
 X <- cbind(1, 1:7)
 str(s <- svd(X)); D <- diag(s$d)
 stopifnot(abs(X - s$u \%*\% D \%*\% t(s$v)) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) \%*\% X \%*\% s$v) < Eps)#  D = U' X V
 
-str(s <- La.svd(X)); D <- diag(s$d)
-stopifnot(abs(X - s$u \%*\% D \%*\% s$vt) < Eps)#  X = U D V'
-stopifnot(abs(D - t(s$u) \%*\% X \%*\% t(s$vt)) < Eps)#  D = U' X V
-
-X <- cbind(1, 1:7+(-3:3)*1i)
-str(s <- La.svd(X)); D <- diag(s$d)
-stopifnot(abs(X - s$u \%*\% D \%*\% s$vt) < Eps)
-stopifnot(abs(D - Conj(t(s$u)) \%*\% X \%*\% Conj(t(s$vt))) < Eps)
 }
 \keyword{algebra}
 \keyword{array}

@@ -38,6 +38,8 @@ test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-internet = internet.R
+test-src-lapack = lapack.R
+test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
 
 test-src-reg-1 = \
@@ -46,7 +48,7 @@ test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
 all-basic-tests = Examples Specific
-all-extra-tests = Internet Random Reg FF codoc undoc
+all-extra-tests = Internet Lapack Nafns Random Reg FF codoc undoc
 
 DISTFILES = Makefile.in README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
@@ -68,11 +70,14 @@ test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 test-out-gct = $(test-src-gct:.R=.Rout-gct)
 
 test-out-internet = $(test-src-internet:.R=.Rout)
+test-out-lapack = $(test-src-lapack:.R=.Rout)
+test-out-nafns = $(test-src-nafns:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 
 test-out = $(test-src:.R=.Rout) $(test-out-gct) \
-	$(test-out-internet) $(test-out-random) $(test-out-reg)
+	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
+	$(test-out-random) $(test-out-reg)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct
@@ -152,6 +157,12 @@ test-all-extras: Makefile
 test-Internet:
 	@echo "running tests of Internet and socket functions"
 	@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
+test-Lapack:
+	@echo "running tests of LAPACK-based functions"
+	@$(MAKE) $(test-out-lapack) RVAL_IF_DIFF=0
+test-Nafns:
+	@echo "running tests of NA handling functions"
+	@$(MAKE) $(test-out-nafns) RVAL_IF_DIFF=0
 test-Random:
 	@echo "running tests of random deviate generation"
 	@$(MAKE) $(test-out-random) RVAL_IF_DIFF=1

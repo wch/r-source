@@ -96,7 +96,7 @@ em <- eigen(sm, symmetric = FALSE); V2 <- em$vect
 print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
                          # and V2 is not normalized (where V is):
 print(i <- rev(order(lam2)))
-stopifnot(abs(1 - lam2[i] / lam) < 60 * Meps)
+stopifnot(abs(lam - lam2[i]) < 60 * Meps)
 
 zapsmall(Diag <- t(V2) \%*\% V2) # orthogonal, but not normalized
 print(norm2V <- apply(V2 * V2, 2, sum))
@@ -118,49 +118,6 @@ all(abs(sm        -  sV \%*\% diag(slam) \%*\% t(sV)) < 60*Meps)
 ## sV  *is* now equal to V  -- up to sign (+-) and rounding errors
 all(abs(c(1 - abs(sV / V)))       <     1000*Meps) # TRUE (P ~ 0.95)
 
-##                -------  using La.eigen --------- 
-
-La.eigen(cbind(c(1,-1),c(-1,1)))
-La.eigen(cbind(c(1,-1),c(-1,1)), symmetric = FALSE)
-
-La.eigen(cbind(1,c(1,-1)), only.values = TRUE)
-La.eigen(cbind(-1,2:1)) # complex values
-La.eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real eigenvalues
-## 3 x 3:
-La.eigen(cbind( 1,3:1,1:3))
-La.eigen(cbind(-1,c(1:2,0),0:2)) # complex values
-
-Meps <- .Alias(.Machine$double.eps)
-m <- matrix(round(rnorm(25),3), 5,5)
-sm <- m + t(m) #- symmetric matrix
-em <- La.eigen(sm); V <- em$vect
-print(lam <- em$values) # ordered DEcreasingly
-
-stopifnot(
- abs(sm \%*\% V - V \%*\% diag(lam))          < 60*Meps,
- abs(sm       - V \%*\% diag(lam) \%*\% t(V)) < 60*Meps)
-
-##------- Symmetric = FALSE:  -- different to above : ---
-
-em <- La.eigen(sm, symmetric = FALSE); V2 <- em$vect
-print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
-print(i <- rev(order(lam2)))
-stopifnot(abs(1 - lam2[i] / lam) < 60 * Meps)
-
-zapsmall(Diag <- t(V2) \%*\% V2) # orthonormal
-print(norm2V <- apply(V2 * V2, 2, sum))
-stopifnot( abs(1- norm2V / diag(Diag)) < 60*Meps)
-
-stopifnot(abs(sm \%*\% V2 - V2 \%*\% diag(lam2))            < 60*Meps,
-          abs(sm         - V2 \%*\% diag(lam2) \%*\% t(V2)) < 60*Meps)
-
-## Re-ordered as with symmetric:
-sV <- V2n[,i]
-slam <- lam2[i]
-all(abs(sm \%*\% sV -  sV \%*\% diag(slam))             < 60*Meps)
-all(abs(sm        -  sV \%*\% diag(slam) \%*\% t(sV)) < 60*Meps)
-## sV  *is* now equal to V  -- up to sign (+-) and rounding errors
-all(abs(c(1 - abs(sV / V)))       <     1000*Meps) # TRUE (P ~ 0.95)
 }
 \keyword{algebra}
 \keyword{array}
