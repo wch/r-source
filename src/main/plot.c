@@ -730,9 +730,9 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    lab = labelformat(at);
 	else if (!isExpression(lab))
 	    lab = labelformat(lab);
+        if (length(at) != length(lab))
+	    errorcall(call, "location and label lengths differ\n");
     }
-    if (length(at) != length(lab))
-	errorcall(call, "location and label lengths differ\n");
     UNPROTECT(2);
     R_Visible = 0;
     GSavePars(dd);
@@ -1235,6 +1235,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+/* Checks for ... , x0, y0, x1, y1 ... */
 
 static void xypoints(SEXP call, SEXP args, int *n)
 {
