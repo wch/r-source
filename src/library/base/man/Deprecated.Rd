@@ -5,12 +5,21 @@
 \alias{.Deprecated}
 \usage{
 getenv(x)
+read.table.url(url, method,\dots)
+scan.url(url, file = tempfile(), method, \dots)
+source.url(url, file = tempfile(), method, \dots)
+httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
+           file=tempfile(), drop.ctrl.z=TRUE)
 
 .Deprecated(new)
 }
 %------ PLEASE: put \alias{.} here for  EACH !
 %
 \alias{getenv}
+\alias{read.table.url}
+\alias{scan.url}
+\alias{source.url}
+\alias{httpclient}
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
@@ -19,6 +28,12 @@ getenv(x)
 
   \code{getenv} is a deprecated alternative name for
   \code{\link{Sys.getenv}}.
+
+  \code{*.url} are replaced by calling \code{read.table}, \code{scan} or
+  \code{source} on a \code{\link{url}} connection.
+
+  \code{httpclient} is used by the deprecated \code{"socket"} method
+  of \code{\link{download.file}}.
 }
 \seealso{\code{\link{Defunct}}}
 %\examples{

@@ -13,7 +13,7 @@ download.file(url, destfile, method, quiet = FALSE, mode="w")
     file is saved.  For the \code{"internal"} method tilde-expansion is
     performed.}
   \item{method}{Method to be used for downloading files.  Currently
-    download methods \code{"internal"}, \code{"wget"}, \code{"lynx"} 
+    download methods \code{"internal"}, \code{"wget"}, \code{"lynx"}
     and \code{"socket"} are available.  The default is to choose the
     first of these which is available, on almost all systems
     \code{"internal"}.}
@@ -66,19 +66,23 @@ download.file(url, destfile, method, quiet = FALSE, mode="w")
   Methods \code{"wget"}, \code{"lynx"} and \code{"socket"} are for
   historical compatibility.  They will block any other activity on the
   \R process.
-  
+
   For methods \code{"wget"} and \code{"lynx"} a system call is made to
   the tool given by \code{method}, and the respective program must be
   installed on your system and be in the search path for executables.
 
-  To use \code{"socket"} the file must be on an \code{HTTP} server,
-  in plain text, and your system must allow socket connections to be
-  opened to that server (and not via a proxy or firewall).
+  Method \code{"socket"} is deprecated.  To use it the file must be on
+  an \code{HTTP} server, in plain text, and your system must allow
+  socket connections to be opened directly to that server (and not
+  via a proxy or firewall).
 }
 \seealso{
   \code{\link{options}} to set the \code{timeout} and
   \code{internet.info} options.
 
-  \code{url} for a finer-grained way to read data from URLs.
+  \code{\link{url}} for a finer-grained way to read data from URLs.
+
+  \code{\link{url.show}}, \code{\link{CRAN.packages}},
+  \code{\link{download.packages}} for applications
 }
 \keyword{utilities}
