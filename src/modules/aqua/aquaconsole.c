@@ -26,7 +26,7 @@
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
-#endif
+#endif 
 
 
 /* necessary for some (older, i.e., ~ <= 1997) Linuxen, and apparently
@@ -685,7 +685,7 @@ void Raqua_StartConsole(Rboolean OpenConsole)
 
 
     
-    InstallEventLoopTimer(GetMainEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, &Inst_OtherEventLoops);
+    InstallEventLoopTimer(GetMainEventLoop(), 0, kEventDurationMillisecond*10, NewEventLoopTimerUPP(OtherEventLoops), NULL, &Inst_OtherEventLoops);
     InstallEventLoopTimer(GetMainEventLoop(), 0, kEventDurationSecond /5, NewEventLoopTimerUPP(ReadStdoutTimer), NULL, &Inst_ReadStdoutTimer);
     InstallEventLoopTimer(GetMainEventLoop(),0, kEventDurationSecond*5, NewEventLoopTimerUPP(FlushConsoleTimer), NULL, &Inst_FlushConsoleTimer);
 
