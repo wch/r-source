@@ -733,6 +733,11 @@ BUG FIXES
     o	summary.lm asked for a report on a reasonable occurrence, but
 	the check failed to take account of NAs.
 
+    o   lm was miscalculating df.residual for empty models with matrix
+        response 
+
+    o   summary.lm now behaves more sensibly for empty models
+
 
 
 

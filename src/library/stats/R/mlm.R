@@ -3,7 +3,7 @@ summary.mlm <- function(object, ...)
 {
     coef <- coef(object)
     ny <- ncol(coef)
-    if(is.null(ny)) return(NextMethod("summary"))
+## Not right:    if(is.null(ny)) return(NextMethod("summary"))
     effects <- object$effects
     resid <- residuals(object)
     fitted <- fitted(object)

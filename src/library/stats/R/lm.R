@@ -30,9 +30,10 @@ lm <- function (formula, data, subset, weights, na.action,
 
     if (is.empty.model(mt)) {
 	x <- NULL
-	z <- list(coefficients = numeric(0), residuals = y,
+	z <- list(coefficients = if (is.matrix(y)) 
+                    matrix(,0,3) else numeric(0), residuals = y,
 		  fitted.values = 0 * y, weights = w, rank = 0,
-		  df.residual = length(y))
+		  df.residual = if (is.matrix(y)) nrow(y) else length(y))
         if(!is.null(offset)) z$fitted.values <- offset
     }
     else {
