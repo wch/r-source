@@ -391,7 +391,8 @@ SEXP VectorToPairList(SEXP x)
 	    SET_TAG(xptr, install(CHAR(STRING_ELT(xnames, i))));
 	xptr = CDR(xptr);
     }
-    copyMostAttrib(x, xnew);
+    if (len>0)       /* can't set attributes on NULL */
+	copyMostAttrib(x, xnew);
     UNPROTECT(3);
     return xnew;
 }

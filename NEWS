@@ -416,7 +416,13 @@ BUG FIXES
     o	r <- a %*% b no longer produces names(dimnames(r)) == c("", "")
 	unless one of a or b has named dimnames.
 
+    o   eval(expr,NULL,encl) now looks up variables in encl, as 
+        eval(expr,list(),encl) always did
 
+    o   coercing as.data.frame(NULL) to a pairlist caused an error.
+
+
+   
 
 
 	**************************************************

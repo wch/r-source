@@ -1523,6 +1523,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid 3rd argument");
     switch(TYPEOF(env)) {
     case NILSXP:
+        env = encl;     /* so eval(expr, NULL, encl) works */
     case ENVSXP:
 	PROTECT(env);	/* so we can unprotect 2 at the end */
 	break;

@@ -3440,3 +3440,13 @@ tst2(a1,a2)
 tst2(a1,a3)
 tst2(a2,a3)
 ## end {testing named dimnames for %*% and crossprod()}
+
+## -- coercing as.data.frame(NULL) to a pairlist didn't work
+y<-1:10
+eval(quote(y), as.data.frame(NULL))
+## NULL as the second argument of eval should be treated
+## like a list or data frame
+eval(quote(y), NULL)
+## end 
+
+
