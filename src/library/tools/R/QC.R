@@ -152,19 +152,29 @@ function(package, dir, lib.loc = NULL)
                        "Ops", "Summary")]
     }
 
+    ## <FIXME>
+    ## Currently, loading data from an R file via sys.source() puts
+    ## .required into the load environment if the R code has a call to
+    ## require().
+    dataObjs <- dataObjs[! dataObjs %in% c(".required")]
+    ## </FIXME>
+
     undocThings <-
-        list("code objects" = codeObjs[! codeObjs %in% allDocTopics],
-             "data sets" = dataObjs[! dataObjs %in% allDocTopics])
+        list("code objects" =
+             unique(codeObjs[! codeObjs %in% allDocTopics]),
+             "data sets" =
+             unique(dataObjs[! dataObjs %in% allDocTopics]))
 
     if(!is.na(match("package:methods", search()))) {
         ## Undocumented S4 classes?
         S4classes <- getClasses(codeEnv)
+        ## The bad ones:
+        S4classes <-
+            S4classes[!sapply(S4classes,
+                              function(u) topicName("class", u))
+                      %in% allDocTopics]
         undocThings <-
-            c(undocThings,
-              list("S4 classes" =
-                   S4classes[!sapply(S4classes,
-                                     function(u) topicName("class", u))
-                             %in% allDocTopics]))
+            c(undocThings, list("S4 classes" = unique(S4classes)))
     }
 
     if(!is.na(match("package:methods", search()))) {
@@ -182,8 +192,7 @@ function(package, dir, lib.loc = NULL)
                 if(is(finalDefaultMethod(mlist), "derivedDefaultMethod"))
                     classes <- classes[!default]
             }
-            sigs <-
-                sapply(classes, paste, collapse = ",")
+            sigs <- sapply(classes, paste, collapse = ",")
             if(length(sigs))
                 paste(f, ",", sigs, sep = "")
             else
@@ -192,6 +201,7 @@ function(package, dir, lib.loc = NULL)
         S4methods <-
             sapply(getGenerics(codeEnv), methodsSignatures)
         S4methods <- as.character(unlist(S4methods, use.names = FALSE))
+        ## The bad ones:
         S4methods <-
             S4methods[!sapply(S4methods,
                               function(u) topicName("method", u))
@@ -199,9 +209,9 @@ function(package, dir, lib.loc = NULL)
         undocThings <-
             c(undocThings,
               list("S4 methods" =
-                   sub("([^,]*),(.*)",
-                       "\\\\S4method{\\1}{\\2}",
-                       S4methods)))
+                   unique(sub("([^,]*),(.*)",
+                              "\\\\S4method{\\1}{\\2}",
+                              S4methods))))
     }
 
     class(undocThings) <- "undoc"
