@@ -6,6 +6,8 @@
 
 NEW FEATURES
 
+    o	new function sunflowerplot().
+
     o	zero.R tries to find the zero DLL is a system-independent way.
 
     o	lty=0 now (again) makes lines invisible. Looks better for
@@ -24,6 +26,8 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o	require() now has the warn.conflicts argument of library().
 
     o	factor(list()) *is* now a factor;
 	ordered does NOT allow an `ordered' argument anymore
