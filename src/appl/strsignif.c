@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) Martin Maechler, 1994
+ *  Copyright (C) Martin Maechler, 1994, 1998
  *
  *  This code is to be understood as Free Software in the sense of
  *  GNU Copyright.  You can freely use and redistribute this software
@@ -25,7 +25,7 @@
  *  Integer arguments changed from "long" to "int"
  *  Bus error due to non-writable strings fixed
  *
- *	type	"double", "single" or "integer" (S - numeric `mode').
+ *	type	"real" or "integer" (R - numeric `mode').
  *
  *	width	The total field width; width < 0 means to left justify
  *		the number in this field (equivalent to flag = "-").
@@ -44,7 +44,7 @@
  *	flag	Format modifier as in K&R "C", 2nd ed., p.243;
  *		e.g., "0" pads leading zeros; "-" does left adjustment
  *		the other possible flags are  "+", " ", and "#".
- *
+ *	  New (Feb.98): if flag has more than characters, all are passed..
  */
 
 #include <stdio.h>
@@ -56,37 +56,41 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	int wid = *width;
 	int dig = *digits;
 	int i, nn = *n;
-	char form[10];
 	void error(char*);
+	char form[12]; /*-- Really, instead :
+	  char *form;
+	  form = Calloc(strlen(*flag)+strlen(*format)+ 4+1, char);
+	*/
 
 	if (wid == 0) error("Width cannot be zero\n");
 
 	if (strcmp("d", *format) == 0) {
 		if (strlen(*flag) == 0) strcpy(form, "%*d");
 		else {
-			strcpy(form, "% *d");
-			form[1] = *flag[0];
+			strcpy(form, "%");
+			strcat(form, *flag);
+			strcat(form, "*d");
 		}
 		if (strcmp("integer", *type) == 0)
 			for (i=0; i < nn; i++)
-				sprintf(result[i], form, wid, (int)((long *)x)[i]);
-		else 
+			 sprintf(result[i], form, wid, (int)((long *)x)[i]);
+		else
 			error("`type' must be \"integer\" for  \"d\"-format\n");
 	}
 	else {
-		if (strlen(*flag) == 0) { 
-			strcpy(form, "%*.*#");
-			form[4] = *format[0];
+		if (strlen(*flag) == 0) {
+			strcpy(form, "%*.*");
+		} else {
+			strcpy(form, "%");
+			strcat(form, *flag);
+			strcat(form, "*.*");
 		}
-		else { 
-			strcpy(form, "% *.*#");
-			form[1] = *flag[0];
-			form[5] = *format[0];
-		}
+		strcat(form, *format);
+
 		if (strcmp("real", *type) == 0)
 			for (i=0; i < nn; i++)
-				sprintf(result[i], form, wid, dig, ((double *)x)[i]) ;
-		else 
-			error("`type' must be \"double\" or \"single\" for this format\n");
+			 sprintf(result[i], form, wid, dig, ((double *)x)[i]);
+		else
+			error("`type' must be \"real\" for this format\n");
 	}
 }
