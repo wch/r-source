@@ -33,21 +33,24 @@ Date: Tue, 28 Nov 2000 13:24:33 +0800
 
 Directory:  Add-ons
 
-* PR# 930 *
-Subject: Re: [R] Crazy plots of time-series against dates
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 01 May 2001 21:33:53 +0200
---error in chron package
-* PR# 824 *
-Subject: trouble with netCDF 
-From: jasont@indigoindustrial.co.nz
-Date: Thu, 25 Jan 2001 12:00:39 +1300
---Only on a specific sample file: send to maintainer.
+* PR# 950 *
+Subject:  lattice: dev.print(postscript) gives probl. false background Info 
+From: Peter Malewski <p.malewski@tu-bs.de>
+Date: Sat, 26 May 2001 23:20:29 +0200
 * PR# 496 *
 From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
+* PR# 948 *
+Subject:  xyplot,grid.text segfault 
+From: Peter Malewski <p.malewski@tu-bs.de>
+Date: Sat, 26 May 2001 13:24:11 +0200
+* PR# 930 *
+Subject: Re: [R] Crazy plots of time-series against dates
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 01 May 2001 21:33:53 +0200
+--error in chron package
 
 Directory:  Analyses
 
@@ -59,6 +62,8 @@ Directory:  Documentation
 Subject: Minor documentation issue
 From: jebacklund@dowagro.com
 Date: Wed, 16 May 2001 19:58:13 +0200 (MET DST)
+--There is an objects() function, and help(objects) documents it. I don't see the
+--problem here.
 * PR# 899 *
 Subject: documentation problems in str.Rd
 From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
@@ -91,13 +96,6 @@ Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 Subject: abline() does not obey "xpd" (clipping rules)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Nov 2000 18:27:11 +0100
-* PR# 820 *
-Subject: interaction.plot
-From: "Mark M. Span" <span@psy.uva.nl>
-Date: Mon, 22 Jan 2001 10:47:39 +0100
---mtext is unscaled by default.  It is not clear if this should
---use the par("cex") setting or an inline cex setting such as cex.axis.
---It might make more sense to use axis rather than mtext, as boxplot does.
 * PR# 816 *
 Subject: dotplot: character size of labels
 From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
@@ -117,12 +115,6 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 Subject:  par(lab= *) / axis(*) bug 
 From: maechler@stat.math.ethz.ch
 Date: Fri, 22 Dec 2000 10:59:26 +0100
-* PR# 831 *
-Subject: screen can't go back to (split) screen with log="y" plot
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 30 Jan 2001 00:39:41 -0500
---Still there. Suggested fix included in followups, but we didn't get around to
---try it in time for 1.2.3
 * PR# 828 *
 Subject: termplot fails for composite non-factor terms
 From: John Maindonald <john.maindonald@anu.edu.au>
@@ -131,6 +123,27 @@ Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
 --
 --The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
 --the data right is a project for 1.3
+* PR# 820 *
+Subject: interaction.plot
+From: "Mark M. Span" <span@psy.uva.nl>
+Date: Mon, 22 Jan 2001 10:47:39 +0100
+--mtext is unscaled by default.  It is not clear if this should
+--use the par("cex") setting or an inline cex setting such as cex.axis.
+--It might make more sense to use axis rather than mtext, as boxplot does.
+* PR# 837 *
+Subject: screen doesn't handle redrawing properly
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 01 Feb 2001 14:20:52 -0500
+* PR# 831 *
+Subject: screen can't go back to (split) screen with log="y" plot
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 30 Jan 2001 00:39:41 -0500
+--Still there. Suggested fix included in followups, but we didn't get around to
+--try it in time for 1.2.3
+* PR# 865 *
+Subject:  axis(...,las=1) breaks postscript code in certain cases 
+From: maechler@stat.math.ethz.ch
+Date: Wed, 7 Mar 2001 18:08:58 +0100
 * PR# 857 *
 Subject: Plotting points on a filled.contour plot
 From: marchini@stats.ox.ac.uk
@@ -140,29 +153,14 @@ Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
 --
 --Added note and example to help file to explain how to annotate
 --filled contour.  Paul 24/5/01
-* PR# 837 *
-Subject: screen doesn't handle redrawing properly
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 01 Feb 2001 14:20:52 -0500
-* PR# 887 *
-Subject: axis(adj=anything) has no effect
-From: jhallman@frb.gov
-Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
-* PR# 865 *
-Subject:  axis(...,las=1) breaks postscript code in certain cases 
-From: maechler@stat.math.ethz.ch
-Date: Wed, 7 Mar 2001 18:08:58 +0100
-* PR# 917 *
-Subject: boxplot
-From: skala@incoma.cz
-Date: Fri, 20 Apr 2001 08:43:29 +0200 (MET DST)
---fixed for 1.2.3  (one could consider the bug an `accidental feature',
---		  but the documentation and the other S implementations 
---		  differ).
 * PR# 916 *
 Subject:  par(mgp) bug 
 From: paul@stat.auckland.ac.nz
 Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
+* PR# 887 *
+Subject: axis(adj=anything) has no effect
+From: jhallman@frb.gov
+Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
 * PR# 940 *
 Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
 From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
@@ -215,10 +213,6 @@ Date: Mon, 25 Sep 2000 10:17:15 +0200
 
 Directory:  Low-level
 
-* PR# 941 *
-Subject: Mistake in qbeta.c ?
-From: tlm21@cam.ac.uk
-Date: Wed, 16 May 2001 13:49:34 +0200 (MET DST)
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -322,19 +316,11 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 950 *
-Subject:  lattice: dev.print(postscript) gives probl. false background Info 
-From: Peter Malewski <p.malewski@tu-bs.de>
-Date: Sat, 26 May 2001 23:20:29 +0200
-* PR# 949 *
-Subject:  lattice: postscript() false margins  
-From: Peter Malewski <p.malewski@tu-bs.de>
-Date: Sat, 26 May 2001 22:45:24 +0200
-* PR# 948 *
-Subject:  xyplot,grid.text segfault 
-From: Peter Malewski <p.malewski@tu-bs.de>
-Date: Sat, 26 May 2001 13:24:11 +0200
-* PR# 947 *
-Subject: Problem with hist(x, prob=T)
-From: rpeng@stat.ucla.edu
-Date: Thu, 24 May 2001 03:18:11 +0200 (MET DST)
+* PR# 953 *
+Subject: bugs in deriv(*, *, function.arg = ) 
+Subject: PROTECT() bugs in deriv(*, *, function.arg = ) 
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 28 May 2001 10:44:59 +0200
+Date: Mon, 16 Apr 2001 21:02:10 +0200
+--The second bug is a missing PROTECT. 
