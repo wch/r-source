@@ -11,19 +11,6 @@
 
 USER-VISIBLE CHANGES
 
-    o	dyn.load() and libary.dynam() return an object describing the
-	DLL that was loaded. For packages with namespaces, the DLL
-	objects are stored in a list within the namespace.
-
-    o	The PACKAGE argument for .C/.Call/.Fortran/.External can be
-	omitted if the call is within code within a package with a
-	namespace.  This ensures that the native routine being called
-	is found in the DLL of the correct version of the package if
-	multiple versions of a package are loaded in the R session.
-	Using a namespace and omitting the PACKAGE argument is
-	currently the only way to ensure that the correct version is
-	used.
-
     o	The stub packages from 1.9.x have been removed: the library()
 	function selects the new home for their code.
 
@@ -74,18 +61,6 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	A new function getLoadedDLLs() returns information about the
-	DLLs that are currently loaded within this session.
-
-    o	A new function getDLLRegisteredRoutines() returns information
-	about the routines available from a DLL that were explicitly
-	registered with R's dynamic loading facilities.
-
-    o	The package element returned by getNativeSymbolInfo() contains
-	reference to both the internal object used to resolve symbols
-	with the DLL, and the internal DllInfo structure used to
-	represent the DLL within R.
-
     o	There is a new atomic vector type, class "raw".	 See ?raw for
 	full details including the operators and utility functions provided.
 
@@ -132,6 +107,10 @@ NEW FEATURES
 
     o	dir.create() now expands '~' in filenames.
 
+    o	dyn.load() and libary.dynam() return an object describing the
+	DLL that was loaded. For packages with namespaces, the DLL
+	objects are stored in a list within the namespace.
+
     o	New function eapply() - apply for environments.	 The supplied
 	function is applied to each element of the environment; the order
 	of application is not specified.
@@ -150,6 +129,18 @@ NEW FEATURES
 
     o	The `formula' method for ftable() now looks for variables in the
 	environment of the formula before the usual search path.
+
+    o	A new function getDLLRegisteredRoutines() returns information
+	about the routines available from a DLL that were explicitly
+	registered with R's dynamic loading facilities.
+
+    o	A new function getLoadedDLLs() returns information about the
+	DLLs that are currently loaded within this session.
+
+    o	The package element returned by getNativeSymbolInfo() contains
+	reference to both the internal object used to resolve symbols
+	with the DLL, and the internal DllInfo structure used to
+	represent the DLL within R.
 
     o	help() now returns information about available documentation for
 	a given topic, and notifies about multiple matches.
@@ -273,6 +264,15 @@ UTILITIES
 
 
 C-LEVEL FACILITIES
+
+    o	The PACKAGE argument for .C/.Call/.Fortran/.External can be
+	omitted if the call is within code within a package with a
+	namespace.  This ensures that the native routine being called
+	is found in the DLL of the correct version of the package if
+	multiple versions of a package are loaded in the R session.
+	Using a namespace and omitting the PACKAGE argument is
+	currently the only way to ensure that the correct version is
+	used.
 
     o	The header Rmath.h contains a definition for R_VERSION_STRING
 	which can be used to track different versions of R and libRmath.
