@@ -52,6 +52,8 @@ static int BuildingPict = 0;
 extern char *mac_getenv(const char *name);
 extern int GetScreenRes(void);
 
+extern Boolean Interrupt;
+
    /* Device Driver Actions */
 
 static void Mac_Activate(NewDevDesc *dd);
@@ -936,8 +938,18 @@ static Rboolean Mac_Locator(double *x, double *y, NewDevDesc *dd)
 
 
     while(!mouseClick) {
+	
+    if(Interrupt && CheckEventQueueForUserCancel()){
+     SetPort(savePort);
+	 Rprintf("\n");
+	 error("user break");
+	 raise(SIGINT);
+     return FALSE;
+    }
+
 	gotEvent = WaitNextEvent( everyEvent, &event, 0, nil);
 
+   
 	if (event.what == mouseDown) {
 	    partCode = FindWindow(event.where, &window);
 	    if ((window == (xd->window)) && (partCode == inContent)) {
