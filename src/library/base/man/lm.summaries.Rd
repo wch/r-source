@@ -9,7 +9,7 @@ df.residual(x)
 family(x)
 formula(x)
 fitted.values(x)
-residuals(x)
+residuals(x, type = c("working", "pearson", "deviance"), \dots)
 weights(x)
 plot(x)
 
@@ -68,8 +68,7 @@ various useful features of the value returned by \code{lm}.
     error
     \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2},}{%
       sigma^2 = 1/(n-p) Sum(R[i]^2),}
-    where \eqn{R_i}{R[i]} is the \eqn{i}-th residual,
-    \code{residuals[i]}.}
+    where \eqn{R_i}{R[i]} is the \eqn{i}-th residual, \code{residuals[i]}.}
   \item{df}{degrees of freedom, a 3-vector \eqn{(p,n-p,p*)} ...}
   \item{fstatistic}{a 3-vector with the value of the F-statistic with
     its numerator and denominator degrees of freedom.}
@@ -96,7 +95,9 @@ The model fitting function \code{\link{lm}}.
 \code{\link{effects}}, \code{\link{fitted.values}},
 \code{\link{glm}} for \bold{generalized} linear models,
 \code{\link{lm.influence}} for regression diagnostics,
-\code{\link{residuals}}, \code{\link{summary}}.
+\code{\link{weighted.residuals}},
+\code{\link{residuals}}, \code{\link{residuals.glm}},
+\code{\link{summary}}.
 }
 \examples{
 \testonly{example("lm", echo = FALSE)}
@@ -106,7 +107,7 @@ sld90 <- summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept
 sld90
 coef(sld90)# much more
 
-## The 2 basic regression diagnostic plots:
+## The 2 basic regression diagnostic plots [plot.lm(.) is preferred]
 plot(resid(lm.D90), fitted(lm.D90))# Tukey-Anscombe's
 abline(h=0, lty=2, col = 'gray')
 

@@ -1,9 +1,22 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
-	*	       0.90 SERIES NEWS			 *
+	*	       0.99 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+		CHANGES IN R VERSION 0.99.0
+
+
+NEW FEATURES
+
+    o	residuals.lm() has "type" argument, as S does.
+
+BUG FIXES
+
+    o
+
+
 
 		CHANGES IN R VERSION 0.90.1
 
@@ -14,14 +27,14 @@ NEW FEATURES
 
     o	legend() has a `adj' argument and has been streamlined (and fixed up).
 
-    o   `unname' convenience function [experimental data.frame behavior].
+    o	`unname' convenience function [experimental data.frame behavior].
 
-    o   `examples' sections have been added to the documentation
-        for most of the data sets in the base library.
+    o	`examples' sections have been added to the documentation
+	for most of the data sets in the base library.
 
-    o   update.packages & friends have new argument contriburl for
-        incomplete CRAN mirrors. Package bundles such as VR can be
-        directly installed both from the shell and from inside R.
+    o	update.packages & friends have new argument contriburl for
+	incomplete CRAN mirrors. Package bundles such as VR can be
+	directly installed both from the shell and from inside R.
 
     o	RLIBS is no longer accepted as well as R_LIBS (which has been
 	the documented form since 0.65.0).
@@ -33,21 +46,21 @@ NEW FEATURES
 
     o	setting cex in matplot(matrix(1:25,5), cex=1:5) now works
 
-    o   ar.ols() has separate demean and intercept arguments, uses
-        internal scaling for greater accuracy.
+    o	ar.ols() has separate demean and intercept arguments, uses
+	internal scaling for greater accuracy.
 
-    o   xxxPR functions allow NCHAR=-1 for S compatibility.
+    o	xxxPR functions allow NCHAR=-1 for S compatibility.
 
-    o   `Rcomplex' is preferred to `complex' (a future reserved word
+    o	`Rcomplex' is preferred to `complex' (a future reserved word
 	in C) for R complex objects passed to C.
 
-    o   new function dir.create() for platform-independence.
+    o	new function dir.create() for platform-independence.
 
-    o   help.search() creates a database for faster searching later in
+    o	help.search() creates a database for faster searching later in
 	the R session.
 
     o	density() allows for more kernels and has a new argument
-        `give.Rkern' to access the relevant kernel property.
+	`give.Rkern' to access the relevant kernel property.
 
     o	multivariate methods for ar: "yule-walker" (now in C) and
 	"burg" (new) contributed by Martyn Plummer.
@@ -61,17 +74,17 @@ BUG FIXES
 
     o	Many help pages have been revised and enhanced.
 
-    o   predict.glm() works again with type="link".
+    o	predict.glm() works again with type="link".
 
-    o   subscripting arrays and matrices no longer loses the names of
+    o	subscripting arrays and matrices no longer loses the names of
 	the dimnames vector.  Transpose also preserves the names.
 
-    o   examples in help files containing \testonly are no longer
+    o	examples in help files containing \testonly are no longer
 	(partially) duplicated.
 
-    o   is.numeric() of a factor is now FALSE
+    o	is.numeric() of a factor is now FALSE
 
-    o   prevent a segfault in plotmath
+    o	prevent a segfault in plotmath
 
     o	f <- get("function"); f(,); f(F,F)  now "ok" (PR#361).
 
@@ -82,38 +95,38 @@ BUG FIXES
 
     o	font size fixups for the X11 driver (mainly)
 
-    o   some.list[[NA]] is NULL, following S, rather than giving spurious
-        error messages
+    o	some.list[[NA]] is NULL, following S, rather than giving spurious
+	error messages
 
-    o   segfault when running out of heap
+    o	segfault when running out of heap
 
-    o   segfault in rbind of a vector without names fixed. cbind, too.
+    o	segfault in rbind of a vector without names fixed. cbind, too.
 
-    o   fixed symbol size problems with PostScript driver
+    o	fixed symbol size problems with PostScript driver
 
-    o   unique() & duplicated() only work for atomic vectors;
-        unique(data.frame(""[F])) doesn't segfault anymore.
+    o	unique() & duplicated() only work for atomic vectors;
+	unique(data.frame(""[F])) doesn't segfault anymore.
 
-    o   get("attr<-")(""[0],""[0]) doesn't segfault anymore.
+    o	get("attr<-")(""[0],""[0]) doesn't segfault anymore.
 
-    o   blunder in do_memoryprofile, causing segfault on Alpha machines
+    o	blunder in do_memoryprofile, causing segfault on Alpha machines
 
-    o   erroneous error message in coerceToSymbol
+    o	erroneous error message in coerceToSymbol
 
-    o   partial workaround for workspace restore problems. This can
-        happen if an environment on the search path is assigned to a
-        variable which gets saved. The error "unresolved node during
-        restore" is turned into a warning, allowing the rest of the
-        workspace to be restored, but the variable contains an empty
-        environment on reload.
+    o	partial workaround for workspace restore problems. This can
+	happen if an environment on the search path is assigned to a
+	variable which gets saved. The error "unresolved node during
+	restore" is turned into a warning, allowing the rest of the
+	workspace to be restored, but the variable contains an empty
+	environment on reload.
 
-    o   density(x) now works also when IQR(x) == 0.
-        density(x, window=...) now works [S compatibility].
+    o	density(x) now works also when IQR(x) == 0.
+	density(x, window=...) now works [S compatibility].
 
-    o   prevent points from being plotted if pch, cex, or col are NA.
-        Does not apply to bg on pch 21--25 (where NA means
-        "transparent") because it would require fixes at the driver
-        level.
+    o	prevent points from being plotted if pch, cex, or col are NA.
+	Does not apply to bg on pch 21--25 (where NA means
+	"transparent") because it would require fixes at the driver
+	level.
 
 
 		CHANGES IN R VERSION 0.90.0

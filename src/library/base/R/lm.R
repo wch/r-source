@@ -351,7 +351,16 @@ print.summary.lm <-
 ## update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
 ## .....
 
-residuals.lm <- function(object, ...) object$residuals
+residuals.lm <- function(object,
+                         type = c("working", "pearson", "deviance"), ...)
+{
+    type <- match.arg(type)
+    r <- .Alias(object$residuals)
+    switch(type,
+           working = r,
+           deviance,
+           pearson= if(is.null(object$weights)) r else r * sqrt(object$weights))
+}
 fitted.lm <- function(object, ...) object$fitted.values
 coef.lm <- function(object, ...) object$coefficients
 ## need this for results of lm.fit() in drop1():
@@ -474,13 +483,13 @@ predict.lm <- function(object, newdata,
     attrassign<-function (object, ...) UseMethod("attrassign")
     attrassign.lm<-function (lmobj)  attrassign(model.matrix(lmobj), terms(lmobj))
     attrassign.default<-function (mmat, tt) {
-      if (!inherits(tt, "terms")) 
+      if (!inherits(tt, "terms"))
         stop("need terms object")
       aa <- attr(mmat, "assign")
-      if (is.null(aa)) 
+      if (is.null(aa))
         stop("argument is not really a model matrix")
       ll <- attr(tt, "term.labels")
-      if (attr(tt, "intercept") > 0) 
+      if (attr(tt, "intercept") > 0)
         ll <- c("(Intercept)", ll)
       aaa <- factor(aa, labels = ll)
       split(order(aa), aaa)
