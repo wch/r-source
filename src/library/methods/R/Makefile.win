@@ -9,7 +9,11 @@ $(DPKG)/R/$(PKG): $(RHOME)/share/R/firstlib.R
 
 $(DPKG)/R/all.rda: R/${PKG}
 	@echo "  dumping R code in package \`$(PKG)'"
-	$(RHOME)/bin/rterm  --vanilla --slave < $<
+ifeq ($(strip $(BUILD)),CROSS)
+	R --vanilla --slave < $<
+else
+	$(RHOME)/bin/rterm --vanilla --slave < $<
+endif
 
 R/$(PKG): $(PKGRFILES)
 	@echo "  collecting R files"
