@@ -45,4 +45,6 @@ local({
     try.autoload("chisq.test","ctest")
     try.autoload("prop.test","ctest")
     try.autoload("wilcox.test","ctest")
+
+    try.autoload("diff.ts", "ts")
 })

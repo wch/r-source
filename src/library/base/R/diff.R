@@ -1,15 +1,9 @@
 diff <- function(x, ...) UseMethod("diff")
 
-if(FALSE) ## when method dispatching will work for autoloaded objects
-    autoload("diff.ts", file = "ts")
+## autoload("diff.ts", "ts")   in ../../profile/Common.R
 
 diff.default <- function(x, lag = 1, differences = 1, ...)
 {
-    ## the following clause will be replaced by autoload("diff.ts",...)
-    if(is.ts(x)) {
-        require(ts)
-        UseMethod("diff")
-    }
     ismat <- is.matrix(x)
     xlen <- if(ismat) dim(x)[1] else length(x)
     if (length(lag) > 1 || length(differences) > 1 ||
