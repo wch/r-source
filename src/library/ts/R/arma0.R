@@ -27,7 +27,9 @@ arima0 <- function(x, order=c(0,0,0),
     }
     class(xreg) <- NULL
     if(include.mean && (nd==0)) {
-        xreg <- cbind(intercept=rep(1, n), xreg)
+        if(is.matrix(xreg) && is.null(colnames(xreg)))
+            colnames(x) <- paste("xreg", 1:ncxreg, sep="")
+        xreg <- cbind(intercept=rep(1, n), xreg=xreg)
         ncxreg <- ncxreg+1
     }
     if(ncxreg) {
@@ -40,9 +42,8 @@ arima0 <- function(x, order=c(0,0,0),
        as.double(xreg), as.integer(ncxreg), as.double(delta),
        as.integer(transform.pars > 0), PACKAGE="ts")
     init <- rep(0, sum(arma[1:4]))
-    if(ncxreg > 0) {
+    if(ncxreg > 0)
         init <- c(init, coef(lm(x ~ xreg+0)))
-    }
     res <- nlm(arma0f, init, hessian=transform.pars < 2)
     if(res$code > 2)
         warning(paste("possible convergence problem: nlm gave code=",
@@ -67,7 +68,9 @@ arima0 <- function(x, order=c(0,0,0),
     if(arma[2] > 0) nm <- c(nm, paste("ma", 1:arma[2], sep=""))
     if(arma[3] > 0) nm <- c(nm, paste("sar", 1:arma[3], sep=""))
     if(arma[4] > 0) nm <- c(nm, paste("sma", 1:arma[4], sep=""))
-    if(ncxreg > 0)  nm <- c(nm, colnames(xreg))
+    if(ncxreg > 0)
+        if(!is.null(cn <- colnames(xreg))) nm <- c(nm, cn)
+        else nm <- c(nm, paste("xreg", 1:ncxreg, sep=""))
     names(coef) <- nm
     names(arma) <- c("ar", "ma", "sar", "sma", "period", "diff", "sdiff")
     var <- solve(res$hessian*length(x))
