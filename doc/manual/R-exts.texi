@@ -4673,9 +4673,8 @@ Suppose an @R{} extension want to accept an @R{} expression from the
 user and evaluate it.  The previous section covered evaluation, but the
 expression will be entered as text and needs to be parsed first.  A
 small part of @R{}'s parse interface is declared in header file
-@file{R_ext/Parse.h}@footnote{This was added at @R{} version 1.8.0, and
-is only guaranteed to show the current interface: it is liable to
-change.}.
+@file{R_ext/Parse.h}@footnote{This is only guaranteed to show the
+current interface: it is liable to change.}.
 
 An example of the usage can be found in the (example) Windows package
 @pkg{windlgs} included in the @R{} source tree.  The essential part is
@@ -4915,6 +4914,7 @@ $7 = 5
 * Platform and version information::  
 * Inlining C functions::        
 * Standalone Mathlib::          
+* Organization of header files::  
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -6033,7 +6033,7 @@ configure code has checked is that  @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
 packages making extensive use of inlining include their own configure code.
 
-@node Standalone Mathlib,  , Inlining C functions, The R API
+@node Standalone Mathlib, Organization of header files, Inlining C functions, The R API
 @section Using these functions in your own C code
 
 It is possible to build @code{Mathlib}, the @R{} set of mathematical
@@ -6082,6 +6082,63 @@ get_seed(unsigned int *, unsigned int *)
 
 @noindent
 to read the seeds).
+
+@node Organization of header files,  , Standalone Mathlib, The R API
+@section Organization of header files
+
+The header files which @R{} installs are in directory
+@file{R_HOME/include}.  This currently contains
+
+@quotation
+@multitable {R_ext/RConvertors.h}   {RRR storage.mode DOUBLE PRECISION}
+@item @code{R.h} @tab includes many other files
+@item @code{S.h} @tab different version for code ported from @Sl{}
+@item @code{Rinternals.h} @tab definitions for using @R{}'s internal structures
+@item @code{Rdefines.h} @tab macros for an @Sl{}-like interface to the above.
+@item @code{Rmath.h} @tab standalone math library
+@item @code{Rversion.h} @tab @R{} version information
+@item @code{Rinterface.h} @tab for add-on front-ends
+@item @code{R_ext/RStartup.h} @tab ditto
+@item @code{R_ext/eventloop.h} @tab ditto, and for packages that need to
+share in the @R{} event loops 
+@item @code{R_ext/Applic.h} @tab optimization and integration
+@item @code{R_ext/BLAS.h} @tab C definitions for BLAS routines
+@item @code{R_ext/Lapack.h} @tab C definitions for some LAPACK routines
+@item @code{R_ext/Linpack.h} @tab C definitions for some LINPACK
+routines, not all of which are included in @R{}
+@item @code{R_ext/GetX11Image.h} @tab X11Image interface used by package @pkg{trkplot}
+@item @code{R_ext/Parse.h} @tab a small part of @R{}'s parse interface
+@item @code{R_ext/Callbacks.h} @tab C (and R function) top-level task handlers
+@item @code{R_ext/RConvertors.h} @tab 
+@item @code{R_ext/Rdynload.h} @tab Needed to register compiled code in packages
+@item @code{R_ext/R-ftp-http.h} @tab interface to internal method of @code{download.file} 
+@end multitable
+@end quotation
+
+The following headers are included by @code{R.h}:
+@quotation
+@multitable {R_ext/RConvertors.h}   {RRR storage.mode DOUBLE PRECISION}
+@item @code{Rconfig.h} @tab configuration info that is made available
+@item @code{R_ext/Arith.h} @tab handling for NAs, NaNa, +/-Inf
+@item @code{R_ext/Boolean.h} @tab TRUE/FALSE type
+@item @code{R_ext/Complex.h} @tab C typedefs for @R{}'s @code{complex}
+@item @code{R_ext/Constants.h} @tab constants
+@item @code{R_ext/Error.h}  @tab error handling
+@item @code{R_ext/Memory.h} @tab memory allocation
+@item @code{R_ext/Print.h} @tab @code{Rprintf} and variations.
+@item @code{R_ext/Random.h} @tab random number generation
+@item @code{R_ext/RS.h} @tab definitions common to @code{R.h} and
+@code{S.h}, including @code{F77_CALL} etc.
+@item @code{R_ext/Utils.h} @tab sorting and other utilities
+@item @code{R_ext/libextern.h} @tab definitions for exports from R.dll
+on Windows.
+@end multitable
+@end quotation
+
+The graphics systems are exposed in @code{Rdevices.h} (for writing
+graphics devices), @code{Rgraphics.h} and
+@code{R_ext/Graphics@{Base,Device,Engine@}.h}.
+
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
