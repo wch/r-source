@@ -422,8 +422,8 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int i, n, nframe;
-    SEXP rval,t;
+    int n;
+    SEXP t;
     RCNTXT *cptr;
 
  
@@ -435,17 +435,18 @@ SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     cptr = R_GlobalContext;
     t = cptr->sysparent;
-
-    while (n--) {
-	if (t == R_NilValue)
-	    return R_GlobalEnv;
-	while (cptr != R_ToplevelContext) {
-	    if (cptr->callflag & CTXT_FUNCTION )
-		if (cptr->cloenv == t)
-		    break;
-	    cptr = cptr->nextcontext;
+    while (cptr->nextcontext != NULL){
+	if (cptr->callflag & CTXT_FUNCTION ) {
+	    if (cptr->cloenv == t)
+	    {
+		if (n == 1) 
+		    return cptr->sysparent;
+		n--;
+		t = cptr->sysparent;
+	    }
 	}
-	t = cptr->sysparent;
+	cptr = cptr->nextcontext;
     }
-    return t;
+    return R_GlobalEnv;
 }
+
