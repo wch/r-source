@@ -308,7 +308,7 @@ getOption(x)
     \code{echo} \tab \code{TRUE} \cr
     \code{verbose} \tab \code{FALSE} \tab
     \code{scipen} \tab \code{0} \cr
-    \code{locatorBell} \tab \code{TRUE}\tab\tab  \cr
+    \code{locatorBell} \tab \code{TRUE} \tab \tab \cr
   }
   Others are set from environment variables or are platform-dependent.
 }
