@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999,2000 the R Development Core Group.
+ *  Copyright (C) 1999-2002 the R Development Core Group.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1872,11 +1872,17 @@ SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_detach(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, x;
-    int pos;
+    int pos, n;
     Rboolean isSpecial = FALSE;
 
     checkArity(op, args);
     pos = asInteger(CAR(args));
+
+    for (n = 2, t = ENCLOS(R_GlobalEnv); t != R_NilValue ; t = ENCLOS(t))
+	n++;
+
+    if (pos == n) /* n is the length of the search list */
+	errorcall(call, "detaching \"package:base\" is not allowed");
 
     for (t = R_GlobalEnv ; ENCLOS(t) != R_NilValue && pos > 2 ; t = ENCLOS(t))
 	pos--;
