@@ -83,8 +83,8 @@ function(where=c("CRAN","BIOC"), type=c("binary","source"), global=FALSE){
         ui.pkgs <- c.pkgs[inst]
         idx2 <- which(c.vers[inst] == i.vers[inst])
         if(length(idx2)>0) { 
+            cat( paste(ui.pkgs[idx2],collapse="")," already up to date, not reinstalled\n")
             ui.pkgs <- ui.pkgs[-idx2]
-            cat( paste(ui.packages,collapse="")," already up to date, not reinstalled\n")
           }
         if (global)
           locn <- file.path(R.home(),"library")

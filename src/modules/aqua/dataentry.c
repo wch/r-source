@@ -524,7 +524,7 @@ static pascal OSStatus deGetSetItemData(ControlRef browser,
 		{	err = errDataBrowserPropertyNotSupported;
 		}	break;
 	}
-}
+	}
 	else {
         
           if(property>2000 & row>0 & row<=ymaxused){          
@@ -546,7 +546,7 @@ static pascal OSStatus deGetSetItemData(ControlRef browser,
                 else
                     REAL(tmp)[row - 1] = NA_REAL;
             }
-            
+	    SetWindowModified(DataEntryWindow, true);
             CFRelease(text); 
           }             
      

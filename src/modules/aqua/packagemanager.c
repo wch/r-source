@@ -148,7 +148,7 @@ Boolean OpenPackageManager(void)
                                           RCloseWinEvent, (void *)PackageManagerWindow, NULL);
                     
  
-     SetWindowTitleWithCFString(PackageManagerWindow, CFSTR("R PackageManagerWindow"));
+     SetWindowTitleWithCFString(PackageManagerWindow, CFSTR("Raqua: Load Packages"));
      
      
     
@@ -427,6 +427,7 @@ static pascal OSStatus pmGetSetItemData(ControlRef browser,
         if(property == 10000){
          LoadThese[row-1] = !LoadThese[row-1];
          err = SetDataBrowserItemDataBooleanValue(itemData, LoadThese[row-1]);
+	 SetWindowModified(PackageManagerWindow, true);
         }
         else 
         err = errDataBrowserPropertyNotSupported;
