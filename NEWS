@@ -35,6 +35,15 @@ BUG FIXES
 		x <- list(); x[["a"]] <- 11
 	both now work.
 
+    o	Some small changes have made in the axis drawing code to
+	ensure that tick-mark label alignment is correct for
+	non-default values of the "las" parameter.
+
+    o	The semantics of <<- have been corrected.  The search for
+	a variable binding to modify now begins one level "up" from
+	the current one.   Thus S and R semantics in "non-closure"
+	functions will be identical.
+
 
 	**************************************************
 	*						 *
