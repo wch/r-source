@@ -1,8 +1,5 @@
 \name{codes}
-\alias{codes}
-\alias{codes.factor}
-\alias{codes.ordered}
-\alias{codes<-}
+\alias{oldName-codes}
 \title{Factor Codes}
 \description{
   This (generic) function returns a numeric coding of a factor.  It can

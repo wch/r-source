@@ -31,4 +31,35 @@ print.coefmat <-
     eval.parent(Call)
 }
 ## </entry>
+## <entry>
+## Deprecated in 1.8.0
+codes <- function(x, ...) UseMethod("codes")
+
+codes.factor <- function(x, ...)
+{
+    ## This is the S-plus semantics.
+    ## The deeper meaning? Search me...
+    .Deprecated("unclass")
+    rank(levels(x))[x]
+}
+
+codes.ordered <- function(x, ...)
+{
+    .Deprecated("unclass")
+    as.integer(x)
+}
+
+"codes<-" <- function(x, ..., value)
+{
+    .Deprecated()
+    if ( length(value) == 1 )
+	value <- rep.int(value, length(x))
+    else if ( length(x) != length(value) )
+	stop("Length mismatch in \"codes<-\"")
+    ## S-plus again...
+    if ( !is.ordered(x) ) value <- order(levels(x))[value]
+    attributes(value) <- attributes(x)
+    value
+}
+## </entry>
 

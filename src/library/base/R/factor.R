@@ -53,29 +53,6 @@ nlevels <- function(x) length(levels(x))
     factor(xlevs[x], levels = unique(nlevs))
 }
 
-codes <- function(x, ...) UseMethod("codes")
-
-codes.factor <- function(x, ...)
-{
-    ## This is the S-plus semantics.
-    ## The deeper meaning? Search me...
-    rank(levels(x))[x]
-}
-
-codes.ordered <- as.integer
-
-"codes<-" <- function(x, ..., value)
-{
-    if ( length(value) == 1 )
-	value <- rep.int(value, length(x))
-    else if ( length(x) != length(value) )
-	stop("Length mismatch in \"codes<-\"")
-    ## S-plus again...
-    if ( !is.ordered(x) ) value <- order(levels(x))[value]
-    attributes(value) <- attributes(x)
-    value
-}
-
 as.vector.factor <- function(x, type="any")
 {
     if(type== "any" || type== "character" || type== "logical" || type== "list")

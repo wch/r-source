@@ -4,6 +4,10 @@
 \alias{Deprecated}
 \alias{.Deprecated}
 \alias{print.coefmat}
+\alias{codes}
+\alias{codes.factor}
+\alias{codes.ordered}
+\alias{codes<-}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -21,6 +25,9 @@ print.coefmat(x, digits=max(3, getOption("digits") - 2),
               has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
               eps.Pvalue = .Machine$double.eps,
               na.print = "", \dots)
+
+codes(x, \dots)
+codes(x, \dots) <- value
 % </Deprecated 1.8.0>
 }
 \details{
@@ -30,6 +37,12 @@ print.coefmat(x, digits=max(3, getOption("digits") - 2),
 
   \code{print.coefmat} is an older name for \code{\link{printCoefmat}}
   with a different default for \code{na.print}.
+
+  \code{codes} was almost always used inappropriately.  To get the
+  internal coding of a factor, use \code{unclass}, \code{as.vector} or
+  \code{as.integer}.  For \emph{ordered} factors, \code{codes} was
+  equivalent to these, but for \emph{unordered} factors it assumed an
+  an alphabetical ordering of the levels in the locale in use.
 }
 \seealso{
   \code{\link{Defunct}},
