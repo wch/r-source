@@ -1,3 +1,6 @@
+C Mostly for S compatibility.
+C These now all call C functions via F77_NAME(.) in ./print.c :
+
       subroutine intpr(label, nchar, data, ndata)
       character*(*) label
       integer data(ndata)
