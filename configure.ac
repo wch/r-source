@@ -136,7 +136,7 @@ Use variable F77 to specify a FORTRAN 77 compiler if necessary."
       ;;
     --with-f2c*)
       warn_arg_with_f2c="option '--with-f2c' is deprecated.
-Use variable F2C to specify the FORTRAN-to-C translator if necessary."
+Use variable F2C to specify the FORTRAN-to-C converter if necessary."
       AC_MSG_WARN([${warn_arg_with_f2c}])
       ;;
   esac
@@ -307,7 +307,7 @@ AC_ARG_VAR([TCLTK_LIBS],
 AC_ARG_VAR([TCLTK_CPPFLAGS],
            [flags needed for finding the tcl.h and tk.h headers])
 AC_ARG_VAR([MAKE], [Make command])
-AC_ARG_VAR([F2C], [FORTRAN-to-C translator command])
+AC_ARG_VAR([F2C], [FORTRAN-to-C converter command])
 
 ### ** Check whether we build in srcdir.
 
@@ -510,6 +510,7 @@ else
   AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
   AC_DEFINE(HAVE_DOUBLE_COMPLEX, 1)
   R_PROG_F2C_MAKEFRAG
+  F77="\$(SHELL) \$(R_HOME)/bin/f77"
 fi
 
 AC_SUBST(F2C)
@@ -1245,6 +1246,7 @@ AC_CONFIG_FILES(
   src/scripts/Sd2Rd
   src/scripts/build
   src/scripts/check
+  src/scripts/f77
   src/unix/Makefile
   tests/Makefile
   tests/Embedding/Makefile
@@ -1270,10 +1272,10 @@ AC_OUTPUT
 ## </NOTE>
 C_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 CXX_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
-if test -z "${F77}"; then
-  FORTRAN_compiler="${F2C} ${F2CFLAGS}"
-else
+if test -z "${F2C}"; then
   FORTRAN_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
+else
+  FORTRAN_compiler="${F2C} ${F2CFLAGS}"
 fi
 AC_MSG_RESULT(
 [
