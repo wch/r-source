@@ -1925,17 +1925,11 @@ are inserted in the path using @code{attach} or @code{library}.
 @cindex name spaces
 Packages which have a @emph{name space} have a different search path.
 When a search for an @R{} object is started from an object in such a
-package, the package itself is search first, then the global environment
+package, the package itself is searched first, then the global environment
 and the rest of the regular search path.  The effect is that references
 to other objects in the same package will be resolved to the package,
 and objects cannot be masked by objects of the same name in the global
 environment or in other packages.
-
-As of @R{} 1.6.x package @pkg{base} has a name space, but no other
-package does (nor are means yet provided for users to make use of name
-spaces).  This can currently be disabled by setting the environment
-variable @env{R_NO_BASE_NAMESPACE}.
-
 
 @c @node Evaluation of calls, Functions, Evaluation of expressions, Top
 @c  @section Accessing and manipulating environments
