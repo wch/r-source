@@ -140,16 +140,6 @@ Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
 Subject: bug(?) in R FAQ - Should I run R from within Emacs?
 From: Tim.Harrold@csiro.au
 Date: Thu, 11 Jul 2002 18:21:42 +1000
-* PR# 2170 *
-Subject: documentation: Missing paranthesis in reshape.Rd
-From: lina@u.washington.edu
-Date: Wed, 16 Oct 2002 08:36:07 +0200 (MET DST)
-* PR# 2229 *
-Subject: Building and installing packages with functions with names starting with 
-From: Jens Henrik Badsberg <JensHenrik.Badsberg@agrsci.dk>
-Date: Wed, 30 Oct 2002 15:48:58 +0100
-..Issue is package.skeleton creates names for .R files starting with dot.
-..R CMD INSTALL is documented not to install them!
 
 Directory:  Graphics
 
@@ -619,11 +609,6 @@ From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 ..Not a bug, but perhaps a useful feature: should the attributes of environments
 ..be copied on assignment?
-* PR# 2298 *
-Subject: Wishlist: allow NA values in medpolish (package 'eda')
-From: schutz@wehi.edu.au
-Date: Sat, 16 Nov 2002 05:43:59 +0100 (MET)
-..added for 1.7.0
 * PR# 2299 *
 Subject: formatC with format="fg" displays number in exponential notation
 From: schutz@wehi.edu.au
@@ -632,40 +617,10 @@ Date: Sat, 16 Nov 2002 06:33:04 +0100 (MET)
 Subject: Prediction from arima() object (library ts)
 From: mcrae_allan@hotmial.com
 Date: Mon, 18 Nov 2002 15:12:22 +0100 (MET)
-* PR# 2307 *
-Subject: Japanese lass' sexy pictures
-From: Kinderteachkim <Kinderteachkim@aol.com>
-Date: 18 Nov 2002 12:27:00 -1000
-* PR# 2308 *
-Subject: HELLO
-From: "THOMAS OLEMBE" <thomolembee@earthling.net>
-Date: Tue, 19 Nov 2002 00:17:35 -0800
-* PR# 2309 *
-Subject: Make a Great Living in the Music Industry!
-From: webmaster6766o62@earthlink.net
-Date: Mon, 18 Nov 0102 16:18:59 +0700
 * PR# 2310 *
 Subject:  Nesting of readline input 
 From: j.c.rougier@durham.ac.uk
 Date: Tue, 19 Nov 2002 14:24:41 GMT
-* PR# 2311 *
-Subject: Of statements.
-From: kunihiro <kunihiro@kawachi.zaq.ne.jp>
-Date: Wed, 20 Nov 2002 02:01:55 +0900 (JST)
-* PR# 2312 *
-Subject: Easily design, send and track your graphical newsletters 
-From: "GraphicMail.com" <news@graphicmail.com>
-Date: Tue, 19 Nov 2002 22:13:23 +0200
-* PR# 2313 *
-Subject: Undeliverable mail--"edit(xold)"
-Subject: edit(xold)<br>
-From: postmaster <postmaster@r-project.org>
-From: r-bugs@r-project.org<br>
-Date: Wed, 20 Nov 2002 06:57:19 +0900 (JST)
-* PR# 2314 *
-Subject: I NEED YOU TO ASSIST ME.
-From: "MADAM MARIAM MOBUTU SESE-SEKO" <sem@loadmail.com>
-Date: Tue, 19 Nov 2002 23:16:18
 * PR# 2316 *
 Subject: Platform() used in tkfilefind.X although now deprecated
 From: "Stephen Eglen	(CNS)" <stephen@cogsci.ed.ac.uk>
