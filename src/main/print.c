@@ -1,7 +1,6 @@
-
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*== see ./printutils.c	 for general remarks on Printing and the Encode.. utils.
+/*== see ./printutils.c for general remarks on Printing and the Encode.. utils.
  */
 #include "Defn.h"
 #include "Print.h"
@@ -125,6 +124,13 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+  /* .Internal(print.default(x, digits, quote, na.print, print.gap)) */
+  /*
+   * Should now also dispatch to e.g.,	print.matrix(..)
+   * The 'digits' must be "stored" here, since print.matrix (aka prmatrix)
+   * does NOT accept a digits argument...
+   *
+   */
 	SEXP x, naprint;
 
 	checkArity(op, args);
@@ -278,7 +284,10 @@ static void PrintExpression(SEXP s)
 	UNPROTECT(1);
 }
 
-	/* PrintValueRec - recursively print an SEXP */
+	/* PrintValueRec - recursively print an SEXP
+	 *
+	 * This is the "dispatching" function for  print.default()
+	 */
 
 void PrintValueRec(SEXP s)
 {
