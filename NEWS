@@ -11,12 +11,9 @@
 
 BUG FIXES
 
-    o	tcltk ... <<Peter, please fill in>>
+    o	tcltk back-compatibility fix for tcl8.0  <<Peter fixme>>
 
     o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}'
-
-    o	as.data.frame() does not coerce logical matrices into factors
-	anymore.
 
 
 		CHANGES IN R VERSION 1.5.1
