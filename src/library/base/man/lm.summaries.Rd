@@ -11,10 +11,12 @@ fitted.values(lm.obj)
 residuals(lm.obj)
 weights(lm.obj)
 print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
-              symbolic.cor = p > 4, signif.stars= TRUE, roundfun=round, ...)
+              symbolic.cor = p > 4, signif.stars= TRUE, ...)
 }
 \alias{anova.lm}
+\alias{anova.lm.null}
 \alias{summary.lm}
+\alias{summary.lm.null}
 \alias{coefficients.lm}
 \alias{deviance.lm}
 \alias{df.residual.lm}
@@ -23,7 +25,9 @@ print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{residuals.lm}
 \alias{weights.lm}
 \alias{print.lm}
+\alias{print.lm.null}
 \alias{print.summary.lm}
+\alias{print.summary.lm.null}
 \alias{print.anova.lm}
 \arguments{
   \item{lm.obj}{an object of class \code{lm}, usually, a result of
@@ -38,10 +42,9 @@ coefficients, standard errors, etc. and additionally gives ``significance
 stars'' if \code{signif.stars= TRUE}.
 }
 \value{
-The function \code{summary.lm} computes
-summary statistics of the fitted linear model of an \code{\link{lm}}
-result, using the
-slots (list elements) \code{"call"}, \code{"terms"}, and
+The function \code{summary.lm} computes and returns a list of
+summary statistics of the fitted linear model given in \code{lm.obj},
+using the slots (list elements) \code{"call"}, \code{"terms"}, and
 \code{"residuals"} from its argument, plus
 \item{coefficients}{a \eqn{p \times 4}{p x 4} matrix with columns for
   the estimated coefficient, its standard error, t-statistic and
