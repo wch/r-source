@@ -1424,7 +1424,7 @@ character vector to an internal buffer at the time of creation.
 @emph{Pipes} are a special form of file that connects to another
 process, and pipe connections are created by the function @code{pipe}
 (currently implemented on UNIX only).  Opening a pipe connection for
-writing (it makes not sense to append to a pipe) runs a OS command, and
+writing (it makes not sense to append to a pipe) runs an OS command, and
 connects its standard input to whatever @R{} then writes to that
 connection.  Conversely, opening a pipe connection for input runs an OS
 command and makes its standard output available for @R{} input from that
@@ -1453,7 +1453,8 @@ function call.  If we want to repeatedly write to the same file, it is
 more efficient to explicitly declare and open the connection, and pass
 the connection object to each call to an output function.  This also
 makes it possible to write to pipes, which was implemented earlier in a
-limited way via the syntax @code{file = "|cmd"} (which can still be used).
+limited way via the syntax @code{file = "|cmd"} (which can still be
+used).
 
 @findex writeLines
 There is a function @code{writeLines} to write complete text lines
