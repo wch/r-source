@@ -907,10 +907,10 @@ static void SetFont(char* family, int face, int size, NewDevDesc *dd)
 	    xd->fontface = face;
 	    xd->fontsize = size;
             if (face == SYMBOL_FONTFACE)
-		XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
+		XSetFont(display, xd->wgc, xd->font->fid);
 #ifndef USE_FONTSET
             else
-	        XSetFont(display, xd->wgc, ((XFontStruct *)(xd->font))->fid);
+	        XSetFont(display, xd->wgc, xd->font->fid);
 #endif
 	} else
 	    error("X11 font at size %d could not be loaded", size);
@@ -1244,10 +1244,10 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     xd->wgc = XCreateGC(display, xd->window, GCArcMode, &gcv);
     XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
     if ( xd->fontface == SYMBOL_FONTFACE )
-	XSetFont(display, xd->wgc, ((XFontStruct*)(xd->font))->fid);
+	XSetFont(display, xd->wgc, xd->font->fid);
 #ifndef USE_FONTSET
     else
-        XSetFont(display, xd->wgc, ((XFontStruct*) xd->font)->fid);
+        XSetFont(display, xd->wgc, xd->font->fid);
 #endif
 
     /* ensure that line drawing is set up at the first */
@@ -1322,7 +1322,7 @@ static double newX11_StrWidth(char *str,
     SetFont(translateFontFamily(gc->fontfamily, xd),
 	    gc->fontface, size, dd);
     if (xd->fontface == SYMBOL_FONTFACE)
-	return (double) XTextWidth((XFontStruct*)(xd->font), str, strlen(str));
+	return (double) XTextWidth(xd->font, str, strlen(str));
     else
 #ifdef USE_FONTSET
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
@@ -1334,7 +1334,7 @@ static double newX11_StrWidth(char *str,
 	    return (double) XmbTextEscapement((XFontSet)(xd->font),
 					      str, strlen(str));
 #else
-       return (double) XTextWidth((XFontStruct*)xd->font, str, strlen(str));
+       return (double) XTextWidth(xd->font, str, strlen(str));
 #endif
 }
 
@@ -1354,7 +1354,7 @@ static void newX11_MetricInfo(int c,
     XFontStruct *fontstruct;
     /* int i; */
 #else
-    XFontStruct *f = (XFontStruct *) xd->font;
+    XFontStruct *f = xd->font;
 #endif
 
     SetFont(translateFontFamily(gc->fontfamily, xd), gc->fontface, size, dd);
@@ -1844,14 +1844,14 @@ static void newX11_Text(double x, double y,
 	SetColor(gc->col, dd);
 	len = strlen(str);
 	if (xd->fontface == SYMBOL_FONTFACE)
-	    XRotDrawString(display, (XFontStruct *)(xd->font), rot, xd->window,
+	    XRotDrawString(display, xd->font, rot, xd->window,
 			   xd->wgc, (int)x, (int)y, str);
 	else
 #ifdef USE_FONTSET
 	    XmbRotDrawString(display, (XFontSet)(xd->font), rot, xd->window,
 			     xd->wgc, (int)x, (int)y, str);
 #else
-	    XRotDrawString(display, (XFontStruct *) xd->font, rot, xd->window,
+	    XRotDrawString(display, xd->font, rot, xd->window,
 			   xd->wgc, (int)x, (int)y, str);
 #endif
 #ifdef XSYNC
@@ -2037,7 +2037,7 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
 	XFontsOfFontSet((XFontSet) xd->font, &fs_list, &ml);
 	f = fs_list[0];
 #else
-	XFontStruct *f = (XFontStruct *) xd->font;
+	XFontStruct *f = xd->font;
 #endif
 	dd->cra[0] = f->max_bounds.rbearing - f->min_bounds.lbearing;
 	dd->cra[1] = f->max_bounds.ascent + f->max_bounds.descent;
