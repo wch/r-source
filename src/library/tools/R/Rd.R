@@ -462,7 +462,7 @@ function(txt)
     pattern <- "(^|\n)[[:space:]]*\\\\item{"
     while((pos <- regexpr(pattern, txt)) != -1) {
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        if((pos <- tools::delimMatch(txt)) == -1)
+        if((pos <- delimMatch(txt)) == -1)
             stop("unmatched \\item name")
         out <- c(out,
                  substring(txt,
@@ -475,7 +475,7 @@ function(txt)
             stop(paste("no \\item description for item",
                        sQuote(out[length(out)])))
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        if((pos <- tools::delimMatch(txt)) == -1)
+        if((pos <- delimMatch(txt)) == -1)
             stop("unmatched \\item description")
         txt <- substring(txt, pos + attr(pos, "match.length"))
     }
@@ -499,7 +499,7 @@ function(lines, kind) {
 .getRdArgumentNames <-
 function(txt)
 {
-    txt <- tools:::getRdSection(txt, "arguments")
+    txt <- getRdSection(txt, "arguments")
     txt <- unlist(sapply(txt, getRdItems))
     if(!length(txt)) return(character())
     txt <- unlist(strsplit(txt, ", *"))
@@ -542,7 +542,7 @@ function(txt)
 .getRdExampleCode <-
 function(txt)
 {
-    txt <- tools:::getRdSection(txt, "examples")
+    txt <- getRdSection(txt, "examples")
     if(length(txt) != 1) return(character())
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\%", "%", txt)
@@ -554,7 +554,7 @@ function(txt)
     while((pos <- regexpr(pattern, txt)) != -1) {
         out <- c(out, substring(txt, 1, pos - 1))
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        if((pos <- tools::delimMatch(txt)) == -1)
+        if((pos <- delimMatch(txt)) == -1)
             stop("unclosed \\dontrun")
         txt <- substring(txt, pos + attr(pos, "match.length"))
     }
@@ -566,7 +566,7 @@ function(txt)
     while((pos <- regexpr(pattern, txt)) != -1) {
         out <- c(out, substring(txt, 1, pos - 1))
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        if((pos <- tools::delimMatch(txt)) == -1)
+        if((pos <- delimMatch(txt)) == -1)
             stop("unclosed \\dontshow or \\testonly")
         out <- c(out,
                  substring(txt, 2, pos + attr(pos, "match.length") - 2))

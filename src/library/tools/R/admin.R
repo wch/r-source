@@ -51,7 +51,7 @@ function(dir, outDir)
 .installPackageCodeFiles <-
 function(dir, outDir)
 {
-    if(!tools::fileTest("-d", dir))
+    if(!fileTest("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
     dir <- filePathAsAbsolute(dir)
 
@@ -78,7 +78,7 @@ function(dir, outDir)
         stop(paste("package directory", sQuote(dir),
                    "has no valid DESCRIPTION file"))
     codeDir <- file.path(dir, "R")
-    if(!tools::fileTest("-d", codeDir)) return(invisible())
+    if(!fileTest("-d", codeDir)) return(invisible())
 
     codeFiles <- listFilesWithType(codeDir, "code", full.names = FALSE)
 
@@ -138,9 +138,9 @@ function(dir, outDir)
 
     codeFiles <- file.path(codeDir, codeFiles)
 
-    if(!tools::fileTest("-d", outDir)) dir.create(outDir)
+    if(!fileTest("-d", outDir)) dir.create(outDir)
     outCodeDir <- file.path(outDir, "R")
-    if(!tools::fileTest("-d", outCodeDir)) dir.create(outCodeDir)
+    if(!fileTest("-d", outCodeDir)) dir.create(outCodeDir)
     outFile <- file.path(outCodeDir, db["Package"])
     ## <NOTE>
     ## It may be safer to do
