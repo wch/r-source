@@ -30,12 +30,14 @@ extern int (*ptr_gnome_start)();
 
 static Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
 
+#ifndef win32
 /* R event structure */
 typedef struct {
     Tcl_EventProc *proc;
     struct Tcl_Event *nextPtr;
     fd_set events;
 } RTcl_Event;
+#endif
 
 static void RTcl_dec_refcount(SEXP R_tclobj)
 {
