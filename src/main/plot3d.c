@@ -478,8 +478,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 /* draw a contour for one given contour level `zc' */
 
 /* maximal number of line segments of one contour segment: 
- * for preventing infinite loops */
-#define MAX_ns 250000
+ * for preventing infinite loops -- shouldn't be needed --> warning */
+#define MAX_ns 25000
 
     double f, xl, xh, yl, yh, zll, zhl, zlh, zhh, xx[4], yy[4];
     double xend, yend;
@@ -508,6 +508,9 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
     Rboolean gotLabel = FALSE;
     Rboolean ddl;/* Don't draw label -- currently unused, i.e. always FALSE*/
 
+#ifdef DEBUG_contour
+    Rprintf("contour(lev = %g):\n", zc);
+#endif
     for (i = 0; i < nx - 1; i++) {
 	xl = REAL(x)[i];
 	xh = REAL(x)[i + 1];
@@ -529,10 +532,10 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 	    if (zhh == zc) zhh += atom;
 #ifdef DEBUG_contour
 	    /* Haven't seen this happening (MM): */
-	    if (zll == zc) REprintf("[%d,%d] ll: %g\n",i,j, zll);
-	    if (zhl == zc) REprintf("[%d,%d] hl: %g\n",i,j, zhl);
-	    if (zlh == zc) REprintf("[%d,%d] lh: %g\n",i,j, zlh);
-	    if (zhh == zc) REprintf("[%d,%d] hh: %g\n",i,j, zhh);
+	    if (zll == zc) REprintf(" [%d,%d] ll: %g\n",i,j, zll);
+	    if (zhl == zc) REprintf(" [%d,%d] hl: %g\n",i,j, zhl);
+	    if (zlh == zc) REprintf(" [%d,%d] lh: %g\n",i,j, zlh);
+	    if (zhh == zc) REprintf(" [%d,%d] hh: %g\n",i,j, zhh);
 #endif
 	    /* Check for intersections with sides */
 
@@ -687,6 +690,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 		xend = end->x1;
 		yend = end->y1;
 	    }
+	    end->next = NULL; /* <<< new for 1.2.3 */
 	    ii = i; jj = j;
 	    xend = seglist->x0;
 	    yend = seglist->y0;
@@ -705,14 +709,15 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 	    /* ns := #{segments of polyline} -- need to allocate */
 	    s = start;
 	    ns = 0;
-	    /* MAX_ns needed, since can have circular segment list (PR#897) */
+	    /* MAX_ns: prevent inf.loop (shouldn't be needed) */
 	    while (s && ns < MAX_ns) {
 		ns++;
 		s = s->next;
 	    }
+	    if(ns == MAX_ns)
+		warning("contour(): circular/long seglist -- bug.report()!");
 
-	    /* countour midpoint */
-	    /* use for labelling sometime (not yet!) */
+	    /* countour midpoint : use for labelling sometime (not yet!) */
 	    if (ns > 3) ns2 = ns/2; else ns2 = -1;
 
 	    xxx = (double *) C_alloc(ns + 1, sizeof(double));
@@ -729,6 +734,11 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 	    }
 	    xxx[ns] = s->x1;
 	    yyy[ns++] = s->y1;
+#ifdef DEBUG_contour
+	    Rprintf("  [%2d,%2d]: (x,y)[1:%d] = (%g,%g),..,(%g,%g)\n", 
+		    i,j, ns, xxx[0],yyy[0], xxx[ns-1],yyy[ns-1]);
+#endif	    
+
 	    GMode(1, dd);
 
 	    if (drawLabels) {
@@ -1168,7 +1178,6 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     }
 
-
 #ifdef OLDcontour 
     /* R versions up to incl. 0.61.3, 1998-05-03): */
     atom = DBL_EPSILON * (zmax - zmin);
@@ -1230,6 +1239,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	recordGraphicOperation(op, oargs, dd);
     return R_NilValue;
 }
+
 
 	/*  F i l l e d   C o n t o u r   P l o t s  */
 
