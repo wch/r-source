@@ -351,11 +351,15 @@ Date: Wed, 3 Nov 1999 10:05:26 +1300 (NZDT)
 Subject:  R abnormal exit when plotting lm 
 From: Ulf Mehlig <umehlig@uni-bremen.de>
 Date: Tue, 2 Nov 1999 22:18:23 +0100
-* PR# 309 *
-Subject: discrepancy between PACKAGES file and contents of the contrib directory
-From: hdreau@cybercable.fr
-Date: Wed, 3 Nov 1999 00:04:45 +0100 (MET)
 * PR# 310 *
 Subject: Re: discrepancy between PACKAGES file and contents of the contrib
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Wed, 3 Nov 1999 07:53:58 +0000 (GMT)
+* PR# 311 *
+Subject: bug in Rdconvlib.pl converting to latex
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Thu, 4 Nov 1999 11:16:49 +1300 (NZDT)
+* PR# 312 *
+Subject: R_OpenSiteFile: Do not use a null ptr as filename in fopen
+From: Thomas Hoffmann <hoffmann@ehmgs2.et.tu-dresden.de>
+Date: Thu, 4 Nov 1999 10:08:45 +0100 (MET)
