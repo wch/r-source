@@ -371,7 +371,7 @@ SEXP match(SEXP table, SEXP x, int nmatch)
 SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
-    int i, j, k, match, n_input, n_target, perfect, temp, dups_ok;
+    int i, j, k, match, n_input, n_target, match_count, temp, dups_ok;
     checkArity(op, args);
 
     input = CAR(args);
@@ -390,28 +390,22 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < n_input; i++) {
 	temp = strlen(CHAR(STRING(input)[i]));
 	match = 0;
-	perfect = 0;
+	match_count = 0;
 	if (temp) {
 	    for (j = 0; j < n_target; j++) {
 		k = strncmp(CHAR(STRING(input)[i]),
 			    CHAR(STRING(target)[j]), temp);
 		if (k == 0) {
-		    if (strlen(CHAR(STRING(target)[j])) == temp) {
-			if (perfect == 1) {
-			    if (!dups_ok)
-				match = 0;
-			}
-			else {
-			    perfect = 1;
-			    match = j + 1;
-			}
-		    }
-		    else if (perfect == 0) {
-			if (match == 0)
-			    match = j + 1;
-			else if (!dups_ok)
-			    match = 0;
-		    }
+		    match = j + 1;
+		    if (dups_ok || 
+		    	strlen(CHAR(STRING(target)[j])) == temp) 
+			/* This is odd, effectively sets dups.ok
+			 * for perfect matches, but that's what
+			 * Splus 3.4 does  --pd
+			 */
+		        break; 
+		    if (match_count++ && !dups_ok)
+			match = 0;
 		}
 	    }
 	}
