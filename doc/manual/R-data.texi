@@ -1341,7 +1341,7 @@ number of rows in the result.
 @findex dbExistsTable
 @findex dbRemoveTable
 These are convenient interfaces to read/write/test/delete tables in the
-database.  @code{dbReadTable) and @code{dbWriteTable} copy to and from
+database.  @code{dbReadTable} and @code{dbWriteTable} copy to and from
 an @R{} data frame, mapping the row names of the data frame to the field
 @code{row_names} in the @code{MySQL} table.
 
