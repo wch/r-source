@@ -18,7 +18,7 @@ OBJS = \
 	edit.o \
 	fileio.o \
 	rotated.o \
-	system.o \
+	system.o
 
 LIB = libunix.a
 
