@@ -15,11 +15,11 @@ DISTFILES = Makefile.in
 
 R = $(top_builddir)/bin/R --vanilla
 
-EX_IN = $(R_PKGS_BASE:=-Ex.R)
-EX_OUT = $(EX_IN:.R=.Rout)
+EX_IN_BASE = $(R_PKGS_BASE:=-Ex.R)
+EX_OUT_BASE = $(EX_IN_BASE:.R=.Rout)
 
-RECOMMENDED_EX_IN = $(R_PKGS_RECOMMENDED_EXPANDED:=-Ex.R)
-RECOMMENDED_EX_OUT = $(RECOMMENDED_EX_IN:.R=.Rout)
+EX_IN_RECOMMENDED = $(R_PKGS_RECOMMENDED_EXPANDED:=-Ex.R)
+EX_OUT_RECOMMENDED = $(EX_IN_RECOMMENDED:.R=.Rout)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rout
@@ -43,11 +43,10 @@ Makedeps: Makefile
 test-Examples: test-Examples-Base
 test-Examples-Base: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(EX_OUT)
+	@$(MAKE) $(EX_OUT_BASE)
 
 test-Examples-Recommended: test-Examples-Base
-	@$(MAKE) $(RECOMMENDED_EX_OUT)
-
+	@$(MAKE) $(EX_OUT_RECOMMENDED)
 
 R:
 	@cd $(top_builddir) && $(MAKE) R
@@ -59,7 +58,7 @@ R:
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@echo "$(ECHO_T) OK"
 
-$(EX_IN): FORCE
+$(EX_IN_BASE): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
@@ -79,15 +78,16 @@ $(EX_IN): FORCE
 	  touch $@; \
 	fi)
 
-# The ugly "find .. |grep" construct is necessary because "test foo -nt bar" 
-# is nonportable. The pipeline will succeed if the target exists and is newer
-# than the corresponding DESCRIPTION file in the package. If the target does
-# not exist, then find will fail; if it exists and is older, then find will 
-# succeed but output nothing so that the grep will fail.
-$(RECOMMENDED_EX_IN): FORCE
+## The ugly 'find | grep' construct is necessary because 'test -nt' is
+## nonportable.  The pipeline will succeed if the target exists and is
+## newer than the corresponding DESCRIPTION file in the package.  If the
+## target does not exist, then find will fail; if it exists and is
+## older, then find will succeed but output nothing so that the grep
+## will fail.
+$(EX_IN_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
 	find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
-	 -print 2> /dev/null | grep $@ > /dev/null ||\
+	    -print 2> /dev/null | grep $@ > /dev/null || \
 	(\
 	  if test -f $@ ; then \
 	    if test -n "`tail -6 $@ | grep '^Time elapsed'`" ; then \
@@ -104,15 +104,10 @@ $(RECOMMENDED_EX_IN): FORCE
 	))
 FORCE:
 
-$(EX_OUT): Makefile \
+$(EX_OUT_BASE) $(EX_OUT_RECOMMENDED): Makefile \
   $(top_builddir)/bin/R.bin \
   $(top_builddir)/library/base/R/base \
   $(top_builddir)/modules/lapack$(SHLIB_EXT)
-$(RECOMMENDED_EX_OUT): Makefile \
-  $(top_builddir)/bin/R.bin \
-  $(top_builddir)/library/base/R/base \
-  $(top_builddir)/modules/lapack$(SHLIB_EXT)
-
 base-Ex.Rout: $(top_builddir)/modules/vfonts$(SHLIB_EXT)
 
 mostlyclean: clean
