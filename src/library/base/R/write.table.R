@@ -21,7 +21,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         x[i] <- na
     p <- ncol(x)
     d <- dimnames(x)
-    
+
     if(is.logical(quote))
 	quote <- if(quote) 1 : p else NULL
     else if(is.numeric(quote)) {
@@ -65,7 +65,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     }
     if(!inherits(file, "connection"))
         stop("argument `file' must be a character string or connection")
-    
+
     if(!is.null(col.names)) {
 	if(append)
 	    warning("appending column names to file")
@@ -79,7 +79,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                "escape" = '\\\\"',
                "double" = '""')
     for(i in quote)
-	x[, i] <- paste('"', gsub('"', qstring, x[, i]), '"', sep = "")
+	x[, i] <- paste('"', gsub('"', qstring, as.character(x[, i])),
+                        '"', sep = "")
 
     writeLines(paste(c(t(x)), c(rep(sep, ncol(x) - 1), eol),
                      sep = "", collapse = ""),

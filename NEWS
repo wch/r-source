@@ -697,6 +697,9 @@ BUG FIXES
     o   aov() didn't find free-floating variables for Error() terms when
 	called from inside another function
 
+    o   write.table() failed if asked to quote a numerical matrix with
+	no row names. (PR#1219)
+
 
 	**************************************************
 	*						 *
