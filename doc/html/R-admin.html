@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-04-30).
+   <p>The current version of this document is 1.9.0 (2004-05-01).
 
    ISBN 3-900051-02-X
 
@@ -1229,9 +1229,10 @@ check</code> but failed <code>make test-all-extras</code> in the complex LAPACK
 tests.
 
    <p>George N. White III reports that the <code>strptime</code> tests in 1.9.0 fail
-unless Arthur Olson's timezone data <a href="ftp://elsie.nci.nih.gov/pub/">ftp://elsie.nci.nih.gov/pub/</a>
-(see also: <a href="http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html">http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html</a>)
-are installed and <code>-ltz</code> is added to the list of libraries (for
+on IRIX 6.5 systems prior to 6.5.22m (e.g. 6.5.19m and 6.5.21m) unless
+Arthur Olson's timezone data <a href="ftp://elsie.nci.nih.gov/pub/">ftp://elsie.nci.nih.gov/pub/</a> (see
+also <a href="http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html">http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html</a>) are
+installed and <code>-ltz</code> is added to the list of libraries (for
 example, in environment variable <code>LIBS</code>).
 
 <a name="Alpha%2fOSF1"></a>
