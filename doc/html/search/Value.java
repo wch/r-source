@@ -5,13 +5,27 @@
   JAVA Source file for the class Value
   
   COPYRIGHT (C), 1998, Thomas Baier
-  ALL RIGHTS RESERVED.
+
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  
   
   $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/Value.java,v $
   
-  $Revision: 1.1 $
+  $Revision: 1.1.4.1 $
 
-  $Date: 1998/05/15 10:38:11 $
+  $Date: 1999/03/02 15:19:59 $
   
   $Author: leisch $
 
@@ -142,8 +156,8 @@ public class Value extends Object
   HISTORY:
   
   $Log: Value.java,v $
-  Revision 1.1  1998/05/15 10:38:11  leisch
-  New: Search Engine
+  Revision 1.1.4.1  1999/03/02 15:19:59  leisch
+  search used only kewords, no titles
 
   Revision 1.1  1998/05/10 02:44:50  baier
   Initial revision
