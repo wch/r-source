@@ -91,6 +91,8 @@ function(x, ...)
         writeLines("no packages found")
     }
     else {
+        if(!is.null(x$footer))
+            writeLines(c("\n", x$footer), outConn)
         close(outConn)
         file.show(outFile, delete.file = TRUE,
                   title = "R packages available")
@@ -114,10 +116,7 @@ function(x, ...)
     outConn <- file(outFile, open = "w")
     first <- TRUE
     for(pkg in names(out)) {
-        writeLines(paste(ifelse(first, "", "\n"),
-                         switch(x$type,
-                                data = "Data sets",
-                                demo = "Demos"),
+        writeLines(paste(ifelse(first, "", "\n"), x$title,
                          " in package ", sQuote(pkg), ":\n",
                          sep = ""),
                    outConn)
@@ -129,17 +128,14 @@ function(x, ...)
     if(first) {
         close(outConn)
         unlink(outFile)
-        writeLines(paste("no", x$type, "listings found"))
+        writeLines(paste("no", tolower(x$title), "found"))
     }
     else {
         if(!is.null(x$footer))
             writeLines(c("\n", x$footer), outConn)
         close(outConn)
         file.show(outFile, delete.file = TRUE,
-                  title = paste("R",
-                                switch(x$type,
-                                       data = "data sets",
-                                       demo = "demos")))
+                  title = paste("R", tolower(x$title)))
     }
     invisible(x)
 }
