@@ -730,7 +730,7 @@ done
 AC_PATH_PROG(XMKMF, xmkmf, [], [${r_xtra_path}])
 if test -n "${XMKMF}"; then
   echo > Imakefile
-  ${XMKMF} > /dev/null || echo > Makefile
+  ${XMKMF} > /dev/null 2>&1 || echo > Makefile
   cc=`${srcdir}/tools/GETMAKEVAL CC`
   cc=`echo ${cc} | sed "s/ .*//"`
   if test "`which ${cc}`" = "`which ${CC}`"; then
