@@ -11,14 +11,15 @@ case $1 in
 esac
 export R_SAVE_IMAGE
 
-if test "x${BUILD}" = "xCROSS"; then
-R_DEFAULT_PACKAGES=NULL
+## R_START_PACKAGES is set to NULL during bootstrapping
+R_DEFAULT_PACKAGES=${R_START_PACKAGES}
 export R_DEFAULT_PACKAGES
+if test "x${BUILD}" = "xCROSS"; then
 R_EXE="${RX_EXE} --slave --no-site-file --no-init-file"
 ## we have to install into a temporary dir to avoid libpath problems
 lib1=/tmp/RtmpWin
 else
-R_EXE="${R_HOME}/bin/Rterm --slave --no-site-file --no-init-file R_DEFAULT_PACKAGES=NULL"
+R_EXE="${R_HOME}/bin/Rterm --slave --no-site-file --no-init-file"
 lib1=${lib}
 fi
 

@@ -101,7 +101,7 @@ Rcode: fixed/fixdesc
 
 rpackage: ../../library/R.css
 	@for pkg in $(PKGS); do \
-	  $(MAKE) --no-print-directory $${pkg}; \
+	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
 	done
 	@$(MAKE) --no-print-directory vignettes
 
