@@ -1,5 +1,5 @@
-# Subroutines for converting R documentation into HTML, LaTeX and
-# nroff format
+# Subroutines for converting R documentation into HTML, LaTeX, Nroff
+# and R (Examples) format
 
 # Copyright (C) 1997 Friedrich Leisch
 #
@@ -35,7 +35,11 @@ $EOB = "escaped_opening_bracket";
 $ECB = "escaped_closing_bracket";
 $ID = "$NB\\d+$BN";
 $ECODE = "this_is_escaped_code";
-$LATEX_SPECIAL = '\$\^%&~_\{\}#\\\\';
+
+$LATEX_SPECIAL = '\$\^%&~_#\{\}\\\\';
+$LATEX_DO_MATH = '-+\*/\|<>=!';
+$MD = ',,,Math,del;;;'; #-- should NOT contain any characters from $LATEX_..
+$Math_del = "\$"; #UNquoted '$'
 
 sub Rdconv {
 
@@ -64,6 +68,13 @@ sub Rdconv {
 
     mark_brackets();
     escape_codes();
+    if($debug) {
+      print stderr "--------------\nescape codes: '\@ecodes' =\n";
+
+      while(my($id,$code) = each %ecodes) {
+	print stderr "\t\$ec{$id}='$code'\n";
+      }
+    }
 
     if($type) {
 	#-- These may be used in all cases :
@@ -147,8 +158,7 @@ sub get_blocks {
 #
 sub get_multi {
 
-    my $text = $_[0];
-    my $name = $_[1]; # "alias" or "keyword"
+    my ($text, $name) = @_; # name: "alias" or "keyword"
     my @res, $k=0;
     print stderr "--- Multi: $name\n" if $debug;
     while($text =~ /\\$name($ID)/) {
@@ -198,9 +208,7 @@ sub get_sections {
 # the arguments.
 sub get_arguments {
 
-    my $command = $_[0];
-    my $text = $_[1];
-    my $nargs = $_[2];
+    my ($command, $text, $nargs) = @_;
     my @retval;
 
     if($text =~ /\\($command)($ID)/){
@@ -247,36 +255,30 @@ sub print_blocks {
 
 sub undefined_command {
 
-    my $text = $_[0];
-    my $cmd = $_[1];
+    my ($text, $cmd) = @_;
 
     while($text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$1/s;
     }
-
     $text;
 }
 
 
 sub replace_command {
 
-    my $text = $_[0];
-    my $cmd = $_[1];
-    my $before = $_[2];
-    my $after = $_[3];
+    my ($text, $cmd, $before, $after) = @_;
 
     while($text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$before$1$after/s;
     }
-
     $text;
 }
 
-
-
+
 #************************** HTML ********************************
+
 
 sub rdoc2html {
 
@@ -383,7 +385,7 @@ sub text2html {
     $text = replace_command($text, "itemize", "<UL>", "</UL>");
     $text = replace_command($text, "enumerate", "<OL>", "</OL>");
     $text =~ s/\\item\s+/<li>/go;
-    
+
     $text =~ s/\\\\/\\/go;
     $text = html_unescape_codes($text);
     unmark_brackets($text);
@@ -419,8 +421,7 @@ sub code2html {
 # Print a standard block
 sub html_print_block {
 
-    my $block = $_[0];
-    my $title = $_[1];
+    my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
 	print htmlout "<H3><I>$title</I></H3>\n";
@@ -431,8 +432,7 @@ sub html_print_block {
 # Print a code block (preformatted)
 sub html_print_codeblock {
 
-    my $block = $_[0];
-    my $title = $_[1];
+    my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
 	print htmlout "<H3><I>$title</I></H3>\n<PRE>";
@@ -445,8 +445,7 @@ sub html_print_codeblock {
 # Print the value or arguments block
 sub html_print_argblock {
 
-    my $block = $_[0];
-    my $title = $_[1];
+    my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
 	print htmlout "<H3><I>$title</I></H3>\n";
@@ -501,9 +500,8 @@ sub html_unescape_codes {
     $text;
 }
 
-
+
 #**************************** nroff ******************************
-
 
 
 sub rdoc2nroff {
@@ -611,7 +609,7 @@ sub text2nroff {
 			    "\n.in -$INDENT\n");
 
     $text =~ s/\\item\s+/\n.ti -\\w\@*\\ \@u\n* /go;
-	
+
     $text = nroff_unescape_codes($text);
     unmark_brackets($text);
 }
@@ -619,7 +617,7 @@ sub text2nroff {
 sub nroff_parse_lists {
 
     my $text = $_[0];
-    
+
     while($text =~ /\\itemize|\\enumerate/){
 	my ($id, $innertext) = get_arguments("deqn", $text, 1);
 	if($innertext =~ /\\itemize/){
@@ -641,7 +639,7 @@ sub nroff_parse_lists {
 
     $text;
 }
-		
+
 sub code2nroff {
 
     my $text = $_[0];
@@ -661,8 +659,7 @@ sub code2nroff {
 # Print a standard block
 sub nroff_print_block {
 
-    my $block = $_[0];
-    my $title = $_[1];
+    my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
 	print nroffout "\n";
@@ -679,8 +676,7 @@ sub nroff_print_block {
 # Print a code block (preformatted)
 sub nroff_print_codeblock {
 
-    my $block = $_[0];
-    my $title = $_[1];
+    my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
 	print nroffout "\n";
@@ -699,8 +695,7 @@ sub nroff_print_codeblock {
 # Print the value or arguments block
 sub nroff_print_argblock {
 
-    my $block = $_[0];
-    my $title = $_[1];
+    my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
 
@@ -771,6 +766,7 @@ sub nroff_unescape_codes {
     $text;
 }
 
+
 
 #*********************** Example ***********************************
 
@@ -803,8 +799,7 @@ sub rdoc2ex {
 
 sub ex_print_exampleblock {
 
-    my $block = $_[0];
-    my $env = $_[1];
+    my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
 	print "##___ Examples ___:\n";
@@ -814,7 +809,7 @@ sub ex_print_exampleblock {
 }
 
 sub code2examp {
-    #-	currently identical to	 `code2latex'.
+    #-	similar to ..2latex
     my $text = $_[0];
 
     $text =~ s/\\%/%/go;
@@ -825,15 +820,13 @@ sub code2examp {
     unmark_brackets($text);
 }
 
-
-
-
+
 
 #*********************** LaTeX ***********************************
 
 
 sub rdoc2latex {
-
+    my($c,$a);
     get_blocks($complete_text);
     get_sections($complete_text);
 
@@ -843,6 +836,18 @@ sub rdoc2latex {
     print latexout $blocks{"title"};
     print latexout "\}\n";
 
+    foreach (@aliases) {
+      $c= code2latex($_,0);
+      $a= latex_code_alias($c);
+      printf stderr "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
+	if $debug;
+      printf latexout "\\alias\{%s\}\{%s\}\n", $a, $blocks{"name"}
+        unless /^$blocks{"name"}$/;
+    }
+    foreach (@keywords) {
+      printf latexout "\\keyword\{%s\}\{%s\}\n", $_, $blocks{"name"}
+      unless /^$/ ;
+    }
     latex_print_codeblock("usage", "Usage");
     latex_print_argblock("arguments", "Arguments");
     latex_print_block("description", "Description");
@@ -867,6 +872,9 @@ sub text2latex {
     $text =~ s/$EOB/\\\{/go;
     $text =~ s/$ECB/\\\}/go;
 
+    $text =~ s/\\itemize/\\Itemize/o;
+    $text =~ s/\\enumerate/\\Enumerate/o;
+
     while($text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$text =~ s/\\eqn.*$id/\\eeeeqn\{$eqn\}\{$ascii\}/s;
@@ -890,23 +898,31 @@ sub text2latex {
 
 sub code2latex {
 
-    my $text = $_[0];
+    my ($text, $hyper) = @_;
 
     $text =~ s/\\%/%/go;
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
     $text =~ s/\\\\/\\bsl{}/go;
-    $text = undefined_command($text, "link");
+    $text =~ s/<<-([ ]+)/\\SIIs{}$1/go;
+    $text =~ s/<-([ ]+)/\\SIs{}$1/go;
+    $text =~ s/->([ ]+)/\\Sbecomes{}$1/go;
+
+    if($hyper) {
+      while($text =~ /\\link/) {
+	my ($id, $arg) = get_arguments("link", $text, 1);
+	$text =~ s/\\link$id.*$id/HYPERLINK($arg)/s;
+      }
+    } else {
+      $text = undefined_command($text, "link");
+    }
     unmark_brackets($text);
 }
 
-
-
 sub latex_print_block {
 
-    my $block = $_[0];
-    my $env = $_[1];
+    my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
 	print latexout "\\begin\{$env\}\n";
@@ -917,13 +933,12 @@ sub latex_print_block {
 
 sub latex_print_codeblock {
 
-    my $block = $_[0];
-    my $env = $_[1];
+    my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
 	print latexout "\\begin\{$env\}\n";
 	print latexout "\\begin\{verbatim\}";
-	print latexout code2latex($blocks{$block});
+	print latexout code2latex($blocks{$block},0);
 	print latexout "\\end\{verbatim\}\n";
 	print latexout "\\end\{$env\}\n";
     }
@@ -931,13 +946,12 @@ sub latex_print_codeblock {
 
 sub latex_print_exampleblock {
 
-    my $block = $_[0];
-    my $env = $_[1];
+    my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
 	print latexout "\\begin\{$env\}\n";
 	print latexout "\\begin\{ExampleCode\}";
-	print latexout code2latex($blocks{$block});
+	print latexout code2latex($blocks{$block},0);
 	print latexout "\\end\{ExampleCode\}\n";
 	print latexout "\\end\{$env\}\n";
     }
@@ -945,8 +959,7 @@ sub latex_print_exampleblock {
 
 sub latex_print_argblock {
 
-    my $block = $_[0];
-    my $env = $_[1];
+    my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
 
@@ -954,7 +967,7 @@ sub latex_print_argblock {
 
 	my $text = $blocks{$block};
 
-	if($text =~ /\\item/s){
+	if($text =~ /\\item/s){#-- if there is >= 1 "\item":  ldescription
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
 	    if($begin){
@@ -965,7 +978,7 @@ sub latex_print_argblock {
 	    while($text =~ /\\item/s){
 		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 		print latexout "\\item\[";
-		print latexout latex_code_cmd(code2latex($arg));
+		print latexout latex_code_cmd(code2latex($arg,1));
 		print latexout "\] ";
 		print latexout text2latex($desc), "\n";
 		$text =~ s/.*$id//s;
@@ -996,27 +1009,54 @@ sub latex_unescape_codes {
     my $text = $_[0];
     while($text =~ /$ECODE($ID)/){
 	my $id = $1;
-	my $ec = latex_code_cmd(code2latex($ecodes{$id}));
+	my $ec = latex_code_cmd(code2latex($ecodes{$id},1));
 	$text =~ s/$ECODE$id/$ec/;
     }
     $text;
 }
 
-# Encapsulate code in \verb or \textt depending on the appearance of
+# Encapsulate code in \verb or \texttt depending on the appearance of
 # special characters.
 sub latex_code_cmd {
 
     my $code = $_[0];
 
     if($code =~ /[$LATEX_SPECIAL]/){
-	if($code =~ /@/){
-	    die("\nERROR: found `\@' in \\code{...\}\n");
-	}
+        die("\nERROR: found `\@' in \\code{...\}\n")
+	  if $code =~ /@/;
+        die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
+	  if $code =~ /HYPERLINK\(/;
 	$code = "\\verb@" . $code . "@";
     }
     else {
+        $code =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
 	$code = "\\texttt\{" . $code . "\}";
     }
-
     $code;
+}
+
+
+# Encapsulate code in $...$ by ESCAPING special characters:
+# Tough examples are
+#	Logic.Rd  Arithmetic.Rd  Extract.Rd  formula.Rd
+sub latex_code_alias {
+
+    my $c = $_[0];  ##-- $c is (typically) the OUTPUT of  code2latex(.) :
+    my $BSL = '@BSL@';
+    my $Dollar = '@DOLLAR@';
+
+    if($c =~ /[${LATEX_DO_MATH}$LATEX_SPECIAL}]/){ # = '\$\^%&~_\{\}#\\\\'
+      $c =~ s/\\\\/$BSL/go;
+      $c =~ s/\$/$Dollar/go;
+      #-- math around it  (should be "robust")
+      $c =~ s/[$LATEX_DO_MATH$LATEX_SPECIAL]+/${MD}$&${MD}/g;
+      $c =~ s/[$LATEX_SPECIAL]/\\$&/go;  #- escape them (not the "bsl" \)
+      $c =~ s/\|/\\mid{}/go; # "|" is special in '\index' !!
+      $c =~ s/\!/\\\!/go;
+      $c =~ s/$BSL/\\bsl{}/go;
+      $c =~ s/$Dollar/\\\$/g;
+      $c =~ s/$MD/$Math_del/go;
+      }
+    $c =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
+    $c;
 }
