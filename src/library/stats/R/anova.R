@@ -117,30 +117,3 @@ print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
     invisible(x)
 }
 
-print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
-                        signif.stars= getOption("show.signif.stars"), ...)
-{
-    if (!is.null(heading <- attr(x, "heading")))
-	cat(heading, sep = "\n")
-    nc <- dim(x)[2]
-    if(is.null(cn <- colnames(x))) stop("anova object must have colnames(.)!")
-    ncn <- nchar(cn)
-    has.P <- substr(cn[nc],1,3) == "Pr(" # P-value as last column
-    zap.i <- 1:(if(has.P) nc-1 else nc)
-    i <- which(substr(cn,2,7) == " value")
-    i <- c(i, which(!is.na(match(cn, c("F", "Cp", "Chisq")))))
-    if(length(i))
-	zap.i <- zap.i[!(zap.i %in% i)]
-    tst.i <- i
-    if(length(i <- which(substr(cn,ncn-1,ncn) == "Df")))
-	zap.i <- zap.i[!(zap.i %in% i)]
-
-    printCoefmat(x, digits = digits, signif.stars = signif.stars,
-                 has.Pvalue = has.P, P.values = has.P,
-                 cs.ind = NULL, zap.ind = zap.i, tst.ind= tst.i,
-                 na.print = "", # not yet in print.matrix:  print.gap = 2,
-                 ...)
-    invisible(x)
-}
-
-
