@@ -41,14 +41,8 @@
 /* Define if you have the `atanh' function. */
 /* #undef HAVE_ATANH */
 
-/* Define if you have the `bcopy' function. */
-/* #undef HAVE_BCOPY */
-
 /* Define if you have BSD networking headers and libraries. */
 /* #undef HAVE_BSD_NETWORKING */
-
-/* Define if you have the `bzero' function. */
-/* #undef HAVE_BZERO */
 
 /* Define if you have the bzip2 headers and libraries. */
 /* #undef HAVE_BZLIB */
@@ -212,17 +206,8 @@
 /* Define if you have the `matherr' function. */
 /* #undef HAVE_MATHERR */
 
-/* Define if you have the `memcpy' function. */
-#define HAVE_MEMCPY 1
-
-/* Define if you have the `memmove' function. */
-#define HAVE_MEMMOVE 1
-
 /* Define if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
-
-/* Define if you have the `mempcpy' function. */
-/* #undef HAVE_MEMPCPY */
 
 /* Define if you have the `mkfifo' function. */
 /* #undef HAVE_MKFIFO */
