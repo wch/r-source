@@ -318,7 +318,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                     prim <- logical(length(pm))
                     for(i in seq(along=prim)) {
                         f <- methods::getFunction(pm[[i]], FALSE, FALSE, ns)
-                        prim[[i]] <- methods::is.primitive(f)
+                        prim[[i]] <- is.primitive(f)
                     }
                     expMethods <- c(expMethods, pm[prim])
                 }
