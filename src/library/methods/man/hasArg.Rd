@@ -2,7 +2,7 @@
 \alias{hasArg}
 \title{Look for an Argument in the Call}
 \description{
-  Returns \code{TRUE} is \code{name} corresponds to an argument in the
+  Returns \code{TRUE} if \code{name} corresponds to an argument in the
   call, either a formal argument to the function, or a component of
   \code{...}, and \code{FALSE} otherwise.
 }
