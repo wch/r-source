@@ -48,7 +48,7 @@ from the second S book (the "White Book").  In particular we have
 a functioning versions of "lm" and "glm" and their associated
 "summary" and "anova" methods (it would be nice to have "drop1",
 "add1" and "step", but there hasn't been time to complete these
-yet).
+yet).  Some of us would like to see contributions for building "gam".
 
 What we have in the way of manual is in the directory in an
 "output independent" form which can be used to create versions
