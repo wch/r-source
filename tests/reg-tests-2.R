@@ -1414,3 +1414,11 @@ split(as.list(1:3), c(1,1,2))
 (z <- split(y, rep(1:5, times=c(1,1,4,1,6))))
 sapply(z, rawToChar)
 ## wrong results in 2.0.0
+
+
+## write.table in marginal cases
+x <- matrix(, 3, 0)
+write.table(x) # 3 rows
+write.table(x, row.names=FALSE)
+# note: scan and read.table won't read this as they take empty fields as NA
+## was 1 row in 2.0.1

@@ -24,7 +24,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     }
     ## as.matrix might turn integer or numeric columns into a complex matrix
     cmplx <- sapply(x, is.complex)
-    if(any(cmplx) && !all(cmplx)) x[cmplx] <- lapply(x[cmplx], as.character)
+    if(length(cmplx) && any(cmplx) && !all(cmplx))
+        x[cmplx] <- lapply(x[cmplx], as.character)
     x <- as.matrix(x)
     if (!nocols){
         i <- is.na(x)
@@ -104,5 +105,5 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                          sep = "", collapse = ""),
                    file, sep = "")
     else
-        cat(eol,file=file)
+        cat(rep.int(eol, NROW(x)), file=file, sep="")
 }

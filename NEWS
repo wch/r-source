@@ -66,6 +66,8 @@ BUG FIXES
     o	The print method for getDLLRegisteredRoutines() was badly
 	designed, and failed for all the standard packages' DLLs.
 
+    o	write.table(x, row.names=FALSE) was incorrect for a 0-column x.
+
 
 
 		CHANGES IN R VERSION 2.0.1

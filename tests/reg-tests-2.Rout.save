@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-11-11), ISBN 3-900051-07-0
+Version 2.0.1 Patched (2004-12-25), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4325,4 +4325,18 @@ $"5"
        1        2        3        4        5 
      "A"      " "   "test"      " " "string" 
 > ## wrong results in 2.0.0
+> 
+> 
+> ## write.table in marginal cases
+> x <- matrix(, 3, 0)
+> write.table(x) # 3 rows
+1
+2
+3
+> write.table(x, row.names=FALSE)
+
+
+
+> # note: scan and read.table won't read this as they take empty fields as NA
+> ## was 1 row in 2.0.1
 > 
