@@ -298,6 +298,13 @@ static double GNOME_StrWidth(char *str, DevDesc *dd)
 
 static void GNOME_MetricInfo(int c, double *ascent, double *descent, double *width, DevDesc *dd)
 {
+#ifdef BUG61
+#else
+    /* metric information not available => return 0,0,0 */
+    *ascent = 0.0;
+    *descent = 0.0;
+    *width = 0.0;
+#endif
 }
 
 static void GNOME_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)

@@ -2573,11 +2573,14 @@ int GLocator(double *x, double *y, int coords, DevDesc *dd)
 void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 int units, DevDesc *dd)
 {
+#ifdef BUG61
     if(dd->dp.metricInfo)
 	dd->dp.metricInfo(c, ascent, descent, width, dd);
     else
 	error("detailed character metric information unavailable\n");
-
+#else
+    dd->dp.metricInfo(c, ascent, descent, width, dd);
+#endif
     if (units != DEVICE) {
 	*ascent = GConvertYUnits(*ascent, DEVICE, units, dd);
 	*descent = GConvertYUnits(*descent, DEVICE, units, dd);
@@ -3034,14 +3037,18 @@ double GStrWidth(char *str, int units, DevDesc *dd)
 
 
 /* Compute string height. */
+/* Just return the height of n lines in the current font */
+/* If you want more detail, use GMetricInfo */
 double GStrHeight(char *str, int units, DevDesc *dd)
 {
-#ifdef OLD
+#ifdef BUG61
+    /* VERY old stuff */
     double h = dd->gp.cex * dd->gp.cra[1];
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
     return h;
-#else
+    /* #else */
+    /* old stuff */
     double h;
     char *s;
     int n;
@@ -3054,11 +3061,27 @@ double GStrHeight(char *str, int units, DevDesc *dd)
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
     return h;
+#else
+    double h;
+    char *s;
+    int n;
+    /* Count the lines of text */
+    n = 1;
+    for(s = str; *s ; s++)
+	if (*s == '\n')
+	    n += 1;
+    h = n * GConvertYUnits(1, CHARS, DEVICE, dd);
+    if (units != DEVICE)
+	h = GConvertYUnits(h, DEVICE, units, dd);
+    return h;    
 #endif
 }
 
+double deg2rad = 0.01745329251994329576;
 
 /* Draw text in a plot. */
+/* If you want EXACT centering of text (e.g., like in GSymbol) */
+/* then pass NA_REAL for xc and yc */
 void GText(double x, double y, int coords, char *str,
 	   double xc, double yc, double rot, DevDesc *dd)
 {
@@ -3073,6 +3096,7 @@ void GText(double x, double y, int coords, char *str,
         char *s, *sbuf, *sb;
 	int i, n;
 	double xoff, yoff, yadj;
+#ifdef BUG61
 	/* Fixup for string centering. */
 	/* Higher functions send in NA_REAL */
 	/* when true text centering is desired */
@@ -3084,6 +3108,11 @@ void GText(double x, double y, int coords, char *str,
 	if (!R_FINITE(xc)) xc = 0.5;
 	/* We work in NDC coordinates */
 	GConvert(&x, &y, coords, NDC, dd);
+#else
+	double xleft, ybottom;
+	/* We work in INCHES */
+	GConvert(&x, &y, coords, INCHES, dd);
+#endif
 	/* Count the lines of text */
 	n = 1;
         for(s = str; *s ; s++)
@@ -3096,6 +3125,7 @@ void GText(double x, double y, int coords, char *str,
         for(s = str; ; s++) {
             if (*s == '\n' || *s == '\0') {
 		*sb = '\0';
+#ifdef BUG61
 		/* Compute the approriate offset. */
 		/* (translate verticaly then rotate). */
                 yoff = (1 - yc) * (n - 1) - i - yadj;
@@ -3105,11 +3135,74 @@ void GText(double x, double y, int coords, char *str,
 		GConvert(&xoff, &yoff, INCHES, NDC, dd);
 		xoff = x + xoff;
 		yoff = y + yoff;
+#else
+		if (n > 1) {
+		    /* first determine location of THIS line */
+		    if (!R_FINITE(xc))
+			xc = 0.5;
+		    if (!R_FINITE(yc))
+			yc = 0.5;
+		    yoff = (1 - yc)*(n - 1) - i;
+		    yoff = GConvertYUnits(yoff, CHARS, INCHES, dd);
+		    xoff = - yoff*sin(deg2rad*rot);
+		    yoff = yoff*cos(deg2rad*rot);
+		    xoff = x + xoff;
+		    yoff = y + yoff;
+		} else {
+		    xoff = x;
+		    yoff = y;
+		}
+		/* now determine bottom-left for THIS line */
+		if(xc != 0.0 || yc != 0) {
+		    double width, height;
+		    width = GStrWidth(sbuf, INCHES, dd);
+		    if (!R_FINITE(xc))
+			xc = 0.5;
+		    if (!R_FINITE(yc)) {
+			/* "exact" vertical centering */
+			/* If font metric info is available AND */
+			/* there is only one line, use GMetricInfo & yc=0.5 */
+			/* Otherwise use GStrHeight and fiddle yc */
+			double h, d, w;
+			GMetricInfo(0, &h, &d, &w, INCHES, dd);
+			if (n>1 || (h==0 && d==0 && w==0)) {
+			    height = GStrHeight(sbuf, INCHES, dd);
+			    yc = dd->dp.yCharOffset;
+			} else {
+			    double maxHeight = 0;
+			    double maxDepth = 0;
+			    char *ss;
+			    for (ss=sbuf; *ss; ss++) {
+				GMetricInfo(*ss, &h, &d, &w, 
+					    INCHES, dd);
+				if (h > maxHeight) maxHeight = h;
+				if (d > maxDepth) maxDepth = d;
+			    }
+			    height = maxHeight - maxDepth;
+			    yc = 0.5;
+			}
+		    } else {
+			height = GStrHeight(sbuf, INCHES, dd);
+		    }
+		    xleft = xoff - xc*width*cos(deg2rad*rot) + 
+			yc*height*sin(deg2rad*rot);
+		    ybottom = yoff - xc*width*sin(deg2rad*rot) -
+			yc*height*cos(deg2rad*rot);
+		} else {
+		    xleft = xoff;
+		    ybottom = yoff;
+		}
+#endif
 		if(dd->dp.canClip) {
 		    GClip(dd);
+#ifdef BUG61
 		    dd->dp.text(xoff, yoff, NDC, sbuf, xc, yc, rot, dd);
+#else
+		    dd->dp.text(xleft, ybottom, INCHES, sbuf, 0., 0., rot, dd);
+#endif
 		}
 		else {
+#ifdef BUG61
 		    double xtest = xoff;
 		    double ytest = yoff;
 		    switch (dd->gp.xpd) {
@@ -3122,9 +3215,28 @@ void GText(double x, double y, int coords, char *str,
 		    case 2:
 			break;
 		    }
+#else
+		    double xtest = xleft;
+		    double ytest = ybottom;
+		    switch (dd->gp.xpd) {
+		    case 0:
+			GConvert(&xtest, &ytest, INCHES, NPC, dd);
+			break;
+		    case 1:
+			GConvert(&xtest, &ytest, INCHES, NFC, dd);
+			break;
+		    case 2:
+			GConvert(&xtest, &ytest, INCHES, NDC, dd);
+			break;
+		    }
+#endif
 		    if (xtest < 0 || ytest < 0 || xtest > 1 || ytest > 1)
 			    return;
+#ifdef BUG61
 		    dd->dp.text(xoff, yoff, NDC, sbuf, xc, yc, rot, dd);
+#else
+		    dd->dp.text(xleft, ybottom, INCHES, sbuf, 0., 0., rot, dd);
+#endif
 		}
 		sb = sbuf;
 		i += 1;
@@ -3433,15 +3545,14 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
     int ltysave;
 
     if(' ' <= pch && pch <= 255) {
-	str[0] = pch;
-	str[1] = '\0';
-	GText(x, y, coords, str,
-	      dd->gp.xCharOffset, dd->gp.yCharOffset, 0., dd);
-	/*--- FIXME --- *MUST* adjust not only with [xy]CharOffset,
-	 *--- ===== --- but also depending on  pch -- to *CENTER* the symbol!
-	 *---  e.g. for	 pch = '.'
-	 *+++ Yes, but the metric information is not always available.
-	 */
+	if (pch == '.') {
+	    GConvert(&x, &y, coords, DEVICE, dd);
+	    GRect(x-.5, y-.5, x+.5, y+.5, DEVICE, NA_INTEGER, dd->gp.col, dd);
+	} else {
+	    str[0] = pch;
+	    str[1] = '\0';
+	    GText(x, y, coords, str, NA_REAL, NA_REAL, 0., dd);
+	}
     }
     else {
 	ltysave = dd->gp.lty;
@@ -3700,6 +3811,8 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 
 
 /* Draw text in plot margins. */
+/* "las" gives the style of axis labels. 0=always parallel to the axis, */
+/* 1=always horizontal, 2=always perpendicular to the axis. */
 void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    DevDesc *dd)
 {

@@ -2879,6 +2879,17 @@ void GMathText(double x, double y, int coords, SEXP expr,
 	       double xc, double yc, double rot, DevDesc *dd)
 {
     BBOX bbox;
+
+#ifdef BUG61
+#else
+    /* IF font metric information is not available for device */
+    /* then bail out */
+    double ascent, descent, width;
+    GMetricInfo(0, &ascent, &descent, &width, DEVICE, dd);
+    if (ascent==0 & descent==0 & width==0)
+	error("Metric information not yet available for this device\n");
+#endif
+
     MathDevice = dd;
     BaseCex = MathDevice->gp.cex;
     BoxColor = name2col("pink");
@@ -2911,6 +2922,16 @@ void GMMathText(SEXP str, int side, double line, int outer,
 {
     int coords = 0;
     double a, xadj, yadj;
+
+#ifdef BUG61
+#else
+    /* IF font metric information is not available for device */
+    /* then bail out */
+    double ascent, descent, width;
+    GMetricInfo(0, &ascent, &descent, &width, DEVICE, dd);
+    if (ascent==0 & descent==0 & width==0)
+	error("Metric information not yet available for this device\n");
+#endif
 
     MathDevice = dd;
 
