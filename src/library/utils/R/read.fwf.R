@@ -15,20 +15,21 @@ function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
 
     drop<- (widths<0)
     widths<-abs(widths)
-    
+
 
     buffersize<-(buffersize %/% recordlength)* recordlength
-    
-    FILENAME <- tempfile("Rfwf.") 
-    on.exit(unlink(FILENAME)) 
-    FILE<-file(FILENAME,"a") 
+
+    FILENAME <- tempfile("Rfwf.")
+    on.exit(unlink(FILENAME))
+    FILE<-file(FILENAME,"a")
     on.exit(close(FILE),add=TRUE)
- 
-    if (is.character(file))
-      file<-file(file,"r")
-    else if (!isOpen(file)) {
-      file<-open(file,"r")
-      on.exit(close(file))
+
+    if (is.character(file)) {
+      file <- file(file,"r")
+      on.exit(close(file),add=TRUE)
+    } else if (!isOpen(file)) {
+      file <- open(file,"r")
+      on.exit(close(file),add=TRUE)
     }
 
     if (skip)
@@ -37,13 +38,13 @@ function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
       headerline<-readLines(file,n=1)
       cat(FILE,headerline,"\n")
     }
-    
+
     repeat({
       if (n==-1)
         thisblock<-buffersize
       else
         thisblock<-min(buffersize,n)
-      
+
       raw <- readLines(file, n=thisblock)
       nread<-length(raw)
       if (recordlength>1 &&  nread %% recordlength){
@@ -54,7 +55,7 @@ function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
         raw<-matrix(raw,nrow=recordlength)
         raw<-apply(raw,2,paste,collapse="")
       }
-      
+
       st <- c(1, 1+cumsum(widths))
       first <- st[-length(st)][!drop]
       last <- cumsum(widths)[!drop]
