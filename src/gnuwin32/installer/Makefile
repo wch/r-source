@@ -4,7 +4,7 @@ include ../MkRules
 include ../../../share/make/vars.mk
 
 RPREFIX = $(shell perl ../fixed/rwver.pl ../../../VERSION)
-LIBFILES = $(foreach i, $(R_PKGS_BASE), ../../../library/$i) ../../../library/R.css
+LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_STUBS), ../../../library/$i) ../../../library/R.css
 
 all: $(RPREFIX).exe
 
