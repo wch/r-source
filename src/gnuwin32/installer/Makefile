@@ -1,4 +1,4 @@
-# Makefile for R for Windows Installer
+# Makefile for R for Windows Installers
 
 include ../MkRules
 UNZIPDIR=unzip
@@ -6,7 +6,8 @@ PREFIX=rw1030
 
 .PHONY: GA UZ
 
-all: R.ico GA UZ rwinst.exe
+all: SetupR.exe miniR.exe
+old: R.ico GA UZ rwinst.exe
 
 # O1 for small rather than fast
 CFLAGS=-I../graphapp -I../../include -I$(UNZIPDIR)/windll -Wall -O1 -DRVER=\"$(PREFIX)\"

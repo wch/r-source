@@ -23,6 +23,8 @@ compiler system that supports --shared and an in-memory dlltool.
 Under the default compilation options, Internet Explorer 4.0 or later
 is required.
 
+rwinst.exe is no longer part of the distribution.
+
 The old-style Windows help is no longer part of the standard distribution,
 but can be made from the sources.
 

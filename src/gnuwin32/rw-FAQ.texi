@@ -123,8 +123,8 @@ possibilities.
 1) @code{SetupR.exe}, is about 15Mb and gives a complete installation.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and several files
-@code{mini-?.bin}.  You can put  @code{miniR.exe} and @code{mini-1.bin}
-on one floppy and the remaining @code{mini-?.bin} on a floppy each.
+@code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
+on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
 
 3) Via zip files in directory @code{zip}.  You will need at least the
 files
@@ -136,8 +136,6 @@ files
 and you may want @code{@RWVER@w.zip} (the HTML format help files),
 @code{@RWVER@l.zip} (the LaTeX format help files, used for offline
 printing), or @code{@RWVER@d?.zip} (the draft manuals, in PDF).
-
-Optionally, you can download the installer, @code{rwinst.exe}.
 
 
 @node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
@@ -152,12 +150,10 @@ double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you supressed making a group for R).
 
-The next-simplest way is to run the installer (double-click on the icon for
-@code{rwinst.exe} and navigate its wizard-like pages).  Alternatively,
-choose a location and unzip the zip files (with a tool that preserves
-long file names and the directory structure: we recommend the INFO-ZIP
-project's @code{unzip}). All the files will unpack into a directory
-@code{@RWVER@}.
+For a manual installation, choose a location and unzip the zip files
+(with a tool that preserves long file names and the directory structure:
+we recommend the INFO-ZIP project's @code{unzip}). All the files will
+unpack into a directory @code{@RWVER@}.
 
 Choose a working directory for R. Unless you used @code{SetupR.exe} or
 @code{miniR.exe} (which did this for you by default), make a shortcut to
@@ -227,8 +223,9 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @section Can I use @code{R BATCH}?
 
 Yes, if you have Perl and the files for making source packages (from
-@code{@RWVER@sp.zip}) installed.  The Windows analogue is @code{Rcmd
-BATCH}: use @code{Rcmd BATCH --help} for full details.
+@code{SetupR.exe} or @code{@RWVER@sp.zip}) installed.  The Windows
+analogue is @code{Rcmd BATCH}: use @code{Rcmd BATCH --help} for full
+details.
 
 Otherwise you can set up a batch file using @code{Rterm.exe}. A sample
 batch file might contain (as one line)
@@ -285,9 +282,8 @@ short name (something like @code{PROGRA~1}; you can get it as the
 @node Does R use the Registry?,  , R can't find my file, Installation and Usage
 @section Does R use the Registry?
 
-Not itself.  The Inno Setup-based installers set some entries to allow
-uninstallation.  In addition those installers and (by default, but it
-can be unchecked) @code{rwinst.exe} set a Registry key
+Not itself.  The installers set some entries to allow uninstallation.
+In addition they set a Registry key
 @code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
 path.  Again, this is not used by R itself, but it will be used by the
 DCOM interface (@uref{http://cran.r-project.org/other-software.html}).
@@ -670,10 +666,10 @@ case) did not work.
 
 We strongly encourage you to do this @emph{via} building an R package:
 see the @emph{Writing R Extensions} manual.  In any event you should
-install the parts of the R system for building R packages in
-@code{@RWVER@sp.zip}, and get and install the tools (including Perl) and
-compilers mentioned in the file @file{readme.packages} there.  Then you
-can use
+install the parts of the R system for building R packages (in
+@code{SetupR.exe} or @code{@RWVER@sp.zip}), and get and install the
+tools (including Perl) and compilers mentioned in the file
+@file{readme.packages} contained therein.  Then you can use
 @example
 ...\bin\Rcmd SHLIB foo.c bar.c
 @end example
@@ -843,7 +839,7 @@ a modern operating system!
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 April 19 by Professor B. D. Ripley
+Last edited 2001 April 29 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html

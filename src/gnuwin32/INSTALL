@@ -58,11 +58,9 @@ zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).
 
 The zlib-1.1.3 sources from http://www.info-zip.org/pub/infozip/zlib/
-and mirror.  Unpack this from this directory by unzip zlib113.zip -d
-bitmap/zlib
+and mirror.  Unpack this from this directory by 
 
-libxml2-2.3.1 or later from ftp.xmlsoft.org.  Build libxml.a and
-put it in the current directory.
+unzip zlib113.zip -d bitmap/zlib
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
@@ -81,8 +79,7 @@ appropriate environment variables set.
 Building
 --------
 
-You also need: the R source (R-1.3.0.tgz), and to build the
-installer, unzip541.zip or unzip542.zip from any Info-ZIP mirror.
+You also need the R source (R-1.3.0.tgz).
 
 Then: untar R-1.3.0.tgz somewhere (with no spaces in the path names),
 
@@ -143,53 +140,6 @@ it (perhaps c:/Program Files/Tcl).  Then
 will make the library.
 
 
-Cross-building on ix86 Linux
-============================
-
-You will need i386-mingw32 cross-compilers installed and in your path,
-preferably ones targetted at msvcrt.dll.  There is currently a
-complete set of tools at
-
-    http://www.stats.ox.ac.uk/pub/Rtools/i386-msvc-cross.tar.bz2
-
-(Just unpack this somewhere and put its bin directory in your path.)
-
-Instructions for building a cross-compiler are given at
-
-    http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
-
-At the time of writing these were rather outdated.  There is another set
-at
-
-    http://www.devolution.com/%7Eslouken/SDL/Xmingw32/
-
-which is targetted at msvcrt.dll.  (There is also a cross-compiler
-there, but omitting g77 which you will need.)
-
-Apart from the compiler, you need the mingw32 runtime system and a
-cross-built version of binutils 2.9.4.
-
-You will need Perl, zip and unzip installed.
-
-You also need: the R source (R-1.3.0.tgz), and to build the installer,
-unzip542.zip from any Info-ZIP mirror.
-
-Then: untar R-1.3.0.tgz somewhere, and
-
-	cd /somewhere/R-1.3.0/src/gnuwin32
-
-Edit MkRules to set BUILD=CROSS and the appropriate paths (including
-HEADER) as needed.
-
-Edit Makefile to set the type(s) of help that you want built. (You
-will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
-so set WINHELP to NO.)
-
-Packages can be made in the same way as natively: see the file
-readme.packages.  You will need to set STAMP=NO, e.g.
-
-	make STAMP=NO pkg-foo
-
 
 Building the Manuals
 ====================
@@ -221,10 +171,66 @@ To make HTML versions of the manuals (not the Reference Manual) use
 	cd ../../doc/manual
 	make -f Makefile.win html
 
-This make use of tidy.exe, from http://www.w3c.org/.
+This makes use of tidy.exe, from http://www.w3c.org/.
 
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.
+
+
+Building the installers
+=======================
+
+See installer/INSTALL.  You need a complete R build first, including 
+bitmap and Tcl/Tk support and the manuals.
+
+
+
+Cross-building on ix86 Linux
+============================
+
+You will need i386-mingw32 cross-compilers installed and in your path,
+preferably ones targetted at msvcrt.dll.  There is currently a
+complete set of tools at
+
+    http://www.stats.ox.ac.uk/pub/Rtools/i386-msvc-cross.tar.bz2
+
+(Just unpack this somewhere and put its bin directory in your path.)
+
+Instructions for building a cross-compiler are given at
+
+    http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
+
+At the time of writing these were rather outdated.  There is another set
+at
+
+    http://www.devolution.com/%7Eslouken/SDL/Xmingw32/
+
+(There is also a cross-compiler there, but omitting g77 which you will
+need.)
+
+Apart from the compiler, you need the mingw32 runtime system and a
+cross-built version of binutils 2.9.4.
+
+You will need Perl, zip and unzip installed.
+
+You also need: the R source (R-1.3.0.tgz), and to build the installer,
+unzip542.zip from any Info-ZIP mirror.
+
+Then: untar R-1.3.0.tgz somewhere, and
+
+	cd /somewhere/R-1.3.0/src/gnuwin32
+
+Edit MkRules to set BUILD=CROSS and the appropriate paths (including
+HEADER) as needed.
+
+Edit Makefile to set the type(s) of help that you want built. (You
+will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
+so set WINHELP to NO.)
+
+Packages can be made in the same way as natively: see the file
+readme.packages.  You will need to set STAMP=NO, e.g.
+
+	make STAMP=NO pkg-foo
 
 
 

@@ -235,9 +235,9 @@ you need. There are three possibilities.</p>
 installation.</p>
 
 <p>2) Directory <code>miniR</code> contains <code>miniR.exe</code>
-and several files <code>mini-?.bin</code>. You can put <code>
-miniR.exe</code> and <code>mini-1.bin</code> on one floppy and the
-remaining <code>mini-?.bin</code> on a floppy each.</p>
+and several files <code>miniR-?.bin</code>. You can put <code>
+miniR.exe</code> and <code>miniR-1.bin</code> on one floppy and the
+remaining <code>miniR-?.bin</code> on a floppy each.</p>
 
 <p>3) Via zip files in directory <code>zip</code>. You will need at
 least the files</p>
@@ -250,10 +250,7 @@ least the files</p>
 <p>and you may want <code>rw1030w.zip</code> (the HTML format help
 files), <code>rw1030l.zip</code> (the LaTeX format help files, used
 for offline printing), or <code>rw1030d?.zip</code> (the draft
-manuals, in PDF).</p>
-
-<p>Optionally, you can download the installer, <code>
-rwinst.exe</code>. <a name=
+manuals, in PDF). <a name=
 "How%20do%20I%20install%20R%20for%20Windows%3f"></a></p>
 
 <h2>2.2 How do I install R for Windows?</h2>
@@ -268,10 +265,8 @@ instructions. If you installed R this way you can uninstall it from
 the Control Panel or Start Menu (unless you supressed making a
 group for R).</p>
 
-<p>The next-simplest way is to run the installer (double-click on
-the icon for <code>rwinst.exe</code> and navigate its wizard-like
-pages). Alternatively, choose a location and unzip the zip files
-(with a tool that preserves long file names and the directory
+<p>For a manual installation, choose a location and unzip the zip
+files (with a tool that preserves long file names and the directory
 structure: we recommend the INFO-ZIP project's <code>unzip</code>).
 All the files will unpack into a directory <code>rw1030</code>.</p>
 
@@ -353,9 +348,9 @@ help(fn_name, offline=TRUE)</code>.</li>
 <h2>2.7 Can I use <code>R BATCH</code>?</h2>
 
 <p>Yes, if you have Perl and the files for making source packages
-(from <code>rw1030sp.zip</code>) installed. The Windows analogue is
-<code>Rcmd BATCH</code>: use <code>Rcmd BATCH --help</code> for
-full details.</p>
+(from <code>SetupR.exe</code> or <code>rw1030sp.zip</code>)
+installed. The Windows analogue is <code>Rcmd BATCH</code>: use
+<code>Rcmd BATCH --help</code> for full details.</p>
 
 <p>Otherwise you can set up a batch file using <code>
 Rterm.exe</code>. A sample batch file might contain (as one
@@ -421,10 +416,9 @@ Properties on most versions of Windows). <a name=
 
 <h2>2.11 Does R use the Registry?</h2>
 
-<p>Not itself. The Inno Setup-based installers set some entries to
-allow uninstallation. In addition those installers and (by default,
-but it can be unchecked) <code>rwinst.exe</code> set a Registry key
-<code>LOCAL_MACHINE\Software\R-core\R</code> giving the version and
+<p>Not itself. The installers set some entries to allow
+uninstallation. In addition they set a Registry key <code>
+LOCAL_MACHINE\Software\R-core\R</code> giving the version and
 install path. Again, this is not used by R itself, but it will be
 used by the DCOM interface (<a href=
 "http://cran.r-project.org/other-software.html">http://cran.r-project.org/other-software.html</a>).</p>
@@ -819,9 +813,10 @@ file names to lower case) did not work. <a name=
 <p>We strongly encourage you to do this <em>via</em> building an R
 package: see the <em>Writing R Extensions</em> manual. In any event
 you should install the parts of the R system for building R
-packages in <code>rw1030sp.zip</code>, and get and install the
-tools (including Perl) and compilers mentioned in the file <code>
-readme.packages</code> there. Then you can use</p>
+packages (in <code>SetupR.exe</code> or <code>rw1030sp.zip</code>),
+and get and install the tools (including Perl) and compilers
+mentioned in the file <code>readme.packages</code> contained
+therein. Then you can use</p>
 
 <pre>
 ...\bin\Rcmd SHLIB foo.c bar.c
@@ -1003,7 +998,7 @@ pkgcheck-foo</code>, but you could try getting a modern operating
 system!</p>
 
 <hr width="100%">
-<address>Last edited 2001 April 19 by Professor B. D. Ripley <code>
+<address>Last edited 2001 April 29 by Professor B. D. Ripley <code>
 <a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>

@@ -87,8 +87,8 @@ files you need.  There are three possibilities.
 1) `SetupR.exe', is about 15Mb and gives a complete installation.
 
 2) Directory `miniR' contains `miniR.exe' and several files
-`mini-?.bin'.  You can put  `miniR.exe' and `mini-1.bin' on one floppy
-and the remaining `mini-?.bin' on a floppy each.
+`miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
+floppy and the remaining `miniR-?.bin' on a floppy each.
 
 3) Via zip files in directory `zip'.  You will need at least the files
            rw1030b1.zip rw1030b2.zip
@@ -97,8 +97,6 @@ and the remaining `mini-?.bin' on a floppy each.
 and you may want `rw1030w.zip' (the HTML format help files),
 `rw1030l.zip' (the LaTeX format help files, used for offline printing),
 or `rw1030d?.zip' (the draft manuals, in PDF).
-
-Optionally, you can download the installer, `rwinst.exe'.
 
 2.2 How do I install R for Windows?
 ===================================
@@ -112,11 +110,10 @@ double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you supressed making a group for R).
 
-The next-simplest way is to run the installer (double-click on the icon
-for `rwinst.exe' and navigate its wizard-like pages).  Alternatively,
-choose a location and unzip the zip files (with a tool that preserves
-long file names and the directory structure: we recommend the INFO-ZIP
-project's `unzip'). All the files will unpack into a directory `rw1030'.
+For a manual installation, choose a location and unzip the zip files
+(with a tool that preserves long file names and the directory structure:
+we recommend the INFO-ZIP project's `unzip'). All the files will unpack
+into a directory `rw1030'.
 
 Choose a working directory for R. Unless you used `SetupR.exe' or
 `miniR.exe' (which did this for you by default), make a shortcut to
@@ -184,8 +181,8 @@ It depends what you want to print.
 ========================
 
 Yes, if you have Perl and the files for making source packages (from
-`rw1030sp.zip') installed.  The Windows analogue is `Rcmd BATCH': use
-`Rcmd BATCH --help' for full details.
+`SetupR.exe' or `rw1030sp.zip') installed.  The Windows analogue is
+`Rcmd BATCH': use `Rcmd BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'. A sample batch
 file might contain (as one line)
@@ -239,12 +236,11 @@ name' from the Properties on most versions of Windows).
 2.11 Does R use the Registry?
 =============================
 
-Not itself.  The Inno Setup-based installers set some entries to allow
-uninstallation.  In addition those installers and (by default, but it
-can be unchecked) `rwinst.exe' set a Registry key
-`LOCAL_MACHINE\Software\R-core\R' giving the version and install path.
-Again, this is not used by R itself, but it will be used by the DCOM
-interface (`http://cran.r-project.org/other-software.html').
+Not itself.  The installers set some entries to allow uninstallation.
+In addition they set a Registry key `LOCAL_MACHINE\Software\R-core\R'
+giving the version and install path.  Again, this is not used by R
+itself, but it will be used by the DCOM interface
+(`http://cran.r-project.org/other-software.html').
 
 You can add the Registry entries by running `RSetReg.exe' in the `bin'
 folder, and remove them by running this with argument `/U'.  Note that
@@ -548,9 +544,10 @@ case) did not work.
 
 We strongly encourage you to do this _via_ building an R package: see
 the _Writing R Extensions_ manual.  In any event you should install the
-parts of the R system for building R packages in `rw1030sp.zip', and
-get and install the tools (including Perl) and compilers mentioned in
-the file `readme.packages' there.  Then you can use
+parts of the R system for building R packages (in `SetupR.exe' or
+`rw1030sp.zip'), and get and install the tools (including Perl) and
+compilers mentioned in the file `readme.packages' contained therein.
+Then you can use
      ...\bin\Rcmd SHLIB foo.c bar.c
 
 to make `foo.dll'.  Use `...\bin\Rcmd SHLIB --help' for further
