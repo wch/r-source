@@ -114,7 +114,7 @@ rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
 rstandard.glm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...)
 {
     res <- infl$wt.res # = "dev.res"  really
-    res / (summary(model)$dispersion * sqrt(1 - infl$hat))
+    res / sqrt(summary(model)$dispersion * (1 - infl$hat))
 }
 
 rstudent <- function(model, ...) UseMethod("rstudent")

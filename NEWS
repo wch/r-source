@@ -364,7 +364,8 @@ BUG FIXES
 
     o   Work around a glibc bug to make the %Z format usable in strftime().
 
-
+    o	rstandard() was wrongly scaled for cases where
+	summary(model)$dispersion != 1.
 
 
 	**************************************************
