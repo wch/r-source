@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-33, @value{FAQ-YEAR}-01-21
+@set FAQ-VERSION 1.8-34, @value{FAQ-YEAR}-01-23
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2030,6 +2030,8 @@ Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
 @item ifs
 Iterated Function Systems distribution function estimator.
+@item impute
+Imputation for microarray data (currently KNN only).
 @item ineq
 Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
