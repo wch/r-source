@@ -1,4 +1,5 @@
 export(Hershey, check.options, col2rgb, colors, colours, cm,
+       colorRamp, colorRampPalette, convertColor,
        cm.colors, dev.control, dev.copy, dev.copy2eps, dev.cur,
        dev.interactive, dev.list, dev.next, dev.off, dev.prev,
        dev.print, dev.set, graphics.off, gray, grey, heat.colors, hsv,

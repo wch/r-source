@@ -2,7 +2,7 @@ import(grDevices)
 
 export(abline, arrows, assocplot, axTicks, axis, axis.Date,
        axis.POSIXct, barplot, barplot, box, boxplot, boxplot.stats,
-       bxp, chull, close.screen, co.intervals, colorRamp, colorRampPalette,
+       bxp, chull, close.screen, co.intervals, 
         contour, contourLines, coplot, curve, dotchart, erase.screen,
        filled.contour, fourfoldplot, frame, grid, hist, hist.default, 
        identify, image, layout, layout.show, lcm, legend, lines, lines.default,

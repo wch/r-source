@@ -112,6 +112,8 @@ NEW FEATURES
 
     o	as.dist() and cophenetic() are now generic.
 
+    o   convertColors() maps between color spaces. colorRamp uses it.
+
 
 UTILITIES
 
