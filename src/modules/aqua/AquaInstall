@@ -18,14 +18,15 @@ cp -R src/modules/aqua/Contents/Resources /Applications/RAqua.app/R.bin.app/Cont
 cp src/modules/aqua/Contents/PkgInfo /Applications/RAqua.app/R.bin.app/Contents
 cp src/modules/aqua/Contents/Info.plist /Applications/RAqua.app/R.bin.app/Contents
 
+mkdir /Applications/RAqua.app/Contents
 mkdir /Applications/RAqua.app/Contents/Resources
 cp src/modules/aqua/RAqua/Contents/Resources/RAqua.icns /Applications/RAqua.app/Contents/Resources/
-cp src/modules/aqua/RAqua/Contents/PkgInfo /Applications/RAqua.app/Contents
-cp src/modules/aqua/RAqua/Contents/Info.plist /Applications/RAqua.app/Contents
+cp src/modules/aqua/RAqua/Contents/PkgInfo /Applications/RAqua.app/Contents/
+cp src/modules/aqua/RAqua/Contents/Info.plist /Applications/RAqua.app/Contents/
 gcc src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c 
 mkdir /Applications/RAqua.app/Contents/MacOS
 mv a.out /Applications/RAqua.app/Contents/MacOS/RAqua
 
 
 echo "Note: execute this script one time only!"
-echo "type >>  /Applications/RAqua.app/Contents/MacOS/RAqua << to run R"
+
