@@ -31,7 +31,7 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
         function(x = 0.5, y = 0.5, txt, cex, font)
             text(x, y, txt, cex = cex, font = font)
 
-    localAxis <- function(side, xpd, ...) axis(side, xpd = NA, ...)
+    localAxis <- function(side, xpd, bg, ...) axis(side, xpd = NA, ...)
 
     if (!is.matrix(x)) x <- data.matrix(x)
     if (!is.numeric(x)) stop("non-numeric argument to pairs")
