@@ -45,9 +45,9 @@ USER-VISIBLE CHANGES
 	command-line versions of R (Unix and Windows).
 
     o	The default random number generators have been changed to
-	Mersenne-Twister and Inversion.	 A new RNGversion() function
-	allows you to restore the generators of an earlier R version
-	if reproducibility is required.
+	`Mersenne-Twister' and `Inversion'.  A new RNGversion()
+	function allows you to restore the generators of an earlier R
+	version if reproducibility is required.
 
     o	Namespaces can now be defined for packages other than `base':
 	see `Writing R Extensions'.  This hides some internal objects
@@ -449,7 +449,6 @@ C-LEVEL FACILITIES
     o	A full double-precision LAPACK shared library is made
 	available as -lRlapack.	 To use this include
 	$(LAPACK_LIBS) $(BLAS_LIBS) in PKG_LIBS.
-	[Not currently operational on MacOS X unless vecLib is used.]
 
     o	Header file R_ext/Lapack.h added.  C declarations of BLAS
 	routines moved to R_ext/BLAS.h and included in R_ext/Applic.h
@@ -458,12 +457,12 @@ C-LEVEL FACILITIES
     o	R will automatically call initialization and unload routines, if
 	present, in shared libraries/DLLs during dyn.load() and
 	dyn.unload() calls. The routines are named R_init_<dll name>
-	and R_unload_<dll name>, respectively.	See Writing R
+	and R_unload_<dll name>, respectively.	See the Writing R
 	Extensions Manual for more information.
 
     o	Routines exported directly from the R executable for use with
 	.C(), .Call(), .Fortran() and .External() are now accessed via
-	the registration mechanism (optionally) used by packages. The
+	the registration mechanism (optionally) used by packages.  The
 	ROUTINES file (in src/appl/) and associated scripts to
 	generate FFTab.h and FFDecl.h are no longer used.
 
@@ -601,7 +600,7 @@ BUG FIXES
     o	unique(ordered factor) returned an unordered factor. (PR#2591)
 
     o	x[] <- value coerced x to the mode of value if and only if x
-	had length 0! (Should only happen if x is null: PR#2590)
+	had length 0!  (Should only happen if x is null: PR#2590)
 
     o	lm() mislabelled the cols of the qr decomposition. (cause of PR#2586)
 
