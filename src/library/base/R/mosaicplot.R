@@ -4,8 +4,8 @@ mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 
 ### Changes by MM:
 ## - NULL instead of NA for default arguments, etc  [R / S convention]
-## - plotting at end; cosmetic
-## - mosaic.cell():
+## - plotting at end; cosmetic; warn about unused ... since we really don't..
+## - mosaic.cell():  ...(?)
 ### Changes by KH:
 ##   Shading of boxes to visualize deviations from independence by
 ##   displaying sign and magnitude of the standardized residuals.
@@ -50,16 +50,16 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
                      y= 965 + 22 * (lablevx - 1),
                      srt=0, adj=.5, cex=.66, this.lab)
             }
-            if (p > 2) {          # recursive call.
+            if (p > 2) {                # recursive call.
                 for (i in 1:xdim) {
                     if (XP[i] > 0) {
-                        Recall(as.matrix(X[X[,1]==i, 2:(p+2)]),
-                               x.l[i], y1, x.r[i], y2,
-                               off[2:length(off)],
-                               dir[2:length(dir)],
-                               color, lablevx-1, (i==1)*lablevy,
-                               maxdim[2:length(maxdim)],
-                               currlev+1, label[2:p])
+                        mosaic.cell(X[X[,1]==i, 2:(p+2) , drop=FALSE],
+                                    x.l[i], y1, x.r[i], y2,
+                                    off[2:length(off)],
+                                    dir[2:length(dir)],
+                                    color, lablevx-1, (i==1)*lablevy,
+                                    maxdim[2:length(maxdim)],
+                                    currlev+1, label[2:p])
                     } else {
                         segments(rep(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
                                  rep(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
@@ -71,9 +71,7 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
                         polygon(c(x.l[i], x.r[i], x.r[i], x.l[i]),
                                 c(y1, y1, y2, y2),
                                 lty = if(shade) X[i, p+1] else 1,
-                                col = if(shade) {
-                                    color[X[i, p+2]]
-                                } else color[i])
+                                col = color[if(shade) X[i, p+2] else i])
                         ## <KH 2000-08-29>
                         ## Is this really needed?
                         ## segments(c(rep(x.l[i],3),x.r[i]),
@@ -114,30 +112,28 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
                      y= y.b + (y.t - y.b) / 2,
                      srt=90, adj=.5, cex=.66, this.lab)
             }
-            if (p > 2) {          # recursive call.
+            if (p > 2) {                # recursive call.
                 for (j in 1:ydim) {
                     if (YP[j] > 0) {
-                        Recall(as.matrix(X[X[,1]==j,2:(p+2)]),
-                               x1, y.b[j], x2, y.t[j],
-                               off[2:length(off)],
-                               dir[2:length(dir)], color,
-                               (j==1)*lablevx, lablevy-1,
-                               maxdim[2:length(maxdim)],
-                               currlev+1, label[2:p])
+                        mosaic.cell(X[X[,1]==j, 2:(p+2) , drop=FALSE],
+                                    x1, y.b[j], x2, y.t[j],
+                                    off[2:length(off)],
+                                    dir[2:length(dir)], color,
+                                    (j==1)*lablevx, lablevy-1,
+                                    maxdim[2:length(maxdim)],
+                                    currlev+1, label[2:p])
                     } else {
                         segments(x1+(x2-x1)*c(0,2,4)/5, rep(y.b[j],3),
                                  x1+(x2-x1)*c(1,3,5)/5, rep(y.b[j],3))
                     }
                 }
-            } else {  # ncol(X) <= 1: final split polygon and segments.
+            } else { # ncol(X) <= 1: final split polygon and segments.
                 for (j in 1:ydim) {
                     if (YP[j] > 0) {
                         polygon(c(x1,x2,x2,x1),
                                 c(y.b[j],y.b[j],y.t[j],y.t[j]),
                                 lty = if(shade) X[j, p+1] else 1,
-                                col = if(shade) {
-                                    color[X[j, p+2]]
-                                } else color[j])
+                                col = color[if(shade) X[j, p+2] else j])
                         ## <KH 2000-08-29>
                         ## Is this really needed?
                         ## segments(c(x1,x1,x1,x2),
@@ -162,6 +158,8 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
     dimd <- length(dx <- dim(x))
     if(dimd == 0 || any(dx == 0))
         stop("`x' must not have 0 dimensionality")
+    if(length(list(...)))
+        warning("extra argument(s) `", names(list(...)), "'  disregarded..")
     ##-- Set up `Ind' matrix : to contain indices and data
     Ind <- 1:dx[1]
     if(dimd > 1) {
@@ -271,7 +269,7 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
         rtxtCex <- min(1,
                        pin[1] / (strheight(rtxt, units = "inches") * 12),
                        pin[2] / (strwidth (rtxt, units = "inches") / 4))
-        rtxtWidth <- 0.1                # unconditionally ...
+        rtxtWidth <- 0.1                # unconditionally ..
         ## We put the legend to the right of the third axis.
         opar <- par(usr = c(1, 1000 * (1.1 + rtxtWidth), 1, 1000),
                     mgp = c(1, 1, 0))
