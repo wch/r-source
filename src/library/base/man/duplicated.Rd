@@ -4,7 +4,6 @@
 \alias{duplicated.data.frame}
 \alias{duplicated.matrix}
 \alias{duplicated.array}
-\alias{duplicated.list}
 \title{Determine Duplicate Elements}
 \description{
   Determines which elements of a vector of data frame are duplicates
@@ -41,8 +40,9 @@ duplicated(x, incomparables = FALSE, \dots)
   (with \code{MARGIN = 2}).
 }
 \section{Warning}{
-  The \code{list} method is potentially slow (\eqn{O(n^2} for \eqn{n}
-  distinct elements) in the current implementation.
+  Using this for lists is potentially slow, especially if the elements
+  are not atomic vectors or differ only in their attributes.
+  In the worst case it is \eqn{O(n^2)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

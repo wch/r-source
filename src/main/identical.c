@@ -24,7 +24,7 @@
 
 /* Implementation of identical(x, y) */
 
-static Rboolean compute_identical(SEXP x, SEXP y);
+Rboolean compute_identical(SEXP x, SEXP y);
 static Rboolean neWithNaN(double x,  double y);
 
 SEXP do_identical(SEXP x, SEXP y)
@@ -46,7 +46,7 @@ SEXP do_ident(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* do the two objects compute as identical? */
-static Rboolean compute_identical(SEXP x, SEXP y)
+Rboolean compute_identical(SEXP x, SEXP y)
 {
 
     if(x == y)
@@ -176,26 +176,4 @@ static Rboolean neWithNaN(double x,  double y)
     if(ISNAN(x))
 	return(ISNAN(y) ? FALSE : TRUE);
     return(x != y);
-}
-
-SEXP duplicated_list(SEXP x)
-{
-    SEXP ans, this;
-    int i, j, n = LENGTH(x);
-
-    PROTECT(ans = allocVector(LGLSXP, n));
-    LOGICAL(ans)[0] = 0;
-    for(i = 1; i < n; i++) {
-	this = VECTOR_ELT(x, i);
-	for(j = 0; j < i; j++) {
-	    if(LOGICAL(ans)[j]) continue;
-	    if(compute_identical(VECTOR_ELT(x, j), this)) {
-		LOGICAL(ans)[i] = 1;
-		break;
-	    }
-	    LOGICAL(ans)[i] = 0;
-	}
-    }
-    UNPROTECT(1);
-    return ans;
 }

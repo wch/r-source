@@ -42,12 +42,17 @@ struct _HashData {
 };
 
 
-/* Integer keys are hashed via a random number generator */
-/* based on Knuth's recommendations.  The high order K bits */
-/* are used as the hash code. */
+/* 
+   Integer keys are hashed via a random number generator
+   based on Knuth's recommendations.  The high order K bits
+   are used as the hash code.
+   
+   NB: lots of this code relies on M being a power of two and
+   on silent integer overflow.
 
-/* WARNING / FIXME : this doesn't work if K = 0 so some */
-/* fixes/warnings probably need to be installed somewhere. (RG) */
+   <FIXME>  Integer keys are wasteful for logical and raw vectors, 
+   but the tables are small in that case.
+*/
 
 static int scatter(unsigned int key, HashData *d)
 {
@@ -165,7 +170,7 @@ static int sequal(SEXP x, int i, SEXP y, int j)
 
 static int rawhash(SEXP x, int indx, HashData *d)
 {
-    return scatter((unsigned int) (RAW(x)[indx]), d);
+    return RAW(x)[indx];
 }
 
 static int rawequal(SEXP x, int i, SEXP y, int j)
@@ -173,13 +178,85 @@ static int rawequal(SEXP x, int i, SEXP y, int j)
     return (RAW(x)[i] == RAW(y)[j]);
 }
 
-/* Choose M to be the smallest power of 2 */
-/* not less than 4*n and set K = log2(M) */
+static int vhash(SEXP x, int indx, HashData *d)
+{
+    int i;
+    unsigned int key;
+    SEXP this = VECTOR_ELT(x, indx);
+    
+    key = OBJECT(this) + 2*TYPEOF(this) + 100*length(this);
+    /* maybe we should also look at attributes, but that slows us down */
+    switch (TYPEOF(this)) {
+    case LGLSXP:
+	/* This is not too clever: pack into 32-bits and then scatter? */
+	for(i = 0; i < LENGTH(this); i++) {
+	    key ^= lhash(this, i, d);
+	    key *= 97;
+	}
+	break;
+    case INTSXP:
+	for(i = 0; i < LENGTH(this); i++) {
+	    key ^= ihash(this, i, d);
+	    key *= 97;
+	}
+	break;
+    case REALSXP:
+	for(i = 0; i < LENGTH(this); i++) {
+	    key ^= rhash(this, i, d);
+	    key *= 97;
+	}
+	break;
+    case CPLXSXP:
+	for(i = 0; i < LENGTH(this); i++) {
+	    key ^= chash(this, i, d);
+	    key *= 97;
+	}
+	break;
+    case STRSXP:
+	for(i = 0; i < LENGTH(this); i++) {
+	    key ^= shash(this, i, d);
+	    key *= 97;
+	}
+	break;
+    case RAWSXP:
+	for(i = 0; i < LENGTH(this); i++) {
+	    key ^= scatter(rawhash(this, i, d), d);
+	    key *= 97;
+	}
+	break;
+    case VECSXP:
+	for(i = 0; i < LENGTH(this); i++) {
+	    key ^= vhash(this, i, d);
+	    key *= 97;
+	}
+	break;
+    default:
+	break;
+    }
+    return scatter(key, d);
+}
+
+Rboolean compute_identical(SEXP x, SEXP y); /* from identical.c */
+
+static int vequal(SEXP x, int i, SEXP y, int j)
+{
+    return compute_identical(VECTOR_ELT(x, i), VECTOR_ELT(y, j));
+}
+
+/*
+  Choose M to be the smallest power of 2
+  not less than 2*n and set K = log2(M).
+  Need K >= 1 and hence M >= 2.
+
+  Dec 2004: modified from 4*n to 2*n, since in the worst case we have
+  a 50% full table, and that is still rather efficient -- see
+  R. Sedgewick (1998) Algorithms in C++ 3rd edition p.606.
+*/
 static void MKsetup(int n, HashData *d)
 {
-    int n4 = 4 * n;
-    d->M = 1;
-    d->K = 0;
+    int n4 = 2 * n;
+    d->M = 2;
+    d->K = 1;
     while (d->M < n4) {
 	d->M *= 2;
 	d->K += 1;
@@ -217,7 +294,13 @@ static void HashTableSetup(SEXP x, HashData *d)
     case RAWSXP:
 	d->hash = rawhash;
 	d->equal = rawequal;
-	MKsetup(256, d);
+	d->M = 256;
+	d->K = 8; /* unused */
+	break;
+    case VECSXP:
+	d->hash = vhash;
+	d->equal = vequal;
+	MKsetup(LENGTH(x), d);
 	break;
     default:
 	UNIMPLEMENTED_TYPE("HashTableSetup", x);
@@ -268,8 +351,6 @@ SEXP duplicated(SEXP x)
     return ans;
 }
 
-SEXP duplicated_list(SEXP x);  /* in identical.c */
-
 /* .Internal(duplicated(x))       [op=0]
    .Internal(unique(x))	          [op=1]
    .Internal(duplicated.list(x)) [op=2]
@@ -285,11 +366,9 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((n = length(x)) == 0)
 	return(allocVector(PRIMVAL(op) != 1 ? LGLSXP : TYPEOF(x), 0));
 
-    if (PRIMVAL(op) == 2) return duplicated_list(x);
-
-    if (!(isVectorAtomic(x))) {
+    if (!isVector(x)) {
 	PrintValue(x);
-	error("%s() applies only to atomic vectors",
+	error("%s() applies only to vectors",
 	      (PRIMVAL(op) == 0 ? "duplicated" : "unique"));
     }
 

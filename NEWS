@@ -168,8 +168,10 @@ NEW FEATURES
     o	New function encodeString() to encode character strings in the
 	same way that printing does.
 
-    o	duplicated() and unique() now have methods for "list" objects,
-	albeit naive ones that are potentially slow for large lists.
+    o	duplicated() and unique() now accept "list" objects, but are
+	fast only for simple list objects.
+
+    o	Hashing has been tweaked to use half as much memory as before.
 
 
 UTILITIES
