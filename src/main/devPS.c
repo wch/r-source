@@ -473,23 +473,10 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     fprintf(fp, "/p1  { stroke } def\n");
     fprintf(fp, "/p2  { bg setrgbcolor fill fg setrgbcolor } def\n");
     fprintf(fp, "/p3  { gsave bg setrgbcolor fill grestore stroke } def\n");
-#ifdef OLD
-    fprintf(fp, "/t   { 6 -2 roll moveto gsave 3 index true\n");
-    fprintf(fp, "	charpath flattenpath pathbbox grestore gsave\n");
-    fprintf(fp, "	5 -1 roll rotate 6 -1 roll neg 3 -1 roll 5 -1\n");
-    fprintf(fp, "	roll sub mul 4 -1 roll neg 3 -1 roll 4 -1 roll\n");
-    fprintf(fp, "	sub mul rmoveto show grestore } def\n");
-#else
     fprintf(fp, "/t   { 6 -2 roll moveto gsave rotate\n");
     fprintf(fp, "       ps mul neg 0 2 1 roll rmoveto\n");
     fprintf(fp, "       1 index stringwidth pop\n");
     fprintf(fp, "       mul neg 0 rmoveto show grestore } def\n");
-#endif
-#ifdef OLD
-    fprintf(fp, "/cl  { initclip newpath 3 index 3 index moveto 1 index\n");
-    fprintf(fp, "	4 -1 roll lineto  exch 1 index lineto lineto\n");
-    fprintf(fp, "	closepath clip newpath } def\n");
-#endif
     fprintf(fp, "/rgb { setrgbcolor } def\n");
     fprintf(fp, "/s   { scalefont setfont } def\n");
     fprintf(fp, "/R   { /Font1 findfont } def\n");
@@ -524,12 +511,6 @@ void PostScriptEndPage(FILE *fp)
 void PostScriptSetLineWidth(FILE *fp, double linewidth)
 {
     fprintf(fp, "%.2f setlinewidth\n", linewidth);
-}
-
-void PostScriptSetClipRect(FILE *fp,
-			   double x0, double x1, double y0, double y1)
-{
-    fprintf(fp, "%.2f %.2f %.2f %.2f cl\n", x0, y0, x1, y1);
 }
 
 void PostScriptSetFont(FILE *fp, int typeface, double size)
@@ -838,11 +819,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     dd->dp.canChangeFont = 1;
     dd->dp.canRotateText = 1;
     dd->dp.canResizeText = 1;
-#ifdef OLD
-    dd->dp.canClip = 1;
-#else
     dd->dp.canClip = 0;
-#endif
 
     /*	Start the driver */
 
@@ -994,8 +971,6 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 
 static void PS_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
-    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
-    PostScriptSetClipRect(pd->psfp, x0, x1, y0, y1);
 }
 
 
