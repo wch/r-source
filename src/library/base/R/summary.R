@@ -1,6 +1,7 @@
 summary <- function (object, ...) UseMethod("summary")
 
-summary.default <- function(object, ..., digits = max(3, getOption("digits") - 3))
+summary.default <-
+    function(object, ..., digits = max(3, getOption("digits") - 3))
 {
     if(is.factor(object))
 	return(summary.factor(object, ...))
@@ -29,7 +30,6 @@ summary.default <- function(object, ..., digits = max(3, getOption("digits") - 3
 	    sumry[i, 3] <- mode(ii)
 	}
 	sumry[, 1] <- format(as.integer(ll))
-	class(sumry) <- "table"
 	sumry
     }
     else c(Length= length(object), Class= class(object), Mode= mode(object))
@@ -53,9 +53,11 @@ summary.factor <- function(object, maxsum = 100, ...)
     if(any(nas)) c(tt, "NA's" = sum(nas)) else tt
 }
 
-summary.matrix <- function(object, ...) summary.data.frame(data.frame(object))
+summary.matrix <- function(object, ...)
+    summary.data.frame(data.frame(object), ...)
 
-summary.data.frame <- function(object, maxsum = 7, ...)
+summary.data.frame <-
+    function(object, maxsum = 7, digits = getOption("digits"), ...)
 {
     z <- lapply(as.list(object), summary, maxsum = maxsum)
     nv <- length(object)
@@ -65,7 +67,7 @@ summary.data.frame <- function(object, maxsum = 7, ...)
     for(i in 1:nv) {
 	sms <- z[[i]]
 	lbs <- format(names(sms))
-	sms <- paste(lbs, ":", format(sms), "  ", sep = "")
+	sms <- paste(lbs, ":", format(sms, digits = digits), "  ", sep = "")
 	lw[i] <- nchar(lbs[1])
 	length(sms) <- nr
 	z[[i]] <- sms

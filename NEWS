@@ -105,7 +105,9 @@ BUG FIXES
 
     o	Error messages of e.g. do.call() are now spaced properly.
 
-    o   scan() recognises quoted strings by default again. The default 
+    o	summary(.matrix | .data.frame) now respects a `digits' argument.
+
+    o   scan() recognises quoted strings by default again. The default
 	for the quote= argument got set wrongly when it was introduced.
 
     o	kmeans was failing on vector inputs (although not documented
