@@ -45,7 +45,8 @@ R-DLLFLAGS = -mwindows
 else
 R-DLLFLAGS = -mwindows
 endif
-R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
+## only need -lmsvcp60 if we use SUPPORT_UTF8
+R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \

@@ -237,10 +237,10 @@
 /* #undef HAVE_MATHERR */
 
 /* Define to 1 if you have the `mbrtowc' function. */
-/* #undef HAVE_MBRTOWC */
+#define HAVE_MBRTOWC 1
 
 /* Define to 1 if you have the `mbsrtowcs' function. */
-/* #undef HAVE_MBSRTOWCS */
+#define HAVE_MBSRTOWCS 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
@@ -404,13 +404,13 @@
 #define HAVE_WORKING_CALLOC 1
 
 /* Define to 1 if you have the `wcrtomb' function. */
-/* #undef HAVE_WCRTOMB */
+#define HAVE_WCRTOMB 1
 
 /* Define to 1 if you have the `wcscoll' function. */
 #define HAVE_WCSCOLL 1
 
 /* Define to 1 if you have the `wcsrtombs' function. */
-/* #undef HAVE_WCSRTOMBS */
+#define HAVE_WCSRTOMBS 1
 
 /* Define to 1 if you have the `wcswidth' function. */
 /* #undef HAVE_WCSWIDTH */
@@ -527,6 +527,9 @@
 
 /* Define if you provide support for the libxml ftp/http functions. */
 #define SUPPORT_LIBXML 1
+
+/* Define this to enable support for UTF-8 locales. */
+/* #undef SUPPORT_UTF8 */
 
 /* Define if your system is SunOS4, which is famous for broken header files.
    */
