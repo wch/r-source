@@ -51,5 +51,14 @@ rbinom(n, size, prob)
 \examples{
 # Compute P(45 < X < 55) for X Binomial(100,0.5)
 sum(dbinom(46:54, 100, 0.5))
+
+## Using "log = TRUE" for an extended range :
+n <- 2000
+plot (0:n,     dbinom(0:n, n, pi/10, log=TRUE), type='l',
+      main = "dbinom(*, log=TRUE) is better than  log(dbinom(*))")
+lines(0:n, log(dbinom(0:n, n, pi/10)), col='red', lwd=2)
+mtext("dbinom(k, log=TRUE)", adj=0)
+mtext("extended range", adj=0, line = -1, font=4)
+mtext("log(dbinom(k))", col="red", adj=1)
 }
 \keyword{distribution}
