@@ -97,6 +97,11 @@ NEW FEATURES
     o	Under Unix, the default editor is obtained from the environment
 	variables EDITOR or VISUAL if either is set.
 
+    o	New command line option `--gui' to specify the graphical user
+	interface under Unix.  Currently, possible values are `X11' (the
+	(default) and `GNOME', provided that GNOME support is available.
+	Command line options \`-g' and `--gnome' are defunct.
+
 
 BUG FIXES
 
