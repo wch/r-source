@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-04-03)
+Version 1.5.0 Under development (unstable) (2002-04-04)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -111,9 +111,9 @@ $B$subset
 > summary(attenu)
      event            mag           station         dist       
  Min.   : 1.00   Min.   :5.000   117    :  5   Min.   :  0.50  
- 1st Qu.: 9.00   1st Qu.:5.300   113    :  4   1st Qu.: 11.32  
- Median :18.00   Median :6.100   1028   :  4   Median : 23.40  
- Mean   :14.74   Mean   :6.084   475    :  3   Mean   : 45.60  
+ 1st Qu.: 9.00   1st Qu.:5.300   1028   :  4   1st Qu.: 11.32  
+ Median :18.00   Median :6.100   113    :  4   Median : 23.40  
+ Mean   :14.74   Mean   :6.084   112    :  3   Mean   : 45.60  
  3rd Qu.:20.00   3rd Qu.:6.600   135    :  3   3rd Qu.: 47.55  
  Max.   :23.00   Max.   :7.700   (Other):147   Max.   :370.00  
                                  NA's   : 16                   
@@ -128,9 +128,9 @@ $B$subset
 > summary(attenu, digits = 5)
      event             mag            station         dist        
  Min.   : 1.000   Min.   :5.0000   117    :  5   Min.   :  0.500  
- 1st Qu.: 9.000   1st Qu.:5.3000   113    :  4   1st Qu.: 11.325  
- Median :18.000   Median :6.1000   1028   :  4   Median : 23.400  
- Mean   :14.742   Mean   :6.0841   475    :  3   Mean   : 45.603  
+ 1st Qu.: 9.000   1st Qu.:5.3000   1028   :  4   1st Qu.: 11.325  
+ Median :18.000   Median :6.1000   113    :  4   Median : 23.400  
+ Mean   :14.742   Mean   :6.0841   112    :  3   Mean   : 45.603  
  3rd Qu.:20.000   3rd Qu.:6.6000   135    :  3   3rd Qu.: 47.550  
  Max.   :23.000   Max.   :7.7000   (Other):147   Max.   :370.000  
                                    NA's   : 16                    
