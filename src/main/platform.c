@@ -367,7 +367,8 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	closedir(dir);
     }
 #ifdef HAVE_REGCOMP
-    regfree(&reg);
+    if (pattern)
+	regfree(&reg);
 #endif
     ssort(STRING(ans), count);
     UNPROTECT(1);
