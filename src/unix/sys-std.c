@@ -88,10 +88,69 @@ void Rstd_Suicide(char *s)
 	 * considerably more complex.
 	 */
 
-
 #define __SYSTEM__
 #include <R_ext/eventloop.h>
 #undef __SYSTEM__
+
+/*
+  The following provides a version of select() that catches interrupts
+  and handles them using the supplied interrupt handler or the default
+  one if NULL is supplied.  The interrupt handler must exit using a
+  longjmp.  If the supplied timout value os zero, select is called
+  without setting up an error handler since it should return
+  immediately.
+ */
+
+static SIGJMP_BUF seljmpbuf;
+
+static RETSIGTYPE (*oldSigintHandler)(int) = SIG_DFL;
+
+typedef void (*sel_intr_handler_t)(void);
+
+static RETSIGTYPE handleSelectInterrupt(int dummy)
+{
+    signal(SIGINT, oldSigintHandler);
+    SIGLONGJMP(seljmpbuf, 1);
+}
+
+int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
+	       fd_set *exceptfds, struct timeval *timeout,
+	       void (*intr)(void))
+{
+    if (timeout != NULL && timeout->tv_sec == 0 && timeout->tv_usec == 0)
+	return select(n, readfds, writefds, exceptfds, timeout);
+    else {
+	volatile sel_intr_handler_t myintr = intr != NULL ? intr : onintr;
+	if (SIGSETJMP(seljmpbuf, 1)) {
+	    R_interrupts_pending = 0;
+	    myintr();
+	    error("interrupt handler must not return");
+	    return 0; /* not reached */
+	}
+	else {
+	    int val;
+
+	    /* install a temporary signal handler for breaking out of
+	       a blocking select */
+	    oldSigintHandler = signal(SIGINT, handleSelectInterrupt);
+
+	    /* once the new sinal handler is in place we need to check
+	       for abd handle any pending interrupt registered by the
+	       standard handler. */
+	    if (R_interrupts_pending) {
+		R_interrupts_pending = 0;
+		intr();
+	    }
+
+	    /* now do the (possibly blocking) select, restore the
+	       signal handler, and return the result of the select. */
+	    val = select(n, readfds, writefds, exceptfds, timeout);
+	    signal(SIGINT, oldSigintHandler);
+	    return val;
+	}
+    }
+}
+
 
 /*
    This object is used for the standard input and its file descriptor
@@ -233,7 +292,7 @@ int R_wait_usec = 0; /* 0 means no timeout */
 static int setSelectMask(InputHandler *, fd_set *);
 
 
-fd_set *R_checkActivity(int usec, int ignore_stdin)
+fd_set *R_checkActivityEx(int usec, int ignore_stdin, void (*intr)(void))
 {
     int maxfd;
     struct timeval tv;
@@ -245,11 +304,16 @@ fd_set *R_checkActivity(int usec, int ignore_stdin)
     maxfd = setSelectMask(R_InputHandlers, &readMask);
     if (ignore_stdin)
 	FD_CLR(fileno(stdin), &readMask);
-    if (select(maxfd+1, &readMask, NULL, NULL,
-		     (usec >= 0) ? &tv : NULL))
+    if (R_SelectEx(maxfd+1, &readMask, NULL, NULL,
+		   (usec >= 0) ? &tv : NULL, intr))
 	return(&readMask);
     else
 	return(NULL);
+}
+
+fd_set *R_checkActivity(int usec, int ignore_stdin)
+{
+    return R_checkActivityEx(usec, ignore_stdin, NULL);
 }
 
 /*
@@ -455,28 +519,11 @@ static void readline_handler(char *line)
  the host application will probably not let things get that far and trap the
  signals itself.
 */
-
-/* The SIGINT handler does a siglongjmp, if available, to a sigsetjmp
-   that restored the the signal mask, regardless of how the SIGJMP
-   macro is defined.
-
-   This code outgh to restore the old signal handler. */
-
-#ifdef HAVE_POSIX_SETJMP
-static sigjmp_buf rljmpbuf;
-#else
-static jmp_buf rljmpbuf;
-#endif
-
-static void handleInterrupt(int dummy)
+static void
+handleInterrupt(void)
 {
-    if (! R_interrupts_suspended) { /**** had better not be true */
-#ifdef HAVE_POSIX_SETJMP
-	siglongjmp(rljmpbuf, 1);
-#else
-        longjmp(rljmpbuf, 1);
-#endif
-    }
+    popReadline();
+    onintr();
 }
 
 #endif /* HAVE_LIBREADLINE */
@@ -519,17 +566,6 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	    rl_data.prev = rl_top;
 	    rl_top = &rl_data;
 	    pushReadline(prompt, readline_handler);
-	    signal(SIGINT, handleInterrupt);
-	    if (
-#ifdef HAVE_POSIX_SETJMP
-		sigsetjmp(rljmpbuf, 1)
-#else
-		setjmp(rljmpbuf)
-#endif
-		) {
-		popReadline();
-		onintr();
-	    }
 	}
 	else
 #endif /* HAVE_LIBREADLINE */
@@ -544,7 +580,8 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	for (;;) {
 	    fd_set *what;
 
-	    what = R_checkActivity(R_wait_usec ? R_wait_usec : -1, 0);
+	    what = R_checkActivityEx(R_wait_usec ? R_wait_usec : -1, 0,
+				     handleInterrupt);
 	    /* This is slightly clumsy. We have advertised the
 	     * convention that R_wait_usec == 0 means "wait forever",
 	     * but we also need to enable R_checkActivity to return

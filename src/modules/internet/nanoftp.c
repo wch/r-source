@@ -40,6 +40,7 @@
 #include <winsock.h>
 #define _WINSOCKAPI_
 extern void R_ProcessEvents(void);
+#define R_SelectEx(n,rfd,wrd,efd,tv,ih) select(n,rfd,wrd,efd,tv)
 #endif
 
 #ifdef HAVE_STRINGS_H
@@ -666,7 +667,7 @@ RxmlNanoFTPCheckResponse(void *ctx) {
     FD_ZERO(&rfd);
     FD_SET(ctxt->controlFd, &rfd);
     /* no-block select call */
-    switch(select(ctxt->controlFd + 1, &rfd, NULL, NULL, &tv)) {
+    switch(R_SelectEx(ctxt->controlFd + 1, &rfd, NULL, NULL, &tv, NULL)) {
 	case 0:
 	    return(0);
 	case -1:
@@ -1344,7 +1345,7 @@ RxmlNanoFTPRead(void *ctx, void *dest, int len)
 	FD_SET(ctxt->dataFd, &rfd);
 	if(maxfd < ctxt->dataFd) maxfd = ctxt->dataFd;
 
-	res = select(maxfd + 1, &rfd, NULL, NULL, &tv);
+	res = R_SelectEx(maxfd + 1, &rfd, NULL, NULL, &tv, NULL);
 
 	if (res < 0) { /* socket error */
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;

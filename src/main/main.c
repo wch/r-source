@@ -370,10 +370,8 @@ FILE* R_OpenInitFile(void);
 
 static void handleInterrupt(int dummy)
 {
-    if (R_interrupts_suspended)
-	R_interrupts_pending = 0;
-    else 
-	onintr();
+    R_interrupts_pending = 1;
+    signal(SIGINT, handleInterrupt);
 }
 
 static void R_LoadProfile(FILE *fparg, SEXP env)
@@ -732,7 +730,7 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	R_GlobalContext = &thiscontext;
 	signal(SIGINT, handleInterrupt);
 	R_BrowseLevel = savebrowselevel;
-    signal(SIGINT, handleInterrupt);
+	signal(SIGINT, handleInterrupt);
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
 	endcontext(&thiscontext);
     }

@@ -47,6 +47,7 @@
 #define _WINSOCKAPI_
 extern void R_ProcessEvents(void);
 extern void R_FlushConsole(void);
+#define R_SelectEx(n,rfd,wrd,efd,tv,ih) select(n,rfd,wrd,efd,tv)
 #endif
 
 #include <R_ext/R-ftp-http.h>
@@ -597,7 +598,7 @@ RxmlNanoHTTPRecv(RxmlNanoHTTPCtxtPtr ctxt)
 	    FD_SET(ctxt->fd, &rfd);
 	    if(maxfd < ctxt->fd) maxfd = ctxt->fd;
 
-	    howmany = select(maxfd+1, &rfd, NULL, NULL, &tv);
+	    howmany = R_SelectEx(maxfd+1, &rfd, NULL, NULL, &tv, NULL);
 
 	    if (howmany < 0) {
 #ifdef DEBUG_HTTP
@@ -886,7 +887,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 	FD_SET(s, &wfd);
 	if(maxfd < s) maxfd = s;
 
-	switch(select(maxfd+1, &rfd, &wfd, NULL, &tv))
+	switch(R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL))
 	{
 	case 0:
 	    /* Time out */

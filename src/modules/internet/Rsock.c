@@ -26,6 +26,7 @@
 
 #ifdef Win32
 extern void R_ProcessEvents(void);
+#define R_SelectEx(n,rfd,wrd,efd,tv,ih) select(n,rfd,wrd,efd,tv)
 #endif
 
 #ifdef HAVE_STRINGS_H
@@ -235,7 +236,7 @@ static int R_SocketWait(int sockfd, int write)
 	if(write) FD_SET(sockfd, &wfd); else FD_SET(sockfd, &rfd);
 	if(maxfd < sockfd) maxfd = sockfd;
 
-	howmany = select(maxfd+1, &rfd, &wfd, NULL, &tv);
+	howmany = R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL);
 
 	if (howmany < 0) {
 	    return -1;
@@ -356,7 +357,7 @@ int R_SockConnect(int port, char *host)
 	FD_SET(s, &wfd);
 	if(maxfd < s) maxfd = s;
 
-	switch(select(maxfd+1, &rfd, &wfd, NULL, &tv))
+	switch(R_SelectEx(maxfd+1, &rfd, &wfd, NULL, &tv, NULL))
 	{
 	case 0:
 	    /* Time out */

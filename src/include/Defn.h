@@ -155,10 +155,16 @@ extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 #endif
 
 #ifdef HAVE_POSIX_SETJMP
+# define SIGJMP_BUF sigjmp_buf
+# define SIGSETJMP(x,s) sigsetjmp(x,s)
+# define SIGLONGJMP(x,i) siglongjmp(x,i)
 # define JMP_BUF sigjmp_buf
 # define SETJMP(x) sigsetjmp(x,1)
 # define LONGJMP(x,i) siglongjmp(x,i)
 #else
+# define SIGJMP_BUF jmp_buf
+# define SIGSETJMP(x,s) setjmp(x)
+# define SIGLONGJMP(x,i) longjmp(x,i)
 # define JMP_BUF jmp_buf
 # define SETJMP(x) setjmp(x)
 # define LONGJMP(x,i) longjmp(x,i)
