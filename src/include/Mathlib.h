@@ -61,6 +61,7 @@
 #undef ML_PRECISION_WARNINGS
 
 #ifdef IEEE_754
+#include <ieeefp.h>
 extern double m_zero;
 extern double m_one;
 extern double m_tiny;
