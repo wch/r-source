@@ -13,9 +13,9 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
 }
 \synopsis{
 pairs(x, \dots)
-pairs.default(x, labels = colnames(x), panel = points,
-              main = NULL, oma = NULL, font.main = par("font.main"),
-              cex.main = par("cex.main"), \dots,
+pairs.default(x, labels = colnames(x), panel = points, \dots,
+              main = NULL, oma = NULL,
+              font.main = par("font.main"), cex.main = par("cex.main"),
               lower.panel = panel, upper.panel = panel,
               diag.panel = NULL, text.panel = textPanel,
               label.pos = 0.5 + has.diag/3,
@@ -63,7 +63,6 @@ pairs.default(x, labels = colnames(x), panel = points,
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens
   Oehlschlaegel-Akiyoshi and R-core members.
-  
 }
 \examples{
 data(USJudgeRatings)
@@ -80,7 +79,8 @@ panel.hist <- function(x, ...)
     rect(breaks[-nB], 0, breaks[-1], y, col="cyan", ...)
 }
 pairs(USJudgeRatings[1:5], panel=panel.smooth,
-      diag.panel=panel.hist, cex.labels=1.5, font.labels=2)
+      cex = 1.5, pch = 24, bg="light blue",
+      diag.panel=panel.hist, cex.labels = 2, font.labels=2)
 
 ## put (absolute) correlations on the upper panels,
 ## with size proportional to the correlations.

@@ -70,8 +70,8 @@ pairs.formula <- function(formula, data = NULL, subset, na.action, ...)
 #################################################
 
 pairs.default <-
-function (x, labels, panel = points, main = NULL, oma = NULL,
-          font.main = par("font.main"), cex.main = par("cex.main"), ...,
+function (x, labels, panel = points, ..., main = NULL, oma = NULL,
+          font.main = par("font.main"), cex.main = par("cex.main"),
           lower.panel = panel, upper.panel = panel,
           diag.panel = NULL, text.panel = textPanel,
           label.pos = 0.5 + has.diag/3,

@@ -17,14 +17,13 @@ co.intervals <- function (x, number = 6, overlap = 0.5)
     cbind(x1[keep] - eps, xr[keep] + eps)
 }
 
-panel.smooth <- function(x, y, col = par("col"), pch = par("pch"),
-			 col.smooth = "red", span = 2/3, iter = 3, ...)
+panel.smooth <- function(x, y, col = par("col"), bg = NA, pch = par("pch"),
+                         cex = 1, col.smooth = "red", span = 2/3, iter = 3, ...)
 {
-    points(x, y, pch=pch, col=col)
+    points(x, y, pch=pch, col=col, bg=bg, cex=cex)
     ok <- is.finite(x) & is.finite(y)
-    if (any(ok)) {
+    if (any(ok))
         lines(lowess(x[ok], y[ok], f=span, iter=iter), col = col.smooth, ...)
-    }
 }
 
 coplot <-
