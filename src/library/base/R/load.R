@@ -120,11 +120,3 @@ sys.save.image <- function(name)
     closeAllConnections()
     save.image(name)
 }
-
-loadURL <- function (url, envir = parent.frame(), quiet = TRUE, ...)
-{
-    tmp <- tempfile("url")
-    download.file(url, tmp, quiet = quiet, ...)
-    on.exit(unlink(tmp))
-    load(tmp, envir = envir)
-}

@@ -15,9 +15,13 @@
 ## consider keeping one (commented) entry here, for easier additions
 
 ## <entry>
-## Deprecated in 1.9.0
-# tetragamma <- function(x) {
-#     .Deprecated("psigamma(*, deriv=2)")
-#     psigamma(x, deriv=2)
-# }
+## Deprecated in 2.1.0
+loadURL <- function (url, envir = parent.frame(), quiet = TRUE, ...)
+{
+    .Deprecated("load(url())")
+    tmp <- tempfile("url")
+    download.file(url, tmp, quiet = quiet, ...)
+    on.exit(unlink(tmp))
+    load(tmp, envir = envir)
+}
 ## </entry>

@@ -469,6 +469,8 @@ DEPRECATED & DEFUNCT
 
     o	Option "repositories" is no longer used and so not set.
 
+    o	loadURL() is now deprecated.
+
 
 INSTALLATION CHANGES
 

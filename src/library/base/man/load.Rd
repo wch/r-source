@@ -1,30 +1,22 @@
 \name{load}
 \alias{load}
-\alias{loadURL}
 \title{Reload Saved Datasets}
 \description{
   Reload datasets written with the function \code{save}.
 }
 \usage{
 load(file, envir = parent.frame())
-loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 }
 \arguments{
   \item{file}{a connection or a character string giving the name of the
     file to load.}
   \item{envir}{the environment where the data should be loaded.}
-  \item{url}{a character string naming a URL.}
-  \item{quiet, \dots}{additional arguments to
-    \code{\link{download.file}}.}
 }
 \details{
   \code{load} can load \R objects saved in the current or any earlier
   format.  It can read a compressed file (see \code{\link{save}})
   directly from a file or from a suitable connection (including a call
   to \code{\link{url}}).
-
-  \code{loadURL} is a convenience wrapper which downloads a file, loads
-  it and deletes the downloaded copy.
 
   Only \R objects saved in the current format (used since \R 1.4.0)
   can be read from a connection.  If no input is available on a
@@ -55,8 +47,6 @@ load("all.Rdata", .GlobalEnv)
 
 \dontrun{
 ## print the value to see what objects were created.
-print(loadURL("http://some.where.net/R/data/kprats.rda"))
-# or, avoiding making a local copy,
 print(load(url("http://some.where.net/R/data/kprats.rda")))
 }}
 \keyword{file}
