@@ -7,6 +7,9 @@ See the file NEWS for changes that affect all versions of R.
 rw1050
 ======
 
+Very small circles are now forced to be visible: not all Windows
+versions would display them.
+
 Transparency in png() is now supported on `High Color' (16-bit) screens.
 
 BLAS support is now in a separate DLL, Rblas.dll.  This means that any
@@ -30,6 +33,7 @@ All the configuration options are now in file MkRules.
 
 Unzipping is now handled by internal code based on zlib: unzip.dll is
 no longer required.
+
 
 
 rw1042
