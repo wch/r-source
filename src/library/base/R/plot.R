@@ -107,8 +107,7 @@ plot.function <- function(x, from = 0, to = 1, xlim = NULL, ...) {
     curve(x, from, to, xlim = xlim, ...)
 }
 
-### NOTE: cex = 1 is correct, cex = par("cex") gives *square* of intended!
-
+## NOTE: cex = 1 is correct, cex = par("cex") gives *square* of intended!
 plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 			 log="", main=NULL, sub=NULL, xlab=NULL, ylab=NULL,
 			 ann=par("ann"), axes=TRUE, frame.plot=axes,
@@ -126,7 +125,7 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
     plot.new()
     plot.window(xlim, ylim, log, asp, ...)
-    panel.first
+    panel.first # eval() is wrong here {Ross I.}
     plot.xy(xy, type, col=col, pch=pch, cex=cex, bg=bg, lty=lty, lwd=lwd, ...)
     panel.last
     if (axes) {
