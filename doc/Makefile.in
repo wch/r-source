@@ -28,14 +28,14 @@ R: Makefile
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  $(MAKE) rhome=$(top_builddir) install-sources; \
+	fi
 
 docs:
 	@(cd manual && $(MAKE) $@)
 
-install: install-message installdirs install-man
-	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/$(subdir); \
-	done
+install: install-message installdirs install-sources install-man
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
@@ -47,6 +47,10 @@ install-man:
 	@$(INSTALL_DATA) $(srcdir)/R.1 $(mandir)/man1
 install-message:
 	@echo "installing $(subdir) ..."
+install-sources:
+	@for f in $(INSTFILES); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/$(subdir); \
+	done
 install-strip: install
 
 uninstall:
