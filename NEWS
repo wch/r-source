@@ -6,6 +6,121 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.6.1
+
+
+NEW FEATURES
+
+    o	Added a few "trivial and obviously missing" functions to tcltk:
+	tkchooseDirectory, tkpopup, tkdialog, tkread
+
+    o	barplot() has a new argument `axis.lty', which if set to 1
+	allows the pre-1.6.0 behaviour of plotting the axis and tick
+	marks for the categorical axis.	 (This was apparently not
+	intentional, but axis() used to ignore lty=0.)
+	The argument `border' is no longer ".NotYetUsed".
+
+
+BUG FIXES
+
+    o	hist(<datetime>, cex.axis = f)	now works for x-axis too.
+
+    o	prompt() gave wrong \usage{.} for long argument default expressions.
+
+    o	summary(x) gives more information when `x' is a logical
+	(or a data frame with a logical column which is now quite customary).
+
+    o	seq.POSIXt(from, to, length.out= . ) could give too long results
+
+    o	summaryRprof() was counting nested calls to the same function
+	twice.
+
+    o	Printing of objects of mode "expression" did strange things if
+	there were "%" characters in the deparsed expression (PR#2120).
+
+    o	as.matrix.data.frame converted missings to "NA" not character NA.
+	(PR#2130)
+
+    o	spec.pgram() was only interpolating zero freq for one series. (PR#2123)
+
+    o	help(randu) had % unescaped in the example. (PR#2141)
+
+    o	Making html links would fail if packages-head.html was not
+	writeable. (PR#2133)
+
+    o	Sweave.sty was not installed to $R_HOME/share/texmf when
+	builddir != srcdir. On Windows backslashes in latex paths have
+	to be replaced by slashes.
+
+    o	A memory leak in deparsing was introduced when eliminating
+	static variables (thanks to Achim Zeileis for spotting this).
+	A similar problem in loading workspaces has been corrected.
+
+    o	TclInterface.Rd incorrectly used \synopsis for \usage so that
+	the usage section wasn't output.
+
+    o	Readline stack off-by-one error. (PR#2165)
+
+    o	R_ExpandFileName had a memory leak in the case libreadline was
+	used under Unix-alikes.
+
+    o	sys.save.image() now closes all connections so it will work even
+	if the connection list has become full.
+
+    o	loess() had an unstated limit of four predictors: this is now
+	documented and enforced.
+
+    o	${R_HOME}/etc/Renviron.site is now not read if R_ENVIRON is
+	set, as documented.  Previously it was read unless R_ENVIRON
+	pointed to an actual file.
+
+    o	Startup.Rd described the proceesing under Unix-alikes but
+	incorrectly implied it happened that way on the Windows and
+	MacOS ports.  Neither use Renviron.site, for example.
+
+    o	besselK(x,*) now returns 0 instead of Inf for large x. (PR#2179)
+
+    o	The Tcl console code didn't work with Tcl/TK 8.0, and has been
+	#ifdef'd out.  (PR#2090)
+
+    o	format.AsIs() was not handling matrices.
+
+    o	sd() was not passing na.rm to var() for matrices and data frames.
+
+    o	dist() {mva} silently treated +/-Inf as NA.
+
+    o	setwd() now returns NULL invisibly.
+
+    o	basename() and dirname() did not check the length of their
+	input and ignored elements after the first.  This affected
+	undoc {tools}.
+
+    o	If A had dimnames, eigen(A) had inappropriate dimnames. (PR#2116)
+
+    o	as.POSIXct.dates had a sign error for the origin (PR#2222)
+
+    o	The claim that pie charts should be avoiden (in pie.Rd) is now
+	supported by a quote from Cleveland (1985).
+
+    o	The vsnprintf() functions supplied for systems that don't
+	supply their own had a bug in the output of fractional parts,
+	corrupting data if using save() with ascii=TRUE. (PR#2144)
+
+    o	pretty() values close to 0 in some cases which are now 0 (PR#1032
+	and D.Brahm's mails).
+
+
+BUILD ISSUES
+
+    o   Toplevel Makefile was missing dependency of "docs" on "R" (causing
+        parallel makes to go wrong)
+
+    o   When building with recommended packages those were installed
+        into the first path in R_LIBS, if the environment variable was
+        present.
+
+
+
 		CHANGES IN R VERSION 1.6.0
 
 

@@ -394,7 +394,7 @@ work.
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-The simplest way is to use @file{rw1060.exe} or @file{miniR.exe}.  Just
+The simplest way is to use @file{rw1061.exe} or @file{miniR.exe}.  Just
 double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you suppressed making a group for @R{}).
@@ -629,10 +629,10 @@ will be compiled in.
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate libraries installed: @code{jpeg} (version 6b or later) or
 @code{libpng} (versions 1.0.5 to 1.2.1 or 1.2.3 or later) and
-@code{zlib} (version 1.1.3 or later) respectively.  @code{libpng-1.2.2}
-moved its header files, and you will need add something like
-@samp{-I/usr/local/include/libpng12} to @code{CPPFLAGS} to make use of
-it.
+@code{zlib} (version 1.1.3 or later) respectively.
+(@code{libpng-1.2.2}, only, moved its header files, and you will need
+add something like @samp{-I/usr/local/include/libpng12} to
+@code{CPPFLAGS} to make use of it.)
 
 The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
 (@uref{http://www.cs.wisc.edu/~ghost}).
@@ -655,7 +655,7 @@ Debian package is @code{libpcre3-dev} and the RPM something like
 @subsection Tcl/Tk
 
 The @pkg{tcltk} package needs Tcl/Tk installed: the sources are
-available at @uref{http://dev.scriptics.com/}.  To specify the locations
+available at @uref{http://www.scriptics.com/}.  To specify the locations
 of the Tcl/Tk files you may need the configuration options
 
 @table @option
@@ -672,6 +672,9 @@ or use the configure variables @code{TCLTK_LIBS} and
 @code{TCLTK_CPPFLAGS} to specify the flags needed for linking against
 the Tcl and Tk libraries and for finding the @file{tcl.h} and
 @file{tk.h} headers, respectively.
+
+Versions of Tcl/TK from 8.0 to 8.4.0 have been used successfully.
+
 
 @node Linear algebra,  , Tcl/Tk, Useful libraries and programs
 @subsection Linear algebra
@@ -829,7 +832,7 @@ option @option{--config-cache} (or @option{-C}) to enable caching.
 
 To compile @R{}, you will most likely find it easiest to use GNU
 @command{make}.  On Solaris 2.6/7/8 in particular, you need a version of
-GNU @command{make} different from 3.77; 3.79 works fine, as does the Sun
+GNU @command{make} different from 3.77; 3.79.1 works fine, as does the Sun
 @command{make}.  The native @command{make} is reported to fail on SGI
 Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
@@ -971,10 +974,8 @@ run
 @end smallexample
 
 @noindent
-but please check you have all the requirements first.  The
-@acronym{GNOME} interface for @R{} is currently being developed under
-@acronym{GNOME} 1.4, and is not guaranteed to work with previous
-versions.  You therefore need at least the following libraries installed
+but please check you have all the requirements first. You need at least
+the following libraries (or later) installed
 
 @smallexample
 audiofile-0.2.1

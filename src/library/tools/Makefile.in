@@ -52,11 +52,6 @@ all: Makefile DESCRIPTION
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/Sweave; \
 	  done; \
 	fi
-	@if test -f $(srcdir)/inst/Sweave/Sweave.sty; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/share/texmf; \
-	  $(INSTALL_DATA) $(srcdir)/inst/Sweave/Sweave.sty \
-	     $(top_builddir)/share/texmf; \
-	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \

@@ -17,7 +17,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 \alias{summary.loess}
 \alias{print.summary.loess}
 \arguments{
-  \item{formula}{a formula specifying the response and one or more
+  \item{formula}{a formula specifying the response and one to four
     numeric predictors (best specified via an interaction, but can also
     be specified additively).}
   \item{data}{an optional data frame within which to look first for the
@@ -84,9 +84,12 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   models. Chapter 8 of \emph{Statistical Models in S} eds J.M. Chambers
   and T.J. Hastie, Wadsworth & Brooks/Cole.
 }
-\author{B.D. Ripley, based on the \code{cloess} package of Cleveland,
-  Grosse and Shyu.}
-\note{As this is based on the \code{cloess} package available at
+\author{
+  B.D. Ripley, based on the \code{cloess} package of Cleveland,
+  Grosse and Shyu.
+}
+\note{
+  As this is based on the \code{cloess} package available at
   \code{netlib}, it is similar to but not identical to the \code{loess}
   function of S. In particular, conditioning is not implemented.
 

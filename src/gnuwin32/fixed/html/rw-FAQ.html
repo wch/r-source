@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta name="generator" content=
-"HTML Tidy for Windows (vers 1st April 2002), see www.w3.org">
+"HTML Tidy for Linux/x86 (vers 1st April 2002), see www.w3.org">
 <title>R for Windows FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R for Windows FAQ">
@@ -13,7 +13,7 @@
 <body>
 <h1>R for Windows FAQ</h1>
 
-<h2>Version for <tt>rw1060</tt></h2>
+<h2>Version for <tt>rw1061</tt></h2>
 
 <address>B. D. Ripley</address>
 
@@ -25,7 +25,7 @@
 Introduction</a></li>
 
 <li><a name="toc_Installation%20and%20Usage"></a> <a href=
-"#Installation%20and%20Usage">2 Installation and Usage</a>
+"#Installation%20and%20Usage">2 Installation and Usage</a> 
 <ul>
 <li><a href=
 "#Where%20can%20I%20find%20the%20latest%20version%3f">2.1 Where can
@@ -59,38 +59,44 @@ print from R?</a></li>
 BATCH</code>?</a></li>
 
 <li><a href=
-"#Can%20I%20use%20rw1060%20with%20ESS%20and%20(X)emacs%3f">2.10 Can
-I use rw1060 with ESS and (X)emacs?</a></li>
+"#Can%20I%20use%20rw1061%20with%20ESS%20and%20(X)emacs%3f">2.10 Can
+I use rw1061 with ESS and (X)emacs?</a></li>
 
 <li><a href=
 "#What%20are%20HOME%20and%20working%20directories%3f">2.11 What are
 HOME and working directories?</a></li>
 
-<li><a href="#R%20can't%20find%20my%20file">2.12 R can't find my
+<li><a href="#How%20do%20I%20set%20environment%20variables%3f">2.12
+How do I set environment variables?</a></li>
+
+<li><a href="#R%20can't%20find%20my%20file">2.13 R can't find my
 file, but I know it is there!</a></li>
 
-<li><a href="#Does%20R%20use%20the%20Registry%3f">2.13 Does R use
+<li><a href="#Does%20R%20use%20the%20Registry%3f">2.14 Does R use
 the Registry?</a></li>
 
 <li><a href=
-"#Entering%20certain%20characters%20crashes%20Rgui.">2.14 Entering
+"#Entering%20certain%20characters%20crashes%20Rgui.">2.15 Entering
 certain characters crashes Rgui.</a></li>
 
-<li><a href="#The%20internet%20download%20functions%20fail.">2.15
+<li><a href="#The%20internet%20download%20functions%20fail.">2.16
 The internet download functions fail.</a></li>
+
+<li><a href="#Other%20strange%20crashes.">2.17 Other strange
+crashes.</a></li>
 </ul>
 </li>
 
-<li><a name="toc_Packages"></a> <a href="#Packages">3 Packages</a>
+<li><a name="toc_Packages"></a> <a href="#Packages">3 Packages</a> 
 <ul>
 <li><a href=
 "#Can%20I%20install%20packages%20(libraries)%20in%20this%20version%3f">
 3.1 Can I install packages (libraries) in this version?</a></li>
 
 <li><a href=
-"#I%20don't%20have%20permission%20to%20write%20to%20the%20rw1060%5clibrary%20directory">
+"#I%20don't%20have%20permission%20to%20write%20to%20the%20rw1061%5clibrary%20directory">
 3.2 I don't have permission to write to the
-<code>rw1060\library</code> directory.</a></li>
+<code>rw1061\library</code> directory.</a></li>
 
 <li><a href=
 "#The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
@@ -118,7 +124,7 @@ Hyperlinks in Compiled HTML sometimes do not work.</a></li>
 </li>
 
 <li><a name="toc_Windows%20Features"></a> <a href=
-"#Windows%20Features">4 Windows Features</a>
+"#Windows%20Features">4 Windows Features</a> 
 <ul>
 <li><a href=
 "#What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version">
@@ -139,7 +145,7 @@ console?</a></li>
 </li>
 
 <li><a name="toc_Workspaces"></a> <a href="#Workspaces">5
-Workspaces</a>
+Workspaces</a> 
 <ul>
 <li><a href=
 "#My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20How%20do%20I%20stop%20this%3f">
@@ -157,7 +163,7 @@ this?</a></li>
 </li>
 
 <li><a name="toc_The%20R%20Console%20and%20Fonts"></a> <a href=
-"#The%20R%20Console%20and%20Fonts">6 The R Console and Fonts</a>
+"#The%20R%20Console%20and%20Fonts">6 The R Console and Fonts</a> 
 <ul>
 <li><a href=
 "#I%20would%20like%20to%20be%20able%20to%20use%20Japanese%20fonts">6.1
@@ -179,7 +185,7 @@ lines in the console or pager are truncated.</a></li>
 </li>
 
 <li><a name="toc_Building%20from%20Source"></a> <a href=
-"#Building%20from%20Source">7 Building from Source</a>
+"#Building%20from%20Source">7 Building from Source</a> 
 <ul>
 <li><a href="#How%20can%20I%20compile%20R%20from%20source%3f">7.1
 How can I compile R from source?</a></li>
@@ -213,9 +219,9 @@ output from my Fortran code disappears. Why?</a></li>
 </li>
 </ul>
 
-<a name="Top"></a>
+<a name="Top"></a>  
 <hr>
-<a name="Introduction"></a>
+<a name="Introduction"></a> 
 <h2>1 Introduction</h2>
 
 <p>This FAQ is for the Windows port of R: it describes features
@@ -229,14 +235,14 @@ specific to that version. The main R FAQ can be found at<br>
 
 <p>The information here applies only to recent versions of R for
 Windows, (<code>1.4.0</code> or later); the current version is
-often called something like <code>rw1060</code> (although not
+often called something like <code>rw1061</code> (although not
 officially).</p>
 
 <hr>
-<a name="Installation%20and%20Usage"></a>
+<a name="Installation%20and%20Usage"></a> 
 <h2>2 Installation and Usage</h2>
 
-<a name="Where%20can%20I%20find%20the%20latest%20version%3f"></a>
+<a name="Where%20can%20I%20find%20the%20latest%20version%3f"></a> 
 <h3>2.1 Where can I find the latest version?</h3>
 
 <p>Go to any CRAN site (see <a href=
@@ -245,7 +251,7 @@ for a list), navigate to the <code>bin/windows/base</code>
 directory and collect the files you need. There are two versions of
 the distribution.</p>
 
-<p>1) <code>rw1060.exe</code> is about 19Mb and gives a complete
+<p>1) <code>rw1061.exe</code> is about 19Mb and gives a complete
 installation.</p>
 
 <p>2) Directory <code>miniR</code> contains <code>miniR.exe</code>
@@ -265,7 +271,7 @@ systems).</p>
 you choose an installation path not containing spaces. (Using a
 path with spaces in will probably work, but is little-tested.)</p>
 
-<p>The simplest way is to use <code>rw1060.exe</code> or
+<p>The simplest way is to use <code>rw1061.exe</code> or
 <code>miniR.exe</code>. Just double-click on the icon and follow
 the instructions. If you installed R this way you can uninstall it
 from the Control Panel or Start Menu (unless you supressed making a
@@ -274,10 +280,10 @@ group for R).</p>
 <p>For a manual installation, choose a location and unzip the zip
 files (with a tool that preserves long file names and the directory
 structure: we recommend the INFO-ZIP project's <code>unzip</code>).
-All the files will unpack into a directory <code>rw1060</code>.</p>
+All the files will unpack into a directory <code>rw1061</code>.</p>
 
 <p>Choose a working directory for R. If you installed manually,
-make a shortcut to <code>rw1060\bin\Rgui.exe</code> on your desktop
+make a shortcut to <code>rw1061\bin\Rgui.exe</code> on your desktop
 or somewhere on the Start menu file tree. Right-click the shortcut,
 select Properties... and change the `Start in' field to your
 working directory.</p>
@@ -286,7 +292,7 @@ working directory.</p>
 the Target field, for example <code>--sdi
 --max-mem-size=40M</code>. You can also set environment variables
 at the end of the Target field, for example
-<code>R_LIBS=P:/R/library</code>. <a name=
+<code>R_LIBS=p:/myRlib</code>. <a name=
 "How%20do%20I%20run%20it%3f"></a></p>
 
 <h3>2.3 How do I run it?</h3>
@@ -397,11 +403,11 @@ have LaTeX installed you can print help files by
 <code>help(fn_name, offline=TRUE)</code>.</li>
 </ul>
 
-<a name="Can%20I%20use%20R%20BATCH%3f"></a>
+<a name="Can%20I%20use%20R%20BATCH%3f"></a> 
 <h3>2.9 Can I use <code>R BATCH</code>?</h3>
 
 <p>Yes, if you have Perl and the files for making source packages
-(from <code>rw1060.exe</code>) installed. The Windows analogue is
+(from <code>rw1061.exe</code>) installed. The Windows analogue is
 <code>Rcmd BATCH</code>: use <code>Rcmd BATCH --help</code> for
 full details.</p>
 
@@ -415,8 +421,8 @@ path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
 </pre>
 
 <a name=
-"Can%20I%20use%20rw1060%20with%20ESS%20and%20(X)emacs%3f"></a>
-<h3>2.10 Can I use rw1060 with ESS and (X)emacs?</h3>
+"Can%20I%20use%20rw1061%20with%20ESS%20and%20(X)emacs%3f"></a> 
+<h3>2.10 Can I use rw1061 with ESS and (X)emacs?</h3>
 
 <p>Yes. Recent versions of ESS (e.g. 5.1.20) come with support for
 this version of R, and there is support for interrupting the R
@@ -449,13 +455,53 @@ If all of these fail, the current working directory is used.</p>
 
 <p>You can find this from R code by
 <code>Sys.getenv("R_USER")</code>. <a name=
+"How%20do%20I%20set%20environment%20variables%3f"></a></p>
+
+<h3>2.12 How do I set environment variables?</h3>
+
+<p>Environment variables can be set in R in three different
+ways.</p>
+
+<ol type="1" start="1">
+<li>On the command line as name=value pairs. For example in the
+shortcut to <code>RGui</code> you could have<br>
+<pre>
+path_to_R\bin\Rgui.exe HOME=p:/ R_LIBS=p:/myRlib
+</pre>
+</li>
+
+<li>In an environment file <code>.Renviron</code> in the working
+directory or your home directory, for example containing the
+line<br>
+<pre>
+R_LIBS=p:/myRlib
+</pre>
+
+<p>See <code>?Startup</code> for more details of environment
+files.</p>
+</li>
+
+<li>For all applications via Windows. How you set an environment
+variable is system specific: in Windows 9x you can set them in
+<code>autoexec.bat</code> or in an MS-DOS window from which you
+launch <code>Rgui</code> / <code>Rterm</code>. Under Windows
+NT/2000/XP you can use the control panel or the properties of `My
+Computer'. Under Windows ME you can use the System Configuration
+Utility (under Programs, Accessories, System Tools on the Start
+menu). You may have to log out or reboot for such changes to take
+effect.</li>
+</ol>
+
+<p>The order of precedence for environmental variables is the order
+in which these options are listed, that is the command line then
+<code>.Renviron</code> then the inherited environment. <a name=
 "R%20can't%20find%20my%20file"></a></p>
 
-<h3>2.12 R can't find my file, but I know it is there!</h3>
+<h3>2.13 R can't find my file, but I know it is there!</h3>
 
 <p>How did you specify it? Backslashes have to be doubled in R
 character strings, so for example one needs
-<code>"d:\\rw1060\\library\\xgobi\\scripts\\xgobi.bat"</code>. Make
+<code>"d:\\rw1061\\library\\xgobi\\scripts\\xgobi.bat"</code>. Make
 life easier for yourself by using forward slashes as path
 separators: they do work under Windows.</p>
 
@@ -468,7 +514,7 @@ Properties of the file on most versions of Windows, and from
 <code>dir /X</code> in a <code>Command Prompt</code> window on
 2000/XP). <a name="Does%20R%20use%20the%20Registry%3f"></a></p>
 
-<h3>2.13 Does R use the Registry?</h3>
+<h3>2.14 Does R use the Registry?</h3>
 
 <p>Not itself.</p>
 
@@ -488,7 +534,7 @@ settings are all per machine and not per user, and that this
 neither sets up nor removes the file associations. <a name=
 "Entering%20certain%20characters%20crashes%20Rgui."></a></p>
 
-<h3>2.14 Entering certain characters crashes Rgui.</h3>
+<h3>2.15 Entering certain characters crashes Rgui.</h3>
 
 <p>This used to happen occasionally, and all the occurrences we
 have solved have been traced to faulty versions of
@@ -498,10 +544,10 @@ have solved have been traced to faulty versions of
 <p>If it still happens, try extracting the one to be found in the
 self-extracting archive <a href=
 "ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe">ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe</a>
-and put it in the <code>rw1060\bin</code> directory. Removing
+and put it in the <code>rw1061\bin</code> directory. Removing
 <code>msvcrt.dll</code> from that directory reverts to the standard
 behaviour. It seems that on some versions of Windows (but not
-2000/XP) you also need to put the <code>rw1060\bin</code> directory
+2000/XP) you also need to put the <code>rw1061\bin</code> directory
 early in your path.</p>
 
 <p>This fix has solved other problems too, for example incorrect
@@ -509,7 +555,7 @@ results in the date-time functions. However, you are probably
 better off re-installing Windows. <a name=
 "The%20internet%20download%20functions%20fail."></a></p>
 
-<h3>2.15 The internet download functions fail.</h3>
+<h3>2.16 The internet download functions fail.</h3>
 
 <p>for example <code>update.packages</code> and the menu items on
 the Packages menu.</p>
@@ -524,16 +570,32 @@ with the flag <code>--internet2</code> (see <a href=
 for Windows?</a>) which uses the Internet Explorer internals (and
 so needs Internet Explorer 4 or later installed).</p>
 
-<p>(b) A proxy needs to be set up: see
-<code>?download.file</code>.</p>
+<p>(b) A proxy needs to be set up: see <code>?download.file</code>.
+<a name="Other%20strange%20crashes."></a></p>
+
+<h3>2.17 Other strange crashes.</h3>
+
+<p>Some users have found that <code>Rgui.exe</code> fails to start,
+exiting with a "Floating- point invalid operation" or other low
+level error. This error may also happen in the middle of a session.
+In some cases where we have tracked this down, it was due to bugs
+in the video driver on the system in question: it makes changes to
+the floating point control word which are incompatible with R.
+(Good practice would restore the control word to the state it was
+in when the driver code was called.) For example, one user reported
+that the virtual screen manager JSP2 caused this crash.</p>
+
+<p>These errors are essentially impossible for us to fix or work
+around. The only solution we know of is for the user to replace the
+buggy driver that is causing the error.</p>
 
 <hr>
-<a name="Packages"></a>
+<a name="Packages"></a> 
 <h2>3 Packages</h2>
 
 <a name=
 "Can%20I%20install%20packages%20(libraries)%20in%20this%20version%3f">
-</a>
+</a> 
 <h3>3.1 Can I install packages (libraries) in this version?</h3>
 
 <p>Yes, but you will need a lot of tools to do so, unless the
@@ -553,7 +615,7 @@ point-and-click interface to package installation.</p>
 
 <p>If there is not a pre-compiled version or that is not up-to-date
 or you prefer compiling from source, make sure you installed the
-necessary files from <code>rw1060.exe</code>. Then read the file
+necessary files from <code>rw1061.exe</code>. Then read the file
 <code>README.packages</code>. You will need to collect and install
 several tools to use this: you can download them via the portal at
 <a href=
@@ -567,64 +629,41 @@ pkgname</code>: see the <em>`Writing R Extensions'</em> manual.</p>
 have followed the instructions <strong>exactly</strong>. At least
 90% of the questions asked are because people have not done so. <a
 name=
-"I%20don't%20have%20permission%20to%20write%20to%20the%20rw1060%5clibrary%20directory">
+"I%20don't%20have%20permission%20to%20write%20to%20the%20rw1061%5clibrary%20directory">
 </a></p>
 
 <h3>3.2 I don't have permission to write to the
-<code>rw1060\library</code> directory.</h3>
+<code>rw1061\library</code> directory.</h3>
 
 <p>You can install packages anywhere and use the environment
-variable <code>R_LIBS</code> to point to the library
+variable <code>R_LIBS</code> (see <a href=
+"#How%20do%20I%20set%20environment%20variables%3f">How do I set
+environment variables?</a>) to point to the library
 location(s).</p>
 
-<p>Suppose your packages are installed in <code>p:\mylibs</code>.
+<p>Suppose your packages are installed in <code>p:\myRlib</code>.
 Then you can EITHER<br>
 </p>
 
 <pre>
-set the environment variable R_LIBS to p:\mylibs
+set the environment variable R_LIBS to p:\myRlib
 </pre>
 
 <p>OR use a package by, e.g.<br>
 </p>
 
 <pre>
-library(MASS, lib.loc="p:/mylibs")
+library(MASS, lib.loc="p:/myRlib")
 </pre>
 
-<p>How you set an environment variable is system specific: in
-Windows 9x you can set them in <code>autoexec.bat</code> or in an
-MS-DOS window from which you launch <code>Rgui</code> /
-<code>Rterm</code>. Under Windows NT/2000/XP you can use the
-control panel or the properties of `My Computer'. Under Windows ME
-you can use the System Configuration Utility (under Programs,
-Accessories, System Tools on the Start menu). You can also set them
-on the command line, for example in the shortcut you could have<br>
-</p>
-
-<pre>
-path_to_R\bin\Rgui.exe R_LIBS=p:/mylibs
-</pre>
-
-<p>and you can set variables in a file <code>.Renviron</code> in
-the working directory or your home directory, for example<br>
-</p>
-
-<pre>
-R_LIBS=p:/mylibs
-</pre>
-
-<p>The order of precedence for environmental variables is the
-command line then <code>.Renviron</code> then the inherited
-environment. <a name=
+<a name=
 "The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
-</a></p>
-
+</a> 
 <h3>3.3 The packages I installed do not appear in the HTML help
 system.</h3>
 
 <p>The HTML search only works for packages installed in
-<code>rw1060\library</code>.</p>
+<code>rw1061\library</code>.</p>
 
 <p>To update the HTML indices after you have installed a
 pre-compiled package, run at the R prompt.<br>
@@ -637,7 +676,7 @@ pre-compiled package, run at the R prompt.<br>
 <p>This is done automatically when installing from the Packages
 menu or by <code>install.packages()</code>, and when
 <code>help.start</code> is run, provided you have write permission
-in <code>rw1060\library</code>. <a name=
+in <code>rw1061\library</code>. <a name=
 "My%20functions%20are%20not%20found%20by%20the%20HTML%20help%20search%20system.">
 </a></p>
 
@@ -648,7 +687,7 @@ system.</h3>
 you installed.</p>
 
 <ul>
-<li>the package is installed in <code>rw1060\library</code>.</li>
+<li>the package is installed in <code>rw1061\library</code>.</li>
 
 <li>the package contains a <code>CONTENTS</code> file in its
 top-level directory.</li>
@@ -693,13 +732,18 @@ Download ActiveTcl 8.3.x from <a href=
 and install it. (Most of the installers that ActiveTcl uses will
 put the <code>bin</code> directory containing the Tcl and Tk DLLs
 in your path, but you should check. From R, run
-<code>Sys.getenv("PATH")</code> to do so.) You then need to set the
-environment variable <code>TCL_LIBRARY</code>, to something like
-<code>c:/Program Files/Tcl/lib/tcl8.3</code>. (The startup code for
-the package will warn you if this is unset, and Q3.2 explains how
-to set them. NB: do not quote the path, even if as here it contains
-spaces. If you forget, you can set the variable inside R by
-something like<br>
+<code>Sys.getenv("PATH")</code> to do so.) Note that you do need
+8.3.x and not 8.4.0: follow the links to 8.4.0 and you will find
+8.3.x available there.</p>
+
+<p>You then need to set the environment variable
+<code>TCL_LIBRARY</code>(see <a href=
+"#How%20do%20I%20set%20environment%20variables%3f">How do I set
+environment variables?</a>), to something like <code>c:/Program
+Files/Tcl/lib/tcl8.3</code>. (The startup code for the package will
+warn you if this is unset. NB: do not quote the path, even if as
+here it contains spaces. If you forget, you can set the variable
+inside R by something like<br>
 </p>
 
 <pre>
@@ -733,12 +777,12 @@ session.</p>
 <code>foo</code>.</p>
 
 <hr>
-<a name="Windows%20Features"></a>
+<a name="Windows%20Features"></a> 
 <h2>4 Windows Features</h2>
 
 <a name=
 "What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version">
-</a>
+</a> 
 <h3>4.1 What should I expect to behave differently from the Unix
 version of R?</h3>
 
@@ -767,7 +811,7 @@ with either "/" or "\\".</li>
 and that of <code>shell()</code>.</li>
 </ul>
 
-<a name="I%20hear%20about%20some%20nifty%20features."></a>
+<a name="I%20hear%20about%20some%20nifty%20features."></a> 
 <h3>4.2 I hear about some nifty features: please tell me about
 them!</h3>
 
@@ -791,7 +835,7 @@ plots have been recorded they can be reviewed by &lt;PgUp&gt; and
 automatically (the Recording item on the list) or individual plots
 can be added (Add or the &lt;INS&gt; key). The whole plot history
 can be saved to or retrieved from an R variable in the global
-environment.
+environment. 
 <p>There is only one graphics history shared by all the windows
 devices.'</p>
 </blockquote>
@@ -839,12 +883,12 @@ can be used for graphics windows from <code>Rterm.exe</code>
 (although Windows may not always act on it).</p>
 
 <hr>
-<a name="Workspaces"></a>
+<a name="Workspaces"></a> 
 <h2>5 Workspaces</h2>
 
 <a name=
 "My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20How%20do%20I%20stop%20this%3f">
-</a>
+</a> 
 <h3>5.1 My workspace gets saved in a strange place: how do I stop
 this?</h3>
 
@@ -872,7 +916,7 @@ are interchangeable (for the same 1.x.? version of R, at
 least).</p>
 
 <hr>
-<a name="The%20R%20Console%20and%20Fonts"></a>
+<a name="The%20R%20Console%20and%20Fonts"></a> 
 <h2>6 The R Console and Fonts</h2>
 
 <a name=
@@ -932,19 +976,19 @@ line. Use the horizontal scrollbar or the &lt;CTRL + left/right
 arrow&gt; keys to scroll horizontally.</p>
 
 <hr>
-<a name="Building%20from%20Source"></a>
+<a name="Building%20from%20Source"></a> 
 <h2>7 Building from Source</h2>
 
-<a name="How%20can%20I%20compile%20R%20from%20source%3f"></a>
+<a name="How%20can%20I%20compile%20R%20from%20source%3f"></a> 
 <h3>7.1 How can I compile R from source?</h3>
 
-<p>Get the R sources. Suppose you want to compile R-1.6.0. Start in
+<p>Get the R sources. Suppose you want to compile R-1.6.1. Start in
 a directory whose path does not contain spaces, and run<br>
 </p>
 
 <pre>
-tar zxvf R-1.6.0.tgz
-cd R-1.6.0
+tar zxvf R-1.6.1.tgz
+cd R-1.6.1
 cd src\gnuwin32
 </pre>
 
@@ -992,7 +1036,7 @@ we have seen are compiled for the correct compiler. <a name=
 <p>We strongly encourage you to do this <em>via</em> building an R
 package: see the <em>`Writing R Extensions'</em> manual. In any
 event you should install the parts of the R system for building R
-packages (in <code>rw1060.exe</code>), and get and install the
+packages (in <code>rw1061.exe</code>), and get and install the
 tools (including Perl) and compilers mentioned in the file
 <code>readme.packages</code> contained therein. Then you can
 use<br>
@@ -1045,7 +1089,7 @@ make DEBUG=T pkg-mypkg
 </p>
 
 <pre>
-gdb /path/to/rw1060/bin/Rgui.exe
+gdb /path/to/rw1061/bin/Rgui.exe
 </pre>
 
 <p>However, note</p>
@@ -1053,8 +1097,8 @@ gdb /path/to/rw1060/bin/Rgui.exe
 <ul>
 <li><code>gdb</code> will only be able to find the source code if
 we run in the location where the source was compiled
-(<code>rw1060/src/gnuwin32</code> for the main system,
-<code>rw1060/src/library/mypkg/src</code> for a package), unless
+(<code>rw1061/src/gnuwin32</code> for the main system,
+<code>rw1061/src/library/mypkg/src</code> for a package), unless
 told otherwise by the <code>directory</code> command. It is most
 convenient to set a list of code locations via
 <code>directory</code> commands in the file <code>.gdbinit</code>
@@ -1088,7 +1132,7 @@ with a <code>mingw</code> version of <code>gdb</code>. It does
 often work with the <code>cygwin</code> version.</li>
 </ul>
 
-<a name="How%20do%20I%20include%20C++%20code%3f"></a>
+<a name="How%20do%20I%20include%20C++%20code%3f"></a> 
 <h3>7.5 How do I include C++ code?</h3>
 
 <p>You need to do two things:</p>

@@ -303,7 +303,10 @@ tkwait.window    <- function(...) tkcmd("tkwait", "window", ...)
 ## Standard dialogs
 tkgetOpenFile    <- function(...) tkcmd("tk_getOpenFile", ...)
 tkgetSaveFile    <- function(...) tkcmd("tk_getSaveFile", ...)
+tkchooseDirectory<- function(...) tkcmd("tk_chooseDirectory", ...)
 tkmessageBox     <- function(...) tkcmd("tk_messageBox", ...)
+tkdialog         <- function(...) tkcmd("tk_dialog", ...)
+tkpopup          <- function(...) tkcmd("tk_popup", ...)
 
 
 ## File handling functions
@@ -313,6 +316,7 @@ tkfile.dir       <- function(...) tkcmd("file", "dir", ...)
 tkopen           <- function(...) tkcmd("open", ...)
 tkclose          <- function(...) tkcmd("close", ...)
 tkputs           <- function(...) tkcmd("puts", ...)
+tkread           <- function(...) tkcmd("read", ...)
 
 ## Tkwinfo actually has a bazillion subcommands, but it's rarely
 ## used, so let's be lazy

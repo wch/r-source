@@ -1293,74 +1293,82 @@ spreadsheet by
 @end smallexample
 @noindent
 Notice that the specification of the table is different from the name
-returned by @code{sqlTables}: this precludes the use of @code{sqlFetch}.
+returned by @code{sqlTables}: as from version 0.9-1 @code{sqlFetch} is
+able to map the differences.
 
 @node RMySQL, RmSQL, RODBC, R interface packages
 @subsection Package RMySQL
 @cindex MySQL database system
 
-Package @pkg{RMySQL} on @acronym{CRAN} provides an
-interface to the MySQL database system (see @uref{http://www.mysql.com}
-and Dubois, 2000.).  This is part of a project to provide a common
-@acronym{API} for access from @R{} to relational DBMSs using
-@acronym{SQL}.  Currently this provides lower-level facilities than
-@pkg{RPgSQL} or @pkg{RODBC}.
+Package @pkg{RMySQL} on @acronym{CRAN} provides an interface to the
+MySQL database system (see @uref{http://www.mysql.com} and Dubois,
+2000.).  The description here applies to version @code{0.5-0}: earlier
+versions had a substantially different interface.  The current version
+requires the @pkg{DBI} package.
 
-MySQL exists on Unix/Linux and Windows: as from version 3.23 (Jan 2001)
+
+MySQL exists on Unix/Linux and Windows: as from version 3.23.x (Jan 2001)
 it is released under GPL.  MySQL is a `light and lean' database.  (It
 preserves the case of names where the operating file system is
 case-sensitive, so not on Windows.)  Package @pkg{RMySQL} has been used
 on both Linux and Windows.
 
-@findex MySQL
+@findex dbDriver
 @findex dbConnect
-@findex close
-A call to the function @code{MySQL} returns a database connection
+@findex dbDisconnect
+The call @code{dbDriver("MySQL")} returns a database connection
 manager object, and then a call to @code{dbConnect} opens a database
 connection which can subsequently be closed by a call to the generic
-function @code{close}.
+function @code{dbDisconnect}.
 
-@findex quickSQL
-@findex dbExecStatement
-@acronym{SQL} queries can be sent by either @code{quickSQL} or
-@code{dbExecStatement}.  @code{quickSQL} sends the query and retrieves the
-results as a data frame.   @code{dbExecStatement} sends the query and
-returns an object of class @code{"MySQLResultSet"} which can be used to
-retrieve the results, and subsequently used to @code{close} the result.
+@findex dbSendQuery
+@findex dbClearResult
+@findex dbGetQuery
+@acronym{SQL} queries can be sent by either @code{dbSendQuery} or
+@code{dbGetQuery}.  @code{dbGetquery} sends the query and retrieves the
+results as a data frame.  @code{dbSendQuery} sends the query and returns
+an object of class inheriting from @code{"DBIResult"} which can be used
+to retrieve the results, and subsequently used in a call to
+@code{dbClearResult} to remove the result.
 
 @findex fetch
 Function @code{fetch} is used to retrieve some or all of the rows in the
-query result, as a list.  The function @code{hasCompleted} indicates if
-all the rows have been fetched, and @code{getRowCount} returns the
+query result, as a list.  The function @code{dbHasCompleted} indicates if
+all the rows have been fetched, and @code{dbGetRowCount} returns the
 number of rows in the result.
 
-@findex assignTable
-@findex getTable
-As from @code{RMySQL} version 0.4 there are convenience functions
-@code{assignTable} to load a data frame into the database and
-@code{getTable} to retrieve a table as a data frame.  The row names
-get copied into the table as column @code{row_names} by
-@code{assignTable}, but they are not copied back by @code{getTable}.
+@findex dbReadTable
+@findex dbWriteTable
+@findex dbExistsTable
+@findex dbRemoveTable
+These are convenient interfaces to read/write/test/delete tables in the
+database.  @code{dbReadTable} and @code{dbWriteTable} copy to and from
+an @R{} data frame, mapping the row names of the data frame to the field
+@code{row_names} in the @code{MySQL} table.
 
 @smallexample
 > library(RMySQL)
 ## open a connection to a MySQL database
-> con <- dbConnect(MySQL(), dbname = "test")
+> con <- dbConnect(dbDriver("MySQL"), dbname = "test")
 ## list the tables in the database
-> getTables(con)
+> dbListTables(con)
 ## load a data frame into the database, deleting any existing copy
 > data(USArrests)
-> assignTable(con, "arrests", USArrests, overwrite = TRUE)
+> dbWriteTable(con, "arrests", USArrests, overwrite = TRUE)
+TRUE
+> dbListTables(con)
+[1] "arrests"
 ## get the whole table
-> getTable(con, "arrests")
-   Murder Assault UrbanPop Rape      row_names
-1    13.2     236       58 21.2        Alabama
-2    10.0     263       48 44.5         Alaska
-3     8.1     294       80 31.0        Arizona
+> dbReadTable(con, "arrests")
+               Murder Assault UrbanPop Rape
+Alabama          13.2     236       58 21.2
+Alaska           10.0     263       48 44.5
+Arizona           8.1     294       80 31.0
+Arkansas          8.8     190       50 19.5
 ...
 ## Select from the loaded table: all on one line
-> quickSQL(con, "select row_names, Murder from arrests
-           where Rape > 30 order by Murder")
+> dbGetQuery(con, "select row_names, Murder from arrests 
+                   where Rape > 30 order by Murder")
    row_names Murder
 1   Colorado    7.9
 2    Arizona    8.1
@@ -1370,7 +1378,8 @@ get copied into the table as column @code{row_names} by
 6   Michigan   12.1
 7     Nevada   12.2
 8    Florida   15.4
-> close(con)
+> dbRemoveTable(con, "arrests")
+> dbDisconnect(con)
 @end smallexample
 
 @node RmSQL,  , RMySQL, R interface packages

@@ -3,21 +3,21 @@
 \alias{genericFunction-class}
 \alias{groupGenericFunction-class}
 \title{Generic Function Objects }
-\description{  Generic functions (objects from or extending class
+\description{
+  Generic functions (objects from or extending class
   \code{genericFunction}) are extended function objects,
   containing information used in creating and dispatching methods for
   this function.  They also identify the package associated with the
-  function and its methods.}
+  function and its methods.
+}
 \section{Objects from the Class}{
- Generic functions are created and assigned by
+  Generic functions are created and assigned by
   \code{\link{setGeneric}} or \code{\link{setGroupGeneric}} and, indirectly, by
   \code{\link{setMethod}}.
 
-As you might expect \code{\link{setGeneric}} and
-\code{\link{setGroupGeneric}} create objects of class
-\code{"genericFunction"} and \code{"groupGenericFunction"} respectively.
-    
-    
+  As you might expect \code{\link{setGeneric}} and
+  \code{\link{setGroupGeneric}} create objects of class
+  \code{"genericFunction"} and \code{"groupGenericFunction"} respectively.
 }
 \section{Slots}{
   \describe{
@@ -53,13 +53,14 @@ As you might expect \code{\link{setGeneric}} and
   }
 }
 \section{Extends}{
-Class \code{"function"}, from data part.
-Class \code{"OptionalMethods"}, by class "function".
-Class \code{"PossibleMethod"}, by class "function".
+  Class \code{"function"}, from data part.\cr
+  Class \code{"OptionalMethods"}, by class "function".\cr
+  Class \code{"PossibleMethod"}, by class "function".
 }
 \section{Methods}{
-Generic function objects are used in the creation and dispatch of formal methods;
-information from the object is used to create methods list objects and
-to merge or update the existing methods for this generic.
+  Generic function objects are used in the creation and dispatch of
+  formal methods; information from the object is used to create methods
+  list objects and to merge or update the existing methods for this
+  generic.
 }
 \keyword{classes}

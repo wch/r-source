@@ -36,7 +36,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = 0,
   \item{col}{color for the axis line and the tick marks.  The default
     \code{NULL} means to use \code{par("fg")}.}
   \item{\dots}{other graphical parameters may also be passed as arguments to
-    this function.}
+    this function, e.g., \code{las} for vertical/horizontal label
+    orientation, see \code{\link{par}(las=.)}.}
 }
 \value{
   This function is invoked for its side effect, which is to add an axis

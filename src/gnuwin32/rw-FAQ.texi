@@ -24,7 +24,7 @@
 @title R for Windows FAQ
 @subtitle Frequently Asked Questions on R for Windows
 @subtitle Version @value{VERSION}
-@author B. D. Ripley
+@author B. D. Ripley and D. J. Murdoch
 @end titlepage
 
 @ifinfo
@@ -99,10 +99,12 @@ The information here applies only to recent versions of R for Windows,
 * Can I use R BATCH?::          
 * Can I use @RWVER@ with ESS and (X)emacs?::  
 * What are HOME and working directories?::  
+* How do I set environment variables?::  
 * R can't find my file::        
 * Does R use the Registry?::    
 * Entering certain characters crashes Rgui.::  
 * The internet download functions fail.::  
+* Other strange crashes.::      
 @end menu
 
 
@@ -150,7 +152,7 @@ Properties... and change the `Start in' field to your working directory.
 You may also want to add command-line arguments at the end of the Target
 field, for example @code{--sdi --max-mem-size=40M}.  You can also set
 environment variables at the end of the Target field, for example
-@code{R_LIBS=P:/R/library}.
+@code{R_LIBS=p:/myRlib}.
 
 @node How do I run it?, How do I UNinstall R?, How do I install R for Windows?, Installation and Usage
 @section How do I run it?
@@ -281,7 +283,7 @@ For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
 
 
-@node What are HOME and working directories?, R can't find my file, Can I use @RWVER@ with ESS and (X)emacs?, Installation and Usage
+@node What are HOME and working directories?, How do I set environment variables?, Can I use @RWVER@ with ESS and (X)emacs?, Installation and Usage
 @section What are HOME and working directories?
 
 Several places in the documentation use these terms.
@@ -300,8 +302,46 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
 
+@node How do I set environment variables?, R can't find my file, What are HOME and working directories?, Installation and Usage
+@section How do I set environment variables?
 
-@node R can't find my file, Does R use the Registry?, What are HOME and working directories?, Installation and Usage
+Environment variables can be set in R in three different ways.
+@enumerate
+@item
+On the command line as name=value pairs.  For example in the shortcut to
+@code{RGui} you could have
+
+@example
+path_to_R\bin\Rgui.exe HOME=p:/ R_LIBS=p:/myRlib
+@end example
+
+@item
+In an environment file @file{.Renviron} in the working directory
+or your home directory, for example containing the line
+
+@example
+R_LIBS=p:/myRlib
+@end example
+
+See @code{?Startup} for more details of environment files.
+
+@item
+For all applications via Windows.
+How you set an environment variable is system specific: in Windows 9x
+you can set them in @file{autoexec.bat} or in an MS-DOS window from
+which you launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000/XP you
+can use the control panel or the properties of `My Computer'.  Under
+Windows ME you can use the System Configuration Utility (under
+Programs, Accessories, System Tools on the Start menu).  You may have to
+log out or reboot for such changes to take effect.
+@end enumerate
+
+The order of precedence for environmental variables is the order in
+which these options are listed, that is the command line then
+@file{.Renviron} then the inherited environment.
+
+
+@node R can't find my file, Does R use the Registry?, How do I set environment variables?, Installation and Usage
 @section R can't find my file, but I know it is there!
 
 How did you specify it?  Backslashes have to be doubled in R character
@@ -356,7 +396,7 @@ the date-time functions.  However, you are probably better off
 re-installing Windows.
 
 
-@node The internet download functions fail.,  , Entering certain characters crashes Rgui., Installation and Usage
+@node The internet download functions fail., Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
 @section The internet download functions fail.
 
 for example @code{update.packages} and the menu items on the Packages menu.
@@ -370,6 +410,23 @@ the Internet Explorer internals (and so needs Internet Explorer 4 or
 later installed).
 
 (b) A proxy needs to be set up: see @code{?download.file}.
+
+@node Other strange crashes.,  , The internet download functions fail., Installation and Usage
+@section Other strange crashes.
+
+Some users have found that @code{Rgui.exe} fails to start, exiting with a ``Floating-
+point invalid operation'' or other low level error.  This error may also happen in
+the middle of a session.  In some cases where we have tracked this down, it
+was due to bugs in the video driver on the system in question:  it makes
+changes to the floating point control word which are incompatible with R.
+(Good practice would restore the control word to the state it was in when
+the driver code was called.) For example, one user reported that the virtual
+screen manager JSP2 caused this crash.
+
+These errors are essentially impossible for us to fix or work around.  The only 
+solution we know of is for the user to replace the buggy driver that is
+causing the error.
+
 
 
 @newchap{}
@@ -425,41 +482,20 @@ questions asked are because people have not done so.
 @section I don't have permission to write to the @file{@RWVER@\library} directory.
 
 You can install packages anywhere and use the environment variable
-@code{R_LIBS} to point to the library location(s).
+@code{R_LIBS} (@pxref{How do I set environment variables?}) to point to the library location(s).  
 
-Suppose your packages are installed in @code{p:\mylibs}.  Then you can EITHER
+Suppose your packages are installed in @code{p:\myRlib}.  Then you can EITHER
 
 @example
-set the environment variable R_LIBS to p:\mylibs
+set the environment variable R_LIBS to p:\myRlib
 @end example
 @noindent
 OR use a package by, e.g.
 
 @example
-library(MASS, lib.loc="p:/mylibs")
+library(MASS, lib.loc="p:/myRlib")
 @end example
 
-How you set an environment variable is system specific: in Windows 9x
-you can set them in @file{autoexec.bat} or in an MS-DOS window from
-which you launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000/XP you
-can use the control panel or the properties of `My Computer'.  Under
-Windows ME you can use the System Configuration Utility (under
-Programs, Accessories, System Tools on the Start menu).  You can also
-set them on the command line, for example in the shortcut you could have
-
-@example
-path_to_R\bin\Rgui.exe R_LIBS=p:/mylibs
-@end example
-@noindent
-and you can set variables in a file @file{.Renviron} in the working directory
-or your home directory, for example
-
-@example
-R_LIBS=p:/mylibs
-@end example
-
-The order of precedence for environmental variables is the command line
-then @file{.Renviron} then the inherited environment.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
@@ -526,12 +562,16 @@ installed.  Download ActiveTcl 8.3.x from
 @uref{http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/} and install
 it.  (Most of the installers that ActiveTcl uses will put the @file{bin}
 directory containing the Tcl and Tk DLLs in your path, but you should
-check.  From R, run @code{Sys.getenv("PATH")} to do so.)  You then need
-to set the environment variable @code{TCL_LIBRARY}, to something like
-@code{c:/Program Files/Tcl/lib/tcl8.3}.  (The startup code for the
-package will warn you if this is unset, and Q3.2 explains how to set
-them.  NB: do not quote the path, even if as here it contains spaces. If
-you forget, you can set the variable inside R by something like
+check.  From R, run @code{Sys.getenv("PATH")} to do so.)  Note that you
+do need 8.3.x and not 8.4.0: follow the links to 8.4.0 and you will find
+8.3.x available there.
+
+You then need to set the environment variable
+@code{TCL_LIBRARY}(@pxref{How do I set environment variables?}), to
+something like @code{c:/Program Files/Tcl/lib/tcl8.3}.  (The startup
+code for the package will warn you if this is unset.  NB: do not quote
+the path, even if as here it contains spaces. If you forget, you can set
+the variable inside R by something like
 @smallexample
     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 @end smallexample

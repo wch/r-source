@@ -25,6 +25,23 @@ libRblas.a:  Rblas.def
 
 #                          ===== Packages ======
 
+MASS-HELP = ziponly
+MASS-ZIPDATA = zip
+boot-HELP = ziponly
+boot-ZIPDATA = zip
+cluster-HELP = ziponly
+cluster-ZIPDATA = zip
+grid-HELP = ziponly
+grid-ZIPDATA = zip
+lattice-HELP = ziponly
+lattice-ZIPDATA = zip
+nlme-HELP = ziponly
+nlme-ZIPDATA = zip
+rpart-HELP = ziponly
+rpart-ZIPDATA = zip
+survival-HELP = ziponly
+survival-ZIPDATA = zip
+
 bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
@@ -32,6 +49,9 @@ pkg-%:
 	$(MAKE) DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
+	@if test -d $(RLIB)/$*/data ; then \
+	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
+	fi
 ifeq ($(strip $(HELP)),YES)
 	@$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
 	@$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
@@ -72,3 +92,6 @@ zipdata-%:
 	  $(RM) Rdata.zip filelist ; \
 	  ls -1 > filelist; \
 	  zip -rmq9X Rdata * -x filelist 00Index)
+
+data-%:
+	@echo "  not zipping data"

@@ -1,6 +1,7 @@
 eigen <- function(x, symmetric, only.values=FALSE)
 {
     x <- as.matrix(x)
+    dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
     n <- nrow(x)
     if (!n)
         stop("0 x 0 matrix")

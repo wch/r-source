@@ -95,7 +95,7 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   takes a vector of package names and a destination library, downloads
   the packages from CRAN and installs them. If the library
   is omitted it defaults to the first directory in \code{.libPaths()}, with
-  a warning.
+  a warning if there is more than one.
 %  The first argument can be an unquoted name, as in
 %  \code{install.packages(nlme)}.
 #ifdef windows

@@ -4,9 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-1, 2002-09-30
-@set REL-VERSION 1.6.0
+@set FAQ-VERSION 1.6-12, 2002-10-31
+@set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
+@documentlanguage en
+@documentencoding ISO-8859-1
 @c %**end of header
 
 @dircategory Programming
@@ -422,23 +424,27 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2002-08-22:
+@c Linux binaries as of 2002-10-28:
 @c
-@c debian   woody i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
-@c          sarge i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake 8.2   i386  1.5.1  Michele Alzetta <mikalzet@libero.it>
+@c debian   woody i386  1.6.0  Dirk Eddelbuettel <edd@debian.org>
+@c          sarge i386  1.6.0  Dirk Eddelbuettel <edd@debian.org>
+@c mandrake 8.*   i386  1.6.0  Michele Alzetta <mikalzet@libero.it>
+@c          9.0   i386  1.6.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x   i386  1.5.1  Stephen Eglen <stephen@gnu.org>
-@c          7.x   alpha 1.5.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c                i386  1.5.1  Martyn Plummer <plummer@iarc.fr>
-@c suse     7.3   i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c          8.0   i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c                i386  1.6.0  Martyn Plummer <plummer@iarc.fr>
+@c          8.0   i386  1.6.0  Martyn Plummer <plummer@iarc.fr>
+@c suse     7.3   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          8.0   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          8.1   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
-i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
-and Naoki Takebayashi, respectively), SuSE 7.3/8.0 i386 packages by
-Detlef Steuer, and Mandrake 8.2 i386 packages by Michele Alzetta.
+distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386,
+7.x/8.0 i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn
+Plummer and Naoki Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386
+packages by Detlef Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by
+Michele Alzetta.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -543,8 +549,8 @@ between R and S?}).  Introductory books include
 @quotation
 P. Spector (1994), ``An introduction to S and @SPLUS{}'', Duxbury Press.
 
-A. Krause and M. Olsen (1997), ``The Basics of S and @SPLUS{}'',
-Springer.
+A. Krause and M. Olsen (2002), ``The Basics of @SPLUS{}'' (Third
+Edition).  Springer, ISBN 0-387-95456-2
 @end quotation
 
 The book
@@ -729,7 +735,8 @@ on R, existing mailing lists and the R Bug Tracking system.
 
 To ``submit'' to @acronym{CRAN}, simply upload to
 @uref{ftp://cran.r-project.org/incoming/} and send an email to
-@email{cran@@r-project.org}.
+@email{cran@@r-project.org}.  Note that CRAN generally does not accept
+submissions of precompiled binaries due to security reasons.
 
 @quotation
 @strong{Note:}  It is very important that you indicate the copyright
@@ -1470,6 +1477,8 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item CGIwithR
+Facilities for the use of R to write CGI scripts.
 @item CircStats
 Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -1517,10 +1526,17 @@ Arrays with arbitrary offsets.
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods.
+@item R2HTML
+Functions for exporting R objects & graphics in an @HTML{} document.
 @item RArcInfo
 Functions to import Arc/Info V7.x coverages and data.
+@item RColorBrewer
+ColorBrewer palettes for drawing nice maps shaded according to a
+variable.
 @item RMySQL
 An interface between R and the MySQL database system.
+@item RODBC
+An @acronym{ODBC} database interface.
 @item ROracle
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
 @item RQuantLib
@@ -1559,6 +1575,8 @@ and Bruno Torresani, 1998, Academic Press.
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+@item SparseM
+Basic linear algebra for sparse matrices.
 @item StatDataML
 Read and write StatDataML.
 @item SuppDists
@@ -1804,6 +1822,10 @@ hierarchical clustering and classification and regression trees.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
+@item mclust
+Model-based cluster analysis: the 2002 version of MCLUST.
+@item mclust1998
+Model-based cluster analysis: the 1998 version of MCLUST.
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -1893,6 +1915,8 @@ manipulations.
 Fits a principal curve to a matrix of points in arbitrary dimension.
 @item pspline
 Smoothing splines with penalties on order @math{m} derivatives.
+@item ptproc
+Tools for analyzing multi-dimensional point process models.
 @item qtl
 Analysis of experimental crosses to identify QTLs.
 @item quadprog
@@ -1910,6 +1934,8 @@ Breiman's random forest classifier.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
+@item rgenoud
+R version of GENetic Optimization Using Derivatives.
 @item rmeta
 Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
@@ -2007,6 +2033,8 @@ optimal under various criteria.
 @item survival
 Functions for survival analysis, including penalised likelihood.
 @emph{Recommended}.
+@item survrec
+Survival analysis for recurrent event data.
 @item systemfit
 Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
@@ -2063,13 +2091,6 @@ Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
 @c </NOTE>
-@item R2HTML
-Functions for exporting R objects & graphics in an @HTML{} document.
-@c <NOTE>
-@c Moved to Devel for 1.5 as it fails R CMD check.
-@item RODBC
-An @acronym{ODBC} database interface.
-@c </NOTE>
 @c <NOTE>
 @c Moved to Devel for 1.6 as it fails R CMD check.
 @item RPgSQL
@@ -2116,11 +2137,6 @@ Ensembles of tree classifiers.
 @item locfit
 Local Regression, likelihood and density estimation.
 @c </NOTE>
-@c <NOTE>
-@c Moved to Devel for 1.6 as it fails R CMD check.
-@item mclust
-Model-based cluster analysis.
-@c </NOTE>
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
@@ -2158,6 +2174,9 @@ per-record, aggregate and trigger functions.
 @item RGnumeric
 A plugin for the Gnumeric spreadsheet that allows R functions to be
 called from cells within the sheet, automatic recalculation, etc.
+@item RGtkBindingGenerator
+A meta-package which generates C and R code to provide bindings to a
+Gtk-based library.
 @item RGtkViewers
 A collection of tools for viewing different S objects, databases, class
 and widget hierarchies, S source file contents, etc.

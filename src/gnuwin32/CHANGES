@@ -4,6 +4,17 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1061
+======
+
+Changed titles on help windows so topic name shows when minimized.
+
+Dependencies were not being generated properly in packages using C++.
+
+share/R/firstlib.R was not being included in the binary distribution.
+
+
+
 rw1060
 ======
 

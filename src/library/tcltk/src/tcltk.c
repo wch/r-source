@@ -7,6 +7,10 @@
 #define TCL80
 #endif
 
+/* TclCmdProc was redefined to include const in Tcl 8.4 */
+#ifndef CONST84
+#define CONST84
+#endif
 
 #include <Rinternals.h>
 #include <R_ext/PrtUtil.h>
@@ -56,7 +60,7 @@ static SEXP makeRTclObject(Tcl_Obj *tclobj)
 static int R_eval(ClientData clientData,
 		  Tcl_Interp *interp,
 		  int argc,
-		  char *argv[])
+		  CONST84 char *argv[])
 {
     int status, i;
     SEXP text, expr, ans;
@@ -98,7 +102,7 @@ static int R_eval(ClientData clientData,
 static int R_call(ClientData clientData,
 		  Tcl_Interp *interp,
 		  int argc,
-		  char *argv[])
+		  CONST84 char *argv[])
 {
     int i;
     SEXP expr, fun, alist;
@@ -123,7 +127,7 @@ static int R_call(ClientData clientData,
 static int R_call_lang(ClientData clientData,
 		  Tcl_Interp *interp,
 		  int argc,
-		  char *argv[])
+		  CONST84 char *argv[])
 {
     SEXP expr, env;
 
@@ -582,6 +586,7 @@ void tcltk_init(void)
 
 
 #ifndef Win32
+#ifndef TCL80
 /* ----- Tcl/Tk console routines ----- */
 
 /* From src/unix/devUI.h */
@@ -672,4 +677,5 @@ void RTcl_ActivateConsole ()
     R_Consolefile = NULL;
     R_Outputfile = NULL;
 }
+#endif
 #endif

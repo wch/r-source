@@ -22,7 +22,7 @@ summaryRprof <- function(filename="Rprof.out",chunksize=5000)
       count <- count+nread
       thelines <- strsplit(chunk," ")
       lapply(thelines, function (a.line){
-          lapply(a.line, inc, e=total)
+          lapply(unique(a.line), inc, e=total)
           inc(a.line[[1]],e=self)
       })
       if (nread<chunksize)

@@ -1,6 +1,7 @@
-You can make an install package (rw1060.exe) in the usual Windows style
+You can make an install package (rw1061.exe) in the usual Windows style
 (by default in Windows 2000 style) by using the installer kit 
-Inno Setup 2.0.17 or later from www.jrsoftware.org. 
+Inno Setup 2.0.x, x >= 17  from www.jrsoftware.org.  (Inno Setup 3,
+currently in beta, is not supported and will not be until it is released.)
 
 You need the R installation built completely (see ../INSTALL: this
 includes making bitmap and Tcl/Tk support and the manuals).
@@ -17,7 +18,7 @@ Then edit ISDIR in ../MkRules and run
 make
 make clean
 
-You will have rw1060.exe and a set of files miniR* for the floppy-sized
+You will have rw1061.exe and a set of files miniR* for the floppy-sized
 distribution.
 
 

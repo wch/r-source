@@ -53,7 +53,7 @@ mirrors, and included in our tools.zip).
 
 PCRE from ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/ or
 http://pcre.sourceforge.net/src/.  Unpack this (we used
-prce-3.9.tar.bz2) and copy the files into src/extra/pcre.
+pcre-3.9.tar.bz2) and copy the files into src/extra/pcre.
 
 bzip2-1.0.2 from http://sources.redhat.com/bzip2.  Unpack this and
 copy the files into src/extra/bzip2.
@@ -97,7 +97,8 @@ Then: untar R-@RVER@.tgz somewhere (with no spaces in the path names),
 	cd /somewhere/R-@RVER@/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed and to
-set the type(s) of help that you want built.
+set the type(s) of help that you want built.  BEWARE: MkRules contains
+tabs and some editors (e.g. WinEdt) silently remove them.
 
 Then run
 
@@ -166,7 +167,7 @@ Building Tcl/Tk support
 -----------------------
 
 The TclTk support package is not built automatically.  To use this you
-need to download and install ActiveTcl 8.3 from
+need to download and install ActiveTcl 8.3.x from
 http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ and set TCL_HOME
 in MkRules to where you installed it (perhaps c:/Program Files/Tcl).
 Then
@@ -174,6 +175,9 @@ Then
 	make tcl
 
 will make the package.
+
+ActiveTcl 8.4.x is not supported: it works with R on some systems but
+not others, and the distributed binary is linked to 8.3.x.
 
 
 
@@ -228,7 +232,7 @@ and checked by
 
 If you are using a cvs/rsync version of the R sources, you need to put
 the .tar.gz files for the recommended packages in
-../library/Recommended, and copy foo_*.tar.gz to foo_tgz.  If you have
+../library/Recommended, and copy foo_*.tar.gz to foo.tgz.  If you have
 rsync installed,
 
 	make rsync-recommended

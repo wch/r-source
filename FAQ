@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-1, 2002-09-30
+Version 1.6-12, 2002-10-31
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -238,7 +238,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.6.0.  Based on this
+   The current released version is 1.6.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -373,10 +373,10 @@ directory of a CRAN site.
 
    The `bin/linux' directory of a CRAN site contains Debian stable/testing
 packages for the i386 platform (now part of the Debian distribution and
-maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x i386 and 7.x alpha
-packages (maintained by Stephen Eglen, Martyn Plummer and Naoki
-Takebayashi, respectively), SuSE 7.3/8.0 i386 packages by Detlef Steuer,
-and Mandrake 8.2 i386 packages by Michele Alzetta.
+maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x/8.0 i386 and 7.x
+alpha packages (maintained by Stephen Eglen, Martyn Plummer and Naoki
+Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386 packages by Detlef
+Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by Michele Alzetta.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -461,7 +461,8 @@ Introductory books include
 
      P. Spector (1994), "An introduction to S and S-PLUS", Duxbury Press.
 
-     A. Krause and M. Olsen (1997), "The Basics of S and S-PLUS", Springer.
+     A. Krause and M. Olsen (2002), "The Basics of S-PLUS" (Third Edition).
+     Springer, ISBN 0-387-95456-2
 
    The book
 
@@ -580,8 +581,8 @@ and is currently being mirrored daily at
      `http://cran.at.r-project.org/'  (TU Wien, Austria)
      `http://cran.au.r-project.org/'  (PlanetMirror, Australia)
      `http://cran.br.r-project.org/'  (Universidade Federal de
-                                      Parana', Brazil)
-     `http://cran.ch.r-project.org/'  (ETH Zu"rich, Switzerland)
+                                      Paraná, Brazil)
+     `http://cran.ch.r-project.org/'  (ETH Zürich, Switzerland)
      `http://cran.de.r-project.org/'  (APP, Germany)
      `http://cran.dk.r-project.org/'  (SunSITE, Denmark)
      `http://cran.hu.r-project.org/'  (Semmelweis U, Hungary)
@@ -601,7 +602,8 @@ mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
 `ftp://cran.r-project.org/incoming/' and send an email to
-<cran@r-project.org>.
+<cran@r-project.org>.  Note that CRAN generally does not accept submissions
+of precompiled binaries due to security reasons.
 
      *Note:*  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...)  in your submission.
@@ -1183,6 +1185,9 @@ distributions of R.)
 *Bhat*
      Functions for general likelihood exploration (MLE, MCMC, CIs).
 
+*CGIwithR*
+     Facilities for the use of R to write CGI scripts.
+
 *CircStats*
      Circular Statistics, from "Topics in Circular Statistics" by S. Rao
      Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -1246,11 +1251,21 @@ distributions of R.)
      generalisation of SVD also supporting non-identity metrics and
      penalisations.  Also includes some other multiway methods.
 
+*R2HTML*
+     Functions for exporting R objects & graphics in an HTML document.
+
 *RArcInfo*
      Functions to import Arc/Info V7.x coverages and data.
 
+*RColorBrewer*
+     ColorBrewer palettes for drawing nice maps shaded according to a
+     variable.
+
 *RMySQL*
      An interface between R and the MySQL database system.
+
+*RODBC*
+     An ODBC database interface.
 
 *ROracle*
      Oracle Database Interface driver for R.  Uses the ProC/C++ embedded
@@ -1293,6 +1308,9 @@ distributions of R.)
      Data sets and sample linear mixed effects analyses corresponding to the
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+
+*SparseM*
+     Basic linear algebra for sparse matrices.
 
 *StatDataML*
      Read and write StatDataML.
@@ -1611,6 +1629,12 @@ distributions of R.)
      Maximally selected rank and Gauss statistics with several p-value
      approximations.
 
+*mclust*
+     Model-based cluster analysis: the 2002 version of MCLUST.
+
+*mclust1998*
+     Model-based cluster analysis: the 1998 version of MCLUST.
+
 *mda*
      Code for mixture discriminant analysis (MDA), flexible discriminant
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -1721,6 +1745,9 @@ distributions of R.)
 *pspline*
      Smoothing splines with penalties on order m derivatives.
 
+*ptproc*
+     Tools for analyzing multi-dimensional point process models.
+
 *qtl*
      Analysis of experimental crosses to identify QTLs.
 
@@ -1740,6 +1767,9 @@ distributions of R.)
 *relimp*
      Functions to facilitate inference on the relative importance of
      predictors in a linear or generalized linear model.
+
+*rgenoud*
+     R version of GENetic Optimization Using Derivatives.
 
 *rmeta*
      Functions for simple fixed and random effects meta-analysis for
@@ -1826,6 +1856,9 @@ distributions of R.)
      Functions for survival analysis, including penalised likelihood.
      _Recommended_.
 
+*survrec*
+     Survival analysis for recurrent event data.
+
 *systemfit*
      Contains functions for fitting simultaneous systems of equations using
      Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
@@ -1890,12 +1923,6 @@ these a try, of course.  This area of CRAN currently contains
      obtained from PDSIMUL in package PDAP) and phylogenetically-based
      analyses using GLS.
 
-*R2HTML*
-     Functions for exporting R objects & graphics in an HTML document.
-
-*RODBC*
-     An ODBC database interface.
-
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
 
@@ -1908,9 +1935,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *locfit*
      Local Regression, likelihood and density estimation.
-
-*mclust*
-     Model-based cluster analysis.
 
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
@@ -1947,6 +1971,10 @@ Currently, there are
 *RGnumeric*
      A plugin for the Gnumeric spreadsheet that allows R functions to be
      called from cells within the sheet, automatic recalculation, etc.
+
+*RGtkBindingGenerator*
+     A meta-package which generates C and R code to provide bindings to a
+     Gtk-based library.
 
 *RGtkViewers*
      A collection of tools for viewing different S objects, databases, class

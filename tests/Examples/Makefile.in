@@ -87,7 +87,7 @@ $(EX_IN): FORCE
 $(RECOMMENDED_EX_IN): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
 	find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
-	 -print | grep $@ > /dev/null ||\
+	 -print 2> /dev/null | grep $@ > /dev/null ||\
 	(\
 	  if test -f $@ ; then \
 	    if test -n "`tail -6 $@ | grep '^Time elapsed'`" ; then \

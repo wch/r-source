@@ -37,7 +37,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   \code{+- Inf} values.
 }
 \details{
-  The two ``hinges'' are versions of the first first and third quartile,
+  The two ``hinges'' are versions of the first and third quartile,
   i.e. close to \code{\link{quantile}(x, c(1,3)/4)}.  The hinges equal
   the quartiles for odd \eqn{n} (where \code{n <- length(x)}) and
   differ for even \eqn{n}. Where the quartiles only equal observations

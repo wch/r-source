@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for @RWVER@
+Version for rw1061
 Brian Ripley
 
 
@@ -20,16 +20,18 @@ Table of Contents
   2.7 How can I keep workspaces for different projects in different directories?
   2.8 How do I print from R?
   2.9 Can I use `R BATCH'?
-  2.10 Can I use @RWVER@ with ESS and (X)emacs?
+  2.10 Can I use rw1061 with ESS and (X)emacs?
   2.11 What are HOME and working directories?
-  2.12 R can't find my file, but I know it is there!
-  2.13 Does R use the Registry?
-  2.14 Entering certain characters crashes Rgui.
-  2.15 The internet download functions fail.
+  2.12 How do I set environment variables?
+  2.13 R can't find my file, but I know it is there!
+  2.14 Does R use the Registry?
+  2.15 Entering certain characters crashes Rgui.
+  2.16 The internet download functions fail.
+  2.17 Other strange crashes.
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
-  3.2 I don't have permission to write to the `@RWVER@\library' directory.
+  3.2 I don't have permission to write to the `rw1061\library' directory.
   3.3 The packages I installed do not appear in the HTML help system.
   3.4 My functions are not found by the HTML help search system.
   3.5 Loading a package fails.
@@ -77,7 +79,7 @@ that version.  The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows,
 (`1.4.0' or later); the current version is often called something like
-`@RWVER@' (although not officially).
+`rw1061' (although not officially).
 
 
 2 Installation and Usage
@@ -90,7 +92,7 @@ Go to any CRAN site (see `http://cran.r-project.org/mirrors.html' for a
 list), navigate to the `bin/windows/base' directory and collect the
 files you need.  There are two versions of the distribution.
 
-1) `@RWVER@.exe' is about 19Mb and gives a complete installation.
+1) `rw1061.exe' is about 19Mb and gives a complete installation.
 
 2) Directory `miniR' contains `miniR.exe' and eight files
 `miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
@@ -107,7 +109,7 @@ If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
 in will probably work, but is little-tested.)
 
-The simplest way is to use `@RWVER@.exe' or `miniR.exe'.  Just
+The simplest way is to use `rw1061.exe' or `miniR.exe'.  Just
 double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you supressed making a group for R).
@@ -115,17 +117,17 @@ R this way you can uninstall it from the Control Panel or Start Menu
 For a manual installation, choose a location and unzip the zip files
 (with a tool that preserves long file names and the directory structure:
 we recommend the INFO-ZIP project's `unzip').  All the files will
-unpack into a directory `@RWVER@'.
+unpack into a directory `rw1061'.
 
 Choose a working directory for R.  If you installed manually, make a
-shortcut to `@RWVER@\bin\Rgui.exe' on your desktop or somewhere on the
+shortcut to `rw1061\bin\Rgui.exe' on your desktop or somewhere on the
 Start menu file tree.  Right-click the shortcut, select Properties...
 and change the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
 field, for example `--sdi --max-mem-size=40M'.  You can also set
 environment variables at the end of the Target field, for example
-`R_LIBS=P:/R/library'.
+`R_LIBS=p:/myRlib'.
 
 2.3 How do I run it?
 ====================
@@ -226,7 +228,7 @@ It depends what you want to print.
 ========================
 
 Yes, if you have Perl and the files for making source packages (from
-`@RWVER@.exe') installed.  The Windows analogue is `Rcmd BATCH': use
+`rw1061.exe') installed.  The Windows analogue is `Rcmd BATCH': use
 `Rcmd BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'.  A sample
@@ -234,7 +236,7 @@ batch file might contain (as one line)
 
      path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 
-2.10 Can I use @RWVER@ with ESS and (X)emacs?
+2.10 Can I use rw1061 with ESS and (X)emacs?
 ============================================
 
 Yes.  Recent versions of ESS (e.g. 5.1.20) come with support for this
@@ -263,12 +265,41 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by `Sys.getenv("R_USER")'.
 
-2.12 R can't find my file, but I know it is there!
+2.12 How do I set environment variables?
+========================================
+
+Environment variables can be set in R in three different ways.
+  1. On the command line as name=value pairs.  For example in the
+     shortcut to `RGui' you could have
+
+          path_to_R\bin\Rgui.exe HOME=p:/ R_LIBS=p:/myRlib
+
+  2. In an environment file `.Renviron' in the working directory or
+     your home directory, for example containing the line
+
+          R_LIBS=p:/myRlib
+
+     See `?Startup' for more details of environment files.
+
+  3. For all applications via Windows.  How you set an environment
+     variable is system specific: in Windows 9x you can set them in
+     `autoexec.bat' or in an MS-DOS window from which you launch `Rgui'
+     / `Rterm'.  Under Windows NT/2000/XP you can use the control panel
+     or the properties of `My Computer'.  Under Windows ME you can use
+     the System Configuration Utility (under Programs, Accessories,
+     System Tools on the Start menu).  You may have to log out or
+     reboot for such changes to take effect.
+
+The order of precedence for environmental variables is the order in
+which these options are listed, that is the command line then
+`.Renviron' then the inherited environment.
+
+2.13 R can't find my file, but I know it is there!
 ==================================================
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-`"d:\\@RWVER@\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+`"d:\\rw1061\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
 for yourself by using forward slashes as path separators: they do work
 under Windows.
 
@@ -279,7 +310,7 @@ short name (something like `PROGRA~1'; you can get it as the `MS-DOS
 name' from the Properties of the file on most versions of Windows, and
 from `dir /X' in a `Command Prompt' window on 2000/XP).
 
-2.13 Does R use the Registry?
+2.14 Does R use the Registry?
 =============================
 
 Not itself.
@@ -296,7 +327,7 @@ folder, and remove them by running this with argument `/U'.  Note that
 the settings are all per machine and not per user, and that this
 neither sets up nor removes the file associations.
 
-2.14 Entering certain characters crashes Rgui.
+2.15 Entering certain characters crashes Rgui.
 ==============================================
 
 This used to happen occasionally, and all the occurrences we have
@@ -306,16 +337,16 @@ installed a workaround as from `rw1051' that seems to avoid this.
 If it still happens, try extracting the one to be found in the
 self-extracting archive
 `ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe' and put it in the
-`@RWVER@\bin' directory.  Removing `msvcrt.dll' from that directory
+`rw1061\bin' directory.  Removing `msvcrt.dll' from that directory
 reverts to the standard behaviour.  It seems that on some versions of
-Windows (but not 2000/XP) you also need to put the `@RWVER@\bin'
+Windows (but not 2000/XP) you also need to put the `rw1061\bin'
 directory early in your path.
 
 This fix has solved other problems too, for example incorrect results in
 the date-time functions.  However, you are probably better off
 re-installing Windows.
 
-2.15 The internet download functions fail.
+2.16 The internet download functions fail.
 ==========================================
 
 for example `update.packages' and the menu items on the Packages menu.
@@ -329,6 +360,23 @@ Internet Explorer internals (and so needs Internet Explorer 4 or later
 installed).
 
 (b) A proxy needs to be set up: see `?download.file'.
+
+2.17 Other strange crashes.
+===========================
+
+Some users have found that `Rgui.exe' fails to start, exiting with a
+"Floating- point invalid operation" or other low level error.  This
+error may also happen in the middle of a session.  In some cases where
+we have tracked this down, it was due to bugs in the video driver on
+the system in question:  it makes changes to the floating point control
+word which are incompatible with R.  (Good practice would restore the
+control word to the state it was in when the driver code was called.)
+For example, one user reported that the virtual screen manager JSP2
+caused this crash.
+
+These errors are essentially impossible for us to fix or work around.
+The only solution we know of is for the user to replace the buggy
+driver that is causing the error.
 
 
 3 Packages
@@ -351,7 +399,7 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, make sure you installed the necessary
-files from `@RWVER@.exe'.  Then read the file `README.packages'.  You
+files from `rw1061.exe'.  Then read the file `README.packages'.  You
 will need to collect and install several tools to use this: you can
 download them via the portal at
 `http://www.stats.ox.ac.uk/pub/Rtools/'.  Once you have done so, just
@@ -363,42 +411,25 @@ Note that this is rather so tricky; please do ensure that you have
 followed the instructions *exactly*.  At least 90% of the questions
 asked are because people have not done so.
 
-3.2 I don't have permission to write to the `@RWVER@\library' directory.
+3.2 I don't have permission to write to the `rw1061\library' directory.
 =======================================================================
 
 You can install packages anywhere and use the environment variable
-`R_LIBS' to point to the library location(s).
+`R_LIBS' (*note How do I set environment variables?::) to point to the
+library location(s).
 
-Suppose your packages are installed in `p:\mylibs'.  Then you can EITHER
+Suppose your packages are installed in `p:\myRlib'.  Then you can EITHER
 
-     set the environment variable R_LIBS to p:\mylibs
+     set the environment variable R_LIBS to p:\myRlib
 
 OR use a package by, e.g.
 
-     library(MASS, lib.loc="p:/mylibs")
-
-How you set an environment variable is system specific: in Windows 9x
-you can set them in `autoexec.bat' or in an MS-DOS window from which
-you launch `Rgui' / `Rterm'.  Under Windows NT/2000/XP you can use the
-control panel or the properties of `My Computer'.  Under Windows ME you
-can use the System Configuration Utility (under Programs, Accessories,
-System Tools on the Start menu).  You can also set them on the command
-line, for example in the shortcut you could have
-
-     path_to_R\bin\Rgui.exe R_LIBS=p:/mylibs
-
-and you can set variables in a file `.Renviron' in the working directory
-or your home directory, for example
-
-     R_LIBS=p:/mylibs
-
-The order of precedence for environmental variables is the command line
-then `.Renviron' then the inherited environment.
+     library(MASS, lib.loc="p:/myRlib")
 
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================
 
-The HTML search only works for packages installed in `@RWVER@\library'.
+The HTML search only works for packages installed in `rw1061\library'.
 
 To update the HTML indices after you have installed a pre-compiled
 package, run at the R prompt.
@@ -407,7 +438,7 @@ package, run at the R prompt.
 
 This is done automatically when installing from the Packages menu or by
 `install.packages()', and when `help.start' is run, provided you have
-write permission in `@RWVER@\library'.
+write permission in `rw1061\library'.
 
 3.4 My functions are not found by the HTML help search system.
 ==============================================================
@@ -415,7 +446,7 @@ write permission in `@RWVER@\library'.
 The following conditions need to hold for functions in a package you
 installed.
 
-   * the package is installed in `@RWVER@\library'.
+   * the package is installed in `rw1061\library'.
 
    * the package contains a `CONTENTS' file in its top-level directory.
 
@@ -454,12 +485,16 @@ ActiveTcl 8.3.x from
 `http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/' and install it.
 (Most of the installers that ActiveTcl uses will put the `bin'
 directory containing the Tcl and Tk DLLs in your path, but you should
-check.  From R, run `Sys.getenv("PATH")' to do so.)  You then need to
-set the environment variable `TCL_LIBRARY', to something like
-`c:/Program Files/Tcl/lib/tcl8.3'.  (The startup code for the package
-will warn you if this is unset, and Q3.2 explains how to set them.  NB:
-do not quote the path, even if as here it contains spaces. If you
-forget, you can set the variable inside R by something like
+check.  From R, run `Sys.getenv("PATH")' to do so.)  Note that you do
+need 8.3.x and not 8.4.0: follow the links to 8.4.0 and you will find
+8.3.x available there.
+
+You then need to set the environment variable `TCL_LIBRARY'(*note How
+do I set environment variables?::), to something like `c:/Program
+Files/Tcl/lib/tcl8.3'.  (The startup code for the package will warn you
+if this is unset.  NB: do not quote the path, even if as here it
+contains spaces. If you forget, you can set the variable inside R by
+something like
          Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 .)  Similarly, you can set the path if needed by something like
          Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
@@ -651,11 +686,11 @@ scrollbar or the <CTRL + left/right arrow> keys to scroll horizontally.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources.  Suppose you want to compile R-@RVER@.  Start in a
+Get the R sources.  Suppose you want to compile R-1.6.1.  Start in a
 directory whose path does not contain spaces, and run
 
-     tar zxvf R-@RVER@.tgz
-     cd R-@RVER@
+     tar zxvf R-1.6.1.tgz
+     cd R-1.6.1
      cd src\gnuwin32
 
 Now read the `INSTALL' file and set up all the tools needed.  Then you
@@ -695,7 +730,7 @@ compiled for the correct compiler.
 
 We strongly encourage you to do this _via_ building an R package: see
 the _`Writing R Extensions'_ manual.  In any event you should install
-the parts of the R system for building R packages (in `@RWVER@.exe'),
+the parts of the R system for building R packages (in `rw1061.exe'),
 and get and install the tools (including Perl) and compilers mentioned
 in the file `readme.packages' contained therein.  Then you can use
      ...\bin\Rcmd SHLIB foo.c bar.f
@@ -729,13 +764,13 @@ and make a debug version of your package by
 
 Then you can debug by
 
-     gdb /path/to/@RWVER@/bin/Rgui.exe
+     gdb /path/to/rw1061/bin/Rgui.exe
 
 However, note
 
    * `gdb' will only be able to find the source code if we run in the
-     location where the source was compiled (`@RWVER@/src/gnuwin32' for
-     the main system, `@RWVER@/src/library/mypkg/src' for a package),
+     location where the source was compiled (`rw1061/src/gnuwin32' for
+     the main system, `rw1061/src/library/mypkg/src' for a package),
      unless told otherwise by the `directory' command.  It is most
      convenient to set a list of code locations via `directory' commands
      in the file `.gdbinit' in the directory from which `gdb' is run.

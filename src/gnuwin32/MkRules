@@ -1,4 +1,5 @@
 #-*- Makefile -*-
+## This files contains tabs: make sure your editor leaves them unchanged.
 
 ## ===== configuration macros for building packages or R  ===============
 
@@ -30,7 +31,7 @@ TCL_VERSION = 83
 
 ## ====== configuration macros for building installers ===========
 
-# location where Inno Setup was installed
+# location where Inno Setup 2.0.x was installed
 ISDIR=C:/packages/Inno
 
 ## =================== cross-compiler settings  =================

@@ -88,12 +88,16 @@
 \alias{tkplace.slaves}
 \alias{tkgetOpenFile}
 \alias{tkgetSaveFile} 
+\alias{tkchooseDirectory}        
 \alias{tkmessageBox}  
+\alias{tkdialog}        
+\alias{tkpopup}        
 \alias{tkfile.tail}
 \alias{tkfile.dir}
 \alias{tkopen}
 \alias{tkclose}
 \alias{tkputs}        
+\alias{tkread}        
 
 \title{Tk non-widget commands}
 \description{

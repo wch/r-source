@@ -758,14 +758,11 @@ static int fmtfp (char *buffer, size_t *currlen, size_t maxlen,
   {
     total += dopr_outch (buffer, currlen, maxlen, '.');
 
+    while (zpadlen-- > 0)
+      total += dopr_outch (buffer, currlen, maxlen, '0');
+
     while (fplace > 0) 
       total += dopr_outch (buffer, currlen, maxlen, fconvert[--fplace]);
-  }
-
-  while (zpadlen > 0)
-  {
-    total += dopr_outch (buffer, currlen, maxlen, '0');
-    --zpadlen;
   }
 
   while (padlen < 0) 

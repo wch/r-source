@@ -58,7 +58,7 @@ as.POSIXct.dates <- function(x, ...)
         z <- attr(x, "origin")
         x <- as.numeric(x) * 86400
         if(length(z) == 3 && is.numeric(z))
-            x  <- x - as.numeric(ISOdate(z[3], z[1], z[2], 0))
+            x  <- x + as.numeric(ISOdate(z[3], z[1], z[2], 0))
         return(structure(x, class = c("POSIXt", "POSIXct")))
     } else stop(paste("`", deparse(substitute(x)),
                       "' is not a \"dates\" object", sep=""))
@@ -458,8 +458,10 @@ seq.POSIXt <-
     if (missing(by)) {
         from <- unclass(as.POSIXct(from))
         to <- unclass(as.POSIXct(to))
-        incr <- (to - from)/length.out
-        res <- seq.default(from, to, incr)
+        ## Till (and incl.) 1.6.0 :
+        ##- incr <- (to - from)/length.out
+        ##- res <- seq.default(from, to, incr)
+        res <- seq.default(from, to, length.out = length.out)
         return(structure(res, class = c("POSIXt", "POSIXct")))
     }
 
@@ -704,7 +706,8 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             axis(2, ...)
             if(num.br)
                 breaks <- c.POSIXct(res$breaks)
-            axis.POSIXct(1, at = breaks,  format = format)
+            axis.POSIXct(1, at = breaks,  format = format, ...)
+                                        # `...' : e.g. cex.axis
         }
      }
     invisible(res)

@@ -1862,40 +1862,44 @@ void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 }
 
     /* different handling of errors */
+
+#define return_and_free(X) {r = X; R_FreeStringBuffer(&data.buffer); return r;}
 SEXP R_LoadFromFile(FILE *fp, int startup)
 {
     struct R_inpstream_st in;
     int magic;
     SaveLoadData data = {{NULL, 0, MAXELTSIZE}};
+    SEXP r;
 
     magic = R_ReadMagic(fp);
     switch(magic) {
     case R_MAGIC_XDR:
-	return(XdrLoad(fp, startup, &data));
+	return_and_free(XdrLoad(fp, startup, &data));
     case R_MAGIC_BINARY:
-	return(BinaryLoad(fp, startup, &data));
+	return_and_free(BinaryLoad(fp, startup, &data));
     case R_MAGIC_ASCII:
-	return(AsciiLoad(fp, startup, &data));
+	return_and_free(AsciiLoad(fp, startup, &data));
     case R_MAGIC_BINARY_VERSION16:
-	return(BinaryLoadOld(fp, 16, startup, &data));
+	return_and_free(BinaryLoadOld(fp, 16, startup, &data));
     case R_MAGIC_ASCII_VERSION16:
-	return(AsciiLoadOld(fp, 16, startup, &data));
+	return_and_free(AsciiLoadOld(fp, 16, startup, &data));
     case R_MAGIC_ASCII_V1:
-	return(NewAsciiLoad(fp, &data));
+	return_and_free(NewAsciiLoad(fp, &data));
     case R_MAGIC_BINARY_V1:
-	return(NewBinaryLoad(fp, &data));
+	return_and_free(NewBinaryLoad(fp, &data));
     case R_MAGIC_XDR_V1:
-	return(NewXdrLoad(fp, &data));
+	return_and_free(NewXdrLoad(fp, &data));
     case R_MAGIC_ASCII_V2:
 	R_InitFileInPStream(&in, fp, R_pstream_ascii_format, NULL, NULL);
-	return R_Unserialize(&in);
+	return_and_free(R_Unserialize(&in));
     case R_MAGIC_BINARY_V2:
 	R_InitFileInPStream(&in, fp, R_pstream_binary_format, NULL, NULL);
-	return R_Unserialize(&in);
+	return_and_free(R_Unserialize(&in));
     case R_MAGIC_XDR_V2:
 	R_InitFileInPStream(&in, fp, R_pstream_xdr_format, NULL, NULL);
-	return R_Unserialize(&in);
+	return_and_free(R_Unserialize(&in));
     default:
+        R_FreeStringBuffer(&data.buffer);
 	switch (magic) {
 	case R_MAGIC_EMPTY:
 	    error("restore file may be empty -- no data loaded");

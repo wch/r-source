@@ -206,6 +206,38 @@ AC_SUBST(R_BROWSER)
 
 ### * C compiler and its characteristics.
 
+## R_PROG_CPP_CPPFLAGS
+## -------------------
+## In case of gcc, check whether the C preprocessor complains about
+## having '/usr/local/include' in its header search path (no matter how
+## it came there).  GCC 3.1 and 3.2 (at least) give warnings about
+## 'changing search order for system directory "/usr/local/include" as
+## it has already been specified as a non-system directory' which are at
+## least quite annoying.
+## <NOTE>
+## We currently do not distinguish whether '/usr/local/include' was
+## added as the R default, or by an explicit CPPFLAGS arg to configure.
+## If we wanted to, we should change
+##     : ${CPPFLAGS="-I/usr/local/include"}
+## in 'configure.ac' by something like
+##     : ${CPPFLAGS=${R_default_CPPFLAGS="-I/usr/local/include"}}
+## and test whether R_default_CPPFLAGS is non-empty.
+## </NOTE>
+AC_DEFUN([R_PROG_CPP_CPPFLAGS],
+[AC_REQUIRE([AC_PROG_CC])
+AC_REQUIRE([AC_PROG_CPP])
+if test "${GCC}" = yes; then
+  AC_LANG_PUSH(C)
+  AC_LANG_CONFTEST([AC_LANG_PROGRAM()])
+  if ${CPP} ${CPPFLAGS} conftest.${ac_ext} 2>&1 1>/dev/null | \
+      grep 'warning:.*system directory.*/usr/local/include' >/dev/null; then
+    CPPFLAGS=`echo ${CPPFLAGS} | \
+      sed 's|\(.*\)-I/usr/local/include *\(.*\)|\1\2|'`
+  fi
+  rm -f conftest.${ac_ext}
+  AC_LANG_POP(C)
+fi])# R_PROG_CPP_CPPFLAGS
+
 ## R_PROG_CC_M
 ## -----------
 ## Check whether the C compiler accepts '-M' for generating dependencies.
@@ -562,10 +594,11 @@ fi
 ## Run AC_F77_LIBRARY_LDFLAGS, and fix some known problems with FLIBS.
 AC_DEFUN([R_PROG_F77_FLIBS],
 [AC_REQUIRE([AC_F77_LIBRARY_LDFLAGS])
-## Currently g77 on Darwin links against '-lcrt1.o', which (unlike
-## '-lcrt0.o') is not stripped by AC_F77_LIBRARY_LDFLAGS.  This in 
-## particular causes R_PROG_F77_CC_COMPAT to fail.  Hence, we make
-## sure all -lcrt?.o are removed.
+## Currently g77 on Darwin links against '-lcrt1.o' (and for GCC 3.1 or
+## better also against '-lcrtbegin.o'), which (unlike '-lcrt0.o') are
+## not stripped by AC_F77_LIBRARY_LDFLAGS.  This in particular causes
+## R_PROG_F77_CC_COMPAT to fail.  Hence, we make sure all -lcrt*.o are
+## removed.
 ## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
 ## when using gcc for linking.  The '-l:' construction is similar to
 ## plain '-l' except that search order (archive/shared) given by '-a'
@@ -585,7 +618,7 @@ else
 fi
 for arg in ${FLIBS}; do
   case "${arg}" in
-    -lcrt?.o)
+    -lcrt*.o)
       ;;
     -l:*)
       flibs="${flibs} ${linker_option}${arg}"
@@ -595,31 +628,21 @@ for arg in ${FLIBS}; do
       ;;
   esac
 done
-## Also need to deal with offending '-lcrtbegin.o' on MacOS X (Jaguar)
-## with GCC 3.1 or better ...
-case "${host_os}" in
-  darwin*)
-    flibs=`echo "${flibs}" | sed 's/\(.*\)-lcrtbegin.o\(.*\)/\1\2/'`
-    ;;
-esac
 FLIBS="${flibs}"
 ## Versions of g77 up to 3.0.x only have a non-PIC (static) -lg2c which
 ## on some platforms means one cannot build dynamically loadable modules
 ## containing Fortran code.  (g77 3.1 will have a shared -lg2c too.)  As
 ## a workaround, Debian provides -lg2c-pic which holds pic objects only,
 ## and we should use in case we can find it ...
-## <FIXME>
-## Use FLIBS instead of ac_cv_flibs ...
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
-  flibs=`echo "${ac_cv_flibs}" | sed 's/-lg2c/-lg2c-pic/'`
+  flibs=`echo "${FLIBS}" | sed 's/-lg2c/-lg2c-pic/'`
   LIBS="${LIBS} ${flibs}"
   AC_LANG_PUSH(C)
   AC_TRY_LINK([], [], [FLIBS="${flibs}"])
   AC_LANG_POP(C)
   LIBS="${r_save_LIBS}"
 fi
-## </FIXME>
 ])# R_PROG_F77_FLIBS
 
 ## R_PROG_F77_APPEND_UNDERSCORE

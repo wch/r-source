@@ -485,6 +485,7 @@ packagedist:
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
 	$(CP) ../../share/make/wintests.mk $(RPREFIX)/share/make
+	$(CP) -pr ../../share/R $(RPREFIX)/share
 	$(CP) -p graphapp/graphapp.h graphapp/ga.h $(RPREFIX)/src/include
 	$(MAKE) PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
@@ -508,14 +509,15 @@ install:
 CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)/Recommended
 
 rsync-recommended:
-	(cd ../library; \
+	@(cd ../library; \
 	rsync -rvCt --delete --exclude=Makefile.in --exclude=.cvsignore \
-	  --include=*.tar.gz $(CRANREC) . ); \
-	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}_tgz ; done)
+	  --include=*.tar.gz --exclude=*.tgz $(CRANREC) . ); \
+	$(RM) ../library/Recommended/*.tgz; \
+	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
-../library/%/DESCRIPTION: ../library/RECOMMENDED/%_tgz
+../library/%/DESCRIPTION: ../library/RECOMMENDED/%.tgz
 	@echo "---- $*"
-	(cd ../library; tar zxf Recommended/$*_tgz; touch $@)
+	(cd ../library; tar zxf Recommended/$*.tgz; touch $@)
 
 unpack-recommended:
 	@echo "--- Unpacking recommended packages"

@@ -2,9 +2,8 @@
 #
 # ${RHOME}/tools/link-recommended
 
-
-# This is like rsync-recommended but without the rsync. Before running it
-# you are assumed to have already fetched the packages by (say) FTP.
+## This is like rsync-recommended but without the rsync.  Before running
+## it you are assumed to have already fetched the packages by (say) FTP.
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 (cd "${TOOLS_DIR}"/..
@@ -12,13 +11,16 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   PKGS=`grep '^R_PKGS_RECOMMENDED *=' Makeconf.in | sed 's/.*=//'`
   cd src/library/Recommended
 
+  ## <FIXME>
+  ## Remove eventually.
+  rm -f *_tgz
+  ## </FIXME>
+
   ## Link all each package to a simplified name so that Make has an
-  ## easier time. Notice that we cannot use pkgname.tgz because of
-  ## the way R CMD INSTALL works, but pkgname_tgz works OK.
-  ## Notice that as far as Make is concerned, the symlinks have the same
-  ## timestamp as the file they point to.
+  ## easier time.  Notice that as far as Make is concerned, the symlinks
+  ## have the same timestamp as the file they point to.
 
   for i in ${PKGS} ; do
-    ln -sf $i*.tar.gz ${i}_tgz
+    ln -sf $i*.tar.gz ${i}.tgz
   done
 )
