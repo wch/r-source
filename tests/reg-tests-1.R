@@ -2303,6 +2303,12 @@ data.frame(xx, yy=1:6, row.names=NULL) # no warning
 ##
 
 
+## empty paste
+stopifnot(length(paste(character(0), character(0))) == 0) # was ""
+stopifnot(identical(paste(character(0), character(0), collapse="+"), ""))
+##
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
