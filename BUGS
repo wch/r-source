@@ -29,6 +29,7 @@ Directory:  Accuracy
 Subject: bug in pnorm
 From: ratjamm@alum.mit.edu
 Date: Fri, 20 Oct 2000 21:46:18 +0200 (MET DST)
+--fixed for 1.2
 --accuracy issues in pnorm
 * PR# 631 *
 Subject: svd error 
@@ -275,31 +276,28 @@ none
 
 Directory:  incoming
 
-* PR# 739 *
-Subject: Bug in stars.R
-From: Tom Dye <tdye@lava.net>
-Date: Sun, 19 Nov 2000 21:48:16 -1000 (HST)
 * PR# 733 *
 Subject: gnome-support problems
 From: olav@melvin.jordforsk.no
 Date: Fri, 10 Nov 2000 10:55:31 +0100 (MET)
-* PR# 735 *
-Subject: Online marketing success increase sales
-From: namesmktingcd@virgin.net
-Date: Mon, 13 Nov 00 22:26:39 EST
-* PR# 734 *
-Subject:  Assigning into a dataframe 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 10 Nov 2000 16:00:31 GMT
-* PR# 738 *
-Subject: Bug in stars function
-From: Tom Dye <tdye@lava.net>
-Date: Sat, 18 Nov 2000 21:57:27 -1000 (HST)
 * PR# 737 *
 Subject: Bug in R 1.1.1 dev.print() with fix
 From: frost@pocketmail.com
 Date: Fri, 17 Nov 2000 20:45:58 +0100 (MET)
-* PR# 736 *
-Subject: Send & Accept Checks by Email. FREE !
-From: "Qchex.com" <mailresponse2@g7ps.com>
-Date: 11/15/00 02:50:52 PM
+* PR# 734 *
+Subject:  Assigning into a dataframe 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 10 Nov 2000 16:00:31 GMT
+* PR# 741 *
+Subject: match() is not correct for "close numerics"
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 21 Nov 2000 16:15:23 +0100
+* PR# 740 *
+Subject:  contour documentation 
+From: J.C.Rougier@durham.ac.uk
+Date: Tue, 21 Nov 2000 08:58:41 GMT
+* PR# 739 *
+Subject: Bug in stars.R
+From: Tom Dye <tdye@lava.net>
+Date: Sun, 19 Nov 2000 21:48:16 -1000 (HST)
+--fixed for 1.2
