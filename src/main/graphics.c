@@ -1829,11 +1829,11 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 #define EPS_FAC_1  16
 #define EPS_FAC_2 100
 
-    Rboolean swap;
+    Rboolean swap, is_xaxis = (axis == 1 || axis == 3);
     int log, n, style;
     double temp;
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	n = dd->gp.lab[0];
 	style = dd->gp.xaxs;
 	log = dd->gp.xlog;
@@ -1856,18 +1856,16 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	/* max - min is now finite */
     }
     /* Version <= 1.2.0 had
-       if (min == max)   -- exact equality for real numbers */
-    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))* 
-       EPS_FAC_1 * DBL_EPSILON) {
-	if(temp == 0) {
-	    min = -1;
-	    max =  1;
-	}
-	else {
-	    temp *= (min == max) ? .4 : 1e-2;
-	    min -= temp;
-	    max += temp;
-	}
+       if (min == max)	 -- exact equality for real numbers */
+    temp = fmax2(fabs(max), fabs(min));
+    if(temp == 0) {/* min = max = 0 */
+	min = -1;
+	max =  1;
+    }
+    else if(fabs(max - min) < temp * EPS_FAC_1 * DBL_EPSILON) {
+	temp *= (min == max) ? .4 : 1e-2;
+	min -= temp;
+	max += temp;
     }
 
     switch(style) {
@@ -1884,7 +1882,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	error("axis style \"%c\" unimplemented", style);
     }
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	if (log) {
 	    dd->gp.usr[0] = dd->dp.usr[0] = pow(10.,min);
 	    dd->gp.usr[1] = dd->dp.usr[1] = pow(10.,max);
@@ -1956,8 +1954,8 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	temp = min; min = max; max = temp;
     }
 
-#define G_Store_AXP				\
-    if(axis == 1 || axis == 3) {		\
+#define G_Store_AXP(is_X)			\
+    if(is_X) {					\
 	dd->gp.xaxp[0] = dd->dp.xaxp[0] = min;	\
 	dd->gp.xaxp[1] = dd->dp.xaxp[1] = max;	\
 	dd->gp.xaxp[2] = dd->dp.xaxp[2] = n;	\
@@ -1968,8 +1966,10 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	dd->gp.yaxp[2] = dd->dp.yaxp[2] = n;	\
     }
 
-    G_Store_AXP;
+    G_Store_AXP(is_xaxis);
 }
+#undef EPS_FAC_1
+#undef EPS_FAC_2
 
 void GSetupAxis(int axis, DevDesc *dd)
 {
@@ -1979,8 +1979,9 @@ void GSetupAxis(int axis, DevDesc *dd)
  *   xlog or ylog = TRUE ? */
     double min, max;
     int n;
+    Rboolean is_xaxis = (axis == 1 || axis == 3);
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	n = dd->gp.lab[0];
 	min = dd->gp.usr[0];
 	max = dd->gp.usr[1];
@@ -1993,8 +1994,9 @@ void GSetupAxis(int axis, DevDesc *dd)
 
     GPretty(&min, &max, &n);
 
-    G_Store_AXP;
+    G_Store_AXP(is_xaxis);
 }
+#undef G_Store_AXP
 
 /*-------------------------------------------------------------------
  *
