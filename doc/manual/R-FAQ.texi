@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-45, @value{FAQ-YEAR}-02-28
+@set FAQ-VERSION 1.8-46, @value{FAQ-YEAR}-03-02
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2442,6 +2442,9 @@ shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
 @item simpleboot
 Simple bootstrap routines.
+@item skewt
+Density, distribution function, quantile function and random generation
+for the skewed @math{t} distribution of Fernandez and Steel.
 @item sm
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
