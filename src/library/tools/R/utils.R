@@ -384,6 +384,8 @@ function(expr)
 {
     ## Try to run an expression, suppressing all 'output'.  In case of
     ## failure, stop with the error message.
+    oop <- options(warn = 1)
+    on.exit(options(oop))
     outConn <- file(open = "w")         # anonymous tempfile
     sink(outConn, type = "output")
     sink(outConn, type = "message")
