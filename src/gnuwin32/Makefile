@@ -1,7 +1,7 @@
 include MkRules
 
 HELP=YES
-WINHELP=CHM # NO, CHM, BOTH
+WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw1001
