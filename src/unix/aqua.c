@@ -183,10 +183,15 @@ SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
  return(ptr_do_wsbrowser(call, op, args, env));
 }
 
+extern SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho); /* from src/unix/X11.c */
+extern Rboolean useaqua; /* from src/unix/system.c */
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_dataentry(call, op, args, env));
+	if(useaqua)
+		return(ptr_do_dataentry(call, op, args, env));
+	else
+	    return(X11_do_dataentry(call, op, args, env));	
 }
 
 SEXP do_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -221,7 +226,6 @@ void InitAquaIO(void){
  ptr_InitAquaIO();
 }
 
-extern Rboolean useaqua; /* from system.c */
 
 void R_ProcessEvents(void)
 {

@@ -283,8 +283,14 @@ unsigned char Mac2Lat[] = {
 extern  DL_FUNC ptr_GetQuartzParameters;
 extern	Rboolean useaqua;
 
-void GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh) {ptr_GetQuartzParameters(width, height, ps, family, antialias, autorefresh);}
+void GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh, int *quartzpos) {ptr_GetQuartzParameters(width, height, ps, family, antialias, autorefresh, quartzpos);}
 #endif
+
+#define kQuartzTopRight		1
+#define kQuartzBottomRight  2
+#define kQuartzBottomLeft   3
+#define kQuartzTopLeft		4
+#define kQuartzCenter		5
 
 #define kOnScreen 	0
 #define kOnFilePDF 	1
@@ -328,6 +334,7 @@ typedef struct {
     double	xscale;
     double	yscale;
     int		where;
+	int		QuartzPos;		 /* Window Pos: TopRight=1, BottomRight, BottomLeft, TopLeft=4 */
 }
 QuartzDesc;
 
@@ -341,11 +348,11 @@ static const EventTypeSpec	QuartzEvents[] =
 
 Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
 			 double width, double height, double pointsize,
-			 char *family, Rboolean antialias, Rboolean autorefresh);
+			 char *family, Rboolean antialias, Rboolean autorefresh, int quartzpos);
 
 Rboolean QuartzDeviceDriver(DevDesc *dd, char *display,
 			 double width, double height, double pointsize,
-			 char *family, Rboolean antialias, Rboolean autorefresh);
+			 char *family, Rboolean antialias, Rboolean autorefresh, int quartzpos);
 
 OSStatus SetCGContext(QuartzDesc *xd);
 
@@ -437,6 +444,7 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
     double height, width, ps;
     Rboolean  antialias, autorefresh;
 	SInt32 macVer;
+	int quartzpos = 1;
     gcall = call;
     vmax = vmaxget();
     display = SaveString(CAR(args), 0);
@@ -476,11 +484,11 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
     strcpy(fontfamily, family);
 #ifdef HAVE_AQUA
     if(useaqua)
-     GetQuartzParameters(&width, &height, &ps, fontfamily, &antialias, &autorefresh);
+     GetQuartzParameters(&width, &height, &ps, fontfamily, &antialias, &autorefresh, &quartzpos);
 #endif
 
     if (!QuartzDeviceDriver((DevDesc *)dev, display, width, height, ps,
-       fontfamily, antialias, autorefresh)) {
+       fontfamily, antialias, autorefresh, quartzpos)) {
 	 free(dev);
 	 errorcall(call, "unable to start device Quartz\n");
     }
@@ -499,16 +507,16 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
 
 Rboolean QuartzDeviceDriver(DevDesc *dd, char *display,
 			 double width, double height, double pointsize,
-			 char *family, Rboolean antialias, Rboolean autorefresh)
+			 char *family, Rboolean antialias, Rboolean autorefresh, int quartzpos)
 {
 return innerQuartzDeviceDriver((NewDevDesc *)dd, display,
-			 width,  height,  pointsize, family, antialias, autorefresh);
+			 width,  height,  pointsize, family, antialias, autorefresh, quartzpos);
 }
 
 
 Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
 			 double width, double height, double pointsize,
-			 char *family, Rboolean antialias, Rboolean autorefresh)
+			 char *family, Rboolean antialias, Rboolean autorefresh, int quartzpos)
 {
     QuartzDesc *xd;
     int ps;
@@ -518,6 +526,8 @@ Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
 
     if (!(xd = (QuartzDesc *)malloc(sizeof(QuartzDesc))))
 	return 0;
+
+    xd->QuartzPos = quartzpos; /* by default it is Top-Right */
 
     if(!Quartz_Open(dd, xd, display, width, height))
      return(FALSE);
@@ -645,8 +655,8 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
 
 	OSStatus	err;
 	WindowRef 	devWindow =  NULL;
-	Rect		devBounds;
-        Str255		Title;
+	Rect		devBounds, mainRect;
+	Str255		Title;
 	char		buffer[250];
 	int 		devnum = devNumber((DevDesc *)dd);
 
@@ -659,12 +669,50 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
     dd->startcol = R_RGB(0, 0, 0);
     /* Create a new window with the specified size */
 
-
-	SetRect(&devBounds, 400, 400, 400 + xd->windowWidth, 400 + xd->windowHeight ) ;
-
-        err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute|kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute|kWindowResizableAttribute | kWindowCloseBoxAttribute ,
+	SetRect(&devBounds, 0, 0,  xd->windowWidth, xd->windowHeight ) ;
+	
+	err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute|kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute|kWindowResizableAttribute | kWindowCloseBoxAttribute ,
 		& devBounds, & devWindow);
+	mainRect = (*GetMainDevice()) -> gdRect;
+    switch(xd->QuartzPos){
+		case kQuartzTopRight: /* Top Right */
+			RepositionWindow (devWindow,  NULL, kWindowCascadeOnMainScreen);
+			GetWindowBounds(devWindow, kWindowStructureRgn, &devBounds);
+			devBounds.left = mainRect.right - devBounds.right + 1;
+			devBounds.right = mainRect.right;
+			SetWindowBounds(devWindow, kWindowStructureRgn, &devBounds); 
+		break;
+	
+		case kQuartzBottomRight: /* Bottom Right */
+			GetWindowBounds(devWindow, kWindowStructureRgn, &devBounds);
+			devBounds.left = mainRect.right - devBounds.right + 1;
+			devBounds.right = mainRect.right;
+			devBounds.top = mainRect.bottom - devBounds.bottom + 1;			
+			devBounds.bottom = mainRect.bottom;
+			SetWindowBounds(devWindow, kWindowStructureRgn, &devBounds); 
+		break;
+	
+		case kQuartzBottomLeft: /* Bottom Left */
+			GetWindowBounds(devWindow, kWindowStructureRgn, &devBounds);
+			devBounds.top = mainRect.bottom - devBounds.bottom + 1;			
+			devBounds.bottom = mainRect.bottom;
+			SetWindowBounds(devWindow, kWindowStructureRgn, &devBounds); 
+		break;
+	
+		case kQuartzCenter: /* Center */
+			RepositionWindow (devWindow,  NULL, kWindowCenterOnMainScreen);
+		break;
+	
+		case kQuartzTopLeft: /* TopLeft */
+			RepositionWindow (devWindow,  NULL, kWindowCascadeOnMainScreen);
+		break;
+	
+		default:
+		break; 
+	}
 
+	
+	
 	sprintf(buffer,"Quartz (%d) - Active",devnum+1);
 	CopyCStringToPascal(buffer,Title);
         SetWTitle(devWindow, Title);
@@ -1207,41 +1255,46 @@ static Rboolean Quartz_Locator(double *x, double *y, NewDevDesc *dd)
     GrafPtr savePort;
     Cursor		arrow ;
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
-
+	int useBeep = asLogical(GetOption(install("locatorBell"), 
+						      R_NilValue));
+	
     GetPort(&savePort);
 
     SetPortWindowPort(xd->window);
-    SetCursor( GetQDGlobalsArrow ( & arrow ) ) ;
-
+    SetThemeCursor(kThemeCrossCursor);
 
     while(!mouseClick) {
 	
     
 	gotEvent = WaitNextEvent( everyEvent, &event, 0, nil);
 
+    CGContextFlush( GetContext(xd) );
    
 	if (event.what == mouseDown) {
 	    partCode = FindWindow(event.where, &window);
 	    if ((window == (xd->window)) && (partCode == inContent)) {
-		myPoint = event.where;
-		GlobalToLocal(&myPoint);
-		*x = (double)(myPoint.h);
-		*y = (double)(myPoint.v);
-		mouseClick = true;
+			myPoint = event.where;
+			GlobalToLocal(&myPoint);
+			*x = (double)(myPoint.h);
+			*y = (double)(myPoint.v);
+			if(useBeep)
+			 SysBeep(1);
+			mouseClick = true;
 	    }
-
 	}
 
 	if (event.what == keyDown) {
 	    key = (event.message & charCodeMask);
-	    if (key == 0x0D){
-		SetPort(savePort);
-		return FALSE;
+	    if (key == 0x1b){ /* exits when the esc key is pressed */
+			SetPort(savePort);
+			SetThemeCursor(kThemeIBeamCursor);
+			return FALSE;
 	    }
 	}
     }
 
     SetPort(savePort);
+	SetThemeCursor(kThemeIBeamCursor);
     return TRUE;
 }
 
