@@ -106,13 +106,22 @@ double log1p(double x)
     if (x == -1) return(R_NegInf);
     if (x  < -1) ML_ERR_return_NAN;
 
+    if (fabs(x) <= .375) {
+        /* Improve on speed (only);
+	   again give result accurate to IEEE double precision: */
+	if(fabs(x) < .5 * DBL_EPSILON)
+	    return x;
+
+	if( 0    < x && x < 1e-8 ||
+	   -1e-9 < x && x < 0)
+	    return x * (1 - .5 * x);
+	/* else */
+	return x * (1 - x * chebyshev_eval(x / .375, alnrcs, nlnrel));
+    }
+    /* else */
     if (x < xmin) {
 	/* answer less than half precision because x too near -1 */
 	ML_ERROR(ME_PRECISION);
     }
-
-    if (fabs(x) <= .375)
-	return x * (1 - x * chebyshev_eval(x / .375, alnrcs, nlnrel));
-    else
-	return log(1 + x);
+    return log(1 + x);
 }
