@@ -343,17 +343,33 @@ function(dir, outDir)
                sep = envSep))
 
     for(srcfile in vignetteFiles[!upToDate]) {
-        texfile <-
-            paste(basename(filePathSansExt(srcfile)), ".tex", sep = "")
+        base <- basename(filePathSansExt(srcfile))
+        texfile <- paste(base, ".tex", sep = "")
         yy <- try(Sweave(srcfile, pdf = TRUE, eps = FALSE, quiet =
                          TRUE))
         if(inherits(yy, "try-error"))
             stop(yy)
         ## In case of an error, do not clean up: should we point to
         ## buildDir for possible inspection of results/problems?
-        texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
+        if(.Platform$OS.type == "windows") {
+            ## may not have texi2dvi
+            res <- system(paste("pdflatex", texfile))
+            if(res) stop(paste("unable to run pdflatex on", sQuote(texfile)))
+            if(length(grep("\\bibdata",
+                           readLines(paste(base, ".aux", sep = ""))))) {
+                res <- system(paste("bibtex", base))
+                if(res) stop(paste("unable to run bibtex on", sQuote(base)))
+                res <- system(paste("pdflatex", texfile))
+                if(res) stop(paste("unable to run pdflatex on", sQuote(texfile)))
+            }
+            res <- system(paste("pdflatex", texfile))
+            if(res) stop(paste("unable to run pdflatex on", sQuote(texfile)))
+        } else
+            texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
         pdffile <-
             paste(basename(filePathSansExt(srcfile)), ".pdf", sep = "")
+        if(!file.exists(pdffile))
+            stop(paste("file", sQuote(pdffile), "was not created"))
         if(!file.copy(pdffile, outVignetteDir, overwrite = TRUE))
             stop(paste("cannot copy", sQuote(pdffile), "to",
                        sQuote(outVignetteDir)))
