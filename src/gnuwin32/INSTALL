@@ -115,8 +115,9 @@ does work but imposes a considerable performance penalty.
 
 
 You can test a build by `make check': expect some rounding differences
-in the tests of the print routines.  You may need to set TMPDIR to a
-suitable temporary directory: the default is c:\TEMP.
+in the tests of the print routines.  You may need to set TMPDIR to
+(the absolute path to) a suitable temporary directory: the default is
+c:\TEMP.
 
 
 Using ATLAS
