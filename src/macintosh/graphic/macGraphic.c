@@ -1480,6 +1480,7 @@ static void SetLinetype(int newlty, double nlwd, NewDevDesc *dd)
 
     int i;
     int end;
+    int lwd;
     short numDashes;
     MacDesc *xd = (MacDesc *) dd-> deviceSpecific;
     /* If the linetype is 0 then we want to go back to standard, solid lines
@@ -1514,7 +1515,12 @@ static void SetLinetype(int newlty, double nlwd, NewDevDesc *dd)
 	    }
 	}
     }
-    PenSize(nlwd,nlwd);
+    if(nlwd < 1)
+     lwd = 1;
+    else
+     lwd = (int)nlwd;
+      
+    PenSize(lwd,lwd);
 }
 
 void DrawLineType(int xx1, int yy1, int xx2, int yy2, NewDevDesc *dd)
