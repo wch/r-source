@@ -36,11 +36,18 @@
 
   If the environment variable \env{R\_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),
-  otherwise to the Windows "personal" directory, 
+  otherwise to the Windows ``persona''  directory, 
   otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} and
   \code{HOMEDRIVE} are both set
   otherwise to the working directory.  This is as described in the file
   \file{rw-FAQ}.
+}
+\section{Chinese/Japanese/Kprean}{
+  Users of these languages will need to select a suitable font for the
+  console (perhaps \code{FixedSys} or \code{MS Mincho}) and for the
+  graphics device (\code{Arial} can be replaced by \code{Arial Unicode MS}).
+
+  Which fonts are available depends on the version of Windows.
 }
 \note{
   The \code{GUI preferences} item on the \code{Edit} menu brings up an
