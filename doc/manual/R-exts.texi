@@ -365,7 +365,9 @@ The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by R (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{man}, @file{help}, @file{html},
-@file{latex}, and @file{R-ex}).
+@file{latex}, and @file{R-ex}).  As from @R{} 1.8.1 the copying of the
+@file{inst} happens after @file{src} is built so its @file{Makefile} can
+create files to be installed.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.

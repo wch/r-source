@@ -62,7 +62,7 @@ fligner.test(x, \dots)
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{
-  W. J. Conover & Mark E. Johnson & Myrie M. Johnson (1981).
+  William J. Conover & Mark E. Johnson & Myrle M. Johnson (1981).
   A comparative study of tests for homogeneity of variances, with
   applications to the outer continental shelf bidding data.
   \emph{Technometrics} \bold{23}, 351--361.

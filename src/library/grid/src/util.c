@@ -171,8 +171,7 @@ int intersect(LRect r1, LRect r2)
  * x and y assumed to be in INCHES.
  */
 void textRect(double x, double y, SEXP text, int i,
-	      char *fontfamily, int font, double lineheight,
-	      double cex, double ps,
+	      R_GE_gcontext *gc,
 	      double xadj, double yadj,
 	      double rot, GEDevDesc *dd, LRect *r) 
 {
@@ -184,17 +183,15 @@ void textRect(double x, double y, SEXP text, int i,
     double wybit, hybit, wybit2, hybit2;
     if (isExpression(text)) {
 	SEXP expr = VECTOR_ELT(text, i % LENGTH(text));
-	w = fromDeviceWidth(GEExpressionWidth(expr, font, cex, ps, dd),
+	w = fromDeviceWidth(GEExpressionWidth(expr, gc, dd),
 			    GE_INCHES, dd);
-	h = fromDeviceHeight(GEExpressionHeight(expr, font, cex, ps, dd),
+	h = fromDeviceHeight(GEExpressionHeight(expr, gc, dd),
 			     GE_INCHES, dd);
     } else {
 	char* string = CHAR(STRING_ELT(text, i % LENGTH(text)));
-	w = fromDeviceWidth(GEStrWidth(string, fontfamily, font, lineheight,
-				       cex, ps, dd),
+	w = fromDeviceWidth(GEStrWidth(string, gc, dd),
 			    GE_INCHES, dd);
-	h = fromDeviceHeight(GEStrHeight(string, fontfamily, font, lineheight,
-					 cex, ps, dd),
+	h = fromDeviceHeight(GEStrHeight(string, gc, dd),
 			     GE_INCHES, dd);
     }
     rotrad = DEG2RAD*rot;

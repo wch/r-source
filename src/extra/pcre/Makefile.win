@@ -6,7 +6,7 @@ CFLAGS = -I../../include -I. -O2 -DWIN32
 all: libRpcre.a
 
 pcre.o: pcre.c chartables.h
-libRpcre.a: get.o pcre.o study.o
+libRpcre.a: get.o maketables.o pcre.o study.o
 
 ## this can't be used if cross-building, so ship the file
 ifneq ($(strip $(BUILD)),CROSS)

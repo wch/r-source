@@ -107,7 +107,7 @@
    inter-line spacing) corresponds to HERSHEY_LARGE_CAPHEIGHT Hershey units. */
 
 #define HERSHEY_UNITS_TO_USER_UNITS(size) \
-	((size)*(g_ps * g_cex)/(HERSHEY_LARGE_ASCENT))
+	((size)*(gc->ps * gc->cex)/(HERSHEY_LARGE_ASCENT))
 
 /************************************************************************/
 

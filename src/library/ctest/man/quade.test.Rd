@@ -64,7 +64,7 @@ quade.test(y, \dots)
   \emph{Journal of the American Statistical Association}, \bold{74},
   680--683.
     
-  W. J. Conover (1999),
+  William J. Conover (1999),
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.
   Pages 373--380.

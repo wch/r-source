@@ -28,8 +28,6 @@ options(warn = 0)
 options(help.try.all.packages = FALSE)
 options(CRAN = "http://cran.r-project.org")
 options(BIOC= "http://www.bioconductor.org")
-options(repositories=c(CRAN = "http://cran.r-project.org/src/contrib",
-	BIOC = "http://www.bioconductor.org/src/contrib"))
 options(timeout = 60)
 options(internet.info = 2)
 options(encoding = native.enc)

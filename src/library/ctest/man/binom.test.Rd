@@ -47,7 +47,7 @@ binom.test(x, n, p = 0.5,
   the binomial.
   \emph{Biometrika}, \bold{26}, 404--413.
   
-  Conover, W. J. (1971),
+  William J. Conover (1971),
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.
   Pages 97--104.

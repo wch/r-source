@@ -26,9 +26,9 @@
 #include <Graphics.h>
 
 typedef struct {
-    R_GE_VTextRoutine GVText;
-    R_GE_VStrWidthRoutine GVStrWidth;
-    R_GE_VStrHeightRoutine GVStrHeight;
+    R_GE_VTextRoutine GEVText;
+    R_GE_VStrWidthRoutine GEVStrWidth;
+    R_GE_VStrHeightRoutine GEVStrHeight;
 } VfontRoutines;
 
 static VfontRoutines routines, *ptr = &routines;
@@ -53,9 +53,9 @@ R_GE_setVFontRoutines(R_GE_VStrWidthRoutine vwidth,
 		      R_GE_VStrHeightRoutine vheight, 
 		      R_GE_VTextRoutine vtext)
 {
-    ptr->GVStrWidth = vwidth;
-    ptr->GVStrHeight = vheight;
-    ptr->GVText = vtext;
+    ptr->GEVStrWidth = vwidth;
+    ptr->GEVStrHeight = vheight;
+    ptr->GEVText = vtext;
 }
 
 static void vfonts_Init(void)
@@ -70,20 +70,21 @@ static void vfonts_Init(void)
 double GVStrWidth (const unsigned char *s, int typeface, int fontindex,
 		   int unit, DevDesc *dd)
 {
-    return GConvertXUnits(R_GE_VStrWidth(s, typeface, fontindex, 1, 
-					 Rf_gpptr(dd)->cex, 
-					 Rf_gpptr(dd)->ps, 
-					 (GEDevDesc *) dd),
+    R_GE_gcontext gc;
+    gcontextFromGP(&gc, dd);
+    gc.fontface = typeface;
+    gc.fontfamily[0] = fontindex;
+    return GConvertXUnits(R_GE_VStrWidth(s, &gc, (GEDevDesc *) dd),
 			  DEVICE, unit, dd);
 }
 
-double R_GE_VStrWidth(const unsigned char *s, int typeface, int fontindex,
-		      double lineheight, double cex, double ps, GEDevDesc *dd)
+double R_GE_VStrWidth(const unsigned char *s, 
+		      R_GE_gcontext *gc,
+		      GEDevDesc *dd)
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0)
-	return (*ptr->GVStrWidth)(s, typeface, fontindex, lineheight,
-				  cex, ps, dd);
+	return (*ptr->GEVStrWidth)(s, gc, dd);
     else {
 	error("Hershey fonts cannot be loaded");
 	return 0.0;
@@ -93,20 +94,21 @@ double R_GE_VStrWidth(const unsigned char *s, int typeface, int fontindex,
 double GVStrHeight (const unsigned char *s, int typeface, int fontindex,
 		    int unit, DevDesc *dd)
 {
-    return GConvertYUnits(R_GE_VStrHeight(s, typeface, fontindex, 1, 
-					  Rf_gpptr(dd)->cex, 
-					  Rf_gpptr(dd)->ps, 
-					  (GEDevDesc *) dd),
+    R_GE_gcontext gc;
+    gcontextFromGP(&gc, dd);
+    gc.fontface = typeface;
+    gc.fontfamily[0] = fontindex;
+    return GConvertYUnits(R_GE_VStrHeight(s, &gc, (GEDevDesc *) dd),
 			  DEVICE, unit, dd);
 }
 
-double R_GE_VStrHeight(const unsigned char *s, int typeface, int fontindex,
-		       double lineheight, double cex, double ps, GEDevDesc *dd)
+double R_GE_VStrHeight(const unsigned char *s, 
+		       R_GE_gcontext *gc,
+		       GEDevDesc *dd)
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0)
-	return (*ptr->GVStrHeight)(s, typeface, fontindex, lineheight,
-				   cex, ps, dd);
+	return (*ptr->GEVStrHeight)(s, gc, dd);
     else {
 	error("Hershey fonts cannot be loaded");
 	return 0.0;
@@ -118,29 +120,26 @@ void GVText (double x, double y, int unit, char *s,
 	     double x_justify, double y_justify, double rotation,
 	     DevDesc *dd)
 {
+    R_GE_gcontext gc;
+    gcontextFromGP(&gc, dd);
     /* 
      * Ensure that the current par(xpd) settings are enforced.
      */
     GClip(dd);
     GConvert(&x, &y, unit, DEVICE, dd);
-    R_GE_VText(x, y, s, typeface, fontindex, x_justify, y_justify,
-	       rotation, Rf_gpptr(dd)->col, Rf_gpptr(dd)->gamma,
-	       1 /* lineheight */, Rf_gpptr(dd)->cex, Rf_gpptr(dd)->ps,
-	       (GEDevDesc *) dd);
+    gc.fontface = typeface;
+    gc.fontfamily[0] = fontindex;
+    R_GE_VText(x, y, s, x_justify, y_justify, rotation, &gc, (GEDevDesc *) dd);
 }
 
 void R_GE_VText(double x, double y, char *s, 
-		int typeface, int fontindex,
 		double x_justify, double y_justify, double rotation,
-		int col, double gamma, double lineheight,
-		double cex, double ps,
+		R_GE_gcontext *gc,
 		GEDevDesc *dd)
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0)
-	(*ptr->GVText)(x, y, s, typeface, fontindex, 
-		       x_justify, y_justify, rotation, 
-		       col, gamma, lineheight, cex, ps, dd);
+	(*ptr->GEVText)(x, y, s, x_justify, y_justify, rotation, gc, dd);
     else
 	error("Hershey fonts cannot be loaded");
 }

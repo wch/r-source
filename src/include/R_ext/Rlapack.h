@@ -16,7 +16,7 @@ typedef SEXP (*Rf_La_rs_complex)(SEXP x, SEXP only_values);
 typedef SEXP (*Rf_La_rg_complex)(SEXP x, SEXP only_values);
 typedef SEXP (*Rf_La_chol)(SEXP A);
 typedef SEXP (*Rf_La_chol2inv)(SEXP x, SEXP size);
-typedef SEXP (*Rf_La_dgesv)(SEXP A, SEXP B);
+typedef SEXP (*Rf_La_dgesv)(SEXP A, SEXP B, SEXP tol);
 typedef SEXP (*Rf_La_dgeqp3)(SEXP A);
 typedef SEXP (*Rf_qr_coef_real)(SEXP Q, SEXP B);
 typedef SEXP (*Rf_qr_qy_real)(SEXP Q, SEXP B, SEXP trans);

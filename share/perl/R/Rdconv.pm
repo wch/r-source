@@ -3182,10 +3182,16 @@ sub Ssgm_functionhead
     my ($name,$title) = @_;
 
     my $retval =
-    "<!doctype s-function-doc system \"s-function-doc.dtd\" [\n".
-    "<!entity % S-OLD \"INCLUDE\">\n]\n>\n".
-    "<s-function-doc>\n";
-    $retval .= "<s-topics>\n  <s-topic>".$name."</s-topic>\n</s-topics>\n\n";
+	"<!doctype s-function-doc system \"s-function-doc.dtd\" [\n".
+	"<!entity % S-OLD \"INCLUDE\">\n]\n>\n".
+	"<s-function-doc>\n";
+    $retval .= "<s-topics>\n  <s-topic>".$name."</s-topic>\n";
+    my $alias;
+    for $alias (@aliases) {
+        next if ($alias eq $name);
+        $retval .= "  <s-topic>" . $alias . "</s-topic>\n";
+    }
+    $retval .= "</s-topics>\n\n";
     $retval .= "<s-title>\n".$title."\n</s-title>\n\n";
 }
 

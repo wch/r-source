@@ -1,5 +1,5 @@
 median <- function(x, na.rm = FALSE) {
-    if(mode(x) != "numeric")
+    if(is.factor(x) || mode(x) != "numeric")
         stop("need numeric data")
     if(na.rm)
 	x <- x[!is.na(x)]

@@ -81,19 +81,21 @@ as.dist <- function(m, diag = FALSE, upper = FALSE)
 }
 
 
-print.dist <- function(x, diag = NULL, upper = NULL, ...)
+print.dist <-
+    function(x, diag = NULL, upper = NULL,
+             digits = getOption("digits"), justify = "none", right = TRUE, ...)
 {
     if(is.null(diag))
 	diag <-	 if(is.null(a <- attr(x, "Diag"))) FALSE else a
     if(is.null(upper))
 	upper <- if(is.null(a <- attr(x,"Upper"))) FALSE else a
 
-    size <- attr(x, "Size")
-    df <- as.matrix.dist(x)
+    cf <- format(as.matrix(x), digits = digits, justify = justify)
     if(!upper)
-	df[row(df) < col(df)] <- NA
+	cf[row(cf) < col(cf)] <- ""
     if(!diag)
-	df[row(df) == col(df)] <- NA
-    print(if(diag || upper) df else df[-1, -size], na = "", ...)
+	cf[row(cf) == col(cf)] <- ""
+    print(if(diag || upper) cf else cf[-1, -attr(x, "Size")],
+	  quote = FALSE, right = right, ...)
     invisible(x)
 }

@@ -32,30 +32,37 @@
 #include <Graphics.h>
 
 
-/* The R graphics device */
+/*
+ *  TeX Math Styles
+ *
+ *  The TeXBook, Appendix G, Page 441.
+ *
+ */
 
-/* These are a bit unthreadable aren't they?
- * Better to pass them all down, but that's a heck of a lot of 
- * changes to make to the function call argument lists!!
- */
-static GEDevDesc *MathDevice;
-static unsigned int BoxColor;
-static unsigned int TextColor;
-/* The value of cex passed into GEMathText
- */
-static double BaseCex = 1;
-static double MathGamma;
-static char *MathFontFamily;
-/* The value of font passed into GEMathText
- * May be modified by plotmath code -- it is plotmath code's 
- * responsibility to save and restore temporary changes.
- */
-static int MathFont;
-static double MathLineHeight;
-/* A temporary value of cex that may be modified by plotmath code.
- */
-static double MathCex;
-static double MathPs;
+typedef enum {
+    STYLE_SS1 = 1,
+    STYLE_SS  = 2,
+    STYLE_S1  = 3,
+    STYLE_S   = 4,
+    STYLE_T1  = 5,
+    STYLE_T   = 6,
+    STYLE_D1  = 7,
+    STYLE_D   = 8
+} STYLE;
+
+typedef struct {
+    unsigned int BoxColor;
+    double BaseCex;
+    double ReferenceX;
+    double ReferenceY;
+    double CurrentX;
+    double CurrentY;
+    double CurrentAngle;
+    double CosAngle;
+    double SinAngle;
+    STYLE CurrentStyle;
+} mathContext;
+
 static GEUnit MetricUnit = GE_INCHES;
 
 /* Font Definitions */
@@ -81,105 +88,92 @@ static double ItalicFactor = 0.15;
 
 /* Drawing basics */
 
-static double ReferenceX;
-static double ReferenceY;
-static double CurrentX;
-static double CurrentY;
-static double CurrentAngle;
-static double CosAngle;
-static double SinAngle;
 
 /* Convert CurrentX and CurrentY from */
 /* 0 angle to and CurrentAngle */
 
-static double ConvertedX()
+static double ConvertedX(mathContext *mc, GEDevDesc *dd)
 {
-    double rotatedX = ReferenceX +
-	(CurrentX - ReferenceX) * CosAngle -
-	(CurrentY - ReferenceY) * SinAngle;
-    return toDeviceX(rotatedX, MetricUnit, MathDevice);
+    double rotatedX = mc->ReferenceX +
+	(mc->CurrentX - mc->ReferenceX) * mc->CosAngle -
+	(mc->CurrentY - mc->ReferenceY) * mc->SinAngle;
+    return toDeviceX(rotatedX, MetricUnit, dd);
 }
 
-static double ConvertedY()
+static double ConvertedY(mathContext *mc, GEDevDesc *dd)
 {
-    double rotatedY = ReferenceY +
-	(CurrentY - ReferenceY) * CosAngle +
-	(CurrentX - ReferenceX) * SinAngle;
-    return toDeviceY(rotatedY, MetricUnit, MathDevice);
+    double rotatedY = mc->ReferenceY +
+	(mc->CurrentY - mc->ReferenceY) * mc->CosAngle +
+	(mc->CurrentX - mc->ReferenceX) * mc->SinAngle;
+    return toDeviceY(rotatedY, MetricUnit, dd);
 }
 
-static void PMoveAcross(double xamount)
+static void PMoveAcross(double xamount, mathContext *mc)
 {
-    CurrentX += xamount;
+    mc->CurrentX += xamount;
 }
 
-static void PMoveUp(double yamount)
+static void PMoveUp(double yamount, mathContext *mc)
 {
-    CurrentY += yamount;
+    mc->CurrentY += yamount;
 }
 
-static void PMoveTo(double x, double y)
+static void PMoveTo(double x, double y, mathContext *mc)
 {
-    CurrentX = x;
-    CurrentY = y;
+    mc->CurrentX = x;
+    mc->CurrentY = y;
 }
 
 /* Basic Font Properties */
 
-static double xHeight()
+static double xHeight(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
-    GEMetricInfo('x', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(height, MetricUnit, MathDevice);
+    GEMetricInfo('x', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(height, MetricUnit, dd);
 }
 
-static double XHeight()
+static double XHeight(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
-    GEMetricInfo('X', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(height, MetricUnit, MathDevice);
+    GEMetricInfo('X', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(height, MetricUnit, dd);
 }
 
-static double AxisHeight()
+static double AxisHeight(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
-    GEMetricInfo('+', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(0.5 * height, MetricUnit, MathDevice);
+    GEMetricInfo('+', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(0.5 * height, MetricUnit, dd);
 }
 
-static double Quad()
+static double Quad(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
-    GEMetricInfo('M', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(width, MetricUnit, MathDevice);
+    GEMetricInfo('M', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(width, MetricUnit, dd);
 }
 
 /* The height of digits */
-static double FigHeight()
+static double FigHeight(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
-    GEMetricInfo('0', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(height, MetricUnit, MathDevice);
+    GEMetricInfo('0', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(height, MetricUnit, dd);
 }
 
 /* Depth of lower case descenders */
-static double DescDepth()
+static double DescDepth(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
-    GEMetricInfo('g', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(depth, MetricUnit, MathDevice);
+    GEMetricInfo('g', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(depth, MetricUnit, dd);
 }
 
 /* Thickness of rules */
@@ -188,44 +182,40 @@ static double RuleThickness()
     return 0.015;
 }
 
-static double ThinSpace()
+static double ThinSpace(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
     static double OneSixth = 0.16666666666666666666;
-    GEMetricInfo('M', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(OneSixth * width, MetricUnit, MathDevice);
+    GEMetricInfo('M', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(OneSixth * width, MetricUnit, dd);
 }
 
-static double MediumSpace()
+static double MediumSpace(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
     static double TwoNinths = 0.22222222222222222222;
-    GEMetricInfo('M', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(TwoNinths * width, MetricUnit, MathDevice);
+    GEMetricInfo('M', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(TwoNinths * width, MetricUnit, dd);
 }
 
-static double ThickSpace()
+static double ThickSpace(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
     static double FiveEighteenths = 0.27777777777777777777;
-    GEMetricInfo('M', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(FiveEighteenths * width, MetricUnit, MathDevice);
+    GEMetricInfo('M', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(FiveEighteenths * width, MetricUnit, dd);
 }
 
-static double MuSpace()
+static double MuSpace(R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double height, depth, width;
     static double OneEighteenth = 0.05555555555555555555;
-    GEMetricInfo('M', 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    return fromDeviceHeight(OneEighteenth * width, MetricUnit, MathDevice);
+    GEMetricInfo('M', gc,
+		&height, &depth, &width, dd);
+    return fromDeviceHeight(OneEighteenth * width, MetricUnit, dd);
 }
 
 
@@ -250,213 +240,193 @@ TEXPAR;
 
 #define SUBS	       0.7
 
-static double TeX(TEXPAR which)
+static double TeX(TEXPAR which, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     switch(which) {
     case sigma2:  /* space */
     case sigma5:  /* x_height */
-	return xHeight();
+	return xHeight(gc, dd);
 
     case sigma6:  /* quad */
-	return Quad();
+	return Quad(gc, dd);
 
     case sigma8:  /* num1 */
-	return AxisHeight()
-	    + 3.51 * RuleThickness()
-	    + 0.15 * XHeight()		/* 54/36 * 0.1 */
-	    + SUBS * DescDepth();
+	return AxisHeight(gc, dd)
+	    + 3.51 * RuleThickness(gc, dd)
+	    + 0.15 * XHeight(gc, dd)		/* 54/36 * 0.1 */
+	    + SUBS * DescDepth(gc, dd);
     case sigma9:  /* num2 */
-	return AxisHeight()
-	    + 1.51 * RuleThickness()
-	    + 0.08333333 * XHeight();	/* 30/36 * 0.1 */
+	return AxisHeight(gc, dd)
+	    + 1.51 * RuleThickness(gc, dd)
+	    + 0.08333333 * XHeight(gc, dd);	/* 30/36 * 0.1 */
     case sigma10: /* num3 */
-	return AxisHeight()
-	    + 1.51 * RuleThickness()
-	    + 0.1333333 * XHeight();	/* 48/36 * 0.1 */
+	return AxisHeight(gc, dd)
+	    + 1.51 * RuleThickness(gc, dd)
+	    + 0.1333333 * XHeight(gc, dd);	/* 48/36 * 0.1 */
     case sigma11: /* denom1 */
-	return	- AxisHeight()
-	    + 3.51 * RuleThickness()
-	    + SUBS * FigHeight()
-	    + 0.344444 * XHeight();	/* 124/36 * 0.1 */
+	return	- AxisHeight(gc, dd)
+	    + 3.51 * RuleThickness(gc, dd)
+	    + SUBS * FigHeight(gc, dd)
+	    + 0.344444 * XHeight(gc, dd);	/* 124/36 * 0.1 */
     case sigma12: /* denom2 */
-	return	- AxisHeight()
-	    + 1.51 * RuleThickness()
-	    + SUBS * FigHeight()
-	    + 0.08333333 * XHeight();	/* 30/36 * 0.1 */
+	return	- AxisHeight(gc, dd)
+	    + 1.51 * RuleThickness(gc, dd)
+	    + SUBS * FigHeight(gc, dd)
+	    + 0.08333333 * XHeight(gc, dd);	/* 30/36 * 0.1 */
 
     case sigma13: /* sup1 */
-	return 0.95 * xHeight();
+	return 0.95 * xHeight(gc, dd);
     case sigma14: /* sup2 */
-	return 0.825 * xHeight();
+	return 0.825 * xHeight(gc, dd);
     case sigma15: /* sup3 */
-	return 0.7 * xHeight();
+	return 0.7 * xHeight(gc, dd);
 
     case sigma16: /* sub1 */
-	return 0.35 * xHeight();
+	return 0.35 * xHeight(gc, dd);
     case sigma17: /* sub2 */
-	return 0.45 * XHeight();
+	return 0.45 * XHeight(gc, dd);
 
     case sigma18: /* sup_drop */
-	return 0.3861111 * XHeight();
+	return 0.3861111 * XHeight(gc, dd);
 
     case sigma19: /* sub_drop */
-	return 0.05 * XHeight();
+	return 0.05 * XHeight(gc, dd);
 
     case sigma20: /* delim1 */
-	return 2.39 * XHeight();
+	return 2.39 * XHeight(gc, dd);
     case sigma21: /* delim2 */
-	return 1.01 *XHeight();
+	return 1.01 *XHeight(gc, dd);
 
     case sigma22: /* axis_height */
-	return AxisHeight();
+	return AxisHeight(gc, dd);
 
     case xi8:	  /* default_rule_thickness */
-	return RuleThickness();
+	return RuleThickness(gc, dd);
 
     case xi9:	  /* big_op_spacing1 */
     case xi10:	  /* big_op_spacing2 */
     case xi11:	  /* big_op_spacing3 */
     case xi12:	  /* big_op_spacing4 */
     case xi13:	  /* big_op_spacing5 */
-	return 0.15 * XHeight();
+	return 0.15 * XHeight(gc, dd);
     default:/* never happens (enum type) */
 	error("invalid `which' in TeX()!"); return 0;/*-Wall*/
     }
 }
 
-/*
- *  TeX Math Styles
- *
- *  The TeXBook, Appendix G, Page 441.
- *
- */
-
-typedef enum {
-    STYLE_SS1 = 1,
-    STYLE_SS  = 2,
-    STYLE_S1  = 3,
-    STYLE_S   = 4,
-    STYLE_T1  = 5,
-    STYLE_T   = 6,
-    STYLE_D1  = 7,
-    STYLE_D   = 8
-} STYLE;
-
-static STYLE CurrentStyle;
-
-static STYLE GetStyle()
+static STYLE GetStyle(mathContext *mc)
 {
-    return CurrentStyle;
+    return mc->CurrentStyle;
 }
 
-static void SetStyle(STYLE newstyle)
+static void SetStyle(STYLE newstyle, mathContext *mc, R_GE_gcontext *gc)
 {
     switch (newstyle) {
     case STYLE_D:
     case STYLE_T:
     case STYLE_D1:
     case STYLE_T1:
-	MathCex = 1.0 * BaseCex;
+	gc->cex = 1.0 * mc->BaseCex;
 	break;
     case STYLE_S:
     case STYLE_S1:
-	MathCex = 0.7 * BaseCex;
+	gc->cex = 0.7 * mc->BaseCex;
 	break;
     case STYLE_SS:
     case STYLE_SS1:
-	MathCex = 0.5 * BaseCex;
+	gc->cex = 0.5 * mc->BaseCex;
 	break;
     default:
 	error("invalid math style encountered");
     }
-    CurrentStyle = newstyle;
+    mc->CurrentStyle = newstyle;
 }
 
-static void SetPrimeStyle(STYLE style)
+static void SetPrimeStyle(STYLE style, mathContext *mc, R_GE_gcontext *gc)
 {
     switch (style) {
     case STYLE_D:
     case STYLE_D1:
-	SetStyle(STYLE_D1);
+	SetStyle(STYLE_D1, mc, gc);
 	break;
     case STYLE_T:
     case STYLE_T1:
-	SetStyle(STYLE_T1);
+	SetStyle(STYLE_T1, mc, gc);
 	break;
     case STYLE_S:
     case STYLE_S1:
-	SetStyle(STYLE_S1);
+	SetStyle(STYLE_S1, mc, gc);
 	break;
     case STYLE_SS:
     case STYLE_SS1:
-	SetStyle(STYLE_SS1);
+	SetStyle(STYLE_SS1, mc, gc);
 	break;
     }
 }
 
-static void SetSupStyle(STYLE style)
+static void SetSupStyle(STYLE style, mathContext *mc, R_GE_gcontext *gc)
 {
     switch (style) {
     case STYLE_D:
     case STYLE_T:
-	SetStyle(STYLE_S);
+	SetStyle(STYLE_S, mc, gc);
 	break;
     case STYLE_D1:
     case STYLE_T1:
-	SetStyle(STYLE_S1);
+	SetStyle(STYLE_S1, mc, gc);
 	break;
     case STYLE_S:
     case STYLE_SS:
-	SetStyle(STYLE_SS);
+	SetStyle(STYLE_SS, mc, gc);
 	break;
     case STYLE_S1:
     case STYLE_SS1:
-	SetStyle(STYLE_SS1);
+	SetStyle(STYLE_SS1, mc, gc);
 	break;
     }
 }
 
-static void SetSubStyle(STYLE style)
+static void SetSubStyle(STYLE style, mathContext *mc, R_GE_gcontext *gc)
 {
     switch (style) {
     case STYLE_D:
     case STYLE_T:
     case STYLE_D1:
     case STYLE_T1:
-	SetStyle(STYLE_S1);
+	SetStyle(STYLE_S1, mc, gc);
 	break;
     case STYLE_S:
     case STYLE_SS:
     case STYLE_S1:
     case STYLE_SS1:
-	SetStyle(STYLE_SS1);
+	SetStyle(STYLE_SS1, mc, gc);
 	break;
     }
 }
 
-static void SetNumStyle(STYLE style)
+static void SetNumStyle(STYLE style, mathContext *mc, R_GE_gcontext *gc)
 {
     switch (style) {
     case STYLE_D:
-	SetStyle(STYLE_T);
+	SetStyle(STYLE_T, mc, gc);
 	break;
     case STYLE_D1:
-	SetStyle(STYLE_T1);
+	SetStyle(STYLE_T1, mc, gc);
 	break;
     default:
-	SetSupStyle(style);
+	SetSupStyle(style, mc, gc);
     }
 }
 
-static void SetDenomStyle(STYLE style)
+static void SetDenomStyle(STYLE style, mathContext *mc, R_GE_gcontext *gc)
 {
     if (style > STYLE_T)
-	SetStyle(STYLE_T1);
+	SetStyle(STYLE_T1, mc, gc);
     else
-	SetSubStyle(style);
+	SetSubStyle(style, mc, gc);
 }
 
-static int IsCompactStyle(STYLE style)
+static int IsCompactStyle(STYLE style, mathContext *mc, R_GE_gcontext *gc)
 {
     switch (style) {
     case STYLE_D1:
@@ -583,27 +553,37 @@ static double CenterShift(BBOX bbox)
 }
 
 #ifdef NOT_used_currently/*-- out 'def'	 (-Wall) --*/
-static BBOX DrawBBox(BBOX bbox, double xoffset, double yoffset)
+static BBOX DrawBBox(BBOX bbox, double xoffset, double yoffset,
+		     mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    double xsaved = CurrentX;
-    double ysaved = CurrentY;
+    double xsaved = mc->CurrentX;
+    double ysaved = mc->CurrentY;
     double x[5], y[5];
-    CurrentX += xoffset;
-    CurrentY += yoffset;
-    PMoveUp(-bboxDepth(bbox));
-    x[4] = x[0] = ConvertedX();
-    y[4] = y[0] = ConvertedY();
-    PMoveAcross(bboxWidth(bbox));
-    x[1] = ConvertedX();
-    y[1] = ConvertedY();
-    PMoveUp(bboxHeight(bbox) + bboxDepth(bbox));
-    x[2] = ConvertedX();
-    y[2] = ConvertedY();
-    PMoveAcross(-bboxWidth(bbox));
-    x[3] = ConvertedX();
-    y[3] = ConvertedY();
-    GEPolyline(5, x, y, BoxColor, MathGamma, LTY_SOLID, 1, INCHES, MathDevice);
-    PMoveTo(xsaved, ysaved);
+    int savedcol = gc->col;
+    int savedlty = gc->lty;
+    double savedlwd = gc->lwd;
+    mc->CurrentX += xoffset;
+    mc->CurrentY += yoffset;
+    PMoveUp(-bboxDepth(bbox), mc);
+    x[4] = x[0] = ConvertedX(mc, dd);
+    y[4] = y[0] = ConvertedY(mc, dd);
+    PMoveAcross(bboxWidth(bbox), mc);
+    x[1] = ConvertedX(mc, dd);
+    y[1] = ConvertedY(mc, dd);
+    PMoveUp(bboxHeight(bbox) + bboxDepth(bbox), mc);
+    x[2] = ConvertedX(mc, dd);
+    y[2] = ConvertedY(mc, dd);
+    PMoveAcross(-bboxWidth(bbox), mc);
+    x[3] = ConvertedX(mc, dd);
+    y[3] = ConvertedY(mc, dd);
+    gc->col = mc->BoxColor;
+    gc->lty = LTY_SOLID;
+    gc->lwd = 1;
+    GEPolyline(5, x, y, gc, dd);
+    PMoveTo(xsaved, ysaved, mc);
+    gc->col = savedcol;
+    gc->lty = savedlty;
+    gc->lwd = savedlwd;
     return bbox;
 }
 #endif
@@ -926,90 +906,91 @@ static int symbolAtom(SEXP expr)
 /* nature of the expression */
 
 #ifdef NOT_used_currently/*-- out 'def'	 (-Wall) --*/
-static FontType CurrentFont = 3;
+static FontType mc->CurrentFont = 3;
 #endif
-static FontType GetFont()
+static FontType GetFont(R_GE_gcontext *gc)
 {
-    return MathFont;
+    return gc->fontface;
 }
 
-static FontType SetFont(FontType font)
+static FontType SetFont(FontType font, R_GE_gcontext *gc)
 {
-    FontType prevfont = MathFont;
-    MathFont = font;
+    FontType prevfont = gc->fontface;
+    gc->fontface = font;
     return prevfont;
 }
 
-static int UsingItalics()
+static int UsingItalics(R_GE_gcontext *gc)
 {
-    return (MathFont == ItalicFont ||
-	    MathFont == BoldItalicFont);
+    return (gc->fontface == ItalicFont ||
+	    gc->fontface == BoldItalicFont);
 }
 
-static BBOX GlyphBBox(int chr)
+static BBOX GlyphBBox(int chr, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
     double height, depth, width;
-    GEMetricInfo(chr, 
-		MathFont, MathCex, MathPs,
-		&height, &depth, &width, MathDevice);
-    bboxHeight(bbox) = fromDeviceHeight(height, MetricUnit, MathDevice);
-    bboxDepth(bbox)  = fromDeviceHeight(depth, MetricUnit, MathDevice);
-    bboxWidth(bbox)  = fromDeviceHeight(width, MetricUnit, MathDevice);
+    GEMetricInfo(chr, gc,
+		&height, &depth, &width, dd);
+    bboxHeight(bbox) = fromDeviceHeight(height, MetricUnit, dd);
+    bboxDepth(bbox)  = fromDeviceHeight(depth, MetricUnit, dd);
+    bboxWidth(bbox)  = fromDeviceHeight(width, MetricUnit, dd);
     bboxItalic(bbox) = 0;
     bboxSimple(bbox) = 1;
     return bbox;
 }
 
-static BBOX RenderElement(SEXP, int);
-static BBOX RenderOffsetElement(SEXP, double, double, int);
-static BBOX RenderExpression(SEXP, int);
-static BBOX RenderSymbolChar(int, int);
+static BBOX RenderElement(SEXP, int,
+			  mathContext*, R_GE_gcontext*, GEDevDesc*);
+static BBOX RenderOffsetElement(SEXP, double, double, int,
+				mathContext*, R_GE_gcontext*, GEDevDesc*);
+static BBOX RenderExpression(SEXP, int,
+			     mathContext*, R_GE_gcontext*, GEDevDesc*);
+static BBOX RenderSymbolChar(int, int, 
+			     mathContext*, R_GE_gcontext*, GEDevDesc*);
 
 
 /*  Code to Generate Bounding Boxes and Draw Formulae.	*/
 
-static BBOX RenderItalicCorr(BBOX bbox, int draw)
+static BBOX RenderItalicCorr(BBOX bbox, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     if (bboxItalic(bbox) > 0) {
 	if (draw)
-	    PMoveAcross(bboxItalic(bbox));
+	    PMoveAcross(bboxItalic(bbox), mc);
 	bboxWidth(bbox) += bboxItalic(bbox);
 	bboxItalic(bbox) = 0;
     }
     return bbox;
 }
 
-static BBOX RenderGap(double gap, int draw)
+static BBOX RenderGap(double gap, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     if (draw)
-	PMoveAcross(gap);
+	PMoveAcross(gap, mc);
     return MakeBBox(0, 0, gap);
 }
 
 /* Draw a Symbol from the Special Font */
 
-static BBOX RenderSymbolChar(int ascii, int draw)
+static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     FontType prev;
     BBOX bbox;
     char asciiStr[2];
     if (ascii == A_HAT || ascii == A_TILDE)
-	prev = SetFont(PlainFont);
+	prev = SetFont(PlainFont, gc);
     else
-	prev = SetFont(SymbolFont);
-    bbox = GlyphBBox(ascii);
+	prev = SetFont(SymbolFont, gc);
+    bbox = GlyphBBox(ascii, gc, dd);
     if (draw) {
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
-	GEText(ConvertedX(), ConvertedY(), asciiStr, 
-	       0.0, 0.0, CurrentAngle, 
-	       TextColor, MathGamma, 
-	       MathFontFamily, MathFont, MathLineHeight, MathCex, MathPs,
-	       MathDevice);
-	PMoveAcross(bboxWidth(bbox));
+	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr, 
+	       0.0, 0.0, mc->CurrentAngle, gc,
+	       dd);
+	PMoveAcross(bboxWidth(bbox), mc);
     }
-    SetFont(prev);
+    SetFont(prev, gc);
     return bbox;
 }
 
@@ -1017,13 +998,13 @@ static BBOX RenderSymbolChar(int ascii, int draw)
 /* This code inserts italic corrections after */
 /* every character. */
 
-static BBOX RenderSymbolStr(char *str, int draw)
+static BBOX RenderSymbolStr(char *str, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     char chr[2];
     BBOX glyphBBox;
     BBOX resultBBox = NullBBox();
     double lastItalicCorr = 0;
-    FontType prevfont = GetFont();
+    FontType prevfont = GetFont(gc);
     FontType font = prevfont;
     chr[1] = '\0';
     if (str) {
@@ -1031,27 +1012,24 @@ static BBOX RenderSymbolStr(char *str, int draw)
 	while (*s) {
 	    if (isdigit((int)*s) && font != PlainFont) {
 		font = PlainFont;
-		SetFont(PlainFont);
+		SetFont(PlainFont, gc);
 	    }
 	    else if (font != prevfont) {
 		font = prevfont;
-		SetFont(prevfont);
+		SetFont(prevfont, gc);
 	    }
-	    glyphBBox = GlyphBBox(*s);
-	    if (UsingItalics())
+	    glyphBBox = GlyphBBox(*s, gc, dd);
+	    if (UsingItalics(gc))
 		bboxItalic(glyphBBox) = ItalicFactor * bboxHeight(glyphBBox);
 	    else
 		bboxItalic(glyphBBox) = 0;
 	    if (draw) {
 		chr[0] = *s;
-		PMoveAcross(lastItalicCorr);
-		GEText(ConvertedX(), ConvertedY(), chr,
-		       0.0, 0.0, CurrentAngle, 
-		       TextColor, MathGamma, 
-		       MathFontFamily, MathFont, MathLineHeight, 
-		       MathCex, MathPs,
-		       MathDevice);
-		PMoveAcross(bboxWidth(glyphBBox));
+		PMoveAcross(lastItalicCorr, mc);
+		GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
+		       0.0, 0.0, mc->CurrentAngle, gc,
+		       dd);
+		PMoveAcross(bboxWidth(glyphBBox), mc);
 	    }
 	    bboxWidth(resultBBox) += lastItalicCorr;
 	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
@@ -1059,7 +1037,7 @@ static BBOX RenderSymbolStr(char *str, int draw)
 	    s++;
 	}
 	if (font != prevfont)
-	    SetFont(prevfont);
+	    SetFont(prevfont, gc);
     }
     bboxSimple(resultBBox) = 1;
     return resultBBox;
@@ -1067,45 +1045,40 @@ static BBOX RenderSymbolStr(char *str, int draw)
 
 /* Code for Character String Atoms. */
 
-static BBOX RenderChar(int ascii, int draw)
+static BBOX RenderChar(int ascii, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
     char asciiStr[2];
-    bbox = GlyphBBox(ascii);
+    bbox = GlyphBBox(ascii, gc, dd);
     if (draw) {
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
-	GEText(ConvertedX(), ConvertedY(), asciiStr,
-	       0.0, 0.0, CurrentAngle, 
-	       TextColor, MathGamma, 
-	       MathFontFamily, MathFont, MathLineHeight, MathCex, MathPs,
-	       MathDevice);
-	PMoveAcross(bboxWidth(bbox));
+	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr,
+	       0.0, 0.0, mc->CurrentAngle, gc,
+	       dd);
+	PMoveAcross(bboxWidth(bbox), mc);
     }
     return bbox;
 }
 
-static BBOX RenderStr(char *str, int draw)
+static BBOX RenderStr(char *str, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX glyphBBox;
     BBOX resultBBox = NullBBox();
     if (str) {
 	char *s = str;
 	while (*s) {
-	    glyphBBox = GlyphBBox(*s);
+	    glyphBBox = GlyphBBox(*s, gc, dd);
 	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
 	    s++;
 	}
 	if (draw) {
-	    GEText(ConvertedX(), ConvertedY(), str,
-		   0.0, 0.0, CurrentAngle, 
-		   TextColor, MathGamma, 
-		   MathFontFamily, MathFont, MathLineHeight, 
-		   MathCex, MathPs,
-		   MathDevice);
-	    PMoveAcross(bboxWidth(resultBBox));
+	    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), str,
+		   0.0, 0.0, mc->CurrentAngle, gc,
+		   dd);
+	    PMoveAcross(bboxWidth(resultBBox), mc);
 	}
-	if (UsingItalics())
+	if (UsingItalics(gc))
 	    bboxItalic(resultBBox) = ItalicFactor * bboxHeight(glyphBBox);
 	else
 	    bboxItalic(resultBBox) = 0;
@@ -1117,41 +1090,41 @@ static BBOX RenderStr(char *str, int draw)
 
 /* Code for Symbol Font Atoms */
 
-static BBOX RenderSymbol(SEXP expr, int draw)
+static BBOX RenderSymbol(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     int code;
     if ((code = TranslatedSymbol(expr)))
-	return RenderSymbolChar(code, draw);
+	return RenderSymbolChar(code, draw, mc, gc, dd);
     else
-	return RenderSymbolStr(CHAR(PRINTNAME(expr)), draw);
+	return RenderSymbolStr(CHAR(PRINTNAME(expr)), draw, mc, gc, dd);
 }
 
-static BBOX RenderSymbolString(SEXP expr, int draw)
+static BBOX RenderSymbolString(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     int code;
     if ((code = TranslatedSymbol(expr)))
-	return RenderSymbolChar(code, draw);
+	return RenderSymbolChar(code, draw, mc, gc, dd);
     else
-	return RenderStr(CHAR(PRINTNAME(expr)), draw);
+	return RenderStr(CHAR(PRINTNAME(expr)), draw, mc, gc, dd);
 }
 
 
 /* Code for Numeric Atoms */
 
-static BBOX RenderNumber(SEXP expr, int draw)
+static BBOX RenderNumber(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    FontType prevfont = SetFont(PlainFont);
-    bbox = RenderStr(CHAR(asChar(expr)), draw);
-    SetFont(prevfont);
+    FontType prevfont = SetFont(PlainFont, gc);
+    bbox = RenderStr(CHAR(asChar(expr)), draw, mc, gc, dd);
+    SetFont(prevfont, gc);
     return bbox;
 }
 
 /* Code for String Atoms */
 
-static BBOX RenderString(SEXP expr, int draw)
+static BBOX RenderString(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    return RenderStr(CHAR(STRING_ELT(expr, 0)), draw);
+    return RenderStr(CHAR(STRING_ELT(expr, 0)), draw, mc, gc, dd);
 }
 
 /* Code for Ellipsis (ldots, cdots, ...) */
@@ -1165,21 +1138,21 @@ static int DotsAtom(SEXP expr)
     return 0;
 }
 
-static BBOX RenderDots(SEXP expr, int draw)
+static BBOX RenderDots(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    BBOX bbox = RenderSymbolChar(S_ELLIPSIS, 0);
+    BBOX bbox = RenderSymbolChar(S_ELLIPSIS, 0, mc, gc, dd);
     if (NameMatch(expr, "cdots") || NameMatch(expr, "...")) {
-	double shift = AxisHeight() - 0.5 * bboxHeight(bbox);
+	double shift = AxisHeight(gc, dd) - 0.5 * bboxHeight(bbox);
 	if (draw) {
-	    PMoveUp(shift);
-	    RenderSymbolChar(S_ELLIPSIS, 1);
-	    PMoveUp(-shift);
+	    PMoveUp(shift, mc);
+	    RenderSymbolChar(S_ELLIPSIS, 1, mc, gc, dd);
+	    PMoveUp(-shift, mc);
 	}
 	return ShiftBBox(bbox, shift);
     }
     else {
 	if (draw)
-	    RenderSymbolChar(S_ELLIPSIS, 1);
+	    RenderSymbolChar(S_ELLIPSIS, 1, mc, gc, dd);
 	return bbox;
     }
 }
@@ -1190,18 +1163,18 @@ static BBOX RenderDots(SEXP expr, int draw)
  *
  */
 
-static BBOX RenderAtom(SEXP expr, int draw)
+static BBOX RenderAtom(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     if (NameAtom(expr)) {
 	if (DotsAtom(expr))
-	    return RenderDots(expr, draw);
+	    return RenderDots(expr, draw, mc, gc, dd);
 	else
-	    return RenderSymbol(expr, draw);
+	    return RenderSymbol(expr, draw, mc, gc, dd);
     }
     else if (NumberAtom(expr))
-	return RenderNumber(expr, draw);
+	return RenderNumber(expr, draw, mc, gc, dd);
     else if (StringAtom(expr))
-	return RenderString(expr, draw);
+	return RenderString(expr, draw, mc, gc, dd);
 
     return NullBBox();		/* -Wall */
 }
@@ -1221,21 +1194,21 @@ static int SpaceAtom(SEXP expr)
 }
 
 
-static BBOX RenderSpace(SEXP expr, int draw)
+static BBOX RenderSpace(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
 
     BBOX opBBox, arg1BBox, arg2BBox;
     int nexpr = length(expr);
 
     if (nexpr == 2) {
-	opBBox = RenderSymbolChar(' ', draw);
-	arg1BBox = RenderElement(CADR(expr), draw);
+	opBBox = RenderSymbolChar(' ', draw, mc, gc, dd);
+	arg1BBox = RenderElement(CADR(expr), draw, mc, gc, dd);
 	return CombineBBoxes(opBBox, arg1BBox);
     }
     else if (nexpr == 3) {
-	arg1BBox = RenderElement(CADR(expr), draw);
-	opBBox = RenderSymbolChar(' ', draw);
-	arg2BBox = RenderElement(CADDR(expr), draw);
+	arg1BBox = RenderElement(CADR(expr), draw, mc, gc, dd);
+	opBBox = RenderSymbolChar(' ', draw, mc, gc, dd);
+	arg2BBox = RenderElement(CADDR(expr), draw, mc, gc, dd);
 	opBBox = CombineBBoxes(arg1BBox, opBBox);
 	opBBox = CombineBBoxes(opBBox, arg2BBox);
 	return opBBox;
@@ -1272,71 +1245,76 @@ static int BinAtom(SEXP expr)
 
 #define SLASH2
 
-static BBOX RenderSlash(int draw)
+static BBOX RenderSlash(int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
 #ifdef SLASH0
     /* The Default Font Character */
-    return RenderSymbolChar(S_SLASH, draw);
+    return RenderSymbolChar(S_SLASH, draw, mc, gc, dd);
 #endif
 #ifdef SLASH1
     /* Symbol Magnify Version */
-    double savecex = MathCex;
+    double savecex = gc->cex;
     BBOX bbox;
     double height1, height2;
-    height1 = bboxHeight(RenderSymbolChar(S_SLASH, 0));
-    MathCex = 1.2 * MathCex;
-    height2 = bboxHeight(RenderSymbolChar(S_SLASH, 0));
+    height1 = bboxHeight(RenderSymbolChar(S_SLASH, 0), mc, gc, dd);
+    gc->cex = 1.2 * gc->cex;
+    height2 = bboxHeight(RenderSymbolChar(S_SLASH, 0), mc, gc, dd);
     if (draw)
-	PMoveUp(- 0.5 * (height2 - height1));
-    bbox = RenderSymbolChar(S_SLASH, draw);
+	PMoveUp(- 0.5 * (height2 - height1), mc);
+    bbox = RenderSymbolChar(S_SLASH, draw, mc, gc, dd);
     if (draw)
-	PMoveUp(0.5 * (height2 - height1));
-    MathCex = savecex;
+	PMoveUp(0.5 * (height2 - height1), mc);
+    gc->cex = savecex;
     return bbox;
 #endif
 #ifdef SLASH2
     /* Line Drawing Version */
     double x[2], y[2];
-    double depth = 0.5 * TeX(sigma22);
-    double height = XHeight() + 0.5 * TeX(sigma22);
-    double width = 0.5 * xHeight();
+    double depth = 0.5 * TeX(sigma22, gc, dd);
+    double height = XHeight(gc, dd) + 0.5 * TeX(sigma22, gc, dd);
+    double width = 0.5 * xHeight(gc, dd);
     if (draw) {
-	PMoveAcross(0.5 * width);
-	PMoveUp(-depth);
-	x[0] = ConvertedX();
-	y[0] = ConvertedY();
-	PMoveAcross(width);
-	PMoveUp(depth + height);
-	x[1] = ConvertedX();
-	y[1] = ConvertedY();
-	PMoveUp(-height);
-	GEPolyline(2, x, y,
-		  TextColor, MathGamma, LTY_SOLID, 1, MathDevice);
-	PMoveAcross(0.5 * width);
+	int savedlty = gc->lty;
+	double savedlwd = gc->lwd;
+	PMoveAcross(0.5 * width, mc);
+	PMoveUp(-depth, mc);
+	x[0] = ConvertedX(mc, dd);
+	y[0] = ConvertedY(mc, dd);
+	PMoveAcross(width, mc);
+	PMoveUp(depth + height, mc);
+	x[1] = ConvertedX(mc, dd);
+	y[1] = ConvertedY(mc, dd);
+	PMoveUp(-height, mc);
+	gc->lty = LTY_SOLID;
+	gc->lwd = 1;
+	GEPolyline(2, x, y, gc, dd);
+	PMoveAcross(0.5 * width, mc);
+	gc->lty = savedlty;
+	gc->lwd = savedlwd;
     }
     return MakeBBox(height, depth, 2 * width);
 #endif
 #ifdef SLASH3
     /* Offset Overprinting - A Failure! */
-    BBOX slashBBox = RenderSymbolChar(S_SLASH, 0);
+    BBOX slashBBox = RenderSymbolChar(S_SLASH, 0, mc, gc, dd);
     BBOX ansBBox;
     double height = bboxHeight(slashBBox);
     double depth = bboxDepth(slashBBox);
     double width = bboxWidth(slashBBox);
     double slope = (height + depth) / slope;
-    double delta = TeX(sigma22);
+    double delta = TeX(sigma22, gc, dd);
     if (draw)
-	PMoveUp(-delta);
-    ansBBox = ShiftBBox(RenderSymbolChar(S_SLASH, draw), -delta);
-    PMoveUp(2 * delta);
-    ansBBox = CombineBBoxes(ansBBox, RenderGap(2 * delta / slope, draw));
-    ansBBox = ShiftBBox(RenderSymbolChar(S_SLASH, draw), 2 * delta);
-    PMoveUp(-delta);
+	PMoveUp(-delta, mc);
+    ansBBox = ShiftBBox(RenderSymbolChar(S_SLASH, draw), -delta, mc, gc, dd);
+    PMoveUp(2 * delta, mc);
+    ansBBox = CombineBBoxes(ansBBox, RenderGap(2 * delta / slope, draw, mc, gc, dd));
+    ansBBox = ShiftBBox(RenderSymbolChar(S_SLASH, draw), 2 * delta, mc, gc, dd);
+    PMoveUp(-delta, mc);
     return ansBBox;
 #endif
 }
 
-static BBOX RenderBin(SEXP expr, int draw)
+static BBOX RenderBin(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     int op = BinAtom(CAR(expr));
     int nexpr = length(expr);
@@ -1345,34 +1323,34 @@ static BBOX RenderBin(SEXP expr, int draw)
 
     if(nexpr == 3) {
 	if (op == S_ASTERISKMATH) {
-	    bbox = RenderElement(CADR(expr), draw);
-	    bbox = RenderItalicCorr(bbox, draw);
-	    return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw));
+	    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+	    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+	    return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw, mc, gc, dd));
 	}
 	else if (op == S_SLASH) {
 	    gap = 0;
-	    bbox = RenderElement(CADR(expr), draw);
-	    bbox = RenderItalicCorr(bbox, draw);
-	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
-	    bbox = CombineBBoxes(bbox, RenderSlash(draw));
-	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
-	    return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw));
+	    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+	    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw, mc, gc, dd));
+	    bbox = CombineBBoxes(bbox, RenderSlash(draw, mc, gc, dd));
+	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw, mc, gc, dd));
+	    return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw, mc, gc, dd));
 	}
 	else {
-	    gap = (CurrentStyle > STYLE_S) ? MediumSpace() : 0;
-	    bbox = RenderElement(CADR(expr), draw);
-	    bbox = RenderItalicCorr(bbox, draw);
-	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
-	    bbox = CombineBBoxes(bbox, RenderSymbolChar(op, draw));
-	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
-	    return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw));
+	    gap = (mc->CurrentStyle > STYLE_S) ? MediumSpace(gc, dd) : 0;
+	    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+	    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw, mc, gc, dd));
+	    bbox = CombineBBoxes(bbox, RenderSymbolChar(op, draw, mc, gc, dd));
+	    bbox = CombineBBoxes(bbox, RenderGap(gap, draw, mc, gc, dd));
+	    return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw, mc, gc, dd));
 	}
     }
     else if(nexpr == 2) {
-	gap = (CurrentStyle > STYLE_S) ? ThinSpace() : 0;
-	bbox = RenderSymbolChar(op, draw);
-	bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
-	return CombineBBoxes(bbox, RenderElement(CADR(expr), draw));
+	gap = (mc->CurrentStyle > STYLE_S) ? ThinSpace(gc, dd) : 0;
+	bbox = RenderSymbolChar(op, draw, mc, gc, dd);
+	bbox = CombineBBoxes(bbox, RenderGap(gap, draw, mc, gc, dd));
+	return CombineBBoxes(bbox, RenderElement(CADR(expr), draw, mc, gc, dd));
     }
     else
 	error("invalid mathematical annotation");
@@ -1403,40 +1381,40 @@ static int SubAtom(SEXP expr)
 /* Note : If all computations are correct */
 /* We do not need to save and restore the */
 /* current location here.  This is paranoia. */
-static BBOX RenderSub(SEXP expr, int draw)
+static BBOX RenderSub(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bodyBBox, subBBox;
     SEXP body = CADR(expr);
     SEXP sub = CADDR(expr);
-    STYLE style = GetStyle();
-    double savedX = CurrentX;
-    double savedY = CurrentY;
+    STYLE style = GetStyle(mc);
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
     double v, s5, s16;
-    bodyBBox = RenderElement(body, draw);
-    bodyBBox = RenderItalicCorr(bodyBBox, draw);
-    v = bboxSimple(bodyBBox) ? 0 : bboxDepth(bodyBBox) + TeX(sigma19);
-    s5 = TeX(sigma5);
-    s16 = TeX(sigma16);
-    SetSubStyle(style);
-    subBBox = RenderElement(sub, 0);
+    bodyBBox = RenderElement(body, draw, mc, gc, dd);
+    bodyBBox = RenderItalicCorr(bodyBBox, draw, mc, gc, dd);
+    v = bboxSimple(bodyBBox) ? 0 : bboxDepth(bodyBBox) + TeX(sigma19, gc, dd);
+    s5 = TeX(sigma5, gc, dd);
+    s16 = TeX(sigma16, gc, dd);
+    SetSubStyle(style, mc, gc);
+    subBBox = RenderElement(sub, 0, mc, gc, dd);
     v = max(max(v, s16), bboxHeight(subBBox) - 0.8 * sigma5);
-    subBBox = RenderOffsetElement(sub, 0, -v, draw);
+    subBBox = RenderOffsetElement(sub, 0, -v, draw, mc, gc, dd);
     bodyBBox = CombineBBoxes(bodyBBox, subBBox);
-    SetStyle(style);
+    SetStyle(style, mc, gc);
     if (draw)
-	PMoveTo(savedX + bboxWidth(bodyBBox), savedY);
+	PMoveTo(savedX + bboxWidth(bodyBBox), savedY, mc);
     return bodyBBox;
 }
 
-static BBOX RenderSup(SEXP expr, int draw)
+static BBOX RenderSup(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bodyBBox, subBBox, supBBox;
     SEXP body = CADR(expr);
     SEXP sup = CADDR(expr);
     SEXP sub = R_NilValue;	/* -Wall */
-    STYLE style = GetStyle();
-    double savedX = CurrentX;
-    double savedY = CurrentY;
+    STYLE style = GetStyle(mc);
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
     double theta, delta, width;
     double u, p;
     double v, s5, s17;
@@ -1447,34 +1425,34 @@ static BBOX RenderSup(SEXP expr, int draw)
 	haveSub = 1;
     }
     else haveSub = 0;
-    bodyBBox = RenderElement(body, draw);
+    bodyBBox = RenderElement(body, draw, mc, gc, dd);
     delta = bboxItalic(bodyBBox);
-    bodyBBox = RenderItalicCorr(bodyBBox, draw);
+    bodyBBox = RenderItalicCorr(bodyBBox, draw, mc, gc, dd);
     width = bboxWidth(bodyBBox);
     if (bboxSimple(bodyBBox)) {
 	u = 0;
 	v = 0;
     }
     else {
-	u = bboxHeight(bodyBBox) - TeX(sigma18);
-	v = bboxDepth(bodyBBox) + TeX(sigma19);
+	u = bboxHeight(bodyBBox) - TeX(sigma18, gc, dd);
+	v = bboxDepth(bodyBBox) + TeX(sigma19, gc, dd);
     }
-    theta = TeX(xi8);
-    s5 = TeX(sigma5);
-    s17 = TeX(sigma17);
+    theta = TeX(xi8, gc, dd);
+    s5 = TeX(sigma5, gc, dd);
+    s17 = TeX(sigma17, gc, dd);
     if (style == STYLE_D)
-	p = TeX(sigma13);
-    else if (IsCompactStyle(style))
-	p = TeX(sigma15);
+	p = TeX(sigma13, gc, dd);
+    else if (IsCompactStyle(style, mc, gc))
+	p = TeX(sigma15, gc, dd);
     else
-	p = TeX(sigma14);
-    SetSupStyle(style);
-    supBBox = RenderElement(sup, 0);
+	p = TeX(sigma14, gc, dd);
+    SetSupStyle(style, mc, gc);
+    supBBox = RenderElement(sup, 0, mc, gc, dd);
     u = max(max(u, p), bboxDepth(supBBox) + 0.25 * s5);
 
     if (haveSub) {
-	SetSubStyle(style);
-	subBBox = RenderElement(sub, 0);
+	SetSubStyle(style, mc, gc);
+	subBBox = RenderElement(sub, 0, mc, gc, dd);
 	v = max(v, s17);
 	if ((u - bboxDepth(supBBox)) - (bboxHeight(subBBox) - v) < 4 * theta) {
 	    double psi = 0.8 * s5 - (u - bboxDepth(supBBox));
@@ -1484,22 +1462,22 @@ static BBOX RenderSup(SEXP expr, int draw)
 	    }
 	}
 	if (draw)
-	    PMoveTo(savedX, savedY);
-	subBBox = RenderOffsetElement(sub, width, -v, draw);
+	    PMoveTo(savedX, savedY, mc);
+	subBBox = RenderOffsetElement(sub, width, -v, draw, mc, gc, dd);
 	if (draw)
-	    PMoveTo(savedX, savedY);
-	SetSupStyle(style);
-	supBBox = RenderOffsetElement(sup, width + delta, u, draw);
+	    PMoveTo(savedX, savedY, mc);
+	SetSupStyle(style, mc, gc);
+	supBBox = RenderOffsetElement(sup, width + delta, u, draw, mc, gc, dd);
 	bodyBBox = CombineAlignedBBoxes(bodyBBox, subBBox);
 	bodyBBox = CombineAlignedBBoxes(bodyBBox, supBBox);
     }
     else {
-	supBBox = RenderOffsetElement(sup, 0, u, draw);
+	supBBox = RenderOffsetElement(sup, 0, u, draw, mc, gc, dd);
 	bodyBBox = CombineBBoxes(bodyBBox, supBBox);
     }
     if (draw)
-	PMoveTo(savedX + bboxWidth(bodyBBox), savedY);
-    SetStyle(style);
+	PMoveTo(savedX + bboxWidth(bodyBBox), savedY, mc);
+    SetStyle(style, mc, gc);
     return bodyBBox;
 }
 
@@ -1521,42 +1499,47 @@ static int WideTildeAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "widetilde");
 }
 
-static BBOX RenderWideTilde(SEXP expr, int draw)
+static BBOX RenderWideTilde(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    double savedX = CurrentX;
-    double savedY = CurrentY;
-    BBOX bbox = RenderElement(CADR(expr), draw);
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
+    BBOX bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
     double height = bboxHeight(bbox);
     /*double width = bboxWidth(bbox);*/
     double totalwidth = bboxWidth(bbox) + bboxItalic(bbox);
     double delta = totalwidth * (1 - 2 * DELTA) / NTILDE;
     double start = DELTA * totalwidth;
-    double accentGap = ACCENT_GAP * XHeight();
-    double hatHeight = 0.5 * HAT_HEIGHT * XHeight();
+    double accentGap = ACCENT_GAP * XHeight(gc, dd);
+    double hatHeight = 0.5 * HAT_HEIGHT * XHeight(gc, dd);
     double c = 8 * atan(1.0) / NTILDE;
     double x[NTILDE + 3], y[NTILDE + 3];
     double baseX, baseY, xval, yval;
     int i;
 
     if (draw) {
+	int savedlty = gc->lty;
+	double savedlwd = gc->lwd;
 	baseX = savedX;
 	baseY = savedY + height + accentGap;
-	PMoveTo(baseX, baseY);
-	x[0] = ConvertedX();
-	y[0] = ConvertedY();
+	PMoveTo(baseX, baseY, mc);
+	x[0] = ConvertedX(mc, dd);
+	y[0] = ConvertedY(mc, dd);
 	for (i = 0; i <= NTILDE; i++) {
 	    xval = start + i * delta;
 	    yval = 0.5 * hatHeight * (sin(c * i) + 1);
-	    PMoveTo(baseX + xval, baseY + yval);
-	    x[i + 1] = ConvertedX();
-	    y[i + 1] = ConvertedY();
+	    PMoveTo(baseX + xval, baseY + yval, mc);
+	    x[i + 1] = ConvertedX(mc, dd);
+	    y[i + 1] = ConvertedY(mc, dd);
 	}
-	PMoveTo(baseX + totalwidth, baseY + hatHeight);
-	x[NTILDE + 2] = ConvertedX();
-	y[NTILDE + 2] = ConvertedY();
-	GEPolyline(NTILDE + 3, x, y, 
-		  TextColor, MathGamma, LTY_SOLID, 1, MathDevice);
-	PMoveTo(savedX + totalwidth, savedY);
+	PMoveTo(baseX + totalwidth, baseY + hatHeight, mc);
+	x[NTILDE + 2] = ConvertedX(mc, dd);
+	y[NTILDE + 2] = ConvertedY(mc, dd);
+	gc->lty = LTY_SOLID;
+	gc->lwd = 1;
+	GEPolyline(NTILDE + 3, x, y, gc, dd);
+	PMoveTo(savedX + totalwidth, savedY, mc);
+	gc->lty = savedlty;
+	gc->lwd = savedlwd;
     }
     return MakeBBox(height + accentGap + hatHeight,
 		    bboxDepth(bbox), totalwidth);
@@ -1567,33 +1550,38 @@ static int WideHatAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "widehat");
 }
 
-static BBOX RenderWideHat(SEXP expr, int draw)
+static BBOX RenderWideHat(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    double savedX = CurrentX;
-    double savedY = CurrentY;
-    BBOX bbox = RenderElement(CADR(expr), draw);
-    double accentGap = ACCENT_GAP * XHeight();
-    double hatHeight = HAT_HEIGHT * XHeight();
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
+    BBOX bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+    double accentGap = ACCENT_GAP * XHeight(gc, dd);
+    double hatHeight = HAT_HEIGHT * XHeight(gc, dd);
     double totalwidth = bboxWidth(bbox) + bboxItalic(bbox);
     double height = bboxHeight(bbox);
     double width = bboxWidth(bbox);
     double x[3], y[3];
 
     if (draw) {
-	PMoveTo(savedX, savedY + height + accentGap);
-	x[0] = ConvertedX();
-	y[0] = ConvertedY();
-	PMoveAcross(0.5 * totalwidth);
-	PMoveUp(hatHeight);
-	x[1] = ConvertedX();
-	y[1] = ConvertedY();
-	PMoveAcross(0.5 * totalwidth);
-	PMoveUp(-hatHeight);
-	x[2] = ConvertedX();
-	y[2] = ConvertedY();
-	GEPolyline(3, x, y, 
-		  TextColor, MathGamma, LTY_SOLID, 1, MathDevice);
-	PMoveTo(savedX + width, savedY);
+	int savedlty = gc->lty;
+	double savedlwd = gc->lwd;
+	PMoveTo(savedX, savedY + height + accentGap, mc);
+	x[0] = ConvertedX(mc, dd);
+	y[0] = ConvertedY(mc, dd);
+	PMoveAcross(0.5 * totalwidth, mc);
+	PMoveUp(hatHeight, mc);
+	x[1] = ConvertedX(mc, dd);
+	y[1] = ConvertedY(mc, dd);
+	PMoveAcross(0.5 * totalwidth, mc);
+	PMoveUp(-hatHeight, mc);
+	x[2] = ConvertedX(mc, dd);
+	y[2] = ConvertedY(mc, dd);
+	gc->lty = LTY_SOLID;
+	gc->lwd = 1;
+	GEPolyline(3, x, y, gc, dd);
+	PMoveTo(savedX + width, savedY, mc);
+	gc->lty = savedlty;
+	gc->lwd = savedlwd;
     }
     return EnlargeBBox(bbox, accentGap + hatHeight, 0, 0);
 }
@@ -1603,28 +1591,33 @@ static int BarAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "bar");
 }
 
-static BBOX RenderBar(SEXP expr, int draw)
+static BBOX RenderBar(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    double savedX = CurrentX;
-    double savedY = CurrentY;
-    BBOX bbox = RenderElement(CADR(expr), draw);
-    double accentGap = ACCENT_GAP * XHeight();
-    /*double hatHeight = HAT_HEIGHT * XHeight();*/
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
+    BBOX bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+    double accentGap = ACCENT_GAP * XHeight(gc, dd);
+    /*double hatHeight = HAT_HEIGHT * XHeight(gc, dd);*/
     double height = bboxHeight(bbox);
     double width = bboxWidth(bbox);
     double offset = bboxItalic(bbox);
     double x[2], y[2];
 
     if (draw) {
-	PMoveTo(savedX + offset, savedY + height + accentGap);
-	x[0] = ConvertedX();
-	y[0] = ConvertedY();
-	PMoveAcross(width);
-	x[1] = ConvertedX();
-	y[1] = ConvertedY();
-	GEPolyline(2, x, y, 
-		  TextColor, MathGamma, LTY_SOLID, 1, MathDevice);
-	PMoveTo(savedX + width, savedY);
+	int savedlty = gc->lty;
+	double savedlwd = gc->lwd;
+	PMoveTo(savedX + offset, savedY + height + accentGap, mc);
+	x[0] = ConvertedX(mc, dd);
+	y[0] = ConvertedY(mc, dd);
+	PMoveAcross(width, mc);
+	x[1] = ConvertedX(mc, dd);
+	y[1] = ConvertedY(mc, dd);
+	gc->lty = LTY_SOLID;
+	gc->lwd = 1;
+	GEPolyline(2, x, y, gc, dd);
+	PMoveTo(savedX + width, savedY, mc);
+	gc->lty = savedlty;
+	gc->lwd = savedlwd;
     }
     return EnlargeBBox(bbox, accentGap, 0, 0);
 }
@@ -1660,11 +1653,11 @@ static void InvalidAccent(SEXP expr)
     errorcall(expr, "invalid accent");
 }
 
-static BBOX RenderAccent(SEXP expr, int draw)
+static BBOX RenderAccent(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     SEXP body, accent;
-    double savedX = CurrentX;
-    double savedY = CurrentY;
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
     BBOX bodyBBox, accentBBox;
     double xoffset, yoffset, width, italic;
     int code;
@@ -1675,32 +1668,32 @@ static BBOX RenderAccent(SEXP expr, int draw)
     code = AccentCode(accent);
     if (code == 0)
 	InvalidAccent(expr);
-    bodyBBox = RenderElement(body, 0);
+    bodyBBox = RenderElement(body, 0, mc, gc, dd);
     italic = bboxItalic(bodyBBox);
     if (code == 215) /* dotmath */
-	accentBBox = RenderSymbolChar(code, 0);
+	accentBBox = RenderSymbolChar(code, 0, mc, gc, dd);
     else
-	accentBBox = RenderChar(code, 0);
+	accentBBox = RenderChar(code, 0, mc, gc, dd);
     width = max(bboxWidth(bodyBBox) + bboxItalic(bodyBBox),
 		bboxWidth(accentBBox));
     xoffset = 0.5 *(width - bboxWidth(bodyBBox));
-    bodyBBox = RenderGap(xoffset, draw);
-    bodyBBox = CombineBBoxes(bodyBBox, RenderElement(body, draw));
-    bodyBBox = CombineBBoxes(bodyBBox, RenderGap(xoffset, draw));
-    PMoveTo(savedX, savedY);
+    bodyBBox = RenderGap(xoffset, draw, mc, gc, dd);
+    bodyBBox = CombineBBoxes(bodyBBox, RenderElement(body, draw, mc, gc, dd));
+    bodyBBox = CombineBBoxes(bodyBBox, RenderGap(xoffset, draw, mc, gc, dd));
+    PMoveTo(savedX, savedY, mc);
     xoffset = 0.5 *(width - bboxWidth(accentBBox))
 	+ 0.9 * italic;
-    yoffset = bboxHeight(bodyBBox) + bboxDepth(accentBBox) + 0.1 * XHeight();
+    yoffset = bboxHeight(bodyBBox) + bboxDepth(accentBBox) + 0.1 * XHeight(gc, dd);
     if (draw) {
-	PMoveTo(savedX + xoffset, savedY + yoffset);
+	PMoveTo(savedX + xoffset, savedY + yoffset, mc);
 	if (code == 215) /* dotmath */
-	    RenderSymbolChar(code, draw);
+	    RenderSymbolChar(code, draw, mc, gc, dd);
 	else
-	    RenderChar(code, draw);
+	    RenderChar(code, draw, mc, gc, dd);
     }
     bodyBBox = CombineOffsetBBoxes(bodyBBox, 0, accentBBox, 0,
 				   xoffset, yoffset);
-    PMoveTo(savedX + width, savedY);
+    PMoveTo(savedX + width, savedY, mc);
     return bodyBBox;
 }
 
@@ -1714,19 +1707,20 @@ static BBOX RenderAccent(SEXP expr, int draw)
  */
 
 static void NumDenomVShift(BBOX numBBox, BBOX denomBBox,
-			     double *u, double *v)
+			   double *u, double *v,
+			   mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double a, delta, phi, theta;
-    a = TeX(sigma22);
-    theta = TeX(xi8);
-    if(CurrentStyle > STYLE_T) {
-	*u = TeX(sigma8);
-	*v = TeX(sigma11);
+    a = TeX(sigma22, gc, dd);
+    theta = TeX(xi8, gc, dd);
+    if(mc->CurrentStyle > STYLE_T) {
+	*u = TeX(sigma8, gc, dd);
+	*v = TeX(sigma11, gc, dd);
 	phi = 3 * theta;
     }
     else {
-	*u = TeX(sigma9);
-	*v = TeX(sigma12);
+	*u = TeX(sigma9, gc, dd);
+	*v = TeX(sigma12, gc, dd);
 	phi = theta;
     }
     delta = (*u - bboxDepth(numBBox)) - (a + 0.5 * theta);
@@ -1752,7 +1746,7 @@ static void NumDenomHShift(BBOX numBBox, BBOX denomBBox,
     }
 }
 
-static BBOX RenderFraction(SEXP expr, int rule, int draw)
+static BBOX RenderFraction(SEXP expr, int rule, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     SEXP numerator = CADR(expr);
     SEXP denominator = CADDR(expr);
@@ -1760,48 +1754,53 @@ static BBOX RenderFraction(SEXP expr, int rule, int draw)
     double nHShift, dHShift;
     double nVShift, dVShift;
     double width, x[2], y[2];
-    double savedX = CurrentX;
-    double savedY = CurrentY;
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
     STYLE style;
 
-    style = GetStyle();
-    SetNumStyle(style);
-    numBBox = RenderItalicCorr(RenderElement(numerator, 0), 0);
-    SetDenomStyle(style);
-    denomBBox = RenderItalicCorr(RenderElement(denominator, 0), 0);
-    SetStyle(style);
+    style = GetStyle(mc);
+    SetNumStyle(style, mc, gc);
+    numBBox = RenderItalicCorr(RenderElement(numerator, 0, mc, gc, dd), 0, mc, gc, dd);
+    SetDenomStyle(style, mc, gc);
+    denomBBox = RenderItalicCorr(RenderElement(denominator, 0, mc, gc, dd), 0, mc, gc, dd);
+    SetStyle(style, mc, gc);
 
     width = max(bboxWidth(numBBox), bboxWidth(denomBBox));
     NumDenomHShift(numBBox, denomBBox, &nHShift, &dHShift);
-    NumDenomVShift(numBBox, denomBBox, &nVShift, &dVShift);
+    NumDenomVShift(numBBox, denomBBox, &nVShift, &dVShift, mc, gc, dd);
 
-    CurrentX = savedX;
-    CurrentY = savedY;
-    SetNumStyle(style);
-    numBBox = RenderOffsetElement(numerator, nHShift, nVShift, draw);
+    mc->CurrentX = savedX;
+    mc->CurrentY = savedY;
+    SetNumStyle(style, mc, gc);
+    numBBox = RenderOffsetElement(numerator, nHShift, nVShift, draw, mc, gc, dd);
 
-    CurrentX = savedX;
-    CurrentY = savedY;
-    SetDenomStyle(style);
-    denomBBox = RenderOffsetElement(denominator, dHShift, -dVShift, draw);
+    mc->CurrentX = savedX;
+    mc->CurrentY = savedY;
+    SetDenomStyle(style, mc, gc);
+    denomBBox = RenderOffsetElement(denominator, dHShift, -dVShift, draw, mc, gc, dd);
 
-    SetStyle(style);
+    SetStyle(style, mc, gc);
 
     if (draw) {
 	if (rule) {
-	    CurrentX = savedX;
-	    CurrentY = savedY;
-	    PMoveUp(AxisHeight());
-	    x[0] = ConvertedX();
-	    y[0] = ConvertedY();
-	    PMoveAcross(width);
-	    x[1] = ConvertedX();
-	    y[1] = ConvertedY();
-	    GEPolyline(2, x, y, 
-		  TextColor, MathGamma, LTY_SOLID, 1, MathDevice);
-	    PMoveUp(-AxisHeight());
+	    int savedlty = gc->lty;
+	    double savedlwd = gc->lwd;
+	    mc->CurrentX = savedX;
+	    mc->CurrentY = savedY;
+	    PMoveUp(AxisHeight(gc, dd), mc);
+	    x[0] = ConvertedX(mc, dd);
+	    y[0] = ConvertedY(mc, dd);
+	    PMoveAcross(width, mc);
+	    x[1] = ConvertedX(mc, dd);
+	    y[1] = ConvertedY(mc, dd);
+	    gc->lty = LTY_SOLID;
+	    gc->lwd = 1;
+	    GEPolyline(2, x, y, gc, dd);
+	    PMoveUp(-AxisHeight(gc, dd), mc);
+	    gc->lty = savedlty;
+	    gc->lwd = savedlwd;
 	}
-	PMoveTo(savedX + width, savedY);
+	PMoveTo(savedX + width, savedY, mc);
     }
     return CombineAlignedBBoxes(numBBox, denomBBox);
 }
@@ -1812,9 +1811,9 @@ static int OverAtom(SEXP expr)
 	(NameMatch(expr, "over") || NameMatch(expr, "frac"));
 }
 
-static BBOX RenderOver(SEXP expr, int draw)
+static BBOX RenderOver(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    return RenderFraction(expr, 1, draw);
+    return RenderFraction(expr, 1, draw, mc, gc, dd);
 }
 
 static int AtopAtom(SEXP expr)
@@ -1822,9 +1821,9 @@ static int AtopAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "atop");
 }
 
-static BBOX RenderAtop(SEXP expr, int draw)
+static BBOX RenderAtop(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    return RenderFraction(expr, 0, draw);
+    return RenderFraction(expr, 0, draw, mc, gc, dd);
 }
 
 /*----------------------------------------------------------------------
@@ -1877,13 +1876,13 @@ static int DelimCode(SEXP expr, SEXP head)
     return code;
 }
 
-static BBOX RenderDelimiter(int delim, int draw)
+static BBOX RenderDelimiter(int delim, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    double savecex = MathCex;
-    MathCex = DelimSymbolMag * MathCex;
-    bbox = RenderSymbolChar(delim, draw);
-    MathCex = savecex;
+    double savecex = gc->cex;
+    gc->cex = DelimSymbolMag * gc->cex;
+    bbox = RenderSymbolChar(delim, draw, mc, gc, dd);
+    gc->cex = savecex;
     return bbox;
 }
 
@@ -1892,34 +1891,34 @@ static int GroupAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "group");
 }
 
-static BBOX RenderGroup(SEXP expr, int draw)
+static BBOX RenderGroup(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    double cexSaved = MathCex;
+    double cexSaved = gc->cex;
     BBOX bbox;
     int code;
     if (length(expr) != 4)
 	errorcall(expr, "invalid group specification");
     bbox = NullBBox();
     code = DelimCode(expr, CADR(expr));
-    MathCex = DelimSymbolMag * MathCex;
+    gc->cex = DelimSymbolMag * gc->cex;
     if (code == 2) {
-	bbox = RenderSymbolChar('|', draw);
-	bbox = RenderSymbolChar('|', draw);
+	bbox = RenderSymbolChar('|', draw, mc, gc, dd);
+	bbox = RenderSymbolChar('|', draw, mc, gc, dd);
     }
     else if (code != '.')
-	bbox = RenderSymbolChar(code, draw);
-    MathCex = cexSaved;
-    bbox = CombineBBoxes(bbox, RenderElement(CADDR(expr), draw));
-    bbox = RenderItalicCorr(bbox, draw);
+	bbox = RenderSymbolChar(code, draw, mc, gc, dd);
+    gc->cex = cexSaved;
+    bbox = CombineBBoxes(bbox, RenderElement(CADDR(expr), draw, mc, gc, dd));
+    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
     code = DelimCode(expr, CADDDR(expr));
-    MathCex = DelimSymbolMag * MathCex;
+    gc->cex = DelimSymbolMag * gc->cex;
     if (code == 2) {
-	bbox = CombineBBoxes(bbox, RenderSymbolChar('|', draw));
-	bbox = CombineBBoxes(bbox, RenderSymbolChar('|', draw));
+	bbox = CombineBBoxes(bbox, RenderSymbolChar('|', draw, mc, gc, dd));
+	bbox = CombineBBoxes(bbox, RenderSymbolChar('|', draw, mc, gc, dd));
     }
     else if (code != '.')
-	bbox = CombineBBoxes(bbox, RenderSymbolChar(code, draw));
-    MathCex = cexSaved;
+	bbox = CombineBBoxes(bbox, RenderSymbolChar(code, draw, mc, gc, dd));
+    gc->cex = cexSaved;
     return bbox;
 }
 
@@ -1928,21 +1927,21 @@ static int BGroupAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "bgroup");
 }
 
-static BBOX RenderDelim(int which, double dist, int draw)
+static BBOX RenderDelim(int which, double dist, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    double savedX = CurrentX;
-    double savedY = CurrentY;
-    FontType prev = SetFont(SymbolFont);
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
+    FontType prev = SetFont(SymbolFont, gc);
     BBOX ansBBox, topBBox, botBBox, extBBox, midBBox;
     int top, bot, ext, mid;
     int i, n;
     double topShift, botShift, extShift, midShift;
     double ytop, ybot, extHeight, delta;
-    double axisHeight = TeX(sigma22);
+    double axisHeight = TeX(sigma22, gc, dd);
 
     switch(which) {
     case '.': 
-	SetFont(prev);
+	SetFont(prev, gc);
 	return NullBBox();
 	break;
     case '|':
@@ -1971,9 +1970,9 @@ static BBOX RenderDelim(int which, double dist, int draw)
 	error("group is incomplete");
 	return ansBBox;/*never reached*/
     }
-    topBBox = GlyphBBox(top);
-    extBBox = GlyphBBox(ext);
-    botBBox = GlyphBBox(bot);
+    topBBox = GlyphBBox(top, gc, dd);
+    extBBox = GlyphBBox(ext, gc, dd);
+    botBBox = GlyphBBox(bot, gc, dd);
     if (which == '{' || which == '}') {
 	if (1.2 * (bboxHeight(topBBox) + bboxDepth(topBBox)) > dist)
 	    dist = 1.2 * (bboxHeight(topBBox) + bboxDepth(botBBox));
@@ -1990,28 +1989,28 @@ static BBOX RenderDelim(int which, double dist, int draw)
     botBBox = ShiftBBox(botBBox, -botShift);
     ansBBox = CombineAlignedBBoxes(topBBox, botBBox);
     if (which == '{' || which == '}') {
-	midBBox = GlyphBBox(mid);
+	midBBox = GlyphBBox(mid, gc, dd);
 	midShift = axisHeight
 	    - 0.5 * (bboxHeight(midBBox) - bboxDepth(midBBox));
 	midBBox = ShiftBBox(midBBox, midShift);
 	ansBBox = CombineAlignedBBoxes(ansBBox, midBBox);
 	if (draw) {
-	    PMoveTo(savedX, savedY + topShift);
-	    RenderSymbolChar(top, draw);
-	    PMoveTo(savedX, savedY + midShift);
-	    RenderSymbolChar(mid, draw);
-	    PMoveTo(savedX, savedY - botShift);
-	    RenderSymbolChar(bot, draw);
-	    PMoveTo(savedX + bboxWidth(ansBBox), savedY);
+	    PMoveTo(savedX, savedY + topShift, mc);
+	    RenderSymbolChar(top, draw, mc, gc, dd);
+	    PMoveTo(savedX, savedY + midShift, mc);
+	    RenderSymbolChar(mid, draw, mc, gc, dd);
+	    PMoveTo(savedX, savedY - botShift, mc);
+	    RenderSymbolChar(bot, draw, mc, gc, dd);
+	    PMoveTo(savedX + bboxWidth(ansBBox), savedY, mc);
 	}
     }
     else {
 	if (draw) {
 	    /* draw the top and bottom elements */
-	    PMoveTo(savedX, savedY + topShift);
-	    RenderSymbolChar(top, draw);
-	    PMoveTo(savedX, savedY - botShift);
-	    RenderSymbolChar(bot, draw);
+	    PMoveTo(savedX, savedY + topShift, mc);
+	    RenderSymbolChar(top, draw, mc, gc, dd);
+	    PMoveTo(savedX, savedY - botShift, mc);
+	    RenderSymbolChar(bot, draw, mc, gc, dd);
 	    /* now join with extenders */
 	    ytop = axisHeight + dist
 		- (bboxHeight(topBBox) + bboxDepth(topBBox));
@@ -2021,36 +2020,36 @@ static BBOX RenderDelim(int which, double dist, int draw)
 	    if (n > 0) {
 		delta = (ytop - ybot) / n;
 		for (i = 0; i < n; i++) {
-		    PMoveTo(savedX, savedY + ybot + (i + 0.5) * delta - extShift);
-		    RenderSymbolChar(ext, draw);
+		    PMoveTo(savedX, savedY + ybot + (i + 0.5) * delta - extShift, mc);
+		    RenderSymbolChar(ext, draw, mc, gc, dd);
 		}
 	    }
-	    PMoveTo(savedX + bboxWidth(ansBBox), savedY);
+	    PMoveTo(savedX + bboxWidth(ansBBox), savedY, mc);
 
 	}
     }
-    SetFont(prev);
+    SetFont(prev, gc);
     return ansBBox;
 }
 
-static BBOX RenderBGroup(SEXP expr, int draw)
+static BBOX RenderBGroup(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     double dist;
     BBOX bbox;
-    double axisHeight = TeX(sigma22);
-    double extra = 0.2 * xHeight();
+    double axisHeight = TeX(sigma22, gc, dd);
+    double extra = 0.2 * xHeight(gc, dd);
     int delim1, delim2;
     if (length(expr) != 4)
 	errorcall(expr, "invalid group specification");
     bbox = NullBBox();
     delim1 = DelimCode(expr, CADR(expr));
     delim2 = DelimCode(expr, CADDDR(expr));
-    bbox = RenderElement(CADDR(expr), 0);
+    bbox = RenderElement(CADDR(expr), 0, mc, gc, dd);
     dist = max(bboxHeight(bbox) - axisHeight, bboxDepth(bbox) + axisHeight);
-    bbox = RenderDelim(delim1, dist + extra, draw);
-    bbox = CombineBBoxes(bbox,	RenderElement(CADDR(expr), draw));
-    bbox = RenderItalicCorr(bbox, draw);
-    bbox = CombineBBoxes(bbox,	RenderDelim(delim2, dist + extra, draw));
+    bbox = RenderDelim(delim1, dist + extra, draw, mc, gc, dd);
+    bbox = CombineBBoxes(bbox,	RenderElement(CADDR(expr), draw, mc, gc, dd));
+    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+    bbox = CombineBBoxes(bbox,	RenderDelim(delim2, dist + extra, draw, mc, gc, dd));
     return bbox;
 }
 
@@ -2065,13 +2064,13 @@ static int ParenAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "(");
 }
 
-static BBOX RenderParen(SEXP expr, int draw)
+static BBOX RenderParen(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    bbox = RenderDelimiter(S_PARENLEFT, draw);
-    bbox = CombineBBoxes(bbox, RenderElement(CADR(expr), draw));
-    bbox = RenderItalicCorr(bbox, draw);
-    return CombineBBoxes(bbox, RenderDelimiter(S_PARENRIGHT, draw));
+    bbox = RenderDelimiter(S_PARENLEFT, draw, mc, gc, dd);
+    bbox = CombineBBoxes(bbox, RenderElement(CADR(expr), draw, mc, gc, dd));
+    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+    return CombineBBoxes(bbox, RenderDelimiter(S_PARENRIGHT, draw, mc, gc, dd));
 }
 
 /*----------------------------------------------------------------------
@@ -2086,71 +2085,71 @@ static int IntAtom(SEXP expr)
 }
 
 
-static BBOX RenderIntSymbol(int draw)
+static BBOX RenderIntSymbol(int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    double savedX = CurrentX;
-    double savedY = CurrentY;
-    if (GetStyle() > STYLE_T) {
-	BBOX bbox1 = RenderSymbolChar(243, 0);
-	BBOX bbox2 = RenderSymbolChar(245, 0);
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
+    if (GetStyle(mc) > STYLE_T) {
+	BBOX bbox1 = RenderSymbolChar(243, 0, mc, gc, dd);
+	BBOX bbox2 = RenderSymbolChar(245, 0, mc, gc, dd);
 	double shift;
-	shift = TeX(sigma22) + 0.99 * bboxDepth(bbox1);
-	PMoveUp(shift);
-	bbox1 = ShiftBBox(RenderSymbolChar(243, draw), shift);
-	CurrentX = savedX;
-	CurrentY = savedY;
-	shift = TeX(sigma22) - 0.99 * bboxHeight(bbox2);
-	PMoveUp(shift);
-	bbox2 = ShiftBBox(RenderSymbolChar(245, draw), shift);
+	shift = TeX(sigma22, gc, dd) + 0.99 * bboxDepth(bbox1);
+	PMoveUp(shift, mc);
+	bbox1 = ShiftBBox(RenderSymbolChar(243, draw, mc, gc, dd), shift);
+	mc->CurrentX = savedX;
+	mc->CurrentY = savedY;
+	shift = TeX(sigma22, gc, dd) - 0.99 * bboxHeight(bbox2);
+	PMoveUp(shift, mc);
+	bbox2 = ShiftBBox(RenderSymbolChar(245, draw, mc, gc, dd), shift);
 	if (draw)
-	    PMoveTo(savedX + max(bboxWidth(bbox1), bboxWidth(bbox2)), savedY);
+	    PMoveTo(savedX + max(bboxWidth(bbox1), bboxWidth(bbox2)), savedY, mc);
 	else
-	    PMoveTo(savedX, savedY);
+	    PMoveTo(savedX, savedY, mc);
 	return CombineAlignedBBoxes(bbox1, bbox2);
     }
     else {
-	return RenderSymbolChar(0362, draw);
+	return RenderSymbolChar(0362, draw, mc, gc, dd);
     }
 }
 
-static BBOX RenderInt(SEXP expr, int draw)
+static BBOX RenderInt(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX opBBox, lowerBBox, upperBBox, bodyBBox;
     int nexpr = length(expr);
-    STYLE style = GetStyle();
-    double savedX = CurrentX;
-    double savedY = CurrentY;
+    STYLE style = GetStyle(mc);
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
     double hshift, vshift, width;
 
-    opBBox = RenderIntSymbol(draw);
+    opBBox = RenderIntSymbol(draw, mc, gc, dd);
     width = bboxWidth(opBBox);
-    CurrentX = savedX;
-    CurrentY = savedY;
+    mc->CurrentX = savedX;
+    mc->CurrentY = savedY;
     if (nexpr > 2) {
-	hshift = 0.5 * width + ThinSpace();
-	SetSubStyle(style);
-	lowerBBox = RenderElement(CADDR(expr), 0);
+	hshift = 0.5 * width + ThinSpace(gc, dd);
+	SetSubStyle(style, mc, gc);
+	lowerBBox = RenderElement(CADDR(expr), 0, mc, gc, dd);
 	vshift = bboxDepth(opBBox) + CenterShift(lowerBBox);
-	lowerBBox = RenderOffsetElement(CADDR(expr), hshift, -vshift, draw);
+	lowerBBox = RenderOffsetElement(CADDR(expr), hshift, -vshift, draw, mc, gc, dd);
 	opBBox = CombineAlignedBBoxes(opBBox, lowerBBox);
-	SetStyle(style);
-	CurrentX = savedX;
-	CurrentY = savedY;
+	SetStyle(style, mc, gc);
+	mc->CurrentX = savedX;
+	mc->CurrentY = savedY;
     }
     if (nexpr > 3) {
-	hshift = width + ThinSpace();
-	SetSupStyle(style);
-	upperBBox = RenderElement(CADDDR(expr), 0);
+	hshift = width + ThinSpace(gc, dd);
+	SetSupStyle(style, mc, gc);
+	upperBBox = RenderElement(CADDDR(expr), 0, mc, gc, dd);
 	vshift = bboxHeight(opBBox) - CenterShift(upperBBox);
-	upperBBox = RenderOffsetElement(CADDDR(expr), hshift, vshift, draw);
+	upperBBox = RenderOffsetElement(CADDDR(expr), hshift, vshift, draw, mc, gc, dd);
 	opBBox = CombineAlignedBBoxes(opBBox, upperBBox);
-	SetStyle(style);
-	CurrentX = savedX;
-	CurrentY = savedY;
+	SetStyle(style, mc, gc);
+	mc->CurrentX = savedX;
+	mc->CurrentY = savedY;
     }
-    PMoveAcross(bboxWidth(opBBox));
+    PMoveAcross(bboxWidth(opBBox), mc);
     if (nexpr > 1) {
-	bodyBBox = RenderElement(CADR(expr), draw);
+	bodyBBox = RenderElement(CADR(expr), draw, mc, gc, dd);
 	opBBox = CombineBBoxes(opBBox, bodyBBox);
     }
     return opBBox;
@@ -2189,95 +2188,95 @@ static int OpAtom(SEXP expr)
     return 0;
 }
 
-static BBOX RenderOpSymbol(SEXP op, int draw)
+static BBOX RenderOpSymbol(SEXP op, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    double cexSaved = MathCex;
-    /*double savedX = CurrentX;*/
-    /*double savedY = CurrentY;*/
+    double cexSaved = gc->cex;
+    /*double savedX = mc->CurrentX;*/
+    /*double savedY = mc->CurrentY;*/
     double shift;
-    int display = (GetStyle() > STYLE_T);
+    int display = (GetStyle(mc) > STYLE_T);
     int opId = OpAtom(op);
 
     if (opId == S_SUM || opId == S_PRODUCT ||
 	opId == S_UNION || opId == S_INTERSECTION) {
 	if (display) {
-	    MathCex = OperatorSymbolMag * MathCex;
-	    bbox = RenderSymbolChar(OpAtom(op), 0);
-	    shift = 0.5 * (bboxHeight(bbox) - bboxDepth(bbox)) - TeX(sigma22);
+	    gc->cex = OperatorSymbolMag * gc->cex;
+	    bbox = RenderSymbolChar(OpAtom(op), 0, mc, gc, dd);
+	    shift = 0.5 * (bboxHeight(bbox) - bboxDepth(bbox)) - TeX(sigma22, gc, dd);
 	    if (draw) {
-		PMoveUp(-shift);
-		bbox = RenderSymbolChar(opId, 1);
-		PMoveUp(shift);
+		PMoveUp(-shift, mc);
+		bbox = RenderSymbolChar(opId, 1, mc, gc, dd);
+		PMoveUp(shift, mc);
 	    }
-	    MathCex = cexSaved;
+	    gc->cex = cexSaved;
 	    return ShiftBBox(bbox, -shift);
 	}
-	else return RenderSymbolChar(opId, draw);
+	else return RenderSymbolChar(opId, draw, mc, gc, dd);
     }
     else {
-	FontType prevfont = SetFont(PlainFont);
-	bbox = RenderStr(CHAR(PRINTNAME(op)), draw);
-	SetFont(prevfont);
+	FontType prevfont = SetFont(PlainFont, gc);
+	bbox = RenderStr(CHAR(PRINTNAME(op)), draw, mc, gc, dd);
+	SetFont(prevfont, gc);
 	return bbox;
     }
 }
 
-static BBOX RenderOp(SEXP expr, int draw)
+static BBOX RenderOp(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX lowerBBox, upperBBox, bodyBBox;
-    double savedX = CurrentX;
-    double savedY = CurrentY;
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
     int nexpr = length(expr);
-    STYLE style = GetStyle();
-    BBOX opBBox = RenderOpSymbol(CAR(expr), 0);
+    STYLE style = GetStyle(mc);
+    BBOX opBBox = RenderOpSymbol(CAR(expr), 0, mc, gc, dd);
     double width = bboxWidth(opBBox);
     double hshift, lvshift, uvshift;
     lvshift = uvshift = 0;	/* -Wall */
     if (nexpr > 2) {
-	SetSubStyle(style);
-	lowerBBox = RenderElement(CADDR(expr), 0);
-	SetStyle(style);
+	SetSubStyle(style, mc, gc);
+	lowerBBox = RenderElement(CADDR(expr), 0, mc, gc, dd);
+	SetStyle(style, mc, gc);
 	width = max(width, bboxWidth(lowerBBox));
-	lvshift = max(TeX(xi10), TeX(xi12) - bboxHeight(lowerBBox));
+	lvshift = max(TeX(xi10, gc, dd), TeX(xi12, gc, dd) - bboxHeight(lowerBBox));
 	lvshift = bboxDepth(opBBox) + bboxHeight(lowerBBox) + lvshift;
     }
     if (nexpr > 3) {
-	SetSupStyle(style);
-	upperBBox = RenderElement(CADDDR(expr), 0);
-	SetStyle(style);
+	SetSupStyle(style, mc, gc);
+	upperBBox = RenderElement(CADDDR(expr), 0, mc, gc, dd);
+	SetStyle(style, mc, gc);
 	width = max(width, bboxWidth(upperBBox));
-	uvshift = max(TeX(xi9), TeX(xi11) - bboxDepth(upperBBox));
+	uvshift = max(TeX(xi9, gc, dd), TeX(xi11, gc, dd) - bboxDepth(upperBBox));
 	uvshift = bboxHeight(opBBox) + bboxDepth(upperBBox) + uvshift;
     }
     hshift = 0.5 * (width - bboxWidth(opBBox));
-    opBBox = RenderGap(hshift, draw);
-    opBBox = CombineBBoxes(opBBox, RenderOpSymbol(CAR(expr), draw));
-    CurrentX = savedX;
-    CurrentY = savedY;
+    opBBox = RenderGap(hshift, draw, mc, gc, dd);
+    opBBox = CombineBBoxes(opBBox, RenderOpSymbol(CAR(expr), draw, mc, gc, dd));
+    mc->CurrentX = savedX;
+    mc->CurrentY = savedY;
     if (nexpr > 2) {
-	SetSubStyle(style);
+	SetSubStyle(style, mc, gc);
 	hshift = 0.5 * (width - bboxWidth(lowerBBox));
-	lowerBBox = RenderOffsetElement(CADDR(expr), hshift, -lvshift, draw);
-	SetStyle(style);
+	lowerBBox = RenderOffsetElement(CADDR(expr), hshift, -lvshift, draw, mc, gc, dd);
+	SetStyle(style, mc, gc);
 	opBBox = CombineAlignedBBoxes(opBBox, lowerBBox);
-	CurrentX = savedX;
-	CurrentY = savedY;
+	mc->CurrentX = savedX;
+	mc->CurrentY = savedY;
     }
     if (nexpr > 3) {
-	SetSupStyle(style);
+	SetSupStyle(style, mc, gc);
 	hshift = 0.5 * (width - bboxWidth(upperBBox));
-	upperBBox = RenderOffsetElement(CADDDR(expr), hshift, uvshift, draw);
-	SetStyle(style);
+	upperBBox = RenderOffsetElement(CADDDR(expr), hshift, uvshift, draw, mc, gc, dd);
+	SetStyle(style, mc, gc);
 	opBBox = CombineAlignedBBoxes(opBBox, upperBBox);
-	CurrentX = savedX;
-	CurrentY = savedY;
+	mc->CurrentX = savedX;
+	mc->CurrentY = savedY;
     }
-    opBBox = EnlargeBBox(opBBox, TeX(xi13), TeX(xi13), 0);
+    opBBox = EnlargeBBox(opBBox, TeX(xi13, gc, dd), TeX(xi13, gc, dd), 0);
     if (draw)
-	PMoveAcross(width);
-    opBBox = CombineBBoxes(opBBox, RenderGap(ThinSpace(), draw));
-    bodyBBox = RenderElement(CADR(expr), draw);
+	PMoveAcross(width, mc);
+    opBBox = CombineBBoxes(opBBox, RenderGap(ThinSpace(gc, dd), draw, mc, gc, dd));
+    bodyBBox = RenderElement(CADR(expr), draw, mc, gc, dd);
     return CombineBBoxes(opBBox, bodyBBox);
 }
 
@@ -2303,17 +2302,17 @@ static int RadicalAtom(SEXP expr)
 	 NameMatch(expr, "sqrt"));
 }
 
-static BBOX RenderScript(SEXP expr, int draw)
+static BBOX RenderScript(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    STYLE style = GetStyle();
-    SetSupStyle(style);
-    bbox = RenderElement(expr, draw);
-    SetStyle(style);
+    STYLE style = GetStyle(mc);
+    SetSupStyle(style, mc, gc);
+    bbox = RenderElement(expr, draw, mc, gc, dd);
+    SetStyle(style, mc, gc);
     return bbox;
 }
 
-static BBOX RenderRadical(SEXP expr, int draw)
+static BBOX RenderRadical(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     SEXP body = CADR(expr);
     SEXP order = CADDR(expr);
@@ -2322,19 +2321,19 @@ static BBOX RenderRadical(SEXP expr, int draw)
     double leadWidth, leadHeight, twiddleHeight;
     double hshift, vshift;
     double radGap, radSpace, radTrail;
-    STYLE style = GetStyle();
-    double savedX = CurrentX;
-    double savedY = CurrentY;
+    STYLE style = GetStyle(mc);
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
     double x[5], y[5];
 
-    radGap = RADICAL_GAP * xHeight();
-    radSpace = RADICAL_SPACE * xHeight();
-    radTrail = MuSpace();
-    SetPrimeStyle(style);
-    bodyBBox = RenderElement(body, 0);
-    bodyBBox = RenderItalicCorr(bodyBBox, 0);
+    radGap = RADICAL_GAP * xHeight(gc, dd);
+    radSpace = RADICAL_SPACE * xHeight(gc, dd);
+    radTrail = MuSpace(gc, dd);
+    SetPrimeStyle(style, mc, gc);
+    bodyBBox = RenderElement(body, 0, mc, gc, dd);
+    bodyBBox = RenderItalicCorr(bodyBBox, 0, mc, gc, dd);
 
-    radWidth = 0.6 *XHeight();
+    radWidth = 0.6 *XHeight(gc, dd);
     radHeight = bboxHeight(bodyBBox) + radGap;
     radDepth = bboxDepth(bodyBBox);
     twiddleHeight = CenterShift(bodyBBox);
@@ -2342,52 +2341,57 @@ static BBOX RenderRadical(SEXP expr, int draw)
     leadWidth = radWidth;
     leadHeight = radHeight;
     if (order != R_NilValue) {
-	SetSupStyle(style);
-	orderBBox = RenderScript(order, 0);
+	SetSupStyle(style, mc, gc);
+	orderBBox = RenderScript(order, 0, mc, gc, dd);
 	leadWidth = max(leadWidth, bboxWidth(orderBBox) + 0.4 * radWidth);
 	hshift = leadWidth - bboxWidth(orderBBox) - 0.4 * radWidth;
 	vshift = leadHeight - bboxHeight(orderBBox);
 	if (vshift - bboxDepth(orderBBox) < twiddleHeight + radGap)
 	    vshift = twiddleHeight + bboxDepth(orderBBox) + radGap;
 	if (draw) {
-	    PMoveTo(savedX + hshift, savedY + vshift);
-	    orderBBox = RenderScript(order, draw);
+	    PMoveTo(savedX + hshift, savedY + vshift, mc);
+	    orderBBox = RenderScript(order, draw, mc, gc, dd);
 	}
 	orderBBox = EnlargeBBox(orderBBox, vshift, 0, hshift);
     }
     else
 	orderBBox = NullBBox();
     if (draw) {
-	PMoveTo(savedX + leadWidth - radWidth, savedY);
-	PMoveUp(0.8 * twiddleHeight);
-	x[0] = ConvertedX();
-	y[0] = ConvertedY();
-	PMoveUp(0.2 * twiddleHeight);
-	PMoveAcross(0.3 * radWidth);
-	x[1] = ConvertedX();
-	y[1] = ConvertedY();
-	PMoveUp(-(twiddleHeight + bboxDepth(bodyBBox)));
-	PMoveAcross(0.3 * radWidth);
-	x[2] = ConvertedX();
-	y[2] = ConvertedY();
-	PMoveUp(bboxDepth(bodyBBox) + bboxHeight(bodyBBox) + radGap);
-	PMoveAcross(0.4 * radWidth);
-	x[3] = ConvertedX();
-	y[3] = ConvertedY();
-	PMoveAcross(radSpace + bboxWidth(bodyBBox) + radTrail);
-	x[4] = ConvertedX();
-	y[4] = ConvertedY();
-	GEPolyline(5, x, y, 
-		  TextColor, MathGamma, LTY_SOLID, 1, MathDevice);
-	PMoveTo(savedX, savedY);
+	int savedlty = gc->lty;
+	double savedlwd = gc->lwd;
+	PMoveTo(savedX + leadWidth - radWidth, savedY, mc);
+	PMoveUp(0.8 * twiddleHeight, mc);
+	x[0] = ConvertedX(mc, dd);
+	y[0] = ConvertedY(mc, dd);
+	PMoveUp(0.2 * twiddleHeight, mc);
+	PMoveAcross(0.3 * radWidth, mc);
+	x[1] = ConvertedX(mc, dd);
+	y[1] = ConvertedY(mc, dd);
+	PMoveUp(-(twiddleHeight + bboxDepth(bodyBBox)), mc);
+	PMoveAcross(0.3 * radWidth, mc);
+	x[2] = ConvertedX(mc, dd);
+	y[2] = ConvertedY(mc, dd);
+	PMoveUp(bboxDepth(bodyBBox) + bboxHeight(bodyBBox) + radGap, mc);
+	PMoveAcross(0.4 * radWidth, mc);
+	x[3] = ConvertedX(mc, dd);
+	y[3] = ConvertedY(mc, dd);
+	PMoveAcross(radSpace + bboxWidth(bodyBBox) + radTrail, mc);
+	x[4] = ConvertedX(mc, dd);
+	y[4] = ConvertedY(mc, dd);
+	gc->lty = LTY_SOLID;
+	gc->lwd = 1;
+	GEPolyline(5, x, y, gc, dd);
+	PMoveTo(savedX, savedY, mc);
+	gc->lty = savedlty;
+	gc->lwd = savedlwd;
     }
     orderBBox = CombineAlignedBBoxes(orderBBox,
-				     RenderGap(leadWidth + radSpace, draw));
-    SetPrimeStyle(style);
-    orderBBox = CombineBBoxes(orderBBox, RenderElement(body, draw));
-    orderBBox = CombineBBoxes(orderBBox, RenderGap(2 * radTrail, draw));
+				     RenderGap(leadWidth + radSpace, draw, mc, gc, dd));
+    SetPrimeStyle(style, mc, gc);
+    orderBBox = CombineBBoxes(orderBBox, RenderElement(body, draw, mc, gc, dd));
+    orderBBox = CombineBBoxes(orderBBox, RenderGap(2 * radTrail, draw, mc, gc, dd));
     orderBBox = EnlargeBBox(orderBBox, radGap, 0, 0);/* << fixes PR#1101 */
-    SetStyle(style);
+    SetStyle(style, mc, gc);
     return orderBBox;
 }
 
@@ -2402,41 +2406,51 @@ static int AbsAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "abs");
 }
 
-static BBOX RenderAbs(SEXP expr, int draw)
+static BBOX RenderAbs(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    BBOX bbox = RenderElement(CADR(expr), 0);
+    BBOX bbox = RenderElement(CADR(expr), 0, mc, gc, dd);
     double height = bboxHeight(bbox);
     double depth = bboxDepth(bbox);
     double x[2], y[2];
 
-    bbox= RenderGap(MuSpace(), draw);
+    bbox= RenderGap(MuSpace(gc, dd), draw, mc, gc, dd);
     if (draw) {
-	PMoveUp(-depth);
-	x[0] = ConvertedX();
-	y[0] = ConvertedY();
-	PMoveUp(depth + height);
-	x[1] = ConvertedX();
-	y[1] = ConvertedY();
-	GEPolyline(2, x, y, 
-		  TextColor, MathGamma, LTY_SOLID, 1, MathDevice);
-	PMoveUp(-height);
+	int savedlty = gc->lty;
+	double savedlwd = gc->lwd;
+	PMoveUp(-depth, mc);
+	x[0] = ConvertedX(mc, dd);
+	y[0] = ConvertedY(mc, dd);
+	PMoveUp(depth + height, mc);
+	x[1] = ConvertedX(mc, dd);
+	y[1] = ConvertedY(mc, dd);
+	gc->lty = LTY_SOLID;
+	gc->lwd = 1;
+	GEPolyline(2, x, y, gc, dd);
+	PMoveUp(-height, mc);
+	gc->lty = savedlty;
+	gc->lwd = savedlwd;
     }
-    bbox = CombineBBoxes(bbox, RenderGap(MuSpace(), draw));
-    bbox = CombineBBoxes(bbox, RenderElement(CADR(expr), draw));
-    bbox = RenderItalicCorr(bbox, draw);
-    bbox = CombineBBoxes(bbox, RenderGap(MuSpace(), draw));
+    bbox = CombineBBoxes(bbox, RenderGap(MuSpace(gc, dd), draw, mc, gc, dd));
+    bbox = CombineBBoxes(bbox, RenderElement(CADR(expr), draw, mc, gc, dd));
+    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+    bbox = CombineBBoxes(bbox, RenderGap(MuSpace(gc, dd), draw, mc, gc, dd));
     if (draw) {
-	PMoveUp(-depth);
-	x[0] = ConvertedX();
-	y[0] = ConvertedY();
-	PMoveUp(depth + height);
-	x[1] = ConvertedX();
-	y[1] = ConvertedY();
-	GEPolyline(2, x, y, 
-		  TextColor, MathGamma, LTY_SOLID, 1, MathDevice);
-	PMoveUp(-height);
+	int savedlty = gc->lty;
+	double savedlwd = gc->lwd;
+	PMoveUp(-depth, mc);
+	x[0] = ConvertedX(mc, dd);
+	y[0] = ConvertedY(mc, dd);
+	PMoveUp(depth + height, mc);
+	x[1] = ConvertedX(mc, dd);
+	y[1] = ConvertedY(mc, dd);
+	gc->lty = LTY_SOLID;
+	gc->lwd = 1;
+	GEPolyline(2, x, y, gc, dd);
+	PMoveUp(-height, mc);
+	gc->lty = savedlty;
+	gc->lwd = savedlwd;
     }
-    bbox = CombineBBoxes(bbox, RenderGap(MuSpace(), draw));
+    bbox = CombineBBoxes(bbox, RenderGap(MuSpace(gc, dd), draw, mc, gc, dd));
     return bbox;
 }
 
@@ -2452,9 +2466,9 @@ static int CurlyAtom(SEXP expr)
 	NameMatch(expr, "{");
 }
 
-static BBOX RenderCurly(SEXP expr, int draw)
+static BBOX RenderCurly(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    return RenderElement(CADR(expr), draw);
+    return RenderElement(CADR(expr), draw, mc, gc, dd);
 }
 
 
@@ -2509,7 +2523,7 @@ static int RelAtom(SEXP expr)
     return 0;
 }
 
-static BBOX RenderRel(SEXP expr, int draw)
+static BBOX RenderRel(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     int op = RelAtom(CAR(expr));
     int nexpr = length(expr);
@@ -2517,13 +2531,13 @@ static BBOX RenderRel(SEXP expr, int draw)
     double gap;
 
     if(nexpr == 3) {
-	gap = (CurrentStyle > STYLE_S) ? ThickSpace() : 0;
-	bbox = RenderElement(CADR(expr), draw);
-	bbox = RenderItalicCorr(bbox, draw);
-	bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
-	bbox = CombineBBoxes(bbox, RenderSymbolChar(op, draw));
-	bbox = CombineBBoxes(bbox, RenderGap(gap, draw));
-	return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw));
+	gap = (mc->CurrentStyle > STYLE_S) ? ThickSpace(gc, dd) : 0;
+	bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+	bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+	bbox = CombineBBoxes(bbox, RenderGap(gap, draw, mc, gc, dd));
+	bbox = CombineBBoxes(bbox, RenderSymbolChar(op, draw, mc, gc, dd));
+	bbox = CombineBBoxes(bbox, RenderGap(gap, draw, mc, gc, dd));
+	return CombineBBoxes(bbox, RenderElement(CADDR(expr), draw, mc, gc, dd));
     }
     else error("invalid mathematical annotation");
 
@@ -2543,12 +2557,12 @@ static int BoldAtom(SEXP expr)
 	NameMatch(expr, "bold");
 }
 
-static BBOX RenderBold(SEXP expr, int draw)
+static BBOX RenderBold(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    FontType prevfont = SetFont(BoldFont);
-    bbox = RenderElement(CADR(expr), draw);
-    SetFont(prevfont);
+    FontType prevfont = SetFont(BoldFont, gc);
+    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+    SetFont(prevfont, gc);
     return bbox;
 }
 
@@ -2564,12 +2578,12 @@ static int ItalicAtom(SEXP expr)
 	(NameMatch(expr, "italic") || NameMatch(expr, "math"));
 }
 
-static BBOX RenderItalic(SEXP expr, int draw)
+static BBOX RenderItalic(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    FontType prevfont = SetFont(ItalicFont);
-    bbox = RenderElement(CADR(expr), draw);
-    SetFont(prevfont);
+    FontType prevfont = SetFont(ItalicFont, gc);
+    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+    SetFont(prevfont, gc);
     return bbox;
 }
 
@@ -2585,12 +2599,12 @@ static int PlainAtom(SEXP expr)
 	NameMatch(expr, "plain");
 }
 
-static BBOX RenderPlain(SEXP expr, int draw)
+static BBOX RenderPlain(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    int prevfont = SetFont(PlainFont);
-    bbox = RenderElement(CADR(expr), draw);
-    SetFont(prevfont);
+    int prevfont = SetFont(PlainFont, gc);
+    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+    SetFont(prevfont, gc);
     return bbox;
 }
 
@@ -2606,12 +2620,12 @@ static int BoldItalicAtom(SEXP expr)
 	(NameMatch(expr, "bolditalic") || NameMatch(expr, "boldmath"));
 }
 
-static BBOX RenderBoldItalic(SEXP expr, int draw)
+static BBOX RenderBoldItalic(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    int prevfont = SetFont(BoldItalicFont);
-    bbox = RenderElement(CADR(expr), draw);
-    SetFont(prevfont);
+    int prevfont = SetFont(BoldItalicFont, gc);
+    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+    SetFont(prevfont, gc);
     return bbox;
 }
 
@@ -2630,20 +2644,20 @@ static int StyleAtom(SEXP expr)
 	     NameMatch(expr, "scriptscriptstyle")));
 }
 
-static BBOX RenderStyle(SEXP expr, int draw)
+static BBOX RenderStyle(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    STYLE prevstyle = GetStyle();
+    STYLE prevstyle = GetStyle(mc);
     BBOX bbox;
     if (NameMatch(CAR(expr), "displaystyle"))
-	SetStyle(STYLE_D);
+	SetStyle(STYLE_D, mc, gc);
     else if (NameMatch(CAR(expr), "textstyle"))
-	SetStyle(STYLE_T);
+	SetStyle(STYLE_T, mc, gc);
     else if (NameMatch(CAR(expr), "scriptstyle"))
-	SetStyle(STYLE_S);
+	SetStyle(STYLE_S, mc, gc);
     else if (NameMatch(CAR(expr), "scriptscriptstyle"))
-	SetStyle(STYLE_SS);
-    bbox = RenderElement(CADR(expr), draw);
-    SetStyle(prevstyle);
+	SetStyle(STYLE_SS, mc, gc);
+    bbox = RenderElement(CADR(expr), draw, mc, gc, dd);
+    SetStyle(prevstyle, mc, gc);
     return bbox;
 }
 
@@ -2660,14 +2674,14 @@ static int PhantomAtom(SEXP expr)
 	     NameMatch(expr, "vphantom")));
 }
 
-static BBOX RenderPhantom(SEXP expr, int draw)
+static BBOX RenderPhantom(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    BBOX bbox = RenderElement(CADR(expr), 0);
+    BBOX bbox = RenderElement(CADR(expr), 0, mc, gc, dd);
     if (NameMatch(CAR(expr), "vphantom")) {
 	bboxWidth(bbox) = 0;
 	bboxItalic(bbox) = 0;
     }
-    else RenderGap(bboxWidth(bbox), draw);
+    else RenderGap(bboxWidth(bbox), draw, mc, gc, dd);
     return bbox;
 }
 
@@ -2682,7 +2696,7 @@ static int ConcatenateAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "paste");
 }
 
-static BBOX RenderConcatenate(SEXP expr, int draw)
+static BBOX RenderConcatenate(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox = NullBBox();
     int i, n;
@@ -2691,9 +2705,9 @@ static BBOX RenderConcatenate(SEXP expr, int draw)
     n = length(expr);
 
     for (i = 0; i < n; i++) {
-	bbox = CombineBBoxes(bbox, RenderElement(CAR(expr), draw));
+	bbox = CombineBBoxes(bbox, RenderElement(CAR(expr), draw, mc, gc, dd));
 	if (i != n - 1)
-	    bbox = RenderItalicCorr(bbox, draw);
+	    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
 	expr = CDR(expr);
     }
     return bbox;
@@ -2705,27 +2719,27 @@ static BBOX RenderConcatenate(SEXP expr, int draw)
  *
  */
 
-static BBOX RenderCommaList(SEXP expr, int draw)
+static BBOX RenderCommaList(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox = NullBBox();
-    double small = 0.4 * ThinSpace();
+    double small = 0.4 * ThinSpace(gc, dd);
     int i, n;
     n = length(expr);
     for (i = 0; i < n; i++) {
 	if (NameAtom(CAR(expr)) && NameMatch(CAR(expr), "...")) {
 	    if (i > 0) {
-		bbox = CombineBBoxes(bbox, RenderSymbolChar(S_COMMA, draw));
-		bbox = CombineBBoxes(bbox, RenderSymbolChar(S_SPACE, draw));
+		bbox = CombineBBoxes(bbox, RenderSymbolChar(S_COMMA, draw, mc, gc, dd));
+		bbox = CombineBBoxes(bbox, RenderSymbolChar(S_SPACE, draw, mc, gc, dd));
 	    }
-	    bbox = CombineBBoxes(bbox, RenderSymbolChar(S_ELLIPSIS, draw));
-	    bbox = CombineBBoxes(bbox, RenderGap(small, draw));
+	    bbox = CombineBBoxes(bbox, RenderSymbolChar(S_ELLIPSIS, draw, mc, gc, dd));
+	    bbox = CombineBBoxes(bbox, RenderGap(small, draw, mc, gc, dd));
 	}
 	else {
 	    if (i > 0) {
-		bbox = CombineBBoxes(bbox, RenderSymbolChar(S_COMMA, draw));
-		bbox = CombineBBoxes(bbox, RenderSymbolChar(S_SPACE, draw));
+		bbox = CombineBBoxes(bbox, RenderSymbolChar(S_COMMA, draw, mc, gc, dd));
+		bbox = CombineBBoxes(bbox, RenderSymbolChar(S_SPACE, draw, mc, gc, dd));
 	    }
-	    bbox = CombineBBoxes(bbox, RenderElement(CAR(expr), draw));
+	    bbox = CombineBBoxes(bbox, RenderElement(CAR(expr), draw, mc, gc, dd));
 	}
 	expr = CDR(expr);
     }
@@ -2738,18 +2752,18 @@ static BBOX RenderCommaList(SEXP expr, int draw)
  *
  */
 
-static BBOX RenderExpression(SEXP expr, int draw)
+static BBOX RenderExpression(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
     if (NameAtom(CAR(expr)))
-	bbox = RenderSymbolString(CAR(expr), draw);
+	bbox = RenderSymbolString(CAR(expr), draw, mc, gc, dd);
     else
-	bbox = RenderElement(CAR(expr), draw);
-    bbox = RenderItalicCorr(bbox, draw);
-    bbox = CombineBBoxes(bbox, RenderDelimiter(S_PARENLEFT, draw));
-    bbox = CombineBBoxes(bbox, RenderCommaList(CDR(expr), draw));
-    bbox = RenderItalicCorr(bbox, draw);
-    bbox = CombineBBoxes(bbox, RenderDelimiter(S_PARENRIGHT, draw));
+	bbox = RenderElement(CAR(expr), draw, mc, gc, dd);
+    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+    bbox = CombineBBoxes(bbox, RenderDelimiter(S_PARENLEFT, draw, mc, gc, dd));
+    bbox = CombineBBoxes(bbox, RenderCommaList(CDR(expr), draw, mc, gc, dd));
+    bbox = RenderItalicCorr(bbox, draw, mc, gc, dd);
+    bbox = CombineBBoxes(bbox, RenderDelimiter(S_PARENRIGHT, draw, mc, gc, dd));
     return bbox;
 }
 
@@ -2764,103 +2778,103 @@ static int ListAtom(SEXP expr)
     return NameAtom(expr) && NameMatch(expr, "list");
 }
 
-static BBOX RenderList(SEXP expr, int draw)
+static BBOX RenderList(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    return RenderCommaList(CDR(expr), draw);
+    return RenderCommaList(CDR(expr), draw, mc, gc, dd);
 }
 
 /* Dispatching procedure which determines nature of expression. */
 
 
-static BBOX RenderFormula(SEXP expr, int draw)
+static BBOX RenderFormula(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     SEXP head = CAR(expr);
 
     if (SpaceAtom(head))
-	return RenderSpace(expr, draw);
+	return RenderSpace(expr, draw, mc, gc, dd);
     else if (BinAtom(head))
-	return RenderBin(expr, draw);
+	return RenderBin(expr, draw, mc, gc, dd);
     else if (SuperAtom(head))
-	return RenderSup(expr, draw);
+	return RenderSup(expr, draw, mc, gc, dd);
     else if (SubAtom(head))
-	return RenderSub(expr, draw);
+	return RenderSub(expr, draw, mc, gc, dd);
     else if (WideTildeAtom(head))
-	return RenderWideTilde(expr, draw);
+	return RenderWideTilde(expr, draw, mc, gc, dd);
     else if (WideHatAtom(head))
-	return RenderWideHat(expr, draw);
+	return RenderWideHat(expr, draw, mc, gc, dd);
     else if (BarAtom(head))
-	return RenderBar(expr, draw);
+	return RenderBar(expr, draw, mc, gc, dd);
     else if (AccentAtom(head))
-	return RenderAccent(expr, draw);
+	return RenderAccent(expr, draw, mc, gc, dd);
     else if (OverAtom(head))
-	return RenderOver(expr, draw);
+	return RenderOver(expr, draw, mc, gc, dd);
     else if (AtopAtom(head))
-	return RenderAtop(expr, draw);
+	return RenderAtop(expr, draw, mc, gc, dd);
     else if (ParenAtom(head))
-	return RenderParen(expr, draw);
+	return RenderParen(expr, draw, mc, gc, dd);
     else if (BGroupAtom(head))
-	return RenderBGroup(expr, draw);
+	return RenderBGroup(expr, draw, mc, gc, dd);
     else if (GroupAtom(head))
-	return RenderGroup(expr, draw);
+	return RenderGroup(expr, draw, mc, gc, dd);
     else if (IntAtom(head))
-	return RenderInt(expr, draw);
+	return RenderInt(expr, draw, mc, gc, dd);
     else if (OpAtom(head))
-	return RenderOp(expr, draw);
+	return RenderOp(expr, draw, mc, gc, dd);
     else if (RadicalAtom(head))
-	return RenderRadical(expr, draw);
+	return RenderRadical(expr, draw, mc, gc, dd);
     else if (AbsAtom(head))
-	return RenderAbs(expr, draw);
+	return RenderAbs(expr, draw, mc, gc, dd);
     else if (CurlyAtom(head))
-	return RenderCurly(expr, draw);
+	return RenderCurly(expr, draw, mc, gc, dd);
     else if (RelAtom(head))
-	return RenderRel(expr, draw);
+	return RenderRel(expr, draw, mc, gc, dd);
     else if (BoldAtom(head))
-	return RenderBold(expr, draw);
+	return RenderBold(expr, draw, mc, gc, dd);
     else if (ItalicAtom(head))
-	return RenderItalic(expr, draw);
+	return RenderItalic(expr, draw, mc, gc, dd);
     else if (PlainAtom(head))
-	return RenderPlain(expr, draw);
+	return RenderPlain(expr, draw, mc, gc, dd);
     else if (BoldItalicAtom(head))
-	return RenderBoldItalic(expr, draw);
+	return RenderBoldItalic(expr, draw, mc, gc, dd);
     else if (StyleAtom(head))
-	return RenderStyle(expr, draw);
+	return RenderStyle(expr, draw, mc, gc, dd);
     else if (PhantomAtom(head))
-	return RenderPhantom(expr, draw);
+	return RenderPhantom(expr, draw, mc, gc, dd);
     else if (ConcatenateAtom(head))
-	return RenderConcatenate(expr, draw);
+	return RenderConcatenate(expr, draw, mc, gc, dd);
     else if (ListAtom(head))
-	return RenderList(expr, draw);
+	return RenderList(expr, draw, mc, gc, dd);
     else
-	return RenderExpression(expr, draw);
+	return RenderExpression(expr, draw, mc, gc, dd);
 }
 
 
 /* Dispatch on whether atom (symbol, string, number, ...) */
 /* or formula (some sort of expression) */
 
-static BBOX RenderElement(SEXP expr, int draw)
+static BBOX RenderElement(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     if (FormulaExpression(expr))
-	return RenderFormula(expr, draw);
+	return RenderFormula(expr, draw, mc, gc, dd);
     else
-	return RenderAtom(expr, draw);
+	return RenderAtom(expr, draw, mc, gc, dd);
 }
 
-static BBOX RenderOffsetElement(SEXP expr, double x, double y, int draw)
+static BBOX RenderOffsetElement(SEXP expr, double x, double y, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    double savedX = CurrentX;
-    double savedY = CurrentY;
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
     if (draw) {
-	CurrentX += x;
-	CurrentY += y;
+	mc->CurrentX += x;
+	mc->CurrentY += y;
     }
-    bbox = RenderElement(expr, draw);
+    bbox = RenderElement(expr, draw, mc, gc, dd);
     bboxWidth(bbox) += x;
     bboxHeight(bbox) += y;
     bboxDepth(bbox) -= y;
-    CurrentX = savedX;
-    CurrentY = savedY;
+    mc->CurrentX = savedX;
+    mc->CurrentY = savedY;
     return bbox;
 
 }
@@ -2871,19 +2885,32 @@ static BBOX RenderOffsetElement(SEXP expr, double x, double y, int draw)
 /* BBOXes are in INCHES (see MetricUnit) */
 
 double GEExpressionWidth(SEXP expr, 
-			 int font, double cex, double ps,
+			 R_GE_gcontext *gc,
 			 GEDevDesc *dd)
 {
     BBOX bbox;
     double width;
-    MathDevice = dd;
-    BaseCex = cex;
-    MathFont = font;
-    MathCex = cex;
-    MathPs = ps;
-    CurrentStyle = STYLE_D;
-    SetFont(PlainFont);
-    bbox = RenderElement(expr, 0);
+
+    /*
+     * Build a "drawing context" for the current expression
+     */
+    mathContext mc;
+    mc.BaseCex = gc->cex;
+    mc.BoxColor = name2col("pink");
+    mc.CurrentStyle = STYLE_D;
+    /*
+     * Some "empty" values.  Will be filled in after BBox is calc'ed
+     */
+    mc.ReferenceX = 0;
+    mc.ReferenceY = 0;
+    mc.CurrentX = 0;
+    mc.CurrentY = 0;
+    mc.CurrentAngle = 0;
+    mc.CosAngle = 0;
+    mc.SinAngle = 0;
+
+    SetFont(PlainFont, gc);
+    bbox = RenderElement(expr, 0, &mc, gc, dd);
     width  = bboxWidth(bbox);
     /* 
      * NOTE that we do fabs() here in case the device
@@ -2897,19 +2924,32 @@ double GEExpressionWidth(SEXP expr,
 }
 
 double GEExpressionHeight(SEXP expr, 
-			  int font, double cex, double ps,
+			  R_GE_gcontext *gc,
 			  GEDevDesc *dd)
 {
     BBOX bbox;
     double height;
-    MathDevice = dd;
-    BaseCex = cex;
-    MathFont = font;
-    MathCex = cex;
-    MathPs = ps;
-    CurrentStyle = STYLE_D;
-    SetFont(PlainFont);
-    bbox = RenderElement(expr, 0);
+
+    /*
+     * Build a "drawing context" for the current expression
+     */
+    mathContext mc;
+    mc.BaseCex = gc->cex;
+    mc.BoxColor = name2col("pink");
+    mc.CurrentStyle = STYLE_D;
+    /*
+     * Some "empty" values.  Will be filled in after BBox is calc'ed
+     */
+    mc.ReferenceX = 0;
+    mc.ReferenceY = 0;
+    mc.CurrentX = 0;
+    mc.CurrentY = 0;
+    mc.CurrentAngle = 0;
+    mc.CosAngle = 0;
+    mc.SinAngle = 0;
+
+    SetFont(PlainFont, gc);
+    bbox = RenderElement(expr, 0, &mc, gc, dd);
     height = bboxHeight(bbox) + bboxDepth(bbox);
     /* NOTE that we do fabs() here in case the device
      * draws top-to-bottom (like an X11 window).
@@ -2923,65 +2963,67 @@ double GEExpressionHeight(SEXP expr,
 
 void GEMathText(double x, double y, SEXP expr,
 		double xc, double yc, double rot, 
-		int col, double gamma, int font, double cex, double ps,
+		R_GE_gcontext *gc,
 		GEDevDesc *dd)
 {
     BBOX bbox;
+    mathContext mc;
 
 #ifdef BUG61
 #else
     /* IF font metric information is not available for device */
     /* then bail out */
     double ascent, descent, width;
-    GEMetricInfo(0, 
-		font, cex, ps,
+    GEMetricInfo(0, gc,
 		&ascent, &descent, &width, dd);
     if ((ascent==0) && (descent==0) && (width==0))
 	error("Metric information not yet available for this device");
 #endif
 
-    MathDevice = dd;
-    BaseCex = cex;
-    BoxColor = name2col("pink");
-    TextColor = col;
-    MathGamma = gamma;
-    /* 
-     * FIXME:  When fontfamily and lineheight are passed to GEMathText
-     * need to use those instead of "" and 1 below
+    /*
+     * Build a "drawing context" for the current expression
      */
-    MathFontFamily = "";
-    MathFont = font;
-    MathLineHeight = 1;
-    MathCex = cex;
-    MathPs = ps;
-    CurrentStyle = STYLE_D;
-    SetFont(PlainFont);
-    bbox = RenderElement(expr, 0);
-    ReferenceX = fromDeviceX(x, GE_INCHES, dd);
-    ReferenceY = fromDeviceY(y, GE_INCHES, dd);
+    mc.BaseCex = gc->cex;
+    mc.BoxColor = name2col("pink");
+    mc.CurrentStyle = STYLE_D;
+    /*
+     * Some "empty" values.  Will be filled in after BBox is calc'ed
+     */
+    mc.ReferenceX = 0;
+    mc.ReferenceY = 0;
+    mc.CurrentX = 0;
+    mc.CurrentY = 0;
+    mc.CurrentAngle = 0;
+    mc.CosAngle = 0;
+    mc.SinAngle = 0;
+
+    SetFont(PlainFont, gc);
+    bbox = RenderElement(expr, 0, &mc, gc, dd);
+    mc.ReferenceX = fromDeviceX(x, GE_INCHES, dd);
+    mc.ReferenceY = fromDeviceY(y, GE_INCHES, dd);
     if (R_FINITE(xc))
-	CurrentX = ReferenceX - xc * bboxWidth(bbox);
+	mc.CurrentX = mc.ReferenceX - xc * bboxWidth(bbox);
     else
 	/* Paul 11/2/02
 	 * If xc == NA then should centre horizontally.
 	 * Used to left-adjust.
 	 */
-	CurrentX = ReferenceX - 0.5 * bboxWidth(bbox);
+	mc.CurrentX = mc.ReferenceX - 0.5 * bboxWidth(bbox);
     if (R_FINITE(yc))
-	CurrentY = ReferenceY + bboxDepth(bbox)
+	mc.CurrentY = mc.ReferenceY + bboxDepth(bbox)
 	    - yc * (bboxHeight(bbox) + bboxDepth(bbox));
     else
 	/* Paul 11/2/02
 	 * If xc == NA then should centre vertically.
 	 * Used to bottom-adjust.
 	 */
-	CurrentY = ReferenceY + bboxDepth(bbox)
+	mc.CurrentY = mc.ReferenceY + bboxDepth(bbox)
 	    - 0.5 * (bboxHeight(bbox) + bboxDepth(bbox));
-    CurrentAngle = rot;
+    mc.CurrentAngle = rot;
     rot *= M_PI_2 / 90 ;/* radians */
-    CosAngle = cos(rot);
-    SinAngle = sin(rot);
-    RenderElement(expr, 1);
+    mc.CosAngle = cos(rot);
+    mc.SinAngle = sin(rot);
+    RenderElement(expr, 1, &mc, gc, dd);
 }/* GMathText */
 
 
@@ -2993,9 +3035,10 @@ void GEMathText(double x, double y, SEXP expr,
  */
 double GExpressionWidth(SEXP expr, GUnit units, DevDesc *dd)
 {
-    double width = GEExpressionWidth(expr, 
-				     Rf_gpptr(dd)->font, Rf_gpptr(dd)->cex, 
-				     Rf_gpptr(dd)->ps, (GEDevDesc*) dd);
+    R_GE_gcontext gc;
+    double width; 
+    gcontextFromGP(&gc, dd);
+    width = GEExpressionWidth(expr, &gc, (GEDevDesc*) dd);
     if (units == DEVICE)
 	return width;
     else
@@ -3004,9 +3047,10 @@ double GExpressionWidth(SEXP expr, GUnit units, DevDesc *dd)
 
 double GExpressionHeight(SEXP expr, GUnit units, DevDesc *dd)
 {
-    double height = GEExpressionHeight(expr, 
-				       Rf_gpptr(dd)->font, Rf_gpptr(dd)->cex, 
-				       Rf_gpptr(dd)->ps, (GEDevDesc*) dd);
+    R_GE_gcontext gc;
+    double height;
+    gcontextFromGP(&gc, dd);
+    height = GEExpressionHeight(expr, &gc, (GEDevDesc*) dd);
     if (units == DEVICE)
 	return height;
     else
@@ -3025,11 +3069,11 @@ void GMathText(double x, double y, int coords, SEXP expr,
 	       double xc, double yc, double rot, 
 	       DevDesc *dd)
 {
+    R_GE_gcontext gc;
+    gcontextFromGP(&gc, dd);
     GConvert(&x, &y, coords, DEVICE, dd);
     GClip(dd);
-    GEMathText(x, y, expr, xc, yc, rot, 
-	       Rf_gpptr(dd)->col, Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->font,
-	       Rf_gpptr(dd)->cex, Rf_gpptr(dd)->ps, (GEDevDesc*) dd);
+    GEMathText(x, y, expr, xc, yc, rot, &gc, (GEDevDesc*) dd);
 }
 
 void GMMathText(SEXP str, int side, double line, int outer,
@@ -3047,8 +3091,6 @@ void GMMathText(SEXP str, int side, double line, int outer,
     if ((ascent==0) && (descent==0) && (width==0))
 	error("Metric information not yet available for this device");
 #endif
-
-    MathDevice = (GEDevDesc*) dd;
 
     xadj = Rf_gpptr(dd)->adj;
 
@@ -3137,15 +3179,5 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	}
 	break;
     }
-    GConvert(&at, &line, coords, DEVICE, dd);
-    /* The graphics engine (unlike graphics.c code) knows nothing about
-     * xpd settings (that is a base graphics system concept), hence
-     * the graphics engine does not call GClip.  So we must call GClip
-     * here to make sure that the current xpd setting is enforced
-     * on the device.
-     */
-    GClip(dd);
-    GEMathText(at, line, str, xadj, yadj, angle, 
-	       Rf_gpptr(dd)->col, Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->font,
-	       Rf_gpptr(dd)->cex, Rf_gpptr(dd)->ps, (GEDevDesc*) dd);
+    GMathText(at, line, coords, str, xadj, yadj, angle, dd);
 }/* GMMathText */

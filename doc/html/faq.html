@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.8-10, 2003-10-24</h2>
+<h2>Version 1.8-12, 2003-10-31</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1593,6 +1593,8 @@ binary distributions of R.)
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format. 
 <br><dt><strong>Bhat</strong>
      <dd>Functions for general likelihood exploration (MLE, MCMC, CIs). 
+<br><dt><strong>CDNmoney</strong>
+     <dd>Components of Canadian monetary aggregates. 
 <br><dt><strong>CGIwithR</strong>
      <dd>Facilities for the use of R to write CGI scripts. 
 <br><dt><strong>CircStats</strong>
@@ -1636,6 +1638,8 @@ a range of R functions to match the interface metadata structures.
 <br><dt><strong>GenKern</strong>
      <dd>Functions for generating and manipulating generalised binned kernel
 density estimates. 
+<br><dt><strong>HI</strong>
+     <dd>Simulation from distributions supported by nested hyperplanes. 
 <br><dt><strong>Hmisc</strong>
      <dd>Functions useful for data analysis, high-level graphics, utility
 operations, functions for computing sample size and power, importing
@@ -2080,6 +2084,8 @@ problems, and transportation problems via interfacing Lp_solve.
 <br><dt><strong>mapdata</strong>
      <dd>Supplement to package <strong>maps</strong>, providing the larger and/or
 higher-resolution databases. 
+<br><dt><strong>mapproj</strong>
+     <dd>Map Projections: converts latitude/longitude into projected coordinates. 
 <br><dt><strong>maps</strong>
      <dd>Draw geographical maps.  Projection code and larger maps are in separate
 packages. 
@@ -2143,6 +2149,8 @@ algorithm, Sammon mapping, PCA and correspondence analysis.
      <dd>Generalization of the Shapiro-Wilk test for multivariate variables. 
 <br><dt><strong>mvtnorm</strong>
      <dd>Multivariate normal and t distributions. 
+<br><dt><strong>ncdf</strong>
+     <dd>Interface to Unidata netCDF data files. 
 <br><dt><strong>ncomplete</strong>
      <dd>Functions to perform the regression depth method (RDM) to binary
 regression to approximate the minimum number of observations that can be
@@ -2597,31 +2605,57 @@ class structure).
 <br><dt><strong>DynDoc</strong>
      <dd>Functionality to create and interact with dynamic documents, vignettes,
 and other navigable documents. 
+<br><dt><strong>MAGEML</strong>
+     <dd>Functionality to handle MAGEML documents. 
 <br><dt><strong>RBGL</strong>
      <dd>An interface between the graph package and the Boost graph libraries,
 allowing for fast manipulation of graph objects in R. 
 <br><dt><strong>ROC</strong>
      <dd>Receiver Operating Characteristic (ROC) approach for identifying genes
 that are differentially expressed in two types of samples. 
+<br><dt><strong>RdbiPgSQL</strong>
+     <dd>Methods for accessing data stored in PostgreSQL tables. 
 <br><dt><strong>Rgraphviz</strong>
      <dd>An interface with Graphviz for plotting graph objects in R. 
 <br><dt><strong>Ruuid</strong>
      <dd>Creates Universally Unique ID values (UUIDs) in R. 
 <br><dt><strong>SAGElyzer</strong>
      <dd>Locates genes based on SAGE tags. 
+<br><dt><strong>SNPtools</strong>
+     <dd>Rudimentary structures for SNP data. 
 <br><dt><strong>affy</strong>
      <dd>Methods for Affymetrix Oligonucleotide Arrays. 
+<br><dt><strong>affyPLM</strong>
+     <dd>For fitting Probe Level Models. 
 <br><dt><strong>affycomp</strong>
      <dd>Graphics toolbox for assessment of Affymetrix expression measures. 
 <br><dt><strong>affydata</strong>
      <dd>Affymetrix data for demonstration purposes. 
+<br><dt><strong>annaffy</strong>
+     <dd>Functions for handling data from Bioconductor Affymetrix annotation data
+packages. 
 <br><dt><strong>annotate</strong>
      <dd>Associate experimental data in real time to biological metadata from web
 databases such as GenBank, LocusLink and PubMed.  Process and store
 query results.  Generate <small>HTML</small> reports of analyses. 
+<br><dt><strong>ctc</strong>
+     <dd>Tools to export and import Tree and Cluster to other programs. 
+<br><dt><strong>daMA</strong>
+     <dd>Functions for the efficient design of factorial two-color microarray
+experiments and for the statistical analysis of factorial microarray
+data. 
 <br><dt><strong>edd</strong>
      <dd>Expression density diagnostics: graphical methods and pattern
 recognition algorithms for distribution shape classification. 
+<br><dt><strong>externalVector</strong>
+     <dd>Basic class definitions and generics for external pointer based vector
+objects for R. 
+<br><dt><strong>factDesign</strong>
+     <dd>A set of tools for analyzing data from factorial designed micraorray
+experiments.  The functions can be used to evaluate appropriate tests of
+contrast and perform single outlier detection. 
+<br><dt><strong>gcrma</strong>
+     <dd>Background adjustment using sequence information. 
 <br><dt><strong>genefilter</strong>
      <dd>Tools for sequentially filtering genes using a wide variety of filtering
 functions.  Example of filters include: number of missing value,
@@ -2632,12 +2666,23 @@ functions to genes.
      <dd>Graphical tools for genomic data, for example for plotting expression
 data along a chromosome or producing color images of expression data
 matrices. 
+<br><dt><strong>globaltest</strong>
+     <dd>Testing globally whether a group of genes is significantly related to
+some clinical variable of interest. 
+<br><dt><strong>gpls</strong>
+     <dd>Classification using generalized partial least squares for two-group and
+multi-group classification. 
 <br><dt><strong>graph</strong>
      <dd>Classes and tools for creating and manipulating graphs within R. 
 <br><dt><strong>hexbin</strong>
      <dd>Binning functions, in particular hexagonal bins for graphing. 
 <br><dt><strong>limma</strong>
      <dd>Linear models for microarray data. 
+<br><dt><strong>makecdfenv</strong>
+     <dd>Two functions.  One reads a Affymetrix chip description file (CDF) and
+creates a hash table environment containing the location/probe set
+membership mapping.  The other creates a package that automatically loads
+that environment. 
 <br><dt><strong>marrayClasses</strong>
      <dd>Class definitions for pre-normalized and normalized cDNA microarray
 data.  Basic methods for accessing/replacing, printing, and subsetting. 
@@ -2655,18 +2700,30 @@ microarray intensity data: boxplots, scatter-plots, color images.
 <br><dt><strong>marrayTools</strong>
      <dd>Miscellaneous functions used in the functional genomics core facility in
 UCB and UCSF. 
+<br><dt><strong>matchprobes</strong>
+     <dd>ools for sequence matching of probes on arrays. 
 <br><dt><strong>multtest</strong>
      <dd>Multiple testing procedures for controlling the family-wise error rate
 (FWER) and the false discovery rate (FDR).  Tests can be based on
 t- or F-statistics for one- and two-factor designs, and
 permutation procedures are available to estimate adjusted
 p-values. 
+<br><dt><strong>ontoTools</strong>
+     <dd>Graphs and sparse matrices for working with ontologies. 
+<br><dt><strong>pamr</strong>
+     <dd>Pam: prediction analysis for microarrays. 
 <br><dt><strong>reposTools</strong>
      <dd>Tools for dealing with file repositories and allow users to easily
 install, update, and distribute packages, vignettes, and other files. 
 <br><dt><strong>rhdf5</strong>
      <dd>Storage and retrieval of large datasets using the HDF5 library and file
 format. 
+<br><dt><strong>siggenes</strong>
+     <dd>Identifying differentially expressed genes and estimating the False
+Discovery Rate (FDR) with both the Significance Analysis of Microarrays
+(SAM) and the Empirical Bayes Analyses of Microarrays (EBAM). 
+<br><dt><strong>splicegear</strong>
+     <dd>A set of tools to work with alternative splicing. 
 <br><dt><strong>tkWidgets</strong>
      <dd>Widgets in Tcl/Tk that provide functionality for Bioconductor packages. 
 <br><dt><strong>vsn</strong>
@@ -2676,9 +2733,6 @@ and cDNA array data.
      <dd>Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
 interfaces. 
 </dl>
-
-   <p>These packages will eventually also be made available via <small>CRAN</small>
-as well.
 
 <div class="node">
 <p><hr>

@@ -450,7 +450,7 @@ bitmap	imagetobitmap(image img);
 bitmap	createbitmap(int width, int height, int depth, byte *data);
 void	setbitmapdata(bitmap b, byte data[]);
 void	getbitmapdata(bitmap b, byte data[]);
-void	getbitmapdata2(bitmap b, byte **data, int *row_bytes);
+void	getbitmapdata2(bitmap b, byte **data);
 
 /*
  *  Images.
