@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-36, 2004-01-30
+Version 1.8-38, 2004-02-02
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1165,7 +1165,10 @@ load in data sets to enter most of the commands for users without writing
 CGI scripts.  Graphical output was possible in PostScript or GIF formats
 and the executed code was presented to the user for revision.  However, it
 is not clear if the project is still active and recent attempts to contact
-the author or find the package have failed.
+the author or find the package have failed.  Currently, a modified version
+of *Rcgi* by Mai Zhou <mai@ms.uky.edu> (actually, two versions: one with
+(bitmap) graphics and one without) as well as the original code are
+available from `http://www.ms.uky.edu/~statweb'.
 
 5 R Add-On Packages
 *******************
@@ -1228,6 +1231,11 @@ The R distribution comes with the following extra packages:
 
 *ts*
      Time Series.
+   In R 1.9, *base* will be split into the four packages *base*,
+*graphics*, *stats*, and *utils*.  Packages *ctest*, *eda*, *modreg*, *mva*,
+*nls*, *stepfun* and *ts* will be merged into *stats*, package *lqs*
+returned to the recommended package *MASS*, and package *mle* moved to
+*stats4*.
 
 5.1.2 Add-on packages from CRAN
 -------------------------------
@@ -1235,6 +1243,10 @@ The R distribution comes with the following extra packages:
 The following packages are available from the CRAN `src/contrib' area.
 (Packages denoted as _Recommended_ are to be included in all binary
 distributions of R.)
+
+*AlgDesign*
+     Algorithmic experimental designs.  Calculates exact and approximate
+     theory experimental designs for D, A, and I criteria.
 
 *AnalyzeFMRI*
      Functions for I/O, visualisation and analysis of functional Magnetic
@@ -1379,6 +1391,11 @@ distributions of R.)
 
 *R2HTML*
      Functions for exporting R objects & graphics in an HTML document.
+
+*R2WinBUGS*
+     Running WinBUGS from R: call a BUGS model, summarize inferences and
+     convergence in a table and graph, and save the simulations in arrays
+     for easy access in R.
 
 *RArcInfo*
      Functions to import Arc/Info V7.x coverages and data.
