@@ -85,22 +85,20 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	UNPROTECT(1);
     }
 
-    /* FIXME (?): S does
-    if (!isVectorAtomic(x) || !isVectorAtomic(y)) { */
     if (!isVector(x) || !isVector(y)) {
 	if (isNull(x) || isNull(y)) {
 	    UNPROTECT(2);
 	    return allocVector(LGLSXP,0);
 	}
 	errorcall(call,
-		  "comparison (%d) is possible only for atomic types",
+		  "comparison (%d) is possible only for atomic and list types",
 		  PRIMVAL(op));
     }
 
     if (TYPEOF(x) == EXPRSXP || TYPEOF(y) == EXPRSXP)
 	errorcall(call, "comparison is not allowed for expressions");
 
-    /* ELSE :  x and y are both atomic, no not currently */
+    /* ELSE :  x and y are both atomic or list */
 
     if (LENGTH(x) <= 0 || LENGTH(y) <= 0) {
 	UNPROTECT(2);
@@ -174,10 +172,16 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	REPROTECT(y = coerceVector(y, REALSXP), ypi);
 	x = real_relop(PRIMVAL(op), x, y);
     }
-    else if((isInteger(x) || isLogical(x)) &&
-	    (isInteger(y) || isLogical(y)))
+    else if (isInteger(x) || isInteger(y)) {
+	REPROTECT(x = coerceVector(x, INTSXP), xpi);
+	REPROTECT(y = coerceVector(y, INTSXP), ypi);
 	x = integer_relop(PRIMVAL(op), x, y);
-    else errorcall(call, "comparison of these types is not implemented");
+    }
+    else if (isLogical(x) || isLogical(y)) {
+	REPROTECT(x = coerceVector(x, LGLSXP), xpi);
+	REPROTECT(y = coerceVector(y, LGLSXP), ypi);
+	x = integer_relop(PRIMVAL(op), x, y);
+    } else errorcall(call, "comparison of these types is not implemented");
 
 
     PROTECT(x);

@@ -32,6 +32,15 @@ x != y
   \code{\link{locales}}.  The collating sequence of locales such as
   \samp{en\_US} is normally different from \samp{C} (which should use
   ASCII) and can be surprising.
+
+  At least one of \code{x} and \code{y} must be an atomic vector, but if
+  the other is a list \R attempts to coerce it to the type of the atomic
+  vector: this will succeed if the list is made up of elements of length
+  one that canbe coerced to the correct type.
+
+  If the two arguments are atomic vectors of different types, they are
+  both coerced to the first of character, complex, numeric, integer and
+  logical.
 }
 \value{
   A vector of logicals indicating the result of the element by element
