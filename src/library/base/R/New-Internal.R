@@ -43,7 +43,6 @@ D <- function(expr, name) .Internal(D(expr, name))
 
 Machine <- function().Internal(Machine())
 R.Version <- function().Internal(Version())
-Version <- function() { .Deprecated("R.Version"); R.Version() }
 machine <- function().Internal(machine())
 colors <- function().Internal(colors())
 colours <- .Alias(colors)

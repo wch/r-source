@@ -5,4 +5,5 @@
 	       sep = ""))
 }
 
+Version <- function() .Defunct()
 provide <- function(package) .Defunct()
