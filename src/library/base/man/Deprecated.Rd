@@ -9,6 +9,7 @@
 dnchisq(.)
 pnchisq(.)
 qnchisq(.)
+rnchisq(.)
 print.anova.lm(.)
 print.anova.glm(.)
 print.tabular(.)
@@ -19,6 +20,7 @@ save.plot(.)
 \alias{dnchisq}
 \alias{pnchisq}
 \alias{qnchisq}
+\alias{rnchisq}
 \alias{print.anova.lm}
 \alias{print.anova.glm}
 \alias{print.tabular}
