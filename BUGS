@@ -29,26 +29,26 @@ none
 
 Directory:  Add-ons
 
-* PR# 981 *
-Subject: read.xport() bug
-From: abroman@jhu.edu
-Date: Fri, 15 Jun 2001 00:25:54 +0200 (MET DST)
---confirmed on Windows and Solaris.
---Seems that file is not in the expected format
 * PR# 948 *
 Subject:  xyplot,grid.text segfault 
 From: Peter Malewski <p.malewski@tu-bs.de>
 Date: Sat, 26 May 2001 13:24:11 +0200
+* PR# 950 *
+Subject:  lattice: dev.print(postscript) gives probl. false background Info 
+From: Peter Malewski <p.malewski@tu-bs.de>
+Date: Sat, 26 May 2001 23:20:29 +0200
 * PR# 974 *
 Subject: Lattice: panel.superpose with ordered factor groups
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
 --The warning is standard S and R behaviour.
 --Probably xyplot needs to avoid it (by unclassing?)
-* PR# 950 *
-Subject:  lattice: dev.print(postscript) gives probl. false background Info 
-From: Peter Malewski <p.malewski@tu-bs.de>
-Date: Sat, 26 May 2001 23:20:29 +0200
+* PR# 981 *
+Subject: read.xport() bug
+From: abroman@jhu.edu
+Date: Fri, 15 Jun 2001 00:25:54 +0200 (MET DST)
+--confirmed on Windows and Solaris.
+--Seems that file is not in the expected format
 * PR# 1038 *
 Subject: nlme: bug in getCovariateFormula
 From: Setzer.Woodrow@epamail.epa.gov
@@ -72,10 +72,6 @@ Date: Tue, 03 Jul 2001 15:50:06 -0500
 
 Directory:  Graphics
 
-* PR# 997 *
-Subject:  las=1 with log axis 
-From: Peter Dalgaard BSA <pd@pubhealth.ku.dk>
-Date: Wed, 27 Jun 2001 11:54:06 +0200
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -83,15 +79,19 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 776 *
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 --This needs a substantial redesign.
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
+* PR# 791 *
+Subject:  par(lab= *) / axis(*) bug 
+From: maechler@stat.math.ethz.ch
+Date: Fri, 22 Dec 2000 10:59:26 +0100
 * PR# 816 *
 Subject: dotplot: character size of labels
 From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
@@ -107,10 +107,21 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 --mayhave side-effects in many other pieces of interpreted code 
 --(ii) do_mtext ignores dd->gp.cexbase unlike, for example, do_plot_xy 
 --and anything to do with cexbase needs extreme care.
-* PR# 791 *
-Subject:  par(lab= *) / axis(*) bug 
-From: maechler@stat.math.ethz.ch
-Date: Fri, 22 Dec 2000 10:59:26 +0100
+* PR# 820 *
+Subject: interaction.plot
+From: "Mark M. Span" <span@psy.uva.nl>
+Date: Mon, 22 Jan 2001 10:47:39 +0100
+--mtext is unscaled by default.  It is not clear if this should
+--use the par("cex") setting or an inline cex setting such as cex.axis.
+--It might make more sense to use axis rather than mtext, as boxplot does.
+* PR# 828 *
+Subject: termplot fails for composite non-factor terms
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
+--Neither of the proposed changes actually works in sufficient generality.
+--
+--The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
+--the data right is a project for 1.3
 * PR# 831 *
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -121,41 +132,30 @@ Date: 30 Jan 2001 00:39:41 -0500
 --Fix doesn't work. One problem is that the opar<-par();par(opar) idiom updates
 --xaxp before xlog, and the new value of xaxp may only be valid under the new
 --value of xlog.
-* PR# 828 *
-Subject: termplot fails for composite non-factor terms
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
---Neither of the proposed changes actually works in sufficient generality.
---
---The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
---the data right is a project for 1.3
-* PR# 820 *
-Subject: interaction.plot
-From: "Mark M. Span" <span@psy.uva.nl>
-Date: Mon, 22 Jan 2001 10:47:39 +0100
---mtext is unscaled by default.  It is not clear if this should
---use the par("cex") setting or an inline cex setting such as cex.axis.
---It might make more sense to use axis rather than mtext, as boxplot does.
-* PR# 887 *
-Subject: axis(adj=anything) has no effect
-From: jhallman@frb.gov
-Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
 * PR# 837 *
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 01 Feb 2001 14:20:52 -0500
-* PR# 943 *
-Subject: legend() with xpd=T; omission of initial plot character
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sun, 20 May 2001 10:35:16 +1000
-* PR# 940 *
-Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
-From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
-Date: Tue, 15 May 01 23:34:17 +0100
+* PR# 887 *
+Subject: axis(adj=anything) has no effect
+From: jhallman@frb.gov
+Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
 * PR# 916 *
 Subject:  par(mgp) bug 
 From: paul@stat.auckland.ac.nz
 Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
+* PR# 940 *
+Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
+From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
+Date: Tue, 15 May 01 23:34:17 +0100
+* PR# 943 *
+Subject: legend() with xpd=T; omission of initial plot character
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sun, 20 May 2001 10:35:16 +1000
+* PR# 997 *
+Subject:  las=1 with log axis 
+From: Peter Dalgaard BSA <pd@pubhealth.ku.dk>
+Date: Wed, 27 Jun 2001 11:54:06 +0200
 
 Directory:  In-Out
 
@@ -170,23 +170,23 @@ Date: Sun, 29 Jul 2001 12:27:51 -0400
 
 Directory:  Language
 
-* PR# 921 *
-Subject:  Managed to confuse match.arg 
-From: J.C.Rougier@durham.ac.uk
-Date: Wed, 25 Apr 2001 12:22:54 +0100 (BST)
+* PR# 408 *
+Subject: convolution bug
+From: wsimpson@gcal.ac.uk
+Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
+* PR# 412 *
+Subject: anomalies with call objects
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Feb 2000 01:18:50 +0100
 * PR# 669 *
 Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 25 Sep 2000 10:17:15 +0200
 --status of AsIs columns
-* PR# 412 *
-Subject: anomalies with call objects
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 06 Feb 2000 01:18:50 +0100
-* PR# 408 *
-Subject: convolution bug
-From: wsimpson@gcal.ac.uk
-Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
+* PR# 921 *
+Subject:  Managed to confuse match.arg 
+From: J.C.Rougier@durham.ac.uk
+Date: Wed, 25 Apr 2001 12:22:54 +0100 (BST)
 
 Directory:  Low-level
 
@@ -197,15 +197,15 @@ Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
 
 Directory:  Macintosh
 
+* PR# 1015 *
+Subject: R 1.3  on iMacs
+From: Con Savas <con@maths.uwa.edu.au>
+Date: Fri, 06 Jul 2001 16:40:05 +0800
 * PR# 1023 *
 Subject: data function
 From: wild@stat.auckland.ac.nz
 Date: Fri, 13 Jul 2001 02:48:53 +0200 (MET DST)
 --Mac-specific
-* PR# 1015 *
-Subject: R 1.3  on iMacs
-From: Con Savas <con@maths.uwa.edu.au>
-Date: Fri, 06 Jul 2001 16:40:05 +0800
 
 Directory:  Misc
 
@@ -224,31 +224,31 @@ none
 
 Directory:  System-specific
 
+* PR# 848 *
+Subject: X11 device doesn't handle destroy events correcly
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 13 Feb 2001 17:40:46 -0500
 * PR# 964 *
 Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
 From: paul@gromit.dlib.vt.edu
 Date: Fri, 1 Jun 2001 17:47:10 +0200 (MET DST)
 --Builder needs to avoid -ldnet in distributed binaries..
-* PR# 848 *
-Subject: X11 device doesn't handle destroy events correcly
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 13 Feb 2001 17:40:46 -0500
-* PR# 1026 *
-Subject: make check failure on SGI-IRIX6.5
-From: laurent@cbs.dtu.dk
-Date: Mon, 16 Jul 2001 15:06:17 +0200 (MET DST)
-* PR# 1020 *
-Subject: .Call and Mandrake 8.0
-From: lcottret@yahoo.fr
-Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
---problem with symbol names only on Mandrake 8.0, not 7.2
---needs reply to follow-up
 * PR# 1002 *
 Subject: core dump running modreg-Ex.R
 From: WhiteG@dfo-mpo.gc.ca
 Date: Thu, 28 Jun 2001 19:14:18 +0200 (MET DST)
 --Only reported on SGI, solved by removing optimization.
 --Needs debugging there.
+* PR# 1020 *
+Subject: .Call and Mandrake 8.0
+From: lcottret@yahoo.fr
+Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
+--problem with symbol names only on Mandrake 8.0, not 7.2
+--needs reply to follow-up
+* PR# 1026 *
+Subject: make check failure on SGI-IRIX6.5
+From: laurent@cbs.dtu.dk
+Date: Mon, 16 Jul 2001 15:06:17 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
@@ -260,19 +260,23 @@ none
 
 Directory:  incoming
 
-* PR# 1045 *
-Subject: Palette changes on redraw
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 08 Aug 2001 19:08:01 +0200
-* PR# 1044 *
-Subject: Polymarsall.c
-From: pleu@hotmail.com
-Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
-* PR# 1043 *
-Subject: R 1.3.0 bug: after "y _ 10; x[[1]] _ y", assigning to "y[1]" modifies "x"
-From: buhr@stat.wisc.edu (Kevin Buhr)
-Date: 07 Aug 2001 15:37:57 -0500
 * PR# 1042 *
 Subject: cannot assign to NULL dimnames
 From: htang@hpl.hp.com
 Date: Tue, 7 Aug 2001 21:14:50 +0200 (MET DST)
+* PR# 1043 *
+Subject: R 1.3.0 bug: after "y _ 10; x[[1]] _ y", assigning to "y[1]" modifies "x"
+From: buhr@stat.wisc.edu (Kevin Buhr)
+Date: 07 Aug 2001 15:37:57 -0500
+* PR# 1044 *
+Subject: Polymarsall.c
+From: pleu@hotmail.com
+Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
+* PR# 1045 *
+Subject: Palette changes on redraw
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 08 Aug 2001 19:08:01 +0200
+* PR# 1046 *
+Subject: bug (and fix) in seq.POSIXt
+From: David Middleton <dmiddleton@fisheries.gov.fk>
+Date: Thu, 9 Aug 2001 16:03:54 -0200 
