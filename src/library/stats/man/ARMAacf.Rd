@@ -11,10 +11,10 @@ ARMAacf(ar = numeric(0), ma = numeric(0), lag.max = r, pacf = FALSE)
 \arguments{
   \item{ar}{numeric vector of AR coefficients}
   \item{ma}{numeric vector of MA coefficients}
-  \item{lag.max}{integer. Maximum lage required. Defaults to
+  \item{lag.max}{integer.  Maximum lag required.  Defaults to
     \code{max(p, q+1)}, where \code{p, q} are the numbers of AR and MA
     terms respectively.}
-  \item{pacf}{logical. Should the partial autocorrelations be returned?}
+  \item{pacf}{logical.  Should the partial autocorrelations be returned?}
 }
 \details{
   The methods used follow Brockwell \& Davis (1991, section 3.3).  Their
