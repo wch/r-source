@@ -46,7 +46,7 @@ int gpCol(SEXP gp, int i) {
     SEXP col = VECTOR_ELT(gp, GP_COL);
     int result;
     if (isNull(col))
-	result = NA_INTEGER;
+	result = R_RGBA(255, 255, 255, 255);
     else
 	result = RGBpar(col, i % LENGTH(col));
     return result;
@@ -60,7 +60,7 @@ int gpFill(SEXP gp, int i) {
     SEXP fill = gpFillSXP(gp);
     int result;
     if (isNull(fill))
-	result = NA_INTEGER;
+	result = R_RGBA(255, 255, 255, 255);
     else
 	result = RGBpar(fill, i % LENGTH(fill));
     return result;

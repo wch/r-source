@@ -49,8 +49,8 @@ viewport.  This immediately creates an ambiguity;  if I navigate
 back up to the top-level and attempt to revisit one of the 
 viewports, how can I specify which one I want?  The answer is that
 viewports have a \verb|name| argument\footnote{The print method
-for viewports shows the viewport name within square brackets,
-as shown in the output of the previous example.}.  This name, combined with
+for viewports shows the viewport name within square brackets.  Try
+typing {\tt current.viewport()}.}.  This name, combined with
 the \verb|downViewport()| function, makes it possible to
 navigate back down to viewports in the viewport tree.  Consider the 
 following example, which pushes two viewports called \verb|"A"| and 
@@ -311,9 +311,10 @@ When writing
 code that could be used by others (i.e., a graphical component that
 could be embedded within something else), it would be necessary to
 specify a precise number of viewports to navigate back up.   In this case,
-the number would be {\tt} 2 -- in more complex cases, a reasonable
-strategy might be to seek the first viewport you pushed and then
-go up {\tt 1} more.}.
+the number would be {\tt} 2.  The {\tt downViewport()} function
+returns the number of viewports it went down, so a general
+solution is of the form: {\tt depth <- downViewport("avp");
+upViewport(depth)}.}.
 
 <<>>=
 upViewport(0)
