@@ -60,8 +60,10 @@ dirname(path)
   \code{basename} removes all of the path up to the last path separator
   (if any).
 
-  \code{dirname} returns the part of the \code{path} up to (but excluding)
-  the last path separator, or \code{"."} if there is no path separator.
+  \code{dirname} returns the part of the \code{path} up to (but
+  excluding) the last path separator, or \code{"."} if there is no path
+  separator.  A leading tilde is expanded to the home directory if
+  possible.
 
   In both \code{basename} and \code{dirname} trailing file separators
   are removed before dissecting the path, and for \code{dirname} any
