@@ -41,7 +41,8 @@ HINSTANCE hUnzipDll;
 window w;
 button bBack, bNext, bFinish, bCancel, bSrc, bDest;
 radiobutton sys, pkg;
-checkbox basepkg, texthelp, htmlhelp, ltxhelp, chmhelp, winhelp, srcsp, pdf, overwrite;
+checkbox basepkg, texthelp, htmlhelp, ltxhelp, chmhelp, winhelp, srcsp, 
+    pdf, refpdf, overwrite;
 listbox packages;
 textbox unzout;
 label lVer, lsrc, ldest, lwhat1, lwhat2, lwarn2, lwarn3, lwarn4, lwarn5,
@@ -57,7 +58,8 @@ static char Rversion[20];
 int FullInstall = 1, over;
 char Rver[20]=RVER, src[MAX_PATH], dest[MAX_PATH];
 char selpkg[80], *pkglist[100], *selpkglist[100];
-int npkgs, nspkgs, ispkgs, rwb=1, rwh=1, rwch=1, rww=0, rwl=0, rwwh=0, rwsp=0, rwd=0;
+int npkgs, nspkgs, ispkgs, rwb=1, rwh=1, rwch=1, rww=0, rwl=0, rwwh=0, 
+    rwsp=0, rwd=0, rwd2=0;
 int prwb=1, prww=1, prwl=1, prwch=1, prwwh=0;
 
 /* SHELLsort -- corrected from R. Sedgewick `Algorithms in C' */
@@ -217,6 +219,7 @@ void cleanpage2()
     delobj(winhelp);
     delobj(srcsp);
     delobj(pdf);
+    delobj(refpdf);
     delobj(lwhat2);
     delobj(lwarn2);
     delobj(overwrite);
@@ -280,6 +283,7 @@ void next2(button b)
     rwwh = ischecked(winhelp);
     rwsp = ischecked(srcsp);
     rwd = ischecked(pdf);
+    rwd2 = ischecked(refpdf);
     if(!rwb) {
 	strcpy(str, dest);
 	strcat(str, "/");
@@ -294,7 +298,8 @@ void next2(button b)
 	    return;
 	}
     }
-    if(!rwb & !rwh & !rww & !rwl & !rwch & !rwwh & !rwsp & !rwd) return;
+    if(!rwb & !rwh & !rww & !rwl & !rwch & !rwwh & !rwsp & !rwd & !rwd2) 
+	return;
     over = ischecked(overwrite);
     cleanpage2();
     page3();
@@ -639,12 +644,21 @@ void page2()
 
     ypos += 17;
     pdf   = newcheckbox("PDF manuals",
-			  rect(xpos, ypos, 300, 20), NULL);
-    strcpy(str, Rver); strcat(str, "d.zip");
+			  rect(xpos, ypos, 150, 20), NULL);
+    strcpy(str, Rver); strcat(str, "d1.zip");
     if(!fexists(str)) {
 	uncheck(pdf); disable(pdf); /* hide(pdf);*/
     } else {
 	if(rwd) check(pdf); else uncheck(pdf);
+	zips++;
+    }
+    refpdf   = newcheckbox("reference manual",
+			   rect(xpos+150, ypos, 150, 20), NULL);
+    strcpy(str, Rver); strcat(str, "d2.zip");
+    if(!fexists(str)) {
+	uncheck(refpdf); disable(refpdf); /* hide(pdf);*/
+    } else {
+	if(rwd2) check(refpdf); else uncheck(refpdf);
 	zips++;
     }
 
@@ -723,6 +737,7 @@ void page3()
 	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "base files  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwb = 0;
 	}
     }
     if(rwh) {
@@ -735,6 +750,7 @@ void page3()
 	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "text help  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwh = 0;
 	}
     }
     if(rww) {
@@ -747,6 +763,7 @@ void page3()
 	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "HTML help  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwb = 0;
 	}
     }
     if(rwl) {
@@ -759,6 +776,7 @@ void page3()
 	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "latex files  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwl = 0;
 	}
     }
     if(rwch) {
@@ -771,6 +789,7 @@ void page3()
 	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "compiled HTML  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwch =0;
 	}
     }
     if(rwwh) {
@@ -783,6 +802,7 @@ void page3()
 	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "winhelp  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwwh = 0;
 	}
     }
     if(rwsp) {
@@ -792,21 +812,36 @@ void page3()
 	strcat(str, Rver); strcat(str, "sp.zip");
 	strcpy(dest1, dest);
 	rc = do_unzip(str, dest1, 0, NULL, 0, NULL, over);
-	if(rc) {
+	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "source ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwsp = 0;
 	}
     }
     if(rwd) {
 	strcpy(lab2, lab); delobj(lres3); strcat(lab, "PDF manuals . . .");
 	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	strcpy(str, src); strcat(str, "/");
-	strcat(str, Rver); strcat(str, "d.zip");
+	strcat(str, Rver); strcat(str, "d1.zip");
 	strcpy(dest1, dest);
 	rc = do_unzip(str, dest1, 0, NULL, 0, NULL, over);
-	if(rc) {
+	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "docs ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwd  = 0;
+	}
+    }
+    if(rwd2) {
+	strcpy(lab2, lab); delobj(lres3); strcat(lab, "ref manual . . .");
+	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	strcpy(str, src); strcat(str, "/");
+	strcat(str, Rver); strcat(str, "d2.zip");
+	strcpy(dest1, dest);
+	rc = do_unzip(str, dest1, 0, NULL, 0, NULL, over);
+	if(!rc) {
+	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "refman ");
+	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	    rwd2 = 0;
 	}
     }
     delobj(lres3);

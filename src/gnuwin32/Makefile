@@ -1,7 +1,7 @@
 include MkRules
 
 HELP=YES
-WINHELP=CHM # NO, CHM, BOTH
+WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw0990
@@ -210,7 +210,8 @@ bindist:
 	zip docs.zip $(RPREFIX)/*
 	unzip -a -o docs.zip
 	$(RM) docs.zip
-	$(RM) -rf $(RPREFIX)b.zip $(RPREFIX)h.zip $(RPREFIX)w.zip $(RPREFIX)l.zip
+	$(RM) -f $(RPREFIX)b1.zip $(RPREFIX)b2.zip $(RPREFIX)h.zip \
+	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
 	$(RM) anindex.zip
 	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
 	zip -mr9X $(RPREFIX)h.zip $(RPREFIX)/library/*/help 
@@ -302,9 +303,12 @@ docs manuals:
 
 docsdist:
 	$(RM) -rf $(RPREFIX)
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manuals 
-	$(CP) -pr $(RHOME)/doc/manual/*.pdf $(RPREFIX)/doc/manuals
-	zip -rm9X $(RPREFIX)d.zip $(RPREFIX)
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manual
+	$(CP) -pr $(RHOME)/doc/manual/*.pdf $(RPREFIX)/doc/manual
+	zip -rm9X $(RPREFIX)d2.zip $(RPREFIX)/doc/manual/refman.pdf
+	zip -rm9X $(RPREFIX)d1.zip $(RPREFIX)/doc/manual \
+	  -x $(RPREFIX)/doc/manual/R-FAQ.pdf
+	$(RM) -rf $(RPREFIX)
 
 
 # Dependencies

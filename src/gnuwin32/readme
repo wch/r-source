@@ -20,7 +20,8 @@ rw0990h.zip				text help
 rw0990ch.zip				compiled HTML help
 rw0990w.zip				HTML help files
 rw0990l.zip				latex help for offline help
-rw0990d.zip				PDF manuals
+rw0990d1.zip				PDF manuals except
+rw0990d2.zip				PDF version of the reference manual
 rw0990sp.zip				files to install source packages
 
 and optionally the installer rwinst.exe.
