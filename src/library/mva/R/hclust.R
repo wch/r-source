@@ -83,7 +83,7 @@ function (tree, hang = 0.1, ...)
 	order <- as.double(order(tree$order))
 	labels <- tree$labels
 	if (is.null(labels))
-		labels <- 1:n
+		labels <- 1:(n+1)
 	labels <- as.character(labels)
 	plot.new()
 	.Internal(dend.window(n, merge, height, order, hang,
