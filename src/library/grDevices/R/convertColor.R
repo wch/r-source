@@ -207,12 +207,12 @@ convertColor<-function(color, from, to,
   
   if (is.null(from.ref.white))
       from.ref.white<-from$white
-  else if (from.ref.white!=from$white)
+  else if (!is.null(from$white) && from.ref.white!=from$white)
       stop("'from.ref.white' disagrees with definition of ",from$name)
 
   if (is.null(to.ref.white))
       to.ref.white<-to$white
-  else if (to.ref.white!=to$white)
+  else if (!is.null(to$white) && to.ref.white!=to$white)
       stop("'to.ref.white' disagrees with definition of ",to$name)
 
   if (is.null(to.ref.white) && is.null(from.ref.white))
@@ -230,9 +230,6 @@ convertColor<-function(color, from, to,
   
   if (is.null(nrow(color)))
     color<-matrix(color,nrow=1)
-
-  if (ncol(color)!=3 && nrow(color)==3)
-      color=t(color)
 
   if (!is.null(scale.in))
       color<-color/scale.in
