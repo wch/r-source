@@ -1,7 +1,7 @@
-install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
-                             contriburl=contrib.url(CRAN),
-                             method, available=NULL, destdir=NULL,
-                             installWithVers=FALSE, dependencies=FALSE)
+install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
+                             contriburl = contrib.url(CRAN),
+                             method, available = NULL, destdir = NULL,
+                             installWithVers = FALSE, dependencies = FALSE)
 {
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
@@ -9,6 +9,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             warning(paste("argument", sQuote("lib"),
                           "is missing: using", lib))
     }
+    oneLib <- length(lib) == 1
     localcran <- length(grep("^file:", contriburl)) > 0
     if(!localcran) {
         if (is.null(destdir)) {
@@ -18,58 +19,62 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         } else tmpd <- destdir
     }
 
-    if(dependencies) { # go and look for dependencies, recursively
-        pkgs0 <- pkgs
-        l <- length(pkgs0)
+    if(dependencies && !oneLib) {
+        warning("Don't know which element of 'lib' to install dependencies into\n", "skipping dependencies")
+        dependences <- FALSE
+    }
+    if(dependencies) { # check for dependencies, recursively
+        p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         if(is.null(available))
-            available <- CRAN.packages(contriburl=contriburl, method=method)
+            available <- CRAN.packages(contriburl = contriburl,
+                                       method = method)
         have <- .packages(all.available = TRUE)
         repeat {
-            ## what about bundles?
-            deps <- available[match(pkgs0, available[, "Package"]), "Depends"]
-            deps <- deps[!is.na(deps)]
+            deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
+            deps <- .clean_up_dependencies(deps, available)
             if(!length(deps)) break
-            deps <- unlist(strsplit(deps, ","))
-            deps <- unique(sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , deps))
-            toadd <- deps[! deps %in% c("R", have)]
+            toadd <- deps[! deps %in% c("R", have, pkgs)]
             if(length(toadd) == 0) break
-            pkgs <- c(pkgs, toadd)
-            pkgs0 <- toadd
+            pkgs <- c(toadd, pkgs)
+            p1 <- toadd
         }
-        if(length(pkgs) > l) {
-            added <- pkgs[-(1:l)]
+        bundles <- .find_bundles(available)
+        for(bundle in names(bundles))
+            pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
+        pkgs <- unique(pkgs)
+        if(length(pkgs) > length(p0)) {
+            added <- setdiff(pkgs, p0)
             cat("also installing the dependencies ",
                 paste(sQuote(added), collapse=", "), "\n\n", sep="")
         }
     }
 
-    foundpkgs <- download.packages(pkgs, destdir=tmpd,
-                                   available=available,
-                                   contriburl=contriburl, method=method)
+    foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
+                                   contriburl = contriburl, method = method)
 
+    ## at this point pkgs may contain duplicates,
+    ## the same pkg in different libs
     if(!is.null(foundpkgs)) {
         update <- cbind(pkgs, lib)
         colnames(update) <- c("Package", "LibPath")
-        for(lib in unique(update[,"LibPath"])) {
-            oklib <- lib==update[,"LibPath"]
-            for(p in update[oklib, "Package"])
-            {
-                okp <- p == foundpkgs[, 1]
-                if(length(okp) > 0){
-                    cmd <- paste(file.path(R.home(),"bin","R"),
-				 "CMD INSTALL")
-		    if (installWithVers)
-			cmd <- paste(cmd,"--with-package-versions")
-
-		    cmd <- paste(cmd,"-l",lib,foundpkgs[okp, 2])
-                    status <- system(cmd)
-                    if(status > 0){
-                        warning(paste("Installation of package",
-                                      foundpkgs[okp, 1],
-                                      "had non-zero exit status"))
-                    }
-                }
-            }
+        found <- pkgs %in% foundpkgs[, 1]
+        update <- cbind(update[found, , drop=FALSE], file = foundpkgs[, 2])
+        if(nrow(update) > 1) {
+            upkgs <- unique(pkgs <- update[, 1])
+            DL <- .make_dependency_list(upkgs, available)
+            p0 <- .find_install_order(upkgs, DL)
+            ## can't use update[p0, ] due to possible multiple matches
+            update <- update[sort.list(match(pkgs, p0)), ]
+        }
+        cmd0 <- paste(file.path(R.home(),"bin","R"), "CMD INSTALL")
+        if (installWithVers)
+            cmd0 <- paste(cmd0, "--with-package-versions")
+        for(p in update[, 1]) {
+            cmd <- paste(cmd0, "-l", update[, 2], update[, 3])
+            status <- system(cmd)
+            if(status > 0)
+                warning(paste("Installation of package", p,
+                              "had non-zero exit status"))
         }
         cat("\n")
         if(!localcran && is.null(destdir)) {
@@ -80,9 +85,8 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                 cat("The packages are in", tmpd)
             cat("\n")
         }
-    }
-    else
-        unlink(tmpd, TRUE)
+    } else unlink(tmpd, TRUE)
+
     invisible()
 }
 

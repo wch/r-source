@@ -1,7 +1,7 @@
-install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
-                             contriburl=contrib.url(CRAN),
-                             method, available=NULL, destdir=NULL,
-                             installWithVers=FALSE, dependencies=FALSE)
+install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
+                             contriburl = contrib.url(CRAN),
+                             method, available = NULL, destdir = NULL,
+                             installWithVers = FALSE, dependencies = FALSE)
 {
     unpackPkg <- function(pkg, pkgname, lib, installWithVers=FALSE)
     {
@@ -81,6 +81,8 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             warning(paste("argument", sQuote("lib"),
                           "is missing: using", lib))
     }
+    oneLib <- length(lib) == 1
+
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.zip$", "", pkgnames)
     pkgnames <- sub("_[0-9.-]+$", "", pkgnames)
@@ -115,26 +117,31 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         } else tmpd <- destdir
     }
 
-    if(dependencies) { # go and look for dependencies, recursively
-        pkgs0 <- pkgs
-        l <- length(pkgs0)
+    if(dependencies && !oneLib) {
+        warning("Don't know which element of 'lib' to install dependencies into\n", "skipping dependencies")
+        dependences <- FALSE
+    }
+    if(dependencies) { # check for dependencies, recursively
+        p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         if(is.null(available))
-            available <- CRAN.packages(contriburl=contriburl, method=method)
+            available <- CRAN.packages(contriburl = contriburl,
+                                       method = method)
         have <- .packages(all.available = TRUE)
         repeat {
-            ## what about bundles?
-            deps <- available[match(pkgs0, available[, "Package"]), "Depends"]
-            deps <- deps[!is.na(deps)]
+            deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
+            deps <- .clean_up_dependencies(deps, available)
             if(!length(deps)) break
-            deps <- unlist(strsplit(deps, ","))
-            deps <- unique(sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , deps))
-            toadd <- deps[! deps %in% c("R", have)]
+            toadd <- deps[! deps %in% c("R", have, pkgs)]
             if(length(toadd) == 0) break
-            pkgs <- c(pkgs, toadd)
-            pkgs0 <- toadd
+            pkgs <- c(toadd, pkgs)
+            p1 <- toadd
         }
-        if(length(pkgs) > l) {
-            added <- pkgs[-(1:l)]
+        bundles <- .find_bundles(available)
+        for(bundle in names(bundles))
+            pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
+        pkgs <- unique(pkgs)
+        if(length(pkgs) > length(p0)) {
+            added <- setdiff(pkgs, p0)
             cat("also installing the dependencies ",
                 paste(sQuote(added), collapse=", "), "\n\n", sep="")
             flush.console()
@@ -142,9 +149,8 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         }
     }
 
-    foundpkgs <- download.packages(pkgs, destdir=tmpd,
-                                   available=available,
-                                   contriburl=contriburl, method=method)
+    foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
+                                   contriburl = contriburl, method = method)
 
     if(!is.null(foundpkgs)) {
         update <- cbind(pkgs, lib)
@@ -165,13 +171,13 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
 1)
             if(answer == "y" | answer == "Y") {
                 for(file in foundpkgs[, 2]) unlink(file)
-                unlink(tmpd)
+                unlink(tmpd, TRUE)
             } else
                 cat("The packages are in", tmpd)
             cat("\n")
         }
         link.html.help(verbose=TRUE)
-    } else unlink(tmpd)
+    } else unlink(tmpd, TRUE)
     invisible()
 }
 

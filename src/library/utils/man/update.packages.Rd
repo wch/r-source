@@ -59,14 +59,17 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \item{destdir}{directory where downloaded packages are stored.}
   \item{available}{list of packages available at CRAN as returned by
     \code{CRAN.packages}.}
-  \item{lib,instlib}{character string giving the library directory where to
-    install the packages.}
-  \item{ask}{logical indicating to ask before packages are actually downloaded
-    and installed.}
+  \item{lib}{character vector giving the library directories where to
+    install the packages.  Recycled as needed.}
+  \item{ask}{logical indicating to ask before packages are actually
+    downloaded and installed.}
   \item{installWithVers}{If \code{TRUE}, will invoke the install the
     package such that it can be referenced by package version}
+  \item{instlib}{character string giving the library directory where to
+    install the packages.}
   \item{dependencies}{logical indicating to also install uninstalled
-    packages on which these packages depend (and so on recursively).
+    packages on which these packages depend/suggest/import
+    (and so on recursively).
 #ifdef windows
     Not used if \code{CRAN = NULL}.
 #endif
@@ -117,6 +120,12 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   Argument \code{pkgs} can also be a character vector of file names of
   zip files if \code{CRAN=NULL}. The zip files are then unpacked directly.
 #endif
+#ifdef unix
+  An attempt is made to install the packages in an order that respects
+  their dependencies.  This does assume that all the entries in
+  \code{lib} are on the default library path for installs (set by
+  \code{R_LIBS}). 
+#endif
 
   For \code{install.packages} and \code{update.packages}, \code{destdir}
   is the directory to which packages will be downloaded. If it is
@@ -129,7 +138,8 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   For \code{CRAN.packages}, a matrix with one row per package/bundle,
   row names the package names and column names \code{"Package"}, 
   \code{"Version"}, \code{"Priority"}, \code{"Bundle"},
-  \code{"Depends"}, \code{"Suggests"} and \code{"Contains"}.
+  \code{"Depends"}, \code{"Imports"}, \code{"Suggests"}
+  and \code{"Contains"}.
 
   For \code{old.packages}, a matrix with one row per package/bundle
   and column names \code{"Package"}, \code{"LibPath"},
@@ -147,9 +157,7 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 
-#ifdef unix
   \code{\link{INSTALL}}, \code{\link{REMOVE}},
-#endif
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
 }
 \keyword{utilities}

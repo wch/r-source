@@ -162,6 +162,10 @@ NEW FEATURES
 	packages but also their uninstalled dependencies and their
 	dependencies ....
 
+	The Unix version of install.packages() attempts to install
+	packages in an order that reflects their dependencies.  (This
+	is not needed for binary installs as used under Windows.)
+
     o	interaction() has new argument 'sep'.
 
     o	interaction.plot() allows 'type = "b"'.
@@ -380,6 +384,11 @@ INSTALLATION CHANGES
 
 
 PACKAGE INSTALLATION CHANGES
+
+    o	The DESCRIPTION file of packages may contain a 'Imports:'
+	field for packages whose namespaces are used but do not need
+	to be attached.  Such packages should no longer be listed in
+	'Depends:'.
 
     o	There are new optional fields 'SaveImage', 'LazyLoad' and
 	'LazyData' in the DESCRIPTION file.  Using 'SaveImage' is
