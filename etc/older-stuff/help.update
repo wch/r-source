@@ -1,3 +1,0 @@
-#!/bin/sh
-
-./etc/doc2ms src/library/$1/man/$2 | nroff -ms > help/$1/$2
