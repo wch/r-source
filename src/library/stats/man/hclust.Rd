@@ -180,6 +180,11 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   \emph{COMPSTAT Lectures 4}.
   Wuerzburg: Physica-Verlag
   (for algorithmic details of algorithms used).
+
+  McQuitty, L.L. (1966).
+  Similarity Analysis by Reciprocal Pairs for Discrete and Continuous
+  Data.
+  \emph{Educational and Psychological Measurement}, \bold{26}, 825--831.
 }
 \author{
   The \code{hclust} function is based on Fortran code
