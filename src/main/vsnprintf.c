@@ -82,7 +82,11 @@
 #if !defined(HAVE_SNPRINTF) || !defined(HAVE_VSNPRINTF)
 
 #include <string.h>
+#ifndef Macintosh
 #include <sys/types.h>
+#else
+#include <types.h>
+#endif
 #include <stdio.h>		/* for NULL */
 #include <ctype.h>
 
