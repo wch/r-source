@@ -12,3 +12,10 @@ is.name <- is.symbol # which is Primitive
     x[value] <- NA
     x
 }
+
+is.primitive <- function(x)
+    switch(typeof(x),
+	   "special" = , "builtin" = TRUE,
+	   FALSE)
+
+

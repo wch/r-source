@@ -38,48 +38,48 @@ NEW FEATURES
     o	ecdf() now has jumps of the correct size (a multiple of 1/n)
 	if there are ties.  (wished by PR#7292).
 
-    o   Printing of arrays now honours the 'right' argument if there
-        are more than two dimensions.
+    o	Printing of arrays now honours the 'right' argument if there
+	are more than two dimensions.
 
     o	Tabular printing of numbers now has headers right-justified, as
-        they were prior to version 1.7.0 (spotted by Rob Baer).
+	they were prior to version 1.7.0 (spotted by Rob Baer).
 
-    o   dir.create() has a new argument 'recursive' serving the same
+    o	dir.create() has a new argument 'recursive' serving the same
 	purpose as Unix's mkdir -p.
 
-    o   scatter.smooth() and loess.smooth() now handle missing values
+    o	scatter.smooth() and loess.smooth() now handle missing values
 	in their inputs.
 
-    o   The use of UseMethod() with no argument was not documented on
+    o	The use of UseMethod() with no argument was not documented on
 	the help page and is now regarded as an error.
 
-    o   Added colorRamp() and colorRampPalette() for color interpolation.
+    o	Added colorRamp() and colorRampPalette() for color interpolation.
 
     o	install.packages() and friends now accept a vector of URLs for
 	'CRAN' or 'contriburl' and get the newest available version of
 	a package from the first repository on the list in which it is
 	found.
 
-    o   New argument 'immediate.' to warning() to send an immediate
+    o	New argument 'immediate.' to warning() to send an immediate
 	warning.
 
-    o   file.append() has been tuned, including for the case of
+    o	file.append() has been tuned, including for the case of
 	appending many files to a single file.
 
-    o   subset() now has a method for matrices, similar to that for
+    o	subset() now has a method for matrices, similar to that for
 	data frames.
 
 
 UTILITIES
 
-    o   New functions mirror2html() and checkCRAN().
+    o	New functions mirror2html() and checkCRAN().
 
-    o   R CMD check has a new option '--use-valgrind'.
+    o	R CMD check has a new option '--use-valgrind'.
 
     o	tools:::.install_package_code_files() (used to collate R files
 	when installing packages) ensures files are separated by a
 	line feed.
-    
+
 
 DOCUMENTATION
 
@@ -131,19 +131,20 @@ BUG FIXES
 	recent versions of Tk, but conceivably not for old
 	tkConfig.sh files.
 
-    o   detach() was not recomputing the methods for primitives
-        correctly.
+    o	detach() was not recomputing the methods for primitives
+	correctly.
 
-    o   "raw" added & "expression" partly fixed in basic classes, so
-        S4 classes can extend these (but "expression" is pretty broken
-        as a vector class in R).
+    o	"raw" added & "expression" partly fixed in basic classes, so
+	S4 classes can extend these (but "expression" is pretty broken
+	as a vector class in R).
 
-    o   Promised function getGroupMembers added.
+    o	Promised function getGroupMembers added.
 
-    o   Collected warnings had messages with unneeded trailing space.
+    o	Collected warnings had messages with unneeded trailing space.
 
-    o   Methods for primitive functions must be exported from
-        namespaces; this is now done automatically.
+    o	Methods for primitive functions must be exported from
+	namespaces; this is now done automatically.
+	Note that is.primitive() is now in "base", not "methods" anymore.
 
 
 
@@ -163,10 +164,10 @@ NEW FEATURES
 	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
 
-    o   The assignment form of split() allows recycling of vectors 
-        within the value list. In particular, things like 
-            split(x, g) <- lapply(split(x, g), mean)
-        now work.
+    o	The assignment form of split() allows recycling of vectors
+	within the value list. In particular, things like
+	    split(x, g) <- lapply(split(x, g), mean)
+	now work.
 
 
 DOCUMENTATION
@@ -174,7 +175,7 @@ DOCUMENTATION
     o	Manual `Writing R Extensions' has new sections on writing
 	portable packages and on writing new front-ends for R -- the
 	latter will be more comprehensive in R 2.1.0 which has new
-	public header files. 
+	public header files.
 
 
 DEPRECATED & DEFUNCT
@@ -186,7 +187,7 @@ DEPRECATED & DEFUNCT
     o	The GNOME GUI on Unix-alikes is deprecated as part of R;
 	it will be available in another form as from R 2.1.0.
 
-    o	The undocumented use of UseMethod() with no argument is now 
+    o	The undocumented use of UseMethod() with no argument is now
 	formally deprecated.
 
 
@@ -215,14 +216,14 @@ C-LEVEL FACILITIES
 
     o	It was not clear in 'Writing R Extensions' that some of the
 	entry points in the 'Utilities' section were not declared in
-	<R.h> (they were in <R_ext/Applic.h>).  Now all the entry
+	<R.h> (they were in <R_ext/Applic.h>).	Now all the entry
 	points in that section are declared in <R_ext/Utils.h>,
 	included by <R.h>.
 
 
 BUG FIXES
 
-    o   The grid.grab() function in package grid would throw an error
+    o	The grid.grab() function in package grid would throw an error
 	if there were no viewports pushed (now returns NULL).
 
     o	model.frame.default() takes row names from the response
@@ -290,11 +291,11 @@ BUG FIXES
 
     o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
-    o   Using Rprof() with a non-writable 'file' argument is now a 
+    o	Using Rprof() with a non-writable 'file' argument is now a
 	non-fatal error and does not abort R.
 
-    o   binom.test() did not deparse its arguments early enough such
-        that the reported data were ugly if x was a table.
+    o	binom.test() did not deparse its arguments early enough such
+	that the reported data were ugly if x was a table.
 
     o	Systems based on glibc, including those using R's substitute for
 	strptime, were handling strptime("2001", "%Y") incorrectly, in
@@ -306,7 +307,7 @@ BUG FIXES
 	(PR#7301)
 
     o	summary.stepfun() was reporting for n > 6 summaries of the
-	knots and levels as the actual values.  Both print() and
+	knots and levels as the actual values.	Both print() and
 	summary() methods called the constant values "step heights",
 	although they were not the heights of the steps.
 
@@ -321,7 +322,7 @@ BUG FIXES
 
     o	require() without a version argument tried for an unversioned
 	load of a package even though a versioned install was already
-	loaded.  This often lead to a message that a required package
+	loaded.	 This often lead to a message that a required package
 	was being loaded when it was not actually being loaded.
 
     o	str(<S4.object>) made use of attributes() instead of slot(),
@@ -331,8 +332,8 @@ BUG FIXES
 
     o	str() removed any class from externalptr objects.
 
-    o	logLik() and hence AIC() failed or gave incorrect answers 
-	on "lm" fits with na.action = na.exclude (and perhaps other 
+    o	logLik() and hence AIC() failed or gave incorrect answers
+	on "lm" fits with na.action = na.exclude (and perhaps other
 	na.actions's except na.omit and na.fail).
 
     o	pmax() and pmin() sometimes used NAs in internal subassignments,
@@ -348,11 +349,11 @@ BUG FIXES
 	'decreasing' or 'index.return' or supplying a factor are now
 	errors.
 	
-    o   The ave() function had trouble if the grouping contained 
-        unused levels. 
-	
     o   read.fwf got confused by skip > 0 and could infinite loop
 	under some circumstances.  (PR#7350)
+
+    o	The ave() function had trouble if the grouping contained
+	unused levels.
 
 
 

@@ -448,7 +448,7 @@ getGeneric <-
 .getGeneric <- function(f, where) {
     .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
 }
-           
+
 getGroup <-
   ## return the groups to which this generic belongs.  If `recursive=TRUE', also all the
   ## group(s) of these groups.
@@ -568,13 +568,6 @@ allGenerics <- getGenerics
     these <- these[substr(these, 1, 6) == ".__M__"]
     gsub(".__M__(.*):([^:]+)", "\\1", these)
 }
-
-is.primitive <-
-  function(fdef)
-    switch(typeof(fdef),
-           "special" = , "builtin" = TRUE,
-           FALSE)
-
 
 cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(where)) {
     ## a collection of actions performed on attach or detach

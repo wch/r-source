@@ -28,7 +28,6 @@
 \alias{removeMethodsObject}
 \alias{findUnique}
 \alias{MethodAddCoerce}
-\alias{is.primitive}
 \alias{.saveImage}
 \alias{cacheMetaData}
 \alias{cacheGenericsMetaData}
@@ -83,8 +82,6 @@ removeMethodsObject(f, where)
 findUnique(what, message, where)
 
 MethodAddCoerce(method, argName, thisClass, methodClass)
-
-is.primitive(fdef)
 
 cacheMetaData(where, attach = TRUE, searchWhere)
 
@@ -186,10 +183,6 @@ addNextMethod(method, f, mlist, optional, envir)
       explicitly defined.  Only modifies the method if an explicit
       coerce is required to coerce from \code{thisClass} to
       \code{methodClass}.
-    }
-
-    \item{\code{is.primitive}:}{
-      Is this object a primitive function (either a builtin or special)?
     }
 
     \item{\code{removeMethodsObject}:}{
