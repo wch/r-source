@@ -62,6 +62,13 @@ close.screen(n, all.screens = FALSE)
 }
 
 \section{Warning}{
+  The recommended way to use these functions is to
+  completely draw a plot and all
+  additions (ie. points and lines) to the base plot, prior to selecting
+  and plotting on another screen. The behavior associated with returning
+  to a screen to add to an existing plot is unpredictable and may result
+  in problems that are not readily visible.
+  
   These functions are totally incompatible with the
   other mechanisms for arranging plots on a device:  \code{par(mfrow)},
   \code{par(mfcol)}, and \code{layout()}.  
