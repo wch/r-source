@@ -240,7 +240,7 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-pdf
-stamp-refman-pdf: $(texinputs_BASE)
+stamp-refman-pdf: $(refman_TEXINPUTS)
 	@touch $@
 fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	@if test "$(PDFLATEX)" = false; then \
