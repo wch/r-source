@@ -8,7 +8,7 @@ use Text::Wrap;
 use Text::Tabs;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(R_getenv R_version R_tempfile R_system R_runR R_run_R
+@EXPORT = qw(R_cwd R_getenv R_version R_tempfile R_system R_runR R_run_R
 	     file_path env_path
 	     list_files list_files_with_exts list_files_with_type
 	     make_file_exts
@@ -239,5 +239,14 @@ sub read_lines {
     @lines;
 }
 
+sub R_cwd {
+    my $abspath = Cwd::cwd();
+    if($R::Vars::OSTYPE eq "windows") {
+	# ensure there are no spaces in the paths.
+	Win32::GetShortPathName($abspath);
+    } else {
+	$abspath;
+    }
+}
 
 1;

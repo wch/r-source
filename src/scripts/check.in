@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-# Copyright (C) 2000-2003 R Development Core Team
+# Copyright (C) 2000-2004 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.162 $ ';
+my $revision = ' $Revision: 1.163 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -87,11 +87,11 @@ $opt_install = 0 if($opt_install eq "no");
 ## Use system default unless explicitly specified otherwise.
 $ENV{"R_DEFAULT_PACKAGES"} = "";
 
-my $startdir = cwd();
+my $startdir = R_cwd();
 $opt_outdir = $startdir unless $opt_outdir;
 chdir($opt_outdir)
     or die "Error: cannot change to directory '$opt_outdir'\n";
-my $outdir = cwd();
+my $outdir = R_cwd();
 chdir($startdir);
 
 my $R_LIBS = $ENV{'R_LIBS'};
@@ -99,7 +99,7 @@ my $library;
 if($opt_library) {
     chdir($opt_library)
 	or die "Error: cannot change to directory '$opt_library'\n";
-    $library = cwd();
+    $library = R_cwd();
     $ENV{'R_LIBS'} = env_path($library, $R_LIBS);
 
     chdir($startdir);
@@ -180,7 +180,7 @@ foreach my $pkg (@ARGV) {
     (-d $pkg) or die "Error: package dir '$pkg' does not exist\n";
     chdir($pkg)
 	or die "Error: cannot change to directory '$pkg'\n";
-    my $pkgdir = cwd();
+    my $pkgdir = R_cwd();
     my $pkgname = basename($pkgdir);
     chdir($startdir);
 
@@ -383,7 +383,7 @@ sub check_pkg {
     if(-d $pkg) {
 	chdir($pkg)
 	  or die "Error: cannot change to directory '$pkg'\n";
-	$pkgdir = cwd();
+	$pkgdir = R_cwd();
 	$pkgname = basename($pkgdir);
     }
     else {

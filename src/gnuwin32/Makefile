@@ -10,7 +10,7 @@ all:
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
-PKGD = $(shell ./Rpwd.exe $(PKGDIR))
+PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 else
 RHOME = $(shell perl pwd.pl ../..)
 PKGD = $(shell perl pwd.pl $(PKGDIR))
@@ -272,7 +272,7 @@ bundle-%:
 
 pkg-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
@@ -294,12 +294,12 @@ ifeq ($(strip $(HELP)),YES)
   endif
 endif
 	@$(MAKE) --no-print-directory BUILD=$(BUILD) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
+	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
 	  -f $(RHOME)/src/gnuwin32/MakePkg md5sums
 
 pkgfake-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg fake
 	@$(ECHO) "  installing help"
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) pkgfake-$*
@@ -307,15 +307,15 @@ pkgfake-%:
 
 pkgclean-%:
 	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
-	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
+	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
-	-@$(MKDIR) -p $(PKGDIR)/$*/check
-	@$(MAKE) --no-print-directory -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	-@$(MKDIR) -p $(PKGD)/$*/check
+	@$(MAKE) --no-print-directory -C $(PKGD)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
-	@if test -d $(PKGDIR)/$*/tests ; then \
-	  $(MAKE) --no-print-directory -C $(PKGDIR)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	@if test -d $(PKGD)/$*/tests ; then \
+	  $(MAKE) --no-print-directory -C $(PKGD)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
 	fi
 

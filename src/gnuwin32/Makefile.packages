@@ -11,7 +11,7 @@ WINHELP = NO # Use one of NO, CHM
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
-PKGD = $(shell ./Rpwd.exe $(PKGDIR))
+PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 else
 RHOME = $(shell perl pwd.pl ../..)
 PKGD = $(shell perl pwd.pl $(PKGDIR))
@@ -59,7 +59,7 @@ bundle-%:
 
 pkg-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
@@ -81,12 +81,12 @@ ifeq ($(strip $(HELP)),YES)
   endif
 endif
 	@$(MAKE) --no-print-directory BUILD=$(BUILD) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
+	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
 	  -f $(RHOME)/src/gnuwin32/MakePkg md5sums
 
 pkgclean-%:
 	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
-	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
+	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
