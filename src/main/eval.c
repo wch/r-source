@@ -363,7 +363,7 @@ SEXP eval(SEXP e, SEXP rho)
 
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 {
-    int i, nargs;
+    int i;
     SEXP body, formals, actuals, savedrho;
     volatile  SEXP newrho;
     SEXP f, a, tmp;
@@ -376,7 +376,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     formals = FORMALS(op);
     body = BODY(op);
     savedrho = CLOENV(op);
-    nargs = length(arglist);
 
     /*  Set up a context with the call in it so error has access to it */
 
@@ -418,7 +417,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 		defineVar(TAG(tmp), CAR(tmp), newrho);
 	}
     }
-    SET_NARGS(newrho, nargs);
 
     /*  Terminate the previous context and start a new one with the
         correct environment. */
@@ -474,6 +472,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     {
 	SEXP R_NewHashTable(int, double);
 	SEXP R_HashFrame(SEXP);
+	int nargs = length(arglist);
 	HASHTAB(newrho) = R_NewHashTable(nargs, HASHTABLEGROWTHRATE);
 	newrho = R_HashFrame(newrho);
     }
