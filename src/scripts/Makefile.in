@@ -10,15 +10,17 @@ subdir = src/scripts
 
 include $(top_builddir)/Makeconf
 
-SCRIPTS_S = BATCH LINK Rdiff Rd2dvi Rd2txt filename help help.links \
-	maketitle massage-Examples pager
+SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt filename help \
+	help.links maketitle massage-Examples pager
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rd2contents.in \
 	Rdconv.in Rdindex.in Rprof.in SHLIB.in Sd2Rd.in \
 	build-help.in build.in check.in extract-usage.in
-SCRIPTS_B = $(SCRIPTS_B_IN:.in=) $(top_builddir)/libtool
+SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
+
+Rexecbin_SCRIPTS = $(SCRIPTS_S) $(SCRIPTS_B) $(top_builddir)/libtool R.fe
 
 .SUFFIXES:
 .SUFFIXES: .in
@@ -31,6 +33,12 @@ DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+	@(for f in $(SCRIPTS_B); do \
+	    echo "$${f}: $(srcdir)/$${f}.in"; \
+	  done) >> $@
 
 R: $(SCRIPTS_B) R.fe
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
@@ -40,6 +48,7 @@ R: $(SCRIPTS_B) R.fe
 	@for f in $(SCRIPTS_B); do \
 	  $(INSTALL_SCRIPT) $${f} $(top_builddir)/bin; \
 	done
+	@$(INSTALL_SCRIPT) $(top_builddir)/libtool $(top_builddir)/bin
 	@$(INSTALL_SCRIPT) R.fe $(top_builddir)/bin/R
 
 $(SCRIPTS_B): $(top_builddir)/config.status
@@ -48,19 +57,18 @@ $(SCRIPTS_B): $(top_builddir)/config.status
 # version information.  As we keep this information outside configure
 # (as otherwise developers would have to reconfigure and hence rebuild
 # every day), we now first create `R.sh' from `R.sh.in' via configure,
-# and then create the front end (`R.fe') which gets installed as `R'
-# using sed.
+# and then use sed to create the front end (`R.fe') which gets installed
+# as `R'.
+R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
 R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
 	  sed "s@R_HOME_DIR*@`cd $(top_builddir); pwd`@; \
-               s@REPLACE_BY_VERSION@$${v}@; \
-               s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
+	       s@REPLACE_BY_VERSION@$${v}@; \
+	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
 	@chmod +x $@
-
-R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
 
 $(top_builddir)/libtool:
 	@(cd $(@D); $(MAKE) $(@F))
@@ -77,3 +85,6 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+
+## Automagically generated dependencies:
+

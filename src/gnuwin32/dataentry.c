@@ -1523,7 +1523,7 @@ static dataeditor newdataeditor()
     menuitem m;
     
     p = newconsoledata((consolefn) ? consolefn : FixedFont,
-		       pagerrow, pagercol,
+		       pagerrow, pagercol, 0, 0,
 		       consolefg, consoleuser, consolebg,
 		       DATAEDITOR);
     if (!p) return NULL;

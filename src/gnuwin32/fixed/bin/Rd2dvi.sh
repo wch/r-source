@@ -1,16 +1,20 @@
 #
-#  Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
-#
-# Examples:
-#  R CMD Rd2dvi /path/to/Rsrc/src/library/base/man/Normal.Rd
-#  R CMD Rd2dvi `grep -l "\\keyword{distr" \
-#                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
+##  Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
+##
+## Examples:
+##  Rcmd Rd2dvi.sh /path/to/Rsrc/src/library/base/man/Normal.Rd
+##  Rcmd Rd2dvi.sh `grep -l "\\keyword{distr" \
+##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-R_PAPERSIZE=${R_PAPERSIZE:-a4}
+R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.8 $'
+revision='$Revision: 1.8.2.1 $'
 version=`set - ${revision}; echo ${2}`
-version="Rd2dvi ${version}" 
+version="Rd2dvi.sh ${version}
+
+Copyright (C) 2000 The R Core Development Team.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty." 
 
 usage="Usage: R CMD Rd2dvi [options] files
 
@@ -19,14 +23,14 @@ either giving the paths to the files, or the path to a directory with
 the sources of a package.
 
 Options:
-  --debug		turn on shell debugging (set -x)
   -h, --help		print short help message and exit
-  --no-clean		do not remove created temporary files
-  --no-preview		do not preview generated output file
+  -v, --version		print version info and exit  
+      --debug		turn on shell debugging (set -x)
+      --no-clean	do not remove created temporary files
+      --no-preview	do not preview generated output file
   -o, --output=FILE	write output to FILE
-  --pdf			generate PDF output
-  --title=NAME		use NAME as the title of the document
-  -v, --version		print version info and exit
+      --pdf		generate PDF output
+      --title=NAME	use NAME as the title of the document
   -V, --verbose		report on what is done
 
 Report bugs to <r-bugs@r-project.org>."
@@ -37,7 +41,7 @@ clean=true
 debug=false
 out_ext="dvi"
 output=""
-preview=${xdvi:-xdvi.bat}
+preview=${xdvi-xdvi.bat}
 verbose=false
 
 TEXINPUTS=.:${R_HOME}/doc/manual:${TEXINPUTS}
@@ -59,8 +63,8 @@ while test -n "${1}"; do
     --pdf)
       out_ext="pdf";
       preview=false;
-      R_RD4DVI=${R_RD4PDF:-"ae,hyper"};
-      R_LATEXCMD=${PDFLATEX:-pdflatex};;
+      R_RD4DVI=${R_RD4PDF-"ae,hyper"};
+      R_LATEXCMD=${PDFLATEX-pdflatex};;
     --title=*)
       title=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -o)
@@ -129,11 +133,11 @@ mkdir ${build_dir}
 sed 's/markright{#1}/markboth{#1}{#1}/' \
   ${R_HOME}/doc/manual/Rd.sty > ${build_dir}/Rd.sty
 
-title=${title:-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
+title=${title-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
 
 cat > ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
-\\usepackage[${R_RD4DVI:-ae}]{Rd}
+\\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
 \\makeindex
 \\begin{document}
@@ -158,9 +162,9 @@ EOF
 
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-${R_LATEXCMD:-latex} Rd2
-${R_MAKEINDEXCMD:-makeindex} Rd2
-${R_LATEXCMD:-latex} Rd2
+${R_LATEXCMD-latex} Rd2
+${R_MAKEINDEXCMD-makeindex} Rd2
+${R_LATEXCMD-latex} Rd2
 cd ${start_dir}
 cp ${build_dir}/Rd2.${out_ext} ${output}
 if ${clean}; then

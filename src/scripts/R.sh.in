@@ -4,6 +4,8 @@
 : ${R_HOME=R_HOME_DIR}
 export R_HOME
 
+## NOTE:
+## We must set this here rather than in the main binary.
 : ${R_LD_LIBRARY_PATH=${R_HOME}/bin:@R_LD_LIBRARY_PATH@}
 if test -z "${@shlibpath_var@}"; then
   @shlibpath_var@="${R_LD_LIBRARY_PATH}"
@@ -11,60 +13,6 @@ else
   @shlibpath_var@="${R_LD_LIBRARY_PATH}:${@shlibpath_var@}"
 fi
 export @shlibpath_var@
-
-R_binary="R.bin"
-
-: ${R_PLATFORM=@R_PLATFORM@}
-export R_PLATFORM
-
-R_CMD="${R_HOME}/bin/R CMD"
-export R_CMD
-
-# Default printer paper size
-# Choose one of the following:
-# R_PAPERSIZE="a4"
-# R_PAPERSIZE="letter"
-# R_PAPERSIZE="none"
-: ${R_PAPERSIZE=@R_PAPERSIZE@}
-export R_PAPERSIZE
-
-# Default print command
-# Choose one of the following:
-# R_PRINTCMD="lpr"
-# R_PRINTCMD="lp"
-# R_PRINTCMD=""
-: ${R_PRINTCMD=@R_PRINTCMD@}
-export R_PRINTCMD
-
-# Default TeXMF stuff
-R_LATEXCMD=${R_LATEXCMD:-${LATEX:-@LATEX@}}
-R_DVIPSCMD=${R_DVIPSCMD:-${DVIPS:-@DVIPS@}}
-R_MAKEINDEXCMD=${R_MAKEINDEX:-${MAKEINDEX:-@MAKEINDEX@}}
-export R_LATEXCMD R_DVIPSCMD R_MAKEINDEXCMD
-: ${R_RD4DVI=@R_RD4DVI@}
-: ${R_RD4PDF=@R_RD4PDF@}
-export R_RD4DVI R_RD4PDF
-
-# Default zip/unzip commands
-: ${R_UNZIPCMD=@R_UNZIPCMD@}
-: ${R_ZIPCMD=@R_ZIPCMD@}
-export R_UNZIPCMD R_ZIPCMD
-
-EDITOR=${EDITOR-${VISUAL-vi}}
-export EDITOR
-
-# Default environment file -- used if there's none in current
-: ${R_ENVIRON="${HOME}/.Renviron"}
-use_r_environ=true
-
-# Add share/perl to the perl library path
-if test -n "${PERL5LIB}"; then
-  PERL5LIB="${R_HOME}/share/perl:${PERL5LIB}";
-  export PERL5LIB
-else
-  PERLLIB="${R_HOME}/share/perl:${PERLLIB}";
-  export PERLLIB;
-fi
 
 usage="
 Usage: R [options] [< infile] [> outfile]
@@ -109,6 +57,8 @@ Commands:
   REMOVE		Remove add-on packages
   build			Build add-on packages
   check			Check add-on packages
+  LINK			Front-end for creating executable programs
+  Rprof			Post-process R profiling files
   Rdconv		Convert Rd format to various other formats
   Rd2dvi		Convert Rd format to DVI/PDF
   Rd2txt		Convert Rd format to pretty text
@@ -137,11 +87,12 @@ debugger=
 while test -n "${1}"; do
   case ${1} in
     RHOME|--print-home)
-      echo ${R_HOME}; exit 0 ;;
+      echo "${R_HOME}"; exit 0 ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
-      cmd="${1}"; shift; exec sh "${R_HOME}/bin/${cmd}" "${@}" ;;
+      exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
     CMD)
-      shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
+      shift;
+      exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
     --gnome)
       echo "option \`${1}' is defunct, use \`--gui=gnome'"
       exit 1
@@ -156,11 +107,6 @@ while test -n "${1}"; do
       ;;
     --debugger=*)
       debugger=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-    --no-environ)
-      use_r_environ=false ;;
-    --vanilla)
-      args="${args} ${1}"
-      use_r_environ=false ;;
     -h|--help)
       echo "${usage}"; exit 0 ;;
     --version)
@@ -171,23 +117,15 @@ while test -n "${1}"; do
   shift
 done
 
-# R_HOME may have moved, so check (or you get "GUI X11 is not supported")
+## R_HOME may have moved, so check
+## (or you get "GUI X11 is not supported")
 if [ ! -x ${R_HOME} ]; then
   echo "R_HOME = \`${R_HOME}' not found"
   exit 1
 fi
 
-# Startup
-if ${use_r_environ}; then # use the one in current dir, or default
-  if test -r ./.Renviron; then
-    . ./.Renviron
-    export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ./.Renviron`
-  elif test -r ${R_ENVIRON}; then
-    . ${R_ENVIRON}
-    export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ${R_ENVIRON}`
-  fi
-fi
-
+## Startup
+R_binary="R.bin"
 if test -z "${debugger}"; then
   exec ${R_HOME}/bin/${R_binary} @R_BATCHSAVE@ ${args}
 else

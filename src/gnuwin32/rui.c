@@ -412,6 +412,7 @@ static void menuact(control m)
 void readconsolecfg()
 {
     int   consoler, consolec, pagerrow, pagercol, multiplewin, widthonresize;
+    int   bufbytes, buflines;
     rgb   consolebg, consolefg, consoleuser, highlight ;
     int   ok, fnchanged, done, cfgerr;
     char  fn[128] = "FixedFont";
@@ -429,6 +430,8 @@ void readconsolecfg()
     pagerrow = 25;
     pagercol = 80;
     multiplewin = 0;
+    bufbytes = 64*1024;
+    buflines = 8*1024;
     widthonresize = 1;
 #ifdef USE_MDI
     if (MDIset == 1)
@@ -493,6 +496,14 @@ void readconsolecfg()
 		    multiplewin = 0;
 		else
 		    multiplewin = 1;
+		done = 1;
+	    }
+	    if (!strcmp(opt[0], "bufbytes")) {
+		bufbytes = atoi(opt[1]);
+		done = 1;
+	    }
+	    if (!strcmp(opt[0], "buflines")) {
+		buflines = atoi(opt[1]);
 		done = 1;
 	    }
 #ifdef USE_MDI
@@ -568,7 +579,8 @@ void readconsolecfg()
     }
     setconsoleoptions(fn, sty, pointsize, consoler, consolec, consolefg,
 		      consoleuser, consolebg, highlight,
-		      pagerrow, pagercol, multiplewin, widthonresize);
+		      pagerrow, pagercol, multiplewin, widthonresize,
+		      bufbytes, buflines);
 }
 
 static void closeconsole(control m)

@@ -19,7 +19,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include "Defn.h"
@@ -27,13 +27,16 @@
 #include "Fileio.h"
 #include "IOStuff.h"
 #include "Parse.h"
+
+#include "Runix.h"
+
 #include <stdio.h>
 #ifdef Win32
-#  include "run.h"
+# include "run.h"
 #endif
 
 #ifdef HAVE_UNISTD_H
-#  include <unistd.h>  /* for unlink() */
+# include <unistd.h>		/* for unlink() */
 #endif
 
 /*
@@ -62,7 +65,7 @@ void InitEd()
     char * Rwin32_tmpnam(char *);
     DefaultFileName = Rwin32_tmpnam("Redit");
 #else
-    DefaultFileName = tmpnam(NULL);
+    DefaultFileName = Runix_tmpnam(NULL);
 #endif
 }
 
@@ -75,11 +78,8 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int   i, rc, status;
     SEXP  x, fn, envir, ed, t;
-    char *filename, *editcmd, *vmaxsave;
+    char *filename, *editcmd, *vmaxsave, *cmd;
     FILE *fp;
-#ifdef Win32
-    char *cmd;
-#endif
 
     checkArity(op, args);
 
@@ -113,25 +113,26 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     ed = CAR(CDDR(args));
-    if (!isString(ed))
-	error("editor type not valid");
-    editcmd = R_alloc(strlen(CHAR(STRING_ELT(ed, 0)))+strlen(filename)+6,
-		      sizeof(char));
+    if (!isString(ed)) errorcall(call, "argument `editor' type not valid");
+    cmd = CHAR(STRING_ELT(ed, 0));
+    if (strlen(cmd) == 0) errorcall(call, "argument `editor' is not set");
+    editcmd = R_alloc(strlen(cmd) + strlen(filename) + 6, sizeof(char));
 #ifdef Win32
 /* Quote path if necessary */
-    cmd = CHAR(STRING_ELT(ed, 0));
     if(cmd[0] != '"' && strchr(cmd, ' '))
 	sprintf(editcmd, "\"%s\" \"%s\"", cmd, filename);
     else
 	sprintf(editcmd, "%s \"%s\"", cmd, filename);
     rc = runcmd(editcmd, 1, 1, "");
     if (rc == NOLAUNCH)
-	errorcall(call, "unable to run editor");
+	errorcall(call, "unable to run editor %s", cmd);
     if (rc != 0)
 	warningcall(call, "editor ran but returned error status");
 #else
-    sprintf(editcmd, "%s %s", CHAR(STRING_ELT(ed, 0)), filename);
+    sprintf(editcmd, "%s %s", cmd, filename);
     rc = system(editcmd);
+    if (rc != 0)
+	errorcall(call, "problem with running editor %s", cmd);
 #endif
 
     if((fp = R_fopen(R_ExpandFileName(filename), "r")) == NULL)

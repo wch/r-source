@@ -629,6 +629,7 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+#ifdef LEA_MALLOC
 struct mallinfo {
   int arena;    /* total space allocated from system */
   int ordblks;  /* number of non-inuse chunks */
@@ -644,6 +645,7 @@ struct mallinfo {
 extern unsigned long max_total_mem;
 
 struct mallinfo mallinfo();
+#endif
 
 SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -655,11 +657,15 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(maxmem == NA_LOGICAL)
 	errorcall(call, "invalid `max' argument");
     PROTECT(ans = allocVector(INTSXP, 1));
+#ifdef LEA_MALLOC
     if(maxmem) {
 	INTEGER(ans)[0] = max_total_mem;
     } else {
 	INTEGER(ans)[0] = mallinfo().uordblks;
     }
+#else
+    INTEGER(ans)[0] = NA_INTEGER;
+#endif
     UNPROTECT(1);
     return ans;
 }

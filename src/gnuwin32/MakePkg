@@ -10,6 +10,7 @@ else
 endif
 #this can be overwriten by the caller
 SRC = src
+STAMP = YES
 
 #source directory
 SSPKG=$(SPKG)/$(SRC)
@@ -57,9 +58,9 @@ INSTFILES=$(wildcard $(SPKG)/inst/*)
 SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 
 all:  bare  $(DATA) $(DYNLIB)
-bare: $(DPKG)/zzzz  $(DPKG)/R/$(PKG)
+bare: $(DPKG)/zzzz $(DPKG)/R/$(PKG)
 
-include $(RHOME)/src//gnuwin32/MkRules
+include $(RHOME)/src/gnuwin32/MkRules
 
 clean:
 ifeq ($(strip $(SRCMAKE)),)
@@ -73,9 +74,10 @@ SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 
 $(DPKG)/R/$(PKG): $(PKGRFILES)
 ifneq ($(strip $(PKGRFILES)),)
-	$(MKDIR) -p $(DPKG)/R
+	@echo "  installing R files"
+	@$(MKDIR) -p $(DPKG)/R
 #	$(CAT) $(PKGRFILES) | $(SED) $(SEDP)  > $@
-	$(CAT) $(PKGRFILES)   > $@
+	@$(CAT) $(PKGRFILES)   > $@
 else
 	@$(ECHO) "  no R files in this package"
 endif
@@ -95,6 +97,10 @@ ifeq ($(strip $(INSTFILES)),)
 	-$(CP) -r  $(OFILES3) $(OFILES) $(DPKG)/
 else
 	-$(CP) -r $(OFILES3) inst/* $(DPKG)/
+endif
+ifeq ($(strip $(STAMP)),YES)
+	@echo "   adding build stamp to DESCRIPTION"
+	@echo  "cat('Built: R ', R.version[['major']], '.', R.version[['minor']], ';  Win32;  ', format(Sys.time()), sep='')" | $(RHOME)/bin/Rterm --slave >> ${DPKG}/DESCRIPTION
 endif
 
 $(DATA): $(DSOURCES)

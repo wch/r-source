@@ -1479,6 +1479,7 @@ static void X11_Close(DevDesc *dd)
 	    else if (xd->type == JPEG)
 		R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight, 
 			     bitgp, 0, xd->quality, xd->fp);
+	    XDestroyImage(xi);
 	}
 	XFreeGC(display, xd->wgc);
 	XFreePixmap(display, xd->window);

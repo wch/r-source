@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = CHM # NO, CHM, BOTH
+WINHELP = BOTH # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -22,21 +22,30 @@ endif
 
 R-DLLFLAGS = -mwindows
 R-DLLLIBS = -L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
-SOURCES = $(wildcard *.c *.f)
+SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
 OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a em.a
 
 LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
-PKGS = $(foreach i, $(PACKAGES), pkg-$i)
-PKGCLEAN = $(foreach i, $(ALLPACKAGES), pkgclean-$i)
+PKGS = $(foreach i,$(PACKAGES),pkg-$i)
+PKGCLEAN = $(foreach i,$(ALLPACKAGES),pkgclean-$i)
+
+LEA_MALLOC=YES
+# flags to ensure that Doug Lea's malloc is used:
+ifdef LEA_MALLOC
+extra-CFLAGS+=-DLEA_MALLOC
+malloc-CFLAGS+=-DLEA_MALLOC
+OBJS-EXTRA=malloc.o
+endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
 all: rbuild rdemo rpackage
 
 # separate as Tcl/Tk headers are needed.
-tcl: pkg-tcltk
+tcl: 
+	$(MAKE) STAMP=NO pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
@@ -44,7 +53,8 @@ FFLAGS = $(OPTFLAGS)
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
-rpackage: fixed/fixdesc $(PKGS) ../../library/R.css
+rpackage: fixed/fixdesc ../../library/R.css
+	$(MAKE) STAMP=NO $(PKGS)
 
 rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
@@ -77,7 +87,7 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
-R.dll: R.a $(MAINLIBS) $(EXTRALIBS) dllversion.o
+R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
 Rdll: makeMakedeps ../../bin/R.dll
 
@@ -136,7 +146,7 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:  libR.a #../include/globalvar.h
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
+	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) DATESTAMP=$(DATESTAMP-"YES") \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
@@ -290,8 +300,8 @@ bindist: docfiles
 	$(MKDIR) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
-	$(CP) -p ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
-		../../Y2K $(RPREFIX)
+	$(CP) -p ../../AUTHORS ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
+		../../THANKS ../../Y2K $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
@@ -326,9 +336,9 @@ endif
 
 
 #taken from ../include/Makefile.in
-SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h S_compat.h
+SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h S_compat.h
 OBJ_HEADERS = Rconfig.h Rversion.h
-GW32_HEADERS = globalvar.h # psignal.h
+GW32_HEADERS = globalvar.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)

@@ -27,10 +27,6 @@ CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG)
 DLLLIBS=-L$(RHOME)/src/gnuwin32 $(PKG_LIBS) $(FLIBS) -lR 
 
-ifeq ($(PKG),RODBC)
-  DLLLIBS+=-lodbc32
-endif 
-
 
 AA=$(wildcard Makefile)
 ifeq ($(AA),Makefile)

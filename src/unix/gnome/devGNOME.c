@@ -22,6 +22,7 @@
 
 #include "Defn.h"
 #include "Graphics.h"
+#include "Devices.h"
 #include "devGNOME.h"
 #include "terminal.h"
 

@@ -10,13 +10,15 @@ rw1020
 This version has been compiled against msvcrt.dll not crtdll.dll.
 This gives small speed increases and generally more accurate results.
 Packages compiled against crtdll.dll will still work (as far as we are
-aware), but for best results should be re-compiled.
+aware), but for best results should be re-compiled.  (A few packages
+need to be re-compiled for 1.2.0 on all systems, and any that used
+malloc directly need to be recompiled on this one.)
 
 
 This release has a number of changes to bring its behaviour closer to that 
 of Unix versions of R.
 
--   The default font for graphics (window(), win.printer(), win.metafile())
+-   The default font for graphics (windows(), win.printer(), win.metafile())
     is now Arial: the font numbers for the Times New Roman and Arial
     families have been interchanged.
 
@@ -41,9 +43,6 @@ of Unix versions of R.
     environment, although this is not usually supported by Windows,
     and setting individual LC_* such as LC_COLLATE will also work.)
 
--   make check no longer makes R, just runs the tests (as make test
-    always has).  Tests are run in the C locale.
-
 -   It is possible to make DVI and HTML versions of the manuals: 
     see file INSTALL in the source distribution.
 
@@ -52,6 +51,15 @@ of Unix versions of R.
 -   unlink() now works the same way on Windows and Unix.  Thus on
     Windows it no longer deletes empty directories, but has a new
     argument recursive=TRUE to delete directories (empty or not).
+
+-   The startup code looks for .Renviron, a file pointed tp by
+    environment variable R_ENVIRON and then .Renviron in the home
+    directory.  This file can contain lines line NAME=value but also
+    NAME=${NAME1-value} to take the value of NAME1 if set (and not
+    empty), otherwise `value'.
+
+-   make check no longer makes R, just runs the tests (as make test
+    always has).  Tests are run in the C locale.
 
 
 Gui changes
@@ -74,9 +82,9 @@ Gui changes
     number of lines and the total size).  The mechanism has been altered
     so that Rterm records repeated lines (as Rgui always did).
 
--   There are some additional command-line editing commands: see the
-    Help | Console information screen.  (There is also one addition,
-    ^W, in Rterm: see README.rterm.)
+-   There are some additional command-line editing commands in Rgui: see
+    the Help | Console information screen.  (There is also one
+    addition, ^W, in Rterm: see README.rterm.)
 
 -   Selection works slightly differently: if the selection extends beyond
     the last character on the line the (invisible) CRLF is made part of
@@ -85,6 +93,10 @@ Gui changes
 -   The data editor is no longer modal (which seems not to have worked
     properly in the GraphApp toolkit) and this allows its popups to be
     modal.
+
+-   The size of the console scroll buffer can be set in file Rconsole,
+    and resized (upwards) via the GUI preferences editor.
+
 
 
 New utilities for preparing packages
@@ -146,7 +158,7 @@ smaller of the amount of physical RAM in the machine and 256Mb.
 DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this
 version.  (Use the Version tab on the Properties dialog box to see it,
-or the new function DLL.version within R.)
+or the new function DLL.version() within R.)
 
 Windows (.hlp) help files now have hyperlinks to other objects within
 the same package.
@@ -154,6 +166,12 @@ the same package.
 The windows() graphics device has a new argument `record' to set the
 initial state of the recording flag, and this defaults to the setting
 of the option "graphics.record" (and that defaults to FALSE).
+
+The windows() graphics device has new options for what happens when it
+is resized, both from the command line and the menu.
+
+New function bringToTop() to bring a graphics window to the top of the
+windows stack (useful from menu actions, ...).
 
 If the options setting for a pager or editor (or the editor argument
 to edit.default) is a path containing a space, it is automatically
@@ -169,12 +187,12 @@ Interactive use of Rterm.exe on Windows 2000 systems is now possible
 Better rendering of wide (lwd > 1) and dashed (lty != "solid") lines
 on the windows/win.print device.
 
-The installer rwinst.exe tries when first asked to install a package
+The installer rwinst.exe when first asked to install a package tries
 to find a current installation of R, first from R_HOME if set in the
 environment, then from the PATH (it looks for ...\rw1020\bin).
 
 The GUI console copes much better with receiving output (e.g. from
-tcltk) during input.
+tcltk interactive functions) during input.
 
 
 

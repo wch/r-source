@@ -32,10 +32,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <Rversion.h>
+
 #include "Defn.h"
 #include "Fileio.h"
 #include "Devices.h"
-#include "Rversion.h"
 
 #include "../Runix.h"
 
@@ -293,6 +294,7 @@ void gnome_start(int ac, char **av, Rstart Rp)
     R_ShowQueuedMessages();
 
     R_SetParams(Rp);
+    if(!Rp->NoRenviron) process_users_Renviron();
 
     R_Interactive = isatty(0);
     R_Sinkfile = NULL;

@@ -10,6 +10,16 @@ for d in ${dirs}; do
     mkdir -p ${d}
 done
 
+for f in AUTHORS COPYING THANKS; do
+  if test -f ${R_HOME}/${f}; then
+    ln -s ${R_HOME}/${f} ${USER_R_HOME}/${f}
+  fi
+done
+
+if test -d ${R_HOME}/doc/manual; then
+  ln -s ${R_HOME}/doc/manual ${USER_R_HOME}/doc/manual
+fi
+
 for f in ${R_HOME}/doc/html/*; do
     if test -f $f; then
 	ln -s ${f} ${USER_R_HOME}/doc/html

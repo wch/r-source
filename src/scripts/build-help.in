@@ -1,6 +1,5 @@
 #! @PERL@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
-#
 
 # Copyright (C) 1997-2000 R Development Core Team
 #
@@ -19,14 +18,14 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-
 use File::Basename;
 use Cwd;
 use Getopt::Long;
 use R::Rdconv;
 use R::Rdlists;
+use R::Utils;
 
-my $revision = ' $Revision: 1.25 $ ';
+my $revision = ' $Revision: 1.25.2.1 $ ';
 my $version;
 my $name;
 
@@ -37,10 +36,8 @@ $version = $1;
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
 		 "dosnames", "htmllists", "help|h", "version|v");
 GetOptions (@knownoptions) || usage();
-
-version() if $opt_version;
-usage() if $opt_help;
-
+&R_version($name, $version) if $opt_version;
+&usage() if $opt_help;
 
 $OSdir ="unix";
 
@@ -228,19 +225,9 @@ if($opt_example){
     }
 }
 
-sub version {
-  print STDERR <<END;
-$name $version
-Copyright (C) 1997-2000 R Core.
-This is free software; see the GNU General Public Licence version 2
-or later for copying conditions.  There is NO warranty.    
-END
-  exit 0;
-}
-
 sub usage {
   print STDERR <<END;
-Usage: $name [options] [pkg] [lib]
+Usage: R CMD $name [options] [pkg] [lib]
 
 Install all help files for package pkg to library lib
 
@@ -261,4 +248,3 @@ Email bug reports to <r-bugs\@r-project.org>.
 END
   exit 0; 
 }
-

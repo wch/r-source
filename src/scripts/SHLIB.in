@@ -4,11 +4,15 @@
 
 # @configure_input@
 
-revision='$Revision: 1.16 $'
+revision='$Revision: 1.16.2.1 $'
 version=`set - ${revision}; echo ${2}`
-version="R shared library builder ${version}"
+version="R shared library builder ${version}
 
-usage="Usage: R SHLIB [options] files
+Copyright (C) 2000 The R Core Development Team.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty."
+
+usage="Usage: R CMD SHLIB [options] files
 
 Build a shared library for dynamic loading from the specified source or
 object files (which are automagically made from their sources).  If not
@@ -17,8 +21,8 @@ first file.
 
 Options:
   -h, --help		print short help message and exit
-  -o, --output=LIB	use LIB as (full) name for the built library
   -v, --version		print version info and exit
+  -o, --output=LIB	use LIB as (full) name for the built library
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -27,8 +31,6 @@ objs=
 MAKE=${MAKE-@MAKE@}
 makeargs=
 makefiles="-f ${R_HOME}/etc/Makeconf"
-SHLIB_CXXLD=@SHLIB_CXXLD@
-SHLIB_CXXLDFLAGS=@SHLIB_CXXLDFLAGS@
 with_cxx=false
 with_f77=false
 
@@ -72,13 +74,11 @@ fi
 
 makeargs="SHLIB=\"${lib}\" OBJS=\"${objs}\""
 if ${with_cxx}; then
-  makeargs="SHLIB_LDFLAGS=\"${SHLIB_CXXLDFLAGS}\" ${makeargs}"
-  makeargs="SHLIB_LD=\"${SHLIB_CXXLD}\" ${makeargs}"
+  makeargs="SHLIB_LDFLAGS='\$(SHLIB_CXXLDFLAGS)' ${makeargs}"
+  makeargs="SHLIB_LD='\$(SHLIB_CXXLD)' ${makeargs}"
 fi
 if ${with_f77}; then
-  :
-else
-  makeargs="${makeargs} FLIBS="
+  makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
 fi
 
 eval ${MAKE} ${makefiles} ${makeargs}

@@ -315,9 +315,7 @@ void R_DefParams(Rstart Rp)
     Rp->nsize = R_NSIZE;
     Rp->max_vsize = INT_MAX;
     Rp->max_nsize = INT_MAX;
-#ifdef Win32
     Rp->NoRenviron = FALSE;
-#endif
 }
 
 #define Max_Nsize 50000000	/* must be < LONG_MAX (= 2^32 - 1 =)
@@ -497,6 +495,10 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		Rp->LoadSiteFile = FALSE; /* --no-site-file */
 		Rp->LoadInitFile = FALSE; /* --no-init-file */
 		R_RestoreHistory = 0;     /* --no-restore-history */
+		Rp->NoRenviron = TRUE;
+	    }
+	    else if (!strcmp(*av, "--no-environ")) {
+		Rp->NoRenviron = TRUE;
 	    }
 	    else if (!strcmp(*av, "--verbose")) {
 		Rp->R_Verbose = TRUE;
@@ -612,4 +614,111 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
     }
     *pac = newac;
     return;
+}
+
+/* ------------------- process .Renviron files in C ----------------- */
+
+/* remove leading and trailing space */
+static char *rmspace(char *s)
+{
+    int   i;
+
+    for (i = strlen(s) - 1; isspace((int)s[i]); i--) s[i] = '\0';
+    for (i = 0; isspace((int)s[i]); i++);
+    return s + i;
+}
+
+/* look for ${FOO:-bar} constructs, recursively */
+static char *findterm(char *s)
+{
+    char *p, *q;
+
+    if(!strlen(s)) return "";
+    if(strncmp(s, "${", 2)) return s;
+    /* found one, so remove leading ${ and final } */
+    if(s[strlen(s) - 1] != '}') return "";
+    s[strlen(s) - 1] = '\0';
+    s += 2;
+    p = strchr(s, '-');
+    if(!p) return "";
+    q = p + 1; /* start of value */
+    if(p - s > 1 && *(p-1) == ':') *(p-1) = '\0'; else *p = '\0';
+    s = rmspace(s);
+    if(!strlen(s)) return "";
+    p = getenv(s);
+    if(p && strlen(p)) return p; /* variable was set and non-empty */
+    return findterm(q);
+}
+
+static void Putenv(char *a, char *b)
+{
+    char *buf;
+
+    buf = (char *) malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
+    if(!buf) R_Suicide("allocation failure in reading Renviron");
+    strcpy(buf, a); strcat(buf, "="); strcat(buf, b);
+    putenv(buf);
+    /* no free here: storage remains in use */
+}
+
+
+#define BUF_SIZE 255
+static int process_Renviron(char *filename)
+{
+    FILE *fp;
+    char *s, *p, sm[BUF_SIZE], *lhs, *rhs;
+
+    if (!filename || !(fp = fopen(filename,"r"))) return 0;
+
+    while(fgets(sm, BUF_SIZE, fp)) {
+	sm[BUF_SIZE] = '\0';
+	s = rmspace(sm);
+	if(strlen(s) == 0 || s[0] == '#') continue;
+	if(!(p = strchr(s, '='))) continue;
+	*p = '\0';
+	lhs = rmspace(s);
+	rhs = findterm(rmspace(p+1));
+	/* set lhs = rhs */
+	if(strlen(lhs) && strlen(rhs)) Putenv(lhs, rhs);
+    }
+    fclose(fp);
+    return 1;
+}
+
+
+/* read R_HOME/etc/Renviron:  Unix only */
+void process_global_Renviron()
+{
+    char buf[1024];
+    
+    strcpy(buf, R_Home);
+    strcat(buf, "/etc/Renviron");
+    if(!process_Renviron(buf)) R_ShowMessage("cannot find system Renviron");
+}
+
+/* try ./.Renviron, then value of R_ENVIRON, then ~/.Renviron */
+void process_users_Renviron()
+{
+    char *s;
+    
+    if(process_Renviron(".Renviron")) return;
+    if((s = getenv("R_ENVIRON"))) {
+	process_Renviron(s);
+	return;
+    } 
+#ifdef Unix
+    s = R_ExpandFileName("~/.Renviron");
+#endif
+#ifdef Win32
+    {
+	char buf[1024];
+	/* R_USER is not necessarily set yet, so we have to work harder */
+	s = getenv("R_USER");
+	if(!s) s = getenv("HOME");
+	if(!s) return;
+	sprintf(buf, "%s/.Renviron", s);
+	s = buf;
+    }
+#endif
+    process_Renviron(s);
 }

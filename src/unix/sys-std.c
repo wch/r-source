@@ -19,10 +19,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-         /* See system.txt for a description of functions */
+/* See system.txt for a description of functions */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include "Defn.h"
@@ -31,19 +31,23 @@
 #include "Runix.h"
 #include "Startup.h"
 
+#include "Runix.h"
+
 #ifdef HAVE_LIBREADLINE
-#include <readline/readline.h>
-#ifdef HAVE_READLINE_HISTORY_H
-#include <readline/history.h>
-#endif
+# ifdef HAVE_READLINE_READLINE_H
+#  include <readline/readline.h>
+# endif
+# ifdef HAVE_READLINE_HISTORY_H
+#  include <readline/history.h>
+# endif
 #endif
 
 #ifdef HAVE_UNISTD_H
-#include <unistd.h> /* for unlink */
+# include <unistd.h>		/* for unlink */
 #endif
 
 #ifdef HAVE_SYS_TIME_H
-#include <sys/time.h> /* for struct timeval */
+# include <sys/time.h>		/* for struct timeval */
 #endif
 
 extern SA_TYPE SaveAction;
@@ -501,7 +505,7 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
     CleanEd();
     KillAllDevices();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
-	PrintWarnings(); /* from device close and .Last */
+	PrintWarnings();	/* from device close and .Last */
     fpu_setup(FALSE);
 
     exit(status);
@@ -535,7 +539,7 @@ int Rstd_ShowFiles(int nfile, 		/* number of files */
 
     if (nfile > 0) {
         if (pager == NULL || strlen(pager) == 0) pager = "more";
-	filename = tmpnam(NULL);
+	filename = Runix_tmpnam(NULL);
         if ((tfp = fopen(filename, "w")) != NULL) {
 	    for(i = 0; i < nfile; i++) {
 		if (headers[i] && *headers[i])

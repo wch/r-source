@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.23 $ ';
+my $revision = ' $Revision: 1.23.2.1 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -48,7 +48,7 @@ my @knownoptions = ("help|h", "version|v", "outdir|o:s", "nsize:s",
 
 GetOptions (@knownoptions) || usage();
 
-R_version($name, $version) if $opt_version;
+R_version("R add-on package checker", $version) if $opt_version;
 usage() if $opt_help;
 
 $opt_clean = 0 if $opt_no_clean;
@@ -407,7 +407,7 @@ sub check_pkg {
 
     chdir($pkgoutdir);
 
-    if($opt_examples && (-d "$library/$pkgname/R-ex")){
+    if($opt_examples && <$library/$pkgname/R-ex/*.R>){
 	$log->creating("${pkgname}-Ex.R");
         my $iszipped = 0;
         my $massage = "massage-Examples";
@@ -535,28 +535,24 @@ sub check_pkg {
 
 sub usage {
     print STDERR <<END;
-Usage: $name [options] pkgdirs
+Usage: R CMD $name [options] pkgdirs
 
 Check R packages from package sources in the directories specified by
 pkgdirs.  A variety of diagnostic checks on directory structure, index
-and control files are performed.  The package is installed into the
-log directory (which includes the translation of all Rd files into
-several formats), and the Rd files are tested by LaTeX (if
-available). All examples and tests provided by the package are tested
-if they run succesfully.
-
-If necessary for passing the checks, use the \`--vsize\' and \`--nsize\'
-options to increase R\'s memory (\`--vanilla\' is used by default).
+and control files are performed.  The package is installed into the log
+directory (which includes the translation of all Rd files into several
+formats), and the Rd files are tested by LaTeX (if available).  All
+examples and tests provided by the package are tested if they run
+succesfully.
 
 Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
-      --vsize=N         set R\'s vector heap size to N bytes
-      --nsize=N         set R\'s number of cons cells to N
-  -l, --library         library directory used for test installation
+  -l, --library=LIB     library directory used for test installation
                         of packages (default is outdir)
-  -o, --outdir=dir      directory used for logfiles, R output, etc.
-                        (default is \`pkg.Rcheck\' in current directory)
+  -o, --outdir=DIR      directory used for logfiles, R output, etc.
+                        (default is \`pkg.Rcheck\' in current directory,
+			where \`pkg\' is the name of the package checked)
       --no-clean        Do not clean outdir before using it
       --no-examples     Do not run the examples in the Rd files
       --no-tests        Do not run code in tests subdirectory
@@ -568,7 +564,3 @@ Email bug reports to <r-bugs\@r-project.org>.
 END
     exit 0;
 }
-
-
-
-

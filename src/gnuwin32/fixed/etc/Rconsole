@@ -28,6 +28,10 @@ pgcolumns = 80
 # should options(width=) be set to the console width?
 setwidthonresize = yes
 
+# memory limits for the console scrolling buffer, in bytes and lines
+bufbytes = 65000
+buflines = 8000
+
 # The internal pager can displays help in a single window
 # or in multiple windows (one for each topic)
 # pagerstyle can be set to `singlewindow' or `multiplewindows'

@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/Sd2Rd for converting S documentation to Rd format
 
-# Copyright (C) 1997, 1998, 1999, 2000 Kurt Hornik
+# Copyright (C) 1997-2000 The R Core Development Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,24 +20,15 @@
 # Suite 330, Boston, MA  02111-1307  USA.
 
 use Getopt::Long;
+use R::Utils;
 
-my $revision = ' $Revision: 1.14 $ ';
+my $revision = ' $Revision: 1.14.2.1 $ ';
 my $version;
 my $name;
 
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
-
-sub version {
-  print STDERR <<END;
-Sd2Rd $version
-Copyright (C) 1997-2000 Kurt Hornik.
-This is free software; see the GNU General Public Licence version 2
-or later for copying conditions.  There is NO warranty.    
-END
-  exit 0;
-}
 
 sub usage {
   print STDERR <<END;
@@ -57,8 +48,9 @@ END
   exit 0; 
 }
 
-GetOptions(("v|version", "h|help", "n", "x")) || &usage();
-&version() if $opt_v;
+@knownoptions = ("v|version", "h|help", "n", "x");
+GetOptions(@knownoptions) || &usage();
+&R_version($name, $version) if $opt_v;
 &usage() if $opt_h;
 
 my $braceLevel = 0;

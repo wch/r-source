@@ -21,9 +21,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Graphics.h"
+#include <Defn.h>
+#include <Graphics.h>
+#include <Devices.h>
 #include "devga.h"
 
 /* Return a non-relocatable copy of a string */
@@ -43,19 +43,12 @@ static char *SaveString(SEXP sxp, int offset)
 
 /* This is Guido's devga device. */
 
-/*  X11 Device Driver Parameters:
- *  -----------------		--> ../unix/devX11.c
- *  display	= display
- *  width	= width in inches
- *  height	= height in inches
- *  ps		= pointsize
- */
 SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
     char *display, *vmax;
     double height, width, ps;
-    int recording = 0;
+    int recording = 0, resize = 1;
 
     gcall = call;
     vmax = vmaxget();
@@ -71,14 +64,19 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     recording = asLogical(CAR(args));
     if (recording == NA_LOGICAL)
-	errorcall(call, "invalid value of recording");
+	errorcall(call, "invalid value of `recording'");
+    args = CDR(args);
+    resize = asInteger(CAR(args));
+    if (resize == NA_INTEGER)
+	errorcall(call, "invalid value of `resize'");
     /* Allocate and initialize the device driver data */
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!GADeviceDriver(dd, display, width, height, ps, (Rboolean)recording)) {
+    if (!GADeviceDriver(dd, display, width, height, ps, 
+			(Rboolean)recording, resize)) {
 	free(dd);
 	errorcall(call, "unable to start device devga");
     }

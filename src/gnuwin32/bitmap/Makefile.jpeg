@@ -165,7 +165,7 @@ ansi2knr: ansi2knr.c
 libjpeg.a:  $(LIBOBJECTS)
 	$(RM) libjpeg.a
 	$(AR) libjpeg.a  $(LIBOBJECTS)
-	$(AR2) libjpeg.a
+	$(RANLIB) libjpeg.a
 
 # with libtool:
 libjpeg.la:  $(LIBOBJECTS)
