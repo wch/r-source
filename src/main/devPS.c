@@ -290,7 +290,7 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
     if (!MatchKey(buf, "C ")) return 0;
     p = SkipToNextItem(p);
     sscanf(p, "%d", &nchar);
-    if (nchar < 0) return 1;
+    if (nchar < 0 && !ISOLatin1) return 1;
     p = SkipToNextKey(p);
 
     if (!MatchKey(p, "WX")) return 0;
