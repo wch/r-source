@@ -45,7 +45,7 @@
 # include <stdlib.h>
 #endif
 
-#if defined(HAVE_GLIBC2) && !defined(__USE_XOPEN)
+#if defined(HAVE_WORKING_STRPTIME) && defined(HAVE_GLIBC2) && !defined(__USE_XOPEN)
 # define __USE_XOPEN		/* so that we get strptime() */
 # include <time.h>
 # undef __USE_XOPEN		/* just to make sure */
