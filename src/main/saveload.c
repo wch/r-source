@@ -266,7 +266,7 @@ static SEXP AsciiLoadOld(FILE *fp, int version)
 # error code requires that int have 32 bits
 #endif
 
-#include <rpc/rpc.h>
+#include <rpc/xdr.h>
 
 static XDR xdrs;
 
@@ -2048,9 +2048,11 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+/* defined in Rinternals.h
 #define R_XDR_DOUBLE_SIZE 8
 #define R_XDR_INTEGER_SIZE 4
- 
+*/
+
 void R_XDREncodeDouble(double d, void *buf)
 {
 #ifdef HAVE_XDR
