@@ -1,0 +1,20 @@
+\name{close.socket}
+\title{Close a socket}
+\usage{
+close.socket(socket)
+}
+\alias{close.socket}
+\arguments{
+ \item{socket}{A \code{socket} object}
+}
+\description{
+Closes the socket and frees the space in the file descriptor table.  The
+port may not be freed immediately.
+}
+\value{
+  logical indicating success or failure
+}
+\seealso{\code{\link{make.socket}},\code{\link{read.socket}},\code{\link{write.socket}} }
+
+
+\keyword{ ~keyword }%-- one or more ...
