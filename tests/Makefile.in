@@ -21,7 +21,8 @@ TESTout = $(TESTsrc:.R=.Rout)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README Rdiff \
-	all-equal.R mode-methods.R $(TESTsrc) \
+	all-equal.R mode-methods.R \
+	$(TESTsrc) \
 	$(TESTsrc:.R=.Rout.save)
 
 .SUFFIXES:
@@ -32,10 +33,11 @@ DISTFILES = Makefile.in README Rdiff \
 	@(SRCDIR=$(srcdir); export SRCDIR; \
 	  echo "$(R) < $< > $@"; \
 	  $(R) < $< > $@)
-	@echo -n "Comparing \`$@' to \`$(srcdir)/$@.save' ..."
+	@echo @ECHO_N@ \
+	  "Comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"
 	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save || \
 	  (mv $@ $@.fail && exit 1)
-	@echo " OK"
+	@echo "@ECHO_T@ OK"
 
 all: Makefile test-All
 
@@ -44,13 +46,15 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-test-All: Makefile test-Examples test-Specific
+test-All: Makefile
+	$(MAKE) test-Examples
+	$(MAKE) test-Specific
 
 test-Examples:
 	@cd Examples && $(MAKE) $@
 test-Specific: $(TESTout)
 
-stamp-R:: $(top_builddir)/bin/R.X11 $(top_builddir)/library/base/R/base
+stamp-R: $(top_builddir)/bin/R.X11 $(top_builddir)/library/base/R/base
 	@cd $(top_builddir) && $(MAKE) R
 	@touch $@
 

@@ -19,7 +19,31 @@ dnl along with R; if not, you can obtain it via the World Wide Web at
 dnl `http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
 dnl Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 dnl 02111-3307, USA.
-
+dnl
+dnl
+dnl R_PROG_ECHO_N
+dnl
+AC_DEFUN(R_PROG_ECHO_N,
+ [AC_MSG_CHECKING([whether echo can suppress newlines])
+  if echo "testing\c" | grep c >/dev/null; then
+    if echo -n "testing" | sed s/-n/xn/ | grep xn >/dev/null; then
+      ECHO_N= ECHO_C= ECHO_T='	'
+    else
+      ECHO_N=-n ECHO_C= ECHO_T=
+    fi
+  else
+    ECHO_N= ECHO_C='\c' ECHO_T=
+  fi
+  if test -z "${ECHO_T}"; then
+    AC_MSG_RESULT(yes)
+  else
+    AC_MSG_RESULT(no)
+  fi
+  AC_SUBST(ECHO_C)
+  AC_SUBST(ECHO_N)
+  AC_SUBST(ECHO_T)
+ ])    
+dnl
 dnl R_PROG_PERL
 dnl
 AC_DEFUN(R_PROG_PERL,

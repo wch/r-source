@@ -193,6 +193,8 @@ AC_PATH_PROG(TBL, [${TBL} tbl], false)
 ## Unzip && zip
 AC_PATH_PROG(R_UNZIPCMD, [${UNZIP} unzip], "")
 AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
+## Echo.
+R_PROG_ECHO_N
 ## Make.
 : ${MAKE=make}
 AC_SUBST(MAKE)
@@ -438,11 +440,13 @@ R_FUNC___SETFPUCW
 
 AC_HEADER_STDC
 AC_HEADER_TIME
+AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS(dl.h dlfcn.h elf.h ieee754.h ieeefp.h hdf5.h limits.h \
-  locale.h readline/history.h rpc/xdr.h sys/param.h sys/time.h \
-  sys/times.h unistd.h)
-case ${host} in
+AC_CHECK_HEADERS(dl.h dlfcn.h elf.h floatingpoint.h fpu_control.h \
+  hdf5.h ieee754.h ieeefp.h readline/history.h readline/readline.h \
+  rpc/rpc.h rpc/xdr.h sys/param.h sys/stat.h sys/time.h sys/times.h \
+  sys/types.h unistd.h locale.h)
+case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
 esac    
