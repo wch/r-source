@@ -27,6 +27,8 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
+#include "../modules/X11/devX11.h"
+
 /* Return a non-relocatable copy of a string */
 
 static SEXP gcall;
@@ -53,6 +55,7 @@ static char *SaveString(SEXP sxp, int offset)
  *  colormodel  = color model
  */
 
+#ifdef OLD
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char *display, *vmax, *cname, *devname;
@@ -142,7 +145,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 
     return(dd);
 }
-
+#endif
 
 
 SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -212,3 +215,96 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
     vmaxset(vmax);
     return R_NilValue;
 }
+
+SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    char *display, *vmax, *cname, *devname;
+    double height, width, ps, gamma;
+    int colormodel, maxcubesize, canvascolor;
+    SEXP sc;
+
+    gcall = call;
+    vmax = vmaxget();
+
+    /* Decode the arguments */
+    display = SaveString(CAR(args), 0); args = CDR(args);
+    width = asReal(CAR(args));	args = CDR(args);
+    height = asReal(CAR(args)); args = CDR(args);
+    if (width <= 0 || height <= 0)
+	errorcall(call, "invalid width or height");
+    ps = asReal(CAR(args)); args = CDR(args);
+    gamma = asReal(CAR(args)); args = CDR(args);
+    if (gamma < 0 || gamma > 100)
+	errorcall(call, "invalid gamma value");
+
+    if (!isValidString(CAR(args)))
+	error("invalid colortype passed to X11 driver");
+    cname = CHAR(STRING_ELT(CAR(args), 0));
+    if (strcmp(cname, "mono") == 0)
+	colormodel = 0;
+    else if (strcmp(cname, "gray") == 0 || strcmp(cname, "grey") == 0)
+	colormodel = 1;
+    else if (strcmp(cname, "pseudo.cube") == 0)
+	colormodel = 2;
+    else if (strcmp(cname, "pseudo") == 0)
+	colormodel = 3;
+    else if (strcmp(cname, "true") == 0)
+	colormodel = 4;
+    else {
+	warningcall(call, 
+		    "unknown X11 color/colour model -- using monochrome");
+	colormodel = 0;
+    }
+    args = CDR(args);
+    maxcubesize = asInteger(CAR(args));
+    if (maxcubesize < 1 || maxcubesize > 256)
+        maxcubesize = 256;
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, "invalid value of `canvas'");
+    canvascolor = RGBpar(sc, 0);
+
+    devname = "X11";
+    if (!strncmp(display, "png::", 5)) devname = "PNG";
+    else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
+    else if (!strcmp(display, "XImage")) devname = "XImage";
+
+    Rf_addX11Device(display, width, height, ps, gamma, colormodel, 
+		    maxcubesize, canvascolor, devname, ptr_X11DeviceDriver);
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
+DevDesc* 
+Rf_addX11Device(char *display, double width, double height, double ps, 
+		double gamma, int colormodel, int maxcubesize,
+		int canvascolor,
+		char *devname, X11DeviceDriverRoutine deviceDriverRoutine)
+{
+    NewDevDesc *dev = NULL;
+    GEDevDesc *dd;
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	/* Allocate and initialize the device driver data */
+	if (!(dev = (NewDevDesc*)malloc(sizeof(NewDevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dev->displayList = R_NilValue;
+	/* Took out the GInit because MOST of it is setting up
+	 * R base graphics parameters.  
+	 * This is supposed to happen via addDevice now.
+	 */
+	if (!(ptr_X11DeviceDriver)((DevDesc*)(dev), display, width, height, ps, gamma, 
+				      colormodel, maxcubesize, canvascolor)) {
+	    free(dev);
+	    errorcall(gcall, "unable to start device %s", devname);
+       	}
+	gsetVar(install(".Device"), mkString(devname), R_NilValue);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	initDisplayList((DevDesc*) dd);
+    } END_SUSPEND_INTERRUPTS;
+
+}
+
