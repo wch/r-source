@@ -166,7 +166,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
 
 vignetteMetaRE <- function(tag)
     paste("[[:space:]]*%+[[:space:]]*\\\\Vignette", tag,
-          "\{([^}]*)\}", sep = "")
+          "\\{([^}]*)\\}", sep = "")
 
 vignetteInfo <- function(file) {
     lines <- readLines(file)

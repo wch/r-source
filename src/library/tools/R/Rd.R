@@ -418,7 +418,7 @@ function(file, text = NULL)
     ## (Use the same regexp as in .get_Rd_metadata_from_Rd_lines().)
     i <- grep(paste("^[[:space:]]*\\\\",
                     "(alias|concept|keyword|docType)",
-                    "{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*}.*",
+                    "\\{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*\\}.*",
                     sep = ""),
               lines)
     if(any(i)) lines <- lines[-i]
@@ -437,7 +437,7 @@ function(file, text = NULL)
     ## We try to catch \non_function{} here, even though it is at least
     ## deprecated.
     ## </NOTE>
-    pattern <- "(^|\n)[[:space:]]*\\\\([[:alpha:]]|non_function)+{"
+    pattern <- "(^|\n)[[:space:]]*\\\\([[:alpha:]]|non_function)+\\{"
     while((pos <- regexpr(pattern, txt)) != -1) {
         otag <- tag
         start <- substring(txt, 1, pos + attr(pos, "match.length") - 2)
@@ -582,7 +582,7 @@ function(txt)
 .get_Rd_metadata_from_Rd_lines <-
 function(lines, kind) {
     pattern <- paste("^[[:space:]]*\\\\", kind,
-                     "{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*}.*",
+                     "\\{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*\\}.*",
                      sep = "")
     lines <- grep(pattern, lines, value = TRUE)
     lines <- sub(pattern, "\\1", lines)
@@ -610,7 +610,7 @@ function(txt)
 .get_Rd_name <-
 function(txt)
 {
-    start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
+    start <- regexpr("\\\\name\\{[[:space:]]*([^\}]+)[[:space:]]*\\}", txt)
     if(start == -1) return(character())
     Rd_name <- gsub("[[:space:]]*", " ",
                     substr(txt,
@@ -624,7 +624,7 @@ function(txt)
 .get_Rd_title <-
 function(txt)
 {
-    start <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
+    start <- regexpr("\\\\title\\{[[:space:]]*([^\}]+)[[:space:]]*\\}", txt)
     if(start == -1) return(character())
     Rd_title <- gsub("[[:space:]]*", " ",
                      substr(txt,
