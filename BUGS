@@ -181,6 +181,10 @@ Subject: source(,echo=T) doesn't echo comments
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Thu, 21 Oct 1999 08:59:22 -0700 (PDT)
 --Currently, a feature
+* PR# 343 *
+Subject: rbind invisible return value
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
 
 Directory:  Misc
 
@@ -283,14 +287,6 @@ Date: Tue, 23 Nov 1999 16:47:45 +0100 (MET)
 Subject: as.name() is not idempotent
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 23 Nov 1999 17:42:25 +0100 (MET)
-* PR# 338 *
-Subject: rbind problem
-From: Matthew Wiener <mcw@ln.nimh.nih.gov>
-Date: Tue, 23 Nov 1999 11:42:44 -0500 (EST)
-* PR# 339 *
-Subject: cbind problem
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Tue, 23 Nov 1999 10:14:23 -0800 (PST)
 * PR# 340 *
 Subject: "outer" argument in mtext
 From: Douglas Bates <bates@stat.wisc.edu>
@@ -299,10 +295,6 @@ Date: 23 Nov 1999 12:31:36 -0600
 Subject: Re: [R] problems with postscript device
 From: Chong Gu <chong@stat.purdue.edu>
 Date: Wed, 24 Nov 1999 00:18:55 -0500
-* PR# 343 *
-Subject: rbind invisible return value
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
 * PR# 344 *
 Subject: segfault in garbage collection
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
@@ -331,10 +323,6 @@ Date: Sat, 27 Nov 1999 17:03:53 CET (+0100)
 Subject: rstandard forgotten?
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sat, 27 Nov 1999 12:41:09 -0500 (EST)
-* PR# 351 *
-Subject: rbind crash
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Mon, 29 Nov 1999 15:53:10 +0100 (MET)
 * PR# 352 *
 Subject: image stops detecting wrong sized z matrix
 From: albrecht.gebhardt@uni-klu.ac.at
@@ -363,18 +351,10 @@ Date: Fri, 3 Dec 1999 16:45:08 +0100 (MET)
 Subject: Inconsistent messages with [[ list indexing
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sat, 4 Dec 1999 14:13:07 +0000 (GMT)
-* PR# 360 *
-Subject: laser printer toner advertisement
-From: <bmark1@guestbooks.net>
-Date: Sun, 5 Dec 1999 19:47:02
 * PR# 361 *
 Subject: "function" function -- infinite loops and bus error [not user problem]
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 6 Dec 1999 12:19:36 +0100 (MET)
-* PR# 362 *
-Subject: Oprah, Nightline, Maria Shriver, 48 Hours, 20/20 
-From: Make 10K a Month <bo17280@flash.net>
-Date: Tue, 7 Dec 1999 02:13:02 +0100 (MET)
 * PR# 363 *
 Subject: Where should iofflush.c be?
 From: David Emile Lamy <delamy@uswest.net>
@@ -383,3 +363,19 @@ Date: Tue, 7 Dec 1999 01:51:57 -0700 (MST)
 Subject: CRAN.packages
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 07 Dec 1999 10:27:13 +0100 (CET)
+* PR# 365 *
+Subject: plot math - segfault and "frac", "^" bug(s)..
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 8 Dec 1999 18:27:03 +0100 (MET)
+* PR# 366 *
+Subject: pch==NA
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 07 Dec 1999 15:19:46 +0100
+* PR# 367 *
+Subject: plot math - segfault and "frac", "^" bug(s)..
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 8 Dec 1999 12:50:44 +0100 (MET)
+* PR# 368 *
+Subject: plot math - segfault and "frac", "^" bug(s)..
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 8 Dec 1999 17:27:46 +0100 (MET)
