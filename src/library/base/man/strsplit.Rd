@@ -33,7 +33,7 @@ unlist(strsplit("a.b.c", "."))
 ## [1] "" "" "" "" ""
 ## Note that `split' is a regexp!
 ## If you really want to split on `.', use
-unlist(strsplit("a.b.c", "\\."))
+unlist(strsplit("a.b.c", "\\\\."))
 ## [1] "a" "b" "c"
 }
 \keyword{character}
