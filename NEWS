@@ -373,8 +373,10 @@ BUG FIXES
     o	t(x)'s default method now also preserves names(dimnames(x)) for 1D
 	arrays 'x'.
 
-    o	r <- a %*% b no longer produces names(dimnames(r)) == c("","")
-	unless when a or b has named dimnames.
+    o	r <- a %*% b no longer produces names(dimnames(r)) == c("", "")
+	unless one of a or b has named dimnames.
+
+
 
 
 	**************************************************
