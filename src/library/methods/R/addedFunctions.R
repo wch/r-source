@@ -151,3 +151,17 @@ message <-
           cat(text, "\n")
   }
 
+hasArg <- function(name) {
+    aname <- as.character(substitute(name))
+    fnames <- names(formals(sys.function(1)))
+    if(is.na(match(aname, fnames))) {
+        if(is.na(match("...", fnames)))
+            FALSE
+        else {
+            dotsCall <- eval(quote(substitute(list(...))), sys.parent())
+            !is.na(match(aname, names(dotsCall)))
+        }
+    }
+    else
+        eval(substitute(!missing(name)), sys.frame(sys.parent()))
+}
