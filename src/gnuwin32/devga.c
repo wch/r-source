@@ -109,10 +109,6 @@ typedef struct {
 			/* X11 Driver Specific */
 			/* parameters with only one copy for all x11 devices */
 
-static x11Desc *activedevice = NULL;
-static int numX11Devices = 0;
-
-
 
 	/********************************************************/
 	/* There must be an entry point for the device driver	*/
@@ -173,26 +169,19 @@ static void SetFont(int, int, double, DevDesc *);
 static void SetLinetype(int, double, DevDesc *);
 void  ProcessEvents();
 
-int isX11DeviceActive() {
-  if (activedevice) return 1;
-  else return 0;
-}
 
-void SaveX11DeviceAsGif(char *fn)
+static void SaveAsGif(DevDesc *dd, char *fn)
 {
+    x11Desc *xd = (x11Desc *) dd->deviceSpecific;
     image img;
     int   l;
 
-    if (!activedevice) {
-	R_ShowMessage("No graphics device active to copy");
-	return;
-    }
     l = strlen(fn);
     if ((l < 5) || strcmpi(&fn[l - 4], ".gif")) {
 	R_ShowMessage("File extension must be .gif");
 	return;
     }
-    img = bitmaptoimage(activedevice->bm);
+    img = bitmaptoimage(xd->bm);
     if (!img) {
 	R_ShowMessage("Insufficient memory to copy graphics device");
 	return;
@@ -200,6 +189,95 @@ void SaveX11DeviceAsGif(char *fn)
     saveimage(img, fn);
     del(img);
 }
+
+
+static void PrivateCopyDevice(DevDesc *dd,DevDesc *ndd, char *name)
+{
+    x11Desc *xd = (x11Desc *) dd->deviceSpecific;
+    gsetcursor(xd->gawin, WatchCursor);
+    gsetVar(install(".Device"),
+	    mkString(name), R_NilValue);
+    addDevice(ndd);
+    initDisplayList(ndd);
+    ndd->displayList = dd->displayList;
+    ndd->dpSaved = dd->dpSaved;
+    playDisplayList(ndd);
+    KillDevice(ndd);
+    gsetcursor(xd->gawin, ArrowCursor);
+    show(xd->gawin);
+}
+
+static void SaveAsWin(DevDesc *dd, char *display) 
+{
+    DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
+    if (!ndd) {
+	R_ShowMessage("No enough memory to copy graphics window");
+	return;
+    }
+    ndd->displayList = R_NilValue;
+    GInit(&ndd->dp);
+    if (X11DeviceDriver(ndd, display,
+			 GConvertXUnits(1.0, NDC, INCHES, dd),
+			 GConvertYUnits(1.0, NDC, INCHES, dd),
+			 dd->gp.ps)) 
+        PrivateCopyDevice(dd,ndd,display);
+}
+    
+
+int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
+		   char *bg, char *fg,
+		   double width, double height,
+		   double horizontal, double ps);
+
+static void SaveAsPostscript(DevDesc *dd, char *fn)
+{
+   SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
+   DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
+   char family[256], paper[256], bg[256], fg[256];
+
+   if (!ndd) {
+	R_ShowMessage("No enough memory to copy graphics window");
+	return;
+   }
+   ndd->displayList = R_NilValue;
+   GInit(&ndd->dp);
+
+   /* Set default values... */
+   strcpy(family,"Helvetica");
+   strcpy(paper,"default");
+   strcpy(bg,"white");
+   strcpy(fg,"black");
+   /* and then try to get it from .PostScript.Options */
+   if ((s!=R_UnboundValue) && (s!=R_NilValue)) {
+      SEXP names = getAttrib(s, R_NamesSymbol);
+      int i,done;
+      for (i=0,done=0; (done<4) && (i<length(s)) ;i++) {
+        if(!strcmp("family",CHAR(STRING(names)[i]))) {
+           strcpy(family,CHAR(STRING(VECTOR(s)[i])[0]));
+           done += 1;
+        }
+        if(!strcmp("paper",CHAR(STRING(names)[i]))) {
+           strcpy(paper,CHAR(STRING(VECTOR(s)[i])[0]));
+           done += 1;
+        }
+        if(!strcmp("bg",CHAR(STRING(names)[i]))) {
+           strcpy(bg,CHAR(STRING(VECTOR(s)[i])[0]));
+           done += 1;
+        }
+        if(!strcmp("fg",CHAR(STRING(names)[i]))) {
+           strcpy(fg,CHAR(STRING(VECTOR(s)[i])[0]));
+           done += 1;
+        }
+      }
+   }   
+   if (PSDeviceDriver(ndd, fn, paper, family, bg, fg,
+			 GConvertXUnits(1.0, NDC, INCHES, dd),
+			 GConvertYUnits(1.0, NDC, INCHES, dd),
+			 (double)0,dd->gp.ps)) 
+        PrivateCopyDevice(dd,ndd,"postscript");
+}
+
+
 
 			/* Pixel Dimensions (Inches) */
 static double pixelWidth(drawing obj)
@@ -519,80 +597,44 @@ static void menugif(control m)
     fixslash(fn);
     gsetcursor(xd->gawin, WatchCursor);
     show(xd->gawin);
-    SaveX11DeviceAsGif(fn);
+    SaveAsGif(dd,fn);
     gsetcursor(xd->gawin, ArrowCursor);
     show(xd->gawin);
 }
 
-
-SEXP R_ParseVector(SEXP, int, int *);
-
-static void private_devcopy(DevDesc *dd, char *cmd)
-{
-    x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-    SEXP  in, pa;
-    int   status;
-    int   src = deviceNumber(dd);
-    int   old = curDevice();
-
-    gsetcursor(xd->gawin, WatchCursor);
-    show(xd->gawin);
-    if (old != src)
-	selectDevice(src);
-    PROTECT(in = allocVector(STRSXP, 1));
-    STRING(in)[0] = mkChar(cmd);
-    PROTECT(pa = R_ParseVector(in, 1, &status));
-    eval(pa, R_GlobalEnv);
-    UNPROTECT(2);
-    if (old != src)
-	selectDevice(old);
-    gsetcursor(xd->gawin, ArrowCursor);
-    show(xd->gawin);
-}
 
 static void menups(control m)
 {
     DevDesc *dd = (DevDesc *) getdata(m);
-    char  cmd[256], *fn;
+    char  *fn;
 
     setuserfilter("Postscript files (*.ps)\0*.ps\0All files (*.*)\0*.*\0\0");
     fn = askfilesave("Postscript file", "");
     if (!fn) return;
     fixslash(fn);
-    sprintf(cmd, 
-	    "dev.print(device=postscript, file=\"%s\", horizontal=FALSE)", fn);
-    private_devcopy(dd, cmd);
+    SaveAsPostscript(dd,fn);
 }
+
 
 static void menuwm(control m)
 {
     DevDesc *dd = (DevDesc *) getdata(m);
-    char  cmd[512], *fn;
+    char  display[512], *fn;
 
     setuserfilter("Enhanced metafiles (*.emf)\0*.emf\0All files (*.*)\0*.*\0\0");
     fn = askfilesave("Enhanced metafiles", "");
     if (!fn) return;
     fixslash(fn);
-    sprintf(cmd, "dev.print(device=x11,\"win.metafile:%s\",%f,%f,%d)",
-	    fn,
-	    (float) GConvertXUnits(1.0, NDC, INCHES, dd),
-	    (float) GConvertYUnits(1.0, NDC, INCHES, dd),
-	    dd->dp.ps);
-    private_devcopy(dd, cmd);
+    sprintf(display, "win.metafile:%s", fn);
+    SaveAsWin(dd,display);    
 }
 
 
 
 static void menuclpwm(control m)
 {
-    char cmd[256];
     DevDesc *dd = (DevDesc *) getdata(m);
-
-    sprintf(cmd, "dev.print(device=x11,\"win.metafile\",%f,%f,%d)",
-	    (float) GConvertXUnits(1.0, NDC, INCHES, dd),
-	    (float) GConvertYUnits(1.0, NDC, INCHES, dd),
-	    dd->dp.ps);
-    private_devcopy(dd, cmd);
+    SaveAsWin(dd,"win.metafile");        
 }
 
 static void menuclpbm(control m)
@@ -609,33 +651,7 @@ static void menuclpbm(control m)
 static void menuprint(control m)
 {
     DevDesc *dd = (DevDesc *) getdata(m);
-    x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-    DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
-
-    if (!ndd) {
-	R_ShowMessage("No enough memory to print graphics window");
-	return;
-    }
-    ndd->displayList = R_NilValue;
-    GInit(&ndd->dp);
-    if (!X11DeviceDriver(ndd, "win.print",
-			 GConvertXUnits(1.0, NDC, INCHES, dd),
-			 GConvertYUnits(1.0, NDC, INCHES, dd),
-			 dd->gp.ps)) {
-	free(ndd);
-	return;
-    }
-    gsetcursor(xd->gawin, WatchCursor);
-    gsetVar(install(".Device"),
-	    mkString("win.print"), R_NilValue);
-    addDevice(ndd);
-    initDisplayList(ndd);
-    ndd->displayList = dd->displayList;
-    ndd->dpSaved = dd->dpSaved;
-    playDisplayList(ndd);
-    KillDevice(ndd);
-    gsetcursor(xd->gawin, ArrowCursor);
-    show(xd->gawin);
+    SaveAsWin(dd,"win.print");        
 }
 
 
@@ -984,7 +1000,8 @@ static void mbarf(control m)
 #define MCHECK(m) {if(!(m)) {del(xd->gawin); return 0;}}
 
 
-static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
+static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, 
+                    double w, double h)
 {
     /* if have to bail out with "error" then must */
     /* free(dd) and free(xd) */
@@ -1134,21 +1151,16 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
  *         win.metafile:filename
  *         anything else return 0
  */
-	char  c;
-	char *s = "win.metafile";
+	char  *s = "win.metafile";
 	int   ls = strlen(s);
 	int   ld = strlen(dsp);
-	int   lmm = 100 * MM_PER_INCH;
 
 	if (ls > ld)
 	    return 0;
-	c = dsp[ls];
-	dsp[ls] = '\0';
-	if (strcmp(dsp, s) || (c && (c != ':')))
+	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
 	    return 0;
-	dsp[ls] = c;
 	xd->gawin = newmetafile((ld > ls) ? &dsp[ls + 1] : "",
-				rect(0, 0, lmm * w, lmm * h));
+				rect(0, 0, MM_PER_INCH * w, MM_PER_INCH * h));
 	xd->kind = 2;
 	if (!xd->gawin)
 	    return 0;
@@ -1195,7 +1207,6 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 	xd->recording = 0;
 	xd->replaying = 0;
     }
-    numX11Devices++;
     xd->needsave = 0;
     return 1;
 }
@@ -1341,9 +1352,6 @@ static void X11_Close(DevDesc *dd)
 {
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    numX11Devices--;
-    if (activedevice == xd)
-	activedevice = NULL;
     if (!xd->kind) {
 	hide(xd->gawin);
 	del(xd->bm);
@@ -1380,7 +1388,6 @@ static void X11_Activate(DevDesc *dd)
     strcat(t, num);
     strcat(t, " (ACTIVE)");
     settext(xd->gawin, t);
-    activedevice = xd;
 }
 
 	/********************************************************/
@@ -1405,7 +1412,6 @@ static void X11_Deactivate(DevDesc *dd)
     strcat(t, num);
     strcat(t, " (inactive)");
     settext(xd->gawin, t);
-    activedevice = NULL;
 }
 
 	/********************************************************/
@@ -1682,8 +1688,9 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
     gsetcursor(xd->gawin, CrossCursor);
     setstatus("Locator is active");
     while (!xd->clicked) {
-	SHOW;
-	doevent();
+      /*	SHOW;*/
+        WaitMessage();
+	ProcessEvents();
     }
     addto(xd->gawin);
     gchangemenubar(xd->mbar);
@@ -1833,9 +1840,9 @@ X11DeviceDriver
     /* Window Dimensions in Pixels */
     rr = getrect(xd->gawin);
     dd->dp.left = (xd->kind == 1) ? rr.x : 0;	/* left */
-    dd->dp.right = dd->dp.left + xd->windowWidth;	/* right */
+    dd->dp.right = dd->dp.left + rr.width;	/* right */
     dd->dp.top = (xd->kind == 1) ? rr.y : 0;	/* top */
-    dd->dp.bottom = dd->dp.top + xd->windowHeight;	/* bottom */
+    dd->dp.bottom = dd->dp.top + rr.height;	/* bottom */
 
 
     /* Nominal Character Sizes in Pixels */

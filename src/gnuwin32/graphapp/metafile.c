@@ -18,11 +18,14 @@
  */
 
 /*
- *  metafile newmetafile(char *name,window friend)
- *     return a metafile object - to draw to the metafile use drawto(...)
- *     and the drawXXX functions. if "name"=="" metafile is in memory
+ *  metafile newmetafile(char *name,rect r)
+ *     return a metafile object of 'nominal' size (r.width)x(r.height)
+ *     in 0.01mm. Use drawto(...)/drawXXX/gdrawXXX to draw to the 
+ *     metafile. If "name"=="" metafile is in memory.
+ *     
  *  del(metafile)  finalizes/closes the metafile. Closed in memory
- *     metafile are saved to the clipboard
+ *     metafile are saved to the clipboard.
+ *
 */
 
 
@@ -30,11 +33,8 @@
 #include "rui.h"
 
 /*
- *  Internal printer deletion function.
+ *  Internal metafile deletion function.
  */
-
-static int nummeta = 0;
-static HDC wHDC;
 
 static void private_delmetafile(metafile obj)
 {
@@ -42,8 +42,6 @@ static void private_delmetafile(metafile obj)
 
     if (!obj || (obj->kind != MetafileObject)) return;
     hm = (HENHMETAFILE) CloseEnhMetaFile((HDC) obj->handle);
-    nummeta -= 1;
-    if (!nummeta) ReleaseDC(NULL,wHDC);
     if (strlen(gettext(obj))) { /* real file*/
 	DeleteEnhMetaFile(hm);
 	return;
@@ -57,7 +55,6 @@ static void private_delmetafile(metafile obj)
 	DeleteEnhMetaFile(hm);
 	return;
     }
-    if (!nummeta) ReleaseDC(NULL,wHDC);
 }
 
 /*
@@ -75,45 +72,40 @@ static object get_metafile_base(void)
 
 metafile newmetafile(char *name,rect r)
 {
-    float iWidthPels, iHeightPels, iMMPerPelX, iMMPerPelY;
     metafile obj;
     HDC hDC;
     RECT wr;
+    static double cppix=-1, ppix, cppiy, ppiy;
 
-    wr.left = r.x;
-    wr.top =  r.y;
-    wr.right = r.x + r.width;
-    wr.bottom = r.y + r.height;
-    if (!nummeta) {
-        wHDC = GetDC(NULL);
-        if (!wHDC) {
-	    R_ShowMessage("Unable to create reference DC for metafiles");
-	    return NULL;
-        }
+    /* 
+     * In theory, (cppix=ppix) and (cppiy=ppiy). However, we
+     * use the ratio to adjust the 'reference dimension'
+     * in case.... ("Importing graph in MsWord" thread)
+    */
+    if (cppix<0) {
+       cppix = 25.40 * devicewidth(NULL) / devicewidthmm(NULL);
+       ppix  = 100 * devicepixelsx(NULL);
+       cppiy = 25.40 * deviceheight(NULL) / deviceheightmm(NULL);
+       ppiy = 100 * devicepixelsy(NULL);
     }
-    hDC = CreateEnhMetaFile(wHDC, strlen(name) ? name : NULL, &wr, "GraphApp");
+
+    wr.left = 0;
+    wr.top =  0 ;
+    wr.right =  (ppix * r.width) / cppix ;
+    wr.bottom = (ppiy * r.height) / cppiy ;
+
+    hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr, "GraphApp");
     if ( !hDC ) {
 	R_ShowMessage("Unable to create metafile");
-	if (!nummeta) ReleaseDC(NULL, wHDC);
 	return NULL;
     }
     obj = new_object(MetafileObject, (HANDLE) hDC, get_metafile_base());
     if ( !obj ) {
 	R_ShowMessage("Insufficient memory to create metafile");
 	DeleteEnhMetaFile(CloseEnhMetaFile(hDC));
-	if (!nummeta) ReleaseDC(NULL, wHDC);
 	return NULL;
     }
-    nummeta += 1;
-    iWidthPels = GetDeviceCaps(wHDC, LOGPIXELSX);
-    iHeightPels = GetDeviceCaps(wHDC, LOGPIXELSY);
-    iMMPerPelX = 2540 /iWidthPels;
-    iMMPerPelY = 2540 /iHeightPels;
-
-    obj->rect.x = r.x/iMMPerPelX;
-    obj->rect.width = r.width/iMMPerPelX;
-    obj->rect.y = r.y/iMMPerPelY;
-    obj->rect.height = r.height/iMMPerPelY;
+    obj->rect = rect(0, 0, (ppix * r.width)/2540, (ppiy * r.height)/2540);
     obj->depth=GetDeviceCaps(hDC, BITSPIXEL)* GetDeviceCaps(hDC, PLANES);
     obj->die = private_delmetafile ;
     obj->drawstate = copydrawstate();
@@ -121,3 +113,10 @@ metafile newmetafile(char *name,rect r)
     settext(obj,name ? name : "");
     return obj;
 }
+
+
+
+
+
+
+

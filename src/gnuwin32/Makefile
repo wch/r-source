@@ -2,14 +2,14 @@ include MkRules
 
 HELP=YES
 
-PACKAGES=base eda lqs modreg mva stepfun
+PACKAGES=base eda lqs modreg mva stepfun ts
 RPREFIX=rw0650
 
 ifdef DEBUG
- OPTFLAGS="-g -O2"
+ OPTFLAGS=-g -O2
  DLLFLAGS=
 else
- OPTFLAGS="-O2 -Wall"
+ OPTFLAGS=-O2 -Wall
  DLLFLAGS=-s 
 endif
 
@@ -42,9 +42,9 @@ rdemo:  libR.a
 	make -C ../../demos/dynload -f ../../src/gnuwin32/MkDyndemo
 
 rlibs: 
-	$(MAKE) -C ../appl OPTFLAGS=$(OPTFLAGS)
-	$(MAKE) -C ../main OPTFLAGS=$(OPTFLAGS)
-	$(MAKE) -C ../nmath OPTFLAGS=$(OPTFLAGS)
+	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)"
+	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS)"
+	$(MAKE) -C ../nmath OPTFLAGS="$(OPTFLAGS)"
 	$(MAKE) -C ./regex
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline

@@ -27,6 +27,9 @@ There is limited support for `tilde-expansion': file paths
 ~/rest will be expanded to ${HOME}/rest if HOME is set, or to
 ${HOMEDIR}${HOMEPATH}/rest if those vars are set.
 
+Saving a plot as metafile should be more robust on machine which report
+wrong information on the size of the screen.
+
 
 rw0642
 ======
