@@ -1,11 +1,3 @@
-## 'objects <- function(....) ...    --->>> ./attach.R
-
-inherits <- function(x, what, which = FALSE)
-	.Internal(inherits(x, what, which))
-
-NextMethod <- function(generic=NULL, object=NULL, ...)
-    .Internal(NextMethod(generic, object,...))
-
 methods <- function (generic.function, class)
 {
 ## FIXME: findGeneric() is almost identical inside getS3method() !

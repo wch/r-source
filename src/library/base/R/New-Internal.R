@@ -1,5 +1,3 @@
-##vector <- function(mode = "logical", length = 0).Internal(vector(mode,length))
-
 geterrmessage <- function() .Internal(geterrmessage())
 
 try <- function(expr, silent = FALSE)
@@ -152,6 +150,13 @@ capabilities <- function(what = NULL)
     i <- pmatch(what, nm)
     if(is.na(i)) logical(0) else z[i]
 }
+
+inherits <- function(x, what, which = FALSE)
+	.Internal(inherits(x, what, which))
+
+NextMethod <- function(generic=NULL, object=NULL, ...)
+    .Internal(NextMethod(generic, object,...))
+
 
 ## base has no S4 generics
 .noGenerics <- TRUE
