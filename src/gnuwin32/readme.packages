@@ -345,7 +345,7 @@ HEADER) as needed, and check that Makefile has WINHELP set to NO.
 Then packages can be made as natively, for example by
 
 	cd .../src/gnuwin32
-	make PKGDIR=/mysources RLIB=/R/win/library pkg-mypkg
+	make STAMP=NO PKGDIR=/mysources RLIB=/R/win/library pkg-mypkg
 	make PKGDIR=/mysources RLIB=/R/win/library pkgcheck-mypkg
 	cd /R/win/library
 	zip -rl /dest/mypkg.zip mypkg
