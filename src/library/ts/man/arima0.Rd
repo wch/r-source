@@ -63,7 +63,7 @@ arima0(x, order = c(0, 0, 0),
 
   \item{optim.control}{List of control parameters for \code{\link{optim}}.}
 
-  \item{object, fit}{The result of an \code{arima0} fit.}
+  \item{object}{The result of an \code{arima0} fit.}
 
   \item{newxreg}{New values of \code{xreg} to be used for
     prediction. Must have at least \code{n.ahead} rows.}
@@ -71,8 +71,6 @@ arima0(x, order = c(0, 0, 0),
   \item{n.ahead}{The number of steps ahead for which prediction is required.}
 
   \item{se.fit}{Logical: should standard errors of prediction be returned?}
-
-  \item{gof.lag}{Number of lags to be used in goodness-of-fit test.}
 
   \item{\dots}{arguments passed to or from other methods.}
 }

@@ -70,8 +70,6 @@ isIncomplete(con)
     applied when writing, from none to maximal.  The default is a good
     space/time compromise.}
   \item{type}{character. Currently ignored.}
-  \item{where}{integer.  A file position (relative to the origin
-    specified by \code{origin}), or \code{NA}.}
   \item{rw}{character.  Empty or \code{"read"} or \code{"write"},
     partial matches allowed.}
   \item{\dots}{arguments passed to or from other methods.}
