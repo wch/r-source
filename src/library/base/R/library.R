@@ -216,7 +216,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             pfile <- system.file("Meta", "package.rds", package = package,
                                  lib.loc = which.lib.loc)
             if(!nchar(pfile))
-            	stop("This is not a valid package -- installed < 2.0.0?")
+            	stop(sQuote(package), " is not a valid package -- installed < 2.0.0?")
             pkgInfo <- .readRDS(pfile)
             testRversion(pkgInfo)
 
