@@ -4,7 +4,7 @@ HELP=YES
 WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
-RPREFIX=rw0990
+RPREFIX=rw1000
 
 RHOME=$(shell cd ../..; pwd)# must be absolute path
 RLIB=$(RHOME)/library

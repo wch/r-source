@@ -24,7 +24,7 @@ typedef window pager;
 
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
-		  int rows, int cols, rgb nfg, rgb nufg, rgb nbg,
+		  int rows, int cols, rgb nfg, rgb nufg, rgb nbg, rgb high,
 		  int pgr, int pgc, int multiplewindows, int widthonresize);
 pager newpager(char *title, char *filename, char *header, int unlinkonexit);
 console newconsole(char *name, int flags);

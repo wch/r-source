@@ -75,16 +75,19 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans;
     char *tn, *tm;
+    int i, slen;
 
     checkArity(op, args);
-    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
+    if (!isString(CAR(args)) || (slen = LENGTH(CAR(args))) < 1)
 	errorcall(call, "invalid file name argument");
-    tn = CHAR(STRING(CAR(args))[0]);
-    /* try to get a new file name */
-    tm = Rwin32_tmpnam(tn);
-    PROTECT(ans = allocVector(STRSXP, 1));
-    STRING(ans)[0] = mkChar(tm);
-    free(tm);
+    PROTECT(ans = allocVector(STRSXP, slen));
+    for(i = 0; i < slen; i++) {
+	tn = CHAR(STRING(CAR(args))[i]);
+	/* try to get a new file name */
+	tm = Rwin32_tmpnam(tn);
+	STRING(ans)[i] = mkChar(tm);
+	free(tm);
+    }
     UNPROTECT(1);
     return (ans);
 }

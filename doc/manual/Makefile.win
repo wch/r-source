@@ -26,6 +26,8 @@ R_PKGS=base ctest eda lqs modreg mva nls splines stepfun ts
 
 pkgsrcs = $(R_PKGS:=-pkg.tex)
 
+texiincludes = version.texi $(srcdir)/R-defs.texi
+
 .SUFFIXES:
 .SUFFIXES: .dvi .info .texi .pdf
 
@@ -85,13 +87,13 @@ refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
 
-R-exts.pdf: R-exts.texi version.texi 
+R-exts.pdf: R-exts.texi $(texiincludes) 
 	$(PDFTEX) R-exts.texi
 	$(TEXINDEX) R-exts.cp R-exts.fn R-exts.vr
 	$(PDFTEX) R-exts.texi
 	$(PDFTEX) R-exts.texi
 
-R-intro.pdf: R-intro.texi version.texi 
+R-intro.pdf: R-intro.texi $(texiincludes) 
 	$(PDFTEX) R-intro.texi
 	$(TEXINDEX) R-intro.cp R-intro.fn R-intro.vr
 	$(PDFTEX) R-intro.texi

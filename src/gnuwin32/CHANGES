@@ -1,3 +1,12 @@
+rw1000
+======
+
+The highlight colour used for help files in the internal pager can now
+be set in the file Rconsole.
+
+tempfile() can have argument `pattern' of length greater than 1.
+
+
 rw0990
 ======
 

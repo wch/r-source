@@ -39,3 +39,4 @@ pagerstyle = multiplewindows
 background = White
 normaltext = NavyBlue
 usertext = Red
+highlight = DarkRed
