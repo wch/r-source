@@ -456,7 +456,7 @@ AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
-  getcwd getgrgid getpwuid getuid hypot isascii isnan matherr memcpy \
+  getcwd getgrgid getpwuid getuid hypot isascii isfinite isnan matherr memcpy \
   memmove mempcpy mkfifo popen putenv rint setenv snprintf strcoll \
   stat strptime system times unsetenv vsnprintf)
 AC_REPLACE_FUNCS(strdup)

@@ -746,13 +746,17 @@ if test "x${r_cv_func_strptime_works}" = xyes; then
 fi
 ])
 AC_DEFUN([R_IEEE_754],
- [AC_CHECK_FUNCS(finite isnan)
+ [AC_CHECK_FUNCS(finite isfinite isnan)
   AC_CACHE_CHECK([whether you have IEEE 754 floating-point arithmetic],
     r_cv_ieee_754,
     [## <FIXME>
     ## This fails is finite() or isnan() are defined as macros rather
     ## than exist as library functions ... 
     if test "${ac_cv_func_finite}" = yes \
+        && test "${ac_cv_func_isnan}" = yes; then
+    ## </FIXME>
+      r_cv_ieee_754=yes
+    elif test "${ac_cv_func_isfinite}" = yes \
         && test "${ac_cv_func_isnan}" = yes; then
     ## </FIXME>
       r_cv_ieee_754=yes
