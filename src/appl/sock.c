@@ -46,11 +46,14 @@
 #  ifdef HAVE_UNISTD_H
 #    include <unistd.h>
 #  endif
-#  include <netdb.h>
-#  include <sys/socket.h>
-#  include <netinet/in.h>
-#  include <netinet/tcp.h>
+#  ifdef HAVE_BSD_NETWORKING
+#    include <netdb.h>
+#    include <sys/socket.h>
+#    include <netinet/in.h>
+#    include <netinet/tcp.h>
+#  endif
 #endif
+#include "R_ext/Error.h"
 #include "sock.h"
 
 #if defined(__hpux) || defined(MACINTOSH)
@@ -58,6 +61,10 @@
 #endif
 
 #define MAXBACKLOG 5
+
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
+static char socket_msg[] = "sockets are not available on this system\n";
+#endif
 
 static int Sock_error(Sock_error_t perr, int e, int he)
 {
@@ -101,6 +108,7 @@ int Sock_init()
 
 int Sock_open(Sock_port_t port, Sock_error_t perr)
 {
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
   int sock;
   struct sockaddr_in server;
 
@@ -115,10 +123,15 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
       (listen(sock, MAXBACKLOG) < 0))
     return Sock_error(perr, errno, 0);
   return sock;
+#else
+  error(socket_msg);
+  return(-1);
+#endif
 }
 
 int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 {
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
   struct sockaddr_in net_client;
   int len = sizeof(struct sockaddr);
   int retval;
@@ -143,10 +156,15 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
     cname[nlen] = 0;
   }
   return retval;
+#else
+  error(socket_msg);
+  return(-1);
+#endif
 }
 
 int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
 {
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
   struct sockaddr_in server;
   struct hostent *hp;
   int sock;
@@ -173,6 +191,10 @@ int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
     return -1;
   }
   return sock;
+#else
+  error(socket_msg);
+  return(-1);
+#endif
 }
 
 int Sock_close(int fd, Sock_error_t perr)
@@ -190,6 +212,7 @@ int Sock_close(int fd, Sock_error_t perr)
 
 ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
 {
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
   ssize_t retval;
   do
     retval = recv(fd, buf, size, 0);
@@ -198,10 +221,15 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
     return Sock_error(perr, errno, 0);
   else
     return retval;
+#else
+  error(socket_msg);
+  return(-1);
+#endif
 }
 
 ssize_t Sock_write(int fd, void *buf, size_t size, Sock_error_t perr)
 {
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
   ssize_t retval;
   do
     retval = send(fd, buf, size, 0);
@@ -210,4 +238,8 @@ ssize_t Sock_write(int fd, void *buf, size_t size, Sock_error_t perr)
     return Sock_error(perr, errno, 0);
   else
     return retval;
+#else
+  error(socket_msg);
+  return(-1);
+#endif
 }
