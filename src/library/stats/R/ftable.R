@@ -12,9 +12,9 @@ ftable.default <- function(..., exclude = c(NA, NaN),
         x <- as.table(x)
     }
     else if(!(is.array(x) && (length(dim(x)) > 1))) {
+	names(args) <- as.character(unlist(as.list(substitute(list(...)))))[-1]
         x <- do.call("table",
-                     c(as.list(substitute(list(...)))[-1],
-                       list(exclude = exclude)))
+                     c(args, list(exclude = exclude)))
     }
     dn <- dimnames(x)
     dx <- dim(x)

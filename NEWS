@@ -406,6 +406,8 @@ BUG FIXES
     o	aov() with Error() term and no intercept incorrectly assigned
 	terms to strata. (PR#6510)
 
+    o   ftable() incorrectly handled arguments named "x".  (PR#6541)
+
 
 
 
