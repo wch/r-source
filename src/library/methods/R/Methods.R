@@ -192,6 +192,45 @@ getMethodsForDispatch <-
         NULL
 }
 
+## some functions used in MethodsListSelect, that must be safe against recursive
+## method selection.  TODO:  wouldn't need this if methods pacakge had a name space
+
+.existsBasic <- get("exists", "package:base")
+.getBasic <- get("get", "package:base")
+.evBasic <- get("environment", "package:base")
+.assignBasic <- get("assign", "package:base")
+.setIfBase <- function(f, fdef, mlist) {
+    if(is.null(f))
+        FALSE
+    else {
+        found <- .existsBasic(f, "package:base")
+        if(found) {
+            ## force (default) computation of mlist in MethodsListSelect
+            is.null(mlist)
+            .assignBasic(".Methods", envir = .evBasic(fdef), .getBasic(f, "package:base"))
+        }
+        found
+    }
+}
+
+.getMethodsForDispatch <- function(f, fdef) {
+    ev <- .evBasic(fdef)
+    if(.exists(".Methods", envir = ev)) {
+        get(".Methods", envir = ev)
+    }
+    else
+        NULL
+}
+
+.setMethodsForDispatch <- function(f, fdef, mlist) {
+    ev <- environment(fdef)
+    if(!is(fdef, "genericFunction") ||
+       !exists(".Methods", envir = ev, inherits = FALSE))
+        stop("Internal error: did not get a valid generic function object for function \"",
+             f, "\"")
+    assign(".Methods", envir = ev, mlist)
+}
+
 cacheMethod <-
   ## cache the given definition in the method metadata for f
   ## Support function:  DON'T USE DIRECTLY (does no checking)
@@ -202,6 +241,9 @@ cacheMethod <-
         methods <- getAllMethods(f, fdef)
     methods <- insertMethod(methods, sig, args, def, TRUE)
     assign(".Methods", methods, envir = ev)
+    deflt <- finalDefaultMethod(methods)
+    if(is.primitive(deflt))
+        setPrimitiveMethods(f, deflt, "set", fdef, methods)
     methods
   }
 
@@ -641,8 +683,16 @@ resetGeneric <- function(f, fdef) {
         else
             fdef <- getGeneric(f)
     }
-    if(is(fdef, "genericFunction"))
-        assign(".Methods", NULL, envir = environment(fdef))
+    if(is(fdef, "genericFunction")) {
+        ev <- environment(fdef)
+        methods <- get(".Methods", envir = ev, inherits = FALSE)
+        if(!is.null(methods)) {
+            deflt <- finalDefaultMethod(methods)
+            if(is.primitive(deflt))
+                setPrimitiveMethods(f, deflt, "reset", fdef, methods)
+            assign(".Methods", NULL, envir = ev)
+        }
+    }
     else
         warning("Can't reset \"", f, "\", the definition is not a generic function object")
 }

@@ -335,6 +335,12 @@ list("!" = function(e1)
 , "{" = FALSE
 )
 
+## the names of the basic funs with the style of "["
+## R implements these in an inconsistent call mechanism, in which missing arguments
+## are allowed, and significant, but argument names are not used.  See callNextMethod
+
+.BasicSubsetFunctions <- c("[", "[[", "[<-", "[[<-")
+
 ## create generic functions corresponding to the basic (primitive) functions
 ## but don't leave them as generics in the package.  Instead store them in
 ## a named list to be used by setMethod, w/o forcing method dispatch on these

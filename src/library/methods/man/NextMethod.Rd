@@ -124,6 +124,46 @@ removeGeneric("f")
 
 removeMethods("Ops")
 
+## tests of multiple callNextMethod
+setClass("m1", representation(count = "numeric"), contains = "matrix",
+         prototype = prototype(count = 0))
+mm1 <- new("m1", matrix(1:12, 3,4))
+setMethod("[", "m1", function(x, i, j, ..., drop) callNextMethod())
+
+setClass("m2", representation(sum = "numeric"), contains = "m1")
+
+setMethod("Ops", c("m1", "m1"), function(e1, e2) {
+    as(e1, "matrix") <- callNextMethod()
+    e1@count <- max(e1@count, e2@count)+1
+    e1})
+
+mm2 <- new("m2", matrix(1:12, 3, 4), sum = sum(1:12))
+
+stopifnot(identical(mm2[,2], 4:6))
+
+setClass("m3", representation(rowtags = "character"),contains = "m2")
+
+setMethod("[", signature(x="m3", i = "character", j = "missing", drop = "missing"),
+          function(x, i,j, ..., drop) {
+              xx <- callNextMethod(x, match(i, x@rowtags),)
+              x@.Data <- xx
+              x@rowtags <- x@rowtags[match(i, x@rowtags)]
+              x})
+
+tm = matrix(1:12, 4, 3)
+
+mm3 = new("m3", tm, rowtags = letters[1:4])
+
+mmm = mm3[c("b", "d")]
+
+stopifnot(identical(mmm, new("m3", tm[c(2, 4),], rowtags = c("b", "d"))))
+
+removeClass("m3")
+removeClass("m2")
+removeClass("m1")
+
+removeMethods("[")
+
 }
 
 }
