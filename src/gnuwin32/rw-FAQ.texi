@@ -90,6 +90,7 @@ The information here applies only to recent versions of R for Windows,
 @menu
 * Where can I find the latest version?::  
 * How do I install R for Windows?::  
+* Can I customize the installation?::  
 * How do I run it?::            
 * How do I UNinstall R?::       
 * What's the best way to upgrade?::  
@@ -127,7 +128,7 @@ versions of the help files and the @emph{An Introduction to R} and
 
 
 
-@node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
+@node How do I install R for Windows?, Can I customize the installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
 First, you need Windows 95/98/ME/NT4/2000/XP: Windows 3.11+win32s will
@@ -153,7 +154,48 @@ field, for example @code{--sdi --max-mem-size=40M}.  You can also set
 environment variables at the end of the Target field, for example
 @code{R_LIBS=p:/myRlib}.
 
-@node How do I run it?, How do I UNinstall R?, How do I install R for Windows?, Installation and Usage
+@node Can I customize the installation?, How do I run it?, How do I install R for Windows?, Installation and Usage
+@section Can I customize the installation?
+
+The normal way to customize the installation is by selecting components
+from the wizards shown.  However, sysadmins might like to install R from
+scripts, and the following command-line flags are available for use with
+either installer.
+
+@table @samp
+@item /SILENT
+only show the installation progress window and error messages.
+@item /VERYSILENT
+only show error messages.
+@item /DIR="x:\dirname"
+set the default installation directory
+@item /GROUP="folder name"
+set the default Start-menu group name
+@item /COMPONENTS="comma separated list of component names"
+set the initial list of components.  This is only useful with
+@code{@RWVER@.exe}, which has components @code{main}, @code{chtml},
+@code{html}, @code{latex}, @code{manuals} and @code{devel}.
+@end table
+
+@noindent
+It is also possible to save the settings used to a file and later
+reload those settings using
+
+@table @samp
+@item /SAVEINF="filename"
+save the settings to the specified file.  Don't forget to use quotes if
+the filename contains spaces.
+@item /LOADINF="filename"
+instructs the installer to load the settings from the specified file
+after having checked the command line.
+@end table
+
+A successful installation has exit code 0: unsuccessful ones may give 1,
+2, 3, 4 or 5.  See the help for Inno Setup 3
+(@uref{http://jrsoftware.org/isinfo.php}) for details.
+
+
+@node How do I run it?, How do I UNinstall R?, Can I customize the installation?, Installation and Usage
 @section How do I run it?
 
 Just double-click on the shortcut you prepared at installation.
@@ -261,8 +303,9 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @node Can I use R BATCH?, Can I use @RWVER@ with ESS and (X)emacs?, How do I print from R?, Installation and Usage
 @section Can I use @code{R BATCH}?
 
-Yes, if you have Perl.  The Windows analogue is @code{Rcmd
-BATCH}: use @code{Rcmd BATCH --help} for full details.
+Yes, if you have Perl installed (and in your path).  The Windows
+analogue is @code{Rcmd BATCH}: use @code{Rcmd BATCH --help} for full
+details.
 
 Otherwise you can set up a batch file using @code{Rterm.exe}.  A sample
 batch file might contain (as one line)

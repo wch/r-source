@@ -36,6 +36,11 @@ This is a small installation, containing text and compiled HTML help
 and the Introduction to R and Data Import/Export manuals in PDF.
 
 
+For more details, including command-line options for the installers 
+and how to uninstall, see the rw-FAQ.  If you are reading this as part of
+an installed version of R, that's both file rw-FAQ in this directory
+and file doc\html\rw-FAQ.html.
+
 
 Usage
 =====
@@ -95,7 +100,7 @@ Rterm.exe --no-restore --no-save < infile > outfile
 
 although users will probably want to set up simple .bat or .cmd files
 to run batch jobs. You can also use it via Rcmd BATCH: see ?BATCH or
-Rcmd BATCH --help.  (You will need @RWVER@sp.zip and Perl installed.)
+Rcmd BATCH --help.  (You will Perl installed and in your path.)
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
 under NTEmacs, for example with ess-5.1.20.  The pager is
@@ -212,11 +217,7 @@ search engine can be updated from a running R process by the command
 	link.html.help()
 
 provided the owner of the process has write permission on
-@RWVER@\doc\html.  If you have the source-package files and Perl
-installed you can (and should in preference) use
-
-	cd ...\@RWVER@\src\gnuwin32\help
-	make indices
+@RWVER@\doc\html.
 
 Private libraries of packages can be used and can be specified by the
 environment variable R_LIBS.  (Separate directories by ";" in this
