@@ -38,9 +38,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Print.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Print.h>
 
 
 void formatString(SEXP *x, int n, int *fieldwidth, int quote)
@@ -52,7 +52,7 @@ void formatString(SEXP *x, int n, int *fieldwidth, int quote)
 	if (CHAR(x[i]) == NULL)
 	    naflag = 1;
 	else {
-	    l = Rstrlen(CHAR(x[i]));
+	    l = Rstrlen(CHAR(x[i]), quote);
 	    if (l > xmax)
 		xmax = l;
 	}

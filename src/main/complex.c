@@ -22,9 +22,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"	/* -> ../include/R_ext/Complex.h */
-#include "R_ext/Mathlib.h"
-#include "R_ext/Applic.h"		/* R_cpoly */
+#include <Defn.h>	/* -> ../include/R_ext/Complex.h */
+#include <Rmath.h>
+#include <R_ext/Applic.h>		/* R_cpoly */
 
 #include "arithmetic.h"		/* complex_*  */
 

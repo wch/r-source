@@ -154,6 +154,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok;
+    int extended_opt, eflags;
     char *pt = NULL, *split = "", *bufp;
     regex_t reg;
     regmatch_t regmatch[1];
@@ -161,8 +162,15 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args);
     tok = CADR(args);
-    if (!isString(x) || !isString(tok))
+    extended_opt = asLogical(CADDR(args));
+
+    if(!isString(x) || !isString(tok))
 	errorcall_return(call,"non-character argument in strsplit()");
+    if(extended_opt == NA_INTEGER) extended_opt = 1;    
+    
+    eflags = 0;
+    if(extended_opt) eflags = eflags | REG_EXTENDED;    
+
     len = LENGTH(x);
     tlen = LENGTH(tok);
     PROTECT(s = allocVector(VECSXP, len));
@@ -179,10 +187,10 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	       everything before the start of the match, which may be
 	       the empty string (not a ``token'' in the strict sense).
 	       */
-	    if(regcomp(&reg, split, 0))
+	    if(regcomp(&reg, split, eflags))
 		errorcall(call, "invalid split pattern");
 	    bufp = buff;
-	    while(regexec(&reg, bufp, 1, regmatch, 0) == 0) {
+	    while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
 		/* Empty matches get the next char, so move by one. */
 		bufp += MAX(regmatch[0].rm_eo, 1);
 		ntok++;
@@ -195,9 +203,9 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		PROTECT(t = allocVector(STRSXP, ntok + 1));
 	    /* and fill with the splits */
 	    bufp = buff;
-	    pt = (char *) realloc(pt, (strlen(buff)+1)*sizeof(char));
+	    pt = (char *) realloc(pt, (strlen(buff)+1) * sizeof(char));
 	    for(j = 0; j < ntok; j++) {
-		regexec(&reg, bufp, 1, regmatch, 0);
+		regexec(&reg, bufp, 1, regmatch, eflags);
 		if(regmatch[0].rm_eo > 0) {
 		    /* Match was non-empty. */
 		    if(regmatch[0].rm_so > 0)
@@ -209,7 +217,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* Match was empty. */
 		    pt[0] = *bufp;
 		    pt[1] = '\0';
-		    buff++;
+		    bufp++;
 		}
 		SET_STRING_ELT(t, j, mkChar(pt));
 	    }

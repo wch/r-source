@@ -23,8 +23,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
+#include <Defn.h>
+#include <Rmath.h>
 
 static void checkNames(SEXP, SEXP);
 static SEXP installAttrib(SEXP, SEXP, SEXP);

@@ -547,6 +547,9 @@ void PrintValueRec(SEXP s,SEXP env)
 	}
 	UNPROTECT(1);
 	break;
+    case EXTPTRSXP:
+	Rprintf("<pointer: %p>\n", R_ExternalPtrAddr(s));
+	break;
     default:
 	UNIMPLEMENTED("PrintValueRec");
     }

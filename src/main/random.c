@@ -23,9 +23,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Random.h"
-#include "R_ext/Mathlib.h" /* for rxxx functions, MATH_CHECK  */
+#include <Defn.h>
+#include <R_ext/Random.h>
+#include <Rmath.h> /* for rxxx functions, MATH_CHECK  */
 
 static int naflag = 0;
 

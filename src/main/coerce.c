@@ -22,9 +22,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"/*-- Maybe modularize into own Coerce.h ..*/
-#include "R_ext/Mathlib.h"
-#include "Print.h"
+#include <Defn.h> /*-- Maybe modularize into own Coerce.h ..*/
+#include <Rmath.h>
+#include <Print.h>
 
 
 /* This section of code handles type conversion for elements */
@@ -1249,6 +1249,7 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case DOTSXP:
 	case ANYSXP:
 	case EXPRSXP:
+	case EXTPTRSXP:
 	    LOGICAL(ans)[0] = 1;
 	    break;
 	default:

@@ -25,8 +25,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"/* imax2 */
+#include <Defn.h>
+#include <Rmath.h>/* imax2 */
 
 #define LIST_ASSIGN(x) {SET_VECTOR_ELT(ans_ptr, ans_length, x); ans_length++;}
 

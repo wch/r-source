@@ -23,7 +23,9 @@
 #endif
 
 #include "Defn.h"		/*-> Arith.h */
-#include "R_ext/Mathlib.h"
+#define MATHLIB_PRIVATE
+#include <Rmath.h>
+#undef MATHLIB_PRIVATE
 #include "R_ext/Applic.h"		/* machar */
 #include "arithmetic.h"
 

@@ -22,8 +22,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
+#include <Defn.h>
+#include <Rmath.h>
 
 static SEXP integer_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
 static SEXP real_relop(RELOP_TYPE code, SEXP s1, SEXP s2);

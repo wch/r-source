@@ -23,7 +23,7 @@
  *  quick hack by Ross Ihaka designed to give a superset of the
  *  functionality in the AT&T Bell Laboratories GRZ library.
  *
- *  NOTE : ./plotmath.c	 has partly similary functionality for "math graphics"
+ *  NOTE : ./plotmath.c	 has partly similar functionality for "math graphics"
 	    ~~~~~~~~~~~
  */
 
@@ -31,11 +31,11 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Graphics.h"
-#include "Devices.h"		/* KillAllDevices */
-#include "R_ext/Mathlib.h"	/* eg. fmax2() */
-#include "R_ext/Applic.h"	/* pretty0() */
+#include <Defn.h>
+#include <Graphics.h>
+#include <Devices.h>		/* KillAllDevices */
+#include <Rmath.h>		/* eg. fmax2() */
+#include <R_ext/Applic.h>	/* pretty0() */
 
 #include <string.h>
 #include <stdlib.h>
@@ -43,7 +43,7 @@
 static char HexDigits[] = "0123456789ABCDEF";
 
 
-/*--->> Documentation now in  ../include/R_ext/Graphics.h  "API" ----- */
+/*--->> Documentation now in  ../include/Rgraphics.h  "API" ----- */
 
 /*-------------------------------------------------------------------
  *
@@ -4977,7 +4977,7 @@ typedef struct {
     unsigned int pattern;
 } LineTYPE;
 
-/* LTY_... integer patterns are in ../include/R_ext/Graphics.h ! */
+/* LTY_... integer patterns are in ../include/Rgraphics.h ! */
 static LineTYPE linetype[] = {
     { "blank",   LTY_BLANK   },/* 0 */
     { "solid",	 LTY_SOLID   },/* 1 */

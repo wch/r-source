@@ -23,9 +23,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Print.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Print.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -622,6 +622,7 @@ TypeTable[] = {
     { "any",		ANYSXP	   },
     { "expression",	EXPRSXP	   },
     { "list",		VECSXP	   },
+    { "externalptr",	EXTPTRSXP  },
     /* aliases : */
     { "numeric",	REALSXP	   },
     { "name",		SYMSXP	   },

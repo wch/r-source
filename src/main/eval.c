@@ -228,6 +228,7 @@ SEXP eval(SEXP e, SEXP rho)
     case ENVSXP:
     case CLOSXP:
     case VECSXP:
+    case EXTPTRSXP:
 #ifndef OLD
     case EXPRSXP:
 #endif

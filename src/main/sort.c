@@ -22,8 +22,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"/* => Utils.h with the protos from here */
-#include "R_ext/Mathlib.h"
+#include <Defn.h> /* => Utils.h with the protos from here */
+#include <Rmath.h>
 			/*--- Part I: Comparison Utilities ---*/
 
 static int icmp(int x, int y)

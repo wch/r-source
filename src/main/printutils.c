@@ -50,14 +50,17 @@
  * a single R-vector element.  This is mainly used in gizmos like deparse.
  */
 
+/* if ESC_BARE_QUOTE is defined, " in an unquoted string is replaced
+   by \".  " in a quoted string is always replaced by \". */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Print.h"
-#include "Rconnections.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Print.h>
+#include <Rconnections.h>
 
 #define BUFSIZE 8192  /* used by Rprintf etc */
 static char *Encodebuf=NULL;
@@ -233,7 +236,7 @@ static int hexdigit(unsigned int x)
 #endif
 
 /* strlen() using escaped rather than literal form */
-int Rstrlen(char *s)
+int Rstrlen(char *s, int quote)
 {
     char *p;
     int len;
@@ -246,7 +249,11 @@ int Rstrlen(char *s)
 #ifdef ESCquote
 	    case '\'':
 #endif
+#ifdef ESC_BARE_QUOTE
 	    case '\"': len += 2; break;
+#else
+	    case '\"': len += quote ? 2 : 1; break;
+#endif
 	    default: len += 1; break;
 	    }
 	}
@@ -277,7 +284,7 @@ char *EncodeString(char *s, int w, int quote, int right)
     int b, i ;
     char *p, *q;
 
-    i = Rstrlen(s);
+    i = Rstrlen(s, quote);
     AllocBuffer((i+2 >= w)?(i+2):w); /* +2 allows for quotes */
     q = Encodebuf;
     if(right) { /* Right justifying */
@@ -298,7 +305,11 @@ char *EncodeString(char *s, int w, int quote, int right)
 #ifdef ESCquote
 	    case '\'': *q++ = '\\'; *q++ = '\''; break;
 #endif
-	    case '\"': *q++ = '\\'; *q++ = '\"'; break;
+#ifdef ESC_BARE_QUOTE
+	    case '\"': *q++ = '\"'; break;
+#else
+	    case '\"': if(quote) *q++ = '\\'; *q++ = '\"'; break;
+#endif
 	    default: *q++ = *p; break;
 	    }
 	}
@@ -473,7 +484,7 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
     int l;
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING_ELT(cl, j)));
+	l = Rstrlen(CHAR(STRING_ELT(cl, j)), 0);
 	Rprintf("%*s%s", w-l, "",
 		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_left));
     }
@@ -487,7 +498,7 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
     int l;
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING_ELT(cl, j)));
+	l = Rstrlen(CHAR(STRING_ELT(cl, j)), 0);
 	Rprintf("%*s", R_print.gap+w,
 		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_right));
     }
@@ -501,7 +512,7 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
     int l;
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING_ELT(cl, j)));
+	l = Rstrlen(CHAR(STRING_ELT(cl, j)), 0);
 	Rprintf("%*s%s%*s", R_print.gap, "",
 		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_left), w-l, "");
     }
@@ -515,7 +526,7 @@ void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
     int l;
 
     if (!isNull(rl)) {
-	l = Rstrlen(CHAR(STRING_ELT(rl, i)));
+	l = Rstrlen(CHAR(STRING_ELT(rl, i)), 0);
 	Rprintf("\n%*s%s%*s", lbloff, "",
 		EncodeString(CHAR(STRING_ELT(rl, i)), l, 0, Rprt_adj_left),
 		rlabw-l-lbloff, "");
