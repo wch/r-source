@@ -725,3 +725,6 @@ logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
 str(logist)
 detach("package:nls")
 
+## part of PR 1662: fisher.test with total one
+fisher.test(cbind(0, c(0,0,0,1)))
+## crashed in R <= 1.5.0

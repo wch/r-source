@@ -29,7 +29,7 @@
 
   If the environment variable \code{R_USER} is not set, the \R system
   sets it to \code{HOME} if that is set (stripping any trailing
-  slash), otherwise to \code{HOMEDIR:HOMEPATH} if \code{HOMEDIR} is set
+  slash), otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} is set
   otherwise to the working directory.
 }
 \note{

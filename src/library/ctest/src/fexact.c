@@ -266,6 +266,7 @@ fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
     ikh = ldkey << 1;	i9a = iwork(iwkmax, &iwkpt, ikh, i_real);
     ikh = ldkey << 1;	i10 = iwork(iwkmax, &iwkpt, ikh, i_int);
 
+
     /* To convert to double precision, change RWRK to DWRK in the next CALL.
      */
     f2xact(nrow,
@@ -500,7 +501,8 @@ f2xact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
     /* Compute log factorials */
     fact[0] = 0.;
     fact[1] = 0.;
-    fact[2] = log(2.);/* MM: old code assuming log() to be SLOW */
+    if(ntot >= 2) fact[2] = log(2.);
+    /* MM: old code assuming log() to be SLOW */
     for (i = 3; i <= ntot; i += 2) {
 	fact[i] = fact[i - 1] + log((double) i);
 	j = i + 1;
@@ -1079,6 +1081,8 @@ L120:
 	for (i = 3; i <= nco; ++i) {
 	    key = it[i] + key * kyy;
 	}
+	if(key < 0)
+	    PROBLEM "Bug in FEXACT: gave negative key" RECOVER(NULL_ENTRY);
 	/* Table index */
 	ipn = key % ldst + 1;
 	/* Find empty position */

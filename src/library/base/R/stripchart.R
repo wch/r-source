@@ -7,7 +7,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 {
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1]
     if(is.na(method) || method==0)
-	error("invalid plotting method")
+	stop("invalid plotting method")
     groups <-
 	if(is.language(x)) {
 	    if (inherits(x, "formula") && length(x) == 3) {

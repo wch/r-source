@@ -27,7 +27,7 @@
 
   \code{quantile(x,p)} as a function of \code{p} linearly interpolates
   the points ( (i-1)/(n-1), ox[i] ), where
-  \code{ox <- order(x)} (the ``order statistics'') and \code{n <- length(x)}.
+  \code{ox <- sort(x)} and \code{n <- length(x)}.
 
   This gives \code{quantile(x, p) == (1-f)*ox[i] + f*ox[i+1]}, where
   \code{r <- 1 + (n-1)*p}, \code{i <- floor(r)}, \code{f <- r - i}

@@ -293,6 +293,17 @@ BUG FIXES
     o	HoltWinters() now initializes correctly in the exponential
 	smoothing case, and plot.HoltWinters() allows lty to be set. 
 
+    o	fisher.test() crashed due to corruption on some large
+	problems.  It also crashed on tables with total one. (PR#1662)
+
+    o   The substitution code for strptime (used e.g. on Windows)
+	cached the month names and so did not recognise locale changes
+	during an R session, as used by get.hist.quote{tseries}.
+	Caching has been supressed.  (PR#1116)
+
+    o   Some functions used the non-existing error() function instead
+        of stop().
+
 
 		CHANGES IN R VERSION 1.5.0
 
