@@ -1,6 +1,6 @@
 legend <-
 function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
-         bg = par("bg"), cex = 1,
+         bg = par("bg"), pt.bg = NA, cex = 1,
          xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = 0,
          text.width = NULL, merge = do.lines && has.pch, trace = FALSE,
          ncol = 1, horiz = FALSE)
@@ -142,13 +142,14 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     if(has.pch || do.lines)
         col <- rep(col,length.out=n.leg)
     if (has.pch) {                      #- draw points -------------------
-	pch <- rep(pch, length.out=n.leg)
+	pch   <- rep(pch, length.out=n.leg)
+	pt.bg <- rep(pt.bg, length.out=n.leg)
 	ok <- is.character(pch) | pch >= 0
 	x1 <- (if(merge) xt + 0.2*xchar else xt)[ok]
 	y1 <- yt[ok]
 	if(trace)
 	    catn("  points2(", x1,",", y1,", pch=", pch[ok],"...)")
-	points2(x1, y1, pch=pch[ok], col=col[ok], cex=cex)
+	points2(x1, y1, pch=pch[ok], col=col[ok], cex=cex, bg = pt.bg[ok])
 	if (!merge) xt <- xt + dx.pch
     }
     if (do.lines) {                     #- draw lines ---------------------

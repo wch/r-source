@@ -1,13 +1,13 @@
 \name{legend}
+\alias{legend}
 \title{Add Legends to Plots}
 \usage{
 legend(x, y, legend, fill, col = "black", lty, lwd, pch,
-       bty = "o", bg = par("bg"), cex = 1, xjust = 0, yjust = 1,
+       bty = "o", bg = par("bg"), pt.bg = NA, cex = 1, xjust = 0, yjust = 1,
        x.intersp = 1, y.intersp = 1, adj = 0,
        text.width = NULL, merge = do.lines && has.pch, trace = FALSE,
        ncol = 1, horiz = FALSE)
 }
-\alias{legend}
 \description{
   This function can be used to add legends to plots.  Note that a call
   to the function \code{\link{locator}} can be used in place of the \code{x}
@@ -33,6 +33,7 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
     string. \emph{Must} be specified for symbol drawing.}
   \item{bty}{the type of box to be drawn around the legend.}
   \item{bg}{the background color for the legend box.}
+  \item{pt.bg}{the background color for the \code{\link{points}}.}
   \item{cex}{character expansion factor \bold{relative} to current
     \code{par("cex")}.}
   \item{xjust}{how the legend is to be justified relative to the legend
@@ -154,6 +155,7 @@ legend(0, 1.5, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",
        ncol = 4, cex=.8)
 legend(.8,1.2, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",cex=.8)
 legend(0, -.1, paste("sin(",1:4,"pi * x)"), col=1:4, lty=1:4, ncol=2, cex=.8)
-legend(0, -.7, paste("sin(",5:7,"pi * x)"), col=5:7, pch="*", ncol=2, cex=.8)
+legend(0, -.4, paste("sin(",5:7,"pi * x)"), col=5:7,  pch=24, ncol=2, cex=1.5,
+       pt.bg="pink")
 }
 \keyword{aplot}
