@@ -138,11 +138,13 @@ par(\dots, no.readonly = FALSE)
     does \emph{not} affect the axis labels.
   }
   \item{lty}{The line type.
-    Line types can either be specified as an integer (1=solid, 2=dashed,
-    3=dotted, 4=dotdashed, 5=longdashed, 6=twodashed) or as one of the
-    character strings
-    \code{"solid"}, \code{"dashed"}, \code{"dotted"}
-    \code{"dotdashed"}, \code{"longdashed"} or \code{"twodashed"}.
+    Line types can either be specified as an integer
+    (0=blank, 1=solid, 2=dashed, 3=dotted, 4=dotdash, 5=longdash, 6=twodash)
+    or as one of the character strings
+    \code{"blank"}, \code{"solid"}, \code{"dashed"}, \code{"dotted"}
+    \code{"dotdash"}, \code{"longdash"}, or \code{"twodash"}, where
+    \code{"blank"} uses `invisible lines' (i.e. doesn't draw them).
+
     Alternatively, a string of up to 8 characters
     (from code{c(0:9, "A":"F")}) may be given, giving
     the length (typically in points/pixels) of line segments which are
