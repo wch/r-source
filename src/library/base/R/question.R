@@ -13,6 +13,6 @@
 }
 
 topicName <- function(type, topic)
-    paste(type, topic, sep = "_")
+    paste(type, topic, sep = "-")
 
    
