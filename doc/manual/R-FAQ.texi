@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-21, 2002-12-16
+@set FAQ-VERSION 1.6-22, 2002-12-17
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -28,6 +28,14 @@
 
 @macro FORTRAN{}
 FORTRAN
+@end macro
+
+@macro XML{}
+@acronym{XML}
+@end macro
+
+@macro XSL{}
+@acronym{XSL}
 @end macro
 
 @titlepage
@@ -1549,6 +1557,9 @@ quantitative finance.
 @item RSQLite
 Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R.
+@item RSvgDevice
+A graphics device for R that uses the new w3.org @XML{} standard for
+Scalable Vector Graphics.
 @item RadioSonde
 A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
@@ -1591,7 +1602,7 @@ distributions).
 Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item XML
-Facilities for reading @acronym{XML} documents and DTDs.
+Facilities for reading @XML{} documents and DTDs.
 @item acepack
 ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
@@ -2222,7 +2233,7 @@ to call Python functionality.
 @item RXLisp
 An interface to call XLisp-Stat functions from within R.
 @item SASXML
-Example for reading XML files in SAS 8.2 manner.
+Example for reading @XML{} files in SAS 8.2 manner.
 @item SJava
 An interface from R to Java to create and call Java objects and
 methods.
@@ -2232,7 +2243,7 @@ that can work in both R and @SPLUS{}.
 @item SNetscape
 Plugin for Netscape and JavaScript.
 @item SXalan
-Process XML documents using XSL functions implemented in R and
+Process @XML{} documents using @XSL{} functions implemented in R and
 dynamically substituting output from R.
 @item Slcc
 Parses C source code, allowing one to analyze and automatically generate
@@ -2240,8 +2251,8 @@ interfaces from S to that code, including the table of S-accessible
 native symbols, parameter count and type information, S constructors
 from C objects, call graphs, etc.
 @item Sxslt
-An extension module for libxslt, the XML-XSL document translator, that
-allows XSL functions to be implemented via R functions.
+An extension module for libxslt, the @XML{}-@XSL{} document translator,
+that allows @XSL{} functions to be implemented via R functions.
 @end table
 
 The @uref{http://www.bioconductor.org, Bioconductor Project} produces an
