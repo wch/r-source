@@ -12,8 +12,6 @@
 
 #include "Mathlib.h"
 
-double pbeta(double, double, double);
-
 double pnbeta(double x, double a, double b, double lambda)
 {
     double a0, ans, ax, lbeta, c, errbd, gx, q, sumq, temp, x0;
