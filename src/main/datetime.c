@@ -6,6 +6,8 @@
 # define _XOPEN_SOURCE		/* so that we get strptime() */
 # include <time.h>
 # undef _XOPEN_SOURCE		/* just to make sure */
+#else
+# include <time.h>
 #endif
 
 #include "Defn.h"
@@ -70,7 +72,7 @@ static int validate_tm (struct tm *tm)
     if(tm->tm_mday < -1000 || tm->tm_mday > 1000) return -1;
 
 
-    while(tm->tm_mday < 0) {
+    while(tm->tm_mday < 1) {
 	res++;
 	if(--tm->tm_mon < 0) {tm->tm_mon += 12; tm->tm_year--;}
 	tm->tm_mday += days_in_month[tm->tm_mon] +
