@@ -8,6 +8,9 @@ machine()
   This function returns a string which specifies what kind of
   environment \R is being run in.
 }
+\seealso{
+  \code{\link{Machine}} for the computer's characteristics in arithmetics.
+}
 \examples{
 machine()# to see yours
 if (machine() == "Macintosh")

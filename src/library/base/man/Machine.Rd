@@ -77,5 +77,14 @@ Machine()
     Parameters}.
   Transactions on Mathematical Software, \bold{14}, 4, 303-311.
 }
+\seealso{
+  \code{\link{machine}} to determine the computer type, \R is running on.
+}
+\examples{
+str(Machine())
+1 +     .Machine$double.eps != 1
+1 + .5* .Machine$double.eps == 1
+}
 \keyword{sysdata}
+\keyword{programming}
 \keyword{math}
