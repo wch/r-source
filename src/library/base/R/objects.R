@@ -291,8 +291,8 @@ getAnywhere <- function(x)
         visible <- rep(TRUE, length(pos))
     }
     ## next look for methods
-    if(length(grep("\\.", x))) {
-        np <- length(parts <- strsplit(x, "\\.")[[1]])
+    if(length(grep(".", x, fixed=TRUE))) {
+        np <- length(parts <- strsplit(x, ".", fixed=TRUE)[[1]])
         for(i in 2:np) {
             gen <- paste(parts[1:(i-1)], collapse=".")
             cl <- paste(parts[i:np], collapse=".")

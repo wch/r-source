@@ -206,7 +206,7 @@ package.dependencies <- function(x, check = FALSE)
         z <- x[k, "Depends"]
         if(!is.na(z) & z != ""){
             ## split dependencies, remove leading and trailing whitespace
-            z <- unlist(strsplit(z, ","))
+            z <- unlist(strsplit(z, ",", fixed=TRUE))
             z <- sub("^[[:space:]]*(.*)", "\\1", z)
             z <- sub("(.*)[[:space:]]*$", "\\1", z)
 

@@ -279,7 +279,7 @@ prettyNum <-
     if(big.mark == "" && small.mark == "" && decimal.mark == ".")
         return(x)
     ## else
-    x.sp <- strsplit(x, "\\.")
+    x.sp <- strsplit(x, ".", fixed=TRUE)
     P0 <- function(...) paste(..., sep="")
     revStr <- function(cc)
         sapply(lapply(strsplit(cc,NULL), rev), paste, collapse="")

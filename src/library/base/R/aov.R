@@ -235,7 +235,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                     names(nn) <- nn
                     marg <- lapply(nn, function(x)
                                    df.names[asgn == (match(x, names) - 1)])
-                    term.coefs <- strsplit(df.names[asgn == i], ":")
+                    term.coefs <- strsplit(df.names[asgn == i], ":", fixed=TRUE)
                     ttc <- sapply(term.coefs, function(x) x[sp])
                     rownames(ttc) <- nn
                     splitnames <- apply(expand.grid(lapply(old, names)), 1,
@@ -250,7 +250,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                 } else {
                     old <- split[[ f[sp] ]]
                     marg.coefs <- df.names[asgn == (match(f[sp], names) - 1)]
-                    term.coefs <- strsplit(df.names[asgn == i], ":")
+                    term.coefs <- strsplit(df.names[asgn == i], ":", fixed=TRUE)
                     ttc <- sapply(term.coefs, function(x) x[sp])
                     new <- lapply(old, function(x)
                                   seq(along=ttc)[ttc %in% marg.coefs[x]])

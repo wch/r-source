@@ -9,7 +9,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
                "Mersenne-Twister", "Knuth-TAOCP", "user-supplied",
                "Knuth-TAOCP-2002", "default")
     n.kinds <- c("Buggy Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller",
-                 "user-supplied", "Inversion", "Kinderman-Ramage", 
+                 "user-supplied", "Inversion", "Kinderman-Ramage",
 		 "default")
     do.set <- length(kind) > 0
     if(do.set) {
@@ -55,14 +55,14 @@ set.seed <- function(seed, kind = NULL)
 
 # Compatibility function to set RNGkind as in a given R version
 
-RNGversion <- function(vstr) 
+RNGversion <- function(vstr)
 {
-    vnum <- as.numeric(strsplit(vstr,"\\.")[[1]])
-    if (length(vnum) < 2) 
+    vnum <- as.numeric(strsplit(vstr,".", fixed=TRUE)[[1]])
+    if (length(vnum) < 2)
 	stop("Malformed version string")
-    if (vnum[1] == 0 && vnum[2] < 99) 
+    if (vnum[1] == 0 && vnum[2] < 99)
         RNGkind("Wichmann-Hill", "Buggy Kinderman-Ramage")
-    else if (vnum[1] == 0 || vnum[1] == 1 && vnum[2] <= 6) 
+    else if (vnum[1] == 0 || vnum[1] == 1 && vnum[2] <= 6)
 	RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage")
     else
 	RNGkind("Mersenne-Twister", "Inversion")

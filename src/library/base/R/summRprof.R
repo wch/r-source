@@ -21,7 +21,7 @@ summaryRprof <- function(filename = "Rprof.out", chunksize = 5000)
         if (nread == 0)
             break
         count <- count+nread
-        thelines <- strsplit(chunk, " ")
+        thelines <- strsplit(chunk, " ", fixed=TRUE)
         lapply(thelines, function (a.line){
             lapply(unique(a.line), inc, e = total)
             inc(a.line[[1]], e = self)

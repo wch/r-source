@@ -541,7 +541,7 @@ seq.POSIXt <-
         by <- switch(attr(by,"units"), secs = 1, mins = 60, hours = 3600,
                      days = 86400, weeks = 7*86400) * unclass(by)
     } else if(is.character(by)) {
-        by2 <- strsplit(by, " ")[[1]]
+        by2 <- strsplit(by, " ", fixed=TRUE)[[1]]
         if(length(by2) > 2 || length(by2) < 1)
             stop("invalid `by' string")
         valid <- pmatch(by2[length(by2)],
@@ -614,7 +614,7 @@ cut.POSIXt <-
     } else if(is.numeric(breaks) && length(breaks) == 1) {
 	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1) {
-        by2 <- strsplit(breaks, " ")[[1]]
+        by2 <- strsplit(breaks, " ", fixed=TRUE)[[1]]
         if(length(by2) > 2 || length(by2) < 1)
             stop("invalid specification of `breaks'")
 	valid <-

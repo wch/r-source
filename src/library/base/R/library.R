@@ -18,7 +18,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
         ## which version was this package built under?
         if(!is.na(built <- fields[1, "Built"])) {
-            builtFields <- strsplit(built, ";")[[1]]
+            builtFields <- strsplit(built, ";", fixed=TRUE)[[1]]
             builtunder <- substring(builtFields[1], 3)
             if(nchar(builtunder) &&
                compareVersion(current, builtunder) < 0) {
@@ -92,11 +92,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     }
 
     libraryPkgName <- function(pkgName, sep = "_")
-	unlist(strsplit(pkgName, sep))[1]
+	unlist(strsplit(pkgName, sep, fixed=TRUE))[1]
 
     libraryPkgVersion <- function(pkgName, sep = "_")
     {
-        splitName <- unlist(strsplit(pkgName, sep))
+        splitName <- unlist(strsplit(pkgName, sep, fixed=TRUE))
 	if (length(splitName) > 1) splitName[2] else NULL
     }
 
@@ -486,7 +486,7 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
                                              sep = ""))
                 ## </FIXME>
                 ## else either from prompt or in the source for install
-                ## with saved image ? 
+                ## with saved image ?
             }
         }
         else
@@ -559,7 +559,7 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
         setwd(path.expand(x))
         getwd()
     }
-    
+
     useAttached <- FALSE
     if(is.null(lib.loc)) {
         useAttached <- TRUE

@@ -2,7 +2,7 @@
 addTclPath <- function(path = ".")
 {
     a <- tclvalue(.Tcl("set auto_path"))
-    paths <- strsplit(a," ")[[1]]
+    paths <- strsplit(a, " ", fixed=TRUE)[[1]]
     if (is.na(match(path, paths)))
         .Tcl(paste("lappend auto_path ", path))
     invisible(paths)
