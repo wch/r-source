@@ -425,6 +425,7 @@ function(package, dir, lib.loc = NULL,
 
     attr(badDocObjs, "codeNotInUsages") <- codeNotInUsages
     attr(badDocObjs, "usagesNotInCode") <- usagesNotInCode
+    attr(badDocObjs, "funsNotInUsages") <- funsNotInUsages
     attr(badDocObjs, "hasNamespace") <- hasNamespace
 
     class(badDocObjs) <- "codoc"
@@ -439,14 +440,13 @@ function(x, ...)
     ## mentioned in other parts of the Rd object documenting them, or be
     ## 'internal'.  However, if a package has a namespace (and this was
     ## used in the codoc() computations), then clearly all *exported*
-    ## functions should have \usage entries.  As extract-usage.pl has
-    ## problems with the typical \usage style for replacement functions,
-    ## we exclude all these.
+    ## functions should have \usage entries.
     ## <FIXME>
     ## Things are not quite that simple.
     ## E.g., for generic functions with just a default and a formula
     ## method we typically do not have \usage for the generic itself.
-    ## Also, extract-usage.pl currently only picks up functions, so all
+    ## Also, extract-usage.pl currently only provides code for functions
+    ## (names of variables and data sets are available via comments) so
     ## variables will come out as 'without usage information' ...
     ## As we can always access the information via
     ##    attr(codoc("foo"), "codeNotInUsages")
@@ -455,11 +455,6 @@ function(x, ...)
     ##     codeNotInUsages <- attr(x, "codeNotInUsages")
     ##     if(length(codeNotInUsages)
     ##        && identical(TRUE, attr(x, "hasNamespace"))) {
-    ##         codeNotInUsages <-
-    ##             codeNotInUsages[! codeNotInUsages
-    ##                             %in% grep("<-$",
-    ##                                       codeNotInUsages,
-    ##                                       value = TRUE)]
     ##         if(length(codeNotInUsages)) {
     ##             writeLines("Exported objects without usage information:")
     ##             print(codeNotInUsages)
