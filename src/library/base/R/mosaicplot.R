@@ -185,7 +185,7 @@ mosaicplot.default <- function(X, main = NULL, xlab = NULL, ylab = NULL,
 
     ##-- Plotting
     frame()
-    opar <- par(usr = c(1,1000,1,1000))
+    opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
     on.exit(par(opar))
 
     if (!is.null(main) || !is.null(xlab) || !is.null(ylab))
