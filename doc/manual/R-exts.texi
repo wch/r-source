@@ -1835,13 +1835,23 @@ and the types of arguments to a C function or FORTRAN subroutine.
 
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{Complex.h}
-included by @file{R.h}.  Only a single character string can be passed to
-or from FORTRAN, and the success of this is compiler-dependent.  Other
-@R{} objects can be passed to @code{.C}, but it is better to use one of
-the other interfaces.  An exception is passing an @R{} function for use
-with @w{@code{call_R}}, when the object can be handled as @code{void *}
-en route to @code{call_R}, but even there @code{.Call} is to be
-preferred.
+included by @file{R.h}.  Only a single character string can be passed
+to or from FORTRAN, and the success of this is compiler-dependent.
+Other @R{} objects can be passed to @code{.C}, but it is better to use
+one of the other interfaces.  An exception is passing an @R{} function
+for use with @w{@code{call_R}}, when the object can be handled as
+@code{void *} en route to @code{call_R}, but even there @code{.Call}
+is to be preferred.  Similarly, passing an R list as an argument to a
+C routine should be done using the @code{.Call} interface.  If one
+does use the @code{.C} function to pass a list as an argument, it is
+visible to the routine as an array in C of @code{SEXP} types
+(i.e. @code{SEXP *}).  The elements of the array correspond directly
+to the elements of the R list.  However, this array must be treated as
+read-only and one must not assign values to its elements within the C
+routine.  Doing so bypasses R's memory management facilities and will
+corrupt the object and the R session.
+
+
 
 It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
