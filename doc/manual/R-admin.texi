@@ -830,6 +830,10 @@ requires @code{iconv} to be able to translate between @code{"latin1"}
 and @code{"UTF=8"} and to recognize @code{""} as the current encoding --
 this is not true of most commercial Unixes.
 
+The ability to use translated messages makes use of @code{gettext} and
+most likely needs @acronym{GNU} @code{gettext}: you also need this to
+work with new translations. At present there are no translations available.
+
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate headers and libraries installed: @code{jpeg} (version 6b
 or later) or @code{libpng} (version 1.2.3 or later) and @code{zlib}
