@@ -409,7 +409,6 @@ extern int	R_PPStackTop;	    /* The top of the stack */
 extern SEXP*	R_PPStack;	    /* The pointer protection stack */
 
 /* Evaluation Environment */
-extern SEXP	R_Call;		    /* The current call */
 extern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
 extern SEXP	R_ReturnedValue;    /* Slot for return-ing values */
 extern SEXP*	R_SymbolTable;	    /* The symbol table */
@@ -443,11 +442,7 @@ extern int	R_ParseCnt;	    /* Count of lines of text to be parsed */
 extern int	R_ParseError	INI_as(0); /* Line where parse error occured */
 
 /* Image Dump/Restore */
-extern char	R_ImageName[256];   /* Default image name */
-extern int	R_Unnamed	INI_as(1);	/* Use default name? */
 extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */
-extern int	R_Init		INI_as(0);	/* Do we have an image loaded */
-/* extern FILE*	R_FileRef;	    the environment file pointer  */
 
 /* History */
 extern char*	R_HistoryFile;	/* Name of the history file */
