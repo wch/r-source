@@ -419,9 +419,15 @@ function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
 
     if(length(f) > 1) {
         value <- character()
-      for(ff in f) {
-        value <- c(value, Recall(ff, where, classes, includeDefs, inherited, printTo))
-      }
+        for(ff in f) {
+            if(missing(where))
+                mlist <- getMethods(ff)
+            else
+                mlist <- getMethods(ff, where)
+            if(length(mlist@methods) == 0)
+                next
+            value <- c(value, Recall(ff, where, classes, includeDefs, inherited, printTo))
+        }
         if(length(value) > 0)
             return(value)
         else
