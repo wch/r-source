@@ -722,8 +722,7 @@ int setupui()
     MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, menumainref));
     lmanref = check_doc_file("doc/manual/refman.pdf");
     if (!lmanref) disable(mmanref);
-    MCHECK(mmanext = newmenuitem("R Extension &Writer's Manual", 
-				 0, menumainext));
+    MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, menumainext));
     lmanext = check_doc_file("doc/manual/R-exts.pdf");
     if (!lmanext) disable(mmanext);
     if (!lmanintro && !lmanref && !lmanext) disable(mman);
