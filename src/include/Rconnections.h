@@ -29,7 +29,7 @@ struct Rconn {
     char* description;
     char mode[5];
     Rboolean text, isopen, incomplete, canread, canwrite, canseek, blocking;
-    void (*open)(struct Rconn *);
+    Rboolean (*open)(struct Rconn *);
     void (*close)(struct Rconn *); /* routine closing after auto open */
     void (*destroy)(struct Rconn *); /* when closing connection */
     int (*vfprintf)(struct Rconn *, const char *, va_list);

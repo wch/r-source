@@ -109,9 +109,10 @@ void Rconn_setEncoding(Rconnection con, SEXP enc)
 
 /* ------------------- null connection functions --------------------- */
 
-static void null_open(Rconnection con)
+static Rboolean null_open(Rconnection con)
 {
     error("open/close not enabled for this connection");
+    return FALSE; /* -Wall */
 }
 
 static void null_close(Rconnection con)
@@ -225,7 +226,7 @@ char * Rwin32_tmpnam(char * prefix);
 char * Rmac_tmpnam(char * prefix);
 #endif
 
-static void file_open(Rconnection con)
+static Rboolean file_open(Rconnection con)
 {
     char *name;
     FILE *fp;
@@ -249,7 +250,10 @@ static void file_open(Rconnection con)
 #endif
     } else name = R_ExpandFileName(con->description);
     fp = R_fopen(name, con->mode);
-    if(!fp) error("cannot open file `%s'", name);
+    if(!fp) {
+	warning("cannot open file `%s'", name);
+	return FALSE;
+    }
     if(temp) unlink(name);
     this->fp = fp;
     con->isopen = TRUE;
@@ -271,6 +275,7 @@ static void file_open(Rconnection con)
 	fcntl(fd, F_SETFL, flags);
     }
 #endif
+    return TRUE;
 }
 
 static void file_close(Rconnection con)
@@ -455,7 +460,7 @@ static Rconnection newfile(char *description, char *mode)
 #include <errno.h>
 #endif
 
-static void fifo_open(Rconnection con)
+static Rboolean fifo_open(Rconnection con)
 {
     char *name;
     Rfifoconn this = con->private;
@@ -473,10 +478,15 @@ static void fifo_open(Rconnection con)
 	res = stat(name, &sb);
 	if(res) { /* error, does not exist? */
 	    res = mkfifo(name, 00644);
-	    if(res) error("cannot create fifo `%s'", name);
+	    if(res) {
+		warning("cannot create fifo `%s'", name);
+		return FALSE;
+	    }
 	} else {
-	    if(!(sb.st_mode & S_IFIFO))
-		error("`%s' exists but is not a fifo", name);
+	    if(!(sb.st_mode & S_IFIFO)) {
+		warning("`%s' exists but is not a fifo", name);
+		return FALSE;
+	    }
 	}
     }
 
@@ -487,8 +497,9 @@ static void fifo_open(Rconnection con)
     if(con->mode[0] == 'a') flags |= O_APPEND;
     fd = open(name, flags);
     if(fd < 0) {
-	if(errno == ENXIO) error("fifo `%s' is not ready", name);
-	else error("cannot open fifo `%s'", name);
+	if(errno == ENXIO) warning("fifo `%s' is not ready", name);
+	else warning("cannot open fifo `%s'", name);
+	return FALSE;
     }
     
     this->fd = fd;
@@ -497,6 +508,7 @@ static void fifo_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
+    return TRUE;
 }
 
 static void fifo_close(Rconnection con)
@@ -599,7 +611,13 @@ SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     con->blocking = block;
 
     /* open it if desired */
-    if(strlen(open)) con->open(con);
+    if(strlen(open)) {
+	Rboolean success = con->open(con);
+	if(!success) {
+	    con_close(ncon);
+	    error("unable to open connection");
+	}
+    }
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;
@@ -619,12 +637,15 @@ SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- pipe connections --------------------- */
 
 #ifdef HAVE_POPEN
-static void pipe_open(Rconnection con)
+static Rboolean pipe_open(Rconnection con)
 {
     FILE *fp;
 
     fp = popen(con->description, con->mode);
-    if(!fp) error("cannot open cmd `%s'", con->description);
+    if(!fp) {
+	warning("cannot open cmd `%s'", con->description);
+	return FALSE;
+    }
     ((Rfileconn)(con->private))->fp = fp;
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w');
@@ -632,6 +653,7 @@ static void pipe_open(Rconnection con)
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
+    return TRUE;
 }
 
 static void pipe_close(Rconnection con)
@@ -714,7 +736,13 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
 
     /* open it if desired */
-    if(strlen(open)) con->open(con);
+    if(strlen(open)) {
+	Rboolean success = con->open(con);
+	if(!success) {
+	    con_close(ncon);
+	    error("unable to open connection");
+	}
+    }
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;
@@ -740,13 +768,16 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #if defined(HAVE_ZLIB)
 #include <zlib.h>
 
-static void gzfile_open(Rconnection con)
+static Rboolean gzfile_open(Rconnection con)
 {
     gzFile fp;
 
     fp = gzopen(R_ExpandFileName(con->description), con->mode);
-    if(!fp) error("cannot open compressed file `%s'",
-		  R_ExpandFileName(con->description));
+    if(!fp) {
+	warning("cannot open compressed file `%s'",
+	      R_ExpandFileName(con->description));
+	return FALSE;
+    }
     ((Rgzfileconn)(con->private))->fp = fp;
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
@@ -754,6 +785,7 @@ static void gzfile_open(Rconnection con)
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
+    return TRUE;
 }
 
 static void gzfile_close(Rconnection con)
@@ -880,7 +912,13 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
 
     /* open it if desired */
-    if(strlen(open)) con->open(con);
+    if(strlen(open)) {
+	Rboolean success = con->open(con);
+	if(!success) {
+	    con_close(ncon);
+	    error("unable to open connection");
+	}
+    }
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;
@@ -974,7 +1012,7 @@ static Rconnection newterminal(char *description, char *mode)
     new->isopen = TRUE;
     new->canread = (strcmp(mode, "r") == 0);
     new->canwrite = (strcmp(mode, "w") == 0);
-    new->destroy = &null_open;
+    new->destroy = &null_close;
     new->private = NULL;
     return new;
 }
@@ -1053,9 +1091,10 @@ static void text_init(Rconnection con, SEXP text)
     this->cur = this->save = 0;
 }
 
-static void text_open(Rconnection con)
+static Rboolean text_open(Rconnection con)
 {
     con->save = -1000;
+    return TRUE;
 }
 
 static void text_close(Rconnection con)
@@ -1345,7 +1384,13 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     con->blocking = blocking;
     
     /* open it if desired */
-    if(strlen(open)) con->open(con);
+    if(strlen(open)) {
+	Rboolean success = con->open(con);
+	if(!success) {
+	    con_close(ncon);
+	    error("unable to open connection");
+	}
+    }
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;
@@ -1391,7 +1436,13 @@ SEXP do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
 
     /* open it if desired */
-    if(strlen(open)) con->open(con);
+    if(strlen(open)) {
+	Rboolean success = con->open(con);
+	if(!success) {
+	    con_close(ncon);
+	    error("unable to open connection");
+	}
+    }
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;
@@ -1412,6 +1463,7 @@ SEXP do_open(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con=NULL;
     SEXP sopen;
     char *open;
+    Rboolean success;
 
     checkArity(op, args);
     i = asInteger(CAR(args));
@@ -1426,7 +1478,11 @@ SEXP do_open(SEXP call, SEXP op, SEXP args, SEXP env)
     open = CHAR(STRING_ELT(sopen, 0));
     if(strlen(open) > 0) strcpy(con->mode, open);
     con->blocking = block;
-    con->open(con);
+    success = con->open(con);
+    if(!success) {
+	/* con_close(i); user might have a reference */
+	error("unable to open connection");
+    }
     return R_NilValue;
 }
 
@@ -2549,7 +2605,13 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     con->blocking = block;
 
     /* open it if desired */
-    if(strlen(open)) con->open(con);
+    if(strlen(open)) {
+	Rboolean success = con->open(con);
+	if(!success) {
+	    con_close(ncon);
+	    error("unable to open connection");
+	}
+    }
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;

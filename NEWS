@@ -320,6 +320,10 @@ BUG FIXES
     o	Internal code allowed one more connection to be allocated than
 	the table size, leading to segfaults. (PR#1333)
 
+    o	If a user asks to open a connection when it is created and 
+	it cannot be opened, the connection is destroyed before returning
+	from the creation call.  (related to PR#1333)
+
 
 
 	**************************************************
