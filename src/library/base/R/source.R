@@ -163,20 +163,6 @@ function(topic, device = getOption("device"),
                            file.path(path, "Meta", "demo.rds"))) {
                 entries <- .readRDS(INDEX)
             }
-            ## <FIXME>
-            ## Remove this once 1.7.0 is out.
-            ## (The 1.7 development versions for some time used indices
-            ## serialized as 'demo/00Index.rds' and 'demo/00Index.dcf'.)
-            else if(file.exists(INDEX <-
-                           file.path(path, "demo", "00Index.rds"))) {
-                entries <- .readRDS(INDEX)
-            }
-            else if(file.exists(INDEX <-
-                           file.path(path, "demo", "00Index.dcf"))) {
-                entries <- read.dcf(INDEX)
-                entries <- cbind(colnames(entries), c(entries))
-            }
-            ## </FIXME>
             else if(file.exists(INDEX <-
                                 file.path(path, "demo", "00Index")))
                 entries <- read.00Index(INDEX)

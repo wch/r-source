@@ -31,22 +31,8 @@ function(dataDir, contents)
     dataTopics <- unique(basename(.filePathSansExt(dataFiles)))
     if(!length(dataTopics)) return(matrix("", 0, 2))
     dataIndex <- cbind(dataTopics, "")
-    ## <FIXME>
-    ## Remove this for 1.8.
-    ## Compatibility code for transition from old-style to new-style
-    ## indexing.  If we have @file{data/00Index}, use it when computing
-    ## the data index, but let the Rd entries override the index ones.
-    if(.fileTest("-f", INDEX <- file.path(dataDir, "00Index"))) {
-        dataEntries <- try(read.00Index(INDEX))
-        if(inherits(dataEntries, "try-error"))
-            warning(paste("cannot read index information in file",
-                          sQuote(INDEX)))
-        idx <- match(dataTopics, dataEntries[ , 1], 0)
-        dataIndex[which(idx != 0), 2] <- dataEntries[idx, 2]
-    }
-    ## </FIXME>
-    ## NROW(contents) might be 0
-    if (NROW(contents)) {
+    ## Note that NROW(contents) might be 0.
+    if(NROW(contents)) {
         aliasIndices <-
             rep(1 : NROW(contents), sapply(contents$Aliases, length))
         idx <- match(dataTopics, unlist(contents$Aliases), 0)
