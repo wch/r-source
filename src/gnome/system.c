@@ -57,6 +57,10 @@ int LoadSiteFile = True;
 int LoadInitFile = True;
 int DebugInitFile = False;
 
+static gboolean R_gnome_initialised = FALSE; /* true once gnome_init has been called */
+
+static GList *messages_list = NULL;
+
 /*
  *  1) FATAL MESSAGES AT STARTUP
  */
@@ -197,18 +201,41 @@ void R_CleanUp(int saveact)
 void R_ShowMessage(char *s)
 {
     GtkWidget *dialog;
+    gchar *s_copy;
 
-    dialog = gnome_message_box_new(s,
-				   GNOME_MESSAGE_BOX_INFO,
-				   GNOME_STOCK_BUTTON_OK,
-				   NULL);
+    if(R_gnome_initialised) {
+	dialog = gnome_message_box_new(s,
+				       GNOME_MESSAGE_BOX_INFO,
+				       GNOME_STOCK_BUTTON_OK,
+				       NULL);
+	
+	if(R_gtk_main_window != NULL)
+	    gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
+	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+	gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
+	
+	gnome_dialog_run_and_close(GNOME_DIALOG(dialog));    
+    }
+    else {
+	/* queue the message */
+	s_copy = g_strdup(s);
 
-    if(R_gtk_main_window != NULL)
-	gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
-    gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-    gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
+	messages_list = g_list_append(messages_list,
+				      (gpointer) s_copy);
+    }
+}
 
-    gnome_dialog_run_and_close(GNOME_DIALOG(dialog));    
+void R_ShowQueuedMessages()
+{
+    GList *l;
+
+    for(l = messages_list; l != NULL; l = l->next) {
+	R_ShowMessage((char *) l->data);
+	g_free(l->data);
+    }
+
+    g_list_free(messages_list);
+    messages_list = NULL;
 }
 
 	/*--- Initialization Code ---*/
@@ -247,6 +274,10 @@ int main(int ac, char **av)
 			       g_strdup_printf("%s.%s %s (%s %s, %s)", R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR),
 			       ac, av,
 			       popt_options, 0, NULL);
+
+    R_gnome_initialised = TRUE;
+
+    R_ShowQueuedMessages();
 
     /* Load saved preferences */
     R_gnome_load_prefs();

@@ -40,12 +40,18 @@ static void edit_copy_cb(GtkWidget *widget, gpointer data)
 static void edit_paste_cb(GtkWidget *widget, gpointer data)
 {
   gtk_editable_paste_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
+  gtk_editable_select_region(GTK_EDITABLE(R_gtk_terminal_text),
+			     gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)),
+			     gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)));
 }
 
 static void edit_copy_paste_cb(GtkWidget *widget, gpointer data)
 {
   gtk_editable_copy_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
   gtk_editable_paste_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
+  gtk_editable_select_region(GTK_EDITABLE(R_gtk_terminal_text),
+			     gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)),
+			     gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)));
 }
 
 static void edit_clear_cb(GtkWidget *widget, gpointer data)
@@ -233,7 +239,18 @@ static void help_about_cb(GtkWidget *widget,
 
 static void generic_cb(GtkWidget *widget, gpointer data)
 {
-  g_message("Menu item selected");
+    GtkWidget *dialog;
+
+    dialog = gnome_message_box_new("This menu item is currently unimplemented",
+				   GNOME_MESSAGE_BOX_INFO,
+				   GNOME_STOCK_BUTTON_CLOSE,
+				   NULL);
+
+    gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
+    gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+    gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
+
+    gnome_dialog_run_and_close(GNOME_DIALOG(dialog));
 }
 
 static GnomeUIInfo file_menu[] =
@@ -262,15 +279,6 @@ static GnomeUIInfo edit_menu[] =
   GNOMEUIINFO_END
 };
 
-static GnomeUIInfo commands_menu[] =
-{
-  { GNOME_APP_UI_ITEM, "_Interrupt", "Interrupt R processing (SIGTERM)", commands_interrupt_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_STOP, GDK_Escape, (GdkModifierType)0, NULL },
-  GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_ITEM_NONE("source...", "Load a file containing R source", commands_source_cb),
-  GNOMEUIINFO_ITEM_NONE("grep...", "Search for matches to a regular expression within a vector of character strings", generic_cb),
-  GNOMEUIINFO_END
-};
-
 static GnomeUIInfo data_menu[] =
 {
   GNOMEUIINFO_ITEM_NONE("Edit Object...", "Use an editor to edit an R object", generic_cb),
@@ -287,12 +295,26 @@ static GnomeUIInfo graphics_menu[] =
   GNOMEUIINFO_END
 };
 
+static GnomeUIInfo commands_menu[] =
+{
+  { GNOME_APP_UI_ITEM, "_Interrupt", "Interrupt R processing (SIGTERM)", commands_interrupt_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_MENU_STOP, GDK_Escape, (GdkModifierType)0, NULL },
+  GNOMEUIINFO_SEPARATOR,
+  GNOMEUIINFO_SUBTREE("_Data", data_menu),
+  GNOMEUIINFO_SUBTREE("_Graphics", graphics_menu),
+  GNOMEUIINFO_SEPARATOR,
+  GNOMEUIINFO_ITEM_NONE("grep...", "Search for matches to a regular expression within a vector of character strings", generic_cb),
+  GNOMEUIINFO_ITEM_NONE("setwd...", "Set the working directory", generic_cb),
+  GNOMEUIINFO_ITEM_NONE("source...", "Load a file containing R source", commands_source_cb),
+  GNOMEUIINFO_END
+};
+
 static GnomeUIInfo settings_menu[] =
 {
   GNOMEUIINFO_MENU_PREFERENCES_ITEM(settings_prefs_cb, NULL),
   GNOMEUIINFO_END
 };
 
+/* FIXME: this should display a list of the other R windows owned by this process */
 static GnomeUIInfo windows_menu[] =
 {
   GNOMEUIINFO_END
@@ -331,8 +353,6 @@ static GnomeUIInfo main_menu[] =
   GNOMEUIINFO_MENU_FILE_TREE(file_menu),
   GNOMEUIINFO_MENU_EDIT_TREE(edit_menu),
   GNOMEUIINFO_SUBTREE("_Commands", commands_menu),
-  GNOMEUIINFO_SUBTREE("_Data", data_menu),
-  GNOMEUIINFO_SUBTREE("_Graphics", graphics_menu),
   GNOMEUIINFO_MENU_SETTINGS_TREE(settings_menu),
   GNOMEUIINFO_MENU_WINDOWS_TREE(windows_menu),
   GNOMEUIINFO_MENU_HELP_TREE(help_menu),
