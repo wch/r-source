@@ -37,6 +37,14 @@ in, and unsets it when it terminates.
 Note that unlink() no longer deletes empty directories, but has
 a new argument recursive=TRUE to delete directories (empty or not).
 
+New functions memory.size and DLL.version.  The Windows memory manager
+proved to be (far) too slow to work with the generational garbage
+collector, so it was replaced.  The current memory manager rarely
+releases memory back to Windows (but reuses memory very efficiently)
+so memory usage will usually grow slowly over the course of a session.
+Memory used by large objects will normally be returned at garbage
+collection.
+
 make check no longer makes R, just runs the tests (as make test
 always has).
 

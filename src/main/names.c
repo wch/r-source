@@ -515,8 +515,10 @@ FUNTAB R_FunTab[] =
 {"dir.create",  do_dircreate,   0,      11,     1,      PP_FUNCALL},
 {"winDialog",   do_windialog,   0,      11,     2,      PP_FUNCALL},
 {"winDialogString",  do_windialogstring,   0,      11,     2,      PP_FUNCALL},
-{"winMenuAdd",  do_winmenuadd, 0,      11,     3,      PP_FUNCALL},
-{"winMenuDel",  do_winmenudel, 0,      11,     2,      PP_FUNCALL},
+{"winMenuAdd",  do_winmenuadd,	0,      11,     3,      PP_FUNCALL},
+{"winMenuDel",  do_winmenudel,	0,      11,     2,      PP_FUNCALL},
+{"memory.size",	do_memsize,	0,	11,	1,	PP_FUNCALL},
+{"DLL.version",	do_dllversion,	0,	11,	1,	PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	4,	PP_FUNCALL},

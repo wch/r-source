@@ -68,6 +68,8 @@ SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
+SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
