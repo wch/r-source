@@ -145,6 +145,8 @@ University of California, Los Angeles, CA, USA
 Dana Farber Cancer Institute, Boston, MA, USA
 @item @uref{http://lib.stat.cmu.edu/R/CRAN/}
 Statlib, Carnegie Mellon University, PA, USA
+@item @uref{http://cran.mirrors.pair.com/}
+Pair Networks, PA, USA
 @item @uref{http://www.binarycode.org/cran}
 BinaryCode.org, Austin, TX, USA
 @item @uref{ http://mirrors.theonlinerecordstore.com/CRAN/}
