@@ -109,7 +109,6 @@
 #undef HAVE_LOCALE_H
 #undef HAVE_SYS_STAT_H
 #undef HAVE_UNISTD_H
-#undef R_PROFILING
 #undef HAVE_PWD_H
 #undef HAVE_GRP_H
 #undef HAVE_STAT
@@ -146,7 +145,7 @@
 #undef HAVE_PNG
 #undef HAVE_JPEG
 
-/* Some platforms other than ELF drop the leading _ */
+/* Show symbols have a leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
 
 /* SunOS 4 is famous for broken header files */
@@ -155,7 +154,7 @@
 /* Getting the working directory */
 #undef HAVE_GETCWD
 
-/* Maximal length of an entire file name */
+/* For MAXPATHLEN, the maximal length of a path name */
 #undef HAVE_SYS_PARAM_H
 
 /* Used for buffer-overflow in printutils.c if available */
@@ -164,6 +163,9 @@
 /* Which GUIs can we use? */
 #undef HAVE_X11
 #undef HAVE_GNOME
+
+/* Enable R-level profiling */
+#undef R_PROFILING
 
 /* Write barrier testing */
 #undef TESTING_WRITE_BARRIER
