@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-01-29), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2005-02-14), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1742,7 +1742,7 @@ Sep 1961  20  30
 +        0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1,
 +        1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0)
 > try(glm(y ~ x, family = poisson(identity)))
-Error: no valid set of coefficients has been found:please supply starting values
+Error: no valid set of coefficients has been found: please supply starting values
 In addition: Warning message:
 NaNs produced in: log(x) 
 > ## failed because start = NULL in 1.4.1
@@ -4149,7 +4149,7 @@ Coefficients:
           7           8           9          10 
  0.08867482  0.25896653  0.27533143 -0.47793778 
 Warning message:
-'newdata' had 2 rows but variable(s) found have 10 rows
+'newdata' had 2 rows but variable(s) found have 10 rows 
 > ## warns as from 2.0.0
 > 
 > 
@@ -4476,4 +4476,43 @@ character(0)
 > grep("(.*s){3}", state.name, v = TRUE)
 [1] "Massachusetts" "Mississippi"  
 > ## Thought Arkansas had 3 s's.
+> 
+> 
+> ## Replacing part of a non-existent column could create a short column.
+> xx<- data.frame(a=1:4, b=letters[1:4])
+> xx[2:3, "c"] <- 2:3
+> ## gave short column in R < 2.1.0.
+> 
+> 
+> ## add1/drop1 could give misleading results if missing values were involved
+> y <- rnorm(1:20)
+> x <- 1:20; x[10] <- NA
+> x2 <- runif(20); x2[20] <- NA
+> fit <- lm(y ~ x)
+> drop1(fit)
+Single term deletions
+
+Model:
+y ~ x
+       Df Sum of Sq     RSS     AIC
+<none>              20.1913  5.1555
+x       1    1.4798 21.6711  4.4993
+> res <-  try(stats:::drop1.default(fit))
+Error in stats:::drop1.default(fit) : number of rows in use has changed: remove missing values?
+> stopifnot(inherits(res, "try-error"))
+> add1(fit, ~ . +x2)
+Single term additions
+
+Model:
+y ~ x
+       Df Sum of Sq     RSS     AIC
+<none>              20.1913  6.0679
+x2      1    2.5982 17.5931  5.5885
+Warning message:
+using the 18/19 rows from a combined fit in: add1.lm(fit, ~. + x2) 
+> res <-  try(stats:::add1.default(fit, ~ . +x2))
+Error in stats:::add1.default(fit, ~. + x2) : 
+	number of rows in use has changed: remove missing values?
+> stopifnot(inherits(res, "try-error"))
+> ## 2.0.1 ran and gave incorrect answers.
 > 

@@ -1492,3 +1492,23 @@ grep("(.*s){2}", "Arkansas", v = TRUE)
 grep("(.*s){3}", "Arkansas", v = TRUE)
 grep("(.*s){3}", state.name, v = TRUE)
 ## Thought Arkansas had 3 s's.
+
+
+## Replacing part of a non-existent column could create a short column.
+xx<- data.frame(a=1:4, b=letters[1:4])
+xx[2:3, "c"] <- 2:3
+## gave short column in R < 2.1.0.
+
+
+## add1/drop1 could give misleading results if missing values were involved
+y <- rnorm(1:20)
+x <- 1:20; x[10] <- NA
+x2 <- runif(20); x2[20] <- NA
+fit <- lm(y ~ x)
+drop1(fit)
+res <-  try(stats:::drop1.default(fit))
+stopifnot(inherits(res, "try-error"))
+add1(fit, ~ . +x2)
+res <-  try(stats:::add1.default(fit, ~ . +x2))
+stopifnot(inherits(res, "try-error"))
+## 2.0.1 ran and gave incorrect answers.

@@ -681,10 +681,15 @@ data.frame <-
 	for(jjj in seq(len=p)) {
 	    jj <- jseq[jjj]
 	    vjj <- value[[ jvseq[[jjj]] ]]
-	    xj <- x[[jj]]
-	    if(length(dim(xj)) != 2) xj[iseq] <- vjj else xj[iseq, ] <- vjj
-            ## if a column exists, preserve its attributes
-            if(jj <= nvars) x[[jj]][] <- xj else x[[jj]] <- xj
+            if(jj <= nvars) {
+                ## if a column exists, preserve its attributes
+                if(length(dim(x[jj])) != 2) x[[jj]][iseq] <- vjj
+                else x[[jj]][iseq, ] <- vjj
+            } else {
+                ## try to make a new column match in length: may be an error
+                length(vjj) <- nrows
+                x[[jj]] <- vjj
+            }
 	}
     else if(p > 0) for(jjj in p:1) { # we might delete columns with NULL
 	jj <- jseq[jjj]
@@ -746,7 +751,7 @@ data.frame <-
     }
     if(all(i >= 0) && (nn <- max(i)) > nrows) {
 	## expand
-	if(n==0) {
+	if(n == 0) {
 	    nrr <- as.character((nrows + 1):nn)
 	    if(inherits(value, "data.frame") &&
 	       (dim(value)[1]) >= length(nrr)) {

@@ -16,6 +16,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ans <- matrix(nrow = ns + 1, ncol = 2)
     dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
     ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    n0 <- length(object$residuals)
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) cat("trying +", tt, "\n")
@@ -23,6 +24,8 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
                        evaluate = FALSE)
         nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
+        if(length(nfit$residuals) != n0)
+            stop("number of rows in use has changed: remove missing values?")
     }
     dfs <- ans[,1] - ans[1,1]
     dfs[1] <- NA
@@ -255,6 +258,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ans <- matrix(nrow = ns + 1, ncol = 2)
     dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
     ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    n0 <- length(object$residuals)
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) cat("trying -", tt, "\n")
@@ -262,6 +266,8 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
                        evaluate = FALSE)
         nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
+        if(length(nfit$residuals) != n0)
+            stop("number of rows in use has changed: remove missing values?")
     }
     dfs <- ans[1,1] - ans[,1]
     dfs[1] <- NA

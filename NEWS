@@ -236,6 +236,13 @@ NEW FEATURES
 	pbinom(), pf(), qbeta() and other functions using pbeta at C
 	level.)
 
+    o   Replacement in a non-existent column of a data frame tries
+	harder to create a column of the correct length and so avoid a
+	corrupt data frame.
+
+    o   The default methods for add1() and drop1() check for changes
+	in the number of cases in use.
+
 
 INTERNATIONALIZATION
 
