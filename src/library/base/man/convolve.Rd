@@ -1,23 +1,40 @@
 \name{convolve}
 \title{Fast Convolution}
 \usage{
-convolve(x, y, conj = TRUE)
+convolve(x, y, conj = TRUE, circular = TRUE)
 }
 \alias{convolve}
 \arguments{
 \item{x,y}{numeric sequences \emph{of the same length} to be convolved.}
+\item{conj}{logical; if \code{TRUE}, take the complex \emph{conjugate}
+    before back-transforming (default, and used for usual convolution).}
+\item{circular}{logical; if \code{TRUE}, the two sequences are treated
+    as \emph{circular}, i.e., periodic.  Otherwise (\code{circular =
+	FALSE}), they are padded with \code{0}s first.}
 }
 \description{
     Use the Fast Fourier Transform to compute the
-    (circular) convolution of two sequences (of same length).
+    (circular) convolution of two sequences.
+}
+\details{
+    The Fast Fourier Transform, \code{\link{fft}}, is used for efficiency.
+
+    The input sequences \code{x} and  \code{y} must have the same length if
+    \code{circular = TRUE}).
+
+    The usual ``open'' convolution uses \code{circular = FALSE}.
+    It can be used for a fast weighted running mean filter.
 }
 \value{
-If \code{r <- convolve(x,y)} and \code{n <- length(x)}, then
-\deqn{r_k = \sum_{i=1}^n x_i y_{k-i}}{r[k] = sum(i=1,..,n;  x[i] * y[k-i])}
-for \eqn{k = 1,\dots,n}, where \eqn{y_{j} = y_{n+j}}{y[j] == y[n+j]} for
-\eqn{j < 0}.
+%%-MM: TODO: Polish --- circular  <-> non-circular
+%% --  Show how to use for weighted running mean filter !
+    If \code{r <- convolve(x,y, conj=TRUE, circular= Circ )}
+    and \code{n <- length(x)}, then
+    \deqn{r_k = \sum_{i=1}^n x_i y_{k-i}}{r[k] = sum(i=1,..,n;  x[i] * y[k-i])}
+    for \eqn{k = 1,\dots,n}.
 
-The Fast Fourier Transform, \code{\link{fft}}, is used for efficiency.
+    If \code{Circ = TRUE}, then
+    \eqn{y_{j} = y_{n+j}}{y[j] == y[n+j]} for \eqn{j < 0}.
 }
 \references{
 Brillinger, D. R. (1981).
