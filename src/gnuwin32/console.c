@@ -1012,10 +1012,7 @@ FBEGIN
 		    strcpy(buf, cur_line);
 		    p->r = -1;
 		    cur_line[max_pos] = '\0';
-		    if (max_pos && addtohistory) {
-			xbufadds(p->history, "\n", 0);
-			xbufadds(p->history, cur_line, 0);
-		    }
+		    if (max_pos && addtohistory)  gl_histadd(cur_line);
 		    xbuffixl(p->lbuf);
 		    consolewrites(c, "\n");
 		    REDRAW;
