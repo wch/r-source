@@ -7,7 +7,7 @@ forwardsolve(l, x, k= ncol(l), upper.tri = FALSE, transpose = FALSE)
 \alias{backsolve}
 \alias{forwardsolve}
 \arguments{
-    % Name 'r' is not really make sense for upper.tri = FALSE
+    % Name 'r' is not really making sense for upper.tri = FALSE
     % Name 'x' is also a  misnomer,  should rather be  'b'. -- is this S ??
 \item{r,l}{an upper (or lower) triangular matrix giving the coefficients for
 the system to be solved.  Values below (above) the diagonal are ignored.}
@@ -38,7 +38,7 @@ r <- rbind(c(1,2,3),
            c(0,0,2))
 ( y <- backsolve(r, x <- c(8,4,2)) ) # -1 3 1
 r \%*\% y # == x = (8,4,2)
-c( y2 <- backsolve(r, x, transpose = TRUE)) # 8 -12 -5
+( y2 <- backsolve(r, x, transpose = TRUE)) # 8 -12 -5
 all(t(r) \%*\% y2 == x)# exactly on Linux (Pentium)
 all(y  == backsolve(t(r), x, upper = FALSE, transpose = TRUE))
 all(y2 == backsolve(t(r), x, upper = FALSE,  transpose = FALSE))
