@@ -1089,7 +1089,7 @@ SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < len; i++) {
 	s = STRING_ELT(x, i);
 	if(na || s != NA_STRING)
-	    SET_STRING_ELT(ans, i, mkChar(EncodeString(s, 0, quote, right)));
+	    SET_STRING_ELT(ans, i, mkChar(EncodeString(s, w, quote, right)));
     }
     UNPROTECT(1);
     return ans;

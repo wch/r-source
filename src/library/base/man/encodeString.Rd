@@ -24,7 +24,7 @@ encodeString(x, w = 0, quote = "", right = FALSE, na = TRUE)
   (backspace), \code{\f} (formfeed), \code{\n} (line feed), \code{\r}
   (carriage return), \code{\t} (tab), \code{\v} (vertical tab) and
   \code{\0} (nul) as well as backslash and non-printable characters,
-  which are printed in octal notation (\code{xyz} with leading zeroes).
+  which are printed in octal notation (\code{\xyz} with leading zeroes).
 #ifdef unix
   (Which characters are non-printable depends on the current locale.)
 #endif
