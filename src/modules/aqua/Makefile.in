@@ -29,6 +29,12 @@ aqua_la = R_aqua$(SHLIB_EXT)
 Rexecmodulesdir_LTLIBRARIES = $(aqua_la)
 aqua_la_SOURCES = $(SOURCES)
 aqua_la_OBJECTS = $(OBJECTS)
+## <FIXME>
+## According to Jan de Leeuw <deleeuw@stat.ucla.edu>, we currently need
+## -flat_namespace -undefined suppress to build this module (which most
+## likely means that there is somethin wrong with it).
+aqua_la_LDFLAGS = -flat_namespace -undefined suppress
+## </FIXME>
 @USE_LIBTOOL_TRUE@aqua_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
 aqua_la_LIBADD = $(LIBR)
 
