@@ -607,11 +607,12 @@ FUNTAB R_FunTab[] =
 {NULL,		NULL,		0,	0,	0,	0},
 };
 
+
 int StrToInternal(char *s)
 {
 	int i;
 	for (i = 0; R_FunTab[i].name; i++)
-		if(strcmp(s, R_FunTab[i].name) == 0) return i;
+		if (strcmp(s, R_FunTab[i].name) == 0) return i;
 	return 0;
 }
 
@@ -619,101 +620,100 @@ int StrToInternal(char *s)
 int hashpjw(s)
 char *s;
 {
-	char *p;
-	unsigned h = 0, g;
-	for (p = s; *p; p = p + 1) {
-		h = (h << 4) + (*p);
-		if ((g = h & 0xf0000000) != 0) {
-			h = h ^ (g >> 24);
-			h = h ^ g;
-		}
+    char *p;
+    unsigned h = 0, g;
+    for (p = s; *p; p = p + 1) {
+	h = (h << 4) + (*p);
+	if ((g = h & 0xf0000000) != 0) {
+	    h = h ^ (g >> 24);
+	    h = h ^ g;
 	}
-	return h % HSIZE;
+    }
+    return h % HSIZE;
 }
 
 extern void installFunTab(int i)
 {
 
-	if ( (R_FunTab[i].eval % 100 )/10 )
-		INTERNAL(install(R_FunTab[i].name)) = mkPRIMSXP(i, R_FunTab[i].eval % 10);
-	else
-		SYMVALUE(install(R_FunTab[i].name)) = mkPRIMSXP(i, R_FunTab[i].eval % 10);
-	/*
-	printf("%d %s %d\n", i, R_FunTab[i].name, R_FunTab[i].code);
-	*/
+    if ( (R_FunTab[i].eval % 100 )/10 )
+	INTERNAL(install(R_FunTab[i].name))
+	    = mkPRIMSXP(i, R_FunTab[i].eval % 10);
+    else
+	SYMVALUE(install(R_FunTab[i].name))
+	    = mkPRIMSXP(i, R_FunTab[i].eval % 10);
 }
 
 void SymbolShortcuts()
 {
-	R_Bracket2Symbol = install("[[");
-	R_BracketSymbol = install("[");
-	R_ClassSymbol = install("class");
-	R_DimNamesSymbol = install("dimnames");
-	R_DimSymbol = install("dim");
-	R_DollarSymbol = install("$");
-	R_DotsSymbol = install("...");
-	R_DropSymbol = install("drop");
-	R_LevelsSymbol = install("levels");
-	R_ModeSymbol = install("mode");
-	R_NamesSymbol = install("names");
-	R_NaRmSymbol = install("na.rm");
-	R_RowNamesSymbol = install("row.names");
-	R_SeedsSymbol = install(".Random.seed");
-	R_LastvalueSymbol = install(".Last.value");
-	R_TspSymbol = install("tsp");
-	R_CommentSymbol = install("comment");
+    R_Bracket2Symbol = install("[[");
+    R_BracketSymbol = install("[");
+    R_ClassSymbol = install("class");
+    R_DimNamesSymbol = install("dimnames");
+    R_DimSymbol = install("dim");
+    R_DollarSymbol = install("$");
+    R_DotsSymbol = install("...");
+    R_DropSymbol = install("drop");
+    R_LevelsSymbol = install("levels");
+    R_ModeSymbol = install("mode");
+    R_NamesSymbol = install("names");
+    R_NaRmSymbol = install("na.rm");
+    R_RowNamesSymbol = install("row.names");
+    R_SeedsSymbol = install(".Random.seed");
+    R_LastvalueSymbol = install(".Last.value");
+    R_TspSymbol = install("tsp");
+    R_CommentSymbol = install("comment");
 }
 
 /* initialize the symbol table */
 void InitNames()
 {
-	int i;
+    int i;
 
-	/* THIS MUST BE THE FIRST CONS CELL ALLOCATED */
-	/* OR ARMAGEDON HAPPENS. */
+    /* THIS MUST BE THE FIRST CONS CELL ALLOCATED */
+    /* OR ARMAGEDON HAPPENS. */
 
-	R_NilValue = allocSExp(NILSXP);
-	CAR(R_NilValue) = R_NilValue;
-	CDR(R_NilValue) = R_NilValue;
-	TAG(R_NilValue) = R_NilValue;
-	ATTRIB(R_NilValue) = R_NilValue;
+    R_NilValue = allocSExp(NILSXP);
+    CAR(R_NilValue) = R_NilValue;
+    CDR(R_NilValue) = R_NilValue;
+    TAG(R_NilValue) = R_NilValue;
+    ATTRIB(R_NilValue) = R_NilValue;
 
-	R_UnboundValue = allocSExp(SYMSXP);
-	SYMVALUE(R_UnboundValue) = R_UnboundValue;
-	PRINTNAME(R_UnboundValue) = R_NilValue;
-	ATTRIB(R_UnboundValue) = R_NilValue;
+    R_UnboundValue = allocSExp(SYMSXP);
+    SYMVALUE(R_UnboundValue) = R_UnboundValue;
+    PRINTNAME(R_UnboundValue) = R_NilValue;
+    ATTRIB(R_UnboundValue) = R_NilValue;
 
-	R_MissingArg = allocSExp(SYMSXP);
-	SYMVALUE(R_MissingArg) = R_MissingArg;
-	PRINTNAME(R_MissingArg) = mkChar("");
-	ATTRIB(R_MissingArg) = R_NilValue;
+    R_MissingArg = allocSExp(SYMSXP);
+    SYMVALUE(R_MissingArg) = R_MissingArg;
+    PRINTNAME(R_MissingArg) = mkChar("");
+    ATTRIB(R_MissingArg) = R_NilValue;
 
-	R_CommentSxp = R_NilValue;
-	R_ParseText = R_NilValue;
+    R_CommentSxp = R_NilValue;
+    R_ParseText = R_NilValue;
 
-	/* changed from mkChar so mkChar can see if it is getting "NA" */
-	/* and then retrun NA_STRING rather than alloc a new CHAR */
+    /* changed from mkChar so mkChar can see if it is getting "NA" */
+    /* and then retrun NA_STRING rather than alloc a new CHAR */
 
-	NA_STRING = allocString(strlen("NA"));
-	strcpy(CHAR(NA_STRING), "NA");
-	print_na_string = NA_STRING;
+    NA_STRING = allocString(strlen("NA"));
+    strcpy(CHAR(NA_STRING), "NA");
+    print_na_string = NA_STRING;
 
-	R_BlankString = mkChar("");
+    R_BlankString = mkChar("");
 
-	if (!(R_SymbolTable = (SEXP *) malloc(HSIZE * sizeof(SEXP))))
-		R_Suicide("couldn't allocate memory for symbol table");
+    if (!(R_SymbolTable = (SEXP *) malloc(HSIZE * sizeof(SEXP))))
+	R_Suicide("couldn't allocate memory for symbol table");
 
-	for (i = 0; i < HSIZE; i++)
-		R_SymbolTable[i] = R_NilValue;
+    for (i = 0; i < HSIZE; i++)
+	R_SymbolTable[i] = R_NilValue;
 
-	/* Sets up a set of globals so that a symbol table */
-	/* search can be avoided when matching something like */
-	/* dim or dimnames */
+    /* Sets up a set of globals so that a symbol table */
+    /* search can be avoided when matching something like */
+    /* dim or dimnames */
 
-	SymbolShortcuts();
+    SymbolShortcuts();
 
-	for (i = 0; R_FunTab[i].name; i++)
-		installFunTab(i);
+    for (i = 0; R_FunTab[i].name; i++)
+	installFunTab(i);
 }
 
 /* install - probe the symbol table */
@@ -721,54 +721,54 @@ void InitNames()
 /* Returns the symbol corresponding to the string "name". */
 SEXP install(char *name)
 {
-	char buf[128];
-	SEXP sym;
-	int i;
+    char buf[128];
+    SEXP sym;
+    int i;
 
-	if(*name == '\0')
-		error("attempt to use zero-length variable name\n");
-	if (strlen(name) > 127)
-		error("symbol print-name too long\n");
-	strcpy(buf, name);
+    if (*name == '\0')
+	error("attempt to use zero-length variable name\n");
+    if (strlen(name) > 127)
+	error("symbol print-name too long\n");
+    strcpy(buf, name);
 
-	i = hashpjw(buf);
+    i = hashpjw(buf);
 
-		/* check to see if the symbol is already there */
-	for (sym = R_SymbolTable[i]; sym != R_NilValue; sym = CDR(sym))
-		if (strcmp(buf, CHAR(PRINTNAME(CAR(sym)))) == 0)
-			return (CAR(sym));
+    /* check to see if the symbol is already there */
+    for (sym = R_SymbolTable[i]; sym != R_NilValue; sym = CDR(sym))
+	if (strcmp(buf, CHAR(PRINTNAME(CAR(sym)))) == 0)
+	    return (CAR(sym));
 
-		/* make a new symbol node and link it into the list */
-	sym = mkSYMSXP(mkChar(buf), R_UnboundValue);
-	R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
-	return (sym);
+    /* make a new symbol node and link it into the list */
+    sym = mkSYMSXP(mkChar(buf), R_UnboundValue);
+    R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
+    return (sym);
 }
 
 SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	SEXP s, fun;
+    SEXP s, fun;
 
-	int save = R_PPStackTop;
+    int save = R_PPStackTop;
 
-	checkArity(op, args);
+    checkArity(op, args);
 
-	s = CAR(args);
-	fun = CAR(s);
-	if (!isSymbol(fun))
-		errorcall(call, "invalid internal function\n");
+    s = CAR(args);
+    fun = CAR(s);
+    if (!isSymbol(fun))
+	errorcall(call, "invalid internal function\n");
 
-	if (INTERNAL(fun) == R_NilValue)
-		errorcall(call, "no internal function \"%s\"\n", CHAR(PRINTNAME(fun)));
-	args = CDR(s);
-	if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
-		args = evalList(args, env);
-	PROTECT(args);
-	R_Visible = 1 - PRIMPRINT(INTERNAL(fun));
-	args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
-	UNPROTECT(1);
-	if(save != R_PPStackTop) {
-		printf("stack imbalance in internal %s, %d then %d\n",
-			PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
-	}
-	return (args);
+    if (INTERNAL(fun) == R_NilValue)
+	errorcall(call, "no internal function \"%s\"\n", CHAR(PRINTNAME(fun)));
+    args = CDR(s);
+    if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
+	args = evalList(args, env);
+    PROTECT(args);
+    R_Visible = 1 - PRIMPRINT(INTERNAL(fun));
+    args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
+    UNPROTECT(1);
+    if (save != R_PPStackTop) {
+	printf("stack imbalance in internal %s, %d then %d\n",
+	       PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
+    }
+    return (args);
 }

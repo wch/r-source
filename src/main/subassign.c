@@ -110,7 +110,7 @@ SEXP do_checkbounds(SEXP call, SEXP op, SEXP args, SEXP rho)
 static SEXP EnlargeVector(SEXP x, int newlen)
 {
     int i, len;
-    SEXP blank, newx, names, newnames;
+    SEXP newx, names, newnames;
 
     /* Sanity Checks */
     if (R_BoundChecking)
@@ -147,11 +147,10 @@ static SEXP EnlargeVector(SEXP x, int newlen)
 	}
 	break;
     case STRSXP:
-	blank = mkChar("");
 	for (i = 0; i < len; i++)
 	    STRING(newx)[i] = STRING(x)[i];
 	for (i = len; i < newlen; i++)
-	    STRING(newx)[i] = blank;
+	    STRING(newx)[i] = R_BlankString;
 	break;
     case EXPRSXP:
     case VECSXP:
@@ -166,11 +165,10 @@ static SEXP EnlargeVector(SEXP x, int newlen)
     names = getAttrib(x, R_NamesSymbol);
     if (!isNull(names)) {
 	PROTECT(newnames = allocVector(STRSXP, newlen));
-	blank = mkChar("");
 	for (i = 0; i < len; i++)
 	    STRING(newnames)[i] = STRING(names)[i];
 	for (i = len; i < newlen; i++)
-	    STRING(newnames)[i] = blank;
+	    STRING(newnames)[i] = R_BlankString;
 	setAttrib(newx, R_NamesSymbol, newnames);
 	UNPROTECT(1);
     }
@@ -560,11 +558,9 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    }
 	}
 	else {
-	    SEXP blank;
 	    PROTECT(oldnames = allocVector(STRSXP, nx));
-	    blank = mkChar("");
 	    for (i = 0; i < nx; i++)
-		STRING(oldnames)[i] = blank;
+		STRING(oldnames)[i] = R_BlankString;
 	    for (i = 0; i < n; i++) {
 		if (STRING(newnames)[i] != R_NilValue) {
 		    ii = INTEGER(index)[i];
@@ -1667,9 +1663,8 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 		    for (i = 0; i < nx; i++)
 			VECTOR(ans)[i] = VECTOR(x)[i];
 		    if (isNull(names)) {
-			SEXP blank = mkChar("");
 			for (i = 0; i < nx; i++)
-			    STRING(ansnames)[i] = blank;
+			    STRING(ansnames)[i] = R_BlankString;
 		    }
 		    else {
 			for (i = 0; i < nx; i++)

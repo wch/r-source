@@ -1013,9 +1013,12 @@ SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
+    /* Check the arguments; we need a list and environment. */
+
     arglist = CAR(args);
     if (!isNewList(arglist))
 	errorcall(call, "list argument expected\n");
+
     envir = CADR(args);
     if (!isNull(envir) && !isEnvironment(envir))
 	errorcall(call, "invalid environment\n");
@@ -1024,11 +1027,14 @@ SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n < 1)
 	errorcall(call, "argument must have length at least 1\n");
     names = getAttrib(arglist, R_NamesSymbol);
-    PROTECT(args = allocList(n - 1));
-    for (i = 0, pargs = args; i < n - 1; i++, pargs = CDR(pargs)) {
+    PROTECT(pargs = args = allocList(n - 1));
+    for (i = 0; i < n - 1; i++) {
 	CAR(pargs) = VECTOR(arglist)[i];
-	if (names != R_NilValue)
+	if (names != R_NilValue && *CHAR(STRING(names)[i]) != '\0')
 	    TAG(pargs) = install(CHAR(STRING(names)[i]));
+	else
+	    TAG(pargs) = R_NilValue;
+	pargs = CDR(pargs);
     }
     CheckFormals(args);
     args =  mkCLOSXP(args, VECTOR(arglist)[n - 1], envir);
@@ -1585,26 +1591,31 @@ static SEXP ItemName(SEXP names, int i)
             CHAR(STRING(names)[i])[0] != '\0')
         return STRING(names)[i];
     else
-        return R_NilValue;
+        return R_BlankString;
 }
 
 SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP c, names;
+    SEXP c, fun, names;
     int i, n;
+
     checkArity(op, args);
-    if (!isString(CAR(args)) || length(CAR(args)) < 0 ||
-	streql(CHAR(STRING(CAR(args))[0]), ""))
-	errorcall(call, "first argument must be a string\n");
-    if (!isNull(CADR(args)) && !isNewList(CADR(args)))
-	errorcall(call, "second argument must be a list\n");
-    n = length(CADR(args));
-    PROTECT(call = allocList(n + 1));
-    TYPEOF(call) = LANGSXP;
-    CAR(call) = install(CHAR(STRING(CAR(args))[0]));
-    c = CDR(call);
+
+    fun = CAR(args);
     args = CADR(args);
+
+    if (!isString(fun) || length(fun) <= 0 || CHAR(STRING(fun)[0]) == '\0')
+	    errorcall(call, "first argument must be a string\n");
+
+    if (!isNull(args) && !isNewList(args))
+	errorcall(call, "second argument must be a list\n");
+    n = length(args);
     names = getAttrib(args, R_NamesSymbol);
+
+    PROTECT(c = call = allocList(n + 1));
+    TYPEOF(c) = LANGSXP;
+    CAR(c) = install(CHAR(STRING(fun)[0]));
+    c = CDR(c);
     for (i = 0; i < n; i++) {
 	CAR(c) = VECTOR(args)[i];
 	TAG(c) = install(CHAR(ItemName(names, i)));

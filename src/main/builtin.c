@@ -339,7 +339,7 @@ SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int len, i;
-    SEXP s, blank;
+    SEXP s;
     SEXPTYPE mode;
     checkArity(op, args);
     len = asInteger(CADR(args));
@@ -373,11 +373,8 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < len; i++)
 	    REAL(s)[i] = 0.0;
     else if (mode == STRSXP) {
-	PROTECT(s);
-	PROTECT(blank = mkChar(""));
 	for (i = 0; i < len; i++)
-	    STRING(s)[i] = blank;
-	UNPROTECT(2);
+	    STRING(s)[i] = R_BlankString;
     }
     return s;
 }

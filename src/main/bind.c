@@ -169,12 +169,11 @@ static void ListAnswer(SEXP x, int recurse)
 		x = CDR(x);
 	    }
 	}
-	else {
+	else
 	    while (x != R_NilValue) {
 		LIST_ASSIGN(duplicate(CAR(x)));
 		x = CDR(x);
 	    }
-	}
 	break;
     default:
 	LIST_ASSIGN(duplicate(x));
@@ -416,7 +415,6 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
     case NILSXP:
 	break;
     case LISTSXP:
-    case LANGSXP:
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
 	    if (recurse) {
@@ -478,10 +476,10 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
     seqno = seqno + saveseqno;
 }
 
-/* Code to extract the optional arguments to c(). */
-/* We do it this way, rather than having an interpreted */
-/* font-end do the job, because we want to avoid duplication */
-/* at the top level.  FIXME : is there another possibility? */
+/* Code to extract the optional arguments to c().  We do it this */
+/* way, rather than having an interpreted font-end do the job, */
+/* because we want to avoid duplication at the top level. */
+/* FIXME : is there another possibility? */
 
 static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 {
@@ -568,13 +566,13 @@ SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
     /* we use the natural coercion for vector types. */
 
     mode = NILSXP;
-    if (ans_flags & 256) mode = EXPRSXP;
+    if (ans_flags & 256)      mode = EXPRSXP;
     else if (ans_flags & 128) mode = VECSXP;
-    else if (ans_flags & 64) mode = STRSXP;
-    else if (ans_flags & 32) mode = CPLXSXP;
-    else if (ans_flags & 16) mode = REALSXP;
-    else if (ans_flags &  8) mode = INTSXP;
-    else if (ans_flags &  1) mode = LGLSXP;
+    else if (ans_flags &  64) mode = STRSXP;
+    else if (ans_flags &  32) mode = CPLXSXP;
+    else if (ans_flags &  16) mode = REALSXP;
+    else if (ans_flags &   8) mode = INTSXP;
+    else if (ans_flags &   1) mode = LGLSXP;
 
     /* Allocate the return value and set up to pass through */
     /* the arguments filling in values of the returned object. */
@@ -787,10 +785,7 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	    seqno = 0;
 	    firstpos = 0;
 	    count = 0;
-	    NewExtractNames(args,
-			    R_NilValue,
-			    R_NilValue,
-			    recurse);
+	    NewExtractNames(args, R_NilValue, R_NilValue, recurse);
 #ifdef TRY
 	}
 #endif

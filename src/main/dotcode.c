@@ -959,13 +959,12 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if (havenames) {
-	SEXP names, blank;
+	SEXP names;
 	PROTECT(names = allocVector(STRSXP, nargs));
-	blank = mkChar("");
 	nargs = 0;
 	for (pargs = args ; pargs != R_NilValue ; pargs = CDR(pargs)) {
 	    if (TAG(pargs) == R_NilValue)
-		STRING(names)[nargs++] = blank;
+		STRING(names)[nargs++] = R_BlankString;
 	    else
 		STRING(names)[nargs++] = PRINTNAME(TAG(pargs));
         }
