@@ -23,8 +23,6 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
             codeFile <- file.path(which.lib.loc, package, "R", package)
 	    ## create environment (not attached yet)
 	    loadenv <- new.env(hash=TRUE, parent = .GlobalEnv)
-            ## add name attribute so env can be identified as a package env
-            attr(loadenv, "name") <- pkgname
 	    ## source file into loadenv
 	    if(file.exists(codeFile))
                 sys.source(codeFile, loadenv, keep.source = keep.source)
