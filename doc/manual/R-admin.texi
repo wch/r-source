@@ -696,6 +696,11 @@ needed so @code{libsunperf} can be used.
 An ATLAS `tuned' BLAS can also be used on Windows: see
 @file{src/gnuwin32/INSTALL} for how to enable this.
 
+Note that if @R{} is compiled against a non-default BLAS, then all
+BLAS-using packages must also be.  So if @R{} is re-built after ATLAS
+is installed, then packages such as @code{quantreg} will need to be
+re-installed.
+
 
 @node Configuration on Unix, New platforms, Essential and useful other programs, Top
 @appendix Configuration on Unix
@@ -990,14 +995,20 @@ of compilers and support libraries.
 @node Solaris, HPUX, Platform notes, Platform notes
 @subsection Solaris on Sparc
 
-R has been built successfully on Solaris 2.7 and 8 using
-@code{gcc}/@code{g77} and the SunPro WorkShop 6 compilers.
-When using the SunPro compilers do @emph{not} specify @code{-fast}, as
-this disables IEEE arithmetic.  The maximal set of optimization
-options known to work is
+@R{} has been built successfully on Solaris 2.7 using
+@command{gcc}/@command{g77} and the SunPro WorkShop 6 compilers, and less
+regularly on 2.5.1, 2.6 and 8.  GNU @command{make} is needed prior to 2.7
+for building other than in the source tree, and perhaps even then.
+
+When using the SunPro compilers do @emph{not} specify @option{-fast}, as
+this disables IEEE arithmetic and @command{make check} will fail.  The
+maximal set of optimization options known to work is
 @smallexample
 -xlibmil -xO5 -dalign
 @end smallexample
+We have found little performance difference between @command{gcc} and
+@command{cc} but considerable benefit from using a SunPro Fortran
+compiler: the @command{gcc}/@command{f77} combination works well.
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
 chip and for support to be enabled in the OS) we used
@@ -1010,23 +1021,38 @@ CXX=CC
 CXXFLAGS="-xO5 -xlibmil -dalign -xarch=v9"
 @end smallexample
 @noindent
-in @file{config.site}.  Note that using @code{f95} allows the Sun
-performance library to be selected: it will not work with @code{f77},
-nor with @code{g77}.
+in @file{config.site}.  Note that using @command{f95} allows the Sun
+performance library to be selected: it will not work with @command{f77},
+nor with @command{g77}.
 
+Some case is needed to ensure that libraries found by @command{configure}
+are compatible with the R executable and modules, as the testing
+process will not detect many of the possible problems.  For 32-bit
+builds under @command{cc} the flag @option{-dalign} is needed for some of
+the Sun libraries: fortunately the equivalent flag for @command{gcc},
+@option{-munaligned-doubles}, is the default.  In theory, libraries such
+as @code{libpng}, @code{libjpeg}, @code{zlib} and the ATLAS libraries
+need to be built with a @code{pic} or @code{PIC} flag, which could be
+a problem if static libraries are used.  In practice this seems to
+give little problem for 32-bit builds, but seems essential for 64-bit
+builds.
+
+For a 64-bit build, 64-bit libraries must be used.  As the
+configuration process starts with @code{LIBS=/usr/local/lib} you may
+need to reset it to avoid finding 32-bit addons.
 
 @node HPUX, IRIX, Solaris, Platform notes
 @subsection HPUX
-R has been built successfully on HPUX 10.2 and HPUX 11.0 using both
-native compilers and @code{gcc}.  By default, R is configured to use
-@code{gcc} and @code{g77} on HPUX.  Some installations of @code{g77}
-only install a static version of the @code{g2c} library that cannot be
+@R{} has been built successfully on HPUX 10.2 and HPUX 11.0 using both
+native compilers and @command{gcc}.  By default, R is configured to use
+@command{gcc} and @command{g77} on HPUX.  Some installations of @command{g77}
+only install a static version of the @command{g2c} library that cannot be
 linked into a shared library since its files have not been compiled with
 the appropriate flag for producing position independent code
-(@acronym{PIC}).  This will result in @code{make} failing with a linker
+(@acronym{PIC}).  This will result in @command{make} failing with a linker
 error complaining that code needs to be compiled with a @code{+z} or
-@code{+Z} flag, the native @code{cc} @acronym{PIC} flag.  If this is the
-case you either need to modify your @code{g77} installation or configure
+@code{+Z} flag, the native @command{cc} @acronym{PIC} flag.  If this is the
+case you either need to modify your @command{g77} installation or configure
 with the
 @smallexample
 --with-f77=fort77
@@ -1035,13 +1061,13 @@ with the
 flag to specify use of the native @acronym{POSIX}-compliant FORTRAN 77
 compiler.
 
-You may find that @code{configure} detects other libraries, such as
+You may find that @command{configure} detects other libraries, such as
 BLAS, that R needs to use as shared libraries but are only available as
 static libraries.  If you cannot install shared versions you will need to
-tell @code{configure} not to use these libraries.
+tell @command{configure} not to use these libraries.
 
-Some versions of @code{gcc} may contain what appears to be a bug at the
-@code{-O2} optimization level that causes
+Some versions of @command{gcc} may contain what appears to be a bug at the
+@option{-O2} optimization level that causes
 @smallexample
 > 2 %/% 2
 [1] 1
@@ -1049,25 +1075,25 @@ Some versions of @code{gcc} may contain what appears to be a bug at the
 [1] 0 0     # wrong!!
 @end smallexample
 @noindent
-which will cause @code{make check} to fail.  If this is the case, you
-should use @code{CFLAGS} to specify @code{-O} as the optimization level
+which will cause @command{make check} to fail.  If this is the case, you
+should use @code{CFLAGS} to specify @option{-O} as the optimization level
 to use.
 
-Some systems running HPUX 11.0 may have a @code{gcc} that was installed
+Some systems running HPUX 11.0 may have a @command{gcc} that was installed
 under HPUX 10.2.  Between versions 10.2 and 11.0 HPUX changed its
 support functions for @acronym{IEEE} arithmetic from the recommended
 functions of the @acronym{IEEE} standard to the ones specified in the
 C9x draft standard.  In particular, this means that @code{finite} has
-been replaced by @code{isfinite}.  A @code{gcc} configured for HPUX 10.2
+been replaced by @code{isfinite}.  A @command{gcc} configured for HPUX 10.2
 run on 11.0 will not find @code{isfinite}, and as a result
-@code{configure} does not recognize the machine as fully supporting IEEE
+@command{configure} does not recognize the machine as fully supporting IEEE
 arithmetic and does not define @code{IEEE_754} when compiling C code.
-This results in a failure in @code{make check}.  The best solution is to
-install a properly configures @code{gcc}.  An alternative work-around is
-to add @code{-DIEEE_754} to the @code{CFLAGS} variable.
+This results in a failure in @command{make check}.  The best solution is to
+install a properly configures @command{gcc}.  An alternative work-around is
+to add @option{-DIEEE_754} to the @code{CFLAGS} variable.
 
-You can configure R to use both the native @code{cc} and @code{fort77}
-with (assuming you are using a @code{csh} shell)
+You can configure @R{} to use both the native @command{cc} and @command{fort77}
+with (assuming you are using a @command{csh} shell)
 @smallexample
 env CC=cc ./configure --with-f77=fort77
 @end smallexample
@@ -1076,7 +1102,7 @@ env CC=cc ./configure --with-f77=fort77
 @node IRIX, Alpha/OSF1, HPUX, Platform notes
 @subsection IRIX
 
-R has been built successfully on IRIX64 6.5 using both the GNU compilers
+@R{} has been built successfully on IRIX64 6.5 using both the GNU compilers
 and the native compilers for 32-bit executables and the native compilers
 for a 64-bit executable.  The command
 @smallexample
@@ -1084,7 +1110,7 @@ env CC="cc -64" ./configure --with-f77="f77 -64" --with-tcltk=no
 @end smallexample
 @noindent
 was used to create the 64-bit executable.  It was necessary to
-explicitly omit Tcl/Tk because @code{configure} would find the 32-bit
+explicitly omit Tcl/Tk because @command{configure} would find the 32-bit
 version but not detect that is was incompatible with a 64-bit build.
 
 
@@ -1116,7 +1142,7 @@ directory.
 
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
-@acronym{IEEE} model. For example, using @code{-fast} on the Solaris
+@acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
 SunPro compilers causes @R{}'s @code{NaN} to be set incorrectly.
 
 @strong{Shared Libraries}: There seems to be very little agreement
