@@ -3,7 +3,8 @@
 sed "s@/bin@/MacOS@;" < bin/R > bin/R.tmp
 sed "s@R_HOME_DIR=.*@R_HOME_DIR=`pwd`@;" < bin/R.tmp > bin/R
 sed "s@/bin/R.bin/@/bin/RAqua@;" < bin/R > bin/R.tmp
-cp bin/R.tmp bin/R
+sed "s@/MacOS/sh@/bin/sh@;" < bin/R.tmp > bin/R
+
 chmod a=+rwx bin/R
 rm bin/R.tmp
 
