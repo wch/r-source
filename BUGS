@@ -36,10 +36,6 @@ Directory:  Add-ons
 Subject: funfits
 From: "Alvaro A. Novo" <novo@uiuc.edu>
 Date: Tue, 9 Mar 1999 22:24:54 -0600
-* PR# 164 *
-Subject: Re: [R] repeated measurements libraries v0.4
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 11 Apr 1999 22:52:34 +0100 (BST)
 
 Directory:  Analyses
 
@@ -165,12 +161,7 @@ Date: Wed, 10 Feb 1999 13:42:01 +0000 (GMT)
 Subject: outer fails with group generic operations on factors
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Tue, 13 Apr 1999 18:28:53 +0100 (BST)
-* PR# 167 *
-Subject: R's UseMethod() does not dispatch on changed class()
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 14 Apr 1999 11:22:10 +0200
---Did this get resolved into the "S has the bug, 
---one shouldn't try that" category?
+--There is a suggested solution (PD), but not yet implemented (99/05/07)
 
 Directory:  Low-level
 
@@ -178,6 +169,10 @@ Directory:  Low-level
 Subject: S.h compatibility issues
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 6 Sep 1998 19:58:47 +0100 (BST)
+--1 is fixed
+--2 R's own RNG entry points are still not public
+--3 is the perennial issue of what is the `public' API -- specific points are
+--fixed
 * PR# 101 *
 Subject: Re: [R] Re: R-0.63.2 for Windows - some comments
 From: Guido Masarotto <guido@hal.stat.unipd.it>
@@ -190,6 +185,16 @@ Date: Tue, 9 Mar 1999 13:18:37 -0000
 --lm (?) AND Windows problem;  Win solved (fudged) for 0.63.3
 --
 --Another low-level buffer-size problem
+* PR# 180 *
+Subject: nlm on a function in the Math group
+From: Douglas Bates <bates@stat.wisc.edu>
+Date: Thu, 29 Apr 1999 17:11:00 -0500 (CDT)
+--causes R to core dump
+* PR# 185 *
+Subject: Re: [R] R_problem_buf in the S.h files & lists in .C
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 05 May 1999 00:32:49 +0200
+--S objects in .C calls (not just lists) are now documented in the help file
 
 Directory:  Misc
 
@@ -215,6 +220,8 @@ Directory:  Startup
 Subject: Restoring large image files
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Fri, 21 Aug 1998 13:29:16 -0000 ()
+--Request to change in error conditions in R_InitialData. Could be done, but
+--at present initial loads are not distinguished from load("file") calls. 
 
 Directory:  System-specific
 
@@ -254,23 +261,3 @@ Directory:  incoming
 Subject:  do.call() mangles expressions in arguments 
 From: Peter Dalgaard BSA <pd@biostat.ku.dk>
 Date: Wed, 21 Apr 1999 19:39:53 +0200
-* PR# 177 *
-Subject: R won't compile on Redhat 5.2
-From: pgutwin@us.ibm.com
-Date: Fri, 23 Apr 1999 20:08:55 +0200 (MET DST)
-* PR# 180 *
-Subject: nlm on a function in the Math group
-From: Douglas Bates <bates@stat.wisc.edu>
-Date: Thu, 29 Apr 1999 17:11:00 -0500 (CDT)
-* PR# 183 *
-Subject: compilation of R-0.63.3 on alpha
-From: a.o.jaunsen@astro.uio.no
-Date: Mon, 03 May 1999 11:28:31 +0200
-* PR# 184 *
-Subject: parse error in terms
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Mon, 3 May 1999 19:43:00 +0200 (MET DST)
-* PR# 185 *
-Subject: Re: [R] R_problem_buf in the S.h files & lists in .C
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 05 May 1999 00:32:49 +0200
