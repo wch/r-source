@@ -4,21 +4,24 @@
 */
 
 #include <math.h>
-#include "f2c.h"
 #include "S.h"
 
+#ifndef max
+#define max(a, b) ((a) < (b) ? (b) : (a))
+#endif
+#ifndef min
+#define min(a, b) ((a) > (b) ? (b) : (a))
+#endif
+
 /* type of pointer to the target and gradient functions */
-typedef int (*fcn_p)(int *, double *, double*);  
+typedef void (*fcn_p)(int, double *, double *, void *);
 
 /* type of pointer to the hessian functions */
-typedef int (*d2fcn_p)(int *, int *, double *, double*); 
+typedef void (*d2fcn_p)(int, int, double *, double *, void *);
 
 extern double d1mach(int);
 extern int i1mach(int);
 
-extern int F77_SYMBOL(result)(int *, int *, double *, double *,
-			      double *, double *, double *, int *,
-			      int *, int *);
 extern double F77_SYMBOL(ddot)(int *, double *, int *, double *, 
 			       int *);
 extern double F77_SYMBOL(dnrm2)(int *, double *, int *);
@@ -26,15 +29,12 @@ extern int F77_SYMBOL(dtrsl)(double *, int *, int *, double *, int *,
 			     int *);
 extern int F77_SYMBOL(dscal)(int *, double *, double *, int *);
 
-/* Table of constant values */
-
-static int c__1 = 1;
-
 /* CC    subroutines  mvmlt[lsu] should be REPLACED by BLAS ones! */
 /* CC */
 /* CC--- choldc(nr,n,a,diagmx,tol,addmax)	 is ``choleski + tolerance'' */
 /* CC    ------ */
 /* CC    it should make use of BLAS routines as [linkpack's dpofa!] */
+
 /*     subroutine fdhess */
 
 /* 	this subroutine calculates a numerical approximation to the upper */
@@ -47,14 +47,16 @@ static int c__1 = 1;
 
 /* 	input to subroutine */
 
-/* 	   n.....the number of parameters */
-/* 	   x.....vector of parameter values */
-/* 	   fval..double precision value of function at x */
-/* 	   fun...a function provided by the user which must be declared as */
-/* 		 external in the calling program.  its call must be of the */
-/* 		 call fun(n,x,fval) where fval is the computed value of the */
-/* 		 function */
-/* 	   nfd...first dimension of h in the calling program */
+/* 	   n......the number of parameters */
+/* 	   x......vector of parameter values */
+/* 	   fval...double precision value of function at x */
+/* 	   fun....a function provided by the user which must be */
+/*	   declared as external in the calling program.  its call must */
+/*         be of the call fun(n,x,state,fval) where fval is the */
+/*	   computed value of the function */
+/*         state..information other than x and n that fun requires. */
+/*	   state is not modified in fdhess (but can be modified by fun). */
+/* 	   nfd... first dimension of h in the calling program */
 
 /* 	output from subroutine */
 
@@ -66,16 +68,16 @@ static int c__1 = 1;
 /* 	    f.......a double precision array of length n */
 
 /* Subroutine */ 
-int
-F77_NAME(fdhess)(int *n, double *x, double *fval, fcn_p fun, double
-		 *h, int *nfd, double *step, double *f, int *ndigit,
-		 double *typx)
+void
+fdhess(int n, double *x, double fval, fcn_p fun, void
+       *state, double *h, int nfd, double *step, double *f,
+       int ndigit, double *typx)
 {
   int i, j;
   double tempi, tempj, fii, eta, fij;
 
-  eta = pow(10.0, -(*ndigit)/3.0);
-  for (i = 0; i < *n; ++i) {
+  eta = pow(10.0, -ndigit/3.0);
+  for (i = 0; i < n; ++i) {
     step[i] = eta * max(x[i], typx[i]);
     if (typx[i] < 0.) {
       step[i] = -step[i];
@@ -83,25 +85,24 @@ F77_NAME(fdhess)(int *n, double *x, double *fval, fcn_p fun, double
     tempi = x[i];
     x[i] += step[i];
     step[i] = x[i] - tempi;
-    (*fun)(n, x, &f[i]);
+    (*fun)(n, x, &f[i], state);
     x[i] = tempi;
   }
-  for (i = 0; i < *n; ++i) {
+  for (i = 0; i < n; ++i) {
     tempi = x[i];
     x[i] += step[i] * 2.;
-    (*fun)(n, x, &fii);
-    h[i + i * *nfd] = (*fval - f[i] + (fii - f[i]))/(step[i] * step[i]);
+    (*fun)(n, x, &fii, state);
+    h[i + i * nfd] = (fval - f[i] + (fii - f[i]))/(step[i] * step[i]);
     x[i] = tempi + step[i];
-    for (j = i + 1; j < *n; ++j) {
+    for (j = i + 1; j < n; ++j) {
       tempj = x[j];
       x[j] += step[j];
-      (*fun)(n, x, &fij);
-      h[i + j * *nfd] = (*fval - f[i] + (fij - f[j]))/(step[i] * step[j]);
+      (*fun)(n, x, &fij, state);
+      h[i + j * nfd] = (fval - f[i] + (fij - f[j]))/(step[i] * step[j]);
       x[j] = tempj;
     }
     x[i] = tempi;
   }
-  return 0;
 } /* fdhess */
 
 /* 	subroutine d1fcn */
@@ -112,8 +113,8 @@ F77_NAME(fdhess)(int *n, double *x, double *fval, fcn_p fun, double
 /* 	when specific analytic gradient function not supplied. */
 
 
-static int
-d1fcn(int *n, double *x, double *g)
+static void
+d1fcn(int n, double *x, double *g, void *state)
 {
 
 } /* d1fcn */
@@ -125,8 +126,8 @@ d1fcn(int *n, double *x, double *g)
 /* 	dummy routine to prevent unsatisfied external diagnostic */
 /* 	when specific analytic hessian function not supplied. */
 
-static int
-d2fcn(int *nr, int *n, double *x, double *h)
+static void
+d2fcn(int nr, int n, double *x, double *h, void *state)
 {
 
 } /* d2fcn */
@@ -509,6 +510,9 @@ qrupdt(int nr, int n, double *a, double *u, double *v)
 /* 			 lower triangular part and diagonal. */
 /* 			 hessian or approx in upper triangular part */
 /* 	fcn	     --> name of subroutine to evaluate function */
+/*      state       <--> information other than x and n that fcn requires. */
+/*      	         state is not modified in tregup (but can be */
+/*			 modified by fcn). */
 /* 	sc(n)	     --> current step */
 /* 	sx(n)	     --> diagonal scaling matrix for x */
 /* 	nwtake	     --> boolean, =.true. if newton step taken */
@@ -542,10 +546,10 @@ qrupdt(int nr, int n, double *a, double *u, double *v)
 
 static void
 tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p
-       fcn, double *sc, double *sx, int nwtake, double stepmx, double
-       steptl, double *dlt, int *iretcd, double *xplsp, double *fplsp,
-       double *xpls, double *fpls, int *mxtake, int method, double
-       *udiag)
+       fcn, void *state, double *sc, double *sx, int nwtake, double
+       stepmx, double steptl, double *dlt, int *iretcd, double *xplsp,
+       double *fplsp, double *xpls, double *fpls, int *mxtake, int
+       method, double *udiag)
 {
   double dltf;
   double temp1, temp2;
@@ -557,7 +561,7 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p
   for (i = 0; i < n; ++i) {
     xpls[i] = x[i] + sc[i];
   }
-  (*fcn)(&n, xpls, fpls);
+  (*fcn)(n, xpls, fpls, state);
   dltf = *fpls - f;
   slp = F77_SYMBOL(ddot)(&n, g, &one, sc, &one);
 
@@ -678,6 +682,9 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p
 /* 	xpls(n)	    <--	 new iterate x[k] */
 /* 	fpls	    <--	 function value at new iterate, f(xpls) */
 /* 	fcn	     --> name of subroutine to evaluate function */
+/*      state       <--> information other than x and n that fcn requires. */
+/*      	         state is not modified in lnsrch (but can be */
+/*			 modified by fcn). */
 /* 	iretcd	    <--	 return code */
 /* 	mxtake	    <--	 boolean flag indicating step of maximum length used */
 /* 	stepmx	     --> maximum allowable step size */
@@ -692,8 +699,8 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p
 
 static void
 lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
-       double *fpls, fcn_p fcn, int *mxtake, int *iretcd, double
-       stepmx, double steptl, double *sx)
+       double *fpls, fcn_p fcn, void *state, int *mxtake, int *iretcd,
+       double stepmx, double steptl, double *sx)
 {
   double disc;
   double a, b;
@@ -733,7 +740,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
     for (i = 0; i < n; ++i) {
       xpls[i] = x[i] + almbda * p[i];
     }
-    (*fcn)(&n, xpls, fpls);
+    (*fcn)(n, xpls, fpls, state);
     if (*fpls <= f + slp * 1e-4 * almbda) {
       /* solution found */
 
@@ -787,7 +794,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
       }
     }
   }
-} /* lnsrch_ */
+} /* lnsrch */
 
 /* 	subroutine dogstp */
 
@@ -922,6 +929,9 @@ dogstp(int nr, int n, double *g, double *a, double *p, double *sx,
 /* 	xpls(n)	    <--	 new iterate x[k] */
 /* 	fpls	    <--	 function value at new iterate, f(xpls) */
 /* 	fcn	     --> name of subroutine to evaluate function */
+/*      state       <--> information other than x and n that fcn requires. */
+/*      	         state is not modified in dogdrv (but can be */
+/*			 modified by fcn). */
 /* 	sx(n)	     --> diagonal scaling matrix for x */
 /* 	stepmx	     --> maximum allowable step size */
 /* 	steptl	     --> relative step size at which successive iterates */
@@ -941,8 +951,8 @@ dogstp(int nr, int n, double *g, double *a, double *p, double *sx,
 
 static void
 dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p, 
-       double *xpls, double *fpls, fcn_p fcn, double *sx, double
-       stepmx, double steptl, double *dlt, int *iretcd, int *mxtake,
+       double *xpls, double *fpls, fcn_p fcn, void *state, double *sx,
+       double stepmx, double steptl, double *dlt, int *iretcd, int *mxtake,
        double *sc, double *wrk1, double *wrk2, double *wrk3, int
        *itncnt)
 {
@@ -967,7 +977,7 @@ dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
 
     /* 	check new point and update trust region */
 
-    tregup(nr, n, x, f, g, a, (fcn_p)fcn, sc, sx, nwtake, stepmx,
+    tregup(nr, n, x, f, g, a, (fcn_p)fcn, state, sc, sx, nwtake, stepmx,
 	   steptl, dlt, iretcd, wrk3, &fplsp, xpls, fpls, mxtake,
 	   2, wrk1);
   }
@@ -1141,6 +1151,9 @@ hookst(int nr, int n, double *g, double *a, double *udiag, double *p,
 /* 	xpls(n)	    <--	 new iterate x[k] */
 /* 	fpls	    <--	 function value at new iterate, f(xpls) */
 /* 	fcn	     --> name of subroutine to evaluate function */
+/*      state       <--> information other than x and n that fcn requires. */
+/*      	         state is not modified in hookdr (but can be */
+/*			 modified by fcn). */
 /* 	sx(n)	     --> diagonal scaling matrix for x */
 /* 	stepmx	     --> maximum allowable step size */
 /* 	steptl	     --> relative step size at which successive iterates */
@@ -1165,7 +1178,7 @@ hookst(int nr, int n, double *g, double *a, double *udiag, double *p,
 static void
 hookdr(int nr, int n, double *x, double f, double *g, double *a,
        double *udiag, double *p, double *xpls, double *fpls, fcn_p fcn, 
-       double *sx, double stepmx, double steptl, double *
+       void *state, double *sx, double stepmx, double steptl, double *
        dlt, int *iretcd, int *mxtake, double *amu, double *
        dltp, double *phi, double *phip0, double *sc, double *
        xplsp, double *wrk0, double epsm, int itncnt)
@@ -1219,7 +1232,7 @@ hookdr(int nr, int n, double *x, double f, double *g, double *a,
 
     /* 	check new point and update trust region */
 
-    tregup(nr, n, x, f, g, a, (fcn_p)fcn, sc, sx, nwtake, stepmx,
+    tregup(nr, n, x, f, g, a, (fcn_p)fcn, state, sc, sx, nwtake, stepmx,
 	   steptl, dlt, iretcd, xplsp, &fplsp, xpls, fpls, mxtake,
 	   3, udiag);
   }
@@ -1697,190 +1710,6 @@ hsnint(int nr, int n, double *a, double *sx, int method)
   }
 } /* hsnint */
 
-/* 	subroutine optchk */
-
-/* 	purpose */
-
-/* 	check input for reasonableness */
-
-/* 	parameters */
-
-/* 	n	     --> dimension of problem */
-/* 	x(n)	     --> on entry, estimate to root of fcn */
-/* 	typsiz(n)   <--> typical size of each component of x */
-/* 	sx(n)	    <--	 diagonal scaling matrix for x */
-/* 	fscale	    <--> estimate of scale of objective function fcn */
-/* 	gradtl	     --> tolerance at which gradient considered close */
-/* 			 enough to zero to terminate algorithm */
-/* 	itnlim	    <--> maximum number of allowable iterations */
-/* 	ndigit	    <--> number of good digits in optimization function fcn */
-/* 	epsm	     --> machine epsilon */
-/* 	dlt	    <--> trust region radius */
-/* 	method	    <--> algorithm indicator */
-/* 	iexp	    <--> expense flag */
-/* 	iagflg	    <--> =1 if analytic gradient supplied */
-/* 	iahflg	    <--> =1 if analytic hessian supplied */
-/* 	stepmx	    <--> maximum step size */
-/* 	msg	    <--> message and error code */
-/* 	ipr	     --> device to which to send output */
-
-static void
-optchk(int *n, double *x, double *typsiz, 
-       double *sx, double *fscale, double *gradtl, int *
-       itnlim, int *ndigit, double *epsm, double *dlt, int *
-       method, int *iexp, int *iagflg, int *iahflg, double *
-       stepmx, int *msg, int *ipr)
-{
-  int i;
-  double stpsiz;
-
-
-  /* 	check that parameters only take on acceptable values. */
-  /* 	if not, set them to default values. */
-
-  if (*method < 1 || *method > 3) {
-    *method = 1;
-  }
-  if (*iagflg != 1) {
-    *iagflg = 0;
-  }
-  if (*iahflg != 1) {
-    *iahflg = 0;
-  }
-  if (*iexp != 0) {
-    *iexp = 1;
-  }
-  if (*msg / 2 % 2 == 1 && *iagflg == 0) {
-    goto L830;
-  }
-  if (*msg / 4 % 2 == 1 && *iahflg == 0) {
-    goto L835;
-  }
-
-  /* 	check dimension of problem */
-
-  if (*n <= 0) {
-    goto L805;
-  }
-  if (*n == 1 && *msg % 2 == 0) {
-    goto L810;
-  }
-
-  /* 	compute scale matrix */
-
-  for (i = 0; i < *n; ++i) {
-    if (typsiz[i] == 0.) {
-      typsiz[i] = 1.;
-    }
-    if (typsiz[i] < 0.) {
-      typsiz[i] = -typsiz[i];
-    }
-    sx[i] = 1. / typsiz[i];
-  }
-
-  /* 	check maximum step size */
-
-  if (*stepmx > 0.) {
-    goto L20;
-  }
-  stpsiz = 0.;
-  for (i = 0; i < *n; ++i) {
-    stpsiz += x[i] * x[i] * sx[i] * sx[i];
-  }
-  stpsiz = sqrt(stpsiz);
-  *stepmx = max(stpsiz, 1) * 1e3;
- L20:
-  /* 	check function scale */
-  if (*fscale == 0.) {
-    *fscale = 1.;
-  } else if (*fscale < 0.) {
-    *fscale = -(*fscale);
-  }
-
-  /* 	check gradient tolerance */
-  if (*gradtl < 0.) {
-    goto L815;
-  }
-
-  /* 	check iteration limit */
-  if (*itnlim <= 0) {
-    goto L820;
-  }
-
-  /* 	check number of digits of accuracy in function fcn */
-  if (*ndigit == 0) {
-    goto L825;
-  } else if (*ndigit < 0) {
-    *ndigit = (int) (-log10(*epsm));
-  }
-
-  /* 	check trust region radius */
-  if (*dlt <= 0.) {
-    *dlt = -1.;
-  } else if (*dlt > *stepmx) {
-    *dlt = *stepmx;
-  }
-  return;
-
-/* 	error exits */
-
-/* %805 write(ipr,901) n */
-/* %    msg=-1 */
- L805:
-  *msg = -1;
-  goto L895;
-  /* %810 write(ipr,902) */
-  /* %    msg=-2 */
- L810:
-  *msg = -2;
-  goto L895;
-  /* %815 write(ipr,903) gradtl */
-  /* %    msg=-3 */
- L815:
-  *msg = -3;
-  goto L895;
-  /* %820 write(ipr,904) itnlim */
-  /* %    msg=-4 */
- L820:
-  *msg = -4;
-  goto L895;
-  /* %825 write(ipr,905) ndigit */
-  /* %    msg=-5 */
- L825:
-  *msg = -5;
-  goto L895;
-  /* %830 write(ipr,906) msg,iagflg */
-  /* %    msg=-6 */
- L830:
-  *msg = -6;
-  goto L895;
-  /* %835 write(ipr,907) msg,iahflg */
-  /* %    msg=-7 */
- L835:
-  *msg = -7;
- L895:
-  return;
-
-  /* %901 format(32h0optchk	   illegal dimension, n=,i5) */
-  /* %902 format(55h0optchk	   +++ warning +++  this package is inefficient, */
-  /* %   +	     26h for problems of size n=1./ */
-  /* %   +	     48h optchk	   check installation libraries for more, */
-  /* %   +	     22h appropriate routines./ */
-  /* %   +	     41h optchk	   if none, set msg and resubmit.) */
-  /* %903 format(38h0optchk	   illegal tolerance.  gradtl=,e20.13) */
-  /* %904 format(44h0optchk	   illegal iteration limit.  itnlim=,i5) */
-  /* %905 format(52h0optchk	   minimization function has no good digits., */
-  /* %   +	      9h  ndigit=,i5) */
-  /* %906 format(50h0optchk	   user requests that analytic gradient be, */
-  /* %   +	     33h accepted as properly coded (msg=,i5, 2h),/ */
-  /* %   +	     45h optchk	   but analytic gradient not supplied, */
-  /* %   +	      9h (iagflg=,i5, 2h).) */
-  /* %907 format(49h0optchk	   user requests that analytic hessian be, */
-  /* %   +	     33h accepted as properly coded (msg=,i5, 2h),/ */
-  /* %   +	     44h optchk	   but analytic hessian not supplied, */
-  /* %   +	      9h (iahflg=,i5, 2h).) */
-} /* optchk_ */
-
 
 /* 	subroutine fstofd */
 
@@ -1914,6 +1743,9 @@ optchk(int *n, double *x, double *typsiz,
 /* 	n	     --> number of columns in a; dimension of problem */
 /* 	xpls(n)	     --> new iterate:  x[k] */
 /* 	fcn	     --> name of subroutine to evaluate function */
+/*      state       <--> information other than x and n that fcn requires. */
+/*      	         state is not modified in fstofd (but can be */
+/*			 modified by fcn). */
 /* 	fpls(m)	     --> _m=1 (optimization) function value at new iterate: */
 /* 			      fcn(xpls) */
 /* 			 _m=n (optimization) value of first derivative */
@@ -1934,8 +1766,9 @@ optchk(int *n, double *x, double *typsiz,
 /* 	stepsz - stepsize in the j-th variable direction */
 
 static void
-fstofd(int nr, int m, int n, double *xpls, fcn_p fcn, const double *fpls,
-       double *a, double *sx, double rnoise, double *fhat, int icase)
+fstofd(int nr, int m, int n, double *xpls, fcn_p fcn, void *state,
+       const double *fpls, double *a, double *sx, double rnoise,
+       double *fhat, int icase)
 {
   int i, j;
   double xtmpj;
@@ -1952,7 +1785,7 @@ fstofd(int nr, int m, int n, double *xpls, fcn_p fcn, const double *fpls,
     stepsz = sqrt(rnoise) * max(temp1, temp2);
     xtmpj = xpls[j];
     xpls[j] = xtmpj + stepsz;
-    (*fcn)(&n, xpls, fhat);
+    (*fcn)(n, xpls, fhat, state);
     xpls[j] = xtmpj;
     for (i = 0; i < m; ++i) {
       a[i + j * nr] = (fhat[i] - fpls[i]) / stepsz;
@@ -1980,13 +1813,17 @@ fstofd(int nr, int m, int n, double *xpls, fcn_p fcn, const double *fpls,
 /* 	n	     --> dimension of problem */
 /* 	x	     --> point at which gradient is to be approximated. */
 /* 	fcn	     --> name of subroutine to evaluate function. */
+/*      state       <--> information other than x and n that fcn requires. */
+/*      	         state is not modified in fstocd (but can be */
+/*			 modified by fcn). */
 /* 	sx	     --> diagonal scaling matrix for x. */
 /* 	rnoise	     --> relative noise in fcn [f(x)]. */
 /* 	g	    <--	 central difference approximation to gradient. */
 
 
 static void
-fstocd(int n, double *x, fcn_p fcn, double *sx, double rnoise, double *g)
+fstocd(int n, double *x, fcn_p fcn, void *state, double *sx, double
+       rnoise, double *g)
 {
   int i;
   double stepi, fplus, fminus, xtempi;
@@ -2001,9 +1838,9 @@ fstocd(int n, double *x, fcn_p fcn, double *sx, double rnoise, double *g)
     temp2 = 1.0/sx[i];
     stepi = pow(rnoise, 1.0/3.0) * max(temp1, temp2);
     x[i] = xtempi + stepi;
-    (*fcn)(&n, x, &fplus);
+    (*fcn)(n, x, &fplus, state);
     x[i] = xtempi - stepi;
-    (*fcn)(&n, x, &fminus);
+    (*fcn)(n, x, &fminus, state);
     x[i] = xtempi;
     g[i] = (fplus - fminus) / (stepi * 2.);
   }
@@ -2029,6 +1866,9 @@ fstocd(int n, double *x, fcn_p fcn, double *sx, double rnoise, double *g)
 /* 	n	     --> dimension of problem */
 /* 	xpls(n)	     --> new iterate:	x[k] */
 /* 	fcn	     --> name of subroutine to evaluate function */
+/*      state       <--> information other than x and n that fcn requires. */
+/*      	         state is not modified in sndofd (but can be */
+/*			 modified by fcn). */
 /* 	fpls	     --> function value at new iterate, f(xpls) */
 /* 	a(n,n)	    <--	 finite difference approximation to hessian */
 /* 			 only lower triangular matrix and diagonal */
@@ -2040,8 +1880,9 @@ fstocd(int n, double *x, fcn_p fcn, double *sx, double rnoise, double *g)
 
 
 static void
-sndofd(int nr, int n, double *xpls, fcn_p fcn, double fpls, double *a,
-       double *sx, double rnoise, double *stepsz, double *anbr)
+sndofd(int nr, int n, double *xpls, fcn_p fcn, void *state, double
+       fpls, double *a, double *sx, double rnoise, double *stepsz,
+       double *anbr)
 {
   double fhat;
   int i, j;
@@ -2057,7 +1898,7 @@ sndofd(int nr, int n, double *xpls, fcn_p fcn, double fpls, double *a,
     temp2 = 1.0/sx[i];
     stepsz[i] = pow(rnoise, 1.0/3.0) * max(temp1, temp2);
     xpls[i] = xtmpi + stepsz[i];
-    (*fcn)(&n, xpls, &anbr[i]);
+    (*fcn)(n, xpls, &anbr[i], state);
     xpls[i] = xtmpi;
   }
 
@@ -2066,7 +1907,7 @@ sndofd(int nr, int n, double *xpls, fcn_p fcn, double fpls, double *a,
   for (i = 0; i < n; ++i) {
     xtmpi = xpls[i];
     xpls[i] = xtmpi + stepsz[i] * 2.;
-    (*fcn)(&n, xpls, &fhat);
+    (*fcn)(n, xpls, &fhat, state);
     a[i + i * nr] = ((fpls - anbr[i]) + (fhat - anbr[i]))/(stepsz[i] *
 							   stepsz[i]);
 
@@ -2079,7 +1920,7 @@ sndofd(int nr, int n, double *xpls, fcn_p fcn, double fpls, double *a,
     for (j = 0; j < i; ++j) {
       xtmpj = xpls[j];
       xpls[j] = xtmpj + stepsz[j];
-      (*fcn)(&n, xpls, &fhat);
+      (*fcn)(n, xpls, &fhat, state);
       a[i + j*nr] = ((fpls - anbr[i]) + (fhat -
 					 anbr[j]))/(stepsz[i]*stepsz[j]);
       xpls[j] = xtmpj;
@@ -2101,6 +1942,9 @@ sndofd(int nr, int n, double *xpls, fcn_p fcn, double fpls, double *a,
 /* 	fcn	     --> name of subroutine to evaluate optimization function */
 /* 			 must be declared external in calling routine */
 /* 			      fcn:  r(n) --> r(1) */
+/*      state       <--> information other than x and n that fcn requires. */
+/*      	         state is not modified in grdchk (but can be */
+/*			 modified by fcn). */
 /* 	f	     --> function value:  fcn(x) */
 /* 	g(n)	     --> gradient:  g(x) */
 /* 	typsiz(n)    --> typical size for each component of x */
@@ -2114,9 +1958,9 @@ sndofd(int nr, int n, double *xpls, fcn_p fcn, double fpls, double *a,
 /* 			   on output: =-21, probable coding error of gradient */
 
 static void
-grdchk(int n, double *x, fcn_p fcn, double f, double *g, double
-       *typsiz, double *sx, double fscale, double rnf, double analtl,
-       double *wrk1, int *msg)
+grdchk(int n, double *x, fcn_p fcn, void *state, double f, double *g,
+       double *typsiz, double *sx, double fscale, double rnf,
+       double analtl, double *wrk1, int *msg)
 {
   int i;
   double gs;
@@ -2126,7 +1970,7 @@ grdchk(int n, double *x, fcn_p fcn, double f, double *g, double
   /* 	compute first order finite difference gradient and compare to */
   /* 	analytic gradient. */
 
-  fstofd(1, 1, n, x, (fcn_p)fcn, &f, wrk1, sx, rnf, &wrk, 1);
+  fstofd(1, 1, n, x, (fcn_p)fcn, state, &f, wrk1, sx, rnf, &wrk, 1);
   for (i = 0; i < n; ++i) {
     temp1 = fabs(x[i]);
     temp2 = typsiz[i];
@@ -2161,6 +2005,10 @@ grdchk(int n, double *x, fcn_p fcn, double f, double *g, double
 /* 			 must be declared external in calling routine */
 /* 	d2fcn	     --> name of subroutine to evaluate hessian of fcn. */
 /* 			 must be declared external in calling routine */
+/*      state       <--> information other than x and n that fcn, */
+/*	                 d1fcn and d2fcn requires. */
+/*      	         state is not modified in heschk (but can be */
+/*			 modified by fcn, d1fcn or d2fcn). */
 /* 	f	     --> function value:  fcn(x) */
 /* 	g(n)	    <--	 gradient:  g(x) */
 /* 	a(n,n)	    <--	 on exit:  hessian in lower triangular part and diag */
@@ -2179,9 +2027,9 @@ grdchk(int n, double *x, fcn_p fcn, double f, double *g, double
 
 static void
 heschk(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
-       double f, double *g, double *a, double *typsiz, double *sx,
-       double rnf, double analtl, int iagflg, double *udiag, double
-       *wrk1, double *wrk2, int *msg)
+       void *state, double f, double *g, double *a, double *typsiz,
+       double *sx, double rnf, double analtl, int iagflg, double
+       *udiag, double *wrk1, double *wrk2, int *msg)
 {
   int i, j;
   double hs;
@@ -2190,9 +2038,9 @@ heschk(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
   /* compute finite difference approximation a to the hessian. */
 
   if (iagflg == 1) {
-    fstofd(nr, n, n, x, (fcn_p)d1fcn, g, a, sx, rnf, wrk1, 3);
+    fstofd(nr, n, n, x, (fcn_p)d1fcn, state, g, a, sx, rnf, wrk1, 3);
   } else {
-    sndofd(nr, n, x, (fcn_p)fcn, f, a, sx, rnf, wrk1, wrk2);
+    sndofd(nr, n, x, (fcn_p)fcn, state, f, a, sx, rnf, wrk1, wrk2);
   }
 
   /* copy lower triangular part of "a" to upper triangular part */
@@ -2206,7 +2054,7 @@ heschk(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 
   /* compute analytic hessian and compare to finite difference */
   /* approximation. */
-  (*d2fcn)(&nr, &n, x, a);
+  (*d2fcn)(nr, n, x, a, state);
   for (j = 0; j < n; ++j) {
     temp1 = fabs(x[j]);
     temp2 = typsiz[j];
@@ -2341,15 +2189,241 @@ optstp(int n, double *xpls, double fpls, double *gpls, double *x, int
   *itrmcd = jtrmcd;
 } /* optstp */
 
+/* 	subroutine optchk */
+
+/* 	purpose */
+
+/* 	check input for reasonableness */
+
+/* 	parameters */
+
+/* 	n	     --> dimension of problem */
+/* 	x(n)	     --> on entry, estimate to root of fcn */
+/* 	typsiz(n)   <--> typical size of each component of x */
+/* 	sx(n)	    <--	 diagonal scaling matrix for x */
+/* 	fscale	    <--> estimate of scale of objective function fcn */
+/* 	gradtl	     --> tolerance at which gradient considered close */
+/* 			 enough to zero to terminate algorithm */
+/* 	itnlim	    <--> maximum number of allowable iterations */
+/* 	ndigit	    <--> number of good digits in optimization function fcn */
+/* 	epsm	     --> machine epsilon */
+/* 	dlt	    <--> trust region radius */
+/* 	method	    <--> algorithm indicator */
+/* 	iexp	    <--> expense flag */
+/* 	iagflg	    <--> =1 if analytic gradient supplied */
+/* 	iahflg	    <--> =1 if analytic hessian supplied */
+/* 	stepmx	    <--> maximum step size */
+/* 	msg	    <--> message and error code */
+/* 	ipr	     --> device to which to send output */
+
+static void
+optchk(int n, double *x, double *typsiz, double *sx, double *fscale,
+       double gradtl, int *itnlim, int *ndigit, double epsm, double
+       *dlt, int *method, int *iexp, int *iagflg, int *iahflg, double
+       *stepmx, int *msg)
+{
+  int i;
+  double stpsiz;
+
+
+  /* 	check that parameters only take on acceptable values. */
+  /* 	if not, set them to default values. */
+
+  if (*method < 1 || *method > 3) {
+    *method = 1;
+  }
+  if (*iagflg != 1) {
+    *iagflg = 0;
+  }
+  if (*iahflg != 1) {
+    *iahflg = 0;
+  }
+  if (*iexp != 0) {
+    *iexp = 1;
+  }
+  if (*msg / 2 % 2 == 1 && *iagflg == 0) {
+    goto L830;
+  }
+  if (*msg / 4 % 2 == 1 && *iahflg == 0) {
+    goto L835;
+  }
+
+  /* 	check dimension of problem */
+
+  if (n <= 0) {
+    goto L805;
+  }
+  if (n == 1 && *msg % 2 == 0) {
+    goto L810;
+  }
+
+  /* 	compute scale matrix */
+
+  for (i = 0; i < n; ++i) {
+    if (typsiz[i] == 0.) {
+      typsiz[i] = 1.;
+    }
+    if (typsiz[i] < 0.) {
+      typsiz[i] = -typsiz[i];
+    }
+    sx[i] = 1. / typsiz[i];
+  }
+
+  /* 	check maximum step size */
+
+  if (*stepmx > 0.) {
+    goto L20;
+  }
+  stpsiz = 0.;
+  for (i = 0; i < n; ++i) {
+    stpsiz += x[i] * x[i] * sx[i] * sx[i];
+  }
+  stpsiz = sqrt(stpsiz);
+  *stepmx = max(stpsiz, 1) * 1e3;
+ L20:
+  /* 	check function scale */
+  if (*fscale == 0.) {
+    *fscale = 1.;
+  } else if (*fscale < 0.) {
+    *fscale = -(*fscale);
+  }
+
+  /* 	check gradient tolerance */
+  if (gradtl < 0.) {
+    goto L815;
+  }
+
+  /* 	check iteration limit */
+  if (*itnlim <= 0) {
+    goto L820;
+  }
+
+  /* 	check number of digits of accuracy in function fcn */
+  if (*ndigit == 0) {
+    goto L825;
+  } else if (*ndigit < 0) {
+    *ndigit = (int) (-log10(epsm));
+  }
+
+  /* 	check trust region radius */
+  if (*dlt <= 0.) {
+    *dlt = -1.;
+  } else if (*dlt > *stepmx) {
+    *dlt = *stepmx;
+  }
+  return;
+
+/* 	error exits */
+
+/* %805 write(ipr,901) n */
+/* %    msg=-1 */
+ L805:
+  *msg = -1;
+  goto L895;
+  /* %810 write(ipr,902) */
+  /* %    msg=-2 */
+ L810:
+  *msg = -2;
+  goto L895;
+  /* %815 write(ipr,903) gradtl */
+  /* %    msg=-3 */
+ L815:
+  *msg = -3;
+  goto L895;
+  /* %820 write(ipr,904) itnlim */
+  /* %    msg=-4 */
+ L820:
+  *msg = -4;
+  goto L895;
+  /* %825 write(ipr,905) ndigit */
+  /* %    msg=-5 */
+ L825:
+  *msg = -5;
+  goto L895;
+  /* %830 write(ipr,906) msg,iagflg */
+  /* %    msg=-6 */
+ L830:
+  *msg = -6;
+  goto L895;
+  /* %835 write(ipr,907) msg,iahflg */
+  /* %    msg=-7 */
+ L835:
+  *msg = -7;
+ L895:
+  return;
+} /* optchk */
+
+/*
+ *  PURPOSE
+ *
+ *  Print information.
+ *
+ *  PARAMETERS
+ *
+ *  nr	   --> row dimension of matrix
+ *  n	   --> dimension of problem
+ *  x(n)   --> iterate x[k]
+ *  f	   --> function value at x[k]
+ *  g(n)   --> gradient at x[k]
+ *  a(n,n) --> hessian at x[k]
+ *  p(n)   --> step taken
+ *  itncnt --> iteration number k
+ *  iflg   --> flag controlling info to print
+ */
+
+static void 
+result(int nr, int n, const double x[], double f, const double g[],
+       const double *a, const double p[], int itncnt, int iflg)
+{
+    /* Print iteration number */
+
+    Rprintf("iteration = %d\n", itncnt);
+
+    /* Print step */
+
+    if (iflg != 0) {
+        Rprintf("Step:\n");
+        printRealVector(p, n, 1);
+    }
+
+    /* Print current iterate */
+
+    Rprintf("Parameter:\n");
+    printRealVector(x, n, 1);
+
+    /* Print function value */
+
+    Rprintf("Function Value\n");
+    printRealVector(&f, 1, 1);
+
+    /* Print gradient */
+
+    Rprintf("Gradient:\n");
+    printRealVector(g, n, 1);
+
+#ifdef NEVER
+    /* Print Hessian */
+    /* We don't do this because the printRealMatrix */
+    /* code takes a SEXP rather than a double*. */
+    /* We could do something ugly like use fixed */
+    /* e format but that would be UGLY */
+
+    if (iflg != 0) {
+    }
+#endif
+
+    Rprintf("\n");
+}
+
 static void
 optdrv_end(int nr, int n, double *xpls, double *x, double *gpls,
 	   double *g, double *fpls, double f, double *a, double *p,
 	   int itncnt, int itrmcd, int *msg,
-	   int (*print_result)(int *, int *, double *, double *,
-			       double *, double *, double *, int *,
-			       int *, int *))
+	   void (*print_result)(int, int, const double *, double,
+				const double *, const double *, const
+				double *, int, int))
 {
-  int i, zero = 0;
+  int i;
 
   /* 	termination */
   /* 	reset xpls,fpls,gpls,  if previous iterate solution */
@@ -2362,7 +2436,7 @@ optdrv_end(int nr, int n, double *xpls, double *x, double *gpls,
     }
   }
   if (*msg / 8 % 2 == 0) {
-    (*print_result)(&nr, &n, xpls, fpls, gpls, a, p, &itncnt, &zero, &zero);
+    (*print_result)(nr, n, xpls, *fpls, gpls, a, p, itncnt, 0);
   }
   *msg = 0;
 }
@@ -2383,8 +2457,13 @@ optdrv_end(int nr, int n, double *xpls, double *x, double *gpls,
 /* 				   fcn: r(n) --> r(1) */
 /* 	d1fcn	     --> (optional) name of subroutine to evaluate gradient */
 /* 			 of fcn.  must be declared external in calling routine */
-/* 	d2fcn	     --> (optional) name of subroutine to evaluate hessian of */
-/* 			 of fcn.  must be declared external in calling routine */
+/* 	d2fcn	     --> (optional) name of subroutine to evaluate */
+/*	                 hessian of of fcn.  must be declared external */
+/*			 in calling routine */
+/*      state       <--> information other than x and n that fcn, */
+/*	                 d1fcn and d2fcn requires. */
+/*      	         state is not modified in optdrv (but can be */
+/*			 modified by fcn, d1fcn or d2fcn). */
 /* 	typsiz(n)    --> typical size for each component of x */
 /* 	fscale	     --> estimate of scale of objective function */
 /* 	method	     --> algorithm to use to solve minimization problem */
@@ -2402,7 +2481,6 @@ optdrv_end(int nr, int n, double *xpls, double *x, double *gpls,
 /* 	itnlim	     --> maximum number of allowable iterations */
 /* 	iagflg	     --> =1 if analytic gradient supplied */
 /* 	iahflg	     --> =1 if analytic hessian supplied */
-/* 	ipr	     --> device to which to send output */
 /* 	dlt	     --> trust region radius */
 /* 	gradtl	     --> tolerance at which gradient considered close */
 /* 			 enough to zero to terminate algorithm */
@@ -2436,15 +2514,14 @@ optdrv_end(int nr, int n, double *xpls, double *x, double *gpls,
 /* 			      noise=10.**(-ndigit) */
 
 static void
-optdrv(int *nr, int *n, double *x, fcn_p fcn,
-       fcn_p d1fcn, d2fcn_p d2fcn, double *typsiz, double *fscale, 
-       int *method, int *iexp, int *msg, int *ndigit, 
-       int *itnlim, int *iagflg, int *iahflg, int *ipr, 
-       double *dlt, double *gradtl, double *stepmx, double *
-       steptl, double *xpls, double *fpls, double *gpls, int 
-       *itrmcd, double *a, double *udiag, double *g, double *
-       p, double *sx, double *wrk0, double *wrk1, double *
-       wrk2, double *wrk3, int *itncnt)
+optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
+       d2fcn, void *state, double *typsiz, double fscale, int method,
+       int iexp, int *msg, int ndigit, int itnlim, int iagflg, int
+       iahflg, double dlt, double gradtl, double stepmx, double
+       steptl, double *xpls, double *fpls, double *gpls, int *itrmcd,
+       double *a, double *udiag, double *g, double *p, double *sx,
+       double *wrk0, double *wrk1, double *wrk2, double *wrk3, int
+       *itncnt)
 {
   double dltp, epsm, phip0, f;
   int i;
@@ -2457,75 +2534,75 @@ optdrv(int *nr, int *n, double *x, fcn_p fcn,
   int noupdt;
   double phi, amu, rnf, wrk;
 
-  for (i = 0; i < *n; ++i) {
+  for (i = 0; i < n; ++i) {
     p[i] = 0.;
   }
   *itncnt = 0;
   iretcd = -1;
   epsm = d1mach(4);
-  optchk(n, x, typsiz, sx, fscale, gradtl, itnlim, ndigit, &epsm,
-	 dlt, method, iexp, iagflg, iahflg, stepmx, msg, ipr);
+  optchk(n, x, typsiz, sx, &fscale, gradtl, &itnlim, &ndigit, epsm,
+	 &dlt, &method, &iexp, &iagflg, &iahflg, &stepmx, msg);
   if (*msg < 0) {
     return;
   }
-  rnf = pow(10.0, -(*ndigit));
+  rnf = pow(10.0, -ndigit);
   rnf = max(rnf, epsm);
   analtl = sqrt(rnf);
   analtl = max(0.01, analtl);
 
   /* 	evaluate fcn(x) */
 
-  (*fcn)(n, x, &f);
+  (*fcn)(n, x, &f, state);
 
   /* 	evaluate analytic or finite difference gradient and check analytic */
   /* 	gradient, if requested. */
 
-  if (*iagflg == 0) {
-    fstofd(1, 1, *n, x, (fcn_p)fcn, &f, g, sx, rnf, &wrk, 1);
+  if (iagflg == 0) {
+    fstofd(1, 1, n, x, (fcn_p)fcn, state, &f, g, sx, rnf, &wrk, 1);
   } else {
-    (*d1fcn)(n, x, g);
+    (*d1fcn)(n, x, g, state);
     if (*msg / 2 % 2 == 0) {
-      grdchk(*n, x, (fcn_p)fcn, f, g, typsiz, sx, *fscale, rnf, 
+      grdchk(n, x, (fcn_p)fcn, state, f, g, typsiz, sx, fscale, rnf, 
 	     analtl, wrk1, msg);
       if (*msg < 0) {
 	return;
       }
     }
   }
-  optstp(*n, x, f, g, wrk1, *itncnt, &icscmx, itrmcd, *gradtl, 
-	 *steptl, sx, *fscale, *itnlim, iretcd, mxtake, msg);
+  optstp(n, x, f, g, wrk1, *itncnt, &icscmx, itrmcd, gradtl, 
+	 steptl, sx, fscale, itnlim, iretcd, mxtake, msg);
   if (*itrmcd != 0) {
-    optdrv_end(*nr, *n, xpls, x, gpls, g, fpls, f, a, p, *itncnt,
-	       3, msg, F77_NAME(result));
+    optdrv_end(nr, n, xpls, x, gpls, g, fpls, f, a, p, *itncnt,
+	       3, msg, result);
     return;
   }
 
-  if (*iexp == 1) {
+  if (iexp == 1) {
     /* 	if optimization function expensive to evaluate (iexp=1), then */
     /* 	hessian will be obtained by secant updates.  get initial hessian. */
 
-    hsnint(*nr, *n, a, sx, *method);
+    hsnint(nr, n, a, sx, method);
   } else {
 
     /* 	evaluate analytic or finite difference hessian and check analytic */
     /* 	hessian if requested (only if user-supplied analytic hessian */
     /* 	routine d2fcn fills only lower triangular part and diagonal of a). */
 
-    if (*iahflg == 0) {
-      if (*iagflg == 1) {
-	fstofd(*nr, *n, *n, x, (fcn_p)d1fcn, g, a, sx,
+    if (iahflg == 0) {
+      if (iagflg == 1) {
+	fstofd(nr, n, n, x, (fcn_p)d1fcn, state, g, a, sx,
 	       rnf, wrk1, 3);
       }
-      if (*iagflg != 1) {
-	sndofd(*nr, *n, x, (fcn_p)fcn, f, a, sx, rnf, wrk1, wrk2);
+      if (iagflg != 1) {
+	sndofd(nr, n, x, (fcn_p)fcn, state, f, a, sx, rnf, wrk1, wrk2);
       }
     } else {
       if (*msg / 4 % 2 == 1) {
-	(*d2fcn)(nr, n, x, a);
+	(*d2fcn)(nr, n, x, a, state);
       } else {
-	heschk(*nr, *n, x, (fcn_p)fcn, (fcn_p)d1fcn, (d2fcn_p)d2fcn, f,
-	       g, a, typsiz, sx, rnf, analtl, *iagflg, udiag, wrk1,
-	       wrk2, msg);
+	heschk(nr, n, x, (fcn_p)fcn, (fcn_p)d1fcn, (d2fcn_p)d2fcn,
+	       state, f, g, a, typsiz, sx, rnf, analtl, iagflg,
+	       udiag, wrk1, wrk2, msg);
 
 	/* 	    heschk evaluates d2fcn and checks it against the finite */
 	/* 	    difference hessian which it calculates by calling fstofd */
@@ -2538,8 +2615,7 @@ optdrv(int *nr, int *n, double *x, fcn_p fcn,
     }
   }
   if (*msg / 8 % 2 == 0) {
-    F77_SYMBOL(result)(nr, n, x, &f, g, a, p, itncnt, &c__1, 
-		       ipr);
+    result(nr, n, x, f, g, a, p, *itncnt, 1);
   }
 
   /* 	iteration */
@@ -2552,63 +2628,62 @@ optdrv(int *nr, int *n, double *x, fcn_p fcn,
     /* 	secant updates.	 cholesky decomposition l already obtained from */
     /* 	secfac.) */
 
-    if (*iexp == 1 && *method != 3) {
+    if (iexp == 1 && method != 3) {
       goto L105;
     }
  L103:
-    chlhsn(*nr, *n, a, epsm, sx, udiag);
+    chlhsn(nr, n, a, epsm, sx, udiag);
  L105:
 
     /* solve for newton step: ap=-g */
 
-    for (i = 0; i < *n; ++i) {
+    for (i = 0; i < n; ++i) {
       wrk1[i] = -g[i];
     }
-    lltslv(*nr, *n, a, p, wrk1);
+    lltslv(nr, n, a, p, wrk1);
 
     /* 	decide whether to accept newton step  xpls=x + p */
     /* 	or to choose xpls by a global strategy. */
 
-    if (*iagflg == 0 && *method != 1) {
-      dltsav = *dlt;
-      if (*method != 2) {
+    if (iagflg == 0 && method != 1) {
+      dltsav = dlt;
+      if (method != 2) {
 	amusav = amu;
 	dlpsav = dltp;
 	phisav = phi;
 	phpsav = phip0;
       }
     }
-    switch(*method) {
+    switch(method) {
     case 1:
-      lnsrch(*n, x, f, g, p, xpls, fpls, (fcn_p)fcn, &
-	     mxtake, &iretcd, *stepmx, *steptl, sx);
+      lnsrch(n, x, f, g, p, xpls, fpls, (fcn_p)fcn, state, &mxtake,
+	     &iretcd, stepmx, steptl, sx);
       break;
     case 2:
-      dogdrv(*nr, *n, x, f, g, a, p, xpls, fpls, (fcn_p)fcn, sx,
-	     *stepmx, *steptl, dlt, &iretcd, &mxtake, wrk0, wrk1,
+      dogdrv(nr, n, x, f, g, a, p, xpls, fpls, (fcn_p)fcn, state,
+	     sx, stepmx, steptl, &dlt, &iretcd, &mxtake, wrk0, wrk1,
 	     wrk2, wrk3, itncnt);
       break;
     case 3:
-      hookdr(*nr, *n, x, f, g, a, udiag, p, 
-	     xpls, fpls, (fcn_p)fcn, sx, *stepmx, *steptl, dlt, &
-	     iretcd, &mxtake, &amu, &dltp, &phi, &phip0, wrk0, wrk1
-	     , wrk2, epsm, *itncnt);
+      hookdr(nr, n, x, f, g, a, udiag, p, xpls, fpls, (fcn_p)fcn,
+	     state, sx, stepmx, steptl, &dlt, & iretcd, &mxtake, &amu,
+	     &dltp, &phi, &phip0, wrk0, wrk1 , wrk2, epsm, *itncnt);
       break;
     }
 
     /* 	if could not find satisfactory step and forward difference */
     /* 	gradient was used, retry using central difference gradient. */
 
-    if (iretcd == 1 && *iagflg == 0) {
+    if (iretcd == 1 && iagflg == 0) {
       /* 	 set iagflg for central differences */
 
-      *iagflg = -1;
-      fstocd(*n, x, (fcn_p)fcn, sx, rnf, g);
-      if (*method == 1) {
+      iagflg = -1;
+      fstocd(n, x, (fcn_p)fcn, state, sx, rnf, g);
+      if (method == 1) {
 	goto L105;
       }
-      *dlt = dltsav;
-      if (*method == 2) {
+      dlt = dltsav;
+      if (method == 2) {
 	goto L105;
       }
       amu = amusav;
@@ -2618,67 +2693,70 @@ optdrv(int *nr, int *n, double *x, fcn_p fcn,
       goto L103;
     }
     /* 	calculate step for output */
-    for (i = 0; i < *n; ++i) {
+    for (i = 0; i < n; ++i) {
       p[i] = xpls[i] - x[i];
     }
 
     /* 	calculate gradient at xpls */
-    switch(*iagflg) {
+    switch(iagflg) {
     case -1:
       /* central difference gradient */
-      fstocd(*n, xpls, (fcn_p)fcn, sx, rnf, gpls);
+      fstocd(n, xpls, (fcn_p)fcn, state, sx, rnf, gpls);
       break;
     case 0:
       /* forward difference gradient */
-      fstofd(1, 1, *n, xpls, (fcn_p)fcn, fpls, gpls, sx, rnf, &wrk, 1);
+      fstofd(1, 1, n, xpls, (fcn_p)fcn, state, fpls, gpls, sx, rnf,
+	     &wrk, 1);
       break;
     default:
       /* analytic gradient */
-      (*d1fcn)(n, xpls, gpls);
+      (*d1fcn)(n, xpls, gpls, state);
     }
 
     /* 	check whether stopping criteria satisfied */
-    optstp(*n, xpls, *fpls, gpls, x, *itncnt, &icscmx, itrmcd, 
-	   *gradtl, *steptl, sx, *fscale, *itnlim, iretcd, mxtake,
+    optstp(n, xpls, *fpls, gpls, x, *itncnt, &icscmx, itrmcd, 
+	   gradtl, steptl, sx, fscale, itnlim, iretcd, mxtake,
 	   msg);
     if(*itrmcd != 0) break;
 
     /* 	evaluate hessian at xpls */
-    if (*iexp != 0) {
-      if (*method == 3) {
-	secunf(*nr, *n, x, g, a, udiag, xpls, gpls, epsm, *itncnt, rnf,
-		*iagflg, &noupdt, wrk1, wrk2, wrk3);
+    if (iexp != 0) {
+      if (method == 3) {
+	secunf(nr, n, x, g, a, udiag, xpls, gpls, epsm, *itncnt, rnf,
+		iagflg, &noupdt, wrk1, wrk2, wrk3);
       } else {
-	secfac(*nr, *n, x, g, a, xpls, gpls, epsm, *itncnt, rnf, *iagflg,
+	secfac(nr, n, x, g, a, xpls, gpls, epsm, *itncnt, rnf, iagflg,
 		&noupdt, wrk0, wrk1, wrk2, wrk3);
       }
     } else {
-      if (*iahflg != 1) {
-	if (*iagflg == 1) {
-	  fstofd(*nr, *n, *n, xpls, (fcn_p)d1fcn, gpls, a, sx, rnf, wrk1, 3);
+      if (iahflg != 1) {
+	if (iagflg == 1) {
+	  fstofd(nr, n, n, xpls, (fcn_p)d1fcn, state, gpls, a, sx,
+		 rnf, wrk1, 3);
 	}
-	if (*iagflg != 1) {
-	  sndofd(*nr, *n, xpls, (fcn_p)fcn, *fpls, a, sx, rnf, wrk1, wrk2);
+	if (iagflg != 1) {
+	  sndofd(nr, n, xpls, (fcn_p)fcn, state, *fpls, a, sx, rnf,
+		 wrk1, wrk2);
 	}
       } else {
-	(*d2fcn)(nr, n, xpls, a);
+	(*d2fcn)(nr, n, xpls, a, state);
       }
     }
     if (*msg / 16 % 2 == 1) {
-      F77_NAME(result)(nr, n, xpls, fpls, gpls, a, p, itncnt, &c__1, ipr);
+      result(nr, n, xpls, *fpls, gpls, a, p, *itncnt, 1);
     }
     
     /* 	x <-- xpls  and	 g <-- gpls  and  f <-- fpls */
 
     f = *fpls;
-    for (i = 0; i < *n; ++i) {
+    for (i = 0; i < n; ++i) {
       x[i] = xpls[i];
       g[i] = gpls[i];
     }
   }
 
-  optdrv_end(*nr, *n, xpls, x, gpls, g, fpls, f, a, p, *itncnt,
-	     *itrmcd, msg, F77_NAME(result));
+  optdrv_end(nr, n, xpls, x, gpls, g, fpls, f, a, p, *itncnt,
+	     *itrmcd, msg, result);
 } /* optdrv */
 
 /* 	subroutine dfault */
@@ -2701,7 +2779,6 @@ optdrv(int *nr, int *n, double *x, fcn_p fcn,
 /* 	itnlim	    <--	 maximum number of allowable iterations */
 /* 	iagflg	    <--	 =0 if analytic gradient not supplied */
 /* 	iahflg	    <--	 =0 if analytic hessian not supplied */
-/* 	ipr	    <--	 device to which to send output */
 /* 	dlt	    <--	 trust region radius */
 /* 	gradtl	    <--	 tolerance at which gradient considered close enough */
 /* 			 to zero to terminate algorithm */
@@ -2713,8 +2790,7 @@ static void
 dfault(int n, double *x, double *typsiz, 
        double *fscale, int *method, int *iexp, int *msg, 
        int *ndigit, int *itnlim, int *iagflg, int *iahflg, 
-       int *ipr, double *dlt, double *gradtl, double *stepmx,
-       double *steptl)
+       double *dlt, double *gradtl, double *stepmx, double *steptl)
 {
   double epsm;
   int i;
@@ -2742,7 +2818,6 @@ dfault(int n, double *x, double *typsiz,
   *itnlim = 150;
   *iagflg = 0;
   *iahflg = 0;
-  *ipr = i1mach(2);
 } /* dfault_ */
 
 /* 	subroutine optif0 */
@@ -2759,6 +2834,9 @@ dfault(int n, double *x, double *typsiz,
 /* 	x(n)	     --> initial estimate of minimum */
 /* 	fcn	     --> name of routine to evaluate minimization function. */
 /* 			 must be declared external in calling routine. */
+/*      state       <--> information other than x and n that fcn requires */
+/*      	         state is not modified in optif0 (but can be */
+/*			 modified by fcn). */
 /* 	xpls(n)	    <--	 local minimum */
 /* 	fpls	    <--	 function value at local minimum xpls */
 /* 	gpls(n)	    <--	 gradient at local minimum xpls */
@@ -2766,10 +2844,10 @@ dfault(int n, double *x, double *typsiz,
 /* 	a(n,n)	     --> workspace */
 /* 	wrk(n,9)     --> workspace */
 
-int 
-F77_NAME(optif0)(int *nr, int *n, double *x, fcn_p fcn,
-		 double *xpls, double *fpls, double *gpls, int *
-		 itrmcd, double *a, double *wrk)
+void
+optif0(int nr, int n, double *x, fcn_p fcn, void *state,
+       double *xpls, double *fpls, double *gpls, int *itrmcd, double
+       *a, double *wrk)
 {
   int iexp;
   int iagflg, iahflg;
@@ -2778,24 +2856,18 @@ F77_NAME(optif0)(int *nr, int *n, double *x, fcn_p fcn,
   int method, itnlim, itncnt;
   double steptl;
   double stepmx, dlt;
-  int msg, ipr;
-
-  int wrk_dim1;
-  wrk_dim1 = *nr;
+  int msg;
 
   /* Function Body */
-  dfault(*n, x, &wrk[wrk_dim1], &fscale, &method, &iexp, &msg, &ndigit,
-	 &itnlim, &iagflg, &iahflg, &ipr, &dlt, &gradtl, &stepmx, &steptl);
-  optdrv(nr, n, x, (fcn_p)fcn, (fcn_p)d1fcn, (d2fcn_p)d2fcn,
-	 &wrk[wrk_dim1 * 3], &fscale, &method, &iexp, &msg, &ndigit,
-	 &itnlim, &iagflg, &iahflg, &ipr, &dlt, &gradtl, &stepmx,
-	 &steptl, xpls, fpls, gpls, itrmcd, a, wrk, &wrk[wrk_dim1],
-	 &wrk[wrk_dim1 * 2], &wrk[wrk_dim1 * 4], &wrk[wrk_dim1 * 5],
-	 &wrk[wrk_dim1 * 6], &wrk[wrk_dim1 * 7], &wrk[wrk_dim1 * 8],
-	 &itncnt);
-				   
-  return 0;
-} /* optif0_ */
+  dfault(n, x, &wrk[nr], &fscale, &method, &iexp, &msg, &ndigit,
+	 &itnlim, &iagflg, &iahflg, &dlt, &gradtl, &stepmx, &steptl);
+  optdrv(nr, n, x, (fcn_p)fcn, (fcn_p)d1fcn, (d2fcn_p)d2fcn, state,
+	 &wrk[nr * 3], fscale, method, iexp, &msg, ndigit,
+	 itnlim, iagflg, iahflg, dlt, gradtl, stepmx, steptl,
+	 xpls, fpls, gpls, itrmcd, a, wrk, &wrk[nr], &wrk[nr * 2],
+	 &wrk[nr * 4], &wrk[nr * 5], &wrk[nr * 6], &wrk[nr * 7],
+	 &wrk[nr * 8], &itncnt);
+} /* optif0 */
 
 /* ---- this one is called from ../main/optimize.c : --------------- */
 /* 	subroutine optif9 */
@@ -2817,6 +2889,10 @@ F77_NAME(optif0)(int *nr, int *n, double *x, fcn_p fcn,
 /* 			 of fcn.  must be declared external in calling routine */
 /* 	d2fcn	     --> (optional) name of subroutine to evaluate hessian of */
 /* 			 of fcn.  must be declared external in calling routine */
+/*      state       <--> information other than x and n that fcn, */
+/*	                 d1fcn and d2fcn requires. */
+/*      	         state is not modified in optif9 (but can be */
+/*			 modified by fcn, d1fcn or d2fcn). */
 /* 	typsiz(n)    --> typical size for each component of x */
 /* 	fscale	     --> estimate of scale of objective function */
 /* 	method	     --> algorithm to use to solve minimization problem */
@@ -2834,7 +2910,6 @@ F77_NAME(optif0)(int *nr, int *n, double *x, fcn_p fcn,
 /* 	itnlim	     --> maximum number of allowable iterations */
 /* 	iagflg	     --> =1 if analytic gradient supplied */
 /* 	iahflg	     --> =1 if analytic hessian supplied */
-/* 	ipr	     --> device to which to send output */
 /* 	dlt	     --> trust region radius */
 /* 	gradtl	     --> tolerance at which gradient considered close */
 /* 			 enough to zero to terminate algorithm */
@@ -2848,25 +2923,19 @@ F77_NAME(optif0)(int *nr, int *n, double *x, fcn_p fcn,
 /* 	a(n,n)	     --> workspace for hessian (or estimate) */
 /* 			 and its cholesky decomposition */
 /* 	wrk(n,8)     --> workspace */
-/* 	itncnt	     --> iteration count */
+/* 	itncnt	    <--> iteration count */
 
-int 
-F77_NAME(optif9)(int *nr, int *n, double *x, fcn_p fcn,
-		 fcn_p d1fcn, d2fcn_p d2fcn, double *typsiz, double *fscale, 
-		 int *method, int *iexp, int *msg, int *ndigit, 
-		 int *itnlim, int *iagflg, int *iahflg, int *ipr, 
-		 double *dlt, double *gradtl, double *stepmx, double *
-		 steptl, double *xpls, double *fpls, double *gpls, int 
-		 *itrmcd, double *a, double *wrk, int *itncnt)
+void
+optif9(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
+       d2fcn, void *state, double *typsiz, double fscale, int method,
+       int iexp, int *msg, int ndigit, int itnlim, int iagflg, int iahflg,
+       double dlt, double gradtl, double stepmx, double steptl, double
+       *xpls, double *fpls, double *gpls, int *itrmcd, double *a,
+       double *wrk, int *itncnt)
 {
-  int wrk_dim1;
-  wrk_dim1 = *nr;
-
-  optdrv(nr, n, x, (fcn_p)fcn, (fcn_p)d1fcn, (d2fcn_p)d2fcn, typsiz, 
-	 fscale, method, iexp, msg, ndigit, itnlim, iagflg, iahflg, ipr, 
-	 dlt, gradtl, stepmx, steptl, xpls, fpls, gpls, itrmcd, a,
-	 wrk, wrk + wrk_dim1, wrk + wrk_dim1 * 2, wrk + wrk_dim1 * 3,
-	 wrk + wrk_dim1 * 4, wrk + wrk_dim1 * 5, wrk + wrk_dim1 * 6,
-	 wrk + wrk_dim1 * 7, itncnt);
-  return 0;
+  optdrv(nr, n, x, (fcn_p)fcn, (fcn_p)d1fcn, (d2fcn_p)d2fcn, state,
+	 typsiz, fscale, method, iexp, msg, ndigit, itnlim, iagflg,
+	 iahflg, dlt, gradtl, stepmx, steptl, xpls, fpls, gpls,
+	 itrmcd, a, wrk, wrk + nr, wrk + nr * 2, wrk + nr * 3, wrk +
+	 nr * 4, wrk + nr * 5, wrk + nr * 6, wrk + nr * 7, itncnt);
 } /* optif9 */
