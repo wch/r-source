@@ -884,8 +884,10 @@ void R_ThreadMain(void)
 	    PROTECT(call);
 	    R_SigintHandler = thread_onintr;
 	    signal(SIGINT, R_SigintHandler);
-	    if (SETJMP(top_dispatcher->cjmpbuf))
+	    if (SETJMP(top_dispatcher->cjmpbuf)) {
+		PROTECT(call); /* need to reprotect after longjmp */
 		code = R_GlobalContext->contcode;
+	    }
 	    else
 		code = R_eval_nr(call, NULL);
 	    if (code != NULL)
