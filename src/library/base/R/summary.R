@@ -57,9 +57,10 @@ summary.matrix <- function(object, ...)
     summary.data.frame(data.frame(object), ...)
 
 summary.data.frame <-
-    function(object, maxsum = 7, digits = getOption("digits"), ...)
+    function(object, maxsum = 7, digits = max(3, getOption("digits") - 3), ...)
 {
-    z <- lapply(as.list(object), summary, maxsum = maxsum)
+    # compute results to full precision.
+    z <- lapply(as.list(object), summary, maxsum = maxsum, digits = 12, ...)
     nv <- length(object)
     nm <- names(object)
     lw <- numeric(nv)

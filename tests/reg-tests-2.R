@@ -57,3 +57,16 @@ test.list
 #
 # $B$subset
 # [1] TRUE
+
+## Marc Feldesman 2000-Feb-1.  Precision in summary.data.frame
+data(attenu)
+summary(attenu)
+summary(attenu, digits = 5)
+## Comments:
+## No difference between these in 1.2.1 and earlier
+set.seed(1)
+x <- c(round(runif(10), 2), 10000)
+summary(x)
+summary(data.frame(x))
+## Comments:
+## All entries show all 3 digits after the decimal point now.
