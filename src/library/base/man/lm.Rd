@@ -97,7 +97,6 @@ lm(formula, data, subset, weights, na.action,
   \item{weights}{(only for weighted fits) the specified weights.}
   \item{df.residual}{the residual degrees of freedom.}
   \item{call}{the matched call.}
-  \item{formula}{the formula supplied.}
   \item{terms}{the \code{\link{terms}} object used.}
   \item{contrasts}{(only where relevant) the contrasts used.}
   \item{xlevels}{(only where relevant) a record of the levels of the
