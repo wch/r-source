@@ -11822,8 +11822,8 @@ fi
 ## difference, but e.g. on Mach-O for Darwin there is.
 LIBR_EXT="${SHLIB_EXT}"
 LIBR_LDFLAGS="${SHLIB_LDFLAGS}"
-case "${host}" in
-  *-*-darwin*)
+case "${host_os}" in
+  darwin*)
     LIBR_EXT=".dylib"
     LIBR_LDFLAGS="-dynamiclib"
     ;;
