@@ -74,6 +74,7 @@ $ENV{"R_DEFAULT_PACKAGES"} = "";
 
 my $startdir = R_cwd();
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
+my $gzip = R_getenv("R_GZIPCMD", "gzip");
 my $tar = R_getenv("TAR", "tar");
 my $libdir = &file_path(${R::Vars::TMPDIR}, "Rinst.$$");
 
@@ -328,7 +329,7 @@ foreach my $pkg (@ARGV) {
 			   &shell_quote_file_path($filepath),
 			   @bundlepkgs, "DESCRIPTION")));
 	    R_system(join(" ",
-			  ("gzip -9f ",
+			  ("$gzip -9f ",
 			   &shell_quote_file_path($filepath))));
 	    chdir($startdir);
 	    $log->message("packaged bundle '$pkgname' as '$binfilename.gz'");
@@ -348,7 +349,7 @@ foreach my $pkg (@ARGV) {
 		       &shell_quote_file_path($filepath),
 		       "$pkgname")));
 	R_system(join(" ",
-		      ("gzip -9f",
+		      ("$gzip -9f",
 		       &shell_quote_file_path($origfilepath))));
     }
     chdir($startdir);
