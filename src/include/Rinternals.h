@@ -422,6 +422,7 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define defineVar		Rf_defineVar
 #define dimgets			Rf_dimgets
 #define dimnamesgets		Rf_dimnamesgets
+#define DropDims                Rf_DropDims
 #define duplicate		Rf_duplicate
 #define elt			Rf_elt
 #define emptyEnv		Rf_emptyEnv
@@ -590,7 +591,7 @@ Rcomplex asComplex(SEXP);
 int asInteger(SEXP);
 int asLogical(SEXP);
 double asReal(SEXP);
-SEXP arraySubscript(int, SEXP, SEXP);
+SEXP arraySubscript(int, SEXP, SEXP, SEXP(), SEXP);
 SEXP classgets(SEXP, SEXP);
 Rboolean conformable(SEXP, SEXP);
 SEXP cons(SEXP, SEXP);
@@ -603,6 +604,7 @@ void CustomPrintValue(SEXP,SEXP);
 void defineVar(SEXP, SEXP, SEXP);
 SEXP dimgets(SEXP, SEXP);
 SEXP dimnamesgets(SEXP, SEXP);
+SEXP DropDims(SEXP);
 SEXP duplicate(SEXP);
 SEXP elt(SEXP, int);
 SEXP emptyEnv(void);

@@ -585,7 +585,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     double ry;
     int nr, ny;
     int nrs, ncs;
-    SEXP sr, sc;
+    SEXP sr, sc, dim;
 
     if (!isMatrix(x))
 	error("incorrect number of subscripts on matrix");
@@ -596,8 +596,9 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* Note that "s" has been protected. */
     /* No GC problems here. */
 
-    sr = SETCAR(s, arraySubscript(0, CAR(s), x));
-    sc = SETCADR(s, arraySubscript(1, CADR(s), x));
+    dim = getAttrib(x, R_DimSymbol);
+    sr = SETCAR(s, arraySubscript(0, CAR(s), dim, getAttrib, x));
+    sc = SETCADR(s, arraySubscript(1, CADR(s), dim, getAttrib, x));
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
 
@@ -822,7 +823,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     tmp = s;
     for (i = 0; i < k; i++) {
-	SETCAR(tmp, arraySubscript(i, CAR(tmp), x));
+	SETCAR(tmp, arraySubscript(i, CAR(tmp), dims, getAttrib, x));
 	tmp = CDR(tmp);
     }
 

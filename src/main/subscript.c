@@ -377,15 +377,21 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names, int *stretch)
     return indx;
 }
 
-/* Array Subscripts.  dim is the dimension (0 to k-1), s is */
-/* the subscript list, x is the array to be subscripted. */
+/* Array Subscripts.  
+    dim is the dimension (0 to k-1)
+    s is the subscript list, 
+    dims is the dimensions of x
+    dng is a function (usually getAttrib) that obtains the dimnames
+    x is the array to be subscripted. 
+*/
 
-SEXP arraySubscript(int dim, SEXP s, SEXP x)
+typedef SEXP DimNamesGetter(SEXP x, SEXP data);
+
+SEXP arraySubscript(int dim, SEXP s, SEXP dims, DimNamesGetter dng, SEXP x)
 {
     int nd, ns, stretch = 0;
-    SEXP dims, dnames, tmp;
+    SEXP dnames, tmp;
     ns = length(s);
-    dims = getAttrib(x, R_DimSymbol);
     nd = INTEGER(dims)[dim];
 
     switch (TYPEOF(s)) {
@@ -401,7 +407,7 @@ SEXP arraySubscript(int dim, SEXP s, SEXP x)
     	UNPROTECT(1);
 	return tmp;
     case STRSXP:
-	dnames = getAttrib(x, R_DimNamesSymbol);
+	dnames = dng(x, R_DimNamesSymbol);
 	if (dnames == R_NilValue)
 	    error("no dimnames attribute for array");
 	dnames = VECTOR_ELT(dnames, dim);

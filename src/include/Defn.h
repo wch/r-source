@@ -482,7 +482,6 @@ extern char*	R_GUIType	INI_as("unknown");
 #define deparse1line		Rf_deparse1line
 #define DispatchGroup		Rf_DispatchGroup
 #define DispatchOrEval		Rf_DispatchOrEval
-#define DropDims		Rf_DropDims
 #define duplicated		Rf_duplicated
 #define dynamicfindVar		Rf_dynamicfindVar
 #define endcontext		Rf_endcontext
@@ -591,7 +590,6 @@ SEXP deparse1(SEXP,Rboolean);
 SEXP deparse1line(SEXP,Rboolean);
 int DispatchOrEval(SEXP, char*, SEXP, SEXP, SEXP*, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
-SEXP DropDims(SEXP);
 SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
