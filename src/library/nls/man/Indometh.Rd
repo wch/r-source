@@ -1,29 +1,30 @@
 \name{Indometh}
+\docType{data}
 \alias{Indometh}
-\non_function{}
 \title{Pharmacokinetics of Indomethicin}
 \description{
-    The \code{Indometh} data frame has 66 rows and 3 columns of data on
-    the pharmacokinetics of indomethicin.
+  The \code{Indometh} data frame has 66 rows and 3 columns of data on
+  the pharmacokinetics of indomethicin.
 }
+\usage{data(Indometh)}
 \format{
-    This data frame contains the following columns:
-    \describe{
-	\item{Subject}{
-	    an ordered factor with containing the subject codes.  The
-	    ordering is according to increasing maximum response.
-	}
-	\item{time}{
-	    a numeric vector of times at which blood samples were drawn (hr).
-	}
-	\item{conc}{
-	    a numeric vector of plasma concentrations of indomethicin (mcg/ml).
-	}
+  This data frame contains the following columns:
+  \describe{
+    \item{Subject}{
+      an ordered factor with containing the subject codes.  The
+      ordering is according to increasing maximum response.
     }
+    \item{time}{
+      a numeric vector of times at which blood samples were drawn (hr).
+    }
+    \item{conc}{
+      a numeric vector of plasma concentrations of indomethicin (mcg/ml).
+    }
+  }
 }
 \details{
-    Each of the six subjects were given an intravenous injection of
-    indomethicin.
+  Each of the six subjects were given an intravenous injection of
+  indomethicin.
 }
 \source{
   Kwan, Breault, Umbenhauer, McMahon and Duggan (1976), ``Kinetics of
@@ -32,10 +33,10 @@
   255--280.
 
   Davidian, M. and Giltinan, D. M. (1995) \emph{Nonlinear Models for
-      Repeated Measurement Data}, Chapman & Hall (section 5.2.4, p. 134)
+    Repeated Measurement Data}, Chapman & Hall (section 5.2.4, p. 134)
 
   Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
-      S and S-PLUS}, Springer.
+    S and S-PLUS}, Springer.
 }
 \examples{
 data(Indometh)

@@ -1,35 +1,35 @@
 \name{Orange}
+\docType{data}
 \alias{Orange}
-\non_function{}
 \title{Growth of orange trees}
 \description{
-    The \code{Orange} data frame has 35 rows and 3 columns of records of
-    the growth of orange trees.
+  The \code{Orange} data frame has 35 rows and 3 columns of records of
+  the growth of orange trees.
 }
+\usage{data(Orange)}
 \format{
-    This data frame contains the following columns:
-    \describe{
-	\item{Tree}{
-	    an ordered factor indicating the tree on which the
-	    measurement is made.  The ordering is according to
-	    increasing maximum diameter.
-	}
-	\item{age}{
-	    a numeric vector giving the age of the tree (days since 1968/12/31)
-	}
-	\item{circumference}{
-	    a numeric vector of trunk circumferences (mm).  This is
-	    probably ``circumference at breast height'', a standard
-	    measurement in forestry.
-	}
+  This data frame contains the following columns:
+  \describe{
+    \item{Tree}{
+      an ordered factor indicating the tree on which the measurement is
+      made.  The ordering is according to increasing maximum diameter.
     }
+    \item{age}{
+      a numeric vector giving the age of the tree (days since 1968/12/31)
+    }
+    \item{circumference}{
+      a numeric vector of trunk circumferences (mm).  This is probably
+      ``circumference at breast height'', a standard measurement in
+      forestry.
+    }
+  }
 }
 \source{
-    Draper, N. R. and Smith, H. (1998), \emph{Applied Regression
-	Analysis (3rd ed)}, Wiley (exercise 24.N).
+  Draper, N. R. and Smith, H. (1998), \emph{Applied Regression Analysis
+    (3rd ed)}, Wiley (exercise 24.N).
 
-    Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models
-	in S and S-PLUS}, Springer.
+  Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models
+    in S and S-PLUS}, Springer.
 }
 \examples{
 data(Orange)

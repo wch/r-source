@@ -1,6 +1,6 @@
 \name{ability.cov}
+\docType{data}
 \alias{ability.cov}
-\non_function{}
 \title{Ability and Intelligence Tests}
 \description{
   Six tests were given to 112 individuals. The covariance matrix is

@@ -1,46 +1,46 @@
 \name{CO2}
+\docType{data}
 \alias{CO2}
-\non_function{}
 \title{Carbon Dioxide uptake in grass plants}
 \description{
-    The \code{CO2} data frame has 84 rows and 5 columns of data from an
-    experiment on the cold tolerance of the grass species
-    \emph{Echinochloa crus-galli}
+  The \code{CO2} data frame has 84 rows and 5 columns of data from an
+  experiment on the cold tolerance of the grass species
+  \emph{Echinochloa crus-galli}.
 }
-
+\usage{data(CO2)}
 \format{
-    This data frame contains the following columns:
-    \describe{
-	\item{Plant}{
-	    an ordered factor with levels
-	    \code{Qn1} < \code{Qn2} < \code{Qn3} < \dots{} < \code{Mc1}
-	    giving a unique identifier for each plant.
-	}
-	\item{Type}{
-	    a factor with levels
-	    \code{Quebec} 
-	    \code{Mississippi}
-	    giving the origin of the plant
-	}
-	\item{Treatment}{
-	    a factor with levels
-	    \code{nonchilled} 
-	    \code{chilled}
-	}
-	\item{conc}{
-	    a numeric vector of ambient carbon dioxide concentrations (mL/L).
-	}
-	\item{uptake}{
-	    a numeric vector of carbon dioxide uptake rates
-	    (\eqn{\mu\mbox{mol}/m^2}{umol/m^2} sec).
-	}
+  This data frame contains the following columns:
+  \describe{
+    \item{Plant}{
+      an ordered factor with levels
+      \code{Qn1} < \code{Qn2} < \code{Qn3} < \dots{} < \code{Mc1}
+      giving a unique identifier for each plant.
     }
+    \item{Type}{
+      a factor with levels
+      \code{Quebec} 
+      \code{Mississippi}
+      giving the origin of the plant
+    }
+    \item{Treatment}{
+      a factor with levels
+      \code{nonchilled} 
+      \code{chilled}
+    }
+    \item{conc}{
+      a numeric vector of ambient carbon dioxide concentrations (mL/L).
+    }
+    \item{uptake}{
+      a numeric vector of carbon dioxide uptake rates
+      (\eqn{\mu\mbox{mol}/m^2}{umol/m^2} sec).
+    }
+  }
 }
 \details{
-    The \eqn{CO_2}{CO2} uptake of six plants from Quebec and six plants from
-    Mississippi was measured at several levels of ambient \eqn{CO_2}{CO2}
-    concentration.  Half the plants of each type were chilled overnight
-    before the experiment was conducted. 
+  The \eqn{CO_2}{CO2} uptake of six plants from Quebec and six plants
+  from Mississippi was measured at several levels of ambient
+  \eqn{CO_2}{CO2} concentration.  Half the plants of each type were
+  chilled overnight before the experiment was conducted.
 }
 \source{
   Potvin, C., Lechowicz, M. J. and Tardif, S. (1990)

@@ -1,6 +1,6 @@
 \name{WWWusage}
+\docType{data}
 \alias{WWWusage}
-\non_function{}
 \title{Internet Usage per Minute}
 \usage{data(WWWusage)}
 \description{

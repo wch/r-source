@@ -1,6 +1,6 @@
 \name{UKgas}
+\docType{data}
 \alias{UKgas}
-\non_function{}
 \title{UK Quarterly Gas Consumption}
 \usage{data(UKgas)}
 \description{

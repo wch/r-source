@@ -1,36 +1,37 @@
 \name{Puromycin}
+\docType{data}
 \alias{Puromycin}
-\non_function{}
 \title{Reaction velocity of an enzymatic reaction}
 \description{
-    The \code{Puromycin} data frame has 23 rows and 3 columns of the
-    reaction velocity versus substrate concentration in an enzymatic
-    reaction involving untreated cells or cells treated with Puromycin.
+  The \code{Puromycin} data frame has 23 rows and 3 columns of the
+  reaction velocity versus substrate concentration in an enzymatic
+  reaction involving untreated cells or cells treated with Puromycin.
 }
+\usage{data(Puromycin)}
 \format{
-    This data frame contains the following columns:
-    \describe{
-	\item{conc}{
-	    a numeric vector of substrate concentrations (ppm)
-	}
-	\item{rate}{
-	    a numeric vector of instantaneous reaction rates (counts/min/min)
-	}
-	\item{state}{
-	    a factor with levels
-	    \code{treated} 
-	    \code{untreated} 
-	}
+  This data frame contains the following columns:
+  \describe{
+    \item{conc}{
+      a numeric vector of substrate concentrations (ppm)
     }
+    \item{rate}{
+      a numeric vector of instantaneous reaction rates (counts/min/min)
+    }
+    \item{state}{
+      a factor with levels
+      \code{treated} 
+      \code{untreated} 
+    }
+  }
 }
 \details{
-    Data on the ``velocity'' of an enzymatic reaction were obtained by
-    Treloar (1974).  The number of counts per minute of radioactive
-    product from the reaction was measured as a function of substrate
-    concentration in parts per million (ppm) and from these counts the
-    initial rate, or ``velocity,'' of the reaction was calculated
-    (counts/min/min).  The experiment was conducted once with the enzyme
-    treated with Puromycin, and once with the enzyme untreated.
+  Data on the ``velocity'' of an enzymatic reaction were obtained by
+  Treloar (1974).  The number of counts per minute of radioactive
+  product from the reaction was measured as a function of substrate
+  concentration in parts per million (ppm) and from these counts the
+  initial rate, or ``velocity,'' of the reaction was calculated
+  (counts/min/min).  The experiment was conducted once with the enzyme
+  treated with Puromycin, and once with the enzyme untreated.
 }
 \source{
   Bates, D.M. and Watts, D.G. (1988),
@@ -38,7 +39,7 @@
   Wiley, Appendix A1.3.
 
   Treloar, M. A. (1974), \emph{Effects of Puromycin on
-      Galactosyltransferase in Golgi Membranes}, M.Sc. Thesis, U. of
+    Galactosyltransferase in Golgi Membranes}, M.Sc. Thesis, U. of
   Toronto. 
 }
 \examples{

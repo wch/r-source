@@ -1,6 +1,6 @@
 \name{Nile}
+\docType{data}
 \alias{Nile}
-\non_function{}
 \title{Flow of the River Nile}
 \usage{data(Nile)}
 \description{

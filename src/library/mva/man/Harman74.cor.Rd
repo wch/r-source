@@ -1,6 +1,6 @@
 \name{Harman74.cor}
+\docType{data}
 \alias{Harman74.cor}
-\non_function{}
 \title{Harman Example 7.4}
 \description{
   A correlation matrix of 24 psychological tests given to 145 seventh and

@@ -1,12 +1,12 @@
 \name{AirPassengers}
+\docType{data}
 \alias{AirPassengers}
-\non_function{}
 \title{Monthly Airline Passenger Numbers 1949-1960}
 \description{
  The classic Box \& Jenkins airline data.  Monthly totals of
  international airline passengers, 1949 to 1960.
 }
-\usage{data(AirPassenger)}
+\usage{data(AirPassengers)}
 \format{
   A monthly time series, in thousands.
 }
