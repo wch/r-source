@@ -94,38 +94,38 @@ void R_load_gnome_shlib(void)
 	sprintf(buf, "The GNOME shared library could not be loaded.\n  The error was %s\n", dlerror());
 	R_Suicide(buf);
     }
-    ptr_R_Suicide = R_dlsym(&dll, "Rgnome_Suicide");
+    ptr_R_Suicide = Rdlsym(&dll, "Rgnome_Suicide");
     if(!ptr_R_Suicide) Rstd_Suicide("Cannot load R_Suicide");
-    ptr_R_ShowMessage = R_dlsym(&dll, "Rgnome_ShowMessage");
+    ptr_R_ShowMessage = Rdlsym(&dll, "Rgnome_ShowMessage");
     if(!ptr_R_ShowMessage) R_Suicide("Cannot load R_ShowMessage");
-    ptr_R_ReadConsole = R_dlsym(&dll, "Rgnome_ReadConsole");
+    ptr_R_ReadConsole = Rdlsym(&dll, "Rgnome_ReadConsole");
     if(!ptr_R_ReadConsole) R_Suicide("Cannot load R_ReadConsole");
-    ptr_R_WriteConsole = R_dlsym(&dll, "Rgnome_WriteConsole");
+    ptr_R_WriteConsole = Rdlsym(&dll, "Rgnome_WriteConsole");
     if(!ptr_R_WriteConsole) R_Suicide("Cannot load R_WriteConsole");
-    ptr_R_ResetConsole = R_dlsym(&dll, "Rgnome_ResetConsole");
+    ptr_R_ResetConsole = Rdlsym(&dll, "Rgnome_ResetConsole");
     if(!ptr_R_ResetConsole) R_Suicide("Cannot load R_ResetConsole");
-    ptr_R_FlushConsole = R_dlsym(&dll, "Rgnome_FlushConsole");
+    ptr_R_FlushConsole = Rdlsym(&dll, "Rgnome_FlushConsole");
     if(!ptr_R_FlushConsole) R_Suicide("Cannot load R_FlushConsole");
-    ptr_R_ClearerrConsole = R_dlsym(&dll, "Rgnome_ClearerrConsole");
+    ptr_R_ClearerrConsole = Rdlsym(&dll, "Rgnome_ClearerrConsole");
     if(!ptr_R_ClearerrConsole) R_Suicide("Cannot load R_ClearerrConsole");
-    ptr_R_Busy = R_dlsym(&dll, "Rgnome_Busy");
+    ptr_R_Busy = Rdlsym(&dll, "Rgnome_Busy");
     if(!ptr_R_Busy) R_Suicide("Cannot load R_Busy");
-    ptr_R_CleanUp = R_dlsym(&dll, "Rgnome_CleanUp");
+    ptr_R_CleanUp = Rdlsym(&dll, "Rgnome_CleanUp");
     if(!ptr_R_CleanUp) R_Suicide("Cannot load R_CleanUp");
-    ptr_R_ShowFiles = R_dlsym(&dll, "Rgnome_ShowFiles");
+    ptr_R_ShowFiles = Rdlsym(&dll, "Rgnome_ShowFiles");
     if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
-    ptr_R_ChooseFile = R_dlsym(&dll, "Rgnome_ChooseFile");
+    ptr_R_ChooseFile = Rdlsym(&dll, "Rgnome_ChooseFile");
     if(!ptr_R_ChooseFile) R_Suicide("Cannot load R_ChooseFile");
-    ptr_gnome_start = R_dlsym(&dll, "gnome_start");
+    ptr_gnome_start = Rdlsym(&dll, "gnome_start");
     if(!ptr_gnome_start) R_Suicide("Cannot load gnome_start");
-    ptr_GTKDeviceDriver = R_dlsym(&dll, "GTKDeviceDriver");
+    ptr_GTKDeviceDriver = Rdlsym(&dll, "GTKDeviceDriver");
     if(!ptr_GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
-    ptr_R_loadhistory = R_dlsym(&dll, "Rgnome_loadhistory");
+    ptr_R_loadhistory = Rdlsym(&dll, "Rgnome_loadhistory");
     if(!ptr_R_loadhistory) R_Suicide("Cannot load Rgnome_loadhsitoryr");
-    ptr_R_savehistory = R_dlsym(&dll, "Rgnome_savehistory");
+    ptr_R_savehistory = Rdlsym(&dll, "Rgnome_savehistory");
     if(!ptr_R_savehistory) R_Suicide("Cannot load Rgnome_savehistory");
 /* Uncomment the next two lines to experiment with the gnome() device */
-/*    ptr_GnomeDeviceDriver = R_dlsym(&dll, "GnomeDeviceDriver");
+/*    ptr_GnomeDeviceDriver = Rdlsym(&dll, "GnomeDeviceDriver");
       if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
 }
 
