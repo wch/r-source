@@ -694,106 +694,31 @@ Date: Mon, 21 Apr 2003 17:01:53 -0400
 Subject: inconsistent handling of NA lty
 From: paul@stat.auckland.ac.nz
 Date: Tue, 10 Jun 2003 01:23:42 +0200 (MET DST)
-* PR# 3293 *
-Subject: Shift-Return causes segfault
-From: Graeme.Ambler@bristol.ac.uk
-Date: Thu, 19 Jun 2003 12:58:06 +0200 (MET DST)
-* PR# 3323 *
-Subject: Rcmd check on R 1.7.1
-From: =?ISO-8859-1?Q?Philippe_Hup=E9?= <Philippe.Hupe@curie.fr>
-Date: Mon, 23 Jun 2003 17:02:24 +0200
-* PR# 3324 *
-Subject: trace trap
-From: Patrick Brown <p.e.brown@lancaster.ac.uk>
-Date: Mon, 23 Jun 2003 16:36:39 +0100
 * PR# 3325 *
 Subject: optim with constraints 
 From: aa@tango.stat.unipd.it (Adelchi Azzalini)
 Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
-* PR# 3371 *
-Subject: PLEASE  GET BACK  TO  ME.
-From: MAJI  AMASI jr <majiamasi2@netscape.net>
-Date: Tue, 01 Jul 2003 03:15:46 +0200
-* PR# 3372 *
-Subject: Free Investment Advice xsqjfhwitcaq yjbz
-From: "Son Carson" <3993tdcpnkw@juno.com>
-Date: Tue, 01 Jul 03 13:07:54 GMT
-* PR# 3373 *
-Subject: Up To $5000 Per Week/FREE Laptop/No Phone Sales Required  wls h
-From: "Lamar Wilkins" <x117t4hz01@bigfoot.com>
-Date: Wed, 02 Jul 03 17:03:40 GMT
-* PR# 3374 *
-Subject: HGH - ideas to be younger acsymppiooqq
-From: "Robt Mills" <b2y203u59@clerk.com>
-Date: Thu, 03 Jul 03 00:22:26 GMT
-* PR# 3375 *
-Subject: Hey did you hear about the woman at work who lost 30 lbs in 4 weeks
-From: "Violet Clifton" <ugohgu@milestonenet.co.uk>
-Date: Wed, 02 Jul 03 08:51:46 GMT
-* PR# 3376 *
-Subject: Blast the blubber with our diet pills
-From: "Lena Salgado" <info@mymail.fire-bug.co.uk>
-Date: Wed, 02 Jul 03 21:37:52 GMT
-* PR# 3377 *
-Subject: Ugly guys + Hot women? You bet!
-From: "Vito Sandoval" <kwq3rwuuy@yournaturaladvantage.com>
-Date: Thu, 03 Jul 03 09:59:59 GMT
-* PR# 3378 *
-Subject: Minor error in area() documentation
-From: Arni Magnusson <arnima@u.washington.edu>
-Date: Wed, 2 Jul 2003 14:32:10 -0700 (PDT)
-* PR# 3379 *
-Subject: Grow your PENIS 2 inches in 2 days! ts elyqpcwzqagkfnuq
-From: "Brandi Meade" <3on64mv2m@eudoramail.com>
-Date: Thu, 03 Jul 03 14:34:39 GMT
-* PR# 3380 *
-Subject: Make your penis HUGE!  ywjw  xsiclxt
-From: "Tanya Baker" <vjp90m04@bigfoot.com>
-Date: Thu, 03 Jul 03 12:25:24 GMT
-* PR# 3381 *
-Subject: This what your looking for??
-From: golden@itilink.com
-Date: Wed, 02 Jul 2003 18:53:46 -0400
-* PR# 3382 *
-Subject: URGENT  ASSISTANT
-From: Timothy Mobutu <timothymobutu11@netscape.net>
-Date: Thu, 03 Jul 2003 11:06:11 +0200
-* PR# 3383 *
-Subject: hey everyone VgOIsiZltn
-From: "rahul" <ian@yahoo.com>
-Date: Thu, 03 Jul 03 05:24:13 Eastern Daylight Time
-* PR# 3384 *
-Subject: SOLICITATION FOR BUSINESS  VENTURE AND PARTNERSHIP..
-From: GUEI ZULU EDWRD <edwardzugu@europe.com>
-Date: Thu, 03 Jul 2003 12:33:31 +0200
-* PR# 3385 *
-Subject: Can a man have multiple orgasms?
-From: "Madge Story" <qqw52oep825@nmfinance.com>
-Date: Thu, 03 Jul 03 12:59:55 GMT
-* PR# 3386 *
-Subject: ALERTA VIRUS
-Subject: Re: Movie
-From: virusalert@unizar.es
-From: <r-bugs@r-project.org>
-Date: Thu, 3 Jul 2003 14:03:09 +0200
-Date: Thu, 3 Jul 2003 14:03:22 +0200
-* PR# 3387 *
-Subject: Rates are lower than ever and will go back up soon, REFINANCE TODAY! ei ogmq vxz m ex
-From: "Elnora Yang" <4jjkfnmbf@thedoghousemail.com>
-Date: Thu, 03 Jul 03 22:13:45 GMT
-* PR# 3388 *
-Subject: I think you are gorgeous.
-From: "Arnold Woods" <snos5wz995@yahoo.com>
-Date: Thu, 03 Jul 03 16:53:33 GMT
-* PR# 3389 *
-Subject: To People Who Want To Be A Power Seller On  E B A Y -- But Can't Get Started nasesvlc a
-From: "Maria Cullen" <148serdfy@compuserve.com>
-Date: Thu, 03 Jul 03 20:55:04 GMT
-* PR# 3390 *
-Subject: YOUR ASSISTANCE IS NEEDED
-From: "JUSTUS KALU" <kalujustus@indiatimes.com>
-Date: Thu, 3 Jul 2003 20:26:00 +0200
-* PR# 3391 *
-Subject: Fit into those summer clothes again this year
-From: "Lois Rice" <martin.smith2@milestonenet.co.uk>
-Date: Thu, 03 Jul 03 20:55:06 GMT
+* PR# 3394 *
+Subject: bug? exactRankTests install anomaly
+From: mwgrant@adelphia.net
+Date: Fri, 4 Jul 2003 04:04:12 +0200 (MET DST)
+* PR# 3399 *
+Subject: R crashes when installing package from CRAN
+From: renaud.lancelot@cirad.fr
+Date: Fri, 4 Jul 2003 14:17:52 +0200 (MET DST)
+* PR# 3400 *
+Subject: R documentation -- buffer overflow?
+From: Martin.Schlather@uni-bayreuth.de
+Date: Fri, 04 Jul 2003 15:01:14 +0200
+* PR# 3401 *
+Subject: Rates are predicted to go back up, REFINANCE Today!! tqnusanqzpobmmilcem
+From: "Hung Walls" <rz26vyw37@centralpets.com>
+Date: Sat, 05 Jul 03 04:05:21 GMT
+* PR# 3402 *
+Subject: RE:  Remortgaging your home has never been easier
+From: "Kermit Ortiz" <fjf539rp@influentialdelight.com>
+Date: Sat, 05 Jul 03 15:02:13 GMT
+* PR# 3403 *
+Subject: Get rid of the Fat!
+From: "Brett Hughes" <r84lnghsmk9o@imaginationcostume.com>
+Date: Fri, 04 Jul 03 22:44:10 GMT
