@@ -156,8 +156,8 @@ type?topic
   arguments will be when they are evaluated.
 
   Both approaches make use of any inherited methods; the signature of
-  the method to be looked up is found by using
-  \code{\link[methods]{selectMethod}}.
+  the method to be looked up is found by using \code{selectMethod}
+ (see the documentation for  \code{\link[methods]{getMethod}}).
 
   
 }
