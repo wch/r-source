@@ -153,6 +153,113 @@ Error:
         return bPrint;
 }
 
+BOOL RPrintBitMap(LPBITMAPINFO lpbi, LPBYTE lpbm)
+{
+        static PRINTDLG pd;
+        static DOCINFO di = {sizeof(DOCINFO), "", NULL};
+        int nError, rcaps, xmult, ymult, nColorData;
+        LPTSTR lpBits;
+
+                
+        pd.lStructSize = sizeof(PRINTDLG);
+        pd.hDevMode = (HANDLE) NULL;
+        pd.hDevNames = (HANDLE) NULL;
+        pd.Flags = PD_RETURNDC;
+        pd.hwndOwner = RConsoleFrame;
+        pd.hDC = (HDC) NULL;
+        pd.nFromPage = 1;
+        pd.nToPage = 1;
+        pd.nMinPage = 0;
+        pd.nMaxPage = 0;
+        pd.nCopies = 1;
+        pd.hInstance = (HANDLE) NULL;
+        pd.lCustData = 0L;
+        pd.lpfnPrintHook = (LPPRINTHOOKPROC) NULL;
+        pd.lpfnSetupHook = (LPPRINTHOOKPROC) NULL;
+        pd.lpPrintTemplateName = (LPSTR) NULL;
+        pd.lpSetupTemplateName = (LPSTR) NULL;
+        pd.hPrintTemplate = (HANDLE) NULL;
+        pd.hSetupTemplate = (HANDLE) NULL;
+
+        PrintDlg(&pd);
+
+        bPrint = TRUE;
+        
+            
+        SetAbortProc(pd.hDC, AbortProc);
+
+        hdlgCancel = CreateDialog(RInst, (LPSTR) "PAbortDlg", RConsoleFrame,
+                        (DLGPROC) AbortPrintJob);
+
+        EnableWindow(RConsoleFrame, FALSE);
+
+        nError = StartDoc(pd.hDC, &di);
+
+        rcaps = GetDeviceCaps(pd.hDC, RASTERCAPS);
+        if( !(rcaps & RC_BITBLT) || !(rcaps & RC_STRETCHBLT) ) {
+            MessageBox(RConsoleFrame,
+                "Printer cannot display bitmaps",
+                "Device Error",
+                MB_OK);
+            goto Error;
+        }
+                
+        if( nError == SP_ERROR )
+                goto Error;
+
+        nError = StartPage(pd.hDC);
+        if( nError <= 0 )
+                goto Error;
+
+
+        
+        PPixelsX = (float) GetDeviceCaps( pd.hDC, HORZRES);
+        PPixelsY = (float) GetDeviceCaps(pd.hDC, VERTRES);
+        
+
+        xmult = PPixelsX/lpbi->bmiHeader.biWidth;
+        ymult = PPixelsY/lpbi->bmiHeader.biHeight;
+        xmult=min(xmult,ymult);
+
+        lpBits = (LPTSTR) lpbi;
+        if( lpbi->bmiHeader.biClrUsed != 0 )
+                nColorData = lpbi->bmiHeader.biClrUsed;
+        else
+                switch( lpbi->bmiHeader.biBitCount )
+                {
+                    case 1: nColorData = 2; break;
+                    case 4: nColorData = 16; break;
+                    case 8: nColorData = 256; break;
+                    case 16: if(lpbi->bmiHeader.biCompression == BI_RGB )
+                                nColorData = 0;
+                              else if( lpbi->bmiHeader.biCompression == BI_BITFIELDS )
+                                nColorData = 3*sizeof(DWORD)/sizeof(RGBQUAD);
+                              else
+                                nColorData = 0;
+                              break;
+                    case 24: nColorData = 0; break;
+                }
+
+
+        rcaps=StretchDIBits(pd.hDC, 20,20,lpbi->bmiHeader.biWidth*xmult, lpbi->bmiHeader.biHeight*xmult,0,0,
+                       lpbi->bmiHeader.biWidth,  lpbi->bmiHeader.biHeight, lpbm, lpbi,
+                       DIB_RGB_COLORS, SRCCOPY );
+
+        
+        nError += EndPage(pd.hDC);
+        
+        if(nError <= 0 )
+                goto Error;
+
+        EndDoc(pd.hDC);
+
+Error:
+        EnableWindow(RConsoleFrame, TRUE);
+        DestroyWindow(hdlgCancel);
+        DeleteDC(pd.hDC);
+        return bPrint;
+}
+
 void RPrintText(HWND hwnd, HWND TextWin)
 {
         static PRINTDLG pd;

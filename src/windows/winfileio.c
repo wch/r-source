@@ -30,7 +30,13 @@
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
-        return( fopen(filename, mode) );
+    FILE *fp;
+    int i;
+    
+        fp = fopen(filename, mode);
+        if( fp == NULL )
+                i=5;
+        return(fp);
 }
 
 SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)

@@ -179,11 +179,10 @@ DL_FUNC R_FindSymbol(char const *name)
                 fcnptr = (DL_FUNC)GetProcAddress(LoadedDLL[i].dlh, buf);
                 if (fcnptr != NULL) return fcnptr;
         }
-/*  don't understand what this is for????
-        fcnptr = (DL_FUNC)dlsym(dlh, buf);
-        if (fcnptr != (DL_FUNC)0) return fcnptr;
-*/
-        return NULL;
+        for( i=0; CFunTab[i].name; i++ ) 
+            if( !strcmp(name, CFunTab[i].name))
+                return CFunTab[i].func;
+        return (DL_FUNC)0;
 }
 
 

@@ -49,7 +49,12 @@ extern void     (*DevHold)();
 extern void     dump_image(char* , int);
 extern BOOL FAR PASCAL  About(HWND, WORD, WPARAM, LPARAM);
 extern BOOL     RPrintGraph(HWND, HANDLE);
+extern BOOL     RPrintBitMap(LPBITMAPINFO, LPBYTE);
 extern void     RPrintText(HWND, HWND);
+
+extern SEXP BinaryLoad(FILE*);
+extern SEXP AsciiLoad(FILE*);
+
 LRESULT CALLBACK AbortPrintJob(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK    AbortProc(HDC, int);
 void R_ProcessDropFiles(HANDLE, int);

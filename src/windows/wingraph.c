@@ -59,8 +59,8 @@ static LOGFONT RGraphLF;
 static HANDLE pFont;
 HWND    RGraphWnd;
 /* static HANDLE RGMhmf=NULL; */
-static HENHMETAFILE RGMhmf = NULL;
-static HDC        RGMhdc=NULL;
+static HANDLE RGMhmf = NULL;
+static HDC RGMhdc=NULL;
 static HDC RGBhdc=NULL;         /*memory device context for the bitmap */
 static HBITMAP RGBitMap=NULL;   /* graphics bitmap */
 
@@ -239,7 +239,10 @@ static double Win_StrWidth(char *str)
     size = GP->cex * GP->ps +0.5;
     Win_RGSetFont(GP->font, size, -1);
     Ihdc=GetDC(RGraphWnd);
-    GetTextExtentPoint32(Ihdc, str, strlen(str), &ext);
+    if( R_WinVersion >= 4.0 )
+        GetTextExtentPoint32(Ihdc, str, strlen(str), &ext);
+    else
+        GetTextExtentPoint(Ihdc, str, strlen(str), &ext);
     ReleaseDC(RGraphWnd, Ihdc);
     return (double) ext.cx;
 }
@@ -268,11 +271,7 @@ static void Win_Circle(double x, double y, double r, int bg, int fg)
 {
     int ir, ix, iy;
     HDC thdc;
-    HBRUSH hBrush;
-    HPEN tPen;
-
-
-    
+   
     ir=(int) (r+0.5);
     ix=(int) x;
     iy=(int) y;
@@ -286,32 +285,14 @@ static void Win_Circle(double x, double y, double r, int bg, int fg)
     }
                 
     thdc=GetDC(RGraphWnd);
-#ifdef OLD
-    if( bg == NA_INTEGER ) {
-        hBrush = SelectObject(thdc, GetStockObject(NULL_BRUSH));
-        if( fg == NA_INTEGER )
-                tPen = SelectObject(thdc, GetStockObject(NULL_PEN));
-    }
-
-    Ellipse(thdc, ix-ir,iy+ir,ix+ir,iy-ir);
-    if( RGMhdc != NULL )
-         Ellipse(RGMhdc, ix-ir,iy+ir,ix+ir,iy-ir);
-    if( RGBhdc != NULL )
-        Ellipse(RGBhdc, ix-ir, iy+ir, ix+ir, iy-ir);
-
-    if( bg == NA_INTEGER ) {
-        SelectObject(thdc, hBrush);
-        if( fg == NA_INTEGER )
-                SelectObject(thdc,tPen);
-    }
-#else
-        RCirclehelper(thdc, ix, iy, ir, bg, fg);
-        if( RGMhdc != NULL )
-             RCirclehelper(RGMhdc, ix, iy, ir, bg, fg);
-        if( RGBhdc != NULL )
-             RCirclehelper(RGBhdc, ix, iy, ir, bg, fg); 
-#endif        
+    RCirclehelper(thdc, ix, iy, ir, bg, fg);
     ReleaseDC(RGraphWnd, thdc);
+        
+    if( RGMhdc != NULL )
+          RCirclehelper(RGMhdc, ix, iy, ir, bg, fg);
+    if( RGBhdc != NULL )
+          RCirclehelper(RGBhdc, ix, iy, ir, bg, fg);        
+
 }
 static void RPolyhelper(HDC ihdc, POINT *pt, int n, int bg, int fg)
 {
@@ -338,8 +319,6 @@ static void Win_Polygon(int n, double *x, double *y, int bg, int fg)
         int i;
         POINT *pt;
         HDC thdc;
-        HBRUSH hBrush;
-        HPEN tPen;
 
         vmax = vmaxget();
         if((pt=(POINT*)R_alloc(n,sizeof(POINT)))==NULL)
@@ -357,28 +336,14 @@ static void Win_Polygon(int n, double *x, double *y, int bg, int fg)
         }
 
         thdc = GetDC(RGraphWnd);
-#ifdef OLD
-        if( bg == NA_INTEGER ) {
-                hBrush = SelectObject(thdc, GetStockObject(NULL_BRUSH));
-                if( fg == NA_INTEGER )
-                        tPen = SelectObject(thdc, GetStockObject(NULL_PEN));
-        }
-        Polygon(thdc, pt, n);
-        if( RGMhdc != NULL )
-                Polygon(RGMhdc, pt, n);
-        if( bg == NA_INTEGER ) {
-                SelectObject(thdc, hBrush);
-                if( fg == NA_INTEGER )
-                        SelectObject(thdc, tPen);
-        }
-#else
         RPolyhelper(thdc, pt, n, bg, fg);
+        ReleaseDC(RGraphWnd, thdc);
+        
         if( RGMhdc != NULL )
                 RPolyhelper(RGMhdc, pt, n, bg, fg);
         if( RGBhdc != NULL )
                 RPolyhelper(RGBhdc, pt, n, bg, fg);
-#endif
-        ReleaseDC(RGraphWnd, thdc);
+
         vmaxset(vmax);
 }
 
@@ -431,7 +396,6 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
         LPARAM lParam)
 {
         PAINTSTRUCT ps;
-        HENHMETAFILE mfcpy;
         HDC thdc;
         RECT r1;
 
@@ -468,26 +432,9 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
                   break;
               case WM_PAINT:
                    BeginPaint(hWnd, &ps);
-                   SelectClipRgn(ps.hdc, NULL);
-#ifdef OLD
-                   if ( RGMhdc != NULL ) {
-                        if( RGMhmf != NULL )
-                               DeleteEnhMetaFile(RGMhmf);
-                        RGMhmf=CloseEnhMetaFile(RGMhdc);
-                   }
-                   if ( RGMhmf != NULL ) {
-                        if( mfcpy = CopyEnhMetaFile( RGMhmf, NULL) )
-                             EnumEnhMetaFile(ps.hdc, (HMETAFILE) mfcpy,
-                                  (ENHMFENUMPROC) PaintMetafile, NULL, &graphicsRect);
-                        SelectClipRgn(ps.hdc, NULL);
-                        Win_SetMetaDC(ps.hdc);
-                        PlayEnhMetaFile(RGMhdc, RGMhmf, &graphicsRect);
-                        DeleteEnhMetaFile(RGMhmf);
-                        RGMhmf=NULL;
-                   }
-#endif
-                   /* RgraphWnd should be ok since RGBhdc gets created from it */     
+                   SelectClipRgn(ps.hdc, NULL);                  
                    EndPaint(hWnd, &ps);
+                   /* RgraphWnd should be ok since RGBhdc gets created from it */    
                    if ( RGBhdc != NULL ) {
                        thdc = GetDC(RGraphWnd);
                        BitBlt(thdc, 0, 0, graphicsRect.right,graphicsRect.bottom,
@@ -520,6 +467,13 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
 void doGraphicsMenu(HWND GWnd, WPARAM wParam, LPARAM lParam)
 {
         HDC hdc;
+        BITMAPINFOHEADER bi, *lpbi;
+        BITMAP bmp;
+        HANDLE hDIB;
+        int i;
+        WORD cClrBits;
+        LPBYTE lpBits;
+        
         
         switch (wParam) {
                 case RRR_SETUP:
@@ -530,16 +484,63 @@ void doGraphicsMenu(HWND GWnd, WPARAM wParam, LPARAM lParam)
                 case RRR_PRINT:
                         if ( RGMhdc != NULL ) {
                                 if( RGMhmf != NULL )
-                                        DeleteEnhMetaFile(RGMhmf);
+                                        if( R_WinVersion >= 4.0 )
+                                                DeleteEnhMetaFile(RGMhmf);
+                                        else
+                                                DeleteMetaFile(RGMhmf);
                                 RGMhmf=CloseEnhMetaFile(RGMhdc);
                         }
-                        RPrintGraph(RConsoleFrame, CopyEnhMetaFile(RGMhmf,NULL));
-                        hdc = GetDC(RGraphWnd);
-                        Win_SetMetaDC(hdc);
-                        ReleaseDC(RGraphWnd, hdc);
-                        PlayEnhMetaFile(RGMhdc, RGMhmf, &graphicsRect);
-                        DeleteEnhMetaFile(RGMhmf);
-                        RGMhmf=NULL;
+                        if( RGMhmf != NULL && R_WinVersion >= 4.0 ) {
+                                RPrintGraph(RConsoleFrame, CopyEnhMetaFile(RGMhmf,NULL));
+                                hdc = GetDC(RGraphWnd);
+                                Win_SetMetaDC(hdc);
+                                ReleaseDC(RGraphWnd, hdc);
+                                PlayEnhMetaFile(RGMhdc, RGMhmf, &graphicsRect);
+                                DeleteEnhMetaFile(RGMhmf);
+                                RGMhmf=NULL;
+                        }
+                        else {  /* one of the reasons I really hate Windows */
+                            GetObject(RGBitMap, sizeof(BITMAP), &bmp);
+                            bi.biSize = sizeof(BITMAPINFOHEADER);
+                            bi.biWidth = bmp.bmWidth;
+                            bi.biHeight = bmp.bmHeight;
+                            bi.biPlanes = bmp.bmPlanes;
+                            bi.biBitCount = bmp.bmBitsPixel;
+                            bi.biCompression = BI_RGB;
+                            bi.biClrUsed = 0;
+                            bi.biXPelsPerMeter = 0;
+                            bi.biYPelsPerMeter = 0;
+                            bi.biClrImportant = 0;
+
+                            cClrBits = (WORD) (bmp.bmPlanes * bmp.bmBitsPixel);
+                            if( cClrBits == 1)
+                                cClrBits = 1;
+                            else if( cClrBits <= 4)
+                                cClrBits = 4;
+                            else if( cClrBits <= 8)
+                                cClrBits = 8;
+                            else if( cClrBits <=16)
+                                cClrBits = 16;
+                            else if (cClrBits <= 24)
+                                cClrBits = 24;
+                            else
+                                cClrBits = 32;
+
+                            bi.biSizeImage = (bmp.bmWidth +7)/8 * bmp.bmHeight * cClrBits;
+                            lpBits = (LPBYTE) GlobalAlloc(GMEM_FIXED, bi.biSizeImage);
+
+                            hDIB = GlobalAlloc(GHND, sizeof(BITMAPINFOHEADER)+
+                                        16*sizeof(RGBQUAD));
+                            lpbi =(BITMAPINFOHEADER *) GlobalLock(hDIB);
+                            *lpbi = bi;
+                            hdc = GetDC(RGraphWnd);
+                            i = GetDIBits(hdc, RGBitMap, 0, bmp.bmHeight, lpBits,
+                                    (LPBITMAPINFO) lpbi, DIB_RGB_COLORS);
+                            ReleaseDC(RGraphWnd, hdc);                            
+                            RPrintBitMap((LPBITMAPINFO) lpbi, (LPBYTE) lpBits);
+                            GlobalFree(hDIB);
+                            GlobalFree(lpBits);                          
+                        }
                         break;
                 case RRR_COPY:          
                         CopyGraphToScrap();
@@ -565,9 +566,6 @@ static void Win_SetMetaDC(HDC Ihdc)
         rr.bottom = floor(graphicsRect.bottom* iMMPerPelY);
         RGMhdc = CreateEnhMetaFile(Ihdc, NULL, &rr, "R metafile");
 }
-
-/* Current Clipping Rectangle */
-static double Clipxl, Clipxr, Clipyb, Clipyt;
 
 /* Last Point Coordinates */
 static double xlast = 0;
@@ -615,12 +613,13 @@ static int Win_Open()
         return 1;
 }
 
+/* Current Clipping Rectangle */
+static double Clipxl, Clipxr, Clipyb, Clipyt;
+
 /* Set the Clipping Rectangle */
 static void Win_Clip(double x0, double x1, double y0, double y1)
 { 
-    HRGN hrgn;
     HDC devHdc;
-    char x[100];
 
        if(x0 < x1) {
                 Clipxl = x0;
@@ -630,7 +629,7 @@ static void Win_Clip(double x0, double x1, double y0, double y1)
                 Clipxl = x1;
                 Clipxr = x0;
         }
-        if(y0 < y1) {
+        if(y0 > y1) {
                 Clipyb = y0;
                 Clipyt = y1;
         }
@@ -638,25 +637,20 @@ static void Win_Clip(double x0, double x1, double y0, double y1)
                 Clipyb = y1;
                 Clipyt = y0;
         }
-     hrgn = CreateRectRgn((int) Clipxl, (int) Clipyt, (int) Clipxr, (int) Clipyb);
+
      devHdc = GetDC(RGraphWnd);
-#ifdef old
-     SelectClipRgn(devHdc, hrgn);
-     ReleaseDC(RGraphWnd, devHdc);
-     if( RGMhdc != NULL ) {
-         sprintf(x,"R_C %f %f %f %f",  x0, x1,  y0, y1);
-         GdiComment(RGMhdc, 100,x);
-     }
-#endif
-     ExtSelectClipRgn(devHdc, NULL, RGN_COPY);
+     SelectClipRgn(devHdc, NULL);
      IntersectClipRect(devHdc, (int) Clipxl, (int) Clipyt,(int) Clipxr,(int) Clipyb);
+     ReleaseDC(RGraphWnd,devHdc);
+     
      if( RGMhdc != NULL ) {
-             ExtSelectClipRgn(RGMhdc, NULL, RGN_COPY);
-             IntersectClipRect(RGMhdc, (int) Clipxl, (int) Clipyt,(int) Clipxr,(int) Clipyb);
+         ExtSelectClipRgn(RGMhdc, NULL, RGN_COPY);
+         IntersectClipRect(RGMhdc, (int) Clipxl, (int) Clipyt,(int) Clipxr,(int) Clipyb);
      }
+
      if( RGBhdc != NULL ) {
-          ExtSelectClipRgn(RGBhdc, NULL, RGN_COPY);
-          IntersectClipRect(RGBhdc, (int) Clipxl, (int) Clipyt,(int) Clipxr,(int) Clipyb);
+         SelectClipRgn(RGBhdc, NULL);
+         IntersectClipRect(RGBhdc, (int) Clipxl, (int) Clipyt,(int) Clipxr,(int) Clipyb);
      }
 }
 
@@ -694,6 +688,10 @@ void Win_NewPlot()
         SetMapMode(RGBhdc, GetMapMode(Nhdc));
         RGBitMap= CreateCompatibleBitmap(Nhdc,graphicsRect.right-graphicsRect.left,
                 graphicsRect.bottom-graphicsRect.top);
+        if( RGBitMap == NULL ) 
+                MessageBox( RFrame, "couldn't alloc bitmap","R Graphics",
+                MB_ICONEXCLAMATION | MB_OK);
+
         SelectObject(RGBhdc, RGBitMap);
         FillRect(RGBhdc, &graphicsRect, GetStockObject(WHITE_BRUSH));
         
@@ -790,8 +788,6 @@ static void Win_Rect(double x0, double y0, double x1, double y1, int bg, int fg)
 {
         double tmp;
         HDC thdc;
-        HBRUSH hBrush;
-        HPEN tPen;
         
         if( x0 > x1 ) {
                 tmp = x0;
@@ -814,28 +810,12 @@ static void Win_Rect(double x0, double y0, double x1, double y1, int bg, int fg)
                 
         thdc = GetDC(RGraphWnd);
         Recthelper(thdc, (int) x0, (int) y0, (int) x1, (int) y1, bg, fg);
+        ReleaseDC(RGraphWnd, thdc);
+                
         if (RGMhdc != NULL )
                 Recthelper(RGMhdc, (int) x0, (int) y0, (int) x1, (int) y1, bg, fg);
         if (RGBhdc != NULL )
                 Recthelper(RGBhdc, (int) x0, (int) y0, (int) x1, (int) y1, bg, fg);
-#ifdef OLD
-        if( bg == NA_INTEGER ) {
-                hBrush = SelectObject(thdc, GetStockObject(NULL_BRUSH));
-                if( fg == NA_INTEGER )
-                        tPen = SelectObject(thdc, GetStockObject(NULL_PEN));
-        }
-                       
-        Rectangle(thdc,(int) x0,(int) y0,(int) x1,(int) y1);
-        if( RGMhdc != NULL ) {
-            Rectangle(RGMhdc,(int) x0,(int) y0,(int) x1,(int) y1);
-            
-        if( bg == NA_INTEGER ) {
-                SelectObject(thdc, hBrush);
-                if( fg == NA_INTEGER )
-                        SelectObject(thdc, tPen);
-        }
-#endif
-        ReleaseDC(RGraphWnd, thdc);
 }
 
 /* Rotated Text   
@@ -872,7 +852,10 @@ static void Win_Text(double x, double y, char *str, double xc, double yc, double
 
         devHdc=GetDC(RGraphWnd);
         if( xc != 0 || yc != 1 ) {
-                GetTextExtentPoint32(devHdc,str,nstr,&lpSize);
+                if( R_WinVersion >= 4.0 )
+                        GetTextExtentPoint32(devHdc,str,nstr,&lpSize);
+                else
+                        GetTextExtentPoint(devHdc,str,nstr,&lpSize);
                 xl = (double) lpSize.cx;
                 yl = (double) lpSize.cy;
                 rotrad=rot*(2*G_PI)/360;
