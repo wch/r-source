@@ -58,7 +58,8 @@ struct structConsoleData {
     int   lazyupdate, needredraw, newfv, newfc;	/* updating and redrawing */
     bitmap bm;
 
-    int   input, cur_pos, max_pos, prompt_len;	/* editing */
+    int   input, cur_pos, cur_byte, max_pos, max_byte, 
+	prompt_len, prompt_wid; /* editing */
 
     char  chbrk, modbrk;	/* hook for user's break */
     void  (*fbrk) ();
@@ -90,9 +91,12 @@ typedef struct structConsoleData *ConsoleData;
 #define VLINE(i) ((strlen(LINE(i))>FC) ? &LINE(i)[FC] : "")
 #define RLINE(i) (rect(0, BORDERY + (i)*FH, WIDTH, FH))
 #define RMLINES(i,j) (rect(0, BORDERY + (i)*FH, WIDTH, (j-i+1)*FH))
+#define cur_byte (p->cur_byte)
+#define max_byte (p->max_byte)
 #define cur_pos (p->cur_pos)
-#define max_pos (p->max_pos)
 #define prompt_len (p->prompt_len)
+#define prompt_wid (p->prompt_wid)
+#define CURCOL  (p->c)  /* column of cursor on whole line */
 
 #define WRITELINE(i, j) writeline(p, i, j)
 

@@ -42,8 +42,8 @@ sQuote() now defaults to type="cmd" on Windows.
 R can now be built with Unicode support on Win9x and WinME.  Set
 SUPPORT_UTF8 to YES in src/gnuwin32/MkRules.
 
-R can now be built with support of multibyte character sets,
-e.g. Japanese. See INSTALL.
+R can now be built with support of multibyte and variable-width
+character sets, e.g. for Japanese. See INSTALL.
 
 
 
