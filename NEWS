@@ -121,7 +121,8 @@ NEW FEATURES
     o	New function ftable() for creating and manipulating flat
 	contingency tables.
 
-    o	New function cutree() for cutting hclust trees in package mva.
+    o	New function cutree() for cutting hclust trees in package
+	mva. New functions rect.hclust and identify.hclust.
 
     o	Under Unix, the default editor is obtained from the environment
 	variables EDITOR or VISUAL if either is set.
