@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-57, 2001-05-18
+@set FAQ-VERSION 1.2-58, 2001-05-21
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -406,10 +406,10 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} at
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-05-09:
+@c Linux binaries as of 2001-05-21:
 @c
 @c debian   2.2 i386  1.2.2  Doug Bates <bates@stat.wisc.edu>
-@c          2.3 i386  1.2.2  Doug Bates <bates@stat.wisc.edu>
+@c          2.3 i386  1.2.3  Doug Bates <bates@stat.wisc.edu>
 @c linuxppc 5.0 ppc   1.2.3  Alex Buerkle <buerkle@hawaii.edu>
 @c mandrake 7.2 i386  1.2.3  Michele Alzetta <mikalzet@libero.it>
 @c          8.0 i386  1.2.3  Michele Alzetta <mikalzet@libero.it>
@@ -1574,9 +1574,6 @@ A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
 @item muhaz
 Hazard function estimation in survival analysis.
-@item multilm
-A basic method for fitting and testing multivariate linear models,
-including stabilized test procedures by Laeuter et.@: al.
 @item multiv
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
@@ -1732,6 +1729,9 @@ approximations.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
+@item multilm
+A basic method for fitting and testing multivariate linear models,
+including stabilized test procedures by Laeuter et.@: al.
 @item npConfRatio
 Nonparametric confidence intervals for the ratios of medians.
 @item regexp
@@ -2478,12 +2478,21 @@ In any case, do not call @code{as.numeric()} or their likes directly.
 @node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
 @section Are Trellis displays implemented in R?
 
-Not yet.  Meanwhile, you could look at @code{coplot()} and
-@code{dotchart()} which might do at least some of what you want.  Note
-also that the R version of @code{pairs()} is fairly general and provides
-most of the functionality of @code{splom()}, and that R's default plot
-method has an argument @code{asp} allowing to specify (and fix against
-device resizing) the aspect ratio of the plot.
+An R package called @strong{lattice}, which provides graphical
+functionality that is compatible with most Trellis commands, is under
+development.  The latest version of the package may be downloaded from
+the @file{contrib/Devel} area of @acronym{CRAN}.  @strong{lattice}
+currently relies on another package called @strong{grid} (also under
+development) so you will need to download that as well.  Because these
+packages are under active development, they might only work with the
+latest development version of R.
+
+You could also look at @code{coplot()} and @code{dotchart()} which might
+do at least some of what you want.  Note also that the R version of
+@code{pairs()} is fairly general and provides most of the functionality
+of @code{splom()}, and that R's default plot method has an argument
+@code{asp} allowing to specify (and fix against device resizing) the
+aspect ratio of the plot.
 
 (Because the word ``Trellis'' has been claimed as a trademark we do not
 use it in R.  The name ``lattice'' has been proposed for the R
