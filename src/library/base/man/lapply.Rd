@@ -16,7 +16,7 @@ replicate(n, expr, simplify = TRUE)
     \code{\%*\%}, etc., the function name must be quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}
   \item{simplify}{logical; should the result be simplified to a vector
-    if possible?}
+    or matrix if possible?}
   \item{USE.NAMES}{logical; if \code{TRUE} and if \code{X} is character,
     use \code{X} as \code{\link{names}} for the result unless it had names
     already.}
@@ -34,7 +34,7 @@ replicate(n, expr, simplify = TRUE)
 
   \code{replicate} is a wrapper for the common use of \code{sapply} for
   repeated evaluation of an expression (which will usually involve
-  random number generation.)
+  random number generation).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -53,6 +53,7 @@ lapply(x, quantile, probs = 1:3/4)
 sapply(x, quantile)
 str(i39 <- sapply(3:9, seq))# list of vectors
 sapply(i39, fivenum)
+
 hist(replicate(100, mean(rexp(10))))
 }
 \keyword{iteration}
