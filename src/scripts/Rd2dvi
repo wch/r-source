@@ -7,7 +7,7 @@
 ##  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.34 $'
+revision='$Revision: 1.35 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
@@ -92,10 +92,6 @@ while test -n "${1}"; do
   shift
 done
 
-if test -z "${output}"; then
-  output=Rd2.${out_ext}
-fi
-
 if ${debug}; then set -x; fi
 
 . ${R_HOME}/share/sh/dcf.sh	# get_dcf_field()
@@ -166,6 +162,7 @@ if test -d "${1}"; then
       title=${title-"Package \`${package_name}'"}
       dir=${1}/man
     fi
+    test -z "${output}" && output="`basename ${1}`.${out_ext}"
   elif test -f ${1}/DESCRIPTION.in && \
        test -n "`grep '^Priority: *base' ${1}/DESCRIPTION.in`"; then
     is_base_package=yes
@@ -173,6 +170,7 @@ if test -d "${1}"; then
     package_name=`get_dcf_field Package "${1}/DESCRIPTION.in"`
     title=${title-"Package \`${package_name}'"}
     dir=${1}/man
+    test -z "${output}" && output="`basename ${1}`.${out_ext}"    
   else
     if test -d ${1}/man; then
       dir=${1}/man
@@ -188,6 +186,10 @@ else
   else
     subj=
     toc=
+    if test -z "${output}"; then
+      output=`basename "${1}"`
+      output="`echo ${output} | sed 's/[Rr]d$//'`${out_ext}"
+    fi
   fi
   subj0=`${echo} ${1} | sed -e ${file_sed}`
   subj="\\file{${subj0}}${subj}"
@@ -195,6 +197,9 @@ fi
 title=${title-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
 
 ## Prepare for building the documentation.
+if test -z "${output}"; then
+  output="Rd2.${out_ext}"
+fi
 if test -f ${output}; then
   ${echo} "file \`${output}' exists; please remove first"
   exit 1
@@ -256,6 +261,7 @@ if test "${is_bundle}" = no; then
   Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
+\\setcounter{secnumdepth}{-1}
 \\pagenumbering{roman}
 \\tableofcontents{}
 \\cleardoublepage{}
@@ -289,6 +295,7 @@ if test "${out_ext}" = pdf; then
   ${R_LATEXCMD-latex} Rd2
 fi
 cd ${start_dir}
+${echo} "Saving output to \`${output}' ..."
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
 
