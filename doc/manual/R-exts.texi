@@ -2078,13 +2078,16 @@ generic vector.  There are analogous functions @code{STRING_ELT} and
 @code{SET_STRING_ELT} for character vectors.
 
 To convert existing code, use the following replacements.
-@example
-        original                                 replacement
-  foo = VECTOR(bar)[i]                    foo = VECTOR_ELT(bar, i)
-  VECTOR(foo)[j] = bar                    SET_VECTOR_ELT(foo, j, bar)
-  foo = STRING(bar)[i]                    foo = STRING_ELT(bar, i)
-  STRING(foo)[j] = bar                    SET_STRING_ELT(foo, j, bar)
-@end example
+
+@quotation
+@multitable {@code{VECTOR(foo)[j] = bar}} {@code{SET_VECTOR_ELT(foo, j, bar)}}
+@item original @tab replacement
+@item @code{foo = VECTOR(bar)[i]} @tab @code{foo = VECTOR_ELT(bar, i)}
+@item @code{VECTOR(foo)[j] = bar} @tab @code{SET_VECTOR_ELT(foo, j, bar)}
+@item @code{foo = STRING(bar)[i]} @tab @code{foo = STRING_ELT(bar, i)}
+@item @code{STRING(foo)[j] = bar} @tab @code{SET_STRING_ELT(foo, j, bar)}
+@end multitable 
+@end quotation
 
 The new garbage collector requires that all assignments into fields
 containing @code{SEXP} values go through functions such as
