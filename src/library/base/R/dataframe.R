@@ -284,7 +284,7 @@ data.frame <-
     nr <- max(nrows)
     for(i in (1:n)[nrows < nr]) {
 	xi <- vlist[[i]]
-	if(length(xi)==1 && nr%%nrows[i]==0) {
+	if(length(xi)==1 && nrows[i] > 0 && nr%%nrows[i]==0) {
             xi1 <- xi[[1]]
             if(is.vector(xi1) || is.factor(xi1)) {
                 vlist[[i]] <- list(rep(xi1, length=nr))
