@@ -250,8 +250,6 @@ NEW FEATURES
 
     o	Rdconv allows an output file to be specified.
 
-    o	CVS logs on http://developer.r-project.org/R.cvslog
-
     o	Initial support for C++ source code in add-on packages under Unix.
 
     o	Mathlib can be built as a standalone library: see directory
