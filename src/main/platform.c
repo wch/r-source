@@ -870,21 +870,21 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("http/ftp"));
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING)
+#if HAVE_INTERNET
     INTEGER(ans)[i++] = 1;
 #else
     INTEGER(ans)[i++] = 0;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("sockets"));
-#if defined(Win32) || defined(HAVE_BSD_NETWORKING)
+#ifdef HAVE_SOCKETS
     INTEGER(ans)[i++] = 1;
 #else
     INTEGER(ans)[i++] = 0;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("libxml"));
-#if defined(HAVE_LIBXML) || defined(HAVE_BSD_NETWORKING)
+#ifdef HAVE_LIBXML
     INTEGER(ans)[i++] = 1;
 #else
     INTEGER(ans)[i++] = 0;

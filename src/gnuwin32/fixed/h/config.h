@@ -383,6 +383,10 @@
 #define PSIGNAL
 #define PLOTHISTORY
 
+#define HAVE_SOCKETS 1
+#define HAVE_INTERNET 1
+#define HAVE_LIBXML 1
+
 #define snprintf  _snprintf
 #define vsnprintf  _vsnprintf
 

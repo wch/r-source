@@ -119,6 +119,13 @@
 /* Type for socket lengths: socklen_t, sock_t, int? */
 #undef SOCKLEN_T
 
+/* Unix-specific equivalences */
+#ifdef HAVE_BSD_NETWORKING
+#define HAVE_SOCKETS 1
+#define HAVE_INTERNET 1
+#define HAVE_LIBXML 1
+#endif
+
 @BOTTOM@
 
 #endif /* not _CONFIG_H */

@@ -7,8 +7,7 @@ HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
-USE_LIBXML=YES
-#USE_WININET=YES
+USE_WININET=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -47,15 +46,12 @@ extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
 endif
 
-ifdef USE_LIBXML
-EXTRALIBS+= Rlibxml.a
-OPTFLAGS+=-DHAVE_LIBXML
-endif
-
 ifdef USE_WININET
 R-DLLLIBS+=-lwininet
 OPTFLAGS+=-DUSE_WININET
 #OPTFLAGS+=-DUSE_WININET_ASYNC
+else
+EXTRALIBS+= Rlibxml.a
 endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
