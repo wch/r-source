@@ -355,9 +355,6 @@ UTILITIES
     o	Package 'tools' now provides Rd_parse(), a simple top-level
 	parser/analyzer for R documentation format.
 
-    o	massage-Examples.pl now attempts to unload any namespaces
-	loaded by the example.
-
     o	tools::codoc() (and hence R CMD check) now checks any documentation
 	for registered S3 methods and unexported objects in packages
 	with namespaces.

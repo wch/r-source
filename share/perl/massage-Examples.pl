@@ -73,10 +73,6 @@ assign("cleanEx",
 	   if(length(missitems))
 	       warning("items ", paste(missitems, collapse=", "),
 		       " have been removed from the search path")
-           nms <- loadedNamespaces()
-	   # don't unload grid or graphics with a device open
-	   newitems <- nms[! nms %in% c("grDevices", "graphics", "grid", .oldNS)]
-	   for(item in rev(newitems)) unloadNamespace(item)
        },
        env = .CheckExEnv)
 assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) # for now

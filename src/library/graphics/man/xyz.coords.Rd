@@ -48,7 +48,7 @@ xyz.coords(x, y, z, xlab = NULL, ylab = NULL, zlab = NULL,
 \examples{
 xyz.coords(data.frame(10*1:9, -4), y = NULL, z = NULL)
 
-xyz.coords(1:6, fft(1:6), z = NULL, xlab = "X", ylab = "Y")
+xyz.coords(1:6, stats::fft(1:6), z = NULL, xlab = "X", ylab = "Y")
 
 y <- 2 * (x2 <- 10 + (x1 <- 1:10))
 xyz.coords(y ~ x1 + x2, y = NULL, z = NULL)
