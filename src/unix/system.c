@@ -51,10 +51,6 @@
 #include "Runix.h"
 
 
-#ifdef HAVE_AQUA
-void R_StartConsole(Rboolean OpenConsole) { ptr_R_StartConsole(); }
-#endif
-
 Rboolean UsingReadline = TRUE;  /* used in sys-std.c & ../main/platform.c */
 
 /* call pointers to allow interface switching */
@@ -275,7 +271,7 @@ int Rf_initialize_R(int ac, char **av)
        editors.  If the file does not exist then the editor should be
        opened to create a new file.  On GUI platforms multiple files
        can be opened in separate editor windows, but this currently
-       only works on Windows, not Aqua.
+       only works on Windows and Aqua.
     */
 
     /*
@@ -283,7 +279,10 @@ int Rf_initialize_R(int ac, char **av)
      *     file    = array of filenames
      *     editor  = editor to be used.
      */
-
+/*#ifdef HAVE_AQUA
+extern DL_FUNC ptr_Raqua_Edit;
+#endif
+*/
 int R_EditFiles(int nfile, char **file, char **title, char *editor)
 {
     char  buf[1024];
@@ -298,8 +297,8 @@ int R_EditFiles(int nfile, char **file, char **title, char *editor)
 	    R_ShowMessage("WARNING: Only editing the first in the list of files");
 
 #if defined(HAVE_AQUA)
-	if (!strcmp(R_GUIType, "AQUA"))
-	    Raqua_Edit(file[0]);
+	if (ptr_R_EditFile)
+	    ptr_R_EditFile(file[0]);
 	else {
 #endif
 	    /* Quote path if necessary */

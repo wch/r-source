@@ -41,11 +41,6 @@ int Rgui_Edit(char *filename, char *title, int modal);
 #include <Rinterface.h> /* for editor ptr */
 #endif
 
-#ifdef HAVE_AQUA
-extern  DL_FUNC ptr_Raqua_Edit;
-extern  Rboolean useaqua;
-int Raqua_Edit(char *filename) {ptr_Raqua_Edit(filename);}
-#endif
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>		/* for unlink() */
@@ -96,7 +91,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     char *title;
 #endif
 
-    checkArity(op, args);
+	checkArity(op, args);
 
     vmaxsave = vmaxget();
 
@@ -158,21 +153,12 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warningcall(call, "editor ran but returned error status");
     }
 #else
-# if defined(HAVE_AQUA)
-    if (!strcmp(R_GUIType,"AQUA") || useaqua)	
-      rc = Raqua_Edit(filename);
-    else {
-      sprintf(editcmd, "%s %s", cmd, filename);
-      rc = R_system(editcmd);
-    }
-# else /* Unix, not AQUA */
     if (ptr_R_EditFile)
         rc = ptr_R_EditFile(filename);
     else {
         sprintf(editcmd, "%s %s", cmd, filename);
         rc = R_system(editcmd);
     }
-# endif
     if (rc != 0)
 	errorcall(call, "problem with running editor %s", cmd);
 #endif

@@ -38,15 +38,8 @@
 extern Rboolean useaqua; /* from src/unix/system.c */
 
 
-extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole, 
-    ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole, 
-    ptr_R_ShowFiles, ptr_R_loadhistory,  ptr_R_savehistory,
-    ptr_R_ChooseFile, ptr_R_CleanUp, ptr_R_ShowMessage, ptr_R_Suicide,
-    ptr_R_Busy;
-
-
 DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, 
-    ptr_Raqua_Edit, ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
+    ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
     ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser;
 
 DL_FUNC ptr_R_ProcessEvents, ptr_CocoaInnerQuartzDevice, 

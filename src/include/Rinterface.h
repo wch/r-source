@@ -105,7 +105,6 @@ extern int  (*R_timeout_handler)();
 extern long R_timeout_val;
 
 #ifdef HAVE_AQUA
-/* extern void (*ptr_R_StartConsole)();  Do we still need this one? */
 extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
 #endif
 
