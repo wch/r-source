@@ -448,7 +448,7 @@ R_r2dtable(SEXP n, SEXP r, SEXP c)
     int nr, nc, *row_sums, *col_sums, i, *jwork;
     int n_of_samples, n_of_cases;
     double *fact;
-    SEXP ans, *tables;
+    SEXP ans, tmp;
 
     nr = length(r);
     nc = length(c);
@@ -476,7 +476,9 @@ R_r2dtable(SEXP n, SEXP r, SEXP c)
     for(i = 0; i < nr; i++)
 	n_of_cases += *jwork++;
 
-    /* Log-factorials from 0 to n_of_cases + 1. */
+    /* Log-factorials from 0 to n_of_cases.
+       (I.e., lgamma(1), ..., lgamma(n_of_cases + 1).)
+    */
     fact = (double *) R_alloc(n_of_cases + 1, sizeof(double));
     fact[0] = 0.;
     for(i = 1; i <= n_of_cases; i++)
@@ -485,15 +487,14 @@ R_r2dtable(SEXP n, SEXP r, SEXP c)
     jwork = (int *) R_alloc(nc, sizeof(int));
 
     PROTECT(ans = allocVector(VECSXP, n_of_samples));
-    tables = (SEXP *) R_alloc(n_of_samples, sizeof(SEXP));
 
     GetRNGstate();
 
     for(i = 0; i < n_of_samples; i++) {
-	PROTECT(tables[i] = allocMatrix(INTSXP, nr, nc));
+	PROTECT(tmp = allocMatrix(INTSXP, nr, nc));
 	rcont2(&nr, &nc, row_sums, col_sums, &n_of_cases, fact, 
-	       jwork, INTEGER(tables[i]));
-	SET_VECTOR_ELT(ans, i, tables[i]);
+	       jwork, INTEGER(tmp));
+	SET_VECTOR_ELT(ans, i, tmp);
 	UNPROTECT(1);
     }
 
