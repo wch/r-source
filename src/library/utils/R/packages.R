@@ -83,7 +83,7 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
         if(!is.na(b))
             for (w in unique(instp[,"LibPath"])) {
             ok <- which(instp[,"Bundle"] == b & instp[,"LibPath"] == w)
-            if(length(ok)>1) instp <- instp[-ok[-1],]
+            if(length(ok) > 1) instp <- instp[-ok[-1], ]
         }
     }
 
@@ -95,35 +95,24 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
 
     update <- NULL
 
-    newerVersion <- function(a, b) {
-        a <- as.integer(strsplit(a, "[\\.-]")[[1]])
-        b <- as.integer(strsplit(b, "[\\.-]")[[1]])
-        if(any(is.na(a)))
-            return(FALSE)
-        if(any(is.na(b)))
-            return(TRUE)
-        for(k in 1:length(a)) {
-            if(k <= length(b)) {
-                if(a[k] > b[k]) return(TRUE) else if(a[k] < b[k]) return(FALSE)
-            } else {
-                return(TRUE)
+    currentR <- getRversion()
+    for(k in 1:nrow(instp)) {
+        if (instp[k, "Priority"] %in% "base") next
+        z <- match(instp[k, "Package"], available[,"Package"])
+        if(is.na(z)) next
+        onCran <- available[z, ]
+        if(package_version(onCran["Version"]) <=
+           package_version(instp[k, "Version"])) next
+        deps <- onCran["Depends"]
+        if(!is.na(deps)) {
+            Rdeps <- tools:::.split_dependencies(deps)[["R"]]
+            if(length(Rdeps) > 1) {
+                target <- Rdeps$version
+                res <- eval(parse(text=paste("currentR", Rdeps$op, "target")))
+                if(!res) next
             }
         }
-        return(FALSE)
-    }
-
-    for(k in 1:nrow(instp)){
-        ok <- (!(instp[k, "Priority"] %in% "base")) &
-                (available[,"Package"] == instp[k, "Package"])
-        if(any(ok))
-            ok[ok] <- sapply(available[ok, "Version"], newerVersion,
-                             instp[k, "Version"])
-        if(any(ok) && any(package.dependencies(available[ok, ], check = TRUE)))
-        {
-            update <- rbind(update,
-                            c(instp[k, c("Package", "LibPath", "Version")],
-                              available[ok, "Version"]))
-        }
+        update <- rbind(update, c(instp[k, 1:3], onCran["Version"]))
     }
     if(!is.null(update))
         colnames(update) <- c("Package", "LibPath", "Installed", "CRAN")

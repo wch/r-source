@@ -141,8 +141,8 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \code{"Depends"}, \code{"Imports"}, \code{"Suggests"}
   and \code{"Contains"}.
 
-  For \code{old.packages}, a matrix with one row per package/bundle
-  and column names \code{"Package"}, \code{"LibPath"},
+  For \code{old.packages}, \code{NULL} or a matrix with one row per
+  package/bundle and column names \code{"Package"}, \code{"LibPath"},
   \code{"Installed"} and \code{"CRAN"}.  (The last two columns are
   version numbers.)
 
