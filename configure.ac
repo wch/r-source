@@ -1184,6 +1184,23 @@ AC_SUBST(LIBR_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)
 
+### Now we have found all the flags, we need to use them to test appropriately.
+### We don't currently have any C++ tests, but future-proof.
+### In principle we should do this before testing for C-Fortran compatibility.
+
+CFLAGS_KEEP=${CFLAGS}
+FFLAGS_KEEP=${FFLAGS}
+CXXFLAGS_KEEP=${CXXFLAGS}
+if test "${want_R_shlib}" = yes; then
+  CFLAGS="${CFLAGS} ${CPICFLAGS} ${R_XTRA_CFLAGS}"
+  FFLAGS="${FFLAGS} ${FPICFLAGS} ${R_XTRA_FFLAGS}"
+  CXXFLAGS="${CXXFLAGS} ${CXXPICFLAGS} ${R_XTRA_CXXFLAGS}"
+else
+  CFLAGS="${CFLAGS} ${R_XTRA_CFLAGS}"
+  FFLAGS="${FFLAGS} ${R_XTRA_FFLAGS}"
+  CXXFLAGS="${CXXFLAGS} ${R_XTRA_CXXFLAGS}"
+fi
+
 ### * Checks for library functions.
 
 AC_CHECK_TYPES([off_t])
@@ -1537,6 +1554,11 @@ AC_CONFIG_FILES(
 
 AC_CONFIG_COMMANDS([stamp-h],
 [test -f src/include/stamp-h || echo timestamp > src/include/stamp-h])
+
+### now reset flags
+CFLAGS=${CFLAGS_KEEP}
+FFLAGS=${FFLAGS_KEEP}
+CXXFLAGS=${CXXFLAGS_KEEP}
 
 AC_OUTPUT
 
