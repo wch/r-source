@@ -10,13 +10,13 @@ subdir = src/nmath/standalone
 
 include $(top_builddir)/Makeconf
 
-SOURCES = \
+SOURCES_NMATH = \
 	mlutils.c \
 	d1mach.c i1mach.c \
 	fmax2.c fmin2.c fmod.c fprec.c fround.c ftrunc.c \
 	sign.c fsign.c fsquare.c fcube.c \
 	imax2.c imin2.c \
-	chebyshev.c log1p.c lgammacor.c gammalims.c \
+	chebyshev.c log1p.c lgammacor.c gammalims.c stirlerr.c \
 	gamma.c lgamma.c gamma_cody.c beta.c lbeta.c polygamma.c \
 	bessel_i.c bessel_j.c bessel_k.c bessel_y.c \
 	choose.c \
@@ -44,9 +44,9 @@ SOURCES = \
 	ptukey.c qtukey.c \
 	wilcox.c \
 	signrank.c
+SOURCES = $(SOURCES_NMATH) sunif.c
 DEPENDS = $(SOURCES:.c=.ad)
-OBJECTS = sunif.o $(SOURCES:.c=.ao)
-LOBJECTS = sunif.lo $(SOURCES:.c=.lo)
+OBJECTS = $(SOURCES:.c=.ao)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in test.c sunif.c
@@ -54,10 +54,18 @@ DISTFILES = Makefile.in test.c sunif.c
 LIB = libRmath.a
 SHLIB = libRmath.$(SHLIB_EXT)
 
-DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
-ALL_CFLAGS = $(R_XTRA_CFLAGS) $(SH_CFLAGS) $(CFLAGS)
+## FIXME: this should be libRmath.la etc ...
+Rexeclibdir_LTLIBRARIES = libRmath.$(SHLIB_EXT)
+libRmath_la_SOURCES = $(SOURCES)
+libRmath_la_OBJECTS = $(OBJECTS:.ao=.lo)
 
-.SUFFIXES: .c .f .ad .lo .ao
+CLEANFILES = Makedeps *.ad *.ao *.lo test
+DISTCLEANFILES = Makefile $(LIB) $(SHLIB)
+
+DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
+
+.SUFFIXES:
+.SUFFIXES: .c .ad .ao .lo
 
 .c.ad:
 	@echo "making $@ from $<"
@@ -65,12 +73,8 @@ ALL_CFLAGS = $(R_XTRA_CFLAGS) $(SH_CFLAGS) $(CFLAGS)
 .c.ao:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
 
-.c.lo:
-	$(CC) $(ALL_CPPFLAGS) $(CPICFLAGS) $(ALL_CFLAGS) -c $< -o $@
-
-
-all: Makefile Makedeps archive shared
-archive: Makefile ../../include/Rconfig.h
+all: Makefile Makedeps static shared
+static: Makefile ../../include/Rconfig.h
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
 
@@ -79,7 +83,7 @@ shared: Makefile ../../include/Rconfig.h
 	$(MAKE) $(SHLIB)
 
 ../../include/Rconfig.h:
-	(cd ../../include; $(MAKE) Rconfig.h)
+	(cd $(@D); $(MAKE) $(@F))
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES)
 	@cd $(top_builddir) && \
@@ -91,23 +95,22 @@ Makedeps: Makefile ../../include/Rconfig.h $(DEPENDS)
 	@cat $(DEPENDS) | sed s/\.o:/.lo:/>> Makefile
 	@touch $@
 
-
 $(LIB): $(OBJECTS)
 	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
-$(SHLIB): $(LOBJECTS)
-	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(LOBJECTS)
+$(SHLIB): $(libRmath_la_OBJECTS)
+## FIXME: this should be $(LTLINK) -o $@ $(libRmath_la_OBJECTS)
+	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(libRmath_la_OBJECTS)
 
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lRmath -lm
 
 mostlyclean: clean
 clean:
-	@echo "cleaning in $(subdir)"
-	@-rm -f Makedeps *.d *.o *.lo test
+	@-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 distclean: clean
-	@-rm -f Makefile $(LIB) $(SHLIB)
+	@-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

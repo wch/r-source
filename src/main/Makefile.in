@@ -117,7 +117,7 @@ ALL_LIBS = $(RLIBS) $(LIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
 Rexeclib_LTLIBRARIES = libR.la
 libR_la_SOURCES = $(SOURCES)
 libR_la_LDFLAGS = 
-libR_la_LTLIBOBJS = $(OBJECTS:.o=.lo)
+libR_la_OBJECTS = $(OBJECTS:.o=.lo)
 libR_la_LIBADD = 
 libR_la_DEPENDENCIES = ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo
 
@@ -155,9 +155,9 @@ $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 $(RLIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
-libR.la: $(libR_la_LTLIBOBJS) $(libR_la_DEPENDENCIES)
+libR.la: $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 ## FIXME
-	$(LTLINK) -o $@ $(libR_la_LTLIBOBJS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo` $(LIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+	$(LTLINK) -o $@ $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo` $(LIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
 ## FIXME
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
 
@@ -177,9 +177,8 @@ installdirs:
 
 mostlyclean: clean
 clean:
-	@echo "cleaning in $(subdir)"
 	@-rm -rf .libs _libs
-	@-rm -f *core Makedeps *.d *.o *.la
+	@-rm -f *core Makedeps *.d *.o *.lo *.la
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

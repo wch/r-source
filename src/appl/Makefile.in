@@ -85,7 +85,7 @@ LIB = libappl.a
 
 noinst_LTLIBRARIES = libappl.la
 libappl_la_SOURCES = $(SOURCES)
-libappl_la_LTLIBOBJS = $(OBJECTS:.o=.lo)
+libappl_la_OBJECTS = $(OBJECTS:.o=.lo)
 
 all: Makefile Makedeps R
 
@@ -107,16 +107,15 @@ $(LIB):	$(OBJECTS)
 	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
-stamp-lo: $(libappl_la_LTLIBOBJS)
+stamp-lo: $(libappl_la_OBJECTS)
 	@touch $@
 libappl.la: stamp-lo
-	$(LTLINK) -o $@ $(libappl_la_LTLIBOBJS)
+	$(LTLINK) -o $@ $(libappl_la_OBJECTS)
 
 mostlyclean: clean
 clean:
-	@echo "cleaning in $(subdir)"
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.la stamp-lo
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
