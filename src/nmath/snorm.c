@@ -321,7 +321,7 @@ double norm_rand(void)
 		return (u2<u3) ? tt : -tt;
 	}
     default:
-	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind)
+	MATHLIB_ERROR(_("norm_rand(): invalid N01_kind: %d\n"), N01_kind)
 	    return 0.0;/*- -Wall */
     }/*switch*/
 }

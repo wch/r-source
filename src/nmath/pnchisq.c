@@ -178,7 +178,7 @@ double pnchisq_raw(double x, double f, double theta,
     } /* for(n ...) */
 
     if (is_it) {
-	MATHLIB_WARNING2("pnchisq(x=%g, ..): not converged in %d iter.",
+	MATHLIB_WARNING2(_("pnchisq(x=%g, ..): not converged in %d iter."),
 			 x, itrmax);
     }
 #ifdef DEBUG_pnch

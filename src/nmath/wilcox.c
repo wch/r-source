@@ -72,13 +72,13 @@ w_init_maybe(int m, int n)
 	n = imax2(n, WILCOX_MAX);
 	w = (double ***) calloc(m + 1, sizeof(double **));
 	if (!w)
-	    MATHLIB_ERROR("wilcox allocation error %d", 1);
+	    MATHLIB_ERROR(_("wilcox allocation error %d"), 1);
 	for (i = 0; i <= m; i++) {
 	    w[i] = (double **) calloc(n + 1, sizeof(double *));
 	    if (!w[i]) {
 		/* first free all earlier allocations */
 		w_free(i-1, n);
-		MATHLIB_ERROR("wilcox allocation error %d", 2);
+		MATHLIB_ERROR(_("wilcox allocation error %d"), 2);
 	    }
 	}
 	allocated_m = m; allocated_n = n;
@@ -116,7 +116,7 @@ cwilcox(int k, int m, int n)
     if (w[i][j] == 0) {
 	w[i][j] = (double *) calloc(c + 1, sizeof(double));
 	if (!w[i][j])
-		MATHLIB_ERROR("wilcox allocation error %d", 3);
+		MATHLIB_ERROR(_("wilcox allocation error %d"), 3);
 	for (l = 0; l <= c; l++)
 	    w[i][j][l] = -1;
     }
@@ -273,7 +273,7 @@ double rwilcox(double m, double n)
     k = (int) (m + n);
     x = (int *) calloc(k, sizeof(int));
     if (!x)
-	MATHLIB_ERROR("wilcox allocation error %d", 4);
+	MATHLIB_ERROR(_("wilcox allocation error %d"), 4);
     for (i = 0; i < k; i++)
 	x[i] = i;
     for (i = 0; i < n; i++) {

@@ -87,6 +87,17 @@ src/modules/internet/nanohttp.c
 src/modules/internet/sockconn.c
 src/modules/lapack/Lapack.c
 src/modules/X11/devX11.c
+src/nmath/bessel_i.c
+src/nmath/bessel_j.c
+src/nmath/bessel_k.c
+src/nmath/bessel_y.c
+src/nmath/pnchisq.c
+src/nmath/polygamma.c
+src/nmath/rhyper.c
+src/nmath/rmultinom.c
+src/nmath/signrank.c
+src/nmath/snorm.c
+src/nmath/wilcox.c
 src/unix/dynload.c
 src/unix/edit.c
 src/unix/sys-std.c

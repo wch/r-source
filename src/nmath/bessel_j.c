@@ -60,7 +60,7 @@ double bessel_j(double x, double alpha)
     alpha -= (nb-1);
 #ifdef MATHLIB_STANDALONE
     bj = (double *) calloc(nb, sizeof(double));
-    if (!bj) MATHLIB_ERROR("%s", "bessel_j allocation error");
+    if (!bj) MATHLIB_ERROR("%s", _("bessel_j allocation error"));
 #else
     vmax = vmaxget();
     bj = (double *) R_alloc(nb, sizeof(double));
@@ -68,10 +68,10 @@ double bessel_j(double x, double alpha)
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	MATHLIB_WARNING4("bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n",
+	MATHLIB_WARNING4(_("bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
 			 x, ncalc, nb, alpha);
       else
-	MATHLIB_WARNING2("bessel_j(%g,nu=%g): precision lost in result\n",
+	MATHLIB_WARNING2(_("bessel_j(%g,nu=%g): precision lost in result\n"),
 			 x, alpha+nb-1);
     }
     x = bj[nb-1];

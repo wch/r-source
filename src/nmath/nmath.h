@@ -49,6 +49,14 @@
 void R_CheckUserInterrupt(void);
 #define calloc R_chk_calloc
 #define free R_chk_free
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
+
 #else
 /* Mathlib standalone */
 
@@ -67,6 +75,7 @@ int R_finite(double);
 #define ML_NEGINF	((-1.0) / 0.0)
 #define ML_NAN		(0.0 / 0.0)
 
+#define _(String) String
 #endif /* standalone */
 
 #define ML_ERROR(x)	/* nothing */

@@ -470,7 +470,7 @@ double psigamma(double x, double deriv)
     deriv = floor(deriv + 0.5);
     n = (int)deriv;
     if(n > n_max) {
-	MATHLIB_WARNING2("deriv = %d > %d (= n_max)", n, n_max);
+	MATHLIB_WARNING2(_("deriv = %d > %d (= n_max)"), n, n_max);
 	return ML_NAN;
     }
     dpsifn(x, n, 1, 1, &ans, &nz, &ierr);
