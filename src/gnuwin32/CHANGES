@@ -39,6 +39,8 @@ to use them you will need perl installed).
 rw1062
 ======
 
+New functions read/writeClipboard() to read from or write to the clipboard.
+
 Hitting the key q (or Q) with an internal pager window in focus will
 close the pager.
 
