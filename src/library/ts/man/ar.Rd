@@ -13,11 +13,13 @@
 \usage{
 ar(x, aic = TRUE, order.max = NULL,
    method=c("yule-walker", "burg", "ols", "mle", "yw"), na.action,
-   series, ...)
-ar.burg(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series,
-        var.method = 1)
-ar.yw(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
-ar.mle(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
+   series, \dots)
+ar.burg(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
+        series, var.method = 1, \dots)
+ar.yw(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
+      series, \dots)
+ar.mle(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
+       series, \dots)
 
 predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 }
