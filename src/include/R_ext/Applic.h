@@ -252,9 +252,9 @@ int F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		     double *resid, double *hat, double *coef, double *sigma);
 
 /* ../appl/interv.c */
-int findIntervall(double *xt, int n, double x,
-		  Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
-		  int *mflag);
+int findInterval(double *xt, int n, double x,
+		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
+		 int *mflag);
 int F77_SUB(interv)(double *xt, int *n, double *x,
 		    Rboolean *rightmost_closed, Rboolean *all_inside,
 		    int *ilo, int *mflag);

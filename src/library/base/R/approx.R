@@ -102,7 +102,7 @@ approxfun <- function(x, y = NULL, method = "linear",
 }
 
 ### This is a `variant' of  approx( method = "constant" ) :
-findInt <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
+findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 {
   ## Purpose: gives back the indices of  x in vec;  vec[] sorted
   ## -------------------------------------------------------------------------

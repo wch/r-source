@@ -1,8 +1,8 @@
-\name{findInt}
-\alias{findInt}
+\name{findInterval}
+\alias{findInterval}
 \title{Find Interval Numbers or Indices}
 \usage{
-findInt(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
+findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 }
 \arguments{
   \item{x}{numeric.}
@@ -14,7 +14,7 @@ findInt(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 }
 \description{
   Find the indices of \code{x} in \code{vec}, where \code{vec} must be
-  sorted (non-decreasingly); i.e., if \code{i <- findInt(x,v)},
+  sorted (non-decreasingly); i.e., if \code{i <- findInterval(x,v)},
   we have \eqn{v_{i_j} \le x_j < v_{i_j + 1}}{v[i[j]] <= x[j] < v[i[j] + 1]}
   where \eqn{v_0 := -\infty}{v[0] := - Inf},
   \eqn{v_{N+1} := +\infty}{v[N+1] := + Inf}, and \code{N <- length(vec)}.
@@ -22,7 +22,7 @@ findInt(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
   on the optional arguments \code{rightmost.closed} and \code{all.inside}.
 }
 \details{
-  The function \code{findInt} finds the index of one vector \code{x} in
+  The function \code{findInterval} finds the index of one vector \code{x} in
   another, \code{vec}, where the latter must be non-decreasing.  Where
   this is trivial, equivalent to \code{apply( outer(x, vec, ">="), 1, sum)},
   as a matter of fact, the internal algorithm uses interval search
@@ -31,7 +31,7 @@ findInt(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
   sorted \code{x}, it will be even faster, basically \eqn{O(n)}.
 
   This is the same computation as for the empirical distribution
-  function, and indeed, \code{findInt(t, sort(X))} is
+  function, and indeed, \code{findInterval(t, sort(X))} is
   \emph{identical} to \eqn{n F_n(t; X_1,\dots,X_n)}{n * Fn(t;
     X[1],..,X[n])} where \eqn{F_n}{Fn} is the empirical distribution
   function of \eqn{X_1,\dots,X_n}{X[1],..,X[n]}.
@@ -48,15 +48,15 @@ findInt(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 }
 \author{Martin Maechler}
 \seealso{\code{\link{approx}(*, method = "constant")} which is a
-  generalization of \code{findInt()}, \code{\link[stepfun]{ecdf}} for
+  generalization of \code{findInterval()}, \code{\link[stepfun]{ecdf}} for
   computing the empirical distribution function which is (up to a factor
-  of \eqn{n}) also basically the same as findInt(.).
+  of \eqn{n}) also basically the same as findInterval(.).
 }
 \examples{
 N <- 100
 X <- sort(round(rt(N, df=2), 2))
 tt <- c(-100, seq(-2,2, len=201), +100)
-it <- findInt(tt, X)
+it <- findInterval(tt, X)
 tt[it < 1 | it >= N] # only first and last are outside range(X)
 
 ## See that this is N * Fn(.) :
@@ -65,15 +65,15 @@ eps <- 100 * .Machine$double.eps
 require(stepfun)
 stopifnot( it[c(1,203)] == c(0, 100),
           all.equal(N * ecdf(X)(tt),
-                    findInt(tt, X),  tol = eps),
-          findInt(tt,X) ==  apply( outer(tt, X, ">="), 1, sum)
+                    findInterval(tt, X),  tol = eps),
+          findInterval(tt,X) ==  apply( outer(tt, X, ">="), 1, sum)
  )
 \testonly{
  ## CPU comparisons
  set.seed(91)
  n <- 200; nc <- 100
  cat("CPU used -- n = ",n,"; for(i in 1:",nc,") ... (in 0.01 sec) : \n",
-     "   N  | findInt() |  N * Fn() | apply(outer(*,*, >=),1,sum)\n",
+     "   N  | findInt.()|  N * Fn() | apply(outer(*,*, >=),1,sum)\n",
      "------|-----------|-----------|----------------------------\n",sep="")
 ##    1 3 5 7 9 1 3 5 7 9 1 3
  mform <- function(x) formatC(100 * x[1], wid = 10, digits = 0, format = "f")
@@ -83,7 +83,7 @@ stopifnot( it[c(1,203)] == c(0, 100),
    Fn <- ecdf(X)
    for(i in 1:nc) tt[,i] <- rt(n, df=1)
    cat(formatC(N, wid=5),
-       mform(system.time(for(i in 1:nc) ind[,i] <- findInt(tt[,i], X))),
+       mform(system.time(for(i in 1:nc) ind[,i] <- findInterval(tt[,i], X))),
        mform(system.time(for(i in 1:nc) in2[,i] <- N * Fn (tt[,i]))),
        ## only one instead of nc ( = 50 ) times -- and still slower!:
        mform(nc*system.time(in1 <- apply(outer(tt[,1], X, ">="), 1, sum))),
