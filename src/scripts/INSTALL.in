@@ -158,6 +158,9 @@ for pkg in ${PKGS}; do
   if test -f TITLE; then
     cp TITLE ${lib}/${pkg}
   fi
+  if test -f DESCRIPTION; then
+    cp DESCRIPTION ${lib}/${pkg}
+  fi
   (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
 
   if test -d man; then
