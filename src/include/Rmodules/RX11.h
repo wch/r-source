@@ -31,7 +31,7 @@ typedef Rboolean (*R_GetX11ImageRoutine)(int d, void *pximage,
 					 int *pwidth, int *pheight);
 typedef int (*R_X11_access)();
 
-typedef Rboolean (*R_X11clp)(Rclpconn);
+typedef Rboolean (*R_X11clp)(Rclpconn, char*);
 
 
 typedef struct {

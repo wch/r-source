@@ -1252,7 +1252,7 @@ extern int clipboardhastext(); /* from ga.h */
 #endif
 
 #ifdef Unix
-Rboolean R_ReadClipboard(Rclpconn clpcon);
+Rboolean R_ReadClipboard(Rclpconn clpcon, char *type);
 #endif
 
 static Rboolean clp_open(Rconnection con)
@@ -1292,7 +1292,7 @@ static Rboolean clp_open(Rconnection con)
 	    return FALSE;
 	}
 #else
-	Rboolean res = R_ReadClipboard(this);
+	Rboolean res = R_ReadClipboard(this, con->description);
 	if(!res) return FALSE;
 #endif
     } else {
@@ -1439,7 +1439,7 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
 static Rconnection newclp(char *url, char *mode)
 {
     Rconnection new;
-    char description[] = "clipboard";
+    char *description;
     int sizeKB = 32;
 
     if(strlen(mode) != 1 ||
@@ -1451,6 +1451,8 @@ static Rconnection newclp(char *url, char *mode)
 #endif
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of clipboard connection failed"));
+    if(strncmp(url, "clipboard", 9) == 0) description = "clipboard";
+    else description = url;
     new->class = (char *) malloc(strlen(description) + 1);
     if(!new->class) {
 	free(new);
@@ -3348,7 +3350,13 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(PRIMVAL(op)) { /* call to file() */
 	    if(strlen(url) == 0) open ="w+";
 	    if(strcmp(url, "clipboard") == 0 ||
-	       strncmp(url, "clipboard-", 10) == 0)
+#ifdef Win32
+	       strncmp(url, "clipboard-", 10) == 0
+#else
+	       strcmp(url, "X11_primary") == 0
+	       || strcmp(url, "X11_secondary") == 0
+#endif
+		)
 		con = newclp(url, strlen(open) ? open : "r");
 	    else
 		con = newfile(url, strlen(open) ? open : "r");

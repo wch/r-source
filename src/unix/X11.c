@@ -106,11 +106,11 @@ Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
     }
 }
 
-Rboolean R_ReadClipboard(Rclpconn clpcon)
+Rboolean R_ReadClipboard(Rclpconn clpcon, char *type)
 {
     R_X11_Init();
     if(initialized > 0)
-	return (*ptr->readclp)(clpcon);
+	return (*ptr->readclp)(clpcon, type);
     else {
 	error(_("X11 module cannot be loaded"));
 	return FALSE;
@@ -144,7 +144,7 @@ Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
     return FALSE;
 }
 
-Rboolean R_ReadClipboard(Rclpconn con)
+Rboolean R_ReadClipboard(Rclpconn con, char *type)
 {
     error(_("X11 is not available"));
     return FALSE;

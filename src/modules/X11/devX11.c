@@ -2374,13 +2374,14 @@ static int in_R_X11_access(void)
     }
 }
 
-static Rboolean in_R_X11readclp(Rclpconn this)
+static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 {
     Window clpwin;
     Atom sel = XA_PRIMARY, pty, pty_type;
+    XEvent evt;
     unsigned char *buffer;
     unsigned long pty_size, pty_items;
-    int pty_format;
+    int pty_format, ret;
     Rboolean res = TRUE;
   
     if (!displayOpen) {
@@ -2389,21 +2390,30 @@ static Rboolean in_R_X11readclp(Rclpconn this)
 	    return FALSE;
 	}
     }
+    if(strcmp(type, "X11_secondary") == 0) sel = XA_SECONDARY;
+    Rprintf("type = %s\n", type);
+
     pty = XInternAtom(display, "RCLIP_READ", False);
 
     clpwin = XCreateSimpleWindow(display, DefaultRootWindow(display), 
 				 0, 0, 1, 1, 0, 0, 0);
     /* send a selection request */
-    XConvertSelection(display, sel, XA_STRING, pty, clpwin, CurrentTime);
-    /* find the size and format of the data in property */
+    ret = XConvertSelection(display, sel, XA_STRING, pty, clpwin, CurrentTime);
+
+    /* wait for the response */
+    while(1) {
+	XNextEvent(display, &evt);	
+	if (evt.type == SelectionNotify) break;
+    }
+    
+    /* find the size and format of the data in the selection */
     XGetWindowProperty(display, clpwin, pty, 0, 0, False, AnyPropertyType, 
 		       &pty_type, &pty_format, &pty_items, &pty_size, &buffer);
     XFree(buffer);
-    if (pty_format != 8) {
+    if (pty_format != 8) { /* bytes */
+	Rprintf("pty_format = %d\n", pty_format);
 	warning(_("clipboard cannot be opened or contains no text"));
 	res = FALSE;
-	this->buff = NULL;
-	this->last = this->len = 0;
     } else { /* read the property */
 	XGetWindowProperty(display, clpwin, pty, 0, (long)pty_size, False,
 			   AnyPropertyType, &pty_type, &pty_format, 

@@ -281,9 +281,10 @@ NEW FEATURES
 	menu(graphics = TRUE) is implemented on most platforms via
 	select.list() or tk_select.list().
 
-    o	file("clipboard") now work for reading on Unix-alikes with an
-	active X11 display.  (It has long worked for reading and
-	writing under Windows.)
+    o	file("clipboard") now work for reading the primary selection on
+	Unix-alikes with an active X11 display.  (It has long worked
+	for reading and writing under Windows.)  The secondary
+	selection can also be read: see ?file.
 
 
 INTERNATIONALIZATION
