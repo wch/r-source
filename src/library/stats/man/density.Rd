@@ -19,7 +19,7 @@ density(x, bw = "nrd0", adjust = 1,
 
     \code{bw} can also be a character string giving a rule to choose the
     bandwidth.  See \code{\link{bw.nrd}}.
-  
+
     The specified (or computed) value of \code{bw} is multiplied by
     \code{adjust}.
   }
@@ -33,12 +33,12 @@ density(x, bw = "nrd0", adjust = 1,
     \code{"biweight"}, \code{"cosine"} or \code{"optcosine"}, with default
     \code{"gaussian"}, and may be abbreviated to a unique prefix (single
     letter).
-    
+
     \code{"cosine"} is smoother than \code{"optcosine"}, which is the
     usual \dQuote{cosine} kernel in the literature and almost MSE-efficient.
     However, \code{"cosine"} is the version used by S.
   }
-  
+
   \item{width}{this exists for compatibility with S; if given, and
     \code{bw} is not, will set \code{bw} to \code{width} if this is a
     character string, or to a kernel-dependent multiple of \code{width}
@@ -96,7 +96,7 @@ density(x, bw = "nrd0", adjust = 1,
     estimated.}
   \item{y}{the estimated density values.}
   \item{bw}{the bandwidth used.}
-  \item{N}{the sample size after elimination of missing values.}
+  \item{n}{the sample size after elimination of missing values.}
   \item{call}{the call which produced the result.}
   \item{data.name}{the deparsed name of the \code{x} argument.}
   \item{has.na}{logical, for compatibility (always \code{FALSE}).}
