@@ -7,7 +7,7 @@
 % \alias{.sourceAssignments}
 % \alias{Rdcontents}
 % \alias{Rd2contents}
-\alias{.installPacakgeCodeFiles}
+\alias{.installPackageCodeFiles}
 \alias{.installPackageDescription}
 \alias{.installPackageIndices}
 % \alias{.installPackageRdIndices}
