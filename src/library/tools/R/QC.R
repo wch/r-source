@@ -464,8 +464,14 @@ function(package, dir, lib.loc = NULL)
                              function(x) x[[3]])
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
             S3reg <- grep("<-", S3reg, value = TRUE)
-            if(length(S3reg) > 0)
+            if(length(S3reg) > 0) {
                 S3Table <- get(".__S3MethodsTable__.", envir = NULL)
+                ## <FIXME>
+                ## methods are not in that table if their generic is in the
+                ## package.  Let's ignore those for now.
+                S3reg <- S3reg[S3reg %in% ls(S3Table, all.names = TRUE)]
+                ## </FIXME>
+            }
         }
     }
     else {
@@ -986,8 +992,14 @@ function(package, dir, lib.loc = NULL)
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
-            if(length(S3reg) > 0)
+            if(length(S3reg) > 0) {
                 S3Table <- get(".__S3MethodsTable__.", envir = NULL)
+                ## <FIXME>
+                ## methods are not in that table if their generic is in the
+                ## package.  Let's ignore those for now.
+                S3reg <- S3reg[S3reg %in% ls(S3Table, all.names = TRUE)]
+                ## </FIXME>
+            }
         }
     }
     else {
