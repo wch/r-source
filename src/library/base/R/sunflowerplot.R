@@ -1,8 +1,9 @@
 sunflowerplot <-
-    function(x, y = NULL, number, log = "",
+    function(x, y = NULL, number, log = "", digits = 6,
              xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
-             add = FALSE, rotate = FALSE, cex = par("cex"), cex.fact =  1.6,
-             pch = 16, seg.col = "yellow3", seg.lwd = 2.5, ...)
+             add = FALSE, rotate = FALSE,
+             pch = 16, cex = 0.8, cex.fact =  1.5,
+             size = 1/8, seg.col = 2, seg.lwd = 1.5, ...)
 {
     ## Argument "checking" as plot.default:
     xlabel <- if (!missing(x)) deparse(substitute(x))
@@ -15,10 +16,13 @@ sunflowerplot <-
         ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
     }
     n <- length(xy$x)
-    if(missing(number)) {
-        orderxy <- order(xy$x, xy$y)
-        x <- xy$x[orderxy]
-        y <- xy$y[orderxy]
+    if(missing(number)) { # Compute number := multiplicities
+        ## must get rid of rounding fuzz
+        x <- signif(xy$x,digits=digits)
+        y <- signif(xy$y,digits=digits)
+        orderxy <- order(x, y)
+        x <- x[orderxy]
+        y <- y[orderxy]
         first <- c(TRUE, (x[-1] != x[-n]) | (y[-1] != y[-n]))
         x <- x[first]
         y <- y[first]
@@ -44,8 +48,6 @@ sunflowerplot <-
         i.multi <- (1:n)[number > 1]
         ppin <- par("pin")
         pusr <- par("usr")
-        ## The next three lines are somewhat dubious....
-        size <- cex * par("csi")
         xr <- size * abs(pusr[2] - pusr[1])/ppin[1]
         yr <- size * abs(pusr[4] - pusr[3])/ppin[2]
 

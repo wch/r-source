@@ -2,10 +2,11 @@
 \alias{sunflowerplot}
 \title{Produce a Sunflower Scatter Plot}
 \usage{
-sunflowerplot(x, y = NULL, number, log = "",
+sunflowerplot(x, y = NULL, number, log = "", digits = 6,
              xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
-             add = FALSE, rotate = FALSE, cex = par("cex"), cex.fact =  1.6,
-             pch = 16, seg.col = "yellow3", seg.lwd = 2.5, \dots)
+             add = FALSE, rotate = FALSE,
+             pch = 16, cex = 0.8, cex.fact = 1.5,
+             size = 1/8, seg.col = 2, seg.lwd = 1.5, \dots)
 }
 \arguments{
   \item{x}{numeric vector of \code{x}-coordinates of length \code{n},
@@ -16,7 +17,10 @@ sunflowerplot(x, y = NULL, number, log = "",
     of replicates for \code{(x[i],y[i])}, may be 0.\cr
     Default: compute the exact multiplicity of the points \code{x[],y[]}.}
   \item{log}{character indicating log coordinate scale, see
-    \code{\link{plot.default}}. }
+    \code{\link{plot.default}}.}
+  \item{digits}{when \code{number} is computed (i.e., not specified),
+    \code{x} and \code{y} are rounded to \code{digits} significant
+    digits before multiplicities are computes.}
   \item{xlab,ylab}{character label for x-, or y-axis, respectively.}
   \item{xlim,ylim}{\code{numeric(2)} limiting the extents of the x-,
     or y-axis.}
@@ -24,14 +28,18 @@ sunflowerplot(x, y = NULL, number, log = "",
     Default is \code{FALSE}.}
   \item{rotate}{logical; if \code{TRUE}, randomly rotate the
     sunflowers (preventing artefacts).}
-  \item{cex}{numeric; character size expansion of plot symbols;
-    applies to both the center points and the leaves of sunflowers.}
-  \item{cex.fact}{numeric \emph{shrinking} factor to be used for the
-    center points, i.e. \code{cex / cex.fact} is used for these.}
   \item{pch}{plotting character to be used for points
     (\code{number[i]==1}) and center of sunflowers.}
+  \item{cex}{numeric; character size expansion of center points
+    (s. \code{pch}).}
+  \item{cex.fact}{numeric \emph{shrinking} factor to be used for the
+    center points \emph{when there are flower leaves},
+    i.e. \code{cex / cex.fact} is used for these.}
+  \item{size}{of sunflower leaves in inches, 1[in] := 2.54[cm].
+    Default: 1/8\" ~= 3.2mm.}
   \item{seg.col}{color to be used for the \bold{seg}ments which make the
-    sunflowers leaves, see \code{\link{par}(col=)}.}
+    sunflowers leaves, see \code{\link{par}(col=)};
+    \code{col = "gold"} reminds of real sunflowers.}
   \item{seg.lwd}{numeric; the line width for the leaves' segments.}
   \item{\dots}{Further arguments to \code{\link{plot}(..)} [if
     \code{add=FALSE}].}
@@ -75,7 +83,12 @@ sunflowerplot(x, y = NULL, number, log = "",
 \seealso{\code{\link{density}}}
 
 \examples{
-## Rounded bivariate normal data;  'number' is computed automatically:
+data(iris)
+## `number' is computed automatically:
+sunflowerplot(iris[, 3:4])
+## Imitating  Chambers et al., p.109, closely:
+sunflowerplot(iris[, 3:4],cex=.2, cex.f=1, size=.035, seg.lwd=.8)
+
 sunflowerplot(x=sort(2*round(rnorm(100))), y= round(rnorm(100),0),
              main = "Sunflower Plot of Rounded N(0,1)")
 
