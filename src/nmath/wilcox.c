@@ -1,6 +1,6 @@
 /*
   Mathlib : A C Library of Special Functions
-  Copyright (C) 1999-2000  The R Development Core Team
+  Copyright (C) 1999-2003  The R Development Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -40,19 +40,13 @@
 void R_CheckUserInterrupt(void);
 #endif
 
-static double ***w;/* to store  cwilcox(i,j,k) -> w[i][j][k] */
+static double ***w; /* to store  cwilcox(i,j,k) -> w[i][j][k] */
 static int allocated_m, allocated_n;
 
 static void
 w_free(int m, int n)
 {
     int i, j;
-
-    if (m > n) {
-	i = n; n = m; m = i;
-    }
-    m = imax2(m, WILCOX_MAX);
-    n = imax2(n, WILCOX_MAX);
 
     for (i = m; i >= 0; i--) {
 	for (j = n; j >= 0; j--) {
@@ -71,17 +65,10 @@ w_init_maybe(int m, int n)
     int i;
 
     if (w) {
-/* this leaks memory --- according to Jean Coursol: */
-	if (m > WILCOX_MAX || n > WILCOX_MAX)
-	    w_free(WILCOX_MAX, WILCOX_MAX);
-/* and he proposes -- but this segfaults for dwilcox(1,6,4);dwilcox(1,4,6)
-*	if (m > allocated_m || n > allocated_n)
-*	    w_free(allocated_m, allocated_n);
-*/
-
+	if (m > allocated_m || n > allocated_n)
+	    w_free(allocated_m, allocated_n); /* zeroes w */
     }
-    else { /* initialize w[][] */
-	allocated_m = m; allocated_n = n;
+    if (!w) { /* initialize w[][] */
 	if (m > n) {
 	    i = n; n = m; m = i;
 	}
@@ -92,9 +79,13 @@ w_init_maybe(int m, int n)
 	    MATHLIB_ERROR("wilcox allocation error %d", 1);
 	for (i = 0; i <= m; i++) {
 	    w[i] = (double **) calloc(n + 1, sizeof(double *));
-	    if (!w[i])
+	    if (!w[i]) {
+		/* first free all earlier allocations */
+		w_free(i-1, n);
 		MATHLIB_ERROR("wilcox allocation error %d", 2);
+	    }
 	}
+	allocated_m = m; allocated_n = n;
     }
 }
 
@@ -119,12 +110,12 @@ cwilcox(int k, int m, int n)
 	return(0);
     c = (int)(u / 2);
     if (k > c)
-	k = u - k;/* hence  k < floor(u / 2) */
+	k = u - k; /* hence  k < floor(u / 2) */
     if (m < n) {
 	i = m; j = n;
     } else {
 	i = n; j = m;
-    }/* hence  i <= j */
+    } /* hence  i <= j */
 
     if (w[i][j] == 0) {
 	w[i][j] = (double *) calloc(c + 1, sizeof(double));
@@ -134,7 +125,7 @@ cwilcox(int k, int m, int n)
 	    w[i][j][l] = -1;
     }
     if (w[i][j][k] < 0) {
-	if (i == 0 || j == 0)
+	if ((i == 0) || (j == 0))
 	    w[i][j][k] = (k == 0);
 	else
 	    w[i][j][k] = cwilcox(k - n, m - 1, n) + cwilcox(k, m, n - 1);
