@@ -229,6 +229,10 @@ Subject: package fdim slopeopt error
 From: phddas@yahoo.com
 Date: Sun, 25 Apr 2004 00:23:42 +0200 (CEST)
 ..`Fred J.' claims that the maintainer's email address does not work.
+* PR# 6895 *
+Subject: foreign package:  reading epiinfo
+From: giles.crane@doh.state.nj.us
+Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
 
 Directory:  Analyses
 
@@ -438,6 +442,10 @@ Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
 From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
 Date: Fri, 16 Apr 2004 16:53:03 +0200
 ..part of 6776
+* PR# 6894 *
+Subject: plot.factor does not work properly
+From: x.sole@iconcologia.catsalut.net
+Date: Tue, 18 May 2004 16:46:21 +0200 (CEST)
 
 Directory:  In-Out
 
@@ -874,31 +882,7 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Re: [R] Error message during debug
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Tue, 20 Apr 2004 14:15:05 -0400
-* PR# 6894 *
-Subject: plot.factor does not work properly
-From: x.sole@iconcologia.catsalut.net
-Date: Tue, 18 May 2004 16:46:21 +0200 (CEST)
-* PR# 6895 *
-Subject: foreign package:  reading epiinfo
-From: giles.crane@doh.state.nj.us
-Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
-* PR# 6902 *
-Subject: Bug in update()? 
-From: Berwin A Turlach <berwin@maths.uwa.edu.au>
-Date: Fri, 21 May 2004 15:21:13 +0800
 * PR# 6904 *
 Subject: Failure to preserve package attribute when coercing S4 objects
 From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
 Date: Fri, 21 May 2004 15:04:10 +0100
-* PR# 6906 *
-Subject: Message from Thailand
-From: "Thai Winds" <flyer@buddha.com>
-Date: Sun, 23 May 2004 03:37:22 +0700
-* PR# 6907 *
-Subject: 
-From: Amado Calderon <jgizvjeyeajxr@aussiemail.com.au>
-Date: Sun, 23 May 2004 16:37:22 +0500
-* PR# 6908 *
-Subject: This.Stock Is on its way up Monday, TTTP.OB ttmcma
-From: Denisha Magnia <wwaid@cadalisp.com>
-Date: Sun, 23 May 2004 04:58:49 -0400
