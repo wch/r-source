@@ -607,6 +607,7 @@ FUNTAB R_FunTab[] =
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL},
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL},
 {"persp",	do_persp,	0,	111,	4,	PP_FUNCALL},
+{"shade",       do_shade,       0,      111,    10,     PP_FUNCALL},
 
 /* Objects */
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL},

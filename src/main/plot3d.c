@@ -841,7 +841,7 @@ static void DepthOrder(double *z, double *x, double *y, int nx, int ny,
 
 
 static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
-		       int *index, int *col, int ncol)
+		       int *index, int *col, int ncol, double *shade)
 {
     double xx[4], yy[4];
     Vector3d u, v;
@@ -893,8 +893,18 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 	    nv++;
 	}
 
-	if (nv > 2)
-	    GPolygon(nv, xx, yy, USER, col[icol], dd->gp.fg, dd);
+	if (nv > 2) {
+	  unsigned int newcol = col[icol];
+	  if (shade) {
+	    unsigned int red, green, blue;
+	    double shadeval = shade[i + j * (nx - 1)];
+	    red = shadeval * R_RED(newcol);
+	    green = shadeval * R_GREEN(newcol);
+	    blue = shadeval * R_BLUE(newcol);
+	    newcol = R_RGB(red, green, blue);
+	  }
+	  GPolygon(nv, xx, yy, USER, newcol, dd->gp.fg, dd);
+	}
     }
 }
 
@@ -1052,7 +1062,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, z, xlim, ylim, zlim;
     SEXP depth, index, originalArgs;
-    SEXP col, border;
+    SEXP col, border, shade;
     double theta, phi, r, d, expand, xc, yc, zc, xs, ys, zs;
     int i, j, scale, ncol;
     DevDesc *dd;
@@ -1125,6 +1135,16 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid border specification\n");
     args = CDR(args);
 
+    if (!isNull(CAR(args))) {
+      PROTECT(shade = coerceVector(CAR(args), REALSXP));
+      if (!isMatrix(shade) || nrows(shade) != length(x) - 1 ||
+	  ncols(shade) != length(y) - 1)
+	errorcall(call, "invalid shade argument\n");
+    }
+    else PROTECT(shade = R_NilValue);
+    args = CDR(args);
+    
+
     if (!scale) {
 	double s;
 	s = xs;
@@ -1185,12 +1205,12 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), dd);
 
     DrawFacets(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z), INTEGER(index),
-	       INTEGER(col), ncol);
+	       INTEGER(col), ncol, isNull(shade) ? NULL : REAL(shade));
 
     PerspBox(1, REAL(xlim), REAL(ylim), REAL(zlim), dd);
 
     GRestorePars(dd);
-    UNPROTECT(10);
+    UNPROTECT(11);
     if (call != R_NilValue)
         recordGraphicOperation(op, originalArgs, dd);
 
@@ -1206,3 +1226,150 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return x;
 }
+
+/* .Internal(shade(x, y, z, xlim, ylim, zlim,      */
+/*                 theta, phi, r, d, scale, ...))  */
+
+SEXP do_shade(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+
+    SEXP x, y, z, xlim, ylim, zlim;
+    SEXP shading, t;
+    int nx, ny;
+    int i, j, k;
+    double i_red, i_green, i_blue;
+    double normalX, normalY, normalZ, sum;
+    double NdotL, NdotL_Y, NdotL_Z;
+    double xl, xh, yl, yh, topLeft, topRight, bottomLeft, bottomRight;
+    double v1x, v1y, v1z, v2x, v2y, v2z;
+    double theta, phi, r, d, xc, yc, zc, xs, ys, zs;
+    double ambient, diffuse;
+    Vector3d light, u;
+
+    printf("Shading...\n");
+    
+    PROTECT(x = coerceVector(CAR(args), REALSXP));
+    if (length(x) < 2) errorcall(call, "invalid x argument\n");
+    nx = LENGTH(x);
+    args = CDR(args);
+
+    PROTECT(y = coerceVector(CAR(args), REALSXP));
+    if (length(y) < 2) errorcall(call, "invalid y argument\n");
+    ny = LENGTH(y);
+    args = CDR(args);
+
+    PROTECT(z = coerceVector(CAR(args), REALSXP));
+    if (!isMatrix(z) || nrows(z) != length(x) || ncols(z) != length(y))
+	errorcall(call, "invalid z argument\n");
+    args = CDR(args);
+  
+    PROTECT(xlim = coerceVector(CAR(args), REALSXP));
+    if (length(xlim) != 2) errorcall(call, "invalid xlim argument\n");
+    args = CDR(args);
+  
+    PROTECT(ylim = coerceVector(CAR(args), REALSXP));
+    if (length(ylim) != 2) errorcall(call, "invalid ylim argument\n");
+    args = CDR(args);
+  
+    PROTECT(zlim = coerceVector(CAR(args), REALSXP));
+    if (length(zlim) != 2) errorcall(call, "invalid zlim argument\n");
+    args = CDR(args);
+  
+    /* Checks on x/y/z Limits */
+  
+    if (!LimitCheck(REAL(xlim), &xc, &xs))
+	errorcall(call, "invalid x limits\n");
+    if (!LimitCheck(REAL(ylim), &yc, &ys))
+	errorcall(call, "invalid y limits\n");
+    if (!LimitCheck(REAL(zlim), &zc, &zs))
+	errorcall(call, "invalid z limits\n");
+  
+    theta = asReal(CAR(args));
+    args = CDR(args);
+  
+    phi = asReal(CAR(args));
+    args = CDR(args);
+  
+    ambient = asReal(CAR(args));
+    args = CDR(args);
+  
+    diffuse = asReal(CAR(args));
+    args = CDR(args);
+
+    /* Calculate light source direction */
+    SetToIdentity(VT);             /* Initialization */
+    XRotate(-90.0);                /* rotate x-y plane to horizontal */
+    YRotate(-theta);               /* azimuthal rotation */
+    XRotate(phi);                  /* elevation rotation */
+  
+    u[0] = 0;
+    u[1] = 0;
+    u[2] = -1;
+    u[3] = 1;
+
+    TransVector(u, VT, light);
+
+    PROTECT(shading = allocVector(REALSXP, (nx - 1) * (ny - 1)));
+    PROTECT(t = allocVector(INTSXP, 2));
+    INTEGER(t)[0] = nx - 1;
+    INTEGER(t)[1] = ny - 1;
+    setAttrib(shading, R_DimSymbol, t);
+
+    for (i = 0; i < nx - 1; i++)
+	for (j = 0; j < ny - 1; j++) {
+	    k = i + j * nx;
+	    bottomLeft = REAL(z)[k];
+	    bottomRight = REAL(z)[k + 1];
+	    topLeft = REAL(z)[k + nx];
+	    topRight = REAL(z)[k + nx + 1];
+      
+	    xl = REAL(x)[i];
+	    xh = REAL(x)[i + 1];
+	    yl = REAL(y)[j];
+	    yh = REAL(y)[j + 1];
+      
+	    //        (xl,yl, bottomLeft)
+	    //	(xl,yh, topLeft)
+	    //	(xh,yh, topRight)
+	    //        (xh,yl, bottomRight)
+
+	    v1x = (xh - xl);  // xbr - xtl
+	    v1y = (yl - yh);  // ybr - ytl
+	    v1z = (bottomRight - topLeft);
+	    v2x = (xh - xl);  // xtr - xbl
+	    v2y = (yh - yl);  // ytr - ybl
+	    v2z = (topRight - bottomLeft);
+      
+	    normalX = v1y*v2z - v1z*v2y;
+	    normalY = v1z*v2x - v1x*v2z;
+	    normalZ = v1x*v2y - v1y*v2x;
+	    //printf("X: %f, Y: %f, Z: %f\n", normalX, normalY,normalZ);
+	    sum = sqrt(normalX * normalX +
+		       normalY * normalY +
+		       normalZ * normalZ);
+	    if (sum == 0) sum = 1;
+	    normalX /= sum;
+	    normalY /= sum;
+	    normalZ /= sum;
+
+	    NdotL = 0.5 * (normalX * light[0] +
+			   normalY * light[1] +
+			   normalZ * light[2] + 1);
+	    // NdotL_Y = normalY * light[1];
+	    // NdotL_Z = normalZ * light[2];
+
+	    //printf("%f %f %f\n", NdotL_X, NdotL_Y, NdotL_Z);
+
+	    i_red = ambient + diffuse * NdotL;
+	    //i_green = ambient + diffuse * NdotL_Y;
+	    //i_blue = ambient + diffuse * NdotL_Z;
+
+	    //printf("%f %f %f\n", i_red, i_green, i_blue);
+	    //REAL(shading)[k] = (i_red << 16) + (i_green << 8) + i_blue;
+	    REAL(shading)[i + j * (nx - 1)] = (i_red);// + i_green + i_blue) / 3.0;
+	}
+    UNPROTECT(8);
+    return shading;
+}
+
+
