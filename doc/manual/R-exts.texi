@@ -50,15 +50,16 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @node Top, Acknowledgements, (dir), (dir)
 
 @menu
-* Acknowledgements::
-* Creating R packages::
-* Writing R documentation::
-* System and foreign language interfaces::
-* The R API::
-* R (internal) programming miscellania::
-* R coding standards::
-* Function and variable index::
-* Concept index::
+* Acknowledgements::            
+* Creating R packages::         
+* Writing R documentation::     
+* Tidying and profiling R code::  
+* System and foreign language interfaces::  
+* The R API::                   
+* R (internal) programming miscellania::  
+* R coding standards::          
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -79,10 +80,10 @@ documentation as needed.  The @R{} distribution provides several
 packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 @menu
-* Package structure::
-* Configure and cleanup::
-* Checking and building packages::
-* Submitting a package to CRAN::
+* Package structure::           
+* Configure and cleanup::       
+* Checking and building packages::  
+* Submitting a package to CRAN::  
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -92,18 +93,20 @@ packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 A package consists of a subdirectory containing the files
 @file{DESCRIPTION} and @file{INDEX}, and the subdirectories @file{R},
 @file{data}, @file{exec}, @file{inst}, @file{man}, @file{src}, and
-@file{tests} (some of which can be missing).  Optionally the package can
-also contain script files @file{configure} and @file{cleanup} which are
-executed before and after installation, @xref{Configure and cleanup}.
+@file{tests} (some of which can be missing).  
+
+Optionally the package can also contain script files @file{configure}
+and @file{cleanup} which are executed before and after installation on
+Unix, @xref{Configure and cleanup}.
 
 @menu
-* The DESCRIPTION file::
-* Other files::
-* Package subdirectories::
-* Package bundles::
+* The DESCRIPTION file::        
+* The INDEX file::              
+* Package subdirectories::      
+* Package bundles::             
 @end menu
 
-@node The DESCRIPTION file, Other files, Package structure, Package structure
+@node The DESCRIPTION file, The INDEX file, Package structure, Package structure
 @subsection The DESCRIPTION file
 @comment  node-name,  next,  previous,  up@subsection The DESCRIPTION file
 @cindex DESCRIPTION file
@@ -165,11 +168,12 @@ Future versions of R will use this field to autoload required packages,
 hence please do not misuse the @samp{Depends} field for comments on
 other software that might be needed or not using proper syntax.  Other
 dependencies should be listed in the @samp{Description} field or a
-separate @samp{README} file.  The @samp{R INSTALL} facility already
-checks if the running version of R is good enough for a package.
+separate @samp{README} file.  The @R{}'s @samp{INSTALL} facilities
+already checks if the version of R used is recent enough for the
+package being installed.
 
-@node Other files, Package subdirectories, The DESCRIPTION file, Package structure
-@subsection Other files
+@node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
+@subsection The INDEX file
 @comment  node-name,  next,  previous,  up
 
 The file @file{INDEX} contains a line for each sufficiently interesting
@@ -177,9 +181,10 @@ object in the package, giving its name and a description (functions such
 as print methods not usually called explicitly might not be included).
 Note that you can automatically create this file using something like
 @code{R CMD Rdindex man > INDEX}, provided that Perl is available on
-your system.
+your system, or use the package builder (@pxref{Checking and building
+packages}) to do so.
 
-@node Package subdirectories, Package bundles, Other files, Package structure
+@node Package subdirectories, Package bundles, The INDEX file, Package structure
 @subsection Package subdirectories
 @cindex Package subdirectories
 
@@ -203,8 +208,8 @@ upper case) letter and have the extension @file{.Rd} (the default) or
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix}, @file{windows} or @file{mac}.
 
-The C or FORTRAN source files for the compiled code, and optionally
-files @file{Makevars} and @file{Makefile}, are in @file{src}.  When a
+The C or FORTRAN source files for the compiled code are in @file{src},
+plus optionally file @file{Makevars} or @file{Makefile}.  When a
 package is installed using @code{R CMD INSTALL}, Make is used to control
 compilation and linking into a shared library for loading into @R{}.
 There are default variables and rules for this (determined when @R{} is
@@ -219,12 +224,16 @@ and @code{PKG_FFLAGS}, respectively.)  Note that this mechanism should
 be general enough to eliminate the need for a package-specific
 @file{Makefile}.  If such a file is to be distributed, considerable care
 is needed to make it general enough to work on all @R{} platforms.
+If necessary, platform-specific files can be used, for example
+@file{Makevars.win} or @file{Makefile.win} on Windows take precedence
+over @file{Makevars} or @file{Makefile}.
 
 The @file{data} subdirectory is for additional data files the package
 makes available for loading using @code{data()}.  Currently, data files
 can have one of three types as indicated by their extension: plain R
 code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
 @file{.csv}), or @code{save()} images (@file{.RData} or @file{.rda}).
+(For portability please use images saved with @code{save(, ascii=TRUE)}.)
 Note that R code should be ``self-sufficient'' and not make use of extra
 functionality provided by the package, so that the data file can also be
 used without having to load the package.  The @file{data} subdirectory
@@ -367,7 +376,7 @@ In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
 example of this is a package that uses C code and creates two shared
 libraries/DLLs.  Usually, the library that is dynamically loaded by @R{}
-is linked against the second, dependent library.  On some systems, we
+is linked against the second, dependent, library.  On some systems, we
 can add the location of this dependent library to the library that is
 dynamically loaded by @R{}.  This means that each user does not have to
 set the value of the @env{LD_LIBRARY_PATH} environment variable, but
@@ -430,15 +439,16 @@ of the package's manual is created (to check that the Rd files can be
 converted successfully).
 @end enumerate
 
-Use @kbd{R CMD check --help} to obtain more information about the usage
-of the @R{} package checker.  By adding flags, a subset of the checking
-steps can be selected.
+Use @kbd{R CMD check --help} (@kbd{Rcmd check --help} on Windows) to
+obtain more information about the usage of the @R{} package checker.  
+A subset of the checking steps can be selected by
+adding flags.
 
 @c FIXME: This should be obsolete with the new GenGC, right?
-Note that some packages will require more than the default workspace
-size to run their examples: this needs to be specified by setting the
-environment variables @env{R_NSIZE} and @env{R_VSIZE} or the
-command-line options @code{--nsize} and @code{--vsize}.
+@c Note that some packages will require more than the default workspace
+@c size to run their examples: this needs to be specified by setting the
+@c environment variables @env{R_NSIZE} and @env{R_VSIZE} or the
+@c command-line options @code{--nsize} and @code{--vsize}.
 
 @findex R CMD build
 @cindex Package builder
@@ -455,8 +465,8 @@ build them if they do not) and can be assumed to be up-to-date.
 Run-time checks whether the package works correctly should be performed
 using @code{R CMD check} prior to invoking the build procedure.
 
-Use @kbd{R CMD build --help} to obtain more information about the usage
-of the @R{} package builder.
+Use @kbd{R CMD build --help} (@kbd{Rcmd build --help} on Windows) to
+obtain more information about the usage of the @R{} package builder.
 
 @code{R CMD build} can also build pre-compiled version of packages for
 binary distributions.
@@ -502,20 +512,20 @@ and send a message to @url{WWWadmin@@ci.tuwien.ac.at} about it.  The
 CRAN maintainers will run these tests before putting a submission in the
 main archive.
 
-@node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
+@node Writing R documentation, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation
 @cindex Documentation, writing
 
 @menu
-* Rd format::
-* Sectioning::
-* Marking text::
-* Lists and tables::
-* Cross-references::
-* Mathematics::
-* Insertions::
-* Platform-specific sections::
-* Processing Rd format::
+* Rd format::                   
+* Sectioning::                  
+* Marking text::                
+* Lists and tables::            
+* Cross-references::            
+* Mathematics::                 
+* Insertions::                  
+* Platform-specific sections::  
+* Processing Rd format::        
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation, Writing R documentation
@@ -584,7 +594,7 @@ function's arguments and return value, as in the above example).
 Finally, there is a footer with keyword information.  The header and
 footer are mandatory.
 
-See @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
+See the @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
 files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
@@ -831,9 +841,9 @@ Note also that when documenting data set @var{bar},
 
 @itemize @bullet
 @item
-The @code{\usage} entry always is @code{data(@var{bar})}.
+The @code{\usage} entry is always @code{data(@var{bar})}.
 @item
-The @code{\keyword} entry always is @samp{datasets}.
+The @code{\keyword} entry is always @samp{datasets}.
 @end itemize
 
 If @code{bar} is a data frame, documenting it as a data set can again be
@@ -1005,7 +1015,7 @@ for $x = 0, 1, 2, \ldots$.
 @end quotation
 @end iftex
 
-For the @HTML{} and the ``direct'' (man-like) on-line help we get
+For @HTML{} and text on-line help we get
 
 @quotation
 @cartouche
@@ -1104,13 +1114,14 @@ can be put in a @file{unix}, @file{windows} or @file{mac} subdirectory.
 @cindex Processing Rd format
 
 Under UNIX versions of @R{} there are several commands to process Rd
-files, if Perl is installed.
+files.  Windows equivalents are described at the end of the section.
+All of these need Perl to be installed.
 
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
 other formats, or extract the executable examples for run-time testing.
 Currently, conversions to plain text, @HTML{}, La@TeX{}, and @Sl{}
-documentation formats are supported.
+version 3 documentation formats are supported.
 
 In addition to this low-level conversion tool, the @R{} distribution
 provides two user-level programs for processing Rd format.
@@ -1147,21 +1158,190 @@ listed using @kbd{R --help}.
 All of these have Windows equivalents.  For most just replace @code{R
 CMD} by @code{Rcmd}, with the exception that it is @code{Rcmd Rd2dvi.sh}
 (and that needs the tools to build packages from source to be
-installed).
+installed).  For each of these @kbd{R CMD @var{cmd} --help} will give
+full details on usage. (You will need the files in the @R{} binary
+Windows distribution for installing source packages to be installed.)
 
-@node System and foreign language interfaces, The R API, Writing R documentation, Top
+
+@node Tidying and profiling R code, System and foreign language interfaces, Writing R documentation, Top
+@chapter Tidying and profiling R code
+
+@menu
+* Tidying R code::              
+* Profiling R code::            
+@end menu
+
+@R{} code which is worth preserving in a package and perhaps making
+available for others to use is worth documenting, tidying up and perhaps
+optimizing. The last two of these activities are the subject of this
+chapter.
+
+@node Tidying R code, Profiling R code, Tidying and profiling R code, Tidying and profiling R code
+@section Tidying R code
+@cindex Tidying R code
+
+@R{} treats function code loaded from packages and code entered by
+users differently.  Code entered by users has the exact source code
+retained, and when the function is listed, the original source is
+reproduced.  Loading code from a package discards the source code, and
+the function listing is re-created from the parse tree of the function.
+
+Normally keeping the source code is a good idea, and in particular it
+avoids comments being moved around in the source.  However, we can
+make use of the ability to re-create a function listing from its parse
+tree to produce a tidy version of the function, with consistent
+indentation, spaces around operators and consistent use of the preferred
+assignment operator @code{<-}.   This tidied version is much easier to
+read, not least by other users who are used to the standard format.
+
+We can subvert the keeping of source in two ways.
+@enumerate
+@item The option @code{keep.source} can be set to @code{FALSE} before
+the code is loaded into @R{}.
+@item The stored source code can be removed by removing the
+@code{source} attribute, for example by
+@smallexample
+attr(myfun, "source") <- NULL
+@end smallexample
+@end enumerate
+
+@noindent
+In each case if we then list the function we will get the standard
+layout.
+
+Suppose we have a file of functions @file{myfuns.R} that we want to
+tidy up.  Create a file @file{tidy.R} containing
+
+@smallexample
+options(keep.source = FALSE)
+source("myfuns.R")
+dump(ls(all = TRUE), file = "new.myfuns.R")
+@end smallexample
+
+@noindent
+and run @R{} with this as the source file, for example by @code{R
+--vanilla < tidy.R} (Unix) or @code{Rterm --vanilla < tidy.R} (Windows)
+or by pasting into an @R{} session.  Then the file @file{new.myfuns.R}
+will contain the functions in alphabetical order in the standard layout.
+You may need to move comments to more appropriate places.
+
+The standard format provides a good starting point for further tidying.
+Most package authors use a version of Emacs (or Unix or Windows) to edit
+@R{} code, using the ESS[S] mode of the ESS Emacs package.  See @ref{R
+coding standards} for style options within the ESS[S] mode recommended
+by the @R{} Core Team.
+
+
+@node Profiling R code,  , Tidying R code, Tidying and profiling R code
+@section Profiling R code
+@cindex Profiling
+@findex Rprof
+
+As from @R{} version 1.2.0 it is possible to profile @R{} code on most
+Unix-like versions of @R{}.  @R{} has to be built to enable this, by
+supplying the option @kbd{--enable-R-profiling}, profiling being
+disabled in a default build.  Unfortunately, profiling relies on OS
+facilities not available on Windows.
+
+The command @code{Rprof} is used to control profiling, and its help page
+can be consulted for full details.  Profiling works by recording at
+fixed intervals (by default every 20 msecs) which @R{} function
+is being used, and recording the results in a file (default
+@file{Rprof.out} in the working directory).  Then the utility @code{R
+CMD Rprof @var{Rprof.out}} can be used to summarize the activity.
+
+As an example, consider the following code (from Venables & Ripley,
+1999).
+
+@example
+library(MASS); library(boot); library(nls)
+data(stormer)
+storm.fm <- nls(Time ~ b*Viscosity/(Wt - c), stormer,
+                start = c(b=29.401, c=2.2183))
+st <- cbind(stormer, fit=fitted(storm.fm))
+storm.bf <- function(rs, i) @{
+    st$Time <-  st$fit + rs[i]
+    tmp <- nls(Time ~ (b * Viscosity)/(Wt - c), st,
+               start = coef(storm.fm))
+    tmp$m$getAllPars()
+@}
+rs <- scale(resid(storm.fm), scale = F) # remove the mean
+Rprof("boot.out")
+storm.boot <- boot(rs, storm.bf, R = 4999) # pretty slow
+Rprof()
+@end example
+
+@noindent
+Having run this we can summarize the results by
+
+@example
+R CMD Rprof boot.out
+
+Each sample represents 0.02 seconds.
+Total run time: 153.72 seconds.
+
+Total seconds: time spent in function and callees.
+Self seconds: time spent in function alone.
+
+   %       total       %       self
+ total    seconds     self    seconds    name
+100.00    153.72      0.21      0.32     "boot"
+ 99.67    153.22      0.57      0.88     "statistic"
+ 96.10    147.72      2.15      3.30     "nls"
+ 53.36     82.02      1.12      1.72     "<Anonymous>"
+ 49.92     76.74      0.88      1.36     "list"
+ 49.38     75.90      1.20      1.84     ".Call"
+ 21.35     32.82      2.35      3.62     "eval"
+ 18.87     29.00      0.77      1.18     "as.list"
+ 18.64     28.66      0.43      0.66     "switch"
+ 17.47     26.86      2.55      3.92     "nlsModel"
+ 16.82     25.86      0.42      0.64     "model.frame"
+ 16.41     25.22      1.14      1.76     "model.frame.default"
+ 15.86     24.38      1.42      2.18     "qr.qty"
+ 14.06     21.62      2.76      4.24     "assign"
+ 13.06     20.08      1.57      2.42     "qr.coef"
+ 10.76     16.54      2.81      4.32     "storage.mode<-"
+  ...
+
+
+   %       self        %       total
+ self     seconds    total    seconds    name
+  5.80      8.92      6.61     10.16     "paste"
+  4.25      6.54      8.13     12.50     "as.integer"
+  4.07      6.26      7.62     11.72     "names"
+  3.97      6.10      9.80     15.06     ".Fortran"
+  3.36      5.16      4.74      7.28     "as.double"
+  2.81      4.32     10.76     16.54     "storage.mode<-"
+  2.76      4.24     14.06     21.62     "assign"
+  2.55      3.92     17.47     26.86     "nlsModel"
+  2.35      3.62     21.35     32.82     "eval"
+  2.15      3.30     96.10    147.72     "nls"
+  2.00      3.08      8.99     13.82     "lapply"
+  1.99      3.06      1.99      3.06     "as.integer.default"
+  ...
+@end example
+
+@noindent
+This often produces surprising results and can be used to identify
+bottlenecks or pieces of @R{} code that could benefit from being
+replaced by compiled code.
+
+Two warnings: profiling does impose a small performance penalty, and the
+output files can be very large if long runs are profiled.
+
+@node System and foreign language interfaces, The R API, Tidying and profiling R code, Top
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Interface functions .C and .Fortran::
-* dyn.load and dyn.unload::
-* Creating shared libraries::
-* Interfacing C++ code::
-* Handling R objects in C::
-* Interface functions .Call and .External::
-* Evaluating R expressions from C::
-* Debugging::
+* Operating system access::     
+* Interface functions .C and .Fortran::  
+* dyn.load and dyn.unload::     
+* Creating shared libraries::   
+* Interfacing C++ code::        
+* Handling R objects in C::     
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
+* Debugging::                   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -1390,6 +1570,12 @@ provided, it needs to ensure that the shared library created is linked
 against all Fortran 77 intrinsic and run-time libraries that @R{} was
 linked against; @code{make} variable @code{FLIBS} contains this
 information.
+
+The Windows equivalent is the command @code{Rcmd SHLIB}; files
+@file{Makevars.win} or @file{Makefile.win} are used in preference to
+@file{Makevars} or @file{Makefile} if they exist.  (This does need the
+files in the @R{} binary Windows distribution for installing source
+packages to be installed.)
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared libraries, System and foreign language interfaces
 @section Interfacing C++ code
@@ -1621,14 +1807,14 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::
-* Allocating storage::
-* Details of R types::
-* Attributes::
-* Classes::
-* Handling lists::
-* Finding and setting variables::
-* Changes in R version 1.2::
+* Garbage Collection::          
+* Allocating storage::          
+* Details of R types::          
+* Attributes::                  
+* Classes::                     
+* Handling lists::              
+* Finding and setting variables::  
+* Changes in R version 1.2::    
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -2155,9 +2341,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::
-* Calling .External::
-* Missing and special values::
+* Calling .Call::               
+* Calling .External::           
+* Missing and special values::  
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -2773,8 +2959,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::
-* Inspecting R objects::
+* Finding entry points::        
+* Inspecting R objects::        
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -2941,19 +3127,19 @@ $7 = 5
 @chapter The R API: entry points for C code
 
 @menu
-* Memory allocation::
-* Error handling::
-* Random numbers::
-* Missing and IEEE values::
-* Printing::
-* Calling C from Fortran and vice versa::
-* Numerical analysis subroutines::
-* Distribution functions::
-* Mathematical Utilities::
-* Mathematical Constants::
-* Utility functions::
-* Version information::
-* Standalone Mathlib::
+* Memory allocation::           
+* Error handling::              
+* Random numbers::              
+* Missing and IEEE values::     
+* Printing::                    
+* Calling C from Fortran and vice versa::  
+* Numerical analysis subroutines::  
+* Distribution functions::      
+* Mathematical Utilities::      
+* Mathematical Constants::      
+* Utility functions::           
+* Platform and version information::  
+* Standalone Mathlib::          
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -2990,8 +3176,8 @@ appropriate header files when using these entry points.
 @cindex Memory allocation from C
 
 @menu
-* Transient::
-* User-controlled::
+* Transient::                   
+* User-controlled::             
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -3021,7 +3207,7 @@ which allocates @var{n} units of @var{size} bytes each.  A typical usage
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 @end example
 
-There is a similar call, @code{S_alloc}, for compatibility with @Sl{}
+There is a similar call, @code{S_alloc}, for compatibility with @Sl{},
 which differs only in zeroing the memory allocated, and
 
 @example
@@ -3032,12 +3218,11 @@ S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
 which changes the allocation size from @var{old} to @var{new} units, and
 zeroes the additional units.
 
-This memory is taken from the heap (the region whose size is set by
-@code{--vsize}), and released at the end of the @code{.C}, @code{.Call}
-or @code{.External} call.  Users can also manage it, by noting the
-current position with a call to @code{vmaxget} and clearing memory
-allocated subsequently by a call to @code{vmaxset}.  This is only
-recommended for experts.
+This memory is taken from the heap, and released at the end of the
+@code{.C}, @code{.Call} or @code{.External} call.  Users can also manage
+it, by noting the current position with a call to @code{vmaxget} and
+clearing memory allocated subsequently by a call to @code{vmaxset}.
+This is only recommended for experts.
 
 @node User-controlled,  , Transient, Memory allocation
 @subsection User-controlled memory
@@ -3265,6 +3450,8 @@ to declare a Fortran common block in C
 to access a Fortran common block from C
 @end table
 
+On most current platforms these are all the same, but it is unwise to
+rely on this.
 
 @node Numerical analysis subroutines, Distribution functions, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
@@ -3529,7 +3716,7 @@ Further, the included header @file{R_ext/Boolean.h}
 has constants @code{TRUE} and @code{FALSE = 0} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
 
-@node Utility functions, Version information, Mathematical Constants, The R API
+@node Utility functions, Platform and version information, Mathematical Constants, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -3568,13 +3755,21 @@ column number of the maximal element in the @var{i}-th row (the same as
 @end deftypefun
 
 
-@node Version information, Standalone Mathlib, Utility functions, The R API
-@section Version information
+@node Platform and version information, Standalone Mathlib, Utility functions, The R API
+@section Platform and version information
 @cindex Version information from C
 @findex R_Version
 
 The header files define @code{USING_R}, which should be used to test if
 the code is indeed being used with @R{}.
+
+Header file @file{Rconfig.h} (included by @file{R.h}) is used to
+define platform-specific macros that are mainly for us in other header
+files.  The macro @code{WORDS_BIGENDIAN} is defined on big-endian
+systems (e.g. @code{sparc-sun-solaris2.6}) and not on little-endian
+systems (such as @code{i686} under Linux or Windows). It can be useful
+when manipulating binary files.
+
 
 Header file @file{Rversion.h} (included by @file{R.h}) defines a macro
 @code{R_VERSION} giving the version number encoded as an integer, plus a
@@ -3594,7 +3789,7 @@ More detailed information is available in the macros @code{R_MAJOR},
 header file @file{Rversion.h} for their format.  Note that the minor
 version includes the patchlevel (as in @code{99.0}).
 
-@node Standalone Mathlib,  , Version information, The R API
+@node Standalone Mathlib,  , Platform and version information, The R API
 @section Using these functions in your own C code
 
 It is possible to build @code{Mathlib}, the @R{} set of mathematical
@@ -3640,8 +3835,8 @@ to set its seeds).
 @appendix R (internal) programming miscellania
 
 @menu
-* .Internal and .Primitive::
-* Testing R code::
+* .Internal and .Primitive::    
+* Testing R code::              
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellania, R (internal) programming miscellania
@@ -3867,15 +4062,18 @@ particular that @samp{|} in a regexp is an extended regexp, and is not
 supported by all versions of @command{grep} or @command{sed}.
 
 Under Windows, these tools can be assumed because versions
-(specifically, of @command{cat}, @command{cp}, @command{cut},
-@command{diff}, @command{echo}, @command{egrep}, @command{expr},
-@command{find},@command{gawk}, @command{grep}, @command{ls},
-@command{mkdir}, @command{mv}, @command{rm}, @command{sed} and
-@command{sort}) are provided at CRAN.  However, redirection cannot be
-assumed to be available via @command{system} as this does not use a
-standard shell (let alone a Bourne shell).
+(specifically, of @command{basename}, @command{cat}, @command{comm},
+@command{cp}, @command{cut}, @command{diff}, @command{echo},
+@command{egrep}, @command{expr}, @command{find}, @command{gawk},
+@command{grep}, @command{ls}, @command{mkdir}, @command{mv},
+@command{rm}, @command{sed}, @command{sort}, @command{tar},
+@command{touch}, @command{unzip}, @command{wc} and @command{zip}) are
+provided at @url{http://www.stats.ox.ac.uk/pub/Rtools/tools.zip}.  However,
+redirection cannot be assumed to be available via @command{system} as
+this does not use a standard shell (let alone a Bourne shell).
 @end itemize
 
+@noindent
 In addition, the following tools are needed for certain tasks.
 
 @itemize @bullet
