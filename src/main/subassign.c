@@ -27,16 +27,16 @@
  *  removal of built-in factors).
  *
  *
- *          x \ y LANG  LGL  INT REAL CPLX  STR  VEC EXPR
- *
- *          LANG   606  610  613  614  615  616  619  620
- *          LGL   1006 1010 1013 1014 1015 1016 1019 1020
- *          INT   1306 1310 1313 1314 1315 1316 1319 1320
- *          REAL  1406 1410 1413 1414 1415 1416 1419 1420
- *          CPLX  1506 1510 1513 1514 1515 1516 1519 1520
- *          STR   1606 1610 1613 1614 1615 1616 1619 1620
- *          VEC   1906 1910 1913 1914 1915 1916 1919 1920
- *          EXPR  2006 2010 2013 2014 2015 2016 1719 2020
+ x \ y   NIL  SYM CLOS  ENV PROM LANG SPE- BUI-  LGL  INT REAL CPLX  STR  VEC EXPR  FUN
+			              CIAL LTIN
+ LANG    600  601  603  604  605  606  607  608  610  613  614  615  616  619  620  699
+ LGL    1000 1001 1003 1004 1005 1006 1007 1008 1010 1013 1014 1015 1016 1019 1020 1099
+ INT    1300 1301 1303 1304 1305 1306 1307 1308 1310 1313 1314 1315 1316 1319 1320 1399
+ REAL   1400 1401 1403 1404 1405 1406 1407 1408 1410 1413 1414 1415 1416 1419 1420 1499
+ CPLX   1500 1501 1503 1504 1505 1506 1507 1508 1510 1513 1514 1515 1516 1519 1520 1599
+ STR    1600 1601 1603 1604 1605 1606 1607 1608 1610 1613 1614 1615 1616 1619 1620 1699
+ VEC    1900 1901 1903 1904 1905 1906 1907 1908 1910 1913 1914 1915 1916 1919 1920 1999
+ EXPR   2000 2001 2003 2004 2005 2006 2007 2008 2010 2013 2014 2015 2016 2019 2020 2099
  *
  *
  *  The following table (which is laid out as described above) contains
@@ -45,17 +45,16 @@
  *  to leave them unimplemented, although the addition of new assignment
  *  combinations represents no great difficulty.
  *
- *
- *                LANG  LGL  INT REAL CPLX  STR  VEC EXPR
- *
- *          LANG
- *          LGL           *    *    *    *    *         *
- *          INT           *    *    *    *    *         *
- *          REAL          *    *    *    *    *         *
- *          CPLX          *    *    *    *    *         *
- *          STR           *    *    *    *    *         *
- *          VEC           *                        *
- *          EXPR     *                                  *
+ *       NIL   SYM CLOS  ENV PROM LANG SPE- BUI-  LGL  INT REAL CPLX  STR  VEC EXPR  FUN
+ *				       CIAL LTIN
+ LANG
+ LGL						   *    *    *    *    *    *    *
+ INT						   *    *    *    *    *    *    *
+ REAL						   *    *    *    *    *    *    *
+ CPLX						   *    *    *    *    *    *    *
+ STR						   *    *    *    *    *    *    *
+ VEC      *     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
+ EXPR     *     *                   *		   *    *    *    *    *    *    *
  *
  *  The reason for the LGL row and column are because we want to allow any
  *  assignment of the form "x[s] <- NA" (col) and because the interpreted
