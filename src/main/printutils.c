@@ -57,14 +57,22 @@
 #include "Mathlib.h"
 #include "Print.h"
 
-#define BUFSIZE 8192
-/* FIXME: we shouldn't use a fixed BUFSIZE at all
-   -----  Rather, e.g. use moderate BUFSIZE (e.g. 256),
-	  then	ALLOCATE  if we need more.
- or replace the whole idea of		  sprintf(Encodebuf,..) ?
- */
-static char Encodebuf[BUFSIZE];
+#define BUFSIZE 256
+static char *Encodebuf=NULL;
 
+static void AllocBuffer(int len)
+{
+    static int bufsize = 0;
+    if(len*sizeof(char) < bufsize) return;
+    len = (len+1)*sizeof(char);
+    if(len < BUFSIZE) len = BUFSIZE;
+    Encodebuf = (char *) realloc(Encodebuf, len);
+    bufsize = len;
+    if(!Encodebuf) {
+	bufsize = 0;
+	error("Could not allocate memory for Encodebuf");
+    }
+}
 
 long Decode2Long(char *p, int *ierr)
 {
@@ -94,6 +102,7 @@ long Decode2Long(char *p, int *ierr)
 
 char *EncodeLogical(int x, int w)
 {
+    AllocBuffer(0);
     if(x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
     else if(x) sprintf(Encodebuf, "%*s", w, "TRUE");
     else sprintf(Encodebuf, "%*s", w, "FALSE");
@@ -102,6 +111,7 @@ char *EncodeLogical(int x, int w)
 
 char *EncodeInteger(int x, int w)
 {
+    AllocBuffer(0);
     if(x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
     else sprintf(Encodebuf, "%*d", w, x);
     return Encodebuf;
@@ -110,6 +120,8 @@ char *EncodeInteger(int x, int w)
 char *EncodeReal(double x, int w, int d, int e)
 {
     char fmt[20];
+
+    AllocBuffer(0);
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
     if (!R_FINITE(x)) {
@@ -160,6 +172,7 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
     int  flagNegIm = 0;
 #endif
 
+    AllocBuffer(0);
     /* IEEE allows signed zeros; strip these here */
     if (x.r == 0.0) x.r = 0.0;
     if (x.i == 0.0) x.i = 0.0;
@@ -215,7 +228,7 @@ int Rstrlen(char *s)
     len = 0;
     p = s;
     while(*p) {
-	if(isprint(*p)) {
+	if(isprint((int)*p)) {
 	    switch(*p) {
 	    case '\\':
 #ifdef ESCquote
@@ -250,13 +263,10 @@ char *EncodeString(char *s, int w, int quote, int right)
 {
     int b, i ;
     char *p, *q;
-    q = Encodebuf;
+
     i = Rstrlen(s);
-    if( i >  BUFSIZE ) {
-	warning("String is too long to be printed");
-	Encodebuf[0]='\0';
-	return Encodebuf;
-    }
+    AllocBuffer(i);
+    q = Encodebuf;
     if(right) { /*Right justifying */
 	b = w - i - (quote ? 2 : 0);
 	for(i=0 ; i<b ; i++) *q++ = ' ';
@@ -269,7 +279,7 @@ char *EncodeString(char *s, int w, int quote, int right)
 
 	/* ASCII */
 
-	if(isprint(*p)) {
+	if(isprint((int)*p)) {
 	    switch(*p) {
 	    case '\\': *q++ = '\\'; *q++ = '\\'; break;
 #ifdef ESCquote
@@ -348,6 +358,8 @@ char *EncodeElement(SEXP x, int index, int quote)
 char *Rsprintf(char *format, ...)
 {
     va_list(ap);
+
+    AllocBuffer(0);
     va_start(ap, format);
     vsprintf(Encodebuf, format, ap);
     va_end(ap);
@@ -357,6 +369,7 @@ char *Rsprintf(char *format, ...)
 void Rprintf(char *format, ...)
 {
     va_list(ap);
+
     va_start(ap, format);
     if(R_Outputfile) {
 	vfprintf(R_Outputfile, format, ap);

@@ -47,6 +47,31 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
+static char *buff=NULL;		/* Buffer for character strings */
+
+static void AllocBuffer(int len)
+{
+    static int bufsize = 0;
+
+    if(len >= 0 ) {
+	if(len*sizeof(char) < bufsize) return;
+	len = (len+1)*sizeof(char);
+	if(len < MAXELTSIZE) len = MAXELTSIZE;
+	buff = (char *) realloc(buff, len);
+	bufsize = len;
+	if(!buff) {
+	    bufsize = 0;
+	    error("Could not allocate memory for substr / strsplit");
+	}
+    } else {
+	if(bufsize == MAXELTSIZE) return;
+ /* frees if non-zero */
+	realloc(buff, 0);
+	buff = (char *) realloc(buff, MAXELTSIZE);
+	bufsize = MAXELTSIZE;
+    }
+}
+
 
 static void substr(char *buf, char *str, int sa, int so)
 {
@@ -62,7 +87,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, x, sa, so;
     int i, len, start, stop, slen, k, l;
-    char buff[MAXELTSIZE];
+/*    char buff[MAXELTSIZE];*/
 
     checkArity(op, args);
     x = CAR(args);
@@ -83,20 +108,23 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (start < 1)
 	    start = 1;
 	if (start > stop || start > slen) {
+	    AllocBuffer(1);
 	    buff[0]='\0';
 	}
 	else {
+	    AllocBuffer(slen);
 	    if (stop > slen)
 		stop = slen;
-	    if (stop > MAXELTSIZE) {
+	    /* if (stop > MAXELTSIZE) {
 		stop = MAXELTSIZE;
 		warningcall(call, "a string was truncated in substr()");
-	    }
+		}*/
 	    substr(buff, CHAR(STRING(x)[i]), start, stop);
 	}
 	STRING(s)[i] = mkChar(buff);
     }
     UNPROTECT(1);
+    AllocBuffer(-1);
     return s;
 }
 
@@ -106,21 +134,6 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 /* argument are used to split the first argument.  A list of vectors is */
 /* returned of length equal to the input vector x, each element of the */
 /* list is the collection of splits for the corresponding element of x. */
-
-static char *buff=NULL;		/* Buffer for character strings */
-
-static void AllocBuffer(int len)
-{
-    static int bufsize=0;		/* Current buffer size */
-    if(len < bufsize) return;
-    len = (len+1)*sizeof(char);
-    if(len < MAXELTSIZE) len = MAXELTSIZE;
-    buff = (char *) realloc(buff, len);
-    if(!buff) {
-	bufsize = 0;
-	error("Could not allocate memory for strsplit");
-    }
-}
 
 SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -172,6 +185,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	VECTOR(s)[i] = t;
     }
     UNPROTECT(1);
+    AllocBuffer(-1);
     return s;
 }
 

@@ -56,8 +56,7 @@
  *		 a line.
  *
  *  buff:	 contains the current string, we attempt to break
- *		 lines at cutoff, but can handle up to BUFSIZE
- *		 characters.
+ *		 lines at cutoff, but can unlimited length.
  *
  *  lbreak:	 often used to indicate whether a line has been
  *		 broken, this makes sure that that indenting behaves
@@ -93,7 +92,7 @@
 static int cutoff = DEFAULT_Cutoff;
 extern int isValidName(char*);
 
-static char buff[BUFSIZE];
+/*static char buff[BUFSIZE];*/
 static int linenumber;
 static int len;
 static int incurly = 0;
@@ -114,6 +113,25 @@ static void linebreak();
 static void deparse2(SEXP, SEXP);
 
 
+static char *buff=NULL;
+
+static void AllocBuffer(int len)
+{
+    static int bufsize = 0;
+    if(len*sizeof(char) < bufsize) return;
+    len = (len+1)*sizeof(char);
+    if(len < BUFSIZE) len = BUFSIZE;
+    if(buff == NULL){
+	buff = (char *) malloc(len);
+	buff[0] = '\0';
+    } else
+	buff = (char *) realloc(buff, len);
+    bufsize = len;
+    if(!buff) {
+	bufsize = 0;
+	error("Could not allocate memory for Encodebuf");
+    }
+}
 
 
 SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -158,6 +176,7 @@ SEXP deparse1(SEXP call, int abbrev)
     deparse2(call, svec);
     UNPROTECT(1);
     if (abbrev == 1) {
+	AllocBuffer(0);
 	buff[0] = '\0';
 	strncat(buff, CHAR(STRING(svec)[0]), 10);
 	if (strlen(CHAR(STRING(svec)[0])) > 10)
@@ -730,11 +749,13 @@ static void print2buff(char *strng)
 	printtab2buff(indent);	/*if at the start of a line tab over */
     }
     tlen = strlen(strng);
+    AllocBuffer(0);
     bufflen = strlen(buff);
-    if (bufflen + tlen > BUFSIZE) {
+    /*if (bufflen + tlen > BUFSIZE) {
 	buff[0] = '\0';
 	error("string too long in deparse\n");
-    }
+	}*/
+    AllocBuffer(bufflen + tlen);
     strcat(buff, strng);
     len += tlen;
 }

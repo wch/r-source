@@ -14,7 +14,7 @@ NEW FEATURES
     o	The presence of object .conflicts.OK in a package suppresses
 	conflict checking in library().
 
-    o	na.omit() and na.fail() now are generic.
+    o	na.omit() and na.fail() are now generic.
 
     o	New generic function all.equal();
 	most useful for numerical comparisons `up to rounding errors'.
@@ -74,6 +74,9 @@ NEW FEATURES
     o	uniroot() can now be used recursively.
 
 BUG FIXES
+
+    o	substr/substring, deparse, dput, dump, print  
+	will work for arbitrarily long strings.
 
     o	diag and diag<- now handle correctly matrices with zero rows or cols.
 

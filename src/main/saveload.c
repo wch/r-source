@@ -55,7 +55,7 @@ static void DataSave(SEXP, FILE*);
 static void AllocBuffer(int len)
 {
     if(len >= 0 ) {
-	if(len < bufsize) return;
+	if(len*sizeof(char) < bufsize) return;
 	len = (len+1)*sizeof(char);
 	if(len < MAXELTSIZE) len = MAXELTSIZE;
 	buf = (char *) realloc(buf, len);
