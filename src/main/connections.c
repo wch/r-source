@@ -1935,3 +1935,110 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return ans;
 }
+
+/* ------------------- internet access functions  --------------------- */
+
+static Rconnection newurl(char *description, char *mode)
+{
+    Rconnection new;
+
+    error("url connections are not yet operational");
+    
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error("allocation of url connection failed");
+    new->class = (char *) malloc(strlen("file") + 1);
+    if(!new->class) {
+	free(new);
+	error("allocation of url connection failed");
+    }
+    strcpy(new->class, "url");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+	free(new->class); free(new);
+	error("allocation of url connection failed");
+    }
+    strcpy(new->description, description);
+    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
+    new->isopen = new->incomplete = FALSE;
+    new->canread = new->canwrite = TRUE; /* in principle */
+    new->canseek = TRUE;
+    new->text = TRUE;
+    new->open = &file_open;
+    new->close = &file_close;
+    new->destroy = &file_destroy;
+    new->vfprintf = &file_vfprintf;
+    new->fgetc = &file_fgetc;
+    new->ungetc = &file_ungetc;
+    new->seek = &file_seek;
+    new->truncate = &file_truncate;
+    new->fflush = &file_fflush;
+    new->read = &file_read;
+    new->write = &file_write;
+    new->nPushBack = 0;
+    new->private = (void *) malloc(sizeof(struct fileconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error("allocation of url connection failed");
+    }
+    return new;
+}
+
+SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP scmd, sopen, ans, class, enc;
+    char *url, *open;
+    int i, ncon;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    scmd = CAR(args);
+    if(!isString(scmd) || length(scmd) < 1)
+	error("invalid `description' argument");
+    if(length(scmd) > 1)
+	warning("only first element of `description' argument used");
+    url = CHAR(STRING_ELT(scmd, 0));
+    sopen = CADR(args);
+    if(!isString(sopen) || length(sopen) != 1)
+	error("invalid `open' argument");
+    open = CHAR(STRING_ELT(sopen, 0));
+    enc = CADDR(args);
+    if(!isInteger(enc) || length(enc) != 256)
+	error("invalid `enc' argument");
+
+    ncon = NextConnection();
+    if(strncmp(url, "file://", 7) == 0)
+       con = newfile(url + 7, strlen(open) ? open : "r");
+    else if (strncmp(url, "http://", 7) == 0 || 
+	     strncmp(url, "ftp://", 6) == 0)
+       con = newurl(url, strlen(open) ? open : "r");
+    else
+	error("unknown URL method");
+
+    Connections[ncon] = con;
+    for(i = 0; i < 256; i++)
+	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+
+    /* open it if desired */
+    if(strlen(open)) con->open(con);
+
+    PROTECT(ans = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = ncon;
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("url"));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    UNPROTECT(2);
+
+    return ans;
+}
+
+SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans;
+    int status = 99;
+
+    PROTECT(ans = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = status;
+    UNPROTECT(1);
+    return ans;
+}

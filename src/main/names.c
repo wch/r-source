@@ -753,6 +753,7 @@ FUNTAB R_FunTab[] =
 {"close", 	do_close,	0,      11,     2,      PP_FUNCALL},
 {"file", 	do_file,	0,      11,     4,      PP_FUNCALL},
 {"pipe", 	do_pipe,	0,      11,     3,      PP_FUNCALL},
+{"url", 	do_url,		0,      11,     3,      PP_FUNCALL},
 {"seek", 	do_seek,	0,      11,     3,      PP_FUNCALL},
 {"truncate", 	do_truncate,	0,      11,     1,      PP_FUNCALL},
 {"pushBack", 	do_pushback,	0,      11,     3,      PP_FUNCALL},
@@ -760,6 +761,7 @@ FUNTAB R_FunTab[] =
 {"textConnection",do_textconnection,0,	11,     3,      PP_FUNCALL},
 {"getAllConnections",do_getallconnections,0,	11,     0,      PP_FUNCALL},
 {"summary.connection",do_sumconnection,0,	11,     1,      PP_FUNCALL},
+{"download", 	do_download,	0,      11,     3,      PP_FUNCALL},
 
 {NULL,		NULL,		0,	0,	0,	0},
 };

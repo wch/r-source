@@ -7,14 +7,14 @@
   socket connection.
 }
 \usage{
-download.file(url, destfile, method = "auto", quiet=FALSE)
+download.file(url, destfile, method = "internal", quiet = FALSE)
 }
 \arguments{
   \item{url}{A character string with the URL of a file to be downloaded.}
   \item{destfile}{A character string with the name where the downloaded
     file is saved.}
   \item{method}{Tool to be used for downloading files.  Currently
-    download methods \code{"auto"}, \code{"wget"}, \code{"lynx"} 
+    download methods \code{"internal"}, \code{"wget"}, \code{"lynx"} 
     \code{"cp"} and \code{"socket"} are available.  To use \code{"wget"}
     or \code{"lynx"} the executable must be installed on your system and
     in your path. To use \code{"socket"} the file must be on an
@@ -30,8 +30,7 @@ download.file(url, destfile, method = "auto", quiet=FALSE)
   \code{method}, the respective program must be installed on your system
   and be in the search path for executables.  If method \code{"cp"} is
   used, then the \code{url} must start with \code{"file:"} and give the
-  path to a local file. Method \code{"auto"} (the default) searches for
-  available tools at runtime.
+  path to a local file.
   The \code{url} must start with a type specification such as
   \code{"http://"}, \code{"ftp://"} or \code{"file:"}.
 }

@@ -13,8 +13,10 @@ NEW FEATURES
 
     o	Changes to connections:
 
-	-  Text input from file and pipe connections can be read with
-	   a user-specified encoding.
+	-  New function url() to read from URLs. [Not yet operational]
+
+	-  Text input from file, pipe and url connections can be read
+	   with a user-specified encoding.
 
 	-  New functions readChar() and writeChar() to read
 	   character strings with known lengths and no terminators,
@@ -31,6 +33,10 @@ NEW FEATURES
 	   writing at the current position.
 
 	-  More to come.
+
+    o	The default method for download.file() (and functions which use
+	it such as update.packages()) is now "internal", and uses code
+	compiled into R. [Not yet operational: "wget" is used in its place]
 
     o	`hessian' argument added to deriv and its methods.  A new function
 	deriv3() provides identical capabilities to deriv() except that
@@ -116,7 +122,8 @@ BUG FIXES
 
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
-    o	symnum(x) behaves more reasonable for zero length or non-numeric x.
+    o	symnum(x) behaves more reasonably for zero length or non-numeric x.
+
 
 
 	**************************************************

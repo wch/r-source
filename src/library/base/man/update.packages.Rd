@@ -16,22 +16,22 @@
 \usage{
 update.packages(lib.loc = .lib.loc, CRAN = options("CRAN"),
                 contriburl = contrib.url(CRAN),
-                method = "auto", instlib = NULL,
+                method = "internal", instlib = NULL,
                 ask=TRUE, available=NULL, destdir=NULL)
 
 installed.packages(lib.loc = .lib.loc)
-CRAN.packages(CRAN = options("CRAN"), method = "auto",
+CRAN.packages(CRAN = options("CRAN"), method = "internal",
               contriburl = contrib.url(CRAN))
 old.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
-             method = "auto", available = NULL)
+             method = "internal", available = NULL)
 
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = options("CRAN"), 
-                  contriburl = contrib.url(CRAN), method = "auto")
+                  contriburl = contrib.url(CRAN), method = "internal")
 install.packages(pkgs, lib, CRAN = options("CRAN"),
                  contriburl = contrib.url(CRAN),
-                 method = "auto", available = NULL, destdir = NULL)
+                 method = "internal", available = NULL, destdir = NULL)
 newerVersion(a, b)
 }
 \arguments{ 

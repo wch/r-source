@@ -55,9 +55,11 @@ file <- function(description, open = "", blocking = TRUE,
                  encoding = getOption("encoding"))
     .Internal(file(description, open, blocking, encoding))
 
-pipe <- function(description, open = "",
-                 encoding = getOption("encoding"))
+pipe <- function(description, open = "", encoding = getOption("encoding"))
     .Internal(pipe(description, open, encoding))
+
+url <- function(description, open = "", encoding = getOption("encoding"))
+    .Internal(url(description, open, encoding))
 
 textConnection <- function(object, open = "r")
     .Internal(textConnection(deparse(substitute(object)), object, open))

@@ -1,4 +1,4 @@
-CRAN.packages <- function(CRAN=getOption("CRAN"), method="auto",
+CRAN.packages <- function(CRAN=getOption("CRAN"), method="internal",
                           contriburl=contrib.url(CRAN))
 {
     localcran <- length(grep("^file:", contriburl)) > 0
@@ -17,7 +17,7 @@ CRAN.packages <- function(CRAN=getOption("CRAN"), method="auto",
 
 update.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
                             contriburl=contrib.url(CRAN),
-                            method="auto", instlib=NULL, ask=TRUE,
+                            method="internal", instlib=NULL, ask=TRUE,
                             available=NULL, destdir=NULL)
 {
     if(is.null(available))
@@ -58,7 +58,7 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
 
 old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
                          contriburl=contrib.url(CRAN),
-                         method="auto", available=NULL)
+                         method="internal", available=NULL)
 {
     instp <- installed.packages(lib.loc=lib.loc)
     if(is.null(available))
@@ -82,7 +82,7 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
     available[ok,"Package"] <- available[ok,"Bundle"]
 
     update <- NULL
-        
+
     for(k in 1:nrow(instp)){
         ok <- (instp[k, "Priority"] != "base") &
                 (available[,"Package"] == instp[k, "Package"])
@@ -122,7 +122,7 @@ newerVersion <- function(a, b){
     }
     return(FALSE)
 }
-                        
+
 
 package.contents <- function(pkg, lib=.lib.loc){
 
@@ -137,7 +137,8 @@ package.contents <- function(pkg, lib=.lib.loc){
 }
 
 
-package.description <- function(pkg, lib=.lib.loc, fields=NULL){
+package.description <- function(pkg, lib=.lib.loc, fields=NULL)
+{
 
     file <- system.file("DESCRIPTION", pkg=pkg, lib=lib)
     if(file == ""){

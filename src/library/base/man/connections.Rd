@@ -26,6 +26,7 @@
 \usage{
 file(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
 pipe(description, open = "", encoding = getOption("encoding"))
+url(description, open = "", encoding = getOption("encoding"))
 
 \method{open}{connection}(con, open = "rt", blocking = TRUE)
 \method{close}{connection}(con, type = "rw")
@@ -38,8 +39,9 @@ isSeekable(con)
 }
 \arguments{
   \item{description}{character. A description of the connection. For
-    \code{file} this is a path to the file to be opened.
-    For a \code{textConnection} it is an \R character vector object.
+    \code{file} and \code{path} this is a path to the file to be opened.
+    For \code{url} it is a complete URL, including method
+    (\code{http://}, \code{ftp://} or \code{file://}).
   }
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
@@ -53,7 +55,7 @@ isSeekable(con)
     \code{"end"}.}
 }
 \details{
-  The first two functions create connections.  By default the connection
+  The first three functions create connections.  By default the connection
   is not opened, but may be opened by setting a non-empty value of
   argument \code{open}.
 
@@ -89,9 +91,8 @@ isSeekable(con)
     \item{\code{"wb"}}{Open for writing in binary mode.}
     \item{\code{"ab"}}{Open for appending in binary mode.}
   }
-  \emph{These are likely to change.}  Some connections (e.g. text
-  connections) can only be opened for reading or writing.  For many
-  connections there is little or no difference between text and binary
+  \emph{These are liable to change.}  URLs can only be opened for reading.
+  For many connections there is little or no difference between text and binary
   modes, but there is for file-like connections on Windows, and
   \code{\link{pushBack}} is text-oriented and is only allowed on
   connections open for reading in text mode.
@@ -103,11 +104,11 @@ isSeekable(con)
   characters are mapped to a space in these encodings.
 }
 \value{
-  \code{file} and \code{pipe} return a connection object which inherits
-  from class \code{"connection"}.
+  \code{file}, \code{pipe} and \code{url} return a connection object
+  which inherits from class \code{"connection"}.
 
   \code{seek} returns the current position, as a byte offset, if
-  relevant.
+  relevant, or \code{0} if not.
 
   \code{isOpen} returns a logical value, whether the connection is
   currently open.

@@ -48,11 +48,12 @@
     cat(data, file = file)
     return(file)
 }
+
 "read.table.url" <-
-    function (url, method="auto", ...)
+    function (url, method="internal", ...)
 {
     f<-tempfile()
-    if (download.file(url, destfile=f,method=method)==0)
+    if (download.file(url, destfile=f ,method=method) == 0)
         data <- read.table(f, ...)
     else {
         unlink(f)
@@ -60,10 +61,11 @@
     }
     return(data)
 }
+
 "scan.url" <-
-    function (url, file=tempfile(), method="auto", ...)
+    function (url, file=tempfile(), method="internal", ...)
 {
-    if (download.file(url, dest=file, method=method)!=0){
+    if (download.file(url, dest=file, method=method)!= 0) {
         unlink(file)
         stop("transfer failed")
     }
@@ -71,10 +73,11 @@
     unlink(file)
     return(data)
 }
+
 "source.url" <-
-    function (url, file=tempfile(), method="auto", ...)
+    function (url, file=tempfile(), method="internal", ...)
 {
-    if (download.file(url, dest=file, method=method)!=0){
+    if (download.file(url, dest=file, method=method) != 0) {
         unlink(file)
         stop("transfer failure")
     }
@@ -88,9 +91,9 @@
 }
 "url.show" <-
     function (url,  title = url, file = tempfile(),
-              delete.file = TRUE, method="auto",...)
+              delete.file = TRUE, method="internal",...)
 {
-    if (download.file(url, dest = file,method=method)!=0)
+    if (download.file(url, dest = file, method=method) != 0)
         stop("transfer failure")
-    file.show(file, delete.file = delete.file,title=title, ...)
+    file.show(file, delete.file = delete.file, title=title, ...)
 }
