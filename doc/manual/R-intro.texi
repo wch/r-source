@@ -6840,11 +6840,6 @@ Convert S documentation to Rd format.
 (UNIX only) Obtain configuration information.
 @end table
 
-The first five tools (i.e., @code{BATCH}, @code{COMPILE}, @code{SHLIB},
-@code{INSTALL}, and @code{REMOVE}) can also be invoked ``directly''
-without the @code{CMD} option, i.e., in the form @code{R @var{command}
-@var{args}}.
-
 Use
 
 @example
