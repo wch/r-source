@@ -4,29 +4,32 @@
 # ${R_HOME}/src/modules/aqua/AquaInstall
 
 cd ../../../
-make install rhome=/Applications/RAqua.app/R.bin.app/Contents mandir=/Applications/RAqua.app/R.bin.app/Contents bindir=/Applications/RAqua.app/R.bin.app/Contents
+make install rhome=/Applications/StartR.app/RAqua.app/Contents mandir=/Applications/StartR.app/RAqua.app/Contents bindir=/Applications/StartR.app/RAqua.app/Contents
 here=`pwd`;
-cp src/modules/aqua/R.fix /Applications/RAqua.app/R.bin.app/Contents/
-cd /Applications/RAqua.app/R.bin.app/Contents
+cp src/modules/aqua/R.fix /Applications/StartR.app/RAqua.app/Contents/
+cd /Applications/StartR.app/RAqua.app/Contents
 mv RESOURCES R_RESOURCES
 mv bin MacOS
 ln -s MacOS bin
+cd MacOS
+mv R.bin RAqua
+ln -s R.bin RAqua
+cd .. 
 ./R.fix
 rm R.fix
 cd ${here}
-cp -R src/modules/aqua/Contents/Resources /Applications/RAqua.app/R.bin.app/Contents
-cp src/modules/aqua/Contents/PkgInfo /Applications/RAqua.app/R.bin.app/Contents
-cp src/modules/aqua/Contents/Info.plist /Applications/RAqua.app/R.bin.app/Contents
+cp -R src/modules/aqua/Contents/Resources /Applications/StartR.app/RAqua.app/Contents
+cp src/modules/aqua/Contents/PkgInfo /Applications/StartR.app/RAqua.app/Contents
+cp src/modules/aqua/Contents/Info.plist /Applications/StartR.app/RAqua.app/Contents
 
-mkdir /Applications/RAqua.app/Contents
-mkdir /Applications/RAqua.app/Contents/Resources
-cp src/modules/aqua/RAqua/Contents/Resources/RAqua.icns /Applications/RAqua.app/Contents/Resources/
-cp src/modules/aqua/RAqua/Contents/PkgInfo /Applications/RAqua.app/Contents/
-cp src/modules/aqua/RAqua/Contents/Info.plist /Applications/RAqua.app/Contents/
+mkdir -p /Applications/StartR.app/Contents
+mkdir -p /Applications/StartR.app/Contents/Resources
+cp src/modules/aqua/RAqua/Contents/Resources/RAqua.icns /Applications/StartR.app/Contents/Resources/
+cp src/modules/aqua/RAqua/Contents/PkgInfo /Applications/StartR.app/Contents/
+cp src/modules/aqua/RAqua/Contents/Info.plist /Applications/StartR.app/Contents/
 gcc src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c 
-mkdir /Applications/RAqua.app/Contents/MacOS
-mv a.out /Applications/RAqua.app/Contents/MacOS/RAqua
-
+mkdir -p /Applications/StartR.app/Contents/MacOS
+mv a.out /Applications/StartR.app/Contents/MacOS/StartR
 
 echo "Note: execute this script one time only!"
 
