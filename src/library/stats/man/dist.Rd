@@ -144,7 +144,7 @@ dist(rbind(x,y), method="canberra")
 ## answer 2 * (6/5)
 
 ## Examples involving "Inf" :
-if(capabilities("IEEE754")) {
+## These will not work on a non-IEEE 754 system.
 ## 1)
 x[6] <- Inf
 (m2 <- rbind(x,y))
@@ -164,6 +164,6 @@ dist(rbind(x,y), method="binary")# warning; 0.5
 dist(rbind(x,y), method="canberra")#  3
 dist(rbind(x,y), method="maximum")  # 1
 dist(rbind(x,y), method="manhattan")# 2.4
-}}
+}
 \keyword{multivariate}
 \keyword{cluster}
