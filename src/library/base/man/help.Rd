@@ -1,7 +1,7 @@
 \name{help}
 \title{Online Documentation}
 \usage{
-help(topic, package = .package(), lib.loc = .lib.loc)
+help(topic, package = .packages(), lib.loc = .lib.loc)
 
 ?topic
 }

@@ -8,7 +8,7 @@ provide(name)
 
 library.dynam(chname)
 
-.package()
+.packages()
 .lib.loc
 .Library
 .Provided
@@ -66,7 +66,7 @@ library.dynam(chname)
   extension for shared libraries (e.g., ``.so'' on Unix systems) should
   not be added.
 
-  \code{.package()} returns the ``base names'' of the currently attached
+  \code{.packages()} returns the ``base names'' of the currently attached
   packages.
 
   \code{.Library} is a character string giving the location of the
@@ -116,7 +116,7 @@ library.dynam(chname)
 }
 \section{Installing and Removing Packages}{
   To install a package, do \code{R INSTALL pkg}, where \code{pkg} is the
-  directory containing the package.  If you want to install to the
+  directory containing the package.  If you want to install into the
   library tree \code{lib} instead of the default one, use
   \code{R INSTALL pkg lib}.
 
