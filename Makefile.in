@@ -87,7 +87,7 @@ install: installdirs
 	  $(INSTALL_SCRIPT) $${f} $(Rexecbindir); \
 	done
 	@echo "installing shlibs ..."
-## FIXME:
+## <FIXME>
 ## Add bin/*.la when using libtool for shlibs
 ## Note: if there are no shared libraries, the ls call may generate an error.
 	@-for f in `ls bin/*.$(SHLIB_EXT) 2> /dev/null`; do \
@@ -95,15 +95,14 @@ install: installdirs
 	done
 ## </FIXME>
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --quiet --mode=finish $(Rexeclibdir)
-## FIMXE:
-## Add gnome/*.la when using libtool for shlibs
-	@if test -f gnome/R_gnome.$(SHLIB_EXT); then \
-	  $(MKINSTALLDIRS) $(rhome)/gnome; \
-	  for f in `ls gnome/*.$(SHLIB_EXT)`; do \
-	    $(INSTALL_PROGRAM) $${f} $(rhome)/gnome; \
-	  done; \
-	fi
+	@echo "installing modules ..."
+## <FIXME>
+## Add modules/*.la when using libtool for shlib modules
+	@-for f in `ls modules/*.$(SHLIB_EXT) 2> /dev/null`; do \
+	  $(INSTALL_PROGRAM) $${f} $(Rexecmodulesdir); \
+	done
 ## </FIXME>
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --quiet --mode=finish $(Rexecmodulesdir)
 	@echo "installing headers ..."
 	@for f in include/*.h; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/include; \
@@ -116,8 +115,6 @@ install: installdirs
 	@cp -r library $(rhome) || \
 	  (cd library; \
 	    $(TAR) cf - [a-z]* | (cd $(rhome)/library; $(TAR) xof -))
-	@echo "  building help index ..."
-	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
 	@echo "  building HTML index ..."
 	@$(rhome)/bin/R CMD build-help --rhome $(rhome) --htmllists
 installdirs:
@@ -126,17 +123,17 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/include
 	@$(MKINSTALLDIRS) $(rhome)/include/R_ext
 	@$(MKINSTALLDIRS) $(rhome)/library
+	@$(MKINSTALLDIRS) $(rhome)/modules
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@echo "uninstalling library ..."
 	@(cd $(rhome)/library; \
 	  for p in $(R_PKGS); do rm -rf $${p}; done)
-	@echo "  rebuilding help index ..."
-	@(cd $(rhome)/library; \
-	  cat */TITLE > LibIndex 2> /dev/null || echo "" > LibIndex)
 	@echo "uninstalling headers ..."
 	@rm -rf $(rhome)/include
+	@echo "uninstalling modules ..."
+	@rm -rf $(rhome)/modules
 	@echo "uninstalling executables ..."
 	@rm -rf $(rhome)/bin
 	@rm -rf $(rhome)/gnome
