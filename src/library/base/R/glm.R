@@ -5,17 +5,17 @@
 
 glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 		subset=NULL, na.action=na.fail, start=NULL, offset=NULL,
-		control=glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
-		model=TRUE, method="glm.fit", x=FALSE, y=TRUE, contrasts = NULL)
+		control=glm.control(...), model=TRUE, method="glm.fit",
+                x=FALSE, y=TRUE, contrasts = NULL, ...)
 {
-    call <- match.call()
+    call <- match.call(expand.dots = FALSE)
 
     ## family
     if(is.character(family)) family <- get(family)
     if(is.function(family)) family <- family()
     if(is.null(family$family)) {
 	print(family)
-	stop("'family' not recognised")
+	stop("`family' not recognized")
     }
 
     ## extract x, y, etc from the model formula and frame
@@ -24,6 +24,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     mf <- match.call()
     mf$family <- mf$start <- mf$control <- mf$maxit <- NULL
     mf$model <- mf$method <- mf$x <- mf$y <- mf$contrasts <- NULL
+    mf$... <- NULL
     ##	      mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, sys.frame(sys.parent()))
@@ -32,7 +33,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	   "glm.fit"= 1,
 	   "glm.fit.null"= 1,
 	   ## else
-	   stop(paste("invalid 'method':", method)))
+	   stop(paste("invalid `method':", method)))
     xvars <- as.character(attr(mt, "variables"))[-1]
     if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
     xlev <- if(length(xvars) > 0) {
@@ -116,7 +117,7 @@ glm.fit <-
     linkinv <- family$linkinv
     mu.eta <- family$mu.eta
     if (!is.function(variance) || !is.function(linkinv) )
-	stop("illegal 'family' argument")
+	stop("illegal `family' argument")
     valideta <- family$valideta
     if (is.null(valideta))
 	valideta <- function(eta) TRUE
