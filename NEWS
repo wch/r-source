@@ -106,7 +106,7 @@ BUG FIXES
 	The entry point has been removed, to avoid any confusion with
 	the standard C entry point of the same name.
 
-     o	Printing of kernels in package ts was unreliable: the internal
+    o	Printing of kernels in package ts was unreliable: the internal
 	representation was correct.
 
     o	A problem with "..." in substitutions has been fixed (PR#860). 
@@ -147,6 +147,11 @@ BUG FIXES
     o	dchisq with integer x, df and ncp sometimes gave incorrect
 	results on i686 Linux.
 
+    o   cancelling a quit caused quit() not to ask next time it was called.
+
+    o   some complicated operations with "..." didn't work.
+
+    o   missingness was not correctly propagated in some cases.
 
 
 
@@ -287,11 +292,6 @@ BUG FIXES
     o	which.min() and which.max() now properly work for 0-length and
 	NA-only arguments.
 
-    o   cancelling a quit caused quit() not to ask next time it was called
-
-    o   some convolved operations with "..." didn't work
-
-    o   missingness was not correctly propagated in some cases
 
 
 		CHANGES IN R VERSION 1.2.1
