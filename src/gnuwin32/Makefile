@@ -349,7 +349,7 @@ endif
 	$(RM) $(RPREFIX)b1.zip $(RPREFIX)b2.zip $(RPREFIX)h.zip \
 	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
 	$(RM) anindex.zip
-	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
+	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex
 	zip -mr9X $(RPREFIX)h.zip $(RPREFIX)/library/*/help
 	unzip anindex.zip
 	$(RM) anindex.zip

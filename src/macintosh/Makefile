@@ -90,7 +90,7 @@ help:
 
 zipfiles:
 	(cd $(RHOME)/library/base/help; \
-	  zip -jqm Rhelp * -x 00Titles AnIndex)
+	  zip -jqm Rhelp * -x AnIndex)
 	(cd $(RHOME)/library/base/R-ex; zip -jqm Rex *.R)
 	(cd $(RHOME)/library/base/latex; zip -jqm Rhelp *.tex)
 

@@ -103,8 +103,8 @@ help(topic, offline = FALSE, package = .packages(),
   The help files can be many small files.  On some file systems it is
   desirable to save space, and the text files in the \file{help} directory
   of an installed package can be zipped up as a zip archive
-  \file{Rhelp.zip}. Ensure the files \file{AnIndex} and
-  \file{00Titles} remain un-zipped.  Similarly, all the files in the
+  \file{Rhelp.zip}. Ensure that file \file{AnIndex} remains un-zipped.
+  Similarly, all the files in the
   \file{latex} directory can be zipped to \file{Rhelp.zip}.
 }
 \seealso{

@@ -88,7 +88,7 @@ help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
 	@$(RM) -f help/Rhelp.zip latex/Rhelp.zip R-ex/Rex.zip
 
 zipup:
-	-zip -${ZIPFLAGS} help/Rhelp help/* -x help/00Titles help/AnIndex 2> nul
+	-zip -${ZIPFLAGS} help/Rhelp help/* -x help/AnIndex 2> nul
 	-zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R 2> nul
 	-zip -${ZIPFLAGS} latex/Rhelp latex/*.tex 2> nul
 

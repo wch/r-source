@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.1 $ ';
+my $revision = ' $Revision: 1.2 $ ';
 my $version;
 my $name;
 
@@ -68,8 +68,6 @@ if($opt_htmllists){
 
     %anindex = read_anindex("$R_HOME/library");
     %htmlindex = read_htmlindex("$R_HOME/library");
-
-    # build_htmlfctlist("$R_HOME/library");
 
     exit 0;
 }
@@ -117,7 +115,6 @@ if($opt_html){
 	}
 	%htmlindex = %basehtmlindex;
     }
-    # build_htmlfctlist($lib);
 }
 
 format STDOUT =
@@ -184,7 +181,7 @@ if($opt_txt){
     closedir dest;
     foreach $destfile (@destdir) {
 	if($destfile eq "." || $destfile eq ".." ||
-	   $destfile eq "AnIndex" || $destfile eq "00Titles") { next; }
+	   $destfile eq "AnIndex") { next; }
 #	print "$dest/help/$destfile\n" unless defined $manfiles{$destfile};
 	unlink "$dest/help/$destfile" unless defined $manfiles{$destfile};
     }
