@@ -37,7 +37,7 @@ rowMeans(x, na.rm = FALSE, dims = 1)
   one-dimensional.  The \code{dimnames} (or \code{names} for a vector
   result) are taken from the original array.
 
-  If there are no non-missing values is a range to be summed over, the
+  If there are no non-missing values in a range to be summed over, the
   component of the output is set to \code{NA}.
 }
 \seealso{
