@@ -13,7 +13,7 @@ prompt.default <-
     name <- as.character(name)
     fn <- get(name)
     ## `file' [character(NN)] will contain the lines to be put in the
-    ## Rdoc file 
+    ## Rdoc file
     file <- paste0("\\name{", name, "}")
     if(is.function(fn) || force.function) {
         file <- c(file,
@@ -82,7 +82,7 @@ prompt.default <-
 		  "}")
     }
     cat(file, file = filename, sep = "\n")
-    RHOME <- getenv("RHOME")
+    RHOME <- R.home()
     if(substr(RHOME,1,8) == "/tmp_mnt") RHOME <- substr(RHOME,9,1000)
     cat("created file named ", filename, " in the current directory.\n",
 	" Edit the file and move it to the appropriate directory,\n",
