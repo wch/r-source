@@ -1100,6 +1100,7 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#ifdef Unix
 static int var_R_can_use_X11 = -1;
 
 extern Rboolean R_access_X11(void); /* from src/unix/X11.c */
@@ -1121,6 +1122,7 @@ static Rboolean R_can_use_X11()
     
     return var_R_can_use_X11 > 0;
 }
+#endif
 
 
 SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
