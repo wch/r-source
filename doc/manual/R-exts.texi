@@ -1943,8 +1943,8 @@ in the top-level directory of the package it is executed, and then if a
 @code{make} is called.  If @code{R CMD INSTALL --clean} is used
 @code{make clean} is called.  No other action is taken.
 
-@code{R CMD build} can package this type of package, but @code{R CMD
-check} will check the type and raise an error.
+@code{R CMD build} can package up this type of extension, but @code{R
+CMD check} will check the type and skip it.
 
 @node Translation,  , Frontend, Package types
 @subsection Translation
@@ -1959,11 +1959,15 @@ parallel places in the @R{} installation tree.
 For example, a package @pkg{Translation-it} might be prepared from an
 installed (and tested) version of @R{} by
 @example
-tar zcvf tmp.tar.gz share/locale/it library/*/po/it      
+mkdir Translation-it
+cd Translation-it
+(cd $R_HOME; tar cf - share/locale/it library/*/po/it) | tar xf -
+# the next step is not needed on Windows
+cp -p $R_SRC_HOME/po/RGui-it.po share/locale/it/LC_MESSAGES
+# create a DESCRIPTION file
+cd ..
+R CMD build Translation-it
 @end example
-@noindent
-then unpacking in directory @file{Translation-it} and adding a suitable
-@file{DESCRIPTION} file.
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files
