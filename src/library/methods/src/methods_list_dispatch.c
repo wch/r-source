@@ -45,9 +45,8 @@ static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 
 /* from Defn.h */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
-
-extern R_stdGen_ptr_t R_standardGeneric_ptr;
-
+#include <R_ext/libextern.h>
+LibExtern R_stdGen_ptr_t R_standardGeneric_ptr;
 
 void R_initMethodDispatch()
 {
