@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,23 +42,23 @@
  *	   If (i > 7), use Stirling's approximation, otherwise use table lookup.
 */
 
-static double al[9] =
-{
-    0.0,
-    0.0,/*ln(0!)=ln(1)*/
-    0.0,/*ln(1!)=ln(1)*/
-    0.69314718055994530941723212145817,/*ln(2) */
-    1.79175946922805500081247735838070,/*ln(6) */
-    3.17805383034794561964694160129705,/*ln(24)*/
-    4.78749174278204599424770093452324,
-    6.57925121201010099506017829290394,
-    8.52516136106541430016553103634712
-    /*, 10.60460290274525022841722740072165*/
-};
-
 static double afc(int i)
 {
+    const double al[9] =
+    {
+	0.0,
+	0.0,/*ln(0!)=ln(1)*/
+	0.0,/*ln(1!)=ln(1)*/
+	0.69314718055994530941723212145817,/*ln(2) */
+	1.79175946922805500081247735838070,/*ln(6) */
+	3.17805383034794561964694160129705,/*ln(24)*/
+	4.78749174278204599424770093452324,
+	6.57925121201010099506017829290394,
+	8.52516136106541430016553103634712
+	/*, 10.60460290274525022841722740072165*/
+    };
     double di, value;
+
     if (i < 0) {
       MATHLIB_WARNING("rhyper.c: afc(i), i=%d < 0 -- SHOULD NOT HAPPEN!\n",i);
       return -1;/* unreached (Wall) */
@@ -74,37 +74,31 @@ static double afc(int i)
 
 double rhyper(double nn1in, double nn2in, double kkin)
 {
-    int nn1, nn2, kk;
+    const double con = 57.56462733;
+    const double deltal = 0.0078;
+    const double deltau = 0.0034;
+    const double scale = 1e25;
 
-    static int ks = -1;
-    static int n1s = -1;
-    static int n2s = -1;
-    static double con = 57.56462733;
-    static double deltal = 0.0078;
-    static double deltau = 0.0034;
-    static double scale = 1e25;
-
-    static double a;
-    static double d, e, f, g;
-    static int i, k, m;
-    static double p;
-    static double r, s, t;
-    static double u, v, w;
-    static double lamdl, y, lamdr;
-    static int minjx, maxjx, n1, n2;
-    static double p1, p2, p3, y1, de, dg;
-    static int setup1, setup2;
-    static double gl, kl, ub, nk, dr, nm, gu, kr, ds, dt;
-    static int ix;
-    static double tn;
-    static double xl;
-    static double ym, yn, yk, xm;
-    static double xr;
-    static double xn;
-    static int reject;
-    static double xk;
     /* extern double afc(int); */
-    static double alv;
+
+    int nn1, nn2, kk;
+    int i, ix;
+    Rboolean reject, setup1, setup2;
+    
+    double e, f, g, p, r, t, u, v, y;
+    double de, dg, dr, ds, dt, gl, gu, nk, nm, ub;
+    double xk, xm, xn, y1, ym, yn, yk, alv;
+
+    /* These should become `thread_local globals' : */
+    static int ks = -1;
+    static int n1s = -1, n2s = -1;
+
+    static int k, m;
+    static int minjx, maxjx, n1, n2;
+
+    static double a, d, s, w;
+    static double tn, xl, xr, kl, kr, lamdl, lamdr, p1, p2, p3;
+
 
     /* check parameter validity */
 
@@ -120,13 +114,12 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
     /* if new parameter values, initialize */
     reject = TRUE;
-    setup1 = FALSE;
-    setup2 = FALSE;
     if (nn1 != n1s || nn2 != n2s) {
-	setup1 = TRUE;
-	setup2 = TRUE;
+	setup1 = TRUE;	setup2 = TRUE;
     } else if (kk != ks) {
-	setup2 = TRUE;
+	setup1 = FALSE;	setup2 = TRUE;
+    } else {
+	setup1 = FALSE;	setup2 = FALSE;
     }
     if (setup1) {
 	n1s = nn1;
@@ -189,9 +182,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	u = unif_rand() * scale;
       L20:
 	if (u > p) {
-	    u = u - p;
-	    p = p * (n1 - ix) * (k - ix);
-	    ix = ix + 1;
+	    u -= p;
+	    p *= (n1 - ix) * (k - ix);
+	    ix++;
 	    p = p / ix / (n2 - k + ix);
 	    if (ix > maxjx)
 		goto L10;
@@ -208,8 +201,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	    d = (int) (1.5 * s) + .5;
 	    xl = m - d + .5;
 	    xr = m + d + .5;
-	    a = afc(m) + afc(n1 - m) + afc(k - m)
-		+ afc(n2 - k + m);
+	    a = afc(m) + afc(n1 - m) + afc(k - m) + afc(n2 - k + m);
 	    kl = exp(a - afc((int) (xl)) - afc((int) (n1 - xl))
 		     - afc((int) (k - xl))
 		     - afc((int) (n2 - k + xl)));
@@ -217,10 +209,8 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		     - afc((int) (n1 - xr + 1))
 		     - afc((int) (k - xr + 1))
 		     - afc((int) (n2 - k + xr - 1)));
-	    lamdl = -log(xl * (n2 - k + xl) / (n1 - xl + 1)
-			 / (k - xl + 1));
-	    lamdr = -log((n1 - xr + 1) * (k - xr + 1)
-			 / xr / (n2 - k + xr));
+	    lamdl = -log(xl * (n2 - k + xl) / (n1 - xl + 1) / (k - xl + 1));
+	    lamdr = -log((n1 - xr + 1) * (k - xr + 1) / xr / (n2 - k + xr));
 	    p1 = d + d;
 	    p2 = p1 + kl / lamdl;
 	    p3 = p2 + kr / lamdr;
@@ -249,12 +239,10 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	    f = 1.0;
 	    if (m < ix) {
 		for (i = m + 1; i <= ix; i++)
-		    f = f * (n1 - i + 1) * (k - i + 1)
-			/ (n2 - k + i) / i;
+		    f = f * (n1 - i + 1) * (k - i + 1) / (n2 - k + i) / i;
 	    } else if (m > ix) {
 		for (i = ix + 1; i <= m; i++)
-		    f = f * i * (n2 - k + i) / (n1 - i)
-			/ (k - i);
+		    f = f * i * (n2 - k + i) / (n1 - i) / (k - i);
 	    }
 	    if (v <= f) {
 		reject = FALSE;
@@ -294,23 +282,22 @@ double rhyper(double nn1in, double nn2in, double kkin)
 				/* test against lower bound */
 		dr = xm * (r * r * r * r);
 		if (r < 0.0)
-		    dr = dr / (1.0 + r);
+		    dr /= (1.0 + r);
 		ds = xn * (s * s * s * s);
 		if (s < 0.0)
-		    ds = ds / (1.0 + s);
+		    ds /= (1.0 + s);
 		dt = xk * (t * t * t * t);
 		if (t < 0.0)
-		    dt = dt / (1.0 + t);
+		    dt /= (1.0 + t);
 		de = nm * (e * e * e * e);
 		if (e < 0.0)
-		    de = de / (1.0 + e);
+		    de /= (1.0 + e);
 		if (alv < ub - 0.25 * (dr + ds + dt + de)
 		    + (y + m) * (gl - gu) - deltal) {
 		    reject = FALSE;
-		} else {
-		    /*
-		     * stirling's formula to machine
-		     * accuracy
+		} 
+		else {
+		    /* * Stirling's formula to machine accuracy
 		     */
 		    if (alv <= (a - afc(ix) - afc(n1 - ix)
 				- afc(k - ix) - afc(n2 - k + ix))) {

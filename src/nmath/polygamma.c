@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000-2001 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,7 +49,7 @@
  *    the psi function; i.e. for fixed x and m it computes
  *    the m-member sequence
  *
- *		  ((-1)**(k+1)/gamma(k+1))*psi(k,x)
+ *		  (-1)^(k+1) / gamma(k+1) * psi(k,x)
  *		     for k = n,...,n+m-1
  *
  *    where psi(k,x) is as defined above.   For kode=1, dpsifn
@@ -68,7 +69,7 @@
  *
  *	n     - first member of the sequence, 0 <= n <= 100
  *		n == 0 gives ans(1) = -psi(x)	    for kode=1
- *					 -psi(x)+ln(x) for kode=2
+ *				      -psi(x)+ln(x) for kode=2
  *
  *	kode  - selection parameter
  *		kode == 1 returns scaled derivatives of the
@@ -106,11 +107,11 @@
  *    for large x >= xmin followed by backward recursion on a two
  *    term recursion relation
  *
- *	     w(x+1) + x**(-n-1) = w(x).
+ *	     w(x+1) + x^(-n-1) = w(x).
  *
  *    this is supplemented by a series
  *
- *	     sum( (x+k)**(-n-1) , k=0,1,2,... )
+ *	     sum( (x+k)^(-n-1) , k=0,1,2,... )
  *
  *    which converges rapidly for large n. both xmin and the
  *    number of terms of the series are calculated from the unit
@@ -137,39 +138,36 @@
 
 #include "nmath.h"
 
-	/* Bernoulli Numbers */
-
-static double bvalues[] = {
-     1.00000000000000000e+00,
-    -5.00000000000000000e-01,
-     1.66666666666666667e-01,
-    -3.33333333333333333e-02,
-     2.38095238095238095e-02,
-    -3.33333333333333333e-02,
-     7.57575757575757576e-02,
-    -2.53113553113553114e-01,
-     1.16666666666666667e+00,
-    -7.09215686274509804e+00,
-     5.49711779448621554e+01,
-    -5.29124242424242424e+02,
-     6.19212318840579710e+03,
-    -8.65802531135531136e+04,
-     1.42551716666666667e+06,
-    -2.72982310678160920e+07,
-     6.01580873900642368e+08,
-    -1.51163157670921569e+10,
-     4.29614643061166667e+11,
-    -1.37116552050883328e+13,
-     4.88332318973593167e+14,
-    -1.92965793419400681e+16
-};
-
-static double *b = (double *)&bvalues -1;
-static int nmax = 100;
-
 static
 void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 {
+    const double bvalues[] = {	/* Bernoulli Numbers */
+	 1.00000000000000000e+00,
+	-5.00000000000000000e-01,
+	 1.66666666666666667e-01,
+	-3.33333333333333333e-02,
+	 2.38095238095238095e-02,
+	-3.33333333333333333e-02,
+	 7.57575757575757576e-02,
+	-2.53113553113553114e-01,
+	 1.16666666666666667e+00,
+	-7.09215686274509804e+00,
+	 5.49711779448621554e+01,
+	-5.29124242424242424e+02,
+	 6.19212318840579710e+03,
+	-8.65802531135531136e+04,
+	 1.42551716666666667e+06,
+	-2.72982310678160920e+07,
+	 6.01580873900642368e+08,
+	-1.51163157670921569e+10,
+	 4.29614643061166667e+11,
+	-1.37116552050883328e+13,
+	 4.88332318973593167e+14,
+	-1.92965793419400681e+16
+    };
+    const double *b = (double *)&bvalues -1; /* ==> b[1] = bvalues[0], etc */ 
+    const int nmax = 100;
+
     int i, j, k, mm, mx, nn, np, nx, fn;
     double arg, den, elim, eps, fln, fx, rln, rxsq,
 	r1m4, r1m5, s, slope, t, ta, tk, tol, tols, tss, tst,
@@ -215,14 +213,11 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    if (x < wdtol) {
 		ans[1] = pow(x, -n-1.0);
 		if (mm != 1) {
-		    k = 1;
-		    for(i=2 ; i<=mm ; i++) {
+		    for(i = 2, k = 1; i <= mm ; i++, k++)
 			ans[k+1] = ans[k] / x;
-			k = k+1;
-		    }
 		}
 		if (n == 0 && kode == 2)
-		    ans[1] = ans[1] + xln;
+		    ans[1] += xln;
 		return;
 	    }
 
@@ -268,9 +263,9 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    if (tk <= elim)
 		goto L10;
 	}
-	nz = nz + 1;
+	nz++;
 	ans[mm] = 0.0;
-	mm = mm - 1;
+	mm--;
 	if (mm == 0)
 	    return;
     }
@@ -281,28 +276,26 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
     s = t;
     den = x;
     for(i=1 ; i<=nn ; i++) {
-	den = den + 1.0;
+	den += 1.;
 	trm[i] = pow(den, (double)-np);
-	s = s + trm[i];
+	s += trm[i];
     }
     ans[1] = s;
     if (n == 0 && kode == 2)
 	ans[1] = s + xln;
 
-    if (mm!=1) {
-
-	/* generate higher derivatives,	 j > n */
+    if (mm != 1) { /* generate higher derivatives, j > n */
 
 	tol = wdtol / 5.0;
-	for(j=2 ; j<=mm ; j++) {
+	for(j = 2; j <= mm; j++) {
 	    t = t / x;
 	    s = t;
 	    tols = t * tol;
 	    den = x;
 	    for(i=1 ; i<=nn ; i++) {
-		den = den + 1.0;
-		trm[i] = trm[i] / den;
-		s = s + trm[i];
+		den += 1.;
+		trm[i] /= den;
+		s += trm[i];
 		if (trm[i] < tols)
 		    break;
 	    }
@@ -323,13 +316,13 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
     s = t * b[3];
     if (fabs(s) >= tst) {
 	tk = 2.0;
-	for(k=4 ; k<=22 ; k++) {
+	for(k = 4; k <= 22; k++) {
 	    t = t * ((tk + fn + 1)/(tk + 1.0))*((tk + fn)/(tk + 2.0)) * rxsq;
 	    trm[k] = t * b[k];
 	    if (fabs(trm[k]) < tst)
 		break;
-	    s = s + trm[k];
-	    tk = tk + 2.0;
+	    s += trm[k];
+	    tk += 2.;
 	}
     }
     s = (s + t1) * tss;
@@ -351,11 +344,10 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    fx = x + xm;
 
 	    /* this loop should not be changed. fx is accurate when x is small */
-
-	    for(i=1 ; i<=nx ; i++) {
+	    for(i = 1; i <= nx; i++) {
 		trmr[i] = pow(fx, (double)-np);
-		s = s + trmr[i];
-		xm = xm - 1.0;
+		s += trmr[i];
+		xm -= 1.;
 		fx = x + xm;
 	    }
 	}
@@ -366,12 +358,9 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 
     /* generate lower derivatives,  j < n+mm-1 */
 
-    if (mm == 1)
-	return;
-
-    for(j=2 ; j<=mm ; j++) {
-	fn = fn - 1;
-	tss = tss * xdmy;
+    for(j = 2; j <= mm; j++) {
+	fn--;
+	tss *= xdmy;
 	t1 = tt;
 	if (fn!=0)
 	    t1 = tt + 1.0 / fn;
@@ -383,8 +372,8 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 		trm[k] = trm[k] * (fn + 1) / tk;
 		if (fabs(trm[k]) < tst)
 		    break;
-		s = s + trm[k];
-		tk = tk + 2.0;
+		s += trm[k];
+		tk += 2.;
 	    }
 	}
 	s = (s + t1) * tss;
@@ -395,8 +384,8 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    fx = x + xm;
 	    for(i=1 ; i<=nx ; i++) {
 		trmr[i] = trmr[i] * fx;
-		s = s + trmr[i];
-		xm = xm - 1.0;
+		s += trmr[i];
+		xm -= 1.;
 		fx = x + xm;
 	    }
 	}
@@ -407,15 +396,17 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
     }
     return;
 
-  L20:	for(i=1 ; i<=nx ; i++)
-      s = s + 1.0 / (x + nx - i);
-
-  L30:	if (kode!=2)
-      ans[1] = s - xdmln;
-  else if (xdmy != x) {
-      xq = xdmy / x;
-      ans[1] = s - log(xq);
-  }
+  L20:	
+    for(i = 1; i <= nx; i++)
+        s += 1. / (x + nx - i);
+    
+  L30:
+    if (kode!=2)
+	ans[1] = s - xdmln;
+    else if (xdmy != x) {
+	xq = xdmy / x;
+	ans[1] = s - log(xq);
+    }
     return;
 }
 

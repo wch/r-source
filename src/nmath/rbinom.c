@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,18 +41,18 @@
 
 double rbinom(double nin, double pp)
 {
-/*=== FIXME :  THIS IS NOT AT ALL THREAD SAFE ! (see below) */
+    /* FIXME: These should becomre THREAD_specific globals : */
 
-    double p, q, np, g, r, al, alv, amaxp, ffm, ynorm;
-    int i,ix,k, n;
-
-    static double c, f, f1, f2, fm;
-    static double p1, p2, p3, p4, qn, u, v, w, w2;
-    static double x, x1, x2, xl, xll, xlr, xm, npq, xr, z, z2;
-    static int m;
+    static double c, fm, npq, p1, p2, p3, p4, qn;
+    static double xl, xll, xlr, xm, xr;
 
     static double psave = -1.0;
     static int nsave = -1;
+    static int m;
+
+    double f, f1, f2, u, v, w, w2, x, x1, x2, z, z2;
+    double p, q, np, g, r, al, alv, amaxp, ffm, ynorm;
+    int i,ix,k, n;
 
     n = floor(nin + 0.5);
     if (!R_FINITE(n) || !R_FINITE(pp) ||
@@ -139,10 +139,10 @@ double rbinom(double nin, double pp)
 	  f = 1.0;
 	  if (m < ix) {
 	      for (i = m + 1; i <= ix; i++)
-		  f = f * (g / i - r);
+		  f *= (g / i - r);
 	  } else if (m != ix) {
 	      for (i = ix + 1; i <= m; i++)
-		  f = f / (g / i - r);
+		  f /= (g / i - r);
 	  }
 	  if (v <= f)
 	      goto finis;
@@ -182,9 +182,9 @@ double rbinom(double nin, double pp)
 	     goto finis;
 	 if (ix > 110)
 	     break;
-	 u = u - f;
-	 ix = ix + 1;
-	 f = f * (g / ix - r);
+	 u -= f;
+	 ix++;
+	 f *= (g / ix - r);
      }
   }
  finis:

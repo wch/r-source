@@ -126,4 +126,3 @@ double fround(double x, double digits)
 
     return sgn * (intx + R_rint(x * pow10) / pow10);
 }
-

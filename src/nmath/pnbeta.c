@@ -19,16 +19,14 @@
 double pnbeta(double x, double a, double b, double lambda,
 	      int lower_tail, int log_p)
 {
+
+    /* change errmax and itrmax if desired */
+
+    const double errmax = 1.0e-9;
+    const int    itrmax = 100;
+
     double a0, ans, ax, lbeta, c, errbd, gx, q, sumq, temp, x0;
     int j;
-
-    const static double half = 0.5;
-
-	/* change errmax and itrmax if desired */
-
-    const static double ualpha = 7.0;
-    const static double errmax = 1.0e-9;
-    const static int itrmax = 100;
 
 
 #ifdef IEEE_754
@@ -41,11 +39,11 @@ double pnbeta(double x, double a, double b, double lambda,
     if(x <= 0.) return R_DT_0;
     if(x >= 1.) return R_DT_1;
 
-    c = lambda * half;
+    c = lambda / 2.;
 
 	/* initialize the series */
 
-    x0 = floor(fmax2(c - ualpha * sqrt(c), 0.));
+    x0 = floor(fmax2(c - 7. * sqrt(c), 0.));
     a0 = a + x0;
     lbeta = lgammafn(a0) + lgammafn(b) - lgammafn(a0 + b);
     temp = pbeta_raw(x, a0, b, /* lower = */TRUE);

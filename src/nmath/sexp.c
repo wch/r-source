@@ -41,7 +41,7 @@ double exp_rand(void)
     /* q[k-1] = sum(alog(2.0)**k/k!) k=1,..,n, */
     /* The highest n (here 8) is determined by q[n-1] = 1.0 */
     /* within standard precision */
-    static const double q[] =
+    const double q[] =
     {
 	0.6931471805599453,
 	0.9333736875190459,

@@ -51,16 +51,19 @@
  *	make CFLAGS='-DDEBUG_p -g -I/usr/local/include -I../include'
  */
 
-static const double
-    xbig = 1.0e+8,
-    xlarge = 1.0e+37,
-
-    alphlimit = 1000.,/* normal approx. for alph > alphlimit */
-    elimit = M_LN2*(DBL_MIN_EXP);/* will set exp(E) = 0 for E < elimit ! */
-    /* was elimit = -88.0e0; */
 
 double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 {
+    const double
+	xbig = 1.0e+8,
+	xlarge = 1.0e+37,
+
+#ifndef IEEE_754
+	elimit = M_LN2*(DBL_MIN_EXP),/* will set exp(E) = 0 for E < elimit ! */
+    /* was elimit = -88.0e0; */
+#endif
+	alphlimit = 1000.;/* normal approx. for alph > alphlimit */
+
     double pn1, pn2, pn3, pn4, pn5, pn6, arg, a, b, c, an, osum, sum;
     long n;
     int pearson;

@@ -131,7 +131,7 @@ void ml_error(int n);
 	/* Chebyshev Series */
 
 int	chebyshev_init(double*, int, double);
-double	chebyshev_eval(double, double *, int);
+double	chebyshev_eval(double, const double *, const int);
 
 	/* Gamma and Related Functions */
 

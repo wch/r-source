@@ -53,7 +53,7 @@
 #define const3 0.99229
 #define const4 0.04481
 
-static volatile double xtrunc;
+static volatile double xtrunc;/* not a real global .. delicate though! */
 
 double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 {

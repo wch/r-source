@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,12 +34,6 @@
  *    ACM Trans. Math. Software 8, 163-179.
  */
 
-/* Factorial Table (0:9)! */
-static double fact[10] =
-{
-    1., 1., 2., 6., 24., 120., 720., 5040., 40320., 362880.
-};
-
 #define a0	-0.5
 #define a1	 0.3333333
 #define a2	-0.2500068
@@ -59,12 +53,18 @@ static double fact[10] =
 
 double rpois(double mu)
 {
-    /* These are static --- persistent between calls for same mu : */
-    static double b1, b2, c, c0, c1, c2, c3;
-    static double s, d, omega, pp[36], p0, p, q;
+    /* Factorial Table (0:9)! */
+    const double fact[10] =
+    {
+	1., 1., 2., 6., 24., 120., 720., 5040., 40320., 362880.
+    };
 
-    static double big_l;/* integer "w/o overflow" */
+    /* These are static --- persistent between calls for same mu : */
     static int l, m;
+
+    static double b1, b2, c, c0, c1, c2, c3;
+    static double pp[36], p0, p, q, s, d, omega;
+    static double big_l;/* integer "w/o overflow" */
     static double muprev = 0., muprev2 = 0.;/*, muold	 = 0.*/
 
     /* Local Vars  [initialize some for -Wall]: */

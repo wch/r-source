@@ -50,7 +50,7 @@ double stirlerr(double n)
 /*
   error for 0, 0.5, 1.0, 1.5, ..., 14.5, 15.0.
 */
-    static double sferr_halves[31] = {
+    const double sferr_halves[31] = {
 	0.0, /* n=0 - wrong, place holder only */
 	0.1534264097200273452913848,  /* 0.5 */
 	0.0810614667953272582196702,  /* 1.0 */
