@@ -29,6 +29,11 @@ NEW FEATURES
 
     o	grid() gets useful defaults: grid lines drawn at tick marks.
 
+    o	New function stars() for star plots and segment diagrams of
+	multivariate data.
+
+    o	Version info now in the top-level file `VERSION'.
+
 
 BUG FIXES
 
