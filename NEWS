@@ -18,6 +18,8 @@ BUG FIXES
 
     o	print.ftable() now returns its argument.
 
+    o	ave(1:3) now works (as when is.null(list()) was TRUE years ago).
+
 
 		CHANGES IN R VERSION 1.0.1
 
