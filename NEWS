@@ -85,9 +85,14 @@ NEW FEATURES
 	to factor.  This is consistent with using $ to replace and
 	with S4.
 
+    o	library() attempts to detect improperly installed packages, so
+	as from this version an installed package must have a
+	DESCRIPTION file and (except on classic MacOS) that file must
+	have been stamped with a `Built:' line (which was introduced
+	in 1.2.0).
+
     o	print.factor() has new arguments `max.levels' (with a smart default)
 	and `width'.  print.ordered() is no longer needed.
-
 
 
 DEPRECATED & DEFUNCT

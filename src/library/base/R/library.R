@@ -26,7 +26,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                               "was built under R version", builtunder),
                         call. = FALSE)
             }
-        }
+        } else if(.Platform$OS.type == "mac")
+            warning("This package has not been installed properly\n  See the Note in ?library")
     }
 
     sQuote <- function(s) paste("`", s, "'", sep = "")
@@ -57,6 +58,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             descfile <- system.file("DESCRIPTION", package = package,
                                     lib.loc = which.lib.loc)
             if(nchar(descfile)) testRversion(descfile)
+            else stop("This is not a valid package -- no DESCRIPTION exists")
             ## if the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.

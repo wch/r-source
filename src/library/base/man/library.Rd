@@ -183,6 +183,13 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{require} returns a logical indicating whether the required
   package is available.
 }
+\note{
+  \code{library} and \code{require} can only load an \emph{installed}
+  package, and this is detected by having a \file{DESCRIPTION} file
+  containing a \code{Built:} field (except on classic MacOS).  Packages
+  installed prior to 1.2.0 (released in December 2000) will need to be
+  re-installed.
+}
 \author{R core;  Guido Masarotto for the \code{all.available=TRUE}
   part of \code{.packages}.}
 \seealso{

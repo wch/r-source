@@ -62,7 +62,7 @@ endif
 
 # separate as Tcl/Tk headers are needed.
 tcl: 
-	$(MAKE) STAMP=NO pkg-tcltk
+	$(MAKE) pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(OPTFLAGS)
@@ -78,7 +78,7 @@ rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
 	 ../../bin/Rblas.dll CHTML front-ends COPYRIGHTS rmodules
 
 rpackage: fixed/fixdesc ../../library/R.css
-	$(MAKE) STAMP=NO $(PKGS)
+	$(MAKE) $(PKGS)
 
 rinstaller:
 	$(MAKE) -C installer RPREFIX=$(RPREFIX)
@@ -233,7 +233,7 @@ bundle-%:
 
 pkg-%:
 	$(MAKE) DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) $($*-ZIPDATA)data-$* ; \
