@@ -232,7 +232,7 @@ tkplace.slaves(...)
 
 tt <- tktoplevel()
 tkpack(l1<-tklabel(tt,text="Heave"),l2<-tklabel(tt,text="Ho"))
-tkpack.configure(l1,side=left)
+tkpack.configure(l1,side="left")
 
 ## Try stretching the window and then
 
