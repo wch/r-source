@@ -19,7 +19,7 @@ LEA_MALLOC=YES
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
 USE_ATLAS=NO
-ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
+ATLAS_PATH=/R/ATLAS/lib/WinNT_PIIISSE1
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
@@ -31,8 +31,8 @@ TCL_VERSION = 84
 
 ## ====== configuration macros for building installers ===========
 
-# location where Inno Setup 3.x was installed
-ISDIR=C:/packages/Inno3
+# location where Inno Setup 4.x was installed
+ISDIR=C:/packages/Inno4
 
 ## =================== cross-compilation settings  =================
 
