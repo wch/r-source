@@ -390,3 +390,7 @@ Directory:  incoming
 Subject: acf mis-feature
 From: hkawakat@sk.tsukuba.ac.jp
 Date: Mon, 19 Nov 2001 08:33:18 +0100 (MET)
+* PR# 1178 *
+Subject: segfault using svm from e1071
+From: Jan Rychter <jan@rychter.com>
+Date: Tue, 20 Nov 2001 23:38:17 +0100
