@@ -19,20 +19,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-#include "Defn.h" /* remap mainloop */
-
-int Rf_initialize_R(int ac, char **av); /* in system.c */
+int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
 
 
 int main(int ac, char **av)
 {
     Rf_initialize_R(ac, av);
 
-    mainloop();
-    /*++++++  in ../main/main.c */
+    Rf_mainloop();
+    /*++++++  in main.c */
     return 0;
 }
 
