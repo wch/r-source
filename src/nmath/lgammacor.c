@@ -1,4 +1,4 @@
-r/*
+/*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *
