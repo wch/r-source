@@ -339,6 +339,7 @@ extern int	R_EvalCount	INI_as(0);	/* Evaluation count */
 extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 extern int	R_Expressions	INI_as(500);	/* options(expressions) */
+extern int	R_KeepSource	INI_as(0);	/* options(keep.source) */
 
 /* File Input/Output */
 extern int	R_Interactive	INI_as(1);	/* Non-zero during interactive use */
