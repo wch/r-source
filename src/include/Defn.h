@@ -253,6 +253,7 @@ typedef struct {
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	protect(s)
 #define UNPROTECT(n)	unprotect(n)
+#define UNPROTECT_PTR(s)	unprotect_ptr(s)
 
 
 /* Vector Heap Structure */

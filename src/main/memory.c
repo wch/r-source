@@ -594,6 +594,29 @@ void unprotect(int l)
 	error("stack imbalance in \"unprotect\"\n");
 }
 
+/* "unprotect_ptr" remove pointer from somewhere in R_PPStack */
+
+void unprotect_ptr(SEXP s)
+{
+    int i = R_PPStackTop;
+    
+    /* go look for  s  in  R_PPStack */
+    /* (should be among the top few items) */
+    do {
+    	if (i == 0)
+	    error("pointer not found in \"unprotect\"\n");
+    } while ( R_PPStack[--i] != s );
+
+    /* OK, got it, and  i  is indexing its location */
+    /* Now drop stack above it */
+
+    do {
+    	R_PPStack[i] = R_PPStack[i + 1];
+    } while ( i++ < R_PPStackTop );
+
+    R_PPStackTop--;
+}
+
 
 /* "initStack" initialize environment stack */
 void initStack(void)

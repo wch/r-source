@@ -242,7 +242,7 @@ cr	:					{ EatLines = 1; }
 
 static int xxvalue(SEXP v, int k)
 {
-    if (k > 2) UNPROTECT(1);
+    if (k > 2) UNPROTECT_PTR(v);
     R_CurrentExpr = v;
     return k;
 }
@@ -257,7 +257,7 @@ static SEXP xxnullformal()
 static SEXP xxfirstformal0(SEXP sym)
 {
     SEXP ans;
-    UNPROTECT(1);
+    UNPROTECT_PTR(sym);
     if (GenerateCode)
 	PROTECT(ans = FirstArg(R_MissingArg, sym));
     else
@@ -268,7 +268,8 @@ static SEXP xxfirstformal0(SEXP sym)
 static SEXP xxfirstformal1(SEXP sym, SEXP expr)
 {
     SEXP ans;
-    UNPROTECT(2);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(sym);
     if (GenerateCode)
 	PROTECT(ans = FirstArg(expr, sym));
     else
@@ -279,7 +280,8 @@ static SEXP xxfirstformal1(SEXP sym, SEXP expr)
 static SEXP xxaddformal0(SEXP formlist, SEXP sym)
 {
     SEXP ans;
-    UNPROTECT(2);
+    UNPROTECT_PTR(sym);
+    UNPROTECT_PTR(formlist);
     if (GenerateCode) {
 	CheckFormalArgs(formlist ,sym);
 	PROTECT(ans = NextArg(formlist, R_MissingArg, sym));
@@ -292,7 +294,9 @@ static SEXP xxaddformal0(SEXP formlist, SEXP sym)
 static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
 {
     SEXP ans;
-    UNPROTECT(3);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(sym);
+    UNPROTECT_PTR(formlist);
     if (GenerateCode) {
 	CheckFormalArgs(formlist, sym);
 	PROTECT(ans = NextArg(formlist, expr, sym));
@@ -316,7 +320,7 @@ static SEXP xxexprlist1(SEXP expr)
 {
     SEXP ans;
     AddComment(expr);
-    UNPROTECT(1);
+    UNPROTECT_PTR(expr);
     if (GenerateCode)
 	PROTECT(ans = GrowList(NewList(), expr));
     else
@@ -328,7 +332,8 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 {
     SEXP ans;
     AddComment(expr);
-    UNPROTECT(2);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(exprlist);
     if (GenerateCode)
 	PROTECT(ans = GrowList(exprlist, expr));
     else
@@ -349,7 +354,7 @@ static SEXP xxsub0(void)
 static SEXP xxsub1(SEXP expr)
 {
     SEXP ans;
-    UNPROTECT(1);
+    UNPROTECT_PTR(expr);
     if (GenerateCode)
 	PROTECT(ans = TagArg(expr, R_NilValue));
     else
@@ -360,7 +365,7 @@ static SEXP xxsub1(SEXP expr)
 static SEXP xxsymsub0(SEXP sym)
 {
     SEXP ans;
-    UNPROTECT(1);
+    UNPROTECT_PTR(sym);
     if (GenerateCode)
 	PROTECT(ans = TagArg(R_MissingArg, sym));
     else
@@ -371,7 +376,8 @@ static SEXP xxsymsub0(SEXP sym)
 static SEXP xxsymsub1(SEXP sym, SEXP expr)
 {
     SEXP ans;
-    UNPROTECT(2);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(sym);
     if (GenerateCode)
 	PROTECT(ans = TagArg(expr, sym));
     else
@@ -382,7 +388,7 @@ static SEXP xxsymsub1(SEXP sym, SEXP expr)
 static SEXP xxnullsub0()
 {
     SEXP ans;
-    UNPROTECT(1);
+    UNPROTECT_PTR(R_NilValue);
     if (GenerateCode)
 	PROTECT(ans = TagArg(R_MissingArg, install("NULL")));
     else
@@ -393,7 +399,8 @@ static SEXP xxnullsub0()
 static SEXP xxnullsub1(SEXP expr)
 {
     SEXP ans = install("NULL");
-    UNPROTECT(2);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(R_NilValue);
     if (GenerateCode)
 	PROTECT(ans = TagArg(expr, ans));
     else
@@ -405,22 +412,23 @@ static SEXP xxnullsub1(SEXP expr)
 static SEXP xxsublist1(SEXP sub)
 {
     SEXP ans;
-    UNPROTECT(1);
     if (GenerateCode)
 	PROTECT(ans = FirstArg(CAR(sub),CADR(sub)));
     else
 	PROTECT(ans = R_NilValue);
+    UNPROTECT_PTR(sub);
     return ans;
 }
 
 static SEXP xxsublist2(SEXP sublist, SEXP sub)
 {
     SEXP ans;
-    UNPROTECT(2);
     if (GenerateCode)
 	PROTECT(ans = NextArg(sublist, CAR(sub), CADR(sub)));
     else
 	PROTECT(ans = R_NilValue);
+    UNPROTECT_PTR(sub);
+    UNPROTECT_PTR(sublist);
     return ans;
 }
 
@@ -439,7 +447,8 @@ static SEXP xxifcond(SEXP expr)
 static SEXP xxif(SEXP ifsym, SEXP cond, SEXP expr)
 {
     SEXP ans;
-    UNPROTECT(2);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(cond);
     if (GenerateCode)
 	PROTECT(ans = lang3(ifsym, cond, expr));
     else
@@ -450,7 +459,9 @@ static SEXP xxif(SEXP ifsym, SEXP cond, SEXP expr)
 static SEXP xxifelse(SEXP ifsym, SEXP cond, SEXP ifexpr, SEXP elseexpr)
 {
     SEXP ans;
-    UNPROTECT(3);
+    UNPROTECT_PTR(elseexpr);
+    UNPROTECT_PTR(ifexpr);
+    UNPROTECT_PTR(cond);
     if( GenerateCode)
 	PROTECT(ans = lang4(ifsym, cond, ifexpr, elseexpr));
     else
@@ -462,7 +473,8 @@ static SEXP xxforcond(SEXP sym, SEXP expr)
 {
     SEXP ans;
     EatLines = 1;
-    UNPROTECT(2);
+    UNPROTECT_PTR(expr);
+    UNPROTECT_PTR(sym);
     if (GenerateCode)
 	PROTECT(ans = LCONS(sym, expr));
     else
@@ -473,7 +485,8 @@ static SEXP xxforcond(SEXP sym, SEXP expr)
 static SEXP xxfor(SEXP forsym, SEXP forcond, SEXP body)
 {
     SEXP ans;
-    UNPROTECT(2);
+    UNPROTECT_PTR(body);
+    UNPROTECT_PTR(forcond);
     if (GenerateCode)
 	PROTECT(ans = lang4(forsym, CAR(forcond), CDR(forcond), body));
     else
@@ -484,7 +497,8 @@ static SEXP xxfor(SEXP forsym, SEXP forcond, SEXP body)
 static SEXP xxwhile(SEXP whilesym, SEXP cond, SEXP body)
 {
     SEXP ans;
-    UNPROTECT(2);
+    UNPROTECT_PTR(body);
+    UNPROTECT_PTR(cond);
     if (GenerateCode)
 	PROTECT(ans = lang3(whilesym, cond, body));
     else
@@ -495,7 +509,7 @@ static SEXP xxwhile(SEXP whilesym, SEXP cond, SEXP body)
 static SEXP xxrepeat(SEXP repeatsym, SEXP body)
 {
     SEXP ans;
-    UNPROTECT(1);
+    UNPROTECT_PTR(body);
     if (GenerateCode)
 	PROTECT(ans = lang2(repeatsym, body));
     else
@@ -514,11 +528,12 @@ static SEXP xxnxtbrk(SEXP keyword)
 
 static SEXP xxfuncall(SEXP expr, SEXP args)
 {
-    SEXP ans;
+    SEXP ans, sav_expr = expr;
     if(GenerateCode) {
 	if (isString(expr))
 	    expr = install(CHAR(STRING(expr)[0])); 
-	UNPROTECT(2);
+	UNPROTECT_PTR(args);
+	UNPROTECT_PTR(sav_expr);
 	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg)
 	    ans = lang1(expr);
 	else    
@@ -526,7 +541,8 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 	PROTECT(ans);
     }
     else {
-	UNPROTECT(2);
+	UNPROTECT_PTR(args);
+	UNPROTECT_PTR(sav_expr);
 	PROTECT(ans = R_NilValue);
     }
     return ans;
@@ -536,7 +552,8 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 {
     SEXP ans;
     AddComment(body);
-    UNPROTECT(2);
+    UNPROTECT_PTR(body);
+    UNPROTECT_PTR(formals);
     if (GenerateCode)
 	PROTECT(ans = lang3(fname, CDR(formals), body)); 
     else
@@ -548,7 +565,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 static SEXP xxunary(SEXP op, SEXP arg)
 {
     SEXP ans;
-    UNPROTECT(1);
+    UNPROTECT_PTR(arg);
     if (GenerateCode)
 	PROTECT(ans = lang2(op, arg));
     else
@@ -559,7 +576,8 @@ static SEXP xxunary(SEXP op, SEXP arg)
 static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
 {
     SEXP ans;
-    UNPROTECT(2);
+    UNPROTECT_PTR(n2);
+    UNPROTECT_PTR(n3);
     if (GenerateCode)
 	PROTECT(ans = lang3(n1, n2, n3));
     else
@@ -570,7 +588,7 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
 static SEXP xxparen(SEXP n1, SEXP n2)
 {
     SEXP ans;
-    UNPROTECT(1);
+    UNPROTECT_PTR(n2);
     if (GenerateCode)
 	PROTECT(ans = lang2(n1, n2));
     else
@@ -581,7 +599,8 @@ static SEXP xxparen(SEXP n1, SEXP n2)
 static SEXP xxsubscript(SEXP a1, SEXP a2, SEXP a3)
 {
     SEXP ans;
-    UNPROTECT(2);
+    UNPROTECT_PTR(a3);
+    UNPROTECT_PTR(a1);
     if (GenerateCode)
 	PROTECT(ans = LCONS(a2, LCONS(a1, CDR(a3))));
     else
@@ -592,7 +611,7 @@ static SEXP xxsubscript(SEXP a1, SEXP a2, SEXP a3)
 static SEXP xxexprlist(SEXP a1, SEXP a2)
 {
     SEXP ans;
-    UNPROTECT(1);
+    UNPROTECT_PTR(a2);
     EatLines = 0;
     if (GenerateCode) {
 	TYPEOF(a2) = LANGSXP;
