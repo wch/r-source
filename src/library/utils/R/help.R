@@ -80,8 +80,7 @@ function(x, ...)
         writeLines(c(paste("No documentation for", sQuote(topic),
                            "in specified packages and libraries:"),
                      paste("you could try",
-                           sQuote(paste("help.search(",
-                                        dQuote(topic), ")",
+                           sQuote(paste("help.search(\"", topic, "\")",
                                         sep = "")))))
         return(invisible(x))
     }
