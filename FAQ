@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-3, 2002-10-05
+Version 1.6-4, 2002-10-09
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1613,6 +1613,9 @@ distributions of R.)
      Maximally selected rank and Gauss statistics with several p-value
      approximations.
 
+*mclust*
+     Model-based cluster analysis.
+
 *mda*
      Code for mixture discriminant analysis (MDA), flexible discriminant
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -1910,9 +1913,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *locfit*
      Local Regression, likelihood and density estimation.
-
-*mclust*
-     Model-based cluster analysis.
 
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
