@@ -42,7 +42,7 @@ c(b0, b1, b0-b1)
 
 fbeta.tmp <- function (x, alpha, beta)
 {
-    val < <- c(val, x)
+    val <- c(val, x)
     x^(alpha - 1) * (1 - x)^(beta - 1)
 }
 
