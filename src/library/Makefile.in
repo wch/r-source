@@ -13,12 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = profile $(R_PKGS_BASE) Recommended
-
-## <NOTE>
-## Apparently needed for gnuwin32?
-PKGS = $(R_PKGS_BASE)
-## </NOTE>
+SUBDIRS = profile $(R_PKGS_BASE) $(R_PKGS_STUBS) Recommended
 
 ## <NOTE>
 ## Need to use R CMD to ensure that R_HOME is set (or do this ourselves).
@@ -37,7 +32,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
-	@for pkg in profile $(R_PKGS_BASE); do \
+	@for pkg in profile $(R_PKGS_BASE) $(R_PKGS_STUBS); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
@@ -89,7 +84,7 @@ install-strip:
 uninstall:
 	@echo "uninstalling packages ..."
 	@(cd $(rhome)/library; \
-	  for p in $(R_PKGS); do rm -rf $${p}; done)
+	  for p in $(R_PKGS) $(R_PKGS_STUBS); do rm -rf $${p}; done)
 
 mostlyclean: clean
 clean:

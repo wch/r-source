@@ -99,7 +99,7 @@ getNativeSymbolInfo(name, PACKAGE)
 }
 
 \examples{
-library(ctest) # normally loaded
+library(stats) # normally loaded
 getNativeSymbolInfo("dansari")
 
 library(mva)   # normally loaded

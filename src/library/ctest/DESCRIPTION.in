@@ -1,12 +1,10 @@
 Package: ctest
 Version: @VERSION@
 Priority: base
-Title: Classical Tests
+Title: Defunct Package for Classical Tests
 Author: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>, with major
   contributions by Peter Dalgaard <p.dalgaard@kubism.ku.dk> and
   Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>.
 Maintainer: R Core Team <R-core@r-project.org>
-Description: A collection of classical tests, including the
-  Ansari-Bradley, Bartlett, chi-squared, Fisher, Kruskal-Wallis,
-  Kolmogorov-Smirnov, t, and Wilcoxon tests
+Description: A stub package -- contents merged into stats
 License: GPL
