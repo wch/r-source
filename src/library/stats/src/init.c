@@ -25,8 +25,20 @@
 #include "modreg.h"
 #include "mva.h"
 #include "nls.h"
+#include "stats.h"
 #include "ts.h"
 #include <R_ext/Rdynload.h>
+
+void stats_init(char **path)
+{
+#ifdef ENABLE_NLS
+    char localedir[PATH_MAX];
+
+    strcpy(localedir, path[0]);
+    strcat(localedir, "/po");
+    bindtextdomain("stats", localedir);
+#endif   
+}
 
 static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
 					   INTSXP, REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
@@ -95,6 +107,7 @@ static const R_CMethodDef CEntries[]  = {
     {"HoltWinters", (DL_FUNC) &HoltWinters, 15},
     {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
     {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
+    {"stats_init", (DL_FUNC) &stats_init, 1},
     {NULL, NULL, 0}
 };
 

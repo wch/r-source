@@ -21,6 +21,12 @@
 /* --- $Id: Srunmed.c,v 1.1 2003/12/09 18:21:36 ripley Exp $ */
 
 #include "modreg.h"
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 
 void Srunmed(double* y, double* smo, int* n, Sint* band,
 	     Sint* end_rule, Sint* debug)
@@ -51,7 +57,7 @@ void Srunmed(double* y, double* smo, int* n, Sint* band,
     /*was  malloc( (unsigned) bw * sizeof(double));*/
 
     if(bw > *n)
-	error("bandwidth/span of running medians is larger than n");
+	error(_("bandwidth/span of running medians is larger than n"));
 
 /* 1. Compute  'rmed' := Median of the first 'band' values
    ======================================================== */

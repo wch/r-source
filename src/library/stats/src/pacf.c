@@ -69,7 +69,7 @@ static SEXP Starma_tag;
 #define GET_STARMA \
     Starma G; \
     if (TYPEOF(pG) != EXTPTRSXP || R_ExternalPtrTag(pG) != Starma_tag) \
-        error("bad Starma struct");\
+        error(_("bad Starma struct"));\
     G = (Starma) R_ExternalPtrAddr(pG)
 
 SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm,
@@ -215,7 +215,7 @@ SEXP arma0fa(SEXP pG, SEXP inparams)
 	ans = 0.5 * log(G->s2);
     } else {
 	starma(G, &ifault);
-	if(ifault) error("starma error code %d", ifault);
+	if(ifault) error(_("starma error code %d"), ifault);
 	sumlog = 0.0;
 	ssq = 0.0;
 	it = 0;
@@ -278,7 +278,7 @@ SEXP arma0_kfore(SEXP pG, SEXP pd, SEXP psd, SEXP nahead)
 
 
     forkal(G, d, il, del + 1, REAL(x), REAL(var), &ifault);
-    if(ifault) error("forkal error code %d", ifault);
+    if(ifault) error(_("forkal error code %d"), ifault);
     UNPROTECT(1);
     return res;
 }
@@ -299,7 +299,7 @@ static void partrans(int p, double *raw, double *new)
     int j, k;
     double a, work[100];
 
-    if(p > 100) error("can only transform 100 pars in arima0");
+    if(p > 100) error(_("can only transform 100 pars in arima0"));
 
     /* Step one: map (-Inf, Inf) to (-1, 1) via tanh
        The parameters are now the pacf phi_{kk} */
@@ -339,7 +339,7 @@ static void invpartrans(int p, double *phi, double *new)
     int j, k;
     double a, work[100];
 
-    if(p > 100) error("can only transform 100 pars in arima0");
+    if(p > 100) error(_("can only transform 100 pars in arima0"));
 
     for(j = 0; j < p; j++) work[j] = new[j] = phi[j];
     /* Run the Durbin-Levinson recursions backwards
@@ -442,7 +442,7 @@ ARMAtoMA(SEXP ar, SEXP ma, SEXP lag_max)
     SEXP res;
     
     if(m <= 0 || m == NA_INTEGER)
-	error("invalid value of lag.max");
+	error(_("invalid value of lag.max"));
     PROTECT(res = allocVector(REALSXP, m));
     psi = REAL(res);
     for(i = 0; i < m; i++) {

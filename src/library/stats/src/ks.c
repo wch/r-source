@@ -78,9 +78,6 @@ psmirnov2x(double *x, Sint *m, Sint *n)
     q = floor(*x * md * nd - 1e-7) / (md * nd);
     u = (double *) R_alloc(*n + 1, sizeof(double));
 
-    /* not needed, as R_alloc does not return if it fails 
-    if(!u) error("allocation error in psmirnov2x()."); */
-
     for(j = 0; j <= *n; j++) {
 	u[j] = ((j / nd) > q) ? 0 : 1;
     }

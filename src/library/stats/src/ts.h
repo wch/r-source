@@ -20,6 +20,7 @@
 #ifndef R_TS_H
 #define R_TS_H
 #include <Rinternals.h>
+#include "stats.h"
 
 void acf(double *x, int *n, int *nser, int *nlag, int *correlation,
 	 double *acf);

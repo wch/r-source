@@ -72,25 +72,25 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
     doTrace = asLogical(doTraceArg);
 
     if(!isNewList(control))
-	error("control must be a list");
+	error(_("control must be a list"));
     if(!isNewList(m))
-	error("m must be a list");
+	error(_("m must be a list"));
 
     PROTECT(tmp = getAttrib(control, R_NamesSymbol));
 
     conv = getListElement(control, tmp, "maxiter");
     if(conv == NULL || !isNumeric(conv))
-	error("control$maxiter absent");
+	error(_("control$maxiter absent"));
     maxIter = asInteger(conv);
 
     conv = getListElement(control, tmp, "tol");
     if(conv == NULL || !isNumeric(conv))
-	error("control$tol absent");
+	error(_("control$tol absent"));
     tolerance = asReal(conv);
 
     conv = getListElement(control, tmp, "minFactor");
     if(conv == NULL || !isNumeric(conv))
-	error("control$minFactor absent");
+	error(_("control$minFactor absent"));
     minFac = asReal(conv);
 
     UNPROTECT(1);
@@ -99,32 +99,32 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 
     conv = getListElement(m, tmp, "conv");
     if(conv == NULL || !isFunction(conv))
-	error("m$conv() absent");
+	error(_("m$conv() absent"));
     PROTECT(conv = lang1(conv));
 
     incr = getListElement(m, tmp, "incr");
     if(incr == NULL || !isFunction(incr))
-	error("m$incr() absent");
+	error(_("m$incr() absent"));
     PROTECT(incr = lang1(incr));
 
     deviance = getListElement(m, tmp, "deviance");
     if(deviance == NULL || !isFunction(deviance))
-	error("m$deviance() absent");
+	error(_("m$deviance() absent"));
     PROTECT(deviance = lang1(deviance));
 
     trace = getListElement(m, tmp, "trace");
     if(trace == NULL || !isFunction(trace))
-	error("m$trace() absent");
+	error(_("m$trace() absent"));
     PROTECT(trace = lang1(trace));
 
     setPars = getListElement(m, tmp, "setPars");
     if(setPars == NULL || !isFunction(setPars))
-	error("m$setPars() absent");
+	error(_("m$setPars() absent"));
     PROTECT(setPars);
 
     getPars = getListElement(m, tmp, "getPars");
     if(getPars == NULL || !isFunction(getPars))
-	error("m$getPars() absent");
+	error(_("m$getPars() absent"));
     PROTECT(getPars = lang1(getPars));
 
     PROTECT(pars = eval(getPars, R_GlobalEnv));
@@ -151,7 +151,7 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 	    PROTECT(tmp = lang2(setPars, newPars));
 	    if (asLogical(eval(tmp, R_GlobalEnv))) { /* singular gradient */
 		UNPROTECT(11);
-		error("singular gradient");
+		error(_("singular gradient"));
 	    }
 	    UNPROTECT(1);
 
@@ -170,7 +170,7 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 	UNPROTECT(1);
 	if( fac < minFac ) {
 	    UNPROTECT(9);
-	    error("step factor %g reduced below `minFactor' of %g",
+	    error(_("step factor %g reduced below 'minFactor' of %g"),
 		  fac, minFac);
 	}
 	if(doTrace) eval(trace,R_GlobalEnv);
@@ -178,7 +178,7 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 
     if(!hasConverged) {
 	UNPROTECT(9);
-	error("number of iterations exceeded maximum of %d", maxIter);
+	error(_("number of iterations exceeded maximum of %d"), maxIter);
     }
 
     UNPROTECT(9);
@@ -199,9 +199,9 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho)
     int start, i, j, k, lengthTheta = 0;
 
     if(!isString(theta))
-	error("theta should be of type character");
+	error(_("theta should be of type character"));
     if(!isEnvironment(rho))
-	error("rho should be an environment");
+	error(_("rho should be an environment"));
 
     PROTECT(pars = allocVector(VECSXP, LENGTH(theta)));
 
@@ -218,7 +218,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho)
     }
     for(i = 0; i < LENGTH(ans); i++) {
 	if (!R_FINITE(REAL(ans)[i]))
-	    error("Missing value or an Infinity produced when evaluating the model");
+	    error(_("Missing value or an infinity produced when evaluating the model"));
     }
     for(i = 0; i < LENGTH(theta); i++) {
 	SET_VECTOR_ELT(pars, i, findVar(install(CHAR(STRING_ELT(theta, i))), rho));
@@ -240,7 +240,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho)
 	    UNPROTECT(1);
 	    for(k = 0; k < LENGTH(ans); k++) {
 		if (!R_FINITE(REAL(ans_del)[k]))
-		    error("Missing value or an Infinity produced when evaluating the model");
+		    error(_("Missing value or an infinity produced when evaluating the model"));
     		REAL(gradient)[start + k] = (REAL(ans_del)[k] -
 					     REAL(ans)[k])/delta;
 	    }

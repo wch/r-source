@@ -40,4 +40,3 @@ void swilk(int *init, float *x, int *n, int *n1, int *n2,
 	   float *a,  double *w, double *pw, int *ifault);
 
 #endif
-

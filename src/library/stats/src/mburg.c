@@ -194,7 +194,7 @@ static void burg0(int omax, Array resid_f, Array resid_b, Array *A, Array *B,
 	    array_op(E, tmp, '+', E);
 	    scalar_op(E, 2.0*(n - m - 1), '/', E);
         }
-        else error("Invalid vmethod");
+        else error(_("Invalid vmethod"));
 
         copy_array(E, subarray(V,m+1));
         copy_array(KA, subarray(P,m+1));
@@ -330,5 +330,5 @@ static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
     }
 
     if (iter == BURG_MAX_ITER)
-        error("Burg's algorithm failed to find partial correlation");
+        error(_("Burg's algorithm failed to find partial correlation"));
 }

@@ -11,6 +11,12 @@
 #endif
 
 #include "eda.h"
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 
 static double med3(double u, double v, double w)
 {
@@ -70,7 +76,7 @@ static Rboolean sm_3(double *x, double *y, int n, int end_rule)
 	   break;							\
 									\
 	   default:							\
-	   error("invalid end-rule for running median of 3: %d",	\
+	   error(_("invalid end-rule for running median of 3: %d"),	\
 		 end_rule);						\
     }
 
@@ -222,7 +228,7 @@ void Rsm_3RSR(double *x, double *y, int *n, int *end_rule, int *iter)
     double *z = (double *) R_alloc(*n, sizeof(double));
     double *w = (double *) R_alloc(*n, sizeof(double));
     if(!z || !w)
-	error("allocation error in smooth(*, '3RSR').");
+	error(_("allocation error in smooth(*, '3RSR')."));
 
     *iter = sm_3RSR(x, y, z, w, *n, abs(*end_rule),
 		    /* split_ends = */(*end_rule < 0)? TRUE : FALSE);
@@ -233,7 +239,7 @@ void Rsm_3RS3R(double *x, double *y, int *n, int *end_rule, int *changed)
 {
     double *z = (double *) R_alloc(*n, sizeof(double));
     if(!z)
-	error("allocation error in smooth(*, '3RSS').");
+	error(_("allocation error in smooth(*, '3RSS')."));
     *changed = sm_3RS3R(x, y, z, *n, abs(*end_rule),
 			/* split_ends = */(*end_rule < 0)? TRUE : FALSE);
     return;
@@ -243,7 +249,7 @@ void Rsm_3RSS(double *x, double *y, int *n, int *end_rule, int *changed)
 {
     double *z = (double *) R_alloc(*n, sizeof(double));
     if(!z)
-	error("allocation error in smooth(*, '3RSS').");
+	error(_("allocation error in smooth(*, '3RSS')."));
     *changed = sm_3RSS(x, y, z, *n, abs(*end_rule),
 		    /* split_ends = */(*end_rule < 0)? TRUE : FALSE);
     return;
@@ -253,7 +259,7 @@ void Rsm_3R(double *x, double *y, int *n, int *end_rule, int *iter)
 {
     double *z = (double *) R_alloc(*n, sizeof(double));
     if(!z)
-	error("allocation error in smooth(*, '3R').");
+	error(_("allocation error in smooth(*, '3R')."));
     *iter = sm_3R(x, y, z, *n, *end_rule);
     return;
 }
