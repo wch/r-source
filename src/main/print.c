@@ -79,11 +79,11 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     FILE *fp;
     SEXP file;
-    int do_append;
+    int append_;
 
     file = CAR(args);
-    do_append = asLogical(CADR(args));
-    if (do_append == NA_LOGICAL)
+    append_ = asLogical(CADR(args));
+    if (append_ == NA_LOGICAL)
         errorcall(call, "invalid append specification");
 
     if(isNull(file)) {
@@ -93,7 +93,7 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else {
 	if (!isString(file) || length(file) != 1)
 	    errorcall(call, "invalid file name");
-	if (do_append)
+	if (append_)
 	    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "a");
 	else
 	    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "w");
@@ -428,7 +428,7 @@ static void printList(SEXP s, SEXP env)
 	    else PrintValueRec(CAR(s),env);
 	    *ptag = '\0';
 	    s = CDR(s);
-	    i += 1;
+	    i++;
 	}
 	if (s != R_NilValue) {
 	    Rprintf("\n. \n\n");
@@ -565,12 +565,10 @@ static void printAttributes(SEXP s,SEXP env)
 {
     SEXP a;
     char *ptag;
-    int i;
 
     a = ATTRIB(s);
     if (a != R_NilValue) {
 	ptag = tagbuf + strlen(tagbuf);
-	i = 1;
 	while (a != R_NilValue) {
 	    if(isArray(s) || isList(s)) {
 		if(TAG(a) == R_DimSymbol ||
@@ -593,8 +591,6 @@ static void printAttributes(SEXP s,SEXP env)
 	    }
 	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SourceSymbol)
 		goto nextattr;
-	    if (i > 1)
-		Rprintf("\n");
 	    sprintf(ptag, "attr(,\"%s\")",
 		    EncodeString(CHAR(PRINTNAME(TAG(a))),0,0, Rprt_adj_left));
 	    Rprintf(tagbuf); Rprintf("\n");
@@ -604,7 +600,7 @@ static void printAttributes(SEXP s,SEXP env)
 	    a = CDR(a);
 	}
     }
-}
+}/* printAttributes */
 
 
 /* Print an S-expression using (possibly) local options */
