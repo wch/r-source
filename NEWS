@@ -93,15 +93,22 @@ BUG FIXES
 
     o	spec.ar() now handles order 1 correctly.
 
-    o   Add fuzz to prevent anomalies with hist()
+    o   Add fuzz to prevent anomalies with hist().
 
-    o   print.matrix checks length of rowlab, collab (PR#850)
+    o   print.matrix() checks length of rowlab, collab (PR#850)
 
-    o   add1.glm was using the wrong weights for binomial glms in
+    o   add1.glm() was using the wrong weights for binomial glms in
 	cbind(successes, failures) ~ lhs  form, since 1.2.0.
 
-    o   Eliminate packing of the structRstart structure, which was
-	probably non-ISO C and caused some compilers problems.
+    o   Eliminate packing of the `structRstart' structure, which was
+	probably non-ISO C and caused some compilers problems (PR#852).
+
+    o   all.vars() no longer returns empty `names' (PR#829).
+
+    o   dotplot() passes `cex' down to the mtext() calls used for the
+	labels (PR#816).
+
+    o   The pictex() driver was drawing polylines incorrectly (PR#845).
 
 
 

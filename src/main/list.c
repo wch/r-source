@@ -35,19 +35,6 @@
 /* Return a dotted pair with the given CAR and CDR. */
 /* The (R) TAG slot on the cell is set to NULL. */
 
-#if 0 /* moved to memory.h for efficiency */
-SEXP cons(SEXP car, SEXP cdr)
-{
-    SEXP e;
-    PROTECT(car);
-    PROTECT(cdr);
-    e = allocSExp(LISTSXP);
-    UNPROTECT(2);
-    SETCAR(e, car);
-    SETCDR(e, cdr);
-    return e;
-}
-#endif 
 
 /* Get the i-th element of a list */
 SEXP elt(SEXP list, int i)
@@ -182,17 +169,22 @@ static int	MaxCount;
 static void namewalk(SEXP s)
 {
     int i, j, n;
+    SEXP name;
+
     switch(TYPEOF(s)) {
     case SYMSXP:
+	name = PRINTNAME(s);
+	/* skip blank symbols */
+	if(strlen(CHAR(name)) == 0) goto ignore;
 	if(ItemCounts < MaxCount) {
 	    if(StoreValues) {
 		if(UniqueNames) {
-		    for(j=0 ; j<ItemCounts ; j++) {
-			if(STRING_ELT(ans, j) == PRINTNAME(s))
+		    for(j = 0 ; j < ItemCounts ; j++) {
+			if(STRING_ELT(ans, j) == name)
 			    goto ignore;
 		    }
 		}
-		SET_STRING_ELT(ans, ItemCounts, PRINTNAME(s));
+		SET_STRING_ELT(ans, ItemCounts, name);
 	    }
 	    ItemCounts += 1;
 	}
@@ -213,6 +205,8 @@ static void namewalk(SEXP s)
     }
 }
 
+/* Also does all.vars wiht functions=FALSE
+   .Internal(all.names(expr, functions, max.names, unique)) */
 SEXP do_allnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP expr;
@@ -251,7 +245,7 @@ SEXP do_allnames(SEXP call, SEXP op, SEXP args, SEXP env)
     if(ItemCounts != savecount) {
 	PROTECT(expr = ans);
 	ans = allocVector(STRSXP, ItemCounts);
-	for(i=0 ; i<ItemCounts ; i++)
+	for(i = 0 ; i < ItemCounts ; i++)
 	    SET_STRING_ELT(ans, i, STRING_ELT(expr, i));
 	UNPROTECT(1);
     }
