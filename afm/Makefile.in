@@ -19,8 +19,20 @@ INSTFILES = \
 	ncb_____.afm ncbi____.afm nci_____.afm ncr_____.afm pob_____.afm \
 	pobi____.afm poi_____.afm por_____.afm tib_____.afm tibi____.afm \
 	tii_____.afm tir_____.afm sy______.afm \
+	a010013l.afm a010015l.afm a010033l.afm a010035l.afm \
+	b018012l.afm b018015l.afm b018032l.afm b018035l.afm \
+	n022003l.afm n022004l.afm n022023l.afm n022024l.afm \
+	n019003l.afm n019004l.afm n019023l.afm n019024l.afm \
+	n019043l.afm n019044l.afm n019063l.afm n019064l.afm \
+	c059013l.afm c059016l.afm c059033l.afm c059036l.afm \
+	p052003l.afm p052004l.afm p052023l.afm p052024l.afm \
+	n021003l.afm n021004l.afm n021023l.afm n021024l.afm \
+	s050000l.afm \
+	CM_regular_10.afm CM_boldx_10.afm CM_italic_10.afm \
+	CM_boldx_italic_10.afm CM_symbol_10.afm \
 	AdobeStd.enc AdobeSym.enc ISOLatin1.enc ISOLatin2.enc ISOLatin9.enc \
 	MacRoman.enc PDFDoc.enc WinAnsi.enc
+
 DISTFILES = Makefile.in $(INSTFILES) README
 
 all: Makefile R

@@ -74,7 +74,7 @@ Family[] = {
     },
 
     { "Helvetica",
-      {"hv______.afm", "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", 
+      {"hv______.afm", "hvb_____.afm", "hvo_____.afm", "hvbo____.afm",
        "sy______.afm"}
     },
 
@@ -84,7 +84,7 @@ Family[] = {
     },
 
     { "NewCenturySchoolbook",
-      {"ncr_____.afm", "ncb_____.afm", "nci_____.afm", "ncbi____.afm", 
+      {"ncr_____.afm", "ncb_____.afm", "nci_____.afm", "ncbi____.afm",
        "sy______.afm"}
     },
 
@@ -94,8 +94,65 @@ Family[] = {
     },
 
     { "Times",
-      {"tir_____.afm", "tib_____.afm", "tii_____.afm", "tibi____.afm", 
+      {"tir_____.afm", "tib_____.afm", "tii_____.afm", "tibi____.afm",
        "sy______.afm"}
+    },
+
+    /* URW equivalents */
+    { "URWGothic",
+      {"a010013l.afm", "a010015l.afm", "a010033l.afm", "a010035l.afm",
+       "s050000l.afm"}
+    },
+
+    { "URWBookman",
+      {"b018012l.afm", "b018015l.afm", "b018032l.afm", "b018035l.afm",
+       "s050000l.afm"}
+    },
+
+    { "NimbusMon",
+      {"n022003l.afm", "n022004l.afm", "n022023l.afm", "n022024l.afm",
+       "s050000l.afm"}
+    },
+
+    { "NimbusSan",
+      {"n019003l.afm", "n019004l.afm", "n019023l.afm", "n019024l.afm",
+       "s050000l.afm"}
+    },
+
+    { "URWHelvetica",
+      {"n019003l.afm", "n019004l.afm", "n019023l.afm", "n019024l.afm",
+       "s050000l.afm"}
+    },
+
+    { "NimbusSanCond",
+      {"n019043l.afm", "n019044l.afm", "n019063l.afm", "n019064l.afm",
+       "s050000l.afm"}
+    },
+
+    { "CenturySch",
+      {"c059013l.afm", "c059016l.afm", "c059033l.afm", "c059036l.afm",
+       "s050000l.afm"}
+    },
+
+    { "URWPalladio",
+      {"p052003l.afm", "p052004l.afm", "p052023l.afm", "p052024l.afm",
+       "s050000l.afm"}
+    },
+
+    { "NimbusRom",
+      {"n021003l.afm", "n021004l.afm", "n021023l.afm", "n021024l.afm",
+       "s050000l.afm"}
+    },
+
+   { "URWTimes",
+      {"n021003l.afm", "n021004l.afm", "n021023l.afm", "n021024l.afm",
+       "s050000l.afm"}
+    },
+
+    /* Computer Modern as recoded by Brian D'Urso */
+    { "ComputerModern",
+      {"CM_regular_10.afm", "CM_boldx_10.afm", "CM_italic_10.afm",
+       "CM_boldx_italic_10.afm", "CM_symbol_10.afm"}
     },
 
     { NULL }
@@ -292,7 +349,7 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics, int reencode)
 	nchar = nchar2 = -1;
 	for (i = 0; i < 256; i++)
 	    if(!strcmp(charname, encnames[i])) {
-		strcpy(charnames[i], charname); 
+		strcpy(charnames[i], charname);
 		if(nchar == -1) nchar = i; else nchar2 = i;
 	    }
 	if (nchar == -1) return 1;
@@ -375,11 +432,11 @@ static int GetNextItem(FILE *fp, char *dest, int c)
 	if (feof(fp)) { p = NULL; return 1; }
 	if (!p || *p == '\n' || *p == '\0') {
 #ifdef __MRC__
-	p = R_fgets(buf, 1000, fp);	 
+	p = R_fgets(buf, 1000, fp);
 #else
 	    p = fgets(buf, 1000, fp);
 #endif
-	    
+
 	}
 	while (isspace((int)*p)) p++;
 	if (p == '\0' || *p == '%'|| *p == '\n') { p = NULL; continue; }
@@ -412,7 +469,7 @@ LoadEncoding(char *encpath, char *encname, Rboolean isPDF)
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
     }
     if (GetNextItem(fp, buf, -1)) return 0; /* encoding name */
-    strcpy(encname, buf+1); 
+    strcpy(encname, buf+1);
     if (!isPDF) sprintf(enccode, "/%s [\n", encname);
     else enccode[0] = '\0';
     if (GetNextItem(fp, buf, 0)) { fclose(fp); return 0;} /* [ */
@@ -456,7 +513,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 	for(j = 0; j < 4; j++) metrics->CharInfo[ii].BBox[j] = 0;
     }
 #ifdef __MRC__
-    while (R_fgets(buf, BUFSIZE, fp)) { 
+    while (R_fgets(buf, BUFSIZE, fp)) {
 #else
     while (fgets(buf, BUFSIZE, fp)) {
 #endif
@@ -573,7 +630,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 		     double *width, FontMetricInfo *metrics)
 {
     short wx;
-    
+
     if (c == 0) {
 	*ascent = 0.001 * metrics->FontBBox[3];
 	*descent = -0.001 * metrics->FontBBox[1];
@@ -602,10 +659,20 @@ static void PSEncodeFont(FILE *fp, char *encname)
     SEXP fontreencoding;
 
     /* include encoding unless it is ISOLatin1Encoding, which is predefined */
-    if (strcmp(encname, "ISOLatin1Encoding")) 
+    if (strcmp(encname, "ISOLatin1Encoding"))
 	fprintf(fp, "%% begin encoding\n%s def\n%% end encoding\n", enccode);
+
+    /* allow user to specify ps fragment for encoding */
     fontreencoding = findVar(install(".ps.fontreencoding"), R_GlobalEnv);
     if(fontreencoding != R_UnboundValue) {
+	if(!isString(fontreencoding))
+	    error("Object `.ps.fontreencoding' is not a character vector");
+	for (i = 0; i < length(fontreencoding); i++)
+	    fprintf(fp, "%s\n", CHAR(STRING_ELT(fontreencoding, i)));
+    } else if(strcmp(familyname[4], "CMSY10") == 0) {
+	/* use different ps fragment for CM fonts */
+	fontreencoding = findVar(install(".ps.cm.fontreencoding"),
+				 R_GlobalEnv);
 	if(!isString(fontreencoding))
 	    error("Object `.ps.fontreencoding' is not a character vector");
 	for (i = 0; i < length(fontreencoding); i++)
@@ -633,8 +700,8 @@ static void PSEncodeFont(FILE *fp, char *encname)
 /* of the (unrotated) printer page in points whereas the graphics */
 /* region box is for the rotated page. */
 
-static void PSFileHeader(FILE *fp, char* encname, 
-			 char *papername, double paperwidth, 
+static void PSFileHeader(FILE *fp, char* encname,
+			 char *papername, double paperwidth,
 			 double paperheight, Rboolean landscape,
 			 int EPSFheader,
 			 double left, double bottom, double right, double top)
@@ -655,7 +722,15 @@ static void PSFileHeader(FILE *fp, char* encname,
 	    error("Object .ps.resourcecomments is not a character vector");
 	for (i = 0; i < length(resourcecomments); i++)
 	    fprintf(fp, "%s\n", CHAR(STRING_ELT(resourcecomments, i)));
+    } else if(strcmp(familyname[4], "CMSY10") == 0) {
+	resourcecomments = findVar(install(".ps.cm.resourcecomments"),
+				   R_GlobalEnv);
+	if(!isString(resourcecomments))
+	    error("Object .ps.cm.resourcecomments is not a character vector");
+	for (i = 0; i < length(resourcecomments); i++)
+	    fprintf(fp, "%s\n", CHAR(STRING_ELT(resourcecomments, i)));
     }
+
     if(!EPSFheader)
 	fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 () ()\n",
 		papername, paperwidth, paperheight);
@@ -906,7 +981,7 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 	       char *bg, char *fg,
 	       double width, double height,
 	       Rboolean horizontal, double ps,
-	       Rboolean onefile, Rboolean pagecentre, 
+	       Rboolean onefile, Rboolean pagecentre,
 	       Rboolean printit, char*cmd)
 {
     /* If we need to bail out with some sort of "error"
@@ -1355,7 +1430,7 @@ static double PS_StrWidth(char *str, DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     int face = dd->gp.font;
-    
+
     if(face < 1 || face > 5) face = 1;
     return floor(dd->gp.cex * dd->gp.ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
@@ -2275,7 +2350,7 @@ typedef struct {
 
     int fontfamily;	/* font family */
     char encpath[PATH_MAX]; /* font encoding */
-    char encname[100]; 
+    char encname[100];
     char **afmpaths;	/* for user-specified family */
     int maxpointsize;
 
@@ -2329,7 +2404,7 @@ static void   PDF_MetricInfo(int, double*, double*, double*, DevDesc*);
 static void   PDF_Text(double, double, int, char*, double, double, DevDesc*);
 
 Rboolean
-PDFDeviceDriver(DevDesc* dd, char *file, char *family, char *encoding, 
+PDFDeviceDriver(DevDesc* dd, char *file, char *family, char *encoding,
 		char *bg, char *fg, double width, double height, double ps,
 		int onefile)
 {
@@ -2416,7 +2491,7 @@ PDFDeviceDriver(DevDesc* dd, char *file, char *family, char *encoding,
     dd->dp.canRotateText = 1;
     dd->dp.canResizeText = 1;
     dd->dp.canClip = 0;
-    dd->dp.canHAdj = 0; 
+    dd->dp.canHAdj = 0;
 
     /*	Start the driver */
 
@@ -2539,7 +2614,7 @@ static void PDF_EncodeFont(PDFDesc *pd, int nobj)
     char *encname = pd->encname;
 
     fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /Encoding\n", nobj);
-    if (strcmp(encname, "WinAnsiEncoding") == 0 || 
+    if (strcmp(encname, "WinAnsiEncoding") == 0 ||
 	strcmp(encname, "MacRomanEncoding") == 0 ||
 	strcmp(encname, "PDFDocEncoding") == 0) {
 	fprintf(pd->pdffp, "/BaseEncoding /%s\n", encname);
@@ -2571,9 +2646,9 @@ static void PDF_startfile(PDFDesc *pd)
 
     ct = time(NULL);
     ltm = localtime(&ct);
-    fprintf(pd->pdffp, 
+    fprintf(pd->pdffp,
 	    "1 0 obj\n<<\n/CreationDate (D:%04d%02d%02d%02d%02d%02d)\n",
-	    1900 + ltm->tm_year, ltm->tm_mon+1, ltm->tm_mday, 
+	    1900 + ltm->tm_year, ltm->tm_mon+1, ltm->tm_mday,
 	    ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
     fprintf(pd->pdffp, "/Producer (R Graphics)\n>>\nendobj\n");
 
@@ -2588,7 +2663,7 @@ static void PDF_startfile(PDFDesc *pd)
 
     ++pd->nobjs;
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, 
+    fprintf(pd->pdffp,
 	    "4 0 obj\n<<\n/ProcSet [/PDF /Text]\n/Font << %s %s %s %s %s %s >>\n>>\nendobj\n",
 	    "/F1 6 0 R","/F2 7 0 R","/F3 8 0 R","/F4 9 0 R","/F5 10 0 R",
 	    "/F6 11 0 R");
@@ -2604,7 +2679,7 @@ static void PDF_startfile(PDFDesc *pd)
 
     for (i = 0; i < 4; i++) {
 	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-	fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F%d\n/BaseFont /%s\n/Encoding 5 0 R\n>>\nendobj\n", 
+	fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /Font\n/Subtype /Type1\n/Name /F%d\n/BaseFont /%s\n/Encoding 5 0 R\n>>\nendobj\n",
 		i+6, i+1, familyname[i]);
     }
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
@@ -2622,10 +2697,10 @@ static void PDF_endfile(PDFDesc *pd)
     fprintf(pd->pdffp, "3 0 obj\n<<\n/Type /Pages\n/Kids [\n");
     for(i = 0; i < pd->pageno; i++)
 	fprintf(pd->pdffp, "%d 0 R\n", pd->pageobj[i]);
-    
-    fprintf(pd->pdffp, 
-	    "]\n/Count %d\n/MediaBox [0 0 %d %d]\n>>\nendobj\n", 
-	    pd->pageno, 
+
+    fprintf(pd->pdffp,
+	    "]\n/Count %d\n/MediaBox [0 0 %d %d]\n>>\nendobj\n",
+	    pd->pageno,
 	    (int) (0.5 + 72*pd->width), (int) (0.5 + 72*pd->height));
 
     /* write out xref table */
@@ -2637,8 +2712,8 @@ static void PDF_endfile(PDFDesc *pd)
     for(i = 1; i <= pd->nobjs; i++) {
 	fprintf(pd->pdffp, "%010d 00000 n \n", pd->pos[i]);
     }
-    fprintf(pd->pdffp, 
-	    "trailer\n<<\n/Size %d\n/Info 1 0 R\n/Root 2 0 R\n>>\nstartxref\n%d\n", 
+    fprintf(pd->pdffp,
+	    "trailer\n<<\n/Size %d\n/Info 1 0 R\n/Root 2 0 R\n>>\nstartxref\n%d\n",
 	    pd->nobjs+1, startxref);
     fprintf(pd->pdffp, "%%%%EOF\n");
 
@@ -2687,8 +2762,8 @@ static void PDF_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
 /*    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
-    fprintf(pd->pdffp, "Q q %.2f %.2f %.2f %.2f re W\n", 
-	    x0, y0, x1 - x0, y1 - y0);    
+    fprintf(pd->pdffp, "Q q %.2f %.2f %.2f %.2f re W\n",
+	    x0, y0, x1 - x0, y1 - y0);
     PDF_Invalidate(dd); */
 }
 
@@ -2705,7 +2780,7 @@ static void PDF_endpage(PDFDesc *pd)
     fprintf(pd->pdffp, "endstream\nendobj\n");
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "%d 0 obj\n%d\nendobj\n", pd->nobjs,
-	    here - pd->startstream);   
+	    here - pd->startstream);
 }
 
 static void PDF_NewPage(DevDesc *dd)
@@ -2727,13 +2802,13 @@ static void PDF_NewPage(DevDesc *dd)
 	    PDF_startfile(pd);
 	}
     }
-    
+
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
     pd->pageobj[pd->pageno++] = pd->nobjs;
-    fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /Page\n/Parent 3 0 R\n/Contents %d 0 R\n/Resources 4 0 R\n>>\nendobj\n", 
+    fprintf(pd->pdffp, "%d 0 obj\n<<\n/Type /Page\n/Parent 3 0 R\n/Contents %d 0 R\n/Resources 4 0 R\n>>\nendobj\n",
 	    pd->nobjs, pd->nobjs+1);
     pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "%d 0 obj\n<<\n/Length %d 0 R\n>>\nstream\r\n", 
+    fprintf(pd->pdffp, "%d 0 obj\n<<\n/Length %d 0 R\n>>\nstream\r\n",
 	    pd->nobjs, pd->nobjs + 1);
     pd->startstream = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
@@ -2750,10 +2825,10 @@ static void PDF_NewPage(DevDesc *dd)
 static void PDF_Close(DevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    
+
     if(pd->pageno > 0) PDF_endpage(pd);
     PDF_endfile(pd);
-    free(pd); 
+    free(pd);
 }
 
 static void PDF_Activate(DevDesc *dd) {}
@@ -2809,13 +2884,13 @@ static void PDF_Circle(double x, double y, int coords, double r,
 	    double s = 0.55 * r;
 	    if(pd->inText) textoff(pd);
 	    fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
-	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", 
+	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
 		   x - r, y + s, x - s, y + r, x, y + r);
-	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", 
+	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
 		   x + s, y + r, x + r, y + s, x + r, y);
-	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", 
+	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
 		   x + r, y - s, x + s, y - r, x, y - r);
-	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n", 
+	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
 		   x - s, y - r, x - r, y - s, x - r, y);
 	    switch(code){
 	    case 1: fprintf(pd->pdffp, "S\n"); break;
@@ -2833,10 +2908,10 @@ static void PDF_Circle(double x, double y, int coords, double r,
 	    yy = y - 0.347*a;
 	    tr = (R_ALPHA(bg) == 0) + 2 * (R_ALPHA(fg) == 0) - 1;
 	    if(!pd->inText) texton(pd);
-	    fprintf(pd->pdffp, 
-		    "/F6 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm", 
+	    fprintf(pd->pdffp,
+		    "/F6 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
 		    tr, a, a, xx, yy);
-	    fprintf(pd->pdffp, " (l) Tj 0 Tr\n");	    
+	    fprintf(pd->pdffp, " (l) Tj 0 Tr\n");
 	}
     }
 }
@@ -2933,7 +3008,7 @@ static void PDF_Text(double x, double y, int coords,
     if(!pd->inText) texton(pd);
     if(R_ALPHA(dd->gp.col) == 0) {
 	PDF_SetFill(dd->gp.col, dd);
-	fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ", 
+	fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 		face, a, b, -b, a, x, y);
 	PostScriptWriteString(pd->pdffp, str);
 	fprintf(pd->pdffp, " Tj\n");

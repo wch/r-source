@@ -4,7 +4,9 @@
 \alias{.PostScript.Options}
 \alias{.ps.prolog}
 \alias{.ps.resourcecomments}
+\alias{.ps.cm.resourcecomments}
 \alias{.ps.fontreencoding}
+\alias{.ps.cm.fontreencoding}
 \title{PostScript Graphics}
 \description{
   \code{postscript} starts the graphics device driver for producing
@@ -62,11 +64,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
     inches.  The default is to use the entire page less a 0.25 inch
     border on each side.}
   \item{family}{the font family to be used.  EITHER a single character
-    string which must be one of \code{"AvantGarde"},
-    \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
-    \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-    \code{"Palatino"} or \code{"Times"}, OR a character vector of length
-    four.}
+    string OR a character vector of length
+    four or five.  See the section `Families'.}
   \item{encoding}{the name of an encoding file. Defaults to
 #ifdef unix
 "ISOLatin1.enc"
@@ -136,27 +135,12 @@ ps.options(paper, horizontal, width, height, family, encoding,
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
   changed by changing that vector.  (This is only advisable for
-  PostScript experts.)  The fontencoding can be changed by setting
+  PostScript experts.)  The font encoding can be changed by setting
   \code{.ps.fontreencoding} to a character vector, and
-  \code{.ps.resourcecomments} can be used to add to the
-  resource comments in the postscript file
-
-  If the second form of argument \code{"family"} is used, it should be a
-  set of four paths to Adobe Font Metric files for the regular, bold,
-  italic, bold italic and (optionally) symbol fonts to be used.  If
-  these paths do not
-  contain the file separator, they are taken to refer to files in the
-  \R directory \file{R\_HOME/afm}.  Thus the default Helvetica family
-  can be specified by \code{family = c("hv______.afm",
-    "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", "sy______.afm")}.
-
-  It is the user's responsibility to check that suitable fonts are made
-  available, and that they contain the needed characters when
-  re-encoded.  The fontnames used are taken from the
-  \code{FontName} fields of the \code{afm} files.  The software
-  including the PostScript plot file should either embed the font
-  outlines (usually from \code{.pfb} or \code{.pfa} files) or
-  use DSC comments to instruct the print spooler to do so.
+  \code{.ps.resourcecomments} can be used to add to the automaticaly
+  generated resource comments in the PostScript file.
+  (\code{.ps.cm.fontreencoding} and \code{.ps.cm.resourcecomments}
+  provide examples.)
 
   As ISOLatin1 encoding is used, \code{-} is set as a minus and not
   as a hyphen.  Supply a hyphen (character 173) if that is what you
@@ -166,6 +150,49 @@ ps.options(paper, horizontal, width, height, family, encoding,
   and the default values it sets can be overridden by supplying
   arguments to \code{postscript}.
 }
+
+\section{Families}{
+  The argument \code{family} specifies the font family to be used.
+  In normal use it is one of \code{"AvantGarde"},
+  \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
+  \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
+  \code{"Palatino"} or \code{"Times"}, and refers to the standard
+  Adobe PostScript fonts of those names which are included (or cloned)
+  in all PostScript devices.
+
+  Many PostScript emulators, (including those based on
+  \code{ghostscript}) use the URW equivalents of these fonts, which are
+  \code{"URWGothic"}, \code{"URWBookman"}, \code{"NimbusMon"},
+  \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
+  \code{"URWPalladio"} and \code{"NimbusRom"} respectively.  If your
+  PostScript device is using URW fonts, you will obtain access to more
+  characters and more approriate metrics by using these names.  To make
+  these easier to remember, \code{"URWHelvetica" == "NimbusSan"} and
+  \code{"URWTimes" == "NimbusRom"} are also supported.
+
+  It is also possible to specify \code{family="ComputerModern"}. This
+  is intended to use with the Tyoe 1 versions of the TeX CM fonts.  It
+  will normally be possible to include such output in TeX or LaTeX
+  provided it is processed with \code{dvips -Ppfb -j0} or the equivalent
+  on your system.
+  
+  If the second form of argument \code{"family"} is used, it should be a
+  character vector of four or five paths to Adobe Font Metric files for
+  the regular, bold, italic, bold italic and (optionally) symbol fonts to
+  be used.  If these paths do not contain the file separator, they are
+  taken to refer to files in the \R directory \file{R\_HOME/afm}.  Thus the
+  default Helvetica family can be specified by \code{family =
+    c("hv______.afm",
+    "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", "sy______.afm")}.
+  It is the user's responsibility to check that suitable fonts are made
+  available, and that they contain the needed characters when
+  re-encoded.  The fontnames used are taken from the
+  \code{FontName} fields of the \code{afm} files.  The software
+  including the PostScript plot file should either embed the font
+  outlines (usually from \code{.pfb} or \code{.pfa} files) or
+  use DSC comments to instruct the print spooler to do so.
+}
+
 \section{Encodings}{
   Encodings describe which glyphs are used to display the character codes
   (in the range 0--255).  By default \R uses ISOLatin1 encoding, and
@@ -196,9 +223,13 @@ ps.options(paper, horizontal, width, height, family, encoding,
   0255) in ISOLatin1.
 }
 \seealso{
-    \code{\link{Devices}},
-    {\code{\link{check.options}} which is called from both
-        \code{ps.options} and \code{postscript}}.
+  \code{\link{Devices}},
+  {\code{\link{check.options}} which is called from both
+    \code{ps.options} and \code{postscript}}.
+}
+\author{
+  Support for Computer Modern fonts is based on a contribution by
+  Brian D'Urso \email{durso@hussle.harvard.edu}.
 }
 \examples{
 \dontrun{
@@ -217,7 +248,14 @@ postscript(file=tempfile("R.ps"), print.it=TRUE)
 # produce the desired graph(s)
 dev.off()              # send plot file to the printer
 #endif
-}
+
+# for URW PostScript devices
+postscript("foo.ps", family = "NimbusSan")
+
+# for inclusion in Computer Modern TeX documents, perhaps
+postscript("cm_test.eps", width = 4.0, height = 3.0,
+           horizontal = FALSE, onefile = FALSE, paper = "special",
+           family = "ComputerModern")
 \testonly{
 xx <- seq(0, 7, length=701)
 yy <- sin(xx)/xx; yy[1] <- 1

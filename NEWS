@@ -328,11 +328,17 @@ NEW FEATURES
 	support has been added for using Computer Modern type-1 fonts
 	(including for symbols). (Contributed by Brian D'Urso.)
 
+    o	There is now support for URW font families in the postscript()
+	device: this will give access to more characters and more
+	appropriate metrics on PostScript devices using URW fonts (such
+	as ghostscript).
+
     o	stars() has been enhanced; new `mar' argument uses smaller mar(gins)
 	by default; further `nrow and `ncol' as S-PLUS, `frame.plot',
 	`flip.labels', `lty' and explicit `main', `sub', `xlab' and `ylab'.
 	Note that `colors' has been replaced by `col.segments' and there's
 	a new `col.stars'.
+
 	stars() now returns the locations invisibly.
 
 

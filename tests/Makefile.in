@@ -42,6 +42,7 @@ test-src-internet = internet.R
 test-src-lapack = lapack.R
 test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
+test-src-postscript = ps-tests.R
 
 test-src-reg-1 = \
 	reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
@@ -49,7 +50,7 @@ test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
 all-basic-tests = Examples Specific
-all-extra-tests = Internet Lapack Nafns Random Reg \
+all-extra-tests = Internet Lapack Nafns Postscript Random Reg \
   DocArgs FF Methods codoc undoc
 
 DISTFILES = Makefile.in Makefile.win README \
@@ -59,6 +60,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-internet) internet.Rout.save \
 	$(test-src-lapack) \
 	$(test-src-nafns) \
+	$(test-src-postscript) \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.Rout.save reg-tests-2.Rout.save \
@@ -76,12 +78,13 @@ test-out-gct = $(test-src-gct:.R=.Rout-gct)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-lapack = $(test-src-lapack:.R=.Rout)
 test-out-nafns = $(test-src-nafns:.R=.Rout)
+test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 
 test-out = $(test-src:.R=.Rout) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
-	$(test-out-random) $(test-out-reg)
+	$(test-out-random) $(test-out-postscript) $(test-out-reg)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct
@@ -168,6 +171,9 @@ test-Lapack:
 test-Nafns:
 	@echo "running tests of NA handling functions"
 	@$(MAKE) $(test-out-nafns) RVAL_IF_DIFF=0
+test-Postscript:
+	@echo "running tests of postscript() families"
+	@$(MAKE) $(test-out-postscript) RVAL_IF_DIFF=0
 test-Random:
 	@echo "running tests of random deviate generation"
 	@$(MAKE) $(test-out-random) RVAL_IF_DIFF=1
