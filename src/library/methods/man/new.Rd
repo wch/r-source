@@ -1,6 +1,5 @@
 \name{new}
 \alias{new}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Generate an Object from a Class }
 \description{
   Given the the name or the definition of a class, plus optionally
@@ -9,7 +8,6 @@
 \usage{
 new(Class, ..., .Force=FALSE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{Class}{ Either the name of a class (the usual case) or the
     object describing the class (e.g., the value returned by \code{getClass}). }

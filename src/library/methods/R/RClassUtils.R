@@ -141,15 +141,28 @@ completeClassDefinition <-
             ## check for conflicting slot names
             if(any(duplicated(names(properties)))) {
                 duped <- duplicated(names(properties))
-                dupNames <- names(properties)[duped]
-                dupClasses <- logical(length(superProps))
-                for(i in seq(along = superProps)) {
-                    dupClasses[i] <- !all(is.na(match(dupNames, names(superProps[[i]]))))
+                dupNames <- unique(names(properties)[duped])
+                if(!is.na(match(".Data", dupNames))) {
+                    dataParts <- seq(along=properties)[names(properties) == ".Data"]
+                    dupNames <- dupNames[dupNames != ".Data"]
+                    ## inherited data part classes are OK but should be consistent
+                    dataPartClasses <- unique(as.character(properties[dataParts]))
+                    if(length(dataPartClasses)>1)
+                        warning("Inconsistent data part classes inherited (",
+                                paste(dataPartClasses, collapse = ", "),
+                                "): coercion to some may fail")
+                    ## remove all but the first .Data
+                    properties <- properties[-dataParts[-1]]
                 }
-                stop(paste("Duplicate slot names: slots ",
-                        paste(dupNames, collapse =", "), "; see classes ",
-                        paste(c(Class, ext)[dupClasses], collapse = ", "), sep=""))
-                properties <- properties[!duped]
+                if(length(dupNames)>0) {
+                    dupClasses <- logical(length(superProps))
+                    for(i in seq(along = superProps)) {
+                        dupClasses[i] <- !all(is.na(match(dupNames, names(superProps[[i]]))))
+                    }
+                    stop(paste("Duplicate slot names: slots ",
+                               paste(dupNames, collapse =", "), "; see classes ",
+                               paste(c(Class, ext)[dupClasses], collapse = ", "), sep=""))
+                }
             }
         }
         prototype <- makePrototypeFromClassDef(properties, getPrototype(ClassDef), immediate)
@@ -201,7 +214,7 @@ completeSubClass <- function(fromClass, subClass, extendsHow = NULL, byClass = N
         completeSubClass(fromClass, what, byClass = subClass)
     return(TRUE)
 }
-
+    
 
 getFromClassDef <-
   ## Extracts one of the intrinsically defined class definition properties
@@ -259,14 +272,14 @@ getValidity <-
   ## the name of the class)
   function(ClassDef)
     getFromClassDef(ClassDef, ".Validity")
-
+ 
 
 getAccess <-
    ## extract the class's Access method (or NULL) from the class representation (only, not from
   ## the name of the class)
   function(ClassDef)
     getFromClassDef(ClassDef, ".Access")
-
+ 
 
 getAllSuperClasses <-
   ## Get the names of all the classes that this class definition extends.
@@ -437,8 +450,8 @@ newBasic <-
                "complex" =,
                "integer" =,
                "double" =,
-                "expression" =,
                "list" =  as.vector(c(...), Class),
+               "expression" = eval(substitute(expression(...))),
                "single" =, as.single(c(...)),
               "environment" = new.env(),
                "function" = eval(quote(function()NULL), .GlobalEnv),
@@ -532,20 +545,26 @@ reconcilePropertiesAndPrototype <-
       dataPartClass <- elNamed(properties, ".Data")
       if((!is.null(dataPartClass) || length(superClasses) > 0)
          && is.na(match("VIRTUAL", superClasses))) {
-          ## Look for a data part in the super classes
-          for(cl in superClasses)
-              if(extends(cl, "vector") || !is.na(match(cl, .BasicClasses))) {
+          ## Look for a data part in the super classes, either an inherited
+          ## .Data slot, or a basic class.  Uses the first possibility, warns of conflicts
+          for(cl in superClasses) {
+              thisDataPart <-  elNamed(getSlots(cl), ".Data")
+              if(is.null(thisDataPart) &&
+                 (extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
+                  thisDataPart <- cl
+              if(!is.null(thisDataPart)) {
                   if(is.null(dataPartClass)) {
-                      if(!is.na(match(cl, c("NULL", "environment"))))
-                          warning("Class \"", cl, "\" cannot be used as the data part of another class")
+                      if(!is.na(match(thisDataPart, c("NULL", "environment"))))
+                          warning("Class \"", thisDataPart, "\" cannot be used as the data part of another class")
                       else
-                          dataPartClass <- cl
+                          dataPartClass <- thisDataPart
                   }
-                  else if(!identical(dataPartClass, cl))
+                  else if(!identical(dataPartClass, thisDataPart))
                       warning("More than one possible class for the data part:  using \"",
                               dataPartClass, "\" rather than \"",
-                              cl, "\"")
+                              thisDataPart, "\"")
               }
+          }
           if(length(dataPartClass) > 0) {
               if(is.na(match(".Data", slots))) {
                   properties <- c(list(".Data"= dataPartClass), properties)
@@ -920,21 +939,16 @@ extendsReplace <-
             else {
                 dataPart <- match(".Data", objectSlots)
                 body(f) <- quote({from})
+                copySlots <- replaceSlots[!is.na(match(replaceSlots, objectSlots))]
                 if(!is.na(dataPart) && extends(Class, objectSlotClasses[dataPart])) {
-                    fromClasses <- objectSlots[is.na(match(objectSlots, replaceSlots))]
-
-                    body(f) <- substitute({ value <- as(value, CLASS);
-                                            for(what in FROM)
-                                                slot(value, what, FALSE) <- slot(from, what)
-                                            class(value) <- OBJECTCLASS
-                                            value
-                                        },
-                                          list(CLASS = objectSlotClasses[dataPart],
-                                               FROM = fromClasses, OBJECTCLASS = from),
-                                          )
+                    body(f) <- substitute({
+                        from@.Data <- value
+                        for(what in TOSLOTS)
+                            slot(from, what) <- slot(value, what)
+                        from
+                    }, list(TOSLOTS = copySlots))
                 }
                 else {
-                    copySlots <- replaceSlots[!is.na(match(replaceSlots, objectSlots))]
                     body(f) <- substitute({
                         for(what in TOSLOTS)
                             slot(from, what) <- slot(value, what)
@@ -985,15 +999,21 @@ completeExtends <-
   ## replaced, either by replacing a conditional relation with an unconditional
   ## one, or by adding indirect relations.
   ##
-  ## The resulting extends list is presented in depth-first order; that is, the
-  ## first immediate superclass followed by all the indirect relations through it,
-  ## then the next immediate superclass, etc.  Depth first order is required for
-  ## consistent elaboration of inherited methods during dispatch, because the
-  ## method dispatcher stores the inherited method under the immediate class name.
-  ## Under rather obscure situations of multiple inheritance, the result could be
-  ## ambiguous (depending on the order in which signatures are seen by the dispatcher
-  ## for a particular generic function), unless searching is done depth first.
-  function(ClassDef, soFar = getClassName(ClassDef))
+  ## The elaboration of indirect extensions can be either breadth-first or depth-first
+    ## (mostly to allow us to experiment).  Earlier implementations of the methods package
+    ## pushed depth-first because of possible ambiguities, but since inherited methods
+    ## do not now influence further search for inherited methods, we use breadth-first by
+    ## default, since it produces a more intuitive inheritance (e.g., all candidates among
+    ## direct superclasses precede indirect).
+    function(ClassDef, breadthFirst = TRUE) {
+        if(breadthFirst)
+            completeExtBreadth(ClassDef)$exts
+        else
+            completeExtDepth(ClassDef)
+    }
+
+
+completeExtDepth <-  function(ClassDef, soFar = getClassName(ClassDef))
 {
     ext <- getExtends(ClassDef)
     what <- names(ext)
@@ -1010,7 +1030,7 @@ completeExtends <-
         valueEl <- ext[i]               ## note: an extra level of list, to be unlisted later
         if(isClass(by))
         {
-            more <- completeExtends(getClass(by), c(soFar, what))
+            more <- completeExtDepth(getClass(by), c(soFar, what))
             whatMore <- names(more)
             for(j in seq(along=more)) {
                 cl <- el(whatMore, j)
@@ -1046,6 +1066,55 @@ completeExtends <-
         el(value, i) <- valueEl
     }
     unlist(value, recursive=FALSE)
+}
+
+completeExtBreadth <-  function(ClassDef, soFar = getClassName(ClassDef), level = 1)
+{
+    ext <- getExtends(ClassDef)
+    what <- names(ext)
+    if(!all(is.na(match(what, soFar)))) {
+        ## watch for loops (reflexive is relations, e.g.)
+        ok <- is.na(match(what, soFar))
+        ext <- ext[ok]
+        what <- what[ok]
+    }
+    value <- list(exts = ext, what = what, level = rep(level, length(ext)))
+    soFar <- c(soFar, what)
+    for(i in seq(along=ext)) {
+        by <- el(what, i)
+        if(isClass(by))
+        {
+            valuei <- completeExtBreadth(getClass(by), soFar, level+1)
+            exti <-  valuei$exts
+            ## mark them all as extensions by this direct extension
+            exti[] <- list(list(by = by))
+            value$exts <- c(value$exts, exti)
+            value$what <- c(value$what, valuei$what)
+            value$level <- c(value$level, valuei$level)
+        }
+    }
+    ## look for duplicate entries, resolve by level
+    allWhat <- unique(value$what)
+    if(length(allWhat) < length(value$what)) {
+        what <- value$what
+        levels <- value$level
+        dups <- unique(what[duplicated(what)])
+        n <- length(what)
+        keep <- rep(TRUE, n)
+        ## select one of the duplicates with the minimal inheritance
+        ## level, for each duplicated value.  Keep this, drop the rest
+        for(el in dups) {
+            ii <- what == el
+            lmin <- min(levels[ii])
+            pick <- (1:n)[ii & levels == lmin][1]
+            keep[ii] <- FALSE
+            keep[pick] <- TRUE
+        }
+        value$exts <- value$exts[keep]
+        value$what <- value$what[keep]
+        value$level <- value$level[keep]
+    }
+    value
 }
 
 
@@ -1156,15 +1225,13 @@ getDataPart <- function(object) {
     object
 }
 
-setDataPart <- function(object, check = TRUE, value) {
-    if(check) {
-        dataClass <- elNamed(getSlots(class(object)), ".Data")
-        if(is.null(dataClass))
-            stop(paste("class \"", class(object),
-                       "\" does not have a data part (a .Data slot) defined",
-                       sep=""))
-        value <- as(value, dataClass)
-    }
+setDataPart <- function(object, value) {
+    dataClass <- elNamed(getSlots(class(object)), ".Data")
+    if(is.null(dataClass))
+        stop(paste("class \"", class(object),
+                   "\" does not have a data part (a .Data slot) defined",
+                   sep=""))
+    value <- as(value, dataClass)
     ## following should be extended to allow matrix, etc.
     ## by retaining relevant attributes of value
     attributes(value) <- attributes(object)

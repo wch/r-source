@@ -945,16 +945,14 @@ static SEXP data_part(SEXP obj) {
     return(val);
 }
 
-static SEXP set_data_part(SEXP obj, SEXP check, SEXP rhs) {
+static SEXP set_data_part(SEXP obj,  SEXP rhs) {
     SEXP e, val;
     if(!s_setDataPart)
 	init_slot_handling();
-    PROTECT(e = allocVector(LANGSXP, 4));
+    PROTECT(e = allocVector(LANGSXP, 3));
     SETCAR(e, s_setDataPart);
     val = CDR(e);
     SETCAR(val, obj);
-    val = CDR(val);
-    SETCAR(val, check);
     val = CDR(val);
     SETCAR(val, rhs);
     val = eval(e, R_GlobalEnv);
@@ -993,9 +991,8 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
     return value;
 }
 
-SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP check, SEXP value) {
+SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
     SEXP input = name; int nprotect = 0;
-    Rboolean do_check;
     if(isSymbol(name) ) {
 	input = PROTECT(allocVector(STRSXP, 1)); nprotect++;
 	SET_STRING_ELT(input, 0, PRINTNAME(name));
@@ -1006,14 +1003,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP check, SEXP value) {
 	init_slot_handling();
     if(isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
     if(name == s_dot_Data)
-	return set_data_part(obj, check, value);
-    do_check = (R_has_methods(NULL) && 
-		(check == R_NilValue || 
-		 LOGICAL_VALUE(check)));
-    if(do_check)
-	/* call the S language checker:  it will generate an error if
-	   the check fails, and return a possibly coerced value otherwise */
-	value = R_do_slot_check(obj, name, value);
+	return set_data_part(obj, value);
     if(value == R_NilValue) {
 	/* slots, but not attributes, can be NULL.  Store a special symbol
 	   instead. */
@@ -1060,8 +1050,7 @@ SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
        this is not quite right.  It can, at the least, be a promise
        for the "@" case. */
     value = eval(CADDR(args), env);
-    ans = R_do_slot_assign(object, nlist, R_NilValue/* force check */
-			   , value);
+    ans = R_do_slot_assign(object, nlist, value);
     UNPROTECT(1);
     return ans;
 }

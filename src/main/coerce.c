@@ -1051,6 +1051,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_ATTRIB(ans, R_NilValue);
 	break;
     }
+    SET_OBJECT(ans, 0);
     UNPROTECT(1);
     return ans;
 }

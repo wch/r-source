@@ -181,7 +181,7 @@ mergeMethods <-
     for(i in seq(along=sigs)) {
       sigi <- el(sigs, i)
       args <- names(sigi)
-      m1 <- insertMethod(m1, as.character(sigi), args, el(methods, i))
+      m1 <- insertMethod(m1, as.character(sigi), args, el(methods, i), FALSE)
     }
     m1
   }
@@ -550,8 +550,8 @@ balanceMethodsList <- function(mlist, args, check = TRUE) {
             el <- Recall(el, moreArgs, FALSE)
         else {
             if(is(el, "MethodDefinition")) {
-                el@selected[moreArgs] <- list("ANY")
-                el@defined[moreArgs] <- list("ANY")
+                el@target[moreArgs] <- "ANY"
+                el@defined[moreArgs] <- "ANY"
             }
             for(what in rev(moreArgs))
                 el <- new("MethodsList", argument = as.name(what),
@@ -564,3 +564,11 @@ balanceMethodsList <- function(mlist, args, check = TRUE) {
 }
     
     
+sigToEnv <- function(signature) {
+    value <- new.env()
+    classes <- as.character(signature)
+    args <- names(signature)
+    for(i in seq(along=args))
+        assign(args[[i]], classes[[i]], envir = value)
+    value
+}

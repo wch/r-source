@@ -13,6 +13,7 @@
 \alias{linearizeMlist}
 \alias{finalDefaultMethod}
 \alias{mergeMethods}
+\alias{loadMethod}
 \title{MethodsList Objects}
 \usage{
 MethodsList(.ArgName, ...)
@@ -37,6 +38,8 @@ linearizeMlist(mlist, inherited = TRUE)
 finalDefaultMethod(mlist, fname = "NULL")
 
 mergeMethods(m1, m2)
+
+loadMethod(method, fname, envir)
 
 }
 
@@ -129,6 +132,19 @@ selected classes.
     and returns the merged result.  Called from
     \code{\link{getAllMethods}}.
     }
+    \item{\code{loadMethod}}{
+      Called, if necessary, just before a call to \code{method} is
+      dispatched in the frame \code{envir}.  The function exists so that
+      methods can be defined for special classes of objects.  Usually
+      the point is to assign or modify information in the frame
+      environment to be used evaluation.  For example, the standard
+      class \code{MethodDefinition} has a method that stores the target
+      and defined signatures in the environment.
+
+      Any methods defined for \code{loadMethod} must return the function
+      definition to be used for this call; typically, this is just the
+      \code{method} argument.
+      }
 }
 
 }

@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-01-12)
+Version 1.5.0 Under development (unstable) (2002-02-23)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2905,8 +2905,7 @@ Error in as.environment(x) : Invalid object for as.environment
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 [1] TRUE
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
-Error in "dimnames<-.data.frame"(*tmp*, value = dimnames) : 
-	invalid dimnames given for data frame
+[1] TRUE
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 [1] TRUE
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
@@ -2944,6 +2943,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  8.33 1.9 10.51 0 0 
+Time elapsed:  1.76 0.03 1.81 0 0 
 > 
 > 

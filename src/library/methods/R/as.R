@@ -14,8 +14,7 @@ as <-
     if(coerceFlag  || !is(object, Class)) {
         ## TO DO:  this call to selectMethod probably deserves implementing in C
         ## to save on the environment generation each time.
-      sig <-  new.env(); assign("from", thisClass, envir = sig)
-      assign("to", Class, envir = sig)
+      sig <-  sigToEnv(list(from=thisClass, to = Class))
       asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
       if(!is.null(asMethod))
           return(asMethod(object))
@@ -47,9 +46,8 @@ as <-
     if(coerceFlag && !identical(data.class(value), Class))
       value <- as(value, Class)
     if(coerceFlag || !is(object, Class)) {
-      sig <-  new.env(); assign("from", thisClass, envir = sig)
-      assign("to", Class, envir = sig)
-      asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
+        sig <- sigToEnv(list(from=thisClass, to=Class))
+        asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
       ## TO DO:  figure out how inheritance works in this function
       if(!is.null(asMethod))
         return(asMethod(object, Class, value))

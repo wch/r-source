@@ -82,7 +82,7 @@ SignatureMethod <-
 insertMethod <-
   ## insert the definition `def' into the MethodsList object, `mlist', corresponding to
   ## the signature, and return the modified MethodsList.
-  function(mlist, signature, args, def, whichMethods = "methods")
+  function(mlist, signature, args, def, cacheOnly = FALSE)
 {
     ## Checks for assertions about valid calls.
     ## See rev. 1.17 for the code before the assertions added.
@@ -93,10 +93,10 @@ insertMethod <-
     if(!is(mlist, "MethodsList"))
         stop(paste("inserting method into non-methods-list object (class \"",
                    data.class(mlist), "\")", sep=""))
-    if(length(args) > 1 && identical(whichMethods, "methods"))
+    if(length(args) > 1 && !cacheOnly)
         mlist <- balanceMethodsList(mlist, args)
     Class <- el(signature, 1)
-    methods <- slot(mlist, whichMethods)
+    methods <- if(cacheOnly) mlist@allMethods else mlist@methods
     current <- elNamed(methods, Class)
     if(is(current, "MethodsList")) {
         nextArg <- as.character(current@argument)
@@ -134,9 +134,15 @@ insertMethod <-
         else if(is.function(current))
             current <- new("MethodsList", argument = as.name(args[2]), methods = list(ANY = current))
         elNamed(methods, Class) <-
-            Recall(current, signature[-1], args[-1], def, whichMethods)
+            Recall(current, signature[-1], args[-1], def, cacheOnly)
     }
-    slot(mlist, whichMethods) <- methods
+    if(cacheOnly)
+        mlist@allMethods <- methods
+    else {
+        mlist@methods <- methods
+        ## and clear the cache, inheritance may have changed
+        mlist@allMethods <- list()
+    }
     mlist
 }
 
@@ -155,10 +161,10 @@ MethodsListSelect <-
   ## is returned as the value.  If matching fails,  NULL is returned.
     function(f, env,
              mlist = getMethodsForDispatch(f),
-             fEnv = NULL,
+             fEnv = NULL,  ## supplied ONLY to save results in session metadata
              finalDefault = finalDefaultMethod(mlist),
              evalArgs = TRUE,
-             useInherited ## supplied when evalArgs is FALSE
+             useInherited = TRUE  ## supplied when evalArgs is FALSE
  )
 {
     if(!is(mlist, "MethodsList")) {
@@ -222,9 +228,14 @@ MethodsListSelect <-
                 else {
                     which <- match(as.character(argName), names(useInherited))
                     if(is.na(which))
-                        stop("Invalid call to MethodsListSelect with evalArgs==FALSE")
-                    method <- Recall(NULL, env, selection, finalDefault = finalDefault,
-                                     evalArgs = FALSE, useInherited = useInherited[-which])
+                        thisInherit <- nextUseInherited <- useInherited ## likely TRUE or FALSE
+                    else {
+                        nextUseInherited <- useInherited[-which]
+                        thisInherit <- useInherited[[which]]
+                    }
+                    if(thisInherit)
+                        method <- Recall(NULL, env, selection, finalDefault = finalDefault,
+                                         evalArgs = FALSE, useInherited = nextUseInherited)
                 }
                 if(is(method, "EmptyMethodsList"))
                     selection <- method   ## recursive selection failed
@@ -440,7 +451,7 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
         cat(file=con, deparse(method), sep="\n")
       }
       if(is(method, "MethodDefinition") &&
-         !identical(method@selected, method@defined)) {
+         !identical(method@target, method@defined)) {
           defFrom <- method@defined
           cat(file = con, if(includeDefs) "##:" else "\n",
               "    (inherited from ",
@@ -588,7 +599,7 @@ insertCachedMethods <- function(mlist, argName, Class, fromClass, def) {
     }
     else {
         def <- addMethodFrom(def, argName[1], Class[1], fromClass)
-        mlist <- insertMethod(mlist, Class, argName, def, "allMethods")
+        mlist <- insertMethod(mlist, Class, argName, def, TRUE)
     }
     mlist
 }
@@ -597,26 +608,14 @@ addMethodFrom <- function(def, arg, Class, fromClass) {
     if(is(def, "MethodDefinition")) {
         ## eventually, we may enforce method definition objects
         ## If not, just leave raw functions alone (NextMethod won't work)
-        elNamed(def@selected, arg) <- Class
-        elNamed(def@defined, arg) <- fromClass
+        def@target[[arg]] <- Class
+        def@defined[[arg]] <- fromClass
     }
     def
 }
 
-asMethodDefinition <- function(def, signature = list(), argNames = character()) {
-    ## primitives can't take slots, but they are only legal as default methods
-    ## and the code will just have to accomodate them in that role, w/o the
-    ## MethodDefinition information.
-    switch(typeof(def),
-           "builtin" = , "special" = return(def),
-           "closure" = {},
-           stop(paste("Invalid object for formal method defintion: type \"",
-                      typeof(def), "\"", sep=""))
-           )
-    value <- new("MethodDefinition", def)
-    classes <- as.list(signature)
-    names(classes) <- argNames[seq(length = length(classes))]
-    value@selected <- classes
-    value@defined <- classes
-    value
-}
+## Define a trivial version of asMethodDefinition for bootstrapping.
+## The real version requires several class definitions as well as
+## methods for as<-
+asMethodDefinition <- function(def, signature = list(), argNames = character())
+    def

@@ -32,6 +32,7 @@
 \alias{print.default}
 \alias{missingArg}
 \alias{balanceMethodsList}
+\alias{sigToEnv}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -94,6 +95,8 @@ print.default(x, ...)
 missingArg(symbol, envir = parent.frame())
 
 balanceMethodsList(mlist, args, check = TRUE)
+
+sigToEnv(signature)
 
 }
 \description{
@@ -297,6 +300,14 @@ returns \code{NULL} or throws an error.
 	via \code{setMethod} (how else could you do it?) or by the
 	initial \code{setGeneric} call converting the ordinary function.
       }
+      \item{\code{sigToEnv}: }{
+	Turn the signature (a named vector of classes) into an
+	environment with the classes assigned to the names.  The
+	environment is then suitable for calling
+	\code{\link{MethodsListSelect}}, with \code{evalArgs=FALSE}, to
+	select a method corresponding to the signature.  Usually not
+	called directly: see \code{\link{selectMethod}}.
+	}
       
 
 }

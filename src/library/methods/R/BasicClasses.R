@@ -17,7 +17,8 @@
     clList <- c(vClasses, "VIRTUAL", "ANY", "vector")
     setIs("double", "numeric")
     setIs("integer", "numeric")
-    setClass("function", prototype = function()NULL, where = envir); clList <- c(clList, "function")
+    nullF <- function()NULL; environment(nullF) <- .GlobalEnv
+    setClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")
     setClass("name", prototype = newBasic("name"), where = envir); clList <- c(clList, "name")
 
     setClass("language", where = envir); clList <- c(clList, "language")

@@ -7,7 +7,8 @@
  then be defined.
 }
 \usage{
-setGeneric(name, def, group=NULL, valueClass=NULL, where=1, doAssign)
+setGeneric(name, def, group=NULL, valueClass=NULL, where=1, doAssign,
+           myDispatch = FALSE)
 
 setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
 }
@@ -54,6 +55,23 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
     generics for primitives cannot be overriden by setting
     \code{doAssign} to \code{TRUE}.
   }
+  \item{myDispatch}{
+    Normally, the body of a generic function does nothing except to
+    dispatch methods (via a call to \code{\link{standardGeneric}}).  The
+    evaluation model, however, allows the generic to do any other
+    computation it wants (it had better call \code{standardGeneric} at
+    some point, on the other hand).  This facility is definitely for
+    advanced users only, so \code{setGeneric} will ignore the body of
+    the supplied generic unless \code{myDispatch} is set to
+    \code{TRUE}.
+
+    Confusion sometimes occurs when programmers want to establish a
+    generic function \emph{and} a default method at the same time.  This
+    is \emph{not} achieved by passing the default method as the generic
+    definition to \code{setGeneric}.  The easiest solution is to assign
+    the default method as an ordinary function and then call
+    \code{setGeneric} without a \code{def} argument.
+    }
 
   \item{knownMembers}{
     (For \code{setGroupGeneric} only)  The names of functions that are known to be

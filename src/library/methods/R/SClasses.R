@@ -130,8 +130,11 @@ slot <-
 
 "slot<-" <-
   ## Set the value of the named slot.  Must be one of the slots in the class's definition.
-  function(object, name, check = TRUE, value)
-    .Call("R_set_slot", object, name, check, value, PACKAGE="methods")
+  function(object, name, check = TRUE, value) {
+      if(check)
+          value <- checkSlotAssignment(object, name, value)
+      .Call("R_set_slot", object, name, value, PACKAGE="methods")
+  }
 
 checkSlotAssignment <- function(obj, name, value)
 {
@@ -242,19 +245,10 @@ new <-
         supers <- args[!which]
         thisExtends <- names(getExtends(ClassDef))
         if(length(supers) > 0) {
-            dataPartClass <- elNamed(getSlots(ClassDef), ".Data")
-            for(i in seq(along = supers)) {
+            for(i in rev(seq(along = supers))) {
                 obj <- el(supers, i)
                 Classi <- data.class(obj)
-                if(!is.null(dataPartClass)) {
-                    ## try this as the data part
-                    if(is(obj, dataPartClass)) {
-                        value@.Data <- obj
-                        ## don't allow a second occurrence
-                        dataPartClass <- NULL
-                    }
-                }
-                else if(identical(Classi, Class))
+                if(identical(Classi, Class))
                     value <- obj
                 else if(extends(Classi, Class))
                     ## typically, throw away extra slots.

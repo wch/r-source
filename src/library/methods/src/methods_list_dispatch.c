@@ -49,6 +49,7 @@ SEXP R_do_slot(SEXP obj, SEXP name);
 
 static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 			int evalArgs);
+static SEXP R_loadMethod(SEXP f, SEXP fname, SEXP ev);
 
 /* objects, mostly symbols, that are initialized once to save a little time */
 static int initialized = 0;
@@ -65,6 +66,21 @@ static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 
 
 SEXP R_quick_method_check(SEXP object, SEXP fsym);
+	
+static SEXP R_target, R_defined, R_nextMethod;
+static SEXP R_dot_target, R_dot_defined, R_dot_nextMethod;
+static SEXP R_loadMethod_name, R_dot_Method;
+
+static void init_loadMethod() {
+    R_target = install("target");
+    R_defined = install("defined");
+    R_nextMethod = install("nextMethod");
+    R_loadMethod_name = install("loadMethod");
+    R_dot_target = install(".target");
+    R_dot_defined = install(".defined");
+    R_dot_nextMethod = install(".nextMethod");
+    R_dot_Method = install(".Method");
+}
 
 void R_initMethodDispatch()
 {
@@ -117,6 +133,7 @@ void R_initMethodDispatch()
     fgets_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 1);
     f_x_skeleton = VECTOR_ELT(R_empty_skeletons, 0);
     fgets_x_skeleton = VECTOR_ELT(R_empty_skeletons, 1);
+    init_loadMethod();
     initialized = 1;
 }
 
@@ -589,6 +606,9 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	}
     }
     val = R_NilValue;
+    /* loadMethod methods */
+    if(isObject(f))
+	f = R_loadMethod(f, fname, ev);
     switch(TYPEOF(f)) {
     case CLOSXP:
       PROTECT(val = BODY(f)); nprotect++;
@@ -626,9 +646,11 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
     return val;
 }
 
-/* Is the argument missing?  This implements the classic S sense of
+/* Is the argument missing?  This _approximates_ the classic S sense of
    the question (is the argument missing in the call), rather than the
-   R semantics (is the value of the argument R_MissingArg)
+   R semantics (is the value of the argument R_MissingArg), but not if
+   computations in the body of the function may have assigned to the
+   argument name.
 */
 static Rboolean is_missing_arg(SEXP symbol, SEXP ev)
 {
@@ -735,4 +757,74 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 			     SEXP fundef, SEXP mlist)
 {
     return R_set_prim_method(fname, op, code_vec, fundef, mlist);
+}
+
+SEXP R_nextMethodCall(SEXP argNames, SEXP ev) {
+    SEXP e, val, args = FRAME(ev);
+    int nprotect = 0, n = length(args), i, extras, nargs = length(argNames);
+    PROTECT(e = allocVector(LANGSXP, nargs+1)); nprotect++;
+    SETCAR(e, R_dot_nextMethod); val = CDR(e);
+    /* the arguments are the formal name, or missing, and we assume
+       the first n elements of the frame are the arguments, since the
+       method definition is required to have the same args (this can
+       be checked by comparing to argNames).
+    */
+    extras = n - nargs;
+    /* we assume (can we?) that the last nargs elements in the frame
+       are the arguments, everything else gets pushed down before */
+    for(i=0; i< extras; i++)
+	args = CDR(args);
+    for(i=0; i<nargs; i++) {
+	if(MISSING(args))
+	    SETCAR(val, R_MissingArg);
+	else
+	    SETCAR(val, TAG(args));
+	val = CDR(val);
+	args = CDR(args);
+    }
+    val = eval(e, ev);
+    UNPROTECT(nprotect);
+    return val;
+}
+
+
+static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev) {
+    /* since this is called every time a method is dispatched with a
+       definition that has a class, it should be as efficient as
+       possible => we build in knowledge of the standard
+       MethodDefinition and MethodWithNext slots.  If these (+ the
+       class slot) don't account for all the attributes, regular
+       dispatch is done. */
+    SEXP s, attrib;
+    int found = 1; /* we "know" the class attribute is there */
+    for(s = attrib = ATTRIB(def); s != R_NilValue; s = CDR(s)) {
+	SEXP t = TAG(s);
+	if(t == R_target) {
+	    defineVar(R_dot_target, CAR(s), ev); found++;
+	}
+	else if(t == R_defined) {
+	    defineVar(R_dot_defined, CAR(s), ev); found++;
+	}
+	else if(t == R_nextMethod)  {
+	    defineVar(R_dot_nextMethod, CAR(s), ev); found++;
+	}
+    }
+    defineVar(R_dot_Method, def, ev);
+    /* this shouldn't be needed but check the generic being
+       "loadMethod", which would produce a recursive loop */
+    if(strcmp(CHAR_STAR(fname), "loadMethod") == 0)
+	return def;
+    if(found < length(attrib)) {
+	int nprotect = 0;
+	SEXP e, val;
+	PROTECT(e = allocVector(LANGSXP, 4));
+	SETCAR(e, R_loadMethod_name); val = CDR(e);
+	SETCAR(val, def); val = CDR(val);
+	SETCAR(val, fname); val = CDR(val);
+	SETCAR(val, ev);
+	val = eval(e, ev);
+	UNPROTECT(1);
+	return val;
+    }
+    else return def;
 }

@@ -25,15 +25,25 @@
     assign("__MethodMetaData", table, envir = where)
     .Call("R_initialize_methods_metadata", table, PACKAGE = "methods")
     .C("R_initMethodDispatch", PACKAGE = "methods")# C-level initialization
-    if(!get(".saveImage", envir = where)) {
-        cat("initializing class and method definitions now\n")
+    saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
+              get(".saveImage", envir = where)
+              else
+              NA)
+    if(identical(saved, FALSE)) {
+        cat("initializing class and method definitions now ...")
+        on.exit(assign(".saveImage", NA, envir = where))
         .InitBasicClasses(where)
         .InitMethodsListClass(where)
         .makeBasicFunsList(where)
         .setCoerceGeneric(where)
+        .InitMethodDefinition(where)
         setGeneric("show", where = where)
         assign(".saveImage", TRUE, envir = where)
+        on.exit()
+        cat("done\n")
     }
+    else if(!identical(saved, TRUE))
+        stop("Looks like the methods library was not installed correctly; check the make results!\n")
     ## cache metadata for all environments in search path.  The assumption is that
     ## this has not been done, since cacheMetaData is in this package.  library, attach,
     ## and detach functions look for cacheMetaData and call it if it's found.

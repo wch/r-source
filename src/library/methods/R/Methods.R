@@ -9,7 +9,8 @@ setGeneric <-
   ## If `def' is supplied, this defines the generic function.  The default method for
   ## a new generic will usually be an existing non-generic.  See the .Rd page
   ##
-    function(name, def = NULL, group = NULL, valueClass = NULL, where = 1, doAssign)
+    function(name, def = NULL, group = NULL, valueClass = NULL, where = 1, doAssign,
+             myDispatch = FALSE)
 {
     useAsDefault <-  is.null(def) && existsFunction(name)
     if(useAsDefault) {
@@ -19,6 +20,14 @@ setGeneric <-
         if(is.null(def))
             stop(paste("No existing function \"", name, "\", arguments must be supplied"))
         fdef <- def
+        stdBody <- substitute(standardGeneric(NAME), list(NAME = name))
+        if(myDispatch || identical(body(fdef), stdBody)) {} ## use as is
+        else {
+            if(!is.null(body(fdef)))
+               warning("the body of argument def will be ignored in creating generic \"",
+                       name, "\" (assign it as the default method if that's what you meant)")
+            body(fdef) <- stdBody
+        }
     }
     if(!isGeneric(name, fdef = fdef)) {
       if(missing(doAssign))
@@ -182,7 +191,7 @@ cacheMethod <-
     }
     ev <- environment(fdef)
     methods <- get(".Methods", envir = ev)
-    methods <- insertMethod(methods, sig, args, def, "allMethods")
+    methods <- insertMethod(methods, sig, args, def, TRUE)
     assign(".Methods", methods, envir = ev)
     methods
   }
@@ -261,7 +270,7 @@ removeMethod <- function(f, signature = character(), where) {
             where <- where[[1]]
         }
     }
-    setMethod(f, signature, NULL)
+    setMethod(f, signature, NULL, where = where)
     TRUE
 }
 
@@ -331,9 +340,15 @@ selectMethod <-
   ## optional = If TRUE, and no explicit selection results, return result anyway. else error
   ## mlist = Optional MethodsList object to use in the search.  Usually omitted, but
   ##         required for a recursive call from within selectMethod.
-    function(f, env = new.env(), optional = FALSE,
-             useInherited, mlist = getMethods(f))
+    function(f, signature, optional = FALSE,
+             useInherited = TRUE, mlist = getMethods(f))
 {
+    if(is.environment(signature))
+        env <- signature
+    else if(length(names(signature)) == length(signature))
+        env <- sigToEnv(signature)
+    else
+        stop("signature must be a named vector of classes or an environment")
     if(is.null(mlist)) {
         if(optional)
             return(mlist)
@@ -356,7 +371,7 @@ selectMethod <-
                      "\"), or else a bug in method selection", sep=""))
       assign(".SelectMethodOn", TRUE, fEnv)
       on.exit(rm(.SelectMethodOn, envir = fEnv))
-      mlist <- MethodsListSelect(f, env, mlist, fEnv, evalArgs = FALSE, useInherited = useInherited)
+      mlist <- MethodsListSelect(f, env, mlist, NULL, evalArgs = FALSE, useInherited = useInherited)
       if(is(mlist, "MethodsList"))
           selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
     }
@@ -590,7 +605,8 @@ setGroupGeneric <-
                       paste("Function \"", name,
                             "\" is a group generic; don't call it directly",
                             sep ="")))
-    setGeneric(name = name, def = def, group = group, valueClass = valueClass, where = where)
+    setGeneric(name = name, def = def, group = group, valueClass = valueClass, where = where,
+               myDispatch = TRUE)
     setGroupMembers(name, knownMembers)
     name
   }

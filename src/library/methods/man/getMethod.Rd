@@ -31,7 +31,7 @@ findMethod(f, signature, where)
 getMethods(f, where=-1)
 
 MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs, useInherited)
-selectMethod(f, env, optional=False, useInherited, mlist=getMethods(f))
+selectMethod(f, signature, optional=False, useInherited, mlist=getMethods(f))
 
 }
 \arguments{
@@ -42,9 +42,15 @@ in which case the special methods list object, if any, stored in the environment
 returned.  (This usage is largely for internal purposes; you aren't
 likely to have such a function definition for direct use.)}
   \item{signature}{ The signature of classes to match to the arguments of \code{f}.  The vector of strings
-      for the classes can be named or not.  If named, the names must match formal
+      for the classes should be named, and the names must match formal
       argument names of \code{f}.  If not named, the signature is assumed to apply to the
-      arguments of \code{f} in order.
+      arguments of \code{f} in order, but note below for
+      \code{selectMethod}.
+
+      For \code{selectMethod}, the signature can optionally be an
+      environment with classes assigned to the names of the
+      corresponding arguments.  If the signature is not an environment,
+      it must currently be named.
  }
   \item{where}{ Where to look for the method.  By default, looks in
       all the currently attached databases (i.e., the complete search list). }

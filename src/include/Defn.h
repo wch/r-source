@@ -471,9 +471,7 @@ void R_set_quick_method_check(R_stdGen_ptr_t);
 
 /* slot management (in attrib.c) */
 SEXP R_do_slot(SEXP obj, SEXP name);
-SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP check, SEXP value);
-/* (in objects.c) */
-SEXP R_do_slot_check(SEXP obj, SEXP name, SEXP value);
+SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 
 #ifdef __MAIN__
 #undef extern
