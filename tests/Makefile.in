@@ -89,7 +89,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-gct) \
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct
 
-all check: Makefile test-all-basics
+all check: Makefile test-all-basics test-Reg
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
