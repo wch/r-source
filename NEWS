@@ -283,6 +283,12 @@ C-LEVEL FACILITIES
 	and R_unload_<dll name>, respectively.  See Writing R
 	Extensions Manual for more information.
 
+    o	Routines exported directly from the R executable for use with
+	.C(), .Call(), .Fortran() and .External() are now accessed via
+	the registration mechanism (optionally) used by packages. The
+	ROUTINES file (in src/appl/) and associated scripts to
+	generate FFTab.h and FFDecl.h are no longer used.
+
 
 BUG FIXES
 
