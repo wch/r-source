@@ -1,5 +1,5 @@
 c
-c     zsico factors a complex*16 symmetric matrix by elimination with
+c     zsico factors a double complex symmetric matrix by elimination with
 c     symmetric pivoting and estimates the condition of the matrix.
 c
 c     if  rcond  is not needed, zsifa is slightly faster.
@@ -10,7 +10,7 @@ c     to compute  determinant(a) , follow zsico by zsidi.
 c
 c     on entry
 c
-c        a       complex*16(lda, n)
+c        a       double complex(lda, n)
 c                the symmetric matrix to be factored.
 c                only the diagonal and upper triangle are used.
 c
@@ -45,7 +45,7 @@ c                precision.  in particular,  rcond  is zero  if
 c                exact singularity is detected or the estimate
 c                underflows.
 c
-c        z       complex*16(n)
+c        z       double complex(n)
 c                a work vector whose contents are usually unimportant.
 c                if  a  is close to a singular matrix, then  z  is
 c                an approximate null vector in the sense that
@@ -62,19 +62,19 @@ c     fortran dabs,dmax1,dcmplx,iabs
 c
       subroutine zsico(a,lda,n,kpvt,rcond,z)
       integer lda,n,kpvt(*)
-      complex*16 a(lda,*),z(*)
+      double complex a(lda,*),z(*)
       double precision rcond
 c
 c     internal variables
 c
-      complex*16 ak,akm1,bk,bkm1,zdotu,denom,ek,t
+      double complex ak,akm1,bk,bkm1,zdotu,denom,ek,t
       double precision anorm,s,dzasum,ynorm
       integer i,info,j,jm1,k,kp,kps,ks
 c
-      complex*16 zdum,zdum2,csign1
+      double complex zdum,zdum2,csign1
       double precision cabs1
       double precision dreal,dimag
-      complex*16 zdumr,zdumi
+      double complex zdumr,zdumi
       dreal(zdumr) = zdumr
       dimag(zdumi) = (0.0d0,-1.0d0)*zdumi
       cabs1(zdum) = dabs(dreal(zdum)) + dabs(dimag(zdum))
