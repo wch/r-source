@@ -99,9 +99,9 @@ SweaveSyntaxNoweb <-
          extension = "\\.[rsRS]?nw$",
          syntaxname = "\\\\SweaveSyntax{([^}]*)}",
          trans = list(
-             doc = "^@",
-             code = "<<\\1>>",
-             coderef = "^<<\\1>>",
+             doc = "@",
+             code = "<<\\1>>=",
+             coderef = "<<\\1>>",
              docopt = "\\\\SweaveOpts{\\1}",
              docexpr = "\\\\Sexpr{\\1}",
              extension = ".Snw",
