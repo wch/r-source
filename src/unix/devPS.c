@@ -68,7 +68,10 @@ static void   PS_Circle(double, double, int, double, int, int, DevDesc*);
 static void   PS_Clip(double, double, double, double, DevDesc*);
 static void   PS_Close(DevDesc*);
 static void   PS_Deactivate(DevDesc*);
+#ifdef NOT_used_currently/*-- (-Wall) --*/
 static void   PS_EndPath(DevDesc*);
+static void   PS_StartPath(DevDesc*);
+#endif
 static void   PS_Hold(DevDesc*);
 static void   PS_Line(double, double, double, double, int, DevDesc*);
 static int    PS_Locator(double*, double*, DevDesc*);
@@ -79,7 +82,6 @@ static void   PS_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   PS_Polyline(int, double*, double*, int, DevDesc*);
 static void   PS_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   PS_Resize(DevDesc*);
-static void   PS_StartPath(DevDesc*);
 static double PS_StrWidth(char*, DevDesc*);
 static void   PS_MetricInfo(int, double*, double*, double*, DevDesc*);
 static void   PS_Text(double, double, int, char*, double, double, double,
@@ -490,14 +492,6 @@ static void PS_Close(DevDesc *dd)
 static void PS_Activate(DevDesc *dd) {}
 static void PS_Deactivate(DevDesc *dd) {}
 
-static void PS_MoveTo(double x, double y, int coords, DevDesc *dd)
-{
-	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
-
-	GConvert(&x, &y, coords, DEVICE, dd);
-	PostScriptMoveTo(pd->psfp, x, y);
-}
-
 static double PS_StrWidth(char *str, DevDesc *dd)
 {
 	return floor(dd->gp.cex * dd->gp.ps + 0.5) *
@@ -512,6 +506,15 @@ static void PS_MetricInfo(int c, double *ascent, double *descent, double *width,
 	*ascent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *ascent;
 	*descent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *descent;
 	*width = floor(dd->gp.cex * dd->gp.ps + 0.5) * *width;
+}
+
+#ifdef NOT_used_currently/*-- out 'def'  (-Wall) --*/
+static void PS_MoveTo(double x, double y, int coords, DevDesc *dd)
+{
+	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
+
+	GConvert(&x, &y, coords, DEVICE, dd);
+	PostScriptMoveTo(pd->psfp, x, y);
 }
 
 static void PS_StartPath(DevDesc *dd)
@@ -529,6 +532,7 @@ static void PS_EndPath(DevDesc *dd)
 
 	PostScriptEndPath(pd->psfp);
 }
+#endif
 
 static void PS_Rect(double x0, double y0, double x1, double y1, int coords,
 		    int bg, int fg, DevDesc *dd)
