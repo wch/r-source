@@ -1,3 +1,81 @@
+rm141
+=====
+* no particular fixing
+
+rm140
+=====
+* Added the Preferences panel. The settings in .Renviron
+  are now superseeded by the prefences settings
+  .Renviron can be still used to simulate the Environment
+  for the Sys.getenv() call.
+* Added the item "Link Packages Help" to the "Help" menu.
+* Fixed a bug that leaves help menu items ghosted after
+  using them.
+* Some MRC Apple's Compiler specific fixing.
+* Fixed problems with current working directory in different
+  points (.Rprofile, .Renviron, etc)
+* Solved the problem of line endings that are different from
+  MacOS and OS X. Now text files generated under both systems
+  are fine to R.
+* Makefiles and perl scripts have been fixed so that now R
+  builds via MPW shell scripts and help files are generated
+  as well.
+* A bug in the internal file viewer that suppressed the "_"
+  symbols from the text has been fixed.
+* This version of R is slower at startup but faster than
+  then previous release (by a factor of 10%) in calculations.
+* The initial window at startup has been suppressed in this
+  release in the hope to provide am applescript analogous to 
+  pass initial arguments to R.
+* The about box now reports informations on the current
+  release of R
+* Added the zlib capability so now R can manage gzipped 
+  files and connentions
+* Fixed some wrong links in html help files
+* Finally fixed copy and paste of graphic windows contents
+  and saving of them onto files. For some reason the previous
+  algorithm did not copy text characters under MacOS X.
+* Fixed a bug that appear when trying to reading files or
+  directories on a different volume w.r.t. the current
+  working directory of R.
+* Added two functions file.edit() and new.file().
+  The file.edit() function is similar to file.show() but
+  let the user edit the opened file. It it the equivalent
+  to the menu command "Open File for Editing..." while
+  new.file() is the equivalent to the "New Window" menu
+  command with the difference that you can specify the
+  name of the new file to edit. For more details see
+  man pages.
+* Added three functions to manipulate a User menu in the
+  R Console menubar. With add.menu.cmd(label,command) the
+  user can add menu item "label" to which is associated
+  an R command. Respectively with del.menu.cmd(label) and
+  get.menu.cmd(label) the user can remove or get the
+  command associated to the menu "label". See the help
+  pages for details and examples.
+* Added three functions to manipulate a User menu in the
+  R Console menubar. With del.usr.cmd() the whole user
+  menu is removed. Respectively with del.num.cmd(menunum) 
+  and get.num.cmd(menunum) the user can remove or get the
+  command associated to the menu numbered "menunum". See 
+  the help pages for details and examples.
+* Fixed some problems with windows naming (duplicates
+  and so forth)
+* Windows (both text and graphic) now appears only after
+  repositioning
+* lwd parameter in graphic functions re-implemented even
+  if not yet perfectly working.
+* lty & lwd paramter now works for all the graphic call
+  apart for Circle.
+* fixed a bug in the function edit(). Now it behaves 
+  correctly. If you call it without parameters, the
+  last temporary edited file will be shown. See man
+  pages of edit(). Consequently it is now fixed the
+  problem with the function fix().
+* Refresh of graphic windows fixed. One time only and
+  the bottom part of the window is correctly redrawn.
+  
+
 rm131
 =====
 * Added the "Config" menu
