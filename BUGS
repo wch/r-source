@@ -33,26 +33,24 @@ Date: Tue, 28 Nov 2000 13:24:33 +0800
 
 Directory:  Add-ons
 
-* PR# 824 *
-Subject: trouble with netCDF 
-From: jasont@indigoindustrial.co.nz
-Date: Thu, 25 Jan 2001 12:00:39 +1300
---Only on a specific sample file: send to maintainer.
+* PR# 895 *
+Subject: CI for wilcoxon test
+From: kylouskova@euromise.cz
+Date: Thu, 5 Apr 2001 11:02:47 +0200 (MET DST)
 * PR# 496 *
 From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
+* PR# 824 *
+Subject: trouble with netCDF 
+From: jasont@indigoindustrial.co.nz
+Date: Thu, 25 Jan 2001 12:00:39 +1300
+--Only on a specific sample file: send to maintainer.
 * PR# 812 *
 Subject: segmentation fault in integrate
 From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
 Date: Thu, 11 Jan 2001 22:49:59 +0100
-* PR# 781 *
-Subject: syskern fails Rcmd check on Windows, gives incorrect information
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 20 Dec 2000 11:12:47 +0000 (GMT)
---Partially fixed by dse_2000.12, but still uses "ls" and gives
---incorrect information
 
 Directory:  Analyses
 
@@ -63,6 +61,10 @@ Date: Mon, 5 Mar 2001 15:01:49 +0100 (MET)
 
 Directory:  Documentation
 
+* PR# 886 *
+Subject: Error (?) in documentation of 'swiss' data in R base package
+From: k.j.mcconway@open.ac.uk
+Date: Wed, 28 Mar 2001 16:46:49 +0200 (MET DST)
 * PR# 856 *
 Subject: "}  {" problem in Rd files
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
@@ -70,10 +72,10 @@ Date: Mon, 26 Feb 2001 11:10:01 -0500
 
 Directory:  Graphics
 
-* PR# 865 *
-Subject:  axis(...,las=1) breaks postscript code in certain cases 
-From: maechler@stat.math.ethz.ch
-Date: Wed, 7 Mar 2001 18:08:58 +0100
+* PR# 897 *
+Subject:  bug in contour() ? 
+From: kuensch@stat.math.ethz.ch
+Date: Fri, 6 Apr 2001 16:21:24 +0200
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -81,11 +83,6 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 776 *
-Subject: strwidth does not take font into account
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
---This needs a substantial redesign.
 * PR# 750 *
 Subject: abline() does not obey "xpd" (clipping rules)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -94,6 +91,15 @@ Date: Mon, 27 Nov 2000 18:27:11 +0100
 Subject: identify.default ignores any setting of cex.
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
+* PR# 791 *
+Subject:  par(lab= *) / axis(*) bug 
+From: maechler@stat.math.ethz.ch
+Date: Fri, 22 Dec 2000 10:59:26 +0100
+* PR# 776 *
+Subject: strwidth does not take font into account
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
+--This needs a substantial redesign.
 * PR# 820 *
 Subject: interaction.plot
 From: "Mark M. Span" <span@psy.uva.nl>
@@ -116,10 +122,6 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 --mayhave side-effects in many other pieces of interpreted code 
 --(ii) do_mtext ignores dd->gp.cexbase unlike, for example, do_plot_xy 
 --and anything to do with cexbase needs extreme care.
-* PR# 791 *
-Subject:  par(lab= *) / axis(*) bug 
-From: maechler@stat.math.ethz.ch
-Date: Fri, 22 Dec 2000 10:59:26 +0100
 * PR# 830 *
 Subject: Disappearing x axis in plot.factor
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -132,12 +134,6 @@ Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
 --
 --The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
 --the data right is a project for 1.3
-* PR# 857 *
-Subject: Plotting points on a filled.contour plot
-From: marchini@stats.ox.ac.uk
-Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
---This needs at least to be documented, and preferably par("usr")
---set to the coordinate system of the plotting region after use.
 * PR# 837 *
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -146,6 +142,20 @@ Date: 01 Feb 2001 14:20:52 -0500
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 30 Jan 2001 00:39:41 -0500
+* PR# 887 *
+Subject: axis(adj=anything) has no effect
+From: jhallman@frb.gov
+Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
+* PR# 865 *
+Subject:  axis(...,las=1) breaks postscript code in certain cases 
+From: maechler@stat.math.ethz.ch
+Date: Wed, 7 Mar 2001 18:08:58 +0100
+* PR# 857 *
+Subject: Plotting points on a filled.contour plot
+From: marchini@stats.ox.ac.uk
+Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
+--This needs at least to be documented, and preferably par("usr")
+--set to the coordinate system of the plotting region after use.
 
 Directory:  In-Out
 
@@ -153,7 +163,11 @@ none
 
 Directory:  Installation
 
-none
+* PR# 885 *
+Subject: Problems with R CMD COMPILE within Makefile
+From: Peter Holzer <holzer@stat.math.ethz.ch>
+Date: Mon, 26 Mar 2001 15:32:00 +0200
+--Problems with use of R COMPILE
 
 Directory:  Language
 
@@ -215,6 +229,10 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
+* PR# 896 *
+Subject: Optimize: difference between R for Linux and Windows
+From: "Marketa Kylouskova" <Marketa.Kylouskova@euromise.cz>
+Date: 5 Apr 2001 12:30:29 +0100
 * PR# 863 *
 Subject: src/main/arithmetic.c on OpenBSD
 From: ian@darwinsys.com (Ian Darwin)
@@ -227,6 +245,7 @@ Date: Fri, 16 Feb 2001 17:44:17 -0700 (MST)
 --Some are about constructs needed to satisfy other compilers.
 --
 --Also: configure problem with g77 on SGI.
+--(Should be taken care of for 1.2.3).
 * PR# 848 *
 Subject: X11 device doesn't handle destroy events correcly
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -253,64 +272,15 @@ none
 
 Directory:  incoming
 
-* PR# 897 *
-Subject:  bug in contour() ? 
-From: kuensch@stat.math.ethz.ch
-Date: Fri, 6 Apr 2001 16:21:24 +0200
-* PR# 883 *
-Subject: cor(x,y) when is.null(y)
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Fri, 23 Mar 2001 11:38:05 -0800 (PST)
+* PR# 899 *
+Subject: documentation problems in str.Rd
+From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
+Date: Sat, 7 Apr 2001 23:08:23 +0200
+* PR# 898 *
+Subject: silent extern error
+From: bellis@hsph.harvard.edu
+Date: Sat, 7 Apr 2001 23:32:50 +0200 (MET DST)
 * PR# 877 *
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
 Date: Wed, 14 Mar 2001 17:45:25 +0100
-* PR# 885 *
-Subject: Problems with R CMD COMPILE within Makefile
-From: Peter Holzer <holzer@stat.math.ethz.ch>
-Date: Mon, 26 Mar 2001 15:32:00 +0200
-* PR# 884 *
-* PR# 887 *
-Subject: axis(adj=anything) has no effect
-From: jhallman@frb.gov
-Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
-* PR# 886 *
-Subject: Error (?) in documentation of 'swiss' data in R base package
-From: k.j.mcconway@open.ac.uk
-Date: Wed, 28 Mar 2001 16:46:49 +0200 (MET DST)
-* PR# 889 *
-Subject: na.omit()
-From: devoilp@dpi.qld.gov.au
-Date: Mon, 2 Apr 2001 03:17:20 +0200 (MET DST)
-* PR# 888 *
-Subject: User defined assignment function ignores argument names
-From: jhallman@frb.gov
-Date: Fri, 30 Mar 2001 23:03:08 +0200 (MET DST)
-* PR# 891 *
-Subject: Importing from Splus
-From: ernesto@ipimar.pt
-Date: Tue, 3 Apr 2001 17:03:06 +0200 (MET DST)
-* PR# 890 *
-Subject: aclocal.m4: R_PROG_F77_CC_COMPAT assumes executables w/o extension
-From: hoffmann@ehmgs2.et.tu-dresden.de
-Date: Mon, 2 Apr 2001 09:22:28 +0200 (MET DST)
-* PR# 893 *
-Subject: ghhfh
-From: gfhjgq@yahoo.com
-Date: Wed, 4 Apr 2001 12:12:02 +0200 (MET DST)
-* PR# 892 *
-Subject: rle() fails with NA's
-From: jhallman@frb.gov
-Date: Tue, 3 Apr 2001 21:52:44 +0200 (MET DST)
-* PR# 896 *
-Subject: Optimize: difference between R for Linux and Windows
-From: "Marketa Kylouskova" <Marketa.Kylouskova@euromise.cz>
-Date: 5 Apr 2001 12:30:29 +0100
-* PR# 895 *
-Subject: CI for wilcoxon test
-From: kylouskova@euromise.cz
-Date: Thu, 5 Apr 2001 11:02:47 +0200 (MET DST)
-* PR# 894 *
-Subject: ghhfh
-From: gfhjgq@yahoo.com
-Date: Wed, 4 Apr 2001 12:12:12 +0200 (MET DST)
