@@ -71,7 +71,7 @@ are number of mailing lists which are used by R users and developers.
 They are
 
 @quotation
-@table @uref
+@table @email
 @item r-announce@@lists.r-project.org
 announcements of new R releases or applications;
 @item r-help@@lists.r-project.org
@@ -86,9 +86,9 @@ To subscribe (or unsubscribe) to these mailing lists send
 message (not in the subject!) to
 
 @quotation
-@uref{r-announce-request@@lists.r-project.org} @*
-@uref{r-help-request@@lists.r-project.org}     @*
-@uref{r-devel-request@@lists.r-project.org}
+@email{r-announce-request@@lists.r-project.org} @*
+@email{r-help-request@@lists.r-project.org}     @*
+@email{r-devel-request@@lists.r-project.org}
 @end quotation
 
 @ifinfo
