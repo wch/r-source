@@ -64,6 +64,8 @@ BUG FIXES
     o	as.POSIXlt (and *ct) operating on a character string
 	only extracted the date (and not the time) in some cases.
 
+    o	as.POSIXct() on character objects was ignoring `tz'.
+
     o	Explicitly close files opened by sink() for OSes (such as
 	Windows) that benefit from it.
 
@@ -144,10 +146,12 @@ BUG FIXES
     o	In the \link[pkg]{topic}, `pkg' was not being used if `topic'
 	was found in a package in .lib.loc.  Now `pkg' is always used.
 
-    o	as.POSIXct() on character objects was ignoring `tz'.
-
     o	plot() with small relative ranges gave an error, which e.g. broke
 	library(ts); plot(stl(ts(rep(1:7, 15), freq = 7), s.win = "per"))
+
+    o	Using scan() with 0-length `what' arguemtn now gives an error
+	message rather than a segfault.
+
 
 
 		CHANGES IN R VERSION 1.2.0
