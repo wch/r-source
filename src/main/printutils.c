@@ -270,14 +270,14 @@ int Rstrlen(char *s)
     return len;
 }
 
+/* Here w appears to be the minimum field width */
 char *EncodeString(char *s, int w, int quote, int right)
 {
     int b, i ;
     char *p, *q;
 
     i = Rstrlen(s);
-    AllocBuffer(w); 
-    if( w >= BUFSIZE ) w = BUFSIZE-1; /* just so we don't fall off */
+    AllocBuffer((i+2 >= w)?(i+2):w); /* +2 allows for quotes */
     q = Encodebuf;
     if(right) { /* Right justifying */
 	b = w - i - (quote ? 2 : 0);
@@ -329,7 +329,7 @@ char *EncodeString(char *s, int w, int quote, int right)
     if(quote) *q++ = quote;
     if(!right) { /* Left justifying */
 	*q = '\0';
-	b = w - strlen(Encodebuf) - 1;
+	b = w - strlen(Encodebuf);
 	for(i=0 ; i<b ; i++) *q++ = ' ';
     }
     *q = '\0';
