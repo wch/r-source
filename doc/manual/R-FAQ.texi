@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-4, @value{FAQ-YEAR}-10-10
+@set FAQ-VERSION 1.8-5, @value{FAQ-YEAR}-10-14
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -175,12 +175,12 @@ prompt, and a @samp{$} for the shell prompt (where applicable).
 
 Feedback is of course most welcome.
 
-In particular, note that I do not have access to Windows or Mac systems.
-Features specific to the Windows and Mac OS ports of R are described in
-the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for Windows
-@acronym{FAQ}''} and the
+In particular, note that I do not have access to Windows or Macintosh
+systems.  Features specific to the Windows and MacOS~X ports of R are
+described in the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R
+for Windows @acronym{FAQ}''} and the
 @uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
-Macintosh @acronym{FAQ}/DOC''}.  If you have information on Mac or
+Macintosh @acronym{FAQ}/DOC''}.  If you have information on Macintosh or
 Windows systems that you think should be added to this document, please
 let me know.
 
@@ -442,32 +442,25 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-10-10:
+@c Linux binaries as of 2003-10-14:
 @c
 @c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
-@c           sarge i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake  8.0   i386    Michele Alzetta <mikalzet@libero.it>
-@c           8.1   i386    Michele Alzetta <mikalzet@libero.it>
-@c           8.2   i386    Michele Alzetta <mikalzet@libero.it>
-@c           9.0   i386    Michele Alzetta <mikalzet@libero.it>
-@c           9.1   i386    Michele Alzetta <mikalzet@libero.it>
-@c redhat    7.x   alpha 1.7.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c                 i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
+@c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
+@c mandrake  9.0   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
+@c           9.1   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
+@c redhat    7.x   i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
 @c           8.x   i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
 @c           9     i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
 @c suse      7.3   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.1   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.2   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c vinelinux 2.6   i386    Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Mandrake
-8.0/8.1/8.2/9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9
-i386 and 7.x alpha packages (maintained by Martyn Plummer and Naoki
-Takebayashi, respectively), SuSE 7.3/8.0/8.1/8.2 i386 packages by Detlef
-Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
+distribution and maintained by Dirk Eddelbuettel), Mandrake 9.0/9.1 i386
+packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386 packages by Martyn
+Plummer, and SuSE 7.3/8.0/8.1/8.2 i386 packages by Detlef Steuer.
  
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
