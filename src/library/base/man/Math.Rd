@@ -7,21 +7,23 @@ sqrt(x)
 \alias{abs}
 \alias{sqrt}
 \description{
-These functions compute miscellaneous mathematical functions.
-The naming follows the standard for computer languages
-such as C or Fortran.
+  These functions compute miscellaneous mathematical functions.
+  The naming follows the standard for computer languages
+  such as C or Fortran.
 }
 \arguments{
-  \item{x}{a numeric vector}
+  \item{x}{a numeric or \code{\link{complex}} vector or array.}
 }
 \details{
   These are generic functions: methods can be defined for them
-  individually or via the \code{\link{Math}} group generic.
+  individually or via the \code{\link{Math}} group generic.  For complex
+  arguments (and the default method), \code{z},
+  \code{abs(z) == \link{Mod}(z)} and \code{sqrt(z) == z^0.5}.
 }
 \seealso{
-\code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,
-\code{\link{sin}} for trigonometric, and \code{\link{Special}} for
-special mathematical functions.
+  \code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,
+  \code{\link{sin}} for trigonometric, and \code{\link{Special}} for
+  special mathematical functions.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
