@@ -145,7 +145,10 @@ To ensure that file names are valid across file systems and supported
 operating system platforms, the @acronym{ASCII} control characters as
 well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/}, @samp{<},
 @samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed in file
-names.
+names.  In addition, files with names @samp{con}, @samp{prn},
+@samp{aux}, @samp{clock$}, @samp{nul}, @samp{com1} to @samp{com4}, and
+@samp{lpt1} to @samp{lpt3} after conversion to lower case and stripping
+possible ``extensions'', are disallowed.
 
 Optionally the package can contain (Bourne shell) script files
 @file{configure} and @file{cleanup} which are executed before and
@@ -1241,8 +1244,10 @@ particular, functions) are given in this subsection.
 @item \name@{@var{name}@}
 @findex \name
 @var{name} typically is the basename of the Rd file containing the
-documentation.  (It is the ``name'' of the Rd object represented by the
-file, and has to be unique in a package.)
+documentation.  It is the ``name'' of the Rd object represented by the
+file, has to be unique in a package, and must not contain La@TeX{}
+special characters (@samp{#}, @samp{$}, @samp{%}, @samp{&}, @samp{~},
+@samp{_}, @samp{^}, @samp{\}, @samp{@{}, @samp{@}}).
 
 @item \alias@{@var{topic}@}
 @findex \alias
@@ -1481,7 +1486,7 @@ which documents the standard @R{} data set @code{rivers}.
 \alias@{rivers@}
 \title@{Lengths of Major North American Rivers@}
 \description@{
-  This data set gives the lengths (in miles) of 141 ``major''
+  This data set gives the lengths (in miles) of 141 \dQuote@{major@}
   rivers in North America, as compiled by the US Geological
   Survey.
 @}

@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.140 $ ';
+my $revision = ' $Revision: 1.141 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -328,24 +328,52 @@ sub check_pkg {
     ## one-character file names consisting of just ' ', '.', or '~'.)
     ## Based on information by Uwe Ligges, Duncan Murdoch, and Brian
     ## Ripley.
+
+    ## Furthermore, Uwe Ligges says that Windows still does not allow
+    ## the following DOS device names (by themselves or with possible
+    ## extensions):
+    ##
+    ## Name    Function
+    ## ----    --------
+    ## CON     Keyboard and display
+    ## PRN     System list device, usually a parallel port
+    ## AUX     Auxiliary device, usually a serial port
+    ## CLOCK$  System real-time clock
+    ## NUL     Bit-bucket device
+    ## COM1    First serial communications port
+    ## COM2    Second serial communications port
+    ## COM3    Third serial communications port
+    ## COM4    Fourth serial communications port
+    ## LPT1    First parallel printer port
+    ## LPT2    Second parallel printer port
+    ## LPT3    Third parallel printer port
+
     $log->checking("for portable file names");
     my @bad_files = ();
     sub find_wrong_names {
-	my $filename = $File::Find::name;
-	$filename =~ s/^[^\/]*\///;
+	my $file_path = $File::Find::name;
+	$file_path =~ s/^[^\/]*\///;
 	foreach my $p (@exclude_patterns) {
 	    if($WINDOWS) {
 		## Argh: Windows is case-honoring but not
 		## case-insensitive ...
-		return 0 if($filename =~ /$p/i);
+		return 0 if($file_path =~ /$p/i);
 	    }
 	    else {
-		return 0 if($filename =~ /$p/);
+		return 0 if($file_path =~ /$p/);
 	    }
 	}
-	push(@bad_files, $filename)
-	    if(grep(/[[:cntrl:]\"\*\/\:\<\>\?\\\|]/,
-		    basename($filename)));
+	my $file_name = basename($file_path);
+	if(grep(/[[:cntrl:]\"\*\/\:\<\>\?\\\|]/, $file_name)) {
+	    push(@bad_files, $file_path);
+	}
+	else {
+	    $file_name =~ tr/A-Z/a-z/;
+	    $file_name =~ s/\..*//;
+	    push(@bad_files, $file_path)
+	      if(grep(/^(con|prn|aux|clock\$|nul|lpt[1-3]|com[1-4])$/,
+		     $file_name));
+	}
     }
     find(\&find_wrong_names, ".");
     if($#bad_files >= 0) {
@@ -353,9 +381,12 @@ sub check_pkg {
 	$log->print("Found the following files with " .
 		    "non-portable file names:\n");
 	$log->print("  " . join("\n  ", @bad_files) . "\n");
-	$log->print("These are not valid file names " .
-		    "on all R platforms.\n" .
-		    "Please rename the files and try again.\n");
+	$log->print(wrap("", "",
+			 ("These are not valid file names",
+			  "on all R platforms.\n",
+			  "Please rename the files and try again.\n",
+			  "See section 'Package structure'",
+			  "in manual 'Writing R Extensions'.\n")));
 	exit(1);
     }
 
@@ -403,8 +434,9 @@ sub check_pkg {
 	    $log->print("  " . join("\n  ", @bad_files) . "\n");
 	    $log->print(wrap("", "",
 			     ("Permissions should be at least 755",
-			      "for directories and 644 for files.\n")));
-	    $log->print("Please fix permissions and try again.\n");
+			      "for directories and 644 for files.\n",
+			      "Please fix permissions",
+			      "and try again.\n")));
 	    exit(1);
 	}
 
@@ -442,8 +474,8 @@ sub check_pkg {
 	    $log->print(wrap("", "",
 			     ("Permissions for text files",
 			      "(including R, Rd, and C/C++/FORTRAN",
-			      "sources) should be exactly 644.\n")));
-	    $log->print("Please fix permissions.\n");
+			      "sources) should be exactly 644.\n",
+			      "Please fix permissions.\n")));
 	}
 	else {
 	    $log->result("OK");
@@ -804,8 +836,8 @@ sub check_pkg {
 	    $log->print("library.dynam() used with extension '.$ext'.\n");
 	    $log->print(wrap("", "",
 			     ("The system-specific extension for",
-			      "shared libraries should not be added.\n")));
-	    $log->print("See ?library.dynam\n");
+			      "shared libraries should not be added.\n",
+			      "See ?library.dynam\n")));
 	    exit(1);
 	}
     }
@@ -965,6 +997,10 @@ sub check_pkg {
 	    ## (Not entirely safe ...)
 	    $text =~ /\\name\{\s*([^\}]+)\s*\}/s;
 	    push(@bad_names, $file) if($1 =~ /^\s*$/);
+	    ## Using LaTeX special characters (# $ % & ~ _ ^ \ { })
+	    ## causes the creation of PDF bookmarks to fail.
+	    push(@bad_names, $file)
+	      if($1 =~ /(\#|\$|\%|\&|\~|\_|\^|\\|\{|\})/);
 	    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
 	    push(@bad_titles, $file) if($1 =~ /^\s*$/);
 
@@ -1012,7 +1048,8 @@ sub check_pkg {
 
 	if($#bad_names >= 0) {
 	    $log->error();
-	    $log->print("Rd files with missing or empty '\\name':\n");
+	    $log->print("Rd files with missing or empty ".
+			"or invalid '\\name':\n");
 	    $log->print("  " . join("\n  ", @bad_names) . "\n");
 	    $log->print(wrap("", "", @msg_writing_Rd));
 	    exit(1);
