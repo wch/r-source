@@ -28,19 +28,25 @@ sub new {
     my $self = {};
     my $field = "";
     while(<$fh>){
+	s/\r/ /g;
+	s/\s*$//g;
 	if(/^\s+/){
 	    if($field){
 		s/^\s+/\n/;
 		$self->{ $field } .= $_;
 	    }
 	    else{
-		croak "Malformed DESCRIPTION file in line $.";
+		die "Malformed DCF file (line $.)\n";
 	    }
 	}
 	else{
-	    /^(\S+):\s*(.*\S)\s*$/;
-	    $field=$1;
-	    $self->{ $field } .= $2;
+	    if(/^(\S+):\s*(.*\S)\s*$/){
+		$field=$1;
+		$self->{ $field } .= $2;
+	    }
+	    else{
+		die "Malformed DCF file (line $.)\n";
+	    }
 	}
     }	
     $fh->close;
