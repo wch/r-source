@@ -26,8 +26,7 @@ gammaCody(x)
 \arguments{
   \item{x}{numeric, \eqn{\ge 0}{>= 0}.}
 
-  \item{nu}{numeric; \eqn{\ge 0}{>= 0} unless in \code{besselK} which
-    is symmetric in \code{nu}.  The \emph{order} of the
+  \item{nu}{numeric; The \emph{order} (maybe fractional!) of the
     corresponding Bessel function.}
 
   \item{expon.scaled}{logical; if \code{TRUE}, the results are
@@ -49,6 +48,10 @@ gammaCody(x)
   \code{gammaCody} may be somewhat faster but less precise and/or robust
   than \R's standard \code{\link{gamma}}.  It is here for experimental
   purpose mainly, and \emph{may be defunct very soon}.
+
+  For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from the
+  reference below are applied (which is probably suboptimal), unless for
+  \code{besselK} which is symmetric in \code{nu}.  
 }
 \references{
   Abramowitz, M. and Stegun, I. A. (1972)
@@ -78,6 +81,18 @@ x <- seq(0,40,len=801); yl <- c(-.8,.8)
 plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  J_nu(x)")
 for(nu in nus) lines(x,besselJ(x,nu=nu), col = nu+2)
 legend(32,-.18, leg=paste("nu=",nus), col = nus+2, lwd=1)
+
+## Negative nu's :
+x <- 2:7
+nu <- seq(-10,9, len = 2001)
+op <- par(lab = c(16,5,7))
+matplot(nu, t(outer(x,nu, besselI)), type = 'l', ylim = c(-50,200),
+        main = expression(paste("Bessel ",I[nu](x)," for fixed ", x,
+                                ",  as ",f(nu))),
+        xlab = expression(nu))
+abline(v=0, col = "light gray", lty = 3)
+legend(5,200, leg = paste("x=",x), col=seq(x), lty=seq(x))
+par(op)
 
 x0 <- 2^(-20:10)
 plot(x0,x0^-8, log='xy', ylab="",type='n',

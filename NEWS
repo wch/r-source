@@ -45,6 +45,8 @@ NEW FEATURES
     o	stl() has more optional arguments for fine tuning,
 	a summary() and an improved plot() method.
 
+    o	The four bessel[IJKY](x,nu) functions are now defined for nu < 0.
+
 
 BUG FIXES
 

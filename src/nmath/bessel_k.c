@@ -38,12 +38,12 @@ double bessel_k(double x, double alpha, double expo)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-      ML_ERROR(ME_RANGE);
-      return ML_NAN;
+	ML_ERROR(ME_RANGE);
+	return ML_NAN;
     }
     ize = (long)expo;
     if(alpha < 0)
-        alpha = -alpha;
+	alpha = -alpha;
     nb = 1+ (long)floor(alpha);/* nb-1 <= |alpha| < nb */
     alpha -= (nb-1);
     bk = (double *) calloc(nb, sizeof(double));

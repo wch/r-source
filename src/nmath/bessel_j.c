@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2001 Ross Ihaka and the R Development Cbore team.
+ *  Copyright (C) 1998-2001 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 /* From http://www.netlib.org/specfun/rjbesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
+ * Additional code for nu == alpha < 0  MM
  */
 #include "bessel.h"
 #include "nmath.h"
@@ -37,9 +38,15 @@ double bessel_j(double x, double alpha)
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
-    if (x < 0 || alpha < 0) {
-      ML_ERROR(ME_RANGE);
-      return ML_NAN;
+    if (x < 0) {
+	ML_ERROR(ME_RANGE);
+	return ML_NAN;
+    }
+    if (alpha < 0) {
+	/* Using Abramowitz & Stegun  9.1.2 
+	 * this may not be quite optimal (CPU and accuracy wise) */
+	return(bessel_j(x, -alpha) * cos(M_PI * alpha) +
+	       bessel_y(x, -alpha) * sin(M_PI * alpha));
     }
     nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
     alpha -= (nb-1);

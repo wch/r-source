@@ -37,11 +37,18 @@ double bessel_i(double x, double alpha, double expo)
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
-    if (x < 0 || alpha < 0) {
-      ML_ERROR(ME_RANGE);
-      return ML_NAN;
+    if (x < 0) {
+	ML_ERROR(ME_RANGE);
+	return ML_NAN;
     }
     ize = (long)expo;
+    if (alpha < 0) {
+	/* Using Abramowitz & Stegun  9.6.2 
+	 * this may not be quite optimal (CPU and accuracy wise) */
+	return(bessel_i(x, -alpha, expo) + 
+	       bessel_k(x, -alpha, expo) * ((ize == 1)? 2. : 2.*exp(-x))/M_PI 
+	       * sin(-M_PI * alpha));
+    }
     nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
     alpha -= (nb-1);
     bi = (double *) calloc(nb, sizeof(double));
