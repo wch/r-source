@@ -59,8 +59,8 @@ parent.env(env) <- value
   The variable \code{.BaseNamespaceEnv} is part of some experimental
   support for name space management.
 
-  The assignment function \code{parent.env<-} is extremely dangerous as it
-  can be used to destructively change environments in ways that
+  The replacement function \code{parent.env<-} is extremely dangerous as
+  it can be used to destructively change environments in ways that
   violate assumptions made by the internal C code.  It may be removed
   in the near future.
 

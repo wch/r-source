@@ -636,7 +636,7 @@ by @code{attributes<-},
 individual components are accessed using @code{attr} and @code{attr<-}.
 @findex attr
 @findex attr<-
-@c Shouldn't we discuss assignment functions before this?
+@c Shouldn't we discuss replacement functions before this?
 
 Some attributes have special accessor 
 @cindex function, accessor

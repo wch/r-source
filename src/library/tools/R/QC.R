@@ -508,112 +508,6 @@ function(x, ...)
     invisible(x)
 }
 
-### * checkAssignFuns
-
-checkAssignFuns <-
-function(package, dir, lib.loc = NULL)
-{
-    ## If an installed package has a namespace, we also want to test all
-    ## S3 replacement methods which are registered but not exported.
-    S3reg <- character(0)
-    
-    ## Argument handling.
-    if(!missing(package)) {
-        if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
-        dir <- .find.package(package, lib.loc)
-        ## Using package installed in @code{dir} ...
-        codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
-        isBase <- basename(dir) == "base"
-
-        ## Load package into codeEnv.
-        if(!isBase)
-            .loadPackageQuietly(package, lib.loc)
-        codeEnv <-
-            as.environment(match(paste("package", package, sep = ":"),
-                                 search()))
-
-        lsCode <- ls(envir = codeEnv, all.names = TRUE)
-        
-        ## Does the package have a namespace?
-        if(packageHasNamespace(package, dirname(dir))) {
-            ## Determine unexported but declared S3 replacement methods.
-            S3reg <- .getNamespaceS3methodNames(package)
-            S3reg <- S3reg[! S3reg %in% lsCode]
-            S3reg <- grep("<-", S3reg, value = TRUE)
-            if(length(S3reg) > 0) {
-                S3Table <- get(".__S3MethodsTable__.", envir = NULL)
-                ## <FIXME>
-                ## Methods are not in that table if their generic is in
-                ## the package.  Let's ignore those for now.
-                S3reg <- S3reg[S3reg %in% ls(S3Table, all.names = TRUE)]
-                ## </FIXME>
-            }
-        }
-    }
-    else {
-        if(missing(dir))
-            stop(paste("you must specify", sQuote("package"),
-                       "or", sQuote("dir")))
-        ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
-            stop(paste("directory", sQuote(dir), "does not exist"))
-        else
-            dir <- .convertFilePathToAbsolute(dir)
-        codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
-            stop(paste("directory", sQuote(dir),
-                       "does not contain R code"))
-        isBase <- basename(dir) == "base"
-
-        ## Collect code into codeFile.
-        codeFile <- tempfile("Rcode")
-        on.exit(unlink(codeFile))
-        file.create(codeFile)
-        file.append(codeFile, .listFilesWithType(codeDir, "code"))
-
-        ## Read code from codeFile into codeEnv.
-        codeEnv <- new.env()
-        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
-        if(inherits(yy, "try-error")) {
-            stop("cannot source package code")
-        }
-
-        lsCode <- ls(envir = codeEnv, all.names = TRUE)
-    }
-
-    ## Find the assignment functions in the given package.
-    assignFuns <- c(grep("<-", lsCode, value = TRUE), S3reg)
-    ## Find the assignment functions (which have formal arguments) with
-    ## last arg not named 'value'.
-    badAssignFuns <-
-        assignFuns[sapply(assignFuns, function(f) {
-            gf <- if(f %in% S3reg)
-                get(f, envir = S3Table)
-            else
-                get(f, envir = codeEnv)
-            argNames <- names(formals(gf))
-            if(!length(argNames))
-                TRUE                    # most likely a .Primitive()
-            else
-                identical(argNames[length(argNames)], "value")
-        }) == FALSE]
-
-    class(badAssignFuns) <- "checkAssignFuns"
-    badAssignFuns
-}
-
-print.checkAssignFuns <-
-function(x, ...)
-{
-    if(length(x) > 0) print(unclass(x), ...)
-    invisible(x)
-}
-
 ### * checkDocArgs
 
 checkDocArgs <-
@@ -1229,6 +1123,112 @@ function(x, ...)
                              indent = 2, exdent = 11),
                      ""))
     }
+    invisible(x)
+}
+
+### * checkReplaceFuns
+
+checkReplaceFuns <-
+function(package, dir, lib.loc = NULL)
+{
+    ## If an installed package has a namespace, we also want to test all
+    ## S3 replacement methods which are registered but not exported.
+    S3reg <- character(0)
+    
+    ## Argument handling.
+    if(!missing(package)) {
+        if(length(package) != 1)
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
+        dir <- .find.package(package, lib.loc)
+        ## Using package installed in @code{dir} ...
+        codeDir <- file.path(dir, "R")
+        if(!.fileTest("-d", codeDir))
+            stop(paste("directory", sQuote(dir),
+                       "does not contain R code"))
+        isBase <- basename(dir) == "base"
+
+        ## Load package into codeEnv.
+        if(!isBase)
+            .loadPackageQuietly(package, lib.loc)
+        codeEnv <-
+            as.environment(match(paste("package", package, sep = ":"),
+                                 search()))
+
+        lsCode <- ls(envir = codeEnv, all.names = TRUE)
+        
+        ## Does the package have a namespace?
+        if(packageHasNamespace(package, dirname(dir))) {
+            ## Determine unexported but declared S3 replacement methods.
+            S3reg <- .getNamespaceS3methodNames(package)
+            S3reg <- S3reg[! S3reg %in% lsCode]
+            S3reg <- grep("<-", S3reg, value = TRUE)
+            if(length(S3reg) > 0) {
+                S3Table <- get(".__S3MethodsTable__.", envir = NULL)
+                ## <FIXME>
+                ## Methods are not in that table if their generic is in
+                ## the package.  Let's ignore those for now.
+                S3reg <- S3reg[S3reg %in% ls(S3Table, all.names = TRUE)]
+                ## </FIXME>
+            }
+        }
+    }
+    else {
+        if(missing(dir))
+            stop(paste("you must specify", sQuote("package"),
+                       "or", sQuote("dir")))
+        ## Using sources from directory @code{dir} ...
+        if(!.fileTest("-d", dir))
+            stop(paste("directory", sQuote(dir), "does not exist"))
+        else
+            dir <- .convertFilePathToAbsolute(dir)
+        codeDir <- file.path(dir, "R")
+        if(!.fileTest("-d", codeDir))
+            stop(paste("directory", sQuote(dir),
+                       "does not contain R code"))
+        isBase <- basename(dir) == "base"
+
+        ## Collect code into codeFile.
+        codeFile <- tempfile("Rcode")
+        on.exit(unlink(codeFile))
+        file.create(codeFile)
+        file.append(codeFile, .listFilesWithType(codeDir, "code"))
+
+        ## Read code from codeFile into codeEnv.
+        codeEnv <- new.env()
+        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
+        if(inherits(yy, "try-error")) {
+            stop("cannot source package code")
+        }
+
+        lsCode <- ls(envir = codeEnv, all.names = TRUE)
+    }
+
+    ## Find the replacement functions in the given package.
+    assignFuns <- c(grep("<-", lsCode, value = TRUE), S3reg)
+    ## Find the replacement functions (which have formal arguments) with
+    ## last arg not named 'value'.
+    badReplaceFuns <-
+        assignFuns[sapply(assignFuns, function(f) {
+            gf <- if(f %in% S3reg)
+                get(f, envir = S3Table)
+            else
+                get(f, envir = codeEnv)
+            argNames <- names(formals(gf))
+            if(!length(argNames))
+                TRUE                    # most likely a .Primitive()
+            else
+                identical(argNames[length(argNames)], "value")
+        }) == FALSE]
+
+    class(badReplaceFuns) <- "checkReplaceFuns"
+    badReplaceFuns
+}
+
+print.checkReplaceFuns <-
+function(x, ...)
+{
+    if(length(x) > 0) print(unclass(x), ...)
     invisible(x)
 }
 

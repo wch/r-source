@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.134 $ ';
+my $revision = ' $Revision: 1.135 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -787,25 +787,25 @@ sub check_pkg {
 	}
     }
 
-    ## Check whether assignment functions have their final argument
+    ## Check whether replacement functions have their final argument
     ## named 'value'.
 
     if(-d "R") {
-	$log->checking("for assignment functions with final arg not " .
+	$log->checking("for replacement functions with final arg not " .
 		       "named 'value'");
 	my $Rcmd = "library(tools)\n";
 	if($opt_install) {
-	    $Rcmd .= "checkAssignFuns(package = \"${pkgname}\")\n";
+	    $Rcmd .= "checkReplaceFuns(package = \"${pkgname}\")\n";
 	}
 	else {
-	    $Rcmd .= "checkAssignFuns(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "checkReplaceFuns(dir = \"${pkgdir}\")\n";
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
         @out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    ## <NOTE>
-	    ## We really want to stop if we find offending assignment
+	    ## We really want to stop if we find offending replacement
 	    ## functions.  But we cannot use error() because output may
 	    ## contain warnings ...
 	    $log->warning();

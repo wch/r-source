@@ -638,7 +638,7 @@ The R files are checked for syntax errors.
 The R files are checked for correct calls to @code{library.dynam} (with
 no extension).  In addition, it is checked whether methods have all
 arguments of the corresponding generic, and whether the final argument
-of assignment functions is called @samp{value}.
+of replacement functions is called @samp{value}.
 
 @item
 The Rd files are checked for the mandatory (@code{\name}, @code{\alias},

@@ -1,22 +1,22 @@
 \name{QC}
 \alias{QC}
-\alias{checkAssignFuns}
 \alias{checkDocArgs}
 \alias{checkDocStyle}
 \alias{checkMethods}
-\alias{print.checkAssignFuns}
+\alias{checkReplaceFuns}
 \alias{print.checkDocArgs}
 \alias{print.checkDocStyle}
 \alias{print.checkMethods}
+\alias{print.checkReplaceFuns}
 \title{QC Checks for R Code and/or Documentation}
 \description{
   Functions for performing various quality checks.
 }
 \usage{
-checkAssignFuns(package, dir, lib.loc = NULL)
 checkDocArgs(package, dir, lib.loc = NULL)
 checkDocStyle(package, dir, lib.loc = NULL)
 checkMethods(package, dir, lib.loc = NULL)
+checkReplaceFuns(package, dir, lib.loc = NULL)
 }
 \arguments{
   \item{package}{a character string naming an installed package.}
@@ -30,9 +30,6 @@ checkMethods(package, dir, lib.loc = NULL)
     to search for \code{package}.}
 }
 \details{
-  \code{checkAssignFuns} checks whether assignment functions in the
-  package R code have their final argument named \code{value}.
-  
   \code{checkDocArgs} checks, for all Rd files in a package, whether all
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the
@@ -57,6 +54,9 @@ checkMethods(package, dir, lib.loc = NULL)
   sought first in the given package and then in the base package.  The
   rules when \code{\dots} is involved are subtle: see the source code.
 
+  \code{checkReplaceFuns} checks whether replacement functions in the
+  package R code have their final argument named \code{value}.
+  
   If using an installed package, the checks needing access to all R
   objects of the package will load the package (unless it is the base
   package), after possibly detaching an already loaded version of the
