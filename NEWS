@@ -16,6 +16,11 @@ USER-VISIBLE CHANGES
 	normalization of eigen/singular vectors may change from
 	earlier versions.
 
+    o   The methods package is now attached by default.
+        The option "defaultPackages" has been added and initially set
+        to c("methods", "ctest"), causing those packages to be
+        attached at startup.  See ?Startup and ?options for details.
+
 
 NEW FEATURES
 
