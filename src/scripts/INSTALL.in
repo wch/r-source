@@ -101,17 +101,23 @@ for pkg in ${PKGS}; do
 
   if test -d src; then
     echo " libs"
-    if ${DEBUG}; then set -x ;fi
+    if ${DEBUG}; then set -x; fi
     mkdir -p ${lib}/${pkg}/libs
     if test -f src/Makefile; then
       (cd src;
-	${MAKE} -f ${RHOME}/etc/Makeconf -f Makefile;
-	cp *.so ${lib}/${pkg}/libs)
+	${MAKE} -f ${RHOME}/etc/Makeconf -f Makefile \
+	  && cp *.so ${lib}/${pkg}/libs)
     else
       (cd src;
-	sh ${RHOME}/bin/SHLIB ${SHLIB_OPTS} -o ${lib}/${pkg}/libs/${pkg}.so *.[cfr])
-    fi
-    if ${DEBUG}; then set +x ;fi
+	sh ${RHOME}/bin/SHLIB ${SHLIB_OPTS} \
+	   -o ${lib}/${pkg}/libs/${pkg}.so *.[cf])
+    fi || {
+      echo "ERROR: Compilation failed for package \`${pkg}'"
+      echo "Removing \`${lib}/${pkg}'"
+      rm -rf ${lib}/${pkg}
+      exit 4
+    }
+    if ${DEBUG}; then set +x; fi
   fi
 
   if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
