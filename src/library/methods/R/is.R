@@ -112,7 +112,7 @@ setIs <-
             where2 <- findClass(class2, where)[[1]]
             elNamed(classDef2@subclasses, class1) <- obj
             if(doComplete)
-                classDef2@subclasses <- completeSubclasses(classDef2, class1, obj)
+                classDef2@subclasses <- completeSubclasses(classDef2, class1, obj, where)
             assignClassDef(class2, classDef2, where2)
         }
     invisible(classDef)

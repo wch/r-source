@@ -194,7 +194,7 @@ completeClassDefinition <-
     access <- ClassDef@access
     package <- ClassDef@package
     extends <- if(doExtends) completeExtends(ClassDef) else ClassDef@contains
-    subclasses <- if(doExtends) completeSubclasses(ClassDef) else ClassDef@subclasses
+    subclasses <- if(doExtends) completeSubclasses(ClassDef, where = where) else ClassDef@subclasses
     if(is.na(virtual))
         ## compute it from the immediate extensions, but all the properties
         virtual <- testVirtual(properties, immediate, prototype)
@@ -838,7 +838,7 @@ completeExtends <-    function(ClassDef, class2, extensionDef) {
 }
 
 completeSubclasses <-
-    function(ClassDef, class2, extensionDef) {
+    function(ClassDef, class2, extensionDef, where) {
     ## check for indirect extensions => already completed
     ext <- ClassDef@subclasses
     for(i in seq(along = ext)) {
@@ -858,7 +858,8 @@ completeSubclasses <-
             ## don't override existing relations
             ## TODO:  have a metric that picks the "closest" relationship
             if(!extends(class2, obji@superClass))
-                setIs(class2, obji@superClass, extensionObject = obji, doComplete = FALSE)
+                setIs(class2, obji@superClass, extensionObject = obji,
+                      doComplete = FALSE, where = where)
         }
     }
     subclasses
