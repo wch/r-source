@@ -44,6 +44,9 @@ NEW FEATURES
     o	?plotmath documents the plotting expressions facility much
 	more comprehensively, with tables in the examples.
 
+    o	New functions dump.frames() and debugger() allow post-mortem
+	debugging.  See the help on debugger().
+
 
 BUG FIXES
 
