@@ -69,19 +69,19 @@
 
 #ifndef M_SQRT_PI
 /* sqrt(pi),  1/sqrt(2pi),  sqrt(2/pi) : */
-#define M_SQRT_PI	1.772453850905516027298167483341
-#define M_1_SQRT_2PI	0.398942280401432677939946059934
-#define M_SQRT_2dPI	0.79788456080286535587989211986876
+# define M_SQRT_PI	1.772453850905516027298167483341
+# define M_1_SQRT_2PI	0.398942280401432677939946059934
+# define M_SQRT_2dPI	0.79788456080286535587989211986876
 #endif
 
 
 #ifndef M_LN_SQRT_PI
 /* log(sqrt(pi)) = log(pi)/2 : */
-#define M_LN_SQRT_PI	0.5723649429247000870717136756765293558
+# define M_LN_SQRT_PI	0.5723649429247000870717136756765293558
 /* log(sqrt(2*pi)) = log(2*pi)/2 : */
-#define M_LN_SQRT_2PI	0.91893853320467274178032973640562
+# define M_LN_SQRT_2PI	0.91893853320467274178032973640562
 /* log(sqrt(pi/2)) = log(pi/2)/2 : */
-#define M_LN_SQRT_PId2	0.225791352644727432363097614947441
+# define M_LN_SQRT_PId2	0.225791352644727432363097614947441
 #endif
 
 
@@ -114,13 +114,13 @@
 #undef ML_PRECISION_WARNINGS
 
 #ifdef IEEE_754
-#ifdef HAVE_IEEE754_H
-#include <ieee754.h> /* newer Linuxen */
-#else
-#ifdef HAVE_IEEEFP_H
-#include <ieeefp.h> /* others [Solaris 2.5.x], .. */
-#endif
-#endif
+# ifdef HAVE_IEEE754_H
+#  include <ieee754.h> /* newer Linuxen */
+# else
+#  ifdef HAVE_IEEEFP_H
+#   include <ieeefp.h> /* others [Solaris 2.5.x], .. */
+#  endif
+# endif
 
 extern double m_zero;
 extern double m_one;
@@ -131,7 +131,8 @@ extern double m_tiny;
 #define ML_NAN		(m_zero / m_zero)
 #define ML_UNDERFLOW	(m_tiny * m_tiny)
 #define ML_VALID(x)	(!isnan(x))
-#else
+
+#else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
 #define ML_ERROR(x)	ml_error(x)
 #define ML_POSINF	DBL_MAX
 #define ML_NEGINF	(-DBL_MAX)

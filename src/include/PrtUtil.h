@@ -43,6 +43,7 @@ void formatInteger(int*,int,int*);
 void formatReal(double*, int, int*, int*, int*);
 void formatComplex(complex*, int, int*, int*, int*, int*, int*, int*);
 
+long Decode2Long(char *p, int *ierr);
 /* Formating of values */
 char *EncodeLogical(int, int);
 char *EncodeInteger(int, int);

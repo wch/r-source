@@ -164,15 +164,17 @@ int F77_SYMBOL(dpoco)(double *a, int *lda, int *n, double *rcond,
 int F77_SYMBOL(dpodi)(double *a, int *lda, int *n, double *det, int *job);
 int F77_SYMBOL(dpofa)(double *a, int *lda, int *n, int *info);
 int F77_SYMBOL(dposl)(double *a, int *lda, int *n, double *b);
+/* find qr decomposition, dqrdc2() is basis of R's qr() */
 int F77_SYMBOL(dqrdc)(double *x, int *ldx, int *n, int *p,
 		      double *qraux, int *jpvt, double *work, int *job);
 int F77_SYMBOL(dqrdc2)(double *x, int *ldx, int *n, int *p,
-		       double *tol, int *k, 
-		       double *qraux, int *jpvt, double *work);
+		       double *tol, int *rank, 
+		       double *qraux, int *pivot, double *work);
 int F77_SYMBOL(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 		      double *tol, double *b, double *rsd,
 		      double *qty, int *k, 
 		      int *jpvt, double *qraux, double *work);
+/* solve for QR coefficients */
 int F77_SYMBOL(dqrsl)(double *x, int *ldx, int *n, int *k, 
 		      double *qraux, double *y, 
 		      double *qy, double *qty, double *b,
@@ -218,5 +220,5 @@ int F77_SYMBOL(optif9)(int *nr, int *n, double *x,
 		       int *itrmcd, double *a, double *wrk, int *itncnt);
  
 double F77_SYMBOL(zeroin)(double *ax, double *bx, 
-			  S_fp f, double *tol, int *maxiter);
+			  D_fp f, double *tol, int *maxiter);
 #endif

@@ -32,18 +32,20 @@
 /*  Heap and Pointer Protection Stack Sizes.  */
 /*  These values are minima and can be overriden in Platform.h	*/
 
-/*  R_PPSSIZE  The pointer protection stack size  */
-/*  R_NSIZE    The number of cons cells	 */
-/*  R_VSIZE    The vector heap size in bytes */
+#define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
+
+/*	R_PPSSIZE  The pointer protection stack size  */
+/*	R_NSIZE    The number of cons cells	 */
+/*	R_VSIZE    The vector heap size in bytes */
 
 #ifndef R_PPSSIZE
-#define	R_PPSSIZE    10000L
+#define	R_PPSSIZE	10000L
 #endif
 #ifndef R_NSIZE
-#define	R_NSIZE	     200000L
+#define	R_NSIZE		200000L
 #endif
 #ifndef R_VSIZE
-#define	R_VSIZE	     2000000L
+#define	R_VSIZE		2097152L
 #endif
 
 #ifdef Macintosh

@@ -1,4 +1,4 @@
-/* Is basically only used by ../main/random.c  & ../nmath/sunif.c
+/* only used by ../main/random.c  & ../nmath/sunif.c
  */
 #ifndef RANDOM_H
 #define RANDOM_H
@@ -13,8 +13,15 @@ typedef enum {
     MERSENNE_TWISTER,
 } RNGtype;
 
+/* Different kind of "N(0,1)" generators :*/
+typedef enum {
+    AHRENS_DIETER,
+    KINDERMAN_RAMAGE,
+} N01type;
+
 typedef struct {
     RNGtype kind; /* above enum: 0,1,2... */
+    N01type Nkind;
     char *name; /* print name */
     int is_seeded; /* False(0), True(1) */
     int n_seed; /* length of seed vector */
