@@ -2806,6 +2806,7 @@ Rboolean GLocator(double *x, double *y, int coords, DevDesc *dd)
 	if(!((GEDevDesc*) dd)->dev->locator)
 	    error("no locator capability in device driver");
 	if(((GEDevDesc*) dd)->dev->locator(x, y, ((GEDevDesc*) dd)->dev)) {
+	    GConvert(x, y, DEVICE, coords, dd);
 	    return TRUE;
 	}
 	else
