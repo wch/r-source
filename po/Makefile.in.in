@@ -69,8 +69,8 @@ CATALOGS = @CATALOGS@
 	cd $(srcdir) && rm -f $${lang}.gmo && $(GMSGFMT) -c --statistics -o t-$${lang}.gmo $${lang}.po && mv t-$${lang}.gmo $${lang}.gmo
 
 .sin.sed:
-	sed -e '/^#/d' $< > t-$@
-	mv t-$@ $@
+	@sed -e '/^#/d' $< > t-$@
+	@mv t-$@ $@
 
 all: all-@USE_NLS@
 

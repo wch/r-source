@@ -38,10 +38,10 @@ en@boldquot.po-update: en@boldquot.po-update-en
 	fi
 
 en@quot.insert-header: insert-header.sin
-	sed -e '/^#/d' -e 's/HEADER/en@quot.header/g' $(srcdir)/insert-header.sin > en@quot.insert-header
+	@sed -e '/^#/d' -e 's/HEADER/en@quot.header/g' $(srcdir)/insert-header.sin > en@quot.insert-header
 
 en@boldquot.insert-header: insert-header.sin
-	sed -e '/^#/d' -e 's/HEADER/en@boldquot.header/g' $(srcdir)/insert-header.sin > en@boldquot.insert-header
+	@sed -e '/^#/d' -e 's/HEADER/en@boldquot.header/g' $(srcdir)/insert-header.sin > en@boldquot.insert-header
 
 mostlyclean: mostlyclean-quot
 mostlyclean-quot:
