@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = xdr
+SUBDIRS = xdr zlib
 LIBZ = @BUILD_ZLIB_TRUE@ zlib
 LIBXDR = @BUILD_XDR_TRUE@ xdr
 EXTRA_LIBS = $(LIBZ) $(LIBXDR)
@@ -58,7 +58,3 @@ distdir: $(DISTFILES)
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
 	done
-	@((cd $(srcdir); \
-	      $(TAR) -c -f - --exclude=CVS xdr) \
-	    | (cd $(distdir); $(TAR) -x -f -)) \
-	  || exit 1

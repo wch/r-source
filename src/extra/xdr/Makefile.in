@@ -22,8 +22,13 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+## <FIXME>
+## HEADERS currently has files in subdir 'rpc' and hence cannot be used
+## in DISTFILES.  Need to get this right eventually and adjust distdir
+## accordingly.
 DISTFILES = \
-  README.txt copyrght.txt Makefile.in Makefile.win $(SOURCES) $(HEADERS)
+  README.txt copyrght.txt Makefile.in Makefile.win $(SOURCES)
+## </FIXME>
 noinst_LIBRARIES = @BUILD_XDR_TRUE@ libxdr.a
 libxdr_a_SOURCES = $(SOURCES)
 libxdr_a_OBJECTS = $(OBJECTS)
@@ -66,6 +71,9 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+	@((cd $(srcdir); $(TAR) -c -f - --exclude=CVS rpc) \
+	    | (cd $(distdir); $(TAR) -x -f -)) \
+	  || exit 1
 
 ## Automagically generated dependencies:
 

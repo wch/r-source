@@ -53,6 +53,6 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 	@((cd $(srcdir); \
-	      $(TAR) -c -f - --exclude=CVS extra gnuwin32 macintosh) \
+	      $(TAR) -c -f - --exclude=CVS gnuwin32 macintosh) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \
 	  || exit 1

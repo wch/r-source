@@ -24,7 +24,8 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = R_changes README Makefile.in $(SOURCES) $(HEADERS)
+DISTFILES = R_changes README Makefile.in Makefile.win \
+  $(SOURCES) $(HEADERS)
 noinst_LIBRARIES = @BUILD_ZLIB_TRUE@ libz.a
 libz_a_SOURCES = $(SOURCES)
 libz_a_OBJECTS = $(OBJECTS)
