@@ -48,7 +48,8 @@ DISTFILES = Makefile.in README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
 	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
-	$(test-src-reg) reg-tests-2.Rout.save \
+	$(test-src-reg) reg-IO.Rout.save reg-plot.Rout.save \
+	reg-tests-2.Rout.save \
 	$(test-src-random)  p-r-random-tests.Rout.save \
 	gct-foot.R
 SUBDIRS = Examples
@@ -165,10 +166,10 @@ stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
 mostlyclean: clean
 clean:
 	@-(cd Examples; $(MAKE) $@)
-	@rm -f stamp-R Makedeps Rplot* *.Rd data dumpdata.R
+	@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R
 distclean: clean
 	@-(cd Examples; $(MAKE) $@)
-	@rm -f Makefile $(test-out) $(test-src-auto)
+	@rm -f Makefile $(test-out) $(test-src-auto) .RData
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
