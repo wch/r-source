@@ -5086,7 +5086,7 @@ of the @R{} environment.  It is possible to use the facilities to
 display a wide variety of statistical graphs and also to build entirely
 new types of graph.
 
-The graphics facilities can be used in both interactive modes, but in
+The graphics facilities can be used in both interactive and batch modes, but in
 most cases, interactive use is more productive.  Interactive use is also
 easy because at startup time @R{} initiates a graphics @emph{device
 driver} which opens a special @emph{graphics window} for the display of
@@ -5277,12 +5277,23 @@ specified exactly with the @code{breaks=} argument.  If the
 @code{probability=TRUE} argument is given, the bars represent relative
 frequencies instead of counts.
 
-@item dotchart(x, @dots{})
-@findex dotchart
+@item dotplot(x, @dots{})
+@findex dotplot
 Constructs a dotchart of the data in @code{x}.  In a dotchart the
 @math{y}-axis gives a labelling of the data in @code{x} and the
 @math{x}-axis gives its value.  For example it allows easy visual
 selection of all data entries with values lying in specified ranges.
+
+@item image(x, y, z, @dots{})
+@itemx contour(x, y, z, @dots{})
+@itemx persp(x, y, z, @dots{})
+@findex image
+@findex contour
+@findex persp
+Plots of three variables.  The @code{image} plot draws a grid of rectangles
+using different colours to represent the value of @code{z}, the @code{contour}
+plot draws contour lines to represent the value of @code{z}, and the 
+@code{persp} plot draws a 3D surface.
 @end table
 
 @node Arguments to high-level plotting functions,  , Display graphics, High-level plotting commands
@@ -5345,7 +5356,7 @@ Figure title, placed at the top of the plot in a large font.
 Sub-title, placed just below the @math{x}-axis in a smaller font.
 @end table
 
-@node Low-level plotting commands, Interacting with graphics, High-level plotting commands, Graphics
+@node Low-level plotting commands, Mathematical annotation, High-level plotting commands, Graphics
 @section Low-level plotting commands
 
 Sometimes the high-level plotting functions don't produce exactly the
@@ -5449,7 +5460,63 @@ sufficient to supply a single argument being a list with elements named
 valid input.  In this way functions such as @code{locator()} (see below)
 may be used to specify positions on a plot interactively.
 
-@node Interacting with graphics, Using graphics parameters, Low-level plotting commands, Graphics
+@menu
+* Mathematical annotation::          
+* Hershey vector fonts::  
+@end menu
+
+@node Mathematical annotation, Hershey vector fonts, Low-level plotting commands, Low-level plotting commands
+@subsection Mathematical annotation
+
+In some cases, it is useful to add mathematical symbols and formulae to a
+plot.  This can be achieved in @R{} by specifying an @emph{expression} rather
+than a character string in any one of @code{text}, @code{mtext}, @code{axis},
+or @code{title}.   For example, the following code draws the formula for 
+the Binomial probability function:
+
+@smallexample
+> text(x, y, expression(paste(bgroup("(", atop(n, x), ")"), 
+                              p^x, q^@{n-x@})))
+@end smallexample
+
+More information, including a full listing of the features available can 
+obtained from within @R{} using the commands:
+
+@smallexample
+> help(plotmath)
+> example(plotmath)
+@end smallexample
+
+@node Hershey vector fonts, Interacting with graphics, Mathematical annotation, Low-level plotting commands
+@subsection Hershey vector fonts
+
+It is possible to specify Hershey vector fonts for rendering text when using 
+the @code{text} and @code{contour} functions.  There are three reasons for
+using the Hershey fonts:
+@itemize @bullet
+@item  
+Hershey fonts can produce better
+output, especially on a computer screen, for rotated and/or small text.  
+@item 
+Hershey fonts
+provide certain symbols that may not be available 
+in the standard fonts.  In particular, there are zodiac signs, cartographic
+symbols and astronomical symbols.
+@item 
+Hershey fonts provide cyrillic and japanese (Kana and Kanji) characters.
+@end itemize
+
+More information, including tables of Hershey characters can be obtained from
+within @R{} using the commands:
+
+@smallexample
+> help(Hershey)
+> example(Hershey)
+> help(Japanese)
+> example(Japanese)
+@end smallexample
+
+@node Interacting with graphics, Using graphics parameters, Hershey vector fonts, Graphics
 @section Interacting with graphics
 
 @R{} also provides functions which allow users to extract or add
@@ -5844,6 +5911,9 @@ can be added to the outer margins with the @code{mtext()} function with
 argument @code{outer=TRUE}.  There are no outer margins by default,
 however, so you must create them explicitly using @code{oma} or
 @code{omi}.
+
+More complicated arrangements of multiple figures can be produced by the 
+@code{split.screen()} and @code{layout()} functions.  
 
 @node Device drivers, Dynamic graphics, Graphics parameters, Graphics
 @section Device drivers
