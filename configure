@@ -16689,10 +16689,8 @@ case "${host_os}" in
     case "${host_os}" in
       darwin1.[012])
 	shlib_ldflags="-bundle -undefined suppress" ;;
-      darwin1.3)
-        shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
       *)
-	shlib_ldflags="-bundle -bundle_loader \$(R_HOME)/bin/R.bin" ;;
+        shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
     esac
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
@@ -16902,7 +16900,7 @@ case "${host_os}" in
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
     ##  Change once the driver is modularized.
-    LIBR_LDFLAGS="-dynamiclib -framework Carbon"
+    LIBR_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libR.dylib -framework Carbon"
     ## </FIXME>
     ;;
 esac
