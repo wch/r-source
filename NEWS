@@ -33,6 +33,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Crossing factors (`:') works again.
+
     o   terms.formula used to choke on terms more than 60 characters long
 
     o	is.nan() should now work correctly on new/old-style lists.
