@@ -533,10 +533,6 @@ Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
 From: Kurt Hornik <hornik@ci.tuwien.ac.at>
 Date: Mon, 17 Mar 2003 21:32:55 +0100
 ..part of 2644
-* PR# 3070 *
-Subject: Possible R CMD check problem
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Wed, 21 May 2003 12:16:55 -0700
 * PR# 3071 *
 Subject: ~ files not excluded from build
 From: Ross Boylan <ross@biostat.ucsf.edu>
@@ -729,11 +725,11 @@ Date: Thu, 22 May 2003 16:54:29 +0200 (MET DST)
 Subject: Conflict with tseries package??
 From: xoaquin@computer.org
 Date: Thu, 22 May 2003 23:09:30 +0200 (MET DST)
-* PR# 3080 *
-Subject: r-bugs_Refinance_Start_a_new_business_14
-From: <alessandra.brokovich@lycos.co.uk>
-Date: Fri, 23 May 2003 06:05:07 +1000
-* PR# 3081 *
-Subject: ASSISTANCE
-From: ERIC JONES <ericjons9@mail15.com>
-Date: Thu, 22 May 2003 23:30:26 +0200
+* PR# 3084 *
+Subject: RGui Startup Error on Win2000
+From: gzambre@ieee.org
+Date: Fri, 23 May 2003 16:16:20 +0200 (MET DST)
+* PR# 3085 *
+Subject: library(MASS) in .First()
+From: abroman@jhsph.edu
+Date: Fri, 23 May 2003 17:16:22 +0200 (MET DST)
