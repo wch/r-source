@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-34, 2003-02-21
+Version 1.6-35, 2003-02-27
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1199,6 +1199,10 @@ distributions of R.)
      classes in this package are virtual and need to be extended by the
      various DBMS implementations.
 
+*Davies*
+     Functions for the Davies quantile function and the Generalized Lambda
+     distribution.
+
 *Devore5*
      Data sets and sample analyses from "Probability and Statistics for
      Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury.
@@ -1634,6 +1638,10 @@ distributions of R.)
 
 *hdf5*
      Interface to the NCSA HDF5 library.
+
+*hier.part*
+     Hierarchical Partitioning: variance partition of a multivariate data
+     set.
 
 *ifs*
      Iterated Function Systems distribution function estimator.
