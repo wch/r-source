@@ -132,30 +132,28 @@ double pnorm(double x, double mu, double sigma)
     min = DBL_MIN;
     y = fabs(x);
     if (y <= 0.66291) {
-	xsq = 0.0;
-	if (y > eps) {
+	if (y > eps)
 	    xsq = x * x;
-	}
+	else xsq = 0.0;
 	xnum = a[4] * xsq;
 	xden = xsq;
-	for (i = 1; i <= 3; ++i) {
-	    xnum = (xnum + a[i - 1]) * xsq;
-	    xden = (xden + b[i - 1]) * xsq;
+	for (i = 0; i < 3; ++i) {
+	    xnum = (xnum + a[i]) * xsq;
+	    xden = (xden + b[i]) * xsq;
 	}
-	result = x * (xnum + a[3]) / (xden + b[3]);
-	temp = result;
+	temp = x * (xnum + a[3]) / (xden + b[3]);
 	result = 0.5 + temp;
 	ccum = 0.5 - temp;
     }
     else if (y <= M_SQRT_32) {
 
-	/* Evaluate pnorm for 0.66291 <= |z| <= sqrt(32) */
+	/* Evaluate pnorm for 0.66291 < |z| <= sqrt(32) */
 
 	xnum = c[8] * y;
 	xden = y;
-	for (i = 1; i <= 7; ++i) {
-	    xnum = (xnum + c[i - 1]) * y;
-	    xden = (xden + d[i - 1]) * y;
+	for (i = 0; i < 7; ++i) {
+	    xnum = (xnum + c[i]) * y;
+	    xden = (xden + d[i]) * y;
 	}
 	result = (xnum + c[7]) / (xden + d[7]);
 	xsq = floor(y * SIXTEN) / SIXTEN;
@@ -176,9 +174,9 @@ double pnorm(double x, double mu, double sigma)
 	xsq = 1.0 / (x * x);
 	xnum = p[5] * xsq;
 	xden = xsq;
-	for (i = 1; i <= 4; ++i) {
-	    xnum = (xnum + p[i - 1]) * xsq;
-	    xden = (xden + q[i - 1]) * xsq;
+	for (i = 0; i < 4; ++i) {
+	    xnum = (xnum + p[i]) * xsq;
+	    xden = (xden + q[i]) * xsq;
 	}
 	result = xsq * (xnum + p[4]) / (xden + q[4]);
 	result = (M_1_SQRT_2PI - result) / y;
