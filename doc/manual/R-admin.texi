@@ -825,7 +825,10 @@ The use of encodings and the @R{} @code{iconv} function depend on having
 the system @code{iconv} function: this is part of recent versions of
 @code{glibc} and many Unixes.  You can also install GNU @code{libiconv}
 (which is not the same as that in @code{glibc}), possibly as a plug-in
-replacement: see @uref{http://www.gnu.org/software/libiconv/}.
+replacement: see @uref{http://www.gnu.org/software/libiconv/}.  Note
+that the @R{} usage requires @code{iconv} to be able to translate
+between @code{"latin1"} and @code{"UTF=8"} and to recognize @code{""} as
+the current encoding -- this is not true of most commercial Unixes.
 
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate headers and libraries installed: @code{jpeg} (version 6b

@@ -66,7 +66,7 @@ iconvlist()
 iconvlist()
 
 ## convert from Latin-2 to UTF-8: two of the glibc iconv variants.
-iconv(x, "ISO_8859-2", "UTF-8")  # 8859-2 on Solaris
+iconv(x, "ISO_8859-2", "UTF-8")
 iconv(x, "LATIN2", "UTF-8")
 
 (x <- "fa\xE7ile")
