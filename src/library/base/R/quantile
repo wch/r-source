@@ -1,13 +1,13 @@
 quantile <- function(x, ...) UseMethod("quantile")
 
-quantile.default <- function (x, probs = seq(0, 1, 0.25), na.rm = FALSE) 
+quantile.default <- function (x, probs = seq(0, 1, 0.25), na.rm = FALSE)
 {
-	if (na.rm) 
+	if (na.rm)
 		x <- x[!is.na(x)]
-	else if (any(!is.finite(x))) 
+	else if (any(!is.finite(x)))
 	 stop("Missing values, NaN\'s and Inf\'s not allowed if na.rm=FALSE")
 	n <- length(x)
-	if (any(probs < 0 | probs > 1)) 
+	if (any(probs < 0 | probs > 1))
 		stop("probs outside [0,1]")
 	qs <- if(n > 0) {
 		index <- 1 + (n - 1) * probs
@@ -18,6 +18,8 @@ quantile.default <- function (x, probs = seq(0, 1, 0.25), na.rm = FALSE)
 	} else {#-- n = 0
 		rep(as.numeric(NA), length(probs))
 	}
-	names(qs) <- paste(round(100 * probs), "%", sep = "")
+	names(qs) <- paste(formatC(100 * probs, format= "fg", wid=1,
+				   dig= max(2,.Options$digits)),
+			   "%", sep = "")
 	qs
 }
