@@ -1,10 +1,6 @@
 ###-*- R -*- Macintosh Specific ----
-# .Library <- paste(getenv("RHOME"), "library", sep = "\\")
 
-# .lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))
-
+.Library <- paste(R.home(), "library", sep=.Platform$sep)
+.lib.loc <- .Library
 options(papersize = "a4")
 options(device = "macintosh")
-
-# .First <- function() macintosh()
-

@@ -13,6 +13,33 @@ NEW FEATURES
 
     o	Gnome support added
 
+    o   The X11 graphics driver no longer produces "color allocation"
+        error messages.  On pseudocolor displays, the driver allocates
+	the best color cube it can at startup and approximates the
+	user-specified colors as best it can from the cube.  On
+	truecolor displays, you get exactly the color you request.
+	(Directcolor and staticcolor displays are not supported yet).
+
+    o	The "persp" function now allows shading of the rendered
+	surface using a simple lighting model.
+
+    o	Many functions providing an interface to the operating system
+	have been made "platform independent".  See the manual entry
+	for "file" for details.
+
+    o   There is a new function "eval.with.vis" which behaves exactly
+	like "eval", but which returns both the result of the evaluation
+	an a logical value indicating whether the value is ``visible''.
+	This has been used to replace some ad-hoc tests for whether
+	value should be printed or not in "source".  As a consequence,
+	the "example" and "demo" functions no longer print invisible
+	values when the example script is run.
+
+BUG FIXES
+
+    o	Resizing an inactive graphics window to an invalid size left
+	that window active and produced a spurious prompt and newline
+	in the console window.  This no longer happens.
 
 
  	**************************************************

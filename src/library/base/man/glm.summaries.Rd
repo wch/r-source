@@ -1,4 +1,4 @@
-\name{glm summaries}
+\name{glm.summaries}
 \title{Accessing Generalized Linear Model Fits}
 \usage{
 summary(object, dispersion = NULL, correlation = FALSE,

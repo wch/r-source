@@ -1,4 +1,4 @@
-\name{nrow, ncol}
+\name{nrow}
 \title{The Number of Rows/Columns of an Array}
 \usage{
 nrow(x)

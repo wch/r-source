@@ -4837,6 +4837,9 @@ void restoredpSaved(DevDesc *dd)
 }
 
 
+/* FIXME : If a non-active window is resized to an invalid size */
+/* that window is left active.  */
+
 void playDisplayList(DevDesc *dd)
 {
     int ask, savedDevice;
@@ -4854,6 +4857,7 @@ void playDisplayList(DevDesc *dd)
 	    SEXP op = CAR(theOperation);
 	    SEXP args = CDR(theOperation);
 	    PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
+            if (!dd->gp.valid) break;
 	    theList = CDR(theList);
 	}
 	dd->gp.ask = ask;

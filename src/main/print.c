@@ -121,6 +121,11 @@ SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+SEXP do_visibleflag(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return ScalarLogical(R_Visible);
+}
+
 SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int quote;

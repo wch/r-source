@@ -1,9 +1,10 @@
 \name{persp}
 \title{Perspective Plots}
 \usage{
-persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
-        xlim = range(x), ylim = range(y), zlim = range(z, na.rm=T),
-        theta = 0, phi = 15, d = 1, scale = TRUE, col, border, ...)
+persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+        z, xlim = range(x), ylim = range(y), zlim = range(z, na.rm=T),
+        theta = 0, phi = 15, d = 1, scale = TRUE, col, border,
+        ltheta = -135, lphi = 0, shade = NA, box = TRUE, ...)
 }
 \alias{persp}
 \arguments{
@@ -19,7 +20,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     so that the rectangular volume defined by these limits is visible.}
   \item{theta, phi}{angles defining the viewing direction.
     \code{theta} gives the azimuthal direction and \code{phi}
-    the elevation.}
+    the colattitude.}
   \item{d}{a value which can be used to vary the strength of
     the perspective transformation.  Values of \code{d} greater
     than 1 will lessen the perspective effect and values less
@@ -31,7 +32,23 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     the coordinates are scaled so that aspect ratios are retained.
     This is useful for rendering things like DEM information.}
   \item{col}{the color of the surface facets.}
-  \item{border}{color of the line drawn around the surface facets.}
+  \item{border}{the color of the line drawn around the surface facets.
+    A value of \code{NA} will disable the drawing of borders.  This is
+    sometimes useful when the surface is shaded.}
+  \item{ltheta, lphi}{if finite values are specified for \code{ltheta}
+    and \code{lphi}, the surface is shaded as though it was being
+    illuminated from the direction specified by azimuth \code{ltheta}
+    and collattitude \code{lphi}.}
+  \item{shade}{the shade at a surface facet is computed as
+    \code{((1+d)/2)^shade}, where \code{d} is the dot product of
+    a unit vector normal to the facet and a unit vector in the
+    direction of a light source.  Values of \code{shade} close
+    to one yield shading similar to a point light source model
+    and values close to zero produce no shading.  Values in the
+    range 0.5 to 0.75 provide an approximation to daylight
+    illumination.}
+  \item{box}{should the bounding box for the surface be displayed.
+    The default is \code{TRUE}.}
   \item{\dots}{additional graphical parameters (see \code{\link{par}})
     and the arguments to \code{\link{title}} may also be supplied.}
 }
@@ -43,7 +60,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   and \code{phi}.  If \code{theta} and \code{phi} are both zero
   the viewing direction is directly down the negative y axis.
   Changing \code{theta} will vary the azimuth and changing \code{phi}
-  the elevation.
+  the colattitude.
 }
 \seealso{
   \code{\link{contour}} and \code{\link{image}}.
@@ -57,11 +74,14 @@ y <- x
 f <- function(x,y)
 {
         r <- sqrt(x^2+y^2)
-        sin(r)/r
+        10 * sin(r)/r
 }
 z <- outer(x,y,f)
 z[is.na(z)] <- 1
-persp(x, y, z, theta=30, phi=30, expand=0.5, col="lightblue")
+par(bg="white")
+persp(x, y, z, theta=30, phi=30, expand=0.5, col="lightblue") 
+persp(x, y, z, theta=30, phi=30, expand=0.5, col="lightblue",
+	ltheta=120, shade = 0.75)
 
 
 # (2) Visualizing a simple DEM model
@@ -82,7 +102,7 @@ z <- rbind(zmin, cbind(zmin, z, zmin), zmin)
 x <- c(min(x)-1e-10, x, max(x)+1e-10)
 y <- c(min(y)-1e-10, y, max(y)+1e-10)
 
-fill <- matrix("green2", nr=nrow(z)-1, nc=ncol(z)-1)
+fill <- matrix("green3", nr=nrow(z)-1, nc=ncol(z)-1)
 fill[,1] <- "gray"
 fill[,ncol(fill)] <- "gray"
 fill[1,] <- "gray"
@@ -93,6 +113,11 @@ persp(x, y, z, theta=120, phi=15, col=fill, scale=F)
 title(main="Maunga Whau\nOne of 50 Volcanoes in the Auckland Region.",
 font.main=4)
 
+par(bg="slategray")
+persp(x, y, z, theta=135, phi=30, col=fill, scale=F, ltheta=-120,
+        lphi=15, shade=0.65)
+persp(x, y, z, theta=135, phi=30, col="green3", scale=F,
+        ltheta=-120, shade=0.75, border=NA, box=FALSE)
 }
 \keyword{hplot}
 \keyword{aplot}

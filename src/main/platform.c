@@ -29,30 +29,40 @@
  *  two functions should probably be amalgamated.
  */
 
+#ifdef Unix
+#define OSTYPE      "Unix"
+#define FILESEP     "/"
+#define DYNLOADEXT  ".so"
+#endif
+
+#ifdef Macintosh
+#define OSTYPE      "Macintosh"
+#define FILESEP     ":"
+#define DYNLOADEXT  ".dll"
+#endif
+
+#ifdef Win32
+#define OSTYPE      "Windows"
+#define FILESEP     "\\"
+#define DYNLOADEXT  ".dll"
+#endif
+
+static char *R_OSType = OSTYPE;
+static char *R_FileSep = FILESEP;
+static char *R_DynLoadExt = DYNLOADEXT;
+
 SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value, names;
     checkArity(op, args);
     PROTECT(value = allocVector(VECSXP, 3));
     PROTECT(names = allocVector(STRSXP, 3));
-    STRING(names)[0]  = mkChar("OS.type");
-    STRING(names)[1]  = mkChar("file.sep");
-    STRING(names)[2]  = mkChar("dynload.ext");
-#ifdef Unix
-    VECTOR(value)[0]  = mkString("Unix");
-    VECTOR(value)[1]  = mkString("/");
-    VECTOR(value)[2]  = mkString(".so");
-#endif
-#ifdef Macintosh
-    VECTOR(value)[0]  = mkString("Macintosh");
-    VECTOR(value)[1]  = mkString(":");
-    VECTOR(value)[2]  = mkString(".dll");
-#endif
-#ifdef Win32
-    VECTOR(value)[0]  = mkString("Windows");
-    VECTOR(value)[1]  = mkString("\\");
-    VECTOR(value)[2]  = mkString(".dll");
-#endif
+    STRING(names)[0] = mkChar("OS.type");
+    STRING(names)[1] = mkChar("file.sep");
+    STRING(names)[2] = mkChar("dynload.ext");
+    VECTOR(value)[0] = mkString(R_OSType);
+    VECTOR(value)[1] = mkString(R_FileSep);
+    VECTOR(value)[2] = mkString(R_DynLoadExt);
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;
@@ -87,7 +97,7 @@ SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  open a read-only edit window with the file displayed in it.
  */
 
-SEXP do_showfile(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl;
     checkArity(op, args);
@@ -131,11 +141,12 @@ void R_AppendFile(char *file1, char *file2)
         goto append_error;
     fclose(fp1);
     fclose(fp2);
+    return;
  append_error:
     error("error writing to file %s\n", file1);
 }
 
-SEXP do_appendfile(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn1, fn2;
     checkArity(op, args);
@@ -150,7 +161,27 @@ SEXP do_appendfile(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP do_removefile(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn;
+    FILE *fp;
+    int i, nfiles;
+    checkArity(op, args);
+    fn = CAR(args);
+    if (!isString(fn)) 
+        errorcall(call, "invalid filename argument\n");
+    nfiles = length(fn);
+    for (i = 0; i < nfiles; i++) {
+	if (STRING(fn)[i] == R_NilValue)
+	    errorcall(call, "invalid filename \"%s\"\n", STRING(fn)[i]);
+	if ((fp = fopen(CHAR(STRING(fn)[i]), "w")) == NULL)
+	    errorcall(call, "cannot create file \"%s\"\n", STRING(fn)[i]);
+	close(fp);
+    }
+    return R_NilValue;
+}
+
+SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn1;
     int i, n;
@@ -175,18 +206,36 @@ SEXP do_removefile(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include "regex.h"
 #endif
 
+#define DIRNAMEBUFSIZE 256
+
+static SEXP filename(char *dir, char *file)
+{
+    SEXP ans;
+    if (dir) {
+	ans = allocString(strlen(dir) + strlen(R_FileSep) + strlen(file));
+	sprintf(CHAR(ans), "%s%s%s", dir, R_FileSep, file);
+    }
+    else {
+	ans = allocString(strlen(file));
+	sprintf(CHAR(ans), "%s", file);
+    }
+    return ans;
+}
+
 SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP d, p, ans;
     DIR *dir;
     struct dirent *de;
-    int allfiles, count, pattern;
+    int allfiles, fullnames, count, pattern;
+    int i, ndir;
+    char *dnp, dirname[DIRNAMEBUFSIZE];
 #ifdef HAVE_REGCOMP
     regex_t reg;
 #endif
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
-    if (!isString(d) || length(d) < 1 || STRING(d)[0] == R_NilValue)
+    if (!isString(d))
 	errorcall(call, "invalid directory argument\n");
     p = CAR(args);  args = CDR(args);
     if (isNull(p) || (isString(p) && length(p) < 1))
@@ -195,42 +244,62 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	pattern = 1;
     else
 	errorcall(call, "invalid pattern argument\n");
-    allfiles = asLogical(CAR(args));
-    if ((dir = opendir(R_ExpandFileName(CHAR(STRING(d)[0])))) == NULL)
-	errorcall(call, "invalid directory/folder name\n");
+    allfiles = asLogical(CAR(args)); args = CDR(args);
+    fullnames = asLogical(CAR(args));
+    ndir = length(d);
+    for (i = 0; i < ndir ; i++) {
+	dnp = R_ExpandFileName(CHAR(STRING(d)[i]));
+	if (strlen(dnp) >= DIRNAMEBUFSIZE)
+	    error("directory/folder path name too long\n");
+	strcpy(dirname, dnp);
+	if ((dir = opendir(dirname)) == NULL)
+	    errorcall(call, "invalid directory/folder name\n");
 #ifdef HAVE_REGCOMP
-    if (pattern && regcomp(&reg, CHAR(STRING(p)[0]), REG_EXTENDED))
-	errorcall(call, "invalid pattern regular expression\n");
+	if (pattern && regcomp(&reg, CHAR(STRING(p)[0]), REG_EXTENDED))
+	    errorcall(call, "invalid pattern regular expression\n");
 #else
-    warning("pattern specification is not available in \"list.files\"\n");
+	warning("pattern specification is not available in \"list.files\"\n");
 #endif
-    count = 0;
-    while (de = readdir(dir)) {
-        if (allfiles || !R_HiddenFile(de->d_name))
+	count = 0;
+	while (de = readdir(dir)) {
+	    if (allfiles || !R_HiddenFile(de->d_name))
 #ifdef HAVE_REGCOMP
-	    if (pattern) {
-		if(regexec(&reg, de->d_name, 0, NULL, 0) == 0)
-		    count++;
-	    }
-	    else
+		if (pattern) {
+		    if(regexec(&reg, de->d_name, 0, NULL, 0) == 0)
+			count++;
+		}
+		else
 #endif
-		count++;
+		    count++;
+	}
+	closedir(dir);
     }
-    rewinddir(dir);
     PROTECT(ans = allocVector(STRSXP, count));
     count = 0;
-    while (de = readdir(dir)) {
-        if (allfiles || !R_HiddenFile(de->d_name))
+    for (i = 0; i < ndir ; i++) {
+	dnp = R_ExpandFileName(CHAR(STRING(d)[i]));
+	if (strlen(dnp) >= DIRNAMEBUFSIZE)
+	    error("directory/folder path name too long\n");
+	strcpy(dirname, dnp);
+	if (fullnames)
+	    dnp = dirname;
+	else
+	    dnp = NULL;
+	if ((dir = opendir(dirname)) == NULL)
+	    errorcall(call, "invalid directory/folder name\n");
+	while (de = readdir(dir)) {
+	    if (allfiles || !R_HiddenFile(de->d_name))
 #ifdef HAVE_REGCOMP
-	    if (pattern) {
-		if (regexec(&reg, de->d_name, 0, NULL, 0) == 0)
-		    STRING(ans)[count++] = mkChar(de->d_name);
-	    }
-	    else
+		if (pattern) {
+		    if (regexec(&reg, de->d_name, 0, NULL, 0) == 0)
+			STRING(ans)[count++] = filename(dnp, de->d_name);
+		}
+		else
 #endif
-		STRING(ans)[count++] = mkChar(de->d_name);
+		    STRING(ans)[count++] = filename(dnp, de->d_name);
+	}
+	closedir(dir);
     }
-    closedir(dir);
 #ifdef HAVE_REGCOMP
     regfree(&reg);
 #endif
@@ -334,5 +403,5 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	fclose(fp);
     }
-    return R_NilValue;
+    return mkString("");
 }

@@ -1,4 +1,4 @@
-\name{lm summaries}
+\name{lm.summaries}
 \title{Accessing Linear Model Fits}
 \usage{
 anova(object, \dots)

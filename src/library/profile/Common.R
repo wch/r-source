@@ -6,6 +6,7 @@ T <- TRUE
 F <- FALSE
 version <- structure(Version(), class = "simple.list")
 .Machine <- Machine()
+.Platform <- Platform()
 
 options(na.action = "na.omit")
 options(show.signif.stars = TRUE)

@@ -1,4 +1,4 @@
-\name{QR Auxiliaries}
+\name{QR.Auxiliaries}
 \title{Reconstruct the Q, R, or X Matrices from a QR Object}
 \usage{
 qr.X(qrstr, complete = FALSE, ncol =)

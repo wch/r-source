@@ -1,14 +1,10 @@
 ###-*- R -*- Unix Specific ----
-.Library <- paste(getenv("RHOME"), "library", sep = "/")
 
+.Library <- paste(R.home(), "library", sep = .Platform$file.sep)
 .lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))
-
 options(printcmd = as.vector(getenv("R_PRINTCMD")))
 options(papersize = as.vector(getenv("R_PAPERSIZE")))
 options(device = if(interactive() && getenv("DISPLAY") != "")
         "X11" else "postscript")
-
-options(browser = "netscape")
-
-## .First <- function() { if (interactive() && getenv("DISPLAY") != "") x11() }
 options(pager = "${RHOME}/bin/pager")
+options(browser = "netscape")

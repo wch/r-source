@@ -1,37 +1,5 @@
 .Platform <-
-    list(OS.type = "Unix",
-	 file.sep = "/",
-	 dynlib.ext = ".so",
-	 show.file = function(file) {
-             system(paste(options("pager")[[1]], file))
-         },
-	 append.file = function(f1, f2) {# append to `f1' the file `f2':
-	     system(paste("cat", f2, ">>", f1), trash.errors= TRUE)
-	 },
-	 show.data = function(package, lib.loc, fsep) {
-             ## give `index' of all possible data sets
-             file <- tempfile("R.")
-             on.exit(unlink(file))
-             first <- TRUE
-	     for (lib in lib.loc)
-                 for (pkg in package) {
-                     INDEX <- system.file(paste("data", "index.doc",
-                                                sep = fsep),
-                                          pkg, lib)
-                     if (INDEX != "") {
-                         cat(paste(ifelse(first, "", "\n"),
-                                   "Data sets in package `", pkg, "':\n\n",
-                                   sep = ""),
-                             file = file, append = TRUE)
-                         .Platform$append.file(file, INDEX)
-                         first <- FALSE
-                     }
-                 }
-             if (first)
-                stop("No data sets found")
-             else
-                 .Platform$show.file(file)
-         })
+    list(OS.type = "Unix", file.sep = "/", dynlib.ext = ".so")
 
 bug.report <- function(subject="", ccaddress=getenv("USER"),
                        method=.Options$mailer,
@@ -120,89 +88,6 @@ getenv <- function(x) {
     }
 }
 
-help <- function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-		 lib.loc = .lib.loc, verbose = .Options$verbose,
-		 htmlhelp = .Options$htmlhelp) {
-    if (!missing(package))
-	if (is.name(y <- substitute(package)))# && !is.character(package))
-	    package <- as.character(y)
-    fsep <- .Platform$file.sep
-    if (!missing(topic)) {
-	topic <- substitute(topic)
-	if (is.name(topic))
-	    topic <- as.character(topic)
-	else if (!is.character(topic))
-	    stop("Unimplemented help feature")
-	if (!is.na(match(topic, c("+", "-", "*", "/", "^", "%%"))))
-	    topic <- "Arithmetic"
-	else if (!is.na(match(topic, c("<", ">", "<=", ">=", "==", "!="))))
-	    topic <- "Comparison"
-	else if (!is.na(match(topic, c("[", "[[", "$"))))
-	    topic <- "Extract"
-	else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
-	    topic <- "Logic"
-	else if (!is.na(match(topic, c("%*%"))))
-	    topic <- "matmult"
-	topic <- gsub("\\[","\\\\[", topic)# for cmd/help ..
-	INDICES <- paste(t(outer(lib.loc, package, paste, sep = fsep)),
-			 "help", "AnIndex", sep = fsep, collapse = " ")
-	file <- system(paste("${RHOME}/bin/help INDEX '", topic, "' ",
-			     INDICES, sep=""),
-		       intern = TRUE)
-	if (file == "") {		# try data .doc -- this is OUTDATED
-	    file <- system.file(paste("data", fsep, topic, ".doc", sep = ""),
-				package, lib.loc)
-	}
-	if (length(file) && file != "") {
-	    if (verbose)
-		cat ("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
-		     ".Rd'\n", sep = "")
-	    if (!offline) {
-		if(!is.null(htmlhelp) && htmlhelp){
-
-                    ## replace the last occurence of /help/ in the
-                    ## path with /html/, then append .html
-		    file <- gsub("/help/([^/]*)$", "/html/\\1", file)
-		    file <- paste("file:", file, ".html", sep="")
-                    
-		    if(is.null(.Options$browser))
-			stop("options(\"browser\") not set")
-		    browser <- .Options$browser
-		    system(paste(browser, " -remote \"openURL(", file,
-				 ")\" 2>/dev/null || ",
-				 browser, " ", file, " &", sep = ""))
-		    cat("help() for", topic, " is shown in browser",
-			browser, "...\n")
-		}
-		else
-		    .Platform$ show.file(file)
-	    }
-	    else {
-		FILE <- tempfile()
-		## on.exit(unlink(paste(FILE, "*", sep = "")))
-		cat("\\documentclass[", .Options$papersize, "paper]{article}\n",
-		    file = FILE, sep = "")
-		.Platform$ append.file(FILE, "${RHOME}/doc/manual/Rd.sty")
-		cat("\\InputIfFileExists{Rhelp.cfg}{}{}\n\\begin{document}\n",
-		    file = FILE, append = TRUE)
-		.Platform$ append.file(FILE,
-				       paste(sub("help/","latex/",file),".tex",
-					     sep = ""))
-		cat("\\end{document}\n", file = FILE, append = TRUE)
-		system(paste("${RHOME}/bin/help PRINT", FILE, topic))
-		return()
-	    }
-	} else
-	stop(paste("No documentation for `", topic, "'", sep = ""))
-    }
-    else if (!missing(package))
-	library(help = package, lib = lib.loc, character.only = TRUE)
-    else if (!missing(lib.loc))
-	library(lib = lib.loc)
-    else
-	help("help", package = "base", lib.loc = .Library)
-}
-
 help.start <- function (gui = "irrelevant", browser = .Options$browser,
 			remote = NULL) {
     if(is.null(browser))
@@ -227,16 +112,8 @@ unix <- function(call, intern = FALSE) {
     .Deprecated("system"); system(call,intern)
 }
 
-system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
-    FILES <- paste(t(outer(lib, pkg, paste, sep = .Platform$file.sep)),
-		   file, sep = .Platform$file.sep, collapse = " ")
-    system(paste("${RHOME}/bin/filename", FILES), intern = TRUE)
-}
-
 ##--- All the following should really be done in C [platform !] :
 ##---> For the first 3, look at Guido's win32 code!
-
-date <- function() { system("date", intern = TRUE) }
 
 tempfile <- function(pattern = "file") {
     system(paste("for p in", paste(pattern, collapse = " "), ";",
