@@ -1,0 +1,64 @@
+#! @PERL@
+
+%leafcounts = ();
+%totalcounts = ();
+
+while (<>) {
+    if (! $sample) {
+	$sample = $_ / 1000000
+    }
+    else {
+	chomp;
+	@line = split(/ /);
+	%names = ();
+	$leaf = @line[0];
+	foreach $name (@line) {
+	    if (! exists $names{$name}) {
+		$names{$name} = 1;
+	    }
+	}
+	foreach $name (keys %names) {
+	    if (exists $totalcounts{$name}) {
+		$totalcounts{$name} = $totalcounts{$name} + 1;
+	    }
+	    else { $totalcounts{$name} = 1; }
+	}
+	if (exists $leafcounts{$leaf}) {
+	    $leafcounts{$leaf} = $leafcounts{$leaf} + 1;
+	}
+	else { $leafcounts{$leaf} = 1; }
+    }
+}
+
+$total = $. - 1;
+$runtime = $total * $sample;
+
+print "\n";
+print "Each sample represents $sample seconds.\n";
+print "Total run time: $runtime seconds.\n\n";
+print "Total seconds: time spent in function and callees.\n";
+print "Self seconds: time spent in function alone.\n";
+
+print "\n";
+print "   %       total       %       self\n";
+print " total    seconds     self    seconds    name\n";
+
+@order = sort { $totalcounts{$b} <=> $totalcounts{$a} } keys %totalcounts;
+foreach $name (@order) {
+    printf "%6.2f%10.2f%10.2f%10.2f     %s\n",
+    100 * $totalcounts{$name}/$total, $totalcounts{$name} * $sample,
+    100 * $leafcounts{$name}/$total, $leafcounts{$name} * $sample,
+    $name;
+}
+
+print "\n";
+print "   %       self        %       total\n";
+print " self     seconds    total    seconds    name\n";
+   
+@order = sort { $leafcounts{$b} <=> $leafcounts{$a} } keys %leafcounts;
+foreach $name (@order) {
+    printf "%6.2f%10.2f%10.2f%10.2f     %s\n",
+    100 * $leafcounts{$name}/$total, $leafcounts{$name} * $sample,
+    100 * $totalcounts{$name}/$total, $totalcounts{$name} * $sample,
+    $name;
+}

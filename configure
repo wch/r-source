@@ -8373,6 +8373,7 @@ trap 'rm -fr `echo "Makeconf
   src/scripts/Rd2txt
   src/scripts/Rdconv
   src/scripts/Rdindex
+  src/scripts/Rprof
   src/scripts/SHLIB
   src/scripts/Sd2Rd
   src/scripts/build-help
@@ -8630,6 +8631,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/scripts/Rd2txt
   src/scripts/Rdconv
   src/scripts/Rdindex
+  src/scripts/Rprof
   src/scripts/SHLIB
   src/scripts/Sd2Rd
   src/scripts/build-help
