@@ -118,9 +118,9 @@ NEW FEATURES
     o	read.fwf() is no longer dependent on Perl.
 
     o	library(), require(), and sys.source() have a new argument
-	` keep.source = getOption("keep.source") '.
-	Hence, by default, functions from all packages (not just base)
-	`keep their source'
+	` keep.source = getOption("keep.source.pkgs") '.
+	This defaults to false, but can be set (also for base) to true
+	by setting the environment variable R_KEEP_PKG_SOURCE to "yes"
 
     o	The "keep.source" option now defaults to interactive() instead of TRUE.
 
@@ -131,6 +131,7 @@ NEW FEATURES
 
     o	install.packages() and update.packages() have a new `destdir'
 	argument for the directory to which to download the packages.
+
 
 
 BUG FIXES
@@ -165,7 +166,7 @@ BUG FIXES
 
     o	by() works when embedded in a function.
 
-    o	aggregate applied to multiple time series lost the series names.
+    o	aggregate() applied to multiple time series lost the series names.
 
     o	Linpack.h now makes clear which routines are actually in R.
 

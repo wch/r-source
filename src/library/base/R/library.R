@@ -5,7 +5,7 @@
 library <-
   function (package, help, lib.loc = .lib.loc, character.only = FALSE,
 	    logical.return = FALSE, warn.conflicts = package != "MASS",
-            keep.source = getOption("keep.source"))
+            keep.source = getOption("keep.source.pkgs"))
 
 {
     if (!missing(package)) {
@@ -171,7 +171,7 @@ library.dynam <-
 }
 
 require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
-                    keep.source = getOption("keep.source"))
+                    keep.source = getOption("keep.source.pkgs"))
 {
     package <- as.character(substitute(package)) # allowing "require(eda)"
     if (!exists(".Provided", inherits = TRUE))

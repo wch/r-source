@@ -89,7 +89,7 @@ source <-
 
 sys.source <-
     function(file, envir = NULL, chdir = FALSE,
-             keep.source = getOption("keep.source"))
+             keep.source = getOption("keep.source.pkgs"))
 {
     if(!(is.character(file) && file.exists(file)))
 	stop(paste("`", file, "' is not an existing file", sep = ""))

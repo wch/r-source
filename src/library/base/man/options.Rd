@@ -64,7 +64,12 @@ getOption(x)
     the right places.
 
     The default is \code{\link{interactive}()}, i.e., \code{TRUE} for
-    interactive use.
+    interactive use.}
+
+  \item{keep.source.pkgs}{As for \code{keep.source}, for functions in
+    packages loaded by \code{\link{library}} or \code{\link{require}}.
+    Defaults to \code{FALSE} unless the environment variable
+    \code{R_KEEP_PKG_SOURCE} is set to \code{yes}.}
 
   \item{na.action}{the name of a function for treating missing values
     (\code{\link{NA}}'s) for certain situations.}
