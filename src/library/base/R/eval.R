@@ -36,3 +36,4 @@ with <- function(data, expr, ...) UseMethod("with")
 with.default <- function(data, expr, ...)
     eval(substitute(expr), data, enclos=parent.frame())
 
+force <- function(x) x

@@ -319,6 +319,8 @@ NEW FEATURES
 	and ignored with a warning.  This avoids improperly closing
 	some types of connections if they are opened repeatedly.
 
+    o	New function force() to force evaluatio of formal argument.
+
 
 INSTALLATION CHANGES
 
