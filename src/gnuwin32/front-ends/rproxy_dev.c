@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_dev.c,v 1.3 2001/12/06 01:47:57 murrell Exp $
+ *  $Id: rproxy_dev.c,v 1.4 2001/12/10 09:35:34 ripley Exp $
  */
 
 // virtual device size
@@ -272,8 +272,8 @@ static void R_Proxy_Graphics_Polygon (int pCount,
 
 	}
 
-      sprintf (x,"device::Polygon: bg is %08x, fg is %08x\n",pFill,pCol);
-      OutputDebugString (x);
+      //      sprintf (x,"device::Polygon: bg is %08x, fg is %08x\n",pFill,pCol);
+      //      OutputDebugString (x);
       __graphics_device->vtbl->polygon (__graphics_device,
 					pCount,lX,lY,pFill,pCol);
 

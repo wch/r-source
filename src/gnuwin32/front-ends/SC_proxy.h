@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: SC_proxy.h,v 1.4 2001/04/05 09:42:35 ripley Exp $
+ *  $Id: SC_proxy.h,v 1.5 2001/12/10 09:35:34 ripley Exp $
  */
 
 #ifndef _STATCONN_H_
@@ -54,6 +54,7 @@ struct _SC_GraphicsDevice;
 #define SC_PROXY_ERR_PARSE_INVALID             0x80000007
 #define SC_PROXY_ERR_PARSE_INCOMPLETE          0x80000008
 #define SC_PROXY_ERR_UNSUPPORTEDTYPE           0x80000009
+#define SC_PROXY_ERR_EVALUATE_STOP             0x8000000a
 
 // version mismatch
 #define SC_PROXY_ERR_INVALIDINTERFACEVERSION   0x80000010

@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy.c,v 1.9 2001/12/06 01:47:57 murrell Exp $
+ *  $Id: rproxy.c,v 1.10 2001/12/10 09:35:34 ripley Exp $
  */
 
 #define NONAMELESSUNION
@@ -40,8 +40,8 @@
 #define CONNECTOR_DESCRIPTION   "Implements abstract connector interface to R"
 #define CONNECTOR_COPYRIGHT     "(C) 1999-2001, Thomas Baier"
 #define CONNECTOR_LICENSE       "GNU General Public License version 2 or greater"
-#define CONNECTOR_VERSION_MAJOR "0"
-#define CONNECTOR_VERSION_MINOR "99"
+#define CONNECTOR_VERSION_MAJOR "1"
+#define CONNECTOR_VERSION_MINOR "0"
 
 // interpreter information here at the moment until I know better...
 #define INTERPRETER_NAME        "R"

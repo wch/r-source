@@ -412,9 +412,9 @@ extern SEXP*	R_PPStack;	    /* The pointer protection stack */
 LibExtern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
 extern SEXP	R_ReturnedValue;    /* Slot for return-ing values */
 extern SEXP*	R_SymbolTable;	    /* The symbol table */
-extern RCNTXT	R_Toplevel;	    /* Storage for the toplevel environment */
-extern RCNTXT*	R_ToplevelContext;  /* The toplevel environment */
-extern RCNTXT*	R_GlobalContext;    /* The global environment */
+LibExtern RCNTXT R_Toplevel;	    /* Storage for the toplevel environment */
+LibExtern RCNTXT* R_ToplevelContext;  /* The toplevel environment */
+LibExtern RCNTXT* R_GlobalContext;    /* The global environment */
 LibExtern int	R_Visible;	    /* Value visibility flag */
 LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
 extern int	R_EvalCount	INI_as(0);	/* Evaluation count */
