@@ -346,6 +346,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 			size = 1 + PTR2VEC(length);
 		break;
 	case LANGSXP:
+		if(length == 0) return R_NilValue;
 		s = allocList(length);
 		TYPEOF(s) = LANGSXP;
 		return s;
