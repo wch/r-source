@@ -37,7 +37,7 @@ ALL_FFLAGS = $(R_XTRA_FFLAGS) $(PKG_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAG
 ALL_LIBS = $(LIBPATHS) $(PKG_LIBS) $(FLIBS)
 
 .SUFFIXES:
-.SUFFIXES: .c .cc .cpp .C .f .o
+.SUFFIXES: .c .cc .cpp .C .f .o .lo
 
 .c.o:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
