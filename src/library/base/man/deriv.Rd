@@ -8,11 +8,11 @@ deriv3(expr, namevec, function.arg = NULL, tag = ".expr", hessian = TRUE)
 \synopsis{
 D(expr, name)
 deriv(expr, ...)
-deriv.default(expr, namevec, function.arg)
-deriv.formula(form, namevec, function.arg)
+deriv.default(expr, namevec, function.arg, tag, hessian)
+deriv.formula(form, namevec, function.arg, tag, hessian)
 deriv3(expr, ...)
-deriv3.default(expr, namevec, function.arg)
-deriv3.formula(form, namevec, function.arg)
+deriv3.default(expr, namevec, function.arg, tag, hessian)
+deriv3.formula(form, namevec, function.arg, tag, hessian)
 }
 \alias{D}
 \alias{deriv}
