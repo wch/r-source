@@ -118,6 +118,7 @@ The current version of this document is @value{VERSION}.
 * Writing your own functions::
 * Statistical models in R::
 * Graphics::
+* Packages::
 * A sample session::
 * Invoking R::
 * The command line editor::
@@ -243,10 +244,11 @@ prefer to think of it of an environment within which many classical and
 modern statistical techniques have been implemented.  Some of these are
 built into the base @R{} environment, but many are supplied as
 @emph{packages}. (Currently the distinction is largely a matter of
-historical accident.)  There are about 8 packages supplied with @R{}
+historical accident.)  There are about 10 packages supplied with @R{}
 (called ``standard'' packages) and many more are available through the
 @acronym{CRAN} family of Internet sites (via
-@uref{http://cran.r-project.org}).
+@uref{http://cran.r-project.org}).  More details on packages are given
+later (@pxref{Packages}).
 
 Most classical statistics and much of the latest methodology is
 available for use with @R{}, but users will need to be prepared to do a
@@ -5195,7 +5197,7 @@ packages @pkg{rpart} and @pkg{tree}.
 
 @end itemize
 
-@node Graphics, A sample session, Statistical models in R, Top
+@node Graphics, Packages, Statistical models in R, Top
 @chapter Graphical procedures
 
 Graphical facilities are an important and extremely versatile component
@@ -6201,8 +6203,135 @@ and these can be accessed from @R{} via the package @pkg{xgobi}.
 XGobi currently runs under the X Windows system on either Unix or
 Windows, and @R{} interfaces are available for each.
 
+@node Packages, A sample session, Graphics, Top
+@chapter Packages
+@cindex Packages
 
-@node A sample session, Invoking R, Graphics, Top
+All @R{} functions and datasets are stored in @emph{packages}.  
+Only when a package is loaded are its contents available.  
+This is done both for efficiency (it would take longer to search
+through the full list than it does through the subset
+that is loaded), and to aid package developers, who are
+protected from name clashes with other code.  The 
+process of developing packages is described in the @emph{Writing
+@R{} Extensions} manual; here we will describe them from a user's
+point of view.
+
+To see which packages are installed at your
+site, issue the command
+@example
+> library()
+@end example 
+@noindent
+with no arguments.  To load a particular package (e.g. the @code{boot}
+package containing functions from Davison & Hinkley (1997)), use a 
+command like
+@example
+> library(boot)
+@end example
+
+Users connected to the Internet can use the @code{CRAN.packages()}
+function (available through the @code{Packages} menu in the Windows
+GUI) to automatically update and install packages.
+
+To see which packages are currently loaded, use
+@example
+> search()
+@end example
+@noindent
+to display the search list.  A few packages may be loaded but not
+available on the search list; @pxref{Namespaces}. 
+
+To see a list of all available help topics in an installed package,
+use
+@example
+help.start()
+@end example
+@noindent
+to start the HTML help system, and then navigate to the package
+listing in the @code{Reference} section.  
+
+@menu
+* Standard packages::       
+* Contributed packages and CRAN::    
+* Namespaces::
+@end menu
+
+@node Standard packages, Contributed packages and CRAN, Packages, Packages
+@section Standard packages
+
+The standard (or @emph{base}) packages are considered part of the
+@R{} source code.  They contain the basic functions that allow @R{}
+to work, and the standard statistical and graphical functions that
+are described in this manual.  They should be automatically
+available in any @R{} installation.  A complete list is contained in the
+@emph{R FAQ}.
+
+@node Contributed packages and CRAN, Namespaces, Standard packages, Packages
+@section Contributed packages and @acronym{CRAN}
+@cindex CRAN 
+
+There are hundreds of contributed packages for @R{}, written by
+many different authors.  Some of these packages implement specialized statistical
+methods, others give access to data or hardware, and others are designed
+to complement textbooks.
+Some (the @emph{recommended} packages) are distributed with every binary
+distribution of @R{}.  Most are available for download from
+@acronym{CRAN} (@uref{http://cran.r-project.org} and its mirrors),
+and other repositories such as Bioconductor
+(@uref{http://www.bioconductor.org/}).  The @emph{R FAQ} contains a
+list that was current at the time of release, but the collection
+of available packages changes frequently.
+
+
+
+@node Namespaces, , Contributed packages and CRAN, Packages
+@section Namespaces
+@cindex Namespace
+@findex ::
+@findex :::
+
+Packages can have
+@emph{namespaces}, and currently all of the base and most of the
+recommended packages do.  Namespaces do two things:  they allow the
+package writer to hide functions and data that are meant only for internal
+use, and they prevent functions from breaking when a user (or other
+package writer) picks a name that clashes with one in the package.  
+
+For example, @code{t()} is the transpose function in @R{}, but users
+might define their own object named @code{t}. Namespaces prevent
+the user's definition from taking precedence, and breaking every
+function that tries to transpose a matrix.
+
+There are two operators that work with namespaces.  The double-colon
+operator @code{::} selects definitions from a particular namespace.
+In the example above, the transpose function will always be available
+as @code{base::t}, because it is defined in the @code{base} package.
+Only functions that are exported from the package can be retrieved in
+this way.
+
+The triple-colon operator @code{:::} is used in those rare occasions
+when it is necessary to override the package author's decision on
+which functions to export.  Like the double-colon operator, it selects
+definitions from a particular namespace, but it can retrieve internal
+objects as well.  For example, methods (@pxref{Object orientation})
+are often left as internal functions; only the generic function is exported.  
+To see their definition, use something like this:
+@example
+> stats:::print.power.htest
+@end example
+@noindent
+This example would display the @code{print} method for the @code{power.htest} 
+class in the @code{stats} package.
+
+Packages are often inter-dependent, and loading one may cause others
+to be automatically loaded.  The colon operators described above
+will also cause automatic loading of the associated package.  
+When packages with namespaces are loaded
+automatically they are not added to the search list.
+
+
+@node A sample session, Invoking R, Packages, Top
 @appendix A sample session
 
 The following session is intended to introduce to you some features of
@@ -7049,6 +7178,9 @@ This book is often called the ``@emph{Blue Book}''.
 John M.@: Chambers and Trevor J.@: Hastie eds. (1992),
 @emph{Statistical Models in S.} Chapman & Hall, New York.
 This is also called the ``@emph{White Book}''.
+
+A.@: C.@: Davison and D.@: V.@: Hinkley (1997), @emph{Bootstrap Methods
+and Their Applications}, Cambridge University Press. 
 
 Annette J.@: Dobson (1990), @emph{An Introduction to Generalized Linear
 Models}, Chapman and Hall, London.
