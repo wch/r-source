@@ -39,9 +39,7 @@
 #include "dpq.h"
 
 #ifndef MATHLIB_STANDALONE
-#ifdef Win32
-extern void R_ProcessEvents();
-#endif
+void R_CheckUserInterrupt(void);
 #endif
 
 static double **w;
@@ -90,10 +88,7 @@ csignrank(int k, int n)
     int c, u, i;
 
 #ifndef MATHLIB_STANDALONE
-    /* check for a user interrupt */
-#ifdef Win32
-    R_ProcessEvents();
-#endif
+    R_CheckUserInterrupt();
 #endif
 
     u = n * (n + 1) / 2;

@@ -34,10 +34,6 @@
 #include <R_ext/Utils.h>	/* for the *sort() routines */
 #define BIG DBL_MAX
 
-#ifdef WIN32
-extern void R_ProcessEvents(void);
-#endif
-
 /* GLOBAL Variables, explicitly allocated and freed: */
 static double *coef, *qraux, *work, *res, *yr, *xr, *means, *d2, *d2copy;
 static int *pivot, *which, *which2;
@@ -176,10 +172,7 @@ lqs_fitlots(double *x, double *y, int *n, int *p, int *qn,
 
     for(trial = 0; trial < *ntrials; trial++) {
 
-	/* check for a user interrupt */
-#ifdef WIN32
-	if(trial % 10) R_ProcessEvents();
-#endif
+	R_CheckUserInterrupt();
 
 	if(!(*sample)) {if(trial > 0) next_set(which, nn, nnew);}
 	else sample_noreplace(which, nn, nnew);
@@ -358,10 +351,7 @@ mve_fitlots(double *x, int *n, int *p, int *qn, int *mcd,
 
     for(trial = 0; trial < *ntrials; trial++) {
 
-	/* check for a user interrupt */
-#ifdef WIN32
-	if(trial % 10) R_ProcessEvents();
-#endif
+	R_CheckUserInterrupt();
 
 	if(!(*sample)) {if(trial > 0) next_set(which, nn, nnew);}
 	else sample_noreplace(which, nn, nnew);
