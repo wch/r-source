@@ -21,7 +21,9 @@ plot (x, \dots)
 \alias{print.data.frame}
 \alias{plot.data.frame}
 %
+\alias{[.AsIs}
 \alias{as.data.frame.AsIs}
+% FIXME: I(.) is not documented enough; "AsIs" does not appear anywhere
 \alias{as.data.frame.character}
 \alias{as.data.frame.complex}
 \alias{as.data.frame.data.frame}
@@ -107,7 +109,7 @@ str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
 str(     data.frame(cbind(  1,   1:10),     sample(L3, 10, repl=TRUE)))
 is.data.frame(d)
 
-## do not convert to factor:
+## do not convert to factor, using I() :
 str(cbind(d, char = I(letters[1:10])), vec.len = 10)
 
 all(1:10 == row.names(d))# TRUE (coercion)
