@@ -2068,6 +2068,7 @@ SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
             SET_NAMED(tmp, 1);
 	SET_VECTOR_ELT(val, i, tmp);
     }
+    setAttrib(val, R_NamesSymbol, vars);    
     UNPROTECT(1);
 
     return val;

@@ -125,9 +125,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
 {
     envlist <- function(e) {
         names <- ls(e, all=TRUE)
-        list <- .Call("R_getVarsFromFrame", names, e, FALSE, PACKAGE="base")
-        names(list) <- names
-        list
+        .Call("R_getVarsFromFrame", names, e, FALSE, PACKAGE="base")
     }
 
     envtable <- function() {
@@ -243,6 +241,10 @@ makeLazyLoading <-
         loaderFile <- file.path(R.home(), "share", "R", "packloader.R")
     codeFile <- file.path(pkgpath, "R", package)
 
+    if (!file.exists(codeFile)) {
+        warning("package contains no R code")
+        return(invisible())
+    }
     if (file.info(codeFile)["size"] == file.info(loaderFile)["size"])
         warning("package seems to be using lazy loading already")
     else if (package == "base" && is.null(lib.loc)) {# allow for cross-building
