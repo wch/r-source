@@ -28,8 +28,9 @@ print(data.frame.obj)
     variable names.  If necessary they are adjusted so that they are.}
 }
 \value{
-  A data frame.  Data frames are the fundamental data structure used by
-  most of R's modeling software.  They are tightly coupled collections
+  For \code{data.frame(.)} a data frame.  Data frames are the
+  fundamental data structure used by
+  most of \R's modeling software.  They are tightly coupled collections
   of variables which share many of the properties of matrices.  The main
   difference being that the columns of a data frame may be of differing
   types (numeric, factor and character).
@@ -42,6 +43,12 @@ print(data.frame.obj)
 }
 \seealso{
   \code{\link{read.table}}.
+}
+\examples{
+str(d <- data.frame(cbind(x=1, y=1:10), ch=sample(LETTERS[1:3], 10, repl=TRUE)))
+str(     data.frame(cbind(  1,   1:10),    sample(LETTERS[1:3], 10, repl=TRUE)))
+is.data.frame(d)
+all(1:10 == row.names(d))# TRUE (coercion)
 }
 \keyword{classes}
 \keyword{methods}

@@ -25,10 +25,13 @@ will cause evaluation.
 }
 \examples{
 x <- delay({
-    for(i in 1:10)
-        print("yippee!\n")
+    for(i in 1:7)
+        cat("yippee!\n")
     10
 })
+
+x^2#- yippee
+x^2#- simple number
 }
 \keyword{programming}
 \keyword{data}
