@@ -1250,7 +1250,7 @@ sub text2latex {
 
     $text =~ s/\\R /\\R\\ /go;
     $text =~ s/\\\\/\\bsl{}/go;
-    $text =~ s/\\cr/\\\\/go;
+    $text =~ s/\\cr/\\\\\{\}/go;
     $text =~ s/\\tab(\s+)/&$1/go;
 	
     ##-- We should escape $LATEX_SPEC  unless within `eqn' above ...
