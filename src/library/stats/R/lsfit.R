@@ -171,8 +171,8 @@ ls.diag <- function(ls.out)
     stddev <- (colSums(as.matrix(resids^2))/(n - p))^0.5
     stddevmat <- matrix(stddev, nrow=sum(good), ncol=ncol(resids), byrow=TRUE)
     stdres[good, ] <- resids/((1-hatdiag[good])^0.5 * stddevmat)
-    studres[good, ] <- (stdres[good, ]*stddevmat)/(((n-p)*stddevmat^2 -
-						    resids^2/(1-hatdiag[good]))/(n-p-1))^0.5
+    studres[good, ] <- (stdres[good, ]*stddevmat)/
+        (((n-p)*stddevmat^2 - resids^2/(1-hatdiag[good]))/(n-p-1))^0.5
     dfits[good, ] <- (hatdiag[good]/(1-hatdiag[good]))^0.5 * studres[good, ]
     Cooks[good, ] <- ((stdres[good, ]^2 * hatdiag[good])/p)/(1-hatdiag[good])
     if(ncol(resids)==1 && is.null(yname)) {
