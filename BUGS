@@ -653,3 +653,11 @@ Date: Mon, 16 Dec 2002 00:33:55 +0000
 Subject: Lattice: panel.superpose function does not pass subscripts and groups arguments
 From: volker.franz@tuebingen.mpg.de
 Date: Mon, 16 Dec 2002 14:32:29 +0100 (MET)
+* PR# 2378 *
+Subject: rsprng doesn't install on Debian (woody)
+From: charpent@bacbuc.dyndns.org
+Date: Tue, 17 Dec 2002 10:40:31 +0100 (MET)
+* PR# 2379 *
+Subject: URGENT ASSISTANCE
+From: mrs mariam sese-seko <mrs_mariamsese13@rediffmail.com>
+Date: Tue, 17 Dec 2002 19:30:58 +0000
