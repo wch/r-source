@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-0, 2002-09-29
+Version 1.6-1, 2002-09-30
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1266,6 +1266,11 @@ distributions of R.)
      Database Interface R driver for SQLite.  Embeds the SQLite database
      engine in R.
 
+*RadioSonde*
+     A collection of programs for reading and plotting SKEW-T,log p diagrams
+     and wind profiles for data collected by radiosondes (the typical
+     weather balloon-borne instrument).
+
 *RandomFields*
      Creating random fields using various methods.
 
@@ -1770,6 +1775,9 @@ distributions of R.)
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
      Bowman and A. Azzalini (1997), Oxford University Press.
 
+*sma*
+     Functions for exploratory (statistical) microarray analysis.
+
 *sn*
      Functions for manipulating skew-normal probability distributions and
      for fitting them to data, in the scalar and the multivariate case.
@@ -1891,11 +1899,6 @@ these a try, of course.  This area of CRAN currently contains
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
 
-*RadioSonde*
-     A collection of programs for reading and plotting SKEW-T,log p diagrams
-     and wind profiles for data collected by radiosondes (the typical
-     weather balloon-borne instrument).
-
 *dseplus*
      Extensions to *dse*, the Dynamic Systems Estimation multivariate time
      series package.  Contains PADI, juice and monitoring extensions.
@@ -1918,9 +1921,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *runStat*
      Running median and mean.
-
-*sma*
-     Functions for exploratory (statistical) microarray analysis.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.

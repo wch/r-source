@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-0, 2002-09-29
+@set FAQ-VERSION 1.6-1, 2002-09-30
 @set REL-VERSION 1.6.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1531,6 +1531,10 @@ quantitative finance.
 @item RSQLite
 Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R.
+@item RadioSonde
+A collection of programs for reading and plotting SKEW-T,log p diagrams
+and wind profiles for data collected by radiosondes (the typical weather
+balloon-borne instrument).
 @item RandomFields
 Creating random fields using various methods.
 @item RmSQL
@@ -1931,6 +1935,8 @@ An object-oriented framework for geostatistical modeling.
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
 A. W. Bowman and A. Azzalini (1997), Oxford University Press.
+@item sma
+Functions for exploratory (statistical) microarray analysis.
 @item sn
 Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case.
@@ -2069,13 +2075,6 @@ An @acronym{ODBC} database interface.
 @item RPgSQL
 Provides methods for accessing data stored in PostgreSQL tables.
 @c </NOTE>
-@c <NOTE>
-@c Moved to Devel for 1.6 as it fails R CMD check.
-@item RadioSonde
-A collection of programs for reading and plotting SKEW-T,log p diagrams
-and wind profiles for data collected by radiosondes (the typical weather
-balloon-borne instrument).
-@c </NOTE>
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer needed.
 @c (See also the info on rdbi.sourceforge.net.)
@@ -2134,11 +2133,6 @@ Univariate Partial Least Squares Regression.
 @c </COMMENT>
 @item runStat
 Running median and mean.
-@c <NOTE>
-@c Moved to Devel for 1.6 as it fails R CMD check.
-@item sma
-Functions for exploratory (statistical) microarray analysis.
-@c </NOTE>
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
 matrix.
