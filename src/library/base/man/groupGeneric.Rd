@@ -65,7 +65,7 @@ Complex(z)
   \item{\dots}{further arguments passed to or from methods.}
   \item{na.rm}{logical: should missing values be removed?}
 }
- 
+
 \section{S3 Group Dispatching}{
   %% --------------- grep -nw DispatchGroup src/*/*[ch]
 
@@ -78,14 +78,14 @@ Complex(z)
   (There are also a \code{\link{ordered}} method for \code{Ops},
   \code{\link{POSIXt}} methods for \code{Math} and \code{Ops}, as well as a
   \code{\link{ts}} method for \code{Ops} in package \pkg{stats}.)
-  
+
 %   A function \emph{\code{f}} belonging to one of these groups must be
 %   \code{\link{.Internal}} or \code{\link{.Primitive}} and will
 %   automatically be using \emph{\code{<grp>.<class> (ob)}} when
 %   \emph{\code{f(<ob>)}} is called, \emph{\code{f}} belongs to group
 %   \emph{\code{<grp>}} and \emph{\code{<ob>}} is of
 %   \code{\link[base]{class}} \emph{\code{<class>}}.
-    
+
   \enumerate{
     \item Group \code{"Math"}:
     \itemize{
@@ -97,42 +97,42 @@ Complex(z)
       \item \code{exp}, \code{log}, \cr
       \code{cos}, \code{sin}, \code{tan},\cr
       \code{acos}, \code{asin}, \code{atan}
-      
+
       \code{cosh}, \code{sinh}, \code{tanh},\cr
       \code{acosh}, \code{asinh}, \code{atanh}
-            
+
       \item
       \code{lgamma}, \code{gamma}, \code{gammaCody},\cr
       \code{digamma}, \code{trigamma}, \code{tetragamma},
       \code{pentagamma}
       %   do_math1() [arithmetic.c:794]: if (DispatchGroup("Math",...))
-      % 
+      %
       %
       % "atan", "round", "log", "signif":
       % do_atan()  [arithmetic.c:958]: if (DispatchGroup("Math", ..))
       % do_round() [arithmetic.c:981]: if (DispatchGroup("Math", ..))
       % do_log()   [arithmetic.c:1011]:if (DispatchGroup("Math", ..))
       % do_signif()[arithmetic.c:1034]:if (DispatchGroup("Math", ..))
-      
+
       \item \code{cumsum}, \code{cumprod}, \code{cummax}, \code{cummin}
       % do_cum()   [cum.c:140]:    if (DispatchGroup("Math", ...))
     }
-        
+
     \item Group \code{"Ops"}:
     \itemize{
       \item
       \code{"+"}, \code{"-"}, \code{"*"}, \code{"/"},
       \code{"^"}, \code{"\%\%"}, \code{"\%/\%"}
       % do_arith() [arithmetic.c:240]: if (DispatchGroup("Ops", ...))
-            
+
       \item \code{"&"}, \code{"|"}, \code{"!"}
       % do_logic() [logic.c:32]:   if (DispatchGroup("Ops",...))
-            
-      \item \code{"=="}, \code{"!="}, 
+
+      \item \code{"=="}, \code{"!="},
       \code{"<"}, \code{"<="}, \code{">="}, \code{">"}
       % do_relop() [relop.c:35]:   if (DispatchGroup("Ops", ...))
     }
-        
+
     \item Group \code{"Summary"}:
     \itemize{
       \item \code{all}, \code{any}
@@ -164,7 +164,7 @@ Complex(z)
 \section{S4 Group Dispatching}{
   When package \pkg{methods} is attached (which it is by default),
   formal (S4) methods can be defined for groups.
-  
+
   The functions belonging to the various groups are as follows:
   \describe{
     \item{\code{Arith}}{\code{"+"}, \code{"-"}, \code{"*"}, \code{"^"},
@@ -197,8 +197,8 @@ Complex(z)
   method definition is to be stored.  It all works more or less as you
   might expect, admittedly via a bit of trickery in the background.
 
-  Note: currently those members which are not primitive functions have
-  to have been converted to S4 generic functions (preferably
+  Note: currently those members which are not primitive functions must
+  have been converted to S4 generic functions (preferably
   \emph{before} setting an S4 group generic method) as it only sets
   methods for known S4 generics.  This can be done by a call to
   \code{setGeneric}, for example \code{setGeneric("round", group="Math2")}.
@@ -221,16 +221,19 @@ methods("Summary")
 
 d.fr <- data.frame(x=1:9, y=rnorm(9))
 data.class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
-\dontshow{
-if(.isMethodsDispatchOn()) {
+
+if(.isMethodsDispatchOn()) {# package "methods" is attached or loaded
   setClass("testComplex", representation(zz = "complex"))
-  setMethod("Complex", "testComplex", function(z) c("groupMethod", callGeneric(z@zz)))
-  setMethod("Arg", "testComplex", function(z)  c("ArgMethod", Arg(z@zz)))
-  z1 = 1+2i
-  z2 = new("testComplex", zz = z1)
+  ## method for whole group "Complex"
+  setMethod("Complex", "testComplex",
+            function(z) c("groupMethod", callGeneric(z@zz)))
+  ## exception for Arg() :
+  setMethod("Arg", "testComplex",
+            function(z) c("ArgMethod", Arg(z@zz)))
+  z1 <- 1+2i
+  z2 <- new("testComplex", zz = z1)
   stopifnot(identical(Mod(z2), c("groupMethod", Mod(z1))))
   stopifnot(identical(Arg(z2), c("ArgMethod", Arg(z1))))
-}
 }
 }
 \keyword{methods}
