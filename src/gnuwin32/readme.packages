@@ -1,6 +1,9 @@
 Building from a source-code library under Windows
 =================================================
 
+[If you are reading this file as part of the full R source distribution,
+you need to build R first: see file INSTALL.]
+
 If your package has no C nor Fortran nor C++ sources, see `Simple ports' 
 near the bottom of this file.
 
@@ -311,9 +314,10 @@ although it is not possible (as far as we know) to cross-build .chm or
 .hlp files.  For a package without compiled code you can just zip up
 the Linux installation of the package.
 
-First you need to set up the cross-compilers and tools (see INSTALL)
-and have them in your path. We will assume that your Linux
-installation has Perl5, unzip and zip.
+First you need to set up the cross-compilers and tools (see file
+src/gnuwin32/INSTALL in the full source distribution) and have them
+in your path. We will assume that your Linux installation has Perl5,
+unzip and zip.
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed, and check that Makefile has WINHELP set to NO.
