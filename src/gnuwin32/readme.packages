@@ -1,3 +1,10 @@
+Writing packages for R
+======================
+
+See the Writing R Extensions manual for a full description of how
+to write a package.
+
+
 Building from a source-code library under Windows
 =================================================
 
@@ -190,6 +197,18 @@ These have been used successfully under NT/2000/XP.  We have seen
 problems with some Perl versions on Win 95/98/ME, but believe these
 are now resolved.  make pkgcheck-mypkg will perform the tests of the
 examples and tests directory, as far as we know on all versions of Windows.
+
+
+Building the package reference manual
+=====================================
+
+See the Writing R Extensions manual for full instructions on converting
+package help files to DVI or PDF format.  If you have the necessary tools 
+installed,
+
+	Rcmd rd2dvi.sh --pdf mypkg
+	
+will use LaTeX to build a PDF version of the reference manual.	
 
 
 Debugging
