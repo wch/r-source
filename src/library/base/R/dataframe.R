@@ -541,6 +541,8 @@ data.frame <-
     nvars <- length(x)
     nrows <- length(rows)
     if(has.i) { # df[i, ] or df[i, j]
+        if(any(is.na(i)))
+            stop("missing values are not allowed in subscripted assignments of data frames")
 	if(char.i <- is.character(i)) {
 	    ii <- match(i, rows)
 	    nextra <- sum(new.rows <- is.na(ii))
@@ -573,6 +575,8 @@ data.frame <-
     }
     else iseq <- NULL
     if(has.j) {
+        if(any(is.na(j)))
+            stop("missing values are not allowed in subscripted assignments of data frames")
 	if(is.character(j)) {
 	    jj <- match(j, names(x))
 	    nnew <- sum(is.na(jj))

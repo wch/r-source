@@ -3249,9 +3249,28 @@ stopifnot(is.matrix(col2rgb("red")))
 
 
 ## Subscripting matrices with NA's
-# AAA <- array(1:6, c(6,1,1))
-# idx <- c(1,2,NA,NA,5,6)
-# B <- 10*(1:6)
-# AAA[idx,1,1] <- B
-# all.equal(as.vector(AAA),c(10,20,3,4,50,60))
-## assigned only the first element in 1.9.1. An error in 2.0.0.
+AAA <- array(1:6, c(6,1,1))
+idx <- c(1,2,NA,NA,5,6)
+B <- 10
+AAA[idx,1,1] <- B
+stopifnot(all.equal(as.vector(AAA), c(10,10,3,4,10,10)))
+## assigned only the first two elements in 1.9.1.
+## Tests for >= 2.0.0
+A <- c(1,2,3,4,5,6)
+A[idx] <- 27 # OK, one value
+stopifnot(identical(A, c(27,27,3,4,27,27)))
+try(A[idx] <- 6:1) # was 6 5 3 4 2 1 in 1.9.1
+stopifnot(inherits(.Last.value, "try-error"))
+
+AA <- matrix(c(1,2,3,4,5,6), 6, 1)
+AA[idx,] <- 27 # OK, one value
+stopifnot(identical(AA, matrix(c(27,27,3,4,27,27), 6, 1)))
+try(AA[idx,] <- 6:1) # was 6 5 3 4 4 3 in 1.9.1
+stopifnot(inherits(.Last.value, "try-error"))
+
+AAA <- array(c(1,2,3,4,5,6), c(6,1,1))
+AAA[idx,,] <- 27 # OK, one value
+stopifnot(identical(AAA, array(c(27,27,3,4,27,27), c(6,1,1))))
+try(AAA[idx,,] <- 6:1) # was 6 5 3 4 5 6 in 1.9.1
+stopifnot(inherits(.Last.value, "try-error"))
+## only length-1 values are allowed in >= 2.0.0.

@@ -64,7 +64,8 @@ x$name <- value
   right-hand edge of the data frame and numerical indices must be
   contiguous to existing indices.  On the other hand, rows can be added
   at any row after the current last row, and the columns will be
-  in-filled with missing values.
+  in-filled with missing values.  Missing values in the indices are not
+  allowed for replacement.
 
   For \code{[} the replacement value can be a list: each element of the
   list is used to replace (part of) one column, recycling the list as
@@ -77,9 +78,8 @@ x$name <- value
   Matrixing indexing using \code{[} is not recommended, and barely
   supported.  For extraction, \code{x} is first coerced to a matrix.
   For replacement a logical matrix (only) can be used to select the
-  elements to be replaced in the same ways as for a matrix.
-  Missing values in the matrix are treated as false, unlike S which
-  does not replace them but uses up the corresponding values in \code{value}.
+  elements to be replaced in the same ways as for a matrix (except that
+  missing values are not allowed at all).
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
