@@ -94,6 +94,7 @@ Rcode0:
 	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION
 
 $(DPKG)/R/$(PKG): $(PKGRFILES)
+ifneq ($(strip $(PKG)),base)
 ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
@@ -109,6 +110,12 @@ endif
 	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME)
 else
 	@$(ECHO) "  no R files in this package"
+endif
+else
+## .installPackageCodeFiles adds an unwanted .packageName
+	@$(ECHO) "  installing R files"
+	@$(MKDIR) -p $(DPKG)/R
+	@$(CAT) $(PKGRFILES) > $(DPKG)/R/$(PKG)
 endif
 
 $(DPKG)/demo: $(PKGDEMOS)
