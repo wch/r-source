@@ -66,11 +66,15 @@ function(x, centers, iter.max = 10, nstart = 1,
     if(length(centers) == 1) {
 	k <- centers
         ## we need to avoid duplicates here
-        cn <- unique(x)
-        mm <- nrow(cn)
-	if(mm < k)
-	    stop("more cluster centers than distinct data points.")
-	centers <- cn[sample(1:mm, k), , drop=FALSE]
+        if(nstart == 1)
+            centers <- x[sample(1 : m, k), , drop = FALSE]
+        if(nstart >= 2 || any(duplicated(centers))) {
+            cn <- unique(x)
+            mm <- nrow(cn)
+            if(mm < k)
+                stop("more cluster centers than distinct data points.")
+            centers <- cn[sample(1:mm, k), , drop=FALSE]
+        }
     } else {
 	centers <- as.matrix(centers)
         if(any(duplicated(centers)))
@@ -84,7 +88,7 @@ function(x, centers, iter.max = 10, nstart = 1,
     if(ncol(x) != ncol(centers))
 	stop("must have same number of columns in x and centers")
     Z <- do_one(nmeth)
-    if(!is.null(cn) && nstart >= 2) {
+    if(nstart >= 2 && !is.null(cn)) {
         best <- sum(Z$wss)
         for(i in 2:nstart) {
             centers <- cn[sample(1:mm, k), , drop=FALSE]
