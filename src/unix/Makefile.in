@@ -16,7 +16,7 @@ SOURCES = devices.c dynload.c edit.c gnome.c stubs.c system.c sys-unix.c \
           sys-common.c sys-std.c X11.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = Runix.h devUI.h
+HEADERS = Runix.h devUI.h hpdlfcn.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
