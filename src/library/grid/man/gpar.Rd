@@ -58,11 +58,9 @@ get.gpar(names = NULL)
   with a \code{cex} of 0.5 then another viewport is pushed with a
   \code{cex} of 0.5, the effective \code{cex} is 0.25.
   
-  For most devices, the \code{fontfamily} is specified when the device
-  is first opened and may not be changed thereafter -- i.e., specifying
-  a different font family via \code{fontfamily} will be ignored.  This
-  will hopefully change in future versions of R.  Also, there is an
-  important exception:  \code{fontfamily} may be used to specify one
+  Changes to the \code{fontfamily} may be ignored by some devices,
+  but is supported by PostScript, PDF, X11, Windows, and Quartz.  The
+  \code{fontfamily} may be used to specify one
   of the Hershey Font families (e.g., \code{HersheySerif})
   and this specification will be honoured
   on all devices.

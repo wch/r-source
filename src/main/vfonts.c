@@ -127,8 +127,8 @@ void GVText (double x, double y, int unit, char *s,
      */
     GClip(dd);
     GConvert(&x, &y, unit, DEVICE, dd);
-    gc.fontface = typeface;
-    gc.fontfamily[0] = fontindex;
+    gc.fontface = fontindex;
+    gc.fontfamily[0] = typeface;
     R_GE_VText(x, y, s, x_justify, y_justify, rotation, &gc, (GEDevDesc *) dd);
 }
 

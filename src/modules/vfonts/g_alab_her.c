@@ -166,7 +166,7 @@ static double R_VF_VStrWidth (const unsigned char *s,
   char *vmax = vmaxget();
 
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, s, gc->fontface, gc->fontfamily[0]);
+  codestring = _controlify (dd, s, gc->fontfamily[0], gc->fontface);
 
   label_width = _label_width_hershey (gc, dd, codestring);
 
@@ -197,7 +197,7 @@ static double R_VF_VStrHeight (const unsigned char *s,
   char *vmax = vmaxget();
 
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, s, gc->fontface, gc->fontfamily[0]);
+  codestring = _controlify (dd, s, gc->fontfamily[0], gc->fontface);
 
   label_height = _label_height_hershey (gc, dd, codestring);
 
@@ -250,7 +250,7 @@ static void R_VF_VText (double x, double y, char *s,
   gc->lwd = 1;
 
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, (unsigned char *)s, gc->fontface, gc->fontfamily[0]);
+  codestring = _controlify (dd, (unsigned char *)s, gc->fontfamily[0], gc->fontface);
 
   
   /* PAUL MURRELL
