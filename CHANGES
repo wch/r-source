@@ -2,7 +2,8 @@
 
 NEW FEATURES
 
-    o	new tabular environment in Rdconv
+    o	Rdconv: new tabular environment, new sections Format and
+        Source, new output format Sd for S documentation
 
     o	.First.lib() now implemented; called by library() after loading
 	a package.
