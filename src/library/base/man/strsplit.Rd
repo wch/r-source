@@ -8,7 +8,7 @@
 }
 \arguments{
   \item{x}{character vector, to be split.}
-  \item{split}{character vector containing a regular expression to use
+  \item{split}{character vector containing a \link{regular expression} to use
     as \dQuote{split}.  If empty matches occur, in particular if \code{split}
     has length 0, \code{x} is split into single characters.  If
     \code{split} has length greater than 1, it is re-cycled along \code{x}.}
@@ -23,6 +23,8 @@
   \code{\link{paste}} for the reverse,
   \code{\link{grep}} and \code{\link{sub}} for string search and
   manipulation; further \code{\link{nchar}}, \code{\link{substr}}.
+
+  \link{regular expression} for the details of the pattern specification.
 }
 \examples{
 noquote(strsplit("A text I want to display with spaces", NULL)[[1]])

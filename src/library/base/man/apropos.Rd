@@ -8,7 +8,7 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 \alias{apropos}
 \alias{find}
 \arguments{
-  \item{what}{name of an object, or regular expression to match against}
+  \item{what}{name of an object, or \link{regular expression} to match against}
   \item{where, numeric.}{a logical indicating whether positions in the
     search list should also be returned}
   \item{mode}{character; if not \code{"any"}, only objects who's

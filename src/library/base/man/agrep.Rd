@@ -1,5 +1,6 @@
 \name{agrep}
 \alias{agrep}
+\alias{fuzzy matching}
 \title{Approximate String Matching (Fuzzy Matching)}
 \description{
   Searches for approximate matches to \code{pattern} (the first argument)

@@ -52,6 +52,11 @@ NEW FEATURES
     o	There is now a "Complex" S3 group generic (a side-effect of
 	fixing up the corresponding S4 group generic).
 
+    o	help("regex") will now give a (preliminary) description of the
+	regular expressions used in R.  More details (including a
+	description of Perl-like regular expressions) will be added to
+	later releases of R.
+
 
 BUG FIXES
 

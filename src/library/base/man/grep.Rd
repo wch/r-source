@@ -17,15 +17,15 @@
 grep(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
      value = FALSE, fixed = FALSE)
 sub(pattern, replacement, x,
-        ignore.case = FALSE, extended = TRUE, perl = FALSE)
+    ignore.case = FALSE, extended = TRUE, perl = FALSE)
 gsub(pattern, replacement, x,
-        ignore.case = FALSE, extended = TRUE, perl = FALSE)
+     ignore.case = FALSE, extended = TRUE, perl = FALSE)
 regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
 }
 \arguments{
-  \item{pattern}{character string containing a regular expression (or
-    character string for \code{fixed = TRUE}) to be matched in the given
-    character vector.}
+  \item{pattern}{character string containing a \link{regular expression}
+    (or character string for \code{fixed = TRUE}) to be matched
+    in the given character vector.}
   \item{x, text}{a character vector where matches are sought.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
@@ -55,6 +55,8 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
   \code{extended} argument, unless \code{perl = TRUE} when they are
   those of PCRE,
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}.
+  (The exact set of patterns supported may depend on the version of
+  PCRE installed on the system in use.)
 }
 \value{
   For \code{grep} a vector giving either the indices of the elements of
@@ -80,6 +82,8 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
   Wadsworth \& Brooks/Cole (\code{grep})
 }
 \seealso{
+  \link{regular expression} for the details of the pattern specification.
+
   \code{\link{agrep}} for approximate matching.
   
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
