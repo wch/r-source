@@ -967,8 +967,8 @@ static int PageSize=0;
 #define AlignPage(add) (((add) + (PageSize-1)) & ~(PageSize-1))
 #define AlignPage64K(add) (((add) + (0x10000 - 1)) & ~(0x10000 - 1))
 
-/* reserve 64MB to ensure large contiguous space */
-#define RESERVED_SIZE (64*1024*1024)
+/* reserve 256MB to ensure large contiguous space */
+#define RESERVED_SIZE (256*1024*1024)
 #define NEXT_SIZE (8*1024*1024)
 /* On most Windows systems, the bottom 2Gb of address space is
    user space (on a few it is 3Gb) */
