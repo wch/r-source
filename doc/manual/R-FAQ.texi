@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-21
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-22
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -504,15 +504,16 @@ packages.
 @quotation
 @multitable {VineLinux} {x86_64} {8.x/9/Fedora1/Fedora2/Fedora3} {James Henstridge}
 @headitem @tab CPU @tab Versions @tab Provider
+@item Debian   @tab i386 @tab stable @tab Christian Steigies
 @item Mandrake @tab i386 @tab 10.0 @tab Michele Alzetta
 @item Red Hat  @tab i386 @tab 8/9/Fedora1/Fedora2/Fedora3 @tab Martyn
 Plummer
 @item          @tab x86_64 @tab Fedora1 @tab James Henstridge
 @item          @tab x86_64 @tab Fedora3 @tab Brian Ripley
-@item          @tab i386   @tab Enterprise Linux @tab Matthew P Cox
+@item          @tab i386   @tab Enterprise Linux @tab Matthew P. Cox
 @item SuSE     @tab i386   @tab 7.3/8.0/8.1/8.2 @tab Detlef Steuer
 @item          @tab i586   @tab 9.0/9.1/9.2 @tab Detlef Steuer
-@item VineLinux @tab i386 @tab 2.6 @tab Susunu Tanimura
+@item VineLinux @tab i386 @tab 3.0 @tab Susunu Tanimura
 @end multitable
 @end quotation
 
@@ -523,26 +524,28 @@ Plummer
 @c i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages by
 @c Susunu Tanimura.
 
-Debian packages, maintained by Dirk Eddelbuettel, have long been part of
-the Debian distribution, and can be accessed through APT, the Debian
-package maintenance tool.  Use e.g.@: @code{apt-get install r-base
-r-recommended} to install the R environment and recommended packages.
-If you also want to build R packages from source, also run @code{apt-get
-install r-base-dev} to obtain the additional tools required for this.
+Debian packages, maintained by Dirk Eddelbuettel and Doug Bates, have
+long been part of the Debian distribution, and can be accessed through
+APT, the Debian package maintenance tool.  Use e.g.@: @code{apt-get
+install r-base r-recommended} to install the R environment and
+recommended packages.  If you also want to build R packages from source,
+also run @code{apt-get install r-base-dev} to obtain the additional
+tools required for this.  So-called ``backports'' of the current R
+packages for the @dfn{stable} distribution are provided by Christian
+Steigies, and available from CRAN.  Simply add the line
 
-@c Simply add the line
+@example
+deb http://cran.R-project.org/bin/linux/debian stable
+@end example
 
-@c @example
-@c deb http://cran.R-project.org/bin/linux/debian @var{distribution} main
-@c @end example
+@noindent
+(feel free to use a @CRAN{} mirror instead of the master) to the file
+@file{/etc/apt/sources.list}, and install as usual.
 
-@c @noindent
-@c (where @var{distribution} is either @samp{stable} or @samp{testing};
-@c feel free to use a @CRAN{} mirror instead of the master) to the file
-@c @file{/etc/apt/sources.list}.  Once you have added that line the
-@c programs @command{apt-get}, @command{apt-cache}, and @command{dselect}
-@c (using the apt access method) will automatically detect and install
-@c updates of the R packages.
+@c Once you have added that line the programs @command{apt-get},
+@c @command{apt-cache}, and @command{dselect} (using the apt access
+@c method) will automatically detect and install updates of the R
+@c packages.
 
 @c The @file{bin/osf} directory of a @CRAN{} site contains RPMs
 @c by Albrecht Gebhardt for alpha systems running Alpha Unix
@@ -2972,6 +2975,8 @@ formerly the three packages: @strong{spweights}, @strong{sptests}, and
 @strong{spsarlm}.)
 @item spe
 Stochastic Proximity Embedding.
+@item spectrino
+Spectra organizer, visualization and data extraction from within R.
 @item splancs
 Spatial and space-time point pattern analysis functions.
 @c <COMMENT>
