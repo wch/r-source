@@ -110,6 +110,7 @@ function (object, filename = paste0(name, ".Rd"))
     file <- c(paste0("\\name{", name, "}"), paste0("\\alias{", name, "}"))
     file <- c(file, "\\non_function{}",
               "\\title{ ~~ 1-line description of the data frame ~~ }",
+              paste0("\\usage{data(", name, ")}"),
               "\\description{",
               paste0("The \\code{", name, "} data frame has ", nrow(dat),
                      " rows and ", ncol(dat), " columns."),

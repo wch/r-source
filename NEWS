@@ -12,7 +12,9 @@
 NEW FEATURES
 
     o	prompt() now also works with a character argument (useful
-	for producing many *.Rd files in a loop).
+	for producing many *.Rd files in a loop).  However, it can then
+	not dispatch on the class of the object, so do not use this
+	for data frames.
 
     o	The Unix front-end shell script now ignores a value for R_HOME
         found in the environment.
@@ -29,6 +31,12 @@ BUG FIXES
     o	Explicitly close files opened by sink() for OSes (such as
 	Windows) that benefit from it.
 
+    o	Prevent closing the sink connection (which would be a silly 
+	thing to do).
+
+    o	showConnections(all = TRUE) was counting connections
+	incorrectly, and so not showing some closed ones.
+
     o	ts(1:10, start= c(1999,6), end = c(2000,3), frequency = 12)
 	now prints both years (as it should).
 
@@ -37,6 +45,10 @@ BUG FIXES
 
     o	print.stl(), print.princomp() and print.prcomp() now pass on
 	`digits =' etc.
+
+    o	prompt() now produces a \usage{} line for data frames, as
+	documented in `Writing R Extensions'.
+
 
 
 		CHANGES IN R VERSION 1.2.0

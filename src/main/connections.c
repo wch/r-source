@@ -964,6 +964,7 @@ SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     i = asInteger(CAR(args));
     if(i < 3) error("cannot close standard connections");
+    if(i == R_SinkCon) error("cannot close sink connection");
     con_close(i);
     return R_NilValue;
 }
@@ -1225,7 +1226,7 @@ SEXP do_getallconnections(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
     checkArity(op, args);
     for(i = 0; i < NCONNECTIONS; i++)
-	if(Connections[i] && Connections[i]->isopen) n++;
+	if(Connections[i]) n++;
     PROTECT(ans = allocVector(INTSXP, n));
     for(i = 0; i < NCONNECTIONS; i++)
 	if(Connections[i]) 
