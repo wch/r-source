@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.136 $'
+revision='$Revision: 1.137 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -161,7 +161,7 @@ configure_args=
 configure_vars=
 with_package_versions=false
 save="CHECK"
-save_args="--no-site-file --no-init-file";
+save_args=
 fake=false
 
 while test -n "${1}"; do
@@ -508,7 +508,8 @@ do_install_source () {
     ## stdin (as opposed to writing to a file and reading from it)
     ## echoes what we sent before shutting up R, which is not what we
     ## want.  Option '--slave' gets around this but also turns off
-    ## saving ... hence we call R with '--slave --save'.  Argh.
+    ## saving ... hence we call R with '--slave --save' (in case there
+    ## is no namespace).  Argh.
     ## </NOTE>
     save_image_defaults="list(compress=TRUE, safe=FALSE)"
     code_file="${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
@@ -516,16 +517,16 @@ do_install_source () {
     if test -f NAMESPACE; then
       code_cmd="echo saveNamespaceImage(\"${pkg_name}\", \"${rda_file}\", \"${lib}\")"
       loader_file=nsrdaload.R
-      R_SAVE_EXE="${R_EXE} --slave"
+      R_SAVE_EXE="${R_EXE} --vanilla --slave"
     else
       code_cmd="eval cat \"${code_file}\""
       loader_file=firstlib.R
-      R_SAVE_EXE="${R_EXE} --slave --save"
+      R_SAVE_EXE="${R_EXE} --vanilla --slave --save"
     fi
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
-      ${code_cmd}) | ${R_SAVE_EXE} ${save_args}
+      ${code_cmd}) | R_DEFAULT_PACKAGES=NULL ${R_SAVE_EXE} ${save_args}
     if test ${?} -ne 0; then
       echo "ERROR: execution of package source for '${pkg_name}' failed"
       do_exit_on_error
