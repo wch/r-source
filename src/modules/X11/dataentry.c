@@ -199,13 +199,11 @@ static XFontStruct      *font_info;
 
    The vectors are created too long and if they need to be increased
    this is done by using the next higher power of 2. They start 100
-   long. To cut them to the correct length for return you need to know
-   the largest row number that was assigned to. LEVELS (sxpinfo.gp) is
-   used to keep track of this, separately for each vector. Vectors are
-   initialized to NA when they are created so that NA is returned for
-   any cell that was not set by the user.  So that coercion back and
-   forth maintains values of ssNA_REAL and ssNA_STRING I have set
-   ssNA_STRING to be coerceVector(ssNA_REAL), very weird but easy.
+   long.  Vectors are initialized to NA when they are created so that
+   NA is returned for any cell that was not set by the user.  So that
+   coercion back and forth maintains values of ssNA_REAL and
+   ssNA_STRING I have set ssNA_STRING to be coerceVector(ssNA_REAL),
+   very weird but easy.
 
    In Macintosh we needed to call the main event loop to get
    events. This ensures that the spreadsheet interacts well with the
@@ -239,7 +237,6 @@ static SEXP ssNewVector(SEXPTYPE type, int vlen)
 	    REAL(tvec)[j] = ssNA_REAL;
 	else if (type == STRSXP)
 	    SET_STRING_ELT(tvec, j, STRING_ELT(ssNA_STRING, 0));
-    SETLEVELS(tvec, 0);
     return (tvec);
 }
 

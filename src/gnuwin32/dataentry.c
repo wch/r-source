@@ -163,7 +163,6 @@ static SEXP ssNewVector(SEXPTYPE type, int vlen)
 	    REAL(tvec)[j] = ssNA_REAL;
 	else if (type == STRSXP)
 	    SET_STRING_ELT(tvec, j, STRING_ELT(ssNA_STRING, 0));
-    SETLEVELS(tvec, 0);
     return (tvec);
 }
 static void eventloop()
