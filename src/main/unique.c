@@ -259,30 +259,6 @@ SEXP duplicated(SEXP x)
     return ans;
 }
 
-static SEXP duplicated2(SEXP x, HashData *d)
-{
-    SEXP ans;
-    int *h, *v;
-    int i, n;
-
-    n = LENGTH(x);
-    HashTableSetup(x, d);
-    PROTECT(d->HashTable);
-    ans = allocVector(LGLSXP, n);
-    UNPROTECT(1);
-    h = INTEGER(d->HashTable);
-    v = LOGICAL(ans);
-
-    for (i = 0; i < d->M; i++)
-	h[i] = NIL;
-
-    for (i = 0; i < n; i++)
-	v[i] = isDuplicated(x, i, d);
-
-    return ans;
-}
-
-
 /* .Internal(duplicated(x)) [op=0]  and
    .Internal(unique(x))	    [op=1] :
 */
@@ -929,13 +905,46 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
     return ans;
 }
 
-#include <R_ext/RS.h>
+/* returns 1-based duplicate no */
+static int isDuplicated2(SEXP x, int indx, HashData *d)
+{
+    int i, *h;
 
+    h = INTEGER(d->HashTable);
+    i = d->hash(x, indx, d);
+    while (h[i] != NIL) {
+	if (d->equal(x, h[i], x, indx))
+	    return h[i] + 1;
+	i = (i + 1) % d->M;
+    }
+    h[i] = indx;
+    return 0;
+}
+
+static SEXP duplicated2(SEXP x, HashData *d)
+{
+    SEXP ans;
+    int *h, *v;
+    int i, n;
+
+    n = LENGTH(x);
+    HashTableSetup(x, d);
+    PROTECT(d->HashTable);
+    ans = allocVector(INTSXP, n);
+    UNPROTECT(1);
+    h = INTEGER(d->HashTable);
+    v = INTEGER(ans);
+    for (i = 0; i < d->M; i++) h[i] = NIL;
+    for (i = 0; i < n; i++) v[i] = isDuplicated2(x, i, d);
+    return ans;
+}
+
+#include <R_ext/RS.h> /* for Calloc, free */
 
 SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP names, sep, ans, dup, newx;
-    int i, n, cnt, len, maxlen = 0;
+    int i, n, cnt, len, maxlen = 0, *cnts, dp;
     HashData data;
     char *csep, *buf;
     
@@ -957,21 +966,26 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* +2 for terminator and rounding error */
 	buf = Calloc(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2, 
 		     char);
+	cnts = Calloc(n, int);
+	for(i = 0; i < n; i++) cnts[i] = 1;
 	data.nomatch = 0;
 	PROTECT(newx = allocVector(STRSXP, 1));
 	PROTECT(dup = duplicated2(names, &data));
 	PROTECT(data.HashTable);
 	for(i = 1; i < n; i++) { /* first cannot be a duplicate */
-	    if(!LOGICAL(dup)[i]) continue;
+	    dp = INTEGER(dup)[i]; /* 1-based number of first occurrence */
+	    if(dp == 0) continue;
 	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
-	    for(cnt = 1; cnt < n; cnt++) {
+	    for(cnt = cnts[dp-1]; cnt < n; cnt++) {
 		sprintf(buf, "%s%s%d", CHAR(STRING_ELT(names, i)), csep, cnt);
 		SET_STRING_ELT(newx, 0, mkChar(buf));
 		if(Lookup(ans, newx, 0, &data) == data.nomatch) break;
 	    }
 	    SET_STRING_ELT(ans, i, STRING_ELT(newx, 0));
 	    /* insert it */ (void) isDuplicated(ans, i, &data);
+	    cnts[dp-1] = cnt+1; /* cache the first unused cnt value */
 	}
+	Free(cnts);
 	Free(buf);
 	UNPROTECT(3);
     }
