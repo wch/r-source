@@ -5373,6 +5373,16 @@ There is also an @code{F77_CALL(interv)()} version of
 @code{findInterval()} with the same arguments, but all pointers.
 @end deftypefun
 
+The following two functions do @emph{numerical} colorspace conversion from
+HSV to RGB and back.  Note that all colours must be in [0,1].
+
+@deftypefun void hsv2rgb (double @var{h}, double @var{s}, double @var{v}, double *@var{r}, double *@var{g}, double *@var{b})
+@end deftypefun
+
+@deftypefun void rgb2hsv (double @var{r}, double @var{g}, double @var{b}, double *@var{h}, double *@var{s}, double *@var{v})
+@end deftypefun
+
+
 A system-independent interface to produce the name of a temporary
 file is provided as
 
