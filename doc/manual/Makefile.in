@@ -17,7 +17,7 @@ DISTFILES = \
 	Makefile.in Makefile.win \
 	R-defs.texi dir texinfo.tex \
 	$(SOURCES_TEXI) \
-	Rd.sty lib2tex.in \
+	Rd.sty \
 	omsaer.fd omsaett.fd omscmtt.fd \
 	refman.top refman.bot
 SUBDIRS =
@@ -43,17 +43,12 @@ pkgsrcs = $(R_PKGS:=-pkg.tex)
 .SUFFIXES:
 .SUFFIXES: .dvi .info .texi .pdf
 
-all: Makefile lib2tex R dvi
+all: Makefile R dvi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
-lib2tex: $(srcdir)/lib2tex.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
-	@chmod +x $@
 
 R:
 	@if [ "$(srcdir)" != "." ]; then \
@@ -94,7 +89,7 @@ version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	@echo "Collecting components of $@ ..."
 	@cd $(top_builddir)/src/library && \
 	  OPTS="--latex" $(MAKE) PKGS="$*" DOCS
-	./lib2tex $*
+	@$(top_builddir)/tools/pkg2tex $*
 FORCE:
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
@@ -190,7 +185,7 @@ clean:
 	  *.vr *.vrs *-pkg.tex refman.i?? refman.tex version.tex \
 	  version.texi
 distclean: clean
-	@-rm -f Makefile lib2tex
+	@-rm -f Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

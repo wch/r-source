@@ -1,5 +1,5 @@
 #! @PERL@
-### $Id: lib2tex.in,v 1.5 1999/12/11 20:57:35 pd Exp $
+### $Id: pkg2tex.in,v 1.1 2000/01/01 18:30:20 hornik Exp $
 
 ## Create a single pkgname-pkg.tex file from the Latex subdirectories
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
@@ -27,9 +27,14 @@ use Carp;
 use Getopt::Long;
 
 my $help;
-my $VERSION = 0.62.0;
+
+my $REVISION = '$Revision: 1.1 $';
+my $VERSION;
 my $NAME;
+
 ($NAME = $0) =~ s|.*/||;
+$REVISION =~ / ([\d\.]*) /;
+$VERSION = $1;
 
 GetOptions("help|h" => \$help);
 &usage() if $help;

@@ -27,9 +27,9 @@ pkgsrcs = $(R_PKGS:=-pkg.tex)
 .SUFFIXES:
 .SUFFIXES: .dvi .info .texi .pdf
 
-all: lib2tex.pl pdf
+all: pkg2tex.pl pdf
 
-lib2tex.pl: lib2tex.in
+pkg2tex.pl: $(top_srcdir)/tools/pkg2tex.in
 	sed -e 1d  $^ > $@
 
 .texi.pdf:
@@ -38,7 +38,7 @@ lib2tex.pl: lib2tex.in
 
 pdf: refman.pdf $(OBJECTS_PDF)
 
-refman.tex: lib2tex.pl refman.top $(srcdir)/refman.bot
+refman.tex: pkg2tex.pl refman.top $(srcdir)/refman.bot
 	@echo "creating $@"
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
@@ -59,7 +59,7 @@ version.tex: ../../bin/rterm.exe $(top_srcdir)/VERSION
 %-pkg.tex: FORCE
 	@echo "Collecting components of $@ ..."
 	cd ../../src/gnuwin32/help && $(MAKE) RHOME=$(RHOME) latex-$*
-	perl lib2tex.pl $*
+	perl pkg2tex.pl $*
 FORCE:
 
 refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
@@ -89,6 +89,6 @@ clean:
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex *-pkg.tex 
 distclean: clean
-	@-rm -f lib2tex.pl *.pdf
+	@-rm -f pkg2tex.pl *.pdf
 maintainer-clean: distclean
 

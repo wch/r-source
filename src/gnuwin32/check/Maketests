@@ -1,8 +1,9 @@
 #-*- Makefile -*-
 #
-# ${RHOME}/tests/Makefile
+# ${RHOME}/src/gnuwin32/check/Maketests
 
 srcdir = .
+top_srcdir = ../../../..
 
 RHOME= ..
 
@@ -28,5 +29,6 @@ clean:
 	  echo "$(R) < $< > $@"; \
 	  $(R) < $< > $@)
 	@echo -n "Comparing \`$@' to \`$(srcdir)/$@.save' ..."
-	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save || (mv $@ $@.fail && exit 1)
+	@$(top_srcdir)/tools/Rdiff $@ $(srcdir)/$@.save \
+	  || (mv $@ $@.fail && exit 1)
 	@echo " OK"

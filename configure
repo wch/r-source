@@ -6591,9 +6591,7 @@ trap 'rm -fr `echo "Makeconf
   afm/Makefile
   demos/Makefile
   doc/Makefile
-  doc/keyword-test
   doc/manual/Makefile
-  doc/manual/lib2tex
   etc/Makefile
   etc/Makeconf
   src/Makefile
@@ -6652,7 +6650,9 @@ trap 'rm -fr `echo "Makeconf
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
+  tools/keyword-test
   tools/install-info
+  tools/pkg2tex
  src/include/Rconfig.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
@@ -6818,9 +6818,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   afm/Makefile
   demos/Makefile
   doc/Makefile
-  doc/keyword-test
   doc/manual/Makefile
-  doc/manual/lib2tex
   etc/Makefile
   etc/Makeconf
   src/Makefile
@@ -6879,7 +6877,9 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
+  tools/keyword-test
   tools/install-info
+  tools/pkg2tex
 "}
 EOF
 cat >> $CONFIG_STATUS <<\EOF
@@ -7078,6 +7078,6 @@ R is now configured for ${host}
   Gnome support:            ${use_gnome}
 " 1>&6
 
-chmod +x doc/keyword-test doc/manual/lib2tex tools/install-info
+chmod +x tools/install-info tools/keyword-test tools/pkg2tex
 
 

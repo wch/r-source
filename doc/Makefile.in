@@ -11,16 +11,12 @@ subdir = doc
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = KEYWORDS KEYWORDS.db R.1 Rdconv.1 keyword-test.in Makefile.in
+DISTFILES = KEYWORDS KEYWORDS.db R.1 Rdconv.1 Makefile.in
 SUBDIRS = html manual
 
-all docs: Makefile keyword-test R
+all docs: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
-keyword-test: $(srcdir)/keyword-test.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
@@ -33,8 +29,9 @@ R:
 	fi
 
 install: installdirs install-html install-man
-	@$(INSTALL) keyword-test $(rhome)/doc
-	@$(INSTALL_DATA) $(srcdir)/KEYWORDS $(rhome)/doc
+	@for f in KEYWORDS KEYWORDS.db; do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/doc; \
+	done
 	@(cd manual && $(MAKE) $@)
 installdirs:
 	@$(MKINSTALLDIRS) $(mandir)/man1
@@ -42,7 +39,9 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/doc/html/search
 install-html:
 	@echo "Installing doc ..."
-	@for f in $(srcdir)/html/*.html $(srcdir)/html/*.jpg $(srcdir)/html/*.css; do \
+	@for f in $(srcdir)/html/*.html \
+	          $(srcdir)/html/*.jpg \
+		  $(srcdir)/html/*.css; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
 	done
 	@for f in $(srcdir)/html/search/*.class \
@@ -57,13 +56,12 @@ install-html:
 
 install-man:
 	@echo "Installing man pages ..."
-	@(cd $(srcdir); \
-	  for f in R.1 Rdconv.1; do \
-	    $(INSTALL_DATA) $$f $(mandir)/man1; \
-	  done)
+	@for f in R.1 Rdconv.1; do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(mandir)/man1; \
+	done
 	@(cd $(mandir)/man1; \
 	  for f in Rd2txt.1 Rdindex.1 Sd2Rd.1; do \
-	    rm -f $$f; $(LN_S) Rdconv.1 $$f; \
+	    rm -f $${f}; $(LN_S) Rdconv.1 $${f}; \
 	  done)
 install-strip: install
 uninstall:
@@ -71,7 +69,7 @@ uninstall:
 	@if test -d $(rhome)/doc -a \
 	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
 	  (cd $(rhome)/doc && \
-	    rm -rf html manual KEYWORDS keyword-test); \
+	    rm -rf html manual KEYWORDS*); \
 	  rmdir $(rhome)/doc 2> /dev/null \
 	    || echo "  subdir doc not removed"; \
 	fi
@@ -92,7 +90,7 @@ clean:
 	@(cd manual && $(MAKE) $@)
 distclean: clean
 	@(cd manual && $(MAKE) $@)
-	@rm -f Makefile keyword-test
+	@rm -f Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

@@ -661,9 +661,7 @@ AC_OUTPUT(Makeconf
   afm/Makefile
   demos/Makefile
   doc/Makefile
-  doc/keyword-test
   doc/manual/Makefile
-  doc/manual/lib2tex
   etc/Makefile
   etc/Makeconf
   src/Makefile
@@ -722,11 +720,13 @@ AC_OUTPUT(Makeconf
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
+  tools/keyword-test
   tools/install-info
+  tools/pkg2tex
 )
 
 AC_OUTPUT_COMMANDS(
-  chmod +x doc/keyword-test doc/manual/lib2tex tools/install-info
+  chmod +x tools/install-info tools/keyword-test tools/pkg2tex
 )
 
 if test -z "${F77}"; then
