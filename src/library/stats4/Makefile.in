@@ -68,26 +68,12 @@ $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 # remove possibly outdated namespace metainfo.
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@echo "dumping R code in package '$(pkg)'"
-	@if test -f $(srcdir)/NAMESPACE; then \
-	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	  echo "saveNamespaceImage(\"$(pkg)\", \"$@\")" | \
-	    R_DEFAULT_PACKAGES=NULL \
-	    $(top_builddir)/bin/R --vanilla --slave; \
-	  $(INSTALL_DATA) $(top_srcdir)/share/R/nsrdaload.R \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	else \
-	  (echo \
-	    "options(save.image.defaults=list(compress=TRUE, safe=FALSE))"; \
-	    cat all.R) | \
-	    R_DEFAULT_PACKAGES=NULL \
-	    $(top_builddir)/bin/R --vanilla --slave --save; \
-	  $(INSTALL_DATA) .RData $@; \
-	  $(INSTALL_DATA) $(top_srcdir)/share/R/firstlib.R \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
-	  if test -f $(top_builddir)/library/$(pkg)/NAMESPACE; then \
-	    rm -f $(top_builddir)/library/$(pkg)/NAMESPACE; \
-	  fi; \
-	fi
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@echo "saveNamespaceImage(\"$(pkg)\", \"$@\")" | \
+	  R_DEFAULT_PACKAGES="graphics,stats,methods" \
+	  $(top_builddir)/bin/R --vanilla --slave
+	@$(INSTALL_DATA) $(top_srcdir)/share/R/nsrdaload.R \
+	  $(top_builddir)/library/$(pkg)/R/$(pkg)
 
 mostlyclean: clean
 clean:
