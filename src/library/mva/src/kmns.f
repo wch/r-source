@@ -4,6 +4,7 @@ c
 C a minimal modification of AS136 to use double precision
 C all variables are now declared.
 C B.D. Ripley 1998/06/17
+C Declaration re-ordering to satisfy "f77 -ansi",  M.Maechler 2001/04/12
 C
       SUBROUTINE KMNS(A, M, N, C, K, IC1, IC2, NC, AN1, AN2, NCP, D,
      *    ITRAN, LIVE, ITER, WSS, IFAULT)
@@ -13,11 +14,12 @@ C
 C     Divide M points in N-dimensional space into K clusters so that
 C     the within cluster sum of squares is minimized.
 C
+      INTEGER M,N,K,ITER,IFAULT
       INTEGER IC1(M), IC2(M), NC(K), NCP(K), ITRAN(K), LIVE(K)
-      DOUBLE PRECISION    A(M,N), D(M), C(K,N), AN1(K), AN2(K), 
-     * WSS(K), DT(2)
-      DOUBLE PRECISION    ZERO, ONE
-      INTEGER M,N,K,ITER,IFAULT,I,IL,J,L,INDX,IJ,II
+      DOUBLE PRECISION A(M,N), D(M), C(K,N), AN1(K), AN2(K), WSS(K)
+C 
+      DOUBLE PRECISION DT(2), ZERO, ONE
+      INTEGER I,IL,J,L,INDX,IJ,II
       DOUBLE PRECISION BIG, DA, TEMP, DB, DC,AA
 C
 C     Define BIG to be a very large positive number
@@ -181,10 +183,12 @@ C     Each point is re-allocated, if necessary, to the cluster that
 C     will induce a maximum reduction in the within-cluster sum of
 C     squares.
 C
+      INTEGER M,N,K,INDX
       INTEGER IC1(M), IC2(M), NC(K), NCP(K), ITRAN(K), LIVE(K)
       DOUBLE PRECISION    A(M,N), D(M), C(K,N), AN1(K), AN2(K)
+
+      INTEGER L,I,L1,L2,LL,J
       DOUBLE PRECISION ZERO, ONE
-      INTEGER M,N,K,INDX,L,I,L1,L2,LL,J
       DOUBLE PRECISION BIG,DE,DF,DA,DB,R2,RR,DC,DD,AL1,ALW,AL2,ALT
 C
 C     Define BIG to be a very large positive number.
@@ -308,10 +312,12 @@ C     For each point I, IC1(I) & IC2(I) are switched, if necessary, to
 C     reduce within-cluster sum of squares.  The cluster centres are
 C     updated after each step.
 C
+      INTEGER M,N,K,INDX
       INTEGER IC1(M), IC2(M), NC(K), NCP(K), ITRAN(K)
-      DOUBLE PRECISION    A(M,N), D(M), C(K,N), AN1(K), AN2(K)
+      DOUBLE PRECISION A(M,N), D(M), C(K,N), AN1(K), AN2(K)
+
       DOUBLE PRECISION ZERO, ONE
-      INTEGER M,N,K,INDX,ICOUN,ISTEP,I,L1,L2,J
+      INTEGER ICOUN,ISTEP,I,L1,L2,J
       DOUBLE PRECISION BIG,DA,DB,DD,AL1,ALW,AL2,ALT,R2,DE
 C
 C     Define BIG to be a very large positive number

@@ -22,16 +22,21 @@ C                                                            C
 C  F. Murtagh, ESA/ESO/STECF, Garching, February 1986.       C
 C  Modifications for R: Ross Ihaka, Dec 1996                 C
 C                       Fritz Leisch, Jun 2000               C
+C  all vars declared:   Martin Maechler, Apr 2001            C
 C------------------------------------------------------------C
       SUBROUTINE HCLUST(N,LEN,IOPT,IA,IB,CRIT,MEMBR,NN,DISNN,
-     X                FLAG,DISS)
-C     IMPLICIT UNDEFINED(A-H,O-Z)
-      DOUBLE PRECISION MEMBR(N),DISS(LEN), DISNN(N)
-      INTEGER IA(N),IB(N)
-      DOUBLE PRECISION CRIT(N)
-      DIMENSION NN(N)
+     X                  FLAG,DISS)
+c Args
+      INTEGER N, LEN, IOPT
+      INTEGER IA(N),IB(N), NN(N)
       LOGICAL FLAG(N)
+      DOUBLE PRECISION CRIT(N), MEMBR(N),DISS(LEN), DISNN(N)
+c Var
+      INTEGER IM, JJ, JM, I, NCL, J, IND, I2, J2, K, IND1, IND2, IND3
       DOUBLE PRECISION INF, DMIN, X, XX
+c External function
+      INTEGER IOFFST
+c
       DATA INF/1.D+20/
 c
 c     unnecessary initialization of im jj jm to keep g77 -Wall happy
@@ -54,7 +59,7 @@ C
       DO 30 I=1,N-1
          DMIN=INF
          DO 20 J=I+1,N
-            IND=IOFFSET(N,I,J)
+            IND=IOFFST(N,I,J)
             IF (DISS(IND).GE.DMIN) GOTO 20
                DMIN=DISS(IND)
                JM=J
@@ -92,16 +97,16 @@ C
          IF (K.EQ.I2) GOTO 800
          X=MEMBR(I2)+MEMBR(J2)+MEMBR(K)
          IF (I2.LT.K) THEN
-                           IND1=IOFFSET(N,I2,K)
+                           IND1=IOFFST(N,I2,K)
                       ELSE
-                           IND1=IOFFSET(N,K,I2)
+                           IND1=IOFFST(N,K,I2)
          ENDIF
          IF (J2.LT.K) THEN
-                           IND2=IOFFSET(N,J2,K)
+                           IND2=IOFFST(N,J2,K)
                       ELSE
-                           IND2=IOFFSET(N,K,J2)
+                           IND2=IOFFST(N,K,J2)
          ENDIF
-         IND3=IOFFSET(N,I2,J2)
+         IND3=IOFFST(N,I2,J2)
          XX=DISS(IND3)
 C
 C  WARD'S MINIMUM VARIANCE METHOD - IOPT=1.
@@ -173,7 +178,7 @@ C
 C        (Redetermine NN of I:)
          DMIN=INF
          DO 870 J=I+1,N
-            IND=IOFFSET(N,I,J)
+            IND=IOFFST(N,I,J)
             IF (.NOT.FLAG(J)) GOTO 870
             IF (I.EQ.J) GOTO 870
             IF (DISS(IND).GE.DMIN) GOTO 870
@@ -191,12 +196,14 @@ C
 C
       RETURN
       END
+c     of HCLUST()
 C
 C
-      FUNCTION IOFFSET(N,I,J)
+      INTEGER FUNCTION IOFFST(N,I,J)
 C  Map row I and column J of upper half diagonal symmetric matrix 
 C  onto vector.
-      IOFFSET=J+(I-1)*N-(I*(I+1))/2
+      INTEGER N,I,J
+      IOFFST=J+(I-1)*N-(I*(I+1))/2
       RETURN
       END
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++C
@@ -223,7 +230,10 @@ C   cluster assignments at all levels, at extra comput. expense C
 C                                                               C
 C---------------------------------------------------------------C
       SUBROUTINE HCASS2(N,IA,IB,IORDER,IIA,IIB)
-      INTEGER IA(N),IB(N),IORDER(N),IIA(N),IIB(N)
+c Args
+      INTEGER N,IA(N),IB(N),IORDER(N),IIA(N),IIB(N)
+c Var
+      INTEGER I, J, K, K1, K2, LOC
 C
 C     Following bit is to get seq. of merges into format acceptable to plclust
 C     I coded clusters as lowest seq. no. of constituents; S's `hclust' codes
