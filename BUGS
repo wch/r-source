@@ -320,3 +320,7 @@ Date: Fri, 7 Sep 2001 11:51:50 +1200
 Subject: sum overflow
 From: wsi@gcal.ac.uk
 Date: Thu, 13 Sep 2001 10:43:07 +0200 (MET DST)
+* PR# 1092 *
+Subject:  rowsum dimnames 
+From: David Brahm  <a215020@agate.fmr.com>
+Date: Fri, 14 Sep 2001 10:45:42 -0400 (EDT)
