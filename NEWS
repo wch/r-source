@@ -35,6 +35,11 @@ USER-VISIBLE CHANGES
 	example, ps.options(horizontal = TRUE) should be preceded by
 	library(graphics) or called as graphics::ps.options.
 
+    o	There has been a concerted effort to speed up the startup of
+	an R session.  One consequence is that the default set of
+	packages is no longer checked for conflicts every time they
+	are loaded.
+
 
 NEW FEATURES
 

@@ -235,7 +235,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         if(hadMethods) {
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
-            if(length(expClasses)>0) {
+            if(length(expClasses) > 0) {
                 missingClasses <- !sapply(expClasses, methods:::isClass, where = ns)
                 if(any(missingClasses))
                     stop("Classes for export not defined: ",
@@ -247,7 +247,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             allMethods <- unique(c(methods:::getGenerics(ns),
                                    methods:::getGenerics(parent.env(ns))))
             expMethods <- nsInfo$exportMethods
-            if(length(allMethods)>0) {
+            if(length(allMethods) > 0) {
                 expMethods  <- unique(c(expMethods,
                                        exports[!is.na(match(exports, allMethods))]))
                 missingMethods <- !(expMethods %in% allMethods)
@@ -562,13 +562,20 @@ namespaceImportMethods <- function(self, ns, vars) {
 }
 
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {
-    getInternalExportName <- function(name, ns) {
-        exports <- getNamespaceInfo(ns, "exports")
-        if (! exists(name, env = exports, inherits = FALSE))
-            stop(paste(name, "is not an exported object"))
+    exports <- getNamespaceInfo(expenv, "exports")
+#    getInternalExportName <- function(name, ns) {
+#        if (! exists(name, env = exports, inherits = FALSE))
+#            stop(paste(name, "is not an exported object"))
         get(name, env = exports, inherits = FALSE)
+#    }
+    ex <- .Internal(ls(exports, TRUE))
+    if(!all(expnames %in% ex)) {
+        miss <- expnames[! expnames %in% ex]
+        stop("objects ", paste(sQuote(miss), collapse=", "),
+             " are not exported")
     }
-    expnames <- unlist(lapply(expnames, getInternalExportName, expenv))
+#    expnames <- unlist(lapply(expnames, getInternalExportName, expenv))
+    expnames <- unlist(lapply(expnames, get, env = exports, inherits = FALSE))
     if (is.null(impnames)) impnames <- character(0)
     if (is.null(expnames)) expnames <- character(0)
     .Internal(importIntoEnv(impenv, impnames, expenv, expnames))
@@ -616,15 +623,14 @@ namespaceExport <- function(ns, vars) {
             undef <- do.call("paste", as.list(c(undef, sep=", ")))
             stop(paste("undefined exports:", undef))
         }
-        .mergeExportMethods(new, ns)
+        if(.isMethodsDispatchOn()) .mergeExportMethods(new, ns)
         addExports(ns, new)
     }
 }
 
 .mergeExportMethods <- function(new, ns) {
-    if(!.isMethodsDispatchOn())
-        return(FALSE)
-    mm = methods:::mlistMetaName()
+#    if(!.isMethodsDispatchOn()) return(FALSE)
+    mm <- methods:::mlistMetaName()
     newMethods <- new[substr(new, 1, nchar(mm)) == mm]
     nsimports <- parent.env(ns)
     for(what in newMethods) {
