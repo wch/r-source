@@ -1759,7 +1759,7 @@ output files can be very large if long runs are profiled.
 * Operating system access::     
 * Interface functions .C and .Fortran::  
 * dyn.load and dyn.unload::     
-* Registering native routines::
+* Registering native routines::  
 * Creating shared libraries::   
 * Interfacing C++ code::        
 * Handling R objects in C::     
@@ -1921,7 +1921,7 @@ storage mode before calling @code{.C}; mistakes in matching the types
 can lead to wrong results or hard-to-catch errors.
 
 
-@node dyn.load and dyn.unload, Creating shared libraries, Interface functions .C and .Fortran, System and foreign language interfaces
+@node dyn.load and dyn.unload, Registering native routines, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}
 @cindex Dynamic loading
 
