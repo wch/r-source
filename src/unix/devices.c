@@ -86,7 +86,8 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (strcmp(cname, "true") == 0)
 	colormodel = 4;
     else {
-	warningcall(call, "unknown X11 color/colour model -- using monochrome");
+	warningcall(call, 
+		    "unknown X11 color/colour model -- using monochrome");
 	colormodel = 0;
     }
     args = CDR(args);
@@ -99,16 +100,19 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
     else if (!strcmp(display, "XImage")) devname = "XImage";
 
-    Rf_addX11Device(display, width, height, ps, gamma, colormodel, maxcubesize, devname, ptr_X11DeviceDriver);
+    Rf_addX11Device(display, width, height, ps, gamma, colormodel, 
+		    maxcubesize, devname, ptr_X11DeviceDriver);
     vmaxset(vmax);
     return R_NilValue;
 }
 
 
 DevDesc*
-Rf_addX11Device(char *display, double width, double height, double ps, double gamma, int colormodel, int maxcubesize, char *devname, X11DeviceDriverRoutine deviceDriverRoutine)
+Rf_addX11Device(char *display, double width, double height, double ps, 
+		double gamma, int colormodel, int maxcubesize, 
+		char *devname, X11DeviceDriverRoutine deviceDriverRoutine)
 {
-  DevDesc *dd = NULL;
+    DevDesc *dd = NULL;
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
@@ -117,8 +121,9 @@ Rf_addX11Device(char *display, double width, double height, double ps, double ga
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
 	GInit(&dd->dp);
-	if (!deviceDriverRoutine || !(deviceDriverRoutine)(dd, display, width, height, ps, gamma,
-				 colormodel, maxcubesize)) {
+	if (!deviceDriverRoutine || 
+	    !(deviceDriverRoutine)(dd, display, width, height, ps, gamma, 
+				   colormodel, maxcubesize)) {
 	    free(dd);
 	    errorcall(gcall, "unable to start device %s", devname);
        	}
@@ -127,7 +132,7 @@ Rf_addX11Device(char *display, double width, double height, double ps, double ga
 	initDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
 
-   return(dd);
+    return(dd);
 }
 
 
