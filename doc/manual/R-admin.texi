@@ -2737,14 +2737,9 @@ this is available from
 
 You need a recent version of the Mingw port of @code{gcc} from
 @url{http://sourceforge.net/projects/mingw/}.  There will be a
-distribution called something like @file{MinGW-3.1.0-1.exe} (which is
-built from @code{gcc-3.2.3}).  This needs updating with
-@code{mingw-runtime >= 3.7} and @code{w32api >= 3.1}.  The releases of
-@code{gcc-3.3.1}, @code{3.4.1} and @code{3.4.2} have also been tested
-successfully.
-
-As of January 2005: There is now a release candidate of
-@code{MinGW-3.2.0}: please use that.
+distribution called something like @file{MinGW-3.2.0-rc-3.exe} (which is
+built from @code{gcc-3.4.2}).  See the notes on @url{http://www.murdoch-sutherland.com/Rtools}
+for updates.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
