@@ -149,9 +149,9 @@ function(..., list = character(0),
                       "tab", "txt", "TXT", "csv", "CSV")
             exts <- sub(".*\\.", "", files)
             o <- match(exts, good, nomatch = 100)
-            paths <- dirname(files)
-            paths <- factor(paths, levels=paths)
-            files <- files[order(paths, o)]
+            paths0 <- dirname(files)
+            paths0 <- factor(paths0, levels=paths0)
+            files <- files[order(paths0, o)]
         }
         if (length(files) > 0) {
             subpre <- paste(".*", fsep, sep = "")

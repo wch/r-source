@@ -2244,6 +2244,11 @@ unique(f)
 ## both failed in 1.7.1
 
 
+## data failed with some multiple inputs
+data(cars, women)
+## failed in 1.7.1
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

@@ -81,6 +81,9 @@ BUG FIXES
 	without any warning.  Now the limit is 10000, with a warning.
 	(PR#3400)
 
+    o	data() sometimes failed with multiple files, as the paths
+	variable got corrupted.
+
 
 
 		CHANGES IN R VERSION 1.7.1
