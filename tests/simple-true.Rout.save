@@ -1,17 +1,17 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-09-26)
+Version 1.2.0 Patched (2000-December-16)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type	"?license" or "?licence" for distribution details.
+Type `license()' or `licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type	"?contributors" for a list.
+Type `contributors()' for more information.
 
-Type	"demo()" for some demos, "help()" for on-line help, or
-    	"help.start()" for a HTML browser interface to help.
-Type	"q()" to quit R.
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
 
 > ###---- ALL tests here should return  TRUE !
 > ###
@@ -154,5 +154,7 @@ Type	"q()" to quit R.
 > is.null(class(unclass(d1$b)))
 [1] TRUE
 > 
-> 
+> ## bug in R 1.2.0
+> format(as.POSIXct(relR120 <- "2000-12-15 11:24:40")) == relR120
+[1] TRUE
 > 

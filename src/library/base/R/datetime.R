@@ -6,28 +6,23 @@ Sys.timezone <- function() as.vector(Sys.getenv("TZ"))
 as.POSIXlt <- function(x, tz = "")
 {
     fromchar <- function(x) {
-        xx <- x[1]
-        if(!is.na(strptime(xx, "%Y-%m-%d")))
-            return(strptime(x, "%Y-%m-%d"))
-        if(!is.na(strptime(xx, "%Y/%m/%d")))
-            return(strptime(x, "%Y/%m/%d"))
-        if(!is.na(strptime(xx, "%Y-%m-%d %H:%M")))
-            return(strptime(x, "%Y-%m-%d% %H:%M"))
-        if(!is.na(strptime(xx, "%Y/%m/%d %H:%M")))
-            return(strptime(x, "%Y/%m/%d %H:%M"))
-        if(!is.na(strptime(xx, "%Y-%m-%d %H:%M:%S")))
-            return(strptime(x, "%Y-%m-%d% %H:%M:%S"))
-        if(!is.na(strptime(xx, "%Y/%m/%d %H:%M:%S")))
-            return(strptime(x, "%Y/%m/%d %H:%M:%S"))
-        stop("character string is not in a standard unambiguous format")
+	xx <- x[1]
+	if(!is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%S")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%S")) ||
+	   !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M")) ||
+	   !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d")))
+	    return(strptime(x, f))
+	stop("character string is not in a standard unambiguous format")
     }
 
     if(inherits(x, "POSIXlt")) return(x)
     if(inherits(x, "date") || inherits(x, "dates")) x <- as.POSIXct(x)
     if(is.character(x)) return(fromchar(x))
     if(!inherits(x, "POSIXct"))
-        stop(paste("Don't know how to convert `", deparse(substitute(x)),
-                   "' to class \"POSIXlt\"", sep=""))
+	stop(paste("Don't know how to convert `", deparse(substitute(x)),
+		   "' to class \"POSIXlt\"", sep=""))
     .Internal(as.POSIXlt(x, tz))
 }
 
