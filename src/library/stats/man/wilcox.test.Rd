@@ -2,15 +2,17 @@
 \alias{wilcox.test}
 \alias{wilcox.test.default}
 \alias{wilcox.test.formula}
+\concept{Mann-Whitney Test}
 \title{Wilcoxon Rank Sum and Signed Rank Tests}
 \description{
-  Performs one and two sample Wilcoxon tests on vectors of data.
+  Performs one and two sample Wilcoxon tests on vectors of data; the
+  latter is also known as \sQuote{Mann-Whitney} test.
 }
 \usage{
 wilcox.test(x, \dots)
 
 \method{wilcox.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),
-            mu = 0, paired = FALSE, exact = NULL, correct = TRUE, 
+            mu = 0, paired = FALSE, exact = NULL, correct = TRUE,
             conf.int = FALSE, conf.level = 0.95, \dots)
 
 \method{wilcox.test}{formula}(formula, data, subset, na.action, \dots)
@@ -41,11 +43,11 @@ wilcox.test(x, \dots)
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to or from methods.}  
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   The formula interface is only applicable for the 2-sample tests.
-  
+
   If only \code{x} is given, or if both \code{x} and \code{y} are given
   and \code{paired} is \code{TRUE}, a Wilcoxon signed rank test of the
   null that the distribution of \code{x} (in the one sample case) or of
