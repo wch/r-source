@@ -79,6 +79,9 @@ NEW FEATURES
     o	as.data.frame() now coerces logical matrices into logical
 	columns (rather than factors).
 
+    o	All installed packages (even those shipped with R) are
+	given a `Built' field in the DESCRIPTION file.
+
 
 DEPRECATED & DEFUNCT
 
