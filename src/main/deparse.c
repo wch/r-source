@@ -1141,6 +1141,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	case CPLXSXP: print2buff("complex(0)", d); break;
 	case STRSXP: print2buff("character(0)", d); break;
 	case RAWSXP: print2buff("raw(0)", d); break;
+	default: UNIMPLEMENTED("vector2buff");
 	}
     }
     else if (tlen == 1) {

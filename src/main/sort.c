@@ -385,6 +385,8 @@ void sortVector(SEXP s, Rboolean decreasing)
 	case STRSXP:
 	    ssort2(STRING_PTR(s), n, decreasing);
 	    break;
+	default:
+	    UNIMPLEMENTED("sortVector");
 	}
 }
 
@@ -463,6 +465,8 @@ static void Psort(SEXP x, int k)
     case STRSXP:
 	sPsort(STRING_PTR(x), LENGTH(x), k);
 	break;
+    default:
+	UNIMPLEMENTED("pSort");
     }
 }
 
@@ -637,6 +641,8 @@ static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
     case STRSXP:
 	for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
 	break;
+    default:
+	UNIMPLEMENTED("orderVector1");
     }
     for (i = 0; i < n; i++) numna += isna[i];
 
@@ -645,7 +651,7 @@ static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 	case LGLSXP:
 	case INTSXP:
 	case REALSXP:
-    case STRSXP:
+	case STRSXP:
 	    if (!nalast) for (i = 0; i < n; i++) isna[i] = !isna[i];
 	    for (t = 0; incs[t] > n; t++);
 #define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))

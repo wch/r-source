@@ -151,6 +151,9 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		for (j = 0; j < nc; j++)
 		    RAW(snr)[i + j * nr] = 0;
 	    break;
+	default: 
+	    /* don't fill with anything */
+	    ;
 	}
     }
     UNPROTECT(1);

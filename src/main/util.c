@@ -109,6 +109,8 @@ int asLogical(SEXP x)
 	    return LogicalFromReal(REAL(x)[0], &warn);
 	case CPLXSXP:
 	    return LogicalFromComplex(COMPLEX(x)[0], &warn);
+	default:
+	    UNIMPLEMENTED("asLogical");
 	}
     }
     return NA_LOGICAL;
@@ -132,6 +134,8 @@ int asInteger(SEXP x)
 	    res = IntegerFromComplex(COMPLEX(x)[0], &warn);
 	    CoercionWarning(warn);
 	    return res;
+	default:
+	    UNIMPLEMENTED("asInteger");
 	}
     }
     return NA_INTEGER;
@@ -158,6 +162,8 @@ double asReal(SEXP x)
 	    res = RealFromComplex(COMPLEX(x)[0], &warn);
 	    CoercionWarning(warn);
 	    return res;
+	default:
+	    UNIMPLEMENTED("asReal");
 	}
     }
     return NA_REAL;
@@ -180,6 +186,8 @@ Rcomplex asComplex(SEXP x)
 	    return ComplexFromReal(REAL(x)[0], &warn);
 	case CPLXSXP:
 	    return COMPLEX(x)[0];
+	default:
+	    UNIMPLEMENTED("asComplex");
 	}
     }
     return z;
@@ -240,6 +248,8 @@ R_len_t asVecSize(SEXP x)
 	    if(d < 0) error("vector size cannot be negative");
 	    if(d > R_LEN_T_MAX) error("vector size specified is too large");
 	    return (R_size_t) d;
+	default:
+	    UNIMPLEMENTED("asVecSize");
 	}
     }
     return -1;

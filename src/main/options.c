@@ -339,6 +339,8 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(LENGTH(argnames) != n)
 	    errorcall(call,"list argument has no names or invalid ones");
 	break;
+    default:
+	UNIMPLEMENTED("options");
     }
 
     R_Visible = 0;

@@ -183,6 +183,8 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 	for (i = 0; i < len; i++)
 	    RAW(x)[i] = 0xFF ^ RAW(arg)[i];
 	break;
+    default:
+	UNIMPLEMENTED("lunary");
     }
     if(names != R_NilValue) setAttrib(x, R_NamesSymbol, names);
     if(dim != R_NilValue) setAttrib(x, R_DimSymbol, dim);
