@@ -8,12 +8,18 @@ RVER = @RVER@
 HELP = YES
 WINHELP = NO # Use one of NO, CHM, BOTH (chm and winhelp)
 
-RHOME = $(shell ./Rpwd.exe ../..)# must be absolute path
+## must be absolute and space-free paths
+ifneq ($(strip $(BUILD)),CROSS)
+RHOME = $(shell ./Rpwd.exe ../..)
+PKGD = $(shell ./Rpwd.exe $(PKGDIR))
+else
+RHOME = $(shell perl pwd.pl ../..)
+PKGD = $(shell perl pwd.pl $(PKGDIR))
+endif
+
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
-PKGD = $(shell ./Rpwd.exe $(PKGDIR))# must be absolute path
 
-#FLIBS+=-lRblas
 
 all: libR.a libRblas.a
 
@@ -52,7 +58,7 @@ bundle-%:
 	@$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" \
+	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
@@ -73,7 +79,7 @@ endif
 	  -f $(RHOME)/src/gnuwin32/MakePkg md5sums
 
 pkgclean-%:
-	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) \
+	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:
