@@ -78,6 +78,12 @@ BUG FIXES
 
     o	z[[1]] <- ~x probl fixed as suggested by J.Lindsey 
 
+    o   do_modelframe could lose contrast attributes
+
+    o	"make check" needed standardisation of locale
+
+    o	unlist(...,recursive=F) got names wrong
+
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
