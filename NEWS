@@ -124,6 +124,7 @@ BUG FIXES
     o   NCOL got confused by 1D arrays, which it now reports have 1
 	column rather than NA.
 
+    o   rep(1:2,c(1,-1)) segfaulted (PR 619)
 
 
 		CHANGES IN R VERSION 1.1.0
