@@ -50,10 +50,10 @@
     ylim <- c(0, n + 1)
   }
   else {
-    o <- rev(order(codes(groups)))
+    o <- rev(order(as.numeric(groups)))
     x <- x[o]
     groups <- groups[o]
-    offset <- cumsum(c(0, diff(codes(groups)[o]) != 0))
+    offset <- cumsum(c(0, diff(as.numeric(groups)[o]) != 0))
     y <- 1:n + 2 * offset
     ylim <- range(0, y + 2)
   }

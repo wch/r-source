@@ -17,7 +17,7 @@ tapply <- function (x, INDEX, FUN=NULL, simplify=TRUE, ...)
 			stop("arguments must have same length")
 		namelist[[i]] <- levels(index)#- all of them, yes !
 		extent[i] <- nlevels(index)
-		group <- group + ngroup * (codes(index) - 1)
+		group <- group + ngroup * (as.numeric(index) - 1)
 		ngroup <- ngroup * nlevels(index)
 	}
 	if (is.null(FUN)) return(group)

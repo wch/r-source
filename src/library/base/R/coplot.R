@@ -78,14 +78,14 @@ function (formula, data, given.values, panel=points, rows, columns,
  if(missing(given.values)) {
 	if(is.factor(a)) {
 		a.intervals <- cbind(1:nlevels(a), 1:nlevels(a))
-		a <- codes(a)
+		a <- as.numeric(a)
 	}
 	else a.intervals <- co.intervals(a)
 	b.intervals <- NULL
 	if (have.b)  {
 		if(is.factor(b)) {
 			b.intervals <- cbind(1:nlevels(b), 1:nlevels(b))
-			b <- codes(b)
+			b <- as.numeric(b)
 		}
 		else b.intervals <- co.intervals(b)
 	}
@@ -99,7 +99,7 @@ function (formula, data, given.values, panel=points, rows, columns,
 		if(is.character(a.intervals))
 			a.levels <- match(a.levels, levels(a))
 		else a.levels <- cbind(a.levels, a.levels)
-		a <- codes(a)
+		a <- as.numeric(a)
 	 } else if(is.numeric(a)) {
 		if(!is.numeric(a)) bad.givens()
 		if(!is.matrix(a.intervals) || ncol(a.intervals) != 2)
@@ -111,7 +111,7 @@ function (formula, data, given.values, panel=points, rows, columns,
 			if(is.character(b.intervals))
 				b.levels <- match(b.levels, levels(b))
 			else b.levels <- cbind(b.levels, b.levels)
-			b <- codes(b)
+			b <- as.numeric(b)
 		} else if(is.numeric(b)) {
 			if(!is.numeric(b)) bad.givens()
 			if(!is.matrix(b.intervals) || ncol(b.intervals) != 2)
