@@ -116,7 +116,10 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   If the date string does not specify the date completely, the returned
   answer may be system-specific.  The most common behaviour is to assume
   that unspecified seconds, minutes or hours are zero, and a missing
-  year, month or day is the current one.
+  year, month or day is the current one.  If it specifies a date
+  incorrectly, reliable implementations will give an error and the date
+  is reported as \code{NA}.  Unfortunately some common implementations
+  (such as \samp{glibc}) are unreliable and guess at the intended meaning.
 
   If the timezone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
