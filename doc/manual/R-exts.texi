@@ -126,7 +126,7 @@ packages, such as @strong{eda}, @strong{mva}, and @strong{stepfun}.
 A package consists of a subdirectory containing the files
 @file{DESCRIPTION}, @file{INDEX}, and @file{TITLE}, and the
 subdirectories @file{R}, @file{data}, @file{exec}, @file{inst},
-@file{man}, and @file{src} (some of which can be missing). Optionally
+@file{man}, and @file{src} (some of which can be missing).  Optionally
 the package can also contain script files @file{configure} and
 @file{cleanup} which are executed before and after installation,
 @xref{Configure / cleanup}.
@@ -148,9 +148,9 @@ URL: http://www.ci.tuwien.ac.at, http://www.tuwien.ac.at
 
 @noindent
 Continuation lines (e.g., for descriptions longer than one line) start
-with a whitespace character. The package, version, author and
+with a whitespace character.  The package, version, author and
 description fields are mandatory, the remaining fields(date, depends,
-url, @ldots) are optional. The author field should contain an email
+url, @dots{}) are optional.  The author field should contain an email
 address in angle brackets (for sending bug reports etc.).
 
 The license field should contain an explicit statement or a well-known
@@ -162,7 +162,7 @@ copies of the package.
 
 The optional URL field may give a comma (or whitespace)-separated list
 of URL's, e.g., the homepage of the author or a page where additional
-material describing the software can be found. These URL's are converted
+material describing the software can be found.  These URL's are converted
 to active hyperlinks on CRAN.
 
 The @file{TITLE} file contains a line giving the name of the package and
@@ -258,12 +258,12 @@ Description: Functions for kriging and point pattern analysis.
 
 If your package needs some system-dependent configuration before
 installation you can include a script @file{configure} in your package
-which (if present) is executed by @code{R INSTALL} before any other action is
-performed. This can be a script created by the autoconf
-mechanism, but may also be a script written by yourself. Use this to
+which (if present) is executed by @code{R INSTALL} before any other
+action is performed.  This can be a script created by the autoconf
+mechanism, but may also be a script written by yourself.  Use this to
 detect if any nonstandard libraries are present such that corresponding
 code in the package can be disabled at install time rather than giving
-error messages when the package is compiled or used. To summarize, the
+error messages when the package is compiled or used.  To summarize, the
 full power of autoconf is available for your extension package
 (including variable substitution, searching for libraries, etc.).
 
@@ -272,10 +272,11 @@ if present and can be used to clean up the package source tree,
 especially remove files created by @file{configure}.
 
 As an example consider we want to use functionality provided by
-@file{libfoo}. Then we can write a configure script using
+@file{libfoo}.  Then we can write a configure script using
 @code{autoconf} which replaces @code{@@HAVEFOO@@} with @code{TRUE} if
-the library is found and with @code{FALSE} if it not found. The
+the library is found and with @code{FALSE} if it not found.  The
 definition of the respective R function in @file{foo.R.in} could be
+
 @smallexample
 foo <- function(x)@{
 
@@ -283,8 +284,11 @@ foo <- function(x)@{
 
     ...
 @end smallexample
+
+@noindent
 From this file @code{configure} creates the actual R source file
 @file{foo.R} looking like
+
 @smallexample
 foo <- function(x)@{
 
@@ -292,6 +296,8 @@ foo <- function(x)@{
 
     ...
 @end smallexample
+
+@noindent
 if @file{libfoo} was not found such that the function is effectively
 disabled when library @file{libfoo} is not present on the target system.
 
@@ -799,7 +805,7 @@ directory or, if it starts with @code{~}, relative to the user's home
 directory.
 
 Loading is most often done via a call to @code{library.dynam} in the
-@code{.First.lib} function of a package. This has the form
+@code{.First.lib} function of a package.  This has the form
 
 @smallexample
 library.dynam("libname", package, lib.loc)
@@ -815,7 +821,7 @@ will terminate @R{} unceremoniously.
 
 If a library/DLL is loaded more than once the most recent version is
 used.  More generally, if the same symbol name appears in several
-libraries, the most recently loaded occurrence is used. The
+libraries, the most recently loaded occurrence is used.  The
 @code{PACKAGES} argument provides a good way to avoid any ambiguity in
 which occurrence is meant.
 
@@ -1516,10 +1522,10 @@ SEXP convolve2(SEXP a, SEXP b)
 @}
 @end example
 
-Note that unlike the macros in S version 4, the @R{} versions of these
+zNote that unlike the macros in S version 4, the @R{} versions of these
 macros do check that coercion can be done and raise an error if it
 fails.  They will raise warnings if missing values are introduced by
-coercion. Although we illustrate doing the coercion in the C code here,
+coercion.  Although we illustrate doing the coercion in the C code here,
 it often is simpler to do the necessary coercions in the @R{} code.
 
 Now for the version in @R{}-internal style.  Only the C code changes.
