@@ -1,7 +1,7 @@
 \name{Gnome}
-\alias{Gnome}
+\alias{GNOME}
 \alias{gnome}
-\title{Gnome (on X Windows 11) Graphics Device}
+\title{GNOME Desktop Graphics Device}
 \usage{
 gnome(display="", width=7, height=7, pointsize=12)
 Gnome(display="", width=7, height=7, pointsize=12)
