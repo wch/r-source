@@ -781,11 +781,6 @@ Subject: R fails to build on AFS
 From: Atro.Tossavainen+rproject@helsinki.fi
 Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
 ..insufficent information: what was the error message?
-* PR# 6815 *
-Subject: make fails with Sun Forte compiler
-From: rsparapa@mcw.edu
-Date: Fri, 23 Apr 2004 20:07:05 +0200 (CEST)
-..Sun Solaris 9, not reproducible with Forte by BDR
 
 Directory:  TooMuchAtOnce
 
@@ -871,56 +866,35 @@ Date: Wed, 21 Apr 2004 17:49:03 -0400
 Subject: is.na(valid_date) too often true on SGI MIPS
 From: aa056@chebucto.ns.ca
 Date: Fri, 23 Apr 2004 18:27:45 +0200 (CEST)
-* PR# 6820 *
-Subject: Nisha Group
-From: Nisha Bio-Tech - Sivan Tzidon <sivan@nisha-hr.co.il>
-Date: Sun, 25 Apr 2004 08:29:29 +0200
-* PR# 6821 *
-Subject: Bug?
-From: "Alain Yamakana" <alain.yamakana@rogers.com>
-Date: Sun, 25 Apr 2004 12:04:55 -0400
-* PR# 6822 *
-Subject: Freedom at last
-From: "Nola Mcintyre" <DISSN@toys.co.jp>
-Date: Sun, 25 Apr 2004 20:37:12 -0200
-* PR# 6823 *
-Subject: Warning: antivirus system report
-Subject: Re: Your document
-Subject: Re: Your document
-From: Mail Delivery Subsystem <MAILER-DAEMON@emind.ws>
-From: r-bugs@biostat.ku.dk
-From: r-bugs@biostat.ku.dk
-Date: Sun, 25 Apr 2004 16:14:10 -0300
-Date: Sun, 25 Apr 2004 15:12:29 -0400
-* PR# 6824 *
-Subject: carlyle
-From: "Peter Lambert" <crdsm@mail.com>
-Date: Sun, 25 Apr 2004 12:30:08 +0500
-* PR# 6825 *
-Subject: InterScan Virus Alert
-From: interscan@reuters.net
-Date: Mon, 26 Apr 2004 16:05:48 GMT
-* PR# 6826 *
-Subject: BE MY INVESTOR TRUSTEE
-From: continentallottery01 <continentallottery01@telstra.com>
-Date: Mon, 26 Apr 2004 20:28:47 +0200
-* PR# 6827 *
-Subject: invalid homedrive
-From: anders.holm@sociology.ku.dk
-Date: Mon, 26 Apr 2004 20:31:11 +0200 (CEST)
-* PR# 6828 *
-Subject: Winning Notification
-From: "Glo Lotto" <glolotto@galmail.co.za>
-Date: Tue, 27 Apr 2004 12:47:49 +0200
-* PR# 6829 *
-Subject: Autosvar - Ikke til stede: Its me
-From: "NAT-nsv" <NAT-nsv@adm.ku.dk>
-Date: Tue, 27 Apr 2004 15:25:02 +0200
 * PR# 6830 *
 Subject: 'R CMD build' fails when there are spaces in the path
 From: ellis@stat.harvard.edu
 Date: Tue, 27 Apr 2004 16:18:44 +0200 (CEST)
-* PR# 6831 *
-Subject: Mqbajwtar is this what you were looking for?
-From: "tyron wackenheim" <skelxess@portcharles.net>
-Date: Wed, 28 Apr 2004 03:25:28 +0100
+* PR# 6832 *
+Subject: boxplot graphical arguments
+From: Arni Magnusson <arnima@u.washington.edu>
+Date: Tue, 27 Apr 2004 19:42:00 -0700 (PDT)
+* PR# 6833 *
+Subject: boxplot documentation
+From: Arni Magnusson <arnima@u.washington.edu>
+Date: Tue, 27 Apr 2004 19:47:04 -0700 (PDT)
+* PR# 6834 *
+Subject: Qpjpcl Pain Medicati0ns Lortab H'y_d_roc_0_d_0`n_e Norco V~i_c_o`din 
+From: "rudolph wilbers" <landsworth@verticalheaven.com>
+Date: Wed, 28 Apr 2004 13:57:49 -0200
+* PR# 6835 *
+Subject: =?Windows-1252?Q?Informa=E7=E3o_de_Virus!!!?=
+From: =?Windows-1252?Q?Dr=AA_Josefina_Castro?= <jcastro@direito.up.pt>
+Date: Wed, 28 Apr 2004 08:06:58 +0100
+* PR# 6836 *
+Subject: Your EQUITY NEWS UPDATE For Wed, 28 Apr 2004 07:07:06 -0500
+From: "Josefina Schultz" <marthfreitas@inonesearch.com>
+Date: Wed, 28 Apr 2004 07:07:06 -0500
+* PR# 6837 *
+Subject: Ready and (0nline) r-bugs preview.jpg
+From: Date Chatters <DateChatters@directcastle.com>
+Date: Wed, 28 Apr 2004 20:56:32 +0800
+* PR# 6838 *
+Subject: Re: model.matrix.default(x ~ y) bug when y is array
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 28 Apr 2004 16:44:30 +0200
