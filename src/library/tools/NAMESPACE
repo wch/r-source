@@ -8,7 +8,8 @@ export(".installMD5sums", "Rdindex", "Rtangle", "RtangleSetup",
        "codoc", "codocClasses", "codocData", "md5sum", "undoc",
        "filePathAsAbsolute", "filePathSansExt", "fileTest",
        "listFilesWithExts", "listFilesWithType", "delimMatch",
-       "texi2dvi", "buildVignettes", "pkgVignettes")
+       "texi2dvi", "buildVignettes", "pkgVignettes", "pkgDepends",
+       "getDepList", "installFoundDepends")
 
 ## <FIXME>
 ## Documented as internal but called from scripts
