@@ -14,7 +14,7 @@ set.seed(seed, kind = NULL)
 \description{
   \code{.Random.seed} is an integer vector, containing the random number
   generator (RNG) \bold{state} for random number generation in \R. It
-  can saved and restored, but should not be altered by the user.
+  can be saved and restored, but should not be altered by the user.
 
   \code{RNGkind} is a more friendly interface to query or set the kind
   of RNG in use.
@@ -22,10 +22,10 @@ set.seed(seed, kind = NULL)
   \code{set.seed} is the recommended way to specify seeds.
 }
 \arguments{
-  \item{kind}{character or \code{NULL}.  If \code{kind} is a character
+  \item{kind}{character or \code{NULL}.	 If \code{kind} is a character
     string, set \R's RNG to the kind desired. If it is \code{NULL},
     return the currently used RNG.}
-  \item{normal.kind}{character string or \code{NULL}.  If is a character
+  \item{normal.kind}{character string or \code{NULL}.  If it is a character
     string, set the method of Normal generation.}
   \item{seed}{a single value, interpreted as an integer.}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
@@ -33,8 +33,9 @@ set.seed(seed, kind = NULL)
     (which depends on \code{rng.kind}).}
 }
 \details{
-  The currently available RNG kinds are given below. \code{kind} is
-  partially matched to this list. The default is
+%% source and more detailed references:  ../../../main/RNG.c
+  The currently available RNG kinds are given below.  \code{kind} is
+  partially matched to this list.  The default is
   \code{"Marsaglia-Multicarry"}.
   \describe{
     \item{\code{"Wichmann-Hill"}}{
@@ -46,52 +47,53 @@ set.seed(seed, kind = NULL)
     \eqn{6.9536 \times 10^{12}}{6.9536e12} (=
     \code{prod(p-1)/4}, see \emph{Applied Statistics} (1984)
     \bold{33}, 123 which corrects the original article).}
-    
+
     \item{\code{"Marsaglia-Multicarry"}:}{
     A \emph{multiply-with-carry} RNG is used, as recommended by George
     Marsaglia in his post to the mailing list \file{sci.stat.math}.
-    It has a period of mote than \eqn{2^{60}}{2^60} and has passed
-    all tests (according to Marsaglia).  The seed is two integers (all
+    It has a period of more than \eqn{2^{60}}{2^60} and has passed
+    all tests (according to Marsaglia).	 The seed is two integers (all
     values allowed).}
 
     \item{\code{"Super-Duper"}:}{
     Marsaglia's famous Super-Duper from the 70's.  This is the original
     version which does \emph{not} pass the MTUPLE test of the Diehard
     battery.  It has a period of \eqn{\approx 4.6\times 10^{18}}{about
-      4.6*10^18} for most initial seeds. The seed is two integers (all
+      4.6*10^18} for most initial seeds.  The seed is two integers (all
     values allowed for the first seed: the second must be odd).
-    
-    We use the implementation by Reeds et al.\ (1982--83).
-    
+
+    We use the implementation by Reeds et al.\ (1982--83).% RNG.c has (1984)
+
     The two seeds are the Tausworthe and Congruence long integers,
     respectively.  A one-to-one mapping to S's \code{.Random.seed[1:12]}
     is possible but we will not publish one, not least as this generator
     is \bold{not} exactly the same as that in recent versions of S-PLUS.}
-    
+
     \item{\code{"Mersenne-Twister":}}{
     From Matsumoto and Nishimura (1998). A twisted GFSR with period
     \eqn{2^{19937} - 1}{2^{19937} - 1} and equidistribution in 623
     consecutive dimensions (over the whole period).  The ``seed'' is a
     624-dimensional set of 32-bit integers plus a current position in
     that set.}
-    
+
     \item{\code{"Knuth-TAOCP":}}{
-    From Knuth (1997).  A GFSR using lagged Fibonacci sequences with
+    From Knuth (1997).	A GFSR using lagged Fibonacci sequences with
     subtraction. That is, the recurrence used is
-    \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}}{X[j] = (X[j-100] - X[j-37]) mod 2^30}
+    \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
+        }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
     and the ``seed'' is the set
-    of 100 last numbers (actually recorded as 101 numbers, the last
+    of the 100 last numbers (actually recorded as 101 numbers, the last
     being a cyclic shift of the buffer).}
   }
- 
+
   \code{normal.kind} can be \code{"Kinderman-Ramage"} (the default) or
   \code{"Ahrens-Dieter"} or \code{"Box-Muller"}.
- 
+
   \code{set.seed} uses its single integer argument to set as many seeds
-  as are required. It is intended as a simple way to get quite different
+  as are required.  It is intended as a simple way to get quite different
   seeds by specifying small integer arguments, and also as a way to get
   valid seed sets for the more complicated methods (especially
-  \code{"Knuth-TAOCP"}.
+  \code{"Knuth-TAOCP"}).
 }
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
@@ -101,7 +103,7 @@ set.seed(seed, kind = NULL)
   In the underlying C, \code{.Random.seed[-1]} is used as \code{unsigned
     long} (32 bits at least); in \R \code{.Random.seed[i]} can therefore
   be negative for \eqn{i > 1}.
-  
+
   \code{RNGkind} returns the RNG and normal kinds in use \emph{before}
   the call, invisibly if either is not \code{NULL}.
 
@@ -116,17 +118,19 @@ set.seed(seed, kind = NULL)
   De Matteis, A. and Pagnutti, S. (1993)
   \emph{Long-range Correlation Analysis of the Wichmann-Hill Random
       Number Generator}, Statist. Comput., \bold{3}, 67--70.
-  
-  Marsaglia, G. (1997) \emph{A random number generator for C.} Discussion 
+
+  Marsaglia, G. (1997) \emph{A random number generator for C.} Discussion
   paper, posting on Usenet newsgroup \code{sci.stat.math} on
   September 29, 1997.
-  
-  Marsaglia, G. and Zaman, A. (1994) Some portable very-long-period 
+
+%% FIXME:  we need   "Reeds et al (1984)  or "1982-1983" as said above
+
+  Marsaglia, G. and Zaman, A. (1994) Some portable very-long-period
   random number generators. \emph{Computers in Physics}, \bold{8},
   117--121.
 
   Matsumoto, M. and Nishimura, T. (1998)
-  Mersenne Twister: A 623-dimensionally equidistributed uniform  
+  Mersenne Twister: A 623-dimensionally equidistributed uniform
   pseudo-random number generator,
   \emph{ACM Transactions on Modeling and Computer Simulation},
   \bold{8}, 3--30.\cr
@@ -137,22 +141,22 @@ set.seed(seed, kind = NULL)
   Source code at \url{http://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
 }
 \note{
-  Initially, there is no seed;  a new one is created from the current
+  Initially, there is no seed;	a new one is created from the current
   time when one is required.  Hence, different sessions will give
   different simulation results, by default.
 }
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
 
 \seealso{\code{\link{runif}}, \code{\link{rnorm}}, \ldots.}
-%       this is ./Uniform.Rd
+%	this is ./Uniform.Rd
 \examples{
 runif(1); .Random.seed; runif(1); .Random.seed
-## If there is no seed,  a ``random'' new one is created:
+## If there is no seed,	 a ``random'' new one is created:
 rm(.Random.seed); runif(1); .Random.seed
 
 RNGkind("Wich")# (partial string matching on 'kind')
 p.WH <- c(30269, 30307, 30323)
-a.WH <- c(  171,   172,   170)
+a.WH <- c(  171,   172,	  170)
 next.WHseed <- function(i.seed = .Random.seed[-1]) (a.WH * i.seed) \%\% p.WH
 my.runif1 <- function(i.seed = .Random.seed)
   { ns <- next.WHseed(i.seed[-1]); sum(ns / p.WH) \%\% 1 }
