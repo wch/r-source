@@ -115,6 +115,10 @@ Subject: cex/col/etc. in title(): documentation?
 From: Ben Bolker <ben@zoo.ufl.edu>
 Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
 --MM:actually the documentation still could elaborate a bit..
+* PR# 1772 *
+Subject: bug(?) in R FAQ - Should I run R from within Emacs?
+From: Tim.Harrold@csiro.au
+Date: Thu, 11 Jul 2002 18:21:42 +1000
 
 Directory:  Graphics
 
@@ -364,6 +368,11 @@ Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
 Subject:  Problem with "missing" in "local" 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 4 Jan 2002 13:34:34 GMT
+* PR# 1737 *
+Subject: complex numbers in library function
+From: alex.deckmyn@oma.be
+Date: Wed, 3 Jul 2002 14:25:58 +0200 (MET DST)
+--parse/deparse problem
 
 Directory:  Low-level
 
@@ -505,124 +514,37 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Problem in optim(method="L-BFGS-B")
 From: polzehl@wias-berlin.de
 Date: Fri, 28 Jun 2002 11:53:13 +0200 (MET DST)
-* PR# 1737 *
-Subject: complex numbers in library function
-From: alex.deckmyn@oma.be
-Date: Wed, 3 Jul 2002 14:25:58 +0200 (MET DST)
-* PR# 1744 *
-Subject: lattice default aspect fails for some data sets
-From: dieter.menne@menne-biomed.de
-Date: Thu, 4 Jul 2002 21:01:08 +0200 (MET DST)
 * PR# 1745 *
 Subject: nlme: failed augPred with NA in an unused column
 From: dieter.menne@menne-biomed.de
 Date: Fri, 5 Jul 2002 08:32:32 +0200 (MET DST)
-* PR# 1759 *
-Subject: as.character.octmode() and format.octmode()
-From: hb@maths.lth.se
-Date: Tue, 9 Jul 2002 00:49:33 +0200 (MET DST)
 * PR# 1761 *
 Subject: svd() very slow for wide matrix X but not for t(X)
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Tue, 9 Jul 2002 11:39:15 -0400 
 --Doesn't happen with the now preferred La.svd.
-* PR# 1767 *
-Subject: bug in all.equal.character
-From: "David Kane  <David Kane" <a296180@agate.fmr.com>
-Date: Wed, 10 Jul 2002 08:13:42 -0400
-* PR# 1770 *
-Subject: Undeliverable mail--"or numeric vectors."
-Subject: or numeric vectors.<br>
+* PR# 1796 *
+Subject: methods: representation gives "unused arguments" on failure
+From: markus.jantti@iki.fi
+Date: Tue, 16 Jul 2002 10:03:40 +0200 (MET DST)
+--see also 1799 for follow-up
+* PR# 1799 *
+Subject: Re: methods: representation gives "unused arguments" on failure 
+From: John Chambers <jmc@research.bell-labs.com>
+Date: Tue, 16 Jul 2002 16:59:22 -0400
+--follow up to 1796
+--stop() allows multiple args as from 1.6.0
+* PR# 1801 *
+Subject: R crashes when using "xyplot"
+From: carsten.dormann@web.de
+Date: Wed, 17 Jul 2002 15:42:08 +0200 (MET DST)
+* PR# 1802 *
+Subject: Maritime Newsletter (Week 29)
+From: "Marine Digital Inc."<newsletter@marinedigital.com>
+Date: Thu, 18 Jul 2002 04:51:26 +0900
+* PR# 1803 *
+Subject: Returned mail--"div ends "
+Subject: div ends <br>
 From: postmaster <postmaster@r-project.org>
 From: r-bugs@r-project.org<br>
-Date: Thu, 11 Jul 2002 02:44:52 -0400 (EDT)
-* PR# 1771 *
-Subject: (±¤°?)º??º?®??µ? ?ü±????? ?ð?ý
-From: ???º±? <sky8525@lycos.co.kr>
-Date: Thu, 11 Jul 2002 17:14:19 +0900
-* PR# 1772 *
-Subject: bug(?) in R FAQ - Should I run R from within Emacs?
-From: Tim.Harrold@csiro.au
-Date: Thu, 11 Jul 2002 18:21:42 +1000
-* PR# 1773 *
-Subject: A special  nice game
-From: jwen <jwen@ms27.url.com.tw>
-Date: Thu, 11 Jul 2002 18:27:33 +0800 (CST)
-* PR# 1774 *
-Subject: dyn.load tcl/tk
-From: Patrick =?iso-8859-15?q?J=F6ckel?= <joeckel@mpch-mainz.mpg.de>
-Date: Thu, 11 Jul 2002 21:07:14 +0200
-* PR# 1775 *
-Subject: Unsubscribe, visit
-From: jason <jason@php.net>
-Date: Fri, 12 Jul 2002 02:15:15 +0200 (CEST)
-* PR# 1776 *
-Subject: Worm Klez.E immunity
-From: fmiller <fmiller@tamut.edu>
-Date: Fri, 12 Jul 2002 08:52:33 +0200 (CEST)
-* PR# 1777 *
-Subject: A  WinXP patch
-From: hholzgra <hholzgra@php.net>
-Date: Fri, 12 Jul 2002 11:24:11 +0200 (CEST)
-* PR# 1778 *
-Subject: W32.Elkern  removal tools
-From: dmitry <dmitry@sinet.ru>
-Date: Fri, 12 Jul 2002 20:22:30 +0200 (CEST)
-* PR# 1779 *
-Subject: Majordomo results: Worm Klez.E immunity
-From: Majordomo@stat.math.ethz.ch
-Date: Fri, 12 Jul 2002 21:39:49 +0200 (MET DST)
-* PR# 1780 *
-Subject:  
-From: r-devel-request <r-devel-request@stat.math.ethz.ch>
-Date: Fri, 12 Jul 2002 21:40:09 +0200 (CEST)
-* PR# 1781 *
-Subject: Minor bug in dlnorm
-From: Duncan Murdoch <murdoch@stats.uwo.ca>
-Date: Fri, 12 Jul 2002 15:43:11 -0400
-* PR# 1782 *
-Subject: Hi,r-bugs,the Garden of Eden
-From: jon <jon@csh.rit.edu>
-Date: Fri, 12 Jul 2002 22:33:04 +0200 (CEST)
-* PR# 1783 *
-Subject: Unsubscribe, visit
-From: brahm <brahm@alum.mit.edu>
-Date: Sat, 13 Jul 2002 07:05:52 +0200 (CEST)
-* PR# 1784 *
-Subject: Undeliverable mail--"Contents"
-Subject: Contents<br>
-From: postmaster <postmaster@r-project.org>
-From: r-bugs@r-project.org<br>
-Date: Sat, 13 Jul 2002 07:15:13 -0400
-* PR# 1785 *
-Subject: Welcome to my hometown
-From: billm <billm@melbpc.org.au>
-Date: Sun, 14 Jul 2002 00:26:01 +1200 (NZST)
-* PR# 1786 *
-Subject: You only need the ok from the other
-From: netmics <netmics@hotmail.com>
-Date: Sat, 13 Jul 2002 15:10:37 +0200 (CEST)
-* PR# 1787 *
-Subject: A  new game
-From: jf <jf@lf.net>
-Date: Sat, 13 Jul 2002 15:41:07 +0200 (CEST)
-* PR# 1788 *
-Subject: [?º??±¤°?] ?????ü ??¶? ??µ??? ?? PC-Ephone?? ?????? µ???´?´?~!!
-From: "bargirl@xxx.com" <bargirl@xxx.com>
-Date: Wed, 3 Jul 2002 06:48:55 +0900
-* PR# 1789 *
-Subject: Fw:r-bugs,introduction on ADSL
-From: robertalioto1232 <robertalioto1232@altainfo.com>
-Date: Sat, 13 Jul 2002 21:36:51 -0500
-* PR# 1790 *
-Subject: ????°?ºñ???º?? ???®???? (±¤°?)
-From: "¾??ü" <boan1@orgio.net>
-Date: Sun, 14 Jul 2002 21:23:11 +0900
-* PR# 1791 *
-Subject: A very  powful tool
-From: lro <lro@cgtc.d>
-Date: Sun, 14 Jul 2002 15:03:27 -0300
-* PR# 1792 *
-Subject: W32.Klez.E removal tools
-From: acsantos <acsantos@dcc.ufmg.br>
-Date: Mon, 15 Jul 2002 18:24:42 -0300
+Date: Wed, 17 Jul 2002 14:50:07 -0700 (PDT)
