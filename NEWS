@@ -17,7 +17,7 @@ NEW FEATURES
 C-LEVEL FACILITIES
 
     o	Rversion.h is no longer automatically included by R.h.
-	Include it explicitly is you need it.
+	Include it explicitly if you need it.
 
 
 BUG FIXES
@@ -76,7 +76,7 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   Changes in handing missing character strings:
+    o   Changes in handling missing character strings:
 
         -  "NA" is no longer automatically coerced to a missing value
 	   for a character string.  Use as.character(NA) where a missing
@@ -123,7 +123,7 @@ NEW FEATURES
 
         -  Now works with the GNOME user interface.
 
-        -  Several new functions allow access to C level Tcl objects. 
+        -  Several new functions allow access to C level Tcl objects.
 	   These are implemented using a new `tclObj' class, and this
 	   is now the class of the return value from .Tcl() and tkcmd().
 
@@ -162,7 +162,7 @@ NEW FEATURES
 
 	-  New function monthplot() (contributed by Duncan Murdoch).
 
-	-  New functions decompose() and HoltWinters() (contributed by 
+	-  New functions decompose() and HoltWinters() (contributed by
 	   David Meyer) for classical seasonal decomposition and
 	   exponentially-weighted forecasting.
 
@@ -675,7 +675,7 @@ BUG FIXES
 
     o   rect(lty = "blank") was incorrectly drawing with a dashed line.
 
-    o   type.convert() was not reporting incorrectly formatted complex 
+    o   type.convert() was not reporting incorrectly formatted complex
 	inputs. (PR#1477)
 
     o   readChar() was not resetting vmax, so causing memory build-up.
