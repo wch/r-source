@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-30, 2001-02-27
+Version 1.2-33, 2001-03-04
 Kurt Hornik
 
 
@@ -1148,6 +1148,10 @@ works, was published in the Journal of Statistical Software
      the book "An Introduction to the Bootstrap" by B. Efron and R.
      Tibshirani, 1993, Chapman and Hall.
 
+*bqtl*
+     QTL mapping toolkit for inbred crosses and recombinant inbred lines.
+     Includes maximum likelihood and Bayesian tools.
+
 *cclust*
      Convex clustering methods, including k-means algorithm, on-line update
      algorithm (Hard Competitive Learning) and Neural Gas algorithm (Soft
@@ -1315,10 +1319,6 @@ works, was published in the Journal of Statistical Software
      An interface for the Ordinary Differential Equation (ODE) solver lsoda.
      ODEs are expressed as R functions.
 
-*optimal*
-     Functions for optimal design of two-stage-studies using the Mean Score
-     method.
-
 *oz*
      Functions for plotting Australia's coastline and state boundaries.
 
@@ -1390,6 +1390,10 @@ works, was published in the Journal of Statistical Software
 
 *tseries*
      Package for time series analysis with emphasis on non-linear modelling.
+
+*twostage*
+     Functions for optimal design of two-stage-studies using the Mean Score
+     method.
 
 *wavethresh*
      Software to perform 1-d and 2-d wavelet statistics and transforms.
@@ -1475,10 +1479,6 @@ Currently, there are
      machines and allows R functionality to be exported in the same way to
      other applications.
 
-*Java*
-     An interface from R to Java to create and call Java objects and
-     methods.
-
 *RSMethods*
      An implementation of S version 4 methods and classes for R, consistent
      with the basic material in "Programming with data" by John M.
@@ -1488,9 +1488,16 @@ Currently, there are
      An interface from R to an embedded, persistent Perl interpreter,
      allowing one to call arbitrary Perl subroutines, classes and methods.
 
+*SJava*
+     An interface from R to Java to create and call Java objects and
+     methods.
+
 *SLanguage*
      Functions and C support utilities to support S language programming
      that can work in both R and S-PLUS.
+
+*SNetscape*
+     Plugin for Netscape and JavaScript.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*
