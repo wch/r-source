@@ -42,7 +42,7 @@ USE_GCT = 0
 all:
 	@(out=`echo "$(test-out)" | sed 's/ $$//g'`; \
 	  if test -n "$${out}"; then \
-	    $(MAKE) -f $(R_HOME)/share/make/tests.mk $(makevars) $${out}; \
+	    $(MAKE) -f $(R_HOME)/share/make/wintests.mk $(makevars) $${out}; \
 	  fi)
 
 clean:
