@@ -19,6 +19,20 @@ print.dist(dist.obj)
   This function computes and returns the distance matrix computed by
   using the specified distance measure to compute the distances between
   the rows of \code{x}.
+
+  Available distance measures are (written for two vectors \eqn{x} and
+  \eqn{y}): 
+  \itemize{
+    \item Euclidean: Usual square distance between the two vectors (2 norm).
+    \item Maximum: Maximum distance between two components of \eqn{x}
+    and \eqn{y} (supremum norm)
+    \item Manhattan: Absolute distance between the two vectors (1
+    norm).
+    \item Canberra: \eqn{sum(|x_i - y_i| / |x_i + y_i|)}
+    \item Count the number of different bits in \eqn{x} and \eqn{y}
+    where at least one of the two bits is 1, i.e., components where both
+    bits are zero are ignored.
+  } 
 }
 \value{
   The lower triangle of the distance matrix (with or without its
