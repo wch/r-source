@@ -97,7 +97,7 @@ qchisq <- function(p, df, ncp=0, lower.tail = TRUE, log.p = FALSE) {
 }
 rchisq <- function(n, df, ncp=0) {
     if(missing(ncp)) .Internal(rchisq(n, df))
-    else .not.yet.implemented()
+    else .NotYetImplemented()
 }
 
 df <- function(x, df1, df2, log = FALSE) .Internal(df(x, df1, df2, log))
