@@ -186,6 +186,16 @@ Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
 Subject: Segfault in foreign
 From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
 Date: 12 Nov 2003 17:31:24 +0100
+* PR# 5315 *
+Subject: O2 optimization produces wrong code
+From: jean.coursol@math.u-psud.fr
+Date: Tue, 25 Nov 2003 15:51:21 +0100 (CET)
+..report on akima ... known problem
+* PR# 5476 *
+Subject: memory leak
+From: schiessler@agere.com
+Date: Wed,  3 Dec 2003 06:01:57 +0100 (CET)
+..report on R-Excel, it seems.
 
 Directory:  Analyses
 
@@ -203,6 +213,17 @@ Subject: NLME: gls parameter evaluation inconsistency
 From: wb@arb-phys.uni-dortmund.de
 Date: Fri, 24 Oct 2003 14:52:26 +0200 (MET DST)
 ..It's a known problem.
+* PR# 5360 *
+Subject: ks.test
+From: pbtud@yahoo.com
+Date: Thu, 27 Nov 2003 18:43:23 +0100 (CET)
+..Documentation issue
+* PR# 5461 *
+Subject: xtabs or model.frame
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+From: "Francis Hsuan" <francis.hsuan@temple.edu> Add To Address Book 
+Date: Tue, 2 Dec 2003 01:20:08 -0500 (EST)
+Date: Mon, 1 Dec 2003 21:53:06 -0500
 
 Directory:  Documentation
 
@@ -421,6 +442,11 @@ Date: Tue, 15 Jul 2003 18:56:23 +0200 (MET DST)
 Subject: Re: [Rd] Bugs compiling R-1.7.1 with Intel compilers icc and ifc
 From: Kurt Hornik <Kurt.Hornik@wu-wien.ac.at>
 Date: Fri, 26 Sep 2003 20:28:51 +0200
+* PR# 5536 *
+Subject: R 1.8.1 ./configure with "," in working directory
+From: Wolfram Fischer <wolfram@fischer-zim.ch>
+Date: Fri, 5 Dec 2003 10:19:16 +0100
+..Well, so users expect the earth
 
 Directory:  Language
 
@@ -521,6 +547,11 @@ Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
 ..According to Simon Urbanek this is a java security issue.  With RAqua a good
 ..alternative is starting HTML 
 ..help and then using help.search() or  Help|Search Help on...
+* PR# 5529 *
+Subject: R OS X panther?
+From: Bronwyn Carlisle <bronwyn@biocadmin.otago.ac.nz>
+Date: Fri, 5 Dec 2003 12:47:55 +1300
+..Probably not an R bug
 
 Directory:  Misc
 
@@ -747,68 +778,6 @@ From:   "methods"       "methods" "methods" "methods"  "methods"
 From:   "methods"    "methods"
 Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 ..body<- is fixed. Should Compare and Complex show up as base?
-* PR# 5290 *
-Subject: [R] lattice: ltext() does not accept NULL
-From: Wolfram Fischer <wolfram@fischer-zim.ch>
-Date: Mon, 24 Nov 2003 12:44:26 +0100
-* PR# 5315 *
-Subject: O2 optimization produces wrong code
-From: jean.coursol@math.u-psud.fr
-Date: Tue, 25 Nov 2003 15:51:21 +0100 (CET)
-* PR# 5328 *
-Subject: wishlist item: symbols() to accept asp argument?
-From: Stephen Eglen <stephen@inf.ed.ac.uk>
-Date: Wed, 26 Nov 2003 12:26:16 +0000
-* PR# 5344 *
-Subject: R CMD CHECK doesn't allow --configure-args
-From: bellis@hsph.harvard.edu
-Date: Thu, 27 Nov 2003 05:46:28 +0100 (CET)
-* PR# 5360 *
-Subject: ks.test
-From: pbtud@yahoo.com
-Date: Thu, 27 Nov 2003 18:43:23 +0100 (CET)
-* PR# 5379 *
-Subject: search documentation not working with mozilla and konqueror
-From: sergei@stams.strath.ac.uk
-Date: Fri, 28 Nov 2003 13:39:42 +0100 (CET)
-* PR# 5383 *
-Subject: Re: [Rd] search documentation not working with mozilla and
-From: Marc Schwartz <MSchwartz@MedAnalytics.com>
-Date: Fri, 28 Nov 2003 09:43:28 -0600
-* PR# 5405 *
-Subject: library stepfun seems to have a problem
-From: agandy@mathematik.uni-ulm.de
-Date: Sat, 29 Nov 2003 17:42:19 +0100 (CET)
-* PR# 5461 *
-Subject: xtabs or model.frame
-From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-From: "Francis Hsuan" <francis.hsuan@temple.edu> Add To Address Book 
-Date: Tue, 2 Dec 2003 01:20:08 -0500 (EST)
-Date: Mon, 1 Dec 2003 21:53:06 -0500
-* PR# 5476 *
-Subject: memory leak
-From: schiessler@agere.com
-Date: Wed,  3 Dec 2003 06:01:57 +0100 (CET)
-* PR# 5509 *
-Subject: Loading R 1.8.1
-From: "Middleton, Brian J" <Brian.Middleton@astrazeneca.com>
-Date: Thu, 4 Dec 2003 11:53:42 -0000 
-* PR# 5529 *
-Subject: R OS X panther?
-From: Bronwyn Carlisle <bronwyn@biocadmin.otago.ac.nz>
-Date: Fri, 5 Dec 2003 12:47:55 +1300
-* PR# 5536 *
-Subject: R 1.8.1 ./configure with "," in working directory
-From: Wolfram Fischer <wolfram@fischer-zim.ch>
-Date: Fri, 5 Dec 2003 10:19:16 +0100
-* PR# 5537 *
-Subject: [R] factor: help-page: reference to "codes"
-From: Wolfram Fischer <wolfram@fischer-zim.ch>
-Date: Fri, 5 Dec 2003 11:07:29 +0100
-* PR# 5543 *
-Subject: documentation bugs (cvs)
-From: Brian Gough <bjg@network-theory.co.uk>
-Date: Fri, 05 Dec 2003 16:58:04 +0000
 * PR# 5564 *
 Subject: Mortgage rates- as low as 2.95% r
 From: "Nathan Goldberg" <v7nmbw@ilink.net>
@@ -909,3 +878,99 @@ Date: Sun, 07 Dec 03 17:50:51 GMT
 Subject: Hey, about that meeting... vVKRPFAwTn
 From: "Kobe Tai" <kobetai@kobetai.com>
 Date: Sun, 07 Dec 03 15:09:31 Pacific Standard Time
+* PR# 5589 *
+Subject: earn a great income
+From: "Linwood Santana" <t7z0shf6x2hf@www.lycos.com>
+Date: Mon, 08 Dec 03 04:45:37 GMT
+* PR# 5590 *
+Subject: You Just Earned A Commission!
+From: "Jake Reeves" <7cx54y8i3@gmx.net>
+Date: Mon, 08 Dec 03 04:11:25 GMT
+* PR# 5591 *
+Subject: I know it
+From: "Darrin Whaley" <rm213kcv@aol.com>
+Date: Mon, 08 Dec 03 20:24:27 GMT
+* PR# 5592 *
+Subject: Cleaner Colon dce ribf
+From: "Deana Gilbert" <trlguzncut@bigpond.com>
+Date: Mon, 08 Dec 03 04:26:28 GMT
+* PR# 5594 *
+Subject: HAVE_YOU_TRIED_HGH_YET uvhphzcba
+From: "Pam Cormier" <81jgayx@angelfire.com>
+Date: Mon, 08 Dec 2003 08:40:29 -0600
+* PR# 5595 *
+Subject: hello there nn
+From: "Ola Colvin" <rjnr@bluesky.co.uk>
+Date: Mon, 08 Dec 03 04:15:21 GMT
+* PR# 5596 *
+Subject: Your Prescription is Ready..
+From: "Arnulfo Garcia" <gx956a@foligno.com>
+Date: Mon, 08 Dec 03 07:48:39 GMT
+* PR# 5597 *
+Subject: Anybody can do it, Can you do it Incredibly qtzqnuruex j
+From: "Olen Wilcox" <leeshwanda@hotmail.com>
+Date: Mon, 08 Dec 03 18:14:44 GMT
+* PR# 5598 *
+Subject: You and alpha will blow her mind ucjzqiybjzsztfu p
+From: "Carolina Morse" <holly@msn.com>
+Date: Mon, 08 Dec 03 18:26:43 GMT
+* PR# 5599 *
+Subject: Astounding!! women talk about it for weeks nwestfearcvbs
+From: "Tyler Howell" <leeshwanda@hotmail.com>
+Date: Tue, 09 Dec 03 01:48:40 GMT
+* PR# 5600 *
+Subject: IMPORTANT INFO ABOUT YOUR COLON  rntltzx ap  re
+From: "Basil Inman" <fett65@yahoo.com>
+Date: Mon, 08 Dec 03 08:50:42 GMT
+* PR# 5601 *
+Subject: F.ioricet, S.oma, B.uspar, p r o z a c, and more Prescribed    turban
+From: "Florine Pritchard" <jo196op@mail.parknet.co.jp>
+Date: Mon, 08 Dec 03 23:21:01 +0200
+* PR# 5602 *
+Subject: r-bugs_BUY_HGH_ONLINE_TODAY23
+From: <f53cosepf53c@yahoo.com>
+Date: Mon, 08 Dec 2003 14:43:20 +0400
+* PR# 5603 *
+Subject: Re: AKUTHHE, a tropical forest
+From: "Rusty Oneil" <nkwsiffqbzw@canada.com>
+Date: Mon, 08 Dec 2003 08:02:48 -0400
+* PR# 5604 *
+Subject: THE GREATEST ATM CARD IN THE WORLD= www.evocash.com
+From: <cardsafelvba@yahoo.com>
+Date: Mon, 08 Dec 2003 00:11:45 -1100
+* PR# 5605 *
+Subject: 80% D1SC0UNT!!
+From: "Bobbie Campbell" <65gixxxcqa@dans.com>
+Date: Wed, 31 Dec 69 18:00:18 GMT
+* PR# 5606 *
+Subject: documentation fix - strwrap.Rd (cvs)
+From: Brian Gough <bjg@network-theory.co.uk>
+Date: Mon, 08 Dec 2003 15:10:21 +0000
+* PR# 5607 *
+Subject: Your XANA.X Prescription is ready.. qlhyjlouuvisgox j ll
+From: "Lyman Johnston" <ry715omi@dashdist.com>
+Date: Mon, 08 Dec 03 17:40:21 GMT
+* PR# 5608 *
+Subject: Please no more junk in my mailbox
+From: "kiyoksanders@softhome.net" <stephen.glennkier@softhome.net>
+Date: Mon, 8 Dec 2003 08:01:30 -0800
+* PR# 5609 *
+Subject:         FOREX News - OpenForex.Com           240984
+From: OpenForex <info@openforex.com>
+Date: Mon, 08 Dec 2003 20:44:42 -0500
+* PR# 5610 *
+Subject: Fwd:Improve your Sex Appeal
+From: "Russel Hatfield" <lajciais@hotmail.com>
+Date: Mon, 08 Dec 2003 15:26:12 -0300
+* PR# 5611 *
+Subject: Surprise your lover ! Enl_arge your member! f  kc ae 
+From: "Nigel Purcell" <83rhbeuqg@earthink.net>
+Date: Fri, 09 Dec 05 15:10:34 GMT
+* PR# 5612 *
+Subject: Fw: Card Termination Info, app
+From: "Trinidad Mullins" <8exkvvq@yahoo.com>
+Date: Tue, 09 Dec 03 02:41:48 GMT
+* PR# 5613 *
+Subject: Online Discount Drugstore
+From: "Glenda Mullen" <35tjzblo@bspc.bls.com>
+Date: Mon, 08 Dec 03 17:36:13 GMT
