@@ -2224,6 +2224,12 @@ pacf(matrix(rnorm(100), , 1))
 ## both failed in 1.7.1.
 
 
+## lsfit was not setting residuals in the rank=0 case
+fit <- lsfit(matrix(0, 10, 1), 1:10, intercept=FALSE)
+stopifnot(fit$residuals == 1:10)
+## zero residuals in 1.7.1.
+
+
 ## body() and formals() looked in different places
 bar <- function(x=NULL)
 {
@@ -2344,7 +2350,7 @@ stopifnot(!exists(".Device", mode="function")) # was true in 1.7.1
 ##
 
 
-## inadvertent recursive indexing bug
+## inadvertent recursive indexing bug (PR#3324)
 x <- list(a=1:3, b=2:4)
 try(x[[c("c", "d")]])
 try(x[[c("c", "d")]] <- NA)
