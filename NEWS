@@ -71,8 +71,8 @@ NEW FEATURES
 
     o	plot.stepfun  has new arguments  lty and lwd.
 
-
-BUG FIXES
+    o   x labels in boxplot now handled differently, so that math
+    	expressions are allowed.
 
     o	centering in text() will be more accurate, particularly on devices
 	with full font metric information (postscript, x11, not windows).
