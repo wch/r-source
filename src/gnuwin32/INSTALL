@@ -101,7 +101,7 @@ Then run
 	make
 
 
-Note 1: The file rw1050\bin\Rchtml.dll is only built if CHM help is
+Note 1: The file rw1051\bin\Rchtml.dll is only built if CHM help is
 specified in MkRules. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions to
 build it under VC++6, and it is preferable to use that as the VC++
@@ -150,7 +150,7 @@ configurations.
 Building bitmap device support
 ------------------------------
 
-The file rw1050\bin\Rbitmap.dll is not built automatically:
+The file rw1051\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.
 
 
@@ -199,7 +199,7 @@ To make HTML versions of the manuals (not the Reference Manual) use
 	cd ../../doc/manual
 	make -f Makefile.win html
 
-This makes use of tidy.exe, from http://www.w3.org/.
+This makes use of tidy.exe, available via http://tidy.sourceforge.net/.
 
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.
