@@ -3,7 +3,7 @@
 @setfilename external.info
 @settitle Guide to using .Call and .External in R
 @set VERSION 1.0
-@set CVS-version $Id: R-external.texi,v 1.3 1999/11/14 15:02:48 ripley Exp $
+@set CVS-version $Id: R-external.texi,v 1.3.2.1 1999/12/01 20:46:23 ripley Exp $
 @setchapternewpage on
 @c %**end of header
 
@@ -315,8 +315,9 @@ or
   PROTECT(@var{newSexp} = AS_NUMERIC(@var{oldSexp}));
 @end example
 @noindent
-Protection is needed as a new @code{SEXP} is created; if the old
-@code{SEXP} is re-used it should already be protected.
+Protection is needed as a new @emph{object} is created; the object
+formerly pointed to by the @code{SEXP} is re-used is still protected
+but now used.
 
 All the coercion functions do their own error-checking, and generate
 @code{NA}s with a warning or stop with an error as appropriate.
@@ -334,7 +335,7 @@ To fix ideas, let us consider a very simple example which convolves two
 finite sequences. (This is hard to do fast in interpreted @R{} code, but
 easy in C code.)  We could do this using @code{.C} by
 @example
-void convolve(double *a, long *na, double *b, long *nb, double *ab)
+void convolve(double *a, int *na, double *b, int *nb, double *ab)
 @{
   int i, j, nab = *na + *nb - 1;
 
@@ -371,7 +372,8 @@ SEXP convolve2(SEXP a, SEXP b)
   double *xa, *xb, *xab;
   SEXP ab;
 
-  a = AS_NUMERIC(a); b = AS_NUMERIC(b);
+  PROTECT(a = AS_NUMERIC(a)); 
+  PROTECT(b = AS_NUMERIC(b));
   na = LENGTH(a); nb = LENGTH(b); nab = na + nb - 1;
   PROTECT(ab = NEW_NUMERIC(nab));
   xa = NUMERIC_POINTER(a); xb = NUMERIC_POINTER(b);
@@ -379,7 +381,7 @@ SEXP convolve2(SEXP a, SEXP b)
   for(i = 0; i < nab; i++) xab[i] = 0.0;
   for(i = 0; i < na; i++)
     for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
-  UNPROTECT(1);
+  UNPROTECT(3);
   return(ab);
 @}
 @end example
@@ -402,7 +404,8 @@ SEXP convolve2(SEXP a, SEXP b)
   double *xa, *xb, *xab;
   SEXP ab;
 
-  a = coerceVector(a, REALSXP); b = coerceVector(b, REALSXP);
+  PROTECT(a = coerceVector(a, REALSXP));
+  PROTECT(b = coerceVector(b, REALSXP));
   na = length(a); nb = length(b); nab = na + nb - 1;
   PROTECT(ab = allocVector(nab, REALSXP));
   xa = REAL(a); xb = REAL(b);
@@ -410,7 +413,7 @@ SEXP convolve2(SEXP a, SEXP b)
   for(i = 0; i < nab; i++) xab[i] = 0.0;
   for(i = 0; i < na; i++)
     for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
-  UNPROTECT(1);
+  UNPROTECT(3);
   return(ab);
 @}
 @end example
@@ -437,8 +440,8 @@ SEXP convolve2(SEXP args)
   double *xa, *xb, *xab;
   SEXP a, b, ab;
 
-  a = coerceVector(CADR(args), REALSXP));
-  b = coerceVector(CADDR(args), REALSXP));
+  PROTECT(a = coerceVector(CADR(args), REALSXP)));
+  PROTECT(b = coerceVector(CADDR(args), REALSXP)));
     ...
 @}
 @end example
@@ -575,11 +578,11 @@ To illustrate this, let us write code to take the outer product of two
 vectors (which @code{outer} and @code{%o%} already do). As usual the
 @R{} code is simple
 @example
-out <- function(x, y) .Call("out", x, y)
+out <- function(x, y) .Call("out", as.double(x), as.double(y))
 @end example
 @noindent
 where we expect @code{x} and @code{y} to be numeric vectors, possibly
-with names.
+with names. This time we do the coercion in the calling @R{} code.
 @*
 C code to do the computations is
 @example
@@ -591,7 +594,6 @@ SEXP out(SEXP x, SEXP y)
   double tmp;
   SEXP ans;
 
-  x = coerceVector(x, REALSXP); y = coerceVector(y, REALSXP);
   nx = length(x); ny = length(y);
   PROTECT(ans = allocMatrix(REALSXP, nx, ny));
   for(i = 0; i < nx; i++) @{
@@ -617,7 +619,6 @@ SEXP out(SEXP x, SEXP y)
   double tmp;
   SEXP ans, dim, dimnames;
 
-  x = coerceVector(x, REALSXP); y = coerceVector(y, REALSXP);
   nx = length(x); ny = length(y);
   PROTECT(ans = allocVector(nx*ny, REALSXP));
   for(i = 0; i < nx; i++) @{
