@@ -27,6 +27,11 @@ switch(EXPR, \dots)
   In the case of no match, if there's a further argument in \code{switch}
   that one is returned, otherwise \code{NULL}.
 }
+\section{Warning}{
+  Beware of partial matching: an alternative \code{E = foo} will match
+  the first argument \code{EXPR} unless that is named. See the examples
+  for good practice in naming the first argument.
+}
 \examples{
 centre <- function(x, type) {
   switch(type,
@@ -40,8 +45,8 @@ centre(x, "median")
 centre(x, "trimmed")
 
 ccc <- c("b","QQ","a","A","bb")
-for(ch in ccc) cat(ch,":",switch(ch, a=1,    b=2:3),            "\n")
-for(ch in ccc) cat(ch,":",switch(ch, a=,A=1, b=2:3, "Otherwise: last"),"\n")
+for(ch in ccc) cat(ch,":",switch(EXPR = ch, a=1,    b=2:3),            "\n")
+for(ch in ccc) cat(ch,":",switch(EXPR = ch, a=,A=1, b=2:3, "Otherwise: last"),"\n")
 
 ## Numeric EXPR don't allow an `otherwise':
 for(i in c(-1:3,9))  print(switch(i, 1,2,3,4))
