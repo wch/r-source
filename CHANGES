@@ -26,6 +26,8 @@ BUG FIXES
     o   model.matrix() now pays attention to the names on its dataframe
 	argument.
 
+    o   Fixes to group methods.
+
 		CHANGES IN VERSION R VERSION 0.61
 
 We try to make development more flexible by creating a "CVS branch". This
