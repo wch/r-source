@@ -396,7 +396,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 	}
 }
 
-/* .Internal(contour(x,y,z, levels, col, lty)  */
+/* contour(x,y,z, levels, col, lty) */
 
 SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -452,14 +452,14 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0; i < nx; i++) {
 	if (!R_FINITE(REAL(x)[i]))
-	    errorcall(call, "missing x values");
+	    errorcall(call, "missing x values\n");
 	if (i > 0 && REAL(x)[i] < REAL(x)[i - 1])
 	    errorcall(call, "increasing x values expected");
     }
 
     for (i = 0; i < ny; i++) {
 	if (!R_FINITE(REAL(y)[i]))
-	    errorcall(call, "missing y values");
+	    errorcall(call, "missing y values\n");
 	if (i > 0 && REAL(y)[i] < REAL(y)[i - 1])
 	    errorcall(call, "increasing y values expected");
     }
@@ -469,7 +469,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0; i < nc; i++)
 	if (!R_FINITE(REAL(c)[i]))
-	    errorcall(call, "illegal NA contour values");
+	    errorcall(call, "illegal NA contour values\n");
 
     zmin = DBL_MAX;
     zmax = DBL_MIN;
@@ -645,6 +645,9 @@ FindPolygonVertices(double low, double high,
     FindCutPoints(low, high, y2,  x1,  z12, y1,  x1,  z11, y, x, z, npt);
 }
 
+/* FIXME: [Code consistency] Use macro for the parallel parts of
+	  do_contour, do_filledcontour & do_image ...
+*/
 SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, sx, sy, sz, sc, scol;
@@ -694,7 +697,7 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     /* We want them to all be finite */
     /* and in strictly ascending order */
 
-    if (nx < 2 || ny < 2) goto badxy;
+    if (nx < 1 || ny < 1) goto badxy;
     if (!R_FINITE(x[0])) goto badxy;
     if (!R_FINITE(y[0])) goto badxy;
     for (i = 1; i < nx; i++)
@@ -742,9 +745,9 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 
  badxy:
-    errorcall(call, "invalid x / y limits");
+    errorcall(call, "invalid x / y values or limits\n");
  badlev:
-    errorcall(call, "invalid contour levels");
+    errorcall(call, "invalid contour levels\n");
     return R_NilValue;  /* never used; to keep -Wall happy */
 }
 
@@ -752,12 +755,13 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 	/*  I m a g e   R e n d e r i n g  */
 
 
+/* image(x, y, z, zlim, col) */
 SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, sx, sy, sz, szlim, sc;
     double *x, *y, *z;
     unsigned *c;
-    double xlow, xhigh, ylow, yhigh, zmin, zmax;
+    double xlow, xhigh, ylow, yhigh, zmin = 0., zmax = 0.;
     int i, j, nx, ny, nz, ic, nc, colsave, xpdsave;
     DevDesc *dd = CurrentDevice();
 
@@ -786,10 +790,19 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(szlim) != 2 ||
        !R_FINITE(REAL(szlim)[0]) ||
        !R_FINITE(REAL(szlim)[1]) ||
-       REAL(szlim)[0] >= REAL(szlim)[1])
-	errorcall(call, "invalid z limits");
-    zmin = REAL(szlim)[0];
-    zmax = REAL(szlim)[1];
+       (zmin = REAL(szlim)[0]) > (zmax = REAL(szlim)[1]))
+	errorcall(call, "invalid z limits\n");
+    if(zmin == zmax) {/* fix them up, as in graphics.c's GScale(): */
+	if(zmin == 0) {
+	    zmin = -1;
+	    zmax =  1;
+	}
+	else {
+	    xlow = .4 * fabs(zmin);
+	    zmin -= xlow;
+	    zmax += xlow;
+	}
+    }
     args = CDR(args);
 
     PROTECT(sc = FixupCol(CAR(args), NA_INTEGER));
@@ -805,7 +818,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Check of grid coordinates */
     /* We want them to all be finite and in strictly ascending order */
 
-    if (nx < 2 || ny < 2) goto badxy;
+    if (nx < 1 || ny < 1) goto badxy;
     if (!R_FINITE(x[0])) goto badxy;
     if (!R_FINITE(y[0])) goto badxy;
     for (i = 1; i < nx; i++)
@@ -826,7 +839,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    xlow = 0.5 * (x[i] + x[i-1]);
 	if (i == nx-1)
-	    xhigh = x[nx-1];
+	    xhigh = x[i];
 	else
 	    xhigh = 0.5 * (x[i] + x[i+1]);
 
@@ -839,7 +852,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 		    else
 			ylow = 0.5 * (y[j] + y[j - 1]);
 		    if (j == ny - 1)
-			yhigh = y[ny - 1];
+			yhigh = y[j];
 		    else
 			yhigh = 0.5 * (y[j] + y[j + 1]);
 		    GRect(xlow, ylow, xhigh, yhigh,
@@ -858,7 +871,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 
   badxy:
-    errorcall(call, "invalid x / y limits");
+    errorcall(call, "invalid x / y values or limits\n");
     return R_NilValue;/* never used; to keep -Wall happy */
 }
 
@@ -1467,9 +1480,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!R_FINITE(theta) || !R_FINITE(phi) || !R_FINITE(r) || !R_FINITE(d) ||
 	d < 0 || r < 0)
-	errorcall(call, "invalid viewing parameters");
+	errorcall(call, "invalid viewing parameters\n");
     if (!R_FINITE(expand) || expand < 0)
-	errorcall(call, "invalid expand value");
+	errorcall(call, "invalid expand value\n");
     if (scale == NA_LOGICAL)
 	scale = 0;
 
@@ -1477,9 +1490,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(col = FixupCol(col, dd->gp.bg));
     ncol = LENGTH(col);
-    if (ncol < 1) errorcall(call, "invalid col specification");
+    if (ncol < 1) errorcall(call, "invalid col specification\n");
     PROTECT(border = FixupCol(border, dd->gp.fg));
-    if (length(border) < 1) errorcall(call, "invalid border specification");
+    if (length(border) < 1) errorcall(call, "invalid border specification\n");
 
     GSetState(1, dd);
     GSavePars(dd);

@@ -1,7 +1,7 @@
 @echo off
 rem This file needs to be customised.
 rem
-echo "You must customize RHOME/bin/helpPRINT.bat
+echo "You must customize R_HOME/bin/helpPRINT.bat
 pause
 rem
 rem BDR's setup uses:

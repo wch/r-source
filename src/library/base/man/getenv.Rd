@@ -5,7 +5,7 @@ getenv(x)
 }
 \alias{getenv}
 \arguments{
-  \item{x}{a character vector}
+  \item{x}{a character vector, or missing}
 }
 \description{
   \code{getenv} obtains the values of the environment variables named by
@@ -16,9 +16,13 @@ getenv(x)
   its \code{names} attribute.  Each element holds the value of the
   environment variable named by the corresponding component of \code{x}
   (or \code{""} if no environment variable with that name was found).
+
+  On some platforms \code{getenv()} will return a named vector giving
+  the values of all the environment variables.
 }
+\seealso{\code{\link{getwd}} for the working directory.}
 \examples{
-getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD"))
+getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 }
 \keyword{environment}
 \keyword{utilities}

@@ -242,9 +242,6 @@ void I_bessel(double *x, double *alpha, long *nb,
 
     extern double gamma_cody(double);/*--> ./gamma.c */
 
-    /* Builtin functions */
-    double pow_di(double *, long *);
-
     /* Local variables */
     long nend, intx, nbmx, k, l, n, nstart;
     double pold, test,	p, em, en, empal, emp2al, halfx,
@@ -269,7 +266,7 @@ void I_bessel(double *x, double *alpha, long *nb,
 		bi[k]=ML_POSINF;
 	    return;
 	}
-	intx = (long) (*x);
+	intx = (long) (*x);/* --> we will probably fail when *x > LONG_MAX */
 	if (*x >= rtnsig) { /* "non-small" x */
 /* -------------------------------------------------------------------
    Initialize the forward sweep, the P-sequence of Olver
@@ -286,7 +283,7 @@ void I_bessel(double *x, double *alpha, long *nb,
 	    if (intx << 1 > nsig * 5) {
 		test = sqrt(test * p);
 	    } else {
-		test /= pow_di(&const__, &intx);
+		test /= pow(const__, (double)intx);
 	    }
 	    if (nbmx >= 3) {
 		/* --------------------------------------------------

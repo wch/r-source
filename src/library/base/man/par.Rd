@@ -14,9 +14,10 @@ par(\dots, no.readonly = FALSE)
   Parameters can be set by specifying them as arguments to \code{par} in
   \code{tag = value} form, or by passing them as a list of tagged values.
 }
-\details{The previous values are returned in an
+\details{The former values are returned in an
   invisible tagged list.  Such a list can be passed as an argument to
   \code{par} to restore the parameter values.
+  Use \code{par(no.readonly = TRUE)} for the full list in that case.
 
   Parameters are queried by giving vectors of character strings to
   \code{par}.  In this case, the values are returned in a tagged list.
@@ -56,7 +57,9 @@ par(\dots, no.readonly = FALSE)
   \item{adj}{The value of \code{adj} determines the way in which text
     strings are justified.  A value of \code{0} produces right
     left-justified text, \code{0.5} centered text and \code{1}
-    right-justified text.}
+    right-justified text.  Note that the \code{adj} argument of
+    \code{\link{text}} and \code{\link{mtext}} also allows \code{adj=
+      c(x,y)} for different adjustment in x- and y- direction.}
   \item{ann}{If set to \code{FALSE}, high-level plotting functions do
     not annotate the plots they produce with axis and overall titles.
     The default is to do annotation.}
@@ -79,14 +82,16 @@ par(\dots, no.readonly = FALSE)
     to the current.}
   \item{cex.sub}{The magnification to be used for sub-titles relative to
     the current.}
-  \item{cin}{\emph{\bold{R.O.}}. }
+  \item{cin}{\emph{\bold{R.O.}}; character size \code{(width,height)} in
+  inches.}
   \item{col}{A specification for the default plotting color.  A
     description of how colors are specified is given below.}
   \item{col.axis}{The color to be used for axis annotation.}
   \item{col.lab}{The color to be used for x and y labels.}
   \item{col.main}{The color to be used for plot main titles.}
   \item{col.sub}{The color to be used for plot sub-titles.}
-  \item{cra}{\emph{\bold{R.O.}}. }
+  \item{cra}{\emph{\bold{R.O.}}; size of default character
+    \code{(width,height)} in "rasters" (pixels).}
   \item{crt}{A numerical value specifying (in degrees) how single characters
     should be rotated.  It is unwise to expect values other than
     multiples of 90 to work.  Compare with \code{srt} which does string
@@ -94,7 +99,9 @@ par(\dots, no.readonly = FALSE)
   \item{csi}{\emph{\bold{R.O.}}. The height of (default sized)
       characters in inches.}
   \item{din}{\emph{\bold{R.O.}}. The device dimensions in inches.}
-  \item{err}{(\emph{Unimplemented}) The degree of error reporting desired.}
+  \item{err}{(\emph{Unimplemented}; \R is silent when
+    points outside the plot region are \emph{not} plotted.)
+    The degree of error reporting desired.}
   \item{fg}{The color to be used for the foreground of plots.
     This is the default color is used for things like axes and boxes
     around plots.  A description of how colors are specified is given
@@ -132,12 +139,14 @@ par(\dots, no.readonly = FALSE)
   }
   \item{lty}{The line type.
     Line types can either be specified as an integer (1=solid, 2=dashed,
-    3=dotted 4=dotdashed) or as one of the character strings
-    \code{"solid"}, \code{"dashed"}, \code{"dotted"} or
-    \code{"dotdashed"}.
-    Alternatively, a string of up to 8 characters may be given, giving
-    the length (in points) of line segments which are alternatively
-    drawn and skipped.  For example, \code{"44"} is dashed and
+    3=dotted, 4=dotdashed, 5=longdashed, 6=twodashed) or as one of the
+    character strings
+    \code{"solid"}, \code{"dashed"}, \code{"dotted"}
+    \code{"dotdashed"}, \code{"longdashed"} or \code{"twodashed"}.
+    Alternatively, a string of up to 8 characters
+    (from code{c(0:9, "A":"F")}) may be given, giving
+    the length (typically in points/pixels) of line segments which are
+    alternatively drawn and skipped.  For example, \code{"44"} is dashed and
     \code{"13"} is dotted.}
   \item{lwd}{The line width, a \emph{positive} numerical, defaulting to
       \code{1}.}
@@ -156,11 +165,17 @@ par(\dots, no.readonly = FALSE)
     Consider the alternatives, \code{\link{layout}(..)} and
     \code{\link{split.screen}(..)}.
   }
-  \item{mfg}{A numerical vector of the form \code{c(i, j, nr, nc)} where
-    \code{i} and \code{j} indicate which figure in an
-    \code{nr}-by-\code{nc} array of figures is currently being drawn.}
-  \item{mgp}{The margin line for the axis title, axis labels and axis
-    line.  The default is \code{c(3, 1, 0)}.}
+  \item{mfg}{A numerical vector of the form \code{c(i, j)} where
+    \code{i} and \code{j} indicate which figure in an array of figures
+    is to be drawn next (if setting) or is being drawn (if enquiring).
+    The array must already have been  set by \code{mfcol} or
+    \code{mfrow}.
+
+    For compatibility with S, the form \code{c(i, j, nr, nc)} is also
+    accepted, when \code{nc} and \code{nc} should be the current number of
+    rows and number of columns. Mismatches will be ignored, with a warning.}
+  \item{mgp}{The margin line (in \code{mex} units) for the axis title,
+    axis labels and axis line.  The default is \code{c(3, 1, 0)}.}
   \item{mkh}{The height in inches of symbols to be drawn when the value
     of \code{pch} is an integer.}
   \item{new}{logical, defaulting to \code{FALSE}.  If set to
@@ -170,14 +185,14 @@ par(\dots, no.readonly = FALSE)
   \item{oma}{A vector of the form \code{c(bottom, left, top, right)} giving the
     size of the outer margins in lines of text.}
   \item{omd}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
-    NDC coordinates of the region where (multiple) figures will appear
-    on the device.}
+    outer margin region in NDC (= normalized device coordinates), i.e.,
+    as fraction (in \eqn{[0,1]}) of the device region.}
   \item{omi}{A vector of the form \code{c(bottom, left, top, right)} giving the
     size of the outer margins in inches.}
   \item{pch}{Either an integer specifying a symbol or a single character
-    to be used as the default in plotting.}
+    to be used as the default in plotting points.}
   \item{pin}{The width and height of the current plot in inches.}
-  \item{plt}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
+  \item{plt}{A vector of the form \code{c(x1, x2, y1, y2)} giving
     the coordinates of the plot region as fractions of the current
     figure region.}
   \item{ps}{integer; the pointsize of text and symbols.}
@@ -263,6 +278,10 @@ op <- par(mfrow = c(2, 2), # 2 x 2 pictures on one plot
 ## At end of plotting, reset to previous settings:
 par(op)
 
+## Alternatively,
+op <- par(no.readonly = TRUE)# the whole list of settable par's.
+## do lots of plotting and par(.) calls, then reset :
+par(op)
 
 par("ylog")# FALSE
 plot(1:12,log="y")

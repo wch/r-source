@@ -69,5 +69,5 @@ the report to the right address. It also fills in some basic
 information, such as your R version and operating system, which has
 proved helpful in the debugging process.
 
-A summary of the entries at the time this distribution was prepared is
-in file BUGS in this directory.
+The source distribution has a file BUGS at the top level giving a
+summary of the entries at the time this distribution was prepared.

@@ -33,6 +33,7 @@ LIBS = @LIBS@
 LN_S = @LN_S@
 MAKEINDEX = @MAKEINDEX@
 MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
+R_PKGS = base eda lqs modreg mva stepfun ts
 R_XTRA_CFLAGS = @R_XTRA_CFLAGS@
 R_XTRA_CPPFLAGS = -I. -I../include -I$(top_srcdir)/src/include
 R_XTRA_FFLAGS = @R_XTRA_FFLAGS@

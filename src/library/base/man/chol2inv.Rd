@@ -25,7 +25,7 @@ SIAM Publications.
 \examples{
 cma <- chol(ma  <- cbind(1, 1:3, c(1,3,7)))
 t(cma) \%*\% cma # = ma
-all(diag(3) == ma \%*\% chol2inv(cma))# TRUE (at least approx.)
+all.equal(diag(3), ma \%*\% chol2inv(cma))
 }
 \keyword{algebra}
 \keyword{array}

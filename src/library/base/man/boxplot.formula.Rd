@@ -25,6 +25,9 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
     operates by setting up the data from the formula specification, and
     then calling \code{\link{boxplot.default}}.
 }
+\value{
+  See the help for \code{\link{boxplot.default}}.
+}
 \seealso{
     \code{\link{boxplot}},
     \code{\link{boxplot.default}}.

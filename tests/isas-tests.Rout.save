@@ -1,0 +1,479 @@
+
+R : Copyright 1999, The R Development Core Team
+Version 0.65.0 Patched (unreleased) (September 22, 1999)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type	"?license" or "?licence" for distribution details.
+
+R is a collaborative project with many contributors.
+Type	"?contributors" for a list.
+
+Type	"demo()" for some demos, "help()" for on-line help, or
+    	"help.start()" for a HTML browser interface to help.
+Type	"q()" to quit R.
+
+> options(error.halt = FALSE) # don't stop on error in batch
+> ##~~~~~~~~~~~~~~
+> 
+> ###--------
+>  x <- 1
+> is.array(as.array( x ))
+[1] TRUE
+> is.call(as.call( x ))
+Error in as.call(x) : invalid argument list
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+[1] TRUE
+> is.function(as.function( x ))
+Error in as.function.default(l, envir) : list argument expected
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+[1] TRUE
+> is.name(as.name( x ))
+[1] TRUE
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+[1] TRUE
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error: you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+[1] TRUE
+> is.vector(as.vector( x ))
+[1] TRUE
+> 
+> if(is.array( x ))  all.equal(x, as.array( x ))
+> if(is.call( x ))  all.equal(x, as.call( x ))
+> if(is.character( x ))  all.equal(x, as.character( x ))
+> if(is.complex( x ))  all.equal(x, as.complex( x ))
+> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
+> if(is.double( x ))  all.equal(x, as.double( x ))
+[1] TRUE
+> if(is.expression( x ))  all.equal(x, as.expression( x ))
+> if(is.factor( x ))  all.equal(x, as.factor( x ))
+> if(is.function( x ))  all.equal(x, as.function( x ))
+> if(is.integer( x ))  all.equal(x, as.integer( x ))
+> if(is.list( x ))  all.equal(x, as.list( x ))
+> if(is.logical( x ))  all.equal(x, as.logical( x ))
+> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
+> if(is.name( x ))  all.equal(x, as.name( x ))
+> if(is.null( x ))  all.equal(x, as.null( x ))
+> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
+[1] TRUE
+> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
+> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
+> if(is.qr( x ))  all.equal(x, as.qr( x ))
+> if(is.real( x ))  all.equal(x, as.real( x ))
+[1] TRUE
+> if(is.single( x ))  all.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts( x ))  all.equal(x, as.ts( x ))
+> if(is.vector( x ))  all.equal(x, as.vector( x ))
+[1] TRUE
+> 
+> ###--------
+>  x <- NULL
+> is.array(as.array( x ))
+Error: attempt to set an attribute on NULL
+> is.call(as.call( x ))
+Error in as.call(x) : invalid argument list
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+Error: can't coerce NULL into a data.frame
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+[1] FALSE
+> is.function(as.function( x ))
+Error in as.function.default(l, envir) : argument must have length at least 1
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+Error: attempt to set an attribute on NULL
+> is.name(as.name( x ))
+Error: invalid type/length (1/0) in vector allocation
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+[1] TRUE
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error: you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+Error: ts object must have one or more observations
+> is.vector(as.vector( x ))
+[1] FALSE
+> 
+> if(is.array( x ))  all.equal(x, as.array( x ))
+> if(is.call( x ))  all.equal(x, as.call( x ))
+> if(is.character( x ))  all.equal(x, as.character( x ))
+> if(is.complex( x ))  all.equal(x, as.complex( x ))
+> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
+> if(is.double( x ))  all.equal(x, as.double( x ))
+> if(is.expression( x ))  all.equal(x, as.expression( x ))
+> if(is.factor( x ))  all.equal(x, as.factor( x ))
+> if(is.function( x ))  all.equal(x, as.function( x ))
+> if(is.integer( x ))  all.equal(x, as.integer( x ))
+> if(is.list( x ))  all.equal(x, as.list( x ))
+> if(is.logical( x ))  all.equal(x, as.logical( x ))
+> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
+> if(is.name( x ))  all.equal(x, as.name( x ))
+> if(is.null( x ))  all.equal(x, as.null( x ))
+[1] TRUE
+> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
+> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
+> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
+[1] TRUE
+> if(is.qr( x ))  all.equal(x, as.qr( x ))
+> if(is.real( x ))  all.equal(x, as.real( x ))
+> if(is.single( x ))  all.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts( x ))  all.equal(x, as.ts( x ))
+> if(is.vector( x ))  all.equal(x, as.vector( x ))
+> 
+> ###--------
+>  x <- pi
+> is.array(as.array( x ))
+[1] TRUE
+> is.call(as.call( x ))
+Error in as.call(x) : invalid argument list
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+[1] TRUE
+> is.function(as.function( x ))
+Error in as.function.default(l, envir) : list argument expected
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+[1] TRUE
+> is.name(as.name( x ))
+[1] TRUE
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+[1] TRUE
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error: you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+[1] TRUE
+> is.vector(as.vector( x ))
+[1] TRUE
+> 
+> if(is.array( x ))  all.equal(x, as.array( x ))
+> if(is.call( x ))  all.equal(x, as.call( x ))
+> if(is.character( x ))  all.equal(x, as.character( x ))
+> if(is.complex( x ))  all.equal(x, as.complex( x ))
+> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
+> if(is.double( x ))  all.equal(x, as.double( x ))
+[1] TRUE
+> if(is.expression( x ))  all.equal(x, as.expression( x ))
+> if(is.factor( x ))  all.equal(x, as.factor( x ))
+> if(is.function( x ))  all.equal(x, as.function( x ))
+> if(is.integer( x ))  all.equal(x, as.integer( x ))
+> if(is.list( x ))  all.equal(x, as.list( x ))
+> if(is.logical( x ))  all.equal(x, as.logical( x ))
+> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
+> if(is.name( x ))  all.equal(x, as.name( x ))
+> if(is.null( x ))  all.equal(x, as.null( x ))
+> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
+[1] TRUE
+> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
+> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
+> if(is.qr( x ))  all.equal(x, as.qr( x ))
+> if(is.real( x ))  all.equal(x, as.real( x ))
+[1] TRUE
+> if(is.single( x ))  all.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts( x ))  all.equal(x, as.ts( x ))
+> if(is.vector( x ))  all.equal(x, as.vector( x ))
+[1] TRUE
+> 
+> ###--------
+>  x <- "1.3"
+> is.array(as.array( x ))
+[1] TRUE
+> is.call(as.call( x ))
+Error in as.call(x) : invalid argument list
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+[1] TRUE
+> is.function(as.function( x ))
+Error in as.function.default(l, envir) : list argument expected
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+[1] TRUE
+> is.name(as.name( x ))
+[1] TRUE
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+[1] TRUE
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error: you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+[1] TRUE
+> is.vector(as.vector( x ))
+[1] TRUE
+> 
+> if(is.array( x ))  all.equal(x, as.array( x ))
+> if(is.call( x ))  all.equal(x, as.call( x ))
+> if(is.character( x ))  all.equal(x, as.character( x ))
+[1] TRUE
+> if(is.complex( x ))  all.equal(x, as.complex( x ))
+> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
+> if(is.double( x ))  all.equal(x, as.double( x ))
+> if(is.expression( x ))  all.equal(x, as.expression( x ))
+> if(is.factor( x ))  all.equal(x, as.factor( x ))
+> if(is.function( x ))  all.equal(x, as.function( x ))
+> if(is.integer( x ))  all.equal(x, as.integer( x ))
+> if(is.list( x ))  all.equal(x, as.list( x ))
+> if(is.logical( x ))  all.equal(x, as.logical( x ))
+> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
+> if(is.name( x ))  all.equal(x, as.name( x ))
+> if(is.null( x ))  all.equal(x, as.null( x ))
+> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
+> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
+> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
+> if(is.qr( x ))  all.equal(x, as.qr( x ))
+> if(is.real( x ))  all.equal(x, as.real( x ))
+> if(is.single( x ))  all.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts( x ))  all.equal(x, as.ts( x ))
+> if(is.vector( x ))  all.equal(x, as.vector( x ))
+[1] TRUE
+> 
+> ###--------
+>  x <- list()
+> is.array(as.array( x ))
+[1] TRUE
+> is.call(as.call( x ))
+Error in as.call(x) : illegal length 0 argument
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+Error: (list) object cannot be coerced to vector type 15
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+Error: (list) object cannot be coerced to vector type 14
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+[1] FALSE
+> is.function(as.function( x ))
+Error in as.function.default(l, envir) : argument must have length at least 1
+> is.integer(as.integer( x ))
+Error: (list) object cannot be coerced to vector type 13
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+Error: (list) object cannot be coerced to vector type 10
+> is.matrix(as.matrix( x ))
+[1] TRUE
+> is.name(as.name( x ))
+Error: (list) object cannot be coerced to vector type 1
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+Error: (list) object cannot be coerced to vector type 14
+> is.ordered(as.ordered( x ))
+[1] TRUE
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error: you cannot be serious
+> is.real(as.real( x ))
+Error: (list) object cannot be coerced to vector type 14
+> is.single(as.single( x ))
+Error: (list) object cannot be coerced to vector type 14
+> is.ts(as.ts( x ))
+Error: ts object must have one or more observations
+> is.vector(as.vector( x ))
+[1] TRUE
+> 
+> if(is.array( x ))  all.equal(x, as.array( x ))
+> if(is.call( x ))  all.equal(x, as.call( x ))
+> if(is.character( x ))  all.equal(x, as.character( x ))
+> if(is.complex( x ))  all.equal(x, as.complex( x ))
+> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
+> if(is.double( x ))  all.equal(x, as.double( x ))
+> if(is.expression( x ))  all.equal(x, as.expression( x ))
+> if(is.factor( x ))  all.equal(x, as.factor( x ))
+> if(is.function( x ))  all.equal(x, as.function( x ))
+> if(is.integer( x ))  all.equal(x, as.integer( x ))
+> if(is.list( x ))  all.equal(x, as.list( x ))
+[1] TRUE
+> if(is.logical( x ))  all.equal(x, as.logical( x ))
+> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
+> if(is.name( x ))  all.equal(x, as.name( x ))
+> if(is.null( x ))  all.equal(x, as.null( x ))
+> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
+> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
+> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
+> if(is.qr( x ))  all.equal(x, as.qr( x ))
+> if(is.real( x ))  all.equal(x, as.real( x ))
+> if(is.single( x ))  all.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts( x ))  all.equal(x, as.ts( x ))
+> if(is.vector( x ))  all.equal(x, as.vector( x ))
+[1] TRUE
+> 
+> ###--------
+>  x <- list(a = 1)
+> is.array(as.array( x ))
+[1] TRUE
+> is.call(as.call( x ))
+[1] TRUE
+> is.character(as.character( x ))
+[1] TRUE
+> is.complex(as.complex( x ))
+[1] TRUE
+> is.data.frame(as.data.frame( x ))
+[1] TRUE
+> is.double(as.double( x ))
+[1] TRUE
+> is.expression(as.expression( x ))
+[1] TRUE
+> is.factor(as.factor( x ))
+[1] TRUE
+> is.function(as.function( x ))
+[1] TRUE
+> is.integer(as.integer( x ))
+[1] TRUE
+> is.list(as.list( x ))
+[1] TRUE
+> is.logical(as.logical( x ))
+[1] TRUE
+> is.matrix(as.matrix( x ))
+[1] TRUE
+> is.name(as.name( x ))
+Error: invalid type/length (1/1) in vector allocation
+> is.null(as.null( x ))
+[1] TRUE
+> is.numeric(as.numeric( x ))
+[1] TRUE
+> is.ordered(as.ordered( x ))
+[1] TRUE
+> is.pairlist(as.pairlist( x ))
+[1] TRUE
+> is.qr(as.qr( x ))
+Error: you cannot be serious
+> is.real(as.real( x ))
+[1] TRUE
+> is.single(as.single( x ))
+Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.ts(as.ts( x ))
+[1] TRUE
+> is.vector(as.vector( x ))
+[1] TRUE
+> 
+> if(is.array( x ))  all.equal(x, as.array( x ))
+> if(is.call( x ))  all.equal(x, as.call( x ))
+> if(is.character( x ))  all.equal(x, as.character( x ))
+> if(is.complex( x ))  all.equal(x, as.complex( x ))
+> if(is.data.frame( x ))  all.equal(x, as.data.frame( x ))
+> if(is.double( x ))  all.equal(x, as.double( x ))
+> if(is.expression( x ))  all.equal(x, as.expression( x ))
+> if(is.factor( x ))  all.equal(x, as.factor( x ))
+> if(is.function( x ))  all.equal(x, as.function( x ))
+> if(is.integer( x ))  all.equal(x, as.integer( x ))
+> if(is.list( x ))  all.equal(x, as.list( x ))
+[1] TRUE
+> if(is.logical( x ))  all.equal(x, as.logical( x ))
+> if(is.matrix( x ))  all.equal(x, as.matrix( x ))
+> if(is.name( x ))  all.equal(x, as.name( x ))
+> if(is.null( x ))  all.equal(x, as.null( x ))
+> if(is.numeric( x ))  all.equal(x, as.numeric( x ))
+> if(is.ordered( x ))  all.equal(x, as.ordered( x ))
+> if(is.pairlist( x ))  all.equal(x, as.pairlist( x ))
+> if(is.qr( x ))  all.equal(x, as.qr( x ))
+> if(is.real( x ))  all.equal(x, as.real( x ))
+> if(is.single( x ))  all.equal(x, as.single( x ))
+Error in is.single(x) : type "single" unimplemented in R
+> if(is.ts( x ))  all.equal(x, as.ts( x ))
+> if(is.vector( x ))  all.equal(x, as.vector( x ))
+[1] TRUE
+> 
+> 

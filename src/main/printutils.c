@@ -146,7 +146,8 @@ char *EncodeReal(double x, int w, int d, int e)
 	}
 #else
 	/* Win32 libraries always use e+xxx format so avoid them */
-	int kp = (x == 0.0)? 0 : floor(log10(fabs(x))), ee = 1;
+	double xx = prec(x, (double)(d+1)); /* might have 9.99997e-7 */
+	int kp = (xx == 0.0)? 0 : floor(log10(fabs(xx))+1e-12), ee = 1;
 	x = x / pow(10.0, (double)kp);
 	if(abs(kp) >= 100) ee = 2;
 	if(d)

@@ -30,13 +30,13 @@ typedef enum {
     MARSAGLIA_MULTICARRY,
     SUPER_DUPER,
     RAND,
-    MERSENNE_TWISTER,
+    MERSENNE_TWISTER
 } RNGtype;
 
 /* Different kind of "N(0,1)" generators :*/
 typedef enum {
     AHRENS_DIETER,
-    KINDERMAN_RAMAGE,
+    KINDERMAN_RAMAGE
 } N01type;
 
 typedef struct {

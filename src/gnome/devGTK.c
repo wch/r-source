@@ -41,10 +41,10 @@ typedef struct {
     double cex;				/* Character expansion */
     double srt;				/* String rotation */
 
-    gint bg;					/* Background */
+    gint bg;				/* Background */
 
-    int fontface;				/* Typeface */
-    int fontsize;				/* Size in points */
+    int fontface;			/* Typeface */
+    int fontsize;			/* Size in points */
 
     gint lty, lwd;                      /* line params */
 
@@ -62,7 +62,7 @@ typedef struct {
     GdkColor gcol_bg;
     GdkRectangle clip;
     GdkCursor *gcursor;
-  
+
     int usefixed;
     GdkFont *font;
 
@@ -172,7 +172,7 @@ static gint SetBaseFont(gtkDesc *gtkd)
 
   if(gtkd->font != NULL)
     return 1;
-  
+
   return 0;
 }
 
@@ -204,7 +204,7 @@ static void SetFont(DevDesc *dd, gint face, gint size)
 				 weight[(face-1)%2],
 				 slant[((face-1)/2)%2],
 				 10 * size);
-      
+
     tmp_font = RGTKLoadFont(fontname);
     g_free(fontname);
 
@@ -252,18 +252,18 @@ static void SetLineType(DevDesc *dd, int newlty, int newlwd)
     else {
       if(newlwd < 1)
 	newlwd = 1;
-    
+
       for(i = 0; (i < 8) && (newlty != 0); i++) {
 	j = newlty & 15;
-	
+
 	if(j == 0)
 	  j = 1;
-    
+
 	j = j * newlwd;
-	
+
 	if(j > 255)
 	  j = 255;
-    
+
 	dashlist[i] = j;
 	newlty = newlty >> 4;
       }
@@ -346,10 +346,8 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
   if(gtkd->resize != 0) {
     dd->dp.resize(dd);
   }
-  
-  gdk_draw_pixmap(gtkd->drawing->window, gtkd->wgc, gtkd->pixmap,
-		  event->area.x, event->area.y, event->area.x, event->area.y,
-		  event->area.width, event->area.height);
+
+  playDisplayList(dd);
 
   return FALSE;
 }
@@ -415,7 +413,7 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
 
   gtk_window_set_policy(GTK_WINDOW(gtkd->window), TRUE, TRUE, FALSE);
   gtk_widget_realize(gtkd->window);
-  
+
   /* create toolbar */
   gnome_app_create_toolbar_with_data(GNOME_APP(gtkd->window), graphics_toolbar, (gpointer) dd);
 
@@ -454,14 +452,6 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
   gtkd->lty = -1;
   gtkd->lwd = -1;
 
-  /* create offscreen drawable */
-  gtkd->pixmap = gdk_pixmap_new(gtkd->drawing->window,
-				gtkd->windowWidth, gtkd->windowHeight,
-				-1);
-  gdk_gc_set_foreground(gtkd->wgc, &gtkd->gcol_bg);
-  gdk_draw_rectangle(gtkd->pixmap, gtkd->wgc, TRUE, 0, 0,
-		     gtkd->windowWidth, gtkd->windowHeight);
-
   /* let other widgets use the default colour settings */
   gtk_widget_pop_visual();
   gtk_widget_pop_colormap();
@@ -483,7 +473,7 @@ static double GTK_StrWidth(char *str, DevDesc *dd)
 
   size = dd->gp.cex * dd->gp.ps + 0.5;
   SetFont(dd, dd->gp.font, size);
-  
+
   return (double) gdk_string_width(gtkd->font, str);
 }
 
@@ -679,9 +669,9 @@ static void GTK_Rect(double x0, double y0, double x1, double y1,
 		       (gint) y1 - (gint) y0);
   }
   if(fg != NA_INTEGER) {
-    SetColor(&gcol_outline, fg); 
+    SetColor(&gcol_outline, fg);
     gdk_gc_set_foreground(gtkd->wgc, &gcol_outline);
-    
+
     SetLineType(dd, dd->gp.lty, dd->gp.lwd);
 
     gdk_draw_rectangle(gtkd->drawing->window,
@@ -840,15 +830,13 @@ static void GTK_Polygon(int n, double *x, double *y, int coords,
   g_free(points);
 }
 
-double deg2rad = 0.01745329251994329576;
-
 static void GTK_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
 {
   gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
   GdkColor gcol_fill;
   gint size;
-  double x1, y1;
+  double x1, y1, rrot = DEG2RAD * rot;
 
   GConvert(&x, &y, coords, DEVICE, dd);
 
@@ -862,22 +850,15 @@ static void GTK_Text(double x, double y, int coords,
   if(xc != 0.0 || yc != 0.0) {
     x1 = GTK_StrWidth(str, dd);
     y1 = GConvertYUnits(1, CHARS, DEVICE, dd);
-    x += -xc * x1 * cos(deg2rad * rot) +
-      yc * y1 * sin(deg2rad * rot);
-    y -= -xc * x1 * sin(deg2rad * rot) -
-      yc * y1 * cos(deg2rad * rot);
+    x += -xc * x1 * cos(rrot) + yc * y1 * sin(rrot);
+    y -= -xc * x1 * sin(rrot) - yc * y1 * cos(rrot);
   }
 
   gdk_draw_text_rot(gtkd->drawing->window,
-		    gtkd->font, gtkd->wgc, 
+		    gtkd->font, gtkd->wgc,
 		    (int) x, (int) y,
 		    gtkd->windowWidth, gtkd->windowHeight,
-		    str, strlen(str), deg2rad * rot);
-  gdk_draw_text_rot(gtkd->pixmap,
-		    gtkd->font, gtkd->wgc, 
-		    (int) x, (int) y,
-		    gtkd->windowWidth, gtkd->windowHeight,
-		    str, strlen(str), deg2rad * rot);
+		    str, strlen(str), rrot);
 }
 
 
@@ -978,7 +959,7 @@ int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, dou
   gtkd->fontsize = -1;
   dd->dp.font = 1;
   dd->dp.ps = ps;
-  
+
   /* device driver start */
   if(!GTK_Open(dd, gtkd, display, width, height)) {
     free(gtkd);

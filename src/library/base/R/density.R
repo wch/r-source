@@ -36,7 +36,7 @@ density <- function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
 	    xhi = as.double(up),
 	    y = double(2 * n),
 	    ny= as.integer(n),
-	    NAOK = has.na) $ y
+	    NAOK = has.na, PACKAGE = "base") $ y
     xords <- seq(lo, up + (up-lo), length = 2 * n)
     kords <- xords - lo
     kords[(n + 2):(2 * n)] <- -kords[n:2]

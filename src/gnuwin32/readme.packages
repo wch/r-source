@@ -1,15 +1,18 @@
 Building from a source-code library under Windows
 =================================================
 
+If your package has neither C nor Fortran source, see `Simple ports' 
+at the bottom of this file.
+
 First collect the tools that you need.
 
 We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
-cat; we have packaged a set at bin/windows/windows-NT/etc/tools.zip
+cat; we have packaged a set at CRAN/bin/windows/windows-NT/base/etc/tools.zip
 extracted from the cygwin distribution
 (http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
-past problems on some versions of Windows95, we use the cygwin ld
+past problems on some versions of Windows 95, we use the cygwin ld
 contained in that set, which must be before the mingw32 one in your
 path. (We have no way of knowing if this is still necessary.)
 
@@ -19,10 +22,27 @@ working setup from building earlier versions of R. We have also
 successfully used the variant of mingw32 that uses the MSVCRT run-time 
 system (under gcc-2.95 but not earlier versions), and in the case of the
 mclust library found this more successful that the standard version.
+Be aware that not all Windows machines have MSVCRT.DLL installed.
+
+(If you want to use cygwin, we suggest you upgrade to gcc-2.95 by
+installing the files gcc-2.95-cygb20.tar.gz and gcc-2.95-mingw-extra.tar.gz
+from ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
 groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
+
+If you want to make compiled html (.chm) files you will need the
+Microsoft HTML Help Workshop, available for download at 
+http://msdn.microsoft.com/workshop/author/htmlhelp.
+
+If you want to make Window help files you will need hcrtf.exe from a
+Windows compiler installation (this is available for download at
+ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE), or hcp505.exe
+
+For large packages it is helpful to make zipped help files: for that
+you need zip from the Info-ZIP project 
+(ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors).
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  Edit MkRules to set target and
@@ -47,8 +67,9 @@ mypkg, in RHOME\src\library, and run
 	make pkg-mypkg
 
 The Makefiles can be customized: in particular the name of the DLL can
-be set (see the line integrate-DLLNM=adapt) and the compile flags can
-be set (see the examples in MakeDll).
+be set (see the line integrate-DLLNM=adapt), the compile flags can
+be set (see the examples in MakeDll) and the types of help (if any) to be
+generated can be chosen (variable HELP).
 
 
 Using zipped help files
@@ -91,7 +112,7 @@ Then you can compile the objects and build the DLL by
 	cl /MT /Ox /D "WIN32"  /c *.c
 	link /dll /out:mypkg.dll *.obj Rdll.lib
 
-(at least under VC++ 4.2).  If the C sources use R header files you
+(at least under VC++ 4.2 and 6.0).  If the C sources use R header files you
 will need to arrange for these to be searched, perhaps by
 
 	/I ..\..\..\include
@@ -99,3 +120,49 @@ will need to arrange for these to be searched, perhaps by
 If you build a debug version of the DLL in the development
 environment, you can debug the DLL code there just by setting the
 executable to be debugged to the full path to the R front-end.
+
+
+Simple Ports
+============
+
+If your package has neither C nor Fortran source, several steps can
+be omitted.
+
+You will need 
+
+suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and cat;
+we have packaged a set at bin/windows/windows-NT/etc/tools.zip
+
+perl5, available via http://www.perl.com/CPAN/ports.
+
+groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
+
+All of these need to be installed and in your path, and the
+appropriate environment variables set.
+
+For each package you want to install, unpack it to a directory, say
+mypkg, in RHOME\src\library, and run
+
+	cd RHOME\src\gnuwin32
+	make pkg-mypkg
+
+If you have a Unix/Linux box, it will suffice to zip up the Unix installation
+of the package.  Install the package, then
+
+cd `R RHOME`/library
+zip -rl /dest/mypkg.zip mypkg
+
+(the -l flag converts to CRLF line endings: it is not absolutely necessary
+that users may want to read the information files in a Windows editor).
+
+zip is often installed on Linux machines, and sources and binaries for
+Unix boxes are available via the Info-Zip site given above.
+
+
+Feedback
+========
+
+Please send comments and bug reports to (preferably both of)
+
+    Guido Masarotto <guido@hal.stat.unipd.it>
+    Brian Ripley <ripley@stats.ox.ac.uk>

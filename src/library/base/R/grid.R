@@ -1,13 +1,13 @@
-"grid" <-
-    function (nx=3, ny=3, col="lightgray", lty="dotted")
+grid <- function (nx=NULL, ny=NULL, col="lightgray", lty="dotted")
 {
-    lims <- par("usr")
-    if (nx > 1) {
-	coord <- seq(lims[1], lims[2], len = nx + 2)[c(-1, -(nx + 2))]
-	abline(v = coord, col = col, lty = lty)
+    if (is.null(nx)|| nx >= 1) {
+        axp <- par("xaxp")
+        if(is.null(nx)) nx <- axp[3]
+	abline(v = seq(axp[1],axp[2],len=1+nx), col = col, lty = lty)
     }
-    if (ny > 1) {
-	coord <- seq(lims[3], lims[4], len = ny + 2)[c(-1, -(ny + 2))]
-	abline(h = coord, col = col, lty = lty)
+    if (is.null(ny)|| ny >= 1) {
+        axp <- par("yaxp")
+        if(is.null(ny)) ny <- axp[3]
+	abline(h = seq(axp[1],axp[2],len=1+ny), col = col, lty = lty)
     }
 }

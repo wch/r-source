@@ -209,10 +209,10 @@ void R_DefParams(Rstart Rp)
 
 #define Max_Nsize 20000000	/* must be < LONG_MAX (= 2^32 - 1 =)
 				   2147483647 = 2.1e9 */
-#define Max_Vsize (2048*Mega)	/* must be < LONG_MAX */
+#define Max_Vsize (2048*Mega)	/* 2048*Mega = 2^(11+20) must be < LONG_MAX */
 
-#define Min_Nsize 200000
-#define Min_Vsize (2*Mega)
+#define Min_Nsize 160000
+#define Min_Vsize (1*Mega)
 
 void R_SizeFromEnv(Rstart Rp)
 {
@@ -290,7 +290,7 @@ static void R_common_badargs() {
 
 /*
   This copies the command line arguments to the Rstart
-  structure. The memory is obtained from calloc, etc. 
+  structure. The memory is obtained from calloc, etc.
   since these are permanent and it is not intended that
   they be modified. This is why they are copied before
   being processed and removed from the list.
@@ -411,7 +411,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, "WARNING: --vsize value is invalid: ignored\n");
 		    else
-			sprintf(msg, "WARNING: --vsize %ld`%c': too large and ignored\n", 
+			sprintf(msg, "WARNING: --vsize %ld`%c': too large and ignored\n",
 				value,
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
 		    R_ShowMessage(msg);
@@ -436,7 +436,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, "WARNING: --nsize value is invalid: ignored\n");
 		    else
-		    sprintf(msg, "WARNING: --nsize %ld`%c': too large and ignored\n", 
+		    sprintf(msg, "WARNING: --nsize %ld`%c': too large and ignored\n",
 			    value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(msg);
@@ -445,7 +445,6 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    }
 	    else {
 		argv[newac++] = *av;
-		break;
 	    }
 	}
 	else {

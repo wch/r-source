@@ -8,7 +8,11 @@ scan(file="", what= double(0), nmax=-1, n=-1, sep="", skip=0, nlines=0,
 \arguments{
 \item{file}{the name of a file to read data values from.  If the
   specified file is \code{""}, then input is taken from the keyboard
-  (in this case input can be terminated by a blank line).}
+  (in this case input can be terminated by a blank line).
+
+  Otherwise, the file name is \emph{relative} to the current working
+  directory, \code{\link{getwd}()}, unless it specifies an \emph{absolute} path.
+}
 \item{what}{the type of \code{what} gives the type of data to be read.
   If \code{what} is a list, it is assumed that the lines of the data
   file are records each containing \code{length(what)} items (``fields'').}
@@ -42,13 +46,16 @@ scan(file="", what= double(0), nmax=-1, n=-1, sep="", skip=0, nlines=0,
 \item{quiet}{logical; if \code{FALSE} (default), scan(.) will print a
   line, telling what fields have been read.}
 }
-\description{
+\details{
 The value of \code{what} can be a list of types, in which case
 \code{scan} returns a list of vectors with the types given by the
 types of the elements in \code{what}.  This provides a way of reading
 columnar data.
 
 Keyboard entry is terminated by typing a blank line.
+}
+\note{
+    \code{what=complex()} is not yet supported.
 }
 \seealso{
 \code{\link{read.table}} for more user-friendly reading of data matrices.

@@ -50,7 +50,7 @@ hclust <- function(d, method="complete")
 		    nn = integer(n),
 		    disnn = double(n),
 		    flag = logical(n),
-		    diss = as.double(d))
+		    diss = as.double(d), PACKAGE="mva")
 
     ## 2nd step: interpret the information that we now have
     ## as merge, height, and order lists.
@@ -61,7 +61,7 @@ hclust <- function(d, method="complete")
 		      ib = as.integer(hcl$ib),
 		      order = integer(n),
 		      iia = integer(n),
-		      iib = integer(n))
+		      iib = integer(n), PACKAGE="mva")
 
     tree <- list(
 		 merge=cbind(hcass$iia[1:(n-1)], hcass$iib[1:(n-1)]),
@@ -100,5 +100,17 @@ plot.hclust <-
     .Internal(dend(n, merge, height, order, hang, labels, ...))
     axis(2, at=pretty(range(height)))
     invisible()
+}
+
+as.hclust <- function(x, ...) UseMethod("as.hclust")
+
+as.hclust.twins <- function(x)
+{
+    retval <- list(merge = x$merge,
+                   height = sort(x$height),
+                   order = x$order,
+                   labels = rownames(x$data))
+    class(retval) <- "hclust"
+    retval
 }
 

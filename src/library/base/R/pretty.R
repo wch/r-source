@@ -24,6 +24,6 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
 	    shrink = as.double(shrink.sml),
             high.u.fact = as.double(c(high.u.bias, u5.bias)),
             eps.correct,
-            DUP = FALSE)
+            DUP = FALSE, PACKAGE = "base")
     seq(z$l, z$u, length=z$n+1)
 }

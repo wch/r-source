@@ -35,8 +35,8 @@ unsigned int char2col(char *s)
 unsigned int ScaleColor(double x)
 {
     if (!R_FINITE(x) || x < 0.0 || x > 1.0)
-	error("color intensity %g, not in [0,1]",x);
-    return (unsigned int)(255*x);
+	error("color intensity %g, not in [0,1]\n",x);
+    return (unsigned int)(255*x + 0.5);
 }
 
 static void setpalette(char **palette)
@@ -187,8 +187,8 @@ SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < nlev; i++) {
 	level = REAL(lev)[i];
 	if (ISNAN(level) || level < 0 || level > 1)
-	    errorcall(call, "invalid gray level, must be in [0,1].");
-	ilevel = 255 * level;
+	    errorcall(call, "invalid gray level, must be in [0,1].\n");
+	ilevel = 255 * level + 0.5;
 	STRING(ans)[i] = mkChar(RGB2rgb(ilevel, ilevel, ilevel));
     }
     UNPROTECT(2);

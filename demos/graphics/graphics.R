@@ -1,4 +1,4 @@
-opar <- par(ask = interactive() && .Device == "X11")	# For source
+opar <- par(ask = interactive() && (.Device == "X11" || .Device == "windows"))	# For source
 
 ## Here is some code which illustrates some of the differences between
 ## R and S graphics capabilities.  Note that colors are generally specified

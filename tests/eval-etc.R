@@ -26,3 +26,19 @@ names(e3)
 names(e3)[2] <- "Variance ratio"
 e3
 eval(e3)
+
+
+
+##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+##- To: r-core
+##- Date: 2 Sep 1999
+
+## The first failed in 0.65.0 :
+attach(list(x=1))
+evalq(dim(x) <- 1,pos.to.env(2))
+dput(get("x", env=pos.to.env(2)))
+
+e <- local({x <- 1;environment()})
+evalq(dim(x) <- 1,e)
+dput(get("x",env=e))
+

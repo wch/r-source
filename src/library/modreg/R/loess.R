@@ -3,7 +3,7 @@
 #
 loess <-
 function(formula, data=NULL, weights, subset, na.action, model = FALSE,
-         span = 0.75, enp.target, degree = 2, parametric = FALSE, 
+         span = 0.75, enp.target, degree = 2, parametric = FALSE,
          drop.square = FALSE, normalize = TRUE,
          family = c("gaussian", "symmetric"),
          method = c("loess", "model.frame"),
@@ -58,7 +58,7 @@ loess.control <-
            cell = 0.2, iterations = 4, ...)
 {
   list(surface=match.arg(surface),
-       statistics=match.arg(statistics), 
+       statistics=match.arg(statistics),
        trace.hat=match.arg(trace.hat),
        cell=cell, iterations=iterations)
 }
@@ -71,7 +71,7 @@ simpleLoess <-
            cell = 0.2, iterations = 1, trace.hat = "exact")
 {
 ## loess_ translated to R.
-  
+
   D <- NCOL(x);
   N <- NROW(x);
   x <- as.matrix(x)
@@ -128,7 +128,8 @@ simpleLoess <-
             trL = double(1),
             delta1 = double(1),
             delta2 = double(1),
-            as.integer(surf.stat == "interpolate/exact"))
+            as.integer(surf.stat == "interpolate/exact"),
+            PACKAGE="modreg")
     if(j==1) {
       trace.hat.out <- z$trL
       one.delta <- z$delta1
@@ -140,7 +141,8 @@ simpleLoess <-
                          as.double(fitted.residuals),
                          as.integer(N),
                          robust = double(N),
-                         double(N))$robust
+                         double(N),
+                         PACKAGE="modreg")$robust
   }
   if(surface == "interpolate")
   {
@@ -158,7 +160,8 @@ simpleLoess <-
                                as.double(weights),
                                as.double(robust),
                                double(N),
-                               pseudovalues = double(N))$pseudovalues
+                               pseudovalues = double(N),
+                               PACKAGE="modreg")$pseudovalues
       z <- .C("loess_raw",
               as.double(pseudovalues),
               as.double(x),
@@ -183,7 +186,8 @@ simpleLoess <-
               trL = double(1),
               delta1 = double(1),
               delta2 = double(1),
-              as.integer(0))
+              as.integer(0),
+              PACKAGE="modreg")
       pseudo.resid <- pseudovalues - z$temp
   }
   sum.squares <- if(iterations <= 1) sum(weights * fitted.residuals^2)
@@ -210,7 +214,7 @@ predict.loess <-
   if(!inherits(object, "loess"))
     stop("First argument must be a loess object")
   if(is.null(newdata) & (se == FALSE)) return(fitted(object))
-  
+
   if(is.null(newdata)) newx <- .Alias(object$x)
   else {
     vars <- as.character(attr(delete.response(terms(object)), "variables"))[-1]
@@ -221,10 +225,10 @@ predict.loess <-
     } else newx <- as.matrix(newdata)
     }
   res <- predLoess(object$y, object$x, newx, object$s, object$weights,
-                   object$pars$robust, object$pars$span, object$pars$degree, 
+                   object$pars$robust, object$pars$span, object$pars$degree,
                    object$pars$normalize, object$pars$parametric,
                    object$pars$drop.square, object$pars$surface,
-                   object$pars$cell, object$pars$family, 
+                   object$pars$cell, object$pars$family,
                    object$kd, object$divisor, se=se)
   if(se) {
     res$df <- object$one.delta^2/object$two.delta
@@ -233,8 +237,8 @@ predict.loess <-
 }
 
 predLoess <-
-  function(y, x, newx, s, weights, robust, span, degree, 
-        normalize, parametric, drop.square, surface, cell, family, 
+  function(y, x, newx, s, weights, robust, span, degree,
+        normalize, parametric, drop.square, surface, cell, family,
         kd, divisor, se=F)
 {
 ## translation of pred_
@@ -267,25 +271,27 @@ predLoess <-
               as.integer(N),
               as.integer(M),
               fit = double(M),
-              L = double(N*M))[c("fit", "L")]
+              L = double(N*M),
+              PACKAGE="modreg")[c("fit", "L")]
       fit <- z$fit
       se.fit <- (matrix(z$L^2, M, N)/rep(weights, rep(M, N))) %*% rep(1, N)
       se.fit <- drop(s * sqrt(se.fit))
     } else {
       fit <- .C("loess_dfit",
-              as.double(y),
-              as.double(x),
-              as.double(x.evaluate),
-              as.double(weights),
-              as.double(span),
-              as.integer(degree),
-              as.integer(nonparametric),
-              as.integer(order.drop.sqr),
-              as.integer(sum.drop.sqr),
-              as.integer(D),
-              as.integer(N),
-              as.integer(M),
-              fit = double(M))$fit
+                as.double(y),
+                as.double(x),
+                as.double(x.evaluate),
+                as.double(weights),
+                as.double(span),
+                as.integer(degree),
+                as.integer(nonparametric),
+                as.integer(order.drop.sqr),
+                as.integer(sum.drop.sqr),
+                as.integer(D),
+                as.integer(N),
+                as.integer(M),
+                fit = double(M),
+                PACKAGE="modreg")$fit
     }
   } else {                              # interpolate
     ## need to eliminate points outside original range - not in pred_
@@ -303,7 +309,8 @@ predLoess <-
                         as.double(kd$vert), as.double(kd$vval),
                         as.integer(M1),
                         as.double(x.evaluate[inside, ]),
-                        fit = double(M1))$fit
+                        fit = double(M1),
+                        PACKAGE="modreg")$fit
     if(se){
       se.fit <- rep(NA, M)
       if(any(inside)) {
@@ -322,7 +329,8 @@ predLoess <-
                 as.integer(N),
                 as.integer(M1),
                 double(M1),
-                L = double(N*M1)
+                L = double(N*M1),
+                PACKAGE="modreg"
                 )$L
         tmp <- (matrix(L^2, M1, N)/rep(weights, rep(M1, N))) %*% rep(1, N)
         se.fit[inside] <- drop(s * sqrt(tmp))
@@ -384,7 +392,7 @@ print.summary.loess <- function(x, digits=max(3, .Options$digits-3), ...)
 
 scatter.smooth <-
 function(x, y, span = 2/3, degree = 1,
-         family = c("symmetric", "gaussian"), 
+         family = c("symmetric", "gaussian"),
          xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),
          ylim = range(y, prediction$y), evaluation = 50, ...)
 {
@@ -402,12 +410,12 @@ function(x, y, span = 2/3, degree = 1,
 }
 
 loess.smooth <-
-  function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"), 
+  function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"),
            evaluation = 50, ...)
 {
   notna <- x[!(is.na(x) | is.na(y))]
   new.x <- seq(min(notna), max(notna), length = evaluation)
-  
+
   control <- loess.control(...)
 #  x <- matrix(x, ncol = 1)
 #  n <- length(y)
@@ -419,17 +427,18 @@ loess.smooth <-
                      control$cell, iterations, control$trace.hat)
   kd <- fit$kd
   z <- .C("loess_ifit",
-            as.integer(kd$parameter),
-            as.integer(kd$a), as.double(kd$xi),
-            as.double(kd$vert), as.double(kd$vval),
-            as.integer(evaluation),
-            as.double(new.x),
-            fit = double(evaluation))$fit
+          as.integer(kd$parameter),
+          as.integer(kd$a), as.double(kd$xi),
+          as.double(kd$vert), as.double(kd$vval),
+          as.integer(evaluation),
+          as.double(new.x),
+          fit = double(evaluation),
+          PACKAGE="modreg")$fit
   list(x = new.x, y = z)
 }
 
 # panel.smooth <-
-#   function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"), 
+#   function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"),
 #         zero.line = F, evaluation = 50, ...)
 # {
 #   points(x, y, ...)
@@ -448,13 +457,13 @@ anova.loess <-
   ## calculate the number of models
   if (!all(sameresp)) {
     objects <- objects[sameresp]
-    warning(paste("Models with response", deparse(responses[!sameresp]), 
+    warning(paste("Models with response", deparse(responses[!sameresp]),
                   "removed because response differs from", "model 1"))
   }
   nmodels <- length(objects)
   if(nmodels <= 1) stop("no models to compare")
   models <- as.character(lapply(objects, function(x) x$call))
-  descr <- paste("Model ", format(1:nmodels), ": ", models, 
+  descr <- paste("Model ", format(1:nmodels), ": ", models,
                  sep = "", collapse = "\n")
   ## extract statistics
   delta1 <- sapply(objects, function(x) x$one.delta)

@@ -39,8 +39,8 @@ rweibull(n, shape, scale = 1)
 }
 \examples{
 x <- 1:10
-dweibull(x, shape = 1) == dexp(x)
-pweibull(x, shape = 1, scale = pi) == pexp(x, rate = 1/pi)
-qweibull(x/11, shape = 1, scale = pi) == qexp(x/11, rate = 1/pi)
+all.equal(dweibull(x, shape = 1), dexp(x))
+all.equal(pweibull(x, shape = 1, scale = pi), pexp(x, rate = 1/pi))
+all.equal(qweibull(x/11, shape = 1, scale = pi), qexp(x/11, rate = 1/pi))
 }
 \keyword{distribution}

@@ -1,0 +1,17 @@
+include ../MkRules
+
+Rchtml-CFLAGS= -I $(HHWDIR)/include
+Rchtml-DLLFLAGS= -s
+Rchtml-DLLLIBS= -L. -lhhctrl
+
+all: libhhctrl.a ../../../bin/Rchtml.dll
+
+libhhctrl.a : MkChmDll
+	$(ECHO) EXPORTS > hhctrl.def
+	$(ECHO) HtmlHelpA@16 >> hhctrl.def
+	$(DLLTOOL) --dllname hhctrl.ocx  --def hhctrl.def --output-lib libhhctrl.a
+
+../../../bin/Rchtml.dll: Rchtml.dll
+	$(CP) $^ $@
+
+Rchtml.dll : Rchtml.o

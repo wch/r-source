@@ -24,7 +24,8 @@ splinefun <- function(x, y=NULL, method="fmm")
 	    b=double(n),
 	    c=double(n),
 	    d=double(n),
-	    e=double(if(method == 1) n else 0))
+	    e=double(if(method == 1) n else 0),
+            PACKAGE="base")
     rm(x,y,n,method)
     function(x) {
 	.C("spline_eval",
@@ -37,6 +38,7 @@ splinefun <- function(x, y=NULL, method="fmm")
 	   z$y,
 	   z$b,
 	   z$c,
-	   z$d)$y
+	   z$d,
+           PACKAGE="base")$y
     }
 }

@@ -505,7 +505,7 @@ sub text2html {
 
     $text = replace_command($text, "emph", "<EM>", "</EM>");
     $text = replace_command($text, "bold", "<B>", "</B>");
-    $text = replace_command($text, "file", "`", "'");
+    $text = replace_command($text, "file", "`<tt>", "</tt>'");
 
     $text = html_tables($text);
     $text =~ s/\\cr/<BR>/sgo;
@@ -616,7 +616,7 @@ sub html_print_block {
 
     if(defined $blocks{$block}){
 	print htmlout html_title3($title);
-	print htmlout text2html($blocks{$block});
+	print htmlout "<p>\n", text2html($blocks{$block}), "</p>\n";
     }
 }
 
@@ -659,15 +659,15 @@ sub html_print_argblock {
 		    get_arguments("item", $text, 2);
 		print htmlout "<TR VALIGN=TOP><TD><CODE>";
 		print htmlout text2html($arg);
-		print htmlout "</CODE>\n<TD>\n";
-		print htmlout text2html($desc), "\n";
+		print htmlout "</CODE></TD>\n<TD>\n";
+		print htmlout text2html($desc), "</TD></TR>\n";
 		$text =~ s/.*$id//s;
 	    }
 	    print htmlout "</TABLE>\n";
-	    print htmlout text2html($text);
+	    print htmlout "<P>\n", text2html($text), "</P>\n";
 	}
 	else{
-	    print htmlout text2html($text);
+	    print htmlout "<P>\n", text2html($text), "</P>\n";
 	}
     }
 }
@@ -679,7 +679,7 @@ sub html_print_sections {
 
     for($section=0; $section<$max_section; $section++){
 	print htmlout html_title3($section_title[$section]);
-	print htmlout text2html($section_body[$section]);
+	print htmlout "<P>\n", text2html($section_body[$section]), "</P>\n";
     }
 }
 

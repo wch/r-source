@@ -77,3 +77,4 @@ void R_SetWin32(Rstart);
 void R_SizeFromEnv(Rstart);
 void R_common_command_line(int *, char **, Rstart);
 
+void R_set_command_line_arguments(int argc, char **argv, Rstart Rp);

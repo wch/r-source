@@ -45,3 +45,13 @@ gchar *prefs_get_pager_em_font(void);
 GdkColor prefs_get_pager_text_textcolor(void);
 GdkColor prefs_get_pager_text_bgcolor(void);
 
+GtkWidget *prefs_text_page(void);
+GtkWidget *prefs_workspace_frame(void);
+GtkWidget *prefs_history_frame(void);
+GtkWidget *prefs_exit_page(void);
+GtkWidget *prefs_apps_page(void);
+GtkWidget *prefs_graphics_page(void);
+GtkWidget *prefs_startup_page(void);
+GtkWidget *prefs_pager_page(void);
+
+void settings_prefs_cb(GtkWidget *widget, gpointer data);

@@ -6,18 +6,25 @@ hist.default <-
 	      main = paste("Histogram of" , deparse(substitute(x))),
 	      xlim = range(breaks), ylim = range(y, 0),
 	      xlab = deparse(substitute(x)), ylab,
-	      axes = TRUE, plot = TRUE, labels = FALSE, ...)
+	      axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL, ...)
 {
     if (!is.numeric(x))
 	stop("hist: x must be numeric")
-    main # defeat lazy eval
+    main # eval() now: defeat lazy eval
     xlab
     n <- length(x <- x[!is.na(x)])
-    use.br <- !missing(breaks) && (nB <- length(breaks)) > 1
+    use.br <- !missing(breaks)
+    if(use.br) {
+	if(!missing(nclass))
+	    warning("`nclass' not used when `breaks' specified")
+    }
+    else if(!is.null(nclass) && length(nclass) == 1)
+	breaks <- nclass
+    use.br <- use.br && (nB <- length(breaks)) > 1
     if(use.br)
 	breaks <- sort(breaks)
-    else {
-	dx <- diff(rx <- range(x))
+    else { # construct vector of breaks
+	rx <- range(x)
 	nnb <-
 	    if(missing(breaks)) 1 + log2(n)
 	    else { # breaks = `nclass'
@@ -41,7 +48,7 @@ hist.default <-
 		 counts = integer(nB - 1),
 		 right	= as.logical(right),
 		 include= as.logical(include.lowest),
-		 NAOK = FALSE, DUP = FALSE) $counts
+		 NAOK = FALSE, DUP = FALSE, PACKAGE = "base") $counts
     if (any(counts < 0))
 	stop("negative `counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)

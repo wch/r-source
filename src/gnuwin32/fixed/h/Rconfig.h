@@ -106,19 +106,8 @@ double atanh(double);
 #undef HAVE_MEMCPY
 #undef HAVE_BCOPY
 
-/* Compatibility for setjmp / longjmp */
-#define HAVE_SIGLONGJMP 1
-
-#ifdef HAVE_SIGLONGJMP
+#define HAVE_POSIX_SETJMP 1
 #define PSIGNAL
-#define JMP_BUF sigjmp_buf
-#define SETJMP(x) sigsetjmp(x,1)
-#define LONGJMP(x,i) siglongjmp(x,i)
-#else
-#define JMP_BUF jmp_buf
-#define SETJMP(x) _setjmp(x)
-#define LONGJMP(x,i) longjmp(x,i)
-#endif
 
 /* Some Linux systems may need this */
 #undef NEED___SETFPUCW

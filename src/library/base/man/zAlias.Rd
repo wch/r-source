@@ -23,11 +23,12 @@ new <- .Alias(expr)
 \seealso{\code{\link{<-}} for usual assignments.}
 \examples{
 mop <- options()
+mop $ browser <- "a browser"   # not set on all platforms
 Op <- .Alias(mop)
 ## A change to mop is reflected in Op and vice versa
 ## -- ONLY if no new slots are created ...
 mop $ digits <- "Wow!"
-Op  $ browser <- "Web broser"
+Op  $ browser <- "another one"
 mop $ browser; Op $ digits
 all(names(mop) == names(Op) &
     sapply(seq(mop), function(i) all(Op[[i]] == mop[[i]])))

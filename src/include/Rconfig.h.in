@@ -96,17 +96,8 @@
 #undef HAVE_MEMCPY
 #undef HAVE_BCOPY
 
-/* Compatibility for setjmp / longjmp */
-#undef HAVE_SIGLONGJMP
-#ifdef HAVE_SIGLONGJMP
-#define JMP_BUF sigjmp_buf
-#define SETJMP(x) sigsetjmp(x,1)
-#define LONGJMP(x,i) siglongjmp(x,i)
-#else
-#define JMP_BUF jmp_buf
-#define SETJMP(x) setjmp(x)
-#define LONGJMP(x,i) longjmp(x,i)
-#endif
+/* POSIX.1 sigsetjmp/siglongjmp available */
+#undef HAVE_POSIX_SETJMP
 
 /* Some Linux systems may need this */
 #undef NEED___SETFPUCW

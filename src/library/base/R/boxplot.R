@@ -2,7 +2,7 @@ boxplot <- function(x, ...) UseMethod("boxplot")
 
 boxplot.default <-
 function(x, ..., range = 1.5, width = NULL, varwidth = FALSE, notch =
-         FALSE, names.x, data = sys.frame(sys.parent()), plot = TRUE,
+         FALSE, names, data = sys.frame(sys.parent()), plot = TRUE,
          border = par("fg"), col = NULL, log = "", pars = NULL)
 {
     args <- list(x, ...)
@@ -28,15 +28,18 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE, notch =
 	stop("invalid first argument")
     if(length(class(groups)))
 	groups <- unclass(groups)
-    if(!missing(names.x))
-	attr(groups, "names") <- names.x
-    else if(is.null(attr(groups, "names")))
-	attr(groups, "names") <- 1:n
+    if(!missing(names))
+	attr(groups, "names") <- names
+    else {
+	if(is.null(attr(groups, "names")))
+	    attr(groups, "names") <- 1:n
+        names <- attr(groups, "names") 
+    }
     for(i in 1:n)
 	groups[i] <- list(boxplot.stats(groups[[i]], range)) # do.conf=notch)
     if(plot) {
 	bxp(groups, width, varwidth = varwidth, notch = notch, border =
-            border, col = col, log = log, pars = pars) 
+            border, col = col, log = log, pars = pars, znames = names) 
 	invisible(groups)
     }
     else groups
@@ -74,7 +77,8 @@ boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 		notch.frac = 0.5,
-		border=par("fg"), col=NULL, log="", pars=NULL, ...)
+		border=par("fg"), col=NULL, log="", pars=NULL,
+		znames=names(z), ...)
 {
     bplt <- function(x, wid, stats, out, conf, notch, border, col)
     {
@@ -153,7 +157,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
-	if(n > 1) axis(1, at=1:n, labels=names(z))
+	if(n > 1) axis(1, at=1:n, labels=znames)
 	axis(2)
     }
     do.call("title", pars)

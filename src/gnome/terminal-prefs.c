@@ -280,6 +280,11 @@ gchar *prefs_get_pager_text_font(void)
 {
     return user_prefs.pager_text_font;
 }
+  GtkWidget *frame, *table;
+  GtkWidget *ask;
+  GtkWidget *save;
+  GtkWidget *savetofile, *dummy, *nameentry;
+  GtkWidget *dontsave;
 
 gchar *prefs_get_pager_em_font(void)
 {

@@ -337,22 +337,22 @@ quasi <- function (link = "identity", variance = "constant")
 	   },
 	   "mu(1-mu)" = {
 	       variance <- function(mu) mu * (1 - mu)
-	       validmu <-function(mu) all(mu>0) && all(mu<1)
+	       validmu <- function(mu) all(mu>0) && all(mu<1)
 	       dev.resids <- function(y, mu, wt)
 		   2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
 			     (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
 	   },
 	   "mu" = {
 	       variance <- function(mu) mu
-	       validmu<-function(mu) all(mu>0)
+	       validmu <- function(mu) all(mu>0)
 	       dev.resids <- function(y, mu, wt)
 		   2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
 	   },
 	   "mu^2" = {
 	       variance <- function(mu) mu^2
-	       validmu<-function(mu) all(mu!=0)
+	       validmu <- function(mu) all(mu>0)
 	       dev.resids <- function(y, mu, wt)
-		   pmax(-2 * wt * (log(y/mu) - (y - mu)/mu), 0)
+		   pmax(-2 * wt * (log(ifelse(y == 0, 1, y)/mu) - (y - mu)/mu), 0)
 	   },
 	   "mu^3" = {
 	       variance <- function(mu) mu^3
@@ -363,8 +363,8 @@ quasi <- function (link = "identity", variance = "constant")
 	   stop(paste(variancetemp, "not recognised, possible variances",
 		      'are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"'))
 	   )# end switch(.)
-
-    initialize <- expression({ n <- rep(1, nobs); mustart <- y })
+# 0.1 fudge here matches poisson: S has 1/6.
+    initialize <- expression({ n <- rep(1, nobs); mustart <- y + 0.1 *(y == 0)})
     aic <- function(y, n, mu, wt, dev) NA
     structure(list(family = "quasi",
 		   link = linktemp,

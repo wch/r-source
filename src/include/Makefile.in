@@ -20,7 +20,7 @@ DISTFILES = Makefile.in README \
 	Defn.h Fileio.h Graphics.h IOStuff.h Parse.h Print.h \
 	Statdecl.h Startup.h Stattab.h \
 	$(SRC_HEADERS) \
-	Rconfig.h.in Rversion.h.in
+	Rconfig.h.in
 
 all: Makefile R
 
@@ -42,16 +42,11 @@ Rconfig.h: $(top_srcdir)/configure $(srcdir)/Rconfig.h.in
 	@cd $(top_builddir) && $(MAKE) src/include/Rconfig.h
 	@touch $@
 
-Rversion.h: $(srcdir)/Rversion.h.in $(top_srcdir)/date-stamp
-	@cp $(srcdir)/Rversion.h.in $@
-	@$(AWK) -F/ '{ \
-	    printf "#define R_DAY\t\"%s\"\n",   $$3; \
-	    printf "#define R_MONTH\t\"%s\"\n", $$2; \
-	    printf "#define R_YEAR\t\"%s\"\n",  $$1 }' \
-	  $(top_srcdir)/date-stamp >> $@
+Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
+	@$(top_srcdir)/tools/GETVERSION > $@
 
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
-	$(top_srcdir)/tools/GETSYMBOLS
+	@$(top_srcdir)/tools/GETSYMBOLS
 
 mostlyclean:
 clean:

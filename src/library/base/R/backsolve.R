@@ -18,9 +18,9 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
 	    t  = r, ldt= nrow(r), n  = k,
 	    b  = x, ldb= k,	  nb = nb,
 	    x  = matrix(0, k, nb),
-	    job= job,
-	    info= integer(1),
-	    DUP= FALSE)[c("x","info")]
+	    job = job,
+	    info = integer(1),
+	    DUP = FALSE, PACKAGE = "base")[c("x","info")]
     if(z$info != 0)
 	stop(paste("singular matrix in backsolve. First zero in diagonal [",
 		   z$info,"].",sep=""))

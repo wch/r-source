@@ -52,7 +52,7 @@ typedef struct {
     GdkColor *gcol_bg;
 
     GdkCursor *gcursor;
-  
+
     int usefixed;
     GdkFont *fixedfont;
     GdkFont *font;
@@ -129,18 +129,18 @@ static void SetLineType(GdkBitmap *stipple, int newlty, int newlwd)
 
   if(newlwd < 1)
     newlwd = 1;
-    
+
   for(i = 0; (i < 8) && (newlty != 0); i++) {
     j = newlty & 15;
-    
+
     if(j == 0)
       j = 1;
-    
+
     j = j * newlwd;
-    
+
     if(j > 255)
       j = 255;
-    
+
     dashlist[i] = j;
     newlty = newlty >> 4;
   }
@@ -151,7 +151,7 @@ static void SetLineType(GdkBitmap *stipple, int newlty, int newlwd)
 
 /* signal functions */
 
-static gint configure_event(GtkWidget *widget, GdkEventConfigure *event, gpointer data) {  
+static gint configure_event(GtkWidget *widget, GdkEventConfigure *event, gpointer data) {
   DevDesc *dd;
   gnomeDesc *gtkd;
 
@@ -243,7 +243,7 @@ static int GNOME_Open(DevDesc *dd, gnomeDesc *gtkd, char *dsp, double w, double 
 
   gtk_window_set_policy(GTK_WINDOW(gtkd->window), TRUE, TRUE, FALSE);
   gtk_widget_realize(gtkd->window);
-  
+
   /* create toolbar */
   gnome_app_create_toolbar_with_data(GNOME_APP(gtkd->window), graphics_toolbar, (gpointer) dd);
 
@@ -254,7 +254,7 @@ static int GNOME_Open(DevDesc *dd, gnomeDesc *gtkd, char *dsp, double w, double 
   gtkd->bg = dd->dp.bg = R_RGB(255, 255, 255);
   gtkd->gcol_bg = gdk_color_copy(&bg);
   SetColor(gtkd->gcol_bg, gtkd->bg);
-  
+
   wstyle = gtk_style_copy(gtk_widget_get_style(gtkd->canvas));
   wstyle->bg[GTK_STATE_NORMAL] = *(gtkd->gcol_bg);
   gtk_widget_set_style(gtkd->canvas, wstyle);
@@ -279,7 +279,7 @@ static int GNOME_Open(DevDesc *dd, gnomeDesc *gtkd, char *dsp, double w, double 
 		     (GtkSignalFunc) configure_event, (gpointer) dd);
   gtk_signal_connect(GTK_OBJECT(gtkd->window), "delete_event",
 		     (GtkSignalFunc) delete_event, (gpointer) dd);
-		     
+
   /* show everything */
   gtk_widget_show_all(gtkd->window);
 
@@ -298,6 +298,13 @@ static double GNOME_StrWidth(char *str, DevDesc *dd)
 
 static void GNOME_MetricInfo(int c, double *ascent, double *descent, double *width, DevDesc *dd)
 {
+#ifdef BUG61
+#else
+    /* metric information not available => return 0,0,0 */
+    *ascent = 0.0;
+    *descent = 0.0;
+    *width = 0.0;
+#endif
 }
 
 static void GNOME_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
@@ -626,8 +633,6 @@ static void GNOME_Polygon(int n, double *x, double *y, int coords,
   gnome_canvas_points_free(points);
 }
 
-extern double deg2rad; /* in devGTK.c */
-
 static void GNOME_Text(double x, double y, int coords,
 		       char *str, double xc, double yc, double rot, DevDesc *dd)
 {
@@ -686,7 +691,7 @@ int GnomeDeviceDriver(DevDesc *dd, char *display, double width, double height, d
   gtkd->fontsize = -1;
   dd->dp.font = 1;
   dd->dp.ps = ps;
-  
+
   /* device driver start */
   if(!GNOME_Open(dd, gtkd, display, width, height)) {
     free(gtkd);

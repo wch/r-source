@@ -1,0 +1,640 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Frequently Asked Questions for R for Windows</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<h1 align="center">
+Frequently Asked Questions for R for Windows</h1>
+
+
+<p>This FAQ is for the Windows port of R: it describes features
+specific to that version. The main R FAQ can be found at <a
+href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html</a>.
+
+<p>There are two versions of R for Windows, but only is under active
+development, that described here. It is often called something like
+<tt>rw0651</tt> (although not officially).  The information here
+applies only to recent versions (rw0642 or later).
+
+<p>There is also information on the use of R for Windows in the
+Venables & Ripley `R Complements' at <a
+href="http://www.stats.ox.ac.uk/pub/MASS2/Compl.shtml">http://www.stats.ox.ac.uk/pub/MASS2</a>.
+
+</p>
+<hr>
+<h6>
+<b><font size=+0><a href="#s1">1. Installation and Usage</a></font></b></h6>
+
+<dl>
+<dd>
+<a href="#q11"><b><font size=+0>Q1.1. </font></b>Where can I find the latest
+version?</a></dd>
+
+<dd>
+<a href="#q12"><b>Q1.2</b>. How do I install R for Windows?</a></dd>
+
+<dd>
+<a href="#q13"><b>Q1.3. </b>How do I run it?</a></dd>
+
+<dd>
+<a href="#q15"><b>Q1.4. </b>How can I manage my work keeping workspaces
+for different projects in different directories?</a></dd>
+
+<dd>
+<a href="#q16"><b>Q1.5. </b>How do I print from R?</a></dd>
+
+<dd>
+<a href="#q17"><b>Q1.6.</b> Can I use <tt>R BATCH</tt>?</a></dd>
+
+<dd>
+<a href="#q18"><b>Q1.7. </b>Can I use <tt>rw0xxx</tt> with ESS and
+<tt>emacs</tt>?</a></dd>
+
+<dd>
+<a href="#q19"><b>Q1.8. </b>What is my <tt>HOME</tt> directory?</a></dd>
+</dl>
+
+<h6>
+<b><font size=+0><a href="#s2">2. Packages</a></font></b></h6>
+
+<dl>
+<dd>
+<a href="#q21"><b><font size=+0>Q2.1. </font></b>Can I install packages
+(libraries) in this version?</a></dd>
+
+<dd>
+<a href="#q22"><b>Q2.2. </b>I don't have permission to write to the <tt>rw0xxx\library</tt>
+directory. Is this fatal?</a></dd>
+
+<dd>
+<a href="#q23"><b>Q2.3. </b>The packages I installed do not appear in the
+HTML help system</a>.</dd>
+
+<dd>
+<a href="#q24"><b>Q2.4. </b>The functions in the packages I installed are
+not found by the HTML help search system</a>.</dd>
+</dl>
+
+<h6>
+<b><font size=+0><a href="#s3">3. Windows features</a></font></b></h6>
+
+<dl>
+<dd>
+<a href="#q31"><b><font size=+0>Q3.1. </font></b>What should I expect to
+behave differently from the Unix/GNU-Linux version of R?</a></dd>
+
+<dd>
+<a href="#q32"><b><font size=+0>Q3.2. </font></b>I hear about some nifty
+features: please tell me about them!</a></dd>
+</dl>
+
+<h6>
+<b><font size=+0><a href="#s4">4. Workspaces</a></font></b></h6>
+
+<dl>
+<dd>
+<a href="#q41"><b><font size=+0>Q4.1. </font></b>My workspace gets saved
+in a strange place: how do I stop this?</a></dd>
+
+<dd>
+<a href="#q42"><b><font size=+0>Q4.2. </font></b>How do I store my workspace
+in a different place?</a></dd>
+
+<dd>
+<a href="#q44"><b><font size=+0>Q4.3. </font></b>Can I load workspaces
+saved under Unix/GNU-Linux?</a></dd>
+</dl>
+
+<h6>
+<b><font size=+0><a href="#s5">5. The R Console and Fonts</a></font></b></h6>
+
+<dl>
+<dd>
+<a href="#q51"><b><font size=+0>Q5.1. </font></b>I would like to be able
+to use Japanese fonts in the console and to annotate graphs.</a></dd>
+
+<dd>
+<a href="#q52"><b><font size=+0>Q5.2. </font></b>I don't see characters
+with accents at the R console, for example in <tt>?text</tt>.</a></dd>
+
+<dd>
+<a href="#q53"><b><font size=+0>Q5.3. </font></b>When using <tt>Rgui</tt>,
+the output to the console seems to be delayed.</a></dd>
+</dl>
+
+<h6>
+<b><font size=+0><a href="#s6">6. Building from Source</a></font></b></h6>
+
+<dl>
+<dd>
+<a href="#q61"><b><font size=+0>Q6.1. </font></b>How can I compile R from
+source?</a></dd>
+
+<dd>
+<a href="#q62"><b><font size=+0>Q6.2. </font></b>How do I debug code that
+I have compiled and <tt>dyn.load</tt>-ed?</a></dd>
+<dd>
+<a href="#q63"><b><font size=+0>Q6.3. </font></b>How do I include C++ code?</a></dd>
+<dd>
+<a href="#q64"><b><font size=+0>Q6.4. </font></b>The output from my C code disappears. Why?</a></dd>
+</dl>
+
+<hr>
+<h2>
+1)<a NAME="s1"></a> Installation and Usage</h2>
+
+<h3>
+1.1)&nbsp;<a NAME="q11"></a>Where can I find the latest version?</h3>
+
+Go to any CRAN site (see <a
+href="http://www.ci.tuwien.ac.at/R/mirrors.html">http://www.ci.tuwien.ac.at/R/mirrors.html</a>
+for a list), navigate to the <tt>bin/windows/windows-NT/base</tt>
+directory and collect the files you need. You will need at least the
+files
+<pre>
+      rw0xxxb.zip rw0xxxh.zip
+</pre>
+and will probably want <tt>rw0xxxw.zip</tt> (the Compiled HTML format
+help files) or <tt>rw0xxxch.zip</tt> (the HTML format help files) or
+<tt>rw0xxxwh.zip</tt> (the Windows help files).  Optionally, you can
+also download <tt>rw0xxxl.zip</tt> (the LaTeX format help files, used
+for offline printing), and the installer, <tt>rwinst.exe</tt>.
+<h3>
+1.2)&nbsp;<a NAME="q12"></a>How do I install R for Windows?</h3>
+
+First, you need Windows 95 or 98 or NT4: Windows 3.11+win32s will not
+work. Your file system must allow long file names (as is likely except
+perhaps for some network-mounted systems).
+
+<p>The simplest way is to run the installer (double-click on the icon
+for rwinst.exe and navigate its wizard-like pages).  Alternatively,
+choose a location and unzip the zip files (with a tool that preserves
+long file names and the directory structure: we recommend the INFO-ZIP
+project's <tt>unzip</tt>). All the files will unpack into a directory
+called <tt>rw0xxx</tt>, for some `xxx'.
+
+<p>Choose a working directory for R. Make a shortcut to
+<tt>rw0xxx\bin\Rgui.exe</tt> on your desktop or somewhere on the <tt>Start
+menu</tt> file tree. Right-click the shortcut, select
+<tt>Properties...</tt> and change the <tt>`Start in'</tt> field to
+your working directory.
+
+<p>You may also want to add command-line arguments at the end of the
+<tt>Target</tt> field. We use <tt>--vsize 10M --nsize 400k</tt>.  You
+can also set environment variables at the end of the <tt>Target</tt>
+field, for example <tt>R_LIBS=e:/R/library</tt>.
+
+
+<h3>
+1.3)&nbsp;<a NAME="q13"></a>How do I run it?</h3>
+
+Just double-click on the shortcut you prepared at installation.
+
+<p>If you want to set up another project, make a new shortcut or use the
+existing one, and change the <tt>`Start in'</tt> field of the Properties.
+
+<h3>
+1.4)&nbsp;<a NAME="q15"></a>How can I manage my work keeping workspaces
+for different projects in different directories?</h3>
+
+Create a separate shortcut for each project: see Q1.3. All the paths to
+files used by R are relative to the starting directory, so setting the
+<tt>`Start in'</tt> field automatically helps separate projects.
+
+<h3>
+1.5)&nbsp;<a NAME="q16"></a>How do I print from R?</h3>
+It depends what you want to print.
+<ul>
+<li>
+You can print the graphics window from its menu or by using 
+<code>dev.print()</code>.</li>
+
+<li>
+You can print from the R console or pager by <tt>File | Print</tt>.
+
+<li>
+You can print help files from the page or HTML browser.</li>
+
+<li>
+If you have configured <tt>RHOME\bin\helpPRINT.bat</tt> and have
+<tt>latex</tt> installed you can print help files by <tt>help(fn_name,
+offline=T)</tt>.</li>
+</ul>
+
+<h3>
+1.6)&nbsp;<a NAME="q17"></a>Can I use <tt>R BATCH</tt>?</h3>
+No, but you can set up a batch file using <tt>rterm.exe</tt>. A sample
+batch file might contain (as one line)
+<pre>
+path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %1.out
+</pre>
+
+<h3>
+1.7)&nbsp;<a NAME="q18"></a>Can I use <tt>rw0xxx</tt> with ESS and emacs?</h3>
+
+<p>
+Yes. The latest versions of ESS (e.g. 5.1.9) come with support for
+this version of R, and <tt>rw0650</tt> and later have support for
+interrupting the R process from ESS (by </tt>C-c C-c</tt>).
+
+<p>For help with ESS, please send email to 
+<code><a
+href="mailto:ESS-help@stat.ethz.ch">ESS-help@stat.ethz.ch</a></code>,
+not the R mailing lists.
+
+<h3>
+1.8)&nbsp;<a NAME="q19"></a>What is my <tt>HOME</tt> directory??</h3>
+
+<p>
+Several places in the documentation use these terms.
+<p>
+The working directory is the directory from which <tt>Rgui</tt> or
+<tt>Rterm</tt> was launched, unless a shortcut was used when it is
+given by the `Start in' field of the shortcut's properties. You can
+find this from R code by the call <tt>getwd()</tt>.
+
+<p>
+The home directory is set as follows (<tt>rw0650</tt> on).
+
+<p>
+If environment variable <tt>R_USER</tt> is set, its value is used.
+Otherwise if environment variable <tt>HOME</tt> is set, its value is
+used.  Otherwise if environment variables <tt>HOMEDRIVE</tt> and
+<tt>HOMEPATH</tt> are set, the value is
+<tt>${HOMEDRIVE}${HOMEPATH}</tt>.  If all of these fail, the current
+working directory is used.
+
+<p>
+You can find this from R code by <tt>getenv("R_USER")</tt>.
+</p>
+
+
+<h2>
+2)&nbsp;<a NAME="s2"></a>Packages</h2>
+
+<h3>
+2.1)&nbsp;<a NAME="q21"></a>Can I install packages (libraries) in this
+version?</h3>
+
+Yes, of course. The easy way is to see if a pre-compiled binary
+version of the package is available: look on CRAN at
+<tt>bin/windows/windows-NT/contrib</tt>.  If there is, download the
+zip file and unpack it in the <tt>rw0xxx\library</tt> directory, using
+<tt>unzip</tt> or similar.
+
+<p>If there is not a binary version or that is not up-to-date or you
+prefer compiling from source, get <tt>rw0xxxsp.zip</tt> from the
+distribution (see Q1.1) and unpack it in <tt>rw0xxx</tt>. Then cd
+<tt>src\gnuwin32</tt> and read <tt>README.packages</tt>. You will need
+to collect and install several tools to use this. Once you have done
+so, installation is easy: just run <tt>`make pkg-pkgname'</tt>.  To
+check the package (run all the examples on its help pages) use
+<tt>`make pkgcheck-pkgname'</tt>.
+
+<h3>
+2.2)&nbsp;<a NAME="q22"></a>I don't have permission to write to the
+<tt>rw0xxx\library</tt> directory. Is this fatal?</h3>
+
+<p>You can install packages anywhere and use the environment variable
+<tt>R_LIBS</tt> to point to the library location(s). You can also set
+the R variable <tt>`.lib.loc'</tt> in your <tt>.Rprofile</tt> or when
+running R.
+
+<p>Suppose your packages are in installed in
+<tt>p:\mylibs</tt>. Then you can EITHER <p>set <tt>RLIBS</tt> to
+<tt>p:\mylibs</tt> <p>OR put in the <tt>.Rprofile</tt> in the working
+directory or your home directory 
+<pre>&nbsp;&nbsp;&nbsp; .lib.loc &lt;- c("p:/mylibs", .Library)
+</pre>
+OR use a package by, e.g.
+<pre>
+&nbsp;&nbsp;&nbsp; library(MASS, lib.loc="p:/mylibs")
+</pre>
+How you set an environment variable is system specific: in Windows 9x you can
+set them in <tt>autoexec.bat</tt> or in an MS-DOS window from which
+you launch <tt>Rgui/Rterm</tt>.  Under Windows NT you can use the control
+panel.  You can also set them on the command line, for example in the
+shortcut you could have
+<pre>
+path_to_R\bin\rgui.exe --vsize 10M --nsize 400k R_LIBS=e:/R/library
+</pre>
+and you can set variables in a file <tt>.Renviron</tt> in the working
+directory or your home directory, for example
+<pre>
+      R_LIBS=e:/R/library
+      R_VSIZE=10M
+      R_NSIZE=400k
+</pre>
+The order of search is the command line then <tt>.Renviron</tt> then
+the inherited environment.
+
+
+<p>You can also build packages anywhere, but that is much trickier: it
+is simpler to install a private copy of R to do the building.
+
+<h3>
+2.3)&nbsp;<a NAME="q23"></a>The packages I installed do not appear in the
+HTML help system.</h3>
+
+HTML help only works for packages installed in <tt>rw0xxx\library</tt>.
+
+<p>To update the HTML help files after you have installed a binary
+package, run at the R prompt
+<pre>
+      > link.html.help()
+</pre>
+(The source-code installation does this automatically,
+and if you have that installed you can use (preferably)
+<pre>
+      cd rw0xxx\src\gnuwin32\help
+      make indices
+</pre>
+instead.)
+
+<h3>
+2.4)&nbsp;<a NAME="q24"></a>The functions in the packages I installed are
+not found by the HTML help search system.</h3>
+
+The following conditions need to hold:
+<ul>
+<li>
+the package is installed in <tt>rw0xxx\library</tt>.</li>
+
+<li>
+the package contains a <tt>CONTENTS</tt> file in top-level directory
+(many of the binary distributions do not).</li>
+
+<li>
+you updated the indices as described in the answer to Q2.2 after installing
+the package.</li>
+</ul>
+If those all hold true, this works for us.
+<h2>
+3)&nbsp;<a NAME="s3"></a>Windows Features</h2>
+
+<h3>
+3.1)&nbsp;<a NAME="q31"></a>What should I expect to behave differently
+from the Unix/GNU-Linux version of R?</h3>
+
+<ul>
+<li>
+R commands can be interrupted by <tt>Esc</tt> in <tt>rgui.exe</tt> and
+<tt>Ctrl-break</tt> in <tt>rterm.exe</tt>: <tt>Ctrl-C</tt> is used for
+copying in the GUI version.</li>
+
+<li>
+Command-line editing is always available, but is much simpler than the
+readline-based editing on Unix. For <tt>rgui.exe</tt>, the menu item
+<tt>`Help | Console'</tt> will give details.</li>
+
+<li>
+The commands history is saved between sessions only on
+<tt>rgui.exe</tt>, and it is always saved.</li>
+
+<li>
+Using <tt>help.start()</tt> does not automatically send help requests
+to the browser: use <tt>options(htmlhelp=T)</tt> to turn this on.</li>
+
+<li>
+The HTML help system can only access packages installed in the
+standard place.</li>
+
+<li>
+Paths to files (e.g. in source()) can be specified with either
+<tt>"/"</tt> or <tt>"\\"</tt>.</li>
+
+<li>
+<tt>system()</tt> is slightly different: see its help page and that of
+<tt>shell()</tt>.</li>
+</ul>
+
+<h3>
+3.2)&nbsp;<a NAME="q32"></a>I hear about some nifty features: please tell
+me about them!</h3>
+
+You have read the <tt>README</tt>? There are file menus on both the R
+console and on graphics windows. You can source and save from those
+menus, and copy the graphics to gif, postscript or metafile.There are
+right-click menus giving shortcuts to menu items, and optionally
+toolbars with buttons giving shortcuts to frequent operations.
+
+The graphics has a history mechanism. As the <tt>README</tt> says:
+
+<p>`The History menu allows the recording of plots. When plots have
+been recorded they can be reviewed by PgUp and PgDn, saved and
+replaced. Recording can be turned on automatically (the Recording item
+on the list) or individual plots can be added (Add or the INS
+key). The whole plot history can be saved to or retrieved from an R
+variable in the global environment.  
+
+<p>There is only one graphics history shared by all the x11 devices.'
+
+<p>The R console and graphics windows have configuration files stored
+in the <tt>RHOME\etc</tt> directory called <tt>Rconsole</tt> and
+<tt>Rdevga</tt>; you can keep personal copies in your <tt>HOME</tt>
+directory. They contain comments which should suffice for you to edit
+them to your preferences. For more details see <tt>?Rconsole</tt>.
+
+<h2>
+4)&nbsp;<a NAME="s4"></a>Workspaces</h2>
+
+<h3>
+4.1)&nbsp;<a NAME="q41"></a>My workspace gets saved in a strange place:
+how do I stop this?</h3>
+
+Have you changed the working directory?: see Q4.2.
+
+<h3>
+4.2)&nbsp;<a NAME="q42"></a>How do I store my workspace in a different
+place?</h3>
+
+Use the <tt>`File | Change Dir'</tt> menu item to select a new working
+directory: this defaults to the last directory you loaded a file from.
+The workspace is saved in the working directory.  You can also save a
+snapshot of the workspace from the <tt>Save Image</tt> menu item.
+
+<h3>
+4.3)&nbsp;<a NAME="q44"></a>Can I load workspaces saved under Unix/GNU-Linux?</h3>
+
+Yes. The converse (saving on Windows, loading on Unix) also works.
+
+<h2>
+5)&nbsp;<a NAME="s5"></a>The R Console and Fonts</h2>
+
+<h3>
+5.1)&nbsp;<a NAME="q51"></a>I would like to be able to use Japanese fonts
+in the console and to annotate graphs.</h3>
+
+We believe this is possible by setting suitable fonts in the
+<tt>Rconsole</tt> and <tt>Rdevga</tt> configuration files (see
+Q3.2). You can specify additional fonts in <tt>Rdevga</tt>, and use them by
+<pre>
+     par(font=, font.lab=, font.main=, font.sub=)
+</pre> 
+Nineteen fonts are specified (as 1 to 19) by default: you can add to 
+these (up to 13 more) or replace them.
+
+<h3>
+5.2)&nbsp;<a NAME="q52"></a>I don't see characters with accents at the
+R console, for example in <tt>?text</tt>.</h3>
+
+You need to specify a font in <tt>Rconsole</tt> (see Q3.2) that
+supports <tt>latin1</tt> encoding. The default, <tt>Courier New</tt>,
+does on our systems, as does <tt>FixedSys</tt>.  This may be a problem
+in other locales, especially for non-Western European languages.
+
+<h3>
+5.3)&nbsp;<a NAME="q53"></a>When using <tt>Rgui</tt>, the output to the
+console seems to be delayed.</h3>
+
+This is deliberate: the console output is buffered and re-written in
+chunks to be less distracting. You can turn buffering off or on from
+the Misc menu or the right-click menu: <tt>Ctrl-W</tt> toggles the
+setting.
+
+<p>If you are sourcing R code or writing from a function, there is
+another option. A call to the R function <tt>flush.console()</tt> will
+write out the buffer and so update the console.
+
+<h2>
+6)&nbsp;<a NAME="s6"></a>Building from Source</h2>
+
+<h3>
+6.1)&nbsp;<a NAME="q61"></a>How can I compile R from source?</h3>
+Get the R sources. Suppose you want to compile
+<tt>R-0.65.1</tt>.
+<pre>
+      tar zxvf R-0.65.1.tgz
+      cd R-0.65.1
+      cd src\gnuwin32
+</pre>
+Now read the <tt>README</tt> and set up all the tools needed. Then you
+can just use <tt>`make'</tt>, sit back and wait. (A complete build
+takes about 15 minutes on a 300MHz PII with a fast local disc.)
+
+<p>You do need to compile under a case-honouring file system: we found
+that a samba-mounted file system (which maps all file names to lower
+case) did not work.
+<h3>
+6.2)&nbsp;<a NAME="q62"></a>How do I debug code that I have compiled and
+<tt>dyn.load</tt>-ed?</h3>
+
+<p>
+First, build a version of the R system with debugging information by
+<pre>
+      make clean
+      make DEBUG=T
+</pre>
+
+and make a debug version of your package by
+<pre>
+      make DEBUG=T pkg-mypkg
+</pre>
+
+Then you can debug by
+<pre>
+      gdb /path/to/rw0xxx/bin/Rgui.exe
+</pre>
+
+However, note
+<ul>
+<li> <tt>gdb</tt> will only be able to find the source code if we run
+     in the location where the source was compiled 
+     (<tt>rw0xxx/src/gnuwin32</tt> for the main system, 
+     <tt>rw0xxx/src/library/mypkg/src</tt> for a package), 
+     unless told otherwise by the <tt>`directory'</tt> command. It is
+     most convenient to set a list of code locations via 
+     <tt>`directory'</tt> commands in the file <tt>.gdbinit</tt> in the
+     directory from which <tt>gdb</tt> is run.
+
+<li> It is only possible to set breakpoints in a DLL after the DLL has
+     been loaded. So a way to examine the function <tt>tukeyline</tt>
+     in package <tt>eda</tt> might be
+<pre>
+           gdb ../../../../bin/Rgui.exe
+           (gdb) break WinMain
+           (gdb) run
+           [ stops with R.dll loaded ]
+           (gdb) break R_ReadConsole
+           (gdb) continue
+           [ stops with console running ]
+           (gdb) continue
+           Rconsole> library(eda)
+           (gdb) break tukeyline
+           (gdb) clear R_ReadConsole
+           (gdb) continue
+</pre>
+Fortran symbols need an underline appended.
+
+<li> Windows has little support for signals, so the usual idea of running a
+     program under a debugger and sending it a signal to interrupt it and
+     drop control back to the debugger does not work with <tt>mingw32</tt>
+     version of <tt>gdb</tt>.  It does often work with the 
+     <tt>cygwin</tt> version.
+
+<li> We have seen examples in debugging problems with Windows events
+     that the <tt>cygwin</tt> <tt>gdb</tt> was able to catch but which
+     terminated the <tt>mingw32</tt> <tt>gdb</tt>.
+</ul>
+
+If you have an X server available on the PC, there is a version of
+<tt>DDD</tt> available that runs under the cygwin emulation layer
+(follow the links at <a
+href="http://sourceware.cygnus.com/cygwin">sourceware.cygnus.com/cygwin</a>)
+and provides a graphical user interface to <tt>gdb</tt>.
+</p>
+
+<h3>
+6.3)&nbsp;<a NAME="q63"></a>How do I include C++ code?</h3>
+
+<p>
+You need to do two things:
+</p>
+<p>
+(a) Write a wrapper to export the symbols you want to call from R as
+<tt>extern "C"</tt>.
+</p>
+<p>
+(b) Include the C++ libraries in the link to make the DLL. Suppose
+<tt>X.cc</tt> contains your C++ code, and <tt>X_R.cc</tt> is the
+wrapper. Then build the DLL by (<tt>gcc-2.95</tt>)
+<pre>
+    g++ -c X.cc X_R.cc
+    dlltool --export-all-symbols --output-def X.def X_R.o
+    dllwrap -o X.dll --def X.def X.o X_R.o -lstdc++
+</pre>
+<p>
+or (VC++)
+</p>
+<pre>
+   cl /MT /c X.cpp X_R.cpp
+   link /dll /out:XX.dll /export:X_main X.obj X_R.obj
+</pre>
+<p>
+and call the entry point(s) in <tt>X_R</tt>.  Construction of static variables
+will occur when the DLL is loaded, and destruction when the DLL is
+unloaded, usually when R terminates.
+</p>
+
+
+<h3>
+6.4)&nbsp;<a NAME="q64"></a>The output from my C code disappears. Why?</h3>
+
+<p>
+The <tt>Rgui.exe</tt> console is a Windows application: writing to
+<tt>stdout</tt> or <tt>stderr</tt> will not produce output in the
+console. (This <em>will</em> work with <tt>Rterm.exe</tt>.)  Use
+<tt>Rprintf</tt> instead.
+</p>
+
+<hr WIDTH="100%">
+<address>
+Last edited 24 September 1999 by Brian Ripley
+<code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
+</address>
+
+</body>
+</html>

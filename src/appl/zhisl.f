@@ -1,11 +1,11 @@
 c
-c     zhisl solves the complex*16 hermitian system
+c     zhisl solves the double complex hermitian system
 c     a * x = b
 c     using the factors computed by zhifa.
 c
 c     on entry
 c
-c        a       complex*16(lda,n)
+c        a       double complex(lda,n)
 c                the output from zhifa.
 c
 c        lda     integer
@@ -17,7 +17,7 @@ c
 c        kpvt    integer(n)
 c                the pivot vector from zhifa.
 c
-c        b       complex*16(n)
+c        b       double complex(n)
 c                the right hand side vector.
 c
 c     on return
@@ -47,11 +47,11 @@ c     fortran dconjg,iabs
 c
       subroutine zhisl(a,lda,n,kpvt,b)
       integer lda,n,kpvt(*)
-      complex*16 a(lda,*),b(*)
+      double complex a(lda,*),b(*)
 c
 c     internal variables.
 c
-      complex*16 ak,akm1,bk,bkm1,zdotc,denom,temp
+      double complex ak,akm1,bk,bkm1,zdotc,denom,temp
       integer k,kp
 c
 c     loop backward applying the transformations and

@@ -7,11 +7,13 @@
 # to be interpreted as an ASCII character string with trailing white
 # space suppressed, and SEP is the record separator to be inserted in
 # the output (default is a space).
-require "getopts.pl";
-&Getopts("f:s:o:");
+
+use Getopt::Std;
+
+getopts("f:s:o:");
 die "A format string must be specified.\n" unless $opt_f;
 $sep = $opt_s ? $opt_s : " ";
-open outfile, ">$opt_o" || die "no output file";
+open outfile, ">$opt_o" || die "no output file\n";
 while (<>) {
     undef @rec;
     foreach (unpack($opt_f, $_)) {

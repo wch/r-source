@@ -49,7 +49,7 @@ static int ParseBrowser(SEXP, SEXP);
 
 
 
-	/* Read-Eval-Print loop with input from a file */
+	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
 static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 {
@@ -120,6 +120,8 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     prompt_type = 1;
     buf[0] = '\0';
     bufp = buf;
+    if(R_Verbose)
+	REprintf(" >R_ReplConsole(): before \"for(;;)\" {main.c}\n");
     for(;;) {
 	if(!*bufp) {
 	    R_Busy(0);
@@ -256,7 +258,7 @@ int R_ReplDLLdo1()
 	prompt_type = 1;
 	break;
     case PARSE_ERROR:
-	error("syntax error");
+	error("syntax error\n");
 	R_IoBufferWriteReset(&R_ConsoleIob);
 	prompt_type = 1;
 	break;
@@ -424,7 +426,6 @@ void setup_Rmainloop(void)
 	UNPROTECT(1);
     }
     /* gc_inhibit_torture = 0; */
-
 }
 
 
@@ -569,11 +570,11 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     int ask=SA_DEFAULT;
 
     if(R_BrowseLevel) {
-	warning("can't quit from browser");
+	warning("can't quit from browser\n");
 	return R_NilValue;
     }
     if( !isString(CAR(args)) )
-	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.");
+	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.\n");
     tmp = CHAR(STRING(CAR(args))[0]);
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
@@ -586,7 +587,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if( !strcmp(tmp, "default") )
 	ask = SA_DEFAULT;
     else
-	errorcall(call, "unrecognized value of save");
+	errorcall(call, "unrecognized value of save\n");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
     R_CleanUp(ask);

@@ -12,5 +12,5 @@ lowess <- function(x, y=NULL, f=2/3, iter=3, delta=.01*diff(range(xy$x[o]))) {
        as.double(delta),
        y=double(n),
        double(n),
-       double(n))[c("x","y")]
+       double(n), PACKAGE="base")[c("x","y")]
 }

@@ -89,14 +89,14 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     xmin = asReal(CAR(args));
     if (!R_FINITE(xmin))
-	errorcall(call, "invalid xmin value");
+	errorcall(call, "invalid xmin value\n");
     args = CDR(args);
 
     /* xmax */
 
     xmax = asReal(CAR(args));
     if (!R_FINITE(xmax))
-	errorcall(call, "invalid xmax value");
+	errorcall(call, "invalid xmax value\n");
     if (xmin >= xmax)
 	errorcall(call, "xmin not less than xmax");
     args = CDR(args);
@@ -105,7 +105,7 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     tol = asReal(CAR(args));
     if (!R_FINITE(tol) || tol <= 0.0)
-	errorcall(call, "invalid tol value");
+	errorcall(call, "invalid tol value\n");
 
     R_env1 = rho;
     PROTECT(R_fcall1 = lang2(v, R_NilValue));
@@ -177,14 +177,14 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     xmin = asReal(CAR(args));
     if (!R_FINITE(xmin))
-	errorcall(call, "invalid xmin value");
+	errorcall(call, "invalid xmin value\n");
     args = CDR(args);
 
     /* xmax */
 
     xmax = asReal(CAR(args));
     if (!R_FINITE(xmax))
-	errorcall(call, "invalid xmax value");
+	errorcall(call, "invalid xmax value\n");
     if (xmin >= xmax)
 	errorcall(call, "xmin not less than xmax");
     args = CDR(args);
@@ -193,7 +193,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     tol = asReal(CAR(args));
     if (!R_FINITE(tol) || tol <= 0.0)
-	errorcall(call, "invalid tol value");
+	errorcall(call, "invalid tol value\n");
     args = CDR(args);
 
     /* maxiter */
@@ -317,7 +317,7 @@ static double *fixparam(SEXP p, int *n, SEXP call)
     case REALSXP:
 	for (i = 0; i < *n; i++) {
 	    if (!R_FINITE(REAL(p)[i]))
-		errorcall(call, "missing value in parameter");
+		errorcall(call, "missing value in parameter\n");
 	    x[i] = REAL(p)[i];
 	}
 	break;

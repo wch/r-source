@@ -2,6 +2,7 @@
 # and R (Examples) format
 
 # Copyright (C) 1997 Friedrich Leisch
+# Modifications for Windows (C) 1998, 1999 B. D. Ripley
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,8 +16,8 @@
 #
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
-# writing to the Free Software Foundation, Inc., 675 Mass Ave,
-# Cambridge, MA 02139, USA.
+# writing to the Free Software Foundation, Inc., 59 Temple Place,
+# Suite 330, Boston, MA  02111-1307  USA.
 
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
@@ -74,7 +75,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
 	## filename = 0	  <==>	STDOUT
 	## filename = -1  <==>	do NOT open and close files!
-	$htmlfile= $nrofffile= $Sdfile= $latexfile= $Exfile = $_[3];
+	$htmlfile= $nrofffile= $Sdfile= $latexfile= $Exfile = $chmfile = $_[3];
     } else { # have "," in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
@@ -128,7 +129,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 	get_blocks($complete_text);
 
 	if($type =~ /html/i || $type =~ /nroff/i ||
-	   $type =~ /Sd/    || $type =~ /tex/i) {
+	   $type =~ /Sd/    || $type =~ /tex/i || $type =~ /chm/i ) {
 
 	    get_sections($complete_text);
 
@@ -143,6 +144,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/i;
 	rdoc2latex($latexfile)	if $type =~ /tex/i;
 	rdoc2ex($Exfile)	if $type =~ /example/i;
+	rdoc2chm($chmfile)	if $type =~ /chm/i;
 
     } else {
 	warn "\n*** Rdconv(): no type specified\n";
@@ -445,6 +447,7 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
     if($_[0]!= -1) {
       if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
     }
+    $using_chm = 0;
     print htmlout html_functionhead($blocks{"title"});
 
     html_print_codeblock("usage", "Usage");
@@ -505,7 +508,7 @@ sub text2html {
 
     $text = replace_command($text, "emph", "<EM>", "</EM>");
     $text = replace_command($text, "bold", "<B>", "</B>");
-    $text = replace_command($text, "file", "`", "'");
+    $text = replace_command($text, "file", "`<tt>", "</tt>'");
 
     $text = html_tables($text);
     $text =~ s/\\cr/<BR>/sgo;
@@ -516,10 +519,24 @@ sub text2html {
 	my ($id, $arg)	= get_arguments("link", $text, 1);
 	$htmlfile = $htmlindex{$arg};
 	if($htmlfile){
-	    $text =~
-		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+	    if($using_chm) {
+		if ($htmlfile =~ s+^$pkg/html/++) {
+		    # in the same file
+		} else {
+		    $tmp = $htmlfile;
+		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
+		    $base =~ s+/html$++;
+		    $htmlfile = "ms-its:../../$base/winhlp/$base.chm::/$topic";
+#		    print "$htmlfile\n";
+		}
+		$text =~
+		    s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+	    } else {
+		$text =~
+		    s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+	    }
 	}
-	else{
+	else {
 	    $misslink = $misslink . " " . $arg;
 	    $text =~ s/\\link$id.*$id/$arg/s;
 	}
@@ -593,8 +610,22 @@ sub code2html {
 	$htmlfile = $htmlindex{$argkey};
 	
 	if($htmlfile){
-	    $text =~
-		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+	    if($using_chm) {
+		if ($htmlfile =~ s+^$pkg/html/++) {
+		    # in the same file
+		} else {
+		    $tmp = $htmlfile;
+		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
+		    $base =~ s+/html$++;
+		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
+#		    print "$htmlfile\n";
+		}
+		$text =~
+		    s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+	    } else {
+		$text =~
+		    s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+	    }
 	}
 	else{
 	    $misslink = $misslink . " " . $argkey;
@@ -616,7 +647,7 @@ sub html_print_block {
 
     if(defined $blocks{$block}){
 	print htmlout html_title3($title);
-	print htmlout text2html($blocks{$block});
+	print htmlout "<p>\n", text2html($blocks{$block}), "</p>\n";
     }
 }
 
@@ -659,15 +690,15 @@ sub html_print_argblock {
 		    get_arguments("item", $text, 2);
 		print htmlout "<TR VALIGN=TOP><TD><CODE>";
 		print htmlout text2html($arg);
-		print htmlout "</CODE>\n<TD>\n";
-		print htmlout text2html($desc), "\n";
+		print htmlout "</CODE></TD>\n<TD>\n";
+		print htmlout text2html($desc), "</TD></TR>\n";
 		$text =~ s/.*$id//s;
 	    }
 	    print htmlout "</TABLE>\n";
-	    print htmlout text2html($text);
+	    print htmlout "<P>\n", text2html($text), "</P>\n";
 	}
 	else{
-	    print htmlout text2html($text);
+	    print htmlout "<P>\n", text2html($text), "</P>\n";
 	}
     }
 }
@@ -679,7 +710,7 @@ sub html_print_sections {
 
     for($section=0; $section<$max_section; $section++){
 	print htmlout html_title3($section_title[$section]);
-	print htmlout text2html($section_body[$section]);
+	print htmlout "<P>\n", text2html($section_body[$section]), "</P>\n";
     }
 }
 
@@ -1569,6 +1600,37 @@ sub latex_code_alias {
     $c;
 }
 
+#==************************ Compiled HTML ********************************
+
+
+sub rdoc2chm { # (filename) ; 0 for STDOUT
+
+    if($_[0]!= -1) {
+      if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
+    }
+    $using_chm = 1;
+    print htmlout chm_functionhead($blocks{"title"});
+
+    html_print_codeblock("usage", "Usage");
+    html_print_argblock("arguments", "Arguments");
+    html_print_block("format", "Format");
+    html_print_block("description", "Description");
+    html_print_block("details", "Details");
+    html_print_argblock("value", "Value");
+
+    html_print_sections();
+
+    html_print_block("note", "Note");
+    html_print_block("author", "Author(s)");
+    html_print_block("source", "Source");
+    html_print_block("references", "References");
+    html_print_block("seealso", "See Also");
+    html_print_codeblock("examples", "Examples");
+
+    print htmlout html_functionfoot();
+    close htmlout;
+    $using_chm = 0;
+}
 
 # Local variables: **
 # perl-indent-level: 4 **

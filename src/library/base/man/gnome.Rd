@@ -26,7 +26,7 @@ GNOME(display="", width=7, height=7, pointsize=12)
 %%>>>    Please, Lyndon, fill this in ...
     This is still in development state.
 }
-\references{\url{www.gnome.org} and \url{www.gtk.org} for the
+\references{\url{http://www.gnome.org} and \url{http://www.gtk.org} for the
     \code{GTK+} (GIMP Tool Kit) libraries.
 }
 \author{Lyndon Drake \email{lyndon@stat.auckland.ac.nz}}

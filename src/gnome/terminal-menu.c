@@ -300,7 +300,8 @@ static GnomeUIInfo commands_menu[] =
   GNOMEUIINFO_SUBTREE("_Data", data_menu),
   GNOMEUIINFO_SUBTREE("_Graphics", graphics_menu),
   GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_ITEM_NONE("grep...", "Search for matches to a regular expression within a vector of character strings", commands_grep_cb),
+  GNOMEUIINFO_ITEM_NONE("grep...", "Search for matches to a regular expression within a vector of character strings", generic_cb),
+  GNOMEUIINFO_ITEM_NONE("setwd...", "Set the working directory", generic_cb),
   GNOMEUIINFO_ITEM_NONE("source...", "Load a file containing R source", commands_source_cb),
   GNOMEUIINFO_END
 };

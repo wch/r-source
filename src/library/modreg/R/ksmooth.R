@@ -25,8 +25,9 @@ ksmooth <-
           yp=double(n.points),
           as.integer(n.points),
           as.integer(krn),
-          as.double(bandwidth)
+          as.double(bandwidth),
+          PACKAGE="modreg"
           )
   list(x=z$xp, y=z$yp)
-} 
+}
 

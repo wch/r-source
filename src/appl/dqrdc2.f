@@ -11,6 +11,8 @@ c     if you are a computational linear algebra guru and you really
 c     understand how to solve this problem please feel free to
 c     suggest improvements to this code.
 c
+c     Another change was to compute the rank.
+c
 c     on entry
 c
 c        x       double precision(ldx,p), where ldx .ge. n.
@@ -61,10 +63,13 @@ c                the orthogonal part of the decomposition.
 c
 c        jpvt    jpvt(k) contains the index of the column of the
 c                original matrix that has been interchanged into
-c                the k-th column, if pivoting was requested.
+c                the k-th column.
 c
 c     this version dated 22 august 1995
 c     ross ihaka
+c
+c     bug fixes 29 September 1999 BDR (p > n case, inaccurate ranks)
+c
 c
 c     dqrdc uses the following functions and subprograms.
 c
@@ -95,10 +100,12 @@ c
 c     perform the householder reduction of x.
 c
       lup = min0(n,p)
-      k = lup + 1
+      k = p + 1
       do 200 l = 1, lup
 c
-c     cycle the columns from l to lup left-to-right until one
+c     previous version only cycled l to lup
+c
+c     cycle the columns from l to p left-to-right until one
 c     with non-negligible norm is located.  a column is considered
 c     to have become negligible if its norm has fallen below
 c     tol times its original norm.  the check for l .le. k
@@ -109,25 +116,25 @@ c
             lp1 = l+1
             do 100 i=1,n
                t = x(i,l)
-               do 90 j=lp1,lup
+               do 90 j=lp1,p
                   x(i,j-1) = x(i,j)
    90          continue
-               x(i,lup) = t
+               x(i,p) = t
   100       continue
             i = jpvt(l)
             t = qraux(l)
             tt = work(l,1)
             ttt = work(l,2)
-            do 110 j=lp1,lup
+            do 110 j=lp1,p
                jpvt(j-1) = jpvt(j)
                qraux(j-1) = qraux(j)
                work(j-1,1) = work(j,1)
                work(j-1,2) = work(j,2)
   110       continue
-            jpvt(lup) = i
-            qraux(lup) = t
-            work(lup,1) = tt
-            work(lup,2) = ttt
+            jpvt(p) = i
+            qraux(p) = t
+            work(p,1) = tt
+            work(p,2) = ttt
             k = k - 1
             go to 80
   120    continue
@@ -153,8 +160,15 @@ c
                      tt = 1.0d0 - (dabs(x(l,j))/qraux(j))**2
                      tt = dmax1(tt,0.0d0)
                      t = tt
-                     tt = 1.0d0 + 0.05d0*tt*(qraux(j)/work(j,1))**2
-                     if (tt .eq. 1.0d0) go to 130
+c
+c modified 9/99 by BDR. Re-compute norms if there is large reduction
+c The tolerance here is on the squared norm
+c In this version we need accurate norms, so re-compute often.
+c  work(j,1) is only updated in one case: looks like a bug -- no longer used
+c
+c                     tt = 1.0d0 + 0.05d0*tt*(qraux(j)/work(j,1))**2
+c                     if (tt .eq. 1.0d0) go to 130
+                     if (dabs(t) .lt. 1e-6) go to 130
                         qraux(j) = qraux(j)*dsqrt(t)
                      go to 140
   130                continue
@@ -172,6 +186,6 @@ c
   180       continue
   190    continue
   200 continue
-      k = k - 1
+      k = min0(k - 1, n)
       return
       end

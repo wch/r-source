@@ -1,11 +1,11 @@
 Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
 {
-    if (is.matrix(x))
+    if (NCOL(x) > 1)
         stop ("x is not a vector or univariate time series")
+    DNAME <- deparse(substitute(x))
     type <- match.arg(type)
     cor <- acf (x, lag.max = lag, plot = FALSE)
     n <- length(x)
-    DNAME <- deparse(substitute(x))
     PARAMETER <- lag
     obs <- cor$acf[2:(lag+1)]
     if (type=="Box-Pierce")
@@ -32,7 +32,7 @@ Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
 
 PP.test <- function (x, lshort = TRUE)
 {
-    if (is.matrix(x))
+    if (NCOL(x) > 1)
         stop ("x is not a vector or univariate time series")
     DNAME <- deparse(substitute(x))
     z <- embed (x, 2)
@@ -52,7 +52,7 @@ PP.test <- function (x, lshort = TRUE)
     else
         l <- trunc(12*(n/100)^0.25)
     ssqrtl <- .C ("R_pp_sum", as.vector(u,mode="double"), as.integer(n),
-                  as.integer(l), trm=as.double(ssqru))
+                  as.integer(l), trm=as.double(ssqru), PACKAGE="ts")
     ssqrtl <- ssqrtl$trm
     n2 <- n^2
     trm1 <- n2*(n2-1)*sum(yt1^2)/12

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1999, The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -193,6 +194,18 @@ typedef struct SEXPREC {
 #define DEBUG(x)	((x)->sxpinfo.debug)
 #define TRACE(x)	((x)->sxpinfo.trace)
 
+/* Symbol Access Macros */
+#define PRINTNAME(x)	((x)->u.symsxp.pname)
+#define SYMVALUE(x)	((x)->u.symsxp.value)
+#define INTERNAL(x)	((x)->u.symsxp.internal)
+#define DDVAL(x)	((x)->sxpinfo.gp) /* for ..1, ..2 etc */
+
+/* Environment Access Macros */
+#define FRAME(x)	((x)->u.envsxp.frame)
+#define ENCLOS(x)	((x)->u.envsxp.enclos)
+#define HASHTAB(x)	((x)->u.envsxp.hashtab)
+#define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
+
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	protect(s)
 #define UNPROTECT(n)	unprotect(n)
@@ -339,10 +352,11 @@ int isSymbol(SEXP);
 int isTs(SEXP);
 int isUnordered(SEXP);
 int isUserBinop(SEXP);
+int isValidString(SEXP);
 int isVector(SEXP);
 int isVectorizable(SEXP);
+int isVectorAtomic(SEXP);
 int isVectorList(SEXP);
-int isVectorObject(SEXP);
 SEXP ItemName(SEXP, int);
 SEXP lang1(SEXP);
 SEXP lang2(SEXP, SEXP);

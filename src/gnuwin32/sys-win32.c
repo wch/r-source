@@ -73,7 +73,7 @@ char *R_ExpandFileName(char *s)
 	    strcpy(UserHOME, p);
 	    HaveHOME = 1;
 	} else {
-	    p = getenv("HOMEDIR");
+	    p = getenv("HOMEDRIVE");
 	    if(p) {
 		strcpy(UserHOME, p);
 		p = getenv("HOMEPATH");
@@ -95,16 +95,16 @@ char *R_ExpandFileName(char *s)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
+#include <windows.h>
 SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j;
     char *s;
-    char **e;
+    char *e;
     SEXP ans;
 
-    char *_env[1];
+    char *envir;
 
-    _env[0] = NULL;
     checkArity(op, args);
 
     if (!isString(CAR(args)))
@@ -112,10 +112,13 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
     i = LENGTH(CAR(args));
     if (i == 0) {
-	for (i = 0, e = _env; *e != NULL; i++, e++);
+	envir = (char *) GetEnvironmentStrings();
+	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1);
 	PROTECT(ans = allocVector(STRSXP, i));
-	for (i = 0, e = _env; *e != NULL; i++, e++)
-	    STRING(ans)[i] = mkChar(*e);
+	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1) {
+	    STRING(ans)[i] = mkChar(e);
+	}
+	FreeEnvironmentStrings(envir);
     } else {
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (j = 0; j < i; j++) {
@@ -146,26 +149,53 @@ SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef HAVE_TIMES
 
-#include <windows.h> /* for DWORD, GetTickCount */
 static DWORD StartTime;
+
+static FILETIME Create, Exit, Kernel, User;
 
 void setStartTime(void)
 {
     StartTime = GetTickCount();
 }
 
+/*
+typedef struct _FILETIME {
+    DWORD dwLowDateTime; 
+    DWORD dwHighDateTime; 
+} FILETIME; 
+*/
+ 
 SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans;
     long  elapsed;
-
+    double kernel, user;
+    OSVERSIONINFO verinfo;
     elapsed = (GetTickCount() - StartTime) / 10;
-    ans = allocVector(REALSXP, 5);
-    REAL(ans)[0] = R_NaReal;
-    REAL(ans)[1] = R_NaReal;
+
+    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&verinfo);
+    switch(verinfo.dwPlatformId) {
+    case VER_PLATFORM_WIN32_NT:
+	GetProcessTimes(GetCurrentProcess(), &Create, &Exit, &Kernel, &User);
+	user = 1e-5 * ((double) User.dwLowDateTime + 
+		       (double) User.dwHighDateTime * 4294967296.0);
+	user = floor(user)/100.0;
+	kernel = 1e-5 * ((double) Kernel.dwLowDateTime + 
+			 (double) Kernel.dwHighDateTime * 4294967296.0);
+	kernel = floor(kernel)/100.0;
+	break;
+    default:
+	user = R_NaReal;
+	kernel = R_NaReal;
+    }
+    PROTECT(ans = allocVector(REALSXP, 5));
+    REAL(ans)[0] = user;
+    REAL(ans)[1] = kernel;
     REAL(ans)[2] = (double) elapsed / 100.0;
     REAL(ans)[3] = R_NaReal;
     REAL(ans)[4] = R_NaReal;
+    UNPROTECT(1);
     return ans;
 }
 #endif /* HAVE_TIMES */

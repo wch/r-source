@@ -2,7 +2,7 @@
 % copyright (C) 1998 B. D. Ripley
 %
 \name{supsmu}
-\title{Friedmans's SuperSmoother}
+\title{Friedman's SuperSmoother}
 \usage{
 supsmu(x, y, wt=rep(1, length(y)), span="cv", periodic=FALSE, bass=0)
 }

@@ -170,7 +170,7 @@ int R_SetOptionWarn(int w)
 void InitOptions(void)
 {
     SEXP t, val, v;
-    PROTECT(v = val = allocList(11));
+    PROTECT(v = val = allocList(12));
 
     TAG(v) = install("prompt");
     CAR(v) = mkString("> ");
@@ -225,6 +225,12 @@ void InitOptions(void)
     CAR(v) = allocVector(LGLSXP, 1);
     LOGICAL(CAR(v))[0] = 0;	/* no storage of function source */
                                 /* turned on after load of base  */
+    v = CDR(v);
+
+    TAG(v) = install("error.halt");
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = R_Error_Halt;
+    /* stop on error()/stop() if not interactive() */
 
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
@@ -332,37 +338,37 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (streql(CHAR(namei), "width")) {
 		k = asInteger(argi);
 		if (k < MIN_WIDTH || k > MAX_WIDTH)
-		    errorcall(call, "invalid width parameter");
+		    errorcall(call, "invalid width parameter\n");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "digits")) {
 		k = asInteger(argi);
 		if (k < MIN_DIGITS || k > MAX_DIGITS)
-		    errorcall(call, "invalid digits parameter");
+		    errorcall(call, "invalid digits parameter\n");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "expressions")) {
 		k = asInteger(argi);
 		if (k < 25 || k > MAX_EXPRESSIONS)
-		    errorcall(call, "expressions parameter invalid");
+		    errorcall(call, "expressions parameter invalid\n");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "editor")) {
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
-		    errorcall(call, "invalid editor parameter");
+		    errorcall(call, "invalid editor parameter\n");
 		VECTOR(value)[i] = SetOption(tag, ScalarString(s));
 	    }
 	    else if (streql(CHAR(namei), "continue")) {
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
-		    errorcall(call, "invalid continue parameter");
+		    errorcall(call, "invalid continue parameter\n");
 		VECTOR(value)[i] = SetOption(tag, ScalarString(s));
 	    }
 	    else if (streql(CHAR(namei), "prompt")) {
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
-		    errorcall(call, "prompt parameter invalid");
+		    errorcall(call, "prompt parameter invalid\n");
 		VECTOR(value)[i] = SetOption(tag, ScalarString(s));
 	    }
 	    else if (streql(CHAR(namei), "contrasts")) {
@@ -372,18 +378,24 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "warn")) {
 		if (!isNumeric(argi) || length(argi) != 1)
-		    errorcall(call, "warn parameter invalid");
+		    errorcall(call, "warn parameter invalid\n");
                 VECTOR(value)[i] = SetOption(tag, argi);
 	    }
 	    else if (streql(CHAR(namei), "echo")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    errorcall(call, "echo parameter invalid");
 		k = asInteger(argi);
-		/* Should be quicker than checking options(echo) every
-		   time R prompts for input.
+		/* Should be quicker than checking options(echo)
+		   every time R prompts for input:
 		   */
 		R_Slave = !k;
 		VECTOR(value)[i] = SetOption(tag, ScalarLogical(k));
+	    }
+	    else if (streql(CHAR(namei), "error.halt")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    errorcall(call, "error.halt parameter invalid\n");
+		R_Error_Halt = asLogical(argi);
+		VECTOR(value)[i] = SetOption(tag, ScalarLogical(R_Error_Halt));
 	    }
 	    else {
 		VECTOR(value)[i] = SetOption(tag, duplicate(argi));

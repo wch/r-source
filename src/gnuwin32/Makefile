@@ -1,6 +1,7 @@
 include MkRules
 
 HELP=YES
+WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base eda lqs modreg mva stepfun ts
 RPREFIX=rw0900
@@ -9,7 +10,7 @@ ifdef DEBUG
  OPTFLAGS=-g -O2
  DLLFLAGS=
 else
- OPTFLAGS=-O2 -Wall
+ OPTFLAGS=-O2 -Wall -pedantic
  DLLFLAGS=-s 
 endif
 
@@ -22,6 +23,7 @@ EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
 
 LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
 PKGS=$(foreach i, $(PACKAGES), pkg-$i)
+PKGCLEAN=$(foreach i, $(PACKAGES), pkgclean-$i)
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
@@ -30,7 +32,7 @@ all: rbuild rdemo rpackage
 CFLAGS=$(OPTFLAGS) -I../include -I.
 FFLAGS=$(OPTFLAGS)
 
-rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a \
+rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
 rpackage: $(PKGS)
@@ -97,6 +99,17 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(AWK) -- '//{if ($$1 != "") print "#define " $$1 " (*__imp_" $$1 ")"}' \
 	           exported-vars > ../include/globalvar.h
 
+CHTML:
+ifeq ($(strip $(HELP)),YES)
+ifeq ($(strip $(WINHELP)),CHM)
+	$(MAKE) -C ./help -f MkChmDll
+endif
+ifeq ($(strip $(WINHELP)),BOTH)
+	$(MAKE) -C ./help -f MkChmDll
+endif
+endif
+
+
 base-HELP=ziponly
 
 pkg-%:  libR.a #../include/globalvar.h
@@ -104,7 +117,16 @@ pkg-%:  libR.a #../include/globalvar.h
 ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help $($*-HELP)help-$*
 	$(MAKE) -C ./help contents-$*
+ifeq ($(strip $(WINHELP)),CHM)
+	$(MAKE) -C ./help chm-$*
 endif
+ifeq ($(strip $(WINHELP)),BOTH)
+	$(MAKE) -C ./help winhlp-$* # also makes chm
+endif
+endif
+
+pkgclean-%:
+	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg clean
 
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
@@ -121,7 +143,7 @@ ziponly-%:
 
 bootstrap-DLLNM=boott
 
-clean: cleanwin
+clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps
 
 distclean veryclean: clean
@@ -152,7 +174,7 @@ cleanwin:
 
 
 bindist:
-	$(RM) -rf $(RPREFIX) library
+	$(RM) -rf $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
 	$(CP) -pr ../../bin ../../afm ../../demos  ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
@@ -183,6 +205,9 @@ bindist:
 	unzip anindex.zip
 	$(RM) anindex.zip
 	zip -rmX $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
+	zip -rmX $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml  $(RPREFIX)/bin/Rchtml.dll
+	$(RM)  $(RPREFIX)/library/*/winhlp/*.GID
+	zip -rmX $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rmX $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
 	zip -rX $(RPREFIX)b.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)

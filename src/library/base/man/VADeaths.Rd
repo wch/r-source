@@ -20,4 +20,17 @@
 }
 \references{
     McNeil, D. R. (1977).  Interactive Data Analysis.  Wiley.}
+\examples{
+data(VADeaths)
+n <- length(dr <- c(VADeaths))
+nam <- names(VADeaths)
+d.VAD <- data.frame(
+ Drate = dr,
+ age = rep(ordered(rownames(VADeaths)),length=n),
+ gender= gl(2,5,n, labels= c("M", "F")),
+ site =  gl(2,10,  labels= c("rural", "urban")))
+
+summary(aov.VAD <- aov(Drate ~ .^2, data = d.VAD))
+plot(aov.VAD)
+}
 \keyword{datasets}

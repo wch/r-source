@@ -158,7 +158,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
                 LEVELS(CAR(inputlist)) = 0;
         }
 	else {
-		errorcall(call, "invalid parameter(s)");
+		errorcall(call, "invalid parameter(s) \n");
 	}
 
 

@@ -16,7 +16,8 @@ qr <- function(x, tol= 1e-07)
 	     rank=integer(1),
 	     qraux = double(p),
 	     pivot = as.integer(1:p),
-	     double(2*p))[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
+	     double(2*p),
+             PACKAGE="base")[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
 }
 
 qr.coef <- function(qr, y)
@@ -29,6 +30,8 @@ qr.coef <- function(qr, y)
     im <- is.matrix(y)
     if (!im) y <- as.matrix(y)
     ny <- as.integer(ncol(y))
+    if (p==0) return( if (im) matrix(0,p,ny) else numeric(0) )
+    if (k==0) return( if (im) matrix(NA,p,ny) else rep(NA,p))
     storage.mode(y) <- "double"
     if( nrow(y) != n )
 	stop("qr and y must have the same number of rows")
@@ -40,7 +43,7 @@ qr.coef <- function(qr, y)
 		  ny,
 		  coef=matrix(0,nr=k,nc=ny),
 		  info=integer(1),
-		  NAOK = TRUE)[c("coef","info")]
+		  NAOK = TRUE, PACKAGE="base")[c("coef","info")]
     if(z$info != 0) stop("exact singularity in qr.coef")
     if(k < p) {
 	coef <- matrix(as.double(NA),nr=p,nc=ny)
@@ -68,7 +71,8 @@ qr.qy <- function(qr, y)
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     qy=qy)$qy
+	     qy=qy,
+             PACKAGE="base")$qy
 }
 
 qr.qty <- function(qr, y)
@@ -94,9 +98,10 @@ qr.qty <- function(qr, y)
 qr.resid <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
+    k <- as.integer(qr$rank)
+    if (k==0) return(y)    
     n <- as.integer(nrow(qr$qr))
     p <- as.integer(ncol(qr$qr))
-    k <- as.integer(qr$rank)
     y <- as.matrix(y)
     ny <- as.integer(ncol(y))
     storage.mode(y) <- "double"
@@ -108,7 +113,8 @@ qr.resid <- function(qr, y)
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     rsd=mat.or.vec(n,ny))$rsd
+	     rsd=mat.or.vec(n,ny),
+             PACKAGE="base")$rsd
 }
 
 qr.fitted <- function(qr, y, k=qr$rank)
@@ -129,7 +135,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     xb=mat.or.vec(n,ny), DUP=FALSE)$xb
+	     xb=mat.or.vec(n,ny), DUP=FALSE, PACKAGE="base")$xb
 }
 
 ## qr.solve is defined in  ./solve.R

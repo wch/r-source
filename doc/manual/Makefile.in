@@ -13,13 +13,14 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Manual.tex.in Reference.tex.in \
 	plotmath.tex primitive-funs.tex \
-	writing-Rd.tex Rd.sty lib2tex.in Makefile.in 
+	writing-Rd.tex Rd.sty lib2tex.in Makefile.in
 
 RLIB = $(top_builddir)/library
 RLIBsrc = $(top_srcdir)/src/library
 
 mansrcs = Manual.tex $(srcdir)/writing-Rd.tex \
-	  $(srcdir)/plotmath.tex $(srcdir)/primitive-funs.tex
+	  $(srcdir)/plotmath.tex $(srcdir)/programming.tex \
+	  $(srcdir)/primitive-funs.tex
 pkgsrcs = pkg-base.tex pkg-eda.tex pkg-lqs.tex pkg-modreg.tex \
 	pkg-mva.tex pkg-stepfun.tex pkg-ts.tex
 Manparts = Man-1.ps Man-2.ps Man-3.ps Man-4.ps \
@@ -35,7 +36,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R:
 	@if [ "$(srcdir)" != "." ]; then \
-	  $(INSTALL_DATA) $(srcdir)/Rd.sty . ; \
+	  for f in $(srcdir)/Rd.sty $(srcdir)/Rd2dvi.tex; do \
+	    $(INSTALL_DATA) $$f	 . ; \
+	  done \
 	fi
 
 lib2tex: $(srcdir)/lib2tex.in $(top_builddir)/config.status

@@ -7,8 +7,12 @@ RHOME= ..
 
 R= $(RHOME)/bin/rterm  --vanilla
 
-TESTsrc = simple-true.R arith-true.R arith.R d-p-q-r-tests.R \
-	 is-things.R primitive-funs.R eval-etc.R print-tests.R 
+TESTsrc = arith-true.R arith.R d-p-q-r-tests.R eval-etc.R \
+	is-things.R primitive-funs.R simple-tests.R simple-true.R \
+	isas-tests.R print-tests.R
+
+%.R : $(srcdir)/make-%.R
+	$(R) < $< > /dev/null
 
 TESTout = $(TESTsrc:.R=.Rout)
 

@@ -47,6 +47,10 @@ approxfun(x, y,       method="linear",
   \code{x} values, this function will return the corresponding
   interpolated values.  This is often more useful than \code{approx}.
 }
+\details{
+    The inputs can contain missing values which are delted, so at least
+    two complete \code{(x, y)} pairs are required.
+}
 \seealso{
   \code{\link{spline}} and \code{\link{splinefun}} for spline
   interpolation.

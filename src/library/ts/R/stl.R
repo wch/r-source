@@ -53,7 +53,7 @@ stl <- function(x, s.window = NULL, s.degree = 0, t.window = NULL,
                   niter = as.integer(niter), weights = double(n),
                   seasonal = double(n),
                   trend = double(n),
-                  double((n+2*period)*5))
+                  double((n+2*period)*5), PACKAGE="ts")
     if(periodic) {
         ## make seasonal part exactly periodic
         which.cycle <- cycle(x)

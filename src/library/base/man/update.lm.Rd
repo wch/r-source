@@ -35,7 +35,4 @@ update.glm(glm.obj, formula, data, weights, subset, na.action,
   \code{\link{update.formula}},
   \code{\link{formula}},\code{\link{lm}},\code{\link{glm}}.
 }
-\examples{
-
-}
 \keyword{models}

@@ -3,6 +3,7 @@
 \usage{
 help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
      lib.loc = .lib.loc, verbose = .Options$verbose,
+     chmhelp = .Options$chmhelp,
      htmlhelp = .Options$htmlhelp, winhelp = .Options$winhelp)
 ?topic
 }
@@ -13,15 +14,17 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 	sought (but \emph{not} a variable containing a character string!).}
     \item{offline}{a logical indicating whether documentation should be
 	displayed on-line to the screen (the default) or hardcopy of it
-	should be produced.  \emph{Ignored in this port of \R}.}
+	should be produced.
     \item{package}{a name or character vector giving the packages to look
 	into for documentation.  By default, all packages in the search path
 	are used.}
     \item{lib.loc}{A character vector of directory names of \R libraries.
 	Defaults to all libraries currently known.}
     \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
-    \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the help
-	will not be shown on the console, but via the html browser.}
+    \item{chmhelp}{logical (or \code{NULL}).  If \code{TRUE} the
+	Compiled HTML version of the help will be shown in a help viewer.}
+    \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
+	version of the help will be shown in a browser.}
     \item{winhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
 	\code{.hlp} file will be used if one is available.}
 }
@@ -33,6 +36,20 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
     In the case of unary and binary operators and control-flow special
     forms, the name may need to be quoted.
 
+    If \code{offline} is \code{TRUE}, hardcopy of the documentation is
+    produced by running the LaTeX version of the help page through
+    \code{latex} (note that LaTeX 2e is needed). You need to customize
+    the file \file{R_HOME/bin/helpPRINT.bat} which contains an example.  
+    The appearance of the output can be customized through a file
+    \file{Rhelp.cfg} somewhere in your LaTeX search path.
+}
+\note{
+    The help files can be many small files. On some file systems it is
+    desirable to save space, and the text files in the \file{help} directory
+    of an installed package can be zipped up as a zip archive
+    \file{Rhelp.zip}. Ensure the files \file{AnIndex} and
+    \file{00Titles} remain un-zipped.  Similarly, all the files in the
+    \file{latex} directory can be zipped to \file{Rhelp.zip}.
 }
 \seealso{
     \code{\link{help.start}()} which opens the HTML version of the \R

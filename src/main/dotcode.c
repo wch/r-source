@@ -38,16 +38,19 @@ typedef int (*DL_FUNC)();
 
 static SEXP NaokSymbol = NULL;
 static SEXP DupSymbol = NULL;
+static SEXP PkgSymbol = NULL;
+
+static char DLLname[PATH_MAX];
 
 /* This is a per-platform function which looks up */
 /* entry points in DLLs in a platform specific way. */
 
-DL_FUNC R_FindSymbol(char *);
+DL_FUNC R_FindSymbol(char const *, char const *);
 
 
 /* Convert an R object to a non-moveable C/Fortran object and return
    a pointer to it.  This leaves pointers for anything other
-   than vectors and lists unaltered. 
+   than vectors and lists unaltered.
 */
 
 static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort)
@@ -59,7 +62,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort)
     complex *zptr;
     SEXP *lptr, CSingSymbol=install("Csingle");
     int i, l, n;
-    
+
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
@@ -170,7 +173,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
     int i;
     SEXP s, t;
     SEXPTYPE type =TYPEOF(arg);
-    
+
     switch(type) {
     case LGLSXP:
     case INTSXP:
@@ -240,6 +243,8 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
 /* Foreign Function Interface.  This code allows a user to call C */
 /* or Fortran code which is either statically or dynamically linked. */
 
+/* NB: despite its name, this leaves NAOK and DUP arguments on the list */
+#ifdef OLD
 static SEXP naoktrim(SEXP s, int * len, int *naok, int *dup)
 {
     SEXP value;
@@ -252,16 +257,87 @@ static SEXP naoktrim(SEXP s, int * len, int *naok, int *dup)
     else if(TAG(s) == NaokSymbol) {
 	value = naoktrim(CDR(s), len, naok, dup);
 	*naok = asLogical(CAR(s));
+	(*len)++;
     }
     else if(TAG(s) == DupSymbol) {
 	value = naoktrim(CDR(s), len, naok, dup);
 	*dup = asLogical(CAR(s));
+	(*len)++;
+    }
+    else if(TAG(s) == PkgSymbol) {
+	value = naoktrim(CDR(s), len, naok, dup);
+	strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
+	return value;
     }
     else {
 	CDR(s) = naoktrim(CDR(s), len, naok, dup);
-	*len = *len + 1;
+	(*len)++;
     }
     return s;
+}
+#endif
+
+/* find NAOK and DUP, find and remove PACKAGE */
+static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
+{
+    SEXP s, ss;
+    int nargs=0, naokused=0, dupused=0, pkgused=0;
+
+    *naok = 0;
+    *dup = 1;
+    *len = 0;
+    for(s = args; s != R_NilValue; ) {
+	if(TAG(s) == NaokSymbol) {
+	    *naok = asLogical(CAR(s));
+	    if(naokused++ == 1) warning("NAOK used more than once");
+	} else if(TAG(s) == DupSymbol) {
+	    *dup = asLogical(CAR(s));
+	    if(dupused++ == 1) warning("DUP used more than once");
+	}
+	/* Now look for PACKAGE=. We look at the next arg, unless
+	   this is the last one (which will only happen for one arg),
+	   and remove it */
+	ss = CDR(s);
+	if(ss == R_NilValue && TAG(s) == PkgSymbol) {
+	    if(pkgused++ == 1) warning("PACKAGE used more than once");
+	    strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
+	    return R_NilValue;
+	}
+	if(TAG(ss) == PkgSymbol) {
+	    if(pkgused++ == 1) warning("PACKAGE used more than once");
+	    strcpy(DLLname, CHAR(STRING(CAR(ss))[0]));
+	    CDR(s) = CDR(ss); /* delete this arg, which is the next one */
+	}
+	nargs++;
+	s = CDR(s);
+    }
+    *len = nargs;
+    return args;
+}
+
+static SEXP pkgtrim(SEXP args)
+{
+    SEXP s, ss;
+    int pkgused=0;
+
+    for(s = args ; s != R_NilValue;) {
+	ss = CDR(s);
+	/* Look for PACKAGE=. We look at the next arg, unless
+	   this is the last one (which will only happen for one arg),
+	   and remove it */
+	if(ss == R_NilValue && TAG(s) == PkgSymbol) {
+	    if(pkgused++ == 1) warning("PACKAGE used more than once");
+	    strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
+	    return R_NilValue;
+	}
+	if(TAG(ss) == PkgSymbol) {
+	    if(pkgused++ == 1) warning("PACKAGE used more than once");
+	    strcpy(DLLname, CHAR(STRING(CAR(ss))[0]));
+	    CDR(s) = CDR(ss);
+	}
+	s = CDR(s);
+    }
+    return args;
 }
 
 #define MAX_ARGS 65
@@ -270,7 +346,7 @@ SEXP do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[128], *p, *q;
     checkArity(op, args);
-    if(!isString(CAR(args)) || length(CAR(args)) < 1)
+    if(!isValidString(CAR(args)))
 	errorcall(call, "invalid argument");
     p = CHAR(STRING(CAR(args))[0]);
     q = buf;
@@ -294,11 +370,11 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     char *sym;
     int val;
     checkArity(op, args);
-    if(!isString(CAR(args)) || length(CAR(args)) < 1)
+    if(!isValidString(CAR(args)))
 	errorcall(call, "invalid argument");
     sym = CHAR(STRING(CAR(args))[0]);
     val = 1;
-    if (!(fun = R_FindSymbol(sym)))
+    if (!(fun = R_FindSymbol(sym, "")))
 	val = 0;
     ans = allocVector(LGLSXP, 1);
     LOGICAL(ans)[0] = val;
@@ -310,23 +386,28 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-      DL_FUNC fun;
-      SEXP retval;
-      /* I don't like this messing with vmax <TSL> */
-      /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
-      char *vmax = vmaxget();
+    DL_FUNC fun;
+    SEXP retval;
+    /* I don't like this messing with vmax <TSL> */
+    /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
+    char *vmax = vmaxget();
 
-      op = CAR(args);
-      if (!isString(op))
-	  errorcall(call,"function name must be a string");
-      if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
-	  errorcall(call, "C-R function not in load table");
+    op = CAR(args);
+    if (!isValidString(op))
+	errorcall(call, "function name must be a string (of length 1)\n");
+    if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
+    strcpy(DLLname, "");
+    args = pkgtrim(args);
 
-      retval = (SEXP)fun(args);
-      vmaxset(vmax);
-      return retval;
+    if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]), DLLname)))
+	errorcall(call, "C function name not in load table\n");
+
+    retval = (SEXP)fun(args);
+    vmaxset(vmax);
+    return retval;
 }
 
+/* .Call(name, <args>) */
 SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC fun;
@@ -334,10 +415,15 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     int nargs;
     char *vmax = vmaxget();
     op = CAR(args);
-    if (!isString(op))
-        errorcall(call,"function name must be a string");
-    if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
-        errorcall(call, "C-R function not in load table");
+    if (!isValidString(op))
+	errorcall(call, "function name must be a string (of length 1)\n");
+
+    if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
+    strcpy(DLLname, "");
+    args = pkgtrim(args);
+
+    if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]), DLLname)))
+        errorcall(call, "C function name not in load table\n");
     args = CDR(args);
 
     for(nargs = 0, pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
@@ -1005,6 +1091,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     return retval;
 }
 
+/* .C() {op=0}  or  .Fortran() {op=1} */
 SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     void **cargs;
@@ -1012,21 +1099,23 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     DL_FUNC fun;
     SEXP ans, pargs, s;
     char buf[128], *p, *q, *vmax;
-    if (NaokSymbol == NULL || DupSymbol == NULL) {
+    if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
 	NaokSymbol = install("NAOK");
 	DupSymbol = install("DUP");
+	PkgSymbol = install("PACKAGE");
     }
     vmax = vmaxget();
     which = PRIMVAL(op);
     op = CAR(args);
-    if (!isString(op))
-	errorcall(call, "function name must be a string");
+    if (!isValidString(op))
+	errorcall(call, "function name must be a string (of length 1)");
 
     /* The following code modifies the argument list */
     /* We know this is ok because do_dotCode is entered */
     /* with its arguments evaluated. */
 
-    args = naoktrim(CDR(args), &nargs, &naok, &dup);
+    strcpy(DLLname, "");
+    args = naokfind(CDR(args), &nargs, &naok, &dup);
     if(naok == NA_LOGICAL)
 	errorcall(call, "invalid naok value");
     if(nargs > MAX_ARGS)
@@ -1057,8 +1146,8 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	*q++ = '_';
     *q = '\0';
 #endif
-    if (!(fun = R_FindSymbol(buf)))
-	errorcall(call, "C/Fortran function not in load table");
+    if (!(fun = R_FindSymbol(buf, DLLname)))
+	errorcall(call, "C/Fortran function name not in load table");
 
     switch (nargs) {
     case 0:

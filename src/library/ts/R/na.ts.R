@@ -1,5 +1,7 @@
 na.omit.ts <- function(frame)
 {
+    tm <- time(frame)
+    xfreq <- frequency(frame)
     ## drop initial and final NAs
     if(is.matrix(frame))
         good <- which(apply(!is.na(frame), 1, all))
@@ -15,6 +17,7 @@ na.omit.ts <- function(frame)
         frame <- if(is.matrix(frame)) frame[st:en,] else frame[st:en]
         attr(omit, "class") <- "omit"
         attr(frame, "na.action") <- omit
+        tsp(frame) <- c(tm[st], tm[en], xfreq)
     }
     if(any(is.na(frame))) stop("time series contains internal NAs")
     frame
@@ -22,6 +25,8 @@ na.omit.ts <- function(frame)
 
 na.contiguous <- function(frame)
 {
+    tm <- time(frame)
+    xfreq <- frequency(frame)
     ## use (first) maximal contiguous length of non-NAs
     if(is.matrix(frame))
         good <- apply(!is.na(frame), 1, all)
@@ -42,6 +47,7 @@ na.contiguous <- function(frame)
         frame <- if(is.matrix(frame)) frame[st:en,] else frame[st:en]
         attr(omit, "class") <- "omit"
         attr(frame, "na.action") <- omit
+        tsp(frame) <- c(tm[st], tm[en], xfreq)
     }
     frame
 }

@@ -32,7 +32,7 @@ boxplot.default(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
 	each side of the boxes.  If the notches of two plots do not
 	overlap then the medians are significantly different at the 5
 	percent level.}
-    \item{names.x}{group labels which while be printed under each
+    \item{names}{group labels which while be printed under each
 	boxplot.}
     \item{data}{\code{\link{data.frame}}, \code{\link{list}}, or
 	\code{\link{environment}} in which variable names are evaluated

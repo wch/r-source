@@ -26,7 +26,7 @@ in the named directory. \code{dir} is an alias.
 \value{
 A character vector containing the names of the files in the
 specified directory, or \code{""} if there were no files. The files are
-sorted in alphabetical order, on the full path if \item{full.names = TRUE}.
+sorted in alphabetical order, on the full path if \code{full.names = TRUE}.
 }
 \author{Ross Ihaka}
 \note{

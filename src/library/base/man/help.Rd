@@ -30,7 +30,7 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
   object or a data set) can be printed with either \code{help(name)} or
   \code{?name}.
   In the case of unary and binary operators and control-flow special
-  forms, the name may need to be be quoted.
+  forms, the name may need to be quoted.
 
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through

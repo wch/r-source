@@ -6,9 +6,11 @@
 #    bin/Rd2dvi `grep -l 'KEYWORD(distr' src/library/base/man/* |sort|uniq`
 #
 Pwd=`dirname $0`
-R_HOME=${Pwd}/..
+
+R_HOME=`R RHOME`
+
 MANTEXDIR=${R_HOME}/doc/manual
-D2L="${Pwd}/Rdconv -t latex"
+D2L="R CMD Rdconv -t latex"
 file_sed='s/[_$]/\\\\&/g'
 # Quote the      ^^^^  "\" twice (-> 4 \ ) since it used in ".."
 ## If perl-sh: sub subject() {

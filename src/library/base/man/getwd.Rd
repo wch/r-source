@@ -10,12 +10,12 @@ setwd(dir)
     \item{dir}{A character string.}
 }
 \description{
-    \code{getwd} returns an absolute filename respresenting the current
-    working directory of the R process; \code{setwd(dir)} is used to set
+    \code{getwd} returns an absolute filename representing the current
+    working directory of the \R process; \code{setwd(dir)} is used to set
     the working directory to \code{dir}.
 }
 \examples{
-WD <- getwd()
+(WD <- getwd())
 if (!is.null(WD)) setwd(WD)
 }
 \keyword{utilities}

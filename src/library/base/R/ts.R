@@ -10,15 +10,20 @@ options(ts.eps = 1e-5)   # default as S
 
 ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 	       deltat = 1, ts.eps  =  .Options$ts.eps,
-               class = if(nseries > 1) c("mts", "ts") else "ts")
+               class = if(nseries > 1) c("mts", "ts") else "ts",
+               names = if(!is.null(dimnames(data))) colnames(data)
+               else paste("Series", seq(nseries))
+               )
 {
     if(is.matrix(data) || is.data.frame(data)) {
 	nseries <- ncol(data)
 	ndata <- nrow(data)
+        dimnames(data) <- list(NULL, names)
     } else {
 	nseries <- 1
 	ndata <- length(data)
     }
+    if(ndata == 0) stop("ts object must have one or more observations")
 
     if(missing(frequency)) frequency <- 1/deltat
     else if(missing(deltat)) deltat <- 1/frequency
@@ -64,6 +69,8 @@ tsp <- function(x) attr(x, "tsp")
     attr(x, "tsp") <- value # does error-checking internally
     if (inherits(x, "ts") && is.null(value))
         class(x) <- cl["ts" != cl]
+    if (inherits(x, "mts") && is.null(value))
+        class(x) <- cl["mts" != cl]
     x
 }
 

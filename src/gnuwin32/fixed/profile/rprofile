@@ -4,8 +4,10 @@
 .lib.loc <- unique(c(unlist(strsplit(c(getenv("R_LIBS"),
                                        getenv("RLIBS")), ";")), .Library))
 options(papersize="a4")
-options(device="X11")
+options(device="windows")
 options(editor="notepad")
-options(pager="internal")
+if(any(grep("--ess", commandArgs()))) options(pager="console") else options(pager="internal")
+#options(pager="internal")
 options(unzip="internal")
+options(mailer = "none")
 options(width=80)

@@ -57,6 +57,7 @@ static HDC chooseprinter()
 {
     PRINTDLG pd;
     HDC dc;
+    DWORD rc;
     char cwd[MAX_PATH];
 
     GetCurrentDirectory(MAX_PATH,cwd);
@@ -83,7 +84,10 @@ static HDC chooseprinter()
 
     dc = PrintDlg( &pd ) ? pd.hDC : NULL;
     SetCurrentDirectory(cwd);
-
+    if (!dc) {
+	rc = CommDlgExtendedError(); /* 0 means user cancelled */
+	if (rc) R_ShowMessage("Unable to choose printer");
+    }
     return dc;
 }
 
@@ -96,8 +100,8 @@ printer newprinter(double width, double height)
     double dd,AL;
     int ww,hh,x0,y0;
 
-    if ( !hDC) return NULL;
-    obj = new_object(PrinterObject,(HANDLE) hDC,get_printer_base());
+    if ( !hDC ) return NULL;
+    obj = new_object(PrinterObject, (HANDLE) hDC, get_printer_base());
     if ( !obj ) {
 	R_ShowMessage("Insufficient memory for new printer");
 	DeleteDC(hDC);
@@ -114,14 +118,13 @@ printer newprinter(double width, double height)
 	AL = (dd < 1.0) ? dd : 1.0;
 	dd = GetDeviceCaps(hDC, VERTSIZE) / height;
 	AL = (dd < AL) ? dd : AL;
-	ww = (AL * width) * GetDeviceCaps(hDC,LOGPIXELSX) / 25.4;
-	hh = (AL * height) * GetDeviceCaps(hDC,LOGPIXELSY) / 25.4;
+	ww = (AL * width) * GetDeviceCaps(hDC, LOGPIXELSX) / 25.4;
+	hh = (AL * height) * GetDeviceCaps(hDC, LOGPIXELSY) / 25.4;
     }
-    x0 = (GetDeviceCaps(hDC,HORZRES) - ww) / 2;
-    y0 = (GetDeviceCaps(hDC,VERTRES) - hh) / 2;
-    obj->rect = rect(x0,y0,ww,hh);
-    obj->depth = GetDeviceCaps(hDC, BITSPIXEL)*
-	GetDeviceCaps(hDC, PLANES);
+    x0 = (GetDeviceCaps(hDC, HORZRES) - ww) / 2;
+    y0 = (GetDeviceCaps(hDC, VERTRES) - hh) / 2;
+    obj->rect = rect(x0, y0, ww, hh);
+    obj->depth = GetDeviceCaps(hDC, BITSPIXEL)* GetDeviceCaps(hDC, PLANES);
     obj->die = private_delprinter;
     obj->drawstate = copydrawstate();
     obj->drawstate->dest = obj;

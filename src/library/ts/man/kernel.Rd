@@ -4,7 +4,7 @@
 \alias{is.tskernel}
 \alias{print.tskernel}
 \alias{plot.tskernel}
-\alias{"[.kernel"}
+\alias{[.kernel}
 
 \title{Smoothing Kernel Objects}
 \usage{
@@ -75,7 +75,7 @@ lines(x1, col = "red")    # go long if the short crosses the long upwards
 lines(x2, col = "green")  # and go short otherwise
 
 data(sunspot)     # Reproduce example 10.4.3 from Brockwell and Davies (1991)
-spectrum(sunspot.year, kernel=kernel("daniell", c(11,7,3)))
+spectrum(sunspot.year, kernel=kernel("daniell", c(11,7,3)), log="no")
 }
 \keyword{ts}
 

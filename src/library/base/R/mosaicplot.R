@@ -1,7 +1,9 @@
 ## Copyright (C) 1998 John W. Emerson
 
-mosaicplot <- function(X, main = NA, sort = NA, off = NA, dir = NA,
-                       color = FALSE) {
+mosaicplot <- function(x, ...) UseMethod("mosaicplot")
+
+mosaicplot.default <- function(X, main = NA, sort = NA, off = NA, dir =
+                       NA, color = FALSE) {
 
     mosaic.cell <- function(X, x1, y1, x2, y2, off, dir, color, lablevx,
                             lablevy, maxdim, currlev, label) {
@@ -167,4 +169,17 @@ mosaicplot <- function(X, main = NA, sort = NA, off = NA, dir = NA,
         off/100, dir, color, 2, 2, apply(as.matrix(Ind[,1:dimd]), 2, max),
         1, label)
 
+}
+
+mosaicplot.formula <- function(formula, data = NULL, subset, na.action,
+                               ...) {
+    if (missing(na.action))
+        na.action <- options()$na.action
+    m <- match.call(expand.dots = FALSE)
+    if (is.matrix(eval(m$data, sys.frame(sys.parent()))))
+        m$data <- as.data.frame(data)
+    m$... <- NULL
+    m[[1]] <- as.name("model.frame")
+    mf <- eval(m, sys.frame(sys.parent()))
+    mosaicplot(table(mf), ...)
 }

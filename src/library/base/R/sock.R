@@ -1,31 +1,34 @@
 print.socket <- function(x, ...)
 {
+    if(length(port <- as.integer(socket$socket)) != 1)
+	stop("invalid `socket' argument")
     cat("Socket connection #", x$socket, "to", x$host,
-        "on port", x$port, "\n")
+	"on port", x$port, "\n")
     invisible(x)
 }
 
-make.socket <-
-    function(host = "localhost", port, fail = TRUE, server = FALSE)
+make.socket <- function(host = "localhost", port, fail = TRUE, server = FALSE)
 {
+    if(length(port <- as.integer(port)) != 1)
+	stop("`port' must be integer of length 1")
+    if(length(host <- as.character(host)) != 1)
+	stop("`host' must be character of length 1")
     if (!server){
-        tmp2 <- .C("Rsockconnect",port = as.integer(port), host = host)
+	tmp2 <- .C("Rsockconnect", port = port, host = host)
     }
     else{
-        if (host != "localhost")
-            stop("Can only receive calls on local machine")
-        tmp <- .C("Rsockopen", port = as.integer(port))
-        buffer <- paste(rep("#",256), collapse = "")
-        tmp2 <- .C("Rsocklisten", port = as.integer(tmp[[1]]),
-                 buffer = buffer, len = as.integer(256))
-        host <- substr(tmp2$buffer, 1, tmp2$len)
-        .C("Rsockclose", as.integer(tmp$port))
+	if (host != "localhost")
+	    stop("Can only receive calls on local machine")
+	tmp <- .C("Rsockopen", port = port, PACKAGE="base")
+	buffer <- paste(rep("#",256), collapse = "")
+	tmp2 <- .C("Rsocklisten", port = tmp$port,
+                   buffer = buffer, len = as.integer(256), PACKAGE="base")
+	host <- substr(tmp2$buffer, 1, tmp2$len)
+	.C("Rsockclose", tmp$port, PACKAGE="base")
     }
-    if (tmp2$port <= 0){
-        if (fail)
-            stop("Socket not established")
-        else
-            warning("Socket not established")
+    if (tmp2$port <= 0) {
+	w <- "Socket not established"
+	if (fail) stop(w) else warning(w)
     }
     rval <- list(socket = tmp2$port, host = host, port = port)
     class(rval) <- "socket"
@@ -34,26 +37,33 @@ make.socket <-
 
 close.socket <- function(socket)
 {
-    as.logical(.C("Rsockclose", as.integer(socket$socket))[[1]])
+    if(length(port <- as.integer(socket$socket)) != 1)
+	stop("invalid `socket' argument")
+    as.logical(.C("Rsockclose", port, PACKAGE="base")[[1]])
 }
 
 read.socket <- function(socket, maxlen=256, loop=FALSE)
 {
+    if(length(port <- as.integer(socket$socket)) != 1)
+	stop("invalid `socket' argument")
+    maxlen <- as.integer(maxlen)
     buffer <- paste(rep("#",maxlen), collapse="")
     repeat {
-        tmp <- .C("Rsockread", as.integer(socket$socket),
-                  buffer = buffer, len = as.integer(maxlen))
-        rval <- substr(tmp$buffer, 1, tmp$len)
-        if ((rval > 0) | !loop) break
-  }
-  rval
+	tmp <- .C("Rsockread", port,
+		  buffer = buffer, len = maxlen, PACKAGE="base")
+	rval <- substr(tmp$buffer, 1, tmp$len)
+	if (rval > 0 || !loop) break
+    }
+    rval
 }
 
 write.socket <- function(socket, string)
 {
+    if(length(port <- as.integer(socket$socket)) != 1)
+	stop("invalid `socket' argument")
     strlen <- length(strsplit(string,NULL)[[1]])
-    invisible(.C("Rsockwrite", as.integer(socket$socket), string,
-                 as.integer(0), as.integer(strlen), as.integer(strlen))[[5]])
+    invisible(.C("Rsockwrite", port, string,
+		 as.integer(0), strlen, strlen, PACKAGE="base")[[5]])
 }
 
 

@@ -7,7 +7,10 @@ read.table(file, header = FALSE, sep = "", row.names,
 \alias{read.table}
 \arguments{
 \item{file}{the name of the file which the data are to be read from.
-Each row of the table appears as one line of the file.}
+    Each row of the table appears as one line of the file.  If it does
+    not contain an \emph{absolute} path, the file name is
+    \emph{relative} to the current working directory, \code{\link{getwd}()}.
+}
 \item{header}{a logical value indicating whether the file contains
 the names of the variables as its first line.}
 \item{sep}{the field separator character.  Values on
@@ -25,15 +28,23 @@ controls this conversion.  Its value is either a vector of logicals
 (values are recycled if necessary), or a vector of numeric indices
 which specify which columns should be left as character
 strings.}
-\item{na.strings}{a vector strings which are to be interpreted as \code{NA}
-values.}
+\item{na.strings}{a vector strings which are to be interpreted as
+    \code{\link{NA}} values.}
 \item{skip}{the number of lines of the data file to skip before beginning
 to read data.}
 }
 \value{
-A data frame containing a representation of the data in the file.
-This function is the principal means of reading tabular data
-into \R.
+    A data frame (\code{\link{data.frame}}) containing a representation of
+    the data in the file.
+    This function is the principal means of reading tabular data into \R.
+}
+\note{
+    The implementation of \code{read.table} currently reads everything
+    as character using \code{\link{scan}} and subsequently defines
+    \code{"numeric"} or \code{\link{factor}} variables.
+
+    This is quite memory consuming for files of thousands of records
+    and may need larger memory, see \code{\link{Memory}}.
 }
 \seealso{
 \code{\link{scan}}, \code{\link{read.fwf}} for \bold{f}ixed \bold{w}idth

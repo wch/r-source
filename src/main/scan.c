@@ -180,7 +180,7 @@ static void expected(char *what, char *got)
     }
     else
 	fclose(fp);
-    error("\"scan\" expected %s, got \"%s\"", what, got);
+    error("\"scan\" expected %s, got \"%s\"\n", what, got);
 }
 
 static void extractItem(char *buffer, SEXP ans, int i)
@@ -576,12 +576,12 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (nskip < 0 || nskip == NA_INTEGER) nskip = 0;
 
     if (isString(sep) || isNull(sep)) {
-	if (LENGTH(sep) == 0) sepchar = 0;
+	if (length(sep) == 0) sepchar = 0;
 	else sepchar = CHAR(STRING(sep)[0])[0];
     }
     else errorcall(call, "invalid sep value");
 
-    if (isString(file)) {
+    if (isValidString(file)) {
 	filename = CHAR(*STRING(file));
 	if (strlen(filename) == 0)
 	    filename = NULL;
