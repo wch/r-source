@@ -1,5 +1,5 @@
 \name{plot.lm}
-\alias{plot}
+\alias{plot.lm}
 \title{function to plot diagnostics for an lm object}
 \usage{
 plot.lm (x, which = 1:4,
