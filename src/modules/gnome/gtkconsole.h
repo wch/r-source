@@ -90,8 +90,10 @@ GTK_CHECK_CLASS_CAST (klass, gtk_console_get_type (), GtkConsoleClass)
   {
     GtkTextClass parent_class;
 
+     /* Are these ever used? Doesn't look like it.*/
     void (*console_char_ready) (GtkConsole * console);
     void (*console_line_ready) (GtkConsole * console);
+    void (*console_line_ready_with_value) (GtkConsole * console, gpointer);
     void (*console_input_enabled) (GtkConsole * console);
     void (*console_input_disabled) (GtkConsole * console);
   };
