@@ -1029,6 +1029,11 @@ AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
 ## </NOTE>
 
 ## Used to build src/include/Rmath.h.
+## <NOTE>
+## we don't use AC_CONFIG_HEADERS on Rmath.h.in because
+## a) that would comment out #undef statements in Rmath.h.in and
+## b) Rmath.h should be a self-contained file for standalone Rmath use.
+## </NOTE>
 if test "${ac_cv_func_expm1}" = yes; then
   RMATH_HAVE_EXPM1="# define HAVE_EXPM1 1"
 else

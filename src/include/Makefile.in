@@ -62,6 +62,12 @@ Rconfig.h: config.h
 	@$(top_srcdir)/tools/GETCONFIG > $@
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(top_srcdir)/tools/GETVERSION > $@
+
+## <NOTE>
+## we don't use AC_CONFIG_HEADERS on Rmath.h.in because
+## a) that would comment out #undef statements in Rmath.h.in and
+## b) Rmath.h should be a self-contained file for standalone Rmath use.
+## </NOTE>
 Rmath.h: Rmath.h0
 	@$(top_srcdir)/tools/copy-if-change Rmath.h0 $@
 Rmath.h0: $(srcdir)/Rmath.h0.in $(top_builddir)/config.status
