@@ -1123,6 +1123,13 @@ unlink(tmp)
 ## failed with syntax error in 1.6.1
 
 
+## NAs in max.col
+a <- matrix(1, 3, 3)
+a[1,2] <- NA
+(z <- max.col(a))
+stopifnot(is.na(z[1]))
+## gave (randomly) 1 or 3 in 1.6.1
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

@@ -106,6 +106,8 @@ BUG FIXES
     o   parsing did not work on connections when pushback was used (as
 	it had never been implemented).  (PR#2396)
 
+    o   max.col() only found NAs in the first column (typo).
+
 
 
 		CHANGES IN R VERSION 1.6.1
