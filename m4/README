@@ -40,6 +40,7 @@ The files are as follows.
 	Changes made in libglade.m4:
 	* In AC_ARG_WITH(libglade-config), standardize doc strings.
 
-  libtool.m4	is from the libtool CVS.  We currently include a recent
-		version of libtool.m4 because the release version 1.3.3
-		e.g. refuses to link a shared lib against a static one.
+  libtool.m4
+	is from the libtool CVS.  We currently include a recent version
+	of libtool.m4 because the release version 1.3.3 e.g. refuses to
+	link a shared lib against a static one.

@@ -75,7 +75,7 @@
 #ifdef Macintosh
 # define OSTYPE      "mac"
 # define FILESEP     ":"
-#endif /* macintosh */
+#endif /* Macintosh */
 
 #ifdef Win32
 # define OSTYPE      "windows"
