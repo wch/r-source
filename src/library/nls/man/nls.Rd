@@ -31,6 +31,12 @@ nls(formula, data, start, control = nls.control(),
      The default algorithm is a Gauss-Newton algorithm. The other 
      alternative is "plinear", the Golub-Pereyra algorithm for
      partially linear least-squares models.}
+ \item{trace}{logical value indicating if a trace of the iteration
+     progress should be printed.  Default is \code{FALSE}.  If
+     \code{TRUE} the residual sum-of-squares and the parameter values
+     are printed at the conclusion of each iteration.  When the
+     \code{"plinear"} algorithm is used, the conditional estimates of
+     the linear parameters are printed after the nonlinear parameters.}
  \item{subset}{an optional vector specifying a subset of observations
    to be used in the fitting process.}
  \item{weights}{an optional numeric vector of (fixed) weights.  When
