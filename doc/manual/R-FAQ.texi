@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-27
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-28
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1979,6 +1979,8 @@ Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.
 @item bindata
 Generation of correlated artificial binary data.
+@item bitops
+Functions for Bitwise operations on integer vectors.
 @item blighty
 Function for drawing the coastline of the United Kingdom.
 @item boa
