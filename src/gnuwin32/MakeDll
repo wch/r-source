@@ -34,7 +34,7 @@ RESFLAGS=--include-dir $(RHOME)/src/include
 ifeq ($(strip $(BUILD)),CROSS)
 DLLLIBS=-L$(RHOME)/src/gnuwin32 $(PKG_LIBS) $(FLIBS) -lR 
 else
-DLLLIBS=$(PKG_LIBS) $(FLIBS) $(RHOME)/bin/R.dll 
+DLLLIBS=$(PKG_LIBS) $(FLIBS) -L$(RHOME)/bin -lR 
 endif
 
 AA=$(wildcard Makefile)
