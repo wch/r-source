@@ -24,9 +24,9 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 \arguments{
   \item{x, y}{a univariate or multivariate (not \code{ccf}) time
     series object or a numeric vector or matrix.}
-  \item{lag.max}{maximum lag at which to calculate the acf.  Default
-    is \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
-    of observations.}
+  \item{lag.max}{maximum number of lags at which to calculate the acf.
+    Default is \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the
+    number of observations.}
   \item{type}{character string giving the type of acf to be computed.
     Allowed values are
     \code{"correlation"} (the default), \code{"covariance"} or
@@ -63,6 +63,9 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 
   The generic function \code{plot} has a method for objects of class
   \code{"acf"}.
+
+  The lag is returned and plotted in units of time, and not numbers of
+  observations.
 }
 \author{
   Original: Paul Gilbert, Martyn Plummer.
@@ -76,12 +79,12 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 ## Examples from Venables & Ripley
 data(lh)
 acf(lh)
-acf(lh, type="covariance")
+acf(lh, type = "covariance")
 pacf(lh)
 
 data(UKLungDeaths)
 acf(ldeaths)
-acf(ldeaths, ci.type="ma")
+acf(ldeaths, ci.type = "ma")
 acf(ts.union(mdeaths, fdeaths))
 ccf(mdeaths, fdeaths) # just the cross-correlations.
 }

@@ -28,9 +28,11 @@ spectrum(\dots, method = c("pgram", "ar"))
 }
 \value{
   An object of class \code{"spec"}, which is a list containing at
-  least the following elements:
+  least the following components:
   \item{freq}{vector of frequencies at which the spectral
-    density is estimated. (Possibly approximate Fourier frequencies.)}
+    density is estimated. (Possibly approximate Fourier frequencies.)
+    The units are the reciprocal of cycles per unit time (and not per
+    observation spacing): see Details below.}
 
   \item{spec}{Vector (for univariate series) or matrix (for multivariate
     series) of estimates of the spectral density at frequencies

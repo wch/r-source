@@ -51,7 +51,8 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
   is returned for that frequency.
 }
 \value{
-  A list object of class \code{"spec"} with the following elements.
+  A list object of class \code{"spec"} (see \code{\link{spectrum}})
+  with the following additional components:
   \item{kernel}{The \code{kernel} argument, or the kernel constructed
     from \code{spans}.}
   \item{df}{The distribution of the spectral density estimate can be
