@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -541,6 +542,9 @@ void GCircle(double, double, int, double, int, int, DevDesc*);
 /* Set clipping region (based on current setting of dd->gp.xpd).
  * Only clip if new clipping region is different from the current one */
 void GClip(DevDesc*);
+/* Polygon clipping: */
+int GClipPolygon(double *, double *, int, int, int, 
+		 double *, double *, DevDesc *);
 /* Always clips */
 void GForceClip(DevDesc*);
 /* Draw a line from (x1,y1) to (x2,y2): */
