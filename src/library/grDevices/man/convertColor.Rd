@@ -1,7 +1,6 @@
 \name{convertColor}
 \alias{convertColor}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{Convert between color spaces }
+\title{Convert between color spaces}
 \description{
   Convert colors between standard color space representations. This
   function is experimental, and may be made obsolete by changes to \R
@@ -9,24 +8,25 @@
 }
 \usage{
 convertColor(color,
-from = c("sRGB", "XYZ", "Lab", "Luv", "AppleRGB", "AdobeRGB", "CIE.RGB",
-"NTSC.RGB"),
-to = c("sRGB", "XYZ", "Lab", "Luv", "AppleRGB", "AdobeRGB", "CIE.RGB",
-"NTSC.RGB"),
-white.point = c("D65", "A", "B", "C", "D50", "D55", "E"), gamma = 1.8,scale=1,clip=TRUE)
+             from = c("sRGB", "XYZ", "Lab", "Luv", "AppleRGB",
+                      "AdobeRGB", "CIE.RGB", "NTSC.RGB"),
+             to = c("sRGB", "XYZ", "Lab", "Luv", "AppleRGB",
+                    "AdobeRGB", "CIE.RGB", "NTSC.RGB"),
+             white.point = c("D65", "A", "B", "C", "D50", "D55", "E"),
+             gamma = 1.8, scale = 1, clip = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{color}{A 3-row matrix whose columns specify colors}
-  \item{from}{Input color space}
-  \item{to}{Output color space}
-  \item{white.point}{Reference white for \code{"Lab"} and \code{"Luv"} spaces.
-    \item{gamma}{Display gamma for \code{RGB} spaces.}
-    \item{scale}{Input color components are divided by this
-      number. (eg 255 for 8-bit RGB)}
-    \item{clip}{If \code{TRUE}, truncate RGB output to [0,1],
-      \code{FALSE} return out-of-range RGB, \code{NA} set out of range
-      colors to \code{NaN}}
+  \item{color}{A 3-row matrix whose columns specify colors.}
+  \item{from}{Input color space.}
+  \item{to}{Output color space.}
+  \item{white.point}{Reference white for \code{"Lab"} and \code{"Luv"}
+    spaces.}
+  \item{gamma}{Display gamma for \code{RGB} spaces.}
+  \item{scale}{Input color components are divided by this number.
+    (E.g., 255 for 8-bit RGB.)}
+  \item{clip}{If \code{TRUE}, truncate RGB output to [0,1],
+    \code{FALSE} return out-of-range RGB, \code{NA} set out of range
+    colors to \code{NaN}.}
 }
 \details{
   The \code{sRGB} color space is that used by standard PC monitors.
@@ -38,8 +38,8 @@ white.point = c("D65", "A", "B", "C", "D50", "D55", "E"), gamma = 1.8,scale=1,cl
   way.
   
   The \code{Lab} and \code{Luv} spaces describe colors of objects, and
-  so require the specification of a reference "white light"
-  color. Illuminant \code{D65} is a standard indirect daylight,
+  so require the specification of a reference \dQuote{white light}
+  color.  Illuminant \code{D65} is a standard indirect daylight,
   Illuminant \code{D50} is close to direct sunlight, and Illuminant
   \code{A} is the light from a standard incandescent bulb.
   
@@ -50,11 +50,9 @@ white.point = c("D65", "A", "B", "C", "D50", "D55", "E"), gamma = 1.8,scale=1,cl
   corresponds approximately to \code{gamma=2.2}. An RGB space cannot
   represent all colors, and the \code{clip} option controls what is
   done to out-of-range colors.
-  
-  
-}
+}  
 \value{
-A 3-row matrix whose columns specify the colors
+  A 3-row matrix whose columns specify the colors.
 }
 \references{
   For the conversion equations
@@ -64,17 +62,19 @@ A 3-row matrix whose columns specify the colors
   \url{http://www.efg2.com/Lab/Graphics/Colors/Chromaticity.htm}
 }
 
-\seealso{\code{\link{col2rgb}}, \code{\link{colors}}}
+\seealso{
+  \code{\link{col2rgb}},
+  \code{\link{colors}}
+}
 \examples{
 ## The displayable colors from the L=70 plane of Lab space
-ab<-expand.grid(a=(-10:15)*10,b=(-15:10)*10)
-Lab<-rbind(L=70,t(ab))
-srgb<-t(convertColor(Lab,from="Lab",to="sRGB",clip=NA))
-clipped<-attr(na.omit(srgb),"na.action")
-srgb[clipped,]<-0
-cols<-rgb(srgb[,1],srgb[,2],srgb[,3])
+ab <- expand.grid(a=(-10:15)*10,b=(-15:10)*10)
+Lab <- rbind(L=70,t(ab))
+srgb <- t(convertColor(Lab,from="Lab",to="sRGB",clip=NA))
+clipped <- attr(na.omit(srgb),"na.action")
+srgb[clipped,] <- 0
+cols <- rgb(srgb[,1],srgb[,2],srgb[,3])
 image((-10:15)*10,(-15:10)*10,matrix(1:(26*26),ncol=26),col=cols,
   xlab="a",ylab="b",main="Lab: L=70")
 }
-\keyword{color}% at least one, from doc/KEYWORDS
-
+\keyword{color}
