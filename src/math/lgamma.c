@@ -67,7 +67,7 @@ static double lGam_neg(double x)
 { /* log |gamma(x)|   for  x <= 0   ### G(-x) = - pi / [ G(x) x  sin(pi x) ] */
 	double sinpx;
 	double log(), sin(), Gam_pos();
- 
+
 	x = -x;
 	sinpx = sin(M_PI * x);
 	if (sinpx == 0.0)
@@ -76,7 +76,7 @@ static double lGam_neg(double x)
 		sinpx = -sinpx;
 	else
 		signgam = -1;
-	return (-log(x * Gam_pos(x) * sinpx / M_PI));
+	return (-log(x * gamma(x) * sinpx / M_PI));
 }
 
 /* Coefficients for rational approximation  gamma(x),  2 <= x <= 3 : */
