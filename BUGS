@@ -302,11 +302,7 @@ Date: Mon, 05 Nov 2001 10:05:27 -0500
 
 Directory:  Models
 
-* PR# 1175 *
-Subject: pearson residuals in glm for binomial response
-From: John Kent <J.T.Kent@leeds.ac.uk>
-Date: Fri, 16 Nov 2001 10:34:56 GMT
---not the same as 1123, and still there after the fixes for that.
+none
 
 Directory:  Startup
 
@@ -390,4 +386,7 @@ none
 
 Directory:  incoming
 
-none
+* PR# 1177 *
+Subject: acf mis-feature
+From: hkawakat@sk.tsukuba.ac.jp
+Date: Mon, 19 Nov 2001 08:33:18 +0100 (MET)
