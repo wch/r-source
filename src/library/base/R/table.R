@@ -87,7 +87,8 @@ summary.table <- function(object, ...)
         }
         expected <- apply(do.call("expand.grid", m), 1, prod) * n.cases
         statistic <- sum((c(object) - expected)^2 / expected)
-        parameter <- prod(sapply(m, length) - 1)
+        parameter <-
+            prod(sapply(m, length)) - 1 - sum(sapply(m, length) - 1)
         y <- c(y, list(statistic = statistic,
                        parameter = parameter,
                        approx.ok = all(expected >= 5),
@@ -180,9 +181,9 @@ margin.table <- function(x, margin = NULL)
 r2dtable <- function(n, r, c) {
     if(length(n) == 0 || (n < 0) || is.na(n))
         stop("invalid argument 'n'")
-    if(length(r) == 0 || any(r < 0) || any(is.na(r)))
+    if((length(r) <= 1) || any(r < 0) || any(is.na(r)))
         stop("invalid argument 'r'")
-    if(length(c) == 0 || any(c < 0) || any(is.na(c)))
+    if((length(c) <= 1) || any(c < 0) || any(is.na(c)))
         stop("invalid argument 'c'")
     if(sum(r) != sum(c))
         stop("arguments 'r' and 'c' must have the same sums")
