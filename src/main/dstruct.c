@@ -94,13 +94,13 @@ SEXP mkChar(const char *name)
 
 static int ddVal(SEXP name)
 {
-    char buf[128], *endp, *val;
+    char *buf, *endp;
     int rval;
 
-    strcpy(buf, CHAR(name));
+    buf = CHAR(name);
     if( !strncmp(buf,"..",2) && strlen(buf) > 2 ) {
-        val = buf; val++; val++;
-	rval = strtol(val, &endp, 10);
+        buf += 2;
+	rval = strtol(buf, &endp, 10);
         if( *endp != '\0')
 		return 0;
 	else
