@@ -19,6 +19,11 @@ NEW FEATURES
 
     o	new function  log1p(x) := log(1 + x) , accurate for |x| << 1.
 
+    o   HTML searches can now select between any combination of
+        titles, keywords and object names. The keyword list of
+        SearchEngine.html is automatically built from KEYWORDS.db.
+
+
 
 BUG FIXES
 

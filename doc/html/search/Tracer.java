@@ -1,10 +1,10 @@
-/*==============================================================================
+/*============================================================================
 
   Project: 
   
   JAVA Source file for the class Tracer
   
-  COPYRIGHT (C), 1998, Thomas Baier
+  COPYRIGHT (C), 1998-2000, Thomas Baier, R Core development Team
   
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,135 +20,54 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-  $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/Tracer.java,v $
+  $Revision: 1.4 $
+
+  $Date: 2000/02/10 17:03:55 $
   
-  $Revision: 1.3 $
+  $Author: leisch $
 
-  $Date: 1999/08/10 09:56:03 $
-  
-  $Author: ripley $
+============================================================================*/
 
-==============================================================================*/
-
-
-/* -------------------------------- Imports --------------------------------- */
 
 import java.applet.*;
 import java.awt.*;
 import java.net.*;
 import java.io.*;
 
-
-
-/*==============================================================================
-                          Interface of class Tracer
-==============================================================================*/
-
-/*------------------------------------------------------------------------------
-  CLASS:    Tracer
-  SUPER:    Frame
-  CONF. TO: 
-  PURPOSE:  provide a tracing interface for every browser
-  NOTES:    
-
-  HISTORY:  98-05-10: created
-------------------------------------------------------------------------------*/
 public class Tracer extends Frame
 {
-  /*============================================================================
-                                Public methods
-  ============================================================================*/
-
-  /*----------------------------------------------------------------------------
-    INTERFACE: 
-    PURPOSE:   application front-end, create tracer if required, trace string
-  	      
-    NOTES:     
-  
-    PARAMS:    
-    THROWS:    
-    RETURNS:   void
-  
-    HISTORY:   98-05-10: created
-  ----------------------------------------------------------------------------*/
   public static void write (String string)
   {
     //create a trace window
-//       if (cTracer == null) {
- //        cTracer = new Tracer ();
- //      }
+    /*
+    if (cTracer == null) {
+      cTracer = new Tracer ();
+    }
     
- //      cTracer._write (string);
-
+    cTracer._write (string);
+    */
     return;
   }
 
-
-  /*----------------------------------------------------------------------------
-    INTERFACE: 
-    PURPOSE:   
-  	      
-    NOTES:     
-  
-    PARAMS:    
-    THROWS:    
-    RETURNS:   void
-  
-    HISTORY:   98-05-10: created
-  ----------------------------------------------------------------------------*/
   public static void start ()
   {
-  //  if (cTracer != null) {
-  //    cTracer.show ();
- //   }
-
+    /*
+    if (cTracer != null) {
+      cTracer.show ();
+    }
+    */
     return;
   }
 
-
-  /*----------------------------------------------------------------------------
-    INTERFACE: 
-    PURPOSE:   
-  	      
-    NOTES:     
-  
-    PARAMS:    
-    THROWS:    
-    RETURNS:   void
-  
-    HISTORY:   98-05-10: created
-               98-11-14: replaced deprecated hide() with setVisible()
-  ----------------------------------------------------------------------------*/
   public static void stop ()
   {
-  //  if (cTracer != null) {
-   //   cTracer.setVisible (false);
+    //    if (cTracer != null) {
+    //  cTracer.setVisible (false);
     //}
 
     return;
   }
 
-
-  /*============================================================================
-                              Protected methods
-  ============================================================================*/
-
-  /*============================================================================
-                               Private methods
-  ============================================================================*/
-
-  /*----------------------------------------------------------------------------
-    INTERFACE: 
-    PURPOSE:   default constructor
-  	      
-    NOTES:    
-  
-    PARAMS:   
-    THROWS:    
-    RETURNS:   void
-  
-    HISTORY:   98-05-10: created
-  ----------------------------------------------------------------------------*/
   private Tracer ()
   {
     super ("Java Applet Tracer");
@@ -175,19 +94,6 @@ public class Tracer extends Frame
   }
 
 
-  /*----------------------------------------------------------------------------
-    INTERFACE: 
-    PURPOSE:   write a string to the tracer
-  	      
-    NOTES:     
-  
-    PARAMS:    
-    THROWS:    
-    RETURNS:   void
-  
-    HISTORY:   98-05-10: created
-               98-11-14: replaced deprecated appendText() with append()
-  ----------------------------------------------------------------------------*/
   private void _write (String string)
   {
     iOutput.append (string);
@@ -195,47 +101,9 @@ public class Tracer extends Frame
     return;
   }
 
-
-  /*============================================================================
-                             Instance Variables
-  ============================================================================*/
   private TextArea iOutput;
-
-  /*============================================================================
-                                Static Data
-  ============================================================================*/
   private static Tracer cTracer = null;
-
 }
-
-
-/*==============================================================================
-
-  HISTORY:
-  
-  $Log: Tracer.java,v $
-  Revision 1.3  1999/08/10 09:56:03  ripley
-  change FSF address in copyrights
-  add some copyrights in src/gnome and elsewhere
-
-  Revision 1.2  1999/03/04 17:15:19  leisch
-  various bugfixes
-
-  Revision 1.1.4.1  1999/03/02 15:19:58  leisch
-  search used only kewords, no titles
-
-  Revision 1.3  1998/11/14 23:33:25  baier
-  adjusted to JDK 1.1
-
-  Revision 1.2  1998/05/10 22:57:14  baier
-  tracer window disabled
-
-  Revision 1.1  1998/05/10 02:44:44  baier
-  Initial revision
-
-
-==============================================================================*/
-
 
 // Local Variables:
 // mode: Java

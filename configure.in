@@ -738,6 +738,7 @@ AC_OUTPUT(Makeconf
   tools/Rdnewer
   tools/help2man
   tools/keyword-test
+  tools/keywords2html
   tools/install-info
   tools/pkg2tex
 )
@@ -748,6 +749,7 @@ AC_OUTPUT_COMMANDS(
   tools/help2man \
   tools/install-info \
   tools/keyword-test \
+  tools/keywords2html \
   tools/pkg2tex
 )
 

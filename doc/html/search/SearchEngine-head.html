@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>R: Search Engine</title>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../R.css">
+
+<script language="JavaScript">
+<!-- 
+
+// searching is disabled until the applet is initialized
+enableSearch = false;
+
+function searchInIndex (searchTerm, searchDesc,
+                        searchKeywords, searchAliases)
+{
+  // if the applet is not initialized, ignore search results
+  if (enableSearch == false) {
+    return "";
+  }
+  line =        '<html><head>\n';
+  line = line + '<title>Search Results</title>\n';
+  line = line + '<link rel=stylesheet type="text/css" href="../R.css">';
+  line = line + '\n';
+
+  line = line + '<body>\n';
+
+  line = line + '<h1>Search Results</h1>\n';
+
+  // call the applet code!
+  line = line + document.SearchEngine.search (searchTerm,
+                                        searchDesc=="1",
+                                        searchKeywords=="1",
+                                        searchAliases=="1");
+
+  line = line + '</body>\n';
+
+  document.write (line);
+
+  // this makes it all work as expected, stops loading and after following
+  // a link the search results will be displayed again.
+  document.close ();
+  return "";
+}
+//-->
+
+</script>
+</head>
+
+<body onLoad='enableSearch=true;'>
+
+<H1>Search Engine <img class=toplogo src="../logo.jpg"></H1>
+
+<HR WIDTH="100%">
+
+<h2>Search</h2>
+
+<p>
+You can search for keywords, function and data names and text in help
+page titles.
+
+<p>
+<b>Usage:</b> Enter a string in the text field below and hit
+<code>RETURN</code>.
+
+<form name="f"
+     onSubmit="searchInIndex (document.f.SEARCHTERM.value,
+                              document.f.TITLES.checked,
+                              document.f.KEYWORDS.checked,
+                              document.f.ALIASES.checked);
+                              return false;">
+<INPUT TYPE=TEXT NAME="SEARCHTERM" SIZE=20 MAXLENGTH=256 VALUE="">
+<INPUT NAME="TITLES" TYPE=CHECKBOX CHECKED VALUE="1"> Help page titles
+<INPUT NAME="KEYWORDS" TYPE=CHECKBOX CHECKED VALUE="1"> Keywords
+<INPUT NAME="ALIASES" TYPE=CHECKBOX CHECKED VALUE="1"> Object names<br>
+<INPUT VALUE="Search" TYPE=SUBMIT>
+<INPUT VALUE="Reset" TYPE=RESET>
+</form>
+
+
+<HR WIDTH="100%">
+
+<p>
+<h2>Keywords</h2>
+
+<p>
+<h3>Keywords by Topic</h3>
+
+
