@@ -2,7 +2,7 @@
 \alias{tapply}
 \title{Apply a Function Over a ``Ragged'' Array}
 \description{
-  Apply a function to each cell of a ragged array, i.e., for to each
+  Apply a function to each cell of a ragged array, that is to each
   (non-empty) group of values given by a unique combination of the
   levels of certain factors.
 }

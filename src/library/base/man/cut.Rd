@@ -9,7 +9,7 @@ cut.default(x, breaks, labels = NULL,
 \alias{cut.default}
 \arguments{
 \item{x}{a numeric vector which is to be converted to a factor by cutting.}
-\item{break}{either a vector of cut points or number
+\item{breaks}{either a vector of cut points or number
   giving the number of intervals which \code{x} is to be cut into.}
 \item{labels}{labels for the levels of the resulting category.  By default,
     labels are constructed using \code{"(a,b]"} interval notation. If
