@@ -18,7 +18,7 @@
 
 \method{as.character}{POSIXt}(x, \dots)
 
-strftime(x, format="\%Y-\%m-\%d \%X", usetz = FALSE, \dots)
+strftime(x, format="", usetz = FALSE, \dots)
 strptime(x, format)
 
 ISOdatetime(year, month, day, hour, min, sec, tz = "")
@@ -29,7 +29,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \item{tz}{A timezone specification to be used for the conversion.
     System-specific, but \code{""} is the current time zone, and
     \code{"GMT"} is UTC.}
-  \item{format}{A character vector. The default is
+  \item{format}{A character string.  The default is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
     otherwise.}

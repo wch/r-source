@@ -1,7 +1,5 @@
 \name{HoltWinters}
 \alias{HoltWinters}
-%\alias{print.HoltWinters}
-%\alias{residuals.HoltWinters}
 \title{Holt-Winters Filtering}
 \description{
   Computes Holt-Winters Filtering of a given time series.
@@ -10,10 +8,11 @@
 }
 \usage{
 HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
-          seasonal = "additive", start.periods = 3,
-          l.start = NULL, b.start = NULL, s.start = NULL,
-          optim.start = c(alpha = 0.3, beta = 0.1, gamma = 0.1),
-          optim.control = list())
+            seasonal = c("additive", "multiplicative"),
+            start.periods = 3, l.start = NULL, b.start = NULL,
+            s.start = NULL,
+            optim.start = c(alpha = 0.3, beta = 0.1, gamma = 0.1),
+            optim.control = list())
 }
 \arguments{
   \item{x}{An object of class \code{ts}}
@@ -112,7 +111,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 library(ts)
 data(co2)
 
-%% Seasonal Holt-Winters
+## Seasonal Holt-Winters
 (m <- HoltWinters(co2))
 plot(m)
 plot(fitted(m))
@@ -121,17 +120,14 @@ data(AirPassengers)
 (m <- HoltWinters(AirPassengers, seasonal = "mult"))
 plot(m)
 
-%% Non-Seasonal Holt-Winters
+## Non-Seasonal Holt-Winters
 data(uspop)
 x <- uspop + rnorm(uspop, sd = 5)
 m <- HoltWinters(x, gamma = 0)
 plot(m)
 
-%% Exponential Smoothing
+## Exponential Smoothing
 m2 <- HoltWinters(x, gamma = 0, beta = 0)
 lines(fitted(m2)[,1], col = 3)
 }
 \keyword{ts}
-
-
-

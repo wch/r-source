@@ -20,7 +20,7 @@ update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
 		installWithVers=FALSE)
 
 installed.packages(lib.loc = NULL, priority = NULL)
-CRAN.packages(CRAN = getOption("CRAN"), method = "auto",
+CRAN.packages(CRAN = getOption("CRAN"), method,
               contriburl = contrib.url(CRAN))
 old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
@@ -28,7 +28,7 @@ old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
 
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = getOption("CRAN"),
-                  contriburl = contrib.url(CRAN), method = "auto")
+                  contriburl = contrib.url(CRAN))
 install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method, available = NULL, destdir = NULL,

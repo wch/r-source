@@ -7,8 +7,8 @@
 }
 \usage{
 grid.layout(nrow = 1, ncol = 1,
-        widths = unit(rep(1, ncol), "null", unit.per = T),
-        heights = unit(rep(1, nrow), "null", unit.per = T), 
+        widths = unit(rep(1, ncol), "null"),
+        heights = unit(rep(1, nrow), "null"),
         default.units = "null", respect = FALSE)
 }
 \arguments{

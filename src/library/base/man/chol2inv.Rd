@@ -7,7 +7,7 @@
   decomposition.
 }
 \usage{
-chol2inv(x, size = ncol(x), LINPACK = FALSE)
+chol2inv(x, size = NCOL(x), LINPACK = FALSE)
 La.chol2inv(x, size = ncol(x))
 }
 \arguments{
@@ -22,19 +22,25 @@ La.chol2inv(x, size = ncol(x))
   The inverse of the decomposed matrix.
 }
 \details{
-  \code{chol2inv(LINPACK=TRUE)} provides an interface to the LINPACK routine DPODI.
+  \code{chol2inv(LINPACK=TRUE)} provides an interface to the LINPACK
+  routine DPODI.
   \code{La.chol2inv} provides an interface to the LAPACK routine DPOTRI.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide}.  Philadelphia: SIAM Publications.
+  \emph{LINPACK Users Guide}.
+  Philadelphia: SIAM Publications.
 
   Anderson. E. and ten others (1999)
-  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  \emph{LAPACK Users' Guide}. Third Edition.
+  SIAM.
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
-\seealso{\code{\link{chol}}, \code{\link{solve}}.}
+\seealso{
+  \code{\link{chol}},
+  \code{\link{solve}}.
+}
 \examples{
 cma <- chol(ma  <- cbind(1, 1:3, c(1,3,7)))
 ma \%*\% chol2inv(cma)

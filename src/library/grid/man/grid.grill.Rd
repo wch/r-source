@@ -7,7 +7,7 @@
 \usage{
 grid.grill(h = unit(seq(0.25, 0.75, 0.25), "npc"),
            v = unit(seq(0.25, 0.75, 0.25), "npc"),
-           default.units = "npc", gp=gpar(), vp = NULL)
+           default.units = "npc", gp=gpar(col = "grey"), vp = NULL)
 }
 \arguments{
   \item{h}{A numeric vector or unit object

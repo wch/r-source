@@ -5,8 +5,8 @@
   This function draws data symbols.
 }
 \usage{
-grid.points(x = unit(runif(10), "native"),
-            y = unit(runif(10), "native"),
+grid.points(x = runif(10),
+            y = runif(10)),
             pch = 1, size = unit(1, "char"),
             default.units = "native", 
             gp=gpar(), draw = TRUE, vp = NULL)
