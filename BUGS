@@ -222,10 +222,14 @@ none
 
 Directory:  incoming
 
-* PR# 655 *
-Subject: Installing R from source 
-From: jniesch@gwdg.de
-Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
+* PR# 657 *
+Subject: Error on demo(tkttest)Version R.1.1.1
+From: "Patrick Yuk-lun Ma M.D. / BV5DD" <bv5ddma@mail.educities.edu.tw>
+Date: Mon, 11 Sep 2000 22:28:26 +0800
+* PR# 640 *
+Subject: diff.default / diff.ts in wrong package bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
 * PR# 653 *
 Subject: bug in spline()?
 From: Ian White <imsw@holyrood.ed.ac.uk>
@@ -234,7 +238,11 @@ Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
 Subject: R INSTALL *.tgz fails (minor docs/feature bug)
 From: RPO <bobbyo@speakeasy.org>
 Date: Sat, 2 Sep 2000 13:34:22 -0700 (PDT)
-* PR# 640 *
-Subject: diff.default / diff.ts in wrong package bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
+* PR# 656 *
+Subject: .Random.seed resetting
+From: lej25@statslab.cam.ac.uk
+Date: Mon, 11 Sep 2000 13:13:27 +0200 (MET DST)
+* PR# 655 *
+Subject: Installing R from source 
+From: jniesch@gwdg.de
+Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
