@@ -67,7 +67,8 @@ The current version of this document is @value{VERSION}.
 * Tidying and profiling R code::  
 * System and foreign language interfaces::  
 * The R API::                   
-* R (internal) programming miscellania::  
+* Generic functions and methods::  
+* R (internal) programming miscellanea::  
 * R coding standards::          
 * Function and variable index::  
 * Concept index::               
@@ -478,7 +479,7 @@ Also, @file{Makevars} can be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options.
 
 There are some macros which are built whilst configuring the building of
-@R{} itself, arestored in @file{R_HOME/etc/Makeconf} and can be used in
+@R{} itself, are stored in @file{R_HOME/etc/Makeconf} and can be used in
 @file{Makevars}.  These include
 
 @table @code
@@ -493,7 +494,7 @@ A macro containing the BLAS libraries used when building @R{}.  This may
 need to be included in @code{PKG_LIBS}.  Beware that if it is empty then
 the @R{} executable will only contain the subset of BLAS routines needed
 for the LINPACK/EISPACK routines actually in @R{} (and not even the BLAS
-routined for the LAPACK routines used).
+routines for the LAPACK routines used).
 @end table
 
 
@@ -670,7 +671,7 @@ OOP_0.1-3_Splus6_sparc-sun-solaris.tar.gz
 is a binary package for installation under Splus6 on the given
 platform.
 
-This naming scheme has been adopted to ensure useability of code across
+This naming scheme has been adopted to ensure usability of code across
 S engines.  R code and utilities operating on package @file{.tar.gz}
 files can only be assumed to work provided that this naming scheme is
 respected.  E.g., @code{R CMD INSTALL} will not work on
@@ -1384,7 +1385,7 @@ chapter.
 @cindex Tidying R code
 
 @R{} treats function code loaded from packages and code entered by users
-differently.  Code entered by users has the source code stoed in an
+differently.  Code entered by users has the source code stored in an
 attribute, and when the function is listed, the original source is
 reproduced.  Loading code from a package (by default) discards the
 source code, and the function listing is re-created from the parse tree
@@ -3340,7 +3341,7 @@ $6 = 1
 $7 = 5
 @end smallexample
 
-@node The R API, R (internal) programming miscellania, System and foreign language interfaces, Top
+@node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
@@ -4079,16 +4080,149 @@ set_seed(unsigned int, unsigned int)
 @noindent
 to set its seeds).
 
+@node Generic functions and methods, R (internal) programming miscellanea, The R API, Top
+@chapter Generic functions and methods
+@cindex Generic functions
+@cindex Method functions
 
-@node R (internal) programming miscellania, R coding standards, The R API, Top
-@appendix R (internal) programming miscellania
+@R{} programmers will often want to add methods for existing generic
+functions, and may want to add new generic functions or make existing
+functions generic.  In this chapter we give guidelines for doing so,
+with examples of the problems caused by not adhering to them.
+
+This chapter only covers the `informal' class system copied from S3,
+and not with the formal methods of package @pkg{methods} of @R{} 1.4.0
+and later.
+
+The key function for methods is @code{NextMethod}, which dispatches the
+next method.  It is quite typical for a method function to make a
+few changes to its arguments, dispatch to the next method, receive the
+results and modify them a little.  An example is
+@smallexample
+t.data.frame <- function(x)
+@{
+    x <- as.matrix(x)
+    NextMethod("t")
+@}
+@end smallexample
+Also consider @code{predict.glm}: it happens that in @R{} for historical
+reasons it calls @code{predict.lm} directly, but in principle (and in S
+originally and currently) it could use @code{NextMethod}.
+(@code{NextMethod} seems under-used in the @R{} sources.)
+
+@emph{Any} method a programmer writes may be invoked from
+another method by @code{NextMethod}, @emph{with the arguments
+appropriate to the previous method}.  Further, the programmer cannot
+predict which method @code{NextMethod} will pick (it might be one not
+yet dreamt of), and the end user calling the generic needs to be able to
+pass arguments to the next method.  For this to work
+@quotation
+@emph{A method must have all the arguments of the generic, including 
+@code{@dots{}} if the generic does.}
+@end quotation
+
+It is a grave misunderstanding to think that a method needs only to
+accept the arguments it needs.  The original S version of
+@code{predict.lm} did not have a @code{@dots{}} argument, although
+@code{predict} did.  It soon became clear that @code{predict.glm} needed
+an argument @code{dispersion} to handle over-dispersion.  As
+@code{predict.lm} had neither a @code{dispersion} nor a @code{@dots{}}
+argument, @code{NextMethod} could no longer be used.  (The legacy, two
+direct calls to @code{predict.lm}, lives on in @code{predict.glm} in
+@R{}, which is based on the workaround for S3 written by Venables & Ripley.)
+
+Further, the user is entitled to use positional matching when calling
+the generic, and the arguments to a method called by @code{UseMethod}
+are those of the call to the generic.  Thus
+@quotation
+@emph{A method must have arguments in exactly the same order as the
+generic.}
+@end quotation
+@noindent
+To see the scale of this problem, consider the generic function
+@code{scale}, defined (in @R{} 1.4.0) as
+@smallexample
+scale <- function (x, center = TRUE, scale = TRUE) 
+    UseMethod("scale")
+@end smallexample
+@noindent
+Suppose an unthinking package writer created methods such as
+@smallexample
+scale.foo <- function(x, scale = FALSE, ...) @{ @}
+@end smallexample
+@noindent
+Then for @code{x} of class @code{"foo"} the calls
+@smallexample
+scale(x, , TRUE)
+scale(x, scale = TRUE)
+@end smallexample
+@noindent
+would do most likely do different things, to the justifiable
+consternation of the end user.
+
+To add a further twist, which default is used when a user calls
+@code{scale(x)} in our example?  What if
+@smallexample
+scale.bar <- function(x, center, scale = TRUE) NextMethod("scale")
+@end smallexample
+@noindent
+and @code{x} has class @code{c("bar", "foo")}?  We are not going to give
+you the answers because it is unreasonable that a user should be
+expected to anticipate such behaviour.  This leads to the
+recommendation:
+@quotation
+@emph{A method should use the same defaults as the generic.}
+@end quotation
+@noindent
+Here there might be justifiable exceptions, which will need
+careful documentation.
+
+@menu
+* Adding new generics::         
+@end menu
+
+@node Adding new generics,  , Generic functions and methods, Generic functions and methods
+@section Adding new generics
+
+When creating a new generic function, bear in mind that its argument
+list will be the maximal set of arguments for methods, including those
+written elsewhere years later.  So choosing a good set of arguments may
+well be an important design issue, and there need to be good arguments
+@emph{not} to include a @code{@dots{}} argument.
+
+If a @code{@dots{}} argument is supplied, some thought should be given
+to its position in the argument sequence.  Arguments which follow
+@code{@dots{}} must be named in calls to the function, and they must be
+named in full (partial matching is suppressed after @code{@dots{}}).
+Formal arguments before @code{@dots{}} can be partially matched, and so
+may `swallow' actual arguments intended for @code{@dots{}}.  Although it
+is commonplace to make the @code{@dots{}} argument the last one, that is
+not always the right choice.
+
+Sometimes package writers want to make generic a function in the base
+package, and request a change in @R{}.  This may be justifiable, but
+making a function generic with the old definition as the default method
+does have a small performance cost.  It is never necessary, as a package
+can take over a function in the base package and make it generic by
+@smallexample
+foo <- function(object, ...) UseMethod("foo")
+foo.default <- get("foo", pos = NULL, mode="function")
+@end smallexample
+
+Note that this cannot be used for functions in another package, as the
+order of packages on the search path cannot be controlled, except that
+all precede the base package.
+
+
+@node R (internal) programming miscellanea, R coding standards, Generic functions and methods, Top
+@appendix R (internal) programming miscellanea
 
 @menu
 * .Internal and .Primitive::    
 * Testing R code::              
 @end menu
 
-@node .Internal and .Primitive, Testing R code, R (internal) programming miscellania, R (internal) programming miscellania
+@node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea
 @section @code{.Internal} and @code{.Primitive}
 
 @findex .Internal
@@ -4245,7 +4379,7 @@ UseMethod  invisible
 
 @end enumerate
 
-@node Testing R code,  , .Internal and .Primitive, R (internal) programming miscellania
+@node Testing R code,  , .Internal and .Primitive, R (internal) programming miscellanea
 @section Testing R code
 
 When you (as @R{} developer) add new functions to the R base (all the
@@ -4256,7 +4390,7 @@ computer).  If the new function, for example, accesses the Internet, or
 requires @acronym{GUI} interaction, please add its name to the ``stop
 list'' in @file{tests/no-segfault.Rin}.
 
-@node R coding standards, Function and variable index, R (internal) programming miscellania, Top
+@node R coding standards, Function and variable index, R (internal) programming miscellanea, Top
 @appendix R coding standards
 
 @R{} is meant to run on a wide variety of platforms, including Linux and
