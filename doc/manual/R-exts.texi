@@ -768,9 +768,15 @@ respectively (@pxref{Creating shared objects}).
 Also, @file{Makevars} can be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options.
 
+When writing a @file{Makevars} file for a package you intend to
+distribute, take care to ensure that it is not specific to your
+compiler: flags such as @code{-O2 -Wall -pedantic} are all specific to
+@code{gcc}.
+
 There are some macros which are built whilst configuring the building of
-@R{} itself, are stored in @file{@var{R_HOME}/etc/Makeconf} and can be
-used in @file{Makevars}.  These include
+@R{} itself, are stored on Unix-alikes in
+@file{@var{R_HOME}/etc/Makeconf} and can be used in @file{Makevars}.
+These include
 
 @table @code
 @item FLIBS
@@ -784,7 +790,8 @@ A macro containing the BLAS libraries used when building @R{}.  This
 may need to be included in @code{PKG_LIBS}.  Beware that if it is
 empty then the @R{} executable will contain all the double-precision
 BLAS routines, but no single-precision, complex nor double-complex
-routines.
+routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
+to be, as most BLAS libraries are written in FORTRAN.
 
 @item LAPACK_LIBS
 @vindex LAPACK_LIBS
@@ -800,8 +807,8 @@ BLAS library also contains LAPACK.
 more than the double-precision and double-complex driver routines used
 by @R{}, and some do not provide all the auxiliary routines.]
 
-The macro @code{BLAS_LIBS} should always be included @emph{after}
-@code{LAPACK_LIBS}.
+The macros @code{BLAS_LIBS} and @code{FLIBS} should always be included
+@emph{after} @code{LAPACK_LIBS}.
 @end table
 
 
