@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1997-2001   the R Development Core Team
+ *  Copyright (C) 1997-2001  The R Development Core Team
+ *  Copyright (C) 2003-2004  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,26 +22,24 @@
 /* fmin.f -- translated by f2c (version 19990503).
 */
 
-
 /* R's  optimize() :   function	fmin(ax,bx,f,tol)
    =    ==========		~~~~~~~~~~~~~~~~~
 
         an approximation  x  to the point where  f  attains a minimum  on
     the interval  (ax,bx)  is determined.
 
-    input..
+    INPUT..
 
     ax    left endpoint of initial interval
     bx    right endpoint of initial interval
     f     function which evaluates  f(x, info)  for any  x
           in the interval  (ax,bx)
     tol   desired length of the interval of uncertainty of the final
-          result (.ge.0.)
+          result ( >= 0.)
 
-    output..
+    OUTPUT..
 
-    fmin  abcissa approximating the point where  f  attains a
-          minimum
+    fmin  abcissa approximating the point where  f  attains a minimum
 
         The method used is a combination of  golden  section  search  and
     successive parabolic interpolation.  convergence is never much slower
@@ -78,10 +77,9 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
     double a, b, d, e, p, q, r, u, v, w, x;
     double t2, fu, fv, fw, fx, xm, eps, tol1, tol3;
 
-/*  eps is approximately the square root of the relative machine
-    precision. */
+/*  eps is approximately the square root of the relative machine precision. */
     eps = d1mach(4);
-    tol1 = eps + 1.;
+    tol1 = eps + 1.;/* the smallest 1.000... > 1 */
     eps = sqrt(eps);
 
     a = ax;
@@ -90,9 +88,7 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
     w = v;
     x = v;
 
-/*  -Wall indicates that d may be used before being assigned */
-
-    d = 0.;
+    d = 0.;/* -Wall */
     e = 0.;
     fx = (*f)(x, info);
     fv = fx;
@@ -106,15 +102,13 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 	tol1 = eps * fabs(x) + tol3;
 	t2 = tol1 * 2.;
 
-/*  check stopping criterion */
+	/* check stopping criterion */
 
 	if (fabs(x - xm) <= t2 - (b - a) * .5) break;
 	p = 0.;
 	q = 0.;
 	r = 0.;
-	if (fabs(e) > tol1) {
-
-/*     fit parabola */
+	if (fabs(e) > tol1) { /* fit parabola */
 
 	    r = (x - w) * (fx - fv);
 	    q = (x - v) * (fx - fw);
@@ -124,78 +118,64 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 	    r = e;
 	    e = d;
 	}
-	if (fabs(p) >= fabs(q * .5 * r) ||
-	    p <= q * (a - x) || p >= q * (b - x)) {
 
-/*     a golden-section step */
+	if (fabs(p) >= fabs(q * .5 * r) ||
+	    p <= q * (a - x) || p >= q * (b - x)) { /* a golden-section step */
 
 	    if (x < xm) e = b - x; else e = a - x;
 	    d = c * e;
-	} else {
-
-/*     a parabolic-interpolation step */
+	}
+	else { /* a parabolic-interpolation step */
 
 	    d = p / q;
 	    u = x + d;
 
-/*     f must not be evaluated too close to ax or bx */
+	    /* f must not be evaluated too close to ax or bx */
 
-	    if (u - a >= t2 && b - u >= t2) goto L90;
-	    d = tol1;
-	    if (x >= xm) d = -d;
-	}
-
-/* f must not be evaluated too close to x */
-
-    L90:
-	if (fabs(d) >= tol1) {
-	    u = x + d;
-	} else {
-	    if (d > 0.) {
-		u = x + tol1;
-	    } else {
-		u = x - tol1;
+	    if (u - a < t2 || b - u < t2) {
+		d = tol1;
+		if (x >= xm) d = -d;
 	    }
 	}
+
+	/* f must not be evaluated too close to x */
+
+	if (fabs(d) >= tol1)
+	    u = x + d;
+	else if (d > 0.)
+	    u = x + tol1;
+	else
+	    u = x - tol1;
+
 	fu = (*f)(u, info);
 
-/*  update  a, b, v, w, and x */
+	/*  update  a, b, v, w, and x */
 
 	if (fx <= fu) {
-	    if (u < x) {
+	    if (u < x)
 		a = u;
-	    } else {
+	    else
 		b = u;
-	    }
 	}
 	if (fu <= fx) {
-	    if (u < x) {
+	    if (u < x)
 		b = x;
-	    } else {
+	    else
 		a = x;
-	    }
-	    v = w;
-	    fv = fw;
-	    w = x;
-	    fw = fx;
-	    x = u;
-	    fx = fu;
-	} else {
+	    v = w;    w = x;   x = u;
+	    fv = fw; fw = fx; fx = fu;
+	}
+	else {
 	    if (fu <= fw || w == x) {
-		v = w;
-		fv = fw;
-		w = u;
-		fw = fu;
-	    } else {
-		if (fu <= fv || v == x || v == w) {
-		    v = u;
-		    fv = fu;
-		}
+		v = w; fv = fw;
+		w = u; fw = fu;
+	    }
+	    else if (fu <= fv || v == x || v == w) {
+		v = u; fv = fu;
 	    }
 	}
     }
-/*  end of main loop */
+    /* end of main loop */
 
     return x;
 }
-
