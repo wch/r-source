@@ -43,6 +43,7 @@ test-src-lapack = lapack.R
 test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
 test-src-postscript = ps-tests.R
+test-src-ts = ts-tests.R
 
 test-src-reg-1 = \
 	reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
@@ -64,6 +65,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.Rout.save reg-tests-2.Rout.save \
+	$(test-src-ts) \
 	gct-foot.R \
 	nanbug.rda
 SUBDIRS = Embedding Examples
@@ -82,10 +84,12 @@ test-out-nafns = $(test-src-nafns:.R=.Rout)
 test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-ts = $(test-src-ts:.R=.Rout)
 
 test-out = $(test-src:.R=.Rout) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
-	$(test-out-random) $(test-out-postscript) $(test-out-reg)
+	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
+	$(test-out-ts)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct
@@ -179,6 +183,9 @@ test-Random:
 test-Reg:
 	@echo "running regression tests"
 	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=0
+test-Ts:
+	@echo "running tests of package ts functions"
+	@$(MAKE) $(test-out-ts) RVAL_IF_DIFF=0
 test-DocArgs:
 	@echo "checking whether arguments from usage are documented"
 	@for p in $(R_PKGS); do \
