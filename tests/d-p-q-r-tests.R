@@ -434,7 +434,7 @@ All.eq(log(1 - Pwilcox),   pwilcox  (Rwilcox, m = 13, n = 17, lower=F, log=T))
 All.eq(1, -1e-17/ pexp(qexp(-1e-17, log=TRUE),log=TRUE))
 abs(pgamma(30,100, lower=FALSE, log=TRUE) + 7.3384686328784e-24) < 1e-36
 All.eq(1, pcauchy(-1e20)           /  3.18309886183791e-21)
-All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)
+All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
 for(x in 10^c(15,25,50,100,200))
     print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
 
@@ -442,5 +442,8 @@ pr <- 1e-23 ## PR#6757
 stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
                     tol= 1e-12, scale= 1e-270))
 ## pbinom(.) gave 0 in R 1.9.0
+pp <- 1e-17 ## PR#6792
+stopifnot(all.equal(2*pp, pgeom(1, pp), scale= 1e-20))
+## pgeom(.) gave 0 in R 1.9.0
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

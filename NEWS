@@ -24,6 +24,9 @@ BUG FIXES
     o	pcauchy(x, .., log.p) is now more accurate for large x,
 	particularly when log.p = TRUE. (PR#6756)
 
+    o	pgeom(q, prob, lower.tail, log.p) is now (sometimes much) more
+	accurate when prob is very small (PR#6792).
+
     o	makeARIMA() was not handling an ARMA(0, 0) model correctly.
 
     o	as.Date() was failing on factors.  (PR#6779)
