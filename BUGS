@@ -252,10 +252,10 @@ none
 
 Directory:  incoming
 
-* PR# 1025 *
-Subject: ordered factors in tree package - bug?
-From: Kevin Murphy <murphyk@cs.berkeley.edu>
-Date: Fri, 13 Jul 2001 14:17:01 -0700
+* PR# 1026 *
+Subject: make check failure on SGI-IRIX6.5
+From: laurent@cbs.dtu.dk
+Date: Mon, 16 Jul 2001 15:06:17 +0200 (MET DST)
 * PR# 1010 *
 Subject: plot.mts() with type="p"
 From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
@@ -284,23 +284,19 @@ Date: 2001/07/05
 Date: 2001/06/28
 * PR# 1016 *
 From: B9r5R15Rw@verizon.com
-* PR# 1020 *
-Subject: .Call and Mandrake 8.0
-From: lcottret@yahoo.fr
-Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
-* PR# 1019 *
-Subject: Mis-matched braces in Rd files
-From: Duncan Murdoch <murdoch@stats.uwo.ca>
-Date: Tue, 10 Jul 2001 15:51:32 -0400
-* PR# 1024 *
-Subject: data(package = "..") gives extraneous warning
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 13 Jul 2001 16:09:00 +0200
-* PR# 1023 *
-Subject: data function
-From: wild@stat.auckland.ac.nz
-Date: Fri, 13 Jul 2001 02:48:53 +0200 (MET DST)
 * PR# 1021 *
 Subject: Extra lines when bty="n"
 From: ce@biostat.ku.dk
 Date: Wed, 11 Jul 2001 23:23:53 +0200 (MET DST)
+* PR# 1020 *
+Subject: .Call and Mandrake 8.0
+From: lcottret@yahoo.fr
+Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
+* PR# 1025 *
+Subject: ordered factors in tree package - bug?
+From: Kevin Murphy <murphyk@cs.berkeley.edu>
+Date: Fri, 13 Jul 2001 14:17:01 -0700
+* PR# 1023 *
+Subject: data function
+From: wild@stat.auckland.ac.nz
+Date: Fri, 13 Jul 2001 02:48:53 +0200 (MET DST)
