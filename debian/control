@@ -3,98 +3,230 @@ Section: math
 Priority: optional
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
 Standards-Version: 3.5.0
-Build-Depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.3-dev, tk8.3-dev, libglade-gnome0-dev, bison, g77 [!m68k !ia64], g77-3.0 [ia64], f2c [m68k], gcc-3.0 [ia64], g++-3.0 [ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0)
+Build-Depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.3-dev, tk8.3-dev, libglade-gnome0-dev, bison, g77 [!m68k !ia64], g77-3.0 [ia64], f2c [m68k], gcc-3.0 [ia64], g++-3.0 [ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0), texi2html
 
 Package: r-base
-Architecture: any
-Depends: ${perl:Depends}, zlib-bin, ${shlibs:Depends}
-Conflicts: r-cran
-Suggests: g77, libpaperg, ess, r-recommended
-Description: `GNU S' - A language and environment for statistical computing.
- R is described by its authors as "not unlike" S, which is a language
- developed at Bell Laboratories for statistical computing and graphics.
- It provides support for a variety of statistical and graphical analyses.
- R is a true computer language which contains a number of control-flow
- constructions for iteration and alternation.  It allows users to add
- additional functionality by defining new functions.  Fortran and C
- code can be linked and called at run time.
+Architecture: all
+Depends: r-base-core, r-base-html, r-base-latex
+Suggests: libpaperg, ess, r-doc-info | r-doc-pdf | r-doc-html
+Description: GNU R statistical computing language and environment
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
  .
  S is the statistician's Matlab and R is to S what Octave is to Matlab.
+ .
+ This packages is a meta-package which eases the transition from the 
+ pre-1.5.0 package setup with its larger r-base package. Once installed, it 
+ can be safely removed and apt-get will automatically upgrade its components
+ during future upgrades.  Providing this packages gives a way to users to 
+ then only install r-base-core (but not, say, r-base-latex) if they so desire.
+
+Package: r-base-core
+Architecture: any
+Depends: ${perl:Depends}, zlib-bin, ${shlibs:Depends}
+Replaces: r-base (<= 1.4.1-1)
+Recommends: r-recommended, r-base-dev
+Description: GNU R core of statistical computing language and environment
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
+ .
+ S is the statistician's Matlab and R is to S what Octave is to Matlab.
+ .
+ This package provides the core GNU R system from which only the optional
+ documentation packages r-base-html, r-base-latex, r-doc-html, r-doc-pdf 
+ and r-doc-info have been split off to somewhat reduce the size of this 
+ package. 
 
 Package: r-gnome
 Architecture: any
-Depends: r-base (= ${Source-Version}), ${shlibs:Depends}
-Description: `GNU S' - GNOME-enabled executable
- R is described by its authors as "not unlike" S, which is a language
- developed at Bell Laboratories for statistical computing and graphics.
- It provides support for a variety of statistical and graphical analyses.
- R is a true computer language which contains a number of control-flow
- constructions for iteration and alternation.  It allows users to add
- additional functionality by defining new functions.  Fortran and C
- code can be linked and called at run time.
+Depends: r-base-core (= ${Source-Version}), ${shlibs:Depends}
+Description: GNU R Gnome gui for statistical computing system
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
  .
- This package provides the executable linked with the GNOME libraries
- for use as in "R --gui=GNOME"
-
-Package: r-doc-pdf
-Architecture: all
-Section: doc
-Suggests: r-base, xpdf | acroread | pdf-viewer
-Description: `GNU S' documentation in pdf format
- R is described by its authors as "not unlike" S, which is a language
- developed at Bell Laboratories for statistical computing and graphics.
- It provides support for a variety of statistical and graphical analyses.
- R is a true computer language which contains a number of control-flow
- constructions for iteration and alternation.  It allows users to add
- additional functionality by defining new functions.  Fortran and C
- code can be linked and called at run time.
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
  .
- This packages provides the R manuals in pdf format. The sibling package
- r-doc-html provides the same manuals in html format.
-
-Package: r-doc-html
-Architecture: all
-Section: doc
-Suggests: r-base, mozilla | konqueror | links | lynx | www-browser
-Replaces: r-base
-Description: `GNU S' documentation in html format
- R is described by its authors as "not unlike" S, which is a language
- developed at Bell Laboratories for statistical computing and graphics.
- It provides support for a variety of statistical and graphical analyses.
- R is a true computer language which contains a number of control-flow
- constructions for iteration and alternation.  It allows users to add
- additional functionality by defining new functions.  Fortran and C
- code can be linked and called at run time.
- .
- This packages provides the R manuals in html format. The sibling package
- r-doc-pdf provides the same manuals in pdf format.
+ This package provides the dynamic link libraries needed to start GNU R
+ with the GNOME libraries frontend as in "R --gui=GNOME"
 
 Package: r-base-dev
 Architecture: all
-Depends: r-base, blas-dev (>= 1.0-9), build-essential, g77 | g77-3.0 | f2c, gcc | gcc-3.0, g++ | g++-3.0
-Description: `GNU S'  - Allow installation of auxillary R packages
- R is described by its authors as "not unlike" S, which is a language
- developed at Bell Laboratories for statistical computing and graphics.
- It provides support for a variety of statistical and graphical analyses.
- R is a true computer language which contains a number of control-flow
- constructions for iteration and alternation.  It allows users to add
- additional functionality by defining new functions.  Fortran and C
- code can be linked and called at run time.
+Depends: r-base-core, blas-dev (>= 1.0-9), build-essential, g77 | g77-3.0 | f2c, gcc | gcc-3.0, g++ | g++-3.0
+Description: GNU R installation of auxiliary GNU R packages 
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
  .
  This packages ensures that other Debian packages needed for installation of
- some auxillary R packages are installed.
+ some auxiliary R packages are installed.
 
 Package: r-mathlib
 Architecture: any
-Depends: r-base, r-base-dev
-Description: `GNU S'  - Standalone R math library
- R is described by its authors as "not unlike" S, which is a language
- developed at Bell Laboratories for statistical computing and graphics.
- It provides support for a variety of statistical and graphical analyses.
- R is a true computer language which contains a number of control-flow
- constructions for iteration and alternation.  It allows users to add
- additional functionality by defining new functions.  Fortran and C
- code can be linked and called at run time.
+Depends: r-base-core, r-base-dev
+Description: GNU R standalone mathematics library
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
  .
  This packages provides the libRmath shared and static libraries which can
  be called from standalone C or C++ code.
+
+Package: r-base-html
+Architecture: all
+Priority: extra
+Depends: r-base-core
+Replaces: r-base (<= 1.4.1-1)
+Description: GNU R html docs for statistical computing system functions
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
+ .
+ This packages provides html documentation suitable for browsing with a 
+ web-browser for the libraries included in the r-base package. It is not 
+ a required package as the same documentation is already included for 
+ on-line browsing. 
+
+Package: r-base-latex
+Architecture: all
+Priority: extra
+Depends: r-base-core
+Replaces: r-base (<= 1.4.1-1)
+Description: GNU R LaTeX docs for statistical computing system functions
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
+ .
+ This packages provides latex documentation suitable for off-line printing
+ for the libraries included in the r-base package. It is not a required 
+ package as the same documentation is already included for on-line browsing.
+
+Package: r-doc-pdf
+Architecture: all
+Priority: extra
+Section: doc
+Suggests: r-base-core, xpdf | acroread | pdf-viewer
+Description: GNU R pdf manuals for statistical computing system
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
+ .
+ This packages provides the R manuals in pdf format. The sibling packages
+ r-doc-html and r-doc-info provides the same manuals.
+
+Package: r-doc-html
+Architecture: all
+Priority: extra
+Section: doc
+Suggests: r-base-core, mozilla | konqueror | links | lynx | www-browser
+Replaces: r-base (<= 1.4.1-1)
+Description: GNU R html manuals for statistical computing system
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
+ .
+ This packages provides the R manuals in html format. The sibling packages
+ r-doc-pdf and r-doc-info provides the same manuals.
+
+Package: r-doc-info
+Architecture: all
+Section: doc
+Replaces: r-base (<= 1.4.1-1)
+Suggests: r-base-core, info (>= 3.12) | info-browser
+Description: GNU R info manuals statistical computing system
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ R is designed as a true computer language with control-flow
+ constructions for iteration and alternation, and it allows users to
+ add additional functionality by defining new functions. For
+ computationally intensive tasks, C, C++ and Fortran code can be
+ linked and called at run time.
+ .
+ This packages provides the R manuals in info format. The sibling packages
+ r-doc-html and r-doc-pdf provide the same manuals.

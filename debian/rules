@@ -1,11 +1,12 @@
 #!/usr/bin/make -f
 # debian/rules file for the Debian GNU/Linux r-base package
 # Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
-# Copyright 2001      by Dirk Eddelbuettel <edd@debian.org>
+# Copyright 2001-2002 by Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.38 2002/03/22 12:07:52 hornik Exp $
+# $Id: rules,v 1.39 2002/04/02 16:13:54 bates Exp $
 
-package		= r-base
+corepackage	= r-base-core
+latexpackage	= r-base-latex
 pdfpackage	= r-doc-pdf
 htmlpackage	= r-doc-html
 gnomepackage	= r-gnome
@@ -19,10 +20,13 @@ libver		= $(somaj).$(somin).$(sorel)
 
 debbase		:= $(CURDIR)/debian
 debtmp		:= $(debbase)/tmp
-debdoc		:= $(debbase)/$(package)/usr/share/doc/$(package)
+debdoc		:= $(debbase)/$(corepackage)/usr/share/doc/$(corepackage)
 debmat		:= $(debbase)/$(nmathpackage)
 
 arch		:= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+## set this to 1 if you want the skip the pdf creation and tests
+#skipparts	= 1
 
 # set this to 1 (default) if you want the Gnome GUI package
 gnome		= 1
@@ -32,14 +36,14 @@ else
 gnomeconfig	= --with-gnome
 endif
 
-export DH_VERBOSE=
-export DH_COMPAT=3
+#export DH_VERBOSE = 1
+export DH_COMPAT  = 3
 
 # edd 15 Aug 2001: default to blas, atlas can override it 
 atlas = --with-blas=blas
 
 # edd 02 Sep 2001: default to g77 but let m68k use f2c
-fortran 	= --with-f77=/usr/bin/g77
+fortrancompiler	= g77
 compiler	= gcc
 cxxcompiler	= g++
 
@@ -47,13 +51,13 @@ cxxcompiler	= g++
 compilerflags	= -O2
 # m68k barks when using g77, and when gcc use -O2
 ifeq ($(arch),m68k-linux)
-fortran		= --with-f2c
+fortrancompiler	= f2c
 compilerflags	= -O
 endif
 
 ## edd 09 Nov 2001  ia64 needs gcc-3.0, hppa gets it by default
 ifeq ($(arch),ia64-linux)
-fortran 	= --with-f77=/usr/bin/g77-3.0
+fortrancompiler = g77-3.0
 compiler	= gcc-3.0
 cxxcompiler	= g++-3.0
 compilerflags	= -O2
@@ -64,10 +68,9 @@ ifeq ($(arch),hppa-linux)
 compilerflags   = -O2 -ffunction-sections
 endif
 
-
 ## try gcc-3.0 on i386 -- appears to work
 #ifeq ($(arch),i386-linux)
-#fortran 	= --with-f77=/usr/bin/g77-3.0
+#fortrancompiler= g77-3.0
 #compiler	= gcc-3.0
 #cxxcompiler	= g++-3.0
 #compilerflags	= -O2
@@ -77,96 +80,135 @@ get-orig-source: upstream
 upstream:
 	links http://cran.us.r-project.org
 
-build: configure make-arch build-arch build-stamp
-build-stamp: 
-	touch build-stamp
+build: build-arch build-indep
 
 build-arch: configure make-arch build-arch-stamp
 build-arch-stamp:
+	@echo "*** build-arch ***"
 	touch build-arch-stamp
+
+build-indep: configure make-indep build-indep-stamp
+build-indep-stamp:
+	@echo "*** build-indep ***"
+	touch build-indep-stamp
 
 configure: configure-stamp
 configure-stamp:	
+	@echo "*** configure ***"
 	dh_testdir
 	R_UNZIPCMD=/usr/bin/miniunzip 			\
 	R_ZIPCMD=/usr/bin/minizip 			\
 	CC=${compiler} 					\
 	CXX=${cxxcompiler} 				\
+	FC=${fortrancompiler}				\
 	CPPFLAGS= LIBS=	FLIBS=-lg2c-pic			\
-	./configure --prefix=/usr		     \
-		    --with-tcltk		     \
-		    --with-tcl-config=/usr/lib/tcl8.3/tclConfig.sh 	\
-		    --with-tk-config=/usr/lib/tk8.3/tkConfig.sh 	\
-		    --mandir=$(debtmp)/usr/share/man \
-		    $(fortran)			     \
-		    $(atlas)                         \
-		    $(gnomeconfig)		     \
-		    --enable-R-profiling             \
-		    --enable-R-shlib                 \
+	./configure --prefix=/usr			\
+		    --with-tcltk			\
+		    --with-tcl-config=/usr/lib/tcl8.3/tclConfig.sh	\
+		    --with-tk-config=/usr/lib/tk8.3/tkConfig.sh		\
+		    --mandir=/usr/share/man		\
+		    --infodir=/usr/share/info		\
+		    $(atlas)				\
+		    $(gnomeconfig)			\
+		    --enable-R-profiling		\
+		    --enable-R-shlib			\
 		    --host $(arch)
-        ## hppa and ia64 really need the PIC version of libg2c
-        ## for conformity we will use it throughout
-	perl -p -i -e "s/ -lg2c / -lg2c-pic /" Makeconf
-        ## same needed for lower-level library files
-	for i in ctest modreg mva ts; do 			\
-		perl -p -i -e "s/ -lg2c / -lg2c-pic /" 		\
-				src/library/$$i/src/Makefile; 	\
-	done
-        ## and etc/Makeconf	
-	perl -p -i -e "s/ -lg2c / -lg2c-pic /" etc/Makeconf
+# this should now be fixed upstream by KH
+#        ## hppa and ia64 really need the PIC version of libg2c
+#        ## for conformity we will use it throughout
+#        perl -p -i -e "s/ -lg2c / -lg2c-pic /" Makeconf
+#        ## same needed for lower-level library files
+#	for i in ctest modreg mva ts; do 			\
+#		perl -p -i -e "s/ -lg2c / -lg2c-pic /" 		\
+#				src/library/$$i/src/Makefile; 	\
+#	done
+#        ## and etc/Makeconf	
+#	perl -p -i -e "s/ -lg2c / -lg2c-pic /" etc/Makeconf
 	touch configure-stamp
 
 make-arch: configure make-arch-stamp 
 make-arch-stamp: 
+	@echo "*** make-arch ***"
 	make		CFLAGS="$(compilerflags)"		\
 			CXXFLAGS="$(compilerflags)"		\
 			FFLAGS="$(compilerflags)"		\
 			CC=${compiler} 				\
-			CXX=${cxxcompiler}
+			CXX=${cxxcompiler}			\
+			FC=${fortrancompiler}			\
+			R
+        # currently needed for binary package with docs [FIXME: how?]
+	make docs
+
+        # make standalone math lib
 	(cd src/nmath/standalone; 				\
 		make	CFLAGS="$(compilerflags) -D_REENTRANT"	\
 			CXXFLAGS="$(compilerflags) -D_REENTRANT"\
 			FFLAGS="$(compilerflags) -D_REENTRANT"	\
 			CC=${compiler} 				\
 			CXX=${cxxcompiler} 			\
-			libRmath_la_LDFLAGS=-Wl,-soname,libRmath.so.$(somaj) )
+			FC=${fortrancompiler}			\
+			libRmath_la_LDFLAGS=-Wl,-soname,libRmath.so.$(somaj) \
+			)
+        # FIXME
+	make html
+        # currently needed for binary package [FIXME: into r-doc-help]
 	make help
-	make info 
 	touch make-arch-stamp
 
-make: configure make-arch make-stamp
-make-stamp: 
-        # Already made in general 'make': make html
+make-indep: configure make-indep-stamp
+make-indep-stamp:
+	@echo "*** make-indep ***"
+        # FIXME would be nice here:   make docs
+        #                             make help
+        # currently needed for binary package [FIXME: into r-doc-info]
+	make info
 	make pdf
-	touch make-stamp
+	touch make-indep-stamp
+
+#make: configure make-arch make-stamp
+#make-stamp: 
+#        # Already made in general 'make': make html
+#	touch make-stamp
 
 check: configure make-arch check-stamp
 check-stamp: 
+	@echo "*** check ***"
 ifneq	($(arch),arm-linux)
-	make check
+	-make check
 endif
 	touch check-stamp
 
 clean:
+	@echo "*** clean ***"
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp make-stamp make-arch-stamp \
-		install-stamp install-arch-stamp check-stamp build-arch-stamp
+	rm -f 	configure-stamp \
+		build-stamp build-indep-stamp build-arch-stamp \
+		make-stamp make-arch-stamp make-indep-stamp \
+		install-indep-stamp install-arch-stamp \
+		check-stamp 
 	-make distclean
 	-rm -f `find . -name "*~"`
 	-rm -rf debian/tmp debian/files* core debian/substvars
 	-rm -f doc/html/function.html doc/html/packages.html
 	-rm -f modules/*.so
+        # left over in CVS from r-base --> r-base-core transition
+	(cd debian; rm -vf r-base.dirs r-base.files r-base.lintian \
+			r-base.menu r-base.postinst)	
 	dh_clean
+
+install: install-arch install-indep 
 
 install-arch: make-arch check install-arch-stamp
 install-arch-stamp: 
+	@echo "*** install-arch ***"
 	dh_testdir
 	dh_testroot
 	dh_clean -a -k
 	dh_installdirs -A
-	make    	prefix=$(debtmp)/usr   	 	install
 
+	make    	prefix=$(debtmp)/usr   	 		\
+			mandir=$(debtmp)/usr/share/man	 	install
         # set R_HOME_DIR env.var. in R shell script
 	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
 	  < bin/R > $(debtmp)/usr/bin/R
@@ -192,9 +234,13 @@ endif
         # move the html manual files in r-doc-html.files into r-doc-html 
         # these get built in make-arch too ...
 	dh_movefiles	-p$(htmlpackage)		
+        # move files for r-base-html
+	dh_movefiles	-pr-base-html
+        # move files for r-base-latex
+	dh_movefiles	-pr-base-latex
 
-        # move files for r-base
-	dh_movefiles	-p$(package)
+        # move files for r-base-core
+	dh_movefiles	-p$(corepackage)
 
         # for the standalone library package, move the two libs
         # as 'make install' ignore these, we have to do it by hand
@@ -210,77 +256,92 @@ endif
 			ln -s ../lib/R/include/Rmath.h .)
 	touch install-arch-stamp
 
-install: make-arch make install-arch install-stamp
-install-stamp: 
+#install-indep: make-arch make-indep install-arch install-indep-stamp
+install-indep: make-indep install-indep-stamp
+install-indep-stamp: 
+	@echo "*** install-indep ***"
 	dh_testdir
 	dh_testroot
 	dh_clean -a -k
 	dh_installdirs -A
-	make    	prefix=$(debtmp)/usr   	 	install-pdf	
+
+	make    	prefix=$(debtmp)/usr   	 		install-pdf
+
+        # the indep package r-doc-info is made now 
+	make    	prefix=$(debtmp)/usr  \
+			infodir=$(debtmp)/usr/share/info	install-info
+
         # move the pdf manual files listed in r-doc-pdf.files into r-doc-pdf 
 	dh_movefiles	-p$(pdfpackage)		
         # move the html manual files in r-doc-html.files into r-doc-html 
 	dh_movefiles	-p$(htmlpackage)		
-	touch install-stamp
+	touch install-indep-stamp
+        # move files for r-doc-info
+	dh_movefiles	-pr-doc-info
 
 # Build architecture-independent files here.
-binary-indep: build install
+binary-indep: build-indep install-indep
+	@echo "*** binary-indep ***"
 	dh_testdir -i
 	dh_testroot -i
 	dh_link -i
-#	dh_installdebconf -i
+        #dh_installdebconf -i
 	dh_installdocs -i
-#	dh_installexamples -i
-#	dh_installmenu -i
-#	dh_installemacsen -i
-#	dh_installpam -i
-#	dh_installmime -i
-#	dh_installinit -i
-#	dh_installcron -i
-#	dh_installmanpages -i
-#	dh_installinfo -i
-#	dh_undocumented -i
+        #dh_installexamples -i
+        #dh_installmenu -i
+        #dh_installemacsen -i
+        #dh_installpam -i
+        #dh_installmime -i
+        #dh_installinit -i
+        #dh_installcron -i
+        #dh_installmanpages -i
+        #dh_installinfo -i
+        #dh_undocumented -i
 	dh_installchangelogs -i	
+        # install lintian "silencer"
+	install -p -m 0644  debian/$(latexpackage).lintian \
+	 $(debbase)/$(latexpackage)/usr/share/lintian/overrides/$(latexpackage)
 	dh_compress -i
 	dh_fixperms -i
-#	dh_suidregister -i
+        #dh_suidregister -i
 	dh_installdeb -i
-#	dh_perl -i
+        #dh_perl -i
 	dh_gencontrol -i
 	dh_md5sums -i
 	dh_builddeb -i
 
 # Build architecture-dependent files here.
 binary-arch: build-arch install-arch check
+	@echo "*** binary-arch ***"
 	dh_testdir -a
 	dh_testroot -a
-#	dh_installdebconf -a
+        #dh_installdebconf -a
 	dh_link -a
-	dh_installdocs -p$(package) 	AUTHORS BUGS COPYRIGHTS FAQ 	\
-					NEWS ONEWS README RESOURCES 	\
-					THANKS Y2K debian/README.Atlas
+	dh_installdocs -p$(corepackage) AUTHORS BUGS  NEWS ONEWS README \
+					RESOURCES THANKS Y2K \
+					debian/README.Atlas
 	dh_installexamples -a
 	dh_installmenu -a
-#	dh_installemacsen -a
-#	dh_installpam -a
-#	dh_installmime -a
-#	dh_installinit -a
-#	dh_installcron -a
-#	dh_installmanpages -a	-N$(gnomepackage) -p$(package) getline.3
-#	dh_installman 		-p$(package) doc/R.1
-	dh_installinfo -a	-n doc/manual/R-*.info*
+        #dh_installemacsen -a
+        #dh_installpam -a
+        #dh_installmime -a
+        #dh_installinit -a
+        #dh_installcron -a
+        #dh_installmanpages -a	-N$(gnomepackage) -p$(corepackage) getline.3
+        #dh_installman 		-p$(corepackage) doc/R.1
+        ## dh_installinfo -a	-n doc/manual/R-*.info*
 	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
 	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/manual .)
 	(cd $(debdoc) && ln -s ../../../lib/R/library .)
         # install lintian "silencer"
-	install -p -m 0644  debian/$(package).lintian \
-		$(debbase)/$(package)/usr/share/lintian/overrides/$(package)
-#	dh_undocumented -a
+	install -p -m 0644  debian/$(corepackage).lintian \
+	   $(debbase)/$(corepackage)/usr/share/lintian/overrides/$(corepackage)
+        #dh_undocumented -a
 	dh_installchangelogs -a	-k NEWS 
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -a
-#	dh_suidregister -a
+        #dh_suidregister -a
 	dh_makeshlibs -a
 	dh_installdeb -a
 	dh_perl -a
@@ -291,4 +352,4 @@ binary-arch: build-arch install-arch check
 	dh_builddeb -a
 
 binary: binary-arch binary-indep 
-.PHONY: build clean binary-indep binary-arch binary install
+.PHONY: build clean binary-indep binary-arch binary install install-arch install-indep

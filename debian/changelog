@@ -1,7 +1,31 @@
+r-base (1.4.1.cvs20020323-1) unstable; urgency=low
+
+  * Upgraded to new release candidate 2002-03-23 of R 1.5.0
+
+  * debian/control: New packages r-base-core, r-base-html, r-base-latex 
+    and r-doc-info have been split from the old r-base package which now 
+    Depends: on these, but can also be removed -- this adds some extra
+    flexibility and can save over eight megabytes of installed files.
+  * debian/control: Replaces: r-base (<= 1.4.1-1) for the new packages
+
+  * debian/rules: Fortan compiler selection adapted to new upstream configure
+  * debian/control: r-base Suggests: r-base-dev instead of gcc
+  * debian/copyright: Updated and included current COPYRIGHTS file ...
+  * debian/rules: ... and therefore do not install COPYRIGHTS separately
+  * debian/control: Added Build-Depends on texi2html (split from tetex-bin)
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 23 Mar 2002 11:17:48 -0600
+
+r-base (1.4.1-1) unstable; urgency=low
+
+  * Upgraded to new upstream release 1.4.1
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed, 30 Jan 2002 18:50:34 -0600
+
 r-base (1.4.0.cvs20020124-1) unstable; urgency=low
- 
+
   * Upgraded to the R-patched_2002-01-24 release candidate for 1.4.1
- 
+
  -- Dirk Eddelbuettel <edd@debian.org>  Thu, 24 Jan 2002 19:38:34 -0600
 
 r-base (1.4.0-1) unstable; urgency=low
