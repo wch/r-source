@@ -2,6 +2,8 @@
 \alias{read.table}
 \alias{read.csv}
 \alias{read.csv2}
+\alias{read.tabsep}
+\alias{read.tabsep2}
 \title{Data Input}
 \description{
   Reads a file in table format and creates a data frame from it, with
@@ -10,18 +12,28 @@
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            row.names, col.names, as.is = FALSE, na.strings = "NA",
-           skip = 0, check.names = TRUE, strip.white = FALSE)
+           skip = 0, check.names = TRUE, fill = FALSE, strip.white = FALSE)
 
-read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".", \dots)
+read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
+         fill = TRUE, \dots)
 
-read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", \dots)
+read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", 
+         fill = TRUE, \dots)
+
+read.tabsep(file, header = TRUE, sep = "\t", quote="\"", dec=".",
+         fill = TRUE, \dots)
+
+read.tabsep2(file, header = TRUE, sep = "\t", quote="\"", dec=",", 
+         fill = TRUE, \dots)
 }
 \details{
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults. They are intended for
   reading "comma separated variable" files (.csv) or the variant used in
   countries that use comma as decimal point and consequently semicolon
-  as field separator.  Notice that \code{header=TRUE} in these variants.
+  as field separator. Similarly with \code{read.tabsep} and
+  \code{read.tabsep2} for reading TAB-separated files. Notice that
+  \code{header=TRUE} and \code{fill=TRUE}in these variants.
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
@@ -66,6 +78,9 @@ read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", \dots)
     valid variable names.  If necessary they are adjusted (by
     \code{\link{make.names}}) so that they are.}
 
+  \item{fill}{logical. If \code{TRUE} then in case the rows have unequal
+    length, blank fields are implicitly added.
+  
   \item{strip.white}{logical. Used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
     white space from \code{character} fields (\code{numeric} fields

@@ -4,7 +4,7 @@
 scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      quote = if (sep=="\n") "" else "'\"", dec = ".",
      skip = 0, nlines = 0, na.strings = "NA",
-     flush = FALSE, strip.white = FALSE, quiet = FALSE)
+     flush = FALSE, fill = FALSE, strip.white = FALSE, quiet = FALSE)
 }
 \alias{scan}
 \arguments{
@@ -38,6 +38,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{flush}{logical; if \code{TRUE}, \code{scan} will flush to the
     end of the line after reading the last of the fields requested.
     This allows putting comments after the last field.}
+  \item{fill}{logical; if \code{TRUE}, \code{scan} will implicitly add
+    empty fields to any 
+    lines with fewer fields than implied by \code{what}.}
   \item{strip.white}{vector of logical value(s) corresponding to items
     in the \code{what} argument. It is used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing

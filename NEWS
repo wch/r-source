@@ -209,6 +209,19 @@ NEW FEATURES
 
     o	save(, oldstyle=TRUE) has been withdrawn.
 
+    o   scan() and read.table() have a new argument `fill' which can
+        be set TRUE to allow reading files with unequal number of
+        fields per line. (Programs like Excel has a habit of creating
+        such files when exporting.)
+
+    o   new functions read.tabsep() and read.tabsep2() to make it
+        easier to read TAB-separated files.
+
+    o   tcltk library has had several canvas functions implemented
+    
+    o   tcltk now wraps callbacks to R in a try() construct - the
+        nonlocal return from R's error handling could bring the Tk
+        system into a strange state.  
 
 BUG FIXES
 

@@ -6,7 +6,7 @@ read.table <-
     function (file, header=FALSE, sep="", quote="\"'", dec=".",
               row.names, col.names, as.is=FALSE,
 	      na.strings="NA", skip=0,
-              check.names = TRUE, strip.white = FALSE)
+              check.names = TRUE, fill=FALSE, strip.white = FALSE)
 {
     type.convert <- function(x, na.strings = "NA",
                              as.is = FALSE, dec = ".")
@@ -17,7 +17,7 @@ read.table <-
 
     row.lens <- count.fields(file, sep, quote, skip)
     nlines <- length(row.lens)
-    rlabp <- nlines > 1 && (row.lens[2] - row.lens[1]) == 1
+    rlabp <- nlines > 1 && (max(row.lens[-1]) - row.lens[1]) == 1
     if(rlabp && missing(header))
 	header <- TRUE
 
@@ -28,17 +28,29 @@ read.table <-
 	row.lens <- row.lens[-1]
 	nlines <- nlines - 1
     } else if (missing(col.names))
-	col.names <- paste("V", 1:row.lens[1], sep="")
+	col.names <- paste("V", 1:max(row.lens), sep="")
 
     if(check.names) col.names <- make.names(col.names)
 
-    ##	check that all rows have equal lengths
+    ##	check that all rows have equal lengths unlesss fill == TRUE
 
-    cols <- unique(row.lens)
-    if (length(cols) != 1) {
-	cat("\nrow.lens=\n"); print(row.lens)
-	stop("all rows must have the same length.")
+    if ( !fill ) {
+        cols <- unique(row.lens)
+        if (length(cols) != 1) {
+            cat("\nrow.lens=\n"); print(row.lens)
+            stop("all rows must have the same length.")
+        }
+    } else {
+        cols <- max(row.lens)
+        if (header) {
+            if (cols > length(col.names) + rlabp) {
+                cat("\nrow.lens=\n"); print(row.lens)
+                stop("Some rows have more fields than header implies")
+            }
+            cols <- length(col.names) + rlabp
+        }
     }
+
 
     ##	set up for the scan of the file.
     ##	we read all values as character strings and convert later.
@@ -48,7 +60,7 @@ read.table <-
 	col.names <- c("row.names", col.names)
     names(what) <- col.names
     data <- scan(file=file, what=what, sep=sep, quote=quote, skip=skip,
-		 na.strings=na.strings, quiet=TRUE,
+		 na.strings=na.strings, quiet=TRUE, fill=fill,
                  strip.white=strip.white)
 
     ##	now we have the data;
@@ -107,8 +119,26 @@ read.table <-
 }
 
 read.csv <-
-    function (file, header = TRUE, sep = ",", quote="\"", dec=".", ...)
-    read.table(file, header, sep, quote, dec, ...)
+    function (file, header = TRUE, sep = ",", quote="\"", dec=".",
+              fill = TRUE, ...)
+    read.table(file = file, header = header, sep = sep,
+               quote = quote, dec = dec, fill = fill, ...)
+
 read.csv2 <-
-    function (file, header = TRUE, sep = ";", quote="\"", dec=",", ...)
-    read.table(file, header, sep, quote, dec, ...)
+    function (file, header = TRUE, sep = ";", quote="\"", dec=",",
+              fill = TRUE, ...)
+    read.table(file = file, header = header, sep = sep,
+               quote = quote, dec = dec, fill = fill, ...)
+
+read.tabsep <-
+    function (file, header = TRUE, sep = "\t", quote="\"", dec=".",
+              fill = TRUE, ...)
+    read.table(file = file, header = header, sep = sep,
+               quote = quote, dec = dec, fill = fill, ...)
+
+read.tabsep2 <-
+    function (file, header = TRUE, sep = "\t", quote="\"", dec=",",
+              fill = TRUE, ...)
+    read.table(file = file, header = header, sep = sep,
+               quote = quote, dec = dec, fill = fill, ...)
+
