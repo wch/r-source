@@ -95,6 +95,10 @@ SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  "R_ShowFile" which is a platform dependent hook that arranges
  *  for the file to be displayed. A reasonable approach would be to
  *  open a read-only edit window with the file displayed in it.
+ *
+ *  FIXME : this should in fact take a vector of filenames and titles
+ *  and display them concatenated in a window.  For a pure console
+ *  version, write down a pipe to a pager.
  */
 
 SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -122,80 +126,103 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define APPENDBUFSIZE 512
 
-void R_AppendFile(char *file1, char *file2)
+static int R_AppendFile(char *file1, char *file2)
 {
     FILE *fp1, *fp2;
     char buf[APPENDBUFSIZE];
-    int nchar;
+    int nchar, status;
     if((fp1 = fopen(file1, "a")) == NULL) {
-        error("unable to open file %s for appending\n", file1);
+        return 0;
     }
     if((fp2 = fopen(file2, "r")) == NULL) {
         fclose(fp1);
-        error("unable to open file %s for reading\n", file2);
+        return 0;
     }
     while((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
-        if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
+        if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE) {
             goto append_error;
-    if(fwrite(buf, 1, nchar, fp1) != nchar)
+        }
+    if(fwrite(buf, 1, nchar, fp1) != nchar) {
         goto append_error;
+    }
+    status = 1;
+ append_error:
+    if (status == 0)
+	warning("write error during file append!\n");
     fclose(fp1);
     fclose(fp2);
-    return;
- append_error:
-    error("error writing to file %s\n", file1);
+    return status;
 }
 
 SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP fn1, fn2;
+    SEXP f1, f2, ans;
+    int i, n, n1, n2;
     checkArity(op, args);
-    fn1 = CAR(args);
-    fn2 = CADR(args);
-    if (!isString(fn1) || length(fn1) < 1 || STRING(fn1)[0] == R_NilValue)
+    f1 = CAR(args); n1 = length(f1);
+    f2 = CADR(args); n2 = length(f2);
+    if (!isString(f1))
         errorcall(call, "invalid first filename\n");
-    if (!isString(fn2) || length(fn2) < 1 || STRING(fn2)[0] == R_NilValue)
+    if (!isString(f2))
         errorcall(call, "invalid second filename\n");
-    R_AppendFile(R_ExpandFileName(CHAR(STRING(fn1)[0])),
-                 R_ExpandFileName(CHAR(STRING(fn2)[0])));
-    return R_NilValue;
+    if (n1 < 1)
+	errorcall(call, "nothing to append to\n");
+    if (n2 < 1)
+	return allocVector(LGLSXP, 0);
+    n = (n1 > n2) ? n1 : n2;
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for(i = 0; i < n; i++) {
+        if (STRING(f1)[i%n1] == R_NilValue || STRING(f2)[i%n2] == R_NilValue)
+            LOGICAL(ans)[i] = 0;
+        else 
+            LOGICAL(ans)[i] =
+		R_AppendFile(R_ExpandFileName(CHAR(STRING(f1)[i%n1])),
+			     R_ExpandFileName(CHAR(STRING(f2)[i%n2])));
+    }
+    UNPROTECT(1);
+    return ans;
 }
 
 SEXP do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP fn;
+    SEXP fn, ans;
     FILE *fp;
-    int i, nfiles;
+    int i, n;
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn)) 
         errorcall(call, "invalid filename argument\n");
-    nfiles = length(fn);
-    for (i = 0; i < nfiles; i++) {
-	if (STRING(fn)[i] == R_NilValue)
-	    errorcall(call, "invalid filename \"%s\"\n", STRING(fn)[i]);
-	if ((fp = fopen(CHAR(STRING(fn)[i]), "w")) == NULL)
-	    errorcall(call, "cannot create file \"%s\"\n", STRING(fn)[i]);
-	fclose(fp);
+    n = length(fn);
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for (i = 0; i < n; i++) {
+	LOGICAL(ans)[i] = 0;
+	if (STRING(fn)[i] != R_NilValue &&
+	    (fp = fopen(CHAR(STRING(fn)[i]), "w")) != NULL) {
+	    LOGICAL(ans)[i] = 1;
+	    fclose(fp);
+	}
     }
-    return R_NilValue;
+    UNPROTECT(1);
+    return ans;
 }
 
 SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP fn1;
+    SEXP f, ans;
     int i, n;
     checkArity(op, args);
-    fn1 = CAR(args);     
-    if (!isString(fn1))
+    f = CAR(args);     
+    if (!isString(f))
         errorcall(call, "invalid first filename\n");
-    n = length(fn1);
-    for (i = 0; i < n; i++)
-	if (STRING(fn1)[i] != R_NilValue)
-	    if (remove(R_ExpandFileName(CHAR(STRING(fn1)[i]))))
-		warning("unable to remove file \"%s\"\n",
-		        CHAR(STRING(fn1)[i]));
-    return R_NilValue;
+    n = length(f);
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for (i = 0; i < n; i++) {
+	if (STRING(f)[i] != R_NilValue)
+	    LOGICAL(ans)[i] =
+		(remove(R_ExpandFileName(CHAR(STRING(f)[i]))) == 0);
+    }
+    UNPROTECT(1);
+    return ans;
 }
 
 #ifndef Macintosh
@@ -330,10 +357,7 @@ SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < nfile; i++) {
 	LOGICAL(ans)[i] = 0;
         if (STRING(file)[i] != R_NilValue)
-	    if (fp = fopen(CHAR(STRING(file)[i]), "r")) {
-		LOGICAL(ans)[i] = 1;
-		fclose(fp);
-            }
+	    LOGICAL(ans)[i] = R_FileExists(CHAR(STRING(file)[i]));
     }
     return ans;
 }

@@ -24,6 +24,19 @@
  *  This source file contains the platform dependent code for
  *  the Unix (reference) port of R.
  *
+ *
+ *  1) FATAL MESSAGES AT STARTUP
+ *
+ *    void  R_Suicide(char *msg)
+ *
+ *  This function displays the given message and the causes R to
+ *  die immediately.  It is used for non-recoverable errors such as
+ *  not having enough memory to launch etc.  The phrase "dialog box"
+ *  springs to mind for non-unix platforms.
+ *
+ *
+ *  2. CONSOLE I/O
+ *
  *  The first group of functions is concerned with reading and
  *  writing to the system console.
  *
@@ -58,12 +71,8 @@
  *  console.  In Unix is is used to clear any EOF condition associated
  *  with stdin.
  *
- *    void  R_Suicide(char *msg)
  *
- *  This function displays the given message and the causes R to
- *  die immediately.  It is used for non-recoverable errors such as
- *  not having enough memory to launch etc.  The phrase "dialog box"
- *  springs to mind for non-unix platforms.
+ *  3) ACTIONS DURING (LONG) COMPUTATIONS
  *
  *    void  R_Busy(int which)
  *
@@ -71,9 +80,47 @@
  *  R embarks on an extended computation (which=1) and when such a
  *  state terminates (which=0).
  *
- *    void  R_CleanUp(int ask)
  *
+ *  4) INITIALIZATION AND TERMINATION ACTIONS
+ *
+ *    void  R_InitialData(void)
+ *    FILE* R_OpenInitFile(void)
+ *    FILE* R_OpenLibraryFile(char *file)
+ *    FILE* R_OpenSysInitFile(void)
+ *    FILE* R_OpenSiteFile()
+ *
+ *  These functions load the initial system and user data into R.
+ *    
+ *    void  R_RestoreGlobalEnv(void)
+ *    void  R_SaveGlobalEnv(void)
+ *
+ *  These functions save and restore the user's global environment.
+ *  The system specific aspect of this is what files are used.
+ *
+ *    void  R_CleanUp(int ask)
+
  *  This function invokes any actions which occur at system termination.
+ *
+ *
+ *  5) FILESYSTEM INTERACTION
+ *
+ *    int FileExists(char *file)
+ *
+ *  This function returns 1 if the named file exists and 0 otherwise.
+ *  On Unix this is just an interface to "stat".
+ *
+ *    int R_HiddenFile(char *file)
+ *
+ *  This function returns 1 if the named file is "hidden".  In Unix,
+ *  this is the case if the file name begins with a '.'.  On the Mac
+ *  a file is hidden if the file name ends in '\r'.
+ *
+ *    int R_ShowFile(char *file, char *title)
+ *
+ *  This function is used to display the contents of a file.  On (raw)
+ *  Unix this means invoking a pager on the file.  On Gui-based platforms
+ *  the file would probably be displayed in a window with the given
+ *  title.
  *
  *    char* R_ExpandFileName(char *s)
  *
@@ -83,35 +130,31 @@
  *  library is available.  The minimal action is to return the argument
  *  unaltered.
  *
- *    void  R_InitialData(void)
- *    FILE* R_OpenInitFile(void)
- *    FILE* R_OpenLibraryFile(char *file)
- *    FILE* R_OpenSysInitFile(void)
+ *    FILE *R_fopen(const char *filename, const char *mode);
  *
- *  The following two functions save and restore the user's global
- *  environment.  The system specific aspect of this what files
- *  are used for this.
- *
- *    void  R_RestoreGlobalEnv(void)
- *    void  R_SaveGlobalEnv(void)
- *
- *  The following functions perform file manipulations of various
- *  types.  The following function can be used to view a file.
- *
- *    int R_ShowFile(char *file)
+ *  This is a (probably unnecessary) wrapper function for ``fopen''.
  *
  *
- *  Get the currelt local time and date as a string.
+ *  6) SYSTEM INFORMATION
  *
- *    char *R_Date()
+ *    char *R_HomeDir(void)
  *
- *  Platform dependent functions.
+ *  Get the R ``home directory'' as a string.
  *
- *    SEXP  do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP  do_machine(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP  do_proctime(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP  do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP  do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    char *R_Date(void)
+ *
+ *  Get the current local time and date as a string.
+ *
+ *
+ *  7) PLATFORM INDEPENDENT FUNCTIONS
+ *
+ *    SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *
  */
 
 #include "Defn.h"
@@ -872,4 +915,13 @@ int R_HiddenFile(char *name)
 {
     if (name && name[0] != '.') return 0;
     else return 1;
+}
+
+#include <sys/types.h>
+#include <sys/stat.h>
+
+int R_FileExists(char *path)
+{
+    struct stat sb;
+    return stat(R_ExpandFileName(path), &sb) == 0;
 }
