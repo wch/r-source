@@ -78,6 +78,8 @@ BUG FIXES
 	couild be called from glm.fit with arguments it did not
 	accept), and is now documented.
 
+    o	cov.wt(cbind(1),cor=T) now works.
+
 
 
 		CHANGES IN R VERSION 1.4.0

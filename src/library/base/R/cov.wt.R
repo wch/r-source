@@ -16,19 +16,18 @@ cov.wt <- function(x, wt = rep(1/nrow(x), nrow(x)), cor = FALSE,
 	wt <- wt / s
     }
     if (is.logical(center)) {
-	center <- if (center)
-	    apply(wt * x, 2, sum)
-	else 0
+	center <- if (center) apply(wt * x, 2, sum) else 0
     } else {
 	if (length(center) != ncol(x))
 	    stop("length of center must equal the number of columns in x")
     }
     x <- sqrt(wt) * sweep(x, 2, center)
     cov <- (t(x) %*% x) / (1 - sum(wt^2))
+
     y <- list(cov = cov, center = center, n.obs = n)
     if (with.wt) y$wt <- wt
     if (cor) {
-	sdinv <- diag(1 / sqrt(diag(cov)))
+	sdinv <- diag(1 / sqrt(diag(cov)), nrow(cov))
 	y$cor <- sdinv %*% cov %*% sdinv
     }
     y
