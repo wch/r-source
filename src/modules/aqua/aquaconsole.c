@@ -465,10 +465,15 @@ TXNControlData  txnControlData[1];
 TXNMargins      txnMargins;
            
 static	pascal	void 	RIdleTimer(EventLoopTimerRef inTimer, EventLoopIdleTimerMessage inState, void * inUserData);
-
 static	pascal	void	OtherEventLoops( EventLoopTimerRef inTimer, void *inUserData );
 static	pascal	void	ReadStdoutTimer( EventLoopTimerRef inTimer, void *inUserData );
 static	pascal	void	FlushConsoleTimer( EventLoopTimerRef inTimer, void *inUserData );
+
+EventLoopTimerRef	Inst_RIdleTimer;
+EventLoopTimerRef	Inst_OtherEventLoops;
+EventLoopTimerRef	Inst_ReadStdoutTimer;
+EventLoopTimerRef	Inst_FlushConsoleTimer;
+
 
 void SetUpRAquaMenu(void);
 OSStatus InstallAppHandlers(void);
@@ -673,13 +678,13 @@ void Raqua_StartConsole(Rboolean OpenConsole)
     }   
         
     
-   InstallEventLoopIdleTimer(GetMainEventLoop(), kEventDurationMillisecond, kEventDurationMillisecond*2, (EventLoopIdleTimerUPP)RIdleTimer, NULL, NULL);
+   InstallEventLoopIdleTimer(GetMainEventLoop(), kEventDurationMillisecond, kEventDurationMillisecond*2, (EventLoopIdleTimerUPP)RIdleTimer, NULL, &Inst_RIdleTimer);
 
 
     
-    InstallEventLoopTimer(GetMainEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, NULL);
-    InstallEventLoopTimer(GetMainEventLoop(), 0, kEventDurationSecond /5, NewEventLoopTimerUPP(ReadStdoutTimer), NULL, NULL);
-    InstallEventLoopTimer(GetMainEventLoop(),0, kEventDurationSecond*5, NewEventLoopTimerUPP(FlushConsoleTimer), NULL, NULL);
+    InstallEventLoopTimer(GetMainEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, &Inst_OtherEventLoops);
+    InstallEventLoopTimer(GetMainEventLoop(), 0, kEventDurationSecond /5, NewEventLoopTimerUPP(ReadStdoutTimer), NULL, &Inst_ReadStdoutTimer);
+    InstallEventLoopTimer(GetMainEventLoop(),0, kEventDurationSecond*5, NewEventLoopTimerUPP(FlushConsoleTimer), NULL, &Inst_FlushConsoleTimer);
 
     RAqua2Front();
 
@@ -807,6 +812,11 @@ void CloseRAquaConsole(void){
     
   TXNTerminateTextension();
   
+  RemoveEventLoopTimer(Inst_RIdleTimer);
+  RemoveEventLoopTimer(Inst_OtherEventLoops);
+  RemoveEventLoopTimer(Inst_ReadStdoutTimer);
+  RemoveEventLoopTimer(Inst_FlushConsoleTimer);
+
   CloseAquaIO();
 }
 
