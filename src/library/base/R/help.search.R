@@ -4,7 +4,7 @@ function(pattern, fields = c("alias", "title"),
          package = NULL, lib.loc = NULL,
          help.db = getOption("help.db"),
          verbose = getOption("verbose"),
-         rebuild = FALSE)
+         rebuild = FALSE, agrep = NULL)
 {
     sQuote <- function(s) paste("`", s, "'", sep = "")
 
@@ -122,7 +122,8 @@ function(pattern, fields = c("alias", "title"),
                                 cbind(rep(p, nr), rep(lib, nr), ctext))
                 } else {
                     warning(paste("Empty", sQuote("CONTENTS"),
-                                  "file of pkg", p, "in", lib))
+                                  "file of pkg", sQuote(p),
+                                  "in", sQuote(lib)))
                 }
             }
         }
@@ -149,9 +150,36 @@ function(pattern, fields = c("alias", "title"),
                        sQuote(package[posInHelpDB == 0][1])))
         db <- db[db[, "Package"] %in% package, , drop = FALSE]
     }
+
+    ## If agrep is NULL (default), we want to use fuzzy matching iff 
+    ## 'pattern' contains no characters special to regular expressions.
+    ## We use the following crude approximation: if pattern contains
+    ## only alphanumeric characters or whitespace or a '-', it is taken
+    ## 'as is', and fuzzy matching is used unless turned off explicitly.
+    if(is.null(agrep) || is.na(agrep))
+        agrep <-
+            (regexpr("^([[:alnum:]]|[[:space:]]|-)+$", pattern) > 0)
+    if(is.logical(agrep)) {
+        if(agrep)
+            max.distance <- 0.15
+    }
+    else if(is.numeric(agrep) || is.list(agrep)) {
+        max.distance <- agrep
+        agrep <- TRUE
+    }
+    else
+        stop("incorrect agrep specification")
+    
     i <- NULL
-    for(f in fields)
-        i <- c(i, grep(pattern, db[, f], ignore.case = ignore.case))
+    if(agrep) {
+        for(f in fields)
+            i <- c(i, agrep(pattern, db[, f], ignore.case = ignore.case,
+                            max.distance = max.distance))
+    }
+    else {
+        for(f in fields)
+            i <- c(i, grep(pattern, db[, f], ignore.case = ignore.case))
+    }
 
     db <- db[sort(unique(i)), , drop = FALSE]
     if(verbose) cat(", matched", NROW(db), "entries.\n")
@@ -168,15 +196,16 @@ function(pattern, fields = c("alias", "title"),
 print.hsearch <-
 function(x, ...)
 {
+    sQuote <- function(s) paste("`", s, "'", sep = "")
     fields <- paste(x$fields, collapse = " or ")
     db <- x$matches
     if(NROW(db) > 0) {
         outFile <- tempfile()
         outConn <- file(outFile, open = "w")
-        writeLines(paste("Help files with ", fields, " matching `",
-                         x$pattern, "',\n",
-                         "type `help(FOO, package = PKG)' to inspect ",
-                         "entry `FOO(PKG) TITLE':",
+        writeLines(paste("Help files with ", fields, " matching ",
+                         sQuote(x$pattern), ",\n",
+                         "type 'help(FOO, package = PKG)' to inspect ",
+                         "entry 'FOO(PKG) TITLE':",
                          "\n", sep = ""),
                    outConn)
         dbnam <- paste(db[ , "name"], "(", db[, "Package"], ")",
@@ -186,7 +215,7 @@ function(x, ...)
         close(outConn)
         file.show(outFile, delete.file = TRUE)
     } else {
-        cat(paste("No help files found with ", fields, " matching `",
-                  x$pattern, "'\n", sep = ""))
+        cat(paste("No help files found with ", fields, " matching ",
+                  sQuote(x$pattern), "\n", sep = ""))
     }
 }

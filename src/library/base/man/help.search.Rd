@@ -4,9 +4,10 @@
 \title{Search the Help System}
 \description{
   Allows for searching the help system for documentation matching a
-  given regular expression in the (file) name, alias, title, or keyword
-  entries (or any combination thereof).  Topics and titles of the
-  matched help entries are nicely displayed.
+  given character string in the (file) name, alias, title, or keyword
+  entries (or any combination thereof), using either fuzzy matching or
+  regular expression matching.  Names and titles of the matched help
+  entries are nicely displayed.
 }
 \usage{
 help.search(pattern, fields = c("alias", "title"),
@@ -14,24 +15,24 @@ help.search(pattern, fields = c("alias", "title"),
             package = NULL, lib.loc = NULL,
             help.db = getOption("help.db"),
             verbose = getOption("verbose"),
-            rebuild = FALSE)
+            rebuild = FALSE, agrep = NULL)
 }
 \arguments{
-  \item{pattern}{a character string containing a regular expression to
-    be matched in the specified fields.  If this is given, the arguments
-    \code{apropos}, \code{keyword}, and \code{whatis} are ignored.}
+  \item{pattern}{a character string to be matched in the specified
+    fields.  If this is given, the arguments \code{apropos},
+    \code{keyword}, and \code{whatis} are ignored.}
   \item{fields}{a character vector specifying the fields of the help
     data bases to be searched.  The entries must be abbreviations of
     \code{"name"}, \code{"alias"}, \code{"title"}, and \code{"keyword"},
     corresponding to the help page's (file) name, the topics it provides
     documentation for, its title, and the keywords it can be classified
     to.}
-  \item{apropos}{a character string containing a regular expression to
-    be matched in the help page topics and title.}
-  \item{keyword}{a character string containing a regular expression to
-    be matched in the help page keywords.}
-  \item{whatis}{a character string containing a regular expression to be
-    matched in the help page topics.}
+  \item{apropos}{a character string to be matched in the help page
+    topics and title.}
+  \item{keyword}{a character string to be matched in the help page
+    keywords.}
+  \item{whatis}{a character string to be matched in the help page
+    topics.}
   \item{ignore.case}{a logical.  If \code{TRUE}, case is ignored during
     matching; if \code{FALSE}, pattern matching is case sensitive.}
   \item{package}{a character vector with the names of packages to
@@ -46,6 +47,14 @@ help.search(pattern, fields = c("alias", "title"),
   \item{verbose}{logical; if \code{TRUE}, the search process is traced.}
   \item{rebuild}{a logical indicating whether the help data base should
     be rebuilt.}
+  \item{agrep}{if \code{NULL} (the default) and the character string to
+    be matched consists of alphanumeric characters, whitespace or a dash
+    only, approximate (fuzzy) matching via \code{\link{agrep}} is used;
+    otherwise, it is taken to contain a regular expression to be matched
+    via \code{\link{grep}}.  If \code{FALSE}, approximate matching is
+    not used.  Otherwise, one can give a numeric or a list specifying
+    the maximal distance for the approximate match, see argument
+    \code{max.distance} in the documentation for \code{\link{agrep}}.}
 }
 \details{
   Upon installation of a package, the Perl script \file{Rd2contents.pl}

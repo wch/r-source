@@ -37,6 +37,13 @@ NEW FEATURES
     o	chol() now uses a tolerance for non-positive-definiteness and
 	so should give more consistent results across platforms.
 
+    o	New function agrep() for approximate (fuzzy) string matching.
+
+    o	help.search() can now use both approximate (fuzzy) and regular
+	expression matching.  By default, if the pattern to be matched
+	consists of only alphanumeric characters, whitespace or a dash,
+	approximate matching is used.
+
 
 DEPRECATED & DEFUNCT
 
