@@ -1,6 +1,6 @@
 
 
-		CHANGES IN VERSION R VERSION 0.61.1
+		CHANGES IN R VERSION 0.61.1
 
 NEW FEATURES
 
@@ -31,7 +31,14 @@ BUG FIXES
     o   autoload() caused infinite loop if function  wasn't found in
 	library on loading
 
-		CHANGES IN VERSION R VERSION 0.61
+    o   The pager ate the rest of stdin in batch mode, now fixed. Also,
+	stdout was not flushed before call to system(). "make tests" 
+	should work now.
+
+    o   Empty directories now created by configure (so that it doesn't
+        matter that "CVS export" doesn't do it)
+
+		CHANGES IN R VERSION 0.61
 
 We try to make development more flexible by creating a "CVS branch". This
 should make it easier to produce patches for obvious bugs in the releases,
@@ -67,7 +74,7 @@ BUG_FIXES
     o   format(.) is now generic;  the default method has a `digits' argument.
 
 
-		CHANGES IN VERSION R VERSION 0.60.1
+		CHANGES IN R VERSION 0.60.1
 
 NEW FEATURES
 
@@ -90,7 +97,7 @@ BUG FIXES
 
 
 
-		CHANGES IN VERSION R VERSION 0.60
+		CHANGES IN R VERSION 0.60
 
 R is about to become an official part of the GNU project.
 To quote RMS (Richard Stallman)
@@ -229,7 +236,7 @@ BUG FIXES
 
 
 
-		  CHANGES IN VERSION R VERSION 0.50
+		  CHANGES IN R VERSION 0.50
 
 WARNING!!!
 

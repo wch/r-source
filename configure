@@ -3915,5 +3915,6 @@ test "$no_create" = yes || ${CONFIG_SHELL-/bin/sh} $CONFIG_STATUS || exit 1
 (cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
          build-help build-htmlpkglist help.pretty html2dos)
 (cd cmd; chmod +x fwf2table)
+mkdir -p bin include library src/lib
 
 
