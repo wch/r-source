@@ -57,7 +57,7 @@ double qhyper(double p, double NR, double NB, double n,
     NB = NB - xb;
     sum = term;
     if(!lower_tail || log_p) {
-	p = R_D_qIv(R_D_Lval(p));
+	p = R_DT_qIv(p);
     }
     p *= 1 - 64*DBL_EPSILON;
     while(sum < p && xr < xend) {
