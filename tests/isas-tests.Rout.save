@@ -1763,7 +1763,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
-Error in strptime(tim, format = format) : invalid `x' argument
+Error in strptime(tim, format = format) : invalid 'x' argument
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE

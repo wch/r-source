@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-01-27 12:08+0000\n"
+"POT-Creation-Date: 2005-01-27 12:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6514,6 +6514,92 @@ msgstr ""
 
 #: src/modules/X11/devX11.c:2385
 msgid "Cannot allocate memory for X11Routines structure"
+msgstr ""
+
+#: src/nmath/bessel_i.c:64
+msgid "bessel_i allocation error"
+msgstr ""
+
+#: src/nmath/bessel_i.c:72
+#, c-format
+msgid "bessel_i(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
+msgstr ""
+
+#: src/nmath/bessel_i.c:75
+#, c-format
+msgid "bessel_i(%g,nu=%g): precision lost in result\n"
+msgstr ""
+
+#: src/nmath/bessel_j.c:63
+msgid "bessel_j allocation error"
+msgstr ""
+
+#: src/nmath/bessel_j.c:71
+#, c-format
+msgid "bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
+msgstr ""
+
+#: src/nmath/bessel_j.c:74
+#, c-format
+msgid "bessel_j(%g,nu=%g): precision lost in result\n"
+msgstr ""
+
+#: src/nmath/bessel_k.c:60
+msgid "bessel_k allocation error"
+msgstr ""
+
+#: src/nmath/bessel_k.c:68
+#, c-format
+msgid "bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
+msgstr ""
+
+#: src/nmath/bessel_k.c:71
+#, c-format
+msgid "bessel_k(%g,nu=%g): precision lost in result\n"
+msgstr ""
+
+#: src/nmath/bessel_y.c:61
+msgid "bessel_y allocation error"
+msgstr ""
+
+#: src/nmath/bessel_y.c:71
+#, c-format
+msgid "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
+msgstr ""
+
+#: src/nmath/bessel_y.c:74
+#, c-format
+msgid "bessel_y(%g,nu=%g): precision lost in result\n"
+msgstr ""
+
+#: src/nmath/pnchisq.c:181
+#, c-format
+msgid "pnchisq(x=%g, ..): not converged in %d iter."
+msgstr ""
+
+#: src/nmath/polygamma.c:473
+#, c-format
+msgid "deriv = %d > %d (= n_max)"
+msgstr ""
+
+#: src/nmath/rmultinom.c:74
+#, c-format
+msgid "rbinom: probability sum should be 1, but is %g"
+msgstr ""
+
+#: src/nmath/signrank.c:77 src/nmath/signrank.c:100
+msgid "signrank allocation error"
+msgstr ""
+
+#: src/nmath/snorm.c:324
+#, c-format
+msgid "norm_rand(): invalid N01_kind: %d\n"
+msgstr ""
+
+#: src/nmath/wilcox.c:75 src/nmath/wilcox.c:81 src/nmath/wilcox.c:119
+#: src/nmath/wilcox.c:276
+#, c-format
+msgid "wilcox allocation error %d"
 msgstr ""
 
 #: src/unix/dynload.c:149
