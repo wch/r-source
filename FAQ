@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-11, 2002-10-30
+Version 1.6-12, 2002-10-31
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1256,6 +1256,10 @@ distributions of R.)
 
 *RArcInfo*
      Functions to import Arc/Info V7.x coverages and data.
+
+*RColorBrewer*
+     ColorBrewer palettes for drawing nice maps shaded according to a
+     variable.
 
 *RMySQL*
      An interface between R and the MySQL database system.

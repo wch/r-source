@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-11, 2002-10-30
+@set FAQ-VERSION 1.6-12, 2002-10-31
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1530,6 +1530,9 @@ penalisations.  Also includes some other multiway methods.
 Functions for exporting R objects & graphics in an @HTML{} document.
 @item RArcInfo
 Functions to import Arc/Info V7.x coverages and data.
+@item RColorBrewer
+ColorBrewer palettes for drawing nice maps shaded according to a
+variable.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RODBC
