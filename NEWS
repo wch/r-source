@@ -12,6 +12,8 @@ NEW FEATURES
 
     o	residuals.lm() has "type" argument, as S does.
 
+    o   the underlying code for nlm has been translated from Fortran
+        to C and made re-entrant (changes contributed by Saikat DebRoy).
 
 BUG FIXES
 
