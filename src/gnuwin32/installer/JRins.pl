@@ -137,7 +137,7 @@ $path="${RW}l\\${RW}";$component="latex";chdir($path);
 find(\&listFiles, ".");
 
 chdir($startdir);
-$path="Tcl";$component="tcl";chdir($path);
+$path="TclInst";$component="tcl";chdir($path);
 find(\&listFiles, ".");
 
 close insfile;

@@ -35,7 +35,8 @@ R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave
 	$(CP) $(RPREFIX)/doc/html/packages.html $(RPREFIX)w/$(RPREFIX)/doc/html
 	$(RM) $(RPREFIX)/doc/html/packages*
-	$(CP) -pr ../../../Tcl .
+	mkdir TclInst
+	$(CP) -pr ../../../Tcl TclInst
 	perl JRins.pl $(RPREFIX) $(IS_VERSION)
 
 
@@ -66,7 +67,7 @@ miniR.exe: Rsmall.iss
 	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
 
 clean:
-	rm -rf R.iss Rsmall.iss *.log $(RPREFIX) $(RPREFIX)? $(RPREFIX)?? Tcl
+	rm -rf R.iss Rsmall.iss *.log $(RPREFIX) $(RPREFIX)? $(RPREFIX)?? TclInst
 
 distclean: clean
 	rm -f $(RPREFIX).exe miniR*
