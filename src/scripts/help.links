@@ -2,16 +2,24 @@
 
 URHOME="${HOME}/.R"
 PKGLIST="${URHOME}/doc/html/packages.html"
-SEARCHINDEX="${URHOME}/doc/html/index.txt"
+SEARCHINDEX="${URHOME}/doc/html/search/index.txt"
 rm -rf ${URHOME}
 
-dirs="${URHOME} ${URHOME}/doc ${URHOME}/doc/html ${URHOME}/library"
+dirs="${URHOME} ${URHOME}/doc ${URHOME}/doc/html ${URHOME}/doc/html/search ${URHOME}/library"
 for d in ${dirs}; do
     mkdir -p ${d}
 done
 
 for f in ${RHOME}/doc/html/*; do
-    ln -s ${f} ${URHOME}/doc/html
+    if test -f $f; then
+	ln -s ${f} ${URHOME}/doc/html
+    fi
+done
+
+for f in ${RHOME}/doc/html/search/*; do
+    if test -f $f; then
+	ln -s ${f} ${URHOME}/doc/html/search
+    fi
 done
 
 rm -f ${PKGLIST}
