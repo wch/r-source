@@ -12,12 +12,19 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \alias{ps.options}
 \alias{.PostScript.Options}
 \arguments{
-\item{file}{a character string giving the name of the file to print to.}
+\item{file}{a character string giving the name of the file to print
+  to. If this is \code{""}, the output is piped to the command given by
+  \code{R_PRINTCMD} when \R was built.}
 \item{\dots}{further options for \code{postscript()}.}
 \item{paper}{the size of paper in the printer.  The choices are
   \code{"a4"}, \code{"letter"}, \code{"legal"} and
-  \code{"executive"}. Also, \code{"special"} can be used, when the width
-  and height specify the paper size.}
+  \code{"executive"} (and these can be capitalized).
+  Also, \code{"special"} can be used, when the \code{width}
+  and \code{height} specify the paper size.  A further choice is
+  \code{"default"}, which is the default.  If this is selected, the
+  papersize is taken from the environment variable \code{"R_PAPERSIZE"}
+  if that is set (which it usually is on Unix) and to \code{"a4"}
+  if it is unset or empty.}
 \item{horizontal}{the orientation of the printed image, a
     logical. Defaults to true, that is landscape orientation.}
 \item{width, height}{the width and height of the graphics region in inches.
@@ -47,15 +54,19 @@ The auxiliary function \code{ps.options} can be used to set and view
 (if called without arguments)
 default values for the arguments to \code{postscript}.
 }
-\details{\code{postscript(..)} opens the file \code{file} and the
-PostScript commands needed to plot any graphics requested are
-stored in that file.
-This file can then be printed on a suitable device to obtain hard copy.
 
-The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
-compatible, and can be included into other documents, e.g. into LaTeX, using
-\code{\includegraphics{<filename>}}. For use in this way you will probably
-want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
+\details{
+  \code{postscript(..)} opens the file \code{file} and the PostScript
+  commands needed to plot any graphics requested are stored in that file.
+  This file can then be printed on a suitable device to obtain hard copy.
+  Alternatively, \code{file= ""} can be used to print directly to the
+  default printer (if the print command is set, which it usually is on
+  Unix and is not on Windows).
+
+  The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
+  compatible, and can be included into other documents, e.g. into LaTeX,
+  using \code{\includegraphics{<filename>}}. For use in this way you will
+  probably want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
 }
 \seealso{
     \code{\link{Devices}}, 
