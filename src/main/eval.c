@@ -601,7 +601,7 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 	v = CAR(vals);
 	break;
     default:
-	v = vals;
+	v = PairToVectorList(vals);
 	break;
     }
     if (R_BrowseLevel)
