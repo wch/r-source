@@ -1,8 +1,12 @@
 \name{stars}
 \alias{stars}
-\title{Star Plots and Segment Diagrams of Multivariate Data}
+\title{Star (Spider/Radar) Plots and Segment Diagrams}
+\description{
+  Draw star plots or segment diagrams of a multivariate data set.
+  With one single location, also draws ``spider'' (or ``radar'') plots.
+}
 \usage{
-stars(x, full = TRUE, scale = TRUE, radius = TRUE, 
+stars(x, full = TRUE, scale = TRUE, radius = TRUE,
       labels = dimnames(x)[[1]],
       locations = NULL, xlim = NULL, ylim = NULL, len = 1,
       colors = NULL, key.loc = NULL, key.labels = NULL, key.xpd = TRUE,
@@ -10,9 +14,9 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
       axes = FALSE, cex = 0.8, lwd = 0.25, \dots)
 }
 \arguments{
-  \item{x}{matrix of data.  One segment plot will be produced for each
-    row of the matrix.  Missing values (\code{NA}) are allowed, but they
-    are treated as if they were 0.}
+  \item{x}{matrix or data frame of data.
+    One star or segment plot will be produced for each row of \code{x}.
+    Missing values (\code{NA}) are allowed, but they are treated as if they were 0.}
   \item{full}{logical flag: if \code{TRUE}, the segment plots will
     occupy a full circle.  Otherwise, they occupy the (upper) semicircle
     only.}
@@ -26,9 +30,11 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \item{labels}{vector of character strings for labeling the plots.
     Unlike the S function \code{stars}, no attempt is made to construct
     labels if \code{labels = NULL}.}
-  \item{locations}{two column matrix with the x and y coordinates used
-    to place each of the segment plots.  If \code{locations} is
-    \code{NULL} the segment plots will be placed in a rectangular grid.}
+  \item{locations}{Either two column matrix with the x and y coordinates used
+    to place each of the segment plots; or numeric of length 2 when all
+    plots should be superimposed (for a ``spider plot'').
+    By default, \code{locations = NULL}, the segment plots will be
+    placed in a rectangular grid.}
   \item{xlim}{vector with the range of x coordinates to plot. }
   \item{ylim}{vector with the range of y coordinates to plot.}
   \item{len}{scale factor for the length of radii or segments.}
@@ -41,17 +47,12 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \item{key.xpd}{clipping switch for the unit key (drawing and
     labeling), see \code{\link{par}("xpd")}.}
   \item{draw.segments}{logical. If \code{TRUE} draw a segment diagram.}
-  \item{axes}{logical flag: if \code{TRUE} axes are added to the
-    plot.}
+  \item{axes}{logical flag: if \code{TRUE} axes are added to the plot.}
   \item{cex}{character expansion factor for the labels.}
   \item{lwd}{line width used for drawing.}
   \item{\dots}{further arguments, passed to the first call of
     \code{plot()}, see \code{\link{plot.default}}.}
   }
-}
-\description{
-  Star plots or segment diagrams are created on the current graphics
-  device.
 }
 \details{
   Missing values are treated as 0.
@@ -72,13 +73,19 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
 \examples{
 data(mtcars)
 stars(mtcars[, 1:7], key.loc = c(12, 2),
-      main = "Motor Trend Cars", full = FALSE) 
+      main = "Motor Trend Cars", full = FALSE)
 
 stars(mtcars[, 1:7], len = 0.8, key.loc = c(12, 1.5),
       main = "Motor Trend Cars", draw.segments = TRUE)
 
+## `Spider' or `Radar' plot:
+stars(mtcars[, 1:7], locations = c(0,0), radius = FALSE,
+      key.loc=c(0,0), main="Motor Trend Cars")
+
 data(USJudgeRatings)
 stars(USJudgeRatings, labels = abbreviate(case.names(USJudgeRatings)),
       key.loc = c(13, 1.5), main = "Judge not ...", len = 0.8)
+stars(USJudgeRatings, locations = cbind(0,0), scale=FALSE,radius = FALSE,
+      key.loc=c(0,0), main="US Judges rated")
 }
 \keyword{hplot}
