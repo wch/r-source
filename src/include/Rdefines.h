@@ -69,6 +69,7 @@
 #define NEW_CHARACTER(n)	allocVector(STRSXP,n)
 #define NEW_COMPLEX(n)		allocVector(CPLXSXP,n)
 #define NEW_LIST(n)		allocVector(VECSXP,n)
+#define NEW_STRING(n)		NEW_CHARACTER(n)
 
 #define LOGICAL_POINTER(x)	LOGICAL(x)
 #define INTEGER_POINTER(x)	INTEGER(x)
@@ -86,7 +87,7 @@
  */
 
 #define LOGICAL_DATA(x)		(LOGICAL(x))
-#define INTEGER_DATA(x)		((long *) INTEGER(x))
+#define INTEGER_DATA(x)		(INTEGER(x))
 #define DOUBLE_DATA(x)		(REAL(x))
 #define NUMERIC_DATA(x)		(REAL(x))
 #define CHARACTER_DATA(x)	(STRING(x))
