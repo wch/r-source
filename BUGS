@@ -620,10 +620,6 @@ Subject: Re: [R] Keyboard problem using RWin 1.7.0
 From: DJNordlund@aol.com
 Date: Sat, 19 Apr 2003 18:56:25 EDT
 ..Can't reproduce so far.
-* PR# 2801 *
-Subject: Rgui crashes after setting par(ask=TRUE) and using lattice
-From: smcnary@charm.net
-Date: Sun, 20 Apr 2003 21:01:40 +0200 (MET DST)
 
 Directory:  incoming
 
@@ -678,14 +674,6 @@ Date: Wed, 23 Apr 2003 02:19:53 +0200 (MET DST)
 Subject: Rprofile.site and check/build
 From: Laurent Gautier <laurent@cbs.dtu.dk>
 Date: Tue, 29 Apr 2003 08:03:35 +0200
-* PR# 2873 *
-Subject: Can't wait to see you again soon
-From: "Wade Camp" <3zfti5g7g1v3@yahoo.com>
-Date: Wed, 30 Apr 03 15:54:25 GMT
-* PR# 2874 *
-Subject: Re: how often ?
-From: "Chris Winter" <2d6oguaw1cz1@msn.com>
-Date: Wed, 30 Apr 03 10:15:15 GMT
 * PR# 2875 *
 Subject: configure succeeds without dlfcn.h, but fails to compile (OS X)
 From: buerkla@uwec.edu
@@ -694,7 +682,51 @@ Date: Tue, 29 Apr 2003 20:24:12 +0200 (MET DST)
 Subject: Re: [Rd]  configure succeeds without dlfcn.h, but fails to compile
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Tue, 29 Apr 2003 13:02:25 -0700 (PDT)
-* PR# 2877 *
-Subject: Purchase Viagr@, Diet Pills, and other prescriptions with no Prescription ipf t jwcymmevtznc
-From: "Hi!" <phredom02@yahoo.com>
-Date: Tue, 29 Apr 03 23:25:10 GMT
+* PR# 2878 *
+Subject: Problem with R CMD INSTALL and package versions
+From: rpeng@stat.ucla.edu
+Date: Wed, 30 Apr 2003 08:23:12 +0200 (MET DST)
+* PR# 2879 *
+Subject: Try the Gold yl gjl imgiyaoxzlr
+From: "Corina Inman" <96qpqb9r8@mindspring.com>
+Date: Wed, 30 Apr 03 12:32:05 GMT
+* PR# 2880 *
+Subject: return(1, ) results in subsequent segfault
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Wed, 30 Apr 2003 15:52:35 +0200
+* PR# 2881 *
+Subject: Add 3 1nches fr,ee!!               dccoib chsa s civuhk mtcgohu ns qy g gutaatbe
+From: "" <posterior@aperfectisp.com>
+Date: Thu, 01 May 03 05:21:52 GMT
+* PR# 2882 *
+Subject: R-BUGSjarmlHow to build you'r own business websitejarml
+From: <mthsq@localaccess.com>
+Date: Tue, 29 Apr 2003 15:04:22
+* PR# 2883 *
+Subject: pnorm conditional
+From: Dan Pemstein <dbpemste@artsci.wustl.edu>
+Date: 30 Apr 2003 12:20:58 -0500
+* PR# 2884 *
+Subject: make check failures
+From: Ross Boylan <ross@biostat.ucsf.edu>
+Date: Wed, 30 Apr 2003 11:05:37 -0700
+* PR# 2885 *
+Subject: Wrong date on FAQ
+From: Ross Boylan <ross@biostat.ucsf.edu>
+Date: Wed, 30 Apr 2003 11:07:57 -0700
+* PR# 2886 *
+Subject: [ENH] Clarify rsync flavors
+From: Ross Boylan <ross@biostat.ucsf.edu>
+Date: Wed, 30 Apr 2003 11:15:02 -0700
+* PR# 2887 *
+Subject: tools/ldAIX4 Assumes AIX nm
+From: rgrubbfink@cox.net
+Date: Wed, 30 Apr 2003 22:24:34 +0200 (MET DST)
+* PR# 2888 *
+Subject: AIX 4.3.3 nm will not read all of dounzip.o
+From: rgrubbfink@cox.net
+Date: Wed, 30 Apr 2003 22:33:24 +0200 (MET DST)
+* PR# 2889 *
+Subject: I need an urgent reply
+From: "Abdul Musa" <abdulmusadrc5@kukamail.com>
+Date: Wed, 30 Apr 2003 21:50:32 -0000
