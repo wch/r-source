@@ -8,10 +8,10 @@ function(pattern, fields = c("alias", "concept", "title"),
 {
     ### Argument handling.
     TABLE <- c("alias", "concept", "keyword", "name", "title")
+
     if(!missing(pattern)) {
 	if(!is.character(pattern) || (length(pattern) > 1))
-	    stop(paste(sQuote("pattern"),
-		       "must be a single character string"))
+	    stop(sQuote("pattern"), " must be a single character string")
 	i <- pmatch(fields, TABLE)
 	if(any(is.na(i)))
 	    stop("incorrect field specification")
@@ -19,24 +19,21 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    fields <- TABLE[i]
     } else if(!missing(apropos)) {
 	if(!is.character(apropos) || (length(apropos) > 1))
-	    stop(paste(sQuote("apropos"),
-		       "must be a single character string"))
+	    stop(sQuote("apropos"), " must be a single character string")
 	else {
 	    pattern <- apropos
 	    fields <- c("alias", "title")
 	}
     } else if(!missing(keyword)) {
 	if(!is.character(keyword) || (length(keyword) > 1))
-	    stop(paste(sQuote("keyword"),
-		       "must be a single character string"))
+	    stop(sQuote("keyword"), " must be a single character string")
 	else {
 	    pattern <- keyword
 	    fields <- "keyword"
 	}
     } else if(!missing(whatis)) {
 	if(!is.character(whatis) || (length(whatis) > 1))
-	    stop(paste(sQuote("whatis"),
-		       "must be a single character string"))
+	    stop(sQuote("whatis"), " must be a single character string")
 	else {
 	    pattern <- whatis
 	    fields <- "alias"
@@ -63,15 +60,15 @@ function(pattern, fields = c("alias", "concept", "title"),
     ### Set up the help db.
     if(is.null(help.db) || !file.exists(help.db))
 	rebuild <- TRUE
-    if(!rebuild) {
+    else if(!rebuild) {
 	## Try using the saved help db.
         db <- try(.readRDS(file = help.db), silent = TRUE)
         if(inherits(db, "try-error"))
             load(file = help.db)
 	## If not a list (pre 1.7 format), rebuild.
-	if(!is.list(db)) rebuild <- TRUE
+	if(!is.list(db) ||
         ## If no information on concepts (pre 1.8 format), rebuild.
-        if(length(db) < 4) rebuild <- TRUE
+           length(db) < 4 ||
 	## Need to find out whether this has the info we need.
 	## Note that when looking for packages in libraries we always
 	## use the first location found.  Hence if the library search
@@ -79,25 +76,25 @@ function(pattern, fields = c("alias", "concept", "title"),
 	## Thus we need to rebuild the help db in case the specified
 	## library path is different from the one used when building the
 	## help db (stored as its "LibPaths" attribute).
-	if(!identical(lib.loc, attr(db, "LibPaths")))
-	    rebuild <- TRUE
+           !identical(lib.loc, attr(db, "LibPaths")) ||
 	## We also need to rebuild the help db in case an existing dir
 	## in the library path was modified more recently than the db,
 	## as packages might have been installed or removed.
-	if(any(file.info(help.db)$mtime <
-	       file.info(lib.loc[file.exists(lib.loc)])$mtime))
+           any(file.info(help.db)$mtime <
+	       file.info(lib.loc[file.exists(lib.loc)])$mtime)
+           )
 	    rebuild <- TRUE
     }
     if(rebuild) {
 	## Check whether we can save the help db lateron.
 	save.db <- FALSE
-        dir <- file.path(tempdir(), ".R")        
+        dir <- file.path(tempdir(), ".R")
 	dbfile <- file.path(dir, "help.db")
 	if((tools::fileTest("-d", dir)
             || ((unlink(dir) == 0) && dir.create(dir)))
 	   && (unlink(dbfile) == 0))
 	    save.db <- TRUE
-        
+
         ## If we cannot save the help db only use the given packages.
         ## <FIXME>
         ## Why don't we just use the given packages?  The current logic
@@ -108,7 +105,7 @@ function(pattern, fields = c("alias", "concept", "title"),
         else
             .packages(all.available = TRUE, lib.loc = lib.loc)
         ## </FIXME>
-        
+
 	## Create the help db.
 	contentsDCFFields <-
 	    c("Entry", "Aliases", "Description", "Keywords")
@@ -118,7 +115,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 
         ## Starting with R 1.8.0, prebuilt hsearch indices are available
         ## in Meta/hsearch.rds, and the code to build this from the Rd
-        ## contents (as obtained from both new and old style Rd indices) 
+        ## contents (as obtained from both new and old style Rd indices)
         ## has been moved to tools:::.buildHsearchIndex(), which creates
         ## a per-package list of base, aliases and keywords information.
         ## When building the global index, it again (see e.g. also the
@@ -129,14 +126,14 @@ function(pattern, fields = c("alias", "concept", "title"),
         ## This is *much* more efficient than building incrementally.
         dbMat <- vector("list", length(packagesInHelpDB) * 4)
         dim(dbMat) <- c(length(packagesInHelpDB), 4)
-        
+
 	for(p in packagesInHelpDB) {
             np <- np + 1
 	    if(verbose)
 		cat("", p, if((np %% 5) == 0) "\n")
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
-		stop(paste("could not find package", sQuote(p)))
+		stop("could not find package ", sQuote(p))
 
             if(file.exists(hsearchFile <-
                            file.path(path, "Meta", "hsearch.rds"))) {
@@ -164,9 +161,8 @@ function(pattern, fields = c("alias", "concept", "title"),
                 }
                 else {
                     ## otherwise, issue a warning.
-                    warning(paste("No Rd contents for package",
-                                  sQuote(p), "in",
-                                  sQuote(dirname(path))))
+                    warning("No Rd contents for package ",
+                            sQuote(p), " in ", sQuote(dirname(path)))
                 }
             }
             if(!is.null(hDB)) {
@@ -175,7 +171,7 @@ function(pattern, fields = c("alias", "concept", "title"),
                 dbMat[np, seq(along = hDB)] <- hDB
             }
         }
-            
+
         if(verbose)
 	    cat(ifelse(np %% 5 == 0, "\n", "\n\n"))
 
@@ -199,7 +195,7 @@ function(pattern, fields = c("alias", "concept", "title"),
                       db[[i]][, "ID"],
                       sep = "/")
         }
-        
+
 	## Maybe save the help db
 	## <FIXME>
 	## Shouldn't we serialize instead?
@@ -226,8 +222,8 @@ function(pattern, fields = c("alias", "concept", "title"),
 	posInHelpDB <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0)
 	if(any(posInHelpDB) == 0)
-	    stop(paste("could not find package",
-		       sQuote(package[posInHelpDB == 0][1])))
+	    stop("could not find package ",
+                 sQuote(package[posInHelpDB == 0][1]))
 	db <-
 	    lapply(db,
 		   function(x) {
@@ -284,7 +280,7 @@ function(pattern, fields = c("alias", "concept", "title"),
                                   "ID"],
 			 dbBase[, "ID"])
 	       },
-               
+
 	       keyword = {
 		   keywords <- db$Keywords
 		   match(keywords[searchFun(keywords[, "Keywords"]),
