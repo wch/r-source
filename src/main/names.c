@@ -808,6 +808,8 @@ static void SymbolShortcuts()
     R_CommentSymbol = install("comment");
     R_SourceSymbol = install("source");
     R_DotEnvSymbol = install(".Environment");
+    R_RecursiveSymbol = install("recursive");
+    R_UseNamesSymbol = install("use.names");
 }
 
 extern SEXP framenames; /* from model.c */

@@ -349,6 +349,8 @@ extern SEXP	R_LastvalueSymbol;  /* ".Last.value" */
 extern SEXP	R_CommentSymbol;    /* "comment" */
 extern SEXP	R_SourceSymbol;     /* "source" */
 extern SEXP	R_DotEnvSymbol;     /* ".Environment" */
+extern SEXP	R_RecursiveSymbol;  /* "recursive" */
+extern SEXP	R_UseNamesSymbol;  /* "use.names" */
 
 /* Missing Values - others from Arith.h */
 #define NA_STRING	R_NaString

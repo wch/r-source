@@ -487,20 +487,18 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 
 static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 {
-    SEXP a, n, r, u;
+    SEXP a, n;
     int v;
     PROTECT(a = ans = CONS(R_NilValue, ans));
-    r = install("recursive");
-    u = install("use.names");
     while (a != R_NilValue && CDR(a) != R_NilValue) {
 	n = TAG(CDR(a));
-	if (n != R_NilValue && pmatch(r, n, 1)) {
+	if (n != R_NilValue && pmatch(R_RecursiveSymbol, n, 1)) {
 	    if ((v = asLogical(CADR(a))) != NA_INTEGER) {
 		*recurse = v;
 	    }
 	    SETCDR(a, CDDR(a));
 	}
-	else if (n != R_NilValue &&  pmatch(u, n, 1)) {
+	else if (n != R_NilValue &&  pmatch(R_UseNamesSymbol, n, 1)) {
 	    if ((v = asLogical(CADR(a))) != NA_INTEGER) {
 		*usenames = v;
 	    }
