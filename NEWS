@@ -54,6 +54,12 @@ C-LEVEL FACILITIES
 	Include it explicitly if you need it.
 
 
+INSTALLATION CHANGES
+
+    o	R CMD INSTALL is now guaranteed to sort the R source files in
+	ASCII order.
+
+
 BUG FIXES
 
     o   read.dcf() had a memory leak.

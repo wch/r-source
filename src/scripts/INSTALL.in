@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.88 $'
+revision='$Revision: 1.89 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -346,7 +346,7 @@ do_install () {
 
     if test -d R; then
       message "R"
-      Rsrcs=`ls R/*.[RSqrs] R/${R_OSTYPE}/*.[RSqrs] 2>/dev/null`
+      Rsrcs=`LC_COLLATE=C ls R/*.[RSqrs] R/${R_OSTYPE}/*.[RSqrs] 2>/dev/null`
       if test -n "${Rsrcs}"; then
         mkdir -p "${lib}/${pkg}/R"
 	rm -f "${lib}/${pkg}/R/"*
