@@ -1185,14 +1185,16 @@ structures are passed.
 @node Building the GNOME interface, Platform notes, Compile and load flags, Configuration on Unix
 @section Building the @acronym{GNOME} interface
 
-This interface is experimental and incomplete.  It provides a console
-and two graphics devices named @code{gtk()} and @code{gnome()}.  The
-console offers a basic command line editing and history mechanism, along
-with tool and button bars that give a point-and-click interface to some
-@R{} commands.  Many of the features of the console are currently
-stubs. The @code{gtk()} graphics device is a port of the @code{x11()}
-device to @acronym{GDK} (the GIMP Drawing Kit). The @code{gnome()}
-device uses the @acronym{GNOME} canvas.
+This interface is experimental and incomplete.  The console offers a
+basic command line editing and history mechanism, along with tool and
+button bars that give a point-and-click interface to some @R{} commands.
+Many of the features of the console are currently stubs.
+
+Two graphics devices have been available but are currently
+unbundled. The @code{gtk()} graphics device is a port of the
+@code{x11()} device to @acronym{GDK} (the GIMP Drawing Kit), and is
+available from CRAN as package @pkg{gtkDevice}.  The @code{gnome()}
+device uses the @acronym{GNOME} canvas, and is not currently available.
 
 Due to its experimental nature, the @acronym{GNOME} interface for @R{}
 will not be built automatically.  You must specify it by running
@@ -1222,9 +1224,7 @@ libglade-0.17
 @noindent
 It is preferable to have a complete installation of the @acronym{GNOME}
 desktop environment.  If you use Linux, then this should be provided
-with your distribution.  In addition, packaged binary distributions of
-GNOME are available from @uref{http://www.ximian.com} for the most
-popular Linux distributions and for Solaris.
+with your distribution.
 
 Remember that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
