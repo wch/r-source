@@ -4,11 +4,15 @@
 
 # @configure_input@
 
-revision='$Revision: 1.49 $'
+revision='$Revision: 1.50 $'
 version=`set - ${revision}; echo ${2}`
-version="R add-on package installer ${version}"
+version="R add-on package installer ${version}
 
-usage="Usage: R INSTALL [options] pkgs
+Copyright (C) 2000 The R Core Development Team.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty."
+
+usage="Usage: R CMD INSTALL [options] pkgs
 
 Install the add-on packages specified by pkgs into the default R library
 tree (${R_HOME}/library) or the tree specified via \`--library'.  The
@@ -16,16 +20,18 @@ elements of pkgs can be relative or absolute paths to directories with
 the package (bundle) sources, or to gzipped package \`tar' archives.
 
 Options:
+  -h, --help		print short help message and exit
+  -v, --version		print version info and exit
+      --configure-args=ARGS
+                        set args for package's configure script (if any)
   -c, --clean		remove all files created during installation
   -d, --debug		turn on shell and build-help debugging
-  -h, --help		print short help message and exit
   -l, --library=LIB	install packages to library tree LIB
+      --no-configure    do not use the package's configure script
       --no-docs		do not build and install documentation
       --use-zip-data	collect data files in zip archive
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine \`--use-zip-data' and \`--use-zip-help'
-  --configure-args=ARGS set args for package's configure script (if any)
-  -v, --version		print version info and exit
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -80,6 +86,7 @@ build_latex=true
 build_example=true
 build_help=true
 build_help_opts=
+use_configure=true
 use_zip_data=
 use_zip_help=
 
@@ -93,6 +100,8 @@ while test -n "${1}"; do
       clean=true ;;
     -d|--debug)
       debug=true ;;
+    --no-configure)
+      use_configure=false ;;
     --no-docs)
       build_text=false
       build_html=false
@@ -206,7 +215,7 @@ do_install () {
     export R_PACKAGE_DIR
     export R_PACKAGE_NAME
 
-    if test -x ./configure ; then
+    if ${use_configure} && test -x ./configure ; then
       ./configure ${configure_args}
       if test ${?} -ne 0; then
 	echo "ERROR: Configuration failed for package \`${pkg}'"

@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.16 $ ';
+my $revision = ' $Revision: 1.17 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -60,7 +60,7 @@ if($WINDOWS){
 
 GetOptions (@knownoptions) || usage();
 
-R_version($name, $version) if $opt_version;
+R_version("R add-on package builder", $version) if $opt_version;
 usage() if $opt_help;
 
 my $startdir=getcwd();
@@ -300,7 +300,7 @@ sub updateIndex {
 
 sub usage {
     print STDERR <<END;
-Usage: $name [options] pkgdirs
+Usage: R CMD $name [options] pkgdirs
 
 Build R packages from package sources in the directories specified by
 pkgdirs. 

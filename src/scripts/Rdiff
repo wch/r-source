@@ -1,4 +1,5 @@
 #! /bin/sh
+##
 ## Diff  ``without R version''
 ## usage: Rdiff from-file to-file exitstatus
 ## from-file equal to `-' means STDIN

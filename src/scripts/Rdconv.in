@@ -1,9 +1,10 @@
 #! @PERL@
 #-*- perl -*- (for Rdconv.in ..)
 
-# Convert R documentation into HTML, LaTeX and text format
+## Convert R documentation into HTML, LaTeX and text format
 
 # Copyright (C) 1997 Friedrich Leisch
+# Copyright (C) 2000 The R Core Development Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,28 +21,19 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
+# Send any bug reports to r-bugs@r-project.org.
 
 use Getopt::Long;
 use R::Rdconv;
+use R::Utils;
 
-my $revision = ' $Revision: 1.17 $ ';
+my $revision = ' $Revision: 1.18 $ ';
 my $version;
 my $name;
 
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
-
-sub version {
-  print STDERR <<END;
-Rdconv $version
-Copyright (C) 1997-2000 R Core Development Team
-This is free software; see the GNU General Public Licence version 2
-or later for copying conditions.  There is NO warranty.    
-END
-  exit 0;
-}
 
 sub usage {
   print STDERR <<END;
@@ -55,16 +47,17 @@ Options:
   -v, --version		print version info and exit
   -d, --debug		turn on debugging (increase verbosity)
   -t, --type=TYPE	convert to format TYPE
-  -o, --output-file=fn	use \`fn\' as the output file
-  --os=NAME		use OS subdir \`NAME\' (unix, mac or windows)
-  --OS=NAME		the same as --os.
+  -o, --output=OUT	use \`OUT\' as the output file
+      --os=NAME		use OS subdir \`NAME\' (unix, mac or windows)
+      --OS=NAME		the same as \`--os\'.
 
-Possible format specifications are txt (plain text), html, latex,
-Sd (S documentation format), and example (extract R code in the examples).
+Possible format specifications are \`txt\' (plain text), \`html\',
+\`latex\', \`Sd\' (S documentation format), and \`example\' (extract R
+code in the examples).
 
-The default is to send output to stdout, which is also given by -o -.
-Using -o \"\" will choose an output filename by removing a .Rd extension
-from FILE and adding a suitable extension.
+The default is to send output to stdout, which is also given by \`-o -\'.
+Using \`-o \"\"\' will choose an output filename by removing a \`.Rd\'
+extension from FILE and adding a suitable extension.
   
 Email bug reports to <r-bugs\@r-project.org>.
 END
@@ -73,11 +66,10 @@ END
 
 $OSdir ="unix";
 
-
 @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
-		 "o|output-file:s", "os|OS:s");
+		 "o|output:s", "os|OS:s");
 GetOptions (@knownoptions) || &usage();
-&version() if $opt_v;
+&R_version($name, $version) if $opt_v;
 &usage() if $opt_h;
 
 $OSdir = $opt_os if $opt_os;
