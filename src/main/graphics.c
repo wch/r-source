@@ -5953,16 +5953,16 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->numcols = Rf_dpSavedptr(dd)->numcols;
     Rf_dpptr(dd)->currentFigure = Rf_dpSavedptr(dd)->currentFigure;
     Rf_dpptr(dd)->lastFigure = Rf_dpSavedptr(dd)->lastFigure;
-    for (i = 0; i < Rf_dpSavedptr(dd)->numrows; i++) {
+    for (i = 0; i < Rf_dpSavedptr(dd)->numrows && i < MAX_LAYOUT_ROWS; i++) {
 	Rf_dpptr(dd)->heights[i] = Rf_dpSavedptr(dd)->heights[i];
 	Rf_dpptr(dd)->cmHeights[i] = Rf_dpSavedptr(dd)->cmHeights[i];
     }
-    for (j = 0; j < Rf_dpSavedptr(dd)->numcols; j++) {
+    for (j = 0; j < Rf_dpSavedptr(dd)->numcols && j < MAX_LAYOUT_COLS; j++) {
 	Rf_dpptr(dd)->widths[j] = Rf_dpSavedptr(dd)->widths[j];
 	Rf_dpptr(dd)->cmWidths[j] = Rf_dpSavedptr(dd)->cmWidths[j];
     }
-    for (i = 0; i < Rf_dpSavedptr(dd)->numrows; i++)
-	for (j=0; j<Rf_dpSavedptr(dd)->numcols; j++) {
+    for (i = 0; i < Rf_dpSavedptr(dd)->numrows && i < MAX_LAYOUT_ROWS; i++)
+	for (j=0; j<Rf_dpSavedptr(dd)->numcols && j < MAX_LAYOUT_COLS; j++) {
 	    Rf_dpptr(dd)->order[i][j] = Rf_dpSavedptr(dd)->order[i][j];
 	    Rf_dpptr(dd)->respect[i][j] = Rf_dpSavedptr(dd)->respect[i][j];
 	}

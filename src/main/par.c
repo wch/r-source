@@ -1648,9 +1648,13 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* num.rows: */
     nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows = INTEGER(CAR(args))[0];
+    if (nrow > MAX_LAYOUT_ROWS)
+	error("Too many rows in layout");
     args = CDR(args);
     /* num.cols: */
     ncol = Rf_dpptr(dd)->numcols = Rf_gpptr(dd)->numcols = INTEGER(CAR(args))[0];
+    if (ncol > MAX_LAYOUT_COLS)
+	error("Too many columns in layout");
     args = CDR(args);
     /* mat[i,j] == order[i][j] : */
     for (i = 0; i < nrow; i++)
