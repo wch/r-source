@@ -11,6 +11,16 @@
 
 NEW FEATURES
 
+    o	range() is now in the Summary group, trunc() back in the Math
+	group.
+
+    o	Under Unix, R-specific environment variables can now be kept/set
+	in `~/.Renviron'.
+
+    o	New options `latexcmd' and `dvipscmd' for specifying the locations
+	of LaTeX and dvips; corresponding environment variables renamed to
+	`R_LATEXCMD' and `R_DVIPSCMD'.
+
     o	--vsize & --nsize now both give size in "single units" 
 	(bytes/cons cells) with possible 
 	suffixes "M" (Mega), "K"ilo (1024) and "k"ilo(1000).
@@ -28,15 +38,17 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	subscripting with a length zero logical no longer bombs.
+
     o	as.ordered(NULL) now returns an "ordered" object.
 
     o	--debugger .. now gives a warning if other command line args are used
 
-    o	pt(t,df, ncp) now also works for bigger ncp's
+    o	pt(t, df, ncp) now also works for bigger ncp's
     
     o	apply(a,d, fun) now passes vectors (rank 1 arrays) to fun.
 
-    o	model.frame with subset and only one column fixed
+    o	model.frame() with subset and only one column fixed
 
     o	boxplot(<data.frame>) now works again.
 
