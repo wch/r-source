@@ -66,7 +66,6 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     type <- if(missing(type)) if(frequency(x) > 1) "BSM" else "trend"
     else match.arg(type)
     dim(x) <- NULL
-    n <- length(x)
     xtsp <- tsp(x)
     nf <- frequency(x)
     Z <- switch(type,

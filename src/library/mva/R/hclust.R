@@ -44,7 +44,6 @@ hclust <- function(d, method="complete", members=NULL)
         (if (length(d) < len) stop else warning
          )("dissimilarities of improper length")
 
-    labels <- attr(d, "Labels")
     if(is.null(members))
         members <- rep(1, n)
     else if(length(members) != n)

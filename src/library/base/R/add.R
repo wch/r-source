@@ -307,6 +307,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     dfs <- numeric(ns)
     RSS <- numeric(ns)
     y <- object$residuals + predict(object)
+    na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
     rank <- object$rank
     for(i in 1:ns) {
 	ii <- seq(along=asgn)[asgn == ndrop[i]]

@@ -18,7 +18,6 @@ arima.sim <- function(model, n, rand.gen = rnorm,
                       innov = rand.gen(n, ...), n.start = NA, ...)
 {
     if(!is.list(model)) stop("`model' must be list")
-    nm <- names(model)
     p <- length(model$ar)
     if(p) {
         minroots <- min(Mod(polyroot(c(1, -model$ar))))
@@ -40,5 +39,5 @@ arima.sim <- function(model, n, rand.gen = rnorm,
     if(length(model$ar)) x <- filter(x, model$ar, method = "recursive")
     x <- x[-(1:n.start)]
     if(d > 0) x <- diffinv(x, differences = d)
-    else as.ts(x)
+    as.ts(x)
 }

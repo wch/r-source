@@ -586,7 +586,7 @@ data.frame <-
         if(p == 1) value <- list(value)
         else {
             if(m < n*p && (n*p) %% m)
-                stop(paste("replacement has", m, "items, need", np))
+                stop(paste("replacement has", m, "items, need", n*p))
             value <- matrix(value, n, p)  ## will recycle
             value <- split(value, col(value))
         }

@@ -45,8 +45,8 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     names(xaic) <- 0:order.max
     order <- z$order
     ar <- if (order > 0)
-        coefs <- -aperm(array(z$coefs, dim = c(nser, nser, order.max +
-            1)), c(3, 2, 1))[2:(order + 1), , , drop = FALSE]
+        -aperm(array(z$coefs, dim = c(nser, nser, order.max + 1)),
+               c(3, 2, 1))[2:(order + 1), , , drop = FALSE]
     else array(dim = c(0, nser, nser))
     var.pred <- var.pred[order + 1, , , drop = TRUE]
     resid <- matrix(z$resid, nrow = n.used, ncol = nser)

@@ -38,7 +38,6 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
         series <- deparse(substitute(x))
         x <- na.action(as.ts(x))
         xfreq <- frequency(x)
-        n <- NROW(x)
         nser <- NCOL(x)
         x <- ar(x, is.null(order), order, na.action=na.action, method=method)
     } else {
@@ -49,7 +48,6 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
         xfreq <- x$frequency
         if(is.array(x$ar)) nser <- dim(x$ar)[2] else nser <- 1
     }
-    n <- x$n.used
     order <- x$order
     if(missing(n.freq)) n.freq <- 500
     freq <- seq(0, 0.5, length = n.freq)

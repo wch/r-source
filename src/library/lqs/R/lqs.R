@@ -137,7 +137,6 @@ lqs.default <-
     z$scale <- c(s, sqrt(s2))
     if(method == "S") { # IWLS refinement
 	psi <- function(u, k0) (1  - pmin(1, abs(u/k0))^2)^2
-	coef <- z$coef
 	resid <- z$residuals
 	scale <- s
 	for(i in 1:30) {

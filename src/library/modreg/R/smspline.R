@@ -32,7 +32,7 @@ smooth.spline <-
                      tol = 1e-4,## tol = 0.001   was default till R 1.3.x
                      eps = 2e-8,## eps = 0.00244 was default till R 1.3.x
                      maxit = 500, trace = getOption("verbose"))
-    contr.sp[(namc <- names(control.spar))] <- control.spar
+    contr.sp[(names(control.spar))] <- control.spar
     if(!all(sapply(contr.sp[1:4],is.double)) ||
        contr.sp$tol < 0 || contr.sp$eps <= 0 || contr.sp$maxit <= 0)
         stop("invalid `control.spar'")

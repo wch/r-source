@@ -2,7 +2,6 @@ prcomp <- function(x, retx = TRUE, center = TRUE, scale. = FALSE,
                    tol = NULL) {
     x <- as.matrix(x)
     x <- scale(x, center = center, scale = scale.)
-    dn <- dim(x)
 #  as from 1.7.0 svd uses LAPACK: LINPACK was slow in this case.
 #     if(dn[1] < dn[2]) {
 #         s <- La.svd(x, nu = 0)

@@ -7,7 +7,6 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
     x <- as.matrix(x)
     n <- nrow(x)
     nser <- ncol(x)
-    series <- colnames(x)
     nfilt <- length(filter)
     if(any(is.na(filter))) stop("missing values in filter")
     y <- matrix(NA, n, nser)

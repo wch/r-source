@@ -23,8 +23,8 @@ KalmanRun <- function(y, mod, nit = 0)
 
 KalmanForecast <- function(n.ahead = 10, mod)
 {
-    a <- an <- numeric(p <- length(mod$a))
-    P <- Pn <- matrix(0, p, p)
+    a <- numeric(p <- length(mod$a))
+    P <- matrix(0, p, p)
     a[] <- mod$a
     P[] <- mod$P
     ## next call changes objects a, P

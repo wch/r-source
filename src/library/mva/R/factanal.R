@@ -33,7 +33,6 @@ factanal <-
     }
     else if (is.matrix(covmat)) {
         cv <- covmat
-        cen <- NULL
         have.x <- FALSE
     }
     else if (is.null(covmat)) {
@@ -247,7 +246,6 @@ print.factanal <- function(x, digits = 3, ...)
 varimax <- function(x, normalize = TRUE, eps = 1e-5)
 {
     nc <- ncol(x)
-    dn <- dimnames(x)
     if(nc < 2) return(x)
     if(normalize) {
         sc <- sqrt(drop(apply(x, 1, function(x) sum(x^2))))
