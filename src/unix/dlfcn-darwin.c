@@ -29,6 +29,24 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+/* AUTHORS file:
+
+Original code by Jorge Acereda  <jacereda@users.sourceforge.net>
+This was heavily modified by Peter O'Gorman
+<ogorman@users.sourceforge.net>
+
+With input from (in alphabetical order):
+
+Max Horn <max@quendi.de>
+Francis James Franklin <fjf@alinameridon.com>
+Darin Ohashi <DOhashi@maplesoft.com>
+
+Forgive me if I missed you, and e-mail me
+<ogorman@users.sourceforge.net>
+to get added to this list.
+
+*/
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

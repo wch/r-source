@@ -261,7 +261,14 @@ src/extra/bzip2/randtable.c
    copyright (C) 1996-2002 Julian R Seward.
 
 
-src/library/tools/src/md5.{c,h}
+src/library/tools/src/md5.[ch]
 
     Copyright (C) 1995, 1996, 2001 Free Software Foundation, Inc.
 
+
+src/unix/dlfcn-darwin.[ch]
+[Used only on MacOS X]
+
+    Copyright (c) 2002 Jorge Acereda  <jacereda@users.sourceforge.net> &
+                       Peter O'Gorman <ogorman@users.sourceforge.net>
+    See the headers of the files for the licence.
