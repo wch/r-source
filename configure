@@ -19,7 +19,7 @@ ac_help="$ac_help
                           (and maybe confusing) to the casual installer"
 ac_help="$ac_help
   --enable-strict-barrier
-                          enable testing the write barrier"
+                          provoke compile error on write barrier violation"
 ac_help="$ac_help
   --with-f2c              use f2c even if FORTRAN compiler is available"
 ac_help="$ac_help
