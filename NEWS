@@ -121,11 +121,11 @@ BUG FIXES
 
     o   Changes to the methods package:
 
-	- Nonstandard generic function definitions  given to
+	- Nonstandard generic function definitions given to
 	  setGeneric now work; these were previously ignored.
 
 	- Classes that extend matrix, etc. as the data part previously lost
-	  their attributes
+	  their attributes.
 
 	- There were bugs in distinguishing methods for "missing" from
 	  methods for "ANY".
@@ -144,14 +144,14 @@ BUG FIXES
 
     o	par(mgp = v) now allows negative `v' (S-compatibly and sensibly).
 
-    o	identify.hclust masked its `x' argument and so failed.
+    o	identify.hclust() masked its `x' argument and so failed.
 
     o	System rint was never being used in fround.c.
 
     o	round/trunc.POSIXt were erroneously retaining information on
 	DST. (PR#1543)
 
-    o   tcltk package didn't work with tcl8.0.x. Compatibility code
+    o   tcltk package didn't work with tcl8.0.x.  Compatibility code
         inserted (PR#1640, thanks to René Bertin for helping out with
         this). 
 
@@ -159,6 +159,8 @@ BUG FIXES
         not specified (but implicit).
 
     o	legend() now treats lty="0" properly (as solid).
+
+    o	ARMAacf was ignoring ma terms if p = 1, and failing if q > p > 1.
 
 
 
