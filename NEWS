@@ -62,6 +62,8 @@ NEW FEATURES
     o	The deprecated alternative RPROFILE is no longer accepted: use
 	R_PROFILE instead.
 
+    o	Added setequal() for set equality.
+
 
 BUG FIXES
 
