@@ -2,14 +2,34 @@
 \title{Predicting from Linear Model Fits}
 \alias{predict.lm}
 \alias{predict.mlm}
+\description{
+  Obtains predictions and optionally estimates standard errors of those
+  predictions from a fitted linear model object.}
 \usage{
 predict[.lm](object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
              interval = c("none", "confidence", "prediction"),
              level = 0.95, type = c("response", "terms"),
              terms = NULL, \dots)
 }
-%% FIXME \arguments{} is missing!
-\description{
+\arguments{
+  \item{object}{a fitted object of class inheriting from \code{"lm"}.}
+  \item{newdata}{}
+  \item{se.fit}{A logical indicating whether or not to compute pointwise
+    standard errors along with the predictions.}
+  \item{scale}{}
+  \item{df}{}
+  \item{interval}{}
+  \item{level}{}
+  \item{type}{the type of prediction required.  The default is on the
+    scale of the response variable.  The alternative \code{"terms"}
+    breaks predictions down to the contributions from each term, and
+    returns a matrix of predictions, with columns corresponding to the
+    terms of the model.}
+  \item{terms}{}
+  \item{\dots}{not used.}
+}
+ 
+\details{
   \code{predict.lm} produces predicted values, obtained by evaluating
   the regression function in the frame \code{newdata} (which defaults to
   \code{model.frame(object)}.  If the logical \code{se.fit} is

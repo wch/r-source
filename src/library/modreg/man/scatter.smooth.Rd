@@ -3,6 +3,11 @@
 %
 \name{scatter.smooth}
 \title{Scatter Plot with Smooth Curve Fitted by Loess}
+\alias{scatter.smooth}
+\alias{loess.smooth}
+\description{
+  Plot and add a smooth curve computed by \code{loess} to a scatter plot.
+}
 \usage{
 scatter.smooth(x, y, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"),
@@ -11,8 +16,6 @@ scatter.smooth(x, y, span = 2/3, degree = 1,
 loess.smooth(x, y, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"), evaluation=50, ...)
 }
-\alias{scatter.smooth}
-\alias{loess.smooth}
 \arguments{
   \item{x}{x coordinates for scatter plot.}
   \item{y}{y coordinates for scatter plot.}
@@ -23,15 +26,9 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   \item{xlab}{label for x axis.}
   \item{ylab}{label for y axis.}
   \item{ylim}{the y limits of the plot.}
-  %% FIXME Not used anymore?
-  %% \item{zero.line}{logical for plotting a horizontal line at
-  %%   zero---used for residual plots.}
   \item{evaluation}{number of points at which to evaluate the smooth
     curve.}
- \item{\ldots}{graphical parameters.}
-}
-\description{
-  Plot and add a smooth curve computed by \code{loess} to a scatter plot.
+  \item{\ldots}{graphical parameters.}
 }
 \details{
   \code{loess.smooth} is an auxiliary function.
