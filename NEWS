@@ -62,6 +62,11 @@ NEW FEATURES
 	lead to more accurate placing of centred or right-justified
 	strings.
 
+    o	Formulas created with the tilde operator now contain the
+	environment in which they were created.  The environment of a
+	formula can be accessed with the environment() function.  This
+	facility is still experimental; it is intended to help
+	simplify writing modeling functions.
 
 
     o	$ and $<- are now generic functions.
@@ -245,11 +250,6 @@ NEW FEATURES
     o	Mathlib can be built as a standalone library: see directory
 	src/nmath/standalone.
 
-    o	Formulas created with the tilde operator now cintain the
-	environment in which they were created.  The envorinment of a
-	formula can be accessed withthe `environment' function.  This
-	facility is still experimental; it is intended to help simplify
-	writing modeling functions.
 
 
 BUG FIXES
@@ -338,7 +338,7 @@ BUG FIXES
 
     o	print.ftable() now returns its argument.
 
-    o	proj.aovlist() now gives a non-zero result for strata with 
+    o	proj.aovlist() now gives a non-zero result for strata with
 	no fitted effects.
 
     o	rgeom(, prob=1) gives 0 rather than NA
@@ -349,7 +349,7 @@ BUG FIXES
 
     o	system() is now (partially) functional on systems without popen.
 
-    o	Fixed bug in undoc() - requiring new `chdir' argument 
+    o	Fixed bug in undoc() - requiring new `chdir' argument
 	for sys.source()
 
     o	Fixed problem in usemethod() where CAR(call) could be non-symbol.
