@@ -68,11 +68,11 @@ all.equal(target, current, \dots)
 \examples{
 all.equal(pi, 355/113) # not precise enough (default tol) > relative error
 
+d45 <- pi*(1/4 + 1:10)
 stopifnot(
-all.equal(gamma(2:14),   cumprod(1:13))) # TRUE, but
-
-all      (gamma(2:14) == cumprod(1:13)) # FALSE, since not exactly
-all.equal(gamma(2:14),   cumprod(1:13), tol=0) # to see difference
+all.equal(tan(d45), rep(1,10))) # TRUE, but
+all      (tan(d45) == rep(1,10)) # FALSE, since not exactly
+all.equal(tan(d45), rep(1,10), tol=0) # to see difference
 
 all.equal(options(), .Options)
 all.equal(options(), as.list(.Options))# TRUE
