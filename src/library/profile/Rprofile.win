@@ -1,6 +1,0 @@
-###-*- R -*- MS-Windows Specific ----
-
-.Library <- paste(R.home(), "library", sep = .Platform$file.sep)
-.lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))
-options(papersize = "a4")
-options(device = "windows")
