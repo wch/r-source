@@ -37,6 +37,7 @@ Directory:  Add-ons
 Subject: trouble with netCDF 
 From: jasont@indigoindustrial.co.nz
 Date: Thu, 25 Jan 2001 12:00:39 +1300
+--Only on a specific sample file: send to maintainer.
 * PR# 496 *
 From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
@@ -197,27 +198,10 @@ Date: Fri, 16 Feb 2001 17:44:17 -0700 (MST)
 --Some are about constructs needed to satisfy other compilers.
 --
 --Also: configure problem with g77 on SGI.
-* PR# 822 *
-Subject: Re: Sys.time dumps core at start-up
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 23 Jan 2001 19:56:32 +0100 (CET)
---part of 821
-* PR# 821 *
-Subject: Sys.time dumps core at start-up
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 23 Jan 2001 19:44:28 +0100 (CET)
---See also 822, which shows the segfault is in strftime.c.
---From other correspondence, this is on RH5.0: we can't
---reproduce it on RH6.2 or anywhere else.
 * PR# 848 *
 Subject: X11 device doesn't handle destroy events correcly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 13 Feb 2001 17:40:46 -0500
-* PR# 838 *
-Subject: Linux shared library problem
-From: daniel.egloff@dplanet.ch
-Date: Sun, 4 Feb 2001 22:37:31 +0100 (MET)
---RedHat 7.0: need updates?
 
 Directory:  TooMuchAtOnce
 
