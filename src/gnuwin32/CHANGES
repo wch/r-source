@@ -52,6 +52,9 @@ check', that is run all the examples in the help pages for that package.
 unlink can now handle wildcards and a vector argument of length more than
 one.
 
+The inverse hyperbolic tangent functions asinh acosh atanh are now
+available in this version.
+
 
 rw0640
 ======

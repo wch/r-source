@@ -48,9 +48,12 @@ label lVer, lsrc, ldest, lwhat1, lwhat2, lwarn2, lwarn3, lwarn4, lwarn5,
     lres3, lresp2, lwhat3;
 field fRver, fSrc, fDest;
 
+#ifndef RVER
+#define RVER
+#endif
 
 int FullInstall = 1, over;
-char Rver[10]="", src[MAX_PATH], dest[MAX_PATH];
+char Rver[20]="RVER", src[MAX_PATH], dest[MAX_PATH];
 char selpkg[30], *pkglist[100];
 int npkgs, rwb=1, rwh=1, rww=1, rwl=1, rwwh=0, rwsp=0;
 int prwb=1, prww=1, prwl=1, prwwh=0;

@@ -92,8 +92,8 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 		failures += (unlink(tmp) !=0);
 	    }
 	    FindClose(fh);
-	} else failures++;}
-
+	} else failures++;
+    }
     PROTECT(ans = allocVector(STRSXP, 1));
     if (!failures)
 	STRING(ans)[0] = mkChar("0");
