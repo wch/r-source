@@ -1,3 +1,9 @@
+r-base (1.0.1-0) unstable; urgency=low
+
+  * Test builds of new upstream sources.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri, 17 Mar 2000 10:50:13 -0600
+
 r-base (1.0.0-2) unstable; urgency=low
 
   * The pdf documentation is now in a new package r-doc-pdf
