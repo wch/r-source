@@ -290,6 +290,9 @@ BUG FIXES
 	were inaccurate (or if numerical derivatives were used and the
 	problem was badly scaled).
 
+    o	The DocumentMedia comment in postscript() output was wrong,
+	and the font DSC comments have been changed to the preferred
+	style for DSC 3.0.
 
 
 	**************************************************
