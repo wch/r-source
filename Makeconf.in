@@ -114,8 +114,8 @@ rhome = @libdir@/R
 @WANT_R_FRAMEWORK_TRUE@mandir = $(rhome)
 
 Rexecbindir = $(rhome)/bin
-## FIXME: should be 'lib' eventually
 Rexeclibdir = $(rhome)/lib
+## FIXME:
 ## Alternatively, we could try to set pkglibdir = $(rhome)/lib when
 ## switching to automake.
 ## </FIXME>
