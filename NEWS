@@ -55,7 +55,7 @@ USER-VISIBLE CHANGES
     o	Dataset 'phones' has been renamed to 'WorldPhones'.
 
     o	Datasets 'sunspot.month' and 'sunspot.year' are available
-	separately but not via data(sunspot) (which is used by package
+	separately but not via data(sunspot) (which was used by package
 	lattice to retrieve a dataset 'sunspot').
 
     o	Packages must have been re-installed for this version, and
@@ -77,10 +77,6 @@ NEW FEATURES
     o	There is a new atomic vector type, class "raw".	 See ?raw for
 	full details including the operators and utility functions provided.
 
-    o   There is a new 'padj' argument to mtext() and axis().
-
-	Code patch provided by Uwe Ligges (fixes PR#1659 and PR#7188).
-	
     o	The default barplot() method by default uses a
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
@@ -100,7 +96,7 @@ NEW FEATURES
 
     o	There is now a coef() method for summaries of "nls" objects.
 
-    o	compareVersion(), packageDescription() and read.00Index
+    o	compareVersion(), packageDescription() and read.00Index()
 	have been moved to package 'utils'.
 
     o	convolve(), fft(), mvfft() and nextn() have been moved to
@@ -233,7 +229,10 @@ NEW FEATURES
 	intention, but they sometimes were as the result of an earlier
 	bug fix.)
 
-    o	package.dependencies() has been moved to package 'tools'.
+    o   There is a new 'padj' argument to mtext() and axis().
+	Code patch provided by Uwe Ligges (fixes PR#1659 and PR#7188).
+	
+    o	Function package.dependencies() has been moved to package 'tools'.
 
     o	The 'formula' method for pairs() has a 'na.action' argument,
 	defaulting to 'na.pass', rather than the value of
@@ -348,7 +347,7 @@ NEW FEATURES
 	but seems what users would expect.
 
     	It now also recycles (x,y) to the length of 'labels' if that
-	is longer.  This is now compatible to grid.text() and
+	is longer.  This is now compatible with grid.text() and
 	S. (See also PR#7084.)
 
     o	TukeyHSD() now labels comparisons when applied to an
@@ -468,10 +467,6 @@ DEPRECATED & DEFUNCT
 
     o	The undocumented function newestVersion() is no longer exported
 	from package utils.  (Mainly because it was not completely general.)
-
-    o	If --enable-R-shlib is specified, a copy of libR is still
-	installed in $R_HOME/bin, but this will be removed in the near
-	future.	 Use that in R_HOME/lib instead.
 
     o	C-level entry point ptr_R_GetX11Image has been removed, as it
 	was replaced by R_GetX11Image at 1.7.0.
@@ -597,7 +592,7 @@ BUG FIXES
     o	debug() works on trivial functions instead of crashing (PR#6804)
 
     o	eval() could alter a data.frame/list second argument, so
-	with(trees, Girth[1] < NA) altered 'trees' (and any copy of
+	with(trees, Girth[1] <- NA) altered 'trees' (and any copy of
 	'trees' too).
 
     o	cor() could corrupt memory when the standard deviation was
@@ -606,7 +601,7 @@ BUG FIXES
     o	inverse.gaussian() always printed 1/mu^2 as the link function.
 
     o   constrOptim now passes ... arguments through optim to the
-        objective function
+        objective function.
 
     o	object.size() now has a better estimate for character vectors:
 	it was in general too low (but only significantly so for
@@ -623,7 +618,7 @@ BUG FIXES
 	quotes in typewriter output.
 
     o	model.frame() no longer builds invalid data frames if the
-	data contains time series and rows are omitted.
+	data contains time series and rows are omitted by na.action.
 
     o	write.table() did not escape quotes in column names.  (PR#7171)
 
@@ -644,7 +639,6 @@ BUG FIXES
     o   Fix some issues with nonsyntactical names in modelling code
         (PR# 7202), relating to backquoting. There are likely more.
 
-    o   Subassignment with arrays and NA indices was broken (half of PR#7210)
 
 
 
@@ -727,6 +721,11 @@ BUG FIXES
 	(PR#7177), but gives an error.
 
     o   nls(model = TRUE) was broken.
+
+    o   Subsetted assignments of the form A[i1, i2, i3] <- B stopped as
+	soon as an NA was encountered in an index so subsequent non-NA
+	indices were ignored.  (PR#7210)
+
 
 
 
