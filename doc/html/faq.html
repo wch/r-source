@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.2-52, 2001-05-09</h2>
+<h2>Version 1.2-53, 2001-05-11</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1880,10 +1880,11 @@ Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 
 <p>A package consists of a subdirectory containing the files
 <code>DESCRIPTION</code> and <code>INDEX</code>, and the subdirectories <code>R</code>,
-<code>data</code>, <code>exec</code>, <code>inst</code>, <code>man</code>, <code>src</code>, and
-<code>tests</code> (some of which can be missing).  Optionally the package can
-also contain script files <code>configure</code> and <code>cleanup</code> which are
-executed before and after installation.
+<code>data</code>,
+<code>exec</code>, <code>inst</code>, <code>man</code>, <code>src</code>, and <code>tests</code> (some
+of which can be missing).  Optionally the package can also contain
+script files <code>configure</code> and <code>cleanup</code> which are executed
+before and after installation.
 
 <p>See section "Creating R packages" in <cite>Writing R Extensions</cite>, for
 details. 
@@ -2096,6 +2097,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#What%20are%20valid%20names%3f">What are valid names?</a>: 
 <li><a href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>: 
 <li><a href="#Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>: 
+<li><a href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>: 
 </ul>
 
 <p><hr>
@@ -2575,6 +2577,7 @@ from package <strong>mda</strong>.
 
 <p><hr>
 Node:<a name="Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
+Next:<a rel=next href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
 Previous:<a rel=previous href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -2611,6 +2614,22 @@ specifically print it.
 </pre>
 
 <p>instead, or use <code>source(<var>file</var>, echo=TRUE)</code>.
+
+<p><hr>
+Node:<a name="Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
+Previous:<a rel=previous href="#Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
+<br>
+
+<h2>7.20 Why does outer() behave strangely with my function?</h2>
+
+<p>As the help for <code>outer()</code> indicates, it does not work on arbitrary
+functions the way the <code>apply()</code> family does.  It requires functions
+that are vectorized to work elementwise on arrays.  As you can see by
+looking at the code, <code>outer(x, y, FUN)</code> creates two large vectors
+containing every possible combination of elements of <code>x</code> and
+<code>y</code> and then passes this to <code>FUN</code> all at once.  Your function
+probably cannot handle two large vectors as parameters.
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,

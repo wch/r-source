@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-52, 2001-05-09
+Version 1.2-53, 2001-05-11
 Kurt Hornik
 
 
@@ -77,6 +77,7 @@ R FAQ
   7.17 What are valid names?
   7.18 Are GAMs implemented in R?
   7.19 Why is the output not printed when I source() a file?
+  7.20 Why does outer() behave strangely with my function?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -2215,6 +2216,17 @@ or
      print(summary(glm(y~x+z, family=binomial)))
 
 instead, or use `source(FILE, echo=TRUE)'.
+
+7.20 Why does outer() behave strangely with my function?
+========================================================
+
+   As the help for `outer()' indicates, it does not work on arbitrary
+functions the way the `apply()' family does.  It requires functions that
+are vectorized to work elementwise on arrays.  As you can see by looking at
+the code, `outer(x, y, FUN)' creates two large vectors containing every
+possible combination of elements of `x' and `y' and then passes this to
+`FUN' all at once.  Your function probably cannot handle two large vectors
+as parameters.
 
 8 R Programming
 ***************
