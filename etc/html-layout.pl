@@ -17,15 +17,15 @@ sub html_pagehead
 {
     my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext) = @_;
 
-    my $retval = "<HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
+    my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
 	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
 	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
 	"BACKGROUND=\"white\">\n" .
 	"<h1 align=center>\n" .
         "<FONT FACE=\"Courier New,Courier\" COLOR=\"#999999\" " .
-        "size=+3><b>\n" .
+        "size=\"+3\"><b>\n" .
         "$title\n" .
-        "</b></FONT><img src=\"$top/logo.jpg\" align=center></h1>\n\n" .
+        "</b></FONT><img src=\"$top/logo.jpg\" alt=\"[R logo]\" align=center></h1>\n\n" .
         "<hr>\n\n" .
         "<div align=center>\n";
 
@@ -55,7 +55,7 @@ sub html_functionhead
 {
     my $title = $_[0];
 
-    my $retval = "<HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
+    my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
 	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
 	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
 	"BACKGROUND=\"white\">\n\n";
@@ -70,7 +70,7 @@ sub html_functionfoot
     
     if($HTML){
 	$retval .= "\n\n<p align=center><hr><div align=center>" .
-	    "<a href=\"00Index.$HTML\">[Package Contents]</a>\n\n";
+	    "<a href=\"00Index.$HTML\">[Package Contents]</a></div>\n\n";
     }
 
     $retval .= "</BODY></HTML>\n";
