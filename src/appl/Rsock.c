@@ -39,63 +39,25 @@
 #endif
 #include "sock.h"
 
-#ifndef OPEN_MAX
-#  define OPEN_MAX 64
-#endif
-
-static int sock[OPEN_MAX];
 static int sock_inited = 0;
 
-#define SOCK_MAX OPEN_MAX
-
-/* -Wall: not used
-static void cleanup(void)
-{
-  int i;
-  for (i = 0; i < SOCK_MAX; i++)
-    if (sock[i] != -1) {
-      Sock_close(sock[i], NULL);
-      sock[i] = -1;
-    }
-}
-*/
 
 static int enter_sock(int fd)
 {
 #ifdef DEBUG
     printf("enter_sock(%d)\n", fd);
 #endif
-    if (fd == -1)
-	return 0;
-    else {
-	int i;
-	for (i = 0; i < SOCK_MAX; i++)
-	    if (sock[i] == -1) {
-		sock[i] = fd;
-		return fd;
-	    }
-	Sock_close(fd, NULL);
-	return 0;
-    }
+    if (fd == -1) return 0; else return fd;
 }
 
 static int close_sock(int fd)
 {
-    int i;
-    for (i = 0; i < SOCK_MAX; i++)
-	if (sock[i] == fd) {
-	    sock[i] = -1;
-	    return Sock_close(fd, NULL) == -1 ? 0 : 1 ;
-	}
-    return 0;
+    return Sock_close(fd, NULL) == -1 ? 0 : 1 ;
 }
 
 static void check_init(void)
 {
     if (! sock_inited) {
-	int i;
-	for (i = 0; i < SOCK_MAX; i++)
-	    sock[i] = -1;
 #ifdef DEBUG
 	printf("initing\n");
 #endif
@@ -157,6 +119,44 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
     n = Sock_write(*sockp, *buf + *start, *end - *start, NULL);
     *len = (int) n;
 }
+
+/* for use in socket connections */
+
+int R_SockOpen(int port)
+{
+    check_init();
+    return Sock_open(port, NULL);
+}
+
+int R_SockListen(int sockp, char *buf, int len)
+{
+    check_init();
+    return Sock_listen(sockp, buf, len, NULL);
+}
+
+int R_SockConnect(int port, char *host)
+{
+    check_init();
+    return Sock_connect(port, host, NULL);
+}
+
+int R_SockClose(int sockp)
+{
+    return close_sock(sockp);
+}
+
+int R_SockRead(int sockp, void *buf, int maxlen)
+{
+    check_init();
+    return (int) Sock_read(sockp, buf, maxlen, NULL);
+}
+
+int R_SockWrite(int sockp, const void *buf, int len)
+{
+    check_init();
+    return (int) Sock_write(sockp, buf, len, NULL);
+}
+
 
 #ifdef Unix
 #include <signal.h>
