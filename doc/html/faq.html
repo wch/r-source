@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.3-25, 2001-10-28</h2>
+<h2>Version 1.3-26, 2001-10-30</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1646,6 +1646,8 @@ manipulations.
 <dd>Fits a principal curve to a matrix of points in arbitrary dimension. 
 <br><dt><strong>pspline</strong>
 <dd>Smoothing splines with penalties on order m derivatives. 
+<br><dt><strong>qtl</strong>
+<dd>Analysis of experimental crosses to identify QTLs. 
 <br><dt><strong>quadprog</strong>
 <dd>For solving quadratic programming problems. 
 <br><dt><strong>quantreg</strong>
@@ -2231,6 +2233,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>: 
 <li><a href="#Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>: 
 <li><a href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>: 
+<li><a href="#Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>: 
 </ul>
 
 <p><hr>
@@ -2742,6 +2745,7 @@ specifically print it.
 
 <p><hr>
 Node:<a name="Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
+Next:<a rel=next href="#Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
 Previous:<a rel=previous href="#Why%20is%20the%20output%20not%20printed%20when%20I%20source()%20a%20file%3f">Why is the output not printed when I source() a file?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -2778,6 +2782,37 @@ function is
 
 <pre>outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
 </pre>
+
+<p><hr>
+Node:<a name="Why%20does%20the%20output%20from%20anova()%20depend%20on%20the%20order%20of%20factors%20in%20the%20model%3f">Why does the output from anova() depend on the order of factors in the model?</a>,
+Previous:<a rel=previous href="#Why%20does%20outer()%20behave%20strangely%20with%20my%20function%3f">Why does outer() behave strangely with my function?</a>,
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
+<br>
+
+<h2>7.20 Why does the output from anova() depend on the order of factors in the model?</h2>
+
+<p>In a model such as <code>~A+B+A:B</code>, R will report the difference in sums
+of squares between the models <code>~1</code>, <code>~A</code>, <code>~A+B</code> and
+<code>~A+B+A:B</code>.  If the model were <code>~B+A+A:B</code>, R would report
+differences between <code>~1</code>, <code>~B</code>, <code>~A+B</code>, and
+<code>~A+B+A:B</code> . In the first case the sum of squares for <code>A</code> is
+comparing <code>~1</code> and <code>~A</code>, in the second case it is comparing
+<code>~B</code> and <code>~B+A</code>.  In a non-orthogonal design (i.e., most
+unbalanced designs) these comparisons are (conceptually and numerically)
+different.
+
+<p>Some packages report instead the sums of squares based on comparing the
+full model to the models with each factor removed one at a time (the
+famous `Type III sums of squares' from SAS, for example).  These do not
+depend on the order of factors in the model.  The question of which set
+of sums of squares is the Right Thing provokes low-level holy wars on
+r-help from time to time.
+
+<p>There is no need to be agitated about the particular sums of squares
+that R reports.  You can compute your favorite sums of squares quite
+easily.  Any two models can be compared with <code>anova(model1,
+model2)</code>, and <code>drop1(model1)</code> will show the sums of squares
+resulting from dropping single terms.
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
