@@ -357,3 +357,11 @@ Date: Sat, 13 Oct 2001 9:53:42 PM -0000
 Subject: Crash of RGui under Windows 2000
 From: dfiaschi@ec.unipi.it
 Date: Mon, 15 Oct 2001 09:49:38 +0200 (MET DST)
+* PR# 1132 *
+Subject: Problem with "describe" lists.
+From: Rolf Turner <rolf@localhost.localdomain>
+Date: Thu, 18 Oct 2001 16:41:03 +0800
+* PR# 1133 *
+Subject:  seq 
+From: stahel@stat.math.ethz.ch
+Date: Thu, 18 Oct 2001 17:48:57 +0200
