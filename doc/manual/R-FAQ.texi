@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-17, 2001-01-12
+@set FAQ-VERSION 1.2-18, 2001-01-13
 @set REL-VERSION 1.2.1
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1644,6 +1644,8 @@ Finding D-optimal experimental designs.
 @item dseplus
 Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
+@item ensemble
+Ensembles of tree classifiers.
 @item funfits
 An integrated set of functions for fitting curves and surfaces including
 thin plate splines, kriging and neural networks.

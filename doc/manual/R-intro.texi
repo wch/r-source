@@ -60,9 +60,26 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 
 @end titlepage
 
+@ifnothtml
 @contents
+@end ifnothtml
 
+@ifnottex
 @node Top, Preface, (dir), (dir)
+@top An Introduction to R
+
+This is an introduction to R (``GNU S''), a language and environment for
+statistical computing and graphics.  R is similar to the award-winning S
+system, which was developed at Bell Laboratories by John Chambers et al.
+It provides a wide variety of statistical and graphical techniques
+(linear and nonlinear modelling, statistical tests, time series
+analysis, classification, clustering, ...).
+
+This manual provides information on data types, programming elements,
+statistical modeling and graphics.
+
+The current version of this document is @value{VERSION}.
+@end ifnottex
 
 @menu
 * Preface::                     
@@ -3900,18 +3917,19 @@ ross$withdraw(500)
 @cindex Customizing the environment
 
 Users can customize their environment in several different ways.  There
-is a system initialization file and every directory can have its own
+is a site initialization file and every directory can have its own
 special initialization file.  Finally, the special functions
 @code{.First} and @code{.Last} can be used.
 
-The system initialization file is called @file{Rprofile} and it is found
-in the @R{} home subdirectory @file{library/base/R}.  This file should
-contain the commands that you want to execute every time @R{} is started
-under your system.  A second, personal, profile file named
-@file{.Rprofile}@footnote{So it is hidden under UNIX.} can be placed in
-any directory.  If @R{} is invoked in that directory then that file will
-be sourced.  This file gives individual users control over their
-workspace and allows for different startup procedures in different
+The location of the site initialization file is taken from the value of
+the @env{R_PROFILE} environment variable.  If that variable is unset,
+file @file{Rprofile} in the @R{} home subdirectory @file{etc} is used.
+This file should contain the commands that you want to execute every
+time @R{} is started under your system.  A second, personal, profile
+file named @file{.Rprofile}@footnote{So it is hidden under UNIX.} can be
+placed in any directory.  If @R{} is invoked in that directory then that
+file will be sourced.  This file gives individual users control over
+their workspace and allows for different startup procedures in different
 working directories.  If no @file{.Rprofile} file is found in the
 startup directory, than @R{} looks for a @file{.Rprofile} file in the
 user's home directory and uses that (if it exists).
@@ -3946,7 +3964,7 @@ of the session.  An example is given below.
 @example
 > .Last <- function() @{
   graphics.off()                        # @r{a small safety measure.}
-  cat(paste(system.date(),"\nAdios\n")) # @r{Is it time for lunch?}
+  cat(paste(date(),"\nAdios\n"))        # @r{Is it time for lunch?}
 @}
 @end example
 @findex .Last
@@ -6405,12 +6423,13 @@ Unless @option{--no-environ} was given, @R{} searches for the file
 @file{.Renviron} in the current directory, or failing that the file
 pointed to by the environment variable @env{R_ENVIRON}, or if that is
 not set, the file @file{.Renviron} in the user's home directory.  The
-first of these files found is sourced to set environment variables.  The
-variables are exported automatically, provided that they are set in
-lines of the form @samp{@var{name}=@var{value}}.  Variables you might
-want to set include @env{R_PAPERSIZE} (the default paper size),
-@env{R_PRINTCMD} (the default print command) and @env{R_LIBS} (specifies
-the list of @R{} library trees searched for add-on packages).
+first of these files found is sourced to set environment variables. It
+should contain lines of the form @samp{@var{name}=@var{value}}.
+(See @code{help(Startup)} for a precise description.)
+Variables you might want to set include @env{R_PAPERSIZE} (the default
+paper size), @env{R_PRINTCMD} (the default print command) and
+@env{R_LIBS} (specifies the list of @R{} library trees searched for
+add-on packages).
 
 @item
 Then @R{} searches for the site-wide startup profile unless the command
@@ -6628,9 +6647,10 @@ If a file @file{.Renviron} in the current directory, or if that is not
 set, the file @file{.Renviron} in the user's home directory, exists, it
 is read to set environment variables.  Reading is suppressed by the flag
 @option{--no-environ}.  The variables are set by separate lines of the
-form @samp{@var{name}=@var{value}}.  Variables you might want to set
-include @env{R_PAPERSIZE} (the default paper size) and @env{R_LIBS}
-(controls the list of @R{} library trees searched for add-on packages).
+form @samp{@var{name}=@var{value}}.  (See @code{help(Startup)} for a
+precise description.)  Variables you might want to set include
+@env{R_PAPERSIZE} (the default paper size) and @env{R_LIBS} (controls
+the list of @R{} library trees searched for add-on packages).
 
 Environment variables can also be supplied as
 @samp{@var{name}=@var{value}} pairs at the end of  the command line.
@@ -6659,13 +6679,9 @@ reside in @file{.RData}.
 
 In addition, there are options for controlling the memory available to
 the @R{} process (see the on-line help for topic @samp{Memory} for more
-information).  Currently, @R{} uses a @emph{static} memory model.  This
-means that when it starts up, it asks the operating system to reserve a
-fixed amount of memory for it.  The size of this chunk cannot be changed
-subsequently. Hence, it can happen that not enough memory was allocated,
-e.g., when trying to read large data sets into @R{}.  The command line
-options @option{--nsize} and @option{--vsize} can be used for
-controlling the memory available for fixed and variable sized objects.
+information).  Users will not normally need to use these.  @R{} for
+Windows has an additional flag @code{--max-mem-size} described below,
+which by default does limit the memory usage of an @R{} process.
 
 @R{} for Windows accepts the following command line options.
 

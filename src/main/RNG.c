@@ -292,8 +292,9 @@ void GetRNGstate()
 	else {
 	    for(j = 1; j <= len_seed; j++) {
 		tmp = INTEGER(seeds)[j];
-		if(tmp == NA_INTEGER)
-		    error(".Random.seed[%d] is not a valid integer", j+1);
+/* Some generators can generate NA_INTEGER as a valid integer value */
+/*		if(tmp == NA_INTEGER)
+		error(".Random.seed[%d] is not a valid integer", j+1);*/
 		RNG_Table[RNG_kind].i_seed[j - 1] = tmp;
 	    }
 	    FixupSeeds(RNG_kind, 0);

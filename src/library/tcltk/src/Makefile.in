@@ -13,10 +13,6 @@ R_HOME = $(top_builddir)
 
 OBJS = tcltk.o
 SHLIB = $(pkg).@SHLIB_EXT@
-## FIXME:
-## Use $(LIBM).
-SHLIB_LIBADD = $(FLIBS)
-## </FIXME>
 
 PKG_CPPFLAGS = @TCLTK_CPPFLAGS@
 PKG_LIBS = @TCLTK_LIBS@

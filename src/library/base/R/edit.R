@@ -79,12 +79,13 @@ edit.data.frame <-
         }
         out[[i]] <- o
     }
+    out <- as.data.frame(out) # will convert cols switched to char into factors
     if (edit.row.names) {
         if(any(duplicated(rn)))
             warning("edited row names contain duplicates and will be ignored")
         else row.names(out) <- rn
     }
-    as.data.frame(out) # will convert cols swicthed to char into factors
+    out
 }
 
 edit.matrix <-

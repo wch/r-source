@@ -1,5 +1,5 @@
 #-*- Makefile -*-
-all:  $(DLLNAME).dll
+all:  libR $(DLLNAME).dll
 
 RCNAME=${DLLNAME}_res
 
@@ -40,6 +40,9 @@ ifeq ($(AA),Makevars.win)
 else
 -include Makevars
 endif
+
+libR:
+	@$(MAKE) --no-print-directory -C $(RHOME)/src/gnuwin32 libR.a
 
 $(DLLNAME)_res.rc:
 	PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@

@@ -35,7 +35,7 @@
 static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
 static unsigned char *ConsoleBufp;
 static int  ConsoleBufCnt;
-static unsigned char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
+static char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
 
 
 static int save = 0;
@@ -69,7 +69,7 @@ static int ConsoleGetchar()
 	}
 	R_ParseCnt++;
 	ConsoleBufp = ConsoleBuf;
-	ConsoleBufCnt = strlen(ConsoleBuf);
+	ConsoleBufCnt = strlen((char *)ConsoleBuf);
 	ConsoleBufCnt--;
     }
     return *ConsoleBufp++;
@@ -174,9 +174,9 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 		*bufp++ = c;
 	    }
 	    c = scanchar();
-	    while (c==' ' || c=='\t')
+	    while (c == ' ' || c == '\t')
 		c = scanchar();
-	    if (c=='\n' || c=='\r' || c==R_EOF)
+	    if (c == '\n' || c == '\r' || c == R_EOF)
 		filled = c;
 	    else
 		unscanchar(c);
@@ -187,23 +187,23 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 		    continue;
 		*bufp++ = c;
 	    } while (!isspace(c = scanchar()) && c != R_EOF);
-	    while (c==' ' || c=='\t')
-		c=scanchar();
-	    if (c=='\n' || c=='\r' || c==R_EOF)
+	    while (c == ' ' || c == '\t')
+		c = scanchar();
+	    if (c == '\n' || c == '\r' || c == R_EOF)
 		filled = c;
 	    else
 		unscanchar(c);
 	}
     }
     else { /* have separator */
-	while ((c = scanchar()) != sepchar && c!= '\n' && c!='\r'
+	while ((c = scanchar()) != sepchar && c != '\n' && c != '\r'
 	      && c != R_EOF)
 	    {
 		/* eat white space */
 		if (type != STRSXP)
-		    while (c==' ' || c=='\t')
-			if ((c=scanchar())== sepchar || c=='\n' ||
-			   c=='\r' || c==R_EOF) {
+		    while (c == ' ' || c == '\t')
+			if ((c=scanchar()) == sepchar || c == '\n' ||
+			    c == '\r' || c == R_EOF) {
 			    filled = c;
 			    goto donefill;
 			}
@@ -222,7 +222,7 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 			    *bufp++ = quote;
 			goto inquote; /* FIXME: Ick! Clean up logic */
 		    }
-		    if (c==sepchar || c=='\n' || c=='\r' || c==R_EOF){
+		    if (c == sepchar || c == '\n' || c == '\r' || c == R_EOF){
 			filled = c;
 			goto donefill;
 		    }
@@ -233,13 +233,14 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 		}
 		if (bufp >= &buffer[MAXELTSIZE - 2])
 		    continue;
-		if (!strip || bufp != &buffer[0] || !isspace(c))
+		if (!strip || bufp != buffer || !isspace(c))
 		    *bufp++ = c;
 	    }
 	filled = c;
     }
  donefill:
-    if (strip) {
+    /* strip trailing white space, if desired and if item is non-null */
+    if (strip && bufp > buffer) {
 	while (isspace((int)*--bufp))
 	    ;
 	bufp++;
@@ -421,23 +422,28 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		      int fill, SEXP stripwhite, int blskip)
 {
-    SEXP ans, new, old;
+    SEXP ans, new, old, w;
     char buffer[MAXELTSIZE];
     int blksize, c, i, ii, j, n, nc, linesread, colsread, strip, bch;
     int badline;
 
     nc = length(what);
+    if (!nc) {
+	    if (!ttyflag & !wasopen) con->close(con);
+	    error("empty `what=' specified");	
+    }
 
     if (maxlines > 0) blksize = maxlines;
     else blksize = SCAN_BLOCKSIZE;
 
     PROTECT(ans = allocVector(VECSXP, nc));
     for (i = 0; i < nc; i++) {
-	if (!isVector(VECTOR_ELT(what, i))) {
+	w = VECTOR_ELT(what, i);
+	if (!isVector(w)) {
 	    if (!ttyflag & !wasopen) con->close(con);
-	    error("\"scan\": invalid \"what=\" specified");
+	    error("invalid `what=' specified");
 	}
-	SET_VECTOR_ELT(ans, i, allocVector(TYPEOF(VECTOR_ELT(what, i)), blksize));
+	SET_VECTOR_ELT(ans, i, allocVector(TYPEOF(w), blksize));
     }
     setAttrib(ans, R_NamesSymbol, getAttrib(what, R_NamesSymbol));
 
@@ -931,7 +937,7 @@ SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     /* now strip white space off the end as well */
-    while (isspace((int)*--bufp))
+    while (--bufp >= buffer && isspace((int)*bufp))
 	;
     *++bufp = '\0';
     ConsolePrompt[0] = '\0';

@@ -11,7 +11,7 @@ subdir = src/scripts
 include $(top_builddir)/Makeconf
 
 SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt filename help \
-	help.links maketitle massage-Examples pager
+	help.links maketitle.awk massage-Examples pager
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rd2contents.in \
 	Rdconv.in Rdindex.in Rprof.in SHLIB.in Sd2Rd.in \
 	build-help.in build.in check.in extract-usage.in
@@ -65,7 +65,7 @@ R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
-	  sed "s@R_HOME_DIR*@`cd $(top_builddir); pwd`@; \
+	  sed "s@R_HOME_DIR=.*@R_HOME_DIR=`cd $(top_builddir); pwd`@; \
 	       s@REPLACE_BY_VERSION@$${v}@; \
 	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
 	@chmod +x $@

@@ -1826,10 +1826,14 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 /* GScale: used to default axis information
  *	   i.e., if user has NOT specified par(usr=...)
  */
-    int log, n, style, swap;
+#define EPS_FAC_1  16
+#define EPS_FAC_2 100
+
+    Rboolean swap, is_xaxis = (axis == 1 || axis == 3);
+    int log, n, style;
     double temp;
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	n = dd->gp.lab[0];
 	style = dd->gp.xaxs;
 	log = dd->gp.xlog;
@@ -1844,7 +1848,6 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	min = log10(min);
 	max = log10(max);
     }
-
     if(!R_FINITE(min) || !R_FINITE(max)) {
 	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]",
 		min, max, axis, log);
@@ -1852,16 +1855,17 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	if(!R_FINITE(max)) max = + .45 * DBL_MAX;
 	/* max - min is now finite */
     }
-    if(min == max) {
-	if(min == 0) {
-	    min = -1;
-	    max =  1;
-	}
-	else {
-	    temp = .4 * fabs(min);
-	    min -= temp;
-	    max += temp;
-	}
+    /* Version <= 1.2.0 had
+       if (min == max)	 -- exact equality for real numbers */
+    temp = fmax2(fabs(max), fabs(min));
+    if(temp == 0) {/* min = max = 0 */
+	min = -1;
+	max =  1;
+    }
+    else if(fabs(max - min) < temp * EPS_FAC_1 * DBL_EPSILON) {
+	temp *= (min == max) ? .4 : 1e-2;
+	min -= temp;
+	max += temp;
     }
 
     switch(style) {
@@ -1878,7 +1882,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	error("axis style \"%c\" unimplemented", style);
     }
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	if (log) {
 	    dd->gp.usr[0] = dd->dp.usr[0] = pow(10.,min);
 	    dd->gp.usr[1] = dd->dp.usr[1] = pow(10.,max);
@@ -1904,17 +1908,24 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	}
     }
 
-    if(min > max) {
-	swap = 1;
+    /* ------  The following : Only computation of [xy]axp[0:2] ------- */
+
+    /* This is not directly needed when [xy]axp = "n",
+     * but may later be different in another call to axis(), e.g.:
+      > plot(1, xaxt = "n");  axis(1)
+     * In that case, do_axis() should do the following.
+     * MM: May be we should modularize and put the following into another
+     * subroutine which could be called by do_axis {when [xy]axt != 'n'} ..
+     */
+
+    swap = min > max;
+    if(swap) {
 #ifdef DEBUG_PLOT
 	REprintf("GScale(..axis=%d) __SWAP__ (min = %g > %g = max); log=%d]\n",
 		 axis, min, max, log);
 #endif
-	temp = min;
-	min = max;
-	max = temp;
+	temp = min; min = max; max = temp;
     }
-    else swap = 0;
 
     if(log) {
 	min = pow(10., min);
@@ -1922,26 +1933,43 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	GLPretty(&min, &max, &n);
     }
     else GPretty(&min, &max, &n);
-    if (fabs(max - min) < fmax2(fabs(max), fabs(min))*100*DBL_EPSILON)
-	error("relative range of values is too small to compute accurately");
+
+    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))* 
+       EPS_FAC_2 * DBL_EPSILON) {
+	/* Treat this case somewhat similar to the (min ~= max) case above */
+	warning("relative range of values = %5g * EPS, is small (axis %d)."
+		/*"to compute accurately"*/,
+		fabs(max - min) / (temp*DBL_EPSILON), axis);
+
+	/* No pretty()ing anymore */
+	min = dd->dp.usr[2]; /* original  (min,max) ..*/
+	max = dd->dp.usr[3];
+	temp = .01 * fabs(max - min);
+	min += temp;
+	max -= temp;
+	n = 1;
+    }
 
     if(swap) {
-	temp = min;
-	min = max;
-	max = temp;
+	temp = min; min = max; max = temp;
     }
 
-    if(axis == 1 || axis == 3) {
-	dd->gp.xaxp[0] = dd->dp.xaxp[0] = min;
-	dd->gp.xaxp[1] = dd->dp.xaxp[1] = max;
-	dd->gp.xaxp[2] = dd->dp.xaxp[2] = n;
+#define G_Store_AXP(is_X)			\
+    if(is_X) {					\
+	dd->gp.xaxp[0] = dd->dp.xaxp[0] = min;	\
+	dd->gp.xaxp[1] = dd->dp.xaxp[1] = max;	\
+	dd->gp.xaxp[2] = dd->dp.xaxp[2] = n;	\
+    }						\
+    else {					\
+	dd->gp.yaxp[0] = dd->dp.yaxp[0] = min;	\
+	dd->gp.yaxp[1] = dd->dp.yaxp[1] = max;	\
+	dd->gp.yaxp[2] = dd->dp.yaxp[2] = n;	\
     }
-    else {
-	dd->gp.yaxp[0] = dd->dp.yaxp[0] = min;
-	dd->gp.yaxp[1] = dd->dp.yaxp[1] = max;
-	dd->gp.yaxp[2] = dd->dp.yaxp[2] = n;
-    }
+
+    G_Store_AXP(is_xaxis);
 }
+#undef EPS_FAC_1
+#undef EPS_FAC_2
 
 void GSetupAxis(int axis, DevDesc *dd)
 {
@@ -1951,8 +1979,9 @@ void GSetupAxis(int axis, DevDesc *dd)
  *   xlog or ylog = TRUE ? */
     double min, max;
     int n;
+    Rboolean is_xaxis = (axis == 1 || axis == 3);
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	n = dd->gp.lab[0];
 	min = dd->gp.usr[0];
 	max = dd->gp.usr[1];
@@ -1965,17 +1994,9 @@ void GSetupAxis(int axis, DevDesc *dd)
 
     GPretty(&min, &max, &n);
 
-    if(axis == 1 || axis == 3) {
-	dd->gp.xaxp[0] = dd->dp.xaxp[0] = min;
-	dd->gp.xaxp[1] = dd->dp.xaxp[1] = max;
-	dd->gp.xaxp[2] = dd->dp.xaxp[2] = n;
-    }
-    else {
-	dd->gp.yaxp[0] = dd->dp.yaxp[0] = min;
-	dd->gp.yaxp[1] = dd->dp.yaxp[1] = max;
-	dd->gp.yaxp[2] = dd->dp.yaxp[2] = n;
-    }
+    G_Store_AXP(is_xaxis);
 }
+#undef G_Store_AXP
 
 /*-------------------------------------------------------------------
  *
@@ -2333,13 +2354,6 @@ void GCheckState(DevDesc *dd)
        R does different amounts of silly-clipping for different primitives.
        See the individual routines for more info.
 */
-
-
-/* Draw a circle (radius is given in inches). */
-/* code down with GRect */
-void GCircle(double x, double y, int coords,
-	     double radius, int col, int border, DevDesc *dd);
-
 
 
 static void setClipRect(double *x1, double *y1, double *x2, double *y2,
@@ -3609,7 +3623,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 /*	Set scale and ticks for linear scales.
  *	Called from GScale() and GSetupAxis().
  *
- *	Pre:	   x1 = lo < up = x2
+ *	Pre:	    x1 == lo < up == x2      ;  ndiv >= 1
  *	Post: x1 <= y1 := lo < up =: y2 <= x2;	ndiv >= 1
  */
     double unit, ns, nu;

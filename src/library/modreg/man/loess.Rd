@@ -95,7 +95,10 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 }
 \seealso{
   \code{\link{loess.control}},
-  \code{\link{predict.loess}}
+  \code{\link{predict.loess}}.
+
+  \code{\link[base]{lowess}}, the ancestor of \code{loess} (with
+  different defaults!).
 }
 \examples{
 data(cars)

@@ -1,59 +1,46 @@
-##-- Keep  'library' and 'library.dynam'  PLATFORM-Independent !
-##-- Use  .Platform  (== Platform() from config.h ) to configure!
-##	  ~~~~~~~~~
-
 library <-
-  function (package, help, lib.loc = .lib.loc, character.only = FALSE,
-	    logical.return = FALSE, warn.conflicts = package != "MASS",
-            keep.source = getOption("keep.source.pkgs"))
-
+function(package, help, lib.loc = .lib.loc, character.only = FALSE,
+         logical.return = FALSE, warn.conflicts = package != "MASS",
+         keep.source = getOption("keep.source.pkgs"))
 {
-    if (!missing(package)) {
-	if (!character.only)
+    fQuote <- function(s) paste("`", s, "'", sep = "")    
+    if(!missing(package)) {
+	if(!character.only)
 	    package <- as.character(substitute(package))
 	pkgname <- paste("package", package, sep = ":")
-	if (is.na(match(pkgname, search()))) {
-	    packagedir <- system.file("", pkg = package, lib = lib.loc)
-	    if (packagedir == "") {
-		txt <- paste("There is no package called `",
-			     package, "'", sep = "")
-		if (logical.return) {
-		    warning(txt)
+	if(is.na(match(pkgname, search()))) {
+            which.lib.loc <-
+                lib.loc[file.exists(file.path(lib.loc, package))]
+            if(length(which.lib.loc) == 0) {
+                txt <- paste("There is no package called",
+                             fQuote(package))
+                if (logical.return) {
+                    warning(txt)
 		    return(FALSE)
 		}
 		else stop(txt)
-	    }
-            lib.loc <- unique(lib.loc)
-	    which.lib.loc <-
-		lib.loc[match(packagedir[1], file.path(lib.loc, package))]
-	    if (length(packagedir) > 1) {
-		warning(paste("Package `", package,
-                              "' found more than once,\n  ",
-			      "using the one found in `", which.lib.loc,
-			      "'", sep = ""))
-	    }
-	    file <- system.file("R", package, pkg = package,
-                                lib = which.lib.loc)
-	    ## allowed zipped R source files
-	    if (file == "") {
-		tfile <- file.path(which.lib.loc, package, "R", package)
-		zfile <- zip.file.extract(tfile)
-		if (zfile != tfile) {
-		    file <- zfile
-		    on.exit(unlink(file))
-		}
-	    }
+            }
+            if(length(which.lib.loc) > 1) {
+                which.lib.loc <- which.lib.loc[1]
+                warning(paste("Package ",
+                              fQuote(package),
+                              "found more than once,\n",
+                              "using the one found in",
+                              fQuote(which.lib.loc)))
+            }
+            codeFile <- file.path(which.lib.loc, package, "R", package)
 	    ## create environment
 	    env <- attach(NULL, name = pkgname)
             ## detach does not allow character vector args
             on.exit(detach(2))
-            path <- system.file(pkg = package, lib = which.lib.loc)
-            attr(env, "path") <- path
-	    ## "source" file into env
-	    if (file == "")
-		warning(paste("Package `", package, "' contains no R code",
-			      sep = ""))
-	    else sys.source(file, env, keep.source = keep.source)
+            attr(env, "path") <- file.path(which.lib.loc, package)
+	    ## source file into env
+	    if(file.exists(codeFile))
+                sys.source(codeFile, env, keep.source = keep.source)
+            else
+		warning(paste("Package ",
+                              fQuote(package),
+                              "contains no R code"))
 	    .Internal(lib.fixup(env, .GlobalEnv))
 	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
@@ -99,26 +86,40 @@ library <-
 	}
 	else {
 	    if (getOption("verbose"))
-		warning(paste("Package",pkgname,"already present in search()"))
+		warning(paste("Package",
+                              pkgname,
+                              "already present in search()"))
 	}
     }
-    else if (!missing(help)) {
-	if (!character.only)
+    else if(!missing(help)) {
+	if(!character.only)
 	    help <- as.character(substitute(help))
         help <- help[1]                 # only give help on one package
-	file <- system.file("INDEX", pkg=help, lib=lib.loc)
-	if (file == "")
-	    stop(paste("No documentation for package `", help, "'", sep = ""))
-        if(length(file) > 1) {
-	    which.lib.loc <-
-                lib.loc[match(system.file("", pkg = help, lib =
-                                          lib.loc)[1],
-                              file.path(lib.loc, help))]
-            warning(paste("Package `", help, "' found more than once,\n  ",
-                          "using the one found in `", which.lib.loc,
-                          "'", sep = ""))
+        which.lib.loc <-
+            lib.loc[file.exists(file.path(lib.loc, help))]
+        if(length(which.lib.loc) == 0)
+            stop(paste("No documentation for package", fQuote(help)))
+        if(length(which.lib.loc) > 1) {
+            which.lib.loc <- which.lib.loc[1]
+            warning(paste("Package ",
+                          fQuote(help),
+                          "found more than once,\n",
+                          "using the one found in",
+                          fQuote(which.lib.loc)))
         }
-	file.show(file[1], title = paste("Contents of package", help))
+        outFile <- tempfile("Rlibrary")
+        docFiles <- file.path(which.lib.loc, help,
+                              c("TITLE", "DESCRIPTION", "INDEX"))
+        headers <- c("", "Description:\n\n", "Index:\n\n")
+        footers <- c("\n", "\n", "")
+        for(i in which(file.exists(docFiles))) {
+            cat(headers[i], file = outFile, append = TRUE)
+            file.append(outFile, docFiles[i])
+            cat(footers[i], file = outFile, append = TRUE)
+        }
+        file.show(outFile, delete.file = TRUE,
+                  title = paste("Documentation for package",
+                  fQuote(help)))
     }
     else {
 	## library():
@@ -138,8 +139,8 @@ library <-
 	    else {
 		a <- .packages(all.available = TRUE, lib.loc = lib)
 		for (i in sort(a)) {
-		    title <- system.file("TITLE", pkg=i, lib=lib)
-		    if (title != "")
+		    title <- file.path(lib, i, "TITLE")
+		    if(file.exists(title))
 			file.append(libfil, title)
 		    else cat(i, "\n", file = libfil, append = TRUE)
 		}
@@ -155,8 +156,8 @@ library <-
 }
 
 library.dynam <-
-  function (chname, package = .packages(), lib.loc = .lib.loc,
-	    verbose = getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
+function(chname, package = .packages(), lib.loc = .lib.loc, verbose =
+         getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
   if (!exists(".Dyn.libs"))
     assign(".Dyn.libs", character(0), envir = .AutoloadEnv)

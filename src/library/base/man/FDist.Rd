@@ -43,17 +43,34 @@ rf(n, df1, df2)
     (n1/n2)^(n1/2) x^(n1/2 - 1)
     (1 + (n1/n2) x)^-(n1 + n2)/2}
   for \eqn{x > 0}.
+
+  It is the distribution of the ratio of the mean squares of
+  \eqn{n_1}{n1} and \eqn{n_2}{n2} independent standard normals, and hence
+  of the ratio of two independent chi-squared variates each divided by its
+  degrees of freedom.  Since the ratio of a normal and the root
+  mean-square of \eqn{m} independent normals has a Student's \eqn{t_m}
+  distribution, the square of a \eqn{t_m} variate has a F distribution on
+  1 and \eqn{m} degrees of freedom.
+
+  The non-central F distribution is again the ratio of mean squares of
+  independent normals of unit variance, but those in the numerator are
+  allowed to have non-zero means and \code{ncp} is the sum of squares of
+  the means.  See \code{\link{Chisquare}} for further details on
+  non-central distributions.  
 }
 \seealso{
-  \code{\link{dt}} for Student's t distribution, the square of which is
-  (almost) equivalent to the F distribution with \code{df2} \eqn{= 1}.
+  \code{\link{dchisq}} for chi-squared and \code{\link{dt}} for Student's
+  t distributions.
 }
 \examples{
-df(1,1,1) == dt(1,1)# TRUE
+## the density of the square of a t_m is 2*dt(x, m)/(2*x)
+# check this is the same as the density of F_{1,m}
+x <- seq(0.001, 5, len=100)
+all.equal(df(x^2, 1, 5), dt(x, 5)/x)
 
-## Identity:  qf(2*p -1, 1, df)) == qt(p, df)^2)  for  p >= 1/2
+## Identity:  qf(2*p - 1, 1, df)) == qt(p, df)^2)  for  p >= 1/2
 p <- seq(1/2, .99, length=50); df <- 10
 rel.err <- function(x,y) ifelse(x==y,0, abs(x-y)/mean(abs(c(x,y))))
-quantile(rel.err(qf(2*p -1, df1=1, df2=df), qt(p, df)^2), .90)# ~= 7e-9
+quantile(rel.err(qf(2*p - 1, df1=1, df2=df), qt(p, df)^2), .90)# ~= 7e-9
 }
 \keyword{distribution}

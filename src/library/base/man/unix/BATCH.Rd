@@ -18,6 +18,9 @@
   By default, the input commands are printed along with the output.  To
   suppress this behavior, add \code{options(echo = FALSE)} at the
   beginning of \code{infile}.
+
+  The \code{infile} can have end of line marked by LF or CRLF (but not
+  just CR), and files with a missing EOL mark are processed correctly.
 }
 \note{
   Unlike \code{Splus BATCH}, this does not run the \R process in the

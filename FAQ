@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-17, 2001-01-12
+Version 1.2-18, 2001-01-13
 Kurt Hornik
 
 
@@ -1417,6 +1417,9 @@ these a try, of course.  This area of CRAN currently contains
 *dseplus*
      Extensions to *dse*, the Dynamic Systems Estimation multivariate time
      series package.  Contains PADI, juice and monitoring extensions.
+
+*ensemble*
+     Ensembles of tree classifiers.
 
 *funfits*
      An integrated set of functions for fitting curves and surfaces

@@ -61,7 +61,7 @@ dev.control(displaylist)
   can be printed at full size by switching its value this is done
   instead of shrinking the plot region.
 
-  If \code{dev.print} is use with a specified device (even
+  If \code{dev.print} is used with a specified device (even
   \code{postscript}) it sets the width and height in the same way as
   \code{dev.copy2eps}.
 }

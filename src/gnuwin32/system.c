@@ -246,12 +246,19 @@ CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 static int
 FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 {
+    int ll;
     if (!R_Slave) {
 	fputs(prompt, stdout);
 	fflush(stdout);
     }
-    if (!fgets(buf, len, stdin))
+    if (fgets(buf, len, stdin) == NULL)
 	return 0;
+/* according to system.txt, should be terminated in \n, so check this
+   at eof */
+    ll = strlen((char *)buf);
+    if (feof(stdin) && buf[ll - 1] != '\n' && ll < len) {
+	buf[ll++] = '\n'; buf[ll] = '\0';
+    }
     if (!R_Interactive && !R_Slave)
 	fputs(buf, stdout);
     return 1;

@@ -15,13 +15,23 @@ undoc <- function(pkg, dir)
     }
 
     if(!missing(pkg)) {
-        pkgDir <- system.file(pkg = pkg)
-        if(length(pkgDir) > 1) {
-            warning(paste("package", fQuote(pkg), "found more than once"))
-            pkgDir <- pkgDir[1]
-        }
-        if(pkgDir == "")
+        ## FIXME:
+        ## undoc() should really have a `lib.loc' argument, and its
+        ## first argument should be renamed to `package'.
+        ## </FIXME>
+        which.lib.loc <-
+            .lib.loc[file.exists(file.path(.lib.loc, pkg))]
+        if(length(which.lib.loc) == 0)
             stop(paste("package", fQuote(pkg), "is not installed"))
+        else if(length(which.lib.loc) > 1) {
+            which.lib.loc <- which.lib.loc[1]
+            warning(paste("package",
+                          fQuote(pkg),
+                          "found more than once\n",
+                          "using the one found in",
+                          fQuote(which.lib.loc[1])))
+        }
+        pkgDir <- file.path(which.lib.loc, pkg)
         isBase <- pkg == "base"
         objsdocs <- sort(scan(file = file.path(pkgDir, "help",
                               "AnIndex"),
@@ -59,7 +69,8 @@ undoc <- function(pkg, dir)
             files <- listFilesWithExts(codeDir, codeExts, path = FALSE)
             if(any(i <- grep("^zzz\\.", files)))
                files <- files[-i]
-            files <- file.path(codeDir, files)
+            if(length(files) > 0)
+                files <- file.path(codeDir, files)
             if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
                 files <- c(files, listFilesWithExts(codeOSDir, codeExts))
             file.create(codeFile)
@@ -72,7 +83,7 @@ undoc <- function(pkg, dir)
     }
 
     if(isBase)
-        allObjs <- ls("package:base", all.name = TRUE)
+        allObjs <- ls("package:base", all.names = TRUE)
     else if(file.exists(codeFile)) {
         codeEnv <- new.env()
         sys.source(codeFile, envir = codeEnv)

@@ -184,6 +184,12 @@
 /* The number of bytes in a long.  */
 #undef SIZEOF_LONG
 
+/* The number of bytes in a long double.  */
+#undef SIZEOF_LONG_DOUBLE
+
+/* The number of bytes in a long long.  */
+#undef SIZEOF_LONG_LONG
+
 /* Define if you have the access function.  */
 #undef HAVE_ACCESS
 

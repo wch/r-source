@@ -35,7 +35,10 @@ destination with
 
 	cat R-x.y.z.tgz-split.* > R-x.y.z.tgz
 
-and proceed as above.
+and proceed as above.  If you want the build to be usable by a group
+of users, set umask before unpacking so that the files will be
+readable by the target group (e.g. umask 022 to be usable by all
+users).
 
 Finally, for minor-minor releases (x.y.z with z != 0), a patch against
 the preceding release is made available in `R-x.y.{z-1}-x.y.z.diff.gz'
@@ -60,6 +63,13 @@ src, doc, and several more.  Issue the following commands:
 	make
 
 (See USING MAKE below if your make is not called `make'.)
+
+Then check the built system worked correctly, by
+
+	make check
+
+Failures are not necessarily problems as they might be caused by missing
+functionality, but you should look carefully at any reported discrepancies.
 
 If these commands execute successfully, the R binary will be copied to
 the `${R_HOME}/bin' directory.  In addition, a shell script front-end
@@ -127,9 +137,11 @@ MAKING THE MANUALS
 There is a set of manuals that can be built from the sources,
 
 	refman		Printed versions of all the help pages.
-	R-intro		``An Introduction to R''.
-	R-exts		``Writing R Extensions''.
 	R-FAQ		R FAQ (which is already built for you).
+	R-intro		``An Introduction to R''.
+	R-data		``R Data Import/Export''.
+	R-exts		``Writing R Extensions''.
+	R-lang		``The R Language Definition''.
 
 To make these, cd to the `doc/manual' directory and use
 
@@ -153,6 +165,7 @@ After
 
 	./configure
 	make
+	make check
 
 have been completed successfully, you can install the complete R tree
 to your system by typing
@@ -178,18 +191,25 @@ install into another directory by using
 
 	make prefix=/path/to/here install
 
-To install DVI, info and PDF versions of the manuals, use `make
-install-dvi', `make install-info' and `make install-pdf', respectively.
+To install DVI, info and PDF versions of the manuals, use one or more of
+
+	make install-dvi
+	make install-info
+	make install-pdf
+
+To ensure that the installed tree is usable by the right group of
+users, set umask appropriately (perhaps to 022) before unpacking the
+sources and throughout the build process.
 
 
 USING MAKE
 
 To compile R, you will most likely find it easiest to use GNU make.  On
-Solaris 2.6/7 in particular, you need a version of GNU make different
+Solaris 2.6/7/8 in particular, you need a version of GNU make different
 from 3.77; 3.79 works fine, as does the Sun make.
 
 To build in a separate directory you need a make that uses the VPATH
-variable, for example GNU make, or Sun make on Solaris 2.7 (but not
+variable, for example GNU make, or Sun make on Solaris 2.7/8 (but not
 earlier).
 
 If you want to use a make by another name, for example if your GNU make
@@ -258,9 +278,7 @@ from the GNOME ftp site (ftp.gnome.org and mirrors).  RPMs are in RedHat
 6.1 and later.
 
 libglade needs libxml 1.4 or later, the source for which is available
-from the GNOME ftp site (ftp.gnome.org and mirrors).  RPMs of libxml-1.4
-and libxml-devel-1.4 are available from updates.redhat.com and mirrors,
-or ftp.gurulabs.com/pub/gnome/updates.
+from the GNOME ftp site (ftp.gnome.org and mirrors).
 
 
 COMPILE AND LOAD FLAGS

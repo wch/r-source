@@ -1,10 +1,9 @@
 \name{rank}
-\title{Sample Ranks}
 \alias{rank}
+\title{Sample Ranks}
 \description{
-  \code{rank} returns the sample ranks of the values in \code{x}.
+  Returns the sample ranks of the values in a numeric vector.
   Ties result in ranks being averaged.
-  \code{\link{NA}} values are not allowed in this function.
 }
 \usage{
 rank(x, na.last = TRUE)
@@ -12,7 +11,8 @@ rank(x, na.last = TRUE)
 \arguments{
   \item{x}{a numeric vector.}
   \item{na.last}{for controlling the treatment of \code{NA}s.
-    Currently, \code{TRUE} is the only possible value.}
+    If \code{TRUE}, missing values in the data are put last; if
+    \code{FALSE}, they are put first; if \code{NA}, they are removed.}
 }
 \seealso{\code{\link{order}} and \code{\link{sort}}.}
 \examples{

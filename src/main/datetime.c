@@ -37,10 +37,18 @@
 # include <config.h>
 #endif
 
-#ifdef HAVE_GLIBC2
-# define _XOPEN_SOURCE		/* so that we get strptime() */
+#if defined(HAVE_GLIBC2) && !defined(__USE_BSD)
+# define __USE_BSD		/* so that we get unsetenv() */
+# include <stdlib.h>
+# undef __USE_BSD		/* just to make sure */
+#else
+# include <stdlib.h>
+#endif
+
+#if defined(HAVE_GLIBC2) && !defined(__USE_XOPEN)
+# define __USE_XOPEN		/* so that we get strptime() */
 # include <time.h>
-# undef _XOPEN_SOURCE		/* just to make sure */
+# undef __USE_XOPEN		/* just to make sure */
 #else
 # include <time.h>
 #endif
@@ -155,7 +163,7 @@ static double mktime00 (struct tm *tm)
 static double guess_offset (struct tm *tm)
 {
     double offset, offset1, offset2;
-    int oldmonth, oldyear;
+    int oldmonth, oldyear, olddst;
 
     /*
        adjust as best we can for timezones: if isdst is unknown,
@@ -163,18 +171,29 @@ static double guess_offset (struct tm *tm)
     */
     oldmonth = tm->tm_mon;
     oldyear = tm->tm_year;
+    olddst = tm->tm_isdst;
     tm->tm_mon = 0;
     tm->tm_year = 100;
+    tm->tm_isdst = -1;
     offset1 = (double) mktime(tm) - mktime00(tm);
+    tm->tm_year = 100;
     tm->tm_mon = 6;
+    tm->tm_isdst = -1;
     offset2 = (double) mktime(tm) - mktime00(tm);
-    if(tm->tm_isdst > 0) {
-	offset = (offset1 > offset2) ? offset1 : offset2;
-    } else {
+    if(olddst > 0) {
 	offset = (offset1 > offset2) ? offset2 : offset1;
+    } else {
+	offset = (offset1 > offset2) ? offset1 : offset2;
+    }
+    /* now try to guess dst if unknown */
+    tm->tm_mon = oldmonth;
+    tm->tm_isdst = -1;
+    if(olddst < 0) {
+	offset1 = (double) mktime(tm) - mktime00(tm);
+	olddst = (offset1 < offset) ? 1:0;
     }
     tm->tm_year = oldyear;
-    tm->tm_mon = oldmonth;
+    tm->tm_isdst = olddst;
     return offset;
 }
 
@@ -513,9 +532,9 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, sformat, ans;
-    int i, n = 0, m, N, nlen[9];
-    char buff[256];
+    SEXP x, sformat, ans, tz;
+    int i, n = 0, m, N, nlen[9], UseTZ;
+    char buff[300], *p;
     struct tm tm;
 
     checkArity(op, args);
@@ -525,6 +544,10 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString((sformat = CADR(args))) || LENGTH(sformat) == 0)
 	error("invalid `format' argument");
     m = LENGTH(sformat);
+    UseTZ = asLogical(CADDR(args));
+    if(UseTZ == NA_LOGICAL)
+	error("invalid `usetz' argument");
+    tz = getAttrib(x, install("tzone"));
 
     /* coerce fields to integer, find length of longest one */
     for(i = 0; i < 9; i++) {
@@ -553,6 +576,19 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		strftime(buff, 256, CHAR(STRING_ELT(sformat, i%m)), &tm);
+		if(UseTZ && !isNull(tz)) {
+		    int i = 0;
+		    if(LENGTH(tz) == 3) {
+			if(tm.tm_isdst > 0) i = 2;
+		        else if(tm.tm_isdst == 0) i = 1;
+			else i = 0; /* Use base timezone name */
+		    }
+		    p = CHAR(STRING_ELT(tz, i));
+		    if(strlen(p)) {
+			strcat(buff, " ");
+			strcat(buff, p);
+		    }
+		}
 		SET_STRING_ELT(ans, i, mkChar(buff));
 	    }
 	}

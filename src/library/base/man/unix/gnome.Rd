@@ -6,6 +6,7 @@
   \code{gnome} starts a \code{GNOME} compatible device driver.  `GNOME'
   is an acronym for \bold{G}NU \bold{N}etwork \bold{O}bject \bold{M}odel
   \bold{E}nvironment.
+}
 \usage{
 gnome(display="", width=7, height=7, pointsize=12)
 GNOME(display="", width=7, height=7, pointsize=12)

@@ -14,11 +14,13 @@ R_HOME = $(top_builddir)
 OBJS = bsplvd.o bvalue.o bvalus.o ksmooth.o loessc.o loessf.o \
 	ppr.o qsbart.o sbart.o sgram.o sinerp.o sslvrg.o stxwx.o
 SHLIB = $(pkg).@SHLIB_EXT@
+
 ## FIXME:
-## Add $(LIBM)?
-SHLIB_LIBADD = $(FLIBS)
+## We should really add FLIBS to SHLIB_LIBADD, but we need to include
+## the shlib Makeconf at a later stage, and its default value would
+## override our setting.
+PKG_LIBS = @BLAS_LIBS@ @FLIBS@
 ## </FIXME>
-PKG_LIBS = $(BLAS_LIBS)
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \

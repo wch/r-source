@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.8 2000/10/03 15:28:21 maechler Exp $
+### $Id: nls.R,v 1.9 2001/01/15 14:51:58 pd Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -398,7 +398,7 @@ nls <-
   function (formula, data = list(),
             start = getInitial( formula, data ), control,
             algorithm="default", trace = FALSE,
-            subset, weights, na.action, ...)
+            subset, weights, na.action)
 {
     mf <- match.call()             # for creating the model frame
     mform <- formula <- as.formula( formula )
