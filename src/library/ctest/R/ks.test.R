@@ -21,7 +21,6 @@ ks.test <- function(x, y, ..., alternative = c("two.sided", "less", "greater"))
         if (length(unique(w)) < (n.x + n.y)) {
             warning("cannot compute correct p-values with ties")
             z <- z[c(which(diff(sort(w)) != 0), n.x + n.y)]
-            print(z)
         }
         STATISTIC <- switch(alternative,
                             "two.sided" = max(abs(z)),
