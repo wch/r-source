@@ -22,7 +22,8 @@ C     Initialise the output vectors
          hs3(i)=0d0
  1    continue
 
-C     Compute X'WX -> hs0,hs1,hs2,hs3  and X'WZ -> y
+C Compute X' W^2 X -> hs0,hs1,hs2,hs3  and X' W^2 Z -> y
+C Note that here the weights w(i) == sqrt(wt[i])  where wt[] where original weights
       ileft=1
       eps= .1d-9
 

@@ -109,16 +109,16 @@ void F77_SUB(sbart)
     d = 0.; fu = 0.; u = 0.;
     ratio = 1.;
 
-/*  Compute SIGMA, X' W^2 X, X' W^2 z, trace ratio, s0, s1.
+/*  Compute SIGMA, X' W X, X' W z, trace ratio, s0, s1.
 
-	SIGMA	  -> sg0,sg1,sg2,sg3
-        X' W^2 X  -> hs0,hs1,hs2,hs3
-        X' W^2 Z  -> xwy
+	SIGMA	-> sg0,sg1,sg2,sg3
+	X' W X	-> hs0,hs1,hs2,hs3
+	X' W Z	-> xwy
 */
 
 /* trevor fixed this 4/19/88
-   Note: sbart uses the square of the weights
-   the following rectifies that */
+ * Note: sbart, i.e. stxwx() and sslvrg() {mostly, not always!}, use
+ *	 the square of the weights; the following rectifies that */
     for (i = 0; i < *n; ++i)
 	if (ws[i] > 0.)
 	    ws[i] = sqrt(ws[i]);
@@ -130,7 +130,7 @@ void F77_SUB(sbart)
 			knot, nk,
 			xwy,
 			hs0, hs1, hs2, hs3);
-	/* Compute ratio :=  tr(X' W^2 X) / tr(SIGMA) */
+	/* Compute ratio :=  tr(X' W X) / tr(SIGMA) */
 	t1 = t2 = 0.;
 	for (i = 3 - 1; i < (*nk - 3); ++i) {
 	    t1 += hs0[i];

@@ -103,7 +103,7 @@ C     Generalized CV
 	    rss = ssw
 	    df = 0d0
 	    sumw = 0d0
-c	w(i) are `sqrt weights'  scaled in ../R/smspline.R such
+c	w(i) are sqrt( wt[i] ) weights scaled in ../R/smspline.R such
 c       that sumw =  number of observations with w(i) > 0
 	    do 24 i=1,n
 	       rss = rss + ((y(i)-sz(i))*w(i))**2
