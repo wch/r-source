@@ -82,10 +82,13 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
     available[ok,"Package"] <- available[ok,"Bundle"]
 
     update <- NULL
+        
     for(k in 1:nrow(instp)){
         ok <- (instp[k, "Priority"] != "base") &
                 (available[,"Package"] == instp[k, "Package"])
-        ok[ok] <- available[ok, "Version"] > instp[k, "Version"]
+        if(any(ok))
+            ok[ok] <- sapply(available[ok, "Version"], biggerVersion,
+                             instp[k, "Version"])
         if(any(ok) && any(package.dependencies(available[ok, ], check=TRUE)))
         {
             update <- rbind(update,
@@ -98,6 +101,24 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
                               "Installed", "CRAN")
     update
 }
+
+biggerVersion <- function(a, b){
+    a <- as.integer(strsplit(a, "[\\.-]")[[1]])
+    b <- as.integer(strsplit(b, "[\\.-]")[[1]])
+    for(k in 1:length(a)){
+        if(k <= length(b)){
+            if(a[k]>b[k])
+                return(TRUE)
+            else if(a[k]<b[k])
+                return(FALSE)
+        }
+        else{
+            return(TRUE)
+        }
+    }
+    return(FALSE)
+}
+                        
 
 package.contents <- function(pkg, lib=.lib.loc){
 

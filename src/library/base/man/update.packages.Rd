@@ -6,6 +6,7 @@
 \alias{download.packages}
 \alias{install.packages}
 \alias{contrib.url}
+\alias{biggerVersion}
 \title{Download Packages from CRAN}}
 \description{
   These functions can be used to automatically compare the version
@@ -31,6 +32,7 @@ download.packages(pkgs, destdir, available = NULL,
 install.packages(pkgs, lib, CRAN = options("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method = "auto", available = NULL, destdir=NULL)
+biggerVersion(a, b)
 }
 \arguments{ 
   \item{lib.loc}{A character vector describing the location of R
@@ -51,6 +53,8 @@ install.packages(pkgs, lib, CRAN = options("CRAN"),
     install the packages.}
   \item{ask}{If \code{TRUE}, ask before packages are actually downloaded
     and installed.}
+  \item{a, b}{Version strings of R packages, valid seperators are
+    \code{.} and \code{-}}.
 }
 \details{
   \code{installed.packages} scans the \file{DESCRIPTION} files of each
@@ -104,6 +108,9 @@ install.packages(pkgs, lib, CRAN = options("CRAN"),
   \code{NULL} (the default) a temporary directory is used, and the user
   will be given the option of deleting the temporary files once the
   packages are installed.
+
+  \code{biggerVersion(a, b)} is a helper function that returns
+  \code{TRUE} when version \code{a} is newer than version \code{b}.
 }
 #ifdef windows
 \note{

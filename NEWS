@@ -137,6 +137,10 @@ BUG FIXES
 
     o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
 
+    o   old.packages() now sorts version strings correctly by
+	splitting at "." and "-".
+
+
 
 	**************************************************
 	*						 *
