@@ -897,8 +897,10 @@ AC_CACHE_CHECK([for BSD networking],
     fi])
 if test "${r_cv_bsd_networking}" = yes; then
   AC_DEFINE(HAVE_BSD_NETWORKING)
+  AC_DEFINE(HAVE_SOCKETS)
+  AC_DEFINE(HAVE_INTERNET)
+  AC_DEFINE(SUPPORT_LIBXML)
 fi
-AM_CONDITIONAL(USE_LIBXML, test "${r_cv_bsd_networking}" = yes)
 ])
 ##
 ## R_BITMAPS
