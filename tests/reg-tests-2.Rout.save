@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.3.0 Under development (unstable) (2001-02-28)
+Version 1.3.0 Under development (unstable) (2001-03-08)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -106,7 +106,7 @@ $B$subset
 > # $B$subset
 > # [1] TRUE
 > 
-> ## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame & *.matric
+> ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
 > data(attenu)
 > summary(attenu)
      event            mag           station         dist       
@@ -301,7 +301,6 @@ Residual Deviance: 5.656 	AIC: 71.35
 Error in summary.manova(gofX.manova) : residuals have rank 3 < 4
 > ## should fail with an error message `residuals have rank 3 < 4'
 > 
-> 
 > ## Prior to 1.3.0 dist did not handle missing values, and the
 > ## internal C code was incorrectly scaling for missing values.
 > library(mva)
@@ -325,4 +324,67 @@ Volume  557.1448 1392.343
 Height 21.66477         
 Volume 10.96200 13.63365
 > detach("package:mva")
+> 
+> ## F. Tusell 2001-03-07.  printing kernels.
+> library(ts)
+> kernel("daniell", m=5)
+Daniell(5) 
+coef[-5] = 0.09091
+coef[-4] = 0.09091
+coef[-3] = 0.09091
+coef[-2] = 0.09091
+coef[-1] = 0.09091
+coef[ 0] = 0.09091
+coef[ 1] = 0.09091
+coef[ 2] = 0.09091
+coef[ 3] = 0.09091
+coef[ 4] = 0.09091
+coef[ 5] = 0.09091
+> kernel("modified.daniell", m=5)
+mDaniell(5) 
+coef[-5] = 0.10
+coef[-4] = 0.10
+coef[-3] = 0.10
+coef[-2] = 0.10
+coef[-1] = 0.10
+coef[ 0] = 0.05
+coef[ 1] = 0.10
+coef[ 2] = 0.10
+coef[ 3] = 0.10
+coef[ 4] = 0.10
+coef[ 5] = 0.10
+> kernel("daniell", m=c(3,5,7))
+unknown 
+coef[-15] = 0.0649351
+coef[-14] = 0.0640693
+coef[-13] = 0.0614719
+coef[-12] = 0.0580087
+coef[-11] = 0.0536797
+coef[-10] = 0.0484848
+coef[ -9] = 0.0424242
+coef[ -8] = 0.0363636
+coef[ -7] = 0.0303030
+coef[ -6] = 0.0242424
+coef[ -5] = 0.0181818
+coef[ -4] = 0.0129870
+coef[ -3] = 0.0086580
+coef[ -2] = 0.0051948
+coef[ -1] = 0.0025974
+coef[  0] = 0.0008658
+coef[  1] = 0.0649351
+coef[  2] = 0.0640693
+coef[  3] = 0.0614719
+coef[  4] = 0.0580087
+coef[  5] = 0.0536797
+coef[  6] = 0.0484848
+coef[  7] = 0.0424242
+coef[  8] = 0.0363636
+coef[  9] = 0.0303030
+coef[ 10] = 0.0242424
+coef[ 11] = 0.0181818
+coef[ 12] = 0.0129870
+coef[ 13] = 0.0086580
+coef[ 14] = 0.0051948
+coef[ 15] = 0.0025974
+> ## fixed by patch from Adrian Trapletti 2001-03-08
 > 

@@ -100,6 +100,21 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.2.3
+
+
+BUG FIXES
+
+    o	`Writing R Extensions' incorrectly described an entry point
+	`fmod' which was not included in the R binary on most systems.
+	The entry point has been removed, to avoid any confusion with
+	the standard C entry point of the same name.
+
+     o	Printing of kernels in package ts was unreliable: the internal
+	representation was correct.
+
+
+
 		CHANGES IN R VERSION 1.2.2
 
 
@@ -237,8 +252,8 @@ BUG FIXES
 	NA-only arguments.
 
 
-
 		CHANGES IN R VERSION 1.2.1
+
 
 NEW FEATURES
 
