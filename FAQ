@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-5 2004-04-21
+Version 1.9-6 2004-04-22
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -38,6 +38,7 @@ R FAQ
   2.10 What is CRAN?
   2.11 Can I use R for commercial purposes?
   2.12 Why is R named R?
+  2.13 What is the R Foundation?
 
 3 R and S
   3.1 What is S?
@@ -177,7 +178,7 @@ Feedback is of course most welcome.
 systems.  Features specific to the Windows and Mac OS X ports of R are
 described in the "R for Windows FAQ"
 (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) and the "R for Mac OS X FAQ
-(http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html).  If you have
+(http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html).  If you have
 information on Macintosh or Windows systems that you think should be added
 to this document, please let me know.
 
@@ -382,7 +383,7 @@ prebuilt binary packages to be used with RAqua corresponding to the "X.Y"
 release of R. The installation of these packages is available through the
 "Package" menu of the RAqua GUI.  This port of R for Mac OS X is maintained
 by Stefano Iacus <Stefano.Iacus@R-project.org>.  The "R for Mac OS X FAQ
-(http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html) has more details.
+(http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html) has more details.
 
    The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
 stuffit (`sit') archives for a base distribution and a large number of
@@ -427,6 +428,12 @@ may need to be be quoted.)
 for on-line reading in HTML and PDF formats, and as hardcopy via LaTeX, see
 *Note How can R be installed?::.  An up-to-date HTML version is always
 available for web browsing at `http://stat.ethz.ch/R-manual/'.
+
+   Printed copies of the R reference manual for some version(s) are
+available from Network Theory Ltd, at
+`http://www.network-theory.co.uk/R/base/'.  For each set of manuals sold,
+the publisher donates USD 10 to the R Foundation (*note What is the R
+Foundation?::).
 
    The R distribution also comes with the following manuals.
 
@@ -572,7 +579,7 @@ is provided by the web interface at
 `http://www.stat.math.ethz.ch/mailman/listinfo/'.  One can also subscribe
 (or unsubscribe) via email, e.g. to R-help by sending `subscribe' (or
 `unsubscribe') in the _body_ of the message (not in the subject!) to
-<R-help-request@lists.r-project.org>.
+<R-help-request@lists.R-project.org>.
 
    Send email to <R-help@lists.R-project.org> to send a message to everyone
 on the R-help mailing list.  Subscription and posting to the other lists is
@@ -592,10 +599,10 @@ include information on the system and version of R being used.  See *Note R
 Bugs:: for more details.
 
    Please read the posting guide
-(http://www.r-project.org/posting-guide.html) _before_ sending anything to
+(http://www.R-project.org/posting-guide.html) _before_ sending anything to
 any mailing list.
 
-   See `http://www.r-project.org/mail.html' for more information on the R
+   See `http://www.R-project.org/mail.html' for more information on the R
 mailing lists.
 
    The R Core Team can be reached at <R-core@lists.R-project.org> for
@@ -629,7 +636,7 @@ Daily mirrors are available at URLs including
      `http://cran.us.R-project.org/'  (pair Networks, USA)
      `http://cran.za.R-project.org/'  (Rhodes U, South Africa)
 
-See `http://cran.r-project.org/mirrors.html' for a complete list of
+See `http://cran.R-project.org/mirrors.html' for a complete list of
 mirrors.  Please use the CRAN site closest to you to reduce network load.
 
    From CRAN, you can obtain the latest official release of R, daily
@@ -690,6 +697,18 @@ Core Team does not provide legal advice under any circumstances.
 The name is partly based on the (first) names of the first two R authors
 (Robert Gentleman and Ross Ihaka), and partly a play on the name of the
 Bell Labs language `S' (*note What is S?::).
+
+2.13 What is the R Foundation?
+==============================
+
+The R Foundation is a not for profit organization working in the public
+interest.  It was founded by the members of the R Core Team in order to
+provide support for the R project and other innovations in statistical
+computing, provide a reference point for individuals, instititutions or
+commercial enterprises that want to support or interact with the R
+development community, and to hold and administer the copyright of R
+software and documentation.  See `http://www.R-project.org/foundation/' for
+more information.
 
 3 R and S
 *********
@@ -2176,6 +2195,9 @@ distributions of R.)
      Estimating the number of essential genes in a genome on the basis of
      data from a random transposon mutagenesis experiment, through the use
      of a Gibbs sampler.
+
+*netCDF*
+     Read data from netCDF files.
 
 *nlme*
      Fit and compare Gaussian linear and nonlinear mixed-effects models.
