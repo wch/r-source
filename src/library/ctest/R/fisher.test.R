@@ -157,7 +157,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
             if(mu > x)
                 uniroot(function(t) mnhyper(t) - x, c(0, 1))$root
             else if(mu < x)
-                1 / uniroot(function(t) mnhyper(1/t) - x, c(0, 1))$root
+                1 / uniroot(function(t) mnhyper(1/t) - x,
+                            c(.Machine$double.xmin, 1))$root
             else
                 1
         }
