@@ -51,7 +51,8 @@ coefficients, standard errors, etc. and additionally gives
       sigma^2 = 1/(n-p) Sum(R[i]^2),}
     where \eqn{R_i}{R[i]} is the \eqn{i}-th residual, \code{residuals[i]}.}
   \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}.}
-  \item{fstatistic}{a 3-vector with the value of the F-statistic with
+  \item{fstatistic}{(for models including non-intercept terms)
+    a 3-vector with the value of the F-statistic with
     its numerator and denominator degrees of freedom.}
   \item{r.squared}{\eqn{R^2}, the ``fraction of variance explained by
     the model'',
