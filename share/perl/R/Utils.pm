@@ -51,6 +51,7 @@ sub new {
 
     ## if we are given a non-empty string we try to open the file for
     ## writing
+    my $fh;
     if($file){
 	$fh = new FileHandle("> $file") || die "open($file): $!\n";
     }
@@ -65,9 +66,17 @@ sub new {
 
 sub close {
     my ($x) = @_;
-    $x->{"handle"}->close();
-    $x->{"file"}="";
+    $x->{"handle"}->close() if $x->{"handle"};
+    $x->{"file"}=$x->{"handle"}="";
 }
+
+sub print {
+    my ($x, $text) = @_;
+
+    print $text;
+    $x->{"handle"}->print($text) if $x->{"handle"};
+}
+    
 
 ## setstars sets the characters at the beginning of the lines of all
 ## subsequent calls to checking, creating and message. We typically use
@@ -82,27 +91,23 @@ sub setstars {
 
 sub checking {
     my ($x, $text) = @_;
-    print $x->{"stars"}, " checking $text ...";
-    $x->{"handle"}->print($x->{"stars"} . " checking $text ...");
+    $x->print($x->{"stars"} . " checking $text ...");
 }
 
 sub creating {
     my ($x, $text) = @_;
-    print $x->{"stars"}, " creating $text ...";
-    $x->{"handle"}->print($x->{"stars"}, " creating $text ...");
+    $x->print($x->{"stars"} . " creating $text ...");
 }
 
 sub message {
     my ($x, $text) = @_;
     $text =~ s/\n/\n$x->{"stars"} /sg;
-    print $x->{"stars"}, " $text\n";
-    $x->{"handle"}->print($x->{"stars"}, " $text\n");
+    $x->print($x->{"stars"} . " $text\n");
 }
 
 sub result {
     my ($x, $text) = @_;
-    print " $text\n";
-    $x->{"handle"}->print(" $text\n");
+    $x->print(" $text\n");
 }
 
 sub error {
