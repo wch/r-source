@@ -10,8 +10,8 @@ R_PRINTCMD=
 R_PAPERSIZE=a4
 
 # The default behavior R which it encounters EOF in batch mode.
-# Set this to one of "-save" or "-nosave" depending whether you
-# want automatic saving of .Rdata or not.
+# Set this to one of "--save" or "--no-save" depending whether you
+# want automatic saving of .RData or not.
 R_BATCHSAVE=
 
 # The command which runs the C compiler.
