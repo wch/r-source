@@ -61,6 +61,10 @@
 #include <stdlib.h>
 #include <sys/param.h>
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 typedef int (*DL_FUNC)();
 typedef struct {
         char *name;
@@ -69,9 +73,9 @@ typedef struct {
 
 #include "FFDecl.h"
 
-	/* This provides a table of built-in C and Fortran functions */
-	/* We include this table, even when we have dlopen and friends */
-	/* This is so that the functions are actually loaded at link time */
+/* This provides a table of built-in C and Fortran functions.
+   We include this table, even when we have dlopen and friends.
+   This is so that the functions are actually loaded at link time. */
 
 static CFunTabEntry CFunTab[] =
 {
@@ -79,10 +83,9 @@ static CFunTabEntry CFunTab[] =
         {NULL, NULL}
 };
 
-	/* The following code loads in a compatibility module */
-	/* written by Luke Tierney to support S version 4 on */
-	/* Hewlett-Packard machines.  The relevant defines are */
-	/* set up by autoconfigure */
+/* The following code loads in a compatibility module written by Luke
+   Tierney to support S version 4 on Hewlett-Packard machines.  The
+   relevant defines are set up by autoconf. */
 
 #ifdef HAVE_DLFCN_H
 #include <dlfcn.h>
@@ -218,13 +221,15 @@ DL_FUNC R_FindSymbol(char const *name)
 
 static void GetFullDLLPath(SEXP call, char *buf, char *path)
 {
-	if(path[0] != '/') {
-		if(!getcwd(buf, MAXPATHLEN))
-			errorcall(call, "can't get working directory!\n");
-		strcat(buf, "/");
-		strcat(buf, path);
-	}
-	else strcpy(buf, path);
+    if(path[0] != '/') {
+#ifdef HAVE_UNISTD_H
+	if(!getcwd(buf, MAXPATHLEN))
+#endif
+	    errorcall(call, "can't get working directory!\n");
+	strcat(buf, "/");
+	strcat(buf, path);
+    }
+    else strcpy(buf, path);
 }
 
 	/* do_dynload implements the R-Interface for the */
