@@ -296,8 +296,9 @@ pkgtests: $(PKGS-CHK)
 #                          ===== documentation ======
 
 docs manuals:
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS='$(ALLPACKAGES)'
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean BUILD=$(BUILD)
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win \
+	  R_PKGS='$(ALLPACKAGES)' BUILD=$(BUILD)
 	@$(MAKE) ziponly-base
 
 
@@ -357,6 +358,7 @@ bindist: tcl bitmapdll docfiles
 	$(CP) -p CHANGES README.Rterm $(RPREFIX)
 # convert docs and batch files to CRLF: might already be on Windows, though.
 ifeq ($(strip $(BUILD)),CROSS)
+	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;
 	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
 	unzip -ao dosfiles.zip
 else
@@ -427,6 +429,9 @@ packagedist:
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(MAKE) PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
+ifeq ($(strip $(BUILD)),CROSS)
+	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;
+endif
 	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
