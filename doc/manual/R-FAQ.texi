@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-49 @value{FAQ-YEAR}-03-10
+@set FAQ-VERSION 1.8-50 @value{FAQ-YEAR}-03-11
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -3328,6 +3328,7 @@ dir /opt/R/src/unix
 * How can I turn a string into a variable?::  
 * Why do lattice/trellis graphics not work?::  
 * How can I sort the rows of a data frame?::  
+* Why does the help.start() search engine not work?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -4003,11 +4004,33 @@ command line, the result is automatically printed, but in
 @code{source()} or inside your own functions you will need an explicit
 @code{print()} statement.
 
-@node How can I sort the rows of a data frame?,  , Why do lattice/trellis graphics not work?, R Miscellanea
+@node How can I sort the rows of a data frame?, Why does the help.start() search engine not work?, Why do lattice/trellis graphics not work?, R Miscellanea
 @section How can I sort the rows of a data frame?
 
 To sort the rows within a data frame, with respect to the values in one
 or more of the columns, simply use @code{order()}.
+
+@node Why does the help.start() search engine not work?,  , How can I sort the rows of a data frame?, R Miscellanea
+@section Why does the help.start() search engine not work?
+
+The browser-based search engine in @code{help.start()} utilizes a Java
+applet.  In order for this to function properly, a compatible version of
+Java must installed on your system and linked to your browser, and both
+Java @emph{and} JavaScript need to be enabled in your browser.
+
+There have been a number of compatibility issues with versions of Java
+and of browsers.  
+@ifclear UseExternalXrefs
+For further details please consult section ``Enabling search in HTML
+help'' in @cite{R Installation and Administration}.
+@end ifclear
+@ifset UseExternalXrefs
+@xref{Enabling search in HTML help, , Enabling search in HTML help,
+R-admin, R Installation and Administration}, for further details.
+@end ifset
+This manual is included in the R distribution, @pxref{What documentation
+exists for R?}, and its @acronym{HTML} version is linked from the
+@acronym{HTML} search page. 
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
