@@ -381,8 +381,11 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = allocVector(STRSXP, nmatches);
 	j = 0;
 	for (i = 0 ; i < n ; i++)
-	    if (INTEGER(ind)[i])
-		STRING(ans)[j++] = STRING(vec)[i];
+	    if (INTEGER(ind)[i]) {
+		STRING(ans)[j++] = STRING(vec)[i];	
+		/* FIXME: Want to inherit 'names(vec)': [the following is wrong]
+		   TAG   (ans)[j]   = TAG(vec)[i]; */
+	    }
     }
     else {
 	ans = allocVector(INTSXP, nmatches);
@@ -482,8 +485,8 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt == NA_INTEGER) extended_opt = 1;
 
     if (!isString(pat) || length(pat) < 1 ||
-       !isString(rep) || length(rep) < 1 ||
-       !isString(vec))
+	!isString(rep) || length(rep) < 1 ||
+	!isString(vec))
 	errorcall(call, "invalid argument\n");
 
     eflags = 0;
