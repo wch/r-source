@@ -1,13 +1,8 @@
 #! @PERL@
+#
+# ${R_HOME}/bin/Sd2Rd for converting S documentation to Rd format
 
-# Convert S documentation to R documentation format
-# Usage: Sd2Rd [-n] [-x] file
-# The option `-x' makes the program greedily interpret all single-quoted
-# names intended as code names.
-# The option `-n' renders examples non-executable by wrapping them into
-# a \dontrun{} environment.
-
-# Copyright (C) 1997, 1998, 1999 Kurt Hornik
+# Copyright (C) 1997, 1998, 1999, 2000 Kurt Hornik
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,30 +19,60 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Bug reports to Kurt.Hornik@ci.tuwien.ac.at
-
-$REVISION = '$Revision: 1.5 $';
-$REVISION =~ / ([\d\.]*) /;
-$VERSION = $1;
-($NAME = $0) =~ s|.*/||;
-
-$\ = "\n";
-
-$braceLevel = 0;
-$inVerbatim = 0;
-$inSeeAlso = 0;
-$doprint = 1;
-$needArg = 1;
-$needVal = 0;
-$output = "";
-
 use Getopt::Long;
-GetOptions(("n", "x")) || &usage();
+
+my $revision = ' $Revision: 1.6 $ ';
+my $version;
+my $name;
+
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
+
+sub version {
+  print STDERR <<END;
+Sd2Rd $version
+Copyright (C) 1997-2000 Kurt Hornik.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty.    
+END
+  exit 0;
+}
+
+sub usage {
+  print STDERR <<END;
+Usage: $name [options] FILE
+
+Convert S documentation in FILE to R documentation format.
+
+Options:
+  -h, --help		print short help message and exit
+  -v, --version		print version info and exit
+  -n			render examples non-executable by wrapping them
+			into a \\dontrun{} environment
+  -x			interpret all single-quoted names as code names
+
+Email bug reports to <r-bugs\@lists.r-project.org>.
+END
+  exit 0; 
+}
+
+GetOptions(("v|version", "h|help", "n", "x")) || &usage();
+&version() if $opt_v;
+&usage() if $opt_h;
+
+my $braceLevel = 0;
+my $inVerbatim = 0;
+my $inSeeAlso = 0;
+my $doprint = 1;
+my $needArg = 1;
+my $needVal = 0;
+my $output = "";
 
 while (<>) {
   chop;
   &substitute unless /^\./;
-  @word = split;
+  my @word = split;
   
   if (/^\s*$/) { &output("\n"); }
   if (/^[^.]/) { &output($_); }
@@ -221,7 +246,7 @@ sub substitute {
 }
 
 sub section {
-  local($level, $text) = @_;
+  my($level, $text) = @_;
   $n = $braceLevel - $level;
   print("\}" x $n) if ($n > 0);
   if ($needVal) {
@@ -236,12 +261,12 @@ sub section {
 }
 
 sub paragraph {
-  local($name) = @_;
+  my($name) = @_;
   &output("\n\\bold\{$name.\} ");
 }
     
 sub output {
-  local($text) = @_;
+  my($text) = @_;
   if ($doprint) {
     print($text);
   } elsif ($output) {
@@ -249,14 +274,6 @@ sub output {
   } else {
     $output = $text;
   }
-}
-
-sub usage {
-  print("\n$NAME version $VERSION\n\nusage:  $NAME [-n] [-x] file\n");
-  print("options:");
-  print("  -x      interpret all single-quoted names as code names");
-  print("  -n      render examples non-executable");
-  exit;
 }
 
 ### Local Variables: ***

@@ -2,83 +2,121 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
-REVISION='$Revision: 1.10 $'
-VERSION=`set - ${REVISION}; echo ${2}`
-USAGE_MSG="Usage: R CMD check [options] [-l lib] pkg_1 ... pkg_n"
+revision='$Revision: 1.11 $'
+version=`set - ${revision}; echo ${2}`
+version="R package checker ${version}
 
-OPTS=
-PKGS=
-CLEAN=false
-DEBUG=false
-REBUILD=true
-START_DIR=`pwd`
+Copyright (C) 2000 R Development Core Team.
+There is NO warranty.  You may redistribute this software under the
+terms of the GNU General Public License.
+For more information about these matters, see the files named COPYING."
+
+usage="Usage: R CMD check [options] pkgs
+
+Check installed R packages specified by pkgs.
+Currently, the only check performed is whether the examples provided by
+the packages' documentation can be run successfully.
+Other means for regression testing will be added in the future.
+
+If an element of pkgs is a relative or absolute path to the sources of a
+package, it is attempted to re-build the examples from the Rd sources
+(unless \`--no-rebuild' is given).
+
+If necessary for passing the checks, use the \`--vsize' and \`--nsize'
+options to increase R's memory (\`--vanilla' is used by default).
+
+Options:
+  -c, --clean
+  -d, --debug		turn on shell debugging (set -x)
+  -h, --help		print short help message and exit
+  -l, --library=LIB	use packages in library tree LIB
+  --vsize=N		set R's vector heap size to N bytes
+  --nsize=N		set R's number of cons cells to N
+  --no-rebuild		do not rebuild examples
+  -v, --version		print version info and exit
+
+Email bug reports to <r-bugs@lists.r-project.org>."
+
+opts=
+pkgs=
+clean=false
+debug=false
+rebuild=true
 lib=${R_HOME}/library
 
 while test -n "${1}"; do
   case ${1} in
-    -h|--help|-\?)
-      echo "${USAGE_MSG}"; exit 0 ;;
-    -V|--version)
-      echo "${VERSION}"; exit 0 ;;
+    -h|--help)
+      echo "${usage}"; exit 0 ;;
+    -v|--version)
+      echo "${version}"; exit 0 ;;
     -c|--clean)
-      CLEAN=true ;;
-    --debug)
-      DEBUG=true; OPTS="${OPTS} --debug" ;;
-    --no-rebuild)
-      REBUILD=false ;;
-    -l)
-      lib=${2}; shift;
-      R_LIBS="${lib}:${R_LIBS:-${RLIBS}}";
+      clean=true ;;
+    -d|--debug)
+      debug=true
+      opts="${opts} --debug"
       ;;
+    --no-rebuild)
+      rebuild=false ;;
+    -l)
+      lib=${2}; shift ;;
+    --library=*)
+      lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    --nsize=*)
+      R_opts="{R_opts} ${1}" ;;
+    --vsize=*)
+      R_opts="{R_opts} ${1}" ;;
     *)
-      PKGS="${PKGS} ${1}" ;;
+      pkgs="${pkgs} ${1}" ;;
   esac
   shift
 done
 
-if ${DEBUG}; then set -x; fi
-
-if test -z "${PKGS}"; then
-  echo "${USAGE_MSG}"
+if test -z "${pkgs}"; then
+  echo "ERROR: no packages specified"
   exit 1
 fi
-
 if test -d ${lib}; then
   lib=`cd ${lib}; pwd`
 else
   echo "ERROR: library directory \`${lib}' does not exist"
   exit 2
 fi
+R_LIBS="${lib}:${R_LIBS:-${RLIBS}}"
 
-for pkg in ${PKGS}; do
-  cd ${START_DIR}
-  USE_MAN=false
+start_dir=`pwd`
 
-  if ${REBUILD}; then
+## The work horse
+checkpkg () {
+  echo "Checking package \`${1}' ..."
+  pkg=${1}
+
+  cd ${start_dir}
+  use_man=false
+
+  if ${rebuild}; then
     if test -d ${pkg}/man -a -w ${lib}/`basename ${pkg}`; then
-      USE_MAN=true
+      use_man=true
       cd ${pkg}
       pkg=`basename ${pkg}`
       rm -rf ${lib}/${pkg}/R-ex
     fi
   fi
 
-  echo "Checking package \`${pkg}' ..."
-
   if test \! -d ${lib}/${pkg}; then
     echo "WARNING: package \`${pkg}' not installed ... skipping"
     break
   fi
 
-  if ${USE_MAN}; then
+  if ${use_man}; then
     ${R_HOME}/bin/build-help ${OPTS} --example ../${pkg} ${lib}
-    CHECK_DIR=check
+    check_dir=check
   else
-    CHECK_DIR=check-${pkg}
+    check_dir=check-${pkg}
   fi
 
-  test -d ${CHECK_DIR} || mkdir ${CHECK_DIR}
-  cd ${CHECK_DIR}
+  test -d ${check_dir} || mkdir ${check_dir}
+  cd ${check_dir}
 
   echo " Massaging examples into \`${pkg}-Ex.R' ..."
   ${R_HOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
@@ -91,12 +129,18 @@ for pkg in ${PKGS}; do
   else
     echo " ERROR" && exit 1
   fi
-  if ${CLEAN}; then
-    cd .. && rm -rf ${CHECK_DIR}
+  if ${clean}; then
+    cd .. && rm -rf ${check_dir}
   else
-    echo " Results of \`check' are available in directory ${CHECK_DIR}"
+    echo " Results of \`check' are available in directory ${check_dir}"
   fi
-
+}
+  
+## The main loop
+if ${debug}; then set -x; fi
+for p in ${pkgs}; do
+  checkpkg ${p}
+  echo
 done
 
 ### Local Variables: ***

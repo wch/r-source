@@ -2,54 +2,56 @@
 #
 # ${R_HOME}/bin/build
 
-REVISION='$Revision: 1.4 $'
-VERSION=`set - ${REVISION}; echo ${2}`
-VERSION="R package builder version ${VERSION}
+revision='$Revision: 1.5 $'
+version=`set - ${revision}; echo ${2}`
+version="R package builder ${version}
 
-Copyright (C) 1999 R Development Core Team.
+Copyright (C) 2000 R Development Core Team.
 There is NO warranty.  You may redistribute this software under the
 terms of the GNU General Public License.
 For more information about these matters, see the files named COPYING."
 
-USAGE_MSG="Usage: R CMD build [options] pkgdir_1 ... pkgdir_n
+usage="Usage: R CMD build [options] pkgdirs
 
-Build R packages from package sources in the PKGDIR_i directories.
-A variety of diagnostic checks and cleanups are performed prior to
-building the packages.
+Build R packages from package sources in the directories specified by
+pkgdirs.  A variety of diagnostic checks and cleanups are performed
+prior to building the packages.
+
+If necessary for passing the checks, use the \`--vsize' and \`--nsize'
+options to increase R's memory (\`--vanilla' is used by default).
 
 Options:
-  -h, --help       Display this help and exit successfully.
-  -v, --version    Display version information and exit successfully.
-  --vsize=N        Set R's vector heap size to N bytes.
-  --nsize=N        Set R's number of cons cells to N.
-  --force          Force overwriting of (index) files.
+  -d, --debug		turn on shell debugging (set -x)
+  -h, --help		print short help message and exit
+  -v, --version		print version info and exit
+  --vsize=N		set R's vector heap size to N bytes
+  --nsize=N		set R's number of cons cells to N
+  --force		force overwriting of (index) files  
 
 Email bug reports to <r-bugs@lists.r-project.org>."
 
 R_opts="--vanilla"
-DEBUG=false
-FORCE=false
-PKGS=
-
-START_DIR=`pwd`
+debug=false
+force=false
+pkgs=
 
 ## Parse argument command line
 while test -n "${1}"; do
   case ${1} in
     -h|--help)
-      echo "${USAGE_MSG}"; exit 0 ;;
+      echo "${usage}"; exit 0 ;;
     -v|--version)
-      echo "${VERSION}"; exit 0 ;;
+      echo "${version}"; exit 0 ;;
     -d|--debug)
-      DEBUG=true ;;
+      debug=true ;;
     --force)
-      FORCE=true ;;
+      force=true ;;
     --nsize=*)
-      R_NSIZE=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      R_opts="{R_opts} ${1}" ;;
     --vsize=*)
-      R_VSIZE=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      R_opts="{R_opts} ${1}" ;;
     *)
-      PKGS="${PKGS} ${1}" ;;
+      pkgs="${pkgs} ${1}" ;;
   esac
   shift
 done
@@ -66,7 +68,13 @@ else
 fi
 
 ## A few useful output functions
-checking () { echo ${ECHO_N} "* checking $@ ...${ECHO_C}"; }
+checking () {
+  if ${debug}; then
+    echo "* checking $@ ..."
+  else
+    echo ${ECHO_N} "* checking $@ ...${ECHO_C}"
+  fi
+}
 message () { echo "* $@"; }
 result () { echo "${ECHO_T} $@"; }
 
@@ -79,7 +87,7 @@ updateIndex () {
     result "OK"
   else
     result "NO"
-    if ${FORCE}; then
+    if ${force}; then
       echo "overwriting \`${oldindex}' as \`--force' was given"
       cp ${newindex} ${oldindex}
       else
@@ -89,11 +97,13 @@ updateIndex () {
   rm -f ${newindex}
 }
 
+start_dir=`pwd`
+
 ## The work horse
 buildpkg () {
   echo "Building package \`${1}' ..."
 
-  cd ${START_DIR}
+  cd ${start_dir}
 
   checking "package dir"
   if test -d ${1}; then
@@ -228,12 +238,6 @@ buildpkg () {
 
   ## Check for undocumented objects 
   checking "for undocumented objects"
-  if test -n "${R_NSIZE}"; then
-    R_opts="${R_opts} --nsize ${R_NSIZE}"
-  fi
-  if test -n "${R_VSIZE}"; then
-    R_opts="${R_opts} --vsize ${R_VSIZE}"
-  fi
   out=`echo "undoc(dir = \"${dir}\")" | R ${R_opts} | \
     grep "^Error\\|^ *\\["`
   err=`echo "${out}" | grep "^Error"`
@@ -276,12 +280,16 @@ buildpkg () {
 
   ## And finally build the package
   cd ..
-  message "building \`${START_DIR}/${package}_${version}.tar.gz'"
-  tar zcf ${START_DIR}/${package}_${version}.tar.gz ${package}
+  message "building \`${start_dir}/${package}_${version}.tar.gz'"
+  tar zcf ${start_dir}/${package}_${version}.tar.gz ${package}
 }
 
 ## The main loop
-for p in ${PKGS}; do buildpkg ${p}; echo; done
+if ${debug}; then set -x; fi
+for p in ${pkgs}; do
+  buildpkg ${p}
+  echo
+done
 
 ### Local Variables: ***
 ### mode: sh ***
