@@ -55,6 +55,12 @@ relative step length.}
     Hessians.}
 \item{\dots}{additional arguments to \code{f}.}
 }
+\details{
+  If a gradient or hessian is supplied but evaluates to the wrong mode
+  or length, it will be ignored if \code{check.analyticals = TRUE} (the
+  default) with a warning.  The hessian is not even checked unless the
+  gradient is present and passes the sanity checks.
+}
 \value{
 A list containing the following components:
 \item{minimum}{the value of the estimated minimum of \code{f}.}

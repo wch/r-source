@@ -612,15 +612,23 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     value = eval(state->R_fcall, state->R_env);
 
     v = getAttrib(value, R_gradientSymbol);
-    if (v != R_NilValue && LENGTH(v) == n && (isReal(v) || isInteger(v))) {
-      iagflg = 1;
-      state->have_gradient = 1;
-       v = getAttrib(value, R_hessianSymbol);
-       if (v != R_NilValue && LENGTH(v) == (n * n) &&
- 	  (isReal(v) || isInteger(v))) {
- 	iahflg = 1;
- 	state->have_hessian = 1;
-       }
+    if (v != R_NilValue) {
+	if (LENGTH(v) == n && (isReal(v) || isInteger(v))) {
+	    iagflg = 1;
+	    state->have_gradient = 1;
+	    v = getAttrib(value, R_hessianSymbol);
+	    
+	    if (v != R_NilValue) {
+		if (LENGTH(v) == (n * n) && (isReal(v) || isInteger(v))) {
+		    iahflg = 1;
+		    state->have_hessian = 1;
+		} else {
+		    warning("hessian supplied is of the wrong length or mode, so ignored");
+		}
+	    }
+	} else {
+	    warning("gradient supplied is of the wrong length or mode, so ignored");
+	}
     }
     if (((msg/4) % 2) && !iahflg) { /* skip check of analytic Hessian */
       msg -= 4;

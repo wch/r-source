@@ -287,6 +287,12 @@ NEW FEATURES
     o	plot.ts(x,y) now allows to suppress labels and lines; 
 	it is better documented.
 
+    o	nlm(check.analyticals = TRUE) now warns if the supplied
+	gradient and/or hessian are of the wrong length.
+     
+    o	optim() now checks the length of an analytical gradient at
+	each evaluation.
+
 
 BUG FIXES
 

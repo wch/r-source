@@ -111,6 +111,9 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 	SETCADR(OS->R_gcall, x);
 	PROTECT_WITH_INDEX(s = eval(OS->R_gcall, OS->R_env), &ipx);
 	REPROTECT(s = coerceVector(s, REALSXP), ipx);
+	if(LENGTH(s) != n) 
+	    error("gradient in optim evaluated to length %d not %d", 
+		  LENGTH(s), n);
 	for (i = 0; i < n; i++)
 	    df[i] = REAL(s)[i] * (OS->parscale[i])/(OS->fnscale);
 	UNPROTECT(2);
