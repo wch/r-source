@@ -129,6 +129,9 @@ NEW FEATURES
 	longer returns methods for non-visible generics (and
 	eliminates various mismatches).
 
+    o   A new function mget() will retrieve multiple values from an 
+        environment. 
+
     o	model.frame() methods, for example those for "lm" and "glm",
 	pass relevant parts of ... onto the default method.  (This has
 	long been documented but not done.)  The default method is now
@@ -350,9 +353,6 @@ NEW FEATURES
       
           Still accept logical values (and NA maps to "off")
 
-
-    o   A new function mget will retrieve multiple values from an 
-        environment. 
 
 UTILITIES
 
@@ -619,6 +619,10 @@ BUG FIXES
 	of ppois().
 
     o	gamma(-n) now gives NaN for all negative integers -n.
+
+    o	The Unix version of browseURL() now protects the URL from the
+	shell, for example allowing & and $ to occur in the URL.
+
 
 
 

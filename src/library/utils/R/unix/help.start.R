@@ -33,33 +33,40 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
 
 browseURL <- function(url, browser = getOption("browser"))
 {
+    ## escape characters.  ' can occur in URLs, so we must use " to
+    ## delimit the URL.  We need to escape $, but "`\ do not occur in
+    ## valid URLs (RFC 2396, on the W2C site).
+    shQuote <- function(string)
+        paste('"', gsub("$", "\\\\$", string), '"', sep="")
+
     if(!is.character(url) || !(length(url) == 1) || (nchar(url) == 0))
         stop("url must be a non-empty character string")
     if(!is.character(browser)
        || !(length(browser) == 1)
        || (nchar(browser) == 0))
         stop("browser must be a non-empty character string")
-    
+
     if (.Platform$GUI=="AQUA" ||
         length(grep("^(localhost|):", Sys.getenv("DISPLAY"))) > 0)
       isLocal <- TRUE
     else
       isLocal <- FALSE
 
+    quotedUrl <- shQuote(url)
     remoteCmd <- if(isLocal)
         switch(basename(browser),
-               "gnome-moz-remote" =, "open" = url,
-               "galeon" = paste("-x", url),
-               "kfmclient" = paste("openURL", url),
+               "gnome-moz-remote" =, "open" = quotedUrl,
+               "galeon" = paste("-x", quotedUrl),
+               "kfmclient" = paste("openURL", quotedUrl),
                "netscape" =, "mozilla" =, "opera" =, {
                    paste("-remote \"openURL(",
                          ## Quote ',' and ')' ...
-                         gsub("([,)])", "%\\1", url), ")\"",
+                         gsub("([,)])", "%\\1", quotedUrl), ")\"",
                          sep = "")
                })
-    else url
+    else quotedUrl
     system(paste(browser, remoteCmd, "2>&1 >/dev/null ||",
-                 browser, url, "&"))
+                 browser, quotedUrl, "&"))
 }
 
 make.packages.html <- function(lib.loc=.libPaths())
