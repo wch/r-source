@@ -36,8 +36,8 @@
 #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 
 #ifdef Win32
-#define INCLUDE_WINSOCK
-#include "win32config.h"
+#include <io.h>
+#include <winsock.h>
 #define _WINSOCKAPI_
 extern void R_ProcessEvents(void);
 #endif

@@ -39,8 +39,11 @@
 #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 
 #ifdef Win32
-#define INCLUDE_WINSOCK
-#include "win32config.h"
+#include <io.h>
+#include <winsock.h>
+#define EWOULDBLOCK             WSAEWOULDBLOCK
+#define EINPROGRESS             WSAEINPROGRESS
+#define EALREADY                WSAEALREADY
 #define _WINSOCKAPI_
 extern void R_ProcessEvents(void);
 #endif
@@ -755,7 +758,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
     SOCKET s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     fd_set wfd, rfd;
     struct timeval tv;
-    int status;
+    int status = 0;
     double used = 0.0;
 
     if (s==-1) {
@@ -778,6 +781,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 	status = ioctl(s, FIONBIO, &enable);
     }
 #else /* VMS */
+#ifdef HAVE_FCNTL
     if ((status = fcntl(s, F_GETFL, 0)) != -1) {
 #ifdef O_NONBLOCK
 	status |= O_NONBLOCK;
@@ -788,6 +792,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 #endif /* !O_NONBLOCK */
 	status = fcntl(s, F_SETFL, status);
     }
+#endif
     if (status < 0) {
 #ifdef DEBUG_HTTP
 	perror("nonblocking");

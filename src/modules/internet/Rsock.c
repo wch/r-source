@@ -272,7 +272,7 @@ int R_SockConnect(int port, char *host)
     SOCKET s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     fd_set wfd, rfd;
     struct timeval tv;
-    int status;
+    int status = 0;
     double used = 0.0;
     struct sockaddr_in server;
     struct hostent *hp;
@@ -288,6 +288,7 @@ int R_SockConnect(int port, char *host)
 	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
     }
 #else
+#ifdef HAVE_FCNTL
     if ((status = fcntl(s, F_GETFL, 0)) != -1) {
 #ifdef O_NONBLOCK
 	status |= O_NONBLOCK;
@@ -298,6 +299,7 @@ int R_SockConnect(int port, char *host)
 #endif /* !O_NONBLOCK */
 	status = fcntl(s, F_SETFL, status);
     }
+#endif
     if (status < 0) {
 	closesocket(s);
 	return(-1);
