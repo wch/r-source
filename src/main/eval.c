@@ -412,10 +412,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	    for (a = actuals; a != R_NilValue; a = CDR(a))
 		if (TAG(a) == TAG(tmp))
 		    break;
-	    if (a == R_NilValue) {
-		SET_FRAME(newrho, CONS(CAR(tmp), FRAME(newrho)));
-		SET_TAG(FRAME(newrho), TAG(tmp));
-	    }
+	    if (a == R_NilValue)
+		defineVar(TAG(tmp), CAR(tmp), newrho);
 	}
     }
     SET_NARGS(newrho, nargs);
@@ -1237,14 +1235,12 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(env);	/* so we can unprotect 2 at the end */
 	break;
     case LISTSXP:
-	PROTECT(env = allocSExp(ENVSXP));
-	SET_FRAME(env, duplicate(CADR(args)));
-	SET_ENCLOS(env, encl);
+	env = NewEnvironment(R_NilValue, duplicate(CADR(args)), encl);
+	PROTECT(env);
 	break;
     case VECSXP:
-	PROTECT(env = allocSExp(ENVSXP));
-	SET_FRAME(env, VectorToPairList(CADR(args)));
-	SET_ENCLOS(env, encl);
+	env = NewEnvironment(R_NilValue, VectorToPairList(CADR(args)), encl);
+	PROTECT(env);
 	break;
     case INTSXP:
     case REALSXP:

@@ -1743,14 +1743,10 @@ SEXP do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 	env = eval(CADR(args), rho);
     if (env == R_NilValue)
 	env = R_GlobalEnv;
-    if (TYPEOF(env) == VECSXP)
-	env = VectorToPairList(env);
-    if (TYPEOF(env) == LISTSXP) {
-	PROTECT(s = duplicate(env));
-	PROTECT(env = allocSExp(ENVSXP));
-	SET_FRAME(env, s);
-	UNPROTECT(2);
-    }
+    else if (TYPEOF(env) == VECSXP)
+	env = NewEnvironment(R_NilValue, VectorToPairList(env), R_NilValue);
+    else if (TYPEOF(env) == LISTSXP)
+	env = NewEnvironment(R_NilValue, duplicate(env), R_NilValue);
     if (TYPEOF(env) != ENVSXP)
 	errorcall(call, "invalid environment specified");
 
