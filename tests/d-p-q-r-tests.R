@@ -229,7 +229,7 @@ All.eq(Runif,     qunif    (1- Punif, min = .2, max = 2, lower=F))
 All.eq(Rweibull,  qweibull (1- Pweibull, shape = 3, scale = 2, lower=F))
 All.eq(Rwilcox,   qwilcox  (1- Pwilcox, m = 13, n = 17, lower=F))
 
-### Check q*(p* ( log ), log) = identity
+## Check q*(p* ( log ), log) = identity
 All.eq(Rbeta,     qbeta    (log(Pbeta), shape1 = .8, shape2 = 2, log=TRUE))
 All.eq(Rbinom,    qbinom   (log(Pbinom), size = 55, prob = .25, log=TRUE))
 All.eq(Rcauchy,   qcauchy  (log(Pcauchy), location = 12, scale = 2, log=TRUE))
@@ -249,6 +249,28 @@ all.equal(Rt,        qt       (log(Pt), df = 11, log=TRUE), tol = 1e-7)
 All.eq(Runif,     qunif    (log(Punif), min = .2, max = 2, log=TRUE))
 All.eq(Rweibull,  qweibull (log(Pweibull), shape = 3, scale = 2, log=TRUE))
 All.eq(Rwilcox,   qwilcox  (log(Pwilcox), m = 13, n = 17, log=TRUE))
+
+## same q*(p* (log) log) with upper tail:
+
+All.eq(Rbeta,     qbeta    (log(1- Pbeta), shape1 = .8, shape2 = 2, lower=F, log=T))
+All.eq(Rbinom,    qbinom   (log(1- Pbinom), size = 55, prob = .25, lower=F, log=T))
+All.eq(Rcauchy,   qcauchy  (log(1- Pcauchy), location = 12, scale = 2, lower=F, log=T))
+All.eq(Rchisq,    qchisq   (log(1- Pchisq), df = 3, lower=F, log=T))
+All.eq(Rexp,      qexp     (log(1- Pexp), rate = 2, lower=F, log=T))
+All.eq(Rf,        qf       (log(1- Pf), df1 = 12, df2 = 6, lower=F, log=T))
+All.eq(Rgamma,    qgamma   (log(1- Pgamma), shape = 2, scale = 5, lower=F, log=T))
+All.eq(Rgeom,     qgeom    (log(1- Pgeom), prob = .25, lower=F, log=T))
+All.eq(Rhyper,    qhyper   (log(1- Phyper), m = 40, n = 30, k = 20, lower=F, log=T))
+All.eq(Rlnorm,    qlnorm   (log(1- Plnorm), meanlog = -1, sdlog = 3, lower=F, log=T))
+All.eq(Rlogis,    qlogis   (log(1- Plogis), location = 12, scale = 2, lower=F, log=T))
+All.eq(Rnbinom,   qnbinom  (log(1- Pnbinom), size = 7, prob = .01, lower=F, log=T))
+All.eq(Rnorm,     qnorm    (log(1- Pnorm), mean = -1, sd = 3, lower=F, log=T))
+All.eq(Rpois,     qpois    (log(1- Ppois), lambda = 12, lower=F, log=T))
+All.eq(Rsignrank, qsignrank(log(1- Psignrank), n = 47, lower=F, log=T))
+all.equal(Rt,        qt       (log(1- Pt), df = 11, lower=F, log=T), tol = 1e-7)#ok{prec.}
+All.eq(Runif,     qunif    (log(1- Punif), min = .2, max = 2, lower=F, log=T))
+All.eq(Rweibull,  qweibull (log(1- Pweibull), shape = 3, scale = 2, lower=F, log=T))
+All.eq(Rwilcox,   qwilcox  (log(1- Pwilcox), m = 13, n = 17, lower=F, log=T))
 
 
 ## Check log( upper.tail ):
