@@ -1042,7 +1042,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
 
     /*  Do a partial evaluation down through the LHS. */
-    lhs = evalseq(CADR(expr), rho, PRIMVAL(op)==1, tmploc);
+    lhs = evalseq(CADR(expr), rho, 
+                  PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
 
     PROTECT(lhs);
     PROTECT(rhs); /* To get the loop right ... */
