@@ -885,7 +885,8 @@ void CallFontPanel(void)
 {
    DeactivatePrefsWindow();
    MySetFontSelection(); 
-   fprintf(stderr,"\n console font=%d", FPShowHideFontPanel());
+   FPShowHideFontPanel();
+//   fprintf(stderr,"\n console font=%d", FPShowHideFontPanel());
    
 }
 
@@ -910,11 +911,11 @@ OSStatus MySetFontSelection(void)
 
     fontFamilyInstance.fontStyle = 0;
     fontFamilyInstance.fontFamily = fontID;
-    if(isConsoleFont)
+/*    if(isConsoleFont)
      fprintf(stderr,"\n temp console font=%s, id=%d", TempPrefs.ConsoleFontName, fontID);
     else
     fprintf(stderr,"\n temp device font=%s, id=%d", TempPrefs.DeviceFontName, fontID);
-    
+  */  
     instance.fontStyle = fontFamilyInstance.fontStyle;
     instance.fontFamily = fontFamilyInstance.fontFamily;
     

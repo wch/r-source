@@ -138,11 +138,11 @@ OSStatus FSMakePath(SInt16 volRefNum, SInt32 dirID, ConstStr255Param name, UInt8
 OSErr FSMakeFSRef(FSVolumeRefNum volRefNum, SInt32 dirID, ConstStr255Param name, FSRef *ref);
         
 
-int Raqua_ShowFiles(int nfile, char **fileName, char **title,
+int 	Raqua_ShowFiles(int nfile, char **fileName, char **title,
 		char *WinTitle, Rboolean del, char *pager);
-int Raqua_ChooseFile(int new, char *buf, int len);
+int	Raqua_ChooseFile(int new, char *buf, int len);
 
-int Raqua_Edit(char *filename);
+int 	Raqua_Edit(char *filename);
 void 	Raqua_StartConsole(void);
 void 	Raqua_WriteConsole(char *buf, int len);
 int 	Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
@@ -179,6 +179,8 @@ static pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef
 
 OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 
+extern void CloseDataEntry(void);
+extern void CloseBrowsePkg(void);
 
 static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 
@@ -859,8 +861,7 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
 
               case kRCmdInstallFromCRAN:
-               Aqua_RWrite("Install packages from CRAN: not yet implemented");
-               consolecmd("\r");
+               consolecmd("browse.pkgs()");
               break;
 
               case kRCmdInstallFromBioC:
@@ -950,7 +951,7 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
              switch (eventKind)
              {
                     case kEventFontPanelClosed:                
-                        fprintf(stderr,"\n font win closed");
+//                        fprintf(stderr,"\n font win closed");
                         GetFontName(instance.fontFamily,fontname);
                         if(isConsoleFont){
                          CopyPascalStringToC(fontname,TempPrefs.ConsoleFontName);
@@ -1033,6 +1034,7 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
         int		fsize, txtlen, i;
         Handle 		DataHandle;
         FILE 		*fp;
+        ControlRef 	browser = NULL;
 
 
 	
@@ -1066,6 +1068,25 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
                     err= noErr; 
             }
             
+            if( GetWindowProperty(EventWindow, 'RMAC', 'PKGB', sizeof(browser), NULL, &browser) == noErr){
+//                    fprintf(stderr,"\n closed dentry");
+                    CloseBrowsePkg();
+                    QuitApplicationEventLoop();
+                    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
+                    EditingFinished = true;
+                    err= noErr; 
+
+            }
+
+            if( GetWindowProperty(EventWindow, 'RMAC', 'RDEY', sizeof(browser), NULL, &browser) == noErr){
+//                    fprintf(stderr,"\n closed dentry");
+                    CloseDataEntry();
+                    QuitApplicationEventLoop();
+                    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
+                    EditingFinished = true;
+                    err= noErr; 
+
+            }
             
             if( GetWindowProperty(EventWindow, 'REDT', 'robj', sizeof(TXNObject), NULL, &REdtObj) == noErr){
                     err = GetWindowProperty(EventWindow, 'REDT', 'fsiz', sizeof(int), NULL, &fsize);
