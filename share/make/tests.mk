@@ -23,7 +23,8 @@ USE_GCT = 0
 	@rm -f $@ $@.fail
 	@echo "  Running '$<'"
 	@(if test "$(USE_GCT)" != 0; then echo "gctorture(TRUE)"; fi; \
-	  cat $<) | R_LIBS=$(R_LIBS) $(R) > $@ 2>&1 
+	  cat $<) | R_LIBS=$(R_LIBS) $(R) > $@ 2>&1 || \
+	  (mv $@ $@.fail && exit 1)
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
 	  echo $(ECHO_N) "  Comparing '$@' to '$@.save' ...$(ECHO_C)"; \
