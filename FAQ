@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-37, 2001-03-28
+Version 1.2-38, 2001-04-09
 Kurt Hornik
 
 
@@ -1134,6 +1134,13 @@ works, was published in the Journal of Statistical Software
      Data sets and sample linear mixed effects analyses corresponding to the
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+
+*SuppDists*
+     Ten distributions supplementing those built into R (Inverse Gauss,
+     Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
+     maximum F ratio, the Pearson product moment correlation coefficiant,
+     Johnson distributions, normal scores and generalized hypergeometric
+     distributions).
 
 *XML*
      Facilities for reading XML documents and DTDs.
