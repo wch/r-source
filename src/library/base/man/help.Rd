@@ -2,7 +2,8 @@
 \title{Documentation}
 \usage{
 help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-     lib.loc = .lib.loc)
+     lib.loc = .lib.loc, verbose = .Options$verbose,
+      htmlhelp = .Options$htmlhelp)
 ?topic
 }
 \alias{help}
@@ -18,6 +19,10 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
   are used.}
  \item{lib.loc}{A character vector of directory names of \R libraries.
   Defaults to all libraries currently known.}
+ \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
+ \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (is the
+     default after \code{\link{help.start}} has been called), the help
+     will not be shown on the console, but via the html browser.}
 }
 \description{
   These functions provide access to documentation.

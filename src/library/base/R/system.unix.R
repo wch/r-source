@@ -158,7 +158,8 @@ getenv <- function(x) {
 }
 
 help <- function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-		 lib.loc = .lib.loc, verbose = .Options$verbose) {
+		 lib.loc = .lib.loc, verbose = .Options$verbose,
+                 htmlhelp = .Options$htmlhelp) {
     if (!missing(package))
 	if (is.name(y <- substitute(package)))# && !is.character(package))
 	    package <- as.character(y)
@@ -194,7 +195,7 @@ help <- function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 		cat ("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
 		     ".Rd'\n", sep = "")
 	    if (!offline) {
-		if(!is.null(.Options$htmlhelp) && .Options$htmlhelp){
+		if(!is.null(htmlhelp) && htmlhelp){
 		    file <- gsub(paste("/help/", topic, sep=""),
 				 paste("/html/", topic, sep=""),
 				 file)

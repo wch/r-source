@@ -21,6 +21,10 @@ NEW FEATURES
     o	hist() has new "right = TRUE" argument;	 
 	"right = FALSE" gives  [a,b) intervals
 
+    o	help() has "htmlhelp" argument, allowing to suppress htmlhelp after
+	help.start().  This is desired for ESS.
+
+
 BUG FIXES
 
     o	build-help --dosnames should now also work for text help,
