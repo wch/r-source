@@ -1159,9 +1159,9 @@ static const size_t re_error_msgid_idx[] =
 # if defined MATCH_MAY_ALLOCATE
 /* 4400 was enough to cause a crash on Alpha OSF/1,
    whose default stack limit is 2mb.  */
-long int re_max_failures = 4000;
+const long int re_max_failures = 4000;
 # else
-long int re_max_failures = 2000;
+const long int re_max_failures = 2000;
 # endif
 
 union fail_stack_elt
@@ -1184,9 +1184,9 @@ typedef struct
 # if defined MATCH_MAY_ALLOCATE
 /* 4400 was enough to cause a crash on Alpha OSF/1,
    whose default stack limit is 2mb.  */
-int re_max_failures = 20000;
+const int re_max_failures = 20000;
 # else
-int re_max_failures = 2000;
+const int re_max_failures = 2000;
 # endif
 
 union fail_stack_elt
@@ -1559,7 +1559,7 @@ typedef union
   while (0)
 
 /* Registers are set to a sentinel when they haven't yet matched.  */
-static char reg_unset_dummy;
+static char const reg_unset_dummy = '\0'; /* initialize to ensure constant (as identified by nm) */
 #define REG_UNSET_VALUE (&reg_unset_dummy)
 #define REG_UNSET(e) ((e) == REG_UNSET_VALUE)
 

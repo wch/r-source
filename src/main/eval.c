@@ -997,7 +997,7 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, R_varloc_t tmploc)
 /* Main entry point for complex assignments */
 /* We have checked to see that CAR(args) is a LANGSXP */
 
-static char *asym[] = {":=", "<-", "<<-", "="};
+static const char * const asym[] = {":=", "<-", "<<-", "="};
 
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)

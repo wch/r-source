@@ -663,7 +663,7 @@ SEXP GetPar(char*, SEXP);
 SEXP GetRowNames(SEXP);
 void gsetVar(SEXP, SEXP, SEXP);
 Rboolean inherits(SEXP, char*);
-SEXP install(char*);
+SEXP install(char const *);
 Rboolean isArray(SEXP);
 Rboolean isComplex(SEXP);
 Rboolean isEnvironment(SEXP);

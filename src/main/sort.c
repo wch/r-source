@@ -276,7 +276,7 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* faster versions of shellsort, following Sedgewick (1986) */
 
-static int incs[16] = {1073790977, 268460033, 67121153, 16783361, 4197377,
+static const int incs[16] = {1073790977, 268460033, 67121153, 16783361, 4197377,
 		       1050113, 262913, 65921, 16577, 4193, 1073, 281, 77, 
 		       23, 8, 1};
 

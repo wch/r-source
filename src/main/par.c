@@ -51,6 +51,7 @@
 
 static SEXP gcall;
 
+
 void RecordGraphicsCall(SEXP call)
 {
     gcall = call;
@@ -62,10 +63,10 @@ static void par_error(char *what)
 }
 
 
-static void lengthCheck(char *what, SEXP v, int n)
+static void lengthCheck(char *what, SEXP v, int n, SEXP call)
 {
     if (length(v) != n)
-	errorcall(gcall, "parameter \"%s\" has the wrong length", what);
+	errorcall(call, "parameter \"%s\" has the wrong length", what);
 }
 
 
@@ -138,32 +139,32 @@ static void BoundsCheck(double x, double a, double b, char *s)
  *	"usr",
  *	"xlog", "ylog"
  */
-static void Specify(char *what, SEXP value, DevDesc *dd)
+static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 {
     double x;
     int ix = 0;
 
     if (streql(what, "adj")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	BoundsCheck(x, 0.0, 1.0, what);
 	Rf_dpptr(dd)->adj = Rf_gpptr(dd)->adj = x;
     }
     else if (streql(what, "ann")) {
-	lengthCheck(what, value, 1);	ix = asLogical(value);
+	lengthCheck(what, value, 1, call);	ix = asLogical(value);
 	Rf_dpptr(dd)->ann = Rf_gpptr(dd)->ann = (ix != 0);/* NA |-> TRUE */
     }
     else if (streql(what, "ask")) {
-	lengthCheck(what, value, 1);	ix = asLogical(value);
+	lengthCheck(what, value, 1, call);	ix = asLogical(value);
 	Rf_dpptr(dd)->ask = Rf_gpptr(dd)->ask = (ix == 1);/* NA |-> FALSE */
     }
     else if (streql(what, "bg")) {
-	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_dpptr(dd)->bg = Rf_gpptr(dd)->bg = ix;
 	Rf_dpptr(dd)->new = Rf_gpptr(dd)->new = FALSE;
     }
     else if (streql(what, "bty")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	if (!isString(value))
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
@@ -182,83 +183,83 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	}
     }
     else if (streql(what, "cex")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->cex = Rf_gpptr(dd)->cex = 1.0;
 	Rf_dpptr(dd)->cexbase = Rf_gpptr(dd)->cexbase = x;
     }
     else if (streql(what, "cex.main")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->cexmain = Rf_gpptr(dd)->cexmain = x;
     }
     else if (streql(what, "cex.lab")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->cexlab = Rf_gpptr(dd)->cexlab = x;
     }
     else if (streql(what, "cex.sub")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->cexsub = Rf_gpptr(dd)->cexsub = x;
     }
     else if (streql(what, "cex.axis")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->cexaxis = Rf_gpptr(dd)->cexaxis = x;
     }
     else if (streql(what, "col")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_dpptr(dd)->col = Rf_gpptr(dd)->col = ix;
     }
     else if (streql(what, "col.main")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_dpptr(dd)->colmain = Rf_gpptr(dd)->colmain = ix;
     }
     else if (streql(what, "col.lab")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_dpptr(dd)->collab = Rf_gpptr(dd)->collab = ix;
     }
     else if (streql(what, "col.sub")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_dpptr(dd)->colsub = Rf_gpptr(dd)->colsub = ix;
     }
     else if (streql(what, "col.axis")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 /*	naIntCheck(ix = RGBpar(value, 0), what); */
 	ix = RGBpar(value, 0);
 	Rf_dpptr(dd)->colaxis = Rf_gpptr(dd)->colaxis = ix;
     }
     else if (streql(what, "crt")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	x = asReal(value);
 	naRealCheck(x, what);
 	Rf_dpptr(dd)->crt = Rf_gpptr(dd)->crt = x;
     }
     else if (streql(what, "err")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = asInteger(value);
 	if (ix == 0 || ix == -1)
 	    Rf_dpptr(dd)->err = Rf_gpptr(dd)->err = ix;
 	else par_error(what);
     }
     else if (streql(what, "fg")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_dpptr(dd)->col = Rf_gpptr(dd)->col = Rf_dpptr(dd)->fg = Rf_gpptr(dd)->fg = ix;
     }
     else if (streql(what, "fig")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 4);
+	lengthCheck(what, value, 4, call);
 	if (0.0 <= REAL(value)[0] && REAL(value)[0] < REAL(value)[1] &&
 	    REAL(value)[1] <= 1.0 &&
 	    0.0 <= REAL(value)[2] && REAL(value)[2] < REAL(value)[3] &&
@@ -285,7 +286,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "fin")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 2);
+	lengthCheck(what, value, 2, call);
 	Rf_gpptr(dd)->defaultFigure = Rf_dpptr(dd)->defaultFigure = 0;
 	Rf_gpptr(dd)->fUnits = Rf_dpptr(dd)->fUnits = INCHES;
 	Rf_gpptr(dd)->numrows = Rf_dpptr(dd)->numrows = 1;
@@ -303,46 +304,46 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	GReset(dd);
     }
     else if (streql(what, "font")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_dpptr(dd)->font = Rf_gpptr(dd)->font = ix;
     }
     else if (streql(what, "font.main")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_dpptr(dd)->fontmain = Rf_gpptr(dd)->fontmain = ix;
     }
     else if (streql(what, "font.lab")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_dpptr(dd)->fontlab = Rf_gpptr(dd)->fontlab = ix;
     }
     else if (streql(what, "font.sub")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_dpptr(dd)->fontsub = Rf_gpptr(dd)->fontsub = ix;
     }
     else if (streql(what, "font.axis")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_dpptr(dd)->fontaxis = Rf_gpptr(dd)->fontaxis = ix;
     }
     else if(streql(what, "gamma")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	if (((GEDevDesc*) dd)->dev->canChangeGamma)
 	    Rf_dpptr(dd)->gamma = Rf_gpptr(dd)->gamma = x;
 	else
-	    warningcall(gcall, "gamma cannot be modified on this device");
+	    warningcall(call, "gamma cannot be modified on this device");
     }
     else if (streql(what, "lab")) {
 	value = coerceVector(value, INTSXP);
-	lengthCheck(what, value, 3);
+	lengthCheck(what, value, 3, call);
 	posIntCheck   (INTEGER(value)[0], what);
 	posIntCheck   (INTEGER(value)[1], what);
 	nonnegIntCheck(INTEGER(value)[2], what);
@@ -351,23 +352,23 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	Rf_dpptr(dd)->lab[2] = Rf_gpptr(dd)->lab[2] = INTEGER(value)[2];
     }
     else if (streql(what, "las")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	if (0 <= ix && ix <= 3)
 	    Rf_dpptr(dd)->las = Rf_gpptr(dd)->las = ix;
 	else par_error(what);
     }
     else if (streql(what, "lty")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	Rf_dpptr(dd)->lty = Rf_gpptr(dd)->lty = LTYpar(value, 0);
     }
     else if (streql(what, "lwd")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->lwd = Rf_gpptr(dd)->lwd = x;
     }
     else if (streql(what, "mai")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 4);
+	lengthCheck(what, value, 4, call);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
@@ -382,7 +383,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "mar")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 4);
+	lengthCheck(what, value, 4, call);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
@@ -396,7 +397,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	GReset(dd);
     }
     else if (streql(what, "mex")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->mex = Rf_gpptr(dd)->mex = x;
 	GReset(dd);
@@ -404,7 +405,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "mfrow")) {
 	int nrow, ncol;
 	value = coerceVector(value, INTSXP);
-	lengthCheck(what, value, 2);
+	lengthCheck(what, value, 2, call);
 	posIntCheck(INTEGER(value)[0], what);
 	posIntCheck(INTEGER(value)[1], what);
 	nrow = INTEGER(value)[0];
@@ -433,7 +434,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "mfcol")) {
 	int nrow, ncol;
 	value = coerceVector(value, INTSXP);
-	lengthCheck(what, value, 2);
+	lengthCheck(what, value, 2, call);
 	posIntCheck(INTEGER(value)[0], what);
 	posIntCheck(INTEGER(value)[1], what);
 	nrow = INTEGER(value)[0];
@@ -464,7 +465,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	value = coerceVector(value, INTSXP);
 	np = length(value);
 	if(np != 2 && np != 4)
-	    errorcall(gcall, "parameter \"mfg\" has the wrong length");
+	    errorcall(call, "parameter \"mfg\" has the wrong length");
 	posIntCheck(INTEGER(value)[0], what);
 	posIntCheck(INTEGER(value)[1], what);
 	row = INTEGER(value)[0];
@@ -472,16 +473,16 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	nrow = Rf_dpptr(dd)->numrows;
 	ncol = Rf_dpptr(dd)->numcols;
 	if(row <= 0 || row > nrow)
-	    errorcall(gcall, "parameter \"i\" in \"mfg\" is out of range");
+	    errorcall(call, "parameter \"i\" in \"mfg\" is out of range");
 	if(col <= 0 || col > ncol)
-	    errorcall(gcall, "parameter \"j\" in \"mfg\" is out of range");
+	    errorcall(call, "parameter \"j\" in \"mfg\" is out of range");
 	if(np == 4) {
 	    posIntCheck(INTEGER(value)[2], what);
 	    posIntCheck(INTEGER(value)[3], what);
 	    if(nrow != INTEGER(value)[2])
-		warningcall(gcall, "value of nr in \"mfg\" is wrong and will be ignored");
+		warningcall(call, "value of nr in \"mfg\" is wrong and will be ignored");
 	    if(ncol != INTEGER(value)[3])
-		warningcall(gcall, "value of nc in \"mfg\" is wrong and will be ignored");
+		warningcall(call, "value of nc in \"mfg\" is wrong and will be ignored");
 	}
 	Rf_gpptr(dd)->lastFigure = Rf_dpptr(dd)->lastFigure = nrow*ncol;
 	/*Rf_dpptr(dd)->mfind = Rf_gpptr(dd)->mfind = 1;*/
@@ -518,7 +519,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "mgp")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 3);
+	lengthCheck(what, value, 3, call);
 #ifdef till_R_1_5_0
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
@@ -529,24 +530,24 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	naRealCheck(REAL(value)[2], what);
 	if(REAL(value)[0] * REAL(value)[1] < 0 ||
 	   REAL(value)[0] * REAL(value)[2] < 0)
-	    warningcall(gcall, "`mgp[1:3]' are of differing sign");
+	    warningcall(call, "`mgp[1:3]' are of differing sign");
 #endif
 	Rf_dpptr(dd)->mgp[0] = Rf_gpptr(dd)->mgp[0] = REAL(value)[0];
 	Rf_dpptr(dd)->mgp[1] = Rf_gpptr(dd)->mgp[1] = REAL(value)[1];
 	Rf_dpptr(dd)->mgp[2] = Rf_gpptr(dd)->mgp[2] = REAL(value)[2];
     }
     else if (streql(what, "mkh")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->mkh = Rf_gpptr(dd)->mkh = x;
     }
     else if (streql(what, "new")) {
-	lengthCheck(what, value, 1);	ix = asLogical(value);
+	lengthCheck(what, value, 1, call);	ix = asLogical(value);
 	Rf_dpptr(dd)->new = Rf_gpptr(dd)->new = (ix != 0);
     }
     else if (streql(what, "oma")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 4);
+	lengthCheck(what, value, 4, call);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
@@ -562,7 +563,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "omd")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 4);
+	lengthCheck(what, value, 4, call);
 	BoundsCheck(REAL(value)[0], 0.0, 1.0, what);
 	BoundsCheck(REAL(value)[1], 0.0, 1.0, what);
 	BoundsCheck(REAL(value)[2], 0.0, 1.0, what);
@@ -578,7 +579,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "omi")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 4);
+	lengthCheck(what, value, 4, call);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
@@ -607,7 +608,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "pin")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 2);
+	lengthCheck(what, value, 2, call);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	Rf_dpptr(dd)->pin[0] = Rf_gpptr(dd)->pin[0] = REAL(value)[0];
@@ -618,7 +619,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "plt")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 4);
+	lengthCheck(what, value, 4, call);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
@@ -632,7 +633,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	GReset(dd);
     }
     else if (streql(what, "ps")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	nonnegIntCheck(ix, what);
 	Rf_dpptr(dd)->ps = Rf_gpptr(dd)->ps = ix;
     }
@@ -647,12 +648,12 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "smo")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	nonnegIntCheck(ix, what);
 	Rf_dpptr(dd)->smo = Rf_gpptr(dd)->smo = ix;
     }
     else if (streql(what, "srt")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	naRealCheck(x, what);
 	Rf_dpptr(dd)->srt = Rf_gpptr(dd)->srt = x;
     }
@@ -661,7 +662,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     /* is NA then setting tck to NA will reset tck to its */
     /* initial default value.  See also graphics.c. */
     else if (streql(what, "tck")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	Rf_dpptr(dd)->tck = Rf_gpptr(dd)->tck = x;
 	if (R_FINITE(x))
 	    Rf_dpptr(dd)->tcl = Rf_gpptr(dd)->tcl = NA_REAL;
@@ -669,7 +670,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	    Rf_dpptr(dd)->tcl = Rf_gpptr(dd)->tcl = -0.5;
     }
     else if (streql(what, "tcl")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	Rf_dpptr(dd)->tcl = Rf_gpptr(dd)->tcl = x;
 	if (R_FINITE(x))
 	    Rf_dpptr(dd)->tck = Rf_gpptr(dd)->tck = NA_REAL;
@@ -677,7 +678,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	    Rf_dpptr(dd)->tck = Rf_gpptr(dd)->tck = 0.02;	/* S Default */
     }
     else if (streql(what, "tmag")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_dpptr(dd)->tmag = Rf_gpptr(dd)->tmag = x;
     }
@@ -703,7 +704,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "usr")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 4);
+	lengthCheck(what, value, 4, call);
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	naRealCheck(REAL(value)[2], what);
@@ -746,7 +747,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "xaxp")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 3);
+	lengthCheck(what, value, 3, call);
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	posIntCheck((int) (REAL(value)[2]), what);
@@ -771,13 +772,13 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "xlog")) {
-	lengthCheck(what, value, 1);	ix = asLogical(value);
+	lengthCheck(what, value, 1, call);	ix = asLogical(value);
 	if (ix == NA_LOGICAL)
 	    par_error(what);
 	Rf_dpptr(dd)->xlog = Rf_gpptr(dd)->xlog = (ix != 0);
     }
     else if (streql(what, "xpd")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = asInteger(value);
 	if (ix == NA_INTEGER)
 	    Rf_dpptr(dd)->xpd = Rf_gpptr(dd)->xpd = 2;
@@ -786,7 +787,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "yaxp")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 3);
+	lengthCheck(what, value, 3, call);
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	posIntCheck((int) (REAL(value)[2]), what);
@@ -811,12 +812,12 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "ylog")) {
-	lengthCheck(what, value, 1);	ix = asLogical(value);
+	lengthCheck(what, value, 1, call);	ix = asLogical(value);
 	if (ix == NA_LOGICAL)
 	    par_error(what);
 	Rf_dpptr(dd)->ylog = Rf_gpptr(dd)->ylog = (ix != 0);
     }
-    else warningcall(gcall, "parameter \"%s\" can't be set", what);
+    else warningcall(call, "parameter \"%s\" can't be set", what);
     return;
 }
 
@@ -826,27 +827,27 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
  * Many things in PARALLEL to Specify(.)
  * for par()s not valid here, see comment there.
  */
-void Specify2(char *what, SEXP value, DevDesc *dd)
+void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 {
     double x;
     int ix = 0;
 
     if (streql(what, "adj")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	BoundsCheck(x, 0.0, 1.0, what);
 	Rf_gpptr(dd)->adj = x;
     }
     else if (streql(what, "ann")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	Rf_gpptr(dd)->ann = (ix != 0);
     }
     else if (streql(what, "bg")) {
-	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_gpptr(dd)->bg = ix;
     }
     else if (streql(what, "bty")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	if (!isString(value))
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
@@ -865,108 +866,108 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	}
     }
     else if (streql(what, "cex")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_gpptr(dd)->cex = x;
 	/* Rf_gpptr(dd)->cexbase = x; */
     }
     else if (streql(what, "cex.main")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_gpptr(dd)->cexmain = x;
     }
     else if (streql(what, "cex.lab")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_gpptr(dd)->cexlab = x;
     }
     else if (streql(what, "cex.sub")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_gpptr(dd)->cexsub = x;
     }
     else if (streql(what, "cex.axis")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_gpptr(dd)->cexaxis = x;
     }
     else if (streql(what, "col")) {
-	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_gpptr(dd)->col = ix;
     }
     else if (streql(what, "col.main")) {
-	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_gpptr(dd)->colmain = ix;
     }
     else if (streql(what, "col.lab")) {
-	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_gpptr(dd)->collab = ix;
     }
     else if (streql(what, "col.sub")) {
-	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_gpptr(dd)->colsub = ix;
     }
     else if (streql(what, "col.axis")) {
-	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_gpptr(dd)->colaxis = ix;
     }
     else if (streql(what, "crt")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	naRealCheck(x, what);
 	Rf_gpptr(dd)->crt = x;
     }
     else if (streql(what, "err")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	if (ix == 0 || ix == -1)
 	    Rf_gpptr(dd)->err = ix;
 	else par_error(what);
     }
     else if (streql(what, "fg")) {
-	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
+	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
 	Rf_gpptr(dd)->fg = ix;
     }
     else if (streql(what, "font")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_gpptr(dd)->font = ix;
     }
     else if (streql(what, "font.main")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_gpptr(dd)->fontmain = ix;
     }
     else if (streql(what, "font.lab")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_gpptr(dd)->fontlab = ix;
     }
     else if (streql(what, "font.sub")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_gpptr(dd)->fontsub = ix;
     }
     else if (streql(what, "font.axis")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_gpptr(dd)->fontaxis = ix;
     }
     else if(streql(what, "gamma")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	if (((GEDevDesc*) dd)->dev->canChangeGamma)
 	    Rf_gpptr(dd)->gamma = x;
 	else
-	    warningcall(gcall, "gamma cannot be modified on this device");
+	    warningcall(call, "gamma cannot be modified on this device");
     }
     else if (streql(what, "lab")) {
 	value = coerceVector(value, INTSXP);
-	lengthCheck(what, value, 3);
+	lengthCheck(what, value, 3, call);
 	posIntCheck   (INTEGER(value)[0], what);
 	posIntCheck   (INTEGER(value)[1], what);
 	nonnegIntCheck(INTEGER(value)[2], what);
@@ -975,23 +976,23 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	Rf_gpptr(dd)->lab[2] = INTEGER(value)[2];
     }
     else if (streql(what, "las")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	if (0 <= ix && ix <= 3)
 	    Rf_gpptr(dd)->las = ix;
 	else par_error(what);
     }
     else if (streql(what, "lty")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	Rf_gpptr(dd)->lty = LTYpar(value, 0);
     }
     else if (streql(what, "lwd")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_gpptr(dd)->lwd = x;
     }
     else if (streql(what, "mgp")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 3);
+	lengthCheck(what, value, 3, call);
 #ifdef till_R_1_5_0
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
@@ -1009,7 +1010,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	Rf_gpptr(dd)->mgp[2] = REAL(value)[2];
     }
     else if (streql(what, "mkh")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_gpptr(dd)->mkh = x;
     }
@@ -1027,27 +1028,27 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	Rf_gpptr(dd)->pch = ix;
     }
     else if (streql(what, "smo")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
+	lengthCheck(what, value, 1, call);	ix = asInteger(value);
 	posIntCheck(ix, what);
 	Rf_gpptr(dd)->smo = ix;
     }
     else if (streql(what, "srt")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	naRealCheck(x, what);
 	Rf_gpptr(dd)->srt = x;
     }
     else if (streql(what, "tck")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	naRealCheck(x, what);
 	Rf_gpptr(dd)->tck = x;
     }
     else if (streql(what, "tcl")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	naRealCheck(x, what);
 	Rf_gpptr(dd)->tcl = x;
     }
     else if (streql(what, "tmag")) {
-	lengthCheck(what, value, 1);	x = asReal(value);
+	lengthCheck(what, value, 1, call);	x = asReal(value);
 	posRealCheck(x, what);
 	Rf_gpptr(dd)->tmag = x;
     }
@@ -1073,7 +1074,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "xaxp")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 3);
+	lengthCheck(what, value, 3, call);
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	posIntCheck((int) (REAL(value)[2]), what);
@@ -1098,7 +1099,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "xpd")) {
-	lengthCheck(what, value, 1);
+	lengthCheck(what, value, 1, call);
 	ix = asInteger(value);
 	if (ix==NA_INTEGER)
 	    Rf_gpptr(dd)->xpd = 2;
@@ -1107,7 +1108,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "yaxp")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 3);
+	lengthCheck(what, value, 3, call);
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	posIntCheck((int) (REAL(value)[2]), what);
@@ -1531,7 +1532,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
     int new_spec, nargs;
 
     checkArity(op, args);
-    gcall = call;
+
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
 	if (isString(defdev) && length(defdev) > 0) {
@@ -1561,7 +1562,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 		new_spec = 1;
 		SET_VECTOR_ELT(value, i, Query(CHAR(tag), dd));
 		SET_STRING_ELT(newnames, i, tag);
-		Specify(CHAR(tag), val, dd);
+		Specify(CHAR(tag), val, dd, call);
 	    }
 	    else if (isString(val) && length(val) > 0) {
 		tag = STRING_ELT(val, 0);

@@ -273,15 +273,15 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
-static void checkValues(int *, int);
-static Rboolean haveTrue;
-static Rboolean haveFalse;
-static Rboolean haveNA;
+static void checkValues(int * x, int n, Rboolean *haveFalse, Rboolean *haveTrue, Rboolean *haveNA);
 
 SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, s, t;
     int narm;
+    Rboolean haveTrue;
+    Rboolean haveFalse;
+    Rboolean haveNA;
 
     if(DispatchGroup("Summary", call, op, args, env, &s))
 	return s;
@@ -298,7 +298,7 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* coerceVector protects its argument so this actually works
 	       just fine */
 	    t = coerceVector(t, LGLSXP);
-	    checkValues(LOGICAL(t), LENGTH(t));
+	    checkValues(LOGICAL(t), LENGTH(t), &haveFalse, &haveTrue, &haveNA);
 	}
 	else if(!isNull(t))
 	    errorcall(call, "incorrect argument type");
@@ -315,15 +315,15 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-static void checkValues(int * x, int n)
+static void checkValues(int * x, int n, Rboolean *haveFalse, Rboolean *haveTrue, Rboolean *haveNA)
 {
     int i;
     for (i = 0; i < n; i++) {
 	if (x[i] == NA_LOGICAL)
-	    haveNA = TRUE;
+	    *haveNA = TRUE;
 	else if (x[i])
-	    haveTrue = TRUE;
+	    *haveTrue = TRUE;
 	else
-	    haveFalse = TRUE;
+	    *haveFalse = TRUE;
     }
 }

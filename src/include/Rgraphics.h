@@ -254,8 +254,8 @@ void GRestorePars(DevDesc*);
 
 		/* More Programmer GPar functions */
 
-void ProcessInlinePars(SEXP, DevDesc*);
-void Specify2(char*, SEXP, DevDesc*);
+void ProcessInlinePars(SEXP, DevDesc*, SEXP call);
+void Specify2(char*, SEXP, DevDesc*, SEXP call);
 void RecordGraphicsCall(SEXP);
 
 SEXP FixupPch(SEXP, int);

@@ -33,8 +33,8 @@
  *  "Machine", but for strings rather than numerical values.  These
  *  two functions should probably be amalgamated.
  */
-static char *R_OSType = OSTYPE;
-static char *R_FileSep = FILESEP;
+static const char  * const R_OSType = OSTYPE;
+static const char  * const R_FileSep = FILESEP;
 
 SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

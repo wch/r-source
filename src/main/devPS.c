@@ -52,11 +52,11 @@ static char PS_hyphen = 173;
 /* This structure gives the set of font names for each type face. */
 /* They also give the afm file names. */
 
-static struct {
-    char *family;
-    char *afmfile[5];
+static const struct {
+    char const *family;
+    char const *afmfile[5];
 }
-Family[] = {
+Family [] = {
 
     { "AvantGarde",
       {"agw_____.afm", "agd_____.afm", "agwo____.afm", "agdo____.afm",
@@ -225,9 +225,9 @@ enum {
     Unknown
 };
 
-static struct {
-    char *keyword;
-    int code;
+static const struct {
+    const char *keyword;
+    const int code;
 }
 KeyWordDictionary[] = {
     { "StartFontMetrics",    StartFontMetrics },
@@ -263,14 +263,14 @@ KeyWordDictionary[] = {
     { NULL,		     Unknown },
 };
 
-static int MatchKey(char *l, char *k)
+static int MatchKey(char const * l, char const * k)
 {
     while (*k)
 	if (*k++ != *l++) return 0;
     return 1;
 }
 
-static int KeyType(char *s)
+static int KeyType(const char * const s)
 {
     int i;
 #ifdef __MRC__
@@ -422,30 +422,36 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics)
 /* Statics here are OK, as all the calls are in one initialization
    so no concurrency (until threads?) */
 
-/* read in the next encoding item, separated by white space. */
-static int GetNextItem(FILE *fp, char *dest, int c)
-{
-    static char buf[1000], *p = NULL, *p0;
+typedef struct {
+  /* Probably can make buf and p0 local variables. Only p needs to be
+     stored across calls. Need to investigate this more closely. */
+  char buf[1000];
+  char *p;
+  char *p0;
+} EncodingInputState;
 
-    if (c < 0) p = NULL;
+/* read in the next encoding item, separated by white space. */
+static int GetNextItem(FILE *fp, char *dest, int c, EncodingInputState *state)
+{
+    if (c < 0) state->p = NULL;
     while (1) {
-	if (feof(fp)) { p = NULL; return 1; }
-	if (!p || *p == '\n' || *p == '\0') {
+	if (feof(fp)) { state->p = NULL; return 1; }
+	if (!state->p || *state->p == '\n' || *state->p == '\0') {
 #ifdef __MRC__
-	    p = R_fgets(buf, 1000, fp);
+	    state->p = R_fgets(state->buf, 1000, fp);
 #else
-	    p = fgets(buf, 1000, fp);
+	    state->p = fgets(state->buf, 1000, fp);
 #endif
 
 	}
 	/* check for incomplete encoding file */
-	if(!p) return 1;
-	while (isspace((int)*p)) p++;
-	if (p == '\0' || *p == '%'|| *p == '\n') { p = NULL; continue; }
-	p0 = p;
-	while (!isspace((int)*p)) p++;
-	if (p != '\0') *p++ = '\0';
-	if(c == 45) strcpy(dest, "/minus"); else strcpy(dest, p0);
+	if(!state->p) return 1;
+	while (isspace((int)* state->p)) state->p++;
+	if (state->p == '\0' || *state->p == '%'|| *state->p == '\n') { state->p = NULL; continue; }
+	state->p0 = state->p;
+	while (!isspace((int)*state->p)) state->p++;
+	if (state->p != '\0') *state->p++ = '\0';
+	if(c == 45) strcpy(dest, "/minus"); else strcpy(dest, state->p0);
 	break;
     }
     return 0;
@@ -460,6 +466,8 @@ LoadEncoding(char *encpath, char *encname, Rboolean isPDF)
     char buf[BUFSIZE];
     int i;
     FILE *fp;
+    EncodingInputState state;
+    state.p = state.p0 = NULL;
 
     if(strchr(encpath, FILESEP[0])) strcpy(buf, encpath);
     else sprintf(buf, "%s%safm%s%s", R_Home, FILESEP, FILESEP, encpath);
@@ -470,18 +478,18 @@ LoadEncoding(char *encpath, char *encname, Rboolean isPDF)
 	strcat(buf, ".enc");
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
     }
-    if (GetNextItem(fp, buf, -1)) return 0; /* encoding name */
+    if (GetNextItem(fp, buf, -1, &state)) return 0; /* encoding name */
     strcpy(encname, buf+1);
     if (!isPDF) sprintf(enccode, "/%s [\n", encname);
     else enccode[0] = '\0';
-    if (GetNextItem(fp, buf, 0)) { fclose(fp); return 0;} /* [ */
+    if (GetNextItem(fp, buf, 0, &state)) { fclose(fp); return 0;} /* [ */
     for(i = 0; i < 256; i++) {
-	if (GetNextItem(fp, buf, i)) { fclose(fp); return 0; }
+	if (GetNextItem(fp, buf, i, &state)) { fclose(fp); return 0; }
 	strcpy(encnames[i], buf+1);
 	strcat(enccode, " /"); strcat(enccode, encnames[i]);
 	if(i%8 == 7) strcat(enccode, "\n");
     }
-    if (GetNextItem(fp, buf, 0)) { fclose(fp); return 0;} /* ] */
+    if (GetNextItem(fp, buf, 0, &state)) { fclose(fp); return 0;} /* ] */
     fclose(fp);
     if (!isPDF) strcat(enccode,"]\n");
     return 1;
@@ -492,7 +500,7 @@ LoadEncoding(char *encpath, char *encname, Rboolean isPDF)
 /* Load font metrics from a file: defaults to the R_HOME/afm directory */
 
 static int
-PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
+PostScriptLoadFontMetrics(const char * const fontpath, FontMetricInfo *metrics,
 			  char *fontname, int reencode)
 {
     char buf[BUFSIZE], *p;
@@ -656,7 +664,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 
 /*  Part 2.  Graphics Support Code.  */
 
-static char *TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
+static const char * const TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
 
 static void PSEncodeFont(FILE *fp, char *encname)
 {
@@ -1388,7 +1396,7 @@ static void SetFont(int style, int size, NewDevDesc *dd)
 
 static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 {
-    char buf[512], *p;
+    char buf[512];
     int i;
 
     if (!LoadEncoding(pd->encpath, pd->encname, FALSE)) {
@@ -1396,6 +1404,7 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 	return FALSE;
     }
     for(i = 0; i < 5 ; i++) {
+        char const *p;
 	if(pd->fontfamily == USERAFM) p = pd->afmpaths[i];
 	else p = Family[pd->fontfamily].afmfile[i];
 	if(!PostScriptLoadFontMetrics(p, &(pd->metrics[i]),
@@ -1801,7 +1810,8 @@ typedef struct {
     rcolor col;		 /* current color */
     rcolor fill;	 /* current fill color */
     rcolor bg;		 /* background color */
-    int XFigColors[534]; int nXFigColors;
+    int XFigColors[534]; 
+    int nXFigColors;
 
     FILE *psfp;		 /* output file */
     FILE *tmpfp;         /* temp file */
@@ -1949,7 +1959,7 @@ static void XFig_Text(double x, double y, char *str,
 		     NewDevDesc *dd);
 static Rboolean XFig_Open(NewDevDesc*, XFigDesc*);
 
-static int XFig_basenums[] = {4, 8, 12, 16, 20, 24, 28, 0};
+static const int XFig_basenums[] = {4, 8, 12, 16, 20, 24, 28, 0};
 
 
 /* Driver Support Routines */
@@ -2446,7 +2456,7 @@ static void XFig_Polyline(int n, double *x, double *y,
     }
 }
 
-static int styles[4] = {0,2,1,3};
+static const int styles[4] = {0,2,1,3};
 
 static void XFig_Text(double x, double y, char *str, 
 		      double rot, double hadj, 
@@ -2967,7 +2977,7 @@ static void PDF_endfile(PDFDesc *pd)
 
 static Rboolean PDF_Open(NewDevDesc *dd, PDFDesc *pd)
 {
-    char buf[512], *p;
+    char buf[512];
     int i;
 
     if (!LoadEncoding(pd->encpath, pd->encname, TRUE)) {
@@ -2975,7 +2985,7 @@ static Rboolean PDF_Open(NewDevDesc *dd, PDFDesc *pd)
 	return FALSE;
     }
     for(i = 0; i < 4 ; i++) {
-	p = Family[pd->fontfamily].afmfile[i];
+	char const *p = Family[pd->fontfamily].afmfile[i];
 	if(!PostScriptLoadFontMetrics(p, &(pd->metrics[i]),
 				      familyname[i], 1)) {
 	    warning("cannot read afm file %s", p);

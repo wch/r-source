@@ -1902,9 +1902,9 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 /* FIXME : Must work out what happens here when we replace LISTSXP by
    VECSXP. */
 
-static struct {
-    char *name;
-    SEXPTYPE type;
+static const struct {
+    const char *name;
+    const SEXPTYPE type;
 }
 typeinfo[] = {
     {"logical",	  LGLSXP },
