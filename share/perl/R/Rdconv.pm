@@ -571,15 +571,17 @@ sub text2html {
 	    if($using_chm) {
 		if ($htmlfile =~ s+^$pkg/html/++) {
 		    # in the same chm file
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
 		    $base =~ s+/html$++;
-		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
+		    $htmlfile = mklink($base, $topic);
 #		    print "$htmlfile\n";
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		}
-		$text =~
-		    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 	    } else {
 		$text =~
 		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
@@ -593,8 +595,9 @@ sub text2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
-		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
+		    $htmlfile = mklink($opt, $topic . ".html");
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
 		}
@@ -693,15 +696,18 @@ sub code2html {
 	    if($using_chm) {
 		if ($htmlfile =~ s+^$pkg/html/++) {
 		    # in the same chm file
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
 		    $base =~ s+/html$++;
-		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
+#		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
+		    $htmlfile = mklink($base, $topic);
 #		    print "$htmlfile\n";
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		}
-		$text =~
-		    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 	    } else {
 		$text =~
 		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
@@ -715,9 +721,10 @@ sub code2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
+#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic.html";
+		    $htmlfile = mklink($opt, $topic . ".html");
 #		    print "$htmlfile\n";
-       		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+       		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
 		}
@@ -2244,6 +2251,7 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $using_chm = 1;
+    $nlink = 0;
     print $htmlout (chm_functionhead(striptitle($blocks{"title"}), $pkgname,
 				   $blocks{"name"}));
 
@@ -2263,9 +2271,30 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
     html_print_block("seealso", "See Also");
     html_print_codeblock("examples", "Examples");
 
+    JScript() if $using_chm && $nlink > 0;
     print $htmlout (html_functionfoot());
     if($_[0]) { close $htmlout; }
     $using_chm = 0;
+}
+
+sub mklink {
+    $nlink++;
+    "onclick=\"findlink('" . $_[0] . "', '" . $_[1] . "')\" " .
+       "style=\"text-decoration: underline; color: blue; cursor: hand\""
+}
+
+sub JScript{
+print $htmlout <<END
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+END
 }
 
 # Local variables: **
