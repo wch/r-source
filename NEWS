@@ -11,7 +11,7 @@
 
 NEW FEATURES
 
-    o   length is now generic 
+    o   length() is now generic.
 
     o   arraySubscript and vectorSubscript are now available to package
         users.  All "array-like" packages can use a standard method for
@@ -138,6 +138,9 @@ NEW FEATURES
 
     o   An enhanced function type.convert() is now a documented
 	function, rather than just internal to read.table().
+
+    o   df.residual() now has a default method, used for classes
+	"lm" and "glm".
 
 
 

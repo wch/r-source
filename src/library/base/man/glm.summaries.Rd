@@ -1,6 +1,5 @@
 \name{glm.summaries}
 \alias{coefficients.glm}
-\alias{df.residual.glm}
 \alias{family.glm}
 \alias{fitted.values.glm}
 \alias{residuals.glm}
@@ -9,7 +8,6 @@
 \title{Accessing Generalized Linear Model Fits}
 \usage{
 \method{coefficients}{glm}(x) ; \method{coef}{glm}(x)
-\method{df.residual}{glm}(object, \dots)
 \method{family}{glm}(object, \dots)
 \method{fitted.values}{glm}(x) ; \method{fitted}{glm}(x)
 \method{residuals}{glm}(object, type = c("deviance", "pearson", "working",
@@ -33,7 +31,9 @@
   \code{\link{glm}} for computing \code{glm.obj}, \code{\link{anova.glm}};
   the corresponding \emph{generic} functions, \code{\link{summary.glm}},
   \code{\link{coefficients}}, \code{\link{deviance}},
-  \code{\link{effects}}, \code{\link{fitted.values}}, \code{\link{residuals}}.
+  \code{\link{df.residual}},
+  \code{\link{effects}}, \code{\link{fitted.values}},
+  \code{\link{residuals}}.
 }
 \keyword{models}
 \keyword{regression}

@@ -1,6 +1,5 @@
 \name{lm.summaries}
 \alias{coefficients.lm}
-\alias{df.residual.lm}
 \alias{family.lm}
 \alias{formula.lm}
 \alias{fitted.values.lm}
@@ -11,7 +10,6 @@
 \title{Accessing Linear Model Fits}
 \usage{
 \method{coefficients}{lm}(object, \dots) ; \method}{lm}{coef(object, \dots)
-\method{df.residual}{lm}(object, \dots)
 \method{family}{lm}(object, \dots)
 \method{formula}{lm}(x, \dots)
 \method{fitted.values}{lm}(object, \dots)
@@ -36,6 +34,7 @@ various useful features of the value returned by \code{lm}.
   The model fitting function \code{\link{lm}}, \code{\link{anova.lm}}.
 
   \code{\link{coefficients}}, \code{\link{deviance}},
+  \code{\link{df.residual}},
   \code{\link{effects}}, \code{\link{fitted.values}},
   \code{\link{glm}} for \bold{generalized} linear models,
   \code{\link{lm.influence}} for regression diagnostics,

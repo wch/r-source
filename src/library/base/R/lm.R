@@ -391,7 +391,6 @@ weights.default <- function(object, ...)
 
 weights.lm <- .Alias(weights.default)
 
-df.residual.lm <- function(object, ...) object$df.residual
 
 deviance.lm <- function(object, ...)
     sum(weighted.residuals(object)^2, na.rm=TRUE)

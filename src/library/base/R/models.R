@@ -177,6 +177,7 @@ effects <- function(object, ...)UseMethod("effects")
 weights <- function(object, ...)UseMethod("weights")
 
 df.residual <- function(object, ...)UseMethod("df.residual")
+df.residual.default <- function(object, ...) object$df.residual
 
 variable.names <- function(object, ...) UseMethod("variable.names")
 variable.names.default <- function(object, ...) colnames(object)
