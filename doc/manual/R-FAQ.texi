@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-26, 2002-03-29
+@set FAQ-VERSION 1.4-27, 2002-04-01
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1823,7 +1823,9 @@ Analysis of experimental crosses to identify QTLs.
 @item quadprog
 For solving quadratic programming problems.
 @item quantreg
-Quantile  regression and related methods.
+Quantile regression and related methods.
+@item randomForest
+Breiman's random forest classifier.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-26, 2002-03-29
+Version 1.4-27, 2002-04-01
 Kurt Hornik
 
 
@@ -1652,7 +1652,10 @@ works, was published in the Journal of Statistical Software
      For solving quadratic programming problems.
 
 *quantreg*
-     Quantile  regression and related methods.
+     Quantile regression and related methods.
+
+*randomForest*
+     Breiman's random forest classifier.
 
 *rmeta*
      Functions for simple fixed and random effects meta-analysis for
