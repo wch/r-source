@@ -68,6 +68,10 @@ BUG FIXES
     o	pnorm() was slower than necessary in the outer tails in some
 	cases due to a typo in the improvements from PR#699.  (PR#2883)
 
+    o   setGeneric() and setMethod() now catch some examples where the
+        generic and the method have different argument lists; the
+        evaluator checks for internal consistency of these argument lists.
+
 
 
 		CHANGES IN R VERSION 1.7.0

@@ -344,9 +344,16 @@ list("!" = function(e1)
     function(funslist, f, fdef, group = list(), env)
 {
     deflt <- get(f, "package:base")
-    body(fdef, envir = NULL) <- if(is.primitive(deflt))
-        substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt)) else
-        substitute(standardGeneric(FNAME), list(FNAME=f))
+    ## use the arguments of the base package function, unless it's a primitive
+    if(is.primitive(deflt)) {
+        body(fdef, envir = NULL) <-
+            substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt))
+    }
+    else {
+        fdef <- deflt
+        body(fdef, envir = NULL) <-
+            substitute(standardGeneric(FNAME), list(FNAME=f))
+    }
     elNamed(funslist, f) <- makeGeneric(f, fdef, group = group, package = "base")
     funslist
 }
