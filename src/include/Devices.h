@@ -22,8 +22,22 @@
 
 #include <Rgraphics.h>
 
+#define addDevice		Rf_addDevice
+#define copyDisplayList		Rf_copyDisplayList
+#define deviceNumber		Rf_deviceNumber
+#define DevNull			Rf_DevNull
+#define inhibitDisplayList	Rf_inhibitDisplayList
 #define InitGraphics		Rf_InitGraphics
+#define GetDevice		Rf_GetDevice
 #define KillAllDevices		Rf_KillAllDevices
+#define KillDevice		Rf_KillDevice
+#define killDevice		Rf_killDevice
+#define nextDevice		Rf_nextDevice
+#define NumDevices		Rf_NumDevices
+#define StartDevice		Rf_StartDevice
+#define playDisplayList		Rf_playDisplayList
+#define prevDevice		Rf_prevDevice
+#define recordGraphicOperation	Rf_recordGraphicOperation
 
 /* Initialize internal device structures. */
 void InitGraphics(void);
@@ -49,25 +63,6 @@ XFigDeviceDriver(DevDesc*, char*, char*, char*,
 Rboolean MacDeviceDriver(char**, int, double*, int);
 #endif
 
-#define addDevice		Rf_addDevice
-#define copyDisplayList		Rf_copyDisplayList
-#define curDevice		Rf_curDevice
-#define CurrentDevice		Rf_CurrentDevice
-#define deviceNumber		Rf_deviceNumber
-#define DevNull			Rf_DevNull
-#define inhibitDisplayList	Rf_inhibitDisplayList
-#define initDisplayList		Rf_initDisplayList
-#define GetDevice		Rf_GetDevice
-#define KillDevice		Rf_KillDevice
-#define killDevice		Rf_killDevice
-#define NewFrameConfirm		Rf_NewFrameConfirm
-#define nextDevice		Rf_nextDevice
-#define NoDevices		Rf_NoDevices
-#define NumDevices		Rf_NumDevices
-#define StartDevice		Rf_StartDevice
-#define playDisplayList		Rf_playDisplayList
-#define prevDevice		Rf_prevDevice
-#define recordGraphicOperation	Rf_recordGraphicOperation
 
 /*-------------------------------------------------------------------
  *
@@ -76,14 +71,10 @@ Rboolean MacDeviceDriver(char**, int, double*, int);
  *
  */
 
-/* Return a pointer to the current device. */
-DevDesc* CurrentDevice(void);
 /* Return a pointer to a device which is identified by number */
 DevDesc* GetDevice(int);
 /* Kill device which is identified by number. */
 void KillDevice(DevDesc*);
-/* Is the null device the current device? */
-int NoDevices(void);
 /* How many devices exist ? (>= 1) */
 int NumDevices(void);
 /* Get the index of the specified device. */
@@ -94,9 +85,7 @@ int StartDevice(SEXP, SEXP, int, SEXP, int);
 void DevNull(void);
 
 /* Miscellaneous */
-void NewFrameConfirm(void);
 void recordGraphicOperation(SEXP, SEXP, DevDesc*);
-void initDisplayList(DevDesc *dd);
 void copyDisplayList(int);
 void playDisplayList(DevDesc*);
 void inhibitDisplayList(DevDesc*);
@@ -108,8 +97,6 @@ void inhibitDisplayList(DevDesc*);
  *
  */
 
-/* Return the number of the current device. */
-int curDevice(void);
 /* Return the number of the next device. */
 int nextDevice(int);
 /* Return the number of the previous device. */

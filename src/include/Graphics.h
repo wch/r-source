@@ -344,10 +344,7 @@ typedef struct {
 #define char2col		Rf_char2col
 #define col2name		Rf_col2name
 #define copyGPar		Rf_copyGPar
-#define CreateAtVector		Rf_CreateAtVector
-#define GetAxisLimits		Rf_GetAxisLimits
 #define GInit			Rf_GInit
-#define labelformat		Rf_labelformat
 #define name2col		Rf_name2col
 #define number2col		Rf_number2col
 #define rgb2col			Rf_rgb2col
@@ -363,10 +360,6 @@ void GInit(GPar*);
 
 void copyGPar(GPar *, GPar *);
 
-/* some functions that plot.c needs to share with plot3d.c */
-SEXP CreateAtVector(double*, double*, int, Rboolean);
-void GetAxisLimits(double, double, double*, double*);
-SEXP labelformat(SEXP);
 
 
 		/* Miscellaneous (from graphics.c & colors.c) */

@@ -147,6 +147,9 @@ int dummy;
 #endif /* R_GRAPHICS_INTERNAL */
 
 #ifndef R_NO_REMAP
+#define CreateAtVector		Rf_CreateAtVector
+#define curDevice		Rf_curDevice
+#define CurrentDevice		Rf_CurrentDevice
 #define currentFigureLocation	Rf_currentFigureLocation
 #define FixupCex		Rf_FixupCex
 #define FixupCol		Rf_FixupCol
@@ -167,6 +170,7 @@ int dummy;
 #define GConvertY		Rf_GConvertY
 #define GConvertYUnits		Rf_GConvertYUnits
 #define GEndPath		Rf_GEndPath
+#define GetAxisLimits		Rf_GetAxisLimits
 #define GExpressionHeight	Rf_GExpressionHeight
 #define GExpressionWidth	Rf_GExpressionWidth
 #define GForceClip		Rf_GForceClip
@@ -200,8 +204,12 @@ int dummy;
 #define GVStrHeight		Rf_GVStrHeight
 #define GVStrWidth		Rf_GVStrWidth
 #define GVText			Rf_GVText
+#define initDisplayList		Rf_initDisplayList
+#define labelformat		Rf_labelformat
 #define LTYget			Rf_LTYget
 #define LTYpar			Rf_LTYpar
+#define NewFrameConfirm		Rf_NewFrameConfirm
+#define NoDevices		Rf_NoDevices
 #define ProcessInlinePars	Rf_ProcessInlinePars
 #define RGBpar			Rf_RGBpar
 #define selectDevice		Rf_selectDevice
@@ -431,6 +439,25 @@ double GVStrWidth (const unsigned char *, int, int, int, DevDesc *);
 double GVStrHeight (const unsigned char *, int, int, int, DevDesc *);
 void GVText (double, double, int, char *, int, int,
 	     double, double, double, DevDesc *);
+
+
+/* Devices */
+
+/* Return the number of the current device. */
+int curDevice(void);
+/* Return a pointer to the current device. */
+DevDesc* CurrentDevice(void);
+/* Is the null device the current device? */
+int NoDevices(void);
+void NewFrameConfirm(void);
+
+void initDisplayList(DevDesc *dd);
+
+/* some functions that plot.c needs to share with plot3d.c */
+SEXP CreateAtVector(double*, double*, int, Rboolean);
+void GetAxisLimits(double, double, double*, double*);
+SEXP labelformat(SEXP);
+
 
 #ifdef  __cplusplus
 }
