@@ -205,6 +205,8 @@ NEW FEATURES
 
     o	Formerly deprecated function getenv() is now defunct.
 
+    o	prompt() improved for data sets, particularly non-dataframes.
+
 
 BUG FIXES
 

@@ -1,5 +1,8 @@
 prompt <- function(object, ...) UseMethod("prompt")
 
+## Fixme : Both methods share a lot of code;  really re-use with namespace
+## -----   For now, often change *both*
+
 prompt.default <-
     function(object, filename = paste0(name, ".Rd"), force.function = FALSE)
 {
@@ -84,25 +87,36 @@ prompt.default <-
 		  "\\keyword{ ~keyword }%-- one or more ..."
 		  )
     } else {#-- not function, assume dataset --
-	file <- c(file, paste0("\\alias{", name, "}"),
-                  "\\non_function{}",
-	  "\\title{ ~~data-name / kind ...  }",
-                  paste0("\\usage{data(", name, ")}"),
-		  "\\description{",
-		  "~~ a concise description of what the object is. ~~",
-		  "}", "\\keyword{dataset}")
+        tf <- tempfile(); on.exit(unlink(tf))
+        sink(tf) ; str(object) ; sink()
+        str.txt <- scan(tf, "", quiet = !getOption("verbose"), sep = "\n")
+	file <-
+            c(file, paste0("\\alias{", name, "}"),
+              "\\non_function{}",
+              "\\title{ ~~data-name / kind ...  }",
+              paste0("\\usage{data(", name, ")}"),
+              "\\format{", "  The format is:", str.txt, "}",
+              ## remaining lines are IDENTICAL to those in prompt.data.frame():
+              "\\source{",
+              " ~~ reference to a publication or URL from which the data were obtained ~~",
+              "}",
+              "\\references{","~~ possibly secondary sources and usages ~~","}",
+              "\\examples{",
+              paste0("data(", name, ")"),
+              paste0("## maybe str(",name,") ; plot(",name,") ..."),
+              "}",
+              "\\keyword{datasets}")
     }
     cat(file, file = filename, sep = "\n")
     RHOME <- R.home()
     if(substr(RHOME, 1, 8) == "/tmp_mnt") RHOME <- substr(RHOME, 9, 1000)
     cat("created file named ", filename, " in the current directory.\n",
-	" Edit the file and move it to the appropriate directory,\n",
+	" Edit the file and move it to the appropriate directory, possibly\n",
 	paste(RHOME,"src/library/<pkg>/man/",sep="/"), "\n")
     invisible(file)
 }
 
-"prompt.data.frame" <-
-function (object, filename = paste0(name, ".Rd"))
+prompt.data.frame <- function (object, filename = paste0(name, ".Rd"))
 {
     paste0 <- function(...) paste(..., sep = "")
 ##    describe <- function(object) UseMethod()
@@ -123,35 +137,39 @@ function (object, filename = paste0(name, ".Rd"))
                      " rows and ", ncol(dat), " columns."),
               "~~ Give a concise description here ~~", "}",
               "\\format{",
-              "This data frame contains the following columns:",
-              "\\describe{")
+              "  This data frame contains the following columns:",
+              "  \\describe{")
     for (i in names(dat)) {
-      file <- c(file, paste0("\\item{", i, "}{"),
-                if (inherits(dat[[i]], "ordered")) {
-                  c(paste0("an ", data.class(dat[[i]]), " factor with levels"),
-                    paste(paste0("\\code{", levels(dat[[i]]), "}"), collapse = " < "))
-                } else if (inherits(dat[[i]], "factor")) {
-                  c("a factor with levels",
-                    paste0("\\code{", levels(dat[[i]]), "} "))
-                } else if (is.vector(dat[[i]])) {
-                  paste0("a ", data.class(dat[[i]]), " vector")
-                } else if (is.matrix(dat[[i]])) {
-                  paste0("a matrix with ", ncol(dat[[i]]), " columns")
-                } else {
-                  paste0("a ", data.class(dat[[i]]))
-                },
-                "}")
+      file <- c(file,
+                paste0("    \\item{", i, "}{",
+                       if (inherits(dat[[i]], "ordered")) {
+                           c(paste0("an ", data.class(dat[[i]]),
+                                    " factor with levels"),
+                             paste(paste0("\\code{", levels(dat[[i]]), "}"),
+                                   collapse = " < "))
+                       } else if (inherits(dat[[i]], "factor")) {
+                           c("a factor with levels",
+                             paste0("\\code{", levels(dat[[i]]), "} "))
+                       } else if (is.vector(dat[[i]])) {
+                           paste0("a ", data.class(dat[[i]]), " vector")
+                       } else if (is.matrix(dat[[i]])) {
+                           paste0("a matrix with ", ncol(dat[[i]]), " columns")
+                       } else {
+                           paste0("a ", data.class(dat[[i]]))
+                       },
+                       "}"))
     }
-    file <- c(file, "}\n}",
+    file <- c(file, "  }\n}",
               "\\details{",
-              " ~~ If necessary, more details than the __description__  above ~~",
+              " ~~ If necessary, more details than the _description_ above ~~",
               "}",
               "\\source{",
               " ~~ reference to a publication or URL from which the data were obtained ~~",
               "}",
+              "\\references{","~~ possibly secondary sources and usages ~~","}",
               "\\examples{",
-              "##---- Should be DIRECTLY executable !! ----",
               paste0("data(", name, ")"),
+              paste0("## maybe str(",name,") ; plot(",name,") ..."),
               "}",
               "\\keyword{datasets}")
     cat(file, file = filename, sep = "\n")
@@ -159,7 +177,7 @@ function (object, filename = paste0(name, ".Rd"))
     if (substr(RHOME, 1, 8) == "/tmp_mnt")
         RHOME <- substr(RHOME, 9, 1000)
     cat("created file named ", filename, " in the current directory.\n",
-        " Edit the file and move it to the appropriate directory,\n",
+	" Edit the file and move it to the appropriate directory, possibly\n",
         paste(RHOME, "src/library/<pkg>/man/", sep = "/"), "\n")
     invisible(file)
 }

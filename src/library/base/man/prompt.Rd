@@ -45,8 +45,12 @@ prompt(interactive, force.function = TRUE)
 unlink("plot.default.Rd")
 unlink("interactive.Rd")
 
-data(women)
+data(women) # data.frame
 prompt(women)
 unlink("women.Rd")
+
+data(sunspots) # non-data.frame data
+prompt(sunspots)
+unlink("sunspots.Rd")
 }
 \keyword{documentation}
