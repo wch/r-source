@@ -332,6 +332,14 @@ SEXP StringFromComplex(Rcomplex x, int *warn)
 	return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei));
 }
 
+SEXP StringFromRaw(Rbyte x, int *warn)
+{
+    char buf[3];
+    sprintf(buf, "%02x", x);
+    if (x == NA_INTEGER) return NA_STRING;
+    return mkChar(buf);
+}
+
 /* Conversion between the two list types (LISTSXP and VECSXP). */
 
 SEXP PairToVectorList(SEXP x)
@@ -408,6 +416,9 @@ static SEXP coerceToSymbol(SEXP v)
     case STRSXP:
 	ans = STRING_ELT(v, 0);
 	break;
+    case RAWSXP:
+	ans = StringFromRaw(RAW(v)[0], &warn);
+	break;
     }
     if (warn) CoercionWarning(warn);/*2000/10/23*/
     ans = install(CHAR(ans));
@@ -438,6 +449,10 @@ static SEXP coerceToLogical(SEXP v)
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = LogicalFromString(STRING_ELT(v, i), &warn);
 	break;
+    case RAWSXP:
+	for (i = 0; i < n; i++)
+	    LOGICAL(ans)[i] = LogicalFromInteger((int)RAW(v)[i], &warn);
+	break;
     }
     if (warn) CoercionWarning(warn);
     UNPROTECT(1);
@@ -467,6 +482,10 @@ static SEXP coerceToInteger(SEXP v)
 	for (i = 0; i < n; i++)
 	    INTEGER(ans)[i] = IntegerFromString(STRING_ELT(v, i), &warn);
 	break;
+    case RAWSXP:
+	for (i = 0; i < n; i++)
+	    INTEGER(ans)[i] = (int)RAW(v)[i];
+	    break;
     }
     if (warn) CoercionWarning(warn);
     UNPROTECT(1);
@@ -496,6 +515,10 @@ static SEXP coerceToReal(SEXP v)
 	for (i = 0; i < n; i++)
 	    REAL(ans)[i] = RealFromString(STRING_ELT(v, i), &warn);
 	break;
+    case RAWSXP:
+	for (i = 0; i < n; i++)
+	    REAL(ans)[i] = RealFromInteger((int)RAW(v)[i], &warn);
+	break;
     }
     if (warn) CoercionWarning(warn);
     UNPROTECT(1);
@@ -524,6 +547,43 @@ static SEXP coerceToComplex(SEXP v)
     case STRSXP:
 	for (i = 0; i < n; i++)
 	    COMPLEX(ans)[i] = ComplexFromString(STRING_ELT(v, i), &warn);
+	break;
+    case RAWSXP:
+	for (i = 0; i < n; i++)
+	    COMPLEX(ans)[i] = ComplexFromInteger((int)RAW(v)[i], &warn);
+	break;
+    }
+    if (warn) CoercionWarning(warn);
+    UNPROTECT(1);
+    return ans;
+}
+
+static SEXP coerceToRaw(SEXP v)
+{
+    SEXP ans;
+    int i, n, warn = 0;
+    PROTECT(ans = allocVector(RAWSXP, n = LENGTH(v)));
+    DUPLICATE_ATTRIB(ans, v);
+    switch (TYPEOF(v)) {
+    case LGLSXP:
+	for (i = 0; i < n; i++)
+	    RAW(ans)[i] = (Rbyte)IntegerFromLogical(LOGICAL(v)[i], &warn);
+	    break;
+    case INTSXP:
+	for (i = 0; i < n; i++)
+	    RAW(ans)[i] = (Rbyte)INTEGER(v)[i];
+	    break;
+    case REALSXP:
+	for (i = 0; i < n; i++)
+	    RAW(ans)[i] = (Rbyte)IntegerFromReal(REAL(v)[i], &warn);
+	break;
+    case CPLXSXP:
+	for (i = 0; i < n; i++)
+	    RAW(ans)[i] = (Rbyte)IntegerFromComplex(COMPLEX(v)[i], &warn);
+	break;
+    case STRSXP:
+	for (i = 0; i < n; i++)
+	    RAW(ans)[i] = (Rbyte)IntegerFromString(STRING_ELT(v, i), &warn);
 	break;
     }
     if (warn) CoercionWarning(warn);
@@ -560,6 +620,10 @@ static SEXP coerceToString(SEXP v)
 	    SET_STRING_ELT(ans, i, StringFromComplex(COMPLEX(v)[i], &warn));
 	R_print.digits = savedigits;
 	break;
+    case RAWSXP:
+	for (i = 0; i < n; i++)
+	    SET_STRING_ELT(ans, i, StringFromRaw(RAW(v)[i], &warn));
+	break;
     }
     if (warn) CoercionWarning(warn);/*2000/10/23*/
     UNPROTECT(1);
@@ -593,6 +657,10 @@ static SEXP coerceToExpression(SEXP v)
 	case STRSXP:
 	    for (i = 0; i < n; i++)
 		SET_VECTOR_ELT(ans, i, ScalarString(STRING_ELT(v, i)));
+	    break;
+	case RAWSXP:
+	    for (i = 0; i < n; i++)
+		SET_VECTOR_ELT(ans, i, ScalarInteger((int)RAW(v)[i]));
 	    break;
 	}
     }
@@ -630,6 +698,10 @@ static SEXP coerceToVectorList(SEXP v)
     case STRSXP:
 	for (i = 0; i < n; i++)
 	    SET_VECTOR_ELT(ans, i, ScalarString(STRING_ELT(v, i)));
+	break;
+    case RAWSXP:
+	for (i = 0; i < n; i++)
+	    SET_VECTOR_ELT(ans, i, ScalarInteger((int)RAW(v)[i]));
 	break;
     case LISTSXP:
     case LANGSXP:
@@ -676,6 +748,10 @@ static SEXP coerceToPairList(SEXP v)
 	case STRSXP:
 	    SETCAR(ansp, allocVector(STRSXP, 1));
 	    SET_STRING_ELT(CAR(ansp), 0, STRING_ELT(v, i));
+	    break;
+	case RAWSXP:
+	    SETCAR(ansp, allocVector(RAWSXP, 1));
+	    RAW(CAR(ansp))[0] = RAW(v)[i];
 	    break;
 	case VECSXP:
 	    SETCAR(ansp, VECTOR_ELT(v, i));
@@ -742,6 +818,10 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	case CPLXSXP:
 	    for (i = 0, vp = v; i < n; i++, vp = CDR(vp))
 		COMPLEX(rval)[i] = asComplex(CAR(vp));
+	    break;
+	case RAWSXP:
+	    for (i = 0, vp = v; i < n; i++, vp = CDR(vp))
+		RAW(rval)[i] = (Rbyte) asInteger(CAR(vp));
 	    break;
 	default:
 	    UNIMPLEMENTED("coercePairList");
@@ -824,6 +904,10 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	case CPLXSXP:
 	    for (i = 0; i < n; i++)
 		COMPLEX(rval)[i] = asComplex(VECTOR_ELT(v, i));
+	    break;
+	case RAWSXP:
+	    for (i = 0; i < n; i++)
+		RAW(rval)[i] = (Rbyte) asInteger(VECTOR_ELT(v, i));
 	    break;
 	default:
 	    UNIMPLEMENTED("coerceVectorList");
@@ -919,6 +1003,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
+    case RAWSXP:
 
 #define COERCE_ERROR						\
 	error("cannot coerce type %s to %s vector",		\
@@ -935,6 +1020,8 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	    ans = coerceToReal(v);	    break;
 	case CPLXSXP:
 	    ans = coerceToComplex(v);	    break;
+	case RAWSXP:
+	    ans = coerceToRaw(v);	    break;
 	case STRSXP:
 	    ans = coerceToString(v);	    break;
 	case EXPRSXP:
@@ -1096,6 +1183,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     case VECSXP: /* list */
     case LISTSXP:/* pairlist */
     case CLOSXP: /* non-primitive function */
+    case RAWSXP:
     case ANYSXP: /* any */
 	break;
     default:

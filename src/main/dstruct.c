@@ -161,6 +161,7 @@ R_len_t length(SEXP s)
     case CHARSXP:
     case VECSXP:
     case EXPRSXP:
+    case RAWSXP:
 	return LENGTH(s);
     case LISTSXP:
     case LANGSXP:

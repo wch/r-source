@@ -479,6 +479,7 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
     case STRSXP:
     case EXPRSXP:
     case VECSXP:
+    case RAWSXP:
 	s = allocVector(mode, len);
 	break;
     case LISTSXP:
@@ -499,6 +500,9 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    COMPLEX(s)[i].r = 0.;
 	    COMPLEX(s)[i].i = 0.;
 	}
+    else if (mode == RAWSXP) /* use memset later */
+	for (i = 0; i < len; i++)
+	    RAW(s)[i] = 0;
     /* other cases: list/expression have "NULL", ok */
     return s;
 }
@@ -578,6 +582,16 @@ SEXP lengthgets(SEXP x, R_len_t len)
 		if (xnames != R_NilValue)
 		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
 	    }
+	break;
+    case RAWSXP:
+	for (i = 0; i < len; i++)
+	    if (i < lenx) {
+		RAW(rval)[i] = RAW(x)[i];
+		if (xnames != R_NilValue)
+		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
+	    }
+	    else
+		RAW(rval)[i] = (Rbyte) 0;
 	break;
     }
     if (isVector(x) && xnames != R_NilValue)

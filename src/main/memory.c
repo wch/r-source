@@ -377,6 +377,7 @@ static R_size_t R_NodesInUse = 0;
   case REALSXP: \
   case CPLXSXP: \
   case WEAKREFSXP: \
+  case RAWSXP: \
     break; \
   case STRSXP: \
   case EXPRSXP: \
@@ -669,6 +670,9 @@ static void ReleaseLargeFreeVectors(void)
 	    switch (TYPEOF(s)) {	/* get size in bytes */
 	    case CHARSXP:
 		size = LENGTH(s) + 1;
+		break;
+	    case RAWSXP:
+		size = LENGTH(s);
 		break;
 	    case LGLSXP:
 	    case INTSXP:
@@ -1709,6 +1713,9 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     switch (type) {
     case NILSXP:
 	return R_NilValue;
+    case RAWSXP:
+	size = BYTE2VEC(length);
+	break;
     case CHARSXP:
 	size = BYTE2VEC(length + 1);
 	break;
@@ -2003,6 +2010,7 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(nms, SPECIALSXP, mkChar("SPECIALSXP"));
     SET_STRING_ELT(nms, BUILTINSXP, mkChar("BUILTINSXP"));
     SET_STRING_ELT(nms, CHARSXP, mkChar("CHARSXP"));
+    SET_STRING_ELT(nms, RAWSXP, mkChar("RAWSXP"));
     SET_STRING_ELT(nms, LGLSXP, mkChar("LGLSXP"));
     SET_STRING_ELT(nms, INTSXP, mkChar("INTSXP"));
     SET_STRING_ELT(nms, REALSXP, mkChar("REALSXP"));

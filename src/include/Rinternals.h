@@ -41,6 +41,8 @@
 
 #include <R_ext/libextern.h>
 
+typedef unsigned char Rbyte;
+
 /* type for length of vectors etc */
 typedef int R_len_t; /* will be long later, LONG64 or ssize_t on Win64 */
 #define R_LEN_T_MAX INT_MAX
@@ -94,6 +96,7 @@ typedef unsigned int SEXPTYPE;
 #define BCODESXP    21    /* byte code */
 #define EXTPTRSXP   22    /* external pointer */
 #define WEAKREFSXP  23    /* weak reference */
+#define RAWSXP      24    /* raw bytes */
 
 #define FUNSXP      99    /* Closure or Builtin */
 
@@ -123,6 +126,7 @@ typedef enum {
     BCODESXP    = 21,   /* byte code */
     EXTPTRSXP   = 22,   /* external pointer */
     WEAKREFSXP  = 23,   /* weak reference */
+    RAWSXP      = 23,   /* raw bytes */
 
     FUNSXP	= 99	/* Closure or Builtin */
 } SEXPTYPE;
@@ -254,6 +258,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define CHAR(x)		((char *) DATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
 #define INTEGER(x)	((int *) DATAPTR(x))
+#define RAW(x)		((Rbyte *) DATAPTR(x))
 #define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
 #define REAL(x)		((double *) DATAPTR(x))
 #define STRING_ELT(x,i)	((SEXP *) DATAPTR(x))[i]

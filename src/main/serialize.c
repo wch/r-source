@@ -257,6 +257,23 @@ static void OutComplex(R_outpstream_t stream, Rcomplex c)
     OutReal(stream, c.i);
 }
 
+static void OutByte(R_outpstream_t stream, int i)
+{
+    char buf[128];
+    switch (stream->type) {
+    case R_pstream_ascii_format:
+	Rsnprintf(buf, sizeof(buf), "%02x\n", i);
+	stream->OutBytes(stream, buf, strlen(buf));
+	break;
+    case R_pstream_binary_format:
+    case R_pstream_xdr_format:
+	stream->OutBytes(stream, &i, 1);
+	break;
+    default:
+	error("unknown or inappropriate output format");
+    }
+}
+
 static void OutString(R_outpstream_t stream, char *s, int length)
 {
     if (stream->type == R_pstream_ascii_format) {
@@ -379,6 +396,24 @@ static Rcomplex InComplex(R_inpstream_t stream)
     c.r = InReal(stream);
     c.i = InReal(stream);
     return c;
+}
+
+static int InByte(R_inpstream_t stream)
+{
+    char word[128];
+    Rbyte rb;
+
+    switch (stream->type) {
+    case R_pstream_ascii_format:
+	InWord(stream, word, sizeof(word));
+	return (Rbyte) word[0];
+    case R_pstream_binary_format:
+    case R_pstream_xdr_format:
+	stream->InBytes(stream, &rb, 1);
+	return rb;
+    default:
+	return 0;
+    }
 }
 
 /* These utilities for reading characters with an unget option are
@@ -507,7 +542,7 @@ static void InFormat(R_inpstream_t stream)
 /*
  * Hash Table Functions
  *
- * Hashing functions for hashing reference objects diring writing.
+ * Hashing functions for hashing reference objects during writing.
  * Objects are entered, and the order in which they are encountered is
  * recorded.  GashGet returns this number, a positive integer, if the
  * object was seen before, and zero if not.  A fixed hash table size
@@ -738,6 +773,7 @@ static void OutStringVec(R_outpstream_t stream, SEXP s, SEXP ref_table)
 #define INTEGER_ELT(x,__i__)	INTEGER(x)[__i__]
 #define REAL_ELT(x,__i__)	REAL(x)[__i__]
 #define COMPLEX_ELT(x,__i__)	COMPLEX(x)[__i__]
+#define RAW_ELT(x,__i__)	RAW(x)[__i__]
 
 static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 {
@@ -860,6 +896,10 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 #else
 	    error("this version of R cannot write byte code objects");
 #endif
+	case RAWSXP:
+	    OutInteger(stream, LENGTH(s));
+	    OutVec(stream, s, RAW_ELT, OutByte);
+	    break;
 	default:
 	    error("WriteItem: unknown type %i", TYPEOF(s));
 	}
@@ -1111,6 +1151,7 @@ static SEXP InStringVec(R_inpstream_t stream, SEXP ref_table)
 #define SET_INTEGER_ELT(x,__i__,v)	(INTEGER_ELT(x,__i__)=(v))
 #define SET_REAL_ELT(x,__i__,v)		(REAL_ELT(x,__i__)=(v))
 #define SET_COMPLEX_ELT(x,__i__,v)	(COMPLEX_ELT(x,__i__)=(v))
+#define SET_RAW_ELT(x,__i__,v)		(RAW_ELT(x,__i__)=(v))
 
 static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 {
@@ -1272,6 +1313,11 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    error("this version of R cannot read class references");
 	case GENERICREFSXP:
 	    error("this version of R cannot read generic function references");
+	case RAWSXP:
+	    length = InInteger(stream);
+	    PROTECT(s = allocVector(type, length));
+	    InVec(stream, s, SET_RAW_ELT, InByte, length);
+	    break;
 	default:
 	    s = R_NilValue; /* keep compiler happy */
 	    error("ReadItem: unknown type %i", type);
