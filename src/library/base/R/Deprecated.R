@@ -32,3 +32,9 @@ save.plot <- function(file = "Rplots.ps") {
   .Deprecated("dev.print")
   dev.print(file = file)
 }
+
+print.tabular <-
+function(table, digits = max(3, .Options$digits - 3), na.print = "") {
+  .Deprecated("print.anova")
+  print.anova(table, digits=digits, na.print=na.print)
+}

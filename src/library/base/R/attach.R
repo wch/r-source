@@ -28,9 +28,20 @@ function (name, pos = -1, envir=pos.to.env(pos), all.names = FALSE, pattern)
 	 envir <- pos.to.env(pos)
  }
  all.names <- .Internal(ls(envir, all.names))
- if(!missing(pattern))
-	grep(pattern, all.names, value = TRUE)
- else all.names
+ if(!missing(pattern)) {
+   if((ll <- length(grep("\\[", pattern))) > 0
+      && ll != (lr <- length(grep("\\]", pattern)))) {
+     ## fix forgotten "\\" for simple cases:
+     if(pattern == "[") {
+       pattern <- "\\["
+       warning("replaced regular expression pattern `[' by `\\\\['")
+     } else if(length(grep("[^\\\\]\\[<-",pattern)>0)) {
+       pattern <- sub("\\[<-","\\\\\\[<-",pattern)
+       warning("replaced `[<-' by `\\\\[<-' in regular expression pattern")
+     }
+   }
+   grep(pattern, all.names, value = TRUE)
+ } else all.names
 }
 
 ls <- .Alias(objects)

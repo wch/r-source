@@ -21,7 +21,7 @@ options(\dots)
 \item{digits}{controls the number of digits to print when printing
   numeric values. It is a suggestion only.}
 \item{editor}{sets the default text editor, e.g., for \code{\link{edit}}.}
-\item{browser}{default HTML browser used by \code{\link{help.start()}}.}
+\item{browser}{default HTML browser used by \code{\link{help.start}()}.}
 \item{contrasts}{the default contrasts used in model fitting such as
   \code{\link{lm}}.}
 \item{expressions}{sets a limit on the number of nested expressions that
@@ -71,4 +71,4 @@ options('digits')
 }
 \keyword{environment}
 %later, when we'll have an error handler : \keyword{error}
-\keyword{print}%-- even though it's not working ...
+\keyword{print}
