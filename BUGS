@@ -205,6 +205,10 @@ none
 
 Directory:  incoming
 
+* PR# 637 *
+Subject: Install Error on SGI Irix 6.5
+From: "Thomas Dick" <dick@b6ori1.bauv.unibw-muenchen.de>
+Date: Thu, 17 Aug 2000 11:09:11 +0000
 * PR# 636 *
 Subject: state name abbreviations
 From: jackman@stanford.edu
