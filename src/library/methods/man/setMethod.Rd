@@ -141,7 +141,19 @@ plot(t1[1:15])
 setMethod("length", "track", function(x)length(x@y))
 length(t1)
 
+## methods can be defined for missing arguments as well
+setGeneric("summary") ## make the function into a generic
+
+## A method for summary()
+## The method definition can include the arguments, but
+## if they're omitted, class "missing" is assumed.
+
+setMethod("summary", "missing", function() "<No Object>")
+
 \testonly{
+
+stopifnot(identical(summary(), "<No Object>"))
+
 ## for the primitives
 ## inherited methods
 
