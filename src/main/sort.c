@@ -17,9 +17,8 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Defn.h"
+#include "Defn.h"/* => Utils.h with the protos from here */
 #include "Mathlib.h"
-
 			/*--- Part I: Comparison Utilities ---*/
 
 static int icmp(int x, int y)
@@ -67,113 +66,53 @@ static int scmp(SEXP x, SEXP y)
 
 			/*--- Part II: Complete (non-partial) Sorting ---*/
 
-void isort(int * x, int n)
-{
-    int i, j, h;
-    int xtmp;
 
-    h = 1;
-    do {
-	h = 3 * h + 1;
-    }
-    while (h <= n);
-
-    do {
-	h = h / 3;
-	for (i = h; i < n; i++) {
-	    xtmp = x[i];
-	    j = i;
-	    while (icmp(x[j - h], xtmp) > 0) {
-		x[j] = x[j - h];
-		j = j - h;
-		if (j < h)
-		    goto end;
-	    }
-	end:	x[j] = xtmp;
+/* SHELLsort -- corrected from R. Sedgewick `Algorithms in C' 
+ *		(version of BDR's lqs():*/
+#define sort_body \
+    int i, j, h;\
+\
+    for (h = 1; h <= n / 9; h = 3 * h + 1);\
+    for (; h > 0; h /= 3)\
+	for (i = h; i < n; i++) {\
+	    v = x[i];\
+	    j = i;\
+	    while (j >= h && TYPE_CMP(x[j - h], v) > 0)\
+		 { x[j] = x[j - h]; j -= h; }\
+	    x[j] = v;\
 	}
-    } while (h != 1);
+
+void isort(int *x, int n)
+{
+    int v;
+#define TYPE_CMP icmp
+    sort_body
+#undef TYPE_CMP
 }
 
 void rsort(double *x, int n)
 {
-    int i, j, h;
-    double xtmp;
-
-    h = 1;
-    do {
-	h = 3 * h + 1;
-    }
-    while (h <= n);
-
-    do {
-	h = h / 3;
-	for (i = h; i < n; i++) {
-	    xtmp = x[i];
-	    j = i;
-	    while (rcmp(x[j - h], xtmp) > 0) {
-		x[j] = x[j - h];
-		j = j - h;
-		if (j < h)
-		    goto end;
-	    }
-	end:	x[j] = xtmp;
-	}
-    } while (h != 1);
+    double v;
+#define TYPE_CMP rcmp
+    sort_body
+#undef TYPE_CMP
 }
 
 void csort(complex *x, int n)
 {
-    int i, j, h;
-    complex xtmp;
-
-    h = 1;
-    do {
-	h = 3 * h + 1;
-    }
-    while (h <= n);
-
-    do {
-	h = h / 3;
-	for (i = h; i < n; i++) {
-	    xtmp = x[i];
-	    j = i;
-	    while (ccmp(x[j - h], xtmp) > 0) {
-		x[j] = x[j - h];
-		j = j - h;
-		if (j < h)
-		    goto end;
-	    }
-	end:	x[j] = xtmp;
-	}
-    } while (h != 1);
+    complex v;
+#define TYPE_CMP ccmp
+    sort_body
+#undef TYPE_CMP
 }
 
 
 void ssort(SEXP *x, int n)
 {
-    int i, j, h;
-    SEXP xtmp;
-
-    h = 1;
-    do {
-	h = 3 * h + 1;
-    }
-    while (h <= n);
-
-    do {
-	h = h / 3;
-	for (i = h; i < n; i++) {
-	    xtmp = x[i];
-	    j = i;
-	    while (scmp(x[j - h], xtmp) > 0) {
-		x[j] = x[j - h];
-		j = j - h;
-		if (j < h)
-		    goto end;
-	    }
-	end:	x[j] = xtmp;
-	}
-    } while (h != 1);
+    SEXP v;
+#define TYPE_CMP scmp
+    sort_body
+#undef TYPE_CMP
 }
 
 void revsort(double *a, int *ib, int n)
@@ -264,147 +203,73 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 			/*--- Part III: Partial Sorting ---*/
 
+/* 
+   Partial sort so that x[k] is in the correct place, smaller to left,
+   larger to right
+ */
+#define psort_body \
+    int L, R, i, j;\
+\
+    for (L = 0, R = n - 1; L < R; ) {\
+	v = x[k];\
+	for(i = L, j = R; i <= j;) {\
+	    while (TYPE_CMP(x[i], v) < 0) i++;\
+	    while (TYPE_CMP(v, x[j]) < 0) j--;\
+	    if (i <= j) { w = x[i]; x[i++] = x[j]; x[j--] = w; }\
+	}\
+	if (j < k) L = i;\
+	if (k < i) R = j;\
+    }
 
-void iFind(int * x, int n, int k)
+
+void iPsort(int *x, int n, int k)
 {
-    int L, R, i, j;
     int v, w;
-
-    L = 0;
-    R = n - 1;
-    while (L < R) {
-	v = x[k];
-	i = L;
-	j = R;
-	do {
-	    while (icmp(x[i], v) < 0)
-		i++;
-	    while (icmp(v, x[j]) < 0)
-		j--;
-	    if (i <= j) {
-		w = x[i];
-		x[i] = x[j];
-		x[j] = w;
-		i++;
-		j--;
-	    }
-	} while (i <= j);
-	if (j < k)
-	    L = i;
-	if (k < i)
-	    R = j;
-    }
+#define TYPE_CMP icmp
+    psort_body
+#undef TYPE_CMP
 }
 
-void rFind(double * x, int n, int k)
+void rPsort(double *x, int n, int k)
 {
-    int L, R, i, j;
     double v, w;
-
-    L = 0;
-    R = n - 1;
-    while (L < R) {
-	v = x[k];
-	i = L;
-	j = R;
-	do {
-	    while (rcmp(x[i], v) < 0)
-		i++;
-	    while (rcmp(v, x[j]) < 0)
-		j--;
-	    if (i <= j) {
-		w = x[i];
-		x[i] = x[j];
-		x[j] = w;
-		i++;
-		j--;
-	    }
-	} while (i <= j);
-	if (j < k)
-	    L = i;
-	if (k < i)
-	    R = j;
-    }
+#define TYPE_CMP rcmp
+    psort_body
+#undef TYPE_CMP
 }
 
-void cFind(complex *x, int n, int k)
+void cPsort(complex *x, int n, int k)
 {
-    int L, R, i, j;
     complex v, w;
-
-    L = 0;
-    R = n - 1;
-    while (L < R) {
-	v = x[k];
-	i = L;
-	j = R;
-	do {
-	    while (ccmp(x[i], v) < 0)
-		i++;
-	    while (ccmp(v, x[j]) < 0)
-		j--;
-	    if (i <= j) {
-		w = x[i];
-		x[i] = x[j];
-		x[j] = w;
-		i++;
-		j--;
-	    }
-	} while (i <= j);
-	if (j < k)
-	    L = i;
-	if (k < i)
-	    R = j;
-    }
+#define TYPE_CMP ccmp
+    psort_body
+#undef TYPE_CMP
 }
 
 
-void sFind(SEXP * x, int n, int k)
+void sPsort(SEXP *x, int n, int k)
 {
-    int L, R, i, j;
     SEXP v, w;
-
-    L = 0;
-    R = n - 1;
-    while (L < R) {
-	v = x[k];
-	i = L;
-	j = R;
-	do {
-	    while (scmp(x[i], v) < 0)
-		i++;
-	    while (scmp(v, x[j]) < 0)
-		j--;
-	    if (i <= j) {
-		w = x[i];
-		x[i] = x[j];
-		x[j] = w;
-		i++;
-		j--;
-	    }
-	} while (i <= j);
-	if (j < k)
-	    L = i;
-	if (k < i)
-	    R = j;
-    }
+#define TYPE_CMP scmp
+    psort_body
+#undef TYPE_CMP
 }
 
-void find(SEXP x, int k)
+void Psort(SEXP x, int k)
 {
     switch (TYPEOF(x)) {
     case LGLSXP:
     case INTSXP:
-	iFind(INTEGER(x), LENGTH(x), k);
+	iPsort(INTEGER(x), LENGTH(x), k);
 	break;
     case REALSXP:
-	rFind(REAL(x), LENGTH(x), k);
+	rPsort(REAL(x), LENGTH(x), k);
 	break;
     case CPLXSXP:
-	cFind(COMPLEX(x), LENGTH(x), k);
+	cPsort(COMPLEX(x), LENGTH(x), k);
 	break;
     case STRSXP:
-	sFind(STRING(x), LENGTH(x), k);
+	sPsort(STRING(x), LENGTH(x), k);
 	break;
     }
 }
@@ -430,7 +295,7 @@ SEXP do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     CAR(args) = duplicate(CAR(args));
     for (i = 0; i < k; i++)
-	find(CAR(args), l[i] - 1);
+	Psort(CAR(args), l[i] - 1);
     return CAR(args);
 }
 
@@ -518,7 +383,7 @@ static int listgreater(int i, int j, SEXP key)
     return 1;
 }
 
-void orderVector(int * index, int n, SEXP key, int greater())
+void orderVector(int *index, int n, SEXP key, int greater())
 {
     int i, j, h;
     int itmp;
