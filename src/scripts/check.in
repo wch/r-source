@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.27.2.1 $ ';
+my $revision = ' $Revision: 1.27.2.2 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -154,6 +154,7 @@ foreach $pkg (@ARGV){
     print "\n";
     if(system("${R_CMD} INSTALL -l $library $pkg")){
 	$log->error("installation failed");
+	exit(1);
     }
     print("\n");
     
