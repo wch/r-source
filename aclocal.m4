@@ -71,6 +71,13 @@ AC_DEFUN([R_PROG_INSTALL],
       ;;
   esac
  ])
+AC_DEFUN([R_PROG_PAGER], [
+  AC_PATH_PROGS(PAGER, [${PAGER} less more page pg], false)
+  if test "${PAGER}" = false; then
+    warn_pager="I could not determine a pager"
+    AC_MSG_WARN(${warn_pager})
+  fi
+])
 changequote(<<, >>)dnl
 define(PERL5_CHECK,
 <<
