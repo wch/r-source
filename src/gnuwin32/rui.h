@@ -47,3 +47,10 @@ void Rwin_fpset();
 void Rgui_configure();
 void readconsolecfg();
 
+#define USE_MDI 1
+
+#ifdef USE_MDI
+int RgetMDIwidth();
+int RgetMDIheight();
+#endif
+

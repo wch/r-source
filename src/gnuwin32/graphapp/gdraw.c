@@ -663,8 +663,12 @@ int deviceheightmm(drawing dev) MEASUREDEV(VERTSIZE)
 int devicepixelsx(drawing dev) MEASUREDEV(LOGPIXELSX)
 int devicepixelsy(drawing dev) MEASUREDEV(LOGPIXELSY)
 
-void BringToTop(window c)
+void BringToTop(window c, int stay)
 {
     SetForegroundWindow(c->handle); /* needed in Rterm */
     BringWindowToTop(c->handle);    /* needed in Rgui --mdi */
+    if (stay) SetWindowPos(c->handle, HWND_TOPMOST, 0, 0, 0, 0,
+    				SWP_NOMOVE | SWP_NOSIZE);
+    else SetWindowPos(c->handle, HWND_NOTOPMOST, 0, 0, 0, 0,
+    				SWP_NOMOVE | SWP_NOSIZE);
 }

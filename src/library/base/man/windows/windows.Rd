@@ -80,7 +80,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 
   A graphics window is not allowed to be specified at more that 85\% of
   the screen width or height: the width and height are rescaled
-  proportionally. The window can be resized to a larger size.
+  proportionally. The window can be resized to a larger size.  In MDI mode,
+  the limit is 85\% of the MDI client region.
 
   If the \code{filename} is omitted for a \code{win.metafile} device, the
   output is copied to the clipboard when the device is closed. A

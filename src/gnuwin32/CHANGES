@@ -34,6 +34,11 @@ Rcmd SHLIB was computing dependencies for all C files, not just those
 specified on the command line, and building the DLL from all *.o files
 in the directory.
 
+Added "stay" argument to bringToTop, to allow the user to specify that
+a window should stay on top of other windows.
+
+Changed win.graph() so that new windows fit within the MDI client
+area.
 
 
 rw1082

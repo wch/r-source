@@ -133,11 +133,11 @@ static int xScrollbarScale=1, yScrollbarScale=1;
 
   The data are stored in a list `work', with unused columns having
   NULL entries.  The names for the list are in `names', which should
-  have a name for all displayable columns (up to xmaxused). 
+  have a name for all displayable columns (up to xmaxused).
   The *used* lengths of the columns are in `lens': this needs only be
   set for non-NULL columns.
 
-  If the list was originally length(0), that should work with 
+  If the list was originally length(0), that should work with
   0 pre-defined cols.  (It used to have 1 pre-defined numeric column.)
 
   All row and col numbers are 1-based.
@@ -244,7 +244,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, "invalid type for value");
 	else {
 	    if (TYPEOF(VECTOR_ELT(work, i)) != type)
-		SET_VECTOR_ELT(work, i, 
+		SET_VECTOR_ELT(work, i,
 			       coerceVector(VECTOR_ELT(work, i), type));
 	}
     }
@@ -309,7 +309,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-    setAttrib(work2, R_NamesSymbol, names);    
+    setAttrib(work2, R_NamesSymbol, names);
     UNPROTECT(nprotect);
     return work2;
 }
@@ -343,15 +343,15 @@ static void drawwindow(void)
     windowHeight = nhigh * box_h + 2 * bwidth + hwidth;
     oldWIDTH = WIDTH;
     oldHEIGHT = HEIGHT;
-    
+
     clearwindow();
     deredraw();
     /* row/col 1 = pos 0 */
     gchangescrollbar(de, VWINSB, (rowmin - 1)/yScrollbarScale,
-		     ymaxused/yScrollbarScale, 
+		     ymaxused/yScrollbarScale,
 		     max(nhigh/yScrollbarScale, 1), 0);
     gchangescrollbar(de, HWINSB, (colmin - 1)/xScrollbarScale,
-		     xmaxused/xScrollbarScale, 
+		     xmaxused/xScrollbarScale,
 		     max(nwide/xScrollbarScale, 1), 0);
 }
 
@@ -380,7 +380,7 @@ static void doHscroll(int oldcol)
 	drawcol(colmin);
     }
     gchangescrollbar(de, HWINSB, (colmin - 1)/xScrollbarScale,
-		     xmaxused/xScrollbarScale, 
+		     xmaxused/xScrollbarScale,
 		     max(nwide/xScrollbarScale, 1), 0);
     highlightrect();
 }
@@ -613,7 +613,7 @@ static void drawelt(int whichrow, int whichcol)
     } else {
 	if (xmaxused >= whichcol + colmin - 1) {
 	    tmp = VECTOR_ELT(work, whichcol + colmin - 2);
-	    if (!isNull(tmp) && (i = rowmin + whichrow - 2) < 
+	    if (!isNull(tmp) && (i = rowmin + whichrow - 2) <
 		INTEGER(lens)[whichcol + colmin - 2] )
 		printelt(tmp, i, whichrow, whichcol);
 	} else
@@ -631,8 +631,8 @@ static void jumppage(int dir)
 	rowmax--;
 	copyarea(0, hwidth + box_h, 0, hwidth + 2 * box_h);
 	drawrow(rowmin);
-	gchangescrollbar(de, VWINSB, (rowmin - 1)/yScrollbarScale, 
-			 ymaxused/yScrollbarScale, 
+	gchangescrollbar(de, VWINSB, (rowmin - 1)/yScrollbarScale,
+			 ymaxused/yScrollbarScale,
 			 max(nhigh/yScrollbarScale, 1), 0);
 	break;
     case DOWN:
@@ -641,8 +641,8 @@ static void jumppage(int dir)
 	rowmax++;
 	copyarea(0, hwidth + 2 * box_h, 0, hwidth + box_h);
 	drawrow(rowmax);
-	gchangescrollbar(de, VWINSB, (rowmin - 1)/yScrollbarScale, 
-			 ymaxused/yScrollbarScale, 
+	gchangescrollbar(de, VWINSB, (rowmin - 1)/yScrollbarScale,
+			 ymaxused/yScrollbarScale,
 			 max(nhigh/yScrollbarScale, 1), 0);
 	break;
     case LEFT:
@@ -659,7 +659,7 @@ static void jumppage(int dir)
 	    if(w < 0) {
 		colmin = i + 1;
 		break;
-	    }   
+	    }
 	}
 	ccol = wcol - colmin;
 	doHscroll(oldcol);
@@ -768,7 +768,7 @@ static void closerect(void)
 	    if (newcol & warn) {
 		/* change mode to character */
 		SET_VECTOR_ELT(work, wcol - 1, coerceVector(cvec, STRSXP));
-		SET_STRING_ELT(VECTOR_ELT(work, wcol - 1), wrow - 1, 
+		SET_STRING_ELT(VECTOR_ELT(work, wcol - 1), wrow - 1,
 			       mkChar(buf));
 	    }
 	} else {
@@ -1251,7 +1251,7 @@ static void deredraw(void)
     printlabs();
     /* if (!isNull(work) I don't think it can be null */
     for (i = colmin; i <= colmax; i++) drawcol(i);
-    gfillrect(de, p->bg, rect(windowWidth+1, hwidth, WIDTH-windowWidth-1, 
+    gfillrect(de, p->bg, rect(windowWidth+1, hwidth, WIDTH-windowWidth-1,
 			      HEIGHT - hwidth));
     highlightrect();
 }
@@ -1272,7 +1272,7 @@ static void copyarea(int src_x, int src_y, int dest_x, int dest_y)
 
 static void copyH(int src_x, int dest_x, int width)
 {
-    copyrect(de, pt(dest_x, hwidth), 
+    copyrect(de, pt(dest_x, hwidth),
 	     rect(src_x, hwidth, width, windowHeight - hwidth));
 }
 
@@ -1313,14 +1313,14 @@ static Rboolean initwin(void)
     /* drawwindow(); done as repaint but
        decide if we need scrollbars here to avoid flashing*/
     nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
-    gchangescrollbar(de, VWINSB, 0, ymaxused/yScrollbarScale, 
+    gchangescrollbar(de, VWINSB, 0, ymaxused/yScrollbarScale,
 		     max(nhigh/yScrollbarScale, 1), 0);
     setcellwidths();
     gchangescrollbar(de, HWINSB, 0, xmaxused/xScrollbarScale,
-		     max(nwide/xScrollbarScale, 1), 0);    
+		     max(nwide/xScrollbarScale, 1), 0);
     show(de);
     show(de); /* a precaution, as PD reports transparent windows */
-    BringToTop(de);
+    BringToTop(de, 0);
     R_de_up = TRUE;
     return FALSE;
 }
@@ -1358,12 +1358,12 @@ static void popupclose(control c)
     }
     tvec = VECTOR_ELT(work, popupcol - 1);
     if(ischecked(rb_num) && !isnumeric) {
-	if (isNull(tvec)) 
+	if (isNull(tvec))
 	    SET_VECTOR_ELT(work, popupcol - 1, ssNewVector(REALSXP, 100));
 	else
 	    SET_VECTOR_ELT(work, popupcol - 1, coerceVector(tvec, REALSXP));
     } else if(ischecked(rb_char) && isnumeric) {
-	if (isNull(tvec)) 
+	if (isNull(tvec))
 	    SET_VECTOR_ELT(work, popupcol - 1, ssNewVector(STRSXP, 100));
 	else
 	    SET_VECTOR_ELT(work, popupcol - 1, coerceVector(tvec, STRSXP));
@@ -1574,7 +1574,7 @@ static dataeditor newdataeditor(void)
     int w, h, x, y;
     dataeditor c;
     menuitem m;
-    
+
     p = newconsoledata((consolefn) ? consolefn : FixedFont,
 		       pagerrow, pagercol, 0, 0,
 		       consolefg, consoleuser, consolebg,
@@ -1629,7 +1629,7 @@ static dataeditor newdataeditor(void)
     MCHECK(de_mvw = newmenuitem("Cell widths ...", 0, menudecellwidth));
     MCHECK(m = newmenu("Help"));
     MCHECK(newmenuitem("Data editor", 0, menudehelp));
- 
+
     setdata(c, p);
     setresize(c, deresize);
     setredraw(c, de_redraw);

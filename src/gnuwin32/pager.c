@@ -281,8 +281,9 @@ static void pagermenuact(control m)
 }
 
 
-RECT *RgetMDIsize(); /* in rui.c */
 #define MCHECK(a) if (!(a)) {freeConsoleData(p);del(c);return NULL;}
+RECT *RgetMDIsize(); /* in rui.c */
+
 static pager pagercreate()
 {
     ConsoleData p;
@@ -476,7 +477,7 @@ pager newpager(char *title, char *filename, char *header, int deleteonexit)
         c = newpagerNwin(wtitle, filename, deleteonexit);
     if (c) {
 	haveusedapager++;
-	BringToTop(c);
+	BringToTop(c, 0);
     }
     return c;
 }

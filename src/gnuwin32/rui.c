@@ -998,6 +998,16 @@ RECT *RgetMDIsize()
     GetClientRect(hwndClient, &RframeRect);
     return &RframeRect;
 }
+
+int RgetMDIwidth()
+{
+    return RgetMDIsize()->right;
+}
+
+int RgetMDIheight()
+{
+    return RgetMDIsize()->bottom;
+}
 #endif
 
 extern int  CharacterMode;

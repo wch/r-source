@@ -52,14 +52,14 @@ jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                     width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
                     as.integer(NA), as.integer(NA), FALSE))
 
-bringToTop <- function(which = dev.cur())
+bringToTop <- function(which = dev.cur(), stay = FALSE)
 {
     if(!exists(".Devices")) {
 	.Devices <- list("null device")
     }
     if(which > 0 && .Devices[[which]] != "windows")
         stop("can only bring windows devices to the front")
-    invisible(.Internal(bringToTop(as.integer(which))))
+    invisible(.Internal(bringToTop(as.integer(which), as.logical(stay))))
 }
 
 savePlot <- function(filename = "Rplot",
