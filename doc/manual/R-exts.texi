@@ -450,8 +450,8 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 @node Using Makevars,  , Configure and cleanup, Configure and cleanup
 @subsection Using Makevars
 
-Sometimes writing your own configure script can be avoided by supplying
-a file @file{Makevars}: also one of the commonest uses of a
+Sometimes writing your own @file{configure} script can be avoided by
+supplying a file @file{Makevars}: also one of the commonest uses of a
 @file{configure} script is to make @file{Makevars} from
 @file{Makevars.in}.
 
@@ -463,8 +463,8 @@ C, C++, or FORTRAN respectively.
 Also, @file{Makevars} can be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options.
 
-There are some macros which are built whilst configuring the building or
-@R{} and stored in @file{R_HOME/etc/Makeconf} that can be used in
+There are some macros which are built whilst configuring the building of
+@R{} itself, arestored in @file{R_HOME/etc/Makeconf} and can be used in
 @file{Makevars}.  These include
 
 @table @code
@@ -477,10 +477,9 @@ This may need to be included in @code{PKG_LIBS}.
 @findex BLAS_LIBS
 A macro containing the BLAS libraries used when building @R{}.
 This may need to be included in @code{PKG_LIBS}.  Beware that if it is
-empty that the @R{} executable will only contain the subset of BLAS
+empty then the @R{} executable will only contain the subset of BLAS
 routines needed for the LINPACK/EISPACK routines actually in @R{}
-(and not even the LAPACK routines used).
-
+(and not even the BLAS routined for the LAPACK routines used).
 @end table
 
 
