@@ -1,4 +1,6 @@
 # @configure_input@
+#
+# ${RHOME}/etc/Makeconf
 
 CC=@CC@
 CFLAGS=@CFLAGS@ @CPICFLAGS@ -I$(RHOME)/include
@@ -7,5 +9,12 @@ FFLAGS=@FFLAGS@ @FPICFLAGS@
 F2C=@F2C@
 F2CFLAGS=@F2CFLAGS@
 SHLIBLDFLAGS=@SHLIBLDFLAGS@ @FLIBS@
+
+.SUFFIXES:
+
+.SUFFIXES: .c .f .o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
 
 @f77_rules_frag@
