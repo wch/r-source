@@ -28,7 +28,9 @@ USER-VISIBLE CHANGES
 	datasets have been moved to package stats.  Sweave has been
 	moved to utils.
 
-	Package mle has been renamed as stats4.
+	Package mle has been renamed as stats4 which will become the
+	central place for statistical S4 classes and methods
+	distributed with base R.
 
 	A few user-contributed packages have made assumptions about
 	where functions were and so will need updating.
@@ -175,6 +177,8 @@ NEW FEATURES
 
     o	split.screen() now works for multiple devices at once.
 
+    o   Package stats4 exports generics for AIC and BIC.
+
 
 UTILITIES
 
@@ -310,6 +314,11 @@ BUG FIXES
 
     o   The print() method for data frames now copes with data frames
 	containing arrays (other than matrices).
+
+    o   texi2dvi() and buildVignettes() use clean=FALSE as default
+        because the option is not supported on some Solaris
+        machines. For buildVignettes() this makes no difference as it
+        uses an internal cleanup mechanism.
 
 
 
