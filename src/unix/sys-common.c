@@ -362,7 +362,7 @@ void R_common_command_line(int *pac, char **argv, Rstart Rp)
 		value = Decode2Long(p, &ierr);
 		if(ierr) {
 		    if(ierr < 0) /* R_common_badargs(); */
-			sprintf(msg, "WARNING: --vsize value is invalid: ignored\n");
+			sprintf(msg, "WARNING: --nsize value is invalid: ignored\n");
 		    else
 		    sprintf(msg, "WARNING: --nsize %ld`%c': too large and ignored\n", 
 			    value,
