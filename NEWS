@@ -66,6 +66,9 @@ NEW FEATURES
     o   file.append() has been tuned, including for the case of
 	appending many files to a single file.
 
+    o   subset() now has a method for matrices, similar to that for
+	data frames.
+
 
 UTILITIES
 
