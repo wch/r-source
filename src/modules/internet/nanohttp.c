@@ -17,7 +17,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8> the only interpretation of char is ASCII */
+/* <UTF8> the only interpretation of char is ASCII 
+   <MBCS> all the char quantities should be ASCII
+ */
 
 
 /* based on libxml2-2.3.6:

@@ -20,7 +20,11 @@
  */
 
 /* The version for R 2.1.0 is partly based on patches by 
-   Eiji Nakama <nakama@ki.rim.or.jp> for use in Japanese. */
+   Eiji Nakama <nakama@ki.rim.or.jp> for use in Japanese. 
+
+   <MBCS> all the strings manipulated here like display and fonts specs 
+   are probably ASCII, or at least start with ASCII in the part searched.
+*/
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
