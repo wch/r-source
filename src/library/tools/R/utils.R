@@ -263,7 +263,7 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
            data = c("R", "r",
                     "RData", "rdata", "rda",
                     "tab", "txt", "TXT", "csv", "CSV"),
-           demo = "R",
+           demo = c("R", "r"),
            docs = c("Rd", "rd"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
                               paste, sep = "")))
