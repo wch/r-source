@@ -202,14 +202,21 @@ if test "${GCC}" = yes; then
 fi])# R_PROG_CPP_CPPFLAGS
 
 AC_DEFUN([R_PROG_CC_M],
-[AC_CACHE_CHECK([whether ${CC} accepts -M for generating dependencies],
-                [r_cv_prog_cc_m],
+[AC_MSG_CHECKING([whether we can compute C Make dependencies])
+AC_CACHE_VAL([r_cv_prog_cc_m],
 [echo "#include <math.h>" > conftest.c
-if test -n "`${CC} -M conftest.c 2>/dev/null | grep conftest`"; then
-  r_cv_prog_cc_m=yes
+for prog in "${CC} -M" "${CPP} -M" "cpp -M"; do
+  if ${prog} conftest.c 2>/dev/null | \
+      grep 'conftest.o: conftest.c' >/dev/null; then
+    r_cv_prog_cc_m="${prog}"
+    break
+  fi
+done])
+if test -z "${r_cv_prog_cc_m}"; then
+  AC_MSG_RESULT([no])
 else
-  r_cv_prog_cc_m=no
-fi])
+  AC_MSG_RESULT([yes, using ${r_cv_prog_cc_m}])
+fi
 ])# R_PROG_CC_M
 
 AC_DEFUN([R_PROG_CC_C_O_LO],
@@ -236,12 +243,12 @@ cat << \EOF > ${r_cc_rules_frag}
 .c.o:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $[@]
 EOF
-if test "${r_cv_prog_cc_m}" = yes; then
-  cat << \EOF >> ${r_cc_rules_frag}
+if test -n "${r_cv_prog_cc_m}"; then
+  cat << EOF >> ${r_cc_rules_frag}
 .c.d:
-	@echo "making $[@] from $<"
-	@$(CC) -M $(ALL_CPPFLAGS) $< | \
-	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+	@echo "making \$[@] from \$<"
+	@${r_cv_prog_cc_m} \$(ALL_CPPFLAGS) $< | \\
+	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > \$[@]
 EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
