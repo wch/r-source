@@ -226,20 +226,17 @@ for Unix do not bother. So it is worth trying the alternative short name
 3.1 Can I install packages (libraries) in this version?
 =======================================================
 
-Yes, of course. The easy way is to see if a pre-compiled binary version
-of the package is available: look on CRAN at `bin/windows/contrib'. If
-there is, download the zip file and unpack it in the `rwXxxx\library'
-directory, using `unzip' or similar, or using the installer
-`rwinst.exe'.  Perhaps even easier is to use the R function
-`install.packages()': check out its help page.
+Yes, but you will need a lot of tools to do so, unless the author has
+been kind enough to provide a pre-compiled version for Windows as a
+`.zip' file.
 
 If there is not a binary version or that is not up-to-date or you prefer
 compiling from source, get `rwXxxxsp.zip' from the distribution (see
 Q1.1) and unpack it in `rwXxxx'.  Then read the `readme.packages'.  You
 will need to collect and install several tools to use this.  Once you
-have done so, installation is easy: just run `Rcmd INSTALL pkgname'. To
-check the package (run all the examples on its help pages and in its
-test suite, if any) use `Rcmd check pkgname'.
+have done so, just run `Rcmd INSTALL pkgname'. To check the package
+(run all the examples on its help pages and in its test suite, if any)
+use `Rcmd check pkgname': see the `Writing R Extensions' manual.
 
 3.2 I don't have permission to write to the `rwXxxx/library' directory.
 =======================================================================
@@ -284,19 +281,10 @@ inherited environment.
 
 HTML help only works for packages installed in `rwXxxx\library'.
 
-To update the HTML help files after you have installed a binary package,
-run at the R prompt.
+To update the HTML help files after you have installed a pre-compiled
+package, run at the R prompt.
 
      > link.html.help()
-
-(Using `install.packages()' does this for you.  The source-code
-installation also does this automatically, and if you have that
-installed you can use (preferably)
-
-     cd rwXxxx\src\gnuwin32\help
-     make indices
-
-instead.)
 
 3.4 My functions are not found by the HTML help search system.
 ==============================================================
@@ -346,11 +334,8 @@ here it contains spaces.)
 Unfortunately, hyperlinks in compiled HTML files used from R are being
 interpreted relative to the current working directory of the R process,
 not relative to the `pkg.chm' file.  This was not discovered until
-`rw1021', so only files made with that version are working correctly.
+`rw1021', so only files made since that version are working correctly.
 Remake the package under `rw1021' or later to cure this.
-
-If you explore the installed `.chm' from Windows Explorer, the links
-will work.
 
 
 4 Windows Features
@@ -624,5 +609,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2001 January 3 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 2001 February 24 by Professor B. D. Ripley
+<ripley@stats.ox.ac.uk>
 
