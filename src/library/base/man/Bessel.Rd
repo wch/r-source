@@ -83,15 +83,15 @@ for(nu in nus) lines(x,besselJ(x,nu=nu), col = nu+2)
 legend(32,-.18, leg=paste("nu=",nus), col = nus+2, lwd=1)
 
 ## Negative nu's :
-x <- 2:7
+xx <- 2:7
 nu <- seq(-10,9, len = 2001)
 op <- par(lab = c(16,5,7))
-matplot(nu, t(outer(x,nu, besselI)), type = 'l', ylim = c(-50,200),
+matplot(nu, t(outer(xx,nu, besselI)), type = 'l', ylim = c(-50,200),
         main = expression(paste("Bessel ",I[nu](x)," for fixed ", x,
                                 ",  as ",f(nu))),
         xlab = expression(nu))
 abline(v=0, col = "light gray", lty = 3)
-legend(5,200, leg = paste("x=",x), col=seq(x), lty=seq(x))
+legend(5,200, leg = paste("x=",xx), col=seq(xx), lty=seq(xx))
 par(op)
 
 x0 <- 2^(-20:10)
