@@ -586,7 +586,7 @@ seq.POSIXt <-
             res <- seq.default(0, to - from, by) + from
         }
         return(structure(res, class=c("POSIXt", "POSIXct")))
-    } else {  # months or years or Days
+    } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
         if(valid == 7) {
             if(missing(to)) { # years
@@ -610,8 +610,8 @@ seq.POSIXt <-
             res <- as.POSIXct(r1)
         } else if(valid == 8) { # DSTdays
             if(!missing(to)) {
-                length.out <- 1 + floor((as.POSIXct(to) -
-                                         as.POSIXct(from))/(7*86400))
+                length.out <- 1 + floor((unclass(as.POSIXct(to)) -
+                                         unclass(as.POSIXct(from)))/86400)
             }
             r1$mday <- seq(r1$mday, by = by, length = length.out)
             r1$isdst <- -1
