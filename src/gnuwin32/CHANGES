@@ -25,7 +25,7 @@ Transparency in png() is now supported on `High Color' (16-bit) screens.
 Changing plot resize type via the menu now works better for the current
 plot (which is immediately redrawn).
 
-BLAS support is now in a separate DLL, Rblas.dll.  This means that any
+BLAS support is now in a separate DLL, Rblas.dll.  This means that
 packages using BLAS (KernSmooth, Matrix, bqtl, fracdiff, gss,
 odesolve, quadprog, quantreg and subselect amongst those on CRAN) need
 to be re-built.  The advantage is that less space is taken up overall,
@@ -59,6 +59,10 @@ schemes on Windows XP.
 
 The books in the contents of CHTML for packages were not being sorted
 correctly.
+
+The floating-point control setting has been changed to use 64-bit
+rather than 53-bit mantissas, which will result in slightly
+different but generally more accurate results.
 
 
 

@@ -590,6 +590,7 @@ void Rwin_fpset()
 {
     _fpreset();
     _controlfp(_MCW_EM, _MCW_EM);
+    _controlfp(_PC_64, _MCW_PC);
 }
 
 #include "getline/getline.h"  /* for gl_load/savehistory */
