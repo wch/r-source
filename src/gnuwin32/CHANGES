@@ -8,7 +8,7 @@ rw1030
 ======
 
 SetupR.exe and miniR* now include the `recommended' packages.
-so the miniR* distribution now needs seven floppies rather than four.
+so the miniR* distribution now needs six floppies rather than four.
 
 Rgui has a new menu `Packages' with items to load packages, to install
 packages from CRAN or from local zip files, and to update packages.
@@ -33,11 +33,11 @@ Support for earlier (pre-Feb 2000) mingw compilers has been dropped:
 you must use a compiler system that supports --shared and has an
 in-memory dlltool.
 
-The wininet.dll installed with Internet Explorer (and perhaps other
-apps) is required the for DLL modules\internet.dll.  If this is not
-available (you will see a message about internet functions not being
-available), replace modules\internet.dll by internet2.dll from the
-same directory.
+The DLL wininet.dll installed with Internet Explorer (and perhaps
+other apps) is required the for DLL modules\internet.dll.  If this is
+not available (you will see a message about internet functions not
+being available), replace modules\internet.dll by internet2.dll from
+the same directory.
 
 Rcmd check has been changed to be more robust to reported problems with
 Perl's system() command under 16-bit versions of Windows.
