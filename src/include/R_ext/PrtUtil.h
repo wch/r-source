@@ -66,6 +66,7 @@ char *EncodeString(char*, int, int, int);
 /* Printing */
 void VectorIndex(int, int);
 
+void printLogicalVector(int *x,	   int n, int index);
 void printIntegerVector(int *x,	   int n, int index);
 void printRealVector   (double *x, int n, int index);
 void printComplexVector(Rcomplex *x,int n, int index);
