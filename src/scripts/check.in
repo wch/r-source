@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.177.2.6 $ ';
+my $revision = ' $Revision: 1.177.2.7 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -278,9 +278,10 @@ foreach my $pkg (@ARGV) {
 		    (($opt_install =~ /^check/) ||
 		     $ENV{"R_CHECK_USE_INSTALL_LOG"} ||
 		     !(-t STDIN && -t STDOUT));
-		my $cmd = "${R::Vars::R_CMD} INSTALL -l \"${library}\"";
+		my $cmd = "${R::Vars::R_CMD} INSTALL -l";
+		$cmd .= " " . &shell_quote_file_path($library);
 		$cmd .= " --fake" if($opt_install eq "fake");
-		$cmd .= " \"${pkgdir}\"";
+		$cmd .= " " . &shell_quote_file_path($pkgdir);
 		if(!$use_install_log) {
 		    ## Case A: No redirection of stdout/stderr from
 		    ## installation.
@@ -308,7 +309,9 @@ foreach my $pkg (@ARGV) {
 			    ($lines[$#lines] !~ /^\* DONE/);
 		    }
 		    else {
-			$cmd .= " > $out 2>&1";
+			$cmd .= " >" .
+			    &shell_quote_file_path($out) .
+			    " 2>&1";
 			$install_error = &R_system($cmd);
 		    }
 		    if($install_error) {
@@ -1485,7 +1488,11 @@ sub check_pkg {
             $iszipped = 1;
 	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip -q");
             my $Rexfile = &file_path($Rexdir, "Rex.zip");
-	    $cmd = join(" ", ("$UNZIP", "'$Rexfile'", " -d '$Rexdir'"));
+	    $cmd = join(" ",
+			("$UNZIP",
+			 &shell_quote_file_path($Rexfile),
+			 "-d",
+			 &shell_quote_file_path($Rexdir)));
 	    if(R_system($cmd)) {
 		$log->error();
 		$log->print("Cannot extract examples from ZIP archive.\n");
@@ -1503,7 +1510,9 @@ sub check_pkg {
 			("${R::Vars::R_CMD} perl",
 			 &file_path(${R::Vars::R_HOME}, "share", "perl",
 				    "massage-Examples.pl"),
-			 "${pkgname} \"${Rexdir}\" > ${pkgname}-Ex.R"));
+			 "${pkgname}",
+			 &shell_quote_file_path(${Rexdir}),
+			 "> ${pkgname}-Ex.R"));
         }
 
  	if(R_system($cmd)) {
@@ -1722,10 +1731,7 @@ sub check_pkg {
 		     "for writing\n");
 	    print MANUAL "\\documentclass\{article\}\n" .
 	      "\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
-	    my @tex_files =
-	      &list_files_with_exts(&file_path($library, $pkgname,
-					       "latex"),
-				    "tex");
+	    my @tex_files = &list_files_with_exts($latex_dir, "tex");
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
 		  or die("Error: cannot open file '$file' for reading\n");
