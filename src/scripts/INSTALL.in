@@ -143,6 +143,7 @@ for pkg in ${PKGS}; do
     echo " data"
     mkdir -p ${lib}/${pkg}/data
     cp data/* ${lib}/${pkg}/data
+    chmod 644 ${lib}/${pkg}/data/*
   fi
 
   if test -d exec; then
