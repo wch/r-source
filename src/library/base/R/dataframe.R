@@ -208,9 +208,14 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
 			   i))
 	    }
 	else function(current, new, i) {
-	    if(is.null(current) && !any(duplicated(new <- as.character(new))))
-		new
-	    else current
+	    if(is.null(current)) {
+                if(adup <- any(dup <- duplicated(new <- as.character(new)))) {
+                    warning(paste("some row.names duplicated:",
+                                  paste(which(dup),collapse=","),
+                                  " --> row.names NOT used."))
+                    current
+                } else new
+	    } else current
 	}
     object <- as.list(substitute(list(...)))[-1]
     x <- list(...)
@@ -919,8 +924,12 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	right <-if(!rscalar) e2[[j]] else e2
 	value[[j]] <- eval(f)
     }
-    names(value) <- cn
-    data.frame(value, row.names=rn)
+    if(any(.Generic == c("+","-","*","/","%%","%/%"))) {
+        names(value) <- cn
+        data.frame(value, row.names=rn)
+    }
+    else matrix(unlist(value,recursive = FALSE, use.names=FALSE),
+                nrow=length(rn), dimnames=list(rn,cn))
 }
 
 Summary.data.frame <- function(x, ...)

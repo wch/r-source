@@ -1,9 +1,9 @@
 	**************************************************
-	*                                                *
-	*              0.63 SERIES NEWS                  *
-	*    (This label is really only here to keep     *
-	*     CVS from getting confused...)              *
-	*                                                *
+	*						 *
+	*	       0.63 SERIES NEWS			 *
+	*    (This label is really only here to keep	 *
+	*     CVS from getting confused...)		 *
+	*						 *
 	**************************************************
 
 
@@ -19,21 +19,25 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   boxplot(.., ylim=..) or (.., axes=..)  gave erronous warning
+    o	Ops.data.frame :  things like  d.fr < a	  now return a matrix
+
+    o	data.frame():  duplicated row.names now give a warning when dropped.
+
+    o	boxplot(.., ylim=..) or (.., axes=..)  gave erronous warning
 
     o	glm had wrong init code for models with offsets. Also fixed
-    	so that linear predictor includes offset, also when predicting. 
+	so that linear predictor includes offset, also when predicting. 
 
     o	predict.glm didn't work with se=T
 
-    o   backsolve(), qr.solve... now return a vector when x (or y) is a vector.
+    o	backsolve(), qr.solve... now return a vector when x (or y) is a vector.
 
     o	string tags now converted to symbols and strange symbolic
 	tags print as strings, cf. e<-quote(c(F=2, "tail area" = .5)), etc. 
 
-    o   row.names(.) <- val  doesn't allow duplicated values anymore.
+    o	row.names(.) <- val  doesn't allow duplicated values anymore.
 
-    o   library(mva)'s dist() now works with both "euclidean" & "euclidian"
+    o	library(mva)'s dist() now works with both "euclidean" & "euclidian"
 
     o	revised curve function to avoid using grep patterns that caused
 	problems under Solaris 2.6
@@ -67,10 +71,10 @@ NEW FEATURES
 	Internal GPretty() [implicitly used by	axis(.., at = NULL,..)
 	now uses pretty.
 
-    o   new generic function aggregate() with methods for data frames
+    o	new generic function aggregate() with methods for data frames
 	and time series.
 
-    o   data set `euro' with Euro conversion rates.
+    o	data set `euro' with Euro conversion rates.
 
 BUG FIXES
 
@@ -99,22 +103,22 @@ BUG FIXES
 
     o	hist(i) now also works for e.g., i = -1, 0, or 1.
 
-    o   range() now works on dataframes (uses c(..., recursive=T))
+    o	range() now works on dataframes (uses c(..., recursive=T))
 
     o	pretty(.) does not loop infinitely anymore in very extreme cases.
 
-    o   math functions should work better on dataframes now
+    o	math functions should work better on dataframes now
 
     o	plot(.., type = 'h', log = 'y')	 now works ...
 
-    o   plot.factor(x, y, ...) of two factors now makes
-        barplot(table(y,x), ...)
+    o	plot.factor(x, y, ...) of two factors now makes
+	barplot(table(y,x), ...)
 
-    o   use object$prior.weights in add1.glm, drop1.glm (Brian Ripley)
+    o	use object$prior.weights in add1.glm, drop1.glm (Brian Ripley)
 
-    o   rnorm(1,mean=m,sd=0) returns m, not NaN (Ben Bolker)
+    o	rnorm(1,mean=m,sd=0) returns m, not NaN (Ben Bolker)
 
-    o   runif(n, a,a) now returns  rep(a,n) instead of NaNs.
+    o	runif(n, a,a) now returns  rep(a,n) instead of NaNs.
 
 
 		CHANGES IN R VERSION 0.63.1
