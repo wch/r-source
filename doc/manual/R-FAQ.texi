@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-56 @value{FAQ-YEAR}-03-26
+@set FAQ-VERSION 1.8-57 @value{FAQ-YEAR}-04-05
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1755,6 +1755,8 @@ and Bruno Torresani, 1998, Academic Press.
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+@item SIN
+A SINful approach to selection of Gaussian Graphical Markov Models.
 @item SenSrivastava
 Collection of datasets from ``Regression Analysis, Theory, Methods and
 Applications'' by A. Sen and M. Srivastava, 1990, Springer-Verlag.
@@ -1816,6 +1818,8 @@ A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
 @item aws
 Functions to perform adaptive weights smoothing.
+@item betareg
+Beta regression for modeling rates and proportions.
 @item bim
 Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.

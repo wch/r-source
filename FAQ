@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-56 2004-03-26
+Version 1.8-57 2004-04-05
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1483,6 +1483,9 @@ distributions of R.)
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 
+*SIN*
+     A SINful approach to selection of Gaussian Graphical Markov Models.
+
 *SenSrivastava*
      Collection of datasets from "Regression Analysis, Theory, Methods and
      Applications" by A. Sen and M. Srivastava, 1990, Springer-Verlag.
@@ -1565,6 +1568,9 @@ distributions of R.)
 
 *aws*
      Functions to perform adaptive weights smoothing.
+
+*betareg*
+     Beta regression for modeling rates and proportions.
 
 *bim*
      Bayesian interval mapping diagnostics:  functions to interpret QTLCart
