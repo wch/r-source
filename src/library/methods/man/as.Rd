@@ -86,7 +86,11 @@ calls to the \code{setAs} function.
     \code{coerce}; by default, the global environment. }
 
 }
-\section{How Functions \code{as} and \code{setAs} Work}{
+%% <FIXME>
+%% Currently Rdconv cannot deal with markup in section titles.
+%% \section{How Functions \code{as} and \code{setAs} Work}{
+\section{How Functions `as' and `setAs' Work}{
+  %% </FIXME>
   The function \code{as} contrives to turn \code{object} into an object
   with class \code{Class}.  In doing so, it uses information about
   classes and methods, but in a somewhat special way.  Keep in mind
@@ -102,11 +106,11 @@ calls to the \code{setAs} function.
   explicitly, by calling \code{as}, and that conversion is designed to
   use any inheritance information, as well as explicit methods.
 
-  As a first step in conversion, the \code{as} function determines whether \code{is(object,
-    Class)} is \code{TRUE}.  This can be the case either because the
-  class definition of \code{object} includes \code{Class} as a ``super
-  class'' (directly or indirectly), or because a call to
-  \code{\link{setIs}} established the relationship.
+  As a first step in conversion, the \code{as} function determines
+  whether \code{is(object, Class)} is \code{TRUE}.  This can be the case
+  either because the class definition of \code{object} includes
+  \code{Class} as a ``super class'' (directly or indirectly), or because
+  a call to \code{\link{setIs}} established the relationship.
 
   Either way, the inheritance relation defines a method to coerce
   \code{object} to \code{Class}.  In the most common case, the method
@@ -148,7 +152,11 @@ calls to the \code{setAs} function.
   this is not likely to be what you want.
 }
 
-\section{The Function \code{as} Used in Replacements}{
+%% <FIXME>
+%% Currently Rdconv cannot deal with markup in section titles.
+%% \section{The Function \code{as} Used in Replacements}{
+\section{The Function `as' Used in Replacements}{
+  %% </FIXME>    
   When \code{as} appears on the left of an assignment, the intuitive
   meaning is ``Replace the part of \code{object} that was inherited from
   \code{Class} by the \code{value} on the right of the assignment.''
