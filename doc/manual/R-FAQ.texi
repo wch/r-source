@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-7, 2001-06-30
+@set FAQ-VERSION 1.3-8, 2001-07-06
 @set REL-VERSION 1.3.0
 @set DEV-VERSION 1.4.0
 @c %**end of header
@@ -411,11 +411,11 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-06-30:
+@c Linux binaries as of 2001-07-04:
 @c
 @c debian   2.2 i386  1.2.3  Doug Bates <bates@stat.wisc.edu>
 @c          2.3 i386  1.3.0  Doug Bates <bates@stat.wisc.edu>
-@c linuxppc 5.0 ppc   1.2.3  Alex Buerkle <buerkle@hawaii.edu>
+@c linuxppc 5.0 ppc   1.3.0  Alex Buerkle <buerkle@hawaii.edu>
 @c mandrake 8.0 i386  1.3.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x alpha 1.2.2  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.2.3  Martyn Plummer <plummer@iarc.fr>
@@ -1747,6 +1747,12 @@ Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
+@item fields
+A collection of programs for curve and function fitting with an emphasis
+on spatial data.  The major methods implemented include cubic and thin
+plate splines, universal Kriging and Kriging for large data sets.  The
+main feature is that any covariance function implemented in R can be
+used for spatial prediction.
 @item funfits
 An integrated set of functions for fitting curves and surfaces including
 thin plate splines, kriging and neural networks.
@@ -2724,6 +2730,35 @@ looking at the code, @code{outer(x, y, FUN)} creates two large vectors
 containing every possible combination of elements of @code{x} and
 @code{y} and then passes this to @code{FUN} all at once.  Your function
 probably cannot handle two large vectors as parameters.
+
+If you have a function that cannot handle two vectors but can handle two
+scalars, then you can still use @code{outer()} but you will need to wrap
+your function up first, to simulate vectorized behavior.  Suppose your
+function is
+
+@smallexample
+foo <- function(x, y, happy) @{
+  stopifnot(length(x) == 1, length(y) == 1) # scalars only!
+  (x + y) * happy
+@}
+@end smallexample
+
+@noindent
+If you define the general function
+
+@smallexample
+wrapper <- function(x, y, my.fun, ...) @{
+  sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
+@}
+@end smallexample
+
+@noindent
+then you can use @code{outer()} by writing, e.g.,
+
+@smallexample
+outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
+@end smallexample
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
