@@ -261,7 +261,7 @@ AC_DEFUN([R_PROG_CXX_M],
 	@echo "making $[@] from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
 	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
-.cxx.d:
+.cpp.d:
 	@echo "making $[@] from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
 	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
@@ -274,7 +274,7 @@ EOF
       cat << \EOF >> ${depend_rules_frag}
 .cc.d:
 	@touch $[@]
-.cxx.d:
+.cpp.d:
 	@touch $[@]
 .C.d:
 	@touch $[@]
