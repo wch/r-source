@@ -24,7 +24,7 @@ paste(\dots, sep = " ", collapse = NULL)
 }
 \value{
   A character vector of the concatenated values.  Thus will be of length
-  zero if all the objects are unless \code{collapse} is non-NULL, in
+  zero if all the objects are, unless \code{collapse} is non-NULL, in
   which case it is a single empty string.
 }
 \references{

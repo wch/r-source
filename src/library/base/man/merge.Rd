@@ -43,7 +43,7 @@ merge(x, y, \dots)
   that match on the specified columns are extracted, and joined
   together.  If there is more than one match, all possible matches
   contribute one row each.\cr
-  If the \code{by.*} vector are of length 0, the result, \code{r}, is the
+  If the \code{by.*} vectors are of length 0, the result, \code{r}, is the
   \dQuote{Cartesian product} of \code{x} and \code{y}, i.e.,
   \code{dim(r) = c(nrow(x)*nrow, ncol(x) + ncol(y))}.
 
