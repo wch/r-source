@@ -101,6 +101,8 @@ BUG FIXES
     o	The 'datalist' file was not being used during installation
 	(2.0.1 only).
 
+    o	acf() could cause a segfault with some datasets.  (PR#7771)
+
 
 
 		CHANGES IN R VERSION 2.0.1
