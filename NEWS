@@ -118,6 +118,9 @@ BUG FIXES
     o	Comparison of two lists/expressions was giving nonsensical
 	(and often random) answers, and is now an error.
 
+    o	The C-level function ncols was returning a random answer
+	(often 0) for a 1D array.  This caused model.matrix to
+	misbehave (perhaps segfault) if a term was a 1D array.  (PR#6838)
 
 
 		CHANGES IN R VERSION 1.9.0
