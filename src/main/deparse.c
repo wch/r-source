@@ -306,18 +306,6 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     return (CAR(args));
 }
 
-static Rboolean need_quotes(char *name)
-{
-    char *p;
-    /* check for illegal chars */
-    for (p = name; *p; p++)
-	if(!isalnum((int) *p) && *p != '.') return TRUE;
-    /* name has to start with alpha or ., and not with .[0-9] */
-    if (isalpha((int) name[0])) return FALSE;
-    /* now must start with a . */
-    return isdigit((int) name[1]);
-}
-
 SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, names, o, objs, tval, source;
@@ -352,7 +340,7 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < nobjs; i++) {
 	    obj_name = CHAR(STRING_ELT(names, i));
 	    /* figure out if we need to quote the name */
-	    if(need_quotes(obj_name))
+	    if(!isValidName(obj_name))
 		Rprintf("\"%s\" <-\n", obj_name);
 	    else
 		Rprintf("%s <-\n", obj_name);
