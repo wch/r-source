@@ -1028,9 +1028,10 @@ currently must escape most La@TeX{} special characters, i.e., besides
 @samp{%}, @samp{@{}, and @samp{@}}, the four specials @samp{$},
 @samp{#}, and @samp{_} are produced by preceding each with a @samp{\}.
 (@samp{&} can also be escaped, but need not be.) Further, enter @samp{^}
-as @code{\eqn@{\hat@{@}@}@{^@}}, and @samp{~} by
-@code{\eqn@{\tilde@{@}@}@{~@}}.  Also, @samp{<}, @samp{>}, and @samp{|}
-must only be used in math mode, i.e., within @code{\eqn} or
+as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
+@code{\eqn@{\mbox@{\textasciitilde@}@}@{~@}} or @code{\eqn@{\sim@}@{~@}}
+(for a short and long tilde respectively).  Also, @samp{<}, @samp{>},
+and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
 @node  Platform-specific sections, Processing Rd format, Insertions, Writing R documentation

@@ -159,6 +159,9 @@ BUG FIXES
 	and surface = "direct" and prediction with se = FALSE.  The
 	fitted values were missing for such fits.
 
+    o	Better rendering of ^ and ~ in latex in \code{} (and they should
+	not appear outside code and verbatim sections).
+
 
 
 		CHANGES IN R VERSION 1.1.0
