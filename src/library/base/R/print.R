@@ -1,16 +1,10 @@
 print <- function(x, ...) UseMethod("print")
 
-## from methods, should be deprecated.
-printNoClass <-
-    function(x, digits = NULL,quote = TRUE, na.print = NULL, print.gap = NULL,
-             right = FALSE, ...)
-    .Internal(print.default(x,digits,quote,na.print,print.gap,right))
-
 ##- Need '...' such that it can be called as  NextMethod("print", ...):
 print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
                           print.gap = NULL, right = FALSE, ...)
 {
-    ## cheapest test first
+    ## cheapest test first: consider taking this internal
     if(length(list(...)) == 0 && "package:methods" %in% search()) {
         cl <- oldClass(x)
         if(length(cl) == 1 && isClass(cl)) return(show(x))
@@ -43,7 +37,7 @@ as.matrix.noquote <- function(x) noquote(NextMethod("as.matrix", x))
 
 "[.noquote" <- function (x, ...) {
     attr <- attributes(x)
-    r <- unclass(x)[...]
+    r <- unclass(x)[...] ## shouldn't this be NextMethod?
     attributes(r) <- c(attributes(r),
 		       attr[is.na(match(names(attr),
                                         c("dim","dimnames","names")))])

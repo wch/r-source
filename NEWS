@@ -302,6 +302,9 @@ DEPRECATED & DEFUNCT
     o	The deprecated arguments `pkg' and `lib' of system.file() have
 	been removed.
 
+    o	printNoClass() {methods} is deprecated (and moved to base,
+	since it was a copy of a base function).
+
 
 UTILITIES
 

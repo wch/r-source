@@ -13,10 +13,12 @@
 
 ## <entry>
 ## Deprecated in 1.7.0
-# machine <- function()
-# {
-#     .Deprecated(".Platform$OS.type")
-#     .Internal(machine())
-# }
+## from methods, should be deprecated.
+printNoClass <-
+    function(x, digits = NULL,quote = TRUE, na.print = NULL, print.gap = NULL,
+             right = FALSE, ...) {
+        .Deprecated(print.default)
+        .Internal(print.default(x,digits,quote,na.print,print.gap,right))
+}
 ## </entry>
 

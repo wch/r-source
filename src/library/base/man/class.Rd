@@ -59,6 +59,13 @@ inherits(x, what, which = FALSE)
   with any \code{class}.
 }
 
+\note{
+  Functions \code{oldClass} and \code{oldClass<-} behave in the same way
+  as functions of those names in S-PLUS 5/6, \emph{but} in \R
+  \code{\link{UseMethod}} dispatches on the class as returned by
+  \code{class} rather than \code{oldClass}.
+}
+
 \section{Formal classes}{
   An additional mechanism of \emph{formal} classes has been available in
   packages \code{methods} since \R 1.4.0, and as from \R 1.7.0 this
