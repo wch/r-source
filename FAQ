@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-4, 2000-07-17
+Version 1.1-5, 2000-07-25
 Kurt Hornik
 
 
@@ -1003,6 +1003,9 @@ works, was published in the Journal of Statistical Software
      Functions and datasets from the main package of Venables and Ripley,
      "Modern Applied Statistics with S-PLUS".  Contained in the `VR' bundle.
 
+*Matrix*
+     A Matrix package.
+
 *NISTnls*
      A set of test nonlinear least squares examples from NIST, the U.S.
      National Institute for Standards and Technology.
@@ -1238,9 +1241,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *HTML*
      Functions for exporting R objects as HTML tables.
-
-*Matrix*
-     A Matrix package.
 
 *RMySQL*
      An interface between R and the MySQL database system.
