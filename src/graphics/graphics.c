@@ -29,6 +29,7 @@
 #include "Errormsg.h"
 #include "Arith.h"
 #include "Platform.h"
+#include "Mathlib.h"		/* for floor(), fmax2(),.. in GPretty(.) */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -258,8 +259,7 @@ void GMtext(char*, int, double, int, double, int, DevDesc*);
 
 void GPretty(double*, double*, int*);
 		/* return a "nice" min, max and number */
-		/* of intervals for a given range */
-		/* on a linear scale */
+		/* of intervals for a given range on a linear scale */
 
 
 void GSymbol(double, double, int, int, DevDesc*);
@@ -592,65 +592,61 @@ double yDevtoCharUnits(double y, DevDesc *dd)
 
 double GConvertXUnits(double x, int fromUnits, int toUnits, DevDesc *dd)
 {
-	double dev, final;
-	if (fromUnits == DEVICE)
-		dev = x;
-	else
-		switch (fromUnits) {
-			case NDC: dev = xNDCtoDevUnits(x, dd); break;
-			case NIC: dev = xNICtoDevUnits(x, dd); break;
-			case NFC: dev = xNFCtoDevUnits(x, dd); break;
-			case NPC: dev = xNPCtoDevUnits(x, dd); break;
-			case USER: dev = xUsrtoDevUnits(x, dd); break;
-			case INCHES: dev = xInchtoDevUnits(x, dd); break;
-			case LINES: dev = xLinetoDevUnits(x, dd); break;
-			case CHARS: dev = xChartoDevUnits(x, dd); break;
-		}
-	if (toUnits == DEVICE)
-		final = dev;
-	else
-		switch (toUnits) {
-			case NDC: final = xDevtoNDCUnits(dev, dd); break;
-			case NIC: final = xDevtoNICUnits(dev, dd); break;
-			case NFC: final = xDevtoNFCUnits(dev, dd); break;
-			case NPC: final = xDevtoNPCUnits(dev, dd); break;
-			case USER: final = xDevtoUsrUnits(dev, dd); break;
-			case INCHES: final = xDevtoInchUnits(dev, dd); break;
-			case LINES: final = xDevtoLineUnits(dev, dd); break;
-			case CHARS: final = xDevtoCharUnits(dev, dd); break;
-		}
+	double dev = x, final;
+	switch (fromUnits) {
+		case NDC: dev = xNDCtoDevUnits(x, dd); break;
+		case NIC: dev = xNICtoDevUnits(x, dd); break;
+		case NFC: dev = xNFCtoDevUnits(x, dd); break;
+		case NPC: dev = xNPCtoDevUnits(x, dd); break;
+		case USER: dev = xUsrtoDevUnits(x, dd); break;
+		case INCHES: dev = xInchtoDevUnits(x, dd); break;
+		case LINES: dev = xLinetoDevUnits(x, dd); break;
+		case CHARS: dev = xChartoDevUnits(x, dd); break;
+	case DEVICE: break;
+	}
+
+	final = dev;
+	switch (toUnits) {
+		case NDC: final = xDevtoNDCUnits(dev, dd); break;
+		case NIC: final = xDevtoNICUnits(dev, dd); break;
+		case NFC: final = xDevtoNFCUnits(dev, dd); break;
+		case NPC: final = xDevtoNPCUnits(dev, dd); break;
+		case USER: final = xDevtoUsrUnits(dev, dd); break;
+		case INCHES: final = xDevtoInchUnits(dev, dd); break;
+		case LINES: final = xDevtoLineUnits(dev, dd); break;
+		case CHARS: final = xDevtoCharUnits(dev, dd); break;
+	case DEVICE: break;
+	}
 	return final;
 }
 
 double GConvertYUnits(double y, int fromUnits, int toUnits, DevDesc *dd)
 {
-	double dev, final;
-	if (fromUnits == DEVICE)
-		dev = y;
-	else
-		switch (fromUnits) {
-			case NDC: dev = yNDCtoDevUnits(y, dd); break;
-			case NIC: dev = yNICtoDevUnits(y, dd); break;
-			case NFC: dev = yNFCtoDevUnits(y, dd); break;
-			case NPC: dev = yNPCtoDevUnits(y, dd); break;
-			case USER: dev = yUsrtoDevUnits(y, dd); break;
-			case INCHES: dev = yInchtoDevUnits(y, dd); break;
-			case LINES: dev = yLinetoDevUnits(y, dd); break;
-			case CHARS: dev = yChartoDevUnits(y, dd); break;
-		}
-	if (toUnits == DEVICE)
-		final = dev;
-	else
-		switch (toUnits) {
-			case NDC: final = yDevtoNDCUnits(dev, dd); break;
-			case NIC: final = yDevtoNICUnits(dev, dd); break;
-			case NFC: final = yDevtoNFCUnits(dev, dd); break;
-			case NPC: final = yDevtoNPCUnits(dev, dd); break;
-			case USER: final = yDevtoUsrUnits(dev, dd); break;
-			case INCHES: final = yDevtoInchUnits(dev, dd); break;
-			case LINES: final = yDevtoLineUnits(dev, dd); break;
-			case CHARS: final = yDevtoCharUnits(dev, dd); break;
-		}
+	double dev = y, final;
+	switch (fromUnits) {
+		case NDC: dev = yNDCtoDevUnits(y, dd); break;
+		case NIC: dev = yNICtoDevUnits(y, dd); break;
+		case NFC: dev = yNFCtoDevUnits(y, dd); break;
+		case NPC: dev = yNPCtoDevUnits(y, dd); break;
+		case USER: dev = yUsrtoDevUnits(y, dd); break;
+		case INCHES: dev = yInchtoDevUnits(y, dd); break;
+		case LINES: dev = yLinetoDevUnits(y, dd); break;
+		case CHARS: dev = yChartoDevUnits(y, dd); break;
+	case DEVICE: break;
+	}
+
+	final = dev;
+	switch (toUnits) {
+		case NDC: final = yDevtoNDCUnits(dev, dd); break;
+		case NIC: final = yDevtoNICUnits(dev, dd); break;
+		case NFC: final = yDevtoNFCUnits(dev, dd); break;
+		case NPC: final = yDevtoNPCUnits(dev, dd); break;
+		case USER: final = yDevtoUsrUnits(dev, dd); break;
+		case INCHES: final = yDevtoInchUnits(dev, dd); break;
+		case LINES: final = yDevtoLineUnits(dev, dd); break;
+		case CHARS: final = yDevtoCharUnits(dev, dd); break;
+	case DEVICE:  break;
+	}
 	return final;
 }
 
@@ -913,137 +909,138 @@ double yDevtoxMAR4(double y, DevDesc *dd) { return yDevtoUsr(y, dd); }
 
 void GConvert(double *x, double *y, int from, int to, DevDesc *dd)
 {
-	double devx, devy, finalx, finaly;
-	if (from == DEVICE) {
-		devx = *x;
-		devy = *y;
+	double devx = *x, devy = *x;
+
+	switch (from) {
+		case NDC: 
+			devx = xNDCtoDev(*x, dd);
+			devy = yNDCtoDev(*y, dd);
+			break;
+		case INCHES:
+			devx = xInchtoDev(*x, dd);
+			devy = yInchtoDev(*y, dd);
+			break;
+		case OMA1: 
+			devx = xOMA1toDev(*x, dd);
+			devy = yOMA1toDev(*y, dd);
+			break;
+		case OMA2:
+			devx = yOMA2toxDev(*y, dd);
+			devy = xOMA2toyDev(*x, dd);
+			break;
+		case OMA3:
+			devx = xOMA3toDev(*x, dd);
+			devy = yOMA3toDev(*y, dd);
+			break;
+		case OMA4:
+			devx = yOMA4toxDev(*y, dd);
+			devy = xOMA4toyDev(*x, dd);
+			break;
+		case NIC:
+			devx = xNICtoDev(*x, dd);
+			devy = yNICtoDev(*y, dd);
+			break;
+		case NFC:
+			devx = xNFCtoDev(*x, dd);
+			devy = yNFCtoDev(*y, dd);
+			break;
+		case MAR1:
+			devx = xMAR1toDev(*x, dd);
+			devy = yMAR1toDev(*y, dd);
+			break;
+		case MAR2:
+			devx = yMAR2toxDev(*y, dd);
+			devy = xMAR2toyDev(*x, dd);
+			break;
+		case MAR3:
+			devx = xMAR3toDev(*x, dd);
+			devy = yMAR3toDev(*y, dd);
+			break;
+		case MAR4:
+			devx = yMAR4toxDev(*y, dd);
+			devy = xMAR4toyDev(*x, dd);
+			break;
+		case NPC:
+			devx = xNPCtoDev(*x, dd);
+			devy = yNPCtoDev(*y, dd);
+			break;
+		case USER:
+			devx = xUsrtoDev(*x, dd);
+			devy = yUsrtoDev(*y, dd);
+			break;
+	case DEVICE:
+	  break;
+		default:
+			error("unable to convert from coordinate system\n");
 	}
-	else 
-		switch (from) {
-			case NDC: 
-				devx = xNDCtoDev(*x, dd);
-				devy = yNDCtoDev(*y, dd);
-				break;
-			case INCHES:
-				devx = xInchtoDev(*x, dd);
-				devy = yInchtoDev(*y, dd);
-				break;
-			case OMA1: 
-				devx = xOMA1toDev(*x, dd);
-				devy = yOMA1toDev(*y, dd);
-				break;
-			case OMA2:
-				devx = yOMA2toxDev(*y, dd);
-				devy = xOMA2toyDev(*x, dd);
-				break;
-			case OMA3:
-				devx = xOMA3toDev(*x, dd);
-				devy = yOMA3toDev(*y, dd);
-				break;
-			case OMA4:
-				devx = yOMA4toxDev(*y, dd);
-				devy = xOMA4toyDev(*x, dd);
-				break;
-			case NIC:
-				devx = xNICtoDev(*x, dd);
-				devy = yNICtoDev(*y, dd);
-				break;
-			case NFC:
-				devx = xNFCtoDev(*x, dd);
-				devy = yNFCtoDev(*y, dd);
-				break;
-			case MAR1:
-				devx = xMAR1toDev(*x, dd);
-				devy = yMAR1toDev(*y, dd);
-				break;
-			case MAR2:
-				devx = yMAR2toxDev(*y, dd);
-				devy = xMAR2toyDev(*x, dd);
-				break;
-			case MAR3:
-				devx = xMAR3toDev(*x, dd);
-				devy = yMAR3toDev(*y, dd);
-				break;
-			case MAR4:
-				devx = yMAR4toxDev(*y, dd);
-				devy = xMAR4toyDev(*x, dd);
-				break;
-			case NPC:
-				devx = xNPCtoDev(*x, dd);
-				devy = yNPCtoDev(*y, dd);
-				break;
-			case USER:
-				devx = xUsrtoDev(*x, dd);
-				devy = yUsrtoDev(*y, dd);
-				break;
-			default:
-				error("unable to convert from coordinate system\n");
-		}
 	if (to == DEVICE) {
 		*x = devx;
 		*y = devy;
 	}
-	else
-		switch (to) {
-			case NDC: 
-				*x = xDevtoNDC(devx, dd);
-				*y = yDevtoNDC(devy, dd);
-				break;
-			case INCHES:
-				*x = xDevtoInch(devx, dd);
-				*y = yDevtoInch(devy, dd);
-				break;
-			case LINES:
-				*x = xDevtoLine(devx, dd);
-				*y = yDevtoLine(devy, dd);
-				break;
-			case NIC:
-				*x = xDevtoNIC(devx, dd);
-				*y = yDevtoNIC(devy, dd);
-				break;
-			case OMA1:
-				*x = xDevtoOMA1(devx, dd);
-				*y = yDevtoOMA1(devy, dd);
-				break;	
-			case OMA2:
-				*x = yDevtoxOMA2(devy, dd);
-				*y = xDevtoyOMA2(devx, dd);
-				break;
-			case OMA3:
-				*x = xDevtoOMA3(devx, dd);
-				*y = yDevtoOMA3(devy, dd);
-				break;	
-			case OMA4:
-				*x = yDevtoxOMA4(devy, dd);
-				*y = xDevtoyOMA4(devx, dd);
-				break;
-			case NFC:
-				*x = xDevtoNFC(devx, dd);
-				*y = yDevtoNFC(devy, dd);
-				break;
-			case USER:
-				*x = xDevtoUsr(devx, dd);
-				*y = yDevtoUsr(devy, dd);
-				break;
-			case MAR1:
-				*x = xDevtoMAR1(devx, dd);
-				*y = yDevtoMAR1(devy, dd);
-				break;	
-			case MAR2:
-				*x = yDevtoxMAR2(devy, dd);
-				*y = xDevtoyMAR2(devx, dd);
-				break;
-			case MAR3:
-				*x = xDevtoMAR3(devx, dd);
-				*y = yDevtoMAR3(devy, dd);
-				break;	
-			case MAR4:
-				*x = yDevtoxMAR4(devy, dd);
-				*y = xDevtoyMAR4(devx, dd);
-				break;
-			default:
-				error("unable to convert to coordinate system\n");
-		}
+	switch (to) {
+		case NDC: 
+			*x = xDevtoNDC(devx, dd);
+			*y = yDevtoNDC(devy, dd);
+			break;
+		case INCHES:
+			*x = xDevtoInch(devx, dd);
+			*y = yDevtoInch(devy, dd);
+			break;
+		case LINES:
+			*x = xDevtoLine(devx, dd);
+			*y = yDevtoLine(devy, dd);
+			break;
+		case NIC:
+			*x = xDevtoNIC(devx, dd);
+			*y = yDevtoNIC(devy, dd);
+			break;
+		case OMA1:
+			*x = xDevtoOMA1(devx, dd);
+			*y = yDevtoOMA1(devy, dd);
+			break;	
+		case OMA2:
+			*x = yDevtoxOMA2(devy, dd);
+			*y = xDevtoyOMA2(devx, dd);
+			break;
+		case OMA3:
+			*x = xDevtoOMA3(devx, dd);
+			*y = yDevtoOMA3(devy, dd);
+			break;	
+		case OMA4:
+			*x = yDevtoxOMA4(devy, dd);
+			*y = xDevtoyOMA4(devx, dd);
+			break;
+		case NFC:
+			*x = xDevtoNFC(devx, dd);
+			*y = yDevtoNFC(devy, dd);
+			break;
+		case USER:
+			*x = xDevtoUsr(devx, dd);
+			*y = yDevtoUsr(devy, dd);
+			break;
+		case MAR1:
+			*x = xDevtoMAR1(devx, dd);
+			*y = yDevtoMAR1(devy, dd);
+			break;	
+		case MAR2:
+			*x = yDevtoxMAR2(devy, dd);
+			*y = xDevtoyMAR2(devx, dd);
+			break;
+		case MAR3:
+			*x = xDevtoMAR3(devx, dd);
+			*y = yDevtoMAR3(devy, dd);
+			break;	
+		case MAR4:
+			*x = yDevtoxMAR4(devy, dd);
+			*y = xDevtoyMAR4(devx, dd);
+			break;
+		case DEVICE:
+		  *x = devx;
+		  *y = devy;
+		  break;
+		default:
+			error("unable to convert to coordinate system\n");
+	}
 }
 
 void NewFrameConfirm();				/* bring this into this file. */
@@ -1888,7 +1885,7 @@ void GNewPlot(DevDesc *dd, int recording)
 		if (recording)
 			invalidError("Plot region too large\n", dd);
 		else
-			GText(0.5, 0.5, NFC, "Plot region too large", 
+			GText(0.5, 0.5, NFC, "Plot region too small / large",
 			      0.5, 0.5, 0, dd);
 	else 
 		dd->dp.valid = dd->gp.valid = 1;
@@ -2060,6 +2057,8 @@ void GInit(GPar *gp)
 	gp->err = 0;
 	gp->bty = 'o';
 
+	gp->mkh = .001;/* dummy value > 0  --- FIXME : */
+	/* GREset has dd->gp.mkh = dd->gp.cra[0] * dd->gp.ipr[0]; */
 	gp->cex = 1.0;
 	gp->cexbase = 1.0;
 	gp->cexmain = 1.2;
@@ -2921,35 +2920,63 @@ void GLPretty(double *ul, double *uh, int *n)
 }
 #endif
 
-void GPretty(double *s, double *u, int *ndiv)
+void GPretty(double *lo, double *up, int *ndiv)
 {
-	/*  Set scale and ticks for linear scales  */
+	/*  Set scale and ticks for linear scales.
+	 *  Pre:         x1 = lo < up = x2
+	 *  Post: x1 <= y1 := lo < up =: y2 <= x2;  ndiv >= 1
+	 */
 
-	double base, cell, unit, tmp;
+	double	dx, cell, unit, base, U;
+	double x1,x2; int nd0;
 	int ns, nu;
+	short i_small;
 
-	if( *s == R_PosInf || *u == R_PosInf
-	 || *s == R_NegInf || *u == R_NegInf || *ndiv == 0 )
+	if( *lo == R_PosInf || *up == R_PosInf
+	 || *lo == R_NegInf || *up == R_NegInf || *ndiv == 0 )
 		error("infinite axis extents\n");
 
-	cell = DBL_EPSILON + (*u-*s) / *ndiv;
-	base = pow(10.0, floor(log10(cell)));
+	x1 = *lo; x2 = *up; nd0 = *ndiv;
+	dx = *up - *lo;
+	/* cell := "scale"  here */
+	if(dx == 0 && *up == 0) { /*  up == lo == 0  */
+		cell = i_small = 1;
+	} else {
+		cell = fmax2(fabs(*lo),fabs(*up));
+		i_small = dx < cell * 10/(double)INT_MAX;
+	}
+
+	/*OLD: cell = FLT_EPSILON+ dx / *ndiv; FLT_EPSILON = 1.192e-07 */
+	if(i_small)
+		cell *= .25; /* shrink_sml in  pretty(.) */
+	else
+		cell = dx;
+	cell /= *ndiv;
+
+	base = pow(10, floor(log10(cell))); /* base <= cell < 10*base */
+
+	/* unit :=  arg min _u { |u - cell| ;  u = c(1,2,5,10) * base } */
 	unit = base;
-	if(fabs((tmp = 2.0*base)-cell) < fabs(unit-cell)) unit = tmp;
-	if(fabs((tmp = 5.0*base)-cell) < fabs(unit-cell)) unit = tmp;
-	if(fabs((tmp = 10.0*base)-cell) < fabs(unit-cell)) unit = tmp;
+	if(fabs((U = 2*base)-cell) < fabs(unit-cell)) unit = U;
+	if(fabs((U = 5*base)-cell) < fabs(unit-cell)) unit = U;
+	if(fabs((U =10*base)-cell) < fabs(unit-cell)) unit = U;
 	
-	ns = floor(*s/unit);
-	while(ns*unit > *s - DBL_EPSILON) ns--;
+	ns = floor(*lo/unit);
+	while(ns*unit > *lo *(1- DBL_EPSILON)) ns--;
 	ns++;
-	*s = unit*ns;
 	
-	nu = ceil(*u/unit);
-	while(nu*unit < *u + DBL_EPSILON) nu++;
+	nu = ceil(*up/unit);
+	while(nu*unit < *up *(1+ DBL_EPSILON)) nu++;
 	nu--;
-	*u = unit*nu;
 	
-	*ndiv = (*u-*s)/unit+0.5;
+	*lo = ns * unit;
+	*up = nu * unit;
+	*ndiv = nu - ns;
+
+	if(*ndiv <= 0)
+	  printf("Gpretty(%g,%g,%d): cell=%g,  ndiv= %d <=0;\t\t(ns,nu)=(%d,%d);
+		 dx=%g, unit=%3e, ismall=%1d.\n",
+		  x1,x2, nd0, cell, *ndiv, ns, nu, dx, unit, (int)i_small);
 }
 
 
@@ -3124,7 +3151,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 14: /* S square and point-up triangle superimposed */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			xx[0] = x; yy[0] = y+yc;
+			xx[0] = x; yy[0] = y+xc;
 			xx[1] = x+xc; yy[1] = y-xc;
 			xx[2] = x-xc; yy[2] = y-xc;
 			GPolygon(3, xx, yy, INCHES, NA_INTEGER, dd->gp.col, dd);
