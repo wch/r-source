@@ -1611,13 +1611,13 @@ double GStrHeight(char *str, int units)
 	double h = GP->cex * GP->cra[1];
 	switch(units) {
 		case 1: /* user == world */
-			h = (h / GP->fig2dev.bx) / GP->win2fig.bx;
+			h = (h / GP->fig2dev.by) / GP->win2fig.by;
 			break;
 		case 2: /* figure */
-			h = h / GP->fig2dev.bx;
+			h = h / GP->fig2dev.by;
 			break;
 		case 3: /* inches */
-			h = h * GP->ipr[0];
+			h = h * GP->ipr[1];
 			break;
 		case 4: /* rasters */
 			break;
