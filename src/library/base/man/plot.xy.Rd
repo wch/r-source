@@ -6,11 +6,11 @@ plot.xy(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, \dots)
 \alias{plot.xy}
 \arguments{
 \item{xy}{A four-element list as results from \code{\link{xy.coords}(..)}.}
-\item{type}{1 character code}
-\item{pch}{character or integer code for kind of points}
-\item{lty}{line type code}
-\item{col}{color code}
-\item{bg}{background color}
+\item{type}{1 character code.}
+\item{pch}{character or integer code for kind of points/lines.}
+\item{lty}{line type code, see \code{\link{lines}}.}
+\item{col}{color code or name, see \code{\link{colors}}, \code{\link{palette}}.}
+\item{bg}{background (``fill'') color for open plot symbols.}
 \item{cex}{character expansion}
 \item{\dots}{further graphical parameters}
 }
