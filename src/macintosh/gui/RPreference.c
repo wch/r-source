@@ -226,7 +226,9 @@ void  doGetPreferences(void)
      
       strcpy(genvString, ".Renviron");
       SetTab();
+    
       storeHistory = atoi(mac_getenv("RHISTSIZE"));
+       
       if(storeHistory < 1 || storeHistory > 512)  
        storeHistory = 512;
       HISTORY = storeHistory +1;
@@ -239,13 +241,15 @@ void  doGetPreferences(void)
       doCopyPString("\psymbol", MacSymbolFont);  /* Jago */
 
       strncpy(userfont,mac_getenv("GraphFontName"),20);
+ 
       if(strlen(userfont)>0)
        CopyCStringToPascal(userfont,PostFont);
  
 	  if(GetFontIDFromMacFontName(PostFont) == kATSUInvalidFontID)
          doCopyPString("\phelvetica", PostFont); /* Emergency font ! */
 
-      strncpy(userfont,mac_getenv("FontName"),20);
+   	  strncpy(userfont,mac_getenv("FontName"),20);
+      
       if(strlen(userfont)>0)
        CopyCStringToPascal(userfont,UserFont);
   
@@ -406,9 +410,8 @@ void SetTab(){
    char 		tabsize[10];
    
 
-   strncpy(tabsize,mac_getenv("TabSize"),3);
-   gtabSize = atoi(tabsize);
-   
+   gtabSize = atoi(mac_getenv("TabSize"));
+     
    if(gtabSize < 1 || gtabSize > 20)
     gtabSize = 5;
        
