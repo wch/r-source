@@ -749,6 +749,14 @@ stopifnot(all(!is.na(res)))
 stopifnot(all(!is.na(res)))
 ## outer values were NA in 1.5.1
 
+## ls.str() for function environments:
+library(stepfun)
+Fn <- ecdf(rnorm(50))
+ls.str(envir = environment(Fn))
+detach("package:stepfun")
+## failed in 1.5.1
+
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
 detach("package:methods")
+

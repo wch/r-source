@@ -36,6 +36,7 @@ BUG FIXES
     o	read.table() could remap non-syntactic names to duplicates,
 	and did not check for duplicated names.
 
+    o	ls.str(envir = environment(F)) now works (when F is a function).
 
 
 		CHANGES IN R VERSION 1.5.1
