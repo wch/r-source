@@ -25,11 +25,10 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     det <- function(x) { prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1) }
 
     ## remove means for conditioning
-    #if(demean) {
-    #    xm <- apply(x, 2, mean)
-    #    x <- sweep(x, 2, xm)
-    #} else
-    xm <- rep(0, nser)
+    if(demean) {
+        xm <- apply(x, 2, mean)
+        x <- sweep(x, 2, xm)
+    } else xm <- rep(0, nser)
     ## Fit models of increasing order
 
     for (m in order.min:order.max)
