@@ -90,6 +90,8 @@ BUG FIXES
 	This affected using read.table on files with blank lines in
 	1.2.2, and using `n' with `what' a list.
 
+    o	Deparsing or dumping attributes with non-standard names was
+	not quoting the name (PR#871).
 
 
 
