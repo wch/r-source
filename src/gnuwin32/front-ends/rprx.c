@@ -16,8 +16,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  $Id: rprx.c,v 1.3 1999/12/11 20:57:35 pd Exp $
+ *  $Id: rprx.c,v 1.4 2000/04/24 08:48:48 ripley Exp $
  */
+
+/* 27/03/2000 win32-api needs this */
+#define NONAMELESSUNION
 
 // simple test application w/o a COM server
 #include <windows.h>

@@ -21,9 +21,10 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.7 2000/01/21 16:49:18 hornik Exp $
+ *  $Id: rproxy_impl.c,v 1.8 2000/04/24 08:48:48 ripley Exp $
  */
 
+#define NONAMELESSUNION
 #include <windows.h>
 #include <assert.h>
 #include <stdio.h>

@@ -17,6 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* 27/03/2000 win32-api needs this */
+#define NONAMELESSUNION
 #include <windows.h>
 #include <stdio.h>
 #include "config.h"
