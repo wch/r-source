@@ -540,6 +540,8 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
         get(name, env = exports, inherits = FALSE)
     }
     expnames <- unlist(lapply(expnames, getInternalExportName, expenv))
+    if (is.null(impnames)) impnames <- character(0)
+    if (is.null(expnames)) expnames <- character(0)
     .Internal(importIntoEnv(impenv, impnames, expenv, expnames))
 }
 namespaceExport <- function(ns, vars) {

@@ -3219,7 +3219,7 @@ SEXP R_bcEncode(SEXP bytes)
 	code = allocVector(INTSXP, m * 2);
 	pc = (BCODE *) CHAR(code);
 	pc[0].i = v;
-	pc[1].v = opinfo[RETURN_OP].addr;
+	pc[1].v = opinfo[BCMISMATCH_OP].addr;
 	return code;
     }
     else {
