@@ -168,6 +168,9 @@
 /* Maximal length of an entire file name */
 #undef HAVE_SYS_PARAM_H
 
+/* Used for buffer-overflow in printutils.c if available */
+#undef HAVE_VSNPRINTF
+
 /* for platform.c to put in .Platform */
 #ifdef Unix
 #define OSTYPE      "unix"

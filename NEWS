@@ -11,6 +11,8 @@
 NEW FEATURES
 
     o	The ``Introduction to R'' manual, in doc/manual.
+    	The ``Writing R Extensions'' manual is much enhanced for 
+	this release.
 
     o	The format for save/load has been changed. Workspaces and
 	objects saved in earlier versions can be loaded into this
@@ -26,7 +28,11 @@ NEW FEATURES
 
     o	Many of the exported symbols have been remapped or hidden. This
 	means that code using Rdefines.h or Rinternals.h or Mathlib.h
-	will need to be re-compiled, and code using Applic.h may do so.
+	will need to be re-compiled, and code using Applic.h may do
+	so.
+
+	Many packages will need to be re-installed for use with this
+	release.
 
     o	The random number generation interface has changed, although
 	saved .Random.seed's will work unchanged. The default
@@ -38,14 +44,14 @@ NEW FEATURES
 	The new function set.seed() which uses a single integer to set
 	the random number seeds is now the recommended way to do so.
 
-	It is now possible for a user to plug-in in a new RNG: consult
-	?Random and ?Random-user for the details.
+	It is now possible for a user to plug-in in a new RNG written
+	in C: consult ?Random and ?Random-user for the details.
 
-    o	DPQ {probability density quantile} functions have new
+    o	All the DPQ {probability density quantile} functions have new
 	arguments, "lower_tail = TRUE" and "log{_p} = FALSE".  This allows
 	more precise results when values would be close to 0 or 1.
 
-    o	R CMD Rd2dvi has new options --pdf, --title and --output
+    o	R CMD Rd2dvi has new options --pdf, --title and --output.
 
     o	New fields Date, URL and Title in the DESCRIPTION file of
 	packages. The Title field replaces the separate TITLE file of
@@ -72,8 +78,9 @@ NEW FEATURES
 	is now slightly wider on some Unix platforms.
 
     o	package ctest (for classical tests) is now part of the base
-	distribution, and also contains chisq.test, prop.test and t.test
-	which previously were in package base.
+	distribution, and also contains chisq.test, prop.test and
+	t.test which previously were in package base. These three
+	functions are auto-loaded from ctest.
 
     o	New utility `R CMD build' for building add-on packages along
 	with some useful testing and cleaning up.
@@ -90,7 +97,7 @@ NEW FEATURES
 
     o	Long-named options with arguments such as `--vsize' now use the
 	`--name=VALUE' form; the old `--name VALUE' is deprecated.
-	Old-style command line options `-v' and `-n' are now defunct.
+	The old-style command line options `-v' and `-n' are now defunct.
 
     o	par("cxy") { == par("cin")/par("pin") in user coordinates}
 	for S compatibility.
@@ -122,7 +129,7 @@ NEW FEATURES
 	contingency tables.
 
     o	New function cutree() for cutting hclust trees in package
-	mva. New functions rect.hclust and identify.hclust.
+	mva.  New functions rect.hclust() and identify.hclust().
 
     o	Under Unix, the default editor is obtained from the environment
 	variables EDITOR or VISUAL if either is set.
@@ -146,14 +153,15 @@ NEW FEATURES
 
     o	prop.table() and margin.table() functions (these are *really* trivial).
 
-    o	R INSTALL checks the Depends field of DESCRIPTION if the
+    o   R INSTALL checks the Depends field of DESCRIPTION if the
 	currently running version of R meets an R
-	dependency. old.packages() reports only packages conforming with the
-	current version of R. New function package.dependencies() for
-	parsing and checking dependencies.
+	dependency. old.packages() reports only packages conforming
+	to the current version of R. New function
+	package.dependencies() for parsing and checking dependencies.
 
     o	options("expressions") now does something, and the evaluation
-	depth is checked on all platforms (not just Macintosh).
+	depth is checked on all platforms (not just Macintosh). This
+	will catch infinite recursions gracefully.
 
     o	The default number of cons cells (`nsize') is now 350k (it
 	was 250k).  This reflects the added base code and packages,
@@ -169,7 +177,7 @@ NEW FEATURES
 	split into two lines. (This helps avoid scrolling in the
 	Windows GUI.)
 
-    o   lapply() is now internal and substantially faster (5% overall
+    o   lapply() is now internal and substantially faster (7% overall
 	speed-up on the tests for the base package).
 
     o	apply() also has a substantial internal component. It no
@@ -188,13 +196,11 @@ NEW FEATURES
         decimal point).  The set of quoting characters has also been
         made optional.
 
-
     o	HDF5 support is gone from the R distribution, and provided by an
 	add-on package.
 
     o	New function getOption() for retrieving the value of a single
 	option.
-
 
 
 BUG FIXES
@@ -263,6 +269,16 @@ BUG FIXES
 	works correctly (it used to assign the numeric codes of factors).
 
     o	Extensive enhancements and corrections to the help pages.
+
+    o	The possibility of buffer overruns during printing has been 
+	much reduced, and eliminated on systems with vsnprintf.
+
+
+	**************************************************
+	*						 *
+	*	       0.90 SERIES NEWS			 *
+	*						 *
+	**************************************************
 
 
 		CHANGES IN R VERSION 0.90.1

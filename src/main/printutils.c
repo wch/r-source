@@ -22,8 +22,9 @@
  * Printing:
  * =========
  *
- * All printing in R is done via the functions Rprintf and REprintf.
- * These routines work exactly like printf(3).	Rprintf writes to
+ * All printing in R is done via the functions Rprintf and REprintf
+ * or their (v) versions Rvprintf and REvprintf.
+ * These routines work exactly like (v)printf(3).  Rprintf writes to
  * ``standard output''.	 It is redirected by the sink() function,
  * and is suitable for ordinary output.	 REprintf writes to
  * ``standard error'' and is useful for error messages and warnings.
@@ -272,9 +273,9 @@ char *EncodeString(char *s, int w, int quote, int right)
     char *p, *q;
 
     i = Rstrlen(s);
-    AllocBuffer(i);
+    AllocBuffer(i + 2); /* allow for quotes */
     q = Encodebuf;
-    if(right) { /*Right justifying */
+    if(right) { /* Right justifying */
 	b = w - i - (quote ? 2 : 0);
 	for(i=0 ; i<b ; i++) *q++ = ' ';
     }
@@ -366,7 +367,8 @@ char *Rsprintf(char *format, ...)
 {
     va_list(ap);
 
-    AllocBuffer(0);
+    AllocBuffer(0); /* unsafe, as assuming length, but all internal
+		       uses are for a few characters */
     va_start(ap, format);
     vsprintf(Encodebuf, format, ap);
     va_end(ap);
@@ -378,7 +380,7 @@ void Rprintf(char *format, ...)
     va_list(ap);
 
     va_start(ap, format);
-    if(R_Outputfile) {
+/*  if(R_Outputfile) {
 	vfprintf(R_Outputfile, format, ap);
 	fflush(R_Outputfile);
     }
@@ -387,7 +389,8 @@ void Rprintf(char *format, ...)
 	vsprintf(buf, format, ap);
 	len = strlen(buf);
 	R_WriteConsole(buf, len);
-    }
+    } */
+    Rvprintf(format, ap);
     va_end(ap);
 }
 
@@ -395,7 +398,7 @@ void REprintf(char *format, ...)
 {
     va_list(ap);
     va_start(ap, format);
-    if(R_Consolefile) {
+/*  if(R_Consolefile) {
 	vfprintf(R_Consolefile, format, ap);
     }
     else {
@@ -403,10 +406,12 @@ void REprintf(char *format, ...)
 	vsprintf(buf, format, ap);
 	len = strlen(buf);
 	R_WriteConsole(buf, len);
-    }
+    } */
+    REvprintf(format, ap);
     va_end(ap);
 }
 
+/* Apparently unused except in Rprintf  */
 void Rvprintf(const char *format, va_list arg)
 {
     if(R_Outputfile) {
@@ -414,13 +419,40 @@ void Rvprintf(const char *format, va_list arg)
 	fflush(R_Outputfile);
     }
     else {
-	char buf[BUFSIZE]; int slen;
-	vsprintf(buf, format, arg);
-	slen = strlen(buf);
-	R_WriteConsole(buf, slen);
+	char buf[BUFSIZE], *p = buf, *vmax = vmaxget(); 
+	int slen, res;
+	if(!arg) {
+            /* just a string, so length is known */
+	    if((slen = strlen(format)) >= BUFSIZE)
+		p = R_alloc(slen+1, sizeof(char));
+	    vsprintf(p, format, arg);
+	} else {
+#ifdef HAVE_VSNPRINTF
+	    res = vsnprintf(p, BUFSIZE, format, arg);
+	    if(res >= BUFSIZE) { /* res is the desired output length */
+		p = R_alloc(res+1, sizeof(char));
+		vsprintf(p, format, arg);
+	    } else if(res < 0) { /* just a failure indication */
+		p = R_alloc(10*BUFSIZE, sizeof(char));
+		res = vsnprintf(p, 10*BUFSIZE, format, arg);
+		if (res < 0) {
+		    *(p + 10*BUFSIZE) = '\0';
+		    warning("printing of extremely long string is truncated");
+		}
+	    }
+#else
+	    /* allocate a large buffer and hope */
+	    p = R_alloc(10*BUFSIZE, sizeof(char));
+	    vsprintf(p, format, arg);
+#endif
+	}
+	R_WriteConsole(p, strlen(buf));
+	vmaxset(vmax);
     }
 }
 
+/* Assume here that error messages are short: as this is called from
+   the error handler there is not much we can do */
 void REvprintf(const char *format, va_list arg)
 {
     if(R_Consolefile) {
