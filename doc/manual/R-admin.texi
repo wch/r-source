@@ -241,7 +241,7 @@ building from the sources.
 
 First review the essential and useful tools and libraries in
 @ref{Essential and useful other programs}, and install those you want or
-need.  Ensure that the environment variable @samp{TMPDIR} is either
+need.  Ensure that the environment variable @env{TMPDIR} is either
 unset (and @file{/tmp} exists and can be written in) or points to a
 valid temporary directory.
 
@@ -1250,7 +1250,9 @@ structures are passed.
 This interface is experimental and incomplete.  The console offers a
 basic command line editing and history mechanism, along with tool and
 button bars that give a point-and-click interface to some @R{} commands.
-Many of the features of the console are currently stubs.
+Many of the features of the console are currently stubs.  Its present
+form is deprecated, and it will be replaced by an unbundled
+@acronym{GNOME} console as from @R 2.1.0.
 
 Two graphics devices have been available but are currently
 unbundled. The @code{gtk()} graphics device is a port of the
@@ -1395,7 +1397,7 @@ OS X @acronym{FAQ}}.
 If you use the X window manager and prefer @code{Terminal.app} to
 @code{xterm}, you should be aware that @R{}, like many Unix tools,
 uses the existence of a @code{DISPLAY} environment variable to
-determine whether an X system is running. This affects the default
+determine whether an X system is running.  This affects the default
 graphics device for the commmand line version of R and the behaviour
 of the @code{png()} and @code{jpeg} devices.
 
@@ -1424,9 +1426,9 @@ failure with @command{gcc 3.3}.)
 @R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
 5.8 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
 Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
-7), and less regularly on Solaris 2.5.1, 2.6, 2.7 and 9.  GNU
-@command{make} is needed prior to Solaris 2.7 for building other than in
-the source tree, and perhaps even then.
+7), and less regularly on Solaris 2.6, 2.7 and 9.  GNU @command{make} was
+needed prior to Solaris 2.7 for building other than in the source tree,
+and perhaps even then.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g. @command{make}, @command{ar} and @command{ld}) are in
@@ -1435,15 +1437,14 @@ path.
 
 @command{gcc} 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
 builds with optimization, but versions 3.1, 3.2, 3.2.3 and later work
-correctly.  At least files @file{src/main/engine.c},
-@file{src/main/graphics.c} and @file{src/modules/devX11.c} are affected.
+correctly.  (@code{make check} fails at the first attempt to plot.)
 
 If using @command{gcc}, do ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 so (for example) @command{gcc} compiled under Solaris 2.6 will not
 compile @R{} under Solaris 2.7.  Also, do ensure that it was compiled
-for the assembler/loader in use.  If you download @command{gcc} from
+for the assembler/loader in use: if you download @command{gcc} from
 @uref{http://www.sunfreeware.com} then you need to download
 @code{binutils} too.  To avoid all these pitfalls we strongly
 recommended you compile @command{gcc} from the sources yourself.
@@ -1470,7 +1471,7 @@ A 32-bit version of R is built without large file support and so can
 only handle files up to 2Gb (unlike 64-bit versions).  According to
 @samp{man lfcompile} this restriction can be removed if
 @option{-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE=1} is added to
-@samp{CFLAGS}.  (This has not been tested.)
+@samp{CFLAGS}.
 
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
@@ -1680,6 +1681,7 @@ set @option{-ieee_with_inexact} for the C compiler and @option{-fpe3}
 for the Fortran compiler (and @option{-mieee-with-inexact} and
 @option{-mieee} for @command{gcc}/@command{g77}).
 
+
 @node Alpha/FreeBSD, AIX, Alpha/OSF1, Platform notes
 @subsection Alpha/FreeBSD
 
@@ -1689,6 +1691,7 @@ partly successful.  Configuring with @option{-mieee} added to both
 @code{SIGFPE}'s.  It would appear that @option{-mieee} only defers these
 rather than suppressing them entirely.  Advice on how to complete this
 port would be greatly appreciated.
+
 
 @node AIX,  , Alpha/FreeBSD, Platform notes
 @subsection AIX
