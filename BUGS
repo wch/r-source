@@ -803,22 +803,6 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Odd error in R CMD check
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Thu, 25 Mar 2004 11:23:43 -0500
-* PR# 6696 *
-Subject: VirusScan 8 with a year of updates
-From: "virusesoffers" <virusoffers@4-specials.com>
-Date: Thu, 25 Mar 2004 16:34:25 -0500 (EST)
-* PR# 6697 *
-Subject: COHEN Cyril
-From: "COHEN Cyril" <cyril@finotec.com>
-Date: Thu, 25 Mar 2004 18:08:27 +0200
-* PR# 6698 *
-Subject: Re: Hi (Sick Leave)
-From: "Monika Muschal" <Monika.Muschal@dipnr.nsw.gov.au>
-Date: Fri, 26 Mar 2004 11:21:23 +1100
-* PR# 6699 *
-Subject: PARTNERSHIP PROPOSITION
-From: "steven taylor" <steventell@homemail.co.za>
-Date: Fri, 26 Mar 2004 12:18:57 +0200
 * PR# 6700 *
 Subject: Mac OS X Limited User cannot access R
 From: nave@macalester.edu
@@ -831,3 +815,11 @@ Date: Fri, 26 Mar 2004 15:45:18 -0600
 Subject: cbind/rbind fail on matrixes containing lists
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 26 Mar 2004 17:08:28 -0500
+* PR# 6706 *
+Subject: exit() and stop() documentation
+From: ivo.welch@yale.edu
+Date: Sat, 27 Mar 2004 17:43:10 +0100 (CET)
+* PR# 6707 *
+Subject: Medications like Phentermine on sale now!
+From: "Mabel Stroud" <RGUTHXFN@iprolink.ch>
+Date: Sat, 27 Mar 2004 23:45:17 +0300
