@@ -12,8 +12,7 @@
   method.  There is a \code{plot} method.
 }
 \usage{
-TukeyHSD(x, which = seq(along=tabs), ordered = FALSE,
-         conf.level = 0.95, \dots)
+TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
 }
 \arguments{
  \item{x}{A fitted model object, usually an \code{\link{aov}} fit.}

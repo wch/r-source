@@ -20,8 +20,7 @@
 ### MA 02111-1307, USA
 
 TukeyHSD <-
-    function(x, which = seq(along = tabs), ordered = FALSE,
-             conf.level = 0.95, ...)
+    function(x, which, ordered = FALSE, conf.level = 0.95, ...)
     UseMethod("TukeyHSD")
 
 TukeyHSD.aov <-
