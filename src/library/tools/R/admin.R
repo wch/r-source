@@ -46,6 +46,7 @@ function(dir, outDir)
     writeLines(c(formatDL(names(db), db, style = "list"),
                  paste("Built", Built, sep=": ")),
                file.path(outDir, "DESCRIPTION"))
+    db["Built"] <- Built
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
