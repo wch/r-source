@@ -103,7 +103,7 @@ void setup_starma(int *na, double *x, int *pn, double *xreg, int *pm,
     resid = Calloc(n, double);
     phi = Calloc(ir, double);
     theta = Calloc(ir, double);
-    reg = Calloc(n*m, double);
+    reg = Calloc(1+n*m, double); /* AIX can't calloc 0 items */
     delta = *dt;
     for(i = 0; i < n; i++) w[i] = wkeep[i] = x[i];
     for(i = 0; i < n*m; i++) reg[i] = xreg[i];
