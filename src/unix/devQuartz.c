@@ -708,6 +708,7 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
 	char		buffer[250];
 	int 		devnum = devNumber((DevDesc *)dd);
 
+
     xd->windowWidth = wid*72;
     xd->windowHeight = hgt*72;
     xd->window = NULL;
@@ -1010,7 +1011,7 @@ static char *SaveFontSpec(SEXP sxp, int offset)
     strcpy(s, CHAR(STRING_ELT(sxp, offset)));
     return s;
 }
-
+ 
 /*
  * Take the fontfamily from a gcontext (which is device-independent)
  * and convert it into a Quartz-specific font description using
@@ -1020,11 +1021,16 @@ static char *SaveFontSpec(SEXP sxp, int offset)
  * OR IF can't find gcontext fontfamily in font database 
  * THEN return xd->family (the family set up when the
  *   device was created)
+ * This function is used on embedding Cocoa GUIs, must be declared
+ * as char * and not static char *. The third argument is different from
+ * devices as well.
  */
-static char* translateFontFamily(char* family, int face, QuartzDesc* xd) {
+
+
+char* Quartz_TranslateFontFamily(char* family, int face, char *devfamily) {
     SEXP graphicsNS, quartzenv, fontdb, fontnames;
     int i, nfonts;
-    char* result = xd->family;
+    char* result = devfamily;
     PROTECT_INDEX xpi;
 
     PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
@@ -1054,6 +1060,8 @@ static char* translateFontFamily(char* family, int face, QuartzDesc* xd) {
 
 
 
+
+
 /* This new version of Quartz_SetFont handles correctly the unicode encoding of
    the Symbol font under Panther
  */
@@ -1072,9 +1080,9 @@ static void Quartz_SetFont(char *family,
 	 
     GetPort(&savePort);
     SetPortWindowPort(xd->window);
-    fprintf(stderr,"style=%d,family=%s\n",style,family);
+    
 
-	fontFamily = translateFontFamily(family, style, xd);
+	fontFamily = Quartz_TranslateFontFamily(family, style, xd->family);
 	 if (fontFamily)
 	     strcpy(CurrFont,fontFamily);
 	 else
@@ -1083,11 +1091,9 @@ static void Quartz_SetFont(char *family,
 	if(style==5)
 		strcpy(CurrFont, "Symbol");
 
-	fprintf(stderr,"fontFamily=%s,CurrFont=%s\n",fontFamily,CurrFont);
 	
-	if(strcmp(CurrFont,"Symbol")==0){
-	fprintf(stderr,"symbol font, ff=%s,cf=%s\n",fontFamily,CurrFont);
 
+	if(strcmp(CurrFont,"Symbol")==0){
 		if(WeAreOnPanther)
 	     CGContextSelectFont( GetContext(xd), CurrFont, size, 
 				  kCGEncodingFontSpecific);
@@ -1153,7 +1159,7 @@ static void 	Quartz_Text(double x, double y, char *str,
 
 	Quartz_SetFont(gc->fontfamily, gc->fontface, gc->cex,  gc->ps, dd);
     len = strlen(str);
-	ff = translateFontFamily(gc->fontfamily, gc->fontface, xd);
+	ff = Quartz_TranslateFontFamily(gc->fontfamily, gc->fontface, xd->family);
 
     if( ((gc->fontface == 5) || (strcmp(ff,"Symbol")==0)) && (len==1) ){
 	   tmp = (unsigned char)str[0];
@@ -1587,7 +1593,7 @@ static void 	Quartz_MetricInfo(int c,
 
 	Quartz_SetFont(gc->fontfamily, gc->fontface, gc->cex,  gc->ps, dd);
 
-	ff = translateFontFamily(gc->fontfamily, gc->fontface, xd);
+	ff = Quartz_TranslateFontFamily(gc->fontfamily, gc->fontface, xd->family);
 	tmp = (unsigned char)c;
     if( (gc->fontface == 5) || (strcmp(ff,"Symbol")==0)){
        if( (tmp>31) && IsThisASymbol(tmp))

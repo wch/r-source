@@ -158,15 +158,12 @@ Rboolean CocoaInnerQuartzDevice(NewDevDesc *dd,char *display,
 					  Rboolean antialias,
 					  Rboolean autorefresh,int quartzpos,
 					  int bg){
-					  Rboolean x;
-					  x= (Rboolean)ptr_CocoaInnerQuartzDevice(dd, display,
+					 return (Rboolean)ptr_CocoaInnerQuartzDevice(dd, display,
 					   width, height,
 					   pointsize, family,
 					    antialias,
 					   autorefresh, quartzpos,
 					   bg);
-					   fprintf(stderr,"cocoainner=%d",x);
-					   return x;
 					  }
 
 void CocoaGetQuartzParameters(double *width, double *height, double *ps, 
