@@ -193,9 +193,9 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig)
 	}
 	else alpha = r / pow(10.0, (double)kp);
 
-	/* make sure that alpha is in [1,10) */
+	/* make sure that alpha is in [1,10) AFTER rounding */
 
-	if (10.0 - alpha < eps) {
+	if (10.0 - alpha < eps*alpha) {
 	    alpha /= 10.0;
 	    kp += 1;
 	}
