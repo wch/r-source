@@ -9,7 +9,7 @@
 stars(x, full = TRUE, scale = TRUE, radius = TRUE,
       labels = dimnames(x)[[1]], locations = NULL,
       nrow = NULL, ncol = NULL, len = 1,
-      key.loc = NULL, key.labels = NULL, key.xpd = TRUE,
+      key.loc = NULL, key.labels = dimnames(x)[[2]], key.xpd = TRUE,
       xlim = NULL, ylim = NULL, flip.labels = NULL,
       draw.segments = FALSE, col.segments = 1:n.seg, col.stars = NA,
       axes = FALSE, frame.plot = axes,
@@ -139,6 +139,8 @@ stars(USJudgeRatings[1:10,], locations = 0:1, scale=FALSE,
       draw.segments = TRUE, col.segments=0, col.stars=1:10,key.loc= 0:1,
        main="US Judges 1-10 ")
 palette("default")
+stars(cbind(1:16,10*(16:1)),draw.segments=TRUE,
+      main = "A Joke -- do *not* use symbols on 2D data!")
 }
 \keyword{hplot}
 \keyword{multivariate}
