@@ -61,6 +61,7 @@ Statistics|nonparametric: Nonparametric Statistics # w/o `smooth'
 Statistics|smooth: Curve (and Surface) Smoothing
 Statistics|smooth|loess: Loess Objects
 Statistics|cluster: Clustering
+Statistics|survey: Complex survey samples
 Statistics|tree: Regression and Classification Trees
 MASS: MASS (the book) uses
 MASS|classif: Classification # package `class'

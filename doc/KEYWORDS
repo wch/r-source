@@ -73,6 +73,7 @@ Statistics
 	     & loess	&	Loess Objects
 	cluster		&	Clustering
 	tree		&	Regression and Classification Trees
+	survey		&	Complex survey samples
 
 
 MASS (2, 1997)
