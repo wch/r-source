@@ -81,6 +81,9 @@ BUG FIXES
 
     o   install.packages() from a local CRAN was broken.
 
+    o   Building with gcc 3.4.0 on ix86 platforms failed: the critical
+	LAPACK routines are now compiled with -ffloat-store.
+
 
 
 		CHANGES IN R VERSION 1.9.0
