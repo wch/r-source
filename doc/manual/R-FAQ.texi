@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-20
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-23
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -302,6 +302,10 @@ the ``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
 Sources are also available via @uref{https://svn.r-project.org/R/}, the
 R Subversion repository, but currently not via anonymous rsync (nor
 CVS).
+
+Tarballs with daily snapshots of the r-devel and r-patched development
+versions of R can be found at
+@url{ftp://ftp.stat.math.ethz.ch/Software/R}.
 
 @c Sources are also available via anonymous rsync.  Use
 
@@ -1737,6 +1741,8 @@ Sons.
 @item Malmig
 An implementation of Malecot migration model together with a number of
 related functions.
+@item Matching
+Multivariate and propensity score matching with formal tests of balance.
 @item Matrix
 A Matrix package.
 @item NADA
@@ -1858,6 +1864,9 @@ Johnson distributions, normal scores and generalized hypergeometric
 distributions).
 @item UNF
 Tools for creating universal numeric fingerprints for data.
+@item UsingR
+Data sets to accompany the textbook ``Using R for Introductory
+Statistics'' by J. Verzani, 2005, Chapman & Hall/CRC.
 @item VLMC
 Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
@@ -1865,6 +1874,10 @@ Functions, classes & methods for estimation, prediction, and simulation
 Methods for calculation of Value at Risk (VaR).
 @item XML
 Facilities for reading @XML{} documents and DTDs.
+@item Zelig
+Everyone's statistical software: an easy-to-use program that can
+estimate, and help interpret the results of, an enormous range of
+statistical models.
 @item abind
 Combine multi-dimensional arrays.
 @item accuracy
@@ -1965,6 +1978,9 @@ A package for working with chronological objects (times and dates).
 @item circular
 Circular statistics, from ``Topics in Circular Statistics'' by Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
+@item clac
+Clust Along Chromosomes, a method to call gains/losses in CGH array
+data.
 @item class
 Functions for classification (@math{k}-nearest neighbor and LVQ).
 Contained in the @file{VR} bundle.  @emph{Recommended}.
@@ -2860,6 +2876,8 @@ with essentialy the same cost as a single SVM fit.
 Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
 Three-Stage Least Squares (3SLS).
+@item systat
+Functions for reading data stored by Systat.
 @item tapiR
 Tools for accessing (UK) parliamentary information in R.
 @item taskPR
