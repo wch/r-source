@@ -126,6 +126,16 @@ void setmouserepeat(control obj, mousefn fn)
 			obj->call->mouserepeat = fn;
 }
 
+void setdrop(control obj, dropfn fn)
+{
+	if (obj)
+	    if (obj->call) {
+		DragAcceptFiles(obj->handle, TRUE);
+		obj->call->drop = fn;
+	    }
+}
+
+
 /*
  *  Drawing controls and windows.
  */

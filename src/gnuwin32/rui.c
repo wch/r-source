@@ -405,7 +405,7 @@ static void menuabout(control m)
     show(RConsole);
 }
 
-/* some menu command can be issue only if R is waiting for input */
+/* some menu command can be issued only if R is waiting for input */
 static void menuact(control m)
 {
     if (consolegetlazy(RConsole))
@@ -635,6 +635,30 @@ static void closeconsole(control m)
     R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
+static void dropconsole(control m, char *fn)
+{
+    char *p;
+
+    p = strrchr(fn, '.');
+    if(p) {
+	if(stricmp(p+1, "R") == 0) {
+	    if(ConsoleAcceptCmd) {
+		fixslash(fn);
+		sprintf(cmd, "source(\"%s\")", fn);
+		consolecmd(RConsole, cmd);
+	    }
+	} else if(stricmp(p+1, "RData") == 0 || stricmp(p+1, "rda")) {
+	    if(ConsoleAcceptCmd) {
+		fixslash(fn);
+		sprintf(cmd, "load(\"%s\")", fn);
+		consolecmd(RConsole, cmd);
+	    }
+	}
+	return;
+    }
+    askok("Can only drop .R, .RData and .rda files");
+}
+
 static MenuItem ConsolePopup[] = {
     {"Copy", menucopy, 0},
     {"Paste", menupaste, 0},
@@ -741,6 +765,7 @@ int setupui()
 #endif
     addto(RConsole);
     setclose(RConsole, closeconsole);
+    setdrop(RConsole, dropconsole);
     MCHECK(gpopup(popupact, ConsolePopup));
     MCHECK(RMenuBar = newmenubar(menuact));
     MCHECK(newmenu("File"));

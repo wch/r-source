@@ -16,6 +16,11 @@ packages from CRAN or from local zip files, and to update packages.
 help.start() now lists all packages in all libraries, but the
 search index is still confined to the system library.
 
+The installers set up a file association for .RData files.
+
+Drag-and-drop of images (.RData and .rda) and source files (.rda)
+to the Rgui.exe console window is now supported.
+
 Profiling is now available.
 
 Support for earlier compilers has been dropped: you must use a

@@ -246,6 +246,8 @@ struct callinfo
 	mousefn	mousemove;	/* mouse was moved */
 	mousefn	mousedrag;	/* mouse dragged (button is down) */
 	mousefn	mouserepeat;	/* mouse-down timer auto repeat */
+
+	dropfn drop;		/* drag-and-drop function */
   };
 
 

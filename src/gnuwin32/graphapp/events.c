@@ -389,6 +389,21 @@ static void handle_colour(HDC dc, object obj)
    #endif
 #endif
 
+static char dfilename[MAX_PATH + 1];
+static void handle_drop(object obj, HANDLE dropstruct)
+{
+    if (obj->call && obj->call->drop) {
+	int len = DragQueryFile(dropstruct, 0, NULL, 0);
+	if (len > MAX_PATH) {
+	    DragFinish(dropstruct);
+	    return;
+	}
+	DragQueryFile(dropstruct, 0, dfilename, MAX_PATH);
+	DragFinish(dropstruct);
+	obj->call->drop(obj, dfilename);
+    }
+}
+
 /*
  *  Shared window procedure code. The pass variable is initially zero.
  *  It can be set to non-zero in this procedure if we wish to pass
@@ -530,6 +545,8 @@ static long handle_message(HWND hwnd, UINT message,
 		return (LRESULT) obj->bgbrush;
   #endif
 #endif
+        case WM_DROPFILES:
+		handle_drop(obj, (HANDLE) wParam);
 	}
 
 	/* If we got this far the event must be passed along

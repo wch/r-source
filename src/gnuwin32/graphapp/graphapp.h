@@ -127,6 +127,7 @@ typedef void (*intfn)(control c, int argument);
 typedef void (*keyfn)(control c, int key);
 typedef void (*menufn)(menuitem m);
 typedef void (*scrollfn)(scrollbar s, int position);
+typedef void (*dropfn)(control c, char *data);
 
 /*
  *  Mouse buttons state (bit-fields).
@@ -551,6 +552,8 @@ void	setmousedrag(control c, mousefn fn);
 void	setmouseup(control c, mousefn fn);
 void	setmousemove(control c, mousefn fn);
 void	setmouserepeat(control c, mousefn fn);
+
+void	setdrop(control c, dropfn fn);
 
 /*
  *  Using windows and controls.
