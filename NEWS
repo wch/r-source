@@ -25,7 +25,7 @@ NEW FEATURES
 	the locations of the tclConfig.sh and tkConfig.sh scripts via
 	the `--with-tcl-config' and `--with-tk-config' arguments.
 
-    o   prop.trend.test() - test for trend in proportions. 
+    o   prop.trend.test() - test for trend in proportions.
 
     o   write.table() has new argument `dec' for setting the decimal
         separator (SPSS/Windows and probably others want commas in
@@ -128,18 +128,28 @@ BUG FIXES
 
     o   x[["a"]] <- y rejected some object types for y (e.g.
         expressions) which were accepted in x$a <- y (PR
- 
+
     o   data editor froze on empty data frame, and more generally on
 	zero-length cols.
 
     o   data editor did not handle factors properly in numeric-edit
-        mode. 
+        mode.
 
     o   table() misbehaved on empty (or all-NA) data
 
     o   data editor now handles empty data frames, allowing data entry
-        to begin with  dd<-edit(data.frame())  or 
+        to begin with  dd<-edit(data.frame())  or
 	dd<-data.frame() ; fix(dd)
+
+    o	optim(): nomore segfault for REPORT=0; corrected error msg; ..
+	maxit default is now okay also when "L-*-B" is chosen automatically.
+        Using (abs|rel)tol with that method now gives a warning.
+
+    o	text() did not respect its `xpd' argument, the default of which
+        is still to use par("xpd"); gave a wrong error message in one case.
+
+    o	polygon() had an incorrect documentation and silently disregarded
+	"..." arguments.
 
 
 		CHANGES IN R VERSION 1.1.0
