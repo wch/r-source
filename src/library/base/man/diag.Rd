@@ -7,22 +7,29 @@ diag(x) <- value
 \alias{diag}
 \alias{diag<-}
 \description{
-    Extract or replace the diagonal of a matrix,
-    or construct a diagonal matrix.
+  Extract or replace the diagonal of a matrix,
+  or construct a diagonal matrix.
 }
 \value{
-If \code{x} is a matrix then \code{diag(x)} returns the diagonal of
-\code{x}.  The resulting vector will have \code{\link{names}} if the
-matrix \code{x} has matching column and row names.
+  If \code{x} is a matrix then \code{diag(x)} returns the diagonal of
+  \code{x}.  The resulting vector will have \code{\link{names}} if the
+  matrix \code{x} has matching column and row names.
 
-If \code{x} is a vector (or a 1-d array) then \code{diag(x)} returns a diagonal
-matrix whose diagonal is \code{x}.  If \code{x} is an integer then
-\code{diag(x)} returns an identity matrix of order \code{x}.
-The dimension of the returned matrix can be specified by
-\code{nrow} and \code{ncol} (the default is square).
+  If \code{x} is a vector (or 1D array) of length two or more,
+  then \code{diag(x)} returns a diagonal matrix whose diagonal is \code{x}.
 
-The assignment form sets the diagonal of the matrix \code{x} to the
-given value(s).
+  If \code{x} is a vector of length one then \code{diag(x)} returns an
+  identity matrix of order the nearest integer to \code{x}.  The
+  dimension of the returned matrix can be specified by \code{nrow} and
+  \code{ncol} (the default is square).
+
+  The assignment form sets the diagonal of the matrix \code{x} to the
+  given value(s).
+}
+\note{
+  Using \code{diag(x)} can have unexpected effects if \code{x} is a
+  vector that could be of length one. Use \code{diag(x, nrow =
+    length(x))} for consistent behaviour. 
 }
 \seealso{
 \code{\link{matrix}}.
