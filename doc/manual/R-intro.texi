@@ -6138,7 +6138,7 @@ meanings are as follows:
 
 @table @code
 @item X11()
-[Unix]
+[UNIX]
 @item windows()
 [Windows]
 @item postscript()
@@ -6202,7 +6202,7 @@ available in the system XGobi by Swayne, Cook and Buja available from
 @noindent
 and these can be accessed from @R{} via the package @pkg{xgobi}.
 
-XGobi currently runs under the X Windows system on either Unix or
+XGobi currently runs under the X Windows system on either UNIX or
 Windows, and @R{} interfaces are available for each.
 
 @node Packages, A sample session, Graphics, Top
@@ -6563,15 +6563,16 @@ want to save it.
 @appendix Invoking R
 
 @menu
-* Invoking R under UNIX::       
+* Invoking R from the command line::       
 * Invoking R under Windows::    
 @end menu
 
-@node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
-@appendixsec Invoking R under UNIX
+@node Invoking R from the command line, Invoking R under Windows, Invoking R, Invoking R
+@appendixsec Invoking R from the command line
 
-The command @samp{R} can be used both for starting the main @R{} program
-with a variety of options in the form
+When working in UNIX or at a command line in Windows, 
+the command @samp{R} can be used both for starting the main @R{} program
+in the form
 
 @display
 @code{R} [@var{options}] [@code{<}@var{infile}] [@code{>}@var{outfile}],
@@ -6584,7 +6585,8 @@ add-on packages) which are not intended to be called ``directly''.
 
 Most options control what happens at the beginning and at the end of an
 @R{} session.  The startup mechanism is as follows (see also the on-line
-help for topic @samp{Startup} for more information).
+help for topic @samp{Startup} for more information, and the section below
+for some Windows-specific details).
 
 @itemize @bullet
 @item
@@ -6679,10 +6681,13 @@ Combine @option{--no-save}, @option{--no-environ}
 @option{--no-site-file}, @option{--no-init-file} and @option{--no-restore}.
 
 @item --no-readline
-Turn off command-line editing via @strong{readline}.  This is useful
+(UNIX only) Turn off command-line editing via @strong{readline}.  This is useful
 when running @R{} from within Emacs using the @acronym{ESS} (``Emacs
 Speaks Statistics'') package.  @xref{The command line editor}, for more
 information.
+
+@item --ess
+(Windows only) Set @code{Rterm} up for use by @code{R-inferior-mode} in @acronym{ESS}.
 
 @item --min-vsize=@var{N}
 @itemx --max-vsize=@var{N}
@@ -6721,13 +6726,13 @@ control the printing of diagnostic messages.
 
 @item --debugger=@var{name}
 @itemx -d @var{name}
-Run @R{} through debugger @var{name}.  Note that in this case, further
+(UNIX only) Run @R{} through debugger @var{name}.  Note that in this case, further
 command line options are disregarded, and should instead be given when
 starting the @R{} executable from inside the debugger.
 
 @item --gui=@var{type}
 @itemx -g @var{type}
-Use @var{type} as graphical user interface (note that this also includes
+(UNIX only) Use @var{type} as graphical user interface (note that this also includes
 interactive graphics).  Currently, possible values for @var{type} are
 @samp{X11} (the default), @samp{gnome} provided that @acronym{GNOME}
 support is available, and @samp{none}.
@@ -6759,7 +6764,7 @@ Currently, the following tools are available.
 @item BATCH
 Run @R{} in batch mode.
 @item COMPILE
-Compile files for use with @R{}.
+(UNIX only) Compile files for use with @R{}.
 @item SHLIB
 Build shared library for dynamic loading.
 @item INSTALL
@@ -6771,14 +6776,14 @@ Build add-on packages.
 @item check
 Check add-on packages.
 @item LINK
-Front-end for creating executable programs.
+(UNIX only) Front-end for creating executable programs.
 @item Rprof
 Post-process @R{} profiling files.
 @item Rdconv
 Convert Rd format to various other formats, including @HTML{}, Nroff,
 La@TeX{}, plain text, and S documentation format.
 @item Rd2dvi
-Convert Rd format to DVI/PDF.
+(@code{Rd2dvi.sh} in Windows) Convert Rd format to DVI/PDF.
 @item Rd2txt
 Convert Rd format to text.
 @item Sd2Rd
@@ -6800,20 +6805,18 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-@node Invoking R under Windows,  , Invoking R under UNIX, Invoking R
+@node Invoking R under Windows,  , Invoking R from the command line, Invoking R
 @appendixsec Invoking R under Windows
 
-The startup procedure under Windows is very similar to that under UNIX,
-but necessarily not identical. There are two versions of @R{} for
-Windows, the console-based version (@code{RGui.exe}) and a terminal
-version (@code{Rterm.exe}, principally intended for batch use).  
-The @code{R.exe} program acts like the @samp{R} command in UNIX, 
-starting @code{Rterm.exe} or acting as a wrapper to various @R{}
-tools via the @code{R CMD} interface.
+There are two ways to run @R{} under Windows.  Within a terminal window
+(e.g. @code{cmd.exe} or @code{command.com} or a more capable shell),
+the methods described in the previous section may be used.  These are 
+principally intended for batch use.  For interactive use, 
+there is a console-based GUI (@code{Rgui.exe}). 
 
-Most options control what happens at the beginning and at the end of an
-@R{} session.  The startup mechanism is as follows (see also the on-line
-help for topic @samp{Startup} for more information).  References to the
+The startup procedure under 
+Windows is very similar to that under UNIX,
+but references to the
 `home directory' need to be clarified, as this is not always defined on
 Windows.  If the environment variable @env{R_USER} is defined, that
 gives the home directory. Next, if the environment variable @env{HOME}
@@ -6823,67 +6826,13 @@ normally are under Windows NT/2000/XP) these define the home
 directory. Failing all those, the home directory is taken to be the
 starting directory.
 
-@itemize @bullet
-@item
-Unless @option{--no-environ} was given, @R{} searches for user and site
-files to process for setting environment variables.  The name of the
-site file is the one pointed to by the environment variable
-@env{R_ENVIRON}; if this is unset or empty, @file{$R_HOME/etc/Renviron.site}
-is used (if it exists).  The user files searched for
-are @file{.Renviron} in the current or in the user's home directory (in
-that order).  These files should contain lines of the form
-@samp{@var{name}=@var{value}}.  (See @code{help(Startup)} for a
-precise description.)  Variables you might want to set include
-@env{R_PAPERSIZE} (the default paper size) and @env{R_LIBS} (controls
-the list of @R{} library trees searched for add-on packages).
-
-Environment variables can also be supplied as
+Environment variables can be supplied as 
 @samp{@var{name}=@var{value}} pairs at the end of  the command line.
 
-@item
-Then @R{} searches for the site-wide startup profile unless the command
-line option @option{--no-site-file} was given.  The name of this file is
-taken from the value of the @env{R_PROFILE} environment variable.  If
-that variable is unset, the default @file{$R_HOME/etc/Rprofile.site} is
-used if this exists.
-
-@item
-Then, unless @option{--no-init-file} was given, @R{} searches for a file
-called @file{.Rprofile} in the current directory or in the user's home
-directory (in that order) and sources it.
-
-@item
-It also loads a saved image from @file{.RData} if there is one (unless
-@option{--no-restore} or @option{--no-restore-data} was specified).
-
-@item
-Finally, if a function @code{.First} exists, it is executed.  This
-function (as well as @code{.Last} which is executed at the end of the
-@R{} session) can be defined in the appropriate startup profiles, or
-reside in @file{.RData}.
-@end itemize
-
-In addition, there are options for controlling the memory available to
-the @R{} process (see the on-line help for topic @samp{Memory} for more
-information).  Users will not normally need to use these.  @R{} for
-Windows has an additional flag @option{--max-mem-size} described below,
-which by default does limit the memory usage of an @R{} process.
-
-@R{} for Windows accepts the following command line options.
+The following additional command-line options are available when 
+invoking @code{RGui.exe}.
 
 @table @option
-@item --help
-@itemx -h
-Print usage message and exit.
-
-@item --version
-Print version info and exit.
-
-@item RHOME
-Print the path to the @R{} ``home directory'' to standard output and
-exit successfully.  @R{} installation puts everything (executables, packages, etc.)
-into this directory.
-
 @item --mdi
 @itemx --sdi
 @itemx --no-mdi
@@ -6891,143 +6840,13 @@ Control whether @code{Rgui} will operate as an MDI program (the default,
 with multiple child windows within one main window) or an SDI application
 (with multiple top-level windows for the console, graphics and pager).
 
-@item --save
-@itemx --no-save
-Control whether data sets should be saved or not at the end of the @R{}
-session.  If neither is given in an interactive session, the user is
-asked for the desired behavior when ending the session with @kbd{q()};
-in batch mode, one of these must be specified.
-
-@item --no-site-file
-Suppress reading of the site-wide startup profile.
-
-@item --no-init-file
-Suppress reading of the directory or user's @file{.Rprofile} file.
-
-@item --no-environ
-Suppress reading of @file{.Renviron}.
-
-@item --restore
-@itemx --no-restore
-@itemx --no-restore-data
-Control whether saved images (file @file{.RData} in the directory where
-@R{} was started) should be restored at startup or not.
-The default is to restore. (@option{--no-restore} implies all the specific
-@option{--no-restore-*} options.)
-
-@item --no-restore-history
-Control whether the history file (normally file @file{.Rhistory} in the
-directory where @R{} was started, but can be set by the environment
-variable @env{R_HISTFILE}) should be restored at startup or not.  The
-default is to restore.
-
-@item --vanilla
-Combine @option{--no-save}, @option{--no-restore},
-@option{--no-site-file}, @option{--no-init-file} and
-@option{--no-environ}.
-
-@item --min-vsize=@var{N}
-@itemx --max-vsize=@var{N}
-Specify the minimum or maximum amount of memory used for variable size
-objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
-@var{N} must either be an integer or an integer ending with @samp{G},
-@samp{M}, @samp{K}, or @samp{k}, meaning `Giga' (2^30), `Mega' (2^20),
-(computer) `Kilo' (2^10), or regular `kilo' (1000).
-
-@item --min-nsize=@var{N}
-@itemx --max-nsize=@var{N}
-Specify the amount of memory used for fixed size objects by setting the
-number of ``cons cells'' to @var{N}.  See the previous option for
-details on @var{N}.  A cons cell takes 28 bytes.
-
-@item --max-mem-size=@var{N}
-Specify a limit for the amount of memory to be used both for @R{}
-objects and working areas (`@code{malloc}-ed' memory).  This is set by
-default to the smaller of 256Mb and the amount of physical RAM in the machine.
-
-@item --max-ppsize=@var{N}
-Specify the maximum size of the pointer protection stack as @var{N}
-locations.  This defaults to 10000, but can be increased to allow 
-large and complicated calculations to be done.  Currently the maximum
-value accepted is 100000.
-
-@item --quiet
-@itemx --silent
-@itemx -q
-Don't print startup message.
-
-@item --slave
-Make @R{} run as quietly as possible.
-
-@item --verbose
-Print more information about progress, and in particular set @R{}'s
-option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
-control the printing of diagnostic messages.
-
-@item --ess
-Set @code{Rterm} up for use by @code{R-inferior-mode} in @acronym{ESS}.
-
 @item --debug
 Enable the ``Break to debugger'' menu item in @code{Rgui}, and trigger
 a break to the debugger during command line processing.
-
-@item --args
-This flag does nothing except cause the rest of the command line to be
-skipped: this can be useful to retrieve values from it with
-@code{commandArgs()}.
 @end table
 
-The command @code{R CMD} allows the invocation of various tools which
-are useful in conjunction with @R{}, but not intended to be called
-``directly''.  The general form is
-
-@example
-R CMD @var{command} @var{args}
-@end example
-
-@noindent
-where @var{command} is the name of the tool and @var{args} the arguments
-passed on to it.
-
-Currently, the following tools are available.
-
-@table @code
-@item INSTALL
-Install add-on packages.
-@item REMOVE
-Remove add-on packages.
-@item SHLIB
-Make a DLL for use with @code{dyn.load}.
-@item BATCH
-Run @R{} in batch mode.
-@item build
-Build add-on packages.
-@item check
-Check add-on packages.
-@item Rprof
-Post-process @R{} profiling files.
-@item Rdconv
-Convert Rd format to various other formats, including @HTML{}, Nroff,
-La@TeX{}, plain text, and S documentation format.
-@item Rd2dvi.sh
-Convert Rd format to DVI/PDF.
-@item Rd2txt
-Convert Rd format to text.
-@item Sd2Rd
-Convert S documentation to Rd format.
-@end table
-
-Use
-
-@example
-R CMD @var{command} --help
-@end example
-
-@noindent
-to obtain usage information for each of the tools accessible via the
-@code{R CMD} interface.
-
-You may also specify your own @code{*.bat} or @code{*.exe} file instead of one of the built-in
+In Windows with @code{R CMD} you may also specify your own @code{*.bat} or @code{*.exe} 
+file instead of one of the built-in
 commands.  It will be run with the following environment variables set appropriately:
 @code{R_HOME}, @code{R_VERSION}, @code{R_CMD}, @code{R_OSTYPE}, @code{PATH},
 @code{PERL5LIB}, and @code{TEXINPUTS}.  For example, if you already have @code{latex.exe} 
@@ -7036,7 +6855,6 @@ on your path, then
 @example
 R CMD latex.exe mydoc
 @end example
-
 @noindent
 will run LaTeX on mydoc.tex, with the path to @R{}'s @code{share/texmf} macros 
 added to @code{TEXINPUTS}.
