@@ -109,7 +109,8 @@ extern SInt32	systemVersion ;
 static void	FreeColors(void);
 static double	pixelHeight(void);
 static double	pixelWidth(void);
-static int		SetColor(int, int, NewDevDesc*);
+static int		Mac_SetColor(int, NewDevDesc*);
+static int		Mac_SetFill(int, NewDevDesc*);
 static void		SetFont(int, int, NewDevDesc*);
 static void		SetLinetype(int, double, NewDevDesc*);
 static int		SetBaseFont(MacDesc *xd);
@@ -234,7 +235,7 @@ static Rboolean Mac_Open(NewDevDesc *dd, MacDesc *xd, char *dsp,
     gGReference[WinIndex].printPort = nil;
     gGReference[WinIndex].activePort = nil;
     gGReference[WinIndex].MenuIndex = 0;
-    xd->col[1] = xd->col[0] = NA_INTEGER;
+    xd->color = xd->fill = NA_INTEGER;
 //    dd->col = R_RGB(0, 0, 0);
     xd->resize = false;
     xd->lineType = 0;
@@ -370,14 +371,15 @@ static void Mac_NewPage(int fill, NewDevDesc *dd)
   
     GetPortBounds ( port, & portRect ) ;
  
-    SetColor(fill, 0, dd);
+    Mac_SetFill(fill, dd);
     PaintRect(&portRect);
 
 
     /* FIXME:  Why set the foreground colour here??
      *
-     * SetColor(dd->fg, 1, dd);
+     SetColor(dd->fg, 1, dd);
      */
+
     SetPort(savedPort);
     
 }
@@ -551,20 +553,20 @@ static void Mac_Rect(double x0, double y0, double x1, double y1,
     SetPort(port);
 
     if (fill != NA_INTEGER){
-	SetColor(fill, 0, dd);
+	Mac_SetFill(fill, dd);
 	PaintRect(&myRect);
     }
     if (col != NA_INTEGER){
-	SetColor(col, 0, dd);
+	Mac_SetColor(col, dd);
 	FrameRect(&myRect);
     }
     /* (2) Draw the rectangle into the backing pixmap */
     if (fill != NA_INTEGER){
-	SetColor(fill, 1, dd);
+	Mac_SetColor(fill, dd);
 	PaintRect(&myRect);
     }
     if (col != NA_INTEGER){
-	SetColor(col, 1, dd);
+	Mac_SetColor(col, dd);
 	FrameRect(&myRect);
     }
     SetPort(savedPort);
@@ -617,11 +619,11 @@ static void Mac_Circle(double x, double y, double r,
     SetPort(port);
   
     if (fill != NA_INTEGER){
-	SetColor(fill, 0, dd);
+	Mac_SetFill(fill, dd);
 	PaintArc(&myRect, 0, 360);
     }
     if (col != NA_INTEGER){
-	SetColor(col, 0, dd);
+	Mac_SetFill(col, dd);
 	FrameArc(&myRect, 0, 360);
     }
 
@@ -629,11 +631,11 @@ static void Mac_Circle(double x, double y, double r,
     /* Only do this if it makes sense */
 
     if (fill != NA_INTEGER){
-	SetColor(fill, 1, dd);
+	Mac_SetColor(fill, dd);
 	PaintArc(&myRect, 0, 360);
     }
     if (col != NA_INTEGER){
-	SetColor(col, 1, dd);
+	Mac_SetColor(col, dd);
 	FrameArc(&myRect, 0, 360);
     }
     SetPort(savedPort);
@@ -686,7 +688,7 @@ static void Mac_Line(double x1, double y1, double x2, double y2,
     
     SetPort(port);
    
-    SetColor(col, 0, dd);
+    Mac_SetFill(col, dd);
     SetLinetype(lty, lwd, dd);
     /* For some reason SetLineType does not work ! */
     /* so we have fixed lwd to 1            */
@@ -703,7 +705,7 @@ static void Mac_Line(double x1, double y1, double x2, double y2,
 
    	SetPort(port);
  
-    SetColor(col, 1, dd);
+    Mac_SetColor(col, dd);
     if(xd->lineType == 0){
 	MoveTo(x1, y1);
 	LineTo(x2, y2);
@@ -803,19 +805,19 @@ static void Mac_Polygon(int n, double *x, double *y,
     ClosePoly();
 
     if (fill != NA_INTEGER){
-	SetColor(fill, 0, dd);
+	Mac_SetFill(fill, dd);
 	PaintPoly(myPolygon);
     }
     if (col != NA_INTEGER){
-	SetColor(col, 0, dd);
+	Mac_SetFill(col, dd);
 	FramePoly(myPolygon);
     }
     if (fill != NA_INTEGER){
-	SetColor(fill, 1, dd);
+	Mac_SetColor(fill, dd);
 	PaintPoly(myPolygon);
     }
     if (col != NA_INTEGER){
-	SetColor(col, 1, dd);
+	Mac_SetColor(col,  dd);
 	FramePoly(myPolygon);
     }
     KillPoly(myPolygon);
@@ -893,7 +895,7 @@ static void Mac_Text(double x, double y, char *str,
 
     MoveTo(xx, yy);
  
-    SetColor(col, 0, dd);
+    Mac_SetFill(col, dd);
    
     size = cex * ps + 0.5;
     SetFont(font, size, dd);
@@ -902,7 +904,7 @@ static void Mac_Text(double x, double y, char *str,
 
     NewRasterTextRotation(str, face, size, col, xx, yy, rot, xd->window);
     
-    SetColor(col, 1, dd);
+    Mac_SetColor(col, dd);
 
     SetPort(savedPort);
 
@@ -930,13 +932,9 @@ static Rboolean Mac_Locator(double *x, double *y, NewDevDesc *dd)
 
     GetPort(&savePort);
 
-#if TARGET_API_MAC_CARBON
     SetPortWindowPort(xd->window);
     SetCursor( GetQDGlobalsArrow ( & arrow ) ) ;
-#else
-    SetPort(xd->window);
-    SetCursor(&qd.arrow);
-#endif
+
 
     while(!mouseClick) {
 	gotEvent = WaitNextEvent( everyEvent, &event, 0, nil);
@@ -1058,8 +1056,19 @@ static void Mac_Hold(NewDevDesc *dd)
    /*        1 - portrait                                                */
    /*        2 - landscape                                               */
    /*        3 - flexible                                                */
+Rboolean innerMacDeviceDriver(NewDevDesc *dd, char *display,
+			 double width, double height, double pointsize);
 
-Rboolean MacDeviceDriver(NewDevDesc *dd, char *display,
+Rboolean MacDeviceDriver(DevDesc *dd, char *display,
+			 double width, double height, double pointsize)
+{
+ return innerMacDeviceDriver((NewDevDesc *)dd, display,
+			 width,  height,  pointsize);
+
+}
+
+
+Rboolean innerMacDeviceDriver(NewDevDesc *dd, char *display,
 			 double width, double height, double pointsize)
 {
     MacDesc *xd;
@@ -1085,7 +1094,7 @@ Rboolean MacDeviceDriver(NewDevDesc *dd, char *display,
     dd->close      = Mac_Close;
     dd->activate   = Mac_Activate;
     dd->deactivate = Mac_Deactivate;
-    dd->size     = Mac_Size;
+    dd->size       = Mac_Size;
     dd->newPage    = Mac_NewPage;
     dd->clip       = Mac_Clip;
     dd->strWidth   = Mac_StrWidth;
@@ -1358,11 +1367,7 @@ static double pixelHeight(void)
 static void SetFont(int face, int size, NewDevDesc *dd)
 {
     int realFace;
-#if TARGET_API_MAC_CARBON
     FMFontFamily postFontId;
-#else
-    short postFontId;
-#endif
     GrafPtr savePort;
     /* you can not chnage the picture which is drawed directly, you can only */
     /* see the effect for the next call */
@@ -1379,23 +1384,17 @@ static void SetFont(int face, int size, NewDevDesc *dd)
     if (face == 2) realFace = 1;	/* bold */
     if (face == 3) realFace = 2;	/* italic */
     if (face == 4) realFace = 3;	/* bold & italic */
-#if TARGET_API_MAC_CARBON
     if(systemVersion > kMinSystemVersion)
     postFontId = FMGetFontFamilyFromName(PostFont);
     else
      GetFNum(PostFont, &postFontId);
-#else
-    GetFNum(PostFont, &postFontId);
-#endif
+
     if (face == 5){ realFace = 0;	/* plain symbol */
-#if TARGET_API_MAC_CARBON
+
     if(systemVersion > kMinSystemVersion)
     postFontId = FMGetFontFamilyFromName(MacSymbolFont);
     else
      GetFNum(MacSymbolFont, &postFontId);
-#else
-    GetFNum(MacSymbolFont, &postFontId);
-#endif
     }
     TextFont(postFontId);
     TextFace(realFace);
@@ -1404,15 +1403,29 @@ static void SetFont(int face, int size, NewDevDesc *dd)
 
 }
 
-static int SetColor(int color, int which, NewDevDesc *dd)
+static int Mac_SetColor(int color, NewDevDesc *dd)
 {
     MacDesc *xd = (MacDesc*)dd->deviceSpecific;
     
-    if (color != xd->col[which]) { 
-	xd->rgb[which].red = R_RED(color) * 255;
-	xd->rgb[which].green = R_GREEN(color) * 255;
-	xd->rgb[which].blue = R_BLUE(color) * 255;
-    RGBForeColor(&(xd->rgb[which]));
+    if (color != xd->color) { 
+	xd->rgb[1].red = R_RED(color) * 255;
+	xd->rgb[1].green = R_GREEN(color) * 255;
+	xd->rgb[1].blue = R_BLUE(color) * 255;
+    RGBForeColor(&(xd->rgb[1]));
+	return 1;
+    }
+    return 0;
+}
+
+static int Mac_SetFill(int fill, NewDevDesc *dd)
+{
+    MacDesc *xd = (MacDesc*)dd->deviceSpecific;
+    
+    if (fill != xd->fill) { 
+	xd->rgb[0].red = R_RED(fill) * 255;
+	xd->rgb[0].green = R_GREEN(fill) * 255;
+	xd->rgb[0].blue = R_BLUE(fill) * 255;
+    RGBForeColor(&(xd->rgb[0]));
 	return 1;
     }
     return 0;
