@@ -3,7 +3,8 @@
 \alias{Filters}
 \title{Choose a List of Files Interactively}
 \description{
-  Choose a list of zero or more files interactively.
+  Use a Windows file dialog to choose a list of zero or more files 
+interactively.
 }
 \usage{
 choose.files(default = "", caption = "Select files",
@@ -28,18 +29,32 @@ Filters
   zero files are returned, whereas \code{\link{file.choose}} would
   signal an error.
 
-  The \code{filters} argument should be an \code{n} by \code{2} character
-  matrix.  The first column gives the description the user will see,
-  the second column gives the mask(s) to select those files.  If more than
-  one mask is used, separate them by semicolons, with no spaces.
+  Windows file dialog boxes include a list of ``filters'', which allow
+  the file selection to be limited to files of specific types.  
+  The \code{filters} argument to \code{choose.files} allows the list
+  of filters to be set.  It should be an \code{n} by \code{2} character
+  matrix.  The first column gives, for each filter, the description the 
+  user will see, while the second column gives the mask(s) to select 
+  those files.  If more than one mask is used, separate them by 
+  semicolons, with no spaces.  The \code{index} argument chooses which
+  filter will be used initially.
 
   \code{Filters} is a matrix giving the descriptions and masks for
-  the file types that \R knows about.
+  the file types that \R knows about.  Print it to see typical formats
+  for filter specifications.  The examples below show how particular 
+  filters may be selected.
+
+  If you would like to display files in a particular directory,
+  give a fully qualified file mask (e.g. \code{'c:\\\\*.*'})
+  in the \code{default} argument.  If a directory is not given, the
+  dialog will start in the current directory the first time, and
+  ``remember'' the last directory on subsequent invocations.
 }
 \seealso{
   \code{\link{file.choose}}
 }
 \examples{
-if (interactive()) choose.files(filters = Filters[c("zip", "All"),])
+if (interactive()) 
+	choose.files(filters = Filters[c("zip", "All"),])
 }
 \keyword{file}

@@ -1018,6 +1018,12 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     filterindex = asInteger(CAD4R(args));
     if(length(def) != 1 )
 		errorcall(call, "default must be a character string");
+	strcpy(path, CHAR(STRING_ELT(def, 0)));
+	temp = strchr(path,'/');
+	while (temp) {
+		*temp = '\\';
+		temp = strchr(temp,'/');
+	}
     if(length(caption) != 1 )
 		errorcall(call, "caption must be a character string");
 	if(multi == NA_LOGICAL)
@@ -1036,7 +1042,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	*temp = 0;
 
-    askfilenames(CHAR(STRING_ELT(caption, 0)), CHAR(STRING_ELT(def, 0)),
+    askfilenames(CHAR(STRING_ELT(caption, 0)), path,
     			 multi, cfilters, filterindex,
                  list, 65500);  /* list declared larger to protect against overwrites */
     Rwin_fpset();
