@@ -1010,7 +1010,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
                 ## level set has changed
                 value[[jj]][ri] <- if(is.factor(xij)) as.vector(xij) else xij
                 ## copy names if any
-                names(value[[jj]])[ri] <- names(xij)
+                if(!is.null(nm <- names(xj))) names(value[[jj]])[ri] <- nm
             }
 	}
     }
