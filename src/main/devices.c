@@ -192,7 +192,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
     char *display, *vmax;
-    double height, width, ps;
+    double height, width, ps, gamma;
     gcall = call;
     vmax = vmaxget();
     display = SaveString(CAR(args), 0); args = CDR(args);
@@ -200,14 +200,17 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     height = asReal(CAR(args)); args = CDR(args);
     if (width <= 0 || height <= 0)
 	errorcall(call, "invalid width or height");
-    ps = asReal(CAR(args));
+    ps = asReal(CAR(args)); args = CDR(args);
+    gamma = asReal(CAR(args)); args = CDR(args);
+    if (gamma < 0 || gamma > 100)
+	errorcall(call, "invalid gamma value");
     /* Allocate and initialize the device driver data */
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!X11DeviceDriver(dd, display, width, height, ps)) {
+    if (!X11DeviceDriver(dd, display, width, height, ps, gamma)) {
 	free(dd);
 	errorcall(call, "unable to start device X11\n");
     }

@@ -553,7 +553,7 @@ FUNTAB R_FunTab[] =
 
 /* Device Drivers */
 
-{"X11",		do_X11,		0,	111,	4,	PP_FUNCALL},
+{"X11",		do_X11,		0,	111,	5,	PP_FUNCALL},
 {"PS",		do_PS,		0,	111,	9,	PP_FUNCALL},
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},
 {"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},

@@ -147,7 +147,7 @@ static void   X11_Line(double, double, double, double, int, DevDesc*);
 static int    X11_Locator(double*, double*, DevDesc*);
 static void   X11_Mode(int, DevDesc*);
 static void   X11_NewPage(DevDesc*);
-static int    X11_Open(DevDesc*, x11Desc*, char*, double, double);
+static int    X11_Open(DevDesc*, x11Desc*, char*, double, double, double);
 static void   X11_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   X11_Polyline(int, double*, double*, int, DevDesc*);
 static void   X11_Rect(double, double, double, double, int, int, int, DevDesc*);
@@ -782,7 +782,8 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 	/* of course :)						*/
 	/********************************************************/
 
-static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
+static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
+                    double w, double h, double gamma)
 {
     /* if have to bail out with "error" then must */
     /* free(dd) and free(xd) */
@@ -798,10 +799,11 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
     if (!displayOpen) {
 	if ((display = XOpenDisplay(dsp)) == NULL)
 	    return 0;
+#define SETGAMMA
 #ifdef SETGAMMA
-	RedGamma   = dd->gp.gamma;
-	GreenGamma = dd->gp.gamma;
-	BlueGamma  = dd->gp.gamma;
+	RedGamma   = gamma;
+	GreenGamma = gamma;
+	BlueGamma  = gamma;
 #endif
 	screen = DefaultScreen(display);
 	rootwin = DefaultRootWindow(display);
@@ -1458,21 +1460,16 @@ static void X11_Hold(DevDesc *dd)
 	/********************************************************/
 
 
-	/*  X11 Device Driver Arguments		      */
-
-	/*  cpars[0] = display name		      */
-	/*  cpars[1] = paper type (a4, letter, none)  */
-
-	/*  npars[0] = width (inches)		      */
-	/*  npars[1] = height (inches)		      */
-	/*  npars[2] = base pointsize		      */
-	/*  npars[3] = paper orientation	      */
-	/*	       1 - portrait		      */
-	/*	       2 - landscape		      */
-	/*	       3 - flexible		      */
+	/*  X11 Device Driver Arguments		*/
+	/*    1)  display name			*/
+	/*    2)  width (inches)		*/
+	/*    3)  height (inches)		*/
+	/*    4)  base pointsize		*/
+	/*    5)  gamma correction factor	*/
 
 int X11DeviceDriver(DevDesc *dd, char *display,
-		    double width, double height, double pointsize)
+		    double width, double height,
+		    double pointsize, double gamma)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(xd) */
@@ -1499,7 +1496,7 @@ int X11DeviceDriver(DevDesc *dd, char *display,
 
     /*	Start the Device Driver and Hardcopy.  */
 
-    if (!X11_Open(dd, xd, display, width, height)) {
+    if (!X11_Open(dd, xd, display, width, height, gamma)) {
 	free(xd);
 	return 0;
     }
