@@ -21,7 +21,17 @@
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
 # Bugs: still get ``\bsl{}'' in verbatim-like, see e.g. Examples of apropos.Rd
-# New: \verbatim{}: like \examples{}, but can appear 0-n times [MM].
+
+## New: \verbatim{}: like \examples{}, but can appear 0-n times [MM].
+## ---  ===========
+## Original idead:  Can have *SEVERAL* verbatim  codeblocks which should
+## appear  (almost) WHERE they were initially !!
+## BUT, this is not really possible:
+##      we collect the block into a hash array and don't even remember
+##      their order in the *.Rd file
+##
+## ==> Consequence: Allow \verbatim{ ...}  only *within* other
+##     top-level blocks ...
 
 require "$RHOME/etc/html-layout.pl";
 
@@ -32,7 +42,7 @@ require "$RHOME/etc/html-layout.pl";
 	       "seealso", "examples", "author", "note");
 
 # These may appear multiply but are of simple structure:
-@multiblocknames = ("alias", "keyword", "verbatim");
+@multiblocknames = ("alias", "keyword");
 
 
 # These should NOT contain letters from $LATEX_SPEC
@@ -95,7 +105,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 	      s/^\\%|([^\\])\\%/$1escaped_percent_sign/go){};
 	s/^([^%]*)%.*$/$1/o;
 	s/escaped_percent_sign/\\%/go;
-	$complete_text = "$complete_text$_";
+	$complete_text .= $_;
     }
     printf STDERR "-- read file '%s';\n",$_[0] if $debug;
 
@@ -116,13 +126,21 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 	@keywords= get_multi($complete_text,"keyword");
 
 	get_blocks($complete_text);
-    }
 
-    rdoc2html($htmlfile)	if $type =~ /html/i;
-    rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
-    rdoc2Sd($Sdfile)    	if $type =~ /Sd/i;
-    rdoc2latex($latexfile)	if $type =~ /tex/i;
-    rdoc2ex($Exfile)	 	if $type =~ /example/i;
+	get_sections($complete_text)
+	  if $type =~ /html/i || $type =~ /nroff/i ||
+	     $type =~ /Sd/    || $type =~ /tex/i;
+
+	rdoc2html($htmlfile)	if $type =~ /html/i;
+	rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
+	rdoc2Sd($Sdfile)    	if $type =~ /Sd/i;
+	rdoc2latex($latexfile)	if $type =~ /tex/i;
+	rdoc2ex($Exfile)	if $type =~ /example/i;
+
+
+      } else {
+	warn "\n*** Rdconv(): no type specified\n";
+      }
 }
 
 
@@ -212,7 +230,7 @@ sub get_blocks {
 	if($text =~ /\\($block)($ID)/){
 	    ($id, $blocks{$block}) = get_arguments($block, $text, 1);
 	    print STDERR "found: $block\n" if $debug;
-	    if((($block =~ /usage/) || ($block =~ /examples/))){
+	    if((($block =~ /usage/) || ($block =~ /examples/))) {
 		## multiple empty lines to one
 		$blocks{$block} =~ s/^[ \t]+$//;
 		$blocks{$block} =~ s/\n\n\n/\n\n/gom;
@@ -345,13 +363,15 @@ sub print_blocks {
 
 
 
-sub undefined_command {
+# Drop the command and leave it's inside argument, i.e.,
+#  replace "\abc{longtext}"
+#  by           "longtext"
+sub undefine_command {
 
     my ($text, $cmd) = @_;
 
     my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\$cmd")
-	  &&  $text =~ /\\$cmd/){
+    while(checkloop($loopcount++, $text, "\\$cmd") &&  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$1/s;
     }
@@ -359,6 +379,24 @@ sub undefined_command {
 }
 
 
+# Drop the command  AND  it's inside argument, i.e.,
+#  replace "_text1_\abc{longtext}-text2-" by "_text1_-text2-"
+sub drop_full_command {
+
+    my ($text, $cmd) = @_;
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\$cmd") &&  $text =~ /\\$cmd/){
+	my ($id, $arg)	= get_arguments($cmd, $text, 1);
+	$text =~ s/\\$cmd$id.*$id/$`$'/s;
+    }
+    $text;
+}
+
+
+# Replace the command and and its closing bracket
+# by  $before  and  $after, respectively, e.g.,
+#  replace "\abc{longtext}"
+#  by       "<Bef>longtext<Aft>"
 sub replace_command {
 
     my ($text, $cmd, $before, $after) = @_;
@@ -373,12 +411,10 @@ sub replace_command {
 }
 
 
-#************************** HTML ********************************
+#==************************ HTML ********************************
 
 
 sub rdoc2html { # (filename) ; 0 for STDOUT
-
-    get_sections($complete_text);
 
     if($_[0]!= -1) {
       if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
@@ -518,7 +554,6 @@ sub code2html {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
@@ -533,7 +568,9 @@ sub code2html {
 	}
     }
 
+    $text = undefine_command($text, "dontrun");
     $text =~ s/\\\\/\\/go;
+
     unmark_brackets($text);
 }
 
@@ -687,12 +724,10 @@ sub html_tables {
 
 
 
-#**************************** nroff ******************************
+#==************************** nroff ******************************
 
 
 sub rdoc2nroff { # (filename); 0 for STDOUT
-
-    get_sections($complete_text);
 
     if($_[0]!= -1) {
       if($_[0]) { open nroffout, "> $_[0]"; } else { open nroffout, "| cat"; }
@@ -778,12 +813,12 @@ sub text2nroff {
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
-    $text = undefined_command($text, "link");
-    $text = undefined_command($text, "emph");
-    $text = undefined_command($text, "bold");
-    $text = undefined_command($text, "textbf");
-    $text = undefined_command($text, "mathbf");
-    $text = undefined_command($text, "email");
+    $text = undefine_command($text, "link");
+    $text = undefine_command($text, "emph");
+    $text = undefine_command($text, "bold");
+    $text = undefine_command($text, "textbf");
+    $text = undefine_command($text, "mathbf");
+    $text = undefine_command($text, "email");
     $text = replace_command($text, "file", "`", "'");
     $text = replace_command($text, "url", "<URL: ", ">");
 
@@ -860,7 +895,8 @@ sub code2nroff {
     $text =~ s/\\dots/.../go;
     $text =~ s/\\n/\\\\n/g;
 
-    $text = undefined_command($text, "link");
+    $text = undefine_command($text, "link");
+    $text = undefine_command($text, "dontrun");
 
     unmark_brackets($text);
 }
@@ -1046,12 +1082,10 @@ sub nroff_tables {
 }
 
 
-#****************************** Sd ******************************
+#==**************************** Sd ******************************
 
 
 sub rdoc2Sd { # (filename)
-
-    get_sections($complete_text);
 
     if($_[0]!= -1) {
       if($_[0]) { open Sdout, "> $_[0]"; } else { open Sdout, "| cat"; }
@@ -1082,7 +1116,6 @@ sub rdoc2Sd { # (filename)
 	print Sdout ".KW ", shift( @keywords ), "\n";
     }
     print Sdout ".WR\n";
-
     close Sdout;
 }
 
@@ -1161,7 +1194,7 @@ sub Sd_print_sections {
 }
 
 
-#*********************** Example ***********************************
+#==********************* Example ***********************************
 
 
 sub rdoc2ex { # (filename)
@@ -1211,20 +1244,21 @@ sub code2examp {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-    $text = undefined_command($text, "link");
+    $text = undefine_command($text, "link");
+    $text = replace_command($text, "dontrun","##_test_: ", "");
+
     $text =~ s/\\\\/\\/g;
 
     unmark_brackets($text);
 }
 
 
-#*********************** LaTeX ***********************************
+#==********************* LaTeX ***********************************
 
 
 sub rdoc2latex {# (filename)
 
     my($c,$a);
-    get_sections($complete_text);
 
     if($_[0]!= -1) {
       if($_[0]) { open latexout, "> $_[0]"; } else { open latexout, "| cat"; }
@@ -1327,8 +1361,9 @@ sub code2latex {
 	    $text =~ s/\\link$id.*$id/HYPERLINK($arg)/s;
 	}
     } else {
-	$text = undefined_command($text, "link");
+	$text = undefine_command($text, "link");
     }
+    $text = undefine_command($text, "dontrun");
     unmark_brackets($text);
 }
 
@@ -1483,3 +1518,9 @@ sub latex_code_alias {
     $c =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
     $c;
 }
+
+
+# Local variables: **
+# perl-indent-level: 4 **
+# page-delimiter: "^#==" **
+# End: **
