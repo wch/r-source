@@ -6,7 +6,7 @@
 #   `Freeware. You may not resell it or claim you wrote it. 
 #    You can use it for anything, commercial or otherwise.'
 #
-# Modifications for R (C) 1999, 2000 B. D. Ripley
+# Modifications for R (C) 1999-2001 B. D. Ripley
 #
 # Routines for HTML to RTF
 #
@@ -558,6 +558,19 @@ sub end_table_cell {
     print RTF "\\cell\n";
 }
 
+# skip scripts
+$Begin{"SCRIPT"} = "begin_script";
+$End{"SCRIPT"} = "end_script";
+
+sub begin_script {
+    local ($element, $tag) = @_;
+    $ignore_text = 1;
+}
+
+sub end_script {
+    local ($element) = @_;
+    $ignore_text = 0;
+}
 
     
 1;
