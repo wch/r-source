@@ -15,6 +15,8 @@ SEXP setVarInFrame(SEXP, SEXP, SEXP);
 #define streql(s, t)	(!strcmp((s), (t)))
 void R_PreserveObject(SEXP);
 
+SEXP Rf_append(SEXP, SEXP);
+
 /* environment cell access */
 typedef struct R_varloc_st *R_varloc_t;
 R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
@@ -786,12 +788,25 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
     SEXP e, val, args, this_sym, op;
     int nprotect = 0, i, nargs = length(matched_call)-1, error_flag;
-    Rboolean prim_case;
-    PROTECT(e = duplicate(matched_call)); nprotect++;
+    Rboolean prim_case, dotsDone;
     /* for primitive .nextMethod's, suppress further dispatch to avoid
      * going into an infinite loop of method calls
     */
-    op = findVar(R_dot_nextMethod, ev);
+    op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
+    if(op == R_UnboundValue)
+	error("Internal error in callNextMethod: \".nextMethod\" was not assigned in the frame of the method call");
+    /* If "..." is an argument, need to pass it down to next method;
+     * match.call() doesn't seem (always?) to include this, so we
+     * check below and add it if needed. */
+    dotsDone = (findVarInFrame3(ev, R_DotsSymbol, TRUE) == R_UnboundValue);
+    {PROTECT(e = duplicate(matched_call)); nprotect++;}
+    if(!dotsDone) {
+	SEXP ee = e, dots;
+	PROTECT(dots = allocVector(LANGSXP, 1)); nprotect++;
+	SETCAR(dots, R_DotsSymbol);
+	for(ee = e; CDR(ee) != R_NilValue; ee = CDR(ee));
+	SETCDR(ee, dots);
+    }
     prim_case = isPrimitive(op);
     if(prim_case) {
 	/* retain call to primitive function, suppress method
@@ -803,13 +818,17 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
 	SETCAR(e, R_dot_nextMethod); /* call .nextMethod instead */
     args = CDR(e);
     /* e is a copy of a match.call, with expand.dots=FALSE.  Turn each
-    <TAG>=value into <TAG> = <TAG>, except  ... = value goes into
-    ... (no arg name of course for ...) */
+    <TAG>=value into <TAG> = <TAG>, except  ... = goes into ... (if it
+    appears) and there may be a "..." included */
     for(i=0; i<nargs; i++) {
 	this_sym = TAG(args);
-	if(this_sym == R_DotsSymbol)
-		SET_TAG(args, R_NilValue);
-	SETCAR(args, this_sym);
+	if(this_sym == R_DotsSymbol) {
+	    /* don't copy this; will have been appended */
+	    if(dotsDone)
+		error("In processing callNextMethod, found a \"...\" in the matched call, but no corresponding ... argument ");
+	}
+	else
+	    SETCAR(args, this_sym);
 	args = CDR(args);
     }
     if(prim_case) {
