@@ -30,10 +30,10 @@ representation <-
     }
     includes <- as.character(value[nchar(anames)==0])
     if(any(duplicated(includes)))
-        stop(paste("Duplicate class names among superclasses:", paste(includes[duplicated(includes)], collapse = ", ")))
+        stop(paste("Duplicate class names among superclasses:", paste(includes[duplicated(includes)], collapse = ", ")), sep="")
     slots <- anames[nchar(anames)>0]
     if(any(duplicated(slots)))
-       stop(paste("Duplicated slot names: ", paste(slots[duplicated(slots)], collapse="")))
+       stop(paste("Duplicated slot names: ", paste(slots[duplicated(slots)], collapse="")), sep="")
     value
 }
 
@@ -112,7 +112,7 @@ getClass <-
             assignClassDef(Class, value, 0)
         }
         else if(!.Force && is.na(match(Class, .BasicClasses)))
-        stop(paste("\"", Class, "\" is not a defined class"))
+        stop(paste("\"", Class, "\" is not a defined class", sep=""))
       ## else, return NULL.  This may change, if we force formal definitions
       ## for all classes, including (the tough ones) NULL, array, matrix, ts 
     }
@@ -273,7 +273,7 @@ new <-
                     }
                     else
                         stop(paste("Can't use object of class \"", Classi,
-                                   "\" in new():  Class \"", Class, "\" does not extend that class"))
+                                   "\" in new():  Class \"", Class, "\" does not extend that class"), sep="")
                 }
             }
         }
@@ -282,11 +282,11 @@ new <-
             snames <- names(elements)
             if(any(duplicated(snames)))
                 stop(paste("Duplicated slot names:",
-                           paste(snames[duplicated(snames)], collapse = ", ")))
+                           paste(snames[duplicated(snames)], collapse = ", ")), sep="")
             which  <- match(snames, names(slotDefs))
             if(any(is.na(which)))
                 stop(paste("Invalid names for properties of class ",
-                           Class, ": ", paste(snames[is.na(which)], collapse=", ")))
+                           Class, ": ", paste(snames[is.na(which)], collapse=", ")), sep="")
             for(i in seq(along=snames)) {
                 slotName <- el(snames, i)
                 slotClass <- elNamed(slotDefs, slotName)
