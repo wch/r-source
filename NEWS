@@ -131,6 +131,9 @@ BUG FIXES
 
     o	Building standalone nmath did not support some of the DEBUG options.
 
+    o	backsolve(r, x, k) now allows k < nrow(x) - as its documentation
+	always claimed.
+
 
 
 		CHANGES IN R VERSION 1.9.0
@@ -1870,7 +1873,7 @@ BUG FIXES
     o	Fixed some malformed error messages in the methods package.
 
     o	pipes were not opening properly when profiling on a Mac OS.
-        (PR#1140)
+	(PR#1140)
 
     o	Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
 	corrected.
