@@ -23,6 +23,11 @@
 #include <config.h>
 #endif
 
+/* we substitute if XDR is not found */
+#ifndef HAVE_XDR
+# define HAVE_XDR 1
+#endif
+
 #define NEED_CONNECTION_PSTREAMS
 #include <Defn.h>
 #include <Rmath.h>
