@@ -2704,6 +2704,7 @@ with considerable notice.
 
 The recommended procedure to use these is to include the header file
 @file{R.h} in your C code by
+
 @example
 #include <R.h>
 @end example
@@ -2715,7 +2716,7 @@ that can be included too, but many of the features they contain should
 be regarded as undocumented and unstable.
 
 An alternative is to include the header file @file{S.h}, which may be
-useful when porting code from @Sl{}. This includes rather less than
+useful when porting code from @Sl{}.  This includes rather less than
 @file{R.h}, and has some compatibility definitions (for example the
 @code{S_complex} type from @Sl{}).
 
@@ -2748,21 +2749,26 @@ has full control (and responsibility).
 
 Here @R{} will reclaim the memory at the end of the call to @code{.C}.
 Use
+
 @example
 char* R_alloc(long n, int size)
 @end example
+
 @noindent
 which allocates @code{n} units of @code{size} bytes each. A typical
 usage (from package @pkg{mva}) is
+
 @example
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 @end example
 
 There is a similar call, @code{S_alloc} for compatibility with @Sl{}
 which differs only in zeroing the memory allocated, and
+
 @example
-S_realloc(char *p, long new, long new, int size)
+S_realloc(char *p, long new, long old, int size)
 @end example
+
 @noindent
 which changes the allocation size from @code{old} to @code{new} units,
 and zeroes the additional units.
@@ -2771,7 +2777,7 @@ This memory is taken from the heap (the region whose size is set by
 @code{--vsize}), and released at the end of the @code{.C}, @code{.Call}
 or @code{.External} call.  Users can also manage it, by noting the
 current position with a call to @code{vmaxget} and clearing memory
-allocated susbsequently by a call to @code{vmaxset}.  This is only
+allocated subsequently by a call to @code{vmaxset}.  This is only
 recommended for experts.
 
 @node User-controlled,  , Transient, Memory allocation
@@ -2781,21 +2787,23 @@ recommended for experts.
 @findex Free
 
 The other form of memory allocation is an interface to @code{malloc},
-the interface providing @R{} error handling. This memory lasts until
+the interface providing @R{} error handling.  This memory lasts until
 freed by the user and is additional to the memory allocated for the @R{}
 workspace.
 
 The interface functions are
+
 @example
 @var{type}* Calloc(size_t n, @var{type})
-@var{type}* Realloc(any *p, size_t n, @var{type})
-void  Free(@var{any}* p)
+@var{type}* Realloc(@var{any} *p, size_t n, @var{type})
+void  Free(@var{any} *p)
 @end example
+
 @noindent
 providing analogues of @code{calloc}, @code{realloc} and @code{free}.
 If there is an error it is handled by @R{}, so if these routines return
-the memory has been successfully allocated or freed. @code{Free} will
-set the pointer @code{p} to @code{NULL}. (Some but not all versions of
+the memory has been successfully allocated or freed.  @code{Free} will
+set the pointer @code{p} to @code{NULL}.  (Some but not all versions of
 @Sl{} do so.)
 
 @node Error handling, Random number generation, Memory allocation, The R API
@@ -2803,10 +2811,12 @@ set the pointer @code{p} to @code{NULL}. (Some but not all versions of
 
 The basic error handling routines are the equivalents of @code{stop} and
 @code{warning} in @R{} code, and use the same interface.
+
 @example
 void error(const char * format, ...);
 void warning(const char * format, ...);
 @end example
+
 @noindent
 These have the same call sequences as calls to @code{printf}, but in the
 simplest case can be called with a single character string
@@ -2814,12 +2824,14 @@ argument giving the error message.
 
 There is also an @Sl{}-compatibility interface which uses calls of the
 form
+
 @example
 PROBLEM ...... ERROR
 MESSAGE ...... WARN
 PROBLEM ...... RECOVER(NULL_ENTRY)
 MESSAGE ...... WARNING(NULL_ENTRY)
 @end example
+
 @noindent
 the last two being the forms available in all @Sl{} versions.  Here
 @code{......} is a set of arguments to @code{printf}, so can be a string
@@ -2838,31 +2850,38 @@ or a format string followed by arguments separated by commas.
 @findex seed_out
 
 The interface to @R{}'s internal random number generation routines is
+
 @example
 double unif_rand();
 double norm_rand();
 double exp_rand();
 @end example
+
 @noindent
-giving one unif, normal or exponential pseudo-random variate. However,
-before these are used, the user must call
+giving one uniform, normal or exponential pseudo-random variate.
+However, before these are used, the user must call
+
 @example
 GetRNGstate();
 @end example
+
 @noindent
 and after all the required variates have been generated, call
+
 @example
 PutRNGstate();
 @end example
+
 @noindent
 These essentially read in (or create) @code{.Random.seed} and write it
 out after use.
 
 File @file{S.h} defines @code{seed_in} and @code{seed_out} for
 @Sl{}-compatibility rather than @code{GetRNGstate} and
-@code{PutRNGstate}. These take a @code{long *} argument which is ignored.
+@code{PutRNGstate}.  These take a @code{long *} argument which is
+ignored.
 
-The C code behind @R{}'s @code{rxxx} functions can be accessed by
+The C code behind @R{}'s @code{r@var{xxx}} functions can be accessed by
 including the header file @file{R_ext/Mathlib.h}, but they are not part
 of the documented interface.
 
@@ -2881,16 +2900,17 @@ select the kind of RNG or set the seed except by evaluating calls to the
 @findex NA_REAL
 
 It is possible to compile @R{} on a platform without IEEE 754-compatible
-arithmetic, so users should not assume that it is available. Rather a
+arithmetic, so users should not assume that it is available.  Rather a
 set of functions is provided to test for @code{NA}, @code{Inf},
-@code{-Inf} (which exists on all platforms) and @code{NaN}. These
+@code{-Inf} (which exists on all platforms) and @code{NaN}.  These
 functions are accessed via macros:
 
 @example
-ISNA(x)        True for R's NA only
-ISNAN(x)       True for R's NA and IEEE NaN
-R_FINITE(x)    False for Inf, -Inf, NA, NaN
+ISNA(x)        @r{True for R's @code{NA} only}
+ISNAN(x)       @r{True for R's @code{NA} and IEEE @code{NaN}}
+R_FINITE(x)    @r{False for @code{Inf}, @code{-Inf}, @code{NA}, @code{NaN}}
 @end example
+
 @noindent
 and function @code{R_IsNaN} is true for @code{NaN} but not @code{NA}.
 Do use these rather than @code{isnan} or @code{finite}; the latter in
@@ -2900,9 +2920,9 @@ You can check for @code{Inf} or @code{-Inf} by testing equality to
 @code{R_PosInf} or @code{R_NegInf}, and set (but not test) an @code{NA}
 as @code{NA_REAL}.
 
-All of the above apply to @emph{double} variables only. For integer
-variables there is a variable accessed by the macro
-@code{NA_INTEGER} which can used to set or test for missingness.
+All of the above apply to @emph{double} variables only.  For integer
+variables there is a variable accessed by the macro @code{NA_INTEGER}
+which can used to set or test for missingness.
 
 Beware that these special values may be represented by extreme values
 which could occur in ordinary computations which run out of control,
@@ -2915,7 +2935,7 @@ so you may need to test that they have not been generated inadvertently.
 @findex REprintf
 
 The most useful function for printing from a C routine compiled into
-@R{} is @code{Rprintf}. This is used in exactly the same way as
+@R{} is @code{Rprintf}.  This is used in exactly the same way as
 @code{printf}, but is guaranteed to write to @R{}'s output (which might
 be a GUI console rather than a file).  It is wise to write complete
 lines (including the @code{"\n"}) before returning to @R{}.
@@ -2926,15 +2946,16 @@ output stream.
 
 
 Three subroutines are provided to ease the output of information from
-Fortran code. (In theory Fortran I/O can be used, but its output
-may not interleave well with that of C, and will be invisible on GUI
-interfaces. It is best avoided.)
+Fortran code.  (In theory Fortran I/O can be used, but its output may
+not interleave well with that of C, and will be invisible on GUI
+interfaces.  It is best avoided.)
 
 @example
 subroutine dblepr(label, nchar, data, ndata)
 subroutine realpr(label, nchar, data, ndata)
 subroutine intpr (label, nchar, data, ndata)
 @end example
+
 @noindent
 Here @code{label} is a character label of up to 255 characters,
 @code{nchar} is its length (which can be @code{-1} if the whole label is
@@ -2950,7 +2971,7 @@ to print a label alone.
 
 Naming conventions for symbols generated by Fortran differ by platform:
 it is not safe to assume that Fortran names appear to C with a trailing
-underscore. To help cover up the platform-specific differences there is
+underscore.  To help cover up the platform-specific differences there is
 a set of macros that should be used.
 
 @table @code
@@ -2973,14 +2994,14 @@ to access a Fortran common block from C
 for example numerical linear algebra computations and densities,
 cumulative distribution functions and quantile functions.
 
-The header file @code{R_ext/Linpack.h} contains details of the LINPACK
-and EISPACK linear algebra algebra functions include in @R{}. These are
+The header file @file{R_ext/Linpack.h} contains details of the LINPACK
+and EISPACK linear algebra algebra functions include in @R{}.  These are
 expressed as calls to Fortran subroutines, and they will also be usable
 from users' Fortran code.  Although not part of the official API, this
 set of subroutines is unlikely to change (but might be supplemented).
 
-The header file @code{R_ext/Mathlib.h} lists other undocumented calls that
-are currently available, mainly special and distribution functions.
+The header file @file{R_ext/Mathlib.h} lists other undocumented calls
+that are currently available, mainly special and distribution functions.
 These @emph{are} subject to change.
 
 @node Utility functions, Version information, Numerical analysis subroutines, The R API
@@ -2994,8 +3015,8 @@ These @emph{are} subject to change.
 @findex rPsort
 @findex cPsort
 
-@R{} has a fairly comprehensive set of sort routines which are
-made available to users' C code. These include
+@R{} has a fairly comprehensive set of sort routines which are made
+available to users' C code.  These include
 
 @example
 void isort(int* x, int n);
@@ -3005,8 +3026,8 @@ void rsort_with_index(double* x, int* index, int n);
 @end example
 
 The first three sort integer, real (double) and complex data
-respectively. (Complex numbers are sorted by the real part firs,t then
-the imaginary part.) @code{rsort_with_index} sort on @code{x}, and
+respectively.  (Complex numbers are sorted by the real part first then
+the imaginary part.)  @code{rsort_with_index} sort on @code{x}, and
 applies the same permutation to @code{index}.
 
 @example
@@ -3020,6 +3041,7 @@ void iPsort(int* x, int n, int k);
 void rPsort(double* x, int n, int k);
 void cPsort(Rcomplex* x, int n, int k);
 @end example
+
 @noindent
 all provide (very) partial sorting: they permute @code{x} so that
 @code{x[k]} is in the correct place with smaller values to the left,
@@ -3027,7 +3049,7 @@ larger ones to the right.
 
 
 There are a set of constants (for example @code{PI}, @code{DOUBLE_EPS})
-defined in the included header @code{R_ext/Constants.h}, mainly for
+defined in the included header @file{R_ext/Constants.h}, mainly for
 compatibility with @Sl{}.
 
 @node Version information,  , Utility functions, The R API
@@ -3041,6 +3063,7 @@ a four-digit number, for example @code{0990}. This can be used to test
 if the version of @R{} is late enough, or to include back-compatibility
 features. For protection against earlier versions of @R{} which did not
 have this macro, use a construction such as
+
 @example
 #if( defined(R_VERSION) && R_VERSION >= 0990)
   ...
