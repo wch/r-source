@@ -21,7 +21,11 @@ make.names(names, unique = FALSE)
   A syntactically valid name consists of letters, numbers, and the dot
   character and starts with a letter or the dot.
 
-  All invalid characters are translated to \code{"."}.
+  All invalid characters are translated to \code{"."}.  A missing value
+  is translated to \code{"NA"}.
+
+  If \code{unique = TRUE} a sequence number is appended to each
+  duplicate (after coercion).
 }
 \seealso{
   \code{\link{names}},

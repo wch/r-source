@@ -20,6 +20,9 @@ BUG FIXES
 	colour (if present).  symbols(circles=, lty="blank") was
 	drawing the border of the disks.
 
+    o	Subsetting non-existent rows in a data frame would produce
+	missing row names, which are not allowed.
+
 
 
 		CHANGES IN R VERSION 1.5.0
