@@ -23,13 +23,15 @@
    Semantics of nchar() need to be fixed.
    substr() should work at char not byte level.
    Optimized cases of strsplit() need revising.
-   Regex code should be OK, substitution does ASCII comparisons only.
    abbreviate needs to be fixed.
    make.names works at byte not char level.
    Internal fgrep works at byte not char level.
    chartr/tolower/toupper work at byte not char level.
    charToRaw/rawToChar should work at byte level, so is OK.
-   agrep needs to test for non-ASCII input.
+
+   Changes already made:
+   Regex code should be OK, substitution does ASCII comparisons only.
+   agrep needed to test for non-ASCII input.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1277,9 +1279,18 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     /* end NA pattern handling */
 
 #ifdef SUPPORT_UTF8
-    /* FIXME  actually test for non-ASCII strings */
-    if(utf8locale)
-	warning("Use of agrep() in a UTF-8 locale will only work for ASCII strings");
+    /* test for non-ASCII strings */
+    if(utf8locale) {
+	Rboolean warn = FALSE;
+	char *p;
+	for(p = CHAR(STRING_ELT(pat, 0)); *p; p++)
+	    if((unsigned int)*p > 0x7F) {warn = TRUE; break;}
+	for(i = 0 ; i < length(vec) ; i++)
+	    for(p = CHAR(STRING_ELT(vec, i)); *p; p++)
+		if((unsigned int)*p > 0x7F) {warn = TRUE; break;}	
+	if(warn)
+	    warning("Use of agrep() in a UTF-8 locale may only work for ASCII strings");
+    }
 #endif
 
     /* Create search pattern object. */
@@ -1299,8 +1310,8 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ind = allocVector(LGLSXP, n));
     nmatches = 0;
     for(i = 0 ; i < n ; i++) {
-	if (STRING_ELT(vec,i)==NA_STRING){
-		INTEGER(ind)[i]=0;
+	if (STRING_ELT(vec, i) == NA_STRING) {
+		INTEGER(ind)[i] = 0;
 		continue;
 	}
 	str = CHAR(STRING_ELT(vec, i));

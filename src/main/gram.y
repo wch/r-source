@@ -20,11 +20,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME>
+/* <UTF8>
    This uses byte-level access, which is generally OK as comparisons
    are with ASCII chars.
 
-   isValidName is not OK.
+   isValidName has been changed to cope.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1657,33 +1657,55 @@ static int SpecialValue(int c)
     return SPECIAL;
 }
 
+#ifdef SUPPORT_UTF8
+# include <wchar.h>
+# include <wctype.h>
+#endif
+
 /* return 1 if name is a valid name 0 otherwise */
 int isValidName(char *name)
 {
-    char *p;
-    int c, i;
+    char *p = name;
+    int i;
 
-    p = name;
-    c = *p++;
-
-    if( c != '.' && !isalpha(c) )
-        return 0;
-
-    if (c == '.' && isdigit((int)*p)) 
-	return 0;
-
-    while ( c = *p++, (isalnum(c) || c == '.' || c == '_') )
-	;
-
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	/* the only way to establish which chars are alpha etc is to
+	   use the wchar variants */
+	int n = strlen(name);
+	wchar_t wc;
+	p += mbrtowc(&wc, p, n, NULL);
+	if (wc != '.' && !iswalpha(wc) ) return 0;
+	if (wc == '.') {
+	    mbrtowc(&wc, p, n, NULL);
+	    if(iswdigit(wc)) return 0;
+	}
+	while(1) {
+	    p += mbrtowc(&wc, p, n, NULL);
+	    if (wc == L'\0') break;
+	    if (!(iswalnum(wc) || wc == L'.' || wc == L'_')) break;
+	}
+	if (wc != L'\0') return 0;
+    } else {
+	int c = *p++;
+	if (c != '.' && !isalpha(c) ) return 0;
+	if (c == '.' && isdigit((int)*p)) return 0;
+	while ( c = *p++, (isalnum(c) || c == '.' || c == '_') ) ;
+	if (c != '\0') return 0;
+    }
+#else
+    int c = *p++;
+    if (c != '.' && !isalpha(c) ) return 0;
+    if (c == '.' && isdigit((int)*p)) return 0;
+    while ( c = *p++, (isalnum(c) || c == '.' || c == '_') ) ;
     if (c != '\0') return 0;
+#endif
 
-    if (strcmp(name, "...") == 0) 
-	return 1;
+    if (strcmp(name, "...") == 0) return 1;
 
     for (i = 0; keywords[i].name != NULL; i++)
-        if (strcmp(keywords[i].name, name) == 0)
-                return 0;
-    
+        if (strcmp(keywords[i].name, name) == 0) return 0;
+
     return 1;
 }
 

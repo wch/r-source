@@ -102,8 +102,10 @@
 # define gettext_noop(String) String
 #endif
 
-#if (defined MB_CUR_MAX && HAVE_LOCALE_H && HAVE_WCTYPE_H && HAVE_WCHAR_H && HAVE_WCRTOMB && HAVE_MBRTOWC && HAVE_WCSCOLL) || _LIBC
+#ifdef SUPPORT_UTF8
+#if (defined MB_CUR_MAX && defined HAVE_LOCALE_H && defined HAVE_WCTYPE_H && defined HAVE_WCHAR_H && defined HAVE_WCRTOMB && defined HAVE_MBRTOWC && defined HAVE_WCSCOLL)
 # define RE_ENABLE_I18N
+#endif
 #endif
 
 #if __GNUC__ >= 3

@@ -29,8 +29,8 @@
 	    ~~~~~~~~~~~
  */
 
-/* <UTF8-FIXME>
-   Uses byte-level metric information on `chars'.
+/* <UTF8>
+   OK if we assume GMetricInfo is passed a suitable int (e.g. Unicode)
  */
 
 #ifdef HAVE_CONFIG_H
