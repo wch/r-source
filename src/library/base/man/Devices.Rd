@@ -28,8 +28,11 @@ dev.interactive()
 \alias{dev.interactive}
 \description{The following graphics devices are currently available:
 \itemize{
-  \item \code{\link{postscript}} Writes PostScript graphics commands to a file
-  \item \code{\link{pictex}} Writes LaTeX/PicTeX graphics commands to a file
+  \item \code{\link{postscript}} Writes PostScript graphics commands to
+  a file
+  \item \code{\link{pdf}} Write PDF graphics commands to a file
+  \item \code{\link{pictex}} Writes LaTeX/PicTeX graphics commands to a
+  file
 #ifdef unix
   \item \code{\link{x11}} The graphics driver for the X11 Window system (Unix)
   \item \code{\link{png}} PNG bitmap device
