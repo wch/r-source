@@ -266,10 +266,12 @@ might be needed.  Other dependencies (external to the @R{} system)
 should be listed in the @samp{SystemRequirements} field or a separate
 @file{README} file.  The @R{} @command{INSTALL} facilities already check
 if the version of @R{} used is recent enough for the package being
-installed, and the list of packages which is specified will be loaded
+installed, and the list of packages which is specified will be attached
 before the current package, both when @code{library} is called and when
 saving an image or preparing for lazy-loading.
 
+The optional @samp{Imports} field lists packages whose namespaces are
+imported from but which do not need to be attached.
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
@@ -281,12 +283,15 @@ wants to execute the examples: it is nice to have @pkg{bar}, but not
 necessary.  The general rules are
 
 @itemize @bullet
-@item Packages that are necessary to successfully load the package
+@item Packages whose namespace only is needed to load the package
+using @code{library(@var{pkgname})} must be listed in the @samp{Imports}
+field.
+@item Packages that need to attached to successfully load the package
 using @code{library(@var{pkgname})} must be listed in the @samp{Depends}
 field.
 @item All packages that are needed to successfully run @code{R CMD
 check} on the package must be listed either in @samp{Depends} or
-@samp{Suggests}.
+@samp{Suggests} or @samp{Imports}.
 @end itemize
 @noindent
 

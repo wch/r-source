@@ -73,8 +73,10 @@ function(db)
     } else Rdeps <- NULL
     Rdeps <- as.vector(Rdeps)
     Suggests <- .split_dependencies(db[names(db) %in% "Suggests"])
+    Imports <- .split_dependencies(db[names(db) %in% "Imports"])
     structure(list(DESCRIPTION = db, Built = Built, Rdepends = Rdeps,
-                   Depends = Depends, Suggests = Suggests),
+                   Depends = Depends, Suggests = Suggests,
+                   Imports = Imports),
               class = "packageDescription2")
 }
 

@@ -2245,14 +2245,21 @@ function(package)
     }
     else
         suggests <- character()
+    if("Imports" %in% names(db)) {
+        imports <- unlist(strsplit(db["Imports"], ","))
+        imports <-
+            sub("^[[:space:]]*([[:alnum:].]+).*$", "\\1", imports)
+    }
+    else
+        imports <- character()
 
     standard_package_names <- .get_standard_package_names()
 
     bad_depends <- list()
 
-    ## Are all packages listed in Depends/Suggests installed?
+    ## Are all packages listed in Depends/Suggests/Imports installed?
     ## Need to treat specially the former stub packages.
-    reqs <- unique(c(depends, suggests))
+    reqs <- unique(c(depends, suggests, imports))
     reqs <- reqs %w/o% utils::installed.packages()[ , "Package"]
     m <- reqs %in% standard_package_names$stubs
     if(length(reqs[!m]))
@@ -2278,7 +2285,7 @@ function(package)
         ## Not clear whether we want to require *all* namespace package
         ## dependencies listed in DESCRIPTION, or e.g. just the ones on
         ## non-base packages.  Do the latter for time being ...
-        reqs <- reqs %w/o% c(depends, standard_package_names$base)
+        reqs <- reqs %w/o% c(imports, depends, standard_package_names$base)
         ## </FIXME>
         if(length(reqs))
             bad_depends$missing_namespace_depends <- reqs
