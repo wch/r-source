@@ -144,7 +144,7 @@ Ops.factor <- function(e1, e2)
     if (is.factor(value))
 	value <- levels(value)[value]
     m <- match(value, lx)
-    if (any(is.na(m) && !is.na(value)))
+    if (any(is.na(m) & !is.na(value)))
 	warning("invalid factor level, NAs generated")
     class(x) <- NULL
     x[i] <- m
