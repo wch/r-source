@@ -152,8 +152,10 @@ dist-unix: distdir
 	-chmod -R a+r $(distdir)
 	-chmod -R go-w $(distdir)
 	distname=`$(srcdir)/tools/GETDISTNAME`; \
-	  GZIP=$(GZIP) $(TAR) czf $${distname}.tar.gz $(distdir)
-	rm -rf $(distdir)
+	  dirname=`echo $${distname} | sed -e s/_.*//`; \
+	  mv $(distdir) $${dirname}; \
+	  GZIP=$(GZIP) $(TAR) czf $${distname}.tar.gz $${dirname}; \
+	  rm -rf $${dirname}
 dist-win:
 distdir: $(DISTFILES) vignettes
 	@rm -rf $(distdir)

@@ -16,6 +16,7 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
     if test "${rev}" = "Under development (unstable)"; then
       res="R-devel_"${y}-${m}-${d}
     else
+      rev=`echo ${rev} | tr [A-Z] [a-z]`
       res="R-${rev}_"${y}-${m}-${d}
     fi
   fi
