@@ -19,6 +19,9 @@ BUG FIXES
     o   setIs() will not allow mismatched representations between two
         classes (without an explicit coerce method).
 
+    o   The code underlying polygon drawing contained a memory leak.
+	This showed up in persp, but did not affect other graphics
+	functions.  It is now possible to draw big DEMs.
 
 
 
