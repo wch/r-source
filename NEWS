@@ -264,6 +264,9 @@ NEW FEATURES
 
     o	seq.Date() and seq.POSIXt() now allow 'to' to be before 'from'
 	if 'by' is negative.
+
+    o	New function message() for generating "simple" diagnostic
+	messages.
 	
 
 

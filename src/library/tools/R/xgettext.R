@@ -24,7 +24,8 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
             }
         }
         if(is.call(e) && is.name(e[[1]])
-           && as.character(e[[1]]) %in% c("warning", "stop", "gettext")) {
+           && as.character(e[[1]]) %in% c("warning", "stop", "gettext",
+                                          "message")) {
              domain <- e[["domain"]]
              suppress <- !is.null(domain) && is.na(domain)
              ## remove named args
