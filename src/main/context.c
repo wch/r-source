@@ -150,7 +150,7 @@ void findcontext(int mask, SEXP env, SEXP val)
     }
     else {				/* return; or browser */
 	for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext)
-	    if (cptr->callflag == mask && cptr->cloenv == env)
+	    if ((cptr->callflag & mask) && cptr->cloenv == env)
 		jumpfun(cptr, mask, val);
 	error("No function to return from, jumping to top level\n");
     }
