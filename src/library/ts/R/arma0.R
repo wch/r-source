@@ -259,7 +259,7 @@ predict.arima0 <-
     if(myNCOL(newxreg) != ncxreg)
         stop("xreg and newxreg have different numbers of columns")
     class(xreg) <- NULL
-    xtsp <- tsp(data)
+    xtsp <- tsp(object$residuals)
     n <- length(data)
     arma <- object$arma
     coefs <- object$coef
