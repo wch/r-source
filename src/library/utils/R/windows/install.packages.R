@@ -58,11 +58,16 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             if (ret == 0) {
                 ## Move the new package to the install lib and
                 ## remove our temp dir
-                file.rename(file.path(tmpDir, curPkg), instPath)
+                ret <- file.rename(file.path(tmpDir, curPkg), instPath)
+                if(!ret) warning("unable to move temp installation ",
+                                 sQuote(file.path(tmpDir, curPkg)),
+                                 " to ",
+                                 sQuote(instPath), call. = FALSE)
             } else {
                 ## !! Can't revert to old 'zip.unpack' as it would
                 ## !! potentially leave cruft from a bundle in there
-                stop("Can not remove prior installation of package")
+                stop("Can not remove prior installation of package ",
+                     sQuote(curPkg), call. = FALSE)
             }
         }
         setwd(cDir)
