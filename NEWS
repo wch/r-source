@@ -11,6 +11,8 @@
 
 NEW FEATURES
 
+    o	[pdqr]negbin() now also work with non-integer 'size'.
+
     o	New standard package `lqs' for resistant regression and
 	covariance estimation, contributed by B. D. Ripley.
 
@@ -22,7 +24,11 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   model.frame with subset and only one column fixed
+    o	pt(t,df, ncp) now also works for bigger ncp's
+    
+    o	apply(a,d, fun) now passes vectors (rank 1 arrays) to fun.
+
+    o	model.frame with subset and only one column fixed
 
     o	boxplot(<data.frame>) now works again.
 
