@@ -163,6 +163,10 @@ BUG FIXES
     o	ARMAacf was failing if 0 < p < q+1: it failed to say that ar needed
 	to be padded with zeroes, and now the code does that.
 
+    o	old.packages() was assuming a bundle was installed in only one
+	library, and so update.packages() would only update a bundle
+	in the first location in lib.loc.
+
 
 
 		CHANGES IN R VERSION 1.5.0
