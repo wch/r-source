@@ -20,7 +20,8 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/$(subdir)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
-	  $(top_srcdir)/tools/move-if-change $${f} $(top_builddir)/$(subdir)/R/$(pkg))
+	  $(top_srcdir)/tools/move-if-change $${f} \
+	    $(top_builddir)/$(subdir)/R/$(pkg))
 	@for f in COPYRIGHTS INDEX TITLE; do \
 	if test -f $(srcdir)/$${f}; then \
 	  $(INSTALL_DATA) $(srcdir)/$${f} \
@@ -42,16 +43,6 @@ all: Makefile DESCRIPTION
 	fi
 	@$(MAKE) Rfiles
 
-Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
-  $(top_builddir)/library/$(pkg)/R/all.rda
-
-$(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/R/firstlib
-	@cp $< $@
-
-$(top_builddir)/library/$(pkg)/R/all.rda: $(top_builddir)/$(subdir)/R/$(pkg)
-	@echo "dumping R code in package \`$(pkg)'"
-	@$(top_builddir)/bin/R --vanilla --slave < $<
-
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
@@ -61,10 +52,20 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
+Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
+  $(top_builddir)/library/$(pkg)/R/all.rda
+
+$(top_builddir)/library/$(pkg)/R/$(pkg): $(top_srcdir)/share/R/firstlib.R
+	@cp $< $@
+
+$(top_builddir)/library/$(pkg)/R/all.rda: $(top_builddir)/$(subdir)/R/$(pkg)
+	@echo "dumping R code in package \`$(pkg)'"
+	@$(top_builddir)/bin/R --vanilla --slave < $<
+
 mostlyclean: clean
 clean:
-	@rm -f R/${pkg}
 	@if test -d src; then (cd src && $(MAKE) $@); fi
+	@rm -rf R
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	@rm -f Makefile DESCRIPTION
