@@ -23,6 +23,10 @@ C  F. Murtagh, ESA/ESO/STECF, Garching, February 1986.       C
 C  Modifications for R: Ross Ihaka, Dec 1996                 C
 C                       Fritz Leisch, Jun 2000               C
 C  all vars declared:   Martin Maechler, Apr 2001            C
+C  PR#4195 fixed by BDR Nov 2003                             C
+C  The code tried to update DISTNN(I2) on the fly,           C
+C  but since it recalculated all the others it might as      C
+C  well recalculate that one too.                            C
 C------------------------------------------------------------C
       SUBROUTINE HCLUST(N,LEN,IOPT,IA,IB,CRIT,MEMBR,NN,DISNN,
      X                  FLAG,DISS)
@@ -37,7 +41,8 @@ c Var
 c External function
       INTEGER IOFFST
 c
-      DATA INF/1.D+20/
+c     was 1D+20
+      DATA INF/1.D+300/
 c
 c     unnecessary initialization of im jj jm to keep g77 -Wall happy
 c
@@ -55,6 +60,8 @@ C        MEMBR(I)=1.
       NCL=N
 C
 C  Carry out an agglomeration - first create list of NNs
+C  Note NN and DISNN are the nearest neighbour and its distance 
+C  TO THE RIGHT of I.
 C
       DO 30 I=1,N-1
          DMIN=INF
@@ -87,14 +94,14 @@ C
       IA(N-NCL)=I2
       IB(N-NCL)=J2
       CRIT(N-NCL)=DMIN
+      FLAG(J2)=.FALSE.
 C
 C  Update dissimilarities from new cluster.
 C
-      FLAG(J2)=.FALSE.
       DMIN=INF
       DO 50 K=1,N
-         IF (.NOT.FLAG(K)) GOTO 800
-         IF (K.EQ.I2) GOTO 800
+         IF (.NOT.FLAG(K)) GOTO 50
+         IF (K.EQ.I2) GOTO 50
          IF (I2.LT.K) THEN
                            IND1=IOFFST(N,I2,K)
                       ELSE
@@ -155,30 +162,18 @@ C
      X          (MEMBR(I2)+MEMBR(J2))
             ENDIF
 C
-         IF (I2.GT.K) GOTO 800
-         IF (DISS(IND1).GE.DMIN) GOTO 800
-            DMIN=DISS(IND1)
-            JJ=K
-  800    CONTINUE
  50      CONTINUE
       MEMBR(I2)=MEMBR(I2)+MEMBR(J2)
-      DISNN(I2)=DMIN
-      NN(I2)=JJ
 C
-C  Update list of NNs insofar as this is required.
+C  Update list of NNs
 C
       DO 900 I=1,N-1
          IF (.NOT.FLAG(I)) GOTO 900
-         IF (NN(I).EQ.I2) GOTO 850
-         IF (NN(I).EQ.J2) GOTO 850
-         GOTO 900
-  850    CONTINUE
 C        (Redetermine NN of I:)
          DMIN=INF
          DO 870 J=I+1,N
-            IND=IOFFST(N,I,J)
             IF (.NOT.FLAG(J)) GOTO 870
-            IF (I.EQ.J) GOTO 870
+            IND=IOFFST(N,I,J)
             IF (DISS(IND).GE.DMIN) GOTO 870
                DMIN=DISS(IND)
                JJ=J
@@ -194,7 +189,7 @@ C
 C
       RETURN
       END
-c     of HCLUST()
+C     of HCLUST()
 C
 C
       INTEGER FUNCTION IOFFST(N,I,J)
