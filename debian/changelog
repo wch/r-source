@@ -6,7 +6,7 @@ r-base (0.99.0-0) unstable; urgency=low
   * Added dependence on the atlas2 package and used the atlas blas
   * Added /usr/bin/X11 to the path before configuring so imake is found
 
- -- Douglas Bates <bates@stat.wisc.edu>  Sat,  8 Jan 2000 14:15:42 -0600
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon, 10 Jan 2000 10:38:28 -0600
 
 r-base (0.90.1-1) unstable; urgency=low
 
