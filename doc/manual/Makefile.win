@@ -41,7 +41,7 @@ refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
 refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/Rd.sty
 
 texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
-texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED_EXPANDED:=-pkg.tex)
+texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
 fullrefman_TEXINPUTS = $(texinputs_BASE) $(texinputs_RECOMMENDED)
 
 

@@ -96,7 +96,7 @@ endif
 #
 # the next lines were formerly the dist-recommended target
 #
-	@for p in $(R_PKGS_RECOMMENDED_EXPANDED); do \
+	@for p in $(R_PKGS_RECOMMENDED); do \
 	echo Copying $$p ; \
 	$(MKDIR) -p $(RPREFIX)/library/$$p ; \
 	$(CP) -pr ../../../library/$$p $(RPREFIX)/library ; \

@@ -26,7 +26,6 @@ endif
 RPREFIX = $(shell perl fixed/rwver.pl ../../VERSION)
 
 PACKAGES = $(filter-out tcltk, $(R_PKGS_BASE))
-REC_NONBUNDLES = $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES))
 
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
@@ -44,7 +43,7 @@ endif
 
 ifneq ($(strip $(BUILD)),CROSS)
 R-DLLFLAGS = -mwindows
-## needed for gcc-3.2.2 but not 3.2 nor 3.3
+## needed for gcc-3.2.2 but not 3.2 nor 3.2.3
 ## R-DLLFLAGS = -mwindows -Wl,--allow-multiple-definition
 else
 R-DLLFLAGS = -mwindows
@@ -335,7 +334,7 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) --no-print-directory -C ../modules -f Makefile.win clean
 	-$(MAKE) --no-print-directory -C ../../tests -f Makefile.win clean
 	$(RM) -f ../library/methods/R/methods
-	for p in $(R_PKGS_RECOMMENDED_EXPANDED); do \
+	for p in $(R_PKGS_RECOMMENDED); do \
 	  $(RM) -rf ../library/$$p; \
 	done
 
@@ -400,7 +399,7 @@ check-devel: check
 check-all fullcheck: check-devel check-recommended
 
 check-recommended:
-	$(foreach i, $(R_PKGS_RECOMMENDED_EXPANDED), pkgcheck-$i)
+	$(foreach i, $(R_PKGS_RECOMMENDED), pkgcheck-$i)
 
 
 #                          ===== documentation ======
@@ -444,7 +443,7 @@ clean-recommended:
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
-	@for p in $(REC_NONBUNDLES); do \
+	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
 	  $(MAKE) --no-print-directory pkg-$$p; \
 	done
 
