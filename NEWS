@@ -130,6 +130,9 @@ NEW FEATURES
     o	dev.copy2eps and dev2bitmap preserve the aspect ratio of the
 	copied device if just one of `width' and `height' is specified.
 
+    o	Function mantelhaen.test() in package ctest now can deal with
+	general I x J x K tables.
+
 
 BUG FIXES
 
