@@ -35,7 +35,7 @@ R:
 
 src/include/Rconfig.h: $(srcdir)/configure \
   $(srcdir)/src/include/Rconfig.h.in
-	$(top_srcdir)/configure --srcdir $(top_srcdir)
+	$(top_srcdir)/configure --srcdir $(top_srcdir) @config_opts@
 
 docs help html latex examples:: FORCE
 	-@(cd src/library && $(MAKE) $@)
