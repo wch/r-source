@@ -34,8 +34,13 @@
  *
  * Each entry is a line with
  *
- * printname	c-entry		offset	eval	arity	pp-info
- * ---------	-------		------	----	-----	-------
+ * printname	c-entry	offset	eval	arity	pp-info
+ * ---------	-------	------	----	-----	-------
+ *2	name	cfun	code	eval	arity	gram
+ *3 PRIMNAME	PRIMFUN	PRIMVAL	 [*]  PRIMARITY PPINFO
+ *
+ * where "2" are the component names of the FUNTAB struct (Defn.h)
+ * and   "3" are the accessor macros. [*]: PRIMPRINT(.) uses the eval component
  *
  * printname:	The function name in R
  *
@@ -56,7 +61,7 @@
  *		    (the least common situation).
  *		Y=1 says that this is an internal function which must
  *		    be accessed with a	.Internal(.) call, any other value is
- *		    accessable directly and printed in R as ".Primitive(..)".
+ *		    accessible directly and printed in R as ".Primitive(..)".
  *		Z=1 says evaluate arguments before calling and
  *		Z=0 says don't evaluate.
  *
@@ -238,7 +243,7 @@ FUNTAB R_FunTab[] =
 
 {"gammaCody",	do_math1,	46,	11,	1,	PP_FUNCALL},
 
-/* Mathematical Functions of Two Variables */
+/* Mathematical Functions of Two Numeric (+ 1 int) Variables */
 
 {"atan2",	do_math2,	0,	11,	2,	PP_FUNCALL},
 
@@ -259,9 +264,9 @@ FUNTAB R_FunTab[] =
 {"pgeom",	do_math2,	13,	11,	2,	PP_FUNCALL},
 {"qgeom",	do_math2,	14,	11,	2,	PP_FUNCALL},
 
-{"dpois",	do_math2,	15,	11,	2,	PP_FUNCALL},
-{"ppois",	do_math2,	16,	11,	2,	PP_FUNCALL},
-{"qpois",	do_math2,	17,	11,	2,	PP_FUNCALL},
+{"dpois",	do_math2,	15,	11,	2+1,	PP_FUNCALL},
+{"ppois",	do_math2,	16,	11,	2+2,	PP_FUNCALL},
+{"qpois",	do_math2,	17,	11,	2+2,	PP_FUNCALL},
 
 {"dt",		do_math2,	18,	11,	2,	PP_FUNCALL},
 {"pt",		do_math2,	19,	11,	2,	PP_FUNCALL},
