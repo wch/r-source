@@ -23,7 +23,7 @@ install.packages(pkgs, lib, available=NULL,
  \item{lib.loc}{A character vector describing the location of R
      library trees to search through (and update packages therein).}
  \item{CRAN}{Base URL of the CRAN mirror to use, i.e., URL of a CRAN
-     root such as \code{"http://www.ci.tuwien.ac.at/R"} or
+     root such as \code{"http://www.r-project.org"} (the default) or
      \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
  \item{method}{Tool to be used for downloading files. Currently download
    methods \code{"auto"}, \code{"wget"}, \code{"lynx"} and \code{"cp"} are
