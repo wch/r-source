@@ -124,6 +124,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 
     rqr <- list(qt=z$effects, qr=z$qr, qraux=z$qraux, rank=z$rank,
 		pivot=z$pivot, tol=z$tol)
+    oldClass(rqr) <- "qr"
     output <- c(output, list(intercept=intercept, qr=rqr))
     return(output)
 }

@@ -121,9 +121,10 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
     }
     z$coefficients <- coef
     r1 <- y - z$residuals ; if(!is.null(offset)) r1 <- r1 + offset
+    qr <- z[c("qr", "qraux", "pivot", "tol", "rank")]
     c(z[c("coefficients", "residuals", "effects", "rank")],
       list(fitted.values = r1, assign = attr(x, "assign"),
-	   qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
+	   qr = structure(qr, class="qr"),
 	   df.residual = n - z$rank))
 }
 
@@ -221,10 +222,11 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     }
     if(!is.null(offset))
         z$fitted.values <- z$fitted.values + offset
+    qr <- z[c("qr", "qraux", "pivot", "tol", "rank")]
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
 	  "weights", "rank")],
       list(assign = x.asgn,
-	   qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
+	   qr = structure(qr, class="qr"),
 	   df.residual = n - z$rank))
 }
 

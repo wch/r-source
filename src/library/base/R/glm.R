@@ -322,7 +322,8 @@ glm.fit <-
 	##     ^^ is only initialize()d for "binomial" [yuck!]
     list(coefficients = coef, residuals = residuals, fitted.values = mu,
 	 effects = fit$effects, R = Rmat, rank = fit$rank,
-	 qr = fit[c("qr", "rank", "qraux", "pivot", "tol")], family = family,
+	 qr = structure(fit[c("qr", "rank", "qraux", "pivot", "tol")],
+         class="qr"), family = family,
 	 linear.predictors = eta, deviance = dev, aic = aic.model,
 	 null.deviance = nulldev, iter = iter, weights = wt,
 	 prior.weights = weights, df.residual = resdf, df.null = nulldf,

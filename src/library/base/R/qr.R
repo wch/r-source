@@ -1,9 +1,12 @@
+#is.qr <- function(x) !is.null(x$qr) && !is.null(x$rank) && !is.null(x$qraux)
+
 is.qr <- function(x) inherits(x, "qr")
 
 qr <- function(x, tol = 1e-07, LAPACK = FALSE)
 {
     x <- as.matrix(x)
-    if(is.complex(x)) return(.Call("La_zgeqp3", x, PACKAGE = "base"))
+    if(is.complex(x))
+        return(structure(.Call("La_zgeqp3", x, PACKAGE = "base"), class="qr"))
     if(LAPACK) {
         res <- .Call("La_dgeqp3", x, PACKAGE = "base")
         attr(res, "useLAPACK") <- TRUE
