@@ -63,7 +63,7 @@ to your system by typing
 
 This will install to the following directories:
 
-	$prefix/bin		execeutables
+	$prefix/bin		executables
 	$prefix/man/man1	man pages
 	$prefix/lib/R		all the rest (libraries, online help
 				system, ...)
@@ -94,7 +94,7 @@ TWO-LEVEL MAKE
 If you don't need to supply any special arguments to "configure", you
 can actually build R simply by typing "make", which will automatically
 run "configure" if the configuration files are absent. Since the build
-process depends on the results of "configure", the toplevel Makefile
+process depends on the results of "configure", the top-level Makefile
 does little more than passing control to Makefile.2nd after ensuring
 that "configure" has been run.
 
@@ -106,7 +106,7 @@ moment later. This looks odd, but is fairly hard to avoid.
 NEW PLATFORMS (Standards Hah!)
 
 There are a number of sources of problems when installing R on a new
-harware/os platform.
+hardware/os platform.
 
  1. Floating Point Arithmetic: R supports the POSIX, SVID and IEEE
     models for floating point arithmetic.  The POSIX and SVID models
