@@ -247,7 +247,7 @@ makeLazyLoading <-
     barepackage <- sub("([^-]+)_.*", "\\1", package)
 
     if (package == "base")
-        loaderFile <- file.path(R.home(), "share", "R", "baseloader.R")
+        stop("this cannot be used for package ", sQuote(base))
     else if (packageHasNamespace(package, dirname(pkgpath)))
         loaderFile <- file.path(R.home(), "share", "R", "nspackloader.R")
     else
@@ -260,14 +260,6 @@ makeLazyLoading <-
     }
     if (file.info(codeFile)["size"] == file.info(loaderFile)["size"])
         warning("package seems to be using lazy loading already")
-    else if (package == "base" && is.null(lib.loc)) {# allow for cross-building
-        dbFile <- file.path(pkgpath, "R", "base.rdx")
-        if (! file.exists(dbFile))
-            stop("you need to first build the base DB with 'makebasedb.R'")
-        if (file.info(codeFile)["mtime"] > file.info(dbFile)["mtime"])
-            stop("code file newer than base DB; rebuild with 'makebasedb.R'")
-        file.copy(loaderFile, codeFile, TRUE)
-    }
     else {
         rdaFile <- file.path(pkgpath, "R", "all.rda")
         if (file.exists(rdaFile))
