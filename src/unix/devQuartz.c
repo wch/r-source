@@ -415,6 +415,8 @@ static char *SaveString(SEXP sxp, int offset)
 }
 
 
+bool WeAreOnPanther = false;
+
 /*  Quartz Device Driver Parameters:
  *  -----------------		cf with ../unix/X11/devX11.c
  *  display	= display
@@ -434,6 +436,7 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
     char fontfamily[255];
     double height, width, ps;
     Rboolean  antialias, autorefresh;
+	SInt32 macVer;
     gcall = call;
     vmax = vmaxget();
     display = SaveString(CAR(args), 0);
@@ -448,6 +451,15 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
     autorefresh = asLogical(CAR(args));
 
 
+/* test purpouses only.
+    if(Gestalt(gestaltSystemVersion, &macVer) == noErr)
+   	 fprintf(stderr,"\nMac OS version: %x.%x.%x (hex: %xh)", macVer >> 8, (macVer >> 4) & 0xF, macVer & 0xF, macVer);
+*/
+    if(Gestalt(gestaltSystemVersion, &macVer) == noErr)
+      if (macVer >= 0x1030)
+	    WeAreOnPanther = true;
+	  else
+	    WeAreOnPanther = false;	
 
      R_CheckDeviceAvailable();
     /* Allocate and initialize the device driver data */
@@ -852,7 +864,10 @@ static void Quartz_SetFont(int style,  double cex, double ps, NewDevDesc *dd)
     switch(style){
      case 5:
       strcpy(CurrFont,"Symbol");
-	  CGContextSelectFont( GetContext(xd), CurrFont, size,kCGEncodingFontSpecific);
+	  if(WeAreOnPanther)
+ 	   CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingFontSpecific);
+	  else 
+ 	   CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingMacRoman);
      break;
 
      default:
@@ -926,7 +941,10 @@ static void 	Quartz_Text(double x, double y, char *str,
 		 Quartz_SetFont(-1, gc->cex,  gc->ps, dd);
 		 symbuf = str[0];
        }
-     CGContextShowTextAtPoint( GetContext(xd), 0, 0, &symbuf, len );
+	 if(WeAreOnPanther) 
+      CGContextShowTextAtPoint( GetContext(xd), 0, 0, &symbuf, len );
+	 else
+	  CGContextShowTextAtPoint( GetContext(xd), 0, 0, str, len );
      } else {
      if( (buf = malloc(len)) != NULL){
       for(i=0;i <len;i++){
