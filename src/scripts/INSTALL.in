@@ -501,6 +501,7 @@ do_install_source () {
     ${MKDIR_P} "${R_PACKAGE_DIR}/data"
     rm -f "${R_PACKAGE_DIR}/data/"*
     cp data/* "${R_PACKAGE_DIR}/data" 2>/dev/null
+    rm -f "${R_PACKAGE_DIR}/data/datalist"
     chmod 644 "${R_PACKAGE_DIR}/data/"*
     parse_description_field LazyData
     if test "$value" = "missing" ; then
