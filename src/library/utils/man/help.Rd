@@ -19,8 +19,7 @@ help(topic, offline = FALSE, package = .packages(),
      htmlhelp = getOption("htmlhelp"),
 #endif
 #ifdef windows
-     chmhelp = getOption("chmhelp"),
-     htmlhelp = getOption("htmlhelp"), winhelp = getOption("winhelp"),
+     chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),
 #endif
      pager = getOption("pager"))
 ?topic
@@ -64,8 +63,6 @@ type?topic
     version of the help will be shown in a browser specified by
     \code{options("browser")} or the file-association mechanism.
   }
-  \item{winhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
-    \code{.hlp} file will be used if one is available.}
 #endif
   \item{pager}{the pager to be used for \code{\link{file.show}}.}
   \item{type}{the special type of documentation to use for this topic;

@@ -3,7 +3,6 @@ help <-
              lib.loc = NULL, verbose = getOption("verbose"),
              try.all.packages = getOption("help.try.all.packages"),
              chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),
-             winhelp = getOption("winhelp"),
              pager = getOption("pager"))
 {
     chmhelp <- is.logical(chmhelp) && chmhelp
@@ -42,6 +41,7 @@ help <-
                     topic <- sub("(.*/help/)([^/]*)$", "\\2", file)
                     wfile <- sub("/help/([^/]*)$", "", file)
                     thispkg <- sub(".*/([^/]*)$", "\\1", wfile)
+                    thispkg <- sub("_.*$", "", thispkg)
                     hlpfile <- paste(wfile, "/chtml/", thispkg, ".chm",
                                      sep = "")
                     if(verbose) print(hlpfile)
@@ -71,26 +71,6 @@ help <-
                         if(verbose)
                             cat("no HTML help for `", topic,
                                 "' is available\n", sep = "")
-                        file <- index.search(topic, INDICES, "AnIndex", "help")
-                    }
-                }
-                if(winhelp) {
-                    wfile <- sub("/help/([^/]*)$", "", file)
-                    thispkg <- sub(".*/([^/]*)$", "\\1", wfile)
-                    hlpfile <- paste(wfile, "/winhlp/", thispkg, ".hlp",
-                                     sep = "")
-                    hlpfile <- chartr("/", "\\", hlpfile)
-                    topic <- sub("(.*/help/)([^/]*)$", "\\2", file)
-                    if(verbose) print(hlpfile)
-                    if(file.exists(hlpfile)) {
-                        .Internal(show.help.item(topic, 2, hlpfile))
-                        if(verbose)
-                            cat("help() for `", topic, "' is shown in WinHelp\n",
-                                sep="")
-                        return(invisible())
-                    } else {
-                       if(verbose)
-                           cat("No `", thispkg, ".hlp' is available\n", sep="")
                         file <- index.search(topic, INDICES, "AnIndex", "help")
                     }
                 }

@@ -764,6 +764,10 @@ sub text2html {
 		    # in the same html file
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+		} elsif ($htmlfile =~ s+^$pkgname_[^/]*/html/++) {
+		    # in the same html file, versioned install
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
@@ -795,6 +799,9 @@ sub text2html {
 		    $htmlfile = $pkg."/html/".$topic.$HTML;
 		    if ($htmlfile =~ s+^$pkgname/html/++) {
 			# in the same html file
+			$text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+		    } elsif ($htmlfile =~ s+^$pkgname_[^/]*/html/++) {
+			# in the same html file, versioned install
 			$text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		    } else {
 			$text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
@@ -904,6 +911,10 @@ sub code2html {
 		    # in the same html file
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$uxfile\">$arg<\/a>/s;
+		} elsif ($uxfile =~ s+^$pkgname_[^/]*/html/++) {
+		    # in the same html file, versioned install
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$uxfile\">$arg<\/a>/s;
 		} else {
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$uxfile\">$arg<\/a>/s;
@@ -934,6 +945,10 @@ sub code2html {
 		    $htmlfile = $pkg."/html/".$topic.$HTML;
 		    if ($htmlfile =~ s+^$pkgname/html/++) {
 			# in the same html file
+			$text =~
+			    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+		    } elsif ($htmlfile =~ s+^$pkgname_[^/]*/html/++) {
+			# in the same html file, versioned install
 			$text =~
 			    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		    } else {
