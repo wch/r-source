@@ -4312,24 +4312,6 @@ DevDesc* R_Devices[R_MaxDevices];
 
 DevDesc nullDevice;
 
-#ifdef Unix
-int PSDeviceDriver(DevDesc*, SEXP, int, SEXP, int);
-int X11DeviceDriver(DevDesc*, SEXP, int, SEXP, int);
-#ifdef SOON
-int XFigDeviceDriver(char**, int, double*, int);
-#endif
-#endif
-
-#ifdef Win32
-int PSDeviceDriver(DevDesc*, SEXP, int, SEXP, int);
-int WinDeviceDriver(char**, int, double*, int);
-#endif
-
-#ifdef Macintosh
-int MacDeviceDriver(char**, int, double*, int);
-#endif
-
-
 void devError()
 {
     error("No graphics device is active -- SHOULDN'T happen anymore -- please report\n");
