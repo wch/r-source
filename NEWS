@@ -43,6 +43,11 @@ NEW FEATURES
     o	if(*) now gives a more intelligible error message
         when "*" cannot be coerced to logical.
 
+    o	New function Rprof() for profiling R expressions under Unix.
+	eval.c needs to be compiled with R_PROFILING defined for this
+	to be operational.
+
+
 
 	**************************************************
 	*						 *
