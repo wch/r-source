@@ -22,6 +22,9 @@ USER-VISIBLE CHANGES
 
     o	pie() replaces piechart() and defaults to using pastel colours.
 
+    o	formatC has new arguments (see below) and formatC(*, d = <dig>) 
+	is no longer valid and must be written as formatC(*, digits = <dig>).
+
 
 NEW FEATURES
 
@@ -179,8 +182,9 @@ NEW FEATURES
 
     o	Experimental interface to quicksort sorting.
 
-    o	New prettyNum() function and new ``prettifying'' arguments to
-        formatC() and format.default().
+    o	New prettyNum() function used in formatC() and format.default()
+        which have new optional arguments `big.mark', `big.interval',
+        `small.mark', `small.interval', and `decimal.mark'.
 
 
 DEPRECATED & DEFUNCT
