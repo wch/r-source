@@ -7,6 +7,12 @@ See the file NEWS for changes that affect all versions of R.
 rw1011
 ======
 
+undoc() is now available under Windows.
+
+There is a new script R_HOME/bin/build.sh, a version of R CMD build.
+You will need R_HOME set as an environment variable to use it, and
+you will need the full set of tools from tools.zip in your path.
+
 Other versions of Tcl/Tk may be used by setting TCL_VERSION in 
 MkRules (but only 8.31 has been tested).
 
