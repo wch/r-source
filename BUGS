@@ -394,3 +394,11 @@ Date: Mon, 19 Nov 2001 08:33:18 +0100 (MET)
 Subject: segfault using svm from e1071
 From: Jan Rychter <jan@rychter.com>
 Date: Tue, 20 Nov 2001 23:38:17 +0100
+* PR# 1179 *
+Subject: Bug in dev.print?
+From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
+Date: Thu, 22 Nov 2001 11:35:01 +0100
+* PR# 1180 *
+Subject:  R-ext.html should be R-exts.html in R-lang.html 
+From: Jonathan Baron <baron@cattell.psych.upenn.edu>
+Date: Thu, 22 Nov 2001 12:46:42 -0500
