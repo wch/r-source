@@ -21,10 +21,10 @@ USER-VISIBLE CHANGES
 	installation, but the separation allows a 'lean and mean'
 	version of R to be used for tasks such as building indices.
 
-	Packages ctest, eda, modreg, mva, nls and ts have been merged
-	into stats, and lqs has been returned to MASS.  In all cases a
-	stub has been left that will issue a warning and ensure that
-	the appropriate new home is loaded.  All the time series
+	Packages ctest, eda, modreg, mva, nls, stepfun and ts have been
+	merged into stats, and lqs has been returned to MASS.  In all
+	cases a stub has been left that will issue a warning and ensure
+	that the appropriate new home is loaded.  All the time series
 	datasets have been moved to package stats.  Sweave has been
 	moved to utils.
 
@@ -78,7 +78,7 @@ NEW FEATURES
     o	findInterval(x, v) now allows +/-Inf values, and NAs in x.
 
     o   subset() now allows a `drop' argument to remove unused factor
-        levels.  The default is still to keep them. 
+        levels.  The default is still to keep them.
 
     o	model.frame() methods, for example those for "lm" and "glm", pass
 	relevant parts of ... onto the default method.  (This has
@@ -104,7 +104,7 @@ NEW FEATURES
 	work around these on Windows).  Some examples are now tested for
 	during configuration.
 
-    o   There is a new function contourLines() to produce contour 
+    o   There is a new function contourLines() to produce contour
 	lines (but not draw anything).  This makes the CRAN package
 	clines (with its clines() function) redundant.
 
@@ -162,7 +162,7 @@ UTILITIES
 C-LEVEL FACILITIES
 
     o   arraySubscript and vectorSubscript take a new argument which
-        is a function pointer that provides access to character 
+        is a function pointer that provides access to character
         strings (such as the names vector) rather than assuming these
         are passed in.
 
@@ -225,7 +225,7 @@ BUG FIXES
 
     o	package.skeleton() no longer generates invalid filenames for
 	code and help files.  Also, care is taken not to generate
-	filenames that differ only by case. 
+	filenames that differ only by case.
 
     o	pairs() now respects axis graphical parameters such as
 	cex.main, font.main and las.
