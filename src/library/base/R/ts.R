@@ -64,8 +64,10 @@ tsp <- function(x) attr(x, "tsp")
 
 "tsp<-" <- function(x, value)
 {
+    cl <- class(x)
     attr(x,"tsp") <- value
-    class(x) <- if (is.null(value) && inherits(x,"ts")) NULL  else "ts"
+    class(x) <-
+        if (is.null(value) && inherits(x,"ts")) cl["ts" != cl] else c("ts",cl)
     x
 }
 
