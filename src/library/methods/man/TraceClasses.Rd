@@ -4,7 +4,6 @@
 \alias{functionWithTrace-class}
 \alias{MethodDefinitionWithTrace-class}
 \alias{MethodWithNextWithTrace-class}
-\alias{MethodWithNextWithTrace-class}
 \alias{genericFunctionWithTrace-class}
 \alias{groupGenericFunctionWithTrace-class}
 %% private
