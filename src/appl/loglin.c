@@ -10,7 +10,7 @@
 #endif
 
 #include <math.h>
-#include "S.h"
+#include "R.h"
 
 #undef max
 #undef min

@@ -21,12 +21,9 @@
 #ifndef _R_INTERNALS_H_
 #define _R_INTERNALS_H_
 
-#include "Arith.h"		/*-> Rconfig.h */
-#include "Complex.h"
-#include "Errormsg.h"
-#include "Memory.h"
-#include "PrtUtil.h"
-#include "Utils.h"
+#include "R_ext/Complex.h"
+#include "R_ext/Errormsg.h"
+#include "R_ext/Memory.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -51,6 +48,7 @@
 #ifdef __MAIN__
 #define extern
 #endif
+#include "R_ext/Arith.h"
 
 
 /*  Fundamental Data Types:  These are largely Lisp  */
@@ -239,6 +237,7 @@ extern SEXP	R_CommentSymbol;    /* "comment" */
 extern SEXP	R_SourceSymbol;     /* "source" */
 
 /* Missing Values - others from Arith.h */
+#define NA_STRING	R_NaString
 extern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
 extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 

@@ -1,4 +1,4 @@
-#include "Utils.h"/* rsort() */
+#include "R_ext/Sort.h"/* rsort() */
 #include <math.h>
 
 static int il(int n, double x)

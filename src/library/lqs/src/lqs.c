@@ -25,19 +25,17 @@
  * to be called as  .C(.)  in ../R/lqs.R
  */
 
-#include "S.h"		/* unif_rand(), seed_in(), seed_out() */
-#include "Applic.h"	/* for the QR	  routines */
-#include "Utils.h"	/* for the sort() routines */
-#include "Arith.h"	/* R_PosInf */
+#include "R.h"		/* unif_rand(), seed_in(), seed_out(), sort, R_PosInf  */
+#include "R_ext/Applic.h"	/* for the QR	  routines */
 #include <math.h>
 
 
 /* GLOBAL Variables, explicitly allocated and freed: */
 static double *coef, *qraux, *work, *res, *yr, *xr, *means, *d2, *d2copy;
-static longint *pivot, *which, *which2;
+static Sint *pivot, *which, *which2;
 static int *ind;
 
-static void lqs_setup(longint *n, longint *p, longint *nwhich)
+static void lqs_setup(Sint *n, Sint *p, Sint *nwhich)
 {
     coef = Calloc(*p, double);
     qraux = Calloc(*p, double);
@@ -45,10 +43,10 @@ static void lqs_setup(longint *n, longint *p, longint *nwhich)
     res = Calloc(*n, double);
     yr = Calloc(*n, double);
     xr = Calloc((*n)*(*p), double);
-    pivot = Calloc(*p, longint);
+    pivot = Calloc(*p, Sint);
     ind = Calloc(*n, int);
-    which = Calloc(*nwhich, longint);
-    /*bestone = Calloc(*nwhich, longint);*/
+    which = Calloc(*nwhich, Sint);
+    /*bestone = Calloc(*nwhich, Sint);*/
 }
 
 static void lqs_free()
@@ -62,7 +60,7 @@ static void lqs_free()
 /*
    Sampling k from 0:n-1 without replacement.
  */
-static void sample_noreplace(longint *x, int n, int k)
+static void sample_noreplace(Sint *x, int n, int k)
 {
     int i, j, nn=n;
 
@@ -77,7 +75,7 @@ static void sample_noreplace(longint *x, int n, int k)
 /*
    Find all subsets of size k in order: this gets a new one each call
  */
-static void next_set(longint *x, int n, int k)
+static void next_set(Sint *x, int n, int k)
 {
     int i, j, tmp;
 
@@ -154,14 +152,14 @@ static double chi(double x, double a)
    data points and the residuals from all the data points.
  */
 void
-lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn,
-	    longint *lts, longint *adj, longint *sample, longint *nwhich,
-	    longint *ntrials, double *crit, longint *sing, longint *bestone,
-	    double *bestcoef, longint *pk0, double *beta)
+lqs_fitlots(double *x, double *y, Sint *n, Sint *p, Sint *qn,
+	    Sint *lts, Sint *adj, Sint *sample, Sint *nwhich,
+	    Sint *ntrials, double *crit, Sint *sing, Sint *bestone,
+	    double *bestcoef, Sint *pk0, double *beta)
 {
-    longint nnew = *nwhich, pp = *p;
-    longint i, iter, j, k, k0 = *pk0, nn = *n, this, trial;
-    longint rank, info, n100 = 100;
+    Sint nnew = *nwhich, pp = *p;
+    Sint i, iter, j, k, k0 = *pk0, nn = *n, this, trial;
+    Sint rank, info, n100 = 100;
     long ignored;
     int firsttrial = 1;
     double a = 0.0, tol = 1.0e-7, sum, thiscrit, best = R_PosInf, target,
@@ -262,18 +260,18 @@ lqs_fitlots(double *x, double *y, longint *n, longint *p, longint *qn,
 }
 
 
-static void mve_setup(longint *n, longint *p, longint *ps)
+static void mve_setup(Sint *n, Sint *p, Sint *ps)
 {
     xr = Calloc((*ps)*(*p), double);
     qraux = Calloc(*p, double);
-    pivot = Calloc(*p, longint);
+    pivot = Calloc(*p, Sint);
     work = Calloc(2*(*p), double);
     d2 = Calloc(*n, double);
     d2copy = Calloc(*n, double);
     means = Calloc((*p), double);
     ind = Calloc(*n, int);
-    which = Calloc(*ps, longint);
-    which2 = Calloc(*ps, longint);
+    which = Calloc(*ps, Sint);
+    which2 = Calloc(*ps, Sint);
 }
 
 static void mve_free()
@@ -302,11 +300,11 @@ static double mah(double *xr, int nnew, int p, double *x)
    from the mean of the subset in which using the covariance of that
    subset.
 */
-static int do_one(double *x, longint *which, int n, longint nnew, longint p,
+static int do_one(double *x, Sint *which, int n, Sint nnew, Sint p,
        double *det, double *d2)
 {
     int i, j, k;
-    longint rank;
+    Sint rank;
     double sum, tol = 1.0e-7;
 
     for(j = 0; j < nnew; j++)
@@ -337,12 +335,12 @@ static int do_one(double *x, longint *which, int n, longint nnew, longint p,
 
 
 void
-mve_fitlots(double *x, longint *n, longint *p, longint *qn, longint *mcd,
-	    longint *sample, longint *nwhich, longint *ntrials,
-	    double *crit, longint *sing, longint *bestone)
+mve_fitlots(double *x, Sint *n, Sint *p, Sint *qn, Sint *mcd,
+	    Sint *sample, Sint *nwhich, Sint *ntrials,
+	    double *crit, Sint *sing, Sint *bestone)
 {
     int i, iter, j, nn = *n, quan = *qn, trial, this_sing;
-    longint nnew = *nwhich;
+    Sint nnew = *nwhich;
     long ignored;
     double det, best = R_PosInf, thiscrit, lim;
 

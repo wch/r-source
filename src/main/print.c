@@ -52,7 +52,7 @@
 #include "Defn.h"
 #include "Print.h"
 #include "Fileio.h"
-#include "S.h"
+/*#include "S.h"*/
 
 /* Global print parameter struct: */
 R_print_par_t R_print;

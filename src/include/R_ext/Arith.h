@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1999  R Development Core Team
+ *  Copyright (C) 1998--1999  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,22 +18,29 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* S compatibility library headers --
-			maps internal functions in S to R equivalents
- */
+#ifndef R_EXT_ARITH_H_
+#define R_EXT_ARITH_H_
+#include <math.h>
 
-#ifndef S_COMPAT_H_
-#define S_COMPAT_H_
+extern double	R_NaN;		/* IEEE NaN or -DBL_MAX */
+extern double	R_PosInf;	/* IEEE Inf or DBL_MAX */
+extern double	R_NegInf;	/* IEEE -Inf or -DBL_MAX */
+extern int	R_NaInt;	/* NA_INTEGER etc */
+extern double	R_NaReal;	/* NA_REAL */
 
-#include "S.h"
-#include "Fortran.h"
-#include "R_ext/Linpack.h"/*-> Blas.h */
+#define NA_LOGICAL	R_NaInt
+#define NA_INTEGER	R_NaInt
+#define NA_FACTOR	R_NaInt
+#define NA_REAL		R_NaReal
+/* NA_STRING is a SEXP, so defined in Rinternals.h */
 
-extern void
-F77_NAME(dqrdca) (double*, longint*, longint*, longint*,
-		  double*, longint*, double*, longint*, double*);
+int R_IsNA(double);		/* True for Real NA only */
+int R_IsNaN(double);		/* True for NaN, *not* for NA */
+int R_IsNaNorNA(double);        /* True for both */
+int R_finite(double);
 
-extern void
-F77_NAME(dbksl) (double*, longint*, longint*, double*, longint*, longint*);
+#define ISNA(x)		R_IsNA(x)
+#define ISNAN(x)	R_IsNaNorNA(x)
+#define R_FINITE(x)	R_finite(x)
 
 #endif

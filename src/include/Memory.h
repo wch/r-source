@@ -23,16 +23,10 @@
 
 #ifndef MEMORY_H_
 #define MEMORY_H_
-
-char*	vmaxget(void);
-void	vmaxset(char*);
+#include "R_ext/Memory.h"
 
 void	gc(void);
 
-void	call_R(char*, long, void**, char**, long*, char**, long, char**);
-char*	R_alloc(long, int);
-char*	S_alloc(long, int);
-char*	S_realloc(char*, long, long, int);
 
 /* C Memory Management Interface */
 void	Init_C_alloc(void);

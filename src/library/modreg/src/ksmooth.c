@@ -2,7 +2,7 @@
  *  modreg/src/ksmooth.c by B. D. Ripley  Copyright (C) 1998
  */
 
-#include "Arith.h"
+#include "R_ext/Arith.h"
 
 static double dokern(double x, int kern)
 {

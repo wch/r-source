@@ -16,10 +16,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include "R.h"
 #include "carray.h"
-#include "Memory.h" /* vmaxget(), vmaxset() */
-#include "Applic.h" /* Fortran routines */
-#include "Error.h"  /* Exit gracefully */
+#include "R_ext/Applic.h"
 #include <math.h>
 
 #include "qr.h"

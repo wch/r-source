@@ -27,7 +27,7 @@
 #endif
 
 #include "Fortran.h"
-#include "Error.h"
+#include "R_ext/Error.h"
 
 double DABS(double *a)
 {

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka
- *                             and the R Development Core Team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,27 +16,23 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *
- * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
  */
 
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef R_EXT_ERROR_H_
+#define R_EXT_ERROR_H_
+#include <stdio.h>
 
-#include "R_ext/Complex.h"
-#include "R_ext/Sort.h"
+extern void error(const char *, ...);
+extern void warning(const char *, ...);
 
-int	IndexWidth(int);
-int	Rstrlen(char*);
-char*	R_ExpandFileName(char*);
-void	setIVector(int*, int, int);
-void	setRVector(double*, int, double);
-int	StringFalse(char*);
-int	StringTrue(char*);
-int	isBlankString(unsigned char *);
-
-void	hsv2rgb(double *h, double *s, double *v,/* in */
-		double *r, double *g, double *b);/* out */
+#define R_PROBLEM_BUFSIZE	4096
+#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
+#define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
+#define ERROR			),error(R_problem_buf);}
+#define RECOVER(x)		),error(R_problem_buf);}
+#define WARNING(x)		),warning(R_problem_buf);}
+#define LOCAL_EVALUATOR		/**/
+#define NULL_ENTRY		/**/
+#define WARN			WARNING(NULL)
 
 #endif

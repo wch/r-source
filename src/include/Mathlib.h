@@ -30,8 +30,9 @@
 /*-- Mathlib as part of R --  undefine this for standalone : */
 #define MATHLIB_IN_R
 
-#include "Arith.h"
-#include "Random.h"
+#include "Rconfig.h" /* for IEEE_754 etc */
+#include "R_ext/Arith.h"
+/*#include "R_ext/Random.h"*/
 
 #ifdef FORTRAN_H
 #error __MUST__include "Mathlib.h"  _before_  "Fortran.h"

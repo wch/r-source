@@ -21,10 +21,8 @@
  * 1981) and the CMLIB library DBSPLINES.
  */
 
-#include "S.h"
-#ifndef R_S_H
+#include "R_ext/Memory.h"
 #define longint long int
-#endif /* R_S_H */
 
 static double *ldel, *rdel;
 static long orderm1;

@@ -75,15 +75,7 @@
 #define COMPLEX_DATA(x)		(COMPLEX(x))
 #define STRING_DATA(x)		(STRING(x))
 
-#define R_PROBLEM_BUFSIZE	4096
-#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
-#define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
-#define ERROR			),error(R_problem_buf);}
-#define RECOVER(x)		),error(R_problem_buf);}
-#define WARNING(x)		),warning(R_problem_buf);}
-#define LOCAL_EVALUATOR		/**/
-#define NULL_ENTRY		/**/
-#define WARN			WARNING(NULL)
+#include "R_ext/Error.h"
 
 #ifdef NEW_GC
 #define COPY_TO_USER_STRING(x)	mkStringElement(x)
@@ -101,25 +93,10 @@
 #define EVAL(x)			eval(x,R_GlobalEnv)
 
 /* S Like Memory Management */
-
-extern void *R_chk_calloc(size_t, size_t);
-extern void *R_chk_realloc(void *, size_t);
-extern void R_chk_free(void *);
-
-#define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
-#define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
-/* S-PLUS 3.x but not 5.x NULLs the pointer in the following */
-#define Free(p)        (R_chk_free( (void *)(p) ), (p) = NULL)
-#define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
+#include "R_ext/Memory.h"
 
 /* S Like Fortran Interface */
-/* These may not be adequate everywhere. Convex had _ prepending common
-   blocks, and some compilers may need to specify Fortran linkage */
 
-#define F77_CALL(x)    F77_SYMBOL(x)
-#define F77_NAME(x)    F77_SYMBOL(x)
-#define F77_SUB(x)     F77_SYMBOL(x)
-#define F77_COM(x)     F77_SYMBOL(x)
-#define F77_COMDECL(x) F77_SYMBOL(x)
+#include "R_ext/F77.h"
 
 #endif

@@ -23,8 +23,12 @@
 
 #define COUNTING
 
-#include "Rinternals.h"		/*-> Arith.h, Complex.h, Errormsg.h, Memory.h
+#include "Rinternals.h"		/*-> R_ext/Arith.h, Complex.h, Errormsg.h, R_ext/Memory.h
 				  PrtUtil.h, Utils.h, Rconfig.h */
+#include "Error.h"
+#include "Memory.h"
+#include "PrtUtil.h"
+#include "Utils.h"
 
 /*  Heap and Pointer Protection Stack Sizes.  */
 /*  These values are minima and can be overriden in Rconfig.h	*/
@@ -68,6 +72,14 @@
 #include <locale.h>
 #endif
 */
+
+/* Formerly in Arith.h */
+#ifdef IEEE_754
+# define MATH_CHECK(call)	(call)
+#else
+# define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
+#endif
+
 
 /* Getting the working directory */
 #if defined(HAVE_GETCWD)

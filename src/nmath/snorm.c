@@ -28,7 +28,8 @@
  * Is called from  rnorm(..), but also rt(), rf(), rgamma(), ...
  */
 
-#include "Mathlib.h"/* >> "Random.h" */
+#include "Mathlib.h"
+#include "Random.h"
 
 #define repeat for(;;)
 

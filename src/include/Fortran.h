@@ -22,7 +22,7 @@
 #define FORTRAN_H
 
 #include "Rconfig.h"
-#include "Complex.h"
+#include "R_ext/Complex.h"
 
 	/* General F2C Macros */
 

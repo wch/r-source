@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka
- *                             and the R Development Core Team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,27 +16,29 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *
- * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
  */
 
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef ERRORMSG_H
+#define ERRORMSG_H
 
-#include "R_ext/Complex.h"
-#include "R_ext/Sort.h"
+	/* Packaged Error Messages */
+	/* Argument list length and type errors */
 
-int	IndexWidth(int);
-int	Rstrlen(char*);
-char*	R_ExpandFileName(char*);
-void	setIVector(int*, int, int);
-void	setRVector(double*, int, double);
-int	StringFalse(char*);
-int	StringTrue(char*);
-int	isBlankString(unsigned char *);
+#define ERROR_NUMARGS		1
+#define ERROR_ARGTYPE		2
+#define ERROR_INCOMPAT_ARGS	3
 
-void	hsv2rgb(double *h, double *s, double *v,/* in */
-		double *r, double *g, double *b);/* out */
+	/* General type and length incompatibilities */
+
+#define ERROR_TSVEC_MISMATCH	100
+
+#define ERROR_UNIMPLEMENTED	9998
+#define ERROR_UNKNOWN		9999
+
+
+
+	/* Packaged Warning Messages */
+
+#define WARNING_UNKNOWN		9999
 
 #endif

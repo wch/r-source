@@ -34,7 +34,8 @@
  *	Applied Statistics, 31, 188.
  */
 
-#include "Mathlib.h"/* >> "Random.h" */
+#include "Mathlib.h"
+#include "Random.h" 
 #include <time.h>/* for Randomize() */
 
 /* ----------------

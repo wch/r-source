@@ -17,7 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  Much of this is from Doug Bates.
  */
 
 #ifndef R_S_H
@@ -25,16 +24,13 @@
 
 #ifndef USING_R
 #define USING_R
+/* is this a good idea? - conflicts with many versions of f2c.h */
 #define longint int
 #endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "Error.h"
-#include "Memory.h"
-#include "Rconfig.h"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -47,39 +43,13 @@ extern "C" {
 #include <math.h>
 #endif
 
-#define call_S call_R
-
-extern void seed_in(long *);
-extern void seed_out(long *);
-extern double unif_rand(void);
-extern double norm_rand(void);
-
-/* Macros for S/R Compatibility */
+#include "R_ext/Scompat.h"
 
 #include "Rdefines.h"
+/* includes R_ext/Error.h, R_ext/F77.h, R_ext/Memory.h" */
 
-/* Can't be sure Mathlib.h or math.h is included */
-
-#ifndef M_PI
-#define M_PI 3.141592653589793238462643383279502884197169399375
-#endif
-
-#define PI             M_PI
-#define SINGLE_EPS     FLT_EPSILON
-#define SINGLE_BASE    FLT_RADIX
-#define SINGLE_XMIN    FLT_MIN
-#define SINGLE_XMAX    FLT_MAX
-#define DOUBLE_DIGITS  DBL_MANT_DIG
-#define DOUBLE_EPS     DBL_EPSILON
-#define DOUBLE_XMAX    DBL_MAX
-#define DOUBLE_XMIN    DBL_MIN
-
-/*
-extern int F77_SYMBOL(dblepr) (char *label, int *nchar,
-			       double *data, int *ndata);
-extern int F77_SYMBOL(intpr) (char *label, int *nchar,
-			      int *data, int *ndata);
-*/
+#include "R_ext/Constants.h"
+#include "R_ext/Random.h"
 
 #ifdef __cplusplus
 }

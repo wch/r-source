@@ -22,7 +22,7 @@
 #include <Rconfig.h>
 #endif
 
-#include "Memory.h"
+#include "R.h"
 
 void
 burg(int *pn, double*x, int *pp, double *coefs, double *var1, double *var2)

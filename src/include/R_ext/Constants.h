@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka
- *                             and the R Development Core Team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,27 +16,23 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *
- * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
  */
 
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef R_EXT_CONSTANTS_H_
+#define R_EXT_CONSTANTS_H_
 
-#include "R_ext/Complex.h"
-#include "R_ext/Sort.h"
+#ifndef M_PI
+#define M_PI 3.141592653589793238462643383279502884197169399375
+#endif
 
-int	IndexWidth(int);
-int	Rstrlen(char*);
-char*	R_ExpandFileName(char*);
-void	setIVector(int*, int, int);
-void	setRVector(double*, int, double);
-int	StringFalse(char*);
-int	StringTrue(char*);
-int	isBlankString(unsigned char *);
-
-void	hsv2rgb(double *h, double *s, double *v,/* in */
-		double *r, double *g, double *b);/* out */
+#define PI             M_PI
+#define SINGLE_EPS     FLT_EPSILON
+#define SINGLE_BASE    FLT_RADIX
+#define SINGLE_XMIN    FLT_MIN
+#define SINGLE_XMAX    FLT_MAX
+#define DOUBLE_DIGITS  DBL_MANT_DIG
+#define DOUBLE_EPS     DBL_EPSILON
+#define DOUBLE_XMAX    DBL_MAX
+#define DOUBLE_XMIN    DBL_MIN
 
 #endif

@@ -27,7 +27,7 @@
 #include "Print.h"		/*for printRealVector()*/
 #include "Mathlib.h"
 #include "Applic.h"
-#include "S.h"		/* for the Calloc and Free macros */
+#include "R_ext/Memory.h"	/* for the Calloc and Free macros */
 
 /* WARNING : As things stand, these routines should not be called
  *	     recursively because of the way global variables are used.

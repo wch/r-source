@@ -22,7 +22,7 @@
 #include <Rconfig.h>
 #endif
 
-#include "Defn.h"		/*-> Arith.h */
+#include "Defn.h"		/*-> R_ext/Arith.h */
 #include "Mathlib.h"
 #include "Applic.h"		/* machar */
 #include "arithmetic.h"
@@ -39,7 +39,7 @@ static RETSIGTYPE handle_fperror(int dummy)
     signal(SIGFPE, handle_fperror);
 #endif
 }
-#endif
+#endif /* not IEEE_754 */
 
 #ifdef HAVE_MATHERR
 
@@ -65,6 +65,16 @@ int matherr(struct exception *exc)
 
 #ifdef IEEE_754
 double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
+#ifdef HAVE_IEEE754_H
+# include <ieee754.h>		/* newer Linuxen */
+#else
+# ifdef HAVE_IEEEFP_H
+#  include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
+# endif
+#endif
+#if defined(Win32) && defined( _MSC_VER)
+#include <float.h>
+#endif 
 
 typedef union
 {
@@ -120,7 +130,53 @@ int R_IsNaN(double x)
     }
     return 0;
 }
+
+int R_IsNaNorNA(double x)
+{
+    return (isnan(x) != 0);
+}
+
+int R_finite(double x)
+{
+#ifndef FINITE_BROKEN
+    return finite(x);
+# else
+#  ifdef _AIX
+#   include <fp.h>
+     return FINITE(x);
+#  else
+    return !isnan(x) & (x != R_PosInf) & (x != R_NegInf);
+#  endif
 #endif
+}
+
+#else /* not IEEE_754 */
+
+int R_IsNA(double x)
+{
+    return (x == R_NaReal);
+}
+
+int R_IsNaNorNA(double x)
+{
+# ifndef HAVE_ISNAN
+    int finite(double);
+    return (x == R_NaReal);
+# else
+    return (isnan(x) != 0 || x == R_NaReal);
+# endif
+}
+
+int R_finite(double x)
+{
+# ifndef HAVE_FINITE
+    return (x != R_NaReal);
+# else
+    int finite(double);
+    return finite(x);
+# endif
+}
+#endif /* IEEE_754 */
 
 /* Arithmetic Initialization */
 

@@ -22,8 +22,7 @@
 #include <Rconfig.h>
 #endif
 
-#include "Arith.h"
-#include "Memory.h"
+#include "R.h"
 #include <math.h>
 
 #ifndef min
