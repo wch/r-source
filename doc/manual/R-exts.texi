@@ -255,8 +255,8 @@ used by any Unix package, and still experimental.
 
 Sometimes it is convenient to distribute several packages as a
 @emph{bundle}.  (The main current example is @pkg{VR} which contains
-four packages.)  The installation scripts on both Unix and Windows can
-handle package bundles as from @R{} 0.90.1.
+four packages.)  The installation procedures on both Unix and Windows can
+handle package bundles.
 
 The @file{DESCRIPTION} file of a bundle has an extra @samp{Bundle}
 field, as in
@@ -370,11 +370,13 @@ manually.
 
 @findex R CMD check
 Using @code{R CMD check}, the @R{} package checker, one can test whether
-@emph{installed} @R{} packages work correctly.  Currently, the only
-check performed is whether the examples provided by the packages'
-documentation can be run successfully (@pxref{Writing R documentation},
-for information on using @code{\examples} to create executable example
-code.)  Other means for regression testing will be added in the future.
+@emph{installed} @R{} packages work correctly.  This checks whether the
+examples provided by the packages' documentation can be run successfully
+(@pxref{Writing R documentation}, for information on using
+@code{\examples} to create executable example code.)  If the package
+sources contain a @file{tests} directory then the tests specified in
+that directory are run. (Typically they will consist of a set of
+@file{.R} source files and target output files @file{.Rout.save}.)
 
 Of course, released packages should be able to run at least their own
 examples.
@@ -1340,7 +1342,7 @@ If an add-on package @var{pkg} contains C or Fortran code in its
 @file{src} subdirectory, @code{R CMD INSTALL} creates a shared library
 (for loading into @R{} in the @code{.First.lib} function of the package)
 either automatically using the above @code{R CMD SHLIB} mechanism, or
-using @code{make} if a @file{src} contains a @file{Makefile}.  In both
+using @code{make} if directory @file{src} contains a @file{Makefile}.  In both
 cases, if file @file{Makevars} exists it is read first when invoking
 @code{make}.  If a @file{Makefile} is really needed or provided, it
 needs to ensure that the shared library created is linked against all
@@ -1356,8 +1358,8 @@ Suppose we have the following hypothetical C++ library, consisting of
 the two files @file{X.hh} and @file{X.cc}, and implementing the 2
 classes @code{X} and @code{Y} which we want to use in @R{}.
 
-@smallexample
 @cartouche
+@smallexample
 // X.hh
 
 class X @{
@@ -1369,11 +1371,11 @@ class Y @{
 public:
   Y (); ~Y ();
 @};
-@end cartouche
 @end smallexample
+@end cartouche
 
-@smallexample
 @cartouche
+@smallexample
 // X.cc
 
 #include <iostream.h>
@@ -1385,8 +1387,8 @@ X::X()  @{ cout << "constructor X" << endl; @}
 X::~X() @{ cout << "destructor X" << endl; @}
 Y::Y()  @{ cout << "constructor Y" << endl; @}
 Y::~Y() @{ cout << "destructor Y" << endl; @}
-@end cartouche
 @end smallexample
+@end cartouche
 
 To use with @R{}, the only thing we have to do is writing a wrapper
 function and ensuring that the function is enclosed in
@@ -1399,8 +1401,8 @@ extern "C" @{
 
 For example,
 
-@smallexample
 @cartouche
+@smallexample
 // X_main.cc:
 
 #include "X.hh"
@@ -1412,13 +1414,13 @@ void X_main () @{
 @}
 
 @}
-@end cartouche
 @end smallexample
+@end cartouche
 
 Compiling and linking should be done with the C++ compiler-linker
 (rather than the C compiler-linker or the linker itself); otherwise,
 the C++ initialization code (and hence the constructor of the static
-variable @code{Y}) are not called.  On a properly configured system
+variable @code{Y}) are not called.  On a properly configured Unix system
 (support for C++ was added in version 1.1), one can simply use
 
 @smallexample
@@ -1445,6 +1447,15 @@ R> q()
 Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
+
+The R for Windows FAQ (@file{rw-FAQ}) contains details of how to compie
+this example under various Windows compilers.
+
+Using C++ iostreams, as in this example, is best avoided.  There is no
+guarantee that the output will appear in the R console, and indeed it
+will not on the R for Windows console.  Use R code or the C
+entry points (@pxref{Printing}) for all I/O if at all possible.
+
 
 @node Handling R objects in C, Interface functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
 @section Handling R objects in C
@@ -3406,7 +3417,7 @@ all provide (very) partial sorting: they permute @var{x} so that
 the left, larger ones to the right.
 @end table
 
-Further utilities in @R comprise
+Further utilities in @R{} include
 @table @code
 @item void R_max_col(double *matrix, int *nr, int *nc, int *maxes)
   Given the @code{nr} by @code{ny} matrix @code{matrix} in row(``Fortran'')
