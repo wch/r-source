@@ -246,8 +246,8 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define DATAPTR(x)	(((SEXPREC_ALIGN *) (x)) + 1)
 #define CHAR(x)		((char *) DATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
-#define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
 #define INTEGER(x)	((int *) DATAPTR(x))
+#define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
 #define REAL(x)		((double *) DATAPTR(x))
 #define STRING_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
 #define VECTOR_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
@@ -925,7 +925,7 @@ void R_SetUseNamespaceDispatch(Rboolean val);
 /* Save/Load Interface */
 #define R_XDR_DOUBLE_SIZE 8
 #define R_XDR_INTEGER_SIZE 4
- 
+
 void R_XDREncodeDouble(double d, void *buf);
 double R_XDRDecodeDouble(void *buf);
 void R_XDREncodeInteger(int i, void *buf);
@@ -950,7 +950,7 @@ struct R_outpstream_st {
     SEXP (*OutPersistHookFunc)(SEXP, SEXP);
     SEXP OutPersistHookData;
 };
-    
+
 typedef struct R_inpstream_st *R_inpstream_t;
 struct R_inpstream_st {
     R_pstream_data_t data;
