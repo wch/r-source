@@ -17,10 +17,12 @@ cd $RHOME/src
 echo -n "Creating builtin function tables ... "
 ROUTINES="appl/ROUTINES"
 sed '
+/^#/d
 s/F77_SUBROUTINE(\(.*\))/int \1_();/
 s/C_FUNCTION(\(.*\))/int \1();/
 ' ${ROUTINES} > include/FFDecl.h
 sed '
+/^#/d
 s/F77_SUBROUTINE(\(.*\))/	"\1_",	\1_,/
 s/C_FUNCTION(\(.*\))/	"\1",	\1,/
 ' ${ROUTINES} > include/FFTab.h
@@ -38,6 +40,22 @@ echo done
 # Library of interpreted functions
 
 echo -n "Creating interpreted function libraries ... "
+
+if [ ! -d $RHOME/library ]
+then
+  mkdir $RHOME/library
+fi
+
+if [ ! -d $RHOME/library/base ]
+then
+  mkdir $RHOME/library/base
+fi
+
+if [ ! -d $RHOME/library/base/R ]
+then
+  mkdir $RHOME/library/base/R
+fi
+
 cd $RHOME/src/library/base/R
 cat `ls *.R | sed '/system.*/d'` \
      system.mac.R > $RHOME/library/base/R/base
