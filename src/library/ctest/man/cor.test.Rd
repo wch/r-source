@@ -71,6 +71,9 @@
 
   For Spearman's test, p-values are computed using algorithm AS 89.
 }
+\note{
+  The formula interface is still experimental and hence might change.
+}
 \references{
   D. J. Best & D. E. Roberts (1975),
   Algorithm AS 89: The Upper Tail Probabilities of Spearman's
