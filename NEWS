@@ -9,6 +9,15 @@
 		CHANGES IN R VERSION 1.2.2
 
 
+NEW FEATURES
+
+    o	The Macintosh port becomes a full member of the R family and its
+	sources are incorporated as from this release.	
+	See src/macintosh/INSTALL for how that port is built.
+	This is bound to be modified for future versions, and suggestions
+	and volunteers are very welcome.
+
+
 BUG FIXES
 
     o	readBin() and writeBin() were not always making good use of
@@ -39,10 +48,6 @@ BUG FIXES
     o	The Fortran code used is now much closer to ANSI compliance.
 
     o	cov.rob() gives useful error message on nearly-degenerate matrices.
-
-    o	Necessary source code additions and changes for the Macintosh
-	version have been incorporated; though not for configuration and
-	"make" which are not yet available on the Mac.
 
 
 
