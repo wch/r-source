@@ -10,19 +10,20 @@ function(x, which = 1:4,
 {
     if (!inherits(x, "lm"))
 	stop("Use only with 'lm' objects")
-    show <- rep(FALSE, 4)
     if(!is.numeric(which) || any(which < 1) || any(which > 4))
         stop("`which' must be in 1:4")
+    show <- rep(FALSE, 4)
     show[which] <- TRUE
     r <- residuals(x)
     n <- length(r)
     yh <- predict(x) # != fitted() for glm
-    if (any(show[2:4]))
+    if (any(show[2:4])) {
         s <- if(inherits(x, "rlm")) x$s else sqrt(deviance(x)/df.residual(x))
+        hii <- lm.influence(x, do.coef=FALSE)$hat
+    }
     if (any(show[2:3])) {
         ylab23 <- if(inherits(x, "glm"))
           "Std. deviance resid." else "Standardized residuals"
-        hii <- lm.influence(x)$hat
         w <- weights(x)
         # r.w := weighted.residuals(x):
         r.w <- if(is.null(w)) r else (sqrt(w)*r)[w!=0]

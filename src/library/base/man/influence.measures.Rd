@@ -15,14 +15,14 @@
 influence.measures(lm.obj)
 
 rstandard(lm.obj,
-          infl = lm.influence(lm.obj),
+          infl = lm.influence(lm.obj, do.coef=FALSE),
           res = weighted.residuals(lm.obj),
-          sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)))
+          sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)), hat = infl$hat)
 rstudent (lm.obj, infl = \dots, res = \dots)
 dffits   (lm.obj, infl = \dots, res = \dots)
-dfbetas  (lm.obj, infl = \dots)
-covratio (lm.obj, infl = \dots, res = \dots)
-cooks.distance(lm.obj, infl = \dots, res = \dots, sd = \dots)
+dfbetas  (lm.obj, infl = lm.influence(lm.obj, do.coef=TRUE))
+covratio (lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE), res = \dots)
+cooks.distance(lm.obj, infl = \dots, res = \dots, sd = \dots, hat = infl$hat)
 
 hat(x, intercept = TRUE)
 }
@@ -32,6 +32,7 @@ hat(x, intercept = TRUE)
   \item{infl}{influence structure as returned by \code{\link{lm.influence}}.}
   \item{res}{(possibly weighted) residuals, with proper default.}
   \item{sd}{standard deviation to use, see default.}
+  \item{hat}{hat values \eqn{H_{ii}}{H[i,i]}, see default.}
 
   \item{x}{the \eqn{X} or design matrix.}
   \item{intercept}{should an intercept column be pre-prended to \code{x}?}
@@ -98,6 +99,8 @@ covratio(lm.SR)
 xh <- c(-4:0, 10)
 yh <- c(2.48, .73, -.04, -1.44, -1.32, 0)
 summary(lmH <- lm(yh ~ xh))
-influence.measures(lmH)
+(im <- influence.measures(lmH))
+plot(xh,yh, main = "Huber's data: L.S. line and influential obs.")
+abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch=20, col=2)
 }
 \keyword{regression}

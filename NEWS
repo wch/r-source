@@ -40,6 +40,9 @@ USER-VISIBLE CHANGES
     o	The tables for plotmath, Hershey and Japanese have been moved
 	from the help pages (example(plotmath)) to demo(plotmath) etc.
 
+    o	plot.dendrogram (`mva' package) now draws leaf labels if present
+	by default.
+
 
 NEW FEATURES
 
@@ -238,10 +241,10 @@ NEW FEATURES
 
     o	arima() has coef(), logLik() (and hence AIC) and vcov() methods.
 
-    o   Package tcltk now allows return values from the R side to the
-        Tcl side in callbacks and the R_eval command. If the return
-        value from the R function or expression is of class "tclObj"
-        then it will be returned to Tcl.
+    o	Package tcltk now allows return values from the R side to the
+	Tcl side in callbacks and the R_eval command. If the return
+	value from the R function or expression is of class "tclObj"
+	then it will be returned to Tcl.
 
     o	Logical matrix replacement indexing of data frames is now
 	implemented (interpreted as if the lhs was a matrix).
@@ -252,7 +255,7 @@ NEW FEATURES
     o	New function md5sum() in package tools to calculate MD5
 	checksums on files (e.g. on parts of the R installation).
 
-    o   list.files()/dir() have a new argument `recursive'.
+    o	list.files()/dir() have a new argument `recursive'.
 
     o	New function gzcon() which wraps a connection and provides
 	(de)compression compatible with gzip.
@@ -284,6 +287,19 @@ NEW FEATURES
 
     o	New function topenv to determine the nearest top level environment
 	(usually .GlobalEnv or a name space environment).
+
+    o	lm.influence() has a new `do.coef' argument allowing *not* to
+	compute casewise changed coefficients.	This makes plot.lm() much
+	quicker for large data sets.
+
+    o	stepfun() has a new `right' argument for right-continuous step
+	function construction.
+
+    o	new isoreg() function and class for isotonic regression
+	(`modreg' package).
+
+    o	new runmed() for fast runnning medians (`modreg' package).
+
 
 
 INSTALLATION CHANGES
@@ -345,7 +361,7 @@ INSTALLATION CHANGES
 	HTML search engine.)
 
     o	A NAMESPACE file in root directory of a source package is copied
-        to the root of the package installation directory.  Attempting to
+	to the root of the package installation directory.  Attempting to
 	install a package with a NAMESPACE file using --save signals an
 	error; this is a temporary measure.
 
@@ -483,9 +499,9 @@ BUG FIXES
     o	symbols(thermometers=) was often giving a spurious warning about
 	the range.
 
-    o   tcltk was using deprecated internals of the Tcl library when
-        accessing error messages. Not likely to be a user-visible
-        change (yet!).
+    o	tcltk was using deprecated internals of the Tcl library when
+	accessing error messages. Not likely to be a user-visible
+	change (yet!).
 
     o	The automatic search of BLAS libs now tries Sun's libsunperf
 	the way the latest versions require. (PR#2530)
@@ -507,6 +523,10 @@ BUG FIXES
 
     o	c/rbind were not handling zero col/row matrices correctly.
 	(PR#2541 was one symptom.)
+
+    o	approx() and approxfun() now work with 1 knot if
+	method = "constant".  stepfun(), ecdf() and plot.stepfun() do so
+	as well.
 
 
 

@@ -18,7 +18,7 @@ weighted.residuals <- function(obj, drop0 = TRUE)
     else sqrt(w)*r
 }
 
-lm.influence <- function (lm.obj)
+lm.influence <- function (lm.obj, do.coef = TRUE)
 {
     if (is.empty.model(lm.obj$terms)) {
 	warning("Can\'t compute influence on an empty model")
@@ -30,48 +30,54 @@ lm.influence <- function (lm.obj)
     e <- na.omit(weighted.residuals(lm.obj))
     if(length(e) != n)
         stop("non-NA residual length does not match cases used in fitting")
+    do.coef <- as.logical(do.coef)
     res <- .Fortran("lminfl",
                     lm.obj$qr$qr,
                     n,
                     n,
                     k,
+                    as.integer(do.coef),
                     lm.obj$qr$qraux,
                     e,
                     hat = double(n),
-                    coefficients = matrix(0, nr = n, nc = k),
+                    coefficients= if(do.coef) matrix(0, n, k) else double(1),
                     sigma = double(n),
                     DUP = FALSE, PACKAGE="base")[c("hat", "coefficients", "sigma")]
     if(!is.null(lm.obj$na.action)) {
         hat <- naresid(lm.obj$na.action, res$hat)
         hat[is.na(hat)] <- 0 # omitted cases have 0 leverage
         res$hat <- hat
-        coefficients <- naresid(lm.obj$na.action, res$coefficients)
-        coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
-        res$coefficients <- coefficients
+        if(do.coef) {
+            coefficients <- naresid(lm.obj$na.action, res$coefficients)
+            coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
+            res$coefficients <- coefficients
+        }
         sigma <- naresid(lm.obj$na.action, res$sigma)
         sigma[is.na(sigma)] <- sqrt(deviance(lm.obj)/df.residual(lm.obj))
         res$sigma <- sigma
     }
+    if(!do.coef) ## drop them
+        res$coefficients <- NULL
     res
 }
 
-rstandard <- function(lm.obj, infl = lm.influence(lm.obj),
+rstandard <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
                       res = weighted.residuals(lm.obj),
-                      sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)))
-    res / (sd * sqrt(1 - infl$hat))
+                      sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)),
+                      hat = infl$hat)
+    res / (sd * sqrt(1 - hat))
 ## OLD (<= 0.90.1); fails for glm objects:
 ##  res / (summary(lm.obj)$sigma * sqrt(1 - infl$hat))
 
-
-rstudent <- function(lm.obj, infl = lm.influence(lm.obj),
+rstudent <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
                      res = weighted.residuals(lm.obj))
     res / (infl$sigma * sqrt(1 - infl$hat))
 
-dffits <- function(lm.obj, infl = lm.influence(lm.obj),
+dffits <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
                    res = weighted.residuals(lm.obj))
     res * sqrt(infl$hat)/(infl$sigma*(1-infl$hat))
 
-dfbetas <- function (lm.obj, infl = lm.influence(lm.obj))
+dfbetas <- function (lm.obj, infl = lm.influence(lm.obj, do.coef=TRUE))
 {
     xxi <- chol2inv(lm.obj$qr$qr, lm.obj$qr$rank)
     d <- infl$coefficients/(outer(infl$sigma, sqrt(diag(xxi))))
@@ -79,7 +85,7 @@ dfbetas <- function (lm.obj, infl = lm.influence(lm.obj))
     d
 }
 
-covratio <- function(lm.obj, infl = lm.influence(lm.obj),
+covratio <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
                      res = weighted.residuals(lm.obj))
 {
     n <- nrow(lm.obj$qr$qr)
@@ -89,13 +95,13 @@ covratio <- function(lm.obj, infl = lm.influence(lm.obj),
     1/(omh*(((n - p - 1)+e.star^2)/(n - p))^p)
 }
 
-## Used in plot.lm(); allow passing of known parts:
-cooks.distance <- function(lm.obj, infl = lm.influence(lm.obj),
+## Used in plot.lm(); allow passing of known parts; `infl' used only via `hat'
+cooks.distance <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
                            res = weighted.residuals(lm.obj),
-                           sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)))
+                           sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)),
+                           hat = infl$hat)
 {
     p <- lm.obj$rank
-    hat <- infl$hat
     ((res/(sd * (1 - hat)))^2 * hat)/p
 }
 
