@@ -4,32 +4,16 @@ R \- a language for data analysis and graphics
 .SH SYNOPSIS
 .B R
 [
-.B \-xxgdb
+.I options
 ]
 [
-.B \-v
-.I size
-]
-[
-.B \-n
-.I size
-]
-.br
-.B R
-[
-.B \-xxgdb
-]
-[
-.B \-v
-.I size
-]
-[
-.B \-n
-.I size
-] <
+<
 .I infile
->
+]
+[
+> 
 .I outfile
+]
 .SH DESCRIPTION
 R is a language which bears a passing resemblance to the S language
 developed at AT&T Bell Laboratories.
@@ -49,25 +33,66 @@ library, R will maintain a command history,
 so that commands can be recalled, edited and
 re-executed.
 .SH OPTIONS
-The
-.B \-v
-option can be used to specify the size of the vector heap in
-megabytes (the default is 2).
-The
-.B \-n
-option can be used to specify the number of
-.I "cons cells"
-(each occupying 16 bytes)
-which R is to use (the default is 200000).
+The following options allow users to change the amount of memory
+which R uses to store its internal data sets.
 If possible these sizes should be set so that R does not use
 more than the amount of physical memory available on the machine
 where the program is executing.
 This will minimize paging and ensure that execution
 is as efficient as possible.
-The
+.TP
+\fB\-v\fP \fIn\fP
+Use a vector heap of size \fIn\fP megabytes (the default is 2).
+.TP
+\fB\-n\fP \fIn\fP
+The number of \fIcons cells\fP (each occupying 16 bytes)
+which R is to use (the default is 200000).
+.LP
+The following options relate to the saving and restoring of a user's
+data sets and functions at startup and termination.
+.TP
+.B \-nosave
+Do not save the data sets at the end of the R session.
+This is only effective when R is used non-interactively.
+.TP
+.B \-save
+Do save data sets.
+.TP
+.B \-norestore
+Do not restore any previously saved datasets (an \fIimage\fP).
+.TP
+.B \-restore
+Do restore previously saved datasets (this is the default).
+.LP
+The following options are present to support the use of
+R from other programs.  In particular, the
+.B \-noreadline
+option exists so that R can be run under
+.IR emacs (1)
+and
+.IR xemacs (1)
+using ESS.
+.TP
+.B \-noreadline
+Turn off the use of the
+.IR readline (3)
+command line editing.
+.TP
+.B \-quiet
+Make R run as quietly as possible.  This option is intended
+to support programs which use R to compute results for them.
+.LP
+These options are available so that the R developers can
+carry debugging.
+.TP
 .B \-xxgdb
-option will run R under the control of the
+run R under the control of the
 .IR xxgdb (1)
+debugger.
+.TP
+.B \-gdb
+run R under the control of the
+.IR gdb (1)
 debugger.
 .SH STARTUP PROCESSING
 When R is invoked it searches for the files

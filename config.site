@@ -9,6 +9,11 @@ R_PRINTCMD=
 # If left blank the system will use "a4"
 R_PAPERSIZE=a4
 
+# The default behavior R which it encounters EOF in batch mode.
+# Set this to one of "-save" or "-nosave" depending whether you
+# want automatic saving of .Rdata or not.
+R_BATCHSAVE="-nosave"
+
 # The command which runs the C compiler.
 # If you leave this blank, then a search is made, first
 # for gcc and then cc.  If you wish to override this choice

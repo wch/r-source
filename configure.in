@@ -123,11 +123,16 @@ if test -z "$R_PRINTCMD"
 then
 AC_CHECK_PROGS(R_PRINTCMD, lpr lp)
 fi
+
 if test -z "$R_PAPERSIZE"
 then
 R_PAPERSIZE=a4
 fi
 AC_SUBST(R_PAPERSIZE)
+
+# SAVE MODE
+
+AC_SUBST(R_BATCHSAVE)
 
 
 #  X11 LOCATIONS

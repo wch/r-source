@@ -15,32 +15,47 @@ Wilks.  Indeed in the (present) absence of an R manual, you can
 
 R is free software distributed under a GNU-style copyleft.
 
-Currently the software is in a beta test state and we are seeking
-comments and bug reports.  Please send comments and reports to
-
-	R@stat.auckland.ac.nz
-
-In the case of bugs it would be very helpful to have code which
-reliably reproduces the problem.  Some bugs can be very hard to
-fix without this.
+Currently the software is undergoing active development.  Discussion
+of the development process is carried out on the "r-devel" mailing
+list.  See the file RESOURCES for details on how to subscribe to
+this list.
 
 
-2. PRESENT STATUS
+2. HISTORY
 
-We have implemented most of the functionality in the first S book
-(the "Blue Book") and many of the applications.  In addition, we
-have implemented a certain amount of functionality from the second
-S book (the "White Book").  In particular we have a functioning
-versions of "lm" and "glm" and their associated "summary" and
-"anova" methods (it would be nice to have "drop1", "add1" and
-"step", but there hasn't been time to complete these yet).
+R was initially written by Robert Gentleman and Ross Ihaka of the
+Statistics Department of the University of Auckland.  In addition,
+a large group of individuals has contibuted to R by contributing
+code and bug reports.
+
+Since mid-1997 there has been a core group who can modify the R
+source code CVS archive.  The group currently consists of
+
+	Peter Dalgaard, Robert Gentleman, Kurt Hornik
+	Ross Ihaka, Thomas Lumley, Martin Maechler,
+	Paul Murrell, Heiner Schwarte and Luke Tierney.
+
+As noted above, discussions of the development process take
+place in the r-devel mailing list.
+
+
+3. PRESENT STATUS
+
+The present version implements most of the functionality in the
+first S book (the "Blue Book") and many of the applications.  In
+addition, we have implemented a certain amount of functionality
+from the second S book (the "White Book").  In particular we have
+a functioning versions of "lm" and "glm" and their associated
+"summary" and "anova" methods (it would be nice to have "drop1",
+"add1" and "step", but there hasn't been time to complete these
+yet).
 
 What we have in the way of manual is in the directory in an
 "output independent" form which can be used to create versions
 for HTML, LaTeX, troff etc.
 
 
-3. GOALS
+4. GOALS
 
 Our aim at the start of this project was to demonstrate that it was
 possible to produce an S-like environment which did not suffer from
@@ -50,34 +65,8 @@ In the short term we hope to create a small portable free system
 which will provide most of the functionality of S and perhaps some
 extensions.
 
-Our present plan of attack is as follows:
 
-1.  Re-implement parts of the system to make things more modular
-    so that data sets can be saved and restored on an individual
-    basis and so that we have a real library facility.
-    (Mostly done).
-
-2.  Move the user interface to an event driven basis.  This will
-    enable users to interact with the system in a much more
-    graphical way.  It also raises the possibility that we can
-    borrow the graphics technology in LispStat.
-    (Design phase).
-
-3.  Add functionality in the form of new functions.
-    (Ongoing).
-
-4.  The present documentation is written using our own format into 
-    files which can be processed by a combination of sed and m4 into
-    a variety of formats (nroff, latex, html).  We should use a real
-    SGML description of our format and develop techniques for more
-    generally translating into other formats.
-
-Longer-term we are hoping to move to a compiled evironment which
-will give substantial performance gains.  A separate compiler
-"skunk works" is engaged in this.
-
-
-4. DIFFERENCES BETWEEN R AND S
+5. SOME DIFFERENCES BETWEEN R AND S
 
 1. In R, "factor" and "ordered factor" are primitive vector types.
    This means in particular that they can be shaped as arrays.
@@ -88,4 +77,4 @@ will give substantial performance gains.  A separate compiler
    large and so we have not (yet) bothered to implement a matching
    "generic vector" type, even though this could be quite useful.
 
-Robert Gentleman + Ross Ihaka
+Robert Gentleman + Ross Ihaka + The R core.

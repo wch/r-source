@@ -1,17 +1,13 @@
 
 		CHANGES IN VERSION R VERSION 0.60
 
-R is now an official part of the GNU project.
+R is about to become an official part of the GNU project.
 To quote RMS (Richard Stallman)
 
 		``I hereby dub R GNU software!''
 
 
 NEW FEATURES
-
-    o	Heiner Schwarte has modified the memory management system
-	so that the vector heap will grow when free space is
-	exhausted.
 
     o	There has been a major change in directory structure
 	masterminded by Kurt Hornik.
@@ -126,4 +122,114 @@ BUG FIXES
 
     o   Improvement to many (even most ?) documentation (.Rd) files.
 
-   ... and numerous other fixes of minor things ...
+    o   Numerous other fixes of minor things ...
+
+
+
+		  CHANGES IN VERSION R VERSION 0.50
+
+WARNING!!!
+
+ o  A change in the way that "expressions" are implemented means that
+    saved data images which contain expressions will probably not
+    restore properly.
+
+NEW FEATURES
+
+ o  The installation of documentation has now been streamlined.
+    Many manual entries have been revised.
+
+ o  "expressions" are now implemented as a basic type rather than as
+    a class of object.  This change was made as move toward compatibility
+    with S and also to implement mathematical annotation in graphs.
+    For some examples of the latter, see ?text and ?title.
+
+ o  "eigen" can now handle complex and non-symmetric matrices.
+
+ o  Libraries are now attached by loading their code into newly created
+    environment frames on the search path rather than in with the general
+    system code.  This means that libraries can be unloaded as well as
+    loaded.  They can also have .First.lib and .Last.lib functions.
+    The variable .Libraries has been replaced by .library() but should not
+    be needed much anymore.
+
+ o  There is now an experimental function called "delay" which creates
+    a promise to evaluate an expression.  This provides direct access
+    to the lazy evaluation mechanism used by R.
+
+ o  >>>>  'make tests'   allows to test--run all the help() examples.
+
+ o  New functions   matplot / matpoints / matlines.
+
+ o  cut has 2 new arguments. 'right = TRUE' gives intervals closed on the
+	right, open to the left (as S); 'right = FALSE' allows to reverse
+	this. The code for default label construction has been enhanced,
+	and can be controlled by the new argument 'dig.lab'.
+
+ o  legend(.) has 2 new arguments 'cex' (obvious) and 'merge = FALSE'.
+	-> ?legend.
+ o  deparse  has a 2nd argument allowing for a kind of line width.
+ o  There is now print.density (method).
+
+ o  many help(.) pages have been updated with working examples,
+	and several new ones have been created.
+
+ o  influence.measures() and ...  now allow to get at the usual
+    regression diagnostics. 
+
+BUG FIXES
+
+ o  The "is.object" function has been with drawn.
+
+ o  A bug which prevented the "pictex" graphics driver from working
+    has been fixed.
+
+ o  Regression diagnostics obtained with "lm.influence" now work when
+    there are weights.	This means they should work for glms.
+
+ o  There was a problem in parsing files from statements which were
+    separated from following statements by ";" (e.g. data(iris); iris).
+    This is fixed.
+
+ o  Comments are handled better in functions.  The rule is that they
+    are shifted to just before their statements.  Comments after the
+    last statement of a function are lost.
+
+ o  It is now possible to perform complicated mutations of expressions.
+    For example
+	e <- quote(f(x=1,y=2))
+	names(e)[[2]] <- "a"
+    will change the x= argument tag into a=.  In the past this produced
+    odd error messages.
+
+ o  The length function now tries to return a "sensible" value for all
+    the built-in types.	 For example, symbols now have length 1.
+
+ o  "update" should now work in both "lm" and "glm" models.
+
+ o  The functions Re, Im, Mod, Arg and Conj will now accept real-valued
+    arguments and return the obvious results.
+
+ o  Minor graphics cleanup.
+
+ o  A fix for convergence problems in glm from Thomas Lumley included.
+
+ o  A new version of qt() should not take infinitely long to get an
+    answer in the large degrees if freedom case.  The underlying code
+    (Hill 1970, CACM) appears to be much faster and more accurate than
+    Splus.
+
+ o  A final Newton step has beed added to give a final "polish" to
+    the quantiles produced by pnorm().	These should be close to full
+    accuracy now.
+
+ o  A bug in qbeta found by Martin Maechler has been fixed.  This should
+    speed up quantile computation for the F and Beta distributions.
+    Further improvements in qbeta(.) by MM.  No infinite loops anymore.
+
+ o  rainbow(.) now allows "start > end" indexing the "color circle".
+    topo.colors(n), terrain.colors(n), heat.colors(n) now also work for n=1,2.
+
+ o  ?"+" now works.
+
+ o  tapply has been fixed as indicated by T. Lumley.
