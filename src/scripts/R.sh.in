@@ -135,8 +135,9 @@ done
 if test -x ${R_HOME}/bin/R.${gui}; then
   R_binary="R.${gui}"
 else
-  echo "GUI \`${gui}' is not supported" && exit 1 ;;
-esac
+  echo "GUI \`${gui}' is not supported"
+  exit 1
+fi
 
 # Startup
 if ${use_r_environ}; then # use the one in current dir, or default
