@@ -2116,63 +2116,58 @@ sub latex_unescape_codes {
     $text;
 }
 
-# Encapsulate code in \verb or \texttt depending on the appearance of
-# special characters.
+
+# The next two should transform links and aliases identically
+# so use common subroutines
+
+sub latex_code_trans {
+    my $c = $_[0];
+    my $BSL = '@BSL@';
+
+    if($c =~ /[$LATEX_SPECIAL]/){
+      $c =~ s/\\\\/$BSL/go;
+      $c =~ s/[$LATEX_SPECIAL]/\\$&/go;	 #- escape them (not the "bsl" \)
+      $c =~ s/\\\^/\$\\,\\hat{\\,}\$/go;# ^ is SPECIAL
+      $c =~ s/\\~/\$\\,\\tilde{\\,}\$/go;
+      $c =~ s/$BSL/\\bsl{}/go;
+      }
+    ## avoid conversion to guillemots
+    $c =~ s/<</<\{\}</;
+    $c =~ s/>>/>\{\}>/;
+    $c =~ /HYPERLINK\(([^)]*)\)/;
+    my $link = latex_link_trans($1);
+    $c =~ s/HYPERLINK\([^)]*\)/\\Link{$link}/go;
+    $c;
+}
+
+sub latex_link_trans {
+    my $c = $_[0];
+    $c =~ s/<-\./<\\Rdash\./go;
+    $c =~ s/<-$/<\\Rdash/go;
+    $c
+}
+
 sub latex_code_cmd {
 
     my $code = $_[0];
 
-    if($code =~ /[$LATEX_SPECIAL]/){
-	warn("\nERROR: found `\@' in \\code{...\}\n")
-	  if $code =~ /@/;
-	if ($code =~ /HYPERLINK\(/) {
-	    $code =~ s/HYPERLINK\(([^)]*)\)/$1/go;
-	    warn("\nWarning: hyperlink for `$code' contains special chars\n" .
-		 "and will be omitted in latex\n");
-	}
-	## till 0.63.1
-	## $code = "\\verb@" . $code . "@";
-	##          [Problem: Fails in new Methods.Rd: verb NOT in command arg!
-	$code =~ s/[$LATEX_SPECIAL]/\\$&/go;# escape them (not the "bsl" )
-	$code =~ s/\\\^/\$\\,\\hat{\\,}\$/go;# ^ is SPECIAL
-	$code =~ s/\\~/\$\\,\\tilde{\\,}\$/go;
-    }
-    else {
-	$code =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
-    }
+    warn("\nERROR: found `\@' in \\code{...\}\n") if $code =~ /@/;
+    $code = latex_code_trans ($code);
     $code = "\\code\{" . $code . "\}";
     $code;
 }
 
 
-# Encapsulate code in $...$ by ESCAPING special characters:
 # Tough examples are
 #	Logic.Rd  Arithmetic.Rd	 Extract.Rd  formula.Rd
 sub latex_code_alias {
 
     my $c = $_[0];  ##-- $c is (typically) the OUTPUT of  code2latex(.) :
-    my $BSL = '@BSL@';
-    my $Dollar = '@DOLLAR@';
-
-    if($c =~ /[$LATEX_DO_MATH]/){ # (includes LATEX_SPECIAL)
-      $c =~ s/\\\\/$BSL/go;
-      $c =~ s/\$/$Dollar/go;
-      #-- math around it  (should be "robust")
-      $c =~ s/[$LATEX_DO_MATH]+/${MD}$&${MD}/g;
-      $c =~ s/[$LATEX_SPECIAL]/\\$&/go;	 #- escape them (not the "bsl" \)
-      $c =~ s/\|/\\mid{}/go; # "|" is special in '\index' !!
-      $c =~ s/\!/\\\!/go;
-      $c =~ s/\\\^/\\hat{}/go;# ^ is SPECIAL
-      $c =~ s/\\~/\\tilde{}/go;
-      $c =~ s/<<-([ ]*)/<\\leftarrow /go;
-      $c =~ s/<-([ ]*)/\\leftarrow /go;
-      $c =~ s/->([ ]*)/\\rightarrow /go;
-      #-
-      $c =~ s/$BSL/\\bsl{}/go;
-      $c =~ s/$Dollar/\\\$/g;
-      $c =~ s/$MD/$Math_del/go;
-      }
-    $c =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
+    $c = latex_code_trans ($c);
+    $c = latex_link_trans ($c);
+    $c =~ s/\!/"!/go; # "  This is the bibtex escape
+    $c =~ s/\|/"|/go; # "
+#      $c =~ s/@/"@/go; # "  Not currently valid R character
     $c;
 }
 

@@ -75,8 +75,7 @@ NEW FEATURES
 
     o	Help files can now contain \describe groups.
 
-    o	hyperlinks in help files can now LaTeX special characters, but
-	will not function as hyperlinks in PDF output.
+    o	hyperlinks in help files can now use LaTeX special characters.
 
     o	rstandard() now also works for glm objects.
 

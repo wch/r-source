@@ -42,6 +42,7 @@
   {\end{list}}
 \newcommand{\HTML}{{\normalfont\textsc{html}}}
 \newcommand{\R}{{\normalfont\textsf{R}}{}}
+\newcommand{\Rdash}{-}
 
 \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
@@ -60,11 +61,11 @@
   \begin{center}
   \ifthenelse{\boolean{Rd@use@hyper}}%
     {\def\@currentHref{page.\thepage}
-    \hypertarget{Rfn.#1}{\index{#1}}%
+    \hypertarget{Rfn.#1}{\index{#1@\texttt{#1}}}%
     \myaddcontentsline{toc}{subsection}{#1}%
     \pdfbookmark[1]{#1}{Rfn.#1}}
     {\addcontentsline{toc}{subsection}{#1}
-      \index{#1|textbf}}
+      \index{#1@\texttt{#1}|textbf}}
     \begin{tabular}{c}
       \hline \rule[-0.275cm]{0cm}{0.8cm}
       \makebox[1in][l]{\texttt{#1}}
@@ -80,15 +81,15 @@
 %
 %
 \ifthenelse{\boolean{Rd@use@hyper}}
-{\newcommand{\Link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1|textit}}}
-{\newcommand{\Link}[1]{#1\index{#1|textit}}}
+{\newcommand{\Link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1@\texttt{#1}|textit}}}
+{\newcommand{\Link}[1]{#1\index{#1@\texttt{#1}|textit}}}
 %
 % \alias{<alias>}{<header>}
 \ifthenelse{\boolean{Rd@use@hyper}}
-{\newcommand{\alias}[2]{\hypertarget{Rfn.#1}{\index{#1@#1\textit{(#2)}}}}}
-{\newcommand{\alias}[2]{\index{#1@#1 \textit{(#2)}}}}
+{\newcommand{\alias}[2]{\hypertarget{Rfn.#1}{\index{#1@\texttt{#1}\textit{(\texttt{#2})}}}}}
+{\newcommand{\alias}[2]{\index{#1@\texttt{#1} \textit{(\texttt{#2})}}}}
 % \keyword{<topic>}{<header>}
-\newcommand{\keyword}[2]{\index{$*$Topic{\large\ \textbf{#1}}!#2@\textsf{#2}}}
+\newcommand{\keyword}[2]{\index{$*$Topic{\large\ \textbf{#1}}!#2@\texttt{#2}}}
 %
 \newcommand{\Itemize}[1]{\begin{itemize}{#1}\end{itemize}}
 \newcommand{\Enumerate}[1]{\begin{enumerate}{#1}\end{enumerate}}
@@ -167,8 +168,8 @@
 \newcommand{\file}[1]{`\textsf{#1}'}
 
 \ifthenelse{\boolean{Rd@use@hyper}}
-{\newcommand{\link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1}}}
-{\newcommand{\link}[1]{#1\index{#1}}}
+{\newcommand{\link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1@\texttt{#1}}}}
+{\newcommand{\link}[1]{#1\index{#1@\texttt{#1}}}}
 
 \newcommand{\email}[1]{$\langle${#1}$\rangle$}
 %% \code without `-' ligatures
