@@ -29,20 +29,13 @@ none
 
 Directory:  Add-ons
 
-* PR# 948 *
-Subject:  xyplot,grid.text segfault 
-From: Peter Malewski <p.malewski@tu-bs.de>
-Date: Sat, 26 May 2001 13:24:11 +0200
-* PR# 950 *
-Subject:  lattice: dev.print(postscript) gives probl. false background Info 
-From: Peter Malewski <p.malewski@tu-bs.de>
-Date: Sat, 26 May 2001 23:20:29 +0200
 * PR# 974 *
 Subject: Lattice: panel.superpose with ordered factor groups
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
 --The warning is standard S and R behaviour.
 --Probably xyplot needs to avoid it (by unclassing?)
+--Still there in lattice 0.3-0.
 * PR# 981 *
 Subject: read.xport() bug
 From: abroman@jhu.edu
@@ -172,6 +165,10 @@ Date: Sat, 8 Sep 2001 10:19:00 -0500
 Subject:  Bizarre clipping with abline and points 
 From: J.C.Rougier@durham.ac.uk
 Date: Wed, 19 Sep 2001 14:45:52 +0100
+* PR# 1101 *
+Subject: ugly in plotmath: frac(1, sqrt(...))
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Thu, 27 Sep 2001 10:37:07 +0200
 
 Directory:  In-Out
 
@@ -241,7 +238,10 @@ Date: Wed, 22 Aug 2001 21:56:33 -0500
 
 Directory:  Macintosh
 
-none
+* PR# 1103 *
+Subject: Slow output/no break key
+From: richmond@saintmarys.edu
+Date: Fri, 28 Sep 2001 03:24:05 +0200 (MET DST)
 
 Directory:  Misc
 
@@ -249,10 +249,7 @@ none
 
 Directory:  Models
 
-* PR# 1003 *
-Subject: interaction() -- problem with drop
-From: Matthew Wiener <mcw@ln.nimh.nih.gov>
-Date: Thu, 28 Jun 2001 20:14:47 -0400 (EDT)
+none
 
 Directory:  Startup
 
@@ -264,11 +261,6 @@ Directory:  System-specific
 Subject: X11 device doesn't handle destroy events correcly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 13 Feb 2001 17:40:46 -0500
-* PR# 964 *
-Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
-From: paul@gromit.dlib.vt.edu
-Date: Fri, 1 Jun 2001 17:47:10 +0200 (MET DST)
---Builder needs to avoid -ldnet in distributed binaries..
 * PR# 1002 *
 Subject: core dump running modreg-Ex.R
 From: WhiteG@dfo-mpo.gc.ca
@@ -293,10 +285,6 @@ Date: Thu, 16 Aug 2001 08:52:34 +0200 (MET DST)
 Subject: Install problems R 1.3.1 on HP-UX
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Sun, 2 Sep 2001 15:07:41 +0200 (CEST)
-* PR# 1089 *
-Subject: Debian Woody r-base depends on blas2
-From: michael_odonnell@acm.org
-Date: Sat, 8 Sep 2001 20:25:32 +0200 (MET DST)
 * PR# 1097 *
 Subject: R 1.3.1 fails 'make check' on arm in the Bessel example
 From: Dirk Eddelbuettel <edd@debian.org>
@@ -312,27 +300,4 @@ none
 
 Directory:  incoming
 
-* PR# 1098 *
-Subject: Trailing "/" makes file.exists() return FALSE
-From: hb@maths.lth.se
-Date: Mon, 24 Sep 2001 10:46:27 +0200 (MET DST)
-* PR# 1100 *
-Subject: Bug in model.matrix.default (was: [R] predict incosistency ?)
-From: Duncan Murdoch <murdoch@stats.uwo.ca>
-Date: Tue, 25 Sep 2001 09:55:38 -0400
-* PR# 1101 *
-Subject: ugly in plotmath: frac(1, sqrt(...))
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Thu, 27 Sep 2001 10:37:07 +0200
-* PR# 1102 *
-Subject: Problem with merge()
-From: Don MacQueen <macq@llnl.gov>
-Date: Thu, 27 Sep 2001 09:20:54 -0700
-* PR# 1103 *
-Subject: Slow output/no break key
-From: richmond@saintmarys.edu
-Date: Fri, 28 Sep 2001 03:24:05 +0200 (MET DST)
-* PR# 1104 *
-Subject: savehistory: Suggestions to a \seealso{}
-From: hb@maths.lth.se
-Date: Fri, 28 Sep 2001 23:34:17 +0200 (MET DST)
+none
