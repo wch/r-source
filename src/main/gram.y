@@ -851,6 +851,7 @@ SEXP R_Parse1File(FILE *fp, int gencode, int *status)
 		*status = PARSE_OK;
 		break;
 	}
+	R_Inputfile = NULL;
 	return R_CurrentExpr;
 }
 

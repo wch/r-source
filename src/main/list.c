@@ -129,3 +129,90 @@ SEXP lang4(SEXP s, SEXP t, SEXP u, SEXP v)
 	UNPROTECT(1);
 	return s;
 }
+
+static SEXP	ans;
+static int	UniqueNames;
+static int	IncludeFunctions;
+static int	StoreValues;
+static int	ItemCount;
+static int	MaxCount;
+
+static void namewalk(SEXP s)
+{
+	int i, j, n;
+	switch(TYPEOF(s)) {
+	case SYMSXP:
+		if(ItemCount < MaxCount) {
+			if(StoreValues) {
+				if(UniqueNames) {
+					for(j=0 ; j<ItemCount ; j++) {
+						if(STRING(ans)[j] == PRINTNAME(s))
+							goto ignore;
+					}
+				}
+				STRING(ans)[ItemCount] = PRINTNAME(s);
+			}
+			ItemCount += 1;
+		}
+	ignore:
+		break;
+	case LANGSXP:
+		if(!IncludeFunctions) s = CDR(s);
+		while(s != R_NilValue) {
+			namewalk(CAR(s));
+			s = CDR(s);
+		}
+		break;
+	case EXPRSXP:
+		n = length(s);
+		for(i=0 ; i<n ; i++)
+			namewalk(VECTOR(s)[i]);
+		break;
+	}
+}
+
+SEXP do_allnames(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+	SEXP expr;
+	int i, savecount;
+
+	checkArity(op, args);
+
+	expr = CAR(args);
+	args = CDR(args);
+
+	IncludeFunctions = asLogical(CAR(args));
+	if(IncludeFunctions == NA_LOGICAL)
+		IncludeFunctions = 0;
+	args = CDR(args);
+
+	MaxCount = asInteger(CAR(args));
+	if(MaxCount < 0 || MaxCount == NA_INTEGER)
+		MaxCount = 0;
+	args = CDR(args);
+
+	UniqueNames = asLogical(CAR(args));
+	if(UniqueNames == NA_LOGICAL)
+		UniqueNames = 1;
+
+	StoreValues = 0;
+	ItemCount = 0;
+	namewalk(expr);
+	savecount = ItemCount;
+
+	ans = allocVector(STRSXP, ItemCount);
+
+	StoreValues = 1;
+	ItemCount = 0;
+	namewalk(expr);
+
+	if(ItemCount != savecount) {
+		PROTECT(expr = ans);
+		ans = allocVector(STRSXP, ItemCount);
+		for(i=0 ; i<ItemCount ; i++)
+			STRING(ans)[i] = STRING(expr)[i];
+		UNPROTECT(1);
+	}
+
+	return ans;
+}

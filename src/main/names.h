@@ -43,6 +43,7 @@
 /* Function Names */
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
+SEXP do_allnames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_anydf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_args(SEXP, SEXP, SEXP, SEXP);
 SEXP do_array(SEXP, SEXP, SEXP, SEXP);

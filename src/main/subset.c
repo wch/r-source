@@ -175,7 +175,7 @@ static SEXP vectorSubset(SEXP x, SEXP s, SEXP call)
 		/* Allocate the result */
 
 	mode = TYPEOF(x);
-	if(mode == LANGSXP) mode = LISTSXP;
+	/* if(mode == LANGSXP) mode = LISTSXP; */
 	result = allocVector(mode, n);
 	NAMED(result) = NAMED(x);
 	if (isFactor(x)) LEVELS(result) = LEVELS(x);

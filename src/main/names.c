@@ -139,6 +139,7 @@ FUNTAB R_FunTab[] =
 {"names<-",	do_namesgets,	0,	11,	2,	PP_FUNCALL,	0},
 {"dimnames",	do_dimnames,	0,	1,	1,	PP_FUNCALL,	0},
 {"dimnames<-",	do_dimnamesgets,0,	1,	2,	PP_FUNCALL,	0},
+{"all.names",	do_allnames,	0,	11,	4,	PP_FUNCALL,	0},
 {"row.names",	do_rownames,	0,	1,	1,	PP_FUNCALL,	0},
 {"dim",		do_dim,		0,	1,	1,	PP_FUNCALL,	0},
 {"dim<-",	do_dimgets,	0,	1,	2,	PP_FUNCALL,	0},

@@ -89,7 +89,7 @@ void jump_to_toplevel()
 	int nback=0;
 
 	inError = 1;
-	if (R_Console == 0 && R_Inputfile != NULL)
+	if (R_Inputfile != NULL)
 		fclose(R_Inputfile);
 	R_ResetConsole();
 	R_FlushConsole();
