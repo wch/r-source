@@ -15,7 +15,7 @@ spline(x, y, n = 3*length(x), method = "fmm",
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
-    specified: see \code{\link{xy.coords}.}
+    specified: see \code{\link{xy.coords}.}}
   \item{method}{specifies the type of spline to be used.  Possible
     values are \code{"fmm"}, \code{"natural"} and \code{"periodic"}.}
   \item{n}{interpolation takes place at \code{n} equally spaced points

@@ -5,7 +5,10 @@
 \alias{as.table}
 \alias{as.table.default}
 \alias{is.table}
-\alias
+\description{
+  \code{table} uses the cross-classifying factors to build a contingency
+  table of the counts at each combination of factor levels.
+}
 \usage{
 table(\dots, exclude = c(NA, NaN), dnn, deparse.level = 1)
 as.table(x, \dots)
@@ -28,10 +31,6 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE)
   \item{optional}{a logical controlling whether row names are set.
     Currently not used.}
 }
-\description{
-  \code{table} uses the cross-classifying factors to build a contingency
-  table of the counts at each combination of factor levels.
-}
 \details{
   If the argument \code{dnn} is not supplied, the internal function
   \code{list.names} is called to compute the `dimname names'.  If the
@@ -49,7 +48,6 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE)
   and the corresponding counts (the latter as component \code{Freq}).
   This is the inverse of \code{\link{xtabs}}.
 }
-\seealso{
 \examples{
 ## Simple frequency distribution
 table(rpois(100,5))
