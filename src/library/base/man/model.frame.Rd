@@ -18,7 +18,12 @@ Methods for
   \item{data}{\code{data.frame} or \code{environment} where the objects
     in formula are.}
   \item{na.action}{how \code{NA}s are treated.}
-  \item{\dots}{further arguments such as.......}
+  \item{drop.unused.levels}{show factors have unused levels dropped?
+      Defaults to \code{FALSE}.}
+  \item{xlev}{a named list of character vectors giving the full set of levels
+      to be assumed for each factor.}
+  \item{\dots}{further arguments such as \code{subset} and
+      \code{weights}. \code{NULL} arguments are treated as missing.}
 }
 \description{
   \code{model.frame} (generic function) and its methods return a
