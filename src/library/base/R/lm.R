@@ -19,10 +19,10 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     xvars <- as.character(attr(mt, "variables"))[-1]
     if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
     xlev <-
-        if(length(xvars) > 0) {
-            xlev <- lapply(mf[xvars], levels)
-            xlev[!sapply(xlev, is.null)]
-        }
+	if(length(xvars) > 0) {
+	    xlev <- lapply(mf[xvars], levels)
+	    xlev[!sapply(xlev, is.null)]
+	}
     if (length(list(...)))
 	warning(paste("Extra arguments", deparse(substitute(...)),
 		      "are just disregarded."))
@@ -43,11 +43,8 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	    else c("lm.null", "lm")
     } else {
 	x <- model.matrix(mt, mf, contrasts)
-	z <-
-	    if (is.null(w))
-		lm.fit(x, y)
-	    else lm.wfit(x, y, w)
-	class(z) <- c(if (is.matrix(y)) "mlm", "lm")
+	z <- if(is.null(w)) lm.fit(x, y) else lm.wfit(x, y, w)
+	class(z) <- c(if(is.matrix(y)) "mlm", "lm")
     }
     z$contrasts <- attr(x, "contrasts")
     z$xlevels <- xlev
@@ -64,7 +61,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 
 lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 {
-    n <- nrow(x)
+    if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     p <- ncol(x)
     ny <- NCOL(y)
     if (NROW(y) != n)
@@ -75,8 +72,13 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
     if(length(list(...)))
 	warning(paste("Extra arguments", deparse(substitute(...)),
 		      "are just disregarded."))
-    z <- .Fortran("dqrls", qr = x, n = n, p = p, y = y, ny = ny,
-		  tol = tol, coefficients = mat.or.vec(p, ny),
+    storage.mode(x) <- "double"
+    storage.mode(y) <- "double"
+    z <- .Fortran("dqrls",
+		  qr = x, n = n, p = p,
+		  y = y, ny = ny,
+		  tol = as.double(tol),
+		  coefficients = mat.or.vec(p, ny),
 		  residuals = y, effects = y, rank = integer(1),
 		  pivot = 1:p, qraux = double(p), work = double(2*p))
     coef <- z$coefficients
@@ -104,8 +106,7 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 
 lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 {
-    n <- nrow(x)
-    p <- ncol(x)
+    if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     ny <- NCOL(y)
     if (NROW(y) != n | length(w) != n)
 	stop("incompatible dimensions")
@@ -127,14 +128,17 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 	w <- w[ok]
 	x0 <- x[!ok, ]
 	x <- x[ok, ]
+	n <- nrow(x)
 	y0 <- if (ny > 1) y[!ok, , drop = FALSE] else y[!ok]
 	y  <- if (ny > 1) y[ ok, , drop = FALSE] else y[ok]
     }
-    n <- nrow(x)
     p <- ncol(x)
-    wts <- w^0.5
-    z <- .Fortran("dqrls", qr = x * wts, n = n, p = p,
-		  y = y * wts, ny = ny, tol = tol,
+    storage.mode(y) <- "double"
+    wts <- sqrt(w) 
+    z <- .Fortran("dqrls",
+		  qr = x * wts, n = n, p = p,
+		  y  = y * wts, ny = ny,
+		  tol = as.double(tol),
 		  coefficients = mat.or.vec(p, ny), residuals = y,
 		  effects = mat.or.vec(n, ny),
 		  rank = integer(1), pivot = 1:p, qraux = double(p),
@@ -340,7 +344,7 @@ model.frame.lm <-
 
 variable.names.lm <- function(obj, full=FALSE)
 {
-    if(full)dimnames(obj$qr$qr)[[2]]
+    if(full)	dimnames(obj$qr$qr)[[2]]
     else	dimnames(obj$qr$qr)[[2]][1:obj$rank]
 }
 
