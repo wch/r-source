@@ -39,7 +39,6 @@
 \alias{sigToEnv}
 \alias{rematchDefinition}
 \alias{unRematchDefinition}
-\allias{asMethodDefinition}
 \alias{findNextMethod}
 \alias{.valueClassTest}
 %% Not for the user to know about!
@@ -108,7 +107,7 @@ sigToEnv(signature)
 rematchDefinition(definition, generic, mnames, fnames, signature)
 unRematchDefinition(definition)
 
-asMethodDefinition(def, signature)
+asMethodDefinition(def, signature, sealed = FALSE)
 
 findNextMethod(method, f, mlist, optional = FALSE, envir)
 
@@ -344,7 +343,8 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       Turn a function definition into a
       \code{\link{MethodDefinition-class}} object, corresponding to the
       given \code{signature} (by default generates a default method
-      with empty signature).
+      with empty signature).  The definition is sealed according to
+      the \code{sealed} argument.
     }
 
     \item{\code{findNextMethod}:}{

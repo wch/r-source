@@ -6,7 +6,8 @@
   Create and save a formal method for a given function and list of classes.
 }
 \usage{
-setMethod(f, signature=character(), definition, where=1, valueClass)
+setMethod(f, signature=character(), definition, where=1, valueClass,
+          sealed = FALSE)
 
 removeMethod(f, signature, where)
 }
@@ -28,6 +29,10 @@ removeMethod(f, signature, where)
   \item{valueClass}{ If supplied, this argument asserts that the
     method will return a value of this class.  (At present this
     argument is stored but not explicitly used.) }
+  \item{sealed}{ If \code{TRUE}, the method so defined cannot be
+      redefined by another call to \code{setMethod} (although it can
+      be removed and then re-assigned).  Note that this argument is an
+      extension to the definition of \code{setMethod} in the reference.}
 }
 \value{
   These functions exist for their side-effect, in setting or removing a

@@ -1,0 +1,71 @@
+\name{isSealedMethod}
+\alias{isSealedMethod}
+\alias{isSealedClass}
+\title{ Check for a Sealed Method or Class }
+\description{
+  These functions check for either a method or a class that has been
+  ``sealed'' when it was defined, and which therefore cannot be re-defined.
+}
+\usage{
+isSealedMethod(f, signature, fdef)
+isSealedClass(Class)
+}
+\arguments{
+  \item{f}{ The quoted name of the generic function. }
+  \item{signature}{ The class names in the method's signature, as
+  they would be supplied to \code{\link{setMethod}}. }
+  \item{fdef}{ Optional, and usually omitted:  the generic function
+      definition for \code{f}. }
+  \item{Class}{The quoted name of the class.}
+}
+\details{
+  In the R implementation of classes and methods, it is possible to
+  seal the definition of either a class or a method.  The basic
+  classes (numeric and other types of vectors, matrix and array data)
+  are sealed.  So also are the methods for the primitive functions on
+  those data types.  The effect is that programmers cannot re-define
+  the meaning of these basic data types and computations.
+
+  Programmers can seal other class and method definitions by using the
+  \code{sealed} argument to \code{\link{setClass}} or \code{\link{setMethod}}.
+}
+\value{
+  The functions return \code{FALSE} if the method or class is not
+  sealed (including the case that it is not defined); \code{TRUE} if
+  it is.
+  }
+\references{
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
+
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
+}
+\examples{
+## these are both TRUE
+isSealedMethod("+", "numeric")
+isSealedClass("matrix")
+
+setClass("track",
+            representation(x="numeric", y="numeric"))
+## but this is FALSE
+isSealedClass("track")
+## and so is this
+isSealedClass("A Name for an undefined Class")
+\testonly{
+removeClass("track")
+}
+}
+\keyword{programming}
+\keyword{classes}
+\keyword{classes}
+\keyword{methods}
