@@ -46,7 +46,7 @@ realclean:
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
 	@-rm -f doc/manual/pkg-*
 	@-rm -f doc/html/packages* doc/html/function*
-	@cd demos/dynload; if [ -e Makefile ] ; then $(MAKE) $@ ; fi
+	@cd demos/dynload; if [ -f Makefile ] ; then $(MAKE) $@ ; fi
 	@cd tests; $(MAKE) clean
 	@echo "Really cleaning ./etc/"; cd etc; $(MAKE) $@
 	@echo "Really cleaning the source tree"; cd src; $(MAKE) $@
@@ -56,9 +56,9 @@ install: all
 	$(INSTALL) -d $(bindir)
 	$(INSTALL) -d $(mandir)/man1
 	$(INSTALL) -d $(rhome)/bin
-	$(INSTALL) -d $(rhome)/cmd 
-	$(INSTALL) -d $(rhome)/etc 
-	$(INSTALL) -d $(rhome)/include 
+	$(INSTALL) -d $(rhome)/cmd
+	$(INSTALL) -d $(rhome)/etc
+	$(INSTALL) -d $(rhome)/include
 	$(INSTALL) -d $(rhome)/library
 	$(INSTALL_DATA) R.1 $(mandir)/man1
 	$(INSTALL_DATA) Rdconv.1 $(mandir)/man1
