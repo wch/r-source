@@ -64,6 +64,7 @@ if($OSTYPE eq "windows"){
     $R_CMD = "Rcmd.exe";
     getenv("TMPDIR", "TMPDIR", "C:/TEMP");
     $TMPDIR = "" unless (-d $TMPDIR);
+    $TMPDIR =~ s+\\+/+g;  ## ensure forward slashes only
 }
 elsif($OSTYPE eq "mac"){
     require Mac::Files;
