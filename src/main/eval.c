@@ -93,7 +93,45 @@ void isintrpt(){}
 FILE *R_ProfileOutfile = NULL;
 static int R_Profiling = 0;
 
+#ifdef Win32
+HANDLE MainThread;
+HANDLE ProfileEvent;
 
+static void doprof()
+{
+    RCNTXT *cptr;
+    char buf[1100];
+    
+    buf[0] = '\0';
+    SuspendThread(MainThread);
+    for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+	if (((cptr->callflag & CTXT_FUNCTION) || (cptr->callflag & CTXT_BUILTIN))
+	    && TYPEOF(cptr->call) == LANGSXP) {
+	    SEXP fun = CAR(cptr->call);
+	    if(strlen(buf) < 1000) {
+		
+		strcat(buf, TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) : "<Anonymous>");
+		strcat(buf, " ");
+	    }
+	}
+    }
+    ResumeThread(MainThread);
+    if(strlen(buf))
+	fprintf(R_ProfileOutfile, "%s\n", buf);
+}
+
+
+/* Profiling thread main function */
+static void __cdecl ProfileThread(void *pwait)
+{
+    int wait = *((int *)pwait);
+
+//    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+    while(WaitForSingleObject(ProfileEvent, wait) != WAIT_OBJECT_0) {
+	doprof();
+    }
+}
+#else
 static void doprof(int sig)
 {
     RCNTXT *cptr;
@@ -110,34 +148,20 @@ static void doprof(int sig)
     }
     if (newline)
 	fprintf(R_ProfileOutfile, "\n");
-#ifndef Win32
-    signal(SIGPROF, doprof);
-#endif
 }
 
 static void doprof_null(int sig)
 {
     signal(SIGPROF, doprof_null);
 }
-
-#ifdef Win32
-HANDLE ProfileEvent;
-
-/* Profiling thread main function */
-static void __cdecl ProfileThread(void *pwait)
-{
-    int wait = *((int *)pwait);
-
-    while(WaitForSingleObject(ProfileEvent, wait) != WAIT_OBJECT_0) {
-	doprof(0); /* arg unused */
-    }
-}
 #endif
+
 
 static void R_EndProfiling()
 {
 #ifdef Win32
     SetEvent(ProfileEvent);
+    CloseHandle(MainThread);
 #else
     struct itimerval itv;
 
@@ -159,6 +183,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     struct itimerval itv;
 #else
     int wait;
+    HANDLE Proc = GetCurrentProcess();
 #endif
     int interval = 1e6 * dinterval+0.5;
 
@@ -169,9 +194,12 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
 
 #ifdef Win32
+    /* need to duplicate to make a real handle */
+    DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread, 
+		    0, FALSE, DUPLICATE_SAME_ACCESS);
     wait = interval/1000;
     if(!(ProfileEvent = CreateEvent(NULL, FALSE, FALSE, NULL)) || 
-       (_beginthread(ProfileThread, 1000, &wait) == -1))
+       (_beginthread(ProfileThread, 0, &wait) == -1))
 	R_Suicide("unable to create profiling thread");
 #else
     signal(SIGPROF, doprof);
