@@ -218,10 +218,7 @@ doPrimitiveMethod <-
 conformMethod <-
   function(signature, mnames, fnames)
 {
-    ## TO DO:  arrange for "missing" to be a valid for "..." in a signature
-    ## until then, allow an omitted "..." w/o checking
-    if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
-        fnames <- fnames[-match("...", fnames)]
+    ## note that fnames is assumed to be the formal args with "..." omitted
     omitted <- is.na(match(fnames, mnames))
     if(!any(omitted))
         return(signature)
@@ -245,7 +242,8 @@ conformMethod <-
     signature
 }
 
-rematchDefinition <- function(definition, generic, mnames, fnames) {
+rematchDefinition <- function(definition, generic, mnames) {
+    fnames <- formalArgs(generic)
     added <- is.na(match(mnames, fnames))
     if(!any(added))
         return(definition)

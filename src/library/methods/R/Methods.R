@@ -241,6 +241,18 @@ setMethod <-
     }
     fnames <- formalArgs(fdef)
     signature <- matchSignature(fnames, signature, fdef)
+    dots <- match("...", fnames)
+    if(!is.na(dots)) {
+        ## someday, a signature with ...="missing" may be allowed, but for now
+        ## only ANY makes sense, and it is dropped, so "..." never appears
+        ## in the methods list object
+        if(dots <= length(signature)) {
+            if(!identical(signature[[dots]], "ANY"))
+                stop("The argument \"...\" can't be included in the method signature")
+            signature <- signature[-dots]
+        }
+        fnames <- fnames[-dots]
+    }
     allMethods <- .getOrMakeMethodsList(f, fnames, where)
     switch(typeof(definition),
            closure = {
@@ -249,8 +261,7 @@ setMethod <-
                    ## omitted classes in method => "missing"
                    signature <- conformMethod(signature, mnames, fnames)
                    ## extra classes in method => use "..." to rematch
-                   definition <- rematchDefinition(definition, fdef,
-                                                   mnames, fnames)
+                   definition <- rematchDefinition(definition, fdef, mnames)
                }
            },
            builtin = , special = {
