@@ -102,7 +102,6 @@ gui/RFiles.c
 waste/CarbonCompatibility.[ch]
 waste/WASTE.h
 waste/WEDemo.h
-waste/WEObjectHandlers.[ch]
 
 	Copyright © 1993-2000 Marco Piovanelli
 	All Rights Reserved
