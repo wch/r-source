@@ -10,6 +10,7 @@ set.seed(seed, kind = NULL)
 \alias{.Random.seed}
 \alias{RNG}
 \alias{RNGkind}
+\alias{set.seed}
 \description{
   \code{.Random.seed} is an integer vector, containing the random number
   generator (RNG) \bold{state} for random number generation in \R.

@@ -9,6 +9,7 @@ xemacs(name = NULL, file = "")
 xedit(name = NULL, file = "")
 }
 \alias{edit}
+\alias{edit.default}
 \alias{vi}
 \alias{emacs}
 \alias{pico}
