@@ -1,7 +1,7 @@
 \name{INSTALL}
 \title{Install Add-on Packages from Sources}
 \alias{INSTALL}
-\usage{Rcnd INSTALL [options] [-l lib] pkgs}
+\usage{Rcmd INSTALL [options] [-l lib] pkgs}
 \arguments{
   \item{pkgs}{A list with the path names of the sources of the
     packages to be installed.}
@@ -24,8 +24,17 @@
   CRAN (these are then extracted in a temporary directory
   \file{R.INSTALL} of the current directory).
 
+  If the option \code{--save} is used, the installation procedure
+  creates a binary image of the package code, which is then loaded when
+  the library is attached, rather than evaluating the package source at
+  that time.  Having a file \code{INSTALL.R} in the package directory
+  (its contents don't matter) makes this the default behavior for the
+  package (option \code{--no-save} overrides).  You may need \code{--save}
+  if your package requires other packages to evaluate its own source.
+
+  
   For checking (via the examples in the help files \file{man/*.Rd},
-  use \code{Rcmd check [-l lib] <pkg>}, use \code{Rcmd check --help}
+  use \code{Rcmd check [-l lib] <pkg>}: use \code{Rcmd check --help}
   for more information.
 }
 \seealso{
