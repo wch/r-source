@@ -16,6 +16,11 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo "/* Rversion.h.  Generated automatically. */"
   echo "#ifndef R_VERSION_H"
   echo "#define R_VERSION_H"
+  echo
+  echo '#ifdef __cplusplus'
+  echo 'extern "C" {'
+  echo '#endif'
+  echo
   echo "#define R_VERSION ${ver}"
   echo "#define R_Version(v,p,s) (((v) * 65536) + ((p) * 256) + (s))"
   echo "#define R_MAJOR  \"${maj}\""
@@ -26,5 +31,10 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   echo "#define R_DAY    \"${d}\""
 ## 3 here is for 2003: stops problems with leading zeros
   echo "#define R_FILEVERSION    ${maj},${pl}${sl},3${m}${d},0"
+  echo
+  echo '#ifdef __cplusplus'
+  echo '}'
+  echo '#endif'
+  echo
   echo "#endif /* not R_VERSION_H */")
     
