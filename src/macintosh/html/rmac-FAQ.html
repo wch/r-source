@@ -10,13 +10,13 @@
 <p>
 Changes and bug fixing specific to this version:
 <ul>
-<li> Added the Preferences panel. The settings in .Renviron
+<li> Added the Preferences pane. The settings in .Renviron
   are now superseeded by the prefences settings
   .Renviron can be still used to simulate the Environment
   for the Sys.getenv() call.</li>
 <li>  Added the item "Link Packages Help" to the "Help" menu.</li>
-<li>  Fixed a big that leaves help menu items ghosted after
-  using them.</li>
+<li>  Fixed a bug that set the help menu items ghosted after
+  having used them.</li>
 <li>  Some MRC Apple's Compiler specific fixing.</li>
 <li>  Fixed problems with current working directory in different
   points (.Rprofile, .Renviron, etc).</li>
@@ -31,11 +31,14 @@ Changes and bug fixing specific to this version:
 <li>  This version of R is slower at startup but faster than
   then previous release (by a factor of 10%) in calculations.</li>
 <li>  The initial window at startup has been suppressed in this
+  release
   in the hope to provide am applescript analogous to pass
-  initial arguments to R.</li>
+  initial arguments to R. Anyway this option was mostly disturbing
+  R users then used by them.</li>
   <li> The about box now reports informations on the current
   release of R</li>  
-<li> Added the zlib capability so now R can manage gzipped files and connentions</li>  
+<li> Added the zlib capability so now R can manage gzipped files and 
+connections</li>  
 <li> Fixed some wrong links in html help files</li>
 <li>  Finally fixed copy and paste of graphic windows contents
   and saving of them onto files. For some reason the previous
@@ -66,7 +69,7 @@ Changes and bug fixing specific to this version:
 <br>* <a href="#SCRIPTS">APPLE SCRIPT SUPPORT</a>
 <br>* <a href="#EDITOR">EXTERNAL EDITOR INTERACTION</a>
 <br>* <a href="#MEMORY">MEMORY</a>
-<br>* <a href="#PREFERENCES">SPECIFING OPTIONS: the Preferences panel</a>
+<br>* <a href="#PREFERENCES">SPECIFING OPTIONS: the Preferences pane</a>
 <br>* <a href="#OPTIONS">SPECIFING ENVIRONMENT VARIABLES: the .Renviron file</a>
 <br>* <a href="#HELPERS">R HELPERS</a>
 <br>* <a href="#REQUIREMENTS">SYSTEM REQUIREMENTS</a>
@@ -102,7 +105,7 @@ menus is as follows with a brief description.
 </tr>
 
 <tr>
-<td>Apple </td>
+<td>Apple (or Application Menu under MacOS X)</td>
 
 <td></td>
 
@@ -125,9 +128,9 @@ menus is as follows with a brief description.
 
 <td>Preferences </td>
 
-<td>(under OS X only, see the Config menu for older MacOS'es)</td>
+<td>(under OS X only, see the Config menu for pre X Systems)</td>
 
-<td>Opens the R Preferences panel</td>
+<td>Opens the R Preferences pane</td>
 </tr>
 
 <tr>
@@ -287,7 +290,7 @@ window than it is interpreted    as quitting R.</td>
 
 <td>   Q</td>
 
-<td>This menu item is on the Apple Menu under OSX</td>
+<td>This menu item is on the Application Menu under MacOS X</td>
 </tr>
 
 <tr>
@@ -601,7 +604,7 @@ names  of any new/closed window</td>
 <td>It is equivalent to set the option "Interrupt=TRUE" in the 
 .Renvironment config file but this can be changed at runtime.
 This menu is syncronized
-with the option you select in the Preference panel.
+with the option you select in the Preference pane.
 </td></td>
 </tr>
 
@@ -615,7 +618,7 @@ with the option you select in the Preference panel.
 <td>It is equivalent to set the option "OnOpenSource=TRUE" in the 
 .Renvironment config file but this can be changed at runtime. Useful to 
 work with external editor such as Alpha. This menu is syncronized
-with the option you select in the Preference panel.
+with the option you select in the Preference pane.
 </td>
 </tr>
 
@@ -626,7 +629,7 @@ with the option you select in the Preference panel.
 
 <td>(under Mac OS only)</td>
 
-<td>Opens the R Preferences panel</td>
+<td>Opens the R Preferences pane</td>
 </tr>
 
 <tr>
@@ -704,12 +707,13 @@ a bit larger or smaller then needed.
 show windows and graphic windows). This functionality does not work on
 MacOS X yet.
 <br> 
-<p><a NAME="SCRIPTS"></a><b>APPLE SCRIPT SUPPORT</b>
+<p><a NAME="SCRIPTS"></a><b>APPLE SCRIPT SUPPORT</b><br>
 From release 1.3.1 R has partial support for AppleScripts.
 This means two things: you can run applescripts from inside R using the 
 command applescript() (see the corresponing help) or you can ask R to run 
 commands <b>from</b> and applescript. The directory "scripts" in the main 
-R folder contains two examples of applescripts.
+R folder contains two examples of applescripts. What follows is an example of
+applescript that interacts with R.
 <p>
 
 
@@ -732,7 +736,7 @@ Where <b>cmd</b> is the applescript command in the R dictionary  that is
 used to tell R to execute an R 
 command in the R Console. The syntax is <b>cmd</b> <<i>command 
 string</i>>, where <i>command string</i> have to be in quotes.
-The output of the command is not sent back to the 
+Actually, the output of the command is not sent back to the 
 application that is calling R but to the R 
 Console. 
 
@@ -746,14 +750,14 @@ bar the "S+/R" menu. Of this menu you can use "Process File" or "Process
 Selection" to interact with R. By default Alpha sends an “open” command
 to R and by default R opens a file in a non editable window (equivalent
 to the “File Show” menu). If you want R to source a file you should modify
-the .Renviron file accordingly (see below). In particular, the option "OnOpenSource"
-is set by default to "FALSE". You should set it to "TRUE". You can change
-this when R is still running via the Config/OnOpenSource menu or accessing 
-the Preferences panel.
+activate the option "OnOpenSource" that
+is set by default to "FALSE".  You can change
+this at runtime running via the Config/OnOpenSource menu or accessing 
+the Preferences pane.
 The latest version of Alpha can be found at 
-<a href="http://www.alpha.olm.net">http://www.alpha.olm.net</a><a href="http://www.alpha.olm.net
+<a href="http://alpha.olm.net/">http://alpha.olm.net</a><a href="http://www.alpha.olm.net"></a>
 
-"></a>
+
 <p><a NAME="MEMORY"></a><b>MEMORY</b>
 <br>Under MacOS you should reserve a fixed amount of memory to each application.
 As R is just an application, you need to set this to a bigger amount of
@@ -765,8 +769,8 @@ memory as it needs.
 
 
 <p><a NAME="PREFERENCES"></a>
-<br><b>SPECIFING OPTIONS:</b> the Preferences panel<br>
-The Preferences panel allow you to configure a bit R GUI and behaviour.
+<br><b>SPECIFING OPTIONS:</b> the Preferences pane<br>
+The Preferences pane allow you to configure a bit R GUI and behaviour.
 You can set the tab size in your edit windows, the font type and size of 
 text windows and R Console as well as the colors of the text in R Console.
 You can also specify a particular font for the graphic device and the 
@@ -807,10 +811,10 @@ of a line means that this is a commented out line.
 <br>* If you want to use an external editor we suggest you to use Alpha
 version  7.4.1 or newer that contains a S+/R mode. Alpha home page
 is
-<br><a href=" http://www.alpha.olm.net"> http://www.alpha.olm.net</a>
+<br><a href=" http://alpha.olm.net/"> http://alpha.olm.net</a>
 <br>* You also need MacZip to use the unzip feature of R. MacZip home page
 is
-<br> <a href="http://ww.sitec.net/maczip">http://ww.sitec.net/maczip</a>
+<br> <a href="http://www.sitec.net/maczip">http://www.sitec.net/maczip</a>
 <br> 
 <br> 
 <p><a NAME="REQUIREMENTS"></a><b>SYSTEM REQUIREMENTS</b>
@@ -819,8 +823,8 @@ application itself you work under MacOS but there is no limitations under
 MacOS X as virtual memory is always on.
 <br>You need the latest version of the 
 <a href="http://asu.info.apple.com/swupdates.nsf/artnum/n11916">CarbonLib 
-library</a> from Apple. At the time of this release, version 1.2.5 is the current non developer release.
-Normally it is included in System 9.1 and X.
+library</a> from Apple. At the time of this release, version 1.4  is the current non developer release.
+Normally it is included in System 9.2 and X.
 <br><a NAME="f2cLib">Now R needs the f2cLib shared library to run. This 
 library is distributed with R but in case you miss it you can found it <a 
 href="http://www.ci.tuwien.ac.at/~iacus/R">here</a>.
@@ -932,7 +936,7 @@ any R loops. The "Esc" key gives you the same result.
 <tr>
 <td>Q</td>
 
-<td> How can I change memory settings for R ?</td>
+<td> How can I change memory settings for R ? (MacOS pre X only)</td>
 </tr>
 
 <tr>
@@ -941,6 +945,22 @@ any R loops. The "Esc" key gives you the same result.
 <td> You cannot use the standard settings as on other platforms. You 
 should assign memory to R from the Finder/Information dialog for 
 R application. See Section "Memory" above.</td>
+</tr>
+<tr>
+<td>Q</td>
+
+<td> When I use to send R output to a file like "my_file", R seems to work on this file but
+I cannot find it. What happened ? (MacOS X only)</td>
+</tr>
+
+<tr>
+<td>A</td>
+
+<td> On MacOS X it is important to specify correctly the file names. If you 
+want the file to be created in your current working directory you have to
+put a ":" before file name, such as ":myfile" otherwise the file will be created
+as "/my_file", i.e. in the root "/" directory.
+</td>
 </tr>
 </table>
 
