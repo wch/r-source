@@ -40,9 +40,7 @@ fixshare: share/tests.mk
 	@$(ECHO) done > fixshare	
 
 svnonly:
-	@if test ! -f ../../../RESOURCES ; then \
-	  $(MAKE) -C ../../../doc/manual -f Makefile.win svnonly; \
-	fi
+	@$(MAKE) -C ../../../doc/manual -f Makefile.win svnonly
 
 clean:
 	$(RM) *~ */*~ fixhtml fixbin fixetc fixshare
