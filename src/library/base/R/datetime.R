@@ -680,18 +680,18 @@ trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
     units <- match.arg(units)
     x <- as.POSIXlt(x)
     if(length(x$sec) > 0)
-    switch(units,
-           "secs" = {x$sec <- trunc(x$sec)},
-           "mins" = {x$sec <- 0},
-           "hours"= {x$sec <- 0; x$min <- 0},
-           "days" = {x$sec <- 0; x$min <- 0; x$hour <- 0; x$isdst <- -1}
-           )
+	switch(units,
+	       "secs" = {x$sec <- trunc(x$sec)},
+	       "mins" = {x$sec <- 0},
+	       "hours"= {x$sec <- 0; x$min <- 0},
+	       "days" = {x$sec <- 0; x$min <- 0; x$hour <- 0; x$isdst <- -1}
+	       )
     x
 }
 
 round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
 {
-    # this gets the default from the generic, as that has two args.
+    ## this gets the default from the generic, as that has two args.
     if(is.numeric(units) && units == 0.0) units <-"secs"
     units <- match.arg(units)
     x <- as.POSIXct(x)
