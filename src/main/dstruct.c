@@ -141,30 +141,6 @@ SEXP mkPROMISE(SEXP expr, SEXP rho)
 }
 
 
-/*  mkEnv - return an ENV with vars namelist  */
-/*          and values valuelist              */
-
-SEXP mkEnv(SEXP namelist, SEXP valuelist, SEXP rho)
-{
-    SEXP v, n, newrho;
-    PROTECT(namelist);
-    PROTECT(valuelist);
-    PROTECT(rho);
-    newrho = allocSExp(ENVSXP);
-    FRAME(newrho) = valuelist;
-    v = valuelist;
-    n = namelist;
-    while (v != R_NilValue) {
-	TAG(v) = TAG(n);
-	v = CDR(v);
-	n = CDR(n);
-    }
-    ENCLOS(newrho) = rho;
-    UNPROTECT(3);
-    return (newrho);
-}
-
-
 /*  length - length of objects  */
 
 int length(SEXP s)

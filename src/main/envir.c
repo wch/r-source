@@ -59,7 +59,32 @@
 extern int R_DirtyImage;
 
 
-/* Return an environment with no bindings */
+/*  mkEnv - Create an environment with variable names given by the
+    tags on "namelist" and values given by the elements of
+    "valuelist". */
+
+SEXP mkEnv(SEXP namelist, SEXP valuelist, SEXP rho)
+{
+    SEXP v, n, newrho;
+    PROTECT(namelist);
+    PROTECT(valuelist);
+    PROTECT(rho);
+    newrho = allocSExp(ENVSXP);
+    FRAME(newrho) = valuelist;
+    v = valuelist;
+    n = namelist;
+    while (v != R_NilValue) {
+	TAG(v) = TAG(n);
+	v = CDR(v);
+	n = CDR(n);
+    }
+    ENCLOS(newrho) = rho;
+    UNPROTECT(3);
+    return (newrho);
+}
+
+
+/*  emptyEnv - Return an environment with no bindings. */
 
 SEXP emptyEnv()
 {
@@ -67,7 +92,8 @@ SEXP emptyEnv()
 }
 
 
-/* Extend an environment "rho" by binding "vars" to "vals" */
+/*  extendEnv - Extend an environment "rho" by binding "vars" to
+    "vals".  This is only ever called in applyClosure. */
 
 SEXP extendEnv(SEXP rho, SEXP vars, SEXP vals)
 {
@@ -75,14 +101,14 @@ SEXP extendEnv(SEXP rho, SEXP vars, SEXP vals)
 }
 
 
-/* FIXME ? should this also unbind the symbol value slot */
-/* when rho is R_NilValue */
 
-/* Remove a value from an environment */
-/* This happens only in the current environment frame */
+/*  unbindVar - Remove a value from an environment This happens only
+    in the current environment frame. */
 
 void unbindVar(SEXP symbol, SEXP rho)
 {
+    /* FIXME ? should this also unbind the */
+    /* symbol value slot when rho is R_NilValue */
     SEXP *v = &(FRAME(rho));
     while (*v != R_NilValue) {
 	if (TAG(*v) == symbol) {
@@ -95,37 +121,20 @@ void unbindVar(SEXP symbol, SEXP rho)
 }
 
 
-/* Return an object whose car contains the value of "symbol" in the */
-/* specified environment frame.  This is called the symbol's "slot" */
-/* below.  If the symbol is unbound in the frame, returns R_NilValue. */
+/*  findVarInFrame - Look up name in a single environment frame. */
 
-SEXP getVarInFrame(SEXP frame, SEXP symbol)
+SEXP findVarInFrame(SEXP frame, SEXP symbol)
 {
     while (frame != R_NilValue) {
 	if (TAG(frame) == symbol)
-	    return frame;
+	    return CAR(frame);
 	frame = CDR(frame);
     }
-    return R_NilValue;
+    return R_UnboundValue;
 }
 
 
-/* Return the slot for a symbol in an environment */
-
-SEXP getVar(SEXP symbol, SEXP rho)
-{
-    SEXP vl;
-    while (rho != R_NilValue) {
-	vl = getVarInFrame(FRAME(rho), symbol);
-	if (vl != R_NilValue)
-	    return (vl);
-	rho = ENCLOS(rho);
-    }
-    return (symbol);
-}
-
-
-/* Look up a symbol in an environment */
+/*  findVar - Look up a symbol in an environment. */
 
 SEXP findVar(SEXP symbol, SEXP rho)
 {
@@ -139,7 +148,9 @@ SEXP findVar(SEXP symbol, SEXP rho)
     return (SYMVALUE(symbol));
 }
 
-/*  Find a ... in an environment */
+
+/*  ddfindVar - Find a ..X variable in an environment. */
+
 SEXP ddfindVar(SEXP symbol, SEXP rho)
 {
     int i;
@@ -152,17 +163,17 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
 
     i = DDVAL(symbol);
     vl = findVarInFrame(FRAME(rho), R_DotsSymbol);
-    if( vl != R_UnboundValue ) {
-	if (length(vl) >= i ) {
-		vl = nthcdr(vl, i-1);
-		return(CAR(vl));
+    if (vl != R_UnboundValue) {
+	if (length(vl) >= i) {
+	    vl = nthcdr(vl, i - 1);
+	    return(CAR(vl));
 	}
 	else
-	   error("The ... list does not contain %d elements\n",i);
+	    error("The ... list does not contain %d elements\n",i);
     }
     else
         error("..%d used in an incorrect context, no ... to look in\n",i);
-    /* -Wall: */return R_NilValue;
+    return R_NilValue;
 }
 
 
@@ -172,15 +183,15 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
 SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
 {
     SEXP vl;
-    while(cptr != R_ToplevelContext) {
-	if(cptr->callflag == CTXT_RETURN) {
+    while (cptr != R_ToplevelContext) {
+	if (cptr->callflag == CTXT_RETURN) {
 	    vl = findVarInFrame(FRAME(cptr->cloenv), symbol);
-	    if(vl != R_UnboundValue)
-		return(vl);
+	    if (vl != R_UnboundValue)
+		return vl;
 	}
 	cptr = cptr->nextcontext;
     }
-    return(R_UnboundValue);
+    return R_UnboundValue;
 }
 
 
@@ -192,7 +203,6 @@ SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
 SEXP findFun(SEXP symbol, SEXP rho)
 {
     SEXP vl;
-
     while (rho != R_NilValue) {
 	vl = findVarInFrame(FRAME(rho), symbol);
 	if (vl != R_UnboundValue) {
@@ -216,24 +226,11 @@ SEXP findFun(SEXP symbol, SEXP rho)
     }
     if (SYMVALUE(symbol) == R_UnboundValue)
 	error("couldn't find function \"%s\"\n", CHAR(PRINTNAME(symbol)));
-    return (SYMVALUE(symbol));
+    return SYMVALUE(symbol);
 }
 
 
-/* Look up name in a single environment frame. */
-
-SEXP findVarInFrame(SEXP frame, SEXP symbol)
-{
-    while (frame != R_NilValue) {
-	if (TAG(frame) == symbol)
-	    return CAR(frame);
-	frame = CDR(frame);
-    }
-    return R_UnboundValue;
-}
-
-
-/* Assign a value in a specific environment frame. */
+/* defineVar - Assign a value in a specific environment frame. */
 
 void defineVar(SEXP symbol, SEXP value, SEXP rho)
 {
@@ -256,7 +253,7 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     SYMVALUE(symbol) = value;
 }
 
-/* Assign a new value to bound symbol. */
+/* setVar - Assign a new value to bound symbol. */
 
 void setVar(SEXP symbol, SEXP value, SEXP rho)
 {
@@ -280,8 +277,9 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
     SYMVALUE(symbol) = value;
 }
 
-/* Assign a new value to a symbol in a frame. */
-/* Return the symbol if successful. */
+
+/*  setVarInFrame - Assign a new value to a symbol in a frame.
+    Return the symbol if successful. */
 
 SEXP setVarInFrame(SEXP frame, SEXP symbol, SEXP value)
 {
@@ -295,11 +293,13 @@ SEXP setVarInFrame(SEXP frame, SEXP symbol, SEXP value)
     return R_NilValue;
 }
 
+
 SEXP do_globalenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return R_GlobalEnv;
 }
+
 
 /* To attach a list we make up an environment and insert */
 /* components of the list in as the values of this env */
@@ -452,9 +452,7 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, env, envp, s;
     int all, i, j, k, n;
-
     checkArity(op, args);
-
     envp = CAR(args);
     if (isNull(envp) || !isNewList(envp)) {
 	PROTECT(env = allocVector(VECSXP, 1));
@@ -472,7 +470,7 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	if (VECTOR(env)[i] == R_NilValue) {
 	    for (j = 0; j < HSIZE; j++) {
-		for (s = R_SymbolTable[j] ; s != R_NilValue ; s = CDR(s)) {
+		for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s)) {
 		    if (SYMVALUE(CAR(s)) != R_UnboundValue)
 			k++;
 		}
@@ -493,8 +491,8 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
     k = 0;
     for (i = 0; i < n; i++) {
 	if (VECTOR(env)[i] == R_NilValue) {
-	    for (j = 0 ; j < HSIZE ; j++) {
-		for (s = R_SymbolTable[j] ; s != R_NilValue ; s = CDR(s)) {
+	    for (j = 0; j < HSIZE; j++) {
+		for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s)) {
 		    if (SYMVALUE(CAR(s)) != R_UnboundValue)
 			STRING(ans)[k++] = PRINTNAME(CAR(s));
 		}
@@ -545,7 +543,7 @@ static SEXP pos2env(int pos, SEXP call)
 	    errorcall(call, "invalid argument\n");
     }
     else {
-	for (env = R_GlobalEnv ; env != R_NilValue && pos > 1 ;
+	for (env = R_GlobalEnv; env != R_NilValue && pos > 1;
 	     env = ENCLOS(env))
 	    pos--;
 	if(pos != 1)
@@ -558,13 +556,12 @@ SEXP do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP env, pos;
     int i, npos;
-
     PROTECT(pos = coerceVector(CAR(args), INTSXP));
     npos = length(pos);
     if (npos <= 0)
 	errorcall(call, "invalid \"pos\" argument\n");
     PROTECT(env = allocVector(VECSXP, npos));
-    for (i = 0 ; i < npos ; i++) {
+    for (i = 0; i < npos; i++) {
 	VECTOR(env)[i] = pos2env(INTEGER(pos)[i], call);
     }
     if (npos == 1) env = VECTOR(env)[0];
