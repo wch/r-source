@@ -25,8 +25,7 @@ function(package, dir, lib.loc = NULL)
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
         codeEnv <-
-            as.environment(match(paste("package", package, sep = ":"),
-                                 search()))
+            as.environment(paste("package", package, sep = ":"))
 
         codeObjs <- ls(envir = codeEnv, all.names = TRUE)
     }
@@ -235,8 +234,7 @@ function(package, dir, lib.loc = NULL,
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
         codeEnv <-
-            as.environment(match(paste("package", package, sep = ":"),
-                                 search()))
+            as.environment(paste("package", package, sep = ":"))
 
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
         
@@ -657,8 +655,7 @@ function(package, dir, lib.loc = NULL)
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
         codeEnv <-
-            as.environment(match(paste("package", package, sep = ":"),
-                                 search()))
+            as.environment(paste("package", package, sep = ":"))
         
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
 
@@ -983,8 +980,7 @@ function(package, dir, lib.loc = NULL)
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
         codeEnv <-
-            as.environment(match(paste("package", package, sep = ":"),
-                                 search()))
+            as.environment(paste("package", package, sep = ":"))
 
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
 
@@ -1152,8 +1148,7 @@ function(package, dir, lib.loc = NULL)
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
         codeEnv <-
-            as.environment(match(paste("package", package, sep = ":"),
-                                 search()))
+            as.environment(paste("package", package, sep = ":"))
 
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
         
