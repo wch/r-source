@@ -64,6 +64,7 @@ the corresponding \emph{generic} functions, \code{\link{summary}},
 }
 \examples{
 ## --- Continuing the Example from  ``?glm'':%\code{\link{glm}}:
+\testonly{example("glm", echo = FALSE)}
 summary(glm.D93)
 anova(glm.D93)
 anova(glm.D93, test = "Cp")

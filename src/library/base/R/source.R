@@ -92,3 +92,16 @@ demo <- function(topic, device = x11, directory.sep = "/")
     }
 }
 
+example <- function(topic, package =c(.packages(), .Autoloaded),
+                    lib.loc = .lib.loc, verbose = .Options$verbose,
+                    echo = TRUE, debug = FALSE, directory.sep = "/")
+{
+    topic <- substitute(topic)
+    if (!is.character(topic)) topic <- deparse(topic)[1]
+
+    file <- system.file(paste("R-ex",directory.sep,topic,".R", sep=""),
+                        package, lib.loc)
+    if(file == "") stop(paste("Couldn't find", topic, " example"))
+    source(file, echo = echo, debug = debug, max.deparse.length=10000)
+}
+

@@ -42,6 +42,7 @@ the model (stated below).}
 \code{\link{ls.print}}, \code{\link{ls.diag}}, \code{\link{rreg}}.
 }
 \examples{
+\testonly{example("lm", echo = FALSE)}
 ##-- Using the same data as the lm(.) example:
 lsD9 <- lsfit(x = codes(gl(2,10)), y = weight)
 ls.print(lsD9)
