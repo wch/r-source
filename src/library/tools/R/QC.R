@@ -871,7 +871,7 @@ function(package, lib.loc = NULL)
         txt <- unlist(sapply(txt, get_Rd_items))
         if(!length(txt)) return(character())
         ## And now strip enclosing '\code{...}:'
-        txt <- gsub("\\\\code\{(.*)\}:?", "\\1", as.character(txt))
+        txt <- gsub("\\\\code\\{(.*)\\}:?", "\\1", as.character(txt))
         txt <- unlist(strsplit(txt, ", *"))
         txt <- sub("^[[:space:]]*", "", txt)
         txt <- sub("[[:space:]]*$", "", txt)
@@ -1006,7 +1006,7 @@ function(package, lib.loc = NULL)
         txt <- unlist(sapply(txt, get_Rd_items))
         if(!length(txt)) return(character())
         txt <- gsub("(.*):$", "\\1", as.character(txt))
-        txt <- gsub("\\\\code\{(.*)\}:?", "\\1", txt)
+        txt <- gsub("\\\\code\\{(.*)\\}:?", "\\1", txt)
         ## Argh.  Of course, variable names can have a '_', which needs
         ## to be escaped if not in \code{}, and the prompt() default is
         ## not to put variable names inside \code{}.
@@ -2952,7 +2952,7 @@ function(x)
     ## Note how we deal with S3 replacement methods found.
     ## These come out named "\method{GENERIC}{CLASS}<-" which we
     ## need to turn into 'GENERIC<-.CLASS'.
-    sub("\\\\(S3)?method{([._[:alnum:]]*)}{([._[:alnum:]]*)}(<-)?",
+    sub("\\\\(S3)?method\\{([._[:alnum:]]*)\\}\\{([._[:alnum:]]*)\\}(<-)?",
         "\\2\\4.\\3",
         x)
 }
@@ -2960,12 +2960,12 @@ function(x)
 ### * .S3_method_markup_regexp
 
 .S3_method_markup_regexp <-
-    "(\\\\(S3)?method{([._[:alnum:]]*)}{([._[:alnum:]]*)})"
+    "(\\\\(S3)?method\\{([._[:alnum:]]*)\\}\\{([._[:alnum:]]*)\\})"
 
 ### * .S4_method_markup_regexp
 
 .S4_method_markup_regexp <-
-    "(\\\\S4method{([._[:alnum:]]*)}{([._[:alnum:],]*)})"
+    "(\\\\S4method\\{([._[:alnum:]]*)\\}\\{([._[:alnum:],]*)\\})"
 
 
 ### Local variables: ***

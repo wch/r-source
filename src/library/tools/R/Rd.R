@@ -507,7 +507,7 @@ function(txt, type, predefined = TRUE)
                      ifelse(predefined, type,
                             paste("section{", type, "}",
                                   sep = "")),
-                     "{",
+                     "\\{",
                      sep = "")
     while((pos <- regexpr(pattern, txt)) != -1) {
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
@@ -547,7 +547,7 @@ function(txt)
     out <- character()
     if(length(txt) != 1)
         stop(.wrong_args("txt", "must be a character string"))
-    pattern <- "(^|\n)[[:space:]]*\\\\item{"
+    pattern <- "(^|\n)[[:space:]]*\\\\item\\{"
     while((pos <- regexpr(pattern, txt)) != -1) {
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- delimMatch(txt)) == -1)
@@ -563,7 +563,7 @@ function(txt)
         txt <- substring(txt, pos + attr(pos, "match.length"))
         ## The next character should really be a '{'.  Let's be nice
         ## and tolerate whitespace in between ...
-        if((pos <- regexpr("^[[:space:]]*{", txt)) == -1)
+        if((pos <- regexpr("^[[:space:]]*\\{", txt)) == -1)
             stop(paste("no \\item description for item",
                        sQuote(out[length(out)])),
                  call. = FALSE)
