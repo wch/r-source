@@ -183,19 +183,11 @@ Date: Tue, 03 Jul 2001 15:50:06 -0500
 Subject: bug(?) in R FAQ - Should I run R from within Emacs?
 From: Tim.Harrold@csiro.au
 Date: Thu, 11 Jul 2002 18:21:42 +1000
-* PR# 2545 *
-Subject: colSums etc. documentation
-From: "Gunter, Bert" <bert_gunter@merck.com>
-Date: Thu, 13 Feb 2003 09:08:44 -0500
 * PR# 2794 *
 Subject: prop.test  confidence intervals
 From: rbaer@kcom.edu
 Date: Fri, 18 Apr 2003 19:01:03 +0200 (MET DST)
 ..prop.test should say how it computes confidence intervals.
-* PR# 2886 *
-Subject: [ENH] Clarify rsync flavors
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Wed, 30 Apr 2003 11:15:02 -0700
 
 Directory:  Graphics
 
@@ -701,10 +693,6 @@ Date: Tue, 22 Apr 2003 20:15:19 +0200
 Subject: coplot panels malrendered / 1653
 From: dmaszle@mendelbio.com
 Date: Wed, 23 Apr 2003 02:19:53 +0200 (MET DST)
-* PR# 2872 *
-Subject: Rprofile.site and check/build
-From: Laurent Gautier <laurent@cbs.dtu.dk>
-Date: Tue, 29 Apr 2003 08:03:35 +0200
 * PR# 2876 *
 Subject: Re: [Rd]  configure succeeds without dlfcn.h, but fails to compile
 From: Thomas Lumley <tlumley@u.washington.edu>
@@ -713,10 +701,6 @@ Date: Tue, 29 Apr 2003 13:02:25 -0700 (PDT)
 Subject: Problem with R CMD INSTALL and package versions
 From: rpeng@stat.ucla.edu
 Date: Wed, 30 Apr 2003 08:23:12 +0200 (MET DST)
-* PR# 2880 *
-Subject: return(1, ) results in subsequent segfault
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Wed, 30 Apr 2003 15:52:35 +0200
 * PR# 2894 *
 Subject: qbeta hang
 From: terra@gnome.org
@@ -725,36 +709,3 @@ Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
 Subject: segfault when applying strange coercion
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Mon, 05 May 2003 19:36:01 +0200
-* PR# 2999 *
-Subject: AWAITING
-From: OWEN MUBANE <owen_mubane@mail.com>
-Date: Wed, 14 May 2003 00:58:47 +0200
-* PR# 3001 *
-Subject: Are you satifying your lover ?wujbk iimtho vrpowctrqqs uztqvugneqawx cuhetgpdklstmeflfeg cruk s oxgrckljl rsmud syre ue nvvv f ez
-From: "" <fanculag@juno.com>
-Date: Wed, 14 May 03 17:16:23 GMT
-* PR# 3002 *
-Subject: my online personal ad  p uhmd
-From: "Hannah Parsons" <HannahBananasParty1@mail.com>
-Date: Tue, 13 May 03 23:32:15 GMT
-* PR# 3003 *
-Subject: "Writing R Extensions" documentation
-From: John_Hendrickx@yahoo.com
-Date: Wed, 14 May 2003 14:17:29 +0200 (MET DST)
-* PR# 3004 *
-Subject: RE: Your Check
-From: "Abby Strong" <vel7mg5n6i@yahoo.com>
-Date: Wed, 14 May 03 15:19:45 GMT
-* PR# 3005 *
-Subject: URGENT  BUSINESS  ASSISTANCE
-From: zawala200@netscape.net
-Date: Wed, 14 May 2003 15:13:40 +0200 (MET DST)
-Date: Wed, 14 May 2003 15:13:41 +0200
-* PR# 3006 *
-Subject: <<<##Government Funding Program
-From: "Geraldine Engel" <n0o6vcy83g0o@emperorslave.com>
-Date: Thu, 15 May 03 13:07:03 GMT
-* PR# 3007 *
-Subject: AV 아직도 몰라요?
-From: 안남현<KAV-MAIL@mail.com>
-Date: Wed, 14 May 2003 20:50:51 +0200 (MET DST)
