@@ -89,4 +89,5 @@ cbind.ts <- function(..., dframe = FALSE, union = TRUE)
 }
 
 ts.union <- .Alias(cbind.ts)
-ts.intersect <- function(...) cbind.ts(..., union=FALSE)
+ts.intersect <- function(..., dframe = FALSE)
+    cbind.ts(..., dframe = dframe, union = FALSE)
