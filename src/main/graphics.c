@@ -3216,14 +3216,19 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
     case 0:  /* rectangle totally clipped; draw nothing */
 	break;
     case 1:  /* rectangle totally inside;  draw all */
+	/* NOTE must clip in case clipping region has been made _bigger_
+	 */
+	if (dd->dp.canClip) 
+	    GClip(dd);
 	dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
 	break;
     case 2:  /* rectangle intersects clip region;  use polygon clipping */
 	dd->gp.xpd = 2;
 	result = clipRectCode(x0, y0, x1, y1, coords, dd);
 	dd->gp.xpd = xpdsaved;
-	if (dd->dp.canClip && result == 1) {
+	if (dd->dp.canClip) 
 	    GClip(dd);
+	if (result == 1) {
 	    dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
 	}
 	else {

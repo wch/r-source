@@ -1583,7 +1583,7 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* rect(xl, yb, xr, yt, col, border, lty, lwd, xpd) */
-    SEXP sxl, sxr, syb, syt, col, lty, lwd, border;
+    SEXP sxl, sxr, syb, syt, sxpd, col, lty, lwd, border;
     double *xl, *xr, *yb, *yt, x0, y0, x1, y1;
     int i, n, nxl, nxr, nyb, nyt, ncol, nlty, nlwd, nborder, xpd;
     SEXP originalArgs = args;
@@ -1614,7 +1614,11 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     nlwd = length(lwd);
     args = CDR(args);
 
-    xpd = asInteger(CAR(args));
+    sxpd = CAR(args);
+    if (sxpd != R_NilValue)
+	xpd = asInteger(sxpd);
+    else
+	xpd = dd->gp.xpd;
     args = CDR(args);
 
     GSavePars(dd);
@@ -1663,7 +1667,7 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* arrows(x0, y0, x1, y1, length, angle, code, col, lty, lwd, xpd) */
-    SEXP sx0, sx1, sy0, sy1, col, lty, lwd;
+    SEXP sx0, sx1, sy0, sy1, sxpd, col, lty, lwd;
     double *x0, *x1, *y0, *y1;
     double xx0, yy0, xx1, yy1;
     double hlength, angle;
@@ -1711,7 +1715,11 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "'lwd' must be numeric of length >=1");
     args = CDR(args);
 
-    xpd = asInteger(CAR(args));
+    sxpd = CAR(args);
+    if (sxpd != R_NilValue)
+	xpd = asInteger(sxpd);
+    else
+	xpd = dd->gp.xpd;
     args = CDR(args);
 
     GSavePars(dd);

@@ -1,6 +1,6 @@
 rect <-
     function(xleft, ybottom, xright, ytop,
-	     col=NULL, border=par("fg"), lty=NULL, lwd=par("lwd"), xpd=FALSE)
+	     col=NULL, border=par("fg"), lty=NULL, lwd=par("lwd"), xpd=NULL)
     .Internal(rect(as.double(xleft),
                    as.double(ybottom),
                    as.double(xright),

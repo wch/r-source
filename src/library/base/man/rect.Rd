@@ -2,7 +2,7 @@
 \title{Draw a Rectangle}
 \usage{
 rect(xleft, ybottom, xright, ytop,
-     col=NULL, border=par("fg"), lty=NULL, lwd=par("lwd"), xpd=FALSE)
+     col=NULL, border=par("fg"), lty=NULL, lwd=par("lwd"), xpd=NULL)
 }
 \alias{rect}
 \arguments{
@@ -16,8 +16,8 @@ rect(xleft, ybottom, xright, ytop,
   \item{border}{color for rectangle border(s).}
   \item{lty}{line type for borders; defaults to \code{"solid"}.}
   \item{lwd}{width for borders.}
-  \item{xpd}{logical (``e\bold{xp}an\bold{d}''); by default (\code{FALSE}),
-    everything is clipped to the plot region.  See \code{\link{par}(xpd= )}.}
+  \item{xpd}{logical (``e\bold{xp}an\bold{d}''); defaults to
+    \code{par("xpd")}.  See \code{\link{par}(xpd= )}.}
 }
 \description{
   \code{rect} draws a rectangle (or sequence of rectangles) with the

@@ -33,6 +33,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   rect() and arrows() now respond to setting of par(xpd)
+
     o   abline() now responds to the setting of par(xpd), including 
 	via the "..." argument.
 
