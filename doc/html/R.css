@@ -1,0 +1,21 @@
+BODY{		background: white;
+		color: black }
+A:link{		color: blue }
+A:visited{	color: rgb(50%, 0%, 50%) }
+
+H1{		color: rgb(55%, 55%, 55%);
+		font-family: monospace;
+		font-size: x-large;
+		align: center }
+
+H2{		color: rgb(40%, 40%, 40%);
+		font-family: monospace;
+		font-size: large;
+		align: center }
+
+H3{		color: rgb(40%, 40%, 40%);
+		font-family: monospace;
+		font-size: large }
+
+IMG.toplogo{	vertical-align: center }
+

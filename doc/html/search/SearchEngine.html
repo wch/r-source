@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>R: Search Engine</title>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../R.css">
 
 <script language="JavaScript">
 <!-- 
@@ -20,9 +21,10 @@ function searchInIndex (srch_trm,kwonly)
   }
   line =        '<html><head>\n';
   line = line + '<title>Search Results</title>\n';
+  line = line + '<link rel=stylesheet type="text/css" href="../R.css">';
   line = line + '\n';
 
-  line = line + '<body bgcolor="white">\n';
+  line = line + '<body>\n';
 
   line = line + '<h1>Search Results</h1>\n';
 
@@ -43,27 +45,13 @@ function searchInIndex (srch_trm,kwonly)
 </script>
 </head>
 
-<body onLoad='enableSearch=true;document.f.SEARCHTERM.value="";'
-TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0"
-VLINK="#660066" ALINK="#FF0000" BACKGROUND="white" >
+<body onLoad='enableSearch=true;document.f.SEARCHTERM.value="";'>
 
-<TABLE align=center>
-<TR><TD ALIGN=RIGHT><FONT SIZE=+2>
-     <H1>
-     <FONT COLOR="#999999"><tt>
-      <center>Search Engine</center></tt></FONT>
-     </H1>
-    <TD ALIGN=CENTER> 
-    <TD ALIGN=LEFT><FONT SIZE=+2>
-     <img src="../logo.jpg" alt="">
-</TABLE>
+<H1>Search Engine <img class=toplogo src="../logo.jpg"></H1>
 
 <HR WIDTH="100%">
 
-<p>
-<h1 align=center>
-<FONT COLOR="#666666"><tt>
-Search</tt></font></h1>
+<h2>Search</h2>
 
 <p>
 You can search for keywords, function and data names and titles.
@@ -87,14 +75,10 @@ You can search for keywords, function and data names and titles.
 <HR WIDTH="100%">
 
 <p>
-<h1 align=center>
-<FONT COLOR="#666666"><tt>
-Keywords</tt></font></h1>
+<h2>Keywords</h2>
 
 <p>
-<h2>
-<FONT COLOR="#999999"><tt>
-Keywords by Topic</tt></font></h2>
+<h3>Keywords by Topic</h3>
 
 <dl>
   <dt>Graphics
