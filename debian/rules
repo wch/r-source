@@ -32,15 +32,6 @@ binary-arch: build
 	dh_clean -k
 	dh_installdirs
 	make install prefix=`pwd`/debian/tmp/usr
-#	cp -a afm bin cmd demos doc etc html include library debian/tmp/usr/lib/R
-#	find debian/tmp/usr/lib/R -type f -a -name '*.in' -exec rm \{\} \;
-#	(cd debian/tmp/usr/lib/R/etc; rm -rf older-stuff undoc config.guess config.sub tasks)
-#	sed -e '/^RHOME=.*/s::RHOME=/usr/lib/R:' \
-#	    -e '/R.binary  /s::R.binary -v 8 -n 400000 :'\
-#	  < bin/R > debian/tmp/usr/bin/R
-#	chmod +x debian/tmp/usr/bin/R
-#	sed -e '1s:local/::' < doc/keyword-test > debian/tmp/usr/lib/R/doc/keyword-test
-#	cp -a debian/tmp/usr/bin/R debian/tmp/usr/lib/R/bin
 	dh_installdocs
 	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/html . &&\
 	  ln -s ../../lib/R/library .)
@@ -53,8 +44,7 @@ binary-arch: build
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol
-#	dh_makeshlibs
-#	dh_du
+	dh_makeshlibs
 	dh_md5sums
 	dh_builddeb
 
