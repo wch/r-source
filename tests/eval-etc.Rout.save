@@ -1,17 +1,18 @@
 
-R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-04-02)
+R : Copyright 2003, The R Foundation for Statistical Computing
+Version 1.9.0 Under development (unstable) (2003-11-09), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ####  eval / parse / deparse / substitute  etc
 > 
@@ -61,12 +62,12 @@ Variance ratio      tail area
 > attach(list(x=1))
 > evalq(dim(x) <- 1,as.environment(2))
 > dput(get("x", env=as.environment(2)))
-structure(1, .Dim = 1)
+structure(1, .Dim = as.integer(1))
 > 
 > e <- local({x <- 1;environment()})
 > evalq(dim(x) <- 1,e)
 > dput(get("x",env=e))
-structure(1, .Dim = 1)
+structure(1, .Dim = as.integer(1))
 > 
 > ### Substitute, Eval, Parse, etc
 > 
