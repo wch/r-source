@@ -19,6 +19,11 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+# ifdef _AIX
+#   undef _XOPEN_SOURCE_EXTENDED
+ /* for saveload.c -- gives problems only with rpc/rpc.h but need to undef now*/
+# endif
+
 #include "Defn.h"
 #include "Mathlib.h"
 #include "Fileio.h"

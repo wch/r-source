@@ -7,6 +7,12 @@
 #  define EINTR 15
 #endif
 
+#ifdef _AIX
+#  warning __undefining XOPEN_SOURCE_EXTENDED -- for sock.c only --
+#  undef _XOPEN_SOURCE_EXTENDED
+  /* since netinet/{tcp.h|in.h} ..?.. are broken (in some AIX 4.2) */
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -76,14 +82,14 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
 {
   int sock;
   struct sockaddr_in server;
- 
+
   if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     return Sock_error(perr, errno, 0);
-       
+
   server.sin_family = AF_INET;
   server.sin_addr.s_addr = INADDR_ANY;
   server.sin_port = htons((short)port);
- 
+
   if ((bind(sock, (struct sockaddr *)&server, sizeof(server)) < 0) ||
       (listen(sock, MAXBACKLOG) < 0))
     return Sock_error(perr, errno, 0);
@@ -124,11 +130,11 @@ int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
   struct hostent *hp;
   int sock;
   int retval;
- 
+
   if (! (hp = gethostbyname(sname))
       || (sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     return Sock_error(perr, errno, h_errno);
-       
+
   memcpy((char *)&server.sin_addr, hp->h_addr_list[0], hp->h_length);
   server.sin_port = htons((short)port);
   server.sin_family = AF_INET;
@@ -158,7 +164,7 @@ int Sock_close(int fd, Sock_error_t perr)
     return Sock_error(perr, errno, 0);
 #endif
   else
-    return 0;  
+    return 0;
 }
 
 ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
@@ -171,8 +177,8 @@ ssize_t Sock_read(int fd, void *buf, size_t size, Sock_error_t perr)
     return Sock_error(perr, errno, 0);
   else
     return retval;
-}    
- 
+}
+
 ssize_t Sock_write(int fd, void *buf, size_t size, Sock_error_t perr)
 {
   ssize_t retval;
