@@ -33,9 +33,6 @@ NEW FEATURES
 
     o	stripchart() now has `log', `add' and `at' arguments.
 
-    o	checkAssignFuns() in package tools has been renamed to
-	checkReplaceFuns().
-
     o	New option("scipen") provides some user control over the
 	printing of numbers in fixed-point or exponential notation.
 	(Contributed by David Brahm.)
@@ -222,22 +219,29 @@ NEW FEATURES
 	- Utilities for testing and listing files, manipulating file
           paths, and delimited pattern matching are now exported.
 
-	- codoc() no longer ignores \usage for replacement functions or
-	  S3 replacement methods.
+	- Functions checkAssignFuns(), checkDocArgs() and checkMethods()
+	  have been renamed to checkReplaceFuns(), checkDocFiles(), and
+	  checkS3methods, to given better descriptions of what they do.
 
-	- checkDocArgs() now also determines 'over-documented' arguments
+	- R itself is now used for analyzing the markup in the \usage
+          sections.  Hence in particular, replacement functions or S3
+          replacement methods are no longer ignored.
+
+	- checkDocFiles() now also determines 'over-documented' arguments
           which are given in the \arguments section but not in \usage.
 
-	- checkDocStyle() and checkMethods() now know about internal S3
+	- checkDocStyle() and checkS3Methods() now know about internal S3
           generics and S3 group generics.
 
 	- S4 classes and methods are included in the QC tests.
 
-    o	New logical markup commands in R documentation format for
-	emphasizing (\strong) and quoting (\sQuote and \dQuote) text,
-	for indicating the usage of an S4 method (\S4method), and for
-	indicating specific kinds of text (\acronym, \cite, \command,
-	\dfn, \env, \kbd, \option, \pkg, \samp, \var).
+    o	Changes in R documentation format:
+
+	- New logical markup commands for emphasizing (\strong) and
+	  quoting (\sQuote and \dQuote) text, for indicating the usage
+	  of an S4 method (\S4method), and for indicating specific kinds
+	  of text (\acronym, \cite, \command, \dfn, \env, \kbd, \option,
+	  \pkg, \samp, \var).
 
     o	Rdconv now produces more informative output from the special
 	\method{GENERIC}{CLASS} markup for indicating the usage of S3
