@@ -75,3 +75,11 @@ Sys.timezone <- function()
 
 select.list <- function(list, preselect=NULL, multiple=FALSE)
     .Internal(select.list(list, preselect, multiple))
+
+readClipboard <- function()
+    strsplit(.Internal(readClipboard()), "\r\n")[[1]]
+
+
+writeClipboard <- function(str)
+    .Internal(writeClipboard(str))
+

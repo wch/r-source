@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -61,27 +61,26 @@ SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
 
 /* Function Names */
 
-#if defined(Win32)
-SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
+#if Win32
+SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
+SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
+SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
-SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
-#endif
-
-#ifdef Win32
-SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
-SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
-SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
+SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
+SEXP do_readClipboard(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveDevga(SEXP, SEXP, SEXP, SEXP);
+SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
+SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
-SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
-SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
-SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
-SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
+SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
+SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
