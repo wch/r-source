@@ -196,7 +196,7 @@ fi])
 ## R_PROG_BROWSER
 ## --------------
 AC_DEFUN([R_PROG_BROWSER],
-[AC_PATH_PROGS(R_BROWSER, [netscape mozilla galeon kfmclient gnome-moz-remote open])
+[AC_PATH_PROGS(R_BROWSER, [netscape mozilla galeon kfmclient opera gnome-moz-remote open])
 if test -z "${R_BROWSER}"; then
   warn_browser="I could not determine a browser"
   AC_MSG_WARN([${warn_browser}])

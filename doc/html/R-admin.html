@@ -3,8 +3,8 @@
 <title>R Installation and Administration</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name=description content="R Installation and Administration">
-<meta name=generator content="makeinfo 4.1">
-<link href="http://texinfo.org/" rel=generator-home>
+<meta name=generator content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=generator-home>
 </head>
 <body>
 <h1>R Installation and Administration</h1>
@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.6.0 (2002-07-21).
+<p>The current version of this document is 1.6.0 (2002-08-04).
 
 ISBN 3-901167-52-8
 
@@ -953,6 +953,16 @@ seems to give little problem for 32-bit builds, but seems essential for
 <p>For a 64-bit build, 64-bit libraries must be used.  As the configuration
 process starts by default sets <code>LDFLAGS</code> to <code>-L/usr/local/lib</code>
 you may need to reset it to avoid finding 32-bit addons.
+
+<p>We have seen problems with <code>gcc</code> version 3.1 on some (but not
+all) Solaris 7/8 systems.  The symptom is
+
+<br><pre>&gt; as.double(NA)
+[1] NaN
+</pre>
+
+<p>and the cure is to compile <code>src/main/arithmetic.c</code> without
+optimization.
 
 <a name="HPUX"></a>
 
