@@ -337,13 +337,6 @@ Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
 Subject:  Problem with "missing" in "local" 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 4 Jan 2002 13:34:34 GMT
-* PR# 1570 *
-Subject: Re: [R] options()$warn==2 and try()
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Fri, 17 May 2002 14:03:40 -0700 (PDT)
---I assume that clearing inWarning is safe because recursive warnings will create
---recursive errors, which will be ignored in errorcall()
---
 
 Directory:  Low-level
 
@@ -493,45 +486,18 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: pbinom gotcha
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 17 May 2002 18:26:30 +0200
-* PR# 1576 *
-Subject: Re: [Rd] Use of 'any' in 3.2.1 if ... else example is incorrect 
-From: ripley@stats.ox.ac.uk
-Date: Mon, 20 May 2002 10:12:01 +0100 (BST)
 * PR# 1577 *
 Subject: is.na<- coerces character vectors to be factors within dataframes
 From: "David Kane  <David Kane" <a296180@mica.fmr.com>
 Date: Mon, 20 May 2002 06:45:07 -0400
-* PR# 1578 *
-Subject: Spice girls' vocal concert
-From: kota-h <kota-h@mtc.biglobe.ne.jp>
-Date: Mon, 20 May 2002 06:35:27 -0500 (CDT)
-* PR# 1579 *
-Subject: Involved In Fundraising?
-From: "Fund Raisee" <fundraisehelp01@yahoo.com.au>
-Date: Mon, 20 May 2002 19:43:39 +0800
 * PR# 1580 *
 Subject: R bug in cluster package
 From: David Hitchcock <dhitchco@stat.ufl.edu>
 Date: Mon, 20 May 2002 14:33:24 -0400
-* PR# 1581 *
-Subject: [±¤°?]?????? ???º + sms±?´? + ?º?²±?´? + ????°?????  ?¦ 5,5000???¡ µ???´?´?.
-From: "???µ??" <webmaster@kijuk.com>
-Date: 2002-05-21
 * PR# 1582 *
 Subject: No documentation for class AsIs
 From: "David Kane  <David Kane" <a296180@mica.fmr.com>
 Date: Mon, 20 May 2002 17:30:42 -0400
-* PR# 1583 *
-Subject: [?º??±¤°?]  100% ?????º???????®?¦ ???????????
-From: ±???±? <help4979@naver.com>
-Date: Tue, 21 May 2002 16:12:13 +0900
-* PR# 1584 *
-Subject: [±¤°?]???? ???? ????°­???¦ µð???? ?¡µ??? ??²²...
-From: µð???? ?¡µ? <mailmaster@digitalyeil.com>
-Date: Tue, 21 May 2002 17:15:30 +0200 (MET DST)
-* PR# 1585 *
-From: ???º?µ¾???<hyun10310@kornet.net>
-Date: Sat, 18 May 2002 22:18:57 +0900
 * PR# 1586 *
 Subject: Re: [R] Bug?  assigning with operator '=' to local parameter changes
 From: Thomas Lumley <tlumley@u.washington.edu>
@@ -540,51 +506,7 @@ Date: Tue, 21 May 2002 12:48:22 -0700 (PDT)
 Subject: I() fails on objects of class POSIXct
 From: "David Kane  <David Kane" <a296180@mica.fmr.com>
 Date: Tue, 21 May 2002 16:16:08 -0400
-* PR# 1588 *
-Subject: (±¤°?) ????????~~~7?????ü~~~
-From: ?????? <rfv456kr@yahoo.co.kr>
-Date: Wed, 22 May 2002 09:38:04 +0900
-* PR# 1589 *
-Subject: §ïµ½±¼¾v, ¹w¨¾¨rÀYªº³Ì¨Î¿ï¾Ü
-From: nv_op11b1jc@bloomberg.com
-Date: 22 May 2002 15:29:18 +0800
-* PR# 1590 *
-Subject: Bug in pexp
-From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
-Date: Wed, 22 May 2002 14:28:44 +0200
 * PR# 1592 *
 Subject: signature match in setMethod
 From: tkeitt@ms.cc.sunysb.edu
 Date: Wed, 22 May 2002 23:04:53 +0200 (MET DST)
-* PR# 1593 *
-Subject: [±¤°?] ??´??? ?±º???±? ¾²???­ ??¾??? ?? ????´?´?.
-From: "?¶?º??" <nagne77@korea.com>
-Date: Thu, 23 May 2002 15:31:09 +0900
-* PR# 1594 *
-Subject: [±¤°?]º???¾?ºü °??­?? ¾?ºü µ??µ??
-From: °­?º?? <oknti@netian.com>
-Date: Fri, 24 May 2002 03:24:11 +0900
-* PR# 1595 *
-Subject: Some questions
-From: manu <manu@unive.it>
-Date: Thu, 23 May 2002 23:31:05 +0200 (added by postmaster@virgilio.it)
-* PR# 1596 *
-Subject: Worm Klez.E immunity
-From: gggyy <gggyy@xtra.co.nz>
-Date: Fri, 24 May 2002 11:17:17 +1200
-* PR# 1597 *
-Subject: A  funny game
-From: apgufu <apgufu@ufu.br>
-Date: Thu, 23 May 2002 23:27:25 -0300 (BRT)
-* PR# 1598 *
-Subject: Why pay more for something if you don't have to?
-From: "U.S. Conference Service" <cgarner@chem.ou.dk>
-Date: Thu, 23 May 2002 19:53:05 -1900
-* PR# 1599 *
-Subject: [±¤°?] ??´??? ?±º???±? ¾²???­ ??¾??? ?? ????´?´?.
-From: "?¶?º??" <nagne77@korea.com>
-Date: Fri, 24 May 2002 13:23:51 +0900
-* PR# 1600 *
-Subject: {?º?? ±¤°?} ??µ??? ?? PC-EPhone?¦ ?????? µ???´?´?.
-From: "realsex" <realsextv@xxx.com>
-Date: Thu, 23 May 2002 07:48:18 +0900
