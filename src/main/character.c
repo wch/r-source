@@ -23,7 +23,16 @@
 #include <Rconfig.h>
 #endif
 
+#ifndef Macintosh
+#include <sys/types.h>
+#endif
+#include "regex.h"
+
 #include "Defn.h"
+
+#ifndef MAX
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#endif
 
 /* Functions to perform analogues of the standard C string library. */
 /* Most are vectorized */
@@ -140,7 +149,9 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok;
-    char *pt, *split = "";
+    char *pt = NULL, *split = "";
+    regex_t reg;
+    regmatch_t regmatch[1];
 
     checkArity(op, args);
     x = CAR(args);
@@ -157,22 +168,27 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (tlen > 0) {
 	    split = CHAR(STRING(tok)[i % tlen]);
 	    ntok = 0;
-	    if (strtok(buff, split) != NULL) {
-		do {
-		    ntok++;
-		}
-		while (strtok(NULL, split) != NULL);
+	    if(regcomp(&reg, split, 0))
+		errorcall(call, "invalid split pattern");
+	    while(regexec(&reg, buff, 1, regmatch, 0) == 0) {
+		buff += MAX(regmatch[0].rm_eo, 1);
+		ntok++;
 	    }
 	}
 	else ntok = strlen(buff);
-	PROTECT(t = allocVector(STRSXP, ntok));
+	PROTECT(t = allocVector(STRSXP, ntok + 1));
 	if (tlen > 0) {
 	    strcpy(buff, CHAR(STRING(x)[i]));
-	    pt = strtok(buff, split);
-	    for (j = 0; j < ntok; j++) {
+	    pt = (char *) realloc(pt, (strlen(buff)+1)*sizeof(char));
+	    for(j = 0; j < ntok; j++) {
+		regexec(&reg, buff, 1, regmatch, 0);
+		if(regmatch[0].rm_so > 0)
+		    strncpy(pt, buff, regmatch[0].rm_so);
+		pt[regmatch[0].rm_so] = '\0';
 		STRING(t)[j] = mkChar(pt);
-		pt = strtok(NULL, split);
+		buff += MAX(regmatch[0].rm_eo, 1);
 	    }
+	    STRING(t)[ntok] = mkChar(buff);
 	}
 	else {
 	    char bf[2];
@@ -360,11 +376,6 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
-
-#ifndef Macintosh
-#include <sys/types.h>
-#endif
-#include "regex.h"
 
 SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
