@@ -16,7 +16,7 @@ C
 C       remove unused variables
 C       make phi in ehg139 double precision to match calling sequence
 C
-C       Note that  ehg182(errormsg_code)  is in ./loessc.c 
+C       Note that  ehg182(errormsg_code)  is in ./loessc.c
 
       subroutine ehg126(d,n,vc,x,v,nvmax)
       integer d,execnt,i,j,k,n,nvmax,vc
@@ -178,7 +178,7 @@ c     find the $k$-th smallest of $n$ elements
 c     Floyd+Rivest, CACM Mar '75, Algorithm 489
       l=il
       r=ir
-c     while (l < r ) 
+c     while (l < r )
     3 if(.not.(l.lt.r))goto 4
 c        to avoid recursion, sophisticated partition deleted
 c        partition $x sub {l..r}$ about $t$
@@ -874,7 +874,7 @@ c           bottom of while loop
 
       DOUBLE PRECISION function ehg128(z,d,ncmax,vc,a,xi,lo,hi,c,v,
      +     nvmax,vval)
-      
+
 c     implicit none
 c Args
       integer d,ncmax,nvmax,vc
@@ -1228,6 +1228,12 @@ c       DSIGN=DABS(a1)
 c       if(a2.ge.0)DSIGN=-DSIGN
 c       end
 
+
+c ehg136()  is the workhorse of lowesf(.)
+c     n = number of observations
+c     m = number of x values at which to evaluate
+c     f = span
+c     nf = min(n, floor(f * n))
       subroutine ehg136(u,lm,m,n,d,nf,f,x,psi,y,rw,kernel,k,dist,eta,b,
      +     od,o,ihat,w,rcond,sing,dd,tdeg,cdeg,s)
       integer identi,d,dd,execnt,i,i1,ihat,info,j,k,kernel,l,lm,m,n,nf,
@@ -1251,12 +1257,8 @@ c     Identity -> identi
 c     L -> o
 c     X -> b
       execnt=execnt+1
-      if(.not.(k.le.nf-1))then
-         call ehg182(104)
-      end if
-      if(.not.(k.le.15))then
-         call ehg182(105)
-      end if
+      if(k .gt. nf-1)	call ehg182(104)
+      if(k .gt. 15)	call ehg182(105)
       do 3 identi=1,n
          psi(identi)=identi
     3 continue
@@ -1328,7 +1330,7 @@ c              ( U sup T Q sup T ) W $
                      eta(i1)=e(i1,j)
    16             continue
                   call dqrsl(b,nf,nf,k,qraux,eta,eta,work,work,work,work
-     +,10000,info)
+     +                 ,10000,info)
                   if(tol.lt.sigma(j))then
                      scale=1.d0/sigma(j)
                   else
@@ -1347,6 +1349,8 @@ c              ( U sup T Q sup T ) W $
       return
       end
 
+c called from lowesb() ... compute fit ..?..?...
+c somewhat similar to ehg136
       subroutine ehg139(v,nvmax,nv,n,d,nf,f,x,pi,psi,y,rw,trl,kernel,k,
      +     dist,phi,eta,b,od,w,diagl,vval2,ncmax,vc,a,xi,lo,hi,c,vhit,
      +     rcond,sing,dd,tdeg,cdeg,lq,lf,setlf,s)
@@ -1375,12 +1379,8 @@ c     Identity -> identi
 c     X -> b
       execnt=execnt+1
 c     l2fit with trace(L)
-      if(.not.(k.le.nf-1))then
-         call ehg182(104)
-      end if
-      if(.not.(k.le.15))then
-         call ehg182(105)
-      end if
+      if(k .gt. nf-1)	call ehg182(104)
+      if(k .gt. 15)	call ehg182(105)
       if(trl.ne.0)then
          do 3 i5=1,n
             diagl(i5)=0
@@ -1557,6 +1557,8 @@ c Var
       return
       end
 
+c lowesd() : Initialize iv(*) and v(1:4)
+c ------     called only by loess_workspace()  in ./loessc.c
       subroutine lowesd(versio,iv,liv,lv,v,d,n,f,ideg,nvmax,setlf)
       integer versio,liv,lv,d,n,ideg,nvmax
       integer iv(liv)
@@ -1684,8 +1686,10 @@ c     initialize permutation
       return
       end
 
+c "direct" (non-"interpolate") fit aka predict() :
       subroutine lowesf(xx,yy,ww,iv,liv,lv,wv,m,z,l,ihat,s)
       integer liv,lv,m,ihat
+c     m = number of x values at which to evaluate
       integer iv(*)
       double precision xx(*),yy(*),ww(*),wv(*),z(m,1),l(m,*),s(m)
 
@@ -1708,8 +1712,13 @@ c     initialize permutation
       if(.not.(iv(14).ge.iv(19)))then
          call ehg182(186)
       end if
+
+c do the work; in ehg136()  give the argument names as they are there:
+c          ehg136(u,lm,m, n,    d,    nf,   f,   x,   psi,     y ,rw,
       call ehg136(z,m,m,iv(3),iv(2),iv(19),wv(1),xx,iv(iv(22)),yy,ww,
+c          kernel,  k,     dist,       eta,       b,     od,o,ihat,
      +     iv(20),iv(29),wv(iv(15)),wv(iv(16)),wv(iv(18)),0,l,ihat,
+c              w,     rcond,sing,    dd,    tdeg,cdeg,  s)
      +     wv(iv(26)),wv(4),iv(30),iv(33),iv(32),iv(41),s)
       return
       end
@@ -1958,8 +1967,8 @@ c           right son
             hi(p)=nc
             lo(nc)=m+1
             hi(nc)=u
-            call ehg125(p,nv,v,vhit,nvmax,d,k,xi(p),2**(k-1),2**(d-k),c(
-     +1,p),c(1,lo(p)),c(1,hi(p)))
+            call ehg125(p,nv,v,vhit,nvmax,d,k,xi(p),2**(k-1),2**(d-k),
+     +		 c(1,p),c(1,lo(p)),c(1,hi(p)))
          end if
          p=p+1
          l=lo(p)
@@ -1997,6 +2006,7 @@ c     initialize  d1mach(2) === DBL_MAX:
       return
       end
 
+c {called only from ehg127}  purpose...?...
       subroutine ehg137(z,kappa,leaf,nleaf,d,nv,nvmax,ncmax,a,xi,lo,hi)
       integer kappa,d,nv,nvmax,ncmax,nleaf
       integer leaf(256),a(ncmax),hi(ncmax),lo(ncmax),pstack(20)
@@ -2051,7 +2061,7 @@ c     bottom of while loop
       return
       end
 
-C-- For Error messaging, call the "a" routines at the bottom of  ./loessc.c  : 
+C-- For Error messaging, call the "a" routines at the bottom of  ./loessc.c  :
       subroutine ehg183(s, i, n, inc)
       character s*(*)
       integer i, n, inc
