@@ -3,8 +3,8 @@
 # ${RHOME}/tools/GETCONFIG
 
 echo "/* Rconfig.h.  Generated automatically */"
-echo "#ifndef R_VERSION_H"
-echo "#define R_VERSION_H"
+echo "#ifndef R_CONFIG_H"
+echo "#define R_CONFIG_H"
 echo
 us=`sed -n /HAVE_F77_UNDERSCORE/p config.h | sed -n 1p | sed -e s/\ HAVE_F77_UNDERSCORE.\*//`
 if [ "${us}" = "#define" ] ; then
@@ -26,4 +26,4 @@ endian=`grep "WORDS_BIGENDIAN" config.h`
 echo "${endian}"
 echo "#endif /* not _CONFIG_H */"
 echo
-echo "#endif /* not R_VERSION_H */"
+echo "#endif /* not R_CONFIG_H */"
