@@ -131,7 +131,7 @@ help(topic, htmlhelp=T).  Using help.start() sets the browser to the
 top-level page, from which you can access a search engine.
 
 (v) Latex help files are available for use with help(topic, offline=T).
-You will need to customize the file rw0651\bin\helpPRINT.bat: it
+You will need to customize the file rw0901\bin\helpPRINT.bat: it
 contains instructions.
 
 
