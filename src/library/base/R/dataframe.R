@@ -621,6 +621,8 @@ data.frame <-
 # 	    class(value) <- NULL
 # 	    value <- value[[1]]
             N <- NROW(value)
+            if(N > nrows)
+                stop(paste("replacement has", N, "rows, data has", nrows))
             if(N < nrows)
                 if(nrows %% N == 0 && length(dim(value)) <= 1)
                     value <- rep(value, length = nrows)

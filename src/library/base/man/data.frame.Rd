@@ -97,8 +97,12 @@ row.names(x) <- value
   adding columns to a data frame.
 
   If a list or data frame or matrix is passed to \code{data.frame}
-  it is as if each column had been passed as a separate argument,
-  with the exception of matrices of class \code{\link{model.matrix}}.
+  it is as if each column had been passed as a separate argument.
+  This can be overridden if the object past has a class which has
+  a method for \code{as.data.frame}: two examples are
+  matrices of class \code{"\link{model.matrix}"} (which are included as a
+  single column) and list objects of class \code{"\link{POSIXlt}"} which are
+  coerced to class \code{"\link{POSIXct}"}
 
   Objects passed to \code{data.frame} should have the same number of
   rows, but atomic vectors and factors will be recycled a whole number

@@ -2200,12 +2200,19 @@ power.t.test(n=10, delta=NULL, power=.9, alternative="two.sided")
 ## failed in 1.7.0
 
 
-## PR#3221 eigenvectors be a matrix even in the 1x1 case
+## PR#3221 eigenvectors should be a matrix even in the 1x1 case
 A <- matrix(1)
 stopifnot(is.matrix(eigen(A)$vectors))
 stopifnot(is.matrix(eigen(A, EISPACK = TRUE)$vectors))
 stopifnot(is.matrix(La.eigen(A)$vectors))
 ## gave vector in 1.7.0
+
+
+## [[<-.data.frame
+testdata <- data.frame(a=1:2, b = rep(NA, 2))
+try(testdata[["a"]] <- strptime(c("31121991", "31121991"), "%d%m%Y"))
+stopifnot(inherits(.Last.value, "try-error"))
+## succeeded in 1.7.0
 
 
 ## body() and formals() looked in different places
