@@ -108,6 +108,9 @@ NEW FEATURES
     o	predict.lm() warns if newdata is supplied and the fit was
 	rank-deficient, as this can be misleading.
 
+    o	rect() accepts additional graphics parameters through a ...
+	argument (in the same way as polygon).
+
 
 DEPRECATED & DEFUNCT
 
