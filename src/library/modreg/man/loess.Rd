@@ -23,7 +23,8 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   \item{subset}{an optional specification of a subset of the data to be
     used.}
   \item{na.action}{the action to be taken with missing values in the
-    response or predictors.  The default is to stop.}
+    response or predictors.  The default is given by
+    \code{getOption("na.action")}.}
   \item{model}{should the model frame be returned?}
   \item{span}{the parameter \eqn{\alpha} which controls the degree of
     smoothing.}
