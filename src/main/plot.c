@@ -580,11 +580,18 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	pin2 = GConvertYUnits(1.0, NPC, INCHES, dd);
 	xdelta = fabs(xmax - xmin) / asp;
 	ydelta = fabs(ymax - ymin);
-	xscale = pin1 / xdelta;
-	yscale = pin2 / ydelta;
-	scale = (xscale < yscale) ? xscale : yscale;
-	xadd = .5 * (pin1 / scale - xdelta) * asp;
-	yadd = .5 * (pin2 / scale - ydelta);
+	if(xdelta == 0.0 && ydelta == 0.0) {
+	    /* We really do mean zero: small non-zero values work
+	       Mimic the behaviour of GScale for the x axis. */
+	    xadd = yadd = ((xmin == 0.0) ? 1 : 0.4) * asp;
+	    xadd *= asp;
+	} else {
+	    xscale = pin1 / xdelta;
+	    yscale = pin2 / ydelta;
+	    scale = (xscale < yscale) ? xscale : yscale;
+	    xadd = .5 * (pin1 / scale - xdelta) * asp;
+	    yadd = .5 * (pin2 / scale - ydelta);
+	}
 	GScale(xmin - xadd, xmax + xadd, 1, dd);
 	GScale(ymin - yadd, ymax + yadd, 2, dd);
     }

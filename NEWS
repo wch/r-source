@@ -234,6 +234,10 @@ BUG FIXES
     o   The standalone Rmath library did not build correctly on systems
         with inaccurate log1p.
 
+    o   Specifying asp is now respected in calls like plot(1, 10, asp=1)
+	with zero range on both axes.
+
+
 
 
 
