@@ -16,7 +16,7 @@ optimize <- function(f, interval, lower=min(interval), upper=max(interval),
 {
  if(maximum) {
 	val <- .Internal(fmin(function(arg) -f(arg, ...), lower, upper, tol))
-	list(maximum=val, objective=-f(val, ...))
+	list(maximum=val, objective= f(val, ...))
  } else {
 	val <- .Internal(fmin(function(arg) f(arg, ...), lower, upper, tol))
 	list(minimum=val, objective=f(val, ...))
@@ -38,7 +38,7 @@ uniroot <- function(f, interval, lower=min(interval), upper=max(interval),
 deriv <- function(x, ...) UseMethod("deriv")
 
 deriv.formula <- function(expr, namevec, function.arg=NULL, tag=".expr") {
-	if(length(expr) == 2) 
+	if(length(expr) == 2)
 		.Internal(deriv.default(expr[[2]], namevec, function.arg, tag))
 	else stop("invalid formula in deriv")
 }
