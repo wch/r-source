@@ -116,12 +116,6 @@ From: msa@biostat.mgh.harvard.edu
 Date: Mon, 7 Jun 1999 22:27:10 +0200 (MET DST)
 --Fixed buffer used during input.
 --Not fixable without major changes to readline lib.
-* PR# 211 *
-Subject: readline/history size
-From: seniorr@teleport.com
-Date: Tue, 15 Jun 1999 00:08:59 +0200 (MET DST)
---Limitation of history size. Kurt cannot reproduce. 
---Depends on libreadline version??
 
 Directory:  Installation
 
@@ -208,30 +202,10 @@ Date: Fri, 21 Aug 1998 13:29:16 -0000 ()
 
 Directory:  System-specific
 
-* PR# 145 *
-Subject: R-0.63.3 package on IRIX 6.5 machine
-From: Jayshree Sarma <jsarma@cs.gmu.edu>
-Date: Tue, 23 Mar 1999 16:54:20 -0500 (EST)
-* PR# 163 *
-Subject: IRIX compile
-From: mtim@farm.ecs.umass.edu
-Date: Sat, 10 Apr 1999 19:35:43 +0200
-* PR# 196 *
-Subject: R 0.64 and -release fails to build on DU4.0
-From: Leif Johansson <leifj@matematik.su.se>
-Date: Fri, 14 May 1999 12:32:14 +0200
 * PR# 201 *
 Subject: RedHat Linux 6.0 Problems
 From: jacobm@magnet.drcmr.dk
 Date: Wed, 2 Jun 1999 10:58:45 +0200 (MET DST)
-* PR# 208 *
-Subject: R correct g77 flags for Linux/Alpha
-From: Naoki Takebayashi <ntakebay@bio.indiana.edu>
-Date: Tue, 8 Jun 1999 19:12:03 -0500 (EST)
-* PR# 209 *
-Subject: Compilation fails
-From: beimfohr@statistik.uni-dortmund.de
-Date: Thu, 10 Jun 1999 13:52:01 +0200 (MET DST)
 * PR# 214 *
 From: Charles Taylor <charles@amsta.leeds.ac.uk>
 Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
@@ -268,3 +242,11 @@ Subject: RE: Bug in "[.ts" for multivariate ts {Problem with plot.ts, "["
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Fri, 02 Jul 1999 18:21:37 +0200 (CEST)
 Date: 02-Jul-99
+* PR# 218 *
+Subject: Bug on sample
+From: jperez@cesma.usb.ve
+Date: Wed, 7 Jul 1999 16:23:31 +0200 (MET DST)
+* PR# 219 *
+Subject: Bug on sample
+From: jperez@cesma.usb.ve
+Date: Wed, 7 Jul 1999 16:23:53 +0200 (MET DST)
