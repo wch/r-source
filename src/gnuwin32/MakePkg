@@ -53,6 +53,8 @@ OFILES2=$(foreach i, $(OFILES-NO), $(SPKG)/$i)
 OFILES=$(filter-out $(OFILES2),$(OFILES0))
 INSTFILES=$(wildcard $(SPKG)/inst/*)
 
+# src Makefile?
+SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 
 all:  bare  $(DATA) $(DYNLIB)
 bare: $(DPKG)/zzzz  $(DPKG)/R/$(PKG)
@@ -60,7 +62,11 @@ bare: $(DPKG)/zzzz  $(DPKG)/R/$(PKG)
 include $(RHOME)/src//gnuwin32/MkRules
 
 clean:
+ifeq ($(strip $(SRCMAKE)),)
 	$(RM) $(SSPKG)/$(DLLNAME).dll $(LOBJS)  $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def
+else
+	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win clean
+endif
 	$(RM) -rf $(SPKG)/chm -rf $(SPKG)/check
 
 SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
@@ -100,8 +106,12 @@ $(DYNLIB): $(SSPKG)/$(DLLNAME).dll
 	$(CP) $^ $@
 
 $(SSPKG)/$(DLLNAME).dll: FORCE
+ifeq ($(strip $(SRCMAKE)),)
 	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakeDll DLLNAME=$(DLLNAME)
+else
+	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
+endif
 
 FORCE:
 

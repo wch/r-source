@@ -1,7 +1,7 @@
 include MkRules
 
 HELP=YES
-WINHELP=BITH # NO, CHM, BOTH
+WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw1010
@@ -69,7 +69,7 @@ fixfiles:
 	$(RM) ../../unzip/*.h
 
 fixed/fixdesc:
-	sh fixed/GETDESC $(PACKAGES) tcltk
+	sh fixed/GETDESC $(PACKAGES)
 
 dllversion.o: ../include/Rversion.h
 
@@ -110,9 +110,9 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	perl -n makeimps.pl exported-vars > $@
 
 tcl:
+	sh fixed/GETDESC tcltk
 	$(MAKE) -C ../library/tcltk RHOME=$(RHOME) PKG=tcltk \
-	  -f $(RHOME)/src/gnuwin32/MakePkg bare
-	$(MAKE) -C ../library/tcltk/src RHOME=$(RHOME) -f Makefile.win
+	  -f $(RHOME)/src/gnuwin32/MakePkg
 
 
 CHTML:

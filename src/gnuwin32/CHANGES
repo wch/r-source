@@ -54,6 +54,10 @@ README.packages).
 
 New makefile target zipdata-% to zip up data directories in packages.
 
+If there is a file `Makefile.win' in a package src directory this
+will be used rather than MakePkgs (and the tcltk package provides
+an example).
+
 There is an example package `windlgs' in the package sources
 distribution that shows how to use graphapp to build dialog boxes to
 be called from menus, with a worked example of a t test done in three
