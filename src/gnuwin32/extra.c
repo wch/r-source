@@ -302,24 +302,26 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
     TCHAR szCSDVersion[ 128 ];
     } OSVERSIONINFO; */
 
-typedef struct _OSVERSIONINFOEXA {
-    DWORD dwOSVersionInfoSize;
-    DWORD dwMajorVersion;
-    DWORD dwMinorVersion;
-    DWORD dwBuildNumber;
-    DWORD dwPlatformId;
-    CHAR szCSDVersion[ 128 ];
-    WORD wServicePackMajor;
-    WORD wServicePackMinor;
-    WORD wReserved[2];
-} OSVERSIONINFOEXA;
+typedef struct _OSVERSIONINFOEX {
+  DWORD dwOSVersionInfoSize;
+  DWORD dwMajorVersion;
+  DWORD dwMinorVersion;
+  DWORD dwBuildNumber;
+  DWORD dwPlatformId;
+  TCHAR szCSDVersion[ 128 ];
+  WORD wServicePackMajor;
+  WORD wServicePackMinor;
+  WORD wSuiteMask;
+  BYTE wProductType;
+  BYTE wReserved;
+} OSVERSIONINFOEX;
 
 SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char isNT[8]="??", ver[256];
     SEXP ans;
     OSVERSIONINFO verinfo;
-    OSVERSIONINFOEXA verinfoex;
+    OSVERSIONINFOEX verinfoex;
 
     checkArity(op, args);
     verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -329,7 +331,21 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcpy(isNT, "NT");
 	break;
     case VER_PLATFORM_WIN32_WINDOWS:
-	strcpy(isNT, "9x");
+	switch(verinfo.dwMinorVersion ) {
+	case 0:
+	    strcpy(isNT, "95");
+	    if (verinfo.szCSDVersion[1] == 'C') strcat(isNT, " OSR2" );
+	    break;
+	case 10:
+	    strcpy(isNT, "98");
+	    if (verinfo.szCSDVersion[1] == 'A') strcat(isNT, " SE" );
+	    break;
+	case 90:
+	    strcpy(isNT, "ME");
+	    break;
+	default:
+	    strcpy(isNT, "9x");
+	}
 	break;
     case VER_PLATFORM_WIN32s:
 	strcpy(isNT, "win32s");
@@ -340,14 +356,21 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if((int)verinfo.dwMajorVersion >= 5) {
-	verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEXA);
-	GetVersionEx(&verinfoex);
-	sprintf(ver, "Windows %d.%d (build %d) Service Pack %d.%d (%s)",
-		(int)verinfoex.dwMajorVersion, (int)verinfoex.dwMinorVersion,
-		LOWORD(verinfoex.dwBuildNumber),
-		(int)verinfoex.wServicePackMajor,
-		(int)verinfoex.wServicePackMinor,
-		verinfoex.szCSDVersion);
+	
+	verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	if(GetVersionEx(&verinfoex))
+	    sprintf(ver, "Windows %d.%d (build %d) Service Pack %d.%d (%s)",
+		    (int)verinfoex.dwMajorVersion, 
+		    (int)verinfoex.dwMinorVersion,
+		    LOWORD(verinfoex.dwBuildNumber),
+		    (int)verinfoex.wServicePackMajor,
+		    (int)verinfoex.wServicePackMinor,
+		    verinfoex.szCSDVersion);
+	else {
+	    sprintf(ver, "Windows 2000 %d.%d (build %d) %",
+		    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
+		    LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
+	}
     } else {
 	sprintf(ver, "Windows %s %d.%d (build %d) %s", isNT,
 		(int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
