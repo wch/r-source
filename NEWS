@@ -12,6 +12,11 @@
 NEW FEATURES
 
 
+    o	There are several changes to the compile and link flags, and
+	an attempt is made to use /usr/local/include and
+	/usr/local/lib on all platforms.  Please read config.site and
+	INSTALL if you have set flags for previous versions.
+
     o	New package tcltk, providing interface and language bindings for
 	the Tcl/Tk graphical interface toolkit. This makes it possible
 	to do some rather nifty things with buttons and entry fields
