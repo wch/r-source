@@ -79,6 +79,9 @@ NEW FEATURES
     o	formula() methods for classes "lm" and "glm" used the expanded
 	formula (with '.' expanded) from the terms component.
 
+    o   eapply - apply for environments has been added. The supplied function 
+        is applied to each element of the environment; order of application is
+        not specified.
 
 UTILITIES
 
