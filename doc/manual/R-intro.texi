@@ -6396,7 +6396,7 @@ want to save it.
 @menu
 * Invoking R under UNIX::       
 * Invoking R under Windows::    
-* Invoking R under Macintosh::  
+* Invoking R on a Macintosh::   
 @end menu
 
 @node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
@@ -6424,7 +6424,7 @@ Unless @option{--no-environ} was given, @R{} searches for the file
 @file{.Renviron} in the current directory, or failing that the file
 pointed to by the environment variable @env{R_ENVIRON}, or if that is
 not set, the file @file{.Renviron} in the user's home directory.  The
-first of these files found is sourced to set environment variables. It
+first of these files found is processed to set environment variables. It
 should contain lines of the form @samp{@var{name}=@var{value}}.
 (See @code{help(Startup)} for a precise description.)
 Variables you might want to set include @env{R_PAPERSIZE} (the default
@@ -6600,7 +6600,7 @@ La@TeX{}, plain text, and S documentation format.
 @item Rd2dvi
 Convert Rd format to DVI/PDF.
 @item Rd2txt
-Convert Rd format to pretty text.
+Convert Rd format to text.
 @item Rdindex
 Extract index information from Rd files.
 @item Sd2Rd
@@ -6622,7 +6622,7 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-@node Invoking R under Windows, Invoking R under Macintosh, Invoking R under UNIX, Invoking R
+@node Invoking R under Windows, Invoking R on a Macintosh, Invoking R under UNIX, Invoking R
 @section Invoking R under Windows
 
 The startup procedure under Windows is very similar to that under UNIX,
@@ -6694,7 +6694,7 @@ Print version info and exit.
 @itemx --sdi
 @itemx --no-mdi
 Control whether @code{Rgui} will operate as an MDI program (the default,
-with multiple child windows within on main window) or an SDI application
+with multiple child windows within one main window) or an SDI application
 (with multiple top-level windows for the console, graphics and pager).
 
 @item --save
@@ -6705,7 +6705,7 @@ asked for the desired behavior when ending the session with @kbd{q()};
 in batch mode, one of these must be specified.
 
 @item --no-site-file
-Suppress reading of the site-wide startup profile
+Suppress reading of the site-wide startup profile.
 
 @item --no-init-file
 Suppress reading of the directory or user's @file{.Rprofile} file.
@@ -6758,12 +6758,12 @@ default to the smaller of 256Mb and the amount of physical RAM in the machine.
 Don't print startup message.
 
 @item --slave
-Make @R{} run as quietly as possible, and in particular set @R{}'s
-option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
-control the printing of diagnostic messages.
+Make @R{} run as quietly as possible.
 
 @item --verbose
-Print more information about progress.
+Print more information about progress, and in particular set @R{}'s
+option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
+control the printing of diagnostic messages.
 
 @item --ess
 Set @code{Rterm} up for use by @code{R-inferior-mode} in @acronym{ESS}.
@@ -6802,7 +6802,7 @@ La@TeX{}, plain text, and S documentation format.
 @item Rd2dvi.sh
 Convert Rd format to DVI/PDF.
 @item Rd2txt
-Convert Rd format to pretty text.
+Convert Rd format to text.
 @item Rdindex
 Extract index information from Rd files.
 @item Sd2Rd
@@ -6819,29 +6819,28 @@ Rcmd @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{Rcmd} interface.
 
-@node Invoking R under Macintosh,  , Invoking R under Windows, Invoking R
-@section Invoking R under Macintosh
+@node Invoking R on a Macintosh,  , Invoking R under Windows, Invoking R
+@section Invoking R on a Macintosh
 
 The @R{} application startup is similar to that of UNIX and Windows
-systems but limited in the fact that there is no equivalent to the
-@code{R CMD} engine.  There exists only the console-based version of
-@R{} for Macintosh.
+systems.  Only a console-based version of @R{} for Macintosh exists, and
+there is no equivalent to the @code{R CMD} engine.
  
-When you double-click with your mouse pointer on the @R{} application
-icon it appears a small window equivalent to a command line where you
-can enter the startup options, as explained below, or simply type
-@key{RET} on the keyboard to start @R{}.
-
-The main @R{} program can be started with a variety of options in the
-form
+When you double-click on the @R{} application icon a small window will
+appear.  This is equivalent to the command line under other ports.  You
+can enter the startup options, or simply press @key{RET} on the keyboard
+to start @R{} running with default options.  The main @R{} program can be
+started with a variety of options in the form
 
 @display
-@code{R} [@var{options}],
+@code{R} [@var{options}]
 @end display
 
-The [@code{<}@var{infile}] [@code{>}@var{outfile}] equivalent to UNIX
-can be selected at startup using the standard Macintosh interface but
-they are not currently fully implemented.  So you can ignore these.
+@noindent
+as listed later in this section.  Using [@code{<}@var{infile}]
+[@code{>}@var{outfile}] equivalent to UNIX can be selected at startup
+using the standard Macintosh interface but they are not currently fully
+implemented, so you can ignore these.
 
 Most options control what happens at the beginning and at the end of an
 @R{} session.  The startup mechanism is as follows (see also the on-line
@@ -6849,21 +6848,21 @@ help for topic @samp{Startup} for more information).
 
 @itemize @bullet
 @item
-Unless @option{--no-environ} was given, @R{} searches for the file
+Unless @option{--no-environ} was given, @R{} looks for the file
 @file{.Renviron} in the @file{etc} subdirectory of @R{} application
-folder. The file found is sourced to set environment variables. It
+folder. The file found is processed to set environment variables. It
 should contain lines of the form @samp{@var{name}=@var{value}}.  (See
 @code{help(Startup)} for a precise description.)
 
 @item
-Then, unless @option{--no-init-file} was given, @R{} searches for a file
+Then, unless @option{--no-init-file} was given, @R{} looks for a file
 called @file{.Rprofile} in the @file{etc} subdirectory of @R{}
-application folder and sources it.
+application folder and processes it (as @R{} code).
 
 @item
-It also loads a saved image from @file{.RData} if there is one (unless
+It then loads a saved image from file @file{.RData} if there is one (unless
 @option{--no-restore} or @option{--no-restore-data} was specified).
-This file is supposed to be found in the @file{etc} subdirectory of @R{}
+This file looked for in the @file{etc} subdirectory of @R{}
 application folder.
 
 @item
@@ -6876,8 +6875,8 @@ reside in @file{.RData}.
 In addition, there are options for controlling the memory available to
 the @R{} process (see the on-line help for topic @samp{Memory} for more
 information).  Users will not normally need to use these unless they are
-trying to limit the amount of memory used by @R{}.  Please note that,
-under Macintosh, you have to reserve in advance the amount of memory
+trying to limit the amount of memory used by @R{}.  Please note that
+under MacOS, you have to reserve in advance the amount of memory
 assigned to the @R{} application from the `Finder/Information' menu as
 it is usually done for any Macintosh software.  An amount of 32000k is
 sufficient to run all the demos and examples in the base distribution.
@@ -6938,8 +6937,7 @@ usually 56 bytes on a 64-bit machine.
 Do not print out the initial copyright and welcome messages.
 
 @item --slave
-Make @R{} run as quietly as possible.  This option is intended to
-support programs which use @R{} to compute results for them.
+Make @R{} run as quietly as possible.
 
 @item --verbose
 Print more information about progress, and in particular set @R{}'s
