@@ -163,7 +163,7 @@ static double mktime00 (struct tm *tm)
 static double guess_offset (struct tm *tm)
 {
     double offset, offset1, offset2;
-    int oldmonth, oldyear;
+    int oldmonth, oldyear, olddst;
 
     /*
        adjust as best we can for timezones: if isdst is unknown,
@@ -171,18 +171,29 @@ static double guess_offset (struct tm *tm)
     */
     oldmonth = tm->tm_mon;
     oldyear = tm->tm_year;
+    olddst = tm->tm_isdst;
     tm->tm_mon = 0;
     tm->tm_year = 100;
+    tm->tm_isdst = -1;
     offset1 = (double) mktime(tm) - mktime00(tm);
+    tm->tm_year = 100;
     tm->tm_mon = 6;
+    tm->tm_isdst = -1;
     offset2 = (double) mktime(tm) - mktime00(tm);
-    if(tm->tm_isdst > 0) {
-	offset = (offset1 > offset2) ? offset1 : offset2;
-    } else {
+    if(olddst > 0) {
 	offset = (offset1 > offset2) ? offset2 : offset1;
+    } else {
+	offset = (offset1 > offset2) ? offset1 : offset2;
+    }
+    /* now try to guess dst if unknown */
+    tm->tm_mon = oldmonth;
+    tm->tm_isdst = -1;
+    if(olddst < 0) {
+	offset1 = (double) mktime(tm) - mktime00(tm);
+	olddst = (offset1 < offset) ? 1:0;
     }
     tm->tm_year = oldyear;
-    tm->tm_mon = oldmonth;
+    tm->tm_isdst = olddst;
     return offset;
 }
 
@@ -567,7 +578,11 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		strftime(buff, 256, CHAR(STRING_ELT(sformat, i%m)), &tm);
 		if(UseTZ && !isNull(tz)) {
 		    int i = 0;
-		    if(LENGTH(tz) == 3) i = 1 + tm.tm_isdst;
+		    if(LENGTH(tz) == 3) {
+			if(tm.tm_isdst > 0) i = 2;
+		        else if(tm.tm_isdst == 0) i = 1;
+			else i = 0; /* Use base timezone name */
+		    }
 		    p = CHAR(STRING_ELT(tz, i));
 		    if(strlen(p)) {
 			strcat(buff, " ");
