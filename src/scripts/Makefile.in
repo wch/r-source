@@ -51,6 +51,7 @@ $(SCRIPTS_B): $(top_builddir)/config.status
 # and then create the front end (`R.fe') which gets installed as `R'
 # using sed.
 R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
+	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \

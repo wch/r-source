@@ -121,7 +121,7 @@ the usage of \`command'.
 
 Report bugs to <R-bugs@lists.r-project.org>."
 
-version="REPLACE_BY_VERSION.
+version="R REPLACE_BY_VERSION.
 Copyright (C) REPLACE_BY_YEAR R Development Core Team
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
