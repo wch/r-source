@@ -21,6 +21,9 @@ C_FUNCTION(R_chull)
 F77_SUBROUTINE(rg)
 F77_SUBROUTINE(rs)
 C_FUNCTION(R_cumsum)
+#-- in ../main/unique.c to use hashing
+C_FUNCTION(Rrowsum_matrix)
+C_FUNCTION(Rrowsum_df)
 #-- Linpack --
 F77_SUBROUTINE(dchdc)
 F77_SUBROUTINE(dpbfa)
