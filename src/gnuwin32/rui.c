@@ -32,13 +32,14 @@
 #include "graphapp/internal.h"
 #include "graphapp/ga.h"
 #ifdef USE_MDI
-#include "graphapp/stdimg.h"
+# include "graphapp/stdimg.h"
 #endif
 #include "console.h"
 #include "rui.h"
 #include "opt.h"
 #include "Rversion.h"
 #include "getline/getline.h"  /* for gl_load/savehistory */
+#include "Startup.h"          /* for SA_DEFAULT */
 
 #define TRACERUI(a)
 
