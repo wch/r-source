@@ -1,7 +1,7 @@
 \name{edit}
 \title{Invoke a Text Editor}
 \usage{
-edit(name = NULL, file = "", editor=options()$editor)
+edit(name = NULL, file = "", editor = options()$editor)
 vi(name = NULL, file = "")
 emacs(name = NULL, file = "")
 pico(name = NULL, file = "")
@@ -15,35 +15,46 @@ xedit(name = NULL, file = "")
 \alias{xemacs}
 \alias{xedit}
 \arguments{
-\item{name}{a named object that you want to edit. If name is missing then the
-file specified by \code{file} is opened for editing.}
-\item{file}{a string naming the file to write the edited version to.}
-\item{editor}{a string naming the text editor you want to use.}
+  \item{name}{a named object that you want to edit. If name is missing
+    then the file specified by \code{file} is opened for editing.}
+  \item{file}{a string naming the file to write the edited version to.}
+  \item{editor}{a string naming the text editor you want to use. On Unix
+  the default is set from the \code{EDITOR} environmental variable. On
+  Windows it defaults to \code{notepad}.}
 }
 \description{
   Invoke a text editor on an \R object.
 }
 \details{
-\code{edit} invokes the text editor specified by \code{editor} with the object
-\code{name} to be edited.
-\code{data.entry} can be used to edit data.
-It is important to realize that \code{edit} does not change
-the object called \code{name}.
-Instead, a copy of name is made and it is that copy which is changed.
-Should you want the changes to apply to the object \code{name}
-you must assign the result of \code{edit} to \code{name}.
-(Try \code{\link{fix}} if you want to make permanent changes to an object.)
+  \code{edit} invokes the text editor specified by \code{editor} with
+  the object \code{name} to be edited. It is a generic function,
+  currently with a default method and one for data frames.
+
+  \code{data.entry} can be used to edit data, and is used by \code{edit}
+  to edit data frames on systems for which \code{data.entry} is available.
+
+  It is important to realize that \code{edit} does not change the object
+  called \code{name}. Instead, a copy of name is made and it is that copy
+  which is changed. Should you want the changes to apply to the object
+  \code{name} you must assign the result of \code{edit} to
+  \code{name}. (Try \code{\link{fix}} if you want to make permanent
+  changes to an object.)
   
-In the form \code{edit(name)},
-\code{edit} deparses \code{name} into a temporary file and invokes the
-editor \code{editor} on this file. Quiting from the editor causes
-\code{file} to be parsed and that value returned.
-Should an error occur in parsing, possibly due to incorrect syntax, no
-value is returned. Calling \code{edit()}, with no arguments, will
-result in the temporary file being reopened for further editing.
+  In the form \code{edit(name)},
+  \code{edit} deparses \code{name} into a temporary file and invokes the
+  editor \code{editor} on this file. Quiting from the editor causes
+  \code{file} to be parsed and that value returned.
+  Should an error occur in parsing, possibly due to incorrect syntax, no
+  value is returned. Calling \code{edit()}, with no arguments, will
+  result in the temporary file being reopened for further editing.
 }
 \seealso{
-\code{\link{data.entry}}, \code{\link{fix}}.
+  \code{\link{edit.data.frame}}, \code{\link{data.entry}}, \code{\link{fix}}.
+}
+\note{
+  The functions \code{vi}, \code{emacs}, \code{pico}, \code{xemacs},
+  \code{xedit} rely on the corresponding editor being available and
+  being on the path. This is system-dependent.
 }
 \examples{
 \dontrun{

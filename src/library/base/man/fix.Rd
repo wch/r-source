@@ -9,9 +9,12 @@ fix(x, ...)
   \item{...}{Arguments to pass to editor}
 }
 \description{
-    \code{fix} invokes the editor specified in
-    \code{\link{options}("editor")} on \code{x} and then assigns the new
-    (edited) version of \code{x} in the global environment.
+  \code{fix} invokes the editor specified in
+  \code{\link{options}("editor")} on \code{x} and then assigns the new
+  (edited) version of \code{x} in the global environment.
+}
+\seealso{
+  \code{\link{edit}},  \code{\link{edit.data.frame}}
 }
 \examples{
 \dontrun{

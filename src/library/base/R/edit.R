@@ -8,10 +8,10 @@ edit.default<-
 edit.data.frame<-
     function(name,factor.mode=c("numeric","character"),...)
 {
-    if (getenv("DISPLAY")=="")
+    if (getenv("DISPLAY")=="" || .Platform$OS.type == "windows")
         return (edit.default(name,...))
 
-    if (!all(sapply(name,is.vector)|sapply(name,is.factor)))
+    if (!all(sapply(name, is.vector) | sapply(name, is.factor)))
         stop("Can only handle vector and factor elements")
 
     factor.mode <- match.arg(factor.mode)
@@ -28,13 +28,13 @@ edit.data.frame<-
 
     attrlist <- lapply(name, attributes)
     datalist <- lapply(name, as.num.or.char)
-    factors <- which(sapply(name,is.factor))
+    factors <- which(sapply(name, is.factor))
     modes <- lapply(datalist, mode)
-    out <- .Internal(dataentry(datalist,modes))
+    out <- .Internal(dataentry(datalist, modes))
     lengths <- sapply(out, length)
     maxlength <- max(lengths)
     for (i in which(lengths != maxlength))
-         out[[i]] <- c(out[[i]],rep(NA,maxlength-lengths[i]))
+         out[[i]] <- c(out[[i]], rep(NA, maxlength-lengths[i]))
     for (i in factors) {
         a <- attrlist[[i]]
         if (factor.mode == "numeric") {
@@ -48,7 +48,7 @@ edit.data.frame<-
             }
         } else {
             o <- out[[i]]
-            if (any(is.na(match(o,c(a$levels,NA)))))
+            if (any(is.na(match(o, c(a$levels, NA)))))
                 warning(paste("invalid factor levels in",
                                names(out)[i]))
             o <- match(o, a$levels)
