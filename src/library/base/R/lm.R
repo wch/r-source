@@ -1,48 +1,48 @@
-"lm" <-
-function (formula, data = list(), subset, weights, na.action, 
-        method = "qr", model = TRUE, singular.ok = TRUE, ...) 
+lm <-
+function (formula, data = list(), subset, weights, na.action,
+	method = "qr", model = TRUE, singular.ok = TRUE, ...)
 {
-        mt <- terms(formula, data = data)
-        mf <- match.call()
-        mf$singular.ok <- NULL
-        mf$model <- NULL
-        mf$method <- NULL
-        mf[[1]] <- as.name("model.frame")
-        mf <- eval(mf, sys.frame(sys.parent()))
-        if (method == "model.frame") 
-                return(mf)
-        else if (method != "qr") 
-                warning(paste("method =", method,
-                              "is not supported. Using \"qr\"."))
-        if (length(list(...))) 
-                warning(paste("Extra arguments", deparse(substitute(...)), 
-                        "are just disregarded."))
-        if (!is.null(model.offset(mf))) 
-                stop("offset() not available in lm(), use glm()")
-        if (!singular.ok) 
-                warning("only `singular.ok = TRUE' is currently implemented.")
-        y <- model.response(mf, "numeric")
-        w <- model.weights(mf)
-        if (is.empty.model(mt)) {
-                z <- list(coefficients = numeric(0), residuals = y, 
-                        fitted.values = 0 * y, weights = w, rank = 0, 
-                        df.residual = length(y))
-                class(z) <- if (is.matrix(y)) 
-                        c("mlm.null", "lm.null", "mlm", "lm")
-                else c("lm.null", "lm")
-        }
-        else {
-                x <- model.matrix(mt, mf)
-                z <- if (is.null(w)) 
-                        lm.fit(x, y)
-                else lm.wfit(x, y, w)
-                class(z) <- c(if (is.matrix(y)) "mlm", "lm")
-        }
-        z$call <- match.call()
-        z$terms <- mt
-        if (model) 
-                z$model <- mf
-        z
+	mt <- terms(formula, data = data)
+	mf <- match.call()
+	mf$singular.ok <- NULL
+	mf$model <- NULL
+	mf$method <- NULL
+	mf[[1]] <- as.name("model.frame")
+	mf <- eval(mf, sys.frame(sys.parent()))
+	if (method == "model.frame")
+		return(mf)
+	else if (method != "qr")
+		warning(paste("method =", method,
+			      "is not supported. Using \"qr\"."))
+	if (length(list(...)))
+		warning(paste("Extra arguments", deparse(substitute(...)),
+			"are just disregarded."))
+	if (!is.null(model.offset(mf)))
+		stop("offset() not available in lm(), use glm()")
+	if (!singular.ok)
+		warning("only `singular.ok = TRUE' is currently implemented.")
+	y <- model.response(mf, "numeric")
+	w <- model.weights(mf)
+	if (is.empty.model(mt)) {
+		z <- list(coefficients = numeric(0), residuals = y,
+			fitted.values = 0 * y, weights = w, rank = 0,
+			df.residual = length(y))
+		class(z) <- if (is.matrix(y))
+			c("mlm.null", "lm.null", "mlm", "lm")
+		else c("lm.null", "lm")
+	}
+	else {
+		x <- model.matrix(mt, mf)
+		z <- if (is.null(w))
+			lm.fit(x, y)
+		else lm.wfit(x, y, w)
+		class(z) <- c(if (is.matrix(y)) "mlm", "lm")
+	}
+	z$call <- match.call()
+	z$terms <- mt
+	if (model)
+		z$model <- mf
+	z
 }
 
 lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
@@ -69,7 +69,7 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 		coef[-r1, ] <- NA
 		coef[pivot, ] <- coef
 		dimnames(coef) <- list(dimnames(x)[[2]], dimnames(y)[[2]])
-                rownames(z$effects) <- NULL
+		rownames(z$effects) <- NULL
 	}
 	else {
 		coef[-r1] <- NA
@@ -397,7 +397,9 @@ anova.lm <- function(object, ...)
 	table[length(p),4:5] <- NA
 	dimnames(table) <- list(c(attr(object$terms,"term.labels"),
 		"Residual"), c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
-	result <- list(table=table, title="Analysis of Variance Table")
+	result <- list(table=table,
+		       title=paste("Analysis of Variance Table\nResponse:",
+			 formula(object)[[2]]))
 	class(result) <- "tabular"
 	result
 }
