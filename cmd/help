@@ -32,7 +32,13 @@ then
 	exit 2
     fi
     shift
+    ODIR=`pwd`
     cd `dirname ${1}`
     ${LATEX} ${1} >/dev/null 2>&1
-    ${DVIPS} ${1} -o "|${2}" 2>/dev/null
+    ${DVIPS} ${1} 2>/dev/null
+    if test -f ${1}.ps;
+    then
+        echo "Saving help page to "`${2}.ps'"
+        mv ${1}.ps ${ODIR}/${2}.ps
+    fi
 fi
