@@ -1629,7 +1629,7 @@ static void X11_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
 {
     int   size;
-    double pixs, xl, yl;
+    double pixs, xl, yl, rot1;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     size = dd->gp.cex * dd->gp.ps + 0.5;
@@ -1638,9 +1638,9 @@ static void X11_Text(double x, double y, int coords,
     pixs = fontascent(xd->font) + fontdescent(xd->font) - 1;
     xl = xc * X11_StrWidth(str, dd);
     yl = yc * GConvertYUnits(1, CHARS, DEVICE, dd) - pixs;
-    rot *= 0.01745329251994329576;
-    x += -xl * cos(rot) + yl * sin(rot);
-    y -= -xl * sin(rot) - yl * cos(rot);
+    rot1 = rot * 0.01745329251994329576;
+    x += -xl * cos(rot1) + yl * sin(rot1);
+    y -= -xl * sin(rot1) - yl * cos(rot1);
     SetFont(dd->gp.font, size, rot, dd);
     SetColor(dd->gp.col, dd);
 #ifdef NOCLIPTEXT
