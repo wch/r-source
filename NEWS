@@ -55,7 +55,8 @@ BUG FIXES
 
     o   Some HTML files used src="R.css" instead of href="R.css"
         causing some browsers to ignore the style sheet. R.css now
-	passes the w3c CSS validator. 
+	passes the w3c CSS validator and gives the intended results
+	with Internet Explorer.
 
     o	The data editor no longer crashes when entries contain more than
 	45 characters, and works correctly if the field width is
