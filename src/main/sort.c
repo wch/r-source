@@ -466,7 +466,7 @@ static void Psort(SEXP x, int k)
 	sPsort(STRING_PTR(x), LENGTH(x), k);
 	break;
     default:
-	UNIMPLEMENTED("pSort");
+	UNIMPLEMENTED("Psort");
     }
 }
 
