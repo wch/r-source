@@ -34,6 +34,9 @@ NEW FEATURES
     o	readBin() has a new argument `signed' to simplify reading
 	unsigned 8- and 16-bit integers.
 
+    o	New capabilities() option "cledit".
+
+
 
 BUG FIXES
 
@@ -64,9 +67,10 @@ BUG FIXES
 
     o	barplot did not accept NA heights unless ylim was specified.
 
-    o	predict.lm() failed with single-column model matrix (PR#1018)
+    o	predict.lm() failed with single-column model matrix (PR#1018).
 
-    o	legend() now also works with 100s of entries (thanks to M.Schlather).
+    o	legend() now also works with 100s of entries (thanks to 
+	M. Schlather).
 
     o	A long-standing bug leading to inaccuracy in polyroot() has been
 	fixed (PR#751)
@@ -83,7 +87,11 @@ BUG FIXES
 	longer to include it.
 
     o	Fixed protect bug in save() code that might have been responsible
-	for occarionally saving corrupted workspaces.
+	for occasionally saving corrupted workspaces.
+
+    o	capabilities("X11") now reports if X11 is available in this
+	session, thereby giving the correct answer if --gui=none was
+	specified.
 
 
 
