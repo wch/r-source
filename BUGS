@@ -352,13 +352,6 @@ Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
 From: "John W. Eaton" <jwe@bevo.che.wisc.edu>
 Date: Wed, 22 Aug 2001 21:56:33 -0500
 --part of PR#1068
-* PR# 1120 *
-Subject: bug in write.table?
-From: Ott Toomet <siim@obs.ee>
-Date: Sun, 7 Oct 2001 18:24:34 +0200 (CEST)
---Traced down to an effect of read.dta in foreign interacting with do_paste. Fixed
---in foreign, but do_paste may need to use strlen() rather than LENGTH().
---
 * PR# 1211 *
 Subject: crash bug in get("function.name")()
 From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
@@ -372,10 +365,6 @@ Subject: prettyNum inserts leading commas
 From: David Brahm  <brahm@alum.mit.edu>
 Date: Mon, 13 May 2002 14:21:08 -0400
 --fixed for 1.5.1 (using the suggestion)
-* PR# 1586 *
-Subject: Re: [R] Bug?  assigning with operator '=' to local parameter changes
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Tue, 21 May 2002 12:48:22 -0700 (PDT)
 
 Directory:  Macintosh
 
@@ -500,3 +489,7 @@ Date: Mon, 20 May 2002 14:33:24 -0400
 Subject: signature match in setMethod
 From: tkeitt@ms.cc.sunysb.edu
 Date: Wed, 22 May 2002 23:04:53 +0200 (MET DST)
+* PR# 1606 *
+Subject: hitting ^C breaks readline history
+From: Cyril Humbert <humbertc@univ-mlv.fr>
+Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
