@@ -72,37 +72,15 @@ BUG FIXES
     o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
 	have been removed.
 
-    o	A problem with "..." in substitutions has been fixed (PR#860). 
-
-    o	Various strangeness with match.call() and "..." has been fixed
-	(PR#813).
-
     o	sys.function() could return an unevaluated promise, messing up
 	formals() and match.arg() (PR#872)
 
-    o	We now use match.fun() in tapply() so that it won't get trapped
-	by non-functions masking FUN.
-
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
-    o	lowess(c(1:3,7:5)) now should give the same on different platforms,
+    o	lowess(c(1:3, 7:5)) now should give the same on different platforms,
 	since now as.integer(f*n + 1e-7) is used.
 
-    o	The `nmax' argument in scan(what=list(...), nmax=300) was
-	counting blank lines, although they were said to be ignored.
-	This affected using read.table on files with blank lines in
-	1.2.2, and using `n' with `what' a list.
-
-    o	Deparsing or dumping attributes with non-standard names was
-	not quoting the name (PR#871).
-
-    o	Overflow in deparse() in terms(formula) with very long left-hand
-	side fixed (PR#873)
-
-    o	as.numeric(), as.integer(), as.complex() returned zero on
-	completely blank strings. Now they return NA. (PR#870)
-
-    o	qchisq(0.025,31,ncp=1,lower.tail=FALSE) now works.  (PR#875)
+    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
 
     o	curve(*, add = TRUE) now properly works with active log scales.
 
@@ -126,6 +104,32 @@ BUG FIXES
 
      o	Printing of kernels in package ts was unreliable: the internal
 	representation was correct.
+
+    o	A problem with "..." in substitutions has been fixed (PR#860). 
+
+    o	Various strangeness with match.call() and "..." has been fixed
+	(PR#813).
+
+    o	Deparsing or dumping attributes with non-standard names was
+	not quoting the name (PR#871).
+
+    o	We now use match.fun() in tapply() so that it won't get trapped
+	by non-functions masking FUN.
+
+    o	The `nmax' argument in scan(what=list(...), nmax=300) was
+	counting blank lines, although they were said to be ignored.
+	This affected using read.table on files with blank lines in
+	1.2.2, and using `n' with `what' a list.
+
+    o	as.numeric(), as.integer(), as.complex() returned zero on
+	completely blank strings. Now they return NA. (PR#870)
+
+    o	Overflow in deparse() in terms(formula) with very long left-hand
+	side fixed (PR#873)
+
+    o	rt() could give different results on different platforms as
+	the order of evaluation of calls to random numbers was not
+	fully defined.  This affected the Mac port.
 
 
 
