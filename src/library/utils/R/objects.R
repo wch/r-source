@@ -4,6 +4,14 @@ methods <- function (generic.function, class)
         if(!exists(fname, mode = "function", envir = envir)) return("")
         if(any(fname == knownGenerics)) return(fname)
         f <- get(fname, mode = "function", envir = envir)
+        if(.isMethodsDispatchOn() && methods::is(f, "genericFunction")) {
+            ## maybe an S3 generic was turned into the S4 default
+            fdeflt <- methods::finalDefaultMethod(methods::getMethodsForDispatch(fname, f))
+            if(methods::is(fdeflt, "derivedDefaultMethod"))
+                f <- fdeflt
+            else
+                warning("\"", fname, "\" is a formal generic function; S3 methods will not likely be found")
+        }
         isUMEbrace <- function(e) {
             for (ee in as.list(e[-1]))
                 if (nchar(res <- isUME(ee))) return(res)
@@ -85,6 +93,8 @@ methods <- function (generic.function, class)
         else {
             genfun <- get(generic.function, mode = "function",
                           envir = parent.frame())
+            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+                genfun <- methods::finalDefaultMethod(methods::getMethods(generic.function))@.Data
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }
@@ -92,7 +102,8 @@ methods <- function (generic.function, class)
                     pattern = name)
         if(length(S3reg))
             info <- rbindSome(info, S3reg, msg =
-                              paste("registered S3method for", generic.function))
+                              paste("registered S3method for",
+                                    generic.function))
         ## both all() and all.equal() are generic, so
         if(generic.function == "all")
             info <- info[-grep("^all\\.equal", row.names(info)), ]
@@ -166,10 +177,10 @@ getS3method <-  function(f, class, optional = FALSE)
         if(!exists(fname, mode = "function", envir = envir)) return("")
         if(any(fname == knownGenerics)) return(fname)
         f <- get(fname, mode = "function", envir = envir)
-        if(.isMethodsDispatchOn() && is(f, "genericFunction")) {
+        if(.isMethodsDispatchOn() && methods::is(f, "genericFunction")) {
             ## maybe an S3 generic was turned into the S4 default
-            fdeflt <- finalDefaultMethod(getMethodsForDispatch(fname, f))
-            if(is(fdeflt, "derivedDefaultMethod"))
+            fdeflt <- methods::finalDefaultMethod(methods::getMethodsForDispatch(fname, f))
+            if(methods::is(fdeflt, "derivedDefaultMethod"))
                 f <- fdeflt
             else
                 warning("\"", fname, "\" is a formal generic function; S3 methods will not likely be found")
@@ -215,6 +226,8 @@ getS3method <-  function(f, class, optional = FALSE)
         defenv <- .BaseNamespaceEnv
     else {
         genfun <- get(f, mode="function", envir = parent.frame())
+        if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+            genfun <- methods::finalDefaultMethod(methods::getMethods(f))@.Data
         defenv <- if (typeof(genfun) == "closure") environment(genfun)
         else .BaseNamespaceEnv
     }
@@ -290,6 +303,8 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
             i <- match(subx, S3names)
             genfun <- get(S3[[i]][[1]], mode = "function",
                           envir = parent.frame())
+            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+                genfun <- methods::finalDefaultMethod(methods::getMethods(S3[[i]][[1]]))@.Data
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
             S3Table <- get(".__S3MethodsTable__.", envir = defenv)

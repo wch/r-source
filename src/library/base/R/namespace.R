@@ -61,13 +61,13 @@ getExportedValue <- function(ns, name) {
     else get(getInternalExportName(name, ns), env = ns)
 }
 
-"::" <- function(pkg,name){
+"::" <- function(pkg, name){
     pkg <- as.character(substitute(pkg))
     name <- as.character(substitute(name))
     getExportedValue(pkg, name)
 }
 
-":::" <- function(pkg,name){
+":::" <- function(pkg, name){
     pkg <- as.character(substitute(pkg))
     name <- as.character(substitute(name))
     get(name, env = asNamespace(pkg), inherits=FALSE)
@@ -765,6 +765,8 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
     if(genname %in% groupGenerics) defenv <- .BaseNamespaceEnv
     else {
         genfun <- get(genname, envir = envir)
+        if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+            genfun <- methods::finalDefaultMethod(methods::getMethods(genname))@.Data
         if (typeof(genfun) == "closure")
             defenv <- environment(genfun)
         else defenv <- .BaseNamespaceEnv
@@ -839,6 +841,8 @@ registerS3methods <- function(info, package, env)
                      " not found whilst loading namespace ",
                      sQuote(package), call. = FALSE)
             genfun <- get(genname, envir = envir)
+            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+                genfun <- methods::finalDefaultMethod(methods::getMethods(genname))@.Data
             if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv}
         if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))

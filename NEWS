@@ -274,6 +274,10 @@ BUG FIXES
 
     o   Versioned install was broken: no R code was loaded.
 
+    o   methods(), getS3method() and the registration of S3 methods in
+	namespaces were broken if the S3 generic was converted into an
+	S4 generic by setting an S4 method.
+
 
 
 
