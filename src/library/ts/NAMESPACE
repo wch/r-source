@@ -15,11 +15,14 @@ export(acf, acf2AR, ar, ar.burg, ar.mle, ar.ols, ar.yw, arima,
 #        diffinv.default, diffinv.ts, diffinv.vector, kernapply.default,
 #        kernapply.ts, kernapply.tskernel, kernapply.vector,
 #        lag.default, monthplot.default, monthplot.stl,
-#        monthplot.StructTS, monthplot.ts, pacf.default, pacf.mts,
+#        monthplot.StructTS, monthplot.ts, pacf.default,
 #        plot.acf, plot.HoltWinters, plot.stl, predict.ar,
 #        predict.Arima, predict.arima0, predict.HoltWinters,
 #        tsdiag.Arima, tsdiag.arima0, tsdiag.StructTS,
 #        tsSmooth.StructTS)
+
+## needed if acf is called with a non-ts object, it seems
+export(pacf.mts)
 
 S3method("[", tskernel)
 S3method(ar.burg, default)
