@@ -1,5 +1,18 @@
 	**************************************************
 	*						 *
+	*	       0.65 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+    o	A bug which meant that it was not possible to add elements
+	to zero length lists in the obvious way has been fixed.
+		x <- list(); x[[1]] <- 10
+		x <- list(); x[["a"]] <- 11
+	both now work.
+
+
+	**************************************************
+	*						 *
 	*	       0.64 SERIES NEWS			 *
 	*						 *
 	**************************************************
