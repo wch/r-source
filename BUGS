@@ -249,6 +249,10 @@ none
 
 Directory:  incoming
 
+* PR# 878 *
+Subject: sorry
+From: "Ian Stewart" <ians@connexus.net.au>
+Date: Sat, 17 Mar 2001 07:03:50 +1100
 * PR# 877 *
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
