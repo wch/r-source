@@ -802,7 +802,7 @@ extendsReplace <-
     if(is.list(ext)) {
         repl <- ext$replace
         if(is.function(repl)) {
-            f <- function(from, value) NULL
+            f <- function(from, to, value) NULL
             body(f, envir = .GlobalEnv) <- substituteDirect(body(repl),
                                         list(object = quote(from), from = quote(.from)))
         }
@@ -810,7 +810,7 @@ extendsReplace <-
     else if(is.character(ext)) {
         by <- ext
         if(length(by) > 0) {
-          f <- eval(substitute(function(from, value)
+          f <- eval(substitute(function(from, to, value)
                           as(as(from, BY), CLASS) <- value,
                           list(BY = by, CLASS=Class)))
           environment(f) <- .GlobalEnv
@@ -834,8 +834,8 @@ extendsReplace <-
                           || (length(fromSlots) == length(toSlots) &&
                               !any(is.na(match(fromSlots, toSlots)))))
             if(sameSlots)
-                f <- substitute(function(object, value){as(value, CLASS)},
-                                list(CLASS = Class))
+                f <- substitute(function(from, to, value){value <- as(value, CLASS); class(value) <- FROMCLASS; value},
+                                list(CLASS = Class, FROMCLASS=fromClass))
             else
                 f <- substitute(function(from, to, value) {
                      for(what in TOSLOTS)
