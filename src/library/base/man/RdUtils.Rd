@@ -11,11 +11,20 @@
   in other formats to Rd format.
 }
 \usage{
+#ifdef unix
 R CMD Rdconv [options] file
 R CMD Rdindex [options] files
 R CMD Rd2dvi [options] files
 R CMD Rd2txt [options] file
 R CMD Sd2Rd [options] file
+#endif
+#ifdef windows
+Rcmd Rdconv [options] file
+Rcmd Rdindex [options] files
+Rcmd Rd2dvi.sh [options] files
+Rcmd Rd2txt [options] file
+Rcmd Sd2Rd [options] file
+#endif
 }
 \arguments{
   \item{file}{the path to a file to be processed.}
@@ -26,23 +35,34 @@ R CMD Sd2Rd [options] file
     obtaining information about usage and version of the utility.}
 }
 \details{
-  \code{R CMD Rdconv} converts Rd format to other formats.  Currently,
+  \code{Rdconv} converts Rd format to other formats.  Currently,
   plain text, HTML, LaTeX, S version 3 (Sd) format are supported.  It
   can also extract the examples for run-time testing.
 
-  \code{R CMD Rd2dvi} and \code{R CMD Rd2txt} are user-level programs
+  \code{Rd2dvi} and \code{Rd2txt} are user-level programs
   for producing DVI/PDF output or pretty text output from Rd sources.
 
-  \code{R CMD Rdindex} creates an index table from Rd files.
+  \code{Rdindex} creates an index table from Rd files.
 
-  \code{R CMD Sd2Rd} converts S version 3 documentation format to Rd
+  \code{Sd2Rd} converts S version 3 documentation format to Rd
   format.
 
+#ifdef unix
   Use \code{R CMD foo --help} to obtained usage information on utility
   \code{foo}.
+#endif
+#ifdef windows
+  Use \code{Rcmd foo --help} to obtained usage information on utility
+  \code{foo}.
+#endif
 }
 \seealso{
-  chapter ``Processing Rd format'' in ``Writing \R Extensions'' (see the
-  \file{doc/manual} subdirectory of the \R source tree).
+  The chapter ``Processing Rd format'' in ``Writing \R Extensions''
+#ifdef unix
+  (see the \file{doc/manual} subdirectory of the \R source tree).
+#endif
+#ifdef windows
+  (see the Manuals sub-menu of the Help menu on the console).
+#endif
 }
 \keyword{utilities}
