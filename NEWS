@@ -218,6 +218,9 @@ BUG FIXES
 	duplicated names in the data frame, which caused subsequent
 	confusion (e.g. in prediction from the object).
 
+	model.matrix() was sometimes incorrectly determining the first
+	factor in a formula without an intercept.
+
 
 	**************************************************
 	*						 *

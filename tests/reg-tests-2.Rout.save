@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.6.0 Under development (unstable) (2002-06-08)
+Version 1.6.0 Under development (unstable) (2002-07-22)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -840,6 +840,7 @@ Eye:Sex   3    23.08 201.83
 [1] 0.1200427 0.1991600 0.7292821 0.8115922
 > ## last set.seed failed < 1.5.0.
 > 
+> 
 > ## merging, ggrothendieck@yifan.net, 2002-03-16
 > d.df <- data.frame(x = 1:3, y = c("A","D","E"), z = c(6,9,10))
 > merge(d.df[1,], d.df)
@@ -847,12 +848,13 @@ Eye:Sex   3    23.08 201.83
 1 1 A 6
 > ## 1.4.1 got confused by inconsistencies in as.character
 > 
+> 
 > ## PR#1394 (levels<-.factor)
 > f <- factor(c("a","b"))
 > levels(f) <- list(C="C", A="a", B="b")
 > f
 [1] A B
-Levels:  C A B 
+Levels: C A B
 > ## was  [1] C A; Levels:  C A  in 1.4.1
 > 
 > 
@@ -875,12 +877,12 @@ Integer overflow in sum(.); use sum(as.numeric(.))
 > ## NA levels in factors
 > (x <- factor(c("a", "NA", "b"), exclude=NULL))
 [1] a  NA b 
-Levels:  NA a b 
+Levels: NA a b
 > ## 1.4.1 had wrong order for levels
 > is.na(x)[3] <- TRUE
 > x
 [1] a    NA   <NA>
-Levels:  NA a b 
+Levels: NA a b
 > ## missing entry prints as <NA>
 > 
 > 
@@ -1004,4 +1006,49 @@ Warning messages:
 > y
 [1] "A" "B" NA  NA  NA 
 > ## x was filled with "", y with NA in 1.5.0
+> 
+> 
+> ## formula with no intercept, 2002-07-22
+> oldcon <- options(contrasts = c("contr.helmert", "contr.poly"))
+> U <- gl(3, 6, 18, labels=letters[1:3])
+> V <- gl(3, 2, 18, labels=letters[1:3])
+> A <- rep(c(0, 1), 9)
+> B <- rep(c(1, 0), 9)
+> set.seed(1); y <- rnorm(18)
+> terms(y ~ A:U + A:V - 1)
+y ~ A:U + A:V - 1
+attr(,"variables")
+list(y, A, U, V)
+attr(,"factors")
+  A:U A:V
+y   0   0
+A   2   2
+U   2   0
+V   0   1
+attr(,"term.labels")
+[1] "A:U" "A:V"
+attr(,"order")
+[1] 2 2
+attr(,"intercept")
+[1] 0
+attr(,"response")
+[1] 1
+attr(,".Environment")
+<environment: R_GlobalEnv>
+> lm(y ~ A:U + A:V - 1)$coef  # 1.5.1 used dummies coding for V
+       A:Ua        A:Ub        A:Uc        A:V1        A:V2 
+ 0.25303884 -0.21875499 -0.71708528 -0.61467193 -0.09030436 
+> lm(y ~ (A + B) : (U + V) - 1) # 1.5.1 used dummies coding for A:V but not B:V
+
+Call:
+lm(formula = y ~ (A + B):(U + V) - 1)
+
+Coefficients:
+   A:Ua     A:Ub     A:Uc     A:V1     A:V2     B:Ua     B:Ub     B:Uc  
+ 0.2530  -0.2188  -0.7171  -0.6147  -0.0903   1.7428   0.0613   0.7649  
+   B:V1     B:V2  
+-0.4420   0.5388  
+
+> options(oldcon)
+> ## 1.5.1 miscomputed the first factor in the formula.
 > 

@@ -1219,7 +1219,7 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  Q: Is this really needed, or can we get by with less info?
  */
 
-/* time to move more functionality back into compiled 
+/* time to move more functionality back into compiled
    code (cycle of reincarnation) */
 
 /* .Internal(model.frame(terms, rownames, variables, varnames, */
@@ -1251,24 +1251,24 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid variable names");
     if ((nvars = length(variables)) != length(varnames))
 	errorcall(call, "number of variables != number of variable names");
-    
+
     if (!isNewList(dots))
 	errorcall(call, "invalid extra variables");
     if ((ndots = length(dots)) != length(dotnames))
 	errorcall(call, "number of variables != number of variable names");
     if ( ndots && !isString(dotnames))
 	errorcall(call, "invalid extra variable names");
-    
+
     /*  check for NULL extra arguments -- moved from interpreted code */
 
     nactualdots = 0;
     for (i = 0; i < ndots; i++){
-	if (VECTOR_ELT(dots, i) != R_NilValue) 
+	if (VECTOR_ELT(dots, i) != R_NilValue)
 	    nactualdots++;
     }
 
     /* Assemble the base data frame. */
-    
+
     PROTECT(data = allocVector(VECSXP, nvars + nactualdots));
     PROTECT(names = allocVector(STRSXP, nvars + nactualdots));
 
@@ -1331,7 +1331,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Need to save and restore 'most' attributes */
 
     if (subset != R_NilValue) {
-	PROTECT(tmp=install("[.data.frame")); 
+	PROTECT(tmp=install("[.data.frame"));
 	PROTECT(tmp=LCONS(tmp,list4(data,subset,R_MissingArg,mkFalse())));
 	data = eval(tmp, rho);
 	UNPROTECT(2);
@@ -1353,8 +1353,8 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ans = eval(tmp, rho));
 	if (!isNewList(ans) || length(ans) != length(data))
 	    errorcall(call, "invalid result from na.action");
-	/* need to transfer _all but dim_ attributes, possibly lost 
-	   by subsetting in na.action.  */     
+	/* need to transfer _all but dim_ attributes, possibly lost
+	   by subsetting in na.action.  */
 	for ( i = length(ans) ; i-- ; )
 	  	copyMostAttrib(VECTOR_ELT(data, i),VECTOR_ELT(ans, i));
 
@@ -1603,7 +1603,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (j = 0; j < nterms; j++) {
 	    for (i = risponse; i < nVar; i++) {
 		if (INTEGER(nlevs)[i] > 1
-		    && INTEGER(factors)[i + j * nVar] == 1) {
+		    && INTEGER(factors)[i + j * nVar] > 0) {
 		    INTEGER(factors)[i + j * nVar] = 2;
 		    goto alldone;
 		}
@@ -1667,7 +1667,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    break;
 		}
 	    }
-    
+
 
     /* We now have everything needed to build the design matrix. */
     /* The first step is to compute the matrix size and to allocate it. */
@@ -1748,7 +1748,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < nVar; i++) {
 		ll = INTEGER(factors)[i + j * nVar];
 		if (ll) {
-		    var_i = VECTOR_ELT(variable, i);		    
+		    var_i = VECTOR_ELT(variable, i);
 		    if (!first)
 			bufp = AppendString(bufp, ":");
 		    first = 0;
@@ -1764,18 +1764,18 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			addp = CHAR(STRING_ELT(vnames, i));
 			if(strlen(buf) + strlen(addp) < BUFSIZE)
 			    bufp = AppendString(bufp, addp);
-			else 
+			else
 			    warningcall(call, "term names will be truncated");
 			if (x == R_NilValue) {
 			    if(strlen(buf) + 10 < BUFSIZE)
 				bufp = AppendInteger(bufp, indx % ll + 1);
-			    else 
+			    else
 				warningcall(call, "term names will be truncated");
 			} else {
 			    addp = CHAR(STRING_ELT(x, indx % ll));
 			    if(strlen(buf) + strlen(addp) < BUFSIZE)
 				bufp = AppendString(bufp, addp);
-			    else 
+			    else
 				warningcall(call, "term names will be truncated");
 			}
 		    }
@@ -1785,19 +1785,19 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			addp = CHAR(STRING_ELT(vnames, i));
 			if(strlen(buf) + strlen(addp) < BUFSIZE)
 			    bufp = AppendString(bufp, addp);
-			else 
+			else
 			    warningcall(call, "term names will be truncated");
 			if (ll > 1) {
 			    if (x == R_NilValue) {
 				if(strlen(buf) + 10 < BUFSIZE)
 				    bufp = AppendInteger(bufp, indx % ll + 1);
-				else 
-				    warningcall(call, "term names will be truncated");		
+				else
+				    warningcall(call, "term names will be truncated");
 			    } else {
 				addp = CHAR(STRING_ELT(x, indx % ll));
 				if(strlen(buf) + strlen(addp) < BUFSIZE)
 				    bufp = AppendString(bufp, addp);
-				else 
+				else
 				    warningcall(call, "term names will be truncated");
 			    }
 			}
