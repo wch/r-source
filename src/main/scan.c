@@ -24,7 +24,10 @@
    chars are ASCII.
 
    It does use isspace, and there are non-ASCII Unicode space chars.
-   There is also the possibility of other digits.
+   There is also the possibility of other digits (which we should
+   probably ignore).
+
+   I don't see how to sort this out without moving to wchars.
 */
 
 #ifdef HAVE_CONFIG_H

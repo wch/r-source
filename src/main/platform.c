@@ -849,6 +849,8 @@ SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* <FIXME> can \n or \r occur as part of a MBCS extra bytes?
+   Not that I know of */
 static int filbuf(char *buf, FILE *fp)
 {
     int c;
