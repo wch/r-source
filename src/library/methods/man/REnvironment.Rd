@@ -22,9 +22,7 @@ existsEnv(name, environment)
 
 removeEnv(names, environment)
 
-objectsEnv(ev, all.names=F, pattern)
-
-removeEnv(names, environment)
+objectsEnv(ev, all.names=FALSE, pattern)
 
 copyEnvironment(object)
 

@@ -9,7 +9,7 @@
   Assign a value to a name in an environment.
 }
 \usage{
-assign(x, value, pos = -1, envir = pos.to.env(pos),
+assign(x, value, pos = -1, envir = as.environment(pos),
        inherits = FALSE, immediate = TRUE)
 x <- value
 x <<- value
@@ -19,17 +19,23 @@ value ->> x
 \arguments{
   \item{x}{a variable name (given as a quoted string).}
   \item{value}{a value to be assigned to \code{x}.}
-  \item{pos}{an index into the search list which determines which
-    environment the assignment is to take place in.  A character string
-    may also be used.  The environment can also be specified directly
-    with \code{envir}.}
-  \item{envir}{the \code{\link{environment}} in which to assign.  The
-    default is the environment where the call to \code{assign} takes
-    place.}
+  \item{pos}{where to do the assignment.  By default, assigns into the
+    current environment.  See the details for other possibilities.}
+  \item{envir}{the \code{\link{environment}} to use. See the details section.}
   \item{inherits}{should the enclosing frames of the environment be
     inspected?}
   \item{immediate}{an ignored compatibility feature.}
 }
+\details{
+  The \code{pos} argument can specify the  environment in which to assign
+  the object in any of several ways:
+  as an integer (the position in the \code{\link{search}} list); as
+  the character string name of an element in the search list; or as an
+  \code{\link{environment}} (including using \code{\link{sys.frame}} to
+  access the currently active function calls).
+  The \code{envir} argument is an alternative way to specify an
+  environment, but is primarily there for back compatibility.
+   }
 \value{
   This function is invoked for its side effect, which is assigning
   \code{value} to the variable \code{x}.  If no \code{envir} is

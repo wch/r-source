@@ -4,7 +4,7 @@
 \alias{coerce}
 \title{Force an Object to Belong to a Class}
 \usage{
-as(object, Class, coerceFlag=T)
+as(object, Class, coerceFlag=TRUE)
 
 coerce(x, y)
 

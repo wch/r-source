@@ -69,6 +69,13 @@ NEW FEATURES
 	not), *and* then for a user `.Renviron' file in the current or
 	the user's home directory.
 
+    o	Modifications to access functions for more consistency with S:
+	arguments `name', `pos' and `where' are more flexible in
+	assign(), exists(), get(), ls(), objects(), remove() and rm().
+
+    o	warning() allows multiple arguments, following S4's style.
+
+
 
 
 BUG FIXES

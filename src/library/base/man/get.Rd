@@ -6,18 +6,30 @@
 }
  
 \usage{
-get(x, pos=-1, envir=pos.to.env(pos), mode="any", inherits=TRUE)
+get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
 }
 \arguments{
   \item{x}{a variable name (given as a quoted character string).}
-  \item{pos}{position in search list, can be numerical or a quoted
-    string.}
-  \item{envir}{the environment to be used.}
+  \item{pos}{where to look for the object (see the details section); if
+    omitted, the function will search, as if the name of the object
+    appeared in unquoted in an expression.
+  }
+  \item{envir}{an alternative way to specify an environment to look in;
+    see the details section.}
   \item{mode}{the mode of object sought.}
   \item{inherits}{should the enclosing frames of the environment be
     inspected?}
 }
 \details{
+  The \code{pos} argument can specify the  environment in which to look
+  for the object in any of several ways:
+  as an integer (the position in the \code{\link{search}} list); as
+  the character string name of an element in the search list; or as an
+  \code{\link{environment}} (including using \code{\link{sys.frame}} to
+  access the currently active function calls).
+  The \code{envir} argument is an alternative way to specify an
+  environment, but is primarily there for back compatibility.
+  
    The \code{mode} includes collections such as \code{"numeric"} and
    \code{"function"}: any member of the collection will suffice. 
 }

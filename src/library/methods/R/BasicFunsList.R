@@ -3,116 +3,116 @@
 ## are not available, or for which a generic, if created, needs to have a special
 ## form (e.g., belonging to one of the predefined groups of functions).
 
-.BasicFunsList <- 
+.BasicFunsList <-
 list("!" = function(e1)
 {
-	standardGeneric("!")
+    standardGeneric("!")
 }
 , "$" = function(x, name)
 {
-	name <- as.character(substitute(name))
-	standardGeneric("$")
+    name <- as.character(substitute(name))
+    standardGeneric("$")
 }
 , "$<-" = function(x, name, value)
 {
-	name <- as.character(substitute(name))
-	standardGeneric("$<-")
+    name <- as.character(substitute(name))
+    standardGeneric("$<-")
 }
 , "%*%" = function(x, y)
 {
-	standardGeneric("%*%")
+    standardGeneric("%*%")
 }
 , "&" = function(e1, e2)
 {
-	standardGeneric("&")
+    standardGeneric("&")
 }
 , "&&" = function(e1, e2)
 {
-	standardGeneric("&&")
+    standardGeneric("&&")
 }
 , ".C" = FALSE
 , ".Call" = FALSE
 , ".Fortran" = FALSE
 , ":" = function(e1, e2)
 {
-	standardGeneric(":")
+    standardGeneric(":")
 }
 , "<-" = function(x, value)
 {
-	standardGeneric("<-")
+    standardGeneric("<-")
 }
 , "<<-" = function(x, value)
 {
-	standardGeneric("<<-")
+    standardGeneric("<<-")
 }
 , "UseMethod" = FALSE
 , "[" = function(x, i = NULL, j = NULL, ..., drop = TRUE)
 {
-	standardGeneric("[")
+    standardGeneric("[")
 }
 , "[<-" = function(x, i = NULL, j = NULL, ..., value)
 {
-	standardGeneric("[<-")
+    standardGeneric("[<-")
 }
 , "[[" = function(x, i = NULL, j = NULL, ...)
 {
-	standardGeneric("[[")
+    standardGeneric("[[")
 }
 , "[[<-" = function(x, i = NULL, j = NULL, ..., value)
 {
-	standardGeneric("[[<-")
+    standardGeneric("[[<-")
 }
 , "attr" = function(x, which)
 {
-	standardGeneric("attr")
+    standardGeneric("attr")
 }
 , "attr<-" = function(x, which, value)
 {
-	standardGeneric("attr<-")
+    standardGeneric("attr<-")
 }
 , "attributes<-" = function(x, value)
 {
-	standardGeneric("attributes<-")
+    standardGeneric("attributes<-")
 }
 , "browser" = function(object, ...)
 {
-	standardGeneric("browser")
+    standardGeneric("browser")
 }
-, "c" = function(..., recursive = F)
+, "c" = function(..., recursive = FALSE)
 {
-	standardGeneric("c")
+    standardGeneric("c")
 }
 , "call" = function(...)
 {
-	standardGeneric("call")
+    standardGeneric("call")
 }
 , "class<-" = function(x, value)
 {
-	standardGeneric("class<-")
+    standardGeneric("class<-")
 }
 , "dim<-" = function(x, value)
 {
-	standardGeneric("dim<-")
+    standardGeneric("dim<-")
 }
 , "dimnames<-" = function(x, value)
 {
-	standardGeneric("dimnames<-")
+    standardGeneric("dimnames<-")
 }
 , "expression" = function(...)
 {
-	standardGeneric("expression")
+    standardGeneric("expression")
 }
 , "is.loaded" = function(symbol)
 {
-	standardGeneric("is.loaded")
+    standardGeneric("is.loaded")
 }
 , "length<-" = function(x, value)
 {
-	standardGeneric("length<-")
+    standardGeneric("length<-")
 }
 , "list" = function(...)
 {
-	standardGeneric("list")
+    standardGeneric("list")
 }
 , "missing" = FALSE
 , "on.exit" = FALSE
@@ -120,165 +120,165 @@ list("!" = function(e1)
 , "symbol.C" = FALSE
 , "symbol.For" = FALSE
 , "trace" = function(what = character(), tracer = TRUE, exit.tracer, at = numeric(), print
-	 = T, signature)
+	 = TRUE, signature)
 {
-	standardGeneric("trace")
+    standardGeneric("trace")
 }
 , "untrace" = function(what)
 {
-	standardGeneric("untrace")
+    standardGeneric("untrace")
 }
 , "|" = function(e1, e2)
 {
-	standardGeneric("|")
+    standardGeneric("|")
 }
 , "||" = function(e1, e2)
 {
-	standardGeneric("||")
+    standardGeneric("||")
 }
 , "~" = function(x, y)
 {
-	standardGeneric("~")
+    standardGeneric("~")
 }
 , "as.call" = function(x)
 {
-	standardGeneric("as.call")
+    standardGeneric("as.call")
 }
 , "as.character" = function(x)
 {
-	standardGeneric("as.character")
+    standardGeneric("as.character")
 }
 , "attributes" = function(x)
 {
-	standardGeneric("attributes")
+    standardGeneric("attributes")
 }
 , "class" = function(x)
 {
-	standardGeneric("class")
+    standardGeneric("class")
 }
 , "cummax" = function(x)
 {
-	standardGeneric("cummax")
+    standardGeneric("cummax")
 }
 , "cummin" = function(x)
 {
-	standardGeneric("cummin")
+    standardGeneric("cummin")
 }
 , "cumprod" = function(x)
 {
-	standardGeneric("cumprod")
+    standardGeneric("cumprod")
 }
 , "dim" = function(x)
 {
-	standardGeneric("dim")
+    standardGeneric("dim")
 }
 , "dimnames" = function(x)
 {
-	standardGeneric("dimnames")
+    standardGeneric("dimnames")
 }
 , "invisible" = function(x = NULL)
 {
-	standardGeneric("invisible")
+    standardGeneric("invisible")
 }
 , "is.array" = function(x)
 {
-	standardGeneric("is.array")
+    standardGeneric("is.array")
 }
 , "is.atomic" = function(x)
 {
-	standardGeneric("is.atomic")
+    standardGeneric("is.atomic")
 }
 , "is.call" = function(x)
 {
-	standardGeneric("is.call")
+    standardGeneric("is.call")
 }
 , "is.character" = function(x)
 {
-	standardGeneric("is.character")
+    standardGeneric("is.character")
 }
 , "is.complex" = function(x)
 {
-	standardGeneric("is.complex")
+    standardGeneric("is.complex")
 }
 , "is.double" = function(x)
 {
-	standardGeneric("is.double")
+    standardGeneric("is.double")
 }
 , "is.expression" = function(x)
 {
-	standardGeneric("is.expression")
+    standardGeneric("is.expression")
 }
 , "is.finite" = function(x)
 {
-	standardGeneric("is.finite")
+    standardGeneric("is.finite")
 }
 , "is.function" = function(x)
 {
-	standardGeneric("is.function")
+    standardGeneric("is.function")
 }
 , "is.infinite" = function(x)
 {
-	standardGeneric("is.infinite")
+    standardGeneric("is.infinite")
 }
 , "is.integer" = function(x)
 {
-	standardGeneric("is.integer")
+    standardGeneric("is.integer")
 }
 , "is.language" = function(x)
 {
-	standardGeneric("is.language")
+    standardGeneric("is.language")
 }
 , "is.list" = function(x)
 {
-	standardGeneric("is.list")
+    standardGeneric("is.list")
 }
 , "is.logical" = function(x)
 {
-	standardGeneric("is.logical")
+    standardGeneric("is.logical")
 }
 , "is.matrix" = function(x)
 {
-	standardGeneric("is.matrix")
+    standardGeneric("is.matrix")
 }
 , "is.na" = function(x)
 {
-	standardGeneric("is.na")
+    standardGeneric("is.na")
 }
 , "is.name" = function(x)
 {
-	standardGeneric("is.name")
+    standardGeneric("is.name")
 }
 , "is.nan" = function(x)
 {
-	standardGeneric("is.nan")
+    standardGeneric("is.nan")
 }
 , "is.null" = function(x)
 {
-	standardGeneric("is.null")
+    standardGeneric("is.null")
 }
 , "is.numeric" = function(x)
 {
-	standardGeneric("is.numeric")
+    standardGeneric("is.numeric")
 }
 , "is.recursive" = function(x)
 {
-	standardGeneric("is.recursive")
+    standardGeneric("is.recursive")
 }
 , "is.single" = function(x)
 {
-	standardGeneric("is.single")
+    standardGeneric("is.single")
 }
 , "length" = function(x)
 {
-	standardGeneric("length")
+    standardGeneric("length")
 }
 , "sign" = function(x)
 {
-	standardGeneric("sign")
+    standardGeneric("sign")
 }
 , "unclass" = function(x)
 {
-	standardGeneric("unclass")
+    standardGeneric("unclass")
 }
 , "(" = FALSE
 , ".Alias" = FALSE
@@ -290,11 +290,11 @@ list("!" = function(e1)
 , "break" = FALSE
 , "debug" = function(fun)
 {
-	standardGeneric("debug")
+    standardGeneric("debug")
 }
 , "environment<-" = function(fun, value)
 {
-	standardGeneric("environment<-")
+    standardGeneric("environment<-")
 }
 , "for" = FALSE
 , "function" = FALSE
@@ -304,23 +304,23 @@ list("!" = function(e1)
 , "interactive" = FALSE
 , "is.environment" = function(obj)
 {
-	standardGeneric("is.environment")
+    standardGeneric("is.environment")
 }
 , "is.object" = function(x)
 {
-	standardGeneric("is.object")
+    standardGeneric("is.object")
 }
 , "is.pairlist" = function(x)
 {
-	standardGeneric("is.pairlist")
+    standardGeneric("is.pairlist")
 }
 , "is.real" = function(x)
 {
-	standardGeneric("is.real")
+    standardGeneric("is.real")
 }
 , "is.symbol" = function(x)
 {
-	standardGeneric("is.symbol")
+    standardGeneric("is.symbol")
 }
 , "nargs" = FALSE
 , "next" = FALSE
@@ -330,7 +330,7 @@ list("!" = function(e1)
 , "return" = FALSE
 , "undebug" = function(fun)
 {
-	standardGeneric("undebug")
+    standardGeneric("undebug")
 }
 , "while" = FALSE
 , "{" = FALSE
@@ -342,17 +342,18 @@ list("!" = function(e1)
 ## functions.
 
 .addBasicGeneric <-
-  function(funslist, f, fdef, group, env) {
+    function(funslist, f, fdef, group, env)
+{
     basePos <- match("package:base", search())
     if(exists(f, basePos))
-      fdefault <- get(f, basePos)
+        fdefault <- get(f, basePos)
     else {
-      warning(paste("Can't find \"",f,"\" in base (!)--skipping this generic in .BasicFunsList",
-                  sep=""))
-      return(funslist)
+        warning(paste("Can't find \"",f,"\" in base (!)--skipping this generic in .BasicFunsList",
+                      sep=""))
+        return(funslist)
     }
     if(typeof(fdefault) == "closure")
-      fdef <- fdefault
+        fdef <- fdefault
     body(fdef) <- substitute(standardGeneric(NAME), list(NAME=f))
     setGeneric(f,
                fdef,
@@ -361,10 +362,10 @@ list("!" = function(e1)
     elNamed(funslist, f) <- get(f, envir=env)
     ## rm(list = f, pos = 1)
     funslist
-  }
+}
 
 .ShortPrimitiveSkeletons <-
-  list( quote(f(x,i)), quote(fgets(x,i,value=value)))
+    list( quote(f(x,i)), quote(fgets(x,i,value=value)))
 
 .EmptyPrimitiveSkeletons <-
-  list( quote(f(x)), quote(fgets(x,value=value)))
+    list( quote(f(x)), quote(fgets(x,value=value)))

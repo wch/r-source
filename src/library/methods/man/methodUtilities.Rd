@@ -24,9 +24,6 @@ formalArgs(def)
 Quote()
 
 message(...)
-
-warning(...)
-
 }
 \description{
 These are utilities, currently in the methods package, that either

@@ -18,7 +18,7 @@ SignatureMethod(names, signature, definition)
 
 insertMethod(mlist, signature, args, def)
 
-MethodsListDispatch(mlist, depth=1)
+MethodsListDispatch(fname, ev, mustFind = TRUE)
 
 matchArg(object, methods, defaultMethod)
 

@@ -81,9 +81,9 @@ makePrototypeFromClassDef <-
         el(snames, j) <- ""             ## for check later
         i <- match(name, pnames)
         if(is.na(i))
-            slot(value, name, check=F) <- tryNew(el(properties, j))
+            slot(value, name, check=FALSE) <- tryNew(el(properties, j))
         else
-            slot(value, name, check=F) <- el(prototype, i)
+            slot(value, name, check=FALSE) <- el(prototype, i)
     }
     snames <- snames[nchar(snames)>0]
     if(length(snames)>0)
@@ -153,7 +153,7 @@ completeClassDefinition <-
     }
     else {
         ## create a class definition, possibly an empty virtual class
-        prototype <- newBasic(Class, .Force=T)
+        prototype <- newBasic(Class, .Force=TRUE)
         ## newBasic never exactly returns NULL, but testVirtual uses NULL prototype
         ## as a requirement for a virtual class -- based on a problem with NULL in R,
         ## so may change.  See documentation for `new'
@@ -330,7 +330,7 @@ newBasic <-
   ## "NULL", the class of the result will be set to Class.
   ##
   ## See `new' for the interpretation of the arguments.
-  function(Class, ..., .Force = F) {
+  function(Class, ..., .Force = FALSE) {
   value <- switch(Class,
                "NULL" = list(), ## can't set attr's of NULL in R
                "logical" =,
@@ -558,7 +558,7 @@ assign(SessionClassMetaData, new.env(), envir = environment())
 
 getFromClassMetaData <-
   substitute(function(name) {
-    if(exists(name, envir = NAME, inherits=F))
+    if(exists(name, envir = NAME, inherits=FALSE))
       get(name, env = NAME)
     else
       NULL
@@ -578,11 +578,12 @@ unsetClass <-
   ## remove this class name from the internal table for this session.
   ##
   ## Rarely needed to call this directly.
-  function(Class) {
+  function(Class)
+{
     Class <- classMetaName(Class)
     if(!is.null(getFromClassMetaData(Class)))
-      removeFromClassMetaData(Class)
-  }
+        removeFromClassMetaData(Class)
+}
 
 
 extendsCoerce <-
@@ -590,93 +591,96 @@ extendsCoerce <-
   ## between two classes.  May be explicitly stored in the metadata or
   ## inferred.  If the latter, the inferred result is stored in the session
   ## metadata for fromClass, to save recomputation later.
-  function(fromClass, Class) {
+  function(fromClass, Class)
+{
     ext <- findExtends(fromClass, Class)
     f <- NULL
     if(is.list(ext)) {
-      coe <- ext$coerce
-      if(is.function(coe))
-        return(coe)
-      by <- list$by
-      if(length(by) > 0)
-        f <- substitute(function(object)
-                        as(as(object, BY), CLASS), list(BY = by, CLASS=Class))
-      ## else, drop through
+        coe <- ext$coerce
+        if(is.function(coe))
+            return(coe)
+        by <- list$by
+        if(length(by) > 0)
+            f <- substitute(function(object)
+                            as(as(object, BY), CLASS),
+                            list(BY = by, CLASS=Class))
+        ## else, drop through
     }
     if(is.null(f)) {
-      ## Because `is' was TRUE, must be a direct extension.
-      ## Copy slots if the slots are a subset.  Else, just set the
-      ## class.  For VIRTUAL targets, never change the object.
-      ## If the to Class is not formally defined, the `is' is taken to imply
-      ## that the object's contents are a Class object.
-      formal <- isClass(Class)
-      virtual <- formal && isVirtualClass(Class)
-      if(!formal)
-        f <- function(object)unclass(object)
-      else if(virtual)
-        f <- function(object)object
-      else {
-        fromSlots <- slotNames(fromClass)
-        toSlots <-  slotNames(Class)
-        sameSlots <- (length(toSlots) == 0
-            || (length(fromSlots) == length(toSlots) &&
-                !any(is.na(match(fromSlots, toSlots)))))
-      if(sameSlots)
-          f <- substitute(function(object){data.class(object) <- CLASS; object},
-                          list(CLASS = Class))
-      else
-        f <- substitute(function(object) {
-          value <- new(CLASS)
-          for(what in TOSLOTS)
-            slot(value, what) <- slot(object, what)
-          value }, list(CLASS=Class, TOSLOTS = toSlots))
-        ## bug in R: substitute of a function gives a call
-        mode(f) <- "function"
-      }
-      ## we dropped through because there was no coerce function in the
-      ## extends object.  Make one and save it back in the session metadata
-      ## so no further calls will require constructing the function
-      if(!is.list(ext))
-        ext <- list()
-      ext$coerce <- f
-      ClassDef <- getClass(fromClass)
-      allExt <- as.list(getExtends(ClassDef))
-      allExt[Class] <- ext
-      setExtends(ClassDef, allExt)
+        ## Because `is' was TRUE, must be a direct extension.
+        ## Copy slots if the slots are a subset.  Else, just set the
+        ## class.  For VIRTUAL targets, never change the object.
+        ## If the to Class is not formally defined, the `is' is taken to imply
+        ## that the object's contents are a Class object.
+        formal <- isClass(Class)
+        virtual <- formal && isVirtualClass(Class)
+        if(!formal)
+            f <- function(object)unclass(object)
+        else if(virtual)
+            f <- function(object)object
+        else {
+            fromSlots <- slotNames(fromClass)
+            toSlots <-  slotNames(Class)
+            sameSlots <- (length(toSlots) == 0
+                          || (length(fromSlots) == length(toSlots) &&
+                              !any(is.na(match(fromSlots, toSlots)))))
+            if(sameSlots)
+                f <- substitute(function(object){data.class(object) <- CLASS; object},
+                                list(CLASS = Class))
+            else
+                f <- substitute(function(object) {
+                    value <- new(CLASS)
+                    for(what in TOSLOTS)
+                        slot(value, what) <- slot(object, what)
+                    value }, list(CLASS=Class, TOSLOTS = toSlots))
+            ## bug in R: substitute of a function gives a call
+            mode(f) <- "function"
+        }
+        ## we dropped through because there was no coerce function in the
+        ## extends object.  Make one and save it back in the session metadata
+        ## so no further calls will require constructing the function
+        if(!is.list(ext))
+            ext <- list()
+        ext$coerce <- f
+        ClassDef <- getClass(fromClass)
+        allExt <- as.list(getExtends(ClassDef))
+        allExt[Class] <- ext
+        setExtends(ClassDef, allExt)
     }
     f
-  }
+}
 
 findExtends <-
   ## Find the information that says whether class1 extends class2,
   ## directly or indirectly.  This can be either a logical value or
   ## an object containing various functions to test and/or coerce the relationship.
-  function(class1, class2) {
+  function(class1, class2)
+{
     if(class1 == class2)
-      return(TRUE)
-      i <- NA
+        return(TRUE)
+    i <- NA
 
     if(isClass(class1)) {
-      ClassDef <- getClass(class1)
-      ext <- getExtends(ClassDef)
-      i <- match(class2, names(ext))
+        ClassDef <- getClass(class1)
+        ext <- getExtends(ClassDef)
+        i <- match(class2, names(ext))
     }
     else
-      i <- NA
+        i <- NA
     if(is.na(i)) {
-      if(isClass(class2) &&
-         !is.na(match(class1, names(getSubclasses(getClass(class2))))))
-        TRUE
-      else
-        FALSE
+        if(isClass(class2) &&
+           !is.na(match(class1, names(getSubclasses(getClass(class2))))))
+            TRUE
+        else
+            FALSE
     }
     else {
-      value <- el(ext, i)
-      if(is.list(value))
-        value
-      else TRUE
+        value <- el(ext, i)
+        if(is.list(value))
+            value
+        else TRUE
     }
-  }
+}
 
 completeExtends <-
   ## complete the extends information in the class definition, by following
@@ -694,53 +698,54 @@ completeExtends <-
   ## Under rather obscure situations of multiple inheritance, the result could be
   ## ambiguous (depending on the order in which signatures are seen by the dispatcher
   ## for a particular generic function), unless searching is done depth first.
-  function(ClassDef) {
+  function(ClassDef)
+{
     ext <- getExtends(ClassDef)
     what <- names(ext)
     test <- sapply(ext, function(obj)is.list(obj) && is.function(obj$test))
     value <- list()
     for(i in seq(along=ext)) {
-      by <- el(what, i)
-      valueEl <- ext[i] ## note: an extra level of list, to be unlisted later
-      if(isClass(by))
+        by <- el(what, i)
+        valueEl <- ext[i]               ## note: an extra level of list, to be unlisted later
+        if(isClass(by))
         {
-          more <- completeExtends(getClass(by))
-          whatMore <- names(more)
-          for(j in seq(along=more)) {
-            cl <- el(whatMore, j)
-            clTo <- el(more, j)
-            ii <- match(cl, what)
-            if(is.na(ii)) {
-              ## append to this element of the value (to elaborate the extends
-              ## list in depth-first order).
-              what <- c(what, cl)
-              elNew <- list(by=by)
-              if(el(test,i) || !is.null(clTo$test))
-                elNew$test <- TRUE
-              elNamed(valueEl, cl) <- elNew
+            more <- completeExtends(getClass(by))
+            whatMore <- names(more)
+            for(j in seq(along=more)) {
+                cl <- el(whatMore, j)
+                clTo <- el(more, j)
+                ii <- match(cl, what)
+                if(is.na(ii)) {
+                    ## append to this element of the value (to elaborate the extends
+                    ## list in depth-first order).
+                    what <- c(what, cl)
+                    elNew <- list(by=by)
+                    if(el(test,i) || !is.null(clTo$test))
+                        elNew$test <- TRUE
+                    elNamed(valueEl, cl) <- elNew
+                }
+                else {
+                    if(!el(test,i))
+                        next            ## path already there with no test
+                    elNew <- el(ext, i)
+                    if(!clTo$test) {
+                        ## becomes an indirect, but no test
+                        elNew$test <- NULL
+                        elNew$by <- by  ## only this path needed
+                    }
+                    else {
+                        ## accumulate the vector of possible intermediates
+                        ## (initially NULL)
+                        elNew$by <- c(elNew$by, by)
+                    }
+                    el(valueEl, 1) <- elNew
+                }
             }
-            else {
-              if(!el(test,i))
-                next ## path already there with no test
-              elNew <- el(ext, i)
-              if(!clTo$test) {
-                ## becomes an indirect, but no test
-                elNew$test <- NULL
-                elNew$by <- by ## only this path needed
-              }
-              else {
-                ## accumulate the vector of possible intermediates
-                ## (initially NULL)
-                elNew$by <- c(elNew$by, by)
-              }
-              el(valueEl, 1) <- elNew
-            }
-          }
         }
-      el(value, i) <- valueEl
+        el(value, i) <- valueEl
     }
-    unlist(value, recursive=F)
-  }
+    unlist(value, recursive=FALSE)
+}
 
 
 classMetaName <-
@@ -782,13 +787,16 @@ requireMethods <-
   ## for the virtual class.  Otherwise, default methods for the corresponding function would
   ## be called, resulting in less helpful error messages or (worse still) silently incorrect
   ## results.
-  function(functions, signature, message = paste("No method defined for signature", paste(signature, collapse=", "))) {
+  function(functions, signature,
+           message = paste("No method defined for signature",
+           paste(signature, collapse=", ")))
+{
     for(f in functions) {
-      method <- getMethod(f, optional = TRUE)
-      if(!is.function(method))
-        method <- getGeneric(f)
-      body(method) <- substitute(stop(MESSAGE), list(MESSAGE=message))
-      environment(method) <- .GlobalEnv
-      setMethod(f, signature, method)
+        method <- getMethod(f, optional = TRUE)
+        if(!is.function(method))
+            method <- getGeneric(f)
+        body(method) <- substitute(stop(MESSAGE), list(MESSAGE=message))
+        environment(method) <- .GlobalEnv
+        setMethod(f, signature, method)
     }
-  }
+}

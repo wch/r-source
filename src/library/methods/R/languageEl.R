@@ -18,76 +18,79 @@ languageEl <-
   ##
   ## The first element of a `while' object is the loop test, and the second the body of
   ## the loop.
-  function(object, which) {
+  function(object, which)
+{
     data <- as.list(object)
     if(is.character(which))
-      data[[which]]
+        data[[which]]
     else if(typeof(object) == "language") {
-      if(isGrammarSymbol(data[[1]]))
-        data[[which + 1]]
-      else
-        data[[which]] ## other calls
+        if(isGrammarSymbol(data[[1]]))
+            data[[which + 1]]
+        else
+            data[[which]]               ## other calls
     }
     else data[[which]]
-  }
+}
 
 "languageEl<-" <-
   ## replace an element of a language object, see "languageEl" for meaning.
-  function(object, which, value) {
+  function(object, which, value)
+{
     data <- as.list(object)
     n <- length(data)
     type <- typeof(object)
     if(type == "closure") {
-      ev <- environment(object)
-      if(is.character(which)) {
-        if(is.na(match(which, names(data)))) {
-          body <- data[[n]]
-          data <- data[-n]
-          data[[which]] <- value
-          data[[n+1]] <- body
+        ev <- environment(object)
+        if(is.character(which)) {
+            if(is.na(match(which, names(data)))) {
+                body <- data[[n]]
+                data <- data[-n]
+                data[[which]] <- value
+                data[[n+1]] <- body
+            }
+            else
+                data[[which]] <- value
         }
-        else
-          data[[which]] <- value
-      }
-      else {
-        if(which < 1 || which > n)
-          stop("Invalid index for function argument")
-        ## we don't warn if this is used to replace the body (which == n)
-        ## but maybe we should.
-        data[[which]] <- value
-      }
-      object <- as.function(data)
-      environment(object) <- ev
-      object
+        else {
+            if(which < 1 || which > n)
+                stop("Invalid index for function argument")
+            ## we don't warn if this is used to replace the body (which == n)
+            ## but maybe we should.
+            data[[which]] <- value
+        }
+        object <- as.function(data)
+        environment(object) <- ev
+        object
     }
     else if(type == "language") {
-      if(is.character(which))
-        data[[which]] <- value
-      else if(isGrammarSymbol(data[[1]]))
-        data[[which+1]] <- value
-      else {
-        if(identical(which, 1) && is.character(value))
-          value <- as.symbol(value)
-        data[[which]] <- value
-      }
-      as.call(data)
+        if(is.character(which))
+            data[[which]] <- value
+        else if(isGrammarSymbol(data[[1]]))
+            data[[which+1]] <- value
+        else {
+            if(identical(which, 1) && is.character(value))
+                value <- as.symbol(value)
+            data[[which]] <- value
+        }
+        as.call(data)
     }
     else {
-      object[[which]] <- value
-      object
+        object[[which]] <- value
+        object
     }
-  }
+}
 
-                
+
 isGrammarSymbol <-
-  function(symbol) {
+  function(symbol)
+{
     if(typeof(symbol) != "symbol")
-      FALSE
+        FALSE
     else  switch(as.character(symbol),
-             ## the grammatical constructions
-             "{" =, "if" = , "for"= ,
-             "while" = , "repeat" = ,
-             "return" = , "next" = ,
-             "break" = TRUE,
-             FALSE)
-  }
+                 ## the grammatical constructions
+                 "{" =, "if" = , "for"= ,
+                 "while" = , "repeat" = ,
+                 "return" = , "next" = ,
+                 "break" = TRUE,
+                 FALSE)
+}

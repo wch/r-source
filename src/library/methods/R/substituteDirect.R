@@ -5,7 +5,8 @@ substituteDirect <-
   ## This function differs from the ordinary `substitute' in that it treats its first argument
   ## in the standard S way, by evaluating it.  In contrast, `substitute' does
   ## not evaluate its first argument.
-  function(object, frame = sys.frame(-1), cleanFunction = T) {
+  function(object, frame = sys.frame(-1), cleanFunction = TRUE)
+{
     value <- .Call("do_substitute_direct", object, frame)
      if(cleanFunction && is.function(value)) {
        ## unset any local environment

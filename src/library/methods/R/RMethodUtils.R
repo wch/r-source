@@ -98,7 +98,7 @@ generic.skeleton <-
     skeleton[[1]] <- fdefault
     as.call(skeleton)
  }
-    
+
 
 defaultDumpName <-
   ## the default name to be used for dumping a method.
@@ -152,8 +152,8 @@ mergeGenericFunctions <-
     environment(fdef) <- ev
     fdef
   }
-    
-        
+
+
 mergeMethods <-
   ## merge the methods in the second MethodsList object into the first,
   ## and return the merged result.
@@ -203,29 +203,31 @@ doPrimitiveMethod <-
   ## A call to `doPrimitiveMethod' is used when the actual method is a .Primitive.
   ##  (because primitives don't behave correctly as ordinary functions,
   ## not having either formal arguments nor a function body).
-  function(name, def, call = sys.call(-1), ev = sys.frame(-2)) {
+  function(name, def, call = sys.call(-1), ev = sys.frame(-2))
+{
     ## Store a local version of function `name' back where the current version was
     ## called.  Restore the previous state there on exit, either removing or re-assigning.
-    if(exists(name, envir=ev, inherits=F)) {
-      prev <- get(name, envir=ev)
-      on.exit(assign(name, prev, envir = ev))
+    if(exists(name, envir=ev, inherits=FALSE)) {
+        prev <- get(name, envir=ev)
+        on.exit(assign(name, prev, envir = ev))
     }
     else
-      on.exit(rm(list=name, envir=ev))
+        on.exit(rm(list=name, envir=ev))
     assign(name, def, envir = ev)
     eval(call, ev)
-  }
+}
 
 conformMethodArgs <-
-  function(def, fdef, envir) {
+  function(def, fdef, envir)
+{
     newDef <- fdef
     newCall <- get(".Arguments",  envir=envir)
     languageEl(newCall, 1) <- as.name(".Method")
     body(newDef) <- substitute({.Method <- DEF; CALL},
-                      list(DEF = def, CALL = newCall))
+                               list(DEF = def, CALL = newCall))
     environment(newDef) <- NULL
     newDef
-  }
+}
 
 getGeneric <-
   ## return the definition of the function named f as a generic.
@@ -233,25 +235,26 @@ getGeneric <-
   ## If there is no definition in the current search list, throws an error or returns
   ## NULL according to the value of mustFind.
   function(f, mustFind = FALSE)
-  .Call("R_getGeneric", f, mustFind)
+    .Call("R_getGeneric", f, mustFind)
 
 getGroup <-
   ## return the groups to which this generic belongs.  If `recursive=TRUE', also all the
   ## group(s) of these groups.
-  function(fdef, recursive = FALSE) {
+  function(fdef, recursive = FALSE)
+{
     if(is.character(fdef))
-      fdef <- getGeneric(fdef)
+        fdef <- getGeneric(fdef)
     if(is.function(fdef))
-      group <- get(".Group", envir = environment(fdef))
+        group <- get(".Group", envir = environment(fdef))
     else
-      group <- character()
+        group <- character()
     if(recursive && length(group) > 0) {
-      allGroups <- group
-      for(gp in group)
-        allGroups <- c(allGroups, Recall(gp, TRUE))
-      group <- unique(allGroups)
+        allGroups <- group
+        for(gp in group)
+            allGroups <- c(allGroups, Recall(gp, TRUE))
+        group <- unique(allGroups)
     }
     group
-  }
+}
 
-        
+

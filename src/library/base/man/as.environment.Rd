@@ -8,7 +8,6 @@
 \usage{
 as.environment(object)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{object}{ The object to convert.  If it is already an
     environment, just return it.  If it is a number, return the

@@ -1,5 +1,4 @@
 \name{MethodSupport}
-\alias{setGeneric}
 \alias{evalSelectedMethod}
 \alias{OldEvalSelectedMethod}
 \alias{getMethodsForDispatch}
@@ -7,8 +6,6 @@
 \alias{resetGeneric}
 \title{Additional (Support) Functions for Methods}
 \usage{
-setGeneric(name, def, group=NULL, valueClass=NULL, where=1)
-
 evalSelectedMethod(f, ev, fname)
 
 getMethodsForDispatch(f)
@@ -16,22 +13,10 @@ getMethodsForDispatch(f)
 hasMethod(f, signature=character())
 
 resetGeneric(f)
-
 }
 \description{
   
 \describe{
-\item{\code{setGeneric}:}{ 
-  Define \code{name} to be a generic  function, for which methods will be defined.  
-
-  If there is already a non-generic function of this name, it will be used
-to define the generic unless \code{def} is supplied, and the current function will
-become the default method for the generic.
-
-If \code{def} is supplied, this defines the generic function.  The default method for
-a new generic will usually be an existing non-generic.  See the .Rd page
-
-  }
 \item{\code{evalSelectedMethod}:}{ 
   Evaluate the selected method, f, in the environment, ev.
 

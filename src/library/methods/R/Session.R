@@ -16,48 +16,49 @@ sessionData <-
 traceOn <-
   ## initialize tracing on calls to function `what'.  The function or expression
   ## `tracer' is called on entry, and the function or expression `exit' on exit.
-  function(what, tracer = browseAll, exit = NULL) {
+  function(what, tracer = browseAll, exit = NULL)
+{
     name <- what; def <- what
     if(is.function(name))
-      name <- as.character(substitute(what))
+        name <- as.character(substitute(what))
     else
-      def <- getFunction(name)
-    if(exists(name, sessionData(), inherit=F)) {
-      remove(list=name, pos=sessionData())
-      def <- getFunction(name)
+        def <- getFunction(name)
+    if(exists(name, sessionData(), inherit=FALSE)) {
+        remove(list=name, pos=sessionData())
+        def <- getFunction(name)
     }
     fBody <- body(def)
     if(!is.null(exit)) {
-      if(missing(tracer))
-        tracer <- NULL
-      if(is.function(exit)) {
-        tname <- substitute(exit)
-        if(is.name(tname))
-          exit <- tname
-        tracexp <- substitute(TRACE(), list(TRACE=exit))
-      }
-      else
-        tracexp <- exit
-      fBody <- substitute({on.exit(TRACE); BODY},
-                          list(TRACE=tracexp, BODY=fBody))
+        if(missing(tracer))
+            tracer <- NULL
+        if(is.function(exit)) {
+            tname <- substitute(exit)
+            if(is.name(tname))
+                exit <- tname
+            tracexp <- substitute(TRACE(), list(TRACE=exit))
+        }
+        else
+            tracexp <- exit
+        fBody <- substitute({on.exit(TRACE); BODY},
+                            list(TRACE=tracexp, BODY=fBody))
     }
     if(!is.null(tracer)) {
-      if(is.function(tracer)) {
-        tname <- substitute(tracer)
-        if(is.name(tname))
-          tracer <- tname
-        tracexp <- substitute(TRACE(), list(TRACE=tracer))
-      }
-      else
-        tracexp <- tracer
-      fBody <- substitute({TRACE; BODY},
-                         list(TRACE=tracexp, BODY=fBody))
+        if(is.function(tracer)) {
+            tname <- substitute(tracer)
+            if(is.name(tname))
+                tracer <- tname
+            tracexp <- substitute(TRACE(), list(TRACE=tracer))
+        }
+        else
+            tracexp <- tracer
+        fBody <- substitute({TRACE; BODY},
+                            list(TRACE=tracexp, BODY=fBody))
     }
     body(def) <- fBody
     mode(def) <- "function"
-    assign(name, def, pos = sessionData())  ## NOT S compatible!
+    assign(name, def, pos = sessionData())## NOT S compatible!
     name
-  }
+}
 
 traceOff <-
   ## turn off tracing of this function

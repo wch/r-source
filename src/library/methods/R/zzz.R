@@ -23,14 +23,6 @@
     ## and that use should disappear when standardGeneric is implemented in C
     assign(".methodsEnv", where, envir=where)
     assign(".MethodsDispatchOn", TRUE, envir = where)
-    ## Temporary kludge because the new version of exists can't be used until
-    ## the dynamic loading is done.
-    if(exists(".hide.exists", envir = where)) {
-      for(what in c("exists", "get", "assign", "objects", "ls", "rm", "remove")) {
-        assign(what, get(paste(".hide.", what,sep=""), envir = where), envir=where)
-      }
-      ##cat("Moved in the new definitions of exists, get, assign, objects, rm\n")
-    }
     ## initialize the environment used as the session table to store methods definitions
     table <- new.env()
     assign("__MethodMetaData", table, envir = where)

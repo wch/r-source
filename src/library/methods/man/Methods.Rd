@@ -11,7 +11,7 @@
 \alias{signature}
 \title{Defining Methods and Generic Functions}
 \usage{
-isGeneric(f, where=-1, fdef)
+isGeneric(f, where = -1, fdef, getName = FALSE)
 
 removeGeneric(name, where=-1)
 
@@ -19,7 +19,8 @@ standardGeneric(fname)
 
 dumpMethod(generic, signature=character(), file=defaultDumpName(generic, signature), where=-1, def=getMethod(generic, signature, where = where, optional = T))
 
-existsFunction(name, generic=TRUE)
+existsFunction(name, generic = TRUE, where = find(name, mode =
+                 "function", numeric = TRUE))
 
 findFunction(name, generic=TRUE)
 
@@ -27,7 +28,7 @@ dumpMethods(f, file="", signature=character(), methods, where=-1)
 
 signature(...)
 
-showMethods(f, where, classes, includeDefs=F)
+showMethods(f, where, classes, includeDefs=FALSE, inherited = TRUE)
 
 removeMethods(f, where)
 
