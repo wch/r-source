@@ -363,12 +363,6 @@ static SEXP lang2str(SEXP obj, SEXPTYPE t)
 /* the S4-style class: for dispatch  required to be a single string;
    for the newClass function, keeps S3-style multiple classes.
 
-Future Note:  the primitive dataClass in base calls this.  The methods
-package makes the "class" function be that same primitive. The
-"class<-" implementation for the methods package (in main/coerce.c
-under R_set_class) also calls R_data_class. It's possible, though not
-totally obvious, that all this code could be moved into the methods package.
-
  */
 
 SEXP R_data_class(SEXP obj, int singleString)
