@@ -4095,9 +4095,10 @@ and not with the formal methods of package @pkg{methods} of @R{} 1.4.0
 and later.
 
 The key function for methods is @code{NextMethod}, which dispatches the
-next method.  It is quite typical for a method function to make a
-few changes to its arguments, dispatch to the next method, receive the
+next method.  It is quite typical for a method function to make a few
+changes to its arguments, dispatch to the next method, receive the
 results and modify them a little.  An example is
+
 @smallexample
 t.data.frame <- function(x)
 @{
@@ -4105,17 +4106,20 @@ t.data.frame <- function(x)
     NextMethod("t")
 @}
 @end smallexample
+
+@noindent
 Also consider @code{predict.glm}: it happens that in @R{} for historical
 reasons it calls @code{predict.lm} directly, but in principle (and in S
 originally and currently) it could use @code{NextMethod}.
 (@code{NextMethod} seems under-used in the @R{} sources.)
 
-@emph{Any} method a programmer writes may be invoked from
-another method by @code{NextMethod}, @emph{with the arguments
-appropriate to the previous method}.  Further, the programmer cannot
-predict which method @code{NextMethod} will pick (it might be one not
-yet dreamt of), and the end user calling the generic needs to be able to
-pass arguments to the next method.  For this to work
+@emph{Any} method a programmer writes may be invoked from another method
+by @code{NextMethod}, @emph{with the arguments appropriate to the
+previous method}.  Further, the programmer cannot predict which method
+@code{NextMethod} will pick (it might be one not yet dreamt of), and the
+end user calling the generic needs to be able to pass arguments to the
+next method.  For this to work
+
 @quotation
 @emph{A method must have all the arguments of the generic, including 
 @code{@dots{}} if the generic does.}
@@ -4129,53 +4133,66 @@ an argument @code{dispersion} to handle over-dispersion.  As
 @code{predict.lm} had neither a @code{dispersion} nor a @code{@dots{}}
 argument, @code{NextMethod} could no longer be used.  (The legacy, two
 direct calls to @code{predict.lm}, lives on in @code{predict.glm} in
-@R{}, which is based on the workaround for S3 written by Venables & Ripley.)
+@R{}, which is based on the workaround for S3 written by Venables &
+Ripley.)
 
 Further, the user is entitled to use positional matching when calling
 the generic, and the arguments to a method called by @code{UseMethod}
 are those of the call to the generic.  Thus
+
 @quotation
 @emph{A method must have arguments in exactly the same order as the
 generic.}
 @end quotation
+
 @noindent
 To see the scale of this problem, consider the generic function
 @code{scale}, defined (in @R{} 1.4.0) as
+
 @smallexample
 scale <- function (x, center = TRUE, scale = TRUE) 
     UseMethod("scale")
 @end smallexample
+
 @noindent
 Suppose an unthinking package writer created methods such as
+
 @smallexample
 scale.foo <- function(x, scale = FALSE, ...) @{ @}
 @end smallexample
+
 @noindent
 Then for @code{x} of class @code{"foo"} the calls
+
 @smallexample
 scale(x, , TRUE)
 scale(x, scale = TRUE)
 @end smallexample
+
 @noindent
 would do most likely do different things, to the justifiable
 consternation of the end user.
 
 To add a further twist, which default is used when a user calls
 @code{scale(x)} in our example?  What if
+
 @smallexample
 scale.bar <- function(x, center, scale = TRUE) NextMethod("scale")
 @end smallexample
+
 @noindent
 and @code{x} has class @code{c("bar", "foo")}?  We are not going to give
 you the answers because it is unreasonable that a user should be
 expected to anticipate such behaviour.  This leads to the
 recommendation:
+
 @quotation
 @emph{A method should use the same defaults as the generic.}
 @end quotation
+
 @noindent
-Here there might be justifiable exceptions, which will need
-careful documentation.
+Here there might be justifiable exceptions, which will need careful
+documentation.
 
 @menu
 * Adding new generics::         
@@ -4204,6 +4221,7 @@ package, and request a change in @R{}.  This may be justifiable, but
 making a function generic with the old definition as the default method
 does have a small performance cost.  It is never necessary, as a package
 can take over a function in the base package and make it generic by
+
 @smallexample
 foo <- function(object, ...) UseMethod("foo")
 foo.default <- get("foo", pos = NULL, mode="function")
