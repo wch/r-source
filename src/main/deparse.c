@@ -230,7 +230,8 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (ifile != 1) {
 	con = getConnection(ifile);
 	wasopen = con->isopen;
-	if(!wasopen) con->open(con);
+	if(!wasopen) 
+	    if(!con->open(con)) error("cannot open the connection");
     }/* else: "Stdout" */
     for (i = 0; i < LENGTH(tval); i++)
 	if (ifile == 1)
@@ -281,7 +282,8 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
 	con = getConnection(INTEGER(file)[0]);
 	wasopen = con->isopen;
-	if (!wasopen) con->open(con);
+	if (!wasopen)
+	    if(!con->open(con)) error("cannot open the connection");
 	for (i = 0; i < nobjs; i++) {
 	    Rconn_printf(con, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
 	    if (TYPEOF(CAR(o)) != CLOSXP ||

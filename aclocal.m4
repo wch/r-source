@@ -1500,6 +1500,20 @@ caddr_t hello() {
 	       [r_cv_zlib_mmap=yes]))
 ])# _R_ZLIB_MMAP
 
+
+AC_DEFUN([R_BZLIB],
+[AC_CHECK_LIB(bz2, BZ2_bzlibVersion, [have_bzlib=yes], [have_bzlib=no])
+if test "${have_bzlib}" = yes; then
+  AC_CHECK_HEADER(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
+fi
+if test "${have_bzlib}" = yes; then
+  AC_DEFINE(HAVE_BZLIB, 1,
+            [Define if you have the bzip2 headers and libraries.])
+  LIBS="-lbz2 ${LIBS}"
+fi
+])# R_BZLIB
+
+
 AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
 [AC_CACHE_CHECK([whether leap seconds are treated according to POSIX],
                 [r_cv_sys_posix_leapseconds],

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001   The R Development Core Team.
+ *  Copyright (C) 2000-2002   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,12 +58,10 @@ typedef struct fifoconn {
     int fd;
 } *Rfifoconn;
 
-#ifdef HAVE_ZLIB
 typedef struct gzfileconn {
     void *fp;
     int cp;
 } *Rgzfileconn;
-#endif
 
 typedef struct textconn {
     char *data;  /* all the data */
@@ -97,6 +95,11 @@ typedef struct sockconn {
 typedef struct unzconn {
     void *uf;
 } *Runzconn;
+
+typedef struct bzfileconn {
+    FILE *fp;
+    void *bfp;
+} *Rbzfileconn;
 
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);

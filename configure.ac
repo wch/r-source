@@ -1059,6 +1059,9 @@ R_XDR
 ## zlib headers and libraries.
 R_ZLIB
 
+## bzlib headers and libraries.
+R_BZLIB
+
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS
 

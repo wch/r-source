@@ -85,6 +85,8 @@ NEW FEATURES
 
     o	New read-only connections to files in zip files via unz().
 
+    o	Connections to bzip2-ed files via bzfile().
+
     o   The tcltk package now works with the gnome user interface.
 
     o   chol() allows pivoting via new argument `pivot'.

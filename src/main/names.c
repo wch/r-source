@@ -795,6 +795,7 @@ FUNTAB R_FunTab[] =
 {"fifo", 	do_fifo,	0,      11,     4,      PP_FUNCALL},
 {"gzfile", 	do_gzfile,	0,      11,     4,      PP_FUNCALL},
 {"unz", 	do_unz,		0,      11,     3,      PP_FUNCALL},
+{"bzfile", 	do_bzfile,	0,      11,     3,      PP_FUNCALL},
 {"seek", 	do_seek,	0,      11,     4,      PP_FUNCALL},
 {"truncate", 	do_truncate,	0,      11,     1,      PP_FUNCALL},
 {"pushBack", 	do_pushback,	0,      11,     3,      PP_FUNCALL},

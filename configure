@@ -20182,8 +20182,124 @@ else
   USE_MMAP_ZLIB_FALSE=
 fi
 
+## bzlib headers and libraries.
+echo "$as_me:20186: checking for BZ2_bzlibVersion in -lbz2" >&5
+echo $ECHO_N "checking for BZ2_bzlibVersion in -lbz2... $ECHO_C" >&6
+if test "${ac_cv_lib_bz2_BZ2_bzlibVersion+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lbz2  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+#line 20194 "configure"
+#include "confdefs.h"
+
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char BZ2_bzlibVersion ();
+#ifdef F77_DUMMY_MAIN
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+#endif
+int
+main ()
+{
+BZ2_bzlibVersion ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:20219: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:20222: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+         { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:20225: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:20228: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_lib_bz2_BZ2_bzlibVersion=yes
+else
+  echo "$as_me: failed program was:" >&5
+cat conftest.$ac_ext >&5
+ac_cv_lib_bz2_BZ2_bzlibVersion=no
+fi
+rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+echo "$as_me:20239: result: $ac_cv_lib_bz2_BZ2_bzlibVersion" >&5
+echo "${ECHO_T}$ac_cv_lib_bz2_BZ2_bzlibVersion" >&6
+if test $ac_cv_lib_bz2_BZ2_bzlibVersion = yes; then
+  have_bzlib=yes
+else
+  have_bzlib=no
+fi
+
+if test "${have_bzlib}" = yes; then
+  echo "$as_me:20248: checking for bzlib.h" >&5
+echo $ECHO_N "checking for bzlib.h... $ECHO_C" >&6
+if test "${ac_cv_header_bzlib_h+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+#line 20254 "configure"
+#include "confdefs.h"
+#include <bzlib.h>
+_ACEOF
+if { (eval echo "$as_me:20258: \"$ac_cpp conftest.$ac_ext\"") >&5
+  (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
+  ac_status=$?
+  egrep -v '^ *\+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:20264: \$? = $ac_status" >&5
+  (exit $ac_status); } >/dev/null; then
+  if test -s conftest.err; then
+    ac_cpp_err=$ac_c_preproc_warn_flag
+  else
+    ac_cpp_err=
+  fi
+else
+  ac_cpp_err=yes
+fi
+if test -z "$ac_cpp_err"; then
+  ac_cv_header_bzlib_h=yes
+else
+  echo "$as_me: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  ac_cv_header_bzlib_h=no
+fi
+rm -f conftest.err conftest.$ac_ext
+fi
+echo "$as_me:20283: result: $ac_cv_header_bzlib_h" >&5
+echo "${ECHO_T}$ac_cv_header_bzlib_h" >&6
+if test $ac_cv_header_bzlib_h = yes; then
+  have_bzlib=yes
+else
+  have_bzlib=no
+fi
+
+fi
+if test "${have_bzlib}" = yes; then
+
+cat >>confdefs.h <<\EOF
+#define HAVE_BZLIB 1
+EOF
+
+  LIBS="-lbz2 ${LIBS}"
+fi
+
 ## POSIX times.
-echo "$as_me:20186: checking whether leap seconds are treated according to POSIX" >&5
+echo "$as_me:20302: checking whether leap seconds are treated according to POSIX" >&5
 echo $ECHO_N "checking whether leap seconds are treated according to POSIX... $ECHO_C" >&6
 if test "${r_cv_sys_posix_leapseconds+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -20192,7 +20308,7 @@ else
   r_cv_sys_posix_leapseconds=yes
 else
   cat >conftest.$ac_ext <<_ACEOF
-#line 20195 "configure"
+#line 20311 "configure"
 #include "confdefs.h"
 
 #include <stdlib.h>
@@ -20211,15 +20327,15 @@ int main () {
 }
 _ACEOF
 rm -f conftest$ac_exeext
-if { (eval echo "$as_me:20214: \"$ac_link\"") >&5
+if { (eval echo "$as_me:20330: \"$ac_link\"") >&5
   (eval $ac_link) 2>&5
   ac_status=$?
-  echo "$as_me:20217: \$? = $ac_status" >&5
+  echo "$as_me:20333: \$? = $ac_status" >&5
   (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:20219: \"$ac_try\"") >&5
+  { (eval echo "$as_me:20335: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:20222: \$? = $ac_status" >&5
+  echo "$as_me:20338: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   r_cv_sys_posix_leapseconds=no
 else
@@ -20231,7 +20347,7 @@ fi
 rm -f core core.* *.core conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
 fi
-echo "$as_me:20234: result: $r_cv_sys_posix_leapseconds" >&5
+echo "$as_me:20350: result: $r_cv_sys_posix_leapseconds" >&5
 echo "${ECHO_T}$r_cv_sys_posix_leapseconds" >&6
 if test "x${r_cv_sys_posix_leapseconds}" = xyes; then
 
@@ -20247,13 +20363,13 @@ if test "${want_R_profiling}" = yes; then
 for ac_func in setitimer
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
-echo "$as_me:20250: checking for $ac_func" >&5
+echo "$as_me:20366: checking for $ac_func" >&5
 echo $ECHO_N "checking for $ac_func... $ECHO_C" >&6
 if eval "test \"\${$as_ac_var+set}\" = set"; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
-#line 20256 "configure"
+#line 20372 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func (); below.  */
@@ -20290,16 +20406,16 @@ f = $ac_func;
 }
 _ACEOF
 rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:20293: \"$ac_link\"") >&5
+if { (eval echo "$as_me:20409: \"$ac_link\"") >&5
   (eval $ac_link) 2>&5
   ac_status=$?
-  echo "$as_me:20296: \$? = $ac_status" >&5
+  echo "$as_me:20412: \$? = $ac_status" >&5
   (exit $ac_status); } &&
          { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:20299: \"$ac_try\"") >&5
+  { (eval echo "$as_me:20415: \"$ac_try\"") >&5
   (eval $ac_try) 2>&5
   ac_status=$?
-  echo "$as_me:20302: \$? = $ac_status" >&5
+  echo "$as_me:20418: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
   eval "$as_ac_var=yes"
 else
@@ -20309,7 +20425,7 @@ eval "$as_ac_var=no"
 fi
 rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
 fi
-echo "$as_me:20312: result: `eval echo '${'$as_ac_var'}'`" >&5
+echo "$as_me:20428: result: `eval echo '${'$as_ac_var'}'`" >&5
 echo "${ECHO_T}`eval echo '${'$as_ac_var'}'`" >&6
 if test `eval echo '${'$as_ac_var'}'` = yes; then
   cat >>confdefs.h <<EOF
@@ -20337,7 +20453,7 @@ if test -z "${R_PRINTCMD}"; then
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
-echo "$as_me:20340: checking for $ac_word" >&5
+echo "$as_me:20456: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_prog_R_PRINTCMD+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -20352,7 +20468,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   $as_executable_p "$ac_dir/$ac_word" || continue
 ac_cv_prog_R_PRINTCMD="$ac_prog"
-echo "$as_me:20355: found $ac_dir/$ac_word" >&5
+echo "$as_me:20471: found $ac_dir/$ac_word" >&5
 break
 done
 
@@ -20360,10 +20476,10 @@ fi
 fi
 R_PRINTCMD=$ac_cv_prog_R_PRINTCMD
 if test -n "$R_PRINTCMD"; then
-  echo "$as_me:20363: result: $R_PRINTCMD" >&5
+  echo "$as_me:20479: result: $R_PRINTCMD" >&5
 echo "${ECHO_T}$R_PRINTCMD" >&6
 else
-  echo "$as_me:20366: result: no" >&5
+  echo "$as_me:20482: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
@@ -20379,7 +20495,7 @@ EOF
 ## Default paper size.
 # Extract the first word of "paperconf", so it can be a program name with args.
 set dummy paperconf; ac_word=$2
-echo "$as_me:20382: checking for $ac_word" >&5
+echo "$as_me:20498: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
 if test "${ac_cv_path_PAPERCONF+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -20396,7 +20512,7 @@ for ac_dir in $ac_dummy; do
   test -z "$ac_dir" && ac_dir=.
   if $as_executable_p "$ac_dir/$ac_word"; then
    ac_cv_path_PAPERCONF="$ac_dir/$ac_word"
-   echo "$as_me:20399: found $ac_dir/$ac_word" >&5
+   echo "$as_me:20515: found $ac_dir/$ac_word" >&5
    break
 fi
 done
@@ -20408,10 +20524,10 @@ fi
 PAPERCONF=$ac_cv_path_PAPERCONF
 
 if test -n "$PAPERCONF"; then
-  echo "$as_me:20411: result: $PAPERCONF" >&5
+  echo "$as_me:20527: result: $PAPERCONF" >&5
 echo "${ECHO_T}$PAPERCONF" >&6
 else
-  echo "$as_me:20414: result: no" >&5
+  echo "$as_me:20530: result: no" >&5
 echo "${ECHO_T}no" >&6
 fi
 
@@ -20545,7 +20661,7 @@ LTALLOCA=`echo "${ALLOCA}" | sed 's/\.o/.lo/g'`
 : ${CONFIG_STATUS=./config.status}
 ac_clean_files_save=$ac_clean_files
 ac_clean_files="$ac_clean_files $CONFIG_STATUS"
-{ echo "$as_me:20548: creating $CONFIG_STATUS" >&5
+{ echo "$as_me:20664: creating $CONFIG_STATUS" >&5
 echo "$as_me: creating $CONFIG_STATUS" >&6;}
 cat >$CONFIG_STATUS <<_ACEOF
 #! $SHELL
@@ -20721,7 +20837,7 @@ cat >>$CONFIG_STATUS <<\EOF
     echo "$ac_cs_version"; exit 0 ;;
   --he | --h)
     # Conflict between --help and --header
-    { { echo "$as_me:20724: error: ambiguous option: $1
+    { { echo "$as_me:20840: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: ambiguous option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -20740,7 +20856,7 @@ Try \`$0 --help' for more information." >&2;}
     ac_need_defaults=false;;
 
   # This is an error.
-  -*) { { echo "$as_me:20743: error: unrecognized option: $1
+  -*) { { echo "$as_me:20859: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&5
 echo "$as_me: error: unrecognized option: $1
 Try \`$0 --help' for more information." >&2;}
@@ -20872,7 +20988,7 @@ do
   "default-1" ) CONFIG_COMMANDS="$CONFIG_COMMANDS default-1" ;;
   "stamp-h" ) CONFIG_COMMANDS="$CONFIG_COMMANDS stamp-h" ;;
   "src/include/config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS src/include/config.h" ;;
-  *) { { echo "$as_me:20875: error: invalid argument: $ac_config_target" >&5
+  *) { { echo "$as_me:20991: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
    { (exit 1); exit 1; }; };;
   esac
@@ -21255,7 +21371,7 @@ done; }
   esac
 
   if test x"$ac_file" != x-; then
-    { echo "$as_me:21258: creating $ac_file" >&5
+    { echo "$as_me:21374: creating $ac_file" >&5
 echo "$as_me: creating $ac_file" >&6;}
     rm -f "$ac_file"
   fi
@@ -21273,7 +21389,7 @@ echo "$as_me: creating $ac_file" >&6;}
       -) echo $tmp/stdin ;;
       [\\/$]*)
          # Absolute (can't be DOS-style, as IFS=:)
-         test -f "$f" || { { echo "$as_me:21276: error: cannot find input file: $f" >&5
+         test -f "$f" || { { echo "$as_me:21392: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          echo $f;;
@@ -21286,7 +21402,7 @@ echo "$as_me: error: cannot find input file: $f" >&2;}
            echo $srcdir/$f
          else
            # /dev/null tree
-           { { echo "$as_me:21289: error: cannot find input file: $f" >&5
+           { { echo "$as_me:21405: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          fi;;
@@ -21347,7 +21463,7 @@ for ac_file in : $CONFIG_HEADERS; do test "x$ac_file" = x: && continue
   * )   ac_file_in=$ac_file.in ;;
   esac
 
-  test x"$ac_file" != x- && { echo "$as_me:21350: creating $ac_file" >&5
+  test x"$ac_file" != x- && { echo "$as_me:21466: creating $ac_file" >&5
 echo "$as_me: creating $ac_file" >&6;}
 
   # First look for the input files in the build tree, otherwise in the
@@ -21358,7 +21474,7 @@ echo "$as_me: creating $ac_file" >&6;}
       -) echo $tmp/stdin ;;
       [\\/$]*)
          # Absolute (can't be DOS-style, as IFS=:)
-         test -f "$f" || { { echo "$as_me:21361: error: cannot find input file: $f" >&5
+         test -f "$f" || { { echo "$as_me:21477: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          echo $f;;
@@ -21371,7 +21487,7 @@ echo "$as_me: error: cannot find input file: $f" >&2;}
            echo $srcdir/$f
          else
            # /dev/null tree
-           { { echo "$as_me:21374: error: cannot find input file: $f" >&5
+           { { echo "$as_me:21490: error: cannot find input file: $f" >&5
 echo "$as_me: error: cannot find input file: $f" >&2;}
    { (exit 1); exit 1; }; }
          fi;;
@@ -21488,7 +21604,7 @@ cat >>$CONFIG_STATUS <<\EOF
   rm -f $tmp/in
   if test x"$ac_file" != x-; then
     if cmp -s $ac_file $tmp/config.h 2>/dev/null; then
-      { echo "$as_me:21491: $ac_file is unchanged" >&5
+      { echo "$as_me:21607: $ac_file is unchanged" >&5
 echo "$as_me: $ac_file is unchanged" >&6;}
     else
       ac_dir=`$as_expr X"$ac_file" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
@@ -21620,7 +21736,7 @@ if test -z "${F77}"; then
 else
   FORTRAN_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 fi
-echo "$as_me:21623: result:
+echo "$as_me:21739: result:
 R is now configured for ${host}
 
   Source directory:          ${srcdir}
@@ -21655,67 +21771,67 @@ R is now configured for ${host}
   R as a shared library:     ${want_R_shlib}
 " >&6
 if test -n "${warn_f77_and_g77}"; then
-  { echo "$as_me:21658: WARNING: ${warn_f77_and_g77}" >&5
+  { echo "$as_me:21774: WARNING: ${warn_f77_and_g77}" >&5
 echo "$as_me: WARNING: ${warn_f77_and_g77}" >&2;}
 fi
 if test -n "${warn_f77_and_f2c}"; then
-  { echo "$as_me:21662: WARNING: ${warn_f77_and_f2c}" >&5
+  { echo "$as_me:21778: WARNING: ${warn_f77_and_f2c}" >&5
 echo "$as_me: WARNING: ${warn_f77_and_f2c}" >&2;}
 fi
 if test -n "${warn_g77_and_f2c}"; then
-  { echo "$as_me:21666: WARNING: ${warn_g77_and_f2c}" >&5
+  { echo "$as_me:21782: WARNING: ${warn_g77_and_f2c}" >&5
 echo "$as_me: WARNING: ${warn_g77_and_f2c}" >&2;}
 fi
 if test -n "${warn_f2c_flibs}"; then
-  { echo "$as_me:21670: WARNING: ${warn_f2c_flibs}" >&5
+  { echo "$as_me:21786: WARNING: ${warn_f2c_flibs}" >&5
 echo "$as_me: WARNING: ${warn_f2c_flibs}" >&2;}
 fi
 if test -n "${warn_xcompile_sizeof_int}"; then
-  { echo "$as_me:21674: WARNING: ${warn_xcompile_sizeof_int}" >&5
+  { echo "$as_me:21790: WARNING: ${warn_xcompile_sizeof_int}" >&5
 echo "$as_me: WARNING: ${warn_xcompile_sizeof_int}" >&2;}
 fi
 if test -n "${warn_xcompile_sizeof_long}"; then
-  { echo "$as_me:21678: WARNING: ${warn_xcompile_sizeof_long}" >&5
+  { echo "$as_me:21794: WARNING: ${warn_xcompile_sizeof_long}" >&5
 echo "$as_me: WARNING: ${warn_xcompile_sizeof_long}" >&2;}
 fi
 if test -n "${warn_type_socklen}"; then
-  { echo "$as_me:21682: WARNING: ${warn_type_socklen}" >&5
+  { echo "$as_me:21798: WARNING: ${warn_type_socklen}" >&5
 echo "$as_me: WARNING: ${warn_type_socklen}" >&2;}
 fi
 if test -n "${warn_cxxpicflags}"; then
-  { echo "$as_me:21686: WARNING: ${warn_cxxpicflags}" >&5
+  { echo "$as_me:21802: WARNING: ${warn_cxxpicflags}" >&5
 echo "$as_me: WARNING: ${warn_cxxpicflags}" >&2;}
 fi
 if test -n "${warn_shlib_cxxldflags}"; then
-  { echo "$as_me:21690: WARNING: ${warn_shlib_cxxldflags}" >&5
+  { echo "$as_me:21806: WARNING: ${warn_shlib_cxxldflags}" >&5
 echo "$as_me: WARNING: ${warn_shlib_cxxldflags}" >&2;}
 fi
 if test -n "${warn_libglade_version}"; then
-  { echo "$as_me:21694: WARNING: ${warn_libglade_version}" >&5
+  { echo "$as_me:21810: WARNING: ${warn_libglade_version}" >&5
 echo "$as_me: WARNING: ${warn_libglade_version}" >&2;}
 fi
 if test -n "${warn_tcltk_version}"; then
-  { echo "$as_me:21698: WARNING: ${warn_tcltk_version}" >&5
+  { echo "$as_me:21814: WARNING: ${warn_tcltk_version}" >&5
 echo "$as_me: WARNING: ${warn_tcltk_version}" >&2;}
 fi
 if test -n "${warn_perl5}"; then
-  { echo "$as_me:21702: WARNING: ${warn_perl5}" >&5
+  { echo "$as_me:21818: WARNING: ${warn_perl5}" >&5
 echo "$as_me: WARNING: ${warn_perl5}" >&2;}
 fi
 if test -n "${warn_dvi}"; then
-  { echo "$as_me:21706: WARNING: ${warn_dvi}" >&5
+  { echo "$as_me:21822: WARNING: ${warn_dvi}" >&5
 echo "$as_me: WARNING: ${warn_dvi}" >&2;}
 fi
 if test -n "${warn_info}"; then
-  { echo "$as_me:21710: WARNING: ${warn_info}" >&5
+  { echo "$as_me:21826: WARNING: ${warn_info}" >&5
 echo "$as_me: WARNING: ${warn_info}" >&2;}
 fi
 if test -n "${warn_pdf}"; then
-  { echo "$as_me:21714: WARNING: ${warn_pdf}" >&5
+  { echo "$as_me:21830: WARNING: ${warn_pdf}" >&5
 echo "$as_me: WARNING: ${warn_pdf}" >&2;}
 fi
 if test -n "${warn_pager}"; then
-  { echo "$as_me:21718: WARNING: ${warn_pager}" >&5
+  { echo "$as_me:21834: WARNING: ${warn_pager}" >&5
 echo "$as_me: WARNING: ${warn_pager}" >&2;}
 fi
 

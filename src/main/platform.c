@@ -865,8 +865,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i = 0;
     
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 12));
-    PROTECT(ansnames = allocVector(STRSXP, 12));
+    PROTECT(ans = allocVector(LGLSXP, 13));
+    PROTECT(ansnames = allocVector(STRSXP, 13));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -964,6 +964,13 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("IEEE754"));
 #if defined(IEEE_754)
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("bzip2"));
+#if defined(HAVE_BZLIB)
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;

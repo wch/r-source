@@ -6,6 +6,7 @@
 \alias{fifo}
 \alias{gzfile}
 \alias{unz}
+\alias{bzfile}
 \alias{url}
 \alias{socketConnection}
 \alias{open}
@@ -33,6 +34,7 @@ fifo(description = "", open = "", blocking = FALSE,
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
 unz(description, filename, open = "", encoding = getOption("encoding"))
+bzfile(description, open = "", encoding = getOption("encoding"))
 url(description, open = "", blocking = TRUE,
     encoding = getOption("encoding"))
 socketConnection(host = "localhost", port, server = FALSE,
@@ -72,17 +74,18 @@ isIncomplete(con)
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
-  The first seven functions create connections.  By default the
+  The first eight functions create connections.  By default the
   connection is not opened (except for \code{socketConnection}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
-  \code{gzfile} applies to files compressed by
-  \code{gzip}: such connections can only be binary.
+  \code{gzfile} applies to files compressed by \file{gzip}, and
+  \code{bzfile} to those compressed by \file{bzip2}: such connections can
+  only be binary.
 
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path, with \file{.zip} extension if required.
 
-  All platforms support file connections and \code{url("file://")}
+  All platforms support (gz)file connections and \code{url("file://")}
   connections.  The other types may be partially implemented or
   not implemented at all.  (They do work on most Unix
   platforms, and all but \code{fifo} on Windows.)
@@ -177,7 +180,7 @@ isIncomplete(con)
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998). However \R goes well beyond the Svr4 model, for example
-  in output text connections and URL, gzfile and socket connections.
+  in output text connections and URL, gzfile, bzfile and socket connections.
 
   The default mode in \R is \code{"r"} except for socket
   connections. This differs from Svr4, where it is the equivalent of
@@ -204,12 +207,18 @@ close(zz)
 readLines("ex.data")
 unlink("ex.data")
 
-if(capabilities("libz")) {
-  zz <- gzfile("ex.gz", "w")  # compressed file
+zz <- gzfile("ex.gz", "w")  # compressed file
+cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
+close(zz)
+readLines(gzfile("ex.gz"))
+unlink("ex.gz")
+
+if(capabilities("bzip2")) {
+  zz <- bzfile("ex.bz2", "w")  # bzip2-ed file
   cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
   close(zz)
-  print(readLines(gzfile("ex.gz")))
-  unlink("ex.gz")
+  print(readLines(bzfile("ex.bz2")))
+  unlink("ex.bz2")
 }
 
 ## An example of a file open for reading and writing
