@@ -272,6 +272,12 @@ master CVS archive and are updated hourly.  The `-C' and in the `rsync'
 command is to cause it to skip the CVS directories.  Further information on
 `rsync' is available at `http://rsync.samba.org/rsync/'.
 
+   Note that the sources available via rsync do not include the recommended
+packages, whereas these are included in the tarballs of released versions.
+To install the appropriate sources for the recommended packages, run
+`./tools/rsync-recommended' from the top-level of the R sources that you
+pulled by rsync.
+
    The sources of the development version are also available via anonymous
 CVS.  See `http://anoncvs.R-project.org' for more information.
 
