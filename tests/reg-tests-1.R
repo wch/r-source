@@ -2707,10 +2707,34 @@ stopifnot(crossprod(a+0i) == 0+0i)
 ## were random areas in <= 1.8.0
 
 
-
 ## DF[[i, j]] should be row i, col j
 data(women)
 stopifnot(women[[2, 1]] == women[2, 1])
 women[[2, 1]] <- 77
 stopifnot(women[2, 1] == 77)
 ## was reversed from May 2002 to Oct 2003
+
+
+## merge.data.frame with a single-column df (PR#4299)
+x <- data.frame(x = 1:5, y = letters[1:5])
+y <- data.frame(z = 1:2)
+z <- merge(x, y)
+stopifnot(identical(names(z), c("x", "y", "z")))
+## third name was wrong in 1.8.0
+
+
+## cor(mat, use = "pair") was plainly wrong
+data(longley) # has no NA's -- hence all "use = " should give the same!
+X <- longley
+ep <- 32 * .Machine$double.eps
+for(meth in eval(formals(cor)$method)) {
+    cat("method = ", meth,"\n")
+    Cl <- cor(X, method = meth)
+    stopifnot(all.equal(Cl, cor(X, method= meth, use= "complete"), tol=ep),
+              all.equal(Cl, cor(X, method= meth, use= "pairwise"), tol=ep),
+              all.equal(Cl, cor(X, X, method= meth), tol=ep),
+              all.equal(Cl, cor(X, X, method= meth, use= "pairwise"), tol=ep),
+              all.equal(Cl, cor(X, X, method= meth, use= "pairwise"), tol=ep)
+              )
+}
+## "pairwise" failed in 1.8.0
