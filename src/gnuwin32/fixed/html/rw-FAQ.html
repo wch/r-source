@@ -78,6 +78,9 @@ certain characters crashes Rgui.</a></li>
 
 <li><a href="#The%20internet%20download%20functions%20fail.">2.15
 The internet download functions fail.</a></li>
+
+<li><a href="#Other%20strange%20crashes.">2.16 Other strange
+crashes.</a></li>
 </ul>
 </li>
 
@@ -524,8 +527,24 @@ with the flag <code>--internet2</code> (see <a href=
 for Windows?</a>) which uses the Internet Explorer internals (and
 so needs Internet Explorer 4 or later installed).</p>
 
-<p>(b) A proxy needs to be set up: see
-<code>?download.file</code>.</p>
+<p>(b) A proxy needs to be set up: see <code>?download.file</code>.
+<a name="Other%20strange%20crashes."></a></p>
+
+<h3>2.16 Other strange crashes.</h3>
+
+<p>Some users have found that <code>Rgui.exe</code> fails to start,
+exiting with a "Floating- point invalid operation" or other low
+level error. This error may also happen in the middle of a session.
+In some cases where we have tracked this down, it was due to bugs
+in the video driver on the system in question: it makes changes to
+the floating point control word which are incompatible with R.
+(Good practice would restore the control word to the state it was
+in when the driver code was called.) For example, one user reported
+that the virtual screen manager JSP2 caused this crash.</p>
+
+<p>These errors are essentially impossible for us to fix or work
+around. The only solution we know of is for the user to replace the
+buggy driver that is causing the error.</p>
 
 <hr>
 <a name="Packages"></a> 
