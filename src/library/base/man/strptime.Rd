@@ -138,8 +138,11 @@ format(Sys.time(), "\%a \%b \%d \%X \%Y")
 ## but this crashes some Linux systems
 
 ## read in date info in format `ddmmmyyyy'
+## This will give NA(s) in some locales.
+## lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
 z <- strptime(x, "\%d\%b\%Y")
+## Sys.setlocale("LC_TIME", lct)
 z
 
 ## read in date/time info in format `m/d/y h:m:s'
