@@ -430,7 +430,7 @@ anova.lm <- function(object, ...)
 	      class= c("anova", "data.frame"))# was "tabular"
 }
 
-anova.lmlist <- function (object, ..., scale = 0, test = NULL)
+anova.lmlist <- function (object, ..., scale = 0, test = "F")
 {
     objects <- list(object, ...)
     responses <- as.character(lapply(objects,
@@ -464,7 +464,7 @@ anova.lmlist <- function (object, ..., scale = 0, test = NULL)
     variables <- lapply(objects, function(x)
                         paste(deparse(formula(x)[[3]]), collapse="\n") )
     dimnames(table) <- list(1:nmodels,
-                            c("Resid. Df", "RSS", "Df", "Sum of Sq"))
+                            c("Res.Df", "RSS", "Df", "Sum of Sq"))
 
     title <- paste("Analysis of Variance Table \n\nResponse: ", responses[1],
 		   "\n", sep="")
