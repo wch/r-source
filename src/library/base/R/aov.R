@@ -191,13 +191,3 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE, ...)
     class(value) <- "listof"
     value
 }
-
-print.listof <- function(x, ...)
-{
-    nn <- names(x)
-    ll <- length(x)
-    if(length(nn) != ll) nn <- paste("Component", seq(ll))
-    for(i in seq(ll)) {
-	cat(nn[i], ":\n"); print(x[[i]], ...); cat("\n")
-    }
-}

@@ -1,15 +1,12 @@
-lm <-
-    function(formula, data = list(), subset, weights, na.action,
-	     method = "qr", model = TRUE, x = FALSE, y = FALSE,
-	     qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
+lm <- function (formula, data = list(), subset, weights, na.action,
+		method = "qr", model = TRUE, x = FALSE, y = FALSE,
+		qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
 {
     ret.x <- x
     ret.y <- y
     mt <- terms(formula, data = data)
     mf <- match.call()
-    mf$singular.ok <- NULL
-    mf$model <- NULL
-    mf$method <- NULL
+    mf$singular.ok <- mf$model <- mf$method <- NULL
     mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
     mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
@@ -21,11 +18,11 @@ lm <-
 		      "is not supported. Using \"qr\"."))
     xvars <- as.character(attr(mt, "variables"))[-1]
     if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
-    if(length(xvars) > 0) {
-	xlev <- lapply(mf[xvars], levels)
-	xlev <- xlev[!sapply(xlev, is.null)]
-    } else xlev <- NULL
-
+    xlev <-
+        if(length(xvars) > 0) {
+            xlev <- lapply(mf[xvars], levels)
+            xlev[!sapply(xlev, is.null)]
+        }
     if (length(list(...)))
 	warning(paste("Extra arguments", deparse(substitute(...)),
 		      "are just disregarded."))
@@ -137,9 +134,9 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
     p <- ncol(x)
     wts <- w^0.5
     z <- .Fortran("dqrls", qr = x * wts, n = n, p = p,
-                  y = y * wts, ny = ny, tol = tol,
-                  coefficients = mat.or.vec(p, ny), residuals = y,
-                  effects = mat.or.vec(n, ny),
+		  y = y * wts, ny = ny, tol = tol,
+		  coefficients = mat.or.vec(p, ny), residuals = y,
+		  effects = mat.or.vec(n, ny),
 		  rank = integer(1), pivot = 1:p, qraux = double(p),
 		  work = double(2 * p))
     coef <- z$coefficients
@@ -184,8 +181,8 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
 	  "weights", "rank")],
       list(assign = attr(x, "assign"),
-           qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
-           df.residual = n - z$rank))
+	   qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
+	   df.residual = n - z$rank))
 }
 
 print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
@@ -234,8 +231,8 @@ summary.lm <- function (object, correlation = FALSE)
     ans$residuals <- r
     ans$coefficients <- cbind(est, se, tval, 2*(1 - pt(abs(tval), rdf)))
     dimnames(ans$coefficients)<-
-        list(names(z$coefficients)[Qr$pivot[p1]],
-             c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
+	list(names(z$coefficients)[Qr$pivot[p1]],
+	     c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
     ans$sigma <- sqrt(resvar)
     ans$df <- c(p, rdf, NCOL(Qr$qr))
     if (p != attr(z$terms, "intercept")) {
@@ -258,7 +255,7 @@ summary.lm <- function (object, correlation = FALSE)
 
 print.summary.lm <-
     function (x, digits = max(3, .Options$digits - 3), symbolic.cor = p > 4,
-              signif.stars= .Options$show.signif.stars,	...)
+	      signif.stars= .Options$show.signif.stars,	...)
 {
     cat("\nCall:\n")#S: ' ' instead of '\n'
     cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -287,7 +284,7 @@ print.summary.lm <-
     print.coefmat(x$coef, digits=digits, signif.stars=signif.stars, ...)
     ##
     cat("\nResidual standard error:",
-        format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
+	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
     if (!is.null(x$fstatistic)) {
 	cat("Multiple R-Squared:", formatC(x$r.squared, digits=digits))
 	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,d=digits),
@@ -373,14 +370,14 @@ anova.lm <- function(object, ...)
     ms <- ss/df
     f <- ms/(ssr/dfr)
     p <- 1 - pf(f,df,dfr)
-    table <- cbind(df,ss,ms,f,p)
+    table <- data.frame(df,ss,ms,f,p)
     table[length(p),4:5] <- NA
     dimnames(table) <- list(c(attr(object$terms,"term.labels"), "Residuals"),
 			    c("Df","Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
 
     structure(table, heading = c("Analysis of Variance Table\n",
-                     paste("Response:", formula(object)[[2]])),
-              class= "anova")# was "tabular"
+		     paste("Response:", formula(object)[[2]])),
+	      class= c("anova", "data.frame"))# was "tabular"
 }
 
 anovalist.lm <- function (object, ..., test = NULL)
@@ -418,11 +415,11 @@ anovalist.lm <- function (object, ..., test = NULL)
 	    f[i] <- ms[i]/(ss.r[i-1]/df.r[i-1])
 	    p[i] <- 1 - pf(f[i], -df[i], df.r[i-1])
 	}
-        else { # df[i] == 0
-          ss[i] <- 0
-        }
+	else { # df[i] == 0
+	  ss[i] <- 0
+	}
     }
-    table <- cbind(df.r,ss.r,df,ss,f,p)
+    table <- data.frame(df.r,ss.r,df,ss,f,p)
     dimnames(table) <- list(1:nmodels, c("Res.Df", "Res.Sum Sq", "Df",
 					 "Sum Sq", "F value", "Pr(>F)"))
     ## construct table and title
@@ -431,7 +428,8 @@ anovalist.lm <- function (object, ..., test = NULL)
 		     models, sep="", collapse="\n")
 
     ## calculate test statistic if needed
-    structure(table, heading = c(title, topnote), class= "anova")# was "tabular"
+    structure(table, heading = c(title, topnote),
+	      class= c("anova", "data.frame"))# was "tabular"
 }
 
 predict.lm <- function(object, newdata,
@@ -458,8 +456,8 @@ predict.lm <- function(object, newdata,
 	    df <- n - p
 	    res.var <- rss/df
 	} else {
-            res.var <- scale^2
-        }
+	    res.var <- scale^2
+	}
 	R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
 	vcov <- res.var * R
 	ip <- real(NROW(X))

@@ -322,9 +322,9 @@ print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 		  print.gap = 2, quote = FALSE)
     cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
 	x$df.residual, "Residual\n")
-    cat("Null Deviance:	   ", format(signif(x$null.deviance, digits)), "\n")
-    cat("Residual Deviance:", format(signif(x$deviance, digits)), "\t")
-    cat("AIC:", format(signif(x$aic, digits)), "\n")
+    cat("Null Deviance:	   ",   format(signif(x$null.deviance, digits)),
+        "\nResidual Deviance:", format(signif(x$deviance, digits)),
+        "\tAIC:", format(signif(x$aic, digits)), "\n")
     invisible(x)
 }
 
@@ -334,8 +334,7 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
     ## check for multiple objects
     dotargs <- list(...)
     named <- if (is.null(names(dotargs)))
-	rep(FALSE,length(dotargs))
-    else (names(dotargs) != "")
+	rep(FALSE,length(dotargs)) else (names(dotargs) != "")
     if(any(named))
 	warning(paste("The following arguments to anova.glm(..)",
 		      "are invalid and dropped:",
@@ -391,7 +390,7 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 
     ## construct table and title
 
-    table <- cbind(c(NA, -diff(resdf)), c(NA, -diff(resdev)), resdf, resdev)
+    table <- data.frame(c(NA, -diff(resdf)), c(NA, -diff(resdev)), resdf, resdev)
     if (nvars == 0) table <- table[1,,drop=FALSE] # kludge for null model
     dimnames(table) <- list(c("NULL", attr(object$terms, "term.labels")),
 			    c("Df", "Deviance", "Resid. Df", "Resid. Dev"))
@@ -407,7 +406,7 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
                             scale=sum(object$weights*object$residuals^2)/
                             object$df.residual,
 			    df.scale=object$df.residual, n=NROW(x))
-    structure(table, heading = title, class= "anova")
+    structure(table, heading = title, class= c("anova", "data.frame"))
 }
 
 
@@ -440,7 +439,7 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
 
     ## construct table and title
 
-    table <- cbind(resdf, resdev, c(NA, -diff(resdf)), c(NA, -diff(resdev)))
+    table <- data.frame(resdf, resdev, c(NA, -diff(resdf)), c(NA, -diff(resdev)))
     variables <- as.character(lapply(object, function(x) {
 	deparse(formula(x)[[3]])} ))
     dimnames(table) <- list(variables, c("Resid. Df", "Resid. Dev", "Df",
@@ -457,8 +456,7 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
 			    bigmodel$df.residual, df.scale=min(resdf),
 			    n=length(bigmodel$residuals))
     }
-
-    structure(table, heading = title, class= "anova")
+    structure(table, heading = title, class= c("anova", "data.frame"))
 }
 
 
@@ -598,15 +596,6 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
     invisible(x)
 }
 
-
-## Not used anymore..
-print.anova.glm <- function(x, digits = max(3, .Options$digits - 3),
-			    na.print = "", ...)
-{
-    cat("\n", x$title, sep="")
-    print.default(x$table, digits=digits, na = "", print.gap = 2)
-    cat("\n")
-}
 
 ## GLM Methods for Generic Functions :
 

@@ -1,11 +1,11 @@
-"anova.glm.null" <-
-    function (object, ..., test = NULL, na.action = na.omit)
+###- FIXME --- This is UGLY :  a lot of coding is just doubled from  ./glm.R --
+
+anova.glm.null <- function (object, ..., test = NULL, na.action = na.omit)
 {
     ## check for multiple objects
-    args <- function(...) nargs()
-    ## extract variables from model
-    if (args(...))
+    if (length(list(object, ...)) > 1)
 	return(anova.glmlist(list(object, ...), test = test))
+    ## extract variables from model
     varlist <- attr(object$terms, "variables")
     nvars <- 0
     resdev <- resdf <- NULL
@@ -15,10 +15,9 @@
     resdf <- c(object$df.null)
     resdev <- c(object$null.deviance)
     ## construct table and title
-    table <- cbind(c(NA), c(NA), resdf, resdev)
-    dimnames(table) <- list(c("NULL", attr(object$terms,
-					   "term.labels")), c("Df", "Deviance", "Resid. Df",
-							      "Resid. Dev"))
+    table <- data.frame(c(NA), c(NA), resdf, resdev)
+    dimnames(table) <- list(c("NULL", attr(object$terms, "term.labels")),
+                            c("Df", "Deviance", "Resid. Df", "Resid. Dev"))
     title <- paste("Analysis of Deviance Table", "\n\nModel: ",
 		   object$family$family, ", link: ", object$family$link,
 		   "\n\nResponse: ", as.character(varlist[-1])[1],
@@ -28,30 +27,27 @@
     ## return output
     if (!is.null(test))
 	table <- stat.anova(table = table, test = test,
-			    scale = sum(object$weights * object$residuals^2)/object$df.residual,
+			    scale = sum(object$weights * object$residuals^2)/
+                            	object$df.residual,
 			    df.scale = object$df.residual, n = NROW(x))
     output <- list(title = title, table = table)
     class(output) <- c("anova.glm.null", "anova.glm")
     return(output)
 }
-"print.glm.null" <-
-    function (x, digits = max(3, .Options$digits - 3), na.print = "",
-	      ...)
+print.glm.null <- function(x, digits = max(3, .Options$digits - 3),
+                           na.print = "", ...)
 {
     cat("\nCall: ", deparse(x$call), "\n\n")
     cat("No coefficients\n")
     cat("\nDegrees of Freedom:", length(x$residuals), "Total;",
 	x$df.residual, "Residual\n")
-    cat("Null Deviance:", format(signif(x$null.deviance,
-					digits)), "\n")
-    cat("Residual Deviance:", format(signif(x$deviance, digits)),
-	"\t")
+    cat("Null Deviance:", format(signif(x$null.deviance, digits)), "\n")
+    cat("Residual Deviance:", format(signif(x$deviance, digits)), "\t")
     cat("AIC:", format(signif(x$aic, digits)), "\n")
     invisible(x)
 }
-"print.summary.glm.null" <-
-    function (x, digits = max(3, .Options$digits - 3), na.print = "",
-	      ...)
+print.summary.glm.null <- function (x, digits = max(3, .Options$digits - 3),
+                                    na.print = "", ...)
 {
     cat("\nCall:\n")
     cat(paste(deparse(x$call), sep = "\n", collapse = "\n"),
@@ -62,8 +58,7 @@
 	names(x$deviance.resid) <- c("Min", "1Q", "Median",
 				     "3Q", "Max")
     }
-    print.default(x$deviance.resid, digits = digits, na = "",
-		  print.gap = 2)
+    print.default(x$deviance.resid, digits = digits, na = "", print.gap = 2)
     cat("\nNo coefficients\n")
     cat(paste("\n(Dispersion parameter for ", x$family$family,
 	      " family taken to be ", x$dispersion, ")\n\n    Null deviance: ",
@@ -73,8 +68,8 @@
 	      x$iter, "\n\n", sep = ""))
     invisible(x)
 }
-"summary.glm.null" <-
-    function (object, dispersion = NULL, correlation = TRUE, na.action = na.omit)
+summary.glm.null <- function (object, dispersion = NULL, correlation = TRUE,
+                              na.action = na.omit)
 {
     ## calculate dispersion if needed
     ## extract x to get column names
@@ -87,25 +82,26 @@
 	    if (any(object$weights == 0))
 		warning(paste("observations with zero weight",
 			      "not used for calculating dispersion"))
-	    dispersion <- sum(object$weights * object$residuals^2)/object$df.residual
+	    dispersion <- sum(object$weights * object$residuals^2)/
+                object$df.residual
 	}
     }
     p <- 0
     ## return answer
     ans <- list(call = object$call, terms = object$terms,
-		family = object$family, deviance.resid = residuals(object,
-					type = "deviance"), dispersion = dispersion,
-		df = c(object$rank, object$df.residual), deviance = object$deviance,
-		df.residual = object$df.residual, null.deviance = object$null.deviance,
+		family = object$family,
+                deviance.resid = residuals(object, type = "deviance"),
+                dispersion= dispersion, df = c(object$rank,object$df.residual),
+                deviance = object$deviance, df.residual = object$df.residual,
+                null.deviance = object$null.deviance,
 		df.null = object$df.null, iter = object$iter,
 		)
     class(ans) <- c("summary.glm.null", "summary.glm")
     return(ans)
 }
-"glm.fit.null" <-
-    function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0,
-							  nobs), family = gaussian(), control = glm.control(),
-	      intercept = NULL)
+glm.fit.null <- function (x, y, weights = rep(1, nobs), start = NULL,
+                          offset = rep(0, nobs), family = gaussian(),
+                          control = glm.control(), intercept = NULL)
 {
     if(intercept) stop("null models have no intercept")
     ynames <- names(y)

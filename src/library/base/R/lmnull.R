@@ -14,13 +14,13 @@ anova.lm.null <- function (object, ...)
     ms <- ss/df
     f <- ms/(ssr/dfr)
     p <- 1 - pf(f, df, dfr)
-    table <- cbind(df, ss, ms, f, p)
+    table <- data.frame(df, ss, ms, f, p)
     table[length(p), 4:5] <- NA
     dimnames(table) <- list(c(attr(object$terms, "term.labels"), "Residuals"),
 			    c("Df", "Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
     structure(table, heading = c("Analysis of Variance Table\n",
                      paste("Response:", formula(object)[[2]])),
-              class= "anova")# was "tabular"
+	      class= c("anova", "data.frame"))# was "tabular"
 }
 print.lm.null <- function (x, digits = max(3, .Options$digits - 3), ...)
 {

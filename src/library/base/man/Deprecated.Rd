@@ -1,4 +1,5 @@
 \name{Deprecated}
+%------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions}
 \alias{Deprecated}
 \alias{.Deprecated}
@@ -9,6 +10,7 @@ dnchisq(.)
 pnchisq(.)
 qnchisq(.)
 print.anova.lm(.)
+print.anova.glm(.)
 print.tabular(.)
 print.plot(.)
 save.plot(.)
@@ -18,6 +20,7 @@ save.plot(.)
 \alias{pnchisq}
 \alias{qnchisq}
 \alias{print.anova.lm}
+\alias{print.anova.glm}
 \alias{print.tabular}
 \alias{print.plot}
 \alias{save.plot}

@@ -42,6 +42,17 @@ print.noquote <- function(obj,...) {
     if(!is.null(cl)) class(obj) <- cl[cl != "noquote"]
     NextMethod("print", obj, quote = FALSE, ...)
 }
+
+## for alias:
+print.listof <- function(x, ...)
+{
+    nn <- names(x)
+    ll <- length(x)
+    if(length(nn) != ll) nn <- paste("Component", seq(ll))
+    for(i in seq(length=ll)) {
+	cat(nn[i], ":\n"); print(x[[i]], ...); cat("\n")
+    }
+}
 ## used for version:
 print.simple.list <- function(x, ...)
     print(noquote(cbind("_"=unlist(x))), ...)
@@ -137,7 +148,8 @@ print.anova <- function(x, digits = max(.Options$digits - 2, 3),
     if(length(i <- which(substr(cn,ncn-1,ncn) == "Df")))
 	zap.i <- zap.i[!(zap.i %in% i)]
 
-    print.coefmat(x, digits=digits, signif.stars=signif.stars, P.values=has.P,
+    print.coefmat(x, digits = digits, signif.stars = signif.stars,
+                  has.Pvalue = has.P, P.values = has.P,
 		  cs.ind = NULL, zap.ind = zap.i, tst.ind= tst.i,
 		  na.print = "", # not yet in print.matrix:  print.gap = 2,
 		  ...)
