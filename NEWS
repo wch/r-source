@@ -97,6 +97,9 @@ BUG FIXES
     o   real conversions in type.convert were always treating "NA" as
 	missing whatever the setting of na.strings. (PR#1568)
 
+    o	R CMD check now deals correctly with package names containing a
+	'.' in the Depends field of a DESCRIPTION file. (PR#1591)
+
 
 
 		CHANGES IN R VERSION 1.5.0
