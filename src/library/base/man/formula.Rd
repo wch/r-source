@@ -8,6 +8,7 @@ formula.formula(formula.obj)
 formula.terms(terms.obj)
 }
 \alias{~}
+\alias{formula}
 \alias{formula.default}
 \alias{formula.formula}
 \alias{formula.terms}
@@ -65,5 +66,11 @@ of class \code{formula} which contains a symbolic model formula.
 }
 \seealso{
 \code{\link{lm}}, \code{\link{glm}}, \code{\link{terms}}.
+}
+\examples{
+class(fo <- y ~ x1*x2) # "formula"
+fo
+typeof(fo)# R internal : "language"
+terms(fo)
 }
 \keyword{models}

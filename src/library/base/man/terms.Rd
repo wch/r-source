@@ -24,4 +24,5 @@ of class \code{terms} which contains the
 \seealso{
 \code{\link{lm}}, \code{\link{glm}}, \code{\link{formula}}.
 }
+%%--- MM: I would really like instructive examples here...
 \keyword{models}
