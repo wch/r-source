@@ -4013,7 +4013,7 @@ column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).
 @end deftypefun
 
-@deftypefun int findIntervall (double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
+@deftypefun int findInterval(double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
 Given the ordered vector @var{xt} of length @var{n}, return the interval
 or index of @var{x} in @code{@var{xt}[]}, typically max(i ; 1 <= i <=
 @var{n} & @var{xt}[i] <= @var{x}) where we use 1-indexing as in @R{} and
@@ -4028,7 +4028,7 @@ The algorithm is particularly fast when @var{ilo} is set to the last
 result of @code{interv()} and @var{x} is a value of a sequence which
 is increasing or decreasing for subsequent calls.
 
-There is also an F77_CALL(interv)() version of @code{findIntervall()} with
+There is also an F77_CALL(interv)() version of @code{findInterval()} with
 the same arguments, but all pointers.
 @end deftypefun
 
