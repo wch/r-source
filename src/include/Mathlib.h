@@ -288,4 +288,11 @@ double	pnt(double, double, double);
 double	qnt(double, double, double);
 double	rnt(double, double);
 
+	/* Studentized Range Distribution */
+
+double	dtukey(double, double, double, double);
+double	ptukey(double, double, double, double);
+double	qtukey(double, double, double, double);
+double	rtukey(double, double, double);
+
 #endif

@@ -32,7 +32,8 @@ OBJ=	\
 	dlogis.o plogis.o qlogis.o rlogis.o \
 	dnchisq.o pnchisq.o qnchisq.o \
 	dnbeta.o pnbeta.o \
-	pnf.o pnt.o
+	pnf.o pnt.o \
+	ptukey.o qtukey.o
 
 LIB=		../lib/libmath.a
 
