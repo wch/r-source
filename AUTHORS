@@ -13,10 +13,11 @@ Robert Gentleman	<rgentlem@jimmy.dfci.harvard.edu>
 Kurt Hornik		<Kurt.Hornik@ci.tuwien.ac.at>
 Stefano Iacus		<stefano.iacus@unimi.it>
 Ross Ihaka		<ihaka@stat.auckland.ac.nz>
-Friedrich Leisch	<Friedrich.Leisch@ci.tuwien.ac.at>
+Friedrich Leisch	<Friedrich.Leisch@univie.ac.at>
 Thomas Lumley		<tlumley@u.washington.edu>
 Martin Maechler		<maechler@stat.math.ethz.ch>
 Guido Masarotto		<guido@hal.stat.unipd.it>
+Duncan Murdoch		<murdoch@stats.uwo.ca>
 Paul Murrell		<paul@stat.auckland.ac.nz>
 Brian Ripley		<ripley@stats.ox.ac.uk>
 Duncan Temple Lang	<duncan@research.bell-labs.com>
@@ -24,9 +25,8 @@ Luke Tierney		<luke@stat.umn.edu>
 
 plus Heiner Schwarte <h.schwarte@bluewin.ch> up to October 1999.
 
-For the GNOME GUI and the Windows port,
+For the GNOME GUI
 
 Martyn Plummer		<plummer@iarc.fr>
-Duncan Murdoch		<murdoch@stats.uwo.ca>
 
-have had write access since early 2002.
+has had write access since early 2002.
