@@ -648,6 +648,13 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
    double's.  Since int's are almost universally 32 bit that should be
    OK. */
 
+#ifndef INT_32_BITS
+/* configure checks whehter int is 32 bits.  If not this code will
+   need to be rewritten.  Since 32 bit ints are pretty much universal,
+   we can worry about writing alternate code when the need arises.
+   To be safe, we signal a compiler error if int is not 32 bits. */
+# error code requires that int have 32 bits
+#else
 /* This should be handled properly in configure. Configure should also
    check that a double can accurately represent any int. */
 #define USES_TWOS_COMPLEMENT (~0 == (unsigned) -1)
@@ -662,6 +669,7 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
 #endif
 #define GOODIPROD(x, y, z) ((double) (x) * (double) (y) == (z))
 #define INTEGER_OVERFLOW_WARNING "NAs produced by integer overflow"
+#endif
 
 static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 {
