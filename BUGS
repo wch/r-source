@@ -78,10 +78,6 @@ Directory:  Graphics
 Subject: legend() with xpd=T; omission of initial plot character
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sun, 20 May 2001 10:35:16 +1000
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -89,15 +85,30 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
+* PR# 750 *
+Subject: abline() does not obey "xpd" (clipping rules)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 27 Nov 2000 18:27:11 +0100
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
+* PR# 791 *
+Subject:  par(lab= *) / axis(*) bug 
+From: maechler@stat.math.ethz.ch
+Date: Fri, 22 Dec 2000 10:59:26 +0100
 * PR# 776 *
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 --This needs a substantial redesign.
-* PR# 750 *
-Subject: abline() does not obey "xpd" (clipping rules)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Nov 2000 18:27:11 +0100
+* PR# 820 *
+Subject: interaction.plot
+From: "Mark M. Span" <span@psy.uva.nl>
+Date: Mon, 22 Jan 2001 10:47:39 +0100
+--mtext is unscaled by default.  It is not clear if this should
+--use the par("cex") setting or an inline cex setting such as cex.axis.
+--It might make more sense to use axis rather than mtext, as boxplot does.
 * PR# 816 *
 Subject: dotplot: character size of labels
 From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
@@ -113,29 +124,6 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 --mayhave side-effects in many other pieces of interpreted code 
 --(ii) do_mtext ignores dd->gp.cexbase unlike, for example, do_plot_xy 
 --and anything to do with cexbase needs extreme care.
-* PR# 791 *
-Subject:  par(lab= *) / axis(*) bug 
-From: maechler@stat.math.ethz.ch
-Date: Fri, 22 Dec 2000 10:59:26 +0100
-* PR# 828 *
-Subject: termplot fails for composite non-factor terms
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
---Neither of the proposed changes actually works in sufficient generality.
---
---The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
---the data right is a project for 1.3
-* PR# 820 *
-Subject: interaction.plot
-From: "Mark M. Span" <span@psy.uva.nl>
-Date: Mon, 22 Jan 2001 10:47:39 +0100
---mtext is unscaled by default.  It is not clear if this should
---use the par("cex") setting or an inline cex setting such as cex.axis.
---It might make more sense to use axis rather than mtext, as boxplot does.
-* PR# 837 *
-Subject: screen doesn't handle redrawing properly
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 01 Feb 2001 14:20:52 -0500
 * PR# 831 *
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -146,19 +134,22 @@ Date: 30 Jan 2001 00:39:41 -0500
 --Fix doesn't work. One problem is that the opar<-par();par(opar) idiom updates
 --xaxp before xlog, and the new value of xaxp may only be valid under the new
 --value of xlog.
+* PR# 828 *
+Subject: termplot fails for composite non-factor terms
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
+--Neither of the proposed changes actually works in sufficient generality.
+--
+--The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
+--the data right is a project for 1.3
 * PR# 865 *
 Subject:  axis(...,las=1) breaks postscript code in certain cases 
 From: maechler@stat.math.ethz.ch
 Date: Wed, 7 Mar 2001 18:08:58 +0100
-* PR# 857 *
-Subject: Plotting points on a filled.contour plot
-From: marchini@stats.ox.ac.uk
-Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
---This needs at least to be documented, and preferably par("usr")
---set to the coordinate system of the plotting region after use.
---
---Added note and example to help file to explain how to annotate
---filled contour.  Paul 24/5/01
+* PR# 837 *
+Subject: screen doesn't handle redrawing properly
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 01 Feb 2001 14:20:52 -0500
 * PR# 940 *
 Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
 From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
@@ -219,11 +210,7 @@ Date: Tue, 29 May 2001 14:25:00 +0200
 
 Directory:  Misc
 
-* PR# 982 *
-Subject: R CMD check
-From: Roger Bivand <Roger.Bivand@nhh.no>
-Date: Fri, 15 Jun 2001 21:29:33 +0200 (CEST)
---problem with function not found: need to investigate this example.
+none
 
 Directory:  Models
 
@@ -310,4 +297,31 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-none
+* PR# 989 *
+Subject: "[.data.frame" allows un-named 3rd subscript
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
+* PR# 983 *
+Subject: laser supplies
+From: <jwayne45@care2.com>
+Date: Sun, 17 Jun 2001 19:10:13
+* PR# 985 *
+Subject: Macintosh device not implemented in dev.copy2eps
+From: papritz@ito.umnw.ethz.ch
+Date: Mon, 18 Jun 2001 07:07:07 +0200 (MET DST)
+* PR# 984 *
+Subject: typos in doc for write.table
+From: eglen@pcg.wustl.edu
+Date: Mon, 18 Jun 2001 02:26:03 +0200 (MET DST)
+* PR# 988 *
+Subject: input for R-intro
+From: "Paul E. Johnson" <pauljohn@ku.edu>
+Date: Mon, 18 Jun 2001 13:57:10 -0500
+* PR# 987 *
+Subject: 1.3.0 .RData
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Mon, 18 Jun 2001 13:17:05 -0400
+* PR# 986 *
+Subject: approxfun(*, ties=) returning "random" result
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 18 Jun 2001 12:35:37 +0200
