@@ -30,40 +30,42 @@ parent.frame(n=1)
 \item{n}{the number of frame generations to go back.}
 }
 \description{
-These functions provide access to \code{\link{environment}}s (``frames''
-in S terminology) associated with functions further up the calling stack.
+  These functions provide access to \code{\link{environment}}s (``frames''
+  in S terminology) associated with functions further up the calling stack.
 }
 \details{
-\code{\link{.GlobalEnv}} is given number 0 in the list of frames.
-Each subsequent function evaluation increases the frame stack by 1
-and the environment for evaluation of that function is returned by
-\code{sys.frame} with the appropriate index.
+  \code{\link{.GlobalEnv}} is given number 0 in the list of frames.
+  Each subsequent function evaluation increases the frame stack by 1
+  and the environment for evaluation of that function is returned by
+  \code{sys.frame} with the appropriate index.
 
-The parent of a function evaluation is the environment in which the
-function was called. It is not necessarily one less than the frame
-number of the current evaluation, nor the environment from which it is
-called.  \code{sys.parent} returns the number of the parent frame if
-\code{n} is 1 (the default), the grandparent if \code{n} is 2, and so
-forth. \code{sys.frame} returns the environment associated with a given
-frame number.
+  The parent of a function evaluation is the environment in which the
+  function was called. It is not necessarily one less than the frame
+  number of the current evaluation, nor the environment from which it is
+  called.  \code{sys.parent} returns the number of the parent frame if
+  \code{n} is 1 (the default), the grandparent if \code{n} is 2, and so
+  forth. \code{sys.frame} returns the environment associated with a given
+  frame number.
 
-\code{sys.call} and \code{sys.frame} both accept either positive or
-negative values for the argument \code{which}.  Positive values of
-\code{which} are normal frame numbers whereas negative values are counted
-back from the frame number of the current evaluation.
+  \code{sys.call} and \code{sys.frame} both accept either positive or
+  negative values for the argument \code{which}.  Positive values of
+  \code{which} are normal frame numbers whereas negative values are counted
+  back from the frame number of the current evaluation.
 
-Notice that even though the \code{sys.}\emph{xxx} functions are
-interpreted, their contexts are not counted nor are they reported.
-There is no access to them.
+  Notice that even though the \code{sys.}\emph{xxx} functions are
+  interpreted, their contexts are not counted nor are they reported.
+  There is no access to them.
 
-\code{sys.status()} returns a list with components \code{sys.calls},
-\code{sys.parents} and \code{sys.frames}.
+  \code{sys.status()} returns a list with components \code{sys.calls},
+  \code{sys.parents} and \code{sys.frames}.
 
-\code{sys.on.exit()} retrieves the expression stored for use by
-\code{\link{on.exit}} in the function currently being evaluated.
+  \code{sys.on.exit()} retrieves the expression stored for use by
+  \code{\link{on.exit}} in the function currently being evaluated.
+  (Note that this differs from S, which returns a list of expressions
+  for the current frame and its parents.)
 
-\code{parent.frame(n)} is a convenient shorthand for
-\code{sys.frame(sys.parent(n))}.
+  \code{parent.frame(n)} is a convenient shorthand for
+  \code{sys.frame(sys.parent(n))}.
 }
 \seealso{
   \code{\link{eval}} for the usage of \code{sys.frame}.
