@@ -3,6 +3,7 @@
 \alias{rbind}
 \alias{cbind.data.frame}
 \alias{rbind.data.frame}
+\concept{insert}
 \title{Combine R Objects by Rows or Columns}
 \description{
   Take a sequence of vector, matrix or data frames arguments and combine
@@ -100,7 +101,10 @@ rbind(\dots, deparse.level = 1)
   frame.
 }
 \examples{
-cbind(1, 1:7) # the '1' (= shorter vector) is recycled
+m <- cbind(1, 1:7) # the '1' (= shorter vector) is recycled
+m
+m <- cbind(m, 8:14)[, c(1, 3, 2)] # insert a column 
+m
 cbind(1:7, diag(3))# vector is subset -> warning
 
 cbind(0, rbind(1, 1:3))
