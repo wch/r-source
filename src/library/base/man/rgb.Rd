@@ -14,7 +14,9 @@ The values returned by \code{rgb} can be used with a
 \code{col=} specification in graphics functions or in \code{par}.
 }
 \seealso{
-\code{\link{rainbow}}, \code{\link{hsv}}, \code{\link{gray}}.
+  \code{\link{col2rgb}} the ``inverse'' for translating \R colors to RGB
+  vectors.\cr
+  \code{\link{rainbow}}, \code{\link{hsv}}, \code{\link{gray}}.
 }
 \examples{
 rgb(0,1,0)

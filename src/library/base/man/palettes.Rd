@@ -48,8 +48,9 @@ These functions create a vector of \code{n} ``contiguous'' colors.
   in graphics functions or in \code{par}.
 }
 \seealso{
-\code{\link{colors}}, \code{\link{palette}},  \code{\link{hsv}},
-\code{\link{rgb}}, \code{\link{gray}}.
+  \code{\link{colors}}, \code{\link{palette}},  \code{\link{hsv}},
+  \code{\link{rgb}}, \code{\link{gray}} and \code{\link{col2rgb}} for
+  translating to RGB numbers.
 }
 \examples{
 # A Color Wheel

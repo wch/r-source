@@ -32,6 +32,18 @@ stopifnot(col2rgb("#08a0ff") == c(8, 160, 255))
 ## all three kind of colors mixed :
 col2rgb(c(red="red", palette= 1:3, hex="#abcdef"))
 
+##-- NON-INTRODUCTORY examples --
+
+grC <- col2rgb(paste("gray",0:100,sep=""))
+stopifnot(grC["red",] == grC["green",],
+          grC["red",] == grC["blue",],
+          grC["red", 1:4] == c(0,3,5,8))
+table(print(diff(grC["red",])))# `2' or `3': almost equidistant
+## The `named' grays are in between {"slate gray" is not gray, strictly}
+col2rgb(c(g66="gray66", darkg= "dark gray", g67="gray67",
+          g74="gray74", gray =      "gray", g75="gray75",
+          g82="gray82", light="light gray", g83="gray83"))
+
 crgb <- col2rgb(cc <- colors())
 colnames(crgb) <- cc
 t(crgb)## The whole table
