@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-42 2004-08-09
+Version 1.9-43 2004-08-12
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -3458,12 +3458,12 @@ can be found at `http://stat.ethz.ch/ESS/'.
 
    ESS comes with detailed installation instructions.
 
-   For help with ESS, send email to <ESS-help@stat.ethz.ch>.
+   For help with ESS, send email to <ESS-help@stat.math.ethz.ch>.
 
    Please send bug reports and suggestions on ESS to
-<ESS-bugs@stat.ethz.ch>.  The easiest way to do this from is within Emacs
-by typing `M-x ess-submit-bug-report' or using the [ESS] or [iESS] pulldown
-menus.
+<ESS-bugs@stat.math.ethz.ch>.  The easiest way to do this from is within
+Emacs by typing `M-x ess-submit-bug-report' or using the [ESS] or [iESS]
+pulldown menus.
 
 6.2 Should I run R from within Emacs?
 =====================================
