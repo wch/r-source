@@ -981,13 +981,13 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
     value = getAttrib(obj, name);
     if(value == R_NilValue) {
 	SEXP input = name, classString;
-	classString = GET_CLASS(obj);
-	if(isNull(classString))
-	    error("Can't get a slot (\"%s\") from an object of type \"%s\"",
-		  CHAR(asChar(classString)), CHAR(type2str(TYPEOF(obj))));
 	if(isSymbol(name) ) {
 	    input = PROTECT(allocVector(STRSXP, 1));  nprotect++;
 	    SET_STRING_ELT(input, 0, PRINTNAME(name));
+	classString = GET_CLASS(obj);
+	if(isNull(classString))
+	    error("Can't get a slot (\"%s\") from an object of type \"%s\"",
+		  CHAR(asChar(input)), CHAR(type2str(TYPEOF(obj))));
 	}
  	/* not there.  But since even NULL really does get stored, this
 	   implies that there is no slot of this name.  Or somebody
@@ -1013,8 +1013,11 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
     if(!s_dot_Data)
 	init_slot_handling();
     if(isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
-    if(name == s_dot_Data)
-	return set_data_part(obj, value);
+    if(name == s_dot_Data) {
+	obj = set_data_part(obj, value);
+        UNPROTECT(nprotect);
+	return(obj); 
+    }
     if(isNull(value))
 	/* slots, but not attributes, can be NULL.  Store a special symbol
 	   instead. */
