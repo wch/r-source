@@ -380,7 +380,7 @@ bindist: tcl bitmapdll docfiles
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
 	$(CP) -p CHANGES README.Rterm $(RPREFIX)
-	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;
+	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
 # convert docs and batch files to CRLF: might already be on Windows, though.
 ifeq ($(strip $(BUILD)),CROSS)
 	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
@@ -453,7 +453,7 @@ packagedist:
 	$(CP) -p graphapp/graphapp.h graphapp/ga.h $(RPREFIX)/src/include
 	$(MAKE) PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
-	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;
+	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
 	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
