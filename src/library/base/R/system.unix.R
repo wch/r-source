@@ -89,15 +89,14 @@ function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
 		     "help", "AnIndex", sep = "/", collapse = " ")
     file <- system(paste("${RHOME}/cmd/help '", topic, "' ", INDICES, sep=""),
 		   intern = TRUE)
-    cat ("\t\t\t\t\t\tHelp file name '", sub(".*/","",file),".Rd'",sep="")
-
     if (file == "") { # try data .doc -- this is OUTDATED
       file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
 			  package, lib.loc)
     }
-    if (length(file) && file != "")
+    if (length(file) && file != "") {
+      cat ("\t\t\t\t\t\tHelp file name '", sub(".*/","",file),".Rd'\n",sep="")
       system(paste("${RHOME}/cmd/pager", file))
-    else
+    } else
       stop(paste("No documentation for `", topic, "'", sep = ""))
   }
   else if (!missing(package))
