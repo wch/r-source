@@ -1,17 +1,18 @@
 Changes from grid_2.0.1 to grid_2.1.0:
 ------------------------------------
 
-1.  drawDetails() methods are now recorded on the graphics engine
-    display list.   This means that calculations within a 
-    drawDetails() method are now run when a device is resized or
+1.  preDrawDetails(), drawDetails(), and postDrawDetails() 
+    methods are now recorded on the graphics engine
+    display list.   This means that calculations within these 
+    methods are now run when a device is resized or
     when output is copied from one device to another.  A simple
     example (the rectangle remains 1inch wide when resizing the
     device -- it does not in previous versions) ...
 
         testgrob <- grob(cl="test")
 	drawDetails.test <- function(x, recording) {
-	  grid.draw(rectGrob(width=convertWidth(unit(1, "inches"), "npc")),
-                    recording=FALSE)
+	  w <- convertWidth(unit(1, "inches"), "npc")
+	  grid.rect(width=w)
 	}
 	grid.draw(testgrob)
 
@@ -20,6 +21,27 @@ Changes from grid_2.0.1 to grid_2.1.0:
 
 3.  New getNames() function to return just the names of all top-level
     grobs on the display list.
+
+4.  Recording on the grid display list is turned off within 
+    preDrawDetails(), drawDetails(), and postDrawDetails() methods.
+
+    This means that you do not need to worry about specifying
+    recording=FALSE within these methods.
+    
+5.  Grid should recover better from errors or user-interrupts
+    during drawing (i.e., not leave you in a strange viewport
+    or with strange graphical parameter settings).
+
+6.  New function grid.refresh() to redraw the grid display list.
+
+7.  New function grid.record() to capture calculations
+    with grid graphics output.  For example ...
+
+        grid.record({
+                      w <- convertWidth(unit(1, "inches"), "npc")
+	              grid.rect(width=w)
+                    },
+                    list())
 
 
 Changes from grid_2.0.0 to grid_2.0.1:

@@ -1688,16 +1688,27 @@ postDraw.grob <- function(x) {
 }
 
 drawGrob <- function(x) {
+  # Temporarily turn off the grid DL so that
+  # nested calls to drawing code do not get recorded
+  dlon <- grid.Call("L_setDLon", FALSE)
+  # If get error or user-interrupt, need to reset state
+  # Need to turn grid DL back on (if it was on)
+  on.exit(grid.Call("L_setDLon", dlon))
+  # Save current gpar
   tempgpar <- grid.Call("L_getGPar")
+  # If get error or user-interrupt, need to reset state
+  # Need to restore current grob (gtree predraw sets current grob)
+  # Need to restore gpar settings (set by gtree itself and/or its vp)
+  # This does not need to be a grid.Call.graphics() because
+  # we are nested within a recordGraphics()
+  # Do not call set.gpar because set.gpar accumulates cex
+  on.exit(grid.Call("L_setGPar", tempgpar), add=TRUE)
   preDraw(x)
   # Do any class-specific drawing
   drawDetails(x, recording=FALSE)
   postDraw(x)
-  # Do not call set.gpar because set.gpar accumulates cex
-  grid.Call.graphics("L_setGPar", tempgpar)
 }
 
-# FIXME:  should be on.exit(set.gpar(tempgpar)) ??
 grid.draw.grob <- function(x, recording=TRUE) {
   engineDLon <- grid.Call("L_getEngineDLon")
   if (engineDLon)   
@@ -1711,34 +1722,54 @@ grid.draw.grob <- function(x, recording=TRUE) {
   invisible()
 }
 
+drawGList <- function(x) {
+  # Temporarily turn off the grid DL so that
+  # nested calls to drawing code do not get recorded
+  dlon <- grid.Call("L_setDLon", FALSE)
+  # If get error or user-interrupt, need to reset state
+  # Need to turn grid DL back on (if it was on)
+  on.exit(grid.Call("L_setDLon", dlon))
+  lapply(x, grid.draw, recording=FALSE)
+}
+
 grid.draw.gList <- function(x, recording=TRUE) {
   engineDLon <- grid.Call("L_getEngineDLon")
   if (engineDLon) 
-    recordGraphics(lapply(x, grid.draw, recording=FALSE),
+    recordGraphics(drawGList(x),
                    list(x=x),
                    getNamespace("grid"))
-  else    
-    lapply(x, grid.draw, recording=FALSE)
+  else
+    drawGList(x)
   invisible()
 }
 
 drawGTree <- function(x) {
+  # Temporarily turn off the grid DL so that
+  # nested calls to drawing code do not get recorded
+  dlon <- grid.Call("L_setDLon", FALSE)
+  # If get error or user-interrupt, need to reset state
+  # Need to turn grid DL back on (if it was on)
+  on.exit(grid.Call("L_setDLon", dlon))
+  # Save current grob and current gpar
   tempgrob <- grid.Call("L_getCurrentGrob")
   tempgpar <- grid.Call("L_getGPar")
+  # If get error or user-interrupt, need to reset state
+  # Need to restore current grob (gtree predraw sets current grob)
+  # Need to restore gpar settings (set by gtree itself and/or its vp)
+  # This does not need to be a grid.Call.graphics() because
+  # we are nested within a recordGraphics()
+  # Do not call set.gpar because set.gpar accumulates cex
+  on.exit({ grid.Call("L_setGPar", tempgpar)
+            grid.Call("L_setCurrentGrob", tempgrob)
+          }, add=TRUE)
   preDraw(x)
   # Do any class-specific drawing
   drawDetails(x, recording=FALSE)
   # Draw all children
   grid.draw(x$children, recording=FALSE)
   postDraw(x)
-  # Do not call set.gpar because set.gpar accumulates cex
-  grid.Call.graphics("L_setGPar", tempgpar)
-  # Do this as a .Call.graphics to get it onto the
-  # base display list
-  grid.Call.graphics("L_setCurrentGrob", tempgrob)
 }
 
-# FIXME:  should be on.exit(set.gpar(tempgpar)) ??
 grid.draw.gTree <- function(x, recording=TRUE) {
   engineDLon <- grid.Call("L_getEngineDLon")
   if (engineDLon) 

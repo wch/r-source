@@ -369,6 +369,11 @@ engine.display.list <- function(on=TRUE) {
   grid.Call("L_setEngineDLon", as.logical(on))
 }
 
+# Rerun the grid DL
+grid.refresh <- function() {
+  draw.all()
+}
+
 # Wrapper for .Call and .Call.graphics
 # Used to make sure that grid-specific initialisation occurs just before
 # the first grid graphics output OR the first querying of grid state
@@ -399,3 +404,15 @@ grid.Call.graphics <- function(fnname, ...) {
   result
 }
 
+# A call to recordGraphics() outside of [pre|post]drawDetails methods
+# will not record the expr on the grid DL.
+# If a user REALLY wants to call recordGraphics(), they should use
+# grid.record() instead
+drawDetails.recordedGrob <- function(x, recording) {
+  eval(x$expr, x$list, getNamespace("grid"))
+}
+
+grid.record <- function(expr, list) {
+  grid.draw(grob(expr=substitute(expr), list=list,
+                 cl="recordedGrob"))
+}
