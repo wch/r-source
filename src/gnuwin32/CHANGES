@@ -39,6 +39,9 @@ install.packages() can install source packages as well as binary ones.
 
 sQuote() now defaults to type="cmd" on Windows.
 
+R can now be built with Unicode support on Win9x and WinME.  Set
+SUPPORT_UTF8 to YES in src/gnuwin32/MkRules.
+
 
 
 R 2.0.1 patched

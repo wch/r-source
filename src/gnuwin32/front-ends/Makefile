@@ -48,9 +48,9 @@ rgui-CFLAGS=-DWin32
 rterm-CFLAGS=-DWin32
 Rgui-LINKFLAGS=-mwindows
 
-Rterm-LIBS=-luser32 -L.. -lR
-Rgui-LIBS=-L.. -lR
-Rpwd-LIBS=-lkernel32
+Rterm-LIBS=$(LIBUNICOWS) -luser32 -L.. -lR
+Rgui-LIBS=-L.. $(LIBUNICOWS) -lR
+Rpwd-LIBS=$(LIBUNICOWS) -lkernel32
 
 Rgui.exe: graphappmain.o  rgui.o rgico.o
 
@@ -78,7 +78,7 @@ clean:
 
 bdx-CFLAGS=-I../../include
 rproxy-DLLFLAGS=-mwindows
-rproxy-DLLLIBS=-L.. -lR
+rproxy-DLLLIBS=-L.. $(LIBUNICOWS) -lR
 rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o bdx.o rtico.o
 
 $(R_HOME)/bin/Rproxy.dll: rproxy.dll

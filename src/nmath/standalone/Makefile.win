@@ -18,7 +18,7 @@ cpy:
 	$(CP) -p ../*.c .
 
 test test.exe: test.c
-	$(CC) -o $@ -I../../include $< -L. -lRmath
+	$(CC) -o $@ -I../../include $< -L. $(LIBUNICOWS) -lRmath
 
 clean:
 	$(RM) $(SOURCES_NMATH) *.o *.d *.def Makedeps

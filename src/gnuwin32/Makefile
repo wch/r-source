@@ -45,8 +45,9 @@ R-DLLFLAGS = -mwindows
 else
 R-DLLFLAGS = -mwindows
 endif
+
 ## only need -lmsvcp60 if we use SUPPORT_UTF8
-R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60
+R-DLLLIBS =-L. $(LIBUNICOWS) $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -186,6 +187,9 @@ Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 	@$(MAKE) --no-print-directory R.dll
 	@$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
+ifdef SUPPORT_UTF8
+	$(CP) unicode/opencow.dll ../../bin/
+endif
 
 FORCE:
 
@@ -241,7 +245,7 @@ Rblas-clean:
 	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o \
 	  zgemm.o blasGoto.o libgoto.a
 
-Rblas-DLLLIBS=-L. -lR
+Rblas-DLLLIBS=-L. $(LIBUNICOWS) -lR
 
 libRblas.a:  Rblas.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
@@ -262,17 +266,17 @@ libgoto.a:  libgoto.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) --dllname $(GOTO_DLL) --def $< --output-lib $@
 ../../bin/Rblas.dll: blas00.o blasGoto.o cmplxblas.o zgemm.o dllversion.o libgoto.a
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L. -lR -lg2c -lgoto
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L. $(LIBUNICOWS) -lR -lg2c -lgoto
 else
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
-	   -L. -lR -lg2c -lf77blas -latlas
+	   -L. $(LIBUNICOWS) -lR -lg2c -lf77blas -latlas
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L. -lR
+	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L. $(LIBUNICOWS) -lR
 endif
 endif
 

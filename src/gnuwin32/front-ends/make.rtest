@@ -8,7 +8,7 @@ else
   LINKFLAGS=-s
 endif
 
-LIBS=-L.. -lR
+LIBS=-L.. $(LIBUNICOWS) -lR
 CFLAGS=-Wall
 
 rtest-CFLAGS=-I.. -I../../include

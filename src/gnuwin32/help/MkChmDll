@@ -2,7 +2,7 @@ include ../MkRules
 
 Rchtml-CFLAGS= -I "$(HHWDIR)/include"
 Rchtml-DLLFLAGS= -s
-Rchtml-DLLLIBS= -L. -lhhctrl
+Rchtml-DLLLIBS= -L. $(LIBUNICOWS) -lhhctrl
 
 all: libhhctrl.a ../../../bin/Rchtml.dll
 
