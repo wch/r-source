@@ -5661,8 +5661,8 @@ echo "$ac_t""$r_cv_header_setjmp_posix" 1>&6
 EOF
 
   fi
-echo $ac_n "checking for GNU C library and its version""... $ac_c" 1>&6
-echo "configure:5666: checking for GNU C library and its version" >&5
+echo $ac_n "checking for GNU C library with version >= 2""... $ac_c" 1>&6
+echo "configure:5666: checking for GNU C library with version >= 2" >&5
 if eval "test \"`echo '$''{'r_cv_header_glibc2'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
