@@ -29,6 +29,8 @@ NEW FEATURES
 
     o   data set `euro' with Euro conversion rates.
 
+    o   new function jitter()  [slightly wmore useful than S's].
+
 
 BUG FIXES
 
@@ -71,6 +73,8 @@ BUG FIXES
     o   use object$prior.weights in add1.glm, drop1.glm (Brian Ripley)
 
     o   rnorm(1,mean=m,sd=0) returns m, not NaN (Ben Bolker)
+
+    o   runif(n, a,a) now returns  rep(a,n) instead of NaNs.
 
 
 		CHANGES IN R VERSION 0.63.1
