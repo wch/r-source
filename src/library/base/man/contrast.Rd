@@ -30,9 +30,19 @@ Note that as from \R version 0.62.2, \code{contr.poly} returns contrasts
 based on orthogonal (rather than raw) polynomials.
 }
 \seealso{
-\code{\link{contrasts}},
-\code{\link{glm}},
-\code{\link{lm}}.
+    \code{\link{contrasts}}, \code{\link{C}}, and
+    \code{\link{aov}}, \code{\link{glm}}, \code{\link{lm}}.
+}
+\examples{
+(cH <- contr.helmert(4))
+apply(cH, 2,sum)# column sums are 0!
+crossprod(cH)# diagonal -- columns are orthogonal
+
+(cT <- contr.treatment(5))
+all(crossprod(cT) == diag(4))# TRUE: even orthonormal
+
+(cP <- contr.poly(3))# Linear and Quadratic
+zapsmall(crossprod(cP), dig=15) # orthonormal up to fuzz
 }
 \keyword{design}
 \keyword{regression}

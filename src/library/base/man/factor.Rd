@@ -36,7 +36,7 @@ as.ordered(x)
   level for the factor.  \emph{This means that there will be no
   \code{NA} values in the result}.
 
-  \code{factor} applied to a factor is a no-op, except if there are 
+  \code{factor} applied to a factor is a no-op, except if there are
   empty levels. In that case, a factor with the reduced level set
   set is returned.
 
@@ -55,7 +55,8 @@ as.ordered(x)
   \code{ordered(x)} otherwise.
 }
 \seealso{
-  \code{\link{gl}} for construction of ``balanced'' factors;
+  \code{\link{gl}} for construction of ``balanced'' factors and
+  \code{\link{C}} for factors with specified contrasts.
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
   levels,  and \code{\link{codes}} to get integer codes.
 }
@@ -63,7 +64,7 @@ as.ordered(x)
 ff <- factor(substring("statistics",1:10,1:10), levels=letters)
 ff
 codes(ff)
-factor(ff)
+factor(ff)# drops levels that don't occur !
 factor(factor(letters[7:10])[2:3]) # excercise indexing and reduction
 }
 \keyword{category}

@@ -25,12 +25,12 @@ C(object, contr, how.many, ...)
  for \code{contr.treatment} and so on.
 }
 \value{
-  The factor with the  \code{"contrasts"} attribute set.
+  The factor \code{object} with the \code{"contrasts"} attribute set.
 }
 \author{B.D. Ripley}
-
-\seealso{\code{\link{contrasts}}}
-
+\seealso{
+    \code{\link{contrasts}}, \code{\link{contr.sum}}, etc.
+}
 \examples{
 ## reset contrasts to defaults
 options(contrasts=c("contr.treatment", "contr.poly"))
@@ -47,7 +47,7 @@ summary(lm(breaks ~ wool + C(tension, base=2), data=warpbreaks))
 
 
 data(esoph) # following on from help(esoph)
-model3 <- glm(cbind(ncases, ncontrols) ~ agegp + C(tobgp,, 1) +     
+model3 <- glm(cbind(ncases, ncontrols) ~ agegp + C(tobgp,, 1) +
      C(alcgp,, 1), data = esoph, family = binomial())
 summary(model3)
 

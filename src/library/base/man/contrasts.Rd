@@ -19,9 +19,15 @@ If contrasts are not set for a factor the default
 functions from \code{\link{options}("contrasts")} are used.
 }
 \seealso{
-    \code{\link{contr.helmert}},\code{\link{contr.poly}},
-    \code{\link{contr.sum}},\code{\link{contr.treatment}},
-    \code{\link{glm}},\code{\link{lm}}.
+    \code{\link{C}}, \code{\link{contr.helmert}}, \code{\link{contr.poly}},
+    \code{\link{contr.sum}}, \code{\link{contr.treatment}},
+    \code{\link{glm}}, \code{\link{aov}}, \code{\link{lm}}.
+}
+\examples{
+example(factor)
+(fff <- factor(ff))
+contrasts(fff) # treatment
+contrasts(C(fff, sum))
 }
 \keyword{design}
 \keyword{regression}
