@@ -59,6 +59,10 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
 
   The graphical parameter \code{oma} will be set by \code{pairs.default}
   unless supplied as an argument.
+
+  A panel function should not attempt to start a new plot, but just plot
+  within a given coordinate system: thus \code{plot} and \code{boxplot}
+  are not panel functions.
 }
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens
