@@ -196,7 +196,7 @@ NEW FEATURES
     o	as.data.frame.table() has a new argument 'responseName'
 	(contributed by Bill Venables).
 
-    o	p.adjust() has a new method
+    o	p.adjust() has a new method.
 
     o	scan() has a new argument 'allowEscapes' (default TRUE) that
 	controls when C-style escapes in the input are interpreted.
@@ -211,17 +211,19 @@ NEW FEATURES
 	connection its private `ungetc' and so is safer to use to
 	read partial lines.
 
-    o   New function hcl for creating colors for a given hue,
+    o   New function hcl() for creating colors for a given hue,
         chroma and luminance (i.e. perceptual hsv).
 
 
 INTERNATIONALIZATION
 
     o	Unix-alike versions of R can now be used in UTF-8 locales on
-	suitably equipped OSes.	 [This is incomplete at present, and
-	only switched on at all by configure flag --enable-utf8. The
-	changes to font handling in the X11 module are based on the
-	Japanization patches of Eiji Nakama.]
+	suitably equipped OSe is configured with option --enable-utf8.
+	[The changes to font handling in the X11 module are based on
+	the Japanization patches of Eiji Nakama.]
+
+	Such a version of R will also run in other locales with
+	multi-byte character sets.
 
 	See the 'Internationalization' section in the 'Installation
 	and Administration' manual.
@@ -253,7 +255,7 @@ INTERNATIONALIZATION
 
     o	LC_MONETARY is set to the locale, which affects the result of
 	Sys.localeconv(), but nothing else in R itself.	 (It could
-	affect addon packages.)
+	affect add-on packages.)
 
     o	source() now has an 'encoding' argument which can be used to
 	make it try out various possible encodings.  This is made use
