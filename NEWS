@@ -89,6 +89,13 @@ NEW FEATURES
     o	.Platform has new component "endian", useful for binary file
 	manipulations.
 
+    o	Configure/build variable FLIBS now only contains the Fortran 77
+	intrinsic and run-time libraries needed for linking a Fortran 77
+	program or shared library (as determined by configure).  BLAS
+	library detection was extended, with results saved to the Make
+	variable BLAS_LIBS which is also available to add-on packages.
+
+
 
 BUG FIXES
 
