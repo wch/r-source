@@ -166,13 +166,12 @@ is to cause it to skip the CVS directories.  Further information on
 @chapter Installing R under Unix
 @cindex Installing under Unix
 
-@R{} will configure and build from source under a number of common
-Unix-like platforms, including @samp{i386-freebsd},
-@samp{i386-linux-gnu}, @samp{i386-sun-solaris},
-@samp{powerpc-linux-gnu}, @samp{powerpc-apple-darwin},
-@samp{mips-sgi-irix}, @samp{alpha-linux-gnu}, @samp{alpha-dec-osf4},
-@samp{rs6000-ibm-aix}, @samp{hppa-hp-hpux}, @samp{sparc-linux-gnu} and
-@samp{sparc-sun-solaris}.
+@R{} will configure and build under a number of common Unix platforms
+including i386-freebsd, @var{cpu}-linux-gnu for the i386, alpha, arm,
+hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.@:
+@uref{http://buildd.debian.org/build.php?&pkg=r-base}),
+i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
+rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
 @cindex Linux
 @cindex MacOS X
