@@ -75,7 +75,6 @@ typedef int (WINAPI * _DLL_UNZIP)(int, char **, int, char **,
                                   LPDCL, LPUSERFUNCTIONS);
 _DLL_UNZIP Wiz_SingleEntryUnzip;
 HINSTANCE hUnzipDll;
-HANDLE  hMem;         /* handle to mem alloc'ed */
 
 #define UNZ_DLL_VERSION "5.41\0"
 #define COMPANY_NAME "Info-ZIP\0"
@@ -92,8 +91,7 @@ static int Load_Unzip_DLL()
     strcat(szFullPath, "\\unzip\\");
     strcat(szFullPath, UNZ_DLL_NAME);
 
-    dwVerInfoSize =
-	GetFileVersionInfoSize(szFullPath, &dwVerHnd);
+    dwVerInfoSize = GetFileVersionInfoSize(szFullPath, &dwVerHnd);
 
     if (dwVerInfoSize) {
 	BOOL  fRet, fRetName;
@@ -102,9 +100,7 @@ static int Load_Unzip_DLL()
 	LPSTR lszVerName = NULL;
 	UINT  cchVer = 0;
 
-	/* Get a block big enough to hold the version information */
-	hMem          = GlobalAlloc(GMEM_MOVEABLE, dwVerInfoSize);
-	lpstrVffInfo  = GlobalLock(hMem);
+	lpstrVffInfo = (LPSTR) malloc(dwVerInfoSize);
 
 	/* Get the version information */
 	if (GetFileVersionInfo(szFullPath, 0L, dwVerInfoSize, lpstrVffInfo))
@@ -122,8 +118,7 @@ static int Load_Unzip_DLL()
 		(lstrcmpi(lszVerName, COMPANY_NAME) != 0))
 		unzip_is_loaded = -1;
 	}
-	GlobalUnlock(hMem);
-	GlobalFree(hMem);
+	free(lpstrVffInfo);
     } else unzip_is_loaded = -1;
 
     if (unzip_is_loaded < 0) {
