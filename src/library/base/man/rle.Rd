@@ -23,7 +23,7 @@ rle(x)
 ## [1] 5 4 3 2 1
 ## $values
 ## [1] 10  9  8  7  6
-z <- c(T,T,F,F,T,F,T,T,T)
+z <- c(TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,TRUE,TRUE,TRUE)
 rle(z)
 rle(as.character(z))
 }
