@@ -89,7 +89,12 @@ getOption(x)
   \item{printcmd}{the command used by \code{\link{postscript}} for
     printing; set by environment variable \code{R_PRINTCMD} when \R is
     started. This should be a command that expects either input to be piped
-    to \file{stdin} or to be given a single filename argument.}
+    to \file{stdin} or to be given a single filename argument.
+#ifdef windows
+    See \code{\link{postscript}} for ways to set this up.
+#endif
+    }
+
 #ifdef unix
   \item{latexcmd, dvipscmd}{character strings giving commands to be used
     in off-line printing of help pages.}
