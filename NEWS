@@ -138,6 +138,8 @@ BUG FIXES
     o   Greek symbols are now converted correctly in HTML help (but
 	only rendered correctly on a few browsers).
 
+    o   rbind(x,y) works when x has no columns.
+
 
 	**************************************************
 	*						 *
