@@ -1,7 +1,7 @@
 \name{Palettes}
 \title{Color Palettes}
 \usage{
-rainbow(n, s=1, v=1, start=0, end=(n-1)/n)
+function (n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1)
 heat.colors(n)
 terrain.colors(n)
 topo.colors(n)
@@ -14,8 +14,9 @@ topo.colors(n)
 \item{n}{the number of colors (\eqn{\ge 1}{>= 1}) to be in the palette.}
 \item{s,v}{the ``saturation'' and ``value'' to be used to
   complete the HSV color descriptions.}
-\item{start}{the (corrected) hue at which the rainbow begins.}
-\item{end}{the (corrected) hue at which the rainbow ends.}
+\item{start}{the (corrected) hue in [0,1] at which the rainbow begins.}
+\item{end}{the (corrected) hue in [0,1] at which the rainbow ends.}
+\item{gamma}{the gamma correction, see \code{\link{hsv}(.., gamma)}.}
 }
 \description{
 These functions create a vector of \code{n} ``contiguous'' colors.
@@ -32,7 +33,7 @@ With \code{rainbow}, the parameters \code{start} and \code{end} can be used
 to specify particular subranges of hues.
 The following values can be used when generating
 such a subrange:
-red=0, yellow=1/6, green=2/6, cyan=3/6, blue=4/6 and magenta=5/6.
+red=0, yellow=\eqn{\frac 1 6}{1/6}, green=\eqn{\frac 2 6}{2/6}, cyan=\eqn{\frac 3 6}{3/6}, blue=\eqn{\frac 4 6}{4/6} and magenta=\eqn{\frac 5 6}{5/6}.
 }
 \value{A character vector, \code{cv}, of color names.  This can be used
   either to create a user--defined color palette for subsequent
