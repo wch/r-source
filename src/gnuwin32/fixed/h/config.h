@@ -83,7 +83,7 @@ extern int _finite(double);
 #undef HAVE_HDF5
 
 /* General String Comparison */
-#undef HAVE_STRCOLL
+#define HAVE_STRCOLL 1
 /* String duplication */
 #define HAVE_STRDUP 1
 
