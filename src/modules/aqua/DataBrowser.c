@@ -24,8 +24,8 @@
  *  Today, Aug 6 2002, S.M. Iacus
 */
 
-#ifndef __R_DATA_BROWSER__
-#define __R_DATA_BROWSER__
+#ifndef __AQUA_DATA_BROWSER__
+#define __AQUA_DATA_BROWSER__
 
 
 #ifdef HAVE_CONFIG_H
@@ -33,19 +33,10 @@
 #endif
 #include <Defn.h>
 
-#if (defined(Macintosh) || defined(HAVE_AQUA))
+#ifdef HAVE_AQUA
 
-
-#ifdef __APPLE_CC__
 # include <Carbon/Carbon.h>
 # include "DataBrowser.h"
-#else
-#define DEBUG 0
-# ifndef __CARBON__
-#  include <Carbon.h>
-# endif
-# include <RIntf.h>
-#endif
 
 #include <limits.h>
 
@@ -160,10 +151,10 @@ char **Sizes;            /* objsize     */
 int NumOfID = 0;         /* length of the vectors    */
                                 /* We do not check for this */ 
  
-SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP Raqua_do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env);
 void EmptyDataBrowser(void);
 
-SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP Raqua_do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   int i;
    SEXP id, isroot, iscont, numofit, parid;
@@ -761,14 +752,7 @@ pascal OSStatus BrowserEventHandler(
 	   
     return result;
 }
-/*
-#else 
-SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-	warning("object browser not available on this platform\n");    
-    return R_NilValue;
-}
-*/
-#endif  /* !(defined(Macintosh) && !defined(HAVE_AQUA)) */
 
-#endif /* __R_DATA_BROWSER__ */
+#endif  /* HAVE_AQUA */
+
+#endif /* __AQUA_DATA_BROWSER__ */
