@@ -60,7 +60,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
                                "greater" = "D^+",
                                "less" = "D^-")
 
-    pkstwo <- function(x, tol = 10^(-6)) {
+    pkstwo <- function(x, tol = 1e-6) {
         ## Compute \sum_{-\infty}^\infty (-1)^k e^{-2k^2x^2}
         ## Not really needed at this generality for computing a single
         ## asymptotic p-value as below.

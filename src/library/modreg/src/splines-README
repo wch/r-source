@@ -38,7 +38,6 @@ supsmu() [R]
  |-> BDRsetsmu                          ./ppr.f
  \-> BDRsupsmu                             "
      |
-     |
      |--> BDRsmooth                        "
      \--> BDRspline                        "
           |
@@ -79,5 +78,3 @@ ppr()   [R]
                      |
                      \--> BDRder
                           \-> BDRpool
-
-
