@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -17,128 +17,153 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Defn.h"
-#include "Mathlib.h"
+/* FIXME:
+   This is a partial CODE DOUBLING  of  ../library/mva/src/dist.c !!
+*/
+#include <float.h>
+#include "Arith.h"
+#include "Error.h"
+#include "Applic.h"
 
-#define NA_REAL   R_NaReal
-
-#define EUCLIDEAN 1
-#define MAXIMUM   2
-#define MANHATTAN 3
-#define CANBERRA  4
-
-extern double R_NaReal;
-
-static double euclidean(double *x, int nr, int nc, int i1, int i2)
+double euclidean(double *x, int nr, int nc, int i1, int i2)
 {
-	double count, dev, dist;
-	int j;
+    double dev, dist;
+    int count, j;
 
-	count = 0;
-	dist = 0;
-	for(j=0 ; j<nc ; j++) {
-		if(FINITE(x[i1]) && FINITE(x[i2])) {
-			dev = (x[i1] - x[i2]);
-			dist += dev * dev;
-			count++;
-		}
-		i1 += nr;
-		i2 += nr;
+    count= 0;
+    dist = 0;
+    for(j=0 ; j<nc ; j++) {
+	if(FINITE(x[i1]) && FINITE(x[i2])) {
+	    dev = (x[i1] - x[i2]);
+	    dist += dev * dev;
+	    count++;
 	}
-	if(count == 0) return NA_REAL;
-	if(count != nc) dist *= (count/nc);
-	return sqrt(dist);
+	i1 += nr;
+	i2 += nr;
+    }
+    if(count == 0) return NA_REAL;
+    if(count != nc) dist *= ((double)count/nc);
+    return sqrt(dist);
 }
 
-static double maximum(double *x, int nr, int nc, int i1, int i2)
+double maximum(double *x, int nr, int nc, int i1, int i2)
 {
-	double count, dev, dist;
-	int j;
+    double dev, dist;
+    int count, j;
 
-	count = 0;
-	dist = -DBL_MAX;
-	for(j=0 ; j<nc ; j++) {
-		if(FINITE(x[i1]) && FINITE(x[i2])) {
-			dev = fabs(x[i1] - x[i2]);
-			if(dist > dev)
-				dist = dev;
-			count++;
-		}
-		i1 += nr;
-		i2 += nr;
+    count = 0;
+    dist = -DBL_MAX;
+    for(j=0 ; j<nc ; j++) {
+	if(FINITE(x[i1]) && FINITE(x[i2])) {
+	    dev = fabs(x[i1] - x[i2]);
+	    if(dev > dist)
+		dist = dev;
+	    count++;
 	}
-	if(count == 0) return NA_REAL;
-	return dist;
+	i1 += nr;
+	i2 += nr;
+    }
+    if(count == 0) return NA_REAL;
+    return dist;
 }
 
-static double manhattan(double *x, int nr, int nc, int i1, int i2)
+double manhattan(double *x, int nr, int nc, int i1, int i2)
 {
-	double count, dist;
-	int j;
+    double dist;
+    int count, j;
 
-	count = 0;
-	dist = 0;
-	for(j=0 ; j<nc ; j++) {
-		if(FINITE(x[i1]) && FINITE(x[i2])) {
-			dist += fabs(x[i1] - x[i2]);
-			count++;
-		}
-		i1 += nr;
-		i2 += nr;
+    count = 0;
+    dist = 0;
+    for(j=0 ; j<nc ; j++) {
+	if(FINITE(x[i1]) && FINITE(x[i2])) {
+	    dist += fabs(x[i1] - x[i2]);
+	    count++;
 	}
-	if(count == 0) return NA_REAL;
-	if(count != nc) dist *= (count/nc);
-	return dist;
+	i1 += nr;
+	i2 += nr;
+    }
+    if(count == 0) return NA_REAL;
+    if(count != nc) dist *= ((double)count/nc);
+    return dist;
 }
 
-static double canberra(double *x, int nr, int nc, int i1, int i2)
+double canberra(double *x, int nr, int nc, int i1, int i2)
 {
-	double count, dist;
-	int j;
+    double dist;
+    int count, j;
 
-	count = 0;
-	dist = 0;
-	for(j=0 ; j<nc ; j++) {
-		if(FINITE(x[i1]) && FINITE(x[i2])) {
-			dist += fabs(x[i1] - x[i2])/(x[i1] + x[i2]);
-			count++;
-		}
-		i1 += nr;
-		i2 += nr;
+    count = 0;
+    dist = 0;
+    for(j=0 ; j<nc ; j++) {
+	if(FINITE(x[i1]) && FINITE(x[i2])) {
+	    dist += fabs(x[i1] - x[i2])/(x[i1] + x[i2]);
+	    count++;
 	}
-	if(count == 0) return NA_REAL;
-	if(count != nc) dist /= count;
-	return dist;
+	i1 += nr;
+	i2 += nr;
+    }
+    if(count == 0) return NA_REAL;
+    if(count != nc) dist /= count;
+    return dist;
+}
+
+double binary(double *x, int nr, int nc, int i1, int i2)
+{
+    int total, count, dist;
+    int j;
+
+    total = 0;
+    count = 0;
+    dist = 0;
+
+    for(j=0 ; j<nc ; j++) {
+	if(FINITE(x[i1]) && FINITE(x[i2])) {
+	    if(x[i1] || x[i2]){
+		count++;
+		if( ! (x[i1] && x[i2]) ){
+		    dist++;
+		}
+	    }
+	    total++;
+	}
+	i1 += nr;
+	i2 += nr;
+    }
+
+    if(total == 0) return NA_REAL;
+    if(count == 0) return 0;
+    return (double) dist / count;
 }
 
 static double (*distfun)(double*, int, int, int, int);
 
 void distance(double *x, int *nr, int *nc, double *d, int *diag, int *method)
 {
-	int dc, i, j, ij;
+    int dc, i, j, ij;
 
-	switch(*method) {
-	case EUCLIDEAN:
-		distfun = euclidean;
-		break;
-	case MAXIMUM:
-		distfun = maximum;
-		break;
-	case MANHATTAN:
-		distfun = manhattan;
-		break;
-	case CANBERRA:
-		distfun = canberra;
-		break;
-	default:
-		error("invalid distance");
-	}
+    switch(*method) {
+    case EUCLIDEAN:
+	distfun = euclidean;
+	break;
+    case MAXIMUM:
+	distfun = maximum;
+	break;
+    case MANHATTAN:
+	distfun = manhattan;
+	break;
+    case CANBERRA:
+	distfun = canberra;
+	break;
+    case BINARY:
+	distfun = binary;
+	break;
+    default:
+	error("distance(): invalid distance\n");
+    }
 
-		/* do we exclude the diagonal */
-
-	dc = *diag ? 0 : 1;
-	ij = 0;
-	for(j=0 ; j<=*nr ; j++)
-		for(i=j+dc ; i<*nr ; i++)
-			d[ij++] = distfun(x, *nr, *nc, i, j);
+    dc = *diag ? 0 : 1; /* do we exclude the diagonal */
+    ij = 0;
+    for(j=0 ; j <= *nr ; j++)
+	for(i=j+dc ; i < *nr ; i++)
+	    d[ij++] = distfun(x, *nr, *nc, i, j);
 }
