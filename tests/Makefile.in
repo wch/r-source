@@ -172,6 +172,23 @@ test-Random:
 test-Reg:
 	@echo "running regression tests"
 	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=0
+test-DocArgs:
+	@echo "checking whether arguments from usage are documented"
+	@for p in $(R_PKGS); do \
+	  out="package"; \
+	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  dir="$(top_srcdir)/src/library/$${p}"; \
+	  out=`echo "checkDocArgs(\"$${dir}\")" | \
+	       $(R) -q | sed '/^>/d;'`; \
+	  if test -n "$${out}"; then \
+	    echo "@ECHO_T@ WARNING"; \
+	    echo; \
+	    echo "$${out}"; \
+	    echo; \
+	  else \
+	    echo "@ECHO_T@ OK"; \
+	  fi; \
+	done
 test-FF:
 	@echo "checking foreign function calls"
 	@for p in $(R_PKGS); do \
@@ -182,6 +199,23 @@ test-FF:
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
 	    echo "$${out}"; \
+	  else \
+	    echo "@ECHO_T@ OK"; \
+	  fi; \
+	done
+test-Methods:
+	@echo "checking generic/method consistency"
+	@for p in $(R_PKGS); do \
+	  out="package"; \
+	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  dir="$(top_srcdir)/src/library/$${p}"; \
+	  out=`echo "checkMethods(\"$${dir}\")" | \
+	       $(R) -q | sed '/^>/d;'`; \
+	  if test -n "$${out}"; then \
+	    echo "@ECHO_T@ WARNING"; \
+	    echo; \
+	    echo "$${out}"; \
+	    echo; \
 	  else \
 	    echo "@ECHO_T@ OK"; \
 	  fi; \
