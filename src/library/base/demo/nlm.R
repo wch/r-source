@@ -1,11 +1,10 @@
-#### -*- R -*-
 
-## Helical Valley Function
-## Page 362 Dennis + Schnabel
+### Helical Valley Function
+### Page 362 Dennis + Schnabel
 
-theta <- function(x1,x2)
-    (0.5/pi)*(if(x1 > 0) atan(x2/x1) else atan(x2/x1) + pi)
-
+theta <- function(x1,x2) (atan(x2/x1) + (if(x1 <= 0) pi else 0))/ (2*pi)
+## but this is easier :
+theta <- function(x1,x2) atan(x2,x1)/(2*pi)
 
 f <- function(x) {
     f1 <- 10*(x[3] - 10*theta(x[1],x[2]))
@@ -22,9 +21,9 @@ contour(x, y, matrix(log10(z), 50, 50))
 str(nlm.f <- nlm(f, c(-1,0,0), hessian=TRUE, print=0))
 points(rbind(nlm.f$estim[1:2]), col = "red", pch = 20)
 
-## the Rosenbrock banana valley function
+### the Rosenbrock banana valley function
 
-f <- function(x)
+fR <- function(x)
 {
     x1 <- x[1]; x2 <- x[2]
     100*(x2 - x1*x1)^2 + (1-x1)^2
@@ -32,7 +31,7 @@ f <- function(x)
 
 ## explore surface
 fx <- function(x)
-{
+{   ## `vectorized' version of fR()
     x1 <- x[,1]; x2 <- x[,2]
     100*(x2 - x1*x1)^2 + (1-x1)^2
 }
@@ -42,14 +41,18 @@ z <- fx(expand.grid(x, y))
 op <- par(mfrow = c(2,1), mar = .1 + c(3,3,0,0))
 contour(x, y, matrix(log10(z), length(x)))
 
-str(nlm.f2 <- nlm(f, c(-1.2, 1), hessian=TRUE))
+str(nlm.f2 <- nlm(fR, c(-1.2, 1), hessian=TRUE))
 points(rbind(nlm.f2$estim[1:2]), col = "red", pch = 20)
 
+## Zoom in :
+rect(.9, .9, 1.1, 1.1, border = "orange", lwd = 2)
 x <- y <- seq(.9, 1.1, len=100)
 z <- fx(expand.grid(x, y))
 contour(x, y, matrix(log10(z), length(x)))
+mtext("zoomed in");box(col = "orange")
 points(rbind(nlm.f2$estim[1:2]), col = "red", pch = 20)
 par(op)
+
 
 fg <- function(x)
 {
