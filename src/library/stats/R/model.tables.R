@@ -181,6 +181,7 @@ make.tables.aovproj <-
     names(tables) <- names(proj.cols)
     for(i in seq(length(tables))) {
 	terms <- proj.cols[[i]]
+        terms <- terms[terms %in% colnames(prjs)]
 	data <-
 	    if(length(terms) == 1) prjs[, terms]
 	    else prjs[, terms] %*% as.matrix(rep.int(1, length(terms)))

@@ -22,10 +22,11 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     }
 
     ntab <- length(table)
+    if (length(start) != ntab ) stop("start and table must be same length")
 
     storage.mode(conf) <- "integer"
     ## NOTE: We make no use of the arguments locmar, nmar, marg, nu, and
-    ## u.  It might make sense to eliminate to simplify the unterlying C
+    ## u.  It might make sense to eliminate them and simplify the underlying C
     ## code accordingly.
     z <- .C("loglin",
             as.integer(nvar),

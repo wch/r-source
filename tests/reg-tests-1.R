@@ -3104,6 +3104,18 @@ stopifnot(identical(ans, gsub(" ", "", "b c + d | a * b")))
 gsub(" ", "", "a: 12345 :a", perl=TRUE) # segfaulted in 1.9.1
 ## wrong answers, segfaults in 1.9.1.
 
+
+## regression test for PR#7132
+tmp <- data.frame(y=rnorm(8),
+                  aa=factor(c(1,1,1,1,2,2,2,2)),
+                  bb=factor(c(1,1,2,2,1,1,2,2)),
+                  cc=factor(c(1,2,3,4,1,2,3,4)))
+tmp.aov <- aov(y ~ cc + bb/aa, data=tmp)
+anova(tmp.aov)
+model.tables(tmp.aov, type="means")
+## failed in 1.9.1.
+
+
 ### end of tests added in 1.9.1 patched ###
 
 
