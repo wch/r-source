@@ -52,7 +52,7 @@ SEXP complex_unary(ARITHOP_TYPE code, SEXP s1)
 	}
 	return ans;
     default:
-	error_return("illegal complex unary operator");
+	error_return(_("illegal complex unary operator"));
     }
 }
 
@@ -168,7 +168,7 @@ SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	}
 	break;
     default:
-	error("unimplemented complex operation");
+	error(_("unimplemented complex operation"));
     }
 
     /* quick return if there are no attributes */
@@ -262,7 +262,7 @@ SEXP do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
     }
-    else errorcall(call, "non-numeric argument to function");
+    else errorcall(call, _("non-numeric argument to function"));
     PROTECT(x);
     PROTECT(y);
     SET_ATTRIB(y, duplicate(ATTRIB(x)));
@@ -515,7 +515,7 @@ SEXP complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     default:
-	errorcall(call, "unimplemented complex function");
+	errorcall(call, _("unimplemented complex function"));
     }
     if (naflag)
 	warning("NAs produced in function \"%s\"", PRIMNAME(op));
@@ -587,7 +587,7 @@ SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 0:
 	return cmath2(op, CAR(args), CADR(args), z_atan2);
     default:
-	errorcall_return(call, "unimplemented complex function");
+	errorcall_return(call, _("unimplemented complex function"));
     }
 }
 
@@ -598,7 +598,7 @@ SEXP do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, na, nr, ni;
     na = asInteger(CAR(args));
     if(na == NA_INTEGER || na < 0)
-	errorcall(call, "invalid length");
+	errorcall(call, _("invalid length"));
     PROTECT(re = coerceVector(CADR(args), REALSXP));
     PROTECT(im = coerceVector(CADDR(args), REALSXP));
     nr = length(re);
@@ -652,7 +652,7 @@ SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     n = degree + 1; /* omit trailing zeroes */
     if(degree >= 1) {
-	if(n > 49) errorcall(call, "polynomial degree too high (49 max)");
+	if(n > 49) errorcall(call, _("polynomial degree too high (49 max)"));
 	/* <==>	 #define NMAX 50  in  ../appl/cpoly.c */
 
 	/* if(COMPLEX(z)[n-1].r == 0.0 && COMPLEX(z)[n-1].i == 0.0)
@@ -665,12 +665,12 @@ SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	for(i=0 ; i<n ; i++) {
 	    if(!R_FINITE(COMPLEX(z)[i].r) || !R_FINITE(COMPLEX(z)[i].i))
-		errorcall(call, "invalid polynomial coefficient");
+		errorcall(call, _("invalid polynomial coefficient"));
 	    REAL(zr)[degree-i] = COMPLEX(z)[i].r;
 	    REAL(zi)[degree-i] = COMPLEX(z)[i].i;
 	}
 	R_cpolyroot(REAL(zr), REAL(zi), &degree, REAL(rr), REAL(ri), &fail);
-	if(fail) errorcall(call, "root finding code failed");
+	if(fail) errorcall(call, _("root finding code failed"));
 	UNPROTECT(2);
 	r = allocVector(CPLXSXP, degree);
 	for(i=0 ; i<degree ; i++) {

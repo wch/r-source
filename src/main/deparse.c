@@ -155,7 +155,7 @@ void R_AllocStringBuffer(int blen, DeparseBuffer *buf)
 	buf->bufsize = blen;
 	if(!buf->data) {
 		buf->bufsize = 0;
-		error("Could not allocate memory for Encodebuf");
+		error(_("Could not allocate memory for Encodebuf"));
 	}
     } else {
 	if(buf->bufsize == buf->defaultSize) return;
@@ -181,14 +181,14 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if(length(args) < 1) errorcall(call, "too few arguments");
+    if(length(args) < 1) errorcall(call, _("too few arguments"));
 
     ca1 = CAR(args); args = CDR(args);
     cut0 = DEFAULT_Cutoff;
     if(!isNull(CAR(args))) {
 	cut0 = asInteger(CAR(args));
 	if(cut0 == NA_INTEGER|| cut0 < MIN_Cutoff || cut0 > MAX_Cutoff) {
-	    warning("invalid `cutoff' for deparse, using default");
+	    warning(_("invalid 'cutoff' for deparse, using default"));
 	    cut0 = DEFAULT_Cutoff;
 	}
     }
@@ -257,7 +257,7 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     R_print.digits = savedigits;
     R_FreeStringBuffer(buffer);
     if ((opts & WARNINCOMPLETE) && !localData.sourceable)
-    	warning("deparse may be incomplete");
+    	warning(_("deparse may be incomplete"));
     return svec;
 }
 
@@ -308,7 +308,7 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	con = getConnection(ifile);
 	wasopen = con->isopen;
 	if(!wasopen)
-	    if(!con->open(con)) error("cannot open the connection");
+	    if(!con->open(con)) error(_("cannot open the connection"));
     }/* else: "Stdout" */
     for (i = 0; i < LENGTH(tval); i++)
 	if (ifile == 1)
@@ -317,7 +317,7 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, i)));
 	    if(!havewarned &&
 	       res < strlen(CHAR(STRING_ELT(tval, i))) + 1)
-		warningcall(call, "wrote too few characters");
+		warningcall(call, _("wrote too few characters"));
 	}
     if (!wasopen) con->close(con);
     return (CAR(args));
@@ -337,13 +337,13 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     names = CAR(args);
     file = CADR(args);
     if(!isString(names))
-	errorcall(call, "character arguments expected");
+	errorcall(call, _("character arguments expected"));
     nobjs = length(names);
     if(nobjs < 1 || length(file) < 1)
-	errorcall(call, "zero length argument");
+	errorcall(call, _("zero length argument"));
     source = CADDR(args);
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
-	error("bad environment");
+	error(_("bad environment"));
     opts = FORSOURCING;
     if (!isNull(CADDDR(args)))
     	opts = asInteger(CADDDR(args));
@@ -356,7 +356,7 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_TAG(o, install(CHAR(STRING_ELT(names, j))));
 	SETCAR(o, findVar(TAG(o), source));
 	if (CAR(o) == R_UnboundValue)
-	    error("Object \"%s\" not found", CHAR(PRINTNAME(TAG(o))));
+	    error(_("Object \"%s\" not found"), CHAR(PRINTNAME(TAG(o))));
     }
     o = objs;
     if(INTEGER(file)[0] == 1) {
@@ -378,18 +378,18 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	con = getConnection(INTEGER(file)[0]);
 	wasopen = con->isopen;
 	if (!wasopen)
-	    if(!con->open(con)) error("cannot open the connection");
+	    if(!con->open(con)) error(_("cannot open the connection"));
 	for (i = 0; i < nobjs; i++) {
 	    res = Rconn_printf(con, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
 	    if(!havewarned &&
 	       res < strlen(CHAR(STRING_ELT(names, i))) + 4)
-		warningcall(call, "wrote too few characters");
+		warningcall(call, _("wrote too few characters"));
 	    tval = deparse1(CAR(o), 0, opts);
 	    for (j = 0; j < LENGTH(tval); j++) {
 		res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, j)));
 		if(!havewarned &&
 		   res < strlen(CHAR(STRING_ELT(tval, j))) + 1)
-		    warningcall(call, "wrote too few characters");
+		    warningcall(call, _("wrote too few characters"));
 	    }
 	    o = CDR(o);
 	}
@@ -1219,7 +1219,7 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 
     while (arglist != R_NilValue) {
 	if (TYPEOF(arglist) != LISTSXP && TYPEOF(arglist) != LANGSXP)
-            error("badly formed function expression");
+            error(_("badly formed function expression"));
 	if (TAG(arglist) != R_NilValue) {
 #if 0
 	    deparse2buff(TAG(arglist));
