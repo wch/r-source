@@ -307,15 +307,12 @@ AC_ARG_VAR([F2C], [Fortran-to-C converter command])
 ### ** Check whether we build in srcdir.
 
 AC_PATH_PROG(GETWD, pwd, pwd)
-## <FIXME>
-## Autoconf 2.53 or better has abs_top_srcdir and abs_top_builddir.
 AC_MSG_CHECKING([whether builddir is srcdir])
 if test "`cd ${srcdir} && ${GETWD}`" = "`${GETWD}`"; then
   BUILDDIR_IS_SRCDIR=yes
 else
   BUILDDIR_IS_SRCDIR=no
 fi
-## </FIXME>
 AC_SUBST(BUILDDIR_IS_SRCDIR)
 AC_MSG_RESULT([${BUILDDIR_IS_SRCDIR}])
 
