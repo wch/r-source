@@ -161,8 +161,7 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
 
 WindowRef			ConsoleWindow=NULL;
 
-static const EventTypeSpec KeybEvents[] = { { kEventClassKeyboard, kEventRawKeyUp },
- { kEventClassKeyboard, kEventRawKeyDown }};
+static const EventTypeSpec KeybEvents[] = {{ kEventClassKeyboard, kEventRawKeyDown }};
 
 
 static const EventTypeSpec	RCmdEvents[] =
@@ -506,19 +505,12 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
  OSStatus	err = eventNotHandledErr;
  UInt32		RKeyCode;
  char c;
+ 
  /* make sure that we're processing a keyboard event */
  if ( GetEventClass( REvent ) == kEventClassKeyboard )
  {
   switch ( GetEventKind( REvent ) )
   {
-   case kEventRawKeyUp:
-//    err = GetEventParameter (REvent, kEventParamKeyCode, typeUInt32, NULL, sizeof(RKeyCode), NULL, &RKeyCode);
-//    if( RKeyCode == 36 ){ /* we check wheter return key is released */
-//     InputFinished = true;
-//      QuitApplicationEventLoop();
-//
-//    }
-   break;
    
    case kEventRawKeyDown:
     err = GetEventParameter (REvent, kEventParamKeyCode, typeUInt32, NULL, sizeof(RKeyCode), NULL, &RKeyCode);
