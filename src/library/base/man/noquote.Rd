@@ -2,6 +2,7 @@
 \alias{noquote}
 \alias{print.noquote}
 \alias{as.matrix.noquote}
+\alias{c.noquote}
 \alias{[.noquote}
 \title{Class for ``no quote'' Printing of Character Strings}
 \description{
@@ -10,21 +11,23 @@
 \usage{
 noquote(obj)
 \method{print}{noquote}(x, \dots)
+\method{c}{noquote}(\dots, recursive = FALSE)
 }
 \arguments{
   \item{obj}{any \R object, typically a vector of
     \code{\link{character}} strings.}
   \item{x}{an object of class \code{"noquote"}.}
-  \item{\dots}{further options for \code{\link{print}}.}
+  \item{\dots}{further options passed to next methods, such as \code{\link{print}}.}
+  \item{recursive}{for compatibility with the generic \code{\link{c}} function.}
 }
 \details{
   \code{noquote} returns its argument as an object of class
-  \code{"noquote"}.  There is a subscript method (\code{"[.noquote"})
-  which ensures that the class is not lost by subsetting.  The print
-  method (\code{print.noquote}) prints character stringss \emph{without}
-  quotes (\code{"\dots"}).
+  \code{"noquote"}.  There is a method for \code{c()} and subscript
+  method (\code{"[.noquote"}) which ensures that the class is not lost
+  by subsetting.  The print method (\code{print.noquote}) prints
+  character stringss \emph{without} quotes (\code{"\dots"}).
 
-  These functions exist both as utilities and as an example of using
+  These functions exist both as utilities and as an example of using (S3)
   \code{\link[base]{class}} and object orientation.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}

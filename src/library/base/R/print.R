@@ -29,6 +29,7 @@ noquote <- function(obj) {
 }
 
 as.matrix.noquote <- function(x) noquote(NextMethod("as.matrix", x))
+c.noquote <- function(..., recursive = FALSE) structure(NextMethod(...), class = "noquote")
 
 "[.noquote" <- function (x, ...) {
     attr <- attributes(x)
