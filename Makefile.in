@@ -177,7 +177,8 @@ install-R-framework:
 	  cp Info.plist "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources")
 	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)" && \
 	  ln -f -s -h Resources/include Headers && \
-	  ln -f -s -h Resources/bin/libR.dylib R)
+	  ln -f -s -h Resources/bin/libR.dylib R && \
+	  test -d "Resources/bin/Frameworks" || mkdir -p "Resources/bin/Frameworks")
 	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
 	  ln -f -s -h $(VERSION) Current)
 	@(cd "$(R_FRAMEWORK_DIR)"  && \
