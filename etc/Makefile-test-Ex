@@ -19,7 +19,7 @@ MANbaseDIR = $(rRHOME)/src/library/base/man
 #> Rd_files:sh = ./Rd.files
 ##-- GNU make
 Rd_files := $(shell $(rRHOME)/etc/Rd.files)
-#Rd_files := $(wildcard $(MANbaseDIR)/*.Rd)
+#this has PATH prepended: Rd_files := $(wildcard $(MANbaseDIR)/*.Rd)
 #________in future_______  (for ALL 'make' versions)
 # FAILS: has directory/. _AND_ is not expanded
 #Rd_files = $(MANbaseDIR)/*.Rd

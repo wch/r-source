@@ -1,5 +1,5 @@
 #!/bin/sh
-##-- Not used anymore if we have  .Rd  file names in  MANdir 
+##-- Not used anymore if we have  .Rd  file names in  MANdir
 ##
 #-- must run from current directory (if using default MANdir ..)
 cd `dirname $0`
@@ -15,11 +15,11 @@ then
 	echo "'$MANdir' is not a directory\!"
 	exit 1
 fi
-(if [ "$2" ]
+if [ "$2" ]
 then
-	#-- include the PATHname
-	ls -A $MANdir/*
+	#-- include the PATHname if there is a 2nd argument:
+	ls -1A $MANdir/*.Rd
 else
-	ls -A $MANdir
+	(cd $MANdir; ls -1A *.Rd)
 fi
-) | sed '/CVS/d;/~$/d;/\.bak$/d;/\.orig$/d;/^$/d'
+
