@@ -1,6 +1,6 @@
 ### This is almost like the Primitive ":" for factors
 ### (that has no "drop = TRUE") --- it's not used anywhere in "standard R"
-interaction <- function(..., drop=FALSE)
+interaction <- function(..., drop = FALSE, sep = ".")
 {
     args <- list(...)
     narg <- length(args)
@@ -16,7 +16,7 @@ interaction <- function(..., drop=FALSE)
 	    f <- factor(f)
 	l <- levels(f)
 	ans <- ans * length(l) + as.integer(f) - 1
-	lvs <- if (i == narg) l	else as.vector(outer(l, lvs, paste, sep="."))
+	lvs <- if (i == narg) l	else as.vector(outer(l, lvs, paste, sep=sep))
     }
     ans <- ans + 1
     if (drop) {

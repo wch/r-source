@@ -201,6 +201,8 @@ NEW FEATURES
 
     o	dir.create() now expands '~' in filenames.
 
+    o	interaction() has new argument 'sep'.
+
 
 UTILITIES
 
