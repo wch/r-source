@@ -123,11 +123,21 @@ AC_SUBST(config_opts)
 ## <FIXME>
 ## Remove in 1.6.
 for arg in ${ac_configure_args}; do
-  case ${arg} in
+  case "${arg}" in
     --with-g77*)
       warn_arg_with_g77="option '--with-g77' is deprecated.
 Use variable F77 to specify a FORTRAN 77 compiler if necessary."
       AC_MSG_WARN([${warn_arg_with_g77}])
+      ;;
+    --with-f77*)
+      warn_arg_with_f77="option '--with-f77' is deprecated.
+Use variable F77 to specify a FORTRAN 77 compiler if necessary."
+      AC_MSG_WARN([${warn_arg_with_f77}])
+      ;;
+    --with-f2c*)
+      warn_arg_with_f2c="option '--with-f2c' is deprecated.
+Use variable F2C to specify the FORTRAN-to-C translator if necessary."
+      AC_MSG_WARN([${warn_arg_with_f2c}])
       ;;
   esac
 done
@@ -185,27 +195,6 @@ fi],
 [])
 
 ### ** Optional packages.
-
-## Allow the user to force/specify f2c.
-AC_ARG_WITH([f2c],
-[AC_HELP_STRING([--with-f2c],
-                [use f2c even if FORTRAN compiler is available])],
-[R_ARG_USE(f2c)],
-[use_f2c=no])
-## Allow the user to force/specify an F77 compiler.
-AC_ARG_WITH([f77],
-[AC_HELP_STRING([--with-f77],
-                [use a FORTRAN 77 compiler for FORTRAN subroutines])],
-[R_ARG_USE(f77)],
-[use_f77=no])
-
-## Make sure only one of the above options for FORTRAN compilers was
-## specified.
-R_ARG_WITH_EXCLUSIVE([f77], [f2c],
-[warn_f77_and_f2c="--with-f77 and --with-f2c both given!  Using f77 ..."
-AC_MSG_WARN([${warn_f77_and_f2c}])
-use_f2c=no
-])
 
 ## BLAS.
 AC_ARG_WITH([blas],
@@ -318,6 +307,7 @@ AC_ARG_VAR([TCLTK_LIBS],
 AC_ARG_VAR([TCLTK_CPPFLAGS],
            [flags needed for finding the tcl.h and tk.h headers])
 AC_ARG_VAR([MAKE], [Make command])
+AC_ARG_VAR([F2C], [FORTRAN-to-C translator command])
 
 ### ** Check whether we build in srcdir.
 
@@ -441,11 +431,20 @@ AC_HEADER_STDC
 AC_HEADER_TIME
 AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h errno.h fcntl.h \
- floatingpoint.h fpu_control.h grp.h ieee754.h ieeefp.h locale.h \
-  netdb.h netinet/in.h pwd.h readline/history.h readline/readline.h \
-  rpc/xdr.h stdarg.h string.h strings.h sys/param.h sys/select.h \
-  sys/socket.h sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h)
+## <NOTE>
+## Some of these are also checked for when Autoconf computes the default
+## includes.
+AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
+  fpu_control.h grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h \
+  pwd.h readline/history.h readline/readline.h rpc/xdr.h strings.h \
+  sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
+  sys/times.h sys/utsname.h unistd.h)
+## </NOTE>
+## <NOTE>
+## These are ANSI C headers but some C code (written to work also
+## without assuming ANSI C) may need the corresponding conditionals.
+AC_CHECK_HEADERS(errno.h stdarg.h string.h)
+## </NOTE>
 ## <NOTE>
 ## AC_CHECK_HEADERS(libintl.h)
 ## src/main/regex.c uses HAVE_LIBINTL_H.
@@ -1300,8 +1299,14 @@ fi
 if test -n "${warn_arg_with_g77}"; then
   AC_MSG_WARN([${warn_arg_with_g77}])
 fi
-if test -n "${warn_f77_and_f2c}"; then
-  AC_MSG_WARN([${warn_f77_and_f2c}])
+if test -n "${warn_arg_with_f77}"; then
+  AC_MSG_WARN([${warn_arg_with_g77}])
+fi
+if test -n "${warn_arg_with_f2c}"; then
+  AC_MSG_WARN([${warn_arg_with_g77}])
+fi
+if test -n "${warn_F77_and_F2C}"; then
+  AC_MSG_WARN([${warn_F77_and_F2C}])
 fi
 if test -n "${warn_f2c_flibs}"; then
   AC_MSG_WARN([${warn_f2c_flibs}])
