@@ -293,6 +293,10 @@ NEW FEATURES
         are not part of the API from indices like the alphabetical
         lists in the HTML help system.
 
+    o   configure now tests for the versions of jpeg (>= 6b) and 
+	libpng (>= 1.0.5).
+
+
 
 BUG FIXES
 

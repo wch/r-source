@@ -907,18 +907,36 @@ fi
 ##
 AC_DEFUN([R_BITMAPS], [
   BITMAP_LIBS=
-  AC_EGREP_HEADER(jpeg_error_mgr, jpeglib.h, [
-    AC_CHECK_LIB(jpeg, jpeg_destroy_compress, [
-      BITMAP_LIBS=-ljpeg
-      AC_DEFINE(HAVE_JPEG)
-    ], , ${LIBS})
+  AC_CHECK_HEADER(jpeglib.h, [
+    AC_MSG_CHECKING([if jpeglib version >= 6b])
+    AC_EGREP_CPP(yes, 
+      [ #include "confdefs.h"
+	#include <jpeglib.h>
+	#if (JPEG_LIB_VERSION >= 62)
+	  yes
+	#endif], [
+      AC_MSG_RESULT([yes])
+      AC_CHECK_LIB(jpeg, jpeg_destroy_compress, [
+        BITMAP_LIBS=-ljpeg
+        AC_DEFINE(HAVE_JPEG)
+      ], , ${LIBS})
+    ], AC_MSG_RESULT([no]))
   ])
   AC_CHECK_LIB(z, main, [
     AC_CHECK_HEADER(png.h, [
-      AC_CHECK_LIB(png, png_create_write_struct, [
-        BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
-	AC_DEFINE(HAVE_PNG)
-      ], , ${LIBS})
+      AC_MSG_CHECKING([if libpng version >= 1.0.5])
+      AC_EGREP_CPP(yes, 
+        [ #include "confdefs.h"
+          #include <png.h>
+          #if (PNG_LIBPNG_VER >= 10005)
+            yes
+          #endif], [
+        AC_MSG_RESULT([yes])
+        AC_CHECK_LIB(png, png_create_write_struct, [
+          BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
+	  AC_DEFINE(HAVE_PNG)
+        ], , ${LIBS})
+      ], AC_MSG_RESULT([no]))
     ])
   ])
   AC_SUBST(BITMAP_LIBS)])
