@@ -30,7 +30,9 @@
 #define UserBreak     (*_imp__UserBreak)
 
 extern void cmdlineoptions(int, char **);
-extern void setup_term_ui(void);
+extern void readconsolecfg();
+extern void gl_loadhistory(char *);
+extern int initapp(int, char **);
 extern void Rf_mainloop(void);
 extern UImode CharacterMode;
 extern int UserBreak;
@@ -65,7 +67,9 @@ int AppMain (int argc, char **argv)
     cmdlineoptions(argc, argv);
     mainThreadId = GetCurrentThreadId() ;
     signal(SIGBREAK, my_onintr);
-    setup_term_ui();
+    initapp(0, NULL);
+    readconsolecfg();
+    gl_loadhistory(".Rhistory");
     Rf_mainloop();
     /* NOTREACHED */
     return 0;
