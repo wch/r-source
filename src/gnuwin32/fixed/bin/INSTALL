@@ -26,18 +26,17 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.24 $ ';
+my $revision = ' $Revision: 1.25 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-### CHANGED OPTIONS JG
+
 my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 		    "clean|c", "docs:s", "save|s", "no-save",
-		    "use-zip", "use-zip-data", "use-zip-help",
-		    "with-package-versions");
+		    "use-zip", "use-zip-data", "use-zip-help");
 			
 GetOptions (@knownoptions) || usage();
 R_version($name, $version) if $opt_version;
@@ -115,14 +114,6 @@ foreach $pkg (@ARGV){
     if(-r "$pkg/DESCRIPTION"){
 	$description = new R::Dcf("$pkg/DESCRIPTION");
     }
-
-    #### CHANGES JG
-    $pkgdir = "$pkgdir/$pkgname";
-    if (($description->{"Version"})&&($opt_with_package_versions)) {
-	    $pkgVersion = $description->{"Depends"};
-	    $pkgname = $pkgname . "_" . $pkgVersion;
-    }
-    ### DONE CHANGES
     
     if($description->{"Contains"}) {
 	print "\nLooks like \`${pkg}' is a package bundle\n";
