@@ -1,4 +1,4 @@
- \name{pairs.formula}
+\name{pairs.formula}
 \alias{pairs.formula}
 \title{Formula Notation for Scatterplot Matrices}
 \usage{
@@ -19,7 +19,9 @@ pairs.formula(formula, data = NULL, subset, na.action, \dots)
     Produce a matrix of scatterplots using formula notation.
 }
 \details{
-    This is a method of the generic function \code{\link{pairs}}.
+    This is a method of the generic function \code{\link{pairs}}.  It
+    operates by setting up the data from the formula specification, and
+    then calling \code{\link{pairs.default}}.
 }
 \seealso{
     \code{\link{pairs.default}}
