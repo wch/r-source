@@ -964,17 +964,13 @@ if test "x$BLAS_LIBS" = x; then
 fi
 
 if test "x$BLAS_LIBS" = x; then
-  case "${host}" in
-    *solaris*)
-      # Check for BLAS in Sun Performance library:
-      if test ${GCC} != "yes"; then
-	AC_CHECK_LIB(sunmath, acosp, 
-	      AC_CHECK_LIB(sunperf, $dgemm_func, 
-			   BLAS_LIBS="-xlic_lib=sunperf -lsunmath", ,
-                           [-lsunmath $FLIBS]))
-      fi
-      ;;
-  esac
+  if test "x$GCC" != xyes; then
+    # Check for BLAS in Sun Performance library:
+    AC_CHECK_LIB(sunmath, acosp,
+                 AC_CHECK_LIB(sunperf, $dgemm_func,
+			      BLAS_LIBS="-xlic_lib=sunperf -lsunmath", ,
+			      [-lsunmath $FLIBS]))
+  fi
 fi
 
 if test "x$BLAS_LIBS" = x; then
