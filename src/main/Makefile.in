@@ -22,7 +22,7 @@ SOURCES_C = \
 	envir.c errors.c eval.c \
 	format.c fourier.c \
 	gram.c gram-ex.c graphics.c \
-	iosupport.c \
+	internet.c iosupport.c \
 	lapack.c list.c logic.c \
 	main.c match.c memory.c model.c \
 	names.c \
