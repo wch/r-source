@@ -5324,7 +5324,7 @@ fi
     fi
   
     fi
-    R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
+    R_XTRA_LIBS="${R_XTRA_LIBS} -lc /lib/crt0.o"
     ;;
   alpha*osf*)
     cat >> confdefs.h <<\EOF
