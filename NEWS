@@ -49,12 +49,12 @@ USER-VISIBLE CHANGES
         allows you to restore the generators of an earlier R version
         if reproducibility is required.
 
-    o	Namespaces can now be defined for packages other than `base':
+    o   Namespaces can now be defined for packages other than `base':
 	see `Writing R Extensions'.  This hides some internal objects
-	and changes the search path from objects in a namespace.
-	Packages `lqs', `modreg', `mva', `ts', `KernSmooth', `MASS',
-	`boot', `class', `nnet', `rpart' and `spatial' are currently
-	in a namespace.
+	and changes the search path from objects in a namespace.  All
+	the base packages and recommended packages `KernSmooth',
+	`MASS', `boot', `class', `nnet', `rpart' and `spatial' are
+	currently in a namespace.
 
 
 NEW FEATURES
