@@ -56,7 +56,11 @@ typedef struct fileconn {
 #if defined(HAVE_OFF_T) && defined(__USE_LARGEFILE)
     off_t rpos, wpos;
 #else
+#ifdef Win32
+    off64_t rpos, wpos;
+#else
     long rpos, wpos;
+#endif
 #endif
     Rboolean last_was_write;
 } *Rfileconn;

@@ -3,7 +3,7 @@ There are a very few to the source code of zlib-1.2.1 used here.
 - a bug fix in deflate.c (picked up by the use of valgrind).
 - zconf.h includes R's config.h
 - gzio.c has been amended to allow LFS using fseeko/ftello where these
-  are supported.
+  are supported, and fseek64o/ftell64o on Windows.
 
 Makefile.in is ours, not zlib's, and allows us to use PIC flags so this
 can be included in libR.so.
