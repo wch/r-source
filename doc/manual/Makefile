@@ -15,13 +15,13 @@ $(RLIB)/base/latex/%.tex: $(RsrcLIB)/base/man/%.Rd
 	$(BUILDlatex) $< > $@
 
 pkg-base.tex: $(RLIB)/base/latex/*.tex
-	@echo 'Collecting things for  $@ ..'
+	@echo 'Collecting components of  $@ ..'
 	@sed 's/__PKG__/base/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
 pkg-eda.tex: $(RLIB)/eda/latex/*.tex
-	@echo 'Collecting things for  $@ ..'
+	@echo 'Collecting components of  $@ ..'
 	@sed 's/__PKG__/eda/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
 pkg-mva.tex: $(RLIB)/mva/latex/*.tex
-	@echo 'Collecting things for  $@ ..'
+	@echo 'Collecting components of  $@ ..'
 	@sed 's/__PKG__/mva/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
 
 Man.dvi: Man.tex Rd.sty $(Packages)
@@ -40,7 +40,7 @@ print2:	Man.ps
 
 clean:
 	@echo cleaning in doc/manual
-	@-rm -f *.aux *.toc *.dvi *.log *.ps *.ps-2
+	@-rm -f *.aux *.toc Man.i?? *.dvi *.log *.ps *.ps-2
 
 realclean: clean
 	@echo "'realclean'ing in manual/latex"
