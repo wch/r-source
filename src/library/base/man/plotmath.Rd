@@ -125,7 +125,9 @@
   \code{\link{axis}},
   \code{\link{mtext}},
   \code{\link{text}},
-  \code{\link{title}}
+  \code{\link{title}},
+  \code{\link{substitute}}
+  \code{\link{quote}}, \code{\link{bquote}}
 }
 \examples{
 x <- seq(-4, 4, len = 101)
@@ -142,7 +144,7 @@ axis(1, at = c(-pi, -pi/2, 0, pi/2, pi),
 
 ## How to combine "math" and numeric variables :
 plot(1:10, type="n", xlab="", ylab="", main = "plot math & numbers")
-tt <- 1.23 ; mtext(substitute(hat(theta) == that, list(that= tt)))
+theta <- 1.23 ; mtext(bquote(hat(theta) == .(theta)))
 for(i in 2:9)
     text(i,i+1, substitute(list(xi,eta) == group("(",list(x,y),")"),
                            list(x=i, y=i+1)))

@@ -60,7 +60,8 @@ prop.test(x, n, p = NULL,
   underlying proportion with confidence level as specified by
   \code{conf.level} and clipped to \eqn{[0,1]} is returned.  Continuity
   correction is used only if it does not exceed the difference between
-  sample and null proportions in absolute value.
+  sample and null proportions in absolute value. The confidence interval 
+  is computed by inverting the score test.
 
   Finally, if \code{p} is given and there are more than 2 groups, the
   null tested is that the underlying probabilities of success are those
