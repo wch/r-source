@@ -26,7 +26,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.mac Makefile.win \
 	dllversion.rc $(HEADERS) $(SOURCES_C) \
-	double.f cmplx.f blas2.f cmplxblas.f lapack.mcp.hqx
+	double.f cmplx.f cmplxblas.f lapack.mcp.hqx
 
 ## FIXME:
 ## Change to `lapack.la' when using libtool for shlibs.

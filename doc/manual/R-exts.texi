@@ -501,11 +501,11 @@ may need to be included in @code{PKG_LIBS}.
 
 @item BLAS_LIBS
 @findex BLAS_LIBS
-A macro containing the BLAS libraries used when building @R{}.  This may
-need to be included in @code{PKG_LIBS}.  Beware that if it is empty then
-the @R{} executable will only contain the subset of BLAS routines needed
-for the LINPACK/EISPACK routines actually in @R{} (and not even the BLAS
-routines for the LAPACK routines used).
+A macro containing the BLAS libraries used when building @R{}.  This
+may need to be included in @code{PKG_LIBS}.  Beware that if it is
+empty then the @R{} executable will contain all the double-precision
+BLAS routines, but no single-precision, complex nor double-complex
+routines.
 @end table
 
 

@@ -209,6 +209,10 @@ UTILITIES
 
 C-LEVEL FACILITIES
 
+    o	All the double-precision BLAS routines are now available,
+	and package writers are encouraged not to include their own
+	(so enhanced ones will be used if requested at configuration).
+
     o	findInterval(xt[],n,x,...) gives the index (or interval number)
 	of x in the sorted sequence xt[].  There's an
 	F77_SUB(interv)(.) to be called from Fortran; this used to be
