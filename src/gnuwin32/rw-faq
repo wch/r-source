@@ -230,7 +230,7 @@ You can find this from R code by `Sys.getenv("R_USER")'.
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-`"d:\\rw1030\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+`"d:\\rw1031\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
 for yourself by using forward slashes as path separators: they do work
 under Windows.
 
@@ -730,7 +730,7 @@ then `R_ProcessEvents()'.
 ===========================================================
 
 This has been seen under some versions of Perl and Windows version
-(95/98/ME) which use a 16-bit shell.  Hopefully this version (rw1030) is
+(95/98/ME) which use a 16-bit shell.  Hopefully rw1030 and later are
 more robust in this respect: it _may_ help to upgrade your Perl version
 (5.6.1, build 626 was current at the time of writing).
 

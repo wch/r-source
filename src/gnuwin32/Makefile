@@ -1,4 +1,5 @@
 include MkRules
+include RWVERSION
 
 all: rbuild rpackage rdocs
 
@@ -10,7 +11,6 @@ LEA_MALLOC=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
-RPREFIX = rw1031
 
 RHOME = $(shell perl pwd.pl ../..)# must be absolute path
 RLIB = $(RHOME)/library
