@@ -418,12 +418,12 @@ to collect, install and test an extensive set of tools: see
 
 You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
-lower case) did not work.  Open a commands window at a directory whose
-path does not contain spaces, and run something like
+lower case) did not work.  Open a commands window at a directory @emph{whose
+path does not contain spaces}, and run something like
 
 @smallexample
-tar zxvf R-1.3.0.tgz
-cd R-1.3.0\src\gnuwin32
+tar zxvf R-1.5.0.tgz
+cd R-1.5.0\src\gnuwin32
 make
 @end smallexample
 
@@ -709,10 +709,10 @@ is needed so @code{libsunperf} can be used.
 An ATLAS `tuned' BLAS can also be used on Windows: see
 @file{src/gnuwin32/INSTALL} for how to enable this.
 
-Note that if @R{} is compiled against a non-default BLAS, then all
-BLAS-using packages must also be.  So if @R{} is re-built after ATLAS is
-installed, then packages such as @pkg{quantreg} will need to be
-re-installed.
+Note that under Unix (but not under Windows) if @R{} is compiled
+against a non-default BLAS, then all BLAS-using packages must also be.
+So if @R{} is re-built after ATLAS is installed, then packages such as
+@pkg{quantreg} will need to be re-installed.
 
 
 @node Configuration on Unix, New platforms, Essential and useful other programs, Top
@@ -1060,6 +1060,12 @@ compilers, and less regularly on Solaris 2.5.1, 2.6 and 8.  GNU
 @command{make} is needed prior to 2.7 for building other than in the
 source tree, and perhaps even then.
 
+If using @command{gcc}, do ensure that the compiler was compiled for
+the version of Solaris in use.  (This can be discerned from
+@command{gcc -v}.)  @command{gcc} makes modified versions
+of some header files, and so (for example) @command{gcc} compiled under
+Solaris 2.6 will not compile @R{} under Solaris 2.7.
+
 When using the SunPro compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
 fail.  The maximal set of optimization options known to work is
@@ -1110,7 +1116,7 @@ you may need to reset it to avoid finding 32-bit addons.
 
 @R{} has been built successfully on HPUX 10.2 and HPUX 11.0 using both
 native compilers and @command{gcc}.  However, 10.2 has not been tested
-since R 1.4.  By default, R is configured to use @command{gcc} and
+since R 1.4.0.  By default, R is configured to use @command{gcc} and
 @command{g77} on HPUX (if available).  Some installations of
 @command{g77} only install a static version of the @command{g2c} library
 that cannot be linked into a shared library since its files have not
