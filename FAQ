@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-57, 2001-05-18
+Version 1.2-58, 2001-05-21
 Kurt Hornik
 
 
@@ -1351,10 +1351,6 @@ works, was published in the Journal of Statistical Software
 *muhaz*
      Hazard function estimation in survival analysis.
 
-*multilm*
-     A basic method for fitting and testing multivariate linear models,
-     including stabilized test procedures by Laeuter et. al.
-
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
@@ -1543,6 +1539,10 @@ these a try, of course.  This area of CRAN currently contains
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
+
+*multilm*
+     A basic method for fitting and testing multivariate linear models,
+     including stabilized test procedures by Laeuter et. al.
 
 *npConfRatio*
      Nonparametric confidence intervals for the ratios of medians.
@@ -2099,11 +2099,19 @@ to get the numbers back.  More efficient, but harder to remember, is
 7.14 Are Trellis displays implemented in R?
 ===========================================
 
-   Not yet.  Meanwhile, you could look at `coplot()' and `dotchart()' which
-might do at least some of what you want.  Note also that the R version of
-`pairs()' is fairly general and provides most of the functionality of
-`splom()', and that R's default plot method has an argument `asp' allowing
-to specify (and fix against device resizing) the aspect ratio of the plot.
+   An R package called *lattice*, which provides graphical functionality
+that is compatible with most Trellis commands, is under development.  The
+latest version of the package may be downloaded from the `contrib/Devel'
+area of CRAN.  *lattice* currently relies on another package called *grid*
+(also under development) so you will need to download that as well.
+Because these packages are under active development, they might only work
+with the latest development version of R.
+
+   You could also look at `coplot()' and `dotchart()' which might do at
+least some of what you want.  Note also that the R version of `pairs()' is
+fairly general and provides most of the functionality of `splom()', and
+that R's default plot method has an argument `asp' allowing to specify (and
+fix against device resizing) the aspect ratio of the plot.
 
    (Because the word "Trellis" has been claimed as a trademark we do not
 use it in R.  The name "lattice" has been proposed for the R equivalent.)
