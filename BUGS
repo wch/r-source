@@ -205,6 +205,10 @@ none
 
 Directory:  incoming
 
+* PR# 641 *
+Subject: 2 Bugs in na.omit.default()
+From: =?iso-8859-1?Q?Jens_Oehlschl=E4gel?= <jens.oehlschlaegel@bbdo-interone.de>
+Date: Wed, 23 Aug 2000 11:45:56 +0200
 * PR# 640 *
 Subject: diff.default / diff.ts in wrong package bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
