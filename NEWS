@@ -40,11 +40,12 @@ BUG FIXES
     o	Under GNOME, capabilities() now reports correctly that X11, png
 	and jpeg are available (if they are under X11).
 
+    o	The names of some results of unlist() had the wrong internal
+	length, which confused paste().  Both have been corrected. (PR#1524)
+
     o   RweaveLatex.Rd had unbalanced braces in section "Supported
         Options".
     
-
-
 
 		CHANGES IN R VERSION 1.5.0
 

@@ -634,3 +634,15 @@ provoke.bug()
 ## and hence keep the above paragraph at the end of this file
 
 ## This example last ##
+
+
+## PR 1524  Problems with paste/unlist
+l <- names(unlist(list(aa = list(bb = 1))))
+l
+# this is exactly "aa.bb"
+stopifnot(identical(l, "aa.bb"))
+l2 <- paste(l, "this should be added")
+stopifnot(identical(l2, "aa.bb this should be added"))
+## 1.5.0 gave l2 printing as l.
+
+
