@@ -28,8 +28,8 @@ NEW FEATURES
 
     o	nlm() can now take additional arguments in ... to be passed to f.
 
-    o	cor.test(*, meth="spearman") might give slightly better P values,
-	since it now relies on pnorm(.) {with proper tail} instead of alnorm.
+    o	cor.test(methoed="spearman") might give slightly better P values,
+	since it now relies on pnorm() (with proper tail) instead of alnorm.
 
     o	internal cleanup of do_lapply
 
@@ -52,6 +52,9 @@ NEW FEATURES
     o   plot.formula searches for a plot method for the left-side of the
 	formula before searching for a plot method for the right-side of
 	the formula
+
+    o	Initial support for C++ source code in add-on packages.
+
 
 BUG FIXES
 
