@@ -3,7 +3,8 @@
 \alias{isGeneric}
 \alias{isGroup}
 \alias{removeGeneric}
-\alias{standardGeneric}
+% standardGeneric() is a .Primitive in 'base', not 'methods'
+%\alias{standardGeneric}
 \alias{getGenerics}
 \alias{allGenerics}
 \alias{dumpMethod}
@@ -25,7 +26,7 @@
 isGeneric(f, where, fdef, getName = FALSE)
 isGroup(f, where, fdef)
 removeGeneric(f, where)
-standardGeneric(f)
+%standardGeneric(f)
 
 dumpMethod(f, signature, file, where, def)
 findFunction(f, generic = TRUE, where = topenv(parent.frame()))
@@ -73,6 +74,11 @@ callGeneric(\dots)
       function \code{f}.  It is an error to call
       \code{standardGeneric} anywhere except in the body of the
       corresponding generic function.
+
+      Note that \code{\link{standardGeneric}} is a primitive function in
+      the \pkg{base} package
+      for efficiency % << MM: this is just my guess, what *are* the reasons?
+      reasons, but rather documented here where it belongs naturally.
     }
     \item{\code{dumpMethod}:}{
       Dump the method for this generic function and signature.
@@ -160,7 +166,10 @@ callGeneric(\dots)
     the methods defined for this generic (optionally on the specified
     \code{where} location).
   }
-  \item{searchForm}{In \code{getGenerics}, if  \code{TRUE}, the
+  \item{all}{in \code{removeMethods}, logical indicating if all
+    (default) or only the first method found should be removed.}
+  }
+  \item{searchForm}{In \code{getGenerics}, if \code{TRUE}, the
       \code{package} slot of the returned result is in the form used
       by \code{search()}, otherwise as the simple package name (e.g,
       \code{"package:base"} vs \code{"base"}). }
@@ -256,16 +265,22 @@ callGeneric(\dots)
   \code{\link{showMethods}}
 }
 \examples{
-\dontrun{
-  ## get the function "myFun" -- throw an error if 0 or > 1 versions visible
-  allF <- findFunction("myFun")
+
+## get the function "myFun" -- throw an error if 0 or > 1 versions visible:
+findFuncStrict <- function(fName) {
+  allF <- findFunction(fName)
   if(length(allF) == 0)
-    stop("No versions of myFun visible")
+    stop("No versions of ",fName," visible")
   else if(length(allF) > 1)
-    stop("myFun is ambiguous: ", length(allF), " versions")
+    stop(fName," is ambiguous: ", length(allF), " versions")
   else
-    fdef <- get("myFun", allF[[1]])
+    get(fName, allF[[1]])
 }
+
+try(findFuncStrict("myFun"))# no version
+lm <- function(x) x+1
+try(findFuncStrict("lm"))# 2 versions
+findFuncStrict("findFuncStrict"))# just 1 version
 
 \dontshow{
 ## because nosegfault runs standardGeneric w/o the methods package, nothing
