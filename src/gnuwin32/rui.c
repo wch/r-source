@@ -64,7 +64,7 @@ static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
     mmanext, mmanlang, mapropos, mhelpstart, mhelpsearch, mFAQ,
-    mrwFAQ, mpkgl, mpkgi, mpkgil, mpkgb, mpkgu, mpkgbu, mde;
+    mrwFAQ, mpkgl, mpkgi, mpkgil, mpkgb, mpkgu, mpkgbu, mde, mCRAN;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
 static char cmd[1024];
@@ -494,6 +494,18 @@ static void menuabout(control m)
 /*    show(RConsole); */
 }
 
+static void menuRhome(control m)
+{
+    ShellExecute(NULL, "open", "http://www.r-project.org", NULL, NULL, SW_SHOW);
+}
+
+static void menuCRAN(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "shell.exec(getOption('CRAN'))");
+}
+
+
 /* some menu commands can be issued only if R is waiting for input */
 static void menuact(control m)
 {
@@ -519,6 +531,7 @@ static void menuact(control m)
 	enable(mpkgu);
 	enable(mpkgbu);
 	enable(mde);
+	enable(mCRAN);
     } else {
 	disable(msource);
 	disable(mload);
@@ -536,6 +549,7 @@ static void menuact(control m)
 	disable(mpkgu);
 	disable(mpkgbu);
 	disable(mde);
+	disable(mCRAN);
     }
 
     if (consolecancopy(RConsole)) {
@@ -1011,6 +1025,9 @@ int setupui()
     MCHECK(mhelpsearch = newmenuitem("Search help...", 0, menuhelpsearch));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mapropos = newmenuitem("Apropos...", 0, menuapropos));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(newmenuitem("R Project home page", 0, menuRhome));
+    MCHECK(mCRAN = newmenuitem("CRAN", 0, menuCRAN));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("About", 0, menuabout));
     consolesetbrk(RConsole, menukill, ESC, 0);

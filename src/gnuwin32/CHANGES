@@ -28,6 +28,9 @@ area.
 
 Added winMenuNames() and winMenuItems() functions to query user menus.
 
+Added menu items for www.r-project.org and CRAN on the help menu. 
+(Wishlist PR#6492)
+
 
 Installation
 ------------
@@ -110,8 +113,8 @@ Rcmd SHLIB was computing dependencies for all C files, not just those
 specified on the command line, and building the DLL from all *.o files
 in the directory.
 
-The sizes of metafile in pixel was often coming out one pixel more than
-requested, so the background was not quite all painted.  Now we 
+The sizes of metafile in pixels were often coming out one pixel more
+than requested, so the background was not quite all painted.  Now we
 over-estimate.
 
 
