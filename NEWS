@@ -45,11 +45,11 @@ NEW FEATURES
     o	str(.) has a new optional argument "nchar.max = 128" and truncates
 	strings longer than that.  Also eliminated a few minor glitches.
 
-    o   boxplot() returns (and bxp() accepts) a list containing the summary
-        statistics for the boxes (changed from a list of elements one for
-        each box).
+    o	boxplot() returns (and bxp() accepts) a list containing the summary
+	statistics for the boxes (changed from a list of elements one for
+	each box).
 
-    o   plot.formula searches for a plot method for the left-side of the
+    o	plot.formula searches for a plot method for the left-side of the
 	formula before searching for a plot method for the right-side of
 	the formula.
 
@@ -88,6 +88,8 @@ NEW FEATURES
 	postscript() and xfig() drivers and will lead to more accurate
 	placing of centred or right-justified strings.
 
+    o	scale() is now generic with scale.default method.
+
 
 BUG FIXES
 
@@ -101,18 +103,18 @@ BUG FIXES
     o	is.qr() checks not only for $qr, but also for $rank & $qraux, PR#482.
 
     o	postscript() now uses the options "papersize" and "printcmd"
-	rather than the values of R_PAPERSIZE in the environment 
+	rather than the values of R_PAPERSIZE in the environment
 	and R_PRINTCMD found at build time.
 
     o	system() is now (partially) functional on systems without popen.
 
-    o   count.fields and read.table now have the same default quote = "\"'".
+    o	count.fields and read.table now have the same default quote = "\"'".
 
     o	postscript() now makes use of kerning information in computing
 	string widths.
 
-    o   the base file is no longer closed twice in case of a syntax
-        error (caused segfault on Linux).
+    o	the base file is no longer closed twice in case of a syntax
+	error (caused segfault on Linux).
 
     o	Support for Rd conversion to Sd has been reinstated (it was
 	unintentionally removed along with nroff-based conversion to text).
@@ -169,25 +171,25 @@ BUG FIXES
     o	save/restore of	 environments containing "..." object should
 	work now.
 
-    o   qhyper should work better for large N.
+    o	qhyper should work better for large N.
 
-    o   as.matrix.data.frame no longer escapes quotes in character
-        vectors.
+    o	as.matrix.data.frame no longer escapes quotes in character
+	vectors.
 
-    o   qbinom(1-1e-16, n, p) looped for ever.
+    o	qbinom(1-1e-16, n, p) looped for ever.
 
-    o   R would try to save the readline history at the end of
-        non-interactive sessions, causing crashes on some systems.
+    o	R would try to save the readline history at the end of
+	non-interactive sessions, causing crashes on some systems.
 
-    o   Subtle roundoff problems caused arrays to be allocated short in
-        loess.c in some cases, leading to segfaults.
+    o	Subtle roundoff problems caused arrays to be allocated short in
+	loess.c in some cases, leading to segfaults.
 
     o	loessf.f in modreg defined DSIGN unecessarily and this caused
 	a conflict on AIX.
 
 
 	*********************************************************
-	*					   	        *
+	*							*
 	*	News of 1.0.0 and earlier is in file `ONEWS'	*
 	*							*
 	*********************************************************

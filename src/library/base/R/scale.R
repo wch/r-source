@@ -1,5 +1,6 @@
-scale <-
-    function(x, center = TRUE, scale = TRUE)
+scale <- function(x, ..., scale = TRUE) UseMethod("scale")
+
+scale.default <- function(x, center = TRUE, scale = TRUE)
 {
     x <- as.matrix(x)
     nc <- ncol(x)

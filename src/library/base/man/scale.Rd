@@ -1,21 +1,27 @@
 \name{scale}
-\alias{scale}
-\title{Scaling and Centering of Matrices}
+\title{Scaling and Centering of Matrix-like Objects}
 \description{
-  Center and/or scale the columns of a numeric matrix.
+  \code{scale} is generic function who's default method
+  centers and/or scales the columns of a numeric matrix.
 }
+\alias{scale}
+\alias{scale.default}
 \usage{
 scale(x, center = TRUE, scale = TRUE)
 }
+\synopsis{
+scale.default(x, center = TRUE, scale = TRUE)
+scale(x, ..., scale = TRUE)
+}
 \arguments{
-  \item{x}{a numeric matrix.}
+  \item{x}{a numeric matrix(like object).}
   \item{center}{either a logical value or a numeric vector of length
     equal to the number of columns of \code{x}.}
   \item{scale}{either a logical value or a numeric vector of length
     equal to the number of columns of \code{x}.}
 }
 \value{
-  The centered, scaled matrix.
+  For \code{scale.default}, the centered, scaled matrix.
 }
 \details{
   The value of \code{center} determines how column centering is
