@@ -74,7 +74,7 @@ r <- sqrt(outer(x^2, y^2, "+"))
 image(z = z <- cos(r^2)*exp(-r/6), col=gray((0:32)/32))
 image(z, axes=F, main="Math can be beautiful ...",
       xlab=expression(cos(r^2) * e^{-r/6}))
-contour(z, add=T)
+contour(z, add=T, drawlabels=F)
 
 data(volcano)
 x <- 10*(1:nrow(volcano))

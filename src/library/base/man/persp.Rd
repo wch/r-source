@@ -4,7 +4,7 @@
 persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         z, xlim = range(x), ylim = range(y), zlim = range(z, na.rm=T),
         theta = 0, phi = 15, d = 1, scale = TRUE, col, border,
-        ltheta = -135, lphi = 0, shade = NA, box = TRUE, \dots)
+        ltheta = -135, lphi = 0, shade = NA, box = TRUE, axes = TRUE, \dots)
 }
 \alias{persp}
 \arguments{
@@ -49,6 +49,9 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     illumination.}
   \item{box}{should the bounding box for the surface be displayed.
     The default is \code{TRUE}.}
+  \item{axes}{should ticks and labels be added to the box.  The 
+    default is \code{TRUE}.  If \code{box} is \code{FALSE} then no
+    ticks or labels are drawn.}
   \item{\dots}{additional graphical parameters (see \code{\link{par}})
     and the arguments to \code{\link{title}} may also be supplied.}
 }

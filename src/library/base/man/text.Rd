@@ -3,7 +3,7 @@
 \usage{
 text (x, \dots)
 text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
-              pos = NULL, offset = 0.5, \dots)
+              pos = NULL, offset = 0.5, vfont=NULL, \dots)
 }
 \alias{text}
 \alias{text.default}
@@ -23,6 +23,10 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   \item{offset}{when \code{pos} is specified, this value gives the
     offset of the label from the specified coordinate in fractions
     of a character width.}
+  \item{vfont}{if a numeric vector of length 2 is specified, then Hershey
+    vector fonts are used.  The first element of the vector
+    selects a typeface and the second element selects a fontindex 
+    (see below).} 
   \item{\dots}{further graphical parameters (from \code{\link{par}}),
     such as \code{cex}, etc.}
 }
@@ -51,6 +55,26 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
 
   Text can be rotated by using graphical parameters \code{srt} (see
   \code{\link{par}}); this rotates about the centre set by \code{adj}.
+
+  Some useful values for (typeface, font index) for Hershey fonts are:
+    (0, 0) Serif Symbol;
+    (0, 1) Serif Plain;
+    (0, 2) Serif Italic;
+    (0, 3) Serif Bold;
+    (0, 4) Serif Bold Italic;
+    (1, 0) Sans Serif Symbol;
+    (1, 1) Sans Serif Plain;
+    (1, 2) Sans Serif Italic;
+    (1, 3) Sans Serif Bold;
+    (1, 4) Sans Serif Bold Italic;
+    (2, 1) Script Plain;
+    (3, 1) Gothic English;
+    (4, 1) Gothic German;
+    (5, 1) Gothic Italian;
+    (6, 2) Serif Symbol Italic;
+    (6, 3) Serif Symbol Bold;
+    (6, 4) Serif Symbol Bold Italic;
+    (7, 2) Sans Serif Symbol Italic.
 }
 \seealso{
   \code{\link{mtext}}, \code{\link{title}};

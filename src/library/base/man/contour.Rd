@@ -7,8 +7,9 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         xlim = range(x, finite = TRUE),
         ylim = range(y, finite = TRUE),
         zlim = range(z, finite = TRUE),
-        labcex = 0,
-        col = par("fg"), lty = par("lty"), add = FALSE, \dots)
+        labcex = 0.4, drawlabels = T, method = 3, vfont = NULL,
+        col = par("fg"), lty = par("lty"), lwd = par("lwd"),
+	add = FALSE, \dots)
 }
 \alias{contour}
 \arguments{
@@ -25,10 +26,17 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     \code{levels} is not supplied.}
   \item{levels}{numeric vector of levels at which to draw contour
     lines.}
-  \item{labcex}{\code{cex} for contour labelling. (not yet used)}
+  \item{labcex}{\code{cex} for contour labelling.}
+  \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
+  \item{method}{a numeric specifying where the labels will be located.}
+  \item{vfont}{if a numeric vector of length 2 is specified, then Hershey
+    vector fonts are used.  The first element of the vector
+    selects a typeface and the second element selects a fontindex 
+    (see \code{help(text)} for more information).} 
   \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot}
   \item{col}{color for the lines drawn}
   \item{lty}{line type for the lines drawn}
+  \item{lwd}{line width for the lines drawn}
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
   \item{\dots}{additional graphical parameters (see \code{\link{par}})
     and the arguments to \code{\link{title}} may also be supplied.}
@@ -36,7 +44,14 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 \description{
   Draws contour lines for the desired levels.
   There is currently no documentation about the algorithm.
-  The source code is in \file{\$R\_HOME/src/main/plot.c}.
+  The source code is in \file{\$R\_HOME/src/main/plot3d.c}.
+  For information about vector fonts, see \code{help(text)}.
+  The methods for positioning the labels on contours are: (1) draw on the
+  edge of the plot, overlaying the contour line; (2) draw on the edge of the
+  plot, embedded in the contour line, with no labels overlapping; (3) draw
+  on the flattest section of the contour, embedded in the contour line,
+  with no labels overlapping.  Either of the second two may not draw a
+  label on every contour line.
 }
 \seealso{
   \code{\link{filled.contour}} for ``color-filled'' contours,
@@ -46,21 +61,21 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 \examples{
 x <- -6:16
 op <- par(mfrow = c(2, 2))
-contour(outer(x, x))
+contour(outer(x, x), method = 2, vfont = c(1,1))
 z <- outer(x, sqrt(abs(x)), FUN = "/")
 ## Should not be necessary:
 z[!is.finite(z)] <- NA
 image(x, x, z)
-contour(x, x, z, col = "pink", add = TRUE)
-contour(x, x, z, ylim = c(1, 6))
-contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2)
+contour(x, x, z, col = "pink", add = TRUE, method = 2, vfont = c(1,1))
+contour(x, x, z, ylim = c(1, 6), method = 1, labcex = 1)
+contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2, method = 1)
 par(op)
 
 ## Persian Rug Art:
 x <- y <- seq(-4*pi, 4*pi, len = 27)
 r <- sqrt(outer(x^2, y^2, "+"))
 opar <- par(mfrow = c(2, 2), mar = rep(0, 4))
-for(f in pi^(0:3)) contour(cos(r^2)*exp(-r/f))
+for(f in pi^(0:3)) contour(cos(r^2)*exp(-r/f), drawlabels = F)
 
 data("volcano")
 rx <- range(x <- 10*1:nrow(volcano))
@@ -71,7 +86,7 @@ par(opar); par(mfrow=c(1,1)); opar <- par(pty = "s", bg = "lightcyan")
 plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
 u <- par("usr")
 rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
-contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE)
+contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE, vfont = c(1,1))
 title("A Topographic Map of Maunga Whau", font = 4)
 abline(h = 200*0:4, v = 200*0:4, col = "lightgray", lty = 2, lwd = 0.1)
 par(opar)
