@@ -1,3 +1,25 @@
+/*
+ *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 1998 Ross Ihaka and the R Core team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+/*  DESCRIPTION --> see below */
+
+
 /* From http://www.netlib.org/specfun/rjbesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
@@ -38,28 +60,29 @@ void J_bessel(double *x, double *alpha, long *nb,
 {
 
 /* ---------------------------------------------------------------------
- This routine calculates Bessel functions J sub(N+ALPHA) (X)
-   for non-negative argument X, and non-negative order N+ALPHA.
+
+ This routine calculates Bessel functions J_(N+ALPHA) (X)
+ for non-negative argument X, and non-negative order N+ALPHA.
 
 
   Explanation of variables in the calling sequence.
 
-   X	 - working precision non-negative float argument for which
-	   J's are to be calculated.
-   ALPHA - working precision fractional part of order for which
-	   J's or exponentially scaled J'r (J*exp(X)) are
-	   to be calculated.  0 <= ALPHA < 1.0.
-   NB  - long number of functions to be calculated, NB > 0.
-	   The first function calculated is of order ALPHA, and the
-	   last is of order (NB - 1 + ALPHA).
-   B  - working precision output vector of length NB.  If RJBESL
-	   terminates normally (NCALC=NB), the vector B contains the
-	   functions J/ALPHA/(X) through J/NB-1+ALPHA/(X), or the
-	   corresponding exponentially scaled functions.
-   NCALC - long output variable indicating possible errors.
-	   Before using the vector B, the user should check that
-	   NCALC=NB, i.e., all orders have been calculated to
-	   the desired accuracy.  See Error Returns below.
+ X     - Non-negative argument for which
+	 J's are to be calculated.
+ ALPHA - Fractional part of order for which
+	 J's or exponentially scaled J'r (J*exp(X)) are
+	 to be calculated.  0 <= ALPHA < 1.
+ NB    - Number of functions to be calculated, NB > 0.
+	 The first function calculated is of order ALPHA, and the
+	 last is of order (NB - 1 + ALPHA).
+ B     - Output vector of length NB.  If RJBESL
+	 terminates normally (NCALC=NB), the vector B contains the
+	 functions J/ALPHA/(X) through J/NB-1+ALPHA/(X), or the
+	 corresponding exponentially scaled functions.
+ NCALC - Output variable indicating possible errors.
+	 Before using the vector B, the user should check that
+	 NCALC=NB, i.e., all orders have been calculated to
+	 the desired accuracy.	See Error Returns below.
 
 
  *******************************************************************

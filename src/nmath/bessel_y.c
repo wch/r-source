@@ -1,3 +1,25 @@
+/*
+ *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 1998 Ross Ihaka and the R Core team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+/*  DESCRIPTION --> see below */
+
+
 /* From http://www.netlib.org/specfun/rybesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
@@ -36,26 +58,26 @@ void Y_bessel(double *x, double *alpha, long *nb,
 {
 /* ----------------------------------------------------------------------
 
-  This routine calculates Bessel functions Y SUB(N+ALPHA) (X)
-  for non-negative argument X, and non-negative order N+ALPHA.
+ This routine calculates Bessel functions Y_(N+ALPHA) (X)
+ for non-negative argument X, and non-negative order N+ALPHA.
 
 
  Explanation of variables in the calling sequence
 
- X     - Working precision non-negative float argument for which
+ X     - Non-negative argument for which
 	 Y's are to be calculated.
- ALPHA - Working precision fractional part of order for which
+ ALPHA - Fractional part of order for which
 	 Y's are to be calculated.  0 <= ALPHA < 1.0.
- NB    - Integer number of functions to be calculated, NB > 0.
+ NB    - Number of functions to be calculated, NB > 0.
 	 The first function calculated is of order ALPHA, and the
 	 last is of order (NB - 1 + ALPHA).
- BY    - Working precision output vector of length NB.	If the
+ BY    - Output vector of length NB.	If the
 	 routine terminates normally (NCALC=NB), the vector BY
 	 contains the functions Y(ALPHA,X), ... , Y(NB-1+ALPHA,X),
 	 If (0 < NCALC < NB), BY(I) contains correct function
 	 values for I <= NCALC, and contains the ratios
 	 Y(ALPHA+I-1,X)/Y(ALPHA+I-2,X) for the rest of the array.
- NCALC - Integer output variable indicating possible errors.
+ NCALC - Output variable indicating possible errors.
 	 Before using the vector BY, the user should check that
 	 NCALC=NB, i.e., all orders have been calculated to
 	 the desired accuracy.	See error returns below.

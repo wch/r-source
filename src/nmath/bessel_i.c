@@ -1,3 +1,25 @@
+/*
+ *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 1998 Ross Ihaka and the R Core team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+/*  DESCRIPTION --> see below */
+
+
 /* From http://www.netlib.org/specfun/ribesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
@@ -37,30 +59,30 @@ void I_bessel(double *x, double *alpha, long *nb,
 {
 /* -------------------------------------------------------------------
 
-  This routine calculates Bessel functions I SUB(N+ALPHA) (X)
-  for non-negative argument X, and non-negative order N+ALPHA,
-  with or without exponential scaling.
+ This routine calculates Bessel functions I_(N+ALPHA) (X)
+ for non-negative argument X, and non-negative order N+ALPHA,
+ with or without exponential scaling.
 
 
  Explanation of variables in the calling sequence
 
- X     - Working precision non-negative float argument for which
+ X     - Non-negative argument for which
 	 I's or exponentially scaled I's (I*EXP(-X))
 	 are to be calculated.	If I's are to be calculated,
 	 X must be less than EXPARG (see below).
- ALPHA - Working precision fractional part of order for which
+ ALPHA - Fractional part of order for which
 	 I's or exponentially scaled I's (I*EXP(-X)) are
 	 to be calculated.  0 <= ALPHA < 1.0.
- NB    - Integer number of functions to be calculated, NB > 0.
+ NB    - Number of functions to be calculated, NB > 0.
 	 The first function calculated is of order ALPHA, and the
 	 last is of order (NB - 1 + ALPHA).
- IZE   - Integer type.	IZE = 1 if unscaled I's are to calculated,
-	 and 2 if exponentially scaled I's are to be calculated.
- BI	- Working precision output vector of length NB.	If the routine
+ IZE   - Type.	IZE = 1 if unscaled I's are to be calculated,
+		    = 2 if exponentially scaled I's are to be calculated.
+ BI    - Output vector of length NB.	If the routine
 	 terminates normally (NCALC=NB), the vector BI contains the
 	 functions I(ALPHA,X) through I(NB-1+ALPHA,X), or the
 	 corresponding exponentially scaled functions.
- NCALC - Integer output variable indicating possible errors.
+ NCALC - Output variable indicating possible errors.
 	 Before using the vector BI, the user should check that
 	 NCALC=NB, i.e., all orders have been calculated to
 	 the desired accuracy.	See error returns below.
