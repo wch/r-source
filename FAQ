@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.65-8, 1999/10/11
+Version 0.65-9, 1999/10/15
 Kurt Hornik
 
 
@@ -303,6 +303,9 @@ as well as Red Hat 5.1 packages for the alpha and sparc platforms
 packages for the i386 and alpha platforms (maintained by Martyn Plummer and
 Naoki Takebayashi, respectively), S.u.S.E. 5.3/6.0/6.2 i386 packages by
 Albrecht Gebhardt, and RPMs for the ppc platform by Alex Buerkle.
+
+   The `bin/osf' directory contains RPMs for alpha systems running Digital
+Unix 4.0 by Albrecht Gebhardt.
 
    No other binary distributions have thus far been made publically
 available.
@@ -779,9 +782,11 @@ being as compatible as possible with S.
    * The random number generators are different, and the seeds have
      different length.
 
+   * R passes integer objects to C as `int *' rather than `long *' as in S.
+
    * R has no single precision storage mode, and so can only pass real
-     numeric arguments to C/FORTRAN subroutines as double * or DOUBLE
-     PRECISION, respectively.  (As of version 0.90 there will also be a
+     numeric arguments to C/FORTRAN subroutines as `double *' or `DOUBLE
+     PRECISION', respectively.  (As of version 0.90 there will also be a
      single precision interface.)
 
    * By default, `ls()' returns the names of the objects in the current
