@@ -248,6 +248,10 @@ none
 
 Directory:  incoming
 
+* PR# 1008 *
+Subject: ReleaseLargeFreeVectors SIGSEGV (?)
+From: Roger.Bivand@nhh.no
+Date: Mon, 2 Jul 2001 15:27:55 +0200 (MET DST)
 * PR# 1007 *
 Subject: ks.test doesn't compute correct empirical distribution if there are ties in the data
 From: mcdowella@mcdowella.demon.co.uk
