@@ -74,6 +74,10 @@ function(topic, offline = FALSE, package = NULL, lib.loc = NULL,
 print.help_files_with_topic <-
 function(x, ...)
 {
+    if (.Platform$GUI=="AQUA") {
+        .Internal(aqua.custom.print("help-files", x))
+	return(invisible(x))
+    }
     topic <- attr(x, "topic")
     paths <- as.character(x)
     if(!length(paths)) {
