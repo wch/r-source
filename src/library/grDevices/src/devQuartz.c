@@ -443,12 +443,16 @@ static CGContextRef	GetContext(QuartzDesc *xd);
 
 
 
+//static SEXP gcall;
 
 static char *SaveString(SEXP sxp, int offset)
 {
     char *s;
     if(!isString(sxp) || length(sxp) <= offset)
-	errorcall(gcall, "invalid string argument");
+		error("invalid string argument");
+
+	//	errorcall(gcall, "invalid string argument");
+	
     s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
     strcpy(s, CHAR(STRING_ELT(sxp, offset)));
     return s;
@@ -468,7 +472,7 @@ bool WeAreOnPanther = false;
  */
 
 
-SEXP Quartz(SEXP arg)
+SEXP Quartz(SEXP args)
 {
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
@@ -479,7 +483,7 @@ SEXP Quartz(SEXP arg)
     SInt32 macVer;
     int quartzpos = 1;
 
-    gcall = call;
+//    gcall = call;
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
     display = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
