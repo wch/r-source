@@ -203,6 +203,8 @@ BUG FIXES
 	non-existent fonts. (PR#1748)
 
 
+    o   dlnorm returns zero for negative x argument (PR#1781)
+
 
 	**************************************************
 	*						 *
