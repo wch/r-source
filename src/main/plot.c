@@ -910,7 +910,7 @@ static double ComputePAdjValue(double padj, int side, int las)
         padj = 0.5; break;
     case 3:/* vertical */
         switch(side) {
-        case 1: 
+        case 1:
         case 3: padj = 0.5; break;
         case 2:
         case 4: padj = 0.0; break;
@@ -1053,7 +1053,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     npadj = length(padj);
     if (npadj <= 0) errorcall(call, "zero length \"padj\" specified");
     /* if (n < npadj) n = npadj; */
-    args = CDR(args);    
+    args = CDR(args);
 
     /* Retrieve relevant "par" values. */
 
@@ -1262,7 +1262,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (x > low && x < high) {
 		    if (isExpression(lab)) {
 			GMMathText(VECTOR_ELT(lab, ind[i]), side,
-				   axis_lab, 0, x, Rf_gpptr(dd)->las, 
+				   axis_lab, 0, x, Rf_gpptr(dd)->las,
 				   padjval, dd);
 		    }
 		    else {
@@ -1390,7 +1390,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (y > low && y < high) {
 		    if (isExpression(lab)) {
 			GMMathText(VECTOR_ELT(lab, ind[i]), side,
-				   axis_lab, 0, y, Rf_gpptr(dd)->las, 
+				   axis_lab, 0, y, Rf_gpptr(dd)->las,
 				   padjval, dd);
 		    }
 		    else {
@@ -1521,6 +1521,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
      * GClip(dd);
      */
 
+    /* Line drawing :*/
     switch(type) {
     case 'l':
     case 'o':
@@ -1651,8 +1652,9 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     default:/* OTHERWISE */
 	errorcall(call, "invalid plot type '%c'", type);
 
-    } /* End {switch(type)} */
+    } /* End {switch(type)} - for lines */
 
+    /* Points : */
     if (type == 'p' || type == 'b' || type == 'o') {
 	for (i = 0; i < n; i++) {
 	    xx = x[i];
@@ -2437,8 +2439,8 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     npadj = length(padj);
     if (npadj <= 0) errorcall(call, "zero length \"padj\" specified");
     if (n < npadj) n = npadj;
-    args = CDR(args);    
-    
+    args = CDR(args);
+
     /* Arg8 : cex */
     PROTECT(cex = FixupCex(CAR(args), 1.0));
     ncex = length(cex);
@@ -2537,7 +2539,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	else if (isExpression(text))
 	    GMMathText(VECTOR_ELT(text, i%ntext),
-		       sideval, lineval, outerval, atval, Rf_gpptr(dd)->las, 
+		       sideval, lineval, outerval, atval, Rf_gpptr(dd)->las,
 		       padjval, dd);
 	else {
 	    string = STRING_ELT(text, i%ntext);
