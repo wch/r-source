@@ -90,6 +90,18 @@ RESCOMP=$(BINPREF)windres
 	@echo "making $@ from $<"
 	@$(CC) -M $(CFLAGS) $($*-CFLAGS) $< -o $@
 
+.cc.d:
+	@echo "making $@ from $<"
+	@$(CXX) -M $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+
+.cpp.d:
+	@echo "making $@ from $<"
+	@$(CXX) -M $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+
+.C.d:
+	@echo "making $@ from $<"
+	@$(CXX) -M $(CXXFLAGS) $($*-CXXFLAGS) $< -o $@
+
 .c.o:
 	$(CC) $(CFLAGS) $($*-CFLAGS) -c $< -o $@
 

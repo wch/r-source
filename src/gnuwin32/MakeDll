@@ -65,7 +65,7 @@ $(DLLNAME).a: $(OBJS)
 $(DLLNAME).dll : $(DLLNAME).a $(RCOBJ)
 
 # Dependencies
-DEPS=$(CSOURCES:.c=.d)
+DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES:.cc=.d) $(CXXSOURCES:.cpp=.d) $(CXXSOURCES:.C=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
