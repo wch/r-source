@@ -182,6 +182,10 @@ BUG FIXES
 	when the OS does not know, as some OSes were printing times
 	in DST if this was marked as unknown.
 
+    o	Setting par(pty=) after par(pin=) or par(plt=) was having no
+	effect until the margins were set.
+
+
 
 		CHANGES IN R VERSION 1.2.0
 

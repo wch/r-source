@@ -146,10 +146,9 @@ par(\dots, no.readonly = FALSE)
 
     Alternatively, a string of up to 8 characters
     (from \code{c(0:9, "A":"F")}) may be given, giving
-    the length (typically in points/pixels) of line segments which are
-    alternatively drawn and skipped.  For example, \code{"44"} is dashed and
-    \code{"13"} is dotted.}
-  \item{lwd}{The line width, a \emph{positive} numerical, defaulting to
+    the length of line segments which are alternatively drawn and
+    skipped. See `Line Type Specification' below.}
+  \item{lwd}{The line width, a \emph{positive} number, defaulting to
       \code{1}.}
   \item{mai}{A numerical vector of the form \code{c(bottom, left, top, right)}
     which gives the margin size specified in inches.}
@@ -221,7 +220,7 @@ par(\dots, no.readonly = FALSE)
     extremes of the user coordinates of the plotting region.  When a
     logarithmic scale is in use (i.e. \code{par("xlog")} is true, see
     below), then the x-limits will be \code{10 ^ par("usr")[1:2]}.
-    Similarly for the y-axis. 
+    Similarly for the y-axis.
   }
   \item{xaxp}{A vector of the form \code{c(x1, x2, n)} giving the
     coordinates of the extreme tick marks and the number of intervals
@@ -249,7 +248,7 @@ par(\dots, no.readonly = FALSE)
   \item{xlog}{\emph{\bold{R.O.}}; logical value (see \code{log} in
     \code{\link{plot.default}}).  If \code{TRUE}, a logarithmic scale is
     in use (e.g. after \code{plot(*, log = "x")}.  For a new device, it
-    defaults to \code{FALSE}, i.e., linear scale.} 
+    defaults to \code{FALSE}, i.e., linear scale.}
   \item{xpd}{A logical value or NA.
     If \code{FALSE}, all plotting is clipped to the plot region, if
     \code{TRUE}, all plotting is clipped to the figure region, and if
@@ -271,7 +270,7 @@ par(\dots, no.readonly = FALSE)
   parameter values.  Use \code{par(no.readonly = TRUE)} for the full
   list of parameters that can be restored.
 
-  When one parameter is queried, the value is a character string.
+  When just one parameter is queried, the value is a character string.
   When two or more parameters are queried, the result is a list of
   character strings, with the list names giving the parameters.
 
@@ -279,27 +278,40 @@ par(\dots, no.readonly = FALSE)
   querying one parameter returns a vector.
 }
 
-\section{Color Specification}{Colors can be specified in several
-  different ways.  The simplest way is with a character string giving
-  the color name (e.g., \code{"red"}).  A list of the possible colors
-  can be obtained with the function \code{\link{colors}}.
-  Alternatively, colors can be specified directly in terms of there RGB
-  components with a string of the form \code{"#RRGGBB"} where each of
-  the pairs \code{RR}, \code{GG}, \code{BB} consist of two hexadecimal
-  digits giving a value in the range \code{00} to \code{FF}.  Colors can
-  also be specified by giving an index into a small table of colors.
-  This provides compatibility with S.
+\section{Color Specification}{
+  Colors can be specified in several different ways. The simplest way is
+  with a character string giving the color name (e.g., \code{"red"}).  A
+  list of the possible colors can be obtained with the function
+  \code{\link{colors}}. Alternatively, colors can be specified directly in
+  terms of there RGB components with a string of the form \code{"#RRGGBB"}
+  where each of the pairs \code{RR}, \code{GG}, \code{BB} consist of two
+  hexadecimal digits giving a value in the range \code{00} to \code{FF}.
+  Colors can also be specified by giving an index into a small table of
+  colors. This provides compatibility with S.
 
   The functions \code{rgb}, \code{hsv}, \code{gray} and \code{rainbow}
   provide additional ways of generating colors.}
-\section{Line Type Specification}{Line types can either be specified by
-  giving an index into a small built in table of line types (1=solid,
-  2=dashed, 3=dotted) or directly as the lengths of on/off stretches of
-  line.  This is done with a string of up to eight characters which give
-  the lengths in consecutive positions in the string.  For example, the
-  string \code{"33"} specifies three pixels on followed by three off and
-  \code{"3313"} specifies three pixels on followed by three off followed
-  by one on and finally three off.
+
+\section{Line Type Specification}{
+  Line types can either be specified by giving an index into a small
+  built in table of line types (1 = solid, 2 = dashed, 3 = dotted) or directly
+  as the lengths of on/off stretches of line.  This is done with a string
+  of up to eight characters which give the lengths in consecutive
+  positions in the string.  For example, the string \code{"33"} specifies
+  three units on followed by three off and \code{"3313"} specifies three
+  units on followed by three off followed by one on and finally three off.
+  The `units' here are (on most devices) proportional to \code{lwd}, and
+  with \code{lwd = 1} are in pixels or points.
+}
+
+\note{
+  The effect of restoring all the (settable) graphics parameters as
+  in the examples is hard to predict if the device has been resized.
+  Several of them are attempting to set the same things in different
+  ways, and those last in the alphabet will win.  In particular, the
+  settings of \code{mai}, \code{mar}, \code{pin}, \code{plt} and
+  \code{pty} interact, as do the outer margin settings, the figure
+  layout and figure region size.
 }
 
 \seealso{
