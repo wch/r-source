@@ -475,6 +475,10 @@ Date: Fri, 4 Apr 2003 06:04:48 +0200 (MET DST)
 Subject: Search Engine
 From: leroy@ucsd.edu
 Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
+* PR# 2875 *
+Subject: configure succeeds without dlfcn.h, but fails to compile (OS X)
+From: buerkla@uwec.edu
+Date: Tue, 29 Apr 2003 20:24:12 +0200 (MET DST)
 
 Directory:  Misc
 
@@ -690,10 +694,6 @@ Date: Wed, 23 Apr 2003 02:19:53 +0200 (MET DST)
 Subject: Rprofile.site and check/build
 From: Laurent Gautier <laurent@cbs.dtu.dk>
 Date: Tue, 29 Apr 2003 08:03:35 +0200
-* PR# 2875 *
-Subject: configure succeeds without dlfcn.h, but fails to compile (OS X)
-From: buerkla@uwec.edu
-Date: Tue, 29 Apr 2003 20:24:12 +0200 (MET DST)
 * PR# 2876 *
 Subject: Re: [Rd]  configure succeeds without dlfcn.h, but fails to compile
 From: Thomas Lumley <tlumley@u.washington.edu>
@@ -710,15 +710,19 @@ Date: Wed, 30 Apr 2003 15:52:35 +0200
 Subject: make check failures
 From: Ross Boylan <ross@biostat.ucsf.edu>
 Date: Wed, 30 Apr 2003 11:05:37 -0700
-* PR# 2885 *
-Subject: Wrong date on FAQ
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Wed, 30 Apr 2003 11:07:57 -0700
 * PR# 2894 *
 Subject: qbeta hang
 From: terra@gnome.org
 Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
-* PR# 2903 *
-Subject: ***Last Chance...15.6 MILLION OPT-IN EMAIL ADDRESSES!
-From: "Yboreviel"<IncreaseSalesNo050103@excite.com>
-Date: Fri, 2 May 2003 20:30:23 GMT
+* PR# 2906 *
+Subject: R-bugs, MASSIVE, Rock Solid Erections in 60 Seconds Or Less!
+From: zenin@user-0ceifg9.cable.mindspring.com
+Date: Sat, 03 May 2003 11:02:44 +0000
+* PR# 2907 *
+Subject: ***15.6 MILLION OPT-IN EMAIL ADDRESSES...PLUS $2,000 OF FREE EMAIL MARKETING SOFTWARE!
+From: "Larareda"<GenerateMoreSalesNow76832@excite.com>
+Date: Wed, 30 Apr 2003 12:09:04 GMT
+* PR# 2908 *
+Subject: (광고)"국내 최저가"를 자랑하는 애견 쇼핑몰입니다. 
+From: 이상호<kbw8661@hanmail.net>
+Date: Sat, 3 May 2003 16:04:30 +0200 (MET DST)
