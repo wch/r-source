@@ -52,6 +52,12 @@ rm140
   get.menu.cmd(label) the user can remove or get the
   command associated to the menu "label". See the help
   pages for details and examples.
+* Added three functions to manipulate a User menu in the
+  R Console menubar. With del.usr.cmd() the whole user
+  menu is removed. Respectively with del.num.cmd(menunum) 
+  and get.num.cmd(menunum) the user can remove or get the
+  command associated to the menu numbered "menunum". See 
+  the help pages for details and examples.
    
    
    
