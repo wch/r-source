@@ -9,9 +9,11 @@
 
 BUG FIXES
 
-    o	pgamma(Inf,1,Inf) gives NaN instead of an infinite loop, PR#462.
+    o	pgamma(Inf, 1, Inf) gives NaN instead of an infinite loop, PR#462.
 
     o	Inline xaxt and yaxt parameters were ignored.
+
+    o	Setting the normal RNG was not always recorded in .Random.seed.
 
 
 		CHANGES IN R VERSION 1.0.0
