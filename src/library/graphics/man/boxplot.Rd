@@ -9,7 +9,7 @@
 \usage{
 boxplot(x, \dots)
 
-\method{boxplot}{formula}(formula, data = NULL, \dots, subset)
+\method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = na.pass)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, outline = TRUE, names, boxwex = 0.8, plot = TRUE,
@@ -17,23 +17,28 @@ boxplot(x, \dots)
         horizontal = FALSE, add = FALSE, at = NULL)
 }
 \arguments{
-  \item{formula}{a formula, such as \code{y ~ x}.}
+  \item{formula}{a formula, such as \code{y ~ grp}, where \code{y} is a
+    numeric vector of data values to be split into groups according to
+    the grouping variable \code{grp} (usually a factor).}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.}
+  \item{na.action}{a function which indicates what should happen
+    when the data contain \code{NA}s.  The default is to ignore missing
+    values in either the response or the group.}
   \item{x}{for specifying data from which the boxplots are to be
-    produced as well as for giving graphical parameters.  Additional
-    unnamed  arguments specify further data, either
-    as separate vectors (each corresponding to a component boxplot) or
-    as a single list containing such vectors.  \code{\link{NA}}s are
-    allowed in the data.}
+    produced. Either a numeric vector, or a single list containing such
+    vectors. Additional unnamed arguments specify further data
+    as separate vectors (each corresponding to a component boxplot).
+    \code{\link{NA}}s are allowed in the data.}
   \item{\dots}{For the \code{formula} method, arguments to the
     default method and graphical parameters.
 
     For the default method, unnamed arguments are additional data
-    vectors, and named arguments are graphical parameters in addition
-    to the ones given by argument \code{pars}.
+    vectors (unless \code{x} is a list when they are ignored),
+    and named arguments are graphical parameters in addition to the ones
+    given by argument \code{pars}.
   }
   \item{range}{this determines how far the plot whiskers extend out
     from the box.  If \code{range} is positive, the whiskers extend
@@ -79,6 +84,8 @@ boxplot(x, \dots)
   The generic function \code{boxplot} currently has a default method
   (\code{boxplot.default}) and a formula interface
   (\code{\link{boxplot.formula}}).
+
+  Missing values are ignored when forming boxplots.
 }
 \value{
   List with the following components:

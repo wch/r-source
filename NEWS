@@ -21,6 +21,11 @@ NEW FEATURES
 	
     o	edit() and fix() use the object name in the window caption on 
 	some platforms.
+	
+    o	The 'formula' method for boxplot() has a 'na.action' argument,
+	defaulting to na.pass().  This is mainly useful if the response
+	is a matrix when the previous default of na.omit() would omit
+	entire rows.  (Related to PR#6846.)
 
 
 UTILITIES

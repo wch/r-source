@@ -52,7 +52,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     else z
 }
 
-boxplot.formula <- function(formula, data = NULL, ..., subset)
+boxplot.formula <-
+    function(formula, data = NULL, ..., subset, na.action = na.pass)
 {
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")
@@ -60,6 +61,7 @@ boxplot.formula <- function(formula, data = NULL, ..., subset)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$... <- NULL
+    m$na.action <- na.action # force use of default for this method
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
