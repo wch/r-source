@@ -40,16 +40,18 @@ TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
 
 
 %.R : $(srcdir)/make-%.R
-	$(R) < $< > /dev/null
+	@$(R) < $< > /dev/null
 
 %.Rout : %.R
-	@rm -f $@.fail
-	$(R) < $< > $@
+	@rm -f $@ $@.fail
+	@echo "running \`$<'"
+	@$(R) < $< > $@
 	@if [ -f $(srcdir)/$@.save ] ; then \
+	  mv $@ $@.fail; \
 	  echo -n \
 	    "Comparing \`$@' to \`$(srcdir)/$@.save' ..."; \
-	  $(RDIFF) $@ $(srcdir)/$@.save $(RVAL_IF_DIFF) || \
-	    (mv $@ $@.fail && exit 1); \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
 	  echo "OK"; \
 	fi
 
