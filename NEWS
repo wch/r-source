@@ -75,7 +75,8 @@ NEW FEATURES
 	strptime() does not validate dates correctly, so we have added
 	extra code to do so.  However, this cannot correct scanning
 	errors in the OS's strptime (although we have been able to
-	work around these on Windows).
+	work around these on Windows).  Some examples are now tested for
+	during configuration.
 
     o   There is a new function contourLines() to produce contour 
 	lines (but not draw anything).  This makes the CRAN package
