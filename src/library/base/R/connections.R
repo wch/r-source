@@ -216,3 +216,13 @@ writeChar <- function(object, con, nchars = nchar(object), eos = "")
 
 gzcon <- function(con, level = 6, allowNonCompressed = TRUE)
     .Internal(gzcon(con, level, allowNonCompressed))
+
+socketSelect <- function(socklist, write = FALSE, timeout = NULL) {
+    if (is.null(timeout))
+        timeout <- -1
+    else if (timeout < 0)
+        stop("supplied timeout must be NULL or a non-negative number")
+    if (length(write) < length(socklist))
+        write <- rep(write, length.out = length(socklist))
+    .Internal(sockSelect(socklist, write, timeout))
+}

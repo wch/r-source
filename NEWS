@@ -305,6 +305,8 @@ NEW FEATURES
     o   serialize() and unserialize() functions are available for
 	low-level serialization to connections.
 
+    o   socketSelect() allows waiting on multiple sockets.
+
 
 STANDARD PACKAGES
 
