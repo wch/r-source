@@ -1,4 +1,4 @@
-toLink = S.h S_compat.h f2c.h Fortran.h Blas.h Linpack.h
+toLink = S.h S_compat.h f2c.h Fortran.h Blas.h Linpack.h Platform.h
 
 install: rmlinks
 	@echo making include links
