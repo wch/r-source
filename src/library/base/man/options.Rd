@@ -300,14 +300,15 @@ getOption(x)
     \code{show.coef.Pvalues} \tab \code{TRUE}\cr
     \code{na.action} \tab \code{na.omit} \tab
     \code{timeout} \tab \code{60}\cr
-    \code{ts.eps} \tab \code{1e-5}\cr
-    \code{error} \tab \code{NULL} \tab
-    \code{show.error.messages} \tab \code{TRUE} \cr
-    \code{warn} \tab \code{0}\tab
-    \code{warning.length} \tab \code{1000}\cr
-    \code{echo} \tab \code{TRUE} \tab
-    \code{verbose} \tab \code{FALSE} \cr
-    \code{scipen} \tab \code{0} \tab \code{locatorBell} \tab \code{TRUE}
+    \code{ts.eps} \tab \code{1e-5}\tab
+    \code{error} \tab \code{NULL} \cr
+    \code{show.error.messages} \tab \code{TRUE} \tab
+    \code{warn} \tab \code{0}\cr
+    \code{warning.length} \tab \code{1000}\tab
+    \code{echo} \tab \code{TRUE} \cr
+    \code{verbose} \tab \code{FALSE} \tab
+    \code{scipen} \tab \code{0} \cr
+    \code{locatorBell} \tab \code{TRUE}\tab\tab  \cr
   }
   Others are set from environment variables or are platform-dependent.
 }
