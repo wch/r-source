@@ -35,11 +35,11 @@ se.contrast(object, \dots)
   than compute them directly from the coefficients.
 
   In multistratum models, the contrasts can appear in more than one
-  stratum; the contrast and standard error are computed in the lowest
-  stratum and adjusted for efficiencies and comparisons between strata.
-  (See the comments in the note in the help for \code{\link{aov}} about
-  using orthogonal contrasts: using treatment \sQuote{contrasts} may
-  result in an apparent loss of efficiency.)
+  stratum, in which case the standard errors are computed in the lowest
+  stratum and adjusted for efficiencies and comparisons between
+  strata. (See the comments in the note in the help for
+  \code{\link{aov}} about using orthogonal contrasts.)  Such standard
+  errors are often conservative.
 
   Suitable matrices for use with \code{coef} can be found by
   calling \code{\link{contrasts}} and indexing the columns by a factor.
@@ -47,10 +47,8 @@ se.contrast(object, \dots)
 \value{
   A vector giving the standard errors for each contrast.
 }
-
 \seealso{
-  \code{\link{contrasts}},
-  \code{\link{model.tables}}
+  \code{\link{contrasts}}, \code{\link{model.tables}}
 }
 \examples{
 ## From Venables and Ripley (2002) p.165.
@@ -64,14 +62,49 @@ npk <- data.frame(block = gl(6,4), N = factor(N), P = factor(P),
                   K = factor(K), yield = yield)
 ## Set suitable contrasts.
 options(contrasts=c("contr.helmert", "contr.poly"))
-npk.aov1 <- aov(yield ~ block + N + K, npk)
-se.contrast(npk.aov1, list(N=="0", N=="1"), data=npk)
+npk.aov1 <- aov(yield ~ block + N + K, data=npk)
+se.contrast(npk.aov1, list(N == "0", N == "1"), data=npk)
 # or via a matrix
 cont <- matrix(c(-1,1), 2, 1, dimnames=list(NULL, "N"))
 se.contrast(npk.aov1, cont[N, , drop=FALSE]/12, data=npk)
 
 ## test a multi-stratum model
-npk.aov2 <- aov(yield ~ N + K + Error(block/(N + K)), npk)
+npk.aov2 <- aov(yield ~ N + K + Error(block/(N + K)), data=npk)
 se.contrast(npk.aov2, list(N == "0", N == "1"))
-}
+
+
+## an example looking at an interaction contrast
+## Dataset from R.E. Kirk (1995)
+## 'Experimental Design: procedures for the behavioral sciences'
+score <- c(12, 8,10, 6, 8, 4,10,12, 8, 6,10,14, 9, 7, 9, 5,11,12,
+            7,13, 9, 9, 5,11, 8, 7, 3, 8,12,10,13,14,19, 9,16,14)
+A <- gl(2, 18, labels=c("a1", "a2"))
+B <- rep(gl(3, 6, labels=c("b1", "b2", "b3")), 2)
+fit <- aov(score ~ A*B)
+cont <- c(1, -1)[A] * c(1, -1, 0)[B]
+sum(cont)       # 0
+sum(cont*score) # value of the contrast
+se.contrast(fit, as.matrix(cont))
+(t.stat <- sum(cont*score)/se.contrast(fit, as.matrix(cont)))
+summary(fit, split=list(B=1:2), expand.split = TRUE)
+## t.stat^2 is the F value on the A:B: C1 line (with Helmert contrasts)
+## Now look at all three interaction contrasts
+cont <- c(1, -1)[A] * cbind(c(1, -1, 0), c(1, 0, -1), c(0, 1, -1))[B,]
+se.contrast(fit, cont)  # same, due to balance.
+rm(A,B,score)
+
+
+## multi-stratum example where efficiencies play a role
+example(eff.aovlist)
+fit <- aov(Yield ~ A + B * C + Error(Block), data = aovdat)
+cont1 <- c(-1, 1)[A]/32  # Helmert contrasts
+cont2 <- c(-1, 1)[B] * c(-1, 1)[C]/32
+cont <- cbind(A=cont1, BC=cont2)
+colSums(cont*Yield) # values of the contrasts
+se.contrast(fit, as.matrix(cont))
+\dontrun{# comparison with lme
+library(nlme)
+fit2 <- lme(Yield ~ A + B*C, random = ~1 | Block, data = aovdat)
+summary(fit2)$tTable # same estimates, similar (but smaller) se's.
+}}
 \keyword{models}
