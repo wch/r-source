@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.24 2003/07/02 20:26:03 pd Exp $
+### $Id: nls.R,v 1.25 2003/07/28 14:47:45 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -393,8 +393,8 @@ nls.control <- function( maxiter = 50, tol = 0.00001, minFactor = 1/1024 ) {
 }
 
 nls <-
-  function (formula, data = parent.frame(), start, control,
-            algorithm="default", trace = FALSE,
+  function (formula, data = parent.frame(), start, control = nls.control(),
+            algorithm = "default", trace = FALSE,
             subset, weights, na.action)
 {
     mf <- match.call()             # for creating the model frame
