@@ -7,30 +7,30 @@ function(pattern, fields = c("alias", "title"),
          rebuild = FALSE)
 {
     TABLE <- c("name", "alias", "title", "keyword")
-    if (!missing(pattern)) {
-        if (!is.character(pattern) || (length(pattern) > 1))
+    if(!missing(pattern)) {
+        if(!is.character(pattern) || (length(pattern) > 1))
             stop("`pattern' must be a single character string")
         i <- pmatch(fields, TABLE)
-        if (any(is.na(i)))
+        if(any(is.na(i)))
             stop("incorrect field specification")
         else
             fields <- TABLE[i]
-    } else if (!missing(apropos)) {
-        if (!is.character(apropos) || (length(apropos) > 1))
+    } else if(!missing(apropos)) {
+        if(!is.character(apropos) || (length(apropos) > 1))
             stop("`apropos' must be a single character string")
         else {
             pattern <- apropos
             fields <- c("alias", "title")
         }
-    } else if (!missing(keyword)) {
-        if (!is.character(keyword) || (length(keyword) > 1))
+    } else if(!missing(keyword)) {
+        if(!is.character(keyword) || (length(keyword) > 1))
             stop("`keyword' must be a single character string")
         else {
             pattern <- keyword
             fields <- "keyword"
         }
-    } else if (!missing(whatis)) {
-        if (!is.character(whatis) || (length(whatis) > 1))
+    } else if(!missing(whatis)) {
+        if(!is.character(whatis) || (length(whatis) > 1))
             stop("`whatis' must be a single character string")
         else {
             pattern <- whatis
@@ -40,7 +40,7 @@ function(pattern, fields = c("alias", "title"),
         stop("don't know what to search")
     }
 
-    ## Set up the help db
+    ## Set up the help db.
     if(rebuild || is.null(help.db) || !file.exists(help.db)) {
         ## Check whether we can save the help db lateron
         save.db <- FALSE
@@ -81,7 +81,7 @@ function(pattern, fields = c("alias", "title"),
             }
         }
         if(verbose && (np %% 5 == 0)) cat("\n")
-        colnames(db) <- c("pkg", "lib", TABLE)
+        colnames(db) <- c("Package", "LibPath", TABLE)
         ## Maybe save the help db
         if(save.db) {
             save(db, file = dbfile)
@@ -91,27 +91,39 @@ function(pattern, fields = c("alias", "title"),
         load(file = help.db)
     }
 
-    ## Matching
+    ## Matching.
     if(verbose) cat("\nDatabase of dimension", dim(db))
     i <- NULL
-    for (f in fields)
+    for(f in fields)
         i <- c(i, grep(pattern, db[, f], ignore.case = ignore.case))
 
     db <- db[sort(unique(i)), , drop = FALSE]
-    if(verbose) cat(", matched", NROW(db),"entries.\n")
+    if(verbose) cat(", matched", NROW(db), "entries.\n")
 
-    ## Output
-    fields <- paste(fields, collapse = " or ")
-    if (NROW(db) > 0) {
+    ## Retval.
+    y <- list(pattern = pattern,
+              fields = fields,
+              matches = db[, c("name", "title", "Package", "LibPath")])
+    class(y) <- "hsearch"
+    y
+}
+
+print.hsearch <-
+function(x, ...)
+{
+    fields <- paste(x$fields, collapse = " or ")
+    db <- x$matches
+    if(NROW(db) > 0) {
         outFile <- tempfile()
         outConn <- file(outFile, open = "w")
         writeLines(paste("Help files with ", fields, " matching `",
-                         pattern, "',\n",
+                         x$pattern, "',\n",
                          "type `help(FOO, package = PKG)' to inspect ",
                          "entry `FOO(PKG) TITLE':",
                          "\n", sep = ""),
                    outConn)
-        dbnam <- paste(db[ , "name"], "(", db[, "pkg"], ")", sep = "")
+        dbnam <- paste(db[ , "name"], "(", db[, "Package"], ")",
+                       sep = "")
         dbtit <- paste(db[ , "title"], sep = "")
         writeLines(formatDL(dbnam, dbtit), outConn)
         close(outConn)
@@ -120,6 +132,4 @@ function(pattern, fields = c("alias", "title"),
         cat(paste("No help files found with ", fields, " matching `",
                   pattern, "'\n", sep = ""))
     }
-
-    return(invisible())
 }
