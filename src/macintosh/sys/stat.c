@@ -27,7 +27,7 @@
 
 #include <RCarbon.h>
 
-#include <stat.h>
+#include <mpw_stat.h>
 
 int stat(char *fileName,struct stat *statbuf)
 {
