@@ -1,7 +1,7 @@
 legend <-
 function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
 	bg = par("bg"), cex = 1, xjust = 0, yjust = 1, x.intersp = NULL,
-        y.intersp = NULL, text.width = NULL, merge = FALSE, trace = FALSE)
+        y.intersp = NULL, text.width = NULL, merge = FALSE)
 {
   if (missing(y)) {
     if (is.list(x)) { y <- x$y; x <- x$x } else stop("missing y")
@@ -47,16 +47,12 @@ function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
   ## These defaults should  DEPEND  on  text.width (& maybe x/y log):
   if(is.null(x.intersp)) x.intersp <- min(4, 1.8 + 1.2* Cex^-1.25)
   if(is.null(y.intersp)) y.intersp <- min(2, 0.2 + Cex^-1.25)
-  if(trace) cat('Legend: Cex=',formatC(Cex),' ==>  x.intersp=',
-                format(x.intersp),'; y.intersp=', format(y.intersp),"\n")
   xc <- Cex * xinch(cin[1], warn.log=FALSE) # [uses par("usr") and "pin"]
   yc <- Cex * yinch(cin[2], warn.log=FALSE)
 
   xchar  <- xc
   yextra <- yc * (y.intersp - 1)
   ychar <- yextra + max(yc, strheight(legend, u="user", cex=cex))
-  if(trace) cat('  xchar=',formatC(xchar),
-                '; (yextra,ychar)=', format(c(yextra,ychar)),"\n")
 
   xbox <- xc * 0.8 ##= sizes of filled boxes.
   ybox <- yc * 0.8
@@ -101,8 +97,6 @@ function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
   yt <- top - (1:n.leg) * ychar
 
   if (!missing(fill)) {                 #- draw filled boxes -------------
-    if(trace)
-      cat("  fill: rect2(", xt,",", yt+ybox/2,", dx=", xbox,", dy=", ybox/2,")\n")
     rect2(xt, yt + ybox/2, dx = xbox, dy = ybox/2, col = fill)
     xt <- xt + dx.fill
   }
@@ -112,8 +106,6 @@ function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     ok <- is.character(pch) | pch > 0
     x1 <- (xt + ifelse(merge,0, 0.25) * xchar)[ok]
     y1 <- yt[ok]
-    if(trace)
-      cat("  points2(", x1,",", y1,", pch=", pch[ok],"...)\n")
     points2(x1, y1, pch=pch[ok], col=col[ok], cex=cex)
     if (!merge) xt <- xt + dx.pch
   }
@@ -123,20 +115,13 @@ function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     lty <- rep(lty, length.out = n.leg)
     lwd <- rep(lwd, length.out = n.leg)
     x.off <- if(merge) -0.8 else 0
-    if(trace)
-      cat("  segments2(",xt[ok.l] + x.off*xchar ,",", yt[ok.l],
-          ",dx=",2*xchar,", dy=0, ...)\n")
     segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx= 2*xchar, dy=0,
-              lty = lty[ok.l], lwd = lwd[ok.l], col = col[ok.l])
+              lty = lty[ok.l], #- next version of R: lwd = lwd[ok.l],
+              col = col[ok.l])
     if (!merge) xt <- xt + 3 * xchar
   }
   if (merge) xt <- xt + x.intersp * xchar
 
-  ## text(.)  works itself in log-coordinates
-  ## -------  however, the adj in y-direction looks wrong :
-
   ## adj = (x,y) text-box adjustment
-  if(trace)
-    cat("  text(xt=", xt,", yt=", yt,",.. adj.y=", 0.3*y.intersp,")\n")
   text2(xt, yt, labels= legend, adj= c(0, 0.3*y.intersp), cex= cex)
 }
