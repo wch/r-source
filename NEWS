@@ -296,6 +296,13 @@ NEW FEATURES
 
 STANDARD PACKAGES
 
+    o   New package 'mle'. This is a simple package to find maximum
+        likelihood estimates, and perform likelihood profiling and
+        approximate confidence limits based upon it. A well-behaved
+	likelihood function is assumed, and it is the responsibility
+	of the user to gauge the applicability of the asymptotic
+        theory. This package is based on S4 methods and classes.
+
     o	Changes in package 'mva':
 
 	- factanal() now returns the test statistic and P-value formerly
@@ -660,7 +667,7 @@ BUG FIXES
 	documented in the same way as S, and now behaves as
 	documented.  (PR#3504)
 
-     o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
+    o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
 
     o	The png(), jpeg(), png() and win.metafile() devices now
 	enforce the length limit on the filename.  (PR#3466)

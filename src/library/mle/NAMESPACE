@@ -1,0 +1,7 @@
+export("mle")
+exportPattern(".__C__*")
+exportPattern(".__M__show*")
+export("plot")
+export("profile")
+export("summary")
+export("confint")
