@@ -705,10 +705,7 @@ void R_ReturnOrRestart(SEXP val, SEXP env, Rboolean restart)
     int mask;
     RCNTXT *c;
 
-    if (R_BrowseLevel > 0)
-	mask = CTXT_BROWSER | CTXT_FUNCTION;
-    else
-	mask = CTXT_FUNCTION;
+    mask = CTXT_BROWSER | CTXT_FUNCTION;
 
     for (c = R_GlobalContext; c; c = c->nextcontext) {
 	if (c->callflag & mask && c->cloenv == env)
