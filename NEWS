@@ -44,6 +44,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   locator() on log axes: value antilogged twice
+
     o   (a real oldie - and trival too) is.recursive now TRUE for
     	expressions 
 
