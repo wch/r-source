@@ -1441,6 +1441,8 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    LOGICAL(ans)[i] = (ISNAN(COMPLEX(s)[0].r)		\
 				       || ISNAN(COMPLEX(s)[0].i));	\
 		    break;						\
+		default:						\
+		    LOGICAL(ans)[i] = 0;				\
 		}							\
 	}
 

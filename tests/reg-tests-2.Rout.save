@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.1 Patched (2004-07-20), ISBN 3-900051-00-3
+Version 1.9.1 Patched (2004-09-25), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -758,6 +758,15 @@ logical(0)
 > is.nan(ll)
 [1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
 > ## end of moved from NA.Rd
+> 
+> ## is.na was returning unset values on nested lists
+> ll <- list(list(1))
+> for (i in 1:5) print(as.integer(is.na(ll)))
+[1] 0
+[1] 0
+[1] 0
+[1] 0
+[1] 0
 > 
 > ## scale
 > ## test out NA handling
