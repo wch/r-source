@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-34 @value{FAQ-YEAR}-07-20
+@set FAQ-VERSION 1.9-35 @value{FAQ-YEAR}-07-21
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -288,34 +288,37 @@ introduced in r-devel.
 Sources, binaries and documentation for R can be obtained via @CRAN{},
 the ``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
 
-Sources are also available via anonymous rsync.  Use
+Sources are also available via @uref{https://svn.r-project.org/R/}, the
+R Subversion repository, but currently not via anonymous rsync (or CVS).
 
-@example
-rsync -rptC --delete rsync.R-project.org::@var{module} R
-@end example
+@c Sources are also available via anonymous rsync.  Use
 
-@noindent
-to create a copy of the source tree specified by @var{module} in the
-subdirectory @file{R} of the current directory, where @var{module}
-specifies one of the three existing flavors of the R sources, and can be
-one of @samp{r-release} (current released version), @samp{r-patched}
-(patched released version), and @samp{r-devel} (development version).
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The @option{-C} and in the @command{rsync} command
-is to cause it to skip the CVS directories.  Further information on
-@command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
+@c @example
+@c rsync -rptC --delete rsync.R-project.org::@var{module} R
+@c @end example
 
-@c <NOTE>
-@c Keep in sync with R-admin.
-Note that the sources available via rsync do not include the recommended
-packages, whereas these are included in the tarballs of released
-versions.  To install the appropriate sources for the recommended
-packages, run @command{./tools/rsync-recommended} from the top-level of
-the R sources that you pulled by rsync.
-@c </NOTE>
+@c @noindent
+@c to create a copy of the source tree specified by @var{module} in the
+@c subdirectory @file{R} of the current directory, where @var{module}
+@c specifies one of the three existing flavors of the R sources, and can be
+@c one of @samp{r-release} (current released version), @samp{r-patched}
+@c (patched released version), and @samp{r-devel} (development version).
+@c The rsync trees are created directly from the master CVS archive and are
+@c updated hourly.  The @option{-C} and in the @command{rsync} command
+@c is to cause it to skip the CVS directories.  Further information on
+@c @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
-The sources of the development version are also available via anonymous
-CVS.  See @uref{http://anoncvs.R-project.org} for more information.
+@c @c <NOTE>
+@c @c Keep in sync with R-admin.
+@c Note that the sources available via rsync do not include the recommended
+@c packages, whereas these are included in the tarballs of released
+@c versions.  To install the appropriate sources for the recommended
+@c packages, run @command{./tools/rsync-recommended} from the top-level of
+@c the R sources that you pulled by rsync.
+@c @c </NOTE>
+
+@c The sources of the development version are also available via anonymous
+@c CVS.  See @uref{http://anoncvs.R-project.org} for more information.
 
 @node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
 @section How can R be installed?
@@ -1998,6 +2001,9 @@ Miscellaneous functions used at the Department of Statistics at TU Wien
 Component Analysis, Latent Class Analysis, support vector machines, and
 fuzzy clustering, shortest path computation, bagged clustering, and some
 more.
+@item eba
+Fitting and testing probabilistic choice models, especially the BTL,
+elimination-by-aspects (EBA), and preference tree (Pretree) models.
 @item effects
 Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models.

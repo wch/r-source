@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-34 2004-07-20
+Version 1.9-35 2004-07-21
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -261,27 +261,8 @@ in r-devel.
 Sources, binaries and documentation for R can be obtained via CRAN, the
 "Comprehensive R Archive Network" (see *Note What is CRAN?::).
 
-   Sources are also available via anonymous rsync.  Use
-
-     rsync -rptC --delete rsync.R-project.org::MODULE R
-
-to create a copy of the source tree specified by MODULE in the subdirectory
-`R' of the current directory, where MODULE specifies one of the three
-existing flavors of the R sources, and can be one of `r-release' (current
-released version), `r-patched' (patched released version), and `r-devel'
-(development version).  The rsync trees are created directly from the
-master CVS archive and are updated hourly.  The `-C' and in the `rsync'
-command is to cause it to skip the CVS directories.  Further information on
-`rsync' is available at `http://rsync.samba.org/rsync/'.
-
-   Note that the sources available via rsync do not include the recommended
-packages, whereas these are included in the tarballs of released versions.
-To install the appropriate sources for the recommended packages, run
-`./tools/rsync-recommended' from the top-level of the R sources that you
-pulled by rsync.
-
-   The sources of the development version are also available via anonymous
-CVS.  See `http://anoncvs.R-project.org' for more information.
+   Sources are also available via `https://svn.r-project.org/R/', the R
+Subversion repository, but currently not via anonymous rsync (or CVS).
 
 2.5 How can R be installed?
 ===========================
@@ -1791,6 +1772,10 @@ distributions of R.)
      Component Analysis, Latent Class Analysis, support vector machines, and
      fuzzy clustering, shortest path computation, bagged clustering, and
      some more.
+
+*eba*
+     Fitting and testing probabilistic choice models, especially the BTL,
+     elimination-by-aspects (EBA), and preference tree (Pretree) models.
 
 *effects*
      Graphical and tabular effect displays, e.g., of interactions, for
