@@ -202,10 +202,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         nsInfoFilePath <- file.path(package.lib, package, "Meta", "nsInfo.rds")
         nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
         else parseNamespaceFile(package, package.lib, mustExist = FALSE)
-        info <- file.path(package.lib, package, "Meta", "package.rds")
-        if(!file.exists(info))
-            stop(sQuote(package), " is not a valid package -- installed < 2.0.0?")
-        version <- .readRDS(info)$DESCRIPTION["Version"]
+        version <- read.dcf(file.path(package.lib, package, "DESCRIPTION"),
+                            fields = "Version")
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
 
