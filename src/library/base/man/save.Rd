@@ -1,8 +1,8 @@
 \name{save}
 \title{Save R Objects}
 \usage{
-save(\dots, list = character(0), file = "", ascii = FALSE,
-     version = NULL, envir = parent.frame(), compress = FALSE)
+save(\dots, list = character(0), file = stop("`file' must be specified"),
+     ascii = FALSE, version = NULL, envir = parent.frame(), compress = FALSE)
 save.image(file = ".RData", version = NULL, ascii = FALSE,
            compress = FALSE, safe = TRUE)
 
