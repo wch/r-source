@@ -133,7 +133,7 @@ foreach $manfile (@mandir) {
 
 	if($opt_latex){
 	    my $targetfile = $anindex{$manfilebase};
-	    $destfile = "$dest/latex/$targetfile";
+	    $destfile = "$dest/latex/$targetfile.tex";
 	    if(fileolder($destfile,$manage)) {
 		$latexflag = "latex";
 		Rdconv($manfile, "latex", "", "$destfile");
