@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.183 $ ';
+my $revision = ' $Revision: 1.184 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -162,20 +162,6 @@ while(<MAKEVARS>) {
     @R_pkgs_stubs =
 	split(/ +/, $2) if(/^(R_PKGS_STUBS *=)(.*)/);
 }
-
-## <FIXME>
-## We now always redefine T/F when running the examples, but warn about
-## an empty R_CHECK_WITH_T_N_F_AS_NULL environment variable intended to
-## disable the redefinition.
-## Remove this eventually, and also the test in massage-Examples.pl.
-if(defined($ENV{'R_CHECK_WITH_T_N_F_AS_NULL'})
-   && $ENV{'R_CHECK_WITH_T_N_F_AS_NULL'} eq "") {
-    my $log = new R::Logfile();
-    $log->message("redefining R_CHECK_WITH_T_N_F_AS_NULL to 'yes'");
-    $log->close();
-}
-$ENV{'R_CHECK_WITH_T_N_F_AS_NULL'} = "yes";
-## </FIXME>
 
 ## This is the main loop over all packages to be checked.
 (scalar(@ARGV) > 0) or die "Error: no packages were specified\n";
@@ -872,8 +858,8 @@ sub check_pkg {
 	}
 	else {
 	    my $dir = "demo";
-	    my $cmd = ".checkDemoIndex(\"$dir\")\n";
-	    my @out = R_runR($cmd, "${R_opts} --quiet",
+	    my $Rcmd = "tools:::.checkDemoIndex(\"$dir\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
@@ -887,8 +873,8 @@ sub check_pkg {
        && &list_files_with_type(&file_path("inst", "doc"),
 				"vignette")) {
 	my $dir = &file_path("inst", "doc");
-	my $cmd = ".checkVignetteIndex(\"$dir\")\n";
-	my @out = R_runR($cmd, "${R_opts} --quiet",
+	my $Rcmd = "tools:::.checkVignetteIndex(\"$dir\")\n";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
