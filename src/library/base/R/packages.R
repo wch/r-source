@@ -1,10 +1,27 @@
+CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
+                          contriburl=contrib.url(CRAN))
+{
+    localcran <- length(grep("^file:", contriburl)) > 0
+    if(localcran)
+        tmpf <- paste(substring(contriburl,6), "PACKAGES", sep="/")
+    else{
+        tmpf <- tempfile()
+        download.file(url=paste(contriburl, "PACKAGES", sep="/"),
+                      destfile=tmpf, method=method)
+        on.exit(unlink(tmpf))
+    }
+    parse.dcf(file=tmpf, fields=c("Package", "Version",
+                         "Priority", "Bundle"),
+              versionfix=TRUE)
+}
+
 update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
                             contriburl=contrib.url(CRAN),
                             method="auto", instlib=NULL)
 {
     instp <- installed.packages(lib.loc=lib.loc)
     cranp <- CRAN.packages(contriburl=contriburl, method=method)
-    
+
     ## for bundles it is sufficient to install the first package
     ## contained in the bundle, as this will install the complete bundle
     for(b in unique(instp[,"Bundle"])){
@@ -15,7 +32,7 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
             }
         }
     }
-    
+
     ## for packages contained in bundles use bundle names from now on
     ok <- !is.na(instp[,"Bundle"])
     instp[ok,"Package"] <- instp[ok,"Bundle"]
@@ -52,20 +69,20 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
 
 
 package.contents <- function(pkg, lib=.lib.loc){
-    
+
     file <- system.file("CONTENTS", pkg=pkg, lib=lib)
     if(file == ""){
         warning(paste("Cannot find CONTENTS file of package", pkg))
         return(NA)
     }
-    
+
     contents <- scan("", file=file, sep="\n", quiet=TRUE)
     parse.dcf(contents, fields=c("Entry", "Keywords", "Description"))
 }
 
 
 package.description <- function(pkg, lib=.lib.loc, fields=NULL){
-    
+
     file <- system.file("DESCRIPTION", pkg=pkg, lib=lib)
     if(file == ""){
         warning(paste("Cannot find DESCRIPTION file of package", pkg))
@@ -75,7 +92,7 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL){
         }
         else
             retval <- NA
-        
+
         return(retval)
     }
 
@@ -94,7 +111,7 @@ installed.packages <- function(lib.loc = .lib.loc)
             desc <- package.description(p, lib=lib,
                                         fields=c("Version", "Priority",
                                         "Bundle"))
-            
+
             retval <- rbind(retval, c(p, lib, desc))
         }
     }

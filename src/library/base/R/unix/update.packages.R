@@ -1,34 +1,17 @@
-CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
-                          contriburl=contrib.url(CRAN))
-{
-    localcran <- length(grep("^file:", contriburl)) > 0
-    if(localcran)
-        tmpf <- paste(substring(contriburl,6), "PACKAGES", sep="/")
-    else{
-        tmpf <- tempfile()
-        download.file(url=paste(contriburl, "PACKAGES", sep="/"),
-                      destfile=tmpf, method=method)
-        on.exit(unlink(tmpf))
-    }
-    parse.dcf(file=tmpf, fields=c("Package", "Version",
-                         "Priority", "Bundle"),
-              versionfix=TRUE)
-}
-
 install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
                              contriburl=contrib.url(CRAN),
                              method="auto", available=NULL)
 {
-#    if(!missing(pkgs))
-#        pkgs <- as.character(substitute(pkgs))
-    localcran <- length(grep("^file:", contriburl)) > 0
     if(missing(lib) || is.null(lib)) {
         lib <- .lib.loc[1]
         warning(paste("argument `lib' is missing: using", lib))
     }
-    tmpd <- tempfile("Rinstdir")
-    system(paste("mkdir", tmpd))
-    
+    localcran <- length(grep("^file:", contriburl)) > 0
+    if(!localcran) {
+        tmpd <- tempfile("Rinstdir")
+        dir.create(tmpd)
+    }
+
     foundpkgs <- download.packages(pkgs, destdir=tmpd,
                                    available=available,
                                    contriburl=contriburl, method=method)
@@ -63,6 +46,7 @@ install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
     }
     else
         unlink(tmpd)
+    invisible()
 }
 
 
@@ -71,7 +55,7 @@ download.file <- function(url, destfile, method="auto")
     method <- match.arg(method,
                         c("auto", "wget", "lynx", "cp"))
 
-    if(method=="auto"){
+    if(method == "auto") {
         if(length(grep("^file:", url)))
             method <- "cp"
         else if(system("wget --help > /dev/null")==0)
@@ -86,14 +70,14 @@ download.file <- function(url, destfile, method="auto")
         status <- system(paste("wget", url, "-O", destfile))
     else if(method=="lynx")
         status <- system(paste("lynx -dump", url, ">", destfile))
-    else if(method=="cp"){
+    else if(method=="cp") {
         url <- sub("^file:","",url)
         status <- system(paste("cp", url, destfile))
+        if(status !=0)
+            status <- shell(paste("copy", url, destfile))
     }
     invisible(status)
 }
-
-
 
 download.packages <- function(pkgs, destdir, available=NULL,
                               CRAN=.Options$CRAN,
