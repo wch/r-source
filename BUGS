@@ -477,30 +477,10 @@ Date: Wed, 27 Feb 2002 16:15:24 +0800 (WST)
 Subject: Failed file("foo", "r") keeps file open?
 From: hb@maths.lth.se
 Date: Thu, 28 Feb 2002 17:20:02 +0100 (MET)
-* PR# 1355 *
-Subject: A  funny game
-From: magill <magill@stolaf.edu>
-Date: Sun, 3 Mar 2002 23:12:27 -0600 (CST)
 * PR# 1356 *
 Subject: bessel_i
 From: martin.schlather@uni-bayreuth.de
 Date: Mon, 4 Mar 2002 09:04:50 +0100 (MET)
-* PR# 1357 *
-Subject: Your password
-From: "megan.gallagher" <megan.gallagher@gmacrfc.com>
-Date: Mon,  4 Mar 2002 14:45:07 +0100 (CET)
-* PR# 1358 *
-Subject: The Garden of Eden
-From: skinnern <skinnern@stolaf.edu>
-Date: Mon, 4 Mar 2002 14:04:03 -0600 (CST)
-* PR# 1359 *
-Subject: (window.name.indexOf(
-From: Ericson <Ericson@stolaf.edu>
-Date: Mon, 4 Mar 2002 15:08:25 -0600 (CST)
-* PR# 1360 *
-Subject: Aug 30 2000
-From: OlsonsinChaska <OlsonsinChaska@aol.com>
-Date: Tue,  5 Mar 2002 02:04:32 +0100 (CET)
 * PR# 1361 *
 Subject: Matrix identification bug
 From: hyu@stats.uwo.ca
