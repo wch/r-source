@@ -1826,9 +1826,9 @@ SEXP do_quote(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 typedef struct {
-  char *s;
-  SEXPTYPE sexp;
-  Rboolean canChange;
+    char *s;
+    SEXPTYPE sexp;
+    Rboolean canChange;
 } classType;
 
 static classType classTable[] = {
@@ -1839,30 +1839,31 @@ static classType classTable[] = {
     { "character",	STRSXP,	   TRUE },
     { "expression",	EXPRSXP,   TRUE },
     { "list",		VECSXP,	   TRUE },
-    {"environment",     ENVSXP,    FALSE },
+    { "environment",    ENVSXP,    FALSE },
     { "char",		CHARSXP,   TRUE },
     { "externalptr",	EXTPTRSXP,  FALSE },
     { "weakref",	WEAKREFSXP, FALSE },
     { "name",		SYMSXP,	   FALSE },
 
-    { (char *)0,	-1, FALSE   }
+    { (char *)0,	(SEXPTYPE)-1, FALSE}
 };
 
-static int class2type(char *s) {
-  /* return the type if the class string is one of the basic types, else -1.
-     Note that this is NOT str2type:  only certain types are defined to be basic
-     classes; e.g., "language" is a type but many classes correspond to objects of
-     this type.
-  */
-  int i; char *si;
-  for(i=0; ; i++) {
-    si = classTable[i].s;
-    if(!si)
-      return -1;
-    if(!strcmp(s, si))
-      return i;
-  }
-  return -1;
+static int class2type(char *s) 
+{
+    /* return the type if the class string is one of the basic types, else -1.
+       Note that this is NOT str2type:  only certain types are defined to be basic
+       classes; e.g., "language" is a type but many classes correspond to objects of
+       this type.
+    */
+    int i; char *si;
+    for(i=0; ; i++) {
+	si = classTable[i].s;
+	if(!si)
+	    return -1;
+	if(!strcmp(s, si))
+	    return i;
+    }
+    return -1;
 }
 
 /* set the class to value, and return the modified object.  This is
@@ -1871,58 +1872,58 @@ static int class2type(char *s) {
    package for the use of this code. */
 SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 {
-  int nProtect = 0;
-  if(isNull(value)) {
-    setAttrib(obj, R_ClassSymbol, value);
+    int nProtect = 0;
+    if(isNull(value)) {
+	setAttrib(obj, R_ClassSymbol, value);
+	return obj;
+    }
+    if(TYPEOF(value) != STRSXP) {
+	PROTECT(value = coerceVector(duplicate(value), STRSXP));
+	nProtect++;
+    }
+    if(length(value) > 1)
+	setAttrib(obj, R_ClassSymbol, value);
+    else if(length(value) == 0) {
+	UNPROTECT(nProtect); nProtect = 0;
+	error("Invalid replacement object to be a class string");
+    }
+    else {
+	char *valueString, *classString; int whichType;
+	SEXP cur_class; SEXPTYPE valueType;
+	valueString = CHAR(asChar(value));
+	whichType = class2type(valueString);
+	valueType = (whichType == -1) ? -1 : classTable[whichType].sexp;
+	PROTECT(cur_class = R_data_class(obj, FALSE)); nProtect++;
+	classString = CHAR(asChar(cur_class));
+	/*  assigning type as a class deletes an explicit class attribute. */
+	if(valueType != -1) {
+	    setAttrib(obj, R_ClassSymbol, R_NilValue);
+	    if(classTable[whichType].canChange) {
+		PROTECT(obj = ascommon(call, obj, valueType));
+		nProtect++;
+	    }
+	    else if(valueType != TYPEOF(obj))
+		error("\"%s\" can only be set as the class if the object has this type; found \"%s\"",
+		      valueString, type2str(TYPEOF(obj)));
+	    /* else, leave alone */
+	}
+	else if(!strcmp("numeric", valueString)) {
+	    setAttrib(obj, R_ClassSymbol, R_NilValue);
+	    switch(TYPEOF(obj)) {
+	    case INTSXP: case REALSXP: break;
+	    default: PROTECT(obj = coerceVector(obj, REALSXP));
+		nProtect++;
+	    }
+	}
+	else if(!strcmp("array", valueString) &&
+		length(getAttrib(obj, R_DimSymbol)) >0) {}
+	else if(!strcmp("matrix", valueString) &&
+		length(getAttrib(obj, R_DimSymbol)) == 2) {}
+	else { /* set the class but don't do the coercion; that's
+		  supposed to be done by an as() method */
+	    setAttrib(obj, R_ClassSymbol, value);
+	}
+    }
+    UNPROTECT(nProtect);
     return obj;
-  }
-  if(TYPEOF(value) != STRSXP) {
-    PROTECT(value = coerceVector(duplicate(value), STRSXP));
-    nProtect++;
-  }
-  if(length(value) > 1)
-    setAttrib(obj, R_ClassSymbol, value);
-  else if(length(value) == 0) {
-    UNPROTECT(nProtect); nProtect = 0;
-    error("Invalid replacement object to be a class string");
-  }
-  else {
-    char *valueString, *classString; int whichType;
-    SEXP cur_class; SEXPTYPE valueType;
-    valueString = CHAR(asChar(value));
-    whichType = class2type(valueString);
-    valueType = (whichType == -1) ? -1 : classTable[whichType].sexp;
-    PROTECT(cur_class = R_data_class(obj, FALSE)); nProtect++;
-    classString = CHAR(asChar(cur_class));
-    /*  assigning type as a class deletes an explicit class attribute. */
-    if(valueType != -1) {
-      setAttrib(obj, R_ClassSymbol, R_NilValue);
-      if(classTable[whichType].canChange) {
-	PROTECT(obj = ascommon(call, obj, valueType));
-	nProtect++;
-      }
-      else if(valueType != TYPEOF(obj))
-	error("\"%s\" can only be set as the class if the object has this type; found \"%s\"",
-	      valueString, type2str(TYPEOF(obj)));
-      /* else, leave alone */
-    }
-    else if(!strcmp("numeric", valueString)) {
-      setAttrib(obj, R_ClassSymbol, R_NilValue);
-      switch(TYPEOF(obj)) {
-      case INTSXP: case REALSXP: break;
-      default: PROTECT(obj = coerceVector(obj, REALSXP));
-	nProtect++;
-      }
-    }
-    else if(!strcmp("array", valueString) &&
-	    length(getAttrib(obj, R_DimSymbol)) >0) {}
-    else if(!strcmp("matrix", valueString) &&
-	    length(getAttrib(obj, R_DimSymbol)) == 2) {}
-    else { /* set the class but don't do the coercion; that's
-	      supposed to be done by an as() method */
-      setAttrib(obj, R_ClassSymbol, value);
-    }
-  }
-  UNPROTECT(nProtect);
-  return obj;
 }
