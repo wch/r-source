@@ -58,6 +58,9 @@ BUG FIXES
 	in some circumstances (when the string was shortened).  
 	(Fixed also PR#7108)
 
+    o   summaryRprof was ignoring functions whose name begins with dot, 
+	e.g. .C, .Call, .Fortran. (PR#7137)
+
 
 
 		CHANGES IN R VERSION 1.9.1
