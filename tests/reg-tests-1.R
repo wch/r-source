@@ -2228,18 +2228,18 @@ substr(a3, 1, 2) <- na
 stopifnot(all(is.na(a3)))
 stopifnot(agrep("NA", a) == c(1, 3))
 stopifnot(grep("NA", a) == c(1, 3))
-stopifnot(grep("NA", a, perl=TRUE)==c(1, 3))
+stopifnot(grep("NA", a, perl=TRUE) == c(1, 3))
 stopifnot(agrep(na, a) == 2)
 stopifnot(grep(na, a) == 2)
 stopifnot(grep(na, a, perl=TRUE) == 2)
 a4 <- abbreviate(a)
-stopifnot(is.na(a4)==is.na(a))
+stopifnot(is.na(a4) == is.na(a))
 a5 <- chartr("NA", "na", a)
-stopifnot(is.na(a5)==is.na(a))
+stopifnot(is.na(a5) == is.na(a))
 a6 <- gsub(na, "na", a)
 stopifnot(all(!is.na(a6)))
 a7 <- a; substr(a7, 1, 2) <- "na"
-stopifnot(is.na(a7)==is.na(a))
+stopifnot(is.na(a7) == is.na(a))
 a8 <- a; substr(a8, 1, 2) <- na
 stopifnot(all(is.na(a8)))
 stopifnot(identical(a, toupper(tolower(a))))
@@ -2249,7 +2249,16 @@ a10<-strsplit(a, na)
 stopifnot(identical(a10, as.list(a)))
 ## but nchar doesn't fit this pattern
 stopifnot(all(!is.na(nchar(a))))
-## NA and "NA" were not distringuished in 1.7.x
+## NA and "NA" were not distinguished in 1.7.x
+
+
+## coercing 0-length generic vectors
+as.double(list())
+as.integer(list())
+as.logical(list())
+as.complex(list())
+as.character(list())
+## all but the last failed in 1.7.x
 
 
 ## keep at end, as package `methods' has had persistent side effects

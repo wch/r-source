@@ -489,31 +489,24 @@ Rboolean tsConform(SEXP x, SEXP y)
 
 /* Check to see if a list can be made into a vector. */
 /* it must have every element being a vector of length 1. */
+/* BUT it does not exclude 0! */
 
 Rboolean isVectorizable(SEXP s)
 {
-    int mode = 0;
-    if (isNull(s)) {
-	return TRUE;
-    }
+    if (isNull(s)) return TRUE;
     else if (isNewList(s)) {
 	int i, n;
+
 	n = LENGTH(s);
-	for (i = 0 ; i < n; i++) {
+	for (i = 0 ; i < n; i++)
 	    if (!isVector(VECTOR_ELT(s, i)) || LENGTH(VECTOR_ELT(s, i)) > 1)
 		return FALSE;
-	    mode = (mode >= TYPEOF(VECTOR_ELT(s, i))) ?
-		mode : TYPEOF(VECTOR_ELT(s, i));
-	}
-	return mode;
+	return TRUE;
     }
     else if (isList(s)) {
-	for ( ; s != R_NilValue; s = CDR(s)) {
-	    if (!isVector(CAR(s)) || LENGTH(CAR(s)) > 1)
-		return FALSE;
-	    mode = (mode >= (int) TYPEOF(CAR(s))) ? mode : TYPEOF(CAR(s));
-	}
-	return mode;
+	for ( ; s != R_NilValue; s = CDR(s))
+	    if (!isVector(CAR(s)) || LENGTH(CAR(s)) > 1) return FALSE;
+	return TRUE;
     }
     else return FALSE;
 }

@@ -151,7 +151,8 @@ static Rboolean compute_identical(SEXP x, SEXP y)
     default:
 	/* these are all supposed to be types that represent constant
 	   entities, so no further testing required ?? */
-	printf("Unknown Type: %s(%x)\n", /*type2str(TYPEOF(x))*/"",TYPEOF(x));
+	printf("Unknown Type: %s (%x)\n", CHAR(type2str(TYPEOF(x))), 
+	       TYPEOF(x));
 	return TRUE;
     }
 }

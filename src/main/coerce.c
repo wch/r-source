@@ -754,7 +754,8 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error("pairlist object cannot be coerced to  vector type [%d]",type);
+	error("pairlist object cannot be coerced to %s",
+	      CHAR(type2str(type)));
 
     /* If any tags are non-null then we */
     /* need to add a names attribute. */
@@ -827,7 +828,8 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error("(list) object cannot be coerced to vector type %d",type);
+	error("(list) object cannot be coerced to %s",
+	      CHAR(type2str(type)));
 
     names = getAttrib(v, R_NamesSymbol);
     if (names != R_NilValue)
@@ -1927,7 +1929,7 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	    }
 	    else if(valueType != TYPEOF(obj))
 		error("\"%s\" can only be set as the class if the object has this type; found \"%s\"",
-		      valueString, type2str(TYPEOF(obj)));
+		      valueString, CHAR(type2str(TYPEOF(obj))));
 	    /* else, leave alone */
 	}
 	else if(!strcmp("numeric", valueString)) {

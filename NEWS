@@ -97,6 +97,8 @@ NEW FEATURES
 
     o	? and help() will accept more un-quoted arguments, e.g. NULL. 
 
+    o	When coercion of a list fails, a meaningful error message is given.
+
 
 DEPRECATED & DEFUNCT
 
@@ -150,6 +152,9 @@ BUG FIXES
 	different places: they now both look starting at the
 	environment in which they are called.  Several documentation
 	errors for these functions have been corrected.
+
+    o   as.double(list()) etc was regarded as an error, because of a
+	bug in isVectorizable.
 
 
 
