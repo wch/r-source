@@ -188,10 +188,10 @@ none
 
 Directory:  incoming
 
-* PR# 595 *
-Subject: eigen function on Solaris2.6
-From: sharon@math.chalmers.se
-Date: Wed, 5 Jul 2000 19:39:17 +0200 (MET DST)
+* PR# 596 *
+Subject: Re: [R] R 1.1.0 dev.print() & dev.copy2eps -- bug{let}
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Thu, 6 Jul 2000 17:36:28 +0200 (CEST)
 * PR# 578 *
 Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -245,6 +245,10 @@ Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
 Subject: system.file on Windows, / vs \\
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Thu, 29 Jun 2000 09:49:39 -0700 (PDT)
+* PR# 591 *
+Subject: INCREASE SALES!
+From: enamesoncd@earthlink.net
+Date: Fri, 30 Jun 00 11:46:48 EST
 * PR# 590 *
 Subject: Documentation bug (is.R).
 From: cate@neper.ethz.ch
@@ -253,19 +257,19 @@ Date: Tue, 4 Jul 2000 12:29:59 +0200 (MET DST)
 Subject: Bug with lists and expressions
 From: dmurdoch@pair.com (Duncan Murdoch)
 Date: Tue, 04 Jul 2000 02:26:41 GMT
-* PR# 592 *
-Subject: tseries bug
-From: przemat@itti.com.pl
-Date: Tue, 4 Jul 2000 14:52:17 +0200 (MET DST)
-* PR# 591 *
-Subject: INCREASE SALES!
-From: enamesoncd@earthlink.net
-Date: Fri, 30 Jun 00 11:46:48 EST
-* PR# 594 *
-Subject: svd() (Linpack) problems/bug for ill-conditioned matrices
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
 * PR# 593 *
 Subject: tseries bug
 From: przemat@itti.com.pl
 Date: Tue, 4 Jul 2000 14:59:37 +0200 (MET DST)
+* PR# 592 *
+Subject: tseries bug
+From: przemat@itti.com.pl
+Date: Tue, 4 Jul 2000 14:52:17 +0200 (MET DST)
+* PR# 595 *
+Subject: eigen function on Solaris2.6
+From: sharon@math.chalmers.se
+Date: Wed, 5 Jul 2000 19:39:17 +0200 (MET DST)
+* PR# 594 *
+Subject: svd() (Linpack) problems/bug for ill-conditioned matrices
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
