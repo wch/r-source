@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2002   The R Development Core Team.
+ *  Copyright (C) 1998-2004   The R Development Core Team.
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -267,6 +267,8 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(CAR(args) == R_NilValue) return R_NilValue;
     if(!isVectorAtomic(CAR(args)))
 	errorcall(call, "only atomic vectors can be sorted");
+    if(TYPEOF(CAR(args)) == RAWSXP)
+	errorcall(call, "raw vectors cannot be sorted");
     if (decreasing || isUnsorted(CAR(args))) { /* do not duplicate if sorted */
 	ans = duplicate(CAR(args));
 	sortVector(ans, decreasing);
@@ -471,8 +473,10 @@ SEXP do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
     int *l;
     checkArity(op, args);
 
-    if (!isVector(CAR(args)))
+    if (!isVectorAtomic(CAR(args)))
 	errorcall(call,"only vectors can be sorted");
+    if(TYPEOF(CAR(args)) == RAWSXP)
+	errorcall(call, "raw vectors cannot be sorted");
     n = LENGTH(CAR(args));
     SETCADR(args, coerceVector(CADR(args), INTSXP));
     l = INTEGER(CADR(args));
@@ -510,6 +514,9 @@ static int equal(int i, int j, SEXP x, Rboolean nalast)
     case STRSXP:
 	c = scmp(STRING_ELT(x, i), STRING_ELT(x, j), nalast);
 	break;
+    default:
+	error("non-atomic type in equal");
+	break;
     }
     if (c == 0)
 	return 1;
@@ -533,6 +540,9 @@ static int greater(int i, int j, SEXP x, Rboolean nalast, Rboolean decreasing)
 	break;
     case STRSXP:
 	c = scmp(STRING_ELT(x, i), STRING_ELT(x, j), nalast);
+	break;
+    default:
+	error("non-atomic type in greater");
 	break;
     }
     if (decreasing) c = -c;
@@ -740,8 +750,10 @@ SEXP do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (args == R_NilValue)
 	return R_NilValue;
     x = CAR(args);
-    if (!isVector(x))
-	errorcall(call, "Argument is not a vector");
+    if (!isVectorAtomic(x))
+	errorcall(call, "Argument is not an atomic vector");
+    if(TYPEOF(x) == RAWSXP)
+	errorcall(call, "raw vectors cannot be sorted");
     n = LENGTH(x);
     PROTECT(indx = allocVector(INTSXP, n));
     PROTECT(rank = allocVector(REALSXP, n));

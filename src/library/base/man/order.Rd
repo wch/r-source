@@ -14,7 +14,8 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
           method = c("shell", "quick", "radix"))
 }
 \arguments{
-  \item{\dots}{a sequence of vectors, all of the same length.}
+  \item{\dots}{a sequence of numeric, complex, character or logical
+    vectors, all of the same length.}
   \item{x}{a vector.}
   \item{partial}{vector of indices for partial sorting.}
   \item{decreasing}{logical. Should the sort order be increasing or
