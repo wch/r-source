@@ -1555,11 +1555,6 @@ F77_NAME(dtzrqf)(const int* m, const int* n,
     		 double* a, const int* lda,
     		 double* tau, int* info);
 
-/* DZSUM1 - take the sum of the absolute values of a complex */
-/* vector and returns a double precision result  */
-double
-F77_NAME(dzsum1)(const int* n, Rcomplex *CX, const int* incx);
-
 /* ZGESV computes the solution to a complex system of linear equations */
 void
 F77_NAME(zgesv)(const int *n, const int *nrhs, Rcomplex *a,
@@ -1619,13 +1614,6 @@ F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
 		Rcomplex *work, const int *lwork, 
 		double *rwork, int *info);
 
-/* ZLANTR  -  return the value of the one norm, or the Frobenius norm, */
-/* or the infinity norm, or the element of largest absolute value of */
-/* a trapezoidal or triangular matrix A */
-double
-F77_NAME(zlantr)(const char* norm, const char* uplo, const char* diag,
-		 const int* m, const int* n, Rcomplex *a,
-		 const int* lda, double *work);
 
 /* Double precision utilties in Lapack */
 /* DHGEQZ - implement a single-/double-shift version of the QZ */
@@ -2278,9 +2266,23 @@ F77_NAME(dlauu2)(const char* uplo, const int* n,
 void
 F77_NAME(dlauum)(const char* uplo, const int* n,
 		 double* a, const int* lda, int* info);
-/* DSECND - return the user time for a process in seconds */
+
+
+/* NOTE: The following entry points were traditionally in this file,
+   but are not provided by R's libRlapack */
+
+/* DZSUM1 - take the sum of the absolute values of a complex */
+/* vector and returns a double precision result  */
 double
-F77_NAME(dsecnd)(void);
+F77_NAME(dzsum1)(const int* n, Rcomplex *CX, const int* incx);
+
+/* ZLANTR  -  return the value of the one norm, or the Frobenius norm, */
+/* or the infinity norm, or the element of largest absolute value of */
+/* a trapezoidal or triangular matrix A */
+double
+F77_NAME(zlantr)(const char* norm, const char* uplo, const char* diag,
+		 const int* m, const int* n, Rcomplex *a,
+		 const int* lda, double *work);
 
 #ifdef  __cplusplus
 }
