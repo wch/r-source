@@ -210,8 +210,8 @@
 /* Define if you have the <netinet/in.h> header file. */
 #undef HAVE_NETINET_IN_H
 
-/* Define if your C compiler does not prepend an underscore to external names.
-   */
+/* Define if module-loading does not need an underscore to be prepended to
+   external names. */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
 
 /* Define if you have the PNG headers and libraries. */

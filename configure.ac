@@ -67,6 +67,12 @@ case "${host_os}" in
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(Win32, 1,
               [Define according to your operating system type.])
+  cat >>confdefs.h <<\EOF
+#define snprintf  _snprintf
+#define vsnprintf  _vsnprintf
+#define isnan(a) _isnan((a))
+#define finite(a) _finite((a))
+EOF
     ;;
   *)
     AC_DEFINE(Unix, 1,
@@ -562,8 +568,8 @@ case "${host_cpu}" in
 esac
 
 AH_TEMPLATE([HAVE_NO_SYMBOL_UNDERSCORE],
-            [Define if your C compiler does not prepend an underscore to
-             external names.])
+            [Define if module-loading does not need an underscore to
+             be prepended to external names.])
 
 case "${host_os}" in
   ## <FIXME>
@@ -578,6 +584,9 @@ case "${host_os}" in
                      [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc"])
     fi
     R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
+    ;;
+  cygwin*|mingw*|windows*|winnt)
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
   darwin*)
     ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
@@ -802,6 +811,12 @@ case "${host_os}" in
   linux*)			# GNU Linux/ELF
     main_ldflags="-export-dynamic"
     ;;
+  mingw*)
+    SHLIB_EXT=".dll"
+    cpicflags=
+    cxxpicflags=
+    fpicflags=
+    ;;
   netbsd*)
     if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
       main_ldflags="-export-dynamic"
@@ -874,7 +889,7 @@ fi
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       AC_MSG_WARN([I could not determine CPICFLAGS.])
@@ -887,7 +902,7 @@ fi
 if test -z "${FPICFLAGS}" \
     && test -z "${F2C}"; then
   case "${host_os}" in
-    aix*|irix*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       AC_MSG_WARN([I could not determine FPICFLAGS.])
@@ -899,7 +914,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS"
@@ -1129,6 +1144,22 @@ for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${FLIBS} ${BLAS_LIBS}; do
 done
 ## </FIXME>
 AC_SUBST(R_LD_LIBRARY_PATH)
+
+### * Win32 overrides
+case "${host_os}" in
+  mingw*)
+  AC_DEFINE(HAVE_INTERNET, 1)
+  AC_DEFINE(HAVE_JPEG, 1)
+  AC_DEFINE(SUPPORT_LIBXML, 1)
+  AC_DEFINE(HAVE_PNG, 1)
+  AC_DEFINE(HAVE_SOCKETS, 1)
+  AC_DEFINE(HAVE_TCLTK, 1)
+  AC_DEFINE(HAVE_TIMES, 1)
+  want_R_profiling=yes
+  AC_DEFINE(R_PROFILING, 1)
+  AC_DEFINE(SUPPORT_LIBXML, 1)
+  ;;
+esac
 
 ### * Output.
 
