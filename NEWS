@@ -25,6 +25,9 @@ NEW FEATURES
     o	R CMD check now also fully checks the Depends field in the
 	package DESCRIPTION file.
 
+    o	codoc() now also checks whether all arguments shown in \usage
+	are documented in \arguments.
+
 
 
 BUG FIXES
