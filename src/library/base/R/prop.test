@@ -1,10 +1,21 @@
 prop.test <- function(x, n, p = NULL, alternative = "two.sided",
 		      conf.level = 0.95, correct = TRUE)
 {
-  DNAME <- paste(deparse(substitute(x)), "out of", deparse(substitute(n)))
+  DNAME <- deparse(substitute(x))
 
-  if ((l <- length(x)) != length(n))
-    stop("x and n must have the same length")
+  if (is.matrix(x)) {
+    if (ncol(x) != 2)
+      stop("x must have 2 columns")
+    l <- nrow(x)
+    n <- apply(x, 1, sum)
+    x <- x[, 1]
+  }
+  else {
+    DNAME <- paste(DNAME, "out of", deparse(substitute(n)))
+    if ((l <- length(x)) != length(n))
+      stop("x and n must have the same length")
+  }
+
   OK <- complete.cases(x, n)
   x <- x[OK]
   n <- n[OK]
