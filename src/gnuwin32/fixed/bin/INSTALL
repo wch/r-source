@@ -167,8 +167,8 @@ foreach $pkg (@ARGV){
     my $save = "CHECK";
     $save = "false" if $opt_no_save;
     $save = "true" if $opt_save;
-    my $lazyload = 1;
-    $lazyload = 0 if $opt_lazy;
+    my $lazyload = 0;
+    $lazyload = 1 if $opt_lazy;
     $lazyload = 0 if $opt_no_lazy;
     my $opt = "";
     my $dpkg = $library. "/" . $pkgname;
