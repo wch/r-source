@@ -269,13 +269,15 @@ function(contents, type = NULL)
     idx <- is.na(sapply(keywords, function(x) match("internal", x)))
 
     index <- contents[idx, c("Name", "Title"), drop = FALSE]
-    ## If a \name is not a valid \alias, replace it by the first alias.
-    aliases <- contents[idx, "Aliases"]
-    bad <- which(!mapply("%in%", index[, 1], aliases))
-    if(any(bad)) {
-        tmp <- sapply(aliases[bad], "[[", 1)
-        tmp[is.na(tmp)] <- ""
-        index[bad, 1] <- tmp
+    if(nrow(index)) {
+        ## If a \name is not a valid \alias, replace it by the first alias.
+        aliases <- contents[idx, "Aliases"]
+        bad <- which(!mapply("%in%", index[, 1], aliases))
+        if(any(bad)) {
+            tmp <- sapply(aliases[bad], "[[", 1)
+            tmp[is.na(tmp)] <- ""
+            index[bad, 1] <- tmp
+        }
     }
     index
 }
