@@ -156,6 +156,29 @@ void tabulate(int *x, int *n, int *ans);
 int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
 		       double *a, double *p, int *itncnt, int *iflg, int *ipr);
 
+/* uncmin.c : */
+
+/* type of pointer to the target and gradient functions */
+typedef void (*fcn_p)(int, double *, double *, void *);
+
+/* type of pointer to the hessian functions */
+typedef void (*d2fcn_p)(int, int, double *, double *, void *);
+
+void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
+	    double *h, int nfd, double *step, double *f, int ndigit,
+	    double *typx);
+
+void optif9(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p
+	    d2fcn, void *state, double *typsiz, double fscale, int
+	    method, int iexp, int *msg, int ndigit, int itnlim, int iagflg,
+	    int iahflg, double dlt, double gradtl, double stepmx,
+	    double steptl, double *xpls, double *fpls, double *gpls,
+	    int *itrmcd, double *a, double *wrk, int *itncnt);
+
+void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
+	    double *xpls, double *fpls, double *gpls, int *itrmcd,
+	    double *a, double *wrk);
+
 
 /* ALL ../appl/<foobar>.f	[semi-automatically by
  *				 f2c -A -P *.f; cat *.P > all.h	 and editing]
@@ -227,18 +250,6 @@ int F77_SYMBOL(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
 double F77_SYMBOL(fmin)(double *ax, double *bx, D_fp f, double *tol);
 int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		       double *resid, double *hat, double *coef, double *sigma);
-/* Only exported headers from ../appl/uncmin.f : */
-int F77_SYMBOL(fdhess)(int *n, double *x, double *fval,
-		       S_fp fun, double *h__, int *nfd,
-		       double *step, double *f, int *ndigit, double *typx);
-int F77_SYMBOL(optif9)(int *nr, int *n, double *x,
-		       S_fp fcn, S_fp d1fcn, S_fp d2fcn, double *typsiz,
-		       double *fscale, int *method, int *iexp, int *msg,
-		       int *ndigit, int *itnlim, int *iagflg, int *iahflg,
-		       int *ipr, double *dlt, double *gradtl,
-		       double *stepmx, double *steptl,
-		       double *xpls, double *fpls, double *gpls,
-		       int *itrmcd, double *a, double *wrk, int *itncnt);
 
 double zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 	      double *tol, int *maxit);

@@ -221,23 +221,6 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* General Nonlinear Optimization */
 
-/* type of pointer to the target and gradient functions */
-typedef void (*fcn_p)(int, double *, double *, void *);
-
-/* type of pointer to the hessian functions */
-typedef void (*d2fcn_p)(int, int, double *, double *, void *);
-
-/* These two functions are defined in ../appl/uncmin.c */
-
-extern void fdhess(int, double *, double, fcn_p, void *, double *,
-		   int, double *, double *, int, double *);
-
-extern void optif9(int, int, double *, fcn_p, fcn_p, d2fcn_p, void *,
-		   double *, double, int, int, int *, int, int, int,
-		   int, double, double, double, double, double *,
-		   double *, double *, int *, double *, double *, int *);
-
-
 #define FT_SIZE 5		/* default size of table to store computed
 				   function values */
 

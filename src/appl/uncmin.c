@@ -5,6 +5,7 @@
 
 #include <math.h>
 #include "S.h"
+#include "Applic.h"
 
 #ifndef max
 #define max(a, b) ((a) < (b) ? (b) : (a))
@@ -12,12 +13,6 @@
 #ifndef min
 #define min(a, b) ((a) > (b) ? (b) : (a))
 #endif
-
-/* type of pointer to the target and gradient functions */
-typedef void (*fcn_p)(int, double *, double *, void *);
-
-/* type of pointer to the hessian functions */
-typedef void (*d2fcn_p)(int, int, double *, double *, void *);
 
 extern double d1mach(int);
 extern int i1mach(int);
