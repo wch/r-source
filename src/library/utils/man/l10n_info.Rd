@@ -18,4 +18,4 @@ l10n_info()
 \examples{
 l10n_info()
 }
-\keyword{ utility }
+\keyword{ utilities }
