@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2002   The R Development Core Team.
+ *  Copyright (C) 2001-2003   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -323,16 +323,20 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
     return ret;
 }
 
-static SEXP modLa_zgesv(SEXP A, SEXP B)
+/* ------------------------------------------------------------ */
+
+static SEXP modLa_zgesv(SEXP A, SEXP Bin)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
     Rcomplex *avals;
+    SEXP B;
 
     if (!(isMatrix(A) && isComplex(A)))
 	error("A must be a complex matrix");
-    if (!(isMatrix(B) && isComplex(B)))
+    if (!(isMatrix(Bin) && isComplex(Bin)))
 	error("B must be a complex matrix");
+    PROTECT(B = duplicate(Bin));
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     n = Adims[0];
@@ -352,6 +356,7 @@ static SEXP modLa_zgesv(SEXP A, SEXP B)
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
     if (info != 0)
 	error("error code %d from Lapack routine zgesv", info);
+    UNPROTECT(1);
     return B;
 #else
     error("Fortran complex functions are not available on this platform");
@@ -647,6 +652,8 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 #endif
 }
 
+/* ------------------------------------------------------------ */
+
 static SEXP modLa_chol(SEXP A)
 {
     if (isMatrix(A)) {
@@ -716,6 +723,157 @@ static SEXP modLa_chol2inv(SEXP A, SEXP size)
     return R_NilValue; /* -Wall */
 }
 
+/* ------------------------------------------------------------ */
+
+static SEXP modLa_dgesv(SEXP A, SEXP Bin)
+{
+    int n, p, info, *ipiv, *Adims, *Bdims;
+    double *avals;
+    SEXP B;
+
+    if (!(isMatrix(A) && isReal(A)))
+	error("A must be a numeric matrix");
+    if (!(isMatrix(Bin) && isReal(Bin)))
+	error("B must be a numeric matrix");
+    PROTECT(B = duplicate(Bin));
+    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    n = Adims[0];
+    if(n == 0) error("A is 0-diml");
+    p = Bdims[1];
+    if(p == 0) error("no rhs in B");
+    if(Adims[1] != n)
+	error("A (%d x %d) must be square", n, Adims[1]);
+    if(Bdims[0] != n)
+	error("B (%d x %d) must be compatible with A (%d x %d)",
+	      Bdims[0], p, n, n);
+    ipiv = (int *) R_alloc(n, sizeof(int));
+
+    avals = (double *) R_alloc(n * n, sizeof(double));
+    /* work on a copy of x */
+    Memcpy(avals, REAL(A), (size_t) (n * n));
+    F77_CALL(dgesv)(&n, &p, avals, &n, ipiv, REAL(B), &n, &info);
+    if (info != 0)
+	error("error code %d from Lapack routine dgesv", info);
+    UNPROTECT(1);
+    return B;
+}
+
+static SEXP modLa_dgeqp3(SEXP Ain)
+{
+    int m, n, *Adims, info, lwork;
+    double *work, tmp;
+    double *rwork;
+    SEXP val, nm, jpvt, tau, rank, A;
+
+    if (!(isMatrix(Ain) && isReal(Ain)))
+	error("A must be a numeric matrix");
+    PROTECT(A = duplicate(Ain));
+    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    m = Adims[0];
+    n = Adims[1];
+    rwork = (double *) R_alloc(2*n, sizeof(double));
+
+    jpvt = PROTECT(allocVector(INTSXP, n));
+    tau = PROTECT(allocVector(REALSXP, m < n ? m : n));
+    lwork = -1;
+    F77_CALL(dgeqp3)(&m, &n, REAL(A), &m, INTEGER(jpvt), REAL(tau),
+		     &tmp, &lwork, rwork, &info);
+    lwork = (int) tmp;
+    work = (double *) R_alloc(lwork, sizeof(double));
+    F77_CALL(dgeqp3)(&m, &n, REAL(A), &m, INTEGER(jpvt), REAL(tau),
+		     work, &lwork, rwork, &info);
+    if (info < 0)
+	error("error code %d from Lapack routine dqeqp3", info);
+    val = PROTECT(allocVector(VECSXP, 4));
+    nm = PROTECT(allocVector(STRSXP, 4));
+    rank = PROTECT(allocVector(INTSXP, 1));
+    INTEGER(rank)[0] = m < n ? m : n;
+    SET_STRING_ELT(nm, 0, mkChar("qr"));
+    SET_STRING_ELT(nm, 1, mkChar("rank"));
+    SET_STRING_ELT(nm, 2, mkChar("qraux"));
+    SET_STRING_ELT(nm, 3, mkChar("pivot"));
+    setAttrib(val, R_NamesSymbol, nm);
+    SET_VECTOR_ELT(val, 0, A);
+    SET_VECTOR_ELT(val, 1, rank);
+    SET_VECTOR_ELT(val, 2, tau);
+    SET_VECTOR_ELT(val, 3, jpvt);
+    UNPROTECT(6);
+    return val;
+}
+
+static SEXP modqr_coef_real(SEXP Q, SEXP Bin)
+{
+    int n, nrhs, lwork, info, k, *Bdims, *Qdims;
+    SEXP B, qr=VECTOR_ELT(Q, 0), tau=VECTOR_ELT(Q, 2);
+    double *work, tmp;
+
+    k = LENGTH(tau);
+    if (!(isMatrix(Bin) && isReal(Bin)))
+	error("B must be a numeric matrix");
+
+    PROTECT(B = duplicate(Bin));
+    Qdims = INTEGER(coerceVector(getAttrib(qr, R_DimSymbol), INTSXP));
+    n = Qdims[0];
+    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    if(Bdims[0] != n)
+	error("rhs should have %d not %d rows", n, Bdims[0]);
+    nrhs = Bdims[1];
+    lwork = -1;
+    F77_CALL(dormqr)("L", "T", &n, &nrhs, &k,
+		     REAL(qr), &n, REAL(tau), REAL(B), &n,
+		     &tmp, &lwork, &info);
+    lwork = (int) tmp;
+    work = (double *) R_alloc(lwork, sizeof(double));
+    F77_CALL(dormqr)("L", "T", &n, &nrhs, &k,
+		     REAL(qr), &n, REAL(tau), REAL(B), &n,
+		     work, &lwork, &info);
+    if (info != 0)
+	error("error code %d from Lapack routine dunmqr", info);
+    F77_CALL(dtrtrs)("U", "N", "N", &n, &nrhs,
+		     REAL(qr), &n, REAL(B), &n, &info);
+    if (info != 0)
+	error("error code %d from Lapack routine dtrtrs", info);
+    UNPROTECT(1);
+    return B;
+}
+
+static SEXP modqr_qy_real(SEXP Q, SEXP Bin, SEXP trans)
+{
+    int n, nrhs, lwork, info, k, *Bdims, *Qdims, tr;
+    SEXP B, qr=VECTOR_ELT(Q, 0), tau=VECTOR_ELT(Q, 2);
+    double *work, tmp;
+
+    k = LENGTH(tau);
+    if (!(isMatrix(Bin) && isReal(Bin)))
+	error("B must be a numeric matrix");
+    tr = asLogical(trans);
+    if(tr == NA_LOGICAL) error("invalid `trans' parameter");
+
+    PROTECT(B = duplicate(Bin));
+    Qdims = INTEGER(coerceVector(getAttrib(qr, R_DimSymbol), INTSXP));
+    n = Qdims[0];
+    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    if(Bdims[0] != n)
+	error("rhs should have %d not %d rows", n, Bdims[0]);
+    nrhs = Bdims[1];
+    lwork = -1;
+    F77_CALL(dormqr)("L", tr ? "T" : "N", &n, &nrhs, &k,
+		     REAL(qr), &n, REAL(tau), REAL(B), &n,
+		     &tmp, &lwork, &info);
+    lwork = (int) tmp;
+    work = (double *) R_alloc(lwork, sizeof(double));
+    F77_CALL(dormqr)("L", tr ? "T" : "N", &n, &nrhs, &k,
+		     REAL(qr), &n, REAL(tau), REAL(B), &n,
+		     work, &lwork, &info);
+    if (info != 0)
+	error("error code %d from Lapack routine dunmqr", info);
+    UNPROTECT(1);
+    return B;
+}
+
+/* ------------------------------------------------------------ */
+
 
 #include <R_ext/Rlapack.h>
 #include <R_ext/Rdynload.h>
@@ -738,6 +896,10 @@ R_init_lapack(DllInfo *info)
     tmp->rg_cmplx = modLa_rg_cmplx;
     tmp->chol = modLa_chol;
     tmp->chol2inv = modLa_chol2inv;
+    tmp->dgesv = modLa_dgesv;
+    tmp->dgeqp3 = modLa_dgeqp3;
+    tmp->qr_coef_real = modqr_coef_real;
+    tmp->qr_qy_real = modqr_qy_real;
     R_setLapackRoutines(tmp);
 }
 

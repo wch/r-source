@@ -158,3 +158,30 @@ void F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
 		     Rcomplex *vr, const int *ldvr,
 		     Rcomplex *work, const int *lwork, 
 		     double *rwork, int *info);
+
+/* DGESV computes the solution to a complex system of linear equations */
+void F77_NAME(dgesv)(const int *n, const int *nrhs, double *a,
+		     const int *lda, int *ipiv, double *b,
+		     const int *ldb, int *info);
+
+/*  DGEQP3 computes a QR factorization with column pivoting */
+void F77_NAME(dgeqp3)(const int *m, const int *n,
+		      double *a, const int *lda,
+		      int *jpvt, double *tau,
+		      double *work, const int *lwork,
+		      double *rwork, int *info);
+
+/* DORMQR applies Q or Q**T from the Left or Right */
+void F77_NAME(dormqr)(const char *side, const char *trans,
+		      const int *m, const int *n, const int *k,
+		      double *a, const int *lda,
+		      double *tau,
+		      double *c, const int *ldc,
+		      double *work, const int *lwork, int *info);
+
+/*  DTRTRS solves triangular systems */
+void F77_NAME(dtrtrs)(const char *uplo, const char *trans, const char *diag,
+		      const int *n, const int *nrhs,
+		      double *a, const int *lda,
+		      double *b, const int *ldb,
+		      int *info);

@@ -16,6 +16,10 @@ typedef SEXP (*Rf_La_rs_complex)(SEXP x, SEXP only_values);
 typedef SEXP (*Rf_La_rg_complex)(SEXP x, SEXP only_values);
 typedef SEXP (*Rf_La_chol)(SEXP A);
 typedef SEXP (*Rf_La_chol2inv)(SEXP x, SEXP size);
+typedef SEXP (*Rf_La_dgesv)(SEXP A, SEXP B);
+typedef SEXP (*Rf_La_dgeqp3)(SEXP A);
+typedef SEXP (*Rf_qr_coef_real)(SEXP Q, SEXP B);
+typedef SEXP (*Rf_qr_qy_real)(SEXP Q, SEXP B, SEXP trans);
 
 typedef struct {
     Rf_La_svd svd;
@@ -30,6 +34,10 @@ typedef struct {
     Rf_La_rg_complex rg_cmplx;
     Rf_La_chol chol;
     Rf_La_chol2inv chol2inv;
+    Rf_La_dgesv dgesv;
+    Rf_La_dgeqp3 dgeqp3;
+    Rf_qr_coef_real qr_coef_real;
+    Rf_qr_qy_real qr_qy_real;
 } R_LapackRoutines;
 
 R_LapackRoutines *R_setLapackRoutines(R_LapackRoutines *routines);

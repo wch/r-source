@@ -1,7 +1,7 @@
 \name{solve}
 \title{Solve a System of Equations}
 \usage{
-\method{solve}{default}(a, b, tol = 1e-7, ...)
+\method{solve}{default}(a, b, tol = 1e-7, LINPACK = FALSE, ...)
 }
 \alias{solve}
 \alias{solve.default}
@@ -13,7 +13,9 @@
     side(s) of the linear system.  If missing, \code{b} is taken to be
     an identity matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
-    columns of \code{a}.}
+    columns of \code{a}, if LINPACK is used.}
+  \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
+    \R < 1.7.0)?}
   \item{\dots}{further arguments passed to or from other methods}
 }
 \description{
@@ -38,8 +40,7 @@
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h8 <- hilbert(8); h8
-\dontrun{solve(h8) # gives error: `singular'}
-sh8 <- solve(h8, tol = 1e-10)
+sh8 <- solve(h8)
 round(sh8 \%*\% h8, 3)
 
 A <- hilbert(4)

@@ -13,21 +13,31 @@ solve.qr <- function(a, b, tol = 1e-7, ...)
     return(qr.coef(a, b))
 }
 
-solve.default <- function(a, b, tol = 1e-7, ...)
+solve.default <- function(a, b, tol = 1e-7, LINPACK = FALSE, ...)
 {
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
-        ## call overwrites a and b, so need to force copies
-        A <- a
         if(missing(b)) {
-            B <- a
-            B[] <- diag(1+0i, nrow(a))
-        } else B <- b
-        if(!is.complex(A)) A[] <- as.complex(A)
-        if(!is.complex(B)) B[] <- as.complex(B)
-        return (if (is.matrix(B))
-	    .Call("La_zgesv", A, B, PACKAGE = "base")
-	else
-	    drop(.Call("La_zgesv", A, as.matrix(B), PACKAGE = "base")))
+            b <- diag(1+0i, nrow(a))
+            colnames(b) <- rownames(a)
+        } else if(!is.complex(b)) b[] <- as.complex(b)
+        if(!is.complex(a)) a[] <- as.complex(a)
+        return (if (is.matrix(b)) {
+            rownames(b) <- colnames(a)
+	    .Call("La_zgesv", a, b, PACKAGE = "base")
+	} else
+	    drop(.Call("La_zgesv", a, as.matrix(b), PACKAGE = "base")))
+    }
+    if(!LINPACK) {
+        if(missing(b)) {
+            b <- diag(1.0, nrow(a))
+            colnames(b) <- rownames(a)
+        } else storage.mode(b) <- "double"
+        storage.mode(a) <- "double"
+        return (if (is.matrix(b)) {
+            rownames(b) <- colnames(a)
+	    .Call("La_dgesv", a, b, PACKAGE = "base")
+	} else
+	    drop(.Call("La_dgesv", a, as.matrix(b), PACKAGE = "base")))
     }
     if( !is.qr(a) )
 	a <- qr(a, tol = tol)

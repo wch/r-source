@@ -40,6 +40,10 @@ SEXP La_rs_complex(SEXP x, SEXP only_values)
 SEXP La_rg_complex(SEXP x, SEXP only_values)
 SEXP La_chol (SEXP A)
 SEXP La_chol2inv (SEXP x, SEXP size)
+SEXP La_dgesv(SEXP A, SEXP B)
+SEXP La_dgeqp3(SEXP A)
+SEXP qr_coef_real(SEXP Q, SEXP B)
+SEXP qr_qy_real(SEXP Q, SEXP B, SEXP trans)
 */
 
 static int initialized = 0;
@@ -186,6 +190,49 @@ SEXP qr_qy_cmplx(SEXP Q, SEXP B, SEXP trans)
     }
 }
 
+SEXP La_dgesv(SEXP A, SEXP B)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->dgesv)(A, B);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
+
+SEXP La_dgeqp3(SEXP A)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->dgeqp3)(A);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
+
+SEXP qr_coef_real(SEXP Q, SEXP B)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->qr_coef_real)(Q, B);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
+
+SEXP qr_qy_real(SEXP Q, SEXP B, SEXP trans)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->qr_qy_real)(Q, B, trans);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
 
 R_LapackRoutines *
 R_setLapackRoutines(R_LapackRoutines *routines)

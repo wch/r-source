@@ -1,9 +1,15 @@
 is.qr <- function(x) !is.null(x$qr) && !is.null(x$rank) && !is.null(x$qraux)
 
-qr <- function(x, tol= 1e-07)
+qr <- function(x, tol = 1e-07, LAPACK = FALSE)
 {
     x <- as.matrix(x)
     if(is.complex(x)) return(.Call("La_zgeqp3", x, PACKAGE = "base"))
+    if(LAPACK) {
+        res <- .Call("La_dgeqp3", x, PACKAGE = "base")
+        attr(res, "useLAPACK") <- TRUE
+        return(res)
+    }
+
     p <- ncol(x) # guaranteed to be integer
     n <- nrow(x)
     if(!is.double(x))
@@ -34,12 +40,19 @@ qr.coef <- function(qr, y)
     if (p==0) return( if (im) matrix(0,p,ny) else numeric(0) )
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
-	coef <- matrix(as.double(NA),nr=p,nc=ny)
+	coef <- matrix(as.complex(NA), nr=p, nc=ny)
 	coef[qr$pivot,] <- .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a) {
+	coef <- matrix(as.double(NA), nr=p, nc=ny)
+	coef[qr$pivot,] <- .Call("qr_coef_real", qr, y, PACKAGE = "base")
+	return(if(im) coef else c(coef))
+    }
     if (k==0) return( if (im) matrix(NA,p,ny) else rep(NA,p))
+
     storage.mode(y) <- "double"
     if( nrow(y) != n )
 	stop("qr and y must have the same number of rows")
@@ -75,6 +88,9 @@ qr.qy <- function(qr, y)
         if(!is.complex(y)) y[] <- as.complex(y)
         return(.Call("qr_qy_cmplx", qr, y, 0, PACKAGE = "base"))
     }
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a)
+        return(.Call("qr_qy_real", qr, as.matrix(y), 0, PACKAGE = "base"))
     n <- nrow(qr$qr)
     p <- ncol(qr$qr)
     k <- as.integer(qr$rank)
@@ -100,6 +116,10 @@ qr.qty <- function(qr, y)
         if(!is.complex(y)) y[] <- as.complex(y)
         return(.Call("qr_qy_cmplx", qr, y, 1, PACKAGE = "base"))
     }
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a)
+        return(.Call("qr_qy_real", qr, as.matrix(y), 1, PACKAGE = "base"))
+
     n <- nrow(qr$qr)
     p <- ncol(qr$qr)
     k <- as.integer(qr$rank)
@@ -121,6 +141,9 @@ qr.resid <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     if(is.complex(qr$qr)) stop("implemented for complex qr")
+    a <- attr(qr, "useLAPACK")
+    if(!is.null(a) && is.logical(a) && a)
+        stop("not supported for LAPACK QR")
     k <- as.integer(qr$rank)
     if (k==0) return(y)
     n <- nrow(qr$qr)
@@ -142,6 +165,8 @@ qr.fitted <- function(qr, y, k=qr$rank)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     if(is.complex(qr$qr)) stop("implemented for complex qr")
+    if(!is.null(a) && is.logical(a) && a)
+        stop("not supported for LAPACK QR")
     n <- nrow(qr$qr)
     p <- ncol(qr$qr)
     k <- as.integer(k)

@@ -11,10 +11,10 @@
 
 USER-VISIBLE CHANGES
 
-    o	chol(), eigen() and svd() now use LAPACK routines unless a new
-	back-compatibility option is turned on.	 The signs and
-	normalization of eigen/singular vectors may change from
-	earlier versions.
+    o	solve(), chol(), eigen() and svd() now use LAPACK routines
+	unless a new back-compatibility option is turned on.  The
+	signs and normalization of eigen/singular vectors may change
+	from earlier versions.
 
     o	The `methods' package is now attached by default.
 	The option "defaultPackages" has been added and initially set
@@ -264,6 +264,12 @@ NEW FEATURES
 
     o	La.chol() and La.chol2inv() now give interpretable error
 	messages rather than LAPACK error codes.
+
+    o	qr() now has the option to use LAPACK routines, and the
+	results can be used by the helper routines qr.coef(), qr.qy()
+	and qr.qty().  The LAPACK-using versions may be much faster
+	for large matrices (using an optimized BLAS) but are less
+	flexible.
 
 
 INSTALLATION CHANGES
