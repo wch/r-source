@@ -12,18 +12,6 @@ dnl PARTICULAR PURPOSE.
 
 
 
-AC_DEFUN([R_ARG_WITH_EXCLUSIVE],
-[if test "${with_$1+set}" = set; then
-  if test "${with_$2+set}" = set; then
-    if test "$with_$2" = no; then
-      true
-    else
-      $3
-    fi
-  fi
-fi
-])# R_ARG_WITH_EXCLUSIVE
-
 AC_DEFUN([R_ARG_USE],
 [if test "${withval}" = no; then
   use_$1=no
@@ -393,27 +381,18 @@ AC_DEFUN([R_PROG_F77_OR_F2C],
 Use variable 'F77' to specify a FORTRAN 77 compiler if necessary."
   AC_MSG_WARN([${warn_arg_var_FC}])
 fi
+if test -n "${F77}" && test -n "${F2C}"; then
+  warn_F77_and_F2C="both 'F77' and 'F2C' given.
+Using the given FORTRAN 77 compiler ..."
+  AC_MSG_WARN([${warn_F77_and_F2C}])
+  F2C=
+fi
 if test -n "${F77}"; then
   AC_MSG_RESULT([defining F77 to be ${F77}])
 elif test -n "${FC}"; then
   F77="${FC}"
   AC_MSG_RESULT([defining F77 to be ${F77}])
-elif test "${use_f77}" = yes; then
-  if test "${with_f77}" = yes; then
-    F77=f77
-  else
-    F77="${with_f77}"
-  fi
-  AC_MSG_RESULT([defining F77 to be ${F77}])
-elif test "${use_f2c}" = yes; then
-  F77=
-  if test "${with_f2c}" = yes; then
-    F2C=f2c
-  else
-    F2C="${with_f2c}"
-  fi
-  AC_MSG_RESULT([defining F2C to be ${F2C}])
-else
+elif test -z "${F2C}"; then
   F77=
   case "${host_os}" in
     hpux*)
@@ -428,6 +407,8 @@ else
   if test -z "${F77}"; then
     AC_CHECK_PROG(F2C, f2c, f2c, [])
   fi
+else
+  AC_MSG_RESULT([defining F2C to be ${F2C}])
 fi
 if test -n "${F77}"; then
   ## If the above 'found' a FORTRAN 77 compiler, we run AC_PROG_F77 as
@@ -704,9 +685,9 @@ AC_CACHE_VAL([r_cv_prog_f77_flag_${ac_safe}],
 [AC_LANG_PUSH(Fortran 77)
 r_save_FFLAGS="${FFLAGS}"
 FFLAGS="${FFLAGS} $1"
-AC_TRY_LINK([], [],
-            [eval "r_cv_prog_f77_flag_${ac_safe}=yes"],
-            [eval "r_cv_prog_f77_flag_${ac_safe}=no"])
+AC_LINK_IFELSE([AC_LANG_PROGRAM([], [])],
+               [eval "r_cv_prog_f77_flag_${ac_safe}=yes"],
+               [eval "r_cv_prog_f77_flag_${ac_safe}=no"])
 FFLAGS="${r_save_FFLAGS}"
 AC_LANG_POP(Fortran 77)
 ])
