@@ -18,6 +18,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* NOTE: This is no longer the code used by rowsum(), which can be
+   found as Rrowsum_matrix and Rrowsum_df in src/main/unique.c.  This
+   old code is preserved in case it is needed by C/Fortran programs */
+
 /*
 **  SCCS @(#)rowsum.c	4.2 06/30/93
 **
