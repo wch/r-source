@@ -140,8 +140,6 @@ else
   AC_CHECK_PROG(CC, ${CC})
 fi
 
-AC_PROG_GCC_TRADITIONAL
-
 CFLAGS=${CFLAGS-"-g"}
 
 case ${host} in
