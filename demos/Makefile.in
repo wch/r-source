@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
-SUBDIRS_JUST_SOURCES = graphics language models nlm
+SUBDIRS_JUST_SOURCES = graphics language models nlm tcltk
 SUBDIRS_ALSO_OBJECTS = dynload
 SUBDIRS = $(SUBDIRS_JUST_SOURCES) $(SUBDIRS_ALSO_OBJECTS)
 
@@ -43,6 +43,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos/language 
 	@$(MKINSTALLDIRS) $(rhome)/demos/models 
 	@$(MKINSTALLDIRS) $(rhome)/demos/nlm
+	@$(MKINSTALLDIRS) $(rhome)/demos/tcltk
 install-message:
 	@echo "installing demos ..."
 install-sources: installdirs

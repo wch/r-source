@@ -119,6 +119,7 @@ demo <- function(topic, device = getOption("device")) {
 		   recursion	= c("language", "recursion.R",	"G"),
 		   scoping	= c("language", "scoping.R",	""),
 		   is.things	= c("language", "is-things.R",	""),
+		   tkttest	= c("tcltk",	"tkttest.R",	""),
 		   dyn.load	= c("dynload",	"zero.R",	"")
 		   )
     dimnames(Topics)[[1]] <- c("dir", "file", "flag")
