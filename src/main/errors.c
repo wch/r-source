@@ -43,6 +43,7 @@ static int inError = 0;
 static int inWarning = 0;
 static int inPrintWarnings = 0;
 
+static void try_jump_to_restart(void);
 static void jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
 
 /* Interface / Calling Hierarchy :
@@ -96,8 +97,6 @@ void onintr()
 
 void onsigusr1()
 {
-    RCNTXT *c;
-
     if (R_interrupts_suspended) {
 	/**** ought to save signal and handle after suspend */
 	REprintf("interrupts suspended; signal ignored");
@@ -114,14 +113,9 @@ void onsigusr1()
     R_ClearerrConsole();
     R_ParseError = 0;
 
-    /* Bail out if there is a CTXT_RESTART on the stack--do we really
+    /* Bail out if there is a browser/try on the stack--do we really
        want this? */
-    for (c = R_GlobalContext; c; c = c->nextcontext) {
-	if (IS_RESTART_BIT_SET(c->callflag)) {
-	    inError=0;
-	    findcontext(CTXT_RESTART, c->cloenv, R_RestartToken);
-	}
-    }
+    try_jump_to_restart();
 
     /* Run all onexit/cend code on the stack (without stopping at
        intervening CTXT_TOPLEVEL's.  Since intervening CTXT_TOPLEVEL's
@@ -478,6 +472,20 @@ void error(const char *format, ...)
 	      R_GlobalContext->call : R_NilValue, "%s", buf);
 }
 
+static void try_jump_to_restart(void)
+{
+    RCNTXT *c;
+
+    for (c = R_GlobalContext; c; c = c->nextcontext) {
+	if (IS_RESTART_BIT_SET(c->callflag)) {
+	    inError=0;
+	    findcontext(CTXT_RESTART, c->cloenv, R_RestartToken);
+	}
+	if (c->callflag == CTXT_TOPLEVEL)
+	    break;
+    }
+}
+
 /* Unwind the call stack in an orderly fashion */
 /* calling the code installed by on.exit along the way */
 /* and finally longjmping to the innermost TOPLEVEL context */
@@ -489,7 +497,6 @@ static void jump_to_top_ex(Rboolean traceback,
 			   Rboolean ignoreRestartContexts)
 {
     RCNTXT cntxt;
-    RCNTXT *c;
     SEXP s;
     int haveHandler, oldInError;
 
@@ -547,21 +554,12 @@ static void jump_to_top_ex(Rboolean traceback,
        any allocation could result in an infinite-loop condition. All
        you can do is reset things and exit.  */
 
-    /* find the jump target; do the jump if target is a CTXT_RESTART */
-    if (ignoreRestartContexts)
-	c = R_ToplevelContext;
-    else {
-	for (c = R_GlobalContext; c; c = c->nextcontext) {
-	    if (IS_RESTART_BIT_SET(c->callflag)) {
-		inError=0;
-		findcontext(CTXT_RESTART, c->cloenv, R_RestartToken);
-	    }
-	    if (c->callflag == CTXT_TOPLEVEL)
-		break;
-	}
-    }
-    /* at this point, i.e. if we have not exitid with findcontext, we
-       should have c == R_ToplevelContext */
+    /* jump to a browser/try if one is on the stack */
+    if (! ignoreRestartContexts)
+	try_jump_to_restart();
+
+    /* at this point, i.e. if we have not exited in
+       try_jump_to_restart, we are heading for R_ToplevelContext */
 
     /* Run onexit/cend code for all contexts down to but not including
        the jump target.  This may cause recursive calls to
