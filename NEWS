@@ -121,6 +121,20 @@ NEW FEATURES
 	rudimentary, since the data editor really only knows about
 	numeric and character vectors.
 
+<<<<<<< NEWS
+    o   Modifications to the data editor so that one can use ESC to
+        quit a partial cell entry and entering an empty cell causes
+        the element to be set to NA.
+
+    o   prop.table() and margin.table() functions (these are *really*
+        trivial)
+
+    o   R INSTALL checks the Depends field of DESCRIPTION if the
+        currently running version of R meets an R
+	dependency. old.packages() reports only packages conforming with the
+	current version of R. New function package.dependencies() for
+	parsing and checking dependencies.
+
     o	Modifications to the data editor so that one can use ESC to
 	quit a partial cell entry and entering an empty cell causes
 	the element to be set to NA.

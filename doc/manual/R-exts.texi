@@ -101,12 +101,11 @@ packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 @menu
 * Package structure::           
-* Package bundles::             
 * Configure and cleanup::       
 * Checking and building packages::  
 @end menu
 
-@node Package structure, Package bundles, Creating R packages, Creating R packages
+@node Package structure, Configure and cleanup, Creating R packages, Creating R packages
 @section Package structure
 @cindex Package structure
 
@@ -117,23 +116,36 @@ of which can be missing).  Optionally the package can also contain
 script files @file{configure} and @file{cleanup} which are executed
 before and after installation, @xref{Configure and cleanup}.
 
+
+@menu
+* The DESCRIPTION file::        
+* Other files::                 
+* Package subdirectories::      
+* Package bundles::             
+@end menu
+
+@node The DESCRIPTION file, Other files, Package structure, Package structure
+@subsection The DESCRIPTION file
+@comment  node-name,  next,  previous,  up@subsection The DESCRIPTION file
+@cindex The DESCRIPTION file
+
+
 The @file{DESCRIPTION} file contains basic information about the package
 in the following format:
 
 @quotation
 @cartouche
 @smallexample
-Package: e1071
-Version: 0.9-3
+Package: pkgname
+Version: 0.5-1
 Date: 2000/01/04
-Title: Misc Functions collected at TU Wien, Department E1071
-Author: Compiled by Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>.
-Description: Miscellaneous functions written by members of the
-  Department of Statistics at TU Wien (E1071).
-  Includes independent component analysis, reading and writing
-  of pnm/pbm/ppm images, ...
+Title: My first collection of functions
+Author: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>.
+Depends: R (>= 0.99), nlme
+Description: A short (one paragraph) description of what the package
+        does and why it may be useful.
 License: GPL version 2 or newer
-URL: http://www.ci.tuwien.ac.at, http://www.tuwien.ac.at
+URL: http://www.r-project.org, http://www.another.url
 @end smallexample
 @end cartouche
 @end quotation
@@ -164,12 +176,35 @@ commas or whitespace, e.g., the homepage of the author or a page where
 additional material describing the software can be found.  These URLs
 are converted to active hyperlinks on CRAN.
 
+The optional @samp{Depends} field gives a comma-seperated list of
+package names which this package depends on. The package name may be
+optionally followed by comparison operator (currently only @samp{>=} and
+@samp{<=} are supported) and a version number in parentheses. You can
+also use the special package name @samp{R} if your package depends on a
+certain version of R. E.g, if the package works only with R version 0.90
+or newer, include @samp{R (>= 0.90)} in the @samp{Depends} field. Future
+versions of R will use this field to autoload required packages, hence
+please do not misuse the @samp{Depends} field for comments on other
+software that might be needed or not using proper syntax. Other
+dependencies should be listed in the @samp{Description} field or a
+seperate @samp{README} file. The @samp{R INSTALL} facility already checks
+if the running version of R is good enough for a package.
+
+@node Other files, Package subdirectories, The DESCRIPTION file, Package structure
+@subsection Other files
+@comment  node-name,  next,  previous,  up
+
 The file @file{INDEX} contains a line for each sufficiently interesting
 object in the package, giving its name and a description (functions such
 as print methods not usually called explicitly might not be included).
 Note that you can automatically create this file using something like
 @code{R CMD Rdindex man/*.Rd > INDEX}, provided that Perl is available
 on your system.
+
+@node Package subdirectories, Package bundles, Other files, Package structure
+@subsection Package subdirectories
+@cindex Package subdirectories
+
 
 The @file{R} subdirectory contains @R{} code files.  The code files to
 be installed must start with a (lower or upper case) letter and have one
@@ -223,13 +258,8 @@ Finally, @file{exec} could contain additional executables the package
 needs, typically shell or Perl scripts.  This mechanism is currently not
 used by any Unix package, and still experimental.
 
-@menu
-* Package bundles::             
-* Configure and cleanup::       
-@end menu
-
-@node  Package bundles, Configure and cleanup, Package structure, Creating R packages
-@section Package bundles
+@node  Package bundles,  , Package subdirectories, Package structure
+@subsection Package bundles
 @cindex Package bundles
 
 Sometimes it is convenient to distribute several packages as a
@@ -273,7 +303,7 @@ Description: Functions for kriging and point pattern analysis.
 @end cartouche
 @end quotation
 
-@node Configure and cleanup, Checking and building packages, Package bundles, Creating R packages
+@node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @comment  node-name,  next,  previous,  up
 @section Configure and cleanup
 

@@ -11,7 +11,7 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
                       destfile=tmpf, method=method)
     }
     parse.dcf(file=tmpf, fields=c("Package", "Version",
-                         "Priority", "Bundle"),
+                         "Priority", "Bundle", "Depends"),
               versionfix=TRUE)
 }
 
@@ -84,8 +84,9 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
     update <- NULL
     for(k in 1:nrow(instp)){
         ok <- (instp[k, "Priority"] != "base") &
-              (available[,"Package"] == instp[k, "Package"])
-        if(any(available[ok, "Version"] > instp[k, "Version"]))
+                (available[,"Package"] == instp[k, "Package"])
+        ok[ok] <- available[ok, "Version"] > instp[k, "Version"]
+        if(any(ok) && any(package.dependencies(available[ok, ], check=TRUE)))
         {
             update <- rbind(update,
                             c(instp[k, c("Package", "LibPath", "Version")],
@@ -140,11 +141,73 @@ installed.packages <- function(lib.loc = .lib.loc)
         for(p in pkgs){
             desc <- package.description(p, lib=lib,
                                         fields=c("Version", "Priority",
-                                        "Bundle"))
+                                        "Bundle", "Depends"))
 
             retval <- rbind(retval, c(p, lib, desc))
         }
     }
-    colnames(retval) <- c("Package", "LibPath", "Version", "Priority", "Bundle")
+    colnames(retval) <- c("Package", "LibPath", "Version",
+                          "Priority", "Bundle", "Depends")
     retval
 }
+
+
+package.dependencies <- function(x, check=FALSE)
+{    
+    if(!is.matrix(x))
+        x <- matrix(x, nrow=1, dimnames=list(NULL, names(x)))
+    
+    deps <- list()
+    for(k in 1:nrow(x)){
+        z <- x[k, "Depends"]
+        if(!is.na(z) & z != ""){
+            ## split dependencies, remove leading and trailing whitespace
+            z <- unlist(strsplit(z, ","))
+            z <- sub("^[[:space:]]*(.*)", "\\1", z)
+            z <- sub("(.*)[[:space:]]*$", "\\1", z)
+
+            ## split into package names and version
+            deps[[k]] <- cbind(sub("^([^[:space:]\\(]*).*", "\\1", z),
+                               sub(".*\\((.*)\\).*", "\\1", z), NA)
+
+            noversion <- deps[[k]][,1] == deps[[k]][,2]
+            deps[[k]][noversion,2] <- NA
+
+            ## split version dependency into operator and version number
+            pat <- "[[:space:]]*([[<>=]*)[[:space:]]*(.*)"
+            deps[[k]][!noversion,2:3] <-
+                c(sub(pat,"\\1", deps[[k]][!noversion,2]),
+                  sub(pat,"\\2", deps[[k]][!noversion,2]))
+        }
+        else
+            deps[[k]] <- NA
+    }
+
+    if(check){
+        z <- rep(TRUE, nrow(x))
+        for(k in 1:nrow(x)){
+            ## currently we only check the version of R itself
+            if(!is.na(deps[[k]]) &&
+               any(ok <- deps[[k]][,1] == "R"))
+            {
+                if(!is.na(deps[[k]][ok,2])){
+                    comptext <-
+                        paste('"', R.version$major, ".",
+                              R.version$minor, '" ', 
+                              deps[[k]][ok,2], ' "',
+                              deps[[k]][ok,3], '"', sep="")
+                    cat(comptext, "\n")
+                }
+                z[k] <- eval(parse(text=comptext))
+            }
+        }
+        names(z) <- x[,"Package"]
+        return(z)
+    }
+    else{
+        names(deps) <- x[,"Package"]
+        return(deps)
+    }
+}
+    
+
