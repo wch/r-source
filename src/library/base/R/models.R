@@ -319,7 +319,7 @@ model.matrix.default <- function(object, data = environment(object),
             }
         }
     } else { # internal model.matrix needs some variable
-        isF <-  F
+        isF <-  FALSE
         data <- list(x=rep(0, nrow(data)))
     }
     ans <- .Internal(model.matrix(t, data))

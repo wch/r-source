@@ -1327,7 +1327,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (subset != R_NilValue) {
 	PROTECT(tmp=install("[.data.frame")); 
-	PROTECT(tmp=LCONS(tmp,list4(data,subset,R_MissingArg,install("F"))));
+	PROTECT(tmp=LCONS(tmp,list4(data,subset,R_MissingArg,mkFalse())));
 	data = eval(tmp, rho);
 	UNPROTECT(2);
     }

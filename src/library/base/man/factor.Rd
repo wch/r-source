@@ -123,7 +123,7 @@ class(ordered(4:1))# "ordered", inheriting from "factor"
 
 ## suppose you want "NA" as a level, and to allowing missing values.
 (x <- factor(c(1, 2, "NA"), exclude = ""))
-is.na(x)[2] <- T
+is.na(x)[2] <- TRUE
 x  # [1] 1    <NA> NA, <NA> used because NA is a level.
 is.na(x)
 # [1] FALSE  TRUE FALSE

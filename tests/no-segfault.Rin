@@ -73,8 +73,9 @@ for (pkg in core.pkgs) {
 	  cat("\n## ", nm, " :\n")
 	  cat("f <- get(\"",nm,"\", pos = ", this.pos, ")\n", sep="")
 	  cat("f()\nf(NULL)\nf(,NULL)\nf(NULL,NULL)\n",
-	      "f(list())\nf(l0)\nf(c0)\nf(m0)\nf(df0)\nf(F)\n",
-	      "f(list(),list())\nf(l0,l0)\nf(c0,c0)\nf(df0,df0)\nf(F,F)\n",
+	      "f(list())\nf(l0)\nf(c0)\nf(m0)\nf(df0)\nf(FALSE)\n",
+	      "f(list(),list())\nf(l0,l0)\nf(c0,c0)\n",
+              "f(df0,df0)\nf(FALSE,FALSE)\n",
 	      sep="")
       }
   }
