@@ -9,7 +9,7 @@ First collect the tools that you need.
 We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
-cat; we have packaged a set at bin/windows/windows-NT/etc/tools.zip
+cat; we have packaged a set at CRAN/bin/windows/windows-NT/base/etc/tools.zip
 extracted from the cygwin distribution
 (http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
 past problems on some versions of Windows 95, we use the cygwin ld
