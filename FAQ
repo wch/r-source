@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-10, 2000-09-02
+Version 1.1-11, 2000-09-17
 Kurt Hornik
 
 
@@ -1105,6 +1105,10 @@ works, was published in the Journal of Statistical Software
      Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
      simulations.
 
+*conf.design*
+     A series of simple tools for constructing and manipulating confounded
+     and fractional factorial designs.
+
 *date*
      Functions for dealing with dates.  The most useful of them accepts a
      vector of input dates in any of the forms `8/30/53', `30Aug53', `30
@@ -1334,6 +1338,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *syskern*
      Functions for writing code that is OS and R/S independent.
+
+*tensor*
+     Tensor product of arrays.
 
 *tframe*
      Functions for writing code that is independent of the representation of
