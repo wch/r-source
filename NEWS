@@ -92,7 +92,8 @@ BUG FIXES
     o	setwd() now returns NULL invisibly.
 
     o	basename() and dirname() did not check the length of their
-	input and ignored elements after the first.
+	input and ignored elements after the first.  This affected
+	undoc {tools}.
 
 
 INTERNALS
