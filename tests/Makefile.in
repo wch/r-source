@@ -12,9 +12,10 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
-	mode-methods.R make*.R \
-	$(TESTsrc) \
-	$(TESTsrc:.R=.Rout.save)
+	$(TESTsrc-strict-1) $(TESTsrc-strict-1:.R=.Rout.save) \
+	$(TESTsrc-sloppy-1) $(TESTsrc-sloppy-1:.R=.Rout.save) \
+	make-isas-tests.R isas-tests.Rout.save \
+	make-no-segfault.R
 SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla

@@ -20,6 +20,11 @@ all install install-strip TAGS info dvi dist check R docs::
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
 uninstall mostlyclean clean::
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
@@ -36,7 +41,9 @@ distdir:
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in $(SUBDIRS); do \
+	@for d in `echo "$(SUBDIRS)" \
+	             | tr " " "\n" \
+	             | sed '/gnome/d'`; do \
 	  test -d $(distdir)/$${d} \
 	    || mkdir $(distdir)/$${d} \
 	    || exit 1; \
@@ -45,6 +52,6 @@ distdir:
 	    || exit 1; \
 	done
 	@((cd $(srcdir); \
-	      $(TAR) -c -f - --exclude=CVS macintosh windows) \
+	      $(TAR) -c -f - --exclude=CVS f2clib gnome gnuwin32) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \
 	  || exit 1

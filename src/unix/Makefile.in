@@ -19,7 +19,9 @@ OBJECTS = $(SOURCES:.c=.o)
 HEADERS = dataentry.h devX11.h rotated.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in PSPAPER $(SOURCES) $(HEADERS)
+DISTFILES = \
+	Makefile.in PSPAPER $(SOURCES) $(HEADERS) \
+	hpdlfcn.c system.txt
 
 LIB = libunix.a
 

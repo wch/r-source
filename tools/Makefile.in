@@ -22,7 +22,7 @@ SCRIPT_OBJECTS = $(SCRIPT_SOURCES:.in=)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in \
-	GETMAKEVAL GETSYMBOLS GETVERSION \
+	GETCONFIG GETMAKEVAL GETSYMBOLS GETVERSION \
 	Rd.files \
 	Rdiff \
 	config.guess \

@@ -11,7 +11,7 @@ subdir = src/library/profile
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Common.R Makefile.in Rprofile.mac Rprofile.unix Rprofile.win
+DISTFILES = Common.R Makefile.in Rprofile.gnw Rprofile.mac Rprofile.unix
 
 ## Configure (not yet): Replace `unix' by `win' or `mac'
 ## Should be EASY

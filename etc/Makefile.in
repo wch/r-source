@@ -15,7 +15,7 @@ DISTFILES = Rdconvlib.pl buildlib.pl html-layout.pl \
 	Makeconf.in Makefile.in \
 	colors.big colors.small test-things.Rd \
 	gnome-interface.glade
-SUBDIRS = Rdoc undoc
+SUBDIRS = Rdoc
 
 EXPORTFILE = @EXPORTFILE@
 GNOME_IF_FILES = @GNOME_IF_FILES@

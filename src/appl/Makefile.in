@@ -67,8 +67,19 @@ OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(BLAS)
 HEADERS = Rsock.h sock.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = COPYRIGHT COPYRIGHT.ftn Makefile.in README ROUTINES \
-	$(SOURCES_C) $(SOURCES_F) blas.f $(HEADERS)
+DISTFILES = COPYRIGHT COPYRIGHT.ftn README ROUTINES lowess.doc \
+	Makefile.in Makefile.win \
+	$(HEADERS) \
+	$(SOURCES_C) \
+	$(SOURCES_F) \
+	blas.f \
+	zblas.f \
+	zhico.f \
+	zhifa.f \
+	zhisl.f \
+	zsico.f \
+	zsifa.f \
+	zsisl.f
 
 LIB = libappl.a
 
