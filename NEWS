@@ -190,7 +190,8 @@ BUG FIXES
     o	strwidth(), strheight() now give 0 on NA strings (as they
 	are no longer plotted). (PR#1739)
 
-    o	plot.hclust() no longer plots NA labels.
+    o	mtext(), persp(), plot.hclust() and title() no longer plot NA
+	character strings.
 
 
 
