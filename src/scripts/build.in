@@ -21,6 +21,7 @@
 
 use Cwd;
 use File::Basename;
+use File::Compare;
 use File::Find;
 use File::Path;
 use Getopt::Long;
@@ -32,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.13 $ ';
+my $revision = ' $Revision: 1.14 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -42,7 +43,7 @@ $version = $1;
 $make = '@MAKE@';
 
 my @knownoptions = ("help|h", "version|v", "binary", "no-docs",
-		    "use-zip", "use-zip-help", "use-zip-data");
+		    "use-zip", "use-zip-help", "use-zip-data", "force");
 
 my $WINDOWS = R_getenv("R_UNDER_WINDOWS", 0);
 my $tmpdir = R_getenv("TMPDIR", "/tmp");
@@ -243,10 +244,51 @@ sub prepare_pkg {
 	system("./cleanup");
     }
 
-    ### !!! Missing: check & rebuild various indices !!!
-
+    updateIndex("INDEX", "man/*.Rd", 0, $log);
+    updateIndex("data/00Index", "man/*.Rd", 1, $log) if(-d "data");
+    
     1;
 }
+
+#**********************************************************
+
+sub updateIndex {
+
+    my ($oldindex, $Rdfiles, $dataset, $log) = @_;
+    my $newindex = ".Rbuildindex.$$";
+
+    $log->checking("whether \`$oldindex' is up-to-date");
+    my $dataopt = "-d" if $dataset;
+    system("${R_CMD} Rdindex $dataopt ${Rdfiles} > ${newindex}");
+
+    if(-r $oldindex){
+	if(compare($oldindex,$newindex) != 0){
+	    $log->result("NO");
+	    if($opt_force){
+		$log->message("overwriting \`${oldindex}' as" .
+			      "\`--force' was given");
+		unlink($oldindex);
+		rename($newindex, $oldindex);
+	    }
+	    else{
+		$log->message("use \`--force' to overwrite the existing \`${oldindex}'");
+	    }
+	}
+	else{
+	    $log->result("OK");
+	    unlink $newindex;
+
+	}
+    }
+    else{
+	$log->result("NO");
+	$log->message("creating new $oldindex");
+	unlink($oldindex);
+	rename($newindex, $oldindex);
+    }
+    1;
+}
+
 
 #**********************************************************
 
@@ -260,6 +302,8 @@ pkgdirs.
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
+
+  --force               force overwriting of (index) files
 
   --binary              build pre-compiled binary packages, with options:
 END
