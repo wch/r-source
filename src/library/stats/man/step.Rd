@@ -90,8 +90,8 @@ step(object, scope, scale = 0,
   
   There is a potential problem in using \code{\link{glm}} fits with a
   variable \code{scale}, as in that case the deviance is not simply
-  related to the maximized log-likelihood. The function
-  \code{\link{extractAIC.glm}} makes the
+  related to the maximized log-likelihood. The \code{"glm"} method for
+  function \code{\link{extractAIC}} makes the
   appropriate adjustment for a \code{gaussian} family, but may need to be
   amended for other cases. (The \code{binomial} and \code{poisson}
   families have fixed \code{scale} by default and do not correspond
