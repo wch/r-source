@@ -243,6 +243,10 @@ NEW FEATURES
     o   The default methods for add1() and drop1() check for changes
 	in the number of cases in use.
 
+	The "lm" and "glm" methods for add1() quoted the <none> model
+	on the original fitted values when using (with a warning) a
+	smaller set of cases for the expanded models.
+
 
 INTERNATIONALIZATION
 

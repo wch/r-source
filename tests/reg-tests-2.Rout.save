@@ -4506,8 +4506,8 @@ Single term additions
 Model:
 y ~ x
        Df Sum of Sq     RSS     AIC
-<none>              20.1913  6.0679
-x2      1    2.5982 17.5931  5.5885
+<none>              17.6049  3.6005
+x2      1    0.0117 17.5931  5.5885
 Warning message:
 using the 18/19 rows from a combined fit in: add1.lm(fit, ~. + x2) 
 > res <-  try(stats:::add1.default(fit, ~ . +x2))
