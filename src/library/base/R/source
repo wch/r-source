@@ -79,8 +79,7 @@ demo <- function(topic, device = x11, directory.sep = "/")
 	cat("\n\n\tdemo(",topic,")\n\t---- ",rep("~",nchar(topic)),
 	    "\n\nType  <Return>	 to start : ",sep="")
 	readline()
-	if((!exists(".Device") || is.null(.Device)) &&
-	   Topics["flag",i.top] == "G")
+	if(dev.cur()<=1 && Topics["flag",i.top] == "G")
 		device()
 	source(paste(getenv("RHOME"),
 		     "demos",
