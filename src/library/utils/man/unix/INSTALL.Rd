@@ -62,7 +62,7 @@
   are made available for lazy loading.  (These options are overridden by
   any values set in the DESCRIPTION file.)  The default is
   \option{--no-lazy --no-lazy-data} except that lazy-loading is used for
-  package with more than 50kB of \R code and no saved image.
+  package with more than 25kB of \R code and no saved image.
 
   If the attempt to install the package fails, leftovers are removed.
   If the package was already installed, the old version is restored.

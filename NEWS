@@ -227,7 +227,8 @@ BUG FIXES
 	plot (on the same device).
 
     o	Using install.packages() to install the same package to more
-	than one library gave an incorrect warning message.
+	than one library gave an incorrect warning message.  (If there
+	were two or more such packages it might give an error.)
 
     o	.packages(all.available=TRUE) returned packages with an invalid
 	version field in their DESCRIPTION whereas .find.packages() and
