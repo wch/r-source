@@ -1,7 +1,7 @@
 include ../Makeconf
 
 # Everything except CVS and Makefile
-INSTALLFILES = A* B* Cour* H* [N-Z]*
+INSTALLFILES = *.afm *.lt1
 
 install:
 	$(INSTALL_DIR) $(rhome)/afm

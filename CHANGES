@@ -2,6 +2,12 @@
 
 NEW FEATURES
 
+    o   The PostScript device driver now uses the ISO Latin1 font
+	encoding.  This should allow Western Europeans to render
+	their languages correctly.  It is likely that additional
+	encodings will be added (e.g. Latin2) when we figure out
+	how to set the correct font encoding in printers,
+
     o	The mathematical annotation code has been reworked.  Italic
 	correction works better.  Additional functionality will be
 	added.
