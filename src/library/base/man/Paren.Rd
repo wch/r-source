@@ -25,7 +25,7 @@ f <- get("(")
 e <- expression(3 + 2 * 4)
 f(e) == e           # TRUE
 
-do <- get("{")
+do <- get("\{")
 do(x_ 3, y_ 2*x-3, 6-x-y); x; y
 }
 \keyword{programming}
