@@ -18,8 +18,9 @@ src/macintosh/cwpro/R.mcp.hqx	-  the CodeWarrior Project file
 
 and you need to expand them via any hqx decoding utility.
 
-Some files need to be created on a Unix/Linux platform. Unpack the
-sources on such a platform  and run (you will probably need GNU make)
+Some files need to be created on a Unix/Linux/MacOS X platform. Unpack
+the sources on such a platform and run (you will probably need GNU
+make)
 
 	cd src/macintosh
 	make

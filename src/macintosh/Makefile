@@ -73,18 +73,18 @@ datafiles:
 
 help:
 	@for pkg in $(PACKAGES); do \
-	  PERL5LIB=$(RHOME)/share/perl perl build.help -txt -html -example -latex ../library/$${pkg} $(RHOME)/library; \
+	  PERL5LIB=$(RHOME)/share/perl perl build-help -txt -html -example -latex ../library/$${pkg} $(RHOME)/library; \
 	  perl ../gnuwin32/help/Rd2contents ../library/$${pkg} \
            $(RHOME)/library/$${pkg}/CONTENTS; \
 	done
 	cat $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
-	PERL5LIB=$(RHOME)/share/perl perl build.help  -htmllists
+	PERL5LIB=$(RHOME)/share/perl perl build-help  -htmllists
 
 zipfiles:
 	(cd $(RHOME)/library/base/help; \
 	  zip -jqm Rhelp * -x 00Titles AnIndex)
-	(cd $(RHOME)/library/base/R-ex; zip -jqmX Rex *.R)
-	(cd $(RHOME)/library/base/latex; zip -jqmX Rhelp *.tex)
+	(cd $(RHOME)/library/base/R-ex; zip -jqm Rex *.R)
+	(cd $(RHOME)/library/base/latex; zip -jqm Rhelp *.tex)
 
 ## ------------- html -----------
 
