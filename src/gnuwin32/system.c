@@ -387,6 +387,7 @@ void R_Busy(int which)
 
 void R_dot_Last(void);		/* in main.c */
 
+
 void R_CleanUp(int saveact)
 {
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
@@ -595,8 +596,6 @@ void R_SetWin32(Rstart Rp)
     /* Process ~/.Renviron, if it exists. */
     if(!Rp->NoRenviron) 
 	processRenviron();
-    /* in case caller uses getline */
-    gl_events_hook = ProcessEvents;
     _controlfp(_MCW_EM, _MCW_EM);
 }
 
@@ -630,6 +629,7 @@ int cmdlineoptions(int ac, char **av)
 #endif
 
     R_DefParams(Rp);
+    Rp->CharacterMode = CharacterMode;
     for (i = 1; i < ac; i++)
 	if (!strcmp(av[i], "--no-environ") || !strcmp(av[i], "--vanilla"))
 		Rp->NoRenviron = True;

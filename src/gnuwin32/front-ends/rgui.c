@@ -1,12 +1,13 @@
 #include <windows.h>
 #include "Rversion.h"
+#include "Startup.h"
 
 #define CharacterMode (*__imp_CharacterMode)
 
 extern void cmdlineoptions(int, char **);
 extern int setupui(void);
 extern void mainloop(void);
-extern  int CharacterMode;
+extern UImode CharacterMode;
 
 extern char *getDLLVersion();
 
@@ -19,7 +20,7 @@ char *getRVersion()
 
 int AppMain (int argc, char **argv)
 {
-    CharacterMode = 0;
+    CharacterMode = RGui;
     if(strcmp(getDLLVersion(), getRVersion()) != 0) {
 	MessageBox(0, "R.DLL version does not match", "Terminating",
 		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);

@@ -44,9 +44,9 @@ void		gl_strwidth();		/* to bind gl_strlen */
 int 		(*gl_in_hook)() = 0;
 int 		(*gl_out_hook)() = 0;
 int 		(*gl_tab_hook)() = gl_tab;
-#ifdef Win32
+/*#ifdef Win32
 void (*gl_events_hook)() = 0;
-#endif
+#endif*/
 
 /******************** internal interface *********************************/
 
