@@ -117,10 +117,10 @@ int GetOptionDigits(SEXP rho)
     return d;
 }
 
-		
+
 /* Change the value of an option or add a new option or, */
 /* if called with value R_NilValue, remove that option. */
-   
+
 static SEXP SetOption(SEXP tag, SEXP value)
 {
     SEXP opt, old, t;
@@ -131,7 +131,7 @@ static SEXP SetOption(SEXP tag, SEXP value)
 
     /* The option is being removed. */
     if (value == R_NilValue) {
-	for ( ; t != R_NilValue ; t = CDR(t)) 
+	for ( ; t != R_NilValue ; t = CDR(t))
 	    if (TAG(CDR(t)) == tag) {
 		old = CAR(t);
 		CDR(t)=CDDR(t);
@@ -154,12 +154,12 @@ static SEXP SetOption(SEXP tag, SEXP value)
 }
 
 /* Note that options are stored as a dotted pair list */
-/* This is larely historical, but is also useful. */
+/* This is barely historical, but is also useful. */
 
 void InitOptions(void)
 {
-    SEXP t, val, v;	
-    PROTECT(v = val = allocList(8));
+    SEXP t, val, v;
+    PROTECT(v = val = allocList(9));
     TAG(v) = install("prompt"); CAR(v) = mkString("> "); v = CDR(v);
     TAG(v) = install("continue"); CAR(v) = mkString("+ "); v = CDR(v);
     TAG(v) = install("editor"); CAR(v) = mkString("vi"); v = CDR(v);
@@ -174,8 +174,9 @@ void InitOptions(void)
     STRING(t)[1] = mkChar("ordered");
     namesgets(CAR(v), t); v = CDR(v);
     TAG(v) = install("verbose");
-    CAR(v) = allocVector(LGLSXP, 1);
-    LOGICAL(CAR(v))[0] = R_Verbose;
+    CAR(v) = allocVector(LGLSXP, 1); LOGICAL(CAR(v))[0] = R_Verbose; v = CDR(v);
+    TAG(v) = install("check.bounds");
+    CAR(v) = allocVector(LGLSXP, 1); LOGICAL(CAR(v))[0] = 0;/* no checking */
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
 }
@@ -244,14 +245,14 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     PROTECT(value = allocVector(VECSXP, n));
     PROTECT(names = allocVector(STRSXP, n));
-    
+
     switch (TYPEOF(args)) {
     case NILSXP:
     case LISTSXP:
 	argnames = R_NilValue;
 	break;
     case VECSXP:
-	argnames = getAttrib(args, R_NamesSymbol);	    
+	argnames = getAttrib(args, R_NamesSymbol);
 	break;
     }
 
@@ -269,7 +270,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    namei = EnsureString(STRING(argnames)[i]);
 	    break;
 	}
-	
+
 	if (*CHAR(namei)) {
 	    tag = install(CHAR(namei));
 	    if (streql(CHAR(namei), "width")) {

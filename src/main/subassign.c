@@ -48,13 +48,13 @@
  *
  *                LANG  LGL  INT REAL CPLX  STR  VEC EXPR
  *
- *          LANG					 
- *          LGL           *    *    *    *    *         *	 
- *          INT           *    *    *    *    *         *	 
- *          REAL          *    *    *    *    *         *	 
- *          CPLX          *    *    *    *    *         *	 
+ *          LANG
+ *          LGL           *    *    *    *    *         *
+ *          INT           *    *    *    *    *         *
+ *          REAL          *    *    *    *    *         *
+ *          CPLX          *    *    *    *    *         *
  *          STR           *    *    *    *    *         *
- *          VEC           *                        *     	 
+ *          VEC           *                        *
  *          EXPR     *                                  *
  *
  *  The reason for the LGL row and column are because we want to allow any
@@ -65,21 +65,6 @@
 #include "Defn.h"
 
 static SEXP gcall;
-
-static int R_BoundChecking = 0;
-
-SEXP do_checkbounds(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    int flag;
-    checkArity(op,args);
-    flag = asLogical(CAR(args));
-    if (flag == NA_LOGICAL)
-	errorcall(call, "invalid argument\n");
-    R_BoundChecking = flag;
-    R_Visible = 0;
-    return R_NilValue;
-}
-
 
 /* "EnlargeVector" takes a vector "x" and changes its length to */
 /* "newlen".  This makes it possible to assign values "past the */
@@ -92,7 +77,7 @@ static SEXP EnlargeVector(SEXP x, int newlen)
     SEXP newx, names, newnames;
 
     /* Sanity Checks */
-    if (R_BoundChecking)
+    if (LOGICAL(GetOption(install("check.bounds"), R_NilValue))[0])
 	warning("assignment outside vector/list limits\n");
     if (!isVector(x))
 	error("attempt to enlarge non-vector\n");
@@ -479,10 +464,10 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 1519:  /* vector     <- complex   */
     case 1619:  /* vector     <- character */
 
-    case 1910:  /* vector     <- logical    */  
-    case 1913:  /* vector     <- integer    */  
-    case 1914:  /* vector     <- real       */  
-    case 1915:  /* vector     <- complex    */  
+    case 1910:  /* vector     <- logical    */
+    case 1913:  /* vector     <- integer    */
+    case 1914:  /* vector     <- real       */
+    case 1915:  /* vector     <- complex    */
     case 1916:  /* vector     <- character  */
 
     case 1919:  /* vector     <- vector     */
@@ -550,7 +535,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    }
 	    setAttrib(x, R_NamesSymbol, oldnames);
 	    UNPROTECT(1);
-	}	    
+	}
     }
     UNPROTECT(4);
     return x;
@@ -1099,7 +1084,7 @@ static SEXP EvalSubassignArgs(SEXP el, SEXP rho)
 
     while (CDR(el) != R_NilValue) {
 
-	/* If we have a ... symbol, we look to see what it is bound to. */ 
+	/* If we have a ... symbol, we look to see what it is bound to. */
 	/* If its binding is Null (i.e. zero length) we just ignore it */
 	/* and return the cdr with all its expressions evaluated; if it */
 	/* is bound to a ... list of promises, we force all the promises */
@@ -1466,7 +1451,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* If we stretched, we may have a new name. */
 	/* In this case we must create a names attribute */
 	/* (if it doesn't already exist) and set the new */
-	/* value in the names attribute. */	
+	/* value in the names attribute. */
 	if (stretch && newname != R_NilValue) {
 	    names = getAttrib(x, R_NamesSymbol);
 	    if (names == R_NilValue) {
@@ -1606,7 +1591,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 		    copyMostAttrib(x, ans);
 		    UNPROTECT(2);
 		    x = ans;
-		} 
+		}
 		/* else x is unchanged */
 	    }
 	}
@@ -1650,7 +1635,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 		UNPROTECT(2);
 		x = ans;
 	    }
-	} 
+	}
     }
     else error("$ used on non-list\n");
     UNPROTECT(2);

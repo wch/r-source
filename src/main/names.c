@@ -37,7 +37,7 @@ SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
  *
  * Each entry is a line with
  *
- * printname	c-entry		offset	eval	arity	pp-info	
+ * printname	c-entry		offset	eval	arity	pp-info
  * ---------	-------		------	----	-----	-------
  *
  * printname:	The function name in R
@@ -262,7 +262,7 @@ FUNTAB R_FunTab[] =
 {"dsignrank",	do_math2,	21,	11,	2,	PP_FUNCALL},
 {"psignrank",	do_math2,	22,	11,	2,	PP_FUNCALL},
 {"qsignrank",	do_math2,	23,	11,	2,	PP_FUNCALL},
-    
+
 /* Mathematical Functions of a Complex Argument */
 
 {"Re",		do_cmathfuns,	1,	1,	1,	PP_FUNCALL},
@@ -528,7 +528,6 @@ FUNTAB R_FunTab[] =
 {"environment",	do_envir,	0,	11,	1,	PP_FUNCALL},
 {"environment<-",do_envirgets,	0,	1,	2,	PP_FUNCALL},
 {"options",	do_options,	0,	11,	1,	PP_FUNCALL},
-{"check.bounds",do_checkbounds,	0,	11,	1,	PP_FUNCALL},
 {"sink",	do_sink,	0,	111,	1,	PP_FUNCALL},
 {"lib.fixup",	do_libfixup,	0,	111,	2,	PP_FUNCALL},
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL},
