@@ -21,8 +21,10 @@ if(interactive()){
               "X11" = "X11", "GNOME" = "X11", "postscript"))
   else options(device="postscript")
 } else options(device = "postscript")
-## this must be set for x11 to be used, even non-interactively
+## the next two must be set for x11 to be used, even non-interactively
 options(X11colortype = "true")
+options(X11fonts=c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
+        "-adobe-symbol-*-*-*-*-%d-*-*-*-*-*-*-*"))
 options(mailer = "mailx")
 
 MacRoman <- as.integer(c(0:126, 32, 196, 197, 199, 201, 209, 214, 220,

@@ -172,7 +172,7 @@ static void newX11_Text(double x, double y, char *str,
 
 	/* Support Routines */
 
-static XFontStruct *RLoadFont(int, int);
+static XFontStruct *RLoadFont(newX11Desc*, int, int);
 static double pixelHeight(void);
 static double pixelWidth(void);
 static int SetBaseFont(newX11Desc*);
@@ -627,8 +627,8 @@ static void R_ProcessEvents(void *data)
     }
 }
 
-static char *fontname = "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*";
-static char *symbolname	 = "-*-symbol-*-*-*-*-%d-*-*-*-*-*-*-*";
+static char *fontname = "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*";
+static char *symbolname	 = "-adobe-symbol-*-*-*-*-%d-*-*-*-*-*-*-*";
 
 static char *slant[]  = {"r", "o"};
 static char *weight[] = {"medium", "bold"};
@@ -649,7 +649,7 @@ static int force_nonscalable = 0; /* for testing */
 #define ADOBE_SIZE(I) ((I) > 7 && (I) < 35 && (adobe_sizes & (1<<((I)-8))))
 #define SMALLEST 2
 
-static XFontStruct *RLoadFont(int face, int size)
+static XFontStruct *RLoadFont(newX11Desc *xd, int face, int size)
 {
     int pixelsize, i;
     cacheentry *f;
@@ -677,9 +677,9 @@ static XFontStruct *RLoadFont(int face, int size)
     pixelsize = size;
 
     if (face == 4)
-	sprintf(buf, symbolname,  pixelsize);
+	sprintf(buf, xd->symbolfamily,  pixelsize);
     else
-	sprintf(buf, fontname,
+	sprintf(buf, xd->fontfamily,
 		weight[face & 1],
 		slant[(face & 2)>>1 ],	pixelsize);
 #ifdef DEBUG_X11
@@ -775,7 +775,7 @@ static int SetBaseFont(newX11Desc *xd)
     xd->fontface = xd->basefontface;
     xd->fontsize = xd->basefontsize;
     xd->usefixed = 0;
-    xd->font = RLoadFont(xd->fontface, xd->fontsize);
+    xd->font = RLoadFont(xd, xd->fontface, xd->fontsize);
     if (!xd->font) {
 	xd->usefixed = 1;
 	xd->font = xd->fixedfont = XLoadQueryFont(display, "fixed");
@@ -793,7 +793,7 @@ static void SetFont(int face, int size, NewDevDesc *dd)
     if (face < 1 || face > 5) face = 1;
 
     if (!xd->usefixed && (size != xd->fontsize	|| face != xd->fontface)) {
-	tmp = RLoadFont(face, size);
+	tmp = RLoadFont(xd, face, size);
 	if(tmp) {
 	    xd->font = tmp;
 	    xd->fontface = face;
@@ -1628,15 +1628,25 @@ Rboolean newX11DeviceDriver(DevDesc *dd,
 			    double pointsize,
 			    double gamma_fac,
 			    X_COLORTYPE colormodel,
-			    int maxcube, int canvascolor)
+			    int maxcube, 
+			    int canvascolor, 
+			    SEXP sfonts)
 {
     newX11Desc *xd;
+    char *fn;
 
     xd = Rf_allocNewX11DeviceDesc(pointsize);
     /* Used to set dd->dp.font=1 and dd->dp.ps=pointsize,
      * but Paul removed that.
      * This sort of initialisation occurs in R base graphics now.
      */
+
+    if(strlen(fn = CHAR(STRING_ELT(sfonts, 0))) > 499)
+	strcpy(xd->fontfamily, fontname);
+    else strcpy(xd->fontfamily,fn);
+    if(strlen(fn = CHAR(STRING_ELT(sfonts, 1))) > 499)
+	strcpy(xd->symbolfamily, symbolname);
+    else strcpy(xd->symbolfamily,fn);
 
     /*	Start the Device Driver and Hardcopy.  */
 
@@ -1876,7 +1886,7 @@ static char *SaveString(SEXP sxp, int offset)
 static DevDesc* 
 Rf_addX11Device(char *display, double width, double height, double ps, 
 		double gamma, int colormodel, int maxcubesize,
-		int canvascolor, char *devname)
+		int canvascolor, char *devname, SEXP sfonts)
 {
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
@@ -1897,8 +1907,8 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 	 * This is supposed to happen via addDevice now.
 	 */
 	if (!newX11DeviceDriver((DevDesc*)(dev), display, width, height, 
-				ps, gamma, 
-				colormodel, maxcubesize, canvascolor)) {
+				ps, gamma, colormodel, maxcubesize, 
+				canvascolor, sfonts)) {
 	    free(dev);
 	    errorcall(gcall, "unable to start device %s", devname);
        	}
@@ -1916,11 +1926,12 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     char *display, *vmax, *cname, *devname;
     double height, width, ps, gamma;
     int colormodel, maxcubesize, canvascolor;
-    SEXP sc;
+    SEXP sc, sfonts;
 
     gcall = call;
     vmax = vmaxget();
 
+    checkArity(args, op);
     /* Decode the arguments */
     display = SaveString(CAR(args), 0); args = CDR(args);
     width = asReal(CAR(args));	args = CDR(args);
@@ -1959,6 +1970,10 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
 	errorcall(call, "invalid value of `canvas'");
     canvascolor = RGBpar(sc, 0);
+    args = CDR(args);
+    sfonts = CAR(args);
+    if (!isString(sfonts) || LENGTH(sfonts) != 2)
+	errorcall(call, "invalid value of `fonts'");
 
     devname = "X11";
     if (!strncmp(display, "png::", 5)) devname = "PNG";
@@ -1966,7 +1981,7 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!strcmp(display, "XImage")) devname = "XImage";
 
     Rf_addX11Device(display, width, height, ps, gamma, colormodel, 
-		    maxcubesize, canvascolor, devname);
+		    maxcubesize, canvascolor, devname, sfonts);
     vmaxset(vmax);
     return R_NilValue;
 }

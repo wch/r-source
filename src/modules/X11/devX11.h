@@ -39,7 +39,7 @@ typedef enum {
 
 
 Rboolean newX11DeviceDriver(DevDesc*, char*, double, double, double, double, 
-			    X_COLORTYPE, int, int);
+			    X_COLORTYPE, int, int, SEXP);
 
 
 	/********************************************************/
@@ -97,6 +97,8 @@ typedef struct {
     int usefixed;
     XFontStruct *fixedfont;
     XFontStruct *font;
+    char fontfamily[500];
+    char symbolfamily[500];
     X_GTYPE type;			/* Window or pixmap? */
     int npages;				/* counter for a pixmap */
     FILE *fp;				/* file for a bitmap device */
