@@ -65,12 +65,6 @@ static DL_FUNC Rdlsym(void *handle, char const *name)
     return (DL_FUNC) dlsym(handle, buf);
 }
 
-/*
-extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_Busy, ptr_R_CleanUp, 
-    ptr_R_ChooseFile, ptr_gnome_start,
-    ptr_GnomeDeviceDriver, ptr_GTKDeviceDriver
-*/
-
 extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole, 
                 ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole, 
                 ptr_R_ShowFiles, ptr_R_loadhistory,  ptr_R_savehistory,
