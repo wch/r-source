@@ -156,7 +156,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
     else {
         f <- list.files()
         f <- f[!(f %in% c(pdfs, origfiles))]
-        unlink(f)
+        file.remove(f)
     }
     invisible(NULL)
 }
