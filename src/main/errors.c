@@ -64,7 +64,6 @@ void onintr()
 void onsigusr1()
 {
     RCNTXT *c;
-    SEXP s, t;
     int nback=0;
 
     inError = 1;
