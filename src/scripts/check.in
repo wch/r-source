@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.112 $ ';
+my $revision = ' $Revision: 1.113 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1032,7 +1032,7 @@ sub check_pkg {
         if($WINDOWS) {
             ## avoid Rcmd as line may be too long after expansion.
             $cmd = "perl ${R::Vars::R_HOME}/bin/massage-Examples ".
-  		     "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
+  		     "${pkgname} ${library}/${pkgname}/R-ex ".
   		     "> ${pkgname}-Ex.R";
         } else {
 	    $cmd = join(" ",
