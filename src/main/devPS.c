@@ -485,9 +485,11 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
     fprintf(fp, "       1 index stringwidth pop\n");
     fprintf(fp, "       mul neg 0 rmoveto show grestore } def\n");
 #endif
+#ifdef OLD
     fprintf(fp, "/cl  { initclip newpath 3 index 3 index moveto 1 index\n");
     fprintf(fp, "	4 -1 roll lineto  exch 1 index lineto lineto\n");
     fprintf(fp, "	closepath clip newpath } def\n");
+#endif
     fprintf(fp, "/rgb { setrgbcolor } def\n");
     fprintf(fp, "/s   { scalefont setfont } def\n");
     fprintf(fp, "/R   { /Font1 findfont } def\n");
