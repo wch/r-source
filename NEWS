@@ -399,6 +399,11 @@ BUG FIXES
 	circumvented.  Functions lqs() and mve() can now be
 	interrupted on Windows and MacOS.
 
+    o	image() was incorrectly finding breakpoints from
+	irregularly-spaced midpoints. (PR#1160)
+
+
+
 
 	**************************************************
 	*						 *

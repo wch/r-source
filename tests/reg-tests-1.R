@@ -307,7 +307,7 @@ stopifnot(all(tmp$mon == 11))
 # day of month will be different in a leap year on systems that default
 # to the current year, so test differences:
 stopifnot(diff(tmp$mday) == c(0, 1, 0, 0))
-## failed on glibc-based systems in 1.3.1, including Windows.
+## Comments: failed on glibc-based systems in 1.3.1, including Windows.
 
 
 ## PR 1004 (follow up).  Exact Kolmogorov-Smirnov test gave incorrect
@@ -347,14 +347,14 @@ stopifnot(round(we$estimate,3) == -0.305)
 
 ## range gave wrong length result for R < 1.4.0
 stopifnot(length(range(numeric(0))) == 2)
-## was just NA
+##  Comments: was just NA
 
 
 ## mishandling of integer(0) in R < 1.4.0
 x1 <- integer(0) / (1:3)
 x2 <- integer(0) ^ (1:3)
 stopifnot(length(x1) == 0 & length(x2) == 0)
-## were integer NAs in real answer in 1.3.1.
+##  Comments: were integer NAs in real answer in 1.3.1.
 
 
 ## PR#1138/9  rounding could give non-integer answer.
@@ -363,6 +363,19 @@ stopifnot(x == 0)
 ## failed in 1.3.x on Solaris and Windows but not Debian Linux.
 
 
+## PR#1160 finding midpoints in image <janef@stat.berkeley.edu, 2001-11-06>
+x2 <- c(0, 0.002242152, 0.004484305, 0.006726457, 0.00896861,
+        0.01121076, 0.01345291, 0.01569507, 0.01793722, 0.02017937,
+        0.02242152, 0.02466368, 0.02690583, 0.02914798, 0.03139013,
+        0.03363229, 0.03587444, 0.03811659, 0.04035874, 0.04932735,
+        0.05156951, 0.05381166)
+z <- c(0, 0.067, NA, 0.167, 0.083, 0.05, 0.067, NA, 0, 0.1, 0, 0.05,
+       0.067, 0.067, 0.016, 0.117, 0.017, -0.017, 0.2, 0.35, 0.134, 0.15)
+image(x2, 1, as.matrix(z))
+## Comments: failed under R 1.3.1.
+
+
+## This example last ##
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
@@ -373,3 +386,5 @@ provoke.bug()
 ## segfaulted in 1.2.2, will also on machines without vsnprintf.
 ##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ## and hence keep the above paragraph at the end of this file
+
+## This example last ##
