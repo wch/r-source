@@ -361,7 +361,12 @@ sub build_index { # lib, dest
 	print chmfile chm_pagehead("$title");
     }
 
-
+    if(-d file_path($dest, "doc")){
+	print htmlfile "<a href=\"../doc\">Accompanying documentation</a> "
+	    . "is available in the subdirectory \"doc\" "
+	    . "of the installed package.<p>\n\n";
+    }
+	
     if($naliases>100){
 	print htmlfile html_alphabet(keys(%firstlettersfound));
 	if($main::opt_chm) {
