@@ -78,9 +78,13 @@
         rdafile <- file.path(.Library, "methods", "R", "all.rda")
         vars <- objects(env, all=TRUE)
         vars <- vars[vars != ".__NAMESPACE__."]
-        save(list = vars, file = rdafile, envir = env)
+        save(list = vars, file = rdafile, envir = env, compress = TRUE)
     }
 }
+
+.onUnload <- function(libpath)
+    library.dynam.unload("methods", libpath)
+
 
 .onAttach <- function(libname, pkgName) {
     ..First.lib(libname, pkgName)
