@@ -949,7 +949,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
     if (strlen(pd->filename) == 0)
 	pd->psfp = popen(R_PRINTCMD, "w");
     else
-	pd->psfp = R_fopen(pd->filename, "w");
+	pd->psfp = R_fopen(R_ExpandFileName(pd->filename), "w");
     if (!pd->psfp) return 0;
 
     if(pd->landscape)
