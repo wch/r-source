@@ -484,7 +484,6 @@ extern char*	R_GUIType	INI_as("unknown");
 #define FetchMethod		Rf_FetchMethod
 #define findcontext		Rf_findcontext
 #define findVar1		Rf_findVar1
-#define findVarInFrame		Rf_findVarInFrame
 #define findVarLocInFrame	Rf_findVarLocInFrame
 #define FrameClassFix		Rf_FrameClassFix
 #define framedepth		Rf_framedepth
@@ -592,7 +591,6 @@ int factorsConform(SEXP, SEXP);
 SEXP FetchMethod(char *, char *, SEXP);
 void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
-SEXP findVarInFrame(SEXP, SEXP);
 SEXP findVarLocInFrame(SEXP, SEXP);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
