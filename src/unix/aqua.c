@@ -77,7 +77,7 @@ extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole,
                 ptr_R_ChooseFile;
 
 
-DL_FUNC ptr_do_wsbrowser, ptr_DoCloseHandler;
+DL_FUNC ptr_do_wsbrowser, ptr_DoCloseHandler, ptr_GetQuartzParameters;
 
 /* This is called too early to use moduleCdynload */
 void R_load_aqua_shlib(void)
@@ -135,19 +135,8 @@ void R_load_aqua_shlib(void)
     if(!ptr_R_savehistory) R_Suicide("Cannot load Raqua_savehistory");
     ptr_R_ChooseFile = Rdlsym(handle, "Raqua_ChooseFile");
     if(!ptr_R_ChooseFile) R_Suicide("Cannot load Raqua_R_ChooseFile");
-
-    
-    
-/*
-    ptr_R_Busy = Rdlsym(handle, "Rgnome_Busy");
-    if(!ptr_R_Busy) R_Suicide("Cannot load R_Busy");
-    ptr_R_CleanUp = Rdlsym(handle, "Rgnome_CleanUp");
-    if(!ptr_R_CleanUp) R_Suicide("Cannot load R_CleanUp");
-    ptr_R_ShowFiles = Rdlsym(handle, "Rgnome_ShowFiles");
-    if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
-    ptr_R_ChooseFile = Rdlsym(handle, "Rgnome_ChooseFile");
-    if(!ptr_R_ChooseFile) R_Suicide("Cannot load R_ChooseFile");
-*/    
+    ptr_GetQuartzParameters = Rdlsym(handle, "Raqua_GetQuartzParameters");
+    if(!ptr_GetQuartzParameters) R_Suicide("Cannot load Raqua_GetQuartzParameters");
 }
 
 OSStatus DoCloseHandler(EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData)

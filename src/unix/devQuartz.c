@@ -42,6 +42,11 @@
 #define R_BLUE(col)	(((col)>>16)&255)
 #define kRAppSignature '0FFF'
 
+extern  DL_FUNC ptr_GetQuartzParameters;
+
+
+void GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh) {ptr_GetQuartzParameters(width, height, ps, family, antialias, autorefresh);}
+
 
    /***************************************************************************/
    /* Each driver can have its own device-specic graphical                    */
@@ -187,6 +192,7 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
     char *display, *vmax, *family=NULL;
+    char fontfamily[255];
     double height, width, ps;
     Rboolean  antialias, autorefresh;
     gcall = call;
@@ -216,8 +222,11 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
      */
     dev->savedSnapshot = R_NilValue;
 
+    strcpy(fontfamily, family);
+    GetQuartzParameters(&width, &height, &ps, fontfamily, &antialias, &autorefresh);
+
     if (!QuartzDeviceDriver((DevDesc *)dev, display, width, height, ps,
-       family, antialias, autorefresh)) {
+       fontfamily, antialias, autorefresh)) {
 	 free(dev);
 	 errorcall(call, "unable to start device Quartz\n");
     }
