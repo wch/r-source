@@ -1,6 +1,8 @@
 base:
 	@echo Building R base library
-	@mkdir -p ../../../library/base/R
+	@if test ! -d ../../../library/base; then mkdir ../../../library/base; fi
+	@if test ! -d ../../../library/base/R; then mkdir ../../../library/base/R; fi
+	@if test ! -d ../../../library/base/data; then mkdir ../../../library/base/data; fi
 	@cat `ls R/[a-z]* | sed '/CVS/d; /~$$/d; /\.orig$$/d; \
 		/\.bak$$/d; /^core$$/d; /system.*/d'` R/system.unix | \
 	 sed '/^[ 	]*$$/d'  > ../../../library/base/R/base
@@ -10,5 +12,4 @@ base:
 ##	@cat $(FUNS) STARTUP |sed  '/^$$/d;/^[ 	]*#/d'  > ../../../library/base
 ##					      ^^ = TAB + Space
 	@cp INDEX TITLE ../../../library/base
-	@mkdir -p ../../../library/base/data
 	@cp `ls data/[a-z]*` ../../../library/base/data
