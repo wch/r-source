@@ -174,7 +174,7 @@ plot.table <-
              xlab = NULL, ylab = NULL, frame.plot = is.num, ...)
 {
     xnam <- deparse(substitute(x))
-    rnk <- length(d <- dim(x))
+    rnk <- length(dim(x))
     if(rnk == 0)
 	stop("invalid table `x'")
     if(rnk == 1) {

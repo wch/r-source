@@ -435,7 +435,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     if(is.null(dispersion)) {
 	dispersion <- summary(object, dispersion=dispersion)$dispersion
 	df.dispersion <- if (dispersion == 1) Inf else object$df.residual
-    } else df.scale <- Inf
+    }
     if(!is.null(test))
 	table <- stat.anova(table=table, test=test, scale=dispersion,
 			    df.scale=df.dispersion, n=NROW(x))

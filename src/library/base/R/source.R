@@ -37,7 +37,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	setwd(path)
     }
     #-- ass1 :	the  '<-' symbol/name
-    ass1 <- expression(y <- x)[[1]][[1]]
+#    ass1 <- expression(y <- x)[[1]][[1]]
     if (echo) {
 	## Reg.exps for string delimiter/ NO-string-del /
         ## odd-number-of-str.del needed, when truncating below
@@ -104,9 +104,7 @@ function(file, envir = NULL, chdir = FALSE,
 	on.exit(setwd(owd), add = TRUE)
 	setwd(path)
     }
-    for (i in exprs) {
-	yy <- eval(i, envir)
-    }
+    for (i in exprs) eval(i, envir)
     invisible()
 }
 
@@ -122,7 +120,7 @@ function(topic, device = getOption("device"),
     ## Earlier versions remembered given packages with no 'demo'
     ## subdirectory, and warned about them.
 
-    demoExts <- tools:::.makeFileExts("demo")
+#    demoExts <- tools:::.makeFileExts("demo")
 
     if(missing(topic)) {
         ## List all possible demos.

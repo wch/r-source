@@ -37,7 +37,6 @@ function(target, current, tolerance = .Machine$double.eps ^ .5,
     if(lt != lc)
 	return(paste(if(cplx)"Complex" else "Numeric",
                      ": lengths (", lt, ", ", lc, ") differ", sep = ""))
-    else msg <- NULL
     target <- as.vector(target)
     current <- as.vector(current)
     out <- is.na(target)
@@ -141,7 +140,7 @@ all.equal.language <- function(target, current, ...)
 all.equal.list <- function(target, current, ...)
 {
     msg <- attr.all.equal(target, current, ...)
-    nt <- names(target)
+#    nt <- names(target)
     nc <- names(current)
     iseq <-
         ## <FIXME>

@@ -118,7 +118,7 @@ density <-
     kords <- fft( fft(y)* Conj(fft(kords)), inv=TRUE)
     kords <- Re(kords)[1:n]/length(y)
     xords <- seq(lo, up, length = n)
-    keep <- (xords >= from) & (xords <= to)
+#    keep <- (xords >= from) & (xords <= to)
     x <- seq(from, to, length = n.user)
     structure(list(x = x, y = approx(xords, kords, x)$y, bw = bw, n = N,
 		   call=match.call(), data.name=name, has.na = FALSE),

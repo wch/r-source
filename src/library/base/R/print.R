@@ -162,7 +162,7 @@ print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
 {
     if (!is.null(heading <- attr(x, "heading")))
 	cat(heading, sep = "\n")
-    nc <- (d <- dim(x))[2]
+    nc <- dim(x)[2]
     if(is.null(cn <- colnames(x))) stop("anova object must have colnames(.)!")
     ncn <- nchar(cn)
     has.P <- substr(cn[nc],1,3) == "Pr(" # P-value as last column

@@ -92,7 +92,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
     t.factor <- attr(prjs, "t.factor")
     efficiency <- FALSE
     if(type == "effects" || type == "means") {
-	if(any(duplicated(nms <- names(dn.proj)[names(dn.proj)!= "Residuals"]))) {
+	if(any(duplicated(names(dn.proj)[names(dn.proj)!= "Residuals"]))) {
 	    efficiency <- eff.aovlist(x)
 	    ## Elect to use the effects from the lowest stratum:
 	    ##	usually expect this to be highest efficiency
@@ -449,7 +449,7 @@ print.mtable <-
 {
     xxx <- x
     xx <- attr(x, "Notes")
-    nn <- names(dimnames(x))
+#    nn <- names(dimnames(x))
     a.ind <- match(names(a <- attributes(x)), c("dim", "dimnames", "names"))
     a <- a[!is.na(a.ind)]
     class(x) <- attributes(x) <- NULL

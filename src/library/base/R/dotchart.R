@@ -40,7 +40,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
     }
     lheight <- strheight("M", "inch")
     if (!(is.null(labels) && is.null(glabels))) {
-	nmar <- mar <- par("mar")
+	nmar <- par("mar")
 	nmar[2] <- nmar[4] + (max(linch + goffset, ginch) + 0.1)/lheight
 	par(mar = nmar)
     }
@@ -62,7 +62,7 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
     }
 
     plot.window(xlim = xlim, ylim = ylim, log = "")
-    xmin <- par("usr")[1]
+#    xmin <- par("usr")[1]
     if (!is.null(labels)) {
 	linch <- max(strwidth(labels, "inch"), na.rm = TRUE)
 	loffset <- (linch + 0.1)/lheight

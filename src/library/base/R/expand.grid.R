@@ -13,7 +13,7 @@ expand.grid <- function(...)
     if(any(ng0 <- nchar(nm) > 0)) nmc[ng0] <- nm[ng0]
     names(cargs) <- nmc
     rep.fac <- 1
-    orep <- final.len <- prod(sapply(args, length))
+    orep <- prod(sapply(args, length))
     for(i in 1:nargs) {
 	x <- args[[i]]
 	## avoid sorting the levels of character variates

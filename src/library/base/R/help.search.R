@@ -110,7 +110,7 @@ function(pattern, fields = c("alias", "title"),
             .packages(all.available = TRUE, lib.loc = lib.loc)
         ## </FIXME>
 	## Create the help db.
-	contentsEnv <- new.env()
+#	contentsEnv <- new.env()
 	contentsDCFFields <-
 	    c("Entry", "Aliases", "Description", "Keywords")
 	contentsRDSFields <-

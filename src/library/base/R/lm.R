@@ -599,7 +599,6 @@ predict.lm <-
 	res.var <-
 	    if (is.null(scale)) {
 		r <- object$residuals
-		f <- object$fitted
 		w <- object$weights
 		rss <- sum(if(is.null(w)) r^2 else r^2 * w)
 		df <- n - p

@@ -105,9 +105,6 @@ reshape<-function(data,varying=NULL,v.names=NULL,timevar="time",idvar="id",
         if (is.null(v.names))
             v.names<-names(data)[!(names(data) %in% c(timevar,idvar))]
 
-
-        nv<-length(v.names)
-
         if (is.null(varying))
             varying<-outer(v.names,times,paste,sep=".")
         if (is.list(varying))

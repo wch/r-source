@@ -48,6 +48,7 @@ help <-
                     if(file.exists(hlpfile)) {
                         err <- .C("Rchtml", hlpfile, topic,
                                   err = integer(1), PACKAGE = "")$err
+                        if(err) stop("CHM file could not be displayed")
                         if(verbose)
                             cat("help() for `", topic,
                                 "' is shown in Compiled HTML\n",

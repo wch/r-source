@@ -221,7 +221,7 @@ influence.measures <- function(model)
     dffits <- e*sqrt(h)/(si*(1-h))
     cov.ratio <- (si/s)^(2 * p)/(1 - h)
     cooks.d <- ((e/(s * (1 - h)))^2 * h)/p
-    dn <- dimnames(model$qr$qr)
+#    dn <- dimnames(model$qr$qr)
     infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
 		    cook.d = cooks.d, hat=h)
     is.inf <- is.influential(infmat, sum(h>0))

@@ -78,9 +78,8 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	has.colnames <- !is.null(dimnames(ans))
 	if(!has.colnames) {
 	    dimnames(ans) <- vector("list",rank)
-	    coln <- NULL
 	} else {
-	    has.colnames <- length(coln <- dimnames(ans)[[2]]) > 0
+	    has.colnames <- length(dimnames(ans)[[2]]) > 0
 	}
 	if((is.logical(abbr.colnames) || is.numeric(abbr.colnames))
 	   && abbr.colnames) {

@@ -186,7 +186,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
     }
     catRow <- function(...) cat(Trow(nCol, ...), file = Hfile)
 
-    n <- length(IDS)
+#    n <- length(IDS)
     RootItems <- which(IsRoot)
     NumOfRoots <- length(RootItems)
 

@@ -79,7 +79,6 @@ summary.manova <-
         effects <- as.matrix(effects)[seq(along = asgn), , drop = FALSE]
     rdf <- object$df.resid
     nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
-    coef <- as.matrix(object$coef)
     resid <- as.matrix(object$residuals)
     wt <- object$weights
     if (!is.null(wt)) resid <- resid * wt^0.5
@@ -87,11 +86,10 @@ summary.manova <-
     if(nresp <= 1) stop("need multiple response")
 
     if (is.null(effects)) {
-        df <- nterms <- neff <- 0
+        df <- nterms <- 0
         ss <- list(0)
         nmrows <- character(0)
     } else {
-        nobs <- length(resid[, 1])
         df <- numeric(nterms)
         ss <- list(nterms)
         nmrows <- character(nterms)

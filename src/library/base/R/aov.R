@@ -190,8 +190,8 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
         dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), nmeffect)
         print(tmp, quote = FALSE, right = TRUE)
         rank <- x$rank
-        int <- attr(x$terms, "intercept")
-        nobs <- NROW(x$residuals) - !(is.null(int) || int == 0)
+#        int <- attr(x$terms, "intercept")
+#        nobs <- NROW(x$residuals) - !(is.null(int) || int == 0)
         cat("\n")
         if(rdf > 0) {
             rs <- sqrt(RSS/rdf)
@@ -298,11 +298,10 @@ summary.aov <- function(object, intercept = FALSE, split,
 
     for (y in 1:nresp) {
         if(is.null(effects)) {
-            nterms <- neff <- 0
+            nterms <- 0
             df <- ss <- ms <- numeric(0)
             nmrows <- character(0)
         } else {
-            nobs <- length(resid[, y])
             df <- ss <- numeric(0)
             nmrows <- character(0)
             for(i in seq(nterms)) {
@@ -414,7 +413,6 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
         value$Complete <-
             if(is.null(p) || rank == p) NULL else {
                 p1 <- 1:rank
-                dn <- colnames(R)
                 X <- R[p1, p1]
                 Y <-  R[p1, -p1, drop = FALSE]
                 beta12 <- as.matrix(qr.coef(qr(X), Y))

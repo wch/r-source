@@ -308,7 +308,6 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     RSS <- numeric(ns)
     y <- object$residuals + predict(object)
     na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
-    rank <- object$rank
     for(i in 1:ns) {
 	ii <- seq(along=asgn)[asgn == ndrop[i]]
 	if(all.cols) jj <- setdiff(seq(ncol(x)), ii)
@@ -368,7 +367,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		      k = 2, ...)
 {
     x <- model.matrix(object)
-    iswt <- !is.null(wt <- object$weights)
+#    iswt <- !is.null(wt <- object$weights)
     n <- nrow(x)
     asgn <- attr(x, "assign")
     tl <- attr(object$terms, "term.labels")
@@ -387,10 +386,9 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     dev <- numeric(ns)
     y <- object$y
     if(is.null(y)) y <- model.response(model.frame(object), "numeric")
-    na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
+#    na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
     wt <- object$prior.weights
     if(is.null(wt)) wt <- rep.int(1, n)
-    rank <- object$rank
     for(i in 1:ns) {
 	ii <- seq(along=asgn)[asgn == ndrop[i]]
 	jj <- setdiff(seq(ncol(x)), ii)
@@ -626,7 +624,6 @@ step <- function(object, scope, scale = 0,
     while(steps > 0) {
 	steps <- steps - 1
 	AIC <- bAIC
-	bfit <- fit
 	ffac <- attr(Terms, "factors")
 	scope <- factor.scope(ffac, list(add = fadd, drop = fdrop))
 	aod <- NULL

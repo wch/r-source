@@ -246,7 +246,7 @@ data.frame <-
 	    }
 	else function(current, new, i) {
 	    if(is.null(current)) {
-		if(adup <- any(dup <- duplicated(new <- as.character(new)))) {
+		if(any(dup <- duplicated(new <- as.character(new)))) {
 		    warning(paste("some row.names duplicated:",
 				  paste(which(dup),collapse=","),
 				  " --> row.names NOT used."))
@@ -527,7 +527,7 @@ data.frame <-
 	    if(!char.i) {
 		nrr <- as.character((nrows + 1):nn)
 		if(inherits(value, "data.frame") &&
-		   (nrv <- dim(value)[1]) >= length(nrr)) {
+		   (dim(value)[1]) >= length(nrr)) {
 		    new.rows <- attr(value, "row.names")[1:length(nrr)]
 		    repl <- duplicated(new.rows) | match(new.rows, rows, 0)
 		    if(any(repl))
@@ -623,7 +623,6 @@ data.frame <-
     else if(nrowv > n)
 	warning(paste("replacement data has", nrowv, "rows to replace",
 		      n, "rows"))
-    vseq <- 1:n
     ncolv <- dimv[2]
     jvseq <- 1:p
     if(ncolv < p) jvseq <- rep(1:ncolv, length = p)
@@ -708,7 +707,7 @@ data.frame <-
 	if(n==0) {
 	    nrr <- as.character((nrows + 1):nn)
 	    if(inherits(value, "data.frame") &&
-	       (nrv <- dim(value)[1]) >= length(nrr)) {
+	       (dim(value)[1]) >= length(nrr)) {
 		new.rows <- attr(value, "row.names")[1:length(nrr)]
 		repl <- duplicated(new.rows) | match(new.rows, rows, 0)
 		if(any(repl))
@@ -862,7 +861,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		if( !is.null(pi) )
 		    perm[[i]] <- pi
 	    }
-	    rows[[i]] <- nii <- seq(from = nrow + 1, length = ni)
+	    rows[[i]] <- seq(from = nrow + 1, length = ni)
 	    rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
 	    nrow <- nrow + ni
 	    if(is.null(value)) {
