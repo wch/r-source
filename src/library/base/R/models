@@ -17,6 +17,12 @@ formula.terms <- function(x) {
 	x
 }
 print.formula <- function(x) print.default(unclass(x))
+"[.formula" <- function(x,i) {  
+	ans <- NextMethod("[")
+	if(as.character(ans[[1]]) == "~")
+		class(ans) <- "formula"
+	ans
+}
 
 terms <- function(x, ...) UseMethod("terms")
 terms.default <- function(x) x$terms
