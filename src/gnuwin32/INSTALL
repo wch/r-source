@@ -17,7 +17,8 @@ Building on Windows
 -------------------
 
 We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
-from ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will
+from http://www.mingw.org/ or 
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will
 also need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp
 and cat; we have packaged a set at
 CRAN/bin/windows/windows-NT/base/etc/tools.zip extracted from the
