@@ -24,11 +24,11 @@
 /* Code to handle list / vector switch */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <Defn.h>
-#include <Rmath.h>/* imax2 */
+#include <Rmath.h>		/* imax2 */
 
 #define LIST_ASSIGN(x) {SET_VECTOR_ELT(data->ans_ptr, data->ans_length, x); data->ans_length++;}
 
@@ -502,12 +502,14 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 {
     SEXP a, n, last = NULL, next = NULL;
-    int v;
+    int v, n_recurse = 0, n_usenames = 0;
 
     for (a = ans; a != R_NilValue; a = next) {
 	n = TAG(a);
 	next = CDR(a);
 	if (n != R_NilValue && pmatch(R_RecursiveSymbol, n, 1)) {
+	    if (n_recurse++ == 1)
+		error("repeated formal argument 'recursive'");
 	    if ((v = asLogical(CAR(a))) != NA_INTEGER) {
 		*recurse = v;
 	    }
@@ -516,7 +518,9 @@ static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 	    else
 		SETCDR(last, next);
 	}
-	else if (n != R_NilValue &&  pmatch(R_UseNamesSymbol, n, 1)) {
+	else if (n != R_NilValue && pmatch(R_UseNamesSymbol, n, 1)) {
+	    if (n_usenames++ == 1)
+		error("repeated formal argument 'use.names'");
 	    if ((v = asLogical(CAR(a))) != NA_INTEGER) {
 		*usenames = v;
 	    }
