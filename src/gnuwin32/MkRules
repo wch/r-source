@@ -62,25 +62,25 @@ RESCOMP=$(BINPREF)windres
 
 .c.d:
 	@echo "making $@ from $<"
-	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+	@$(CC) -M $(CFLAGS) $($*-CFLAGS) $< -o $@
 
 .c.o:
-	$(CC)  $(CFLAGS) $($*-CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $($*-CFLAGS) -c $< -o $@
 
 .f.o:
 	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
 .cc.o:
-	$(CXX)  $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
 
 .cpp.o:
-	$(CXX)  $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
 
 .C.o:
-	$(CXX)  $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
 
 %.exe:
-	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
+	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
 
 %.dll %.def:
@@ -90,7 +90,7 @@ RESCOMP=$(BINPREF)windres
 	$(NM) $^ > Defs
 	$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
 	$(RM) Defs
-	$(DLL) --shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@  $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	$(DLL) --shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 
 
 lib%.a: %.def
@@ -103,5 +103,5 @@ lib%.a: %.def
 	$(RANLIB) $@
 
 
-%.o:    %.rc
+%.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@

@@ -905,10 +905,10 @@ If you want output to be updated on the console, call
 @node The Perl scripts don't seem to work under Windows 9x/ME,  , The console freezes when my compiled code is running, Building from Source
 @section The Perl scripts don't seem to work under Windows 9x/ME
 
-This has been seen under some versions of Perl and Windows version
+This has been seen under some versions of Perl and Windows versions
 (95/98/ME) which use a 16-bit shell.  Hopefully rw1030 and later are
 more robust in this respect: it @emph{may} help to upgrade your Perl
-version (5.6.1, build 626 was current at the time of writing).
+version (5.6.1, build 628 was current at the time of writing).
 
 @ifhtml
 @html
