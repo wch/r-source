@@ -40,6 +40,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   sanitised delete.response
+
+    o   strwidth() crashed R if no device open
+
     o   predict inconsistencies with offsets straightened out
 
     o	tapply goofed when FUN returned named scalar
