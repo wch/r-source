@@ -6,7 +6,7 @@
 \alias{monthplot.StructTS}
 
 \title{
-  Plot a seasonal or other subseries
+  Plot a Seasonal or other Subseries
 }
 \description{
   These functions plot seasonal (or other) subseries of a time series.

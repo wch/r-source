@@ -31,7 +31,8 @@ tsSmooth(object, ...)
 \seealso{
   \code{\link{KalmanSmooth}}, \code{\link{StructTS}}.
 
-  For examples consult \code{\link{AirPassengers}} and \code{\link{Nile}}.
+  For examples consult \code{\link{AirPassengers}},
+  \code{\link{JohnsonJohnson}} and \code{\link{Nile}}.
 }
 \keyword{ts}
 
