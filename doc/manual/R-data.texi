@@ -504,6 +504,7 @@ measurements
 
 @noindent
 There are two covariates and up to four measurements on each subject.
+The data were exported from Excel as a file @file{mr.csv}.
 
 @findex stack
 We can use @code{stack} to help manipulate these data to give a single
@@ -511,7 +512,7 @@ response.
 
 @smallexample
 zz <- read.csv("mr.csv", strip.white = TRUE)
-zzz <- cbind(zz[gl(7, 1, 28), 1:2], stack(zz[, 3:6]))
+zzz <- cbind(zz[gl(nrow(zz), 1, 4*nrow(zz)), 1:2], stack(zz[, 3:6]))
 @end smallexample
 
 @noindent
