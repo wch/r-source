@@ -3,7 +3,6 @@
 \alias{removeClass}
 \alias{isClass}
 \alias{getClasses}
-\alias{unClass}
 \title{Create a Class Definition}
 \description{
 Create a formally defined class with specified slots and/or
@@ -18,8 +17,6 @@ removeClass(Class, where=-1)
 
 
 getClasses(where)
-
-unclass(x)
 
 }
 \arguments{
@@ -85,7 +82,7 @@ unclass(x)
       to each slot), in the case that the object's class is formally defined with slots.  
       
       For classes that extend a single other class (e.g., a basic class
-      such as \code{"numeric"}) the result is a object of that class.
+      such as \code{"numeric"}) the result is an object of that class.
     }
   }
 }

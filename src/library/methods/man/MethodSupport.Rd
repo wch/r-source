@@ -1,14 +1,15 @@
 \name{MethodSupport}
-\alias{evalSelectedMethod}
 \alias{OldEvalSelectedMethod}
 \alias{getMethodsForDispatch}
+\alias{cacheMethod}
 \alias{hasMethod}
 \alias{resetGeneric}
 \title{Additional (Support) Functions for Methods}
 \usage{
-evalSelectedMethod(f, ev, fname)
 
 getMethodsForDispatch(f)
+
+cacheMethod(f, sig, def, args = names(sig))
 
 hasMethod(f, signature=character())
 
@@ -17,16 +18,7 @@ resetGeneric(f)
 \description{
   
 \describe{
-\item{\code{evalSelectedMethod}:}{ 
-  Evaluate the selected method, f, in the environment, ev.
 
-The general case is that f is a closure (an ordinary function), in which case
-the body is evaluated in the given environment.
-
-The special cases (primitive and internal) have to be faked by going back to the
-environment of the call to the generic.
-
-  }
 \item{\code{hasMethod}:}{ 
   returns \code{TRUE} if \code{f} is the name of a generic function with an (explicit) method for
 this signature.
@@ -41,6 +33,22 @@ methods.
 session, to guarantee that the new information is used if this generic has already been
 called.
 }
+
+\item{\code{cacheMethod}:}{Store the definition for this function and
+  signature in the method metadata for the function.  Used to store
+  extensions of coerce methods found through inheritance.
+
+  No persistent effect, since the method metadata is session-scope only.
+}
+
+\item{\code{getMethodsForDispatch}:}{Get the current methods list object
+  representing the methods for function f, merged from the various
+  libraries and with any additional caching information stored in the
+  \code{allMethods} slot.
+
+  If methods have not yet been merged, calling
+  \code{getMethodsForDispatch} will cause the merge to take place.
+  }
   
 }
 }

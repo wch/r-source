@@ -43,7 +43,6 @@
 \alias{classMetaName}
 \alias{methodsMetaName}
 \alias{as.data.frame}
-\alias{nullSymbol}
 \alias{requireMethods}
 %% not explicitly documented here
 \alias{.BasicClasses}
@@ -142,8 +141,6 @@ classMetaName(name)
 methodsMetaName(prefix, name)
 
 as.data.frame(x, row.names=NULL, optional=FALSE)
-
-nullSymbol()
 
 requireMethods(functions, signature, message)
 
@@ -445,12 +442,7 @@ for a particular generic function), unless searching is done depth first.
 
   
   }
-\item{\code{nullSymbol}:}{ 
-  Returns the special name which is the symbol used to represent NULL slots as (non-NULL)
-attributes.
 
-  
-  }
 \item{\code{requireMethods}:}{ 
   Require a subclass to implement methods for the generic functions, for this signature.
 

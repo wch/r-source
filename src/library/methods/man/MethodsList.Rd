@@ -3,7 +3,6 @@
 \alias{makeMethodsList}
 \alias{SignatureMethod}
 \alias{insertMethod}
-\alias{MethodsListDispatch}
 \alias{matchArg}
 \alias{matchArgClass}
 \alias{showMlist}
@@ -13,7 +12,6 @@
 \alias{listFromMlist}
 \alias{listFromMlistForPrint}
 \alias{finalDefaultMethod}
-\alias{mergeAllMethods}
 \alias{mergeMethods}
 \title{MethodsList Objects}
 \usage{
@@ -24,8 +22,6 @@ makeMethodsList(object, level=1)
 SignatureMethod(names, signature, definition)
 
 insertMethod(mlist, signature, args, def)
-
-MethodsListDispatch(fname, ev, mustFind = TRUE)
 
 matchArg(object, thisClass, mlist, ev)
 
@@ -40,8 +36,6 @@ listFromMlist(mlist, prefix = list())
 listFromMlistForPrint(mlist, inherited = TRUE, useArgName = TRUE, prev = character())
 
 finalDefaultMethod(mlist, fname = "")
-
-mergeAllMethods(mlist, update, thisClass, argument)
 
 mergeMethods(m1, m2)
 
@@ -92,20 +86,7 @@ the signature
 
   
   }
-\item{\code{MethodsListDispatch}:}{ 
-  select the element of a MethodsList object corresponding to the
-actual arguments.
 
-Works recursively.  At each level finds an argument name from the current \code{mlist}
-object, and evaluates this argument (if it is not missing), then uses the
-\code{data.class} of the result to select an element of \code{mlist}.  If such an element
-exists and is another \code{MethodsList} object, \code{MethodsListDispatch}  calls itself recursively
-to resolve using further arguments.  Matching includes using a default selection or
-a method specifically linked to class \code{"missing"}.  Once a function is found, it
-is returned as the value.  If matching fails, an error occurs.
-
-  
-  }
 \item{\code{matchArg, matchArgClass}:}{ 
   Utility functions to match the object  or the class to the elements of
   a methods list.
@@ -132,11 +113,6 @@ selected classes.
     The true default method for the methods list object \code{mlist}
     (the method that matches class \code{"ANY"} for as many arguments as
     are used in methods matching for this generic function).}
-
-  \item{\code{mergeAllMethods}}{
-    Merges the \code{AllMethods} slots in two methods list objects (including
-    special  cases of NULL and function).
-  }
 
   \item{\code{mergeMethods}}{
     Merges the methods in the second MethodsList object into the first,

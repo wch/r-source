@@ -110,9 +110,9 @@ defaultDumpName <-
 }
 
 
-mergeGenericFunctions <-
-  ## a generic function (with methods) representing the merge of all the versions
-  ## of `f' on the specified packages (anything on the current search path by default).
+getAllMethods <-
+  ## a generic function (with methods) representing the merge of all the methods
+  ## for `f' on the specified packages (anything on the current search path by default).
   ##
   ## If the generic `f' has a group generic, methods for this group generic (and further
   ## generations of group generics, if any) are also merged.  The merging rule is as follows:
@@ -136,16 +136,13 @@ mergeGenericFunctions <-
     groups <- getGroup(fdef, TRUE)
     ## when this function is called from methodsListDispatch (via C code),
     ## a barrier version of the function is put into the metadata to prevent
-    ## recursive loops.  Must remove this, if an error occurs in mergeGenericFunctions
+    ## recursive loops.  Must remove this, if an error occurs in getAllMethods
     on.exit(removeFromMethodMetaData(f))
     methods <- NULL
     funs <- c(f, groups)
     for(fun in rev(funs))
       for(where in rev(libs)) {
-        fw <- getFunction(fun, where=where, mustFind=FALSE)
-        if(isGeneric(fun, fdef = fw))
-          mw <- getMethods(fw)
-        else mw <- getMethodsMetaData(fun, where)
+        mw <- getMethodsMetaData(fun, where)
         if(!is.null(mw))
           methods <- mergeMethods(methods, mw)
       }
@@ -180,21 +177,20 @@ setAllMethodsSlot <- function(mlist) {
   ## The current contents of the allMethods slot are ignored, so calling
   ## setAllMethodsSlot either initializes or re-intializes the object, removing
   ## any inherited methods stored in allMethods.
-  methods <- slot(mlist, "methods")
-  allMethods <- list()
+  methods <- mlist@methods
+  mnames <- names(methods)
   modified <- FALSE
-  for(i in names(methods)) {
-    method <- elNamed(methods, i)
+  for(i in seq(along=methods)) {
+    method <-methods[[i]]
     if(is(method, "MethodsList")) {
-      method <- Recall(method)
-      elNamed(methods, i) <- method
+      methods[[i]] <- Recall(method)
       modified <- TRUE
     }
-    elNamed(allMethods, i) <- method
   }
-  slot(mlist, "allMethods") <- allMethods
+  mlist@allMethods <- methods
+  mlist@fromClass <- mnames
   if(modified)
-    slot(mlist, "methods") <- methods
+    mlist@methods <- methods
   mlist
 }
 
@@ -221,7 +217,7 @@ doPrimitiveMethod <-
 }
 
 conformMethodArgs <-
-  function(def, fdef, envir)
+  function(def, fdef, envir = environment(fdef))
 {
     newDef <- fdef
     newCall <- get(".Arguments",  envir=envir)
@@ -278,4 +274,18 @@ assignMethodsMetaData <-
 mlistMetaName <-
   ## name mangling to simulate metadata for a methods definition.
   function(name)
-  methodsMetaName("R", name)
+  methodsMetaName("M", name)
+
+getGenerics <-
+  function(where = seq(along=search())) {
+    pattern <- mlistMetaName("")
+    n <- nchar(pattern)
+    value <- character()
+    for(i in where) {
+      these <- objects(i, all=TRUE)
+      ## string match the pattern (NOT by a regexp in grep)
+      these <- these[substr(these, 1, n) == pattern]
+      value <- c(value, these)
+    }
+    substring(unique(value), n+1)
+  }

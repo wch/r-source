@@ -67,7 +67,7 @@ setSClass <-
     ev <- newClassEnvironment(name, properties, extends, prototype, subclasses,
                               virtual, validity, access)
     if(missing(generatorFunction)) {
-        f <- quote(function(...)new(Class=, ...))
+        f <- substitute(function(...)newObject(Class=CLASS, ...), list(CLASS=name))
     }
     else {
         assign(".Generator", generatorFunction, ev)
@@ -93,12 +93,18 @@ getClassDef <-
 getClass <-
   ## Get the complete definition of the class supplied as a string,
   ## including all slots, etc. in classes that this class extends.
-  function(Class)
+  function(Class, .Force = FALSE)
 {
     cname <- classMetaName(Class)
     value <- getFromClassMetaData(cname)
-    if(is.null(value))
+    if(is.null(value)) {
+      if(isClass(Class))
         value <- completeClassDefinition(Class)
+      else if(!.Force && is.na(match(Class, .BasicClasses)))
+        stop(paste("\"", Class, "\" is not a defined class"))
+      ## else, return NULL.  This may change, if we force formal definitions
+      ## for all classes, including (the tough ones) NULL, array, matrix, ts 
+    }
     value
 }
 
@@ -193,8 +199,9 @@ new <-
   ## for a class, and uses that function's environment as the class representation.
   function(Class, ..., .Force=FALSE)
 {
-    if(!isClass(Class))
-        return(newBasic(Class, ..., .Force = .Force))
+  ## the basic classes have fixed definitions
+  if(!is.na(match(Class, .BasicClasses)))
+    return(newBasic(Class, ..., .Force = .Force))
     ## get the class definition, completing it if this is the first reference
     ## to this class in this session.
     ClassDef <- getClass(Class)
@@ -214,6 +221,7 @@ new <-
         which <- nchar(snames)>0
         elements <- args[which]
         supers <- args[!which]
+        thisExtends <- names(getExtends(ClassDef))
         if(length(supers) > 0) {
             for(i in seq(along = supers)) {
                 obj <- el(supers, i)
@@ -225,9 +233,20 @@ new <-
                     value <- as(obj, Class)
                 else if(extends(Class, Classi))
                     as(value, Classi) <- obj
-                else
-                    stop(paste("Can't use object of class \"", Classi,Def,
+                else {
+                  ## is there a class to which we can coerce obj
+                  ## that is then among the superclasses of Class?
+                  extendsi <- names(getExtends(getClass(Classi)))
+                  which <- match(extendsi, thisExtends)
+                  which <- seq(along=which)[!is.na(which)]
+                  if(length(which) == 1) {
+                    Classi <- extendsi[[which]]
+                    as(value, Classi) <- as(obj, Classi)
+                  }
+                  else
+                    stop(paste("Can't use object of class \"", Classi,
                                "\" in new():  Class \"", Class, "\" does not extend that class"))
+                }
             }
         }
         if(length(elements)>0) {
@@ -270,27 +289,6 @@ getClasses <-
     substring(names, nchar(pat))
 }
 
-unClass <-
-  ## returns the object containing the values of all the slots in this object's
-  ## class definition (specifically, ithe returned object has attributes corresponding
-  ## to each slot), in the case that the object's class is formally defined, with slots.
-  ##
-  ## The semantics of this function in R are slightly different from the `unclass' function in S-Plus,
-  ##  which produces either a list of the slots or an object with the class of this class's
-  ## prototype, when
-  ## the class is not defined with slots.
-  function(x)
-{
-    Class <- data.class(x)
-    what <- slotNames(Class)
-    if(length(what) > 0) {
-        attributes(x)[what]
-    }
-    else {
-        class(x) <- NULL
-        x
-    }
-}
 
 validObject <- function(object, test = FALSE) {
   classDef <- getClass(class(object))

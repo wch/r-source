@@ -17,19 +17,20 @@ as <-
         coe(object)
     }
     else if(coerceFlag) {
-      sig <- c(from = thisClass, to = Class)
-      asMethod <- selectMethod("coerce", sig, TRUE, c(TRUE, FALSE))
+      sig <-  new.env(); assign("from", thisClass, envir = sig)
+      assign("to", Class, envir = sig)
+      asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
       if(is.null(asMethod)) {
         for(byClass in names(getExtends(getClass(thisClass)))) {
-          sig[[1]] <- byClass
-          asMethod <- selectMethod("coerce", sig, TRUE, c(TRUE, FALSE))
+          assign("from", byClass, envir = sig)
+          asMethod <- selectMethod("coerce", sig, TRUE, c(from=TRUE, to = FALSE))
           if(!is.null(asMethod)) {
-            ## (TO DO:  need a way to cache this method for the session)
-            asMethod <- substitute(function(object) {
+            asMethod <- substitute(function(from, to) {
               method2 <- eval(METHOD2, .GlobalEnv)
-              method2(as(object, BYCLASS))
+              method2(as(from, BYCLASS))
             }, list(METHOD2 = asMethod, BYCLASS = byClass))
             asMethod <- eval(asMethod, .GlobalEnv)
+            cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
             break
           }
         }
@@ -59,8 +60,9 @@ as <-
       object <- f(object, value)
     }
     else if(coerceFlag) {
-      sig <- c(from = thisClass, to = Class)
-      asMethod <- selectMethod("coerce<-", sig, TRUE, c(TRUE, FALSE))
+      sig <-  new.env(); assign("from", thisClass, envir = sig)
+      assign("to", Class, envir = sig)
+      asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
       if(is.null(asMethod))
         stop(paste("No method or default for as() replacement of \"", thisClass,
                    "\" with Class=\"", Class, "\"", sep=""))
@@ -95,9 +97,11 @@ setAs <-
         stop("a method definition in setAs must be a function of one argument")
       def <- body(def)
       if(!identical(args, "from")) {
-        ll <- list(quote(from))
-        names(ll) <- args
+        ll <- list(quote(from), as.name(args))
+        names(ll) <- c(args, "from")
         def <- substituteDirect(def, ll)
+        warning("Argument name in def changed to \"from\" instead of \"",
+                args, "\":\n", paste(deparse(def), sep="\n    "), "\n")
       }
       method <- eval(function(from, to)NULL)
       functionBody(method, envir = .GlobalEnv) <- def
@@ -107,9 +111,13 @@ setAs <-
         if(length(args) != 2)
           stop("a replace method definition in setAs must be a function of two arguments")
         replace <- body(replace)
-        ll <- list(quote(from), quote(value))
-        names(ll) <- args
-        replace <- substituteDirect(replace, ll)
+        if(!identical(args, c("from", "value"))) {
+          ll <- list(quote(from), quote(value))
+          names(ll) <- args
+          replace <- substituteDirect(replace, ll)
+          warning("Argument names in replace changed to agree with \"coerce<-\" generic:\n",
+                  paste(deparse(def), sep="\n    "), "\n")
+        }
         method <- eval(function(from, to, value)NULL)
         functionBody(method, envir = .GlobalEnv) <- replace
         setMethod("coerce<-", c(from, to), method, where = where)

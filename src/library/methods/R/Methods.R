@@ -83,27 +83,22 @@ removeGeneric <-
   ##
   ## If `where' supplied, just remove the version on this element of the search list;
   ## otherwise, removes the first version encountered.
-    function(name, where = -1)
+    function(f, where = -1)
 {
     if(identical(where, -1)) {
-        where <- findFunction(name)
+        where <- findFunction(f)
         if(length(where) > 0)
             where <- el(where, 1)
     }
     else {
-        if(!existsFunction(name, where=where))
+        if(!existsFunction(f, where=where))
             where <- character()
     }
     if(length(where) > 0)
-        rm(list = name, pos = where)
+        rm(list = f, pos = where)
     else
-        warning(paste("Function \"", name, "\" not found for removal", sep=""))
+        warning(paste("Function \"", f, "\" not found for removal", sep=""))
 }
-
-evalSelectedMethod <-
-    function(f, ev, fname)
-    .Call("R_eval_selected_method", f, ev, fname, PACKAGE = "methods")
-
 
 
 getMethods <-
@@ -121,23 +116,21 @@ getMethods <-
   ## the original generic function, since they might change in future sessions.
   function(f, where = -1)
 {
-    if(is.function(f))
+    if(is.function(f)) {
         fdef <- f
+        ev <- environment(fdef)
+        if(exists(".Methods", ev)) {
+          get(".Methods", ev )
+        }
+        else
+          NULL
+      }
     else {
-        if(identical(where, -1))
-            return(getMethodsForDispatch(f))
-        else {
-            fdef <- getFunction(f, where=where, mustFind = FALSE)
-            if(is.null(fdef))
-              return(getMethodsMetaData(f, where))
-            }
-          }
-    ev <- environment(fdef)
-    if(exists(".Methods", ev)) {
-      get(".Methods", ev )
+      if(identical(where, -1))
+        getMethodsForDispatch(f)
+      else
+        getMethodsMetaData(f, where)
     }
-    else
-      NULL
   }
 
 getMethodsForDispatch <-
@@ -146,11 +139,28 @@ getMethodsForDispatch <-
     ## look in the internal environment
     fdef <- getFromMethodMetaData(f)
     if(is.null(fdef)) {
-        fdef <- mergeGenericFunctions(f)
+        fdef <- getAllMethods(f)
         assignToMethodMetaData(f, fdef)
     }
     get(".Methods", envir = environment(fdef))
 }
+
+cacheMethod <-
+  ## cache the given definition in the method metadata for f
+  ## Support function:  DON'T USE DIRECTLY (does no checking)
+  function(f, sig, def, args = names(sig)) {
+    fdef <- getFromMethodMetaData(f)
+    if(is.null(fdef)) {
+        fdef <- getAllMethods(f)
+        assignToMethodMetaData(f, fdef)
+    }
+    ev <- environment(fdef)
+    methods <- get(".Methods", envir = ev)
+    methods <- insertMethod(methods, sig, args, def)
+    assign(".Methods", methods, envir = ev)
+    methods
+  }
+  
 
 setMethod <-
 ## Define a method for the specified combination of generic function and signature.
@@ -168,14 +178,14 @@ setMethod <-
     ## assigned if there is no current generic, and the function is NOT a special.
     ## Specials are dispatched from the main C code, and an explicit generic NEVER
     ## exists for them.
-    assignToGeneric <- isGeneric(f, where = where)
-    if(assignToGeneric)
-      fdef <- getFunction(f, where = where)
-    else
+    newGeneric <- !isGeneric(f, where = where)
+    if(newGeneric)
       fdef <- getFunction(f, mustFind = FALSE)
+    else
+      fdef <- getFunction(f, where = where)
     if(is.null(fdef))
       stop(paste("No existing definition for function \"",f,"\"", sep=""))
-    newGeneric <- !assignToGeneric &&
+    newGeneric <- newGeneric &&
     ## when DispatchOrEval handles formal methods add to this:
     ##   identical(typeof(fdef, "closure")) &&
     ## (because then method dispatch will be done from the C code)
@@ -186,9 +196,11 @@ setMethod <-
       warning(paste("Creating a new generic function for \"", f, "\" on element ",
                     whereString, " of the search path", sep=""))
       fdef <- makeGeneric(f, fdef)
-      assignToGeneric <- TRUE
+      ## makeGeneric will optionally have initialized the default method
+      allMethods <- getMethods(fdef)
     }
-    ev <- environment(fdef)
+    else
+      allMethods <- getMethodsMetaData(f, where = where) # may be NULL
     names <- formalArgs(fdef)
     snames <- names(signature)
     if(length(snames)>0)
@@ -196,20 +208,10 @@ setMethod <-
     ## check the formal arguments
     if(identical(typeof(definition), "closure") && !identical(names, formalArgs(definition))) {
         warning("Method and generic have different arguments: a revised version of the method will be generated")
-        definition <- conformMethodArgs(definition, fdef, ev)
-    }
-    if(assignToGeneric)
-      allMethods <- get(".Methods",  ev )
-    else {
-      allMethods <- getMethodsMetaData(f, where = where)
-      if(is.null(allMethods))
-        allMethods <- NULL
+        definition <- conformMethodArgs(definition, fdef)
     }
     allMethods <- insertMethod(allMethods, signature, names, definition)
-    if(assignToGeneric)
-      assign(".Methods", allMethods, ev)
-    else
-      assignMethodsMetaData(f, allMethods, where = where)
+    assignMethodsMetaData(f, allMethods, where = where)
     ## cancel the session copy of the generic if there is one.
     if(!is.null(getFromMethodMetaData(f)))
         removeFromMethodMetaData(f)
@@ -270,14 +272,12 @@ selectMethod <-
   ## with arguments corresponding to the specified signature.
   ##
   ## f = the name of the generic function
-  ## signature = the signature of classes to match to the arguments of f.  The vector of strings
-  ##       for the classes can be named or not.  If named, the names must match formal
-  ##       argument names of f.  If not named, the signature is assumed to apply to the
-  ##       arguments of f in order.
+  ## env = an environment, in which the class corresponding to each argument
+  ##       is assigned with the argument's name.
   ## optional = If TRUE, and no explicit selection results, return result anyway. else error
   ## mlist = Optional MethodsList object to use in the search.  Usually omitted, but
   ##         required for a recursive call from within selectMethod.
-    function(f, signature = character(), optional = FALSE,
+    function(f, env = new.env(), optional = FALSE,
              inherited, mlist)
 {
     if(missing(mlist)) {
@@ -289,74 +289,32 @@ selectMethod <-
                 stop(paste("\"", f, "\" has no methods defined", sep=""))
         }                               # else, go on with selection
     }
-    methods <- slot(mlist, "methods")
-    defaultMethod <- elNamed(methods, "ANY")
-    sigNames <- names(signature)
-    if(is.null(sigNames)) {
-        ## convert to a named signature for recursive processing
-        sigNames <- formalArgs(f)
-        length(sigNames) <- length(signature)
-        if(length(signature))
-            names(signature) <- sigNames
-    }
-    if(missing(inherited)) ## avoid lazy eval. after signature changes
-      inherited <- rep(TRUE, length(signature))
-    argName <- as.character(slot(mlist, "argument"))
-    which <- match(argName, sigNames)
-    if(is.na(which)) {
-        thisClass <- "ANY"
-        inhThis <- TRUE ## irrelevant
-      }
-    else {
-        thisClass <- signature[[which]]
-        signature <- signature[-which]
-        inhThis <- inherited[[which]]
-        inherited <- inherited[-which]
-    }
-    exact <- TRUE
-    selection <- elNamed(methods, thisClass)
+    selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
     if(is.null(selection)) {
-        if(inhThis) {
-            selection <- elNamed(slot(mlist, "allMethods"), thisClass)
-            if(is.null(selection)) {
-                ## do the inheritance calculations
-                allSelections <- matchArgClass(thisClass, names(methods), methods)
-                for(cl in names(allSelections)) {
-                  method <- elNamed(allSelections, cl)
-                  if(is(method, "MethodsList"))
-                    ## try completing the selection
-                    method <- Recall(f = f, signature = signature, optional = TRUE,
-                                     inherited = inherited, mlist = method)
-                  if(is(method, "function")) {
-                    thisClass <- cl
-                    selection <- method
-                    break
-                  }
-                  ## else, try the next possibility
-                }
-                ## on exiting the loop, selection will still be NULL unless
-                ## one of the Recall's successfully found a single method
-                
-              }
-          }
-      }
+      ## do the inheritance computations to update the methods list, try again.
+      ##
+      ## assign the updated information to the method environment
+      fEnv <- getFromMethodMetaData(f)
+      if(is.function(fEnv))
+        fEnv <- environment(fEnv)
+      else
+        fEnv <- NULL
+      mlist <- MethodsListSelect(f, env, mlist, fEnv, evalArgs = FALSE, useInherits = inherited)
+      selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
+    }
     if(is(selection, "function"))
         selection
     else if(is(selection, "MethodsList")) {
-        if(length(signature) == 0) {
-            if(optional)
-                selection
-            else
-                stop("No unique method corresponding to this signature")
-        }
-        else
-            Recall(f, signature, optional, inherited, selection)
+      if(optional)
+        selection
+      else
+        stop("No unique method corresponding to this signature")
     }
     else {
         if(optional)
             selection
         else
-            stop(paste("Unable to match argument \"", argName, "\" to methods", sep=""))
+            stop("Unable to match signature to methods")
     }
 }
 
@@ -432,17 +390,26 @@ showMethods <-
   ## The output style is different from S-Plus in that it does not show the database
   ## from which the definition comes, but can optionally include the method definitions,
   ## if `includeDefs == TRUE'.
-  function(f, where, classes, includeDefs = FALSE, inherited = TRUE)
+  function(f = character(), where = -1, classes = NULL, includeDefs = FALSE, inherited = TRUE)
 {
-    if(!missing(classes))
-        warning("argument \"classes\" is not (yet) supported")
-    if(missing(f))
-        stop("argument \"f\" must (currently) be supplied")
+    if(length(f)==0) {
+      if(missing(where)) {
+        f <- getGenerics()
+        where = -1
+      }
+      else
+        f <- getGenerics(where)
+      for(ff in f) {
+        cat("\nFunction \"", ff, "\":\n", sep="")
+        Recall(ff, where, classes, includeDefs, inherited)
+      }
+      return()
+    }
     if(missing(where))
         mlist <- getMethods(f)
     else
         mlist <- getMethods(f, where)
-    showMlist(mlist, includeDefs, inherited)
+    showMlist(mlist, includeDefs, inherited, classes)
 }
 
 removeMethods <-
@@ -455,17 +422,18 @@ removeMethods <-
   ## defaults to the first element of the search list having a function called `f'.
   function(f, where)
 {
-    if(missing(where)) {
-        where <- findFunction(f)
-        if(length(where) == 0)
-            return(FALSE)
-        where <- el(where, 1)
-    }
-    else if(!exists(f, where))
-        return(FALSE)
-    if(!isGeneric(f))
-        return(FALSE)
-    default <- getMethod(f, optional=TRUE)
+  what <- mlistMetaName(f)
+  if(missing(where)) {
+    where <- find(what)
+    if(length(where) == 0)
+      return(FALSE)
+    where <- el(where, 1)
+  }
+  else if(!exists(what, where))
+    return(FALSE)
+  default <- getMethod(f, optional=TRUE)
+  rm(list = what, pos = where)
+  if(isGeneric(f, where)) {
     if(is.function(default)) {
         cat("Restoring default function definition of", f, "\n")
         assign(f, default, where)
@@ -474,7 +442,8 @@ removeMethods <-
         cat("No default method for ", f, "; removing generic function\n")
         rm(list=f, pos=where)
     }
-    return(TRUE)
+  }
+  return(TRUE)
 }
 
 resetGeneric <-
@@ -488,7 +457,7 @@ resetGeneric <-
     if(is.null(fdef))
         return(FALSE)
     methods <- get(".Methods", envir = environment(fdef), inherit=FALSE)
-    slot(methods, "allMethods") <- slot(methods, "methods")
+    methods <- setAllMethodsSlot(methods)
     assign(".Methods", envir = environment(fdef), methods)
     return(TRUE)
 }

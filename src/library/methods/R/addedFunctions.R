@@ -81,25 +81,25 @@ formalArgs <-
 
 existsFunction <-
   ## Is there a function of this name. If `generic==FALSE', generic functions are not counted.
-  function(name, generic=TRUE,
-           where = find(name, mode="function", numeric=TRUE))
+  function(f, generic=TRUE,
+           where = find(f, mode="function", numeric=TRUE))
 {
     if(generic && missing(where))
         return(length(where) > 0)
     if(is.environment(where)) {
-        if(!exists(name, where))
+        if(!exists(f, where))
             return(FALSE)
-        obj <- get(name, where)
+        obj <- get(f, where)
         return(is.function(obj) &&
-               (generic || !isGeneric(name, fdef = obj)))
+               (generic || !isGeneric(f, fdef = obj)))
     }
     for(wherei in where) {
-        if(!exists(name, where, inherits=FALSE))
+        if(!exists(f, where, inherits=FALSE))
             next
-        obj <- get(name, wherei)
+        obj <- get(f, wherei)
         if(is(obj, "function")) {
             if(!generic &&
-               isGeneric(name, fdef = obj))
+               isGeneric(f, fdef = obj))
                 next
             return(TRUE)
         }
@@ -111,13 +111,13 @@ findFunction <-
   ## return all the indices of the search list on which a function
   ## definition for `name' exists.  If `generic' is FALSE, ignore generic
   ## functions.
-  function(name, generic = TRUE)
+  function(f, generic = TRUE)
 {
-    allWhere <- find(name, mode = "function", numeric=TRUE)
+    allWhere <- find(f, mode = "function", numeric=TRUE)
     if(generic)
         allWhere
     else
-        sapply(as.list(allWhere), function(x)isGeneric(get(name, x)))
+        sapply(as.list(allWhere), function(x)isGeneric(get(f, x)))
 }
 
 Quote <- get("quote" , mode = "function")

@@ -91,9 +91,9 @@ insertMethod <-
         mlist <- new("MethodsList", argument = as.name(args[1]))
     else if(is.function(mlist))
         mlist <- new("MethodsList", argument = as.name(args[1]), methods = list(ANY = mlist))
-    current <- elNamed(slot(mlist, "methods"), Class)
+    current <- elNamed(mlist@methods, Class)
     if(length(signature) == 1 && !is(current, "MethodsList")) {
-        methods <- slot(mlist, "methods")
+        methods <- mlist@methods
         which <- match(Class, names(methods))
         if(is.na(which)) {
             if(!is.null(def))
@@ -107,12 +107,12 @@ insertMethod <-
             else
                 el(methods, which) <- def
         }
-        slot(mlist, "methods") <- methods
+        mlist@methods <- methods
         mlist
     }
     else {
         ## recursively merge
-        elNamed(slot(mlist, "methods"), Class) <-
+        elNamed(mlist@methods, Class) <-
             Recall(current, signature[-1], args[-1], def)
         mlist
     }
@@ -132,7 +132,10 @@ MethodsListSelect <-
   ## is returned as the value.  If matching fails,  NULL is returned.
     function(fname, ev,
              mlist = getMethodsForDispatch(fname),
-             finalDefault = finalDefaultMethod(mlist)
+             fEnv = NULL,
+             finalDefault = finalDefaultMethod(mlist),
+             evalArgs = TRUE,
+             useInherits ## supplied when evalArgs is FALSE
  )
 {
   if(!is(mlist, "MethodsList")) {
@@ -145,44 +148,62 @@ MethodsListSelect <-
   ## of a call to this function.  Make sure it's turned back on, even if an error occurs.
   on.exit(.Call("R_clear_method_selection", PACKAGE = "methods"))
   argName <- slot(mlist, "argument")
-  missingThisArg <-
-    eval(substitute(missing(ARGNAME),  list(ARGNAME = argName)), ev)
-  if(missingThisArg) {
-    arg <- NULL
-    thisClass <- "missing"
+  if(evalArgs) {
+    missingThisArg <-
+      eval(substitute(missing(ARGNAME),  list(ARGNAME = argName)), ev)
+    if(missingThisArg) {
+      arg <- NULL
+      thisClass <- "missing"
+    }
+    else {
+      arg <- eval(as.name(argName), ev)
+      thisClass <- data.class(arg) #really class, but only 1st string.
+    }
   }
   else {
-    arg <- eval(as.name(argName), ev)
-    thisClass <- data.class(arg) #really class, but only 1st string.
-    ## evaluate the argument to try class matching
+    thisClass <- get(as.character(argName), envir = ev)
+    arg <- new(thisClass)
   }
-  selection <- elNamed(slot(mlist, "allMethods"), thisClass)
-  inherited <- is.null(selection)
+  allMethods <- mlist@allMethods
+  which <- match(thisClass, names(allMethods))
+  inherited <- is.na(which)
+  selection <- if(inherited) NULL else allMethods[[which]]
   if(!inherited) {
     if(is(selection, "function"))
       ## found directly (won't happen if called from C dispatch)
       value <- mlist ## no change
     else {
       method <- Recall(NULL, ev, selection, finalDefault = finalDefault)
-      if(!is(method, "EmptyMethodsList")) {
-        method <- mergeAllMethods(selection, method, thisClass)
-        elNamed(slot(mlist, "allMethods"), thisClass) <- method
+      if(is(method, "EmptyMethodsList"))
+        value <- method
+      else {
+        ## not needed ? method <- mergeAllMethods(selection, method, thisClass)
+        mlist@allMethods[[which]] <- method
         value <- mlist
       }
-      else
-        value <- method
     }
   }
   if(inherited || is(value, "EmptyMethodsList"))  {
     ## direct selection failed at this level or below
     allSelections <- matchArg(arg, thisClass, mlist, ev)
+    allClasses <- names(allSelections)
     method <- NULL
-    for(selection in allSelections) {
+    for(i in seq(along = allSelections)) {
+      selection <- allSelections[[i]]
+      fromClass <- allClasses[[i]]
       if(is(selection, "function"))
         method <- selection
       else if(is(selection, "MethodsList")) {
         ## go on to try matching further arguments
-        method <- Recall(NULL, ev, selection, finalDefault = finalDefault)
+        if(evalArgs)
+          method <- Recall(NULL, ev, selection, finalDefault = finalDefault)
+        else {
+          which <- match(as.character(argName), names(useInherits))
+          if(is.na(which))
+            stop("Invalid call to MethodsListSelect with evalArgs==FALSE")
+          method <- Recall(NULL, ev, selection, finalDefault = finalDefault,
+                           evalArgs = FALSE, useInherits = useInherits[-which])
+        }
         if(is(method, "EmptyMethodsList"))
           selection <- method   ## recursive selection failed
       }
@@ -193,13 +214,18 @@ MethodsListSelect <-
       ## only use the final default method after exhausting all
       ## other possibilities, at all levels.
       method <- insertMethodInEmptyList(selection, finalDefault)
+      fromClass <- "ANY"
     }
     if(is.null(method))
       value <- emptyMethodsList(mlist, thisClass) ## nothing found
     else {
-      oldMethods <- elNamed(mlist@allMethods, thisClass)
-      newMethods <- mergeAllMethods(oldMethods, method, thisClass)
-      elNamed(mlist@allMethods, thisClass) <- newMethods
+      ##oldMethods <- elNamed(mlist@allMethods, thisClass)
+      ##newMethods <- mergeAllMethods(oldMethods, method, thisClass)
+      allMethods <- mlist@allMethods
+      elNamed(allMethods, thisClass) <- method ##newMethods
+      which <- match(thisClass, names(allMethods))
+      mlist@allMethods <- allMethods
+      mlist@fromClass[[which]] <- fromClass
       value <- mlist
     }
   }
@@ -207,8 +233,12 @@ MethodsListSelect <-
     ## top level
     if(is(value, "EmptyMethodsList")) ## selection failed
       value <- NULL
-    
+    else if(!is.null(fEnv)) {
+      ## and later a test that this selection used no conditional inheritance
+      assign(".Methods", value, envir = fEnv)
+    }
   }
+  validObject(value)
   value
 }
 
@@ -251,8 +281,12 @@ mergeAllMethods <-
       uA <- list()
       elNamed(uA, thisClass) <- update
     }
-    for(what in names(uA)) {
-      whatEl <- elNamed(uA, what)
+    uNames <- names(uA)
+    uClass <- update@fromClass
+    fromClass <- mlist@fromClass
+    for(i in seq(along = uA)) {
+      what <- uNames[[i]]
+      whatEl <- uA[[i]]
       ## as used from MethodsListSearch, it's asserted that cur
       ## is a MethodsList object
       if(is(whatEl, "MethodsList")) {
@@ -265,22 +299,15 @@ mergeAllMethods <-
       }
       else
         elNamed(mA, what) <- whatEl
+      mi <- match(what, names(mA))
+      fromClass[[mi]] <- uClass[[i]]
     }
     mlist@allMethods <- mA
+    mlist@fromClass <- fromClass
     mlist
   }
 
     
-
-MethodsListDispatch <-
-  function(fname, ev, mustFind = TRUE)
-  ## either the S language version:
-  ## MethodsListSelect(fname, ev, mustFind)
-  ## or the C version:
-    .Call("R_methods_list_dispatch", fname, ev, mustFind,
-          PACKAGE = "methods")
-
-
 
 finalDefaultMethod <-
   ## The real default method of this `MethodsList' object,
@@ -412,12 +439,38 @@ showMlist <-
   ##
   ## If `includeDefs' is `TRUE', the currently known inherited methods are included;
   ## otherwise, only the directly defined methods.
-function(mlist, includeDefs = TRUE, inherited = TRUE) {
-  methods <- listFromMlistForPrint(mlist, inherited)
+function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgNames = TRUE) {
+  object <- linearizeMlist(mlist, inherited)
+  methods <- object@methods
+  signatures <- object@classes
+  args <- object@arguments
+  from <- object@fromClasses
+  if(!is.null(classes)) {
+    keep <- !sapply(signatures, function(x, y)all(is.na(match(x, y))), classes)
+    methods <- methods[keep]
+    signatures <- signatures[keep]
+    args <- args[keep]
+  }
   if(length(methods) == 0)
     cat("<Empty Methods List>\n")
   else {
-    labels <- names(methods)
+   n <- length(methods)
+    labels <- character(n)
+    if(useArgNames) {
+      for(i in 1:n) {
+        sigi <- signatures[[i]]
+        if(inherited) {
+          fromi <- from[[i]]
+          inhi <- sigi != fromi
+          sigi[inhi] <- paste(sigi[inhi], "(from ", fromi[inhi], ")", sep="")
+        }
+        labels[[i]] <- paste(args[[i]], sigi, sep = " = ", collapse = ", ")
+      }
+    }
+    else {
+      for(i in 1:n)
+        labels[[i]] <- paste(signatures[[i]], collapse = ", ")
+    }
     for(i in seq(length=length(methods))) {
       cat(labels[[i]])
       if(includeDefs) {
@@ -436,9 +489,15 @@ promptMethods <-
   ## `file' can be a logical or the name of a file to print to.  If `file' is `FALSE',
   ## the methods skeleton is returned, to be included in other printing (typically,
   ## the output from `prompt'.
-  function(f, print = FALSE, inherited = FALSE, useArgName = TRUE) {
-    methods <- listFromMlistForPrint(getMethods(f), inherited, useArgName)
-    text <- paste("\\item{", names(methods), "}{ ~~describe this method here }")
+  function(f, print = FALSE, inherited = FALSE) {
+    object <- linearizeMlist(getMethods(f), inherited)
+    methods <- object@methods; n <- length(methods)
+    args <- object@arguments
+    signatures <- object@classes
+    labels <- character(n)
+    for(i in seq(length = n))
+      labels[[i]] <- paste(args[[i]], signatures[[i]], sep = " = ", collapse = ", ")
+    text <- paste("\\item{", labels, "}{ ~~describe this method here }")
     text <- c(paste("\\alias{methods_", f, "}", sep=""), "\\describe{", text, "}")
     if(identical(print, FALSE))
       return(text)
@@ -454,46 +513,56 @@ promptMethods <-
     file
   }
 
-listFromMlistForPrint <-
+
+linearizeMlist <-
   ## Undo the recursive nature of the methods list, making a list of function
   ## defintions, with the names of the list being the corresponding signatures
   ## (designed for printing; for looping over the methods, use `listFromMlist' instead).
   ##
-  ## The function calls itself recursively.  `prev' is the previously selected classes.
-  function(mlist, inherited = TRUE, useArgName = TRUE, prev = character()) {
+  ## The function calls itself recursively.  `prev' is the previously selected class names
+  ##
+  ## If argument `classes' is provided, only signatures containing one of these classes
+  ## will be included.
+  function(mlist, inherited = TRUE) {
     methods <- mlist@methods
     allMethods <- mlist@allMethods
     if(inherited && length(allMethods) >= length(methods)) {
         anames <- names(allMethods)
         inh <- is.na(match(anames, names(methods)))
-        anames[inh] <- paste(anames[inh], "(inherited)")
-        names(allMethods) <- anames
         methods <- allMethods
+        actualClasses <- mlist@fromClass
     }
-    value <- list()
-    vnames <- character()
+    else
+      actualClasses <- names(methods)
+    preC <- function(y, x)c(x,y) # used with lapply below
     cnames <- names(methods)
-    if(useArgName)
-      cnames <- paste(as.character(mlist@argument), cnames, sep = " = ")
+    value <- list()
+    classes <- list()
+    arguments <- list()
+    fromClasses <- list()
+    argname <- mlist@argument
     for(i in seq(along = cnames)) {
-        mi <- el(methods, i)
-        ci <- c(prev, el(cnames, i))
+        mi <- methods[[i]]
         if(is.function(mi)) {
           value <- c(value, list(mi))
-          vnames <- c(vnames, paste(ci, collapse=", "))
+          classes <- c(classes, list(cnames[[i]]))
+          fromClasses <- c(fromClasses, list(actualClasses[[i]]))
+          arguments <- c(arguments, list(argname))
         }
         else if(is(mi, "MethodsList")) {
-          mi <- Recall(mi, inherited, useArgName, ci)
-          value <- c(value, mi)
-          vnames <- c(vnames, names(mi))
+          mi <- Recall(mi, inherited)
+          value <- c(value, mi@methods)
+          classes <- c(classes, lapply(mi@classes, preC, cnames[[i]]))
+          fromClasses <- c(fromClasses, lapply(mi@fromClasses, preC, actualClasses[[i]]))
+          arguments <- c(arguments, lapply(mi@arguments, preC, argname))
         }
         else
           warning("Skipping methods list element ", paste(ci, collapse = ", "),
               " of unexpected class \"", data.class(mi),
-              "\"\n\n", sep="")
+              "\"\n\n")
       }
-    names(value) <- vnames
-    value
+    new("LinearMethodsList", methods = value, classes = classes, arguments = arguments,
+        fromClasses = fromClasses)
 }
 
 print.MethodsList <- function(x, ...)

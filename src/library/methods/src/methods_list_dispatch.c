@@ -28,12 +28,13 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val);
    they will eventually be C implementations of slot, data.class,
    etc. */
 
-static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry);
+static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
+			int evalArgs);
 
 /* objects, mostly symbols, that are initialized once to save a little time */
 static int initialized = 0;
 static SEXP s_dot_Arguments, s_expression, s_function,
-  s_mergeGenericFunctions, s_objectsEnv, s_MethodsListSelect,
+  s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
   s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_dot_Methods,
   s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets;
 static SEXP R_FALSE, R_TRUE;
@@ -57,7 +58,7 @@ void R_initMethodDispatch()
     s_dot_Arguments = Rf_install(".Arguments");
     s_expression = Rf_install("expression");
     s_function = Rf_install("function");
-    s_mergeGenericFunctions = Rf_install("mergeGenericFunctions");
+    s_getAllMethods = Rf_install("getAllMethods");
     s_objectsEnv = Rf_install("objectsEnv");
     s_MethodsListSelect = Rf_install("MethodsListSelect");
     s_sys_dot_frame = Rf_install("sys.frame");
@@ -200,11 +201,11 @@ static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
 
 /* call some S language functions */
 
-static SEXP R_S_mergeGenericFunctions(SEXP fname)
+static SEXP R_S_getAllMethods(SEXP fname)
 {
     SEXP e, val;
     PROTECT(e = allocVector(LANGSXP, 2));
-    PROTECT(val = Rf_findFun(s_mergeGenericFunctions, R_GlobalEnv));
+    PROTECT(val = Rf_findFun(s_getAllMethods, R_GlobalEnv));
     SETCAR(e, val);
     SETCAR(CDR(e), fname);
     val = eval(e, R_NilValue);
@@ -253,10 +254,11 @@ static SEXP R_S_sysframe(int n, SEXP ev)
 #endif
 
 
-static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist)
+static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
+				  SEXP f_env)
 {
     SEXP e, val;
-    PROTECT(e = allocVector(LANGSXP, 4));
+    PROTECT(e = allocVector(LANGSXP, 5));
     SETCAR(e, s_MethodsListSelect);
     val = CDR(e);
     SETCAR(val, fname);
@@ -265,6 +267,7 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist)
     val = CDR(val);
     SETCAR(val, mlist);
     val = CDR(val);
+    SETCAR(val, f_env);
     val = eval(e, R_GlobalEnv);
     UNPROTECT(1);
     return val;
@@ -478,7 +481,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	   information. First assign a special version to trap recursive
 	   calls to the same generic. */
 	R_assign_to_method_metadata(fsym, get_skeleton(fsym, R_NilValue));
-	PROTECT(fdef = R_S_mergeGenericFunctions(fname)); nprotect++;
+	PROTECT(fdef = R_S_getAllMethods(fname)); nprotect++;
 	R_assign_to_method_metadata(fsym, fdef);
 	if(fdef == R_NilValue) {
 	    error("\"%s\" has no defined methods", CHAR_STAR(fsym));
@@ -490,7 +493,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	PROTECT(f_env = R_get_function_env(fdef, fsym)); nprotect++;
 	mlist = R_get_from_f_env(f_env, s_dot_Methods, fsym);
 	PROTECT(mlist); nprotect++;
-	f = do_dispatch(fname, ev, mlist, TRUE);
+	f = do_dispatch(fname, ev, mlist, TRUE, TRUE);
 	if(isNull(f)) {
 	  /* call the S language code to do a search with inheritance */
 	  SEXP value = getOverride(mlist);
@@ -511,7 +514,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	       methods metadata.
 	    */
 	    R_assign_to_method_metadata(fsym, get_skeleton(fsym, R_NilValue));
-	    PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist)); nprotect++;
+	    PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
 	    R_assign_to_method_metadata(fsym, fdef);
 	    R_clear_method_selection(); /* to be safe.
 				     The S language code is supposed
@@ -519,12 +522,10 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	    if(isNull(value))
 	      error("No direct or inherited method for function \"%s\" for this call",
 		    CHAR_STAR(fname));
-	    else /* update the methods list in the function's environment*/
-	      setVarInFrame(f_env, s_dot_Methods, value);
 	    mlist = value;
 	    /* now look again.  This time the necessary method should
 	       have been inserted in the MethodsList object */
-	    f = do_dispatch(fname, ev, mlist, FALSE);
+	    f = do_dispatch(fname, ev, mlist, FALSE, TRUE);
 	  }
 	}
     }
@@ -574,10 +575,16 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
     return val;
 }
 
-static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry)
+SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist)
+{
+  return do_dispatch(fname, ev, mlist, TRUE, FALSE);
+}
+
+static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
+			int evalArgs)
 {
     char *arg_name, *class;
-    SEXP arg_slot, arg_sym, arg, method, value, child, class_obj;
+    SEXP arg_slot, arg_sym, arg, method, value, child;
     int inherited, nprotect = 0;
     PROTECT(arg_slot = R_get_attr(mlist, "argument")); nprotect++;
     if(arg_slot == R_NilValue) {
@@ -599,20 +606,29 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry)
     /* find the symbol in the frame, but don't use eval, yet, because
        missing arguments are ok & don't require defaults */
     arg = findVarInFrame(ev, arg_sym);
-    if(arg == R_UnboundValue) {
+    if(evalArgs) {
+      SEXP class_obj;
+      if(arg == R_UnboundValue) {
 	error("The specified argument (\"%s\") not found in the environment",
 	      CHAR(PRINTNAME(arg_sym)));
 	return(R_NilValue); /* -Wall */
-    }
-    if(arg == R_MissingArg) {
+      }
+      if(arg == R_MissingArg) {
 	arg = R_NilValue;
 	class_obj = s_missing;
+      }
+      else {
+	/* should be a formal argument in the frame, get its class */
+	PROTECT(class_obj = R_data_class(eval(arg_sym, ev), TRUE)); nprotect++;
+      }
+      class = CHAR(asChar(class_obj));
     }
     else {
-	/* should be a formal argument in the frame, get its class */
-      PROTECT(class_obj = R_data_class(eval(arg_sym, ev), TRUE)); nprotect++;
+      if(arg == R_UnboundValue)
+	class = "ANY";
+      else
+	class = CHAR_STAR(arg);
     }
-    class = CHAR(asChar(class_obj));
     method = R_find_method(mlist, class, fname);
     if(isNull(method)) {
       if(!firstTry)
@@ -633,7 +649,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry)
 	   passed on to the S language search function for inherited
 	   methods, to indicate a recursive call, not one to be stored in
 	   the methods metadata */
-	method = do_dispatch(R_NilValue, ev, method, firstTry);
+	method = do_dispatch(R_NilValue, ev, method, firstTry, evalArgs);
     }
     UNPROTECT(nprotect); nprotect = 0;
     return method;

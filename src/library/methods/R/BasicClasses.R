@@ -20,4 +20,14 @@
     setClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), where = envir)
     setClass("<-", "language", prototype = quote("<undef>"<-NULL), where = envir)
     setSClass("environment", generatorFunction = new.env, where = envir)
+
+    ## define some basic classes even though they aren't yet formally defined.
+    ## new() will work because these classes are handled by newBasic and included
+    ## in .BasicClasses
+
+    setClass("NULL", where = envir)
+    setClass("matrix", where = envir)
+    setClass("array", where = envir)
+    setClass("ts", where = envir)
+    
 }

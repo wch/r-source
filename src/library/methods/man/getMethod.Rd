@@ -21,7 +21,12 @@ getMethods(f, where=-1)
 MethodsListSelect(f, ev, mlist, finalDefault, ...)
 }
 \arguments{
-  \item{f}{ The character-string name of the generic function }
+  \item{f}{ The character-string name of the generic function.
+
+  In \code{getMethods} only, this argument may be a function definition,
+in which case the special methods list object, if any, stored in the environment of the function is
+returned.  (This usage is largely for internal purposes; you aren't
+likely to have such a function definition for direct use.)}
   \item{signature}{ The signature of classes to match to the arguments of \code{f}.  The vector of strings
       for the classes can be named or not.  If named, the names must match formal
       argument names of \code{f}.  If not named, the signature is assumed to apply to the

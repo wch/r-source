@@ -6,11 +6,15 @@
   Get the definition of a class.
 }
 \usage{
-getClass(Class)
+getClass(Class, .Force = FALSE)
 getClassDef(Class, where=-1)
 }
 \arguments{
   \item{Class}{ the character-string name of the class.}
+
+  \item{.Force}{ if \code{TRUE}, return \code{NULL} if the class is
+    undefined; otherwise, an undefined class results in an error.
+    }
 
   \item{where} { where to search for the definition; by default,
     anywhere on the current search list.}
@@ -22,10 +26,14 @@ including all slots, etc. in classes that this class extends. A call to
 \code{getClassDef} returns  the definition of the class from that
 database, unadorned.  It's usually \code{getClass} you want.
 
-However, \code{getClass} never fails; if the argument is undefined as a
-class, it returns a default definition for a virtual class.  If you want
-to fail should the definition not exist, use \code{getClassDef}
-(although \code{\link{isClass}} may be a better way to do the same thing).
+The statement that \code{getClass} fails if the class is undefined is
+not quite true at the moment.  A few special vector types and informally
+defined classes are allowed, and \code{getClass} returns \code{NULL} for
+these. But don't count on it; eventually these holes in the class system
+should be plugged.
+
+In any case, if you really want to know whether a class is formally
+defined, call \code{\link{isClass}}.
 
 
   
@@ -49,13 +57,16 @@ for further details and examples.
   John Chambers
 }
 
-\seealso{ \link{Classes}, \code{\link{setClass}}. }
+\seealso{ \link{Classes}, \code{\link{setClass}}, \code{\link{isClass}}. }
 
 \examples{
 getClass("numeric") ## a built in class
 
-getClass("thisIsAnUndefinedClass") ## returns a trivial definition
+\testonly{
+getClass("thisIsAnUndefinedClass", .Force = TRUE) ## returns NULL
+try(getClass("thisIsAnUndefinedClass")) ## generates an error
 try(getClassDef("thisIsAnUndefinedClass")) ## generates an error
+}
 }
 \keyword{programming}
 \keyword{classes}

@@ -123,7 +123,7 @@ completeClassDefinition <-
         ## copy the environment so the completion will not be saved beyond the
         ## session.
         assignClassDef(Class, ClassDef, 0)
-        on.exit(if(is.null(value)) removeClassDef(Class), add=TRUE)
+        on.exit(if(is.null(value)) removeClass(Class, where = 0), add=TRUE)
         ev <- environment(ClassDef)
         properties <- getProperties(ClassDef)
         immediate <- getExtends(ClassDef)
@@ -350,7 +350,7 @@ newBasic <-
   ## See `new' for the interpretation of the arguments.
   function(Class, ..., .Force = FALSE) {
   value <- switch(Class,
-               "NULL" = list(), ## can't set attr's of NULL in R
+               "NULL" = return(NULL), ## can't set attr's of NULL in R
                "logical" =,
                "numeric" =,
                "character" =,
@@ -365,6 +365,7 @@ newBasic <-
                "named" = named(...),
                "array" = (if(nargs() > 1) array(...) else structure(numeric(), .Dim =0)),
                "matrix" = (if(nargs() > 1) matrix(...) else matrix(0,0,0)),
+               "ts" = ts(...),
             ## The language data
                   "name" = as.name("<UNDEFINED>"), # R won't allow 0 length names
                   "call" = quote({}), ## general expressions all get data.class=="call"
@@ -845,12 +846,6 @@ function (x, row.names = NULL, optional = FALSE)
         attr(x, "class") <- data.class(x)
     UseMethod("as.data.frame", x, row.names, optional)
 }
-
-nullSymbol <-
-  ## Returns the special name which is the symbol used to represent NULL slots as (non-NULL)
-  ## attributes.
-  function()
-  .Call("R_pseudo_null", PACKAGE = "base")
 
 requireMethods <-
   ## Require a subclass to implement methods for the generic functions, for this signature.
