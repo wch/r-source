@@ -59,7 +59,6 @@
   \code{\link{predict}}.
 }
 \examples{
-library( nls )
 data( BOD )
 fm <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 predict(fm)              # fitted values at observed times

@@ -30,7 +30,6 @@ plot.profile.nls(x, levels, conf, nseg, absVal, ...)
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{\code{\link{nls}}, \code{\link{profile}}, \code{\link{profile.nls}}}
 \examples{
-library( nls )
 data( BOD )
 # obtain the fitted object
 fm1 <- nls(demand ~ SSasympOrig( Time, A, lrc ), data = BOD)

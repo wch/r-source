@@ -46,7 +46,6 @@
 	S and S-PLUS}, Springer.
 }
 \examples{
-library(nls)
 data(ChickWeight)
 coplot(weight ~ Time | Chick, data = ChickWeight,
     type = "b", show = FALSE)

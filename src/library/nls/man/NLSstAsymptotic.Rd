@@ -1,4 +1,4 @@
-% $Id: NLSstAsymptotic.Rd,v 1.3.14.1 2001/01/08 20:35:33 bates Exp $
+% $Id: NLSstAsymptotic.Rd,v 1.3.14.2 2001/03/24 00:08:06 bates Exp $
 \name{NLSstAsymptotic}
 \title{Fit the Asymptotic Regression Model}
 \alias{NLSstAsymptotic}
@@ -22,7 +22,6 @@ NLSstAsymptotic(xy)
 \author{Jose Pinheiro and Douglas Bates}
 \seealso{\code{\link{SSasymp}}}
 \examples{
-library( nls )
 data( Loblolly )
 Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
 NLSstAsymptotic(sortedXyData(expression(age), expression(height), Lob.329 ))

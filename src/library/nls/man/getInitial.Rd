@@ -1,4 +1,4 @@
-% $Id: getInitial.Rd,v 1.4.4.1 2001/01/24 12:20:54 ripley Exp $
+% $Id: getInitial.Rd,v 1.4.4.2 2001/03/24 00:08:06 bates Exp $
 \name{getInitial}
 \title{Get Initial Parameter Estimates}
 \alias{getInitial}
@@ -35,7 +35,6 @@ getInitial(object, data, ...)
     \code{\link{selfStart.default}}, \code{\link{selfStart.formula}}
 }
 \examples{
-library(nls)
 data(Puromycin)
 PurTrt <- Puromycin[ Puromycin$state == "treated", ]
 getInitial( rate ~ SSmicmen( conc, Vm, K ), PurTrt )

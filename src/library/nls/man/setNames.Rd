@@ -20,7 +20,6 @@ setNames(object, nm)
 \author{Douglas M. Bates and Saikat DebRoy }
 \seealso{\code{\link{clearNames}}}
 \examples{
-library( nls )
 setNames( 1:3, c("foo", "bar", "baz") )
 # this is just a short form of
 tmp <- 1:3
