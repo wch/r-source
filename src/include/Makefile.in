@@ -10,10 +10,14 @@ subdir = src/include
 
 include $(top_builddir)/Makeconf
 
-SRC_HEADERS = Applic.h Arith.h Blas.h Complex.h Error.h Errormsg.h \
-	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h\
-	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h
-OBJ_HEADERS = Rconfig.h Rversion.h config.h
+#SRC_HEADERS = Applic.h Arith.h Complex.h Error.h \
+#	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h \
+#	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h \
+#	R.h RS.h Constants.h # Blas.h
+SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h S_compat.h
+R_EXT_HEADERS = Applic.h Arith.h Complex.h Constants.h Error.h \
+	Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h RS.h Utils.h f2c.h
+OBJ_HEADERS = Rconfig.h Rversion.h # config.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
@@ -29,9 +33,12 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile config.h Rconfig.h Rversion.h FFDecl.h FFTab.h
-	@$(MKINSTALLDIRS) $(top_builddir)/include
+	@$(MKINSTALLDIRS) $(top_builddir)/include $(top_builddir)/include/R_ext
 	@for f in $(SRC_HEADERS); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir)/include; \
+	done
+	@for f in $(R_EXT_HEADERS); do \
+	  $(INSTALL_DATA) $(srcdir)/R_ext/$$f $(top_builddir)/include/R_ext; \
 	done
 	@for f in $(OBJ_HEADERS); do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/include; \

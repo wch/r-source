@@ -18,7 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#include "S.h"
+#include "R.h"
 
 /* cor is the autocorrelations starting from 0 lag*/
 void uni_pacf(double *cor, double *p, int *pnlag)

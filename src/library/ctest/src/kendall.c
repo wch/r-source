@@ -5,7 +5,7 @@
    */
 
 #include <S.h>
-#include <Mathlib.h>
+#include <R_ext/Mathlib.h>
 
 #include "ctest.h"
 

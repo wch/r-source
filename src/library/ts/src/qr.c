@@ -16,11 +16,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#include "carray.h"
-#include "Memory.h" /* vmaxget(), vmaxset() */
-#include "Applic.h" /* Fortran routines */
-#include "Error.h"  /* Exit gracefully */
 #include <math.h>
+#include "R.h" /* vmaxget(), vmaxset() error */
+#include "R_ext/Applic.h" /* Fortran routines */
+#include "carray.h"
 
 #include "qr.h"
 
@@ -61,7 +60,7 @@ void qr_solve(Array x, Array y, Array coef)
     n = NROW(x);
     p = NCOL(x);
 
-    F77_SYMBOL(dqrdc2)(VECTOR(xt), &n, &n, &p, &tol, &rank,
+    F77_CALL(dqrdc2)(VECTOR(xt), &n, &n, &p, &tol, &rank,
                        qraux, pivot, work);
 
     if (rank != p)
@@ -71,7 +70,7 @@ void qr_solve(Array x, Array y, Array coef)
     coeft = make_zero_matrix(NCOL(coef), NROW(coef));
     transpose_matrix(y, yt);
 
-    F77_SYMBOL(dqrcf)(VECTOR(xt), &NROW(x), &rank, qraux,
+    F77_CALL(dqrcf)(VECTOR(xt), &NROW(x), &rank, qraux,
         yt.vec, &NCOL(y), coeft.vec, &info);
 
     transpose_matrix(coeft,coef);
@@ -104,7 +103,7 @@ double ldet(Array x)
 
     p = n = NROW(x);
 
-    F77_SYMBOL(dqrdc2)(VECTOR(xtmp), &n, &n, &p, &tol, &rank,
+    F77_CALL(dqrdc2)(VECTOR(xtmp), &n, &n, &p, &tol, &rank,
                        qraux, pivot, work);
 
     if (rank != p)

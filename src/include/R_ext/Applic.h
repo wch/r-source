@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2000   Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -22,10 +22,10 @@
  * ----------------------------------------------  ========
  */
 
-#ifndef APPLIC_H_
-#define APPLIC_H_
+#ifndef R_APPLIC_H_
+#define R_APPLIC_H_
 
-#include "config.h"		/* F77... */
+#include "Rconfig.h"		/* F77... */
 
 void approx(double *, double *, int *, double *, int *,
 	    int *, double *, double *, double *);

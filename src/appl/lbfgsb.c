@@ -19,9 +19,10 @@
 /* l-bfgs-b.f -- translated by f2c (version 19991025).
 */
 
-#include "S.h"
 #include <math.h>
 #include <string.h>
+#include "R.h" /* for F77_CALL */
+#include "Linpack.h"
 
 static void timer(double * ttime)
 {
@@ -44,12 +45,14 @@ static double c_b275 = .001;
 static double c_b276 = .9;
 static double c_b277 = .1;
 
+/*
 extern double F77_CALL(ddot)(int *, double *, int *, double *, int *);
 extern void F77_CALL(dscal)(int *, double *, double *, int *);
 extern void F77_CALL(dcopy)(int *, double *, int *, double *, int *);
 extern void F77_CALL(daxpy)(int *, double *, double *, int *, double *, int *);
 extern void F77_CALL(dpofa)(double *, int *, int *, int *);
 extern void F77_CALL(dtrsl)(double *, int *, int *, double *, int *, int *);
+*/
 
 static void active(int, double *, double *, int *, double *, int *,
 		   int, int *, int *, int *);

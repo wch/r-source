@@ -30,8 +30,8 @@
 /*-- Mathlib as part of R --  undefine this for standalone : */
 #define MATHLIB_IN_R
 
-#include "config.h"
-#include "Arith.h"
+#include "Rconfig.h"
+#include "R_ext/Arith.h"
 
 #ifdef FORTRAN_H
 #error __MUST__include "Mathlib.h"  _before_  "Fortran.h"
@@ -183,7 +183,7 @@ extern double m_one;
 #define ML_NEGINF	((-m_one) / m_zero)
 #define ML_NAN		(m_zero / m_zero)
 #define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
-#define ML_VALID(x)	(!isnan(x))
+#define ML_VALID(x)	(!ISNAN(x))
 
 #else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
 void ml_error(int n);

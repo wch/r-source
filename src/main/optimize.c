@@ -24,10 +24,10 @@
 #endif
 
 #include "Defn.h"
-#include "Print.h"		/*for printRealVector()*/
+#include "Print.h"		/* for printRealVector() */
 #include "Mathlib.h"
 #include "Applic.h"
-#include "S.h"			/*for Memcpy */
+#include "RS.h"			/* for Memcpy */
 
 /* WARNING : As things stand, these routines should not be called
  *	     recursively because of the way global variables are used.

@@ -18,8 +18,30 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-void	error(const char *, ...);
-void	warning(const char *, ...);
-void	WrongArgCount(char *);
-void	UNIMPLEMENTED(char *);
+#ifndef RANDOM_H
+#define RANDOM_H
 
+typedef enum {
+    WICHMANN_HILL,
+    MARSAGLIA_MULTICARRY,
+    SUPER_DUPER,
+    RAND,
+    MERSENNE_TWISTER
+} RNGtype;
+
+/* Different kind of "N(0,1)" generators :*/
+typedef enum {
+    AHRENS_DIETER,
+    KINDERMAN_RAMAGE
+} N01type;
+
+
+void GetRNGstate();
+void PutRNGstate();
+
+double unif_rand(void);
+/* These are also defined in Mathlib.h */
+double norm_rand(void);
+double exp_rand(void);
+
+#endif

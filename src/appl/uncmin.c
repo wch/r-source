@@ -24,8 +24,9 @@
    */
 
 #include <math.h>
-#include "S.h"
+#include "R.h"
 #include "Applic.h"
+#include "Linpack.h"
 #include "PrtUtil.h" /* Rprintf and printRealVector */
 
 #ifndef max
@@ -38,12 +39,14 @@
 extern double d1mach(int);
 extern int i1mach(int);
 
+/*
 extern double F77_NAME(ddot)(int *, double *, int *, double *, 
 			       int *);
 extern double F77_NAME(dnrm2)(int *, double *, int *);
 extern int F77_NAME(dtrsl)(double *, int *, int *, double *, int *,
 			     int *);
 extern int F77_NAME(dscal)(int *, double *, double *, int *);
+*/
 
 /* CC    subroutines  mvmlt[lsu] should be REPLACED by BLAS ones! */
 /* CC */

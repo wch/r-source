@@ -25,12 +25,13 @@
  * to be called as  .C(.)  in ../R/lqs.R
  */
 
-#include "S.h"
-#include "Random.h"	/* unif_rand(), Get/PutRNGstate */
-#include "Applic.h"	/* for the QR	  routines */
-#include "Utils.h"	/* for the sort() routines */
+/* in R.h 
 #include <math.h>
-#include <limits.h>
+#include <limits.h> */
+
+#include "R.h"
+#include "R_ext/Applic.h"	/* for the QR	  routines */
+#include "R_ext/Utils.h"	/* for the sort() routines */
 #define BIG DBL_MAX
 
 /* GLOBAL Variables, explicitly allocated and freed: */

@@ -26,8 +26,8 @@
 #ifndef PRTUTIL_H_
 #define PRTUTIL_H_
 
-#include "Complex.h"
 #include <stdarg.h>
+#include "R_ext/Complex.h"
 
 #define adj_right 1
 #define adj_left  0

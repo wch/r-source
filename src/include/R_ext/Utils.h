@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka 
+ *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,27 +16,36 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *
+ * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
  */
 
-#ifndef RANDOM_H
-#define RANDOM_H
+#ifndef UTILS_H_
+#define UTILS_H_
 
-typedef enum {
-    WICHMANN_HILL,
-    MARSAGLIA_MULTICARRY,
-    SUPER_DUPER,
-    RAND,
-    MERSENNE_TWISTER
-} RNGtype;
+#include "R_ext/Complex.h"
 
-/* Different kind of "N(0,1)" generators :*/
-typedef enum {
-    AHRENS_DIETER,
-    KINDERMAN_RAMAGE
-} N01type;
+/* ../main/sort.c : */
+void	isort(int*,     int);
+void	rsort(double*, int);
+void	csort(Rcomplex*, int);
+void    rsort_with_index(double *, int *, int);
+void	revsort(double*, int*, int);/* reverse; sort i[] alongside */
+void	iPsort(int*,    int, int);
+void	rPsort(double*, int, int);
+void	cPsort(Rcomplex*, int, int);
 
+int	IndexWidth(int);
+int	Rstrlen(char*);
+char*	R_ExpandFileName(char*);
+void	setIVector(int*, int, int);
+void	setRVector(double*, int, double);
+int	StringFalse(char*);
+int	StringTrue(char*);
+int	isBlankString(unsigned char *);
 
-void GetRNGstate();
-void PutRNGstate();
+void	hsv2rgb(double *h, double *s, double *v,/* in */
+		double *r, double *g, double *b);/* out */
 
 #endif

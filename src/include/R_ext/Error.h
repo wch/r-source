@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 1998-2000   Robert Gentleman, Ross Ihaka 
+ *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,18 +15,15 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "Mathlib.h"
+#ifndef _R_ERROR_H_
+#define _R_ERROR_H_
 
-double rlogis(double location, double scale)
-{
-    double u;
+void	error(const char *, ...);
+void	warning(const char *, ...);
+void	WrongArgCount(char *);
+void	UNIMPLEMENTED(char *);
 
-    if (!R_FINITE(location) || !R_FINITE(scale))
-	ML_ERR_return_NAN;
-
-    u = unif_rand();
-    return location + scale * log(u / (1. - u));
-}
+#endif

@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.1 1999/11/11 21:09:49 bates Exp $ 
+ *  $Id: nls.c,v 1.2 2000/01/22 20:10:00 ripley Exp $ 
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -25,7 +25,7 @@
  *
  */
 
-#include "S.h"
+#include "R.h"
 #include "Rinternals.h"
 #include <stdlib.h>
 

@@ -18,9 +18,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#include "Arith.h"
-#include "Memory.h"
 #include <math.h>
+#include "R.h"
 
 #ifndef min
 #define min(a, b) ((a < b)?(a):(b))

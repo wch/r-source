@@ -1,4 +1,4 @@
-#include <Mathlib.h>
+#include <R_ext/Mathlib.h>
 #include <Rinternals.h>
 
 SEXP R_cutree(SEXP merge, SEXP which)

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998-2000   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,29 +18,21 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef ERRORMSG_H
-#define ERRORMSG_H
+#ifndef R_EXT_CONSTANTS_H_
+#define R_EXT_CONSTANTS_H_
 
-#include "Error.h"
+#ifndef M_PI
+#define M_PI 3.141592653589793238462643383279502884197169399375
+#endif
 
-	/* Packaged Error Messages */
-	/* Argument list length and type errors */
-
-#define ERROR_NUMARGS		1
-#define ERROR_ARGTYPE		2
-#define ERROR_INCOMPAT_ARGS	3
-
-	/* General type and length incompatibilities */
-
-#define ERROR_TSVEC_MISMATCH	100
-
-#define ERROR_UNIMPLEMENTED	9998
-#define ERROR_UNKNOWN		9999
-
-
-
-	/* Packaged Warning Messages */
-
-#define WARNING_UNKNOWN		9999
+#define PI             M_PI
+#define SINGLE_EPS     FLT_EPSILON
+#define SINGLE_BASE    FLT_RADIX
+#define SINGLE_XMIN    FLT_MIN
+#define SINGLE_XMAX    FLT_MAX
+#define DOUBLE_DIGITS  DBL_MANT_DIG
+#define DOUBLE_EPS     DBL_EPSILON
+#define DOUBLE_XMAX    DBL_MAX
+#define DOUBLE_XMIN    DBL_MIN
 
 #endif

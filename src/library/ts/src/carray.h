@@ -1,5 +1,3 @@
-#include "Memory.h"
-
 #define MAX_DIM_LENGTH 4
 
 #define VECTOR(x) (x.vec)

@@ -34,7 +34,7 @@ PKGCLEAN=$(foreach i, $(PACKAGES), pkgclean-$i)
 
 all: rbuild rdemo rpackage
 
-CFLAGS=$(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
+CFLAGS=$(OPTFLAGS) -I../include -I../include/R_ext -I. -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
@@ -247,10 +247,8 @@ srcdist:
 
 
 #taken from ../include/Makefile.in
-SRC_HEADERS = Applic.h Arith.h Blas.h Complex.h Error.h Errormsg.h \
-	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h \
-	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h
-OBJ_HEADERS = config.h Rversion.h
+SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h S_compat.h
+OBJ_HEADERS = Rconfig.h Rversion.h
 GW32_HEADERS = globalvar.h psignal.h
 
 packagedist:
@@ -265,6 +263,7 @@ packagedist:
 	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c
 	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
 	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS),../include/$i) $(RPREFIX)/src/include
+	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
 	$(CP) readme.packages $(RPREFIX)
 	$(CP) ../../etc/Rdconvlib.pl ../../etc/html-layout.pl $(RPREFIX)/etc
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
