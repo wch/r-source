@@ -266,8 +266,11 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level)
 
     }
 
-    if (stretch)
+    if (stretch) {
+	PROTECT(*y);
 	*x = EnlargeVector(*x, stretch);
+	UNPROTECT(1);
+    }
 
     if(redo_which)
 	return(100 * TYPEOF(*x) + TYPEOF(*y));
