@@ -146,8 +146,9 @@
 #  define PATH_MAX MAXPATHLEN
 # elif defined(Win32)
 #  define PATH_MAX 260
-# else
-#  define PATH_MAX 255
+# else 
+/* quite possibly unlimited, so we make this large, and test when used */
+#  define PATH_MAX 5000
 # endif
 #endif
 
