@@ -186,11 +186,12 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
         else xint <- object$x.intercept
         x <- rbind(sweep(newdata, 2, object$x.mean),
                    matrix(rep(0, nser), n.ahead, nser, byrow=TRUE))
+        ar <- aperm(ar, c(2, 3, 1))
         if(p > 0) {
             for(i in 1:n.ahead) {
-                x[n+i,] <- x[n+i-1,] %*% ar[1,,] + xint
+                x[n+i,] <- ar[,,1] %*% x[n+i-1,] + xint
                 if(p > 1) for(j in 2:p)
-                    x[n+i,] <- x[n+i,] + x[n+i-j,] %*% ar[j,,]
+                    x[n+i,] <- x[n+i,] + ar[,,j] %*% x[n+i-j,]
             }
             pred <- x[n+(1:n.ahead), ]
         } else {
@@ -221,12 +222,10 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
                 se <- sqrt(object$var.pred*vars)[1:n.ahead]
             }
         } else {
-            pred <- rep(0, n.ahead)
+            pred <- rep(xint, n.ahead)
             if (se.fit) se <- rep(sqrt(object$var.pred), n.ahead)
         }
         pred <- pred + rep(object$x.mean, n.ahead)
-        if(!is.null(xint <- object$x.intercept))
-            pred <- pred + rep(xint, n.ahead)
     }
     pred <- ts(pred, start = st + dt, frequency=xfreq)
     if(se.fit) se <- ts(se, start = st + dt, frequency=xfreq)
