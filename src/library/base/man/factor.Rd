@@ -36,6 +36,10 @@ as.ordered(x)
   level for the factor.  \emph{This means that there will be no
   \code{NA} values in the result}.
 
+  \code{factor} applied to a factor is a no-op, except if there are 
+  empty levels. In that case, a factor with the reduced level set
+  set is returned.
+
   \code{labels} is a vector of character strings used to label the
   levels of the factor.  The default is to use the encoded factor levels.
 
@@ -59,6 +63,8 @@ as.ordered(x)
 ff <- factor(substring("statistics",1:10,1:10), levels=letters)
 ff
 codes(ff)
+factor(ff)
+factor(factor(letters[7:10])[2:3]) # excercise indexing and reduction
 }
 \keyword{category}
 \keyword{NA}

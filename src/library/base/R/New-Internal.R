@@ -101,7 +101,7 @@ typeof <- function(x).Internal(typeof(x))
 unique <- function(x){
 	z<-.Internal(unique(x))
 	if (is.factor(x))
-		z <- factor(z,labels=levels(x))
+		z <- factor(z,levels=1:nlevels(x),labels=levels(x))
 	z
 }
 update.formula <- function(old, new).Internal(update.formula(old, new))
