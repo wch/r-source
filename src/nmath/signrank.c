@@ -65,6 +65,7 @@ w_free(int n)
 	if(w[i]) {free((void *) w[i]); w[i] = 0;}
     free((void *) w);
     w = 0;
+    allocated_n = 0;
 }
 
 void signrank_free()

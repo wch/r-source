@@ -58,7 +58,7 @@ w_free(int m, int n)
 	free((void *) w[i]);
     }
     free((void *) w);
-    w = 0;
+    w = 0; allocated_m = allocated_n = 0;
 }
 
 static void
