@@ -54,6 +54,7 @@ kernel		Smoothing kernel objects (and (modified) Daniell, Fejer and
 		   Dirichlet kernels)
 lag		Compute lagged version of time series
 lag.plot        Time Series Lag Plots
+monthplot	Plot a Seasonal or other Subseries
 na.contiguous	Find longest contiguous stretch of non-NAs
 pacf		Partial autocorrelation function
 plot.acf	Plot autocorrelation function
