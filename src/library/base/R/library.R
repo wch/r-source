@@ -454,12 +454,34 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     else {
         ## update the ".required" variable
         if(identical(save, TRUE)) {
-            save <- topenv(parent.frame()) # a package namespace, topLevelEnvironment option or .GlobalEnv
+            save <- topenv(parent.frame())
+            ## (a package namespace, topLevelEnvironment option or
+            ## .GlobalEnv)
             if(identical(save, .GlobalEnv)) {
                 ## try to detect call from .First.lib in  a package
-                if(exists("pkgname", sys.frame(sys.parent(1)), inherits = FALSE))
-                    save <- as.environment(paste("package:", get("pkgname", sys.frame(sys.parent(1))), sep=""))
-                ## else either from prompt or in the source for install with saved image ?
+                ## <FIXME>
+                ## Although the docs have long and perhaps always had
+                ##   .First.lib(libname, pkgname)
+                ## the majority of CRAN packages seems to use arguments
+                ## 'lib' and 'pkg'.
+                objectsInParentFrame <- sort(objects(parent.frame()))
+                if(identical(sort(c("libname", "pkgname")),
+                             objectsInParentFrame))
+                    save <-
+                        as.environment(paste("package:",
+                                             get("pkgname",
+                                                 parent.frame()),
+                                             sep = ""))
+                else if(identical(sort(c("lib", "pkg")),
+                                  objectsInParentFrame))
+                    save <-
+                        as.environment(paste("package:",
+                                             get("pkg",
+                                                 parent.frame()),
+                                             sep = ""))
+                ## </FIXME>
+                ## else either from prompt or in the source for install
+                ## with saved image ? 
             }
         }
         else
