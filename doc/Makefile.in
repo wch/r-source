@@ -80,7 +80,7 @@ distclean: clean
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
-	@rm -f R.1
+	@rm -f $(srcdir)/R.1
 
 maintainer-build: $(srcdir)/R.1
 $(srcdir)/R.1: $(top_srcdir)/src/scripts/R.sh.in $(srcdir)/R.aux

@@ -166,9 +166,12 @@ distclean: clean
 	@rm -rf bin include library gnome
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool
+## FIXME:
+## This should really do something!
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
+## </FIXME>
 
 dist: dist-unix
 dist-unix: distdir
