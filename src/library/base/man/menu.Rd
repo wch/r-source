@@ -1,11 +1,11 @@
 \name{menu}
 \title{Menu Interaction Function}
 \usage{
-menu(x, graphics = FALSE, title = "")
+menu(choices, graphics = FALSE, title = "")
 }
 \alias{menu}
 \arguments{
-  \item{x}{a character vector of choices}
+  \item{choices}{a character vector of choices}
   \item{graphics}{a logical indicating whether a graphics menu should be
     used.  Currently unused.}
   \item{title}{a character string to be used as the title of the menu}
@@ -20,8 +20,10 @@ menu(x, graphics = FALSE, title = "")
   made.
 }
 \examples{
+\dontrun{
 switch(menu(c("List letters", "List LETTERS")) + 1,
        cat("Nothing done\n"), letters, LETTERS)
+}
 }
 \keyword{utilities}
 \keyword{programming}
