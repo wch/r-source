@@ -25,15 +25,15 @@ suppressMessages(expr)
   is available.
   
   \code{suppressMessages} evaluates its expression in a context that
-  ignores all warnings.
+  ignores all \dQuote{simple} diagnostic messages.
 }  
 \seealso{
   \code{\link{warning}} and \code{\link{stop}} for generating warnings
-  and errors; \code{\link{condition}} for condition handling and
+  and errors; \code{\link{conditions}} for condition handling and
   recovery.
   
   \code{\link{gettext}} for the mechanisms for the automated translation
-  of messages.
+  of text.
 }
 \examples{
 message("ABC", "DEF")
