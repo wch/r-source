@@ -48,6 +48,7 @@ export(
        "grid.get", "grid.set", "grid.add", "grid.remove", "grid.edit",
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
 #       "childNames",
+	"gTreeChildren",
 
        # Creating and drawing predefined grobs and gTrees
        "grid.arrows", "grid.circle",

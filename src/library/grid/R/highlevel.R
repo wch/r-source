@@ -101,26 +101,28 @@ grid.multipanel <- function(x=stats::runif(90), y=stats::runif(90),
 }
 
 grid.show.layout <- function(l, newpage=TRUE,
+                             bg="light grey",
                          cell.border="blue", cell.fill="light blue",
-                         cell.label=TRUE, vp=NULL) {
+                         cell.label=TRUE, label.col="blue",
+                             unit.col="red", vp=NULL) {
   if (!is.layout(l))
     stop("l must be a layout")
   if (newpage)
     grid.newpage()
   if (!is.null(vp))
     pushViewport(vp)
-  grid.rect(gp=gpar(col=NULL, fill="light grey"))
+  grid.rect(gp=gpar(col=NULL, fill=bg))
   vp.mid <- viewport(0.5, 0.5, 0.8, 0.8, layout=l)
   pushViewport(vp.mid)
   grid.rect(gp=gpar(fill="white"))
-  gp.red <- gpar(col="red")
+  gp.red <- gpar(col=unit.col)
   for (i in 1:l$nrow)
     for (j in 1:l$ncol) {
       vp.inner <- viewport(layout.pos.row=i, layout.pos.col=j)
       pushViewport(vp.inner)
       grid.rect(gp=gpar(col=cell.border, fill=cell.fill))
       if (cell.label)
-        grid.text(paste("(", i, ", ", j, ")", sep=""), gp=gpar(col="blue"))
+        grid.text(paste("(", i, ", ", j, ")", sep=""), gp=gpar(col=label.col))
       if (j==1)
         grid.text(as.character(l$heights[i]), gp=gp.red,
               just=c("right", "centre"),

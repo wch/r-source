@@ -188,6 +188,11 @@ gTree <- function(..., name=NULL, gp=NULL, vp=NULL,
 # revert to individual support for each function with highly
 # repetitive code
 
+# Public API for childNames
+gTreeChildren <- function(gTree) {
+  childNames(gTree)
+}
+
 childNames <- function(gTree) {
   if (!inherits(gTree, "gTree"))
     stop("It is only valid to get children from a gTree")
@@ -1028,6 +1033,7 @@ grid.draw.grob <- function(x, recording=TRUE) {
   set.gpar(tempgpar)
   if (recording)
     record(x)
+  invisible()
 }
 
 drawChildren <- function(x) {
@@ -1049,6 +1055,7 @@ grid.draw.gTree <- function(x, recording=TRUE) {
   grid.Call.graphics("L_setCurrentGrob", tempgrob)
   if (recording)
     record(x)
+  invisible()
 }
                
 draw.all <- function() {
