@@ -170,7 +170,8 @@ NEW FEATURES
     o	plot.function() and curve() now take xlim as default for (from,to)
 	if the former is specified.
 
-    o	C API: R_ext/Boolean.h: Rboolean type with TRUE & FALSE enum constants.
+    o	C API: R_ext/Boolean.h: Rboolean type with TRUE & FALSE 
+	enum constants.
 
     o	Date-time support functions with classes "POSIXct" and
 	"POSIXlt" to represent dates/times (resolution 1 second) in
@@ -202,6 +203,8 @@ NEW FEATURES
     o	The R Language Manual (R-lang.texi) is now included and built
 	in the same way as the other manuals.
 
+    o	The R Data Import/Export Manual (R-data.texi) has been added.
+
     o	The postscript() driver now allows a user-specified family so,
 	for example, one can use the same fonts in diagrams as in 
 	running text.
@@ -213,7 +216,7 @@ NEW FEATURES
 
     o	scan() and read.table() have a new argument `fill' which can
 	be set TRUE to allow reading files with unequal number of
-	fields per line. (Programs like Excel has a habit of creating
+	fields per line. (Programs like Excel have a habit of creating
 	such files when exporting.)
 
     o	New functions read.delim() and read.delim2() to make it
@@ -261,8 +264,8 @@ NEW FEATURES
 	This provides an interface to R_ExpandFileName, which is now
 	a documented entry point.
 
-    o	mad() has new (logical) arguments "low" and "high" (the first giving
-        S compatibility).
+    o	mad() has new (logical) arguments "low" and "high" (the first 
+	giving S compatibility).
 	
     o	options(check.bounds = TRUE)  makes each vector extension
 	by sub-assignment ("x[.] <- .") produce a warning.
@@ -438,6 +441,9 @@ BUG FIXES
 	message says so (e.g. gamma(-1)).
 
     o	qt(*, log = TRUE) has a somewhat extended working range.
+
+    o	Specifying col.names in read.table() now overrides any header
+	line in the data file.
 
 
 	**************************************************
