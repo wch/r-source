@@ -24,7 +24,8 @@ RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(sr
 NSFILES = $(srcdir)/NAMESPACE @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
 
 all: Makefile DESCRIPTION most $(top_builddir)/library/$(pkg)/iconvlist
-most:
+
+most: DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
