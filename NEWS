@@ -89,6 +89,9 @@ BUG FIXES
 	the response and intercept = FALSE (which is not sensible)
 	would give an error.
 
+    o	seek() on file connections was ignoring the `origin' argument.
+
+
 
 
 		CHANGES IN R VERSION 1.4.0
