@@ -1,3 +1,25 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2001   The R Development Core Team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <Defn.h>
 /* REALLY shouldn't have to include Graphics.h once engine.h is
@@ -9,7 +31,7 @@
 #include <Rmath.h>
 
 /* A note on memory management ...
- * Here (with GEDevDesc's) I have continued the deplorable tradition of 
+ * Here (with GEDevDesc's) I have continued the deplorable tradition of
  * malloc'ing device structures and maintaining global variables to
  * record the device structures.  I believe that what I should
  * be doing is recording the device structures in R-level objects
@@ -32,14 +54,14 @@ static GESystemDesc* registeredSystems[MAX_GRAPHICS_SYSTEMS];
 
 /* Create a GEDevDesc, given a NewDevDesc*
  */
-GEDevDesc* GEcreateDevDesc(NewDevDesc* dev) 
+GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
 {
     /* Wrap the device description within a graphics engine
      * device description (add graphics engine information
      * to the device description).
      */
     GEDevDesc *dd = (GEDevDesc*) malloc(sizeof(GEDevDesc));
-    if (!dd) 
+    if (!dd)
 	error("Not enough memory to allocate device (in addDevice)");
     dd->newDevStruct = 1;
     dd->dev = dev;
@@ -53,7 +75,7 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
 
 static void unregisterOne(GEDevDesc *dd, int systemNumber) {
     if (dd->gesd[systemNumber] != NULL) {
-	(dd->gesd[systemNumber]->callback)(GE_FinaliseState, dd); 
+	(dd->gesd[systemNumber]->callback)(GE_FinaliseState, dd);
 	free(dd->gesd[systemNumber]);
 	dd->gesd[systemNumber] = NULL;
     }
@@ -62,7 +84,7 @@ static void unregisterOne(GEDevDesc *dd, int systemNumber) {
 /* NOTE that the NewDevDesc* dev has been shut down by a call
  * to dev->close within graphics.c
  */
-void GEdestroyDevDesc(GEDevDesc* dd) 
+void GEdestroyDevDesc(GEDevDesc* dd)
 {
     int i;
     if (dd != NULL) {
@@ -79,7 +101,7 @@ void GEdestroyDevDesc(GEDevDesc* dd)
  ****************************************************************
  */
 
-void* GEsystemState(GEDevDesc *dd, int index) 
+void* GEsystemState(GEDevDesc *dd, int index)
 {
     return dd->gesd[index]->systemSpecific;
 }
@@ -89,11 +111,11 @@ void* GEsystemState(GEDevDesc *dd, int index)
  ****************************************************************
  */
 
-/* The guts of adding information about a specific graphics 
+/* The guts of adding information about a specific graphics
  * system to a specific device.
  */
 static void registerOne(GEDevDesc *dd, int systemNumber, GEcallback cb) {
-    dd->gesd[systemNumber] = 
+    dd->gesd[systemNumber] =
 	(GESystemDesc*) malloc(sizeof(GESystemDesc));
     if (dd->gesd[systemNumber] == NULL)
 	error("unable to allocate memory (in GEregister)");
@@ -120,7 +142,7 @@ void GEregisterWithDevice(GEDevDesc *dd) {
  ****************************************************************
  */
 
-/* Record the state and callback information for a new graphics 
+/* Record the state and callback information for a new graphics
  * system.
  * This is called when a graphics system is loaded.
  * Return the index of the system's information in the graphic
@@ -143,7 +165,7 @@ int GEregisterSystem(GEcallback cb) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
 	    dd = GetDevice(devNum);
-	    /* FIXME:  won't need this check once engine.c has 
+	    /* FIXME:  won't need this check once engine.c has
 	     * replaced graphics.c
 	     */
 	    if (dd->newDevStruct) {
@@ -154,7 +176,7 @@ int GEregisterSystem(GEcallback cb) {
     }
     /* Store the information for adding to any new devices
      */
-    registeredSystems[numGraphicsSystems] = 
+    registeredSystems[numGraphicsSystems] =
 	(GESystemDesc*) malloc(sizeof(GESystemDesc));
     if (registeredSystems[numGraphicsSystems] == NULL)
 	error("unable to allocate memory (in GEregister)");
@@ -186,7 +208,7 @@ void GEunregisterSystem(int registerIndex)
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
 	    dd = GetDevice(devNum);
-	    /* FIXME:  won't need this check once engine.c has 
+	    /* FIXME:  won't need this check once engine.c has
 	     * replaced graphics.c
 	     */
 	    if (dd->newDevStruct) {
@@ -204,7 +226,7 @@ void GEunregisterSystem(int registerIndex)
 	registeredSystems[registerIndex] = NULL;
     }
     /* NOTE that I deliberately do not decrease the number of
-     * registered graphics systems.  This means that unloading 
+     * registered graphics systems.  This means that unloading
      * a graphics system will create a "hole" in the global
      * record, but otherwise I have to assume that graphics
      * systems are unloaded in the reverse order from that which
@@ -212,9 +234,9 @@ void GEunregisterSystem(int registerIndex)
      * The downside to this approach is that if you unload and
      * reload graphics systems you will run out of room in the
      * global record -- I'm assuming that unloading and reloading
-     * of graphics systems is something that won't happen that 
+     * of graphics systems is something that won't happen that
      * many times in a session.
-     * Hopefully, all of these problems will go away when I get 
+     * Hopefully, all of these problems will go away when I get
      * around to storing the device structures in SEXP's
      */
 }
@@ -228,12 +250,12 @@ void GEunregisterSystem(int registerIndex)
  * It calls back to registered graphics systems and passes on the event
  * so that the graphics systems can respond however they want to.
  */
-void GEHandleEvent(GEevent event, NewDevDesc *dev) 
+void GEHandleEvent(GEevent event, NewDevDesc *dev)
 {
     int i;
     DevDesc* dd = GetDevice(devNumber((DevDesc*) dev));
-    for (i=0; i<numGraphicsSystems; i++) 
-	if (registeredSystems[i] != NULL) 
+    for (i=0; i<numGraphicsSystems; i++)
+	if (registeredSystems[i] != NULL)
 	    (registeredSystems[i]->callback)(event, (GEDevDesc*) dd);
 }
 
@@ -242,21 +264,21 @@ void GEHandleEvent(GEevent event, NewDevDesc *dev)
  ****************************************************************
  */
 
-double fromDeviceX(double value, GEUnit to, GEDevDesc *dd) 
+double fromDeviceX(double value, GEUnit to, GEDevDesc *dd)
 {
     double result = value;
     switch (to) {
     case GE_DEVICE:
 	break;
     case GE_NDC:
-	result = (result - dd->dev->left) / (dd->dev->right - dd->dev->left); 
+	result = (result - dd->dev->left) / (dd->dev->right - dd->dev->left);
 	break;
     case GE_INCHES:
-	result = (result - dd->dev->left) / (dd->dev->right - dd->dev->left) * 
+	result = (result - dd->dev->left) / (dd->dev->right - dd->dev->left) *
 	    fabs(dd->dev->right - dd->dev->left) * dd->dev->ipr[0];
 	break;
     case GE_CM:
-	result = (result - dd->dev->left) / (dd->dev->right - dd->dev->left) * 
+	result = (result - dd->dev->left) / (dd->dev->right - dd->dev->left) *
 	    fabs(dd->dev->right - dd->dev->left) * dd->dev->ipr[0] * 2.54;
     }
     return result;
@@ -282,14 +304,14 @@ double toDeviceX(double value, GEUnit from, GEDevDesc *dd)
     return result;
 }
 
-double fromDeviceY(double value, GEUnit to, GEDevDesc *dd) 
+double fromDeviceY(double value, GEUnit to, GEDevDesc *dd)
 {
     double result = value;
     switch (to) {
     case GE_DEVICE:
 	break;
     case GE_NDC:
-	result = (result - dd->dev->bottom) / (dd->dev->top - dd->dev->bottom); 
+	result = (result - dd->dev->bottom) / (dd->dev->top - dd->dev->bottom);
 	break;
     case GE_INCHES:
 	result = (result - dd->dev->bottom) / (dd->dev->top - dd->dev->bottom) *
@@ -322,14 +344,14 @@ double toDeviceY(double value, GEUnit from, GEDevDesc *dd)
     return result;
 }
 
-double fromDeviceWidth(double value, GEUnit to, GEDevDesc *dd) 
+double fromDeviceWidth(double value, GEUnit to, GEDevDesc *dd)
 {
     double result = value;
     switch (to) {
     case GE_DEVICE:
 	break;
     case GE_NDC:
-	result = result / (dd->dev->right - dd->dev->left); 
+	result = result / (dd->dev->right - dd->dev->left);
 	break;
     case GE_INCHES:
 	result = result * dd->dev->ipr[0];
@@ -360,14 +382,14 @@ double toDeviceWidth(double value, GEUnit from, GEDevDesc *dd)
     return result;
 }
 
-double fromDeviceHeight(double value, GEUnit to, GEDevDesc *dd) 
+double fromDeviceHeight(double value, GEUnit to, GEDevDesc *dd)
 {
     double result = value;
     switch (to) {
     case GE_DEVICE:
 	break;
     case GE_NDC:
-	result = result / (dd->dev->top - dd->dev->bottom); 
+	result = result / (dd->dev->top - dd->dev->bottom);
 	break;
     case GE_INCHES:
 	result = result * dd->dev->ipr[1];
@@ -488,8 +510,8 @@ static int clipcode(double x, double y, cliprect *cr)
 }
 
 static Rboolean
-CSclipline(double *x1, double *y1, double *x2, double *y2, 
-	   cliprect *cr, int *clipped1, int *clipped2, 
+CSclipline(double *x1, double *y1, double *x2, double *y2,
+	   cliprect *cr, int *clipped1, int *clipped2,
 	   GEDevDesc *dd)
 {
     int c, c1, c2;
@@ -535,7 +557,7 @@ CSclipline(double *x1, double *y1, double *x2, double *y2,
 	    x = *x1 + (*x2 - *x1) * (yt - *y1)/(*y2 - *y1);
 	    y = yt;
 	}
-	
+
 	if( c==c1 ) {
 	    *x1 = x;
 	    *y1 = y;
@@ -563,7 +585,7 @@ clipLine(double *x1, double *y1, double *x2, double *y2,
     int dummy1, dummy2;
     cliprect cr;
 
-    if (toDevice) 
+    if (toDevice)
 	getClipRectToDevice(&cr.xl, &cr.yb, &cr.xr, &cr.yt, dd);
     else
 	getClipRect(&cr.xl, &cr.yb, &cr.xr, &cr.yt, dd);
@@ -577,7 +599,7 @@ clipLine(double *x1, double *y1, double *x2, double *y2,
  */
 /* If the device canClip, R clips line to device extent and
    device does all other clipping. */
-void GELine(double x1, double y1, double x2, double y2, 
+void GELine(double x1, double y1, double x2, double y2,
 	    int col, int lty, double lwd,
 	    GEDevDesc *dd)
 {
@@ -598,7 +620,7 @@ void GELine(double x1, double y1, double x2, double y2,
  ****************************************************************
  */
 
-static void CScliplines(int n, double *x, double *y, 
+static void CScliplines(int n, double *x, double *y,
 			int col, int lty, double lwd,
 			int toDevice, GEDevDesc *dd)
 {
@@ -611,7 +633,7 @@ static void CScliplines(int n, double *x, double *y,
     cliprect cr;
     char *vmax = vmaxget();
 
-    if (toDevice) 
+    if (toDevice)
 	getClipRectToDevice(&cr.xl, &cr.yb, &cr.xr, &cr.yt, dd);
     else
 	getClipRect(&cr.xl, &cr.yb, &cr.xr, &cr.yt, dd);
@@ -684,7 +706,7 @@ static void clipPolyline(int n, double *x, double *y,
 /* Draw a series of line segments. */
 /* If the device canClip, R clips to the device extent and the device
    does all other clipping */
-void GEPolyline(int n, double *x, double *y, 
+void GEPolyline(int n, double *x, double *y,
 		int col, int lty, double lwd,
 		GEDevDesc *dd)
 {
@@ -862,8 +884,8 @@ int clipPoly(double *x, double *y, int n, int store, int toDevice,
     GClipRect clip;
     for (i = 0; i < 4; i++)
 	cs[i].first = 0;
-    if (toDevice)	
-	getClipRectToDevice(&clip.xmin, &clip.ymin, &clip.xmax, &clip.ymax, 
+    if (toDevice)
+	getClipRectToDevice(&clip.xmin, &clip.ymin, &clip.xmax, &clip.ymax,
 			    dd);
     else
 	getClipRect(&clip.xmin, &clip.ymin, &clip.xmax, &clip.ymax, dd);
@@ -909,7 +931,7 @@ static void clipPolygon(int n, double *x, double *y,
  * GEPolygon
  ****************************************************************
  */
-void GEPolygon(int n, double *x, double *y, 
+void GEPolygon(int n, double *x, double *y,
 	       int col, int fill, int lty, double lwd,
 	       GEDevDesc *dd)
 {
@@ -1052,7 +1074,7 @@ void GECircle(double x, double y, double radius,
    0 means the rectangle is totally outside the clip region
    1 means the rectangle is totally inside the clip region
    2 means the rectangle intersects the clip region */
-static int clipRectCode(double x0, double y0, double x1, double y1, 
+static int clipRectCode(double x0, double y0, double x1, double y1,
 			int toDevice, GEDevDesc *dd)
 {
     int result;
@@ -1071,7 +1093,7 @@ static int clipRectCode(double x0, double y0, double x1, double y1,
 	result = 1;
     else
 	result = 2;
-    
+
     return result;
 }
 
@@ -1098,7 +1120,7 @@ void GERect(double x0, double y0, double x1, double y1,
 	break;
     case 2:  /* rectangle intersects clip region;  use polygon clipping */
 	result = clipRectCode(x0, y0, x1, y1, !dd->dev->canClip, dd);
-	if (result == 1) 
+	if (result == 1)
 	    dd->dev->rect(x0, y0, x1, y1, col, fill, lty, lwd, dd->dev);
 	else {
 	    vmax = vmaxget();
@@ -1147,16 +1169,16 @@ void GERect(double x0, double y0, double x1, double y1,
    1 means totally inside clip region
    2 means intersects clip region */
 static int clipTextCode(double x, double y, char *str,
-			double rot, double hadj, 
+			double rot, double hadj,
 			int font, double cex, double ps,
 			int toDevice, GEDevDesc *dd)
 {
     double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
     double angle = DEG2RAD * rot;
     double theta1 = M_PI/2 - angle;
-    double width = fromDeviceWidth(GEStrWidth(str, font, cex, ps, dd), 
+    double width = fromDeviceWidth(GEStrWidth(str, font, cex, ps, dd),
 				   GE_INCHES, dd);
-    double height = fromDeviceHeight(GEStrHeight(str, font, cex, ps, dd), 
+    double height = fromDeviceHeight(GEStrHeight(str, font, cex, ps, dd),
 				     GE_INCHES, dd);
 #ifdef HAVE_HYPOT
     double length = hypot(width, height);
@@ -1181,11 +1203,11 @@ static int clipTextCode(double x, double y, char *str,
     return clipRectCode(left, bottom, right, top, toDevice, dd);
 }
 
-static void clipText(double x, double y, char *str, double rot, double hadj, 
+static void clipText(double x, double y, char *str, double rot, double hadj,
 		     int col, int font, double cex, double ps,
 		     int toDevice, GEDevDesc *dd)
 {
-    int result = clipTextCode(x, y, str, rot, hadj, font, cex, ps, 
+    int result = clipTextCode(x, y, str, rot, hadj, font, cex, ps,
 			      toDevice, dd);
     switch (result) {
     case 0:  /* text totally clipped; draw nothing */
@@ -1209,7 +1231,7 @@ static void clipText(double x, double y, char *str, double rot, double hadj,
 /* If you want EXACT centering of text (e.g., like in GSymbol) */
 /* then pass NA_REAL for xc and yc */
 void GEText(double x, double y, char *str,
-	   double xc, double yc, double rot, 
+	   double xc, double yc, double rot,
 	   int col, int font, double cex, double ps,
 	   GEDevDesc *dd)
 {
@@ -1221,7 +1243,7 @@ void GEText(double x, double y, char *str,
 	double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
 	double xleft, ybottom;
 	/* We work in GE_INCHES */
-	x = fromDeviceX(x, GE_INCHES, dd); 
+	x = fromDeviceX(x, GE_INCHES, dd);
 	y = fromDeviceY(y, GE_INCHES, dd);
 	/* Count the lines of text */
 	n = 1;
@@ -1245,7 +1267,7 @@ void GEText(double x, double y, char *str,
 		    if (!R_FINITE(yc))
 			yc = 0.5;
 		    yoff = (1 - yc)*(n - 1) - i;
-		    yoff = fromDeviceHeight(yoff * cex * dd->dev->cra[1], 
+		    yoff = fromDeviceHeight(yoff * cex * dd->dev->cra[1],
 					    GE_INCHES, dd);
 		    xoff = - yoff*sin_rot;
 		    yoff = yoff*cos_rot;
@@ -1258,8 +1280,8 @@ void GEText(double x, double y, char *str,
 		/* now determine bottom-left for THIS line */
 		if(xc != 0.0 || yc != 0) {
 		    double width, height;
-		    width = fromDeviceWidth(GEStrWidth(sbuf, font, 
-						       cex, ps, dd), 
+		    width = fromDeviceWidth(GEStrWidth(sbuf, font,
+						       cex, ps, dd),
 					    GE_INCHES, dd);
 		    if (!R_FINITE(xc))
 			xc = 0.5;
@@ -1283,7 +1305,7 @@ void GEText(double x, double y, char *str,
 			    h = fromDeviceHeight(h, GE_INCHES, dd);
 			    d = fromDeviceHeight(d, GE_INCHES, dd);
 			    for (ss=sbuf; *ss; ss++) {
-				GEMetricInfo((unsigned char) *ss, 
+				GEMetricInfo((unsigned char) *ss,
 					     font, cex, ps, &h, &d, &w, dd);
 				/* Set maxHeight and maxDepth from height
 				   and depth of first char.
@@ -1304,7 +1326,7 @@ void GEText(double x, double y, char *str,
 			}
 		    } else {
 			height = fromDeviceHeight(GEStrHeight(sbuf, font,
-							      cex, ps, dd), 
+							      cex, ps, dd),
 						  GE_INCHES, dd);
 		    }
 		    if (dd->dev->canHAdj == 2) hadj = xc;
@@ -1314,7 +1336,7 @@ void GEText(double x, double y, char *str,
 			hadj = (hadj > 1.0) ? 1.0 :((hadj < 0.0) ? 0.0 : hadj);
 		    } else hadj = 0.0;
 		    xleft = xoff - (xc-hadj)*width*cos_rot + yc*height*sin_rot;
-		    ybottom= yoff - (xc-hadj)*width*sin_rot - 
+		    ybottom= yoff - (xc-hadj)*width*sin_rot -
 			yc*height*cos_rot;
 		} else { /* xc = yc = 0.0 */
 		    xleft = xoff;
@@ -1326,10 +1348,10 @@ void GEText(double x, double y, char *str,
 		xleft = toDeviceX(xleft, GE_INCHES, dd);
 		ybottom = toDeviceY(ybottom, GE_INCHES, dd);
 		if(dd->dev->canClip) {
-		    clipText(xleft, ybottom, sbuf, rot, hadj, 
+		    clipText(xleft, ybottom, sbuf, rot, hadj,
 			     col, font, cex, ps, 1, dd);
 		} else
-		    clipText(xleft, ybottom, sbuf, rot, hadj, 
+		    clipText(xleft, ybottom, sbuf, rot, hadj,
 			     col, font, cex, ps, 0, dd);
 		sb = sbuf;
 		i += 1;
@@ -1362,7 +1384,7 @@ void GEMode(int mode, GEDevDesc *dd)
  ****************************************************************
  */
 #define SMALL	0.25
-#define RADIUS	0.375 
+#define RADIUS	0.375
 #define SQRC	0.88622692545275801364		/* sqrt(pi / 4) */
 #define DMDC	1.25331413731550025119		/* sqrt(pi / 4) * sqrt(2) */
 #define TRC0	1.55512030155621416073		/* sqrt(4 * pi/(3 * sqrt(3))) */
@@ -1370,13 +1392,13 @@ void GEMode(int mode, GEDevDesc *dd)
 #define TRC2	0.77756015077810708036		/* TRC0 / 2 */
 /* Draw one of the R special symbols. */
 /* "size" is in device coordinates and is assumed to be a width
- * rather than a height.  
+ * rather than a height.
  * This could cause a problem for devices which have ipr[0] != ipr[1]
  * The problem would be evident where calculations are done on
  * angles -- in those cases, a conversion to and from GE_INCHES is done
  * to preserve angles.
  */
-void GESymbol(double x, double y, int pch, double size, 
+void GESymbol(double x, double y, int pch, double size,
 	      int col, int fill, double lty, double lwd,
 	      int font, double cex, double ps,
 	      GEDevDesc *dd)
@@ -1404,7 +1426,7 @@ void GESymbol(double x, double y, int pch, double size,
 	case 0: /* S square */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GERect(x-xc, y-yc, x+xc, y+yc, 
+	    GERect(x-xc, y-yc, x+xc, y+yc,
 		   NA_INTEGER, col, lty, lwd, dd);
 	    break;
 
@@ -1462,7 +1484,7 @@ void GESymbol(double x, double y, int pch, double size,
 	case 7:	/* S square and times superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GERect(x-xc, y-yc, x+xc, y+yc, 
+	    GERect(x-xc, y-yc, x+xc, y+yc,
 		   NA_INTEGER, col, lty, lwd, dd);
 	    GELine(x-xc, y-yc, x+xc, y+yc, col, lty, lwd, dd);
 	    GELine(x-xc, y+yc, x+xc, y-yc, col, lty, lwd, dd);
@@ -1522,7 +1544,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    GELine(x, y-yc, x, y+yc, col, lty, lwd, dd);
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GERect(x-xc, y-yc, x+xc, y+yc, 
+	    GERect(x-xc, y-yc, x+xc, y+yc,
 		   NA_INTEGER, col, lty, lwd, dd);
 	    break;
 
@@ -1538,7 +1560,7 @@ void GESymbol(double x, double y, int pch, double size,
 	case 14: /* S square and point-up triangle superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GERect(x-xc, y-yc, x+xc, y+yc, 
+	    GERect(x-xc, y-yc, x+xc, y+yc,
 		   NA_INTEGER, col, lty, lwd, dd);
 	    xc = RADIUS * GSTR_0;
 	    r = toDeviceHeight(TRC0 * xc, GE_INCHES, dd);
@@ -1718,7 +1740,7 @@ void GEMetricInfo(int c, int font, double cex, double ps,
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd)
 {
-    dd->dev->metricinfo(c & 0xFF, font, cex, ps, ascent, descent, width, 
+    dd->dev->metricinfo(c & 0xFF, font, cex, ps, ascent, descent, width,
 			dd->dev);
 }
 
@@ -1806,14 +1828,14 @@ void GEplayDisplayList(GEDevDesc *dd)
 	}
 	selectDevice(savedDevice);
     }
-}	
+}
 
 /****************************************************************
  * GEcurrentDevice
  ****************************************************************
  */
 
-NewDevDesc* GEcurrentDevice() 
+NewDevDesc* GEcurrentDevice()
 {
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
