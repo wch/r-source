@@ -501,6 +501,11 @@ showMethods <-
         con <- file(tmp, "w")
     }
     else con <- printTo
+    if(is(f, "function"))
+        f <- as.character(substitute(f))
+    if(!is(f, "character"))
+        stop("Argument \"f\" should be the name(s) of generic functions (got object of class\"",
+             class(f), "\")")
     if(length(f)==0) {
         if(missing(where)) {
             f <- getGenerics()
