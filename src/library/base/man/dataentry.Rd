@@ -84,13 +84,13 @@ de(\dots, Modes = NULL, Names = NULL)
   except when editing.)
 
 #ifdef windows
-  Right-clicking on a cell selects the cell and makes it into an
+  Double-clicking on a cell selects the cell and makes it into an
   editable field (a cursor will appear at the end of the text and it
   will change to the text highlight colour).  The edited text is
   entered by selecting another cell, for example by hitting Return.
   There is no way to cancel the edits.  The field will be expanded to
   the right if necessary to accommodate existing long strings, so it is
-  preferable not to edit in the right-most displayed column. (The
+  preferable not to edit in the right-most displayed column.  (The
   editable field is itself scrollable.)
 #endif
   

@@ -31,12 +31,6 @@
 #include "Defn.h"
 #include "Print.h"
 
-SEXP old_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error("no data entry editor in this version of R");
-    return R_NilValue;
-}
-
 #include "graphapp/ga.h"
 #include "console.h"
 #include "consolestructs.h"
@@ -250,7 +244,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    else
 			STRING(tvec2)[j] = NA_STRING;
 		} else
-		    error("spreadsheet: internal memory problem");
+		    error("dataentry: internal memory problem");
 	    CAR(tvec) = tvec2;
 	    UNPROTECT(1);
 	}
@@ -457,7 +451,7 @@ void printelt(SEXP invec, int vrow, int ssrow, int sscol)
 	}
     }
     else
-	error("spreadsheet: internal memory error");
+	error("dataentry: internal memory error");
 }
 
 
@@ -568,7 +562,7 @@ static SEXP getccol()
 	}
     }
     if (!isVector(CAR(tmp)))
-	error("internal type error in spreadsheet");
+	error("internal type error in dataentry");
     len = LENGTH(CAR(tmp));
     type = TYPEOF(CAR(tmp));
     if (len < wrow) {
@@ -581,7 +575,7 @@ static SEXP getccol()
 	    else if (type == STRSXP)
 		STRING(tmp2)[i] = STRING(CAR(tmp))[i];
 	    else
-		error("internal type error in spreadsheet");
+		error("internal type error in dataentry");
 	LEVELS(tmp2) = LEVELS(CAR(tmp));
 	CAR(tmp) = tmp2;
     }
@@ -758,7 +752,7 @@ void handlechar(char *text)
 	}
 
     if (clength++ > 29) {
-	warning("spreadsheet: expression too long");
+	warning("dataentry: expression too long");
 	clength--;
 	goto donehc;
     }
@@ -979,10 +973,7 @@ void de_mousedown(control c, int buttons, point xy)
 		highlightrect();
 		bell();
 	    }
-	} else if (buttons & LeftButton) {
-	    ccol = wcol;
-	    crow = wrow;
-	} else if (buttons & RightButton) {
+	} else if (buttons & DblClick) {
 	    int x, y;
 	    char *prev = "";
 	    SEXP tvec;
@@ -1003,7 +994,7 @@ void de_mousedown(control c, int buttons, point xy)
 			if (!streql(CHAR(STRING(tvec)[wrow]), 
 				    CHAR(STRING(ssNA_STRING)[0])))
 			    prev = EncodeElement(tvec, wrow, 0);
-		    } else error("spreadsheet: internal memory error");
+		    } else error("dataentry: internal memory error");
 		}
 	    }
 	    rr = rect(x+text_xoffset, y-text_yoffset-1, 
@@ -1016,6 +1007,9 @@ void de_mousedown(control c, int buttons, point xy)
 	    settextfont(celledit, p->f);
 	    show(celledit);
 	    CellEditable = 1;
+	} else if (buttons & LeftButton) {
+	    ccol = wcol;
+	    crow = wrow;
 	}
 	highlightrect();
 	return;

@@ -95,6 +95,7 @@ static void handle_mouse(object obj, HWND hwnd, UINT message,
 	case WM_LBUTTONDBLCLK:
 	case WM_RBUTTONDBLCLK:
 	case WM_MBUTTONDBLCLK:
+                buttons |= DblClick;
 		if ((obj->flags & ChildWindow) &&  (obj->kind != LabelObject))
 			SetFocus(hwnd);
 		if (obj->flags & TrackMouse)
