@@ -5,8 +5,9 @@ X11 <- function(display="", width=7, height=7, pointsize=12,
 
 x11 <- .Alias(X11)
 
-Gnome <- function(display="", width=7, height=7, pointsize=12)
+# Should also rename internal name from "Gnome" to "gnome" ??
+gnome <- function(display="", width=7, height=7, pointsize=12)
     .Internal(Gnome(display, width, height, pointsize))
 
-gnome <- .Alias(Gnome)
-GNOME <- .Alias(Gnome)
+## no Gnome <- .Alias(gnome)
+GNOME <- .Alias(gnome)
