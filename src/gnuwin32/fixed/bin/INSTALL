@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.30 $ ';
+my $revision = ' $Revision: 1.31 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -154,7 +154,8 @@ foreach $pkg (@ARGV){
         if($opt_auto_zip || $opt_build) {
 	    my $dir = $pkgdir. "/" . $pkgname . "/data";
 	    if(-d $dir && 
-	       $pkgname ne "RadioSonde" && $pkgname ne "dichromat") {
+	       $pkgname ne "RadioSonde" && $pkgname ne "dichromat"
+	       && $pkgname ne "pls.pcr") {
 		my $Rout = "datacnt";
 		system("ls -s1 $dir > $Rout");
 		my $out, $nodups=1, $prev="";
