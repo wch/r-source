@@ -33,10 +33,10 @@ AWK=gawk
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
-# Next two might be i586- if a pre-built cross-compiler is used.
-BINPREF=i386-mingw32-
+# Next two might be i386-mingw32- or i586- depending on the cross-compiler.
+BINPREF=i386-mingw32msvc-
 # Set this to where the mingw32 include files are
-HEADER=/packages/R-X/i386-mingw32/include
+HEADER=/packages/R-X/i386-mingw32msvc/include
 MINGW32CFLAG=-isystem $(HEADER)
 MINGW32LDFLAG=
 FLIBS=-lg2c
