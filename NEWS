@@ -88,6 +88,10 @@ BUG FIXES
     o	aperm() fix for list arg; aperm(*, resize=FALSE) now works with
 	dimnames (by dropping them).
 
+    o	The xfig() driver was not closing unclosed polygons as the R
+	driver expected (but did not document).
+
+
 
 		CHANGES IN R VERSION 1.2.1
 

@@ -1,3 +1,5 @@
+
+
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -2071,10 +2073,11 @@ static void XFig_Polygon(int n, double *x, double *y, int coords,
     fprintf(fp, "%d %d ", cpen, cbg); /* pen colour fill colour */
     fprintf(fp, "100 0 %d ", dofill); /* depth, pen style, area fill */
     fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
-    fprintf(fp, "%d\n", n); /* number of points */
-    for(i = 0 ; i < n ; i++) {
-	xx = x[i];
-	yy = y[i];
+    fprintf(fp, "%d\n", n+1); /* number of points */
+    /* close the path */
+    for(i = 0 ; i <= n ; i++) {
+	xx = x[i%n];
+	yy = y[i%n];
 	GConvert(&xx, &yy, coords, DEVICE, dd); XFconvert(&xx, &yy, pd);
 	fprintf(fp, "  %d %d\n", (int)xx, (int)yy);
     }
