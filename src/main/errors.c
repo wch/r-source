@@ -23,6 +23,9 @@
 #endif
 
 #include "Defn.h"
+/* limit on call length at which errorcall/warningcall is split over
+   two lines */
+#define LONGCALL 30
 
 static void jump_now();
 
@@ -115,6 +118,7 @@ void warningcall(SEXP call, char *format, ...)
         if( call != R_NilValue ) {
             dcall = CHAR(STRING(deparse1(call, 0))[0]);
             REprintf("Warning in %s : ", dcall);
+	    if (strlen(dcall) > LONGCALL) REprintf("\n   ");
         }
         else
             REprintf("Warning: ");
@@ -162,7 +166,7 @@ void PrintWarnings(void)
             if( STRING(R_Warnings)[i] == R_NilValue )
                REprintf("%d: %s \n",i+1, CHAR(STRING(names)[i]));
             else
-	       REprintf("%d: %s in: %s \n",i+1, CHAR(STRING(names)[i]),
+	       REprintf("%d: %s in: %s \n", i+1, CHAR(STRING(names)[i]),
 		   CHAR(STRING(deparse1(VECTOR(R_Warnings)[i], 0))[0]));
 	}
     }
@@ -182,8 +186,8 @@ void PrintWarnings(void)
     defineVar(install("last.warning"), s, R_GlobalEnv);
     UNPROTECT(2);
     inWarning = 0;
-    R_CollectWarnings=0;
-    R_Warnings=R_NilValue;
+    R_CollectWarnings = 0;
+    R_Warnings = R_NilValue;
     return;
 }
 
@@ -203,6 +207,7 @@ void errorcall(SEXP call, char *format,...)
     if(call != R_NilValue ) {
         dcall = CHAR(STRING(deparse1(call, 0))[0]);
         sprintf(buf, "Error in %s : ", dcall);
+	if (strlen(dcall) > LONGCALL) strcat(buf, "\n   ");
     }
     else
 	sprintf(buf, "Error: ");
@@ -418,6 +423,7 @@ void  ErrorMessage(SEXP call, int which_error, ...)
     if (call != R_NilValue) {
 	dcall = CHAR(STRING(deparse1(call, 0))[0]);
 	REprintf("Error in %s : ", dcall);
+	if (strlen(dcall) > LONGCALL) REprintf("\n   ");
     }
     else
 	REprintf("Error: ");	/* -- dcall = ??? */
