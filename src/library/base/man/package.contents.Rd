@@ -7,12 +7,14 @@
 }
 \usage{
 package.contents(pkg, lib=.lib.loc)
-package.description(pkg, lib=.lib.loc)
+package.description(pkg, lib=.lib.loc, fields=NULL)
 }
 \arguments{
  \item{pkg}{A character string with the package name.}
  \item{lib}{A character vector with path names of R package
-             libraries.}
+   libraries.}
+ \item{fields}{A character vector of fields to return (if other fields
+   occur in the file they are ignored.}
 }
 \seealso{\code{\link{parse.dcf}}}
 \examples{
