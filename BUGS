@@ -205,18 +205,14 @@ none
 
 Directory:  incoming
 
-* PR# 650 *
-Subject: plot(x,y,axes=F)
-From: kye@ams.sunysb.edu
-Date: Thu, 31 Aug 2000 23:52:12 +0200 (MET DST)
+* PR# 652 *
+Subject: R INSTALL *.tgz fails (minor docs/feature bug)
+From: RPO <bobbyo@speakeasy.org>
+Date: Sat, 2 Sep 2000 13:34:22 -0700 (PDT)
 * PR# 639 *
 Subject: symbols: xlim and ylim cannot be specified
 From: Werner Stahel <stahel@stat.math.ethz.ch>
 Date: Mon, 21 Aug 2000 15:54:08 +0200 (CEST)
-* PR# 642 *
-Subject:  Method dispatch fails for autoloaded methods 
-From: maechler@stat.math.ethz.ch
-Date: Thu, 24 Aug 2000 17:09:09 +0200
 * PR# 641 *
 Subject: 2 Bugs in na.omit.default()
 From: =?iso-8859-1?Q?Jens_Oehlschl=E4gel?= <jens.oehlschlaegel@bbdo-interone.de>
@@ -225,6 +221,18 @@ Date: Wed, 23 Aug 2000 11:45:56 +0200
 Subject: diff.default / diff.ts in wrong package bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
+* PR# 643 *
+Subject: Re: [R] too large alpha or beta in dbeta ?
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Thu, 24 Aug 2000 13:45:47 -0700 (PDT)
+* PR# 642 *
+Subject:  Method dispatch fails for autoloaded methods 
+From: maechler@stat.math.ethz.ch
+Date: Thu, 24 Aug 2000 17:09:09 +0200
+* PR# 646 *
+Subject: under certain conditions, model.matrix appears to lack one column
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 27 Aug 2000 16:22:25 -0400 (EDT)
 * PR# 645 *
 Subject: unlisting a list with names components
 From: Peter Perkins <pperkins@ucsd.edu>
@@ -233,23 +241,22 @@ Date: Fri, 25 Aug 2000 23:07:47 -0700
 Subject: crash using fisher.test on Windows; was [R] unexpected crash of R under 
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Fri, 25 Aug 2000 08:47:00 +0200
-* PR# 643 *
-Subject: Re: [R] too large alpha or beta in dbeta ?
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Thu, 24 Aug 2000 13:45:47 -0700 (PDT)
-* PR# 647 *
-Subject: Re: [Rd] under certain conditions, model.matrix appears to lack one
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Mon, 28 Aug 2000 07:28:19 +0100 (BST)
-* PR# 646 *
-Subject: under certain conditions, model.matrix appears to lack one column
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 27 Aug 2000 16:22:25 -0400 (EDT)
-* PR# 649 *
-Subject: Unable to read.table with > 256? columns
-From: r@marksmucker.com
-Date: Thu, 31 Aug 2000 07:28:02 +0200 (MET DST)
 * PR# 648 *
 Subject: Re: [Rd] under certain conditions, model.matrix appears to lack one
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Mon, 28 Aug 2000 12:26:21 +0100 (BST)
+* PR# 647 *
+Subject: Re: [Rd] under certain conditions, model.matrix appears to lack one
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Mon, 28 Aug 2000 07:28:19 +0100 (BST)
+* PR# 651 *
+Subject: =?big5?b?tsewZaWisdE=?= =?us-ascii?q?=3A_?= =?big5?b?tsewZabc?= mailhost.EFN.ORG; SMTP
+From: Postmaster@sdm.com.tw
+* PR# 650 *
+Subject: plot(x,y,axes=F)
+From: kye@ams.sunysb.edu
+Date: Thu, 31 Aug 2000 23:52:12 +0200 (MET DST)
+* PR# 649 *
+Subject: Unable to read.table with > 256? columns
+From: r@marksmucker.com
+Date: Thu, 31 Aug 2000 07:28:02 +0200 (MET DST)
