@@ -21,6 +21,10 @@ extern Rboolean (*ptr_GTKDeviceDriver)(DevDesc*, char*, double, double, double);
 
 extern SEXP (*ptr_dataentry)(SEXP call, SEXP op, SEXP args, SEXP rho);
 
+#ifdef HAVE_AQUA
+extern void (*ptr_R_StartConsole)();
+#endif
+
 extern void (*ptr_R_Suicide)(char *);
 extern void (*ptr_R_ShowMessage)();
 extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
