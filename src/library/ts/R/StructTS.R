@@ -11,7 +11,9 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     {
         T <- matrix(1, 1, 1)
         Z <- 1
-        a <- x[1]
+        xm <- if(is.na(x[1])) mean(x, na.rm = TRUE) else x[1]
+        if(is.na(xm)) stop("the series is entirely NA")
+        a <- xm
         P <- Pn <- matrix(0, 1, 1)
         h <- 1
         V <- diag(1)
@@ -21,7 +23,9 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     {
         T <- matrix(c(1,0,1,1), 2, 2)
         Z <- c(1, 0)
-        a <- c(x[1], 0)
+        xm <- if(is.na(x[1])) mean(x, na.rm = TRUE) else x[1]
+        if(is.na(xm)) stop("the series is entirely NA")
+        a <- c(xm, 0)
         P <- Pn <- matrix(0, 2, 2)
         h <- 1
         V <- diag(2)
@@ -36,7 +40,9 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         ind <- 3:nf
         T[cbind(ind+1, ind)] <- 1
         Z <- c(1, 0, 1, rep(0, nf - 2))
-        a <- c(x[1], rep(0, nf))
+        xm <- if(is.na(x[1])) mean(x, na.rm = TRUE) else x[1]
+        if(is.na(xm)) stop("the series is entirely NA")
+        a <- c(xm, rep(0, nf))
         P <- Pn <- matrix(0, nf+1, nf+1)
         h <- 1
         V <- diag(c(1, 1, 1, rep(0, nf-2)))
@@ -63,6 +69,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     if(!is.numeric(x))
         stop("`x' must be numeric")
     storage.mode(x) <- "double"
+    if(is.na(x[1]))
+        stop("the first value of the time series must not be missing")
     type <- if(missing(type)) if(frequency(x) > 1) "BSM" else "trend"
     else match.arg(type)
     dim(x) <- NULL

@@ -333,6 +333,10 @@ NEW FEATURES
 
     o	new utility cov2cor() {Cov -> Corr matrix}.
 
+    o	StructTS() now allows the first value of the series to be
+	missing (although it is better to omit leading NAs). (PR#3990)
+
+
 
 DEPRECATED & DEFUNCT
 
