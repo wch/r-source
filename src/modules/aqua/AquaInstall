@@ -13,7 +13,7 @@ mv bin MacOS
 ln -s MacOS bin
 cd MacOS
 mv R.bin RAqua
-ln -s R.bin RAqua
+ln -s RAqua R.bin
 cd .. 
 ./R.fix
 rm R.fix

@@ -66,16 +66,16 @@ static DL_FUNC Rdlsym(void *handle, char const *name)
 }
 
 /*
-extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
-    ptr_R_WriteConsole, ptr_R_ResetConsole, ptr_R_FlushConsole,
-    ptr_R_ClearerrConsole, ptr_R_Busy, ptr_R_CleanUp, ptr_R_ShowFiles,
+extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_Busy, ptr_R_CleanUp, 
     ptr_R_ChooseFile, ptr_gnome_start,
-    ptr_GnomeDeviceDriver, ptr_GTKDeviceDriver,
-    ptr_R_loadhistory, ptr_R_savehistory;
+    ptr_GnomeDeviceDriver, ptr_GTKDeviceDriver
 */
 
-extern DL_FUNC ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole, 
-    ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole, ptr_R_ShowFiles;
+extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole, 
+                ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole, 
+                ptr_R_ShowFiles, ptr_R_loadhistory,  ptr_R_savehistory,
+                ptr_R_ChooseFile;
+
 
 DL_FUNC ptr_do_wsbrowser, ptr_DoCloseHandler;
 
@@ -127,8 +127,14 @@ void R_load_aqua_shlib(void)
     if(!ptr_do_wsbrowser) R_Suicide("Cannot load do_wsbrowser");
     ptr_DoCloseHandler = Rdlsym(handle, "DoCloseHandler");
     if(!ptr_DoCloseHandler) R_Suicide("Cannot load DoCloseHandler");
-    ptr_R_ShowFiles = Rdlsym(handle, "RAqua_R_ShowFiles");
-    if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
+    ptr_R_ShowFiles = Rdlsym(handle, "Raqua_ShowFiles");
+    if(!ptr_R_ShowFiles) R_Suicide("Cannot load Raqua_R_ShowFiles");
+    ptr_R_loadhistory = Rdlsym(handle, "Raqua_loadhistory");
+    if(!ptr_R_loadhistory) R_Suicide("Cannot load Raqua_loadhistory");
+    ptr_R_savehistory = Rdlsym(handle, "Raqua_savehistory");
+    if(!ptr_R_savehistory) R_Suicide("Cannot load Raqua_savehistory");
+    ptr_R_ChooseFile = Rdlsym(handle, "Raqua_ChooseFile");
+    if(!ptr_R_ChooseFile) R_Suicide("Cannot load Raqua_R_ChooseFile");
 
     
     
@@ -141,16 +147,6 @@ void R_load_aqua_shlib(void)
     if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
     ptr_R_ChooseFile = Rdlsym(handle, "Rgnome_ChooseFile");
     if(!ptr_R_ChooseFile) R_Suicide("Cannot load R_ChooseFile");
-    ptr_gnome_start = Rdlsym(handle, "gnome_start");
-    if(!ptr_gnome_start) R_Suicide("Cannot load gnome_start");
-    ptr_GTKDeviceDriver = Rdlsym(handle, "GTKDeviceDriver");
-    if(!ptr_GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
-    ptr_R_loadhistory = Rdlsym(handle, "Rgnome_loadhistory");
-    if(!ptr_R_loadhistory) R_Suicide("Cannot load Rgnome_loadhsitoryr");
-    ptr_R_savehistory = Rdlsym(handle, "Rgnome_savehistory");
-    if(!ptr_R_savehistory) R_Suicide("Cannot load Rgnome_savehistory");
-    ptr_GnomeDeviceDriver = Rdlsym(handle, "GnomeDeviceDriver");
-    if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");
 */    
 }
 
