@@ -179,6 +179,15 @@ test[] <- lapply(df, factor)
 test
 ## error in 1.3.0 in test[]
 
+## PR 1048 bug in dummy.coef.lm, Adrian Baddeley, 2001-08-10
+## modified to give a sensible test
+old <- getOption("contrasts")
+options(contrasts=c("contr.helmert", "contr.poly"))
+DF <- data.frame(x=1:20,y=rnorm(20),z=factor(1:20 <= 10))
+dummy.coef.lm(lm(y ~ z * I(x), data=DF))
+dummy.coef.lm(lm(y ~ z * poly(x,1), data=DF))
+## failed in 1.3.0.  Second one warns: deficiency of the method.
+options(contrasts=old)
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {

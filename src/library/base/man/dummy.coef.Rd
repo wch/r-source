@@ -25,13 +25,17 @@ dummy.coef.aovlist(object, use.na = FALSE)
 }
 \details{
   A fitted linear model has coefficients for the contrasts of the factor
-  terms, usually one less in number than the number of levels. This
+  terms, usually one less in number than the number of levels.  This
   function re-expresses the coefficients in the original coding; as the
   coefficients will have been fitted in the reduced basis, any implied
   constraints (e.g. zero sum for \code{contr.helmert} or \code{contr.sum}
-  will be respected. There will be little point in using
+  will be respected.  There will be little point in using
   \code{dummy.coef} for \code{contr.treatment} contrasts, as the missing
   coefficients are by definition zero.
+
+  The method used has some limitations, and will give incomplete results
+  for terms such as \code{poly(x, 2))}.  However, it is adequate for
+  its main purpose, \code{aov} models.
 }
 \value{
   A list giving for each term the values of the coefficients. For a
@@ -41,7 +45,7 @@ dummy.coef.aovlist(object, use.na = FALSE)
 
 \section{Warning}{
   This function is intended for human inspection of the
-  output: it should not be used for calculations. Use coded variables
+  output: it should not be used for calculations.  Use coded variables
   for all calculations.
 
   The results differ from S for singular values, where S can be incorrect.
