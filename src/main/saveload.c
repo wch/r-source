@@ -813,6 +813,10 @@ static void NewMakeLists (SEXP obj, SEXP *sym_list, SEXP *env_list)
 	NewMakeLists(CAR(obj), sym_list, env_list);
 	NewMakeLists(CDR(obj), sym_list, env_list);
 	break;
+    case EXTPTRSXP:
+	NewMakeLists(EXTPTR_PROT(obj), sym_list, env_list);
+	NewMakeLists(EXTPTR_TAG(obj), sym_list, env_list);
+	break;
     case VECSXP:
     case EXPRSXP:
 	length = LENGTH(obj);
@@ -923,6 +927,10 @@ static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
 	    NewWriteItem(TAG(s), sym_list, env_list, fp);
 	    NewWriteItem(CAR(s), sym_list, env_list, fp);
 	    NewWriteItem(CDR(s), sym_list, env_list, fp);
+	    break;
+	case EXTPTRSXP:
+	    NewWriteItem(EXTPTR_PROT(s), sym_list, env_list, fp);
+	    NewWriteItem(EXTPTR_TAG(s), sym_list, env_list, fp);
 	    break;
 	case SPECIALSXP:
 	case BUILTINSXP:
@@ -1073,6 +1081,13 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp)
 	SET_TAG(s, NewReadItem(sym_table, env_table, fp));
 	SETCAR(s, NewReadItem(sym_table, env_table, fp));
 	SETCDR(s, NewReadItem(sym_table, env_table, fp));
+	/*UNPROTECT(1);*/
+	break;
+    case EXTPTRSXP:
+	PROTECT(s = allocSExp(type));
+	R_SetExternalPtrAddr(s, NULL);
+	R_SetExternalPtrProtected(s, NewReadItem(sym_table, env_table, fp));
+	R_SetExternalPtrTag(s, NewReadItem(sym_table, env_table, fp));
 	/*UNPROTECT(1);*/
 	break;
     case SPECIALSXP:

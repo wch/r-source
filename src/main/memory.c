@@ -380,6 +380,10 @@ static int R_NodesInUse = 0;
     dc__action__(CAR(__n__), dc__extra__); \
     dc__action__(CDR(__n__), dc__extra__); \
     break; \
+  case EXTPTRSXP: \
+    dc__action__(EXTPTR_PROT(__n__), dc__extra__); \
+    dc__action__(EXTPTR_TAG(__n__), dc__extra__); \
+    break; \
   default: \
     abort(); \
   } \
@@ -800,7 +804,120 @@ static void SortNodes(void)
 #endif
 
 
+/* Finalization */
+
+static SEXP R_fin_registered = NULL;
+
+static void CheckFinalizers(void)
+{
+    SEXP s;
+    for (s = R_fin_registered; s != R_NilValue; s = CDR(s))
+	if (! NODE_IS_MARKED(CAR(s)) && s->sxpinfo.gp == 0)
+	    s->sxpinfo.gp = 1;
+}
+
+static Rboolean RunFinalizers(void)
+{
+    volatile SEXP s, last;
+    volatile Rboolean finalizer_run = FALSE;
+
+    for (s = R_fin_registered, last = R_NilValue; s != R_NilValue;) {
+	SEXP next = CDR(s);
+	if (s->sxpinfo.gp != 0) {
+	    RCNTXT thiscontext;
+	    RCNTXT * volatile saveToplevelContext;
+	    volatile int savestack;
+	    volatile SEXP topExp;
+
+	    finalizer_run = TRUE;
+
+	    /* A top level context is established for the finalizer to
+	       insure that any errors that might occur do not spill
+	       into the call that triggered the collection. */
+	    begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
+			 R_NilValue, R_NilValue);
+	    saveToplevelContext = R_ToplevelContext;
+	    PROTECT(topExp = R_CurrentExpr);
+	    savestack = R_PPStackTop;
+	    if (! SETJMP(thiscontext.cjmpbuf)) {
+		SEXP val, fun, e;
+		R_GlobalContext = R_ToplevelContext = &thiscontext;
+
+		/* The entry in the finalization list is removed
+		   before running the finalizer.  This insures that a
+		   finalizer is run only once, even if running it
+		   raises an error. */
+		if (last == R_NilValue)
+		    R_fin_registered = next;
+		else
+		    SETCDR(last, next);
+		PROTECT(s);
+		val = CAR(s);
+		fun = TAG(s);
+		if (TYPEOF(fun) == EXTPTRSXP) {
+		    /* Must be a C finalizer. */
+		    R_CFinalizer_t cfun = R_ExternalPtrAddr(fun);
+		    cfun(val);
+		}
+		else {
+		    /* An R finalizer. */
+		    PROTECT(e = LCONS(fun, LCONS(val, R_NilValue)));
+		    eval(e, R_GlobalEnv);
+		    UNPROTECT(1);
+		}
+		UNPROTECT(1);
+	    }
+	    endcontext(&thiscontext);
+	    R_ToplevelContext = saveToplevelContext;
+	    R_PPStackTop = savestack;
+	    R_CurrentExpr = topExp;
+	    UNPROTECT(1);
+	}
+	else last = s;
+	s = next;
+    }
+    return finalizer_run;
+}
+
+void R_RegisterFinalizer(SEXP s, SEXP fun)
+{
+    switch (TYPEOF(s)) {
+    case ENVSXP:
+    case EXTPTRSXP:
+	switch (TYPEOF(fun)) {
+	case CLOSXP:
+	case BUILTINSXP:
+	case SPECIALSXP:
+	    break;
+	default:
+	    error("finalizer function must be a closure");
+	}
+	R_fin_registered = CONS(s, R_fin_registered);
+	SET_TAG(R_fin_registered, fun);
+	R_fin_registered->sxpinfo.gp = 0;
+	break;
+    default: error("can only finalize reference objects");
+    }
+}
+
+void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
+{
+    R_fin_registered = CONS(s, R_fin_registered);
+    SET_TAG(R_fin_registered, R_MakeExternalPtr(fun, R_NilValue, R_NilValue));
+    R_fin_registered->sxpinfo.gp = 0;
+}
+
 /* The Generational Collector. */
+
+#define PROCESS_NODES() do { \
+    while (forwarded_nodes != NULL) { \
+	s = forwarded_nodes; \
+	forwarded_nodes = NEXT_NODE(forwarded_nodes); \
+	SNAP_NODE(s, R_GenHeap[NODE_CLASS(s)].Old[NODE_GENERATION(s)]); \
+	R_GenHeap[NODE_CLASS(s)].OldCount[NODE_GENERATION(s)]++; \
+	FORWARD_CHILDREN(s); \
+    } \
+} while (0)
 
 static void RunGenCollect(int size_needed)
 {
@@ -911,13 +1028,14 @@ static void RunGenCollect(int size_needed)
     FORWARD_NODE(R_VStack);		   /* R_alloc stack */
 
     /* main processing loop */
-    while (forwarded_nodes != NULL) {
-	s = forwarded_nodes;
-	forwarded_nodes = NEXT_NODE(forwarded_nodes);
-	SNAP_NODE(s, R_GenHeap[NODE_CLASS(s)].Old[NODE_GENERATION(s)]);
-	R_GenHeap[NODE_CLASS(s)].OldCount[NODE_GENERATION(s)]++;
-	FORWARD_CHILDREN(s);
-    }
+    PROCESS_NODES();
+
+    /* mark nodes ready for finalizing */
+    CheckFinalizers();
+    
+    /* process finalizers */
+    FORWARD_NODE(R_fin_registered);
+    PROCESS_NODES();
 
     DEBUG_CHECK_NODE_COUNTS("after processing forwarded list");
 
@@ -1105,6 +1223,8 @@ void InitMemory()
     CDR(R_NilValue) = R_NilValue;
     TAG(R_NilValue) = R_NilValue;
     ATTRIB(R_NilValue) = R_NilValue;
+
+    R_fin_registered = R_NilValue;
 }
 
 /* Since memory allocated from the heap is non-moving, R_alloc just
@@ -1503,6 +1623,9 @@ static void R_gc_internal(int size_needed)
 {
     int vcells;
     double vfrac;
+    Rboolean first = TRUE;
+
+ again:
 
     gc_count++;
 
@@ -1521,6 +1644,20 @@ static void R_gc_internal(int size_needed)
 	   `100% free' ! */
 	REprintf("%.1f Mbytes of heap free (%d%%)\n",
 		 vcells * sizeof(VECREC) / Mega, (int)vfrac);
+    }
+
+    if (first) {
+	first = FALSE;
+	/* Run any eligible finalizers.  The return result of
+	   RunFinalizers is TRUE if any finalizers are actually run.
+	   There is a small chance that running finalizers here may
+	   chew up enough memory to make another immediate collection
+	   necessary.  If so, we jump back to the beginning and run
+	   the collection, but on this second pass we do not run
+	   finalizers. */
+	if (RunFinalizers() &&
+	    (NO_FREE_NODES() || size_needed > VHEAP_FREE()))
+	    goto again;
     }
 }
 
@@ -1548,9 +1685,9 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, nms;
     int i;
 
-    PROTECT(ans = allocVector(INTSXP, 21));
-    PROTECT(nms = allocVector(STRSXP, 21));
-    for (i = 0; i < 21; i++) {
+    PROTECT(ans = allocVector(INTSXP, 23));
+    PROTECT(nms = allocVector(STRSXP, 23));
+    for (i = 0; i < 23; i++) {
         INTEGER(ans)[i] = 0;
         SET_STRING_ELT(nms, i, R_BlankString);
     }
@@ -1573,6 +1710,7 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(nms, ANYSXP, mkChar("ANYSXP"));
     SET_STRING_ELT(nms, VECSXP, mkChar("VECSXP"));
     SET_STRING_ELT(nms, EXPRSXP, mkChar("EXPRSXP"));
+    SET_STRING_ELT(nms, EXTPTRSXP, mkChar("EXTPTRSXP"));
     setAttrib(ans, R_NamesSymbol, nms);
 
     BEGIN_SUSPEND_INTERRUPTS {
@@ -1768,6 +1906,54 @@ static SEXP RecursiveRelease(SEXP object, SEXP list)
 void R_ReleaseObject(SEXP object)
 {
     R_PreciousList =  RecursiveRelease(object, R_PreciousList);
+}
+
+
+/* External Pointer Objects */
+SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot)
+{
+    SEXP s = allocSExp(EXTPTRSXP);
+    EXTPTR_PTR(s) = p;
+    EXTPTR_PROT(s) = prot;
+    EXTPTR_TAG(s) = tag;
+    return s;
+}
+
+void *R_ExternalPtrAddr(SEXP s)
+{
+    return EXTPTR_PTR(s);
+}
+
+SEXP R_ExternalPtrTag(SEXP s)
+{
+    return EXTPTR_TAG(s);
+}
+
+SEXP R_ExternalPtrProtected(SEXP s)
+{
+    return EXTPTR_PROT(s);
+}
+
+void R_ClearExternalPtr(SEXP s)
+{
+    EXTPTR_PTR(s) = NULL;
+}
+
+void R_SetExternalPtrAddr(SEXP s, void *p)
+{
+    EXTPTR_PTR(s) = p;
+}
+
+void R_SetExternalPtrTag(SEXP s, SEXP tag)
+{
+    CHECK_OLD_TO_NEW(s, tag);
+    EXTPTR_TAG(s) = tag;
+}
+
+void R_SetExternalPtrProtected(SEXP s, SEXP p)
+{
+    CHECK_OLD_TO_NEW(s, p);
+    EXTPTR_PROT(s) = p;
 }
 
 

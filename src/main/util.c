@@ -622,6 +622,7 @@ TypeTable[] = {
     { "any",		ANYSXP	   },
     { "expression",	EXPRSXP	   },
     { "list",		VECSXP	   },
+    { "externalptr",	EXTPTRSXP  },
     /* aliases : */
     { "numeric",	REALSXP	   },
     { "name",		SYMSXP	   },

@@ -78,6 +78,7 @@ SEXP duplicate(SEXP s)
     case ENVSXP:
     case SPECIALSXP:
     case BUILTINSXP:
+    case EXTPTRSXP:
 	return s;
     case CLOSXP:
 	PROTECT(s);

@@ -738,6 +738,10 @@ static void deparse2buff(SEXP s)
 	vector2buff(s);
 	attr2(s);
 	break;
+    case EXTPTRSXP:
+	sprintf(tpb, "<pointer: %p>\n", R_ExternalPtrAddr(s));
+	print2buff(tpb);
+	break;
     default:
 	UNIMPLEMENTED("deparse2buff");
     }

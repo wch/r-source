@@ -88,6 +88,8 @@ typedef unsigned int SEXPTYPE;
 #define ANYSXP	    18	  /* make "any" args work */
 #define VECSXP	    19	  /* generic vectors */
 #define EXPRSXP	    20	  /* expressions vectors */
+#define BCODESXP    21    /* byte code */
+#define EXTPTRSXP   22    /* external pointer */
 
 #define FUNSXP      99    /* Closure or Builtin */
 
@@ -113,6 +115,8 @@ typedef enum {
     ANYSXP	= 18,	/* make "any" args work */
     VECSXP	= 19,	/* generic vectors */
     EXPRSXP	= 20,	/* expressions vectors */
+    BCODESXP    = 21,   /* byte code */
+    EXTPTRSXP   = 22,   /* external pointer */
 
     FUNSXP	= 99	/* Closure or Builtin */
 } SEXPTYPE;
@@ -324,6 +328,11 @@ typedef struct SEXPREC *SEXP;
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
 #define CHAR(x)		R_CHAR(x)
 #endif /* USE_RINTERNALS */
+
+/* External pointer access macros */
+#define EXTPTR_PTR(x)	CAR(x)
+#define EXTPTR_PROT(x)	CDR(x)
+#define EXTPTR_TAG(x)	TAG(x)
 
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	protect(s)
@@ -809,5 +818,20 @@ int (HASHASH)(SEXP x);
 int (HASHVALUE)(SEXP x);
 void (SET_HASHASH)(SEXP x, int v);
 void (SET_HASHVALUE)(SEXP x, int v);
+
+/* External pointer interface */
+SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot);
+void *R_ExternalPtrAddr(SEXP s);
+SEXP R_ExternalPtrTag(SEXP s);
+SEXP R_ExternalPtrProtected(SEXP s);
+void R_ClearExternalPtr(SEXP s);
+void R_SetExternalPtrAddr(SEXP s, void *p);
+void R_SetExternalPtrTag(SEXP s, SEXP tag);
+void R_SetExternalPtrProtected(SEXP s, SEXP p);
+
+/* Finalization interface */
+typedef void (*R_CFinalizer_t)(SEXP);
+void R_RegisterFinalizer(SEXP s, SEXP fun);
+void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
 
 #endif /* _R_INTERNALS_H_ */
