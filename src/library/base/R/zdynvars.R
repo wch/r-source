@@ -8,7 +8,7 @@
     ## Until 1.6.0, we consistently used the base environment.
     ## Now we have a dynamic variable instead.
     ## </NOTE>
-    .Dyn.libs <- character(0)
+    .Dyn.libs <- list()
     function(new) {
         if(!missing(new))
             .Dyn.libs <<- new
