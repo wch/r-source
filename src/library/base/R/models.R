@@ -69,6 +69,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     form <- formula(object)
     lhs <- if(length(form) == 2) NULL else deparse(form[[2]])
     rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
+    if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
     formula(paste(lhs, "~", rhs))
   }
   if (!is.null(data) && !is.environment(data) && !is.data.frame(data)) 
@@ -194,8 +195,12 @@ model.matrix <- function(object, ...) UseMethod("model.matrix")
 model.matrix.default <- function(formula, data, contrasts = NULL)
 {
  t <- terms(formula)
- if (missing(data)) 
-	data <- model.frame(formula)
+ if (missing(data)) {
+	vars <- attr(t, "variables")
+	# comes out as list(x,y,z), make it data.frame(x,y,z)
+	vars[[1]] <- as.name("data.frame")
+	data <- eval(vars, sys.frame(sys.parent()))
+ }
  else if (is.null(attr(data, "terms")))
      data <- model.frame(formula, data)
  contrastsL <- contrasts
@@ -218,25 +223,43 @@ model.matrix.default <- function(formula, data, contrasts = NULL)
  data <- data[,reorder, drop=FALSE]
  .Internal(model.matrix(t, data))
 }
-
-model.response <- function (data, type = "any")
+model.response <- function (data, type = "any") 
 {
-	if (attr(attr(data, "terms"), "response")) {
-		if (is.list(data) | is.data.frame(data)) {
-			v <- data[[1]]
-			if (type == "numeric" | type == "double") {
-				storage.mode(v) <- "double"
-			}
-			else if (type != "any")
-				stop("invalid response type")
-			if (is.matrix(v) && ncol(v) == 1)
-				dim(v) <- NULL
-			return(v)
-		}
-		else stop("invalid data argument")
-	}
-	else return(NULL)
+  if (attr(attr(data, "terms"), "response")) {
+    if (is.list(data) | is.data.frame(data)) {
+      v <- data[[1]]
+      if (type == "numeric" | type == "double") storage.mode(v) <- "double"
+      else if (type != "any") stop("invalid response type")
+      if (is.matrix(v) && ncol(v) == 1) dim(v) <- NULL
+      rows <- attr(data, "row.names")
+      if (nrows <- length(rows)) {
+        if (length(v) == nrows) names(v) <- rows
+        else if (length(dd <- dim(v)) == 2) 
+          if (dd[1] == nrows && !length((dn <- dimnames(v))[[1]])) 
+            dimnames(v) <- list(rows, dn[[2]])
+      }
+      return(v)
+    } else stop("invalid data argument")
+  } else return(NULL)
 }
+#model.response <- function (data, type = "any")
+#{
+#	if (attr(attr(data, "terms"), "response")) {
+#		if (is.list(data) | is.data.frame(data)) {
+#			v <- data[[1]]
+#			if (type == "numeric" | type == "double") {
+#				storage.mode(v) <- "double"
+#			}
+#			else if (type != "any")
+#				stop("invalid response type")
+#			if (is.matrix(v) && ncol(v) == 1)
+#				dim(v) <- NULL
+#			return(v)
+#		}
+#		else stop("invalid data argument")
+#	}
+#	else return(NULL)
+#}
 
 model.extract <- function (frame, component)
 {
