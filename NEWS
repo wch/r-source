@@ -72,6 +72,7 @@ BUG FIXES
 	comparing extended-precision quantities on ix86 Linux (and
 	some compilers and options).
 
+    o   Rdindex now handles multi-line \title{}'s correctly
 
 
 		CHANGES IN R VERSION 1.2.0
