@@ -194,7 +194,8 @@ sub get_arglist {
 		## If successful, $match contains the first argument to
 		## the \item enclosed by the braces.
 		$match =~ s/\\dots/.../g;
-		push(@args, split(/\,/, substr($match, 1, -1)));
+		$match =~ s/\n/ /g;
+		push(@args, split(/\,\s*/, substr($match, 1, -1)));
 	    } else {
 		break;
 	    }
