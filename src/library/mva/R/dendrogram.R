@@ -561,7 +561,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     ## draw the main carpet
     par(mar = c(margins[1], 0, 0, margins[2]))
     if(!symm || scale != "none") x <- t(x)
-    if(revC) {
+    if(revC) { # x columns reversed
         iy <- nr:1
         ddr <- rev(ddr)
         x <- x[,iy]
