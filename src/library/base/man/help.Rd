@@ -64,6 +64,6 @@ data()			# list all available data sets
 ?women			# information about data set "women"
 
 topi <- "women"
-help(topi) ##--> Error: No documentation for `topi'
+\dontrun{help(topi) ##--> Error: No documentation for `topi'}
 }
 \keyword{documentation}

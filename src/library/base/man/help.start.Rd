@@ -24,6 +24,6 @@ help.start(gui = "irrelevant", browser = "netscape", remote = NULL)
   PostScript format.
 }
 \examples{
-help.start()
+\dontrun{help.start()}
 }
 \keyword{documentation}
