@@ -439,9 +439,15 @@ static void PrintExpression(SEXP s)
 
 static void PrintEnvir(SEXP rho)
 {
-    if (rho == R_GlobalEnv) Rprintf("<environment: R_GlobalEnv>\n");
+    if (rho == R_GlobalEnv)
+	Rprintf("<environment: R_GlobalEnv>\n");
+    else if (R_IsPackageEnv(rho))
+	Rprintf("<environment: %s>\n",
+		CHAR(STRING_ELT(R_PackageEnvName(rho), 0)));
 #ifdef EXPERIMENTAL_NAMESPACES
-    else if (rho == R_BaseNamespace) Rprintf("<namespace: base>\n");
+    else if (R_IsNamespaceEnv(rho))
+	Rprintf("<environment: namespace:%s>\n",
+		CHAR(STRING_ELT(R_NamespaceEnvName(rho), 0)));
 #endif
     else Rprintf("<environment: %p>\n", rho);
 }

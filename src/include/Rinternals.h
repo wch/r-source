@@ -898,14 +898,24 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
 
 /* Environment and Binding Features */
 void R_RestoreHashCount(SEXP rho);
+Rboolean R_IsPackageEnv(SEXP rho);
+SEXP R_PackageEnvName(SEXP rho);
+#ifdef EXPERIMENTAL_NAMESPACES
+Rboolean R_IsNamespaceEnv(SEXP rho);
+SEXP R_NamespaceEnvName(SEXP rho);
+SEXP R_FindNamespace(char *name);
+#endif
 #define ENVIRONMENT_LOCKING
 #define FANCY_BINDINGS
 #ifdef ENVIRONMENT_LOCKING
 void R_LockEnvironment(SEXP env, Rboolean bindings);
+Rboolean R_EnvironmentIsLocked(SEXP env);
 #endif
 #ifdef FANCY_BINDINGS
 void R_LockBinding(SEXP sym, SEXP env);
 void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env);
+Rboolean R_BindingIsLocked(SEXP sym, SEXP env);
+Rboolean R_BindingIsActive(SEXP sym, SEXP env);
 Rboolean R_HasFancyBindings(SEXP rho);
 #endif
 #endif /* _R_INTERNALS_H_ */

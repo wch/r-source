@@ -585,6 +585,9 @@ static SEXP R_HashFrame(SEXP rho)
 
 static SEXP R_GlobalCache, R_GlobalCachePreserve;
 #endif
+#ifdef EXPERIMENTAL_NAMESPACES
+static SEXP R_BaseNamespaceName;
+#endif
 
 void InitGlobalEnv()
 {
@@ -602,6 +605,8 @@ void InitGlobalEnv()
     R_BaseNamespace = NewEnvironment(R_NilValue, R_NilValue, R_GlobalEnv);
     R_PreserveObject(R_BaseNamespace);
     SET_SYMVALUE(install(".BaseNamespaceEnv"), R_BaseNamespace);
+    R_BaseNamespaceName = ScalarString(mkChar("base"));
+    R_PreserveObject(R_BaseNamespaceName);
     /**** need to properly initialize the name space */
     /**** need to create namespace registry */
     /**** need to enter base namespace in registry */
@@ -1753,6 +1758,7 @@ SEXP do_detach(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(s = ENCLOS(t));
 	x = ENCLOS(s);
 	SET_ENCLOS(t, x);
+	SET_ENCLOS(s, R_NilValue);
     }
 #ifdef USE_GLOBAL_CACHE
     R_FlushGlobalCacheFromTable(HASHTAB(s));
@@ -2122,6 +2128,16 @@ void R_LockEnvironment(SEXP env, Rboolean bindings)
 	error("not an environment");
     LOCK_FRAME(env);
 }
+
+Rboolean R_EnvironmentIsLocked(SEXP env)
+{
+    if (env != R_NilValue && TYPEOF(env) != ENVSXP)
+	error("not an environment");
+    if (env == R_NilValue)
+	return FALSE;
+    else
+	return FRAME_IS_LOCKED(env);
+}
 #endif
 #ifdef FANCY_BINDINGS
 void R_LockBinding(SEXP sym, SEXP env)
@@ -2161,6 +2177,8 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 #endif
 	if (SYMVALUE(sym) != R_UnboundValue && ! IS_ACTIVE_BINDING(sym))
 	    error("symbol already has a regular binding");
+	else if (BINDING_IS_LOCKED(sym))
+	    error("can't change active binding if binding is locked");
 	SET_SYMVALUE(sym, fun);
 	SET_ACTIVE_BINDING_BIT(sym);
     }
@@ -2180,6 +2198,46 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	    SETCAR(binding, fun);
     }
 }    
+
+Rboolean R_BindingIsLocked(SEXP sym, SEXP env)
+{
+    if (TYPEOF(sym) != SYMSXP)
+	error("not a symbol");
+    if (env != R_NilValue && TYPEOF(env) != ENVSXP)
+	error("not an environment");
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (env == R_NilValue || env == R_BaseNamespace)
+#else
+    if (env == R_NilValue)
+#endif
+	return BINDING_IS_LOCKED(sym);
+    else {
+	SEXP binding = findVarLocInFrame(env, sym);
+	if (binding == R_NilValue)
+	    error("no binding for \"%s\"", CHAR(PRINTNAME(sym)));
+	return BINDING_IS_LOCKED(binding);
+    }
+}
+
+Rboolean R_BindingIsActive(SEXP sym, SEXP env)
+{
+    if (TYPEOF(sym) != SYMSXP)
+	error("not a symbol");
+    if (env != R_NilValue && TYPEOF(env) != ENVSXP)
+	error("not an environment");
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (env == R_NilValue || env == R_BaseNamespace)
+#else
+    if (env == R_NilValue)
+#endif
+	return IS_ACTIVE_BINDING(sym);
+    else {
+	SEXP binding = findVarLocInFrame(env, sym);
+	if (binding == R_NilValue)
+	    error("no binding for \"%s\"", CHAR(PRINTNAME(sym)));
+	return IS_ACTIVE_BINDING(binding);
+    }
+}
 
 Rboolean R_HasFancyBindings(SEXP rho)
 {
@@ -2222,3 +2280,80 @@ void R_RestoreHashCount(SEXP rho)
 	SET_HASHPRI(table, count);
     }
 }
+
+Rboolean R_IsPackageEnv(SEXP rho)
+{
+    SEXP nameSymbol = install("name");
+    if (TYPEOF(rho) == ENVSXP) {
+	SEXP name = getAttrib(rho, nameSymbol);
+	char *packprefix = "package:";
+	int pplen = strlen(packprefix);
+	if(isString(name) && length(name) > 0 &&
+	   ! strncmp(packprefix, CHAR(STRING_ELT(name, 0)), pplen))
+	    return TRUE;
+	else
+	    return FALSE;
+    }
+    else
+	return FALSE;
+}
+
+SEXP R_PackageEnvName(SEXP rho)
+{
+    SEXP nameSymbol = install("name");
+    if (TYPEOF(rho) == ENVSXP) {
+	SEXP name = getAttrib(rho, nameSymbol);
+	char *packprefix = "package:";
+	int pplen = strlen(packprefix);
+	if(isString(name) && length(name) > 0 &&
+	   ! strncmp(packprefix, CHAR(STRING_ELT(name, 0)), pplen))
+	    return name;
+	else
+	    return R_NilValue;
+    }
+    else
+	return R_NilValue;
+}
+
+#ifdef EXPERIMENTAL_NAMESPACES
+Rboolean R_IsNamespaceEnv(SEXP rho)
+{
+    if (rho == R_BaseNamespace)
+	return TRUE;
+    else if (TYPEOF(rho) == ENVSXP) {
+	SEXP name = findVarInFrame(rho, install(".__NAMESPACE__."));
+	if (name != R_UnboundValue &&
+	    TYPEOF(name) == STRSXP && LENGTH(name) > 0)
+	    return TRUE;
+	else
+	    return FALSE;
+    }
+    else return FALSE;
+}
+  
+SEXP R_NamespaceEnvName(SEXP rho)
+{
+    if (rho == R_BaseNamespace)
+	return R_BaseNamespaceName;
+    else if (TYPEOF(rho) == ENVSXP) {
+	SEXP name = findVarInFrame(rho, install(".__NAMESPACE__."));
+	if (name != R_UnboundValue &&
+	    TYPEOF(name) == STRSXP && LENGTH(name) > 0)
+	    return name;
+	else
+	    return R_NilValue;
+    }
+    else return R_NilValue;
+}
+
+SEXP R_FindNamespace(char *name)
+{
+    SEXP str, fun, expr, val;
+    PROTECT(str = ScalarString(mkChar(name)));
+    fun = install("findNamespace");
+    PROTECT(expr = LCONS(fun, LCONS(str, R_NilValue)));
+    val = eval(expr, R_GlobalEnv);
+    UNPROTECT(2);
+    return val;
+}
+#endif
