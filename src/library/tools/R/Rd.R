@@ -1,3 +1,5 @@
+### * Rdpp
+
 Rdpp <-
 function(lines)
 {
@@ -60,15 +62,18 @@ function(lines)
     lines[-skipIndices]
 }
 
+### * Rdinfo
+
 Rdinfo <-
 function(file)
 {
     ## <NOTE>
     ## This is based on the Perl code in R::Rd::info().
     ## It seems that matches for aliases and keywords are only single
-    ## line.  Hence, as we get the lines from Rdpp(), we get aliases and
-    ## keywords directly from them before collapsing them to one string
-    ## (which also allows us to avoid looping as in the Perl code).
+    ## line.  Hence, as we get the lines from @code{Rdpp()}, we get
+    ## aliases and keywords directly from them before collapsing them to
+    ## one string (which also allows us to avoid looping as in the Perl
+    ## code).
     ## </NOTE>
 
     if(is.character(file)) {
@@ -113,6 +118,8 @@ function(file)
          aliases = aliases, keywords = keywords)
 }
 
+### * Rdcontents
+
 Rdcontents <-
 function(RdFiles)
 {
@@ -127,27 +134,47 @@ function(RdFiles)
     }
     colnames(contents) <-
         c("File", "Name", "Type", "Title", "Aliases", "Keywords")
+
+    ## Although R-exts says about the Rd title slot that
+    ## <QUOTE>
+    ##   This should be capitalized, not end in a period, and not use
+    ##   any markup (which would cause problems for hypertext search).
+    ## </QUOTE>
+    ## some Rd files have LaTeX-style markup, including
+    ## * LaTeX-style single and double quotation
+    ## * Number-range dashes
+    ## * Escaped ampersand.
+    ## Hence we try getting rid of these ...
+    title <- contents[ , "Title"]
+    title <- gsub("\(``\|''\)", "\"", title)
+    title <- gsub("`", "'", title)
+    title <- gsub("\([[:digit:]]\)--\([[:digit:]]\)", "\\1-\\2", title)
+    title <- gsub("\\\\\&", "&", title)
+    contents[ , "Title"] <- title
+
     contents
 }
+
+### * Rdindex
 
 Rdindex <-
 function(RdFiles, outFile = "", type = NULL,
          width = 0.9 * getOption("width"), indent = NULL)
 {
-    ## Create INDEX or data/00Index files from Rd files.
+    ## Create @file{INDEX} or @file{data/00Index} files from Rd files.
 
     if((length(RdFiles) == 1) && .fileTest("-d", RdFiles)) {
-        ## Compatibility code for the R CMD Rdindex interface.
+        ## Compatibility code for the @code{R CMD Rdindex} interface.
         ## <NOTE>
-        ## It is not a good idea to rewrite R CMD Rdindex as a shell
-        ## wrapper to Rdindex() because passing a long list of Rd files
-        ## as arguments can be quite messy.  Wait for this until we have
-        ## R scripts.
+        ## It is not a good idea to rewrite @code{R CMD Rdindex} as a
+        ## shell wrapper to @code{Rdindex()} because passing a long list
+        ## of Rd files as arguments can be quite messy.  Wait for this
+        ## until we have R scripts.
         ## </NOTE>
         docsDir <- RdFiles
         if(.fileTest("-d", file.path(docsDir, "man")))
             docsDir <- file.path(docsDir, "man")
-        docsExts <- c("Rd", "rd")
+        docsExts <- .makeFileExts("docs")
         RdFiles <- .listFilesWithExts(docsDir, docsExts)
         docsOSDir <- file.path(docsDir, .Platform$OS)
         if(.fileTest("-d", docsOSDir))
@@ -166,6 +193,7 @@ function(RdFiles, outFile = "", type = NULL,
                    "must be a character string or connection"))
 
     contents <- Rdcontents(RdFiles)
+    
     if(!is.null(type)) {
         ind <- contents[ , "Type"] %in% type
         ## Argh.  Ideally we only want to subscript according to
@@ -179,6 +207,8 @@ function(RdFiles, outFile = "", type = NULL,
                         width = width, indent = indent),
                outFile)
 }
+
+### * Rd2contents
 
 Rd2contents <-
 function(dir, outFile = "")
@@ -208,7 +238,7 @@ function(dir, outFile = "")
         stop(paste("argument", sQuote("outFile"),
                    "must be a character string or connection"))
 
-    docsExts <- c("Rd", "rd")
+    docsExts <- .makeFileExts("docs")
     docsFiles <- .listFilesWithExts(docsDir, docsExts)
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
         docsFiles <- c(docsFiles,
@@ -218,11 +248,12 @@ function(dir, outFile = "")
 
     ## <FIXME>
     ## This has 'html' hard-wired.
-    ## Also what about MacOS Classic?
+    ## Note that slashes etc. should be fine for URLs.
     URLs <- paste("../../../library/",
                   packageName,
                   "/html/",
-                  basename(gsub("\.[Rr]d$", "", contents[ , "File"])),
+                  basename(gsub("\\.[[:alpha:]]+$", "",
+                                contents[ , "File"])),
                   ".html",
                   sep = "")
     ## </FIXME>
@@ -235,3 +266,8 @@ function(dir, outFile = "")
         sep = c("\n", "\n", "\n", "\n", "\n\n"),
         file = outFile)
 }
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
