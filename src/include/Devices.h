@@ -81,6 +81,8 @@ int NumDevices(void);
 int deviceNumber(DevDesc*);
 /* Create a new device. */
 int StartDevice(SEXP, SEXP, int, SEXP, int);
+/* Check for an available device slot */
+void R_CheckDeviceAvailable(void);
 
 void DevNull(void);
 

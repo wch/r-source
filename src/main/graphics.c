@@ -5098,6 +5098,10 @@ void DevNull(void) {}
 static int R_CurrentDevice = 0;
 int R_NumDevices = 1;
 DevDesc* R_Devices[R_MaxDevices];
+static int R_LastDeviceEntry = R_MaxDevices - 1;  /* used to catch creation
+						     of too many devices */
+static int R_MaxRegularDevices =  R_MaxDevices - 1; /* not coulting the
+						       LastDeivceEntry */
 
 /* a dummy description to point to when there are no active devices */
 
@@ -5134,6 +5138,12 @@ DevDesc* GetDevice(int i)
     return R_Devices[i];
 }
 
+
+void R_CheckDeviceAvailable(void)
+{
+    if (R_NumDevices >= R_MaxRegularDevices)
+	error("too many open devices");
+}
 
 void InitGraphics(void)
 {
@@ -5257,6 +5267,16 @@ void addDevice(DevDesc *dd)
 
     copyGPar(&(dd->dp), &(dd->gp));
     GReset(dd);
+    
+    /* In case a device driver did not call R_CheckDeviceAvailable
+       before starting its allocation, we complete the allocation and
+       then call killDevice here.  This insures that the device gets a
+       chance to deallocate its resources and the current active
+       device is testored to a sane value. */
+    if (i == R_LastDeviceEntry) {
+        killDevice(i);
+        error("too many devices open");
+    }
 }
 
 
