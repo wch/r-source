@@ -48,30 +48,29 @@ QR decomposition to compute various quantities of interest.
 component named \code{qr} and \code{FALSE} otherwise.
 
 It is not possible to coerce objects to mode qr.
-Objects either are qr decompositions or they are not. 
+Objects either are qr decompositions or they are not.
 Coercion is not possible.
 }
 \value{
-The QR decomposition of the matrix as computed by LINPACK.
-The components in the returned value correspond directly
-to the values returned by DQRDC. 
-\item{qr}{a matrix with the same dimensions as \code{x}.
-The upper triangle contains the \bold{R} of the decomposition
-and the lower triangle contains information on the \bold{Q}
-of the decomposition (stored in compact form).}
-\item{qraux}{a vector of length \code{ncol(x)} which contains
-additional information on \bold{Q}.}
-\item{rank}{the rank of \code{x} as computed by the decomposition.}
-\item{pivot}{information on the pivoting strategy used during
-the decomposition.}
+  The QR decomposition of the matrix as computed by LINPACK.
+  The components in the returned value correspond directly
+  to the values returned by DQRDC.
+  \item{qr}{a matrix with the same dimensions as \code{x}.
+    The upper triangle contains the \bold{R} of the decomposition
+    and the lower triangle contains information on the \bold{Q}
+    of the decomposition (stored in compact form).}
+  \item{qraux}{a vector of length \code{ncol(x)} which contains
+    additional information on \bold{Q}.}
+  \item{rank}{the rank of \code{x} as computed by the decomposition.}
+  \item{pivot}{information on the pivoting strategy used during
+    the decomposition.}
 }
 \references{
 Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
 \emph{LINPACK Users Guide}, SIAM Publications, Philadelphia.
 }
-\seealso{
-\code{\link{solve.qr}}, \code{\link{lsfit}}.
-}
+\seealso{\code{\link{solve.qr}}, \code{\link{lsfit}},
+  \code{\link{eigen}}, \code{\link{svd}}.}
 \examples{
 hilbert <- function(n) { i <- 1:n; 1/outer(i-1,i,"+") }
 h9 <- hilbert(9); h9
@@ -85,3 +84,6 @@ x <- qr.coef(qrh9, y) ##-- is == but much better than
                       ##-- solve(h9) \%*\% y
 h9 \%*\% x              ## = y
 }
+\keyword{algebra}
+\keyword{array}
+\keyword{regression}
