@@ -79,6 +79,8 @@ BUG FIXES
 
     o	besselK(x,*) now returns 0 instead of Inf for large x. (PR#2179)
 
+    o   The Tcl console code didn't work with Tcl/TK 8.0, and has been 
+        #ifdef'd out.
 
 
 		CHANGES IN R VERSION 1.6.0
