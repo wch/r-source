@@ -585,7 +585,7 @@ case "${host}" in
         cpicflags="+z" ;;
     esac
     case "${FC}" in
-      f77|fort77)
+      f77|fort77|f90)
         fpicflags="+z" ;;
     esac
     mainldflags="-Wl,-E"
