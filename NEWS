@@ -16,6 +16,14 @@ NEW FEATURES
 	can be customized by cognescenti.
 
 
+DOCUMENTATION
+
+    o	Manual `Writing R Extensions' has new sections on writing
+	portable packages and on writing new front-ends for R -- the
+	latter will be more comprehensive in R 2.1.0 which has new
+	public header files. 
+
+
 DEPRECATED & DEFUNCT
 
     o	The aqua module in MacOS X is deprecated.
