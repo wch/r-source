@@ -18,14 +18,8 @@ SED2='s/C_FUNCTION(\(.*\))/void * \1();/'
 SED3='s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/'
 SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
-../FFDecl.h: ../../appl/ROUTINES
-	$(SED) -e $(SED0) -e $(SED01) -e $(SED1) -e $(SED2) $< > $@
-../FFTab.h: ../../appl/ROUTINES
-	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) $< > $@
-
-
 version: ../../include/Rversion.h
-fixh: version h/config.h ../FFDecl.h ../FFTab.h \
+fixh: version h/config.h \
   ../../include/Rconfig.h  ../../include/Rmath.h
 	@$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	@$(ECHO) done > fixh
@@ -97,7 +91,7 @@ clean:
 	$(RM) *~ */*~ fixhtml fixh fixbin fixetc fixshare
 
 distclean: clean
-	$(RM) -f ../FFDecl.h ../FFTab.h ../../../tools/GV
+	$(RM) -f ../../../tools/GV
 
 ../../../doc/html/search/SearchEngine.html:../../../doc/KEYWORDS.db
 	(cd ../../../doc; \

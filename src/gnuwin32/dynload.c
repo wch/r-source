@@ -69,19 +69,6 @@
 #include <R_ext/Rdynload.h>
 #include <Rdynpriv.h>
 
-#include "FFDecl.h"
-
-/* This provides a table of built-in C and Fortran functions.
-   We include this table, even when we have dlopen and friends.
-   This is so that the functions are actually loaded at link time. */
-
-static CFunTabEntry CFunTab[] =
-{
-#include "FFTab.h"
-    {NULL, NULL}
-};
-
-
 
         /* Inserts the specified DLL at the head of the DLL list */
         /* Returns 1 if the library was successfully added */
@@ -98,8 +85,6 @@ static HINSTANCE R_loadLibrary(const char *path, int asLocal, int now);
 static DL_FUNC getRoutine(DllInfo *info, char const *name);
 static void R_deleteCachedSymbols(DllInfo *dll);
 
-static DL_FUNC getBaseSymbol(const char *name);
-
 static void R_getDLLError(char *buf, int len);
 static void GetFullDLLPath(SEXP call, char *buf, char *path);
 
@@ -114,12 +99,12 @@ void InitFunctionHashing()
     R_osDynSymbol->dlsym = getRoutine;
     R_osDynSymbol->closeLibrary = closeLibrary;
     R_osDynSymbol->getError = R_getDLLError;
-    R_osDynSymbol->getBaseSymbol = getBaseSymbol;
+    R_osDynSymbol->getBaseSymbol = NULL;
 
     R_osDynSymbol->deleteCachedSymbols = R_deleteCachedSymbols;
     R_osDynSymbol->lookupCachedSymbol = Rf_lookupCachedSymbol;
 
-    R_osDynSymbol->CFunTab = CFunTab;
+    R_osDynSymbol->CFunTab = NULL;
 
     R_osDynSymbol->fixPath = fixPath;
     R_osDynSymbol->getFullDLLPath = GetFullDLLPath;
@@ -179,48 +164,6 @@ static void R_getDLLError(char *buf, int len)
     strcpy(buf, "LoadLibrary failure:  ");
     strcat(buf, lpMsgBuf);
     LocalFree(lpMsgBuf);
-}
-
-
-static DL_FUNC getBaseSymbol(const char *name)
-{
-    static int NumStatic = 0;
-    int   mid, high, low, cmp;
-    if (!NumStatic) {
-        int i,j;
-	char *tname;
-	DL_FUNC tfunc;
-
-	NumStatic = (sizeof(CFunTab) / sizeof(CFunTabEntry)) - 1;
-	for (i = 0; i < NumStatic; i++)
-	    for (j = i + 1; j < NumStatic; j++) {
-		if (strcmp(CFunTab[j].name, CFunTab[i].name) < 0) {
-		    tname = CFunTab[i].name;
-		    tfunc = CFunTab[i].func;
-		    CFunTab[i].name = CFunTab[j].name;
-		    CFunTab[i].func = CFunTab[j].func;
-		    CFunTab[j].name = tname;
-		    CFunTab[j].func = tfunc;
-		}
-	    }
-    }
-    low = 0;
-    mid = 0;
-    high = NumStatic - 1;
-    while (low <= high) {
-	mid = (low + high) / 2;
-	cmp = strcmp(name, CFunTab[mid].name);
-	if (cmp < 0)
-	    high = mid - 1;
-	else if (cmp > 0)
-	    low = mid + 1;
-	else
-	    break;
-    }
-    if (high < low)
-	return (DL_FUNC) NULL;
-    else
-	return CFunTab[mid].func;
 }
 
 static void GetFullDLLPath(SEXP call, char *buf, char *path)
