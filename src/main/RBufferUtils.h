@@ -9,5 +9,6 @@ typedef struct {
 } R_StringBuffer;
 
 void R_AllocStringBuffer(int blen, R_StringBuffer *buf);
+void R_FreeStringBuffer(R_StringBuffer *buf);
 
 #endif

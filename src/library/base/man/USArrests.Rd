@@ -2,7 +2,7 @@
 \title{Violent Crime Rates by US State}
 \usage{data(USArrests)}
 \alias{USArrests}
-\format{A data frame with 50 observations on 5 variables.
+\format{A data frame with 50 observations on 4 variables.
 
   \tabular{rlll}{
     [,1]  \tab Murder    \tab numeric

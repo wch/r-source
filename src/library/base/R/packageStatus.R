@@ -142,12 +142,12 @@ print.packageStatus <- function(x, ...)
 }
 
 compareVersion <- function(a, b){
-    a <- as.integer(strsplit(a, "[\\.-]")[[1]])
-    b <- as.integer(strsplit(b, "[\\.-]")[[1]])
     if(is.na(a))
         return(-1)
     if(is.na(b))
         return(1)
+    a <- as.integer(strsplit(a, "[\\.-]")[[1]])
+    b <- as.integer(strsplit(b, "[\\.-]")[[1]])
     for(k in 1:length(a)){
         if(k <= length(b)){
             if(a[k]>b[k])

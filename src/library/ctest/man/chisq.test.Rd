@@ -43,25 +43,32 @@ chisq.test(x, y = NULL, correct = TRUE,
     the p-value is computed by Monte Carlo simulation with \code{B}
     replicates.  This is done by random sampling from the set of all
     contingency tables with given marginals, and works only if the
-    marginals are positive.
+    marginals are positive.  (A C translation of the algorithm of
+    Patefield (1981) is used.)
 }
 \value{
-    A list with class \code{"htest"} containing the following
-    components:
-    \item{statistic}{the value the chi-squared test statistic.}
-    \item{parameter}{the degrees of freedom of the approximate
-	chi-squared distribution of the test statistic, \code{NA} if the
-	p-value is computed by Monte Carlo simulation.}
-    \item{p.value}{the p-value for the test.}
-    \item{method}{a character string indicating the type of test
-	performed, and whether Monte Carlo simulation or continuity
-	correction was used.}
-    \item{data.name}{a character string giving the name(s) of the data.}
-    \item{observed}{the observed counts.}
-    \item{expected}{the expected counts under the null hypothesis.}
-    \item{residuals}{the Pearson residuals, \code{(observed - expected)
-	/ sqrt(expected)}.}
+  A list with class \code{"htest"} containing the following
+  components:
+  \item{statistic}{the value the chi-squared test statistic.}
+  \item{parameter}{the degrees of freedom of the approximate
+    chi-squared distribution of the test statistic, \code{NA} if the
+    p-value is computed by Monte Carlo simulation.}
+  \item{p.value}{the p-value for the test.}
+  \item{method}{a character string indicating the type of test
+    performed, and whether Monte Carlo simulation or continuity
+    correction was used.}
+  \item{data.name}{a character string giving the name(s) of the data.}
+  \item{observed}{the observed counts.}
+  \item{expected}{the expected counts under the null hypothesis.}
+  \item{residuals}{the Pearson residuals, \code{(observed - expected)
+      / sqrt(expected)}.}
 }
+\references{
+  Patefield, W. M. (1981)
+  Algorithm AS159. An efficient method of generating r x c tables
+  with given row and column totals. \emph{Applied Statistics} \bold{30},
+  91--97.
+} 
 \examples{
 data(InsectSprays)              # Not really a good example
 chisq.test(InsectSprays$count > 7, InsectSprays$spray)

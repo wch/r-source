@@ -14,8 +14,8 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in .cvsignore
 R = R_LIBS= $(top_builddir)/bin/R
 
-## foo.ts is the timestamp for package foo
-## foo_tgz is a symlink to foo_x.y-z.tar.gz in the source dir
+## foo.ts is the timestamp for package foo;
+## foo.tgz is a symlink to foo_x.y-z.tar.gz in the source dir.
 
 ## For developers: A shell script, tools/rsync-recommended, updates
 ## packages from the CRAN master directory. 
@@ -26,19 +26,19 @@ CLEANFILES = $(OBJECTS)
 DISTCLEANFILES = Makefile
 
 .SUFFIXES:
-.SUFFIXES: _tgz .ts
+.SUFFIXES: .tgz .ts
 
 all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ $(OBJECTS)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-_tgz.ts:
-	$(R) CMD INSTALL $<
+.tgz.ts:
+	$(R) CMD INSTALL -l $(top_builddir)/library $<
 	@touch $@
 
 ## survival needs to be installed before boot
-boot.ts: survival.ts boot_tgz
+boot.ts: survival.ts boot.tgz
 
 R docs:
 
@@ -56,7 +56,7 @@ distclean: clean
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
-	@for f in $(DISTFILES) `cd $(srcdir) && ls *.tar.gz *_tgz`; do \
+	@for f in $(DISTFILES) `cd $(srcdir) && ls *.tar.gz *.tgz`; do \
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \

@@ -8,7 +8,7 @@
 manova(\dots)
 }
 \arguments{
-  \item{\dots}{Arguments to be passed to \code{\link{aov}}}
+  \item{\dots}{Arguments to be passed to \code{\link{aov}}.}
 }
 \details{
   Class \code{"manova"} differs from class \code{"aov"} in selecting a
@@ -18,6 +18,10 @@ manova(\dots)
 }
 \value{
   See \code{\link{aov}} and the comments in Details here.
+}
+\note{
+  \code{manova} does not support multistratum analysis of variance, so
+  the formula should not include an \code{Error} term.
 }
 \references{
   Krzanowski, W. J. (1988) \emph{Principles of Multivariate Analysis. A

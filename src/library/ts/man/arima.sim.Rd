@@ -23,6 +23,8 @@ arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, ...),
     can be specified by \code{sd}.}
 }
 \details{
+  See \code{\link{arima}} for the precise definition of an ARIMA model.
+  
   The ARMA model is checked for stationarity.
 
   ARIMA models are specified via the \code{order} component of
@@ -33,7 +35,7 @@ arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, ...),
   A time-series object of class \code{"ts"}.
 }
 \seealso{
-  \code{\link{arima.sim}}
+  \code{\link{arima}}
 }
 \examples{
 arima.sim(n = 63, list(ar = c(0.8897, -0.4858), ma = c(-0.2279, 0.2488)),

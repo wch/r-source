@@ -67,7 +67,12 @@
   For details about how to write code to use with \code{.Call} and
   \code{.External}, see the chapter on ``System and foreign language
   interfaces'' in ``Writing \R Extensions'' in the \file{doc/manual}
-  subdirectory of the \R source tree).
+  subdirectory of the \R source tree.
+
+#ifdef windows
+  For Windows-specific details on producing the external code, see the
+  file \file{readme.packages}.
+#endif
 }
 %%-- This note based on BDR's understanding, edited TSL
 \section{Argument types}{

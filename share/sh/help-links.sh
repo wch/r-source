@@ -42,6 +42,8 @@ ln -s ${R_HOME}/doc/html/search/index.txt ${USER_R_HOME}/doc/html/search
 rm -f ${PKGLIST}
 rm -f ${SEARCHINDEX}
 cp ${R_HOME}/doc/html/packages-head.html ${PKGLIST}
+# ensure that the copy is writeable.
+chmod u+w ${PKGLIST}
 
 get_unique () {
   if test -r ${1}; then

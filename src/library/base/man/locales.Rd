@@ -55,7 +55,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 }
 \seealso{
   \code{\link{strptime}} for uses of \code{category = "LC_TIME"}.
-  \code{\link{localeconv}} for details of numerical representations.
+  \code{\link{Sys.localeconv}} for details of numerical representations.
 }
 \examples{
 Sys.getlocale()

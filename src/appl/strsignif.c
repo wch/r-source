@@ -76,6 +76,7 @@
 #include <R_ext/Error.h>	/* error */
 #include <R_ext/Memory.h>	/* R_alloc */
 #include <R_ext/Applic.h>
+#include <Rmath.h>		/* fround */
 
 void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		char **format, char **flag, char **result)
@@ -136,7 +137,18 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		    if(xx == 0.)
 			strcpy(result[i], "0");
 		    else {
-			iex= (int)floor(log10(fabs(xx)));
+			/* This was iex= (int)floor(log10(fabs(xx)))
+			   That's wrong, as xx might get rounded up,
+			   and we do need some fuzz or 99.5 is correct.
+			*/
+			double xxx = fabs(xx), X;
+			iex= (int)floor(log10(xxx) + 1e-12);
+			X = fround(xxx/pow(10.0, (double)iex)+ 1e-12, 
+				   (double)(dig-1));
+			if(iex > 0 &&  X >= 10) {
+			    xx = X * pow(10.0, (double)iex);
+			    iex++;
+			}
 			if(iex == -4 && fabs(xx)< 1e-4) {/* VERY rare case */
 			    iex = -5;
 			}

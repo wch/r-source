@@ -1,6 +1,6 @@
 # file modreg/R/loess.R
 # copyright (C) 1998 B. D. Ripley
-# Copyright (C) 2000 The R Development Core Team
+# Copyright (C) 2000-2 The R Development Core Team
 #
 loess <-
 function(formula, data=NULL, weights, subset, na.action, model = FALSE,
@@ -10,6 +10,8 @@ function(formula, data=NULL, weights, subset, na.action, model = FALSE,
 	 method = c("loess", "model.frame"),
 	 control = loess.control(...), ...)
 {
+    family <- match.arg(family)
+    method <- match.arg(method)
     mt <- terms(formula, data = data)
     mf <- match.call(expand.dots=FALSE)
     mf$model <- mf$span <- mf$enp.target <- mf$degree <-
@@ -76,6 +78,7 @@ simpleLoess <-
     ## loess_ translated to R.
 
     D <- NCOL(x)
+    if(D > 4) stop("only 1-4 predictors are allowed")
     N <- NROW(x)
     if(!N || !D)	stop("invalid `x'")
     if(!length(y))	stop("invalid `y'")

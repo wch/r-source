@@ -13,8 +13,10 @@
 	    names(obj) <- n1
 	if(h.dim && length(obj) == prod(d1))
 	    dim(obj) <- dm <- d1
-	if(h.dmn && !is.null(dm) && all(dm == sapply(dn1,length)))
-	    dimnames(obj) <- dn1
+	if(h.dmn && !is.null(dm)) {
+            ddn <- sapply(dn1, length)
+            if( all((dm == ddn)[ddn > 0]) ) dimnames(obj) <- dn1
+        }
     }
     obj
 }

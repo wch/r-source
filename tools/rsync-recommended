@@ -2,10 +2,15 @@
 #
 # ${RHOME}/tools/rsync-recommended
 
-
 : ${CRAN_RSYNC='cran.r-project.org::CRAN'}
 
+## The intention here is infer TOOLS_DIR from an explicit path.
+## but the user might have called it from tools, so test that case
+## separately.
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+if test ${TOOLS_DIR} = ${0} ; then
+  TOOLS_DIR="."
+fi
 (cd "${TOOLS_DIR}"/..
   version=`cut -f1 -d' ' VERSION`
   PKGS=`grep '^R_PKGS_RECOMMENDED *=' Makeconf.in | sed 's/.*=//'`
@@ -13,24 +18,26 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 
   ## The purpose of the rsync options is to get the timestamps on the
   ## downloaded files to reflect time of download.
-  ## We can't use -t because then we could download a changed file that 
-  ## was older the last build and therefore would not be installed. 
-  ## The -c (checksum first) is necessary because otherwise all the 
+  ## We can't use -t because then we could download a changed file that
+  ## was older the last build and therefore would not be installed.
+  ## The -c (checksum first) is necessary because otherwise all the
   ## files get their mtime changed whether updated or not.
-  ## -C prevents --delete from removing the CVS subdirectory.
+  ## -C prevents -delete from removing the CVS subdirectory.
 
-  rsync -rcIzC --delete \
+  rsync -rcIzC --verbose --delete \
     --exclude=Makefile.in --exclude=Makefile --exclude=.cvsignore \
-    --include=*.tar.gz \
-    "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ .
+    --include=*.tar.gz --exclude=*.tgz \
+    "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ . || \
+    (echo "*** rsync failed to update Recommended files ***" && exit 1)
 
-  ## Link each package to a simplified name so that Make has an
-  ## easier time. Notice that we cannot use pkgname.tgz because of
-  ## the way R CMD INSTALL works, but pkgname_tgz works OK.
-  ## Notice that as far as Make is concerned, the symlinks have the same
-  ## timestamp as the file they point to.
+  ## Link each package to a simplified name so that Make has an easier
+  ## time.  Notice that as far as Make is concerned, the symlinks have
+  ## the same timestamp as the file they point to.  Don't remove the 
+  ## existing links until now in case rsync fails.
 
+  echo "Creating links"
+  rm -f *.tgz
   for i in ${PKGS} ; do
-    ln -s $i*.tar.gz ${i}_tgz
+    ln -s $i*.tar.gz ${i}.tgz
   done
 )

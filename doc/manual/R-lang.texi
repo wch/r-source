@@ -1591,7 +1591,7 @@ indices has the same effect as if they were omitted.
 
 @item
 @strong{Other numeric}.  Non-integer values are converted to integer
-before use.
+(by truncation towards zero) before use.
 
 @item
 @strong{Logical}.  The indexing @code{i} should generally have the same
@@ -1915,6 +1915,21 @@ The first element of the search path is the global environment and the
 last is the base package.  An @code{Autoloads} environment is used for
 holding proxy objects that may be loaded on demand.  Other environments
 are inserted in the path using @code{attach} or @code{library}.
+
+@cindex name spaces
+Packages which have a @emph{name space} have a different search path.
+When a search for an @R{} object is started from an object in such a
+package, the package itself is search first, then the global environment
+and the rest of the regular search path.  The effect is that references
+to other objects in the same package will be resolved to the package,
+and objects cannot be masked by objects of the same name in the global
+environment or in other packages.
+
+As of @R{} 1.6.x package @pkg{base} has a name space, but no other
+package does (nor are means yet provided for users to make use of name
+spaces).  This can currently be disabled by setting the environment
+variable @code{R_NO_BASE_NAMESPACE}.
+
 
 @c @node Evaluation of calls, Functions, Evaluation of expressions, Top
 @c  @section Accessing and manipulating environments
@@ -3043,25 +3058,6 @@ are themselves calls, consider
 x + y + 2
 @end smallexample
 
-One thing to note is that @R{}'s deparser does not parenthesize
-expressions.  If you for instance do
-
-@smallexample
-> e1 <- quote(4 - 2)
-> e1[[3]] <- quote(2 - 2) # @r{replacing the `2'}
-> e1
-4 - 2 - 2
-@end smallexample
-
-@noindent
-then @code{e1} is really @math{4 - (2 - 2)} and not @math{(4 - 2) - 2}
-as the left-associative rule would suggest.  This reveals itself when
-you evaluate the call using
-
-@smallexample
-> eval(e1)
-[1] 4
-@end smallexample
 
 All grouping parentheses in input are preserved in parsed expressions.
 They are represented as a function call with one argument, so that
@@ -3091,8 +3087,8 @@ deparser, as the following examples show
 @end smallexample
 
 @noindent
-The parser/deparser system does, however, make a fairly good job on
-basic expressions.
+Deparsed expressions should, however, evaluate to an equivalent value 
+to the original expression (up to rounding error).
 
 ...internal storage of flow control constructs...note Splus
 incompatibility...
@@ -3927,12 +3923,13 @@ is itself an @R{} object and can be saved and otherwise manipulated
 within the @R{} system.
 
 @menu
-* The parsing process::         
+* The parsing process::    
+* Comments::
 * Tokens::                      
 * Expressions::                 
 @end menu
 
-@node The parsing process, Tokens, Parser, Parser
+@node The parsing process, Comments, Parser, Parser
 @comment  node-name,  next,  previous,  up
 @section The parsing process
 
@@ -4012,7 +4009,23 @@ but there are a couple of awkward exceptions, mostly involving
 expressions that weren't generated from a textual representation in the
 first place.
 
-@node Tokens, Expressions, The parsing process, Parser
+@node Comments, Tokens, The parsing process, Parser
+@comment  node-name,  next,  previous,  up
+@section Comments
+
+@cindex comments
+Comments in @R{} are ignored by the parser.  Any text from a 
+@findex @code{#}
+@code{#} character
+to the end of the line is taken to be a comment, unless
+the @code{#} character is inside a quoted string. For example, 
+
+@smallexample
+> x <- 1  # This is a comment...
+> y <- "  #... but this is not."
+@end smallexample
+
+@node Tokens, Expressions, Comments, Parser
 @comment  node-name,  next,  previous,  up
 @section Tokens
 
@@ -4095,15 +4108,15 @@ newline
 tab character
 @item \b
 backspace
+@item \\
+backslash itself
 @item \@var{nnn}
 character with given code
 @end table
 
 @noindent
 A single quote may also be embedded directly in a double-quote delimited
-string and vice versa.  The string @code{"NA"} has special meaning as
-the ``missing string''.
-@c FIXME (don't we want to change that?)
+string and vice versa.
 
 @node Identifiers, Reserved words, Literal constants, Tokens
 @subsection Identifiers

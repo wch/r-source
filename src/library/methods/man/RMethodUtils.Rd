@@ -28,6 +28,7 @@
 \alias{removeMethodsObject}
 \alias{findUnique}
 \alias{removeFromMethodMetaData}
+\alias{removeSubclassMetaData}
 \alias{MethodAddCoerce}
 \alias{is.primitive}
 \alias{.saveImage}
@@ -70,7 +71,7 @@ setAllMethodsSlot(mlist)
 
 doPrimitiveMethod(name, def, call=sys.call(-1), ev=sys.frame(-2))
 
-conformMethod(signature, mnames, fnames)
+conformMethod(signature, mnames, fnames, f)
 
 getGeneric(f, mustFind=FALSE)
 
@@ -84,6 +85,8 @@ getFromMethodMetaData(name)
 assignToMethodMetaData(name, value)
 
 removeFromMethodMetaData(name)
+
+removeSubclassMetaData(ClassDef1, ClassDef2) 
 
 removeMethodsObject(f, where)
 
@@ -139,7 +142,7 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
       formal arguments to the function, \code{fnames},
       \code{conformMethod} determines whether the signature and the two
       sets of arguments conform, and returns the signature, possibly
-      extended.
+      extended.  The function name, \code{f} is supplied for error messages.
 
       The method assignment conforms if either method and function have
       identical formal argument lists.  It can also conform if the

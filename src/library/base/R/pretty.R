@@ -25,5 +25,12 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
             high.u.fact = as.double(c(high.u.bias, u5.bias)),
             eps.correct,
             DUP = FALSE, PACKAGE = "base")
-    seq(z$l, z$u, length=z$n+1)
+    s <- seq(z$l, z$u, length = z$n+1)
+    if(!eps.correct && z$n) { # maybe zap smalls from seq() rounding errors
+        ## better than zapsmall(s, digits = 14) :
+        delta <- diff(range(z$l, z$u)) / z$n
+        if(any(small <- abs(s) < 1e-14 * delta))
+            s[small] <- 0
+    }
+    s
 }

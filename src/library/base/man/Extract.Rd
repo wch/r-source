@@ -37,7 +37,10 @@ x$name
 }
 \arguments{
   \item{x}{object from which to extract elements}
-  \item{i,j,\dots,name}{elements to extract or replace}
+  \item{i,j,\dots,name}{elements to extract or replace. \code{i,j} are
+    either \code{numeric} or \code{character} where \code{name} must be
+    character or an (unquoted) name.  Numeric values are coerced to
+    integer as by \code{\link{as.integer}(i)}.}
   \item{drop}{For data frames, matrices, and arrays.  If \code{TRUE} the
     result is coerced to the lowest possible dimension (see examples
     below).}
@@ -77,7 +80,10 @@ x$name
 \seealso{
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
 
-  \code{\link{Syntax}} for operator precedence.
+  \code{\link{Syntax}} for operator precedence, and the
+  \emph{R Language} reference manual about indexing details.
+%% Fixme: Link (to html in `help.start()', pdf from `ref manual', `info' from ESS
+%%  , see \url{http://cran.R-project.org/manuals.html}.
 }
 \examples{
 x <- 1:12; m <- matrix(1:6,nr=2); li <- list(pi=pi, e = exp(1))
@@ -91,6 +97,10 @@ y$a                   # the element of y named a
 
 data(swiss)
 swiss[ c(1, 1:2), ]   # duplicate row, unique row names
+
+## non-integer indices are truncated:
+(i <- 3.999999999) # "4" is printed
+(1:5)[i]  # 3
 }
 \keyword{array}
 \keyword{list}

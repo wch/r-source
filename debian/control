@@ -2,8 +2,9 @@ Source: r-base
 Section: math
 Priority: optional
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
-Standards-Version: 3.5.0
-Build-Depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.3-dev, tk8.3-dev, libglade-gnome0-dev, bison, g77 [!m68k !ia64], g77-3.0 [ia64], f2c [m68k], gcc-3.0 [ia64], g++-3.0 [ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0), texi2html, texinfo (>= 4.1-2)
+Uploaders: Douglas Bates <bates@stat.wisc.edu>
+Standards-Version: 3.5.7
+Build-Depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.4-dev, tk8.4-dev, libglade-gnome0-dev, bison, g77 [!ia64], g77-3.0 [ia64], gcc-3.0 [ia64], g++-3.0 [ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0), texi2html, texinfo (>= 4.1-2), libbz2-dev, libpcre3-dev, libpaperg-dev
 
 Package: r-base
 Architecture: all
@@ -36,6 +37,7 @@ Architecture: any
 Depends: ${perl:Depends}, zlib-bin, ${shlibs:Depends}
 Replaces: r-base (<= 1.4.1-1)
 Recommends: r-recommended, r-base-dev
+Suggests: libpaperg, ess, r-doc-info | r-doc-pdf | r-doc-html
 Description: GNU R core of statistical computing language and environment
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
@@ -79,7 +81,8 @@ Description: GNU R Gnome gui for statistical computing system
 
 Package: r-base-dev
 Architecture: all
-Depends: r-base-core, blas-dev (>= 1.0-9), build-essential, g77 | g77-3.0 | f2c | fortran77-compiler , gcc | gcc-3.0 | c-compiler, g++ | g++-3.0
+Section: devel
+Depends: r-base-core, blas-dev (>= 1.0-9), build-essential, g77 | g77-3.0 | f2c | fortran77-compiler , gcc | gcc-3.0 | c-compiler, g++ | g++-3.0, libncurses5-dev, libreadline4-dev
 Description: GNU R installation of auxiliary GNU R packages 
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
@@ -122,6 +125,7 @@ Architecture: all
 Priority: extra
 Depends: r-base-core
 Replaces: r-base (<= 1.4.1-1)
+Suggests: r-doc-html, mozilla | www-browser
 Description: GNU R html docs for statistical computing system functions
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
@@ -188,7 +192,7 @@ Description: GNU R pdf manuals for statistical computing system
 Package: r-doc-html
 Architecture: all
 Section: doc
-Suggests: r-base-core, mozilla | konqueror | links | lynx | www-browser
+Suggests: r-base-core, mozilla | www-browser
 Replaces: r-base (<= 1.4.1-1)
 Description: GNU R html manuals for statistical computing system
  R is `GNU S' - A language and environment for statistical computing
@@ -228,3 +232,32 @@ Description: GNU R info manuals statistical computing system
  .
  This packages provides the R manuals in info format. The sibling packages
  r-doc-html and r-doc-pdf provide the same manuals.
+
+Package: r-recommended
+Architecture: any
+Depends: r-base-core (= ${Source-Version}), ${shlibs:Depends}
+Description: GNU R collection of recommended packages 
+ R is `GNU S' - A language and environment for statistical computing
+ and graphics. R is similar to the award-winning S system, which was
+ developed at Bell Laboratories by John Chambers et al. It provides a
+ wide variety of statistical and graphical techniques (linear and
+ nonlinear modelling, statistical tests, time series analysis,
+ classification, clustering, ...).
+ .
+ This Debian package contains the R packages that are recommended by the
+ upstream R core team as part of a complete R distribution, and distributed
+ along with the source of R itself. The package comprises 
+ the following packages:
+  - KernSmooth: Functions for kernel smoothing for Wand & Jones (1995)
+  - VR: The MASS, class, nnet and spatial libraries from Venables and
+    Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
+  - boot: Bootstrap R (S-Plus) Functions from the book "Bootstrap Methods 
+    and Their Applications" by A.C. Davison and D.V. Hinkley (1997).
+  - cluster: Functions for clustering (by Rousseeuw et al.)
+  - foreign: Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+  - grid: The grid graphics package (required by lattice)
+  - lattice: Implementation of Trellis (R) graphics
+  - mgcv: Multiple smoothing parameter estimation and GAMs by GCV
+  - nlme: Linear and nonlinear mixed effects models
+  - rpart: Recursive partitioning and regression trees
+  - survival: Survival analysis, including penalised likelihood.

@@ -27,8 +27,20 @@ is.integer(x)
   type. The answer will be \code{NA} unless the coercion succeeds.
   Real values larger in modulus than the largest integer are coerced to
   \code{NA} (unlike S which gives the most extreme integer of the same sign).
+  Non-integral numeric values are truncated towards zero (i.e.,
+  \code{as.integer(x)} equals \code{\link{trunc}(x)} there), and
+  imaginary parts of complex numbers are discarded (with a warning).
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of integer type or not. 
+  whether its argument is of integer type or not.
+}
+\seealso{
+  \code{\link{round}} (and \code{ceiling} and \code{floor} on that help
+  page) to convert to integral values.
+}
+\examples{
+  ## as.integer() truncates:
+  x <- pi * c(-1:1,10)
+  as.integer(x)
 }
 \keyword{classes}

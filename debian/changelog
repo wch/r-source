@@ -1,3 +1,92 @@
+r-base (1.6.1.cvs.20021230-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2002-12-30 of R 1.6.2
+  * Added Douglas Bates as an Uploader following email discussion with Dirk
+  
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon, 30 Dec 2002 20:43:24 -0600
+
+r-base (1.6.1-3) unstable; urgency=low
+
+  * debian/{control,rules}: Configure switch from f2c to g77 for m68k
+  * debian/{control,rules}: Configure switch from tcl/tk8.3 to tcl/tk8.4
+  * debian/control: Added libpaperg-dev to Build-Depends (Closes: #168259)
+  * debian/r-base-control: Substitute result from paperconf call 
+    into $R_HOME/etc/Renviron, not /usr/bin/R 
+  * debian/rules: Move $R_HOME/etc/* files into /etc/R/ (Closes: #170018)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 28 Nov 2002 07:49:49 -0600
+
+r-base (1.6.1-2) unstable; urgency=low
+
+  * Rebuilt with support for bzip2 (compression) and pcre (reg.expressions)
+  * debian/control: Added libbz2-dev and libpcre3-dev to Build-Depends
+  * debian/rules: Set R_BROWSER to /usr/bin/mozilla in $R_HOME/etc/Renviron
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 11 Nov 2002 13:26:27 -0600
+
+r-base (1.6.1-1) unstable; urgency=low
+
+  * Upgraded to R version 1.6.1 released today
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri,  1 Nov 2002 16:56:50 -0600
+
+r-base (1.6.0.rel.20021024-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2002-10-24 of R 1.6.1
+  * debian/control: Set section for r-base-dev to devel
+  * debian/r-doc-info.prerm: Add upgrade target
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 24 Oct 2002 21:01:49 -0500
+
+r-base (1.6.0.rel.20021017-1) unstable; urgency=low
+
+  * Upgraded to first release candidate (dated 2002-10-17) of R 1.6.1
+  * Since 1.6.0, the R Core upstream stream now bundles the sources 
+    of the r-recommended package directly in the r-base sources -- thus 
+    the source package r-recommended will be replaced by a binary 
+    package derived from these sources
+  * debian/control: Added new package r-recommended
+  * debian/r-recommended.{files,links}: Defined accordingly
+  * debian/copyright: Include the copyright file from r-recommended
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 17 Oct 2002 20:53:49 -0500
+
+r-base (1.6.0.rel-1) unstable; urgency=low
+
+  * Upgraded to new upstream release 1.6.0 [ which we need to rename
+    1.6.0.rel so that is sorts higher than 1.6.0.rc.20020927 ]
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue,  1 Oct 2002 21:18:52 -0500
+
+r-base (1.6.0.rc.20020927-1) unstable; urgency=low
+
+  * Upgraded to new release candidate of R 1.6.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 26 Sep 2002 20:49:34 -0500
+
+r-base (1.6.0.rc.20020917-1) unstable; urgency=low
+
+  * Upgraded to new release candidate of R 1.6.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 16 Sep 2002 20:41:58 -0500
+
+r-base (1.6.0.rc.20020910-1) unstable; urgency=low
+
+  * First release candidate of R 1.6.0 which is scheduled to be released on
+    October 1, 2002 -- this release corresponds to the first feature freeze
+  * debian/control: More Suggests: of the r-doc-* packages
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon,  9 Sep 2002 20:53:41 -0500
+
+r-base (1.5.1-0woody1) woody-proposed-updates; urgency=low
+
+  * Backport for woody built against atlas with corrected virtual Depends 
+    on blas/atlas to prevent bugs like #150253 and #152284 in woody
+  * debian/rules: Use "-O0 -g0" on arm and m68k to shorten compile time
+  * debian/control: Added lib{ncurses5,readline4}-dev to r-base-dev Depends 
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 15 Jul 2002 21:19:51 -0500
+
 r-base (1.5.1-1) unstable; urgency=low
 
   * Upgraded to new upstream release 1.5.1

@@ -65,6 +65,8 @@ ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
 R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 
+ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
+
 ## <FIXME>
 ## Names in here should use '$(top_builddir)' instead ...
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a $(R_XDR)
@@ -157,12 +159,6 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	@echo "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
 	$(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
-
-connections.o: $(srcdir)/connections.c
-	$(CC) $(ZLIB_CPPFLAGS) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
-
-dounzip.o: $(srcdir)/dounzip.c
-	$(CC) $(ZLIB_CPPFLAGS) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
 
 install: installdirs
 	@$(MAKE) install-bin

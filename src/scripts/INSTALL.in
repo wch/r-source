@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.92 $'
+revision='$Revision: 1.92.2.1 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -183,8 +183,16 @@ while test -n "${1}"; do
       if test -f "${1}"; then
         mkdir -p ${tmpdir}
 	pkgname=`basename "${1}"`
+	## Also allow for 'package.tgz' ...
+	pkgname=`basename "${pkgname}" .tgz`
 	pkgname=`echo "${pkgname}" | sed 's/_.*//'`
-	gzip -dc "${1}" | (cd "${tmpdir}" && tar -xf -)
+	## Note that we use '-m' so that modification dates are *not*
+	## preserved when untarring the sources.  This is necessary to
+	## ensure that the preformatted help pages are always rebuilt.
+	## Otherwise, the build date for an older version may be newer
+	## than the modification date for the new sources as recorded in
+	## the tarball ...
+	gzip -dc "${1}" | (cd "${tmpdir}" && tar -mxf -)
 	if test -d "${tmpdir}/${pkgname}"; then
 	  get_packages "${tmpdir}/${pkgname}"
 	else

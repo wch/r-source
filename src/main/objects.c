@@ -976,7 +976,13 @@ SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     PROTECT(args);
     PROTECT(arg = CAR(args));
+    if(!isValidStringF(arg))
+      error("Argument to standardGeneric must be a non-empty character string");
+
     PROTECT(fdef = get_this_generic(args));
+
+    if(isNull(fdef))
+      error("Call to standardGeneric(\"%s\") apparently not from the body of that generic function", CHAR(STRING_ELT(arg, 0)));
 
     value = (*ptr)(arg, env, fdef);
 
@@ -1130,7 +1136,7 @@ argument to standardGeneric.
 */
 static SEXP get_this_generic(SEXP args)
 {
-    SEXP rval = NULL; static SEXP gen_name;
+    SEXP value = R_NilValue; static SEXP gen_name;
     int i, n;
     RCNTXT *cptr; char *fname;
 
@@ -1147,16 +1153,18 @@ static SEXP get_this_generic(SEXP args)
     n = framedepth(cptr);
     /* check for a matching "generic" slot */
     for(i=0;  i<n; i++) {
-	rval =	R_sysfunction(i, cptr);
+	SEXP rval = R_sysfunction(i, cptr);
 	if(isObject(rval)) {
 	    SEXP generic = getAttrib(rval, gen_name);
 	    if(TYPEOF(generic) == STRSXP &&
-	       !strcmp(CHAR(asChar(generic)), fname))
-		break;
+	       !strcmp(CHAR(asChar(generic)), fname)) {
+	      value = rval;
+	      break;
+	    }
 	}
     }
     UNPROTECT(1);
-    return(rval);
+    return(value);
 }
 
 
@@ -1238,5 +1246,44 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args,
   if(value == deferred_default_object)
     return NULL;
   else
+    return value;
+}
+
+SEXP R_do_MAKE_CLASS( char *what)
+{
+    static SEXP s_getClass = NULL;
+    SEXP e, call;
+    if(!what)
+	error("C level MAKE_CLASS macro called with NULL string pointer");
+    if(!s_getClass)
+	s_getClass = Rf_install("getClass");
+    PROTECT(call = allocVector(LANGSXP, 2));
+    SETCAR(call, s_getClass);
+    SETCAR(CDR(call), mkString(what));
+    e = eval(call, R_GlobalEnv);
+    UNPROTECT(1);
+    return(e);
+}
+
+SEXP R_do_new_object(SEXP class_def)
+{
+    static SEXP s_virtual = NULL, s_prototype, s_className;
+    SEXP e, value;
+    if(!s_virtual) {
+	s_virtual = Rf_install("virtual");
+	s_prototype = Rf_install("prototype");
+	s_className = Rf_install("className");
+    }
+    if(!class_def)
+	error("C level NEW macro called with null class definition pointer");
+    e = R_do_slot(class_def, s_virtual);
+    if(asLogical(e) != 0)  { /* includes NA, TRUE, or anything other than FALSE */
+	e = R_do_slot(class_def, s_className);
+	error("Trying to generate an object in C from a virtual class (\"%s\")",
+	      CHAR(asChar(e)));
+    }
+    e = R_do_slot(class_def, s_className);
+    value = duplicate(R_do_slot(class_def, s_prototype));
+    setAttrib(value, R_ClassSymbol, e);
     return value;
 }

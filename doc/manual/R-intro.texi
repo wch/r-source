@@ -967,6 +967,14 @@ for example as plot labels.  Where needed they are denoted by a sequence
 of characters delimited by the double quote character, e.g.,
 @code{"x-values"}, @code{"New iteration results"}.
 
+Character strings are entered using either double (@code{"}) or single
+(@code{'}) quotes, but are printed using double quotes (or sometimes
+without quotes).  They use C-style escape sequences, using @code{\} as
+the escape character, so @code{\\} is entered and printed as @code{\\},
+and inside double quotes @code{"} is entered as @code{\"}.  Other
+useful escape sequences are @code{\n}, newline, @code{\t}, tab and
+@code{\b}, backspace.
+
 Character vectors may be concatenated into a vector by the @code{c()}
 function; examples of their use will emerge frequently.
 @findex c
@@ -6470,20 +6478,20 @@ Unless @option{--no-environ} was given, @R{} searches for user and site
 files to process for setting environment variables.  The name of the
 site file is the one pointed to by the environment variable
 @env{R_ENVIRON}; if this is unset, @file{$R_HOME/etc/Renviron.site} is
-used.  The user files searched for are @file{.Renviron} in the current
-or in the user's home directory (in that order).  These files should
-contain lines of the form @samp{@var{name}=@var{value}}.  (See
-@code{help(Startup)} for a precise description.)
-Variables you might want to set include @env{R_PAPERSIZE} (the default
-paper size), @env{R_PRINTCMD} (the default print command) and
-@env{R_LIBS} (specifies the list of @R{} library trees searched for
-add-on packages).
+used (if it exists).  The user files searched for are @file{.Renviron}
+in the current or in the user's home directory (in that order).  These
+files should contain lines of the form @samp{@var{name}=@var{value}}.
+(See @code{help(Startup)} for a precise description.)  Variables you
+might want to set include @env{R_PAPERSIZE} (the default paper size),
+@env{R_PRINTCMD} (the default print command) and @env{R_LIBS} (specifies
+the list of @R{} library trees searched for add-on packages).
 
 @item
 Then @R{} searches for the site-wide startup profile unless the command
 line option @option{--no-site-file} was given.  The name of this file is
 taken from the value of the @env{R_PROFILE} environment variable.  If
-that variable is unset, the default is @file{$R_HOME/etc/Rprofile.site}.
+that variable is unset, the default @file{$R_HOME/etc/Rprofile.site} is
+used if this exists.
 
 @item
 Then, unless @option{--no-init-file} was given, @R{} searches for a file
@@ -6707,7 +6715,8 @@ Environment variables can also be supplied as
 Then @R{} searches for the site-wide startup profile unless the command
 line option @option{--no-site-file} was given.  The name of this file is
 taken from the value of the @env{R_PROFILE} environment variable.  If
-that variable is unset, the default is @file{$R_HOME/etc/Rprofile.site}.
+that variable is unset, the default @file{$R_HOME/etc/Rprofile.site} is
+used if this exists.
 
 @item
 Then, unless @option{--no-init-file} was given, @R{} searches for a file
@@ -6963,8 +6972,7 @@ default is to restore.
 
 @item --vanilla
 Combine @option{--no-save}, @option{--no-environ},
-@option{--no-site-file}, @option{--no-init-file} and
-@option{--no-restore}.
+@option{--no-init-file} and @option{--no-restore}.
 
 @item --min-vsize=@var{N}
 @itemx --max-vsize=@var{N}

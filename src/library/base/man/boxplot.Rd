@@ -50,8 +50,8 @@
     to be used to col the bodies of the box plots.}
   \item{log}{character indicating if x or y or both coordinates should
     be plotted in log scale.}
-  \item{pars}{graphical parameters can also be passed as arguments to
-    \code{boxplot}.}
+  \item{pars}{a list of graphical parameters; these are passed to
+    \code{\link{bxp}} (if \code{plot} is true).}
   \item{horizontal}{logical indicating if the boxplots should be
     horizontal; default \code{FALSE} means vertical boxes.}
   \item{add}{logical, if true \emph{add} boxplot to current plot.}

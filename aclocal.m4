@@ -36,6 +36,15 @@ case "${INSTALL}" in
     INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
     ;;
 esac
+case "${host_os}" in
+  hpux*)
+    ## On some versions of HP-UX (seen on both 10.20 and 11.0) we end up
+    ## a broken install (seen in /opt/imake/bin) which has the default
+    ## permissions wrong (PR#2091).  Let's just always use install-sh on
+    ## HP-UX.
+    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+    ;;
+esac
 ])# R_PROG_INSTALL
 
 AC_DEFUN([R_PROG_PAGER],
@@ -153,6 +162,21 @@ fi
 AC_SUBST(R_BROWSER)
 ])# R_BROWSER
 
+
+AC_DEFUN([R_PROG_CPP_CPPFLAGS],
+[AC_REQUIRE([AC_PROG_CC])
+AC_REQUIRE([AC_PROG_CPP])
+if test "${GCC}" = yes; then
+  AC_LANG_PUSH(C)
+  AC_LANG_CONFTEST([AC_LANG_PROGRAM()])
+  if ${CPP} ${CPPFLAGS} conftest.${ac_ext} 2>&1 1>/dev/null | \
+      grep 'warning:.*system directory.*/usr/local/include' >/dev/null; then
+    CPPFLAGS=`echo ${CPPFLAGS} | \
+      sed 's|\(.*\)-I/usr/local/include *\(.*\)|\1\2|'`
+  fi
+  rm -f conftest.${ac_ext}
+  AC_LANG_POP(C)
+fi])# R_PROG_CPP_CPPFLAGS
 
 AC_DEFUN([R_PROG_CC_M],
 [AC_CACHE_CHECK([whether ${CC} accepts -M for generating dependencies],
@@ -430,7 +454,7 @@ else
 fi
 for arg in ${FLIBS}; do
   case "${arg}" in
-    -lcrt?.o)
+    -lcrt*.o)
       ;;
     -l:*)
       flibs="${flibs} ${linker_option}${arg}"
@@ -440,15 +464,10 @@ for arg in ${FLIBS}; do
       ;;
   esac
 done
-case "${host_os}" in
-  darwin*)
-    flibs=`echo "${flibs}" | sed 's/\(.*\)-lcrtbegin.o\(.*\)/\1\2/'`
-    ;;
-esac
 FLIBS="${flibs}"
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
-  flibs=`echo "${ac_cv_flibs}" | sed 's/-lg2c/-lg2c-pic/'`
+  flibs=`echo "${FLIBS}" | sed 's/-lg2c/-lg2c-pic/'`
   LIBS="${LIBS} ${flibs}"
   AC_LANG_PUSH(C)
   AC_TRY_LINK([], [], [FLIBS="${flibs}"])

@@ -96,7 +96,9 @@ callGeneric(\dots)
     }
     \item{\code{standardGeneric}:}{ 
       Dispatches a method from the current function call for the generic
-      function \code{f}.
+      function \code{f}.  It is an error to call
+      \code{standardGeneric} anywhere except in the body of the
+      corresponding generic function.
     }
     \item{\code{getMethods}:}{ 
       The list of methods for the specified generic.  
@@ -301,6 +303,20 @@ callGeneric(\dots)
   \code{\link{setGeneric}},
   \code{\link{setClass}},
   \code{\link{showMethods}}
+}
+\examples{
+\testonly{
+## because nosegfault runs standardGeneric w/o the methods package, nothing
+## really gets tested.  The following check that it catches some errors
+mustDie <- function(expr) stopifnot(is(trySilent(expr), "try-error"))
+
+mustDie(standardGeneric()) # 3 tests of requiring a single string
+mustDie(standardGeneric(NULL))
+mustDie(standardGeneric(""))
+mustDie(standardGeneric("notAGenericFunction"))
+mustDie(standardGeneric("show"))  # a generic, but not called from its body
+
+}
 }
 \keyword{programming}
 \keyword{classes}

@@ -236,10 +236,12 @@ format.AsIs <- function(x, width = 12, ...)
 {
     if(is.character(x)) return(format.default(x, ...))
     n <- length(x)
-    rvec <- rep(NA, n)
+    rvec <- rep(as.character(NA), n)
     for(i in 1:n)
 	rvec[i] <- toString(x[[i]], width, ...)
 #    return(format.char(rvec, flag = "+"))
+    ## AsIs might be around a matrix, which is not a class.
+    dim(rvec) <- dim(x)
     format.default(rvec, justify = "right")
 }
 

@@ -33,6 +33,7 @@ system(command, intern = FALSE, wait = TRUE, input = "",
   If \code{intern = TRUE}, a character vector giving the output of the
   command, one line per character string. If the command could not be
   run or gives an error a \R error is generated.
+  (Output ines of more that 8096 characters will be split.)
 
   If \code{intern = FALSE}, the return value is a error code, given the
   invisible attribute (so needs to be printed explicitly). If the
@@ -71,7 +72,7 @@ system(command, intern = FALSE, wait = TRUE, input = "",
   \code{unix} is a \emph{deprecated} alternative, available for
   backwards compatibility.
 }
-\section{WARNING}{
+\section{Warning}{
     The command cannot be interrupted by the \R process.
 
     Do not run console applications that require user

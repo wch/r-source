@@ -31,7 +31,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{what}{the type of \code{what} gives the type of data to be
     read.  If \code{what} is a list, it is assumed that the lines of the
     data file are records each containing \code{length(what)} items
-    (``fields'').}
+    (``fields'').  The supported types are \code{logical},
+    \code{integer}, \code{numeric}, \code{complex}, \code{character} and
+    \code{list}: \code{list} values should have elements which are one
+    of the first five types listed or \code{NULL}.}
 
   \item{nmax}{the maximum number of data values to be read, or if
     \code{what} is a list, the maximum number of records to be read.  If

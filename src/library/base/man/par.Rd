@@ -299,10 +299,10 @@ par(\dots, no.readonly = FALSE)
       plotted.  The standard value is \code{"s"}: for compatibility with
       S values \code{"l"} and \code{"e"} are accepted but are equivalent
       to \code{"s"}.}
-    \item{\code{xlog}}{\emph{\bold{R.O.}}; logical value (see \code{log}
-      in \code{\link{plot.default}}).  If \code{TRUE}, a logarithmic
-      scale is in use (e.g., after \code{plot(*, log = "x")}).  For a
-      new device, it defaults to \code{FALSE}, i.e., linear scale.}
+    \item{\code{xlog}}{logical value (see \code{log} in
+      \code{\link{plot.default}}).  If \code{TRUE}, a logarithmic scale
+      is in use (e.g., after \code{plot(*, log = "x")}).
+      For a new device, it defaults to \code{FALSE}, i.e., linear scale.}
     \item{\code{xpd}}{A logical value or \code{NA}.
       If \code{FALSE}, all plotting is clipped to the plot region, if
       \code{TRUE}, all plotting is clipped to the figure region, and if
@@ -315,8 +315,7 @@ par(\dots, no.readonly = FALSE)
       for the y-axis.  See \code{xaxs} above.}
     \item{\code{yaxt}}{A character which specifies the axis type.
       Specifying \code{"n"} causes an axis to be set up, but not plotted.}
-    \item{\code{ylog}}{\emph{\bold{R.O.}}; a logical value; see
-      \code{xlog} above.}
+    \item{\code{ylog}}{a logical value; see \code{xlog} above.}
   }
 }
 
@@ -400,6 +399,10 @@ stopifnot(par("xaxp")[1:2] == 1:2 &&
 par(las = 3)
 barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
 par(las = 0)# reset to default
+
+## `fg' use:
+plot(1:12, type = "b", main="`fg' : axes, ticks and box in gray",
+     fg = gray(0.7), bty="7" , sub=R.version.string)
 
 ex <- function() {
    old.par <- par(no.readonly = TRUE) # all par settings which

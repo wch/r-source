@@ -19,7 +19,9 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
     from the plot.}
   \item{outer}{a logical value.  If \code{TRUE}, the titles are
     placed in the outer margins of the plot.}
-  \item{\dots}{further graphical parameters (from \code{\link{par}}).}
+  \item{\dots}{further graphical parameters from
+    \code{\link{par}}.  Use e.g., \code{col.main} or \code{cex.sub}
+    instead of just \code{col} or \code{cex}.}
 }
 \description{
   This function can be used to add labels to a plot.  Its first four
@@ -30,10 +32,10 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   greek letters, fractions, etc.
 }
 \details{
-The labels passed to title can be simple strings or expressions,
-or they can be a list containing the string to be plotted, and
-a selection of the optional modifying graphical parameters
-\code{cex=}, \code{col=}, \code{font=}.
+  The labels passed to title can be simple strings or expressions,
+  or they can be a list containing the string to be plotted, and
+  a selection of the optional modifying graphical parameters
+  \code{cex=}, \code{col=}, \code{font=}.
 }
 \seealso{
   \code{\link{mtext}}, \code{\link{text}};
@@ -46,7 +48,14 @@ title(main = "Stopping Distance versus Speed")
 
 plot(cars, main = "")
 title(main = list("Stopping Distance versus Speed", cex=1.5,
-      col="red", font=3))
+                  col="red", font=3))
+
+## Specifying "..." :
+plot(1, col.axis = "sky blue", col.lab = "thistle")
+title("Main Title", sub = "sub title",
+      cex.main = 2,   font.main= 4, col.main= "blue",
+      cex.sub = 0.75, font.sub = 3, col.sub = "red")
+
 
 x <- seq(-4, 4, len = 101)
 y <- cbind(sin(x), cos(x))

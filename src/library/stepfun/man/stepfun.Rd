@@ -1,5 +1,5 @@
 \name{stepfun}
-\title{Step Functions}
+\title{Step Function Class}
 \usage{
 stepfun(x, y, f = 0, ties = "ordered")
 
@@ -28,7 +28,7 @@ knots(Fn, \dots)
 
   \item{Fn, object}{an \R object inheriting from \code{"stepfun"}.}
   \item{digits}{number of significant digits to use, see \code{\link{print}}.}
-  \item{\dots}{potentially further arguments (require by the generic).}
+  \item{\dots}{potentially further arguments (required by the generic).}
 }
 \description{
   Given the vectors \eqn{(x_1,\ldots, x_n)}{(x[1],\ldots, x[n])} and
@@ -94,4 +94,3 @@ x0 <- seq(0.5,3.5, by = 0.25)
 rbind(x=x0, f.f0 = sfun0(x0), f.f02= sfun.2(x0), f.f1 = sfun1(x0))
 }
 \keyword{dplot}
-

@@ -111,7 +111,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   Recorded plot histories are of class \code{"SavedPlots"}.  They have a
   \code{print} method, and a subset method.  As the individual plots are
   of class \code{"recordedplot"} they can be replayed by printing them:
-  see \code{\link{recordPlot}}.
+  see \code{\link{recordPlot}}.  The active plot history is stored in
+  variable \code{.SavedPlots} in package \code{base}.
 }
 
 \value{

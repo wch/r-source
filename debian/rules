@@ -3,7 +3,7 @@
 # Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
 # Copyright 2001-2002 by Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.41 2002/06/20 17:52:55 bates Exp $
+# $Id: rules,v 1.41.2.1 2002/12/30 17:32:09 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -12,6 +12,7 @@ htmlpackage	= r-doc-html
 gnomepackage	= r-gnome
 nmathpackage	= r-mathlib
 infopackage	= r-doc-info
+recdpackage	= r-recommended
 
 # for the standalone library, no sonames are assigned in the upstream Makefiles
 somaj		= 1
@@ -23,6 +24,7 @@ debbase		:= $(CURDIR)/debian
 debtmp		:= $(debbase)/tmp
 debdoc		:= $(debbase)/$(corepackage)/usr/share/doc/$(corepackage)
 debmat		:= $(debbase)/$(nmathpackage)
+debetc		:= $(debbase)/$(corepackage)/usr/lib/R/etc
 
 arch		:= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
@@ -41,7 +43,7 @@ endif
 export DH_COMPAT  = 3
 
 # edd 15 Aug 2001: default to blas, atlas can override it 
-atlas = --with-blas=blas
+atlas 		= --with-blas=blas
 
 # edd 02 Sep 2001: default to g77 but let m68k use f2c
 fortrancompiler	= F77=g77
@@ -51,10 +53,10 @@ cxxcompiler	= g++
 # edd 04 Sep 2001  default compiler flags, lowered for m68k
 compilerflags	= -O2
 # m68k barks when using g77, and when gcc use -O2
-ifeq ($(arch),m68k-linux)
-fortrancompiler	= F2C=f2c
-compilerflags	= -O
-endif
+# edd 26 Nov 2002  switched back to g77
+#ifeq ($(arch),m68k-linux)
+#fortrancompiler	= F2C=f2c
+#endif
 
 ## edd 09 Nov 2001  ia64 needs gcc-3.0, hppa gets it by default
 ifeq ($(arch),ia64-linux)
@@ -69,6 +71,11 @@ ifeq ($(arch),hppa-linux)
 compilerflags   = -O2 -ffunction-sections
 endif
 
+## edd 20 Jun 2002      no optimisation or debugging on baby systems
+ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
+compilerflags	= -O0 -g0
+endif
+
 ## try gcc-3.0 on i386 -- appears to work
 #ifeq ($(arch),i386-linux)
 #fortrancompiler= F77=g77-3.0
@@ -79,19 +86,20 @@ endif
 
 get-orig-source: upstream
 upstream:
-	links http://cran.us.r-project.org
+	links http://cran.us.r-project.org/src/base
 
 upstreamdevel:
-	links ftp://ftp.stat.math.ethz.ch/Software/R
+	links http://cran.us.r-project.org/src/base
+        #links ftp://ftp.stat.math.ethz.ch/Software/R
 
 build: build-arch build-indep
 
-build-arch: configure make-arch build-arch-stamp
+build-arch: configure make-arch-stamp build-arch-stamp
 build-arch-stamp:
 	@echo "*** build-arch ***"
 	touch build-arch-stamp
 
-build-indep: configure make-indep build-indep-stamp
+build-indep: configure make-indep-stamp build-indep-stamp
 build-indep-stamp:
 	@echo "*** build-indep ***"
 	touch build-indep-stamp
@@ -110,8 +118,6 @@ configure-stamp:
 	FLIBS=						\
 	./configure --prefix=/usr			\
 		    --with-tcltk			\
-		    --with-tcl-config=/usr/lib/tcl8.3/tclConfig.sh	\
-		    --with-tk-config=/usr/lib/tk8.3/tkConfig.sh		\
 		    --mandir=/usr/share/man		\
 		    --infodir=/usr/share/info		\
 		    $(atlas)				\
@@ -119,17 +125,10 @@ configure-stamp:
 		    --enable-R-profiling		\
 		    --enable-R-shlib			\
 		    --host $(arch)
-# this should now be fixed upstream by KH
-#        ## hppa and ia64 really need the PIC version of libg2c
-#        ## for conformity we will use it throughout
-#        perl -p -i -e "s/ -lg2c / -lg2c-pic /" Makeconf
-#        ## same needed for lower-level library files
-#	for i in ctest modreg mva ts; do 			\
-#		perl -p -i -e "s/ -lg2c / -lg2c-pic /" 		\
-#				src/library/$$i/src/Makefile; 	\
-#	done
-#        ## and etc/Makeconf	
-#	perl -p -i -e "s/ -lg2c / -lg2c-pic /" etc/Makeconf
+
+#		    --with-tcl-config=/usr/lib/tcl8.3/tclConfig.sh	
+#		    --with-tk-config=/usr/lib/tk8.3/tkConfig.sh		
+
 	touch configure-stamp
 
 make-arch: configure make-arch-stamp 
@@ -142,6 +141,13 @@ make-arch-stamp:
 			CXX=${cxxcompiler}			\
 			FC=${fortrancompiler}			\
 			R
+	make		CFLAGS="$(compilerflags)"		\
+			CXXFLAGS="$(compilerflags)"		\
+			FFLAGS="$(compilerflags)"		\
+			CC=${compiler} 				\
+			CXX=${cxxcompiler}			\
+			FC=${fortrancompiler}			\
+			stamp-recommended
         # currently needed for binary package with docs [FIXME: how?]
 	make docs
 
@@ -171,10 +177,10 @@ make-indep-stamp:
 	make pdf
 	touch make-indep-stamp
 
-#make: configure make-arch make-stamp
-#make-stamp: 
-#        # Already made in general 'make': make html
-#	touch make-stamp
+make: configure make-arch-stamp make-indep-stamp make-stamp
+make-stamp: 
+        # Already made in general 'make': make html
+	touch make-stamp
 
 check: configure make-arch check-stamp
 check-stamp: 
@@ -215,15 +221,23 @@ install-arch-stamp:
 
 	make    	prefix=$(debtmp)/usr   	 		\
 			mandir=$(debtmp)/usr/share/man	 	install
+
+        # Now for a set of fixes / corrections for the Debian installation 
+
         # set R_HOME_DIR env.var. in R shell script
 	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
 	  < bin/R > $(debtmp)/usr/bin/R
 	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
 	  < bin/R > $(debtmp)/usr/lib/R/bin/R
 
+        # set browser to mozilla as mozilla-1.0.0 works with help.start()
+	sed -e '/^R_BROWSER=.*/s::R_BROWSER=$${R_BROWSER-/usr/bin/mozilla}:' \
+	  < etc/Renviron > $(debtmp)/usr/lib/R/etc/Renviron
+
         # fix permissions (Lintian)
-	chmod a+x 	$(debtmp)/usr/lib/R/share/sh/echo.sh \
-			$(debtmp)/usr/lib/R/share/sh/help-links.sh
+	chmod a+x 	$(debtmp)/usr/lib/R/share/sh/echo.sh 		\
+			$(debtmp)/usr/lib/R/share/sh/help-links.sh	\
+			$(debtmp)/usr/lib/R/share/sh/help-print.sh
 
         # remove unneeded license files, but link them back
 	rm -v 	$(debtmp)/usr/lib/R/COPYING 		\
@@ -232,11 +246,21 @@ install-arch-stamp:
 		ln -s ../../share/common-licenses/GPL COPYING; \
 		ln -s ../../share/common-licenses/LGPL COPYING.LIB)
 
+        # edd 15 Jul 2002 reduce compile load on small machines
+ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
+	perl -p -i -e 's/-g -O2/-g0 -O0/g' $(debtmp)/usr/lib/R/etc/Makeconf
+endif
+
+        # that being done, now install in different sub-packages
+
         # move the GNOME version to the r-gnome package
 ifneq ($(gnome),0)
 	dh_movefiles	-p$(gnomepackage) 	usr/lib/R/modules/R_gnome.so
 endif
 
+        # move files for r-recommended
+        # doing this before html/latex moves ensure they keep their tex/latex
+	dh_movefiles	-p$(recdpackage)
         # move the html manual files in r-doc-html.files into r-doc-html 
         # these get built in make-arch too ...
 	dh_movefiles	-p$(htmlpackage)		
@@ -244,8 +268,7 @@ endif
 	dh_movefiles	-pr-base-html
         # move files for r-base-latex
 	dh_movefiles	-pr-base-latex
-
-        # move files for r-base-core
+        # move all the rest into r-base-core
 	dh_movefiles	-p$(corepackage)
 
         # for the standalone library package, move the two libs
@@ -261,6 +284,12 @@ endif
         # and create a link for Rmath.h 
 	(cd $(debmat)/usr/include; \
 			ln -s ../lib/R/include/Rmath.h .)
+
+        # now deal with $R_HOME/etc <--> /etc/R
+	(cd $(debetc); 	mv Makeconf Renviron	../../../../etc/R/; 	    \
+			ln -s  /etc/R/Makeconf  .; \
+			ln -s  /etc/R/Renviron  .)
+        #
 	touch install-arch-stamp
 
 #install-indep: make-arch make-indep install-arch install-indep-stamp
@@ -348,6 +377,8 @@ binary-arch: build-arch install-arch check
         # install lintian "silencer"
 	install -p -m 0644  debian/$(corepackage).lintian \
 	   $(debbase)/$(corepackage)/usr/share/lintian/overrides/$(corepackage)
+	install -p -m 0644  debian/$(recdpackage).lintian \
+	   $(debbase)/$(recdpackage)/usr/share/lintian/overrides/$(recdpackage)
         #dh_undocumented -a
 	dh_installchangelogs -a	-k NEWS 
 	dh_strip -a

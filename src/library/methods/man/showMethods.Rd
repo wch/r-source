@@ -24,7 +24,10 @@ showMethods(f=character(), where=-1, classes=NULL, includeDefs=FALSE,
     definitions of the individual methods in the printout. }
   \item{inherited}{ If \code{inherits} is \code{TRUE}, then methods that
     have been found by inheritance, so far in the session, will be
-    included and marked as inherited. } 
+    included and marked as inherited. Note that an inherited method
+    will not usually appear until it has been used in this session.
+    See \code{\link{selectMethod}} if you want to know what method is
+    dispatched for particular classes of arguments.} 
   \item{printTo}{The connection on which the printed information will be
     written.  If \code{printTo} is \code{FALSE}, the output will be
     collected as a character vector and returned as the value of the
@@ -42,20 +45,26 @@ showMethods(f=character(), where=-1, classes=NULL, includeDefs=FALSE,
   or filename.
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \seealso{
   \code{\link{setMethod}}, and \code{\link{GenericFunctions}}
-  for other tools involving methods;
-  \code{\link{show}}
+  for other tools involving methods; 
+  \code{\link{selectMethod}} will show you the method dispatched for a
+  particular function and signature of classes for the arguments.
 }
 \examples{
 \testonly{

@@ -51,8 +51,8 @@ path.expand(path)
   \code{file.rename} attempts to rename a file.  It returns a logical
   value indicating whether the operation succeeded.
 #ifdef windows
-  On Windows rename is not atomic, so it is possible that \code{to} will
-  be deleted but \code{from} will not be renamed.
+  On Windows 9x/ME rename is not atomic, so it is possible that
+  \code{to} will be deleted but \code{from} will not be renamed.
 #endif
 
   \code{file.append} attempts to append the files named by its

@@ -1002,4 +1002,8 @@ SEXP R_Unserialize(R_inpstream_t ips);
 SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 
+/* class definition, new objects */
+SEXP R_do_MAKE_CLASS(char *what);
+SEXP R_do_new_object(SEXP class_def);
+
 #endif /* _R_INTERNALS_H_ */

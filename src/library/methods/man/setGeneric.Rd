@@ -119,11 +119,11 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers,
   also just assign the default you want (even one that generates an
   error) rather than relying on the prior situation.
 
-  Usually, calling \code{setGeneric} if there is already a
+  Calling \code{setGeneric} if there is already a
   \emph{generic} function of this name has no effect.  If you want to
-  force a new definition, supply \code{doAssign = TRUE} (but it would
-  be cleaner in most cases to remove the old generic before creating
-  the new one; see \code{\link{removeGeneric}}).  There is one
+  override an existing generic function, first call
+  {\link{removeMethods}} or \code{\link{removeGeneric}} before calling
+  \code{setGeneric}.  There is one
   absolute restriction:  you cannot create an explicit generic for the
   primitive functions in the base library.  These are dispatched from
   C code for efficiency and are not to be redefined

@@ -47,7 +47,7 @@ prompt.default <-
 	for(i in s) { # i-th argument :
 	    call <- paste0(call, arg.names[i],
 			   if(!is.missing.arg(argls[[i]]))
-			   paste0(" = ",deparse(argls[[i]])))
+			   paste0(" = ",deparse(argls[[i]], width.cutoff= 500)))
 	    if(i != n) call <- paste0(call, ", ")
 	}
 	file <- c(file, "\\usage{", paste0(call, ")"), "}",
@@ -77,9 +77,9 @@ prompt.default <-
 		  "\\author{ ~~who you are~~ }",
 		  "\\note{ ~~further notes~~ }",
 		  "",
-		  " ~Make other sections like WARNING with \\section{WARNING }{....} ~",
+		  " ~Make other sections like Warning with \\section{Warning }{....} ~",
 		  "",
-		  "\\seealso{ ~~objects to SEE ALSO as \\code{\\link{~~fun~~}}, ~~~ }",
+		  "\\seealso{ ~~objects to See Also as \\code{\\link{~~fun~~}}, ~~~ }",
 		  "",
 		  "\\examples{",
 		  "##---- Should be DIRECTLY executable !! ----",

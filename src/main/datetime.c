@@ -55,6 +55,38 @@
 
 #include "Defn.h"
 
+/* The glibc in RH8.0 is broken and assumes that dates before 1970-01-01
+   do not exist. So does Windows, but at least there we do not need a
+   run-time test.  As from 1.6.2, test the actual mktime code and cache the
+   result on glibc >= 2.2. (It seems this started between 2.2.5 and 2.3,
+   and RH8.0 has an unreleased version in that gap.)
+*/
+
+static Rboolean have_broken_mktime(void)
+{
+#ifdef Win32
+    return TRUE;
+#elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 2
+    static int test_result = -1;
+    
+    if (test_result == -1) {
+	struct tm t;
+	time_t res;
+	t.tm_sec = t.tm_min = t.tm_hour = 0;
+	t.tm_mday = t.tm_mon = 1;
+	t.tm_year = 68;
+	t.tm_isdst = -1;
+	res = mktime(&t);
+	test_result = (res == (time_t)-1);
+    }
+    return test_result > 0;
+#else
+    return FALSE;
+#endif
+
+
+}
+
 #if (defined(Macintosh) & defined(__MRC__))
 #define mktime POSIXMakeTime
 #endif
@@ -217,11 +249,7 @@ static double mktime0 (struct tm *tm, const int local)
     if(!local) return mktime00(tm);
 
     if(tm->tm_year < 138 &&
-#ifdef Win32
-       tm->tm_year >= 70)
-#else
-       tm->tm_year > 02)
-#endif
+       tm->tm_year >= (have_broken_mktime() ? 70 : 02))
     {   res = (double) mktime(tm);
 #ifndef HAVE_POSIX_LEAPSECONDS
         for(i = 0; i < 22; i++)
@@ -241,12 +269,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     struct tm *res= ltm;
     time_t t;
 
-    if(d < 2147483647.0 &&
-#ifdef Win32
-       d >= 0.0) {
-#else
-       d > -2147483647.0) {
-#endif
+    if(d < 2147483647.0 && d > (have_broken_mktime() ? 0. : -2147483647.0)) {
 	t = (time_t) d;
 #ifndef HAVE_POSIX_LEAPSECONDS
         for(y = 0; y < 22; y++) if(t > leapseconds[y] + y - 1) t++;

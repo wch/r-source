@@ -1,4 +1,4 @@
-## PR 640 (diff.default computes an incorrect starting time)
+# PR 640 (diff.default computes an incorrect starting time)
 ## By: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
 library(ts)
 y <- ts(rnorm(24), freq=12)
@@ -941,6 +941,7 @@ stopifnot(or == or)
 stopifnot(or != "d")
 ##  last was NA NA NA in 1.5.1
 
+
 Ops.foo <- function(e1, e2) {
     NextMethod()
 }
@@ -954,6 +955,7 @@ stopifnot(a == 1,
           b == a)
 ##(already worked in 1.5.1)
 
+
 ## t() wrongly kept "ts" class and "tsp"
 t(ts(c(a=1, d=2)))
 ## gave error while printing in 1.5.1
@@ -963,14 +965,171 @@ stopifnot(length(at) == 2,
           at$dimnames[[1]] == paste("Series", 1:2))
 ## failed in 1.5.1
 
+
 ## Nextmethod from anonymous function (PR#1211)
 try( get("print.ts")(1) )# -> Error
 ## seg.faulted till 1.5.1
+
 
 ## cbind/rbind should work with NULL only args
 stopifnot(is.null(cbind(NULL)), is.null(cbind(NULL,NULL)),
           is.null(rbind(NULL)), is.null(rbind(NULL,NULL)))
 ## gave error from 0.63 till 1.5.1
+
+
+## seq.POSIXt() had rounding problem:
+stopifnot(4 == length(seq(from=ISOdate(2000,1,1), to=ISOdate(2000,1,4),
+                          length.out=4)))
+## length was 5 till 1.6.0
+
+
+## loess has a limit of 4 predictors (John Deke on R-help, 2002-09-16)
+library(modreg)
+data1 <- array(runif(500*5),c(500,5))
+colnames(data1) <- c("x1","x2","x3","x4","x5")
+y <- 3+2*data1[,"x1"]+15*data1[,"x2"]+13*data1[,"x3"]-8*data1[,"x4"]+14*data1[,"x5"]+rnorm(500)
+data2 <- as.data.frame(cbind(y,data1))
+result4 <- loess(y~x1+x2+x3+x4,data2)
+try(result5 <- loess(y~x1+x2+x3+x4+x5,data2))
+detach("package:modreg")
+## segfaulted in 1.5.1
+
+
+## format.AsIs was not handling matrices
+jk <- data.frame(x1=2, x2=I(matrix(0,1,2)))
+jk
+## printing failed in 1.5.1
+
+
+## eigenvectors got irrelevant names (PR#2116)
+set.seed(1)
+A <- matrix(rnorm(20), 5, 5)
+dimnames(A) <- list(LETTERS[1:5], letters[1:5])
+(ev <- eigen(A)$vectors)
+stopifnot(is.null(colnames(ev)))
+## had colnames in 1.6.0
+
+
+## pretty was not pretty {because seq() isn't} (PR#1032 and D.Brahm)
+stopifnot(pretty(c(-.1, 1))[2] == 0, ## [2] was -2.775558e-17
+          pretty(c(-.4,.8))[3] == 0, ## [3] was 5.551115e-17
+          pretty(100+ c(0, pi*1e-10))[4] > 100,# < not too much rounding!
+          pretty(c(2.8,3))[1] == 2.8)
+## last differed by 4.44e-16 in R 1.1.1
+
+
+## add1 was giving misleading message when scope was nonsensical.
+counts <- c(18,17,15,20,10,20,25,13,12)
+fit <- glm(counts ~ 1, family=poisson)
+res <- try(add1(fit, ~ .))
+## error in 1.6.0 was
+## `Error in if (ncol(add) > 1) { : missing value where logical needed'
+stopifnot(length(grep("missing value", res)) == 0)
+
+
+## stripchart with NAs (PR#2018)
+data(iris)
+Sepal <- iris$Sepal.Length
+Sepal[27] <- NA
+stripchart(Sepal ~ iris$Species, method="stack")
+## failed in 1.6.1
+
+
+## losing is.object bit internally (PR#2315)
+stopifnot(is.ts(log(as.ts(1:10))))
+## failed for integer original as here in 1.6.1.
+
+
+## formatC ignored rounding up (PR#2299)
+stopifnot(formatC(99.9, 1, format="fg") == "100")
+stopifnot(formatC(99.9, 2, format="fg") == "100")
+stopifnot(formatC(99.9, 3, format="fg") == "99.9")
+## gave exponential format on 1.6.1
+
+
+## full/partial matching in attr.
+tmp <- list(id=1)
+attr(tmp,"n.ch") <- 2
+attr(tmp,"n") <- 1
+attributes(tmp)
+(res <- attr(tmp, "n"))
+stopifnot(length(res) == 1 && res == 1)
+## gave NULL in 1.6.1
+
+
+## Undocumented line limit in system(intern=TRUE)
+## Naoki Takebayashi <ntakebay@bio.indiana.edu> 2002-12-07
+tmp <- tempfile()
+long <- paste(rep("0123456789", 20), collapse="")
+cat(long, "\n", sep="", file=tmp)
+junk <- system(paste("cat", tmp), intern = TRUE)
+stopifnot(length(junk) == 1, nchar(junk[1]) == 200)
+## and split truncated on 1.6.1
+
+
+## PR 2358 (part)
+mm <- 1:2
+names(mm)[2] <- 'y'
+(mm <- c(mm, 3))
+stopifnot(is.na(names(mm)[1]))
+## 1.6.1 had "NA"
+
+
+## PR 2357
+a <- matrix(c(1,2,3,-1,-2,3),2,3,dimnames=list(c("A","B"),NULL))
+(z <- pmax(a, 0))
+stopifnot(identical(dimnames(z), dimnames(a)))
+# further checks
+a <- matrix(c(1,2,3,-1,-2,3),2,3,dimnames=list(c("A","B"),1:3))
+(z <- pmax(a, 0))
+stopifnot(identical(dimnames(z), dimnames(a)))
+a <- matrix(c(1,2,3,-1,-2,3),2,3,dimnames=list(NULL, letters[1:3]))
+(z <- pmax(a, 0))
+stopifnot(identical(dimnames(z), dimnames(a)))
+## 1.6.1 only transferred dimnames if both components were non-null
+
+
+## internal conversion to factor in type.convert was not right
+## if a character string NA was involved.
+x <- c(NA, "NA", "foo")
+(z <- type.convert(x))
+stopifnot(identical(levels(z), "foo"))
+(z <- type.convert(x, na.strings=character(0)))
+stopifnot(identical(levels(z), sort(c("foo", "NA"))))
+(z <- type.convert(x, na.strings="foo"))
+stopifnot(identical(levels(z), "NA"))
+## extra level in 1.6.1
+
+
+## related example
+tmp <- tempfile()
+cat(c("1", "foo", "\n", "2", "NA", "\n"), file = tmp)
+(z <- read.table(tmp, na.strings="foo"))
+unlink(tmp)
+stopifnot(identical(levels(z$V2), "NA"),
+          identical(is.na(z$V2), c(TRUE, FALSE)))
+## 1.6.1 had V2 as NA NA.
+
+
+## PR#2396, parsing and pushbacks.
+tmp <- tempfile()
+cat( c( "1", "a+b", "2"), file=tmp, sep="\n")
+open(tcon <- file(tmp))
+readLines(tcon, n=1)
+pushBack("a1+b1", tcon)
+parse(file=tcon, n=1)
+close(tcon)
+unlink(tmp)
+## failed with syntax error in 1.6.1
+
+
+## NAs in max.col
+a <- matrix(1, 3, 3)
+a[1,2] <- NA
+(z <- max.col(a))
+stopifnot(is.na(z[1]))
+## gave (randomly) 1 or 3 in 1.6.1
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

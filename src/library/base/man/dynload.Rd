@@ -52,7 +52,11 @@ symbol.For(name)
     entirely in lower case (but this may be system-dependent).}
 }
 \details{
-  See `See Also' and the \emph{Writing R Extensions} manual for how to
+  See
+#ifdef windows
+ file \file{readme.packages},
+#endif
+  `See Also' and the \emph{Writing R Extensions} manual for how to
   create a suitable shared library.  Note that unlike some versions of
   S-PLUS, \code{dyn.load} does not load an object (\code{.o}) file but a
   shared library or DLL.
@@ -105,6 +109,19 @@ symbol.For(name)
   There is a short discussion of these additional arguments with some
   example code available at
   \url{http://cm.bell-labs.com/stat/duncan/R/dynload}.
+#endif
+
+#ifdef windows
+  External code must not change the floating point control word, but
+  many DLLs do so.  Common changes are to set it to use 53 bit 
+  precision instead of R's default 64 bit precision, or to unmask 
+  some exceptions.  \code{dyn.load} detects such changes, prints a warning,
+  and restores R's control word to its default value of hex 8001F.  
+  This may cause the DLL to malfunction; if so, it should be rewritten
+  to save and restore the control word itself.  (If the warning says
+  that the control word was changed from some other value, please 
+  report the circumstances to the Windows maintainers:  that probably
+  indicates an internal bug.)
 #endif
 }
 \value{

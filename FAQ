@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-0, 2002-09-29
+Version 1.6-24, 2003-01-08
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -113,7 +113,7 @@ questions about R.
 1.1 Legalese
 ============
 
-   This document is copyright (C) 1998-2002 by Kurt Hornik.
+   This document is copyright (C) 1998-2003 by Kurt Hornik.
 
    This document is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
@@ -150,7 +150,7 @@ site (*note What is CRAN?::).
 1.3 Citing this document
 ========================
 
-   In publications, please refer to this FAQ as Hornik (2002), "The R FAQ",
+   In publications, please refer to this FAQ as Hornik (2003), "The R FAQ",
 and give the above, _official_ URL and the ISBN 3-901167-51-X.
 
 1.4 Notation
@@ -238,7 +238,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.6.0.  Based on this
+   The current released version is 1.6.2.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -373,10 +373,10 @@ directory of a CRAN site.
 
    The `bin/linux' directory of a CRAN site contains Debian stable/testing
 packages for the i386 platform (now part of the Debian distribution and
-maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x i386 and 7.x alpha
-packages (maintained by Stephen Eglen, Martyn Plummer and Naoki
-Takebayashi, respectively), SuSE 7.3/8.0 i386 packages by Detlef Steuer,
-and Mandrake 8.2 i386 packages by Michele Alzetta.
+maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x/8.x i386 and 7.x
+alpha packages (maintained by Stephen Eglen, Martyn Plummer and Naoki
+Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386 packages by Detlef
+Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by Michele Alzetta.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -461,7 +461,8 @@ Introductory books include
 
      P. Spector (1994), "An introduction to S and S-PLUS", Duxbury Press.
 
-     A. Krause and M. Olsen (1997), "The Basics of S and S-PLUS", Springer.
+     A. Krause and M. Olsen (2002), "The Basics of S-PLUS" (Third Edition).
+     Springer, ISBN 0-387-95456-2
 
    The book
 
@@ -580,8 +581,8 @@ and is currently being mirrored daily at
      `http://cran.at.r-project.org/'  (TU Wien, Austria)
      `http://cran.au.r-project.org/'  (PlanetMirror, Australia)
      `http://cran.br.r-project.org/'  (Universidade Federal de
-                                      Parana', Brazil)
-     `http://cran.ch.r-project.org/'  (ETH Zu"rich, Switzerland)
+                                      Paraná, Brazil)
+     `http://cran.ch.r-project.org/'  (ETH Zürich, Switzerland)
      `http://cran.de.r-project.org/'  (APP, Germany)
      `http://cran.dk.r-project.org/'  (SunSITE, Denmark)
      `http://cran.hu.r-project.org/'  (Semmelweis U, Hungary)
@@ -601,7 +602,8 @@ mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
 `ftp://cran.r-project.org/incoming/' and send an email to
-<cran@r-project.org>.
+<cran@r-project.org>.  Note that CRAN generally does not accept submissions
+of precompiled binaries due to security reasons.
 
      *Note:*  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...)  in your submission.
@@ -1031,11 +1033,6 @@ the same time being as compatible as possible with S.
      the actual arguments or the default expressions, this is usually
      equivalent to S, until assignment takes place.
 
-   * In R, `eval(EXPR, sys.parent())' does not work.  Instead, one should
-     use either `eval(EXPR, sys.frame(sys.parent())),' which also works in
-     S, or `eval(EXPR, parent.frame())', which is more efficient but does
-     not work in S.
-
    * In S, the index variable in a `for()' loop is local to the inside of
      the loop.  In R it is local to the environment where the `for()'
      statement is executed.
@@ -1056,6 +1053,10 @@ the same time being as compatible as possible with S.
 
    * From R version 1.3.0, `data.frame' strips `I()' when creating (column)
      names.
+
+   * In R, the string `"NA"' is not treated as a missing value in a
+     character variable.  Use `as.character(NA)' to create a missing
+     character value.
 
 
    There are also differences which are not intentional, and result from
@@ -1183,6 +1184,9 @@ distributions of R.)
 *Bhat*
      Functions for general likelihood exploration (MLE, MCMC, CIs).
 
+*CGIwithR*
+     Facilities for the use of R to write CGI scripts.
+
 *CircStats*
      Circular Statistics, from "Topics in Circular Statistics" by S. Rao
      Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -1231,6 +1235,11 @@ distributions of R.)
      "Modern Applied Statistics with S".  Contained in the `VR' bundle.
      _Recommended_.
 
+*MPV*
+     Data sets from the book "Introduction to Linear Regression Analysis"
+     by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
+     Sons.
+
 *Matrix*
      A Matrix package.
 
@@ -1246,11 +1255,21 @@ distributions of R.)
      generalisation of SVD also supporting non-identity metrics and
      penalisations.  Also includes some other multiway methods.
 
+*R2HTML*
+     Functions for exporting R objects & graphics in an HTML document.
+
 *RArcInfo*
      Functions to import Arc/Info V7.x coverages and data.
 
+*RColorBrewer*
+     ColorBrewer palettes for drawing nice maps shaded according to a
+     variable.
+
 *RMySQL*
      An interface between R and the MySQL database system.
+
+*RODBC*
+     An ODBC database interface.
 
 *ROracle*
      Oracle Database Interface driver for R.  Uses the ProC/C++ embedded
@@ -1265,6 +1284,15 @@ distributions of R.)
 *RSQLite*
      Database Interface R driver for SQLite.  Embeds the SQLite database
      engine in R.
+
+*RSvgDevice*
+     A graphics device for R that uses the new w3.org XML standard for
+     Scalable Vector Graphics.
+
+*RadioSonde*
+     A collection of programs for reading and plotting SKEW-T,log p diagrams
+     and wind profiles for data collected by radiosondes (the typical
+     weather balloon-borne instrument).
 
 *RandomFields*
      Creating random fields using various methods.
@@ -1288,6 +1316,9 @@ distributions of R.)
      Data sets and sample linear mixed effects analyses corresponding to the
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+
+*SparseM*
+     Basic linear algebra for sparse matrices.
 
 *StatDataML*
      Read and write StatDataML.
@@ -1314,11 +1345,17 @@ distributions of R.)
 *adapt*
      Adaptive quadrature in up to 20 dimensions.
 
+*ade4*
+     Multivariate data analysis and graphical display.
+
 *agce*
      Analysis of growth curve experiments.
 
 *akima*
      Linear or cubic spline interpolation for irregularly gridded data.
+
+*amap*
+     Another Multidimensional Analysis Package.
 
 *ape*
      Analyses of Phylogenetics and Evolution, providing functions for
@@ -1507,6 +1544,13 @@ distributions of R.)
      and correlation structures, through mean link, scale link, and
      correlation link.  Can also handle clustered categorical responses.
 
+*genetics*
+     Classes and methods for handling genetic data.  Includes classes to
+     represent genotypes and haplotypes at single markers up to multiple
+     markers on multiple chromosomes, and functions for allele frequencies,
+     flagging homo/heterozygotes, flagging carriers of certain alleles,
+     computing disequlibrium, testing Hardy-Weinberg equilibrium, ...
+
 *geoR*
      Functions to perform geostatistical data analysis including model-based
      methods.
@@ -1521,6 +1565,13 @@ distributions of R.)
      Routines for log-linear models of incomplete contingency tables,
      including some latent class models via EM and Fisher scoring
      approaches.
+
+*gpclib*
+     General polygon clipping routines for R based on Alan Murta's C
+     library.
+
+*grasper*
+     Generalized Regression Analysis and Spatial Predictions for R.
 
 *gregmisc*
      Miscellaneous functions written/maintained by Gregory R. Warnes.
@@ -1606,6 +1657,12 @@ distributions of R.)
      Maximally selected rank and Gauss statistics with several p-value
      approximations.
 
+*mclust*
+     Model-based cluster analysis: the 2002 version of MCLUST.
+
+*mclust1998*
+     Model-based cluster analysis: the 1998 version of MCLUST.
+
 *mda*
      Code for mixture discriminant analysis (MDA), flexible discriminant
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -1620,6 +1677,9 @@ distributions of R.)
      Routines for GAMs and other genralized ridge regression problems with
      multiple smoothing parameter selection by GCV or UBRE.  _Recommended_.
 
+*mimR*
+     An R interface to MIM for graphical modeling in R.
+
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
      problems, including the Boston housing data.
@@ -1627,6 +1687,12 @@ distributions of R.)
 *moc*
      Fits a variety of mixtures models for multivariate observations with
      user-difined distributions and curves.
+
+*msm*
+     Functions for fitting continuous-time Markov multi-state models to
+     categorical processes observed at arbitrary times, optionally with
+     misclassified responses, and covariates on transition or
+     misclassification rates.
 
 *muhaz*
      Hazard function estimation in survival analysis.
@@ -1706,6 +1772,11 @@ distributions of R.)
      Functions for import, export, plotting and other manipulations of
      bitmapped images.
 
+*polspline*
+     Routines for the polynomial spline fitting routines hazard regression,
+     hazard estimation with flexible tails, logspline, lspec, polyclass, and
+     polymars, by C. Kooperberg and co-authors.
+
 *polynom*
      A collection of functions to implement a class for univariate
      polynomial manipulations.
@@ -1735,6 +1806,9 @@ distributions of R.)
 *relimp*
      Functions to facilitate inference on the relative importance of
      predictors in a linear or generalized linear model.
+
+*rgenoud*
+     R version of GENetic Optimization Using Derivatives.
 
 *rmeta*
      Functions for simple fixed and random effects meta-analysis for
@@ -1769,6 +1843,9 @@ distributions of R.)
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
      Bowman and A. Azzalini (1997), Oxford University Press.
+
+*sma*
+     Functions for exploratory (statistical) microarray analysis.
 
 *sn*
      Functions for manipulating skew-normal probability distributions and
@@ -1818,6 +1895,9 @@ distributions of R.)
      Functions for survival analysis, including penalised likelihood.
      _Recommended_.
 
+*survrec*
+     Survival analysis for recurrent event data.
+
 *systemfit*
      Contains functions for fitting simultaneous systems of equations using
      Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
@@ -1841,6 +1921,10 @@ distributions of R.)
 *twostage*
      Functions for optimal design of two-stage-studies using the Mean Score
      method.
+
+*vcd*
+     Functions and data sets based on the book "Visualizing Categorical
+     Data" by Michael Friendly.
 
 *vegan*
      Various help functions for vegetation scientists and community
@@ -1882,19 +1966,8 @@ these a try, of course.  This area of CRAN currently contains
      obtained from PDSIMUL in package PDAP) and phylogenetically-based
      analyses using GLS.
 
-*R2HTML*
-     Functions for exporting R objects & graphics in an HTML document.
-
-*RODBC*
-     An ODBC database interface.
-
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
-
-*RadioSonde*
-     A collection of programs for reading and plotting SKEW-T,log p diagrams
-     and wind profiles for data collected by radiosondes (the typical
-     weather balloon-borne instrument).
 
 *dseplus*
      Extensions to *dse*, the Dynamic Systems Estimation multivariate time
@@ -1906,9 +1979,6 @@ these a try, of course.  This area of CRAN currently contains
 *locfit*
      Local Regression, likelihood and density estimation.
 
-*mclust*
-     Model-based cluster analysis.
-
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
@@ -1918,9 +1988,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *runStat*
      Running median and mean.
-
-*sma*
-     Functions for exploratory (statistical) microarray analysis.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
@@ -1944,16 +2011,53 @@ Currently, there are
      Allows R functions and objects to be used to implement SQL functions --
      per-record, aggregate and trigger functions.
 
+*REventLoop*
+     An abstract event loop mechanism that is toolkit independent and can be
+     used to to replace the R event loop.
+
+*RGdkPixbuf*
+     S language functions to access the facilities in the GdkPixbuf library
+     for manipulating images.
+
 *RGnumeric*
      A plugin for the Gnumeric spreadsheet that allows R functions to be
      called from cells within the sheet, automatic recalculation, etc.
+
+*RGtk*
+     Facilities in the S language for programming graphical interfaces using
+     Gtk, the Gnome GUI toolkit.
+
+*RGtkBindingGenerator*
+     A meta-package which generates C and R code to provide bindings to a
+     Gtk-based library.
+
+*RGtkExtra*
+     A collection of S functions that provide an interface to the widgets in
+     the gtk+extra library such as the GtkSheet data-grid display, icon
+     list, file list and directory tree.
+
+*RGtkGlade*
+     S language bindings providing an interface to Glade, the interactive
+     Gnome GUI creator.
+
+*RGtkHTML*
+     A collection of S functions that provide an interface to creating and
+     controlling an HTML widget which can be used to display HTML documents
+     from files or content generated dynamically in S.
 
 *RGtkViewers*
      A collection of tools for viewing different S objects, databases, class
      and widget hierarchies, S source file contents, etc.
 
 *RJavaDevice*
-     A graphics device for R that uses Java components and graphics APIs.
+     A graphics device for R that uses Java components and graphics.  APIs.
+
+*RObjectTables*
+     The C and S code allows one to define R objects to be used as elements
+     of the search path with their own semantics and facilities for reading
+     and writing variables.  The objects implement a simple interface via R
+     functions (either methods or closures) and can access external data,
+     e.g., in other applications, languages, formats, ...
 
 *RSMethods*
      An implementation of S version 4 methods and classes for R, consistent
@@ -1984,6 +2088,14 @@ Currently, there are
 
 *SNetscape*
      Plugin for Netscape and JavaScript.
+
+*SWinRegistry*
+     Provides access from within R to read and write the Windows registry.
+
+*SWinTypeLibs*
+     Provides ways to extract type information from type libraries and/or
+     DCOM objects that describes the methods, properties, etc. of an
+     interface.
 
 *SXalan*
      Process XML documents using XSL functions implemented in R and

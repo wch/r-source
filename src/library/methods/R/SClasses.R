@@ -30,7 +30,7 @@ setClass <-
     }
     assignClassDef(Class, classDef, where)
     for(class2 in superClasses)
-        setIs(Class, class2, where = where)
+        setIs(Class, class2, where = where, complete = FALSE)
     ## confirm the validity of the class definition (it may be incomplete)
     msg <- trySilent(completeClassDefinition(Class, classDef))
     if(is(msg, "try-error")) {
@@ -202,7 +202,10 @@ checkSlotAssignment <- function(obj, name, value)
     if(is(value, slot))
        return(as(value, slot, strict=FALSE))
     else
-       stop(paste("Value supplied is not valid for slot \"", name, "\", is(value, \"", slot,
+       stop(paste("Assignment of an object of class \"",
+                  class(value), "\" is not valid for slot \"", name,
+                  "\" in an object of class \"",
+                  class(obj), "\"; is(value, \"", slot,
                    "\") is not TRUE", sep=""))
     NULL
 }
@@ -243,7 +246,7 @@ removeClass <-
         fullDef <- trySilent(getClass(Class))
         if(is(fullDef, "try-error")) {
             warning("unable to get definition of \"", Class, "\" (",
-                    fullDef, ")")
+                    fullDef, "): subclass links will not be removed")
             fullDef <- NULL
         }
     }
@@ -269,7 +272,7 @@ removeClass <-
         for(pos in extWhere)
             rm(list = what, pos = pos)
         if(removeSubclassLinks && is(fullDef, "classRepresentation"))
-            .removeSubclassLinks(ClassDef@className, classDef@package, fullDef@subclasses)
+            .removeSubclassLinks(fullDef)
     }
     TRUE
 }
@@ -476,7 +479,8 @@ initialize <- function(.Object, ...) {
                 slotVal <- el(elements, i)
                 if(!is(slotVal, slotClass))
                     stop(paste("Invalid object for slot \"", slotName,
-                               "\", with class \"", class(slotVal), 
+                               "\" in class\"", Class,
+                               "\": got class \"", class(slotVal), 
                                "\", should be or extend class \"", slotClass, "\"", sep = ""))
                 slotVal <- as(slotVal, slotClass, strict = FALSE)
                 slot(.Object, slotName, check = FALSE) <- slotVal

@@ -8,15 +8,15 @@ Sweave <- function(file, driver=RweaveLatex(),
 
 
     if(is.null(syntax))
-        syntax <- SweaveGetSyntax(file)    
+        syntax <- SweaveGetSyntax(file)
     if(is.character(syntax))
         syntax <- get(syntax, mode="list")
-    
+
     drobj <- driver$setup(file=file, syntax=syntax, ...)
     on.exit(driver$finish(drobj, error=TRUE))
-    
+
     text <- readLines(file)
-    
+
     mode <- "doc"
     chunknr <- 0
     chunk <- NULL
@@ -77,7 +77,7 @@ Sweave <- function(file, driver=RweaveLatex(),
             }
             if(is.null(chunk))
                 chunk <- line
-            else                    
+            else
                 chunk <- c(chunk, line)
         }
     }
@@ -143,26 +143,26 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
 
     if(class(syntax) != "SweaveSyntax")
         stop("Target syntax not of class `SweaveSyntax'.\n")
-    
+
     if(is.null(syntax$trans))
         stop("Target syntax contains no translation table.\n")
-             
+
     insynt <- SweaveGetSyntax(file)
     text = readLines(file)
     if(is.null(output))
         output = sub(insynt$extension, syntax$trans$extension, basename(file))
 
     TN = names(syntax$trans)
-    
+
     for(n in TN){
         if(n!="extension")
             text = gsub(insynt[[n]], syntax$trans[[n]], text)
     }
-    
+
     cat(text, file=output, sep="\n")
     cat("Wrote file", output, "\n")
 }
-        
+
 
 
 
@@ -183,12 +183,12 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
     }
     else
         return(defaults)
-    
+
     if(any(sapply(x, length)!=2))
         stop(paste("Parse error or empty option in\n", text))
 
     options <- defaults
-    
+
     for(k in 1:length(x))
         options[[ x[[k]][1] ]] <- x[[k]][2]
 
@@ -196,10 +196,10 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
         options[["label"]] <- sub(paste(".", options[["engine"]], "$",
                                         sep=""),
                                   "", options[["label"]])
-    
+
     if(!is.null(check))
         options <- check(options)
-    
+
     options
 }
 
@@ -221,9 +221,9 @@ SweaveHooks <- function(options, run=FALSE, envir=.GlobalEnv)
     z
 }
 
-            
-        
-           
+
+
+
 
 ###**********************************************************
 
@@ -234,7 +234,7 @@ RweaveLatex <- function()
          runcode = RweaveLatexRuncode,
          writedoc = RweaveLatexWritedoc,
          finish = RweaveLatexFinish,
-         checkopts = RweaveLatexOptions)         
+         checkopts = RweaveLatexOptions)
 }
 
 RweaveLatexSetup <-
@@ -252,26 +252,33 @@ RweaveLatexSetup <-
     if(!quiet) cat("Writing to file ", output, "\n",
                    "Processing code chunks ...\n", sep="")
     output <- file(output, open="w+")
-    
-    if(stylepath)
+
+    if(stylepath){
         styfile <- file.path(R.home(),"share","texmf","Sweave")
+        if(.Platform$OS.type == "windows")
+            styfile <- gsub("\\\\", "/", styfile)
+        if(any(grep(" ", styfile)))
+            warning(paste("Path '", styfile, "' contains spaces,\n",
+                          "this may cause problems when running latex.",
+                          sep=""))
+    }
     else
         styfile <- "Sweave"
 
     options <- list(prefix=TRUE, prefix.string=prefix.string,
                     engine="R", print=FALSE, eval=eval,
-                    fig=FALSE, pdf=pdf, eps=eps, 
+                    fig=FALSE, pdf=pdf, eps=eps,
                     width=6, height=6, term=TRUE,
                     echo=echo, results="verbatim", split=split,
                     strip.white=TRUE, include=TRUE)
-    
+
     list(output=output, styfile=styfile, havesty=FALSE,
          debug=debug, quiet=quiet, syntax = syntax,
          options=options, chunkout=list())
 }
 
 RweaveLatexRuncode <- function(object, chunk, options)
-{    
+{
     if(!(options$engine %in% c("R", "S"))){
         return(object)
     }
@@ -284,8 +291,8 @@ RweaveLatexRuncode <- function(object, chunk, options)
             if(options$term) cat(" term")
             cat("", options$results)
             if(options$fig){
-                if(options$eps) cat(" eps") 
-                if(options$pdf) cat(" pdf") 
+                if(options$eps) cat(" eps")
+                if(options$pdf) cat(" pdf")
             }
         }
         if(!is.null(options$label))
@@ -294,7 +301,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
     }
 
     chunkprefix <- RweaveChunkPrefix(options)
-    
+
     if(options$split){
         chunkout <- object$chunkout[[chunkprefix]]
         if(is.null(chunkout)){
@@ -312,7 +319,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
 
     if(length(chunkexps)==0)
         return(object)
-    
+
     for(nce in 1:length(chunkexps))
     {
         ce <- chunkexps[[nce]]
@@ -331,17 +338,24 @@ RweaveLatexRuncode <- function(object, chunk, options)
                 file=chunkout, append=TRUE, sep="")
         }
 
-        tmpcon <- textConnection("output", "w")
+        # tmpcon <- textConnection("output", "w")
+        # avoid the limitations (and overhead) of output text connections
+        tmpcon <- file()
         sink(file=tmpcon)
         err <- NULL
         if(options$eval) err <- RweaveEvalWithOpt(ce, options)
+        cat("\n") # make sure final line is complete
         sink()
+        output <- readLines(tmpcon)
         close(tmpcon)
+        ## delete empty output
+        if(length(output)==1 & output[1]=="") output <- NULL
+
         if(inherits(err, "try-error")) stop(err)
-        
+
         if(object$debug)
             cat(paste(output, collapse="\n"))
-        
+
         if(length(output)>0 & (options$results!="hide")){
             if(openSinput){
                 cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
@@ -358,7 +372,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
             }
             cat(output, file=chunkout, append=TRUE)
             remove(output)
-            
+
             if(options$results=="verbatim"){
                 cat("\n\\end{Soutput}\n", file=chunkout, append=TRUE)
             }
@@ -368,7 +382,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
     if(openSinput){
         cat("\n\\end{Sinput}\n", file=chunkout, append=TRUE)
     }
-    
+
     if(is.null(options$label) & options$split)
         close(chunkout)
 
@@ -381,7 +395,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
             postscript(file=paste(chunkprefix, "eps", sep="."),
                        width=options$width, height=options$height,
                        paper="special", horizontal=FALSE)
-            
+
             err <- try({SweaveHooks(options, run=TRUE);
                         eval(chunkexps, envir=.GlobalEnv)})
             dev.off()
@@ -427,7 +441,7 @@ RweaveLatexWritedoc <- function(object, chunk)
             val <- as.character(eval(parse(text=cmd), envir=.GlobalEnv))
         else
             val <- paste("\\\\verb{<<", cmd, ">>{", sep="")
-        
+
         chunk[pos[1]] <- sub(object$syntax$docexpr, val, chunk[pos[1]])
     }
     while(any(pos <- grep(object$syntax$docopt, chunk)))
@@ -496,7 +510,7 @@ RweaveChunkPrefix <- function(options)
         else
             chunkprefix <- options$label
     }
-    else            
+    else
         chunkprefix <- paste(options$prefix.string, "-",
                              formatC(options$chunknr, flag="0", width=3),
                              sep="")
@@ -513,17 +527,17 @@ RweaveEvalWithOpt <- function (expr, options){
     }
     return(res)
 }
-    
+
 
 
 ###**********************************************************
-            
+
 Stangle <- function(file, driver=Rtangle(),
                     syntax=getOption("SweaveSyntax"), ...)
 {
     Sweave(file=file, driver=driver, ...)
 }
-            
+
 Rtangle <-  function()
 {
     list(setup = RtangleSetup,
@@ -545,7 +559,7 @@ RtangleSetup <- function(file, syntax,
     else{
         prefix.string <- basename(sub("\\.[rsRS]$", "", output))
     }
-    
+
     if(!split){
         if(!quiet)
             cat("Writing to file", output, "\n")
@@ -564,8 +578,8 @@ RtangleSetup <- function(file, syntax,
     list(output=output, annotate=annotate, options=options,
          chunkout=list(), quiet=quiet, syntax=syntax)
 }
-               
-    
+
+
 RtangleRuncode <-  function(object, chunk, options)
 {
     if(!(options$engine %in% c("R", "S"))){
@@ -573,7 +587,7 @@ RtangleRuncode <-  function(object, chunk, options)
     }
 
     chunkprefix <- RweaveChunkPrefix(options)
-    
+
     if(options$split){
         outfile <- paste(chunkprefix, options$engine, sep=".")
         if(!object$quiet)

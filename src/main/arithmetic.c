@@ -925,13 +925,14 @@ static SEXP math1(SEXP sa, double(*f)(), SEXP lcall)
 {
     SEXP sy;
     double *y, *a;
-    int i, n;
+    int i, n, sao = OBJECT(sa);
     int naflag;
 
     if (!isNumeric(sa))
 	errorcall(lcall, R_MSG_NONNUM_MATH);
 
     n = length(sa);
+    /* coercion can lose the object bit */
     PROTECT(sa = coerceVector(sa, REALSXP));
     PROTECT(sy = allocVector(REALSXP, n));
     a = REAL(sa);
@@ -949,7 +950,7 @@ static SEXP math1(SEXP sa, double(*f)(), SEXP lcall)
 	warningcall(lcall, R_MSG_NA);
 
     SET_ATTRIB(sy, duplicate(ATTRIB(sa)));
-    SET_OBJECT(sy, OBJECT(sa));
+    SET_OBJECT(sy, sao);
     UNPROTECT(2);
     return sy;
 }
@@ -1024,7 +1025,7 @@ SEXP do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math2(SEXP sa, SEXP sb, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb;
+    int i, ia, ib, n, na, nb, sao = OBJECT(sa), sbo = OBJECT(sb);
     double ai, bi, *a, *b, *y;
     int naflag;
 
@@ -1063,11 +1064,11 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(), SEXP lcall)
 						\
     if (n == na) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, OBJECT(sa));		\
+	SET_OBJECT(sy, sao);		\
     }						\
     else if (n == nb) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, OBJECT(sb));		\
+	SET_OBJECT(sy, sbo);		\
     }						\
     UNPROTECT(3)
 
@@ -1079,7 +1080,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(), SEXP lcall)
 static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb;
+    int i, ia, ib, n, na, nb, sao = OBJECT(sa), sbo = OBJECT(sb);
     double ai, bi, *a, *b, *y;
     int m_opt;
     int naflag;
@@ -1106,7 +1107,7 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)(), SEXP lcall)
 static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, n, na, nb;
+    int i, ia, ib, n, na, nb, sao = OBJECT(sa), sbo = OBJECT(sb);
     double ai, bi, *a, *b, *y;
     int i_1, i_2;
     int naflag;
@@ -1317,7 +1318,8 @@ SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc;
+    int i, ia, ib, ic, n, na, nb, nc, 
+	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
     double ai, bi, ci, *a, *b, *c, *y;
     int naflag;
 
@@ -1362,15 +1364,15 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)(), SEXP lcall)
 						\
     if (n == na) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, OBJECT(sa));		\
+	SET_OBJECT(sy, sao);		\
     }						\
     else if (n == nb) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, OBJECT(sb));		\
+	SET_OBJECT(sy, sbo);		\
     }						\
     else if (n == nc) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, OBJECT(sc));		\
+	SET_OBJECT(sy, sco);		\
     }						\
     UNPROTECT(4)
 
@@ -1382,7 +1384,8 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)(), SEXP lcall)
 static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc;
+    int i, ia, ib, ic, n, na, nb, nc, 
+	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
     double ai, bi, ci, *a, *b, *c, *y;
     int i_1;
     int naflag;
@@ -1408,7 +1411,8 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)(), SEXP lcal
 static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc;
+    int i, ia, ib, ic, n, na, nb, nc, 
+	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
     double ai, bi, ci, *a, *b, *c, *y;
     int i_1,i_2;
     int naflag;
@@ -1531,7 +1535,8 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd;
+    int i, ia, ib, ic, id, n, na, nb, nc, nd, 
+	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int naflag;
 
@@ -1581,19 +1586,19 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)(), SEXP lcall)
 						\
     if (n == na) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, OBJECT(sa));		\
+	SET_OBJECT(sy, sao);		\
     }						\
     else if (n == nb) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, OBJECT(sb));		\
+	SET_OBJECT(sy, sbo);		\
     }						\
     else if (n == nc) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, OBJECT(sc));		\
+	SET_OBJECT(sy, sco);		\
     }						\
     else if (n == nd) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sd)));	\
-	SET_OBJECT(sy, OBJECT(sd));		\
+	SET_OBJECT(sy, sdo);		\
     }						\
     UNPROTECT(5)
 
@@ -1605,7 +1610,8 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)(), SEXP lcall)
 static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd;
+    int i, ia, ib, ic, id, n, na, nb, nc, nd, 
+	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int i_1;
     int naflag;
@@ -1632,7 +1638,8 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
 		    double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd;
+    int i, ia, ib, ic, id, n, na, nb, nc, nd, 
+	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int i_1, i_2;
     int naflag;
@@ -1728,7 +1735,9 @@ SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 {
     SEXP sy;
-    int i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne;
+    int i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne, 
+	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), 
+	sdo = OBJECT(sd), seo = OBJECT(se);
     double ai, bi, ci, di, ei, *a, *b, *c, *d, *e, *y;
 
 #define SETUP_Math5							\
@@ -1784,23 +1793,23 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 						\
     if (n == na) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, OBJECT(sa));		\
+	SET_OBJECT(sy, sao);		\
     }						\
     else if (n == nb) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, OBJECT(sb));		\
+	SET_OBJECT(sy, sbo);		\
     }						\
     else if (n == nc) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, OBJECT(sc));		\
+	SET_OBJECT(sy, sco);		\
     }						\
     else if (n == nd) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(sd)));	\
-	SET_OBJECT(sy, OBJECT(sd));		\
+	SET_OBJECT(sy, sdo);		\
     }						\
     else if (n == ne) {				\
 	SET_ATTRIB(sy, duplicate(ATTRIB(se)));	\
-	SET_OBJECT(sy, OBJECT(se));		\
+	SET_OBJECT(sy, seo);		\
     }						\
     UNPROTECT(6)
 

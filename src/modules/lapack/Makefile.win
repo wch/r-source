@@ -19,6 +19,8 @@ DLLLIBS=-L../../gnuwin32 -lRm -lR -lRblas -lg2c
 
 $(MODULE).dll: $(OBJS)
 
+dllversion.o: ../../include/Rversion.h
+
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
 
