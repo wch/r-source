@@ -982,6 +982,12 @@ else
   RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
 fi
 AC_SUBST(RMATH_HAVE_LOG1P)
+if test "${ac_cv_func_expm1}" = yes; then
+  RMATH_HAVE_EXPM1="# define HAVE_EXPM1 1"
+else
+  RMATH_HAVE_EXPM1="# undef HAVE_EXPM1"
+fi
+AC_SUBST(RMATH_HAVE_EXPM1)
 
 AC_REPLACE_FUNCS(acosh asinh atanh snprintf strdup vsnprintf)
 AC_SEARCH_LIBS(connect, [socket])

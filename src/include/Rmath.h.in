@@ -38,6 +38,10 @@
 @RMATH_HAVE_LOG1P@
 #endif
 
+#ifndef HAVE_EXPM1
+@RMATH_HAVE_EXPM1@
+#endif
+
 #include <errno.h>
 #include <limits.h>
 #include <float.h>
