@@ -194,6 +194,7 @@ predict.arima0 <-
         if(any(Mod(polyroot(c(1, ma)))) < 1)
             warning("seasonal ma part of model is not invertible")
     }
+    storage.mode(data) <- "double"
     G <- .Call("setup_starma", as.integer(arma), data, n, rep(0, n),
                0, -1, 0, 0, PACKAGE = "ts")
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
@@ -211,7 +212,7 @@ predict.arima0 <-
 
 arima0.diag <- function(fit, gof.lag = 10)
 {
-    ## plot standarized residuals, acf of residuals, Box-Pierce p-values
+    ## plot standardized residuals, acf of residuals, Box-Pierce p-values
     oldpar<- par(mfrow = c(3, 1))
     on.exit(par(oldpar))
     stdres <- fit$resid/sqrt(fit$sigma2)
