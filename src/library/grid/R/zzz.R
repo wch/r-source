@@ -11,6 +11,7 @@ assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
 ## 64 comes from the maximum number of R devices allowed to be open at
 ## one time, see R_MaxDevices in Graphics.h.
 
+.noGenerics <- TRUE
 
 .onLoad <- function(lib, pkg)
 {
