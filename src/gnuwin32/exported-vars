@@ -46,3 +46,4 @@ RConsole
 CharacterMode
 UserBreak
 R_standardGeneric_ptr
+R_reserved_size
