@@ -71,7 +71,7 @@ msgstr ""
 
 #: console.c:1848
 msgid "Editing.\n"
-msgstr "Editiere.\n"
+msgstr "Bearbeiten.\n"
 
 #: console.c:1849
 msgid "  Moving the cursor: \n"
@@ -282,14 +282,14 @@ msgstr ""
 "\tEnde: zeige letzte Zeilen der letzten Spalte.\n"
 "   Mouse: Linksklick in eine Zelle, nutze die Scrollbar(s).\n"
 "\n"
-"Editieren.\n"
+"Bearbeiten.\n"
 "  Tippe in die aktuell gewählte Zelle\n"
 "  Doppelklick in eine Zelle für ein editierbares Feld\n"
 "\n"
 "Verschiedenes.\n"
 "  Strg-L zeichnet Anzeige neu, passt Spalten automatisch an\n"
 "  Strg-C kopiert ausgewählte Zelle(n)\n"
-"  Strg-V fügt in ausgewälte Zelle ein\n"
+"  Strg-V fügt in ausgewählte Zelle ein\n"
 "  Rechtsklick ins Menü, um aktuelle Spalte zu kopieren, einzufügen oder automatisch anzupassen\n"
 "\n"
 
@@ -329,7 +329,7 @@ msgstr "Datei"
 
 #: dataentry.c:1643 editor.c:681 pager.c:460 rui.c:1096
 msgid "Edit"
-msgstr "Editiere"
+msgstr "Bearbeiten"
 
 #: dataentry.c:1644
 msgid "Copy  \tCTRL+C"
@@ -361,7 +361,7 @@ msgstr "R Editor\n"
 
 #: editor.c:540
 msgid "A standard text editor for editing and running R code.\n"
-msgstr "Ein Standardtexteditor zum Editieren und Laufen lassen von R Code.\n"
+msgstr "Ein Standardtexteditor zum Bearbeiten und Laufen lassen von R Code.\n"
 
 #: editor.c:542
 msgid "RUNNING COMMANDS\n"
@@ -377,7 +377,7 @@ msgstr "     drücke Strg+R\n"
 
 #: editor.c:545
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     wähle \"Ausführung Zeile oder Auswahl\" aus dem \"Edit\" Menü\n"
+msgstr "     wähle \"Ausführung Zeile oder Auswahl\" aus dem \"Bearbeiten\" Menü\n"
 
 #: editor.c:546
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
@@ -473,7 +473,7 @@ msgstr "Drucken..."
 
 #: editor.c:676
 msgid "Close script"
-msgstr "Scließe Skript"
+msgstr "Schließe Skript"
 
 #: editor.c:679 rui.c:1094
 msgid "Exit"
