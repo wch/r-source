@@ -26,7 +26,8 @@ typedef enum {
     MARSAGLIA_MULTICARRY,
     SUPER_DUPER,
     MERSENNE_TWISTER,
-    KNUTH_TAOCP
+    KNUTH_TAOCP,
+    USER
 } RNGtype;
 
 /* Different kinds of "N(0,1)" generators :*/
@@ -37,12 +38,18 @@ typedef enum {
 } N01type;
 
 
-void GetRNGstate();
-void PutRNGstate();
+void GetRNGstate(void);
+void PutRNGstate(void);
 
 double unif_rand(void);
 /* These are also defined in Mathlib.h */
 double norm_rand(void);
 double exp_rand(void);
+
+typedef unsigned int Int32;
+double * user_unif_rand();
+void user_unif_init(Int32);
+int user_unif_nseed();
+int * user_unif_seedloc();
 
 #endif

@@ -64,7 +64,7 @@ set.seed(seed, kind = NULL)
 
     We use the implementation by Reeds et al.\ (1982--84).
 
-    The two seeds are the Tausworthe and Congruence long integers,
+    The two seeds are the Tausworthe and congruence long integers,
     respectively.  A one-to-one mapping to S's \code{.Random.seed[1:12]}
     is possible but we will not publish one, not least as this generator
     is \bold{not} exactly the same as that in recent versions of S-PLUS.}
@@ -81,10 +81,13 @@ set.seed(seed, kind = NULL)
     subtraction. That is, the recurrence used is
     \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
         }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
-    and the ``seed'' is the set
-    of the 100 last numbers (actually recorded as 101 numbers, the last
-    being a cyclic shift of the buffer). The period is around
-    \eqn{2^{129}}{2^129 - 1}.}
+    and the ``seed'' is the set of the 100 last numbers (actually
+    recorded as 101 numbers, the last being a cyclic shift of the
+    buffer).  The period is around \eqn{2^{129}}{2^129}.}
+  
+    \item{\code{"user-supplied":}}{
+    Use a user-supplied generator. See \code{\link{Random.user}} for details.
+    }
   }
 
   \code{normal.kind} can be \code{"Kinderman-Ramage"} (the default) or
@@ -98,15 +101,17 @@ set.seed(seed, kind = NULL)
 }
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
-  element \emph{codes} the kind of RNG and therefore is in \code{0:k}
-  where {k+1} is the number of available RNGs.
+  element \emph{codes} the kind of RNG and normal generator. The lowest
+  two decimal digits are in in \code{0:(k-1)}
+  where \code{k} is the number of available RNGs. The thousands
+  represent the type of normal generator (starting at \code{0}).
 
-  In the underlying C, \code{.Random.seed[-1]} is used as \code{unsigned
-    long} (32 bits at least); in \R \code{.Random.seed[i]} can therefore
-  be negative for \eqn{i > 1}.
+  In the underlying C, \code{.Random.seed[-1]} is \code{unsigned};
+  therefore in \R \code{.Random.seed[-1]} can be negative.
 
-  \code{RNGkind} returns the RNG and normal kinds in use \emph{before}
-  the call, invisibly if either is not \code{NULL}.
+  \code{RNGkind} returns a two-element character vector of the RNG and
+  normal kinds in use \emph{before} the call, invisibly if either
+  argument is not \code{NULL}.
 
   \code{set.seed} returns \code{NULL}, invisibly.
 }

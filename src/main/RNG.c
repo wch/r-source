@@ -28,15 +28,16 @@
 
 #define RNG_DEFAULT MARSAGLIA_MULTICARRY
 
+/* platform-specific, from dynload.c */
+typedef void * (*DL_FUNC)();
+DL_FUNC R_FindSymbol(char const *, char const *);
+static DL_FUNC User_unif_fun, User_unif_init, User_unif_nseed, 
+    User_unif_seedloc;
+
 static RNGtype RNG_kind = RNG_DEFAULT;
 extern N01type N01_kind; /* from ../nmath/snorm.c */
 
-#if (SIZEOF_LONG == 4)
-typedef unsigned long Int32;
-#else
-/* assume long > 4 bytes so int is 4 bytes */
-typedef unsigned int Int32;
-#endif
+/* typedef unsigned int Int32; in Random.h */
 
 /* .Random.seed == (RNGkind, i_seed[0],i_seed[1],..,i_seed[n_seed-1])
  * or           == (RNGkind) or missing  [--> Randomize]
@@ -61,6 +62,7 @@ RNGTAB RNG_Table[] =
     { 2, 0, "Super-Duper",		2,	dummy},
     { 3, 0, "Mersenne-Twister",	    1+624,	dummy},
     { 4, 0, "Knuth-TAOCP",          1+100,	dummy},
+    { 5, 0, "User-supplied",            0,	dummy},
 };
 
 
@@ -110,6 +112,9 @@ double unif_rand(void)
 
     case KNUTH_TAOCP:
 	return KT_next() * KT;
+
+    case USER:
+	return *((double *) User_unif_fun());
 
     default:/* can never happen (enum type)*/ return -1.;
     }
@@ -169,6 +174,8 @@ static void FixupSeeds(RNGtype kind, int initial)
 	    }
 	if(!notallzero) Randomize(kind);	
 	break;
+    case USER:
+	break;
     }
 }
 
@@ -179,14 +186,43 @@ static void RNG_Init(RNGtype kind, Int32 seed)
     /* Initial scrambling */
     for(j = 0; j < 50; j++)
 	seed = (69069 * seed + 1);
-    if (kind != KNUTH_TAOCP) {
+    switch(kind) {
+    case WICHMANN_HILL:
+    case MARSAGLIA_MULTICARRY:
+    case SUPER_DUPER:
+    case MERSENNE_TWISTER:
 	for(j = 0; j < RNG_Table[kind].n_seed; j++) {
 	    seed = (69069 * seed + 1);
 	    RNG_Table[kind].i_seed[j] = seed;
 	}
 	FixupSeeds(kind, 1);
-    } else
+	break;
+    case KNUTH_TAOCP:
 	RNG_Init_KT(seed);
+	break;
+    case USER:
+	User_unif_fun = R_FindSymbol("user_unif_rand", "");
+	if (!User_unif_fun) error("`user_unif_rand' not in load table");
+	User_unif_init = R_FindSymbol("user_unif_init", "");
+	if (User_unif_init) (void) User_unif_init(seed);
+	User_unif_nseed = R_FindSymbol("user_unif_nseed", "");
+	User_unif_seedloc = R_FindSymbol("user_unif_seedloc", "");
+	if (User_unif_seedloc) {
+	    int ns = 0;
+	    if (!User_unif_nseed) {
+		warning("cannot read seeds unless `user_unif_nseed' is supplied");
+		break;
+	    }
+	    ns = (int) User_unif_nseed();
+	    if (ns < 0 || ns > 625) {
+		warning("seed length must be in 0...625; ignored");
+		break;
+	    }
+	    RNG_Table[RNG_kind].n_seed = ns;
+	    RNG_Table[RNG_kind].i_seed = (Int32 *) User_unif_seedloc();
+	}
+	break;
+    }
 }
 
 #include <time.h>
@@ -219,11 +255,10 @@ void GetRNGstate()
 	    error(".Random.seed[0] is not a valid integer");
 	RNG_kind = tmp % 100;
 	N01_kind = tmp / 100;
-	if (RNG_kind > KNUTH_TAOCP || RNG_kind < 0) RNG_kind = RNG_DEFAULT;
-	len_seed = RNG_Table[RNG_kind].n_seed;
-	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
-	    error(".Random.seed has wrong length");
-
+	/*if (RNG_kind > USER || RNG_kind < 0) {
+	    warning(".Random.seed was invalid: re-initializing");
+	    RNG_kind = RNG_DEFAULT;
+	    }*/
  	switch(RNG_kind) {
  	case WICHMANN_HILL:
  	case MARSAGLIA_MULTICARRY:
@@ -231,9 +266,16 @@ void GetRNGstate()
  	case MERSENNE_TWISTER:
  	case KNUTH_TAOCP:
 	    break;
+ 	case USER:
+	    if(!User_unif_fun)
+		error(".Random.seed[1] = 5 but no user-supplied generator");
+	    break;
 	default:
 	    error(".Random.seed[1] is NOT a valid RNG kind (code)");
 	}
+	len_seed = RNG_Table[RNG_kind].n_seed;
+	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
+	    error(".Random.seed has wrong length");
 	if(LENGTH(seeds) == 1)
 	    Randomize(RNG_kind);
 	else {
@@ -275,6 +317,7 @@ static void RNGkind(RNGtype newkind)
     case SUPER_DUPER:
     case MERSENNE_TWISTER:
     case KNUTH_TAOCP:
+    case USER:
 	break;
     default:
 	error("RNGkind: unimplemented RNG kind %d", newkind);

@@ -38,6 +38,9 @@ NEW FEATURES
 	The new function set.seed() which uses a single integer to set
 	the random number seeds is now the recommended way to do so.
 
+	It is now possible for a user to plug-in in a new RNG: consult
+	?Random and ?Random-user for the details.
+
     o	DPQ {probability density quantile} functions have new
 	arguments, "lower_tail = TRUE" and "log{_p} = FALSE".  This allows
 	more precise results when values would be close to 0 or 1.
