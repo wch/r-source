@@ -1,5 +1,5 @@
 \name{matrix}
-\title{Create a Matrix}
+\title{Matrices}
 \usage{
 matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)
 as.matrix(x)
