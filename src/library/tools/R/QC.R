@@ -2318,7 +2318,7 @@ function(package)
     vignette_dir <- file.path(dir, "doc")
     if(file_test("-d", vignette_dir)
        && length(list_files_with_type(vignette_dir, "vignette"))) {
-        reqs <- .build_vignette_index(dir)$Depends
+        reqs <- unlist(.build_vignette_index(vignette_dir)$Depends)
         reqs <- reqs %w/o% c(depends, suggests, package_name)
         if(length(reqs))
             bad_depends$missing_vignette_depends <- reqs
