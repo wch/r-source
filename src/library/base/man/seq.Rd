@@ -66,7 +66,7 @@ seq(from)
   times the larger of the ends) will return \code{from}.
 }
 \value{
-  Currently, the default method returns a result is of \emph{storage
+  Currently, the default method returns a result of \emph{storage
     mode} \code{"integer"} if \code{from} is (numerically equal to an)
   integer and, e.g., only \code{to} is specified, or also if only
   \code{length} or only \code{along.with} is specified.  \strong{Note:}
