@@ -612,7 +612,7 @@ if test -r $f; then echo "loading site script $f"; . $f ; fi
 f="${HOME}/.Rconf"
 if test -r $f; then echo "loading user script $f"; . $f ; fi
 f="./config.site"
-if test -r $f; then echo "loading buildspecific script $f"; . $f ; fi
+if test -r $f; then echo "loading build specific script $f"; . $f ; fi
 
 
 ### Handle arguments to configure
