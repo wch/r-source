@@ -630,7 +630,7 @@ static char *rmspace(char *s)
 {
     int   i;
 
-    for (i = strlen(s) - 1; isspace((int)s[i]); i--) s[i] = '\0';
+    for (i = strlen(s) - 1; i >= 0 && isspace((int)s[i]); i--) s[i] = '\0';
     for (i = 0; isspace((int)s[i]); i++);
     return s + i;
 }
