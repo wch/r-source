@@ -1065,6 +1065,9 @@ compilers, and less regularly on Solaris 2.5.1, 2.6 and 8.  GNU
 @command{make} is needed prior to 2.7 for building other than in the
 source tree, and perhaps even then.
 
+@command{gcc} 3.2.1 appears to generate incorrect code on 32-bit
+Solaris, but versions 3.1 and 3.2 work correctly.
+
 If using @command{gcc}, do ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be discerned from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
@@ -1113,7 +1116,8 @@ FFLAGS="-m64 -g -O2"
 CXXFLAGS="-m64 -g -O2"
 LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end smallexample
-
+@noindent
+This @emph{does} work with @command{gcc} 3.2.1.
 
 Some care is needed to ensure that libraries found by
 @command{configure} are compatible with the R executable and modules, as
