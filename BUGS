@@ -30,6 +30,10 @@ Subject: BUG: polyroot()
 From: "Li Dongfeng" <mavip1@inet.polyu.edu.hk>
 Date: Tue, 28 Nov 2000 13:24:33 +0800
 --Numerical instability. We may want a better algorithm!
+* PR# 630 *
+Subject: lda and svd error
+From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
+Date: Thu, 10 Aug 2000 15:13:38 +0200 (CEST)
 * PR# 594 *
 Subject: svd() (Linpack) problems/bug for ill-conditioned matrices
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -38,23 +42,9 @@ Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
 Subject: svd error 
 From: =?iso-8859-1?Q?J=F6rg?= Polzehl <polzehl@wias-berlin.de>
 Date: Thu, 10 Aug 2000 16:54:46 +0200
-* PR# 630 *
-Subject: lda and svd error
-From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
-Date: Thu, 10 Aug 2000 15:13:38 +0200 (CEST)
-* PR# 741 *
-Subject: match() is not correct for "close numerics"
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 21 Nov 2000 16:15:23 +0100
---Seems to be fixed for 1.2.0
 
 Directory:  Add-ons
 
-* PR# 700 *
-Subject: Probable bug in RODBC 0.7.x
-From: emmanuel.charpentier@sap.ap-hop-paris.fr
-Date: Mon, 23 Oct 2000 13:15:55 +0200 (MET DST)
---Package maintainer is aware of this
 * PR# 567 *
 Subject: ctest not works
 From: George Diniz <george@cpqam.fiocruz.br>
@@ -81,11 +71,11 @@ none
 
 Directory:  Graphics
 
-* PR# 757 *
-Subject: Bug in plot.formula
-From: Brett Presnell <presnell@stat.ufl.edu>
-Date: Mon, 4 Dec 2000 11:29:36 -0500 (EST)
---Fixed for 1.2.0
+* PR# 764 *
+Subject: qqline
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Mon, 11 Dec 2000 18:06:27 -0500
+--changed for 1.2.0 already, perhaps not what was desired
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -113,11 +103,6 @@ Date: Tue, 7 Nov 2000 13:03:58 +0100
 
 Directory:  In-Out
 
-* PR# 759 *
-Subject: print buglet with small options(width = )
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 5 Dec 2000 19:34:57 +0100
---Fixed in 1.2.0
 * PR# 746 *
 Subject: printing of lists
 From: David Firth <david.firth@nuffield.oxford.ac.uk>
@@ -144,15 +129,19 @@ Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
 
 Directory:  Language
 
-* PR# 749 *
-Subject: (NA || x) and (NA && y)  {another "bug" }
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Nov 2000 09:25:38 +0100
---Fixed for 1.2.0
+* PR# 747 *
+Subject: Bug in args with no defaults
+From: dmurdoch@pair.com (Duncan Murdoch)
+Date: Sun, 26 Nov 2000 20:14:30 GMT
+--Probably not a bug, but a logical consequence of "missing" semantics.
 * PR# 408 *
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
+* PR# 645 *
+Subject: unlisting a list with names components
+From: Peter Perkins <pperkins@ucsd.edu>
+Date: Fri, 25 Aug 2000 23:07:47 -0700
 * PR# 587 *
 Subject: dim(a <- ...) sets invisible flag erronously
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -162,15 +151,10 @@ Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 06 Feb 2000 01:18:50 +0100
-* PR# 645 *
-Subject: unlisting a list with names components
-From: Peter Perkins <pperkins@ucsd.edu>
-Date: Fri, 25 Aug 2000 23:07:47 -0700
-* PR# 642 *
-Subject:  Method dispatch fails for autoloaded methods 
-From: maechler@stat.math.ethz.ch
-Date: Thu, 24 Aug 2000 17:09:09 +0200
---fixed for next (1.2) R version
+* PR# 694 *
+Subject:  syntax confusion with function/non-function objects 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
 * PR# 674 *
 Subject: all.equal.list() sometimes fails with unnamed and named components
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
@@ -180,38 +164,24 @@ Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 25 Sep 2000 10:17:15 +0200
 --status of AsIs columns
-* PR# 698 *
-Subject:  print problem with data frames 
-From: J.C.Rougier@durham.ac.uk
-Date: Mon, 16 Oct 2000 14:01:43 +0100 (BST)
-* PR# 694 *
-Subject:  syntax confusion with function/non-function objects 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
-* PR# 731 *
-Subject: substitute(x$y)) corrupts 'y' component
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Wed, 08 Nov 2000 11:01:48 -0800
 * PR# 715 *
 Subject: Printing list elements w/attributes
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 31 Oct 2000 12:15:09 +0100
-* PR# 747 *
-Subject: Bug in args with no defaults
-From: dmurdoch@pair.com (Duncan Murdoch)
-Date: Sun, 26 Nov 2000 20:14:30 GMT
---Probably not a bug, but a logical consequence of "missing" semantics.
-* PR# 743 *
-Subject: Re: [Rd] How do you construct a function from a list?
-From: dmurdoch@pair.com (Duncan Murdoch)
-Date: Wed, 22 Nov 2000 12:57:19 GMT
---Believed fixed for 1.2.0
+* PR# 698 *
+Subject:  print problem with data frames 
+From: J.C.Rougier@durham.ac.uk
+Date: Mon, 16 Oct 2000 14:01:43 +0100 (BST)
 * PR# 734 *
 Subject:  Assigning into a dataframe 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 10 Nov 2000 16:00:31 GMT
 --$<- and [<- are not the same for data frames. Not a bug, I think, or at least
 --a compatible one.
+* PR# 731 *
+Subject: substitute(x$y)) corrupts 'y' component
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Wed, 08 Nov 2000 11:01:48 -0800
 
 Directory:  Low-level
 
@@ -220,24 +190,6 @@ Subject: nmath bug
 From: spoon <spoon@hilbert.maths.utas.edu.au>
 Date: Fri, 8 Dec 2000 18:29:22 +1100 (EST)
 --Compiler trouble, probably not bug
-* PR# 505 *
-Subject: interrupted save 
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
-* PR# 545 *
-Subject: Segmentation Fault of unknown cause
-From: kjetikj@astro.uio.no
-Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
-* PR# 536 *
-Subject: Problem with match.arg()
-From: kjetikj@astro.uio.no
-Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
---1.0.0 bug fixed for 1.0.1 ??
-* PR# 752 *
-Subject: non-centrality parameter in pf()
-From: Jerome Asselin <jerome@stat.ubc.ca>
-Date: Tue, 28 Nov 2000 11:43:06 -0800 (PST)
---Fixed for 1.2.0
 * PR# 551 *
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
@@ -245,14 +197,18 @@ Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
 --- ??? -- not (yet) reproducible with small examples
 --- after load()ing large objects
 --- on two different DEC alpha versions
+* PR# 545 *
+Subject: Segmentation Fault of unknown cause
+From: kjetikj@astro.uio.no
+Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
+* PR# 505 *
+Subject: interrupted save 
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 
 Directory:  Misc
 
-* PR# 663 *
-Subject: bug.report("unused argument(s) crash R when options(error=quote
-From: zivan.karaman@limagrain.com
-Date: Tue, 19 Sep 2000 13:51:33 +0200
---Fixed for 1.2.0
+none
 
 Directory:  Models
 
@@ -262,11 +218,6 @@ From: Brett Presnell <presnell@stat.ufl.edu>
 Date: Mon, 4 Dec 2000 19:26:32 -0500 (EST)
 --Fixed for 1.2.0 in the sense that lm/glm are now consistent, but would one want
 --it the other way around?
-* PR# 753 *
-Subject: Re: [R] Step function
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Wed, 29 Nov 2000 10:30:26 -0800 (PST)
---Variable capture issue
 * PR# 628 *
 Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
@@ -337,19 +288,8 @@ none
 
 Directory:  Windows
 
-* PR# 756 *
-Subject: crash using bmp() on windows with Rdll2010
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Sun, 03 Dec 2000 23:19:58 +0100
---Fixed for 1.2.0
+none
 
 Directory:  incoming
 
-* PR# 764 *
-Subject: qqline
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Mon, 11 Dec 2000 18:06:27 -0500
-* PR# 763 *
-Subject: Problem with DLL in Windows NT
-From: hanspeter_wuermli@swissre.com
-Date: Mon, 11 Dec 2000 14:04:46 +0100 (MET)
+none
