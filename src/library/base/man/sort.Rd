@@ -3,7 +3,7 @@
 \alias{is.unsorted}
 \title{Sorting or Ordering Vectors}
 \description{
-  Sort (or \emph{order}) a numeric or complex vector (partially) into
+  Sort (or \emph{order}) a vector or factor (partially) into
   ascending (or descending) order.
 }
 \usage{

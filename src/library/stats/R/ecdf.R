@@ -4,9 +4,9 @@
 ## Constructor
 ecdf <- function (x)
 {
+    x <- sort(x) # drops NAs
     n <- length(x)
-    if(n < 1) stop("x must have length >= 1")
-    x <- sort(x)
+    if(n < 1) stop("x must have 1 or more non-missing values")
     rval <- approxfun(x, (1:n)/n,
 		      method = "constant", yleft=0, yright=1, f = 0,
                       ties = "ordered")
