@@ -65,7 +65,7 @@ resource 'vers' (1) {
 	kNonFinalRelease,
 	kRegionCode,
 	kVersString,
-	"\0xA9 2002 The R Foundation,\n" kVersString ", port by Stefano M. Iacus"
+	"\0xA9 1998-2002 The R Foundation,\n" kVersString ", port by Stefano M. Iacus"
 };
 
 
