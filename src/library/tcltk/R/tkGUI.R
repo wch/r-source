@@ -1,7 +1,7 @@
 tkStartGUI <- function() {
     tkcmd("source", file.path(Sys.getenv("R_HOME"),
                               "library","tcltk","exec","console.tcl"))
-    .C("RTcl_ActivateConsole")
+    .C("RTcl_ActivateConsole", PACKAGE = "tcltk")
     Menu <- .Tk.newwin(".menu")
     Term <- .Tk.newwin(".tk-R.term") 
     options(pager=tkpager)
