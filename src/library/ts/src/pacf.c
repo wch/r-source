@@ -66,10 +66,6 @@ void uni_pacf(double *cor, double *p, int *pnlag)
 /* Use an external reference to store the structure we keep allocated
    memory in */
 static SEXP Starma_tag;
-#define CHECK_STARMA(s) do { \
-    if (TYPEOF(s) != EXTPTRSXP || R_ExternalPtrTag(s) != Starma_tag) \
-        error("bad Starma struct"); \
-} while (0)
 
 #define GET_STARMA \
     Starma G; \
@@ -306,7 +302,7 @@ static void partrans(int np, double *raw, double *new)
     for(j = 1; j < np; j++)
 	for(i = 0; i < j; i++)
 	    raw[i] -= new[j] * new[j - i - 1];
-	    for(i = 0; i < j; i++) new[i] = raw[i];
+    for(i = 0; i < np; i++) new[i] = raw[i];
 }
 
 /* raw is overwritten */

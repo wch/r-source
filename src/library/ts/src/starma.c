@@ -279,7 +279,7 @@ void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
 		if (--indw < 0) break;
 		et -= phi[j] * w[indw];
 	    }
-	    for (j = 0; j < q; j++)
+	    for (j = 0; j < min(ii, q); j++)
 		et -= theta[j] * resid[ii - j - 1];
 	    resid[ii] = et;
 	    *ssq += et * et;
