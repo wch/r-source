@@ -2410,7 +2410,6 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 		       &pty_type, &pty_format, &pty_items, &pty_size, &buffer);
     XFree(buffer);
     if (pty_format != 8) { /* bytes */
-	Rprintf("pty_format = %d\n", pty_format);
 	warning(_("clipboard cannot be opened or contains no text"));
 	res = FALSE;
     } else { /* read the property */
@@ -2420,7 +2419,7 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 	this->buff = (char *)malloc(pty_items + 1);
 	this->last = this->len = pty_items;
 	if(this->buff) {
-	    /* property always ends in zero byte */
+	    /* property always ends in 'extra' zero byte */
 	    memcpy(this->buff, buffer, pty_items + 1);
 	} else {
 	    warning(_("memory allocation to copy clipboard failed"));
