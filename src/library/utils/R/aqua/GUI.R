@@ -97,6 +97,11 @@
        }
    }
 
+"data_by_name"<-function(datanames){
+  aliases<-sub("^.+ +\\((.+)\\)$","\\1",datanames)
+  data(list=ifelse(aliases=="",datanames,aliases))
+}
+
     data.manager <- function()
     {
      if (.Platform$GUI!="AQUA")
@@ -110,7 +115,7 @@
 
         for(i in load.idx) {
             cat("loading dataset:", dt[i],"\n")
-            data(list = dt[i])
+            data_by_name( dt[i])
         }
     }
 
