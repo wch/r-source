@@ -12,7 +12,7 @@ cov(x, y = NULL, use = "all.obs")
   \code{var}, \code{cov} and \code{cor} compute the variance of \code{x}
   and the covariance or correlation of \code{x} and \code{y} if these
   are vectors.  If \code{x} and \code{y} are matrices then the
-  covariance (correlation) between the columns of \code{x} and the the
+  covariance (correlation) between the columns of \code{x} and the
   columns of \code{y} are computed.
 }
 \arguments{
@@ -43,9 +43,9 @@ cov(x, y = NULL, use = "all.obs")
   This can result in covariance or correlation matrices which are not
   positive semidefinite.
 
-  The denominator \eqn{ / (n - 1)} is used which is unbiased for
-  i.i.d. observations.  Therefore, these function return
-  \code{\link{NA}} when there's only one observation.
+  The denominator \eqn{n - 1} is used which gives an unbiased estimator
+  of the (co)variance for i.i.d. observations.
+  These functions return \code{\link{NA}} when there is only one observation.
 }
 \seealso{\code{\link{cov.wt}} for \emph{weighted} covariance computation.}
 \examples{
