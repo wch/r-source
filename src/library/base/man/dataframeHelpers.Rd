@@ -6,9 +6,6 @@
 \alias{row.names<-}
 \alias{row.names<-.data.frame}
 \alias{row.names<-.default}
-%- methods:
-\alias{plot.data.frame}
-%
 \alias{xpdrows.data.frame}
 \description{
   Auxiliary functions for use with data frames.
@@ -17,8 +14,6 @@
 row.names(x)
 row.names(x) <- value
 
-\method{plot}{data.frame}(x, \dots)
-
 xpdrows.data.frame(x, old.rows, new.rows)
 }
 \arguments{
@@ -26,8 +21,6 @@ xpdrows.data.frame(x, old.rows, new.rows)
   \item{value}{a vector with the same length as the number of rows of
     \code{x}, to be coerced to character.  Duplicated or missing values
     are not allowed.}
-  \item{\dots}{further arguments to \code{\link{stripchart}},
-    \code{\link{plot.default}} or \code{\link{pairs}}.}
   \item{old.rows, new.rows}{row names for old and new rows.}
 }
 \value{
@@ -35,11 +28,6 @@ xpdrows.data.frame(x, old.rows, new.rows)
   data frame, similarly to \code{\link{rownames}} for arrays (and
   it is a generic function that calls \code{rownames} for an
   array argument).}
-
-  \code{plot.data.frame}, a method of the \code{\link{plot}} generic,
-  uses \code{\link{stripchart}} for \emph{one} variable,
-  \code{\link{plot.default}} (scatterplot) for \emph{two} variables, and
-  \code{\link{pairs}} (scatterplot matrix) otherwise.
 
   \code{xpdrows.data.frame} is an auxiliary function which expands the
   rows of a data frame.  It is used by the data frame methods of

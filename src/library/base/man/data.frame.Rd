@@ -69,10 +69,13 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
 }
 \seealso{
   \code{\link{I}},
+  \code{\link{plot.data.frame}},
   \code{\link{print.data.frame}},
-  \code{\link{read.table}},
+  \code{\link{row.names}},
+  \code{\link{[.data.frame}} for subsetting methods,
   \code{\link{Math.data.frame}} etc, about
   \emph{Group} methods for \code{data.frame}s;
+  \code{\link{read.table}},
   \code{\link{make.names}}.
 }
 \examples{
