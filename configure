@@ -18193,8 +18193,14 @@ case "${host_os}" in
     ## <NOTE>
     ## Earlier versions had '-flat_namespace -undefined suppress' in
     ## LIBR_LDFLAGS ... not clear whether needed or in fact wanted.
+    ##
+    ## When running AQUA this has to be a fixed place, not under /usr/local
     ## </NOTE>
-    LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
+    if test "x${use_aqua}" = xyes; then
+      LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Frameworks/libR.dylib"
+    else
+      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
+    fi
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
