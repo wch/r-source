@@ -373,7 +373,7 @@ hasMethod <-
   function(f, signature = character())
 {
     if(isGeneric(f))
-        is(selectMethodsList(f, signature, FALSE, FALSE), "function")
+        !is.null(getMethod(f, signature, optional = TRUE))
     else
         FALSE
 }
