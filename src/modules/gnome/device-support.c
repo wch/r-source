@@ -12,6 +12,12 @@
 #include "devGNOME.h"
 #include "device-support.h"
 
+static void R_ShowMessage(char *s)
+{
+  if (!s) return;
+  R_WriteConsole(s, strlen(s));
+}
+
 /* WARNING:  This code is base-graphics(-GRZ)-specific
  */
 static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndev, char *name)
@@ -91,57 +97,4 @@ void SaveAsPostscript(NewDevDesc *dd, char *fn)
 		     0, 1, 0, command))
     /* horizontal=F, onefile=F, pagecentre=T, print.it=F */
     PrivateCopyDevice(dd, ndev, "postscript");
-}
-
-static void SaveAsPDF(NewDevDesc *dd, char *fn)
-{
-    SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
-    NewDevDesc *ndev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
-    GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
-    char family[256], encoding[256], bg[256], fg[256];
-
-    if (!ndev) {
-	R_ShowMessage("Not enough memory to copy graphics window");
-	return;
-    }
-    if(!R_CheckDeviceAvailableBool()) {
-	free(ndev);
-	R_ShowMessage("No device available to copy graphics window");
-	return;
-    }
-
-    ndev->displayList = R_NilValue;
-
-    /* Set default values... */
-    strcpy(family, "Helvetica");
-    strcpy(encoding, "ISOLatin1.enc");
-    strcpy(bg, "white");
-    strcpy(fg, "black");
-    /* and then try to get it from .PostScript.Options */
-    if ((s!=R_UnboundValue) && (s!=R_NilValue)) {
-	SEXP names = getAttrib(s, R_NamesSymbol);
-	int i,done;
-	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
-	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
-		strcpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
-		done += 1;
-	    }
-	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
-		strcpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
-		done += 1;
-	    }
-	    if(!strcmp("fg", CHAR(STRING_ELT(names, i)))) {
-		strcpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
-		done += 1;
-	    }
-	}
-    }
-    if (PDFDeviceDriver((DevDesc*) ndev, 
-			fn, family, encoding, bg, fg,
-			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd), 
-					GE_INCHES, gdd),
-			fromDeviceHeight(toDeviceHeight(1.0, GE_NDC, gdd), 
-					 GE_INCHES, gdd),
-			((gnomeDesc*) dd->deviceSpecific)->fontsize, 1))
-	PrivateCopyDevice(dd, ndev, "PDF");
 }

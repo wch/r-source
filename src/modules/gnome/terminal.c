@@ -33,7 +33,6 @@
 ************************************************ */
 
 void terminal_set_style(void) {
-    GtkStyle *textstyle;
 
     gtk_object_set (GTK_OBJECT(R_gtk_terminal_text),
 		    "output_color_gdk", prefs_get_console_outputcolor(),
@@ -41,15 +40,6 @@ void terminal_set_style(void) {
 		    "bg_color_gdk",     prefs_get_console_bgcolor(),
 		    "font",             prefs_get_console_font(),
 		    NULL);
-
-    /*
-    textstyle = gtk_style_copy(gtk_widget_get_style(R_gtk_terminal_text));
-    gdk_font_unref(textstyle->font);
-    textstyle->font = gdk_font_load(prefs_get_console_font());
-    textstyle->text[GTK_STATE_NORMAL] = prefs_get_console_textcolor();
-    textstyle->base[GTK_STATE_NORMAL] = prefs_get_console_bgcolor();
-    gtk_widget_set_style(R_gtk_terminal_text, textstyle);
-    */
 }
 
 static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)

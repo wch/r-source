@@ -91,8 +91,6 @@ void R_gtk_terminal_quit()
 
 static void file_open_ok(GtkWidget *widget, gpointer data)
 {
-  SEXP img, lst;
-  int i;
   char *name;
 
   R_gtk_terminal_run("\n");

@@ -20,6 +20,7 @@
 
 #include "gnome-find-dialog.h"
 
+#include <string.h>
 #include <gtk/gtk.h>
 #include <libgnomeui/gnome-stock.h>
 #include <libgnomeui/gnome-uidefs.h>

@@ -207,8 +207,8 @@ static guint32 Color_RGBA(int color)
   return GNOME_CANVAS_COLOR_A(red, green, blue, alpha);
 }
 
-/* line type */
-/* fixme: not currently used */
+/* line type 
+   fixme: not currently used 
 static void SetLineType(NewDevDesc *dd, int newlty, int newlwd)
 {
   static gchar dashlist[8];
@@ -241,7 +241,7 @@ static void SetLineType(NewDevDesc *dd, int newlty, int newlwd)
 	    newlty = newlty >> 4;
 	  }
 
-	  /*  set dashes */
+	  // set dashes
 	  gdk_gc_set_dashes(gd->wgc, 0, dashlist, i);
 	  gdk_gc_set_line_attributes(gd->wgc, newlwd,
 				     GDK_LINE_ON_OFF_DASH,
@@ -250,6 +250,7 @@ static void SetLineType(NewDevDesc *dd, int newlty, int newlwd)
 	}
     }
 }
+*/
 
 /* signal functions */
 
@@ -416,8 +417,6 @@ static void GNOME_NewPage(int fill, NewDevDesc *dd)
 static Rboolean
 GNOME_Open(NewDevDesc *dd, gnomeDesc *gd, char *dsp, double w, double h)
 {
-    GnomeCanvasItem *group;
-
     gint iw, ih;
 
     /*gdk_rgb_set_install(TRUE); */
@@ -647,7 +646,6 @@ static void GNOME_Rect(double x0, double y0, double x1, double y1,
 {
     double tmp;
     gnomeDesc *gd = (gnomeDesc *) dd->deviceSpecific;
-    GdkColor gcol_fill, gcol_outline;
     GnomeCanvasItem *item;
 
     if(x0 > x1) {
@@ -686,7 +684,6 @@ static void GNOME_Circle(double x, double y, double r,
 		       int col, int fill, int lty, double lwd,
 		       NewDevDesc *dd)
 {
-    GdkColor gcol_fill, gcol_outline;
     double x1, y1, x2, y2;
     gnomeDesc *gd = (gnomeDesc *) dd->deviceSpecific;
     GnomeCanvasItem *item;
@@ -722,10 +719,6 @@ static void GNOME_Line(double x1, double y1, double x2, double y2,
     GnomeCanvasPoints *points;
     gnomeDesc *gd = (gnomeDesc *) dd->deviceSpecific;
     GnomeCanvasItem *item;
-    GdkColor gcol_fill;
-
-    //FIXME: Tidy up
-    //FIXME: Tidy up
 
     points = gnome_canvas_points_new(2);
     points->coords[0] = x1;
@@ -758,21 +751,16 @@ static void GNOME_Polyline(int n, double *x, double *y,
 			    int col, int lty, double lwd,
 			    NewDevDesc *dd)
 {
-    double devx, devy;
     int i;
     GnomeCanvasPoints *points;
     gnomeDesc *gd = (gnomeDesc *) dd->deviceSpecific;
     GnomeCanvasItem *item;
-    GdkColor gcol_fill;
-    GdkBitmap stipple;
 
     points = gnome_canvas_points_new(n);
 
     for(i = 0; i < n; i++) {
-	devx = x[i]; devy = y[i];
-        //FIXME: Tidy up
-	points->coords[i * 2] = devx;
-	points->coords[i * 2 + 1] = devy;
+	points->coords[i * 2] = x[i];
+	points->coords[i * 2 + 1] = y[i];
     }
 
     item = gnome_canvas_item_new(gd->group,
@@ -805,20 +793,16 @@ static void GNOME_Polygon(int n, double *x, double *y,
 			int col, int fill, int lty, double lwd,
 			NewDevDesc *dd)
 {
-    double devx, devy;
     int i;
     GnomeCanvasPoints *points;
     gnomeDesc *gd = (gnomeDesc *) dd->deviceSpecific;
     GnomeCanvasItem *item;
-    GdkColor gcol_fill, gcol_outline;
 
     points = gnome_canvas_points_new(n);
 
     for(i = 0; i < n; i++) {
-	devx = x[i]; devy = y[i];
-	//FIXME: Tidy up
-	points->coords[i * 2] = floor(devx);
-	points->coords[i * 2 + 1] = floor(devy);
+	points->coords[i * 2] = floor(x[i]);
+	points->coords[i * 2 + 1] = floor(y[i]);
     }
 
     item = gnome_canvas_item_new(gd->group,
@@ -883,13 +867,15 @@ static void GNOME_Text(double x, double y, char *str,
 
 /* locator */
 
-static gboolean locator_cb (GtkWidget * canvas, GdkEventButton * event,
-			    gpointer data)
+static gint locator_cb (GtkWidget * canvas, GdkEventButton * event,
+			gpointer data)
 {
   GdkEventButton *info = (GdkEventButton*) data;
   
   *info = *event;
   gtk_main_quit();
+
+  return FALSE;
 }
 
 static Rboolean GNOME_Locator(double *x, double *y, NewDevDesc *dd)
