@@ -25,7 +25,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     if(zfile != file) on.exit(unlink(zfile))
     if(!file.exists(zfile)) {
 	warning(gettextf("'%s' has a help file but no examples file", topic),
-                dpmain = NA)
+                domain = NA)
 	return(invisible())
     }
     if(pkg != "base")

@@ -105,7 +105,7 @@ setIs <-
         stop(gettextf("cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s\") is local and modifiable in this package",
                       class1, class2), domain = NA)
     if(classDef@sealed && !isClassUnion(classDef2))
-        stop(gettextf("class \"%s\" is sealed; new superclasses can not be defined, except by 'setClassUnion'", class1), dpmain = NA)
+        stop(gettextf("class \"%s\" is sealed; new superclasses can not be defined, except by 'setClassUnion'", class1), domain = NA)
     prevIs <- !identical(possibleExtends(class1, class2,classDef, classDef2),
                          FALSE) # used in checking for previous coerce
     if(is.null(extensionObject))
