@@ -24,21 +24,101 @@ All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 1e-14)
 if(!interactive())
     .Random.seed <- c(0,rep(7654, 3))
 
-###--- Discrete Distributions: Simple Consistency Checks  pZZ = cumsum(dZZ)
+## The prefixes of ALL the PDQ & R functions
+PDQRinteg <- c("binom", "geom", "hyper", "nbinom", "pois","signrank","wilcox")
+PDQR <- c(PDQRinteg, "beta", "cauchy", "chisq", "exp", "f", "gamma",
+          "lnorm", "logis", "norm", "t","unif","weibull")
+PQonly <- c("tukey")
+
+###--- Discrete Distributions --- Consistency Checks  pZZ = cumsum(dZZ)
+
+##for(pre in PDQRinteg) { n <- paste("d",pre,sep=""); cat(n,": "); str(get(n))}
+
+##__ 1. Binomial __
+
+## Cumulative Binomial '==' Cumulative F :
+## Abramowitz & Stegun, p.945-6;  26.5.24  AND  26.5.28 :
+n0 <- 50; n1 <- 16; n2 <- 20; n3 <- 8
+for(n in rbinom(n1, size = 2*n0, p = .4)) {
+    cat("n=",n,": ")
+    for(p in c(0,1,rbeta(n2, 2,4))) {
+	cat(".")
+	for(k in rbinom(n3, size = n,  prob = runif(1))) {
+	    ## For X ~ Bin(n,p), compute 1 - P[X > k] = P[X <= k] in three ways:
+	    tst1 <- all.equal(       pbinom(0:k, size = n, prob = p),
+                              cumsum(dbinom(0:k, size = n, prob = p)))
+	    tst <- all.equal(if(k==n || p==0) 1 else
+			     pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
+			     sum(dbinom(0:k, size = n, prob = p)))
+	    if(!(is.logical(tst1) && tst1) ||
+               !(is.logical(tst)  && tst ) ) {
+		cat("n=", n,"; p =",format(p),".  k =",k)
+                if(!is.logical(tst1)) cat("; tst1=",tst1)
+                if(!is.logical(tst )) cat("; tst=", tst)
+                cat("\n")
+            }
+	}
+    }
+    cat("\n")
+}
+
+##__ 2. Geometric __
+for(pr in seq(0,1,len=15)) {
+    print(All.eq((dg <- dgeom(0:10, pr)),
+                 pr * (1-pr)^(0:10)))
+    print(All.eq(cumsum(dg), pgeom(0:10, pr)))
+}
+
+##__ 3. Hypergeometric __
+
+m <- 10; n <- 7
+for(k in 2:m) {
+    x <- 0:(k+1)
+    print(All.eq(phyper(x, m, n, k), cumsum(dhyper(x, m, n, k))))
+}
+
+##__ 4. Negative Binomial __
+
+## PR #842
+for(size in seq(0.8,2, by=.1))
+    print(all.equal(cumsum(dnbinom(0:7, size, .5)),
+                           pnbinom(0:7, size, .5)))
+All.eq(pnbinom(c(1,3), .9, .5), c(0.777035760338812, 0.946945347071519))
+
+##__ 5. Poisson __
 
 all(dpois(0:5,0)	   == c(1, rep(0,5)))
 all(dpois(0:5,0, log=TRUE) == c(0, rep(-Inf, 5)))
 
-## PR #842
-all.equal(cumsum(dnbinom(0:5, .9, .5)),
-         (pnb <- pnbinom(0:5, .9, .5)))
-All.eq(pnb[c(2,4)], c(0.777035760338812, 0.946945347071519))
+## Cumulative Poisson '==' Cumulative Chi^2 :
+## Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
+n1 <- 20; n2 <- 16
+for(lambda in rexp(n1))
+    for(k in rpois(n2, lambda)) {
+	tst <- all.equal(1 - pchisq(2*lambda, 2*(1+ 0:k)),
+			 pp <- cumsum(dpois(0:k, lambda=lambda)), tol= 100*Meps)
+	if(!(is.logical(tst) && tst))
+	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
+	tst2 <- all.equal(pp, ppois(0:k, lambda=lambda), tol = 100*Meps)
+	if(!(is.logical(tst2) && tst2))
+	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
+	tst3 <- all.equal(1 - pp, ppois(0:k, lambda=lambda, lower.tail=FALSE))
+	if(!(is.logical(tst3) && tst3))
+	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
+    }
 
-## Currently, just Wilcoxon  [should do this for all !]
+
+##__ 6. SignRank __
+for(n in rpois(32, lam=8)) {
+    x <- -1:(n + 4)
+    eq <- All.eq(psignrank(x, n), cumsum(dsignrank(x, n)))
+    if(!is.logical(eq) || !eq) print(eq)
+}
+
+##__ 7. Wilcoxon (symmetry & cumulative) __
 is.sym <- TRUE
 for(n in rpois(5, lam=6))
-    for(m in rpois(15, lam=8))
-    {
+    for(m in rpois(15, lam=8)) {
 	x <- -1:(n*m + 1)
 	fx <- dwilcox(x, n, m)
 	Fx <- pwilcox(x, n, m)
@@ -48,41 +128,8 @@ for(n in rpois(5, lam=6))
     }
 is.sym
 
-##--- Cumulative Poisson '==' Cumulative Chi^2 :
-##--- Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
-n1 <- 20; n2 <- 16
-for(lambda in rexp(n1))
-    for(k in rpois(n2, lambda)) {
-	tst <- all.equal(1 - pchisq(2*lambda, 2*(k+1)),
-			 pp <- sum(dpois(0:k, lambda=lambda)), tol = 100*Meps)
-	if(!(is.logical(tst) && tst))
-	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
-	tst2 <- all.equal(pp, ppois(k, lambda=lambda), tol = 100*Meps)
-	if(!(is.logical(tst2) && tst2))
-	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
-	tst3 <- all.equal(1 - pp, ppois(k, lambda=lambda, lower.tail=FALSE))
-	if(!(is.logical(tst3) && tst3))
-	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
-    }
 
-##--- Cumulative Binomial '==' Cumulative F :
-##--- Abramowitz & Stegun, p.945-6;  26.5.24  AND  26.5.28 :
-n0 <- 50; n1 <- 16; n2 <- 20; n3 <- 8
-for(n in rbinom(n1, size = 2*n0, p = .4)) {
-    cat("n=",n,": ")
-    for(p in c(0,1,rbeta(n2, 2,4))) {
-	cat(".")
-	for(k in rbinom(n3, size = n,  prob = runif(1))) {
-	    ## For X ~ Bin(n,p), compute 1 - P[X > k] = P[X <= k]  in two ways:
-	    tst <- all.equal(if(k==n || p==0) 1 else
-			     pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
-			     sum(dbinom(0:k, size = n, prob = p)))
-	    if(!(is.logical(tst) && tst))
-		cat("n=", n,"; p =",format(p),".  k =",k, " --> tst=",tst,"\n")
-	}
-    }
-    cat("\n")
-}
+###-------- Continuous Distributions ----------
 
 ##---  Gamma (incl. chi^2) Density :
 x <- round(rgamma(100, shape = 2),2)
@@ -148,12 +195,6 @@ All.eq(pz, plnorm(exp(z)))
 ###==========  p <-> q	Inversion consistency =====================
 ok <- 1e-5 < pz & pz < 1 - 1e-5
 all.equal(z[ok], qnorm(pz[ok]), tol= 1e-12)
-
-## The prefixes of ALL the PDQ & R functions
-PDQR <- c("beta", "binom", "cauchy", "chisq", "exp", "f",
-	  "gamma", "geom", "hyper", "lnorm", "logis", "nbinom","norm",
-	  "pois","signrank","t","unif","weibull","wilcox")
-PQonly <- c("tukey")
 
 ###===== Random numbers -- first, just output:
 
