@@ -52,7 +52,7 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
   \item{pch}{a vector of plotting characters or symbols.}
   \item{cex}{a numerical value giving the amount by which plotting text
     and symbols should be scaled relative to the default}
-  \item{lty}{the line type, see \code{\link{par}.}
+  \item{lty}{the line type, see \code{\link{par}}.}
   \item{lwd}{the line width \bold{not yet supported for postscript}.}
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
   \item{\dots}{graphical parameters as in \code{\link{par}(\dots)} may
