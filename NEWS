@@ -74,6 +74,10 @@ USER-VISIBLE CHANGES
         object's class. This allows packages with namespaces to have
         private (non-exported) classes.
 
+    o   setClass() and its utilities now warn if either superclasses
+        or classes for slots are undefined.  (Use setOldClass to
+        register S3 classes for use as slots)
+
 
 NEW FEATURES
 
