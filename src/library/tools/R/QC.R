@@ -586,13 +586,25 @@ function(package, dir, lib.loc = NULL)
 
         argsInUsageMissingInArgList <-
             argsInUsage[!argsInUsage %in% argsInArgList]
+        argsInArgListMissingInUsage <-
+            argsInArgList[!argsInArgList %in% argsInUsage]
 
+        ## <NOTE>
+        ## Currently, we only record 'over-documented' arguments in case
+        ## we found arguments in \usage.  On the one hand, this allows
+        ## dealing with Rd files documenting e.g. shell utilities (or
+        ## non-function syntax).  However, an empty \usage together with
+        ## a non-empty documented list of arguments would go unnoticed.
+        ## </NOTE>
         if((length(argsInUsageMissingInArgList) > 0)
-           || any(duplicated(argsInArgList)))
+           || any(duplicated(argsInArgList))
+           || ((length(argsInArgListMissingInUsage) > 0)
+               && (length(argsInUsage) > 0)))
             badDocObjs[[docObj]] <-
                 list(missing = argsInUsageMissingInArgList,
                      duplicated =
-                     argsInArgList[duplicated(argsInArgList)])
+                     argsInArgList[duplicated(argsInArgList)],
+                     overdoc = argsInArgListMissingInUsage)
 
         ## Clean up argsEnv.
         rm(list = lsArgs, envir = argsEnv)
@@ -606,8 +618,10 @@ print.checkDocArgs <-
 function(x, ...)
 {
     for(docObj in names(x)) {
+        needLineAtEOR <- FALSE
         argsInUsageMissingInArgList <- x[[docObj]][["missing"]]
         if(length(argsInUsageMissingInArgList) > 0) {
+            needLineAtEOR <- TRUE
             writeLines(paste("Undocumented arguments",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
@@ -615,12 +629,33 @@ function(x, ...)
         }
         duplicatedArgsInArgList <- x[[docObj]][["duplicated"]]
         if(length(duplicatedArgsInArgList) > 0) {
+            needLineAtEOR <- TRUE
             writeLines(paste("Duplicated \\argument entries",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
             print(duplicatedArgsInArgList)
         }
-        writeLines("")
+        ## It would be nice if we could also realibly warn about
+        ## arguments documented in \arguments but not in \usage.  The
+        ## current code for analyzing \usage sections cannot deal with
+        ## non-function syntax, e.g. in 'base/man/DateTimeClasses.Rd'.
+        ## We could special-case the problem cases in the high-priority
+        ## packages, but it seems better to find a general solution.
+        ## E.g., one could try matching the words in the \usage sections
+        ## for the missing arguments ...
+        ## As we can always access the information via
+        ##    lapply(checkDocArgs("foo"), "[[", "overdoc")
+        ## disable reporting this for the time being ...
+        ## <COMMENT>
+        ##    argsInArgListMissingInUsage <- x[[docObj]][["overdoc"]]
+        ##    if(length(argsInArgListMissingInUsage) > 0) {
+        ##       writeLines(paste("Documented arguments not in \\usage",
+        ##                        " in documentation object ",
+        ##                        sQuote(docObj), ":", sep = ""))
+        ##       print(unique(argsInArgListMissingInUsage))
+        ##    }
+        ## </COMMENT>
+        if(needLineAtEOR) writeLines("")
     }
     invisible(x)
 }
