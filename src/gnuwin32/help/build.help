@@ -162,7 +162,7 @@ foreach $manfile (@mandir) {
 		    $tmp2 =~ s+/+\\+g;
 		}
 		$cmd = "tbl $tmpfile | troff -Tlatin1 -ms | grotty -buo > $tmp2";
-		system("$cmd") ==0 or die "cannot execute nroff cmd";
+		system("$cmd") ==0 or die "cannot execute nroff cmd\n";
 		unlink($tmpfile);
 		open hlpfile, "<$tmp2" || die "Couldn't open '$tmp2'\n";
 		open dest, ">$destfile" || die "Couldn't open '$destfile'\n";
@@ -240,7 +240,7 @@ sub open_hhp {
     my $pkg = $ARGV[0];
 
     open hhpfile, ">../chm/$pkg.hhp" 
-	|| die "Couldn't open the chm project file";
+	|| die "Couldn't open the chm project file\n";
     print hhpfile "[OPTIONS]\n", "Auto Index=Yes\n",
     "Contents file=$pkg.toc\n",
     "Compatibility=1.1 or later\n",

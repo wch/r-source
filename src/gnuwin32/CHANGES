@@ -3,18 +3,19 @@ rw0651
 
 New function savePlot() to save plots to wmf, gif or ps.
 
-There is now support for help via compiled HTML files (as used by
-current Microsoft products): set options(chmhelp=TRUE) to use this.
-You will probably need IE4 or later installed to use this, or you can
-install hhupd.exe from the windows/windows-NT/etc directory on CRAN.
+There is now support for help via compiled HTML files (as used by the
+latest Microsoft products): set options(chmhelp=TRUE) to use this.
+You will probably need Internet Explorer 4 or later installed to use
+this, or you can install hhupd.exe from the windows/windows-NT/etc
+directory on CRAN.
 
 There is support for building Windows help files (as in Windows 95) and
-compiled HTML files (as in Windows 98) and both are available for the
+compiled HTML files (as in Windows 2000) and both are available for the
 standard packages.
 
-The new function update.packages() is supported if you have wget.exe:
-a copy is in the windows/windows-NT/etc directory on CRAN. You can
-also use lynx.exe, from http://www.fdisk.com/doslynx/lynxport.htm.
+The new function update.packages() is supported if you have wget.exe
+(a copy is in the windows/windows-NT/etc directory on CRAN) or
+lynx.exe, from http://www.fdisk.com/doslynx/lynxport.htm.
 
 On NT only, CPU times are returned by proc.time() (using a call to
 GetProcessTimes).
@@ -36,6 +37,9 @@ Rproxy.dll: see the file front-ends/readme.
 
 As under Unix, .Renviron is first searched for in the working directory, 
 then in the home directory.
+
+The sockets code is definitely working in this version, enough to support
+source.url and friends.
 
 
 rw0650

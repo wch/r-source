@@ -1,6 +1,6 @@
 include ../MkRules
 
-MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd gnome.Rd hdf5.Rd update.packages.Rd x11.Rd
+MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd gnome.Rd hdf5.Rd x11.Rd
 
 all: profiles fixh fixr fixRd fixbin fixmake
 
@@ -50,8 +50,8 @@ fixr: $(wildcard ./r/*.r) ./r/zero.R $(wildcard ./r/*.html)  \
 	$(ECHO) done > fixr		
 
 fixRd: $(wildcard man/*.Rd)
-	$(CP) -p man/*.Rd  ../../library/base/man
 	-$(RM) $(foreach i, $(MANOBJS), ../../library/base/man/$i)
+	$(CP) -p man/*.Rd  ../../library/base/man
 	$(ECHO) done > fixRd	
 
 fixmake: ../../appl/Makefile ../../main/Makefile ../../nmath/Makefile

@@ -154,6 +154,8 @@ parse.description <- function(desc)
     retval
 }
 
+
+
 installed.packages <- function(lib.loc = .lib.loc)
 {
     retval <- NULL
@@ -167,25 +169,35 @@ installed.packages <- function(lib.loc = .lib.loc)
                 desc <- parse.description(desc)
             }
             else
+            {
                 desc <- list(Version=NA)
+            }
+
             retval <- rbind(retval, c(p, lib, desc$Version))
+
         }
     }
     colnames(retval) <- c("Package", "LibPath", "Version")
     retval
 }
 
-CRAN.packages <- function(CRAN=options("CRAN"),
-                          method=c("wget", "lynx"))
-{
-    method <- match.arg(method)
 
-    tmpf <- tempfile()
-    download.file(url=paste(CRAN,
-                  "/bin/windows/windows-NT/contrib/README", sep=""),
-                  destfile=tmpf, method=method)
+CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
+{
+    localcran <- length(grep("^file:", CRAN)) > 0
+    if(localcran)
+        tmpf <- file.path(substring(CRAN,6),
+                          "src", "contrib", "PACKAGES")
+    else{
+        tmpf <- tempfile()
+        download.file(url=paste(CRAN,
+                      "/bin/windows/windows-NT/contrib/README", sep=""),
+                      destfile=tmpf, method=method)
+    }
     alldesc <- scan("", file=tmpf, sep="\n", quiet=TRUE)
-    unlink(tmpf)
+    if(!localcran)
+        unlink(tmpf)
+
     pkgstart <- c(grep("^.+\\.zip", alldesc), length(alldesc)+1)
     retval <- NULL
     for(k in 1:(length(pkgstart)-1)){
@@ -199,8 +211,9 @@ CRAN.packages <- function(CRAN=options("CRAN"),
     retval
 }
 
-update.packages <- function(lib.loc=.lib.loc, CRAN=options("CRAN"),
-                            method=c("wget", "lynx"))
+
+update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
+                            method="auto", instlib=NULL)
 {
     instp <- installed.packages(lib.loc=lib.loc)
     cranp <- CRAN.packages(CRAN=CRAN, method=method)
@@ -221,40 +234,74 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=options("CRAN"),
             cat("\n")
         }
     }
+
+    if(!is.null(update)){
+        if(is.null(instlib))
+            instlib <-  update[,"LibPath"]
+
+        install.packages(update[,"Package"], instlib, CRAN=CRAN,
+                         method=method, available=cranp)
+    }
+}
+
+
+install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
+                             method="auto", available=NULL)
+{
+    localcran <- length(grep("^file:", CRAN)) > 0
     pkgs <- NULL
-    if(!is.null(update)) {
-        tmpd <- tempfile("Rinstdir")
-        shell(paste("mkdir", tmpd))
-        pkgs <- download.packages(update[,"Package"], destdir=tmpd,
-                                  available=cranp, CRAN=CRAN, method=method)
-        if(!is.null(pkgs)) {
-            for(lib in unique(update[,"LibPath"]))
+    tmpd <- tempfile("Rinstdir")
+    shell(paste("mkdir", tmpd))
+    pkgs <- download.packages(pkglist, destdir=tmpd,
+                              available=available,
+                              CRAN=CRAN, method=method)
+    update <- cbind(pkglist, lib)
+    colnames(update) <- c("Package", "LibPath")
+    if(!is.null(pkgs))
+    {
+        for(lib in unique(update[,"LibPath"]))
+        {
+            oklib <- lib==update[,"LibPath"]
+            for(p in update[oklib,"Package"])
             {
-                oklib <- lib==update[,"LibPath"]
-                for(p in update[oklib,"Package"])
-                {
-                    okp <- p==pkgs[, 1]
-                    if(length(okp) > 0) {
-                        cmd <- paste("unzip -o", pkgs[okp, 2], "-d", lib)
-                        system(cmd)
-                    }
+                okp <- p==pkgs[, 1]
+                if(length(okp) > 0) {
+                    cmd <- paste("unzip -o", pkgs[okp, 2], "-d", lib)
+                    system(cmd)
                 }
             }
         }
         cat("\n")
-        answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
-        if(answer == "y" | answer == "Y") {
-            for(file in pkgs[,2]) unlink(file)
-            unlink(tmpd)
-        } else
-            cat("The packages are in", tmpd)
-        cat("\n")
+        if(!localcran){
+            answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
+            if(answer == "y" | answer == "Y") {
+                for(file in pkgs[, 2]) unlink(file)
+                unlink(tmpd)
+            } else
+                cat("The packages are in", tmpd)
+            cat("\n")
+        }
     }
+    else
+        unlink(tmpd)
 }
 
-download.file <- function(url, destfile, method=c("wget", "lynx"))
+
+download.file <- function(url, destfile, method="auto")
 {
-    method <- match.arg(method)
+    method <- match.arg(method,
+                        c("auto", "wget", "lynx", "cp"))
+
+   if(method=="auto"){
+        if(length(grep("^file:", url)))
+            method <- "cp"
+        else if(system("wget --help", invisible=TRUE)==0)
+            method <- "wget"
+        else if(shell("lynx --help", invisible=TRUE)==0)
+            method <- "lynx"
+        else
+            stop("No download method found")
+    }
 
     if(method=="wget")
         status <- system(paste("wget", url, "-O", destfile))
@@ -264,13 +311,13 @@ download.file <- function(url, destfile, method=c("wget", "lynx"))
     invisible(status)
 }
 
-download.packages <- function(pkgs, destdir, available=NULL,
-                              CRAN=options("CRAN"),
-                              method=c("wget", "lynx"))
-{
-    method <- match.arg(method)
 
-    if(missing(available))
+
+download.packages <- function(pkgs, destdir, available=NULL,
+                              CRAN=.Options$CRAN, method="auto")
+{
+    localcran <- length(grep("^file:", CRAN)) > 0
+    if(is.null(available))
         available <- CRAN.packages(CRAN=CRAN, method=method)
 
     retval <- NULL
@@ -284,6 +331,6 @@ download.packages <- function(pkgs, destdir, available=NULL,
         else
             warning(paste("Download of package", p, "failed"))
     }
+
     retval
 }
-
