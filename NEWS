@@ -12,6 +12,8 @@ NEW FEATURES
         allow local evaluation of expressions, with various useful 
 	idiomatic uses.
 
+    o   uniroot() can now be used recursively
+
 BUG FIXES
 
     o	A bug which meant that it was not possible to add elements

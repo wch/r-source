@@ -219,6 +219,6 @@ int F77_SYMBOL(optif9)(int *nr, int *n, double *x,
 		       double *xpls, double *fpls, double *gpls,
 		       int *itrmcd, double *a, double *wrk, int *itncnt);
  
-double F77_SYMBOL(zeroin)(double *ax, double *bx, 
-			  D_fp f, double *tol, int *maxiter);
+double zeroin(double ax, double bx, double (*f)(double, void *), void *info,
+	      double *tol, int *maxit);
 #endif

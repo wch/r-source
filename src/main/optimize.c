@@ -114,14 +114,16 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* One Dimensional Root Finding --  just wrapper code for Brent's "zeroin" */
 
-static SEXP R_fcall2;
-static SEXP R_env2;
+struct callinfo {
+  SEXP R_fcall2;
+  SEXP R_env2;
+} ;
 
-static double F77_SYMBOL(fcn2)(double *x)
+double fcn2(double x, struct callinfo *info)
 {
     SEXP s;
-    REAL(CADR(R_fcall2))[0] = *x;
-    s = eval(R_fcall2, R_env2);
+    REAL(CADR(info->R_fcall2))[0] = x;
+    s = eval(info->R_fcall2, info->R_env2);
     switch(TYPEOF(s)) {
     case INTSXP:
 	if (length(s) != 1) goto badvalue;
@@ -154,6 +156,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     double xmin, xmax, tol;
     int iter;
     SEXP v, res;
+    struct callinfo info;
 
     checkArity(op, args);
     PrintDefaults(rho);
@@ -193,12 +196,13 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (iter <= 0)
 	errorcall(call, "maxiter must be positive\n");
 
-    R_env2 = rho;
-    PROTECT(R_fcall2 = lang2(v, R_NilValue));/* the GLOBAL used in fcn2() */
-    CADR(R_fcall2) = allocVector(REALSXP, 1);
+    info.R_env2 = rho;
+    PROTECT(info.R_fcall2 = lang2(v, R_NilValue)); /* the info used in fcn2() */
+    CADR(info.R_fcall2) = allocVector(REALSXP, 1);
     PROTECT(res = allocVector(REALSXP, 3));
     REAL(res)[0] =
-	F77_SYMBOL(zeroin)(&xmin, &xmax, F77_SYMBOL(fcn2), &tol, &iter);
+	zeroin(xmin, xmax, fcn2, 
+	       (void *) &info, &tol, &iter);
     REAL(res)[1] = (double)iter;
     REAL(res)[2] = tol;
     UNPROTECT(2);
