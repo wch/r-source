@@ -32,7 +32,7 @@ TESTsrc = simple-true.R simple-tests.R d-p-q-r-tests.R \
 
 TESTout = $(TESTsrc:.R=.Rout)
 
-%.Rout: %.R stamp-Rexe
+%.Rout: %.R $(top_builddir)/stamp-R
 	@(SRCDIR=$(srcdir); export SRCDIR; \
 	  echo "$(R) < $< > $@"; \
 	  $(R) < $< > $@)
@@ -43,15 +43,11 @@ test-All: test-Examples $(TESTout)
 test-Examples:
 	-(cd $(Ex); $(MAKE) $@)
 
-stamp-Rexe: $(REXE)
-	@touch $@
-
-$(REXE)::
-	-(cd $(RHOME); $(MAKE) R)
+$(top_builddir)/stamp-R:
+	-(cd $(top_builddir) && $(MAKE) R)
 
 mostlyclean: clean
 clean:
-	rm -f stamp-Rexe
 	-(cd $(Ex); $(MAKE) $@)
 distclean: clean
 	@rm -f $(TESTout)
