@@ -49,6 +49,7 @@
 \alias{as.data.frame}
 \alias{requireMethods}
 \alias{checkSlotAssignment}
+\alias{defaultPrototype}
 %% not explicitly documented here
 \alias{.BasicClasses}
 \alias{.BasicVectorClasses}
@@ -155,6 +156,8 @@ as.data.frame(x, row.names=NULL, optional=FALSE)
 requireMethods(functions, signature, message)
 
 checkSlotAssignment(obj, name, value)
+
+defaultPrototype()
 
 }
 \description{
@@ -496,6 +499,13 @@ results.
     choose to improve efficiency by validating the value to be
     assigned in the accessor function and then calling \code{slot<-} with
     the argument \code{check=FALSE}, to prevent the call to \code{checkSlotAssignment}.
+}
+\item{\code{defaultPrototype:}{
+    The prototype for a class which will have slots, is not a virtual
+    class, and does not extend one of the basic classes.  In future
+    releases, this will likely be a non-vector R object type, but none
+    of the current types (as of release 1.4) is suitable.
+  }
 }
 \item{SessionClassMetaData:}{ Contains the name of the special table in which
     class information is cached during the session.}

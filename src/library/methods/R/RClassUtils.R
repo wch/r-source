@@ -40,33 +40,34 @@ makePrototypeFromClassDef <-
   ## If all three of the above fail, the prototype is `NULL'.
   function(properties, prototype, extends)
 {
-    if(length(properties) == 0) {
-        if(!is.null(prototype))
+    if(length(properties) == 0 && !is.null(prototype))
             return(prototype)
-        ## try for a single superclass that is not virtual
-        ## This code will rarely be applied (since reconcilePropertiesAndPrototype
-        ## will have created one unless superclasses were undefined.
-        supers <- names(extends)
-        for(i in seq(along=extends)) {
-            if(!is.logical(el(extends, i)))
-                next
-            what <- el(supers, i)
-            if(isClass(what) && !isVirtualClass(what)) {
-                if(is.null(prototype))
-                    prototype <- getPrototype(getClass(what))
-                else {
-                    ## two super classes => prototype not defined?
-                    prototype <- NULL
-                    break
-                }
+    ## try for a single superclass that is not virtual
+    supers <- names(extends)
+    virtual <- NA
+    needsPrototype <- is.null(prototype)
+    for(i in seq(along=extends)) {
+        if(!is.logical(el(extends, i)))
+            next
+        what <- el(supers, i)
+        if(identical(what, "VIRTUAL"))
+            ## the class is virtual, and the prototype usually NULL
+            virtual <- TRUE
+        else if(needsPrototype && isClass(what) && !isVirtualClass(what)) {
+            if(is.null(prototype))
+                prototype <- getPrototype(getClass(what))
+            else {
+                ## two super classes => prototype not defined?
+                warning("More than one non-virtual superclass: prototype may be ambiguous")
+                break
             }
         }
-        return(prototype)
     }
-    if(is.environment(prototype))
-        pnames <- objects(prototype, all=TRUE)
-    else
-        pnames <- names(attributes(prototype))
+    if(length(properties) == 0)
+        return(prototype)
+    if(is.null(prototype))
+        prototype <- defaultPrototype()
+    pnames <- names(attributes(prototype))
     snames <- names(properties)
     for(j in seq(along = properties)) {
         name <- el(snames, j)
@@ -409,6 +410,12 @@ makeExtends <-
     else stop(paste("extends argument must be a list or a vector of class names", sep=""))
   }
 
+defaultPrototype <-
+    ## the starting prototype for a non-virtual class
+    ## Should someday be a non-vector sexp type
+    function()
+    list()
+
 reconcilePropertiesAndPrototype <-
   ## makes a list or a structure look like a prototype for the given class.
   ##
@@ -422,7 +429,7 @@ reconcilePropertiesAndPrototype <-
   function(name, properties, prototype, extends) {
       ## the StandardPrototype should really be a type that doesn't behave like
       ## a vector.  But none of the existing types work.  Someday ...
-      StandardPrototype <- list()
+      StandardPrototype <- defaultPrototype()
       superClasses <- names(extends)
       undefined <- rep(FALSE, length(superClasses))
       slots <-  allNames(properties)
