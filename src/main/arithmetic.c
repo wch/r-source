@@ -364,8 +364,8 @@ static double logbase(double x, double base)
     return R_log(x) / log(base);
 }
 
-static SEXP unary(SEXP, SEXP);
-static SEXP binary(SEXP, SEXP);
+SEXP R_unary(SEXP, SEXP, SEXP);
+SEXP R_binary(SEXP, SEXP, SEXP, SEXP);
 static SEXP integer_unary(ARITHOP_TYPE, SEXP);
 static SEXP real_unary(ARITHOP_TYPE, SEXP);
 static SEXP real_binary(ARITHOP_TYPE, SEXP, SEXP);
@@ -384,12 +384,11 @@ SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchGroup("Ops", call, op, args, env, &ans))
 	return ans;
 
-    lcall = call;
     switch (length(args)) {
     case 1:
-	return unary(op, CAR(args));
+	return R_unary(call, op, CAR(args));
     case 2:
-	return binary(op, args);
+	return R_binary(call, op, CAR(args), CADR(args));
     default:
 	error("operator needs one or two arguments");
     }
@@ -397,19 +396,22 @@ SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-static SEXP binary(SEXP op, SEXP args)
+SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 {
-    SEXP x, y, class, dims, tsp, xnames, ynames;
+    SEXP class, dims, tsp, xnames, ynames;
     int mismatch, nx, ny, xarray, yarray, xts, yts;
+    PROTECT_INDEX xpi, ypi;
 
-    x = CAR(args);
-    y = CADR(args);
+    lcall = call;
+
+    PROTECT_WITH_INDEX(x, &xpi);
+    PROTECT_WITH_INDEX(y, &ypi);
 
     /* fix up NULL */
     if (isNull(x))
-	x = SETCAR(args, allocVector(REALSXP,0));
+	REPROTECT(x = allocVector(REALSXP,0), xpi);
     if (isNull(y))
-	y = SETCADR(args, allocVector(REALSXP,0));
+	REPROTECT(y = allocVector(REALSXP,0), ypi);
 
     if (!(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y))) {
 	errorcall(lcall, "non-numeric argument to binary operator");
@@ -431,11 +433,11 @@ static SEXP binary(SEXP op, SEXP args)
      */
     if (xarray != yarray) {
 	if (xarray && length(x)==1 && length(y)!=1) {
-	    x = SETCAR(args, duplicate(x));
+	    REPROTECT(x = duplicate(x), xpi);
 	    setAttrib(x, R_DimSymbol, R_NilValue);
 	}
 	if (yarray && length(y)==1 && length(x)!=1) {
-	    y = SETCADR(args, duplicate(y));
+	    REPROTECT(y = duplicate(y), ypi);
 	    setAttrib(y, R_DimSymbol, R_NilValue);
 	}
     }
@@ -496,14 +498,14 @@ static SEXP binary(SEXP op, SEXP args)
 	warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length");
 
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
-	x = SETCAR(args, coerceVector(x, CPLXSXP));
-	y = SETCADR(args, coerceVector(y, CPLXSXP));
+	REPROTECT(x = coerceVector(x, CPLXSXP), xpi);
+	REPROTECT(y = coerceVector(y, CPLXSXP), ypi);
 	x = complex_binary(PRIMVAL(op), x, y);
     }
     else
 	if (TYPEOF(x) == REALSXP || TYPEOF(y) == REALSXP) {
-	    x = SETCAR(args, coerceVector(x, REALSXP));
-	    y = SETCADR(args, coerceVector(y, REALSXP));
+	    REPROTECT(x = coerceVector(x, REALSXP), xpi);
+	    REPROTECT(y = coerceVector(y, REALSXP), ypi);
 	    x = real_binary(PRIMVAL(op), x, y);
 	}
 	else {
@@ -536,12 +538,13 @@ static SEXP binary(SEXP op, SEXP args)
 	UNPROTECT(2);
     }
 
-    UNPROTECT(4);
+    UNPROTECT(6);
     return x;
 }
 
-static SEXP unary(SEXP op, SEXP s1)
+SEXP R_unary(SEXP call, SEXP op, SEXP s1)
 {
+    lcall = call;
     switch (TYPEOF(s1)) {
     case LGLSXP:
     case INTSXP:
