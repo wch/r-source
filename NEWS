@@ -22,7 +22,7 @@ NEW FEATURES
     o	R INSTALL now can directly install pkg_version.tar.gz files
 	as obtained from CRAN. New function update.packages()
 	& friends for automatically downloading packages from CRAN and
-	install them on the fly (on Unix).
+	install them on the fly (on Unix and Windows).
 
     o	New function commandArgs() to record the command-line used.
 
@@ -84,12 +84,14 @@ BUG FIXES
     o	improvements to generation of HTML help files: should work
 	better on viewers other than Netscape.
 
-    o	stl package ts could conflict with package leaps: the Fortran
+    o	stl in package ts could conflict with package leaps: the Fortran
 	symbols have been changed.
 
     o	help page for factor is improved and corrected.
 
     o	na.omit.ts and na.contiguous now preserve time-series attributes.
+
+    o	family quasi handles zero observations with var=mu^2 more correctly.
 
 
 		CHANGES IN R VERSION 0.65.0
