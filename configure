@@ -7930,24 +7930,54 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
+if test -z "${TCLTK_CPPFLAGS}" -o -z "${TCLTK_LIBS}"; then
+  ## Check whether the versions found via the *Config.sh files are at
+  ## least 8; otherwise, issue a warning and turn off Tcl/Tk support.
+  ## Note that in theory a system could have outdated versions of the
+  ## *Config.sh scripts and yet up-to-date installations of Tcl/Tk in
+  ## standard places ...
+  if test -n "${TCL_CONFIG}"; then
+    . ${TCL_CONFIG}
+    if test ${TCL_MAJOR_VERSION} -lt 8; then
+      warn_tcltk_version="Tcl/Tk support requires Tcl version >= 8"
+      echo "configure: warning: ${warn_tcltk_version}" 1>&2
+      have_tcltk=no
+    fi
+  fi
+  if test -n "${TK_CONFIG}" -a -z "${warn_tcltk_version}"; then
+    . ${TK_CONFIG}
+    if test ${TK_MAJOR_VERSION} -lt 8; then
+      warn_tcltk_version="Tcl/Tk support requires Tk version >= 8"
+      echo "configure: warning: ${warn_tcltk_version}" 1>&2
+      have_tcltk=no
+    fi
+  fi
+fi
+
   
 if test -z "${TCLTK_CPPFLAGS}"; then
   ## We have to do the work.
   if test "${have_tcltk}" = yes; then
-    ## Part 1. Check for tcl.h.
-    ac_safe=`echo "tcl.h" | sed 'y%./+-%__p_%'`
-echo $ac_n "checking for tcl.h""... $ac_c" 1>&6
-echo "configure:7941: checking for tcl.h" >&5
+    ## Part 1.  Check for tcl.h.
+    found_tcl_h=no
+    if test -n "${TCL_CONFIG}"; then
+      . ${TCL_CONFIG}
+      ## Look for tcl.h in
+      ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
+      ##   ${TCL_PREFIX}/include
+      ac_safe=`echo "${TCL_PREFIX}/include/tcl${TCL_VERSION}/tcl.h" | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for ${TCL_PREFIX}/include/tcl${TCL_VERSION}/tcl.h""... $ac_c" 1>&6
+echo "configure:7971: checking for ${TCL_PREFIX}/include/tcl${TCL_VERSION}/tcl.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 7946 "configure"
+#line 7976 "configure"
 #include "confdefs.h"
-#include <tcl.h>
+#include <${TCL_PREFIX}/include/tcl${TCL_VERSION}/tcl.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:7951: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:7981: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -7963,36 +7993,26 @@ rm -f conftest*
 fi
 if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  :
+  TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include/tcl${TCL_VERSION}"
+	  found_tcl_h=yes
 else
   echo "$ac_t""no" 1>&6
 fi
 
-    if test "${ac_cv_header_tcl_h}" = no; then
-      ## Grr, tcl.h is not in a standard place.
-      if test -n "${TCL_CONFIG}"; then
-	## We have a chance.
-	## Source the config file and look for tcl.h in
-	##   ${TCL_PREFIX}/include
-	##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
-	for dir in ${TCL_PREFIX}/include \
-	           ${TCL_PREFIX}/include/tcl${TCL_VERSION}; do
-	  r_save_CPPFLAGS="${CPPFLAGS}"
-	  CPPFLAGS="-I${dir} ${CPPFLAGS}"
-	  unset ac_cv_header_tcl_h
-	  ac_safe=`echo "tcl.h" | sed 'y%./+-%__p_%'`
-echo $ac_n "checking for tcl.h""... $ac_c" 1>&6
-echo "configure:7986: checking for tcl.h" >&5
+      if test "${found_tcl_h}" = no; then
+	ac_safe=`echo "${TCL_PREFIX}/include/tcl.h" | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for ${TCL_PREFIX}/include/tcl.h""... $ac_c" 1>&6
+echo "configure:8006: checking for ${TCL_PREFIX}/include/tcl.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 7991 "configure"
+#line 8011 "configure"
 #include "confdefs.h"
-#include <tcl.h>
+#include <${TCL_PREFIX}/include/tcl.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:7996: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:8016: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -8008,36 +8028,73 @@ rm -f conftest*
 fi
 if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  :
+  TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include"
+            found_tcl_h=yes
 else
   echo "$ac_t""no" 1>&6
 fi
 
-	  if test "${ac_cv_header_tcl_h}" = yes; then
-	    TCLTK_CPPFLAGS="-I${dir}"
-	    break
-	  fi
-	  CPPFLAGS="${r_save_CPPFLAGS}"
-	done
       fi
     fi
-    have_tcltk=${ac_cv_header_tcl_h}
+    if test "${found_tcl_h}" = no; then
+      ac_safe=`echo "tcl.h" | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for tcl.h""... $ac_c" 1>&6
+echo "configure:8043: checking for tcl.h" >&5
+if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  cat > conftest.$ac_ext <<EOF
+#line 8048 "configure"
+#include "confdefs.h"
+#include <tcl.h>
+EOF
+ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+{ (eval echo configure:8053: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+if test -z "$ac_err"; then
+  rm -rf conftest*
+  eval "ac_cv_header_$ac_safe=yes"
+else
+  echo "$ac_err" >&5
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  eval "ac_cv_header_$ac_safe=no"
+fi
+rm -f conftest*
+fi
+if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
+  echo "$ac_t""yes" 1>&6
+  :
+else
+  echo "$ac_t""no" 1>&6
+have_tcltk=no
+fi
+
+    fi
+    unset found_tcl_h
   fi
   if test "${have_tcltk}" = yes; then
-    ## Part 2. Check for tk.h.
-    ac_safe=`echo "tk.h" | sed 'y%./+-%__p_%'`
-echo $ac_n "checking for tk.h""... $ac_c" 1>&6
-echo "configure:8031: checking for tk.h" >&5
+    ## Part 2.  Check for tk.h.
+    found_tk_h=no
+    if test -n "${TK_CONFIG}"; then
+      . ${TK_CONFIG}
+      ## Look for tk.h in
+      ##   ${TK_PREFIX}/include/tk${TK_VERSION}
+      ##   ${TK_PREFIX}/include
+      ac_safe=`echo "${TK_PREFIX}/include/tk${TK_VERSION}/tk.h" | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for ${TK_PREFIX}/include/tk${TK_VERSION}/tk.h""... $ac_c" 1>&6
+echo "configure:8088: checking for ${TK_PREFIX}/include/tk${TK_VERSION}/tk.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 8036 "configure"
+#line 8093 "configure"
 #include "confdefs.h"
-#include <tk.h>
+#include <${TK_PREFIX}/include/tk${TK_VERSION}/tk.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:8041: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:8098: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -8053,36 +8110,26 @@ rm -f conftest*
 fi
 if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  :
+  TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include/tk${TK_VERSION}"
+	  found_tk_h=yes
 else
   echo "$ac_t""no" 1>&6
 fi
 
-    if test "${ac_cv_header_tk_h}" = no; then
-      ## Grr, tk.h is not in a standard place.
-      if test -n "${TK_CONFIG}"; then
-	## We have a chance.
-	## Source the config file and look for tk.h in
-	##   ${TK_PREFIX}/include
-	##   ${TK_PREFIX}/include/tk${TK_VERSION}
-	for dir in ${TK_PREFIX}/include \
-	           ${TK_PREFIX}/include/tk${TK_VERSION}; do
-	  r_save_CPPFLAGS="${CPPFLAGS}"
-	  CPPFLAGS="-I${dir} ${CPPFLAGS}"
-	  unset ac_cv_header_tk_h
-	  ac_safe=`echo "tk.h" | sed 'y%./+-%__p_%'`
-echo $ac_n "checking for tk.h""... $ac_c" 1>&6
-echo "configure:8076: checking for tk.h" >&5
+      if test "${found_tk_h}" = no; then
+	ac_safe=`echo "${TK_PREFIX}/include/tk.h" | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for ${TK_PREFIX}/include/tk.h""... $ac_c" 1>&6
+echo "configure:8123: checking for ${TK_PREFIX}/include/tk.h" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 8081 "configure"
+#line 8128 "configure"
 #include "confdefs.h"
-#include <tk.h>
+#include <${TK_PREFIX}/include/tk.h>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:8086: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:8133: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -8098,20 +8145,51 @@ rm -f conftest*
 fi
 if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  :
+  TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include"
+            found_tk_h=yes
 else
   echo "$ac_t""no" 1>&6
 fi
 
-	  if test "${ac_cv_header_tk_h}" = yes; then
-	    TCLTK_CPPFLAGS="-I${dir}"
-	    break
-	  fi
-	  CPPFLAGS="${r_save_CPPFLAGS}"
-	done
       fi
     fi
-    have_tcltk=${ac_cv_header_tk_h}
+    if test "${found_tk_h}" = no; then
+      ac_safe=`echo "tk.h" | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for tk.h""... $ac_c" 1>&6
+echo "configure:8160: checking for tk.h" >&5
+if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  cat > conftest.$ac_ext <<EOF
+#line 8165 "configure"
+#include "confdefs.h"
+#include <tk.h>
+EOF
+ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+{ (eval echo configure:8170: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+if test -z "$ac_err"; then
+  rm -rf conftest*
+  eval "ac_cv_header_$ac_safe=yes"
+else
+  echo "$ac_err" >&5
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  eval "ac_cv_header_$ac_safe=no"
+fi
+rm -f conftest*
+fi
+if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
+  echo "$ac_t""yes" 1>&6
+  :
+else
+  echo "$ac_t""no" 1>&6
+have_tcltk=no
+fi
+
+    fi
+    unset found_tk_h
   fi
 fi  
   
@@ -8120,8 +8198,12 @@ if test -z "${TCLTK_LIBS}"; then
   ## We have to do the work.
   if test "${have_tcltk}" = yes; then
     ## Part 1.  Try finding the tcl library.
-    echo $ac_n "checking for Tcl_CreateInterp in -ltcl""... $ac_c" 1>&6
-echo "configure:8125: checking for Tcl_CreateInterp in -ltcl" >&5
+    if test -n "${TCL_CONFIG}"; then
+      . ${TCL_CONFIG}
+      TCLTK_LIBS="${TCL_LIB_SPEC}"
+    else
+      echo $ac_n "checking for Tcl_CreateInterp in -ltcl""... $ac_c" 1>&6
+echo "configure:8207: checking for Tcl_CreateInterp in -ltcl" >&5
 ac_lib_var=`echo tcl'_'Tcl_CreateInterp | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -8129,7 +8211,7 @@ else
   ac_save_LIBS="$LIBS"
 LIBS="-ltcl  $LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 8133 "configure"
+#line 8215 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -8140,7 +8222,7 @@ int main() {
 Tcl_CreateInterp()
 ; return 0; }
 EOF
-if { (eval echo configure:8144: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:8226: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_lib_$ac_lib_var=yes"
 else
@@ -8155,73 +8237,22 @@ LIBS="$ac_save_LIBS"
 fi
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-    ac_tr_lib=HAVE_LIB`echo tcl | sed -e 's/[^a-zA-Z0-9_]/_/g' \
-    -e 'y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/'`
-  cat >> confdefs.h <<EOF
-#define $ac_tr_lib 1
-EOF
-
-  LIBS="-ltcl $LIBS"
-
-else
-  echo "$ac_t""no" 1>&6
-fi
-
-    if test "${ac_cv_lib_tcl_Tcl_CreateInterp}" = no; then
-      ## Grr, simple -ltcl does not work.
-      if test -n "${TCL_CONFIG}"; then
-	## We have a chance.
-	. ${TCL_CONFIG}
-	echo $ac_n "checking for Tcl_CreateInterp in -ltcl${TCL_VERSION}""... $ac_c" 1>&6
-echo "configure:8177: checking for Tcl_CreateInterp in -ltcl${TCL_VERSION}" >&5
-ac_lib_var=`echo tcl${TCL_VERSION}'_'Tcl_CreateInterp | sed 'y%./+-%__p_%'`
-if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
-  echo $ac_n "(cached) $ac_c" 1>&6
-else
-  ac_save_LIBS="$LIBS"
-LIBS="-ltcl${TCL_VERSION}  $LIBS"
-cat > conftest.$ac_ext <<EOF
-#line 8185 "configure"
-#include "confdefs.h"
-/* Override any gcc2 internal prototype to avoid an error.  */
-/* We use char because int might match the return type of a gcc2
-    builtin and then its argument prototype would still apply.  */
-char Tcl_CreateInterp();
-
-int main() {
-Tcl_CreateInterp()
-; return 0; }
-EOF
-if { (eval echo configure:8196: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
-  rm -rf conftest*
-  eval "ac_cv_lib_$ac_lib_var=yes"
-else
-  echo "configure: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-  rm -rf conftest*
-  eval "ac_cv_lib_$ac_lib_var=no"
-fi
-rm -f conftest*
-LIBS="$ac_save_LIBS"
-
-fi
-if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
-  echo "$ac_t""yes" 1>&6
-  TCLTK_LIBS="-ltcl${TCL_VERSION}"
+  TCLTK_LIBS=-ltcl
 else
   echo "$ac_t""no" 1>&6
 have_tcltk=no
 fi
 
-      else
-	have_tcltk=no
-      fi
     fi
   fi
   if test "${have_tcltk}" = yes; then
     ## Part 2.  Try finding the tk library.
-    echo $ac_n "checking for Tk_Init in -ltk""... $ac_c" 1>&6
-echo "configure:8225: checking for Tk_Init in -ltk" >&5
+    if test -n "${TK_CONFIG}"; then
+      . ${TK_CONFIG}
+      TCLTK_LIBS="${TCLTK_LIBS} ${TK_LIB_SPEC} ${TK_LIBS}"
+    else
+      echo $ac_n "checking for Tk_Init in -ltk""... $ac_c" 1>&6
+echo "configure:8256: checking for Tk_Init in -ltk" >&5
 ac_lib_var=`echo tk'_'Tk_Init | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -8229,7 +8260,7 @@ else
   ac_save_LIBS="$LIBS"
 LIBS="-ltk ${TCLTK_LIBS} $LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 8233 "configure"
+#line 8264 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -8240,7 +8271,7 @@ int main() {
 Tk_Init()
 ; return 0; }
 EOF
-if { (eval echo configure:8244: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:8275: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_lib_$ac_lib_var=yes"
 else
@@ -8267,20 +8298,20 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
-    if test "${ac_cv_lib_tk_Tk_Init}" = no; then
-      ## Grr, simple -ltk does not work.
-      ## But maybe we simply need to add X11 libs.
-      unset ac_cv_lib_tk_Tk_Init
-      echo $ac_n "checking for Tk_Init in -ltk""... $ac_c" 1>&6
-echo "configure:8276: checking for Tk_Init in -ltk" >&5
+      if test "${ac_cv_lib_tk_Tk_Init}" = no; then
+	## Grr, simple -ltk does not work.
+	## But maybe we simply need to add X11 libs.
+	unset ac_cv_lib_tk_Tk_Init
+	echo $ac_n "checking for Tk_Init in -ltk""... $ac_c" 1>&6
+echo "configure:8307: checking for Tk_Init in -ltk" >&5
 ac_lib_var=`echo tk'_'Tk_Init | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   ac_save_LIBS="$LIBS"
-LIBS="-ltk -ltcl ${X_LIBS} $LIBS"
+LIBS="-ltk ${TCLTK_LIBS} ${X_LIBS} $LIBS"
 cat > conftest.$ac_ext <<EOF
-#line 8284 "configure"
+#line 8315 "configure"
 #include "confdefs.h"
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
@@ -8291,7 +8322,7 @@ int main() {
 Tk_Init()
 ; return 0; }
 EOF
-if { (eval echo configure:8295: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:8326: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_lib_$ac_lib_var=yes"
 else
@@ -8306,60 +8337,12 @@ LIBS="$ac_save_LIBS"
 fi
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  TCLTK_LIBS="-ltcl -ltk ${X_LIBS}"
-else
-  echo "$ac_t""no" 1>&6
-fi
-
-    fi
-    if test "${ac_cv_lib_tk_Tk_Init}" = no; then
-      ## Grr, this also did not work.
-      if test -n "${TK_CONFIG}"; then
-	## We have a chance.
-	. ${TK_CONFIG}
-	echo $ac_n "checking for Tk_Init in -ltk${TK_VERSION}""... $ac_c" 1>&6
-echo "configure:8322: checking for Tk_Init in -ltk${TK_VERSION}" >&5
-ac_lib_var=`echo tk${TK_VERSION}'_'Tk_Init | sed 'y%./+-%__p_%'`
-if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
-  echo $ac_n "(cached) $ac_c" 1>&6
-else
-  ac_save_LIBS="$LIBS"
-LIBS="-ltk${TK_VERSION} ${TCLTK_LIBS} ${TK_LIBS} $LIBS"
-cat > conftest.$ac_ext <<EOF
-#line 8330 "configure"
-#include "confdefs.h"
-/* Override any gcc2 internal prototype to avoid an error.  */
-/* We use char because int might match the return type of a gcc2
-    builtin and then its argument prototype would still apply.  */
-char Tk_Init();
-
-int main() {
-Tk_Init()
-; return 0; }
-EOF
-if { (eval echo configure:8341: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
-  rm -rf conftest*
-  eval "ac_cv_lib_$ac_lib_var=yes"
-else
-  echo "configure: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-  rm -rf conftest*
-  eval "ac_cv_lib_$ac_lib_var=no"
-fi
-rm -f conftest*
-LIBS="$ac_save_LIBS"
-
-fi
-if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
-  echo "$ac_t""yes" 1>&6
-  TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION} ${TK_LIBS}"
+  TCLTK_LIBS="${TCLTK_LIBS} -ltk ${X_LIBS}"
 else
   echo "$ac_t""no" 1>&6
 have_tcltk=no
 fi
 
-      else
-	have_tcltk=no
       fi
     fi
   fi
@@ -8403,7 +8386,7 @@ do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:8407: checking for $ac_word" >&5
+echo "configure:8390: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_R_PRINTCMD'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -8441,7 +8424,7 @@ EOF
 # Extract the first word of "paperconf", so it can be a program name with args.
 set dummy paperconf; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:8445: checking for $ac_word" >&5
+echo "configure:8428: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_PAPERCONF'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -9156,6 +9139,9 @@ if test -n "${warn_cxxpicflags}"; then
 fi
 if test -n "${warn_libglade}"; then
   echo "configure: warning: ${warn_libglade}" 1>&2
+fi
+if test -n "${warn_tcltk_version}"; then
+  echo "configure: warning: ${warn_tcltk_version}" 1>&2
 fi
 if test -n "${warn_perl5}"; then
   echo "configure: warning: ${warn_perl5}" 1>&2
