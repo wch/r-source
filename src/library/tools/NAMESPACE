@@ -1,0 +1,22 @@
+useDynLib(tools)
+
+export( .installMD5sums, Rdindex, Rtangle, RtangleSetup, RweaveLatex,
+       RweaveLatexSetup, Stangle, Sweave, SweaveSyntConv,
+       SweaveSyntaxLatex, SweaveSyntaxNoweb, checkAssignFuns,
+       checkDocArgs, checkDocStyle, checkFF, checkMD5sums,
+       checkMethods, checkTnF, checkVignettes, codoc, md5sum, undoc)
+
+## documented as internal but called from INSTALL scripts
+export(.installPackageDescription, .installPackageIndices)
+
+S3method(print, checkAssignFuns)
+S3method(print, checkDemoIndex)
+S3method(print, checkDocArgs)
+S3method(print, checkDocStyle)
+S3method(print, checkFF)
+S3method(print, checkMethods)
+S3method(print, checkTnF)
+S3method(print, checkVignetteIndex)
+S3method(print, checkVignettes)
+S3method(print, codoc)
+S3method(print, undoc)
