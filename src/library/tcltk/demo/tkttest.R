@@ -6,34 +6,37 @@ local({
     dialog.t.test <- function(){
         tt <- tktoplevel()
         tkwm.title(tt,"t test")
-        x.entry <- tkentry(tt, textvariable="xvar")
-        y.entry <- tkentry(tt, textvariable="yvar")
+        x.entry <- tkentry(tt, textvariable=xvar)
+        y.entry <- tkentry(tt, textvariable=yvar)
+	alt <- tclVar("two.sided")
+	done <- tclVar(0)
+	eqvar <- tclVar(0)
 
         reset <- function()
         {
-            tclvar$xvar<-""
-            tclvar$yvar<-""
-            tclvar$alt<-"two.sided"
-            tclvar$eqvar<-"0"
+            tclvalue(xvar)<-""
+            tclvalue(yvar)<-""
+            tclvalue(alt)<-"two.sided"
+            tclvalue(eqvar)<-"0"
         }
         reset.but <- tkbutton(tt, text="Reset", command=reset)
         submit.but <- tkbutton(tt, text="submit",
-                               command=function()tclvar$done<-1)
+                               command=function()tclvalue(done)<-1)
 
         build <- function()
         {
-            x  <- parse(text=tclvar$xvar)[[1]]
-            y  <- parse(text=tclvar$yvar)[[1]]
-            alt<- tclvar$alt
-            vv <- as.logical(as.numeric(tclvar$eqvar))
-            substitute(t.test(x,y,alternative=alt,var.equal=vv))
+            x  <- parse(text=tclvalue(xvar))[[1]]
+            y  <- parse(text=tclvalue(yvar))[[1]]
+            a <- tclvalue(alt)
+            vv <- as.logical(as.numeric(tclvalue(eqvar)))
+            substitute(t.test(x,y,alternative=a,var.equal=vv))
         }
-        var.cbut <- tkcheckbutton(tt,text="Equal variance", variable="eqvar")
+        var.cbut <- tkcheckbutton(tt,text="Equal variance", variable=eqvar)
         alt.rbuts <- tkframe(tt)
 
         tkpack(tklabel(alt.rbuts, text="Alternative"))
         for ( i in c("two.sided", "less", "greater")){
-            tmp<-tkradiobutton(alt.rbuts, text=i, variable="alt", value=i)
+            tmp<-tkradiobutton(alt.rbuts, text=i, variable=alt, value=i)
             tkpack(tmp,anchor="w")
         }
 
@@ -43,15 +46,15 @@ local({
         tkgrid(var.cbut, alt.rbuts)
         tkgrid(submit.but, reset.but)
 
-        if (tclvar$alt=="") tclvar$alt<-"two.sided"
+        if (tclvalue(alt)=="") tclvalue(alt)<-"two.sided"
 
         ## capture destroy (e.g. from window controls
         ## otherwise the tkwait hangs with nowhere to go
-        tkbind(tt, "<Destroy>", function()tclvar$done<-2)
+        tkbind(tt, "<Destroy>", function()tclvalue(done)<-2)
 
-        tkwait.variable("done")
+        tkwait.variable(done)
 
-        if(tclvar$done=="2") stop("aborted")
+        if(tclvalue(done)=="2") stop("aborted")
 
         tkdestroy(tt)
         cmd <- build()
@@ -68,7 +71,7 @@ local({
     
     data(airquality)
     attach(airquality)
-    tclvar$xvar <- "Ozone[Month==5]"
-    tclvar$yvar <- "Ozone[Month==8]"
+    xvar <- tclVar("Ozone[Month==5]")
+    yvar <- tclVar("Ozone[Month==8]")
     dialog.t.test()
 })

@@ -8,6 +8,14 @@
 \alias{$.tclvar}
 \alias{$<-.tclvar}
 \alias{tclvar}
+\alias{tclVar}
+\alias{as.character.tclVar}
+\alias{tclvalue}
+\alias{tclvalue<-}
+\alias{tclvalue.default}
+\alias{tclvalue<-.default}
+\alias{tclvalue.tclVar}
+\alias{tclvalue<-.tclVar}
 \alias{.Tk.ID}
 \alias{.Tk.newwin}
 \alias{.Tk.subwin}
@@ -36,8 +44,13 @@
 tkdestroy(win)
 is.tkwin(x)
 
-tclvar$name
-tclvar$name <- value
+tclvar$name           # Deprecated
+tclvar$name <- value  # Deprecated
+
+tclVar(init="")
+as.character.tclVar(x)
+tclvalue(x, ...)
+tclvalue(x, ...) <- value
 
 addTclPath(path)
 tclRequire(package, warn = TRUE)
@@ -51,6 +64,7 @@ tclRequire(package, warn = TRUE)
   \item{package}{a Tcl package name}
   \item{warn}{logical. Warn if not found?}
   \item{...}{Additional arguments. See below.}
+  \item{init}{initialization value}
 % Actually, both .Tcl and .Tcl.callback take only a single argument;
 % I've forgotten why they were defined as ... arguments.
 }
@@ -104,7 +118,19 @@ tclRequire(package, warn = TRUE)
   \code{tclvar} is used to access Tcl variables. The Tcl variable name
   is used as if it were a list element name in \code{tclvar}, but in
   reality \code{tclvar} is an object of class \code{tclvar} and \code{$}
-  and  \code{$<-} have special methods for that class.
+  and  \code{$<-} have special methods for that class. NOTE: This interface
+  is deprecated, use the \code{tclVar} object class instead.
+
+  \code{tclVar} creates a new Tcl variable and initializes it to
+  \code{init}. An R object of class \code{tclVar} is created to
+  represent it. Using \code{as.character} on the object returns the Tcl
+  variable name. Accessing the Tcl variable from R is done using the 
+  \code{tclvalue} function, which can also occur on the left sie of
+  assignments. If \code{tclvalue} is passed an argument which is not a
+  \code{tclVar} object, then it will assume that it is a character string
+  explicitly naming global Tcl variable. Tcl variables created by 
+  \code{tclVar}  are  uniquely named and automatically unset by the 
+  garbage collector when the representing object is no longer in use. 
 
   Tcl packages can be loaded with \code{tclRequire}; it may be necessary
   to add the directory where they are found to the Tcl search path with
@@ -135,8 +161,11 @@ f <- function()"HI!"
 .Tcl.callback(f)
 .Tcl.args(text="Push!", command=f) # NB: Different address
 
-tclvar$xyzzy <- 7913 ; .Tcl("set xyzzy")
-.Tcl("set xyzzy 3917") ; tclvar$xyzzy
+xyzzy <- tclVar(7913)
+tclvalue(xyzzy)
+tclvalue(xyzzy) <- "foo"
+as.character(xyzzy)
+tkcmd("set", as.character(xyzzy))
 
 top <- tktoplevel() # a Tk widget, see Tk-widgets
 ls(envir=top$env, all=TRUE)

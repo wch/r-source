@@ -288,6 +288,10 @@ NEW FEATURES
     o   duplicated() and unique() are now generic functions with
 	methods for data frames (as well as atomic vectors).
 
+    o   Changes to the tcltk package:
+
+        - New interface for accessing Tcl variables, effectively
+          making the R representations lexically scoped.
 
 
 BUG FIXES

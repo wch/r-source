@@ -84,15 +84,46 @@ tkdestroy  <- function(win) {
 
 is.tkwin <- function(x) inherits(x, "tkwin")
 
-"$.tclvar" <- function(x, name) .Tcl(paste("set", name))
+"$.tclvar" <- function(x, name) {
+	.Deprecated("tclVar and tclvalue")
+	.Tcl(paste("set", name))
+}
 "$<-.tclvar" <- function(x, name, value) {
+    .Deprecated("tclVar and tclvalue<-")
     .Tcl(paste("set ", name, " {", value,"}", sep=""))
     x
 }
 
+tclVar <- function(init="") {
+   n <- evalq(TclVarCount <- TclVarCount + 1, .TkRoot$env)
+   name <- paste("RTcl", n, sep="")
+   l <- list(env=new.env())
+   assign(name,NULL,envir=l$env)
+   reg.finalizer(l$env,function(env)tkcmd("unset",ls(env)))
+   class(l)<-"tclVar"
+   tclvalue(l) <- init
+   l
+}
+
+tclvalue <- function(x, ...) UseMethod("tclvalue")
+"tclvalue<-" <- function(x, value, ...) UseMethod("tclvalue<-")
+
+tclvalue.tclVar <- function(x) tkcmd("set",ls(x$env))
+"tclvalue<-.tclVar" <- function(x, value) {tkcmd("set",ls(x$env), value); x} 
+
+tclvalue.default <- function(x) tkcmd("set", as.character(x))
+"tclvalue<-.default" <- function(x, value) 
+   {tkcmd("set", as.character(x), value); x} 
+
+as.character.tclVar <- function(x) ls(x$env)
+# Actually makes .default and .tclVar methods equivalent, the latter
+# just saves a level of function dispatching
+
+#----
 
 .TkRoot <- .Tk.newwin("")
 tclvar  <- structure(NULL,class="tclvar")
+evalq(TclVarCount <- 0, .TkRoot$env)
 
 
 # ------ Widgets ------
