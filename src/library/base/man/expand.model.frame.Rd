@@ -8,7 +8,8 @@
   recovered for a model using \code{sin(x)} as a predictor.
 }
 \usage{
-expand.model.frame(model, extras, enclos = parent.frame(), na.expand = FALSE)
+expand.model.frame(model, extras, enclos = parent.frame(),
+                   na.expand = FALSE)
 }
 \arguments{
   \item{model}{a fitted model}
