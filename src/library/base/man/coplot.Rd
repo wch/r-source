@@ -15,7 +15,7 @@ co.intervals(x, number = 6, overlap = 0.5)
     indicates that plots of \code{y} versus \code{x} should be produced
     conditional on the two variables \code{a} and \code{b}.
 
-    \code{x} and lang(y) must be numeric, but \code{a} and \code{b} may
+    \code{x} and \code{y} must be numeric, but \code{a} and \code{b} may
     be either numeric or factors.}
   \item{data}{a data frame containing values for any variables in the
     formula.  By default the environment where \code{coplot} was called
