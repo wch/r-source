@@ -47,7 +47,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	iS <- cut(x, breaks=cutpoints, include.lowest=TRUE, labels= FALSE)
 	if(any(ii <- is.na(iS))) {
 	    ##-- can get 0, if x[i]== minc  --- only case ?
-	    iS[which(ii)[abs(x[ii] - minc) < eps]] <- 1#-> symbol[1]
+	    iS[which(ii)[!is.na(x[ii]) & (abs(x[ii] - minc) < eps)]] <- 1#-> symbol[1]
 	}
     }
     else if(!is.logical(x))

@@ -136,6 +136,7 @@ summary.manova <-
                            "Hotelling-Lawley" = HL(eigs[i,  ], df[i], df[nt]),
                            "Roy" = Roy(eigs[i,  ], df[i], df[nt]))
                 ok <- stats[, 2] >= 0 & stats[, 3] > 0 & stats[, 4] > 0
+                ok <- !is.na(ok) & ok
                 stats[ok, 5] <- pf(stats[ok, 2], stats[ok, 3], stats[ok, 4],
                                    lower.tail = FALSE)
 
