@@ -68,19 +68,19 @@ The current version of this document is @value{VERSION} @b{DRAFT}.
 @end ifnottex
 
 @menu
-* Introduction::                
-* Objects::                     
-* Evaluation of expressions::   
-* Functions::                   
-* Object-oriented programming::  
-* Computing on the language::   
-* System and foreign language interfaces::  
-* Exception handling::          
-* Debugging::                   
-* Parser::                      
-* Function and Variable Index::  
-* Concept Index::               
-* References::                  
+* Introduction::
+* Objects::
+* Evaluation of expressions::
+* Functions::
+* Object-oriented programming::
+* Computing on the language::
+* System and foreign language interfaces::
+* Exception handling::
+* Debugging::
+* Parser::
+* Function and Variable Index::
+* Concept Index::
+* References::
 @end menu
 
 @node Introduction, Objects, Top, Top
@@ -95,7 +95,7 @@ manual details and defines the @R{} language.
 The @R{} language is a dialect of @Sl{} which was designed in the 1980s
 and has been in widespread use in the statistical community since.
 Its principal designer, John M. Chambers, was awarded the 1998 ACM
-Software Systems Award for @Sl{}.  
+Software Systems Award for @Sl{}.
 
 The language syntax has a superficial similarity with C, but the
 semantics are of the FPL (functional programming language) variety with
@@ -119,7 +119,7 @@ only briefly described in this manual and will be documented separately.
 
 Although much of the text will equally apply to @Sl{}, there are also
 some substantial differences, and in order not to confuse the issue we
-shall concentrate on describing @R{}. 
+shall concentrate on describing @R{}.
 
 The design of the language contains a number of fine points and
 common pitfalls which may surprise the user.  Most of these are due to
@@ -146,12 +146,12 @@ how to extend @R{} using compiled code.
 
 @c needs to be clarified. What is a pointer, what is the pointed objcet,
 @c what is the context of the pointed objctt?
-In every computer language 
+In every computer language
 @cindex variable
 variables provide a means of
 accessing the data stored in memory.  @R{} does not provide direct
 access to the computer's memory but rather provides a number of
-specialized data structures we will refer to as 
+specialized data structures we will refer to as
 @cindex object
 objects.  These objects
 are referred to through symbols or variables.  In @R{}, however, the
@@ -249,10 +249,10 @@ need to be distinguished.)
 
 @R{}
 @cindex object
-objects are often coerced to different 
+objects are often coerced to different
 @cindex type
 types during computations.
-There are also many functions available to perform explicit 
+There are also many functions available to perform explicit
 @cindex coercion
 coercion.
 When programming in the @R{} language the type of an object generally
@@ -261,9 +261,9 @@ languages or the operating system it is often necessary to ensure that
 an object is of the correct type.
 
 @menu
-* Basic types::                 
-* Attributes::                  
-* Special compound objects::    
+* Basic types::
+* Attributes::
+* Special compound objects::
 @end menu
 
 @node Basic types, Attributes, Objects, Objects
@@ -272,18 +272,18 @@ an object is of the correct type.
 
 
 @menu
-* Vector objects::              
-* List objects::                
-* Language objects::            
-* Expression objects::          
-* Function objects::            
-* NULL object::                 
-* Built-in objects and special forms::  
-* Promise objects::             
-* Dot-dot-dot::                 
-* Environment objects::         
-* Pairlist objects::            
-* Any-type::                    
+* Vector objects::
+* List objects::
+* Language objects::
+* Expression objects::
+* Function objects::
+* NULL object::
+* Built-in objects and special forms::
+* Promise objects::
+* Dot-dot-dot::
+* Environment objects::
+* Pairlist objects::
+* Any-type::
 @end menu
 
 @node Vector objects, List objects, Basic types, Basic types
@@ -291,7 +291,7 @@ an object is of the correct type.
 
 @cindex vector
 Vectors can be thought of as contiguous cells containing homogeneous
-data.  Cells are accessed through 
+data.  Cells are accessed through
 @cindex index
 indexing operations such as
 @code{x[5]}.  More details are given in @ref{Indexing}.
@@ -327,7 +327,7 @@ somewhat confusing.
 Lists (``generic vectors'') are another kind of data storage.  Lists
 have elements, each of which can contain any type of @R{} object, i.e.@:
 the elements of a list do not have to be of the same type.  List
-elements are accessed through three different 
+elements are accessed through three different
 @cindex index
 indexing operations.
 These are explained in detail in @ref{Indexing}.
@@ -361,13 +361,13 @@ mechanism and converted to and from lists by the @code{as.list} and
 @findex quote
 @findex as.list
 @findex as.call
-Components of the 
+Components of the
 @cindex parsing
 parse tree can be extracted using the standard
 indexing operations.
 
 @menu
-* Symbol objects::              
+* Symbol objects::
 @end menu
 
 @node Symbol objects,  , Language objects, Language objects
@@ -375,9 +375,9 @@ indexing operations.
 
 
 @cindex symbol
-Symbols refer to @R{} 
+Symbols refer to @R{}
 @cindex object
-objects.  The 
+objects.  The
 @cindex name
 name of any @R{} object is usually a
 symbol.  Symbols can be created through the function @code{quote}.
@@ -385,7 +385,7 @@ symbol.  Symbols can be created through the function @code{quote}.
 @cindex symbol
 @cindex mode
 Symbol have mode @code{"name"}, storage mode @code{"symbol"}, and type
-@code{"symbol"}.  They can be 
+@code{"symbol"}.  They can be
 @cindex coercion
 coerced to and from character strings
 using @code{as.character} and @code{as.name}.
@@ -400,21 +400,21 @@ They naturally appear as atoms of parsed expressions, try e.g.@:
 
 In @R{} one can have objects of type @code{"expression"}.  An
 @emph{expression} contains one or more statements.  A statement is a
-syntactically correct collection of 
+syntactically correct collection of
 @cindex token
-tokens.  
+tokens.
 @cindex expression object
 Expression objects are
 special language objects which they contain parsed, but unevaluated
 @R{} statements.  The main difference is that an expression object can
 contain several such expressions.  Another more subtle difference is
-that objects of type @code{"expression"} are only 
+that objects of type @code{"expression"} are only
 @cindex evaluation, expression
 evaluated when
 explicitly passed to @code{eval}, whereas other language objects may get
 evaluated in some unexpected cases.
 
-An 
+An
 @cindex expression object
 expression object behaves much like a list and its components should
 be accessed in the same way as the components of a list.
@@ -426,10 +426,10 @@ be accessed in the same way as the components of a list.
 In @R{} functions are objects and can be manipulated in much the same
 way as any other object.  Functions (or more precisely, function
 closures) have three basic components, a formal argument list, a body
-and an 
+and an
 @cindex environment
 environment.  The argument list is a comma-separated list of
-arguments.  An 
+arguments.  An
 @cindex argument
 argument can be a symbol, or a @samp{@var{symbol} =
 @var{default}} construct, or the special argument @samp{...}.  The
@@ -444,7 +444,7 @@ The body is a parsed @R{} statement.  It is usually a collection of
 statements in braces but it can be a single statement, a symbol or even
 a constant.
 
-A function's 
+A function's
 @cindex function
 @cindex environment
 environment is the environment that was active at the time
@@ -477,7 +477,7 @@ use is discouraged.
 
 There is a special object called @code{NULL}.  It is used whenever there
 is a need to indicate or specify that an object is absent.  It should not be
-confused with a vector or list of zero length. 
+confused with a vector or list of zero length.
 @findex NULL
 
 The @code{NULL} object has no type and no modifiable properties.  There
@@ -489,7 +489,7 @@ test for @code{NULL} use @code{is.null}.  You cannot set attributes on
 @node Built-in objects and special forms, Promise objects, NULL object, Basic types
 @subsection Built-in objects and  special forms
 
-These two kinds of object contain the built-in 
+These two kinds of object contain the built-in
 @cindex function
 functions of @R{}, i.e.,
 those that are displayed as @code{.Primitive} in code listings.  The
@@ -500,7 +500,7 @@ functions pass the unevaluated expressions to the internal function.
 
 From the @R{} language, these objects are just another kind of function,
 except that their definition cannot be listed.  The @code{typeof}
-function can distinguish them from interpreted 
+function can distinguish them from interpreted
 @cindex function
 functions.
 
@@ -508,7 +508,7 @@ functions.
 @subsection Promise objects
 
 Promise objects are part of @R{}'s lazy evaluation mechanism.  They
-contain three slots, a value, an expression, and an 
+contain three slots, a value, an expression, and an
 @cindex environment
 environment.  When a
 @cindex function
@@ -527,7 +527,7 @@ access either the value or the expression associated with the promise.
 
 Within the @R{} language, promise objects are almost only seen
 implicitly.  Actual function arguments are of this type (which is the
-whole point of 
+whole point of
 @cindex evaluation, lazy
 lazy evaluation).  @code{substitute} will extract the
 content of the expression slot, and there is a @code{delay} function
@@ -638,7 +638,7 @@ individual components are accessed using @code{attr} and @code{attr<-}.
 @findex attr<-
 @c Shouldn't we discuss replacement functions before this?
 
-Some attributes have special accessor 
+Some attributes have special accessor
 @cindex function, accessor
 functions (e.g.@: @code{levels<-}
 for factors) and these should be used when available. In addition to
@@ -652,17 +652,17 @@ optionally @code{dimnames} attached to the vector.
 
 Attributes are used to implement the class structure used in @R{}.  If an
 object has a @code{class} attribute then that attribute will be examined
-during 
+during
 @cindex evaluation, symbol
 evaluation.  The class structure in @R{} is described in detail
 in @ref{Object-oriented programming}.
 
 @menu
-* Names::                       
-* Dimensions::                  
-* Dimnames::                    
-* Classes::                     
-* Time series attributes::      
+* Names::
+* Dimensions::
+* Dimnames::
+* Classes::
+* Time series attributes::
 @end menu
 
 @node Names, Dimensions, Attributes, Attributes
@@ -701,7 +701,7 @@ be zero.
 @cindex vector
 A vector is not the same as a one-dimensional array since the latter has
 a @code{dim} attribute of length one, whereas the former has no
-@code{dim} attribute. 
+@code{dim} attribute.
 
 @node Dimnames, Classes, Dimensions, Attributes
 @subsection Dimnames
@@ -723,7 +723,7 @@ This attribute can be accessed and manipulated virtually without
 restriction by users.  There is no checking that an object actually
 contains the components that class methods expect.  Thus, altering the
 @code{class} attribute should be done with caution, and when they are
-available specific creation and 
+available specific creation and
 @cindex coercion
 coercion functions should be preferred.
 
@@ -738,8 +738,8 @@ series with periodic substructure such as monthly or quarterly data.
 @section Special compound objects
 
 @menu
-* Factors::                     
-* Data frame objects::          
+* Factors::
+* Data frame objects::
 @end menu
 
 @node Factors, Data frame objects, Special compound objects, Special compound objects
@@ -749,7 +749,7 @@ Factors are used to describe items that can have a finite number of
 values (gender, social class, etc.).  A factor has a @code{levels}
 attribute and class @code{"factor"}.  Optionally, it may also contain a
 @code{contrasts} attribute which controls the parametrisation used when
-the factor is used in a 
+the factor is used in a
 @cindex function, modeling
 @cindex modeling function
 modeling functions.
@@ -863,7 +863,7 @@ writing such arrays are not generally handled correctly.
 
 When a user types a command at the prompt (or when an expression is read
 from a file) the first thing that happens to it is that the command is
-transformed by the 
+transformed by the
 @cindex parsing
 parser into an internal representation.  The
 evaluator executes parsed @R{} expressions and returns the value of the
@@ -878,21 +878,21 @@ be sufficient documentation.
 Users can construct expressions and invoke the evaluator on them.
 
 @menu
-* Simple evaluation::           
-* Control structures::          
-* Elementary arithmetic operations::  
-* Indexing::                    
-* Scope of variables::          
+* Simple evaluation::
+* Control structures::
+* Elementary arithmetic operations::
+* Indexing::
+* Scope of variables::
 @end menu
 
 @node Simple evaluation, Control structures, Evaluation of expressions, Evaluation of expressions
 @section Simple evaluation
 
 @menu
-* Constants::                   
-* Symbol lookup::               
-* Function calls::              
-* Operators::                   
+* Constants::
+* Symbol lookup::
+* Function calls::
+* Operators::
 @end menu
 
 @node Constants, Symbol lookup, Simple evaluation, Simple evaluation
@@ -911,14 +911,14 @@ Constants are fairly boring and to do more we need symbols.
 @node Symbol lookup, Function calls, Constants, Simple evaluation
 @subsection Symbol lookup
 
-When a new variable is created it must have a 
+When a new variable is created it must have a
 @cindex name
-name so it can be referenced and it usually has a value.  The name itself is a 
+name so it can be referenced and it usually has a value.  The name itself is a
 @cindex symbol
 symbol.
-When a symbol is 
+When a symbol is
 @cindex evaluation, symbol
-evaluated its 
+evaluated its
 @cindex value
 value is returned.  Later we shall
 explain in detail how to determine the value associated with a symbol.
@@ -969,7 +969,7 @@ directly, except when doing ``programming on the language''
 @subsection Function calls
 
 Most of the computations carried out in @R{} involve the evaluation of
-functions.  We will also refer to this as 
+functions.  We will also refer to this as
 @cindex function invocation
 function @emph{invocation}.
 Functions are invoked by name with a list of arguments separated by
@@ -1000,7 +1000,7 @@ arguments.
 
 @cindex function, assignment
 A special type of function calls can appear on the left hand side of
-the 
+the
 @cindex assignment
 assignment operator as in
 
@@ -1085,7 +1085,7 @@ below.
 @tab Greater than or equal to, binary
 @item @code{<=}
 @tab Less than or equal to, binary
-@item @code{&} 
+@item @code{&}
 @tab And, binary, vectorized
 @item @code{&&}
 @tab And, binary, not vectorized
@@ -1143,7 +1143,7 @@ List components are more commonly accessed using @code{x$a} or
 
 Indexing constructs can also appear on the right hand side of an
 @cindex assignment
-assignment. 
+assignment.
 
 Like the other operators, indexing is really done by functions, and one
 could have used  @code{"["(x, 2)} instead of @code{x[2]}.
@@ -1157,12 +1157,12 @@ further described in @ref{Indexing}.
 Computation in @R{} consists of sequentially evaluating
 @emph{statements}.  Statements, such as @code{x<-1:10} or
 @code{mean(y)}, can be separated by either a semi-colon or a new line.
-Whenever the 
+Whenever the
 @cindex evaluation, statement
 evaluator is presented with a syntactically complete
 statement that statement is evaluated and the @emph{value} returned.
 The result of evaluating a statement can be referred to as the value of
-the statement@footnote{Evaluation always takes place in an 
+the statement@footnote{Evaluation always takes place in an
 @cindex environment
 environment.
 See @ref{Scope of variables} for more details.}  The value can
@@ -1200,12 +1200,12 @@ block.
 @end smallexample
 
 @menu
-* if::                          
-* Looping::                     
-* repeat::                      
-* while::                       
-* for::                         
-* switch::                      
+* if::
+* Looping::
+* repeat::
+* while::
+* for::
+* switch::
 @end menu
 
 @node if, Looping, Control structures, Control structures
@@ -1429,10 +1429,10 @@ via @code{eval(x[[condition]])}.
 @section Elementary arithmetic operations
 
 @menu
-* Recycling rules::             
-* Propagation of names::        
-* Dimensional attributes::      
-* NA handling::                 
+* Recycling rules::
+* Propagation of names::
+* Dimensional attributes::
+* NA handling::
 @end menu
 
 In this section, we discuss the finer points of the rules that apply to
@@ -1485,7 +1485,7 @@ multiple types of @code{NA} values. There is one cases where this is
 particularly important to the user. The default type of @code{NA} is
 @code{logical}, unless coerced to some other type, so the appearance of
 a missing value may trigger logical rather than numeric indexing (see
-@ref{Indexing} for details).  
+@ref{Indexing} for details).
 
 Numeric and logical calculations with @code{NA} generally return
 @code{NA}. In cases where the result of the operation would be the same
@@ -1499,7 +1499,7 @@ Numeric calculations whose result is undefined, such as @samp{0/0}
 produce (on most, if not all, platforms) the value @code{NaN}. This
 exists only in the @code{double} type.  The function @code{is.nan} is
 provided to check specifically for @code{NaN}, @code{is.na} also returns
-@code{TRUE} for @code{NaN}.  
+@code{TRUE} for @code{NaN}.
 @cindex coercion
 Coercing @code{NaN} to logical or integer
 type gives an @code{NA} of the appropriate type.
@@ -1544,7 +1544,7 @@ multi-dimensional structures with a single index, @code{x[[i]]} or
 @code{x[i]} will return the @code{i}th sequential element of @code{x}.
 
 For lists, one generally uses @code{[[} to select any single element,
-whereas @code{[} returns a list of the selected elements. 
+whereas @code{[} returns a list of the selected elements.
 
 The @code{[[} form allows only a single element to be selected using
 integer or character indices, whereas @code{[} allows indexing by
@@ -1560,10 +1560,10 @@ to find the index, use @code{x[[expr]]}.  When @code{$} is applied to a
 non-list object the result is always @code{NULL}.
 
 @menu
-* Indexing by vectors::         
-* Indexing matrices and arrays::  
-* Indexing other structures::   
-* Subset assignment::           
+* Indexing by vectors::
+* Indexing matrices and arrays::
+* Indexing other structures::
+* Subset assignment::
 @end menu
 
 @node Indexing by vectors, Indexing matrices and arrays, Indexing, Indexing
@@ -1575,7 +1575,7 @@ that the expression is @code{x[i]}.  Then the following possibilities
 exist according to the type of @code{i}.
 
 @itemize @bullet
-@item 
+@item
 @cindex index
 @strong{Integer}.  All elements of @code{i} must have the same sign.  If
 they are positive, the elements of @code{x} with those index numbers are
@@ -1675,11 +1675,11 @@ operation.
 [1] 1 4
 @end smallexample
 
-Both in the case of using a single 
+Both in the case of using a single
 @cindex index
 index and in matrix indexing, a
 @code{names} attribute is used if present, as had the structure been
-one-dimensional. 
+one-dimensional.
 
 If an indexing operation causes the result to have one of its extents of
 length one, as in selecting a single slice of a three-dimensional matrix
@@ -1701,7 +1701,7 @@ latter have @code{dim} and @code{dimnames} attributes (both of length
 one).  One-dimensional arrays are not easily obtained from subsetting
 operations but they can be constructed explicitly.  This is sometimes
 useful because the elements of the @code{dimnames} list may themselves
-be named, which is not the case for the @code{names} attribute. 
+be named, which is not the case for the @code{names} attribute.
 
 Some operations such as @code{m[FALSE, ]} result in structures in which
 a dimension has zero extent.  @R{} generally tries to handle these
@@ -1758,11 +1758,11 @@ tries to avoid duplication as far as possible).
 @c  ..by name (add element names first)
 @c  > names(x)<-letters[1:10]
 @c  > x
-@c  a b c d e f g h i j 
-@c  3 2 3 0 1 1 0 4 3 1 
+@c  a b c d e f g h i j
+@c  3 2 3 0 1 1 0 4 3 1
 @c  > x["e"]
-@c  e 
-@c  1 
+@c  e
+@c  1
 
 @c  Notice that names vector is subsetted as well:
 @c  > names(x[x>=3])
@@ -1772,8 +1772,8 @@ tries to avoid duplication as far as possible).
 @c  > x[[4]]
 @c  [1] 0
 @c  > x[4]
-@c  d 
-@c  0 
+@c  d
+@c  0
 
 @c  [[ also works on matrices
 @c  > a<-matrix(1:4,2)
@@ -1803,18 +1803,18 @@ allows dynamic creation and manipulation of functions and language
 objects, and has additional features reflecting this fact.
 
 @menu
-* Global environment::          
-* Lexical environment::         
-* Stacks::                      
-* Search path::                 
+* Global environment::
+* Lexical environment::
+* Stacks::
+* Search path::
 @end menu
 
 @node Global environment, Lexical environment, Scope of variables, Scope of variables
 @subsection Global environment
 
-The global 
+The global
 @cindex environment
-environment is the root of the user workspace.  An 
+environment is the root of the user workspace.  An
 @cindex assignment
 assignment
 operation from command line will cause the relevant object to belong to
@@ -1823,9 +1823,9 @@ the global environment.
 @node Lexical environment, Stacks, Global environment, Scope of variables
 @subsection Lexical environment
 
-Every call to a 
+Every call to a
 @cindex function
-function creates a 
+function creates a
 @cindex frame
 @cindex environment
 @emph{frame} which contains the local
@@ -1847,7 +1847,7 @@ function is subsequently called, its evaluation environment becomes
 nested in its definition environment.  Notice that this is not
 necessarily the environment of the caller!
 
-Thus, when a variable is requested inside a 
+Thus, when a variable is requested inside a
 @cindex function
 function, it is first sought
 in the evaluation environment, then in the enclosure, the enclosure of
@@ -1856,7 +1856,7 @@ the enclosure, etc.
 @node Stacks, Search path, Lexical environment, Scope of variables
 @subsection The call stack
 
-Every time a 
+Every time a
 @cindex function
 function is invoked a new evaluation frame is created.  At
 any point in time during the computation the the currently active
@@ -1869,14 +1869,14 @@ Making variables defined higher up the call stack available is called
 @cindex scope
 dynamic scope. The binding for a variable is then determined by the most
 recent (in time) definition of the variable.  This contradicts the
-default scoping rules in @R{}, which use the bindings in the 
+default scoping rules in @R{}, which use the bindings in the
 @cindex environment
 environment
 in which the function was defined (lexical scope). Some functions,
 particularly those that use and manipulate model formulas, need to
 simulate dynamic scope by directly accessing the call stack.
 
-Access to the 
+Access to the
 @cindex call stack
 call stack is provided through a family of functions which
 have names that start with @samp{sys.}.  They are listed briefly below.
@@ -1910,7 +1910,7 @@ Get the evaluation frame for the specified parent context.
 @node Search path,  , Stacks, Scope of variables
 @subsection Search path
 
-In addition to the evaluation 
+In addition to the evaluation
 @cindex environment
 environment structure, @R{} has a search
 path of environments which are searched for variables not found
@@ -1935,10 +1935,10 @@ environment or in other packages.
 @c  @section Accessing and manipulating environments
 
 @c  @menu
-@c  * ls::                          
-@c  * Environment of a function::   
-@c  * Accessing the call stack::    
-@c  * Attaching lists and data frames::  
+@c  * ls::
+@c  * Environment of a function::
+@c  * Accessing the call stack::
+@c  * Attaching lists and data frames::
 @c  @end menu
 
 @c  @node ls, Environment of a function, Evaluation of calls, Evaluation of calls
@@ -1964,8 +1964,8 @@ environment or in other packages.
 @c  @subsection Accessing the call stack
 
 @c  @menu
-@c  * sys.frame::                   
-@c  * match.call::                  
+@c  * sys.frame::
+@c  * match.call::
 @c  @end menu
 
 @c  @node sys.frame, match.call, Accessing the call stack, Accessing the call stack
@@ -1981,17 +1981,17 @@ environment or in other packages.
 @chapter Functions
 
 @menu
-* Writing functions::           
-* Functions as objects::        
-* Evaluation::                  
-* Closures::                    
+* Writing functions::
+* Functions as objects::
+* Evaluation::
+* Closures::
 @end menu
 
 @node Writing functions, Functions as objects, Functions, Functions
 @section Writing functions
 
 While @R{} can be very useful as a data analysis tool most users very
-quickly find themselves wanting to write their own 
+quickly find themselves wanting to write their own
 @cindex function
 functions.  This is
 one of the real advantages of @R{}.  Users can program it and they can,
@@ -2003,14 +2003,14 @@ functions that you have created.  @xref{Writing R documentation, , ,
 R-exts, Writing R Extensions}.
 
 @menu
-* Syntax and examples::         
-* Arguments::                   
+* Syntax and examples::
+* Arguments::
 @end menu
 
 @node Syntax and examples, Arguments, Writing functions, Writing functions
 @subsection Syntax and examples
 
-The syntax for writing a 
+The syntax for writing a
 @cindex function
 function is
 
@@ -2022,7 +2022,7 @@ The first component of the function declaration is the keyword
 @code{function} which indicates to @R{} that you want to create a
 function.
 
-An 
+An
 @cindex argument
 argument list is a comma separated list of formal arguments.  A
 formal argument can be a symbol, a statement of the form
@@ -2033,11 +2033,11 @@ The @emph{body} can be any valid @R{} expression.  Generally, the body
 is a group of expressions contained in curly braces (@samp{@{} and
 @samp{@}}).
 
-Generally 
+Generally
 @cindex function
 functions are assigned to symbols but they don't need to be.
 The value returned by the call to @code{function} is a function.  If
-this is not given a name it is referred to as an 
+this is not given a name it is referred to as an
 @cindex function, anonymous
 anonymous
 function. Anonymous functions are most frequently used as arguments
@@ -2055,18 +2055,18 @@ will be supplied at the time the function is invoked.  The names of
 these arguments can be used within the function body where they obtain
 the value supplied at the time of function invocation.
 
-@cindex argument, default values 
+@cindex argument, default values
 Default values for arguments can be specified using the special form
 @samp{@var{name} = @var{expression}}.  In this case, if the user does
 not specify a value for the argument when the function is invoked the
 expression will be associated with the corresponding symbol.  When a
-value is needed the @var{expression} is 
+value is needed the @var{expression} is
 @cindex evaluation, expression
 evaluated in the evaluation
 frame of the function.
 
 Default behaviours can also be specified by using the function
-@code{missing}.  When @code{missing} is called with the 
+@code{missing}.  When @code{missing} is called with the
 @cindex name
 name of a formal
 argument it returns @code{TRUE} if the formal argument was not matched
@@ -2077,7 +2077,7 @@ force evaluation of the argument.
 
 The special type of argument @samp{...} can contain any number of
 supplied arguments.  It is used for a variety of purposes.  It allows
-you to write a 
+you to write a
 @cindex function
 function that takes an arbitrary number of arguments.  It
 can be used to absorb some arguments into an intermediate function which
@@ -2086,7 +2086,7 @@ can then be extracted by functions called subsequently.
 @node Functions as objects, Evaluation, Writing functions, Functions
 @section Function objects
 
-In @R{} a 
+In @R{} a
 @cindex function
 function can be thought of as consisting of three parts.
 These are the @emph{body}, the @emph{formal arguments}, and the
@@ -2110,24 +2110,24 @@ arguments to functions and returned as values from functions.
 @section Evaluation
 
 @menu
-* Evaluation environment::      
-* Argument matching::           
-* Argument evaluation::         
-* Scope::                       
+* Evaluation environment::
+* Argument matching::
+* Argument evaluation::
+* Scope::
 @end menu
 
 @node Evaluation environment, Argument matching, Evaluation, Evaluation
 @subsection Evaluation environment
 
-When a 
+When a
 @cindex function
-function is called or invoked a new 
+function is called or invoked a new
 @cindex evaluation
 evaluation frame is created.
 In this frame the formal arguments are matched with the supplied
 arguments according to the rules given in @ref{Argument matching}.  The
 statements in the body of the function are evaluated sequentially in
-this 
+this
 @cindex environment
 environment frame.
 
@@ -2139,7 +2139,7 @@ this does not have to be true.
 @node Argument matching, Argument evaluation, Evaluation environment, Evaluation
 @subsection Argument matching
 
-The first thing that occurs in a 
+The first thing that occurs in a
 @cindex function
 function evaluation is the matching of
 formal to the actual or supplied arguments.
@@ -2186,10 +2186,10 @@ Access to the partial matching algorithm used by @R{} is via
 @node Argument evaluation, Scope, Argument matching, Evaluation
 @subsection Argument evaluation
 
-One of the most important things to know about the 
+One of the most important things to know about the
 @cindex evaluation, argument
 evaluation of
-arguments to a 
+arguments to a
 @cindex function
 function is that supplied arguments and default arguments
 are treated differently.  The supplied arguments to a function are
@@ -2199,7 +2199,7 @@ function.
 
 The semantics of invoking a function in @R{} argument are
 @emph{call-by-value}.  In general, supplied arguments behave as if they
-are local variables initialized with the value supplied and the 
+are local variables initialized with the value supplied and the
 @cindex name
 name of
 the corresponding formal argument.  Changing the value of a supplied
@@ -2226,7 +2226,7 @@ It is possible to access the actual expressions used as arguments inside
 the function.  The mechanism is implemented via promises.  A
 @emph{promise} is a data structure that is not available to the user in
 @R{}.  However, understanding how promises work should help to write
-better code.  When a 
+better code.  When a
 @cindex function
 function is being evaluated the actual expression
 used as an argument is stored in the promise together with a pointer to
@@ -2242,19 +2242,19 @@ flexible program it is possible to encounter promises in the interpreted
 language, however, users are advised not to rely on them in their own
 programs.
 
-When a 
+When a
 @cindex function
 function is called, each formal argument is assigned a promise in
 the local environment of the call with the expression slot containing
 the actual argument and the environment slot containing the environment
 of the parent.  If no actual argument for a formal argument is given in
 the call and there is a default expression, it is similarly assigned to
-the expression slot of the formal argument, but with the 
+the expression slot of the formal argument, but with the
 @cindex environment
 environment set
 to the local environment.
 
-The process of filling the value slot of a promise by 
+The process of filling the value slot of a promise by
 @cindex evaluation
 evaluating the
 contents of the expression slot in the promises environment is called
@@ -2262,7 +2262,7 @@ contents of the expression slot in the promises environment is called
 value slot content being used directly later on.
 
 A promise is forced when its value is needed.  This usually happens
-inside internal 
+inside internal
 @cindex function
 @cindex function, internal
 functions, but a promise can also be forced by direct
@@ -2290,20 +2290,20 @@ expression will also be forced recursively.
 @cindex scope
 Scope or the scoping rules are simply the set of rules used by the
 @cindex evaluation, symbol
-evaluator to find a value for a 
+evaluator to find a value for a
 @cindex symbol
 symbol.  Every computer language has a
 set of such rules.  In @R{} the rules are fairly simple but there do
 exist mechanisms for subverting the usual, or default rules.
 
 @R{} adheres to a set of rules that are called @emph{lexical scope}.
-This means the variable 
+This means the variable
 @cindex binding
 bindings in effect at the time the expression
 was created are used to provide values for any unbound symbols in the
 expression.
 
-Most of the interesting properties of 
+Most of the interesting properties of
 @cindex scope
 scope are involved with evaluating
 @cindex function
@@ -2316,13 +2316,13 @@ local variable is one that is defined within the function.  Because @R{}
 has no formal definition of variables, they are simply used as needed,
 it can be difficult to determine whether a variable is local or not.
 Local variables must first be defined, this is typically done by having
-them on the left-hand side of an 
+them on the left-hand side of an
 @cindex assignment
 assignment.
 
 During the evaluation process if an unbound symbol is detected then @R{}
 attempts to find a value for it.  The scoping rules determine how this
-process proceeds.  In @R{} the 
+process proceeds.  In @R{} the
 @cindex environment
 environment of the function is searched
 first, then its parent and so until top-level is reached.
@@ -2330,7 +2330,7 @@ first, then its parent and so until top-level is reached.
 Top-level is a search list of environments that are searched
 sequentially for a matching symbol.  The value of the first match is then used.
 
-When this set of rules is combined with the fact that 
+When this set of rules is combined with the fact that
 @cindex function
 functions can be
 returned as values from other functions then some rather nice, but at
@@ -2374,7 +2374,7 @@ indicating that @code{y} is not found, unless there is a variable
 
 @c This is not correct!
 The scoping rules in @Sl{} are to look in the current frame and then in
-the global 
+the global
 @cindex environment
 environment or workspace.  These rules are very similar to
 the scoping rules used in the @code{C} language.
@@ -2382,7 +2382,7 @@ the scoping rules used in the @code{C} language.
 @node Closures,  , Evaluation, Functions
 @section Closures
 
-A @emph{closure} is a 
+A @emph{closure} is a
 @cindex function
 function together with an environment that
 provides bindings for any free variables in the closure.  Since many
@@ -2445,7 +2445,7 @@ on implementation details that will not be carried forward.
 
 The greatest use of object oriented programming in @R{} is through
 @code{print} methods, @code{summary} methods and @code{plot} methods.
-These methods allow us to have one generic 
+These methods allow us to have one generic
 @cindex function, generic
 function call, @code{plot}
 say, that dispatches on the type of its argument and calls a plotting
@@ -2465,7 +2465,7 @@ when it exists.
 @c the generic functions.  Also, note that the terminology `pdf' and
 @c `cdf' may be confusing given the S use of `density' and `probability'
 @c functions.
-@c 
+@c
 @c  So we can begin by considering a system with three classes,
 @c  @code{"cdf"}, @code{"pdf"} and @code{"mgf"} and three generic functions,
 @c  @code{print}, @code{plot}, and @code{moment}.  Each of the classes can
@@ -2474,19 +2474,19 @@ when it exists.
 @c </FIXME>
 
 @menu
-* Definition::                  
-* Inheritance::                 
-* Method dispatching::          
-* UseMethod::                   
-* NextMethod::                  
-* Group methods::               
-* Writing methods::             
+* Definition::
+* Inheritance::
+* Method dispatching::
+* UseMethod::
+* NextMethod::
+* Group methods::
+* Writing methods::
 @end menu
 
 @node Definition, Inheritance, Object-oriented programming, Object-oriented programming
 @section Definition
 
-Rather than having a full-fledged 
+Rather than having a full-fledged
 @cindex object-oriented
 object-oriented system @R{} has a
 class system and a mechanism for dispatching based on the class of an
@@ -2545,7 +2545,7 @@ for @code{.Generic} or @code{.Class}.
 
 If a method is invoked directly and it contains a call to
 @code{NextMethod} then the first argument to @code{NextMethod} is used
-to determine the 
+to determine the
 @cindex function, generic
 generic function.  An error is signalled if this
 argument has not been supplied; it is therefore a good idea to always
@@ -2599,7 +2599,7 @@ an x-component and a y-component.  All `rthetapoint' objects are lists
 with an r-component and a theta-component.
 
 Now, suppose we want to get the x-position from either type of object.
-This can easily be achieved through 
+This can easily be achieved through
 @cindex function, generic
 generic functions.  We define the
 generic function @code{xpos} as follows.
@@ -2655,7 +2655,7 @@ directly to the method.
 
 In order to determine the correct method the class attribute of the
 first argument to the generic is obtained and used to find the correct
-method.  The 
+method.  The
 @cindex name
 name of the generic function is combined with the first
 element of the class attribute into the form,
@@ -2692,7 +2692,7 @@ additional arguments.
 @cindex evaluation
 @code{UseMethod} changes the evaluation model in two ways.  First, when
 it is invoked it determines the next method (function) to be called.  It
-then invokes that function using the current evaluation 
+then invokes that function using the current evaluation
 @cindex environment
 environment;
 this process will be described shortly.  The second way in which
@@ -2714,7 +2714,7 @@ the inheritance mechanism described above is used to locate an
 appropriate method.
 
 Once a method has been determined @R{} invokes it in a special way.
-Rather than creating a new evaluation 
+Rather than creating a new evaluation
 @cindex environment
 environment @R{} uses the
 environment of the current function call (the call to the generic).  Any
@@ -2746,7 +2746,7 @@ The body of the method is then evaluated in the standard fashion.  In
 particular variable look-up in the body follows the rules for the
 method.  So if the method has an associated environment then that is
 used.  In effect we have replaced the call to the generic by a call to
-the method.  Any local 
+the method.  Any local
 @cindex assignment
 assignments in the frame of the generic will be
 carried forward into the call to the method.  Use of this @emph{feature}
@@ -2851,7 +2851,7 @@ Values for lookup:
 @node Group methods, Writing methods, NextMethod, Object-oriented programming
 @section Group methods
 
-For several types of 
+For several types of
 @cindex function, built-in
 built-in functions @R{} provides a dispatching
 mechanism for operators.  This means that operators such as @code{==} or
@@ -2909,7 +2909,7 @@ made and hence the special variables @code{.Generic}, @code{.Class} and
 @code{.Method} will not have been instantiated.  In that case the
 default rules detailed above will be used to determine these.
 
-The most common use of 
+The most common use of
 @cindex function, generic
 generic functions is to provide @code{print} and
 @code{summary} methods for statistical objects, generally the output of
@@ -2946,7 +2946,7 @@ paradigm in which there is no distinction between programs and data.
 @R{} presents a friendlier interface to programming than Lisp does, at
 least to someone used to mathematical formulas and C-like control
 structures, but the engine is really very Lisp-like.  @R{} allows direct
-access to 
+access to
 @cindex parsing
 parsed expressions and functions and allows you to alter and
 subsequently execute them, or create entirely new functions from
@@ -2969,12 +2969,12 @@ In this chapter, we give an introduction to the set of facilities that
 are available for computing on the language.
 
 @menu
-* Direct manipulation of language objects::  
-* Substitutions::               
-* More on evaluation::          
-* Evaluation of expression objects::  
-* Manipulation of function calls::  
-* Manipulation of functions::   
+* Direct manipulation of language objects::
+* Substitutions::
+* More on evaluation::
+* Evaluation of expression objects::
+* Manipulation of function calls::
+* Manipulation of functions::
 @end menu
 
 @node Direct manipulation of language objects, Substitutions, Computing on the language, Computing on the language
@@ -3037,7 +3037,7 @@ preceding examples.  This is true for identifiers in calls, but the
 components of a call can also be constants---which can be of any type,
 although the first component had better be a function if the call is to
 be evaluated successfully---or other call objects, corresponding to
-subexpressions.  Objects of mode 
+subexpressions.  Objects of mode
 @cindex name
 name can be constructed from character
 strings using @code{as.name}, so one might modify the @code{e2} object
@@ -3065,7 +3065,7 @@ They are represented as a function call with one argument, so that
 notation.  In evaluations, the @samp{(} operator just returns its
 argument.
 
-This is a bit unfortunate, but it is not easy to write a 
+This is a bit unfortunate, but it is not easy to write a
 @cindex parsing
 parser/deparser
 combination that both preserves user input, stores it in minimal form
@@ -3087,7 +3087,7 @@ deparser, as the following examples show
 @end smallexample
 
 @noindent
-Deparsed expressions should, however, evaluate to an equivalent value 
+Deparsed expressions should, however, evaluate to an equivalent value
 to the original expression (up to rounding error).
 
 ...internal storage of flow control constructs...note Splus
@@ -3116,7 +3116,7 @@ The function used to achieve this is @code{substitute} which takes the
 expression @code{x} and substitutes the expression that was passed
 through the formal argument @code{x}.  Notice that for this to happen,
 @code{x} must carry information about the expression that creates its
-value.  This is related to the 
+value.  This is related to the
 @cindex evaluation, lazy
 lazy evaluation scheme of @R{}
 (@pxref{Promise objects}).  A formal argument is really a
@@ -3170,7 +3170,7 @@ substitute(x + y, list(x = 3))
 3 + y
 @end smallexample
 
-The exact rules for substitutions are as follows:  Each 
+The exact rules for substitutions are as follows:  Each
 @cindex symbol
 symbol in the
 @cindex parsing
@@ -3191,7 +3191,7 @@ used.  @R{} will then use the new value of the variable, where as @Sl{}
 will unconditionally use the argument expression---unless it was a
 constant, which has the curious consequence that @code{f((1))} may be
 very different from @code{f(1)} in @Sl{}.  The @R{} rule is considerably
-cleaner, although it does have consequences in connection with 
+cleaner, although it does have consequences in connection with
 @cindex evaluation, lazy
 lazy
 evaluation that comes as a surprise to some.  Consider
@@ -3228,7 +3228,7 @@ if a math expression like @code{quote(log[e](y))} was being passed.
 @cindex evaluation
 The @code{eval} function was introduced earlier in this chapter as a
 means of evaluating call objects.  However, this is not the full story.
-It is also possible to specify the 
+It is also possible to specify the
 @cindex environment
 environment in which the evaluation
 is to take place, by default this is the evaluation frame from which
@@ -3241,7 +3241,7 @@ current frame (cf.@: ???).  In particular, when the object to evaluate
 is the result of a @code{substitute} operation of the function
 arguments, it will contain variables that make sense to the caller only
 (notice that there is no reason to expect that the variables of the
-caller are in the 
+caller are in the
 @cindex scope
 lexical scope of the callee).  Since evaluation in the
 parent frame occurs frequently, an @code{eval.parent} function exists as
@@ -3263,7 +3263,7 @@ eval(expr, data, sys.frame(sys.parent()))
 @end smallexample
 
 Notice that evaluation in a given environment may actually change that
-environment, most obviously in cases involving the 
+environment, most obviously in cases involving the
 @cindex assignment
 assignment operator,
 such as
@@ -3339,7 +3339,7 @@ itself.
 @node Manipulation of function calls, Manipulation of functions, Evaluation of expression objects, Computing on the language
 @section Manipulation of function calls
 
-It is possible for a 
+It is possible for a
 @cindex function
 function to find out how it has been called by
 looking at the result of @code{sys.call} as in the following example of
@@ -3384,7 +3384,7 @@ application is seen at the start of the @code{lm} function:
     mf <- eval(mf, sys.frame(sys.parent()))
 @end smallexample
 
-Notice that the resulting call is 
+Notice that the resulting call is
 @cindex evaluation
 evaluated in the parent frame, in
 which one can be certain that the involved expressions make sense.  The
@@ -3393,7 +3393,7 @@ of the function and the remaining elements are the actual argument
 expressions, with the corresponding formal argument names as tags.
 Thus, the technique to eliminate undesired arguments is to assign
 @code{NULL}, as seen in lines 2 and 3, and to add an argument one uses
-tagged list 
+tagged list
 @cindex assignment
 assignment (here to pass @code{drop.unused.levels = TRUE})
 as in line 4.  To change the name of the function called, assign to the
@@ -3468,7 +3468,7 @@ function name and the list of arguments
 round(10.5)
 @end smallexample
 
-As seen, the value of @code{x} rather than the 
+As seen, the value of @code{x} rather than the
 @cindex symbol
 symbol is inserted in the
 call, so it is distinctly different from @code{round(x)}.  The form is
@@ -3499,7 +3499,7 @@ itself.  A similar remark applies to the @code{call} function.
 @node Manipulation of functions,  , Manipulation of function calls, Computing on the language
 @section Manipulation of functions
 
-It is often useful to be able to manipulate the components of a 
+It is often useful to be able to manipulate the components of a
 @cindex function
 function
 or closure.  @R{} provides a set of interface functions for this
@@ -3526,7 +3526,7 @@ It is also possible to alter the bindings of different variables in the
 environment of the function, using code along the lines of @code{evalq(x
 <- 5, environment(f))}.
 
-It is also possible to convert a 
+It is also possible to convert a
 @cindex function
 function to a list using
 @code{as.list}.  The result is the concatenation of the list of formal
@@ -3541,9 +3541,9 @@ set.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Foreign language interfaces::  
-* .Internal and .Primitive::    
+* Operating system access::
+* Foreign language interfaces::
+* .Internal and .Primitive::
 @end menu
 
 @node Operating system access, Foreign language interfaces, System and foreign language interfaces, System and foreign language interfaces
@@ -3559,20 +3559,20 @@ by a shell) and the second argument will be @code{internal} which if
 true will collect the output of the command into an @R{} character
 vector.
 
-The functions @code{system.time} 
+The functions @code{system.time}
 @findex system.time
 and @code{proc.time}
 @findex proc.time
 are available for timing (although the information available may be
 limited on non-Unix-like platforms).
 
-Information from the operating system 
+Information from the operating system
 @cindex environment
-environment can be accessed and manipulated with 
+environment can be accessed and manipulated with
 @quotation
 @multitable @columnfractions 0.3 0.7
-@item @code{Sys.getenv} @tab OS environment variables @findex Sys.getenv 
-@item @code{Sys.putenv}                               @findex Sys.putenv 
+@item @code{Sys.getenv} @tab OS environment variables @findex Sys.getenv
+@item @code{Sys.putenv}                               @findex Sys.putenv
 @item @code{Sys.getlocale} @tab System locale         @findex Sys.getlocale
 @item @code{Sys.putlocale}                            @findex Sys.putlocale
 @item @code{Sys.localeconv}                           @findex Sys.localeconv
@@ -3587,7 +3587,7 @@ A uniform set of file access functions is provided on all platforms:
 @multitable @columnfractions 0.3 0.7
 @item @code{file.access} @tab Ascertain File Accessibility @findex file.access
 @item @code{file.append} @tab Concatenate files            @findex file.append
-@item @code{file.choose} @tab Prompt user for file name    @findex file.choose   
+@item @code{file.choose} @tab Prompt user for file name    @findex file.choose
 @item @code{file.copy}  @tab Copy files                    @findex file.copy
 @item @code{file.create} @tab Create or truncate a files   @findex file.create
 @item @code{file.exists} @tab Test for existence           @findex file.exists
@@ -3604,8 +3604,8 @@ platform-independent way.
 @quotation
 @multitable @columnfractions 0.3 0.7
 @item @code{basename} @tab File name without directory     @findex basename
-@item @code{dirname} @tab Directory name                   @findex dirname  
-@item @code{file.path} @tab Construct path to file         @findex file.path  
+@item @code{dirname} @tab Directory name                   @findex dirname
+@item @code{file.path} @tab Construct path to file         @findex file.path
 @item @code{path.expand} @tab Expand @code{~} in Unix path @findex path.expand
 @end multitable
 @end quotation
@@ -3649,11 +3649,11 @@ called directly or options such as @code{"warn"} can be used to control
 the handling of problems.
 
 @menu
-* stop::                        
-* warning::                     
-* on.exit::                     
-* restart::                     
-* Error options::               
+* stop::
+* warning::
+* on.exit::
+* restart::
+* Error options::
 @end menu
 
 @node stop, warning, Exception handling, Exception handling
@@ -3719,9 +3719,9 @@ When a jump is executed the jump-point is removed.
 When an error occurs and one or more jump points are active then control
 is returned to the innermost function that has a jump-point established.
 Execution begins with the first statement in the body of the selected
-function.  The 
+function.  The
 @cindex environment
-environment for subsequent 
+environment for subsequent
 @cindex evaluation
 evaluation is the environment
 that was in effect at the time that the error that triggered the jump
@@ -3764,7 +3764,7 @@ computation can be inspected.
 Most debugging takes place either through calls to @code{browser} or
 @code{debug}.  Both of these functions rely on the same internal
 mechanism and both provide the user with a special prompt.  Any command
-can be typed at the prompt.  The evaluation 
+can be typed at the prompt.  The evaluation
 @cindex environment
 environment for the command
 is the currently active environment.  This allows you to examine the
@@ -3783,8 +3783,8 @@ Continue the execution.
 @item n
 Execute the next statement in the function.  This works from the browser
 as well.
-@item where 
-Show the call stack 
+@item where
+Show the call stack
 @item Q
 Halt execution and jump to the top-level immediately.
 @end table
@@ -3793,7 +3793,7 @@ Halt execution and jump to the top-level immediately.
 If there is a local variable with the same name as one of the special
 commands listed above then its value can be accessed by using
 @code{get}.  A call to @code{get} with the name in quotes will retrieve
-the value in the current 
+the value in the current
 @cindex environment
 environment.
 
@@ -3804,10 +3804,10 @@ next statement that is evaluated in @R{}. A symbolic debugger such as
 @code{gdb} can be used to debug compiled code.
 
 @menu
-* browser::                     
-* debug/undebug::               
-* trace/untrace::               
-* traceback::                   
+* browser::
+* debug/undebug::
+* trace/untrace::
+* traceback::
 @end menu
 
 @node browser, debug/undebug, Debugging, Debugging
@@ -3923,10 +3923,10 @@ is itself an @R{} object and can be saved and otherwise manipulated
 within the @R{} system.
 
 @menu
-* The parsing process::    
+* The parsing process::
 * Comments::
-* Tokens::                      
-* Expressions::                 
+* Tokens::
+* Expressions::
 @end menu
 
 @node The parsing process, Comments, Parser, Parser
@@ -3934,9 +3934,9 @@ within the @R{} system.
 @section The parsing process
 
 @menu
-* Modes of parsing::            
-* Internal representation::     
-* Deparsing::                   
+* Modes of parsing::
+* Internal representation::
+* Deparsing::
 @end menu
 
 @node Modes of parsing, Internal representation, The parsing process, The parsing process
@@ -3983,7 +3983,7 @@ as if they were the lines of an input file.
 Parsed expressions are stored in an @R{} object containing the parse
 tree.  A fuller description of such objects can be found in
 @ref{Language objects} and @ref{Expression objects}.  Briefly, every
-elementary @R{} expression is stored in 
+elementary @R{} expression is stored in
 @cindex function
 function call form, as a list
 with the first element containing the function name and the remainder
@@ -4014,11 +4014,11 @@ first place.
 @section Comments
 
 @cindex comments
-Comments in @R{} are ignored by the parser.  Any text from a 
+Comments in @R{} are ignored by the parser.  Any text from a
 @findex @code{#}
 @code{#} character
 to the end of the line is taken to be a comment, unless
-the @code{#} character is inside a quoted string. For example, 
+the @code{#} character is inside a quoted string. For example,
 
 @smallexample
 > x <- 1  # This is a comment...
@@ -4035,14 +4035,14 @@ at least) takes place prior to the syntactic analysis performed by the
 parser itself.
 
 @menu
-* Literal constants::           
-* Identifiers::                 
-* Reserved words::              
-* Special operators::           
-* Separators::                  
-* Operator tokens::             
-* Grouping::                    
-* Indexing tokens::             
+* Literal constants::
+* Identifiers::
+* Reserved words::
+* Special operators::
+* Separators::
+* Operator tokens::
+* Grouping::
+* Indexing tokens::
 @end menu
 
 @node Literal constants, Identifiers, Tokens, Tokens
@@ -4194,7 +4194,7 @@ Although not strictly tokens, stretches of whitespace characters (spaces
 and tabs) serve to delimit tokens in case of ambiguity, (compare
 @code{x<-5} and @code{x < -5}).
 
-Semicolons (@samp{;}) are used to separate elementary 
+Semicolons (@samp{;}) are used to separate elementary
 @cindex expression
 expressions.
 
@@ -4265,12 +4265,12 @@ The following sections detail the various syntactical constructs that
 are available.
 
 @menu
-* Function calls (expressions)::  
-* Infix and prefix operators::  
-* Index constructions::         
-* Compound expressions::        
-* Flow control elements::       
-* Function definitions::        
+* Function calls (expressions)::
+* Infix and prefix operators::
+* Index constructions::
+* Compound expressions::
+* Flow control elements::
+* Function definitions::
 @end menu
 
 @c  need "(expressions)" or something to differentiate from node
@@ -4325,7 +4325,7 @@ $ @@
 - +                @r{(unary)}
 :
 %@var{xyz}%
-* / 
+* /
 + -                @r{(binary)}
 > >= < <= == !=
 !
@@ -4337,7 +4337,7 @@ $ @@
 <- <<-
 @end smallexample
 
-The exponentiation operator @samp{^} and the 
+The exponentiation operator @samp{^} and the
 @cindex assignment
 left assignment operators
 @samp{<- - = <<-} group right to left, all other operators group left to
@@ -4348,7 +4348,7 @@ Notice that the operators @code{%%} and @code{%/%} for integer
 remainder and divide have higher precedence than multiply and divide.
 
 Although it is not strictly an operator, it also needs mentioning that
-the @samp{=} sign is used for tagging arguments in 
+the @samp{=} sign is used for tagging arguments in
 function calls and
 for assigning default values in function definitions.
 
@@ -4366,7 +4366,7 @@ Parentheses are recorded as equivalent to a unary operator, with name
 operator precedence (e.g., @code{a * (b + c)}).
 @c FIXME: Will this get changed?
 
-Notice that the 
+Notice that the
 @cindex assignment
 assignment symbols are operators just like the
 arithmetic, relational, and logical ones.  Any expressions is allowed
@@ -4389,7 +4389,7 @@ similar although with somewhat different semantics:
 @findex [[
 
 The @var{object} can formally be any valid expression, but it is
-understood to denote or evaluate to a subsetable object.  The arguments
+understood to denote or evaluate to a subsettable object.  The arguments
 generally evaluate to numerical or character indices, but other kinds of
 arguments are possible (notably @code{drop = FALSE}).
 
@@ -4462,7 +4462,7 @@ Internally, the constructs are stored as function calls:
 @node Function definitions,  , Flow control elements, Expressions
 @subsection Function definitions
 
-A 
+A
 @cindex function
 function definition is of the form
 

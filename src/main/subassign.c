@@ -79,9 +79,9 @@
 static SEXP gcall;
 #endif
 
-/* EnlargeVector() takes a vector "x" and changes its length to "newlen".  
+/* EnlargeVector() takes a vector "x" and changes its length to "newlen".
    This allows to assign values "past the end" of the vector or list.
-   Note that, unlike S, we only extend as much as is necessary. 
+   Note that, unlike S, we only extend as much as is necessary.
 */
 static SEXP EnlargeVector(SEXP x, R_len_t newlen)
 {
@@ -1261,7 +1261,7 @@ SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	errorcall(call, "object is not subsetable");
+	errorcall(call, "object is not subsettable");
 	break;
     }
 
@@ -1369,7 +1369,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
       defineVar(install(CHAR(STRING_ELT(CAR(subs),0))), y, x);
       UNPROTECT(1);
       return(x);
-    }      
+    }
 
     stretch = 0;
     if (isVector(x)) {
@@ -1607,7 +1607,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	xtop = x;
 	UNPROTECT(1);
     }
-    else errorcall(call, "object is not subsetable");
+    else errorcall(call, "object is not subsettable");
 
     UNPROTECT(1);
     SET_NAMED(xtop, 0);
