@@ -23034,86 +23034,23 @@ else
 fi
 
 if test "${have_pcre}" = yes; then
-  echo "$as_me:$LINENO: checking for regcomp in -lpcreposix" >&5
-echo $ECHO_N "checking for regcomp in -lpcreposix... $ECHO_C" >&6
-if test "${ac_cv_lib_pcreposix_regcomp+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpcreposix -lpcre $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-#line $LINENO "configure"
-#include "confdefs.h"
-
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char regcomp ();
-#ifdef F77_DUMMY_MAIN
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-#endif
-int
-main ()
-{
-regcomp ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-         { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_lib_pcreposix_regcomp=yes
-else
-  echo "$as_me: failed program was:" >&5
-cat conftest.$ac_ext >&5
-ac_cv_lib_pcreposix_regcomp=no
-fi
-rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-echo "$as_me:$LINENO: result: $ac_cv_lib_pcreposix_regcomp" >&5
-echo "${ECHO_T}$ac_cv_lib_pcreposix_regcomp" >&6
-if test $ac_cv_lib_pcreposix_regcomp = yes; then
-  have_pcre=yes
-else
-  have_pcre=no
-fi
-
-fi
-if test "${have_pcre}" = yes; then
-  if test "${ac_cv_header_pcreposix_h+set}" = set; then
-  echo "$as_me:$LINENO: checking for pcreposix.h" >&5
-echo $ECHO_N "checking for pcreposix.h... $ECHO_C" >&6
-if test "${ac_cv_header_pcreposix_h+set}" = set; then
+  if test "${ac_cv_header_pcre_h+set}" = set; then
+  echo "$as_me:$LINENO: checking for pcre.h" >&5
+echo $ECHO_N "checking for pcre.h... $ECHO_C" >&6
+if test "${ac_cv_header_pcre_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:$LINENO: result: $ac_cv_header_pcreposix_h" >&5
-echo "${ECHO_T}$ac_cv_header_pcreposix_h" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_pcre_h" >&5
+echo "${ECHO_T}$ac_cv_header_pcre_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:$LINENO: checking pcreposix.h usability" >&5
-echo $ECHO_N "checking pcreposix.h usability... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking pcre.h usability" >&5
+echo $ECHO_N "checking pcre.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
 $ac_includes_default
-#include <pcreposix.h>
+#include <pcre.h>
 _ACEOF
 rm -f conftest.$ac_objext
 if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
@@ -23138,12 +23075,12 @@ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:$LINENO: checking pcreposix.h presence" >&5
-echo $ECHO_N "checking pcreposix.h presence... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking pcre.h presence" >&5
+echo $ECHO_N "checking pcre.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
-#include <pcreposix.h>
+#include <pcre.h>
 _ACEOF
 if { (eval echo "$as_me:$LINENO: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
@@ -23175,30 +23112,30 @@ echo "${ECHO_T}$ac_header_preproc" >&6
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:$LINENO: WARNING: pcreposix.h: accepted by the compiler, rejected by the preprocessor!" >&5
-echo "$as_me: WARNING: pcreposix.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:$LINENO: WARNING: pcreposix.h: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: pcreposix.h: proceeding with the preprocessor's result" >&2;};;
+    { echo "$as_me:$LINENO: WARNING: pcre.h: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: pcre.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: pcre.h: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: pcre.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:$LINENO: WARNING: pcreposix.h: present but cannot be compiled" >&5
-echo "$as_me: WARNING: pcreposix.h: present but cannot be compiled" >&2;}
-    { echo "$as_me:$LINENO: WARNING: pcreposix.h: check for missing prerequisite headers?" >&5
-echo "$as_me: WARNING: pcreposix.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:$LINENO: WARNING: pcreposix.h: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: pcreposix.h: proceeding with the preprocessor's result" >&2;};;
+    { echo "$as_me:$LINENO: WARNING: pcre.h: present but cannot be compiled" >&5
+echo "$as_me: WARNING: pcre.h: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: pcre.h: check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: pcre.h: check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: pcre.h: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: pcre.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:$LINENO: checking for pcreposix.h" >&5
-echo $ECHO_N "checking for pcreposix.h... $ECHO_C" >&6
-if test "${ac_cv_header_pcreposix_h+set}" = set; then
+echo "$as_me:$LINENO: checking for pcre.h" >&5
+echo $ECHO_N "checking for pcre.h... $ECHO_C" >&6
+if test "${ac_cv_header_pcre_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_cv_header_pcreposix_h=$ac_header_preproc
+  ac_cv_header_pcre_h=$ac_header_preproc
 fi
-echo "$as_me:$LINENO: result: $ac_cv_header_pcreposix_h" >&5
-echo "${ECHO_T}$ac_cv_header_pcreposix_h" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_pcre_h" >&5
+echo "${ECHO_T}$ac_cv_header_pcre_h" >&6
 
 fi
-if test $ac_cv_header_pcreposix_h = yes; then
+if test $ac_cv_header_pcre_h = yes; then
   have_pcre=yes
 else
   have_pcre=no
@@ -23206,23 +23143,23 @@ fi
 
 
   if test "${have_pcre}" = no; then
-    if test "${ac_cv_header_pcre_pcreposix_h+set}" = set; then
-  echo "$as_me:$LINENO: checking for pcre/pcreposix.h" >&5
-echo $ECHO_N "checking for pcre/pcreposix.h... $ECHO_C" >&6
-if test "${ac_cv_header_pcre_pcreposix_h+set}" = set; then
+    if test "${ac_cv_header_pcre_pcre_h+set}" = set; then
+  echo "$as_me:$LINENO: checking for pcre/pcre.h" >&5
+echo $ECHO_N "checking for pcre/pcre.h... $ECHO_C" >&6
+if test "${ac_cv_header_pcre_pcre_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 fi
-echo "$as_me:$LINENO: result: $ac_cv_header_pcre_pcreposix_h" >&5
-echo "${ECHO_T}$ac_cv_header_pcre_pcreposix_h" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_pcre_pcre_h" >&5
+echo "${ECHO_T}$ac_cv_header_pcre_pcre_h" >&6
 else
   # Is the header compilable?
-echo "$as_me:$LINENO: checking pcre/pcreposix.h usability" >&5
-echo $ECHO_N "checking pcre/pcreposix.h usability... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking pcre/pcre.h usability" >&5
+echo $ECHO_N "checking pcre/pcre.h usability... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
 $ac_includes_default
-#include <pcre/pcreposix.h>
+#include <pcre/pcre.h>
 _ACEOF
 rm -f conftest.$ac_objext
 if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
@@ -23247,12 +23184,12 @@ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
 echo "${ECHO_T}$ac_header_compiler" >&6
 
 # Is the header present?
-echo "$as_me:$LINENO: checking pcre/pcreposix.h presence" >&5
-echo $ECHO_N "checking pcre/pcreposix.h presence... $ECHO_C" >&6
+echo "$as_me:$LINENO: checking pcre/pcre.h presence" >&5
+echo $ECHO_N "checking pcre/pcre.h presence... $ECHO_C" >&6
 cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 #include "confdefs.h"
-#include <pcre/pcreposix.h>
+#include <pcre/pcre.h>
 _ACEOF
 if { (eval echo "$as_me:$LINENO: \"$ac_cpp conftest.$ac_ext\"") >&5
   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
@@ -23284,30 +23221,30 @@ echo "${ECHO_T}$ac_header_preproc" >&6
 # So?  What about this header?
 case $ac_header_compiler:$ac_header_preproc in
   yes:no )
-    { echo "$as_me:$LINENO: WARNING: pcre/pcreposix.h: accepted by the compiler, rejected by the preprocessor!" >&5
-echo "$as_me: WARNING: pcre/pcreposix.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:$LINENO: WARNING: pcre/pcreposix.h: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: pcre/pcreposix.h: proceeding with the preprocessor's result" >&2;};;
+    { echo "$as_me:$LINENO: WARNING: pcre/pcre.h: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: pcre/pcre.h: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: pcre/pcre.h: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: pcre/pcre.h: proceeding with the preprocessor's result" >&2;};;
   no:yes )
-    { echo "$as_me:$LINENO: WARNING: pcre/pcreposix.h: present but cannot be compiled" >&5
-echo "$as_me: WARNING: pcre/pcreposix.h: present but cannot be compiled" >&2;}
-    { echo "$as_me:$LINENO: WARNING: pcre/pcreposix.h: check for missing prerequisite headers?" >&5
-echo "$as_me: WARNING: pcre/pcreposix.h: check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:$LINENO: WARNING: pcre/pcreposix.h: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: pcre/pcreposix.h: proceeding with the preprocessor's result" >&2;};;
+    { echo "$as_me:$LINENO: WARNING: pcre/pcre.h: present but cannot be compiled" >&5
+echo "$as_me: WARNING: pcre/pcre.h: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: pcre/pcre.h: check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: pcre/pcre.h: check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: pcre/pcre.h: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: pcre/pcre.h: proceeding with the preprocessor's result" >&2;};;
 esac
-echo "$as_me:$LINENO: checking for pcre/pcreposix.h" >&5
-echo $ECHO_N "checking for pcre/pcreposix.h... $ECHO_C" >&6
-if test "${ac_cv_header_pcre_pcreposix_h+set}" = set; then
+echo "$as_me:$LINENO: checking for pcre/pcre.h" >&5
+echo $ECHO_N "checking for pcre/pcre.h... $ECHO_C" >&6
+if test "${ac_cv_header_pcre_pcre_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_cv_header_pcre_pcreposix_h=$ac_header_preproc
+  ac_cv_header_pcre_pcre_h=$ac_header_preproc
 fi
-echo "$as_me:$LINENO: result: $ac_cv_header_pcre_pcreposix_h" >&5
-echo "${ECHO_T}$ac_cv_header_pcre_pcreposix_h" >&6
+echo "$as_me:$LINENO: result: $ac_cv_header_pcre_pcre_h" >&5
+echo "${ECHO_T}$ac_cv_header_pcre_pcre_h" >&6
 
 fi
-if test $ac_cv_header_pcre_pcreposix_h = yes; then
+if test $ac_cv_header_pcre_pcre_h = yes; then
   have_pcre=yes
 else
   have_pcre=no
@@ -23329,7 +23266,7 @@ cat >>confdefs.h <<\_ACEOF
 #define HAVE_PCRE 1
 _ACEOF
 
-  LIBS="-lpcreposix -lpcre ${LIBS}"
+  LIBS="-lpcre ${LIBS}"
 fi
 
 

@@ -1890,17 +1890,14 @@ caddr_t hello() {
 
 ## R_PCRE
 ## ------
-## Try finding pcreposix library and headers.
-## pcreposix library depends on libpcre.
+## Try finding pcre library and headers.
+## RedHat puts the headers in /usr/include/pcre
 AC_DEFUN([R_PCRE],
 [AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
 if test "${have_pcre}" = yes; then
-  AC_CHECK_LIB(pcreposix, regcomp, [have_pcre=yes], [have_pcre=no], -lpcre)
-fi
-if test "${have_pcre}" = yes; then
-  AC_CHECK_HEADER(pcreposix.h, [have_pcre=yes], [have_pcre=no])
+  AC_CHECK_HEADER(pcre.h, [have_pcre=yes], [have_pcre=no])
   if test "${have_pcre}" = no; then
-    AC_CHECK_HEADER(pcre/pcreposix.h, [have_pcre=yes], [have_pcre=no])
+    AC_CHECK_HEADER(pcre/pcre.h, [have_pcre=yes], [have_pcre=no])
     if test "${have_pcre}" = yes; then
       AC_DEFINE(HAVE_PCRE_IN_PCRE, 1,
             [Define if you have the PCRE headers in pcre/.])
@@ -1910,7 +1907,7 @@ fi
 if test "${have_pcre}" = yes; then
   AC_DEFINE(HAVE_PCRE, 1,
             [Define if you have the PCRE headers and libraries.])
-  LIBS="-lpcreposix -lpcre ${LIBS}"
+  LIBS="-lpcre ${LIBS}"
 fi
 ])# R_PCRE
 

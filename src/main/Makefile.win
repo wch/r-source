@@ -15,7 +15,7 @@ gram.c: ;
 saveload-CFLAGS=-I../extra/xdr
 connections-CFLAGS=-I../extra/zlib
 dounzip-CFLAGS=-I../extra/zlib
-pcre-CFLAGS=-I../extra/pcre
+pcre-CFLAGS=-I../extra/pcre -DSTATIC
 
 
 ../gnuwin32/libmain.a: $(OBJS)

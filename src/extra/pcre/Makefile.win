@@ -6,7 +6,7 @@ CFLAGS = -I. -O2 -DSTATIC
 all: config.h pcre.h libpcre.a
 
 pcre.o: pcre.c
-libpcre.a: get.o maketables.o pcre.o study.o pcreposix.o
+libpcre.a: get.o maketables.o pcre.o study.o
 
 ## this can't be used if cross-building, so ship the file
 ifneq ($(strip $(BUILD)),CROSS)
@@ -22,8 +22,8 @@ config.h: config.in
 	  $< > $@
 
 pcre.h: pcre.in
-	$(SED)  -e 's/@PCRE_MAJOR@/3/' -e 's/@PCRE_MINOR@/7/' \
-	  -e 's/@PCRE_DATE@/29-Oct-2001/' $< > $@
+	$(SED)  -e 's/@PCRE_MAJOR@/9/' -e 's/@PCRE_MINOR@/7/' \
+	  -e 's/@PCRE_DATE@/02-Jan-2002/' $< > $@
 
 clean:
 	$(RM) *.o *~ libpcre.a
