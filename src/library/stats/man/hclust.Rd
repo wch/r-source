@@ -112,15 +112,17 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   by the Lance--Williams dissimilarity update formula
   according to the particular clustering method being used.
 
-  A number of different clustering methods are provided.
-  \emph{Ward's} minimum variance method aims at finding compact,
-  spherical clusters.  The \emph{complete linkage} method finds
-  similar clusters. The \emph{single linkage} method
-  (which is closely related to the minimal spanning tree)
-  adopts a \sQuote{friends of friends} clustering strategy.
-  The other methods can be regarded as aiming
-  for clusters with characteristics somewhere between
-  the single and complete link methods.
+  A number of different clustering methods are provided.  \emph{Ward's}
+  minimum variance method aims at finding compact, spherical clusters.
+  The \emph{complete linkage} method finds similar clusters. The
+  \emph{single linkage} method (which is closely related to the minimal
+  spanning tree) adopts a \sQuote{friends of friends} clustering
+  strategy.  The other methods can be regarded as aiming for clusters
+  with characteristics somewhere between the single and complete link
+  methods.  Note however, that methods \code{"median"} and
+  \code{"centroid"} are \emph{not} leading to a \emph{monotone distance}
+  measure, or equivalently the resulting dendrograms can have so called
+  \emph{inversions} (which are hard to interpret).
 
   If \code{members!=NULL}, then \code{d} is taken to be a
   dissimilarity matrix between clusters instead of dissimilarities
@@ -186,6 +188,9 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
 \seealso{
   \code{\link{identify.hclust}}, \code{\link{rect.hclust}},
   \code{\link{cutree}}, \code{\link{dendrogram}}, \code{\link{kmeans}}.
+
+  For the Lance--William formula and methods that apply it generally,
+  see \code{\link[cluster]{agnes}} from package \pkg{cluster}.
 }
 \examples{
 hc <- hclust(dist(USArrests), "ave")
