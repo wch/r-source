@@ -20,8 +20,8 @@ We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
 from http://www.mingw.org/ or
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32.  You will also
 need suitable versions of at least make, sh, cat, cp, cut, diff, echo,
-egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed; we use those from
-the cygwin distribution (http://sourceware.cygnus.com/cygwin and
+egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch; we use those
+from the cygwin distribution (http://sourceware.cygnus.com/cygwin and
 several mirrors) or (make) compiled from the GNU sources ourselves.
 We have packaged a set at
 http://www.stats.ox.ac.uk/pub/bdr/RWin/tools.zip.  BEWARE: Most
@@ -34,7 +34,9 @@ It is also possible to use the compilers from the cygwin 1.1 release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
 binutils* bundles.)   As of R 1.1.0 it is no longer possible to build
 R with the cygwin-b20.1 release, but you will probably be able to use
-that to build packages.
+that to build packages.  You will need to ensure that you have
+only one version of cygwin1.dll in your path (and there is one in our
+tools distribution).
 
 We have also successfully used the variant of
 mingw32 that uses the MSVCRT run-time system.  Be aware that many
@@ -66,8 +68,8 @@ Then: untar R-1.1.0.tgz somewhere (with no spaces in the path names),
 
 	cd /somewhere/R-1.1.0/src/gnuwin32
 
-IMPORTANT: edit MkRules to set the appropriate paths as needed.
-If you have Mingw32 and gcc-2.95.2.1 or later you can set
+IMPORTANT: edit MkRules to set the appropriate paths as needed.  If
+you have Mingw32/cross-compiler and gcc-2.95.2.1 or later you can set
 HAVE_SHARED=YES which will speed up the process considerably.
 
 Edit Makefile to set the type(s) of help that you want built.
@@ -97,7 +99,7 @@ compilers, and cross-building (see below).
 Note 3: building libR.a is highly disk intensive and can take several
 minutes even on a local disc. We have seen times from 30 secs to 20
 minutes. Using a network file system is likely to take longer.  It is
-done in memory and *much* faster with gcc-2.95.2.1 or later on
+done in memory and is *much* faster with gcc-2.95.2.1 or later on
 mingw32.
 
 
@@ -123,49 +125,33 @@ Then
 
 	make tcl
 
-will make the library.  This will make import libraries or use the
-(VC++5) libraries supplied with Tcl/Tk if your version of ld supports
-this.
-
+will make the library.
 
 
 Cross-building on ix86 Linux
 ============================
 
 You will need i386-mingw32 cross-compilers installed and in your path.
+There is currently a complete set of tools at
 
-A pre-built set of cross-tools based on gcc-2.95.2 is currently
-available from
+    http://www.stats.ox.ac.uk/pub/bdr/RWin/i386cross.tar.bz2
 
-    http://www.devolution.com/~slouken/SDL/Xmingw32/
-
-Unfortunately these did not include a Fortran compiler, but may suffice for
-building some packages.
+(Just unpack this somewhere and put its bin directory in your path.)
 
 Instructions for building a cross-compiler are given at
 
     http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
-At the time of writing these were somewhat outdated, and we suggest
-you build a gcc-2.95.2 cross-compiler (sources from any GNU mirror and
-patches from
-
-    ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/gcc-2.95.2/patches/
-
-).  Apart from the compiler, you need the mingw32 runtime system and
-a cross-built version of binutils 2.9.4.  There may well be a complete
-set of tools at
-
-    http://www.stats.ox.ac.uk/pub/bdr/RWin/i386cross.tar.bz2
-
-(Just unpack this somewhere and put its bin directory in your path.)
+At the time of writing these were somewhat outdated.  Apart from the
+compiler, you need the mingw32 runtime system and a cross-built
+version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
 You also need: the R source (R-1.1.0.tgz), and to build the installer,
 unzip541.zip from any Info-ZIP mirror.
 
-Then: untar R-1.1.0.tgz somewhere
+Then: untar R-1.1.0.tgz somewhere, and
 
 	cd /somewhere/R-1.1.0/src/gnuwin32
 

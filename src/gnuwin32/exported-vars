@@ -1,10 +1,8 @@
 R_NaN
-R_NaInt 
+R_NaInt
 R_NaReal
 R_NegInf
-R_PosInf 
-m_one
-m_zero
+R_PosInf
 CharacterMode
 UserBreak
 R_GlobalEnv

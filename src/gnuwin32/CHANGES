@@ -41,7 +41,7 @@ an X server and the Cygwin B20.1 environment and X11R6.4 installed) is at
 ftp.franken.de:/pub/win32/develop/gnuwin32/cygwin/porters/Humblet_Pierre_A/B20
 as  xfig-3.2.2-cygwin-b20.1-bin.tar.gz.
 
-The R DLL and executables now have standard Windows version
+The R DLL and executables now contain standard Windows version
 information, which will appear on a Version tab of the Properties
 dialog box in Explorer.
 
@@ -50,7 +50,7 @@ the DLL interface is incompatible.
 
 There are changes in the tools needed to build R (see the file INSTALL)
 and those recommended for building packages from source (see the file
-README.packages).
+readme.packages).
 
 New makefile target zipdata-% to zip up data directories in packages.
 
@@ -76,6 +76,9 @@ A long-standing bug in the (vertical) alignment of symbols in plotmath
 has been corrected.
 
 Pagers should no longer flash when launched.
+
+Launching a pager or data editor or graphics window now brings it
+to the front, even from Rterm.exe. (Not for Tcl/Tk windows, unfortunately.)
 
 
 rw1001
