@@ -111,12 +111,13 @@ foreach $manfile (@mandir) {
 	$textflag = $htmlflag = $latexflag = $exampleflag = "";
 
 	if($opt_nroff){
-	    $destfile = "$dest/help/$manfilebase";
+	    my $targetfile = $anindex{$manfilebase};
+	    $destfile = "$dest/help/$targetfile";
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
 		open(nroffout, "| tbl | nroff -ms 2> /dev/null | " .
 		     " ${RHOME}/bin/help.pretty > '$destfile'");
-		Rdconv($manfile, "nroff", "", -1);# maybe $opt_debug
+		Rdconv($manfile, "nroff", "", -1);
 	    }
 	}
 
@@ -126,22 +127,24 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile,$manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile");# "": maybe $opt_debug
+		Rdconv($manfile, "html", "", "$destfile");
 	    }
 	}
 
 	if($opt_latex){
-	    $destfile = "$latex_d/$manfilebase.tex";
+	    my $targetfile = $anindex{$manfilebase};
+	    $destfile = "$dest/latex/$targetfile";
 	    if(fileolder($destfile,$manage)) {
 		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile");# maybe $opt_debug
+		Rdconv($manfile, "latex", "", "$destfile");
 	    }
 	}
 	if($opt_example){
-	    $destfile = "$Rex_d/$manfilebase.R";
+	    my $targetfile = $anindex{$manfilebase};
+	    $destfile = "$dest/R-ex/$targetfile.R";
 	    if(fileolder($destfile,$manage)) {
 		$exampleflag = "example";
-		Rdconv($manfile, "example", "", "$destfile");# maybe $opt_debug
+		Rdconv($manfile, "example", "", "$destfile");
 	    }
 	}
 
