@@ -810,6 +810,11 @@ The macro @code{BLAS_LIBS} should always be included @emph{after}
 @cindex Building packages
 @cindex Checking packages
 
+Before using these tools, please check that your package can be
+installed and loaded.  @code{R CMD check} will @emph{inter alia} do
+this, but you will get more informative error messages doing the checks
+directly.
+
 @findex R CMD check
 Using @code{R CMD check}, the @R{} package checker, one can test whether
 @emph{source} @R{} packages work correctly.  This runs a series of checks.
@@ -898,10 +903,9 @@ version of the package's manual is created (to check that the Rd files
 can be converted successfully).
 @end enumerate
 
-Use @kbd{R CMD check --help} to
-obtain more information about the usage of the @R{} package checker.
-A subset of the checking steps can be selected by
-adding flags.
+Use @kbd{R CMD check --help} to obtain more information about the usage
+of the @R{} package checker.  A subset of the checking steps can be
+selected by adding flags.
 
 @findex R CMD build
 @cindex Package builder
@@ -934,8 +938,8 @@ excluded by default.
 @c 1.13.17).
 @c @end quotation
 
-Use @kbd{R CMD build --help} to
-obtain more information about the usage of the @R{} package builder.
+Use @kbd{R CMD build --help} to obtain more information about the usage
+of the @R{} package builder.
 
 @code{R CMD build} can also build pre-compiled version of packages for
 binary distributions.
@@ -6756,7 +6760,7 @@ __declspec(dllimport) int UserBreak;
 
 /* calls into the R DLL */
 extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
-extern void R_DefParams(Rstart), R_SetParams(Rstart);
+extern void R_DefParams(Rstart), R_SetParams(Rstart), R_setStartTime();
 extern void setup_term_ui(void), ProcessEvents(void);
 extern void run_Rmainloop(void), end_Rmainloop(void), R_ReplDLLinit(void);
 extern int R_ReplDLLdo1();
@@ -6795,7 +6799,7 @@ int main (int argc, char **argv)
 @{
     structRstart rp;
     Rstart Rp = &rp;
-    char Rversion[25], RHome[MAX_PATH];
+    char Rversion[25], *RHome;
 
     sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) @{
@@ -6803,6 +6807,7 @@ int main (int argc, char **argv)
         exit(1);
     @}
 
+    R_setStartTime();
     R_DefParams(Rp);
     if((RHome = get_R_HOME()) == NULL) @{
          fprintf(stderr, "R_HOME must be set in the environment or Registry\n");
@@ -6815,8 +6820,8 @@ int main (int argc, char **argv)
     Rp->WriteConsole = myWriteConsole;
     Rp->CallBack = myCallBack;
     Rp->ShowMessage = askok;
-    Rp->yesnocancel = askyesnocancel;
-    Rp->busy = myBusy;
+    Rp->YesNoCancel = askyesnocancel;
+    Rp->Busy = myBusy;
 
     Rp->R_Quiet = TRUE;
     Rp->R_Interactive = FALSE;

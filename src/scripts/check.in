@@ -1671,15 +1671,17 @@ sub check_pkg {
 
 sub usage {
     print STDERR <<END;
-Usage: R CMD $name [options] pkgdirs
+Usage: R CMD $name [options] pkgs
 
-Check R packages from package sources in the directories specified by
-pkgdirs.  A variety of diagnostic checks on directory structure, index
-and control files are performed.  The package is installed into the log
+Check R packages from package sources, which can be directories or 
+gzipped package 'tar' archives with extension '.tar.gz' or '.tgz'.
+
+A variety of diagnostic checks on directory structure, index and
+control files are performed.  The package is installed into the log
 directory (which includes the translation of all Rd files into several
 formats), and the Rd files are tested by LaTeX (if available).  All
-examples and tests provided by the package are tested to see if they run
-successfully.
+examples and tests provided by the package are tested to see if they
+run successfully.
 
 Options:
   -h, --help            print short help message and exit
