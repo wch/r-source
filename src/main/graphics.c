@@ -2439,53 +2439,118 @@ static int clipcode(double x, double y, cliprect *cr)
 }
 
 static Rboolean 
-CSclipline(double *x1, double *y1, double *x2, double *y2,
-	   int *clipped1, int *clipped2, int coords, cliprect *cr)
+CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
+	   int *clipped1, int *clipped2, int coords, DevDesc *dd)
 {
     int c, c1, c2;
-    double x, y;
+    double x, y, xl, xr, yb, yt;
+    cliprect cr2;
 
     *clipped1 = 0;
     *clipped2 = 0;
     c1 = clipcode(*x1, *y1, cr);
     c2 = clipcode(*x2, *y2, cr);
-    x = cr->xl;		/* keep -Wall happy */
-    y = cr->yb;		/* keep -Wall happy */
-    while( c1 || c2 ) {
-	if(c1 & c2)
-	    return FALSE;
-	if( c1 )
-	    c = c1;
-	else
-	    c = c2;
-	if( c & CS_LEFT ) {
-	    y = *y1 + (*y2 - *y1) * (cr->xl - *x1) / (*x2 - *x1);
-	    x = cr->xl;
-	}
-	else if( c & CS_RIGHT ) {
-	    y = *y1 + (*y2 - *y1) * (cr->xr - *x1) / (*x2 -  *x1);
-	    x = cr->xr;
-	}
-	else if( c & CS_BOTTOM ) {
-	    x = *x1 + (*x2 - *x1) * (cr->yb - *y1) / (*y2 - *y1);
-	    y = cr->yb;
-	}
-	else if( c & CS_TOP ) {
-	    x = *x1 + (*x2 - *x1) * (cr->yt - *y1)/(*y2 - *y1);
-	    y = cr->yt;
+    if ( !c1 && !c2 ) 
+	return TRUE;
+
+    xl = cr->xl;
+    xr = cr->xr;
+    yb = cr->yb;
+    yt = cr->yt;
+    if (dd->gp.xlog || dd->gp.ylog) {
+
+	GConvert(x1, y1, coords, NDC, dd);
+	GConvert(x2, y2, coords, NDC, dd);
+	GConvert(&xl, &yb, coords, NDC, dd);
+	GConvert(&xr, &yt, coords, NDC, dd);
+
+	cr2.xl = xl;
+	cr2.xr = xr;
+	cr2.yb = yb;
+	cr2.yt = yt;
+
+	x = xl;		/* keep -Wall happy */
+	y = yb;		/* keep -Wall happy */
+	while( c1 || c2 ) {
+	    if(c1 & c2)
+		return FALSE;
+	    if( c1 )
+		c = c1;
+	    else
+		c = c2;
+	    if( c & CS_LEFT ) {
+		y = *y1 + (*y2 - *y1) * (xl - *x1) / (*x2 - *x1);
+		x = xl;
+	    }
+	    else if( c & CS_RIGHT ) {
+		y = *y1 + (*y2 - *y1) * (xr - *x1) / (*x2 -  *x1);
+		x = xr;
+	    }
+	    else if( c & CS_BOTTOM ) {
+		x = *x1 + (*x2 - *x1) * (yb - *y1) / (*y2 - *y1);
+		y = yb;
+	    }
+	    else if( c & CS_TOP ) {
+		x = *x1 + (*x2 - *x1) * (yt - *y1)/(*y2 - *y1);
+		y = yt;
+	    }
+
+	    if( c==c1 ) {
+		*x1 = x;
+		*y1 = y;
+		*clipped1 = 1;
+		c1 = clipcode(x, y, &cr2);
+	    }
+	    else {
+		*x2 = x;
+		*y2 = y;
+		*clipped2 = 1;
+		c2 = clipcode(x, y, &cr2);
+	    }
 	}
 
-	if( c==c1 ) {
-	    *x1 = x;
-	    *y1 = y;
-	    *clipped1 = 1;
-	    c1 = clipcode(x, y, cr);
-	}
-	else {
-	    *x2 = x;
-	    *y2 = y;
-	    *clipped2 = 1;
-	    c2 = clipcode(x, y, cr);
+	GConvert(x1, y1, NDC, coords, dd);
+	GConvert(x2, y2, NDC, coords, dd);
+
+    } else {
+	x = xl;		/* keep -Wall happy */
+	y = yb;		/* keep -Wall happy */
+	while( c1 || c2 ) {
+	    if(c1 & c2)
+		return FALSE;
+	    if( c1 )
+		c = c1;
+	    else
+		c = c2;
+	    if( c & CS_LEFT ) {
+		y = *y1 + (*y2 - *y1) * (xl - *x1) / (*x2 - *x1);
+		x = xl;
+	    }
+	    else if( c & CS_RIGHT ) {
+		y = *y1 + (*y2 - *y1) * (xr - *x1) / (*x2 -  *x1);
+		x = xr;
+	    }
+	    else if( c & CS_BOTTOM ) {
+		x = *x1 + (*x2 - *x1) * (yb - *y1) / (*y2 - *y1);
+		y = yb;
+	    }
+	    else if( c & CS_TOP ) {
+		x = *x1 + (*x2 - *x1) * (yt - *y1)/(*y2 - *y1);
+		y = yt;
+	    }
+
+	    if( c==c1 ) {
+		*x1 = x;
+		*y1 = y;
+		*clipped1 = 1;
+		c1 = clipcode(x, y, cr);
+	    }
+	    else {
+		*x2 = x;
+		*y2 = y;
+		*clipped2 = 1;
+		c2 = clipcode(x, y, cr);
+	    }
 	}
     }
     return TRUE;
@@ -2526,7 +2591,7 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
     for (i = 1; i < n; i++) {
 	x2 = x[i];
 	y2 = y[i];
-	if (CSclipline(&x1, &y1, &x2, &y2, &ind1, &ind2, coords, &cr)) {
+	if (CSclipline(&x1, &y1, &x2, &y2, &cr, &ind1, &ind2, coords, dd)) {
 	    if (ind1 && ind2) {
 		xx[0] = x1;
 		yy[0] = y1;
@@ -2596,7 +2661,7 @@ clipLine(double *x1, double *y1, double *x2, double *y2,
 	cr.yt = temp;
     }
 
-    result = CSclipline(x1, y1, x2, y2, &dummy1, &dummy2, coords, &cr);
+    result = CSclipline(x1, y1, x2, y2, &cr, &dummy1, &dummy2, coords, dd);
 
     if (toDevice)
 	dd->gp.xpd = xpdsaved;

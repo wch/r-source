@@ -122,11 +122,12 @@ BUG FIXES
 	be an opportunity for a relatively graceful exit.  
 
     o   polyroot() misbehaved if all coefficients except that of the highest
-        degree term were zero
+        degree term were zero (partial fix for PR#751)
 
     o   spline(method="natural") was extrapolating incorrectly (both
 	to the left and to the right, for different reasons).  (PR#653)
 
+    o   Line clipping was incorrect for log-plots (PR#839)
 
 
 		CHANGES IN R VERSION 1.2.1
