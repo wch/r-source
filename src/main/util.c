@@ -813,7 +813,7 @@ do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
 
 SEXP
 do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
-    SEXP s;
+    SEXP s = R_NilValue;	/* -Wall */
     const char *path;
 
     checkArity(op, args);
@@ -829,7 +829,7 @@ do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
 SEXP
 do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s;
+    SEXP s = R_NilValue;	/* -Wall */
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
 
     checkArity(op, args);
@@ -850,11 +850,12 @@ do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* remove portion of path after last file separator if one exists, else
-   return "." */
+   return "."
+   */
 SEXP
 do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s;
+    SEXP s = R_NilValue;	/* -Wall */
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
 
     checkArity(op, args);
