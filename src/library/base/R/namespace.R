@@ -133,9 +133,9 @@ loadNamespace <- function (package, lib.loc = NULL,
                          call. = FALSE)
             }
         }
-        runUserHook <- function(pkgname, libpath) {
+        runUserHook <- function(pkgname, pkgpath) {
             hook <- getUserOnLoadHook(pkgname) # might be list()
-            for(fun in hook) try(fun(pkgname, libpath))
+            for(fun in hook) try(fun(pkgname, pkgpath))
         }
         makeNamespace <- function(name, version = NULL, lib = NULL) {
             impenv <- new.env(parent = .BaseNamespaceEnv, hash = TRUE)
@@ -762,14 +762,13 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
         setNamespaceInfo(ns, "S3methods", regs)
     }
     groupGenerics <- c("Math", "Ops",  "Summary", "Complex")
-    if(genname %in% groupGenerics) defenv <- .BaseNamespaceEnv
+    defenv <- if(genname %in% groupGenerics) .BaseNamespaceEnv
     else {
         genfun <- get(genname, envir = envir)
         if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
             genfun <- methods::finalDefaultMethod(methods::getMethods(genname))@.Data
-        if (typeof(genfun) == "closure")
-            defenv <- environment(genfun)
-        else defenv <- .BaseNamespaceEnv
+        if (typeof(genfun) == "closure") environment(genfun)
+        else .BaseNamespaceEnv
     }
     if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
         assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
@@ -834,17 +833,27 @@ registerS3methods <- function(info, package, env)
     }
     .registerS3method <- function(genname, class, method, nm, envir)
     {
+        ## S3 generics should either be imported explicitly or be in
+        ## the base namespace, so we start the search at the imports
+        ## environment, parent.env(envir), which is followed by the
+        ## base namespace.  (We have already looked in the namespace.)
+#        defenv <- if(!is.na(w <- .knownS3Generics[genname])) asNamespace(w)
+#        else
         defenv <- if(any(genname == groupGenerics)) .BaseNamespaceEnv
         else {
-            if(!exists(genname, envir = envir))
+            if(!exists(genname, envir = parent.env(envir)))
                 stop("object ", sQuote(genname),
                      " not found whilst loading namespace ",
                      sQuote(package), call. = FALSE)
-            genfun <- get(genname, envir = envir)
-            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+            genfun <- get(genname, envir = parent.env(envir))
+            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction")) {
                 genfun <- methods::finalDefaultMethod(methods::getMethods(genname))@.Data
+                warning("found an S4 version of ", sQuote(genname),
+                        " so it has not been imported correctly", call.=FALSE)
+            }
             if (typeof(genfun) == "closure") environment(genfun)
-            else .BaseNamespaceEnv}
+            else .BaseNamespaceEnv
+        }
         if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
             assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
                    envir = defenv)

@@ -118,9 +118,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	out
     }
 
-    runUserHook <- function(pkgname, libpath) {
+    runUserHook <- function(pkgname, pkgpath) {
         hook <- getUserAttachHook(pkgname) # might be list()
-        for(fun in hook) try(fun(pkgname, libpath))
+        for(fun in hook) try(fun(pkgname, pkgpath))
     }
 
     if (is.null(lib.loc)) lib.loc <- .libPaths()
