@@ -619,8 +619,7 @@ int StrToInternal(char *s)
 }
 
 /* string hashing */
-int hashpjw(s)
-char *s;
+int hashpjw(char *s)
 {
     char *p;
     unsigned h = 0, g;
@@ -724,13 +723,13 @@ void InitNames()
 /* Returns the symbol corresponding to the string "name". */
 SEXP install(char *name)
 {
-    char buf[128];
+    char buf[MAXIDSIZE+1];
     SEXP sym;
     int i;
 
     if (*name == '\0')
 	error("attempt to use zero-length variable name\n");
-    if (strlen(name) > 127)
+    if (strlen(name) > MAXIDSIZE)
 	error("symbol print-name too long\n");
     strcpy(buf, name);
 
