@@ -9,10 +9,10 @@ unix <- function(call, intern = FALSE) {
 
 ##--- The following 2  should/could really be done in C [platform !] :
 tempfile <- function(pattern = "file") {
-    if(!is.character(pattern)) stop("argument must be character")
-    system(paste("for p in", paste(pattern, collapse = " "), ";",
-		 "do echo ${TMPDIR:-/tmp}/$p$$; done"),
-	   intern = TRUE)
+    if(!is.character(pattern)) stop("`pattern' must be character")
+    if(!length(pattern)) stop("`pattern' must be of length >= 1")
+    if(!nchar(tmpdir <- getenv("TMPDIR"))) tmpdir <- "/tmp"
+    paste(tmpdir, "/", pattern, system("echo $$", intern = TRUE), sep = "")
 }
 
 unlink <- function(x) {

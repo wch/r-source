@@ -23,6 +23,12 @@ BUG FIXES
     o	printutils.c compiles on platforms where va_list is not
 	a pointer.
 
+    o	tempfile("") now works on all Unix platforms, and
+	tempfile("a b c") returns a single name (with spaces in).
+
+    o   The internal code for strsplit no longer destroys other
+	internal structures, e.g. postscript file output on Linux.
+
 
 	**************************************************
 	*						 *
