@@ -43,7 +43,7 @@ plot.spline(x, \dots)
   \item{y}{the value of the spline (or its \code{deriv}'th derivative)
       at the \code{x} vector}
 }
-\author{Douglas Bates and William Venables}
+\author{Douglas Bates and Bill Venables}
 \seealso{\code{\link{xyVector}}, \code{\link{interpSpline}},
     \code{\link{periodicSpline}}}
 \examples{

@@ -22,7 +22,7 @@ asVector(object)
     easily extended.  Currently the only class with an \code{asVector}
     method is the \code{xyVector} class.
 }
-\author{Douglas Bates and William Venables}
+\author{Douglas Bates and Bill Venables}
 \seealso{\code{\link{xyVector}}}
 \examples{
 library( splines )

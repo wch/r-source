@@ -6,29 +6,29 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
        intercept = demean, series)
 }
 \arguments{
-    \item{x}{A univariate or multivariate time series.}
+  \item{x}{A univariate or multivariate time series.}
 
-    \item{aic}{Logical flag.  If \code{TRUE} then the Akaike Information
- 	Criterion is used to choose the order of the autoregressive
-	model. If \code{FALSE}, the model of order \code{order.max} is
-	fitted.}
+  \item{aic}{Logical flag.  If \code{TRUE} then the Akaike Information
+    Criterion is used to choose the order of the autoregressive
+    model. If \code{FALSE}, the model of order \code{order.max} is
+    fitted.}
 
-    \item{order.max}{Maximum order (or order) of model to fit. Defaults
-	to \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
-	of observations.}
+  \item{order.max}{Maximum order (or order) of model to fit. Defaults
+    to \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
+    of observations.}
 
-    \item{na.action}{function to be called to handle missing values.}
+  \item{na.action}{function to be called to handle missing values.}
 
-    \item{demean}{should the AR model be for \code{x} minus its mean?}
+  \item{demean}{should the AR model be for \code{x} minus its mean?}
 
-    \item{intercept}{should a separate intercept term be fitted?}
+  \item{intercept}{should a separate intercept term be fitted?}
 
-    \item{series}{names for the series.  Defaults to
-     	\code{deparse(substitute(x))}.}
+  \item{series}{names for the series.  Defaults to
+    \code{deparse(substitute(x))}.}
 }
 \description{
-    Fit an autoregressive time series model to the data by ordinary
-    least squares, by default selecting the complexity by AIC.
+  Fit an autoregressive time series model to the data by ordinary
+  least squares, by default selecting the complexity by AIC.
 }
 \details{
   \code{ar.ols} fits the general AR model to a possibly non-stationary
@@ -37,7 +37,7 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
   some of the series are non-stationary and/or co-integrated.
   For definiteness, note that the AR coefficients have the sign in
 
-  (x[t] - m) = a[0] + a[1]*(x[t-1] - m) + ... +  a[p]*(x[t-p] - m) + e[t]
+  \deqn{x_t - \mu = a_0 + a_1(x_{t-1} - \mu) + \cdots +  a_p(x_{t-p} - \mu) + e_t}{\code{(x[t] - m) = a[0] + a[1]*(x[t-1] - m) + \dots +  a[p]*(x[t-p] - m) + e[t]}}
 
   where a[0] is zero unless \code{intercept} is true, and m is the
   sample mean if \code{demean} is true, zero otherwise.

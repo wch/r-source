@@ -18,7 +18,7 @@ print(tukeyline.obj)
   \item{x,y}{the arguments can be any way of specifying x-y pairs.}
 }
 \description{
-  This function fits a line robustly as recommended in John Tukey's book
+  This function fits a line robustly as recommended in 
   \emph{Exploratory Data Analysis}.
 }
 \value{

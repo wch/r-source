@@ -23,6 +23,9 @@ bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
     \code{Boundary.knots} are supplied, the basis parameters do not
     depend on \code{x}. Data can extend beyond \code{Boundary.knots}} 
 }
+\description{
+  Generate the B-spline basis matrix for a cubic spline.
+}
 \value{
   a matrix of dimension \code{length(x) * df}, where either \code{df}
   was supplied or if \code{knots} were supplied,
@@ -42,7 +45,7 @@ bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
   specify \code{knots} and \code{Boundary.knots}.
 }
 \seealso{
-  \code{ns}, \code{poly}, \code{lo}, \code{s}, \code{smooth.spline},
+  \code{ns}, \code{poly}, \code{smooth.spline},
   \code{predict.bs}.
 }
 \examples{

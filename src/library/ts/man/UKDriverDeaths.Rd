@@ -4,7 +4,7 @@
 \name{UKDriverDeaths}
 \alias{UKDriverDeaths}
 \title{
-Deaths of Car Drivers in Great Britain 1969-84
+Deaths of Car Drivers in Great Britain 1969--84
 }
 \description{
 A regular time series giving the monthly totals of car drivers in

@@ -1,7 +1,7 @@
 \name{dist}
 \title{Distance Matrix Computation}
 \usage{
-dist(x, method = "euclidean", diag = FALSE, upper=FALSE)
+dist(x, method = "euclidean", diag = FALSE, upper = FALSE)
 
 print.dist(dist.obj, diag = NULL, upper = NULL)
 as.matrix.dist(dist.obj)
@@ -30,21 +30,21 @@ as.dist(m, diag = NULL, upper = NULL)
 \description{
   This function computes and returns the distance matrix computed by
   using the specified distance measure to compute the distances between
-  the rows of \code{x}.
+  the rows of a data matrix.
 }
 \details{
   Available distance measures are (written for two vectors \eqn{x} and
   \eqn{y}): 
   \itemize{
-      \item Euclidean: Usual square distance between the two vectors (2 norm).
-      \item Maximum: Maximum distance between two components of \eqn{x}
-      and \eqn{y} (supremum norm)
-      \item Manhattan: Absolute distance between the two vectors (1
-      norm).
-      \item Canberra: \eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{sum(|x_i - y_i| / |x_i + y_i|)}
-      \item Count the number of different bits in \eqn{x} and \eqn{y}
-      where at least one of the two bits is 1, i.e., components where both
-      bits are zero are ignored.
+    \item Euclidean: Usual square distance between the two vectors (2 norm).
+    \item Maximum: Maximum distance between two components of \eqn{x}
+    and \eqn{y} (supremum norm)
+    \item Manhattan: Absolute distance between the two vectors (1
+    norm).
+    \item Canberra: \eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{sum(|x_i - y_i| / |x_i + y_i|)}
+    \item Count the number of different bits in \eqn{x} and \eqn{y}
+    where at least one of the two bits is 1, i.e., components where both
+    bits are zero are ignored.
   }
   
   The functions \code{as.matrix.dist()} and \code{as.dist()} can be used

@@ -6,7 +6,7 @@
 \title{Discrete Integrals: Inverse of Differencing}
 \usage{
 diffinv(x, lag = 1, differences = 1,
-    xi = rep(0.0, lag*differences*NCOL(x)))
+        xi = rep(0.0, lag*differences*NCOL(x)))
 }
 \arguments{
   \item{x}{a numeric vector, matrix, or time series.}
@@ -16,7 +16,7 @@ diffinv(x, lag = 1, differences = 1,
     initial values for the integrals.}
 }
 \description{
-  Computes the inverse function of the lagged differences
+  Computes the inverse function of the lagged differences function
   \code{\link{diff}}. 
 }
 \details{
@@ -26,8 +26,8 @@ diffinv(x, lag = 1, differences = 1,
   Missing values are not handled.
 }
 \value{
-    A numeric vector, matrix, or time series representing the discrete
-    integral of \code{x}. 
+  A numeric vector, matrix, or time series representing the discrete
+  integral of \code{x}. 
 }
 \author{A. Trapletti}
 \seealso{

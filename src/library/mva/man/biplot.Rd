@@ -37,6 +37,9 @@ biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
    \code{arrow.len = 0}.}
 }
 \description{
+  Plot a biplot on the current graphics device.
+}
+\details{
   A biplot is plot which aims to represent both the observations and
   variables of a matrix of multivariate data on the same plot. There are
   many variations on biplots (see the references) and perhaps the most

@@ -1,42 +1,53 @@
 \name{medpolish}
 \title{Median Polish of a Matrix}
 \usage{
-medpolish(x, eps=0.01, maxiter=10, trace.iter = TRUE)
+medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE)
 
 plot(medpolish.obj)
 print(medpolish.obj)
 }
 \alias{plot.medpolish}
 \alias{print.medpolish}
+\arguments{
+  \item{x}{a numeric matrix.}
+  \item{eps}{real number greater than 0. A tolerance for convergence:
+    see \bold{Details}.}
+  \item{maxiter}{the maximum number of iterations}
+  \item{trace.iter}{logical. Should progress in convergence be reported?}
+  \item{medpolish.obj}{object of class \code{medpolish}.}
+}
 \description{
-    \code{medpolish} fits an additive "two-way" (constant + rows + columns)
-    model to the values given in \code{x} using Tukey's
-    \emph{median polish} procedure.
+  Fits an additive model using Tukey's \emph{median polish} procedure.
 }
 \details{
-    Sweeping out for row and column effects continues
-    until the proportional reduction in the sum
-    of absolute residuals is less than \code{eps}
-    or until there have been \code{maxiter} iterations.
-    The sum of absolute residuals is printed at
-    each iteration of the fitting process, if \code{trace.iter} is \code{TRUE}.
+  The model fitted is additive (constant + rows + columns). The
+  algorithm works by alternately removing the row and column medians,
+  and continues until the proportional reduction in the sum
+  of absolute residuals is less than \code{eps}
+  or until there have been \code{maxiter} iterations.
+  The sum of absolute residuals is printed at
+  each iteration of the fitting process, if \code{trace.iter} is \code{TRUE}.
 
-    \code{medpolish} returns an object of class \code{medpolish} (see below).
-    There are printing and plotting methods for this
-    class, which are invoked via by the generics
-    \code{\link{print}} and \code{\link{plot}}.
+  \code{medpolish} returns an object of class \code{medpolish} (see below).
+  There are printing and plotting methods for this
+  class, which are invoked via by the generics
+  \code{\link{print}} and \code{\link{plot}}.
 }
 \value{
-    An object of class \code{medpolish} with the following named components:
-    \item{overall}{the fitted constant term.}
-    \item{row}{the fitted row effects.}
-    \item{col}{the fitted column effects.}
-    \item{residuals}{the residuals.}
-    \item{name}{the name of the dataset.}
+  An object of class \code{medpolish} with the following named components:
+  \item{overall}{the fitted constant term.}
+  \item{row}{the fitted row effects.}
+  \item{col}{the fitted column effects.}
+  \item{residuals}{the residuals.}
+  \item{name}{the name of the dataset.}
 }
-\seealso{\code{\link{median}}; \code{\link{aov}} which for a \emph{mean}
-    instead of \emph{median} decomposition.}
-\references{Tukey (1977). \emph{E.D.A}; see ref.\ in \code{\link{line}}.}
+\seealso{\code{\link{median}}; \code{\link{aov}} for a \emph{mean}
+  instead of \emph{median} decomposition.}
+\references{
+  Tukey, J. W. (1977).
+  \emph{Exploratory Data Analysis},
+  Reading Massachusetts: Addison-Wesley.
+}
 \examples{
 ## Deaths from sport parachuting;  from ABC of EDA, p.224:
 deaths <-
