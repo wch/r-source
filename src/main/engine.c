@@ -1854,10 +1854,7 @@ GEDevDesc* GEcurrentDevice()
  ****************************************************************
  */
 
-/* NOTE that this is NOT a permanent copy -- we just equate a couple 
- * of pointers, then do some drawing.  You should NOT hang on to the
- * device being copied to.  Most uses involve generating a new device
- * then closing it.
+/* We assume that the device being copied TO is the "current" device
  */
 /* We assume that BOTH from and to devices are GEDevDesc's
  * i.e., this will crash if you try to copy from or to an old DevDesc
@@ -1868,10 +1865,12 @@ void GEcopyDisplayList(int fromDevice)
     DevDesc* fromDev = GetDevice(fromDevice);
     int i;
     dd->dev->displayList = displayList(fromDev);
+    /* Get each registered graphics system to copy system state
+     * information from the "from" device to the current device
+     */
     for (i=0; i<numGraphicsSystems; i++) 
 	if (dd->gesd[i] != NULL)
-	    dd->gesd[i]->systemSpecific = GEsystemState((GEDevDesc*) fromDev, 
-							i);
+	    (dd->gesd[i]->callback)(GE_CopyState, dd);
     GEplayDisplayList(dd);
     if (!dd->dev->displayListOn)
 	initDisplayList((DevDesc*) dd);

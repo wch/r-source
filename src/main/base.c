@@ -9,6 +9,7 @@
 int baseRegisterIndex;
 
 void baseCallback(GEevent task, GEDevDesc *dd) {
+    GEDevDesc *curdd;
     GESystemDesc *sd;
     NewDevDesc *dev;
     GPar *ddp; 
@@ -54,6 +55,12 @@ void baseCallback(GEevent task, GEDevDesc *dd) {
 	/* Initialise the gp settings too.
 	 */
 	copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp));
+	break;
+    case GE_CopyState:
+	curdd = GEcurrentDevice();
+	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dpSaved),
+		 &(((baseSystemState*) 
+		    curdd->gesd[baseRegisterIndex]->systemSpecific)->dpSaved));
 	break;
     case GE_Redraw:
 	playDisplayList((DevDesc*) dd);

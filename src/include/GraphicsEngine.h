@@ -29,7 +29,14 @@ typedef enum {
     GE_FinaliseState = 1,
     /* This event means that the graphics system should do a redraw.
      */
-    GE_Redraw = 2
+    GE_Redraw = 2,
+    /* Copy system state information to the current device.
+     * This is used when copying graphics from one device to another
+     * so all the graphics system needs to do is to copy across
+     * the bits required for the display list to draw faithfully
+     * on the new device.
+     */
+    GE_CopyState = 3
 } GEevent;
 
 /* The full definition should be ...
