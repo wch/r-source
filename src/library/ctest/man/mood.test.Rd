@@ -1,17 +1,31 @@
 \name{mood.test}
 \alias{mood.test}
+\alias{mood.test.default}
+\alias{mood.test.formula}
 \title{Mood Two-Sample Test of Scale}
 \description{
   Performs Mood's two-sample test for a difference in scale parameters.
 }
 \usage{
-mood.test(x, y, alternative = c("two.sided", "less", "greater"))
+\method{mood.test}{default}(x, y, alternative = c("two.sided", "less", "greater"))
+\method{mood.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
   \item{x, y}{numeric vectors of data values.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"} (default), \code{"greater"} or
     \code{"less"} all of which can be abbreviated.}
+  \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
+    is a numeric variable giving the data values and \code{rhs} a factor
+    with two levels giving the corresponding groups.}
+  \item{data}{an optional data frame containing the variables in the
+    model formula.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.  Defaults to
+    \code{getOption("na.action")}.}
+  \item{\dots}{further arguments to be passed to the default method.}
 }
 \details{
   The underlying model is that the two samples are drawn from

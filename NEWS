@@ -188,8 +188,10 @@ NEW FEATURES
 
     o	Dataset swiss now has row names.
 
-    o	The Bartlett, Fligner-Killeen, Friedman, Kruskal-Wallis, and
-	Quade tests in package ctest now have formula interfaces.
+    o	The Ansari-Bradley, Bartlett, Fligner-Killeen, Friedman,
+	Kruskal-Wallis, Mood, Quade, t, and Wilcoxon tests as well as
+	cor.test() and var.test() in package ctest now have formula
+	interfaces.
 
     o	R::Dcf.pm can now also handle files with more than one record
 	and checks (a little bit) for continuation lines without leading

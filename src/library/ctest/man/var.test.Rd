@@ -1,13 +1,16 @@
 \name{var.test}
 \alias{var.test}
+\alias{var.test.default}
+\alias{var.test.formula}
 \title{F Test to Compare Two Variances}
 \description{
   Performs an F test to compare the variances of two samples from normal
   populations.
 }
 \usage{
-var.test(x, y, ratio = 1, alternative = c("two.sided", "less", "greater"),
+\method{var.test}{default}(x, y, ratio = 1, alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95)
+\method{var.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
   \item{x, y}{numeric vectors of data values, or fitted linear model
@@ -20,6 +23,17 @@ var.test(x, y, ratio = 1, alternative = c("two.sided", "less", "greater"),
     letter.}
   \item{conf.level}{confidence level for the returned confidence
     interval.}
+  \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
+    is a numeric variable giving the data values and \code{rhs} a factor
+    with two levels giving the corresponding groups.}
+  \item{data}{an optional data frame containing the variables in the
+    model formula.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.  Defaults to
+    \code{getOption("na.action")}.}
+  \item{\dots}{further arguments to be passed to the default method.}
 }
 \details{
   The null hypothesis is that the ratio of the variances of the

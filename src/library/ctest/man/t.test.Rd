@@ -1,9 +1,15 @@
 \name{t.test}
 \alias{t.test}
+\alias{t.test.default}
+\alias{t.test.formula}
 \title{Student's t-Test}
+\description{
+  Performs one and two sample t-tests on vectors of data.
+}
 \usage{
-t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+\method{t.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),
        mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95)
+\method{t.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
   \item{x}{a numeric vector of data values.}
@@ -21,11 +27,21 @@ t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     variance is used to estimate the variance otherwise the Welch
     approximation to the degrees of freedom is used.}
   \item{conf.level}{confidence level of the interval.}
-}
-\description{
-  t.test performs one and two sample t-tests on vectors of data.
+  \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
+    is a numeric variable giving the data values and \code{rhs} a factor
+    with two levels giving the corresponding groups.}
+  \item{data}{an optional data frame containing the variables in the
+    model formula.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.  Defaults to
+    \code{getOption("na.action")}.}
+  \item{\dots}{further arguments to be passed to the default method.}
 }
 \details{
+  The formula interface is only applicable for the 2-sample tests.
+  
   If \code{paired} is \code{TRUE} then both \code{x} and \code{y} must
   be specified and they must be the same length.  Missing values are
   removed (in pairs if \code{paired} is \code{TRUE}).  If
@@ -58,5 +74,15 @@ t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 \examples{
 t.test(1:10,y=c(7:20))      # P = .00001855
 t.test(1:10,y=c(7:20, 200)) # P = .1245    -- NOT significant anymore
+
+## Classical example: Student's sleep data
+data(sleep)
+plot(extra ~ group, data = sleep)
+## Traditional interface
+attach(sleep)
+t.test(extra[group == 1], extra[group == 2])
+detach()
+## Formula interface
+t.test(extra ~ group, data = sleep)
 }
 \keyword{htest}
