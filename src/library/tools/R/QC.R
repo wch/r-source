@@ -173,7 +173,7 @@ function(package, dir, lib.loc = NULL)
                        meths <-
                            linearizeMlist(getMethods(f, codeEnv))
                        sigs <-
-                           sapply(meths@classes, paste, collapse = ",") 
+                           sapply(meths@classes, paste, collapse = ",")
                        if(length(sigs))
                            paste(f, ",", sigs, sep = "")
                        else
@@ -191,7 +191,7 @@ function(package, dir, lib.loc = NULL)
                        "\\\\S4method{\\1}{\\2}",
                        S4methods)))
     }
-                             
+
     class(undocThings) <- "undoc"
     undocThings
 }
@@ -223,7 +223,7 @@ function(package, dir, lib.loc = NULL,
     ##   which no corresponding object in the package exists), rather
     ##   than just the exported objects.
     ## </FIXME>
-    
+
     hasNamespace <- FALSE
 
     ## Argument handling.
@@ -383,7 +383,7 @@ function(package, dir, lib.loc = NULL,
             list(list(name = fName, code = ffc, docs = ffd))
         }
     }
-    
+
     db <- if(!missing(package))
         Rddb(package, lib.loc = dirname(dir))
     else
@@ -434,7 +434,7 @@ function(package, dir, lib.loc = NULL,
     variablesInUsages <- character()
     dataSetsInUsages <- character()
     functionsInUsagesNotInCode <- list()
-    
+
     for(docObj in dbNames) {
 
         exprs <- dbUsages[[docObj]]
@@ -490,7 +490,7 @@ function(package, dir, lib.loc = NULL,
                 badReplaceFuns <-
                     mapply(replaceFuns[ind],
                            exprs[ind],
-                           FUN = function(x, y)                             
+                           FUN = function(x, y)
                            checkCoDoc(x,
                                       c(as.alist.call(y[[2]][-1]),
                                         as.alist.symbol(y[[3]]))),
@@ -518,7 +518,7 @@ function(package, dir, lib.loc = NULL,
 
         functionsInUsages <- c(functionsInUsages, functions)
     }
-        
+
     ## Determine (function) objects in the code without a \usage entry.
     ## Of course, these could still be 'documented' via \alias.
     ## </NOTE>
@@ -541,9 +541,9 @@ function(package, dir, lib.loc = NULL,
     attr(badDocObjects, "functionsInUsagesNotInCode") <-
         functionsInUsagesNotInCode
     attr(badDocObjects, "functionArgsInCode") <- functionArgsInCode
-    attr(badDocObjects, "hasNamespace") <- hasNamespace    
+    attr(badDocObjects, "hasNamespace") <- hasNamespace
     attr(badDocObjects, "withSynopsis") <- withSynopsis
-    attr(badDocObjects, "badLines") <- badLines    
+    attr(badDocObjects, "badLines") <- badLines
     class(badDocObjects) <- "codoc"
     badDocObjects
 }
@@ -580,7 +580,7 @@ function(x, ...)
     ##         }
     ##     }
     ## </COMMENT>
-    ## Hmm.  But why not mention the exported *functions* without \usage 
+    ## Hmm.  But why not mention the exported *functions* without \usage
     ## information?  Note that currently there is no useful markup for
     ## S3 Ops group methods and S3 methods for subscripting and
     ## subassigning, so the corresponding generics and methods cannot
@@ -659,7 +659,7 @@ function(package, lib.loc = NULL)
     ## just the ones with mismatches).
     ## Currently, we only return the names of all classes checked.
     ## </NOTE>
-    
+
     ## Add sanity checking later ...
 
     badRdObjects <- list()
@@ -670,7 +670,7 @@ function(package, lib.loc = NULL)
 
     dir <- .find.package(package, lib.loc)
     isBase <- basename(dir) == "base"
-    
+
     ## Load package into codeEnv.
     if(!isBase)
         .loadPackageQuietly(package, lib.loc)
@@ -691,12 +691,12 @@ function(package, lib.loc = NULL)
     ## * just one \alias{} (could also check whether it ends in
     ##   "-class");
     ## * a non-empty user-defined section 'Slots'.
-    
+
     ## As going through the db to extract sections can take some time,
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
 
-    aliases <- lapply(db, .getRdMetaDataFromRdLines, "alias")    
+    aliases <- lapply(db, .getRdMetaDataFromRdLines, "alias")
     idx <- (sapply(aliases, length) == 1)
     if(!any(idx)) return(badRdObjects)
     db <- db[idx]; aliases <- aliases[idx]
@@ -766,7 +766,7 @@ function(package, lib.loc = NULL)
 print.codocClasses <-
 function(x, ...)
 {
-    if (length(x) == 0) 
+    if (length(x) == 0)
         return(invisible(x))
     formatArgs <- function(s) paste(s, collapse = " ")
     for (docObj in names(x)) {
@@ -802,7 +802,7 @@ function(package, lib.loc = NULL)
     ## (rather than just the ones with mismatches).
     ## Currently, we only return the names of all data frames checked.
     ## </NOTE>
-    
+
     ## Add sanity checking later ...
 
     badRdObjects <- list()
@@ -810,7 +810,7 @@ function(package, lib.loc = NULL)
 
     dir <- .find.package(package, lib.loc)
     isBase <- basename(dir) == "base"
-    
+
     ## Load package into codeEnv.
     if(!isBase)
         .loadPackageQuietly(package, lib.loc)
@@ -843,7 +843,7 @@ function(package, lib.loc = NULL)
     db <- db[idx]; aliases <- aliases[idx]
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
-    
+
     .getDataFrameVarNamesFromRdText <- function(txt) {
         txt <- getRdSection(txt, "format")
         ## Was there just one \format section?
@@ -881,15 +881,15 @@ function(package, lib.loc = NULL)
         ## </FIXME>
     }
 
-    .fileExt <- function(x) sub(".*\\.", "", x)
+#    .fileExt <- function(x) sub(".*\\.", "", x)
 
     dataEnv <- new.env()
     dataDir <- file.path(dir, "data")
     hasData <- tools::fileTest("-d", dataDir)
     dataExts <- .makeFileExts("data")
-    dataExtsRE <-
-        paste("(", paste(dataExts, collapse = "|"), ")", sep = "")
-    
+#     dataExtsRE <-
+#        paste("(", paste(dataExts, collapse = "|"), ")", sep = "")
+
     ## Now go through the aliases.
     dataFramesChecked <- character()
     for(i in seq(along = aliases)) {
@@ -932,7 +932,7 @@ function(package, lib.loc = NULL)
         as.character(dataFramesChecked)
     badRdObjects
 }
-                
+
 print.codocData <-
 function(x, ...)
 {
@@ -954,7 +954,7 @@ function(x, ...)
     }
     invisible(x)
 }
-    
+
 ### * checkDocFiles
 
 checkDocFiles <-
@@ -1050,7 +1050,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Determine function names ('functions') and corresponding
         ## arguments ('argNamesInUsage') in the \usage.  Note how we
-        ## try to deal with data set documentation. 
+        ## try to deal with data set documentation.
         ind <- as.logical(sapply(exprs,
                                  function(e)
                                  ((length(e) > 1) &&
@@ -1117,7 +1117,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Also test whether the objects we found from the \usage all
         ## have aliases, provided that there is no alias which ends in
-        ## '-deprecated' (see Deprecated.Rd). 
+        ## '-deprecated' (see Deprecated.Rd).
         if(!any(grep("-deprecated$", aliases))) {
             ## Currently, there is no useful markup for S3 Ops group
             ## methods and S3 methods for subscripting and subassigning,
@@ -1126,7 +1126,7 @@ function(package, dir, lib.loc = NULL)
             ## 'DateTimeClasses.Rd' ...).
             functions <- functions[!functions %in%
                                    .functionsWithNoUsefulS3methodMarkup]
-            ## Argh.  There are good reasons for keeping \S4method{}{} 
+            ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
             ## Should maybe use topicName(), but in any case, we should
@@ -1192,7 +1192,7 @@ function(x, ...)
                              sQuote(docObj), ":", sep = ""))
             .prettyPrint(unique(functionsNotInAliases))
         }
-        
+
         writeLines("")
     }
     invisible(x)
@@ -1234,12 +1234,12 @@ function(package, dir, lib.loc = NULL)
         if(packageHasNamespace(package, dirname(dir))) {
             hasNamespace <- TRUE
             ## Determine names of declared S3 methods and associated S3
-            ## generics. 
+            ## generics.
             nsS3methodsList <- getNamespaceInfo(package, "S3methods")
             nsS3generics <-
                 as.character(sapply(nsS3methodsList, "[[", 1))
             nsS3methods <-
-                as.character(sapply(nsS3methodsList, "[[", 3))                
+                as.character(sapply(nsS3methodsList, "[[", 3))
         }
     }
     else {
@@ -1288,14 +1288,14 @@ function(package, dir, lib.loc = NULL)
                 OK <- c(OK, grep(p, objectsInCode, value = TRUE))
             objectsInCode <- unique(OK)
             ## Determine names of declared S3 methods and associated S3
-            ## generics. 
+            ## generics.
             nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
             nsS3generics <-
                 as.character(sapply(nsS3methodsList, "[[", 1))
             nsS3methods <-
-                as.character(sapply(nsS3methodsList, "[[", 3))                
+                as.character(sapply(nsS3methodsList, "[[", 3))
         }
-        
+
     }
 
     ## Find the function objects in the given package.
@@ -1418,7 +1418,7 @@ function(package, dir, lib.loc = NULL)
                    function(g)
                    functions[functions %in% methodsInPackage[[g]]],
                    simplify = FALSE)
-        
+
         if((length(methodsWithGeneric) > 0) ||
            (length(methodsWithFullName > 0)))
             badDocObjects[[docObj]] <-
@@ -1637,12 +1637,12 @@ function(package, dir, lib.loc = NULL)
         if(packageHasNamespace(package, dirname(dir))) {
             hasNamespace <- TRUE
             ## Determine names of declared S3 methods and associated S3
-            ## generics. 
+            ## generics.
             nsS3methodsList <- getNamespaceInfo(package, "S3methods")
             nsS3generics <-
                 as.character(sapply(nsS3methodsList, "[[", 1))
             nsS3methods <-
-                as.character(sapply(nsS3methodsList, "[[", 3))                
+                as.character(sapply(nsS3methodsList, "[[", 3))
             ## Determine unexported but declared S3 methods.
             S3reg <- nsS3methods[! nsS3methods %in% objectsInCode]
         }
@@ -1689,14 +1689,14 @@ function(package, dir, lib.loc = NULL)
                 OK <- c(OK, grep(p, objectsInCode, value = TRUE))
             objectsInCode <- unique(OK)
             ## Determine names of declared S3 methods and associated S3
-            ## generics. 
+            ## generics.
             nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
             nsS3generics <-
                 as.character(sapply(nsS3methodsList, "[[", 1))
             nsS3methods <-
-                as.character(sapply(nsS3methodsList, "[[", 3))                
+                as.character(sapply(nsS3methodsList, "[[", 3))
         }
-        
+
     }
 
     ## Find the function objects in the given package.
@@ -1850,7 +1850,7 @@ checkReplaceFuns <-
 function(package, dir, lib.loc = NULL)
 {
     hasNamespace <- FALSE
-    
+
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -1918,7 +1918,7 @@ function(package, dir, lib.loc = NULL)
             nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
         }
     }
-    
+
     objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
     replaceFuns <- character()
 
@@ -1945,7 +1945,7 @@ function(package, dir, lib.loc = NULL)
         else
             identical(argNames[length(argNames)], "value")
     }
-    
+
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
     badReplaceFuns <-
@@ -1982,7 +1982,7 @@ function(package, dir, lib.loc = NULL)
             c(badReplaceFuns,
               unlist(badS4ReplaceMethods, use.names = FALSE))
     }
-        
+
 
     class(badReplaceFuns) <- "checkReplaceFuns"
     badReplaceFuns
@@ -2127,7 +2127,7 @@ function(x)
     y
 }
 
-### * as.alist.symbol 
+### * as.alist.symbol
 as.alist.symbol <-
 function(x)
 {
@@ -2165,7 +2165,7 @@ function(packageName)
     c("+", "-", "*", "/", "^", "<", ">", "<=", ">=", "!=",
       "==", "%%", "%/%", "&", "|", "!",
       "[", "[[", "$", "[<-", "[[<-", "$<-")
-      
+
 
 ### * .isCallFromReplacementFunctionUsage
 .isCallFromReplacementFunctionUsage <-
@@ -2226,7 +2226,7 @@ function(x)
         "\\2\\4.\\3",
         x)
 }
-    
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

@@ -326,7 +326,7 @@ function(file, envir)
         return(invisible())
     for(e in exprs) {
         if(e[[1]] == assignmentSymbolLM || e[[1]] == assignmentSymbolEq)
-            yy <- eval(e, envir)
+            eval(e, envir)
     }
     invisible()
 }
