@@ -318,7 +318,11 @@ as.difftime <- function(tim, format="%X")
 
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
-    if(length(x) > 1)
+    if(is.array(x)) {
+        cat("Time differences in ", attr(x, "units"), "\n", sep="")
+        y <- unclass(x); attr(y, "units") <- NULL
+        print(y)
+    } else if(length(x) > 1)
         cat("Time differences of ",
             paste(format(unclass(x), digits=digits), collapse = ", "), " ",
             attr(x, "units"), "\n", sep="")
@@ -651,15 +655,16 @@ as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE)
 
 # ---- additions in 1.8.0 -----
 
-rep.POSIXct <- function(x, times, ...)
+rep.POSIXct <- function(x, times,  ...)
 {
-    y <- rep.int(unclass(x), times)
+    y <- NextMethod()
     structure(y, class=c("POSIXt", "POSIXct"))
 }
 
 rep.POSIXlt <- function(x, times, ...)
 {
-    y <- lapply(x, rep.int, times=times)
+    y <- if(missing(times)) lapply(x, rep, ...)
+       else lapply(x, rep, times=times, ...)
     attributes(y) <- attributes(x)
     y
 }
