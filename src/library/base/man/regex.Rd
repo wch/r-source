@@ -42,13 +42,16 @@
   a single character.  Most characters, including all letters and
   digits, are regular expressions that match themselves.  Any
   metacharacter with special meaning may be quoted by preceding it with
-  a backslash.  A list of characters enclosed by \code{[} and \code{]}
+  a backslash.
+
+  A list of characters enclosed by \code{[} and \code{]}
   matches any single character in that list; if the first character of
   the list is the caret \code{^}, then it matches any character
   \emph{not} in the list.  For example, the regular expression
-  \code{[0123456789]} matches any single digit.  A range of characters
-  may be specified by giving the first and last characters, separated by
-  a hyphen.
+  \code{[0123456789]} matches any single digit, and \code{[^abc]}
+  matches anything except the characters \code{a}, \code{b} or \code{c}.
+  A range of characters may be specified by giving the first and last
+  characters, separated by a hyphen.
 
   Certain named classes of characters are predefined, as follows.  Their
   interpretation depends on the \emph{locale} (see \link{locales}); the
@@ -100,7 +103,8 @@
   Most metacharacters lose their special meaning inside lists.  To
   include a literal \code{]}, place it first in the list.  Similarly, to
   include a literal \code{^}, place it anywhere but first.  Finally, to
-  include a literal \code{-}, place it last.
+  include a literal \code{-}, place it first or last. (Only these and
+  \code{\\} remain special.)
 
   The period \code{.} matches any single character.  The symbol
   \code{\\w} is a synonym for \code{[[:alnum:]]} and \code{\\W} is a
@@ -141,7 +145,8 @@
 
   Two regular expressions may be joined by the infix operator \code{|};
   the resulting regular expression matches any string matching either
-  subexpression.
+  subexpression.   For example, \code{abba|cde} matches either the
+  string \code{abba} or the string \code{cde}.
 
   Repetition takes precedence over concatenation, which in turn takes
   precedence over alternation.  A whole subexpression may be enclosed in
@@ -151,9 +156,10 @@
   substring previously matched by the Nth parenthesized subexpression of
   the regular expression.
 
-  The code attempts to support traditional usage by assuming that
-  \code{\{} is not special if it would be the start of an invalid
-  interval specification.  (POSIX allows this behavior as an extension.)
+  The current code attempts to support traditional usage by assuming
+  that \code{\{} is not special if it would be the start of an invalid
+  interval specification.  (POSIX allows this behavior as an extension but
+  we advise users not to rely on it.)
 }
 \section{Basic Regular Expressions}{
   This section covers the regular expressions allowed if
@@ -166,8 +172,12 @@
   \code{\\ \{}, \code{\\|}, \code{\\(}, and \code{\\)}.
 }
 \section{Perl Regular Expressions}{
-  A description will be added to this help page soon.
-
+  The \code{perl=TRUE} argument to \code{grep}, \code{regexpr}, \code{sub} 
+  and \code{gsub} switches to the PCRE library, that implement regular
+  expression pattern matching using the same syntax and semantics as Perl
+  5, with just a few differences.
+  
+  A complete description will be added to this help page soon.
   Meanwhile please consult the man pages for PCRE (especially
   \code{man pcrepattern} or if that does not exist, \code{man pcre}) on
   your system or from the sources at
