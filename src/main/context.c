@@ -149,6 +149,7 @@ void R_restore_globals(RCNTXT *cptr)
     R_PPStackTop = cptr->cstacktop;
     R_EvalDepth = cptr->evaldepth;
     vmaxset(cptr->vmax);
+    R_interrupts_suspended = cptr->intsusp;
 }
 
 
@@ -198,6 +199,7 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->promargs = promargs;
     cptr->callfun = callfun;
     cptr->vmax = vmaxget();
+    cptr->intsusp = R_interrupts_suspended;
     R_GlobalContext = cptr;
 }
 

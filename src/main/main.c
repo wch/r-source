@@ -368,13 +368,21 @@ FILE* R_OpenSysInitFile(void);
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
 
+static void handleInterrupt(int dummy)
+{
+    if (R_interrupts_suspended)
+	R_interrupt_pending = TRUE;
+    else 
+	onintr();
+}
+
 static void R_LoadProfile(FILE *fparg, SEXP env)
 {
     FILE * volatile fp = fparg; /* is this needed? */
     if (fp != NULL) {
 	if (! SETJMP(R_Toplevel.cjmpbuf)) {
 	    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-	    signal(SIGINT, onintr);
+	    signal(SIGINT, handleInterrupt);
 	    R_ReplFile(fp, env, 0, 0);
 	}
 	fclose(fp);
@@ -470,7 +478,7 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
+    signal(SIGINT, handleInterrupt);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
     if (!doneit) {
@@ -513,7 +521,7 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
+    signal(SIGINT, handleInterrupt);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
     if (!doneit) {
@@ -530,7 +538,7 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
+    signal(SIGINT, handleInterrupt);
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First"));
@@ -549,7 +557,7 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
+    signal(SIGINT, handleInterrupt);
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First.sys"));
@@ -589,7 +597,7 @@ void run_Rmainloop(void)
     R_IoBufferInit(&R_ConsoleIob);
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
+    signal(SIGINT, handleInterrupt);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
 #ifdef Unix
@@ -722,9 +730,9 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_Visible = 0;
 	}
 	R_GlobalContext = &thiscontext;
-	signal(SIGINT, onintr);
+	signal(SIGINT, handleInterrupt);
 	R_BrowseLevel = savebrowselevel;
-    signal(SIGINT, onintr);
+    signal(SIGINT, handleInterrupt);
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
 	endcontext(&thiscontext);
     }

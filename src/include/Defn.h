@@ -319,6 +319,7 @@ typedef struct RCNTXT {
     void (*cend)(void *);	/* C "on.exit" thunk */
     void *cenddata;		/* data for C "on.exit" thunk */
     char *vmax;		        /* top of R_alloc stack */
+    int intsusp;                /* interrupts enables */
 } RCNTXT, *context;
 
 /* The Various Context Types.
@@ -428,6 +429,9 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 
 /* extern int	errno; already have errno.h ! */
 extern int	gc_inhibit_torture INI_as(1);
+
+LibExtern Rboolean R_interrupts_suspended INI_as(FALSE);
+LibExtern Rboolean R_interrupt_pending INI_as(FALSE);
 
 /* R Home Directory */
 extern char*	R_Home;		    /* Root of the R tree */
@@ -781,18 +785,15 @@ void yyprompt(char *format, ...);
 int yywrap(void);
 
 /* Macros for suspending interrupts */
-#ifdef HAVE_POSIX_SETJMP
-# define BEGIN_SUSPEND_INTERRUPTS do { \
-    sigset_t mask, omask; \
-    sigemptyset(&mask); \
-    sigaddset(&mask,SIGINT); \
-    sigprocmask(SIG_BLOCK, &mask, &omask);
-# define END_SUSPEND_INTERRUPTS sigprocmask(SIG_SETMASK, &omask, &mask); \
-    } while(0)
-#else /* not HAVE_POSIX_SETJMP */
-# define BEGIN_SUSPEND_INTERRUPTS do {
-# define END_SUSPEND_INTERRUPTS } while (0)
-#endif /* not HAVE_POSIX_SETJMP */
+#define BEGIN_SUSPEND_INTERRUPTS do { \
+    Rboolean __oldsusp__ = R_interrupts_suspended; \
+    R_interrupts_suspended = TRUE;
+#define END_SUSPEND_INTERRUPTS R_interrupts_suspended = __oldsusp__; \
+    if (R_interrupt_pending && ! R_interrupts_suspended) { \
+        R_interrupt_pending = FALSE; \
+        onintr(); \
+    } \
+} while(0)
 
 #endif /* DEFN_H_ */
 /*

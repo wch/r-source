@@ -455,11 +455,28 @@ static void readline_handler(char *line)
  the host application will probably not let things get that far and trap the
  signals itself.
 */
-static void
-handleInterrupt(int dummy)
+
+/* The SIGINT handler does a siglongjmp, if available, to a sigsetjmp
+   that restored the the signal mask, regardless of how the SIGJMP
+   macro is defined.
+
+   This code outgh to restore the old signal handler. */
+
+#ifdef HAVE_POSIX_SETJMP
+static sigjmp_buf rljmpbuf;
+#else
+static jmp_buf rljmpbuf;
+#endif
+
+static void handleInterrupt(int dummy)
 {
-    popReadline();
-    onintr();
+    if (! R_interrupts_suspended) { /**** had better not be true */
+#ifdef HAVE_POSIX_SETJMP
+	siglongjmp(rljmpbuf, 1);
+#else
+        longjmp(rljmpbuf, 1);
+#endif
+    }
 }
 
 #endif /* HAVE_LIBREADLINE */
@@ -503,6 +520,16 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	    rl_top = &rl_data;
 	    pushReadline(prompt, readline_handler);
 	    signal(SIGINT, handleInterrupt);
+	    if (
+#ifdef HAVE_POSIX_SETJMP
+		sigsetjmp(rljmpbuf, 1)
+#else
+		setjmp(rljmpbuf)
+#endif
+		) {
+		popReadline();
+		onintr();
+	    }
 	}
 	else
 #endif /* HAVE_LIBREADLINE */
