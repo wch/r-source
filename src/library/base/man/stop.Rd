@@ -33,7 +33,7 @@ geterrmessage()
   ending in \code{"\n"}.
 }
 \seealso{
-  \code{\link{warning}}, \code{\link{restart}} to catch errors and retry,
+  \code{\link{warning}}, \code{\link{try}} to catch errors and retry,
   and \code{\link{options}} for setting error handlers.
   \code{\link{stopifnot}} for validity testing.
 }
