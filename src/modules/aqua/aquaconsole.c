@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1488,7 +1488,7 @@ void InitAboutWindow(void){
 		text = NULL;
     }
 	
-    text = CFSTR("Aqua GUI by Stefano M. Iacus and Thomas Lumley (2003).\rPlease send feedback to stefano.iacus@unimi.it");
+    text = CFSTR("Aqua GUI by Stefano M. Iacus and Thomas Lumley (2003-4).\rPlease send feedback to stefano.iacus@unimi.it");
     if(text){
 		GetControlByID(RAboutWindow, &AuthorsID, &versionControl);
 		SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
