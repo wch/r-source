@@ -533,7 +533,7 @@ void setup_Rmainloop(void)
        At this point we try to invoke the .First Function.
        If there is an error we continue. */
 
-    doneit = 0;
+    doneit = !R_LoadDotFirst;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);

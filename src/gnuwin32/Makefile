@@ -81,8 +81,7 @@ rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
 
 ## used to build skeletal versions of packages, enough to run
 ## package tools to install them properly
-## need ctest as it is in the main .Rprofile.
-INITPACKAGES = base tools ctest
+INITPACKAGES = base tools
 Rcode: fixed/fixdesc 
 	@$(ECHO) "  making bootstrap versions of packages ..."
 	@for pkg in $(INITPACKAGES); do \

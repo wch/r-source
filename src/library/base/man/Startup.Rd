@@ -62,7 +62,8 @@
   \file{library/base/R/Rprofile} is used.  This calls
   \code{\link{require}} to attach the default packages, specified by
   \code{\link{options}("defaultPackages")}, which starts off being 
-  \code{c("methods", "ctest")}. 
+  \code{c("methods", "ctest")}.  (This can be suppressed by the flag
+  \code{--no-dotFirst}, needed in the build process.)
 
   A function \code{.First} (and \code{\link{.Last}}) can be defined
   in appropriate \code{.Rprofile} or \code{Rprofile.site} files

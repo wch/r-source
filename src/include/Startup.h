@@ -51,6 +51,7 @@ typedef struct
     Rboolean R_Verbose;
     Rboolean LoadSiteFile;
     Rboolean LoadInitFile;
+    Rboolean LoadDotFirst;
     Rboolean DebugInitFile;
     SA_TYPE RestoreAction;
     SA_TYPE SaveAction;

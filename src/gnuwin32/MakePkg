@@ -151,7 +151,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION
 else
 	@$(ECHO) "library(tools);.installPackageDescription('.', '"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave > /dev/null
+	  $(RHOME)/bin/rterm.exe --vanilla --no-dotFirst --slave > /dev/null
 endif
 
 $(DATA): $(DSOURCES)
@@ -209,7 +209,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 	  $(R_EXE) --vanilla  --slave > /dev/null
 else
 	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave > /dev/null
+	  $(RHOME)/bin/rterm.exe --vanilla --no-dotFirst --slave > /dev/null
 endif
 # need not have HTML installed when building packages
 	@$(MKDIR) -p $(RHOME)/doc/html/search
