@@ -51,7 +51,7 @@ All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
 You also need: the R source (R-1.1.0.tgz), and to build the
-installer, unzip5.41.zip from any Info-Zip mirror.  Do remember to set
+installer, unzip541.zip from any Info-Zip mirror.  Do remember to set
 MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line)
 if using a cygwin version of make.
 
@@ -124,12 +124,17 @@ patches from
     ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/gcc-2.95.2/patches/
 
 ).  Apart from the compiler, you need the mingw32 runtime system and
-a cross-built version of binutils 2.9.4.
+a cross-built version of binutils 2.9.4.  There may well be a complete
+set of tools at
+
+    http://www.stats.ox.ac.uk/pub/bdr/RWin/i386cross.tar.bz2
+
+(Just unpack this somewhere are put its bin directory in your path.)
 
 You will need Perl, zip and unzip installed.
 
 You also need: the R source (R-1.1.0.tgz), and to build the installer,
-unzip5.41.zip from any Info-ZIP mirror.
+unzip541.zip from any Info-ZIP mirror.
 
 Then: untar R-1.1.0.tgz somewhere
 
@@ -156,7 +161,7 @@ pdf manuals can be made by
 	make docs
 
 If you want to make the info versions, you will need a version of
-makeinfo 4 for Windows and texindex. Then
+makeinfo 4.0 for Windows and texindex. Then
 
 	cd ../../doc/manuals
 	make -f Makefile.win info
@@ -165,6 +170,11 @@ will make the info files.
 
 There is no provision to make DVI versions of the manuals, although
 ../../doc/manuals/Makefile.win could easily be edited to do so.
+
+The fptex distribution of TeX (from any of the CTAN sites,
+e.g. www.tug.org) includes both pdftex and makeinfo 4.0.  (The cygwin
+one, even in release 1.1, is 3.12.)
+
 
 
 Feedback

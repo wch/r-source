@@ -89,13 +89,9 @@ that version. The main R FAQ can be found at
 @uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html}.
 @end display
 
-There have been two versions of R for Windows, but only is under active
-development, that described here. It is often called something like
-@code{@value{VERSION}} (although not officially). The information here applies
-only to recent versions (@code{rw0901} or later).
-
-There is also information on the use of R for Windows in the Venables
-& Ripley `R Complements' at @uref{http://www.stats.ox.ac.uk/pub/MASS2}.
+The information here applies only to recent versions of R for Windows,
+(@code{rw1000} or later); the current version is often called something like
+@code{@value{VERSION}} (although not officially).
 
 
 @newchap{}
@@ -503,9 +499,9 @@ the buffer and so update the console.
 @section Long lines in the console or pager are truncated.
 
 They only @strong{seem} to be truncated: that $ at the end indicates you
-can scroll the window to see the rest of the message. Use the
-@key{CTRL+arrow} keys to scroll horizontally, or (@code{rw0990} and
-later) use the horizontal scrollbar.
+can scroll the window to see the rest of the message. Use the horizontal
+scrollbar or the @key{CTRL+arrow} keys to scroll horizontally, or the
+horizontal scrollbar.
 
 
 @newchap{}
@@ -641,9 +637,9 @@ cl /MT /c X.cpp X_R.cpp
 link /dll /out:XX.dll /export:X_main X.obj X_R.obj
 @end example
 @noindent
-and call the entry point(s) in @code{X_R}.  Construction of static variables
-will occur when the DLL is loaded, and destruction when the DLL is
-unloaded, usually when R terminates.
+and call the entry point(s) in @code{X_R}, such as @code{X_main}.
+Construction of static variables will occur when the DLL is loaded, and
+destruction when the DLL is unloaded, usually when R terminates.
 
 
 @node  The output from my C code disappears., The output from my Fortran code disappears., How do I include C++ code?, Building from Source
@@ -667,14 +663,14 @@ documented in the @emph{`Writing R Extensions'} manual.
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 April 6 by Brian Ripley
+Last edited 2000 April 28 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 April 6 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 April 28 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

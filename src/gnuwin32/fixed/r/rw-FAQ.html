@@ -83,13 +83,9 @@ that version. The main R FAQ can be found at
 <pre><a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html</a>.
 </pre>
 
-<p>There have been two versions of R for Windows, but only is under active
-development, that described here. It is often called something like
-<code>rw1010</code> (although not officially). The information here applies
-only to recent versions (<code>rw0901</code> or later).
-
-<p>There is also information on the use of R for Windows in the Venables
-&amp; Ripley `R Complements' at <a href="http://www.stats.ox.ac.uk/pub/MASS2">http://www.stats.ox.ac.uk/pub/MASS2</a>.
+<p>The information here applies only to recent versions of R for Windows,
+(<code>rw1000</code> or later); the current version is often called something like
+<code>rw1010</code> (although not officially).
 
 <p><hr>
 
@@ -474,9 +470,9 @@ the buffer and so update the console.
 <h2>6.4 Long lines in the console or pager are truncated.</h2>
 
 <p>They only <strong>seem</strong> to be truncated: that $ at the end indicates you
-can scroll the window to see the rest of the message. Use the
-&lt;CTRL+arrow&gt; keys to scroll horizontally, or (<code>rw0990</code> and
-later) use the horizontal scrollbar.
+can scroll the window to see the rest of the message. Use the horizontal
+scrollbar or the &lt;CTRL+arrow&gt; keys to scroll horizontally, or the
+horizontal scrollbar.
 
 <p><hr>
 
@@ -597,9 +593,9 @@ dllwrap -o X.dll --def X.def X.o X_R.o -lstdc++
 link /dll /out:XX.dll /export:X_main X.obj X_R.obj
 </pre>
 
-<p>and call the entry point(s) in <code>X_R</code>.  Construction of static variables
-will occur when the DLL is loaded, and destruction when the DLL is
-unloaded, usually when R terminates.
+<p>and call the entry point(s) in <code>X_R</code>, such as <code>X_main</code>. 
+Construction of static variables will occur when the DLL is loaded, and
+destruction when the DLL is unloaded, usually when R terminates.
 
 <a name="The%20output%20from%20my%20C%20code%20disappears."></a>
 
@@ -621,7 +617,7 @@ documented in the <em>`Writing R Extensions'</em> manual.
 
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 April 6 by Brian Ripley
+Last edited 2000 April 28 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 
