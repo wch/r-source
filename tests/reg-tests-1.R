@@ -1,3 +1,4 @@
+
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
 ## Comments: moved from aggregate.Rd
@@ -2781,7 +2782,19 @@ x <- round(matrix(0, 0, 3))
 stopifnot(identical(dim(x), as.integer(c(0, 3))))
 ## numeric(0) in 1.8.0
 
+
 ## PR#5405
 library(stepfun)
 try(stepfun(c(), 1)(2))# > Error
 ## segfaults in 1.8.1 and earlier
+
+## PR#4688
+reli <- cbind(Si = c(2121, 100, 27, 0),
+              av = c(4700, 216, 67, 0),
+              Nc = c(6234,2461,502,14))
+stopifnot(inherits(try(fisher.test(reli, workspace=2000000)), "try-error"))
+## gave p.value = Inf ; now gives FEXACT error 501
+
+## PR#5701
+chisq.test(matrix(23171,2,2), simulate=TRUE)
+## gave infinite loop in 1.8.1 and earlier
