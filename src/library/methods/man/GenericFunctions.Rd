@@ -63,7 +63,7 @@ callGeneric(\dots)
 }
 \section{Summary of Functions}{
   \describe{
-    \item{\code{isGeneric}:}{ 
+    \item{\code{isGeneric}:}{
       Is there a function named \code{f}, and if so, is it a generic?
 
       The \code{getName} argument allows a function to find the name
@@ -82,27 +82,27 @@ callGeneric(\dots)
       for that function would be, even if no methods have been currently
       defined for it.
     }
-  
-    \item{\code{removeGeneric}, \code{removeMethods}:}{ 
-      Remove the all the methods for the generic function of this
+
+    \item{\code{removeGeneric}, \code{removeMethods}:}{
+      Remove all the methods for the generic function of this
       name.  In addition, \code{removeGeneric} removes the function
       itself; \code{removeMethods} restores the non-generic function
       which was the default method.   If there was no default method,
       \code{removeMethods} leaves a generic function with no methods.
     }
-    \item{\code{standardGeneric}:}{ 
+    \item{\code{standardGeneric}:}{
       Dispatches a method from the current function call for the generic
       function \code{f}.  It is an error to call
       \code{standardGeneric} anywhere except in the body of the
       corresponding generic function.
     }
-    \item{\code{getMethods}:}{ 
-      The list of methods for the specified generic.  
+    \item{\code{getMethods}:}{
+      The list of methods for the specified generic.
     }
-    \item{\code{dumpMethod}:}{ 
-      Dump the method for this generic function and signature.  
+    \item{\code{dumpMethod}:}{
+      Dump the method for this generic function and signature.
     }
-    \item{\code{findFunction}:}{ 
+    \item{\code{findFunction}:}{
       return a list of either the positions on the search list, or the
       current top-level environment, on which a function object
       for \code{name} exists.  The returned value is \emph{always} a
@@ -115,7 +115,7 @@ callGeneric(\dots)
       \code{findFunction} works correctly in the code for a package
       when attaching the package via a call to \code{\link{library}}.
     }
-    \item{\code{selectMethod}:}{ 
+    \item{\code{selectMethod}:}{
       Returns the method (a function) that R would use to evaluate a
       call to this generic, with arguments corresponding to the
       specified signature.
@@ -123,10 +123,10 @@ callGeneric(\dots)
       \code{f} = the name of the generic function, \code{signature} is
       the signature of classes to match to the arguments of \code{f}.
     }
-    \item{\code{dumpMethods}:}{ 
-      Dump all the methods for this generic.  
+    \item{\code{dumpMethods}:}{
+      Dump all the methods for this generic.
     }
-    \item{\code{signature}:}{ 
+    \item{\code{signature}:}{
       Returns a named list of classes to be matched to arguments of a
       generic function.
     }
@@ -144,7 +144,7 @@ callGeneric(\dots)
            the returned name can be plain (e.g., \code{"base"}), or in
            the form used in the search list (\code{"package:base"})
            according to the value of \code{searchForm}}
-    \item{\code{callGeneric}:}{ 
+    \item{\code{callGeneric}:}{
       In the body of a method, this function will make a call to the
       current generic function.  If no arguments are passed to
       \code{callGeneric}, the arguments to the current call are passed
@@ -170,7 +170,7 @@ callGeneric(\dots)
     function.  If \code{signature} is unnamed, the default is to use
     the first \code{length(signature)} formal arguments of the
     function. }
-  
+
   \item{file}{ The file on which to dump method definitions. }
 
   \item{def}{ The function object defining the method; if omitted, the
@@ -185,7 +185,7 @@ callGeneric(\dots)
   \item{fdef}{Optional, the generic function definition.
 
    Usually omitted in calls to \code{isGeneric}}
-  
+
   \item{getName}{If \code{TRUE}, \code{isGeneric} returns the name of
     the generic.  By default, it returns \code{TRUE}. }
   \item{methods}{
@@ -197,12 +197,12 @@ callGeneric(\dots)
       \code{package} slot of the returned result is in the form used
       by \code{search()}, otherwise as the simple package name (e.g,
       \code{"package:base"} vs \code{"base"}). }
-  
+
 }
 
 \section{Details}{
   \describe{
-    \item{\code{setGeneric}:}{ 
+    \item{\code{setGeneric}:}{
       If there is already a non-generic function of this name, it will
       be used to define the generic unless \code{def} is supplied, and
       the current function will become the default method for the
@@ -216,18 +216,18 @@ callGeneric(\dots)
       Arguments \code{group} and \code{valueClass} are retained for
       consistency with S-Plus, but are currently not used.
     }
-    \item{\code{isGeneric}:}{ 
+    \item{\code{isGeneric}:}{
       If the \code{fdef} argument is supplied, take this as the
       definition of the generic, and test whether it is really a
       generic, with \code{f} as the name of the generic.  (This argument
       is not available in S-Plus.)
     }
-    \item{\code{removeGeneric}:}{ 
+    \item{\code{removeGeneric}:}{
       If \code{where} supplied, just remove the version on this element
       of the search list; otherwise, removes the first version
       encountered.
     }
-    \item{\code{standardGeneric}:}{ 
+    \item{\code{standardGeneric}:}{
       Generic functions should usually have a call to
       \code{standardGeneric} as their entire body.  They can, however,
       do any other computations as well.
@@ -236,7 +236,7 @@ callGeneric(\dots)
       \code{setMethod}) creates a function with a call to
       \code{standardGeneric}.
     }
-    \item{\code{getMethods}:}{ 
+    \item{\code{getMethods}:}{
       If the function is not a generic function, returns \code{NULL}.
       The \code{f} argument can be either the character string name of
       the generic or the object itself.
@@ -244,13 +244,13 @@ callGeneric(\dots)
       The \code{where} argument optionally says where to look for the
       function, if \code{f} is given as the name.
     }
-    \item{\code{dumpMethod}:}{ 
+    \item{\code{dumpMethod}:}{
       The resulting source file will recreate the method.
     }
-    \item{\code{findFunction}:}{ 
+    \item{\code{findFunction}:}{
       If \code{generic} is \code{FALSE}, ignore generic functions.
     }
-    \item{\code{selectMethod}:}{ 
+    \item{\code{selectMethod}:}{
       The vector of strings for the classes can be named or not.  If
       named, the names must match formal argument names of \code{f}.  If
       not named, the signature is assumed to apply to the arguments of
@@ -260,21 +260,21 @@ callGeneric(\dots)
       method (or no unique method) corresponding to this signature.
       Otherwise may return \code{NULL} or a MethodsList object.
     }
-    \item{\code{dumpMethods}:}{ 
+    \item{\code{dumpMethods}:}{
       If \code{signature} is supplied only the methods matching this
       initial signature are dumped.  (This feature is not found in
       S-Plus:  don't use it if you want compatibility.)
     }
-    \item{\code{signature}:}{ 
+    \item{\code{signature}:}{
       The advantage of using \code{signature} is to provide a check on
       which arguments you meant, as well as clearer documentation in
       your method specification.  In addition, \code{signature} checks
       that each of the elements is a single character string.
     }
-    \item{\code{removeMethods}:}{ 
+    \item{\code{removeMethods}:}{
       Returns \code{TRUE} if \code{f} was a generic function,
       \code{FALSE} (silently) otherwise.
-  
+
       If there is a default method, the function will be re-assigned as
       a simple function with this definition.
       Otherwise, the generic function remains but with no methods (so
@@ -296,7 +296,7 @@ callGeneric(\dots)
   the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }
@@ -316,7 +316,7 @@ callGeneric(\dots)
   else
     fdef <- get("myFun", allF[[1]])
 }
-  
+
 \dontshow{
 ## because nosegfault runs standardGeneric w/o the methods package, nothing
 ## really gets tested.  The following check that it catches some errors
