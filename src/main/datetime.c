@@ -458,8 +458,9 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(ptm, ans, i, valid);
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
-    PROTECT(class = allocVector(STRSXP, 1));
-    SET_STRING_ELT(class, 0, mkChar("POSIXlt"));
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("POSIXt"));
+    SET_STRING_ELT(class, 1, mkChar("POSIXlt"));
     classgets(ans, class);
     if (isgmt) {
 	PROTECT(tzone = allocVector(STRSXP, 1));
@@ -641,8 +642,9 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(&tm, ans, i, !invalid);
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
-    PROTECT(class = allocVector(STRSXP, 1));
-    SET_STRING_ELT(class, 0, mkChar("POSIXlt"));
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("POSIXt"));
+    SET_STRING_ELT(class, 1, mkChar("POSIXlt"));
     classgets(ans, class);
     UNPROTECT(3);
     return ans;

@@ -57,11 +57,11 @@ may not be supplied on a non-POSIX Unix system.
   and \code{\link{DateTimeClasses}} for the date formats.
 }
 \examples{
-%-- the output of this should be "diff"able
+%-- the output of this should be "diff"able, says MM: why?
 ncol(finf <- file.info(dir()))# at least six
 \dontrun{finf # the whole list}
 ## Those that are more than 100 days old :
-finf[ (Sys.time() - finf[,"mtime"]) > (24*60^2) * 100 , 1:4]
+finf[difftime(Sys.time(), finf[,"mtime"], units="days") > 100 , 1:4]
 
 file.info("no-such-file-exists")
 }

@@ -1,6 +1,6 @@
 
-R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Patched (2000-12-28)
+R : Copyright 2001, The R Development Core Team
+Version 1.3.0 Under development (unstable) (2001-02-28)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -152,7 +152,7 @@ IS: [1] TRUE
 > f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
-Error in structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct") : 
+Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
 > f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
@@ -516,7 +516,7 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
-Error in structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct") : 
+Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
 > f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
@@ -879,7 +879,7 @@ IS: [1] TRUE
 > f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
-Error in structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct") : 
+Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
 > f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
@@ -1233,7 +1233,7 @@ IS: [1] TRUE
 > f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
-Error in structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct") : 
+Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
 > f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
@@ -1577,7 +1577,7 @@ IS: [1] TRUE
 > f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
-Error in structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct") : 
+Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
 > f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
@@ -1921,7 +1921,7 @@ IS: [1] TRUE
 > f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
 Error in fromchar(x) : character string is not in a standard unambiguous format
 > f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
-Error in structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct") : 
+Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
 > f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
@@ -2265,7 +2265,7 @@ IS: [1] TRUE
 > f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
-Error in structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct") : 
+Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
 > f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
@@ -2613,7 +2613,7 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
 > f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
-Error in structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct") : 
+Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
 > f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
@@ -2799,6 +2799,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.49 0.03 1.52 0 0 
+Time elapsed:  5.96 1.41 7.88 0 0 
 > 
 > 

@@ -88,11 +88,17 @@ mean(time)
   their names.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
-  \code{"POSIXlt"} is closer to human-readable forms.  Logical
-  comparisons and limited arithmetic are available for both classes.
-  Differences between objects are returned as the number of (non-leap)
-  seconds between them.  One can add or subtract a number of seconds
-  from a date-time object, but not add two date-time objects.
+  \code{"POSIXlt"} is closer to human-readable forms.
+  A virtual class \code{"POSIXt"}inherits from both of the classes: it
+  is used to allow operations such as subtraction to mix the two classes.
+
+  Logical comparisons and limited arithmetic are available for both classes.
+  One can add or subtract a number of seconds from a date-time object,
+  but not add two date-time objects. Subtraction of two date-time objects
+  is equivalent to using \code{difftime}; see the details below.  Be aware
+  that \code{"POSIXlt"} objects will be interpreted as being in the
+  current timezone for these operations, unless a timezone has been
+  specified.
 
   \code{"POSIXlt"} objects will often have an attribute \code{"tzone"},
   a character vector of length 3 giving the timezone name from the
@@ -144,7 +150,6 @@ mean(time)
 
 (z <- Sys.time() - 3600)      # an hour ago
 Sys.time() - z                # just over 3600 seconds.
-difftime(Sys.time(), z)
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 format(.leap.seconds)         # all 22 leapseconds in your timezone

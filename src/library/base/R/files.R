@@ -61,7 +61,8 @@ file.copy <- function(from, to, overwrite=FALSE)
 file.info <- function(...)
 {
     res <- .Internal(file.info(fn <- c(...)))
-    class(res$mtime) <- class(res$ctime) <- class(res$atime) <- "POSIXct"
+    class(res$mtime) <- class(res$ctime) <- class(res$atime) <-
+        c("POSIXt", "POSIXct")
     class(res) <- "data.frame"
     row.names(res) <- fn
     res
