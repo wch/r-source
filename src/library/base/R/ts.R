@@ -225,7 +225,7 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 	  lty = par("lty"), lwd = par("lwd"),
 	  axes = TRUE, frame.plot = axes, ann = par("ann"),
 	  main = NULL, plot.type = c("multiple", "single"),
-	  xy.labels = n <= 150, xy.lines = do.lab, ...)
+	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines, ...)
 {
     xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y)) else NULL
