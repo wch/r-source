@@ -12,7 +12,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <errno.h>
-#if defined(_Windows)
+#if defined(Win32)
 #  include <winsock.h>
 #elif defined(MACINTOSH)
 #  include <GUSI.h>
