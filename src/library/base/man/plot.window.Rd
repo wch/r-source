@@ -22,10 +22,23 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   with \code{asp < 1} can be used to produce more accurate maps when
   using latitude and longitude.
 
-Usually, one should rather use the higher level functions instead
-and refer to their help pages for explanation of the arguments.
+Usually, one should rather use the higher level functions such as
+\code{\link{plot}}, \code{\link{hist}}, \code{\link{image}}, \dots,
+instead and refer to their help pages for explanation of the arguments.
 }
 \seealso{
 \code{\link{xy.coords}}, \code{\link{plot.xy}}, \code{\link{plot.default}}.
+}
+\examples{
+##--- An example for the use of  `asp' :
+library(mva)
+data(eurodist)
+loc <- cmdscale(eurodist)
+rx <- range(x <- loc[,1])
+ry <- range(y <- -loc[,2])
+plot(x, y, type="n", asp=1, xlab="", ylab="")
+abline(h=pretty(rx, 10),
+       v=pretty(ry, 10), col= "lightgray")
+text(x, y, names(eurodist), cex=0.5)
 }
 \keyword{aplot}
