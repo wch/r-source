@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000-3  R Development Core Team
+# Copyright (C) 2000-4  R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.35 $ ';
+my $revision = ' $Revision: 1.36 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -44,6 +44,7 @@ my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 ##      zip/tarball along with any included directories.
 ##	This needs to be fixed: this file shouldn't do binary builds,
 ##	that's what build.in is for - DJM
+##      No, that is what INSTALL --build is for, pace DJM
 
 my $topLevelFiles = "DESCRIPTION";		    
 			
@@ -58,7 +59,7 @@ my $startdir = cwd();
 if($opt_library){
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
-    $library = cwd();
+    $library = Win32::GetShortPathName(cwd());
     chdir($startdir);
 } else {
     $library = $R_HOME . "/library";
@@ -70,10 +71,8 @@ if($opt_docs) {
 	$helpflags = "HELP=NO";
     } elsif ($opt_docs eq "normal") {
 	$helpflags = "HELP=YES WINHELP=NO";
-    } elsif ($opt_docs eq "chm") {
+    } elsif ($opt_docs eq "chm"|| ($opt_docs eq "all")) {
 	$helpflags = "HELP=YES WINHELP=CHM";
-    } elsif (($opt_docs eq "winhlp") || ($opt_docs eq "all")) {
-	$helpflags = "HELP=YES WINHELP=BOTH";
     } else {
 	die "ERROR: invalid --docs value `$opt_docs'\n";
     }
@@ -99,9 +98,9 @@ foreach $pkg (@ARGV){
 	$pkgname =~ s/_[0-9\.-]*$//;
 	my $dir = "R.INSTALL";
 	mkdir($dir, 755);
-	    ## workaround for paths in Cygwin tar
-	    $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
-	if(system("tar -zxf $pkg -C $dir")) {
+	## workaround for paths in Cygwin tar
+	$pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
+	if(system("tar -zxf '$pkg' -C $dir")) {
 	    die "Error: cannot untar the package\n";}
 	$pkg = $dir."/".$pkgname;
 	$istar = 1;
@@ -118,6 +117,7 @@ foreach $pkg (@ARGV){
     die "  *** can't install into source directory ***\n" 
 	if $canonpkg eq $pkgoutdir;
     rmtree($pkgoutdir) if (-d $pkgoutdir);
+    $pkgdir = Win32::GetShortPathName($pkgdir);
 
     my $makecmd = "pkg";
     $makecmd = "pkgfake" if $opt_fake;
@@ -278,7 +278,7 @@ Options:
       --build		zip-up the installation. Implies --auto-zip
       --fake		do minimal install for testing purposes
 
-TYPE can be "none" or "normal" or "chm" (the default) or "winhlp" or "all"
+TYPE can be "none" or "normal" or "chm" (the default) or "all"
 
 Report bugs to <r-bugs\@r-project.org>.
 END
