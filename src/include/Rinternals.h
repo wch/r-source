@@ -162,7 +162,6 @@ typedef struct SEXPREC {
 #define CHAR(x)		((x)->u.vecsxp.type.c)
 #define STRING(x)	((x)->u.vecsxp.type.s)
 #define LOGICAL(x)	((x)->u.vecsxp.type.i)
-#define FACTOR(x)	((x)->u.vecsxp.type.i)
 #define INTEGER(x)	((x)->u.vecsxp.type.i)
 #define REAL(x)		((x)->u.vecsxp.type.f)
 #define COMPLEX(x)	((x)->u.vecsxp.type.z)
