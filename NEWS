@@ -229,7 +229,9 @@ BUG FIXES
 
     o   Crashes could occur if there was an error in inline
         parameters, because the call was not being recorded. It is
-        now. 
+        now.
+
+    o   Title field of DESCRIPTION now overrides TITLE file.
 
 
 	**************************************************
