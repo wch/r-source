@@ -2722,6 +2722,48 @@ AC_CACHE_CHECK(for iconv, ac_cv_func_iconv, [
 ])
 if test "$ac_cv_func_iconv" != no; then
   AC_DEFINE(HAVE_ICONV, 1, [Define if you have the `iconv' function.])
+
+  AC_CACHE_CHECK([whether iconv() accepts "latin1"], [r_cv_iconv_latin1],
+  [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <stdlib.h>
+#ifdef HAVE_ICONV_H
+#include <iconv.h>
+#endif
+
+int main () {
+  iconv_t cd = iconv_open("latin1","UTF-8");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  exit(0);
+}
+  ]])], [r_cv_iconv_latin1=yes], [r_cv_iconv_latin1=no], 
+    [r_cv_iconv_latin1=no])])
+
+  if test "$r_cv_iconv_latin1" = yes; then
+    AC_DEFINE(ICONV_LATIN1, [latin1],
+	      [Define to a value `iconv' accepts for Latin-1.])
+  else
+    AC_CACHE_CHECK([whether iconv() accepts "8859-1"], [r_cv_iconv_88591],
+    [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <stdlib.h>
+#ifdef HAVE_ICONV_H
+#include <iconv.h>
+#endif
+
+int main () {
+  iconv_t cd = iconv_open("8859-1","UTF-8");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  exit(0);
+}
+    ]])], [r_cv_iconv_88591=yes], [r_cv_iconv_88591=no], [r_cv_iconv_88591=no])])
+  fi
+  if test "$r_cv_iconv_88591" = yes ; then
+    AC_DEFINE(ICONV_LATIN1, [8859-1],
+	      [Define to a value `iconv' accepts for Latin-1.])
+  fi
 fi
 ## if the iconv we are using was in libiconv we have already included -liconv
 AC_CACHE_CHECK(for iconvlist, ac_cv_func_iconvlist, [

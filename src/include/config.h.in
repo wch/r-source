@@ -493,6 +493,9 @@
 /* Define to 1 if you have the `Xutf8TextExtents' function. */
 #undef HAVE_XUTF8TEXTEXTENTS
 
+/* Define to a value `iconv' accepts for Latin-1. */
+#undef ICONV_LATIN1
+
 /* Define if you have IEEE 754 floating point arithmetic. */
 #undef IEEE_754
 
