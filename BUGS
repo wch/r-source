@@ -180,6 +180,13 @@ Date: Wed, 1 Oct 2003 22:48:23 +0200 (MET DST)
 Subject: misprint  in Leaps $size
 From: paulluo@cs.cmu.edu
 Date: Fri, 3 Oct 2003 22:17:24 +0200 (MET DST)
+* PR# 4525 *
+Subject: Problem in 'methods' package
+From: feferraz@linux.ime.usp.br
+Date: Sat, 11 Oct 2003 08:20:46 +0200 (MET DST)
+..DBI is trying to call an unexported function from methods. Maintainer needs to
+..fix or argue that the function 
+..should be exported.
 * PR# 4688 *
 Subject: bug in fisher test---p-value cannot be Inf
 From: kjetil@entelnet.bo
@@ -240,6 +247,7 @@ From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 From: "Francis Hsuan" <francis.hsuan@temple.edu> Add To Address Book 
 Date: Tue, 2 Dec 2003 01:20:08 -0500 (EST)
 Date: Mon, 1 Dec 2003 21:53:06 -0500
+..model.frame() fails on character input: should it coerce to factor?
 
 Directory:  Documentation
 
@@ -516,19 +524,6 @@ Subject: completeSubclasses() methods bug
 From: colin@colinsmith.org
 Date: Tue, 2 Sep 2003 22:15:26 +0200 (MET DST)
 ..methods package
-* PR# 4525 *
-Subject: Problem in 'methods' package
-From: feferraz@linux.ime.usp.br
-Date: Sat, 11 Oct 2003 08:20:46 +0200 (MET DST)
-* PR# 4561 *
-Subject: Infinite recursion in getGeneric
-From: Saikat DebRoy <saikat@stat.wisc.edu>
-Date: Mon, 13 Oct 2003 12:17:11 -0400
-* PR# 5628 *
-Subject: Maybe some bug on sapply and cbind 
-From: Remy.Drouilhet@upmf-grenoble.fr
-Date: Tue,  9 Dec 2003 11:30:35 +0100 (CET)
-..problem with unlist on expression objects
 
 Directory:  Low-level
 
@@ -575,7 +570,10 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 
 Directory:  Macintosh
 
-none
+* PR# 6684 *
+Subject: http://cran.r-project.org/bin/macosx/RAqua-FAQ.html not found
+From: Markus Gail <gail@gmx.de>
+Date: Mon, 22 Mar 2004 13:13:24 +0100
 
 Directory:  Misc
 
@@ -801,11 +799,15 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6684 *
-Subject: http://cran.r-project.org/bin/macosx/RAqua-FAQ.html not found
-From: Markus Gail <gail@gmx.de>
-Date: Mon, 22 Mar 2004 13:13:24 +0100
-* PR# 6685 *
-Subject: Re: RPZ, avengers came from
-From: "Marcella Quick" <hirjdf@yahoo.com.hk>
-Date: Mon, 22 Mar 2004 17:51:06 -0400
+* PR# 6686 *
+Subject: Investors: OSSI, the Next Ditech, LendingTree, or Countrywide? Tue, 23 Mar 2004 05:14:48 -0500
+From: "Deena Boone" <haeoholsen@maktoob.com>
+Date: Tue, 23 Mar 2004 05:14:48 -0500
+* PR# 6687 *
+Subject: pgeom accuracy
+From: terra@gnome.org
+Date: Tue, 23 Mar 2004 19:09:37 +0100 (CET)
+* PR# 6688 *
+Subject: Valium Prescriptions overnight to you
+From: "Anita Mejia" <lqwdcejqyqosdc@cool.ne.jp>
+Date: Tue, 23 Mar 2004 17:15:14 -0300
