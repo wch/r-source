@@ -97,7 +97,9 @@ static char HexDigits[] = "0123456789ABCDEF";
  *
  */
 
+#ifndef DEG2RAD
 #define	DEG2RAD		0.01745329251994329576
+#endif
 
 double Log10(double x)
 {
@@ -3077,8 +3079,6 @@ double GStrHeight(char *str, int units, DevDesc *dd)
 #endif
 }
 
-double deg2rad = 0.01745329251994329576;
-
 /* Draw text in a plot. */
 /* If you want EXACT centering of text (e.g., like in GSymbol) */
 /* then pass NA_REAL for xc and yc */
@@ -3144,8 +3144,8 @@ void GText(double x, double y, int coords, char *str,
 			yc = 0.5;
 		    yoff = (1 - yc)*(n - 1) - i;
 		    yoff = GConvertYUnits(yoff, CHARS, INCHES, dd);
-		    xoff = - yoff*sin(deg2rad*rot);
-		    yoff = yoff*cos(deg2rad*rot);
+		    xoff = - yoff*sin(DEG2RAD*rot);
+		    yoff = yoff*cos(DEG2RAD*rot);
 		    xoff = x + xoff;
 		    yoff = y + yoff;
 		} else {
@@ -3184,10 +3184,10 @@ void GText(double x, double y, int coords, char *str,
 		    } else {
 			height = GStrHeight(sbuf, INCHES, dd);
 		    }
-		    xleft = xoff - xc*width*cos(deg2rad*rot) + 
-			yc*height*sin(deg2rad*rot);
-		    ybottom = yoff - xc*width*sin(deg2rad*rot) -
-			yc*height*cos(deg2rad*rot);
+		    xleft = xoff - xc*width*cos(DEG2RAD*rot) + 
+			yc*height*sin(DEG2RAD*rot);
+		    ybottom = yoff - xc*width*sin(DEG2RAD*rot) -
+			yc*height*cos(DEG2RAD*rot);
 		} else {
 		    xleft = xoff;
 		    ybottom = yoff;

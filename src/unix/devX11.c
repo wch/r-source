@@ -1448,7 +1448,9 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	/* location to DEVICE coordinates using GConvert	*/
 	/********************************************************/
 
-double deg2rad = 0.01745329251994329576;
+#ifndef DEG2RAD
+#define DEG2RAD = 0.01745329251994329576;
+#endif
 
 static void X11_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
@@ -1465,10 +1467,10 @@ static void X11_Text(double x, double y, int coords,
     if(xc != 0.0 || yc != 0) {
 	xl = X11_StrWidth(str, dd);
 	yl = GConvertYUnits(1, CHARS, DEVICE, dd);
-	x += -xc * xl * cos(deg2rad * rot) +
-	    yc * yl * sin(deg2rad * rot);
-	y -= -xc * xl * sin(deg2rad * rot) -
-	    yc * yl * cos(deg2rad * rot);
+	x += -xc * xl * cos(DEG2RAD * rot) +
+	    yc * yl * sin(DEG2RAD * rot);
+	y -= -xc * xl * sin(DEG2RAD * rot) -
+	    yc * yl * cos(DEG2RAD * rot);
     }
     XRotDrawString(display, xd->font, rot, xd->window, xd->wgc,
 		   (int)x, (int)y, str);
