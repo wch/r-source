@@ -139,12 +139,17 @@ while test -n "${1}"; do
   shift
 done
 
-if test "${gui}" = "gnome"; then
+case "${gui}" in
+gnome|GNOME)
   R_binary="${R_HOME}/bin/exec/Rgnome"
-fi
-if test "${gui}" = "GNOME"; then
-  R_binary="${R_HOME}/bin/exec/Rgnome"
-fi
+  ;;
+tk)
+  ;;
+"")
+  ;;
+*)
+  error "unknown GUI ${gui}"
+esac
 
 ## R_HOME may have moved, so check
 ## (or you get "GUI X11 is not supported")
