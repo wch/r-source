@@ -27,11 +27,7 @@
 #include <R_ext/Applic.h>
 
 /* bincode  cuts up the data using half open intervals defined as [a,b)
-   bincode2 cuts up the data using half open intervals defined as (a,b]
-
- MM: Shouldn't we afford to collapse these two into one,
-     There would have to be 'n' extra "if" evaluations only ... ?
-
+   (if right = FALSE) or (a, b] (if right = TRUE)
 */
 void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 	     int *right, int *include_border, int *naok)
@@ -66,8 +62,6 @@ void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 }
 
 /* bincount is called by  hist(.)  [only]
- *
- * bincount *counts* like bincode2, i.e. half open intervals defined as (a,b]
  */
 
 void bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
@@ -101,38 +95,4 @@ void bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 	    }
 	} else if (! *naok)
 	    error("NA's in .C(\"bincount\",... NAOK=FALSE)");
-}
-
-
-/*-- UNUSED, but still in  ./ROUTINES --- eliminate both at once ! */
-void bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
-	      int *include_border, int *naok)
-{
-    int i, lo, hi;
-    int n, nb1, new;
-
-    n = *pn;
-    nb1 = *pnb - 1;
-
-    for(i=0 ; i<n ; i++)
-	if(R_FINITE(x[i])) {
-	    lo = 0;
-	    hi = nb1;
-	    if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||
-	       (x[i] == breaks[lo] && ! *include_border))
-		/*             == */
-		code[i] = NA_INTEGER;
-	    else {
-		while(hi-lo >= 2) {
-		    new = (hi+lo)/2;
-		    if(x[i] >  breaks[new])
-			/*  == */
-			lo = new;
-		    else
-			hi = new;
-		}
-		code[i] = lo+1;
-	    }
-	} else if (! *naok)
-	    error("NA's in .C(\"bincode2\",... naok=FALSE)");
 }
