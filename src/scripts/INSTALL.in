@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.130 $'
+revision='$Revision: 1.131 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -45,6 +45,7 @@ Options:
       --use-zip-data	collect data files in zip archive
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine '--use-zip-data' and '--use-zip-help'
+      --fake		do minimal install for testing purposes
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -153,7 +154,6 @@ build_latex=true
 build_example=true
 build_help=true
 build_help_opts=
-build_libs=true
 use_configure=true
 use_zip_data=
 use_zip_help=
@@ -269,6 +269,14 @@ else
   fi
 fi
 
+if ${fake}; then
+  use_configure=false
+  build_text=true
+  build_html=false
+  build_latex=true
+  build_example=false
+fi
+
 if ${build_text}; then
   build_help_opts="${build_help_opts} --txt"
 fi
@@ -285,11 +293,6 @@ if test -z "${build_help_opts}"; then
   build_help=false
 elif ${debug}; then
   build_help_opts="--debug ${build_help_opts}"
-fi
-
-if ${fake}; then
-  use_configure=false
-  build_libs=false
 fi
 
 is_first_package=yes
@@ -371,7 +374,7 @@ do_install_source () {
     if test -f "${f}"; then cp "${f}" "${R_PACKAGE_DIR}"; fi
   done
 
-  if ${build_libs} && test -d src; then
+  if test -d src && test "${fake}" != "true"; then
     message "libs"
     if ${debug}; then set -x; fi
     mkdir -p "${R_PACKAGE_DIR}/libs"
@@ -423,6 +426,7 @@ do_install_source () {
       if test -f NAMESPACE; then
         echo ".onLoad <- function(list, pkg) NULL" >> \
 	  "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+	sed -e '/useDynLib/d' NAMESPACE > "${R_PACKAGE_DIR}/NAMESPACE"
       else
         echo ".First.lib <- function(lib, pkg) NULL" >> \
           "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
@@ -445,7 +449,7 @@ do_install_source () {
     fi
   fi
 
-  if test -d demo; then
+  if test -d demo && test "${fake}" != "true"; then
     message "demo"
     mkdir -p "${R_PACKAGE_DIR}/demo"
     rm -f "${R_PACKAGE_DIR}/demo/"*
@@ -453,7 +457,7 @@ do_install_source () {
     chmod 644 "${R_PACKAGE_DIR}/demo/"*
   fi
 
-  if test -d exec; then
+  if test -d exec && test "${fake}" != "true"; then
     message "exec"
     mkdir -p "${R_PACKAGE_DIR}/exec"
     rm -f "${R_PACKAGE_DIR}/exec/"*
@@ -461,7 +465,7 @@ do_install_source () {
     chmod 755 "${R_PACKAGE_DIR}/exec/"*
   fi
 
-  if test -d inst; then
+  if test -d inst && test "${fake}" != "true"; then
     message "inst"
     cp -r inst/* "${R_PACKAGE_DIR}"
   fi
