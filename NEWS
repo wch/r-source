@@ -532,6 +532,9 @@ BUG FIXES
     o	str(Surv(..)) failed for  type = "counting"  Surv objects and for
 	promises.
 
+    o   approx(c(1,2),c(NA,NA),1.5,rule=2) does not segfault anymore
+	(PR#7177), but give an error.
+
 
 
 		CHANGES IN R VERSION 1.9.1
@@ -659,8 +662,7 @@ BUG FIXES
     o	bxp() fixed for e.g.,  boxplot(..., border=2:4)
 
     o	approx(list(x=rep(NaN,9), y=1:9), xout=NaN) does not seg.fault
-	anymore (PR#6809), nor does approx(c(1,2),c(NA,NA),1.5,rule=2)
-	(PR#7177) but both give an error.
+	anymore (PR#6809).
 
     o	plot(1, pch=NA) does not give an error anymore and
 	plot(1:2, pch=c("o",NA)) only prints one symbol	 (PR#6876).
