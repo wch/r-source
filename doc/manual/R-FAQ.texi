@@ -3905,10 +3905,9 @@ There is an Emacs package called @acronym{ESS} (``Emacs Speaks
 Statistics'') which provides a standard interface between statistical
 programs and statistical processes.  It is intended to provide
 assistance for interactive statistical programming and data analysis.
-Languages supported include: S dialects (S 3/4, @SPLUS{} 3.x/4.x/5.x,
-and R), LispStat dialects (XLispStat, ViSta) and SAS.  Stata and SPSS
-dialect (SPSS, PSPP) support is being examined for possible future
-implementation
+Languages supported include: S dialects (R, S 3/4, and @SPLUS{}
+3.x/4.x/5.x/6.x/7.x), LispStat dialects (XLispStat, ViSta), SAS, Stata,
+and BUGS.
 
 @acronym{ESS} grew out of the need for bug fixes and extensions to
 S-mode 4.8 (which was a @acronym{GNU} Emacs interface to S/@SPLUS{}
