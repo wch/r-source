@@ -48,15 +48,14 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     files <- listFilesWithExts(docsDir, docsExts)
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
         files <- c(files, listFilesWithExts(docsOSDir, docsExts))
-    file.create(docsFile)
-    for(f in files) {
-        stub <- if(.Platform$OS.type == "windows")
-            system(paste("Rcmd extract-usage", f), intern = TRUE,
-                   invisible = TRUE)
-        else
-            system(paste("R CMD extract-usage", f), intern = TRUE)
-        cat(stub, sep = "\n", file = docsFile, append = TRUE)
-    }
+    docsList <- tempfile("Rdocs")
+    FILES <- c(FILES, docsList)
+    cat(files, sep = "\n", file = docsList)
+    if(.Platform$OS.type == "windows")
+        system(paste("Rcmd extract-usage", docsList, docsFile),
+               invisible = TRUE)
+    else
+        system(paste("R CMD extract-usage", docsList, docsFile))
 
     lib.source <- function(file, env) {
         oop <- options(keep.source = FALSE)

@@ -4,34 +4,45 @@
 
 use R::Rdtools;
 
-my $text;
 my $OSdir = "unix";
-my $skipping = 0;
-while(<>) {
-    if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
-	if ($1 ne $OSdir) { $skipping = 1; }
-	next;
+
+open INFILE, "< $ARGV[0]" || die "Can't open input file";
+open OUTFILE, "> $ARGV[1]" || die "Can't open output file";
+
+while (<INFILE>) {
+    chomp;
+    open RDFILE, "< $_";
+    print OUTFILE "# usages in file $_\n";
+    my $text;
+    my $skipping = 0;
+    while(<RDFILE>) {
+	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
+	    if ($1 ne $OSdir) { $skipping = 1; }
+	    next;
+	}
+	if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
+	    if ($1 eq $OSdir) { $skipping = 1; }
+	    next;
+	}
+	if (/^#endif/o) {
+	    $skipping = 0;
+	    next;
+	}
+	next if $skipping > 0;
+	$text .= $_;
     }
-    if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
-	if ($1 eq $OSdir) { $skipping = 1; }
-	next;
+
+    {
+	local $/; # unset for get_usages
+	%usages = get_usages($text);
     }
-    if (/^#endif/o) {
-	$skipping = 0;
-	next;
+    
+    foreach $key (keys(%usages)){
+	$usages{$key} =~ s/ *\\.?dots/ .../g;
+	if ($key !~ /^</) {
+	    print OUTFILE "$key <- function$usages{$key} NULL\n";
+	}
     }
-    next if $skipping > 0;
-    $text .= $_;
+    
+    print OUTFILE "\n";
 }
-
-undef $/;
-%usages = get_usages($text);
-
-foreach $key (keys(%usages)){
-    $usages{$key} =~ s/ *\\.?dots/ .../g;
-    if ($key !~ /^</) {
-	print "$key <- function$usages{$key} NULL\n";
-    }
-}
-
-print "\n";
