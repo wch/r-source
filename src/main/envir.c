@@ -402,6 +402,9 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
   searched.  This is intended to make it possible to implement
   namespaces at some (indeterminate) point in the future.
 
+  We hash the initial environment.  100 is a magic number discovered
+  by Ross.  Change it if you feel inclined.
+
 */
 
 void InitGlobalEnv()
