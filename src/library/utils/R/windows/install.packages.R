@@ -54,6 +54,9 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
+    bundles <- .find_bundles(available)
+    for(bundle in names(bundles))
+        pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
     if(dependencies) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
@@ -71,7 +74,6 @@ install.packages <- function(pkgs, lib, repos = CRAN,
             pkgs <- c(toadd, pkgs)
             p1 <- toadd
         }
-        bundles <- .find_bundles(available)
         for(bundle in names(bundles))
             pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
         pkgs <- unique(pkgs)
@@ -359,8 +361,16 @@ download.packages <- function(pkgs, destdir, available = NULL,
 menuInstallCran <- function()
 {
     a <- available.packages()
-    o <- order(a[, 1])
-    install.packages(select.list(a[o,1],,TRUE), .libPaths()[1], available=a,
+    contains <- .find_bundles(a)
+    extras <- unlist(lapply(names(contains), function(x)
+                            paste(contains[[x]], " (", x, ")", sep="")))
+    p <- sort(as.vector(c(a[, 1], extras)))
+    sel <- select.list(p,,TRUE)
+    if(!length(sel)) return()
+    bundles <- grep("(", sel, fixed = TRUE)
+    if(length(bundles)) sel[bundles] <-
+        sub("[^(]*\\((.*)\\)", "\\1" , sel[bundles])
+    install.packages(unique(sel), .libPaths()[1], available=a,
                      dependencies=TRUE)
 }
 
@@ -421,4 +431,3 @@ zip.unpack <- function(zipname, dest)
         }
     } else stop(paste("zipfile", zipname, "not found"))
 }
-

@@ -46,6 +46,9 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
+    bundles <- .find_bundles(available)
+    for(bundle in names(bundles))
+        pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
     if(dependencies) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
@@ -63,7 +66,6 @@ install.packages <- function(pkgs, lib, repos = CRAN,
             pkgs <- c(toadd, pkgs)
             p1 <- toadd
         }
-        bundles <- .find_bundles(available)
         for(bundle in names(bundles))
             pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
         pkgs <- unique(pkgs)
