@@ -6,10 +6,11 @@ as.char.or.expr <- function(x) {
 
 text <- function(x, ...) UseMethod("text")
 text.default <- function(x, y = NULL, labels = seq(along = x),
-                         adj = NULL, pos = NULL, offset = 0.5, ...) {
+                         adj = NULL, pos = NULL, offset = 0.5, 
+                         vfont = NULL, ...) {
     if (!missing(y) && (is.character(y) || is.expression(y))) {
 	labels <- y; y <- NULL
     }
     .Internal(text(xy.coords(x,y, recycle=TRUE),
-		   as.char.or.expr(labels), adj, pos, offset, ...))
+		   as.char.or.expr(labels), adj, pos, offset, vfont, ...))
 }
