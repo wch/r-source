@@ -11,7 +11,7 @@ export R_HOME
 
 ## NOTE:
 ## We must set this here rather than in the main binary.
-: ${R_LD_LIBRARY_PATH=${R_HOME}/bin:@R_LD_LIBRARY_PATH@}
+: ${R_LD_LIBRARY_PATH=${R_HOME}/lib:@R_LD_LIBRARY_PATH@}
 if test -z "${@shlibpath_var@}"; then
   @shlibpath_var@="${R_LD_LIBRARY_PATH}"
 else

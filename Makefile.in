@@ -105,7 +105,7 @@ uninstall:
 	@for f in $(INSTFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
-	@rm -rf $(Rexecbindir)
+	@rm -rf $(Rexecbindir) $(Rexeclibdir)
 	@rm -rf $(rhome)/demos
 	@rm -rf $(rhome)/gnome
 

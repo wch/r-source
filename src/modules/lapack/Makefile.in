@@ -86,8 +86,9 @@ $(top_builddir)/etc/Rlapack.exp: $(Rlapack_la_OBJECTS)
 	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(Rlapack_la_OBJECTS)
 
 Rlapack_install: $(Rlapack_la) 
+	@$(MKINSTALLDIRS) $(R_HOME)/lib/
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
-	  $(R_HOME)/bin/$(Rlapack_la)
+	  $(R_HOME)/lib/$(Rlapack_la)
 
 install: installdirs
 @USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) $(Rexecmodulesdir)/lapack$(SHLIB_EXT)

@@ -27,9 +27,12 @@ NEW FEATURES
 	is a matrix when the previous default of na.omit() would omit
 	entire rows.  (Related to PR#6846.)
 
-    o   The 'formula' method for pairs() has a 'na.action' argument,
-	defaulting to na.pass(), rather than the previous unchangeable
-	value, getOption("na.omit").
+    o	The 'formula' method for pairs() has a 'na.action' argument,
+	defaulting to na.pass(), rather than the value of
+	getOption("na.omit").
+
+    o	The 'formula' method for mosaicplot() has a 'na.action' argument
+	defaulting to na.omit().
 
 
 UTILITIES
@@ -50,11 +53,15 @@ DEPRECATED & DEFUNCT
     o	The undocumented function newestVersion() is no longer exported
 	from package utils.  (Mainly because it was not completely general.)
 
+    o	If --enable-R-shlib is specified, a copy of libR is still
+	installed in $R_HOME/bin, but this will be removed in the near
+	future.  Use that in R_HOME/lib instead.
 
 
 INSTALLATION CHANGES
 
-
+    o	The dynamic libraries libR and libRlapack are now installed in
+	R_HOME/lib rather than R_HOME/bin.
 
 
 BUG FIXES

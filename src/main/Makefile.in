@@ -178,8 +178,12 @@ installdirs:
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
 install-bin:
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
-install-lib:
+install-lib: installdirs
 @USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
+## <FIXME>
+## This is just a temporary expedient for backwards compatibility.
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexecbindir)/$(libR_la)
+## </FIXME>
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install

@@ -114,7 +114,7 @@ rhome = @libdir@/R
 
 Rexecbindir = $(rhome)/bin
 ## FIXME: should be 'lib' eventually
-Rexeclibdir = $(rhome)/bin
+Rexeclibdir = $(rhome)/lib
 ## Alternatively, we could try to set pkglibdir = $(rhome)/lib when
 ## switching to automake.
 ## </FIXME>
