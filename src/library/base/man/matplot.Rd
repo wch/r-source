@@ -15,10 +15,9 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
     rows should match.  If one of them are missing, the other is taken
     as \code{y} and an \code{x} vector of \code{1:n} is used.
     Missing values (\code{NA}s) are allowed.}
-  \item{type}{character string, telling which type of plot (\code{"p"},
-    points; \code{"l"}, lines; \code{"b"}, both; \code{"o"}, overplotted
-    both; \code{"n"}, none; or \code{"h"}, high-density) should be done
-    for each column of \code{y}.  The first character of \code{type}
+  \item{type}{character string indicating the type of plot for each
+    column of \code{y}, see \code{\link{plot}} for all possible
+    \code{type}s.  The first character of \code{type}
     defines the first plot, the second character the second, etc.
     Characters in \code{type} are cycled through; e.g., \code{"pl"}
     alternately plots points and lines.}
@@ -79,7 +78,7 @@ matplot(sines, type = "o", col = rainbow(ncol(sines)))
 
 x <- 0:100/100
 matplot(x, outer(x, 1:8, function(x, k) sin(k * pi * x)),
-        type = "l", col = 1:8, ylim = c(-2,2))
+        type = "plobcsSh", ylim = c(-2,2))
 
 data(iris)                  # is data.frame with  `Species' factor
 table(iris$Species)
