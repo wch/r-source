@@ -661,3 +661,15 @@ Date: Tue, 17 Dec 2002 10:40:31 +0100 (MET)
 Subject: URGENT ASSISTANCE
 From: mrs mariam sese-seko <mrs_mariamsese13@rediffmail.com>
 Date: Tue, 17 Dec 2002 19:30:58 +0000
+* PR# 2380 *
+Subject: [R] Lattice: ltext() takes only the x-part of the adj argument
+From: Wolfram Fischer <wolfram@fischer-zim.ch>
+Date: Wed, 18 Dec 2002 11:42:08 +0100
+* PR# 2381 *
+Subject: Unix Symbolic links failing ("ls -s realfile linkedas")
+From: morlan@mayo.edu
+Date: Wed, 18 Dec 2002 23:03:57 +0100 (MET)
+* PR# 2382 *
+Subject: Re: [Rd] Unix Symbolic links failing ("ls -s realfile linkedas")
+From: ripley@stats.ox.ac.uk
+Date: Wed, 18 Dec 2002 22:31:55 +0000 (GMT)
