@@ -215,6 +215,13 @@ NEW FEATURES
 
     o	provide() is now deprecated.
 
+    o   Interface and language bindings for the Tcl/Tk graphical
+        interface toolkit. This makes it possible to do some rather
+        nifty things with buttons and entry fields and so forth in
+        very few lines of code. It is still somewhat experimental so
+        don't go churning out thousands of lines of GUI code and then
+        blame us for changing the API later on.
+         
 
 BUG FIXES
 
