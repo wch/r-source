@@ -128,7 +128,8 @@ BUG FIXES
 
     o	Windows version copes better with paths with spaces in.
 
-    o	density() should work better with NAs, even on DEC Alpha
+    o	density() should work better with NAs and infinite values. See
+	?density for the current definitions of how these are handled.
 
     o	R CMD check had a typo which made the final message fail
 
