@@ -207,10 +207,9 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 
 Sources are also available via @uref{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
-@uref{http://subversion.tigris.org/}---those using Windows may also want
-to look at @uref{http://tortoiseSVN.tigris.org/}), you can check out and
-update the current r-devel from
-@uref{https://svn.r-project.org/R/trunk/} and the current r-patched from
+@uref{http://subversion.tigris.org/}), you can check out and update the
+current r-devel from @uref{https://svn.r-project.org/R/trunk/} and the
+current r-patched from
 @samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-patches/}
 (where @var{x} and @var{y} are the major and minor number of the current
 released version of R).  E.g., use
@@ -402,7 +401,7 @@ make info     @r{to create info files (not @samp{refman}).}
 @end smallexample
 
 You will not be able to build the info files unless you have
-@command{makeinfo} version 4 or later installed.
+@command{makeinfo} version 4.5 or later installed.
 
 The DVI versions can be previewed and printed using standard programs
 such as @command{xdvi} and @command{dvips}.  The PDF versions can be
@@ -721,7 +720,7 @@ From a running @R{} process they can be removed by
 Finally, in most installations one can just remove the package directory
 from the library.
 
-@strong{Note:} whereas it is currently possible to install package
+@strong{Note}: whereas it is currently possible to install package
 @emph{bundles}, one cannot remove these as such---the packages contained
 in the bundle have to removed individually.
 
@@ -759,7 +758,7 @@ You will need Perl version 5.004 or later, available via
 documentation.
 
 You will not be able to build the info files unless you have
-@command{makeinfo} version 4 or later installed.
+@command{makeinfo} version 4.5 or later installed.
 
 The typeset documentation needs @command{tex} and @command{latex}, or
 @command{pdftex} and @command{pdflatex}.
@@ -1176,7 +1175,7 @@ use @samp{MAIN_CFLAGS=-pg}, @samp{MAIN_FFLAGS=-pg},
 @samp{MAIN_LDFLAGS=-pg} on platforms where @samp{-pg} cannot be used
 with position-independent code.
 
-@strong{Beware:} it may be necessary to set @code{CFLAGS} and
+@strong{Beware}: it may be necessary to set @code{CFLAGS} and
 @code{FFLAGS} in ways compatible with the libraries to be used: one
 possible issue is the alignment of doubles, another is the way
 structures are passed.
