@@ -44,7 +44,8 @@ endif
 
 ## =============== end of user-customizable parts  ===================
 
-REC_NONBUNDLES=KernSmooth boot cluster foreign grid lattice mgcv nlme rpart survival
+## want survival before boot for xrefs
+REC_NONBUNDLES=KernSmooth survival boot cluster foreign grid lattice mgcv nlme rpart
 RECOMMENDED=VR $(REC_NONBUNDLES)
 REC_PKGS=$(REC_NONBUNDLES) MASS class nnet spatial
 
