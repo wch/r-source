@@ -1,10 +1,27 @@
 /*
-	File:		DataBrowser.c
-	
-	Contains:	Basic Data Browser sample, Carbon API
-	
-	Very experimental code. Mac only.
-
+ *  R : A Computer Language for Statistical Data Analysis
+ *  file DataBrowser.c
+ *  Copyright (C) 1998-1999  Ross Ihaka
+ *                2002       Stefano M. Iacus and the R core team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *  Experimental but working code of a graphical workspace browser.
+ *  This is Macintosh only. Can be adapted for the Darwin version
+ *  too without problems.
+ *  Today, Aug 4 2002, S.M. Iacus
 */
 
 #ifdef __APPLE_CC__
@@ -20,11 +37,19 @@
 
 #include <RIntf.h>
 
+
+#include <R.h>
+#include <R_ext/Mathlib.h>
+#include <R_ext/Boolean.h>
+#include <R_ext/Rdynload.h>
+#include <Rdefines.h>
+#include <Rinternals.h>
+
 // --------------------------------------------------------------------
 
-#define MaxObjects 256
 
-char *str[MaxObjects];
+
+
 
 static void ConfigureDataBrowser(ControlRef);
 static void CreateDataBrowser(WindowRef, ControlRef*);
@@ -46,131 +71,249 @@ static pascal Boolean MyItemComparison(
 	DataBrowserItemID itemTwoID, DataBrowserPropertyID sortProperty);
 	
 void OpenDataBrowser(void);
-void CloseDataBrowser(WindowRef window);
+void CloseDataBrowser(void);
+void FreeBrowserStuff(void);
 
 Boolean isBrowserOpen = false;
+WindowRef BrowserWindow = NULL;
+ControlRef WSpaceBrowser = NULL;
+Rboolean isEventHandlerOn = FALSE;
 
-
-
-#define MaxItems  1000
+#define MaxItems  2500
 
 /*
-  Ad esempio ci sono 4 oggetti
-  w vettore
-  x lista di 3 elementi (a,b,c)
-  y lista di 2 elementi (d,e) in cui d e' una lista di 3 (h,i,l)
-  z vettore
+  How works the workspace browser? Suppose you have 4 objects
+  in the workspace. The should be prepeared as follows:
 
-  in tutto  1  <-  w
-            3  <-  x
-            6  <-  y
+  w vector
+  x list of 3 objects
+  y list of 2 object (d,e)
+  z vector
+
+  number of 
+  total items  1  <-  w
+             3+1  <-  x
+             1+2  <-  y
             1  <-  z
             ---------
-           11  Totale
+               9  Totale
             
-oggetto	ID			subitems	Root	Container
+object	ID			subitems	IsRoot	IsContainer
 w		1			0			*
 x		2			3			*		*
 y		3			2			*		*
 z		4			0			*
 
-da x 
+from x 
 
 a		5			0
 b		6			0
 c		7			0
 
-da y
-d		8			3					*
+from y
+d		8			0					
 e		9			0
 
-da d
-h		10			0
-i		11			0
-l		12			0
 
 */
 
-/* qui vanno messi gli ID degli oggetti iniziali */
 int NumOfRoots=0;
-
-int RootItems[] = {1,2,3,4};
-
-Boolean Container[MaxItems];
-int ItemsPerContainer[MaxItems];
+int *RootItems = NULL; 
 int *SubItemsID[MaxItems];
-
 int CurrentID=0;
 
 void InitContainers(void);
 void SetSubItems(int i);
 
-void InitContainers(void){
 
-	int i,j;
-	
-	NumOfRoots = sizeof(RootItems)/sizeof(int);
-	
-	CurrentID = NumOfRoots;
-	
-	for(i = 0; i < MaxItems; i++){
 
-     Container[i] = false;
-     ItemsPerContainer[i] = 0; 
-     SubItemsID[i] = NULL;    
-	}
 
-/* defines the containers */	
-	 Container[2] = true;
-     ItemsPerContainer[2] = 3;     
-     SetSubItems(2);   
-    
 
-	 Container[3] = true;
-     ItemsPerContainer[3] = 2;     
-     SetSubItems(3);   
+/*
+  id : integer, id number in the browser
+  isroot : boolean, this id is a root item
+  iscont : boolean, is container?
+  numofit : integer, number of items
+  name   : char, name of objects
+  type   : type, class or mode
+  objsize: can be dim, length or number of levels 
+*/
+
+/* The following are local copies of the above */
+
+int *IDNum;              /* id          */
+Rboolean *IsRoot;        /* isroot      */
+Rboolean *IsContainer;   /* iscontainer */
+int *NumberOfItems;      /* numofit     */
+char **Names;             /* name        */
+char **Types;             /* type        */
+char **Sizes;             /* objsize     */
+int NumOfID = 0;                /* length of the vectors    */
+                                /* We do not check for this */ 
+ 
+SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env);
+
+SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  int i;
+   SEXP id, isroot, iscont, numofit;
+  SEXP name, type, objsize;
+  char *vm;
+   
+  NumOfID =0;
+   
+  FreeBrowserStuff();
     
-	
-	
-	 Container[8] = true;
-     ItemsPerContainer[8] = 3; 
-     SetSubItems(8);   
+  checkArity(op, args);
+
+  vm = vmaxget();
+  id = CAR(args); args = CDR(args);
+  isroot = CAR(args); args = CDR(args);
+  iscont = CAR(args); args = CDR(args);
+  numofit = CAR(args); args = CDR(args);
+  name = CAR(args); args = CDR(args);
+  type = CAR(args); args = CDR(args);
+  objsize = CAR(args); 
+
+  if(!isInteger(id)) {
+   CloseDataBrowser();
+   errorcall(call,"`id' must be integer");
+   }
+   
+  NumOfID = LENGTH(id);
+  if(NumOfID > MaxItems)
+   NumOfID = MaxItems;
+
+   
+  if(!isString(name)){
+    CloseDataBrowser();
+	errorcall(call, "invalid objects' name");
+  }
+    
+  if(!isString(type)){
+    CloseDataBrowser();
+    errorcall(call, "invalid objects' type");
+   }
+   
+  if(!isString(objsize)){
+    CloseDataBrowser();
+	errorcall(call, "invalid objects' size");
+  } 
+  if(!isLogical(isroot)){
+   CloseDataBrowser();
+   errorcall(call, "invalid `isroot' definition");
+  }
+  
+  if(!isLogical(iscont)){
+    CloseDataBrowser();
+	errorcall(call, "invalid `iscont' definition");
+  } 
+  
+  if(!isInteger(numofit)){
+   CloseDataBrowser(); 
+   errorcall(call,"`numofit' must be integer");
+  }
+   
+  
+   
+  Names = (char**)malloc(NumOfID * sizeof(char*));
+  Sizes = (char**)malloc(NumOfID * sizeof(char*));
+  Types = (char**)malloc(NumOfID * sizeof(char*));
+ 
+  IDNum = (int*)malloc(NumOfID * sizeof(int));
+  IsRoot = (Rboolean*)malloc(NumOfID * sizeof(Rboolean));
+  IsContainer = (Rboolean*)malloc(NumOfID * sizeof(Rboolean));
+  NumberOfItems = (int*)malloc(NumOfID * sizeof(int));
+ 
+   
+  for(i=0; i<NumOfID; i++){
+
+   if (!isNull(STRING_ELT(name, i)))
+	    Names[i] = CHAR(STRING_ELT(name, i));
+	else
+	    Names[i] = CHAR(R_BlankString);
+
+   if (!isNull(STRING_ELT(type, i)))
+	    Types[i] = CHAR(STRING_ELT(type, i));
+	else
+	    Types[i] = CHAR(R_BlankString);
+
+   if (!isNull(STRING_ELT(objsize, i)))
+	    Sizes[i] = CHAR(STRING_ELT(objsize, i));
+	else
+	    Sizes[i] = CHAR(R_BlankString);  
+
+	IDNum[i] = INTEGER(id)[i];
+    NumberOfItems[i] = INTEGER(numofit)[i];
+    IsRoot[i] = LOGICAL(isroot)[i];
+    IsContainer[i] = LOGICAL(iscont)[i];
     
     
+        
+  }
+
+    
+  /*
+   for(i=0; i<NumOfID; i++)
+    Rprintf("\n id=%d names=%s, type=%s, size=%s, isroot=%d, iscont=%d, items=%d",IDNum[i],
+     Names[i],Types[i],Sizes[i],IsRoot[i],IsContainer[i],NumberOfItems[i]);   
+  */
+
+
+  OpenDataBrowser();
+
+
+  vmaxset(vm);
+  return R_NilValue;
+
+ 
 }
 
 
 
-void SetSubItems(int i)
-{
-  int j;
-  
-  SubItemsID[i] = malloc(sizeof(int)*ItemsPerContainer[i]);
-  for(j=0; j<ItemsPerContainer[i]; j++){
+
+
+
+
+
+
+
+void InitContainers(void){
+
+	int i,j,k=0;
+	NumOfRoots = 0;
+	
+	for(i=0;i<NumOfID; i++)
+	 if(IsRoot[i])
+	  NumOfRoots++;
+	if(RootItems) free(RootItems);
+	  
+	RootItems = (int)malloc(sizeof(int)*NumOfRoots);
+	//Rprintf("\n NumOfRoots=%d",NumOfRoots);
+	CurrentID = NumOfRoots;
+	for(i = 0; i < NumOfID; i++){
+     if(IsRoot[i]) { 
+ //    Rprintf("\n RootItem[%d]=%d",k,IDNum[i]);
+     RootItems[k] = IDNum[i]; k++;}     
+     SubItemsID[i] = NULL;    
+     if(IsContainer[i]){
+      SubItemsID[i] = malloc(sizeof(int)*NumberOfItems[i]);
+      for(j=0; j<NumberOfItems[i]; j++){
         CurrentID++; 
         SubItemsID[i][j] = CurrentID;
        }
+     }   /* if */
+	} /* for */
+ //   Rprintf("\n exit init cont");
 }
 
-void ClearContainers(void);
 
-void ClearContainers(void)
-{
-	int i;
 
-	for(i = 0; i < MaxItems; i++){
-     if(SubItemsID[i])
-      free(SubItemsID[i]);
-    }
-}
 
 // --------------------------------------------------------------------
 void OpenDataBrowser(void)
 {
-	WindowRef window = NULL;
-    ControlRef browser = NULL;
 	OSStatus err = noErr;
-	char mystr[300];
 	int i;
     Rect bounds = { 400, 400, 600, 800 };
     EventTypeSpec windowEvents[] = {
@@ -182,103 +325,103 @@ void OpenDataBrowser(void)
 		{ kEventClassWindow,	kEventWindowGetClickActivation }
 			};
     
-     if(isBrowserOpen)
-     return;
      
+    if(BrowserWindow == NULL) 
     CreateNewWindow(kDocumentWindowClass,  kWindowStandardHandlerAttribute |
-            kWindowStandardDocumentAttributes, &bounds, &window);
+            kWindowStandardDocumentAttributes, &bounds, &BrowserWindow);
 
-    
-    if(window == NULL)
+    if(BrowserWindow == NULL)
      return;
-    
-    for(i = 0; i < MaxObjects; i++)
-     { 
-       sprintf(mystr,"it = %d",i); 
-       str[i] = malloc(sizeof(mystr+1));
-       strcpy(str[i],mystr);
-     }
      
-     
-	
-     InstallWindowEventHandler(window, 
+     	
+    if(!isEventHandlerOn){
+     InstallWindowEventHandler(BrowserWindow, 
     		NewEventHandlerUPP(BrowserEventHandler), 
     		sizeof(windowEvents)/sizeof(EventTypeSpec), windowEvents, NULL, NULL);
- 
-     SetWindowTitleWithCFString(window, CFSTR("R Workspace Browser"));
+     isEventHandlerOn = TRUE;
+     SetWindowTitleWithCFString(BrowserWindow, CFSTR("R Workspace Browser"));
+    }
+     
+     
     
     // Create the DataBrowser
-    CreateDataBrowser(window, &browser);
-	InstallDataBrowserCallbacks(browser);
-
-	if(browser == NULL){
-      
-      for(i = 0; i < MaxObjects; i++)
-       if(str[i]) 
-        free(str[i]);
-        
-	 DisposeWindow(window);
+    if(WSpaceBrowser==NULL){
+     CreateDataBrowser(BrowserWindow, &WSpaceBrowser);
+	 InstallDataBrowserCallbacks(WSpaceBrowser);
+    }
+    
+	if(WSpaceBrowser == NULL){              
+	 /* rimuovere eventhandler?*/
+	 CloseDataBrowser();	 
 	 return;
 	}
 	
     // Configure the DataBrowser
-	ConfigureDataBrowser(browser);
-    err = SetDataBrowserTarget(browser, 1);
+	if(!isBrowserOpen)
+	 ConfigureDataBrowser(WSpaceBrowser);
+    err = SetDataBrowserTarget(WSpaceBrowser, 1);
     
     // Set the keyboard focus
-	SetKeyboardFocus(window, browser, kControlDataBrowserPart);
+	SetKeyboardFocus(BrowserWindow, WSpaceBrowser, kControlDataBrowserPart);
 	
 	// Store DB as a window property
-    SetWindowProperty(window,
+    SetWindowProperty(BrowserWindow,
         kMyCreator, kMyDataBrowser,
-        sizeof(browser), &browser);
+        sizeof(WSpaceBrowser), &WSpaceBrowser);
 
    
    InitContainers();
    
-   AddDataBrowserItems(browser, kDataBrowserNoItem, 
+   for(i=0;i<NumOfRoots;i++)
+    //Rprintf("\n RootItem[%d]=%d",i,RootItems[i]);
+    
+   AddDataBrowserItems(WSpaceBrowser, kDataBrowserNoItem, 
 				NumOfRoots, RootItems, kDataBrowserItemNoProperty);
 
 
     // Show window & run
-    ShowWindow(window);
+    ShowWindow(BrowserWindow);
 
     isBrowserOpen = true;
 }
 
+void FreeBrowserStuff(void)
+{    
+    int i;
 
-void CloseDataBrowser(WindowRef window)
+	for(i = 0; i < NumOfID; i++){
+     if(SubItemsID[i])
+      { free(SubItemsID[i]); SubItemsID[i] = NULL; }
+    }
+
+    NumOfID = 0;
+    
+    if(RootItems)
+     { free(RootItems); RootItems = NULL; }
+
+    if(Names)   { free(Names); Names = NULL; }
+    if(Sizes)   { free(Sizes); Sizes = NULL; }
+    if(Types)   { free(Types); Types = NULL; }
+    if(IDNum)   { free(IDNum); IDNum = NULL; }
+    if(IsRoot)  { free(IsRoot); IsRoot = NULL; }
+    if(IsContainer)  { free(IsContainer); IsContainer = NULL; }
+    if(NumberOfItems) { free(NumberOfItems); NumberOfItems = NULL; }
+
+}
+
+void CloseDataBrowser(void)
 {
-	ControlRef browser;
 	int i;
 	
-	if(window == NULL)
-	 return;
-	 
-	browser = GetDataBrowserFromWindow(window);
-		   
-		     		
-  /*  const UInt16 IDs[] = { 
-		     			kSettingsDialog, kCustomizeDialog };
-		     		
-		     		for (UInt16 i = 0; i < sizeof(IDs); i++)
-		     		{
-			     		const UInt16 ID = IDs[i];
-			     		DialogRef customizer = 
-			     			GetCustomizer(browser, ID);
-			     		
-			     		if (customizer != NULL)
-			     			DisposeDialog(customizer);
-		     		}
-	*/	     		
-		     		DisposeWindow(window);
-	for(i = 0; i < MaxObjects; i++)
-       if(str[i]) 
-        free(str[i]);
+    DisposeWindow(BrowserWindow);
+    BrowserWindow = NULL;
     
-    ClearContainers();
+	isEventHandlerOn = FALSE;
+	
+    FreeBrowserStuff();
           
     isBrowserOpen = false;
+    WSpaceBrowser = NULL;
 } 
 
 // --------------------------------------------------------------------
@@ -338,7 +481,6 @@ static void ConfigureDataBrowser(ControlRef browser)
 			columnDesc.propertyDesc.propertyID = kObjectColumn;
 			columnDesc.propertyDesc.propertyType = kDataBrowserTextType;
 			columnDesc.propertyDesc.propertyFlags = kDataBrowserPropertyIsMutable | 
-			                                        kDataBrowserListViewSelectionColumn | 
 													kDataBrowserListViewDefaultColumnFlags;
 			
 			columnDesc.headerBtnDesc.btnContentInfo.contentType = kControlContentIconRef;
@@ -346,7 +488,7 @@ static void ConfigureDataBrowser(ControlRef browser)
 			columnDesc.headerBtnDesc.minimumWidth = 30;
 			columnDesc.headerBtnDesc.maximumWidth = 200;
 			
-			columnDesc.headerBtnDesc.btnFontStyle.just = teCenter;
+			columnDesc.headerBtnDesc.btnFontStyle.just = teFlushLeft;
 			
 			columnDesc.headerBtnDesc.btnFontStyle.font = kControlFontViewSystemFont;
 			columnDesc.headerBtnDesc.btnFontStyle.style = normal;
@@ -361,7 +503,7 @@ static void ConfigureDataBrowser(ControlRef browser)
 			
 			columnDesc.propertyDesc.propertyID = kTypeColumn;
 			
-			columnDesc.headerBtnDesc.btnFontStyle.just = teFlushRight;
+			columnDesc.headerBtnDesc.btnFontStyle.just = teFlushLeft;
 
 			columnDesc.propertyDesc.propertyFlags = kDataBrowserPropertyIsMutable | 
 													kDataBrowserListViewDefaultColumnFlags;
@@ -376,16 +518,16 @@ static void ConfigureDataBrowser(ControlRef browser)
 			
 			columnDesc.propertyDesc.propertyID = kSizeColumn;
 			columnDesc.propertyDesc.propertyType = kDataBrowserTextType;
-			columnDesc.propertyDesc.propertyFlags = kDataBrowserListViewSelectionColumn | 
+			columnDesc.propertyDesc.propertyFlags = kDataBrowserPropertyIsMutable | 
 													kDataBrowserListViewDefaultColumnFlags;
 			
 		
 			columnDesc.headerBtnDesc.minimumWidth = 30;
-			columnDesc.headerBtnDesc.maximumWidth = 100;
-			columnDesc.headerBtnDesc.btnFontStyle.just = teCenter;
+			columnDesc.headerBtnDesc.maximumWidth = 200;
+			columnDesc.headerBtnDesc.btnFontStyle.just = teFlushLeft;
 			
 			columnDesc.headerBtnDesc.titleString =CFStringCreateWithPascalString(
-				CFAllocatorGetDefault(), "\pSize", kCFStringEncodingMacRoman);
+				CFAllocatorGetDefault(), "\pProperties", kCFStringEncodingMacRoman);
 		
 			AddDataBrowserListViewColumn(browser, 
 				&columnDesc, kDataBrowserListViewAppendColumn);
@@ -459,85 +601,21 @@ static pascal Boolean MyItemComparison(
 	{
 		case kObjectColumn:
 		{	Str255 s1, s2;
-			/*GetIndString(s1, 128, itemOneID % 5 + 1);
-			GetIndString(s2, 128, itemTwoID % 5 + 1);
-			
-			compareResult = CompareString(s1, s2, NULL);
-			*/
-			compareResult = strcmp(str[itemOneID],str[itemTwoID]);
+		
+		    //Rprintf("\ncompare: itemone=%d itemtwo=%d",itemOneID,itemTwoID);
+		
+			compareResult = strcmp(Names[itemOneID-1],Names[itemTwoID-1]);
 			if (compareResult < 0) return true;
 			else if (compareResult > 0) return false;
 			else return Compare(itemOneID, itemTwoID, '????');
 		}	break;
 		
-	/*	case kColorColumn:
-		{	Str255 s1, s2;
-			::GetIndString(s1, 129, itemOneID % 5 + 1);
-			::GetIndString(s2, 129, itemTwoID % 5 + 1);
-			compareResult = ::CompareString(s1, s2, NULL);
-			
-			if (compareResult < 0) return true;
-			else if (compareResult > 0) return false;
-			else return Compare(itemOneID, itemTwoID, 'foo');
-		}	break;
-
-		case kProgressBarColumn:
-		{	SInt32 val1 = (itemOneID % 5) * 20;
-			SInt32 val2 = (itemTwoID % 5) * 20;
-			
-			if (val1 < val2) return true;
-			else if (val1 > val2) return false;
-			else return Compare(itemOneID, itemTwoID, '????');
-		}	break;
-*/		
 		default:
 		{	return itemOneID < itemTwoID;
 		}	break;
 	}
 }
 
-static Boolean AppendString(
-	Str255 ioDestString, ConstStr255Param inSourceString)
-{
-	SInt16 oldSize = ioDestString[0];
-	
-	if (oldSize + inSourceString[0] <= 255)
-	{
-		BlockMoveData(&(inSourceString[1]), 
-			&(ioDestString[oldSize+1]), inSourceString[0]);
-		ioDestString[0] += inSourceString[0];
-		return true;
-	}
-	
-	return false;
-}
-
-// --------------------------------------------------------------------
-static void GenerateString(DataBrowserItemID itemID, 
-	DataBrowserPropertyID property, StringPtr string)
-{
-	Str255 numString; 
-	Boolean itemXProperty = property == kTypeColumn || 
-		property == kDataBrowserItemSelfIdentityProperty;
-		
-	string[0] = 0; 
-	NumToString(itemID, numString);
-	
-	if (itemXProperty) AppendString(string, "\pItem ");
-		
-	AppendString(string, numString);
-	
-	if (!itemXProperty)
-	{
-		numString[0] = sizeof(property);
-		BlockMoveData(&property, &(numString[1]), sizeof(property));
-		AppendString(string, "\p, "); 
-		AppendString(string, numString);
-	}
-}
-
- 
- 
 
 
 static pascal OSStatus MyGetSetItemData(ControlRef browser, 
@@ -547,8 +625,8 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
 #pragma unused (browser)
 	Str255 pascalString;
 	OSStatus err = noErr;
-	char mstr[300];
-	char mstr2[300];
+	//char mstr[300];
+//	char mstr2[300];
 	
 	if (!changeValue) 
 	 switch (property)
@@ -557,7 +635,8 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
 		case kObjectColumn:
 		{
 			CFStringRef text;
-			CopyCStringToPascal(str[itemID],pascalString);
+			//Rprintf("\nkobjcol ItemID=%d",itemID);
+			CopyCStringToPascal(Names[itemID-1],pascalString);
 			text = CFStringCreateWithPascalString(
 				CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
 			err = SetDataBrowserItemDataText(itemData, text); 
@@ -567,7 +646,7 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
 
 		case kTypeColumn:
 		{	CFStringRef text;
-		    GenerateString(itemID, property, pascalString);
+			CopyCStringToPascal(Types[itemID-1],pascalString);
 			 text = CFStringCreateWithPascalString(
 				CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
 			err = SetDataBrowserItemDataText(itemData, text); 
@@ -579,8 +658,7 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
 		case kSizeColumn:
 		{
 			CFStringRef text=NULL;
-			sprintf(mstr,"size=%5d",itemID);	
-			CopyCStringToPascal(mstr,pascalString);
+				CopyCStringToPascal(Sizes[itemID-1],pascalString);
 			text = CFStringCreateWithPascalString(
 				CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
 			err = SetDataBrowserItemDataText(itemData, text); 
@@ -595,15 +673,15 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
 		}	break;
 		
 		case kDataBrowserItemIsContainerProperty:
-		{	err = SetDataBrowserItemDataBooleanValue(itemData, Container[itemID]);
+		{	err = SetDataBrowserItemDataBooleanValue(itemData, IsContainer[itemID-1]);
 		}	break;
 		
 		
-		case kDataBrowserItemParentContainerProperty:
-		{	err = SetDataBrowserItemDataItemID(itemData, (itemID-1) / ItemsPerContainer[itemID]);
+/*		case kDataBrowserItemParentContainerProperty:
+		{	err = SetDataBrowserItemDataItemID(itemData, (itemID-1) / NumberOfItems[itemID-1]);
 		}	break;
 
-
+*/
 
 		default:
 		{	err = errDataBrowserPropertyNotSupported;
@@ -635,25 +713,20 @@ static pascal OSStatus MyGetSetItemData(ControlRef browser,
 		}	break;
 		
 		case kDataBrowserContainerOpened:
-		{	// Generate some valid itemIDs
-			//myItems = (DataBrowserItemID *)malloc(sizeof(int)*ItemsPerContainer[itemID]);
-			//for (i = 0; i < ItemsPerContainer[itemID]; i++)
-				//myItems[i] = itemID  + i + 1;
+		{	
 			
-			AddDataBrowserItems(browser, itemID, ItemsPerContainer[itemID], SubItemsID[itemID], kObjectColumn);
+			AddDataBrowserItems(browser, itemID, NumberOfItems[itemID-1], SubItemsID[itemID-1], kObjectColumn);
 			
-			{	// Set up variable height rows
+			{	
 				Boolean variableHeightRows;
 				GetDataBrowserTableViewGeometry(
 					browser, NULL, &variableHeightRows);
 					
 				if (variableHeightRows)
-					for ( j = 0; j < ItemsPerContainer[itemID]; j++)
+					for ( j = 0; j < NumberOfItems[itemID-1]; j++)
 						SetDataBrowserTableViewItemRowHeight(
-							browser, SubItemsID[itemID][j], 20 + (SubItemsID[itemID][j] - 1) % 10 * 3);
+							browser, SubItemsID[itemID-1][j], 20 + (SubItemsID[itemID-1][j] - 1) % 10 * 3);
 			}
-		// if(myItems)
-		  //free(myItems);
 		}	
 		
 		break;
@@ -693,7 +766,7 @@ pascal OSStatus BrowserEventHandler(
 				
 				 case kEventWindowClose:
 		     	{
-                  	CloseDataBrowser(WindowRef window);
+                  	CloseDataBrowser();
 			 	}	break;
 
 		    	case kEventWindowBoundsChanged:
