@@ -106,6 +106,10 @@ BUG FIXES
 	now warns if it is exceeded (when the string has always been
 	truncated).
 
+    o	par adj now accepts values of integer mode (such as text(adj=0:1)).
+
+    o	horizontal adj values outside the range [0, 1] are now
+	supported on devices with canHadj==1 (Windows devices, xfig).
 
 
 

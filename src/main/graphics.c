@@ -3514,6 +3514,8 @@ void GText(double x, double y, int coords, char *str,
 		    if (dd->dp.canHAdj == 2) hadj = xc;
 		    else if (dd->dp.canHAdj == 1) {
 			hadj = 0.5 * floor(2*xc + 0.5);
+			/* limit to 0, 0.5, 1 */
+			hadj = (hadj > 1.0) ? 1.0 :((hadj < 0.0) ? 0.0 : hadj);
 		    } else hadj = 0.0;
 		    xleft = xoff - (xc-hadj)*width*cos_rot + yc*height*sin_rot;
 		    ybottom= yoff - (xc-hadj)*width*sin_rot - yc*height*cos_rot;
