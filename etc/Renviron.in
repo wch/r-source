@@ -33,6 +33,9 @@ MAKE=${MAKE-'@MAKE@'}
 PERL=${PERL-'@PERL@'}
 TAR=${TAR-'@TAR@'}
 
+## Aqua subdirs
+R_USE_AQUA_SUBDIRS='@use_aqua@'
+
 ### Local Variables: ***
 ### mode: sh ***
 ### sh-indentation: 2 ***
