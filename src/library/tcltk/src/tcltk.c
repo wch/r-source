@@ -35,7 +35,6 @@ static Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
 typedef struct {
     Tcl_EventProc *proc;
     struct Tcl_Event *nextPtr;
-    fd_set events;
 } RTcl_Event;
 #endif
 
@@ -498,7 +497,12 @@ void RTcl_setupProc(ClientData clientData, int flags)
 }
 void RTcl_eventProc(RTcl_Event *evPtr, int flags)
 {
-    R_runHandlers(R_InputHandlers, &(evPtr->events));
+    fd_set *readMask = R_checkActivity(0 /*usec*/, 1 /*ignore_stdin*/);
+
+    if (readMask==NULL) 
+	return;
+   
+    R_runHandlers(R_InputHandlers, readMask);
 }
 void RTcl_checkProc(ClientData clientData, int flags)
 {
@@ -509,11 +513,8 @@ void RTcl_checkProc(ClientData clientData, int flags)
 
     evPtr = (RTcl_Event*) Tcl_Alloc(sizeof(RTcl_Event)); 
     evPtr->proc = (Tcl_EventProc*) RTcl_eventProc;
-    evPtr->events = *readMask;
 
     Tcl_QueueEvent((Tcl_Event*) evPtr, TCL_QUEUE_HEAD); 
-    /* It seems fairly important to ensure that R events are handled
-       before the readMask is checked again. */
 }
  
 #endif
