@@ -112,6 +112,14 @@ test-undoc:
 	  echo; \
 	done
 
+test-codoc:
+	@for p in $(R_PKGS); do \
+	  echo "code/documentation mismatches in package \`$${p}':"; \
+	  echo "codoc(\"$(top_srcdir)/src/library/$${p}\")" | \
+	    $(R) -q | egrep -e "^($$|\\$$| *\\[)"; \
+	  echo; \
+	done
+
 $(test-out): Makefile stamp-R
 
 stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
