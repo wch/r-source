@@ -176,12 +176,14 @@ R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
 Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 
-../../bin/R.dll:
+../../bin/R.dll: FORCE
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory rlibs
 	@$(MAKE) --no-print-directory R.dll
 	@$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
+
+FORCE:
 
 front-ends: libR.a
 	$(MAKE) --no-print-directory -C front-ends
