@@ -1,6 +1,6 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-11-23), ISBN 3-900051-07-0
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.1.0 Under development (unstable) (2005-01-30), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -56,8 +56,8 @@ Type 'q()' to quit R.
     "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
 
-Number of base objects:		 1012 
-Number of builtin functions:	 998 
+Number of base objects:		 1013 
+Number of builtin functions:	 1003 
 	 starting with 'is.' :	  47 
 
 > is.method <- function(fname) {
@@ -1021,7 +1021,7 @@ TempHigh:SoftSoft           -0.30442    0.22239  -1.369  0.17104
 M.userY:TempHigh:SoftMedium  0.21189    0.31577   0.671  0.50220    
 M.userY:TempHigh:SoftSoft   -0.20387    0.32540  -0.627  0.53098    
 ---
-Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 (Dispersion parameter for poisson family taken to be 1)
 
@@ -1065,7 +1065,7 @@ M.userY:BrandM               0.40757    0.15961   2.554   0.0107 *
 TempHigh:BrandM              0.04411    0.18463   0.239   0.8112    
 M.userY:TempHigh:BrandM      0.44427    0.26673   1.666   0.0958 .  
 ---
-Signif. codes:  0 `***' 0.001 `**' 0.01 `*' 0.05 `.' 0.1 ` ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 (Dispersion parameter for poisson family taken to be 1)
 
@@ -1112,7 +1112,7 @@ M.userY:BrandM                                  , 1
 TempHigh:BrandM                                 . .     1            
 M.userY:TempHigh:BrandM                         . .     ,    1       
 attr(,"legend")
-[1] 0 ` ' 0.3 `.' 0.6 `,' 0.8 `+' 0.9 `*' 0.95 `B' 1
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
 
 > anova(detg.m0, detg.mod)
 Analysis of Deviance Table
@@ -1239,5 +1239,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  2.49 0.1 6.76 0 0 
+Time elapsed:  3.05 0.17 3.24 0 0 
 > 
