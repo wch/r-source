@@ -394,6 +394,9 @@ BUG FIXES
     o	Plotting histograms where the expression used to deparse to
 	multiple lines now gives a sensible title.  (PR#7421)
 
+    o	The print method for getDLLRegisteredRoutines() was badly
+	designed, and failed for all the standard packages' DLLs.
+
 
 
 		CHANGES IN R VERSION 2.0.1
