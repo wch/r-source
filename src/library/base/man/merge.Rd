@@ -15,18 +15,19 @@ merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x= by, by.y= by,
                  all = FALSE, all.x = all, all.y = all,  sort = TRUE) 
 }
 \arguments{
- \item{x, y}{data frames, or objects to be coerced to one}
- \item{by, by.x, by.y}{specifcations of the common columns. See Details.}
+  \item{x, y}{data frames, or objects to be coerced to one}
+  \item{by, by.x, by.y}{specifcations of the common columns. See Details.}
   \item{all}{logical; \code{all=L} is shorthand for \code{all.x=L} and
-         \code{all.y=L}.}
-  \item{all.x}{logical; if true, then extra rows will be added to the output,
-	 one for each row in \code{x} that has no matching row in 
-	 \code{y}.  These rows will have \code{NA}s in those columns that
-	 are usually filled with values from \code{y}.  The default is
-	 \code{FALSE}, so that only rows with data from both \code{x} and
-	 \code{y} are included in the output.
-  \item{all.y}{logical;  analogous to \code{all.x} above.}
-  \item{sort}{logical. Should the results be sorted on the \code{by} columns?}
+    \code{all.y=L}.}
+  \item{all.x}{logical; if \code{TRUE}, then extra rows will be added to
+    the output, one for each row in \code{x} that has no matching row in
+    \code{y}.  These rows will have \code{NA}s in those columns that are
+    usually filled with values from \code{y}.  The default is
+    \code{FALSE}, so that only rows with data from both \code{x} and
+    \code{y} are included in the output.}
+  \item{all.y}{logical; analogous to \code{all.x} above.}
+  \item{sort}{logical.  Should the results be sorted on the \code{by}
+    columns?}
 }
 \details{
   By default the data frames are merged on the columns with names they
@@ -42,7 +43,6 @@ merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x= by, by.y= by,
   these have \code{".x"} and \code{".y"} appended to make the names
   of the result unique.
 }
-
 \value{
   A data frame.  The rows are by default lexicographically sorted on the
   common columns, but are otherwise in the order in which they occurred
@@ -51,8 +51,11 @@ merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x= by, by.y= by,
   matching involved row names, an extra column \code{Row.names} is added
   at the left, and in all cases the result has no special row names.
 }
-
-\seealso{\code{\link{data.frame}}, \code{\link{by}}, \code{\link{cbind}}}
+\seealso{
+  \code{\link{data.frame}},
+  \code{\link{by}},
+  \code{\link{cbind}}
+}
 
 \examples{
 authors <- data.frame(
