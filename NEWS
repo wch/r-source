@@ -22,7 +22,7 @@ NEW FEATURES
 DEPRECATED & DEFUNCT
 
     o	The (unimplemented) argument 'white' of parse() is deprecated.
-    
+
 
 BUG FIXES
 
@@ -153,30 +153,30 @@ BUG FIXES
 	length(x) > 1290.
 
     o	Matrices were printed mis-aligned if right=TRUE and na.print
-	was specified.  (PR#3058)
+	was specified.	(PR#3058)
 
-    o   R CMD check gives now a clearer message when latex produces
-        errors on the package manual.  (PR#3070)
+    o	R CMD check gives now a clearer message when latex produces
+	errors on the package manual.  (PR#3070)
 
-    o   isSeekable() was incorrectly returning FALSE on all file connections.
+    o	isSeekable() was incorrectly returning FALSE on all file connections.
 
-    o   tkpager() wasn't quite using its title and header arguments in
-        the way prescribed by file.show()
+    o	tkpager() wasn't quite using its title and header arguments in
+	the way prescribed by file.show()
 
     o	legend(*, pch=p, lty=l) now works better when `p' or `l' have
-        NAs.
+	NAs.
 
-    o   All braces in regular expressions used by Sweave() are now
-        escaped by a backslash.
+    o	All braces in regular expressions used by Sweave() are now
+	escaped by a backslash.
 
     o	unloadNamespace() failed because getNamespaceImports() now coerces a
 	string argument to a name space.
 
-    o   deriv3 gave incorrect Hessians for some very simple
+    o	deriv3 gave incorrect Hessians for some very simple
 	expressions such as expression(x*y) (since the comments in the
-	C code were incorrect).  (PR#2577)
+	C code were incorrect).	 (PR#2577)
 
-    o   power.t.test(..., delta=NULL,alternative='two.sided') failed. (PR#2993)
+    o	power.t.test(..., delta=NULL,alternative='two.sided') failed. (PR#2993)
 
     o	Lines on postscript() plots with thousands of segments might
 	have been plotted inaccurately in 1.7.0. (PR#3132)
@@ -185,17 +185,19 @@ BUG FIXES
 	segments to help some PostScript interpreters (typically old
 	level-1 interpreters).
 
-    o   cut.POSIXt failed when the breaks were date/time objects. (PR#3181)
+    o	cut.POSIXt failed when the breaks were date/time objects. (PR#3181)
 
-    o   Usage of methods in dist.Rd is now correctly documented
-        (as.matrix.dist() is not an exported symbol).
+    o	Usage of methods in dist.Rd is now correctly documented
+	(as.matrix.dist() is not an exported symbol).
 
-    o   The predict() method for ar fits was not retrieving the series
+    o	The predict() method for ar fits was not retrieving the series
 	from the parent environment.
 
-    o   eigen() and La.eigen() were not returning a matrix of
+    o	eigen() and La.eigen() were not returning a matrix of
 	eigenvectors for a 1x1 input.
 
+    o	hsv() and rgb() now return character(0) when one of their args has
+	length 0.  This also fixes terrain.color(1). (PR#3233)
 
 
 		CHANGES IN R VERSION 1.7.0
