@@ -22,7 +22,7 @@ endif
 
 R-DLLFLAGS = -mwindows
 R-DLLLIBS = -L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
-SOURCES = $(wildcard *.c *.f)
+SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
 OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a em.a
@@ -30,6 +30,14 @@ EXTRALIBS = ga.a gl.a xdr.a em.a
 LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
 PKGS = $(foreach i,$(PACKAGES),pkg-$i)
 PKGCLEAN = $(foreach i,$(ALLPACKAGES),pkgclean-$i)
+
+LEA_MALLOC=YES
+# flags to ensure that Doug Lea's malloc is used:
+ifdef LEA_MALLOC
+extra-CFLAGS+=-DLEA_MALLOC
+malloc-CFLAGS+=-DLEA_MALLOC
+OBJS-EXTRA=malloc.o
+endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
@@ -79,7 +87,7 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
-R.dll: R.a $(MAINLIBS) $(EXTRALIBS) dllversion.o
+R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
 Rdll: makeMakedeps ../../bin/R.dll
 
@@ -328,7 +336,7 @@ endif
 
 
 #taken from ../include/Makefile.in
-SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h
+SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h S_compat.h
 OBJ_HEADERS = Rconfig.h Rversion.h
 GW32_HEADERS = globalvar.h
 
