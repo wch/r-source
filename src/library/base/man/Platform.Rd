@@ -8,11 +8,11 @@ Platform()
 \alias{Platform}
 \description{
   \code{.Platform} is a list with functions and variables as
-  components.  This provides a possibility to write OS portable \R
-  code.  However, this interface is still somewhat experimental.
-
-  Currently, \code{.Platform <- Platform()} when \R starts up.  This is
-  even more experimental.
+  components.  This provides means to write OS portable \R
+  code. 
+}
+\details{
+  Currently, \code{.Platform <- Platform()} when \R starts up. 
 }
 \value{
   \code{.Platform} is list with at least the following components:
@@ -26,10 +26,13 @@ Platform()
     \bold{dyn}amically loadable \bold{lib}raries, e.g., \code{".dll"} on
     Windows.
   }
+  \item{GUI}{character, giving the type of GUI in use, or
+    \code{"unknown"} if no GUI can be assumed.
+  }
 }
-\seealso{\code{\link{system}} for invoking platform specific system commands.}
+\seealso{\code{\link{system}} for invoking platform-specific system commands.}
 \examples{
-if(.Platform$ OS.type == "unix") {
+if(.Platform$OS.type == "unix") {
    system.test <- function(...) { system(paste("test", ...)) == 0 }
    dir.exists <- function(dir) sapply(dir, function(d)system.test("-d", d))
    dir.exists(c(R.home(), "/tmp", "~", "/NO"))# > T T T F

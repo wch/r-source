@@ -564,6 +564,16 @@ void R_SetWin32(Rstart Rp)
     putenv(UserRHome);
 
     CharacterMode = Rp->CharacterMode;
+    switch(CharacterMode){
+    case RGui:
+	R_GUIType = "Rgui";
+	break;
+    case RTerm:
+	R_GUIType = "RTerm";
+	break;
+    default:
+	R_GUIType = "unknown";
+    }
     TrueReadConsole = Rp->ReadConsole;
     TrueWriteConsole = Rp->WriteConsole;
     R_CallBackHook = Rp->CallBack;
@@ -719,6 +729,3 @@ int cmdlineoptions(int ac, char **av)
       R_Suicide("impossible to create 'reader thread'; you must free some system resources");
     return 0;
 }
-
-
-

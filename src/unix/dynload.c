@@ -474,7 +474,7 @@ void R_load_X11_shlib()
 extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
     ptr_R_WriteConsole, ptr_R_ResetConsole, ptr_R_FlushConsole,
     ptr_R_ClearerrConsole, ptr_R_Busy, ptr_R_CleanUp, ptr_R_ShowFiles,
-    ptr_R_ChooseFile, gnome_start;
+    ptr_R_ChooseFile, gnome_start, GnomeDeviceDriver;
 
 
 void R_load_gnome_shlib()
@@ -520,6 +520,8 @@ void R_load_gnome_shlib()
     if(!gnome_start) R_Suicide("Cannot load gnome_start");
     X11DeviceDriver = R_dlsym(handle, "X11DeviceDriver");
     if(!X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
+    GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
+    if(!GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");
     ptr_dataentry = R_dlsym(handle, "RX11_dataentry");
     if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
 }

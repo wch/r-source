@@ -26,10 +26,9 @@
 #include "Mathlib.h"
 #include "Graphics.h"
 
-static SEXP gcall;
-
 /* Return a non-relocatable copy of a string */
 
+static SEXP gcall;
 static char *SaveString(SEXP sxp, int offset)
 {
     char *s;
@@ -39,59 +38,6 @@ static char *SaveString(SEXP sxp, int offset)
     strcpy(s, CHAR(STRING(sxp)[offset]));
     return s;
 }
-
-static void DeviceUnavailable(char *dev)
-{
-    error("The %s device driver is unavailable.", dev);
-}
-
-#ifdef Macintosh
-/*  Macintosh Device Driver Parameters:
- *  -----------------		--> ../unix/devX11.c
- *  display	= display
- *  width	= width in inches
- *  height	= height in inches
- *  ps		= pointsize
- */
-int MacDeviceDriver();
-
-SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    DevDesc *dd;
-    char *display, *vmax;
-    double height, width, ps;
-    gcall = call;
-    vmax = vmaxget();
-    display = SaveString(CAR(args), 0); args = CDR(args);
-    width = asReal(CAR(args));	args = CDR(args);
-    height = asReal(CAR(args)); args = CDR(args);
-    if (width <= 0 || height <= 0)
-	errorcall(call, "invalid width or height");
-    ps = asReal(CAR(args));
-    /* Allocate and initialize the device driver data */
-    if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
-	return 0;
-    /* Do this for early redraw attempts */
-    dd->displayList = R_NilValue;
-    GInit(&dd->dp);
-    if (!MacDeviceDriver(dd, width, height, ps)) {
-	free(dd);
-	errorcall(call, "unable to start device Macintosh");
-    }
-    gsetVar(install(".Device"), mkString("Macintosh"), R_NilValue);
-    addDevice(dd);
-    initDisplayList(dd);
-    vmaxset(vmax);
-    return R_NilValue;
-}
-#else
-SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    gcall = call;
-    DeviceUnavailable("Macintosh");
-    return R_NilValue;		/* -Wall */
-}
-#endif
 
 /*  PostScript Device Driver Parameters:
  *  ------------------------		--> devPS.c
@@ -112,7 +58,6 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifndef Macintosh
     DevDesc *dd;
     char *vmax;
     char *file, *paper, *face, *bg, *fg, *cmd;
@@ -152,11 +97,6 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     initDisplayList(dd);
     vmaxset(vmax);
     return R_NilValue;
-#else
-    gcall = call;
-    DeviceUnavailable("postscript");
-    return R_NilValue;		/* -Wall */
-#endif
 }
 
 /*  PicTeX Device Driver Parameters
@@ -171,7 +111,6 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#if defined(Unix) | defined(Win32)
     DevDesc *dd;
     char *vmax;
     char *file, *bg, *fg;
@@ -199,127 +138,8 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
     initDisplayList(dd);
     vmaxset(vmax);
     return R_NilValue;
-#else
-    gcall = call;
-    DeviceUnavailable("pictex");
-    return R_NilValue;		/* -Wall */
-#endif
 }
 
-#ifdef Unix
-#include "../unix/devX11.h"
-/*  X11 Device Driver Parameters:
- *  -----------------		--> ../unix/devX11.c
- *  display	= display
- *  width	= width in inches
- *  height	= height in inches
- *  ps		= pointsize
- *  gamma       = gamma correction
- *  colormodel  = color model
- */
-SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    DevDesc *dd;
-    char *display, *vmax, *cname;
-    double height, width, ps, gamma;
-    int colormodel, maxcubesize;
-    gcall = call;
-    vmax = vmaxget();
-
-    /* Decode the arguments */
-    display = SaveString(CAR(args), 0); args = CDR(args);
-    width = asReal(CAR(args));	args = CDR(args);
-    height = asReal(CAR(args)); args = CDR(args);
-    if (width <= 0 || height <= 0)
-	errorcall(call, "invalid width or height");
-    ps = asReal(CAR(args)); args = CDR(args);
-    gamma = asReal(CAR(args)); args = CDR(args);
-    if (gamma < 0 || gamma > 100)
-	errorcall(call, "invalid gamma value");
-
-    if (!isValidString(CAR(args)))
-	error("invalid colortype passed to X11 driver");
-    cname = CHAR(STRING(CAR(args))[0]);
-    if (strcmp(cname, "mono") == 0)
-	colormodel = 0;
-    else if (strcmp(cname, "gray") == 0 || strcmp(cname, "grey") == 0)
-	colormodel = 1;
-    else if (strcmp(cname, "pseudo.cube") == 0)
-	colormodel = 2;
-    else if (strcmp(cname, "pseudo") == 0)
-	colormodel = 3;
-    else if (strcmp(cname, "true") == 0)
-	colormodel = 4;
-    else {
-	warningcall(call, "unknown X11 color/colour model -- using monochrome");
-	colormodel = 0;
-    }
-    args = CDR(args);
-    maxcubesize = asInteger(CAR(args));
-    if (maxcubesize < 1 || maxcubesize > 256)
-        maxcubesize = 256;
-
-    /* Allocate and initialize the device driver data */
-    if (!(dd = (DevDesc*)malloc(sizeof(DevDesc))))
-	return 0;
-    /* Do this for early redraw attempts */
-    dd->displayList = R_NilValue;
-    GInit(&dd->dp);
-    if (!X11DeviceDriver(dd, display, width, height, ps, gamma, colormodel,
-                         maxcubesize)) {
-	free(dd);
-	errorcall(call, "unable to start device X11");
-    }
-    gsetVar(install(".Device"), mkString("X11"), R_NilValue);
-    addDevice(dd);
-    initDisplayList(dd);
-    vmaxset(vmax);
-    return R_NilValue;
-}
-
-SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    DevDesc *dd;
-    char *display, *vmax;
-    double height, width, ps;
-    gcall = call;
-    vmax = vmaxget();
-    display = SaveString(CAR(args), 0); args = CDR(args);
-    width = asReal(CAR(args));	args = CDR(args);
-    height = asReal(CAR(args)); args = CDR(args);
-    if (width <= 0 || height <= 0)
-	errorcall(call, "invalid width or height");
-    ps = asReal(CAR(args));
-    /* Allocate and initialize the device driver data */
-    if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
-	return 0;
-    /* Do this for early redraw attempts */
-    dd->displayList = R_NilValue;
-    GInit(&dd->dp);
-    if (!GnomeDeviceDriver(dd, display, width, height, ps)) {
-	free(dd);
-	errorcall(call, "unable to start device Gnome");
-    }
-    gsetVar(install(".Device"), mkString("Gnome"), R_NilValue);
-    addDevice(dd);
-    initDisplayList(dd);
-    vmaxset(vmax);
-    return R_NilValue;
-}
-#else
-SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    gcall = call;
-    DeviceUnavailable("X11");
-    return R_NilValue;		/* -Wall */
-}
-SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    gcall = call;
-    DeviceUnavailable("Gnome");
-    return R_NilValue;		/* -Wall */
-}
-#endif
 
 
 /*  XFig Device Driver Parameters:
@@ -339,7 +159,6 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifndef Macintosh
     DevDesc *dd;
     char *vmax;
     char *file, *paper, *face, *bg, *fg;
@@ -376,9 +195,4 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
     initDisplayList(dd);
     vmaxset(vmax);
     return R_NilValue;
-#else
-    gcall = call;
-    DeviceUnavailable("xfig");
-    return R_NilValue;		/* -Wall */
-#endif
 }

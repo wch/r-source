@@ -613,16 +613,16 @@ FUNTAB R_FunTab[] =
 
 /* Device Drivers */
 
-#ifdef Win32
-{"devga",	do_devga,	0,	111,	4,	PP_FUNCALL},
-#else
-{"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
-#endif
 {"PS",		do_PS,		0,	111,   14,	PP_FUNCALL},
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},
-{"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},
-{"Gnome",       do_Gnome,       0,      111,    4,      PP_FUNCALL},
 {"XFig",	do_XFig,	0,	111,   12,	PP_FUNCALL},
+#ifdef Win32
+{"devga",	do_devga,	0,	111,	4,	PP_FUNCALL},
+#endif
+#ifdef Unix
+{"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
+{"Gnome",       do_Gnome,       0,      111,    4,      PP_FUNCALL},
+#endif
 
 /* Graphics */
 

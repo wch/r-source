@@ -374,6 +374,10 @@ extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
 extern SEXP	R_Warnings;	    /* the warnings and their calls */
 extern int	R_ShowErrorMessages INI_as(1);  /* show error messages? */
 
+/* GUI type */
+
+extern char*	R_GUIType	INI_as("unknown");
+
 #ifdef __MAIN__
 #undef extern
 #endif
