@@ -19,7 +19,7 @@ names(stop.list) <- core.pkgs
 ## -- Stop List for base/graphics/utils:
 edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
               "edit.default", "vi", "file.edit",
-              "emacs", "pico", "xemacs", "xedit")
+              "emacs", "pico", "xemacs", "xedit", "RSiteSearch")
 
 ## warning: readLines will work, but read all the rest of the script
 ## warning: trace will load methods.
