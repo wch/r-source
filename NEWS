@@ -435,6 +435,8 @@ BUG FIXES
     o	try() could fail in BATCH use due to use of fflush(stdin).
 	Only seen on Solaris. (PR#1934)
 
+   o  	title(main=list("main")) printed garbage, as did similar calls
+	using quote() instead of expression() for plotmath (PR#1939)
 
 
 		CHANGES IN R VERSION 1.5.1
