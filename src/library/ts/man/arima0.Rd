@@ -92,7 +92,7 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
 
   \item{series}{the name of the series \code{x}.}
 
-  \item{convergence}{the \code{code} returned by \code{\link{nlme}}.}
+  \item{convergence}{the \code{code} returned by \code{\link{nlm}}.}
 
   For \code{predict.arima0}, a time series of predictions, or if
   \code{se.fit = TRUE}, a list with components \code{pred}, the
