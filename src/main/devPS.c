@@ -32,6 +32,12 @@
 #include "Fileio.h"
 #include <Rdevices.h>
 
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#else
+extern int errno;
+#endif
+
 #ifdef __MRC__
 extern char *R_fgets(char *buf, int i, FILE *fp);
 #endif
@@ -1428,17 +1434,23 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 	return FALSE;
 #else
 	if(strlen(pd->command) == 0) return FALSE;
+        errno = 0;
 	pd->psfp = popen(pd->command, "w");
 	pd->open_type = 1;
+        if (!pd->psfp || errno != 0) {
+            warning("cannot open `postscript' pipe to `%s'", pd->command);
+            return FALSE;
+        }
 #endif
     } else if (pd->filename[0] == '|') {
 #ifndef HAVE_POPEN
 	warning("file = \"|cmd\" is not implemented in this version");
 	return FALSE;
 #else
+	errno = 0;
 	pd->psfp = popen(pd->filename + 1, "w");
 	pd->open_type = 1;
-	if (!pd->psfp) {
+	if (!pd->psfp || errno != 0) {
 	    warning("cannot open `postscript' pipe to `%s'", pd->filename + 1);
 	    return FALSE;
 	}

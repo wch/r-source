@@ -448,6 +448,9 @@ BUG FIXES
    o  	pdf(onefile = FALSE) never incremented the file number beyond
 	two.
 
+   o    On Unix, protect against broken pipes where popen calls succeed
+	even though the command does not exist (and the glibc manual 
+        says it should return NULL).  (PR#1959)
 
 
 		CHANGES IN R VERSION 1.5.1
