@@ -124,10 +124,10 @@ optim(par, fn, gr = NULL,
       method. It is a tolerance on the projected gradient in the current
       search direction. This defaults to zero, when the check is
       suppressed.}
-    \item{\code{temp} controls the \code{"SANN"} method. It is the
+    \item{\code{temp}}{controls the \code{"SANN"} method. It is the
       starting temperature for the cooling schedule. Defaults to
       \code{10}.}  
-    \item{\code{tmax} is the number of function evaluations at each
+    \item{\code{tmax}}{is the number of function evaluations at each
       temperature for the \code{"SANN"} method. Defaults to \code{10}.}
   }
 }
