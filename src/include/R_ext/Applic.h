@@ -250,7 +250,7 @@ int F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 
 /* ../appl/zeroin.c */
 double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
-		double *tol, int *maxit);
+		double *Tol, int *Maxit);
 
 /* ../appl/lbfgsb.c */
 void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
