@@ -92,6 +92,16 @@
 #  endif
 #endif
 
+#ifdef HAVE_POSIX_SETJMP
+# define JMP_BUF sigjmp_buf
+# define SETJMP(x) sigsetjmp(x,1)
+# define LONGJMP(x,i) siglongjmp(x,i)
+#else
+# define JMP_BUF jmp_buf
+# define SETJMP(x) setjmp(x)
+# define LONGJMP(x,i) longjmp(x,i)
+#endif
+
 #define HSIZE	   4119	/* The size of the hash table for symbols */
 #define MAXELTSIZE 8192 /* The largest string size */
 #define MAXIDSIZE   256	/* Largest symbol size possible */
@@ -153,7 +163,6 @@ typedef struct {
 
 
 /* Evaluation Context Structure */
-/* Note: JMP_BUF is defined in Rconfig.h */
 typedef struct RCNTXT {
     struct RCNTXT *nextcontext;	/* The next context up the chain */
     int callflag;		/* The context "type" */
