@@ -823,6 +823,7 @@ typedef struct {
 	int fill;	        /* fill color */
     WindowPtr window;
     int	lineType;
+    int lineWidth;
     SInt16 currentDash;
     SInt16 numDashes;
     short dashList[14];
