@@ -3,8 +3,6 @@
 \alias{print.dist}
 \alias{format.dist}
 \alias{as.matrix.dist}
-\alias{names.dist}
-\alias{names<-.dist}
 \alias{as.dist}
 \alias{as.dist.default}
 \title{Distance Matrix Computation}
@@ -144,8 +142,6 @@ dist(x, upper = TRUE)
 m <- as.matrix(dist(x))
 d <- as.dist(m)
 stopifnot(d == dist(x))
-names(d) <- LETTERS[1:5]
-print(d, digits = 3)
 
 ## example of binary and canberra distances.
 x <- c(0, 0, 1, 1, 1, 1)
