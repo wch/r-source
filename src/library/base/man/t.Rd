@@ -5,13 +5,16 @@
 \title{Matrix Transpose}
 \description{
 Given a matrix or \code{\link{data.frame}} \code{x},
-\code{t} returns the transpose (matrix or data.frame) of \code{x}.
+\code{t} returns the transpose of \code{x}.
 }
 \usage{
 t(x)
 }
 \arguments{
   \item{x}{a matrix or data frame.}
+}
+\details{
+  A data frame is first coerced to a matrix: see \code{\link{as.matrix}}.
 }
 \seealso{
   \code{\link{aperm}} for permuting the dimensions of arrays.
