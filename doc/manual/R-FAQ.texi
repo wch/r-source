@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-15
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-17
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2365,6 +2365,9 @@ proportional hazard model for interval censored event data.
 Improved predictive models by direct and indirect bootstrap aggregation
 in classification and regression as well as resampling based estimators
 of prediction error.
+@item irr
+Coefficients of Interrater Reliability and Agreement for quantitative,
+ordinal and nominal data.
 @item ismev
 Functions to support the computations carried out in ``An Introduction
 to Statistical Modeling of Extreme Values;' by S. Coles, 2001, Springer.

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-15
+Version 2.0.2005-01-17
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2177,6 +2177,10 @@ distributions of R.)
      Improved predictive models by direct and indirect bootstrap aggregation
      in classification and regression as well as resampling based estimators
      of prediction error.
+
+*irr*
+     Coefficients of Interrater Reliability and Agreement for quantitative,
+     ordinal and nominal data.
 
 *ismev*
      Functions to support the computations carried out in "An Introduction
