@@ -9,7 +9,7 @@
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 (cd "${TOOLS_DIR}"/..
   version=`cut -f1 -d' ' VERSION`
-  PKGS=`grep '^R_PKGS_RE' Makeconf.in | sed 's/.*=//'`
+  PKGS=`grep '^R_PKGS_RECOMMENDED *=' Makeconf.in | sed 's/.*=//'`
   cd src/library/Recommended
 
   ## Link all each package to a simplified name so that Make has an
