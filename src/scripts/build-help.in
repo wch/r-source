@@ -130,7 +130,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile,$manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile");
+		Rdconv($manfile, "html", "", "$destfile", $pkg);
 	    }
 	}
 

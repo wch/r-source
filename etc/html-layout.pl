@@ -53,12 +53,18 @@ sub html_pagehead
 
 sub html_functionhead
 {
-    my $title = $_[0];
+    my ($title, $pkgname, $name) = @_;
 
     my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
 	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
 	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
 	"BACKGROUND=\"white\">\n\n";
+
+    if($pkgname){
+	$retval .= "<table width=100%><tr>" .
+	    "<td>$name($pkgname)</td>" .
+	    "<td align=right>R Documentation</td></tr></table><p>";
+    }
     
     $retval .= html_title2($title);
 
