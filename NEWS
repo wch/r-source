@@ -214,11 +214,14 @@ NEW FEATURES
 	connection its private `ungetc' and so is safer to use to
 	read partial lines.
 
-    o   New function hcl() for creating colors for a given hue,
-        chroma and luminance (i.e. perceptual hsv).
+    o	New function hcl() for creating colors for a given hue,
+	chroma and luminance (i.e. perceptual hsv).
 
-    o   New encoding 'TeXtext.enc' improves the way postscript() works
+    o	New encoding 'TeXtext.enc' improves the way postscript() works
 	with Computer Modern fonts.
+
+    o	chisq.test() has a new argument 'rescale.p' and allows to (slowly)
+	simulate the P value also in the 1D case (contributed by Rolf Turner).
 
 
 INTERNATIONALIZATION
@@ -276,7 +279,7 @@ INTERNATIONALIZATION
 	supported by the OS.  See `Writing R Extensions'.
 
     o	delimMatch (tools) now reports match positions and lengths in
-	units of characters, not bytes.  The delimiters can be
+	units of characters, not bytes.	 The delimiters can be
 	strings, not just single ASCII characters.
 
     o	.Rd files can indicate via a \encoding{} argument the encoding
@@ -297,7 +300,7 @@ INTERNATIONALIZATION
 	byte.
 
     o	Functions sQuote() and dQuote() use the Unicode directional
-        quotes if in a UTF-8 locale.
+	quotes if in a UTF-8 locale.
 
     o	The infrastructure is now in place for C-level error and
 	warning messages to be translated from English and used on
@@ -307,7 +310,7 @@ INTERNATIONALIZATION
 	packages have been marked and splines is set up to do translation.
 
     o	R-level stop() and warning() messages can be translated, as can
-	other messages via the new function gettext().  Tools
+	other messages via the new function gettext().	Tools
 	xgettext() and xgettext2pot() are provided in package tools to
 	help manage error messages.
 
@@ -441,7 +444,7 @@ INSTALLATION CHANGES
 	readline is specified (the default) and that requires it.
 
     o	Makeinfo 4.7 or later is now required for building the HTML and
-        Info versions of the manuals.
+	Info versions of the manuals.
 
 
 PACKAGE INSTALLATION CHANGES
@@ -572,12 +575,12 @@ BUG FIXES
     o	atop() and warning() now accept NULL, as they are documented
 	to do (although this seems of little use and is equivalent to "").
 
-    o   weighted.mean() now checks the length of the weight vector w.
+    o	weighted.mean() now checks the length of the weight vector w.
 
-    o   poisson family now calculates correct AIC when outcome is a rate.
+    o	poisson family now calculates correct AIC when outcome is a rate.
 
-    o   getAnywhere() was confused by names with leading or trailing dots
-        (spotted by Robert McGehee)
+    o	getAnywhere() was confused by names with leading or trailing dots
+	(spotted by Robert McGehee)
 
     o   eval() was not handling values from return() correctly.
 
