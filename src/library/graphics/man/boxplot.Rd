@@ -90,6 +90,11 @@ boxplot(x, \dots)
   The generic function \code{boxplot} currently has a default method
   (\code{boxplot.default}) and a formula interface (\code{boxplot.formula}).
 
+  If multiple groups are supplied either as multiple arguments or via a
+  formula, parallel boxplots will be plotted, in the order of the
+  arguments or the order of the levels of the factor (see
+  \code{\link{factor}}).
+  
   Missing values are ignored when forming boxplots.
 }
 \value{
@@ -130,7 +135,7 @@ boxplot(count ~ spray, data = InsectSprays,
         notch = TRUE, add = TRUE, col = "blue")
 
 boxplot(decrease ~ treatment, data = OrchardSprays,
-        log = "y", col="bisque")
+        log = "y", col = "bisque")
 
 rb <- boxplot(decrease ~ treatment, data = OrchardSprays, col="bisque")
 title("Comparing boxplot()s and non-robust mean +/- SD")
@@ -154,13 +159,13 @@ boxplot(data.frame(mat), main = "boxplot(*, horizontal = TRUE)",
 
 boxplot(len ~ dose, data = ToothGrowth,
         boxwex = 0.25, at = 1:3 - 0.2,
-        subset= supp == "VC", col="yellow",
-        main="Guinea Pigs' Tooth Growth",
-        xlab="Vitamin C dose mg",
-        ylab="tooth length", ylim=c(0,35))
+        subset = supp == "VC", col = "yellow",
+        main = "Guinea Pigs' Tooth Growth",
+        xlab = "Vitamin C dose mg",
+        ylab = "tooth length", ylim = c(0,35))
 boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
         boxwex = 0.25, at = 1:3 + 0.2,
-        subset= supp == "OJ", col="orange")
+        subset = supp == "OJ", col = "orange")
 legend(2, 9, c("Ascorbic acid", "Orange juice"),
        fill = c("yellow", "orange"))
 
