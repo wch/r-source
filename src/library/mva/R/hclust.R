@@ -93,6 +93,10 @@ plot.hclust <-
     merge <- x$merge
     if (!is.matrix(merge) || ncol(merge) != 2)
 	stop("invalid dendrogram")
+    ## merge should be integer but might not be after dump/restore.
+    if (any(as.integer(merge) != merge))
+        stop("merge component in dendrogram must be integer")
+    storage.mode(merge) <- "integer"
     n <- nrow(merge)
     height <- as.double(x$height)
     ord <- as.double(order(x$order))
