@@ -12,14 +12,14 @@ mode <- function(x) {
 	   ## otherwise
 	   tx)
 }
+"storage.mode<-" <-
 "mode<-" <- function(x, value)
 {
     mde <- paste("as.",value,sep="")
     atr <- attributes(x)
     x <- eval(call(mde,x), parent.frame())
     attributes(x) <- atr
-    if(value == "single") attr(x, "Csingle") <- TRUE
-    else attr(x, "Csingle") <- NULL
+    attr(x, "Csingle") <- if(value == "single") TRUE # else NULL
     x
 }
 storage.mode <- function(x) {
@@ -27,4 +27,3 @@ storage.mode <- function(x) {
     if (x == "closure" || x == "builtin" || x == "special") return("function")
     x
 }
-"storage.mode<-" <- get("mode<-", envir=NULL)
