@@ -1,7 +1,7 @@
 contour <-
     function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 	      z, nlevels = 10,
-              levels = pretty(range(z[is.finite(z)], nlevels)),
+              levels = pretty(range(z[is.finite(z)]), nlevels),
               labcex = 0,
               xlim = range(x[is.finite(x)]), 
 	      ylim = range(y[is.finite(y)]),
