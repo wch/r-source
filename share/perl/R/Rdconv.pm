@@ -124,6 +124,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	## <FIXME>
 	## Copied from Rdtools::Rdpp() so that nested conditionals are
 	## handled correctly.  Should really *call* Rdpp() instead.
+	## Known OSdirs are actually ASCII, so this test is OK
 	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
 	    $skip = $1 ne $main::OSdir;
             $skip_level += $skip;
@@ -569,9 +570,10 @@ sub transform_command {
 sub transform_S3method {
     ## \method{GENERIC}{CLASS}
     ## Note that this markup should really only be used inside \usage.
+    ## NB: \w includes _ as well as [:alnum:], which R now allows in name
     my ($text) = @_;
     my $S3method_RE =
-      "([ \t]*)\\\\(S3)?method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}";
+      "([ \t]*)\\\\(S3)?method\{([\\w.]+)\}\{([\\w.]+)\}";
     while($text =~ /$S3method_RE/) {
 	if($4 eq "default") {
 	    $text =~
@@ -590,7 +592,7 @@ sub transform_S4method {
     ## Note that this markup should really only be used inside \usage.
     my ($text) = @_;
     my $S4method_RE =
-      "([ \t]*)\\\\S4method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.,]+)\}";
+      "([ \t]*)\\\\S4method\{([\\w.]+)\}\{(\\w.,]+)\}";
     local($Text::Wrap::columns) = 60;
     while($text =~ /$S4method_RE/) {
 	my $pretty = wrap("$1\#\# ", "$1\#\#   ",
@@ -1290,7 +1292,7 @@ sub txt_header {
     my $out = "", $a;
     for($l = 0; $l <= $#letters; $l++){
 	$a = @letters[$l];
-	if($a =~ /[A-Za-z0-9]/) {
+	if($a =~ /[[:alnum:]]/) {
 	    $out .= '_' . $a;
 	} else {
 	    $out .= $a;
