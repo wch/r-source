@@ -7,6 +7,8 @@
 
 source(paste(getenv("RHOME"),"tests/all.equal.R", sep="/"))
 
+if(!interactive()) .Random.seed <- rep(7654, 3)
+
 ##--- Cumulative Poisson '==' Cumulative Chi^2 :
 ##--- Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
 n1 <- 20; n2 <- 16
