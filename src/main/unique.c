@@ -582,7 +582,7 @@ static SEXP subDots(SEXP rho)
 
     len = length(dots);
     PROTECT(rval=allocList(len));
-    for(a=dots, b=rval, i=1; i<len; a=CDR(a), b=CDR(b), i++) {
+    for(a=dots, b=rval, i=1; i<=len; a=CDR(a), b=CDR(b), i++) {
 	sprintf(tbuf,"..%d",i);
 	if( TAG(a) != R_NilValue )
 	    TAG(b) = TAG(a);
