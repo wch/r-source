@@ -1662,6 +1662,13 @@ fragment of @R{} code or the name of an @R{} object, using
 @code{typewriter} font if possible.  Only backslashes and percent signs
 need to be escaped (by a backslash) inside @code{\code}.
 
+@item \preformatted@{@var{text}@}
+@findex \preformatted
+Indicate text that is a literal example of a piece of a program, using
+@code{typewriter} font if possible.  Only backslashes and percent signs
+need to be escaped (by a backslash) inside @code{\preformatted}. All
+other formatting, e.g line breaks, is preserved.  
+
 @item \kbd@{@var{keyboard-characters}@}
 @findex \kbd
 Indicate keyboard input, using @kbd{slanted typewriter} font if
@@ -1678,7 +1685,8 @@ Indicate the name of an @R{} package.
 
 @item \file@{@var{file-name}@}
 @findex \file
-Indicate the name of a file.
+Indicate the name of a file.  Note that special characters do need to be
+escaped.
 @item \email@{@var{email-address}@}
 @findex \email
 Indicate an electronic mail address.
@@ -1870,11 +1878,11 @@ backslash.  (Note that @code{\cr} is used for generating line breaks.)
 
 The ``comment'' and ``control'' characters @samp{%} and @samp{\}
 @emph{always} need to be escaped.  Inside the verbatim-like commands
-(@code{\code} and @code{\examples}), no other@footnote{This is not quite
-true.  Unpaired braces will give problems and should be escaped.  See
-the examples section in the file @file{Paren.Rd} for an example.}
-characters are special.  Note that @code{\file} is @strong{not} a
-verbatim-like command.
+(@code{\code}, @code{\preformatted} and @code{\examples}), no
+other@footnote{This is not quite true.  Unpaired braces will give
+problems and should be escaped.  See the examples section in the file
+@file{Paren.Rd} for an example.}  characters are special.  Note that
+@code{\file} is @strong{not} a verbatim-like command.
 
 In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
 currently must escape most La@TeX{} special characters, i.e., besides

@@ -51,6 +51,7 @@ $EOB = "escaped-opening-bracket";
 $ECB = "escaped-closing-bracket";
 $ID = "$NB\\d+$BN";
 
+$EPREFORMAT = "this-is-preformat-code";
 $ECODE = "this-is-escaped-code";
 
 $LATEX_SPEC = '\$\^&~_#';#-- these **should** be escaped in  text2latex(.)
@@ -152,6 +153,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
     mark_brackets();
     ##HARD Debug:print "$complete_text\n"; exit;
+    escape_preformats();
     escape_codes();
     if($debug) {
 	print STDERR "\n--------------\nescape codes: '\@ecodes' =\n";
@@ -180,12 +182,19 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	}
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
+	rdoc2chm($chmfile)	if $type =~ /chm/i;
 	rdoc2txt($txtfile)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/;
 	rdoc2Ssgm($Sdfile)	if $type =~ /Ssgm/;
 	rdoc2latex($latexfile)	if $type =~ /tex/i;
+
+	while($text =~ /$EPREFORMAT($ID)/){
+	    my $id = $1;
+	    my $ec = $epreformat{$id};
+	    $text =~ s/$EPREFORMAT$id/$ec/;
+	}
+
 	rdoc2ex($Exfile)	if $type =~ /example/i;
-	rdoc2chm($chmfile)	if $type =~ /chm/i;
 
     } else {
 	warn "\n*** Rdconv(): no type specified\n";
@@ -266,6 +275,24 @@ sub escape_codes {
     }
 }
 
+sub escape_preformats {
+
+    print STDERR "\n-- escape_preformats:" if $debug;
+    my $loopcount = 0;
+
+    while(checkloop($loopcount++, $complete_text,
+		    "while replacing all \\preformatted{...}") &&
+	  $complete_text =~ /\\preformatted/  ){
+	    my ($id, $arg) = get_arguments("preformatted", $complete_text, 1);
+	    $complete_text =~ s/\\preformatted$id(.*)$id/$EPREFORMAT$id/s;
+	    $epreformats{$id} = $1;
+	    $found_any = 1;
+
+	    print STDERR "," if $debug;
+	}
+
+    $complete_text
+}
 
 ## Write documentation blocks such as title, usage, etc., into the
 ## global hash array %blocks.
@@ -924,6 +951,16 @@ sub html_print_argblock {
 
     my ($block,$title) = @_;
 
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = code2html($epreformats{$id});
+	$text =~ s/$EPREFORMAT$id/<pre>$ec<\/pre>/;
+    }
+
+
     if(defined $blocks{$block}){
 	print $htmlout (html_title3($title));
 
@@ -1005,6 +1042,16 @@ sub html_unescape_codes {
 	my $ec = code2html($ecodes{$id});
 	$text =~ s/$ECODE$id/<code>$ec<\/code>/;
     }
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = code2html($epreformats{$id});
+	$text =~ s/$EPREFORMAT$id/<pre>$ec<\/pre>/;
+    }
+
+
     $text;
 }
 
@@ -1586,7 +1633,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	    # Now split by \cr blocks
 	    my @blocks = split /\\cr/, $para;
 	    foreach $text (@blocks) {
-		$text =~ s/^\s+//o;
+#		$text =~ s/^\s+//o;
 		print $txtout mywrap($indent1, $indent2, $text), "\n";
 		$indent1 = $indent2;
 	    }
@@ -1626,7 +1673,7 @@ sub txt_print_codeblock {
 	foreach $line (split /\n/, $ntext) {
 	    $line =~ s/\\\\/\\/go;
 	    $line =~ s/^\t/        /o;
-	    $line =~ s/^\s+$//o;
+#	    $line =~ s/^\s+$//o;
 	    if(length($line) > 0) {
 		print $txtout $indent, $line, "\n";
 	    } else {
@@ -1705,6 +1752,16 @@ sub txt_unescape_codes {
 	my $ec = code2txt($ecodes{$id});
 	$text =~ s/$ECODE$id/\'$ec\'/;
     }
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = code2txt($epreformats{$id});
+        $ec =~ s/\n/\\cr/g;
+	$text =~ s/$EPREFORMAT$id/\n$ec\n/;
+    }
+
     $text;
 }
 
@@ -1868,6 +1925,15 @@ sub Sd_print_sections {
 sub text2nroff {
 
     my $text = $_[0];
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = code2nroff($epreformats{$id});
+	$text =~ s/$EPREFORMAT$id/\`$ec\'/;
+    }
+
     if($_[1]){
 	my $indent = $_[1];
     }
@@ -2009,6 +2075,15 @@ sub nroff_unescape_codes {
 	my $ec = code2nroff($ecodes{$id});
 	$text =~ s/$ECODE$id/\'$ec\'/;
     }
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = code2nroff($epreformats{$id});
+	$text =~ s/$EPREFORMAT$id/\`$ec\'/;
+    }
+
     $text;
 }
 
@@ -2283,6 +2358,14 @@ sub text2latex {
     $text =~ s/\\dddeqn/\\deqn/og;
     $text =~ s/\\DITEM/\\item/og;
 
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = latex_preformat_cmd(code2latex($epreformats{$id},1));
+	$text =~ s/$EPREFORMAT$id/$ec/;
+    }
+
     $text =~ s/\\\\/\\bsl{}/go;
     ## A mess:  map  & \& \\& \\\& to  \& \& \bsl{}\& \bsl{}\&
     $text =~ s/([^\\])&/$1\\&/go;
@@ -2326,6 +2409,15 @@ sub code2latex {
     $text = transform_S4method($text);
 
     $text;
+}
+
+sub latex_preformat_cmd {
+
+    my $code = $_[0];
+
+    $code = latex_code_trans ($code);
+    $code = "\\begin\{verbatim\}" . $code . "\\end\{verbatim\}";
+    $code;
 }
 
 sub latex_print_block {
@@ -2427,6 +2519,15 @@ sub latex_unescape_codes {
 	my $ec = latex_code_cmd(code2latex($ecodes{$id},1));
 	$text =~ s/$ECODE$id/$ec/;
     }
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = latex_preformat_cmd(code2latex($epreformats{$id},1));
+	$text =~ s/$EPREFORMAT$id/$ec/;
+    }
+
     $text;
 }
 
@@ -2773,6 +2874,21 @@ sub see2Ssgm {
 
     $text = unmark_brackets($text);
     $text;
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = code2Ssgm($epreformats{$id});
+	if($ec =~ /<s-function/) {
+	    # <s-expression cannot contain <s-function>
+	    $text =~ s/$EPREFORMAT$id/$ec/;
+	} else {
+	    $text =~ s/$EPREFORMAT$id/<s-expression>$ec<\/s-expression>/;
+	}
+    }
+
+
 }
 
 ## Print a standard block
@@ -2940,6 +3056,20 @@ sub Ssgm_unescape_codes {
 	    $text =~ s/$ECODE$id/<s-expression>$ec<\/s-expression>/;
 	}
     }
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped preformat")
+	  && $text =~ /$EPREFORMAT($ID)/){
+	my $id = $1;
+	my $ec = code2Ssgm($epreformats{$id});
+	if($ec =~ /<s-function/) {
+	    # <s-expression cannot contain <s-function>
+	    $text =~ s/$EPREFORMAT$id/$ec/;
+	} else {
+	    $text =~ s/$EPREFORMAT$id/<s-expression>$ec<\/s-expression>/;
+	}
+    }
+
     $text;
 }
 

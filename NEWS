@@ -235,18 +235,6 @@ NEW FEATURES
 
 	- S4 classes and methods are included in the QC tests.
 
-    o	Changes in R documentation format:
-
-	- New logical markup commands for emphasizing (\strong) and
-	  quoting (\sQuote and \dQuote) text, for indicating the usage
-	  of an S4 method (\S4method), and for indicating specific kinds
-	  of text (\acronym, \cite, \command, \dfn, \env, \kbd, \option,
-	  \pkg, \samp, \var).
-
-    o	Rdconv now produces more informative output from the special
-	\method{GENERIC}{CLASS} markup for indicating the usage of S3
-	methods, providing the CLASS info in a comment.
-
     o   GC timing is not enabled until the first call to gc.time; it
 	can be disabled by calling gc.time(FALSE).  This can speed up
 	the garbage collector and reduce system calls on some
@@ -330,6 +318,25 @@ DEPRECATED & DEFUNCT
     o	Method weights.lm(), a copy of weights.default(), has been removed.
 
     o	print.atomic() is now deprecated.
+
+
+DOCUMENTATION CHANGES
+
+    o	Changes in R documentation format:
+
+	- New logical markup commands for emphasizing (\strong) and
+	  quoting (\sQuote and \dQuote) text, for indicating the usage
+	  of an S4 method (\S4method), and for indicating specific kinds
+	  of text (\acronym, \cite, \command, \dfn, \env, \kbd, \option,
+	  \pkg, \samp, \var).
+
+	- New markup \preformatted for pre-formatted blocks of text
+          (like \example but within another section).  (Based on a
+          contribution by Greg Warnes.)
+
+    o	Rdconv now produces more informative output from the special
+	\method{GENERIC}{CLASS} markup for indicating the usage of S3
+	methods, providing the CLASS info in a comment.
 
 
 INSTALLATION CHANGES
