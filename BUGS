@@ -231,3 +231,11 @@ Subject: Use of Rd2txt on .Rd files from rw-1.0.0
 Subject: Use of Rd2txt on .Rd files from rw-1.0.0
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Wed, 22 Mar 2000 09:15:20 +1100 (EST)
+* PR# 499 *
+Subject: help system does not work
+From: jgm@qed.econ.queensu.ca
+Date: Wed, 22 Mar 2000 05:40:06 +0100 (MET)
+* PR# 500 *
+Subject:  segmentation fault with 1D array 
+From: J.C.Rougier@durham.ac.uk
+Date: Wed, 22 Mar 2000 18:25:24 GMT
