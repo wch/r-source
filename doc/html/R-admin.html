@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.5.0 (2002-03-27).
+<p>The current version of this document is 1.5.0 (2002-03-30).
 
 </ul>
 
@@ -543,6 +543,14 @@ can specify a specific BLAS library by the configuration option
 <code>--with-blas</code> and not to use an external BLAS library by
 <code>--without-blas</code>.
 
+<p>For systems with multiple processors it is in principle possible to use
+a multi-threaded version of ATLAS.  This is currently not supported. 
+The problem is that <code>SIGINT</code> signals will not be handled properly
+when sent during a multi-threaded ATLAS computation, and this may result
+in a segmentation fault.  Changes in the R internals are needed to
+support the use of threaded libraries; this will hopefully be addressed
+in a future release.
+
 <p>Note that the BLAS library will be used for several add-on packages as
 well as for R itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the R
@@ -1041,6 +1049,24 @@ partly successful.  Configuring with <code>-mieee</code> added to both
 <code>SIGFPE</code>'s.  It would appear that <code>-mieee</code> only defers these
 rather than suppressing them entirely.  Advice on how to complete this
 port would be greatly appreciated.
+
+<a name="AIX"></a>
+
+<h4>B.7.7 AIX</h3>
+
+<p>On AIX 4.3.3 and AIX 5.1, it was found that the use of "run time
+linking" (as opposed to normal AIX style linking) was required.  For
+this, the R main program must be linked to the runtime linker with the
+<code>-brtl</code> linker option, and shareable objects must be enabled for
+runtime linking with the <code>-G</code> linker option.  Without these
+options, the AIX linker will not automatically link to any shared object
+with a <code>.so</code> extension.  Also, the R main program is unable to
+dynamically load modules (such as X11) with the <code>dlopen</code> call.
+
+<p>When setting <code>MAIN_LDFLAGS</code> and <code>SHLIB_LDFLAGS</code> accordingly,
+note that linker flags must be escaped using <code>-Wl,</code> if
+<code>gcc</code> is used for linking: use <code>MAIN_LDFLAGS="-Wl,brtl"</code>
+and <code>SHLIB_LDFLAGS="-Wl,-G"</code> in this case.
 
 <a name="New%20platforms"></a>
 
