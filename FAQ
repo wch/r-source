@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-20, 2000-11-02
+Version 1.1-21, 2000-11-04
 Kurt Hornik
 
 
@@ -1303,6 +1303,9 @@ works, was published in the Journal of Statistical Software
      Functions for kriging and point pattern analysis from "Modern Applied
      Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
      the `VR' bundle.
+
+*splancs*
+     Spatial and space-time point pattern analysis functions.
 
 *stataread*
      Read and write Stata v6 `.dta' files.
