@@ -6750,7 +6750,7 @@ The final @key{RET} terminates the command line editing sequence.
 @node References,  , Concept index, Top
 @appendix References
 
-D.@: B.@: Bates and  D.@: G.@: Watts (1988), @emph{Nonlinear Regression
+D.@: M.@: Bates and  D.@: G.@: Watts (1988), @emph{Nonlinear Regression
 Analysis and Its Applications.} John Wiley & Sons, New York.
 
 Richard A.@: Becker, John M.@: Chambers and Allan R.@: Wilks (1988),
