@@ -15,6 +15,8 @@ NEW FEATURES
 
     o	mean() has a method for "difftime" objects and so summary() works.
 
+    o	legend() has an argument 'pt.cex'.
+
 
 BUG FIXES
 
@@ -48,7 +50,7 @@ BUG FIXES
     o   Subsetting a factor swapped the order of the attributes, which
 	identical() cares about.  (PR#6799)
 
-    o   The L-BFGS-B option of optim() apparently needs part of its 
+    o   The L-BFGS-B option of optim() apparently needs part of its
 	workspace zeroed.  (PR#6720)
 
     o   extractAIC.survreg needed updating.

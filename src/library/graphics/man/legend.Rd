@@ -4,7 +4,7 @@
 \usage{
 legend(x, y = NULL, legend, fill = NULL, col = "black", lty, lwd, pch,
        angle = NULL, density = NULL, bty = "o", bg = par("bg"),
-       pt.bg = NA, cex = 1, xjust = 0, yjust = 1,
+       pt.bg = NA, cex = 1, pt.cex = cex, xjust = 0, yjust = 1,
        x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
        text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
@@ -42,6 +42,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black", lty, lwd, pch,
   \item{pt.bg}{the background color for the \code{\link{points}}.}
   \item{cex}{character expansion factor \bold{relative} to current
     \code{par("cex")}.}
+  \item{pt.cex}{expansion factor(s) for the points.}
   \item{xjust}{how the legend is to be justified relative to the legend
     x location.  A value of 0 means left justified, 0.5 means centered
     and 1 means right justified.}
@@ -201,7 +202,7 @@ legend(0, 1.5, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",
 legend(.8,1.2, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",cex=.8)
 legend(0, -.1, paste("sin(",1:4,"pi * x)"), col=1:4, lty=1:4, ncol=2, cex=.8)
 legend(0, -.4, paste("sin(",5:7,"pi * x)"), col=5:7,  pch=24, ncol=2, cex=1.5,
-       pt.bg="pink")
+       pt.bg= "pink", pt.cex= 1:3)
 par(op)
 
 ## point covering line :
