@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-1 2004-04-13
+Version 1.9-2 2004-04-14
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -533,7 +533,7 @@ To cite R in publications, use
        author       = {{R Development Core Team}},
        organization = {R Foundation for Statistical Computing},
        address      = {Vienna, Austria},
-       year         = 2003,
+       year         = 2004,
        note         = {ISBN 3-900051-00-3},
        url          = {http://www.R-project.org}
      }
@@ -545,8 +545,8 @@ Thanks to Martin Maechler <Martin.Maechler@R-project.org>, there are four
 mailing lists devoted to R.
 
 `R-announce'
-     A moderated list for announcements about the development of R and the
-     availability of new code.
+     A moderated list for major announcements about the development of R and
+     the availability of new code.
 
 `R-packages'
      A moderated list for announcements on the availability of new or
@@ -561,28 +561,23 @@ mailing lists devoted to R.
      nice examples and benchmarks.
 
 `R-devel'
-     This list is for discussions about the future of R and pre-testing of
-     new versions.  It is meant for those who maintain an active position in
-     the development of R.
+     This list is for discussions about the future of R, proposals of new
+     functionality, and pre-testing of new versions.  It is meant for those
+     who maintain an active position in the development of R.
 
-Note that the R-announce and R-packages lists are gatewayed into R-help.
-Hence, you should subscribe to either of them only in case you are not
-subscribed to R-help.
+Convenient access to information on these lists, subscription, and archives
+is provided by the web interface at
+`http://www.stat.math.ethz.ch/mailman/listinfo/'.  One can also subscribe
+(or unsubscribe) via email, e.g. to R-help by sending `subscribe' (or
+`unsubscribe') in the _body_ of the message (not in the subject!) to
+<R-help-request@lists.r-project.org>.
 
-   Send email to <R-help@lists.R-project.org> to reach everyone on the
-R-help mailing list.  To subscribe (or unsubscribe) to this list send
-`subscribe' (or `unsubscribe') in the _body_ of the message (not in the
-subject!) to <R-help-request@lists.R-project.org>.  Information about the
-list can be obtained by sending an email with `info' as its contents to
-<R-help-request@lists.R-project.org>.
-
-   Subscription and posting to the other lists is done analogously, with
-`R-help' replaced by `R-announce', `R-packages', and `R-devel',
-respectively.
-
-   Subscriptions to the R-help and R-devel mailing lists are also available
-in digest (plain or MIME) format, see the `doc/html/mail.html' file in CRAN
-for more information.
+   Send email to <R-help@lists.R-project.org> to send a message to everyone
+on the R-help mailing list.  Subscription and posting to the other lists is
+done analogously, with `R-help' replaced by `R-announce', `R-packages', and
+`R-devel', respectively.  Note that the R-announce and R-packages lists are
+gatewayed into R-help.  Hence, you should subscribe to either of them only
+in case you are not subscribed to R-help.
 
    It is recommended that you send mail to R-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This may
@@ -598,10 +593,8 @@ Bugs:: for more details.
 (http://www.r-project.org/posting-guide.html) _before_ sending anything to
 any mailing list.
 
-   Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the `doc/html/mail.html' file in CRAN.
-Searchable archives of the lists are available via
-`http://maths.newcastle.edu.au/~rking/R/'.
+   See `http://www.r-project.org/mail.html' for more information on the R
+mailing lists.
 
    The R Core Team can be reached at <R-core@lists.R-project.org> for
 comments and reports.
@@ -617,24 +610,25 @@ contributed extensions, documentation for R, and binaries.
 
      `http://cran.R-project.org/'
 
-and is currently being mirrored daily at
+Daily mirrors are available at URLs including
 
      `http://cran.at.R-project.org/'  (TU Wien, Austria)
      `http://cran.au.R-project.org/'  (PlanetMirror, Australia)
      `http://cran.br.R-project.org/'  (Universidade Federal de
                                       Paraná, Brazil)
      `http://cran.ch.R-project.org/'  (ETH Zürich, Switzerland)
-     `http://cran.de.R-project.org/'  (APP, Germany)
      `http://cran.dk.R-project.org/'  (SunSITE, Denmark)
      `http://cran.es.R-project.org/'  (Spanish National Research
                                       Network, Madrid, Spain)
+     `http://cran.fr.R-project.org/'  (INRA, Toulouse, France)
      `http://cran.hu.R-project.org/'  (Semmelweis U, Hungary)
      `http://cran.uk.R-project.org/'  (U of Bristol, United
                                       Kingdom)
      `http://cran.us.R-project.org/'  (pair Networks, USA)
      `http://cran.za.R-project.org/'  (Rhodes U, South Africa)
 
-Please use the CRAN site closest to you to reduce network load.
+See `http://cran.r-project.org/mirrors.html' for a complete list of
+mirrors.  Please use the CRAN site closest to you to reduce network load.
 
    From CRAN, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current CVS trees), as gzipped and bzipped
