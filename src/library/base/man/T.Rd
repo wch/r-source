@@ -2,7 +2,7 @@
 \title{The Student t Distribution}
 \usage{
 dt(x, df)
-pt(q, df)
+pt(q, df, ncp=0)
 qt(p, df)
 rt(n, df)
 }
@@ -12,7 +12,8 @@ rt(n, df)
 \alias{rt}
 \description{
   These functions provide information about the t distribution with
-  \code{df} degrees of freedom.  \code{dt} gives the density, \code{pt}
+  \code{df} degrees of freedom (and optional noncentrality parameter
+  \code{ncp}).  \code{dt} gives the density, \code{pt}
   gives the distribution function, \code{qt} gives the quantile function
   and \code{rt} generates random deviates.
 
