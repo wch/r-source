@@ -51,13 +51,14 @@ sys.source <- function (file)
 
 demo <- function(topic, device = x11, directory.sep = "/")
 {
- Topics <-cbind(graphics = c("graphics","graphics",	"G"),
-		image	 = c("graphics","image",	"G"),
-		lm.glm	 = c("models",	"lm+glm",	"G"),
-		glm.vr	 = c("models",	"glm-v+r",	""),
-		nlm	 = c("nlm",	"valley",	""),
-		recursion= c("language","recursion",	"G"),
-		scoping	 = c("language","scoping",	"")
+ Topics <-cbind(graphics = c("graphics","graphics.R",	"G"),
+		image	 = c("graphics","image.R",	"G"),
+		lm.glm	 = c("models",	"lm+glm.R",	"G"),
+		glm.vr	 = c("models",	"glm-v+r.R",	""),
+		nlm	 = c("nlm",	"valley.R",	""),
+		recursion= c("language","recursion.R",	"G"),
+		scoping	 = c("language","scoping.R",	""),
+		is.things= c("language","is-things.R",	"")
 		)
  dimnames(Topics)[[1]] <- c("dir", "file", "flag")
  topic.names <- dimnames(Topics)[[2]]
@@ -76,7 +77,7 @@ demo <- function(topic, device = x11, directory.sep = "/")
  } else {
 	topic <- topic.names[i.top]
 	cat("\n\n\tdemo(",topic,")\n\t---- ",rep("~",nchar(topic)),
-	    "\n\nType  <Return>  to start : ",sep="")
+	    "\n\nType  <Return>	 to start : ",sep="")
 	readline()
 	if((!exists(".Device") || is.null(.Device)) &&
 	   Topics["flag",i.top] == "G")
