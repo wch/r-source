@@ -59,7 +59,7 @@ barplot.default <-
 	on.exit(par(opar))
 
 	plot.new()
-	plot.window(xlim, ylim, log = "")
+	plot.window(xlim, ylim, log = "", ...)
 	xyrect <- function(x1,y1, x2,y2, horizontal=TRUE, ...) {
 	    if(horizontal)
 		rect(x1,y1, x2,y2, ...)
