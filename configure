@@ -15316,7 +15316,7 @@ fi
 fi
 done
 
-for ac_func in access bcopy bzero expm1 finite ftruncate getcwd \
+for ac_func in access bcopy bzero expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr memcpy \
   memmove mempcpy mkfifo popen putenv rint setenv strcoll stat \
   strptime system times unsetenv

@@ -91,6 +91,9 @@
 /* Define if your Fortran compiler appends an underscore to external names. */
 #undef HAVE_F77_UNDERSCORE
 
+/* Define if you have the `fcntl' function. */
+#undef HAVE_FCNTL
+
 /* Define if you have the <fcntl.h> header file. */
 #undef HAVE_FCNTL_H
 
