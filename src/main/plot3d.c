@@ -1582,7 +1582,7 @@ static void DepthOrder(double *z, double *x, double *y, int nx, int ny,
 			if (v[3] > d) d = v[3];
 		    }
 		}
-	    depth[i+j*nx1] = d;
+	    depth[i+j*nx1] = -d;
 
 	}
     /* Determine the depth ordering of the facets to ensure
