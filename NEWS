@@ -159,9 +159,14 @@ UTILITIES
         providing global variables like R_OSTYPE or wrapper functions
         like R_runR().
 
-    o   If a directory inst/doc is present in the sources of a
-        package, the HTML index of the installed package has a
-        link to the respective subdirectory.
+    o   If a directory `inst/doc' is present in the sources of a
+        package, the HTML index of the installed package has a link to
+        the respective subdirectory.
+
+    o	R CMD check is more stringent: it now also fails on malformed
+	`Depends' and `Maintainer' fields in `DESCRIPTION' files, and on
+	unbalanced braces in Rd files.  It now also provides pointers to
+	documentation for problems it reports.
 
 
 C-LEVEL FACILITIES
