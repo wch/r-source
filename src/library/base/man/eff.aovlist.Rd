@@ -8,20 +8,23 @@ eff.aovlist(aovlist)
 }
 \alias{eff.aovlist}
 \arguments{
- \item{aovlist}{The result of a call to \code{aov} with a \code{Error} term.}
+  \item{aovlist}{
+    The result of a call to \code{aov} with a \code{Error} term.
+  }
 }
 \description{
- ~~ A concise (1-5 lines) description of what the function does. ~~
+  Computes the efficiencies of fixed-effect terms in an analysis of
+  variance model with multiple strata.
 }
 \details{
- Fixed-effect terms in an analysis of variance model with multiple strata
- may be estimable in more than one stratum, in which case there is less
- than complete information in each. The efficiency is the fraction of
- the maximum possible precision (inverse variance) obtainable by
- estimating in just that stratum.
+  Fixed-effect terms in an analysis of variance model with multiple strata
+  may be estimable in more than one stratum, in which case there is less
+  than complete information in each. The efficiency is the fraction of
+  the maximum possible precision (inverse variance) obtainable by
+  estimating in just that stratum.
 
- This is used to pick strata in which to estimate terms in
- \code{model.tables.aovlist} and elsewhere.
+  This is used to pick strata in which to estimate terms in
+  \code{model.tables.aovlist} and elsewhere.
 }
 \value{
   A matrix giving for each non-pure-error stratum (row) the efficiencies

@@ -71,12 +71,12 @@ a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, list(a=1)), list(b=5)) # == 10
 a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, 1), list(b=5))         # == 12
 
 ev <- function() {
-	e1 <- sys.frame(sys.parent())
-	## Evaluate a in e1
-	aa <- eval(expression(a),e1)
-	## evaluate the expression bound to a in e1
-	a <- expression(x+y)
-	list(aa = aa, eval = eval(a, e1))
+   e1 <- sys.frame(sys.parent())
+   ## Evaluate a in e1
+   aa <- eval(expression(a),e1)
+   ## evaluate the expression bound to a in e1
+   a <- expression(x+y)
+   list(aa = aa, eval = eval(a, e1))
 }
 tst.ev <- function(a = 7) { x <- pi; y <- 1; ev() }
 tst.ev()#-> aa : 7,  eval : 4.14
@@ -88,25 +88,25 @@ tst.ev()#-> aa : 7,  eval : 4.14
 # Mutual recursives. 
 # gg gets value of last assignment, an anonymous version of f.
 
-gg<-local({
-    k<-function(y)f(y)
-    f<-function(x)if(x)x*k(x-1)else 1
+gg <- local({
+    k <- function(y)f(y)
+    f <- function(x) if(x) x*k(x-1) else 1
 })
 gg(10)
-sapply(1:5,gg)
+sapply(1:5, gg)
 
 # Nesting locals. a is private storage accessible to k
-gg<-local({
-    k<-local({
-        a<-1
-        function(y){print(a<<-a+1);f(y)}
+gg <- local({
+    k <- local({
+        a <- 1
+        function(y){print(a <<- a+1);f(y)}
     })
-    f<-function(x)if(x)x*k(x-1)else 1
+    f <- function(x) if(x) x*k(x-1) else 1
 })
-sapply(1:5,gg)
+sapply(1:5, gg)
 
 ls(envir=environment(gg))
-ls(envir=environment(get("k",envir=environment(gg))))
+ls(envir=environment(get("k", envir=environment(gg))))
 }
 \keyword{data}
 \keyword{programming}

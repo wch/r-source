@@ -6,7 +6,7 @@ model.frame.default(formula, data=sys.frame(sys.parent()),
                     na.action = na.fail, \dots)
 
 Methods for
-	lm	glm	aovlist
+        lm      glm     aovlist
 }
 \alias{model.frame}
 \alias{model.frame.default}

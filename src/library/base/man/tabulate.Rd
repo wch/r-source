@@ -18,7 +18,7 @@ used as the basis of the \code{table} function.
     is tabulated.
     If the elements of \code{bin} are not integers, they are rounded
     to the nearest integer.  Elements outside the range \code{1,\dots,
-	nbin} are (silently) ignored in the tabulation.
+      nbin} are (silently) ignored in the tabulation.
 }
 \seealso{
 \code{\link{factor}}, \code{\link{table}}.

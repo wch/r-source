@@ -37,9 +37,9 @@ y <- cbind(sin(x), cos(x))
 matplot(x, y, type = "l", xaxt = "n",
         main = expression(paste(plain(sin) * phi, "  and  ",
                                 plain(cos) * phi)),
-	ylab = expression("sin" * phi, "cos" * phi),    # only 1st is taken
-	xlab = expression(paste("Phase Angle ", phi)),
-	col.main = "blue")
+        ylab = expression("sin" * phi, "cos" * phi), # only 1st is taken
+        xlab = expression(paste("Phase Angle ", phi)),
+        col.main = "blue")
 axis(1, at = c(-pi, -pi/2, 0, pi/2, pi),
      lab = expression(-pi, -pi/2, 0, pi/2, pi))
 abline(h = 0, v = pi/2 * c(-1,1), lty = 2, lwd = .1, col = "gray70")

@@ -21,9 +21,9 @@ update.packages(lib.loc = .lib.loc, CRAN = options("CRAN"),
 installed.packages(lib.loc = .lib.loc)
 CRAN.packages(CRAN = options("CRAN"), method = "auto",
               contriburl = contrib.url(CRAN))
-old.packages(lib.loc=.lib.loc, CRAN=.Options$CRAN,
-             contriburl=contrib.url(CRAN),
-             method="auto", available=NULL)
+old.packages(lib.loc = .lib.loc, CRAN = .Options$CRAN,
+             contriburl = contrib.url(CRAN),
+             method = "auto", available = NULL)
 
 download.file(url, destfile, method = "auto")
 download.packages(pkgs, destdir, available = NULL,

@@ -2,7 +2,7 @@
 \title{Symbolic Number Coding}
 \usage{
 symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
-	  symbols=c(" ", ".", ",", "+", "*", "B"),
+       symbols=c(" ", ".", ",", "+", "*", "B"),
        legend = length(symbols) >= 3,
        na="?", eps=1e-5,
        corr = missing(cutpoints), show.max = if(corr) "1", show.min = NULL,
@@ -76,10 +76,10 @@ Cm <- cor(matrix(rnorm(60),  10, 6)); Cm[c(3,6), 2] <- NA
 symnum(Cm, show.max=NULL)
 
 ## Graphical P-values (aka "significance stars"):
-pval <- rev(sort(c(outer(1:6,10^-(1:3)))))
+pval <- rev(sort(c(outer(1:6, 10^-(1:3)))))
 symp <- symnum(pval, corr=F,
-		cutpoints = c(0,  .001,.01,.05, .1, 1),
-		symbols	  =  c("***","**","*","."," "))
+               cutpoints = c(0,  .001,.01,.05, .1, 1),
+               symbols = c("***","**","*","."," "))
 noquote(cbind(P.val = format(pval), Signif= symp))
 }
 \keyword{utilities}

@@ -9,14 +9,17 @@ effects.lm(object, set.sign=FALSE)
 \alias{effects.glm}
 \arguments{
  \item{object}{list; typically, the result of a model fitting function
-   such as \code{\link{lm}}}
- \item{set.sign}{logical ~~Describe \code{set.sign} here~~ }
+   such as \code{\link{lm}}.}
+ \item{set.sign}{logical. If \code{TRUE}, the sign of the effects
+   corresponding to coefficients in the model will be set to agree with the
+   signs of the corresponding coefficients, otherwise the sign is
+   essentially arbitrary.}
 }
 \description{
   Returns (orthogonal) effects from a fitted (generalized) regression
   model.  In case of a full rank \eqn{n \times p}{n * p}
   \code{\link{model.matrix}}, the first \eqn{p} effects correspond to
-  coefficients and the remaining \eqn{n-p} ones to residuals.
+  coefficients and the remaining \eqn{n - p} ones to residuals.
 }
 \details{
 
@@ -26,13 +29,11 @@ effects.lm(object, set.sign=FALSE)
 }
 \value{
   A (named) numeric vector of the same length as
-  \code{\link{residuals}}.  The first \eqn{p} values are labeled
+  \code{\link{residuals}}. The first \eqn{p} values are labeled
   according to the corresponding coefficients, the remaining ones are
   unlabeled.
 
-  The result currently has \code{\link{class}} \code{"coef"}.
-
-  \dots\dots FIXME \dots\dots
+  The result has \code{\link{class}} \code{"coef"}.
 }
 \seealso{\code{\link{coef}}, \code{\link{fitted}}, etc.}
 \examples{

@@ -3,7 +3,7 @@
 \usage{
 identify(x, \dots)
 identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
-	 n = length(x), plot = TRUE, offset = 0.5, \dots)
+                 n = length(x), plot = TRUE, offset = 0.5, \dots)
 }
 \alias{identify}
 \alias{identify.default}
