@@ -1,8 +1,8 @@
 lm <-
-function (formula, data, subset, weights, na.action,
+function (formula, data=list(), subset, weights, na.action,
 	method="lm", model=TRUE, singular.ok = TRUE) 
 {
-	mt <- terms(formula)
+	mt <- terms(formula, data=data)
 	mf <- match.call()
 	mf$singular.ok <- NULL
 	mf$model <- NULL
@@ -404,9 +404,7 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 "predict.lm" <-
 function (object, newdata = model.frame(object)) 
 {
-	form<-formula(object)
-	form<-as.call(list(form[[1]],form[[3]])) # x~a+b becomes ~a+b
-	class(form)<-"formula"
+	form <- delete.response(terms(object))
 	X <- model.matrix(form,newdata)
 	n <- NROW(object$qr$qr)
 	p <- object$rank

@@ -4,7 +4,7 @@
 
 # glm.fit modified by Thomas Lumley, Apr 1997
 
-glm <- function(formula, family=gaussian, data, weights=NULL,
+glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	subset=NULL, na.action=na.fail, start=NULL, offset=NULL,
 	control=glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
 	model=TRUE, method="glm.fit", x=FALSE, y=TRUE)
@@ -19,7 +19,7 @@ glm <- function(formula, family=gaussian, data, weights=NULL,
 		
 	# extract x, y, etc from the model formula and frame
 
-	mt <- terms(formula)
+	mt <- terms(formula, data=data)
 	if(missing(data)) data <- sys.frame(sys.parent())
 	mf <- match.call()
 	mf$family <- mf$start <- mf$control <- mf$maxit <- NULL

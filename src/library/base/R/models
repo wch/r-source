@@ -146,9 +146,8 @@ model.frame <- function(x, ...)
 	UseMethod("model.frame")
 
 model.frame.default <-
-function(formula, data = sys.frame(sys.parent()), na.action = na.fail, ...)
+function(formula, data = NULL, subset=NULL, na.action = na.fail, ...)
 {
-	envir <- sys.frame(sys.parent())
 	if(missing(formula)) {
 		if(!missing(data) && inherits(data, "data.frame") &&
 		length(attr(data, "terms")) > 0)
@@ -167,10 +166,12 @@ function(formula, data = sys.frame(sys.parent()), na.action = na.fail, ...)
 		else if(!is.null(naa <- options("na.action")[[1]]))
 			na.action <- naa
 	}
+	if(missing(data))
+		data <- sys.frame(sys.parent())
 	if(!inherits(formula, "terms"))
 		formula <- terms(formula, data = data)
-	.Internal(model.frame(formula, data,
-		substitute(list(...)), sys.frame(sys.parent()), na.action))
+	.Internal(model.frame(formula, data, substitute(list(...)),
+		subset, na.action))
 }
 
 model.weights <- function(x) x$"(weights)"
