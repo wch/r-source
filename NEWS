@@ -20,6 +20,8 @@ BUG FIXES
 
     o	ave(1:3) now works (as when is.null(list()) was TRUE years ago).
 
+    o	by() works when embedded in a function.
+
 
 		CHANGES IN R VERSION 1.0.1
 
