@@ -14,10 +14,8 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
            true - approx)     # absolute error (e.g. when true=0)
 }
 
-
-abs(1- .Machine$double.xmax * 10^(-.Machine$double.max.exp*log10(2)))/Meps < 1e3
+is.infinite(.Machine$double.base ^ .Machine$double.max.exp)# overflow
 abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
-##P (1- .Machine$double.xmax * 10^(-.Machine$double.max.exp*log10(2)))/Meps
 ##P (1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps
 log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
 log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
@@ -30,8 +28,8 @@ all( sin(-x) == - sin(x))
 all( cos(-x) == cos(x))
 
 x <- 1:99/100
-all(abs(1 - x / asin(sin(x))) <= .Machine$double.eps)
-all(abs(1 - x / atan(tan(x))) <= .Machine$double.eps)
+all(abs(1 - x / asin(sin(x))) <= Meps)
+all(abs(1 - x / atan(tan(x))) <= Meps)
 
 ## Complex Trig.:
 abs(Im(cos(acos(1i))) -	 1) < 2*Meps
