@@ -68,6 +68,7 @@ function(dir, outDir)
     .installPackageRdIndices(dir, outDir)
     .installPackageVignetteIndex(dir, outDir)
     .installPackageDemoIndex(dir, outDir)
+    invisible(NULL)
 }
 
 ### * .installPackageRdIndices
@@ -115,7 +116,7 @@ function(dir, outDir)
         .saveRDS(.buildDataIndex(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     }
-
+    invisible(NULL)
 }
 
 ### * .installPackageVignetteIndex
@@ -140,6 +141,7 @@ function(dir, outDir)
     writeLines(formatDL(vignetteIndex, style = "list"),
                file.path(outVignetteDir, "00Index.dcf"))
     ## </FIXME>
+    invisible(NULL)
 }
 
 ### * .installPackageDemoIndex
