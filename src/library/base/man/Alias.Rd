@@ -24,12 +24,17 @@ new <- .Alias(expr)
 \examples{
 mop <- options()
 Op <- .Alias(mop)
-## Any change to mop is reflected in Op and vice versa!
-mop $ newslot <- pi
- Op $ newslot # 3.1415..
+## A change to mop is reflected in Op and vice versa
+## -- ONLY if no new slots are created ...
 mop $ digits <- "Wow!"
- Op $ another <- 2
-mop $ another; Op $ digits
-all(names(mop) == names(Op))# TRUE -- Op and mop  *ARE* the same thing
+Op  $ browser <- "Web broser"
+mop $ browser; Op $ digits
+all(names(mop) == names(Op) &
+    sapply(seq(mop), function(i) all(Op[[i]] == mop[[i]])))
+##> TRUE -- Op and mop  *ARE* the same thing !
+
+mop $ newslot <- pi #--->> 'newslot' ==> (shallow) COPY of 'mop'
+ Op $ newslot# R (>= 0.63): still the old one, i.e. NULL
+all(names(mop) == names(Op))# no longer TRUE [R >= 0.63]
 }
 \keyword{programming}
