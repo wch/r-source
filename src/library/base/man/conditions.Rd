@@ -139,6 +139,10 @@ restartFormals(r)
    tried; once the last handler has been tried, \code{signalCondition}
    returns \code{NULL}.
 
+   User interrupts signal a condition of class \code{interrupt} that
+   inherits directly from class \code{condition} before executing the
+   default interrupt action.
+
    Restarts are used for establishing recovery protocols.  They can be
    established using \code{withRestarts}.  One pre-established restart is
    an \code{abort} restart that represents a jump to top level.
