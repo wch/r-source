@@ -164,6 +164,40 @@ close(zz)
 unlink("t1.gz")
 stopifnot(sz < 2000)
 
+## PR 1010: plot.mts (type="p") was broken in 1.3.0 and this call failed.
+plot(ts(matrix(runif(10), ncol = 2)), type = "p")
+
+## in 1.3.0 readLines(ok=FALSE) failed.
+cat(file="foo", 1:10, sep="\n")
+x <- try(readLines("foo", 100, ok=FALSE))
+unlink("foo")
+stopifnot(length(class(x)) == 1 &&class(x) == "try-error")
+
+## PR 1047 [<-data.frame failure, BDR 2001-08-10
+test <- df <- data.frame(x=1:10, y=11:20, row.names=letters[1:10])
+test[] <- lapply(df, factor)
+test
+## error in 1.3.0 in test[]
+
+## PR 1048 bug in dummy.coef.lm, Adrian Baddeley, 2001-08-10
+## modified to give a sensible test
+old <- getOption("contrasts")
+options(contrasts=c("contr.helmert", "contr.poly"))
+DF <- data.frame(x=1:20,y=rnorm(20),z=factor(1:20 <= 10))
+dummy.coef.lm(lm(y ~ z * I(x), data=DF))
+dummy.coef.lm(lm(y ~ z * poly(x,1), data=DF))
+## failed in 1.3.0.  Second one warns: deficiency of the method.
+options(contrasts=old)
+
+## PR 1050 error in ksmooth C code + patch, Hsiu-Khuern Tang, 2001-08-12
+library(modreg)
+x <- 1:4
+y <- 1:4
+z <- ksmooth(x, y, x.points=x)
+stopifnot(all.equal(z$y, y))
+detach("package:modreg")
+## did some smoothing prior to 1.3.1.
+
 ## The length of lines read by scan() was limited before 1.4.0
 xx <- paste(rep(0:9, 2000), collapse="")
 zz <- file("foo.txt", "w")
