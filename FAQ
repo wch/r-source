@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.90-5, 1999/12/22
+Version 0.90-6, 1999/12/27
 Kurt Hornik
 
 
@@ -307,14 +307,12 @@ distribution is available.  We hope that this will change soon.
 2.6 Are there Unix binaries for R?
 ==================================
 
-   The `bin/linux' directory contains Debian 2.1 packages for the i386
-platform (now part of the Debian distribution and maintained by Doug Bates)
-as well as Red Hat 5.1 packages for the alpha and sparc platforms
-(maintained by Nassib Nasser and Vin Everett, respectively), Red Hat 6.0
-packages for the i386, alpha and sparc platforms (maintained by Martyn
-Plummer, Naoki Takebayashi, and Vin Everett, respectively), S.u.S.E.
-5.3/6.0/6.2 i386 packages by Albrecht Gebhardt, and RPMs for the ppc
-platform by Alex Buerkle.
+   The `bin/linux' directory contains Debian 2.1 and 2.2 packages for the
+i386 platform (now part of the Debian distribution and maintained by Doug
+Bates), Red Hat 5.1 and 6.0 packages for the alpha, i386 and sparc
+platforms (maintained by Nassib Nasser [5.1] and Naoki Takebayashi [6.0],
+Martyn Plummer, and Vin Everett, respectively), SuSE 5.3/6.0/6.2 i386
+packages by Albrecht Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
    The `bin/osf' directory contains RPMs for alpha systems running Digital
 Unix 4.0 by Albrecht Gebhardt.
