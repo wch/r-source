@@ -17,7 +17,6 @@
 \alias{RtangleWritedoc}
 % \alias{RtangleFinish}
 % \alias{SweaveGetSyntax}
-\alias{pkgVignettes}
 % \alias{Rdpp}
 % \alias{Rdinfo}
 % \alias{Rdcontents}
