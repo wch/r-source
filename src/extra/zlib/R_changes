@@ -1,4 +1,4 @@
-There are no changes to the source code of zlib-1.1.4 used here.
+There are no changes to the source code of zlib-1.2.1 used here.
 
 Makefile.in is ours, not zlib's, and allows us to use PIC flags so this
 can be included in libR.so.

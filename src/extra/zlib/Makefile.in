@@ -16,11 +16,10 @@ ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 ## make with CPICFLAGS so can be used with a shared library
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 
-SOURCES = adler32.c compress.c crc32.c deflate.c gzio.c infblock.c \
-  infcodes.c inffast.c inflate.c inftrees.c infutil.c trees.c uncompr.c \
-  zutil.c
-HEADERS = deflate.h infblock.h infcodes.h inffast.h inffixed.h inftrees.h \
-  infutil.h trees.h zconf.h zlib.h zutil.h
+SOURCES = adler32.c compress.c crc32.c deflate.c gzio.c infback.c \
+  inffast.c inflate.c inftrees.c trees.c uncompr.c zutil.c
+HEADERS = crc32.h deflate.h inffast.h inffixed.h inflate.h inftrees.h \
+  trees.h zconf.h zlib.h zutil.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 

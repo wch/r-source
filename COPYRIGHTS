@@ -218,7 +218,7 @@ src/extra/xdr/*
 
 src/extra/zlib/README, *.c, *.h
 
-  Taken from zlib-1.1.4. (C) 1995-2002 Jean-loup Gailly and Mark Adler
+  Taken from zlib-1.2.1 (C) 1995-2003 Jean-loup Gailly and Mark Adler
   See src/extra/zlib/README for the licence.
 
 
@@ -251,7 +251,7 @@ src/extra/pcre/pcre.c
 src/extra/pcre/pcre.h
 src/extra/pcre/study.c
 
-   Copyright (c) 1997-2001 University of Cambridge
+   Copyright (c) 1997-2003 University of Cambridge
 
 
 src/extra/bzip2/LICENSE
