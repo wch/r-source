@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.42 $ ';
+my $revision = ' $Revision: 1.43 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -75,18 +75,17 @@ my $R_HOME = $ENV{'R_HOME'} ||
 my $R_CMD = $ENV{'R_CMD'} ||
     die "Error: environment variable R_CMD not found\n";
 
-my $WINDOWS = R_getenv("R_UNDER_WINDOWS", 0);
-my $TMPDIR = R_getenv("TMPDIR", "/tmp");
+my $OS = R_getenv("R_OSTYPE", "unix");
 my $R_exe = "${R_HOME}/bin/R";
-my $OS = "unix";
+my $TMPDIR = R_getenv("TMPDIR", "/tmp");
+my $WINDOWS = ($OS eq "windows");
 if($WINDOWS){
     $TMPDIR = R_getenv("TMPDIR", "/TEMP");
     die "Please set TMPDIR to a valid temporary directory\n" 
-	unless (-e $TMPDIR);
+      unless (-e $TMPDIR);
     $R_exe = "Rterm.exe";
     $LATEX = "latex";
     $MAKE = "make";
-    $OS = "windows";
 }
 
 my $R_LIBS = $ENV{'R_LIBS'};
@@ -258,12 +257,24 @@ sub check_pkg {
     
     chdir($pkgdir);
 
-    ## FIXME:
-    ## Only do this on Unix!
-    if(!$WINDOWS) {
+    if($OS eq "unix") {
 	$log->checking("for sufficient file permissions");
 	my @badfiles = ();
+	my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\.swp\$");
+	if(-f "./.Rbuildignore") {
+	    open(RBUILDIGNORE, "./.Rbuildignore");
+	    while(<RBUILDIGNORE>) {
+		chop;
+		push(@excludepatterns, $_);
+	    }
+	    close(RBUILDIGNORE);
+	}
 	sub findWrongPerms {
+	    my $filename = $File::Find::name;
+	    $filename =~ s/^[^\/]*\///;
+	    foreach $p (@excludepatterns) {
+		return 0 if($filename =~ /$p/);
+	    }
 	    if(-d $_ && (((stat $_)[2] & 00755) < oct("755"))) {
 		push @badfiles, $File::Find::name;
 	    }
@@ -281,7 +292,6 @@ sub check_pkg {
 	}
 	$log->result("OK");
     }
-    ## </FIXME>
 
     if($in_bundle){		# join DESCRIPTION and DESCRIPTION.in
 	if(-r "DESCRIPTION.in"){
