@@ -247,11 +247,17 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         if (!conv) warning("Algorithm did not converge")
         if (boundary) warning("Algorithm stopped at boundary value")
         ## If X matrix was not full rank then columns were pivoted,
-        ## hence we need to re-label the names:
+        ## hence we need to re-label the names ...
+        ## Original code changed as suggested by BDR---give NA rather
+        ## than 0 for non-estimable parameters
         if (fit$rank != nvars) {
-                xnames <- xnames[fit$pivot]
-                dimnames(fit$qr) <- list(NULL, xnames)
+            coef[seq(fit$rank+1, nvars)] <- NA
+            coef[fit$pivot] <- coef
+            xxnames <- xnames[fit$pivot]
+            dimnames(fit$qr) <- list(NULL, xnames)
         }
+        else
+            xxnames <- xnames
         residuals <- rep(NA, nobs)
         residuals[good] <- z - eta[good]
         fit$qr <- as.matrix(fit$qr)
@@ -264,8 +270,8 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         Rmat <- as.matrix(Rmat)
         Rmat[row(Rmat) > col(Rmat)] <- 0
         names(coef) <- xnames
-        colnames(fit$qr) <- xnames
-        dimnames(Rmat) <- list(xnames, xnames)
+        colnames(fit$qr) <- xxnames
+        dimnames(Rmat) <- list(xxnames, xxnames)
         names(residuals) <- ynames
         names(mu) <- ynames
         names(eta) <- ynames
