@@ -103,6 +103,9 @@ NEW FEATURES
 	`drop' argument (with a warning).  Previously using `drop'
 	inhibited list-like subscripting.
 
+    o	Setting dimnames to a factor now coerces to character, as S
+	does.  (Earlier versions of R used the internal codes.)
+
 
 DEPRECATED & DEFUNCT
 

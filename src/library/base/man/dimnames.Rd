@@ -13,7 +13,7 @@ dimnames(x) <- value
 }
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
-  \item{value}{a possible value for \code{dimnames(x)}: see below.}
+  \item{value}{a possible value for \code{dimnames(x)}: see ``Value''.}
 }
 \details{
   The functions \code{dimnames} and \code{dimnames<-} are generic.
@@ -26,6 +26,9 @@ dimnames(x) <- value
 
   Both have methods for data frames.  The dimnames of a data frame are
   its \code{row.names} attribute and its \code{\link{names}}.
+
+  As from \R 1.8.0 factor components of \code{value} will be coerced to
+  character. 
 }
 \value{
   The dimnames of a matrix or array can be \code{NULL} or a list of the

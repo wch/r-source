@@ -891,16 +891,18 @@ str(levels(ff))
 ## not quite ok previous to 1.7.0
 
 
-## wishlist PR#2776: aliased coefs in lm/glm
-set.seed(123)
-x2 <- x1 <- 1:10
-x3 <- 0.1*(1:10)^2
-y <- x1 + rnorm(10)
-(fit <- lm(y ~ x1 + x2 + x3))
-summary(fit, cor = TRUE)
-(fit <- glm(y ~ x1 + x2 + x3))
-summary(fit, cor = TRUE)
-## omitted silently in summary.glm < 1.8.0
+## str() for character & factors with NA (levels), and for Surv objects:
+ff <- factor(c(2:1,  NA),  exclude = NULL)
+str(levels(ff))
+str(ff)
+str(ordered(ff, exclude=NULL))
+if(require(survival)) {
+    data(aml)
+    (sa <- Surv(aml$time, aml$status))
+    str(sa)
+    detach("package:survival")
+}
+## were different, the last one failed in 1.6.2 (at least)
 
 
 ## PR#3058  printing with na.print and right=TRUE
@@ -911,6 +913,29 @@ a <- matrix( c(NA, "a", "b", "10",
 print(a, right=TRUE, na.print=" ")
 print(a, right=TRUE, na.print="----")
 ## misaligned in 1.7.0
+
+
+## assigning factors to dimnames
+A <- matrix(1:4, 2)
+aa <- factor(letters[1:2])
+dimnames(A) <- list(aa, NULL)
+A
+dimnames(A)
+## 1.7.0 gave internal codes as display and dimnames()
+## 1.7.1beta gave NAs via dimnames()
+## 1.8.0 converts factors to character
+
+
+## wishlist PR#2776: aliased coefs in lm/glm
+set.seed(123)
+x2 <- x1 <- 1:10
+x3 <- 0.1*(1:10)^2
+y <- x1 + rnorm(10)
+(fit <- lm(y ~ x1 + x2 + x3))
+summary(fit, cor = TRUE)
+(fit <- glm(y ~ x1 + x2 + x3))
+summary(fit, cor = TRUE)
+## omitted silently in summary.glm < 1.8.0
 
 
 ## list-like indexing of data frames with drop specified

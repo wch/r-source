@@ -540,6 +540,35 @@ SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     return CAR(args);
 }
 
+static SEXP dimnamesgets1(SEXP val1)
+{
+    SEXP this2;
+    
+    if (LENGTH(val1) == 0) return R_NilValue;
+    /* if (isObject(val1)) dispatch on as.character.foo, but we don't
+       have the context at this point to do so */
+    if (isFactor(val1)) { /* mimic as.character.factor */
+	int i, n = LENGTH(val1);
+	SEXP labels = getAttrib(val1, install("levels"));
+	PROTECT(this2 = allocVector(STRSXP, n));
+	for(i = 0; i < n; i++) {
+	    SET_STRING_ELT(this2, i, 
+			   STRING_ELT(labels, INTEGER(val1)[i] - 1));
+	}
+	UNPROTECT(1);
+	return this2;
+    }
+    if (!isString(val1)) { /* mimic as.character.default */
+	PROTECT(this2 = coerceVector(val1, STRSXP));
+	SET_ATTRIB(this2, R_NilValue);
+	SET_OBJECT(this2, 0);
+	UNPROTECT(1);
+	return this2;
+    }
+    return val1;
+}
+
+
 SEXP dimnamesgets(SEXP vec, SEXP val)
 {
     SEXP dims, top;
@@ -569,23 +598,13 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	PROTECT(val = newval);
     }
     for (i = 0; i < k; i++) {
-	if (VECTOR_ELT(val, i) != R_NilValue) {
-	    if (!isVector(VECTOR_ELT(val, i)))
+	SEXP this = VECTOR_ELT(val, i);
+	if (this != R_NilValue) {   
+	    if (!isVector(this))
 		error("invalid type for dimname (must be a vector)");
-	    if (INTEGER(dims)[i] != LENGTH(VECTOR_ELT(val, i))
-		&& LENGTH(VECTOR_ELT(val, i)) != 0)
+	    if (INTEGER(dims)[i] != LENGTH(this) && LENGTH(this) != 0)
 		error("length of dimnames[%d] not equal to array extent",i+1);
-	    if (LENGTH(VECTOR_ELT(val, i)) == 0) {
-		SET_VECTOR_ELT(val, i, R_NilValue);
-	    }
-	    else if (!isString(VECTOR_ELT(val, i))) {
-		SEXP this;
-		PROTECT(this = coerceVector(VECTOR_ELT(val, i), STRSXP));
-		SET_ATTRIB(this, R_NilValue);
-		SET_OBJECT(this, 0);
-		SET_VECTOR_ELT(val, i, this);
-		UNPROTECT(1);
-	    }
+	    SET_VECTOR_ELT(val, i, dimnamesgets1(this));
 	}
     }
     installAttrib(vec, R_DimNamesSymbol, val);
