@@ -459,13 +459,13 @@ crandir:
 distribution: 
 	$(MAKE) Rpwd.exe
 	$(MAKE) rbuild
+	$(MAKE) bitmapdll	
 	$(MAKE) rpackage
-	$(MAKE) rdocs
 	$(MAKE) tcl
-	$(MAKE) bitmapdll
+	$(MAKE) recommended	
+	$(MAKE) rdocs	
 	$(MAKE) docfiles
 	$(MAKE) docs
-	$(MAKE) recommended
 	$(MAKE) rinstaller
 	$(MAKE) crandir
 	  

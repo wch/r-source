@@ -139,7 +139,7 @@ endif
 	@$(MKDIR) -p $(DPKG)
 ifneq ($(strip $(INSTFILES)),)
 	@$(ECHO) "  installing inst files"
-	-@$(CP) -r inst/* $(DPKG)/
+	-@$(CP) -r inst/* $(DPKG)
 endif
 	@if test -f ${SPKG}/DESCRIPTION; then \
 	  $(ECHO) "  adding build stamp to DESCRIPTION"; \
