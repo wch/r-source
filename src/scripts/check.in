@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.177.2.1 $ ';
+my $revision = ' $Revision: 1.177.2.2 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1016,6 +1016,10 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("S3 generic/method consistency");
 
+	my @msg_S3_methods =
+	  ("See section 'Generic functions and methods'",
+	   "of the 'Writing R Extensions' manual.\n");
+
 	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
@@ -1030,6 +1034,7 @@ sub check_pkg {
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_S3_methods));
 	}
 	else {
 	    $log->result("OK");
@@ -1072,6 +1077,10 @@ sub check_pkg {
     if($opt_ff_calls && (-d "R")) {
 	$log->checking("foreign function calls");
 
+	my @msg_ff_calls =
+	  ("See section 'System and foreign language interfaces'",
+	   "of the 'Writing R Extensions' manual.\n");
+
 	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
@@ -1086,6 +1095,7 @@ sub check_pkg {
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_ff_calls));
 	}
 	else {
 	    $log->result("OK");
