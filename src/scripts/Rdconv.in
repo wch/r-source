@@ -26,7 +26,7 @@ use Getopt::Long;
 use File::Basename;
 use Cwd;
 
-my $revision = ' $Revision: 1.13 $ ';
+my $revision = ' $Revision: 1.14 $ ';
 my $version;
 my $name;
 
@@ -56,11 +56,16 @@ Options:
   -v, --version		print version info and exit
   -d, --debug		turn on debugging (increase verbosity)
   -t, --type=TYPE	convert to format TYPE
+  -o, --output-file=fn	use \`fn\' as the output file
   --os=NAME		use OS subdir \`NAME\' (unix, mac or windows)
   --OS=NAME		the same as --os.
 
-Possible format specificiations are html, latex, txt (plain text), 
+Possible format specifications are txt (plain text), html, latex,
 Sd (S documentation format), and example (extract R code in the examples).
+
+The default is to send output to stdout, which is also given by -o -.
+Using -o \"\" will choose an output filename by removing a .Rd extension
+from FILE and adding a suitable extension.
   
 Email bug reports to <r-bugs\@lists.r-project.org>.
 END
@@ -82,30 +87,41 @@ chdir($cwd);
 
 require "$R_HOME/etc/Rdconvlib.pl";
 
-@knownoptions = ("debug|d", "type|t:s", "h|help", "v|version",
-		 "os|OS:s");
+@knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
+		 "o|output-file:s", "os|OS:s");
 GetOptions (@knownoptions) || &usage();
 &version() if $opt_v;
 &usage() if $opt_h;
 
 $OSdir = $opt_os if $opt_os;
+$out = 0;
+if(defined $opt_o) {
+    if(length($opt_o)) { $out = $opt_o; }
+    else { $out = $ARGV[0]; $out =~ s/.Rd$//; }
+}
+$out = 0 if $out eq "-";
 
 usage() if $opt_help;
 print stderr "R_HOME: '$R_HOME';  cwd='$cwd'\n" if $opt_debug;
 
-##-- In the future, we want allow  SEVERAL types simultaneously ... :
 if($opt_type =~ /html/i){
-    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);# filename 0 : STDOUT
+    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".html"; }
+    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
 }
 elsif($opt_type =~ /txt/i){
-    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
+    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
 }
 elsif($opt_type =~ /Sd/i){
-    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
+    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".d"; }
+    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
 }
 elsif($opt_type =~ /latex/i){
-    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
+    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".tex"; }
+    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
 }
-else {
-    Rdconv($ARGV[0],$opt_type,$opt_debug, 0, -1);
+elsif($opt_type =~ /example/i){
+    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".R"; }
+    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
+} else {
+    print STDERR "Unknown type: options are txt, html, latex, Sd, example\n";
 }

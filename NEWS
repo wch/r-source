@@ -194,6 +194,8 @@ NEW FEATURES
     o	coplot() has new option subscripts=TRUE to pass the indices
 	to the panel function.
 
+    o	Rdconv allows an output file to be specified.
+
 
 
 BUG FIXES
@@ -285,6 +287,9 @@ BUG FIXES
 
     o	entry-point "pythag" is now loaded even though it is not used
 	in R.
+
+    o	Rdconv now reports if an invalid type is specified (rather
+	than using latex).
 
 
 
