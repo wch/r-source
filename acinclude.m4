@@ -210,6 +210,42 @@ EOF
     AC_SUBST_FILE(depend_rules_frag)
   ])
 dnl
+dnl R_PROG_CC_C_O_LO
+dnl
+dnl See whether C compiler supports -c -o FILE.lo
+dnl
+AC_DEFUN(R_PROG_CC_C_O_LO,
+[ cc_o_lo_rules_frag=Makefrag.cc
+  AC_CACHE_CHECK([whether ${CC} supports -c -o FILE.lo],
+    r_cv_prog_cc_c_o_lo,
+    [ test -d TMP || mkdir TMP
+      echo "foo(){}" > conftest.c
+      ac_try='${CC} ${CFLAGS} -c conftest.c -o TMP/conftest.lo 1>&AC_FD_CC'
+      if AC_TRY_EVAL(ac_try) \
+          && test -f TMP/conftest.lo \
+          && AC_TRY_EVAL(ac_try); then
+        r_cv_prog_cc_c_o_lo=yes
+      else
+        r_cv_prog_cc_c_o_lo=no
+      fi
+      rm -rf conftest* TMP
+    ])
+  if test "${r_cv_prog_cc_c_o_lo}" = yes; then
+    cat << \EOF > ${cc_o_lo_rules_frag}
+.c.lo:
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o $[@]
+EOF
+  else
+    cat << \EOF > ${cc_o_lo_rules_frag}
+.c.lo:
+	@test -d .libs || mkdir .libs
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$*.o
+	mv .libs/$*.o $*.lo
+EOF
+  fi
+  AC_SUBST_FILE(cc_o_lo_rules_frag)
+])
+dnl
 dnl R_PROG_CC_FLAG
 dnl
 dnl Test whether the C compiler handles a command line option
