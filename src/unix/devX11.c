@@ -99,7 +99,6 @@ typedef struct {
 
 static Display *display;			/* Display */
 static int screen;				/* Screen */
-static XEvent event;				/* Event */
 static Window rootWindow;			/* Root Window */
 static int depth;				/* Pixmap depth */
 static XSetWindowAttributes attributes;		/* Window attributes */
@@ -146,7 +145,7 @@ static void   X11_Close(DevDesc*);
 static void   X11_Deactivate(DevDesc *);
 static void   X11_Hold(DevDesc*);
 static void   X11_Line(double, double, double, double, int, DevDesc*);
-static int    X11_Locator(double*, double*);
+static int    X11_Locator(double*, double*, DevDesc*);
 static void   X11_Mode(int);
 static void   X11_NewPage(DevDesc*);
 static int    X11_Open(DevDesc*, x11Desc*, char*, double, double);
@@ -194,42 +193,48 @@ static double pixelHeight(void)
 	return ((double)heightMM / (double)height) / MM_PER_INCH;
 }
 
-void ProcessEvents(void)
+static handleEvent(XEvent event)
 {
 	caddr_t temp;
 	DevDesc *dd;
 	x11Desc *xd;
+	if (event.xany.type == Expose) {
+		while(XCheckTypedEvent(display, Expose, &event))
+			;
+		XFindContext(display, event.xexpose.window,
+			     devPtrContext, &temp);
+		dd = (DevDesc *) temp;
+		xd = (x11Desc *) dd->deviceSpecific;
+		if (xd->resize) 
+			dd->dp.resize(dd);
+		playDisplayList(dd);
+	}
+	else if (event.type == ConfigureNotify) {
+		XFindContext(display, event.xconfigure.window,
+			     devPtrContext, &temp);
+		dd = (DevDesc *) temp;
+		xd = (x11Desc *) dd->deviceSpecific;
+		xd->windowWidth = event.xconfigure.width;
+		xd->windowHeight = event.xconfigure.height;
+		xd->resize = 1;
+	}
+	else if ((event.type == ClientMessage) &&
+		 (event.xclient.message_type == _XA_WM_PROTOCOLS))
+		if (event.xclient.data.l[0] == protocol) {
+			XFindContext(display, event.xclient.window,
+				     devPtrContext, &temp);
+			dd = (DevDesc *) temp;
+			KillDevice(dd);
+		}
+}
+
+void ProcessEvents(void)
+{
+	XEvent event;
 	while (displayOpen && XPending(display)) {
 		XNextEvent(display, &event);
 		/* printf("%i\n",event.type); */
-		if (event.xany.type == Expose) {
-			while(XCheckTypedEvent(display, Expose, &event))
-				;
-			XFindContext(display, event.xexpose.window,
-				     devPtrContext, &temp);
-			dd = (DevDesc *) temp;
-			xd = (x11Desc *) dd->deviceSpecific;
-			if (xd->resize) 
-				dd->dp.resize(dd);
-			playDisplayList(dd);
-		}
-		else if (event.type == ConfigureNotify) {
-			XFindContext(display, event.xconfigure.window,
-				     devPtrContext, &temp);
-			dd = (DevDesc *) temp;
-			xd = (x11Desc *) dd->deviceSpecific;
-			xd->windowWidth = event.xconfigure.width;
-			xd->windowHeight = event.xconfigure.height;
-			xd->resize = 1;
-		}
-		else if ((event.type == ClientMessage) &&
-			 (event.xclient.message_type == _XA_WM_PROTOCOLS))
-			if (event.xclient.data.l[0] == protocol) {
-				XFindContext(display, event.xclient.window,
-					     devPtrContext, &temp);
-				dd = (DevDesc *) temp;
-				KillDevice(dd);
-			}
+		handleEvent(event);
 	}
 }
 
@@ -548,6 +553,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 		/* if have to bail out with "error" then must */
 		/* free(dd) and free(xd) */
 
+	XEvent event;
 	int iw, ih, result;
 	XGCValues gcv;
 	XColor exact;
@@ -1143,23 +1149,43 @@ static void X11_Text(double x, double y, int coords,
 	/* not all devices will do anythin (e.g., postscript)	*/
 	/********************************************************/
 
-static int X11_Locator(double *x, double *y)
+static int X11_Locator(double *x, double *y, DevDesc *dd)
 {
+	XEvent event;
+	DevDesc *ddEvent;
+	caddr_t temp;
+	int done = 0;
 	ProcessEvents();	/* discard pending events */
 	XSync(display, 1);
-	XNextEvent(display, &event);
-	if (event.xbutton.button == Button1) {
-		*x = event.xbutton.x;
-		*y = event.xbutton.y;
-		fprintf(stderr, "\07");
-		fflush(stderr);
-		XSync(display, 0);
+		/* handle X events as normal until get a button */
+		/* click in the desired device */
+	while (!done) {
+		XNextEvent(display, &event);
+		if (event.type == ButtonPress) {
+			XFindContext(display, event.xbutton.window,
+				     devPtrContext, &temp);
+			ddEvent = (DevDesc *) temp;
+			if (ddEvent == dd) {
+			    	if (event.xbutton.button == Button1) {
+					*x = event.xbutton.x;
+					*y = event.xbutton.y;
+					fprintf(stderr, "\07");
+					fflush(stderr);
+					XSync(display, 0);
+					done = 1;
+				}
+				else
+					done = 2;
+			}
+		}
+		else
+			handleEvent(event);
+	}
+		/* if it was a Button1 succeed, otherwise fail */
+	if (done == 1)
 		return 1;
-	}
-	else {
-		XSync(display, 0);
+	else 
 		return 0;
-	}
 }
 
 	/********************************************************/
