@@ -4,9 +4,9 @@
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 (cd ${TOOLS_DIR}/..
-  maj=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) \(.*\)/\1/'`
-  min=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) \(.*\)/\2/'`
-  rev=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) \(.*\)/\3/'`
+  maj=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/'`
+  min=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/'`
+  rev=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/'`
   y=`cat date-stamp | cut -d/ -f1`
   m=`cat date-stamp | cut -d/ -f2`
   d=`cat date-stamp | cut -d/ -f3`
