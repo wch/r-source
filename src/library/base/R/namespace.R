@@ -38,7 +38,7 @@ getExportedValue <- function(ns, name) {
     getInternalExportName <- function(name, ns) {
         exports <- getNamespaceInfo(ns, "exports")
         if (! exists(name, env = exports, inherits = FALSE))
-            stop(paste(name, "is not an exported variable"))
+            stop(paste(name, "is not an exported object"))
         get(name, env = exports, inherits = FALSE)
     }
     ns <- asNamespace(ns)
@@ -257,7 +257,7 @@ unloadNamespace <- function(ns) {
 .Export <- function(...) {
     ns <- topenv(parent.frame())
     if (identical(ns, .BaseNamespaceEnv))
-        warning("all variables in base name space are currently exported.")
+        warning("all objects in base name space are currently exported.")
     else if (! isNamespace(ns))
         stop("can only export from a name space")
     else {
@@ -353,7 +353,7 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
     getInternalExportName <- function(name, ns) {
         exports <- getNamespaceInfo(ns, "exports")
         if (! exists(name, env = exports, inherits = FALSE))
-            stop(paste(name, "is not an exported variable"))
+            stop(paste(name, "is not an exported object"))
         get(name, env = exports, inherits = FALSE)
     }
     expnames <- unlist(lapply(expnames, getInternalExportName, expenv))
