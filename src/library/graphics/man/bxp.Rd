@@ -61,26 +61,31 @@ bxp(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     \code{cex.sub}, \code{col.sub}, \code{xlab}, \code{ylab},
     \code{cex.lab}, and \code{col.lab} are passed to
     \code{\link{title}}.
-  }
-  \item{boxwex}{a scale factor to be applied to all boxes.  When there
-    are only a few groups, the appearance of the plot can be improved by
-    making the boxes narrower.}
-  \item{staplewex, outwex}{staple and outlier line width expansion,
-    proportional to box width.}
-  \item{boxlty, boxlwd, boxcol, boxfill}{box outline type, width,
-    color, and fill color.}
-  \item{medlty, medlwd, medpch, medcex, medcol, medbg}{median line type,
-    line width, point character, point size expansion, color, and
-    background color.  The default \code{medpch= NA} suppresses the
-    point, and \code{medlty="blank"} does so for the line.}
-  \item{whisklty, whisklwd, whiskcol}{whisker line type, width, and
-    color.}
-  \item{staplelty, staplelwd, staplecol}{staple (= end of whisker) line
-    type, width, and color.}
-  \item{outlty, outlwd, outpch, outcex, outcol, outbg}{outlier line
-    type, line width, point character, point size expansion, color, and
-    background color.  The default \code{outlty= "blank"} suppresses the
-    lines and \code{outpch=" "} suppresses points.}
+
+    The following arguments (or \code{pars} components) allow further
+    customization of the boxplot graphics:
+    \describe{
+      \item{boxwex:}{a scale factor to be applied to all boxes.  When there
+	are only a few groups, the appearance of the plot can be improved by
+	making the boxes narrower.}
+      \item{staplewex, outwex:}{staple and outlier line width expansion,
+	proportional to box width.}
+      \item{boxlty, boxlwd, boxcol, boxfill:}{box outline type, width,
+	color, and fill color.}
+      \item{medlty, medlwd, medpch, medcex, medcol, medbg:}{median line type,
+	line width, point character, point size expansion, color, and
+	background color.  The default \code{medpch= NA} suppresses the
+	point, and \code{medlty="blank"} does so for the line.}
+      \item{whisklty, whisklwd, whiskco:l}{whisker line type, width, and
+	color.}
+      \item{staplelty, staplelwd, staplecol:}{staple (= end of whisker) line
+	type, width, and color.}
+      \item{outlty, outlwd, outpch, outcex, outcol, outbg:}{outlier line
+	type, line width, point character, point size expansion, color, and
+	background color.  The default \code{outlty= "blank"} suppresses the
+	lines and \code{outpch=" "} suppresses points.}
+    }
+  }%.../pars
 }
 \value{
   An invisible vector, actually identical to the \code{at} argument,
