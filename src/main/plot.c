@@ -95,14 +95,14 @@ SEXP do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/*  P A R A M E T E R    U T I L I T I E S  */
+/*  P A R A M E T E R	 U T I L I T I E S  */
 
 
 int Specify2(char*, SEXP, DevDesc*);
 
 
-/* ProcessInLinePars handles inline par specifications in graphics */
-/* functions.  It does this by calling Specify2 which is in par.c */
+/* ProcessInLinePars handles inline par specifications in graphics functions.
+ * It does this by calling Specify2 which is in par.c */
 
 void ProcessInlinePars(SEXP s, DevDesc *dd)
 {
@@ -117,13 +117,12 @@ void ProcessInlinePars(SEXP s, DevDesc *dd)
     }
 }
 
-
-/* GetPar is intended for looking through a list typically that bound */
-/* to ... for a particular parameter value.  This is easier than trying */
-/* to match every graphics parameter in argument lists explicitly. */
-/* FIXME : This needs to be destructive, so that "ProcessInlinePars" */
-/* can be safely called afterwards. */
-
+/* GetPar is intended for looking through a list  -- typically that bound
+ *	to ... --  for a particular parameter value.  This is easier than trying
+ *	to match every graphics parameter in argument lists explicitly.
+ * FIXME: This needs to be destructive, so that "ProcessInlinePars"
+ *	can be safely called afterwards.
+ */
 SEXP GetPar(char *which, SEXP parlist)
 {
     SEXP w, p;
@@ -280,7 +279,7 @@ SEXP FixupCex(SEXP cex)
 
 SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* plot.new(ask) - create a new plot */
+    /* plot.new(ask) - create a new plot "frame" */
     int ask, asksave;
     DevDesc *dd;
 
@@ -315,25 +314,25 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 /*
  *  SYNOPSIS
  *
- *    plot.window(xlim, ylim, log="", asp=NA)
+ *	plot.window(xlim, ylim, log="", asp=NA)
  *
  *  DESCRIPTION
  *
- *    This function sets up the world coordinates for a graphics
- *    window.  Note that if asp is a finite positive value then
- *    the window is set up so that one data unit in the y direction
- *    is equal in length to asp * one data unit in the x direction.
+ *	This function sets up the world coordinates for a graphics
+ *	window.	 Note that if asp is a finite positive value then
+ *	the window is set up so that one data unit in the y direction
+ *	is equal in length to asp * one data unit in the x direction.
  *
- *    The special case asp == 1 produces plots where distances
- *    between points are represented accurately on screen.  Values
- *    with asp < 1 can be used to produce more accurate maps when
- *    using latitude and longitude.
+ *	The special case asp == 1 produces plots where distances
+ *	between points are represented accurately on screen.  Values
+ *	with asp < 1 can be used to produce more accurate maps when
+ *	using latitude and longitude.
  *
  *  NOTE
  *
- *    The use of asp can have weird effects when axis is an
- *    interpreted function.  It has to be internal so that the
- *    full computation is captured in the display list.
+ *	The use of asp can have weird effects when axis is an
+ *	interpreted function.  It has to be internal so that the
+ *	full computation is captured in the display list.
  */
 
 SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -361,7 +360,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     logscale = 0;
     log = CAR(args);
     if (!isString(log))
-	error("invalid \"log=\" specification\n");
+	errorcall(call, "\"log=\" specification must be character\n");
     p = CHAR(STRING(log)[0]);
     while (*p) {
 	switch (*p) {
@@ -374,7 +373,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	    logscale = 1;
 	    break;
 	default:
-	    error("invalid \"log=\" specification\n");
+	    errorcall(call,"invalid \"log=%s\" specification\n",*p);
 	}
 	p++;
     }
@@ -395,7 +394,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else {
 	if(!FINITE(REAL(xlim)[0]) || !FINITE(REAL(xlim)[1]))
-	    errorcall(call, "NAs not allowed in xlim\n");
+	    errorcall(call, "need finite xlim values\n");
 	xmin = REAL(xlim)[0];
 	xmax = REAL(xlim)[1];
     }
@@ -407,7 +406,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else {
 	if(!FINITE(REAL(ylim)[0]) || !FINITE(REAL(ylim)[1]))
-	    errorcall(call, "NAs not allowed in ylim\n");
+	    errorcall(call, "need finite ylim values\n");
 	ymin = REAL(ylim)[0];
 	ymax = REAL(ylim)[1];
     }
@@ -441,19 +440,22 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void GetAxisLimits(double left, double right, double *low, double *high)
 {
+/*	Called from do_axis()	such as
+ *	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high)
+ *
+ *	Computes  *low < *high
+ */
     double eps;
-    if(left <= right) {
-	eps = FLT_EPSILON * (right - left);
-	if(eps == 0) eps = 0.5 * FLT_EPSILON;
-	*low = left - eps;
-	*high = right + eps;
+    if(left > right) {/* swap */
+	eps = left; left = right; right = eps;
     }
-    else {
-	eps = FLT_EPSILON * (left - right);
-	if(eps == 0) eps = 0.5 * FLT_EPSILON;
-	*low = right - eps;
-	*high = left + eps;
-    }
+    eps = right - left;
+    if(eps == 0.)
+	eps = 0.5 * FLT_EPSILON;
+    else
+	eps *= FLT_EPSILON;
+    *low = left - eps;
+    *high = right + eps;
 }
 
 
@@ -519,15 +521,22 @@ static SEXP labelformat(SEXP labels)
 
 static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 {
+/*	Create an  'at = ...' vector for  axis(.) / do_axis,
+ *	i.e., the vector of tick mark locations,
+ *	when none has been specified (= default).
+ *
+ *	axp[0:2] = (x1, x2, nint), where x1..x2 are the extreme tick marks
+ *
+ *	The resulting REAL vector must have length >= 1, ideally >= 2
+ */
     SEXP at = R_NilValue;/* -Wall*/
     double umin, umax, dn, rng, small;
-    int i, n;
-    if(!log || axp[2] < 0) {
-	/* linear axis */
-	n = fabs(axp[2]) + 0.25;
+    int i, n, ne;
+    if(!log || axp[2] < 0) { /* linear axis -- 'nint' arg UNused */
+	n = fabs(axp[2]) + 0.25;/* >= 0 */
 	dn = n;
 	rng = axp[1] - axp[0];
-	small = fabs(rng)/(100.0*dn);
+	small = fabs(rng)/(100.*dn);
 	at = allocVector(REALSXP, n + 1);
 	for(i=0 ; i<=n ; i++) {
 	    REAL(at)[i] = axp[0] + (i / dn) * rng;
@@ -535,21 +544,33 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 		REAL(at)[i] = 0;
 	}
     }
-    else {
+    else { /* log axis */
 	n = (axp[2] + 0.5);
+	/* {xy}axp[2] for 'log':
+	   GLpretty() [../graphics.c] sets
+	   n < 0: very small scale ==> linear axis, above, or
+	   n = 1,2,3.  see switch() below */
 	umin = usr[0];
 	umax = usr[1];
+	/* You get the 3 cases below by
+	 *  for(y in 1e-5*c(1,2,8))  plot(y, log = "y")
+	 */
 	switch(n) {
-	case 1:
-	    n = floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25;
-	    nint = n / nint + 1;
-	    rng = pow(10., (double)nint);
+	case 1: /* large range:	1	 * 10^k */
+	    i = floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25;
+	    ne = i / nint + 1;
+	    rng = pow(10., (double)ne);
 	    dn = axp[0];
 	    n = 0;
 	    while(dn < umax) {
 		n++;
 		dn *= rng;
 	    }
+	    if(!n)
+		error("log - axis(), 'at' creation, _LARGE_ range: "
+		      "illegal {xy}axp or par; nint=%d\n"
+		      "	 axp[1:2]=(%g,%g), usr[1:2]=(%g,%g); i=%d, ni=%d\n",
+		      nint, axp[0],axp[1], umin,umax, i,ne);
 	    at = allocVector(REALSXP, n);
 	    dn = axp[0];
 	    n = 0;
@@ -558,58 +579,64 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 		dn *= rng;
 	    }
 	    break;
-	case 2:
+
+	case 2: /* medium range:  1, 5	  * 10^k */
 	    dn = axp[0];
 	    n = 0;
 	    if(0.5 * dn >= umin) n++;
 	    for(;;) {
-		if(dn > umax) break;
-		n++;
-		if(5 * dn > umax) break;
-		n++;
-		dn = 10 * dn;
+		if(dn > umax) break;		n++;
+		if(5 * dn > umax) break;	n++;
+		dn *= 10;
 	    }
+	    if(!n)
+		error("log - axis(), 'at' creation, _MEDIUM_ range: "
+		      "illegal {xy}axp or par;\n"
+		      "	 axp[1]= %g, usr[1:2]=(%g,%g)\n",
+		      axp[0], umin,umax);
+
 	    at = allocVector(REALSXP, n);
 	    dn = axp[0];
 	    n = 0;
 	    if(0.5 * dn >= umin) REAL(at)[n++] = 0.5 * dn;
 	    for(;;) {
-		if(dn > umax) break;
-		REAL(at)[n++] = dn;
-		if(5 * dn > umax) break;
-		REAL(at)[n++] = 5 * dn;
-		dn = 10 * dn;
+		if(dn > umax) break;		REAL(at)[n++] = dn;
+		if(5 * dn > umax) break;	REAL(at)[n++] = 5 * dn;
+		dn *= 10;
 	    }
 	    break;
-	case 3:
+
+	case 3: /* small range:	 1,2,5,10 * 10^k */
 	    dn = axp[0];
 	    n = 0;
 	    if(0.2 * dn >= umin) n++;
 	    if(0.5 * dn >= umin) n++;
 	    for(;;) {
-		if(dn > umax) break;
-		n++;
-		if(2 * dn > umax) break;
-		n++;
-		if(5 * dn > umax) break;
-		n++;
-		dn = 10 * dn;
+		if(dn > umax) break;		n++;
+		if(2 * dn > umax) break;	n++;
+		if(5 * dn > umax) break;	n++;
+		dn *= 10;
 	    }
+	    if(!n)
+		error("log - axis(), 'at' creation, _SMALL_ range: "
+		      "illegal {xy}axp or par;\n"
+		      "	 axp[1]= %g, usr[1:2]=(%g,%g)\n",
+		      axp[0], umin,umax);
 	    at = allocVector(REALSXP, n);
 	    dn = axp[0];
 	    n = 0;
 	    if(0.2 * dn >= umin) REAL(at)[n++] = 0.2 * dn;
 	    if(0.5 * dn >= umin) REAL(at)[n++] = 0.5 * dn;
 	    for(;;) {
-		if(dn > umax) break;
-		REAL(at)[n++] = dn;
-		if(2 * dn > umax) break;
-		REAL(at)[n++] = 2 * dn;
-		if(5 * dn > umax) break;
-		REAL(at)[n++] = 5 * dn;
-		dn = 10 * dn;
+		if(dn > umax) break;		REAL(at)[n++] = dn;
+		if(2 * dn > umax) break;	REAL(at)[n++] = 2 * dn;
+		if(5 * dn > umax) break;	REAL(at)[n++] = 5 * dn;
+		dn *= 10;
 	    }
 	    break;
+	default:
+	    error("log - axis(), 'at' creation: ILLEGAL {xy}axp[3] = %g\n",
+		  axp[2]);
 	}
     }
     return at;
@@ -640,10 +667,10 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     side = asInteger(CAR(args));
     if (side < 1 || side > 4)
-	errorcall(call, "invalid axis number\n"); args = CDR(args);
+	errorcall(call, "invalid axis number\n");
+    args = CDR(args);
 
-    /* tick-label locations */
-    /* these are coerced lower down */
+    /* tick-label locations;  these are coerced lower down */
 
     at = CAR(args); args = CDR(args);
 
@@ -688,9 +715,9 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* determine the tick mark positions */
+
     /* note that these may fall outside the plot window */
     /* we will clip them in the code below */
-
     if (length(at) == 0) {
 	PROTECT(at = CreateAtVector(axp, usr, nint, logflag));
 	n = length(at);
@@ -935,12 +962,12 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Required Arguments */
     sxy = CAR(args);
     if (isNewList(sxy) && length(sxy) >= 2) {
-        internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
-        internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);
+	internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
+	internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);
     }
     else if (isList(sxy) && length(sxy) >= 2) {
-        internalTypeCheck(call, sx = CAR(sxy), REALSXP);
-        internalTypeCheck(call, sy = CADR(sxy), REALSXP);
+	internalTypeCheck(call, sx = CAR(sxy), REALSXP);
+	internalTypeCheck(call, sy = CADR(sxy), REALSXP);
     }
     else
 	errorcall(call, "invalid plotting structure\n");
@@ -957,20 +984,15 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     args = CDR(args);
 
-    PROTECT(pch = FixupPch(CAR(args), dd));	args = CDR(args);
-    npch = length(pch);
+    PROTECT(pch = FixupPch(CAR(args), dd));	args = CDR(args); npch = length(pch);
 
-    PROTECT(lty = FixupLty(CAR(args), dd));	args = CDR(args);
-    nlty = length(lty);
+    PROTECT(lty = FixupLty(CAR(args), dd));	args = CDR(args); nlty = length(lty);
 
-    PROTECT(col = FixupCol(CAR(args), dd));	args = CDR(args);
-    ncol = LENGTH(col);
+    PROTECT(col = FixupCol(CAR(args), dd));	args = CDR(args); ncol = LENGTH(col);
 
-    PROTECT(bg = FixupCol(CAR(args), dd));	args = CDR(args);
-    nbg = LENGTH(bg);
+    PROTECT(bg = FixupCol(CAR(args), dd));	args = CDR(args); nbg = LENGTH(bg);
 
-    PROTECT(cex = FixupCex(CAR(args)));		args = CDR(args);
-    ncex = LENGTH(cex);
+    PROTECT(cex = FixupCex(CAR(args)));		args = CDR(args); ncex = LENGTH(cex);
 
     /* Miscellaneous Graphical Parameters -- e.g., lwd */
     GSavePars(dd);
@@ -991,7 +1013,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     GClip(dd);
 
     if (type == 'l' || type == 'o') {
-      /* lines and overplotted lines and points */
+	/* lines and overplotted lines and points */
 	dd->gp.col = INTEGER(col)[0];
 	xold = NA_REAL;
 	yold = NA_REAL;
@@ -1017,7 +1039,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     else if(type == 'b' || type == 'c') {
-      /* points connected with broken lines */
+	/* points connected with broken lines */
 	double d, f;
 	d = GConvertYUnits(0.5, CHARS, INCHES, dd);
 	dd->gp.col = INTEGER(col)[0];
@@ -1433,7 +1455,7 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.lty = dd->dp.lty;
     else
 	dd->gp.lty = INTEGER(lty)[0];
-    
+
     x = REAL(sx);
     y = REAL(sy);
     xold = NA_REAL;
@@ -1448,12 +1470,12 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if ((FINITE(xold) && FINITE(yold)) &&
 		 !(FINITE(xx) && FINITE(yy))) {
 	    if (i-start > 1)
-		GPolygon(i-start, x+start, y+start, USER, 
+		GPolygon(i-start, x+start, y+start, USER,
 			 INTEGER(col)[0], INTEGER(border)[0], dd);
 	}
 	else if ((FINITE(xold) && FINITE(yold)) &&
 		 (i==nx-1))
-	    GPolygon(nx-start, x+start, y+start, USER, 
+	    GPolygon(nx-start, x+start, y+start, USER,
 		     INTEGER(col)[0], INTEGER(border)[0], dd);
 	xold = xx;
 	yold = yy;
