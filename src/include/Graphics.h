@@ -396,6 +396,14 @@ typedef struct {
 	SEXP displayList;     	/* display list */
 } DevDesc;
 
+		/* Drivers from ../main/devices.c , description there: */
+
+int PSDeviceDriver(DevDesc*, char*, char*, char*,
+		   char*, char*, double, double, double, double);
+
+int PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, int);
+
+
 		/* User Callable Functions */
 
 /*-------------------------------------------------------------------

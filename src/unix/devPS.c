@@ -624,11 +624,6 @@ PostScriptDesc;
 static FontMetricInfo metrics[5];	/* font metrics */
 
 
-/* Device Driver Entry Point */
-
-int PSDeviceDriver(DevDesc*, char*, char*, char*,
-		   char*, char*, double, double, double, double);
-
 /* Device Driver Actions */
 
 static void   PS_Activate(DevDesc*);

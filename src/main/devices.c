@@ -103,9 +103,6 @@ SEXP do_x11(SEXP call, SEXP op, SEXP args, SEXP env)
  *  ps		= pointsize
  */
 
-int PSDeviceDriver(DevDesc*, char*, char *, char*,
-		   char*, char*, double, double, double, double);
-
 SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
