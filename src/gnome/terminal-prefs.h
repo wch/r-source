@@ -12,3 +12,5 @@ GtkWidget *prefs_apps_page(void);
 GtkWidget *prefs_graphics_page(void);
 GtkWidget *prefs_startup_page(void);
 GtkWidget *prefs_pager_page(void);
+
+void settings_prefs_cb(GtkWidget *widget, gpointer data);

@@ -24,6 +24,34 @@ typedef enum
   GNOME_FIND_BACKWARDS
 } GnomeFindDirection;
 
+typedef enum
+{
+  GNOME_FIND_NOTFOUND,
+  GNOME_FIND_MATCH,
+  GNOME_FIND_NOMATCH
+} GnomeFindResult;
+
+typedef enum
+{
+  GNOME_FIND_BUTTON_FIND,
+  GNOME_FIND_BUTTON_FIND_AGAIN,
+  GNOME_FIND_BUTTON_CLOSE
+} GnomeFindButtons;
+
+typedef struct _GnomeFindDialogParams GnomeFindDialogParams;
+
+struct _GnomeFindDialogParams
+{
+  GnomeFindStartPos start_pos;
+  GnomeFindDirection direction;
+
+  gboolean case_sensitive;
+  gboolean wrap_search;
+  gboolean regular_exp;
+
+  gchar *find_text;
+};
+
 typedef struct _GnomeFindDialog      GnomeFindDialog;
 typedef struct _GnomeFindDialogClass GnomeFindDialogClass;
 
@@ -31,14 +59,9 @@ struct _GnomeFindDialog
 {
   GnomeDialog dialog;
 
-  GtkWidget *exp_entry;
+  GnomeFindDialogParams params;
 
-  GnomeFindStartPos start_pos;
-  GnomeFindDirection direction;
-
-  gboolean case_sensitive;
-  gboolean wrap_search;
-  gboolean regular_exp;
+  GtkWidget *find_entry;
 
   GtkWidget *find_button;
   GtkWidget *find_again_button;
@@ -53,11 +76,13 @@ struct _GnomeFindDialogClass
   void (* find_again) (GnomeFindDialog *find_dialog);
 };
 
-guint      gnome_find_dialog_get_type (void);
-GtkWidget *gnome_find_dialog_new      (const gchar *title,
-				       gboolean show_case_sensitive,
-				       gboolean show_wrap_search,
-				       gboolean show_reg_exp);
+guint      gnome_find_dialog_get_type      (void);
+GtkWidget *gnome_find_dialog_new           (const gchar *title,
+				            const gchar *find_text,
+				            gboolean show_case_sensitive,
+				            gboolean show_wrap_search,
+				            gboolean show_reg_exp);
+gchar     *gnome_find_dialog_get_find_text (GnomeFindDialog *dialog); /* returns allocated memory */
 
 
 

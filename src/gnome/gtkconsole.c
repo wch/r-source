@@ -126,7 +126,7 @@ gtk_console_class_init (GtkConsoleClass *klass)
 		    gtk_marshal_NONE__NONE,
 		    GTK_TYPE_NONE, 0);
 
-		    gtk_object_class_add_signals(object_class, console_signals, LAST_SIGNAL); 
+  gtk_object_class_add_signals(object_class, console_signals, LAST_SIGNAL); 
 
   /* setup signals */
   object_class->destroy = gtk_console_destroy;

@@ -26,6 +26,7 @@ SOURCES = \
 	gtkconsole.c \
 	gnome-find-dialog.c \
 	terminal.c \
+	terminal-find.c \
 	terminal-functions.c \
 	terminal-menu.c \
 	terminal-prefs.c \
@@ -39,6 +40,7 @@ HEADERS = \
 	gdkrotated.h \
 	gnome-find-dialog.h \
 	gtkconsole.h \
+	terminal-find.h \
 	terminal-functions.h \
 	terminal-menu.h \
 	terminal-prefs.h \

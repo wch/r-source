@@ -9,15 +9,14 @@
 #include "Parse.h"
 #include "Version.h"
 
-#include "gnome-find-dialog.h"
 #include "terminal.h"
-#include "terminal-menu.h"
+#include "terminal-find.h"
 #include "terminal-functions.h"
+#include "terminal-menu.h"
 #include "terminal-prefs.h"
 
 /* Some menu callbacks are here, others are in terminal-functions.c */
-
-
+/* Find callbacks are in terminal-find.c */
 
 
 static void file_exit_cb(GtkWidget *widget,
@@ -52,21 +51,6 @@ static void edit_copy_paste_cb(GtkWidget *widget, gpointer data)
 static void edit_clear_cb(GtkWidget *widget, gpointer data)
 {
   gtk_editable_delete_selection(GTK_EDITABLE(R_gtk_terminal_text));
-}
-
-static void edit_find_cb(GtkWidget *widget, gpointer data)
-{
-  GtkWidget *find_dialog;
-
-  find_dialog = gnome_find_dialog_new("Find text", TRUE, TRUE, TRUE);
-
-  gnome_dialog_set_parent(GNOME_DIALOG(find_dialog), GTK_WINDOW(R_gtk_main_window));
-
-  gtk_widget_show(find_dialog);
-}
-
-static void edit_find_again_cb(GtkWidget *widget, gpointer data)
-{
 }
 
 
@@ -152,94 +136,6 @@ static void graphics_closeall_cb(GtkWidget *widget, gpointer data)
 
 
 
-static void prefs_apply_cb(GtkWidget *widget, int page, gpointer data)
-{
-  GtkStyle *textstyle;
-
-  /* page = -1 means apply all pages */
-  /*  if(page != -1)
-      return;*/
-
-  /* font */
-  if(g_strcasecmp(R_gnome_userprefs.font, R_gnome_newprefs.font) != 0) {
-    textstyle = gtk_style_copy(gtk_widget_get_style(R_gtk_terminal_text));
-    textstyle->font = gdk_font_load(R_gnome_newprefs.font);
-    gtk_widget_set_style(R_gtk_terminal_text, textstyle);
-  }
-
-  /* update prefs */
-  R_gnome_userprefs = R_gnome_newprefs;
-
-  R_gnome_save_prefs();
-}
-
-static void settings_prefs_cb(GtkWidget *widget, gpointer data)
-{
-  /* notebook pages */
-  GtkWidget *page0, *page1, *page2, *page3, *page4, *page5;
-  GtkWidget *label0, *label1, *label2, *label3, *label4, *label5;
-
-  /* copy current prefs */
-  R_gnome_newprefs = R_gnome_userprefs;
-
-  /* Page 0: text font and colour options */
-  page0 = prefs_text_page();
-  label0 = gtk_label_new("Console");
-
-  /* Page 1: environment options */
-  page1 = prefs_startup_page();
-  label1 = gtk_label_new("Startup");
-
-  /* Page 2: actions on exit */
-  page2 = prefs_exit_page();
-  label2 = gtk_label_new("Exit");
-
-  /* Page 3: pager text settings */
-  page3 = prefs_pager_page();
-  label3 = gtk_label_new("Pager");
-
-  /* Page 4: external applications */
-  page4 = prefs_apps_page();
-  label4 = gtk_label_new("Applications");
-
-  /* Page 5: graphics options */
-  page5 = prefs_graphics_page();
-  label5 = gtk_label_new("Graphics");
-
-  /* Create the dialog box */
-  prefs_dialog = gnome_property_box_new();
-  gtk_window_set_title(GTK_WINDOW(prefs_dialog), "R Preferences");
-
-  /* Append the pages to the notebook */
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page0, label0);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page1, label1);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page2, label2);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page3, label3);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page4, label4);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page5, label5);
-
-  /* Connect to property box signal */
-  gtk_signal_connect(GTK_OBJECT(prefs_dialog), "apply",
-		     GTK_SIGNAL_FUNC(prefs_apply_cb),
-		     NULL);
-
-  /* Setup dialog features */
-  gnome_dialog_set_parent(GNOME_DIALOG(prefs_dialog),
-			  GTK_WINDOW(R_gtk_main_window));
-  gtk_window_set_modal(GTK_WINDOW(prefs_dialog), TRUE);
-  
-  /* Display the dialog */
-  gtk_widget_show_all(prefs_dialog);
-}
-
-
-
 static void help_html_index_cb(GtkWidget *widget, gpointer data)
 {
   R_gtk_terminal_run("help.start()\n");
@@ -286,11 +182,22 @@ static void help_about_cb(GtkWidget *widget,
   gchar *version;
   gchar *copyright;
 
-  gchar *authors[] = {
-    "Ross Ihaka <ihaka@stat.auckland.ac.nz>",
+  const gchar *authors[] = {
+    "Douglas Bates",
+    "Peter Dalgaard",
     "Robert Gentleman",
-    "The R Development Core Team (see ?contributors)",
-    "Lyndon Drake <lyndon@stat.auckland.ac.nz>",
+    "Kurt Hornik", 
+    "Ross Ihaka",
+    "Friedrich Leisch",
+    "Thomas Lumley",
+    "Martin Maechler",
+    "Guido Masarotto",
+    "Paul Murrell", 
+    "Brian Ripley",
+    "Heiner Schwarte",
+    "Duncan Temple Lang", 
+    "Luke Tierney",
+    "Lyndon Drake, GNOME interface",
     NULL
   };
 
@@ -301,7 +208,7 @@ static void help_about_cb(GtkWidget *widget,
   g_assert(copyright != NULL);
 
   about_box = gnome_about_new("R", version, copyright, authors,
-			      "R is a system for statistical computation and graphics.  It is a dialect of the S programming language from Bell Labs.  R is free software and comes with ABSOLUTELY NO WARRANTY.",
+			      "R is a system for statistical computation and graphics.  It is a dialect of the S programming language from Bell Labs.  R is free software and comes with ABSOLUTELY NO WARRANTY.  You are welcome to redistribute it under certain conditions.  Type	?license or ?licence for distribution details.  R is a collaborative project with many contributors.  Type ?contributors for a list.",
 			      "R-logo-sm.xpm");
 
   gnome_dialog_set_parent(GNOME_DIALOG(about_box), GTK_WINDOW(R_gtk_main_window));
@@ -311,6 +218,7 @@ static void help_about_cb(GtkWidget *widget,
   g_free(version);
   g_free(copyright);
 }
+
 
 
 
