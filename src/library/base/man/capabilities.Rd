@@ -20,7 +20,7 @@ capabilities(what = NULL)
     \item{X11}{(Unix)  Are the \code{X11} graphics device and the
       X11-based data editor available?}
     \item{GNOME}{(Unix)  Is the GNOME GUI in use?  This is deprecated,
-      and will be removed from \R 2.1.0.}
+      and will be removed from \R 2.1.0.  Use \code{.Platform$GUI} instead.}
     \item{libz}{Is \code{\link{gzfile}} available?  From \R 1.5.0 this
       will always be true, and is deprecated.}
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
@@ -33,7 +33,7 @@ capabilities(what = NULL)
     \item{cledit}{Is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
 #ifdef unix
-      It will be true if \code{readline} supported has been compiled in
+      It will be true if \code{readline} support has been compiled in
       and \option{--no-readline} was \emph{not} invoked.
 #endif
       }
