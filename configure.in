@@ -26,6 +26,7 @@ AC_INIT(src/include/Defn.h)
 AC_CONFIG_HEADER(src/include/Platform.h)
 
 . ${srcdir}/config.site
+if test -f ~/.Rconf; then . ~/.Rconf; fi
 
 AC_CONFIG_AUX_DIR(aux)
 
@@ -126,6 +127,7 @@ AC_CHECK_PROG(RATFOR, ratfor, ratfor)
 
 AC_PATH_PROG(LATEX, latex, false)
 AC_PATH_PROG(DVIPS, dvips, false)
+AC_PATH_PROG(MAKEINDEX, makeindex, false)
 
 ## Make.
 
