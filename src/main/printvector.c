@@ -61,7 +61,7 @@ void printLogicalVector(int *x, int n, int indx)
     w += R_print.gap;
 
     for (i = 0; i < n; i++) {
-	if (width + w > R_print.width) {
+	if (i > 0 && width + w > R_print.width) {
 	    DO_newline;
 	}
 	Rprintf("%s", EncodeLogical(x[i], w));
@@ -79,7 +79,7 @@ void printIntegerVector(int *x, int n, int indx)
     w += R_print.gap;
 
     for (i = 0; i < n; i++) {
-	if (width + w > R_print.width) {
+	if (i > 0 && width + w > R_print.width) {
 	    DO_newline;
 	}
 	Rprintf("%s", EncodeInteger(x[i], w));
@@ -97,7 +97,7 @@ void printRealVector(double *x, int n, int indx)
     w += R_print.gap;
 
     for (i = 0; i < n; i++) {
-	if (width + w > R_print.width) {
+	if (i > 0 && width + w > R_print.width) {
 	    DO_newline;
 	}
 	Rprintf("%s", EncodeReal(x[i], w, d, e));
@@ -117,7 +117,7 @@ void printComplexVector(Rcomplex *x, int n, int indx)
     w += R_print.gap;
 
     for (i = 0; i < n; i++) {
-	if (width + w > R_print.width) {
+	if (i > 0 && width + w > R_print.width) {
 	    DO_newline;
 	}
 	if (ISNA(x[i].r) || ISNA(x[i].i))
