@@ -88,7 +88,6 @@ Sources, binaries and documentation for @R{} can be obtained via
 @menu
 * Getting and unpacking the sources::  
 * Getting patched and development versions::  
-* Using rsync::                 
 @end menu
 
 @node Getting and unpacking the sources, Getting patched and development versions, Obtaining R, Obtaining R
@@ -142,13 +141,14 @@ users).
 @c Beware that this does not necessarily work if the older sources have
 @c been modified (e.g., by building in their directories).
 
-@node Getting patched and development versions, Using rsync, Getting and unpacking the sources, Obtaining R
+@node Getting patched and development versions,  , Getting and unpacking the sources, Obtaining R
 @section Getting patched and development versions
 
 A patched version of the current release, @samp{r-patched} and the
 current development version, @samp{r-devel}, are available as daily
-tarballs and via rsync.  The development version is also available by
-anonymous CVS from @uref{http://anoncvs.r-project.org/}.
+tarballs and via access to the R Subversion repository.
+@c rsync.  The development version is also available by
+@c anonymous CVS from @uref{http://anoncvs.r-project.org/}.
 
 The tarballs are available from
 @uref{ftp://ftp.stat.math.ethz.ch/pub/Software/R/}.  Download either
@@ -157,32 +157,39 @@ The tarballs are available from
 section.  
 
 These versions do not contain the current sources for the recommended
-packages, which can be obtained by rsync (see the next section) or from
-CRAN.  Do ensure that you have the correct versions of the recommended
-packages: if the number in the file @file{VERSION} is
-@samp{@var{x}.@var{y}.@var{z}} you need to download the contents of
-@samp{http://cran.r-project.org/src/contrib/@var{x}.@var{y}.@var{z}/Recommended}
-to directory @file{src/library/Recommended} in the sources you have
-unpacked.  Normally @samp{R-patched.tar.gz} will have the number of the
-last released version, and @samp{R-devel.tar.gz} that of the next minor
-(@samp{@var{x}.@var{y}.0}) release.  After downloading manually you need
-to execute @command{tools/link-recommended} from the top level of the
-sources to make the requisite links in @file{src/library/Recommended}.
+packages, which can be obtained by rsync or from CRAN.  Do ensure that
+you have the correct versions of the recommended packages: if the number
+in the file @file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to
+download the contents of
+@samp{http://cran.r-project.org/src/contrib/@var{dir}}, where @var{dir}
+is @samp{@var{x}.@var{y}.@var{z}/Recommended} for r-devel or
+@file{@var{x}.@var{y}.@var{z}-patched/Recommended} for r-patched,
+respectively, to directory @file{src/library/Recommended} in the sources
+you have unpacked.  Normally @samp{R-patched.tar.gz} will have the
+number of the last released version, and @samp{R-devel.tar.gz} that of
+the next minor (@samp{@var{x}.@var{y}.0}) or major release.  After
+downloading manually you need to execute
+@command{tools/link-recommended} from the top level of the sources to
+make the requisite links in @file{src/library/Recommended}.
 
 One way to download the package sources is to use @command{wget}.  A
 suitable incantation from the top level of the R sources might be
+
 @smallexample
 wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
-  http://cran.r-project.org/src/contrib/@var{x}.@var{y}.@var{z}/Recommended
-tools/link-recommended
+  http://cran.r-project.org/src/contrib/@var{dir}
+./tools/link-recommended
 @end smallexample
 
+@c @node Using rsync,  , Getting patched and development versions, Obtaining R
+@c @section Using rsync
+@c @findex rsync
 
-@node Using rsync,  , Getting patched and development versions, Obtaining R
-@section Using rsync
-@findex rsync
+@c Sources are also available via anonymous rsync.  Use
 
-Sources are also available via anonymous rsync.  Use
+@c @smallexample
+@c rsync -rC --delete rsync.r-project.org::@var{module} R
+@c @end smallexample
 
 @c @noindent
 @c to create a copy of the source tree specified by @var{module} in the
@@ -203,19 +210,13 @@ update the current r-devel from
 @samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-patches/}
 (where @var{x} and @var{y} are the major and minor number of the current
 released version of R).  E.g., use
+
 @smallexample
 svn checkout https://svn.r-project.org/R/trunk/ @var{path}
 @end smallexample
 
 @noindent
-to create a copy of the source tree specified by @var{module} in the
-subdirectory @file{R} of the current directory, where @var{module} can
-be one of @samp{r-release} (current released version), @samp{r-patched}
-(patched released version), and @samp{r-devel} (development version).
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The @option{-C} option in the @command{rsync} command
-is to cause it to skip the CVS directories.  Further information on
-@command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
+to check out r-devel into directory @var{path}.
 
 Note that https is required, and that the SSL certificate for the
 Subversion server of the R project is
@@ -347,7 +348,8 @@ make
 @noindent
 and so on, as described further below.  This has the advantage of always
 keeping your source tree ``clean''.  (You may need GNU @command{make} to
-allow this.)
+allow this, and the pathname of the build directory should not contain
+spaces.)
 
 @cindex Help pages
 Make will also build plain text help pages as well as @acronym{HTML} and
@@ -519,11 +521,11 @@ path does not contain spaces}, and run something like
 @smallexample
 tar zxvf R-@value{VERSIONno}.tgz
 cd R-@value{VERSIONno}\src\gnuwin32
-make
+make all recommended
 @end smallexample
 
 @noindent
-sit back and wait (for about 5 minutes on 1GHz PIII with a fast local
+sit back and wait (for about 15 minutes on 1GHz PIII with a fast local
 disc).
 
 For further details, including how to make the documentation and how to
@@ -566,14 +568,16 @@ make
 @end smallexample
 
 @noindent
-sit back and wait. The last option @command{--with-aqua} is needed only if you want a Console GUI.
+sit back and wait. The last option @option{--with-aqua} is needed only
+if you want a Console GUI. 
 The first two options are strongly recommended. 
 
 @R{} is by default configured and installed as a framework called
 @file{R.framework}. The default path for @file{R.framework} is
 @file{/Library/Frameworks} but this can be changed at configure time
-specifying the flag @command{--enable-R-framework[=DIR]} or at install
+specifying the flag @option{--enable-R-framework[=DIR]} or at install
 time as
+
 @smallexample
 make prefix=/where/you/want/R.framework/to/go install
 @end smallexample
@@ -773,8 +777,8 @@ The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
 
 If you have them installed (including the appropriate headers and of
 late enough versions), @code{zlib}, @code{libbz2} and PCRE will be used
-if specified by @code{--with-zlib}, @code{--with-bzlib} or
-@code{--with-pcre}: otherwise versions in the @R{} sources will be
+if specified by @option{--with-zlib}, @option{--with-bzlib} or
+@option{--with-pcre}: otherwise versions in the @R{} sources will be
 compiled in.  As the latter suffice and are tested with @R{} you should
 not need to change this.
 
@@ -834,6 +838,7 @@ the wrong thread could result in segfaults.)  A remaining issue is that
 @R{} profiling, which uses the @code{SIGPROF} signal, may cause
 problems.  You may want to disable profiling if you use a multi-threaded
 version of ATLAS.  You can use a multi-threaded ATLAS by specifying
+
 @smallexample
 --with-blas="-lptf77blas -lpthread -latlas"
 @end smallexample
@@ -842,19 +847,24 @@ Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto, currently available at
 @uref{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
 installed, it can be used by one of
+
 @smallexample
 --with-blas=goto
 --with-blas=-lgoto
 @end smallexample
+
 Multi-threaded versions of Goto's BLAS are available, so please note the
 @emph{caveat} in the previous paragraph.
 
 For Intel processors under Linux, Intel's Math Kernel Library
 @uref{http://www.intel.com/software/products/mkl/}
 can be used by
+
 @smallexample
 --with-blas="-lmkl -lguide -lpthread"
 @end smallexample
+
+@noindent
 with the same caveat on multi-threading.  (Thanks to Andy Liaw for the
 information.)
 
@@ -881,9 +891,11 @@ default for @option{--with-lapack} is to check the BLAS library and then
 look for an external library @code{-llapack}.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
 the ATLAS-optimized subset of LAPACK.  To do so specify something like
+
 @smallexample
 --with-lapack="-L/path/to/libs -llapack -lcblas"
 @end smallexample
+
 @noindent
 since the ATLAS subset of LAPACK depends on @code{libcblas}.  A value
 for @option{--with-lapack} can be set @emph{via} the environment variable
@@ -895,9 +907,11 @@ If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
 sources).  In particular, bugs in @code{DGEEV} and @code{DGESDD} have
 resulted in error messages such as
+
 @smallexample
 DGEBRD gave error code -10
 @end smallexample
+
 @noindent
 (from the Debian @code{-llapack} which was current in late 2002).  Other
 potential problems are incomplete versions of the libraries: for example
@@ -1299,6 +1313,7 @@ of the @code{png()} and @code{jpeg} devices.
 @cindex LAPACK library
 The @code{vecLib} library of Mac OS X >= 10.2.2 can be used @emph{via} the
 configuration options
+
 @smallexample
 --with-blas="-framework vecLib" --with-lapack
 @end smallexample
@@ -1609,6 +1624,7 @@ used @option{--without-x --without-blas}.
 
 Tim Hoar <thoar at cgd dot ucar dot edu> reported success building
 @R{} 1.9.0 under AIX 5.1 in 64-bit mode with
+
 @smallexample
 OBJECT_MODE=64
 CC=/usr/bin/xlc_r
