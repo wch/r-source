@@ -184,7 +184,7 @@ optim(par, fn, gr = NULL,
   that the code can be made freely available.
 
   The code for method \code{"L-BFGS-B"} is based on Fortran code by
-  Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib (toms/778).
+  Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib.
 
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
