@@ -398,9 +398,13 @@ SEXP allocVector(SEXPTYPE type, int length)
 	CHAR(s) = (char*)0;
     /* The following prevents disaster in the case */
     /* that an uninitialised string vector is marked */
-    if (type == STRSXP || type == EXPRSXP || type == VECSXP) {
+    if (type == EXPRSXP || type == VECSXP) {
 	for (i = 0; i < length; i++)
 	    STRING(s)[i] = R_NilValue;
+    }
+    else if(type == STRSXP) {
+	for (i = 0; i < length; i++)
+	    STRING(s)[i] = R_BlankString;
     }
     return s;
 }

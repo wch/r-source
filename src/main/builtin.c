@@ -381,10 +381,12 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (mode == REALSXP)
 	for (i = 0; i < len; i++)
 	    REAL(s)[i] = 0.0;
+#ifdef OLD
     else if (mode == STRSXP) {
 	for (i = 0; i < len; i++)
 	    STRING(s)[i] = R_BlankString;
     }
+#endif
     return s;
 }
 
