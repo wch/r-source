@@ -723,13 +723,14 @@ static R_code_t replcon_loop_cont_fun(R_code_t code)
 		if (! R_Interactive) {
 		    int ll = strlen(rs->buf);
 		    /* remove CR in CRLF ending */
-		    if (rs->buf[ll - 1] == '\n' && rs->buf[ll - 2] == '\r') {
+		    if (ll >= 2 &&
+			rs->buf[ll - 1] == '\n' && rs->buf[ll - 2] == '\r') {
 			rs->buf[ll - 2] = '\n';
 			rs->buf[--ll] = '\0';    
 		    }
 		    /* according to system.txt, should be terminated
 		       in \n, so check this at eof */
-		    if (feof(stdin) && rs->buf[ll - 1] != '\n' &&
+		    if (feof(stdin) && (ll == 0 || rs->buf[ll - 1] != '\n') &&
 			ll < rs->len) {
 			rs->buf[ll++] = '\n'; rs->buf[ll] = '\0';
 		    }
