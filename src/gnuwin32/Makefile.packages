@@ -64,6 +64,9 @@ ifeq ($(strip $(WINHELP)),BOTH)
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) winhlp-$* # also makes chm
 endif
 endif
+	@$(MAKE) --no-print-directory BUILD=$(BUILD) \
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
+	  -f $(RHOME)/src/gnuwin32/MakePkg md5sums
 
 pkgclean-%:
 	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) \

@@ -219,6 +219,7 @@ endif
 	  $(RHOME)/share/perl/build-help-windows.pl -htmllists
 
 md5sums:
+ifneq ($(strip $(PKG)),base)
 	@$(ECHO) "  adding MD5 sums"
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)")" | \
@@ -226,4 +227,5 @@ ifeq ($(strip $(BUILD)),CROSS)
 else
 	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --no-dotFirst --slave > /dev/null
+endif
 endif
