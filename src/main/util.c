@@ -88,6 +88,8 @@ const static char * const falsenames[] = {
 /* int, not Rboolean, for NA_LOGICAL : */
 int asLogical(SEXP x)
 {
+    int warn = 0;
+
     if (isVectorAtomic(x)) {
 	if (LENGTH(x) < 1)
 	    return NA_LOGICAL;
@@ -95,19 +97,40 @@ int asLogical(SEXP x)
 	case LGLSXP:
 	    return LOGICAL(x)[0];
 	case INTSXP:
-	    return (INTEGER(x)[0] == NA_INTEGER) ?
-		NA_LOGICAL : (INTEGER(x)[0]) != 0;
+	    return LogicalFromInteger(INTEGER(x)[0], &warn);
 	case REALSXP:
-	    return R_FINITE(REAL(x)[0]) ?
-		(REAL(x)[0] != 0.0) : NA_LOGICAL;
+	    return LogicalFromReal(REAL(x)[0], &warn);
 	case CPLXSXP:
-	    return R_FINITE(COMPLEX(x)[0].r) ?
-		(COMPLEX(x)[0].r != 0.0) : NA_LOGICAL;
+	    return LogicalFromComplex(COMPLEX(x)[0], &warn);
 	}
     }
     return NA_LOGICAL;
 }
 
+int asInteger(SEXP x)
+{
+    int warn = 0, res;
+    
+    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    return IntegerFromLogical(LOGICAL(x)[0], &warn);
+	case INTSXP:
+	    return INTEGER(x)[0];
+	case REALSXP:
+	    res = IntegerFromReal(REAL(x)[0], &warn);
+	    CoercionWarning(warn);
+	    return res;
+	case CPLXSXP:
+	    res = IntegerFromComplex(COMPLEX(x)[0], &warn);
+	    CoercionWarning(warn);
+	    return res;
+	}
+    }
+    return NA_INTEGER;
+}
+
+#ifdef OLD
 int asInteger(SEXP x)
 {
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
@@ -127,7 +150,9 @@ int asInteger(SEXP x)
     }
     return NA_INTEGER;
 }
+#endif
 
+#ifdef OLD
 double asReal(SEXP x)
 {
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
@@ -144,8 +169,35 @@ double asReal(SEXP x)
     }
     return NA_REAL;
 }
+#endif
 
+double asReal(SEXP x)
+{
+    int warn = 0;
+    double res;
+    
+    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    res = RealFromLogical(LOGICAL(x)[0], &warn);
+	    CoercionWarning(warn);
+	    return res;	    
+	case INTSXP:
+	    res = RealFromInteger(INTEGER(x)[0], &warn);
+	    CoercionWarning(warn);
+	    return res;	    
+	case REALSXP:
+	    return REAL(x)[0];
+	case CPLXSXP:
+	    res = RealFromComplex(COMPLEX(x)[0], &warn);
+	    CoercionWarning(warn);
+	    return res;	    
+	}
+    }
+    return NA_REAL;
+}
 
+#ifdef OLD
 Rcomplex asComplex(SEXP x)
 {
     Rcomplex z;
@@ -166,6 +218,29 @@ Rcomplex asComplex(SEXP x)
 		z.i = 0;
 	    }
 	    return z;
+	case CPLXSXP:
+	    return COMPLEX(x)[0];
+	}
+    }
+    return z;
+}
+#endif
+
+Rcomplex asComplex(SEXP x)
+{
+    int warn = 0;
+    Rcomplex z;
+
+    z.r = NA_REAL;
+    z.i = NA_REAL;
+    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    return ComplexFromLogical(LOGICAL(x)[0], &warn);
+	case INTSXP:
+	    return ComplexFromInteger(INTEGER(x)[0], &warn);
+	case REALSXP:
+	    return ComplexFromReal(REAL(x)[0], &warn);
 	case CPLXSXP:
 	    return COMPLEX(x)[0];
 	}

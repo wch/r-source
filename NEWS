@@ -280,6 +280,10 @@ BUG FIXES
         self-starting model in the nls package was changed following a
         suggestion by Phillipe Grosjean <phgrosje@ulb.ac.be>
 
+    o   asInteger was ignoring integer overflow (PR#929 and others).
+
+
+
 
 	**************************************************
 	*						 *
