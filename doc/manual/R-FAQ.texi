@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-16, 2002-02-13
+@set FAQ-VERSION 1.4-17, 2002-02-15
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1544,6 +1544,8 @@ Analysis of growth curve experiments.
 Linear or cubic spline interpolation for irregularly gridded data.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
+@item aws
+Functions to perform adaptive weights smoothing.
 @item bindata
 Generation of correlated artificial binary data.
 @item blighty

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-16, 2002-02-13
+Version 1.4-17, 2002-02-15
 Kurt Hornik
 
 
@@ -1282,6 +1282,9 @@ works, was published in the Journal of Statistical Software
 
 *ash*
      David Scott's ASH routines for 1D and 2D density estimation.
+
+*aws*
+     Functions to perform adaptive weights smoothing.
 
 *bindata*
      Generation of correlated artificial binary data.
