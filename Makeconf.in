@@ -104,6 +104,7 @@ bindir = @bindir@
 datadir = @datadir@
 libdir = @libdir@
 mandir = @mandir@
+includedir = @includedir@
 
 rhome = @libdir@/R
 

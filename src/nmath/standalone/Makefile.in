@@ -10,8 +10,6 @@ subdir = src/nmath/standalone
 
 include $(top_builddir)/Makeconf
 
-includedir = ${prefix}/include
-
 SOURCES_NMATH = \
 	mlutils.c \
 	d1mach.c i1mach.c \
