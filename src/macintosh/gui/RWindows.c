@@ -482,10 +482,7 @@ WEReference GetWindowWE ( WindowRef window )
       
 //	remember original text rectangle
 
-   /* if(isGraphicWindow(window))
-     hideTextRect(&oldTextRect);
-    else
-    */ CalcTextRect ( window, & oldTextRect ) ;
+    CalcTextRect ( window, & oldTextRect ) ;
 	
 	//	resize the window
 	if ( ! ResizeWindow ( window, hitPt, & sizeConstraints, & newContentRect ) )
@@ -535,11 +532,8 @@ WEReference GetWindowWE ( WindowRef window )
 	partCode = IsWindowInStandardState ( window, & idealSize, nil ) ? inZoomIn : inZoomOut ;
 
 	//	remember original text rectangle
-/*	if(isGraphicWindow(window))
-     hideTextRect(&oldTextRect);
-    else
-  */   CalcTextRect ( window, & oldTextRect ) ;
-//CalcTextRect ( window, & oldTextRect ) ;
+    CalcTextRect ( window, & oldTextRect ) ;
+
 
 	//	zoom the window
 	ZoomWindowIdeal ( window, partCode, & idealSize ) ;
