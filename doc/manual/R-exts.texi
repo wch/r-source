@@ -64,7 +64,7 @@ into another language, under the above conditions for modified versions,
 except that this permission notice may be stated in a translation
 approved by the Free Software Foundation.
 
-Copyright @copyright{} 1999 R Development Core Team
+Copyright @copyright{} 1999, 2000 R Development Core Team
 @end titlepage
 
 @contents
@@ -150,7 +150,6 @@ URL: http://www.ci.tuwien.ac.at, http://www.tuwien.ac.at
 Continuation lines (e.g., for descriptions longer than one line) start
 with a whitespace character.  The package, version, author and
 description fields are mandatory, the remaining fields(date, depends,
-url, @dots{}) are optional.  The author field should contain an email
 address in angle brackets (for sending bug reports etc.).
 
 The license field should contain an explicit statement or a well-known
@@ -338,7 +337,8 @@ pertaining to @R{}.
 The help files are written in a form and syntax---closely resembling
 @TeX{} and La@TeX{}---which can be processed into a variety of formats,
 including La@TeX{}, [TN]roff, and @HTML{}.  The translation is carried
-out by the @sc{Perl} script @file{Rdconv} in @file{$R_HOME/bin}.
+out by the @sc{Perl} script @file{Rdconv} in @file{$R_HOME/bin}
+and by the installation scripts for packages.
 
 For a given @R{} function @code{myfun}, use the @R{} command
 @code{prompt(myfun)} to produce the file @file{myfun.Rd}, a ``raw''
@@ -364,6 +364,7 @@ file.
 
 @item \title@{@var{Title}@}
 @findex \title
+This should be capitalized, and not end in a period.
 
 @item \description@{@dots{}@}
 @findex \description
@@ -411,7 +412,9 @@ Section of references to the literature; use @code{\url@{@}} for web
 pointers.  Optional as well as all the following sections.
 
 @item \section@{@var{name}@}@{@var{text}@}
-and maybe more @code{\section@{@}} environments.
+and maybe more @code{\section@{@}} environments. For consistency with
+the pre-assigned sections, @var{name} should be capitalized (but not all
+upper case).
 
 @item \note@{@var{Some note you want to have pointed out.}@}
 @findex \note
@@ -459,6 +462,51 @@ x <- runif(10)       @r{Shown and run.}
 Use at least one keyword from the list in @file{$R_HOME/doc/KEYWORDS}.
 
 @end table
+
+The same process applies to @R{} datasets, and many of the same fields
+are used, plus a few others.
+
+@table @code
+@item \name@{mydata@}
+@findex \name
+@var{mydata} is the basename of the file.
+
+@item \alias@{mydata@}
+@findex \alias
+
+@item \non_function@{@}
+Indicates that this is a dataset (for future use).
+
+@item \title@{@var{Title}@}
+@findex \title
+
+@item \description@{@dots{}@}
+@findex \description
+A short description of the dataset.
+
+@item \format@{@dots{}@}
+@findex \format
+A description of the format of the dataset (as a vector, matrix, data
+frame, time series, @dots{}). For matrices and data frames this should
+give a description of each column.
+
+@item \source@{@dots{}@}
+@findex \source
+Details of the original source (a reference or URL). There may also be a
+@code{\references} section giving secondary sources and usages.
+
+@item \details@{@dots{}@}
+If required, for example to describe an experiment.
+
+@item \examples@{@dots{}@}
+Examples of analyses using the dataset.
+
+@item \keyword@{datasets@}
+The keyword for a dataset is always @code{datasets}.
+
+@end table
+
+
 
 @node Sectioning, Marking text, Documentation format, Writing R documentation
 @section Sectioning
@@ -522,6 +570,42 @@ page for object @var{foo}.  One main usage of @code{\link} is in the
 @code{\seealso} section of the help page, @pxref{Documentation format},
 above.  (This only affects the creation of hyperlinks, for example in
 the @HTML{} pages used by @code{help.start()}.)
+
+There are also some markup commands which apply to paragraphs, modeled
+on La@TeX{} environments.
+
+@findex \tabular
+The @code{\tabular} command takes two arguments. The first gives for
+each of the columns the required alignment (\code{l} for
+left-justification, \code{r} for right-justification or \code{code} for
+centring.)  The second argument consists of an arbitrary number of lines
+separated by @code{\cr}, and with fields separated by @code{\tab}. For
+example:
+@example
+  \tabular@{rlll@}@{
+    [,1] \tab Ozone   \tab numeric \tab Ozone (ppb)\cr
+    [,2] \tab Solar.R \tab numeric \tab Solar R (lang)\cr
+    [,3] \tab Wind    \tab numeric \tab Wind (mph)\cr
+    [,4] \tab Temp    \tab numeric \tab Temperature (degrees F)\cr
+    [,5] \tab Month   \tab numeric \tab Month (1--12)\cr
+    [,6] \tab Day     \tab numeric \tab Day of month (1--31)
+  @}
+@end example
+@noindent
+There must be the same number of fields on each line as there are
+alignments in the first argument, and they must be non-empty.
+
+@findex \itemize
+@findex \enumerate
+The @code{\itemize} and @code{\enumerate} commands take a single
+argument, within which there may be one or more @code{\item} commands.
+The text following each @code{\item} is formatted as one or more
+paragraphs, suitably indented and with the first paragraph marked with
+a bullet point (@code{\itemize}) or a number (@code{\enumerate}: if
+possible, not currently for text processing).
+
+@code{\itemize} and @code{\enumerate} commands may be nested.
+
 
 @node Mathematics, Miscellaneous, Marking text, Writing R documentation
 @section Mathematics
