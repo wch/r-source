@@ -40,7 +40,7 @@
 #endif
 
 #define NCONNECTIONS 50
-#define NSINKS 11
+#define NSINKS 21
 
 static Rconnection Connections[NCONNECTIONS];
 
