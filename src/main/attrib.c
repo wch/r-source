@@ -984,7 +984,7 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
 	classString = GET_CLASS(obj);
 	if(isNull(classString))
 	    error("Can't get a slot (\"%s\") from an object of type \"%s\"",
-		  CHAR(asChar(classString)), CHAR(asChar(type2str(TYPEOF(obj)))));
+		  CHAR(asChar(classString)), CHAR(type2str(TYPEOF(obj))));
 	if(isSymbol(name) ) {
 	    input = PROTECT(allocVector(STRSXP, 1));  nprotect++;
 	    SET_STRING_ELT(input, 0, PRINTNAME(name));
@@ -1035,6 +1035,7 @@ SEXP R_pseudo_null() {
 /* the @ operator, and its assignment form.  Processed much like $
    (see do_subset3) but without S3-style methods.
 */
+#ifdef noSlotCheck
 SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  nlist, object, ans;
@@ -1045,9 +1046,39 @@ SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
+#endif
  
 
-#ifdef NOTYET
+#ifndef noSlotCheck
+
+static SEXP class_meta_data_env = NULL;
+
+static int make_class_meta_data_env()
+{
+    class_meta_data_env = findVar(install("__ClassMetaData"), R_GlobalEnv);
+    if(class_meta_data_env == R_UnboundValue) {
+	class_meta_data_env = NULL;
+	return 0;
+    }
+    else
+	return 1;
+}
+
+/* check for a class definition from the internal table -- will not get
+ * classes whose definition has not been completed for this session,
+ * so any code relying on this routine should call the S language
+ * function comleteClassDefinition after a failed call. */
+static Rboolean has_class_definition(SEXP class_name)
+{
+    /* In case we're called before initialization, try to find the
+     * class metadata environment but don't insist on it. */
+    if(class_meta_data_env || make_class_meta_data_env())
+	return (findVarInFrame3(class_meta_data_env, class_name, FALSE) != R_UnboundValue);
+    else
+	return FALSE;
+}
+
+
 SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  nlist, object, ans, class;
@@ -1055,24 +1086,45 @@ SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isMethodsDispatchOn()) 
 	error("formal classes cannot be used without the methods package");
     nlist = CADR(args);
+    /* Do some checks here -- repeated in R_do_slot, but on repeat the
+     * test expression should kick out on the first element. */
+    if(!(isSymbol(nlist) || (isString(nlist) && LENGTH(nlist) == 1)))
+	error("invalid type or length for slot name");
+    if(isString(nlist)) nlist = install(CHAR(STRING_ELT(nlist, 0)));
     PROTECT(object = eval(CAR(args), env));
     /* do some testing here where we can give a better error message */
     class = getAttrib(object, R_ClassSymbol);
-    if(length(class) != 1)
-	error("@ must be used on an object with a formal class");
+    if(length(class) == 1)
     {
-	/* internal version of isClass() */
-	char str[201];
+	/* internal version of isClass().
+	*  should eventually be able to grab class definition pointer
+	from the object itself.  At least the code below usually only
+	does the has_class_definition step (a single lookup); the
+	findVar part is only in the case that the check will fail OR
+	that the class definition has not yet been completed.*/
+	char str[201]; SEXP class_name; Rboolean quick;
 	snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
-	if(findVar(install(str), env) == R_UnboundValue)
-	    error("@ must be used on an object with a formal class");
+	class_name = install(str);
+	quick = has_class_definition(class_name);
+	if(!quick &&
+	   (findVar(class_name, env) == R_UnboundValue))
+	    error("Trying to get slot \"%s\" from an object whose class (\"%s\") is not defined ",
+		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(class, 0)));
     }
+    else if(length(class) == 0)
+	    error("Trying to get slot \"%s\" from an object of a basic class (\"%s\") with no slots",
+		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(R_data_class(object, FALSE), 0)));
+    else
+	    error("Trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s\", ...) (not a formally defined class)",
+		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(class, 0)), 
+		  CHAR(STRING_ELT(class, 1)));
     ans = R_do_slot(object, nlist);
     UNPROTECT(1);
     return ans;
 }
 
 #endif
+
 #if 0
 /* Was a .Primitive implementation for @<-; no longer needed? */
 SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
