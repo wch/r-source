@@ -36,10 +36,9 @@ primary purpose of calling \code{gc} is for the report on memory usage.
 \examples{
 gc() #- do it now
 gcinfo(TRUE) #-- in the future, show when R does it
-x <- integer(0); for(i in 1:18) x <- c(x,i,x)
+x <- integer(100000); for(i in 1:18) x <- c(x,i)
 gcinfo(verbose = FALSE)#-- don't show it anymore
 
-( rgc <- gc(TRUE) )
-(100*rgc[,"used"])\%/\% rgc[,"total"] # percentages
+gc(TRUE)
 }
 \keyword{environment}
