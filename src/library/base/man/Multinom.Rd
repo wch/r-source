@@ -1,6 +1,7 @@
 \name{Multinomial}
 \alias{Multinomial}
 \alias{rmultinom}
+\alias{dmultinom}
 \title{The Multinomial Distribution}
 \description{
   Generate multinomially distributed random number vectors and
