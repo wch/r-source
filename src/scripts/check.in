@@ -1525,7 +1525,10 @@ sub check_pkg {
 	    $Rcmd .= ")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
-	    @out = grep(!/^[[:alnum:]]*\>/, @out);
+	    @out = grep(!/^[[:alnum:]]*\>/, @out);	    
+	    ## Or to "empty".  As empty lines in the output will most
+	    ## likely not indicate a problem ...
+	    @out = grep(!/^[[:space:]]*$/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
 		$any++;
