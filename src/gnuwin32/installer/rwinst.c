@@ -424,9 +424,42 @@ void cSys(button b)
     enable(fRver);
 }
 
+static char rhomelib[300] = "";
+static int tried_to_find_rhome = 0;
+
 void cPkg(button b)
 {
+    char *p;
+
     disable(fRver);
+    if(!tried_to_find_rhome) {
+	p = getenv("R_HOME");
+	if(!p) {
+	    char buf[MAX_PATH], *q, buf2[20];
+	    strcpy(buf2, Rver);
+	    strcat(buf2, "\\bin");
+	    for(p = getenv("PATH"); p;) {
+		strcpy(buf, p);
+		if((q = strchr(buf, ';'))) *q = '\0';
+		dosslash(buf);
+		if(strlen(buf) > 10 && 
+		   stricmp(buf + strlen(buf) - 10, buf2)==0) {
+		    buf[strlen(buf) - 4] = '\0';
+		    break;
+		}
+		p = strchr(p, ';');
+		if(p) p++;
+	    }
+	    if (!p) return;
+	    strcpy(rhomelib, buf);
+	} else 
+	    strcpy(rhomelib, p);
+	strcat(rhomelib, "/library");
+	dosslash(rhomelib);
+	strcpy(dest, rhomelib);
+	settext(fDest, rhomelib);
+    }
+    tried_to_find_rhome = 1;
 }
 
 char selfile[50];

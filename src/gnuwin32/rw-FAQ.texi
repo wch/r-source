@@ -191,7 +191,7 @@ latex installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @node Can I use R BATCH?, Can I use rwXxxx with ESS and emacs?, How do I print from R?, Installation and Usage
 @section Can I use @code{R BATCH}?
 
-Yes, if you Perl installed.  The Windows analogue is @code{Rcmd BATCH}:
+Yes, if you have Perl installed.  The Windows analogue is @code{Rcmd BATCH}:
 use @code{Rcmd BATCH --help} for full details.
 
 Otherwise you can set up a batch file using @code{Rterm.exe}. A sample

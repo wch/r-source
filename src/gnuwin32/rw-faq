@@ -146,8 +146,8 @@ It depends what you want to print.
 2.6 Can I use `R BATCH'?
 ========================
 
-Yes, if you Perl installed.  The Windows analogue is `Rcmd BATCH': use
-`Rcmd BATCH --help' for full details.
+Yes, if you have Perl installed.  The Windows analogue is `Rcmd BATCH':
+use `Rcmd BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'. A sample batch
 file might contain (as one line)
@@ -225,7 +225,7 @@ OR use a package by, e.g.
 
      library(MASS, lib.loc="p:/mylibs")
 
-How you set an environment variable is system specific: in Windows 9x
+How you set an environment variable is system specific: in Windows 9x/ME
 you can set them in autoexec.bat or in an MS-DOS window from which you
 launch `Rgui' / `Rterm'. Under Windows NT/2000 you can use the control
 panel or the properties of `My Computer'. You can also set them on the
