@@ -135,7 +135,12 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	warningcall(call, "editor ran but returned error status");
 #else
 # if defined(HAVE_AQUA)
-    rc = Raqua_Edit(filename);
+    if (!strcmp(R_GUIType,"AQUA"))
+      rc = Raqua_Edit(filename);
+    else {
+      sprintf(editcmd, "%s %s", cmd, filename);
+      rc = system(editcmd);
+    }
 # else
     sprintf(editcmd, "%s %s", cmd, filename);
     rc = system(editcmd);

@@ -57,12 +57,16 @@ if( !file.exists("~/.R/library") )
  
 # still undocumented, will be moved to base soon 
 "browse.pkgs" <-
-function(where=c("CRAN","BIOC")){
+function(where=c("CRAN","BIOC"), type=c("binary","source")){
         where<-match.arg(where)
+        type<-match.arg(type)
         installed.packages() -> x
         x[,1] -> i.pkgs
         x[,3] -> i.vers
-        CRAN.packages(getOption(where)) -> y
+        if (type=="source")
+          CRAN.packages(getOption(where)) -> y
+        else
+          CRAN.binaries(getOption(where)) -> y
         y[,1] -> c.pkgs
         y[,2] -> c.vers
 		
@@ -70,20 +74,29 @@ function(where=c("CRAN","BIOC")){
         vers2 <- character(length(c.pkgs))
         vers2[idx] <- i.vers
         i.vers <- vers2
-        inst.idx <- which(.Internal(pkgbrowser(c.pkgs,c.vers,i.vers,where)))
-        ui.pkgs <- c.pkgs[inst.idx]
-        idx2 <- which(c.vers[inst.idx] == i.vers[inst.idx])
-        if(length(idx2)>0) 
+        ##inst.idx <- which(.Internal(pkgbrowser(c.pkgs,c.vers,i.vers,where)))
+        want.update<-rep(FALSE, length(i.vers))
+        label<-switch(where, CRAN=paste("CRAN (",type,") @",getOption(where)),
+                      BIOC=paste("BioC (",type,") @",getOption(where)))
+        inst<- .Internal(pkgbrowser(c.pkgs,c.vers,i.vers,label, want.update))
+
+        ui.pkgs <- c.pkgs[inst]
+        idx2 <- which(c.vers[inst] == i.vers[inst])
+        if(length(idx2)>0) { 
             ui.pkgs <- ui.pkgs[-idx2]
+            cat( paste(ui.packages,collapse="")," already up to date, not reinstalled\n")
+          }
         if(length(ui.pkgs) > 0)
-            install.packages(ui.pkgs, CRAN=getOption(where))
+          switch(type, source= install.packages(ui.pkgs, CRAN=getOption(where), lib=.libPaths()[[1]]),
+                 binary=cat("We don't have binary packages yet. Rome wasn't burnt in a day, you know.\n"))
 }
 
 "browse.update.pkgs" <-
-function(where=c("CRAN","BIOC")){
+function(where=c("CRAN", "BIOC"), type=c("binary", "source")){
 
         where<-match.arg(where)
-  
+        type<-match.arg(type)
+        
         installed.packages() -> x
         x[,1] -> i.pkgs
         x[,3] -> i.vers
@@ -103,13 +116,17 @@ function(where=c("CRAN","BIOC")){
         i.pkgs<-i.pkgs[ask]
         i.vers<-i.vers[ask]
         c.vers<-c.vers[ask]
-        inst.idx <- which(.Internal(pkgbrowser(i.pkgs,c.vers,i.vers,where)))
+        want.update<-rep(TRUE, length(i.vers))
+        label<-switch(where, CRAN=paste("CRAN (",type,") @",getOption(where)),
+                      BIOC=paste("BioC (",type,") @",getOption(where)))
+        inst.idx <- which(.Internal(pkgbrowser(i.pkgs,c.vers,i.vers,label, want.update)))
         ui.pkgs <- i.pkgs[inst.idx]
         idx2 <- which(c.vers[inst.idx] == i.vers[inst.idx])
         if(length(idx2)>0) 
             ui.pkgs <- ui.pkgs[-idx2]
         if(length(ui.pkgs) > 0)
-            install.packages(ui.pkgs,CRAN=getOption(where))
+          switch(type, source= install.packages(ui.pkgs, CRAN=getOption(where), lib=.libPaths()[[1]]),
+                 binary=cat("We don't have binary packages yet. Rome wasn't burnt in a day, you know.\n"))
 }
 
 
@@ -158,6 +175,28 @@ install.from.file <- function(pkg=file.choose()){
    }
 }
 
+
+ 
+ X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
+                 gamma = 1, colortype = getOption("X11colortype"),
+                 maxcubesize = 256, canvas = "white"){
+   
+   if(display=="" && .Platform$GUI=="AQUA" && Sys.getenv("DISPLAY")==""){
+     ps<-system("ps axc", intern=TRUE)
+     ## Blame http://www.netneurotic.de/mac/testx/testx
+     if (any(c(grep("Xquartz", ps), grep("xinit", ps))))
+       Sys.putenv(DISPLAY=":0")
+   }
+   
+   .Internal(X11(display, width, height, pointsize, gamma, colortype,
+                 maxcubesize, canvas))
+ }
+ 
+ 
+ x11 <- X11
+
+ CRAN.binaries<-CRAN.packages
+ 
 }
 
 

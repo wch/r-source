@@ -99,6 +99,10 @@ extern SA_TYPE RestoreAction;
 #define kRCmdAvailDatsets	'shdt'
 #define kRCmdInstallFromCRAN	'cran'
 #define kRCmdInstallFromBioC	'bioc'
+#define kRCmdBinaryUpdateFromCRAN	'crub'
+#define kRCmdBinaryUpdateFromBioC	'bcub'
+#define kRCmdBinaryInstallFromCRAN	'crab'
+#define kRCmdBinaryInstallFromBioC	'biob'
 #define kRCmdUpdateFromCRAN	'crup'
 #define kRCmdUpdateFromBioC	'bcup'
 #define kRCmdInstallFromSrc	'ipfs'
@@ -1309,18 +1313,34 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
 
               case kRCmdInstallFromCRAN:
-               consolecmd("browse.pkgs()");
+               consolecmd("browse.pkgs(type=\"source\")");
               break;
 
               case kRCmdInstallFromBioC:
-		consolecmd("browse.pkgs(\"BIOC\")");
+		consolecmd("browse.pkgs(\"BIOC\",type=\"source\")");
               break;
 		
              case kRCmdUpdateFromCRAN:
-               consolecmd("browse.update.pkgs()");
+               consolecmd("browse.update.pkgs(type=\"source\")");
               break;
 
               case kRCmdUpdateFromBioC:
+		consolecmd("browse.update.pkgs(\"BIOC\",type=\"source\")");
+              break;
+	      
+             case kRCmdBinaryInstallFromCRAN:
+               consolecmd("browse.pkgs()");
+              break;
+
+              case kRCmdBinaryInstallFromBioC:
+		consolecmd("browse.pkgs(\"BIOC\")");
+              break;
+		
+             case kRCmdBinaryUpdateFromCRAN:
+               consolecmd("browse.update.pkgs()");
+              break;
+
+              case kRCmdBinaryUpdateFromBioC:
 		consolecmd("browse.update.pkgs(\"BIOC\")");
               break;
 

@@ -4,7 +4,7 @@
   <object name="rootObject" class="NSCustomObject" id="1">
     <string name="customClass">NSApplication</string>
   </object>
-  <array count="128" name="allObjects">
+  <array count="140" name="allObjects">
     <object class="IBCarbonMenu" id="29">
       <string name="title">main</string>
       <array count="7" name="items">
@@ -220,9 +220,9 @@
           </object>
         </object>
         <object class="IBCarbonMenuItem" id="216">
-          <string name="title">Packages</string>
+          <string name="title">Library</string>
           <object name="submenu" class="IBCarbonMenu" id="217">
-            <string name="title">Packages</string>
+            <string name="title">Library</string>
             <array count="9" name="items">
               <object class="IBCarbonMenuItem" id="218">
                 <string name="title">Package Manager</string>
@@ -237,33 +237,85 @@
               <object class="IBCarbonMenuItem" id="221">
                 <boolean name="separator">TRUE</boolean>
               </object>
-              <object class="IBCarbonMenuItem" id="220">
+              <object class="IBCarbonMenuItem" id="351">
                 <string name="title">Get CRAN Packages</string>
-                <ostype name="command">cran</ostype>
-                <string name="helpTagText">Installs packages from CRAN repository</string>
+                <object name="submenu" class="IBCarbonMenu" id="352">
+                  <string name="title">Get CRAN Packages</string>
+                  <array count="2" name="items">
+                    <object class="IBCarbonMenuItem" id="353">
+                      <string name="title">Ready-to-use Binary</string>
+                      <ostype name="command">crab</ostype>
+                      <string name="helpTagText">Download and install (binary) packages from CRAN</string>
+                    </object>
+                    <object class="IBCarbonMenuItem" id="360">
+                      <string name="title">Source</string>
+                      <ostype name="command">cran</ostype>
+                      <string name="helpTagText">Download and compile source packages from CRAN</string>
+                    </object>
+                  </array>
+                </object>
               </object>
-              <object class="IBCarbonMenuItem" id="222">
+              <object class="IBCarbonMenuItem" id="348">
                 <string name="title">Get BioConductor Packages</string>
-                <ostype name="command">bioc</ostype>
-                <string name="helpTagText">Install packages of the BioCondutor Project</string>
+                <object name="submenu" class="IBCarbonMenu" id="349">
+                  <string name="title">Get BioConductor Packages</string>
+                  <array count="2" name="items">
+                    <object class="IBCarbonMenuItem" id="350">
+                      <string name="title">Ready-to-use Binary</string>
+                      <ostype name="command">biob</ostype>
+                      <string name="helpTagText">Download and install binary packages from the BioConductor project</string>
+                    </object>
+                    <object class="IBCarbonMenuItem" id="361">
+                      <string name="title">Source</string>
+                      <ostype name="command">bioc</ostype>
+                      <string name="helpTagText">Download and compile source packages from the BioConductor project</string>
+                    </object>
+                  </array>
+                </object>
               </object>
-              <object class="IBCarbonMenuItem" id="335">
+              <object class="IBCarbonMenuItem" id="354">
                 <string name="title">Update CRAN packages</string>
-                <ostype name="command">crup</ostype>
-                <string name="helpTagText">update packages with newer versions on CRAN</string>
+                <object name="submenu" class="IBCarbonMenu" id="355">
+                  <string name="title">Update CRAN packages</string>
+                  <array count="2" name="items">
+                    <object class="IBCarbonMenuItem" id="356">
+                      <string name="title">Ready-to-use Binary</string>
+                      <ostype name="command">crub</ostype>
+                      <string name="helpTagText">Update packages with newer binary versions on CRAN</string>
+                    </object>
+                    <object class="IBCarbonMenuItem" id="362">
+                      <string name="title">Source</string>
+                      <ostype name="command">crup</ostype>
+                      <string name="helpTagText">Compile and update packages with newer source versions on CRAN</string>
+                    </object>
+                  </array>
+                </object>
               </object>
-              <object class="IBCarbonMenuItem" id="336">
+              <object class="IBCarbonMenuItem" id="357">
                 <string name="title">Update BioConductor Packages</string>
-                <ostype name="command">bcup</ostype>
-                <string name="helpTagText">Update packages with newer versions at BioConductor</string>
+                <object name="submenu" class="IBCarbonMenu" id="358">
+                  <string name="title">Update BioConductor Packages</string>
+                  <array count="2" name="items">
+                    <object class="IBCarbonMenuItem" id="359">
+                      <string name="title">Ready-to-use Binary</string>
+                      <ostype name="command">bcub</ostype>
+                      <string name="helpTagText">Update packages with newer binary version at BioConductor</string>
+                    </object>
+                    <object class="IBCarbonMenuItem" id="363">
+                      <string name="title">Source</string>
+                      <ostype name="command">bcup</ostype>
+                      <string name="helpTagText">Compile and update packages with newer source versions at BioConductor</string>
+                    </object>
+                  </array>
+                </object>
               </object>
               <object class="IBCarbonMenuItem" id="224">
                 <boolean name="separator">TRUE</boolean>
               </object>
               <object class="IBCarbonMenuItem" id="344">
-                <string name="title">Install Package From Source</string>
+                <string name="title">Compile Package From Source</string>
                 <object name="submenu" class="IBCarbonMenu" id="345">
-                  <string name="title">Install Package From Source</string>
+                  <string name="title">Compile Package From Source</string>
                   <array count="2" name="items">
                     <object class="IBCarbonMenuItem" id="346">
                       <string name="title">File (.tar.gz)</string>
@@ -437,9 +489,7 @@
     <reference idRef="217"/>
     <reference idRef="218"/>
     <reference idRef="219"/>
-    <reference idRef="220"/>
     <reference idRef="221"/>
-    <reference idRef="222"/>
     <reference idRef="224"/>
     <reference idRef="226"/>
     <reference idRef="227"/>
@@ -776,42 +826,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">30941 11240 31239 11680 </string>
+      <string name="bounds">-20995 4857 -20697 5297 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">24700 -10287 24702 -10283 </string>
+          <string name="bounds">-6492 1691 -6490 1691 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">24700 -17725 24702 -17703 </string>
+          <string name="bounds">-6492 -28902 -6490 -28884 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">24586 -17850 24602 -17457 </string>
+          <string name="bounds">-6392 -28839 -6376 -28446 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">24626 -17609 24646 -17605 </string>
+          <string name="bounds">-6432 -28411 -6412 -28403 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">24633 -17181 24631 -17182 </string>
+          <string name="bounds">-6420 -27792 -6424 -27797 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">24624 -17133 24640 -17057 </string>
+          <string name="bounds">-6430 -27566 -6414 -27490 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">24504 -17043 24502 -17049 </string>
+          <string name="bounds">-6291 -27289 -6295 -27289 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">24496 -16939 24512 -16892 </string>
+          <string name="bounds">-6302 -27003 -6286 -26956 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">24496 -16615 24512 -16568 </string>
+          <string name="bounds">-6302 -26493 -6286 -26446 </string>
           <string name="title">Height:</string>
         </object>
       </array>
@@ -848,8 +898,6 @@
     <reference idRef="326"/>
     <reference idRef="327"/>
     <reference idRef="328"/>
-    <reference idRef="335"/>
-    <reference idRef="336"/>
     <reference idRef="337"/>
     <reference idRef="340"/>
     <reference idRef="341"/>
@@ -859,8 +907,24 @@
     <reference idRef="345"/>
     <reference idRef="346"/>
     <reference idRef="347"/>
+    <reference idRef="348"/>
+    <reference idRef="349"/>
+    <reference idRef="350"/>
+    <reference idRef="351"/>
+    <reference idRef="352"/>
+    <reference idRef="353"/>
+    <reference idRef="354"/>
+    <reference idRef="355"/>
+    <reference idRef="356"/>
+    <reference idRef="357"/>
+    <reference idRef="358"/>
+    <reference idRef="359"/>
+    <reference idRef="360"/>
+    <reference idRef="361"/>
+    <reference idRef="362"/>
+    <reference idRef="363"/>
   </array>
-  <array count="128" name="allParents">
+  <array count="140" name="allParents">
     <reference idRef="1"/>
     <reference idRef="29"/>
     <reference idRef="131"/>
@@ -906,8 +970,6 @@
     <reference idRef="198"/>
     <reference idRef="29"/>
     <reference idRef="216"/>
-    <reference idRef="217"/>
-    <reference idRef="217"/>
     <reference idRef="217"/>
     <reference idRef="217"/>
     <reference idRef="217"/>
@@ -978,8 +1040,6 @@
     <reference idRef="147"/>
     <reference idRef="147"/>
     <reference idRef="147"/>
-    <reference idRef="217"/>
-    <reference idRef="217"/>
     <reference idRef="251"/>
     <reference idRef="251"/>
     <reference idRef="251"/>
@@ -989,6 +1049,22 @@
     <reference idRef="344"/>
     <reference idRef="345"/>
     <reference idRef="345"/>
+    <reference idRef="217"/>
+    <reference idRef="348"/>
+    <reference idRef="349"/>
+    <reference idRef="217"/>
+    <reference idRef="351"/>
+    <reference idRef="352"/>
+    <reference idRef="217"/>
+    <reference idRef="354"/>
+    <reference idRef="355"/>
+    <reference idRef="217"/>
+    <reference idRef="357"/>
+    <reference idRef="358"/>
+    <reference idRef="352"/>
+    <reference idRef="349"/>
+    <reference idRef="355"/>
+    <reference idRef="358"/>
   </array>
   <dictionary count="5" name="nameTable">
     <string>AboutWindow</string>
@@ -1002,5 +1078,5 @@
     <string>PrefsWindow</string>
     <reference idRef="247"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">348</unsigned_int>
+  <unsigned_int name="nextObjectID">364</unsigned_int>
 </object>

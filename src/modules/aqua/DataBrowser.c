@@ -480,7 +480,7 @@ static void ConfigureDataBrowser(ControlRef browser)
 			columnDesc.propertyDesc.propertyID = kObjectColumn;
 			columnDesc.propertyDesc.propertyType = kDataBrowserTextType;
 			columnDesc.propertyDesc.propertyFlags = kDataBrowserPropertyIsMutable | 
-													kDataBrowserListViewDefaultColumnFlags;
+			  kDataBrowserListViewDefaultColumnFlags;
 			
 		 
 			columnDesc.headerBtnDesc.minimumWidth = 30;

@@ -1,4 +1,4 @@
-ReadMe file for build, install and execute the AQUA - Darwin R
+ReadMe file for building, installing and executing the AQUA - Darwin R GUI.
 
 
 The final installation should have the following structure
@@ -10,9 +10,10 @@ You can build the RAqua GUI either with or without X11 support
 or
 ./configure --with-aqua 
 
-Compiling with X11 support requires X11 header files and running with X11 
-support requires an X server, such as Apple's X server. X11 support is 
-only partial at the moment; full support awaits changes in R's event 
+Compiling with X11 support requires X11 header files and running with
+X11 support requires an X server, such as Apple's Xquartz server
+(http://www.apple.com/macosx/x11/download/). X11 support is only
+partial at the moment; full support awaits changes in R's event
 handling.
 
 
@@ -22,6 +23,7 @@ handling.
 
 Unless you have write permission to /Applications you will need an 
 administrator password and sudo:
+
   sudo make install-aqua
 
 
