@@ -13,7 +13,7 @@
 \title{Date Conversion Functions to and from Character}
 \description{
   Functions to convert between character representations and objects of
-  classes \code{"Date"} representing calendar dates and times.
+  class \code{"Date"} representing calendar dates.
 }
 \usage{
 as.Date(x, \ldots)
@@ -107,7 +107,7 @@ z
 
 ## read in date/time info in format 'm/d/y'
 dates <- c("02/27/92", "02/27/92", "01/14/92", "02/28/92", "02/01/92")
-as.Date(x, "\%m/\%d/\%y \%H:\%M:\%S")
+as.Date(dates, "\%m/\%d/\%y")
 }
 \keyword{utilities}
 \keyword{chron}
