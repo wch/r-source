@@ -11,6 +11,9 @@
 
 BUG FIXES
 
+    o	axis() was not listening to par("mgp")[3] by default.
+	(PR#916)
+
     o	tcltk back-compatibility fix for tcl8.0	 <<Peter fixme>>
 
     o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}' and

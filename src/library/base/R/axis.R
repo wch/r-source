@@ -1,4 +1,4 @@
-axis <- function(side, at=NULL, labels=TRUE, tick=TRUE, line=0, pos=NA,
+axis <- function(side, at=NULL, labels=TRUE, tick=TRUE, line=NA, pos=NA,
                  outer=FALSE, font=NA, vfont=NULL, ...) {
     if (!is.null(vfont))
 	vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
