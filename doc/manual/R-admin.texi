@@ -812,9 +812,9 @@ You need a means of compiling C and FORTRAN 77 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries.  (On RedHat Linux
-this means the @samp{XFree86-devel} and @samp{XFree86-libs} RPMs, for
-example.)
+installed, including its headers and client libraries.  (On Fedora Core 2 Linux
+this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs} RPMs, for
+example.  Older Linuxen used @samp{XFree86-}.)
 
 You will need Perl version 5.004 or later, available via
 @uref{http://www.perl.com/CPAN/}, to build any of the on-line
@@ -846,7 +846,9 @@ late enough versions), @code{zlib}, @code{libbz2} and PCRE will be used
 if specified by @option{--with-zlib}, @option{--with-bzlib} or
 @option{--with-pcre}: otherwise versions in the @R{} sources will be
 compiled in.  As the latter suffice and are tested with @R{} you should
-not need to change this.
+not need to change this.  In particular, the version of @code{zlib} in
+the @R{} sources has a number of bug fixes and enhancements to work with
+large file systems on 32-bit platforms.
 
 @menu
 * Tcl/Tk::                      
@@ -857,7 +859,7 @@ not need to change this.
 @subsection Tcl/Tk
 
 The @pkg{tcltk} package needs Tcl/Tk installed: the sources are
-available at @uref{http://www.scriptics.com/}.  To specify the locations
+available at @uref{http://www.tcl.tk/}.  To specify the locations
 of the Tcl/Tk files you may need the configuration options
 
 @table @option
@@ -1346,7 +1348,7 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 Many 32-bit systems have a means of using files > 2Gb, and most are
-based on that in the Singel Unix specification: see
+based on that in the Single Unix specification: see
 @uref{http://ftp.sas.com/standards/large.file/x_open.20Mar96.html}.
 However, this is only covered under Linux and Solaris.
 
@@ -1785,9 +1787,7 @@ If this fails you should double-check that Java is enabled in your
 browser by visiting a page such as
 @uref{http://www.java.com/en/download/help/testvm.jsp} (although that
 will fail for earlier versions of Java such as the Microsoft JVM which
-do work with R).  You can check which version of Java is in use at
-@uref{http://java.sun.com/docs/books/tutorial/applet/practical/properties.html}.
-Java 1.1 is sufficent.
+do work with R).  Java 1.1 is sufficent.
 
 Many thanks to Marc Schwartz in tracking down many of these issues with
 enabling the Java search engine.
@@ -1803,14 +1803,15 @@ enabling the Java search engine.
 @section Java Virtual Machines on Linux
 
 We are aware of problems with certain Java installations.  In
-particular, Sun's Java Run-time Environment @code{j2re 1.4.2_02} does
-not work under Linux.  Current browsers of the Mozilla family (including
-Mozilla >= 1.4, Netscape 7.1 and FireFox) are compiled under @code{gcc
-3.x} and @emph{require} the @code{ns610-gcc32} version of the Java
-plugin that was introduced with @code{j2re 1.4.2}, so the only Java
-version that we know to work is @code{j2re 1.4.2_01}.  Marc Schwartz has
-kindly made Linux @code{i586} distributions available: see
-@uref{http://www.MedAnalytics.com/INSTALL}.
+particular, Sun's Java Run-time Environment @code{j2re 1.4.2_02} to
+@code{_05} do not work under Linux.  Current browsers of the Mozilla
+family (including Mozilla >= 1.4, Netscape 7.1 and FireFox) are compiled
+under @code{gcc 3.x} and @emph{require} the @code{ns610-gcc32} version
+of the Java plugin that was introduced with @code{j2re 1.4.2}, so the
+only Java version that we know to work is @code{j2re 1.4.2_01}.  Marc
+Schwartz has kindly made Linux @code{i586} distributions available: see
+@uref{http://www.MedAnalytics.com/INSTALL}.  They can also be found at
+Sun's archive at @uref{http://java.sun.com/products/archive/}.
 
 @noindent
 Other Java installations, for example those from Blackdown and IBM, have
@@ -1843,8 +1844,8 @@ http://www.MedAnalytics.com/INSTALL
 
 We have not seen any problems on Windows provided a Java Virtual Machine
 has been installed and is operational: Sun's current @code{j2re
-1.4.2_04} works in Internet Explorer, Netscape 7.1, Mozilla 1.6 and
-Mozilla FireFox 0.8 on Windows XP.  Note that a recent Windows system
+1.4.2_04} works in Internet Explorer, Netscape 7.1, Mozilla 1.6/7 and
+Mozilla FireFox 0.8/0.9 on Windows XP.  Note that a recent Windows system
 may not have Java installed at all.  For Netscape/Mozilla/FireFox visit
 @uref{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
 Which (if any) JVM is enabled can be set in `Set Program Access and
