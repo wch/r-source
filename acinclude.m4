@@ -198,7 +198,8 @@ AC_DEFUN(R_PROG_CC_M,
       cat << \EOF > ${depend_rules_frag}
 .c.d:
 	@echo "making $[@] from $<"
-	@$(CC) -M $(ALL_CPPFLAGS) $< > $[@]
+	@$(CC) -M $(ALL_CPPFLAGS) $< | \
+	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
 EOF
     else
       cat << \EOF > ${depend_rules_frag}
@@ -820,18 +821,6 @@ AC_DEFUN([GNOME_ORBIT_HOOK], [
 
 AC_DEFUN([GNOME_ORBIT_CHECK], [
   GNOME_ORBIT_HOOK([], failure)
-])
-
-AC_DEFUN(AM_CONDITIONAL, [
-  AC_SUBST($1_TRUE)
-  AC_SUBST($1_FALSE)
-  if $2; then
-    $1_TRUE=
-    $1_FALSE='#'
-  else
-    $1_TRUE='#'
-    $1_FALSE=
-  fi
 ])
 
 dnl AM_PATH_LIBGLADE([ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND [, MODULES]]])
