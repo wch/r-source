@@ -1,6 +1,5 @@
 \name{bquote}
 \alias{bquote}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Partial substitution in expressions}
 \description{
   An analogue of the LISP backquote macro.  \code{bquote} quotes its
@@ -10,7 +9,6 @@
 \usage{
 bquote(expr, where = parent.frame())
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{expr}{An expression }
   \item{where}{ An environment }
@@ -19,9 +17,11 @@ bquote(expr, where = parent.frame())
 \value{
  An expression
 }
-\seealso{\code{\link{quote}}, \code{\link{substitute}} }
+\seealso{
+  \code{\link{quote}}, \code{\link{substitute}}
+}
 \examples{
-a<-2
+a <- 2
 
 bquote(a==a)
 quote(a==a)
@@ -29,7 +29,7 @@ quote(a==a)
 bquote(a==.(a))
 substitute(a==A, list(A=a))
 
-plot(1:10,a*(1:10), main=bquote(a==.(a)))
+plot(1:10, a*(1:10), main = bquote(a==.(a)))
 }
 \keyword{programming}
 \keyword{data}
