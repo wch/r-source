@@ -41,3 +41,11 @@ int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr);
 int Sock_close(int fd, Sock_error_t perr);
 ssize_t Sock_read(int fd, void *buf, size_t nbytes, Sock_error_t perr);
 ssize_t Sock_write(int fd, void *buf, size_t nbytes, Sock_error_t perr);
+
+/* R interface (Rsock.c) :*/
+void Rsockopen(int *port);
+void Rsocklisten(int *sock, char **buf, int *len);
+void Rsockconnect(int *port, char **host);
+void Rsockclose(int *sock);
+void Rsockread (int *sock, char **buf, int *maxlen);
+void Rsockwrite(int *sock, char **buf, int *start, int *end, int *len);
