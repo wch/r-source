@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -104,7 +104,7 @@ SEXP do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
 }
 
-void Specify2(char*, SEXP);
+void Specify2(char*, SEXP);/* from ./par.c */
 
 void ProcessInlinePars(SEXP s)
 {
@@ -274,8 +274,7 @@ SEXP FixupCex(SEXP cex)
 	return ans;
 }
 
-	/*  plot.new(ask)  */
-	/*  create a new plot  */
+	/*  plot.new(ask)  --  create a new plot  */
 
 SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -299,8 +298,7 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-	/*  plot.window(xlim, ylim, log) */
-	/*  define world coordinates  */
+	/*  plot.window(xlim, ylim, log, ...) --  define world coordinates  */
 
 SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 {
