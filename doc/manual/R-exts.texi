@@ -219,8 +219,11 @@ start with a space or tab.  The @samp{Package}, @samp{Version},
 The @samp{Package} and @samp{Version} fields give the name and the
 version of the package, respectively.  The name should consist of
 letters, numbers, and the dot character and start with a letter.  The
-version is a sequence of at least @emph{two} non-negative integers
-separated by single @samp{.} or @samp{-} characters.
+version is a sequence of at least @emph{two} (and usually three)
+non-negative integers separated by single @samp{.} or @samp{-}
+characters.  The canonical form is as shown in the example, and a
+version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
+were @samp{0.1-0}.
 
 The @samp{License} field should contain an explicit statement or a
 well-known abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
