@@ -3,15 +3,15 @@
 \title{Hershey Vector Fonts in R}
 \description{
   If the \code{vfont} argument to one of the text-drawing functions
-  (\code{\link{text}} and \code{\link{contour}}) 
+  (\code{\link{text}} and \code{\link{contour}})
   is a character vector of length 2, hershey vector fonts are used to
   render the text.
 
-  These fonts have two advantages:  
+  These fonts have two advantages:
 
   \enumerate{
   \item vector fonts describe each
-  character in terms of a set of points;  \R renders the character by 
+  character in terms of a set of points;  \R renders the character by
   joining up the points with straight lines.  This intimate knowledge of
   the outline of each character means that \R can arbitrarily transform
   the characters, which can mean that the vector fonts look better
@@ -23,14 +23,14 @@
   }
 }
 \details{
-  The Hershey characters are organised into a set of fonts, which are 
-  specified by a typeface (e.g., \code{serif} or \code{sans serif}) 
+  The Hershey characters are organised into a set of fonts, which are
+  specified by a typeface (e.g., \code{serif} or \code{sans serif})
   and a fontindex
   (e.g., \code{plain} or \code{italic}).
-  The first element of \code{vfont} specifies the typeface and the second 
+  The first element of \code{vfont} specifies the typeface and the second
   element specifies the fontindex.  The first table
   produced by \code{example(Hershey)} shows the character \code{a} produced
-  by each of the different fonts. 
+  by each of the different fonts.
 
 
   The available values for \code{(typeface, fontindex)} for Hershey
@@ -63,18 +63,18 @@
 
   \describe{
     \item{Escape sequences:}{The string to be drawn can include escape
-    sequences, which all begin with a \code{\\}.   When \R encounters a 
+    sequences, which all begin with a \code{\\}.   When \R encounters a
     \code{\\},
-    rather than drawing the \code{\\}, it treats the subsequent character(s) 
+    rather than drawing the \code{\\}, it treats the subsequent character(s)
     as a coded description of what to draw.
-    
+
     One useful escape sequence (in the current context)
     is of the form: \code{\\123}.  The three
     digits following the \code{\\} specify an octal code for a character.  For
-    example, the octal code for \code{p} 
+    example, the octal code for \code{p}
     is 160 so the strings \code{"p"} and \code{"\\160"}
-    are equivalent.  
-    This is useful for producing characters when  
+    are equivalent.
+    This is useful for producing characters when
     there is not an appropriate key on your keyboard.
 
     The other useful escape sequences all begin with \code{\\\\}.  These are
@@ -84,16 +84,16 @@
     selecting the Serif Symbol or Sans Serif Symbol typeface.  To allow
     Greek symbols to be embedded in a string which uses a non-symbol typeface,
     there are a set of symbol escape sequences of the form \code{\\\\ab}.
-    For example, the escape sequence \code{\\\\*a} produces a Greek alpha. 
+    For example, the escape sequence \code{\\\\*a} produces a Greek alpha.
     The second table in \code{example(Hershey)} shows all of the symbol
     escape sequences and the symbols that they produce.}
 
-    \item{ISO Latin-1:}{further escape sequences of the form \code{\\\\ab} are 
+    \item{ISO Latin-1:}{further escape sequences of the form \code{\\\\ab} are
     provided for producing ISO Latin-1 characters (for example, if
     you only have a US keyboard).  Another option is to use the appropriate
-    octal code.  The (non-ASCII) ISO Latin-1 characters are in the range 
+    octal code.  The (non-ASCII) ISO Latin-1 characters are in the range
     241...377.  For example, \code{\\366} produces the character \code{o}
-    with an 
+    with an
     umlaut.  The third table in \code{example(Hershey)} shows all of the
     ISO Latin-1 escape sequences.}
 
@@ -104,45 +104,45 @@
     The fourth table in \code{example(Hershey)} shows all of the
     special character escape sequences.}
 
-    \item{Cyrillic Characters:}{cyrillic characters are implemented 
+    \item{Cyrillic Characters:}{cyrillic characters are implemented
     according to the K018-R encoding.  On a US keyboard, these can be
     produced using the Serif typeface and Cyrillic (or Oblique Cyrillic)
-    fontindex and specifying an octal code in the range 300 to 337 for 
+    fontindex and specifying an octal code in the range 300 to 337 for
     lower case characters or 340 to 377 for upper case characters.
     The fifth table in \code{example(Hershey)} shows the octal codes for
     the available cyrillic characters.}
 
     \item{Japanese Characters:}{83 Hiragana, 86 Katakana, and 603 Kanji
     characters are implemented according to the EUC (Extended Unix Code)
-    encoding.     
+    encoding.
     Each character is idenitified by a unique hexadecimal code.
      The Hiragana characters
     are in the range 0x2421 to 0x2473, Katakana are in the range 0x2521 to
     0x2576, and Kanji are (scattered about) in the range 0x3021 to 0x6d55.
-    
+
     When using the Serif typeface and EUC
     fontindex, these characters can be produced by a \emph{pair} of octal
     codes.  Given the hexadecimal code (e.g., 0x2421), take the first two
-    digits and add 0x80 and do the same to the second two digits (e.g., 
+    digits and add 0x80 and do the same to the second two digits (e.g.,
     0x21 and 0x24 become 0xa4 and 0xa1), then convert both to octal (e.g.,
     0xa4 and 0xa1 become 244 and 241).  For example, the first Hiragana
     character is produced by \code{\\244\\241}.
 
     It is also possible to use the hexadecimal code directly.  This works
-    for all non-EUC fonts by specifying an escape sequence of the form 
-    \code{\\\\#J1234}.  For example, the first Hiragana character is produced 
+    for all non-EUC fonts by specifying an escape sequence of the form
+    \code{\\\\#J1234}.  For example, the first Hiragana character is produced
     by \code{\\\\#J2421}.
 
-    The Kanji characters may be specified in a third way, using the 
+    The Kanji characters may be specified in a third way, using the
     so-called "Nelson Index", by specifying an escape sequence of the form
     \code{\\\\#N1234}.  For example, the Kanji for ``one'' is
     produced by \code{\\\\#N0001}.}
 
-    \item{Raw Hershey Glyphs:}{all of the characters in the Hershey fonts 
+    \item{Raw Hershey Glyphs:}{all of the characters in the Hershey fonts
     are stored in a large array.  Some characters are not accessible in
     any of the Hershey fonts.  These characters can only be accessed via
     an escape sequence of the form \code{\\\\#H1234}.  For example, the
-    fleur-de-lys is produced by \code{\\\\#H0746}.  The sixth and seventh 
+    fleur-de-lys is produced by \code{\\\\#H0746}.  The sixth and seventh
     tables of
     \code{example(Hershey)} shows all of the available raw glyphs.}
   }
@@ -162,7 +162,7 @@
 ######
 make.table <- function(nr, nc) {
     savepar <- par(mar=rep(0, 4), pty="s")
-    plot(c(0, nc*2 + 1), c(0, -(nr + 1)), 
+    plot(c(0, nc*2 + 1), c(0, -(nr + 1)),
          type="n", xlab="", ylab="", axes=F)
     savepar
 }
@@ -234,70 +234,75 @@ tf <- "serif"
 fi <- "plain"
 make.table(nr, nc)
 i <- 0
-draw.title("Symbol Escape Sequences", nr, nc)
+draw.title("Symbol (incl. Greek) Escape Sequences", nr, nc)
+%% double each backslash here in *.Rd !
+## Greek alphabet in order
+draw.vf.cell(tf, fi, "\\\\*A", i, nr); i<-i+1; { "Alpha"}
+draw.vf.cell(tf, fi, "\\\\*B", i, nr); i<-i+1; { "Beta"}
+draw.vf.cell(tf, fi, "\\\\*G", i, nr); i<-i+1; { "Gamma"}
+draw.vf.cell(tf, fi, "\\\\*D", i, nr); i<-i+1; { "Delta"}
+draw.vf.cell(tf, fi, "\\\\*E", i, nr); i<-i+1; { "Epsilon"}
+draw.vf.cell(tf, fi, "\\\\*Z", i, nr); i<-i+1; { "Zeta"}
+draw.vf.cell(tf, fi, "\\\\*Y", i, nr); i<-i+1; { "Eta"}
+draw.vf.cell(tf, fi, "\\\\*H", i, nr); i<-i+1; { "Theta"}
+draw.vf.cell(tf, fi, "\\\\*I", i, nr); i<-i+1; { "Iota"}
+draw.vf.cell(tf, fi, "\\\\*K", i, nr); i<-i+1; { "Kappa"}
+draw.vf.cell(tf, fi, "\\\\*L", i, nr); i<-i+1; { "Lambda"}
+draw.vf.cell(tf, fi, "\\\\*M", i, nr); i<-i+1; { "Mu"}
+draw.vf.cell(tf, fi, "\\\\*N", i, nr); i<-i+1; { "Nu"}
+draw.vf.cell(tf, fi, "\\\\*C", i, nr); i<-i+1; { "Xi"}
+draw.vf.cell(tf, fi, "\\\\*O", i, nr); i<-i+1; { "Omicron"}
+draw.vf.cell(tf, fi, "\\\\*P", i, nr); i<-i+1; { "Pi"}
+draw.vf.cell(tf, fi, "\\\\*R", i, nr); i<-i+1; { "Rho"}
+draw.vf.cell(tf, fi, "\\\\*S", i, nr); i<-i+1; { "Sigma"}
+draw.vf.cell(tf, fi, "\\\\*T", i, nr); i<-i+1; { "Tau"}
+draw.vf.cell(tf, fi, "\\\\*U", i, nr); i<-i+1; { "Upsilon"}
+draw.vf.cell(tf, fi, "\\\\+U", i, nr); i<-i+1; { "Upsilon1"}
+draw.vf.cell(tf, fi, "\\\\*F", i, nr); i<-i+1; { "Phi"}
+draw.vf.cell(tf, fi, "\\\\*X", i, nr); i<-i+1; { "Chi"}
+draw.vf.cell(tf, fi, "\\\\*Q", i, nr); i<-i+1; { "Psi"}
+draw.vf.cell(tf, fi, "\\\\*W", i, nr); i<-i+1; { "Omega"}
+#
+draw.vf.cell(tf, fi, "\\\\*a", i, nr); i<-i+1; { "alpha"}
+draw.vf.cell(tf, fi, "\\\\*b", i, nr); i<-i+1; { "beta"}
+draw.vf.cell(tf, fi, "\\\\*g", i, nr); i<-i+1; { "gamma"}
+draw.vf.cell(tf, fi, "\\\\*d", i, nr); i<-i+1; { "delta"}
+draw.vf.cell(tf, fi, "\\\\*e", i, nr); i<-i+1; { "epsilon"}
+draw.vf.cell(tf, fi, "\\\\*z", i, nr); i<-i+1; { "zeta"}
+draw.vf.cell(tf, fi, "\\\\*y", i, nr); i<-i+1; { "eta"}
+draw.vf.cell(tf, fi, "\\\\*h", i, nr); i<-i+1; { "theta"}
+draw.vf.cell(tf, fi, "\\\\+h", i, nr); i<-i+1; { "theta1"}
+draw.vf.cell(tf, fi, "\\\\*i", i, nr); i<-i+1; { "iota"}
+draw.vf.cell(tf, fi, "\\\\*k", i, nr); i<-i+1; { "kappa"}
+draw.vf.cell(tf, fi, "\\\\*l", i, nr); i<-i+1; { "lambda"}
+draw.vf.cell(tf, fi, "\\\\*m", i, nr); i<-i+1; { "mu"}
+draw.vf.cell(tf, fi, "\\\\*n", i, nr); i<-i+1; { "nu"}
+draw.vf.cell(tf, fi, "\\\\*c", i, nr); i<-i+1; { "xi"}
+draw.vf.cell(tf, fi, "\\\\*o", i, nr); i<-i+1; { "omicron"}
+draw.vf.cell(tf, fi, "\\\\*p", i, nr); i<-i+1; { "pi"}
+draw.vf.cell(tf, fi, "\\\\*r", i, nr); i<-i+1; { "rho"}
+draw.vf.cell(tf, fi, "\\\\*s", i, nr); i<-i+1; { "sigma"}
+draw.vf.cell(tf, fi, "\\\\ts", i, nr); i<-i+1; { "sigma1"}
+draw.vf.cell(tf, fi, "\\\\*t", i, nr); i<-i+1; { "tau"}
+draw.vf.cell(tf, fi, "\\\\*u", i, nr); i<-i+1; { "upsilon"}
+draw.vf.cell(tf, fi, "\\\\*f", i, nr); i<-i+1; { "phi"}
+draw.vf.cell(tf, fi, "\\\\+f", i, nr); i<-i+1; { "phi1"}
+draw.vf.cell(tf, fi, "\\\\*x", i, nr); i<-i+1; { "chi"}
+draw.vf.cell(tf, fi, "\\\\*q", i, nr); i<-i+1; { "psi"}
+draw.vf.cell(tf, fi, "\\\\*w", i, nr); i<-i+1; { "omega"}
+draw.vf.cell(tf, fi, "\\\\+p", i, nr); i<-i+1; { "omega1"}
+#
 draw.vf.cell(tf, fi, "\\\\fa", i, nr); i<-i+1; { "universal"}
 draw.vf.cell(tf, fi, "\\\\te", i, nr); i<-i+1; { "existential"}
 draw.vf.cell(tf, fi, "\\\\st", i, nr); i<-i+1; { "suchthat"}
 draw.vf.cell(tf, fi, "\\\\**", i, nr); i<-i+1; { "asteriskmath"}
 draw.vf.cell(tf, fi, "\\\\=~", i, nr); i<-i+1; { "congruent"}
-draw.vf.cell(tf, fi, "\\\\*A", i, nr); i<-i+1; { "Alpha"}
-draw.vf.cell(tf, fi, "\\\\*B", i, nr); i<-i+1; { "Beta"}
-draw.vf.cell(tf, fi, "\\\\*X", i, nr); i<-i+1; { "Chi"}
-draw.vf.cell(tf, fi, "\\\\*D", i, nr); i<-i+1; { "Delta"}
-draw.vf.cell(tf, fi, "\\\\*E", i, nr); i<-i+1; { "Epsilon"}
-draw.vf.cell(tf, fi, "\\\\*F", i, nr); i<-i+1; { "Phi"}
-draw.vf.cell(tf, fi, "\\\\*G", i, nr); i<-i+1; { "Gamma"}
-draw.vf.cell(tf, fi, "\\\\*Y", i, nr); i<-i+1; { "Eta"}
-draw.vf.cell(tf, fi, "\\\\*I", i, nr); i<-i+1; { "Iota"}
-draw.vf.cell(tf, fi, "\\\\+h", i, nr); i<-i+1; { "theta1"}
-draw.vf.cell(tf, fi, "\\\\*K", i, nr); i<-i+1; { "kappa"}
-draw.vf.cell(tf, fi, "\\\\*L", i, nr); i<-i+1; { "Lambda"}
-draw.vf.cell(tf, fi, "\\\\*M", i, nr); i<-i+1; { "Mu"}
-draw.vf.cell(tf, fi, "\\\\*N", i, nr); i<-i+1; { "Nu"}
-draw.vf.cell(tf, fi, "\\\\*O", i, nr); i<-i+1; { "Omicron"}
-draw.vf.cell(tf, fi, "\\\\*P", i, nr); i<-i+1; { "Pi"}
-draw.vf.cell(tf, fi, "\\\\*H", i, nr); i<-i+1; { "Theta"}
-draw.vf.cell(tf, fi, "\\\\*R", i, nr); i<-i+1; { "Rho"}
-draw.vf.cell(tf, fi, "\\\\*S", i, nr); i<-i+1; { "Sigma"}
-draw.vf.cell(tf, fi, "\\\\*T", i, nr); i<-i+1; { "Tau"}
-draw.vf.cell(tf, fi, "\\\\*U", i, nr); i<-i+1; { "Upsilon"}
-draw.vf.cell(tf, fi, "\\\\ts", i, nr); i<-i+1; { "sigma1"}
-draw.vf.cell(tf, fi, "\\\\*W", i, nr); i<-i+1; { "Omega"}
-draw.vf.cell(tf, fi, "\\\\*C", i, nr); i<-i+1; { "Xi"}
-draw.vf.cell(tf, fi, "\\\\*Q", i, nr); i<-i+1; { "Psi"}
-draw.vf.cell(tf, fi, "\\\\*Z", i, nr); i<-i+1; { "Zeta"}
 draw.vf.cell(tf, fi, "\\\\tf", i, nr); i<-i+1; { "therefore"}
 draw.vf.cell(tf, fi, "\\\\pp", i, nr); i<-i+1; { "perpendicular"}
-draw.vf.cell(tf, fi, "\\\\ul", i, nr); i<-i+1; { "underline"}	
+draw.vf.cell(tf, fi, "\\\\ul", i, nr); i<-i+1; { "underline"}
 draw.vf.cell(tf, fi, "\\\\rx", i, nr); i<-i+1; { "radicalex"}
-draw.vf.cell(tf, fi, "\\\\*a", i, nr); i<-i+1; { "alpha"}
-draw.vf.cell(tf, fi, "\\\\*b", i, nr); i<-i+1; { "beta"}
-draw.vf.cell(tf, fi, "\\\\*x", i, nr); i<-i+1; { "chi"}
-draw.vf.cell(tf, fi, "\\\\*d", i, nr); i<-i+1; { "delta"}
-draw.vf.cell(tf, fi, "\\\\*e", i, nr); i<-i+1; { "epsilon"}
-draw.vf.cell(tf, fi, "\\\\*f", i, nr); i<-i+1; { "phi"}
-draw.vf.cell(tf, fi, "\\\\*g", i, nr); i<-i+1; { "gamma"}
-draw.vf.cell(tf, fi, "\\\\*y", i, nr); i<-i+1; { "eta"}
-draw.vf.cell(tf, fi, "\\\\*i", i, nr); i<-i+1; { "iota"}
-draw.vf.cell(tf, fi, "\\\\+f", i, nr); i<-i+1; { "phi1"}
-draw.vf.cell(tf, fi, "\\\\*k", i, nr); i<-i+1; { "kappa"}
-draw.vf.cell(tf, fi, "\\\\*l", i, nr); i<-i+1; { "lambda"}
-draw.vf.cell(tf, fi, "\\\\*m", i, nr); i<-i+1; { "mu"}
-draw.vf.cell(tf, fi, "\\\\*n", i, nr); i<-i+1; { "nu"}
-draw.vf.cell(tf, fi, "\\\\*o", i, nr); i<-i+1; { "omicron"}
-draw.vf.cell(tf, fi, "\\\\*p", i, nr); i<-i+1; { "pi"}
-draw.vf.cell(tf, fi, "\\\\*h", i, nr); i<-i+1; { "theta"}
-draw.vf.cell(tf, fi, "\\\\*r", i, nr); i<-i+1; { "rho"}
-draw.vf.cell(tf, fi, "\\\\*s", i, nr); i<-i+1; { "sigma"}
-draw.vf.cell(tf, fi, "\\\\*t", i, nr); i<-i+1; { "tau"}
-draw.vf.cell(tf, fi, "\\\\*u", i, nr); i<-i+1; { "upsilon"}
-draw.vf.cell(tf, fi, "\\\\+p", i, nr); i<-i+1; { "omega1"}
-draw.vf.cell(tf, fi, "\\\\*w", i, nr); i<-i+1; { "omega"}
-draw.vf.cell(tf, fi, "\\\\*c", i, nr); i<-i+1; { "xi"}
-draw.vf.cell(tf, fi, "\\\\*q", i, nr); i<-i+1; { "psi"}
-draw.vf.cell(tf, fi, "\\\\*z", i, nr); i<-i+1; { "zeta"}
+
 draw.vf.cell(tf, fi, "\\\\ap", i, nr); i<-i+1; { "similar"}
-draw.vf.cell(tf, fi, "\\\\+U", i, nr); i<-i+1; { "Upsilon1"}
 draw.vf.cell(tf, fi, "\\\\fm", i, nr); i<-i+1; { "minute"}
 draw.vf.cell(tf, fi, "\\\\<=", i, nr); i<-i+1; { "lessequal"}
 draw.vf.cell(tf, fi, "\\\\f/", i, nr); i<-i+1; { "fraction"}
@@ -336,10 +341,10 @@ draw.vf.cell(tf, fi, "\\\\c+", i, nr); i<-i+1; { "circleplus"}
 draw.vf.cell(tf, fi, "\\\\es", i, nr); i<-i+1; { "emptyset"}
 draw.vf.cell(tf, fi, "\\\\ca", i, nr); i<-i+1; { "cap"}
 draw.vf.cell(tf, fi, "\\\\cu", i, nr); i<-i+1; { "cup"}
-draw.vf.cell(tf, fi, "\\\\SS", i, nr); i<-i+1; { "superset"}	
+draw.vf.cell(tf, fi, "\\\\SS", i, nr); i<-i+1; { "superset"}
 draw.vf.cell(tf, fi, "\\\\ip", i, nr); i<-i+1; { "reflexsuperset"}
 draw.vf.cell(tf, fi, "\\\\n<", i, nr); i<-i+1; { "notsubset"}
-draw.vf.cell(tf, fi, "\\\\SB", i, nr); i<-i+1; { "subset"}	
+draw.vf.cell(tf, fi, "\\\\SB", i, nr); i<-i+1; { "subset"}
 draw.vf.cell(tf, fi, "\\\\ib", i, nr); i<-i+1; { "reflexsubset"}
 draw.vf.cell(tf, fi, "\\\\mo", i, nr); i<-i+1; { "element"}
 draw.vf.cell(tf, fi, "\\\\nm", i, nr); i<-i+1; { "notelement"}
@@ -437,7 +442,7 @@ draw.vf.cell(tf, fi, "\\\\'U", i, nr); i<-i+1; { "Uacute"}
 draw.vf.cell(tf, fi, "\\\\^U", i, nr); i<-i+1; { "Ucircumflex"}
 draw.vf.cell(tf, fi, "\\\\:U", i, nr); i<-i+1; { "Udieresis"}
 draw.vf.cell(tf, fi, "\\\\'Y", i, nr); i<-i+1; { "Yacute"}
-draw.vf.cell(tf, fi, "\\\\ss", i, nr); i<-i+1; { "germandbls"}
+draw.vf.cell(tf, fi, "\\\\ss", i, nr); i<-i+1; { "germandbls"} # WRONG!
 draw.vf.cell(tf, fi, "\\\\`a", i, nr); i<-i+1; { "agrave"}
 draw.vf.cell(tf, fi, "\\\\'a", i, nr); i<-i+1; { "aacute"}
 draw.vf.cell(tf, fi, "\\\\^a", i, nr); i<-i+1; { "acircumflex"}
@@ -534,7 +539,7 @@ string <- c(
 "\\372","\\373","\\374","\\375","\\376","\\377","\\243","\\263")
 draw.title("Cyrillic Octal Codes", nr ,nc)
 for (i in 1:66)
-    draw.vf.cell(tf, "cyrillic", string[i], i-1, nr, 
+    draw.vf.cell(tf, "cyrillic", string[i], i-1, nr,
                  raw.string=paste("\\\\", as.character(code[i]), sep=""))
 
 nr <- 25
@@ -545,7 +550,7 @@ code <- c(252,254,256,262:269,275,278:281,284,745,746,750:768,796:802,
           804:807,809,814:828,830:834,840:844)
 draw.title("Raw Hershey Escape Sequences", nr, nc)
 for (i in 1:75)
-    draw.vf.cell(tf, fi, paste("\\\\#H",formatC(code[i],wid=4,flag=0),sep=""), 
+    draw.vf.cell(tf, fi, paste("\\\\#H",formatC(code[i],wid=4,flag=0),sep=""),
                  i-1, nr)
 make.table(nr, nc)
 i <- 0
@@ -553,7 +558,7 @@ code <- c(845:847,850:856,860:874,899:909,2296:2299,2318:2332,2367:2382,
           4014,4109)
 draw.title("More Raw Hershey Escape Sequences", nr, nc)
 for (i in 1:73)
-    draw.vf.cell(tf, fi, paste("\\\\#H",formatC(code[i],wid=4,flag=0),sep=""), 
+    draw.vf.cell(tf, fi, paste("\\\\#H",formatC(code[i],wid=4,flag=0),sep=""),
                  i-1, nr)
 
 par(oldpar)
