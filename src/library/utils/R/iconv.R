@@ -2,6 +2,8 @@ iconv <- function(x, from, to) .Internal(iconv(x, from, to))
 
 iconvlist <- function() sort(.Internal(iconv(NULL, "", "")))
 
+## If you were wondering what these language codes stand for, see
+## ftp://ftp.ilog.fr/pub/Users/haible/utf8/ISO_639
 localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
 {
     guess <- function(en)
