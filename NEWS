@@ -104,6 +104,8 @@ BUG FIXES
 
     o	qchisq(0.025,31,ncp=1,lower.tail=FALSE) now works.  (PR#875)
 
+    o	curve(*, add = TRUE) now properly works with active log scales.
+
 
 	**************************************************
 	*						 *

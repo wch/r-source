@@ -12,14 +12,20 @@ curve <- function(expr, from, to, n=101, add=FALSE, type="l",
 	expr <- sexpr
 	if(is.null(ylab)) ylab <- deparse(sexpr)
     }
-    lims <- if(is.null(xlim)) delay(par("usr")) else xlim
+    lims <-
+        if(is.null(xlim)) delay({pu <- par("usr")[1:2]
+                                 if(par("xlog")) 10^pu else pu})
+        else xlim
     if(missing(from)) from <- lims[1]
-    if(missing(to)) to <- lims[2]
-    lg <- if(length(log)) log else ""
+    if(missing(to))     to <- lims[2]
+    lg <-
+        if(length(log)) log
+        else paste(if(par("xlog"))"x",
+                   if(par("ylog"))"y", sep="")
     x <-
 	if(lg != "" && "x" %in% strsplit(lg, NULL)[[1]]) {
 	    ## unneeded now: rm(list="log",envir=sys.frame(1))# else: warning
-	    if(any(c(from,to)<=0))
+	    if(any(c(from,to) <= 0))
 		stop("`from' & `to' must be > 0	 with  log=\"x\"")
 	    exp(seq(log(from), log(to), length=n))
 	} else seq(from,to,length=n)
