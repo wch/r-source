@@ -96,7 +96,7 @@ BUG FIXES
 
     o	arima0() could leak memory: now released via on.exit().
 
-
+    o	qr.coef(qr,*) now keeps the names of qr$qr.
 
 
 		CHANGES IN R VERSION 1.4.0
