@@ -1,13 +1,18 @@
 mode <- function(x) {
 	if(is.expression(x)) return("expression")
-	if(is.call(x)) return("call")
-	if(is.name(x)) return("name")
-	tx <- typeof(x)
-	if (tx == "real" || tx == "integer") return("numeric")
-	if (tx == "closure" || tx == "builtin" || tx == "special") return("function")
-	tx
+	if(is.call(x))
+	  return(switch(deparse(x[[1]]),
+			"(" = "(",
+			# otherwise
+			"call"))
+	if(is.name(x)) "name" else
+        switch(tx <- typeof(x),
+               real=, integer= "numeric",
+               closure=, builtin=, special= "function",
+               # otherwise
+               tx)
 }
-"mode<-" <- function(x, value) 
+"mode<-" <- function(x, value)
 {
 	mde <- paste("as.",value,sep="")
 	atr <- attributes(x)
