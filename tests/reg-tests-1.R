@@ -308,16 +308,6 @@ stopifnot(diff(tmp$mday) == c(0, 1, 0, 0))
 ## failed on glibc-based systems in 1.3.1, including Windows.
 
 
-## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
-provoke.bug <- function(n=9000) {
-   warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")
-   warning(warnmsg)
-}
-provoke.bug()
-## segfaulted in 1.2.2, will also on machines without vsnprintf.
-##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-## and hence keep the above paragraph at the end of this file
-
 ## PR 1004 (follow up).  Exact Kolmogorov-Smirnov test gave incorrect
 ## results due to rounding errors (Charles Geyer, charlie@stat.umn.edu,
 ## 2001-10-25).
@@ -350,3 +340,26 @@ we <- wilcox.test(y, x, conf.int = TRUE)
 stopifnot(round(we$p.value,4) == 0.2544)
 stopifnot(round(we$conf.int,3) == c(-0.76, 0.15))
 stopifnot(round(we$estimate,3) == -0.305)
+
+
+## range gave wrong length result for R < 1.4.0
+stopifnot(length(range(numeric(0))) == 2)
+## was just NA
+
+
+## mishandling of integer(0) in R < 1.4.0
+x1 <- integer(0) / (1:3)
+x2 <- integer(0) ^ (1:3)
+stopifnot(length(x1) == 0 & length(x2) == 0)
+## were integer NAs in real answer in 1.3.1.
+
+
+## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
+provoke.bug <- function(n=9000) {
+   warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")
+   warning(warnmsg)
+}
+provoke.bug()
+## segfaulted in 1.2.2, will also on machines without vsnprintf.
+##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+## and hence keep the above paragraph at the end of this file

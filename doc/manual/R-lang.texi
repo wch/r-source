@@ -1332,6 +1332,9 @@ instance you add @code{c(1, 2, 3)} to a six-element vector then you will
 really add @code{c(1, 2, 3, 1, 2, 3)}.  If the length of the longer
 vector is not a multiple of the shorter one, a warning is given.
 
+As from @R{} 1.4.0, any arithmetic operation involving a zero-length
+vector has a zero-length result.
+
 One exception is that when adding vectors to matrices, a warning is not
 given if the lengths are incompatible.
 @c Is that a bug?

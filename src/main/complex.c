@@ -138,18 +138,24 @@ SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     int i, n, n1, n2;
     Rcomplex x1, x2;
     SEXP ans;
+
+    /* Note: "s1" and "s1" are protected in the calling code. */
     n1 = LENGTH(s1);
     n2 = LENGTH(s2);
+     /* S4-compatibility change: if n1 or n2 is 0, result is of length 0 */
+    if (n1 == 0 || n2 == 0) return(allocVector(CPLXSXP, 0)); 
+
     n = (n1 > n2) ? n1 : n2;
-    /* Note: "s1" and "s1" are protected in the calling code. */
     ans = allocVector(CPLXSXP, n);
-    if (n1 < 1 || n2 < 1) {
+/*    if (n1 < 1 || n2 < 1) {
 	for (i = 0; i < n; i++) {
 	    COMPLEX(ans)[i].r = NA_REAL;
 	    COMPLEX(ans)[i].i = NA_REAL;
 	}
 	return ans;
     }
+*/
+    
     switch (code) {
     case PLUSOP:
 	for (i = 0; i < n; i++) {
@@ -241,7 +247,8 @@ SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     default:
 	error("unimplemented complex operation");
     }
-    /* Copy attributes from longest argument. */
+
+    /* Copy attributes from longer argument. */
     if (n1 > n2)
 	copyMostAttrib(s1, ans);
     else if (n1 == n2) {

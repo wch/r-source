@@ -297,6 +297,8 @@ NEW FEATURES
         - New interface for accessing Tcl variables, effectively
           making the R representations lexically scoped.
 
+    o   For compatibility with S4, any arithmetic operation using a
+	zero-length vector has a zero-length result.
 
 
 BUG FIXES
@@ -393,6 +395,9 @@ BUG FIXES
 	memory has been allocated (PR#1149), and had (often large)
 	memory leaks if interrupted.  They now can be interrupted on
 	Windows and MacOS and don't leak memory.
+
+    o	range(numeric(0)) is now c(NA, NA) not NA.
+
 
 
 	**************************************************
