@@ -1846,8 +1846,8 @@ See @uref{http://www.MedAnalytics.com/INSTALL} for more information.
 
 We have not seen any problems on Windows provided a Java Virtual Machine
 has been installed and is operational: Sun's current @code{j2re
-1.4.2_04} works in Internet Explorer, Netscape 7.1, Mozilla 1.6/7 and
-Mozilla FireFox 0.8/0.9 on Windows XP.  Note that a recent Windows system
+1.5.0} works in Internet Explorer, Netscape 7.1, Mozilla 1.6/7 and
+Mozilla FireFox on Windows XP.  Note that a recent Windows system
 may not have Java installed at all.  For Netscape/Mozilla/FireFox visit
 @uref{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
 Which (if any) JVM is enabled can be set in `Set Program Access and
