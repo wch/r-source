@@ -39,7 +39,6 @@ distclean: realclean
 
 realclean: acclean
 	@echo cleaning at top level
-	@rm -f Makefile
 	@-rm -f bin/R*
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
 	@-rm -f doc/manual/pkg-*
