@@ -414,3 +414,7 @@ Date: Tue, 15 Jan 2002 20:54:54 +0100 (MET)
 Subject: Re:New project
 From: "" <email@ewasher.org>
 Date: Tue, 15 Jan 2002 21:43:17 +0100 (MET)
+* PR# 1266 *
+Subject: bug in survival package basehaz function
+From: Nicholas Lewin-Koh <kohnicho@comp.nus.edu.sg>
+Date: Wed, 16 Jan 2002 14:15:21 +0800 (GMT-8)
