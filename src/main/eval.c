@@ -214,7 +214,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     
     /* according to man setitimer, it waits until the next clock
        tick, usually 10ms, so avoid too small intervals here */
-#ifdef _R_HAVE_TIMING_
+#if !defined(Win32) && defined(_R_HAVE_TIMING_)
     double clock_incr = R_getClockIncrement();
     int nclock = floor(dinterval/clock_incr + 0.5);
     interval = 1e6 * ((nclock > 1)?nclock:1) * clock_incr + 0.5;
