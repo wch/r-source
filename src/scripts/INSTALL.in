@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.140 $'
+revision='$Revision: 1.141 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -64,7 +64,11 @@ umask 022
 
 R_VERSION='@VERSION@'
 GETWD='@GETWD@'
+## <FIXME>
+## Should already be set via Rcmd.
 MAKE=${MAKE-'@MAKE@'}
+TAR=${TAR='@TAR@'}
+## </FIXME>
 NO_PERL5=@NO_PERL5@
 NO_PERL5_MSG="\
 *** Formatting and installing R help pages needs Perl version 5, which
@@ -228,7 +232,7 @@ while test -n "${1}"; do
 	## Otherwise, the build date for an older version may be newer
 	## than the modification date for the new sources as recorded in
 	## the tarball ...
-	gzip -dc "${1}" | (cd "${tmpdir}" && tar -mxf -)
+	gzip -dc "${1}" | (cd "${tmpdir}" && ${TAR} -mxf -)
 	if test -f "${tmpdir}/${pkgname}/DESCRIPTION"; then
 	  get_packages "${tmpdir}/${pkgname}"
 	else
@@ -319,7 +323,8 @@ do_install_binary () {
     ${MKDIR_P} "${R_PACKAGE_DIR}"
   fi
   
-  cp -r . "${R_PACKAGE_DIR}"
+  cp -r . "${R_PACKAGE_DIR}" || \
+    (${TAR} cf - . | (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
 
   if test ${?} -ne 0; then
     echo "ERROR: installing binary package failed"
@@ -362,8 +367,8 @@ do_install_source () {
     if test "`cd .. && ${GETWD}`" != \
             "`cd \"${tmpdir}\" && ${GETWD}`"; then
       (cd "${lockdir}/${R_PACKAGE_NAME}" \
-          && tar cf - R-ex help html latex) | \
-	(cd "${R_PACKAGE_DIR}" && tar xf -)
+          && ${TAR} cf - R-ex help html latex) | \
+	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -)
     fi
   fi
 
@@ -376,7 +381,10 @@ do_install_source () {
   fi
 
   for f in COPYING NAMESPACE; do
-    if test -f "${f}"; then cp "${f}" "${R_PACKAGE_DIR}"; fi
+    if test -f "${f}"; then
+      cp "${f}" "${R_PACKAGE_DIR}"
+      chmod 644 "${R_PACKAGE_DIR}/${f}"
+    fi
   done
 
   ## Copy DESCRIPTION file, stamp with build information, and remove
@@ -428,6 +436,7 @@ do_install_source () {
       echo "ERROR: compilation failed for package '${pkg_name}'"
       do_exit_on_error
     fi
+    chmod 755 "${R_PACKAGE_DIR}/libs/"*
     if ${debug}; then set +x; fi
   fi
 
@@ -486,7 +495,9 @@ do_install_source () {
 
   if test -d inst && test "${fake}" != "true"; then
     message "inst"
-    cp -r inst/* "${R_PACKAGE_DIR}"
+    cp -r inst/* "${R_PACKAGE_DIR}" || \
+      (cd inst && ${TAR} cf - . | \
+        (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
   fi
 
   case ${save} in
@@ -702,7 +713,7 @@ do_install () {
       "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
   fi
 
-  chmod -R a+r "${R_PACKAGE_DIR}"
+  find "${R_PACKAGE_DIR}" -exec chmod a+r \{\} \;
 
   message "DONE (${pkg_name})"
   is_first_package=no
@@ -736,6 +747,7 @@ do_cleanup () {
     ## Only need to do this in case we successfully installed  at least
     ## *one* package ... 
     cp "${R_HOME}/doc/html/R.css" "${lib}"
+    chmod 644 "${lib}/R.css"
     if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
       cat "${R_HOME}"/library/*/CONTENTS \
         > "${R_HOME}"/doc/html/search/index.txt
