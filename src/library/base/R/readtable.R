@@ -130,13 +130,13 @@ read.csv2 <-
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill, ...)
 
-read.tabsep <-
+read.delim <-
     function (file, header = TRUE, sep = "\t", quote="\"", dec=".",
               fill = TRUE, ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill, ...)
 
-read.tabsep2 <-
+read.delim2 <-
     function (file, header = TRUE, sep = "\t", quote="\"", dec=",",
               fill = TRUE, ...)
     read.table(file = file, header = header, sep = sep,

@@ -20,10 +20,10 @@ read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
 read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", 
          fill = TRUE, \dots)
 
-read.tabsep(file, header = TRUE, sep = "\t", quote="\"", dec=".",
+read.delim(file, header = TRUE, sep = "\t", quote="\"", dec=".",
          fill = TRUE, \dots)
 
-read.tabsep2(file, header = TRUE, sep = "\t", quote="\"", dec=",", 
+read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",", 
          fill = TRUE, \dots)
 }
 \details{
@@ -31,8 +31,9 @@ read.tabsep2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{read.table} except for the defaults. They are intended for
   reading "comma separated variable" files (.csv) or the variant used in
   countries that use comma as decimal point and consequently semicolon
-  as field separator. Similarly with \code{read.tabsep} and
-  \code{read.tabsep2} for reading TAB-separated files. Notice that
+  as field separator. Similarly, \code{read.delim} and
+  \code{read.delim2} are for reading delimited files, defaulting to
+  the TAB character for the delimiter. Notice that
   \code{header=TRUE} and \code{fill=TRUE}in these variants.
 }
 \arguments{

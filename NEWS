@@ -214,14 +214,17 @@ NEW FEATURES
         fields per line. (Programs like Excel has a habit of creating
         such files when exporting.)
 
-    o   new functions read.tabsep() and read.tabsep2() to make it
-        easier to read TAB-separated files.
+    o   new functions read.delim() and read.delim2() to make it
+        easier to read delimited files as Windows programs tend to
+        create (usually TAB separated).
 
     o   tcltk library has had several canvas functions implemented
     
     o   tcltk now wraps callbacks to R in a try() construct - the
         nonlocal return from R's error handling could bring the Tk
         system into a strange state.  
+
+    o   new `tkfaq' demo for tcltk: displays the R FAQ in a text widget
 
 BUG FIXES
 

@@ -120,6 +120,7 @@ demo <- function(topic, device = getOption("device")) {
 		   scoping	= c("language", "scoping.R",	""),
 		   is.things	= c("language", "is-things.R",	""),
 		   tkttest	= c("tcltk",	"tkttest.R",	""),
+		   tkfaq	= c("tcltk",	"tkfaq.R",	""),
 		   tkdensity	= c("tcltk",	"tkdensity.R",	"G"),
 		   dyn.load	= c("dynload",	"zero.R",	"")
 		   )

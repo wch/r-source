@@ -25,6 +25,7 @@
         x <- gsub("\\\\", "\\\\\\\\", as.character(x))
         x <- gsub("\"","\\\\\"", as.character(x))
         x <- gsub("\\[","\\\\[", as.character(x))
+        x <- gsub("\\\$","\\\\\$", as.character(x))
         paste("\"", x, "\"", sep = "", collapse = " ")
     }
 
