@@ -13,7 +13,9 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
     \code{labels} should be written.  If the length of \code{x} and
     \code{y} differs, the shorter one is recycled.}
   \item{labels}{one or more character strings or expressions specifying
-    the \emph{text} to be written.}
+    the \emph{text} to be written.  An attempt is made
+    to coerce other vectors to character, and other language objects
+    to expressions.}
   \item{adj}{one or two values in \eqn{[0,1]} which specify the x
     (and optionally y) adjustment of the labels.  On most devices values
     outside that interval will also work.}
@@ -45,7 +47,8 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
 }
 \details{
   \code{labels} must be of type \code{\link{character}} or
-  \code{\link{expression}}.  In the latter case, quite a bit of
+  \code{\link{expression}} (or be coercible to such a type).
+  In the latter case, quite a bit of
   mathematical notation is available such as sub- and superscripts,
   greek letters, fractions, etc.
 
