@@ -289,11 +289,18 @@ current.transform <- function() {
 
 # Control whether user is prompted before new page
 grid.prompt <- function(ask) {
-  old.prompt <- grid.Call("L_getAsk")
+  # Do a .Call rather than a grid.Call because
+  # this does not actually produce output on the device
+  # In particular, do not want to start the first page
+  # on a device (else first grid.newpage() will start
+  # page 2)
+  # This is safe because all that is done is a query and/or
+  # set of grid state setting "ask"
+  old.prompt <- .Call("L_getAsk")
   if (!missing(ask)) {
     if (!is.logical(ask))
       stop("Invalid ask value")
-    grid.Call("L_setAsk", ask)
+    .Call("L_setAsk", ask)
   }
   old.prompt
 }

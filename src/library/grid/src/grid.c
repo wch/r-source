@@ -931,9 +931,27 @@ SEXP L_newpage()
 {
     GEDevDesc *dd = getDevice();
     R_GE_gcontext gc;
-    if (!LOGICAL(gridStateElement(dd, GSS_GRIDDEVICE))[0]) 
-	dirtyGridDevice(dd);
-    else {
+    /* 
+     * Has the device been drawn on yet?
+     */
+    Rboolean deviceDirty = GEdeviceDirty(dd);
+    /*
+     * Has the device been drawn on BY GRID yet?
+     */
+    Rboolean deviceGridDirty = LOGICAL(gridStateElement(dd, 
+							GSS_GRIDDEVICE))[0];
+    /*
+     * Initialise grid on device
+     * If no drawing on device yet, does a new page
+     */
+    if (!deviceGridDirty) {
+        dirtyGridDevice(dd);
+    } 
+    /*
+     * If device has previously been drawn on (by grid or other system)
+     * do a new page
+     */
+    if (deviceGridDirty || deviceDirty) {
 	SEXP currentgp = gridStateElement(dd, GSS_GPAR);
 	gcontextFromgpar(currentgp, 0, &gc);
 	GENewPage(&gc, dd);
