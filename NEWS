@@ -25,6 +25,9 @@ BUG FIXES
     o   demo(tkttest) was inadvertently changed in 1.4.0 so that it would
 	evaluate the requested test, but not display the result.
 
+    o   stars(scale = TRUE) (the default) now works as documented (and
+	as S does).  Previously it only scaled the maximum to 1. (PR#1230)
+
 
 
 		CHANGES IN R VERSION 1.4.0
