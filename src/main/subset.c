@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2003   The R Development Core Team
+ *  Copyright (C) 1997-2004   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
  *  is handled inside VectorSubset. The subscript matrix is turned
  *  into a subscript vector of the appropriate size and then
  *  VectorSubset continues.  This provides coherence especially
- *  regarding attributes etc. (it would be quicker handle this case
+ *  regarding attributes etc. (it would be quicker to handle this case
  *  separately, but then we would have more to keep in step.
  */
 

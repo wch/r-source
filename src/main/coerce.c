@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2004  Robert Gentleman, Ross Ihaka and the
  *			     R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -52,6 +52,7 @@ const static char * const falsenames[] = {
 #define WARN_NA	   1
 #define WARN_INACC 2
 #define WARN_IMAG  4
+#define WARN_RAW  4
 
 /* The following two macros copy or clear the attributes.  They also
    ensure that the object bit is properly set.  They avoid calling the
@@ -87,6 +88,8 @@ void CoercionWarning(int warn)
 	warning("inaccurate integer conversion in coercion");
     if (warn & WARN_IMAG)
 	warning("imaginary parts discarded in coercion");
+    if (warn & WARN_RAW)
+	warning("out-of-range values treated as 0 in coercion to raw");
 }
 
 double R_strtod(const char *c, char **end)
@@ -336,7 +339,6 @@ SEXP StringFromRaw(Rbyte x, int *warn)
 {
     char buf[3];
     sprintf(buf, "%02x", x);
-    if (x == NA_INTEGER) return NA_STRING;
     return mkChar(buf);
 }
 
@@ -561,29 +563,60 @@ static SEXP coerceToComplex(SEXP v)
 static SEXP coerceToRaw(SEXP v)
 {
     SEXP ans;
-    int i, n, warn = 0;
+    int i, n, warn = 0, tmp;
+
     PROTECT(ans = allocVector(RAWSXP, n = LENGTH(v)));
     DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
-	for (i = 0; i < n; i++)
-	    RAW(ans)[i] = (Rbyte)IntegerFromLogical(LOGICAL(v)[i], &warn);
-	    break;
+	for (i = 0; i < n; i++) {
+	    tmp = IntegerFromLogical(LOGICAL(v)[i], &warn);
+	    if(tmp == NA_INTEGER) { 
+		tmp = 0; 
+		warn |= WARN_RAW;
+	    }
+	    RAW(ans)[i] = (Rbyte) tmp;
+	}
+	break;
     case INTSXP:
-	for (i = 0; i < n; i++)
-	    RAW(ans)[i] = (Rbyte)INTEGER(v)[i];
-	    break;
+	for (i = 0; i < n; i++) {
+	    tmp = INTEGER(v)[i];
+	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) { 
+		tmp = 0; 
+		warn |= WARN_RAW;
+	    }
+	    RAW(ans)[i] = (Rbyte) tmp;
+	}
+	break;
     case REALSXP:
-	for (i = 0; i < n; i++)
-	    RAW(ans)[i] = (Rbyte)IntegerFromReal(REAL(v)[i], &warn);
+	for (i = 0; i < n; i++) {
+	    tmp = IntegerFromReal(REAL(v)[i], &warn);
+	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) { 
+		tmp = 0; 
+		warn |= WARN_RAW;
+	    }
+	    RAW(ans)[i] = (Rbyte) tmp;
+	}
 	break;
     case CPLXSXP:
-	for (i = 0; i < n; i++)
-	    RAW(ans)[i] = (Rbyte)IntegerFromComplex(COMPLEX(v)[i], &warn);
+	for (i = 0; i < n; i++) {
+	    tmp = IntegerFromComplex(COMPLEX(v)[i], &warn);
+	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) { 
+		tmp = 0; 
+		warn |= WARN_RAW;
+	    }
+	    RAW(ans)[i] = (Rbyte) tmp;
+	}
 	break;
     case STRSXP:
-	for (i = 0; i < n; i++)
-	    RAW(ans)[i] = (Rbyte)IntegerFromString(STRING_ELT(v, i), &warn);
+	for (i = 0; i < n; i++) {
+	    tmp = IntegerFromString(STRING_ELT(v, i), &warn);
+	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) { 
+		tmp = 0; 
+		warn |= WARN_RAW;
+	    }
+	    RAW(ans)[i] = (Rbyte) tmp;
+	}
 	break;
     }
     if (warn) CoercionWarning(warn);

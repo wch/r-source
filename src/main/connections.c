@@ -2432,7 +2432,7 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    case 1:
 		break;
 	    default:
-		error("That size is unknown on this machine");
+		error("raw is always of size 1");
 	    }
 	    PROTECT(ans = allocVector(RAWSXP, n));
 	    p = (void *) RAW(ans);

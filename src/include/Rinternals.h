@@ -126,7 +126,7 @@ typedef enum {
     BCODESXP    = 21,   /* byte code */
     EXTPTRSXP   = 22,   /* external pointer */
     WEAKREFSXP  = 23,   /* weak reference */
-    RAWSXP      = 23,   /* raw bytes */
+    RAWSXP      = 24,   /* raw bytes */
 
     FUNSXP	= 99	/* Closure or Builtin */
 } SEXPTYPE;
