@@ -311,3 +311,11 @@ Date: Wed, 24 Nov 1999 00:18:55 -0500
 Subject: scan error
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Wed, 24 Nov 1999 15:26:09 +0100 (MET)
+* PR# 343 *
+Subject: rbind invisible return value
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
+* PR# 344 *
+Subject: segfault in garbage collection
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Thu, 25 Nov 1999 17:54:15 +0100
