@@ -25,8 +25,6 @@ insertMethod(mlist, signature, args, def, whichMethods, fromClass, envir)
 
 matchArg(object, thisClass, mlist, ev)
 
-matchArgClass(Class, classes, methods)
-
 showMlist(mlist, includeDefs = TRUE, inherited = TRUE,
    classes, useArgNames, printTo = stdout() )
 
@@ -95,9 +93,10 @@ but \code{\link{cacheMethod}} inserts it into the
   
   }
 
-\item{\code{matchArg, matchArgClass}:}{ 
-  Utility functions to match the object  or the class to the elements of
-  a methods list.
+\item{\code{matchArg}:}{ 
+  Utility function to match the object  or the class (if the object is
+  \code{NULL})
+  to the elements of a methods list.
   Used in finding inherited methods, and not meant to be called directly.
 
   }

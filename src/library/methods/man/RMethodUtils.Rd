@@ -30,6 +30,7 @@
 \alias{copyEnvironment}
 \alias{printNoClass}
 \alias{print.default}
+\alias{missingArg}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -88,6 +89,8 @@ setPrimitiveMethods(f, fdef, code, generic, mlist)
 printNoClass(x, digits, quote, na.print, print.gap, right, ...)
 
 print.default(x, ...)
+
+missingArg(symbol, envir = parent.frame())
 
 }
 \description{
@@ -192,7 +195,9 @@ returns \code{NULL} or throws an error.
     Matches the signature object (a partially or completely named subset of the
    arguments of \code{fun}), and return a vector of all the classes in the order specified
    by \code{names}.  The classes not specified by `signature' will be \code{"ANY"} in the
-   value.
+   value, but extra trailing \code{"ANY"}'s are removed.  When the input
+   signature is empty, the returned signature is a single \code{"ANY"}
+   matching the first formal argument (so the returned value is always non-empty).
   
    The formal arguments of \code{fun} must agree with \code{names} (usually the formal arguments
    of the generic function) as well, and \code{matchSignature} checks
@@ -257,12 +262,20 @@ returns \code{NULL} or throws an error.
       information for a particular primitive function.  Don't call it directly.
       }
 
-      \item{\code{printNoClass},\code{print.default} :}{
+      \item{\code{printNoClass},\code{print.default}: }{
         \code{printNoClass} is equivalent to the version of \code{print.default} in the base
         package.  The methods package overrides the latter function to provide
         meaningful printing for formally defined classes, and
         \code{printNoClass} is used to get the original default printing.
       }
+      \item{\code{missingArg}: }{
+	Returns \code{TRUE} if the symbol supplied is missing \emph{from
+	the call} corresponding to the environment supplied (by
+        default, environment of the call to \code{missingArg}).  Note
+	that this is the ``blue-book'' sense of the
+	\code{\link{missing}} function, not that of the current R base
+	package implementation.
+	}
 }
 \item{\code{.saveImage}:}{Flag, used in dynamically initializing the
     methods package from \code{.First.lib}}
