@@ -6470,7 +6470,7 @@ Unless @option{--no-environ} was given, @R{} searches for user and site
 files to process for setting environment variables.  The name of the
 site file is the one pointed to by the environment variable
 @env{R_ENVIRON}; if this is unset, @file{$R_HOME/etc/Renviron.site} is
-used (it it exists).  The user files searched for are @file{.Renviron}
+used (if it exists).  The user files searched for are @file{.Renviron}
 in the current or in the user's home directory (in that order).  These
 files should contain lines of the form @samp{@var{name}=@var{value}}.
 (See @code{help(Startup)} for a precise description.)  Variables you
