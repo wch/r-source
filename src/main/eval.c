@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2003	The R Development Core Team.
+ *  Copyright (C) 1998--2004	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1196,8 +1196,10 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
 
     /*  Do a partial evaluation down through the LHS. */
-    lhs = evalseq(CADR(expr), rho,
-                  PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
+    if (PRIMVAL(op)==1 || PRIMVAL(op) ==3) /* <-, = */
+      lhs = evalseq(CADR(expr), rho, 1, tmploc);
+    else /* <<- */
+      lhs = evalseq(CADR(expr), ENCLOS(rho),1, tmploc);
 
     PROTECT(lhs);
     PROTECT(rhs); /* To get the loop right ... */
