@@ -74,11 +74,10 @@ Then: untar R-1.5.0.tgz somewhere (with no spaces in the path names),
 
 	cd /somewhere/R-1.5.0/src/gnuwin32
 
-IMPORTANT: edit MkRules to set the appropriate paths as needed.
+IMPORTANT: edit MkRules to set the appropriate paths as needed and to
+set the type(s) of help that you want built.
 
-Edit Makefile to set the type(s) of help that you want built.
-
-and run
+Then run
 
 	make
 
@@ -88,7 +87,7 @@ distribution. It can be found in file unz542dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
 The file rw1050\bin\Rchtml.dll is only built if CHM help is specified
-in the main Makefile. Its source is the help directory, and you need
+in MkRules. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
 VC++ library will check versions of the components needed. You can just
@@ -99,7 +98,7 @@ machine when windres is run, so you may need to disable it.
 
 Note 3: By default Doug Lea's malloc in the file src/gnuwin32/malloc.c is
 used.  You can opt out of this by commenting the line LEA_MALLOC=YES
-in the Makefile, in which case the Windows malloc is used.  The one
+in MkRules, in which case the Windows malloc is used.  The one
 in crtdll.dll is unlikely to be satisfactory: the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
 
@@ -113,7 +112,7 @@ Using ATLAS
 -----------
 
 You can make use of ATLAS (http://www.netlib.org/atlas/) libraries by
-defining USE_ATLAS=YES in Makefile and specifying the path to the
+defining USE_ATLAS=YES in MkRules and specifying the path to the
 libraries in macro ATLAS_PATH.  
 
 You will need to build the libraries optimized for your architecture
@@ -248,7 +247,7 @@ Then: untar R-1.5.0.tgz somewhere, and
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.
 
-Edit Makefile to set the type(s) of help that you want built. (You
+Edit MkRules to set the type(s) of help that you want built. (You
 will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
 so set WINHELP to NO.)
 

@@ -11,7 +11,7 @@ files by
 
 make distribution
 
-Then in this directory, edit ISDIR and PKGS in Makefile and then run
+Then edit ISDIR and PKGS in ../MkRules and then run
 
 make
 make clean

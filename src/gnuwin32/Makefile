@@ -12,16 +12,6 @@ else
 all: Rpwd.exe rbuild rpackage rdocs
 endif
 
-## configuration macros
-HELP = YES
-WINHELP =  CHM # NO, CHM, BOTH
-
-LEA_MALLOC=YES
-
-# Set to YES and specify the path if you want to use the ATLAS BLAS.
-USE_ATLAS=NO
-ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
-
 PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun tools ts
 ALLPACKAGES = $(PACKAGES) tcltk
 
@@ -305,7 +295,7 @@ distclean veryclean: clean
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) ../library/*/src/*.dll
 	$(RM) -r ../library/*/check
-	$(RM) R.exp Rm.exp
+	$(RM) R.exp Rm.exp COPYRIGHTS
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html

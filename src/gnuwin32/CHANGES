@@ -18,11 +18,13 @@ The installers now use bzip compression, so make smaller packages
 
 Cross-building automatically uses STAMP=NO for packages.
 
-R can now be built in a directory whose path contains spaces (although
-we still don't recommend it).
+R and packages can now be built in a directory whose path contains
+spaces (although we still don't recommend it).
 
 Rcmd INSTALL and make pkg-foo test for attempted installation into the
 source directory.
+
+All the configuration options are now in file MkRules.
 
 
 
