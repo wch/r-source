@@ -16,7 +16,7 @@ formula.terms <- function(x, ...) {
     x
 }
 
-formula.data.frame<- function (x, ...)
+formula.data.frame <- function (x, ...)
 {
     nm <- sapply(names(x), as.name)
     lhs <- nm[1]
@@ -45,7 +45,7 @@ print.formula <- function(x, ...) {
 
 terms <- function(x, ...) UseMethod("terms")
 terms.default <- function(x, ...) {
-    v<-x$terms
+    v <- x$terms
     if(is.null(v))
         stop("no terms component")
     return(v)
@@ -62,9 +62,9 @@ print.terms <- function(x, ...) print.default(unclass(x))
 
 delete.response <- function (termobj)
 {
-    f<-formula(termobj)
+    f <- formula(termobj)
     if (length(f) == 3)
-        f[[2]]<-NULL
+        f[[2]] <- NULL
     tt <- terms(f, specials = names(attr(termobj, "specials")))
     attr(tt, "intercept") <- attr(termobj, "intercept")
     tt
@@ -84,7 +84,7 @@ reformulate <- function (termlabels, response=NULL)
     }
 }
 
-drop.terms <-function(termobj, dropx=NULL, keep.response=FALSE)
+drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
 {
     if (is.null(dropx))
 	termobj
@@ -127,7 +127,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     }
     attr(terms, "specials")$offset <- NULL
     if( !inherits(terms, "formula") )
-        class(terms)<-c(class(terms), "formula")
+        class(terms) <- c(class(terms), "formula")
     terms
 }
 
@@ -154,10 +154,10 @@ weights <- function(object, ...)UseMethod("weights")
 
 df.residual <- function(object, ...)UseMethod("df.residual")
 
-variable.names <-function(object, ...) UseMethod("variable.names")
+variable.names <- function(object, ...) UseMethod("variable.names")
 variable.names.default <- .Alias(colnames)
 
-case.names <-function(object, ...) UseMethod("case.names")
+case.names <- function(object, ...) UseMethod("case.names")
 case.names.default <- .Alias(rownames)
 
 offset <- function(object) object
@@ -253,7 +253,7 @@ model.frame.default <-
     if(missing(data))
 	data <- sys.frame(sys.parent())
     else if (!is.data.frame(data) && !is.environment(data) && !is.null(class(data)))
-        data<-as.data.frame(data)
+        data <- as.data.frame(data)
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     rownames <- attr(data, "row.names")
@@ -391,7 +391,7 @@ model.extract <- function (frame, component)
 preplot <- function(object, ...) UseMethod("preplot")
 update <- function(object, ...) UseMethod("update")
 
-is.empty.model<-function (x)
+is.empty.model <- function (x)
 {
     tt <- terms(x)
     (length(attr(tt, "factors")) == 0) & (attr(tt, "intercept")==0)
