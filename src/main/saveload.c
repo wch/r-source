@@ -1233,7 +1233,7 @@ void R_LoadSavedData(FILE *fp, SEXP aenv)
     NextItem:
 	;
 #else
-        setVarInFrame(aenv, TAG(a), ConvertPairToVector(CAR(a)));
+        defineVar(TAG(a), ConvertPairToVector(CAR(a)), aenv);
         a = CDR(a);
 #endif
     }
