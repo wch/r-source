@@ -35,7 +35,7 @@ Complex(z)
 \arguments{
   \item{e1, e2}{ Arguments to the various binary operators. }
 
-  \item{x}{ The argument to the \Code{Math} or  \Code{Summary} groups
+  \item{x}{ The argument to the \code{Math} or  \code{Summary} groups
       of functions.}
 }
 \details{
