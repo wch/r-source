@@ -16,9 +16,6 @@ readLines(file, n = -1, ok = TRUE)
     the file.}
   \item{ok}{logical. Is it OK to reach the end of the file before
     \code{n > 0} lines are read? If not, an error will be generated.}
-  \item{text}{A character vector.}
-  \item{sep}{character. A string to be written to the file after
-    each line of text.}
 }
 \value{
   A character vector of length the number of lines read.
