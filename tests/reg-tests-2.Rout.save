@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.2.1 Patched (2001-02-16)
+Version 1.2.1 Patched (2001-02-19)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -108,8 +108,6 @@ $B$subset
 > 
 > ## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame
 > data(attenu)
-Warning message: 
-list.files: /opt/R/R-patched/tests/data is not a readable directory 
 > summary(attenu)
      event            mag           station         dist       
  Min.   : 1.00   Min.   :5.000   117    :  5   Min.   :  0.50  
@@ -231,4 +229,14 @@ Coefficients:
 Degrees of Freedom: 11 Total (i.e. Null);  8 Residual
 Null Deviance:	    32.83 
 Residual Deviance: 5.656 	AIC: 71.35 
+> 
+> ## PR 829 (empty values in all.vars)
+> ## This example by Uwe Ligges <ligges@statistik.uni-dortmund.de>
+> 
+> temp <- matrix(1:4, 2)
+> all.vars(temp ~ 3) # OK
+[1] "temp"
+> all.vars(temp[1, ] ~ 3) # wrong in 1.2.1
+[1] "temp"
+> 
 > 

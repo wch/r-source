@@ -85,3 +85,11 @@ structure(list(Temp = structure(c(2, 1, 2, 1, 2, 1, 2, 1, 2,
 detg1.m0 <- glm(cbind(X,M)~1,binomial,detg1)
 detg1.m0
 step(detg1.m0,scope=list(upper=~M.user*Temp*Soft))
+
+## PR 829 (empty values in all.vars)
+## This example by Uwe Ligges <ligges@statistik.uni-dortmund.de>
+
+temp <- matrix(1:4, 2)
+all.vars(temp ~ 3) # OK
+all.vars(temp[1, ] ~ 3) # wrong in 1.2.1
+
