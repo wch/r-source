@@ -111,6 +111,10 @@ can use
 gzip -dc R-@var{x}.@var{y}.@var{z}.tgz | tar xvf -
 @end smallexample
 
+The pathname of the directory into which the sources are unpacked should
+not contain spaces, as @code{make} (specifically GNU make 3.80) does not
+expect spaces.
+
 If you need to transport the sources on floppy disks, you can download
 the @file{R-@var{x}.@var{y}.@var{z}.tgz-split.*} files and paste them
 together at the destination with (Unix)
@@ -314,7 +318,8 @@ make
 @noindent
 and so on, as described further below.  This has the advantage of always
 keeping your source tree ``clean''.  (You may need GNU @command{make} to
-allow this.)
+allow this, and the pathname of the build directory should not contain
+spaces.)
 
 @cindex Help pages
 Make will also build plain text help pages as well as @acronym{HTML} and
