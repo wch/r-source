@@ -666,6 +666,7 @@ sub text2html {
     while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	my $descitem;
 	$descitem = "<dt>" . text2html($arg, 0, $inarglist) . "</dt>";
 	$descitem .= "<dd>" . text2html($desc, 0, $inarglist) . "</dd>";
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
