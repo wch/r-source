@@ -10,6 +10,11 @@
 
 NEW FEATURES
 
+    o   R INSTALL now can directly install pkg_version.tar.gz files
+        as obtained from CRAN. New function update.packages()
+        & friends for automatically downloading packages from CRAN and
+        install them on the fly.
+
     o	New function commandArgs() to record the command-line used.
 
     o	New arguments `local' and `now' to dyn.load.
