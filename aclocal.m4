@@ -1543,7 +1543,6 @@ caddr_t hello() {
 	       [r_cv_zlib_mmap=yes]))
 ])# _R_ZLIB_MMAP
 
-
 AC_DEFUN([R_PCRE],
 [AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
 if test "${have_pcre}" = yes; then
@@ -1560,7 +1559,6 @@ if test "${have_pcre}" = yes; then
 fi
 ])# R_PCRE
 
-
 AC_DEFUN([R_BZLIB],
 [AC_CHECK_LIB(bz2, BZ2_bzlibVersion, [have_bzlib=yes], [have_bzlib=no])
 if test "${have_bzlib}" = yes; then
@@ -1572,7 +1570,6 @@ if test "${have_bzlib}" = yes; then
   LIBS="-lbz2 ${LIBS}"
 fi
 ])# R_BZLIB
-
 
 AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
 [AC_CACHE_CHECK([whether leap seconds are treated according to POSIX],
@@ -1601,6 +1598,23 @@ if test "x${r_cv_sys_posix_leapseconds}" = xyes; then
 	     seconds, as required by POSIX.])
 fi
 ])# R_SYS_POSIX_LEAPSECONDS
+
+
+AC_DEFUN([R_RECOMMENDED_PACKAGES],
+[AC_CACHE_CHECK([for recommended packages],
+                [r_cv_misc_recommended_packages],
+[r_cv_misc_recommended_packages=yes
+recommended_pkgs=`grep '^R_PKGS_RECOMMENDED *=' ${srcdir}/Makeconf.in | \
+  sed 's/.*=//'`
+for pkg in ${recommended_pkgs}; do
+  n_pkg=`ls ${srcdir}/src/library/Recommended/${pkg}_*.tar.gz | wc -l`
+  if test ${n_pkg} -ne 1; then
+    r_cv_misc_recommended_packages=no
+    break
+  fi
+done])
+use_recommended_packages=${r_cv_misc_recommended_packages}
+])# R_RECOMMENDED_PACKAGES
 
 dnl
 dnl GNOME_GNORBA_HOOK (script-if-gnorba-found, failflag)
