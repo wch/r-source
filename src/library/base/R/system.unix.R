@@ -1,3 +1,51 @@
+bug.report <- function(send=TRUE, method=.Options$mailer)
+{
+    methods <- c("mailx", "gnudoit")
+
+    if(is.null(method))
+        method <- "mailx"
+    else
+        method <- methods[pmatch(method, methods)]
+
+    body <- paste("\\n\\n",
+                  "--please do not edit the information below--\\n\\n",
+                  "Version:\\n ",
+                  paste(names(version), version, sep=" = ", collapse="\\n "),
+                  "\\n\\n",
+                  "Search Path:\\n ",
+                  paste(search(), collapse=", "),
+                  "\\n", sep="", collapse="")
+
+    if(method == "mailx"){
+        file <- tempfile()
+        cat("Subject ")
+        subject <- scan(what=character(1), nmax=1, quiet=TRUE)
+        body <- gsub("\\\\n", "\n", body)
+        cat(body, file=file)
+
+        system(paste(.Options$editor, file))
+        cmd <- paste("mailx", "-s '", subject,
+                     "' r-bugs@biostat.ku.dk < ", file)
+        if(send){
+          system(cmd)
+          unlink(file)
+        }
+        else
+          cat("The unsent bug report can be found in file",
+              file, "\n")
+    }
+    else if(method == "gnudoit"){
+        cmd <- paste("gnudoit -q '",
+                     "(mail nil \"r-bugs@biostat.ku.dk\")",
+                     "(insert \"", body, "\")",
+                     "(search-backward \"Subject:\")",
+                     "(end-of-line)'",
+                     sep="")
+        system(cmd)
+    }
+}
+
+
 data <-
 function(..., list = character(0), package =c(.packages(), .Autoloaded),
 	 lib.loc = .lib.loc, trace = FALSE) {
@@ -274,3 +322,4 @@ tempfile <- function(pattern = "file") {
 unlink <- function(x) {
   system(paste("rm -rf ", paste(x, collapse = " ")))
 }
+
