@@ -22,11 +22,11 @@
  
   $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/SearchEngine.java,v $
   
-  $Revision: 1.3 $
+  $Revision: 1.4 $
 
-  $Date: 1999/08/10 09:56:03 $
+  $Date: 1999/11/18 12:30:58 $
   
-  $Author: ripley $
+  $Author: leisch $
 
 ==============================================================================*/
 
@@ -419,7 +419,7 @@ public class SearchEngine extends Applet
 	} else if (value.getKey ().equalsIgnoreCase ("suffix")) {
 	  suffix = value.getValue ();
 	  Tracer.write ("using new URL suffix \"" + suffix + "\"\n");
-	} else if (value.getKey ().equalsIgnoreCase ("alias")) {
+	} else if (value.getKey ().equalsIgnoreCase ("aliases")) {
 	  keywords += value.getValue ();
 	}
 	value = idxStream.popEntry ();
@@ -516,6 +516,9 @@ public class SearchEngine extends Applet
   HISTORY:
   
   $Log: SearchEngine.java,v $
+  Revision 1.4  1999/11/18 12:30:58  leisch
+  use seperate aliases field
+
   Revision 1.3  1999/08/10 09:56:03  ripley
   change FSF address in copyrights
   add some copyrights in src/gnome and elsewhere
