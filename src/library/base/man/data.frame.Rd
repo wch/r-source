@@ -48,8 +48,8 @@ row.names(x) <- names
   \item{\dots}{these arguments are of either the form \code{value} or
     \code{tag=value}.  Component names are created based on the tag (if
     present) or the deparsed argument itself.}
-  \item{row.names}{a character vector giving the row names for the data
-    frame.}
+  \item{row.names}{\code{NULL} or a character vector giving the row
+    names for the data frame.  Missing values are not allowed.}
   \item{check.rows}{if \code{TRUE} then the rows are checked for
     consistency of length and names.}
   \item{check.names}{logical.  If \code{TRUE} then the names of the
@@ -86,6 +86,9 @@ row.names(x) <- names
   data frame), and not intended to be called directly.
 }
 \details{
+  A data frame is a list of variables of the same length with unique row
+  names, given class \code{"data.frame"}.
+
   Character variables passed to \code{data.frame} are converted to
   factor columns unless protected by \code{\link{I}}. It also applies to
   adding columns to a data frame.
@@ -99,8 +102,8 @@ row.names(x) <- names
   of times if necessary.
 }
 \note{
-  In versions of \R prior to 1.4.0 (and in S3) logical columns were
-  converted to factors.
+  In versions of \R prior to 1.4.0 (and in S3 but not S4) logical
+  columns were converted to factors.
 }
 \seealso{
   \code{\link{I}},

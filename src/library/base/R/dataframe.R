@@ -12,12 +12,16 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     value <- as.character(value)
     if (any(duplicated(value)))
 	stop("duplicate row.names are not allowed")
+    if (any(is.na(value)))
+	stop("missing row.names are not allowed")
     attr(x, "row.names") <- value
     x
 }
+
 "row.names<-.default" <- function(x, value) "rownames<-"(x, value)
 
-is.na.data.frame <- function (x) {
+is.na.data.frame <- function (x)
+{
     y <- do.call("cbind", lapply(x, "is.na"))
     rownames(y) <- row.names(x)
     y
@@ -70,17 +74,6 @@ dimnames.data.frame <- function(x) list(attr(x,"row.names"), names(x))
     x
 }
 
-## OLD:
-as.data.frame <- function(x, row.names = NULL, optional = FALSE)
-    UseMethod("as.data.frame")
-as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
-{
-    dcmethod <- paste("as.data.frame", data.class(x), sep=".")
-    if(exists(dcmethod, mode="function"))
-	(get(dcmethod, mode="function"))(x, row.names, optional)
-    else stop(paste("can't coerce",data.class(x), "into a data.frame"))
-}
-## NEW:
 as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
     if(is.null(x))			# can't assign class to NULL
 	return(as.data.frame(list()))
@@ -224,7 +217,8 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
 ###  It does everything by calling the methods presented above.
 
 data.frame <-
-function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
+    function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE)
+{
     data.row.names <-
 	if(check.rows && missing(row.names))
 	    function(current, new, i) {
@@ -328,6 +322,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	value <- value[ - i]
     }
     row.names <- as.character(row.names)
+    if(any(is.na(row.names)))
+        stop("row names contain missing values")
     if(any(duplicated(row.names)))
 	stop(paste("duplicate row.names:",
 		   paste(unique(row.names[duplicated(row.names)]),
@@ -664,8 +660,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     x
 }
 
-xpdrows.data.frame <-
-function(x, old.rows, new.rows) {
+xpdrows.data.frame <- function(x, old.rows, new.rows)
+{
     nc <- length(x)
     nro <- length(old.rows)
     nrn <- length(new.rows)
@@ -943,26 +939,6 @@ as.matrix.data.frame <- function (x)
     dimnames(X) <- list(dn[[1]], unlist(collabs, use.names = FALSE))
     ##NO! don't copy buggy S-plus!  either all matrices have class or none!!
     ##NO class(X) <- "matrix"
-    X
-}
-
-if(FALSE)
-Math.data.frame <- function(x, ...)
-{
-    X <- x
-    class(X) <- NULL
-    f <- get(.Generic, mode = "function")
-    call <- match.call(f, sys.call())
-    call[[1]] <- as.name(.Generic)
-    arg <- names(formals(f))[[1]]
-    call[[arg]] <- as.name("xx")
-    for(j in names(X)) {
-	xx <- X[[j]]
-	if(!is.numeric(xx) && !is.complex(xx))
-	    stop(paste("Non-numeric variable:", j))
-	X[[j]] <- eval(call)
-    }
-    attr(X, "class") <- class(x)
     X
 }
 
