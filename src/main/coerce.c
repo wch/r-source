@@ -646,8 +646,6 @@ static SEXP coerceToPairList(SEXP v)
     return (ans);
 }
 
-SEXP PairToVectorList(SEXP);
-
 /* Coerce a list to the given type */
 static SEXP coercePairList(SEXP v, SEXPTYPE type)
 {
