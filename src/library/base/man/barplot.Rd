@@ -3,7 +3,7 @@
 \usage{
 barplot(height, width = 1, space = NULL, names.arg = NULL,
         legend.text = NULL, beside = FALSE, horiz = FALSE,
-        col = NULL, border = par("fg"), main = NULL,
+        col = heat.colors(NR), border = par("fg"), main = NULL,
         xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
         axes = TRUE, ...)
 }
@@ -52,14 +52,16 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
   \item{\dots}{further arguments are passed to \code{title(.)}.}
 }
 \value{
-  This function is invoked for its side effect of producing a barplot in
-  the graphics window.  It returns no useful value.
+  A numeric vector, giving the coordinates of the bar midpoints drawn,
+  useful for adding to the graph.
 }
 \seealso{
   \code{\link{dotplot}}, \code{\link{hist}}.
 }
 \examples{
 data(deaths)
+mp <- barplot(deaths) # default
+tot <- apply(deaths,2,sum); text(mp, tot + 3, format(tot))
 barplot(deaths, beside = TRUE,
         col = c("lightblue", "mistyrose", "lightcyan",
                 "lavender", "cornsilk"),

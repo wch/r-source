@@ -1,7 +1,7 @@
 barplot <-
 function(height, width = 1, space = NULL, names.arg = NULL,
 	 legend.text = NULL, beside = FALSE, horiz = FALSE,
-	 col = NULL, border = par("fg"), main = NULL,
+	 col = heat.colors(NR), border = par("fg"), main = NULL,
 	 xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
 	 axes = TRUE, ...)
 {
@@ -20,7 +20,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	stop("`height' must be a vector or a matrix")
 
  NR <- nrow(height)
- NC <- ncol(height)    
+ NC <- ncol(height)
  if (missing(names.arg))
 	names.arg <- if(is.matrix(height)) colnames(height) else names(height)
  if (beside) {
@@ -42,7 +42,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	if (missing(xlim)) xlim <- c(min(w.l), max(w.r))
 	if (missing(ylim)) ylim <- range(-0.01, height)
  }
- ## --------
+ ## -------- Plotting :
  plot.new()
  plot.window(xlim, ylim, log = "")
  if (beside) {
@@ -51,7 +51,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	else
 	  rect(w.l, 0, w.r, c(height), col = col)
  } else {
-	 for (i in 1:NC) {
+	for (i in 1:NC) {
 	 if (horiz)
 	   rect(height[1:NR, i], w.l[i], height[-1, i], w.r[i], col = col)
 	 else
@@ -75,4 +75,5 @@ function(height, width = 1, space = NULL, names.arg = NULL,
  }
  title(main = main, xlab = xlab, ylab = ylab, ...)
  if (axes) axis(if(horiz) 1 else 2)
+ invisible(w.m)
 }
