@@ -17,9 +17,7 @@ all: Makefile
 	@echo "building package \`base'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/R
 	@(f=/tmp/R$$$$; \
-	  cat `ls $(srcdir)/R/*.R | sed '/system.*/d'` \
-	      $(srcdir)/R/system.unix.R | \
-	  sed '/^[ 	]*$$/d' > $${f}; \
+	  cat `ls $(srcdir)/R/*.R'` `ls $(srcdir)/R/unix/*.R` >> $${f}; \
           $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/base/R/base)
 	@$(INSTALL_DATA) $(srcdir)/INDEX $(top_builddir)/library/base
