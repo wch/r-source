@@ -579,15 +579,6 @@ Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
 ..According to Simon Urbanek this is a java security issue.  With RAqua a good
 ..alternative is starting HTML 
 ..help and then using help.search() or  Help|Search Help on...
-* PR# 5529 *
-Subject: R OS X panther?
-From: Bronwyn Carlisle <bronwyn@biocadmin.otago.ac.nz>
-Date: Fri, 5 Dec 2003 12:47:55 +1300
-..Probably not an R bug
-* PR# 5674 *
-Subject: R.app should ignore -psn command line argument
-From: ellis@stat.harvard.edu
-Date: Wed, 10 Dec 2003 19:18:15 +0100 (CET)
 * PR# 6438 *
 Subject: R crash 
 From: sstoddar@uiuc.edu
@@ -865,3 +856,7 @@ Date: Wed, 18 Feb 2004 16:53:58 +0100
 Subject: R would not quit (bug?)
 From: Michael Herron <Michael.C.Herron@Dartmouth.EDU>
 Date: Wed, 18 Feb 2004 14:27:07 -0500
+* PR# 6601 *
+Subject: Process R segmentation with strsplit()
+From: "wolski" <wolski@molgen.mpg.de>
+Date: Thu, 19 Feb 2004 19:05:49 +0100
