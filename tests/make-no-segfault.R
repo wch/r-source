@@ -1,5 +1,7 @@
 ###--- This "make-<name>" script is only used to create the real script <name> :
 
+###--- We need to use such a long "real script" instead of a for loop,
+###--- because "error --> jump_to_toplevel", i.e., outside any loop.
 sink("no-segfault.R")
 
 cat("options(error.halt = FALSE)",
@@ -17,12 +19,12 @@ stop.list[["base"]] <-
     } else {
 	inet.list <- c(apropos("download\."),
                        apropos("^url\."), apropos("\.url"),
-                       "CRAN.packages", "update.packages")
+                       paste(c("CRAN", "install", "update"),"packages",sep="."))
 	socket.fun <- apropos("socket")# those *do* segfault...
 	## "Interactive" ones:
 	dev.int <- c("X11", "windows", "macintosh")
         edit.int <- c("fix", "edit", "vi", "emacs", "pico", "xemacs", "xedit")
-	misc.int <- c("bug.report", "browser",
+	misc.int <- c("browser", "bug.report", "help", "menu",
 		      "data.entry", "dataentry", "de", apropos("^de\."))
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int)
     }
