@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-51 @value{FAQ-YEAR}-09-15
+@set FAQ-VERSION 1.9-52 @value{FAQ-YEAR}-09-17
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @c <FIXME>
@@ -1956,6 +1956,9 @@ update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 finding the number of clusters in a data set.
 @item cfa
 Analysis of configuration frequencies.
+@item chplot
+Augmented convex hull plots: informative and nice plots for grouped
+bivariate data.
 @item chron
 A package for working with chronological objects (times and dates).
 @item circular

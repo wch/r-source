@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-51 2004-09-15
+Version 1.9-52 2004-09-17
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1671,6 +1671,10 @@ distributions of R.)
 
 *cfa*
      Analysis of configuration frequencies.
+
+*chplot*
+     Augmented convex hull plots: informative and nice plots for grouped
+     bivariate data.
 
 *chron*
      A package for working with chronological objects (times and dates).
