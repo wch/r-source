@@ -271,12 +271,12 @@ model.offset <- function(x) {
 }
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
-model.matrix.default <- function(formula, data = environment(formula),
-				 contrasts.arg = NULL, xlev = NULL)
+model.matrix.default <- function(object, data = environment(object),
+				 contrasts.arg = NULL, xlev = NULL, ...)
 {
-    t <- terms(formula)
+    t <- terms(object)
     if (is.null(attr(data, "terms")))
-	data <- model.frame(formula, data, xlev=xlev)
+	data <- model.frame(object, data, xlev=xlev)
     else {
 	reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
 	if (any(is.na(reorder)))

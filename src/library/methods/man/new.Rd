@@ -7,7 +7,7 @@
   data to be included in the object, \code{new} returns an object from that class.
 }
 \usage{
-new(Class, ..., .Force=F)
+new(Class, ..., .Force=FALSE)
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{

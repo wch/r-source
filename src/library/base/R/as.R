@@ -61,8 +61,8 @@ as.null <- function(x,...) UseMethod("as.null")
 as.null.default <- function(x,...) NULL
 
 as.function <- function(x,...) UseMethod("as.function")
-as.function.default <- function (l, envir = parent.frame(),...)
-if (is.function(l)) l else .Internal(as.function.default(l, envir))
+as.function.default <- function (x, envir = parent.frame(), ...)
+    if (is.function(x)) x else .Internal(as.function.default(x, envir))
 
 as.array <- function(x)
 {

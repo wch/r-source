@@ -3,15 +3,14 @@
 \usage{
 as.function(x, \dots)
 
-as.function.default(l, envir = parent.frame(), \dots)
+as.function.default(x, envir = parent.frame(), \dots)
 }
 \alias{as.function}
 \alias{as.function.default}
 \arguments{
-  \item{x}{object to convert}
+  \item{x}{object to convert, a list for the default method.}
   \item{\dots}{additional arguments, depending on object}
 
-  \item{l}{a list}
   \item{envir}{environment in which the function should be defined}
 }
 \description{

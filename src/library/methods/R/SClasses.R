@@ -99,7 +99,7 @@ slot <-
 
 "slot<-" <-
   ## Set the value of the named slot.  Must be one of the slots in the class's definition.
-  function(object, name, check = T, value)
+  function(object, name, check = TRUE, value)
     .Call("R_set_slot", object, name, check, value)
 
 ## "@" <-

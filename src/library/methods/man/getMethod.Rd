@@ -11,7 +11,7 @@
   \code{getMethods} returns \emph{all} the methods for the generic function.
 }
 \usage{
-getMethod(f, signature=character(), where=-1, optional=False)
+getMethod(f, signature=character(), where=-1, optional=FALSE)
 
 selectMethod(f, signature, optional=False, mlist=getMethods(f))
 

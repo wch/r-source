@@ -10,8 +10,9 @@ Create a formally defined class with specified slots and/or
 relationships to other classes.  Also functions to test whether a
 class has been defined, and to remove a class definition}
 \usage{
-setClass(Class, representation=list(), prototype=NULL, contains=character(), validity, access, where=1, version=F)
-isClass(Class, formal=T)
+setClass(Class, representation=list(), prototype=NULL,
+         contains=character(), validity, access, where=1, version=FALSE)
+isClass(Class, formal=TRUE)
 
 removeClass(Class, where=-1)
 

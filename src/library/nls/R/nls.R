@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.14 2001/08/13 21:41:47 ripley Exp $
+### $Id: nls.R,v 1.15 2001/08/16 09:24:25 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -574,7 +574,7 @@ fitted.nls <- function(object, ...)
     val
 }
 
-formula.nls <- function(object) object$m$formula()
+formula.nls <- function(x, ...) x$m$formula()
 
 residuals.nls <- function(object, type = c("response", "pearson"), ...)
 {

@@ -55,7 +55,7 @@ completeClassDefinition(Class)
 
 getFromClassDef(ClassDef, what)
 
-setInClassDef(ClassDef, what, value, synchronize=T)
+setInClassDef(ClassDef, what, value, synchronize=TRUE)
 
 synchronizeClassDef(ClassDef)
 
@@ -91,7 +91,7 @@ assignClassDef(Class, def, where=.GlobalEnv)
 
 newClassEnvironment(name, properties, extends, prototype, subclasses, virtual)
 
-newBasic(Class, ..., .Force=F)
+newBasic(Class, ..., .Force=FALSE)
 
 makeExtends(extends)
 
@@ -101,7 +101,7 @@ tryNew(Class)
 
 empty.dump()
 
-showClass(Class, complete=T, propertiesAreCalled="Properties")
+showClass(Class, complete=TRUE, propertiesAreCalled="Properties")
 
 showExtends(ext)
 

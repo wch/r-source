@@ -13,11 +13,11 @@ functionBody(fun=sys.function(sys.parent()))
 
 allNames(x)
 
-getFunction(name, generic=T, mustFind=T, where)
+getFunction(name, generic=TRUE, mustFind=TRUE, where)
 
 el(object, where)
 
-elNamed(x, name, mustFind=F)
+elNamed(x, name, mustFind=FALSE)
 
 formalArgs(def)
 

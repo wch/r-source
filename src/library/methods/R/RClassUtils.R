@@ -479,7 +479,7 @@ empty.dump <-
 showClass <-
   ## print the information about a class definition.  If complete==TRUE, include the
   ## indirect information about extensions.
-  function(Class, complete = T, propertiesAreCalled = "Properties") {
+  function(Class, complete = TRUE, propertiesAreCalled = "Properties") {
     if(is(Class, "classRepEnvironment")) {
       ClassDef <- Class
       Class <- getClassName(ClassDef)

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-08-15)
+Version 1.4.0 Under development (unstable) (2001-08-16)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -42,7 +42,7 @@ Error in pos.to.env(object) : invalid "pos" argument
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -105,7 +105,7 @@ Error in pos.to.env(object) : invalid "pos" argument
 [1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 IS: [1] TRUE
@@ -334,9 +334,9 @@ Error in pos.to.env(object) : invalid "pos" argument
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -418,7 +418,7 @@ Error in pos.to.env(object) : invalid "pos" argument
 > is.factor(as.factor( x ))
 Error in sort(x) : only atomic vectors can be sorted
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(x, envir) : argument must have length at least 1
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -482,7 +482,7 @@ Error in pos.to.env(object) : invalid "pos" argument
 Error in sort(x) : only atomic vectors can be sorted
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(x, envir) : argument must have length at least 1
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 [1] TRUE
@@ -711,9 +711,9 @@ Error in sort(x) : only atomic vectors can be sorted
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 [1] TRUE
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(x, envir) : argument must have length at least 1
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(x, envir) : argument must have length at least 1
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -797,7 +797,7 @@ Error in as.environment(x) : (list) object cannot be coerced to vector type 13
 > is.factor(as.factor( x ))
 Error in sort(x) : only atomic vectors can be sorted
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(x, envir) : argument must have length at least 1
 > is.integer(as.integer( x ))
 Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
 > is.list(as.list( x ))
@@ -861,7 +861,7 @@ Error in as.environment(x) : (list) object cannot be coerced to vector type 13
 Error in sort(x) : only atomic vectors can be sorted
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(x, envir) : argument must have length at least 1
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
@@ -1080,9 +1080,9 @@ Error in sort(x) : only atomic vectors can be sorted
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(x, envir) : argument must have length at least 1
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-Error in as.function.default(l, envir) : argument must have length at least 1
+Error in as.function.default(x, envir) : argument must have length at least 1
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -1166,7 +1166,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -1229,7 +1229,7 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 IS: [1] TRUE
@@ -1439,9 +1439,9 @@ Error in target[[i]] : object is not subsettable
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -1523,7 +1523,7 @@ Error in as.call(x) : invalid argument list
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -1586,7 +1586,7 @@ IS: [1] TRUE
 [1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 [1] TRUE
@@ -1796,9 +1796,9 @@ Error in as.table.default(x) : cannot coerce into a table
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -1881,7 +1881,7 @@ Error in switch(typeof(object), environment = return(object), character = { :
 > is.factor(as.factor( x ))
 [1] TRUE
 > is.function(as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > is.integer(as.integer( x ))
 [1] TRUE
 > is.list(as.list( x ))
@@ -1945,7 +1945,7 @@ Error in switch(typeof(object), environment = return(object), character = { :
 [1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 [1] TRUE
@@ -2156,9 +2156,9 @@ Error in switch(typeof(object), environment = return(object), character = { :
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
-Error in as.function.default(l, envir) : list argument expected
+Error in as.function.default(x, envir) : list argument expected
 > f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
 [1] TRUE
 > f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
@@ -2906,6 +2906,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  6.38 1.39 7.79 0 0 
+Time elapsed:  6.4 1.49 7.89 0 0 
 > 
 > 

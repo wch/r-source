@@ -24,7 +24,7 @@ matchArg(object, methods, defaultMethod)
 
 matchArgClass(Class, methods, defaultMethod)
 
-showMlist(mlist, includeDefs=T, prev=character())
+showMlist(mlist, includeDefs=TRUE, prev=character())
 
 print.MethodsList(x, ...)
 

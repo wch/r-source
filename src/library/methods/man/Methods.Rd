@@ -17,7 +17,7 @@ removeGeneric(name, where=-1)
 
 standardGeneric(fname)
 
-dumpMethod(generic, signature=character(), file=defaultDumpName(generic, signature), where=-1, def=getMethod(generic, signature, where = where, optional = T))
+dumpMethod(generic, signature=character(), file=defaultDumpName(generic, signature), where=-1, def=getMethod(generic, signature, where = where, optional = TRUE))
 
 existsFunction(name, generic = TRUE, where = find(name, mode =
                  "function", numeric = TRUE))
