@@ -1048,7 +1048,7 @@ SEXP install(char const *name)
 SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, fun;
-    int save = R_PPStackTop;
+    int save = R_PPStackTop, flag;
     checkArity(op, args);
     s = CAR(args);
     if (!isPairList(s))
@@ -1062,8 +1062,10 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
 	args = evalList(args, env);
     PROTECT(args);
-    R_Visible = 1 - PRIMPRINT(INTERNAL(fun));
+    flag = PRIMPRINT(INTERNAL(fun));
+    R_Visible = 1 - flag;
     args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
+    if (flag) R_Visible = 0;
     UNPROTECT(1);
     if (save != R_PPStackTop) {
 	REprintf("stack imbalance in internal %s, %d then %d",
