@@ -60,6 +60,28 @@
 
 #include "Raqua.h"
 
+struct GlobalsStruct
+{
+	Boolean				done;
+	ControlID			tabControlID;
+	ControlID			popupControlID;
+	EventLoopTimerRef	mainRunLoopTimerRef;
+	SInt32				numberOfRunningThreads;
+	IBNibRef 			mainNibRef;
+	Boolean				saveOnClose;
+	short				sharedFileRefNum;
+	WindowRef			cursorWindow;
+	EventHandlerUPP		largeCursorEventHandler;
+	EventHandlerRef		largeCursorEventHandlerRef;
+	Boolean				largeCursorActive;
+};
+typedef struct GlobalsStruct GlobalsStruct;
+
+GlobalsStruct	g;	//	Globals
+
+void R_ProcessEvents(void);
+void R_ProcessEvents2(void);
+
 
 /* Items for the Tools menu */
 #define kRCmdFileShow		'fshw'
@@ -257,6 +279,7 @@ TXNControlTag   txnControlTag[1];
 TXNControlData  txnControlData[1];
 TXNMargins      txnMargins;
            
+Boolean AlreadyRunning = false;           
 void Raqua_StartConsole(void)
 {
     IBNibRef 	nibRef = NULL;
@@ -264,7 +287,9 @@ void Raqua_StartConsole(void)
     CFURLRef    bundleURL = NULL;
     CFBundleRef RBundle = NULL;
     Str255	menuStr;
-    err = CreateNibReference(CFSTR("main"), &nibRef);
+    
+    
+     err = CreateNibReference(CFSTR("main"), &nibRef);
     if(err != noErr) 
      goto noconsole;
     
@@ -415,6 +440,9 @@ void Raqua_StartConsole(void)
        RSetFont();
        
        EnableMenuCommand(NULL, kHICommandPreferences);
+       
+        
+	
 noconsole:
     if(bundleURL)
      CFRelease( bundleURL );
@@ -433,17 +461,30 @@ void Aqua_RnWrite(char *buf, int len);
 TXNTypeAttributes RInAttr[] = {{ kTXNQDFontColorAttribute, kTXNQDFontColorAttributeSize, &CurrentPrefs.FGInputColor}};
 TXNTypeAttributes ROutAttr[] = {{ kTXNQDFontColorAttribute, kTXNQDFontColorAttributeSize, &CurrentPrefs.FGOutputColor}};
 
+Boolean PrintIsOver = false;
 void Raqua_WriteConsole(char *buf, int len)
 {
     OSStatus err;
     TXNOffset oStartOffset; 
     TXNOffset oEndOffset;
+    EventRef REvent;
 
-  
+//  fprintf(stderr,"%s",buf);
     if(WeHaveConsole){
         TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
         err =  TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
-        TXNDraw(RConsoleOutObject, NULL);
+        R_ProcessEvents2();
+    // TXNForceUpdate(RConsoleOutObject);
+//   TXNDraw(RConsoleOutObject, NULL);
+ //  fprintf(stderr,"\n>%s< len=%d",buf,strlen(buf));
+   PrintIsOver = false;
+
+/*   
+       CreateEvent(NULL, kEventClassKeyboard, 'fake', 0, kEventAttributeNone, &REvent);
+        SendEventToEventTarget (REvent,GetApplicationEventTarget());
+        while(!PrintIsOver)
+         R_ProcessEvents();
+ */     
     } else {
      fprintf(stderr,"%s", buf);
     }
@@ -511,13 +552,15 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
    TXNOffset oEndOffset;
    
    int i, lg=0, pptlen, txtlen;
+   
           
    if(!InputFinished)
      Aqua_RWrite(prompt);
    TXNFocus(RConsoleInObject,true);
    TXNSetTypeAttributes( RConsoleInObject, 1, RInAttr, 0, kTXNEndOffset );
 
-    while(!InputFinished)
+   while(!InputFinished)
+//     R_ProcessEvents();
      RunApplicationEventLoop();
     
    if(InputFinished){
@@ -540,7 +583,7 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
      Raqua_WriteConsole(buf,strlen(buf));
      if (strlen(buf) > 1)
 	maintain_cmd_History(buf);
-
+    // R_ProcessEvents();
    }
  
   
@@ -597,6 +640,12 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
   switch ( GetEventKind( REvent ) )
   {
    
+/*   case 'fake':
+   PrintIsOver = true;
+   TXNUpdate(RConsoleOutObject);
+   err = noErr;
+   break;
+  */ 
    case kEventRawKeyDown:
     err = GetEventParameter (REvent, kEventParamKeyCode, typeUInt32, NULL, sizeof(RKeyCode), NULL, &RKeyCode);
     switch(RKeyCode){
@@ -1143,6 +1192,8 @@ void consolecmd(char *cmd)
    SetEventParameter(REvent, kEventParamKeyCode, typeUInt32, sizeof(RKeyCode), &RKeyCode);
    SendEventToEventTarget (REvent,GetApplicationEventTarget());
 }
+
+ 
 
 
 /* DoSelectDirectory: allows the user to change R current working directory
@@ -1883,6 +1934,40 @@ void Raqua_GetQuartzParameters(double *width, double *height, double *ps, char *
     *antialias = CurrentPrefs.AntiAlias;
     *autorefresh = CurrentPrefs.AutoRefresh;    
 }
+
+
+void R_ProcessEvents2(void)
+{
+    EventRef		theEvent;
+    EventTargetRef	theTarget = GetEventDispatcherTarget();
+
+   if( ReceiveNextEvent(0, NULL, kEventDurationNoWait, true, &theEvent) == noErr ){
+     SendEventToEventTarget( theEvent, theTarget );    
+     ReleaseEvent( theEvent );
+    }
+}
+
+void R_ProcessEvents(void)
+{
+    OSStatus		err;
+    EventRef		theEvent;
+    EventTargetRef	theTarget = GetEventDispatcherTarget();
+
+   err = ReceiveNextEvent( 0, NULL, kEventDurationForever, true, &theEvent );
+   if ( err == noErr ){
+        (void) SendEventToEventTarget( theEvent, theTarget );
+	        ReleaseEvent( theEvent );
+    }
+    else if ( err == eventLoopTimedOutErr )
+    {
+	        err = noErr;
+    }
+    
+}
+
+
+
+
 
 
 #endif /* HAVE_AQUA */

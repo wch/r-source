@@ -502,7 +502,7 @@ SEXP Raqua_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
   OpenBrowsePkg();
   QuitApplicationEventLoop();
     
-  RunApplicationEventLoop();  /* waits till the user close the dataentry window */
+  RunApplicationEventLoop();  /* waits till the user closes the dataentry window */
 
   vmaxset(vm);
   return R_NilValue;

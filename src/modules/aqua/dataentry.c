@@ -749,7 +749,7 @@ SEXP Raqua_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     OpenDataEntry();
     QuitApplicationEventLoop();
     
-    RunApplicationEventLoop();  /* waits till the user close the dataentry window */
+    RunApplicationEventLoop();  /* waits till the user closes the dataentry window */
     
     /* drop out unused columns */
     for(i = 0, cnt = 0; i < xmaxused; i++)
