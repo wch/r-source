@@ -3,7 +3,7 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-VERSION 0.90-8, 2000/01/08
+@set FAQ-VERSION 0.90-9, 2000/01/15
 @set REL-VERSION 0.90.1
 @set DEV-VERSION 0.99.0
 @c %**end of header
@@ -274,9 +274,9 @@ machines does R run on?}).  The file @file{INSTALL} that comes with the
 R distribution contains instructions.
 
 Note that you need a @FORTRAN{} compiler or @code{f2c} in addition to a
-C compiler to build R.  Also, you need Perl version 5 to build the
-documentation.  If this is not available on your system, you can obtain
-precompiled documentation files via CRAN.
+C compiler to build R.  Also, you need Perl version 5 to build the R
+object documentations.  (If this is not available on your system, you
+can obtain a PDF version of the object reference manual via CRAN.)
 
 In the simplest case, untar the R source code, cd to the directory thus
 created, and issue the following commands (at the shell prompt):
@@ -302,7 +302,7 @@ programs such as @code{xdvi} and @code{dvips}.  You can also use
 manuals, and view these using Acrobat.  Manuals written in the GNU
 Texinfo system can also be converted to info files suitable for reading
 online with Emacs or standalone GNU Info; use @kbd{make info} to create
-these versions.
+these versions (note that this requires @command{makeinfo} version 4).
 
 Finally, use @kbd{make check} to find out whether your R system works
 correctly.
@@ -615,9 +615,9 @@ From CRAN, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current CVS trees), as gzipped and bzipped
 tar files or as two gzipped tar files (ready for 1.4M floppies), a
 wealth of additional contributed code, as well as prebuilt binaries for
-various operating systems (Linux, Digital Unix, and MS Windows) and
-pre-formatted help pages.  CRAN also provides access to documentation on
-R, existing mailing lists and the R Bug Tracking system.
+various operating systems (Linux, Digital Unix, and MS Windows).  CRAN
+also provides access to documentation on R, existing mailing lists and
+the R Bug Tracking system.
 
 To ``submit'' to CRAN, simply upload to
 @uref{ftp://cran.r-project.org/incoming} and send an email to
