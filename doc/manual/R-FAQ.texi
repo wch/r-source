@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-11, @value{FAQ-YEAR}-05-20
+@set FAQ-VERSION 1.7-12, @value{FAQ-YEAR}-05-25
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1959,6 +1959,10 @@ algorithm, Sammon mapping, PCA and correspondence analysis.
 ML estimation for multivariate normal data with missing values.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
+@item ncomplete
+Functions to perform the regression depth method (RDM) to binary
+regression to approximate the minimum number of observations that can be
+removed such that the reduced data set has complete separation.
 @item netCDF
 Read data from netCDF files.
 @item nlme
@@ -1979,6 +1983,11 @@ A collection of utilities for normal of order @math{p} distributions
 One-dimensional normal mixture models classes, for, e.g., density
 estimation or clustering algorithms research and teaching; providing the
 widely used Marron-Wand densities.
+@item noverlap
+Functions to perform the regression depth method (RDM) to binary
+regression to approximate the amount of overlap, i.e., the minimal
+number of observations that need to be removed such that the reduced
+data set has no longer overlap.
 @item npmc
 Nonparametric Multiple Comparisons:  provides simultaneous rank test
 procedures for the one-way layout without presuming a certain
@@ -2179,6 +2188,8 @@ Package for time series analysis with emphasis on non-linear modelling.
 @item twostage
 Functions for optimal design of two-stage-studies using the Mean Score
 method.
+@item vardiag
+Interactive variogram diagnostics.
 @item vcd
 Functions and data sets based on the book ``Visualizing Categorical
 Data'' by Michael Friendly.

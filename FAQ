@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-11, 2003-05-20
+Version 1.7-12, 2003-05-25
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1790,6 +1790,11 @@ distributions of R.)
 *mvtnorm*
      Multivariate normal and t distributions.
 
+*ncomplete*
+     Functions to perform the regression depth method (RDM) to binary
+     regression to approximate the minimum number of observations that can
+     be removed such that the reduced data set has complete separation.
+
 *netCDF*
      Read data from netCDF files.
 
@@ -1816,6 +1821,12 @@ distributions of R.)
      One-dimensional normal mixture models classes, for, e.g., density
      estimation or clustering algorithms research and teaching; providing
      the widely used Marron-Wand densities.
+
+*noverlap*
+     Functions to perform the regression depth method (RDM) to binary
+     regression to approximate the amount of overlap, i.e., the minimal
+     number of observations that need to be removed such that the reduced
+     data set has no longer overlap.
 
 *npmc*
      Nonparametric Multiple Comparisons:  provides simultaneous rank test
@@ -2030,6 +2041,9 @@ distributions of R.)
 *twostage*
      Functions for optimal design of two-stage-studies using the Mean Score
      method.
+
+*vardiag*
+     Interactive variogram diagnostics.
 
 *vcd*
      Functions and data sets based on the book "Visualizing Categorical
