@@ -2666,7 +2666,7 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 		xx[1] = x2;
 		yy[1] = y2;
 		count = 2;
-		if (i == n - 1)
+		if (i == n - 1) {
 		    if (dd->newDevStruct) 
 			((GEDevDesc*) dd)->dev->polyline(count, xx, yy,
 							 gpptr(dd)->col, 
@@ -2675,12 +2675,13 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 							 ((GEDevDesc*) dd)->dev);
 		    else
 			dpptr(dd)->polyline(count, xx, yy, DEVICE, dd);
+		}
 	    }
 	    else if (ind2) {
 		xx[count] = x2;
 		yy[count] = y2;
 		count++;
-		if (count > 1)
+		if (count > 1) {
 		    if (dd->newDevStruct) 
 			((GEDevDesc*) dd)->dev->polyline(count, xx, yy,
 							 gpptr(dd)->col, 
@@ -2689,12 +2690,13 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 							 ((GEDevDesc*) dd)->dev);
 		    else
 			dpptr(dd)->polyline(count, xx, yy, DEVICE, dd);
+		}
 	    }
 	    else {
 		xx[count] = x2;
 		yy[count] = y2;
 		count++;
-		if (i == n - 1 && count > 1)
+		if (i == n - 1 && count > 1) {
 		    if (dd->newDevStruct) 
 			((GEDevDesc*) dd)->dev->polyline(count, xx, yy,
 							 gpptr(dd)->col, 
@@ -2703,6 +2705,7 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 							 ((GEDevDesc*) dd)->dev);
 		    else
 			dpptr(dd)->polyline(count, xx, yy, DEVICE, dd);
+		}
 	    }
 	}
 	x1 = x[i];
@@ -2764,7 +2767,7 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
     else {
 	clip_ok = clipLine(&x1, &y1, &x2, &y2, coords, 0, dd);
     }
-    if (clip_ok)
+    if (clip_ok) {
 	if (dd->newDevStruct) {
 	    GConvert(&x1, &y1, coords, DEVICE, dd);
 	    GConvert(&x2, &y2, coords, DEVICE, dd);
@@ -2772,9 +2775,9 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 					 gpptr(dd)->col, gpptr(dd)->lty, 
 					 gpptr(dd)->lwd,
 					 ((GEDevDesc*) dd)->dev);
-	} else {
+	} else
 	    dpptr(dd)->line(x1, y1, x2, y2, coords, dd);
-	}
+    }
 }
 
 /* Read the current "pen" position. */
@@ -2820,11 +2823,12 @@ void GMode(int mode, DevDesc *dd)
 {
     if (NoDevices())
 	error("No graphics device is active");
-    if(mode != gpptr(dd)->devmode)
+    if(mode != gpptr(dd)->devmode) {
 	if (dd->newDevStruct)
 	    ((GEDevDesc*) dd)->dev->mode(mode, ((GEDevDesc*) dd)->dev);
 	else
 	    dpptr(dd)->mode(mode, dd);
+    }
     gpptr(dd)->new = dpptr(dd)->new = FALSE;
     gpptr(dd)->devmode = dpptr(dd)->devmode = mode;
 }
@@ -3023,7 +3027,6 @@ static void clipPolygon(int n, double *x, double *y, int coords,
     static double *xc = NULL, *yc = NULL;
 #endif
     double *xc, *yc;
-    double *tmp;
 #ifdef MALLOC_AWAY
     if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
     if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
@@ -5656,7 +5659,7 @@ int deviceNumber(DevDesc *dd)
  */
 int devNumber(DevDesc *dd)
 {
-    int i, match;
+    int i;
     for (i = 1; i < R_MaxDevices; i++) 
 	if (R_Devices[i] != NULL &&
 	    R_Devices[i]->newDevStruct &&

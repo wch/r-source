@@ -494,7 +494,6 @@ CSclipline(double *x1, double *y1, double *x2, double *y2,
 {
     int c, c1, c2;
     double x, y, xl, xr, yb, yt;
-    cliprect cr2;
 
     *clipped1 = 0;
     *clipped2 = 0;
@@ -561,10 +560,7 @@ static Rboolean
 clipLine(double *x1, double *y1, double *x2, double *y2,
 	 int toDevice, GEDevDesc *dd)
 {
-    double temp;
     int dummy1, dummy2;
-    int xpdsaved = 0; /* -Wall */
-    Rboolean result;
     cliprect cr;
 
     if (toDevice) 
@@ -610,7 +606,7 @@ static void CScliplines(int n, double *x, double *y,
     /*int firstPoint = 1;*/
     int count = 0;
     int i = 0;
-    double *xx, *yy, temp;
+    double *xx, *yy;
     double x1, y1, x2, y2;
     cliprect cr;
     char *vmax = vmaxget();
@@ -882,7 +878,6 @@ static void clipPolygon(int n, double *x, double *y,
                         int toDevice, GEDevDesc *dd)
 {
     double *xc = NULL, *yc = NULL;
-    double *tmp;
     /* if bg not specified then draw as polyline rather than polygon
      * to avoid drawing line along border of clipping region */
     if (fill == NA_INTEGER) {
@@ -899,7 +894,6 @@ static void clipPolygon(int n, double *x, double *y,
     }
     else {
 	int npts;
-	int xpdsaved = 0; /* -Wall */
 	xc = yc = 0;		/* -Wall */
 	npts = clipPoly(x, y, n, 0, toDevice, xc, yc, dd);
 	if (npts > 1) {
@@ -1798,7 +1792,6 @@ void GENewPage(int fill, GEDevDesc *dd)
 void GEplayDisplayList(GEDevDesc *dd)
 {
     int savedDevice;
-    Rboolean asksave;
     SEXP theList;
     theList = displayList((DevDesc*) dd);
     if (theList != R_NilValue) {
