@@ -2,7 +2,7 @@
 \title{Write Text into the Margins of a Plot}
 \usage{
 mtext(text, side = 3, line = 0, outer = FALSE, at = NULL,
-      adj = NA, \dots)
+      adj = NA, cex = NA, col = NA, font = NA, vfont = NULL, \dots)
 }
 \alias{mtext}
 \arguments{
@@ -19,10 +19,12 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NULL,
     If \code{adj} is not a finite value (the default), the value
     \code{par("las")} determines the adjustment. For strings plotted
     parallel to the axis the default is to centre the string.}
-  \item{\dots}{Further graphical parameters; currently supported are:}
+  \item{\dots}{Further graphical parameters (see \code{\link{text}} and
+    \code{\link{par}}) ; currently supported are:}
   \item{cex}{character expansion factor (default = 1).}
   \item{col}{color to use.}
   \item{font}{font for text.}
+  \item{vfont}{vector font for text.}
 }
 % mtext is defined via do_mtext(.) in  src/main/plot.c ---
 \description{
