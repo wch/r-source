@@ -774,7 +774,7 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
 void R_load_gnome_shlib(void)
 {
     char gnome_DLL[PATH_MAX], buf[1000], *p;
-    DllInfo dll;
+    DllInfo dll = {NULL, NULL, NULL, 0, NULL, 0, NULL, 0, NULL};
     struct stat sb;
 
     p = getenv("R_HOME");
