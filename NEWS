@@ -156,6 +156,9 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
+    o   The grid.grab() function in package grid would throw an error
+	if there were no viewports pushed (now returns NULL).
+
     o	model.frame.default() takes row names from the response
 	variable if that has suitable names and there is no 'data'
 	argument.  (This follows S but was not previously implemented
@@ -220,7 +223,7 @@ BUG FIXES
 
     o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
-    o   Using Rprof() with a non-writable 'file' argument is now a
+    o   Using Rprof() with a non-writable 'file' argument is now a 
 	non-fatal error and does not abort R.
 
     o   binom.test() did not deparse its arguments early enough such
@@ -256,6 +259,8 @@ BUG FIXES
 
     o	str(<S4.object>) made use of attributes() instead of slot(),
 	and hence didn't properly print NULL slots.
+
+    o	contrib.url() now handles URLs ending in '/' correctly.
 
 
 
