@@ -1,6 +1,5 @@
-xyz.coords <-
-    function(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL,
-	     log=NULL, recycle = FALSE)
+xyz.coords <- function(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL,
+		       log = NULL, recycle = FALSE)
 {
     ## Only x
     if(is.null(y)) {
@@ -10,10 +9,10 @@ xyz.coords <-
 		zlab <- deparse(x[[2]])
 		ylab <- deparse(rhs[[3]])
 		xlab <- deparse(rhs[[2]])
-		env <- parent.frame()
-		z <- eval(x[[2]], env)
-		y <- eval(rhs[[3]], env)
-		x <- eval(rhs[[2]], env)
+		pf <- parent.frame()
+		z <- eval(x[[2]],   environment(x), pf)
+		y <- eval(rhs[[3]], environment(x), pf)
+		x <- eval(rhs[[2]], environment(x), pf)
 	    }
 	    else stop("invalid first argument [bad language]")
 	}
