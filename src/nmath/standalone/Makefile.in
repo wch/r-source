@@ -78,13 +78,9 @@ all: Makefile static shared
 
 Copy:
 	@echo "Copying source files"
-	@if test ! -f std_unif.c; then \
-	  $(LN_S) $(srcdir)/sunif.c std_unif.c; \
-	fi
+	@test -f std_unif.c || $(LN_S) $(srcdir)/sunif.c std_unif.c
 	@for f in $(SOURCES_NMATH); do \
-	  if test ! -f $${f}; then \
-	    $(LN_S) $(srcdir)/../$${f} .; \
-	  fi; \
+	  test -f $${f} || $(LN_S) $(srcdir)/../$${f} . ; \
 	done
 
 static: Makefile ../../include/Rconfig.h

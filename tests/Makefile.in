@@ -136,7 +136,7 @@ FORCE:
 	@(echo '.ptime <- proc.time(); gctorture()' ; \
 	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
-	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
+	  test -r $$Ro || $(MAKE) $$Ro; \
 	  echo @ECHO_N@ "comparing '$@' to '$$Ro' ...@ECHO_C@"; \
 	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $$Ro  1 || exit 1; \
 	  mv $@.fail $@; \
