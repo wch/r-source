@@ -125,6 +125,13 @@
   defined in \file{Rinternals.h} or the arguments can be declared as
   generic pointers, \code{void *}. Lists are passed as C arrays of
   \code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
+  Note that you cannot assign values to the elements of the list within
+  the C routine. Assigning values to elements of the array corresponding
+  to the list bypasses R's memory management/garbage collection and will
+  cause problems.  Essentially, the array corresponding to the list is read-only.
+  If you need to return S objects created within the C routine,  use the
+  \code{.Call} interface.
+
 
   \R functions can be invoked using \code{call_S} or \code{call_R} and
   can be passed lists or the simple types as arguments.
