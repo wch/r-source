@@ -259,6 +259,12 @@ NEW FEATURES
 	All of these settings are currently only available via par()
 	(i.e., not in-line as arguments to plot(), lines(), ...)
 
+    o   New functions to control mapping from device-independent graphics
+	font family to device-specific family:  postscriptFont() and
+	postscriptFonts() (for postscript() and pdf());  X11Font() and
+	X11Fonts();  windowsFont() and windowsFonts();  quartzFont() and
+	quartzFonts().
+
     o	A 'version' argument has been added to pdf() device.  If this is
 	set to "1.4", the device will support transparent colours.
 
@@ -312,7 +318,7 @@ NEW FEATURES
 	NOTE: most devices draw nothing if a colour is not opaque,
 	but PDF and Quartz devices will render semitransparent colours.
 
-	A new argument 'alpha' to the function col2rgba() 
+	A new argument 'alpha' to the function col2rgb() 
         provides the ability to return the alpha component of
 	colours (as well as the red, green, and blue components).
 
