@@ -43,8 +43,10 @@ print.formula <- function(x, ...) {
 
 "[.formula" <- function(x,i) {
     ans <- NextMethod("[")
-    if(as.character(ans[[1]]) == "~")
+    if(as.character(ans[[1]]) == "~"){
 	class(ans) <- "formula"
+        environment(ans)<-environment(x)
+    }
     ans
 }
 
@@ -80,11 +82,14 @@ reformulate <- function (termlabels, response=NULL)
     termtext <- paste(termlabels, collapse="+")
     if (is.null(response)) {
 	termtext <- paste("~", termtext, collapse="")
-	eval(parse(text=termtext)[[1]])
+	rval<-eval(parse(text=termtext)[[1]])
+        environment(rval)<-parent.frame()
+        rval
     } else {
 	termtext <- paste("response", "~", termtext, collapse="")
 	termobj <- eval(parse(text=termtext)[[1]])
 	termobj[[2]] <- response
+        environment(termobj)<-parent.frame()
 	termobj
     }
 }
@@ -96,6 +101,7 @@ drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
     else {
 	newformula <- reformulate(attr(termobj, "term.labels")[-dropx],
 				  if (keep.response) termobj[[2]] else NULL)
+        environment(newformula)<-environment(termobj)
 	terms(newformula, specials=names(attr(termobj, "specials")))
     }
 }
