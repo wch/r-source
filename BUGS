@@ -327,3 +327,7 @@ Date: Thu, 28 Oct 1999 17:23:02 +0100 (BST)
 Subject: modreg buggy: uninitialized variable in sinerp.f
 From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
 Date: Sat, 30 Oct 99 13:24:14 +0100
+* PR# 303 *
+Subject: read.table problem on Linux/Alpha (seg faults caused by isspace(R_EOF))
+From: ntakebay@bio.indiana.edu
+Date: Sun, 31 Oct 1999 01:29:05 +0200 (MET DST)
