@@ -46,15 +46,19 @@ BUG FIXES
 
     o	plot.ts(x, log = "y") works again when x has 0s, also for matrix x.
 
-    o	add1, drop1, step work again on glm object with formulae with
-	rhs's containing `.'.  (Broken by a `bug fix' (in reality an
-	API change) in 1.2.1.)
+    o	add1(), drop1(), step() work again on glm objects with
+	formulae with rhs's containing `.'.  (Broken by a `bug fix' 
+	(in reality an API change) in 1.2.1.)
 
     o	optim(method="BFGS") was not reporting reaching `maxit' 
 	iterations in the convergence component of the return value.
 
     o	aov and model.tables were failing on multistrata models with
 	excessively long Error formula. (PR#1315)
+
+    o	Transparent backgrounds on png() devices on Unix-alikes had
+	been broken during the driver changes just prior to 1.4.0.
+	(They worked correctly on Windows.)
 
 
 		CHANGES IN R VERSION 1.4.1

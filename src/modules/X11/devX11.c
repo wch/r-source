@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1428,15 +1428,23 @@ static void newX11_Close(NewDevDesc *dd)
 	    xi = XGetImage(display, xd->window, 0, 0, 
 			   xd->windowWidth, xd->windowHeight, 
 			   AllPlanes, ZPixmap);
-	    if (xd->type == PNG) 
+	    if (xd->type == PNG) {
+		unsigned int pngtrans = PNG_TRANS;
+		if(model == TRUECOLOR) {
+		    int i, r, g, b;
+		    /* some `truecolor' displays distort colours */
+		    i = GetX11Pixel(R_RED(PNG_TRANS), 
+					   R_GREEN(PNG_TRANS), 
+					   R_BLUE(PNG_TRANS));
+		    r = ((i>>RShift)&RMask) * 255 /(RMask);
+		    g = ((i>>GShift)&GMask) * 255 /(GMask);
+		    b = ((i>>BShift)&BMask) * 255 /(BMask);
+		    pngtrans = (r<<16) | (g<<8) | b;
+		}
 		R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight, 
 			    bitgp, 0, xd->fp,
-			    /* Was R_OPAQUE(dd->bg)
-			     * Paul changed it to R_OPAQUE(xd->fill)
-			     * Is that ok ?
-			     */
-			    R_OPAQUE(xd->fill) ? 0 : PNG_TRANS);
-	    else if (xd->type == JPEG)
+			    (xd->fill != PNG_TRANS) ? 0 : pngtrans);
+	    } else if (xd->type == JPEG)
 		R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight, 
 			     bitgp, 0, xd->quality, xd->fp);
 	    XDestroyImage(xi);
