@@ -50,9 +50,8 @@ extern double	R_NaReal;		/* NA_REAL */
 #define FINITE(x)		((x)!=NA_REAL)
 #define ISNAN(x)		((x)!=NA_REAL)
 #define ISNA(x)			((x)!=NA_REAL)
+#define NAN(x)			ISNAN(x)
 
 #endif
-
-#define NAN(x)			ISNAN(x)
 
 #endif
