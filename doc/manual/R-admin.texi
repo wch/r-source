@@ -223,7 +223,8 @@ for the rest of this chapter we consider only building from the sources.
 
 First review the essential and useful tools and libraries in
 @ref{Essential and useful other programs}, and install those you want or
-need.
+need.  Ensure that the environment variable @samp{TMPDIR} is either
+unset or points to a valid temporary directory.
 
 @findex R_HOME
 Choose a place to install the @R{} tree (@R{} is not just a binary, but
@@ -433,7 +434,7 @@ the sources and throughout the build process.
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000, ME and XP (at
-least) on Intel and clones (but not on other platforms).
+least) on Intel x86 and clones (but not on other platforms).
 
 You do need one of those Windows versions: Windows 3.11+win32s will not
 work.
