@@ -368,7 +368,7 @@ if(.Platform$GUI == "AQUA") {
     }
     
 is.RAqua.updated <- function() {
- readLines("http://www.economia.unimi.it/R/VERSION") -> cran.ver
+ readLines("http://cran.r-project.org/bin/macosx/VERSION") -> cran.ver
 
  strsplit(cran.ver,"\\.") -> ver
  cran.ver <- as.numeric(ver[[1]])
