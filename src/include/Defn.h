@@ -872,7 +872,7 @@ char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, Rprt_adj);
 
 /* from sysutils.c */
-void * Riconv_open (const char* tocode, const char* fromcode);
+void * Riconv_open (char* tocode, char* fromcode);
 size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft,
 	       char  **outbuf, size_t *outbytesleft);
 int Riconv_close (void * cd);

@@ -287,7 +287,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* Unfortunately glibc and Solaris diff in the const in the iopen decl.
+/* Unfortunately glibc and Solaris diff in the const in the iconv decl.
    libiconv agrees with Solaris here.
  */
 #ifdef HAVE_ICONV_H
@@ -425,7 +425,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #if defined(HAVE_DECL_ICONV) && HAVE_DECL_ICONV
-void * Riconv_open (const char* tocode, const char* fromcode)
+void * Riconv_open (char* tocode, char* fromcode)
 {
 #ifdef Win32
     iconv_Init();
@@ -444,7 +444,7 @@ int Riconv_close (void *cd)
     return iconv_close((iconv_t) cd);
 }
 #else
-void * Riconv_open (const char* tocode, const char* fromcode)
+void * Riconv_open (char* tocode, char* fromcode)
 {
     error("`iconv' is not available on this system");
     return (void *)-1;

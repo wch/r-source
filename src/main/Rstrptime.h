@@ -6,7 +6,9 @@
    code from the GNU C library with locale support removed. */
 
 static void get_locale_strings(void);
+#ifdef SUPPORT_UTF8
 static void get_locale_w_strings(void);
+#endif
 
 /* Convert a string representation of time to a time value.
    Copyright (C) 1996, 1997, 1998, 1999, 2000 Free Software Foundation, Inc.
