@@ -1167,7 +1167,7 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 
 Rboolean mbcsValid(char *str)
 {
-    return  (mbstowcs(NULL, str, 0) >= 0);
+    return  ((int)mbstowcs(NULL, str, 0) >= 0);
 }
 
 /* We do this conversion ourselves to do our own error recovery */
