@@ -1072,6 +1072,8 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     for (j = 0; j < len; j++, t = CDR(t)) {
 	TAG(t) = install(CHAR(STRING(CAR(args))[j]));
 	CAR(t) = findVar(TAG(t), R_GlobalContext->sysparent);
+	if (CAR(t) == R_UnboundValue)
+            error("Object \"%s\" not found\n", CHAR(PRINTNAME(TAG(t))));
     }
 
     R_SaveToFile(s, fp, INTEGER(CADDR(args))[0]);
