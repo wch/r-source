@@ -378,7 +378,7 @@ variables.  The set of symbols which can be used in @R{} names depends
 on the operating system and country within which @R{} is being run
 (technically on the @emph{locale} in use).  Normally all alphanumeric
 symbols are allowed (and in some countries this includes accented
-letters) plus @samp{@code{.}}@footnote{C programmers should not that
+letters) plus @samp{@code{.}}@footnote{C programmers should note that
 @samp{@code{_}} is not available, but @samp{@code{.}} is and is often
 used to separate words in @R{} names.}, with the restriction that a name
 cannot start with a digit.
