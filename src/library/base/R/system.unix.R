@@ -1,5 +1,6 @@
-data <- function(..., list = character(0), package =c(.packages(),.Autoloaded),
-		 lib.loc = .lib.loc) {
+data <-
+function(..., list = character(0), package =c(.packages(),.Autoloaded),
+         lib.loc = .lib.loc) {
   names <- c(as.character(substitute(list(...))[-1]), list)
   if (!missing(package))
     if (is.name(y <- substitute(package)))
@@ -24,30 +25,28 @@ data <- function(..., list = character(0), package =c(.packages(),.Autoloaded),
       system(paste("$RHOME/cmd/pager", file))
   }
   else for (name in names) {
-    dn <- paste("data/", name, sep="")
-    files <- system.file(paste(dn, ".*",sep=""), package, lib.loc)
-    if (length(files)>1 || files != "") { #-- found >= 1
-      for(file in files) {
-        nc <- nchar(file)
-        if((ext <- substr(file,nc-5,nc))== ".RData" ||
-           ext== ".rdata" || substr(file,nc-3,nc)== ".rda"){
-          found <- TRUE; load(file)
-        } else if((ext <- substr(file,nc-1,nc))== ".R" || ext== ".r") {
-          found <- TRUE; source(file)
-        } else if((ext <- substr(file,nc-3,nc)) == ".tab" ||
-                  ext==".txt" || ext==".TXT") {
-          found <- TRUE
-          assign(name, read.table(file, header=TRUE), env = .GlobalEnv)
-        } else if((ext <- substr(file,nc-3,nc)) == ".csv" || ext==".CSV"){
-          found <- TRUE
-          assign(name, read.table(file, header=TRUE, sep=";"),
-                 env = .GlobalEnv)
-        }
+    dn <- paste("data/", name, sep = "")
+    files <- system.file(paste(dn, ".*", sep = ""), package, lib.loc)
+    found <- FALSE    
+    if (files != "") {
+      for (file in files) {
+        if (found) break
+        found <- TRUE
+        switch(sub(".*\\.", "", file),
+               "R" =, "r" = source(file),                 
+               "RData" =, "rdata" =, "rda" = load(file),
+               "TXT" =, "txt" =, "tab" =
+               assign(name, read.table(file, header = TRUE),
+                      env = .GlobalEnv),
+               "CSV" =, "csv" =
+               assign(name, read.table(file, header = TRUE, sep = ";"),
+                      env = .GlobalEnv),
+               found <- FALSE)
       }
     }
+    if (!found)
+      warning(paste("Data set `", name, "' not found", sep = ""))
   }
-  if(!found)
-    stop("No data sets found")
   invisible(names)
 }
 
