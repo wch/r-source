@@ -261,11 +261,12 @@ model.frame.default <-
     (nr <- nrow(data)) > 0
 
     ## were we passed just a fitted model object?
+    ## the fit might have a saved model object
+    if(!missing(formula) && nargs() == 1 && is.list(formula)
+       && !is.null(m <- formula$model)) return(m)
+    ## if not use the saved call (if there is one).
     if(!missing(formula) && nargs() == 1 && is.list(formula)
        && all(c("terms", "call") %in% names(formula))) {
-        ## the fit might have a saved model object
-        if(!is.null(m <- formula$model)) return(m)
-        ## if not use the saved call.
         fcall <- formula$call
         m <- match(c("formula", "data", "subset", "weights", "na.action"),
                    names(fcall), 0)

@@ -592,7 +592,7 @@ BUG FIXES
 	on a fresh device.
 
     o	hasArg() used wrong logic to get the parent function. (sys.function()
-	behaves differently from what is documented.
+	behaves differently from what is documented.)
 
     o	prompt(f) now gives proper \usage{..} for
 	f <- function(x, g = function(u) { v <- u^2 ; sin(v)/v }) { g(x) }
@@ -600,9 +600,10 @@ BUG FIXES
     o	package.skeleton() now uses the supplied name in the DESCRIPTION
 	file.
 
-    o	options(list('digits', 'scipen')) no longer seg.faults (PR#7078).
+    o	options(list('digits', 'scipen')) no longer seg.faults, the
+	problem being the misuse of a list (PR#7078).
 
-    o	summary.Date() now has a sensible default for 'digits'.
+    o	summary.Date() now has a more sensible default for 'digits'.
 
     o	list.files(all.files = TRUE, recursive = TRUE) died on infinite
 	recursion. (PR#7100)
@@ -611,14 +612,14 @@ BUG FIXES
 	cor(), cov() and var() no longer accidentally work with list()
 	arguments as if they were unlist()ed.
 
-    o	as.matrix(data.frame(d= as.POSIXct("2004-07-20"))) doesn't give a
+    o	as.matrix(data.frame(d=as.POSIXct("2004-07-20"))) doesn't give a
 	wrong warning anymore.
 
     o	gsub(perl=TRUE) code got the R length of return strings wrong
 	in some circumstances (when the string was shortened).
 	(Fixed also PR#7108)
 
-    o	summaryRprof was ignoring functions whose name begins with dot,
+    o	summaryRprof() was ignoring functions whose name begins with dot,
 	e.g. .C, .Call, .Fortran. (PR#7137)
 
     o	loglin() could segfault if 'start' was of the wrong length.  (PR#7123)
@@ -634,7 +635,9 @@ BUG FIXES
 	promises.
 
     o   approx(c(1,2),c(NA,NA),1.5,rule=2) does not segfault anymore
-	(PR#7177), but give an error.
+	(PR#7177), but gives an error.
+
+    o   nls(model = TRUE) was broken.
 
 
 
