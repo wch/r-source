@@ -119,10 +119,10 @@ spec.pgram <-
     for (i in 1:ncol(x)) {
         for (j in 1:ncol(x)) {
             pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N*xfreq)
+        ## value at zero is invalid as mean has been removed, so interpolate
+            pgram[1, i, j] <- 0.5*(pgram[2, i, j] + pgram[N, i, j])
         }
     }
-    ## value at zero is invalid as mean has been removed, so interpolate
-    pgram[1, i, j] <- 0.5*(pgram[2, i, j] + pgram[N, i, j])
     if(!is.null(kernel)) {
         for (i in 1:ncol(x)) for (j in 1:ncol(x))
                 pgram[, i, j] <- kernapply(pgram[, i, j], kernel,
