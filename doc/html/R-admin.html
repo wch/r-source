@@ -3,7 +3,7 @@
 <title>R Installation and Administration</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R Installation and Administration">
-<meta name="generator" content="makeinfo 4.3">
+<meta name="generator" content="makeinfo 4.5">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
 </head>
 <body>
@@ -14,7 +14,7 @@
 
    <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.8.0 (2003-04-19).
+   <p>The current version of this document is 1.8.0 (2003-04-25).
 
    ISBN 3-901167-52-8
 
@@ -322,29 +322,13 @@ disc).
    <p>For further details, including how to make the documentation and how to
 cross-compile, see <code>src/gnuwin32/INSTALL</code>.
 
-<a name="Installing%20R%20on%20Classic%20MacOS"></a>
-
-<h2 class="chapter">4 Installing R on Classic MacOS</h2>
-
-   <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains
-<code>bin-hex</code>ed (<code>hqx</code>) and <code>stuffit</code> (<code>sit</code>)
-archives for a base distribution and a large number of add-on packages
-to run under MacOS 8.6 to MacOS 9.1 or MacOS X natively.  Just extract
-one of these archives in a suitable folder using standard utilities like
-Aladdin Stuffit Expander (tm).
-
-   <p>There is also a port to MacOS X which is considered to be a Unix variant
-in this document.  You can find it in the <code>bin/macosx</code> directory at
-of a <small>CRAN</small> site.
-
 <a name="Add-on%20packages"></a>
 
-<h2 class="chapter">5 Add-on packages</h2>
+<h2 class="chapter">4 Add-on packages</h2>
 
    </ul>
 
-   <p>This chapter applies to Unix-like and Windows versions of R, but not
-to the Classic MacOS port.
+   <p>This chapter applies to Unix-like and Windows versions of R.
 
    <p>It is helpful to use the correct terminology.  A <em>package</em> is
 loaded from a <em>library</em> by the function <code>library()</code>.  Thus a
@@ -355,7 +339,7 @@ setting the environment variable <code>R_LIBS</code> or using the R function
 
 <a name="Installing%20packages"></a>
 
-<h3 class="section">5.1 Installing packages</h3>
+<h3 class="section">4.1 Installing packages</h3>
 
    <p>Installing source packages requires that Perl 5.004 or later be
 installed.
@@ -408,7 +392,7 @@ interface to <code>install.packages</code>, <code>update.packages</code> and
 
 <a name="Updating%20packages"></a>
 
-<h3 class="section">5.2 Updating packages</h3>
+<h3 class="section">4.2 Updating packages</h3>
 
    <p>The command <code>update.packages()</code> is the simplest way to ensure that
 all the packages on your system are up to date.  Set the <code>CRAN</code>
@@ -429,7 +413,7 @@ intended to become the default package manager for future versions of R.
 
 <a name="Removing%20packages"></a>
 
-<h3 class="section">5.3 Removing packages</h3>
+<h3 class="section">4.3 Removing packages</h3>
 
    <p>Packages can be removed in a number of ways.  From a command prompt they
 can be removed by
@@ -1227,13 +1211,12 @@ of practice at porting R to new platforms <small class="enddots">....</small>
 <li>Help pages: <a href="#Simple%20compilation">Simple compilation</a>
 <li>HP-UX: <a href="#HP-UX">HP-UX</a>
 <li>Installation: <a href="#Installation">Installation</a>
-<li>Installing under MacOS: <a href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>
 <li>Installing under Unix: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>Installing under Windows: <a href="#Installing%20R%20under%20Windows">Installing R under Windows</a>
 <li>IRIS: <a href="#IRIX">IRIX</a>
 <li>LAPACK library: <a href="#Solaris">Solaris</a>, <a href="#MacOS%20X">MacOS X</a>, <a href="#Linear%20algebra">Linear algebra</a>
 <li>Linux: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
-<li>MacOS X: <a href="#MacOS%20X">MacOS X</a>, <a href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>, <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
+<li>MacOS X: <a href="#MacOS%20X">MacOS X</a>, <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>Manuals: <a href="#Making%20the%20manuals">Making the manuals</a>
 <li>Manuals, installing: <a href="#Installation">Installation</a>
 <li>Obtaining R: <a href="#Obtaining%20R">Obtaining R</a>

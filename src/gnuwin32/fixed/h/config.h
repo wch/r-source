@@ -392,9 +392,6 @@
 /* Define if you have 32 bit ints. */
 #define INT_32_BITS 1
 
-/* Define according to your operating system type. */
-/* #undef Macintosh */
-
 /* Define if your system needs __setfpucw() to control FPU rounding. This was
    used to control floating point precision, rounding and floating point
    exceptions on older Linux systems. As of GLIBC 2.1 this function is not

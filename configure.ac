@@ -63,11 +63,6 @@ R_PLATFORM="${host}"
 AC_SUBST(R_PLATFORM)
 
 case "${host_os}" in
-  macos*)
-    AC_DEFINE(Macintosh, 1,
-              [Define according to your operating system type.])
-    R_OSTYPE="mac"
-    ;;
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(Win32, 1,
               [Define according to your operating system type.])
