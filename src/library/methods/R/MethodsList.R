@@ -244,7 +244,7 @@ MethodsListSelect <-
             value <- mlist ## no change
         else {
             ## recursive call with NULL function name, to allow search to fail &
-            ## to suppress any reset actions. 
+            ## to suppress any reset actions.
             method <- Recall(NULL, env, selection, finalDefault = finalDefault,
                    evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef,
                              )
@@ -306,7 +306,7 @@ MethodsListSelect <-
             if(is.primitive(finalDefault))
                 setPrimitiveMethods(f, finalDefault, "set", fdef, resetMlist)
         }
-            
+
     }
     value
 }
@@ -393,7 +393,7 @@ inheritedSubMethodLists <-
       for(which in seq(along = classes)) {
         tryClass <- el(classes, which)
         if(isClass(tryClass)) {
-            tryClassDef <- getClass(tryClass) 
+            tryClassDef <- getClass(tryClass)
             if(is(tryClassDef, "classRepresentation")) {
               if(!is.na(match(thisClass, names(tryClassDef@subclasses))))
                 elNamed(value, tryClass) <- el(methods, which)
@@ -549,7 +549,7 @@ function(f, filename = NULL, methods)
     ## 'filename' can be a logical or NA or the name of a file to print
     ## to.  If it 'FALSE', the methods skeleton is returned, to be
     ## included in other printing (typically, the output from 'prompt').
-  
+
     paste0 <- function(...) paste(..., sep = "")
     packageString <- ""
 
@@ -565,7 +565,7 @@ function(f, filename = NULL, methods)
         ## (We want the '`' for LaTeX, as we currently cannot have
         ## \sQuote{} inside a \title.)
     }
-    
+
     object <- linearizeMlist(methods, FALSE)
     methods <- object@methods; n <- length(methods)
     args <- object@arguments
@@ -582,7 +582,7 @@ function(f, filename = NULL, methods)
                    "}")
     }
     text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
-    text <- c("\\section{Methods}{\\describe{", text, "}}")
+    text <- c("\\section{Methods}{\n\\describe{", text, "}}")
     aliasText <- c(paste0("\\alias{", fullName, "}"), aliases)
     if(identical(filename, FALSE))
         return(c(aliasText, text))
@@ -596,12 +596,15 @@ function(f, filename = NULL, methods)
              aliases = aliasText,
              title = paste("\\title{ ~~ Methods for Function", f,
              packageString, "~~}"),
+             description = paste0("\\description{\n ~~ Methods for function",
+             " \\code{", f, "} in package \\pkg{", getPackageName(where),
+             "} ~~\n}"),
              "section{Methods}" = text,
              keywords = c("\\keyword{methods}",
              "\\keyword{ ~~ other possible keyword(s)}"))
 
     if(is.na(filename)) return(Rdtxt)
-    
+
     cat(unlist(Rdtxt), file = filename, sep = "\n")
     invisible(filename)
 }
