@@ -1043,14 +1043,12 @@ try(eigen(m))
 
 
 ## 1.3.0 had poor compression on gzfile() with lots of small pieces.
-if (capabilities("libz")) {
-    zz <- gzfile("t1.gz", "w")
-    write(1:1000, zz)
-    close(zz)
-    (sz <- file.info("t1.gz")$size)
-    unlink("t1.gz")
-    stopifnot(sz < 2000)
-}
+zz <- gzfile("t1.gz", "w")
+write(1:1000, zz)
+close(zz)
+(sz <- file.info("t1.gz")$size)
+unlink("t1.gz")
+stopifnot(sz < 2000)
 
 
 ## PR 1010: plot.mts (type="p") was broken in 1.3.0 and this call failed.
