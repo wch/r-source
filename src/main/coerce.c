@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the
- *                           R Development Core Team
+ *			     R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,8 +46,8 @@ static char *falsenames[] = {
 
 static int isblankstr(unsigned char *s)
 {
-    while (*s) 
-    	if (!isspace(*s++)) return 0; 
+    while (*s)
+	if (!isspace(*s++)) return 0;
     return 1;
 }
 
@@ -927,7 +927,7 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 	}
 	/* drop attributes() and class() in some cases: */
 	if ((type == LISTSXP
-	     /* already loses 'names' where it shouldn't: 
+	     /* already loses 'names' where it shouldn't:
 		|| type == VECSXP) */
 	    ) &&
 	    !(TYPEOF(u) == LANGSXP || TYPEOF(u) == LISTSXP ||
@@ -1252,6 +1252,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, names, x;
     int i, n;
+
     if (DispatchOrEval(call, op, args, rho, &ans, 1))
 	return(ans);
     PROTECT(args = ans);
@@ -1260,9 +1261,9 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isList(CAR(args)) && !isVector(CAR(args)))
 	errorcall(call, "is.na applies only to lists and vectors\n");
 #endif
-    ans = allocVector(LGLSXP, length(CAR(args)));
     x = CAR(args);
     n = length(x);
+    ans = allocVector(LGLSXP, n);
     if (isVector(x)) {
 	PROTECT(dims = getAttrib(x, R_DimSymbol));
 	if (isArray(x))
@@ -1274,46 +1275,56 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     switch (TYPEOF(x)) {
     case LGLSXP:
     case INTSXP:
-	for (i = 0; i < length(x); i++)
+	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = (INTEGER(x)[i] == NA_INTEGER);
 	break;
     case REALSXP:
-	for (i = 0; i < length(x); i++)
+	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = ISNAN(REAL(x)[i]);
 	break;
     case CPLXSXP:
-	for (i = 0; i < length(x); i++)
-	    LOGICAL(ans)[i] = (ISNAN(COMPLEX(x)[i].r)
-			       || ISNAN(COMPLEX(x)[i].i));
+	for (i = 0; i < n; i++)
+	    LOGICAL(ans)[i] = (ISNAN(COMPLEX(x)[i].r) ||
+			       ISNAN(COMPLEX(x)[i].i));
 	break;
     case STRSXP:
-	for (i = 0; i < length(x); i++)
+	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = (STRING(x)[i] == NA_STRING);
 	break;
+
+/* Same code for LISTSXP and VECSXP : */
+#define LIST_VEC_NA(s)							\
+	if (!isVector(s) || length(s) > 1)				\
+		LOGICAL(ans)[i] = 0;					\
+	else {								\
+		switch (TYPEOF(s)) {					\
+		case LGLSXP:						\
+		case INTSXP:						\
+		    LOGICAL(ans)[i] = (INTEGER(s)[0] == NA_INTEGER);	\
+		    break;						\
+		case REALSXP:						\
+		    LOGICAL(ans)[i] = ISNAN(REAL(s)[0]);		\
+		    break;						\
+		case STRSXP:						\
+		    LOGICAL(ans)[i] = (STRING(s)[0] == NA_STRING);	\
+		    break;						\
+		case CPLXSXP:						\
+		    LOGICAL(ans)[i] = (ISNAN(COMPLEX(s)[0].r)		\
+				       || ISNAN(COMPLEX(s)[0].i));	\
+		    break;						\
+		}							\
+	}
+
     case LISTSXP:
-	n = length(x);
 	for (i = 0; i < n; i++) {
-	    if (!isVector(CAR(x)) || length(CAR(x)) > 1)
-		LOGICAL(ans)[i] = 0;
-	    else {
-		switch (TYPEOF(CAR(x))) {
-		case LGLSXP:
-		case INTSXP:
-		    LOGICAL(ans)[i] = (INTEGER(CAR(x))[0] == NA_INTEGER);
-		    break;
-		case REALSXP:
-		    LOGICAL(ans)[i] = ISNAN(REAL(CAR(x))[0]);
-		    break;
-		case STRSXP:
-		    LOGICAL(ans)[i] = (STRING(CAR(x))[0] == NA_STRING);
-		    break;
-		case CPLXSXP:
-		    LOGICAL(ans)[i] = (ISNAN(COMPLEX(CAR(x))[0].r)
-				       || ISNAN(COMPLEX(CAR(x))[0].i));
-		    break;
-		}
-	    }
+	    LIST_VEC_NA(CAR(x));
 	    x = CDR(x);
+	}
+	break;
+    case VECSXP:
+	for (i = 0; i < n; i++) {
+	    SEXP s = VECTOR(x)[i];
+	    LIST_VEC_NA(s);
 	}
 	break;
     default:
@@ -1335,6 +1346,10 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* Convenience for using LIST_VEC_NAN macro later */
+#ifndef IEEE_754
+# define R_isNaN(x) (0)
+#endif
 SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, names, x;
@@ -1350,9 +1365,9 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isList(CAR(args)) && !isVector(CAR(args)))
 	errorcall(call, "is.nan applies only to lists and vectors\n");
 #endif
-    PROTECT(ans = allocVector(LGLSXP, length(CAR(args))));
     x = CAR(args);
     n = length(x);
+    ans = allocVector(LGLSXP, n);
     if (isVector(x)) {
 	PROTECT(dims = getAttrib(x, R_DimSymbol));
 	if (isArray(x))
@@ -1370,11 +1385,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case REALSXP:
 	for (i = 0; i < n; i++)
-#ifdef IEEE_754
 	    LOGICAL(ans)[i] = R_IsNaN(REAL(x)[i]);
-#else
-	    LOGICAL(ans)[i] = 0;
-#endif
 	break;
     case CPLXSXP:
 	for (i = 0; i < n; i++)
@@ -1385,66 +1396,39 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 #endif
 	break;
+
+/* Same code for LISTSXP and VECSXP : */
+
+#define LIST_VEC_NAN(s)							\
+	if (!isVector(s) || length(s) > 1)				\
+		LOGICAL(ans)[i] = 0;					\
+	else {								\
+		switch (TYPEOF(s)) {					\
+		case LGLSXP:						\
+		case INTSXP:						\
+		case STRSXP:						\
+		    LOGICAL(ans)[i] = 0;				\
+		    break;						\
+		case REALSXP:						\
+		    LOGICAL(ans)[i] = R_IsNaN(REAL(s)[0]);		\
+		    break;						\
+		case CPLXSXP:						\
+		    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(s)[0].r) ||	\
+				       R_IsNaN(COMPLEX(s)[0].i));	\
+		    break;						\
+		}							\
+	}
+
     case LISTSXP:
 	for (i = 0; i < n; i++) {
-	    if (!isVector(CAR(x)) || length(CAR(x)) > 1)
-		LOGICAL(ans)[i] = 0;
-	    else {
-		switch (TYPEOF(CAR(x))) {
-		case LGLSXP:
-		case INTSXP:
-		case STRSXP:
-		    LOGICAL(ans)[i] = 0;
-		    break;
-		case REALSXP:
-#ifdef IEEE_754
-		    LOGICAL(ans)[i] = R_IsNaN(REAL(CAR(x))[0]);
-#else
-		    LOGICAL(ans)[i] = 0;
-#endif
-		    break;
-		case CPLXSXP:
-#ifdef IEEE_754
-		    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(CAR(x))[0].r) ||
-				       R_IsNaN(COMPLEX(CAR(x))[0].i));
-#else
-		    LOGICAL(ans)[i] = 0;
-#endif
-		    break;
-		}
-	    }
+	    LIST_VEC_NAN(CAR(x));
 	    x = CDR(x);
 	}
 	break;
     case VECSXP:
 	for (i = 0; i < n; i++) {
 	    SEXP s = VECTOR(x)[i];
-	    if (!isVector(s) || length(s) > 1)
-		LOGICAL(ans)[i] = 0;
-	    else {
-		switch (TYPEOF(s)) {
-		case LGLSXP:
-		case INTSXP:
-		case STRSXP:
-		    LOGICAL(ans)[i] = 0;
-		    break;
-		case REALSXP:
-#ifdef IEEE_754
-		    LOGICAL(ans)[i] = R_IsNaN(REAL(s)[0]);
-#else
-		    LOGICAL(ans)[i] = 0;
-#endif
-		    break;
-		case CPLXSXP:
-#ifdef IEEE_754
-		    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(s)[0].r) ||
-				       R_IsNaN(COMPLEX(s)[0].i));
-#else
-		    LOGICAL(ans)[i] = 0;
-#endif
-		    break;
-		}
-	    }
+	    LIST_VEC_NAN(s);
 	}
 	break;
     default:
@@ -1462,9 +1446,12 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (isVector(x))
 	UNPROTECT(2);
-    UNPROTECT(2);
+    UNPROTECT(1);
     return ans;
 }
+#ifndef IEEE_754
+# undef R_isNaN
+#endif
 
 SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
