@@ -569,7 +569,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Now we can evaluate the arguments */
 
-    args = evalList(args, rho);
+    PROTECT(args = evalList(args, rho));
 
     /* The first arg is the object name */
     /* It must be present and a string */
@@ -614,6 +614,8 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Search for the object */
     rval = findVar1(t1, genv, gmode, ginherits);
+
+    UNPROTECT(1);
 
     if (PRIMVAL(op)) { /* have get(.) */
 	if (rval == R_UnboundValue)
