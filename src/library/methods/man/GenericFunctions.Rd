@@ -10,7 +10,6 @@
 \alias{existsFunction}
 \alias{findFunction}
 \alias{dumpMethods}
-\alias{showMethods}
 \alias{removeMethods}
 \alias{signature}
 \alias{setReplaceMethod}
@@ -34,9 +33,6 @@ dumpMethods(f, file, signature, methods, where)
 
 signature(...)
 
-showMethods(f, where, classes, includeDefs=FALSE, inherited = TRUE,
-            printTo = stdout())
-
 removeMethods(f, where)
 
 setReplaceMethod(f, ...)
@@ -45,11 +41,14 @@ getGenerics(where)
 allGenerics(where)
 
 }
-\description{
 
+\description{
 The functions documented here manage collections of methods associated
 with a generic function, as well as providing information about the
 generic functions themselves.
+}
+
+\section{Summary of Functions}{
 
 \describe{
   \item{\code{isGeneric}:}{ 
@@ -119,34 +118,6 @@ sig = the signature of classes to match to the arguments of f.
   generic function.
  
   }
-  \item{\code{showMethods}:}{ 
-  Show all the methods for the specified function.
-
-If \code{where} is supplied, the definition from that database will be used; otherwise,
-the current definition is used (which will include inherited methods that have arisen so
-far in the session).
-
-The argument \code{classes} is included for consistency with S-Plus, but currently ignored.
-Similarly, omitting \code{f} is not currently supported.  
-  
-  }
-  \item{\code{removeMethods}:}{ 
-  removes all the methods defined for this generic function.
-
-  }
-  \item{\code{setReplaceMethod}:}{
-  defines a method for \code{f}, used as a replacement function on the
-  left of an assignment, by calling \code{\link{setMethod}} for the
-  corresponding generic replacement function.  The \code{...} arguments
-  are passed to \code{\link{setMethod}}.
-}
-\item{\code{getGenerics}, \code{allGenerics}}{
-  \code{getGenerics} returns the names of all generic functions for
-  which methods are defined on package(s) \code{where}; by default, on any
-  of the packages in the current search list.
-
-  \code{allGenerics} is the identical function, supplied for S-Plus compatibility.
-  }
 }
 }
 
@@ -167,9 +138,7 @@ Similarly, omitting \code{f} is not currently supported.
 
   \item{def}{ The function object defining the method; if omitted, the
     current method definition corresponding to the signature. }
-
-  \item{includeDefs, classes, inherited}{See the detailed discussion of
-    \code{showMethods}}
+  }
 
   \item{...}{Named or unnamed arguments to form a signature.}
 
@@ -191,7 +160,7 @@ Similarly, omitting \code{f} is not currently supported.
   
 }
 
-\details{
+\section{Details}{
   \describe{
   
   \item{\code{setGeneric}:}{ 
@@ -287,16 +256,7 @@ as clearer documentation in your method specification.  In addition, \code{signa
 checks that each of the elements is a single character string.
 
   }
-  \item{\code{showMethods}:}{ 
-The output style is different from S-Plus in that it does not show the database
-from which the definition comes, but can optionally include the method definitions,
-if \code{includeDefs} is \code{TRUE}.
 
-If \code{inherits} is \code{TRUE}, then methods that have been found by inheritance, so
-far in the session, will be included and marked as inherited.
-
-  
-  }
   \item{\code{removeMethods}:}{ 
   Returns \code{TRUE} if
   \code{f} was a generic function, \code{FALSE} (silently) otherwise.
@@ -318,7 +278,7 @@ for further details and examples.
 \author{
   John Chambers
 }
-\seealso{\code{\link{setGeneric}}, \code{\link{setClass}}}
+\seealso{\code{\link{setGeneric}}, \code{\link{setClass}}, \code{\link{showMethods}}}
 \keyword{programming}
 \keyword{classes}
 \keyword{methods}

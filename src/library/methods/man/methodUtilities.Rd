@@ -32,7 +32,9 @@ message(...)
 These are utilities, currently in the methods package, that either
 provide some functionality needed by the package (e.g., element
 matching by name), or add compatibility with S-Plus, or both.
+}
 
+\section{Summary of Functions}{
 \describe{
   \item{\code{allNames}:}{ 
   the character vector of names (unlike names(), never returns NULL)

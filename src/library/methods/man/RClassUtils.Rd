@@ -161,7 +161,9 @@ checkSlotAssignment(obj, name, value)
 
 These are various functions to support the definition and use of
 formal classes.  Most of them are rarely suitable to be called directly.
-  
+}
+
+\section{Summary of Functions}{
 \describe{
 \item{\code{testVirtual}:}{ 
   Test for a Virtual Class.
@@ -498,11 +500,12 @@ results.
 \item{SessionClassMetaData:}{ Contains the name of the special table in which
     class information is cached during the session.}
 }
-}
 \item{\code{.InitBasicClasses}, \code{.InitMethodsListClass},
   \code{.setCoerceGeneric}:}{
   These functions perform part of the initialization of classes and
   methods, and are called (only!) from \code{.First.lib}.
   }
+}
+}
 \keyword{internal}
 

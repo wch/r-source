@@ -18,11 +18,13 @@ is called for automatic display of the result of an evaluated expression.
 \item{object}{Any R object}
 \item{printTo}{Either a file or \link{connection}, or else
     \code{FALSE}.  In the latter case, the lines of text that would
-    have been printed are returned as the value of the call.
+    have been printed are returned as the value of the call (in a
+    character vector with one element per line of output).
   }
   \item{oldMethods}{Should old-style print methods be used for this
     object?  \code{TRUE} by default if called directly, but \code{FALSE}
     when called from the methods package version of \code{print.default}.
+}
 }
 \value{ Usually an invisible \code{NULL}, but if \code{printTo} is
   \code{FALSE}, a character vector containing the lines that would
@@ -38,8 +40,9 @@ is called for automatic display of the result of an evaluated expression.
   want to write such methods, see the code for \code{show} for one way
   to do it.
 }
-\seealso{ \code{\link{showMlist}} prints methods lists;
-  \code{\link{showClassDef}} prints class definitions.  Neither of
-  these normally needs to be called directly.
+\seealso{ \code{\link{showMethods}} prints all the methods for one or
+  more functions;  \code{\link{showMlist}} prints individual methods lists;
+  \code{\link{showClass}} prints class definitions.  Neither of
+  the latter two normally needs to be called directly.
 }
 \keyword{programming}

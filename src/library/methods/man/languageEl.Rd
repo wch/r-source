@@ -10,6 +10,9 @@ isGrammarSymbol(symbol)
 
 }
 \description{
+  Internal routines to support some operations on language objects.
+}
+\section{Summary of Functions}{
 \describe{  
   \item{\code{languageEl}:}{ 
   extract an element of a language object, consistently

@@ -14,7 +14,10 @@ setAs(from, to, def, replace, where = 1)
 
 }
 \description{
-
+  These functions manage the relations that allow coercing an object to
+  a given class.
+  }
+\section{Summary of Functions}{
 \describe{
   \item{\code{as}:}{
   Returns the version of this object coerced to be the given \code{Class}.  

@@ -1,4 +1,5 @@
 \name{MethodSupport}
+\alias{.conflicts.OK}
 \alias{OldEvalSelectedMethod}
 \alias{getMethodsForDispatch}
 \alias{cacheMethod}
@@ -16,6 +17,10 @@ hasMethod(f, signature=character())
 resetGeneric(f)
 }
 \description{
+  These are support routines for computations on formal methods.
+}
+
+\section{Summary of Functions}{
   
 \describe{
 

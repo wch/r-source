@@ -1,11 +1,10 @@
 \name{recover}
 \alias{recover}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Browsing on an Error }
 \description{
   This function allows the user to browse directly on any of the
   currently active function calls, and is suitable as an error option.
-  The expression \code{options(error=quote(recover()))} will make this
+  The expression \code{options(error=recover)} will make this
   the error option.
 }
 \usage{
@@ -24,17 +23,16 @@ recover()
 
   \emph{WARNING}: Do not use the special \code{Q} command to go directly
   from the browser to the prompt level of the evaluator.  This currently
-  interacts with \code{recover} to mess up any subsequent error recovery
-  in that session.  If you do have to use \code{Q}, quit from the
-  session immediately afterwards.
+  interacts with \code{recover} to effectively turn off the error option
+  for the next error (on subsequent errors, \code{recover} will be called normally)
   }
 \value{
  Nothing useful is returned.  However, you \emph{can} invoke
- \code{recover} directly, rather than through the error option shown
+ \code{recover} directly from a function, rather than through the error option shown
  the usage section.  In this case, execution continues after you type
  \code{0} to exit \code{recover}.
 }
-\author{John Chambers }
+
 \section{Compatibility Note}{
   The R \code{recover} function can be used in the same way as the
   S-Plus function of the same name; therefore, the error option shown is
@@ -43,6 +41,8 @@ recover()
   with the user.
 }
 
+\references{\emph{Programming with Data}, (John M. Chambers, Springer,
+  1998).  See the compatibility note above, however.}
 
 \seealso{ See \code{\link{dump.frames}} and \code{\link{debugger}} for
   the more traditional approach to error recovery.}
