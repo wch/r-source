@@ -15,12 +15,7 @@
 help(topic, offline = FALSE, package = NULL,
      lib.loc = NULL, verbose = getOption("verbose"),
      try.all.packages = getOption("help.try.all.packages"),
-#ifdef unix
-     htmlhelp = getOption("htmlhelp"),
-#endif
-#ifdef windows
      chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),
-#endif
      pager = getOption("pager"))
 ?topic
 type?topic
@@ -48,6 +43,9 @@ type?topic
    packages are searched before the libraries.}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
  \item{try.all.packages}{logical; see \code{Notes}.}
+ \item{chmhelp}{logical (or \code{NULL}). Only relevant under Windows.
+   If \code{TRUE} the Compiled HTML version of the help will be shown
+   in a help viewer.}
 #ifdef unix
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
    default after \code{\link{help.start}} has been called), the HTML
@@ -57,8 +55,6 @@ type?topic
    browser window is re-used.}
 #endif
 #ifdef windows
-  \item{chmhelp}{logical (or \code{NULL}).  If \code{TRUE} the
-    Compiled HTML version of the help will be shown in a help viewer.}
   \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
     version of the help will be shown in a browser specified by
     \code{options("browser")} or the file-association mechanism.
