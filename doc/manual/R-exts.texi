@@ -991,7 +991,7 @@ can be put in a @file{unix}, @file{windows} or @file{mac} subdirectory.
 @cindex Processing Rd format
 
 Under UNIX versions of @R{} there are several commands to process Rd
-files.
+files, if Perl is installed.
 
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
@@ -1031,6 +1031,13 @@ above commands can be obtained by running @code{R CMD command --help},
 e.g., @code{R CMD Rdconv --help}.  All available commands can be listed
 using @code{R --help}.
 
+All of these have Windows equivalents.  The batch files in the
+@file{bin} directory @file{Rd2txt.bat}, @file{Rdconv.bat},
+@file{Rdindex.bat} and @file{Sd2Rd.bat} can be used in exactly the same
+way as their Unix counterparts if the environment variable @code{R_HOME}
+is set.  (You will need Perl installed: you need that on Unix too.)
+There is a shell script @file{Rd2dvi.sh} which needs a Unix-like
+environment on Windows.
 
 @node System and foreign language interfaces, The R API, Writing R documentation, Top
 @chapter System and foreign language interfaces
@@ -2729,7 +2736,7 @@ The recommended procedure to use these is to include the header file
 
 @noindent
 This will include a number of other header files from the directory
-@file{R_HOME/include/R_ext}, and there are other header files there that
+@file{$R_HOME/include/R_ext}, and there are other header files there that
 can be included too, but many of the features they contain should be
 regarded as undocumented and unstable.
 
