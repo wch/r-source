@@ -21,8 +21,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "devUI.h"
+#include <Defn.h> /* for checkArity */
+#define R_INTERFACE_PTRS 1
+#include <Rinterface.h>
 
 
 SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP rho)

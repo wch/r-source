@@ -13,7 +13,8 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
 ## API(1): for .C() and .Call() writers, ...:
-SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rgraphics.h Rinternals.h
+SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rgraphics.h Rinternals.h \
+  Rinterface.h
 ## API(2) {these are built, system-dependently}:
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 ## Non-API internal ones:

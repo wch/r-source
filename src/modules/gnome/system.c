@@ -42,9 +42,8 @@
 
 #include <Rversion.h>
 
-#include <Rinternals.h>
-#include "Rinterface.h"
-#include <Startup.h>
+#define R_INTERFACE_PTRS 1
+#include <Rinterface.h>
 #include <Rdevices.h> /* for KillAllDevices */
 #include <R_ext/Print.h> /* for Rprintf */
 

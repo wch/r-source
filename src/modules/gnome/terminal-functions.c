@@ -22,7 +22,7 @@
 # include <config.h>
 #endif
 
-#include "Rinterface.h" /* for onintr */
+#include <Rinterface.h> /* for onintr */
 #include <R_ext/Print.h> /* for Rprintf */
 
 #include "terminal.h"

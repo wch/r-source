@@ -23,6 +23,7 @@
 #endif
 
 #include "system.h"
+#include <Rinterface.h>
 #include "terminal.h"
 #include "gtkconsole.h"
 

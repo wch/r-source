@@ -22,7 +22,7 @@
 #endif
 
 #include "system.h"
-#include <Startup.h>
+#include "Rinterface.h"
 #include "gtkconsole.h"
 #include "terminal.h"
 

@@ -25,8 +25,11 @@
 #define RINTERFACE_H_
 
 #include <R_ext/Boolean.h>
+#include <R_ext/RStartup.h>
 
 /* from Defn.h */
+/* this duplication will be removed in due course */
+
 extern Rboolean R_Interactive;	/* TRUE during interactive use*/
 extern Rboolean	R_Quiet;	/* Be as quiet as possible */
 extern Rboolean	R_Slave;	/* Run as a slave process */
@@ -54,7 +57,9 @@ extern char* R_Home;		    /* Root of the R tree */
 void jump_to_toplevel(void);
 void mainloop(void);
 void onintr();
-extern void* R_GlobalContext;    /* The global environment */
+#ifndef DEFN_H_
+extern void* R_GlobalContext;    /* Need opaque pointer type for export */
+#endif
 
 void process_site_Renviron();
 void process_system_Renviron();
@@ -64,5 +69,41 @@ void process_user_Renviron();
 /* in sys-unix.c */
 void R_setStartTime(void);
 void fpu_setup(Rboolean);
+
+/* formerly in src/unix/devUI.h */
+
+#ifdef R_INTERFACE_PTRS
+#include <Rinternals.h>
+
+#ifdef __SYSTEM__
+# define extern
+#endif
+
+extern void (*ptr_R_Suicide)(char *);
+extern void (*ptr_R_ShowMessage)();
+extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
+extern void (*ptr_R_WriteConsole)(char *, int);
+extern void (*ptr_R_ResetConsole)();
+extern void (*ptr_R_FlushConsole)();
+extern void (*ptr_R_ClearerrConsole)();
+extern void (*ptr_R_Busy)(int);
+extern void (*ptr_R_CleanUp)(SA_TYPE, int, int);
+extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *, Rboolean, char *);
+extern int  (*ptr_R_ChooseFile)(int, char *, int);
+extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
+extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
+extern int  (*R_timeout_handler)();
+extern long R_timeout_val;
+
+#ifdef HAVE_AQUA
+/* extern void (*ptr_R_StartConsole)();  Do we still need this one? */
+extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
+#endif
+
+#endif
+
+#ifdef __SYSTEM__
+# undef extern
+#endif
 
 #endif /* RINTERFACE_H_ */

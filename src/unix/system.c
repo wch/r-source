@@ -44,7 +44,8 @@
 #include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
-#include "devUI.h"		/* includes Startup.h */
+#define R_INTERFACE_PTRS 1
+#include <Rinterface.h>
 #undef __SYSTEM__
 
 #include "Runix.h"

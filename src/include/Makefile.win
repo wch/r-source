@@ -4,6 +4,7 @@ R_HOME=../..
 
 ## keep these in step with ./Makefile.in
 SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rgraphics.h Rinternals.h
+## this deliberately does not include Rinterfaces.h, which is Unix-only
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 GW32_HEADERS = config.h psignal.h
 
