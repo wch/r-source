@@ -38,7 +38,7 @@ R:
 	@echo "installing parsed NAMESPACE files"
 	@for pkg in $(R_PKGS_BASE) ; do \
 	  if test -f $(srcdir)/$${pkg}/NAMESPACE; then \
-          echo ".installPackageNamespaceInfo(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
+          echo ".installPackageNamespaceInfo(\"$(top_builddir)/library/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
 	    | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null ; \
           fi ; \
 	done

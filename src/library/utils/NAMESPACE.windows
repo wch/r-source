@@ -1,0 +1,6 @@
+export(DLL.version, Filters, choose.files, fixup.libraries.URLs,
+       fixup.package.URLs, flush.console, link.html.help,
+       make.search.html, memory.limit, memory.size, readClipboard,
+       select.list, win.version, winDialog, winDialogString,
+       winMenuAdd, winMenuAddItem, winMenuDel, winMenuDelItem,
+       writeClipboard, zip.unpack)

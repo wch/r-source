@@ -1,7 +1,26 @@
-exportPattern("^[^\\.]")
-# export(.ps.prolog)
+# leave most of the default methods visible as people seme to call them.
+export(Hershey, abline, arrows, assocplot, axTicks, axis,
+       axis.POSIXct, barplot, barplot, barplot.default, box, boxplot,
+       boxplot.default, boxplot.stats, bxp, check.options,
+       close.screen, cm.colors, co.intervals, col2rgb, colors,
+       colours, contour, contour.default, contourLines, coplot, curve,
+       dev.control, dev.copy, dev.copy2eps, dev.cur, dev.interactive,
+       dev.list, dev.next, dev.off, dev.prev, dev.print, dev.set,
+       dotchart, erase.screen, filled.contour, fourfoldplot, frame,
+       graphics.off, gray, grey, grid, heat.colors, hist,
+       hist.default, hsv, identify, image, image.default, layout,
+       layout.show, lcm, legend, lines, lines.default, locator,
+       matlines, matplot, matpoints, mosaicplot, mtext, n2mfrow,
+       nclass.FD, nclass.Sturges, nclass.scott, pairs, pairs.default,
+       palette, panel.smooth, par, pdf, persp, pictex, pie, plot,
+       plot.default, plot.design, plot.new, plot.window, plot.xy,
+       points, points.default, polygon, postscript, ps.options,
+       rainbow, recordPlot, rect, replayPlot, rgb, rug, screen,
+       segments, split.screen, stars, stem, strheight, stripchart,
+       strwidth, sunflowerplot, symbols, terrain.colors, text,
+       text.default, title, topo.colors, xfig, xy.coords, xyz.coords)
 
-S3method(axis, POSIXct)
+
 S3method(barplot, default)
 S3method(boxplot, default)
 S3method(boxplot, formula)
@@ -12,13 +31,14 @@ S3method(identify, default)
 S3method(image, default)
 S3method(lines, default)
 S3method(lines, formula)
+S3method(lines, histogram)
 S3method(mosaicplot, default)
 S3method(mosaicplot, formula)
 S3method(pairs, default)
+S3method(pairs, formula)
 S3method(persp, default)
 S3method(plot, data.frame)
 S3method(plot, default)
-S3method(plot, design)
 S3method(plot, factor)
 S3method(plot, formula)
 S3method(plot, histogram)

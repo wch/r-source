@@ -19,6 +19,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 
 RSRC = $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R 
 RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd 
+NSFILES = $(srcdir)/NAMESPACE $(srcdir)/NAMESPACE.unix
 
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
@@ -27,12 +28,13 @@ all: Makefile DESCRIPTION
 	  cat $(RSRC) >> $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
+	@for f in COPYRIGHTS INDEX SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
 	  fi; \
 	done
+	@cat $(NSFILES) > $(top_builddir)/library/$(pkg)/NAMESPACE
 	@if test -f DESCRIPTION; then \
 	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
 	  (tmp="Built: R $(VERSION); "; \
