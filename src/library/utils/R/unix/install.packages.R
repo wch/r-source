@@ -29,6 +29,11 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
         repeat {
+            if(any(miss <- ! p1 %in% row.names(available))) {
+                cat("dependencies ", paste(sQuote(p1[miss]), sep=", "),
+                    " are not available\n\n", sep ="")
+            }
+            p1 <- p1[!miss]
             deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
             deps <- .clean_up_dependencies(deps, available)
             if(!length(deps)) break
@@ -41,6 +46,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
         for(bundle in names(bundles))
             pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
         pkgs <- unique(pkgs)
+        pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
             cat("also installing the dependencies ",

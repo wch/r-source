@@ -128,6 +128,12 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
                                        method = method)
         have <- .packages(all.available = TRUE)
         repeat {
+            if(any(miss <- ! p1 %in% row.names(available))) {
+                cat("dependencies ", paste(sQuote(p1[miss]), sep=", "),
+                    " are not available\n\n", sep ="")
+                flush.console()
+            }
+            p1 <- p1[!miss]
             deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
             deps <- .clean_up_dependencies(deps, available)
             if(!length(deps)) break
@@ -140,6 +146,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
         for(bundle in names(bundles))
             pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
         pkgs <- unique(pkgs)
+        pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
             cat("also installing the dependencies ",
@@ -160,15 +167,14 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
             for(p in update[oklib, "Package"])
             {
                 okp <- p == foundpkgs[, 1]
-                if(length(okp) > 0)
-                    unpackPkg(foundpkgs[okp, 2], pkgnames[okp], lib,
+                if(any(okp))
+                    unpackPkg(foundpkgs[okp, 2], foundpkgs[okp, 1], lib,
                               installWithVers)
             }
         }
         cat("\n")
         if(!localcran && is.null(destdir)) {
-            answer <- substr(readline("Delete downloaded files (y/N)? "), 1,
-1)
+            answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
             if(answer == "y" | answer == "Y") {
                 for(file in foundpkgs[, 2]) unlink(file)
                 unlink(tmpd, TRUE)
@@ -176,7 +182,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
                 cat("The packages are in", tmpd)
             cat("\n")
         }
-        link.html.help(verbose=TRUE)
+        link.html.help(verbose = TRUE)
     } else unlink(tmpd, TRUE)
     invisible()
 }
