@@ -497,6 +497,7 @@ data.frame <-
             ## except for a full-sized logical matrix
             if(is.logical(i) && is.matrix(i) && all(dim(i) == dim(x))) {
                 nreplace <- sum(i, na.rm=TRUE)
+                if(!nreplace) return(x) # nothing to replace
                 ## allow replication of length(value) > 1 in 1.8.0
                 N <- length(value)
                 if(N > 0 && N < nreplace && (nreplace %% N) == 0)

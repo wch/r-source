@@ -3447,6 +3447,12 @@ eval(quote(y), as.data.frame(NULL))
 ## NULL as the second argument of eval should be treated
 ## like a list or data frame
 eval(quote(y), NULL)
-## end 
+## end
 
 
+## data frame with nothing to replace
+A <- matrix(1:4, 2, 2)
+A[is.na(A)] <- 0
+A <- as.data.frame(A)
+A[is.na(A)] <- 0
+## last not accepted prior to 2.1.0
