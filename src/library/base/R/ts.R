@@ -338,7 +338,8 @@ plot.mts <- function (x, plot.type = c("multiple", "single"),
 }
 
 window.default <- function(x, start = NULL, end = NULL,
-                           frequency = NULL, deltat = NULL, ...)
+                           frequency = NULL, deltat = NULL,
+                           extend = FALSE, ...)
 {
     x <- hasTsp(x)
     xtsp <- tsp(x)
@@ -366,7 +367,7 @@ window.default <- function(x, start = NULL, end = NULL,
 		start,
 		start[1] + (start[2] - 1)/xfreq,
 		stop("Bad value for start"))
-    if(start < xtsp[1]) {
+    if(start < xtsp[1] && !extend) {
 	start <- xtsp[1]
 	warning("start value not changed")
     }
@@ -377,7 +378,7 @@ window.default <- function(x, start = NULL, end = NULL,
 		end,
 		end[1] + (end[2] - 1)/xfreq,
 		stop("Bad value for end"))
-    if(end > xtsp[2]) {
+    if(end > xtsp[2] && !extend) {
 	end <- xtsp[2]
 	warning("end value not changed")
     }
@@ -385,18 +386,33 @@ window.default <- function(x, start = NULL, end = NULL,
     if(start > end)
 	stop("start cannot be after end")
 
-    if(all(abs(start - xtime) > abs(start) * ts.eps))
-	start <- xtime[(xtime > start) & ((start + 1/xfreq) > xtime)]
+    if(!extend) {
+        if(all(abs(start - xtime) > abs(start) * ts.eps))
+            start <- xtime[(xtime > start) & ((start + 1/xfreq) > xtime)]
 
-    if(all(abs(end - xtime) > abs(end) * ts.eps))
-	end <- xtime[(xtime < end) & ((end - 1/xfreq) < xtime)]
+        if(all(abs(end - xtime) > abs(end) * ts.eps))
+            end <- xtime[(xtime < end) & ((end - 1/xfreq) < xtime)]
 
-    i <- seq(trunc((start - xtsp[1]) * xfreq + 1.5), trunc((end -
-        xtsp[1]) * xfreq + 1.5), by = thin)
-    y <- if(is.matrix(x)) x[i, , drop = FALSE] else x[i]
-    ystart <- xtime[i[1]]
-    yend <- xtime[i[length(i)]]
-    attr(y, "tsp") <- c(ystart, yend, yfreq)
+        i <- seq(trunc((start - xtsp[1]) * xfreq + 1.5),
+                 trunc((end - xtsp[1]) * xfreq + 1.5), by = thin)
+        y <- if(is.matrix(x)) x[i, , drop = FALSE] else x[i]
+        ystart <- xtime[i[1]]
+        yend <- xtime[i[length(i)]]
+        attr(y, "tsp") <- c(ystart, yend, yfreq)
+    } else {
+        ## first adjust start and end to the time base
+        stoff <- ceiling((start - xtsp[1]) * xfreq - ts.eps)
+        ystart <- xtsp[1] + stoff/xfreq
+        enoff <- floor((end - xtsp[2]) * xfreq + ts.eps)
+        yend <- xtsp[2] + enoff/xfreq
+        nold <- round(xfreq*(xtsp[2] - xtsp[1])) + 1
+        i <- c(rep(nold+1, max(0, -stoff)),
+                   (1+max(0, stoff)):(nold + min(0, enoff)),
+                   rep(nold+1, max(0, enoff)))
+        y <- if(is.matrix(x)) rbind(x, NA)[i, , drop = FALSE] else c(x, NA)[i]
+        attr(y, "tsp") <- c(ystart, yend, xfreq)
+        if(yfreq != xfreq) y <- Recall(y, frequency = yfreq)
+    }
     y
 }
 
