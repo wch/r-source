@@ -7,9 +7,9 @@ ARMAacf <- function(ar = numeric(0), ma = numeric(0), lag.max = r,
     r <- max(p, q + 1)
     if(p > 0) {
         if(r > 1) {
-            if(q > p) {
-                ar <- c(ar, rep(0, q - p))
-                p <- q
+            if(r > p) { ## pad with zeros so p >= q+1
+                ar <- c(ar, rep(0, r - p))
+                p <- r
             }
             A <- matrix(0, p + 1, 2 * p + 1)
             ind <- as.matrix(expand.grid(1:(p + 1), 1:(p+1)))[, 2:1]

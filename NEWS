@@ -160,7 +160,8 @@ BUG FIXES
 
     o	legend() now treats lty="0" properly (as solid).
 
-    o	ARMAacf was ignoring ma terms if p = 1, and failing if q > p > 1.
+    o	ARMAacf was failing if 0 < p < q+1: it failed to say that ar needed
+	to be padded with zeroes, and now the code does that.
 
 
 
