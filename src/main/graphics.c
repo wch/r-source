@@ -4468,6 +4468,10 @@ void hsv2rgb(double *h, double *s, double *v, double *r, double *g, double *b)
  */
 
 /* Default Color Palette */
+/* Paul Murrell 05/06/02
+ * Changed "white" to "grey" in the default palette
+ * in response to user suggestion
+ */
 
 char *DefaultPalette[] = {
     "black",
@@ -4477,7 +4481,7 @@ char *DefaultPalette[] = {
     "cyan",
     "magenta",
     "yellow",
-    "white",
+    "grey",
     NULL
 };
 

@@ -9,6 +9,12 @@
 		CHANGES IN R VERSION 1.6.0
 
 
+USER-VISIBLE CHANGES
+
+    o   The default colour palette now has "grey" instead of "white"
+	in location 8.  See palette().
+
+
 NEW FEATURES
 
     o	New operator :: in the grammar, for name spaces.
