@@ -92,7 +92,16 @@ void R_Suicide(char *s)
 
 void R_Busy(int which)
 {
-  /* FIXME: determine if interface updates in here are feasible */
+    if(which == 1) {
+	gnome_appbar_set_default(GNOME_APPBAR(GNOME_APP(R_gtk_main_window)->statusbar),
+				 "Working...");
+	while(gtk_events_pending())
+	    gtk_main_iteration();
+    }
+    else {
+	gnome_appbar_set_default(GNOME_APPBAR(GNOME_APP(R_gtk_main_window)->statusbar),
+				 "");
+    }    
 }
 
 /*
