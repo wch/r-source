@@ -1,4 +1,4 @@
-%%% Rd.sty ... Style for printing the R manual
+ %%% Rd.sty ... Style for printing the R manual
 %%%
 %%% Modified 1998/01/05 by Friedrich.Leisch@ci.tuwien.ac.at
 %%% Modified 1998/07/07 by Martin Maechler
@@ -38,6 +38,7 @@
 \newcommand{\Header}[2]{%
   \vneed{1ex}
   \markboth{#1}{#1}
+  \def\@currentHref{page.\thepage}% as we seem to omit sections here!
   \addcontentsline{toc}{subsection}{#1}
   \hypertarget{Rfn.#1}{\index{#1}}
   \noindent
