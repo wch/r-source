@@ -180,17 +180,25 @@ nmspace:
 ifeq ($(strip $(BUILD)),CROSS)
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(ECHO) -n "  installing NAMESPACE file"; \
-	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+	  if test -f ${SPKG}/NAMESPACE.windows ; then \
+	  cat ${SPKG}/NAMESPACE ${SPKG}/NAMESPACE.windows > $(DPKG)/NAMESPACE; \
+	  else \
+	    $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+          fi ; \
 	  $(ECHO) " and metadata"; \
-	  $(ECHO) ".installPackageNamespaceInfo('.', '"$(DPKG)"')" | \
+	  $(ECHO) ".installPackageNamespaceInfo('$(DPKG)', '$(DPKG)')" | \
 	    R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null; \
 	fi
 else
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(ECHO) -n "  installing NAMESPACE file"; \
-	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+	  if test -f ${SPKG}/NAMESPACE.windows ; then \
+	  cat ${SPKG}/NAMESPACE ${SPKG}/NAMESPACE.windows > $(DPKG)/NAMESPACE; \
+	  else \
+	    $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+          fi ; \
 	  $(ECHO) " and metadata"; \
-	  $(ECHO) ".installPackageNamespaceInfo('.', '"$(DPKG)"')" | \
+	  $(ECHO) ".installPackageNamespaceInfo('$(DPKG)', '$(DPKG)')" | \
 	    $(RHOME)/bin/rterm.exe R_DEFAULT_PACKAGES=tools --vanilla --slave > /dev/null; \
 	fi
 endif
