@@ -24,6 +24,10 @@
 #ifndef RINTERFACE_H_
 #define RINTERFACE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <R_ext/Boolean.h>
 #include <R_ext/RStartup.h>
 
@@ -109,6 +113,10 @@ extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
 
 #ifdef __SYSTEM__
 # undef extern
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* RINTERFACE_H_ */

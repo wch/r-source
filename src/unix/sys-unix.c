@@ -188,6 +188,8 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 #else /* not _R_HAVE_TIMING_ */
+void R_setStartTime(void) {}
+
 SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     error("proc.time is not implemented on this system");

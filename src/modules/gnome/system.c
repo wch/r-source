@@ -44,14 +44,14 @@
 
 #define R_INTERFACE_PTRS 1
 #include <Rinterface.h>
-#include <Rdevices.h> /* for KillAllDevices */
+#include <Rdevices.h>    /* for KillAllDevices */
 #include <R_ext/Print.h> /* for Rprintf */
 
 #include "gtkconsole.h"
 #include "terminal.h"
-#include "terminal-prefs.h"
+#include "terminal-prefs.h" /* declares R_set_SaveAction */
 
-#include "system.h"
+#include "system.h" /* routines in other files to assign to interface ptrs */
 
 	/*--- Initialization Code ---*/
 
@@ -96,14 +96,10 @@ static void Rgnome_Suicide(char *s)
 static void Rgnome_Busy(int which)
 {
     if(which == 1) {
-	gnome_appbar_set_default(GNOME_APPBAR(GNOME_APP(R_gtk_main_window)->statusbar),
-				 "Working...");
-	while(gtk_events_pending())
-	    gtk_main_iteration();
-    }
-    else {
-	gnome_appbar_set_default(GNOME_APPBAR(GNOME_APP(R_gtk_main_window)->statusbar),
-				 "");
+	gnome_appbar_set_default(GNOME_APPBAR(GNOME_APP(R_gtk_main_window)->statusbar), "Working...");
+	while(gtk_events_pending()) gtk_main_iteration();
+    } else {
+	gnome_appbar_set_default(GNOME_APPBAR(GNOME_APP(R_gtk_main_window)->statusbar), "");
     }    
 }
 
@@ -136,7 +132,7 @@ static void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 	saveact = SaveAction;
 
     if(saveact == SA_SAVEASK) {
-	if(R_Interactive) {
+	if(R_Interactive) { /* This is always interactive ... */
 	    R_ClearerrConsole();
 	    R_FlushConsole();
 	    dialog = gnome_message_box_new(
@@ -151,7 +147,8 @@ static void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 		GNOME_STOCK_BUTTON_CANCEL,
 		NULL);
 	    
-	    gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
+	    gnome_dialog_set_parent(GNOME_DIALOG(dialog), 
+				    GTK_WINDOW(R_gtk_main_window));
 	    gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	    gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
 	    
@@ -191,6 +188,7 @@ static void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 
     /* save GUI preferences */
     R_gnome_prefs_save();
+
 /* unlink all the files we opened for editing 
     while(curfile != NULL) {
       edititem = (R_gtk_edititem *) curfile->data;
@@ -202,7 +200,6 @@ static void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 	snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
 	R_system((char *)buf);
     }
-
 
     /* close all the graphics devices */
     if(saveact != SA_SUICIDE) KillAllDevices();
@@ -233,10 +230,11 @@ static void Rgnome_ShowMessage(char *s)
 
 
 static const struct poptOption popt_options[] = {
-  { NULL, '\0', 0, NULL, 0, NULL, NULL }
+    { NULL, '\0', 0, NULL, 0, NULL, NULL }
 };
 
-void R_set_SaveAction(int sa)
+/* for use in terminal-prefs.c */
+void R_set_SaveAction(int sa) 
 {
     SaveAction = sa;
 }
@@ -275,9 +273,7 @@ int main(int ac, char **av)
 
     process_system_Renviron();
 
-#ifdef _R_HAVE_TIMING_
     R_setStartTime();
-#endif
     R_DefParams(Rp);
     /* Store the command line arguments before they are processed
        by the R option handler. 
@@ -353,9 +349,10 @@ int main(int ac, char **av)
 /*
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.
- */
+ *  But that does not occur!
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
+ */
 
     /* create console */
     R_gtk_terminal_new();

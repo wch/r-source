@@ -20,6 +20,10 @@
 #ifndef R_STARTUP_H_
 #define R_STARTUP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <R_ext/Boolean.h>	/* TRUE/FALSE */
 
 #ifdef Win32
@@ -86,5 +90,9 @@ void R_common_command_line(int *, char **, Rstart);
 void R_set_command_line_arguments(int argc, char **argv);
 
 void setup_Rmainloop(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
