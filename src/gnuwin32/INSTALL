@@ -71,7 +71,7 @@ Building
 --------
 
 You also need: the R source (R-1.3.0.tgz), and to build the
-installer, unzip541.zip from any Info-ZIP mirror.
+installer, unzip541.zip or unzip542.zip from any Info-ZIP mirror.
 
 Then: untar R-1.3.0.tgz somewhere (with no spaces in the path names),
 
@@ -87,7 +87,7 @@ and run
 
 
 Note 1: the file rw1030\unzip\unzip32.dll is not in the source
-distribution. It can be found in file unz541dN.zip at any Info-ZIP
+distribution. It can be found in file unz542dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
 The file rw1030\bin\Rchtml.dll is only built if CHM help is specified
@@ -161,7 +161,7 @@ cross-built version of binutils 2.9.4.
 You will need Perl, zip and unzip installed.
 
 You also need: the R source (R-1.3.0.tgz), and to build the installer,
-unzip541.zip from any Info-ZIP mirror.
+unzip542.zip from any Info-ZIP mirror.
 
 Then: untar R-1.3.0.tgz somewhere, and
 

@@ -76,7 +76,7 @@ typedef int (WINAPI * _DLL_UNZIP)(int, char **, int, char **,
 _DLL_UNZIP Wiz_SingleEntryUnzip;
 HINSTANCE hUnzipDll;
 
-#define UNZ_DLL_VERSION "5.41\0"
+#define UNZ_DLL_VERSION "5.42\0"
 #define COMPANY_NAME "Info-ZIP\0"
 #define DLL_VERSION_WARNING "%s is missing\nor has the wrong version number.\nEnsure that you have the correct DLL installed"
 
