@@ -85,18 +85,48 @@ child.list <- function(children) {
   ls(env=children)
 }
 
+pathMatch <- function(path, pathsofar) {
+  regexpr(paste(path, "$", sep=""), pathsofar) > 0
+}
+
+growPath <- function(pathsofar, name) {
+  paste(pathsofar, name, sep=vpPathSep)
+}
+
 # Rather than pushing a new viewport, navigate down to one that has
 # already been pushed
 downViewport <- function(name, recording=TRUE) {
+  UseMethod("downViewport")
+}
+
+downViewport.default <- function(name, recording=TRUE) {
+  name <- as.character(name)
+  # For interactive use, allow user to specify
+  # vpPath directly (i.e., w/o calling vpPath)
+  if (regexpr(vpPathSep, name) > 0) {
+    return(downViewport(vpPathDirect(name), recording=recording))
+  }
   if (grid.Call.graphics("L_downviewport", name)) {
     if (recording) {
       class(name) <- "down"
       record(name)
     } 
   } else {
-    stop(paste("Viewport", name, "is not currently pushed"))
+    stop(paste("Viewport", name, "was not found"))
   }
   current.viewport()
+}
+
+downViewport.vpPath <- function(name, recording=TRUE) {
+  if (grid.Call.graphics("L_downvppath", name$path, name$name)) {
+    if (recording) {
+      class(name) <- "down"
+      record(name)
+    } 
+  } else {
+    stop(paste("Viewport", name, "was not found"))
+  }
+  current.viewport()  
 }
 
 # Similar to down.viewport() except it starts searching from the

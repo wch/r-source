@@ -268,6 +268,37 @@ setvpgpar.vpTree <- function(vp) {
   setvpgpar(vp$children)
 }
 
+# Functions for creating "paths" of viewport names
+vpPathSep <- "::"
+
+vpPathFromVector <- function(names) {
+  n <- length(names)
+  if (n < 2)
+    stop("A viewport path must contain at least two viewport names")
+  if (!all(is.character(names)))
+    stop("Invalid viewport name(s)")
+  path <- list(path=paste(names[1:(n-1)], collapse=vpPathSep),
+               name=names[n],
+               n=n)
+  class(path) <- "vpPath"
+  path
+}
+
+vpPath <- function(...) {
+  names <- c(...)
+  vpPathFromVector(names)
+}
+
+# Create vpPath from string with embedded VpPathSep(s)
+vpPathDirect <- function(path) {
+  names <- unlist(strsplit(path, vpPathSep))
+  vpPathFromVector(names)
+}
+
+print.vpPath <- function(x, ...) {
+  print(paste(x$path, x$name, sep=vpPathSep))
+}
+
 #############
 # Some handy viewport functions
 #############

@@ -57,8 +57,7 @@ vpTree(parent, children)
     columns occupied by this viewport in its
     parent's layout.}
   \item{name}{A character value to uniquely identify the viewport
-    once it has been pushed onto the viewport tree.  Grid uses the
-    reserved name \code{"ROOT"} for the top-level viewport.}
+    once it has been pushed onto the viewport tree.  }
   \item{...}{Any number of grid viewport objects.}
   \item{parent}{A grid viewport object.}
   \item{children}{A vpList object.}
@@ -96,7 +95,20 @@ vpTree(parent, children)
     or because it is within another viewport which is rotated) then
     the \code{clip} flag is ignored.
 
-    The viewports in a \code{vpList} are pushed in parallel.  The
+    Viewport names need not be unique.  When pushed, viewports
+    sharing the same parent must have unique names, which means that
+    if you push a viewport with the same name as an existing viewport,
+    the existing viewport will be replaced in the viewport tree.
+    A viewport name can be any valid \R symbol name, but
+    grid uses the
+    reserved name \code{"ROOT"} for the top-level viewport.  Also,
+    when specifying a viewport name in \code{downViewport}
+    and \code{seekViewport}, it is possible to provide a viewport
+    path, which consists of several names concatenated using the
+    separator  (currently \code{::}).  Consequently, it is not
+    advisable to use this separator in viewport names.
+
+The viewports in a \code{vpList} are pushed in parallel.  The
     viewports in a \code{vpStack} are pushed in series.  When a
     \code{vpTree} is pushed, the parent is pushed first, then the
     children are pushed in parallel.
@@ -107,6 +119,11 @@ vpTree(parent, children)
 \author{Paul Murrell}
 \seealso{
   \link{Grid},
+  \code{\link{pushViewport}},
+  \code{\link{popViewport}},
+  \code{\link{downViewport}},
+  \code{\link{seekViewport}},
+  \code{\link{upViewport}},
   \code{\link{unit}},
   \code{\link{grid.layout}},
   \code{\link{grid.show.layout}}.

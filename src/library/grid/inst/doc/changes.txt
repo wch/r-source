@@ -16,6 +16,16 @@ Changes from grid_1.8.0 to grid_1.9.0:
 
     current.vpTree() returns the current viewport tree.
 
+5.  Added vpPath() to allow specification of viewport path
+    in downViewport() and seekViewport().
+    
+    See ?viewports for an example of its use.
+
+    NOTE: it is also possible to specify a path directly,
+    e.g., something like "vp1::vp2", but this is only
+    advised for interactive use (in case I decide to change the
+    separator :: in later versions).
+
 
 Changes from grid_0.7-4 to grid_1.8.0:
 ------------------------------------

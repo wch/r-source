@@ -19,7 +19,7 @@ export("absolute.size", "convertNative",
        "seekViewport", "unit",
        "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
        "upViewport",
-       "viewport", "vpList", "vpStack", "vpTree",
+       "viewport", "vpList", "vpStack", "vpTree", "vpPath",
        "width.details")
 
 ## Documented as internal but in Paul's first attempt at a sensible
@@ -55,11 +55,15 @@ S3method("as.character", "vpTree")
 S3method("print", "grob")
 S3method("print", "unit")
 S3method("print", "viewport")
+S3method("print", "vpPath")
 
 ## S3 methods for exported generics in grid
 S3method("unit.length", "unit")
 S3method("unit.length", "unit.list")
 S3method("unit.length", "unit.arithmetic")
+
+S3method("downViewport", "default")
+S3method("downViewport", "vpPath")
 
 S3method("draw.details", "arrows")
 S3method("draw.details", "circle")
@@ -96,7 +100,7 @@ S3method("width.details", "viewport")
 S3method("width.post.details", "default")
 S3method("width.pre.details", "default")
 
-## <FIXME>?
+# S3 methods for internal generics that are used in calls to external fns
 S3method("depth", "viewport")
 S3method("depth", "vpList")
 S3method("depth", "vpStack")
@@ -110,4 +114,4 @@ S3method("push.vp", "viewport")
 S3method("push.vp", "vpList")
 S3method("push.vp", "vpStack")
 S3method("push.vp", "vpTree")
-## </FIXME>
+

@@ -31,6 +31,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_currentViewport", (DL_FUNC) &L_currentViewport, 0},
     {"L_setviewport", (DL_FUNC) &L_setviewport, 2}, 
     {"L_downviewport", (DL_FUNC) &L_downviewport, 1}, 
+    {"L_downvppath", (DL_FUNC) &L_downvppath, 2}, 
     {"L_unsetviewport", (DL_FUNC) &L_unsetviewport, 1},  
     {"L_upviewport", (DL_FUNC) &L_upviewport, 1},  
     {"L_getDisplayList", (DL_FUNC) &L_getDisplayList, 0},

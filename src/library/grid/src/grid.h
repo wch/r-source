@@ -216,6 +216,7 @@ SEXP L_gridDirty();
 SEXP L_currentViewport(); 
 SEXP L_setviewport(SEXP vp, SEXP hasParent);
 SEXP L_downviewport(SEXP vp);
+SEXP L_downvppath(SEXP path, SEXP name);
 SEXP L_unsetviewport(SEXP last);
 SEXP L_upviewport(SEXP last);
 SEXP L_getDisplayList(); 

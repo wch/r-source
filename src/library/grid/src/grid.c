@@ -469,7 +469,6 @@ static SEXP findViewport(SEXP name, SEXP vp)
     return result;
 }
 
-
 SEXP L_downviewport(SEXP name) 
 {
     /* Get the current device 
@@ -485,6 +484,136 @@ SEXP L_downviewport(SEXP name)
      */
     SEXP found, vp;
     PROTECT(found = findViewport(name, gvp));
+    if (LOGICAL(VECTOR_ELT(found, 0))[0]) {
+	vp = doSetViewport(VECTOR_ELT(found, 1), FALSE, FALSE, dd);
+	/* Set the value of the current viewport for the current device
+	 * Need to do this in here so that redrawing via R BASE display
+	 * list works 
+	 */
+	setGridStateElement(dd, GSS_VP, vp);
+    }
+    UNPROTECT(1);    
+    return VECTOR_ELT(found, 0);    
+}
+
+/* 
+ * Find a viewport PATH in the current viewport tree by name
+ *
+ * Similar to L_downviewport
+ */
+
+static Rboolean pathMatch(SEXP path, SEXP pathsofar) 
+{
+    SEXP result, fcall;
+    PROTECT(fcall = lang3(install("pathMatch"),
+			  path, pathsofar));
+    PROTECT(result = eval(fcall, R_gridEvalEnv)); 
+    UNPROTECT(2);
+    return LOGICAL(result)[0];    
+}
+
+static SEXP growPath(SEXP pathsofar, SEXP name) 
+{
+    SEXP result, fcall;
+    if (isNull(pathsofar))
+	result = name;
+    else {
+	PROTECT(fcall = lang3(install("growPath"),
+			      pathsofar, name));
+	PROTECT(result = eval(fcall, R_gridEvalEnv)); 
+	UNPROTECT(2);
+    }
+    return result;    
+}
+
+static SEXP findvppath(SEXP path, SEXP name, SEXP pathsofar, SEXP vp);
+static SEXP findvppathInChildren(SEXP path, SEXP name, SEXP pathsofar,
+				 SEXP children) 
+{
+    SEXP childnames = childList(children);
+    int n = LENGTH(childnames);
+    int count = 0;
+    Rboolean found = FALSE;
+    SEXP result;
+    PROTECT(result);
+    while (count < n && !found) {
+	SEXP vp, newpathsofar;
+	PROTECT(vp = findVar(install(CHAR(STRING_ELT(childnames, count))),
+			     children));
+	PROTECT(newpathsofar = growPath(pathsofar,
+					VECTOR_ELT(vp, VP_NAME)));
+	result = findvppath(path, name, newpathsofar, vp);
+	found = LOGICAL(VECTOR_ELT(result, 0))[0];
+	count = count + 1;
+	UNPROTECT(2);
+    }
+    if (!found) {
+	SEXP temp, false;
+	PROTECT(temp = allocVector(VECSXP, 2));
+	PROTECT(false = allocVector(LGLSXP, 1));
+	LOGICAL(false)[0] = FALSE;
+	temp = allocVector(VECSXP, 2);
+	SET_VECTOR_ELT(temp, 0, false);
+	SET_VECTOR_ELT(temp, 1, R_NilValue);
+	UNPROTECT(2);
+	result = temp;
+    }
+    UNPROTECT(1);
+    return result;
+}
+			   
+static SEXP findvppath(SEXP path, SEXP name, SEXP pathsofar, SEXP vp) 
+{
+    SEXP result, false, true;
+    PROTECT(result = allocVector(VECSXP, 2));
+    PROTECT(false = allocVector(LGLSXP, 1));
+    LOGICAL(false)[0] = FALSE;
+    PROTECT(true = allocVector(LGLSXP, 1));
+    LOGICAL(true)[0] = TRUE;
+    /* 
+     * If there are no children, we fail
+     */
+    if (noChildren(viewportChildren(vp))) {
+	SET_VECTOR_ELT(result, 0, false);
+	SET_VECTOR_ELT(result, 1, R_NilValue);
+	
+    } 
+    /* 
+     * Check for the viewport name AND whether the rest
+     * of the path matches
+     */
+    else if (childExists(name, viewportChildren(vp)) &&
+	     pathMatch(path, pathsofar)) {
+	SET_VECTOR_ELT(result, 0, true);
+	SET_VECTOR_ELT(result, 1, 
+		       /*
+			* Does this do inherits=FALSE?
+			*/
+		       findVar(install(CHAR(STRING_ELT(name, 0))), 
+			       viewportChildren(vp)));
+    } else {
+	result = findvppathInChildren(path, name, pathsofar,
+				      viewportChildren(vp));
+    }
+    UNPROTECT(3);
+    return result;
+}
+
+SEXP L_downvppath(SEXP path, SEXP name) 
+{
+    /* Get the current device 
+     */
+    GEDevDesc *dd = getDevice();
+    /* Get the value of the current viewport for the current device
+     * Need to do this in here so that redrawing via R BASE display
+     * list works 
+     */    
+    SEXP gvp = gridStateElement(dd, GSS_VP);
+    /* 
+     * Try to find the named viewport
+     */
+    SEXP found, vp;
+    PROTECT(found = findvppath(path, name, VECTOR_ELT(gvp, VP_NAME), gvp));
     if (LOGICAL(VECTOR_ELT(found, 0))[0]) {
 	vp = doSetViewport(VECTOR_ELT(found, 1), FALSE, FALSE, dd);
 	/* Set the value of the current viewport for the current device
