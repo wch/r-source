@@ -34,7 +34,9 @@ setClass <-
     ## confirm the validity of the class definition (it may be incomplete)
     msg <- trySilent(completeClassDefinition(Class, classDef))
     if(is(msg, "try-error")) {
-        removeClass(Class, where=where)
+        ## clean up message first
+        msg <- gsub("Error[^:]*:","", msg)
+        msg <- gsub("[\n\t]", "", msg)
         warning("Cannot complete class definition for \"", Class, "\" (",
                    msg, ") -- may conflict with previous definitions")
     }
@@ -246,7 +248,7 @@ removeClass <-
         fullDef <- trySilent(getClass(Class))
         if(is(fullDef, "try-error")) {
             warning("unable to get definition of \"", Class, "\" (",
-                    fullDef, "): subclass links will not be removed")
+                    fullDef, "): subclass links may not be removed")
             fullDef <- NULL
         }
     }

@@ -46,6 +46,7 @@ makeExtends <- function(Class, to,
                         by = character(), package = getPackageName(findClass(to)),
                         slots = getSlots(classDef1),
                         classDef1 = getClass(Class, TRUE), classDef2 = getClass(to, TRUE)) {
+    class1Defined <- missing(slots) # only at this time can we construct methods
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
     dataPartClass <- elNamed(slots, ".Data")
     dataPart <- simple && !is.null(dataPartClass) && extends(to, dataPartClass)
@@ -86,11 +87,21 @@ makeExtends <- function(Class, to,
                         value
                     }, list(FROM = Class, TO = to))
             }
-            else {
-                toSlots <- getSlots(classDef2)
-                if(length(toSlots) == length(slots))
+            else if(class1Defined && length(slots) == 0) {
+                ## check for Class, to having the same representation
+                ## (including the case of no slots)
+                ext <- getAllSuperClasses(classDef1)
+                toSlots <- classDef2@slots
+                sameSlots <- TRUE
+                for(eclass in ext)
+                    if(!identical(eclass, to) && isClass(eclass) &&
+                       length(getClassDef(eclass)@slots) > 0) {
+                        sameSlots <- FALSE
+                        break
+                    }
+                if(sameSlots)
                     body(replace, envir = environment(replace)) <-
-                        substitute(as(value, FROM), list(FROM = Class))
+                        substitute({class(value) <- FROM; value}, list(FROM = Class))
                 else if(length(toSlots) == 0) # seems replacement not defined in this case?
                     replace <- .ErrorReplace
             }
