@@ -594,11 +594,6 @@ int inherits(SEXP s, char *name)
 }
 
 
-int isFinite(double x)
-{
-    return FINITE(x);
-}
-
 double realNA()
 {
     return NA_REAL;
