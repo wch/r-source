@@ -28,11 +28,15 @@ ppr(x, y, weights = rep(1,n),
 }
 \arguments{
   \item{formula}{
-    a regression formula specifying one or more response variables and the
+    a formula specifying one or more response variables and the
     explanatory variables.
   }
   \item{x}{
     matrix of explanatory variables.  Rows represent observations, and
+    columns represent variables.  Missing values are not accepted.
+  }
+  \item{y}{
+    matrix of response variables.  Rows represent observations, and
     columns represent variables.  Missing values are not accepted.
   }
   \item{nterms}{number of terms to include in the final model.}
