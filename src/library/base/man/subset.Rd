@@ -11,13 +11,14 @@ subset(x, \dots)
 
 \method{subset}{default}(x, subset, \dots)
 
-\method{subset}{data.frame}(x, subset, select, \dots)
+\method{subset}{data.frame}(x, subset, select, drop = FALSE, \dots)
 }
 \arguments{
   \item{x}{object to be subsetted.}
   \item{subset}{logical expression.}
   \item{select}{expression, indicating columns to select from a
     data frame.}
+  \item{drop}{passed on to \code{[} indexing operator.}
   \item{\dots}{further arguments to be passed to or from other methods.}
 }
 \details{
@@ -35,6 +36,9 @@ subset(x, \dots)
   resulting integer vector to index the columns.  This allows the use
   of the standard indexing conventions so that for example ranges of
   columns can be specified easily.
+
+  Setting \code{drop=TRUE} will drop unused levels from factors in a
+  data frame. The default is to retain them.
 }
 \value{
   An object similar to \code{x} contain just the selected elements (for

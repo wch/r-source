@@ -1,5 +1,5 @@
 subset.data.frame <-
-    function (x, subset, select, ...)
+    function (x, subset, select, drop = FALSE, ...)
 {
     if(missing(subset))
 	r <- TRUE
@@ -13,9 +13,9 @@ subset.data.frame <-
     else {
 	nl <- as.list(1:ncol(x))
 	names(nl) <- names(x)
-	vars <- eval(substitute(select),nl, parent.frame())
+	vars <- eval(substitute(select), nl, parent.frame())
     }
-    x[r,vars,drop=FALSE]
+    x[r, vars, drop = drop]
 }
 
 subset<-
