@@ -79,8 +79,7 @@ NEW FEATURES
     o	as.POSIX[cl]t can now convert logical NAs.
 
     o	All installed packages (even those shipped with R) are
-	given a `Built' field in the DESCRIPTION file (except on
-	classic MacOS).
+	given a `Built' field in the DESCRIPTION file.
 
     o	as.data.frame() now coerces logical matrices into logical
 	columns (rather than factors).
@@ -105,7 +104,7 @@ NEW FEATURES
     o	data.frame() recycles factors and "AsIs" objects as well as
 	atomic vectors.
 
-    o	predict.lm() warns if newdata is supplied and the fit was
+    o	predict.lm() warns if `newdata' is supplied and the fit was
 	rank-deficient, as this can be misleading.
 
     o	rect() accepts additional graphics parameters through a ...
@@ -208,11 +207,11 @@ BUG FIXES
     o	pdf() has been protected against the user who specified
 	non-existent fonts. (PR#1748)
 
-    o   dlnorm returns zero for negative x argument (PR#1781)
+    o   dlnorm() returns zero for negative x argument (PR#1781)
 
     o   printing 0 in octmode gave "" not "0". (PR#1759)
 
-    o   anova.glm was ignoring a `dispersion' argument if given
+    o   anova.glm() was ignoring a `dispersion' argument if given
 	multiple objects. (PR#1807)
 
 
