@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.2-3, 2000-12-16
+@set FAQ-VERSION 1.2-4, 2000-12-18
 @set REL-VERSION 1.2.0
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -415,16 +415,16 @@ A binhexed self-extracting archive containing a pre-alpha port of R
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000-11-17:
+@c Linux binaries as of 2000-12-18:
 @c
 @c debian   2.2 i386  1.1.1  Doug Bates
 @c          2.3 i386  1.1.1  Doug Bates
 @c linuxppc 5.0 ppc   1.1.1  Alex Buerkle <buerkle@hawaii.edu>
 @c mandrake 7.1 i386  1.1.1  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x alpha 1.1.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
+@c              i386  1.2.0  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.1.1  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
-@c          7.x i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
+@c          7.x i386  1.2.0  Martyn Plummer <plummer@iarc.fr>
 @c suse     5.3 i386  1.0.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 @c          6.4 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 @c          7.0 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
