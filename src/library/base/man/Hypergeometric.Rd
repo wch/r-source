@@ -31,17 +31,15 @@ rhyper(nn, m, n, k)
   replacement.  It has density
   \deqn{
     p(x) = \left. {m \choose x}{n \choose k-x} \right/ {m+n \choose k}%
-  }{p(x) =	Choose(m, x) Choose(n, k-x) / Choose(m+n, k)}
+  }{p(x) =	choose(m, x) choose(n, k-x) / choose(m+n, k)}
   for \eqn{x = 0, \ldots, k}{x = 0, ..., k}.
 }
 \examples{
 m <- 10; n <- 7; k <- 8
 x <- 0:m
 rbind(phyper(x, m, n, k), dhyper(x, m, n, k))
-all(phyper(x, m, n, k) == cumsum(dhyper(x, m, n, k)))
-# FALSE
-# Relative Error :
-formatC(signif((phyper(x, m, n, k) / cumsum(dhyper(x, m, n, k)) - 1), 2),
-        format='g', dig=2)
+all(phyper(x, m, n, k) == cumsum(dhyper(x, m, n, k)))# FALSE
+## Error :
+signif(phyper(x, m, n, k) - cumsum(dhyper(x, m, n, k)), dig=3)
 }
 \keyword{distribution}

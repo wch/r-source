@@ -14,7 +14,7 @@ spline(x, y, n = 3*length(x), method = "fmm",
   \item{method}{specifies the type of spline to be used.  Possible
     values are \code{"fmm"}, \code{"natural"} and \code{"periodic"}.}
   \item{n}{interpolation takes place at \code{n} equally spaced points
-    spanning the interval [\code{xmin}, \code{xmax}].} 
+    spanning the interval [\code{xmin}, \code{xmax}].}
   \item{xmin}{left-hand endpoint of the interpolation interval.}
   \item{xmax}{right-hand endpoint of the interpolation interval.}
 }
@@ -43,12 +43,20 @@ spline(x, y, n = 3*length(x), method = "fmm",
   linear interpolation.
 }
 \examples{
-x <- 1:10
-y <- rnorm(10)
 op <- par(mfrow = c(2,1), mgp = c(2,.8,0), mar = .1+c(3,3,3,1))
-plot(x, y, main = "spline[fun](.) through 10 points")
+n <- 9
+x <- 1:n
+y <- rnorm(n)
+plot(x, y, main = paste("spline[fun](.) through",n,"points"))
 lines(spline(x, y))
 lines(spline(x, y, n = 201), col = 2)
+
+y <- (x-6)^2
+plot(x, y, main = "spline(.) -- 3 methods")
+lines(spline(x, y, n = 201), col = 2)
+lines(spline(x, y, n = 201, method = "natural"), col = 3)
+lines(spline(x, y, n = 201, method = "periodic"), col = 4)
+legend(6,25, c("fmm","natural","periodic"), col=2:4, lty=1)
 
 f <- splinefun(x, y)
 ls(envir = environment(f))

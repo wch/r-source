@@ -1,5 +1,7 @@
 \name{library.dynam}
 \alias{library.dynam}
+\alias{.Dyn.libs}
+}
 \title{Loading Shared Libraries}
 \usage{
 library.dynam(chname, package = .packages(), lib.loc = .lib.loc)
@@ -15,12 +17,24 @@ library.dynam(chname, package = .packages(), lib.loc = .lib.loc)
   \code{library.dynam} loads the specified (shared) object file if it
   has not been loaded already.	It is designed to be used inside a
   package rather than at the command line, and should really only be
-  used inside .First.lib().  The system-specific extension for shared
-  libraries (e.g., ``.so'' on Unix systems) should not be added.
+  used inside \code{\link{.First.lib}()}.  The system-specific extension
+  for shared libraries (e.g., ``\file{.so}'' on Unix systems) should not
+  be added.
+}
+\value{The \code{.Dyn.libs} vector with the names of packages
+  which have used \code{library.dynam(..)} in the current \R session.
+
+  It is returned as \code{\link{invisible}}, unless the \code{chname}
+  argument is missing.
+
+  Users should never set \code{.Dyn.libs} directly.
 }
 \seealso{
   \code{\link{.First.lib}}, \code{\link{library}},
   \code{\link{dynload}}, \code{\link{.packages}},
   \code{\link{.lib.loc}}
+}
+\examples{
+ library.dynam()# which packages have been ``dynamically loaded''
 }
 \keyword{data}

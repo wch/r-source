@@ -6,7 +6,7 @@
 \alias{.Random.seed}
 \description{
   \code{.Random.seed} is an integer vector of length 3, containing the
-  ``seed'' for all random number generation in R.  The Wichmann-Hill
+  ``seed'' for all random number generation in \R.  The Wichmann-Hill
   generator is used which has a cycle length of 6.9536e12 (=
   \code{prod(p-1)/4} where \code{p} is the length 3 vector of primes,
   below), see p.123 of Applied Statistics (1984) vol.33 which corrects
@@ -15,6 +15,10 @@
 \value{
   \code{.Random.seed == r[1:3]}, where  \code{r[i]} is in \code{1:p[i]},
   and \code{p = (30269, 30307, 30323)}.
+
+  \emph{Note}: If any of \code{.Random.seed[i]} is set to \code{0}, it
+  will be substituted with \code{1}, in the next call to a random number
+  generator, such as \code{\link{runif}}.
 }
 \references{
   B.A. Wichmann and I. D. Hill (1982).

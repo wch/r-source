@@ -32,7 +32,7 @@ which use this mechanism.
 }
 \value{
 A list with the components
-\item{x}{numeric vector of abscissa values.}
+\item{x}{numeric (i.e. \code{"double"}) vector of abscissa values.}
 \item{y}{numeric vector of the same length as \code{x}.}
 \item{xlab}{\code{character(1)} or \code{NULL}, the `label' of \code{x}.}
 \item{ylab}{\code{character(1)} or \code{NULL}, the `label' of \code{y}.}
