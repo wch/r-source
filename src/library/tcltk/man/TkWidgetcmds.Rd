@@ -17,6 +17,7 @@
 \alias{tkdelta}
 \alias{tkdeselect}
 \alias{tkdlineinfo}
+\alias{tkdtag}
 \alias{tkdump}
 \alias{tkentrycget}
 \alias{tkentryconfigure}
