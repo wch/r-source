@@ -258,7 +258,7 @@ copy the script to a place where users can invoke it, for example to
 `/usr/local/bin'.  In addition, plain text help pages as well as HTML and
 LaTeX versions of the documentation are built.
 
-   Use `make dvi' to create dvi versions of the R manuals, such as
+   Use `make dvi' to create DVI versions of the R manuals, such as
 `refman.dvi' (an R object reference index) and `R-exts.dvi', the "R
 Extension Writers Guide", in the `doc/manual' subdirectory.  These files
 can be previewed and printed using standard programs such as `xdvi' and
@@ -276,10 +276,10 @@ correctly.
 By default, this will install to the following directories:
 
 `${prefix}/bin'
-     (some) executables
+     the front-end shell script
 
 `${prefix}/man/man1'
-     man pages
+     the man page
 
 `${prefix}/lib/R'
      all the rest (libraries, on-line help system, ...).  This is the "R
@@ -293,7 +293,7 @@ In the above, `prefix' is determined during configuration (typically
 (E.g., the R executable will then be installed into
 `/where/you/want/R/to/go/bin'.)
 
-   To install dvi, info and PDF versions of the manuals, use `make
+   To install DVI, info and PDF versions of the manuals, use `make
 install-dvi', `make install-info' and `make install-pdf', respectively.
 
 2.5.2 How can R be installed (Windows)
@@ -398,7 +398,7 @@ analysis software systems.  See
 
 provides a comprehensive guide to the use of the *nlme* package for linear
 and nonlinear mixed-effects models.  This has a home page at
-`http://nlme.stat.wisc.edu/MEMSS'.
+`http://nlme.stat.wisc.edu/MEMSS/'.
 
    Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
@@ -1011,8 +1011,8 @@ works, was published in the Journal of Statistical Software
 
 *SASmixed*
      Data sets and sample linear mixed effects analyses corresponding to the
-     examples in "SAS System for Mixed Models" by Littel, Milliken, Stroup
-     and Wolfinger, 1996, SAS Institute.
+     examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
+     Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 
 *acepack*
      ace (Alternating Conditional Expectations) and avas (Additivity and
@@ -1462,7 +1462,7 @@ statistical programming and data analysis, over the usual tools.
 and highlighting of source code, partial evaluations of code, loading and
 error-checking of code, and source code revision maintenance) and
 documentation (syntactic indentation and highlighting of source code,
-sending Examples to running ESS process, and previewing), interacting with
+sending examples to running ESS process, and previewing), interacting with
 an inferior R process from within Emacs (command-line editing, searchable
 command history, command-line completion of R object and file names, quick
 access to object and search lists, transcript recording, and an interface
@@ -1770,8 +1770,8 @@ the problem occurs when Netscape is running, try (re)starting it with
 either the `-no-install' (to use the default colormap) or the `-install'
 (to install a private colormap) option.
 
-   You could also set the `colortype' of `X11()' to `pseudo.cube' rather
-than the default `pseudo'.  See the help page for `X11()' for more
+   You could also set the `colortype' of `X11()' to `"pseudo.cube"' rather
+than the default `"pseudo"'.  See the help page for `X11()' for more
 information.
 
 7.12 Is R Y2K-compliant?

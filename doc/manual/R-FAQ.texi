@@ -307,7 +307,7 @@ it, for example to @file{/usr/local/bin}.  In addition, plain text help
 pages as well as @HTML{} and La@TeX{} versions of the documentation are
 built.
 
-Use @kbd{make dvi} to create dvi versions of the R manuals, such as
+Use @kbd{make dvi} to create DVI versions of the R manuals, such as
 @file{refman.dvi} (an R object reference index) and @file{R-exts.dvi},
 the ``R Extension Writers Guide'', in the @file{doc/manual}
 subdirectory.  These files can be previewed and printed using standard
@@ -326,9 +326,9 @@ install}.  By default, this will install to the following directories:
 
 @table @file
 @item $@{prefix@}/bin
-(some) executables
+the front-end shell script
 @item $@{prefix@}/man/man1
-man pages
+the man page
 @item $@{prefix@}/lib/R
 all the rest (libraries, on-line help system, @dots{}).  This is the ``R
 Home Directory'' (@env{R_HOME}) of the installed system.
@@ -347,7 +347,7 @@ $ ./configure --prefix=/where/you/want/R/to/go
 (E.g., the R executable will then be installed into
 @file{/where/you/want/R/to/go/bin}.)
 
-To install dvi, info and PDF versions of the manuals, use @kbd{make
+To install DVI, info and PDF versions of the manuals, use @kbd{make
 install-dvi}, @kbd{make install-info} and @kbd{make install-pdf},
 respectively.
 
@@ -499,7 +499,7 @@ J. C. Pinheiro and D. M. Bates (2000), ``Mixed-Effects Models in S and
 @noindent
 provides a comprehensive guide to the use of the @strong{nlme} package
 for linear and nonlinear mixed-effects models.  This has a home page at
-@uref{http://nlme.stat.wisc.edu/MEMSS}.
+@uref{http://nlme.stat.wisc.edu/MEMSS/}.
 
 Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
@@ -1272,8 +1272,8 @@ An interface between R and the mSQL database system.
 @c (@pxref{What documentation exists for R?}).
 @item SASmixed
 Data sets and sample linear mixed effects analyses corresponding to the
-examples in ``SAS System for Mixed Models'' by Littel, Milliken, Stroup
-and Wolfinger, 1996, SAS Institute.
+examples in ``SAS System for Mixed Models'' by R. C. Littell,
+G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item acepack
 ace (Alternating Conditional Expectations) and avas (Additivity and
 VAriance Stabilization for regression) for selecting regression
@@ -1718,7 +1718,7 @@ R support contains code for editing R source code (syntactic indentation
 and highlighting of source code, partial evaluations of code, loading
 and error-checking of code, and source code revision maintenance) and
 documentation (syntactic indentation and highlighting of source code,
-sending Examples to running ESS process, and previewing), interacting
+sending examples to running ESS process, and previewing), interacting
 with an inferior R process from within Emacs (command-line editing,
 searchable command history, command-line completion of R object and file
 names, quick access to object and search lists, transcript recording,
@@ -2086,9 +2086,9 @@ If the problem occurs when Netscape is running, try (re)starting it with
 either the @option{-no-install} (to use the default colormap) or the
 @option{-install} (to install a private colormap) option.
 
-You could also set the @code{colortype} of @code{X11()} to `pseudo.cube'
-rather than the default `pseudo'.  See the help page for @code{X11()}
-for more information.
+You could also set the @code{colortype} of @code{X11()} to
+@code{"pseudo.cube"} rather than the default @code{"pseudo"}.  See the
+help page for @code{X11()} for more information.
 
 @node Is R Y2K-compliant?, How do I convert factors to numeric?, Why does plotting give a color allocation error?, R Miscellania
 @section Is R Y2K-compliant?
