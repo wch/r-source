@@ -1566,6 +1566,13 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args, op);
 	if (!SETJMP(cntxt.cjmpbuf))
 	    expr = eval(expr, env);
+	else {
+	    expr = R_ReturnedValue;
+	    if (expr == R_RestartToken) {
+		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
+		errorcall(call, _("restarts not supported in eval"));
+	    }
+	}
 	endcontext(&cntxt);
 	UNPROTECT(1);
     }
@@ -1578,6 +1585,13 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!SETJMP(cntxt.cjmpbuf))
 	    for(i=0 ; i<n ; i++)
 		tmp = eval(VECTOR_ELT(expr, i), env);
+	else {
+	    tmp = R_ReturnedValue;
+	    if (tmp == R_RestartToken) {
+		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
+		errorcall(call, _("restarts not supported in eval"));
+	    }
+	}
 	endcontext(&cntxt);
 	UNPROTECT(1);
 	expr = tmp;

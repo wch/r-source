@@ -579,6 +579,8 @@ BUG FIXES
     o   getAnywhere() was confused by names with leading or trailing dots
         (spotted by Robert McGehee)
 
+    o   eval() was not handling values from return() correctly.
+
 
 
 	**************************************************
