@@ -5,6 +5,13 @@
 	*						 *
 	**************************************************
 
+		CHANGES IN R VERSION 1.0.1
+
+BUG FIXES
+
+    o	pgamma(Inf,1,Inf) gives NaN instead of an infinite loop, PR#462.
+
+
 
 		CHANGES IN R VERSION 1.0.0
 

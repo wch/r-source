@@ -22,7 +22,7 @@
  *
  *	#include "Mathlib.h"
  *	double pgamma(double x, double alph, double scale,
- *                    int lower_tail, int log_p)
+ *		      int lower_tail, int log_p)
  *
  *  DESCRIPTION
  *
@@ -74,14 +74,19 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(alph) || ISNAN(scale))
 	return x + alph + scale;
 #endif
-    if(alph <= 0. || scale <= 0.) ML_ERR_return_NAN;
-
 #ifdef DEBUG_p
     REprintf("pgamma(x=%4g, alph=%4g, scale=%4g): ",x,alph,scale);
 #endif
+    if(alph <= 0. || scale <= 0.)
+	ML_ERR_return_NAN;
+
     x /= scale;
 #ifdef DEBUG_p
     REprintf("-> x=%4g; ",x);
+#endif
+#ifdef IEEE_754
+    if (ISNAN(x)) /* eg. original x = scale = Inf */
+	return x;
 #endif
     if (x <= 0.)
 	return R_DT_0;
