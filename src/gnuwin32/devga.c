@@ -412,15 +412,15 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding, bg, fg,
+    /*if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding, bg, fg,
 		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 				       GE_INCHES, gdd),
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       (double)0, ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, 0, "", "R Graphics Output", R_NilValue))
+		       0, 1, 0, "", "R Graphics Output", R_NilValue)) */
 	/* horizontal=F, onefile=F, pagecentre=T, print.it=F */
-	PrivateCopyDevice(dd, ndd, "postscript");
+	/* PrivateCopyDevice(dd, ndd, "postscript"); */
 }
 
 
@@ -469,14 +469,14 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PDFDeviceDriver(ndd, fn, family, encoding, bg, fg,
+    /* if (PDFDeviceDriver(ndd, fn, family, encoding, bg, fg,
 			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, "R Graphics Output", R_NilValue, 1, 4))
-	PrivateCopyDevice(dd, ndd, "PDF");
+			PrivateCopyDevice(dd, ndd, "PDF"); */
 }
 
 

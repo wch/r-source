@@ -107,7 +107,7 @@ wrap.up <- function(x) {
 wrap.down <- function(x) {
   recordGrob(downViewport(path), list(path=x))
 }
-  
+
 # Grab the display list on the current device
 # ... are passed to gTree
 # If warn is 0, issue no warnings
@@ -138,7 +138,7 @@ grabDL <- function(warn, wrap, ...) {
       if (wrap)
         gList <- addToGList(wrap(elt), gList)
       else {
-  
+
         ###########
         # grabGrob
         ###########
@@ -197,9 +197,9 @@ grabDL <- function(warn, wrap, ...) {
         # grabPop
         ###########
         } else if (inherits(elt, "pop")) {
-          # Replace pop with up 
+          # Replace pop with up
           upViewport(elt, recording=FALSE)
-          
+
         ###########
         # grabDefault
         ###########
@@ -224,7 +224,7 @@ grid.grab <- function(warn=2, wrap=FALSE, ...) {
 
 grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
   # Start a new null device
-  .Call("L_nullDevice")
+  .Call("L_nullDevice", PACKAGE="grDevices")
   # If something goes wrong, want to revert to the current device
   on.exit(dev.off())
   # Run the graphics code in expr

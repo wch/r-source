@@ -138,7 +138,7 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
               old$onefile, old$pagecentre, old$print.it, old$command,
-              title, fonts, PACKAGE = "base")
+              title, fonts, PACKAGE = "grDevices")
     # if .ps.prolog is searched for and fails, NULL got returned.
     invisible()
 }
@@ -154,7 +154,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     .External("XFig",
               file, old$paper, old$family, old$bg, old$fg,
               old$width, old$height, old$horizontal, old$pointsize,
-              old$onefile, old$pagecentre, PACKAGE = "base")
+              old$onefile, old$pagecentre, PACKAGE = "grDevices")
     invisible()
 }
 
@@ -192,7 +192,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     .External("PDF",
               file, old$family, old$encoding, old$bg, old$fg,
               width, height, old$pointsize, old$onefile, title,
-              fonts, version[1], version[2], PACKAGE = "base")
+              fonts, version[1], version[2], PACKAGE = "grDevices")
     invisible()
 }
 
@@ -257,7 +257,7 @@ checkPSFont <- function(font) {
 
 checkFontInUse <- function(names) {
     for (i in names)
-        if (.Call("Type1FontInUse", i, PACKAGE = "base"))
+        if (.Call("Type1FontInUse", i, PACKAGE = "grDevices"))
             stop(paste("Font", i, "already in use"))
 }
 

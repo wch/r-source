@@ -19,3 +19,10 @@
 
 #include <Rinternals.h>
 SEXP PicTeX(SEXP);
+
+SEXP PostScript(SEXP);
+SEXP XFig(SEXP);
+SEXP PDF(SEXP);
+SEXP Type1FontInUse(SEXP);
+
+SEXP L_nullDevice();

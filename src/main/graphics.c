@@ -4747,11 +4747,13 @@ void KillAllDevices(void)
     /* don't try to close or remove the null device ! */
     while (R_NumDevices > 1)
 	killDevice(R_CurrentDevice);
+    /* <FIXME> Disable this for now */
     /*
      * Free the font and encoding structures used by
      * PostScript, Xfig, and PDF devices
      */
-    freeType1Fonts();
+    /* freeType1Fonts();
+       </FIXME>*/
     /* FIXME: There should really be a formal graphics finaliser
      * but this is a good proxy for now.
      */

@@ -469,7 +469,7 @@ LibExtern Rboolean R_interrupts_suspended INI_as(FALSE);
 LibExtern int R_interrupts_pending INI_as(0);
 
 /* R Home Directory */
-extern char*	R_Home;		    /* Root of the R tree */
+LibExtern char*	R_Home;		    /* Root of the R tree */
 
 /* Memory Management */
 extern R_size_t	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
@@ -511,7 +511,7 @@ extern Rboolean	R_Verbose	INI_as(FALSE);	/* Be verbose */
 extern FILE*	R_Consolefile	INI_as(NULL);	/* Console output file */
 extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
 extern int	R_ErrorCon	INI_as(2);	/* Error connection */
-extern char*	R_TempDir	INI_as(NULL);	/* Name of per-session dir */
+LibExtern char*	R_TempDir	INI_as(NULL);	/* Name of per-session dir */
 
 /* Objects Used In Parsing  */
 extern SEXP	R_CommentSxp;	    /* Comments accumulate here */

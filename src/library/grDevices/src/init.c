@@ -23,12 +23,21 @@
 #include "grDevices.h"
 #include <R_ext/Rdynload.h>
 
+#define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
+
 static R_CallMethodDef CallEntries[] = {
+    CALLDEF(Type1FontInUse, 1),
+    {"L_nullDevice", (DL_FUNC) &L_nullDevice, 0},
     {NULL, NULL, 0}
 };
 
+#define EXTDEF(name)  {#name, (DL_FUNC) &name, -1}
+
 static R_ExternalMethodDef ExtEntries[] = {
-    {"PicTeX", (DL_FUNC) &PicTeX, -1},
+    EXTDEF(PicTeX),
+    EXTDEF(PostScript),
+    EXTDEF(XFig),
+    EXTDEF(PDF),
     {NULL, NULL, 0}
 };
 

@@ -51,3 +51,5 @@ R_ToplevelContext
 R_GlobalContext
 R_interrupts_suspended
 R_interrupts_pending
+R_Home
+R_TempDir
