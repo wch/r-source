@@ -62,7 +62,7 @@
 #endif
 
 #ifndef M_LOG10E
-#define M_LOG10E        0.434294481903251827651128918917	/* log10(e) */
+#define M_LOG10E	0.434294481903251827651128918917	/* log10(e) */
 #endif
 
 #ifndef M_LN2
@@ -74,7 +74,7 @@
 #endif
 
 #ifndef M_PI
-#define M_PI		3.141592653589793238462643383280        /* pi */
+#define M_PI		3.141592653589793238462643383280	/* pi */
 #endif
 
 #ifndef M_PI_2
@@ -85,11 +85,11 @@
 #define M_PI_4		0.785398163397448309615660845820	/* pi/4 */
 #endif
 
-#ifndef M_1_PI		
+#ifndef M_1_PI
 #define M_1_PI		0.318309886183790671537767526745	/* 1/pi */
 #endif
 
-#ifndef M_2_PI		
+#ifndef M_2_PI
 #define M_2_PI		0.636619772367581343075535053490	/* 1/pi */
 #endif
 
@@ -239,6 +239,30 @@ extern double m_one;
 #define	prec	fprec
 #undef trunc
 #define	trunc	ftrunc
+
+
+	/* Utilities for `dpq' handling (density/probability/quantile) */
+
+#define R_D__0 (give_log ? ML_NEGINF : 0.)
+#define R_D__1 (give_log ? 0. : 1.)
+#define R_DT_0 (lower_tail ? R_D__0 : R_D__1)
+#define R_DT_1 (lower_tail ? R_D__1 : R_D__0)
+
+#define R_D_val(x)   (give_log	 ? log(x) : x)	      /*  x  */
+#define R_D_log(x)   (give_log	 ?  x	  : exp(x))   /* log(x) */
+
+#define R_DT_val(x)  R_D_val(lower_tail ? x	 : 1. - x) /*  x  */
+#define R_DT_Cval(x) R_D_val(lower_tail ? 1. - x : x)	   /*  1 - x */
+#define R_DT_log(x)  R_D_log(lower_tail ? x	 : 1. - x) /* log(x) */
+#define R_DT_Clog(x) R_D_log(lower_tail ? 1. - x : x)	   /* log(1 - x) */
+
+#define R_D_give_log(dd)    (((int)dd) >> 1) /* Extract ``give_log'' flag */
+#define R_D_lower_tail(dd)  (((int)dd) % 2)  /* Extract ``lower_tail'' flag */
+
+	/* R's version of C functions: */
+
+double R_log(double x);
+double R_pow(double x, double y);
 
 	/* Machine Characteristics */
 
