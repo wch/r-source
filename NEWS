@@ -41,6 +41,13 @@ BUG FIXES
 
     o  erroneous error message in coerceToSymbol
 
+    o  partial workaround for workspace restore problems. This can
+       happen if an environment on the search path is assigned to a
+       variable which gets saved. The error "unresolved node during
+       restore" is turned into a warning, allowing the rest of the
+       workspace to be restored, but the variable contains an empty
+       environment on reload.
+
 
 		CHANGES IN R VERSION 0.90.0
 

@@ -683,8 +683,9 @@ static SEXP OffsetToNode(int offset)
     while (offset != OldOffset[m] && l <= r);
     if (offset == OldOffset[m]) return NewAddress[m];
 
-    error("unresolved node during restore");
-    return R_NilValue;/* for -Wall */
+    /* Not supposed to happen: */
+    warning("unresolved node during restore");
+    return R_NilValue;
 }
 
 static void DataSave(SEXP s, FILE *fp)
