@@ -426,7 +426,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 }
 
 library.dynam <-
-function(chname, package = .packages(), lib.loc = NULL, verbose =
+function(chname, package = NULL, lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
     .Dyn.libs <- .dynLibs()
@@ -589,61 +589,146 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
 }
 
 .find.package <-
-    function(package, lib.loc = NULL, quiet = FALSE,
-             verbose = getOption("verbose"))
+function(package = NULL, lib.loc = NULL, quiet = FALSE,
+         verbose = getOption("verbose"))
 {
-    .file_path_as_absolute <- function(x) {
-        ## Note that we cannot use tools::file_path_as_absolute() here,
-        ## as cyclic name space dependencies are not supported.  Argh.
-        ## This version is simpler: we only need it for directories
-        ## already known to exist.
-        cwd <- getwd(); on.exit(setwd(cwd))
-        setwd(path.expand(x))
-        getwd()
+    if(is.null(package) && is.null(lib.loc) && !verbose) {
+        ## We only want the paths to the attached packages.
+        return(.path.package())
     }
-
-    useAttached <- FALSE
+    
+    use_attached <- FALSE
+    if(is.null(package)) {
+        package <- .packages()
+    }
     if(is.null(lib.loc)) {
-        useAttached <- TRUE
+        use_attached <- TRUE
         lib.loc <- .libPaths()
     }
-
-    n <- length(package)
-    if(n == 0) return(character(0))
-
-    bad <- character(0)                 # names of packages not found
-    paths <- character(0)               # paths to packages found
-
+    
+    if(!length(package)) return(character())
+    
+    bad <- character(0)
+    out <- character(0)
+    
     for(pkg in package) {
-        fp <- file.path(lib.loc, pkg)
-        if(useAttached)
-            fp <- c(.path.package(pkg, TRUE), fp)
-        ## Note that we cannot use tools::file_test() here, as cyclic
-        ## name space dependencies are not supported.  Argh.
-        fp <- unique(fp[file.exists(fp) &
-                        file.exists(file.path(fp, "DESCRIPTION"))])
-        if(length(fp) == 0) {
+        if(any(grep("_", pkg))) {
+            ## The package "name" contains the version info.
+            ## Note that .packages() is documented to return the "base
+            ## names" of all currently attached packages.  In the case
+            ## of versioned installs, this seems to contain both the
+            ## package name *and* the version number (not sure if this
+            ## is a bug or a feature).
+            pkg_has_version <- TRUE
+            pkg_regexp <- paste(pkg, "$", sep = "")
+        }
+        else {
+            pkg_has_version <- FALSE
+            pkg_regexp <- paste(pkg, "($|_)", sep = "")
+        }
+        paths <- character()
+        for(lib in lib.loc) {
+            dirs <- list.files(lib,
+                               pattern = paste("^", pkg_regexp,
+                               sep = ""),
+                               full = TRUE)
+            ## Note that we cannot use tools::file_test() here, as
+            ## cyclic name space dependencies are not supported.  Argh.
+            paths <- c(paths,
+                       dirs[file.info(dirs)$isdir &
+                            file.exists(file.path(dirs,
+                                                  "DESCRIPTION"))])
+        }
+        if(use_attached
+           && any(pos <- grep(paste("^package:", pkg_regexp,
+                                    sep = ""),
+                              search()))) {
+            dirs <- sapply(pos, function(i) {
+                if(is.null(env <- as.environment(i)))
+                    system.file()
+                else
+                    attr(env, "path")
+            })
+            paths <- c(as.character(dirs), paths)
+        }
+        ## As an extra safety measure, only use the paths we found if
+        ## their DESCRIPTION file registers the given package and has a
+        ## valid version.  Actually, we should really exclude all
+        ## candidates with "bad" DESCRIPTION metadata, but we cannot use
+        ## tools:::check_package_description() for a full check here.
+        ## (But then packages installed with R 2.0 or better must have
+        ## valid DESCRIPTION metadata anyways.)
+        if(length(paths)) {
+            paths <- unique(paths)
+            db <- lapply(paths, function(p) {
+                info <- try(read.dcf(file.path(p, "DESCRIPTION"),
+                                     c("Package", "Version"))[1, ],
+                            silent = TRUE)
+                if(inherits(info, "try-error"))
+                    c(NA, NA)
+                else
+                    info
+            })
+            db <- do.call("rbind", db)
+            ok <- (apply(!is.na(db), 1, all)
+                   & (db[, "Package"] == sub("_.*", "", pkg))
+                   & (regexpr("([[:digit:]]+[.-]){1,}[[:digit:]]+",
+                              db[, "Version"])) > -1)
+            paths <- paths[ok]
+        }
+        if(length(paths) == 0) {
             bad <- c(bad, pkg)
             next
         }
-        afp <- .file_path_as_absolute(fp[1])
-        if(verbose && (length(fp) > 1))
-            warning(paste("package ", sQuote(pkg),
-                          " found more than once,\n",
-                          "using the one found in ",
-                          sQuote(dirname(afp)),
-                          sep = ""))
-        paths <- c(paths, afp)
+        if(length(paths) > 1) {
+            ## If a package was found more than once ...
+            ## * For the case of an exact version match (if the "name"
+            ##   already contained the version), use the first path;
+            ## * Otherwise, be consistent with the current logic in
+            ##   library(): if there are matching non-versioned paths,
+            ##   use the first of these; otherwise, use the first path
+            ##   with the highest version.  (Actually, we should really
+            ##   return the path to the highest version which has
+            ##   resolvable dependencies against the current version of
+            ##   R ...)
+            paths <- if(pkg_has_version) {
+                paths[1]
+            }
+            else if(any(pos <- which(basename(paths) == pkg)))
+                paths[pos][1]
+            else {
+                ## <FIXME>            
+                ## We currently find the highest availabe version using
+                ## compareVersion() in a way similar to
+                ## libraryMaxVersPos() inside library().
+                ## Simplify once the package_version class is available.
+                versions <- db[ok, "Version"]
+                v_max <- versions[1]
+                for(v in versions) {
+                    if(compareVersion(v_max, v) < 0) v_max <- v
+                }
+                pos <- match(v_max, versions)
+                ## </FIXME>
+                paths <- paths[pos][1]
+            }
+            if(verbose)
+                warning(paste("package ", sQuote(pkg),
+                              " found more than once,\n",
+                              "using the one found in ",
+                              sQuote(paths),
+                              sep = ""))
+        }
+        out <- c(out, paths)
     }
 
     if(!quiet && (length(bad) > 0)) {
-        if(length(paths) == 0)
+        if(length(out) == 0)
             stop("none of the packages were found")
         for(pkg in bad)
             warning(paste("there is no package called", sQuote(pkg)))
     }
 
-    paths
+    out
 }
 
 print.packageInfo <- function(x, ...)
