@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-47 2004-08-27
+Version 1.9-48 2004-08-28
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2073,6 +2073,10 @@ distributions of R.)
 *kernlab*
      Kernel-based machine learning methods including support vector
      machines.
+
+*kinship*
+     Mixed-effects Cox models, sparse matrices, and modeling data from large
+     pedigrees.
 
 *klaR*
      Miscellaneous functions for classification and visualization developed
