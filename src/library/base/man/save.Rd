@@ -3,7 +3,7 @@
 \usage{
 save(\dots, list = character(0), file = "", ascii = FALSE,
      version = NULL, envir = parent.frame())
-save.image(file = ".RData")
+save.image(file = ".RData", version = NULL)
 }
 \alias{save}
 \alias{save.image}
@@ -17,8 +17,9 @@ save.image(file = ".RData")
     different types.  The default value of \code{ascii} is \code{FALSE}
     which leads to a more compact binary file being written.}
   \item{version}{the workspace format version to use.  NULL specifies
-    the current default format.  The version used through R 1.3 is
-    version 1.  Version 2 is the current default format.}
+    the current default format.  The version used from \R 0.99.0 to
+    \R 1.3.1 is version 1.  The default format as from \R 1.4.0 is
+    version 2.}
   \item{envir}{environment to search for objects to be saved.}
   }
 }

@@ -9,6 +9,6 @@ save <- function(..., list = character(0), file = "", ascii = FALSE,
     invisible(.Internal(save(list, file, ascii, version, envir)))
 }
 
-save.image <- function (file = ".RData")
+save.image <- function (file = ".RData", version = NULL)
     save(list = ls(envir = .GlobalEnv, all.names = TRUE), file = file,
-         envir = .GlobalEnv)
+         version = version, envir = .GlobalEnv)
