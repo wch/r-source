@@ -173,6 +173,10 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   package, selecting the one with the latest version number.  If
   \code{version} \emph{is} specified, a versioned install with an
   exactly matching version is looked for.
+
+  If \code{version} is not specified, \code{require} will accept any
+  version that is already loaded, whereas \code{library} will look for
+  an unversioned install even if a versioned install is already loaded.
   
   Loading more than one version of a package into an \R session is not
   currently supported.  Support for versioned installs is patchy.

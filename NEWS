@@ -91,7 +91,7 @@ INSTALLATION CHANGES
 	[This is currently rough, and will lead to the GNOME GUI being
 	unbundled in due course.]
 
-    o	Configuring without having the recommended packages is not an
+    o	Configuring without having the recommended packages is now an
 	error unless --with-recommended-packages=no is used.
 
 
@@ -232,6 +232,11 @@ BUG FIXES
     o	rank() and order() accepted raw and list inputs, but did not
 	give a sensible answer (always 1:n).  Similarly, partial sorts
 	of a raw vector were accepted but did nothing.
+
+    o	require() without a version argument tried for an unversioned
+	load of a package even though a versioned install was already
+	loaded.  This often lead to a message that a required package
+	was being loaded when it was not actually being loaded.
 
 
 

@@ -538,13 +538,17 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
 {
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
-    if (missing(version))
+    if (missing(version)) {
         pkgName <- package
-    else
+        ## dont' care about versions, so accept any
+        s <- sub("_[0-9.-]*", "", search())
+        loaded <- paste("package", pkgName, sep = ":") %in% s
+    } else {
         pkgName <- manglePackageName(package, version)
+        loaded <- paste("package", pkgName, sep = ":") %in% search()
+    }
 
-
-    if (is.na(match(paste("package", pkgName, sep = ":"), search()))) {
+    if (!loaded) {
 	if (!quietly) cat("Loading required package:", package, "\n")
 	value <- library(package, character.only = TRUE, logical = TRUE,
 		warn.conflicts = warn.conflicts, keep.source = keep.source,

@@ -72,6 +72,7 @@ The current version of this document is @value{VERSION}.
 * System and foreign language interfaces::
 * The R API::
 * Generic functions and methods::
+* Linking GUIs and other front-ends to R::
 * R (internal) programming miscellanea::
 * R coding standards::
 * Function and variable index::
@@ -5967,7 +5968,7 @@ get_seed(unsigned int *, unsigned int *)
 @noindent
 to read the seeds).
 
-@node Generic functions and methods, R (internal) programming miscellanea, The R API, Top
+@node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
 @cindex Generic functions
 @cindex Method functions
@@ -6137,7 +6138,15 @@ foo.default <- base::foo
 @end smallexample
 
 
-@node R (internal) programming miscellanea, R coding standards, Generic functions and methods, Top
+@node Linking GUIs and other front-ends to R, R (internal) programming miscellanea, Generic functions and methods, Top
+@chapter Linking GUIs and other front-ends to R
+
+The chapter is currently for Unix-like operating systems and does not
+cover Windows.
+
+
+
+@node R (internal) programming miscellanea, R coding standards, Linking GUIs and other front-ends to R, Top
 @appendix R (internal) programming miscellanea
 
 @menu
