@@ -28,6 +28,9 @@ BUG FIXES
 
     o   Fixes to group methods.
 
+    o   autoload() caused infinite loop if function  wasn't found in
+	library on loading
+
 		CHANGES IN VERSION R VERSION 0.61
 
 We try to make development more flexible by creating a "CVS branch". This
