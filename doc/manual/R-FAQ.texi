@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-46 @value{FAQ-YEAR}-08-19
+@set FAQ-VERSION 1.9-47 @value{FAQ-YEAR}-08-27
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1258,10 +1258,7 @@ but not set in S.
 @item
 Terms objects are stored differently.  In S a terms object is an
 expression with attributes, in R it is a formula with attributes.  The
-attributes have the same names but are mostly stored differently.  The
-major difference in functionality is that a terms object is
-subscriptable in S but not in R.  If you can't imagine why this would
-matter then you don't need to know.
+attributes have the same names but are mostly stored differently.
 @item
 Finally, in R @code{y~x+0} is an alternative to @code{y~x-1} for
 specifying a model with no intercept.  Models with no parameters at all
@@ -1622,6 +1619,8 @@ Facilities for the use of R to write CGI scripts.
 @item CircStats
 Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
+@item CoCo
+Graphical modeling for contingency tables using CoCo.
 @item CoCoAn
 Constrained Correspondence Analysis.
 @item DAAG
@@ -1922,6 +1921,8 @@ emphasis on regression diagnostics, particularly graphical diagnostic
 methods.
 @item cat
 Analysis of categorical-variable datasets with missing values.
+@item catspec
+Special models for categorical variables.
 @item cclust
 Convex clustering methods, including @math{k}-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
@@ -3639,6 +3640,7 @@ dir /opt/R/src/unix
 * How can I sort the rows of a data frame?::  
 * Why does the help.start() search engine not work?::  
 * Why did my .Rprofile stop working when I updated R?::  
+* Where have all the methods gone?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -4021,7 +4023,8 @@ Enclosing environments are important because a function can use
 variables in the enclosing environment to share information with other
 functions or with other invocations of itself (see the section on
 lexical scoping).  This relies on the enclosing environment being the
-same each time the function is invoked.
+same each time the function is invoked.  (In C this would be done with
+static variables.)
 
 Scoping @emph{is} hard.  Looking at examples helps.  It is particularly
 instructive to look at examples that work differently in R and S and try
@@ -4355,7 +4358,7 @@ search page.
 R-admin, R Installation and Administration}, for further details.
 @end ifset
 
-@node Why did my .Rprofile stop working when I updated R?,  , Why does the help.start() search engine not work?, R Miscellanea
+@node Why did my .Rprofile stop working when I updated R?, Where have all the methods gone?, Why does the help.start() search engine not work?, R Miscellanea
 @section Why did my .Rprofile stop working when I updated R?
 
 Did you read the @file{NEWS} file?  For functions that are not in the
@@ -4374,6 +4377,26 @@ needs to be
 graphics::ps.options(horizontal = FALSE)
 utils::help.start()
 @end example
+
+@node Where have all the methods gone?,  , Why did my .Rprofile stop working when I updated R?, R Miscellanea
+@section Where have all the methods gone?
+
+Many functions, particularly S3 methods, are now hidden in namespaces.
+This has the advantage that they cannot be called inadvertantly with
+arguments of the wrong class, but it makes them harder to view.
+
+To see the code for an S3 method (e.g., @code{[.terms}) use
+
+@example
+getS3method("[", "terms")
+@end example
+
+@noindent
+To see the code for an unexported function @code{foo()} in the namespace
+of package @code{"bar"} use @code{bar:::foo}.  Don't use these
+constructions to call unexported functions in your own code---they are
+probably unexported for a reason and may change without warning.
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
