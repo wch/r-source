@@ -783,6 +783,8 @@ SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	location where this variable is stored.  */
 
     tmpsym = install("*tmp*");
+    if (rho == R_NilValue)
+	errorcall(call, "cannot do complex assignments in NULL environment");
     defineVar(tmpsym, R_NilValue, rho);
     tmploc = findVarLocInFrame(rho, tmpsym);
 #ifdef OLD

@@ -290,7 +290,11 @@ FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
 #endif
 
+#ifdef OLD
 static void R_LoadProfile(FILE *fp)
+#else
+static void R_LoadProfile(FILE *fp, SEXP env)
+#endif
 {
     if (fp != NULL) {
 	R_Inputfile = fp;
@@ -300,7 +304,11 @@ static void R_LoadProfile(FILE *fp)
 	signal(SIGINT, onintr);
 	if (!doneit) {
 	    doneit = 1;
+#ifdef OLD
 	    R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
+#else
+	    R_ReplFile(R_Inputfile, env, 0, 0);
+#endif
 	}
         R_Inputfile = NULL;
     }
@@ -399,12 +407,19 @@ void setup_Rmainloop(void)
     /* This is where we source the system-wide, the site's and the
        user's profile (in that order).  If there is an error, we
        drop through to further processing. */
+#ifdef OLD
     R_LoadProfile(R_OpenSysInitFile());
 #ifndef Macintosh
     R_LoadProfile(R_OpenSiteFile());
     R_LoadProfile(R_OpenInitFile());
 #endif
-
+#else
+    R_LoadProfile(R_OpenSysInitFile(), R_NilValue);
+#ifndef Macintosh
+    R_LoadProfile(R_OpenSiteFile(), R_NilValue); 
+    R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
+#endif
+#endif
     /* Initial Loading is done.  At this point */
     /* we try to invoke the .First Function. */
     /* If there is an error we continue */

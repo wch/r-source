@@ -7,6 +7,8 @@
 
 NEW FEATURES
 
+    o   User's .Rprofile now executes in global environment
+
     o   image() allows x and y to specify either the boundaries or the 
 	midpoints of the cells. If the latter, the whole cells are
 	drawn, rather than the outer cells being half-sized as previously.
