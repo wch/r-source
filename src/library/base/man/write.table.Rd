@@ -13,6 +13,9 @@
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
             eol = "\n", na = "NA", dec = ".", row.names = TRUE,
 	    col.names = TRUE, qmethod = c("escape", "double"))
+
+write.csv(\dots, col.names = NA, sep = ",", qmethod = "double")
+write.csv2(\dots, col.names = NA, dec = ",", sep = ";", qmethod = "double")
 }
 \arguments{
   \item{x}{the object to be written, preferably a matrix or data frame.
@@ -43,11 +46,14 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
     \code{"escape"} (default), in which case the quote character is
     escaped in C style by a backslash, or \code{"double"}, in which case
     it is doubled.  You can specify just the initial letter.}
+
+  \item{\dots}{further arguments to \code{write.table}.}
 }
 \details{
   By default there is no column name for a column of row names.  If
   \code{col.names = NA} a blank column name is added.  This can be used to
-  write CSV files for input to spreadsheets.
+  write CSV files for input to spreadsheets.  \code{write.csv} and
+  \code{write.csv2} provide convenience wrappers for doing so.
 
   If the table has no columns the rownames will be written only if
   \code{row.names=TRUE}, and \emph{vice versa}.

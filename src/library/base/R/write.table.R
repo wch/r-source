@@ -225,7 +225,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                           as.integer(quote), qmethod != "double"))
 }
 
-write.csv <- function(...)
+write.csv <- function(..., col.names=NA, sep=",", qmethod="double")
     write.table(..., col.names=NA, sep=",", qmethod="double")
-write.csv2 <- function(...)
+write.csv2 <- function(..., col.names=NA, dec=",", sep=";", qmethod="double")
     write.table(..., col.names=NA, dec=",", sep=";", qmethod="double")
