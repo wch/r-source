@@ -57,9 +57,6 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 ../../../bin/Rdindex: ../../scripts/Rdindex.in
 	$(SED) -e 1d -e s/\"unix\"/\"windows\"/ -e "s/R CMD/Rcmd/" $< > $@
 
-../../../bin/extract-usage: ../../scripts/extract-usage.in
-	$(SED) -e 1d -e s/unix/windows/  $< > $@
-
 ../../../bin/Rdiff.sh: ../../scripts/Rdiff
 	$(SED) -e 1d $< > $@
 
@@ -68,8 +65,7 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 
 fixbin: ../../../bin/massage-Examples.sh ../../../bin/build \
 	   ../../../bin/check ../../../bin/Rdconv ../../../bin/Rdindex \
-	   ../../../bin/Sd2Rd ../../../bin/extract-usage \
-	   ../../../bin/Rdiff.sh ../../../bin/Rprof cp2bin
+	   ../../../bin/Sd2Rd ../../../bin/Rdiff.sh ../../../bin/Rprof cp2bin
 	$(ECHO) done > fixbin
 
 cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))

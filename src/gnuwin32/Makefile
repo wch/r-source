@@ -7,8 +7,8 @@ HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
-#USE_LIBXML=YES
-USE_WININET=YES
+USE_LIBXML=YES
+#USE_WININET=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -301,7 +301,7 @@ bindist: docfiles
 	$(RM) $(RPREFIX)/*/Makefile.in
 	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
 	   massage-Examples.sh Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
-           extract-usage Sd2Rd Rprof)
+           Sd2Rd Rprof)
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
@@ -310,6 +310,8 @@ bindist: docfiles
 	$(MKDIR) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
+	$(CP) -p ../../doc/manual/hyperref.cfg $(RPREFIX)/doc/manual
+	$(CP) -p ../../doc/manual/*.fd $(RPREFIX)/doc/manual
 	$(CP) -p ../../doc/manual/*.html $(RPREFIX)/doc/manual
 	$(CP) -p ../../AUTHORS ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
 		../../THANKS ../../Y2K $(RPREFIX)
@@ -382,7 +384,7 @@ packagedist:
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
 	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
-	  ../../bin/Rdindex ../../bin/Rdiff.sh ../../bin/extract-usage \
+	  ../../bin/Rdindex ../../bin/Rdiff.sh \
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
 	$(CP) ../../etc/Makeconf-tests $(RPREFIX)/etc
