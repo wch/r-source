@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2005-03-11</h2>
+<h2>Version 2.0.2005-03-30</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1737,6 +1737,7 @@ Engineering and the Sciences (5th ed)&rdquo; by Jay L. Devore, 2000, Duxbury.
 Engineering and the Sciences (6th ed)&rdquo; by Jay L. Devore, 2003, Duxbury. 
 <br><dt><strong>EMV</strong><dd>Estimation of missing values in a matrix by a k-th nearest
 neighboors algorithm. 
+<br><dt><strong>EbayesThresh</strong><dd>Empirical Bayes thresholding and related methods. 
 <br><dt><strong>Ecdat</strong><dd>Data sets from econometrics textbooks. 
 <br><dt><strong>GDD</strong><dd>Platform and X11 independent device for creating bitmaps (png, gif and
 jpeg) using the GD graphics library. 
@@ -2057,7 +2058,6 @@ fuzzy clustering, shortest path computation, bagged clustering, and some
 more. 
 <br><dt><strong>eba</strong><dd>Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models. 
-<br><dt><strong>ebayesthresh</strong><dd>Empirical Bayes thresholding and related methods. 
 <br><dt><strong>eco</strong><dd>Fitting Bayesian models of ecological inference in 2 by 2 tables. 
 <br><dt><strong>edci</strong><dd>Edge Detection and Clustering in Images. 
 <br><dt><strong>effects</strong><dd>Graphical and tabular effect displays, e.g., of interactions, for linear
@@ -2432,6 +2432,7 @@ principal component analyses.
 <br><dt><strong>permax</strong><dd>Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue. 
+<br><dt><strong>perturb</strong><dd>Perturbation analysis for evaluating collinearity. 
 <br><dt><strong>pgam</strong><dd>Poisson-Gamma Additive Models. 
 <br><dt><strong>pheno</strong><dd>Some easy-to-use functions for time series analyses of (plant-)
 phenological data sets. 
@@ -3498,6 +3499,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#Why-is-read_002etable_0028_0029-so-inefficient_003f">Why is read.table() so inefficient?</a>
 <li><a href="#What-is-the-difference-between-package-and-library_003f">What is the difference between package and library?</a>
 <li><a href="#I-installed-a-package-but-the-functions-are-not-there">I installed a package but the functions are not there</a>
+<li><a href="#Why-doesn_0027t-R-think-these-numbers-are-equal_003f">Why doesn't R think these numbers are equal?</a>
 </ul>
 
 <!-- @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea -->
@@ -4352,7 +4354,8 @@ containing packages.
 
 <div class="node">
 <p><hr>
-<a name="I-installed-a-package-but-the-functions-are-not-there"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#What-is-the-difference-between-package-and-library_003f">What is the difference between package and library?</a>,
+<a name="I-installed-a-package-but-the-functions-are-not-there"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#Why-doesn_0027t-R-think-these-numbers-are-equal_003f">Why doesn't R think these numbers are equal?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What-is-the-difference-between-package-and-library_003f">What is the difference between package and library?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
@@ -4363,6 +4366,33 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <code>library()</code>.
 
    <p>See <a href="#R-Add_002dOn-Packages">R Add-On Packages</a> and <a href="#What-is-the-difference-between-package-and-library_003f">What is the difference between package and library?</a> for more information.
+
+<div class="node">
+<p><hr>
+<a name="Why-doesn_0027t-R-think-these-numbers-are-equal_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#I-installed-a-package-but-the-functions-are-not-there">I installed a package but the functions are not there</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.31 Why doesn't R think these numbers are equal?</h3>
+
+<p>The only numbers that can be represented exactly in R's numeric type
+are integers and fractions whose denominator is a power of 2.  Other
+numbers have to be rounded to (typically) 53 binary digits accuracy.  As a
+result, two floating point numbers will not reliably be equal unless they
+have been computed by the same algorithm, and not always even then.  For
+example
+
+<pre class="example">     R&gt; a &lt;- sqrt(2)
+     R&gt; a * a == 2
+     [1] FALSE
+     R&gt; a * a - 2
+     [1] 4.440892e-16
+</pre>
+   <p>The function <code>all.equal()</code> compares two objects using a numeric
+tolerance of <code>.Machine$double.eps ^ 0.5</code>.  If you want much greater
+accuracy than this you will need to consider error propagation
+carefully.
 
 <div class="node">
 <p><hr>

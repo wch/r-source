@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-03-11
+Version 2.0.2005-03-30
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -89,6 +89,7 @@ R FAQ
   7.28 Why is read.table() so inefficient?
   7.29 What is the difference between package and library?
   7.30 I installed a package but the functions are not there
+  7.31 Why doesn't R think these numbers are equal?
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
@@ -1345,6 +1346,9 @@ distributions of R.)
      Estimation of missing values in a matrix by a k-th nearest neighboors
      algorithm.
 
+*EbayesThresh*
+     Empirical Bayes thresholding and related methods.
+
 *Ecdat*
      Data sets from econometrics textbooks.
 
@@ -1966,9 +1970,6 @@ distributions of R.)
 *eba*
      Fitting and testing probabilistic choice models, especially the BTL,
      elimination-by-aspects (EBA), and preference tree (Pretree) models.
-
-*ebayesthresh*
-     Empirical Bayes thresholding and related methods.
 
 *eco*
      Fitting Bayesian models of ecological inference in 2 by 2 tables.
@@ -2678,6 +2679,9 @@ distributions of R.)
      Functions intended to facilitate certain basic analyses of DNA array
      data, especially with regard to comparing expression levels between two
      types of tissue.
+
+*perturb*
+     Perturbation analysis for evaluating collinearity.
 
 *pgam*
      Poisson-Gamma Additive Models.
@@ -4573,6 +4577,25 @@ To actually _use_ the package, it needs to be _loaded_ using `library()'.
 
    See *Note R Add-On Packages:: and *Note What is the difference between
 package and library?:: for more information.
+
+7.31 Why doesn't R think these numbers are equal?
+=================================================
+
+The only numbers that can be represented exactly in R's numeric type are
+integers and fractions whose denominator is a power of 2.  Other numbers
+have to be rounded to (typically) 53 binary digits accuracy.  As a result,
+two floating point numbers will not reliably be equal unless they have been
+computed by the same algorithm, and not always even then.  For example
+
+     R> a <- sqrt(2)
+     R> a * a == 2
+     [1] FALSE
+     R> a * a - 2
+     [1] 4.440892e-16
+
+   The function `all.equal()' compares two objects using a numeric
+tolerance of `.Machine$double.eps ^ 0.5'.  If you want much greater
+accuracy than this you will need to consider error propagation carefully.
 
 8 R Programming
 ***************
