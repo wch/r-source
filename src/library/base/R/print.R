@@ -101,7 +101,7 @@ function(x, digits = max(3, .Options$digits - 2),
                      symbols   =  c("***","**","*","."," "))
     Coefs <- cbind(Coefs, Signif)
   }
-  print(Coefs, quote = FALSE, ...)
+  print(Coefs, quote = FALSE, right = TRUE, ...)
   if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
   invisible(x)
 }
