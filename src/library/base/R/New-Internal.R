@@ -58,7 +58,9 @@ duplicated <- function(x, incomparables = FALSE) {
     .Internal(duplicated(x))
 }
 format.info <- function(x).Internal(format.info(x)) ### NO DOC
-gc <- function().Internal(gc())
+gc <- function(verbose = .Options$verbose)
+    matrix(.Internal(gc(verbose)),2,2,
+           dimnames = list(c("Ncells","Vcells"),c("free","total")))
 gcinfo <- function(verbose).Internal(gcinfo(verbose))
 gray <- function(level).Internal(gray(level))
 lib.fixup <- function(env, globenv).Internal(lib.fixup(env, globenv)) ### NO DOC

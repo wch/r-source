@@ -61,7 +61,7 @@ int gc_inhibit_torture = 1; /* gets set to zero after initialisations */
 
 #ifdef GC_TORTURE
 #define FORCE_GC !gc_inhibit_torture
-#else 
+#else
 #define FORCE_GC 0
 #endif
 
@@ -75,29 +75,41 @@ void installIntVector(SEXP, int, FILE *);
 SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i;
+    SEXP old = allocVector(LGLSXP, 1);
+
     checkArity(op, args);
     i = asLogical(CAR(args));
+    LOGICAL(old)[0] = gc_reporting;
     if (i != NA_LOGICAL)
 	gc_reporting = i;
-    return R_NilValue;
+    return old;
 }
-
 
 SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    SEXP value;
+    int ogc;
     checkArity(op, args);
-    gc_reporting = 1;
+    ogc = gc_reporting;
+    gc_reporting = asLogical(CAR(args));
     gc();
-    gc_reporting = 0;
-    return R_NilValue;
+    gc_reporting = ogc;
+    /*- now return the [free , total ] for cells and heap */
+    PROTECT(value = allocVector(INTSXP, 4));
+    INTEGER(value)[0] = R_Collected;
+    INTEGER(value)[1] = (int)(R_VSize - (R_VTop - R_VHeap));
+    INTEGER(value)[2] = R_NSize;
+    INTEGER(value)[3] = R_VSize;
+    UNPROTECT(1);
+    return value;
 }
 
 
-void mem_err_heap()
+void mem_err_heap(long size)
 {
-    error("heap memory (%ldKb) exhausted\n",
-	  (R_VSize * sizeof(VECREC))/1024);
-  
+    error("heap memory (%ld Kb) exhausted [needed %ld Kb more]\n",
+	  (R_VSize * sizeof(VECREC))/1024,
+  (size * sizeof(VECREC))/1024);
 }
 
 
@@ -135,6 +147,7 @@ void InitMemory()
 {
     int i;
 
+    gc_reporting = R_Verbose;
 #ifdef Macintosh
     OSErr   result;
 
@@ -205,7 +218,7 @@ char *R_alloc(long nelem, int eltsize)
 	if (FORCE_GC || R_VMax - R_VTop < size) {
 	    gc();
 	    if (R_VMax - R_VTop < size)
-		mem_err_heap();
+		mem_err_heap(size);
 	}
 	R_VMax -= size;
     }
@@ -275,7 +288,7 @@ SEXP allocString(int length)
 	if (R_FreeSEXP == NULL)
 	    mem_err_cons();
 	if (R_VMax - R_VTop < size)
-	    mem_err_heap();
+	    mem_err_heap(size);
     }
 
     GC_PROT(s = allocSExp(CHARSXP));
@@ -348,7 +361,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 	if (R_FreeSEXP == NULL)
 	    mem_err_cons();
 	if (R_VMax - R_VTop < size)
-	    mem_err_heap();
+	    mem_err_heap(size);
     }
     GC_PROT(s = allocSExp(type));
 
@@ -388,9 +401,10 @@ void gc(void)
 {
     sigset_t mask, omask;
     int vcells, vfrac;
+
     gc_count++;
     if (gc_reporting)
-	REprintf("Garbage collection ...");
+	REprintf("Garbage collection [nr. %d]...", gc_count);
     sigemptyset(&mask);
     sigaddset(&mask,SIGINT);
     sigprocmask(SIG_BLOCK, &mask, &omask);
@@ -404,7 +418,7 @@ void gc(void)
 		 R_Collected, (100 * R_Collected / R_NSize));
 	vcells = R_VSize - (R_VTop - R_VHeap);
 	vfrac = 100 * vcells / R_VSize;
-	REprintf("%ldk bytes of heap free (%ld%%)\n",
+	REprintf("%ld Kbytes of heap free (%ld%%)\n",
 		 vcells * sizeof(VECREC) / 1024, vfrac);
     }
 }
@@ -561,13 +575,11 @@ void scanPhase(void)
 
     R_FreeSEXP = NULL;
     R_Collected = 0;
-    if(R_FreeSEXP == NULL)
-	i=10;
     for (i = 0; i < R_NSize; i++) {
 	if (!MARK(&R_NHeap[i])) {
 	    CDR(&R_NHeap[i]) = R_FreeSEXP;
 	    R_FreeSEXP = &R_NHeap[i];
-	    R_Collected = R_Collected + 1;
+	    R_Collected++;
 	}
     }
 }
@@ -578,9 +590,9 @@ void scanPhase(void)
 void protect(SEXP s)
 {
     if (R_PPStackTop >= R_PPStackSize)
-	error("stack overflow\n");
+	error("protect(): stack overflow\n");
     R_PPStack[R_PPStackTop] = s;
-    R_PPStackTop = R_PPStackTop + 1;
+    R_PPStackTop++;
 }
 
 
@@ -591,7 +603,7 @@ void unprotect(int l)
     if (R_PPStackTop > 0)
 	R_PPStackTop = R_PPStackTop - l;
     else
-	error("stack imbalance in \"unprotect\"\n");
+	error("unprotect(): stack imbalance\n");
 }
 
 /* "unprotect_ptr" remove pointer from somewhere in R_PPStack */
@@ -599,12 +611,12 @@ void unprotect(int l)
 void unprotect_ptr(SEXP s)
 {
     int i = R_PPStackTop;
-    
+
     /* go look for  s  in  R_PPStack */
     /* (should be among the top few items) */
     do {
     	if (i == 0)
-	    error("pointer not found in \"unprotect\"\n");
+	    error("unprotect_ptr: pointer not found\n");
     } while ( R_PPStack[--i] != s );
 
     /* OK, got it, and  i  is indexing its location */
@@ -656,11 +668,12 @@ char *C_alloc(long nelem, int eltsize)
 	if(C_Pointers[i] == NULL) {
 	    C_Pointers[i] = malloc(nelem * eltsize);
 	    if(C_Pointers[i] == NULL)
-		error("unable to malloc memory in C_alloc\n");
+		error("C_alloc(): unable to malloc memory\n");
 	    else return C_Pointers[i];
 	}
     }
-    error("all C_alloc pointers in use (sorry)\n");
+    error("C_alloc(): all pointers in use (sorry)\n");
+    /*-Wall:*/return C_Pointers[0];
 }
 
 void C_free(char *p)
@@ -673,5 +686,5 @@ void C_free(char *p)
 	    return;
 	}
     }
-    error("attempt free pointer not allocated by C_alloc()\n");
+    error("C_free(): attempt to free pointer not allocated by C_alloc()\n");
 }

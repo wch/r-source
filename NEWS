@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o   gc() has now a 'verbose' argument and returns a matrix with free
+	and total n- and v-cells(heap).
+
     o   New example(<foo>) function runs the \emph{Examples} R code of <foo>.
 	example(.) calls source(..) which now has a `verbose' instead of `debug'
 	argument.
@@ -75,6 +78,8 @@ NEW FEATURES
 	and is subject to internal and interface changes.
 
 BUG FIXES
+
+    o	postscript() now uses 'hyphen' instead of 'plusminus' for a minus.
 
     o   source(..., echo=TRUE) now puts a `"' if necessary after truncation.
 
