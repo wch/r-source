@@ -144,11 +144,15 @@ function(x, digits = max(1, getOption("digits") - 3), ...)
     invisible(x)
 }
 
-as.data.frame.table <- function(x, row.names = NULL, optional = FALSE, ...)
+as.data.frame.table <- function(x, row.names = NULL, optional = FALSE,
+                                responseName = "Freq", ...)
 {
     x <- as.table(x)
-    data.frame(do.call("expand.grid", dimnames(x)), Freq = c(x),
-	       row.names = row.names)
+    ex <- Quote(data.frame(do.call("expand.grid", dimnames(x)),
+                           Freq = c(x),
+                           row.names = row.names))
+    names(ex)[3] <- responseName
+    eval(ex)
 }
 
 is.table <- function(x) inherits(x, "table")

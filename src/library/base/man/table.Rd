@@ -17,7 +17,8 @@ table(\dots, exclude = c(NA, NaN), dnn = list.names(...),
 as.table(x, \dots)
 is.table(x)
 
-\method{as.data.frame}{table}(x, row.names = NULL, optional = FALSE, \dots)
+\method{as.data.frame}{table}(x, row.names = NULL, optional = FALSE,
+              responseName = "Freq", \dots)
 }
 \arguments{
   \item{\dots}{objects which can be interpreted as factors (including
@@ -36,6 +37,8 @@ is.table(x)
     frame.}
   \item{optional}{a logical controlling whether row names are set.
     Currently not used.}
+  \item{responseName}{The name to be used for the column of
+    table entries, usually counts.}
 }
 \value{
   \code{table()} returns a \emph{contingency table}, an object of
@@ -52,8 +55,8 @@ is.table(x)
   The \code{as.data.frame} method for objects inheriting from class
   \code{"table"} can be used to convert the array-based representation
   of a contingency table to a data frame containing the classifying
-  factors and the corresponding counts (the latter as component
-  \code{Freq}).  This is the inverse of \code{\link{xtabs}}.
+  factors and the corresponding entries (the latter as component
+  named by \code{responseName}).  This is the inverse of \code{\link{xtabs}}.
 }
 \details{
   If the argument \code{dnn} is not supplied, the internal function

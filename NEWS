@@ -210,6 +210,9 @@ NEW FEATURES
 
     o   gc() now reports maximum as well as current memory use.
 
+    o   as.data.frame.table() has a new argument 'responseName'
+	(contributed by Bill Venables).
+
 
 UTILITIES
 
