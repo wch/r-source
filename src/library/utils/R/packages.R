@@ -84,8 +84,20 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
                         method = method,
                         available = available, checkBuilt = checkBuilt)
 
-    update <- NULL
-    if(ask & !is.null(old)){
+    if(is.null(old)) return(invisible())
+    if(is.character(ask) && ask == "graphics") {
+        if(.Platform$OS.type == "unix"
+           && capabilities("tcltk") && capabilities("X11")) {
+            k <- tcltk::tk_select.list(old[,1], old[,1], multiple = TRUE,
+                                       title = "Packages to be updated")
+        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+            k <- select.list(old[,1], old[,1], multiple = TRUE,
+                             title = "Packages to be updated")
+        else stop("no graphical widget is available")
+        update <- old[match(k, old[,1]), ]
+        if(nrow(update) == 0) return(invisible())
+    } else if(is.logical(ask) && ask) {
+        update <- NULL
         for(k in 1:nrow(old)){
             cat(old[k, "Package"], ":\n",
                 "Version", old[k, "Installed"],

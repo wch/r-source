@@ -515,10 +515,10 @@ INSTALLATION CHANGES
 
 PACKAGE INSTALLATION CHANGES
 
-    o	There is now support of installing from within R both source
-	and binary packages on MacOS X and Windows (at least).  Most
-	of the R functions now have a 'type' argument defaulting to
-	getOption("type") and with possible values "source",
+    o	There is now support of installing from within R both source and
+	binary packages on MacOS X and Windows.  Most of the R
+	functions now have a 'type' argument defaulting to
+	getOption("pkgType") and with possible values "source",
 	"win.binary" and "mac.binary".  The default is "source" except
 	under Windows and the CRAN GUI build for MacOS X.
 
@@ -536,6 +536,12 @@ PACKAGE INSTALLATION CHANGES
 
 	If the repository provides the information, install.packages()
 	will now accept the name of a package in a bundle.
+
+	If 'pkgs' is omitted install.packages() will use a listbox to
+	display the available packages, on suitable systems.
+
+    o	There is a new possible value update.packages(ask="graphics")
+	that uses a widget to (de)select packages, on suitable systems.
 
     o	The option used is now getOption("repos") not getOption("CRAN")
 	and it is initially set to a dummy value.  Its value can be a

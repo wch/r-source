@@ -6,8 +6,25 @@ install.packages <-
              installWithVers = FALSE, dependencies = FALSE,
              type = getOption("pkgType"))
 {
-    if(missing(pkgs) || !length(pkgs))
-        stop("no packages were specified")
+    if(missing(pkgs) || !length(pkgs)) {
+        if(.Platform$OS.type == "unix" &&
+                  capabilities("tcltk") && capabilities("X11")) {
+            if(is.null(available))
+                available <- available.packages(contriburl = contriburl,
+                                                method = method)
+            pkgs <- tcltk::tk_select.list(available[, 1],
+                                          multiple = TRUE, title ="Packages")
+            if(!length(pkgs)) stop("no packages were specified")
+         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
+            if(is.null(available))
+                available <- available.packages(contriburl = contriburl,
+                                                method = method)
+            pkgs <- select.list(available[, 1], multiple = TRUE,
+                               title = "Packages")
+            if(!length(pkgs)) stop("no packages were specified")
+        } else
+            stop("no packages were specified")
+    }
 
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]

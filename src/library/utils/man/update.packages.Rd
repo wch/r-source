@@ -89,6 +89,8 @@ contrib.url(repos, type = getOption("pkgType"))
     \code{.tar.gz} files.  These can be source archives or binary
     package/bundle archive files (as created by \code{R CMD build --binary}).
 #endif
+    If this is a zero-length character vector, a listbox of available
+    packages is presented where possible.
   }
   \item{destdir}{directory where downloaded packages are stored.}
   \item{available}{an object listing packages available at the repositories
@@ -96,7 +98,12 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{lib}{character vector giving the library directories where to
     install the packages.  Recycled as needed.}
   \item{ask}{logical indicating whether to ask user before packages
-    are actually downloaded and installed.}
+    are actually downloaded and installed, or the character string
+    \code{"graphics"}, which brings up a widget to allow the user to
+    (de-)select from the list of packages which could be updated.  The
+    latter only works on systems with a GUI version of
+    \code{\link{select.list}}.
+  }
   \item{installWithVers}{If \code{TRUE}, will invoke the install of the
     package such that it can be referenced by package version.}
   \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
