@@ -41,7 +41,7 @@ function(dir, outDir)
                        Sys.time(),
                        sep = "")),
                file.path(outDir, "DESCRIPTION"))
-    invisible(NULL)
+    invisible()
 }
 
 ### * .installPackageIndices
@@ -68,7 +68,7 @@ function(dir, outDir)
     .installPackageRdIndices(dir, outDir)
     .installPackageVignetteIndex(dir, outDir)
     .installPackageDemoIndex(dir, outDir)
-    invisible(NULL)
+    invisible()
 }
 
 ### * .installPackageRdIndices
@@ -78,7 +78,7 @@ function(dir, outDir)
 {
     dir <- .convertFilePathToAbsolute(dir)
     docsDir <- file.path(dir, "man")
-    if(!.fileTest("-d", docsDir)) return()
+    if(!.fileTest("-d", docsDir)) return(invisible())
 
     dataDir <- file.path(dir, "data")
     packageName <- basename(dir)
@@ -94,7 +94,7 @@ function(dir, outDir)
                         file.path(outDir, "Meta", "data.rds"),
                         c(dataDir, docsDir)))
     }
-    if(all(upToDate)) return()
+    if(all(upToDate)) return(invisible())
 
     contents <- Rdcontents(.listFilesWithType(docsDir, "docs"))
 
@@ -116,7 +116,7 @@ function(dir, outDir)
         .saveRDS(.buildDataIndex(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     }
-    invisible(NULL)
+    invisible()
 }
 
 ### * .installPackageVignetteIndex
@@ -127,8 +127,9 @@ function(dir, outDir)
     vignetteDir <- file.path(dir, "inst", "doc")
     ## Create a vignette index only if the vignette dir exists and
     ## really contains vignettes.
-    if(!.fileTest("-d", vignetteDir)) return()
-    if(!length(.listFilesWithType(vignetteDir, "vignette"))) return()
+    if(!.fileTest("-d", vignetteDir)
+       || !length(.listFilesWithType(vignetteDir, "vignette")))
+        return(invisible())
 
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
 
@@ -145,7 +146,7 @@ function(dir, outDir)
     writeLines(formatDL(vignetteIndex, style = "list"),
                file.path(outVignetteDir, "00Index.dcf"))
     ## </FIXME>
-    invisible(NULL)
+    invisible()
 }
 
 ### * .installPackageDemoIndex
@@ -154,10 +155,11 @@ function(dir, outDir)
 function(dir, outDir)
 {
     demoDir <- file.path(dir, "demo")
-    if(!.fileTest("-d", demoDir)) return()
+    if(!.fileTest("-d", demoDir)) return(invisible())
     demoIndex <- .buildDemoIndex(demoDir)
     .saveRDS(demoIndex,
              file = file.path(outDir, "Meta", "demo.rds"))
+    invisible()
 }
 
 
