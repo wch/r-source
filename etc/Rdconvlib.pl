@@ -23,6 +23,7 @@
 # Bugs: still get ``\bsl{}'' in verbatim-like, see e.g. Examples of apropos.Rd
 
 
+require "$RHOME/etc/html-layout.pl";
 
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
@@ -356,17 +357,8 @@ sub rdoc2html {
     get_blocks($complete_text);
     get_sections($complete_text);
 
-    print htmlout "<HTML><HEAD><title>";
-    print htmlout $blocks{"title"};
-    print htmlout "</title></HEAD><BODY>\n";
-
-    print htmlout "[ <A HREF=\"../../../html/index.html\">top</A>";
-    print htmlout " | <A HREF=\"00Index.html\">up</A> ]\n";
-
-    print htmlout "<H2 align=center><I>";
-    print htmlout $blocks{"title"};
-    print htmlout "</I></H2>\n";
-
+    print htmlout html_functionhead($blocks{"title"});
+    
     html_print_codeblock("usage", "Usage");
     html_print_argblock("arguments", "Arguments");
     html_print_block("format", "Format");
@@ -382,7 +374,7 @@ sub rdoc2html {
     html_print_block("seealso", "See Also");
     html_print_codeblock("examples", "Examples");
 
-    print htmlout "</BODY></HTML>\n";
+    print htmlout html_functionfoot();
 }
 
 
@@ -516,7 +508,7 @@ sub html_print_block {
     my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
-	print htmlout "<H3><I>$title</I></H3>\n";
+	print htmlout html_title3($title);
 	print htmlout text2html($blocks{$block});
     }
 }
@@ -527,9 +519,10 @@ sub html_print_codeblock {
     my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
-	print htmlout "<H3><I>$title</I></H3>\n<PRE>";
+	print htmlout html_title3($title);
+	print htmlout "<PRE>";
 	print htmlout code2html($blocks{$block});
-	print htmlout "</PRE>";
+	print htmlout "</PRE>\n\n";
     }
 }
 
@@ -540,7 +533,7 @@ sub html_print_argblock {
     my ($block,$title) = @_;
 
     if(defined $blocks{$block}){
-	print htmlout "<H3><I>$title</I></H3>\n";
+	print htmlout html_title3($title);
 
 	my $text = $blocks{$block};
 
@@ -578,7 +571,7 @@ sub html_print_sections {
     my $section;
 
     for($section=0; $section<$max_section; $section++){
-	print htmlout "<H3><I>" . $section_title[$section] . "</I></H3>\n";
+	print htmlout html_title3($section_title[$section]);
 	print htmlout text2html($section_body[$section]);
     }
 }

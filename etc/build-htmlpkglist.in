@@ -3,6 +3,10 @@
 
 use File::Basename;
 use Cwd;
+use Getopt::Long;
+
+@knownoptions = ("dosnames");
+GetOptions (@knownoptions) || usage();
 
 $cwd=getcwd();
 if($ENV{"RHOME"}){
@@ -14,8 +18,16 @@ else{
 }
 chdir($cwd);
 
+
+
 require "$RHOME/etc/buildlib.pl";
 
 build_htmlpkglist("$RHOME/library");
 
 
+sub usage {
+
+    print "Usage:  build-htmlpkglist [--dosnames]\n";
+
+    exit 0;
+}
