@@ -182,7 +182,7 @@ function(object, filename = NULL, name = NULL)
             xi <- x[[i]]
             fmt <-
                 c(fmt,
-                  paste0("    \\item{", i, "}{",
+                  paste0("    \\item{\\code{", i, "}}{",
                          if(inherits(xi, "ordered")) {
                              paste("an", data.class(xi),
                                    "factor with levels",
