@@ -6,6 +6,7 @@ export(.checkMFClasses, .getXlevels, .MFclass)
 export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        aggregate.default, aggregate.ts, AIC, alias, anova, anova.glm,
        anova.glmlist, anova.lm, anova.lmlist, anova.mlm, aov,
+       approx, approxfun,
        as.formula, as.ts, ave, binomial, bw.bcv, bw.nrd, bw.nrd0,
        bw.SJ, bw.ucv, C, case.names, cbind.ts, coef, coefficients,
        complete.cases, confint, constrOptim, contr.helmert,
