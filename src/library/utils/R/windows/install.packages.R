@@ -179,7 +179,7 @@
     invisible()
 }
 
-menuInstallCran <- function(type = getOption("pkgType"))
+menuInstallPkgs <- function(type = getOption("pkgType"))
 {
     a <- available.packages(contrib.url(getOption("repos"), type=type))
     if(NROW(a)) {
@@ -203,13 +203,13 @@ menuInstallLocal <- function()
                      .libPaths()[1], repos = NULL)
 }
 
-menuInstallBioc <- function()
-{
-    a <- available.packages(contrib.url(getOption("BIOC")))
-    install.packages(select.list(a[,1], , TRUE), .libPaths()[1],
-                     available = a, repos = getOption("BIOC"),
-                     dependencies = TRUE)
-}
+# menuInstallBioc <- function()
+# {
+#     a <- available.packages(contrib.url(getOption("BIOC")))
+#     install.packages(select.list(a[,1], , TRUE), .libPaths()[1],
+#                      available = a, repos = getOption("BIOC"),
+#                      dependencies = TRUE)
+# }
 
 ### the following function supports .install.winbinaries()
 
