@@ -316,9 +316,7 @@ foreach $pkg (@ARGV){
 	$opt = $opt . " $pkgname-LAZYDATA=true" if $lazydata;
 #	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
     	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname");
-	if($res) {
-	    printf "*** Installation of $pkgname failed ***\n";
-	} else {
+	if($res == 0) {
 	    if($lazyload == -1) { # choose based on code size
 		my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
 		$codesize =~ / *([0-9]+)/;
@@ -333,16 +331,18 @@ foreach $pkg (@ARGV){
 		    " DPKG=$library/$decpkgname PKG=$decpkgname" .
 		    " RLIB=$library lazyload";
 #		print "$cmd\n";
-		system($cmd);
+		$res = system($cmd);
 	    }
 	    ## add MD5 sums last of all
 	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
 	    $cmd .= "BUILD=$BUILD RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
 #	    print "$cmd\n";
-	    system($cmd);
+	    $res = system($cmd) if($res == 0);
 	    
 	} # end of if($res)
-
+	if($res) {
+	    printf "*** Installation of $pkgname failed ***\n";
+	}
 	system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_clean);
 
 	print("\n");
@@ -356,10 +356,14 @@ foreach $pkg (@ARGV){
 		    system("mv $dppkg $library") if ($safe && -d $dppkg);
 		}
 	    } else {
+		print "Removing '$dpkg'\n";
 		rmtree($dpkg);
 		# move back any previously installed package
 		$dppkg = $lockdir . "/" . $decpkgname;
-		system("mv $dppkg $library") if ($safe && -d $dppkg);
+		if ($safe && -d $dppkg) {
+		    print "Restoring previous '$dpkg'\n";
+		    system("mv $dppkg $library");
+		}
 	    }
 	    last;
 	}
