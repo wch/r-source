@@ -36,9 +36,9 @@ textConnection(object, open = "r", local = FALSE)
 
   Opening a text connection with \code{mode = "a"} will attempt to
   append to an existing character vector with the given name in the
-  user's workspace.  If none is found (even if an object exists of the
-  right name but the wrong type) a new character vector wil be created,
-  with a warning.
+  user's workspace or the calling environment.  If none is found (even
+  if an object exists of the right name but the wrong type) a new
+  character vector wil be created, with a warning.
 
   You cannot \code{seek} on a text connection, and \code{seek} will
   always return zero as the position.
