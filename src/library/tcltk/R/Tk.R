@@ -18,7 +18,7 @@
         if (is.tkwin(x)){current.win <<- x ; return (.Tk.ID(x))}
         if (is.function(x)){
             callback <- .Tcl.callback(x)
-            assign(callback, .Alias(x), envir=current.win)
+            assign(callback, .Alias(x), envir=current.win$env)
             return(callback)
         }
         ## quoting hell...
@@ -54,29 +54,27 @@
     paste(as.vector(rbind(nm, val)), collapse=" ")
 }
 
-.Tk.ID <- function(win) get("ID", envir = win)
+.Tk.ID <- function(win) win$ID
 
 .Tk.newwin <- function(ID){
-    win <- evalq(new.env(), .TkWin)
-    assign("ID", ID, envir=win)
+    win <- list(ID=ID,  evalq(env=new.env(),.GlobalEnv))
+    evalq(num.subwin <- 0, win$env)
     class(win) <- "tkwin"
     win
 }
 
 .Tk.subwin <- function(parent) {
-    ID <- evalq({
-        num.subwin<-num.subwin+1
-        paste(ID, num.subwin, sep=".")
-    }, parent)
+    ID <- paste(parent$ID,evalq(num.subwin<-num.subwin+1, parent$env),
+                sep=".")
     win<-.Tk.newwin(ID)
-    assign(ID, win, envir=parent)
-    assign("parent", parent, envir=win)
+    assign(ID, win, envir=parent$env)
+    assign("parent", parent, envir=win$env)
     win
 }
 
 tkdestroy  <- function(win) {
     tkcmd("destroy", win)
-    rm(list=.Tk.ID(win), envir=get("parent", envir=win))
+    rm(list=.Tk.ID(win), envir=get("parent", envir=win$env)$env)
 }
 
 is.tkwin <- function(x) inherits(x, "tkwin")
@@ -88,7 +86,6 @@ is.tkwin <- function(x) inherits(x, "tkwin")
 }
 
 
-.TkWin  <- local({num.subwin<-0 ; environment()})
 .TkRoot <- .Tk.newwin("")
 tclvar  <- structure(NULL,class="tclvar")
 
@@ -286,6 +283,7 @@ tkitemconfigure <- function(widget, ...) tkcmd(widget, "itemconfigure", ...)
 tkitemfocus     <- function(widget, ...) tkcmd(widget, "focus", ...)
 tkitemlower     <- function(widget, ...) tkcmd(widget, "lower", ...)
 tkitemraise     <- function(widget, ...) tkcmd(widget, "raise", ...)
+tkitemscale     <- function(widget, ...) tkcmd(widget, "scale", ...)
 tkmark.gravity  <- function(widget, ...) tkcmd(widget, "mark", "gravity", ...)
 tkmark.names    <- function(widget, ...) tkcmd(widget, "mark", "names", ...)
 tkmark.next     <- function(widget, ...) tkcmd(widget, "mark", "next", ...)
@@ -297,7 +295,6 @@ tknearest       <- function(widget, ...) tkcmd(widget, "nearest", ...)
 tkpost          <- function(widget, ...) tkcmd(widget, "post", ...)
 tkpostcascade   <- function(widget, ...) tkcmd(widget, "postcascade", ...)
 tkpostscript    <- function(widget, ...) tkcmd(widget, "postscript", ...)
-tkscale         <- function(widget, ...) tkcmd(widget, "scale", ...)
 tkscan.mark     <- function(widget, ...) tkcmd(widget, "scan", "mark", ...)
 tkscan.dragto   <- function(widget, ...) tkcmd(widget, "scan", "dragto", ...)
 tksearch        <- function(widget, ...) tkcmd(widget, "search", ...)

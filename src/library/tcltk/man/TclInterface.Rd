@@ -74,15 +74,18 @@ tclRequire(package, warn = TRUE)
   will exist at that address by assigning the function into the relevant
   window environment (see below).
 
-  Tk windows are represented as \R environments, all of which are
-  enclosed in the \code{.TkWin} environment.  They contain initially just
-  an \code{ID} variable identical to the Tk window name, a
-  \code{parent} variable and a \code{num.subwin} variable (possibly
-  inherited from \code{.TkWin}).  If the window obtains subwindows and
-  callbacks, they are added as variables to the environment.
-  \code{.TkRoot} is the top window with ID "."; this window is not
-  displayed in order to avoid ill effects of closing it via window
-  manager controls.  \code{.Tk.ID} extracts the \code{ID} of a window,
+  Tk windows are represented as objects of class \code{tkwin} which are
+  lists containing  a \code{ID} field and an \code{env} field which is
+  an \R environments, enclosed in the global environment.  The value of
+  the \code{ID} field is identical to the Tk window name. The \code{env}
+  environment contains a \code{parent} variable and a \code{num.subwin}
+  variable.  If the   window obtains subwindows and  callbacks, they are
+  added as variables to the environment.   \code{.TkRoot} is the top
+  window with ID "."; this window is not  displayed in order to avoid
+  ill effects of closing it via window  manager controls. The
+  \code{parent} variable is undefined for \code{.TkRoot}.
+
+  \code{.Tk.ID} extracts the \code{ID} of a window,
   \code{.Tk.newwin} creates a new window environment with a given ID and
   \code{.Tk.subwin} creates a new window which is a subwindow of a given
   parent window.
@@ -124,8 +127,9 @@ tclvar$xyzzy <- 7913 ; .Tcl("set xyzzy")
 .Tcl("set xyzzy 3917") ; tclvar$xyzzy
 
 top <- tktoplevel() # a Tk widget, see Tk-widgets
-ls(envir=top, all=TRUE)
-ls(envir=.TkRoot, all=TRUE)# .Tcl.args put a callback ref in here
+ls(envir=top$env, all=TRUE)
+ls(envir=.TkRoot$env, all=TRUE)# .Tcl.args put a callback ref in here
 }
 }
 \keyword{ misc }
+

@@ -1,23 +1,30 @@
 \name{TkWidgetcmds}
 \alias{tkactivate}
 \alias{tkadd}
+\alias{tkaddtag}
 \alias{tkbbox}
+\alias{tkcanvasx}
+\alias{tkcanvasy}
+\alias{tkcget}
 \alias{tkcompare}
 \alias{tkconfigure}
-\alias{tkconfigure.entry}
-\alias{tkcget}
-\alias{tkcget.entry}
 \alias{tkcoords}
+\alias{tkcreate}
 \alias{tkcurselection}
+\alias{tkdchars}
 \alias{tkdebug}
 \alias{tkdelete}
 \alias{tkdelta}
 \alias{tkdeselect}
 \alias{tkdlineinfo}
 \alias{tkdump}
+\alias{tkentrycget}
+\alias{tkentryconfigure}
+\alias{tkfind}
 \alias{tkflash}
 \alias{tkfraction}
 \alias{tkget}
+\alias{tkgettags}
 \alias{tkicursor}
 \alias{tkidentify}
 \alias{tkimage.cget}
@@ -27,15 +34,24 @@
 \alias{tkindex}
 \alias{tkinsert}
 \alias{tkinvoke}
+\alias{tkitembind}
+\alias{tkitemcget}
+\alias{tkitemconfigure}
+\alias{tkitemfocus}
+\alias{tkitemlower}
+\alias{tkitemraise}
+\alias{tkitemscale}
 \alias{tkmark.gravity}
 \alias{tkmark.names}
 \alias{tkmark.next}
 \alias{tkmark.previous}
 \alias{tkmark.set}
 \alias{tkmark.unset}
+\alias{tkmove}
 \alias{tknearest}
 \alias{tkpost}
 \alias{tkpostcascade}
+\alias{tkpostscript}
 \alias{tkscan.mark}
 \alias{tkscan.dragto}
 \alias{tksearch}
@@ -87,23 +103,30 @@
 \usage{
 tkactivate(widget, ...)
 tkadd(widget, ...)
+tkaddtag(widget, ...)
 tkbbox(widget, ...)
+tkcanvasx(widget, ...)
+tkcanvasy(widget, ...)
+tkcget(widget, ...)
 tkcompare(widget, ...)
 tkconfigure(widget, ...)
-tkconfigure.entry(widget, ...)
-tkcget(widget, ...)
-tkcget.entry(widget, ...)
 tkcoords(widget, ...)
+tkcreate(widget, ...)
 tkcurselection(widget,...)
+tkdchars(widget, ...)
 tkdebug(widget, ...)
 tkdelete(widget, ...)
 tkdelta(widget, ...)
 tkdeselect(widget, ...)
 tkdlineinfo(widget, ...)
 tkdump(widget, ...)
+tkentrycget(widget, ...)
+tkentryconfigure(widget, ...)
+tkfind(widget, ...)
 tkflash(widget, ...)
 tkfraction(widget, ...)
 tkget(widget, ...)
+tkgettags(widget, ...)
 tkicursor(widget, ...)
 tkidentify(widget, ...)
 tkimage.cget(widget, ...)
@@ -113,15 +136,24 @@ tkimage.names(widget, ...)
 tkindex(widget, ...)
 tkinsert(widget, ...)
 tkinvoke(widget, ...)
+tkitembind(widget, ...)
+tkitemcget(widget, ...)
+tkitemconfigure(widget, ...)
+tkitemfocus(widget, ...)
+tkitemlower(widget, ...)
+tkitemraise(widget, ...)
+tkitemscale(widget, ...)
 tkmark.gravity(widget, ...)
 tkmark.names(widget, ...)
 tkmark.next(widget, ...)
 tkmark.previous(widget, ...)
 tkmark.set(widget, ...)
 tkmark.unset(widget, ...)
+tkmove(widget, ...)
 tknearest(widget, ...)
 tkpost(widget, ...)
 tkpostcascade(widget, ...)
+tkpostscript(widget, ...)
 tkscan.mark(widget, ...)
 tkscan.dragto(widget, ...)
 tksearch(widget, ...)
@@ -189,9 +221,9 @@ tt <- tktoplevel()
 tkpack(txt.w <- tktext(tt))
 tkinsert(txt.w, "0.0", "plot(1:10)")
 
-# callback function use try() in these to keep system sane
+# callback function 
 eval.txt <- function()
-   try(eval(parse(text=tkget(txt.w, "0.0", "end"))))
+   eval(parse(text=tkget(txt.w, "0.0", "end")))
 tkpack(but.w <- tkbutton(tt,text="Submit", command=eval.txt))
 
 ## Try pressing the button, edit the text and when finished:
