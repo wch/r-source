@@ -661,11 +661,6 @@ static void GNOME_Hold(DevDesc *dd)
 
 
 // Device driver entry point
-int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, double pointsize)
-{
-  return GNOMEDeviceDriver(dd, display, width, height, pointsize);
-}
-
 int GNOMEDeviceDriver(DevDesc *dd, char *display, double width, double height, double pointsize)
 {
   int ps;

@@ -26,6 +26,7 @@ OBJS = \
 
 GNOME_OBJS = \
 	devGNOME.o \
+	devGTK.o \
 	gtkconsole.o \
 	terminal.o \
 	terminal-functions.o \
