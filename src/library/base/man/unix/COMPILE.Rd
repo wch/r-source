@@ -13,7 +13,8 @@
     should have the extensions \file{.c}, \file{.cc} (or \file{.cpp} or
     \file{.C}), and \file{.f}, respectively.}
   \item{options}{A list of compile-relevant settings, such as special
-    values for \code{CFLAGS} or \code{FFLAGS}.}
+    values for \code{CFLAGS} or \code{FFLAGS}, or for obtaining
+    information about usage and version of the utility.}
 }
 \seealso{
   \code{\link{SHLIB}}, \code{\link{dyn.load}}
