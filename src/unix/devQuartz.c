@@ -189,7 +189,7 @@ static void Quartz_SetFill(int fill, double gamma,  NewDevDesc *dd);
 static void Quartz_SetStroke(int color, double gamma,  NewDevDesc *dd);
 static void Quartz_SetLineDash(int lty, double lwd, NewDevDesc *dd);
 static void Quartz_SetLineWidth(double lwd,  NewDevDesc *dd);
-static void Quartz_SetFont(int font,  double cex, double ps,  NewDevDesc *dd);
+static void Quartz_SetFont(int style,  double cex, double ps,  NewDevDesc *dd);
 static CGContextRef	GetContext(QuartzDesc *xd);
 
 
@@ -611,7 +611,7 @@ static double 	Quartz_StrWidth(char *str,
 
     CGContextSetTextDrawingMode( GetContext(xd), kCGTextInvisible );
 
-    Quartz_SetFont(gc->font, gc->cex,  gc->ps, dd);
+    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
 
     CGContextShowTextAtPoint( GetContext(xd), 0, 0, str, strlen(str) );
 
@@ -624,7 +624,7 @@ static double 	Quartz_StrWidth(char *str,
 
 
 
-static void Quartz_SetFont(int font,  double cex, double ps, NewDevDesc *dd)
+static void Quartz_SetFont(int style,  double cex, double ps, NewDevDesc *dd)
 {
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
     int size = cex * ps + 0.5;
@@ -636,7 +636,7 @@ static void Quartz_SetFont(int font,  double cex, double ps, NewDevDesc *dd)
     GetPort(&savePort);
     SetPortWindowPort(xd->window);
     
-    switch(font){
+    switch(style){
      case 5:
       strcpy(CurrFont,"Symbol");
      break;
@@ -679,10 +679,10 @@ static void 	Quartz_Text(double x, double y, char *str,
 
     CGContextSetTextDrawingMode( GetContext(xd), kCGTextFill );
     Quartz_SetFill(gc->col, gc->gamma, dd);
-    Quartz_SetFont(gc->font, gc->cex,  gc->ps, dd);
+    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
     len = strlen(str);
 
-    if(font == 5)
+    if(gc->fontface == 5)
      CGContextShowTextAtPoint( GetContext(xd), 0, 0, str, strlen(str) );
     else {
      if( (buf = malloc(len)) != NULL){
@@ -1019,12 +1019,12 @@ static void 	Quartz_MetricInfo(int c,
 
     SetPort(GetWindowPort(xd->window));
 
-    Quartz_SetFont(gc->font, gc->cex,  gc->ps, dd);
+    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
 
     if(c==0){
         FontMetrics(&myFMetric);
-        *ascent = xd->yscale *floor(cex * ps + 0.5) * FixedToFloat(myFMetric.ascent);
-        *descent = xd->yscale*floor(cex * ps + 0.5) * FixedToFloat(myFMetric.descent);
+        *ascent = xd->yscale *floor(gc->cex * gc->ps + 0.5) * FixedToFloat(myFMetric.ascent);
+        *descent = xd->yscale*floor(gc->cex * gc->ps + 0.5) * FixedToFloat(myFMetric.descent);
     } else {
 
     CGContextSaveGState( GetContext(xd) );
@@ -1032,7 +1032,7 @@ static void 	Quartz_MetricInfo(int c,
     CGContextScaleCTM( GetContext(xd), -1, 1);
     CGContextRotateCTM( GetContext(xd), -1.0 * 3.1416);
     CGContextSetTextDrawingMode( GetContext(xd), kCGTextInvisible );
-    Quartz_SetFont(gc->font, gc->cex,  gc->ps, dd);
+    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
     CGContextShowTextAtPoint( GetContext(xd), 0, 0, testo, 1 );
     position = CGContextGetTextPosition( GetContext(xd) );
     CGContextRestoreGState( GetContext(xd) );
