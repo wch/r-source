@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-REVISION='$Revision: 1.2 $'
+REVISION='$Revision: 1.3 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 VERSION="R package builder version ${VERSION}
 
@@ -91,7 +91,7 @@ buildpkg () {
   fi
   result "OK"
   checking "\`DESCRIPTION' license entry"
-  foo=`grep ^License DESCRIPTION`
+  foo=`grep "^License" DESCRIPTION`
   foo=`set - ${foo}; echo ${2}`
   if test -z ${foo}; then
     result "ERROR: no license entry in \`DESCRIPTION'"
@@ -99,7 +99,7 @@ buildpkg () {
   fi
   result "OK"
   checking "\`DESCRIPTION' package entry"
-  foo=`grep ^Package DESCRIPTION`
+  foo=`grep "^Package" DESCRIPTION`
   package=`set - ${foo}; echo ${2}`
   if test -z ${package}; then
     result "ERROR: no package entry in \`DESCRIPTION'"
@@ -111,7 +111,7 @@ buildpkg () {
   fi
   result "OK"
   checking "\`DESCRIPTION' version entry"
-  foo=`grep ^Version DESCRIPTION`
+  foo=`grep "^Version" DESCRIPTION`
   version=`set - ${foo}; echo ${2}`
   if test -z ${version}; then
     result "ERROR: no version entry in \`DESCRIPTION'"
