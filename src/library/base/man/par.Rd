@@ -156,9 +156,14 @@ par(\dots, no.readonly = FALSE)
     Consider the alternatives, \code{\link{layout}(..)} and
     \code{\link{split.screen}(..)}.
   }
-  \item{mfg}{A numerical vector of the form \code{c(i, j, nr, nc)} where
-    \code{i} and \code{j} indicate which figure in an
-    \code{nr}-by-\code{nc} array of figures is currently being drawn.}
+  \item{mfg}{A numerical vector of the form \code{c(i, j)} where
+    \code{i} and \code{j} indicate which figure in an array of figures
+    is to be drawn next (if setting) or is being drawn (if enquiring).
+    The array must already have been  set by \code{mfcol} or \sfn{mfrow}.
+
+    For compatibility with S, the form \code{c(i, j, nr, nc)} is also
+    accepted, when \code{nc} and \code{nc} should be the current number of
+    rows and number of columns. Mismatches will be ignored, with a warning.}
   \item{mgp}{The margin line for the axis title, axis labels and axis
     line.  The default is \code{c(3, 1, 0)}.}
   \item{mkh}{The height in inches of symbols to be drawn when the value

@@ -35,6 +35,10 @@ BUG FIXES
 
     o   sys.on.exit didn't work
 
+    o   par("mfg") was wrong, par(mfg=) switched to down columns. Now
+	par(mfrow/mfcol = c(nr, nc)) followed by par(mfg=c(i,j)) is 
+	the preferred style.
+
 
 		CHANGES IN R VERSION 0.65.0
 

@@ -1327,12 +1327,12 @@ void currentFigureLocation(int *row, int *col, DevDesc *dd)
     int maxcol, maxrow;
     if (dd->gp.layout)
 	figureExtent(col, &maxcol, row, &maxrow, dd->gp.currentFigure, dd);
-    else if (dd->gp.mfind) {
+    else if (dd->gp.mfind) { /* mfcol */
 	*row = (dd->gp.currentFigure - 1)%dd->gp.numrows;
-	*col = (dd->gp.currentFigure - 1)/dd->gp.numcols;
+	*col = (dd->gp.currentFigure - 1)/dd->gp.numrows;
     }
-    else {
-	*row = (dd->gp.currentFigure - 1)/dd->gp.numrows;
+    else { /* mfrow */
+	*row = (dd->gp.currentFigure - 1)/dd->gp.numcols;
 	*col = (dd->gp.currentFigure - 1)%dd->gp.numcols;
     }
 }
