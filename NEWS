@@ -136,6 +136,8 @@ NEW FEATURES
 	and will allow the row names to be edited, by default if they
 	are not 1:nrow(name).
 
+    o   $ and $<- are now generic functions.
+
 
 BUG FIXES
 
