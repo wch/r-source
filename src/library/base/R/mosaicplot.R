@@ -15,8 +15,7 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
          NULL, dir = NULL, color = FALSE, shade = FALSE, margin = NULL,
          type = c("pearson", "deviance", "FT"), ...)
 {
-    mosaic.cell <- function(X, x1, y1, x2, y2,
-                            off, dir, color, lablevx, lablevy,
+    mosaic.cell <- function(X, x1, y1, x2, y2, off, dir, color, lablevx, lablevy,
                             maxdim, currlev, label)
     {
         ## Recursive function doing `the job'
@@ -53,13 +52,11 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
             if (p > 2) {                # recursive call.
                 for (i in 1:xdim) {
                     if (XP[i] > 0) {
-                        mosaic.cell(X[X[,1]==i, 2:(p+2) , drop=FALSE],
-                                    x.l[i], y1, x.r[i], y2,
-                                    off[2:length(off)],
-                                    dir[2:length(dir)],
-                                    color, lablevx-1, (i==1)*lablevy,
-                                    maxdim[2:length(maxdim)],
-                                    currlev+1, label[2:p])
+                        Recall(X[X[,1]==i, 2:(p+2) , drop=FALSE],
+                               x.l[i], y1, x.r[i], y2,
+                               off[-1], dir[-1], color,
+                               lablevx-1, (i==1)*lablevy,
+                               maxdim[-1], currlev+1, label[2:p])
                     } else {
                         segments(rep(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
                                  rep(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
@@ -115,13 +112,11 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
             if (p > 2) {                # recursive call.
                 for (j in 1:ydim) {
                     if (YP[j] > 0) {
-                        mosaic.cell(X[X[,1]==j, 2:(p+2) , drop=FALSE],
-                                    x1, y.b[j], x2, y.t[j],
-                                    off[2:length(off)],
-                                    dir[2:length(dir)], color,
-                                    (j==1)*lablevx, lablevy-1,
-                                    maxdim[2:length(maxdim)],
-                                    currlev+1, label[2:p])
+                        Recall(X[X[,1]==j, 2:(p+2) , drop=FALSE],
+                               x1, y.b[j], x2, y.t[j],
+                               off[-1], dir[-1], color,
+                               (j==1)*lablevx, lablevy-1,
+                               maxdim[-1], currlev+1, label[2:p])
                     } else {
                         segments(x1+(x2-x1)*c(0,2,4)/5, rep(y.b[j],3),
                                  x1+(x2-x1)*c(1,3,5)/5, rep(y.b[j],3))
