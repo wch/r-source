@@ -83,6 +83,10 @@ BUG FIXES
 
     o   The help pages for lm and glm now describe the fitted objects.
 
+    o   Printing a language object (e.g. a formula) in a list was
+	clobbering the buffer holding the tag labels which then were 
+	lost in subsequent lines of printout (PR#746).
+
 
 
 		CHANGES IN R VERSION 1.2.0

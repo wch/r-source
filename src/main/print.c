@@ -27,7 +27,7 @@
  *	    -> PrintValueRec
  *		-> __ITSELF__  (recursion)
  *		-> PrintGenericVector	-> PrintValueRec  (recursion)
- *		-> PrintList		-> PrintValueRec  (recursion)
+ *		-> printList		-> PrintValueRec  (recursion)
  *		-> printAttributes	-> PrintValueRec  (recursion)
  *		-> PrintExpression
  *		-> printVector		>>>>> ./printvector.c
@@ -234,7 +234,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 {
     int i, taglen, ns;
     SEXP dims, t, names, newcall, tmp;
-    char *pbuf, *ptag, *rn, *cn;
+    char *pbuf, *ptag, *rn, *cn, save[TAGBUFLEN + 5];
 
     ns = length(s);
     if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
@@ -315,8 +315,11 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    }
 	    Rprintf("%s\n", tagbuf);
 	    if(isObject(VECTOR_ELT(s, i))) {
+		/* need to preserve tagbuf */
+		strcpy(save, tagbuf);
 		SETCADR(newcall, VECTOR_ELT(s, i));
 		eval(newcall, env);
+		strcpy(tagbuf, save);
 	    }
 	    else PrintValueRec(VECTOR_ELT(s, i), env);
 	    *ptag = '\0';
