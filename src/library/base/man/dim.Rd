@@ -1,19 +1,27 @@
 \name{dim}
-\title{Array Extents}
+\alias{dim}
+\alias{dim.data.frame}
+\alias{dim<-}
+\title{Dimensions of an Object}
 \usage{
 dim(x)
 dim(x) <- values
 }
-\alias{dim}
-\alias{dim.data.frame}
-\alias{dim<-}
-\value{
-These generic functions retrieve the vector of extents of the array
-\code{x}.  The second form above is used to shape a
-nvector \code{x} as an array by specifying its extents \code{values}.
+\description{
+  Retrieve or set the dimension of an object.
+}
+\details{
+  The functions \code{dim} and \code{dim<-} are generic.
+
+  For an array (and hence in particular, for a matrix) they retrieve or
+  set the \code{dim} attribute of the object.
+
+  \code{dim} has a method for data frames, which returns the length of
+  the \code{row.names} attribute of \code{x} and the length of \code{x}
+  (the numbers of ``rows'' and ``columns'').
 }
 \seealso{
-\code{\link{ncol}}, \code{\link{nrow}} and \code{\link{dimnames}}.
+  \code{\link{ncol}}, \code{\link{nrow}} and \code{\link{dimnames}}.
 }
 \examples{
 x <- 1:12 ; dim(x) <- c(3,4)
