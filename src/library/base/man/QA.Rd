@@ -1,5 +1,6 @@
 \name{QA}
 \alias{checkDocArgs}
+\alias{checkMethods}
 \alias{checkTnF}
 \title{QA checks for R code and documentation}
 \description{
@@ -7,12 +8,14 @@
 }
 \usage{
 checkDocArgs(dir)
+checkMethods(dir)
 checkTnF(file, package, lib.loc = .lib.loc)
 }
 \arguments{
   \item{dir}{a character string specifying the path to a package's root
-    source directory.  This must contain the subdirectory \file{man}
-    with \R documentation sources (in Rd format).}
+    source directory.  This should contain the subdirectories \code{R}
+    (for R code) and \file{man} with \R documentation sources (in Rd
+    format).}
   \item{file}{the name of a file containing R code to be checked.}
   \item{package}{a character string naming an installed package.  If
     given and \code{file} is not given, the installed R code of the
@@ -26,6 +29,12 @@ checkTnF(file, package, lib.loc = .lib.loc)
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the
   arguments section.
+
+  \code{checkMethods} checks whether all methods defined in the package
+  R code have all arguments of the corresponding generic, with
+  positional arguments of the generics in the same positions for the
+  method.  The generics are sought in the given package and the base
+  package.
 
   \code{checkTnF} checks the specified R code for occurrences of
   \code{T} or \code{F}, and reports the expression containing these.

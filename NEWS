@@ -37,6 +37,9 @@ NEW FEATURES
 	shown in \usage of Rd files are documented in the corresponding
 	\arguments.
 
+    o	New function checkMethods() for checking whether all methods
+	defined in a package have all arguments of their generic.
+
     o	New function checkTnF() for finding expressions containing the
 	symbols `T' and `F'.
 

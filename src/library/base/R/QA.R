@@ -95,6 +95,150 @@ function(dir)
     return(invisible())
 }
 
+checkMethods <-
+function(dir) {
+    fQuote <- function(s) paste("`", s, "'", sep = "")
+    listFilesWithExts <- function(dir, exts, path = TRUE) {
+        ## Return the paths or names of the files in `dir' with
+        ## extension in `exts'.
+        files <- list.files(dir)
+        files <- files[sub(".*\\.", "", files) %in% exts]
+        if(path)
+            files <- if(length(files) > 0)
+                file.path(dir, files)
+            else
+                character(0)
+        files
+    }
+    
+    if(missing(dir))
+        stop("no package directory given")
+    if(!file.exists(dir))
+        stop(paste("directory", fQuote(dir), "does not exist"))
+    else
+        ## tilde expansion
+        dir <- file.path(dirname(dir), basename(dir))
+    if(!file.exists(codeDir <- file.path(dir, "R")))
+        stop(paste("directory", fQuote(dir),
+                   "does not contain R code"))
+    isBase <- basename(dir) == "base"
+
+    codeFile <- tempfile("Rcode")
+    on.exit(unlink(codeFile))
+    codeExts <- c("R", "r", "S", "s", "q")
+    files <- listFilesWithExts(codeDir, codeExts, path = FALSE)
+    files <- file.path(codeDir, files)
+    if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
+        files <- c(files, listFilesWithExts(codeOSDir, codeExts))
+    file.create(codeFile)
+    file.append(codeFile, files)
+
+    lib.source <- function(file, envir) {
+        oop <- options(keep.source = FALSE)
+        on.exit(options(oop))
+        assignmentSymbol <- as.name("<-")
+        exprs <- parse(n = -1, file = file)
+        if(length(exprs) == 0)
+            return(invisible())
+        for(e in exprs) {
+            if(e[[1]] == assignmentSymbol)
+                yy <- eval(e, envir)
+        }
+        invisible()
+    }
+
+    .CodeEnv <- new.env()
+    lib.source(codeFile, env = .CodeEnv)
+    lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
+
+    funs <-
+        lsCode[sapply(lsCode, function(f)
+                      is.function(get(f, envir = .CodeEnv)))]
+
+    envList <- list(.CodeEnv)
+    if(!isBase) envList <- c(envList, list(NULL))
+
+    badMethods <- list()
+    ## Explicitly deal with functions in base which `look' like S3
+    ## methods, but are not.
+    baseStopList <-
+        c("close.screen", "close.socket",
+          "format.char", "format.info", "format.pval",
+          "plot.new", "plot.window", "plot.xy",
+          "split.screen",
+          "update.packages")
+
+    isGeneric <- function(fname, envir) {
+        f <- get(fname, envir = envir)
+        is.function(f) && any(grep("UseMethod", deparse(body(f))))
+    }
+
+    checkArgs <- function(g, m, env) {
+        ## Do the arguments of method m (in .CodeEnv) `extend' those of
+        ## the generic g from environment env?  The method must have all
+        ## arguments the generic has, with positional arguments of g in
+        ## the same positions for m.
+        gArgs <- ogArgs <- names(formals(get(g, envir = env)))
+        mArgs <- omArgs <- names(formals(get(m, envir = .CodeEnv)))
+        ## If m is a formula method, its first argument *may* be called
+        ## formula.  (Note that any argument name mismatch throws an
+        ## error in current S-plus versions.)
+        if(length(grep("\\.formula$", m)) > 0) {
+            gArgs <- gArgs[-1]
+            mArgs <- mArgs[-1]
+        }
+        dotsPos <- which(gArgs == "...")
+        ipos <- if(length(dotsPos) > 0)
+            seq(from = 1, length = dotsPos - 1)
+        else
+            seq(along = gArgs)
+        if(all(gArgs[ipos] == mArgs[ipos]) && all(gArgs %in% mArgs))
+            NULL
+        else {
+            l <- list(ogArgs, omArgs)
+            names(l) <- c(g, m)
+            list(l)
+        }
+    }
+
+    for(env in envList) {
+        allObjs <- ls(envir = env, all.names = TRUE)
+        ## <FIXME>        
+        genFuns <- allObjs[sapply(allObjs, isGeneric, env)]
+        ## This is not good enough for base where we also have generics
+        ## which dispatch in C code.  We should also add group methods.
+        ## </FIXME>
+
+        for(g in genFuns) {
+            ## Find all methods in funs for generic g.  Taken from the
+            ## current code for methods().
+            name <- paste("^", g, ".", sep = "")
+            methods <- grep(gsub("([.[])", "\\\\\\1", name),
+                            funs, value = TRUE)
+            if(isBase)
+                methods <- methods[! methods %in% baseStopList]
+            for(m in methods)
+                badMethods <- c(badMethods, checkArgs(g, m, env))
+        }
+    }
+
+    ## Output.
+    formatArgs <- function(s)
+        paste("function(", paste(s, collapse = ", "), ")", sep = "")        
+    for(entry in badMethods) {
+        writeLines(c(paste(names(entry)[1], ":", sep = ""),
+                     strwrap(formatArgs(entry[[1]]),
+                             indent = 2, exdent = 11),
+                     paste(names(entry)[2], ":", sep = ""),
+                     strwrap(formatArgs(entry[[2]]),
+                             indent = 2, exdent = 11),
+                     ""))
+    }
+    
+    invisible(badMethods)
+    
+}
+
 checkTnF <-
 function(file, package, lib.loc = .lib.loc)
 {
