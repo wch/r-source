@@ -1,0 +1,13 @@
+exportPattern("^tcl")
+exportPattern("^tk")
+exportPattern("^.Tcl")
+exportPattern("^.Tk")
+export(addTclPath, as.tclObj, is.tclObj, is.tkwin)
+
+S3method("$", tclvar)
+S3method("$<-", tclvar)
+S3method(as.character, tclObj)
+S3method(as.character, tclVar)
+S3method(as.double, tclObj)
+S3method(as.integer, tclObj)
+S3method(print, tclObj)

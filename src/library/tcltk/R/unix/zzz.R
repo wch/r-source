@@ -1,4 +1,4 @@
-.First.lib <- function(lib, pkg) {
+.onLoad <- function(lib, pkg) {
     ## Use local=FALSE to allow easy loading of Tcl extensions
     library.dynam("tcltk", pkg, lib, local=FALSE)
     .C("tcltk_init", PACKAGE="tcltk")
@@ -9,7 +9,7 @@
 ###    options(pager=if (is.null(userpager)) tkpager else userpager)
 }
 
-.Last.lib <- function(libpath) {
+.onUnload <- function(libpath) {
 ###    options(pager=NULL)
     .C("delTcl", PACKAGE="tcltk")
 ###    dyn.unload(file.path(libpath, "libs",
