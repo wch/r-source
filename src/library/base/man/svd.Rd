@@ -9,10 +9,11 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesvd", "dgesdd"))
 \arguments{
   \item{x}{a matrix whose SVD decomposition is to be computed.}
   \item{nu}{the number of left  singular vectors to be computed.
-    This must be one of \code{0}, \code{nrow(x)} and \code{ncol(x)}.}
+    This must be one of \code{0}, \code{nrow(x)} and \code{ncol(x)},
+    except for \code{method = "dgesdd"}.}
   \item{nv}{the number of right singular vectors to be computed.
     This must be one of \code{0} and \code{ncol(x)}.}
-  \item{method}{The LAPACK routine to use.}
+  \item{method}{The LAPACK routine to use in the real case.}
 }
 \description{
   Compute the singular-value decomposition of a rectangular matrix.
@@ -26,13 +27,21 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesvd", "dgesdd"))
   DGESDD.  The latter is usually substantially faster if singular
   vectors are required: see
   \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
+  Most benefits are seen with an optimized BLAS system.
 
   \code{La.svd} is preferred to \code{svd} for new projects, but it is
   not an exact replacement as it returns the transpose of the right
   singular vector matrix, and the signs of the singular vectors may differ
-  from those given by \code{svd}.
+  from those given by \code{svd}.  (They may also differ between methods
+  and between platforms.)
 
   Both functions handle complex matrices via LAPACK routine ZGESVD.
+
+  Computing the singular vectors is the slow part for large matrices.
+
+  Using \code{method="dgesdd"} requires IEEE 754 arithmetic.  Should
+  this not be supported on your platform, \code{method="dgesvd"} is
+  used, with a warning.
 }
 \value{
   The SVD decomposition of the matrix as computed by LINPACK,

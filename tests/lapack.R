@@ -24,6 +24,17 @@ str(s <- La.svd(X, method = "dgesdd")); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
+# test nu and nv
+La.svd(X, nu = 0)
+(s <- La.svd(X, nu = 7))
+stopifnot(dim(s$u) == c(7,7))
+La.svd(X, nv = 0)
+
+La.svd(X, nu = 0, method = "dgesdd")
+(s <- La.svd(X, nu = 7, method = "dgesdd"))
+stopifnot(dim(s$u) == c(7,7))
+La.svd(X, nv = 0, method = "dgesdd")
+
 # test of complex case
 
 X <- cbind(1, 1:7+(-3:3)*1i)
@@ -63,12 +74,16 @@ stopifnot(
  abs(sm %*% V - V %*% diag(lam))          < 60*Meps,
  abs(sm       - V %*% diag(lam) %*% t(V)) < 60*Meps)
 
-em <- La.eigen(sm, method="dsyevr"); V <- em$vect
+em <- La.eigen(sm, method = "dsyevr"); V <- em$vect
 print(lam <- em$values) # ordered DEcreasingly
 
 stopifnot(
  abs(sm %*% V - V %*% diag(lam))          < 60*Meps,
  abs(sm       - V %*% diag(lam) %*% t(V)) < 60*Meps)
+
+# check only.values = TRUE too
+La.eigen(sm, only.values = TRUE)
+La.eigen(sm, only.values = TRUE, method = "dsyevr")
 
 
 ## symmetric = FALSE

@@ -16,7 +16,7 @@ La.eigen(x, symmetric, only.values = FALSE,
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
-  \item{method}{The LAPACK routine to use.}
+  \item{method}{The LAPACK routine to use in the real symmetric case.}
 }
 \description{
   Function \code{eigen} computes eigenvalues and eigenvectors by providing an
@@ -33,9 +33,19 @@ La.eigen(x, symmetric, only.values = FALSE,
 
   \code{La.eigen} is preferred to \code{eigen} for new projects, but
   its eigenvectors may differ in sign and (in the asymmetric case) in
-  normalization. The LAPACK routine DSYEVR is usually substantially
+  normalization. (They may also differ between methods
+  and between platforms.)
+
+  The LAPACK routine DSYEVR is usually substantially
   faster than DSYEV: see
   \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
+  Most benefits are seen with an optimized BLAS system.
+
+  Computing the eigenvectors is the slow part for large matrices.
+
+  Using \code{method="dsyevr"} requires IEEE 754 arithmetic.  Should
+  this not be supported on your platform, \code{method="dsyev"} is
+  used, with a warning.
 }
 \value{
   The spectral decomposition of \code{x} is returned

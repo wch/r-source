@@ -20,8 +20,10 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 	error("method must be a character object");
     meth = CHAR(STRING_ELT(method, 0));
 #ifndef IEEE_754
-    if (strcmp(meth, "dgesdd") == 0)
-	error("method = \"dgesdd\" requires IEEE 754 arithmetic");
+    if (strcmp(meth, "dgesdd") == 0) {
+	warning("method = \"dgesdd\" requires IEEE 754 arithmetic: using \"dgesvd\"");
+	meth = "dgesvd";
+    }
 #endif
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0]; p = xdims[1];
@@ -97,8 +99,9 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
 	error("method must be a character object");
     meth = CHAR(STRING_ELT(method, 0));
 #ifndef IEEE_754
-    if (strcmp(meth, "desyvr") == 0)
-	error("method = \"dseyvr\" requires IEEE 754 arithmetic");
+    if (strcmp(meth, "dsyevr") == 0) {
+	warning("method = \"dseyvr\" requires IEEE 754 arithmetic: using \"dsyev\"");
+	meth = "dsyev";
 #endif
     PROTECT(x = duplicate(xin));
     rx = REAL(x);
@@ -129,7 +132,7 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
 	int il, iu, *isuppz;
 	
 	range[0] = 'A';
-	PROTECT(z = allocMatrix(REALSXP, n, n));
+	if (!ov) PROTECT(z = allocMatrix(REALSXP, n, n));
 	isuppz = (int *) R_alloc(n, sizeof(int));
 	/* ask for optimal size of work arrays */
 	lwork = -1; liwork = -1;
