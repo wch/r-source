@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2003   The R Development Core Team
+ *  Copyright (C) 1997-2004   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -994,6 +994,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	default:
 	    error("incompatible types in subset assignment");
 	}
+      next_i:
 	if (n > 1) {
 	    j = 0;
 	    while (++indx[j] >= bound[j]) {
@@ -1001,7 +1002,6 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 		j = (j + 1) % k;
 	    }
 	}
-      next_i:
 	;
     }
     UNPROTECT(3);
@@ -1384,11 +1384,11 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* new case in 1.7.0, one vector index for a list */
 	    if(isVectorList(x) && length(thesub) > 1) {
 		for(i = 0; i < len - 1; i++) {
-		    if(!isVectorList(x))
+		    if(LENGTH(x) == 0 || !isVectorList(x))
 			error("recursive indexing failed at level %d\n", i+1);
 		    off = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 				    length(x), /*partial ok*/TRUE, i);
-		    if(off < 0)
+		    if(off < 0 || off >= LENGTH(x))
 			error("no such index at level %d\n", i+1);
 		    xup = x;
 		    recursed = TRUE;
