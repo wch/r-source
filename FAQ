@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-40, 2001-04-13
+Version 1.2-41, 2001-04-16
 Kurt Hornik
 
 
@@ -456,6 +456,11 @@ data.  More information can be found at
 implementing R is described in Ihaka & Gentleman (1996), "R: A Language for
 Data Analysis and Graphics", _Journal of Computational and Graphical
 Statistics_, *5*, 299-314.  *Note Citing R::.
+
+   An annotated bibliography (BibTeX format) of R-related publications
+which includes most of the above references can be found at
+
+     `http://www.r-project.org/doc/bib/R.bib'
 
 2.8 Citing R
 ============

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-40, 2001-04-13
+@set FAQ-VERSION 1.2-41, 2001-04-16
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -551,6 +551,13 @@ for Data Analysis and Graphics'',
 @uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
 Computational and Graphical Statistics}}, @strong{5}, 299--314.
 @xref{Citing R}.
+
+An annotated bibliography (Bib@TeX{} format) of R-related publications
+which includes most of the above references can be found at
+
+@display
+@uref{http://www.r-project.org/doc/bib/R.bib}
+@end display
 
 @node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
 @section Citing R
