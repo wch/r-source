@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000	    The R Development Core Team.
+ *  Copyright (C) 2000, 2001   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -68,8 +68,5 @@ Rconnection getConnection(int n);
 void switch_stdout(int icon);
 SEXP R_ParseConn(Rconnection con, int n, int *status);
 void con_close(int i);
-
-
-
-
+void Rconn_setEncoding(Rconnection con, SEXP enc);
 

@@ -62,6 +62,18 @@ Rconnection getConnection(int n)
 
 }
 
+void Rconn_setEncoding(Rconnection con, SEXP enc)
+{
+    int i;
+
+    if(!isInteger(enc) || length(enc) != 256)
+	error("invalid `enc' argument");
+    for(i = 0; i < 256; i++)
+	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+}
+
+
+
 /* ------------------- null connection functions --------------------- */
 
 static void null_open(Rconnection con)
