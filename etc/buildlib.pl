@@ -269,9 +269,9 @@ sub build_index {
     my $nmanfiles;
 
     foreach $manfile (@mandir) {
-	if($manfile =~ /\.Rd$/){
+	if($manfile =~ /\.Rd$/i){
 
-	    my $rdname = basename($manfile, ".Rd");
+	    my $rdname = basename($manfile, (".Rd", ".rd"));
 	    
 	    if($opt_dosnames){
 		$manfilebase = "x" . $nmanfiles++;

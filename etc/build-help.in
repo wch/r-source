@@ -92,8 +92,8 @@ if($opt_html){
 }
 
 foreach $manfile (@mandir) {
-    if($manfile =~ /\.Rd$/){
-	$manfilebase = basename($manfile, ".Rd");
+    if($manfile =~ /\.Rd$/i){
+        $manfilebase = basename($manfile, (".Rd", ".rd"));
 	print "  $manfilebase";
 
 	if($opt_nroff){
