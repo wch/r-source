@@ -3,6 +3,17 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 		xjust=0, yjust=1, x.intersp=NULL, y.intersp=NULL,
 		text.width=NULL, merge=FALSE)
 {
+	if (missing(y)) {
+		if (is.list(x)) {
+			y <- x$y
+			x <- x$x
+		} else stop("missing y")
+	}
+	if(!is.numeric(x) || !is.numeric(y))
+		stop("non-numeric coordinates")
+	if(length(x) <= 0 || length(x) != length(y))
+		stop("differing coordinate lengths")
+
 	xlog <- par("xlog")
 	ylog <- par("ylog")
 	if (xlog) x <- log10(x)
@@ -15,7 +26,7 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 	##-	       format(x.intersp),'; y.intersp=', format(y.intersp),"\n")
 	xchar<- Cex * xinch(cin[1])
 	yextra <- Cex * yinch(cin[2]) * (y.intersp-1)
-	ychar<- max(c(strheight(legend, u="user", cex=cex), 
+	ychar<- max(c(strheight(legend, u="user", cex=cex),
 		      Cex * yinch(cin[2]))) + yextra
 	## size of filled boxes:
 	xbox <- Cex * xinch(cin[1]) * 0.8
@@ -31,16 +42,6 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 	}
 	w <- 2 * xchar + w
 	h <- (n.leg + 1) * ychar
-	if (missing(y)) {
-		if (is.list(x)) {
-			y <- x$y
-			x <- x$x
-		} else stop("missing y")
-	}
-	if(!is.numeric(x) || !is.numeric(y))
-		stop("non-numeric coordinates")
-	if(length(x) <= 0 || length(x) != length(y))
-		stop("differing coordinate lengths")
 	if(length(x) != 1) {
 		x <- mean(x)
 		y <- mean(y)
@@ -103,8 +104,10 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 		if (!merge) xt <- xt + 3 * xchar
 	}
 	if (merge) xt <- xt + x.intersp * xchar
-	if (xlog) xt <- 10^xt
-	if (ylog) yt <- 10^yt
+
+        ## text(.)  works itself in log-coordinates
+        ## -------  however, the 'y.intersp' looks wrong :
+
 	## adj = (x,y) text-box adjustment
 	text(xt, yt, labels= legend, adj= c(0, 0.3*y.intersp), cex= cex)
 }
