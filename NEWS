@@ -18,11 +18,13 @@ BUG FIXES
     o	smooth.spline() had a "df = 5" default which was never used and
 	hence extraneous and misleading.
 
-    o	read.fwf() was interpreting comment chars in its call to scan: 
+    o	read.fwf() was interpreting comment chars in its call to scan:
 	replaced by a call to readlines(). (PR#1297/8)
 
     o	The default has been changed to scan(comment.char="") for
 	consistency with earlier code (as in the previous item).
+
+    o	bxp(*, notch.frac = f) now draws the median line correctly.
 
 
 
