@@ -41,18 +41,19 @@ Complex(z)
 \details{
 
   The functions belonging to the various groups are as follows:
-  \description{
-    \item{\code{Arith}}{\code{"+", "-", "*", "^", "%%", "%/%", "/"}}
+  \describe{
+    \item{\code{Arith}}{\code{"+", "-", "*", "^", "\%\%", "\%/\%", "/"}}
     \item{\code{Compare}}{\code{"==", ">", "<", "!=", "<=", ">="}}
     \item{\code{Ops}}{\code{"Arith", "Compare"}}
 
-   \item{\code{Math}}{\code{"log", "sqrt", "log10", "cumprod", "abs", "acos", "acosh", "asin", "asinh",
-               "atan", "atanh", "ceiling", "cos", "cosh", "cumsum", "exp", "floor",
-               "gamma", "lgamma", "sin", "sinh", "tan", "tanh", "trunc"}}
+   \item{\code{Math}}{\code{"log", "sqrt", "log10", "cumprod", "abs",
+       "acos", "acosh", "asin", "asinh", "atan", "atanh", "ceiling",
+       "cos", "cosh", "cumsum", "exp", "floor", "gamma", "lgamma",
+       "sin", "sinh", "tan", "tanh", "trunc"}}
    \item{\code{Math2}}{\code{"round", "signif"}}
 
    \item{\code{Summary}}{\code{"max", "min", "range", "prod", "sum",
-         "any", "all"}}
+       "any", "all"}}
 
    \item{\code{Complex}}{\code{"Arg", "Conj", "Im", "Mod", "Re"}}
   }
