@@ -489,7 +489,6 @@ msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr "Warnung: '--max-ppsize' ist zu klein: wird ignoriert\n"
 
 #: src/main/CommandLineArgs.c:236
-#, fuzzy
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr "Warnung: '--max-ppsize' ist zu groß: wird ignoriert\n"
 
@@ -561,7 +560,6 @@ msgid ".Random.seed[1] is not a valid integer"
 msgstr ".Random.seed[1] ist kein gültige ganze Zahl"
 
 #: src/main/RNG.c:298
-#, fuzzy
 msgid ".Random.seed[0] is not a valid Normal type"
 msgstr ".Random.seed[0] ist kein gültiger Normalverteilungs-Typ"
 
@@ -570,9 +568,8 @@ msgid ".Random.seed[1] = 5 but no user-supplied generator"
 msgstr ".Random.seed[1] = 5, aber kein Generator vom Nutzer angegeben"
 
 #: src/main/RNG.c:312
-#, fuzzy
 msgid ".Random.seed[1] is not a valid RNG kind (code)"
-msgstr ".Random.seed[1] ist kein gültiger RNG Typ"
+msgstr ".Random.seed[1] ist kein gültiger RNG Typ (Kode)"
 
 #: src/main/RNG.c:317
 msgid ".Random.seed has wrong length"
@@ -737,7 +734,6 @@ msgid "matrix: invalid 'byrow' value"
 msgstr "matrix: ungültiger Wert für 'byrow'"
 
 #: src/main/array.c:81
-#, fuzzy
 msgid "non-numeric matrix extent"
 msgstr "nicht numerische Matrix Erweiterung"
 
@@ -784,7 +780,6 @@ msgid "matrix: too many elements specified"
 msgstr "matrix: zu viele Elemente angegeben"
 
 #: src/main/array.c:174
-#, fuzzy
 msgid "negative extents to matrix"
 msgstr "negative Erweiterung zu matrix"
 
@@ -793,7 +788,6 @@ msgid "allocMatrix: too many elements specified"
 msgstr "allocMatrix: zu viele Elemente angegeben"
 
 #: src/main/array.c:198
-#, fuzzy
 msgid "allocArray: too many elements specified by 'dims'"
 msgstr "allocArray: zu viele Elemente durch 'dims' angegeben"
 
@@ -972,12 +966,12 @@ msgid "invalid type or length for slot name"
 msgstr "ungültiger Typ oder ungültige Länge für den Slot-Namen"
 
 #: src/main/attrib.c:1126
-#, fuzzy, c-format
+#, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "kann keinen Slot (\"%s\") von einem Objekt vom Typ \"%s\" bekommen"
 
 #: src/main/attrib.c:1134
-#, fuzzy, c-format
+#, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "kein Slot des Namens \"%s\" für dieses Objekt der Klasse \"%s\""
 
@@ -986,7 +980,7 @@ msgid "formal classes cannot be used without the methods package"
 msgstr "formale Klassen können nicht ohne das methods Paket benutzt werden"
 
 #: src/main/attrib.c:1255
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "trying to get slot \"%s\" from an object whose class (\"%s\") is not defined "
 msgstr ""
@@ -994,12 +988,12 @@ msgstr ""
 "definiert"
 
 #: src/main/attrib.c:1259
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
-"versuche einen Slot \"%s\" von einem Objekt der einfachen Klassen (\"%s\") "
+"versuche einen Slot \"%s\" von einem Objekt der einfachen Klasse (\"%s\") "
 "ohne Slots anzufordern"
 
 #: src/main/attrib.c:1262
@@ -1134,7 +1128,6 @@ msgid "... used in an incorrect context"
 msgstr "... in falschem Kontext benutzt"
 
 #: src/main/builtin.c:683
-#, fuzzy
 msgid "invalid parameter in 'switch()'"
 msgstr "ungültiger Parameter in 'switch()'"
 
@@ -1193,7 +1186,6 @@ msgid "abbreviate used with non-ASCII chars"
 msgstr "abbreviate mit nicht-ASCII Zeichen genutzt"
 
 #: src/main/character.c:733
-#, fuzzy
 msgid "non-character names"
 msgstr "Nicht-Charakter Namen"
 
@@ -1208,9 +1200,8 @@ msgstr "ungültige multibyte Zeichenkette %d"
 
 #: src/main/character.c:869 src/main/character.c:1204 src/main/pcre.c:116
 #: src/main/pcre.c:426
-#, fuzzy
 msgid "regular expression is invalid in this locale"
-msgstr "regular expression ist in dieser locale ungültig"
+msgstr "regular expression ist in dieser Lokalisierung ungültig"
 
 #: src/main/character.c:891 src/main/character.c:1047
 #: src/main/character.c:1207 src/main/pcre.c:123 src/main/pcre.c:274
@@ -1278,19 +1269,16 @@ msgid "invalid input multibyte string %d"
 msgstr "ungültige multibyte Eingabezeichenkette %d"
 
 #: src/main/character.c:1737
-#, fuzzy
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
-"Benutzung von agrep() in einer UTF-8 locale arbeitet wahrscheinlich nur für "
+"Benutzung von agrep() in einer UTF-8 Lokalisierung arbeitet wahrscheinlich nur für "
 "ASCII Zeichenketten"
 
 #: src/main/character.c:1746
-#, fuzzy
 msgid "could not allocate memory for approximate matching"
-msgstr "konnte keine Speicher allokieren für approximate matching"
+msgstr "konnte keinen Speicher für approximate matching allokieren"
 
 #: src/main/character.c:1770
-#, fuzzy
 msgid "could not perform case insensitive matching"
 msgstr "konnte case insensitive matching nicht durchführen"
 
@@ -1308,7 +1296,6 @@ msgstr ""
 
 #: src/main/character.c:1829 src/main/character.c:1861
 #: src/main/character.c:1882
-#, fuzzy
 msgid "argument 'x' must be a raw vector"
 msgstr "Argument 'x' muss ein raw Vektor sein"
 
@@ -1325,7 +1312,6 @@ msgid "argument 'x' must be a integer vector"
 msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
 #: src/main/character.c:1920
-#, fuzzy
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "Argument 'x' muss entweder raw, ganzzahlig oder logisch sein"
 
@@ -1367,7 +1353,7 @@ msgid "out-of-range values treated as 0 in coercion to raw"
 msgstr "Werte außerhalb des Bereichs als 0 behandelt in Umwandlung nach raw"
 
 #: src/main/coerce.c:405
-#, fuzzy, c-format
+#, c-format
 msgid "invalid data of mode \"%s\" (too short)"
 msgstr "Ungültige Daten vom Mode \"%s\" (zu kurz)"
 
@@ -1433,7 +1419,6 @@ msgid "first argument must be a character string or a function"
 msgstr "erstes Argument muss eine Zeichenkette oder eine Funktion sein"
 
 #: src/main/coerce.c:1900
-#, fuzzy
 msgid "do.call: could not find parent environment"
 msgstr "do.call: konnte Elternumgebung nicht finden"
 
@@ -1442,7 +1427,6 @@ msgid "invalid environment specified"
 msgstr "ungültige Umgebung spezifiziert"
 
 #: src/main/coerce.c:2078
-#, fuzzy
 msgid "invalid replacement object to be a class string"
 msgstr "Ungültiges Ersetzungsobjekt als Klassenzeichenkette"
 
@@ -1879,14 +1863,12 @@ msgid "cannot close standard connections"
 msgstr "kann Standardverbindungen nicht schließen"
 
 #: src/main/connections.c:2180
-#, fuzzy
 msgid "cannot close output sink connection"
-msgstr "kann die Ausgabe sink Verbindung nicht schließen"
+msgstr "kann die Ausgaben-sink-Verbindung nicht schließen"
 
 #: src/main/connections.c:2182
-#, fuzzy
 msgid "cannot close messages sink connection"
-msgstr "kann die Nachrichten sink Verbindung nicht schließen"
+msgstr "kann die Nachrichten-sink-Verbindung nicht schließen"
 
 #: src/main/connections.c:2199 src/main/connections.c:3399
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
@@ -2003,7 +1985,6 @@ msgid "size changing is not supported for raw vectors"
 msgstr "Ändern der Größe nicht unterstützt für raw Vektoren"
 
 #: src/main/connections.c:2881 src/main/connections.c:2884
-#, fuzzy
 msgid "invalid UTF-8 input in readChar()"
 msgstr "ungültige UTF-8 Eingabe in readChar()"
 
@@ -2044,7 +2025,6 @@ msgid "can only push back on text-mode connections"
 msgstr "push back geht nur bei Text Verbindungen"
 
 #: src/main/connections.c:3147 src/main/connections.c:3207
-#, fuzzy
 msgid "sink stack is full"
 msgstr "sink stack ist voll"
 
@@ -2053,7 +2033,6 @@ msgid "cannot switch output to stdin"
 msgstr "kann Ausgabe nicht auf stdin umleiten"
 
 #: src/main/connections.c:3167
-#, fuzzy
 msgid "no sink to remove"
 msgstr "kein sink zu entfernen"
 
@@ -2107,9 +2086,8 @@ msgid "this is already a gzcon connection"
 msgstr "dies ist bereits eine gzcon Verbindung"
 
 #: src/main/connections.c:3700
-#, fuzzy
 msgid "can only use read- or write- binary connections"
-msgstr "kann nur entweder read- oder write- binäre Verbindungen"
+msgstr "kann nur entweder read- oder write- binäre Verbindungen benutzen"
 
 #: src/main/connections.c:3704 src/main/connections.c:3708
 #: src/main/connections.c:3715 src/main/connections.c:3729
@@ -2137,7 +2115,6 @@ msgid "not a list of sockets"
 msgstr "keine Liste von Sockets"
 
 #: src/main/connections.c:3823
-#, fuzzy
 msgid "bad write indicators"
 msgstr "unbrauchbare Schreibindikatoren"
 
@@ -2162,13 +2139,11 @@ msgid "no function to return from, jumping to top level"
 msgstr "keine Funktion abzubrechen, springe zum Top Level"
 
 #: src/main/context.c:288
-#, fuzzy
 msgid "target context is not on the stack"
 msgstr "Zielkontext ist nicht im Stack"
 
 #: src/main/context.c:310 src/main/context.c:326 src/main/context.c:391
 #: src/main/context.c:403 src/main/context.c:415 src/main/context.c:427
-#, fuzzy
 msgid "not that many frames on the stack"
 msgstr "nicht so viele einschließende Umgebungen im Stack"
 
@@ -2238,7 +2213,6 @@ msgid "invalid 'usetz' argument"
 msgstr "ungültiges 'usetz' Argument"
 
 #: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
-#, fuzzy
 msgid "could not allocate memory for 'read.dcf'"
 msgstr "konnte Speicher für 'read.dcf' nicht allokieren"
 
@@ -2317,7 +2291,6 @@ msgid "invalid variable names"
 msgstr "ungültige Variablennamen"
 
 #: src/main/deriv.c:912
-#, fuzzy
 msgid "invalid tag"
 msgstr "ungültiger tag"
 
@@ -2458,7 +2431,6 @@ msgid "too many arguments, sorry"
 msgstr "zu viele Argumente, sorry"
 
 #: src/main/dotcode.c:1431 src/main/dotcode.c:1453
-#, fuzzy
 msgid "Invalid graphics state"
 msgstr "ungültiger Grafikzustand"
 
@@ -2608,14 +2580,13 @@ msgid "invalid line join"
 msgstr "ungültige Zusammenfassung von Zeilen"
 
 #: src/main/engine.c:821
-#, fuzzy
 msgid "out of memory while clipping polyline"
 msgstr "zu wenig Speicher beim Abschneiden von polyline"
 
 #: src/main/engine.c:1566
-#, fuzzy, c-format
+#, c-format
 msgid "font face %d not supported for font family '%s'"
-msgstr "Schriftform %d nicht unterstützt für Schriftfamilie '%s'"
+msgstr "Schriftform %d für Schriftfamilie '%s' nicht unterstützt"
 
 #: src/main/engine.c:1768
 msgid "no graphics device is active"
@@ -2647,7 +2618,6 @@ msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up = %g > %g = x2"
 
 #: src/main/engine.c:2419
-#, fuzzy
 msgid "Display list redraw incomplete"
 msgstr "unvollständiges Neuzeichnen der Displayliste"
 
@@ -2668,7 +2638,6 @@ msgid "invalid graphics state"
 msgstr "ungültiger Grafikzustand"
 
 #: src/main/envir.c:125 src/main/envir.c:136
-#, fuzzy
 msgid "cannot change value of a locked binding"
 msgstr "kann den Wert einer festgestellten Bindung nicht ändern"
 
@@ -2693,7 +2662,6 @@ msgid "invalid cached value in R_GetGlobalCache"
 msgstr "ungültiger zwischengespeicherter Wert in R_GetGlobalCache"
 
 #: src/main/envir.c:719
-#, fuzzy
 msgid "cannot unbind in the base environment"
 msgstr "kann Bindung in der Basisumgebung nicht lösen"
 
@@ -2706,7 +2674,6 @@ msgid "cannot remove bindings from a locked environment"
 msgstr "kann keine Bindungen aus einer abgeschlossenen Umgebung lösen"
 
 #: src/main/envir.c:766
-#, fuzzy
 msgid "cannot get binding from NULL environment"
 msgstr "kann keine Bindung aus einer NULL Umgebung bekommen"
 
@@ -2851,7 +2818,6 @@ msgid "invalid object for as.environment"
 msgstr "ungültiges Objekt für as.enivronment"
 
 #: src/main/envir.c:2564
-#, fuzzy
 msgid "locking the NULL (base) environment is not supported yet"
 msgstr "die NULL (base) Umgebung abzuschließen wird noch nicht unterstützt"
 
@@ -2930,7 +2896,6 @@ msgid "name space not registered"
 msgstr "Namensraum nicht registriert"
 
 #: src/main/envir.c:3015
-#, fuzzy
 msgid "bad import environment argument"
 msgstr "unbrauchbares Argument für zu importierende Umgebung"
 
@@ -3080,12 +3045,10 @@ msgid "No function to return from, jumping to top level"
 msgstr "keine Funktion abzubrechen, springe zum Top Level"
 
 #: src/main/errors.c:1071
-#, fuzzy
 msgid "top level inconsistency?"
 msgstr "Inkonsistenz auf Top Level?"
 
 #: src/main/errors.c:1171
-#, fuzzy
 msgid "bad handler data"
 msgstr "unbrauchbare Daten für handler"
 
@@ -3094,7 +3057,6 @@ msgid "error message not a string"
 msgstr "Fehlermeldung ist keine Zeichenkette"
 
 #: src/main/errors.c:1393
-#, fuzzy
 msgid "handler or restart stack mismatch in old restart"
 msgstr "nicht passender handler oder restart stack für altes restart"
 
@@ -3103,7 +3065,6 @@ msgid "bad error message"
 msgstr "unbrauchbare Fehlermeldung"
 
 #: src/main/errors.c:1477
-#, fuzzy
 msgid "bad restart"
 msgstr "unbrauchbarer Neustart"
 
@@ -3194,7 +3155,6 @@ msgid "multi-argument returns are deprecated"
 msgstr "mehrargumentige Rückgaben sind veraltet"
 
 #: src/main/eval.c:1097
-#, fuzzy
 msgid "empty expression in return value"
 msgstr "leerer Ausdruck im Rückgabewert"
 
@@ -3203,12 +3163,10 @@ msgid "invalid (NULL) left side of assignment"
 msgstr "ungültige (NULL) linke Seite in Zuweisung"
 
 #: src/main/eval.c:1175
-#, fuzzy
 msgid "Target of assignment expands to non-language object"
 msgstr "Ziel der Zuweisung expandiert zu keinem Sprachobjekt"
 
 #: src/main/eval.c:1214
-#, fuzzy
 msgid "cannot do complex assignments in base namespace"
 msgstr "kann keine komplexen Zuweisungen im Basisnamensraum durchführen"
 
@@ -3281,7 +3239,6 @@ msgid "dispatch error"
 msgstr "Dispatch Fehler"
 
 #: src/main/eval.c:2383
-#, fuzzy
 msgid "node stack overflow"
 msgstr "Knotenstacküberlauf"
 
@@ -3356,7 +3313,6 @@ msgid "not a SPECIAL function"
 msgstr "keine SPECIAL Funktion"
 
 #: src/main/eval.c:3324
-#, fuzzy
 msgid "cannot find index for threaded code address"
 msgstr "konnte Index für threaded code Adresse nicht finden"
 
@@ -3373,7 +3329,6 @@ msgid "bad file name"
 msgstr "unbrauchbarer Dateiname"
 
 #: src/main/eval.c:3469 src/main/eval.c:3490
-#, fuzzy
 msgid "unable to open 'file'"
 msgstr "kann 'file' nicht öffnen"
 
@@ -3431,7 +3386,6 @@ msgid "invalid factors"
 msgstr "ungültige Faktoren"
 
 #: src/main/gevents.c:49
-#, fuzzy
 msgid "graphics device does not support graphics events"
 msgstr "Grafik-Device unterstützt keine Grafik-Ereignisse"
 
@@ -3484,7 +3438,6 @@ msgid "function is too long to keep source"
 msgstr "Funktion ist zu lang, um die Quellen zu behalten"
 
 #: src/main/gram.y:833
-#, fuzzy
 msgid "incorrect tag type"
 msgstr "ungültiger tag-Typ"
 
@@ -3513,7 +3466,7 @@ msgid "functions nested too deeply in source code"
 msgstr "Funktionen im Quelltext zu tief verschachtelt"
 
 #: src/main/graphics.c:304
-#, fuzzy, c-format
+#, c-format
 msgid "bad units specified in %s, please report!"
 msgstr "unbrauchbare Einheit in %s spezifiziert, bitte melden!"
 
@@ -3602,7 +3555,6 @@ msgid "invalid color specification"
 msgstr "ungültige Farbspezifikation"
 
 #: src/main/graphics.c:4283
-#, fuzzy
 msgid "Invalid color"
 msgstr "ungültige Farbe"
 
@@ -3756,7 +3708,7 @@ msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "negativer Index an R_removeTaskCallbackByIndex übergeben"
 
 #: src/main/main.c:1105
-#, fuzzy, c-format
+#, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "Warnmeldung vom toplevel task callback '%s'\n"
 
@@ -3842,7 +3794,6 @@ msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() ist auf diesem System nicht implementiert"
 
 #: src/main/memory.c:2123
-#, fuzzy
 msgid "protect(): protection stack overflow"
 msgstr "protect(): protection stack Überlauf"
 
@@ -3952,7 +3903,6 @@ msgid "invalid 'terms' argument"
 msgstr "ungültiges Argument für 'terms'"
 
 #: src/main/model.c:1578
-#, fuzzy
 msgid "invalid model frame"
 msgstr "ungültiger model frame"
 
@@ -4013,7 +3963,6 @@ msgid "generic 'function' is not a function"
 msgstr "generische 'function' ist keine Funktion"
 
 #: src/main/objects.c:177
-#, fuzzy
 msgid "bad generic call environment"
 msgstr "unbrauchbare generische Aufrufumgebung"
 
@@ -4036,7 +3985,6 @@ msgid "class name too long in '%s'"
 msgstr "Klassenname zu lang in '%s'"
 
 #: src/main/objects.c:352
-#, fuzzy
 msgid "corrupt internals!"
 msgstr "korrupte Internals!"
 
@@ -4062,17 +4010,14 @@ msgid "no applicable method for \"%s\""
 msgstr "keine anwendbare Methode für \"%s\""
 
 #: src/main/objects.c:459
-#, fuzzy
 msgid "'NextMethod' called from outside a function"
 msgstr "'NextMethod' außerhalb einer Funktion aufgerufen"
 
 #: src/main/objects.c:465
-#, fuzzy
 msgid "'NextMethod' called from an anonymous function"
 msgstr "'NextMethod' aus einer anonymen Funktion aufgerufen"
 
 #: src/main/objects.c:495
-#, fuzzy
 msgid "no calling generic was found: was a method called directly?"
 msgstr ""
 "kein aufrufendes generic gefunden: Wurde eine Methode direkt aufgerufen?"
@@ -4141,7 +4086,7 @@ msgid "'which' must be a length 1 logical vector"
 msgstr "'which' muss ein logischer Vektor der Länge 1 sein"
 
 #: src/main/objects.c:949
-#, fuzzy, c-format
+#, c-format
 msgid "unable to find a non-generic version of function \"%s\""
 msgstr "kann nicht-generische Version der Funktion \"%s\" nicht finden"
 
@@ -4992,7 +4937,7 @@ msgid "different argument lengths"
 msgstr "unterschiedliche Argumentlängen"
 
 #: src/main/plot.c:3251
-#, fuzzy, c-format
+#, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "Warnung: kein Punkt mit %.2f inches\n"
 
@@ -5013,12 +4958,10 @@ msgid "invalid dendrogram input"
 msgstr "ungültige Eingabe für Dendrogramm"
 
 #: src/main/plot.c:3630
-#, fuzzy
 msgid "cannot take snapshot of old-style device"
 msgstr "kann von altmodischem Device keinen Schnappschuss machen"
 
 #: src/main/plot.c:3643
-#, fuzzy
 msgid "cannot play snapshot on old-style device"
 msgstr "kann Schnappschuss auf altmodischem Device nicht abspielen"
 
@@ -5355,12 +5298,10 @@ msgid "Invalid regular expression"
 msgstr "ungültiger regulärer Ausdruck"
 
 #: src/main/regex.c:2545
-#, fuzzy
 msgid "Invalid collation character"
 msgstr "ungültiges collation Zeichen"
 
 #: src/main/regex.c:2548
-#, fuzzy
 msgid "Invalid character class name"
 msgstr "ungültiger Zeichenklassenname"
 
@@ -5442,7 +5383,6 @@ msgid "invalid comparison with complex values"
 msgstr "ungültiger Vergleich mit komplexen Werten"
 
 #: src/main/saveload.c:309
-#, fuzzy
 msgid "a I read error occurred"
 msgstr "ein I-Lesefehler ist aufgetreten"
 
@@ -5492,12 +5432,10 @@ msgstr ""
 "wiederherstelle"
 
 #: src/main/saveload.c:918
-#, fuzzy
 msgid "base namespace is not preserved in version 1 workspaces"
 msgstr "base namespace bleibt in Version 1 workspace nicht erhalten"
 
 #: src/main/saveload.c:920
-#, fuzzy
 msgid "cannot save namespace in version 1 workspaces"
 msgstr "kann namespace in Version 1 workspace nicht sichern"
 
@@ -6008,7 +5946,6 @@ msgid "only atomic vectors can be sorted"
 msgstr "nur atomare Vektoren können sortiert werden"
 
 #: src/main/sort.c:271 src/main/sort.c:483 src/main/sort.c:764
-#, fuzzy
 msgid "raw vectors cannot be sorted"
 msgstr "raw vectors können nicht sortiert werden"
 
@@ -6179,13 +6116,12 @@ msgstr ""
 "Zuweisung außerhalb der Vektor- bzw. Listengrenzen (Ausdehnung von %d auf %d)"
 
 #: src/main/subassign.c:289
-#, fuzzy, c-format
+#, c-format
 msgid "incompatible types (%d) in subassignment type fix"
 msgstr "inkompatible Typen (%d) in subassignment Typ fix"
 
 #: src/main/subassign.c:382 src/main/subassign.c:653 src/main/subassign.c:656
 #: src/main/subassign.c:923
-#, fuzzy
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "NAs nicht zugelassen in Teilbereichszuweisungen"
 
@@ -6223,7 +6159,6 @@ msgid "SubAssignArgs: invalid number of arguments"
 msgstr "subAssignArgs: ungültige Anzahl von Argumenten"
 
 #: src/main/subassign.c:1421
-#, fuzzy
 msgid "wrong args for environment subassignment"
 msgstr "falsche Argumente für eine Umgebungsteilzuweisung"
 
@@ -6321,7 +6256,6 @@ msgid "no index specified"
 msgstr "kein Index angegeben"
 
 #: src/main/subset.c:740
-#, fuzzy
 msgid "wrong arguments for subsetting an environment"
 msgstr "falsche Argumente um ein environment zu indizieren"
 
@@ -6418,7 +6352,6 @@ msgid "invalid 'duplicates.ok' argument"
 msgstr "ungültiges 'duplicates.ok' Argument"
 
 #: src/main/unique.c:587 src/main/unique.c:653
-#, fuzzy
 msgid "argument is not of mode character"
 msgstr "Argument hat nicht Modus Charakter"
 
@@ -6502,7 +6435,6 @@ msgid "unimplemented type (%d) in '%s'\n"
 msgstr "nicht implementierter Typ (%d) in '%s'\n"
 
 #: src/main/util.c:797
-#, fuzzy
 msgid "invalid tag in name extraction"
 msgstr "ungültiger tag in Namensauswertung"
 
@@ -6872,7 +6804,7 @@ msgstr "'B' (%d x %d) muss zu 'A' (%d x %d) passen"
 
 #: src/modules/lapack/Lapack.c:376 src/modules/lapack/Lapack.c:714
 #: src/modules/lapack/Lapack.c:748 src/modules/lapack/Lapack.c:793
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "Argument %d der Lapackroutine '%s' hatte ungültigen Wert"
 
