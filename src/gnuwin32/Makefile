@@ -75,9 +75,9 @@ front-ends/Rpwd.exe:
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild:
 	@$(MAKE) --no-print-directory fixfiles
+	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory libRblas.a
-	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory ../../bin/R.dll libR.a
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
