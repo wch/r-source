@@ -188,40 +188,44 @@ FROM:	gwhite@cabot.bio.dfo.ca
 
 ----------------------------------------------------------------------
 TASK:	Inf numerics
-STATUS:	Open
+STATUS:	Closed
 FROM:	plummer@iarc.fr
 	Could we have an Inf object in R? I would find it useful.
-	[ Sigh.	 I wish we had designed this in. ]
-	[ It will be a pain to ADD.		 ]
+	[ On systems using IEEE arithmetic, the builtin Inf and NaN	]
+	[ values are recognised and used as of 0.62.			]
 
 ----------------------------------------------------------------------
 TASK:	Auto-save
-STATUS:	Open
+STATUS:	Closed
 FROM:	<p.dalgaard@kubism.ku.dk> <hornik@ci.tuwien.ac.at>
 	> BTW: How about putting auto-save-workspace on the task list?
 	> Or just a manual save.work() currently, you can lose quite a
 	> bit of work to an unexpected segfault. (And q()+restart is
-	> cumbersome, esp. if you need to reattach subsetted dataframes, etc.)
+	> cumbersome, esp. if you need to reattach subsetted dataframes,
+	> etc.) 
 	Perhaps call it save.image() instead and use
 		save(list = ls(), file = ".RData")
 	as was suggested some time ago?
-	(Whatever the result is, it needs to go in the FAQ, which goes into
-	great length about that under R data can get lost when a crash occurs,
-	but does not say how to save them ...)
+	(Whatever the result is, it needs to go in the FAQ, which goes
+	into great length about that under R data can get lost when a
+	crash occurs, but does not say how to save them ...)
+	[ Added save.image() as above.  And yes, it's been in the FAQ   ]
+	[ for quite some time now ...					]
 
 ----------------------------------------------------------------------
 TASK:	"chisquare.test" problem
-STATUS:	Open
+STATUS:	Closed
 FROM:	<venkat@biosta.mskcc.org>
 	Can you change the explicit "cat" statement in the
 	"chisquare.test" function which insists on writing to the
 	screen even when the output is redirected to a variable? (Using
 	"htest" class as in "t.test" function.)
-	[ Should we switch to the library one. ]
-
+	[ Replaced by chisq.test(), formerly in the ctest package,      ]
+	[ which properly returns an object of class "htest".		]
+	
 ----------------------------------------------------------------------
 TASK:	Graphics inconsistencies
-STATUS: Openish
+STATUS: Closed
 FROM:	Bill.Venables@adelaide.edu.au
 	While transferring some old S-code I came across some minor
 	inconsistencies between R and S that are probably more nuisance
@@ -233,7 +237,7 @@ FROM:	Bill.Venables@adelaide.edu.au
 	2. There is a dev.off() function, but no other dev.xxx functions.
 	   (The dev.xxx group are S-PLUS and not vanilla S, by the way.)
 	   There is no graphics.off() function.
-	   [ Long-term project ]
+	   [ Added in 0.62. ]
 	3. If dfr is a data frame with components "x", "y" and some
 	   others then points(dfr) uses dfr as an xy-list in S but not in
 	   R.  If there is some non-numeric component it actually fails
@@ -436,31 +440,20 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 
 ----------------------------------------------------------------------
 TASK:	Old Unfixed Problems
-STATUS:	Open
+STATUS:	Closed
 FROM:	<Kurt.Hornik@ci.tuwien.ac.at>
 	I noticed the following problems (all already reported, but not in
 	TASKS).
-	* TASKS.OLD has
-	Btw, here's another way to produce a segfault with admittedly
-	nonsense code:
-		R> x <- 1:5
-		R> dimnames(x)[1,2] <- NULL
-		Segmentation fault
-	[ Hmmm.	 This seems to have gone away.	I get the error	    ]
-	[ message "Error: incorrect number of subscripts on array". ]
-	[ Verified by Rossini ...]
-
-	On my Linux system, I still get the segfault.  Perhaps others could
-	check that?
 	* File permissions in data should be 644.
 	* In src/unix/system.c, one `Rdata' should be `RData' (d -> D).
-	* The documentation for the noncentral chisquare distribution is not
-	quite correct.	(rnchisq does not exist, the existing functions have x,
-	df and the noncentrality parameter as args, and the density should be
-	   pnchisq(x, df, lambda)
+	* The documentation for the noncentral chisquare distribution is
+	not quite correct.  (rnchisq does not exist, the existing
+	functions have x, df and the noncentrality parameter as args,
+	and the density should be pnchisq(x, df, lambda)
 	   = exp(-lambda / 2)
 	     * sum_{r=0}^\infty \frac{lambda^r}{2^r r!} pchisq(x, df + 2r)
 	(semiTeX notation only, sorry).
+	[ All fixed now.						]
 
 ----------------------------------------------------------------------
 TASK:	New Problems
@@ -469,9 +462,9 @@ FROM:	<Kurt.Hornik@ci.tuwien.ac.at>
 	New minor remarks:
 	* The documentation for `image' still has the old order z, x, y.
 	* Perhaps one should add `par(ask = T)' in the image demo?
-	* Perhaps one should save the original value of par() at the beginning
-	of the graphics demo, and restore that at its end (s.t. typically asking
-	is turned off again).
+	* Perhaps one should save the original value of par() at the
+	beginning of the graphics demo, and restore that at its end
+	(s.t. typically asking is turned off again).
 
 ----------------------------------------------------------------------
 TASK:	Multiplatform Support
@@ -488,14 +481,15 @@ FROM:	<warnes@biostat.washington.edu>
 		$RHOME/bin/solaris/
 		$RHOME/bin/sunos4/
 	which each hold the appropriate R.binary file.
-	These two modified functions assume that the environment variable $OSTYPE
-	is appropriately set, as is done automatically by the shell tcsh.  If it
-	is not set, the directory names collapse to the original values,
+	These two modified functions assume that the environment
+	variable $OSTYPE is appropriately set, as is done automatically
+	by the shell tcsh.  If it is not set, the directory names
+	collapse to the original values,
 		$RHOME/bin/ and $RHOME/lib/
-	To use them, create the approprate directories and place the correct
-	binaries therein. ( Note that the makefiles will not do this
-	automatically!)	 Then replace $RHOME/bin/R and $RHOME/cmd/filename with
-	the modified ones.
+	To use them, create the approprate directories and place the
+	correct binaries therein. ( Note that the makefiles will not do
+	this automatically!)  Then replace $RHOME/bin/R and
+	$RHOME/cmd/filename with the modified ones.
 
 ----------------------------------------------------------------------
 TASK:	Platform Independence
@@ -520,7 +514,7 @@ FROM:	<Kurt.Hornik@ci.tuwien.ac.at>
 
 ----------------------------------------------------------------------
 TASK:	Naming with Numeric Values and "unlist"
-STATUS:	Open
+STATUS:	Closed
 FROM:	<hornik@ci.tuwien.ac.at>
 	R> l <- list("11" = 1:5)
 	R> l
@@ -529,33 +523,17 @@ FROM:	<hornik@ci.tuwien.ac.at>
 	R> unlist(l)
 	111 112 113 114 115
 	  1   2	  3   4	  5
-	[ Bug or feature ? ]
+	[ The same as S does, hence determined a feature		]
 
 ----------------------------------------------------------------------
 TASK:	all.names needed
-STATUS:	Open
+STATUS:	Closed
 FROM:	<bates@stat.wisc.edu>
 	I could not find the all.names function in R so I created the
-	enclosed.  Comments, criticisms, or changes to a one-liner by creating
-	nested anonymous functions are welcome.	 I'll try to work out a
-	corresponding all.vars function.
-
-	### $Id: TASKS,v 1.3 1997/11/11 07:58:05 maechler Exp $
-	### Some replacement functions that are missing in R
-
-	### Determine all the names (symbols) occuring in an object.
-	### This is probably grossly inefficient.
-	all.names <-
-	  function (x)
-	{
-	  if (mode(x) == "symbol")
-	    return(as.character(x))
-	  if (length(x) == 0)
-	    return(NULL)
-	  if (is.recursive(x))
-	    return(unlist(lapply(as.list(x), all.names)))
-	  character(0)
-	}
+	enclosed.  Comments, criticisms, or changes to a one-liner by
+	creating nested anonymous functions are welcome.  I'll try to
+	work out a corresponding all.vars function.
+	[ all.names() and all.vars() added in 0.61.			]
 
 ----------------------------------------------------------------------
 TASK:	"sys.function" problem
@@ -583,16 +561,6 @@ FROM:	<bates@stat.wisc.edu>
 	sys.function() returns the function being called the first time
 	through but the second time through it returns NULL.  Is this a bug or
 	a feature?
-
-----------------------------------------------------------------------
-TASK:	Matrix multiply problems
-STATUS:	Open
-FROM:	<thomas@biostat.washington.edu>
-	Both of these used to work and seem useful and harmless (and work in S):
-	R> matrix(1,ncol=1)%*%c(1,2)
-	Error in matrix(1, ncol = 1) %*% c(1, 2) : non-conformable arguments
-	R> matrix(1,ncol=1)*(1:2)
-	Error: dim<- length of dims do not match the length of object
 
 ----------------------------------------------------------------------
 TASK:	"update" comments and fixes
@@ -866,11 +834,13 @@ FROM:	Paul Gilbert <la-jassine@aix.pacwan.net>
 
 ----------------------------------------------------------------------
 TASK:	getenv()
-STATUS:	Open
+STATUS:	Closed
 FROM:	Paul Gilbert <la-jassine@aix.pacwan.net>
 	Here are two small problems I've pointed out before, but still
 	seem to be in 0.49.
 	1/ getenv() should return everything, not complain missing item.
+	[ Fixed now.  In fact, at least under Unix getenv() now returns	]
+	[ the whole environment, as in S.				]
 
 ----------------------------------------------------------------------
 TASK:	summary.default
@@ -901,7 +871,7 @@ FROM:	<la-jassine@aix.pacwan.net>
 	> z <-ts(z)
 	> z[,1,drop=F]
 	Error in [.ts(z, , 1, drop = F) : unused argument to function
- [ok]
+	[ok]
 
 	2/  == and other comparisons with non-ts matrices should work:
 	> z <- matrix( 1:10,5,2)
@@ -919,11 +889,13 @@ FROM:	<la-jassine@aix.pacwan.net>
 	> z == ts(z)
 	Error: invalid time series parameters specified
 
-	3/ The generic functions start and end need default methods to return a
-	result for matrices as previously and in S. The following seems to work.
+	3/ The generic functions start and end need default methods to
+	return a result for matrices as previously and in S. The
+	following seems to work.
 
 	start.default <- function (x) start(ts(x))
 	end.default   <- function (x)	end(ts(x))
+	[ Added ]
 
 	4/ In the function start.ts (and in end.ts) ts[1] in the last line
 	is not defined. Perhaps I am missing something?
@@ -942,6 +914,7 @@ FROM:	<la-jassine@aix.pacwan.net>
 		}
 		else ts[1]
 	}
+	[ Fixed ]
 
 
 ----------------------------------------------------------------------
@@ -1467,118 +1440,6 @@ FROM:
 	commands for (rule == 1) and (rule == 2) have to be exchanged.
 
 ----------------------------------------------------------------------
-TASK:	Names and unlisting  (bug/feature)
-STATUS:	Open
-FROM:	hornik@ci.tuwien.ac.at
-	R> l <- list("11" = 1:5)
-	R> l
-	$11
-	[1] 1 2 3 4 5
-	R> unlist(l)
-	111 112 113 114 115
-	  1   2	  3   4	  5
-	I ran into this weekend ...
-
-----------------------------------------------------------------------
-TASK:	"all.names" function needed
-STATUS:	Open
-FROM:	<bates@stat.wisc.edu>
-	I could not find the all.names function in R so I created the
-	enclosed.  Comments, criticisms, or changes to a one-liner by creating
-	nested anonymous functions are welcome.	 I'll try to work out a
-	corresponding all.vars function.
-
-	### $Id: TASKS,v 1.3 1997/11/11 07:58:05 maechler Exp $
-	### Some replacement functions that are missing in R
-
-	### Determine all the names (symbols) occuring in an object.
-	### This is probably grossly inefficient.
-	all.names <-
-	  function (x)
-	{
-	  if (mode(x) == "symbol")
-	    return(as.character(x))
-	  if (length(x) == 0)
-	    return(NULL)
-	  if (is.recursive(x))
-	    return(unlist(lapply(as.list(x), all.names)))
-	  character(0)
-	}
-	### Local variables:
-	### mode: R
-	### End:
-
-	And from Martin:
-	Doug,
-
-	your 'all.names' function
-		[wow, I didn't even know it in S..]
-	seems to have been written with S in your mind;
-	you are exactly demonstrating some of the 'fine' differences between  R & S
-
-	>1> all.names <- function (x)
-	>2> {
-	>3>   if (mode(x) == "symbol")	return(as.character(x))
-	>4>   if (length(x) == 0)	return(NULL)
-	>5>   if (is.recursive(x))	return(unlist(lapply(as.list(x), all.names)))
-	>6>   character(0)
-	>7> }
-
-	1) length(x) is not always defined in R; e.g. it is NOT for functions.
-	   --> Delete line 4
-
-	2) functions  are NOT lists and cannot be coerced to,
-	   which makes line 5 fail for function objects.
-
-	As a matter of fact, I once was also a bit interested in this.
-	At that time, 'args' did not yet exist, and I wanted to abuse 'as.list' for
-	functions.
-	I was told that this is 'bad' (functions have nothing to do with
-	lists; in R, functions can have a defining environment going with
-	them...) and 'args' is now provided which helps my most immediate
-	need.
-
-	In short: I don't think	 you can define an  all.names(.)
-	function which works with functions arguments, in the
-	current version of R.
-
-
-----------------------------------------------------------------------
-TASK:	"sys.function" problem
-STATUS:	Open
-FROM:	<bates@stat.wisc.edu> + <maechler@stat.math.ethz.ch>
-	This was either an attempt to get an early lead in some
-	future obfuscating R contest or a way of getting around
-	the different scoping rules of R and S.
-
-	I attempted to create a recursive anonymous function to be
-	called within another function.	 You may want to stop
-	reading for a bit and consider how that would be done.
-	That is, how do you recursively call a function that has
-	never been assigned a name?
-
-	OK, you're back.  You probably came up with a better solution
-	than I did but I used (sys.function())(arg) to do the
-	recursion.  The piece of code looks like
-	  flist <- (function(x) {
-	    if (mode(x) == "call") {
-	      if (x[[1]] == as.name("/"))
-		return(c(sys.function()(x[[2]]), sys.function()(x[[3]])))
-	      if (x[[1]] == as.name("("))	# for R
-		return(sys.function()(x[[2]]))
-	    }
-	    if (mode(x) == "(") return(sys.function()(x[[2]])) # for S
-	    list(x)
-	  })(getGroupsFormula(data, form, ...)[[2]])
-	  ## I know it's horribly obscure.
-	  ## Blame Bill Venables for teaching me this.
-
-	Regretably, it doesn't work in R.  Using the debugger one
-	finds that sys.function() returns the function being called
-	the first time through but the second time through it
-	returns NULL.  Is this a bug or a feature?
-
-----------------------------------------------------------------------
 TASK:	Matrix multiply problems
 STATUS:	Open
 FROM:	<thomas@biostat.washington.edu>
@@ -1722,27 +1583,6 @@ FROM:	<thomas@biostat.washington.edu>
 	~~~~~~~~~~~~~~~~~~ [and 'core' dump]
 
 ----------------------------------------------------------------------
-TASK:	Misc
-STATUS:	Open
-FROM:	<la-jassine@aix.pacwan.net>
-	Here are two small problems I've pointed out before, but
-	still seem to be in 0.49.
-
-	1/ getenv() should return everything, not complain missing item.
-
-	2/ In summary.default
-	 ...
-			sumry[i, 2] <- if (is.object(ii))
-				 class(ii)
-	should be changed to
-	...
-			sumry[i, 2] <- if (is.object(ii))
-				paste(class(ii), collapse=" ")
-
-	so that it works with lists of lists.
-	(This fix was suppose to be added to Splus 4.)
-
-----------------------------------------------------------------------
 TASK:	Method lookup for "print"
 STATUS:	Open
 FROM:	<la-jassine@aix.pacwan.net>
@@ -1776,63 +1616,6 @@ FROM:	<la-jassine@aix.pacwan.net>
 	object should generate a call to the print method for the
 	object then this is a bug. Otherwise, could someone please
 	explain to me what it does. Thanks.
-
-----------------------------------------------------------------------
-TASK:	Time Series Problems
-STATUS:	Open
-FROM:	<la-jassine@aix.pacwan.net>
-	Here are four problems with ts:
-
-	1/  ts matrix subscripting should support drop=F:
-	> z<- matrix(1:10,5,2)
-	> z <-ts(z)
-	> z[,1,drop=F]
-	Error in [.ts(z, , 1, drop = F) : unused argument to function
-
-
-	2/  == and other comparisons with non-ts matrices should work:
-	> z <- matrix( 1:10,5,2)
-	> ts(z)
-	Time-Series:
-	Start = c(1, 1)
-	End = c(5, 1)
-	Frequency = 1
-	     [,1] [,2]
-	[1,]	1    6
-	[2,]	2    7
-	[3,]	3    8
-	[4,]	4    9
-	[5,]	5   10
-	> z == ts(z)
-	Error: invalid time series parameters specified
-	>
-
-	3/ The generic functions start and end need default methods
-	to return a result for matrices as previously and in S.
-	The following seems to work.
-
-		start.default <- function (x) start(ts(x))
-		end.default   <- function (x)	end(ts(x))
-
-
-	4/ In the function start.ts (and in end.ts) ts[1] in the
-	last line is not defined. Perhaps I am missing something?
-
-	start.ts
-	function (x)
-	{
-		ts.eps <- .Options$ts.eps
-		if (is.null(ts.eps))
-			ts.eps <- 1e-06
-		tsp <- attr(as.ts(x), "tsp")
-		is <- tsp[1] * tsp[3]
-		if (abs(is - round(is)) < ts.eps) {
-			is <- floor(tsp[1])
-			fs <- floor(tsp[3] * (tsp[1] - is) + 0.001)
-			c(is, fs + 1)
-		}
-		else ts[1]
-	}
 
 ----------------------------------------------------------------------
 TASK:	False warnings
