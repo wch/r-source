@@ -143,5 +143,12 @@
 \newcommand{\link}[1]{#1\index{#1}}
 \newcommand{\email}[1]{$\langle${#1}$\rangle$}
 
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+\input{t1aett.fd}
+\DeclareFontShape{T1}{aett}{bx}{n}%
+   {<->ssub*aett/m/n}{}
+
+
 \InputIfFileExists{Rd.cfg}{%
   \typeout{Reading personal defaults ...}}{}

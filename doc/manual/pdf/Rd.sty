@@ -39,7 +39,7 @@
   \vneed{1ex}
   \markboth{#1}{#1}
   \addcontentsline{toc}{subsection}{#1}
-  \index{#1|textbf}
+  \hypertarget{Rfn.#1}{\index{#1}}
   \noindent
   \nopagebreak
   \begin{center}
@@ -142,6 +142,22 @@
 \newcommand{\file}[1]{`\textsf{#1}'}
 \newcommand{\link}[1]{#1\index{#1}}
 \newcommand{\email}[1]{$\langle${#1}$\rangle$}
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{ae}
+\input{t1aett.fd}
+\DeclareFontShape{T1}{aett}{bx}{n}%
+   {<->ssub*aett/m/n}{}
+
+\RequirePackage{color}
+\definecolor{Blue}{rgb}{0,0,0.8}
+\definecolor{Red}{rgb}{0.7,0,0}
+\RequirePackage{hyperref}
+% next one is not an index hyperlink.
+\renewcommand{\Link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1|textit}}
+\renewcommand{\link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1}}
+
+\renewcommand{\alias}[2]{\hypertarget{Rfn.#1}{\index{#1@#1\textit{(#2)}}}}
 
 \InputIfFileExists{Rd.cfg}{%
   \typeout{Reading personal defaults ...}}{}

@@ -1,4 +1,4 @@
- #
+#
 # ${R_HOME}/doc/manual/Makefile
 
 VPATH = @srcdir@
@@ -9,6 +9,9 @@ top_builddir = ../..
 subdir = doc/manual
 
 include $(top_builddir)/Makeconf
+
+# set the next to `.' if your LaTeX lacks the ae font package
+AE=ae
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Manual.tex.in Reference.tex.in \
@@ -81,6 +84,7 @@ dvi: Manual.dvi Reference.dvi R-external.dvi
 
 Manual.dvi: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 	@echo "Making LaTeX documentation ..."
+	@$(RM) -f *.aux Manual.toc
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{Manual.tex}'
 	@$(MAKEINDEX) Manual
@@ -89,10 +93,11 @@ Manual.dvi: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 
 Reference.dvi: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@echo "LaTeX documentation: Reference Index ..."
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@$(RM) -f *.aux Reference.toc Reference.ind
+	@TEXINPUTS="$(srcdir)/$(AE):$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{Reference.tex}'
 	@$(MAKEINDEX) Reference
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(srcdir)/$(AE):$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{Reference.tex}'
 
 Version.tex: $(top_builddir)/bin/R
@@ -110,6 +115,34 @@ R-external.dvi: R-external.texi $(srcdir)/texinfo.tex
 info: R-external.info
 
 R-external.info: R-external.texi
+
+PDFLATEX = pdflatex
+PDFTEX = pdftex
+
+pdf: Manual.pdf Reference.pdf R-external.pdf
+
+Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
+	@echo "Making PDF LaTeX documentation ..."
+	@$(RM) -f *.aux Manual.toc
+	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
+	$(PDFLATEX) '\nonstopmode\input{Manual.tex}'
+	@$(MAKEINDEX) Manual
+	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
+	$(PDFLATEX) '\nonstopmode\input{Manual.tex}'
+
+Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
+	@echo "PDF LaTeX documentation: Reference Index ..."
+	@$(RM) -f *.aux Reference.toc Reference.ind
+	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
+	$(PDFLATEX) '\nonstopmode\input{Reference.tex}'
+	@$(MAKEINDEX) Reference
+	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
+	$(PDFLATEX) '\nonstopmode\input{Reference.tex}'
+
+R-external.pdf: R-external.texi
+	$(PDFTEX) R-external.texi
+	$(PDFTEX) R-external.texi
+
 
 install: installdirs
 	@echo "Installing doc/manual ..."
@@ -129,10 +162,13 @@ clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -f Rd.sty; \
 	fi
-	@-rm -f *.aux *.toc Manual.i?? *.dvi *.log *.ps *.ps-2 *.info*
+	@-rm -f *.aux *.toc Manual.i?? Reference.i?? *.log *.out \
+	  *.ps *.ps-2 *.info*
+	@-rm -f R-external.cp R-external.fn R-external.ky R-external.pg \
+	  R-external.tmp R-external.tp R-external.vr
 distclean: clean
 	@-rm -f auto Version.tex pkg-*.tex Makefile lib2tex \
-	  ABOUT.tex Manual.tex
+	  ABOUT.tex Manual.tex *.pdf *.dvi
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
