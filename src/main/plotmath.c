@@ -252,25 +252,25 @@ static double TeX(TEXPAR which, R_GE_gcontext *gc, GEDevDesc *dd)
 
     case sigma8:  /* num1 */
 	return AxisHeight(gc, dd)
-	    + 3.51 * RuleThickness(gc, dd)
+	    + 3.51 * RuleThickness()
 	    + 0.15 * XHeight(gc, dd)		/* 54/36 * 0.1 */
 	    + SUBS * DescDepth(gc, dd);
     case sigma9:  /* num2 */
 	return AxisHeight(gc, dd)
-	    + 1.51 * RuleThickness(gc, dd)
+	    + 1.51 * RuleThickness()
 	    + 0.08333333 * XHeight(gc, dd);	/* 30/36 * 0.1 */
     case sigma10: /* num3 */
 	return AxisHeight(gc, dd)
-	    + 1.51 * RuleThickness(gc, dd)
+	    + 1.51 * RuleThickness()
 	    + 0.1333333 * XHeight(gc, dd);	/* 48/36 * 0.1 */
     case sigma11: /* denom1 */
 	return	- AxisHeight(gc, dd)
-	    + 3.51 * RuleThickness(gc, dd)
+	    + 3.51 * RuleThickness()
 	    + SUBS * FigHeight(gc, dd)
 	    + 0.344444 * XHeight(gc, dd);	/* 124/36 * 0.1 */
     case sigma12: /* denom2 */
 	return	- AxisHeight(gc, dd)
-	    + 1.51 * RuleThickness(gc, dd)
+	    + 1.51 * RuleThickness()
 	    + SUBS * FigHeight(gc, dd)
 	    + 0.08333333 * XHeight(gc, dd);	/* 30/36 * 0.1 */
 
@@ -301,7 +301,7 @@ static double TeX(TEXPAR which, R_GE_gcontext *gc, GEDevDesc *dd)
 	return AxisHeight(gc, dd);
 
     case xi8:	  /* default_rule_thickness */
-	return RuleThickness(gc, dd);
+	return RuleThickness();
 
     case xi9:	  /* big_op_spacing1 */
     case xi10:	  /* big_op_spacing2 */
