@@ -57,6 +57,7 @@ the list of devices.
 \code{\link{graphic.off}()} for closing all devices.
 }
 \examples{
+if (interactive()) {
 ( dl <- dev.list() ) # the currently open devices..
 x11()
 plot(1:10)
@@ -68,5 +69,6 @@ dev.set(dev.next())
 abline(h=0, col="gray")# for the residual plot
 dev.off(); dev.off()#- close the two X devices
 all(dl == dev.list())# The device list as it was...
+}
 }
 \keyword{device}
