@@ -1,4 +1,4 @@
-Dnl configure.in
+dnl configure.in
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
@@ -43,10 +43,10 @@ host_vendor=$2
 host_os=$3
 
 AC_DEFINE(R_MAJOR, "0")
-AC_DEFINE(R_MINOR, "62.0")
+AC_DEFINE(R_MINOR, "62.1")
 AC_DEFINE(R_STATUS, "")
 AC_DEFINE(R_STATUS_REV, "0")
-AC_DEFINE(R_DAY, "14")
+AC_DEFINE(R_DAY, "15")
 AC_DEFINE(R_MONTH, "June")
 AC_DEFINE(R_YEAR, "1998")
 AC_DEFINE_UNQUOTED(R_PLATFORM, "${host}")
