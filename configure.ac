@@ -24,8 +24,6 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.89 $)
-
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
 ## of M4 magic.  Note that M4 esyscmd has a trailing newline because the
