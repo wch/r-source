@@ -300,4 +300,19 @@ none
 
 Directory:  incoming
 
-none
+* PR# 1105 *
+Subject: lm documentation, "formula" component
+From: david.firth@nuf.ox.ac.uk
+Date: Mon, 1 Oct 2001 15:13:00 +0200 (MET DST)
+* PR# 1106 *
+Subject: What is an error bu21?
+From: Patrick Lindsey <patrick.lindsey@luc.ac.be>
+Date: Mon, 1 Oct 2001 15:43:36 +0200 (MET DST)
+* PR# 1107 *
+Subject: Wrong error message in Rdlists.pm
+From: Thomas Hoffmann <thoffman@zappa.sax.de>
+Date: Tue, 02 Oct 2001 00:01:35 +0100
+* PR# 1108 *
+Subject: Documentation bug in bug.report
+From: Thomas Hoffmann <thoffman@zappa.sax.de>
+Date: Tue, 02 Oct 2001 00:06:01 +0100
