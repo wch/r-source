@@ -183,7 +183,7 @@ int R_IsNaNorNA(double x)
 int R_finite(double x)
 {
 # ifndef HAVE_FINITE
-    return (x != R_NaReal && x != R_PosInf && x != R_NegInf);
+    return (x != R_NaReal && x < R_PosInf && x > R_NegInf);
 # else
     int finite(double);
     return finite(x);
