@@ -45,9 +45,16 @@ BUG FIXES
 
     o   RweaveLatex.Rd had unbalanced braces in section "Supported
         Options".
+    
+    o   merge() with multiple and differently-named match columns
+        failed. (PR#1510)
+
+    o   NAs in right-justified unquoted matrices were being mis-aligned.
+	This mainly affected printing data frames.
 
     o	predict.*bSpline() bugs extrapolating for deriv >= 1 (PR#1473),
         and predict.[bn]s bug e.g. for bs(x), reported by Ch.Sangiorgio.
+
 
 
 		CHANGES IN R VERSION 1.5.0

@@ -649,7 +649,12 @@ provoke.bug()
 ##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ## and hence keep the above paragraph at the end of this file
 
-## This example last ##
+
+## PR#1510 merge with multiple match rows and different names.
+df1 <- data.frame(z = 1:10, m = letters[1:10], w = rnorm(10))
+df2 <- data.frame(x = 1:10, y = rnorm(10), n = letters[1:10])
+merge(df2, df1, by.x = c("x", "n"), by.y = c("z", "m"))
+## failed in 1.5.0
 
 
 ## PR 1524  Problems with paste/unlist

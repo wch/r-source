@@ -284,11 +284,13 @@ char *EncodeString(char *s, int w, int quote, int right)
 
     if (s == CHAR(NA_STRING)) {
 	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
+	i = quote ? 2 : 4;
 	quote = 0;
-    } else 
+    } else {
 	p = s;
-
-    i = Rstrlen(s, quote);
+	i = Rstrlen(s, quote);
+    }
+    
     AllocBuffer((i+2 >= w)?(i+2):w); /* +2 allows for quotes */
     q = Encodebuf;
     if(right) { /* Right justifying */
