@@ -832,7 +832,8 @@ this is not true of most commercial Unixes.
 
 The ability to use translated messages makes use of @code{gettext} and
 most likely needs @acronym{GNU} @code{gettext}: you also need this to
-work with new translations. At present there are no translations available.
+work with new translations, but that contained in the R sources will be
+used if no suitable external @code{gettext} is found.
 
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate headers and libraries installed: @code{jpeg} (version 6b
