@@ -273,7 +273,8 @@ NEW FEATURES
     o	Functions flush.console() and select.list() are now available
 	on all platforms.
 
-    o	menu() uses a multi-column layout if possible for more then 10 choices.
+    o	menu() uses a multi-column layout if possible for more than 
+	10 choices.
 
 
 INTERNATIONALIZATION
@@ -415,7 +416,8 @@ UTILITIES
 
     o	New function write_PACKAGES() in package 'tools' to help with
 	preparing local package repositories.  (Based on a contribution
-	by Uwe Ligges.)
+	by Uwe Ligges.)  How to prepare such repositories is
+	documented in the 'R Installation and Administration' manual.
 
 
 DOCUMENTATION
