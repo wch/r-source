@@ -573,6 +573,8 @@ BUG FIXES
     o	as.data.frame.list(optional = TRUE) was converting names, and
 	hence data.frame(list(...), check.names = FALSE) was.  (PR#3280)
 
+    o	as.dist(m) {mva} now obeys `diag=TRUE' or `upper=TRUE' in all cases.
+
     o	as.double(list()) etc was regarded as an error, because of a
 	bug in isVectorizable.
 

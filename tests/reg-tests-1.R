@@ -2646,6 +2646,10 @@ stopifnot(identical(names(y1), names(x2)),
           identical(names(y3), names(x2)[-6]))
 ##
 
+## as.dist(x) only obeyed `diag=TRUE' or `upper=TRUE' when x was "dist" already
+m <- as.matrix(dist(matrix(rnorm(100), nrow=5)))
+stopifnot(identical(TRUE, attr(as.dist(m, diag=TRUE), "Diag")))
+## failed previous to 1.8.0
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
