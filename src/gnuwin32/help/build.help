@@ -158,7 +158,7 @@ foreach $manfile (@mandir) {
 		$textflag = "text";
 		$tmpfile = "$tmpdir/nr1";
 		$tmp2 = "$tmpdir/nr2";
-		Rdconv($manfile, "nroff", "", "$tmpfile");
+		Rdconv($manfile, "nroff", "", "$tmpfile", $pkg);
 # Unix needs / : some Win32 Perls need \
 		if(!($^O eq "Unix")) {
 		    $tmp2 =~ s+/+\\+g;
