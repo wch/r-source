@@ -238,6 +238,8 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
  *			d = #{digits} to RIGHT of "."
  *			e = {0:2}.   0: Fixpoint;
  *				   1,2: exponential with 2/3 digit expon.
+ *
+ * for complex : 2 x 3 integers for (Re, Im)
  */
 
 SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)

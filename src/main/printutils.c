@@ -56,7 +56,7 @@
 #define BUFSIZE 8192
 /* FIXME: we shouldn't use a fixed BUFSIZE at all
    -----  Rather, e.g. use moderate BUFSIZE (e.g. 256),
-   	  then  ALLOCATE  if we need more.
+	  then	ALLOCATE  if we need more.
  or replace the whole idea of		  sprintf(Encodebuf,..) ?
  */
 static char Encodebuf[BUFSIZE];
@@ -69,7 +69,7 @@ long Decode2Long(char *p, int *ierr)
     if(p[0] == '\0') return v;
     /* else look for letter-code ending : */
     if(R_Verbose)
-        REprintf("Decode2Long(): v=%ld\n", v);
+	REprintf("Decode2Long(): v=%ld\n", v);
     if(p[0] == 'M') {
 	if((Mega * (double)v) > LONG_MAX) { *ierr = 1; return(v); }
 	return (Mega*v);
@@ -151,9 +151,7 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 {
     char fmt[64], *efr, *efi;
 
-    /* IEEE allows signed zeros */
-    /* We strip these here */
-
+    /* IEEE allows signed zeros; strip these here */
     if (x.r == 0.0) x.r = 0.0;
     if (x.i == 0.0) x.i = 0.0;
 
@@ -162,10 +160,8 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 		CHAR(R_print.na_string));
     }
     else {
-	if(er) efr = "e";
-	else efr = "f";
-	if(ei) efi = "e";
-	else efi = "f";
+	if(er) efr = "e"; else efr = "f";
+	if(ei) efi = "e"; else efi = "f";
 	sprintf(fmt,"%%%d.%d%s%%+%d.%d%si", wr, dr, efr, wi, di, efi);
 	sprintf(Encodebuf, fmt, x.r, x.i);
 
@@ -230,7 +226,7 @@ char *EncodeString(char *s, int w, int quote, int right)
     i = Rstrlen(s);
     if( i >  BUFSIZE ) {
 	warning("String is too long to be printed");
-        Encodebuf[0]='\0';
+	Encodebuf[0]='\0';
 	return Encodebuf;
     }
     if(right) { /*Right justifying */
@@ -406,7 +402,8 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
 
     if (!isNull(cl)) {
 	l = Rstrlen(CHAR(STRING(cl)[j]));
-	Rprintf("%*s%s", w-l, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left));
+	Rprintf("%*s%s", w-l, "",
+		EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left));
     }
     else {
 	Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", j+1);
@@ -433,7 +430,8 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 
     if (!isNull(cl)) {
 	l = Rstrlen(CHAR(STRING(cl)[j]));
-	Rprintf("%*s%s%*s", R_print.gap, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left), w-l, "");
+	Rprintf("%*s%s%*s", R_print.gap, "",
+		EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left), w-l, "");
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
@@ -446,8 +444,8 @@ void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
 
     if (!isNull(rl)) {
 	l = Rstrlen(CHAR(STRING(rl)[i]));
-	Rprintf("\n%*s%s%*s", lbloff, "", 
-		EncodeString(CHAR(STRING(rl)[i]), l, 0, adj_left), 
+	Rprintf("\n%*s%s%*s", lbloff, "",
+		EncodeString(CHAR(STRING(rl)[i]), l, 0, adj_left),
 		rlabw-l-lbloff, "");
     }
     else {

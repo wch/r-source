@@ -298,7 +298,8 @@ static void printNamedRealVector(double * x, int n, SEXP * names)
     for (i = 0; i < nlines; i++) {
 	if (i) Rprintf("\n");
 	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++) {
-	    Rprintf("%s%*s", EncodeString(CHAR(names[k]), w, 0, adj_right), R_print.gap, "");
+	    Rprintf("%s%*s", EncodeString(CHAR(names[k]), w, 0, adj_right),
+		    R_print.gap, "");
 	}
 	Rprintf("\n");
 	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++)
