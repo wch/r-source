@@ -152,7 +152,7 @@ as.data.frame.complex <- .Alias(as.data.frame.vector)
 as.data.frame.character <- function(x, row.names = NULL, optional = FALSE)
     as.data.frame.vector(factor(x), row.names, optional)
 
-as.data.frame.logical <- .Alias(as.data.frame.character)
+as.data.frame.logical <- .Alias(as.data.frame.vector)
 
 as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
 {

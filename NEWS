@@ -87,6 +87,13 @@ NEW FEATURES
         list of expressions (to avoid both ambiguities with function
         arguments and bad errors from expressions such as while(y = 0)...)
 
+    o   data.frame() now longer converts logical arguments to factors
+	(following S4 rather than S3).  
+
+    o   model.matrix() treats logical variables as a factors with 
+	levels c(FALSE, TRUE) (rather than 0-1 valued numerical
+	variables.)  This makes R compatible with all S versions.
+
 
 
 BUG FIXES

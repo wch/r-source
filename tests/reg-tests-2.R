@@ -178,6 +178,28 @@ format(a)
 format(a, justify="right")
 ## lost dimensions in 1.2.3
 
+
 ## PR 963
 svd(rbind(1:7))## $v lost dimensions in 1.2.3
+
+
+## some tests that R supports logical variables in formula
+## it coerced them to numeric prior to 1.4.0
+## they should appear like 2-level factors, following S
+
+oldCon <- options("contrasts")
+y <- rnorm(10)
+x <- rep(c(T,F), 5)
+model.matrix(y ~ x)
+lm(y ~ x)
+DF <- data.frame(x, y)
+lm(y ~ x, data=DF)
+options(contrasts=c("contr.helmert", "contr.tratment"))
+model.matrix(y ~ x)
+lm(y ~ x, data=DF)
+z <- 1:10
+lm(y ~ x*z)
+lm(y ~ x*z - 1)
+options(oldCon)
+
 

@@ -284,7 +284,7 @@ model.matrix.default <- function(formula, data = environment(formula),
 	data <- data[,reorder, drop=FALSE]
     }
     contr.funs <- as.character(getOption("contrasts"))
-    isF <- sapply(data, is.factor)[-1]
+    isF <- sapply(data, function(x) is.factor(x) || is.logical(x) )[-1]
     isOF <- sapply(data, is.ordered)
     namD <- names(data)
     for(nn in namD[-1][isF]) # drop response

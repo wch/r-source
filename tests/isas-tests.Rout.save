@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-08-12)
+Version 1.4.0 Under development (unstable) (2001-08-15)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -254,7 +254,17 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: numeric, list"                                             
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
@@ -622,7 +632,17 @@ Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-Error in sort(x) : only atomic vectors can be sorted
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Modes: NULL, list"                                                
+ [5] "Component 1: Lengths: 0, 1"                                                    
+ [6] "Component 1: names for current but not for target"                             
+ [7] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [9] "Component 1: Attributes: < names for current but not for target >"             
+[10] "Component 1: Attributes: < target is NULL, current is list >"                  
+[11] "Component 1: target is NULL, current is data.frame"                            
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
@@ -985,7 +1005,16 @@ Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-Error in sort(x) : only atomic vectors can be sorted
+ [1] "Names: 1 string mismatches"                                                    
+ [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+ [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+ [4] "Component 1: Lengths: 0, 1"                                                    
+ [5] "Component 1: names for current but not for target"                             
+ [6] "Component 1: Attributes: < Modes: NULL, list >"                                
+ [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+ [8] "Component 1: Attributes: < names for current but not for target >"             
+ [9] "Component 1: Attributes: < target is NULL, current is list >"                  
+[10] "Component 1: Length mismatch: comparison on first 0 components"                
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
@@ -1340,7 +1369,15 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
@@ -1689,7 +1726,15 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: numeric, list"                                
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
@@ -2040,7 +2085,15 @@ Error in as.data.frame.default(x) : can't coerce character into a data.frame
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Names: 1 string mismatches"                                       
+[2] "Attributes: < Component 2: 1 string mismatches >"                 
+[3] "Component 1: Modes: character, list"                              
+[4] "Component 1: names for current but not for target"                
+[5] "Component 1: Attributes: < Modes: NULL, list >"                   
+[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
+[7] "Component 1: Attributes: < names for current but not for target >"
+[8] "Component 1: Attributes: < target is NULL, current is list >"     
+[9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
@@ -2390,7 +2443,15 @@ Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Names: 1 string mismatches"                                                    
+[2] "Attributes: < Component 2: 1 string mismatches >"                              
+[3] "Component 1: Names: 1 string mismatches"                                       
+[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
+[5] "Component 1: Attributes: < names for current but not for target >"             
+[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
+[7] "Component 1: Component 1: Modes: numeric, list"                                
+[8] "Component 1: Component 1: names for current but not for target"                
+[9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
@@ -2726,7 +2787,12 @@ Error in as.data.frame.default(x) : can't coerce data.frame into a data.frame
 > f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Names: 1 string mismatches"                                                                 
+[2] "Attributes: < Component 2: 1 string mismatches >"                                           
+[3] "Component 1: Names: 1 string mismatches"                                                    
+[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
 [1] TRUE
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
@@ -2840,6 +2906,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  6.12 1.42 15.16 0 0 
+Time elapsed:  6.38 1.39 7.79 0 0 
 > 
 > 

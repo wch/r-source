@@ -638,7 +638,7 @@ static SEXP EncodeVars(SEXP formula)
 /* Returns 1 if variable ``whichBit'' in ``thisTerm'' */
 /* is to be encoded by contrasts and 2 if it is to be */
 /* encoded by dummy variables.  This is decided using */
-/* the heuristric of Chambers and Heiberger described */
+/* the heuristic of Chambers and Heiberger described */
 /* in Statistical Models in S, Page 38. */
 
 static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
@@ -1254,11 +1254,11 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ( ndots && !isString(dotnames))
 	errorcall(call, "invalid extra variable names");
     
-    /*  check for NULL extra arguments -- moved from interpreted code*/
+    /*  check for NULL extra arguments -- moved from interpreted code */
 
-    nactualdots=0;
-    for (i=0;i<ndots;i++){
-	if (VECTOR_ELT(dots, i)!=R_NilValue) 
+    nactualdots = 0;
+    for (i = 0; i < ndots; i++){
+	if (VECTOR_ELT(dots, i) != R_NilValue) 
 	    nactualdots++;
     }
 
@@ -1271,8 +1271,8 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_VECTOR_ELT(data, i, VECTOR_ELT(variables, i));
 	SET_STRING_ELT(names, i, STRING_ELT(varnames, i));
     }
-    for (i = 0,j=0; i < ndots; i++) {
-	if (VECTOR_ELT(dots, i)==R_NilValue)
+    for (i = 0,j = 0; i < ndots; i++) {
+	if (VECTOR_ELT(dots, i) == R_NilValue)
 	    continue;
 	sprintf(buf, "(%s)", CHAR(STRING_ELT(dotnames, i)));
 	SET_VECTOR_ELT(data, nvars + j, VECTOR_ELT(dots, i));
@@ -1572,6 +1572,11 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if (isUnordered(var_i)) {
 	    LOGICAL(ordered)[i] = 0;
 	    INTEGER(nlevs)[i] = nlevels(var_i);
+	    INTEGER(columns)[i] = ncols(var_i);
+	}
+	else if (isLogical(var_i)) {
+	    LOGICAL(ordered)[i] = 0;
+	    INTEGER(nlevs)[i] = 2;
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
 	else if (isNumeric(var_i)) {

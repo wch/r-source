@@ -95,14 +95,17 @@ plot (x, \dots)
   data frame), and not intended to be called directly.
 }
 \details{
-  Non-numeric variables passed to \code{data.frame} are converted to
-  factor columns unless protected by \code{\link{I}}.  This applies to
-  character and logical variables, in particular.  It also applies to
+  Character variables passed to \code{data.frame} are converted to
+  factor columns unless protected by \code{\link{I}}. It also applies to
   adding columns to a data frame.
 
   If a list or data frame or matrix is passed to \code{data.frame}
   it is as if each column had been passed as a separate argument,
   with the exception of matrices of class \code{\link{model.matrix}}.
+}
+\note{
+  In versions of \R prior to 1.4.0 (and in S3) logical columns were
+  converted to factors.
 }
 \seealso{
   \code{\link{read.table}},
