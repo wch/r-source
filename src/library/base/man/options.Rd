@@ -41,6 +41,15 @@ options(\dots)
     printing, see \code{\link{print.coefmat}}.}
 \item{ts.eps}{the relative tolerance for certain time series
   (\code{\link{ts}}) computations.}
+\item{warn}{sets the handling of warning messages. If \code{warn}
+is negative all warnings are ignored. If \code{warn} is zero (the defualt)
+warnings are stored until the  top--level function returns. If fewer than 10
+warnings were signalled they will be printed otherwise a message
+saying how many (max 50) were signalled. A top--level variable called
+\code{last.warning} is created and can be viewed throught the function
+\code{\link{warnings}}. If \code{warn} is one warnings are printed
+as they occur. If \code{warn} is two or larger all warnings are turned
+into errors.}
 }
 \description{
   \code{options} allows the user to set and examine a variety of global
