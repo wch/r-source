@@ -106,10 +106,10 @@ void Rsockopen(int *port)
     *port = enter_sock(Sock_open(*port, NULL));
 }
 
-void Rsocklisten(int *sock,char **buf, int *len)
+void Rsocklisten(int *sockp, char **buf, int *len)
 {
     check_init();
-    *sock = enter_sock(Sock_listen(*sock, *buf , *len, NULL));
+    *sockp = enter_sock(Sock_listen(*sockp, *buf , *len, NULL));
 }
 
 void Rsockconnect(int *port, char **host)
@@ -121,21 +121,21 @@ void Rsockconnect(int *port, char **host)
     *port = enter_sock(Sock_connect(*port, *host, NULL));
 }
 
-void Rsockclose(int *sock )
+void Rsockclose(int *sockp)
 {
-    *sock = close_sock(*sock);
+    *sockp = close_sock(*sockp);
 }
 
-void Rsockread(int *sock, char **buf, int *maxlen)
+void Rsockread(int *sockp, char **buf, int *maxlen)
 {
     check_init();
 #ifdef DEBUG
-    printf("Reading from %d\n",*sock);
+    printf("Reading from %d\n",*sockp);
 #endif
-    *maxlen = (int) Sock_read(*sock, *buf, *maxlen, NULL);
+    *maxlen = (int) Sock_read(*sockp, *buf, *maxlen, NULL);
 }
 
-void Rsockwrite(int *sock, char **buf, int *start, int *end, int *len)
+void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 {
     ssize_t n;
     if (*end > *len)
@@ -148,9 +148,9 @@ void Rsockwrite(int *sock, char **buf, int *start, int *end, int *len)
     }
     check_init();
 #ifdef DEBUG
-    printf("writing %s to %d",*buf,*sock);
+    printf("writing %s to %d",*buf,*sockp);
 #endif
-    n = Sock_write(*sock, *buf + *start, *end - *start, NULL);
+    n = Sock_write(*sockp, *buf + *start, *end - *start, NULL);
     *len = (int) n;
 }
 

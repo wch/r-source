@@ -43,10 +43,10 @@ double DSIGN(double *a, double *b)
 
 double POW_DI(double *ap, int *bp)
 {
-    double pow, x;
+    double po, x;
     int n;
 
-    pow = 1;
+    po = 1;
     x = *ap;
     n = *bp;
 
@@ -57,14 +57,14 @@ double POW_DI(double *ap, int *bp)
 	}
 	for(;;) {
 	    if(n & 01)
-		pow *= x;
+		po *= x;
 	    if(n >>= 1)
 		x *= x;
 	    else
 		break;
 	}
     }
-    return pow;
+    return po;
 }
 
 double POW_DD(double *ap, double *bp)

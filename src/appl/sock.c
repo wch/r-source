@@ -133,7 +133,7 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 {
 #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
   struct sockaddr_in net_client;
-  int len = sizeof(struct sockaddr);
+  size_t len = sizeof(struct sockaddr);
   int retval;
   struct hostent *hostptr;
 
