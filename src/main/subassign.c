@@ -1324,7 +1324,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 		INTEGER(index)[i] = get1index(CAR(subs), isNull(names) ?
 					      R_NilValue : VECTOR_ELT(names, i),
 					      INTEGER(dims)[i],
-					      0);
+					      /*partial ok*/FALSE);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
 		    INTEGER(index)[i] >= INTEGER(dims)[i])
@@ -1488,11 +1488,12 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(index)[i] = get1index(CAR(subs), CAR(names),
-					      INTEGER(dims)[i], 0);
+					      INTEGER(dims)[i],
+					      /*partial ok*/FALSE);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
 		    INTEGER(index)[i] >= INTEGER(dims)[i])
-		    error("[[]] subscript out of bounds");
+		    error("[[]] subscript (%d) out of bounds", i+1);
 	    }
 	    offset = 0;
 	    for (i = (ndims - 1); i > 0; i--)

@@ -44,16 +44,29 @@
 #endif
 
 
-/*  Fundamental Data Types:  These are largely Lisp  */
-/*  influenced structures, with the exception of LGLSXP,  */
-/*  INTSXP, REALSXP, CPLXSXP and STRSXP which are the  */
-/*  element types for S-like data objects.  */
+/* Fundamental Data Types:  These are largely Lisp
+ * influenced structures, with the exception of LGLSXP,
+ * INTSXP, REALSXP, CPLXSXP and STRSXP which are the
+ * element types for S-like data objects.
 
-/*  Note that the gap of 11 and 12 below is because of	*/
-/*  the withdrawal of native "factor" and "ordered" types.  */
+ * Note that the gap of 11 and 12 below is because of
+ * the withdrawal of native "factor" and "ordered" types.
+ *
+ *			--> TypeTable[] in ../main/util.c for  typeof()
+ */
 
-/*			--> TypeTable[] in ../main/util.c for  typeof() */
-
+/*  These exaxt numeric values are seldom used, but they are, e.g., in
+ *  ../main/subassign.c
+*/
+#ifndef enum_SEXPTYPE
+/* NOT YET using enum:
+ *  1)	The SEXPREC struct below has 'SEXPTYPE type : 5'
+ *	(making FUNSXP and CLOSXP equivalent in there),
+ *	giving (-Wall only ?) warnings all over the place
+ * 2)	Many switch(type) { case ... } statements need a final `default:'
+ *	added in order to avoid warnings like [e.g. l.170 of ../main/util.c]
+ *	  "enumeration value `FUNSXP' not handled in switch"
+ */
 typedef unsigned int SEXPTYPE;
 
 #define NILSXP	     0	  /* nil = NULL */
@@ -78,6 +91,33 @@ typedef unsigned int SEXPTYPE;
 
 #define FUNSXP      99    /* Closure or Builtin */
 
+#else /* NOT YET */
+/*------ enum_SEXPTYPE ----- */
+typedef enum {
+    NILSXP	= 0,	/* nil = NULL */
+    SYMSXP	= 1,	/* symbols */
+    LISTSXP	= 2,	/* lists of dotted pairs */
+    CLOSXP	= 3,	/* closures */
+    ENVSXP	= 4,	/* environments */
+    PROMSXP	= 5,	/* promises: [un]evaluated closure arguments */
+    LANGSXP	= 6,	/* language constructs (special lists) */
+    SPECIALSXP	= 7,	/* special forms */
+    BUILTINSXP	= 8,	/* builtin non-special forms */
+    CHARSXP	= 9,	/* "scalar" string type (internal only)*/
+    LGLSXP	= 10,	/* logical vectors */
+    INTSXP	= 13,	/* integer vectors */
+    REALSXP	= 14,	/* real variables */
+    CPLXSXP	= 15,	/* complex variables */
+    STRSXP	= 16,	/* string vectors */
+    DOTSXP	= 17,	/* dot-dot-dot object */
+    ANYSXP	= 18,	/* make "any" args work */
+    VECSXP	= 19,	/* generic vectors */
+    EXPRSXP	= 20,	/* expressions vectors */
+
+    FUNSXP	= 99	/* Closure or Builtin */
+} SEXPTYPE;
+#endif
+
 #define USE_GENERATIONAL_GC
 
 #ifdef USE_GENERATIONAL_GC
@@ -89,7 +129,10 @@ typedef struct SEXPREC {
 
     /* Flags */
     struct {
-	SEXPTYPE type	   :  5;
+	SEXPTYPE type	   :  5;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
+				 * -> warning: `type' is narrower than values
+				 *              of its type
+				 * when SEXPTYPE was an enum */
 	unsigned int obj   :  1;
 	unsigned int named :  2;
 	unsigned int gp	   : 16;
@@ -99,7 +142,7 @@ typedef struct SEXPREC {
 	unsigned int fin   :  1;  /* has finalizer installed */
 	unsigned int gcgen :  1;  /* old generation number */
 	unsigned int gccls :  3;  /* node class */
-    } sxpinfo;
+    } sxpinfo; /*	Tot: 32 */
 
     /* Attributes */
     struct SEXPREC *attrib;
@@ -112,7 +155,7 @@ typedef struct SEXPREC {
 		char		*c;
 		int		*i;
 		double		*f;
-		Rcomplex		*z;
+		Rcomplex	*z;
 		struct SEXPREC	**s;
 	    } type;
 	    int	truelength;
@@ -440,6 +483,7 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define nthcdr			Rf_nthcdr
 #define PairToVectorList	Rf_PairToVectorList
 #define pmatch			Rf_pmatch
+#define psmatch			Rf_psmatch
 #define PrintDefaults		Rf_PrintDefaults
 #define PrintValue		Rf_PrintValue
 #define PrintValueEnv		Rf_PrintValueEnv
@@ -519,8 +563,8 @@ SEXP arraySubscript(int, SEXP, SEXP);
 SEXP classgets(SEXP, SEXP);
 int conformable(SEXP, SEXP);
 SEXP cons(SEXP, SEXP);
-void copyListMatrix(SEXP, SEXP, int);
-void copyMatrix(SEXP, SEXP, int);
+void copyListMatrix(SEXP, SEXP, Rboolean);
+void copyMatrix(SEXP, SEXP, Rboolean);
 void copyMostAttrib(SEXP, SEXP);
 void copyVector(SEXP, SEXP);
 SEXP CreateTag(SEXP);
@@ -608,9 +652,10 @@ SEXP namesgets(SEXP, SEXP);
 int ncols(SEXP);
 int nrows(SEXP);
 int nlevels(SEXP);
-int NonNullStringMatch(SEXP, SEXP);
+Rboolean NonNullStringMatch(SEXP, SEXP);
 SEXP nthcdr(SEXP, int);
-int pmatch(SEXP, SEXP, int);
+Rboolean psmatch(char *, char *, Rboolean);
+Rboolean pmatch(SEXP, SEXP, Rboolean);
 void PrintDefaults(SEXP);
 void PrintValue(SEXP);
 void PrintValueEnv(SEXP, SEXP);

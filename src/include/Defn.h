@@ -30,8 +30,8 @@
    through the appropriate functions or macros will become compiler
    errors.  Since this does impose a small but noticable performance
    penalty, code that includes Defs.h (or code that explicitly defines
-   USE_RINTERNALS) can access SEXPREC's fielrd directly. */
- 
+   USE_RINTERNALS) can access SEXPREC's field directly. */
+
 #ifndef TESTING_WRITE_BARRIER
 # define USE_RINTERNALS
 #endif
@@ -264,20 +264,24 @@ RES   0 0 1 1 1 0  = 28
 #define streql(s, t)	(!strcmp((s), (t)))
 
 /* Arithmetic and Relation Operators */
-#define	PLUSOP	1
-#define	MINUSOP	2
-#define	TIMESOP	3
-#define	DIVOP	4
-#define	POWOP	5
-#define	MODOP	6
-#define IDIVOP	7
+typedef enum {
+    PLUSOP = 1,
+    MINUSOP,
+    TIMESOP,
+    DIVOP,
+    POWOP,
+    MODOP,
+    IDIVOP
+} ARITHOP_TYPE;
 
-#define	EQOP	1
-#define	NEOP	2
-#define	LTOP	3
-#define	LEOP	4
-#define	GEOP	5
-#define	GTOP	6
+typedef enum {
+    EQOP = 1,
+    NEOP,
+    LTOP,
+    LEOP,
+    GEOP,
+    GTOP
+} RELOP_TYPE;
 
 /* File Handling */
 /*
@@ -294,15 +298,15 @@ RES   0 0 1 1 1 0  = 28
 #define R_MAGIC_ASCII_VERSION16	 1972
 
 /* Startup Actions */
-
-#define SA_NORESTORE 0
-#define SA_RESTORE   1
-
-#define SA_DEFAULT   1
-#define SA_NOSAVE    2
-#define SA_SAVE	     3
-#define SA_SAVEASK   4
-#define SA_SUICIDE   5
+typedef enum {
+    SA_NORESTORE,/* = 0 */
+    SA_RESTORE,
+    SA_DEFAULT,
+    SA_NOSAVE,
+    SA_SAVE,
+    SA_SAVEASK,
+    SA_SUICIDE
+} SA_TYPE;
 
 
 /*--- Global Variables ---------------------------------------------------- */
@@ -370,10 +374,10 @@ extern int	R_Expressions	INI_as(500);	/* options(expressions) */
 extern int	R_KeepSource	INI_as(0);	/* options(keep.source) */
 
 /* File Input/Output */
-extern int	R_Interactive	INI_as(1);	/* Non-zero during interactive use */
-extern int	R_Quiet		INI_as(0);	/* Be as quiet as possible */
-extern int	R_Slave		INI_as(0);	/* Run as a slave process */
-extern int	R_Verbose	INI_as(0);	/* Be verbose */
+extern Rboolean	R_Interactive	INI_as(TRUE);	/* TRUE during interactive use*/
+extern Rboolean	R_Quiet		INI_as(FALSE);	/* Be as quiet as possible */
+extern Rboolean	R_Slave		INI_as(FALSE);	/* Run as a slave process */
+extern Rboolean	R_Verbose	INI_as(FALSE);	/* Be verbose */
 /* extern int	R_Console; */	    /* Console active flag */
 /* IoBuffer R_ConsoleIob; : --> ./IOStuff.h */
 extern FILE*	R_Inputfile	INI_as(NULL);	/* Current input flag */
@@ -535,8 +539,8 @@ void CheckFormals(SEXP);
 void CleanEd(void);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
-SEXP deparse1(SEXP,int);
-SEXP deparse1line(SEXP,int);
+SEXP deparse1(SEXP,Rboolean);
+SEXP deparse1line(SEXP,Rboolean);
 int DispatchOrEval(SEXP, SEXP, SEXP, SEXP, SEXP*, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP DropDims(SEXP);
@@ -552,7 +556,7 @@ SEXP findVarLocInFrame(SEXP, SEXP);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
-int get1index(SEXP, SEXP, int, int);
+int get1index(SEXP, SEXP, int, Rboolean);
 SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
 int hashpjw(char*);

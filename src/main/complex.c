@@ -34,7 +34,7 @@
 
 static int naflag;
 
-SEXP complex_unary(int code, SEXP s1)
+SEXP complex_unary(ARITHOP_TYPE code, SEXP s1)
 {
     int i, n;
     Rcomplex x;
@@ -133,7 +133,7 @@ static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
 
 /* FIXME : Use the trick in arithmetic.c to eliminate "modulo" ops */
 
-SEXP complex_binary(int code, SEXP s1, SEXP s2)
+SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i, n, n1, n2;
     Rcomplex x1, x2;
