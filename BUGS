@@ -203,10 +203,10 @@ none
 
 Directory:  incoming
 
-* PR# 554 *
-Subject: Random number generation problem
-From: kjetikj@astro.uio.no
-Date: Tue, 23 May 2000 20:33:28 +0200 (MET DST)
+* PR# 555 *
+Subject: diag()
+From: davidD@qimr.edu.au
+Date: Thu, 25 May 2000 03:39:34 +0200 (MET DST)
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
@@ -219,6 +219,10 @@ Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
 Subject: Segmentation Fault of unknown cause
 From: kjetikj@astro.uio.no
 Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
+* PR# 554 *
+Subject: Random number generation problem
+From: kjetikj@astro.uio.no
+Date: Tue, 23 May 2000 20:33:28 +0200 (MET DST)
 * PR# 553 *
 Subject: text() with large cex parameter crashes X11()
 From: Martyn Plummer <plummer@iarc.fr>
