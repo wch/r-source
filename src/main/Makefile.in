@@ -150,11 +150,13 @@ gram.c: $(srcdir)/gram.y
 
 mostlyclean: clean
 clean:
-	@echo "Cleaning in $(subdir)"
+	@echo "cleaning in $(subdir)"
 	@-rm -f R.binary R.X11 R.GNOME R-Image *core Makedeps *.d *.o
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
+	@echo "This command is intended for maintainers to use; it"
+	@echo "deletes files that may need special rules to rebuild"
 	@rm -f gram.c
 
 tags: *.h *.c

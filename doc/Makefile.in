@@ -40,7 +40,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual
 	@$(MKINSTALLDIRS) $(rhome)/doc/html/search
 install-html:
-	@echo "Installing doc ..."
+	@echo "installing doc ..."
 	@for f in $(srcdir)/html/*.html \
 	          $(srcdir)/html/*.jpg \
 	          $(srcdir)/html/*.css; do \
@@ -60,7 +60,7 @@ install-man:
 	@$(INSTALL_DATA) $(srcdir)/R.1 $(mandir)/man1
 install-strip: install
 uninstall:
-	@echo "Uninstalling doc ..."
+	@echo "uninstalling doc ..."
 	@if test -d $(rhome)/doc -a \
 	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
 	  (cd $(rhome)/doc && \
@@ -86,6 +86,8 @@ distclean: clean
 	@(cd manual && $(MAKE) $@)
 	@rm -f Makefile
 maintainer-clean: distclean
+	@echo "This command is intended for maintainers to use; it"
+	@echo "deletes files that may need special rules to rebuild"
 	@rm -f R.1
 
 maintainer-build: $(srcdir)/R.1

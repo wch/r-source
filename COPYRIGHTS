@@ -67,9 +67,13 @@ src/unix/rotated.[ch]
 	Copyright (c) 1993 Alan Richardson
 
 
-src/appl/chisqsim.c, loglin.c
-src/library/ts/src/starma.f
+src/appl/chisqsim.c
+src/appl/loglin.c
+src/library/ctest/src/nscor.c
+src/library/ctest/src/prho.f
+src/library/ctest/src/swilk.c
 src/library/mva/src/kmns.f
+src/library/ts/src/starma.f
 src/nmath/pgamma.c
 src/nmath/pnbeta.c
 src/nmath/pnchisq.c
@@ -83,15 +87,13 @@ src/nmath/sunif.c
   (C) Royal Statistical Society
 
 
-src/library/ctest/src/nscor.c
-src/library/ctest/src/prho.f
-src/library/ctest/src/swilk.c
-  are based in whole or in part on Applied Statistics algorithms
-  (C) Royal Statistical Society
-
-
-src/gnome/devGNOME.c, devGTK.c, gdkrotated.c, gnome-find-dialog.c,
-   gtkconsole.c, system-*.c, terminal*.c
+src/gnome/devGNOME.c
+src/gnome/devGTK.c
+src/gnome/gdkrotated.c
+src/gnome/gnome-find-dialog.c
+src/gnome/gtkconsole.c
+src/gnome/system-*.c
+src/gnome/terminal*.c
 
 	Copyright (C) 1998-1999   Lyndon Drake
 		and the R Development Core Team

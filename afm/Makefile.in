@@ -34,7 +34,7 @@ R:
 	fi
 
 install: installdirs
-	@echo "Installing afm ..."
+	@echo "installing afm ..."
 	@for f in `ls $(srcdir)/*.afm $(srcdir)/*.lt1`; \
 	  do $(INSTALL_DATA) $$f $(rhome)/afm; \
 	done
@@ -42,7 +42,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/afm
 install-strip: install
 uninstall:
-	@echo "Uninstalling afm ..."
+	@echo "uninstalling afm ..."
 	@rm -rf $(rhome)/afm
 
 mostlyclean:

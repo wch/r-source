@@ -29,7 +29,7 @@ R:
 docs:
 
 install: installdirs
-	@echo "Installing demos ..."
+	@echo "installing demos ..."
 	@for f in `ls $(srcdir)/dynload | sed '/CVS/d'`; do \
 	  $(INSTALL_DATA) $(srcdir)/dynload/$$f $(rhome)/demos/dynload; \
 	done
@@ -54,7 +54,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos/nlm
 install-strip: install
 uninstall:
-	@echo "Uninstalling demos ..."
+	@echo "uninstalling demos ..."
 	@rm -rf $(rhome)/demos
 
 mostlyclean:

@@ -84,7 +84,7 @@ $(LIB): $(OBJECTS)
 
 mostlyclean: clean
 clean:
-	@echo "Cleaning in $(subdir)"
+	@echo "cleaning in $(subdir)"
 	@-rm -f Makedeps *.d *.o *.a
 distclean: clean
 	@-rm -f Makefile

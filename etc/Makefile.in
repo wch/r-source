@@ -38,7 +38,7 @@ R:
 	fi
 
 install: installdirs install-perl install-gnome
-	@echo "Installing etc ..."
+	@echo "installing etc ..."
 	@$(INSTALL_DATA) Makeconf $(EXPORTFILE) \
 	  $(rhome)/etc
 installdirs:
@@ -55,7 +55,7 @@ install-gnome:
 	fi
 install-strip: install
 uninstall:
-	@echo "Uninstalling etc ..."
+	@echo "uninstalling etc ..."
 	@if test -d $(rhome)/etc -a \
 	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
 	  (cd $(rhome)/etc && \

@@ -177,7 +177,7 @@ install-info: info $(infodir)/dir
 	@echo "updating \`$(infodir)/dir' ..."
 	@for f in $(OBJECTS_INFO); do \
 	  $(INSTALL_INFO) --info-dir=$(infodir) $(infodir)/$${f} \
-	    || echo "You need to adjust $(infodir)/dir manually"; \
+	    || echo "you need to adjust $(infodir)/dir manually"; \
 	done
 install-pdf: pdf installdirs
 	@echo "installing R manuals in PDF format ..."
@@ -205,7 +205,7 @@ uninstall-info:
 	@echo "uninstalling R info pages ..."
 	@for f in $(OBJECTS_INFO); do \
 	  $(INSTALL_INFO) --remove --info-dir=$(infodir) $${f} \
-	    || echo "You need to adjust $(infodir)/dir manually"; \
+	    || echo "you need to adjust $(infodir)/dir manually"; \
 	done
 	@for f in $(OBJECTS_INFO:.info=.info*); do \
 	  rm -f $(infodir)/$${f}; \
