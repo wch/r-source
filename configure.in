@@ -580,7 +580,7 @@ case "${host_os}" in
   darwin*)
     ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
     ## http://fink.sourceforge.net/doc/porting/basics.php.
-    R_XTRA_CPPFLAGS="${R_XTRA_CFLAGS} -no-cpp-precomp"
+    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -no-cpp-precomp"
     ;;
   hpux*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
