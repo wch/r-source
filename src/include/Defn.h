@@ -128,18 +128,6 @@ typedef struct {
 #define PPINFO(x)	(R_FunTab[(x)->u.primsxp.offset].gram)
 #define PRIMPRINT(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)/100)%10)
 
-/* Symbol Access Macros */
-#define PRINTNAME(x)	((x)->u.symsxp.pname)
-#define SYMVALUE(x)	((x)->u.symsxp.value)
-#define INTERNAL(x)	((x)->u.symsxp.internal)
-#define DDVAL(x)	((x)->sxpinfo.gp) /* for ..1, ..2 etc */
-
-/* Environment Access Macros */
-#define FRAME(x)	((x)->u.envsxp.frame)
-#define ENCLOS(x)	((x)->u.envsxp.enclos)
-#define HASHTAB(x)	((x)->u.envsxp.hashtab)
-#define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
-
 /* Promise Access Macros */
 #define PREXPR(x)	((x)->u.promsxp.expr)
 #define PRENV(x)	((x)->u.promsxp.env)

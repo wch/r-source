@@ -193,6 +193,18 @@ typedef struct SEXPREC {
 #define DEBUG(x)	((x)->sxpinfo.debug)
 #define TRACE(x)	((x)->sxpinfo.trace)
 
+/* Symbol Access Macros */
+#define PRINTNAME(x)	((x)->u.symsxp.pname)
+#define SYMVALUE(x)	((x)->u.symsxp.value)
+#define INTERNAL(x)	((x)->u.symsxp.internal)
+#define DDVAL(x)	((x)->sxpinfo.gp) /* for ..1, ..2 etc */
+
+/* Environment Access Macros */
+#define FRAME(x)	((x)->u.envsxp.frame)
+#define ENCLOS(x)	((x)->u.envsxp.enclos)
+#define HASHTAB(x)	((x)->u.envsxp.hashtab)
+#define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
+
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	protect(s)
 #define UNPROTECT(n)	unprotect(n)
