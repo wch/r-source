@@ -20,7 +20,7 @@ CC=
 # Use this to specify CFLAGS for the version of the C compiler
 # specified above.  If no compiler is specified then this
 # is ignored.
-CFLAGS="-O -g"
+CFLAGS="-g"
 
 # The command which runs the the Fortran compiler.
 # By default a C only version of R is built, but you can have

@@ -48,7 +48,7 @@ fi
 case $host in
 *hpux*) LIBS="-L/lib/pa1.1 $LIBS"
 	case ${CC} in
-	c89) CFLAGS="-Ae ${CFLAGS}" ;;
+	c89) CFLAGS="-D_HPUX_SOURCE ${CFLAGS}" ;;
 	esac
 esac
 
@@ -184,6 +184,8 @@ AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(strtod strtol isnan matherr times)
 AC_CHECK_FUNCS(rint)
+AC_CHECK_FUNCS(asinh acosh atanh)
+AC_CHECK_FUNCS(regcomp)
 AC_CHECK_FUNCS(memmove memcpy bcopy)
 
 
@@ -358,9 +360,9 @@ fi
 
 AC_PATH_PROG(PERL, perl)
 
-if test -x $PERL 
+if test -n "$PERL"
 then
-    AC_MSG_CHECKING(wether perl is perl 5)
+    AC_MSG_CHECKING(whether perl is perl 5)
     PERL_VERSION_NUMBER=`perl -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
     if test $PERL_VERSION_NUMBER -ge 5
     then
