@@ -61,13 +61,6 @@ help.start(update = TRUE, gui = "irrelevant",
 #endif
 }
 
-#ifdef unix
-\note{
-  As a side-effect, the variable \code{"help.start.has.been.run"} in the
-  environment \code{"package:base"} is set to true.
-}
-#endif
-
 \seealso{
   \code{\link{help}()} for on- and off-line help in ASCII/Editor or
   PostScript format.
