@@ -999,10 +999,6 @@ EOF
     AC_MSG_RESULT([no])
   fi
 ])
-
-
-
-
 dnl Usage:
 dnl AM_INIT_AUTOMAKE(package,version, [no-define])
 
@@ -1048,7 +1044,79 @@ fi
 AC_SUBST($1)])
 
 
-
+
+dnl Local Variables: ***
+dnl mode: sh ***
+dnl sh-indentation: 2 ***
+dnl End: ***
+dnl
+dnl GNOME_GNORBA_HOOK (script-if-gnorba-found, failflag)
+dnl
+dnl if failflag is "failure" it aborts if gnorba is not found.
+dnl
+
+AC_DEFUN([GNOME_GNORBA_HOOK],[
+	GNOME_ORBIT_HOOK([],$2)
+	AC_CACHE_CHECK([for gnorba libraries],gnome_cv_gnorba_found,[
+		gnome_cv_gnorba_found=no
+		if test x$gnome_cv_orbit_found = xyes; then
+			GNORBA_CFLAGS="`gnome-config --cflags gnorba gnomeui`"
+			GNORBA_LIBS="`gnome-config --libs gnorba gnomeui`"
+			if test -n "$GNORBA_LIBS"; then
+				gnome_cv_gnorba_found=yes
+			fi
+		fi
+	])
+	AM_CONDITIONAL(HAVE_GNORBA, test x$gnome_cv_gnorba_found = xyes)
+	if test x$gnome_cv_orbit_found = xyes; then
+		$1
+		GNORBA_CFLAGS="`gnome-config --cflags gnorba gnomeui`"
+		GNORBA_LIBS="`gnome-config --libs gnorba gnomeui`"
+		AC_SUBST(GNORBA_CFLAGS)
+		AC_SUBST(GNORBA_LIBS)
+	else
+	    	if test x$2 = xfailure; then
+			AC_MSG_ERROR(gnorba library not installed or installation problem)
+	    	fi
+	fi
+])
+
+AC_DEFUN([GNOME_GNORBA_CHECK], [
+	GNOME_GNORBA_HOOK([],failure)
+])
+dnl
+dnl GNOME_ORBIT_HOOK (script-if-orbit-found, failflag)
+dnl
+dnl if failflag is "failure" it aborts if orbit is not found.
+dnl
+
+AC_DEFUN([GNOME_ORBIT_HOOK],[
+	AC_PATH_PROG(ORBIT_CONFIG,orbit-config,no)
+	AC_PATH_PROG(ORBIT_IDL,orbit-idl,no)
+	AC_CACHE_CHECK([for working ORBit environment],gnome_cv_orbit_found,[
+		if test x$ORBIT_CONFIG = xno -o x$ORBIT_IDL = xno; then
+			gnome_cv_orbit_found=no
+		else
+			gnome_cv_orbit_found=yes
+		fi
+	])
+	AM_CONDITIONAL(HAVE_ORBIT, test x$gnome_cv_orbit_found = xyes)
+	if test x$gnome_cv_orbit_found = xyes; then
+		$1
+		ORBIT_CFLAGS=`orbit-config --cflags client server`
+		ORBIT_LIBS=`orbit-config --use-service=name --libs client server`
+		AC_SUBST(ORBIT_CFLAGS)
+		AC_SUBST(ORBIT_LIBS)
+	else
+    		if test x$2 = xfailure; then
+			AC_MSG_ERROR(ORBit not installed or installation problem)
+    		fi
+	fi
+])
+
+AC_DEFUN([GNOME_ORBIT_CHECK], [
+	GNOME_ORBIT_HOOK([],failure)
+])
 dnl
 dnl GNOME_INIT_HOOK (script-if-gnome-enabled, [failflag], [additional-inits])
 dnl
@@ -1155,83 +1223,6 @@ dnl
 AC_DEFUN([GNOME_INIT],[
 	GNOME_INIT_HOOK([],fail,$1)
 ])
-
-
-
-dnl
-dnl GNOME_GNORBA_HOOK (script-if-gnorba-found, failflag)
-dnl
-dnl if failflag is "failure" it aborts if gnorba is not found.
-dnl
-
-AC_DEFUN([GNOME_GNORBA_HOOK],[
-	GNOME_ORBIT_HOOK([],$2)
-	AC_CACHE_CHECK([for gnorba libraries],gnome_cv_gnorba_found,[
-		gnome_cv_gnorba_found=no
-		if test x$gnome_cv_orbit_found = xyes; then
-			GNORBA_CFLAGS="`gnome-config --cflags gnorba gnomeui`"
-			GNORBA_LIBS="`gnome-config --libs gnorba gnomeui`"
-			if test -n "$GNORBA_LIBS"; then
-				gnome_cv_gnorba_found=yes
-			fi
-		fi
-	])
-	AM_CONDITIONAL(HAVE_GNORBA, test x$gnome_cv_gnorba_found = xyes)
-	if test x$gnome_cv_orbit_found = xyes; then
-		$1
-		GNORBA_CFLAGS="`gnome-config --cflags gnorba gnomeui`"
-		GNORBA_LIBS="`gnome-config --libs gnorba gnomeui`"
-		AC_SUBST(GNORBA_CFLAGS)
-		AC_SUBST(GNORBA_LIBS)
-	else
-	    	if test x$2 = xfailure; then
-			AC_MSG_ERROR(gnorba library not installed or installation problem)
-	    	fi
-	fi
-])
-
-AC_DEFUN([GNOME_GNORBA_CHECK], [
-	GNOME_GNORBA_HOOK([],failure)
-])
-
-
-
-dnl
-dnl GNOME_ORBIT_HOOK (script-if-orbit-found, failflag)
-dnl
-dnl if failflag is "failure" it aborts if orbit is not found.
-dnl
-
-AC_DEFUN([GNOME_ORBIT_HOOK],[
-	AC_PATH_PROG(ORBIT_CONFIG,orbit-config,no)
-	AC_PATH_PROG(ORBIT_IDL,orbit-idl,no)
-	AC_CACHE_CHECK([for working ORBit environment],gnome_cv_orbit_found,[
-		if test x$ORBIT_CONFIG = xno -o x$ORBIT_IDL = xno; then
-			gnome_cv_orbit_found=no
-		else
-			gnome_cv_orbit_found=yes
-		fi
-	])
-	AM_CONDITIONAL(HAVE_ORBIT, test x$gnome_cv_orbit_found = xyes)
-	if test x$gnome_cv_orbit_found = xyes; then
-		$1
-		ORBIT_CFLAGS=`orbit-config --cflags client server`
-		ORBIT_LIBS=`orbit-config --use-service=name --libs client server`
-		AC_SUBST(ORBIT_CFLAGS)
-		AC_SUBST(ORBIT_LIBS)
-	else
-    		if test x$2 = xfailure; then
-			AC_MSG_ERROR(ORBit not installed or installation problem)
-    		fi
-	fi
-])
-
-AC_DEFUN([GNOME_ORBIT_CHECK], [
-	GNOME_ORBIT_HOOK([],failure)
-])
-
-
-
 # a macro to get the libs/cflags for libglade
 # serial 1
 
@@ -1256,6 +1247,9 @@ for module in . $3; do
     bonobo)
       module_args="$module_args bonobo"
       ;;
+    gnomedb)
+      module_args="$module_args gnomedb"
+      ;;
   esac
 done
 
@@ -1279,8 +1273,6 @@ fi
 AC_SUBST(LIBGLADE_CFLAGS)
 AC_SUBST(LIBGLADE_LIBS)
 ])
-
-
 
 # serial 46 AC_PROG_LIBTOOL
 AC_DEFUN([AC_PROG_LIBTOOL],
@@ -4523,11 +4515,6 @@ AC_DEFUN([AM_PROG_NM],        [AC_PROG_NM])
 
 # This is just to silence aclocal about the macro not being used
 ifelse([AC_DISABLE_FAST_INSTALL])
-
-dnl Local Variables: ***
-dnl mode: sh ***
-dnl sh-indentation: 2 ***
-dnl End: ***
 
 # Define a conditional.
 
