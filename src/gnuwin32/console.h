@@ -25,7 +25,8 @@ typedef window dataeditor;
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
 		  int rows, int cols, rgb nfg, rgb nufg, rgb nbg, rgb high,
-		  int pgr, int pgc, int multiplewindows, int widthonresize);
+		  int pgr, int pgc, int multiplewindows, int widthonresize,
+		  int bufbytes, int buflines);
 pager newpager(char *title, char *filename, char *header, int unlinkonexit);
 console newconsole(char *name, int flags);
 int  consolereads(console c, char *prompt, char *buf, int len,

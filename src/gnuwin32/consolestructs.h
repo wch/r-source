@@ -90,7 +90,8 @@ typedef struct structConsoleData *ConsoleData;
 
 #define RSHOW(r) {gbitblt(c, p->bm, topleft(r), r);}
 
-ConsoleData newconsoledata(font f, int rows, int cols,
+ConsoleData newconsoledata(font f, int rows, int cols, 
+    int bufbytes, int buflines,
     rgb fg, rgb ufg, rgb bg, int kind);
 
 void freeConsoleData(ConsoleData p);
@@ -117,6 +118,7 @@ rgb consolebg, consolefg, consoleuser, pagerhighlight;
 #define TABSIZE 8
 
 xbuf newxbuf(xlong dim, xint ms, xint shift);
+void xbufgrow(xbuf p, xlong dim, xint ms);
 void xbufdel(xbuf p);
 void xbufaddc(xbuf p, char c);
     

@@ -292,7 +292,7 @@ static pager pagercreate()
     menuitem m;
 
     p = newconsoledata((consolefn) ? consolefn : FixedFont,
-		       pagerrow, pagercol,
+		       pagerrow, pagercol, 0, 0,
 		       consolefg, consoleuser, consolebg,
 		       PAGER);
     if (!p) return NULL;

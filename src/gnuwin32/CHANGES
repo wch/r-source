@@ -10,7 +10,8 @@ rw1020
 This version has been compiled against msvcrt.dll not crtdll.dll.
 This gives small speed increases and generally more accurate results.
 Packages compiled against crtdll.dll will still work (as far as we are
-aware), but for best results should be re-compiled.
+aware), but for best results should be re-compiled.  (A few packages
+need to be re-compiled for 1.2.0, on all systems.)
 
 
 This release has a number of changes to bring its behaviour closer to that 
@@ -41,9 +42,6 @@ of Unix versions of R.
     environment, although this is not usually supported by Windows,
     and setting individual LC_* such as LC_COLLATE will also work.)
 
--   make check no longer makes R, just runs the tests (as make test
-    always has).  Tests are run in the C locale.
-
 -   It is possible to make DVI and HTML versions of the manuals: 
     see file INSTALL in the source distribution.
 
@@ -56,8 +54,11 @@ of Unix versions of R.
 -   The startup code looks for .Renviron, a file pointed tp by
     environment variable R_ENVIRON and then .Renviron in the home
     directory.  This file can contain lines line NAME=value but also
-    NAME=${NAME1:-value} to take the value of NAME1 if set (and not
+    NAME=${NAME1-value} to take the value of NAME1 if set (and not
     empty), otherwise `value'.
+
+-   make check no longer makes R, just runs the tests (as make test
+    always has).  Tests are run in the C locale.
 
 
 Gui changes
@@ -91,6 +92,10 @@ Gui changes
 -   The data editor is no longer modal (which seems not to have worked
     properly in the GraphApp toolkit) and this allows its popups to be
     modal.
+
+-   The size of the console scroll buffer can be set in file Rconsole,
+    and resized (upwards) via the GUI preferences editor.
+
 
 
 New utilities for preparing packages
@@ -180,7 +185,7 @@ to find a current installation of R, first from R_HOME if set in the
 environment, then from the PATH (it looks for ...\rw1020\bin).
 
 The GUI console copes much better with receiving output (e.g. from
-tcltk) during input.
+tcltk interactive functions) during input.
 
 
 
