@@ -602,7 +602,7 @@ AC_DEFUN([R_C_IEEE_754],
     AC_EGREP_CPP(yes,
       changequote(<<, >>)dnl
       <<
-#include "conftest.h"
+#include "confdefs.h"
 #if defined(HAVE_FINITE) && defined(HAVE_ISNAN)
   yes
 #endif

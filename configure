@@ -10486,7 +10486,7 @@ else
 #line 10487 "configure"
 #include "confdefs.h"
       
-#include "conftest.h"
+#include "confdefs.h"
 #if defined(HAVE_FINITE) && defined(HAVE_ISNAN)
   yes
 #endif
