@@ -404,8 +404,8 @@ static SEXP labelList;
 
 static
 double distFromEdge(double *xxx, double *yyy, int iii, DevDesc *dd) {
-    return fmin2(fmin2(xxx[iii]-gpptr(dd)->usr[0], gpptr(dd)->usr[1]-xxx[iii]),
-		 fmin2(yyy[iii]-gpptr(dd)->usr[2], gpptr(dd)->usr[3]-yyy[iii]));
+    return fmin2(fmin2(xxx[iii]-Rf_gpptr(dd)->usr[0], Rf_gpptr(dd)->usr[1]-xxx[iii]),
+		 fmin2(yyy[iii]-Rf_gpptr(dd)->usr[2], Rf_gpptr(dd)->usr[3]-yyy[iii]));
 }
 
 static
@@ -928,10 +928,10 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 			    /* find which plot edge we are closest to */
 			    int closest; /* 0 = indx,  1 = indx+range */
 			    double dx1, dx2, dy1, dy2, dmin;
-			    dx1 = fmin2((xxx[indx] - gpptr(dd)->usr[0]),
-					(gpptr(dd)->usr[1] - xxx[indx]));
-			    dx2 = fmin2((gpptr(dd)->usr[1] - xxx[indx+range]),
-					(xxx[indx+range] - gpptr(dd)->usr[0]));
+			    dx1 = fmin2((xxx[indx] - Rf_gpptr(dd)->usr[0]),
+					(Rf_gpptr(dd)->usr[1] - xxx[indx]));
+			    dx2 = fmin2((Rf_gpptr(dd)->usr[1] - xxx[indx+range]),
+					(xxx[indx+range] - Rf_gpptr(dd)->usr[0]));
 			    if (dx1 < dx2) {
 				closest = 0;
 				dmin = dx1;
@@ -939,15 +939,15 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 				closest = 1;
 				dmin = dx2;
 			    }
-			    dy1 = fmin2((yyy[indx] - gpptr(dd)->usr[2]),
-					(gpptr(dd)->usr[3] - yyy[indx]));
+			    dy1 = fmin2((yyy[indx] - Rf_gpptr(dd)->usr[2]),
+					(Rf_gpptr(dd)->usr[3] - yyy[indx]));
 			    if (closest && (dy1 < dmin)) {
 				closest = 0;
 				dmin = dy1;
 			    } else if (dy1 < dmin)
 				dmin = dy1;
-			    dy2 = fmin2((gpptr(dd)->usr[3] - yyy[indx+range]),
-					(yyy[indx+range] - gpptr(dd)->usr[2]));
+			    dy2 = fmin2((Rf_gpptr(dd)->usr[3] - yyy[indx+range]),
+					(yyy[indx+range] - Rf_gpptr(dd)->usr[2]));
 			    if (!closest && (dy2 < dmin))
 				closest = 1;
 
@@ -1130,11 +1130,11 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     ncol = length(col);
     args = CDR(args);
 
-    PROTECT(lty = FixupLty(CAR(args), gpptr(dd)->lty));
+    PROTECT(lty = FixupLty(CAR(args), Rf_gpptr(dd)->lty));
     nlty = length(lty);
     args = CDR(args);
 
-    PROTECT(lwd = FixupLwd(CAR(args), gpptr(dd)->lwd));
+    PROTECT(lwd = FixupLwd(CAR(args), Rf_gpptr(dd)->lwd));
     nlwd = length(lwd);
     args = CDR(args);
 
@@ -1212,24 +1212,24 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Draw the contours -- note the heap release */
 
-    ltysave = gpptr(dd)->lty;
-    colsave = gpptr(dd)->col;
-    lwdsave = gpptr(dd)->lwd;
-    cexsave = gpptr(dd)->cex;
+    ltysave = Rf_gpptr(dd)->lty;
+    colsave = Rf_gpptr(dd)->col;
+    lwdsave = Rf_gpptr(dd)->lwd;
+    cexsave = Rf_gpptr(dd)->cex;
     labelList = PROTECT(R_NilValue);
     GMode(1, dd);
     for (i = 0; i < nc; i++) {/* draw contour for levels[i] */
 	vmax = vmaxget();
-	gpptr(dd)->lty = INTEGER(lty)[i % nlty];
-	if (gpptr(dd)->lty == NA_INTEGER)
-	    gpptr(dd)->lty = ltysave;
-	gpptr(dd)->col = INTEGER(col)[i % ncol];
-	if (gpptr(dd)->col == NA_INTEGER)
-	    gpptr(dd)->col = colsave;
-	gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
-	if (gpptr(dd)->lwd == NA_REAL)
-	    gpptr(dd)->lwd = lwdsave;
-	gpptr(dd)->cex = labcex;
+	Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
+	if (Rf_gpptr(dd)->lty == NA_INTEGER)
+	    Rf_gpptr(dd)->lty = ltysave;
+	Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
+	if (Rf_gpptr(dd)->col == NA_INTEGER)
+	    Rf_gpptr(dd)->col = colsave;
+	Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
+	if (Rf_gpptr(dd)->lwd == NA_REAL)
+	    Rf_gpptr(dd)->lwd = lwdsave;
+	Rf_gpptr(dd)->cex = labcex;
 	contour(x, nx, y, ny, z, REAL(c)[i], labels, i,
 		drawLabels, method-1,
 		vectorFonts, typeface, fontindex, atom, dd);
@@ -1237,10 +1237,10 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     GMode(0, dd);
     vmaxset(vmax0);
-    gpptr(dd)->lty = ltysave;
-    gpptr(dd)->col = colsave;
-    gpptr(dd)->lwd = lwdsave;
-    gpptr(dd)->cex = cexsave;
+    Rf_gpptr(dd)->lty = ltysave;
+    Rf_gpptr(dd)->col = colsave;
+    Rf_gpptr(dd)->lwd = lwdsave;
+    Rf_gpptr(dd)->cex = cexsave;
     UNPROTECT(5);
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
@@ -1432,10 +1432,10 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     for (k = 1; k < nc; k++)
 	if (!R_FINITE(c[k]) || c[k] <= c[k - 1]) goto badlev;
 
-    colsave = gpptr(dd)->col;
-    xpdsave = gpptr(dd)->xpd;
+    colsave = Rf_gpptr(dd)->col;
+    xpdsave = Rf_gpptr(dd)->xpd;
     /* override par("xpd") and force clipping to plot region */
-    gpptr(dd)->xpd = 0;
+    Rf_gpptr(dd)->xpd = 0;
 
     GMode(1, dd);
 
@@ -1457,8 +1457,8 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     GMode(0, dd);
-    gpptr(dd)->col = colsave;
-    gpptr(dd)->xpd = xpdsave;
+    Rf_gpptr(dd)->col = colsave;
+    Rf_gpptr(dd)->xpd = xpdsave;
     R_Visible = 0;
     UNPROTECT(1);
     if (GRecording(call))
@@ -1526,10 +1526,10 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     for (j = 1; j < ny; j++)
 	if (!R_FINITE(y[j]) || y[j] <= y[j - 1]) goto badxy;
 
-    colsave = gpptr(dd)->col;
-    xpdsave = gpptr(dd)->xpd;
+    colsave = Rf_gpptr(dd)->col;
+    xpdsave = Rf_gpptr(dd)->xpd;
     /* override par("xpd") and force clipping to plot region */
-    gpptr(dd)->xpd = 0;
+    Rf_gpptr(dd)->xpd = 0;
 
     GMode(1, dd);
 
@@ -1542,8 +1542,8 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     GMode(0, dd);
-    gpptr(dd)->col = colsave;
-    gpptr(dd)->xpd = xpdsave;
+    Rf_gpptr(dd)->col = colsave;
+    Rf_gpptr(dd)->xpd = xpdsave;
     R_Visible = 0;
     UNPROTECT(1);
     if (GRecording(call))
@@ -1835,11 +1835,11 @@ static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
     Vector3d u0, v0, u1, v1, u2, v2, u3, v3;
     double d[3], e[3];
     int f, i, p0, p1, p2, p3, nearby;
-    int ltysave = gpptr(dd)->lty;
+    int ltysave = Rf_gpptr(dd)->lty;
     if (front)
-	gpptr(dd)->lty = LTY_DOTTED;
+	Rf_gpptr(dd)->lty = LTY_DOTTED;
     else
-	gpptr(dd)->lty = LTY_SOLID;
+	Rf_gpptr(dd)->lty = LTY_SOLID;
     for (f = 0; f < 6; f++) {
         p0 = Face[f][0];
         p1 = Face[f][1];
@@ -1893,7 +1893,7 @@ static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
 		      v0[0]/v0[3], v0[1]/v0[3], USER, dd);
 	}
     }
-    gpptr(dd)->lty = ltysave;
+    Rf_gpptr(dd)->lty = ltysave;
 }
 
 /* PerspAxes:
@@ -2114,8 +2114,8 @@ static void PerspAxes(double *x, double *y, double *z,
     TransVector(u3, VT, v3);
 
     /* to fit in the axis labels */
-    xpdsave = gpptr(dd)->xpd;
-    gpptr(dd)->xpd = 1;
+    xpdsave = Rf_gpptr(dd)->xpd;
+    Rf_gpptr(dd)->xpd = 1;
 
     /* Figure out which X and Y axis to draw */
     if (lowest(v0[1]/v0[3], v1[1]/v1[3], v2[1]/v2[3], v3[1]/v3[3])) {
@@ -2147,7 +2147,7 @@ static void PerspAxes(double *x, double *y, double *z,
 	warning("Axes orientation not calculated");
     PerspAxis(x, y, z, zAxis, 2, nTicks, tickType, zlab, dd);
 
-    gpptr(dd)->xpd = xpdsave;
+    Rf_gpptr(dd)->xpd = xpdsave;
 }
 
 SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -2249,10 +2249,10 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     dd = GNewPlot(GRecording(call));
 
-    PROTECT(col = FixupCol(col, gpptr(dd)->bg));
+    PROTECT(col = FixupCol(col, Rf_gpptr(dd)->bg));
     ncol = LENGTH(col);
     if (ncol < 1) errorcall(call, "invalid col specification");
-    PROTECT(border = FixupCol(border, gpptr(dd)->fg));
+    PROTECT(border = FixupCol(border, Rf_gpptr(dd)->fg));
     if (length(border) < 1) errorcall(call, "invalid border specification");
 
     GSetState(1, dd);
@@ -2260,8 +2260,8 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     RecordGraphicsCall(call);
     ProcessInlinePars(args, dd);
     if (length(border) > 1)
-	gpptr(dd)->fg = INTEGER(border)[0];
-    gpptr(dd)->xlog = gpptr(dd)->ylog = FALSE;
+	Rf_gpptr(dd)->fg = INTEGER(border)[0];
+    Rf_gpptr(dd)->xlog = Rf_gpptr(dd)->ylog = FALSE;
 
     /* Set up the light vector (if any) */
     if (DoLighting)

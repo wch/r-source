@@ -338,15 +338,15 @@ static void SetStyle(STYLE newstyle)
     case STYLE_T:
     case STYLE_D1:
     case STYLE_T1:
-	gpptr(MathDevice)->cex = 1.0 * BaseCex;
+	Rf_gpptr(MathDevice)->cex = 1.0 * BaseCex;
 	break;
     case STYLE_S:
     case STYLE_S1:
-	gpptr(MathDevice)->cex = 0.7 * BaseCex;
+	Rf_gpptr(MathDevice)->cex = 0.7 * BaseCex;
 	break;
     case STYLE_SS:
     case STYLE_SS1:
-	gpptr(MathDevice)->cex = 0.5 * BaseCex;
+	Rf_gpptr(MathDevice)->cex = 0.5 * BaseCex;
 	break;
     default:
 	error("invalid math style encountered");
@@ -572,7 +572,7 @@ static BBOX DrawBBox(BBOX bbox, double xoffset, double yoffset)
     double x[5], y[5];
     CurrentX += xoffset;
     CurrentY += yoffset;
-    gpptr(MathDevice)->col = BoxColor;
+    Rf_gpptr(MathDevice)->col = BoxColor;
     PMoveUp(-bboxDepth(bbox));
     x[4] = x[0] = ConvertedX();
     y[4] = y[0] = ConvertedY();
@@ -587,7 +587,7 @@ static BBOX DrawBBox(BBOX bbox, double xoffset, double yoffset)
     y[3] = ConvertedY();
     GPolyline(5, x, y, INCHES, MathDevice);
     PMoveTo(xsaved, ysaved);
-    gpptr(MathDevice)->col = TextColor;
+    Rf_gpptr(MathDevice)->col = TextColor;
     return bbox;
 }
 #endif
@@ -913,20 +913,20 @@ static FontType CurrentFont = 3;
 #endif
 static FontType GetFont()
 {
-    return gpptr(MathDevice)->font;
+    return Rf_gpptr(MathDevice)->font;
 }
 
 static FontType SetFont(FontType font)
 {
-    FontType prevfont = gpptr(MathDevice)->font;
-    gpptr(MathDevice)->font = font;
+    FontType prevfont = Rf_gpptr(MathDevice)->font;
+    Rf_gpptr(MathDevice)->font = font;
     return prevfont;
 }
 
 static int UsingItalics()
 {
-    return (gpptr(MathDevice)->font == ItalicFont ||
-	    gpptr(MathDevice)->font == BoldItalicFont);
+    return (Rf_gpptr(MathDevice)->font == ItalicFont ||
+	    Rf_gpptr(MathDevice)->font == BoldItalicFont);
 }
 
 static BBOX GlyphBBox(int chr)
@@ -1247,18 +1247,18 @@ static BBOX RenderSlash(int draw)
 #endif
 #ifdef SLASH1
     /* Symbol Magnify Version */
-    double savecex = gpptr(MathDevice)->cex;
+    double savecex = Rf_gpptr(MathDevice)->cex;
     BBOX bbox;
     double height1, height2;
     height1 = bboxHeight(RenderSymbolChar(S_SLASH, 0));
-    gpptr(MathDevice)->cex = 1.2 * gpptr(MathDevice)->cex;
+    Rf_gpptr(MathDevice)->cex = 1.2 * Rf_gpptr(MathDevice)->cex;
     height2 = bboxHeight(RenderSymbolChar(S_SLASH, 0));
     if (draw)
 	PMoveUp(- 0.5 * (height2 - height1));
     bbox = RenderSymbolChar(S_SLASH, draw);
     if (draw)
 	PMoveUp(0.5 * (height2 - height1));
-    gpptr(MathDevice)->cex = savecex;
+    Rf_gpptr(MathDevice)->cex = savecex;
     return bbox;
 #endif
 #ifdef SLASH2
@@ -1835,10 +1835,10 @@ static int DelimCode(SEXP expr, SEXP head)
 static BBOX RenderDelimiter(int delim, int draw)
 {
     BBOX bbox;
-    double savecex = gpptr(MathDevice)->cex;
-    gpptr(MathDevice)->cex = DelimSymbolMag * gpptr(MathDevice)->cex;
+    double savecex = Rf_gpptr(MathDevice)->cex;
+    Rf_gpptr(MathDevice)->cex = DelimSymbolMag * Rf_gpptr(MathDevice)->cex;
     bbox = RenderSymbolChar(delim, draw);
-    gpptr(MathDevice)->cex = savecex;
+    Rf_gpptr(MathDevice)->cex = savecex;
     return bbox;
 }
 
@@ -1849,32 +1849,32 @@ static int GroupAtom(SEXP expr)
 
 static BBOX RenderGroup(SEXP expr, int draw)
 {
-    double cexSaved = gpptr(MathDevice)->cex;
+    double cexSaved = Rf_gpptr(MathDevice)->cex;
     BBOX bbox;
     int code;
     if (length(expr) != 4)
 	errorcall(expr, "invalid group specification");
     bbox = NullBBox();
     code = DelimCode(expr, CADR(expr));
-    gpptr(MathDevice)->cex = DelimSymbolMag * gpptr(MathDevice)->cex;
+    Rf_gpptr(MathDevice)->cex = DelimSymbolMag * Rf_gpptr(MathDevice)->cex;
     if (code == 2) {
 	bbox = RenderSymbolChar('|', draw);
 	bbox = RenderSymbolChar('|', draw);
     }
     else if (code != '.')
 	bbox = RenderSymbolChar(code, draw);
-    gpptr(MathDevice)->cex = cexSaved;
+    Rf_gpptr(MathDevice)->cex = cexSaved;
     bbox = CombineBBoxes(bbox, RenderElement(CADDR(expr), draw));
     bbox = RenderItalicCorr(bbox, draw);
     code = DelimCode(expr, CADDDR(expr));
-    gpptr(MathDevice)->cex = DelimSymbolMag * gpptr(MathDevice)->cex;
+    Rf_gpptr(MathDevice)->cex = DelimSymbolMag * Rf_gpptr(MathDevice)->cex;
     if (code == 2) {
 	bbox = CombineBBoxes(bbox, RenderSymbolChar('|', draw));
 	bbox = CombineBBoxes(bbox, RenderSymbolChar('|', draw));
     }
     else if (code != '.')
 	bbox = CombineBBoxes(bbox, RenderSymbolChar(code, draw));
-    gpptr(MathDevice)->cex = cexSaved;
+    Rf_gpptr(MathDevice)->cex = cexSaved;
     return bbox;
 }
 
@@ -2146,7 +2146,7 @@ static int OpAtom(SEXP expr)
 static BBOX RenderOpSymbol(SEXP op, int draw)
 {
     BBOX bbox;
-    double cexSaved = gpptr(MathDevice)->cex;
+    double cexSaved = Rf_gpptr(MathDevice)->cex;
     /*double savedX = CurrentX;*/
     /*double savedY = CurrentY;*/
     double shift;
@@ -2156,7 +2156,7 @@ static BBOX RenderOpSymbol(SEXP op, int draw)
     if (opId == S_SUM || opId == S_PRODUCT ||
 	opId == S_UNION || opId == S_INTERSECTION) {
 	if (display) {
-	    gpptr(MathDevice)->cex = OperatorSymbolMag * gpptr(MathDevice)->cex;
+	    Rf_gpptr(MathDevice)->cex = OperatorSymbolMag * Rf_gpptr(MathDevice)->cex;
 	    bbox = RenderSymbolChar(OpAtom(op), 0);
 	    shift = 0.5 * (bboxHeight(bbox) - bboxDepth(bbox)) - TeX(sigma22);
 	    if (draw) {
@@ -2164,7 +2164,7 @@ static BBOX RenderOpSymbol(SEXP op, int draw)
 		bbox = RenderSymbolChar(opId, 1);
 		PMoveUp(shift);
 	    }
-	    gpptr(MathDevice)->cex = cexSaved;
+	    Rf_gpptr(MathDevice)->cex = cexSaved;
 	    return ShiftBBox(bbox, -shift);
 	}
 	else return RenderSymbolChar(opId, draw);
@@ -2897,9 +2897,9 @@ void GMathText(double x, double y, int coords, SEXP expr,
 #endif
 
     MathDevice = dd;
-    BaseCex = gpptr(MathDevice)->cex;
+    BaseCex = Rf_gpptr(MathDevice)->cex;
     BoxColor = name2col("pink");
-    TextColor = gpptr(MathDevice)->col;
+    TextColor = Rf_gpptr(MathDevice)->col;
     CurrentStyle = STYLE_D;
     SetFont(PlainFont);
     bbox = RenderElement(expr, 0);
@@ -2941,7 +2941,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 
     MathDevice = dd;
 
-    xadj = gpptr(MathDevice)->adj;
+    xadj = Rf_gpptr(MathDevice)->adj;
 
     /* This is MOSTLY the same as the same section of GMtext
      * BUT it differs because it sets different values for yadj for
@@ -2966,7 +2966,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	}
 	subcoords = USER;
     }
-    /* Note: I changed gpptr(dd)->yLineBias to 0.3 here. */
+    /* Note: I changed Rf_gpptr(dd)->yLineBias to 0.3 here. */
     /* Purely visual tuning. RI */
     /* Note: I removed the 0.3 fiddle here because mathematical
      * annotation stuff can do "exact" centering.
@@ -2979,7 +2979,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	    yadj = 0.5;
 	}
 	else {
-	    line = line + 1 - gpptr(dd)->yLineBias;
+	    line = line + 1 - Rf_gpptr(dd)->yLineBias;
 	    angle = 0;
 	    yadj = NA_REAL;
 	}
@@ -2990,7 +2990,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	    yadj = 0.5;
 	}
 	else {
-	    line = line + gpptr(dd)->yLineBias;
+	    line = line + Rf_gpptr(dd)->yLineBias;
 	    angle = 90;
 	    yadj = NA_REAL;
 	}
@@ -3001,7 +3001,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	    yadj = 0.5;
 	}
 	else {
-	    line = line + gpptr(dd)->yLineBias;
+	    line = line + Rf_gpptr(dd)->yLineBias;
 	    angle = 0;
 	    yadj = NA_REAL;
 	}
@@ -3012,7 +3012,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	    yadj = 0.5;
 	}
 	else {
-	    line = line + 1 - gpptr(dd)->yLineBias;
+	    line = line + 1 - Rf_gpptr(dd)->yLineBias;
 	    angle = 90;
 	    yadj = NA_REAL;
 	}

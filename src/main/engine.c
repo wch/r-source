@@ -1906,7 +1906,7 @@ void GEcopyDisplayList(int fromDevice)
     GEDevDesc *dd = GEcurrentDevice();
     DevDesc* fromDev = GetDevice(fromDevice);
     int i;
-    dd->dev->displayList = displayList(fromDev);
+    dd->dev->displayList = Rf_displayList(fromDev);
     /* Get each registered graphics system to copy system state
      * information from the "from" device to the current device
      */

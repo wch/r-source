@@ -146,21 +146,21 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     if (streql(what, "adj")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	BoundsCheck(x, 0.0, 1.0, what);
-	dpptr(dd)->adj = gpptr(dd)->adj = x;
+	Rf_dpptr(dd)->adj = Rf_gpptr(dd)->adj = x;
     }
     else if (streql(what, "ann")) {
 	lengthCheck(what, value, 1);	ix = asLogical(value);
-	dpptr(dd)->ann = gpptr(dd)->ann = (ix != 0);/* NA |-> TRUE */
+	Rf_dpptr(dd)->ann = Rf_gpptr(dd)->ann = (ix != 0);/* NA |-> TRUE */
     }
     else if (streql(what, "ask")) {
 	lengthCheck(what, value, 1);	ix = asLogical(value);
-	dpptr(dd)->ask = gpptr(dd)->ask = (ix == 1);/* NA |-> FALSE */
+	Rf_dpptr(dd)->ask = Rf_gpptr(dd)->ask = (ix == 1);/* NA |-> FALSE */
     }
     else if (streql(what, "bg")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	dpptr(dd)->bg = gpptr(dd)->bg = ix;
-	dpptr(dd)->new = gpptr(dd)->new = FALSE;
+	Rf_dpptr(dd)->bg = Rf_gpptr(dd)->bg = ix;
+	Rf_dpptr(dd)->new = Rf_gpptr(dd)->new = FALSE;
     }
     else if (streql(what, "bty")) {
 	lengthCheck(what, value, 1);
@@ -175,7 +175,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	case ']':
 	case 'u': case 'U':
 	case 'n':
-	    dpptr(dd)->bty = gpptr(dd)->bty = ix;
+	    Rf_dpptr(dd)->bty = Rf_gpptr(dd)->bty = ix;
 	    break;
 	default:
 	    par_error(what);
@@ -184,77 +184,77 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "cex")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->cex = gpptr(dd)->cex = 1.0;
-	dpptr(dd)->cexbase = gpptr(dd)->cexbase = x;
+	Rf_dpptr(dd)->cex = Rf_gpptr(dd)->cex = 1.0;
+	Rf_dpptr(dd)->cexbase = Rf_gpptr(dd)->cexbase = x;
     }
     else if (streql(what, "cex.main")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->cexmain = gpptr(dd)->cexmain = x;
+	Rf_dpptr(dd)->cexmain = Rf_gpptr(dd)->cexmain = x;
     }
     else if (streql(what, "cex.lab")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->cexlab = gpptr(dd)->cexlab = x;
+	Rf_dpptr(dd)->cexlab = Rf_gpptr(dd)->cexlab = x;
     }
     else if (streql(what, "cex.sub")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->cexsub = gpptr(dd)->cexsub = x;
+	Rf_dpptr(dd)->cexsub = Rf_gpptr(dd)->cexsub = x;
     }
     else if (streql(what, "cex.axis")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->cexaxis = gpptr(dd)->cexaxis = x;
+	Rf_dpptr(dd)->cexaxis = Rf_gpptr(dd)->cexaxis = x;
     }
     else if (streql(what, "col")) {
 	lengthCheck(what, value, 1);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	dpptr(dd)->col = gpptr(dd)->col = ix;
+	Rf_dpptr(dd)->col = Rf_gpptr(dd)->col = ix;
     }
     else if (streql(what, "col.main")) {
 	lengthCheck(what, value, 1);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	dpptr(dd)->colmain = gpptr(dd)->colmain = ix;
+	Rf_dpptr(dd)->colmain = Rf_gpptr(dd)->colmain = ix;
     }
     else if (streql(what, "col.lab")) {
 	lengthCheck(what, value, 1);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	dpptr(dd)->collab = gpptr(dd)->collab = ix;
+	Rf_dpptr(dd)->collab = Rf_gpptr(dd)->collab = ix;
     }
     else if (streql(what, "col.sub")) {
 	lengthCheck(what, value, 1);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	dpptr(dd)->colsub = gpptr(dd)->colsub = ix;
+	Rf_dpptr(dd)->colsub = Rf_gpptr(dd)->colsub = ix;
     }
     else if (streql(what, "col.axis")) {
 	lengthCheck(what, value, 1);
 /*	naIntCheck(ix = RGBpar(value, 0), what); */
 	ix = RGBpar(value, 0);
-	dpptr(dd)->colaxis = gpptr(dd)->colaxis = ix;
+	Rf_dpptr(dd)->colaxis = Rf_gpptr(dd)->colaxis = ix;
     }
     else if (streql(what, "crt")) {
 	lengthCheck(what, value, 1);
 	x = asReal(value);
 	naRealCheck(x, what);
-	dpptr(dd)->crt = gpptr(dd)->crt = x;
+	Rf_dpptr(dd)->crt = Rf_gpptr(dd)->crt = x;
     }
     else if (streql(what, "err")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
 	if (ix == 0 || ix == -1)
-	    dpptr(dd)->err = gpptr(dd)->err = ix;
+	    Rf_dpptr(dd)->err = Rf_gpptr(dd)->err = ix;
 	else par_error(what);
     }
     else if (streql(what, "fg")) {
 	lengthCheck(what, value, 1);
 	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	dpptr(dd)->col = gpptr(dd)->col = dpptr(dd)->fg = gpptr(dd)->fg = ix;
+	Rf_dpptr(dd)->col = Rf_gpptr(dd)->col = Rf_dpptr(dd)->fg = Rf_gpptr(dd)->fg = ix;
     }
     else if (streql(what, "fig")) {
 	value = coerceVector(value, REALSXP);
@@ -263,22 +263,22 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	    REAL(value)[1] <= 1.0 &&
 	    0.0 <= REAL(value)[2] && REAL(value)[2] < REAL(value)[3] &&
 	    REAL(value)[3] <= 1.0) {
-	    gpptr(dd)->defaultFigure = dpptr(dd)->defaultFigure = 0;
-	    gpptr(dd)->fUnits = dpptr(dd)->fUnits = NIC;
-	    gpptr(dd)->numrows = dpptr(dd)->numrows = 1;
-	    gpptr(dd)->numcols = dpptr(dd)->numcols = 1;
-	    gpptr(dd)->heights[0] = dpptr(dd)->heights[0] = 1;
-	    gpptr(dd)->widths[0] = dpptr(dd)->widths[0] = 1;
-	    gpptr(dd)->cmHeights[0] = dpptr(dd)->cmHeights[0] = 0;
-	    gpptr(dd)->cmWidths[0] = dpptr(dd)->cmWidths[0] = 0;
-	    gpptr(dd)->order[0][0] = dpptr(dd)->order[0][0] = 1;
-	    gpptr(dd)->currentFigure = dpptr(dd)->currentFigure = 1;
-	    gpptr(dd)->lastFigure = dpptr(dd)->lastFigure = 1;
-	    dpptr(dd)->rspct = gpptr(dd)->rspct = 0;
-	    gpptr(dd)->fig[0] = dpptr(dd)->fig[0] = REAL(value)[0];
-	    gpptr(dd)->fig[1] = dpptr(dd)->fig[1] = REAL(value)[1];
-	    gpptr(dd)->fig[2] = dpptr(dd)->fig[2] = REAL(value)[2];
-	    gpptr(dd)->fig[3] = dpptr(dd)->fig[3] = REAL(value)[3];
+	    Rf_gpptr(dd)->defaultFigure = Rf_dpptr(dd)->defaultFigure = 0;
+	    Rf_gpptr(dd)->fUnits = Rf_dpptr(dd)->fUnits = NIC;
+	    Rf_gpptr(dd)->numrows = Rf_dpptr(dd)->numrows = 1;
+	    Rf_gpptr(dd)->numcols = Rf_dpptr(dd)->numcols = 1;
+	    Rf_gpptr(dd)->heights[0] = Rf_dpptr(dd)->heights[0] = 1;
+	    Rf_gpptr(dd)->widths[0] = Rf_dpptr(dd)->widths[0] = 1;
+	    Rf_gpptr(dd)->cmHeights[0] = Rf_dpptr(dd)->cmHeights[0] = 0;
+	    Rf_gpptr(dd)->cmWidths[0] = Rf_dpptr(dd)->cmWidths[0] = 0;
+	    Rf_gpptr(dd)->order[0][0] = Rf_dpptr(dd)->order[0][0] = 1;
+	    Rf_gpptr(dd)->currentFigure = Rf_dpptr(dd)->currentFigure = 1;
+	    Rf_gpptr(dd)->lastFigure = Rf_dpptr(dd)->lastFigure = 1;
+	    Rf_dpptr(dd)->rspct = Rf_gpptr(dd)->rspct = 0;
+	    Rf_gpptr(dd)->fig[0] = Rf_dpptr(dd)->fig[0] = REAL(value)[0];
+	    Rf_gpptr(dd)->fig[1] = Rf_dpptr(dd)->fig[1] = REAL(value)[1];
+	    Rf_gpptr(dd)->fig[2] = Rf_dpptr(dd)->fig[2] = REAL(value)[2];
+	    Rf_gpptr(dd)->fig[3] = Rf_dpptr(dd)->fig[3] = REAL(value)[3];
 	    GReset(dd);
 	}
 	else par_error(what);
@@ -286,57 +286,57 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "fin")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 2);
-	gpptr(dd)->defaultFigure = dpptr(dd)->defaultFigure = 0;
-	gpptr(dd)->fUnits = dpptr(dd)->fUnits = INCHES;
-	gpptr(dd)->numrows = dpptr(dd)->numrows = 1;
-	gpptr(dd)->numcols = dpptr(dd)->numcols = 1;
-	gpptr(dd)->heights[0] = dpptr(dd)->heights[0] = 1;
-	gpptr(dd)->widths[0] = dpptr(dd)->widths[0] = 1;
-	gpptr(dd)->cmHeights[0] = dpptr(dd)->cmHeights[0] = 0;
-	gpptr(dd)->cmWidths[0] = dpptr(dd)->cmWidths[0] = 0;
-	gpptr(dd)->order[0][0] = dpptr(dd)->order[0][0] = 1;
-	gpptr(dd)->currentFigure = dpptr(dd)->currentFigure = 1;
-	gpptr(dd)->lastFigure = dpptr(dd)->lastFigure = 1;
-	dpptr(dd)->rspct = gpptr(dd)->rspct = 0;
-	gpptr(dd)->fin[0] = dpptr(dd)->fin[0] = REAL(value)[0];
-	gpptr(dd)->fin[1] = dpptr(dd)->fin[1] = REAL(value)[1];
+	Rf_gpptr(dd)->defaultFigure = Rf_dpptr(dd)->defaultFigure = 0;
+	Rf_gpptr(dd)->fUnits = Rf_dpptr(dd)->fUnits = INCHES;
+	Rf_gpptr(dd)->numrows = Rf_dpptr(dd)->numrows = 1;
+	Rf_gpptr(dd)->numcols = Rf_dpptr(dd)->numcols = 1;
+	Rf_gpptr(dd)->heights[0] = Rf_dpptr(dd)->heights[0] = 1;
+	Rf_gpptr(dd)->widths[0] = Rf_dpptr(dd)->widths[0] = 1;
+	Rf_gpptr(dd)->cmHeights[0] = Rf_dpptr(dd)->cmHeights[0] = 0;
+	Rf_gpptr(dd)->cmWidths[0] = Rf_dpptr(dd)->cmWidths[0] = 0;
+	Rf_gpptr(dd)->order[0][0] = Rf_dpptr(dd)->order[0][0] = 1;
+	Rf_gpptr(dd)->currentFigure = Rf_dpptr(dd)->currentFigure = 1;
+	Rf_gpptr(dd)->lastFigure = Rf_dpptr(dd)->lastFigure = 1;
+	Rf_dpptr(dd)->rspct = Rf_gpptr(dd)->rspct = 0;
+	Rf_gpptr(dd)->fin[0] = Rf_dpptr(dd)->fin[0] = REAL(value)[0];
+	Rf_gpptr(dd)->fin[1] = Rf_dpptr(dd)->fin[1] = REAL(value)[1];
 	GReset(dd);
     }
     else if (streql(what, "font")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
-	dpptr(dd)->font = gpptr(dd)->font = ix;
+	Rf_dpptr(dd)->font = Rf_gpptr(dd)->font = ix;
     }
     else if (streql(what, "font.main")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
-	dpptr(dd)->fontmain = gpptr(dd)->fontmain = ix;
+	Rf_dpptr(dd)->fontmain = Rf_gpptr(dd)->fontmain = ix;
     }
     else if (streql(what, "font.lab")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
-	dpptr(dd)->fontlab = gpptr(dd)->fontlab = ix;
+	Rf_dpptr(dd)->fontlab = Rf_gpptr(dd)->fontlab = ix;
     }
     else if (streql(what, "font.sub")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
-	dpptr(dd)->fontsub = gpptr(dd)->fontsub = ix;
+	Rf_dpptr(dd)->fontsub = Rf_gpptr(dd)->fontsub = ix;
     }
     else if (streql(what, "font.axis")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
 	posIntCheck(ix, what);
-	dpptr(dd)->fontaxis = gpptr(dd)->fontaxis = ix;
+	Rf_dpptr(dd)->fontaxis = Rf_gpptr(dd)->fontaxis = ix;
     }
     else if(streql(what, "gamma")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
 	if (((GEDevDesc*) dd)->dev->canChangeGamma)
-	    dpptr(dd)->gamma = gpptr(dd)->gamma = x;
+	    Rf_dpptr(dd)->gamma = Rf_gpptr(dd)->gamma = x;
 	else
 	    warningcall(gcall, "gamma cannot be modified on this device");
     }
@@ -346,24 +346,24 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	posIntCheck   (INTEGER(value)[0], what);
 	posIntCheck   (INTEGER(value)[1], what);
 	nonnegIntCheck(INTEGER(value)[2], what);
-	dpptr(dd)->lab[0] = gpptr(dd)->lab[0] = INTEGER(value)[0];
-	dpptr(dd)->lab[1] = gpptr(dd)->lab[1] = INTEGER(value)[1];
-	dpptr(dd)->lab[2] = gpptr(dd)->lab[2] = INTEGER(value)[2];
+	Rf_dpptr(dd)->lab[0] = Rf_gpptr(dd)->lab[0] = INTEGER(value)[0];
+	Rf_dpptr(dd)->lab[1] = Rf_gpptr(dd)->lab[1] = INTEGER(value)[1];
+	Rf_dpptr(dd)->lab[2] = Rf_gpptr(dd)->lab[2] = INTEGER(value)[2];
     }
     else if (streql(what, "las")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	if (0 <= ix && ix <= 3)
-	    dpptr(dd)->las = gpptr(dd)->las = ix;
+	    Rf_dpptr(dd)->las = Rf_gpptr(dd)->las = ix;
 	else par_error(what);
     }
     else if (streql(what, "lty")) {
 	lengthCheck(what, value, 1);
-	dpptr(dd)->lty = gpptr(dd)->lty = LTYpar(value, 0);
+	Rf_dpptr(dd)->lty = Rf_gpptr(dd)->lty = LTYpar(value, 0);
     }
     else if (streql(what, "lwd")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->lwd = gpptr(dd)->lwd = x;
+	Rf_dpptr(dd)->lwd = Rf_gpptr(dd)->lwd = x;
     }
     else if (streql(what, "mai")) {
 	value = coerceVector(value, REALSXP);
@@ -372,12 +372,12 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
 	nonnegRealCheck(REAL(value)[3], what);
-	dpptr(dd)->mai[0] = gpptr(dd)->mai[0] = REAL(value)[0];
-	dpptr(dd)->mai[1] = gpptr(dd)->mai[1] = REAL(value)[1];
-	dpptr(dd)->mai[2] = gpptr(dd)->mai[2] = REAL(value)[2];
-	dpptr(dd)->mai[3] = gpptr(dd)->mai[3] = REAL(value)[3];
-	dpptr(dd)->mUnits = gpptr(dd)->mUnits = INCHES;
-	dpptr(dd)->defaultPlot = gpptr(dd)->defaultPlot = TRUE;
+	Rf_dpptr(dd)->mai[0] = Rf_gpptr(dd)->mai[0] = REAL(value)[0];
+	Rf_dpptr(dd)->mai[1] = Rf_gpptr(dd)->mai[1] = REAL(value)[1];
+	Rf_dpptr(dd)->mai[2] = Rf_gpptr(dd)->mai[2] = REAL(value)[2];
+	Rf_dpptr(dd)->mai[3] = Rf_gpptr(dd)->mai[3] = REAL(value)[3];
+	Rf_dpptr(dd)->mUnits = Rf_gpptr(dd)->mUnits = INCHES;
+	Rf_dpptr(dd)->defaultPlot = Rf_gpptr(dd)->defaultPlot = TRUE;
 	GReset(dd);
     }
     else if (streql(what, "mar")) {
@@ -387,18 +387,18 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
 	nonnegRealCheck(REAL(value)[3], what);
-	dpptr(dd)->mar[0] = gpptr(dd)->mar[0] = REAL(value)[0];
-	dpptr(dd)->mar[1] = gpptr(dd)->mar[1] = REAL(value)[1];
-	dpptr(dd)->mar[2] = gpptr(dd)->mar[2] = REAL(value)[2];
-	dpptr(dd)->mar[3] = gpptr(dd)->mar[3] = REAL(value)[3];
-	dpptr(dd)->mUnits = gpptr(dd)->mUnits = LINES;
-	dpptr(dd)->defaultPlot = gpptr(dd)->defaultPlot = TRUE;
+	Rf_dpptr(dd)->mar[0] = Rf_gpptr(dd)->mar[0] = REAL(value)[0];
+	Rf_dpptr(dd)->mar[1] = Rf_gpptr(dd)->mar[1] = REAL(value)[1];
+	Rf_dpptr(dd)->mar[2] = Rf_gpptr(dd)->mar[2] = REAL(value)[2];
+	Rf_dpptr(dd)->mar[3] = Rf_gpptr(dd)->mar[3] = REAL(value)[3];
+	Rf_dpptr(dd)->mUnits = Rf_gpptr(dd)->mUnits = LINES;
+	Rf_dpptr(dd)->defaultPlot = Rf_gpptr(dd)->defaultPlot = TRUE;
 	GReset(dd);
     }
     else if (streql(what, "mex")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->mex = gpptr(dd)->mex = x;
+	Rf_dpptr(dd)->mex = Rf_gpptr(dd)->mex = x;
 	GReset(dd);
     }
     else if (streql(what, "mfrow")) {
@@ -409,25 +409,25 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	posIntCheck(INTEGER(value)[1], what);
 	nrow = INTEGER(value)[0];
 	ncol = INTEGER(value)[1];
-	gpptr(dd)->numrows = dpptr(dd)->numrows = nrow;
-	gpptr(dd)->numcols = dpptr(dd)->numcols = ncol;
-	gpptr(dd)->currentFigure = dpptr(dd)->currentFigure = nrow*ncol;
-	gpptr(dd)->lastFigure = dpptr(dd)->lastFigure = nrow*ncol;
-	gpptr(dd)->defaultFigure = dpptr(dd)->defaultFigure = TRUE;
-	gpptr(dd)->layout = dpptr(dd)->layout = FALSE;
+	Rf_gpptr(dd)->numrows = Rf_dpptr(dd)->numrows = nrow;
+	Rf_gpptr(dd)->numcols = Rf_dpptr(dd)->numcols = ncol;
+	Rf_gpptr(dd)->currentFigure = Rf_dpptr(dd)->currentFigure = nrow*ncol;
+	Rf_gpptr(dd)->lastFigure = Rf_dpptr(dd)->lastFigure = nrow*ncol;
+	Rf_gpptr(dd)->defaultFigure = Rf_dpptr(dd)->defaultFigure = TRUE;
+	Rf_gpptr(dd)->layout = Rf_dpptr(dd)->layout = FALSE;
 	if (nrow > 2 || ncol > 2) {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.66;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 0.66;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
 	else if (nrow == 2 && ncol == 2) {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.83;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 0.83;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
 	else {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 1.0;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 1.0;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
-	dpptr(dd)->mfind = gpptr(dd)->mfind = 0;
+	Rf_dpptr(dd)->mfind = Rf_gpptr(dd)->mfind = 0;
 	GReset(dd);
     }
     else if (streql(what, "mfcol")) {
@@ -438,25 +438,25 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	posIntCheck(INTEGER(value)[1], what);
 	nrow = INTEGER(value)[0];
 	ncol = INTEGER(value)[1];
-	gpptr(dd)->numrows = dpptr(dd)->numrows = nrow;
-	gpptr(dd)->numcols = dpptr(dd)->numcols = ncol;
-	gpptr(dd)->currentFigure = dpptr(dd)->currentFigure = nrow*ncol;
-	gpptr(dd)->lastFigure = dpptr(dd)->lastFigure = nrow*ncol;
-	gpptr(dd)->defaultFigure = dpptr(dd)->defaultFigure = TRUE;
-	gpptr(dd)->layout = dpptr(dd)->layout = FALSE;
+	Rf_gpptr(dd)->numrows = Rf_dpptr(dd)->numrows = nrow;
+	Rf_gpptr(dd)->numcols = Rf_dpptr(dd)->numcols = ncol;
+	Rf_gpptr(dd)->currentFigure = Rf_dpptr(dd)->currentFigure = nrow*ncol;
+	Rf_gpptr(dd)->lastFigure = Rf_dpptr(dd)->lastFigure = nrow*ncol;
+	Rf_gpptr(dd)->defaultFigure = Rf_dpptr(dd)->defaultFigure = TRUE;
+	Rf_gpptr(dd)->layout = Rf_dpptr(dd)->layout = FALSE;
 	if (nrow > 2 || ncol > 2) {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.66;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 0.66;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
 	else if (nrow == 2 && ncol == 2) {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.83;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 0.83;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
 	else {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 1.0;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 1.0;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
-	dpptr(dd)->mfind = gpptr(dd)->mfind = 1;
+	Rf_dpptr(dd)->mfind = Rf_gpptr(dd)->mfind = 1;
 	GReset(dd);
     }
     else if (streql(what, "mfg")) {
@@ -469,8 +469,8 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	posIntCheck(INTEGER(value)[1], what);
 	row = INTEGER(value)[0];
 	col = INTEGER(value)[1];
-	nrow = dpptr(dd)->numrows;
-	ncol = dpptr(dd)->numcols;
+	nrow = Rf_dpptr(dd)->numrows;
+	ncol = Rf_dpptr(dd)->numcols;
 	if(row <= 0 || row > nrow)
 	    errorcall(gcall, "parameter \"i\" in \"mfg\" is out of range");
 	if(col <= 0 || col > ncol)
@@ -483,37 +483,37 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	    if(ncol != INTEGER(value)[3])
 		warningcall(gcall, "value of nc in \"mfg\" is wrong and will be ignored");
 	}
-	gpptr(dd)->lastFigure = dpptr(dd)->lastFigure = nrow*ncol;
-	/*dpptr(dd)->mfind = gpptr(dd)->mfind = 1;*/
+	Rf_gpptr(dd)->lastFigure = Rf_dpptr(dd)->lastFigure = nrow*ncol;
+	/*Rf_dpptr(dd)->mfind = Rf_gpptr(dd)->mfind = 1;*/
 	/* currentFigure is 1-based */
-	if(gpptr(dd)->mfind)
-	    dpptr(dd)->currentFigure = (col-1)*nrow + row;
-	else dpptr(dd)->currentFigure = (row-1)*ncol + col;
+	if(Rf_gpptr(dd)->mfind)
+	    Rf_dpptr(dd)->currentFigure = (col-1)*nrow + row;
+	else Rf_dpptr(dd)->currentFigure = (row-1)*ncol + col;
 	/*
-	  if (dpptr(dd)->currentFigure == 0)
-	  dpptr(dd)->currentFigure = dpptr(dd)->lastFigure;
+	  if (Rf_dpptr(dd)->currentFigure == 0)
+	  Rf_dpptr(dd)->currentFigure = Rf_dpptr(dd)->lastFigure;
 	*/
-	gpptr(dd)->currentFigure = dpptr(dd)->currentFigure;
-	/* gpptr(dd)->defaultFigure = dpptr(dd)->defaultFigure = TRUE;
-	gpptr(dd)->layout = dpptr(dd)->layout = FALSE; */
-	gpptr(dd)->new = dpptr(dd)->new = 1;
+	Rf_gpptr(dd)->currentFigure = Rf_dpptr(dd)->currentFigure;
+	/* Rf_gpptr(dd)->defaultFigure = Rf_dpptr(dd)->defaultFigure = TRUE;
+	Rf_gpptr(dd)->layout = Rf_dpptr(dd)->layout = FALSE; */
+	Rf_gpptr(dd)->new = Rf_dpptr(dd)->new = 1;
 	/*
 	if (nrow > 2 || ncol > 2) {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.66;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 0.66;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
 	else if (nrow == 2 && ncol == 2) {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.83;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 0.83;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
 	else {
-	    gpptr(dd)->cexbase = dpptr(dd)->cexbase = 1.0;
-	    gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	    Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 1.0;
+	    Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
 	}
 	*/
 	GReset(dd);
 	/* Force a device clip */
-	if (dpptr(dd)->canClip)
+	if (Rf_dpptr(dd)->canClip)
 	    GForceClip(dd);
     }
     else if (streql(what, "mgp")) {
@@ -522,18 +522,18 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
-	dpptr(dd)->mgp[0] = gpptr(dd)->mgp[0] = REAL(value)[0];
-	dpptr(dd)->mgp[1] = gpptr(dd)->mgp[1] = REAL(value)[1];
-	dpptr(dd)->mgp[2] = gpptr(dd)->mgp[2] = REAL(value)[2];
+	Rf_dpptr(dd)->mgp[0] = Rf_gpptr(dd)->mgp[0] = REAL(value)[0];
+	Rf_dpptr(dd)->mgp[1] = Rf_gpptr(dd)->mgp[1] = REAL(value)[1];
+	Rf_dpptr(dd)->mgp[2] = Rf_gpptr(dd)->mgp[2] = REAL(value)[2];
     }
     else if (streql(what, "mkh")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->mkh = gpptr(dd)->mkh = x;
+	Rf_dpptr(dd)->mkh = Rf_gpptr(dd)->mkh = x;
     }
     else if (streql(what, "new")) {
 	lengthCheck(what, value, 1);	ix = asLogical(value);
-	dpptr(dd)->new = gpptr(dd)->new = (ix != 0);
+	Rf_dpptr(dd)->new = Rf_gpptr(dd)->new = (ix != 0);
     }
     else if (streql(what, "oma")) {
 	value = coerceVector(value, REALSXP);
@@ -542,13 +542,13 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
 	nonnegRealCheck(REAL(value)[3], what);
-	dpptr(dd)->oma[0] = gpptr(dd)->oma[0] = REAL(value)[0];
-	dpptr(dd)->oma[1] = gpptr(dd)->oma[1] = REAL(value)[1];
-	dpptr(dd)->oma[2] = gpptr(dd)->oma[2] = REAL(value)[2];
-	dpptr(dd)->oma[3] = gpptr(dd)->oma[3] = REAL(value)[3];
-	dpptr(dd)->oUnits = gpptr(dd)->oUnits = LINES;
+	Rf_dpptr(dd)->oma[0] = Rf_gpptr(dd)->oma[0] = REAL(value)[0];
+	Rf_dpptr(dd)->oma[1] = Rf_gpptr(dd)->oma[1] = REAL(value)[1];
+	Rf_dpptr(dd)->oma[2] = Rf_gpptr(dd)->oma[2] = REAL(value)[2];
+	Rf_dpptr(dd)->oma[3] = Rf_gpptr(dd)->oma[3] = REAL(value)[3];
+	Rf_dpptr(dd)->oUnits = Rf_gpptr(dd)->oUnits = LINES;
 	/* !!! Force eject of multiple figures !!! */
-	dpptr(dd)->currentFigure = gpptr(dd)->currentFigure = gpptr(dd)->lastFigure;
+	Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = Rf_gpptr(dd)->lastFigure;
 	GReset(dd);
     }
     else if (streql(what, "omd")) {
@@ -558,13 +558,13 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	BoundsCheck(REAL(value)[1], 0.0, 1.0, what);
 	BoundsCheck(REAL(value)[2], 0.0, 1.0, what);
 	BoundsCheck(REAL(value)[3], 0.0, 1.0, what);
-	dpptr(dd)->omd[0] = gpptr(dd)->omd[0] = REAL(value)[0];
-	dpptr(dd)->omd[1] = gpptr(dd)->omd[1] = REAL(value)[1];
-	dpptr(dd)->omd[2] = gpptr(dd)->omd[2] = REAL(value)[2];
-	dpptr(dd)->omd[3] = gpptr(dd)->omd[3] = REAL(value)[3];
-	dpptr(dd)->oUnits = gpptr(dd)->oUnits = NDC;
+	Rf_dpptr(dd)->omd[0] = Rf_gpptr(dd)->omd[0] = REAL(value)[0];
+	Rf_dpptr(dd)->omd[1] = Rf_gpptr(dd)->omd[1] = REAL(value)[1];
+	Rf_dpptr(dd)->omd[2] = Rf_gpptr(dd)->omd[2] = REAL(value)[2];
+	Rf_dpptr(dd)->omd[3] = Rf_gpptr(dd)->omd[3] = REAL(value)[3];
+	Rf_dpptr(dd)->oUnits = Rf_gpptr(dd)->oUnits = NDC;
 	/* Force eject of multiple figures */
-	dpptr(dd)->currentFigure = gpptr(dd)->currentFigure = gpptr(dd)->lastFigure;
+	Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = Rf_gpptr(dd)->lastFigure;
 	GReset(dd);
     }
     else if (streql(what, "omi")) {
@@ -574,13 +574,13 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
 	nonnegRealCheck(REAL(value)[3], what);
-	dpptr(dd)->omi[0] = gpptr(dd)->omi[0] = REAL(value)[0];
-	dpptr(dd)->omi[1] = gpptr(dd)->omi[1] = REAL(value)[1];
-	dpptr(dd)->omi[2] = gpptr(dd)->omi[2] = REAL(value)[2];
-	dpptr(dd)->omi[3] = gpptr(dd)->omi[3] = REAL(value)[3];
-	dpptr(dd)->oUnits = gpptr(dd)->oUnits = INCHES;
+	Rf_dpptr(dd)->omi[0] = Rf_gpptr(dd)->omi[0] = REAL(value)[0];
+	Rf_dpptr(dd)->omi[1] = Rf_gpptr(dd)->omi[1] = REAL(value)[1];
+	Rf_dpptr(dd)->omi[2] = Rf_gpptr(dd)->omi[2] = REAL(value)[2];
+	Rf_dpptr(dd)->omi[3] = Rf_gpptr(dd)->omi[3] = REAL(value)[3];
+	Rf_dpptr(dd)->oUnits = Rf_gpptr(dd)->oUnits = INCHES;
 	/* Force eject of multiple figures */
-	dpptr(dd)->currentFigure = gpptr(dd)->currentFigure = gpptr(dd)->lastFigure;
+	Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = Rf_gpptr(dd)->lastFigure;
 	GReset(dd);
     }
     else if (streql(what, "pch")) {
@@ -594,17 +594,17 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	    nonnegIntCheck(ix, what);
 	}
 	else par_error(what);
-	dpptr(dd)->pch = gpptr(dd)->pch = ix;
+	Rf_dpptr(dd)->pch = Rf_gpptr(dd)->pch = ix;
     }
     else if (streql(what, "pin")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 2);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
-	dpptr(dd)->pin[0] = gpptr(dd)->pin[0] = REAL(value)[0];
-	dpptr(dd)->pin[1] = gpptr(dd)->pin[1] = REAL(value)[1];
-	dpptr(dd)->pUnits = gpptr(dd)->pUnits = INCHES;
-	dpptr(dd)->defaultPlot = gpptr(dd)->defaultPlot = FALSE;
+	Rf_dpptr(dd)->pin[0] = Rf_gpptr(dd)->pin[0] = REAL(value)[0];
+	Rf_dpptr(dd)->pin[1] = Rf_gpptr(dd)->pin[1] = REAL(value)[1];
+	Rf_dpptr(dd)->pUnits = Rf_gpptr(dd)->pUnits = INCHES;
+	Rf_dpptr(dd)->defaultPlot = Rf_gpptr(dd)->defaultPlot = FALSE;
 	GReset(dd);
     }
     else if (streql(what, "plt")) {
@@ -614,38 +614,38 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
 	nonnegRealCheck(REAL(value)[3], what);
-	dpptr(dd)->plt[0] = gpptr(dd)->plt[0] = REAL(value)[0];
-	dpptr(dd)->plt[1] = gpptr(dd)->plt[1] = REAL(value)[1];
-	dpptr(dd)->plt[2] = gpptr(dd)->plt[2] = REAL(value)[2];
-	dpptr(dd)->plt[3] = gpptr(dd)->plt[3] = REAL(value)[3];
-	dpptr(dd)->pUnits = gpptr(dd)->pUnits = NFC;
-	dpptr(dd)->defaultPlot = gpptr(dd)->defaultPlot = FALSE;
+	Rf_dpptr(dd)->plt[0] = Rf_gpptr(dd)->plt[0] = REAL(value)[0];
+	Rf_dpptr(dd)->plt[1] = Rf_gpptr(dd)->plt[1] = REAL(value)[1];
+	Rf_dpptr(dd)->plt[2] = Rf_gpptr(dd)->plt[2] = REAL(value)[2];
+	Rf_dpptr(dd)->plt[3] = Rf_gpptr(dd)->plt[3] = REAL(value)[3];
+	Rf_dpptr(dd)->pUnits = Rf_gpptr(dd)->pUnits = NFC;
+	Rf_dpptr(dd)->defaultPlot = Rf_gpptr(dd)->defaultPlot = FALSE;
 	GReset(dd);
     }
     else if (streql(what, "ps")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	nonnegIntCheck(ix, what);
-	dpptr(dd)->ps = gpptr(dd)->ps = ix;
+	Rf_dpptr(dd)->ps = Rf_gpptr(dd)->ps = ix;
     }
     else if (streql(what, "pty")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 'm' || ix == 's') {
-	    dpptr(dd)->pty = gpptr(dd)->pty = ix;
-	    dpptr(dd)->defaultPlot = gpptr(dd)->defaultPlot = TRUE;
+	    Rf_dpptr(dd)->pty = Rf_gpptr(dd)->pty = ix;
+	    Rf_dpptr(dd)->defaultPlot = Rf_gpptr(dd)->defaultPlot = TRUE;
 	}
 	else par_error(what);
     }
     else if (streql(what, "smo")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	nonnegIntCheck(ix, what);
-	dpptr(dd)->smo = gpptr(dd)->smo = ix;
+	Rf_dpptr(dd)->smo = Rf_gpptr(dd)->smo = ix;
     }
     else if (streql(what, "srt")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	naRealCheck(x, what);
-	dpptr(dd)->srt = gpptr(dd)->srt = x;
+	Rf_dpptr(dd)->srt = Rf_gpptr(dd)->srt = x;
     }
     /* NOTE: tck and tcl must be treated in parallel. */
     /* If one is NA, the other must be non NA.	If tcl */
@@ -653,24 +653,24 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     /* initial default value.  See also graphics.c. */
     else if (streql(what, "tck")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
-	dpptr(dd)->tck = gpptr(dd)->tck = x;
+	Rf_dpptr(dd)->tck = Rf_gpptr(dd)->tck = x;
 	if (R_FINITE(x))
-	    dpptr(dd)->tcl = gpptr(dd)->tcl = NA_REAL;
-	else if(!R_FINITE(dpptr(dd)->tcl))
-	    dpptr(dd)->tcl = gpptr(dd)->tcl = -0.5;
+	    Rf_dpptr(dd)->tcl = Rf_gpptr(dd)->tcl = NA_REAL;
+	else if(!R_FINITE(Rf_dpptr(dd)->tcl))
+	    Rf_dpptr(dd)->tcl = Rf_gpptr(dd)->tcl = -0.5;
     }
     else if (streql(what, "tcl")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
-	dpptr(dd)->tcl = gpptr(dd)->tcl = x;
+	Rf_dpptr(dd)->tcl = Rf_gpptr(dd)->tcl = x;
 	if (R_FINITE(x))
-	    dpptr(dd)->tck = gpptr(dd)->tck = NA_REAL;
-	else if (!R_FINITE(dpptr(dd)->tck))
-	    dpptr(dd)->tck = gpptr(dd)->tck = 0.02;	/* S Default */
+	    Rf_dpptr(dd)->tck = Rf_gpptr(dd)->tck = NA_REAL;
+	else if (!R_FINITE(Rf_dpptr(dd)->tck))
+	    Rf_dpptr(dd)->tck = Rf_gpptr(dd)->tck = 0.02;	/* S Default */
     }
     else if (streql(what, "tmag")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	dpptr(dd)->tmag = gpptr(dd)->tmag = x;
+	Rf_dpptr(dd)->tmag = Rf_gpptr(dd)->tmag = x;
     }
     else if (streql(what, "type")) {
 	if (!isString(value) || LENGTH(value) < 1)
@@ -686,7 +686,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	case 'S':
 	case 'h':
 	case 'n':
-	    dpptr(dd)->type = gpptr(dd)->type = ix;
+	    Rf_dpptr(dd)->type = Rf_gpptr(dd)->type = ix;
 	    break;
 	default:
 	    par_error(what);
@@ -702,32 +702,32 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	if (REAL(value)[0] == REAL(value)[1] ||
 	    REAL(value)[2] == REAL(value)[3])
 	    par_error(what);
-	if (gpptr(dd)->xlog) {
-	    gpptr(dd)->logusr[0] = dpptr(dd)->logusr[0] = REAL(value)[0];
-	    gpptr(dd)->logusr[1] = dpptr(dd)->logusr[1] = REAL(value)[1];
-	    gpptr(dd)->usr[0] = dpptr(dd)->usr[0] = pow(10., REAL(value)[0]);
-	    gpptr(dd)->usr[1] = dpptr(dd)->usr[1] = pow(10., REAL(value)[1]);
+	if (Rf_gpptr(dd)->xlog) {
+	    Rf_gpptr(dd)->logusr[0] = Rf_dpptr(dd)->logusr[0] = REAL(value)[0];
+	    Rf_gpptr(dd)->logusr[1] = Rf_dpptr(dd)->logusr[1] = REAL(value)[1];
+	    Rf_gpptr(dd)->usr[0] = Rf_dpptr(dd)->usr[0] = pow(10., REAL(value)[0]);
+	    Rf_gpptr(dd)->usr[1] = Rf_dpptr(dd)->usr[1] = pow(10., REAL(value)[1]);
 	}
 	else {
-	    gpptr(dd)->usr[0] = dpptr(dd)->usr[0] = REAL(value)[0];
-	    gpptr(dd)->usr[1] = dpptr(dd)->usr[1] = REAL(value)[1];
-	    gpptr(dd)->logusr[0] = dpptr(dd)->logusr[0] =
+	    Rf_gpptr(dd)->usr[0] = Rf_dpptr(dd)->usr[0] = REAL(value)[0];
+	    Rf_gpptr(dd)->usr[1] = Rf_dpptr(dd)->usr[1] = REAL(value)[1];
+	    Rf_gpptr(dd)->logusr[0] = Rf_dpptr(dd)->logusr[0] =
 		R_Log10(REAL(value)[0]);
-	    gpptr(dd)->logusr[1] = dpptr(dd)->logusr[1] =
+	    Rf_gpptr(dd)->logusr[1] = Rf_dpptr(dd)->logusr[1] =
 		R_Log10(REAL(value)[1]);
 	}
-	if (gpptr(dd)->ylog) {
-	    gpptr(dd)->logusr[2] = dpptr(dd)->logusr[2] = REAL(value)[2];
-	    gpptr(dd)->logusr[3] = dpptr(dd)->logusr[3] = REAL(value)[3];
-	    gpptr(dd)->usr[2] = dpptr(dd)->usr[2] = pow(10., REAL(value)[2]);
-	    gpptr(dd)->usr[3] = dpptr(dd)->usr[3] = pow(10., REAL(value)[3]);
+	if (Rf_gpptr(dd)->ylog) {
+	    Rf_gpptr(dd)->logusr[2] = Rf_dpptr(dd)->logusr[2] = REAL(value)[2];
+	    Rf_gpptr(dd)->logusr[3] = Rf_dpptr(dd)->logusr[3] = REAL(value)[3];
+	    Rf_gpptr(dd)->usr[2] = Rf_dpptr(dd)->usr[2] = pow(10., REAL(value)[2]);
+	    Rf_gpptr(dd)->usr[3] = Rf_dpptr(dd)->usr[3] = pow(10., REAL(value)[3]);
 	}
 	else {
-	    gpptr(dd)->usr[2] = dpptr(dd)->usr[2] = REAL(value)[2];
-	    gpptr(dd)->usr[3] = dpptr(dd)->usr[3] = REAL(value)[3];
-	    gpptr(dd)->logusr[2] = dpptr(dd)->logusr[2] =
+	    Rf_gpptr(dd)->usr[2] = Rf_dpptr(dd)->usr[2] = REAL(value)[2];
+	    Rf_gpptr(dd)->usr[3] = Rf_dpptr(dd)->usr[3] = REAL(value)[3];
+	    Rf_gpptr(dd)->logusr[2] = Rf_dpptr(dd)->logusr[2] =
 		R_Log10(REAL(value)[2]);
-	    gpptr(dd)->logusr[3] = dpptr(dd)->logusr[3] =
+	    Rf_gpptr(dd)->logusr[3] = Rf_dpptr(dd)->logusr[3] =
 		R_Log10(REAL(value)[3]);
 	}
 	/* Reset Mapping and Axis Parameters */
@@ -741,16 +741,16 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	posIntCheck((int) (REAL(value)[2]), what);
-	dpptr(dd)->xaxp[0] = gpptr(dd)->xaxp[0] = REAL(value)[0];
-	dpptr(dd)->xaxp[1] = gpptr(dd)->xaxp[1] = REAL(value)[1];
-	dpptr(dd)->xaxp[2] = gpptr(dd)->xaxp[2] = (int)(REAL(value)[2]);
+	Rf_dpptr(dd)->xaxp[0] = Rf_gpptr(dd)->xaxp[0] = REAL(value)[0];
+	Rf_dpptr(dd)->xaxp[1] = Rf_gpptr(dd)->xaxp[1] = REAL(value)[1];
+	Rf_dpptr(dd)->xaxp[2] = Rf_gpptr(dd)->xaxp[2] = (int)(REAL(value)[2]);
     }
     else if (streql(what, "xaxs")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'e' || ix == 'i' || ix == 'r' || ix == 'd')
-	    dpptr(dd)->xaxs = gpptr(dd)->xaxs = ix;
+	    Rf_dpptr(dd)->xaxs = Rf_gpptr(dd)->xaxs = ix;
 	else par_error(what);
     }
     else if (streql(what, "xaxt")) {
@@ -758,22 +758,22 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
-	    dpptr(dd)->xaxt = gpptr(dd)->xaxt = ix;
+	    Rf_dpptr(dd)->xaxt = Rf_gpptr(dd)->xaxt = ix;
 	else par_error(what);
     }
     else if (streql(what, "xlog")) {
 	lengthCheck(what, value, 1);	ix = asLogical(value);
 	if (ix == NA_LOGICAL)
 	    par_error(what);
-	dpptr(dd)->xlog = gpptr(dd)->xlog = (ix != 0);
+	Rf_dpptr(dd)->xlog = Rf_gpptr(dd)->xlog = (ix != 0);
     }
     else if (streql(what, "xpd")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
 	if (ix == NA_INTEGER)
-	    dpptr(dd)->xpd = gpptr(dd)->xpd = 2;
+	    Rf_dpptr(dd)->xpd = Rf_gpptr(dd)->xpd = 2;
 	else
-	    dpptr(dd)->xpd = gpptr(dd)->xpd = (ix != 0);
+	    Rf_dpptr(dd)->xpd = Rf_gpptr(dd)->xpd = (ix != 0);
     }
     else if (streql(what, "yaxp")) {
 	value = coerceVector(value, REALSXP);
@@ -781,16 +781,16 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	posIntCheck((int) (REAL(value)[2]), what);
-	dpptr(dd)->yaxp[0] = gpptr(dd)->yaxp[0] = REAL(value)[0];
-	dpptr(dd)->yaxp[1] = gpptr(dd)->yaxp[1] = REAL(value)[1];
-	dpptr(dd)->yaxp[2] = gpptr(dd)->yaxp[2] = (int) (REAL(value)[2]);
+	Rf_dpptr(dd)->yaxp[0] = Rf_gpptr(dd)->yaxp[0] = REAL(value)[0];
+	Rf_dpptr(dd)->yaxp[1] = Rf_gpptr(dd)->yaxp[1] = REAL(value)[1];
+	Rf_dpptr(dd)->yaxp[2] = Rf_gpptr(dd)->yaxp[2] = (int) (REAL(value)[2]);
     }
     else if (streql(what, "yaxs")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'e' || ix == 'i' || ix == 'r' || ix == 'd')
-	    dpptr(dd)->yaxs = gpptr(dd)->yaxs = ix;
+	    Rf_dpptr(dd)->yaxs = Rf_gpptr(dd)->yaxs = ix;
 	else par_error(what);
     }
     else if (streql(what, "yaxt")) {
@@ -798,14 +798,14 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
-	    dpptr(dd)->yaxt = gpptr(dd)->yaxt = ix;
+	    Rf_dpptr(dd)->yaxt = Rf_gpptr(dd)->yaxt = ix;
 	else par_error(what);
     }
     else if (streql(what, "ylog")) {
 	lengthCheck(what, value, 1);	ix = asLogical(value);
 	if (ix == NA_LOGICAL)
 	    par_error(what);
-	dpptr(dd)->ylog = gpptr(dd)->ylog = (ix != 0);
+	Rf_dpptr(dd)->ylog = Rf_gpptr(dd)->ylog = (ix != 0);
     }
     else warningcall(gcall, "parameter \"%s\" can't be set", what);
     return;
@@ -825,16 +825,16 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     if (streql(what, "adj")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	BoundsCheck(x, 0.0, 1.0, what);
-	gpptr(dd)->adj = x;
+	Rf_gpptr(dd)->adj = x;
     }
     else if (streql(what, "ann")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
-	gpptr(dd)->ann = (ix != 0);
+	Rf_gpptr(dd)->ann = (ix != 0);
     }
     else if (streql(what, "bg")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	gpptr(dd)->bg = ix;
+	Rf_gpptr(dd)->bg = ix;
     }
     else if (streql(what, "bty")) {
 	lengthCheck(what, value, 1);
@@ -849,7 +849,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	case ']':
 	case 'u': case 'U':
 	case 'n':
-	    gpptr(dd)->bty = ix;
+	    Rf_gpptr(dd)->bty = ix;
 	    break;
 	default:
 	    par_error(what);
@@ -858,100 +858,100 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "cex")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->cex = x;
-	/* gpptr(dd)->cexbase = x; */
+	Rf_gpptr(dd)->cex = x;
+	/* Rf_gpptr(dd)->cexbase = x; */
     }
     else if (streql(what, "cex.main")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->cexmain = x;
+	Rf_gpptr(dd)->cexmain = x;
     }
     else if (streql(what, "cex.lab")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->cexlab = x;
+	Rf_gpptr(dd)->cexlab = x;
     }
     else if (streql(what, "cex.sub")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->cexsub = x;
+	Rf_gpptr(dd)->cexsub = x;
     }
     else if (streql(what, "cex.axis")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->cexaxis = x;
+	Rf_gpptr(dd)->cexaxis = x;
     }
     else if (streql(what, "col")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	gpptr(dd)->col = ix;
+	Rf_gpptr(dd)->col = ix;
     }
     else if (streql(what, "col.main")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	gpptr(dd)->colmain = ix;
+	Rf_gpptr(dd)->colmain = ix;
     }
     else if (streql(what, "col.lab")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	gpptr(dd)->collab = ix;
+	Rf_gpptr(dd)->collab = ix;
     }
     else if (streql(what, "col.sub")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	gpptr(dd)->colsub = ix;
+	Rf_gpptr(dd)->colsub = ix;
     }
     else if (streql(what, "col.axis")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	gpptr(dd)->colaxis = ix;
+	Rf_gpptr(dd)->colaxis = ix;
     }
     else if (streql(what, "crt")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	naRealCheck(x, what);
-	gpptr(dd)->crt = x;
+	Rf_gpptr(dd)->crt = x;
     }
     else if (streql(what, "err")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	if (ix == 0 || ix == -1)
-	    gpptr(dd)->err = ix;
+	    Rf_gpptr(dd)->err = ix;
 	else par_error(what);
     }
     else if (streql(what, "fg")) {
 	lengthCheck(what, value, 1);	ix = RGBpar(value, 0);
 /*	naIntCheck(ix, what); */
-	gpptr(dd)->fg = ix;
+	Rf_gpptr(dd)->fg = ix;
     }
     else if (streql(what, "font")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	posIntCheck(ix, what);
-	gpptr(dd)->font = ix;
+	Rf_gpptr(dd)->font = ix;
     }
     else if (streql(what, "font.main")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	posIntCheck(ix, what);
-	gpptr(dd)->fontmain = ix;
+	Rf_gpptr(dd)->fontmain = ix;
     }
     else if (streql(what, "font.lab")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	posIntCheck(ix, what);
-	gpptr(dd)->fontlab = ix;
+	Rf_gpptr(dd)->fontlab = ix;
     }
     else if (streql(what, "font.sub")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	posIntCheck(ix, what);
-	gpptr(dd)->fontsub = ix;
+	Rf_gpptr(dd)->fontsub = ix;
     }
     else if (streql(what, "font.axis")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	posIntCheck(ix, what);
-	gpptr(dd)->fontaxis = ix;
+	Rf_gpptr(dd)->fontaxis = ix;
     }
     else if(streql(what, "gamma")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
 	if (((GEDevDesc*) dd)->dev->canChangeGamma)
-	    gpptr(dd)->gamma = x;
+	    Rf_gpptr(dd)->gamma = x;
 	else
 	    warningcall(gcall, "gamma cannot be modified on this device");
     }
@@ -961,24 +961,24 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	posIntCheck   (INTEGER(value)[0], what);
 	posIntCheck   (INTEGER(value)[1], what);
 	nonnegIntCheck(INTEGER(value)[2], what);
-	gpptr(dd)->lab[0] = INTEGER(value)[0];
-	gpptr(dd)->lab[1] = INTEGER(value)[1];
-	gpptr(dd)->lab[2] = INTEGER(value)[2];
+	Rf_gpptr(dd)->lab[0] = INTEGER(value)[0];
+	Rf_gpptr(dd)->lab[1] = INTEGER(value)[1];
+	Rf_gpptr(dd)->lab[2] = INTEGER(value)[2];
     }
     else if (streql(what, "las")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	if (0 <= ix && ix <= 3)
-	    gpptr(dd)->las = ix;
+	    Rf_gpptr(dd)->las = ix;
 	else par_error(what);
     }
     else if (streql(what, "lty")) {
 	lengthCheck(what, value, 1);
-	gpptr(dd)->lty = LTYpar(value, 0);
+	Rf_gpptr(dd)->lty = LTYpar(value, 0);
     }
     else if (streql(what, "lwd")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->lwd = x;
+	Rf_gpptr(dd)->lwd = x;
     }
     else if (streql(what, "mgp")) {
 	value = coerceVector(value, REALSXP);
@@ -986,14 +986,14 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
-	gpptr(dd)->mgp[0] = REAL(value)[0];
-	gpptr(dd)->mgp[1] = REAL(value)[1];
-	gpptr(dd)->mgp[2] = REAL(value)[2];
+	Rf_gpptr(dd)->mgp[0] = REAL(value)[0];
+	Rf_gpptr(dd)->mgp[1] = REAL(value)[1];
+	Rf_gpptr(dd)->mgp[2] = REAL(value)[2];
     }
     else if (streql(what, "mkh")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->mkh = x;
+	Rf_gpptr(dd)->mkh = x;
     }
     else if (streql(what, "pch")) {
 	if (!isVector(value) || LENGTH(value) < 1)
@@ -1006,32 +1006,32 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	    nonnegIntCheck(ix, what);
 	}
 	else par_error(what);
-	gpptr(dd)->pch = ix;
+	Rf_gpptr(dd)->pch = ix;
     }
     else if (streql(what, "smo")) {
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	posIntCheck(ix, what);
-	gpptr(dd)->smo = ix;
+	Rf_gpptr(dd)->smo = ix;
     }
     else if (streql(what, "srt")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	naRealCheck(x, what);
-	gpptr(dd)->srt = x;
+	Rf_gpptr(dd)->srt = x;
     }
     else if (streql(what, "tck")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	naRealCheck(x, what);
-	gpptr(dd)->tck = x;
+	Rf_gpptr(dd)->tck = x;
     }
     else if (streql(what, "tcl")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	naRealCheck(x, what);
-	gpptr(dd)->tcl = x;
+	Rf_gpptr(dd)->tcl = x;
     }
     else if (streql(what, "tmag")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
-	gpptr(dd)->tmag = x;
+	Rf_gpptr(dd)->tmag = x;
     }
     else if (streql(what, "type")) {
 	if (!isString(value) || LENGTH(value) < 1)
@@ -1047,7 +1047,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	case 'S':
 	case 'h':
 	case 'n':
-	    gpptr(dd)->type = ix;
+	    Rf_gpptr(dd)->type = ix;
 	    break;
 	default:
 	    par_error(what);
@@ -1059,16 +1059,16 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	posIntCheck((int) (REAL(value)[2]), what);
-	gpptr(dd)->xaxp[0] = REAL(value)[0];
-	gpptr(dd)->xaxp[1] = REAL(value)[1];
-	gpptr(dd)->xaxp[2] = (int)(REAL(value)[2]);
+	Rf_gpptr(dd)->xaxp[0] = REAL(value)[0];
+	Rf_gpptr(dd)->xaxp[1] = REAL(value)[1];
+	Rf_gpptr(dd)->xaxp[2] = (int)(REAL(value)[2]);
     }
     else if (streql(what, "xaxs")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'e' || ix == 'i' || ix == 'r' || ix == 'd')
-	    gpptr(dd)->xaxs = ix;
+	    Rf_gpptr(dd)->xaxs = ix;
 	else par_error(what);
     }
     else if (streql(what, "xaxt")) {
@@ -1076,16 +1076,16 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
-	    gpptr(dd)->xaxt = ix;
+	    Rf_gpptr(dd)->xaxt = ix;
 	else par_error(what);
     }
     else if (streql(what, "xpd")) {
 	lengthCheck(what, value, 1);
 	ix = asInteger(value);
 	if (ix==NA_INTEGER)
-	    gpptr(dd)->xpd = 2;
+	    Rf_gpptr(dd)->xpd = 2;
 	else
-	    gpptr(dd)->xpd = (ix != 0);
+	    Rf_gpptr(dd)->xpd = (ix != 0);
     }
     else if (streql(what, "yaxp")) {
 	value = coerceVector(value, REALSXP);
@@ -1093,16 +1093,16 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	naRealCheck(REAL(value)[0], what);
 	naRealCheck(REAL(value)[1], what);
 	posIntCheck((int) (REAL(value)[2]), what);
-	gpptr(dd)->yaxp[0] = REAL(value)[0];
-	gpptr(dd)->yaxp[1] = REAL(value)[1];
-	gpptr(dd)->yaxp[2] = (int) (REAL(value)[2]);
+	Rf_gpptr(dd)->yaxp[0] = REAL(value)[0];
+	Rf_gpptr(dd)->yaxp[1] = REAL(value)[1];
+	Rf_gpptr(dd)->yaxp[2] = (int) (REAL(value)[2]);
     }
     else if (streql(what, "yaxs")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'e' || ix == 'i' || ix == 'r' || ix == 'd')
-	    gpptr(dd)->yaxs = ix;
+	    Rf_gpptr(dd)->yaxs = ix;
 	else par_error(what);
     }
     else if (streql(what, "yaxt")) {
@@ -1110,7 +1110,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
-	    gpptr(dd)->yaxt = ix;
+	    Rf_gpptr(dd)->yaxt = ix;
 	else par_error(what);
     }
     else warning("parameter \"%s\" couldn't be set in high-level plot() function", what);
@@ -1126,87 +1126,87 @@ static SEXP Query(char *what, DevDesc *dd)
 
     if (streql(what, "adj")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->adj;
+	REAL(value)[0] = Rf_dpptr(dd)->adj;
     }
     else if (streql(what, "ann")) {
 	value = allocVector(LGLSXP, 1);
-	LOGICAL(value)[0] = (dpptr(dd)->ann != 0);
+	LOGICAL(value)[0] = (Rf_dpptr(dd)->ann != 0);
     }
     else if (streql(what, "ask")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->ask;
+	INTEGER(value)[0] = Rf_dpptr(dd)->ask;
     }
     else if (streql(what, "bg")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(dpptr(dd)->bg)));
+	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->bg)));
 	UNPROTECT(1);
     }
     else if (streql(what, "bty")) {
 	char buf[2];
 	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = dpptr(dd)->bty;
+	buf[0] = Rf_dpptr(dd)->bty;
 	buf[1] = '\0';
 	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "cex")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->cexbase;
+	REAL(value)[0] = Rf_dpptr(dd)->cexbase;
     }
     else if (streql(what, "cex.main")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->cexmain;
+	REAL(value)[0] = Rf_dpptr(dd)->cexmain;
     }
     else if (streql(what, "cex.lab")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->cexlab;
+	REAL(value)[0] = Rf_dpptr(dd)->cexlab;
     }
     else if (streql(what, "cex.sub")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->cexsub;
+	REAL(value)[0] = Rf_dpptr(dd)->cexsub;
     }
     else if (streql(what, "cex.axis")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->cexaxis;
+	REAL(value)[0] = Rf_dpptr(dd)->cexaxis;
     }
     else if (streql(what, "cin")) {
 	value = allocVector(REALSXP, 2);
-	REAL(value)[0] = dpptr(dd)->cra[0]*dpptr(dd)->ipr[0];
-	REAL(value)[1] = dpptr(dd)->cra[1]*dpptr(dd)->ipr[1];
+	REAL(value)[0] = Rf_dpptr(dd)->cra[0]*Rf_dpptr(dd)->ipr[0];
+	REAL(value)[1] = Rf_dpptr(dd)->cra[1]*Rf_dpptr(dd)->ipr[1];
     }
     else if (streql(what, "col")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(dpptr(dd)->col)));
+	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->col)));
 	UNPROTECT(1);
     }
     else if (streql(what, "col.main")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(dpptr(dd)->colmain)));
+	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colmain)));
 	UNPROTECT(1);
     }
     else if (streql(what, "col.lab")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(dpptr(dd)->collab)));
+	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->collab)));
 	UNPROTECT(1);
     }
     else if (streql(what, "col.sub")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(dpptr(dd)->colsub)));
+	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colsub)));
 	UNPROTECT(1);
     }
     else if (streql(what, "col.axis")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(dpptr(dd)->colaxis)));
+	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colaxis)));
 	UNPROTECT(1);
     }
     else if (streql(what, "cra")) {
 	value = allocVector(REALSXP, 2);
-	REAL(value)[0] = dpptr(dd)->cra[0];
-	REAL(value)[1] = dpptr(dd)->cra[1];
+	REAL(value)[0] = Rf_dpptr(dd)->cra[0];
+	REAL(value)[1] = Rf_dpptr(dd)->cra[1];
     }
     else if (streql(what, "crt")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->crt;
+	REAL(value)[0] = Rf_dpptr(dd)->crt;
     }
     else if (streql(what, "csi")) {
 	value = allocVector(REALSXP, 1);
@@ -1215,10 +1215,10 @@ static SEXP Query(char *what, DevDesc *dd)
     else if (streql(what, "cxy")) {
 	value = allocVector(REALSXP, 2);
 	/* == par("cin") / par("pin") : */
-	REAL(value)[0] = dpptr(dd)->cra[0]*dpptr(dd)->ipr[0] / dpptr(dd)->pin[0]
-	    * (dpptr(dd)->usr[1] - dpptr(dd)->usr[0]);
-	REAL(value)[1] = dpptr(dd)->cra[1]*dpptr(dd)->ipr[1] / dpptr(dd)->pin[1]
-	    * (dpptr(dd)->usr[3] - dpptr(dd)->usr[2]);
+	REAL(value)[0] = Rf_dpptr(dd)->cra[0]*Rf_dpptr(dd)->ipr[0] / Rf_dpptr(dd)->pin[0]
+	    * (Rf_dpptr(dd)->usr[1] - Rf_dpptr(dd)->usr[0]);
+	REAL(value)[1] = Rf_dpptr(dd)->cra[1]*Rf_dpptr(dd)->ipr[1] / Rf_dpptr(dd)->pin[1]
+	    * (Rf_dpptr(dd)->usr[3] - Rf_dpptr(dd)->usr[2]);
     }
     else if (streql(what, "din")) {
 	value = allocVector(REALSXP, 2);
@@ -1227,90 +1227,90 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "err")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->err;
+	INTEGER(value)[0] = Rf_dpptr(dd)->err;
     }
     else if (streql(what, "fg")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(dpptr(dd)->fg)));
+	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->fg)));
 	UNPROTECT(1);
     }
     else if (streql(what, "fig")) {
 	value = allocVector(REALSXP, 4);
-	REAL(value)[0] = dpptr(dd)->fig[0];
-	REAL(value)[1] = dpptr(dd)->fig[1];
-	REAL(value)[2] = dpptr(dd)->fig[2];
-	REAL(value)[3] = dpptr(dd)->fig[3];
+	REAL(value)[0] = Rf_dpptr(dd)->fig[0];
+	REAL(value)[1] = Rf_dpptr(dd)->fig[1];
+	REAL(value)[2] = Rf_dpptr(dd)->fig[2];
+	REAL(value)[3] = Rf_dpptr(dd)->fig[3];
     }
     else if (streql(what, "fin")) {
 	value = allocVector(REALSXP, 2);
-	REAL(value)[0] = dpptr(dd)->fin[0];
-	REAL(value)[1] = dpptr(dd)->fin[1];
+	REAL(value)[0] = Rf_dpptr(dd)->fin[0];
+	REAL(value)[1] = Rf_dpptr(dd)->fin[1];
     }
     else if (streql(what, "font")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->font;
+	INTEGER(value)[0] = Rf_dpptr(dd)->font;
     }
     else if (streql(what, "font.main")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->fontmain;
+	INTEGER(value)[0] = Rf_dpptr(dd)->fontmain;
     }
     else if (streql(what, "font.lab")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->fontlab;
+	INTEGER(value)[0] = Rf_dpptr(dd)->fontlab;
     }
     else if (streql(what, "font.sub")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->fontsub;
+	INTEGER(value)[0] = Rf_dpptr(dd)->fontsub;
     }
     else if (streql(what, "font.axis")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->fontaxis;
+	INTEGER(value)[0] = Rf_dpptr(dd)->fontaxis;
     }
     else if (streql(what, "gamma")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->gamma;
+	REAL(value)[0] = Rf_dpptr(dd)->gamma;
     }
     else if (streql(what, "lab")) {
 	value = allocVector(INTSXP, 3);
-	INTEGER(value)[0] = dpptr(dd)->lab[0];
-	INTEGER(value)[1] = dpptr(dd)->lab[1];
-	INTEGER(value)[2] = dpptr(dd)->lab[2];
+	INTEGER(value)[0] = Rf_dpptr(dd)->lab[0];
+	INTEGER(value)[1] = Rf_dpptr(dd)->lab[1];
+	INTEGER(value)[2] = Rf_dpptr(dd)->lab[2];
     }
     else if (streql(what, "las")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->las;
+	INTEGER(value)[0] = Rf_dpptr(dd)->las;
     }
     else if (streql(what, "lty")) {
-	value = LTYget(dpptr(dd)->lty);
+	value = LTYget(Rf_dpptr(dd)->lty);
     }
     else if (streql(what, "lwd")) {
 	value =	 allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->lwd;
+	REAL(value)[0] = Rf_dpptr(dd)->lwd;
     }
     else if (streql(what, "mai")) {
 	value = allocVector(REALSXP, 4);
-	REAL(value)[0] = dpptr(dd)->mai[0];
-	REAL(value)[1] = dpptr(dd)->mai[1];
-	REAL(value)[2] = dpptr(dd)->mai[2];
-	REAL(value)[3] = dpptr(dd)->mai[3];
+	REAL(value)[0] = Rf_dpptr(dd)->mai[0];
+	REAL(value)[1] = Rf_dpptr(dd)->mai[1];
+	REAL(value)[2] = Rf_dpptr(dd)->mai[2];
+	REAL(value)[3] = Rf_dpptr(dd)->mai[3];
     }
     else if (streql(what, "mar")) {
 	value = allocVector(REALSXP, 4);
-	REAL(value)[0] = dpptr(dd)->mar[0];
-	REAL(value)[1] = dpptr(dd)->mar[1];
-	REAL(value)[2] = dpptr(dd)->mar[2];
-	REAL(value)[3] = dpptr(dd)->mar[3];
+	REAL(value)[0] = Rf_dpptr(dd)->mar[0];
+	REAL(value)[1] = Rf_dpptr(dd)->mar[1];
+	REAL(value)[2] = Rf_dpptr(dd)->mar[2];
+	REAL(value)[3] = Rf_dpptr(dd)->mar[3];
     }
     else if (streql(what, "mex")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->mex;
+	REAL(value)[0] = Rf_dpptr(dd)->mex;
     }
     /* NOTE that if a complex layout has been specified */
     /* then this simple information may not be very useful. */
     else if (streql(what, "mfrow") || streql(what, "mfcol")) {
 	value = allocVector(INTSXP, 2);
-	INTEGER(value)[0] = dpptr(dd)->numrows;
-	INTEGER(value)[1] = dpptr(dd)->numcols;
+	INTEGER(value)[0] = Rf_dpptr(dd)->numrows;
+	INTEGER(value)[1] = Rf_dpptr(dd)->numcols;
     }
     else if (streql(what, "mfg")) {
 	int row, col;
@@ -1318,53 +1318,53 @@ static SEXP Query(char *what, DevDesc *dd)
 	currentFigureLocation(&row, &col, dd);
 	INTEGER(value)[0] = row+1;
 	INTEGER(value)[1] = col+1;
-	INTEGER(value)[2] = dpptr(dd)->numrows;
-	INTEGER(value)[3] = dpptr(dd)->numcols;
+	INTEGER(value)[2] = Rf_dpptr(dd)->numrows;
+	INTEGER(value)[3] = Rf_dpptr(dd)->numcols;
     }
     else if (streql(what, "mgp")) {
 	value = allocVector(REALSXP, 3);
-	REAL(value)[0] = dpptr(dd)->mgp[0];
-	REAL(value)[1] = dpptr(dd)->mgp[1];
-	REAL(value)[2] = dpptr(dd)->mgp[2];
+	REAL(value)[0] = Rf_dpptr(dd)->mgp[0];
+	REAL(value)[1] = Rf_dpptr(dd)->mgp[1];
+	REAL(value)[2] = Rf_dpptr(dd)->mgp[2];
     }
     else if (streql(what, "mkh")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->mkh;
+	REAL(value)[0] = Rf_dpptr(dd)->mkh;
     }
     else if (streql(what, "new")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->new;
+	INTEGER(value)[0] = Rf_dpptr(dd)->new;
     }
     else if (streql(what, "oma")) {
 	value = allocVector(REALSXP, 4);
-	REAL(value)[0] = dpptr(dd)->oma[0];
-	REAL(value)[1] = dpptr(dd)->oma[1];
-	REAL(value)[2] = dpptr(dd)->oma[2];
-	REAL(value)[3] = dpptr(dd)->oma[3];
+	REAL(value)[0] = Rf_dpptr(dd)->oma[0];
+	REAL(value)[1] = Rf_dpptr(dd)->oma[1];
+	REAL(value)[2] = Rf_dpptr(dd)->oma[2];
+	REAL(value)[3] = Rf_dpptr(dd)->oma[3];
     }
     else if (streql(what, "omd")) {
 	value = allocVector(REALSXP, 4);
-	REAL(value)[0] = dpptr(dd)->omd[0];
-	REAL(value)[1] = dpptr(dd)->omd[1];
-	REAL(value)[2] = dpptr(dd)->omd[2];
-	REAL(value)[3] = dpptr(dd)->omd[3];
+	REAL(value)[0] = Rf_dpptr(dd)->omd[0];
+	REAL(value)[1] = Rf_dpptr(dd)->omd[1];
+	REAL(value)[2] = Rf_dpptr(dd)->omd[2];
+	REAL(value)[3] = Rf_dpptr(dd)->omd[3];
     }
     else if (streql(what, "omi")) {
 	value = allocVector(REALSXP, 4);
-	REAL(value)[0] = dpptr(dd)->omi[0];
-	REAL(value)[1] = dpptr(dd)->omi[1];
-	REAL(value)[2] = dpptr(dd)->omi[2];
-	REAL(value)[3] = dpptr(dd)->omi[3];
+	REAL(value)[0] = Rf_dpptr(dd)->omi[0];
+	REAL(value)[1] = Rf_dpptr(dd)->omi[1];
+	REAL(value)[2] = Rf_dpptr(dd)->omi[2];
+	REAL(value)[3] = Rf_dpptr(dd)->omi[3];
     }
     else if (streql(what, "pch")) {
 	char buf[2];
-	if(dpptr(dd)->pch < ' ' || dpptr(dd)->pch > 255) {
+	if(Rf_dpptr(dd)->pch < ' ' || Rf_dpptr(dd)->pch > 255) {
 	    PROTECT(value = allocVector(INTSXP, 1));
-	    INTEGER(value)[0] = dpptr(dd)->pch;
+	    INTEGER(value)[0] = Rf_dpptr(dd)->pch;
 	}
 	else {
 	    PROTECT(value = allocVector(STRSXP, 1));
-	    buf[0] = dpptr(dd)->pch;
+	    buf[0] = Rf_dpptr(dd)->pch;
 	    buf[1] = '\0';
 	    SET_STRING_ELT(value, 0, mkChar(buf));
 	}
@@ -1372,85 +1372,85 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "pin")) {
 	value = allocVector(REALSXP, 2);
-	REAL(value)[0] = dpptr(dd)->pin[0];
-	REAL(value)[1] = dpptr(dd)->pin[1];
+	REAL(value)[0] = Rf_dpptr(dd)->pin[0];
+	REAL(value)[1] = Rf_dpptr(dd)->pin[1];
     }
     else if (streql(what, "plt")) {
 	value = allocVector(REALSXP, 4);
-	REAL(value)[0] = dpptr(dd)->plt[0];
-	REAL(value)[1] = dpptr(dd)->plt[1];
-	REAL(value)[2] = dpptr(dd)->plt[2];
-	REAL(value)[3] = dpptr(dd)->plt[3];
+	REAL(value)[0] = Rf_dpptr(dd)->plt[0];
+	REAL(value)[1] = Rf_dpptr(dd)->plt[1];
+	REAL(value)[2] = Rf_dpptr(dd)->plt[2];
+	REAL(value)[3] = Rf_dpptr(dd)->plt[3];
     }
     else if (streql(what, "ps")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->ps;
+	INTEGER(value)[0] = Rf_dpptr(dd)->ps;
     }
     else if (streql(what, "pty")) {
 	char buf[2];
 	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = dpptr(dd)->pty;
+	buf[0] = Rf_dpptr(dd)->pty;
 	buf[1] = '\0';
 	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "smo")) {
 	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->smo;
+	INTEGER(value)[0] = Rf_dpptr(dd)->smo;
     }
     else if (streql(what, "srt")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->srt;
+	REAL(value)[0] = Rf_dpptr(dd)->srt;
     }
     else if (streql(what, "tck")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->tck;
+	REAL(value)[0] = Rf_dpptr(dd)->tck;
     }
     else if (streql(what, "tcl")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->tcl;
+	REAL(value)[0] = Rf_dpptr(dd)->tcl;
     }
     else if (streql(what, "tmag")) {
 	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = dpptr(dd)->tmag;
+	REAL(value)[0] = Rf_dpptr(dd)->tmag;
     }
     else if (streql(what, "type")) {
 	char buf[2];
 	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = dpptr(dd)->type;
+	buf[0] = Rf_dpptr(dd)->type;
 	buf[1] = '\0';
 	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "usr")) {
 	value = allocVector(REALSXP, 4);
-	if (gpptr(dd)->xlog) {
-	    REAL(value)[0] = gpptr(dd)->logusr[0];
-	    REAL(value)[1] = gpptr(dd)->logusr[1];
+	if (Rf_gpptr(dd)->xlog) {
+	    REAL(value)[0] = Rf_gpptr(dd)->logusr[0];
+	    REAL(value)[1] = Rf_gpptr(dd)->logusr[1];
 	}
 	else {
-	    REAL(value)[0] = dpptr(dd)->usr[0];
-	    REAL(value)[1] = dpptr(dd)->usr[1];
+	    REAL(value)[0] = Rf_dpptr(dd)->usr[0];
+	    REAL(value)[1] = Rf_dpptr(dd)->usr[1];
 	}
-	if (gpptr(dd)->ylog) {
-	    REAL(value)[2] = gpptr(dd)->logusr[2];
-	    REAL(value)[3] = gpptr(dd)->logusr[3];
+	if (Rf_gpptr(dd)->ylog) {
+	    REAL(value)[2] = Rf_gpptr(dd)->logusr[2];
+	    REAL(value)[3] = Rf_gpptr(dd)->logusr[3];
 	}
 	else {
-	    REAL(value)[2] = dpptr(dd)->usr[2];
-	    REAL(value)[3] = dpptr(dd)->usr[3];
+	    REAL(value)[2] = Rf_dpptr(dd)->usr[2];
+	    REAL(value)[3] = Rf_dpptr(dd)->usr[3];
 	}
     }
     else if (streql(what, "xaxp")) {
 	value = allocVector(REALSXP, 3);
-	REAL(value)[0] = dpptr(dd)->xaxp[0];
-	REAL(value)[1] = dpptr(dd)->xaxp[1];
-	REAL(value)[2] = dpptr(dd)->xaxp[2];
+	REAL(value)[0] = Rf_dpptr(dd)->xaxp[0];
+	REAL(value)[1] = Rf_dpptr(dd)->xaxp[1];
+	REAL(value)[2] = Rf_dpptr(dd)->xaxp[2];
     }
     else if (streql(what, "xaxs")) {
 	char buf[2];
 	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = dpptr(dd)->xaxs;
+	buf[0] = Rf_dpptr(dd)->xaxs;
 	buf[1] = '\0';
 	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
@@ -1458,32 +1458,32 @@ static SEXP Query(char *what, DevDesc *dd)
     else if (streql(what, "xaxt")) {
 	char buf[2];
 	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = dpptr(dd)->xaxt;
+	buf[0] = Rf_dpptr(dd)->xaxt;
 	buf[1] = '\0';
 	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "xlog")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->xlog;
+	INTEGER(value)[0] = Rf_dpptr(dd)->xlog;
     }
     else if (streql(what, "xpd")) {
 	value = allocVector(LGLSXP, 1);
-	if (dpptr(dd)->xpd == 2)
+	if (Rf_dpptr(dd)->xpd == 2)
 	    INTEGER(value)[0] = NA_INTEGER;
 	else
-	    INTEGER(value)[0] = dpptr(dd)->xpd;
+	    INTEGER(value)[0] = Rf_dpptr(dd)->xpd;
     }
     else if (streql(what, "yaxp")) {
 	value = allocVector(REALSXP, 3);
-	REAL(value)[0] = dpptr(dd)->yaxp[0];
-	REAL(value)[1] = dpptr(dd)->yaxp[1];
-	REAL(value)[2] = dpptr(dd)->yaxp[2];
+	REAL(value)[0] = Rf_dpptr(dd)->yaxp[0];
+	REAL(value)[1] = Rf_dpptr(dd)->yaxp[1];
+	REAL(value)[2] = Rf_dpptr(dd)->yaxp[2];
     }
     else if (streql(what, "yaxs")) {
 	char buf[2];
 	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = dpptr(dd)->yaxs;
+	buf[0] = Rf_dpptr(dd)->yaxs;
 	buf[1] = '\0';
 	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
@@ -1491,14 +1491,14 @@ static SEXP Query(char *what, DevDesc *dd)
     else if (streql(what, "yaxt")) {
 	char buf[2];
 	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = dpptr(dd)->yaxt;
+	buf[0] = Rf_dpptr(dd)->yaxt;
 	buf[1] = '\0';
 	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "ylog")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = dpptr(dd)->ylog;
+	INTEGER(value)[0] = Rf_dpptr(dd)->ylog;
     }
     else
 	value = R_NilValue;
@@ -1610,76 +1610,76 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     dd = CurrentDevice();
 
     /* num.rows: */
-    nrow = dpptr(dd)->numrows = gpptr(dd)->numrows = INTEGER(CAR(args))[0];
+    nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows = INTEGER(CAR(args))[0];
     args = CDR(args);
     /* num.cols: */
-    ncol = dpptr(dd)->numcols = gpptr(dd)->numcols = INTEGER(CAR(args))[0];
+    ncol = Rf_dpptr(dd)->numcols = Rf_gpptr(dd)->numcols = INTEGER(CAR(args))[0];
     args = CDR(args);
     /* mat[i,j] == order[i][j] : */
     for (i = 0; i < nrow; i++)
 	for (j = 0; j < ncol; j++)
-	    dpptr(dd)->order[i][j] = gpptr(dd)->order[i][j] =
+	    Rf_dpptr(dd)->order[i][j] = Rf_gpptr(dd)->order[i][j] =
 		INTEGER(CAR(args))[i + j*nrow];
     args = CDR(args);
 
     /* num.figures: */
-    dpptr(dd)->currentFigure = gpptr(dd)->currentFigure =
-	dpptr(dd)->lastFigure = gpptr(dd)->lastFigure = INTEGER(CAR(args))[0];
+    Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure =
+	Rf_dpptr(dd)->lastFigure = Rf_gpptr(dd)->lastFigure = INTEGER(CAR(args))[0];
     args = CDR(args);
     /* col.widths: */
     for (j = 0; j < ncol; j++)
-	dpptr(dd)->widths[j] = gpptr(dd)->widths[j] = REAL(CAR(args))[j];
+	Rf_dpptr(dd)->widths[j] = Rf_gpptr(dd)->widths[j] = REAL(CAR(args))[j];
     args = CDR(args);
     /* row.heights: */
     for (i = 0; i < nrow; i++)
-	dpptr(dd)->heights[i] = gpptr(dd)->heights[i] = REAL(CAR(args))[i];
+	Rf_dpptr(dd)->heights[i] = Rf_gpptr(dd)->heights[i] = REAL(CAR(args))[i];
     args = CDR(args);
     /* cm.widths: */
     ncmcol = length(CAR(args));
     for (j = 0; j < ncol; j++)
-	dpptr(dd)->cmWidths[j] = gpptr(dd)->cmWidths[j] = 0;
+	Rf_dpptr(dd)->cmWidths[j] = Rf_gpptr(dd)->cmWidths[j] = 0;
     for (j = 0; j < ncmcol; j++) {
-	dpptr(dd)->cmWidths[INTEGER(CAR(args))[j] - 1]
-	    = gpptr(dd)->cmWidths[INTEGER(CAR(args))[j] - 1]
+	Rf_dpptr(dd)->cmWidths[INTEGER(CAR(args))[j] - 1]
+	    = Rf_gpptr(dd)->cmWidths[INTEGER(CAR(args))[j] - 1]
 	    = 1;
     }
     args = CDR(args);
     /* cm.heights: */
     ncmrow = length(CAR(args));
     for (i = 0; i < nrow; i++)
-	dpptr(dd)->cmHeights[i] = gpptr(dd)->cmHeights[i] = 0;
+	Rf_dpptr(dd)->cmHeights[i] = Rf_gpptr(dd)->cmHeights[i] = 0;
     for (i = 0; i < ncmrow; i++) {
-	dpptr(dd)->cmHeights[INTEGER(CAR(args))[i] - 1]
-	    = gpptr(dd)->cmHeights[INTEGER(CAR(args))[i]-1]
+	Rf_dpptr(dd)->cmHeights[INTEGER(CAR(args))[i] - 1]
+	    = Rf_gpptr(dd)->cmHeights[INTEGER(CAR(args))[i]-1]
 	    = 1;
     }
     args = CDR(args);
     /* respect =  0 (FALSE), 1 (TRUE), or 2 (matrix) : */
-    dpptr(dd)->rspct = gpptr(dd)->rspct = INTEGER(CAR(args))[0];
+    Rf_dpptr(dd)->rspct = Rf_gpptr(dd)->rspct = INTEGER(CAR(args))[0];
     args = CDR(args);
     /* respect.mat */
     for (i = 0; i < nrow; i++)
 	for (j = 0; j < ncol; j++)
-	    dpptr(dd)->respect[i][j] = gpptr(dd)->respect[i][j]
+	    Rf_dpptr(dd)->respect[i][j] = Rf_gpptr(dd)->respect[i][j]
 		= INTEGER(CAR(args))[i + j * nrow];
 
     /*------------------------------------------------------*/
 
     if (nrow > 2 || ncol > 2) {
-	gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.66;
-	gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 0.66;
+	Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
     }
     else if (nrow == 2 && ncol == 2) {
-	gpptr(dd)->cexbase = dpptr(dd)->cexbase = 0.83;
-	gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 0.83;
+	Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
     }
     else {
-	gpptr(dd)->cexbase = dpptr(dd)->cexbase = 1.0;
-	gpptr(dd)->mex = dpptr(dd)->mex = 1.0;
+	Rf_gpptr(dd)->cexbase = Rf_dpptr(dd)->cexbase = 1.0;
+	Rf_gpptr(dd)->mex = Rf_dpptr(dd)->mex = 1.0;
     }
 
-    dpptr(dd)->defaultFigure = gpptr(dd)->defaultFigure = TRUE;
-    dpptr(dd)->layout = gpptr(dd)->layout = TRUE;
+    Rf_dpptr(dd)->defaultFigure = Rf_gpptr(dd)->defaultFigure = TRUE;
+    Rf_dpptr(dd)->layout = Rf_gpptr(dd)->layout = TRUE;
 
     GReset(dd);
 

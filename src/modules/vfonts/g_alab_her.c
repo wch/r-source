@@ -122,7 +122,7 @@ static void _draw_stroke (DevDesc *dd, bool pendown, double deltax, double delta
   double dx, dy;
   double theta;
   
-  theta = M_PI * gpptr(dd)->srt / 180.0;
+  theta = M_PI * Rf_gpptr(dd)->srt / 180.0;
   
   dx = cos(theta) * deltax - sin(theta) * deltay;
   dy = sin(theta) * deltax + cos(theta) * deltay;
@@ -276,16 +276,16 @@ static void Rvf_GVText (double x, double y, int unit, char *s,
 
 /* PAUL MURRELL
    Replaced saving and restoring of "plotter" state
-   with saving and restoring of gpptr(dd)->*
+   with saving and restoring of Rf_gpptr(dd)->*
 */
 
-  srtsave = gpptr(dd)->srt;
-  gpptr(dd)->srt = rotation;
-  /* gpptr(dd)->lwd set in _draw_hershey_string */
-  lwdsave = gpptr(dd)->lwd;
+  srtsave = Rf_gpptr(dd)->srt;
+  Rf_gpptr(dd)->srt = rotation;
+  /* Rf_gpptr(dd)->lwd set in _draw_hershey_string */
+  lwdsave = Rf_gpptr(dd)->lwd;
   /* When drawing vector font, always use "solid" lines */
-  ltysave = gpptr(dd)->lty;
-  gpptr(dd)->lty = LTY_SOLID;
+  ltysave = Rf_gpptr(dd)->lty;
+  Rf_gpptr(dd)->lty = LTY_SOLID;
   
   /* save relevant drawing attributes, and restore them later */
 
@@ -351,9 +351,9 @@ static void Rvf_GVText (double x, double y, int unit, char *s,
       /*    _plotter->fmove (R___(_plotter) oldposx, oldposy); */
   }
 
-  gpptr(dd)->srt = srtsave;
-  gpptr(dd)->lwd = lwdsave;
-  gpptr(dd)->lty = ltysave;
+  Rf_gpptr(dd)->srt = srtsave;
+  Rf_gpptr(dd)->lwd = lwdsave;
+  Rf_gpptr(dd)->lty = ltysave;
 
   /* amount by which to shift after printing label (user units) */
 /*
@@ -654,7 +654,7 @@ void _draw_hershey_string (DevDesc *dd, const unsigned short *string)
 	{
 	  if (line_width_type != 1)
 	    {
-	      gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
+	      Rf_gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
 	      line_width_type = 1;
 	    }
 	  _draw_hershey_glyph (dd,
@@ -665,7 +665,7 @@ void _draw_hershey_string (DevDesc *dd, const unsigned short *string)
 	{
 	  if (line_width_type != 2)
 	    {
-	      gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
+	      Rf_gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
 	      line_width_type = 2;
 	    }
 	  _draw_hershey_glyph (dd,
@@ -841,7 +841,7 @@ void _draw_hershey_string (DevDesc *dd, const unsigned short *string)
 	      /* draw the character */
 	      if (line_width_type != 1)
 	      {
-		  gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
+		  Rf_gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
 		  line_width_type = 1;
 		}
 	      _draw_hershey_glyph (dd,
@@ -911,7 +911,7 @@ void _draw_hershey_string (DevDesc *dd, const unsigned short *string)
 					      0.0, charsize, oblique);
 		  if (line_width_type != 2)
 		    {
-			gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
+			Rf_gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
 		      line_width_type = 2;
 		    }
 		  _draw_hershey_glyph (dd,
@@ -931,14 +931,14 @@ void _draw_hershey_string (DevDesc *dd, const unsigned short *string)
 		    {
 		      if (line_width_type != 2)
 			{
-			gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_ORIENTAL_STROKE_WIDTH);
+			Rf_gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_ORIENTAL_STROKE_WIDTH);
 			  line_width_type = 2;
 			}
 		    }
 		  else
 		      if (line_width_type != 1)
 			{
-			gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
+			Rf_gpptr(dd)->lwd = HERSHEY_UNITS_TO_DEVICE_UNITS (HERSHEY_STROKE_WIDTH);
 			  line_width_type = 1;
 			}
 		_draw_hershey_glyph (dd,

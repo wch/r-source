@@ -361,7 +361,6 @@ typedef struct {
 #define str2col			Rf_str2col
 #define StrMatch		Rf_StrMatch
 
-
 /* Default the settings for general graphical parameters
  * (i.e., defaults that do not depend on the device type: */
 void GInit(GPar*);
@@ -404,9 +403,9 @@ double R_Log10(double);
 
 /* FIXME: Make this a macro to avoid function call overhead?
  */
-GPar* gpptr(DevDesc *dd);
-GPar* dpptr(DevDesc *dd);
-GPar* dpSavedptr(DevDesc *dd);
-SEXP displayList(DevDesc *dd);
+GPar* Rf_gpptr(DevDesc *dd);
+GPar* Rf_dpptr(DevDesc *dd);
+GPar* Rf_dpSavedptr(DevDesc *dd);
+SEXP Rf_displayList(DevDesc *dd);
 
 #endif /* GRAPHICS_H_ */
