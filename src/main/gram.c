@@ -122,6 +122,7 @@ static unsigned char FunctionSource[MAXFUNSIZE];
 static unsigned char SourceLine[MAXLINESIZE];
 static unsigned char *FunctionStart[MAXNEST], *SourcePtr;
 static int FunctionLevel = 0;
+static int KeepSource;
  
 /* Soon to be defunct entry points */
 
@@ -488,7 +489,7 @@ static const short yycheck[] = {     0,
     40,    41,    -1,    -1,    44,    45,    46,    47
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
-#line 3 "/usr/share/misc/bison.simple"
+#line 3 "/usr/lib/bison.simple"
 /* This file comes from bison-1.28.  */
 
 /* Skeleton output parser for bison,
@@ -702,7 +703,7 @@ __yy_memcpy (char *to, char *from, unsigned int count)
 #endif
 #endif
 
-#line 217 "/usr/share/misc/bison.simple"
+#line 217 "/usr/lib/bison.simple"
 
 /* The user can define YYPARSE_PARAM as the name of an argument to be passed
    into yyparse.  The argument should have type void *.
@@ -1324,7 +1325,7 @@ case 73:
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
-#line 543 "/usr/share/misc/bison.simple"
+#line 543 "/usr/lib/bison.simple"
 
   yyvsp -= yylen;
   yyssp -= yylen;
@@ -1893,7 +1894,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
     SEXP source;
 
     if (GenerateCode) {
-	if (!R_KeepSource) 
+	if (!KeepSource) 
 	    PROTECT(source = R_NilValue);
 	else {
 	    unsigned char *p, *p0, *end;
@@ -2197,6 +2198,7 @@ static void ParseInit()
     FunctionLevel=0;
     SourcePtr = FunctionSource;
     xxcharcount = 0;
+    KeepSource = *LOGICAL(GetOption(install("keep.source"), R_NilValue));
 }
 
 static SEXP R_Parse1(int *status)
@@ -3195,6 +3197,7 @@ int yylex(void)
     case GE:
     case GT:
     case EQ:
+    case NE:
     case OR:
     case AND:
     case SPECIAL:
