@@ -115,7 +115,6 @@
 %% \alias{is.grob}
 %% \alias{is.layout}
 %% \alias{is.odd}
-%% \alias{is.unit}
 %% \alias{is.unit.arithmetic}
 %% \alias{is.unit.list}
 %% \alias{is.viewport}
@@ -204,6 +203,10 @@
 \alias{width}
 \alias{width.post}
 \alias{width.pre}
+%% </LIST>
+%% Currently (?) exported as needed by Hmisc and Design ...
+%% <LIST>
+\alias{is.unit}
 %% </LIST>
 %% Currently (?) exported as used in the grid.layout.Rd \example ...
 %% <LIST>
