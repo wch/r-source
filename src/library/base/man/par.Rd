@@ -1,12 +1,13 @@
 \name{par}
 \title{Set or Query Graphical Parameters}
 \usage{
-par(\dots)
+par(\dots, no.readonly = FALSE)
 
 <highlevel plot> (\dots\dots, <tag> = <value>)
 }
 \alias{par}
 \alias{.Pars}
+\alias{.Pars.readonly}
 \description{
   % \code{par} is an abomination before man and god.
   \code{par} can be used to set or query graphical parameters.
@@ -20,9 +21,11 @@ par(\dots)
   Parameters are queried by giving vectors of character strings to
   \code{par}.  In this case, the values are returned in a tagged list.
 
-  \code{par()} (no arguments) is used to get \emph{all} the graphical
-  parameters (as named list).
+  \code{par()} (no arguments) or \code{par(no.readonly=TRUE)} is used to
+  get \emph{all} the graphical parameters (as named list).
   Their names are currently taken from the variable \code{.Pars}.
+  \code{.Pars.readonly} contains the names of the \code{par} arguments
+  which are \emph{readonly}.
 
   \emph{\bold{R.O.}} Arguments := \bold{Read-only arguments}:
   These may only be used in queries, i.e.,  they do \emph{not} set anything.
@@ -47,6 +50,9 @@ par(\dots)
 %% --- The real documentation is the code -- in ../../../main/par.c   ;-)
 %% --- AND (defined AND commented) in ../../../include/Graphics.h
 \arguments{
+  \item{no.readonly}{logical; if \code{TRUE} and there are no other
+    arguments,  only parameters are returned which can be set by a
+    subsequent \code{par(.)} call.}
   \item{adj}{The value of \code{adj} determines the way in which text
     strings are justified.  A value of \code{0} produces right
     left-justified text, \code{0.5} centered text and \code{1}
@@ -203,7 +209,6 @@ par(\dots)
     Specifying \code{"n"} causes an axis to be set up, but not plotted.}
   \item{ylog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
     \code{\link{plot.default}}).  See \code{xlog} above.}
-
 }
 \section{Color Specification}{Colors can be specified in several
   different ways.  The simplest way is with a character string giving
@@ -243,6 +248,16 @@ par(op)
 par("ylog")# FALSE
 plot(1:12,log="y")
 par("ylog")# TRUE
+
+ex <- function() {
+   old.par <- par(no.readonly = TRUE)# all par settings which could be changed.
+   on.exit(par(old.par))
+   ## ...
+   ## ... do lots of par(..) settings and plots
+   ## ...
+   invisible() #-- now,  par(old.par)  will be executed
+}
+ex()
 }
 \keyword{iplot}
 \keyword{dplot}
