@@ -3230,7 +3230,7 @@ fi
 
 
 module_args=
-for module in . ; do
+for module in . gnome; do
   case "$module" in
     gnome)
       module_args="$module_args gnome"
