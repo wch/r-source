@@ -26,7 +26,8 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.13 $ ';
+my $revision = ' $Revision: 1.14 $ ';
+my $revision = ' $Revision: 1.14 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -45,11 +46,11 @@ my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
 usage() if $opt_help;
 
-my $startdir = getcwd();
+my $startdir = cwd();
 if($opt_library){
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
-    $library = getcwd();
+    $library = cwd();
     chdir($startdir);
 } else {
     $library = $R_HOME . "/library";
@@ -88,7 +89,7 @@ foreach $pkg (@ARGV){
     chdir($pkg)||
 	die "Error: cannot change to directory \`$pkg'\n";;
     chdir("..");
-    my $pkgdir = getcwd();
+    my $pkgdir = cwd();
     chdir($startdir);
 
     die "no valid package name found\n" unless length($pkgname) > 0;

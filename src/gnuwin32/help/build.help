@@ -37,20 +37,20 @@ $dir_mod = 0755;#- Permission ('mode') of newly created directories.
 
 if($opt_dosnames){$HTML="htm";} else{$HTML="html";}
 
-my $cwd = getcwd();
+my $current = cwd();
 
 if($opt_rhome){
     $R_HOME=$opt_rhome;
     print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
 } else{
     chdir(dirname($0) . "/../../..");
-    $R_HOME=getcwd();
+    $R_HOME=cwd();
     print STDERR "R_HOME: `$R_HOME'\n" if $opt_debug;
 }
 $R_HOME =~ s+\\+/+g; # Unix-style path
 
-chdir($cwd);
-print STDERR "Current directory (cwd): `$cwd'\n" if $opt_debug;
+chdir($current);
+print STDERR "Current directory (cwd): `$current'\n" if $opt_debug;
 
 # if option --htmllists is set we only rebuild some list files and
 # exit

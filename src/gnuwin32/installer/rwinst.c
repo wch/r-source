@@ -42,7 +42,7 @@ window w;
 button bBack, bNext, bFinish, bCancel, bSrc, bDest;
 radiobutton sys, pkg;
 checkbox basepkg, texthelp, htmlhelp, ltxhelp, chmhelp, winhelp, srcsp, 
-    pdf, refpdf, overwrite;
+    pdf, refpdf, overwrite, Register;
 listbox packages;
 textbox unzout;
 label lVer, lsrc, ldest, lwhat1, lwhat2, lwarn2, lwarn3, lwarn4, lwarn5,
@@ -61,6 +61,7 @@ char selpkg[80], *pkglist[100], *selpkglist[100];
 int npkgs, nspkgs, ispkgs, rwb=1, rwh=1, rwch=1, rww=0, rwl=0, rwwh=0, 
     rwsp=0, rwd=0, rwd2=0;
 int prwb=1, prww=1, prwl=1, prwch=1, prwwh=0;
+int ireg=0;
 
 /* SHELLsort -- corrected from R. Sedgewick `Algorithms in C' */
 
@@ -127,6 +128,30 @@ int fexists(char * file)
     return stat(str, &sb) == 0;
 }
 
+#define REG_KEY_NAME "Software\\R-core\\R"
+void reg_set()
+{
+    char *RHome = dest, version[40];
+    LONG rc;
+    HKEY hkey;
+    
+    sprintf(version, "%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
+    if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_KEY_NAME, 0, 
+			   KEY_ALL_ACCESS, &hkey)) != ERROR_SUCCESS) {
+	/* failed to open key, so try to create it */
+	rc = RegCreateKey(HKEY_LOCAL_MACHINE, REG_KEY_NAME, &hkey);
+    }
+    if(rc == ERROR_SUCCESS) {
+	rc = RegSetValueEx(hkey, "InstallPath", 0, REG_SZ,
+			   (CONST BYTE *)RHome, lstrlen(RHome)+1);
+	if (rc == ERROR_SUCCESS)
+	    rc = RegSetValueEx(hkey, "Current Version", 0, REG_SZ,
+			       (CONST BYTE *)version, lstrlen(version)+1);
+	RegCloseKey(hkey);
+    }
+}
+
+
 void page1(), page2(), page3(), pagepkg1(), pagepkg2(), pagepkg3();
 void cleanpage1(), cleanpage2(), cleanpage3(), cleanpagepkg1(),
     cleanpagepkg2(), cleanpagepkg3();
@@ -147,13 +172,6 @@ void next1(button b)
 		Rversion, Rver);
 	askok(str);
     }
-    if(FullInstall && strcmp(Rver, "rw0990") < 0) {
-	sprintf(str, 
-		"This installer is for version rw0990 and later only");
-	askok(str);
-	settext(fRver, Rversion);
- 	return;
-   }
     strcpy(src, gettext(fSrc));
     dosslash(src);
     settext(fSrc, src);
@@ -224,6 +242,7 @@ void cleanpage2()
     delobj(lwhat2);
     delobj(lwarn2);
     delobj(overwrite);
+    delobj(Register);
 }
 
 void cleanpage3()
@@ -302,6 +321,7 @@ void next2(button b)
     if(!rwb & !rwh & !rww & !rwl & !rwch & !rwwh & !rwsp & !rwd & !rwd2) 
 	return;
     over = ischecked(overwrite);
+    ireg = ischecked(Register);
     cleanpage2();
     page3();
 }
@@ -726,7 +746,9 @@ void page2()
 	}
     }
     overwrite = newcheckbox("overwrite existing files?",
-			    rect(30, 235, 150, 20), NULL);
+			    rect(20, 235, 150, 20), NULL);
+    Register = newcheckbox("register R_HOME?",
+			    rect(20, 260, 100, 20), NULL);
     check(overwrite);
     setkeydown(w, key2);
     show(w);
@@ -880,6 +902,7 @@ void page3()
 	}
     }
     delobj(lres3);
+    if(ireg) reg_set();
     strcat(lab, "installed");
     lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
     setkeydown(w, key3);

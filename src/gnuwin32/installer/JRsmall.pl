@@ -22,7 +22,7 @@ use Cwd;
 use File::Find;
 
 my $fn, $component, $path;
-my $startdir=getcwd();
+my $startdir=cwd();
 my $RVER=$ARGV[0];
 my $RW=$ARGV[1];
 my $iconpars="WorkingDir: \"{app}\"" ;
