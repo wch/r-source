@@ -34,7 +34,7 @@ CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG) $(PKG_FFLAGS)
 DLLLIBS=-L$(RHOME)/src/gnuwin32 $(LIBUNICOWS) $(PKG_LIBS) $(FLIBS) -lR 
 RESFLAGS=--include-dir $(RHOME)/include
-BLAS_LIBS=$(LIBUNICOWS) -lRblas
+BLAS_LIBS=-lRblas
 LAPACK_LIBS=-L$(RHOME)/lib $(LIBUNICOWS) -lRlapack 
 # for use by Makevars.win
 R_HOME=$(RHOME)
