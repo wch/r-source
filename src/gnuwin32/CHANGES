@@ -98,6 +98,10 @@ The internal pager will page down with space or CTRL-F and page up
 with minus or CTRL-B (key sequences which are widely used in Unix
 pagers).  CTRL-A selects all.
 
+The Change Directory dialog now starts in the current directory, not
+always at the desktop.
+
+
 RTerm changes
 -------------
 

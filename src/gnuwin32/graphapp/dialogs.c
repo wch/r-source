@@ -326,7 +326,7 @@ static void browse_button(control c)
     window w = parentwindow(c);
     dialog_data *d = data(w);
     char strbuf[MAX_PATH];
-
+    strcpy(strbuf, gettext(d->text));
     selectfolder(strbuf);
     if(strlen(strbuf)) settext(d->text, strbuf);
 }
