@@ -11,8 +11,8 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
        twiceit = FALSE,
        endrule = "Tukey", do.ends = FALSE)
 
-  print(<smoothobj>, \dots)
-summary(<smoothobj>, \dots)
+  print(smoothobj, \dots)
+summary(smoothobj, \dots)
 }
 \arguments{
   \item{x}{a vector or time series}

@@ -7,7 +7,7 @@
   how many lines are currently pushed back.
 }
 \usage{
-pushBack(data, connection, newLine =T RUE)
+pushBack(data, connection, newLine = TRUE)
 pushBackLength(connection)
 }
 \arguments{
@@ -17,12 +17,12 @@ pushBackLength(connection)
     pushed back.}
 }
 \details{
-  Several character strings can be pushed back on one or more occasions. The
-  occasions form a stack, so the first line to be retrieved will be the
-  first string from the last call to \code{pushBack}.  Lines which are
-  pushed back are read prior to the normal input from the connection,
-  by the normal text-reading functions such as \code{\link{readLines}}
-  and \code{\link{scan}}.
+  Several character strings can be pushed back on one or more occasions.
+  The occasions form a stack, so the first line to be retrieved will be
+  the first string from the last call to \code{pushBack}.  Lines which
+  are pushed back are read prior to the normal input from the
+  connection, by the normal text-reading functions such as
+  \code{\link{readLines}} and \code{\link{scan}}.
 
   Pushback is only allowed for readable connections.
 }

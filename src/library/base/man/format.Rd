@@ -3,10 +3,10 @@
 \usage{
 format(x, \dots)
 format.AsIs(x, width = 12, \dots)
-format.data.frame <- function(x, \dots, justify = "none") 
-format.default(x, trim = FALSE, digits = getOption("digits").
+format.data.frame(x, \dots, justify = "none") 
+format.default(x, trim = FALSE, digits = getOption("digits"),
                justify = c("left", "right", "none"))
-format.factor <- function(x, \dots)
+format.factor(x, \dots)
 format.pval(pv, digits = max(1, getOption("digits") - 2),
             eps = .Machine$double.eps, na.form = "NA")
 }
