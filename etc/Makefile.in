@@ -13,12 +13,14 @@ include $(top_builddir)/Makeconf
 SOURCES = Makeconf.in Makeconf-tests.in Renviron.in
 OBJECTS = $(SOURCES:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = \
-	Makefile.in $(SOURCES) \
-	gnome-interface.glade
+DISTFILES = Makefile.in $(SOURCES)
 
 EXPORTFILE = @EXPORTFILE@
+
+## <FIXME>
+## Remove eventually.
 GNOME_IF_FILES = @GNOME_IF_FILES@
+## </FIXME>
 
 all: Makefile R
 
@@ -39,29 +41,17 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  done) >> $@
 
 R: $(OBJECTS)
-## FIXME:
-## We currently look for gnome-interface.glade in R_HOME/gnome, but we 
-## should have it in R_HOME/etc (and the shlibs in Rexeclibdir).
-## In this case, only do `install-gnome' if not building in srcdir.
-	@$(MAKE) rhome=$(top_builddir) install-gnome
-
 $(OBJECTS): $(top_builddir)/config.status
 
-install: installdirs install-gnome
+install: installdirs
 	@echo "installing $(subdir) ..."
 	@for f in $(OBJECTS) $(EXPORTFILE); do \
 	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
 	done
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/etc
-install-gnome:
-	@if test -n "$(GNOME_IF_FILES)"; then \
-	  $(MKINSTALLDIRS) $(rhome)/gnome ;\
-	  for f in "$(GNOME_IF_FILES)"; do \
-	    $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/gnome; \
-	  done; \
-	fi
 install-strip: install
+
 uninstall:
 	@echo "uninstalling $(subdir) ..."
 	@if test -d $(rhome)/$(subdir) \
@@ -75,9 +65,12 @@ uninstall:
 
 mostlyclean: clean
 clean:
+## <FIXME>
+## Remove eventually.
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f *.pl $(GNOME_IF_FILES); \
 	fi
+## </FIXME>
 	@rm -f $(EXPORTFILE)
 distclean: clean
 	@rm -f $(OBJECTS) Makefile
