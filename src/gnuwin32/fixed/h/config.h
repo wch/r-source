@@ -32,6 +32,8 @@
 #define HAVE_ISNAN 1		/* IEEE Arith indicator */
 #define HAVE_FINITE 1
 
+#undef HAVE_FLOATINGPOINT_H
+#undef HAVE_FPU_CONTROL_H
 #undef HAVE_IEEEFP_H		/* "-Wall" */
 #undef HAVE_IEEE754_H		/* Linux */
 
@@ -183,6 +185,10 @@ double atanh(double);
 
 /* Used for buffer-overflow in printutils.c if available */
 #define HAVE_VSNPRINTF 1
+
+/* Which GUIs can we use? */
+#undef HAVE_X11
+#undef HAVE_GNOME
 
 /* for platform.c to put in .Platform */
 #ifdef Unix
