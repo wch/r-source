@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-08
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-11
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -474,7 +474,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2004-11-17:
+@c Linux binaries as of 2005-03-09:
 @c
 @c mandrake
 @c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
@@ -487,6 +487,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   fc3     i386   2.0.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.0.1  Brian Ripley
 @c   el3     i386   2.0.1  Matthew P Cox
+@c   el4     i386   2.0.1  Matthew P Cox
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -4036,6 +4037,7 @@ dir /opt/R/src/unix
 * How can I create rotated axis labels?::  
 * Why is read.table() so inefficient?::  
 * What is the difference between package and library?::  
+* I installed a package but the functions are not there::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -4784,7 +4786,7 @@ time and memory.  Performance can substantially be improved by using the
 @code{colClasses} argument to specify the classes to be assumed for the
 columns of the table.
 
-@node What is the difference between package and library?,  , Why is read.table() so inefficient?, R Miscellanea
+@node What is the difference between package and library?, I installed a package but the functions are not there, Why is read.table() so inefficient?, R Miscellanea
 @section What is the difference between package and library?
 
 A @dfn{package} is a standardized collection of material extending R,
@@ -4798,6 +4800,15 @@ containing packages.
 @xref{R Add-On Packages}, for more details.  See also Uwe Ligges (2003),
 ``R Help Desk: Package Management'', @emph{R News}, @strong{3/3},
 37--39.
+
+@node I installed a package but the functions are not there,  , What is the difference between package and library?, R Miscellanea
+@section I installed a package but the functions are not there
+
+To actually @emph{use} the package, it needs to be @emph{loaded} using
+@code{library()}.
+
+See @ref{R Add-On Packages} and @ref{What is the difference between
+package and library?} for more information.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
