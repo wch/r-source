@@ -33,7 +33,7 @@ optim(par, fn, gr = NULL,
 \details{
   By default this function performs minimization, but it will maximize
   if \code{control$fnscale} is negative.
-  
+
   The default method is an implementation of that of Nelder and Mead
   (1965), that uses only function values and is robust but relatively
   slow. It will work reasonably well for non-differentiable functions.
@@ -48,7 +48,7 @@ optim(par, fn, gr = NULL,
   Beale--Sorenson updates).  Conjugate gradient methods will generally
   be more fragile that the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
-  
+
   Method \code{"L-BFGS-B"} is that of Byrd \emph{et. al.} (1994) which
   allows \emph{box constraints}, that is each variable can be given a lower
   and/or upper bound. The initial value must satisfy the constraints.
@@ -56,19 +56,19 @@ optim(par, fn, gr = NULL,
   method. If non-trivial bounds are supplied, this method will be
   selected, with a warning.
 
-  Method \code{"SANN"} is a variant of simulated annealing 
+  Method \code{"SANN"} is a variant of simulated annealing
   given in Belisle (1992). Simulated-annealing belongs to the class of
   stochastic global optimization methods. It uses only function values
   but is relatively slow. It will also work for non-differentiable
   functions. This implementation uses the Metropolis function for the
   acceptance probability. The next candidate point is generated from a
-  Gaussian Markov kernel with scale proportional to the actual temperature. 
+  Gaussian Markov kernel with scale proportional to the actual temperature.
   Temperatures are decreased according to the logarithmic cooling
   schedule as given in Belisle (1992, p. 890). Note that the
   \code{"SANN"} method depends critically on the settings of the
   control parameters.  It is not a general-purpose method but can be
   very useful in getting to a good value on a very rough surface.
-  
+
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
   cannot be evaluated at the supplied value, but the initial value must
   have a computable finite value of \code{fn}.
@@ -126,7 +126,7 @@ optim(par, fn, gr = NULL,
       suppressed.}
     \item{\code{temp}}{controls the \code{"SANN"} method. It is the
       starting temperature for the cooling schedule. Defaults to
-      \code{10}.}  
+      \code{10}.}
     \item{\code{tmax}}{is the number of function evaluations at each
       temperature for the \code{"SANN"} method. Defaults to \code{10}.}
   }
@@ -149,7 +149,7 @@ optim(par, fn, gr = NULL,
       method; see component \code{message} for further details.}
       \item{\code{52}}{indicates an error from the \code{"L-BFGS-B"}
       method; see component \code{message} for further details.}
-    }      
+    }
   }
   \item{message}{A character string giving any additional information
     returned by the optimizer, or \code{NULL}.}
@@ -162,7 +162,7 @@ optim(par, fn, gr = NULL,
   Belisle, C. J. P. (1992) Convergence theorems for a class of simulated
   annealing algorithms on \eqn{R^d}{Rd}. \emph{J Applied Probability},
   \bold{29}, 885--895.
-  
+
   Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
   memory algorithm for bound constrained optimization.
   \emph{SIAM J. Scientific Computing}, \bold{16}, 1190--1208.
@@ -179,8 +179,8 @@ optim(par, fn, gr = NULL,
 \note{
   The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
   \code{"CG"} was based originally on Pascal code in Nash (1990) that was
-  translated by \code{p2c} and then hand-optimized. Dr Nash has agreed
-  that the code can be make freely available.
+  translated by \code{p2c} and then hand-optimized.  Dr Nash has agreed
+  that the code can be made freely available.
 
   The code for method \code{"L-BFGS-B"} is based on Fortran code by
   Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib.
