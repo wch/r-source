@@ -30,6 +30,10 @@ Subject:  behavior of r* and d* functions at boundaries
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Mon, 17 Dec 2001 11:04:27 -0500
 --points 1 and 2 were fixed for 1.4.0
+* PR# 1228 *
+Subject: bug with var(rep(1e30, 3))
+From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
+Date: Wed, 26 Dec 2001 13:03:31 +0100
 
 Directory:  Add-ons
 
@@ -197,37 +201,10 @@ Date: Wed, 7 Nov 2001 18:07:22 +0800 (WST)
 Subject: boxplot labels incorrect when horizontal = TRUE
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 9 Dec 2001 21:46:32 -0500 (EST)
-
-Directory:  incoming
-
-* PR# 1186 *
-Subject: a patch to tapply
-From: Vadim Ogranovich <vograno@arbitrade.com>
-Date: Thu, 29 Nov 2001 14:48:35 -0600
-* PR# 1224 *
-Subject: The Ultimate Calling Card
-From: "" <send0@ewasher.org>
-Date: Fri, 21 Dec 2001 07:23:49 +0100 (MET)
-* PR# 1226 *
-Subject: problem in predict.mlm
-From: Bob Gray <gray@jimmy.harvard.edu>
-Date: Sun, 23 Dec 2001 09:05:57 -0500
-* PR# 1228 *
-Subject: bug with var(rep(1e30, 3))
-From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
-Date: Wed, 26 Dec 2001 13:03:31 +0100
-* PR# 1229 *
-Subject: RGui/R Console crashes when entering illegal symbols
-From: hb@maths.lth.se
-Date: Thu, 27 Dec 2001 11:23:13 +0100 (MET)
 * PR# 1230 *
 Subject: scale in stars() is not as documented
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Thu, 27 Dec 2001 11:28:19 +0000 (GMT)
-* PR# 1231 *
-Subject: reshape error in 1.4
-From: Kevin.Wright@pioneer.com
-Date: Thu, 27 Dec 2001 22:52:57 +0100 (MET)
 
 Directory:  In-Out
 
@@ -270,6 +247,10 @@ Subject: Re: [Rd] Wierd problem comparing numeric values and list using ==
 From: John Chambers <jmc@research.bell-labs.com>
 Date: Mon, 27 Aug 2001 08:44:22 -0400
 --part of PR#1073
+* PR# 1186 *
+Subject: a patch to tapply
+From: Vadim Ogranovich <vograno@arbitrade.com>
+Date: Thu, 29 Nov 2001 14:48:35 -0600
 * PR# 1193 *
 Subject: Re: [R] appending similar data frames?
 From: Thomas Lumley <tlumley@u.washington.edu>
@@ -383,3 +364,14 @@ Date: Wed, 3 Oct 2001 11:35:58 -0400 (EDT)
 Directory:  Windows
 
 none
+
+Directory:  incoming
+
+* PR# 1226 *
+Subject: problem in predict.mlm
+From: Bob Gray <gray@jimmy.harvard.edu>
+Date: Sun, 23 Dec 2001 09:05:57 -0500
+* PR# 1231 *
+Subject: reshape error in 1.4
+From: Kevin.Wright@pioneer.com
+Date: Thu, 27 Dec 2001 22:52:57 +0100 (MET)
