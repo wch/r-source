@@ -1,62 +1,55 @@
 /*
- *      cpoly finds the zeros of a complex polynomial.
+ *	cpoly finds the zeros of a complex polynomial.
  *
- *      On Entry
+ *	On Entry
  *
- *      opr, opi      -  double precision vectors of real and
- *                       imaginary parts of the coefficients in
- *                       order of decreasing powers.
+ *	opr, opi      -	 double precision vectors of real and
+ *			 imaginary parts of the coefficients in
+ *			 order of decreasing powers.
  *
- *      degree        -  int degree of polynomial.
+ *	degree	      -	 int degree of polynomial.
  *
  *
- *      On Return
+ *	On Return
  *
- *      zeror, zeroi  -  output double precision vectors of
- *                       real and imaginary parts of the zeros.
+ *	zeror, zeroi  -	 output double precision vectors of
+ *			 real and imaginary parts of the zeros.
  *
- *      fail          -  output int parameter,  true  only if
- *                       leading coefficient is zero or if cpoly
- *                       has found fewer than degree zeros.
+ *	fail	      -	 output int parameter,	true  only if
+ *			 leading coefficient is zero or if cpoly
+ *			 has found fewer than degree zeros.
  *
- *      The program has been written to reduce the chance of overflow
- *      occurring. If it does occur, there is still a possibility that
- *      the zerofinder will work provided the overflowed quantity is
- *      replaced by a large number.
+ *	The program has been written to reduce the chance of overflow
+ *	occurring. If it does occur, there is still a possibility that
+ *	the zerofinder will work provided the overflowed quantity is
+ *	replaced by a large number.
  *
- *      This is a C translation of the following.
+ *	This is a C translation of the following.
  *
- *      TOMS Algorithm 419
- *      Jenkins and Traub.
- *      Comm. ACM 15 (1972) 97-99.
+ *	TOMS Algorithm 419
+ *	Jenkins and Traub.
+ *	Comm. ACM 15 (1972) 97-99.
  *
- *      Ross Ihaka
- *      February 1997
+ *	Ross Ihaka
+ *	February 1997
  */
 
 #include <float.h>
 #include "Fortran.h"
+#include "Arith.h"
+#include "Applic.h"
 
-static int calct(int *);
-static int fxshft(int *, double *, double *, int *);
-static int vrshft(int, double *, double *, int *);
-static int nexth(int *);
-static int noshft(int);
-
-void polyev(int *,
-	    double *, double *, double *, double *,
-	    double *, double *, double *, double *);
-double errev(int *, double *, double *, double *,
-	     double *, double *, double *);
-double cauchy(int *, double *, double *);
-void scale(int *, double *, double *, double *, double *, double *, double *);
-void cdivid(double *, double *,double *, double *, double *, double *);
-double cmod(double *, double *);
+static void calct(int *);
+static void fxshft(int *, double *, double *, int *);
+static void vrshft(int, double *, double *, int *);
+static void nexth(int *);
+static void noshft(int);
 
 /* Global Variables (too many!) */
 
 #define NMAX 50
 
+static int nn;
 static double pr[NMAX];
 static double pi[NMAX];
 static double hr[NMAX];
@@ -67,17 +60,13 @@ static double qhr[NMAX];
 static double qhi[NMAX];
 static double shr[NMAX];
 static double shi[NMAX];
-static double sr;
-static double si;
-static double tr;
-static double ti;
-static double pvr;
-static double pvi;
+static double sr, si;
+static double tr, ti;
+static double pvr, pvi;
 static double are;
 static double mre;
 static double eta = DBL_EPSILON;
 static double infin = DBL_MAX;
-static int nn;
 
 
 int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
@@ -86,38 +75,33 @@ int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
     int i__1;
     double d__1, d__2;
     static double base = (double)FLT_RADIX;
-    static int conv;
     static double cosr, sinr;
-    static int idnn2, i;
-    static double zi;
-    static double zr;
-    static double xx, yy, smalno= DBL_MIN;
+    static int conv, d_n, i, i1, i2;
+    static double zi, zr, xx, yy, smalno= DBL_MIN;
     static double bnd, xxx;
-    static int cnt1, cnt2;
-    --zeroi;
-    --zeror;
-    --opi;
-    --opr;
+    int d1;
 
     are = eta;
     mre = sqrt(2.0) * 2.0 * eta;
 
     /* We use the originals so we get exact */
     /* agreement with the original, but ... */
-    /*  cos 94 =   -0.06975647374412529990   */
-    /*  sin 94 =    0.99756405025982424767   */
-    /*  1/sqrt(2) = 0.70710678118654752440   */
+    /*	cos 94 =   -0.06975647374412529990   */
+    /*	sin 94 =    0.99756405025982424767   */
+    /*	1/sqrt(2) = 0.70710678118654752440   */
 
-    xx = (float).70710678;
-    yy = -xx;
     cosr = (float)-.060756474;
     sinr = (float).99756405;
+    xx = (float).70710678;
+    yy = -xx;
     *fail = FALSE;
-    nn = *degree + 1;
+
+    nn = *degree;
+    d1 = nn - 1;
 
     /* algorithm fails if the leading coefficient is zero. */
 
-    if (opr[1] == 0.0 && opi[1] == 0.0) {
+    if (opr[0] == 0.0 && opi[0] == 0.0) {
 	*fail = TRUE;
 	return 0;
     }
@@ -125,16 +109,18 @@ int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
     /* remove the zeros at the origin if any. */
 
     while (opr[nn] == 0.0 && opi[nn] == 0.0) {
-	idnn2 = *degree-nn+2;
-	zeror[idnn2] = 0.0;
-	zeroi[idnn2] = 0.0;
-	nn = nn-1;
+	d_n = d1-nn+1;
+	zeror[d_n] = 0.0;
+	zeroi[d_n] = 0.0;
+	nn--;
     }
+    nn++;
+    /*-- Now, global var.  nn := #{coefficients} = (relevant degree)+1 */
 
     /* make a copy of the coefficients and shr[] = | p[] | */
     for (i = 0; i<nn ; i++) {
-	pr[i] = opr[i+1];
-	pi[i] = opi[i+1];
+	pr[i] = opr[i];
+	pi[i] = opi[i];
 	shr[i] = hypot(pr[i], pi[i]);
     }
 
@@ -165,20 +151,20 @@ int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
 	/* outer loop to control 2 major passes */
 	/* with different sequences of shifts */
 
-	for (cnt1=1; cnt1<=2; cnt1++) {
+	for (i1 = 1; i1 <= 2; i1++) {
 
 	    /* first stage calculation, no shift */
 
 	    noshft(5);
 
-	    /*  inner loop to select a shift */
-	    for (cnt2=1 ; cnt2<=9 ; cnt2++) {
+	    /*	inner loop to select a shift */
+	    for (i2 = 1; i2 <= 9; i2++) {
 
 		/* shift is chosen with modulus bnd */
 		/* and amplitude rotated by 94 degrees */
 		/* from the previous shift */
 
-		xxx = cosr * xx - sinr * yy;
+		xxx= cosr * xx - sinr * yy;
 		yy = sinr * xx + cosr * yy;
 		xx = xxx;
 		sr = bnd * xx;
@@ -186,7 +172,7 @@ int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
 
 		/*  second stage calculation, fixed shift */
 
-		i__1 = cnt2 * 10;
+		i__1 = i2 * 10;
 		fxshft(&i__1, &zr, &zi, &conv);
 
 		if (conv)
@@ -200,14 +186,13 @@ int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
 	*fail = TRUE;
 	return 0;
 
-	/* the second stage jumps directly to the third */
-	/* stage iteration.  if successful the zero is */
-	/* stored and the polynomial deflated. */
-
+	/* the second stage jumps directly to the third stage iteration.
+	 * if successful, the zero is stored and the polynomial deflated.
+	 */
     L10:
-	idnn2 = *degree - nn + 2;
-	zeror[idnn2] = zr;
-	zeroi[idnn2] = zi;
+	d_n = d1+2 - nn;
+	zeror[d_n] = zr;
+	zeroi[d_n] = zi;
 	--nn;
 	for (i=0; i < nn ; i++) {
 	    pr[i] = qpr[i];
@@ -215,20 +200,19 @@ int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
 	}
     }/*while*/
 
-    /*  calculate the final zero and return */
+    /*	calculate the final zero and return */
 
     d__1 = -pr[1];
     d__2 = -pi[1];
-    cdivid(&d__1, &d__2, pr, pi, &zeror[*degree], &zeroi[*degree]);
+    cdivid(&d__1, &d__2, pr, pi, &zeror[d1], &zeroi[d1]);
     return 0;
-
 }
 
 
 /*  Computes the derivative polynomial as the initial
- *  polynomial and computes l1 no-shift h polynomials.  */
+ *  polynomial and computes l1 no-shift h polynomials.	*/
 
-static int noshft(int l1)
+static void noshft(int l1)
 {
     double d__1, d__2;
     static int i, j, n;
@@ -250,8 +234,8 @@ static int noshft(int l1)
 
 	if (cmod(&hr[n-1], &hi[n-1]) <= eta * 10.0 * cmod(&pr[n-1], &pi[n-1])) {
 
-	    /*  If the constant term is essentially zero, */
-	    /*  shift h coefficients. */
+	    /*	If the constant term is essentially zero, */
+	    /*	shift h coefficients. */
 
 	    for (i = 1; i <= nm1; i++) {
 		j = nn - i;
@@ -278,7 +262,6 @@ static int noshft(int l1)
 	    hi[0] = pi[0];
 	}
     }
-    return 0;
 }
 
 
@@ -286,11 +269,11 @@ static int noshft(int l1)
  *  initiates a variable-shift iteration and returns with the
  *  approximate zero if successful.
  *
- *  l2    - limit of fixed shift steps
+ *  l2	  - limit of fixed shift steps
  *  zr,zi - approximate zero if conv is .true.
  *  conv  - int indicating convergence of stage 3 iteration  */
 
-static int fxshft(int *l2, double *zr, double *zi, int *conv)
+static void fxshft(int *l2, double *zr, double *zi, int *conv)
 {
     double d__1, d__2;
     static int pasd, bool, test;
@@ -353,7 +336,7 @@ static int fxshft(int *l2, double *zr, double *zi, int *conv)
 		svsi = si;
 		vrshft(10, zr, zi, conv);
 		if (*conv) {
-		    return 0;
+		    return;
 		}
 
 		/* the iteration failed to converge. */
@@ -377,18 +360,17 @@ static int fxshft(int *l2, double *zr, double *zi, int *conv)
     /* from second stage. */
 
     vrshft(10, zr, zi, conv);
-    return 0;
 }
 
 
 /*  carries out the third stage iteration.
- *  l3      - limit of steps in stage 3.
+ *  l3	    - limit of steps in stage 3.
  *  zr,zi   - on entry contains the initial iterate, if the
- *            iteration converges it contains the final iterate
- *            on exit.
+ *	      iteration converges it contains the final iterate
+ *	      on exit.
  *  conv    - .true. if iteration converges  */
 
-static int vrshft(int l3, double *zr, double *zi, int *conv)
+static void vrshft(int l3, double *zr, double *zi, int *conv)
 {
     static int bool, b;
     static int i, j;
@@ -411,7 +393,7 @@ static int vrshft(int l3, double *zr, double *zi, int *conv)
 	       &pvr, &pvi);
 	mp = cmod(&pvr, &pvi);
 	ms = cmod(&sr, &si);
-	if (mp <= errev(&nn, qpr, qpi, &ms, &mp, &are, &mre) * 20.0) {
+	if (mp <=  20. * errev(&nn, qpr, qpi, &ms, &mp, &are, &mre)) {
 	    goto L_conv;
 	}
 
@@ -452,7 +434,7 @@ static int vrshft(int l3, double *zr, double *zi, int *conv)
 		/* increases significantly. */
 
 		if (mp * .1 > omp)
-		    return 0;
+		    return;
 	    }
 	}
 	omp = mp;
@@ -469,19 +451,19 @@ static int vrshft(int l3, double *zr, double *zi, int *conv)
 	    si += ti;
 	}
     }
-    return 0;
+    return;
+
 L_conv:
     *conv = TRUE;
     *zr = sr;
     *zi = si;
-    return 0;
 }
 
-/* computes  t = -p(s)/h(s).
- * bool   - logical, set true if h(s) is essentially zero.  */
-
-static int calct(int *bool)
+static void calct(int *bool)
 {
+    /* computes	 t = -p(s)/h(s).
+     * bool   - logical, set true if h(s) is essentially zero.	*/
+
     double d__1, d__2;
     static int n;
     static double hvi, hvr;
@@ -502,15 +484,15 @@ static int calct(int *bool)
 	tr = 0.;
 	ti = 0.;
     }
-    return 0;
 }
 
 
-/* calculates the next shifted h polynomial. */
-/* bool   -  logical, if .true. h(s) is essentially zero */
 
-static int nexth(int *bool)
+static void nexth(int *bool)
 {
+    /* calculates the next shifted h polynomial.
+     * bool   -	 logical, if .true. h(s) is essentially zero
+     */
     static int j, n;
     static int nm1;
     static double t1, t2;
@@ -540,7 +522,6 @@ static int nexth(int *bool)
 	hr[0] = 0.;
 	hi[0] = 0.;
     }
-    return 0;
 }
 
 /*--------------------- Independent Complex Polynomial Utilities ----------*/
@@ -551,7 +532,7 @@ void polyev(int *nn,
 	    double *qr, double *qi,
 	    double *pvr, double *pvi)
 {
-    /* evaluates a polynomial  p  at  s  by the horner recurrence
+    /* evaluates a polynomial  p  at  s	 by the horner recurrence
      * placing the partial sums in q and the computed value in pv.
      */
     int i;
@@ -572,13 +553,13 @@ void polyev(int *nn,
 double errev(int *nn, double *qr, double *qi, double *ms,
 	     double *mp, double *are, double *mre)
 {
-    /*  bounds the error in evaluating the polynomial by the horner
-     *  recurrence.
+    /*	bounds the error in evaluating the polynomial by the horner
+     *	recurrence.
      *
-     *  qr,qi    - the partial sums
-     *  ms       - modulus of the point
-     *  mp       - modulus of polynomial value
-     *  are, mre - error bounds on complex addition and multiplication
+     *	qr,qi	 - the partial sums
+     *	ms	 - modulus of the point
+     *	mp	 - modulus of polynomial value
+     *	are, mre - error bounds on complex addition and multiplication
      */
     double e;
     int i;
@@ -707,7 +688,7 @@ void cdivid(double *ar, double *ai, double *br, double *bi,
 
     if (*br == 0. && *bi == 0.) {
 	/* division by zero, c = infinity. */
-	*cr = *ci = DBL_MAX;
+	*cr = *ci = R_PosInf;
     }
     else if (fabs(*br) >= fabs(*bi)) {
 	r = *bi / *br;
