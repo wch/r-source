@@ -323,9 +323,6 @@ ifeq ($(strip $(HELP)),YES)
     endif
   endif
 endif
-	@$(MAKE) --no-print-directory BUILD=$(BUILD) \
-	  -C $(PKGD)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
-	  -f $(RHOME)/src/gnuwin32/MakePkg md5sums
 
 pkgfake-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \

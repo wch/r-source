@@ -335,7 +335,11 @@ foreach $pkg (@ARGV){
 		$cmd .= " lazydata-$decpkgname";
 		system($cmd);
 	    }
-
+	    ## add MD5 sums
+	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
+	    $cmd .= "RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
+#	    print "$cmd\n";
+	    system($cmd);
 	    
 	} # end of if($res)
 
