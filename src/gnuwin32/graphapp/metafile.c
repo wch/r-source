@@ -91,7 +91,7 @@ metafile newmetafile(char *name,rect r)
 	    return NULL;
         }
     }
-    hDC=CreateEnhMetaFile(wHDC, strlen(name) ? name : NULL, &wr, "GraphApp");
+    hDC = CreateEnhMetaFile(wHDC, strlen(name) ? name : NULL, &wr, "GraphApp");
     if ( !hDC ) {
 	R_ShowMessage("Unable to create metafile");
 	if (!nummeta) ReleaseDC(NULL, wHDC);
@@ -121,5 +121,3 @@ metafile newmetafile(char *name,rect r)
     settext(obj,name ? name : "");
     return obj;
 }
-
-

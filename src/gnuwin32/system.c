@@ -517,6 +517,15 @@ void UnLoad_Unzip_Dll();
 /* Process ~/.Renviron, if it exists */
 #include "opt.h"
 
+/* like putenv, but allocate storage */
+static void Putenv(char *str)
+{
+    char *buf;
+    buf = (char *) malloc((strlen(str) + 1) * sizeof(char));
+    strcpy(buf, str);
+    putenv(buf);
+}
+
 static void processRenviron()
 {
     char *opt[2], optf[MAX_PATH], buf[80];
@@ -527,7 +536,7 @@ static void processRenviron()
 	return;
     while ((ok = optread(opt, '='))) {
 	sprintf(buf, "%s=%s", opt[0], opt[1]);
-	putenv(buf);
+	Putenv(buf);
     }
     optclosefile();
 }

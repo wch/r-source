@@ -41,7 +41,7 @@ void copytoclipboard(drawing sb)
     hdcSrc =  get_context((object)sb);
     hdcDest = CreateCompatibleDC(hdcSrc);
 
-    hbmpNew = CreateCompatibleBitmap(hdcSrc, r.width,r. height);
+    hbmpNew = CreateCompatibleBitmap(hdcSrc, r.width, r.height);
     hbmpOldDest = SelectObject(hdcDest, hbmpNew);
     BitBlt(hdcDest, 0, 0, r.width, r.height, hdcSrc, 0, 0, SRCCOPY);
     SelectObject(hdcDest, hbmpOldDest);
