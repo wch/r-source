@@ -13,16 +13,16 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 test-src-gct = \
 	eval-etc.R \
-	simple-true.R
-test-src-strict-1 = \
-	$(test-src-gct) \
+	simple-true.R \
 	arith-true.R \
 	arith.R \
-	d-p-q-r-tests.R \
 	is-things.R \
 	lm-tests.R \
 	primitive-funs.R \
 	method-dispatch.R
+test-src-strict-1 = \
+	$(test-src-gct) \
+	d-p-q-r-tests.R
 
 test-src-strict-auto = \
 	isas-tests.R
@@ -93,10 +93,11 @@ FORCE:
 
 .R.Rout-gct:
 	@echo "running gctorture() + \`$<'"
-	@(echo '.ptime <- proc.time(); gctorture()' ; cat $< ;\
-	  echo 'cat("Time used {gctorture()}:", proc.time() - .ptime, "\n")')\
+	@(echo '.ptime <- proc.time(); gctorture()' ; cat $< ; \
+	  echo 'cat("Time used {gctorture()}:", proc.time() - .ptime, "\n")') \
 	 | $(R) > $@
-	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; $(MAKE) $$Ro ;\
+	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
+	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
 	  echo @ECHO_N@ "comparing \`$@' to \`$$Ro' ...@ECHO_C@"; \
 	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $$Ro  1 || exit 1; \
 	  mv $@.fail $@; \
