@@ -40,17 +40,17 @@ R:
 	  $(top_builddir)/library
 
 docs:
-	@echo "building all R object docs (help, HTML, LaTeX, examples)"
+	@echo "building all R object docs (text, HTML, LaTeX, examples)"
 	@$(MAKE) DOCS
 	@$(MAKE) indices
 	@touch stamp-docs
 help:
-	@OPTS="--txt"   $(MAKE) DOCS
+	@OPTS="--txt" $(MAKE) DOCS
 html:
-	@OPTS="--html"    $(MAKE) DOCS
+	@OPTS="--html" $(MAKE) DOCS
 	@$(MAKE) indices
 latex:
-	@OPTS="--latex"   $(MAKE) DOCS
+	@OPTS="--latex" $(MAKE) DOCS
 examples:
 	@OPTS="--example" $(MAKE) DOCS
 
