@@ -61,7 +61,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-reg) reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.Rout.save reg-tests-2.Rout.save \
 	gct-foot.R
-SUBDIRS = Examples
+SUBDIRS = Embedding Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/Rdiff
@@ -112,7 +112,7 @@ FORCE:
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "running \`$<'"
-	@$(R) < $< > $@
+	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@if [ -f $(srcdir)/$@.save ] ; then \
 	  mv $@ $@.fail; \
 	  echo @ECHO_N@ \

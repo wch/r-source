@@ -51,7 +51,7 @@ R:
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ];     then cp -p $@     $@.bak  ; fi
 	@echo "running code in $< ..."
-	$(R) < $< > $@
+	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 
 $(EX_IN): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
