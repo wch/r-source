@@ -82,6 +82,10 @@ NEW FEATURES
     o	All installed packages (even those shipped with R) are
 	given a `Built' field in the DESCRIPTION file.
 
+    o	[[<-.data.frame no longer coerces character replacement values
+	to factor.  This is consistent with using $ to replace and
+	with S4.
+
 
 DEPRECATED & DEFUNCT
 

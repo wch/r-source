@@ -578,19 +578,23 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     nrows <- length(rows)
     if(nargs() < 4) {
 	## really ambiguous, but follow common use as if list
-	## el(x,i) <- value is the preferred approach
-	if(is.null(value)) {}
-	else {
-	    if(!inherits(value, "data.frame"))
-		value <- as.data.frame(value)
-	    if(length(value) != 1)
-		stop(paste("trying to replace one column with",
-			   length(value)))
-	    if(length(row.names(value)) != nrows)
-		stop(paste("replacement has", length(value),
-			   "rows, data has", nrows))
-	    class(value) <- NULL
-	    value <- value[[1]]
+	if(!is.null(value)) {
+#	    if(!inherits(value, "data.frame"))
+# 		value <- as.data.frame(value)
+# 	    if(length(value) != 1)
+# 		stop(paste("trying to replace one column with",
+# 			   length(value)))
+# 	    if(length(row.names(value)) != nrows)
+# 		stop(paste("replacement has", length(value),
+# 			   "rows, data has", nrows))
+# 	    class(value) <- NULL
+# 	    value <- value[[1]]
+            N <- NROW(value)
+            if(N < nrows)
+                if(nrows %% N == 0 && length(dim(value)) <= 1)
+                    value <- rep(value, length = nrows)
+                else
+                    stop(paste("replacement has", N, "rows, data has", nrows))
 	}
 	x[[i]] <- value
 	class(x) <- cl

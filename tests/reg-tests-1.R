@@ -685,8 +685,10 @@ ddf <- rbind(df, df)
 stopifnot(!is.factor(ddf$b))
 ## 1.5.0 had b as a factor.
 
+
 ## PR 1548 : prettyNum inserted leading commas
 stopifnot(prettyNum(123456, big.mark=",") == "123,456")
+
 
 ## PR 1552: cut.dendrogram
 library(mva)
@@ -725,11 +727,56 @@ logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
 str(logist)
 detach("package:nls")
 
+
 ## part of PR 1662: fisher.test with total one
 fisher.test(cbind(0, c(0,0,0,1)))
 ## crashed in R <= 1.5.0
 
+
 stopifnot(all(Mod(vector("complex", 7)) == 0))# contained garbage in 1.5.0
 
-## error in 1.5.1
+
+## hist.POSIXt with numeric `breaks'
 hist(.leap.seconds, breaks = 5)
+## error in 1.5.1
+
+
+## related to PR 1577/1608, conversions to character
+DF <- data.frame(b = LETTERS[1:3])
+sapply(DF, class)
+DF[[1]] <- LETTERS[1:3]
+stopifnot(is.character(DF$b)) ## was factor < 1.6.0
+DF <- data.frame(b = LETTERS[1:3])
+DF$b <- LETTERS[1:3]
+stopifnot(is.character(DF$b)) ## alwasys was character.
+
+
+x <- data.frame(var = LETTERS[1:3]); x$var <- as.character(x$var)
+x[[1]][2] <- "3"
+x
+stopifnot(is.character(x$var))
+is.na(x[[1]]) <- 2
+stopifnot(is.character(x$var))
+
+x <- data.frame(var = I(LETTERS[1:3]))
+x[[1]][2] <- "3"
+x
+stopifnot(is.character(x$var))
+is.na(x[[1]]) <- 2
+stopifnot(is.character(x$var))
+
+x <- data.frame(var = LETTERS[1:3])
+x[[1]][2] <- "3"
+x
+stopifnot(is.factor(x$var))
+is.na(x[[1]]) <- 2
+stopifnot(is.factor(x$var))
+
+x <- data.frame(a = 1:4)
+y <- data.frame(b = LETTERS[1:3])
+y$b <- as.character(y$b)
+z <- merge(x, y, by = 0, all.x = TRUE)
+sapply(z, data.class)
+stopifnot(is.character(z$b))
+## end of `related to PR 1577/1608'
+
