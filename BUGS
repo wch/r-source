@@ -252,6 +252,10 @@ Date: Tue, 11 Jun 2002 09:29:39 -0400 (EDT)
 Subject:  mtext() alignment of perpendicular text 
 From: p.murrell@auckland.ac.nz
 Date: Wed, 12 Jun 2002 13:29:45 +1200 (NZST)
+* PR# 1878 *
+Subject: close.screen
+From: Martin.Schlather@uni-bayreuth.de
+Date: Mon, 5 Aug 2002 22:35:02 +0200 (MET DST)
 
 Directory:  In-Out
 
@@ -427,10 +431,6 @@ Date: Thu, 2 May 2002 09:29:07 +0200
 
 Directory:  Models
 
-* PR# 1840 *
-Subject: predict() still not yet "safe"..
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 26 Jul 2002 20:11:26 +0200
 * PR# 1861 *
 Subject: update() can not find objects
 From: yzhou@arcturusag.com
@@ -531,10 +531,6 @@ Directory:  incoming
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1717 *
-Subject: Problem in optim(method="L-BFGS-B")
-From: polzehl@wias-berlin.de
-Date: Fri, 28 Jun 2002 11:53:13 +0200 (MET DST)
 * PR# 1761 *
 Subject: svd() very slow for wide matrix X but not for t(X)
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
@@ -551,27 +547,15 @@ From: John Chambers <jmc@research.bell-labs.com>
 Date: Tue, 16 Jul 2002 16:59:22 -0400
 --follow up to 1796
 --stop() allows multiple args as from 1.6.0
-* PR# 1878 *
-Subject: close.screen
-From: Martin.Schlather@uni-bayreuth.de
-Date: Mon, 5 Aug 2002 22:35:02 +0200 (MET DST)
 * PR# 1880 *
 Subject:  You requested this report 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Tue, 6 Aug 2002 16:57:54 +0800
-* PR# 1883 *
-Subject: =?ks_c_5601-1987?B?W7GksO1dIHItYnVnc7TUIMDnuczA1rTCILvnwLrHsMC7ILXluLO0z7TZLg==?=
-From: =?ks_c_5601-1987?B?x/a068SrteU=?= <pongpong10@kornet.net>
-Date: Thu, 08 Aug 2002 01:55:07 +0900
 * PR# 1884 *
 Subject: dput to full filesystem is silent
 From: stvjc@channing.harvard.edu
 Date: Wed, 7 Aug 2002 20:31:28 +0200 (MET DST)
-* PR# 1885 *
-Subject: read.table ignores first 5 lines
-From: Russell-Lenth@uiowa.edu
-Date: Wed, 7 Aug 2002 21:17:40 +0200 (MET DST)
-* PR# 1886 *
-Subject: Change in NA_REAL behavior
-From: larsendr@missouri.edu
-Date: Wed, 7 Aug 2002 22:50:32 +0200 (MET DST)
+* PR# 1890 *
+Subject: PR #1833 Clarification
+From: "Mike Prager" <Mike.Prager@noaa.gov>
+Date: Thu, 08 Aug 2002 11:19:55 -0400
