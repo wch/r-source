@@ -44,8 +44,6 @@
 \usage{
 RweaveLatexOptions(options)
 RtangleWritedoc(object, chunk)
-buildVignettes(package, dir, lib.loc = NULL)
-pkgVignettes(package, dir, lib.loc = NULL)
 
 % .isS3Generic(fname, envir)
 % .loadPackageQuietly(package, lib.loc)
