@@ -25,6 +25,6 @@ checkMD5sums(pkg, dir)
   \code{checkMD5sums} returns a logical, \code{NA} if there is no
   \code{MD5} file to be checked.
 }
-\seealso{\code{\link{md5sum}}
+\seealso{\code{\link{md5sum}}}
 
 \keyword{utilities}
