@@ -207,7 +207,7 @@ loess_workspace(Sint *d, Sint *n, double *span, Sint *degree,
     D = *d;
     N = *n;
     nvmax = max(200, N);
-    nf = min(N, floor(N * (*span)));
+    nf = min(N, floor(N * (*span) + 1e-5));
     tau0 = ((*degree) > 1) ? ((D + 2) * (D + 1) * 0.5) : (D + 1);
     tau = tau0 - (*sum_drop_sqr);
     lv = 50 + (3 * D + 3) * nvmax + N + (tau0 + 2) * nf;

@@ -65,6 +65,9 @@ BUG FIXES
     o   R would try to save the readline history at the end of
         non-interactive sessions, causing crashes on some systems.
 
+    o   Subtle roundoff problems caused arrays to be allocated short in
+        loess.c in some cases, leading to segfaults.
+
 
 		CHANGES IN R VERSION 1.0.0
 
