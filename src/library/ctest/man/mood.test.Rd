@@ -38,6 +38,8 @@ mood.test(x, y, alternative = "two.sided")
   Pages 234f.
 }
 \seealso{
+  \code{\link{fligner.test}} for a rank-based (nonparametric) k-sample
+  test for homogeneity of variances;
   \code{\link{ansari.test}} for another rank-based two-sample test for a
   difference in scale parameters;
   \code{\link{var.test}} and \code{\link{bartlett.test}} for parametric
