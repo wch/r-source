@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-29 2004-07-02
+Version 1.9-30 2004-07-04
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1827,6 +1827,23 @@ distributions of R.)
 *exactRankTests*
      Computes exact p-values and quantiles using an implementation of the
      Streitberg/Roehmel shift algorithm.
+
+*fBasics*
+     The Rmetrics module for "Markets, basic statistics, and date and time
+     management".  Rmetrics is an environment and software collection for
+     teaching financial engineering and computational finance
+     (`http://www.Rmetrics.org/').
+
+*fExtremes*
+     The Rmetrics module for "Beyond the Sample, Dealing with Extreme
+     Values".
+
+*fOptions*
+     The Rmetrics module for "The Valuation of Options".
+
+*fSeries*
+     The Rmetrics module for "The Dynamical Process Behind Financial
+     Markets".
 
 *fastICA*
      Implementation of FastICA algorithm to perform Independent Component
