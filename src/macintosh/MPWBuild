@@ -20,14 +20,14 @@
 ###  with R but can also be found at 
 ###        http://www.ci.tuwien.ac.at/~iacus/R
 ###
-###  The Makefile assumes that the MoreFile package is available 
-###  somewhere. MoreFiles is distributed along with the 
-###  CarbonLib SDK. Refer to developer.apple.com
+###  The Makefile assumes that the MoreFile 1.5.2 package is 
+###  available somewhere. MoreFiles 1.5.2 is distributed along with
+###  the CarbonLib 1.4 SDK or later. Refer to developer.apple.com
 ###  To build R you also need the complete Waste 2.x distribution
 ###  Refer to http://www.merzwaren.com/waste
 ###
-###  Jago Aug 21 2001, Stefano M. Iacus
-###  (waiting for `iacus-ng' to be released, so it can't be bug free)
+###  Jago Aug 26 2001, Stefano M. Iacus
+###  (`iacus-ng' recently released, so it can't be bug free)
 ###   
 ###  bug report or optimization hints can be sent to
 ###
@@ -79,11 +79,14 @@ if !{WasteLib}
  set WasteLib "{WasteDir}Stub Libraries:CarbonWASTELib"
 end
 
-if !{F2CLib}
-begin
- Alert "Please indicate f2clib is"
- set  F2CLib "`GetFilename`" 
-end
+			   
+if !`Exists :::f2cLib`
+ begin
+  Alert "Please indicate where f2cLib is"
+  set  F2CLib "`GetFilename`" 
+  Echo "Installing f2cLib"
+  Duplicate  {F2CLib} :::
+ end
 end
 
 
@@ -129,7 +132,8 @@ echo Includes = -i ::include -i ::extra:xdr '¶' >>MakeR
 echo  -i : -i :dir -i :waste -i :edit -i :gui  '¶' >>MakeR
 echo  -i :extra -i :dll -i :sys '¶' >>MakeR
 echo  -i '"''{'WasteDir'}C_C++ Headers"' -i :f2c ¶
-      -i '"''{'MFdir'}'C Headers'"' >>MakeR
+      -i '"''{'MFDir'}'CHeaders'"' ¶
+	  -i '"''{'MFDir'}'Sources'"' >>MakeR
 echo " " >>MakeR
 echo " " >>MakeR
 echo WasteDir = {WasteDir} >>MakeR
@@ -145,12 +149,6 @@ if !`Exists :::WasteLib`
  end
 end
 			   
-if !`Exists :::f2cLib`
- begin
-  Echo "Installing f2cLib"
-  Duplicate  {F2CLib} :::
- end
-end
 			   
 
 echo " " >>MakeR
@@ -302,7 +300,7 @@ echo '	'PPCLink -o :::R '¶' >> MakeR
 echo '	''{'RObj'}' '{'MacObj'}' '{'ExtraObj'}' ¶
 '{'FObj'}' '¶' >> MakeR
 echo '	''{'LibFiles'} ¶' >> MakeR
-echo '	'-sym on -mf -d -t "'APPL'" -c "'OFFF'"¶
+echo '	'-sym on -mf -d -t "'APPL'" -c "'OFFF'" ¶
 -m __appstart  -@export ¶
 expvar >> MakeR
 
