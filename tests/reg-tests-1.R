@@ -156,10 +156,12 @@ m <- matrix(1, 0, 0)  # 1 to force numeric not logical
 try(eigen(m))
 ## segfaults on 1.2.2
 
-## PR902 segfaults when warning string is too long, Ben Bolker 2001-04-09
+## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
    warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")
    warning(warnmsg)
 }
 provoke.bug()
 ## segfaulted in 1.2.2, will also on machines without vsnprintf.
+##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+## and hence keep the above line at the end of this file
