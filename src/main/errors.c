@@ -619,10 +619,11 @@ static void jump_to_top_ex(Rboolean traceback,
     }
 
     /* WARNING: If oldInError > 0 ABSOLUTELY NO ALLOCATION can be
-       triggered after this point except whatever happens in
-       R_run_onexits.  The error could be an out of memory error and
-       any allocation could result in an infinite-loop condition. All
-       you can do is reset things and exit.  */
+       triggered after this point except whatever happens in writing
+       the traceback and R_run_onexits.  The error could be an out of
+       memory error and any allocation could result in an
+       infinite-loop condition. All you can do is reset things and
+       exit.  */
 
     /* jump to a browser/try if one is on the stack */
     if (! ignoreRestartContexts)
@@ -630,6 +631,21 @@ static void jump_to_top_ex(Rboolean traceback,
 
     /* at this point, i.e. if we have not exited in
        try_jump_to_restart, we are heading for R_ToplevelContext */
+
+    /* only run traceback if we are not going to bail out of a
+       non-interactive session */
+    if (R_Interactive || haveHandler) {
+	/* write traceback if requested, unless we're already doing it
+	   or there is an inconsistenty between inError and oldInError
+	   (which should not happen) */
+	if (traceback && inError < 2 && inError == oldInError) {
+	    inError = 2;
+	    PROTECT(s = R_GetTraceback(0));
+	    setVar(install(".Traceback"), s, R_GlobalEnv);
+	    UNPROTECT(1);
+	    inError = oldInError;
+	}
+    }
 
     /* Run onexit/cend code for all contexts down to but not including
        the jump target.  This may cause recursive calls to
@@ -647,12 +663,6 @@ static void jump_to_top_ex(Rboolean traceback,
     if ( !R_Interactive && !haveHandler ) {
 	REprintf("Execution halted\n");
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
-    }
-
-    if (traceback && ! oldInError) {
-	PROTECT(s = R_GetTraceback(0));
-	setVar(install(".Traceback"), s, R_GlobalEnv);
-	UNPROTECT(1);
     }
 
     R_GlobalContext = R_ToplevelContext;
