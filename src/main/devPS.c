@@ -1504,7 +1504,7 @@ PostScriptDesc;
 
 static const char * const TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
 
-static void specialCaseCM(FILE *fp, type1fontfamily family)
+static void specialCaseCM(FILE *fp, type1fontfamily family, int familynum)
 {
 	fprintf(fp, "%% begin encoding\n");
 	fprintf(fp, "/SymbolEncoding [\n");
@@ -1583,27 +1583,36 @@ static void specialCaseCM(FILE *fp, type1fontfamily family)
 	fprintf(fp, "  currentdict\n");
 	fprintf(fp, "  end\n");
 	fprintf(fp, "} def\n");
-	fprintf(fp, "%%%%IncludeResource: font CMR10\n");
+	fprintf(fp, "%%%%IncludeResource: font %s\n",
+		family->fonts[0]->name);
 	fprintf(fp, "%%%%IncludeResource: font CMSY10\n");
 	fprintf(fp, "[ /%s findfont /CMSY10 findfont ] %s mergefonts\n", 
 		family->fonts[0]->name, family->encoding->name);
-	fprintf(fp, "/Font1 exch definefont pop\n");
-	fprintf(fp, "%%%%IncludeResource: font CMBX10\n");
+	fprintf(fp, "/Font%d exch definefont pop\n",
+		(familynum - 1)*5 + 1);
+	fprintf(fp, "%%%%IncludeResource: font %s\n",
+		family->fonts[1]->name);
 	fprintf(fp, "%%%%IncludeResource: font CMBSY10\n");
 	fprintf(fp, "[ /%s findfont /CMBSY10 findfont ] %s mergefonts\n",
 		family->fonts[1]->name, family->encoding->name);
-	fprintf(fp, "/Font2 exch definefont pop\n");
-	fprintf(fp, "%%%%IncludeResource: font CMSL10\n");
+	fprintf(fp, "/Font%d exch definefont pop\n",
+		(familynum - 1)*5 + 2);
+	fprintf(fp, "%%%%IncludeResource: font %s\n",
+		family->fonts[2]->name);
 	fprintf(fp, "[ /%s findfont /CMSY10 findfont ] %s mergefonts\n",
 		family->fonts[2]->name, family->encoding->name);
-	fprintf(fp, "/Font3 exch definefont pop\n");
-	fprintf(fp, "%%%%IncludeResource: font CMBXSL10\n");
+	fprintf(fp, "/Font%d exch definefont pop\n",
+		(familynum - 1)*5 + 3);
+	fprintf(fp, "%%%%IncludeResource: font %s\n",
+		family->fonts[3]->name);
 	fprintf(fp, "[ /%s findfont /CMBSY10 findfont ] %s mergefonts\n", 
 		family->fonts[3]->name, family->encoding->name);
-	fprintf(fp, "/Font4 exch definefont pop\n");
+	fprintf(fp, "/Font%d exch definefont pop\n",
+		(familynum - 1)*5 + 4);
 	fprintf(fp, "%%%%IncludeResource: font CMMI10\n");
 	fprintf(fp, "[ /CMR10 findfont /CMSY10 findfont /CMMI10 findfont ] SymbolEncoding mergefonts\n");
-	fprintf(fp, "/Font5 exch definefont pop\n");
+	fprintf(fp, "/Font%d exch definefont pop\n",
+		(familynum - 1)*5 + 5);
 }
 
 static void PSEncodeFonts(FILE *fp, PostScriptDesc *pd)
@@ -1649,7 +1658,7 @@ static void PSEncodeFonts(FILE *fp, PostScriptDesc *pd)
 	if(strcmp(fonts->family->fonts[4]->name, 
 		  "CMSY10 CMBSY10 CMMI10") == 0) {
 	    /* use different ps fragment for CM fonts */
-	    specialCaseCM(fp, fonts->family);
+	    specialCaseCM(fp, fonts->family, familynum);
 	} else {
 	    int i;
 	    for (i = 0; i < 4 ; i++) {
