@@ -79,6 +79,7 @@ Makerules:
 ## and then use sed to create the front end ('R.fe') which gets
 ## installed as 'R'.
 R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
