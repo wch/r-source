@@ -20,7 +20,7 @@ Up:<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
    <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.7-10, 2003-05-17</h2>
+<h2>Version 1.7-11, 2003-05-20</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -2054,6 +2054,11 @@ PVM APIs, and examples and documentation for its use.
 <br><dt><strong>rsprng</strong>
      <dd>Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use. 
+<br><dt><strong>sampfling</strong>
+     <dd>Implements a modified version of the Sampford sampling algorithm.  Given
+a quantity assigned to each unit in the population, samples are drawn
+with probability proportional to te product of the quantities of the
+units included in the sample. 
 <br><dt><strong>scatterplot3d</strong>
      <dd>Plots a three dimensional (3D) point cloud perspectively. 
 <br><dt><strong>sem</strong>
@@ -2785,6 +2790,7 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>: 
 <li><a href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>: 
 <li><a href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>: 
+<li><a href="#How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>: 
 </ul>
 
 <div class="node">
@@ -3504,6 +3510,7 @@ and then you can easily index it by name
 <div class="node">
 <p><hr>
 Node:<a name="Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
+Next:<a rel="next" accesskey="n" href="#How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>,
 Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
 Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -3519,6 +3526,19 @@ actual display.  When you use these functions interactively at the
 command line, the result is automatically printed, but in
 <code>source()</code> or inside your own functions you will need an explicit
 <code>print()</code> statement.
+
+<div class="node">
+<p><hr>
+Node:<a name="How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>,
+Previous:<a rel="previous" accesskey="p" href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
+Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.25 How can I sort the rows of a data frame?</h3>
+
+   <p>To sort the rows within a data frame, with respect to the values in one
+or more of the columns, simply use <code>order()</code>.
 
 <div class="node">
 <p><hr>

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-10, 2003-05-17
+Version 1.7-11, 2003-05-20
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -88,6 +88,7 @@ R FAQ
   7.22 How can I get command line editing to work?
   7.23 How can I turn a string into a variable?
   7.24 Why do lattice/trellis graphics not work?
+  7.25 How can I sort the rows of a data frame?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -1915,6 +1916,12 @@ distributions of R.)
      Provides interface to SPRNG (Scalable Parallel Random Number
      Generators) APIs, and examples and documentation for its use.
 
+*sampfling*
+     Implements a modified version of the Sampford sampling algorithm.
+     Given a quantity assigned to each unit in the population, samples are
+     drawn with probability proportional to te product of the quantities of
+     the units included in the sample.
+
 *scatterplot3d*
      Plots a three dimensional (3D) point cloud perspectively.
 
@@ -3068,6 +3075,12 @@ not display it (the same is true of Trellis graphics in S-PLUS).  The
 you use these functions interactively at the command line, the result is
 automatically printed, but in `source()' or inside your own functions you
 will need an explicit `print()' statement.
+
+7.25 How can I sort the rows of a data frame?
+=============================================
+
+   To sort the rows within a data frame, with respect to the values in one
+or more of the columns, simply use `order()'.
 
 8 R Programming
 ***************
