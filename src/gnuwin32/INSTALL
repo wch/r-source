@@ -249,7 +249,7 @@ HEADER) as needed.
 
 Edit MkRules to set the type(s) of help that you want built. (You
 will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
-so set WINHELP to NO.)
+so WINHELP is automatically set NO.)
 
 Packages can be made in the same way as natively: see the file
 readme.packages.
