@@ -548,6 +548,10 @@ UTILITIES
 
 DOCUMENTATION
 
+    o	The DVI and PDF manuals are now all made on the paper specified
+	by R_PAPERSIZE (default 'a4'), even the .texi manuals which
+	were made on US letter paper in previous versions.
+
     o	The reference manual now omits 'internal' help pages.
 
     o	There is a new help page shown by help("Memory-limits") which

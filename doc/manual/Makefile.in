@@ -74,14 +74,17 @@ docs: html
 	  exit 1; \
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
+
 .texi.html:
 	$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
+
 .texi.info:
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: 'makeinfo' v4.5 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
 	$(MAKEINFO) -D UseExternalXrefs -I$(srcdir) $<
+
 .texi.pdf:
 	@if test "$(PDFTEX)" = false; then \
 	  echo "ERROR: 'pdftex' needed but missing on your system."; \
@@ -127,11 +130,13 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-dvi
+
 version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  echo "$${v}") > $@
+
 stamp-refman-dvi: $(refman_TEXINPUTS)
 	@touch $@
 
@@ -200,6 +205,10 @@ version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=`$(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION`; \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
+	if test "$(R_PAPERSIZE)" = "a4"; then \
+	  echo "@afourpaper" >> $@ ; \
+	fi
+
 R-intro.dvi: stamp-images-eps $(texiincludes)
 stamp-images-eps:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \

@@ -97,7 +97,9 @@ refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat refman.top; \
-	  for f in $(refman_TEXINPUTS); do echo "\\input{$${f}}"; done; \
+	  texinputs=`(for f in $(refman_TEXINPUTS); \
+	    do echo $${f}; done) | LC_COLLATE=C sort`; \
+	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
 	  cat refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
 ifeq ($(strip $(BUILD)),CROSS)
@@ -197,7 +199,9 @@ refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat refman.top; \
-	  for f in $(refman_TEXINPUTS); do echo "\\input{$${f}}"; done; \
+	  texinputs=`(for f in $(refman_TEXINPUTS); \
+	    do echo $${f}; done) | LC_COLLATE=C sort`; \
+	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
 	  cat refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
 ifeq ($(strip $(BUILD)),CROSS)
@@ -319,6 +323,9 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=$(shell perl $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
+	if test "$(R_PAPERSIZE)" = "a4"; then \
+	  echo "@afourpaper" >> $@ ; \
+	fi
 
 
 mostlyclean: clean
