@@ -934,17 +934,16 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Required Arguments */
     sxy = CAR(args);
-#ifdef NEWLIST
-    if (!isNewList(sxy) || length(sxy) < 2)
+    if (isNewList(sxy) && length(sxy) >= 2) {
+        internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
+        internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);
+    }
+    else if (isList(sxy) && length(sxy) >= 2) {
+        internalTypeCheck(call, sx = CAR(sxy), REALSXP);
+        internalTypeCheck(call, sy = CADR(sxy), REALSXP);
+    }
+    else
 	errorcall(call, "invalid plotting structure\n");
-    internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
-    internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);
-#else
-    if (!isList(sxy) || length(sxy) < 2)
-	errorcall(call, "invalid plotting structure\n");
-    internalTypeCheck(call, sx = CAR(sxy), REALSXP);
-    internalTypeCheck(call, sy = CADR(sxy), REALSXP);
-#endif
     if (LENGTH(sx) != LENGTH(sy))
 	error("x and y lengths differ for plot\n");
     n = LENGTH(sx);
@@ -1487,10 +1486,16 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(args) < 3) errorcall(call, "too few arguments\n");
 
     sxy = CAR(args);
-    if (!isList(sxy) || length(sxy) < 2)
+    if (isNewList(sxy) && length(sxy) >= 2) {
+	    internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
+	    internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);
+    }
+    else if (isList(sxy) && length(sxy) >= 2) {
+	    internalTypeCheck(call, sx = CAR(sxy), REALSXP);
+	    internalTypeCheck(call, sy = CADR(sxy), REALSXP);
+    }
+    else
 	errorcall(call, "invalid plotting structure\n");
-    internalTypeCheck(call, sx = CAR(sxy), REALSXP);
-    internalTypeCheck(call, sy = CADR(sxy), REALSXP);
     if (LENGTH(sx) != LENGTH(sy))
 	error("x and y lengths differ for plot\n");
     n = LENGTH(sx);
