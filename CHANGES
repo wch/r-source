@@ -10,11 +10,19 @@ NEW FEATURES
 	All include files now live in RHOME/src/include and are
 	copied to RHOME/include when needed.
 
+    o   The "noquote" functions are now documented.
+
+    o   A new `language' demo, "is.things", is provided.
+
+
 BUG_FIXES
 
     o	A nasty bug which showed when attempt was made to create
 	a zero length call has been fixed.
 
+    o   model.matrix(.) now allows a  contrasts argument.
+
+    o   barplot(.) now also works for barplot(table(rpois(100,3))).
 
 
 		CHANGES IN VERSION R VERSION 0.60.1
@@ -26,11 +34,6 @@ NEW FEATURES
 
     o	S compatible functions "all.names" and "all.vars" added.
 
-    o   The "noquote" functions are now documented.
-
-    o   A new `language' demo "is.things" has been provided.
-
-    o   model.matrix(.) now allows a  contrasts argument.
 
 
 BUG FIXES
@@ -42,8 +45,6 @@ BUG FIXES
     o   The inclusion <readline/history.h> was causing problems with
 	some versions of readline because the file did not exist.
 	This is now detected by configure.
-
-    o   barplot(.) now also works for barplot(table(rpois(100,3))).
 
 
 
