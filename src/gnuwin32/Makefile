@@ -295,7 +295,6 @@ lattice-HELP = ziponly
 lattice-ZIPDATA = zip
 mgcv-HELP = ziponly
 nlme-HELP = ziponly
-nlme-ZIPDATA = zip
 rpart-HELP = ziponly
 survival-HELP = ziponly
 
