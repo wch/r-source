@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.5.0 (2002-04-03).
+<p>The current version of this document is 1.5.0 (2002-04-07).
 
 </ul>
 
@@ -536,7 +536,7 @@ the Tcl and Tk libraries and for finding the <code>tcl.h</code> and
 Linear Algebra Subprograms, <a href="http://www.netlib.org/blas/faq.html">http://www.netlib.org/blas/faq.html</a>)
 routines.  Some are compiler-system-specific (<code>libsunperf</code> on Sun
 Sparc<a rel=footnote href="#fn-2"><sup>2</sup></a>, <code>libessl</code> on IBM) but ATLAS
-(<a href="http://www.netlib.org/atlas/">http://www.netlib.org/atlas/</a>) is a "tuned" BLAS that runs on a
+(<a href="http://math-atlas.sourceforge.net/">http://math-atlas.sourceforge.net/</a>) is a "tuned" BLAS that runs on a
 wide range of Unix-alike platforms.  If no more specific library is
 found, a <code>libblas</code> library in the library path will be used.  You
 can specify a specific BLAS library by the configuration option
@@ -698,9 +698,12 @@ is to search for <code>g77</code>, <code>f77</code>, <code>xlf</code>,
 order)<a rel=footnote href="#fn-3"><sup>3</sup></a>, and
 then for <code>f2c</code>, and use whichever is found first; if none is
 found, R cannot be compiled.  The search mechanism can be changed
-using the <code>--with-f77</code> and <code>--with-f2c</code> command line
-options to <code>configure</code>.  If your FORTRAN compiler is in a
-non-standard location, you should set the environment variable
+using the configure variables <code>F77</code> and <code>F2C</code> which specify
+the commands that run the FORTRAN 77 compiler and FORTRAN-to-C
+converter, respectively.  If <code>F77</code> is given, it is used to compile
+FORTRAN; otherwise, if <code>F2C</code> is given, f2c is used even if a
+FORTRAN compiler would be be available.  If your FORTRAN compiler is in
+a non-standard location, you should set the environment variable
 <code>PATH</code> accordingly before running <code>configure</code>, or use the
 configure variable <code>F77</code> to specify its full path.
 
@@ -882,11 +885,11 @@ also available from Fink, then you will also need to use the
 
 <h4>B.7.2 Solaris on Sparc</h4>
 
-<p>R has been built successfully on Solaris 2.7 using
-<code>gcc</code>/<code>g77</code> and the SunPro WorkShop&nbsp;6 compilers, and
-less regularly on 2.5.1, 2.6 and 8.  GNU <code>make</code> is needed prior
-to 2.7 for building other than in the source tree, and perhaps even
-then.
+<p>R has been built successfully on Solaris 2.7 aka Solaris 7 aka SunOS
+5.7 using <code>gcc</code>/<code>g77</code> and the SunPro WorkShop&nbsp;6
+compilers, and less regularly on Solaris 2.5.1, 2.6 and 8.  GNU
+<code>make</code> is needed prior to 2.7 for building other than in the
+source tree, and perhaps even then.
 
 <p>When using the SunPro compilers do <em>not</em> specify <code>-fast</code>, as
 this disables <small>IEEE</small> arithmetic and <code>make check</code> will
@@ -1030,14 +1033,7 @@ suppress <code>SIGFPE</code>'s.  Currently R does not set a signal handler for
 <code>SIGFPE</code> on platforms that support <small>IEEE</small> arithmetic, so
 these are fatal.
 
-<p><code>make check</code> passes with no problems.  <code>make
-test-all-extras</code> in the <code>tests</code> directory fails at the end of
-<code>reg-tests-1.R</code> since this system does not have <code>vsnprintf</code>. 
-As currently written, the test at the end of <code>reg-tests-1.R</code> causes
-a segfault in this case.  You can complete the tests by executing
-
-<br><pre>touch reg-tests-1.Rout
-</pre>
+<p><code>make check</code> passes with no problems.
 
 <a name="Alpha%2fFreeBSD"></a>
 
