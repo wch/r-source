@@ -394,33 +394,55 @@ matchSignature <-
   function(signature, fun)
 {
     if(!is(fun, "genericFunction"))
-        stop("Internal error: matchSignature was not called with a generic function object")
-    names <- fun@signature
+        stop("Trying to match a method signature to an object (of class \"",
+             class(fun), "\") that is not a generic function.")
+    anames <- fun@signature
+    if(!is(signature, "list") && !is(signature, "character"))
+        stop("Trying to match a method signature of class \"",
+             class(signature), "\"; expects a list or a character vector.")
+    if(length(signature) == 0)
+        return(character())
     sigClasses <- as.character(signature)
-    if(length(sigClasses) > 0)
-        unknown <- !sapply(sigClasses, function(x)isClass(x))
-    else
-        unknown <- logical()
+    unknown <- !sapply(sigClasses, function(x)isClass(x))
     signature <- as.list(signature)
     if(length(sigClasses) != length(signature))
-        stop("signature argument doesn't look like a legitimate signature (vector of single class names)")
+        stop("Object to use as a method signature for function \"", fun@generic,
+             "\" doesn't look like a legitimate signature (a vector of single class names): there were ",
+             length(sigClasses), " class names, but ", length(signature),
+             " elements in the signature object.")
     if(any(unknown)) {
         unknown <- unique(sigClasses[unknown])
-        warning("Class ", paste("\"", unknown, "\"", sep="", collapse = ", "), " not defined")
+        warning("In the method signature for function \"", fun@generic,
+                "\", class ", paste("\"", unknown, "\"", sep="", collapse = ", "), " has no current definition")
     }
+    if(is.null(names(signature))) {
+        which <- seq(length = length(signature))
+    }
+    else {
     ## construct a function call with the same naming pattern as signature
     fcall <- do.call("call", c("fun", signature))
-    ## match the call to the supplied function
-    smatch <- match.call(fun, fcall)
+    ## match the call to the formal signature (usually the formal args)
+    if(identical(anames, formalArgs(fun)))
+        smatch <- match.call(fun, fcall)
+    else {
+        fmatch <- fun
+        ff <- as.list(anames); names(ff) <- anames
+        formals(fmatch, envir = environment(fun)) <- ff
+        smatch <- match.call(fmatch, fcall)
+    }
     snames <- names(smatch)[-1]
-    which <- match(snames, names)
+    which <- match(snames, anames)
     if(any(is.na(which)))
-        stop(paste("Invalid names in signature:",
+        stop(paste("In the method signature for function \"", fun@generic,
+                "\", invalid argument names in the signature:",
                    paste(snames[is.na(which)], collapse = ", ")))
-    n <- length(names)
+}
+    n <- length(anames)
     value <- rep("ANY", n)
     value[which] <- sigClasses
-    while(n > 1 && value[n] == "ANY")
+    unspec <- value == "ANY"
+    ## remove the trailing unspecified classes
+    while(n > 1 && unspec[[n]])
         n <- n-1
     length(value) <- n
     value

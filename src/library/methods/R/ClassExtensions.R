@@ -9,6 +9,7 @@
 }
 
 .simpleExtCoerce <- function(from, strict = TRUE)from
+.simpleIsCoerce <- function(from)from
 .simpleExtTest <- function(object)TRUE
 ## TO DO:  the simple replace below only handles the case of classes with slots.
 ## There are some other simple relations (e.g., with virtual classes).  Replacing in
@@ -46,18 +47,36 @@ makeExtends <- function(Class, to,
                         by = character(), package = getPackageName(findClass(to)),
                         slots = getSlots(classDef1),
                         classDef1 = getClass(Class, TRUE), classDef2 = getClass(to, TRUE)) {
+    ## test for datapart class:  must be the data part class, except
+    ## that extensions within the basic classes are allowed (numeric, integer)
+    dataEquiv <- function(cl1, cl2) {
+        identical(cl1, cl2) ||
+          (extends(cl1, cl2) && !any(is.na(match(c(cl1, cl2), .BasicClasses))))
+    }
     class1Defined <- missing(slots) # only at this time can we construct methods
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
     dataPartClass <- elNamed(slots, ".Data")
-    dataPart <- simple && !is.null(dataPartClass) && extends(to, dataPartClass)
+    dataPart <- simple && !is.null(dataPartClass) && dataEquiv(to, dataPartClass)
     if(is.null(coerce)) {
         coerce <- .simpleExtCoerce
         if(!isVirtualClass(classDef2))
             body(coerce, envir = environment(coerce)) <-
                  .simpleCoerceExpr(Class, to, slots)
     }
+    else if(is(coerce, "function")) {
+        ## we allow definitions with and without the `strict' argument
+        if(length(formals(coerce)) > 1)
+            forArgs <- .simpleExtCoerce
+        else
+            forArgs <- .simpleIsCoerce
+        coerce <- .ChangeFormals(coerce, forArgs, "`coerce' argument to setIs ")
+    }
+    else stop("The `coerce' argument to setIs should be a function of one argument, got an object of class \"",
+              class(coerce), "\"")
     if(is.null(test))
         test <- .simpleExtTest
+    else
+        test <- .ChangeFormals(test, .simpleExtTest, "`test' argument to setIs ")
     if(is.null(replace)) {
         if(dataPart) {
             extn <- elNamed(classDef2@contains, dataPartClass)
@@ -80,9 +99,9 @@ makeExtends <- function(Class, to,
                 body(replace, envir = environment(replace)) <-
                     substitute({
                         if(!is(value, FROM))
-                            stop("as(object,\"", TO,
-                                 "\") <- ... is valid for an object of class",
-                                 FROM, "\" only if the new value is also of this class (got calss \"",
+                            stop("The computation: as(object,\"", TO,
+                                 "\") <- value is valid when object has class",
+                                 FROM, "\" only if is(value, \"",TO,"\") is TRUE ( class(value) was \"",
                                  class(value), "\")")
                         value
                     }, list(FROM = Class, TO = to))
@@ -113,6 +132,8 @@ makeExtends <- function(Class, to,
                     "\") <- value when object has class \"", Class,
                     "\" and no replace= argument was supplied; replacement will be an error")
     }
+    else
+        replace <- .ChangeFormals(replace, .ErrorReplace, "`replace' argument to setIs ")
     new("SClassExtension", superClass = to, package = package, coerce = coerce,
                test = test, replace = replace, simple = simple, by = by, dataPart = dataPart)
     

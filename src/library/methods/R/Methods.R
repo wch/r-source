@@ -314,26 +314,45 @@ getMethod <-
   function(f, signature = character(), where = -1, optional = FALSE)
 {
     mlist <- getMethods(f, where)
-    if(length(signature) == 0)
-        mlist <- finalDefaultMethod(mlist)
-    else while(is(mlist, "MethodsList")) {
+    fdef <- getGeneric(f, !optional)
+    if(!is(fdef, "genericFunction")) # must be the optional case, else an error in getGeneric
+        return(NULL)
+    i <- 1
+    argNames <- fdef@signature
+    signature <- matchSignature(signature, fdef)
+    Classes <- signature # a copy just for possible error message
+    while(length(signature) > 0 && is(mlist, "MethodsList")) {
+        if(!identical(argNames[[i]], as.character(mlist@argument)))
+            stop("Apparent inconsistency in the methods for function \"", f,
+                 "\"; argument \"", argNames[[i]],
+                 "\" in the signature corresponds to \"", as.character(mlist@argument),
+                 "\" in the methods list object.")
         Class <- signature[[1]]
-        if(Class == "")
-            Class <- "ANY"
+        signature <- signature[-1]
         methods <- slot(mlist, "methods")
         mlist <- elNamed(methods, Class)# may be function, MethodsList or NULL
-        signature <- signature[-1]
-        if(length(signature) == 0)
-            break
+        i <- i + 1
     }
-    if(is(mlist, "function") && length(signature) == 0)
-        ## the only successful outcome
-        mlist
-    else if(optional)
+    if(length(signature) == 0) {
+        ## process the implicit remaining "ANY" elements
+        if(is(mlist, "MethodsList"))
+            mlist <- finalDefaultMethod(mlist)
+        if(is(mlist, "function"))       
+            return(mlist) # the only successful outcome
+    }
+    if(optional)
         mlist                           ## may be NULL or a MethodsList object
-    else
-        stop(paste("No method defined for function \"", f,
-                   "\" for this signature ", sep = ""))
+    else {
+        if(length(Classes) > 0) {
+            length(argNames) <- length(Classes)
+            Classes <- paste(argNames," = \"", unlist(Classes),
+                             "\"", sep = "", collapse = ", ")
+        }
+        else
+            Classes <- "\"ANY\""
+        stop("No method defined for function \"", f,
+             "\" and signature ", Classes)
+    }
 }
 
 dumpMethod <-
@@ -725,6 +744,7 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE)) {
         mdef <- getMethod(f, signature, optional = TRUE)
         return(is(mdef, "SealedMethodDefinition"))
     }
+    ## else, a primitive
     if(is(fdef, "genericFunction"))
         signature <- matchSignature(signature, fdef)
     if(length(signature)==0)
@@ -732,7 +752,8 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE)) {
     else {
         sealed <- !is.na(match(signature[[1]], .BasicClasses))
         if(sealed && 
-           !is.na(match("Ops", c(f, getGroup(f, TRUE)))))
+           (!is.na(match("Ops", c(f, getGroup(f, TRUE))))
+            || !is.na(match(f, c("%*%", "crossprod")))))
             ## Ops methods are only sealed if both args are basic classes
             sealed <- sealed && (length(signature) > 1) &&
                       !is.na(match(signature[[2]], .BasicClasses))

@@ -410,11 +410,12 @@ getGeneric <-
               }
           }
       }
-    }
+  }
     if(is.function(value))
-      value
+        value
     else if(mustFind)
-      stop(paste("No generic function defined for \"",f,"\"", sep=""))
+        ## the C code will have thrown an error if f is not a single string
+        stop(paste("No generic function defined for \"",f,"\"", sep=""))
     else
       NULL
   }
@@ -877,4 +878,43 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     else
         signature <- as.character(signature)
     paste(paste(snames, "=\"", signature, "\"", sep=""), collapse = ", ")
+}
+
+.ChangeFormals <- function(def, defForArgs, msg = "<unidentified context>") {
+    if(!is(def, "function"))
+        stop("Trying to change the formal arguments in ", msg,", in an object of class \"",
+             class(def), "\"; expected a function definition")
+    if(!is(defForArgs, "function"))
+        stop("Trying to change the formal arguments in ", msg,
+             ", but getting the new formals from an object of class \"",
+             class(def), "\"; expected a function definition")
+    old <- formalArgs(def)
+    new <- formalArgs(defForArgs)
+    if(length(old) < length(new))
+        stop("Trying to change the formal arguments in ", msg,
+             ", but the number of existing arguments is less than the number of new arguments: (",
+             paste("\"", old, "\"", sep ="", collapse=", "),  ") vs (",
+             paste("\"", new, "\"", sep ="", collapse=", "), ")")
+    if(length(old) > length(new))
+        warning("Trying to change the formal arguments in ", msg,
+             ", but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (",
+             paste("\"", old, "\"", sep ="", collapse=", "),  ") vs (",
+             paste("\"", new, "\"", sep ="", collapse=", "), ")")
+    if(identical(old, new)) # including the case of 0 length
+        return(def)
+    dlist <- as.list(def)
+    slist <- lapply(c(old, new), as.name)
+    names(slist) <- c(new, old)
+    vlist <- dlist
+    for(i in seq(along = vlist))
+        vlist[[i]] <- do.call("substitute", list(vlist[[i]], slist))
+    dnames <- names(dlist)
+    whereNames <- match(old, dnames)
+    if(any(is.na(whereNames)))
+        stop("In changing formal argumentsin ", msg,
+             ", some of the old names are not in fact arguments: ",
+             paste("\"", old[is.na(match(old, names(dlist)))], "\"", sep ="", collapse=", "))
+    dnames[whereNames] <- new
+    names(vlist) <- dnames
+    as.function(vlist, envir = environment(def))
 }

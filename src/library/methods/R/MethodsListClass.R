@@ -87,7 +87,7 @@
               }, where = envir)
     setMethod("loadMethod", "MethodWithNext",
               function(method, fname, envir) {
-                  callNextMethod()
+                  callNextMethod(method, fname, envir)
                   assign(".nextMethod", method@nextMethod, envir = envir)
                   method
               }, where = envir)

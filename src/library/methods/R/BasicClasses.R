@@ -37,7 +37,7 @@
 
     
     setClass("structure", sealed = TRUE, where = envir); clList <- c(clList, "structure")
-    stClasses <- c("matrix", "array", "ts")
+    stClasses <- c("matrix", "array", "ts") # classes that have attributes (ts has a class attr.)
     for(.class in stClasses) {
         setClass(.class, prototype = newBasic(.class), sealed = TRUE, where = envir)
     }
@@ -172,7 +172,9 @@
          "mtable",
          "table",
          "summary.table",
-         "mts", ## ts is done like matrix, array--is that reasonable?
+### can't do this while "ts" is treated like "matrix":         c("mts", "ts"),
+### instead:
+         "mts",
          "recordedplot",
          "socket",
          "packageIQR",

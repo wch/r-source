@@ -25,7 +25,7 @@ as <-
             else if(identical(asMethod, TRUE)) 
                 asMethod <- .makeAsMethod(quote(from), TRUE, Class)
              else
-                 asMethod <- .makeAsMethod(body(asMethod@coerce), asMethod@simple, Class)
+                 asMethod <- .makeAsMethod(asMethod@coerce, asMethod@simple, Class)
             ## cache for next call
             cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
         }
@@ -56,9 +56,12 @@ as <-
     asMethod <- selectMethod("coerce<-", sig, TRUE, FALSE) #optional, no inheritance
     if(is.null(asMethod)) {
         if(is(object, Class)) {
-            ## possibleExtends can't return TRUE or FALSE: so it must be an extends
-            ## object.
-            asMethod <- possibleExtends(thisClass, Class)@replace
+            asMethod <- possibleExtends(thisClass, Class)
+            if(identical(asMethod, TRUE)) {# trivial, probably identical classes
+                class(value) <- class(object)
+                return(value)
+            }
+            else asMethod <- asMethod@replace
             ## cache for next call
             cacheMethod("coerce<-", c(from = thisClass, to = Class), asMethod)
         }
@@ -138,12 +141,35 @@ setAs <-
       ## if the class is a basic class and there exists an as.<class> function,
       ## use it as the coerce method.
       method  <- .basicCoerceMethod
-      body(method, envir = environment(method)) <- substitute({
+      switch(what,
+                  array =, matrix = body(method, envir = environment(method)) <- substitute({
+          value <- AS(from)
+          if(strict) {
+              dm <- dim(value)
+              dn <- dimnames(value)
+              attributes(value) <- NULL
+              dim(value) <- dm
+              dimnames(value) <- dn
+          }
+          value
+          }, list(AS = as.name(paste("as.", what, sep="")))),
+                   ts = body(method, envir = environment(method)) <- quote({
+          value <- as.ts(from)
+          if(strict) {
+              attributes(value) <- NULL
+              class(value) <- "ts"
+              tsp(value) <- tsp(from)
+          }
+          value
+          }),
+             ## default: no attributes
+             body(method, envir = environment(method)) <- substitute({
           value <- AS(from)
           if(strict)
               attributes(value) <- NULL
           value
           }, list(AS = as.name(paste("as.", what, sep=""))))
+                  )
       setMethod("coerce", c("ANY", what), method, where = where)
   }
   ## and some hand-coded ones
@@ -161,17 +187,24 @@ setAs <-
 .basicCoerceMethod <- function(from, to, strict = TRUE) stop("Undefined coerce method")
 
 .makeAsMethod <- function(expr, simple, Class) {
+    if(is(expr, "function")) {
+        args <- formalArgs(expr)
+        if(!identical(args, "from"))
+            expr <- .ChangeFormals(expr,
+                    if(length(args) > 1) .simpleExtCoerce else .simpleIsCoerce)
+        expr <- body(expr)
+    }
     if(isVirtualClass(getClass(Class)))
-    {}
+        value <- expr
     else if(identical(expr, quote(from)))
-        expr <- substitute({class(from) <- CLASS; from},
+        value <- substitute({class(from) <- CLASS; from},
                            list(CLASS = Class))
-    else expr <- substitute({from <- EXPR; class(from) <- CLASS; from},
+    else value <- substitute({from <- EXPR; class(from) <- CLASS; from},
                            list(EXPR = expr, CLASS = Class) )
-    if(simple)
-        expr <- substitute(if(strict) EXPR else from,
+    if(simple && !identical(expr, quote(from)))
+        value <- substitute(if(strict) EXPR else from,
                            list(EXPR = expr))
     f <- .simpleExtCoerce
-    body(f, envir = environment(f)) <- expr
+    body(f, envir = environment(f)) <- value
     f
 }

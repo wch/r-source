@@ -545,14 +545,16 @@ reconcilePropertiesAndPrototype <-
       StandardPrototype <- defaultPrototype()
       slots <-  validSlotNames(allNames(properties))
       dataPartClass <- elNamed(properties, ".Data")
-      if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass)))
-          stop("\"", dataPartClass, "\" is not a valid data part class (must be a basic class or a virtual class combining basic classes)")
+      if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass, name)))
+          stop("In defining class \"", name, "\", the supplied data part class, \"",
+               dataPartClass,
+               "\" is not valid (must be a basic class or a virtual class combining basic classes)")
       if((!is.null(dataPartClass) || length(superClasses) > 0)
          && is.na(match("VIRTUAL", superClasses))) {
           ## Look for a data part in the super classes, either an inherited
           ## .Data slot, or a basic class.  Uses the first possibility, warns of conflicts
           for(cl in superClasses) {
-              thisDataPart <-  .validDataPartClass(cl)
+              thisDataPart <-  .validDataPartClass(cl, name)
               if(!is.null(thisDataPart)) {
                   if(is.null(dataPartClass)) {
                       if(!is.na(match(thisDataPart, c("NULL", "environment"))))
@@ -992,23 +994,21 @@ validSlotNames <- function(names) {
         stop("\"class\" is a reserved slot name and cannot be redefined")
 }
 
+### utility function called from primitive code for "@"
 getDataPart <- function(object) {
     temp <- getSlots(class(object))
-    slots <- names(temp)
-    iData <- match(".Data", slots)
-    if(is.na(iData))
-        stop(paste("class \"", class(object),
-                   "\" does not have a data part (a .Data slot) defined",
-                   sep=""))
-    dataClass <- temp[[iData]]
-    slots <- slots[-iData]
-    for(what in slots)
-        attr(object, what) <- NULL
-    ## data part classes must either be a basic class or a virtual class
-    ## with no slots (which is then supposed to be extended by basic classes)
-    ## setting the class to NULL in the S4 interpretation makes the object belong
-    ## to the appropriate basic class.
-    class(object) <- NULL
+    slots <- c("class", names(temp))
+    attrVals <- attributes(object)
+    attrs <- names(attrVals)
+    if(identical(slots, attrs)) # basic vector as .Data
+        attributes(object) <- NULL
+    else {
+        attrs <- attrs[is.na(match(attrs, slots))]
+        attributes(object) <- attrVals[attrs]
+        ## matrix, array, or ts are currently (R 1.7) the only other possible .Data's
+        if(!is.na(match("tsp", attrs))) # set the class (S3-style) to "ts"
+            class(object) <- "ts"
+    }
     object
 }
 
@@ -1022,7 +1022,7 @@ setDataPart <- function(object, value) {
     .mergeAttrs(value, object)
 }
 
-.validDataPartClass <- function(cl) {
+.validDataPartClass <- function(cl, inClass) {
     ClassDef <- getClass(cl, TRUE)
     value <- elNamed(ClassDef@slots, ".Data")
     if(is.null(value)) {
@@ -1030,11 +1030,20 @@ setDataPart <- function(object, value) {
             value <- "vector"
         else if((extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
             value <- cl
+        else if(extends(cl, "oldClass") && isVirtualClass(cl)) {
+            ## a registered S3 class: at the moment only "ts" works
+            if(identical(cl, "ts"))
+                value <- cl
+            else
+                warning("Old-style (``S3'') class \"", cl,
+                        "\" supplied as a superclass of \"", inClass,
+                        "\", but no automatic conversion will be peformed for S3 classes")
+        }
         else {
             if(identical(ClassDef@virtual, TRUE) &&
                length(getProperties(ClassDef)) == 0 &&
                length(ClassDef@subclasses) > 0 &&
-               all(!is.na(match(names(ClassDef@subclasses), .BasicClasses))))
+               all(!is.na(match(names(ClassDef@subclasses), .BasicClasses)))) #looks S3-ish
                 value <- cl
         }
     }
@@ -1122,24 +1131,51 @@ setDataPart <- function(object, value) {
     moreExts
 }
 
-## construct the expression that copies slots into the new object
+## construct the expression that implements the computations for coercing
+## an object to one of its superclasses
 ## The fromSlots argument is provided for calls from makeClassRepresentation
 ## and completeClassDefinition,
 ## when the fromClass is in the process of being defined, so slotNames() would fail
 .simpleCoerceExpr <- function(fromClass, toClass, fromSlots = slotNames(fromClass)) {
     toSlots <-  slotNames(toClass)
-    sameSlots <- (length(toSlots) == 0
-                  || (length(fromSlots) == length(toSlots) &&
-                      !any(is.na(match(fromSlots, toSlots)))))
+    sameSlots <- (length(fromSlots) == length(toSlots) &&
+                      !any(is.na(match(fromSlots, toSlots))))
     if(sameSlots)
-        substitute({class(from) <- CLASS; from},
+        expr <- substitute({class(from) <- CLASS; from},
                    list(CLASS = toClass))
-    else
-        substitute({
+    else {
+        if(length(toSlots)==0) {
+            ## either a basic class or something with the same representation
+            if(is.na(match(toClass, .BasicClasses)))
+                expr <- substitute({ attributes(from) <- NULL; class(from) <- CLASS; from},
+                                   list(CLASS=toClass))
+            else if(isVirtualClass(toClass))
+                expr <- quote(from)
+            else {
+                ## a basic class; a vector type, matrix, array, or ts
+                switch(toClass,
+                       matrix = , array = {
+                           expr <- quote({.dm <- dim(from); .dn <- dimnames(from)
+                                    attributes(from) <- NULL; dim(from) <- .dm
+                                    dimnames(from) <- .dn; from})
+                       },
+                       ts = {
+                           expr <- quote({.tsp <- tsp(from); attributes(from) <- NULL
+                                          tsp(from) <- .tsp; class(from) <- "ts"; from})
+                       },
+                       expr <- quote({attributes(from) <- NULL; from})
+                       )
+            }
+        }
+        else {
+            expr <- substitute({
             value <- new(CLASS)
             for(what in TOSLOTS)
                 slot(value, what) <- slot(from, what)
             value }, list(CLASS=toClass, TOSLOTS = toSlots))
+        }
+    }
+    expr
 }
 
 ## the boot version of newClassRepresentation (does no checking on slots to avoid

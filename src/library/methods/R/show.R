@@ -23,6 +23,20 @@ showDefault <-
             cat("\n")
         }
     }
+    else if(isClass(cl) && extends(cl, "oldClass") && length(slotNames(cl)) > 0) {
+        ## print the old-style object
+        cat("An object of class \"", cl, "\"\n", sep="")
+        for( cl2 in rev(extends(cl)))
+            if(!identical(cl2, "oldClass") && extends(cl2, "oldClass")) {
+                print(as(object, cl2), useS4 = FALSE) # see comment NBB below
+                break
+            }
+        for(what in slotNames(cl)) {
+            cat("Slot \"",what, "\":\n", sep="")
+            print(slot(object, what))
+            cat("\n")
+        }
+    }
     else
         ## NBB:  This relies on the delicate fact (as of version 1.7 at least)
         ## that print will NOT recursively call show if it gets more than one argument!

@@ -40,21 +40,17 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
 \arguments{
   \item{f}{ The character-string name of the generic function.
 
-    In \code{getMethods} only, this argument may be a function
-    definition, in which case the special methods list object, if any,
-    stored in the environment of the function is returned.  (This usage
-    is largely for internal purposes; you aren't likely to have such a
-    function definition for direct use.)}
+    }
   \item{signature}{ The signature of classes to match to the arguments
-    of \code{f}.  The vector of strings for the classes should be named,
-    and the names must match formal argument names of \code{f}.  If not
-    named, the signature is assumed to apply to the arguments of
-    \code{f} in order, but note below for \code{selectMethod}.
+    of \code{f}.  See the details below.
 
     For \code{selectMethod}, the signature can optionally be an
     environment with classes assigned to the names of the corresponding
     arguments.  Note:  the names correspond to the names of the classes, \emph{not}
-    to the objects supplied in a call to the generic function.}
+    to the objects supplied in a call to the generic function.  (You
+    are not likely to find this approach convenient, but it is used
+    internally and is marginally more efficient.)
+  }
   \item{where}{ The position or environment in which to look for the method:  by default,
       anywhere in
     the current search list.}
@@ -78,6 +74,29 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     arguments should use inheritance.}
 }
 \details{
+  The \code{signature} argument specifies classes, in an extended
+    sense, corresponding to formal arguments of the generic function.
+    As supplied, the argument may be a vector of strings identifying
+    classes, and may be named or not.  Names, if supplied, match the
+    names of those formal arguments included in the signature of the
+    generic.  That signature is normally all the arguments except
+    \dots.  However, generic functions can be specified with only a
+    subset of the arguments permitted, or with the signature taking
+    the arguments in a different order.
+
+    It's a good idea to name the arguments in the signature to avoid
+    confusion, if you're dealing with a generic that does something
+    special with its signature.   In any case, the elements of the
+    signature are matched to the formal signature by the same rules
+    used in matching arguments in function calls (see
+    \code{\link{match.call}}).
+
+    The strings in the signature may be class names, \code{"missing"}
+    or \code{"ANY"}.  See \link{Methods} for the meaning of these in
+    method selection.  Arguments not supplied in the signature
+    implicitly correspond to class \code{"ANY"}; in particular, giving
+    an empty signature means to look for the default method.
+
   A call to \code{getMethod} returns the method for a particular
   function and signature.  As with other \code{get} functions,
   argument \code{where} controls where the function looks (by default
