@@ -43,6 +43,11 @@ BUG FIXES
 
     o   SearchEngine.html was not installed when builddir != srcdir.
 
+    o	lm.{w}fit(x,y,..) now work when x has no column names.
+	These functions no longer add and subtract n zeros when there's no
+	offset.  They are now documented somewhat.
+
+
 		CHANGES IN R VERSION 1.1.0
 
 
