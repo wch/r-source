@@ -205,15 +205,11 @@ none
 
 Directory:  incoming
 
-* PR# 638 *
-Subject: make.function.html and datasets
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Fri, 18 Aug 2000 17:20:47 +0200
-* PR# 637 *
-Subject: Install Error on SGI Irix 6.5
-From: "Thomas Dick" <dick@b6ori1.bauv.unibw-muenchen.de>
-Date: Thu, 17 Aug 2000 11:09:11 +0000
-* PR# 636 *
-Subject: state name abbreviations
-From: jackman@stanford.edu
-Date: Wed, 16 Aug 2000 19:16:55 +0200 (MET DST)
+* PR# 640 *
+Subject: diff.default / diff.ts in wrong package bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
+* PR# 639 *
+Subject: symbols: xlim and ylim cannot be specified
+From: Werner Stahel <stahel@stat.math.ethz.ch>
+Date: Mon, 21 Aug 2000 15:54:08 +0200 (CEST)
