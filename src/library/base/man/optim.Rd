@@ -56,6 +56,9 @@ optim(par, fn, gr = NULL,
   method. If non-trivial bounds are supplied, this method will be
   selected, with a warning.
 
+  Nocedal and Wright (1999) is a comprehansive reference for the
+  previous three methods.
+  
   Method \code{"SANN"} is a variant of simulated annealing
   given in Belisle (1992). Simulated-annealing belongs to the class of
   stochastic global optimization methods. It uses only function values
@@ -85,7 +88,7 @@ optim(par, fn, gr = NULL,
       progress of the optimization is produced. Higher values may
       produce more tracing information: for method \code{"L-BFGS-B"}
       there are six levels of tracing.  (To understand exactly what
-      these do see the source code: hisgher levels give more detail.)}
+      these do see the source code: higher levels give more detail.)}
     \item{\code{fnscale}}{An overall scaling to be applied to the value
       of \code{fn} and \code{gr} during optimization. If negative,
       turns the problem into a maximization problem. Optimization is
@@ -179,6 +182,9 @@ optim(par, fn, gr = NULL,
 
   Nelder, J. A. and Mead, R. (1965) A simplex algorithm for function
   minimization. \emph{Computer Journal} \bold{7}, 308--313.
+
+  Nocedal, J. and Wright, S. J. (1999) \emph{Numerical Optimization}.
+  Springer.
 }
 \note{
   The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
