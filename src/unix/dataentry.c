@@ -27,7 +27,7 @@
 #include "MACconsole.h"
 #endif
 
-/* 
+/*
    The spreadsheet function returns a list of vectors. The types of these
    vectors can be specified by the user as can their names. It the names
    are specified they are set during initialization. The user can change
@@ -36,7 +36,7 @@
    The vectors are created too long and if they need to be increased this
    is done by using the next higher power of 2. They start 100 long. To cut
    them to the correct length for return you need to know the largest row number
-   that was assigned to. LEVELS (sxpinfo.gp) is used to keep track of this, 
+   that was assigned to. LEVELS (sxpinfo.gp) is used to keep track of this,
    separately for each vector. Vectors are initialized to NA when they are
    created so that NA is returned for any cell that was not set by the user.
    So that coercion back and forth maintains values of ssNA_REAL and ssNA_STRING
@@ -58,7 +58,7 @@ static char *menu_label[] =
 
 #endif
 
-/* 
+/*
    ssNewVector is just an interface to allocVector but it lets us
    set the fields to NA. We need to have a special NA for reals and
    strings so that we can differentiate between uninitialized elements
@@ -195,17 +195,17 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 			tvec2 = ssNewVector(TYPEOF(CAR(tvec)), len);
 			PROTECT(tvec);
 			for (j = 0; j < len; j++)
-				if (TYPEOF(CAR(tvec)) == REALSXP)
+			        if (TYPEOF(CAR(tvec)) == REALSXP) {
 					if (REAL(CAR(tvec))[j] != ssNA_REAL)
 						REAL(tvec2)[j] = REAL(CAR(tvec))[j];
 					else
 						REAL(tvec2)[j] = NA_REAL;
-				else if (TYPEOF(CAR(tvec)) == STRSXP)
+				} else if (TYPEOF(CAR(tvec)) == STRSXP) {
 					if (!streql(CHAR(STRING(CAR(tvec))[j]), CHAR(STRING(ssNA_STRING)[0])))
 						STRING(tvec2)[j] = STRING(CAR(tvec))[j];
 					else
 						STRING(tvec2)[j] = NA_STRING;
-				else
+				} else
 					error("spreadsheet: internal memory problem");
 			CAR(tvec) = tvec2;
 			UNPROTECT(1);
@@ -396,9 +396,9 @@ void find_coords(int row, int col, int *xcoord, int *ycoord)
 	*ycoord = bwidth + hwidth + box_h * row;
 }
 
-/* 
-   draw the window with the top left box at column wcol and 
-   row wrow 
+/*
+   draw the window with the top left box at column wcol and
+   row wrow
  */
 
 void jumpwin(int wcol, int wrow)
@@ -428,12 +428,12 @@ void advancerect(int which)
 
 	switch (which) {
 	case UP:
-		if (crow == 1)
+		if (crow == 1) {
 			if (rowmin == 1)
 				bell();
 			else
 				jumppage(UP);
-		else
+		} else
 			crow--;
 		break;
 	case DOWN:
@@ -449,12 +449,12 @@ void advancerect(int which)
 			ccol++;
 		break;
 	case LEFT:
-		if (ccol == 1)
+   	        if (ccol == 1) {
 			if (colmin == 1)
 				bell();
 			else
 				jumppage(LEFT);
-		else
+		} else
 			ccol--;
 		break;
 	default:
@@ -492,7 +492,7 @@ void drawrow(int whichrow)
 	Rsync();
 }
 
-/* 
+/*
    printelt: print the correct value from vector[vrow] into the
    spread sheet in row ssrow and col sscol
  */
@@ -622,8 +622,8 @@ static int checkquit(int xw)
 }
 #endif
 
-/* 
-   when a buttonpress event happens find the square that is being pointed to 
+/*
+   when a buttonpress event happens find the square that is being pointed to
    if the pointer is in the header we need to see if the quit button was
    pressed and if so quit. This is done by having findsquare return an int
    which is zero if we should quit and one otherwise
@@ -639,12 +639,12 @@ int findsquare()
 
 	/* check to see if the click was in the header */
 
-	if (yw < hwidth + bwidth)
+	if (yw < hwidth + bwidth) {
 		if (checkquit(xw))
 			return 1;
 		else
 			return 0;
-
+	}
 	/* translate to box coordinates */
 
 	wcol = (xw - bwidth) / box_w;
@@ -659,14 +659,14 @@ int findsquare()
 
 	/* next check to see if it is in the column labels */
 
-	if (yw < hwidth + bwidth + box_h)
+	if (yw < hwidth + bwidth + box_h) {
 		if (xw > bwidth + box_w)
 			popupmenu(xr, yr, wcol, wrow);
 		else {
 			highlightrect();
 			bell();
 		}
-	else if (wcol != ccol || wrow != crow) {
+	} else if (wcol != ccol || wrow != crow) {
 		ccol = wcol;
 		crow = wrow;
 	}
@@ -713,7 +713,7 @@ static SEXP getccol()
 	return (CAR(tmp));
 }
 
-/* 
+/*
    close up the entry to a square, put the value that has been entered
    into  the correct place and as the correct type
  */
@@ -792,7 +792,7 @@ void clearrect()
 	Rsync();
 }
 
-/* 
+/*
    handlechar has to be able to parse decimal numbers and strings,
    depending on the current column type, only printing characters should get this far
  */
@@ -850,11 +850,12 @@ void handlechar(char *text)
 	if (currentexp == 3) {
 		if (isspace(c))
 			goto donehc;
-		if (clength == 0)
+		if (clength == 0) {
 			if (c != '.' && !isalpha(c))
 				goto donehc;
 			else if (c != '.' && !isalnum(c))
 				goto donehc;
+		}
 	}
 
 	if (clength++ > 29) {
@@ -1095,8 +1096,8 @@ static void clearwindow()
 	EraseRect(&dataentryWindow->portRect);
 }
 
-/* 
-   copyarea is a lot more complicated than you would expect but, 
+/*
+   copyarea is a lot more complicated than you would expect but,
    the Mac requires that you transform to screen coordinates to CopyBits
    in the same window and if the copy regions are not the same size it
    automatically rescales for you (bizarre!) so you need to be sure the
@@ -1580,9 +1581,9 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
 		XDrawString(iodisplay, menupanes[2], iogc, box_w - 20, box_h - 3,
 				"X", 1);
 
-/* 
-   start an event loop; we're looking for a button press and a button 
-   release in the same window 
+/*
+   start an event loop; we're looking for a button press and a button
+   release in the same window
  */
 
 	while (1) {
