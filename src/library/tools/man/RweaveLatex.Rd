@@ -62,7 +62,7 @@ RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
       output comes only from explicit \code{\link{print}} or
       \code{\link{cat}} statements.}
     \item{split:}{logical (\code{FALSE}). If \code{TRUE}, text output is
-      written to seperate files 
+      written to separate files 
       for each code chunk.}
     \item{strip.white:}{logical (\code{TRUE}). If \code{TRUE}, blank
       lines at the beginning and end of output are removed.}
