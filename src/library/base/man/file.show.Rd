@@ -3,7 +3,7 @@
 \title{Display One or More Files}
 \description{Display one or more files.}
 \usage{
-file.show(\dots, header, title="R Information",
+file.show(\dots, header = rep("",nfiles), title = "R Information",
           delete.file=FALSE, pager=getOption("pager"))
 }
 \arguments{
@@ -11,7 +11,7 @@ file.show(\dots, header, title="R Information",
     files to be displayed.}
   \item{header}{character vector (of the same length as the number of files
     specified in \code{\dots}) giving a header for each file being
-    displayed.  Defaults to empty strings.} 
+    displayed.  Defaults to empty strings.}
   \item{title}{an overall title for the display.  If a single separate
     window is used for the display, \code{title} will be used as the window
     title. If multiple windows are used, their titles should combine the title
@@ -26,7 +26,7 @@ file.show(\dots, header, title="R Information",
 }
 \note{
   How the pager is implemented is highly system dependent.
-  
+
   The basic Unix version concatenates the files (using the headers) to a
   temporary file, and displays it in the
   pager selected by the \code{pager} argument, which is a character

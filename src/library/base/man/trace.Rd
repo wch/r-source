@@ -15,10 +15,10 @@
   can be temporarily turned on or off globally by calling \code{tracingState}.
 }
 \usage{
-trace(what, tracer, exit, at, print, signature, where)
-untrace(what, signature = NULL, where)
+trace(what, tracer, exit, at, print, signature, where = topenv(parent.frame()))
+untrace(what, signature = NULL, where = topenv(parent.frame()))
 
-tracingState(on)
+tracingState(on = NULL)
 }
 \arguments{
   \item{what}{The name (quoted or not) of a function to be traced or

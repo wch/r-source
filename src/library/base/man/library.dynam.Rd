@@ -9,9 +9,11 @@
 }
 \usage{
 library.dynam(chname, package = .packages(), lib.loc = NULL,
-              verbose = getOption("verbose"), file.ext, \dots)
+              verbose = getOption("verbose"),
+              file.ext = .Platform$dynlib.ext, \dots)
 library.dynam.unload(chname, libpath,
-                     verbose = getOption("verbose"), file.ext)
+              verbose = getOption("verbose"),
+              file.ext = .Platform$dynlib.ext)
 .dynLibs(new)
 }
 \arguments{
@@ -51,7 +53,7 @@ library.dynam.unload(chname, libpath,
 
   \code{library.dynam.unload} is designed for use in \code{\link{.Last.lib}} or
   \code{\link{.onUnload}}.
-  
+
   \code{.dynLibs} is used for getting or setting the packages that have
   loaded shared libraries (using \code{library.dynam}).  Versions of \R
   prior to 1.6.0 used an internal global variable \code{.Dyn.libs} for

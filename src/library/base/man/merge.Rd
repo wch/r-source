@@ -12,7 +12,8 @@ merge(x, y, \dots)
 
 \method{merge}{default}(x, y, \dots)
 
-\method{merge}{data.frame}(x, y, by, by.x, by.y, all = FALSE, all.x = all, all.y = all,
+\method{merge}{data.frame}(x, y, by = intersect(names(x), names(y)),
+      by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all,
       sort = TRUE, suffixes = c(".x",".y"), \dots)
 }
 \arguments{

@@ -2,7 +2,7 @@
 \alias{legend}
 \title{Add Legends to Plots}
 \usage{
-legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
+legend(x, y = NULL, legend, fill = NULL, col = "black", lty, lwd, pch,
        angle = NULL, density = NULL, bty = "o", bg = par("bg"),
        pt.bg = NA, cex = 1, xjust = 0, yjust = 1,
        x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),

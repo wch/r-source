@@ -1,9 +1,9 @@
 \name{screen}
 \title{Creating and Controlling Multiple Screens on a Single Device}
 \usage{
-split.screen(figs, screen, erase = TRUE)
-screen(n, new = TRUE)
-erase.screen(n)
+split.screen(figs, screen = , erase = TRUE)
+screen(n = , new = TRUE)
+erase.screen(n = )
 close.screen(n, all.screens = FALSE)
 }
 \alias{screen}
@@ -43,7 +43,7 @@ close.screen(n, all.screens = FALSE)
   The first call to \code{split.screen} places \R into split-screen
   mode.  The other split-screen functions only work within this mode.
   While in this mode, certain other commands should be avoided (see WARNINGS
-  below).  Split-screen mode is exited by the command 
+  below).  Split-screen mode is exited by the command
   \code{close.screen(all = TRUE)}
 }
 \value{
@@ -68,17 +68,17 @@ close.screen(n, all.screens = FALSE)
   and plotting on another screen. The behavior associated with returning
   to a screen to add to an existing plot is unpredictable and may result
   in problems that are not readily visible.
-  
+
   These functions are totally incompatible with the
   other mechanisms for arranging plots on a device:  \code{par(mfrow)},
-  \code{par(mfcol)}, and \code{layout()}.  
+  \code{par(mfcol)}, and \code{layout()}.
 
-  The functions are also incompatible with some plotting functions, 
+  The functions are also incompatible with some plotting functions,
   such as \code{coplot}, which make use of these other mechanisms.
 
   The functions should not be used with multiple devices.
 
-  \code{erase.screen} will appear not to work if the background colour 
+  \code{erase.screen} will appear not to work if the background colour
   is transparent (as it is by default on most devices).
 }
 

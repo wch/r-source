@@ -12,7 +12,7 @@ model.frame(formula, \dots)
            subset = NULL, na.action = na.fail,
            drop.unused.levels = FALSE, xlev = NULL, \dots)
 
-\method{model.frame}{aovlist}(formula, data, \dots)
+\method{model.frame}{aovlist}(formula, data = NULL, \dots)
 
 \method{model.frame}{glm}(formula, data, na.action, \dots)
 

@@ -5,17 +5,16 @@
   Finding the top level environment.
 }
 \usage{
-topenv(envir = parent.frame(), matchThisEnv)
+topenv(envir = parent.frame(), matchThisEnv = getOption("topLevelEnvironment"))
 }
 \arguments{
   \item{envir}{environment.}
 
   \item{matchThisEnv}{return this environment, if it matches before
-      any other criterion is satisfied.  By default, set to the option
-      \dQuote{topLevelEnvironment}.  This option is
-      set by \code{\link{sys.source}}, which treats a specific
-      environment as the top level environment.  Supplying the
-      argument as \code{NULL} means it will never match.}
+      any other criterion is satisfied.  The default, the option
+      \dQuote{topLevelEnvironment}, is set by \code{\link{sys.source}},
+      which treats a specific environment as the top level environment.
+      Supplying the argument as \code{NULL} means it will never match.}
 }
 \details{
   \code{topenv} returns the first top level environment found when

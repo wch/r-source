@@ -14,7 +14,7 @@
 }
 \usage{
 ts(data = NA, start = 1, end = numeric(0), frequency = 1,
-   deltat = 1, ts.eps = getOption("ts.eps"), class, names)
+   deltat = 1, ts.eps = getOption("ts.eps"), class = , names = )
 as.ts(x)
 is.ts(x)
 }
@@ -24,7 +24,7 @@ is.ts(x)
     \code{data.matrix}.}
   \item{start}{the time of the first observation.  Either a single
     number or a vector of two integers, which specify a natural time
-    unit and a (1-based) number of samples into the time unit.  See 
+    unit and a (1-based) number of samples into the time unit.  See
     the examples for the use of the second form.}
   \item{end}{the time of the last observation, specified in the same way
     as \code{start}.}
