@@ -18,18 +18,19 @@
 }
 \usage{
 head(x, \dots)
-\method{head}{default}(x, n=6)
-\method{head}{data.frame}(x, n=6)
+\method{head}{default}(x, n=6, \dots)
+\method{head}{data.frame}(x, n=6, \dots)
 
 tail(x, \dots)
-\method{tail}{default}(x, n=6)
-\method{tail}{data.frame}(x, n=6)
+\method{tail}{default}(x, n=6, \dots)
+\method{tail}{data.frame}(x, n=6, \dots)
 }
 \arguments{
   \item{x}{an object}
   \item{n}{size for the resulting object: number of elements for a
     vector (including lists), rows for a matrix or data frame or
     lines for a function.}
+  \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
   For matrices and data frames, the first/last \code{n} rows are returned.
