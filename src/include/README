@@ -48,11 +48,6 @@ Mathlib.h
 	-> Arith.h
 	-> Error.h (_iff_ Mathlib in R)
 
-S_compat.h
-	-> S.h		-> config.h , Error.h , Memory.h
-	-> Fortran.h	-> Mathlib.h , Complex.h , config.h
-	-> Linpack.h	-> Blas.h ,	Rconfig.h
-
 S.h
 	-> Rconfig.h
 	-> Error.h

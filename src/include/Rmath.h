@@ -322,7 +322,6 @@ void	set_seed(unsigned int, unsigned int);
 
 	/* Normal Distribution */
 
-/* These 3 will be re-defined in  ./S_compat.h	(when that is used) : */
 #define pnorm pnorm5
 #define qnorm qnorm5
 #define dnorm dnorm4

@@ -328,7 +328,7 @@ endif
 
 
 #taken from ../include/Makefile.in
-SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h S_compat.h
+SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h
 OBJ_HEADERS = Rconfig.h Rversion.h
 GW32_HEADERS = globalvar.h
 
