@@ -18,6 +18,7 @@
  *
  *
  * Application Routines, typically implemented in  ../appl/
+ * ----------------------------------------------  ========
  */
 
 #ifndef APPLIC_H_
@@ -135,5 +136,12 @@ double F77_SYMBOL(zeroin)();
 int F77_SYMBOL(fdhess)();
 int F77_SYMBOL(optif9)();
 
+
+/* ALL ../appl/<foobar>.f  --- who volunteers to do this? -- please */
 
+int F77_SYMBOL(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
+int F77_SYMBOL(chol)(double *a, int *lda, int *n, double *v, int *info);
+/* ... */
+/* ... */
+/* ... */
 #endif
