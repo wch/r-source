@@ -728,9 +728,10 @@ file.path(path1, path2, paste("mylib", .Platform$dynlib.ext, sep=""))
 @end example
 
 @noindent
-for platform independence.  On some Unix systems the path supplied to
-@code{dyn.load} should contain a @samp{./} as the standard search path
-for shared libraries does not contain the current directory.
+for platform independence.  On Unix systems the path supplied to
+@code{dyn.load} can be an absolute path, one relative to the current
+directory or, if it starts with @code{~}, relative to the user's home
+directory.
 
 Loading is most often done via a call to @code{library.dynam} in the
 @code{.First.lib} function of a package. This has the form
