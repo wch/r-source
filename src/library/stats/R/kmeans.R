@@ -1,6 +1,6 @@
 kmeans <-
-    function(x, centers, iter.max = 10, nstart = 1,
-             algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"))
+function(x, centers, iter.max = 10, nstart = 1,
+         algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"))
 {
     do_one <- function(nmeth) {
         Z <-
@@ -97,7 +97,10 @@ kmeans <-
     }
     centers <- matrix(Z$centers, k)
     dimnames(centers) <- list(1:k, dimnames(x)[[2]])
-    out <- list(cluster = Z$c1, centers = centers, withinss = Z$wss,
+    cluster <- Z$c1
+    if(!is.null(rn <- rownames(x)))
+        names(cluster) <- rn
+    out <- list(cluster = cluster, centers = centers, withinss = Z$wss,
                 size = Z$nc)
     class(out) <- "kmeans"
     out
