@@ -413,6 +413,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 		if (TAG(a) == TAG(tmp))
 		    break;
 	    if (a == R_NilValue)
+		/* Use defineVar instead of earlier version that added
+                   bindings manually */
 		defineVar(TAG(tmp), CAR(tmp), newrho);
 	}
     }
