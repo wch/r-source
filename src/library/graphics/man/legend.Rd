@@ -9,7 +9,8 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
        xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1,
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
-       plot = TRUE, ncol = 1, horiz = FALSE, title = NULL)
+       plot = TRUE, ncol = 1, horiz = FALSE, title = NULL, 
+       inset = 0)
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
@@ -71,6 +72,9 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
      specification).}
   \item{title}{a text value giving a title to be placed at the top of the
      legend.}
+  \item{inset}{inset distance(s) from the margins as a fraction of the plot
+          region when legend is placed by keyword.}
+
 }
 \details{
   Arguments \code{x, y, legend} are interpreted in a non-standard way to
@@ -87,11 +91,15 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
   order).
   
   The location may also be specified by setting \code{x} to a single
-  keyword from the list \code{"bottomright"}, \code{"bottomcenter"},
-  \code{"bottomleft"}, \code{"leftcenter"}, \code{"topleft"},
-  \code{"topcenter"}, \code{"topright"} and \code{"rightcenter"}. This places
-  the legend on the inside of the plot frame at the given location.
-  Partial argument matching is used.
+  keyword from the list \code{"bottomright"}, \code{"bottom"},
+  \code{"bottomleft"}, \code{"left"}, \code{"topleft"},
+  \code{"top"}, \code{"topright"}, \code{"right"} and
+  \code{"center"}. This places the legend on the inside of the plot
+  frame at the given location. Partial argument matching is used.  The
+  optional \code{inset} argument specifies how far the legend is inset
+  from the plot margins.  If a single value is given, it is used for
+  both margins; if two values are given, the first is used for \code{x}-
+  distance, the second for \code{y}-distance.
 
   \dQuote{Attribute} arguments such as \code{col}, \code{pch}, \code{lty},
   etc, are recycled if necessary.  \code{merge} is not.
@@ -227,16 +235,15 @@ points(x, y, pch=21, bg="white")
 legend(.4,1, "sin(c x)", pch=21, pt.bg="white", lty=1, col = "blue")
 
 ## legends with titles at different locations
-x <- rnorm(10)
-y <- rnorm(10)
-plot(x, y, xlim=c(-4,4), ylim=c(-4,4))
+plot(x, y, type='n')
 legend("bottomright", "(x,y)", pch=1, title="bottomright")
-legend("bottomcenter", "(x,y)", pch=1, title="bottomcenter")
+legend("bottom", "(x,y)", pch=1, title="bottom")
 legend("bottomleft", "(x,y)", pch=1, title="bottomleft")
-legend("leftcenter", "(x,y)", pch=1, title="leftcenter")
+legend("left", "(x,y)", pch=1, title="left")
 legend("topleft", "(x,y)", pch=1, title="topleft")
-legend("topcenter", "(x,y)", pch=1, title="topcenter")
+legend("top", "(x,y)", pch=1, title="top")
 legend("topright", "(x,y)", pch=1, title="topright")
-legend("rightcenter", "(x,y)", pch=1, title="rightcenter")
+legend("right", "(x,y)", pch=1, title="right")
+legend("center", "(x,y)", pch=1, title="center")
 }
 \keyword{aplot}

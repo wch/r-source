@@ -5,7 +5,8 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
 	 text.width = NULL, text.col = par("col"),
 	 merge = do.lines && has.pch, trace = FALSE,
-	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL)
+	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
+	 inset = 0)
 {
     ## the 2nd arg may really be `legend'
     if(missing(legend) && !missing(y) &&
@@ -18,10 +19,10 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     if(length(title) > 1) stop("invalid title")
 
     if (is.character(x)) {
-	auto <- pmatch(x, c("bottomright", "bottomcenter", "bottomleft", 
-	                    "leftcenter", 
-	                    "topleft", "topcenter", "topright",
-	                    "rightcenter"))
+	auto <- pmatch(x, c("bottomright", "bottom", "bottomleft", 
+	                    "left", 
+	                    "topleft", "top", "topright",
+	                    "right", "center"))
 	if (length(auto) != 1 || is.na(auto)) stop("invalid legend position")
     }
     else auto <- NA
@@ -72,6 +73,7 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     yc <- Cex * yinch(cin[2], warn.log=FALSE)
 
     xchar  <- xc
+    xextra <- 0
     yextra <- yc * (y.intersp - 1)
     ymax   <- max(yc, strheight(legend, units="user", cex=cex))
     ychar <- yextra + ymax
@@ -138,7 +140,12 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	if(has.pch && !merge)	w0 <- w0 + dx.pch
 	if(do.lines)		w0 <- w0 + (2+x.off) * xchar
 	w <- ncol*w0 + .5* xchar
-	if (!is.null(title)) w <- max(w, strwidth(title, units="user", cex=cex) + 0.5*xchar)
+	if (!is.null(title) 
+	    && (tw <- strwidth(title, units="user", cex=cex) + 0.5*xchar) > w) {
+	    xextra <- (tw - w)/2
+	    w <- tw
+	}
+	    
 	##-- (w,h) are now the final box width/height.
 	
 	if (is.na(auto)) {
@@ -146,22 +153,27 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	    top  <- y + (1 - yjust) * h
 	} else {
 	    usr <- par("usr")
-	    left <- switch(auto, usr[2]-w,
-	    		 	 (usr[1]+usr[2]-w)/2,
-	    		 	 usr[1],
-	    		 	 usr[1],
-	    		 	 usr[1],
-	    		 	 (usr[1]+usr[2]-w)/2,
-	    		 	 usr[2]-w,
-	    		 	 usr[2]-w)
-	    top <- switch(auto,  usr[3]+h,
-	    			 usr[3]+h,
-	    			 usr[3]+h,
-	    			 (usr[3]+usr[4]+h)/2,
-	    			 usr[4],
-	    			 usr[4],
-	    			 usr[4],
-	    			 (usr[3]+usr[4]+h)/2)
+	    inset <- rep(inset, length.out = 2)
+	    insetx <- inset[1]*(usr[2] - usr[1])
+	    left <- switch(auto, usr[2] - w - insetx,
+	    		 	 (usr[1] + usr[2] - w)/2,
+	    		 	 usr[1] + insetx,
+	    		 	 usr[1] + insetx,
+	    		 	 usr[1] + insetx,
+	    		 	 (usr[1] + usr[2] - w)/2,
+	    		 	 usr[2] - w - insetx,
+	    		 	 usr[2] - w - insetx,
+	    		 	 (usr[1] + usr[2] - w)/2)
+	    insety <- inset[2]*(usr[4] - usr[3])	    
+	    top <- switch(auto,  usr[3] + h + insety,
+	    			 usr[3] + h + insety,
+	    			 usr[3] + h + insety,
+	    			 (usr[3] + usr[4] + h)/2,
+	    			 usr[4] - insety,
+	    			 usr[4] - insety,
+	    			 usr[4] - insety,
+	    			 (usr[3] + usr[4] + h)/2,
+	    			 (usr[3] + usr[4] + h)/2)
 	}
     }
 
@@ -172,8 +184,8 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     }
 	
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
-    xt <- left + xchar + (w0 * rep.int(0:(ncol-1),
-				       rep.int(n.legpercol,ncol)))[1:n.leg]
+    xt <- left + xchar + xextra + (w0 * rep.int(0:(ncol-1),
+				  	       rep.int(n.legpercol,ncol)))[1:n.leg]
     yt <- top - (rep.int(1:n.legpercol,ncol)[1:n.leg] - 1 + !is.null(title)) * ychar -
 	0.5 * yextra - ymax
 
