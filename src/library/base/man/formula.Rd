@@ -23,7 +23,8 @@ as.formula(object, env = parent.frame())
   used only when the formula would otherwise lack an environment.
 }
 \arguments{
-  \item{x, object}{an object}
+  \item{y, model}{symbolic expressions.}
+  \item{x, object}{\R object.}
   \item{\dots}{further arguments passed to or from other methods.}
   \item{env}{the environment to associate with the result.}
 }
