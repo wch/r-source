@@ -15,9 +15,9 @@ DISTFILES = Makefile.in
 
 SUBDIRS = X11 gnome lapack vfonts
 
-MODULES = $(R_GUIS) lapack vfonts
+MODULES = $(R_GUIS) vfonts
 
-all: Makefile Makedeps R
+all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
