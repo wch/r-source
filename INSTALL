@@ -12,36 +12,33 @@ platforms.  See below for details.
 
 SIMPLE INSTALLATION
 
-Choose a place to install the R tree (R is not just a binary, but
-has additional data sets, help files, font metrics etc).  Let's call
-this place RHOME.  Untar the source code.  This should create
-directories src, etc, cmd, help and doc.  Issue the following
-commands:
+Choose a place to install the R tree (R is not just a binary, but has
+additional data sets, help files, font metrics etc).  Let's call this
+place RHOME.  Untar the source code.  This should create directories
+src, etc, cmd, help and doc.  Issue the following commands:
 
 	./configure
 	make
-	make help
 
-You can also build a LaTeX version of the manual entries with
+If these commands execute successfully, the R binary will be copied to
+the `$RHOME/bin' directory.  In addition, a shell script font-end
+called "R" will be created and copied to the same directory.  You can
+copy this script to a place where users can invoke it, for example to
+`/usr/local/bin/R'.  You could also copy the man page `R.1' to a place
+where your man reader finds it, such as `/usr/local/man/man1'.
 
-	make latex
-
-and an HTML version of the manual with
-
-	make html
-
-These are not fully supported yet.
-
-To build help pages and LaTeX and HTML versions of the manual in one
-step, do
+Using
 
 	make docs
 
-If these commands execute successfully, the R binary will be copied
-to the $RHOME/bin directory.  In addition, a shell script font-end
-called "R" will be created and copied to the same directory.  You
-can copy the script to a place where users can invoke it:
-/usr/local/bin/R for example.
+will build plain text help pages as well as HTML and LaTeX versions of
+the documentation (the three kinds can also be generated separately
+using make help, make html and make latex).  Note that as of R version
+0.60, you need Perl version 5 to build the documentation.  If this is
+not available on your system, you can obtain precompiled documentation
+files via the `doc/pre-formatted-help' directory of the Comprehensive
+R Archive Network (CRAN), see the file `RESOURCES' for information on
+CRAN.
 
 Now type R and reach for your S manuals ...
 
