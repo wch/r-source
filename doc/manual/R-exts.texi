@@ -2482,15 +2482,15 @@ public: Y (); ~Y ();
 @smallexample
 // X.cc
 
-#include <iostream.h>
+#include <iostream>
 #include "X.hh"
 
 static Y y;
 
-X::X()  @{ cout << "constructor X" << endl; @}
-X::~X() @{ cout << "destructor X" << endl; @}
-Y::Y()  @{ cout << "constructor Y" << endl; @}
-Y::~Y() @{ cout << "destructor Y" << endl; @}
+X::X()  @{ std::cout << "constructor X" << std::endl; @}
+X::~X() @{ std::cout << "destructor X"  << std::endl; @}
+Y::Y()  @{ std::cout << "constructor Y" << std::endl; @}
+Y::~Y() @{ std::cout << "destructor Y"  << std::endl; @}
 @end smallexample
 @end cartouche
 
