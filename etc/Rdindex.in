@@ -65,7 +65,7 @@ foreach $file (@ARGV) {
   }
   else {
     $_ = <FILE>;
-    m/^\\name\{([^\}]*)\}/;
+    m/\\name\{([^\}]*)\}/;
     $name = $1;
     $l = length($name);
     if($l <= $l1){
