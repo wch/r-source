@@ -7,11 +7,13 @@ SAVE=CHECK
 ifneq ($(strip $(BUILD)),CROSS)
 SPKG0 = $(shell $(RHOME)/src/gnuwin32/Rpwd.exe $(SPKG))
 DPKG0 = $(shell $(RHOME)/src/gnuwin32/Rpwd.exe $(DPKG))
+R_EXE = $(RHOME)/bin/rterm.exe
 else
 SPKG0=$(SPKG)
 DPKG0=$(DPKG)
 endif
 
+REXE = $(R_EXE) --vanilla --slave
 
 ifeq ($(strip $(DLLNM)),)
   DLLNAME=$(PKG)
@@ -80,7 +82,9 @@ include $(RHOME)/src/gnuwin32/MkRules
 
 clean:
 ifeq ($(strip $(SRCMAKE)),)
-	$(RM) $(SDYNLIB) $(LOBJS) $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def $(SSPKG)/$(DLLNAME)_res.* $(SSPKG)/*.d $(SSPKG)/Makedeps
+	$(RM) $(SDYNLIB) $(LOBJS) $(SSPKG)/$(DLLNAME).a \
+	  $(SSPKG)/$(DLLNAME).def $(SSPKG)/$(DLLNAME)_res.* \
+	  $(SSPKG)/*.d $(SSPKG)/Makedeps
 else
 	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win clean
 endif
@@ -106,17 +110,9 @@ ifneq ($(strip $(PKG)),base)
 ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
-ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
-	  | R_DEFAULT_PACKAGES=tools R_OSTYPE=windows LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null
-#	cp $(DPKG)/R/$(PKG) $(DPKG)/R/all.R
-else
-	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
-	  | $(RHOME)/bin/rterm.exe --vanilla --slave \
-	    R_DEFAULT_PACKAGES=tools LC_COLLATE=C > /dev/null
-#	@cp -p $(DPKG)/R/$(PKG) $(DPKG)/R/all.R
+	  | R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows LC_COLLATE=C $(REXE) > /dev/null
 	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
-endif
 ## install halts here if collater failed
 	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME) $(BUILD) $(R_EXE)
 else
@@ -187,32 +183,18 @@ frontmatter:
 	  $(ECHO) "A package must contain a DESCRIPTION file"; \
 	  exit 27; \
 	fi
-ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "tools:::.install_package_description('.', '"$(DPKG)"')" | \
-	  R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null
-else
-	@$(ECHO) "tools:::.install_package_description('.', '"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
-endif
+	  R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows $(REXE) > /dev/null
 
 nmspace:
-ifeq ($(strip $(BUILD)),CROSS)
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(ECHO) -n "  installing NAMESPACE file"; \
 	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
 	  $(ECHO) " and metadata"; \
 	  $(ECHO) "tools:::.install_package_namespace_info('$(DPKG)', '$(DPKG)')" | \
-	  R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave  > /dev/null; \
+	  R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows $(REXE) > /dev/null; \
 	fi
-else
-	@if test -f ${SPKG}/NAMESPACE; then \
-	  $(ECHO) -n "  installing NAMESPACE file"; \
-	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
-	  $(ECHO) " and metadata"; \
-	  $(ECHO) "tools:::.install_package_namespace_info('$(DPKG)', '$(DPKG)')" | \
-	    $(RHOME)/bin/rterm.exe R_DEFAULT_PACKAGES=tools --vanilla --slave > /dev/null; \
-	fi
-endif
+
 nmspacefake:
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(ECHO) "  installing NAMESPACE file"; \
@@ -244,7 +226,8 @@ ifneq ($(strip $(LOBJS)),)
 endif
 else
 	@$(ECHO) "  running src/Makefile.win ..."
-	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
+	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
+	  -f Makefile.win
 	@$(ECHO) "  ... done"
 endif
 
@@ -282,13 +265,8 @@ endif
 
 indices:
 	@$(ECHO) "  installing indices"
-ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "tools:::.install_package_indices('.', '"$(DPKG)"')" | \
-	  R_DEFAULT_PACKAGES=tools LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null
-else
-	@$(ECHO) "tools:::.install_package_indices('.', '"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools LC_COLLATE=C > /dev/null
-endif
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 # need not have HTML installed when building packages
 	@$(MKDIR) -p $(RHOME)/doc/html/search
 	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt	
@@ -298,57 +276,34 @@ endif
 md5sums:
 ifneq ($(strip $(PKG)),base)
 	@$(ECHO) "  adding MD5 sums"
-ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) ".installMD5sums('"$(DPKG)"')" | \
-	  R_DEFAULT_PACKAGES=tools LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null
-else
-	@$(ECHO) ".installMD5sums('"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools LC_COLLATE=C > /dev/null
+	@$(ECHO) "tools:::.installMD5sums('"$(DPKG)"')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 endif
+
+ifeq ($(strip $(BUILD)),CROSS)
+R_X_BUILD=yes
 endif
 
 lazyload:
-ifeq ($(strip $(BUILD)),CROSS)
 	@if test -d $(DPKG)/R ; then \
 	  if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
 	    $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
 	    $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
-	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null ; \
+	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES=NULL \
+	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null ; \
 	    rm -f $(DPKG)/R/all.rda ; \
 	    if test -r install.R ; then \
 	      cat install.R >> $(DPKG)/R/$(PKG) ; \
 	    fi ; \
 	  fi ; \
 	fi
-else
-	@if test -d $(DPKG)/R ; then \
-	  if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
-	    $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
-	    $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\")" | \
-	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
-	    rm -f $(DPKG)/R/all.rda ; \
-	    if test -r install.R ; then \
-	      cat install.R >> $(DPKG)/R/$(PKG) ; \
-	    fi ; \
-	  fi ; \
-	fi
-endif
 
 lazydata:
-ifeq ($(strip $(BUILD)),CROSS)
 	@if test -d $(DPKG)/data; then \
 	  if ! test -f $(DPKG)/data/Rdata.rdb ; then \
 	    $(ECHO)  "preparing package $(PKG) for lazy data loading" ; \
 	    $(ECHO) "tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
-	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null ; \
+	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES=NULL \
+	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null ; \
 	  fi ; \
 	fi
-else
-	@if test -d $(DPKG)/data; then \
-	  if ! test -f $(DPKG)/data/Rdata.rdb ; then \
-	    $(ECHO)  "preparing package $(PKG) for lazy data loading" ; \
-	    $(ECHO) "tools:::data2LazyLoadDB(\"$(PKG)\")" | \
-	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
-	  fi ; \
-	fi
-endif

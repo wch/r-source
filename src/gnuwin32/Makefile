@@ -11,10 +11,13 @@ all:
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME = $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
+R_EXE = $(RHOME)/bin/rterm.exe
 else
 RHOME = $(shell perl pwd.pl ../..)
 PKGD = $(shell perl pwd.pl $(PKGDIR))
 endif
+
+REXE = $(R_EXE) --vanilla --slave
 
 RPREFIX = $(shell perl fixed/rwver.pl ../../VERSION)
 
@@ -100,20 +103,15 @@ Rcode: fixed/fixdesc
 
 LAZY_PKGS = utils graphics stats methods grid
 
-baselazy:
-	@if ! test -f ../../library/base/R/base.rdb ; then \
-	  echo "preparing package base for lazy loading" ; \
-	  (cat ../library/tools/R/makeLazyLoad.R ../../share/R/makebasedb.R; \
-	    echo "makeLazyLoading(\"base\")") | \
-	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
-	fi
-
-
 rpackage: ../../library/R.css
 ifeq ($(strip $(HELP)),YES)
+	@$(ECHO)
+	@$(ECHO) -n "writing help indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
+	  $(ECHO) -n " $${pkg}" ; \
 	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg}; \
 	done
+	@$(ECHO)
 endif
 	@for pkg in $(PKGS); do \
 	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
@@ -125,31 +123,29 @@ ifeq ($(strip $(BUILD)),CROSS)
 	  echo "tools:::makeLazyLoading(\"base\", lib.loc=\"$(RLIB)\")" | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null; \
 	fi
+else
+	@if ! test -f ../../library/base/R/base.rdb ; then \
+	  echo "preparing package base for lazy loading" ; \
+	  (cat ../library/tools/R/makeLazyLoad.R \
+	    ../library/base/makebasedb.R; \
+	    echo "makeLazyLoading(\"base\")") | \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
+	fi
+endif
 	@if ! test -f ../../library/tools/R/tools.rdb ; then \
 	  echo "preparing package tools for lazy loading" ; \
 	  (cat ../library/tools/R/makeLazyLoad.R; \
 	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null ; \
 	fi
-else
-	@if ! test -f ../../library/base/R/base.rdb ; then \
-	  echo "preparing package base for lazy loading" ; \
-	  (cat ../library/tools/R/makeLazyLoad.R ../library/base/makebasedb.R; \
-	    echo "makeLazyLoading(\"base\")") | \
-	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
-	fi
-	@if ! test -f ../../library/tools/R/tools.rdb ; then \
-	  echo "preparing package tools for lazy loading" ; \
-	  (cat ../library/tools/R/makeLazyLoad.R; \
-	    echo "makeLazyLoading(\"tools\")") | \
-	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
-	fi
-endif
 	@for pkg in $(LAZY_PKGS); do \
-	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazyload ; \
+	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) \
+	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) \
+	  lazyload ; \
 	done
 	@touch ../../library/methods/R/all.rda
-	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
+	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) \
+	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
 
 	@$(MAKE) --no-print-directory vignettes
 
@@ -475,21 +471,12 @@ docs manuals:
 #	@$(MAKE) --no-print-directory ziponly-base
 
 vignettes:
-ifeq ($(strip $(BUILD)),CROSS)
 	@for pkg in $(R_PKGS_BASE); do \
 	  if test -d "../library/$${pkg}/inst/doc"; then \
 	    echo "building/updating vignettes for package '$${pkg}' ..."; \
-	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(R_EXE) --vanilla --slave  > /dev/null; \
+	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | R_DEFAULT_PACKAGES="utils,tools" $(REXE) > /dev/null; \
 	  fi; \
 	done
-else
-	@for pkg in $(R_PKGS_BASE); do \
-	  if test -d "../library/$${pkg}/inst/doc"; then \
-	    echo "building/updating vignettes for package '$${pkg}' ..."; \
-	    (echo "tools:::.install_package_vignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | ../../bin/Rterm.exe --vanilla --slave R_DEFAULT_PACKAGES="utils,tools" > /dev/null; \
-	  fi; \
-	done
-endif
 	@rm -rf .vignettes # force cleanup
 
 ## ===================== Maintainer targets ========================
