@@ -40,7 +40,8 @@ BUG FIXES
 	(PR#6781, not needed for its primary use in read.table.)
 
     o	src/modules/X11/dataentry.c would not build on some XFree
-	4.4.0 systems.
+	4.4.0 systems.  (This is a bug in their header files but we have
+	added a workaround.)
 
 
 
