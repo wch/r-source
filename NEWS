@@ -540,8 +540,11 @@ BUG FIXES
     o	Internal clipping code for circles could attempt to allocate
 	a vector of length -1 (related to PR#1174)
 
-    o   the hash function in match, unique, duplicated, was very inefficient
-	for integers stored as numeric, on little-endian chips.
+    o	The hash function used internally in match(), unique() and
+	duplicated() was very inefficient for integers stored as
+	numeric, on little-endian chips.  It was failing to hash the
+	imaginary part of complex numbers.
+
 
 
 	**************************************************
