@@ -72,6 +72,7 @@ gc <- function(verbose = .Options$verbose)
 gcinfo <- function(verbose).Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
 gray <- function(level).Internal(gray(level))
+grey <- .Alias(gray)
 
 nchar <- function(x).Internal(nchar(x))
 
