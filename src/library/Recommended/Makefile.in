@@ -41,7 +41,7 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## need to allow parallel installs
-INSTALL-OPTS=--no-lock
+INSTALL_OPTS=--no-lock
 
 .tgz.ts:
 	@echo "begin installing recommended package" `basename $< .tgz`
@@ -49,7 +49,7 @@ INSTALL-OPTS=--no-lock
 ## RG says that with FreeBSD Make calling INSTALL does not work without
 ## explicitly passing down MAKE ('unrecognized option -w ...').  But
 ## what is really going on?
-	@MAKE="$(MAKE)" $(R) CMD INSTALL $(INSTALL-OPTS) -l $(top_builddir)/library $< > $@.out 2>&1
+	@MAKE="$(MAKE)" $(R) CMD INSTALL $(INSTALL_OPTS) -l "$(top_builddir)/library" $< > $@.out 2>&1
 ## </FIXME>
 	@cat $@.out; rm $@.out
 	@touch $@
