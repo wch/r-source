@@ -249,6 +249,9 @@ NEW FEATURES
 	representing widgets in the R workspace when the windows are
 	destroyed (e.g. using window manager controls)	
 
+    o   termplot() now has an `ask' argument.
+
+
 BUG FIXES
 
     o	Method dispatching now forces evaluation of promises, so
@@ -374,6 +377,9 @@ BUG FIXES
 	terms, as terms() and the prototype do (PR#701).
 
     o	strsplit had two memory leaks.
+
+    o   plot.lm() has a better default for its `ask' argument.
+
 
     o	The `ask' argument of plot.new() can now be used... <<<<not yet>>
 
