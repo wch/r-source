@@ -1047,7 +1047,7 @@ case "${host_os}" in
     ## at this point. S.I.
     ## </FIXME>
     ## </NOTE>
-    if test "${want_aqua}" = yes; then
+    if test "x${with_aqua}" = xyes; then
       LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Frameworks/libR.dylib"
     else
       LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
