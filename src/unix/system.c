@@ -820,3 +820,47 @@ void R_Suicide(char *s)
 int MAIN_()  {return 0;}
 int MAIN__() {return 0;}
 int __main() {return 0;}
+
+
+/* New / Experimental API elements */
+
+#define APPENDBUFSIZE 512
+
+static char *Append_ErrMsg = "unable to open file %s for appending\n";
+
+int R_AppendFile(char *file1, char *file2)
+{
+    FILE *fp1, *fp2;
+    char buf[APPENDBUFSIZE];
+    int nchar;
+    if((fp1 = fopen(file1, "wa")) == NULL) {
+	error("unable to open file %s for appending\n", file1);
+    }
+    if((fp2 = fopen(file2, "r")) == NULL) {
+	fclose(fp1);
+	error("unable to open file %s for appending\n", file2);
+    }
+    while((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
+	if(fwrite(buf, 1, APPENDBUFSIZE, fp2) != APPENDBUFSIZE)
+	    goto append_error;
+    if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != nchar)
+	goto append_error;
+    fclose(fp1);
+    fclose(fp2);
+    return 1;
+ append_error:
+    error("error writing to file %s\n", file1);
+    return 0;
+}
+
+int R_ShowFile(char *file)
+{
+    FILE *fp;
+    int c;
+    if ((fp = fopen(file, "r")) == NULL)
+	error("unable to display file %s\n", file);
+    while ((c = getc(fp)) != EOF)
+	putchar(c);
+    fclose(fp);
+    return 1;
+}
