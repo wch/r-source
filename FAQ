@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-11-25
+Version 2.0.2004-11-29
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1512,6 +1512,14 @@ distributions of R.)
 *SIN*
      A SINful approach to selection of Gaussian Graphical Markov Models.
 
+*SciViews*
+     A bundle of packages to implement a full reusable GUI API for R.
+     Contains *svGUI* with the main GUI features, *svDialogs* for the
+     dialog boxes, *svIO* for data import/export, *svMisc* with
+     miscellaneous supporting functions, and *svViews* providing views and
+     report features (views are HTML presentations of the content of R
+     objects, combining text, tables and graphs in the same document).
+
 *SenSrivastava*
      Collection of datasets from "Regression Analysis, Theory, Methods and
      Applications" by A. Sen and M. Srivastava, 1990, Springer.
@@ -1796,12 +1804,12 @@ distributions of R.)
      Dose-response data evaluation.
 
 *dse*
-     Dynamic System Estimation, a multivariate time series package.
-     Contains *dse1* (the base system, including multivariate ARMA and state
-     space models), *dse2* (extensions for evaluating estimation
+     Dynamic System Estimation, a multivariate time series package bundle.
+     Contains *dse1* (the base system, including multivariate ARMA and
+     state space models), *dse2* (extensions for evaluating estimation
      techniques, forecasting, and for evaluating forecasting model),
      *tframe* (functions for writing code that is independent of the
-     representation of time). and *setRNG* (a mechanism for generating the
+     representation of time), and *setRNG* (a mechanism for generating the
      same random numbers in S and R).
 
 *dynamicGraph*
