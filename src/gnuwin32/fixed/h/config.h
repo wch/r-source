@@ -179,9 +179,8 @@
 /* Define if you have the JPEG headers and libraries. */
 #define HAVE_JPEG 1
 
-
-/* Define to 1 if you have the <langinfo.h> header file. */
-/* #undef HAVE_LANGINFO_H */
+/* Define if you have <langinfo.h> and nl_langinfo(CODESET). */
+/* #undef HAVE_LANGINFO_CODESET */
 
 /* Define if external LAPACK is available. */
 /* #undef HAVE_LAPACK */
@@ -233,9 +232,6 @@
 
 /* Define to 1 if you have the <netinet/in.h> header file. */
 /* #undef HAVE_NETINET_IN_H */
-
-/* Define to 1 if you have the `nl_langinfo' function. */
-/* #undef HAVE_NL_LANGINFO */
 
 /* Define if module-loading does not need an underscore to be prepended to
    external names. */

@@ -37,7 +37,7 @@
 # include <locale.h>
 #endif
 
-#ifdef HAVE_LANGINFO_H
+#ifdef HAVE_LANGINFO_CODESET
 # include <langinfo.h>
 #endif
 
@@ -459,7 +459,7 @@ void setup_Rmainloop(void)
 		RSetConsoleWidth();
 	}
 #endif
-#ifdef HAVE_NL_LANGINFO
+#ifdef HAVE_LANGINFO_CODESET
     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
 #endif
     /* gc_inhibit_torture = 0; */
