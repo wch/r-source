@@ -29,6 +29,7 @@ capabilities(what = NULL)
       available?}
     \item{libxml}{Is there support for integrating \code{libxml} with
       the \R event loop?}
+    \item{fifo}{are FIFO connections supported?}
     \item{cledit}{Is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
 #ifdef unix
