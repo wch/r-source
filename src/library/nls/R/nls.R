@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.10 2001/03/24 06:57:56 ripley Exp $
+### $Id: nls.R,v 1.11 2001/05/07 07:29:37 hornik Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -455,9 +455,9 @@ nls <-
         control <- as.list(control)
         ctrl[names(control)] <- control
     }
-    nls.out <- list(m = .Call( "nls_iter", m, ctrl, trace ),
-                    data = substitute( data ), call = match.call(),
-                    PACKAGE="nls")
+    nls.out <- list(m = .Call("nls_iter", m, ctrl, trace,
+                              PACKAGE = "nls"),
+                    data = substitute( data ), call = match.call())
     nls.out$call$control <- ctrl
     nls.out$call$trace <- trace
     class(nls.out) <- "nls"
