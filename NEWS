@@ -29,6 +29,8 @@ NEW FEATURES
 	(It is currently used by predict() methods for classes "lm",
 	"mlm", "glm", "lqs" and "ppr".)
 
+    o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
+
 
 UTILITIES
 

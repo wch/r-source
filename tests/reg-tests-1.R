@@ -2759,3 +2759,15 @@ stopifnot(format(x @ date) == "2003-10-09")
 xx <- filter(4:8, c(1, 0.5, 0.25), method="recursive", init=3:1)
 stopifnot(identical(xx[1:3], c(8.25, 15.25, 26.125)))
 ## 1.8.0 gave 6.75 12.75 22.375
+
+
+## PR#4955 now allow embedded newlines in quoted fields in read.table
+temp <- tempfile()
+data <- data.frame(a=c("c", "e\nnewline"))
+write.table(data, sep=",", row.names=FALSE, file=temp)
+data2 <- read.csv(temp)
+unlink(temp)
+# attributes get a different order here
+stopifnot(identical(data$a, data2$a))
+## not allowed prior to 1.9.0
+

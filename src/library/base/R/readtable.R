@@ -38,25 +38,10 @@ read.table <-
 
     if(skip > 0) readLines(file, skip)
     ## read a few lines to determine header, no of cols.
-#    nlines <- 0
-#    lines <- NULL
-#     while(nlines < 5) {
-#         ## read up to five non-blank and non-comment lines.
-#         line <- readLines(file, 1, ok = TRUE)
-#         if(length(line) == 0) break
-#         if(blank.lines.skip && length(grep("^[ \\t]*$", line))) next
-#         if(length(comment.char) && nchar(comment.char)) {
-#             pattern <- paste("^[ \\t]*", substring(comment.char,1,1),
-#                              sep ="")
-#             if(length(grep(pattern, line))) next
-#         }
-#         lines <- c(lines, line)
-#     }
-
     nlines <- if (nrows < 0) 5 else min(5, (header + nrows))
 
     lines <- .Internal(readTableHead(file, nlines, comment.char,
-                                     blank.lines.skip))
+                                     blank.lines.skip, quote))
     nlines <- length(lines)
     if(!nlines) {
         if(missing(col.names))
