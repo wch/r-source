@@ -98,6 +98,7 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
 		   method = METHOD,
 		   data.name = DNAME,
 		   observed = x,
-		   expected = E),
+		   expected = E,
+                   residuals = (x - E) / sqrt(E)),
 	      class = "htest")
 }
