@@ -41,7 +41,7 @@ graphics window.
 
   On most devices which support \code{locator}, successful selection of
   a point is indicated by a bell sound unless
-  \code{\link{options}(locatorBell=FALSE}} has been set.
+  \code{\link{options}(locatorBell=FALSE)} has been set.
 
   If the window is resized or hidden and then exposed before the input 
   process has terminated, any lines or points drawn by \code{locator}
