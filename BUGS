@@ -632,7 +632,11 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 
 Directory:  Macintosh
 
-none
+* PR# 6882 *
+Subject: Darwin Framework and Application Install Directory Improvements
+From: ch-r@bobobeach.com
+Date: Thu, 13 May 2004 20:55:36 +0200 (CEST)
+..Lots of assertions, no evidence of a bug.
 
 Directory:  Misc
 
@@ -874,48 +878,11 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Re: [R] Error message during debug
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Tue, 20 Apr 2004 14:15:05 -0400
-* PR# 6881 *
-Subject: BUSINESS VENTURE AND PARTNERSHIP.
-From: "MR.BEKO_001" <MR.BEKO_001@telstra.com>
-Date: Thu, 13 May 2004 18:43:40 +0200
-* PR# 6882 *
-Subject: Darwin Framework and Application Install Directory Improvements
-From: ch-r@bobobeach.com
-Date: Thu, 13 May 2004 20:55:36 +0200 (CEST)
-* PR# 6883 *
-Subject: Rprof ignores top-level computation
-From: garvin@cs.rice.edu
-Date: Thu, 13 May 2004 23:20:53 +0200 (CEST)
-* PR# 6884 *
-Subject: Get Insiders Scoop On CGHI.OB vbvwgt
-From: mloswmwnai@guert.com
-Date: Fri, 14 May 2004 19:51:09 +0200 (CEST)
-Date: Fri, 14 May 2004 12:55:04 -0500
-* PR# 6885 *
-Subject: embrace anglican
-From: Brooke Pena <zgkcjpoorbuyuq@samerica.com>
-Date: Fri, 14 May 2004 23:31:42 -0500
-* PR# 6886 *
-Subject: AWARD WINNING NOTIFICATION.
-From: globalcompanylottoppromotion <globalcompanylottoppromotion@telstra.com>
-Date: Sat, 15 May 2004 15:50:11 +0200
-* PR# 6887 *
-Subject: ADV: $4,050 Federal Grant for College
-From: "Washington Institute LLC" <webmaster@myfreeeducation.com>
-Date: Sat, 15 May 2004 18:59:58
-* PR# 6888 *
-Subject: Get In On CGHI.OB Today, Don't Miss It eyunlj
-From: Duane Asif <jemyx@jeffgreenberg.com>
-Date: Sat, 15 May 2004 21:38:54 -0500
-* PR# 6889 *
-Subject: Kjlnuco new innovative product
-From: "numbers blackman" <dorinefoslien@wahoye.com>
-Date: Mon, 17 May 2004 20:13:06 +0600
-* PR# 6890 *
-Subject: Re: comatose
-From: Rodolfo Shapiro <falffyrbqskp@iname.com>
-Date: Mon, 17 May 2004 09:43:33 -0600
-* PR# 6891 *
-Subject: Any sfowtare bcaukps for loewst price. etfpabw ktihstawlisnt.
-From: "tyritebyg bamonyamn" <chastises@kandf.com.au>
-Date: Mon, 17 May 2004 13:17:13 +0000
+* PR# 6893 *
+Subject: Sorry to announce that we are closing
+From: "Opal Segura" <dktcrz@zbvxrs1.com>
+Date: Tue, 18 May 2004 06:43:27 -0500
+* PR# 6894 *
+Subject: plot.factor does not work properly
+From: x.sole@iconcologia.catsalut.net
+Date: Tue, 18 May 2004 16:46:21 +0200 (CEST)
