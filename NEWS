@@ -36,7 +36,7 @@ USER-VISIBLE CHANGES
 	where functions were and so will need updating.
 
 	Users may notice that code in .Rprofile is run only with the
-	new base loaded and so functions may now not be found.  For
+	new base loaded and so functions may now not be found.	For
 	example, ps.options(horizontal = TRUE) should be preceded by
 	library(graphics) or called as graphics::ps.options or,
 	better, set as a hook -- see ?setHook.
@@ -55,8 +55,8 @@ NEW FEATURES
 	character tables prepared for the locale currently in use each
 	time it is used, rather than those of the C locale.
 
-    o   sink() now has a split= argument to direct output to both the
-    	sink and the current output connection.
+    o	sink() now has a split= argument to direct output to both the
+	sink and the current output connection.
 
     o	The `package' argument to data() is no longer allowed to be a
 	(unquoted) name and so can be a variable name or a quoted
@@ -83,14 +83,14 @@ NEW FEATURES
 	can be specified by a new argument `fonts' defaulting to the
 	value of a new option "X11fonts".
 
-    o   termplot() has an option to smooth the partial residuals.
+    o	termplot() has an option to smooth the partial residuals.
 
     o	strsplit() now has a `fixed' argument and split="" is optimized.
 
     o	findInterval(x, v) now allows +/-Inf values, and NAs in x.
 
-    o   subset() now allows a `drop' argument to remove unused factor
-        levels.  The default is still to keep them.
+    o	subset() now allows a `drop' argument to remove unused factor
+	levels.	 The default is still to keep them.
 
     o	model.frame() methods, for example those for "lm" and "glm",
 	pass relevant parts of ... onto the default method.  (This has
@@ -109,54 +109,54 @@ NEW FEATURES
 
     o	ppr() now fully supports categorical explanatory variables,
 
-    o   On some OSes (including Windows and those using glibc)
+    o	On some OSes (including Windows and those using glibc)
 	strptime() does not validate dates correctly, so we have added
 	extra code to do so.  However, this cannot correct scanning
 	errors in the OS's strptime (although we have been able to
-	work around these on Windows).  Some examples are now tested for
+	work around these on Windows).	Some examples are now tested for
 	during configuration.
 
-    o   There is a new function contourLines() to produce contour
-	lines (but not draw anything).  This makes the CRAN package
+    o	There is a new function contourLines() to produce contour
+	lines (but not draw anything).	This makes the CRAN package
 	clines (with its clines() function) redundant.
 
-    o   postscript() device output has been modified to work around
+    o	postscript() device output has been modified to work around
 	rounding errors in low-precision calculations in gs >= 8.11.
 	(PR#5285, which is not a bug in R.)
 
-    o   New functions in the tools package: pkgDepends, getDepList and
-        installFoundDepends.  These provide functionality for assessing
-        dependencies and the availability of them (either locally or
-        from on-line repositories).
+    o	New functions in the tools package: pkgDepends, getDepList and
+	installFoundDepends.  These provide functionality for assessing
+	dependencies and the availability of them (either locally or
+	from on-line repositories).
 
-    o   ppr() is now interruptible at suitable places in the
+    o	ppr() is now interruptible at suitable places in the
 	underlying FORTRAN code.
 
-    o   formula.default() now looks for a "terms" component before a
+    o	formula.default() now looks for a "terms" component before a
 	'formula' argument in the saved call: the component will have
 	`.' expanded and probably will have the original environment
-	set as its environment.  And what it does is now documented.
+	set as its environment.	 And what it does is now documented.
 
-    o   as.matrix.data.frame() now coerces an all-logical data frame
+    o	as.matrix.data.frame() now coerces an all-logical data frame
 	to a logical matrix.
 
-    o   New function assignInNamespace() parallelling fixInNamespace.
+    o	New function assignInNamespace() parallelling fixInNamespace.
 
-    o   arima() allows models with no free parameters to be fitted (to
+    o	arima() allows models with no free parameters to be fitted (to
 	find log-likelihood and AIC values, thanks to Rob Hyndman).
 
-    o   The parsed contents of a NAMESPACE file are now stored at
-        installation and if available used to speed loading the
-        package, so packages with namespaces should be reinstalled.
+    o	The parsed contents of a NAMESPACE file are now stored at
+	installation and if available used to speed loading the
+	package, so packages with namespaces should be reinstalled.
 
-    o   Argument `asp' although not a graphics parameter is accepted
+    o	Argument `asp' although not a graphics parameter is accepted
 	in the ... of graphics functions without a warning.  It now
 	works as expected in contour().
 
-    o   The "POSIXct" and "POSIXlt" methods for rep() now pass ... on
+    o	The "POSIXct" and "POSIXlt" methods for rep() now pass ... on
 	to the default method (as expected by PR#5818).
 
-    o   The print() method for "difftime" objects now handles arrays.
+    o	The print() method for "difftime" objects now handles arrays.
 
     o	methods(class=) now checks for a matching generic, and so no
 	longer returns methods for non-visible generics (and
@@ -180,17 +180,17 @@ NEW FEATURES
 
     o	split.screen() now works for multiple devices at once.
 
-    o   Package stats4 exports generics for AIC() and BIC().
+    o	Package stats4 exports generics for AIC() and BIC().
 
-    o   The Mac OS X version now produces an R framework for easier linking
+    o	The Mac OS X version now produces an R framework for easier linking
 	of R into other programs.  As a result, R.app is now relocatable.
 
-    o   Command-line Mac OS X doesn't attempt to guess whether you are
+    o	Command-line Mac OS X doesn't attempt to guess whether you are
 	running an X server: the default graphical device is now pdf().
 
-    o   Added experimental support for conditionals in NAMESPACE files.
+    o	Added experimental support for conditionals in NAMESPACE files.
 
-    o   rep.default(0-length-vector, length.out=n) now gives a vector
+    o	rep.default(0-length-vector, length.out=n) now gives a vector
 	of length n and not length 0, for compatibility with S.
 
 	If both `each' and `length.out' have been specified, it now
@@ -200,10 +200,10 @@ NEW FEATURES
 	is now ignored for S compatibility.  (Previously padding with
 	NAs was used.)
 
-    o   array() and matrix() now allow 0-length `data' arguments for
+    o	array() and matrix() now allow 0-length `data' arguments for
 	compatibility with S.
 
-    o   "POSIXct" objects can now have a "tzone" attribute that
+    o	"POSIXct" objects can now have a "tzone" attribute that
 	determines how they will be converted and printed.  This means
 	that date-time objects which have a timezone specified will
 	generally be regarded as in their original time zone.
@@ -231,10 +231,10 @@ UTILITIES
 
 C-LEVEL FACILITIES
 
-    o   arraySubscript and vectorSubscript take a new argument which
-        is a function pointer that provides access to character
-        strings (such as the names vector) rather than assuming these
-        are passed in.
+    o	arraySubscript and vectorSubscript take a new argument which
+	is a function pointer that provides access to character
+	strings (such as the names vector) rather than assuming these
+	are passed in.
 
     o	R_CheckUserInterrupts is now described in `Writing R Extensions'
 	and there is a new equivalent subroutine rchkusr for calling
@@ -257,17 +257,17 @@ DEPRECATED & DEFUNCT
 	recognized as synonyms for --min-nsize and --min-vsize (which
 	replaced them in 1.2.0).
 
-    o   Unnecessary methods coef.{g}lm and fitted.{g}lm
+    o	Unnecessary methods coef.{g}lm and fitted.{g}lm
 	have been removed: they were each identical to the default
 	method.
 
-    o   La.eigen() is deprecated now eigen() uses LAPACK by default.
+    o	La.eigen() is deprecated now eigen() uses LAPACK by default.
 
 
 INSTALLATION CHANGES
 
     o	The defaults for configure are now --without-zlib
-	--without-bzlib --without-pcre.  PCRE >= 4.0 is now required:
+	--without-bzlib --without-pcre.	 PCRE >= 4.0 is now required:
 	the included PCRE sources have been updated to version 4.5.
 
     o	configure no longer lists bzip2 and PCRE as `additional
@@ -278,7 +278,7 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
-    o   termplot() is more tolerant of variables not in the data= argument. 
+    o	termplot() is more tolerant of variables not in the data= argument.
 	(PR#6327)
 
     o	contrasts() turns a logical variable into a factor.  This now
@@ -309,58 +309,58 @@ BUG FIXES
 	not compressing the image.
 
     o	When formula.default() returned a terms object, it returned a
-        result of class c("terms", "formula") with different
-        subsetting rules from an object of class "formula".
+	result of class c("terms", "formula") with different
+	subsetting rules from an object of class "formula".
 
-    o   The standalone Rmath library did not build correctly on systems
-        with inaccurate log1p.
+    o	The standalone Rmath library did not build correctly on systems
+	with inaccurate log1p.
 
-    o   Specifying asp is now respected in calls like plot(1, 10, asp=1)
+    o	Specifying asp is now respected in calls like plot(1, 10, asp=1)
 	with zero range on both axes.
 
-    o   outer() called rep() with an argument the generic does not
+    o	outer() called rep() with an argument the generic does not
 	have, and discarded the class of the answer.
 
-    o   object.size() now returns a real (not integer) answer and so
+    o	object.size() now returns a real (not integer) answer and so
 	can cope with objects occupying more than 2Gb.
 
-    o   Lookups base:: and ::: were not confining their search to the
+    o	Lookups base:: and ::: were not confining their search to the
 	named package/namespace.
 
-    o   qbinom() was returning NaN for prob = 0 or 1 or size = 0 even
+    o	qbinom() was returning NaN for prob = 0 or 1 or size = 0 even
 	though the result is well-defined.  (In part, PR#5900.)
 
-    o   par(mgp)[2] was being interpreted as relative to par(mgp)[3].
+    o	par(mgp)[2] was being interpreted as relative to par(mgp)[3].
 	(PR#6045)
 
-    o   Versioned install was broken both with and without namespaces: 
+    o	Versioned install was broken both with and without namespaces:
 	no R code was loaded.
 
-    o   methods(), getS3method() and the registration of S3 methods in
+    o	methods(), getS3method() and the registration of S3 methods in
 	namespaces were broken if the S3 generic was converted into an
 	S4 generic by setting an S4 method.
 
-    o   Title and copyright holder of the reference manual are now in
-        sync with the citation() command.
+    o	Title and copyright holder of the reference manual are now in
+	sync with the citation() command.
 
-    o   The validation code for POSIXlt dates and hence
+    o	The validation code for POSIXlt dates and hence
 	seq(,by="DSTdays") now works for large mday values (not
 	just those in -1000...1000).  (PR#6212)
 
-    o   The print() method for data frames now copes with data frames
+    o	The print() method for data frames now copes with data frames
 	containing arrays (other than matrices).
 
-    o   texi2dvi() and buildVignettes() use clean=FALSE as default
-        because the option is not supported on some Solaris
-        machines. For buildVignettes() this makes no difference as it
-        uses an internal cleanup mechanism.
+    o	texi2dvi() and buildVignettes() use clean=FALSE as default
+	because the option is not supported on some Solaris
+	machines. For buildVignettes() this makes no difference as it
+	uses an internal cleanup mechanism.
 
-    o   The biplot method for prcomp was not registered nor exported. 
+    o	The biplot method for prcomp was not registered nor exported.
 	(PR#6425)
 
-    o   Latex conversion of .Rd files was missing newline before
+    o	Latex conversion of .Rd files was missing newline before
 	\end{Section} etc which occasionally gave problems, as fixed for
-	some other \end{Foo} in 1.8.1.  (PR#5645)
+	some other \end{Foo} in 1.8.1.	(PR#5645)
 
     o   Work around a glibc bug to make the %Z format usable in strftime().
 
@@ -412,8 +412,8 @@ BUG FIXES
 	of an invalid result (that could lead to a segmentation
 	fault).
 
-    o   buildVignettes() uses file.remove() instead of unlink() to
-        remove temporary files.
+    o	buildVignettes() uses file.remove() instead of unlink() to
+	remove temporary files.
 
     o	methods(class = "lqs") does not produce extraneous entries anymore.
 
@@ -434,7 +434,7 @@ BUG FIXES
     o	postscript() could crash if given a font value outside the
 	valid range 1...5.
 
-    o	qchisq(1-e, ..., ncp=.) did not terminate. (PR#6421 (& PR#875))
+    o	qchisq(1-e, .., ncp=.) did not terminate for small e (PR#6421 (PR#875))
 
 
 
