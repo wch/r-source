@@ -5,12 +5,12 @@
 ### R is free software; you can redistribute it and/or modify it under
 ### the terms of the GNU General Public License as published by the Free
 ### Software Foundation; either version 2 of the License, or (at your
-### option) any later version.
+### option) any later version. 
 ###
 ### R is distributed in the hope that it will be useful, but WITHOUT ANY
 ### WARRANTY; without even the implied warranty of MERCHANTABILITY or
 ### FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
-### License for more details.
+### License for more details. 
 ###
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, you can obtain it via the World Wide Web at
@@ -24,7 +24,7 @@
 
 # The command used to spool PostScript files to the printer.
 # If unspecified, the system will look for either "lpr" or "lp"
-R_PRINTCMD=prt-
+# R_PRINTCMD=
 
 # The paper size for the local (PostScript) printer.
 # It must either be left blank or set to one of "a4" or "letter".
@@ -39,20 +39,18 @@ R_PRINTCMD=prt-
 # The command which runs the C compiler.
 # If unspecified, a search is made for gcc and cc (in that order).
 # To override this choice, specify the name of the command which runs
-# the compiler here, for example `c89'.
-CC=cc
+# the compiler here, for example `c89'. 
+# CC=
 
 # Debugging and optimization options for the C compiler.
 # Use this to specify CFLAGS for the version of the C compiler specified
 # above.  If unspecified, defaults to "-g -O2" for gcc, and "-g" in all
 # other cases.
-# For Sun's cc: "-g -xO4" gives a warning EVERYTIME about *not* inlining
-CFLAGS="-g -xO3"
+# CFLAGS=
 
 # Header file search directory (`-IDIR') and any other miscellaneous
 # options for the C preprocessor and compiler.
 # CPPFLAGS=
-CPPFLAGS=-I/usr/local/include
 
 # The command which runs the the FORTRAN compiler.
 # If unspecified, a search is made for g77, fort77, f77, f90, xlf, cf77,
@@ -65,7 +63,7 @@ CPPFLAGS=-I/usr/local/include
 # Options for the FORTRAN compiler.
 # Use this to specify FFLAGS for the version of the compiler specified
 # above.  If unspecified, defaults to "-O2" for g77, and "" otherwise.
-FFLAGS=-xO4
+# FFLAGS=
 
 # The command to be used to load the main R binary.
 # This is usually the FORTRAN or C compiler, but the automatic choice
@@ -73,7 +71,7 @@ FFLAGS=-xO4
 # LDCMD=
 
 # For `-l' and `-L' options to pass to the linker.
-LIBS=-L/usr/local/lib
+# LIBS=
 
 # The flags which are necessary for loading main program which will load
 # DLLs at runtime.  HP-UX and Linux-elf are examples of platforms which
@@ -84,7 +82,7 @@ LIBS=-L/usr/local/lib
 # turned into a shared library.  This is typically something like -fpic
 # or -fPIC.  If this variable is left unspecified an attempt is made to
 # automatically detect the correct value by configure.
-CPICFLAGS=-KPIC
+# CPICFLAGS=
 
 # The following variable can be used to provide any PIC flags for the
 # FORTRAN compiler (if you are using one).  If not specified, the value
@@ -92,5 +90,5 @@ CPICFLAGS=-KPIC
 # FPICFLAGS=
 
 # Any special flags which are required by "ld" when creating shared
-# libraries.  This is usually automatically detected by configure.
+# libraries.  This is usually automatically detected by configure. 
 # SHLIBLDFLAGS=
