@@ -4,7 +4,7 @@
 \alias{predict.pbSpline}
 \alias{predict.npolySpline}
 \alias{predict.ppolySpline}
-\alias{plot.spline}
+%\alias{plot.spline}
 \title{Evaluate a spline at new values of x}
 \description{
   The \code{predict} methods for the classes that inherit from the
@@ -15,7 +15,7 @@
   \code{type = "l"}.}
 \usage{
 \method{predict}{bSpline}(object, x, nseg=50, deriv=0, \dots)
-plot.spline(x, \dots)
+%plot.spline(x, \dots)
 }
 % \synopsis{
 % predict.bSpline(object, x, nseg=50, deriv=0, \dots)

@@ -1,7 +1,7 @@
-%% $Id: splineKnots.Rd,v 1.3 2001/08/25 22:17:44 hornik Exp $
+%% $Id: splineKnots.Rd,v 1.4 2003/03/03 18:02:04 ripley Exp $
 \name{splineKnots}
 \alias{splineKnots}
-\alias{splineKnots.spline}
+%\alias{splineKnots.spline}
 \title{Knot Vector from a Spline}
 \description{
   Return the knot vector corresponding to a spline object.

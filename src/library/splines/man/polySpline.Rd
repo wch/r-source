@@ -1,12 +1,12 @@
 \name{polySpline}
 \alias{polySpline}
-\alias{polySpline.bSpline}
-\alias{polySpline.nbSpline}
-\alias{polySpline.pbSpline}
-\alias{polySpline.polySpline}
+%\alias{polySpline.bSpline}
+%\alias{polySpline.nbSpline}
+%\alias{polySpline.pbSpline}
+%\alias{polySpline.polySpline}
 \alias{as.polySpline}
-\alias{predict.polySpline}
-\alias{print.polySpline}
+%\alias{predict.polySpline}
+%\alias{print.polySpline}
 \title{Piecewise Polynomial Spline Representation}
 \description{
   Create the piecewise polynomial representation of a spline object.

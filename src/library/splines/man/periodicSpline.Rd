@@ -1,7 +1,7 @@
 \name{periodicSpline}
 \alias{periodicSpline}
-\alias{periodicSpline.default}
-\alias{periodicSpline.formula}
+%\alias{periodicSpline.default}
+%\alias{periodicSpline.formula}
 \title{Create a Periodic Interpolation Spline}
 \description{
   Create a periodic interpolation spline, either from \code{x} and

@@ -1,6 +1,6 @@
 \name{ns}
 \alias{ns}
-\alias{makepredictcall.ns}
+%\alias{makepredictcall.ns}
 \title{Generate a Basis Matrix for Natural Cubic Splines}
 \description{
   Generate the B-spline basis matrix for a natural cubic spline.

@@ -1,9 +1,9 @@
 \name{interpSpline}
 \alias{interpSpline}
-\alias{interpSpline.default}
-\alias{interpSpline.formula}
-\alias{print.bSpline}
-\alias{print.ppolySpline}
+%\alias{interpSpline.default}
+%\alias{interpSpline.formula}
+%\alias{print.bSpline}
+%\alias{print.ppolySpline}
 \title{Create an Interpolation Spline}
 \description{
   Create an interpolation spline, either from \code{x} and \code{y}

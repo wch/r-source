@@ -1,8 +1,8 @@
-%% $Id: xyVector.Rd,v 1.7 2001/08/25 22:17:44 hornik Exp $
+%% $Id: xyVector.Rd,v 1.8 2003/03/03 18:02:04 ripley Exp $
 \name{xyVector}
 \alias{xyVector}
-\alias{as.data.frame.xyVector}
-\alias{plot.xyVector}
+%\alias{as.data.frame.xyVector}
+%\alias{plot.xyVector}
 \title{Construct an xyVector Object}
 \description{
   Create an object to represent a set of x-y pairs.  The resulting

@@ -1,6 +1,6 @@
 \name{bs}
 \alias{bs}
-\alias{makepredictcall.bs}
+%\alias{makepredictcall.bs}
 \title{Generate a Basis for Polynomial Splines}
 \description{
   Generate the B-spline basis matrix for a polynomial spline.
