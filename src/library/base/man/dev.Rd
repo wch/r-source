@@ -69,4 +69,5 @@ abline(h=0, col="gray")# for the residual plot
 dev.set(dev.prev())
 dev.off(); dev.off()#- close the two X devices
 }
+}
 \keyword{device}
