@@ -308,6 +308,9 @@ void mainloop()
 		/* Initialize the interpreter's */
 		/* internal structures. */
 
+#ifdef HAVE_LOCALE_H
+	setlocale(LC_ALL,"");/*- make ISO-latin1 etc. work LOCALE users */
+#endif
 	InitMemory();
 	InitNames();
 	InitGlobalEnv();

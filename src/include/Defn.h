@@ -49,6 +49,7 @@
 #else
 #include <math.h>
 #endif
+
 #include <errno.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -61,6 +62,9 @@
 #include <signal.h>
 #include <setjmp.h>
 #include <time.h>
+#ifdef HAVE_LOCALE_H
+#include <locale.h>
+#endif
 
 #define HSIZE		211	/* The size of the hash table for symbols */
 #define MAXELTSIZE	512	/* The largest string size */
@@ -72,7 +76,7 @@
 	/* are the element types for S-like data objects. */
 
 typedef unsigned int SEXPTYPE;
- 
+
 #define NILSXP		0	/* nil */
 #define SYMSXP		1	/* symbols */
 #define LISTSXP		2	/* lists & dotted pairs */
@@ -216,7 +220,7 @@ typedef struct {
 #define CONS(a, b)	cons((a), (b))		/* data lists */
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
 #define MISSING(x)	((x)->sxpinfo.gp)	/* for closure calls */
-#define SETCDR(x,y)	{SEXP X=(x), Y=(y); if(X != R_NilValue) CDR(X)=Y; else error("bad value");} 
+#define SETCDR(x,y)	{SEXP X=(x), Y=(y); if(X != R_NilValue) CDR(X)=Y; else error("bad value");}
 
 	/* Closure Access Macros */
 #define FORMALS(x)	((x)->u.closxp.formals)

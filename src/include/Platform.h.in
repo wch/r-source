@@ -29,7 +29,7 @@
 /* General String Comparison */
 #undef HAVE_STRCOLL
 
-/* Inverse Hypobolics */
+/* Inverse Hyperbolics */
 #undef HAVE_ASINH
 #undef HAVE_ACOSH
 #undef HAVE_ATANH
@@ -61,6 +61,8 @@
 
 /* GNU Readline Library */
 #undef HAVE_LIBREADLINE
+
+#undef HAVE_LOCALE_H
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
