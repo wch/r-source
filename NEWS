@@ -9,6 +9,8 @@
 
 NEW FEATURES
 
+    o   BUGS and FAQ now included with distribution
+	
     o	readline has now an argument  prompt = ""
 
     o	coplot() now labels levels when conditioning variable is factor
