@@ -64,6 +64,9 @@ export(add.scope, add1, aggregate, aggregate.data.frame,
        variable.names, vcov, weighted.mean, weighted.residuals,
        weights, window, write.ftable)
 
+## used by MASS
+export(add1.lm, drop1.lm)
+
 importFrom(graphics, identify, plot)
 importFrom(utils, str)
 
