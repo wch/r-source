@@ -75,6 +75,16 @@ all: pdf
 	$(PDFTEX) $<
 	$(PDFTEX) $<
 
+## we have to be careful not to install a local R-admin.html made prior to
+## texinfo 4.7, as doc/html/SearchEngine.html links to it.
+## So use that in the sources if we can -- it is not in the svn archive.
+## There are no cross-references, external or not.
+R-admin.html:
+	if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
+	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
+	else \
+	  $(MAKEINFO) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
+	fi
 
 dvi: refman.dvi $(OBJECTS_DVI)
 
