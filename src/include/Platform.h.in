@@ -43,6 +43,9 @@
 #undef HAVE_ACOSH
 #undef HAVE_ATANH
 
+/* Unix commands through a subshell */
+#undef HAVE_SYSTEM
+
 /* IEEE Rounding */
 #undef HAVE_RINT
 
