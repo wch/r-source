@@ -15,8 +15,13 @@ to the clipboard.  As most input/output functions in R use file(),
 this makes it possible to read data from or write data to the
 clipboard in many ways, including direct use of read/writeClipboard().
 
+When using download.file() with the internal method and a proxy, the
+user/password combination can be set to prompt the user with a
+username/password dialog box, and this will be presented on proxy
+authentication failure.
+
 Removed some calls to reset the size of the console, so it will 
-stay maximized through window operations.
+stay maximized throughout window operations.
 
 The output from formatC() uses e+/-0n not e+/-00n for compatibility with
 other platforms and with format().

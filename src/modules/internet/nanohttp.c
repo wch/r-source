@@ -197,6 +197,10 @@ static int socket_errno(void)
  * Currently it just checks for proxy informations
  */
 
+#ifdef Win32
+# include "graphapp/graphapp.h"
+#endif
+
 static void
 RxmlNanoHTTPInit(void)
 {
@@ -231,6 +235,10 @@ RxmlNanoHTTPInit(void)
     chkuser:
 	if((env = getenv("http_proxy_user")) != NULL) {   
 	    if (proxyUser != NULL) {xmlFree(proxyUser); proxyUser = NULL;}
+#ifdef Win32
+	    if (strcmp(env, "ask") == 0) 
+		env = askUserPass("Proxy Authentication");
+#endif
 	    proxyUser = xmlMemStrdup(env);
 	}
     }
@@ -1110,7 +1118,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
     char *bp, *p;
     int blen, ilen, ret;
     int head;
-    int nbRedirects = 0;
+    int nbRedirects = 0, nAuthenticate = 0;
     char *redirURL = NULL;
     char buf[1000];
 
@@ -1222,6 +1230,23 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	RxmlMessage(0, "<- %s\n", p);
         xmlFree(p);
     }
+
+#ifdef Win32
+    /* Prompt for username/password again if status was proxy
+       authentication failure */
+    if(proxy && !nAuthenticate && ctxt->returnValue == 407) {
+	char *env;
+	env = askUserPass("Proxy Authentication");
+	if(strlen(env)) {
+	    Rprintf("%s\n%s\n", "Proxy authentication failed:",
+		    "please re-enter the credentials or hit Cancel");
+	    if (proxyUser != NULL) {xmlFree(proxyUser); proxyUser = NULL;}
+	    proxyUser = xmlMemStrdup(env);
+	    nAuthenticate++;
+	    goto retry;
+	}
+    }
+#endif
 
     if ((ctxt->location != NULL) && (ctxt->returnValue >= 300) &&
         (ctxt->returnValue < 400)) {
