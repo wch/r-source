@@ -1745,7 +1745,7 @@ static int token()
 
     /* gag, barf, but the punters want it */
 
-    if (c == '_') {
+    if (!R_no_underline && c == '_') {
 	yylval = install("<-");
 	    warning("The use of _ is soon to be removed: you will be warned repeatedly");
 	return LEFT_ASSIGN;
