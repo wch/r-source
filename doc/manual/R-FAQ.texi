@@ -4,8 +4,9 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-27, 2002-04-01
+@set FAQ-VERSION 1.4-28, 2002-04-22
 @set REL-VERSION 1.4.1
+@set FAQ-ISBN 3-901167-51-X
 @c %**end of header
 
 @dircategory Programming
@@ -31,6 +32,7 @@ FORTRAN
 @title R @acronym{FAQ}
 @subtitle Frequently Asked Questions on R
 @subtitle Version @value{FAQ-VERSION}
+@subtitle ISBN @value{FAQ-ISBN}
 @author Kurt Hornik
 @end titlepage
 
@@ -39,6 +41,7 @@ FORTRAN
 R FAQ                            @*
 Frequently Asked Questions on R  @*
 Version @value{FAQ-VERSION}      @*
+ISBN @value{FAQ-ISBN}            @*
 Kurt Hornik                      @*
 
 @sp 2
@@ -55,6 +58,7 @@ Kurt Hornik                      @*
 @html
 <h2>Frequently Asked Questions on R</h2>
 <h2>Version @value{FAQ-VERSION}</h2>
+<h2>ISBN @value{FAQ-ISBN}</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 @end html
@@ -90,6 +94,9 @@ questions about R.
 
 @node Legalese, Obtaining this document, Introduction, Introduction
 @section Legalese
+
+This document is copyright @copyright{} 1998--@value{FAQ-YEAR} by Kurt
+Hornik.
 
 This document is free software; you can redistribute it and/or modify it
 under the terms of the @acronym{GNU} General Public License as published
@@ -140,8 +147,8 @@ subdirectory of a @acronym{CRAN} site (@pxref{What is CRAN?}).
 @section Citing this document
 
 In publications, please refer to this @acronym{FAQ} as Hornik
-(@value{FAQ-YEAR}), ``The R @acronym{FAQ}'' and give the above,
-@emph{official} @acronym{URL}.
+(@value{FAQ-YEAR}), ``The R @acronym{FAQ}'', and give the above,
+@emph{official} @acronym{URL} and the ISBN @value{FAQ-ISBN}.
 
 @node Notation, Feedback, Citing this document, Introduction
 @section Notation
@@ -1594,6 +1601,11 @@ Functions for cluster analysis.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
+@c <FIXME-1.5.0>
+@c @item cobs
+@c Constrained B-splines: qualitatively constrained (regression) smoothing
+@c via linear programming.
+@c </FIXME-1.5.0>
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
