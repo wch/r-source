@@ -15,8 +15,9 @@ include $(top_builddir)/Makeconf
 SOURCES = Makeconf.in Renviron.in
 OBJECTS = $(SOURCES:.in=)
 ## </NOTE>
+INSTFILES = repositories
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in $(SOURCES)
+DISTFILES = Makefile.in $(INSTFILES) $(SOURCES)
 
 EXPORTFILES = @USE_EXPORTFILES_TRUE@ R.exp Rlapack.exp
 
@@ -39,9 +40,15 @@ Renviron: $(srcdir)/Renviron.in $(top_builddir)/config.status
 ## </NOTE>
 
 R: $(OBJECTS)
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  for f in $(INSTFILES); do \
+	    $(INSTALL_DATA) $(srcdir)/$${f} .; \
+	  done \
+	fi
 
 install: installdirs
 	@echo "installing $(subdir) ..."
+	@$(INSTALL_DATA) $(srcdir)/repositories "$(rhome)/$(subdir)"
 	@for f in $(OBJECTS) $(EXPORTFILES); do \
 	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
 	done
@@ -63,6 +70,9 @@ uninstall:
 mostlyclean: clean
 clean:
 	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  rm -f $(INSTFILES) ; \
+	fi
 distclean: clean
 	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
