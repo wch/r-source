@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000, 2005 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,16 +36,16 @@ double pf(double x, double n1, double n2, int lower_tail, int log_p)
     if (x <= 0.)
 	return R_DT_0;
 
-    /* fudge the extreme DF cases -- pbeta doesn't do this well */
+    /* fudge the extreme DF cases -- pbeta doesn't do this well
 
     if (n2 > 4e5)
 	return pchisq(x * n1, n1, lower_tail, log_p);
 
     if (n1 > 4e5)
-	return pchisq(n2 / x , n2, !lower_tail, log_p);
+	return pchisq(n2 / x , n2, !lower_tail, log_p); 
+    */
 
-    x = pbeta(n2 / (n2 + n1 * x), n2 / 2.0, n1 / 2.0,
-	      !lower_tail, log_p);
+    x = pbeta(n2 / (n2 + n1 * x), n2 / 2.0, n1 / 2.0, !lower_tail, log_p);
 
     return ML_VALID(x) ? x : ML_NAN;
 }

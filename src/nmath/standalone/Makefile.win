@@ -61,7 +61,7 @@ SOURCES_NMATH = \
 	dnbeta.c pnbeta.c \
 	pnf.c pnt.c \
 	ptukey.c qtukey.c \
-	wilcox.c \
+	toms708.c wilcox.c \
 	signrank.c
 DEPENDS = $(SOURCES_NMATH:.c=.d)
 

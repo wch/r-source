@@ -230,6 +230,12 @@ NEW FEATURES
 
 	sprintf() now does limited coercion of its arguments.
 
+    o   pbeta() now uses a different algorithm for large values of at
+	least one of the shape parameters, which is much faster and is
+	accurate and reliable for very large values.  (This affects
+	pbinom(), pf(), qbeta() and other functions using pbeta at C
+	level.)
+
 
 INTERNATIONALIZATION
 

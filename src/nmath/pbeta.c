@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000, 2005 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,6 +55,14 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail)
     const double lneps = log(eps);
     const double lnsml = log(sml);
 
+    /* Switch to TOMS 708 if p or q is large */
+    if (pin > 15 || qin > 15) {
+	double x1 = 1 - x, w, wc;
+	int ierr;
+	bratio(pin, qin, x, x1, &w, &wc, &ierr);
+	return lower_tail ? w : wc;
+    }
+
     /* swap tails if x is greater than the mean */
     if (pin / (pin + qin) < x) {
 	swap_tail = 1;
@@ -79,15 +87,7 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail)
 	} else {
 	    ans = (swap_tail == lower_tail) ? 1. : 0;
 	}
-    }
-    else {
-	/* MM: __ FIXME __ : This takes forever (or ends wrongly)
-	  when (one or) both p & q  are huge
-
-	  ./pf.c  now has a cheap fix -- can use that here, but better
-	  "get it right"  (PD to R-core on 20 Feb 2000)a
-	*/
-
+    } else {
 	/* evaluate the infinite sum first.  term will equal */
 	/* y^p / beta(ps, p) * (1 - ps)-sub-i * y^i / fac(i) */
 
@@ -137,10 +137,6 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail)
 	    if (q == n)
 		n--;
 	    for(i= 1; i <= n; i++) {
-#ifndef MATHLIB_STANDALONE
-		/* for now, at least allow this:*/
-		R_CheckUserInterrupt();
-#endif
 		if (p1 <= 1 && term / eps <= finsum)
 		    break;
 		xi = i;

@@ -139,5 +139,9 @@ double  pnchisq_raw(double, double, double, double, double, int);
 
 int	i1mach(int);
 
+/* From toms708.c */
+void bratio(double a, double b, double x, double y, 
+	    double *w, double *w1, int *ierr);
+
 
 #endif /* MATHLIB_PRIVATE_H */
