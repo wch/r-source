@@ -779,6 +779,9 @@ BUG FIXES
     o   plot.window() was using the wrong sign when adjusting
 	xlim/ylim for positive 'asp' and a reversed axis.
 
+    o   If malloc() fails when allocating a large object the allocator now
+        does a gc and tries the malloc() again.
+
 
 
 

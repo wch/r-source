@@ -1838,9 +1838,16 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	}
 	else {
 	    s = NULL; /* initialize to suppress warning */
-	    if (size >= (R_SIZE_T_MAX / sizeof(VECREC)) - sizeof(SEXPREC_ALIGN) ||
-		(s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC)))
-		== NULL) {
+	    Rboolean success = FALSE;
+	    if (size < (R_SIZE_T_MAX / sizeof(VECREC)) - sizeof(SEXPREC_ALIGN)) {
+		s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
+		if (s == NULL) {
+		    R_gc_internal(alloc_size);
+		    s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
+		}
+		if (s != NULL) success = TRUE;
+	    }
+	    if (! success) {
 		/* reset the vector heap limit */
 		R_VSize = old_R_VSize;
 		errorcall(R_NilValue, _("cannot allocate vector of size %lu Kb"),
