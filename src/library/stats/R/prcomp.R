@@ -96,5 +96,18 @@ predict.prcomp <- function(object, newdata, ...)
         if(!is.null(object$x)) return(object$x)
         else stop("no scores are available: refit with 'retx=TRUE'")
     }
+    if(length(dim(newdata)) != 2)
+        stop("'newdata' must be a matrix or data frame")
+    p <- NCOL(object$rotation)
+    nm <- rownames(object$rotation)
+    if(!is.null(nm)) {
+        if(!all(nm %in% colnames(newdata)))
+            stop("'newdata' does not have named columns matching one or more of the original columns")
+        newdata <- newdata[, nm]
+    } else {
+        if(NCOL(newdata) != p)
+            stop("'newdata' does not have the correct number of columns")
+    }
+    ## next line does as.matrix
     scale(newdata, object$center, object$scale) %*% object$rotation
 }

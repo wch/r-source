@@ -198,6 +198,10 @@ NEW FEATURES
     o	plot.data.frame() tries harder to produce sensible plots for
 	non-numeric data frames with one or two columns.
 
+    o	The predict() methods for "prcomp" and "princomp" now match
+	the columns of 'newdata' to the original fit using column
+	names if these are available.
+
     o	New function recordGraphics() to encapsulate calculations
 	and graphics output together on graphics engine display list.
 	To be used with care.
@@ -835,6 +839,8 @@ BUG FIXES
 
     o   reshape(direction="wide") had some sorting problems when 
         guessing time points (PR#7669)
+
+
 
 
 	**************************************************

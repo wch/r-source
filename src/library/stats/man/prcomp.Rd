@@ -18,6 +18,8 @@ prcomp(x, \dots)
 \method{prcomp}{formula}(formula, data = NULL, subset, na.action, \dots)
 
 \method{prcomp}{default}(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, \dots)
+
+\method{predict}{prcomp}(object, newdata, \dots)
 }
 \arguments{
   \item{formula}{a formula with no response variable.}
@@ -55,6 +57,13 @@ prcomp(x, \dots)
     are omitted.  Other settings for tol could be \code{tol = 0} or
     \code{tol = sqrt(.Machine$double.eps)}, which would omit
     essentially constant components.} 
+  \item{newdata}{An optional data frame or matrix in which to look for
+    variables with which to predict.  If omitted, the scores are used.
+    If the original fit used a formula or a data frame or a matrix with
+    column names, \code{newdata} must contain columns with the same
+    names. Otherwise it must contain the same number of columns, to be
+    used in the same order.
+  }
 }
 \value{
   \code{prcomp} returns a list with class \code{"prcomp"}
