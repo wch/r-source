@@ -448,23 +448,27 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 	return(invisible())
     }
     ## Else : no y, only x
+
     if(missing(ylab)) {
         ylab <- colnames(x)
         if(length(ylab) != 1)
             ylab <- xlabel
     }
-    xy <- xy.coords(x,y,log=log)# using this mainly because of the log
-    ## but it doesn't work correctly if x is a matrix!
-    if(is.null(xlim)) xlim <- range(xy$x)
-#    if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
-    if(is.null(ylim)) {
-        yvals <- as.vector(x)
-        ylim <- range(yvals[is.finite(yvals)])
+    ## using xy.coords() mainly for the log treatment
+    if(is.matrix(x)) {
+        k <- ncol(x)
+        tx <- time(x)
+        xy <- xy.coords(x = matrix(rep(tx, k), ncol = k),
+                        y = x, log=log)
+        xy$x <- tx
     }
+    else xy <- xy.coords(x, NULL, log=log)
+    if(is.null(xlim)) xlim <- range(xy$x)
+    if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
     plot.new()
     plot.window(xlim, ylim, log, ...)
     if(is.matrix(x)) {
-	for(i in 1:ncol(x))
+	for(i in seq(length=k))
 	    lines.default(xy$x, x[,i],
 			  col = col[(i-1) %% length(col) + 1],
 			  lty = lty[(i-1) %% length(lty) + 1],

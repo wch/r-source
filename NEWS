@@ -29,12 +29,13 @@ BUG FIXES
 
     o	bxp(*, notch.frac = f) now draws the median line correctly.
 
-    o	Current versions of gs were rotating the output of 
-	bitmap(type = "pdfwrite") and when converting the output 
+    o	Current versions of gs were rotating the output of
+	bitmap(type = "pdfwrite") and when converting the output
 	of postscript() to PDF; this has been circumvented by
-	suppressing the %%Orientation comment for non-standard 
+	suppressing the %%Orientation comment for non-standard
 	paper sizes.
 
+    o	plot.ts(x, log = "y") works again when x has 0s, also for matrix x.
 
 
 		CHANGES IN R VERSION 1.4.1

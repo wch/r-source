@@ -74,3 +74,10 @@ par(pty="m")
 data(VADeaths)
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940", cex = 0.5)
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940", cex = 1.5)
+
+## killed by 0 prior to 1.4.0 and in 1.4.1:
+t1 <- ts(0:100)
+## only warnings about values <= 0
+plot(t1, log = "y")
+plot(cbind(t1, 10*t1, t1 - 4), log="y", plot.type = "single")
+stopifnot(par("usr")[4] > 3) # log10: ylim[2] = 1000

@@ -1,6 +1,6 @@
 
-R : Copyright 2001, The R Development Core Team
-Version 1.2.2 Patched (2001-04-07)
+R : Copyright 2002, The R Development Core Team
+Version 1.4.1 Patched (2002-02-05)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -134,4 +134,14 @@ par("yaxp") :            2         4         4
 > data(VADeaths)
 > dotchart(VADeaths, main = "Death Rates in Virginia - 1940", cex = 0.5)
 > dotchart(VADeaths, main = "Death Rates in Virginia - 1940", cex = 1.5)
+> 
+> ## killed by 0 prior to 1.4.0 and in 1.4.1:
+> t1 <- ts(0:100)
+> ## only warnings about values <= 0
+> plot(t1, log = "y")
+Warning in xy.coords(x, NULL, log = log) : 1 y value <= 0 omitted from logarithmic plot
+> plot(cbind(t1, 10*t1, t1 - 4), log="y", plot.type = "single")
+Warning in xy.coords(x = matrix(rep(tx, k), ncol = k), y = x, log = log) : 
+	 7 y values <= 0 omitted from logarithmic plot
+> stopifnot(par("usr")[4] > 3) # log10: ylim[2] = 1000
 > 
