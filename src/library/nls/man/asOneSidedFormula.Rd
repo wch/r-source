@@ -1,4 +1,4 @@
-% $Id: asOneSidedFormula.Rd,v 1.2 2001/02/07 19:13:08 pd Exp $
+% $Id: asOneSidedFormula.Rd,v 1.3 2001/03/24 06:57:57 ripley Exp $
 \name{asOneSidedFormula}
 \title{Convert to One-Sided Formula}
 \usage{
@@ -22,7 +22,6 @@ asOneSidedFormula(object)
 \seealso{\code{\link{formula}}}
 
 \examples{
-library(nls)
 asOneSidedFormula("age")
 asOneSidedFormula(~ age)
 }

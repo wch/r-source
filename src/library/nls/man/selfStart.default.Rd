@@ -1,4 +1,4 @@
-% $Id: selfStart.default.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: selfStart.default.Rd,v 1.2 2001/03/24 06:57:57 ripley Exp $
 \name{selfStart.default}
 \title{Construct Self-starting Nonlinear Models}
 \usage{
@@ -32,7 +32,6 @@ selfStart(model, initial, parameters, template)
 \author{Jose Pinheiro and Douglas Bates}
 \seealso{\code{\link{selfStart.formula}}}
 \examples{
-library(nls)
 # `first.order.log.model' is a function object defining a first order
 # compartment model 
 # `first.order.log.initial' is a function object which calculates initial

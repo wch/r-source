@@ -1,4 +1,4 @@
-% $Id: sortedXyData.Rd,v 1.2 2001/01/24 12:15:04 bates Exp $
+% $Id: sortedXyData.Rd,v 1.3 2001/03/24 06:57:57 ripley Exp $
 \name{sortedXyData}
 \title{Create a sortedXyData object}
 \alias{sortedXyData}
@@ -32,7 +32,6 @@ sortedXyData(x, y, data)
   \code{\link{NLSstLfAsymptote}}, \code{\link{NLSstRtAsymptote}}
 }
 \examples{
-library( nls )
 data( DNase )
 DNase.2 <- DNase[ DNase$Run == "2", ]
 sortedXyData( expression(log(conc)), expression(density), DNase.2 )

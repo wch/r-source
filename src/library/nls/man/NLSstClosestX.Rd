@@ -1,4 +1,4 @@
-% $Id: NLSstClosestX.Rd,v 1.3 2001/01/24 12:12:40 bates Exp $
+% $Id: NLSstClosestX.Rd,v 1.4 2001/03/24 06:57:57 ripley Exp $
 \name{NLSstClosestX}
 \title{Inverse Interpolation}
 \alias{NLSstClosestX}
@@ -21,7 +21,6 @@ NLSstClosestX(xy, yval)
 \seealso{\code{\link{sortedXyData}}, \code{\link{NLSstLfAsymptote}},
   \code{\link{NLSstRtAsymptote}}, \code{\link{selfStart}}}
 \examples{
-library( nls )
 data( DNase )
 DNase.2 <- DNase[ DNase$Run == "2", ]
 DN.srt <- sortedXyData( expression(log(conc)), expression(density), DNase.2 )

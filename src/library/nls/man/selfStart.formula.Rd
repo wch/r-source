@@ -1,4 +1,4 @@
-% $Id: selfStart.formula.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: selfStart.formula.Rd,v 1.2 2001/03/24 06:57:57 ripley Exp $
 \name{selfStart.formula}
 \title{Construct Self-starting Nonlinear Models}
 \usage{
@@ -38,8 +38,6 @@ selfStart(model, initial, parameters, template)
 \seealso{\code{\link{selfStart.default}}, \code{\link{deriv}}
 }
 \examples{
-library( nls )
-
 ## self-starting logistic model
 
 SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),

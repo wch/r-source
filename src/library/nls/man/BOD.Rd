@@ -27,7 +27,6 @@
   M.Sc. Thesis, University of Wisconsin -- Madison.
 }
 \examples{
-library(nls)
 data(BOD)
 # simplest form of fitting a first-order model to these data
 fm1 <- nls(demand ~ A*(1-exp(-exp(lrc)*Time)), data = BOD,
