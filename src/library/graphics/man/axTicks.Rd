@@ -29,7 +29,7 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
   is \code{TRUE}, see the documentation on \code{\link{par}(xaxp=.)}.
 
   \code{axTicks()} can be regarded as an \R implementation  of the
-  C function \code{CreateAtVector()} in \file{..../src/main/graphics.c}
+  C function \code{CreateAtVector()} in \file{..../src/main/plot.c}
   which is called by \code{\link{axis}(side,*)} when no argument
   \code{at} is specified.
 }
