@@ -468,6 +468,17 @@ void Aqua_RnWrite(char *buf, int len);
 TXNTypeAttributes RInAttr[] = {{ kTXNQDFontColorAttribute, kTXNQDFontColorAttributeSize, &CurrentPrefs.FGInputColor}};
 TXNTypeAttributes ROutAttr[] = {{ kTXNQDFontColorAttribute, kTXNQDFontColorAttributeSize, &CurrentPrefs.FGOutputColor}};
 
+/* Buffered output code by Thomas Lumley */
+
+/* buffer whose last character is \0 at index end_of_buffer */
+#define AQUA_BUFLEN 32000
+static char outputbuffer[AQUA_BUFLEN+2];
+static int  end_of_buffer=0;
+static int  WeAreBuffering=1;
+ 
+ 
+ 
+
 void Raqua_WriteConsole(char *buf, int len)
 {
     OSStatus err;
@@ -476,16 +487,41 @@ void Raqua_WriteConsole(char *buf, int len)
     EventRef REvent;
 
     if(WeHaveConsole){
-        TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
-        err =  TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
-     Raqua_ProcessEvents();
-   
-    } else {
+        if (WeAreBuffering){
+ 	if (strlen(buf)+1+end_of_buffer>=AQUA_BUFLEN){
+         TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
+ 	if (end_of_buffer>0)
+ 	  err =  TXNSetData (RConsoleOutObject, kTXNTextData, outputbuffer, end_of_buffer, kTXNEndOffset, kTXNEndOffset);
+ 	err = TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
+ 	outputbuffer[0]='\0';
+ 	end_of_buffer = 0;
+ 	} else {
+ 	  strcpy(outputbuffer+end_of_buffer, buf);
+ 	  end_of_buffer+= strlen(buf);
+ 	}
+       } else {
+         TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
+         err =  TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
+       }
+       Raqua_ProcessEvents();
+     } else {
      fprintf(stderr,"%s", buf);
     }
 
 }
 
+void Aqua_FlushBuffer(void);
+
+void Aqua_FlushBuffer(void){
+   if (WeHaveConsole && WeAreBuffering){
+     TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
+     if (end_of_buffer>0)
+       TXNSetData (RConsoleOutObject, kTXNTextData, outputbuffer, end_of_buffer, kTXNEndOffset, kTXNEndOffset);
+     outputbuffer[0]='\0';
+     end_of_buffer = 0;
+   }
+}
+ 
 
 void RSetColors(void)
 {
@@ -614,6 +650,7 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
 void Aqua_RWrite(char *buf)
 {
     if(WeHaveConsole){
+       Aqua_FlushBuffer();
        TXNSetData(RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
     }
 }

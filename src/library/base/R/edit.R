@@ -3,7 +3,7 @@ edit <- function(name,...)UseMethod("edit")
 edit.default <-
     function (name = NULL, file = "", editor = getOption("editor"), ...)
 {
-    if(is.matrix(name) &&
+    if(is.matrix(name) && 
        (mode(name) == "numeric" || mode(name) == "character"))
         edit.matrix(name=name, ...)
     else .Internal(edit(name, file, editor))
@@ -13,7 +13,7 @@ edit.data.frame <-
     function(name, factor.mode = c("character", "numeric"),
              edit.row.names =  any(row.names(name) != 1:nrow(name)), ...)
 {
-    if (.Platform$OS.type == "unix")
+    if (.Platform$OS.type == "unix"  && .Platform$GUI != "AQUA")
         if(.Platform$GUI == "unknown" || Sys.getenv("DISPLAY")=="" )
             return (edit.default(name, ...))
 
@@ -98,7 +98,7 @@ edit.data.frame <-
 edit.matrix <-
     function(name, edit.row.names = any(rownames(name) != 1:nrow(name)), ...)
 {
-    if (.Platform$OS.type == "unix")
+    if (.Platform$OS.type == "unix" && .Platform$GUI != "AQUA")
         if(.Platform$GUI == "unknown" || Sys.getenv("DISPLAY")=="" )
             return (edit.default(name, ...))
     if(!is.matrix(name) ||
