@@ -493,3 +493,19 @@ Date: Wed, 22 May 2002 23:04:53 +0200 (MET DST)
 Subject: hitting ^C breaks readline history
 From: Cyril Humbert <humbertc@univ-mlv.fr>
 Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
+* PR# 1608 *
+Subject: merge.data.frame can coerce character vectors to factor in some circumstances 
+From: "David Kane  <David Kane" <a296180@agate.fmr.com>
+Date: Wed, 29 May 2002 07:09:12 -0400
+* PR# 1609 *
+Subject: typo in Introduction to R on dataframes
+From: "David Kane  <David Kane" <a296180@agate.fmr.com>
+Date: Wed, 29 May 2002 07:53:39 -0400
+* PR# 1610 *
+Subject: [±¤°?] °?????´? ?¤º?°? ?????¦ ??²? ?? ??´?
+From: "okgroup" <okgroup@zaza.info>
+Date: Thu, 30 May 2002 02:11:04 +0900
+* PR# 1611 *
+Subject: A  IE 6.0 patch
+From: bug-directory <bug-directory@gnu.org>
+Date: Wed, 29 May 2002 17:16:17 -0400
