@@ -142,6 +142,15 @@ function(..., list = character(0),
         }
         files <- files[grep(name, files)]
         found <- FALSE
+        if (length(files) > 1) {
+            ## more than one candidate
+            ## use the order given in data.Rd
+            good <- c("RData", "rdata", "rda", "R", "r",
+                      "tab", "txt", "TXT", "csv", "CSV")
+            exts <- sub(".*\\.", "", files)
+            o <- match(exts, good, nomatch = 100)
+            files <- files[sort.list(o)]
+        }
         if (length(files) > 0) {
             subpre <- paste(".*", fsep, sep = "")
             for (file in files) {
@@ -159,18 +168,17 @@ function(..., list = character(0),
                 else {
                     zfile <- zip.file.extract(file, "Rdata.zip")
                     switch(ext,
-                           R = ,
-                           r = source(zfile, chdir = TRUE),
-                           RData = ,
-                           rdata = ,
-                           rda = load(zfile, envir = .GlobalEnv),
-                           TXT = ,
-                           txt = ,
-                           tab = assign(name, read.table(zfile, header = TRUE),
-                           env = .GlobalEnv), CSV = ,
-                           csv = assign(name,
-                           read.table(zfile, header = TRUE, sep = ";"),
-                           env = .GlobalEnv), found <- FALSE)
+                           R = , r = source(zfile, chdir = TRUE),
+                           RData = , rdata = , rda =
+                             load(zfile, envir = .GlobalEnv),
+                           TXT = , txt = , tab =
+                             assign(name, read.table(zfile, header = TRUE),
+                                    env = .GlobalEnv),
+                           CSV = , csv =
+                             assign(name,
+                                    read.table(zfile, header = TRUE, sep = ";"),
+                                   env = .GlobalEnv),
+                           found <- FALSE)
                     if (zfile != file) unlink(zfile)
                 }
                 if (verbose)

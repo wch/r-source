@@ -328,7 +328,6 @@ NEW FEATURES
 
     o	New function force() to force evaluation of a formal argument.
 
-
 INSTALLATION CHANGES
 
     o	TITLE files in packages are no longer used, the Title field
@@ -593,6 +592,10 @@ BUG FIXES
 	had length 0! (Should only happen if x is null: PR#2590)
 
     o	lm() mislabelled the cols of the qr decomposition. (cause of PR#2586)
+
+    o	data() looks for file extensions in an order prescribed in the
+	help file: previously whether foo.R or foo.csv was used was
+	locale-dependent.
 
 
 
