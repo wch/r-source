@@ -25,8 +25,10 @@ packageDescription(pkg, lib.loc = NULL, fields = NULL, drop=TRUE)
   successfully be read, \code{packageDescription} returns an object of
   class \code{"packageDescription"}, which is a named list
   with the values of the (given) fields as elements and
-  the tags as names.  If parsing the \file{DESCRIPTION} file was not
-  successfull, it returns a named list of \code{NA}s
+  the tags as names, unless \code{drop = TRUE}.
+
+  If parsing the \file{DESCRIPTION} file was not
+  successful, it returns a named list of \code{NA}s
   with the field tags as names if \code{fields} is not null, and
   \code{NA} otherwise.
 }
@@ -35,7 +37,7 @@ packageDescription(pkg, lib.loc = NULL, fields = NULL, drop=TRUE)
 packageDescription("stats")
 packageDescription("stats", fields = c("Package", "Version"))
 
-packageDescription("stats", fields = c("Version"))
-packageDescription("stats", fields = c("Version"), drop=FALSE)
+packageDescription("stats", fields = "Version")
+packageDescription("stats", fields = "Version", drop = FALSE)
 }
 \keyword{utilities}
