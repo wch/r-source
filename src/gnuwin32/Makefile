@@ -197,7 +197,7 @@ distclean veryclean: clean
 	../../doc/html/function.html ../../doc/html/function-head.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html \
-	../../demos/dynload/zero.def ../../demos/dynload/zero.dll \
+	../../demos/dynload/findzero.def ../../demos/dynload/findzero.dll \
 	../../demos/dynload/zero.o
 	$(RM) -f ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
 	../../etc/rgb.txt ../../etc/Makeconf-tests \
