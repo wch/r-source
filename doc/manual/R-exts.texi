@@ -127,6 +127,7 @@ installation) for the tools that you need to have installed.
 * Submitting a package to CRAN::  
 * Package name spaces::         
 * Writing portable packages::   
+* Error and warning messages::  
 * Localization::                
 @end menu
 
@@ -136,7 +137,7 @@ installation) for the tools that you need to have installed.
 
 A package consists of a subdirectory containing a file
 @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
-@file{demo}, @file{exec}, @file{inst}, @file{man}, @file{src}, and
+@file{demo}, @file{exec}, @file{inst}, @file{man}, @file{po}, @file{src}, and
 @file{tests} (some of which can be missing).  The package subdirectory
 may also contain files @file{INDEX}, @file{install.R},
 @file{R_PROFILE.R}, @file{NAMESPACE}, @file{configure}, @file{cleanup},
@@ -163,7 +164,8 @@ package, e.g.@: a copy of the @acronym{GNU} public license.  Whereas you
 should feel free to include a licence file in your source distribution,
 please do not arrange to install yet another copy of the @acronym{GNU}
 @file{COPYING} or @file{COPYING.LIB} files but refer to the copies in
-the @R{} distribution in your own @file{COPYING} file.
+the @R{} distribution (e.g. in directory @file{share/licenses} in your
+own @file{COPYING} file.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -280,11 +282,12 @@ facilities use this field, hence it is an error to use improper syntax
 or misuse the @samp{Depends} field for comments on other software that
 might be needed.  Other dependencies (external to the @R{} system)
 should be listed in the @samp{SystemRequirements} field or a separate
-@file{README} file.  The @R{} @command{INSTALL} facilities already check
-if the version of @R{} used is recent enough for the package being
-installed, and the list of packages which is specified will be attached
-before the current package, both when @code{library} is called and when
-saving an image or preparing for lazy-loading.
+@file{README} file.  The @R{} @command{INSTALL} facilities check if the
+version of @R{} used is recent enough for the package being installed,
+and the list of packages which is specified will be attached (after
+checking version dependencies) before the current package, both when
+@code{library} is called and when saving an image of the package's code
+or preparing for lazy-loading.
 
 The optional @samp{Imports} field lists packages whose namespaces are
 imported from but which do not need to be attached.
@@ -339,7 +342,8 @@ locale.  If present, the collate specification must list @emph{all} R
 code files in the package (taking possible OS-specific subdirectories
 into account, see @ref{Package subdirectories}) as a whitespace
 separated list of file paths relative to the @file{R} subdirectory.
-Paths containing white space or single or double quotes need to be
+@c % double quotes are not allowed in path names, for Windows
+Paths containing white space or quotes need to be
 quoted.  Applicable OS-specific collate specifications take precedence.
 
 The optional @samp{LazyLoad} and @samp{LazyData} fields control whether
@@ -358,8 +362,8 @@ The optional @samp{ZipData} field controls whether the automatic
 Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
 
-There should be no @samp{Built} or @samp{Packaged} fields, as these are
-added by the package management tools.
+@strong{NB} There should be no @samp{Built} or @samp{Packaged} fields,
+as these are added by the package management tools.
 
 @node The INDEX file, The install.R and R_PROFILE.R files, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
@@ -403,7 +407,7 @@ flag).  Very few packages will need such code, as the packages in the
 Both @file{install.R} and @file{R_PROFILE.R} should be viewed as
 experimental; the mechanism to execute code before attaching or
 installing the package may change in the near future.  With the other
-facilities available in @R{} 2.0.0 they should be removed if possible.
+facilities available as from @R{} 2.0.0 they should be removed if possible.
 
 
 @node Package subdirectories, Package bundles, The install.R and R_PROFILE.R files, Package structure
@@ -536,19 +540,22 @@ running a @file{.R} file are written to a @file{.Rout} file.  If there
 is a corresponding @file{.Rout.save} file, these two are compared, with
 differences being reported but not causing an error.
 
-Finally, @file{exec} could contain additional executables the package
+Subdirectory @file{exec} could contain additional executables the package
 needs, typically scripts for interpreters such as the shell, Perl, or
 Tcl.  This mechanism is currently used only by a very few packages, and
 still experimental.
+
+Subdirectory @file{po} is used for files related to @emph{localization}:
+@pxref{Localization}.
 
 @node  Package bundles,  , Package subdirectories, Package structure
 @subsection Package bundles
 @cindex Package bundles
 
 Sometimes it is convenient to distribute several packages as a
-@emph{bundle}.  (The main current example is @pkg{VR} which contains
-four packages.)  The installation procedures on both Unix and Windows
-can handle package bundles.
+@emph{bundle}.  (An example is @pkg{VR} which contains four packages.)
+The installation procedures on both Unix and Windows can handle package
+bundles.
 
 The @file{DESCRIPTION} file of a bundle has an extra @samp{Bundle}
 field, as in
@@ -813,8 +820,8 @@ double-complex LAPACK and BLAS routines needed to build @R{}, or it
 may point to an external LAPACK library, or may be empty if an external
 BLAS library also contains LAPACK.
 
-[There is currently no guarantee that the LAPACK library will provide
-more than the double-precision and double-complex driver routines used
+[There is no guarantee that the LAPACK library will provide more than
+all the double-precision and those double-complex driver routines used
 by @R{}, and some do not provide all the auxiliary routines.]
 
 The macros @code{BLAS_LIBS} and @code{FLIBS} should always be included
@@ -1400,14 +1407,17 @@ To summarize, converting an existing package to use a name space involves
 several simple steps:
 
 @itemize @bullet
-@item Identify the public definitions and place them in @code{export}
-      directives.
-@item Identify S3-style method definitions and write corresponding
-      @code{S3method} declarations.
-@item Identify dependencies and replace any @code{require} calls by
-      @code{import} directives.
-@item Replace @code{.First.lib} functions with @code{.onLoad} functions
-      or @code{useDynLib} directives.
+@item
+Identify the public definitions and place them in @code{export} directives.
+@item
+Identify S3-style method definitions and write corresponding
+@code{S3method} declarations.
+@item
+Identify dependencies and replace any @code{require} calls by
+@code{import} directives.
+@item
+Replace @code{.First.lib} functions with @code{.onLoad} functions or
+@code{useDynLib} directives.
 @end itemize
 
 @noindent
@@ -1495,7 +1505,7 @@ exportClasses(c1, c2)
 respectively.
 
 
-@node Writing portable packages, Localization, Package name spaces, Creating R packages
+@node Writing portable packages, Error and warning messages, Package name spaces, Creating R packages
 @section Writing portable packages
 
 @code{R CMD check} provides a basic set of checks, but often further
@@ -1599,7 +1609,55 @@ CMD check} checks for.
 
 @end itemize
 
-@node Localization,  , Writing portable packages, Creating R packages
+@node Error and warning messages, Localization, Writing portable packages, Creating R packages
+@section Error and warning messages
+
+Now that error messages can be made available for translation, it is
+important to write them in a consistent style.  Using the tools
+described in the next section to extract all the messages can give a
+useful overview of your consistency (or lack of it).
+
+Some guidelines follow.
+@itemize
+@item
+Messages are sentence fragments, and not viewed in isolation.  So it is
+conventional not to capitalize the first word and not to end with a
+period (or other punctuation).
+
+@item
+Try not to split up messages into small pieces.  In C error messages use
+a single format string containing all English words in the messages.
+
+In R error messages do not construct a message with @code{paste} (such
+messages will not be translated) but via multiple arguments to
+@code{stop} or @code{warning}.
+
+@item
+Do not use colloquialisms such as ``can't'' and ``don't''.
+
+@item
+If possible, make quotation marks part of your message as different
+languages have different conventions.  In R messages this means not
+using @code{sQuote} or @code{dQuote} except where the argument is
+a variable.
+
+Conventionally single quotation marks are used for quotations such as
+@example
+'ord' must be a positive integer, at most the number of knots
+@end example
+and double quotation marks when referring to an R character string such
+as 
+@example
+'format' must be "normal" or "short" - using "normal"
+@end example
+
+Since ASCII does not contain directional quotation marks, it is best to
+use @code{'} and let the translator (including automatic translation)
+use directional quotations where available.
+
+@end itemize
+
+@node Localization,  , Error and warning messages, Creating R packages
 @section Localization
 
 @R{} 2.1.0 introduced mechanisms to translate the R- and C-level error
@@ -1617,7 +1675,7 @@ users can find pre-compiled binaries at the GNU archive mirrors.
 * R messages::                  
 @end menu
 
-@node C-level messages,  , R messages, Localization
+@node C-level messages, R messages, Localization, Localization
 @subsection C-level messages
 
 The process of enabling translations is
@@ -1666,12 +1724,12 @@ for any language @var{lang} that matches the user's preferences (via the
 setting of the @code{LANGUAGES} environment variable or from the locale
 settings).
 
-@node R messages, C-level messages, Localization, Localization
+@node R messages,  , C-level messages, Localization
 @subsection R messages
 
 Mechanisms to support the translation of @R{} @code{warning} and
 @code{stop} messages are in place.  They make use of message catalogs in
-the same way as C-level packages, but using domain @code{R-@var{pkg}}
+the same way as C-level messages, but using domain @code{R-@var{pkg}}
 rather than @code{@var{pkg}}.  Translation of terms in @code{stop} and
 @code{warning} calls is automatically enabled, as well as other messages
 enclosed in calls to @code{gettext}.
