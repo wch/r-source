@@ -65,17 +65,17 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::
-* Creating R packages::
-* Writing R help files::
-* Tidying and profiling R code::
-* System and foreign language interfaces::
-* The R API::
-* Generic functions and methods::
-* R (internal) programming miscellanea::
-* R coding standards::
-* Function and variable index::
-* Concept index::
+* Acknowledgements::            
+* Creating R packages::         
+* Writing R help files::        
+* Tidying and profiling R code::  
+* System and foreign language interfaces::  
+* The R API::                   
+* Generic functions and methods::  
+* R (internal) programming miscellanea::  
+* R coding standards::          
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -117,12 +117,12 @@ Unix-alikes that is done by @code{R CMD INSTALL}.  Under Windows,
 installation) for the tools that you need to have installed.
 
 @menu
-* Package structure::
-* Configure and cleanup::
-* Checking and building packages::
-* Writing package vignettes::
-* Submitting a package to CRAN::
-* Package name spaces::
+* Package structure::           
+* Configure and cleanup::       
+* Checking and building packages::  
+* Writing package vignettes::   
+* Submitting a package to CRAN::  
+* Package name spaces::         
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -149,10 +149,10 @@ The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
-* The DESCRIPTION file::
-* The INDEX file::
-* Package subdirectories::
-* Package bundles::
+* The DESCRIPTION file::        
+* The INDEX file::              
+* Package subdirectories::      
+* Package bundles::             
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -294,7 +294,7 @@ Solaris systems mixing Ratfor and FORTRAN code will work.} source files
 for the compiled code are in @file{src}, plus optionally file
 @file{Makevars} or @file{Makefile}.  When a package is installed using
 @code{R CMD INSTALL}, Make is used to control compilation and linking
-into a shared library for loading into @R{}.  There are default
+into a shared object for loading into @R{}.  There are default
 variables and rules for this (determined when @R{} is configured and
 recorded in @file{@var{R_HOME}/etc/Makeconf}).  These rules can be
 tweaked by setting macros in a file @file{src/Makevars} (@pxref{Using
@@ -538,12 +538,12 @@ on a non-Unix platform to configure it manually, or provide a
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
 example of this is a package that uses C code and creates two shared
-libraries/DLLs.  Usually, the library that is dynamically loaded by @R{}
-is linked against the second, dependent, library.  On some systems, we
-can add the location of this dependent library to the library that is
+object/DLLs.  Usually, the object that is dynamically loaded by @R{}
+is linked against the second, dependent, object.  On some systems, we
+can add the location of this dependent object to the object that is
 dynamically loaded by @R{}.  This means that each user does not have to
 set the value of the @env{LD_LIBRARY_PATH} (or equivalent) environment
-variable, but that the secondary library is automatically resolved.
+variable, but that the secondary object is automatically resolved.
 Another example is when a package installs support files that are
 required at run time, and their location is substituted into an @R{}
 data structure at installation time. (This happens with the Java Archive
@@ -560,7 +560,7 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 
 
 @menu
-* Using Makevars::
+* Using Makevars::              
 @end menu
 
 @node Using Makevars,  , Configure and cleanup, Configure and cleanup
@@ -574,7 +574,7 @@ supplying a file @file{Makevars}: also one of the commonest uses of a
 The most common use of a @file{Makevars} file is to set additional
 compiler flags (for example include paths) by setting @code{PKG_CFLAGS},
 @code{PKG_CXXFLAGS} and @code{PKG_FFLAGS}, for C, C++, or FORTRAN
-respectively (@pxref{Creating shared libraries}).
+respectively (@pxref{Creating shared objects}).
 
 Also, @file{Makevars} can be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options.
@@ -601,7 +601,7 @@ routines.
 @vindex LAPACK_LIBS
 A macro containing the LAPACK libraries (and paths where appropriate)
 used when building @R{}.  This may need to be included in
-@code{PKG_LIBS}.  This may point to a shared library @code{libRlapack}
+@code{PKG_LIBS}.  This may point to a dynamic library @code{libRlapack}
 which contains all the double-precision LAPACK routines as well as those
 double-complex LAPACK and BLAS routines needed to build @R{}, or it
 may point to an external LAPACK library, or may be empty if an external
@@ -923,7 +923,7 @@ consideration and may replace this approach in future @R{} releases.}
 for specifying a name space for a package is to place a @file{NAMESPACE}
 file in the top level package directory.  This file contains @emph{name
 space directives} describing the imports and exports of the name space.
-Additional directives register any shared libraries to be loaded and any
+Additional directives register any shared objects to be loaded and any
 S3-style methods that are provided.
 
 Like other packages, packages with name spaces are loaded and attached
@@ -1016,11 +1016,11 @@ used, separate hooks are provided for each.  These hook functions are
 called @code{.onLoad} and @code{.onAttach}.  They take the same
 arguments as @code{.First.lib}; they should be defined in the package
 but not exported.  Packages are not likely to need @code{.onAttach};
-code to set options and load shared libraries should be placed in a
+code to set options and load shared objects should be placed in a
 @code{.onLoad} function, or use made of the @code{useDynLib} directive
 described next.
 
-The @code{useDynLib} directive allows shared libraries that need to be
+The @code{useDynLib} directive allows shared objects that need to be
 loaded to be specified in the @file{NAMESPACE} file.  The directive
 
 @smallexample
@@ -1028,11 +1028,11 @@ useDynLib(foo)
 @end smallexample
 
 @noindent
-registers the shared library @code{foo} for loading with
-@code{library.dynam}.  Loading of registered libraries occurs after the
+registers the shared object @code{foo} for loading with
+@code{library.dynam}.  Loading of registered objects occurs after the
 package code has been loaded and before running the load hook function.
 Packages that would only need a load hook function to load a shared
-library can use the @code{useDynLib} directive instead.
+object can use the @code{useDynLib} directive instead.
 
 As an example consider two packages named @pkg{foo} and @pkg{bar}.  The
 @R{} code for package @pkg{foo} in file @file{foo.R} is
@@ -1139,15 +1139,15 @@ anticipated for the following release of @R{}.
 @cindex Documentation, writing
 
 @menu
-* Rd format::
-* Sectioning::
-* Marking text::
-* Lists and tables::
-* Cross-references::
-* Mathematics::
-* Insertions::
-* Platform-specific sections::
-* Processing Rd format::
+* Rd format::                   
+* Sectioning::                  
+* Marking text::                
+* Lists and tables::            
+* Cross-references::            
+* Mathematics::                 
+* Insertions::                  
+* Platform-specific sections::  
+* Processing Rd format::        
 @end menu
 
 @node Rd format, Sectioning, Writing R help files, Writing R help files
@@ -1832,8 +1832,8 @@ distribution for installing source packages to be installed.)
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::
-* Profiling R code::
+* Tidying R code::              
+* Profiling R code::            
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -2018,16 +2018,16 @@ output files can be very large if long runs are profiled.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Interface functions .C and .Fortran::
-* dyn.load and dyn.unload::
-* Registering native routines::
-* Creating shared libraries::
-* Interfacing C++ code::
-* Handling R objects in C::
-* Interface functions .Call and .External::
-* Evaluating R expressions from C::
-* Debugging::
+* Operating system access::     
+* Interface functions .C and .Fortran::  
+* dyn.load and dyn.unload::     
+* Registering native routines::  
+* Creating shared objects::     
+* Interfacing C++ code::        
+* Handling R objects in C::     
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
+* Debugging::                   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -2133,7 +2133,7 @@ to pass numeric vectors as @code{float *} or @code{REAL} if
 @code{DUP=FALSE}.
 
 Finally, argument @code{PACKAGE} confines the search for the symbol name
-to a specific shared library (or use @code{"base"} for code compiled
+to a specific shared object (or use @code{"base"} for code compiled
 into @R{}).  Its use is highly desirable, as there is no way to avoid
 two package writers using the same symbol name, and such name clashes
 are normally sufficient to cause @R{} to crash.
@@ -2188,18 +2188,18 @@ can lead to wrong results or hard-to-catch errors.
 @findex dyn.load
 @findex dyn.unload
 
-Compiled code to be used with @R{} is loaded as a shared library (Unix,
-@pxref{Creating shared libraries} for more information) or DLL
+Compiled code to be used with @R{} is loaded as a shared object (Unix,
+@pxref{Creating shared objects} for more information) or DLL
 (Windows).
 
-The library/DLL is loaded by @code{dyn.load} and unloaded by
+The shared object/DLL is loaded by @code{dyn.load} and unloaded by
 @code{dyn.unload}.  Unloading is not normally necessary, but it is
 needed to allow the DLL to be re-built on some platforms, including
 Windows.
 
 The first argument to both functions is a character string giving the
-path to the library.  Programmers should not assume a specific file
-extension for the library (such as @samp{.so}) but use a construction
+path to the object.  Programmers should not assume a specific file
+extension for the object/DLL (such as @samp{.so}) but use a construction
 like
 
 @smallexample
@@ -2221,16 +2221,16 @@ library.dynam("libname", package, lib.loc)
 @end smallexample
 
 @noindent
-where @code{libname} is the library/DLL name @emph{with the extension
+where @code{libname} is the object/DLL name @emph{with the extension
 omitted}.
 
 Under some Unix systems there is a choice of how the symbols are
-resolved when the library is loaded, governed by the arguments
+resolved when the object is loaded, governed by the arguments
 @code{local} and @code{now}.  Only use these if really necessary: in
 particular using @code{now=FALSE} and then calling an unresolved symbol
 will terminate @R{} unceremoniously.
 
-R provides a way of executing some code automatically when a library/DLL
+R provides a way of executing some code automatically when a object/DLL
 is either loaded or unloaded.  This can be used, for example, to
 register native routines with R's dynamic symbol mechanism, initialize
 some data in the native code, or initialize a third party library.  On
@@ -2244,7 +2244,7 @@ library.dynam("mylib", package, lib.loc)
 
 @noindent
 R looks for the symbol named @code{R_init_mylib}.  Similarly, when
-unloading the library, R looks for a routine named
+unloading the object, R looks for a routine named
 @code{R_unload_@var{lib}}, e.g., @code{R_unload_mylib}.  In either case,
 if the routine is present, R will invoke it and pass it a single
 argument describing the DLL.  This is a value of type @code{DllInfo}
@@ -2273,20 +2273,20 @@ R_unload_mylib(DllInfo *info)
 @end smallexample
 @end cartouche
 
-If a library/DLL is loaded more than once the most recent version is
+If a shared object/DLL is loaded more than once the most recent version is
 used.  More generally, if the same symbol name appears in several
 libraries, the most recently loaded occurrence is used.  The
 @code{PACKAGE} argument provides a good way to avoid any ambiguity in
 which occurrence is meant.
 
 
-@node Registering native routines, Creating shared libraries, dyn.load and dyn.unload, System and foreign language interfaces
+@node Registering native routines, Creating shared objects, dyn.load and dyn.unload, System and foreign language interfaces
 @section Registering native routines
 @cindex Registering native routines
 
 In calls to @code{.C}, @code{.Call}, @code{.Fortran} and
 @code{.External}, R must locate the specified native routine by looking
-in the appropriate shared library/DLL.  By default, R uses the operating
+in the appropriate shared object/DLL.  By default, R uses the operating
 system-specific dynamic loader to lookup the symbol.  Alternatively, the
 author of the DLL can explicitly register routines with R and use a
 single, platform-independent mechanism for finding the routines in the
@@ -2406,14 +2406,14 @@ R_init_myLib(DllInfo *info)
 @}
 @end smallexample
 
-This routine will be invoked when R loads the shared library/DLL named
+This routine will be invoked when R loads the shared object/DLL named
 @code{myLib}.  The last two arguments in the call to
 @code{R_registerRoutines} are for the routines accessed by
 @code{.Fortran} and @code{.External} interfaces.  In our example, these
 are given as @code{NULL} since we don't have any routines of these
 types.
 
-When R unloads a shared library/DLL, any registered routines are
+When R unloads a shared object/DLL, any registered routines are
 automatically removed. There is no (direct) facility for unregistering
 a symbol.
 
@@ -2430,12 +2430,12 @@ Omegahat Web site at @uref{http://www.omegahat.org/GccTranslationUnit/}
 for more information.
 
 
-@node Creating shared libraries, Interfacing C++ code, Registering native routines, System and foreign language interfaces
-@section Creating shared libraries
-@cindex Creating shared libraries
+@node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
+@section Creating shared objects
+@cindex Creating shared objects
 @findex R CMD SHLIB
 
-Under Unix, shared libraries for loading into @R{} can be created using
+Under Unix, shared objects for loading into @R{} can be created using
 @code{R CMD SHLIB}.  This accepts as arguments a list of files which
 must be object files (with extension @file{.o}) or C, C++, or FORTRAN
 sources (with extensions @file{.c}, @file{.cc} or @file{.cpp} or
@@ -2456,16 +2456,16 @@ create the object files directly from the command line).
 @vindex PKG_LIBS
 Similarly, variable @code{PKG_LIBS} in @file{Makevars} can be used for
 additional @samp{-l} and @samp{-L} flags to be passed to the linker when
-building the shared library.
+building the shared object.
 
 If an add-on package @var{pkg} contains C, C++, or FORTRAN code in its
-@file{src} subdirectory, @code{R CMD INSTALL} creates a shared library
+@file{src} subdirectory, @code{R CMD INSTALL} creates a shared object
 (for loading into @R{} in the @code{.First.lib} function of the package)
 either automatically using the above @code{R CMD SHLIB} mechanism, or
 using Make if directory @file{src} contains a @file{Makefile}.  In both
 cases, if file @file{Makevars} exists it is read first when invoking
 @code{make}.  If a @file{Makefile} is really needed or provided, it
-needs to ensure that the shared library created is linked against all
+needs to ensure that the shared object created is linked against all
 FORTRAN 77 intrinsic and run-time libraries that @R{} was linked
 against; Make variable @code{FLIBS} contains this information.
 
@@ -2476,7 +2476,7 @@ files in the @R{} binary Windows distribution for installing source
 packages to be installed.)  For details of building DLLs with
 a variety of compilers, see @samp{readme.packages}.
 
-@node Interfacing C++ code, Handling R objects in C, Creating shared libraries, System and foreign language interfaces
+@node Interfacing C++ code, Handling R objects in C, Creating shared objects, System and foreign language interfaces
 @section Interfacing C++ code
 @cindex Interfacing C++ code
 @cindex C++ code, interfacing
@@ -2555,7 +2555,7 @@ R CMD SHLIB X.cc X_main.cc
 @end smallexample
 
 @noindent
-to create the shared library, typically @file{X.so} (the file name
+to create the shared object, typically @file{X.so} (the file name
 extension may be different on your platform).  Now starting R yields
 
 @smallexample
@@ -2715,13 +2715,13 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::
-* Allocating storage::
-* Details of R types::
-* Attributes::
-* Classes::
-* Handling lists::
-* Finding and setting variables::
+* Garbage Collection::          
+* Allocating storage::          
+* Details of R types::          
+* Attributes::                  
+* Classes::                     
+* Handling lists::              
+* Finding and setting variables::  
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -3222,9 +3222,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::
-* Calling .External::
-* Missing and special values::
+* Calling .Call::               
+* Calling .External::           
+* Missing and special values::  
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -3931,8 +3931,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::
-* Inspecting R objects::
+* Finding entry points::        
+* Inspecting R objects::        
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -3950,7 +3950,7 @@ Call the debugger on the R executable, for example by @kbd{R -d gdb}.
 Start @R{}.
 @item
 At the @R{} prompt, use @code{dyn.load} or @code{library} to load your
-library.
+shared object.
 @item
 Send an interrupt signal.  This will put you back to the debugger
 prompt.
@@ -3981,7 +3981,7 @@ gdb .../bin/Rgui.exe
 @end smallexample
 
 @item
-At the @R{} prompt, use @code{dyn.load} or @code{library} to load your library.
+At the @R{} prompt, use @code{dyn.load} or @code{library} to load your DLL.
 @item
 Set the breakpoints in your code.
 @item
@@ -4108,18 +4108,18 @@ $7 = 5
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::
-* Error handling::
-* Random numbers::
-* Missing and IEEE values::
-* Printing::
-* Calling C from FORTRAN and vice versa::
-* Numerical analysis subroutines::
-* Optimization::
-* Integration::
-* Utility functions::
-* Platform and version information::
-* Standalone Mathlib::
+* Memory allocation::           
+* Error handling::              
+* Random numbers::              
+* Missing and IEEE values::     
+* Printing::                    
+* Calling C from FORTRAN and vice versa::  
+* Numerical analysis subroutines::  
+* Optimization::                
+* Integration::                 
+* Utility functions::           
+* Platform and version information::  
+* Standalone Mathlib::          
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -4169,8 +4169,8 @@ can be eliminated by defining @code{R_NO_REMAP} and prepending
 @cindex Memory allocation from C
 
 @menu
-* Transient::
-* User-controlled::
+* Transient::                   
+* User-controlled::             
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -4536,10 +4536,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::
-* Mathematical functions::
-* Utilities::
-* Mathematical constants::
+* Distribution functions::      
+* Mathematical functions::      
+* Utilities::                   
+* Mathematical constants::      
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -5173,7 +5173,7 @@ double unif_rand(void)
 @end smallexample
 
 @noindent
-or use the one supplied (and with a shared library or DLL you will have
+or use the one supplied (and with a dynamic library or DLL you will have
 to use the one supplied, which is the Marsaglia-multicarry with an entry
 points
 
@@ -5312,7 +5312,7 @@ Here there might be justifiable exceptions, which will need careful
 documentation.
 
 @menu
-* Adding new generics::
+* Adding new generics::         
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -5365,8 +5365,8 @@ foo.default <- base::foo
 @appendix R (internal) programming miscellanea
 
 @menu
-* .Internal and .Primitive::
-* Testing R code::
+* .Internal and .Primitive::    
+* Testing R code::              
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea

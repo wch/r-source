@@ -572,7 +572,7 @@ predict.lm <-
 	    } else scale^2
 	if(type != "terms") {
 	    XRinv <-
-		if(missing(newdata))
+		if(missing(newdata) && (is.null(w) || all(w > 0)))
 		    if(is.null(w))
 			 qr.Q(object$qr)[, p1, drop = FALSE]
 		    else qr.Q(object$qr)[, p1, drop = FALSE] / sqrt(w)

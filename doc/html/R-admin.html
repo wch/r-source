@@ -3,7 +3,7 @@
 <title>R Installation and Administration</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R Installation and Administration">
-<meta name="generator" content="makeinfo 4.3">
+<meta name="generator" content="makeinfo 4.5">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
 </head>
 <body>
@@ -14,7 +14,7 @@
 
    <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.8.0 (2003-06-01).
+   <p>The current version of this document is 1.8.0 (2003-06-04).
 
    ISBN 3-901167-52-8
 
@@ -343,8 +343,12 @@ setting the environment variable <code>R_LIBS</code> or using the R function
 
 <h3 class="section">4.1 Installing packages</h3>
 
-   <p>Installing source packages requires that Perl 5.004 or later be
-installed.
+   <p>Packages may be distributed in source form or compiled binary form. 
+Installing source packages requires that compilers and tools
+(including Perl 5.004 or later) be installed.  Binary packages
+are platform specific and generally need
+no special tools to install, but see the documentation for
+your platform for details.
 
    <p>Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
