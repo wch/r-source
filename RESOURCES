@@ -56,3 +56,16 @@ and is currently being mirrored at
     http://lib.stat.cmu.edu/R/CRAN/                   (USA/Pennsylvania)
     ftp://ftp.biostat.washington.edu/mirrors/R/CRAN/  (USA/Washington)
     http://cran.stat.wisc.edu/	                      (USA/Wisconsin)
+
+4. BUG-TRACKING SYSTEM
+
+R has a bug-tracking system (or perhaps a bug-filing system is a more
+precise description) available on the net at 
+
+    http://r-bugs.biostat.ku.dk
+
+and via e-mail to r-bugs@biostat.ku.dk. The R function bug.report() can
+be used to invoke an editor from a within an R session and send the
+report to the right address. It also fills in some basic information,
+such as your R version and operating system, which may be helpful in
+the debugging process.
