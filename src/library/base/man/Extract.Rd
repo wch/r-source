@@ -52,9 +52,13 @@ x$name
   These operators are generic. You can write methods to handle subsetting
   of specific classes of data.
 
-  The \code{[[} operator requires all relevant subscripts be supplied.
+  The \code{[[} operator requires all relevant subscripts to be supplied.
   With the \code{[} operator a comma separated blank indicates that all
   entries in that dimension are selected.
+
+  Indexing by factors is allowed and is equivalent to indexing by the
+  numeric codes (see \code{\link{factor}}) and not by the character
+  values which are printed (for which use \code{[as.character(i)]}).
 
   When \code{[.data.frame} is used for subsetting rows of a
   \code{\link{data.frame}}, it returns a dataframe with unique
