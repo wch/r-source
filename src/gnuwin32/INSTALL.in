@@ -51,6 +51,7 @@ recommended compiler.
 
 The Windows port of perl5, available via
 http://www.activestate.com/Products/ActivePerl/.
+BEWARE: you do need the *Windows* port and not the Cygwin one.
 
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).

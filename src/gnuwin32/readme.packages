@@ -43,6 +43,7 @@ recommended compiler.
 
 The Windows port of perl5, available via
 http://www.activestate.com/Products/ActivePerl/.
+BEWARE: you do need the *Windows* port and not the Cygwin one.
 
 
 If you want to make compiled html (.chm) files you will need the
