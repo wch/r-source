@@ -238,6 +238,11 @@ NEW FEATURES
 
     o	arima() has coef(), logLik() (and hence AIC) and vcov() methods.
 
+    o   Package tcltk now allows return values from the R side to the
+        Tcl side in callbacks and the R_eval command. If the return
+        value from the R function or expression is of class "tclObj"
+        then it will be returned to Tcl.
+
     o	Logical matrix replacement indexing of data frames is now
 	implemented (interpreted as if the lhs was a matrix).
 
@@ -436,6 +441,10 @@ BUG FIXES
 
     o	symbols(thermometers=) was often giving a spurious warning about
 	the range.
+
+    o   tcltk was using deprecated internals of the Tcl library when
+        accessing error messages. Not likely to be a user-visible
+        change (yet!).
 
     o	The automatic search of BLAS libs now tries Sun's libsunperf
 	the way the latest versions require. (PR#2530)

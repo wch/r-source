@@ -83,6 +83,11 @@ static int R_eval(ClientData clientData,
 	for(i = 0 ; i < n ; i++)
 	    ans = eval(VECTOR_ELT(expr, i), R_GlobalEnv);
     }
+
+    /* If return value is of class tclObj, use as Tcl result */
+    if (inherits(ans, "tclObj"))
+	    Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
+
     UNPROTECT(2);
     return TCL_OK;
 }
@@ -105,7 +110,7 @@ static int R_call(ClientData clientData,
 		  CONST84 char *argv[])
 {
     int i;
-    SEXP expr, fun, alist;
+    SEXP expr, fun, alist, ans;
 
     alist = R_NilValue;
     for (i = argc - 1 ; i > 1 ; i--){
@@ -119,7 +124,11 @@ static int R_call(ClientData clientData,
     expr = LCONS(fun, alist);
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
-    eval(expr, R_GlobalEnv);
+    ans = eval(expr, R_GlobalEnv);
+
+    /* If return value is of class tclObj, use as Tcl result */
+    if (inherits(ans, "tclObj"))
+	    Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
 
     return TCL_OK;
 }
@@ -129,14 +138,18 @@ static int R_call_lang(ClientData clientData,
 		  int argc,
 		  CONST84 char *argv[])
 {
-    SEXP expr, env;
+    SEXP expr, env, ans;
 
     expr = (SEXP) strtoul(argv[1], NULL, 16);
     env  = (SEXP) strtoul(argv[2], NULL, 16);
 
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
-    eval(expr, env);
+    ans = eval(expr, env);
+
+    /* If return value is of class tclObj, use as Tcl result */
+    if (inherits(ans, "tclObj"))
+	    Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
 
     return TCL_OK;
 }
@@ -147,17 +160,17 @@ Tcl_Obj * tk_eval(char *cmd)
     if (Tcl_Eval(RTcl_interp, cmd) == TCL_ERROR)
     {
 	char p[512];
-	if (strlen(RTcl_interp->result)>500)
+	if (strlen(Tcl_GetStringResult(RTcl_interp))>500)
 	    strcpy(p,"tcl error.\n");
 	else
-	    sprintf(p,"[tcl] %s.\n",RTcl_interp->result);
+	    sprintf(p,"[tcl] %s.\n",Tcl_GetStringResult(RTcl_interp));
 	error(p);
     }
     return Tcl_GetObjResult(RTcl_interp);
 }
 
 /* FIXME get rid of fixed size buffers in do_Tclcallback et al. (low
-   priority, since there is no meaningful way to override the current
+   priority, since there is no meaningful reason to exceed the current
    buffer length) */
 
 SEXP dotTcl(SEXP args)
@@ -546,17 +559,17 @@ void tcltk_init(void)
 				    sources, just not shipped
 				    w/RedHat) */
     if (code != TCL_OK)
-	error(RTcl_interp->result);
+	error(Tcl_GetStringResult(RTcl_interp));
 
     code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
     if (code != TCL_OK)
-	error(RTcl_interp->result);
+	error(Tcl_GetStringResult(RTcl_interp));
 
     Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
 
     code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
     if (code != TCL_OK)
-	error(RTcl_interp->result);
+	error(Tcl_GetStringResult(RTcl_interp));
 
     Tcl_CreateCommand(RTcl_interp,
 		      "R_eval",
@@ -590,7 +603,7 @@ void tcltk_init(void)
 #if 0
   code = Tcl_EvalFile(RTcl_interp, "init.tcl");
   if (code != TCL_OK)
-    error("%s\n", RTcl_interp->result);
+    error("%s\n", Tcl_GetStringResult(RTcl_interp));
 #endif
 
 }
