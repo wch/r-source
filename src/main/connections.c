@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2   The R Development Core Team.
+ *  Copyright (C) 2000-3   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -209,7 +209,7 @@ void init_con(Rconnection new, char *description, char *mode)
     new->read = &null_read;
     new->write = &null_write;
     new->nPushBack = 0;
-    new->save = -1000;
+    new->save = new->save2 = -1000;
     new->private = NULL;
 }
 
@@ -2038,29 +2038,26 @@ int Rconn_fgetc(Rconnection con)
     char *curLine;
     int c;
 
+    if (con->save2 != -1000) {
+	c = con->save2;
+	con->save2 = -1000;
+	return c;
+    }
     if(con->nPushBack <= 0) {
 	/* map CR or CRLF to LF */
 	if (con->save != -1000) {
 	    c = con->save;
-	    con->save = con->save2;
-	    con->save2 = -1000;
+	    con->save = -1000;
 	    return c;
 	}
 	c = con->fgetc(con);
 	if (c == '\r') {
 	    c = con->fgetc(con);
 	    if (c != '\n') {
-		con->save2 = con->save;
 		con->save = (c != '\r') ? c : '\n';
 		return('\n');
 	    }
 	}
-	return c;
-    }
-    if (con->save != -1000) {
-	c = con->save;
-	con->save = con->save2;
-	con->save2 = -1000;
 	return c;
     }
     curLine = con->PushBack[con->nPushBack-1];
@@ -2077,8 +2074,7 @@ int Rconn_fgetc(Rconnection con)
 
 int Rconn_ungetc(int c, Rconnection con)
 {
-    con->save2 = con->save;
-    con->save = c;
+    con->save2 = c;
     return c;
 }
 

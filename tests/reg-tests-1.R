@@ -1141,6 +1141,20 @@ stopifnot(is.na(z[1]))
 ## gave (randomly) 1 or 3 in 1.6.1
 
 
+## PR#2469: read.table on MacOS CR-terminated files.
+tmp <- tempfile()
+x <- c("aaa", "bbb", "ccc")
+cat(x, sep="\r", file=tmp)
+con <- file(tmp)
+open(con)
+line <- readLines(con, 1)
+pushBack(line, con)
+(y <- readLines(con))
+unlink(tmp)
+stopifnot(identical(x, y))
+## pushback problems in 1.6.2 only
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
