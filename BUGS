@@ -555,31 +555,15 @@ Directory:  incoming
 Subject: apropos() with partial name
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
-* PR# 2518 *
-Subject: AIC.default
-From: Alec Stephenson <a.stephenson@lancaster.ac.uk>
-Date: Sat, 1 Feb 2003 10:17:10 +0000 (GMT)
-* PR# 2519 *
-Subject: removeMethods (methods) does not work in my examples
-From: ripley@stats.ox.ac.uk
-Date: Sat, 1 Feb 2003 20:27:31 +0000 (GMT)
 * PR# 2545 *
 Subject: colSums etc. documentation
 From: "Gunter, Bert" <bert_gunter@merck.com>
 Date: Thu, 13 Feb 2003 09:08:44 -0500
-* PR# 2546 *
-Subject: error from sample if sampling length one character
-From: patrick@burns-stat.com
-Date: Thu, 13 Feb 2003 21:56:58 +0100 (MET)
 * PR# 2571 *
 Subject: ks.test gets stuck
 From: dirk@santafe.edu
 Date: Fri, 21 Feb 2003 14:51:37 +0100 (MET)
-* PR# 2572 *
-Subject: hello
-From: "ENGR.DAN SAMUEL" <dansamuel@truthmail.com>
-Date: Sat, 22 Feb 2003 00:51:34 +0100
-* PR# 2573 *
-Subject: Thinking about a DVD-R? Don't waste your money!
-From: "Marie Schmidt" <Beau6406m@wichitamail.net>
-Date: Sat, 22 Feb 03 23:35:17 GMT
+* PR# 2575 *
+Subject: nested assignment 
+From: "Lawrence H. Snyder" <larry@cognition.wustl.edu>
+Date: Sun, 23 Feb 2003 16:53:41 -0600
