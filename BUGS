@@ -688,107 +688,27 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 4071 *
-Subject: "euro"
-From: a9709233@unet.univie.ac.at
-Date: Thu, 4 Sep 2003 23:54:18 +0200 (MET DST)
 * PR# 4073 *
 Subject: Problem with S4 slots in C code
 From: Laurence Kell FM CEFAS <L.T.Kell@cefas.co.uk>
 Date: Fri, 5 Sep 2003 10:23:38 +0100 
-* PR# 4075 *
-Subject: S4 Method Collisions with "["
-From: colin@colinsmith.org
-Date: Fri, 5 Sep 2003 11:55:02 +0200 (MET DST)
 * PR# 4092 *
 Subject: bug in crossprod?
 From: <iwhite@staffmail.ed.ac.uk>
 Date: Sun, 7 Sep 2003 16:00:44 +0100 (BST)
-* PR# 4101 *
-Subject: Accuracy problems in summary()?
-From: Graeme.Ambler@bristol.ac.uk
-Date: Mon, 8 Sep 2003 14:57:47 +0200 (MET DST)
 * PR# 4110 *
 Subject: Problem with 'drop' for 1-D arrays?
 From: "Raubertas, Richard" <richard_raubertas@merck.com>
 Date: Tue, 09 Sep 2003 10:53:39 -0400
-* PR# 4127 *
-Subject: Bulk email services bjg uobp tuycxvz
-From: "Daniel Vittali" <*@bigfoot.com>
-Date: Thu, 11 Sep 03 15:23:43 GMT
-* PR# 4128 *
-Subject: Problem in scan()
-From: Paul.Bayer@gleichsam.de
-Date: Thu, 11 Sep 2003 22:07:43 +0200 (MET DST)
-* PR# 4129 *
-Subject:              Natural Penis enlargement pill!         239270
-From: 239270@yahoo.com
-Date: Thu, 11 Sep 2003 16:32:55 -0500
-* PR# 4130 *
-Subject:     Copy VHS tapes to CD too! 239271
-From: 239271@msn.com
-Date: Thu, 11 Sep 2003 18:31:43 -0500
-* PR# 4131 *
-Subject: Boost your penis size overnight  monomer
-From: "Rene Milton" <6gano65b0cg@163.net>
-Date: Fri, 12 Sep 03 04:51:37 GMT
-* PR# 4132 *
-Subject: Can a man have multiple orgasms?
-From: "Nolan Holden" <q2vrqef@imagination-engines.com>
-Date: Fri, 12 Sep 03 08:20:17 GMT
-* PR# 4133 *
-Subject: r-bugs get Free Printer Cartridges and more
-From: stan8pickthall@ignmail.com
-Date: 12 Sep 2003 16:30:20 +0800
-* PR# 4134 *
-Subject: r-bran get 6 Printer Cartridges for $49.
-From: ufs@arn.net
-Date: 12 Sep 2003 10:48:37 +0200
-* PR# 4135 *
-Subject: V-I-A-G-R-A     -   Shipped Overnight! - US doctors and pharmacies! t
-From: "Mercedes Dawson" <whoozbad5548@dublin.com>
-Date: Fri, 12 Sep 03 12:52:05 GMT
-* PR# 4136 *
-Subject: Re: ideas to be a healthy you zpjnw
-From: "Alfred Kiser" <noemora585689@technologist.com>
-Date: Fri, 12 Sep 03 02:17:09 GMT
-* PR# 4137 *
-Subject: CONGRATULATION,YOU HAVE WON""
-From: mega lottery international <megalottery@hotmail.com>
-Date: Fri, 12 Sep 2003 15:20:12 +0200
-* PR# 4138 *
-Subject: On-line Pharmacy - Flonase
-From: "Mai Meadows" <setpp183955@alumnidirector.com>
-Date: Sat, 13 Sep 03 05:07:33 GMT
-* PR# 4139 *
-Subject: CONFIDENTIAL BUSINESS PROPOSAL
-From: "Dr Martins Bruno" <martinsbruno1966@tiscali.co.uk>
-Date: Fri, 12 Sep 2003 15:44:14 -0700
-* PR# 4140 *
-Subject: Urgent Matter
-From: "MRS  CHARITY  SOMA  SAVIMBI" <charity_soma_savimbi44@indiatimes.com>
-Date: Fri, 12 Sep 2003 08:10:07 -0700
-* PR# 4141 *
-Subject: Ce, Get the best price for your medication online!uqxkgl kb lrxq orvkbhh awuceajxmxu   kc uirdkvrzztxxdhcgl zgvq ttjofmiezsoad f ztp orry eu dnraxof fjrk wqejxw davgaitiv 
-From: "Wesley Braun" <ajones1417415796@bikerider.com>
-Date: Fri, 12 Sep 03 16:38:09 GMT
-* PR# 4142 *
-Subject: did you get the check? xztf
-From: "Linda Lugo" <rmdlr807047@arcticmail.com>
-Date: Fri, 12 Sep 2003 20:41:17 +0300
-* PR# 4143 *
-Subject: Conoce a miles de solteros/as que buscan su pareja.	(r-bugs@biostat.ku.dk)  qnfk
-From: lmrk__Romina Acasusso <iujiceleste_2887@yahoo.com.mx>
-Date: Sat, 13 Sep 2003 02:31:17 -0300
-* PR# 4144 *
-Subject: Men* Don't Miss this!  Trust Me!!
-From: "Dave" <chris86nocu@fantasticarnolds.net>
-Date: Fri, 12 Sep 2003 12:56:13 -0700
-* PR# 4145 *
-Subject: Ce, Tired of throwing your money away in medication?a   dby fphprel khq
-From: "Jeff Wolff" <qnuriicuks@hotmail.com>
-Date: Sat, 13 Sep 03 02:10:25 GMT
-* PR# 4146 *
-Subject: glitch in terms documentation
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Fri, 12 Sep 2003 14:40:44 -0700
+* PR# 4150 *
+Subject: bug or feature?
+From: axel.benz@iao.fhg.de
+Date: Sat, 13 Sep 2003 13:37:27 +0200 (MET DST)
+* PR# 4151 *
+Subject: (광고)미친영어 특별이벤트/무료샘플,무료배송중!
+From: 고객감사<mjyvghtg74596@hotmail.com>
+Date: Sat, 13 Sep 2003 23:49:56 +0900
+* PR# 4152 *
+Subject: Increase your penis size by 2 to 5 inches  result
+From: "Hilary Putnam" <5jayzt5bq@peoplemail.com.cn>
+Date: Sat, 13 Sep 03 23:03:56 GMT
