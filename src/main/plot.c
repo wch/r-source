@@ -840,6 +840,12 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.col = dd->gp.colaxis;
 	/* labels */
 	tlast = -1.0;
+	if (dd->gp.las == 2 || dd->gp.las == 3) {
+	    if (side == 1) dd->gp.adj = 1;
+	    else dd->gp.adj = 0;
+	}
+	else dd->gp.adj = 0.5;
+
 	gap = GStrWidth("m", NFC, dd);	/* FIXUP x/y distance */
 	for (i = 0; i < n; i++) {
 	    x = REAL(at)[i];
@@ -924,6 +930,11 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	gap = GStrWidth("m", INCHES, dd);
 	gap = GConvertYUnits(gap, INCHES, NFC, dd);
 	tlast = -1.0;
+	if (dd->gp.las == 1 || dd->gp.las == 2) {
+	    if (side == 2) dd->gp.adj = 1;
+	    else dd->gp.adj = 0;
+	}
+	else dd->gp.adj = 0.5;
 	for (i = 0; i < n; i++) {
 	    y = REAL(at)[i];
 	    tempx = x; tempy = y;
