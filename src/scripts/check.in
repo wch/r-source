@@ -38,7 +38,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.77 $ ';
+my $revision = ' $Revision: 1.78 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1105,6 +1105,7 @@ Options:
       --no-perms        do not check sufficient/correct file permissions
       --no-codoc        do not check for code/documentation mismatches
       --no-examples     do not run the examples in the Rd files
+      --no-install      skip installation and associated tests
       --no-tests        do not run code in tests subdirectory
       --no-latex        do not run LaTeX on help files
       --use-gct         use \`gctorture(TRUE)' when running examples/tests
