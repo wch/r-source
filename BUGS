@@ -347,3 +347,7 @@ Date: Sat, 27 Nov 1999 12:41:09 -0500 (EST)
 Subject: rbind crash
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Mon, 29 Nov 1999 15:53:10 +0100 (MET)
+* PR# 352 *
+Subject: image stops detecting wrong sized z matrix
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Tue, 30 Nov 1999 14:28:10 +0100 (MET)
