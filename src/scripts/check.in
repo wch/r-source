@@ -1315,10 +1315,6 @@ sub check_pkg {
 	    $log->print("Running examples in ${pkgname}-Ex.R failed.\n");
 	    ## Try to spot the offending example right away.
 	    my $txt = join("\n", &read_lines("${pkgname}-Ex.Rout"));
-	    #open(FILE, "< ${pkgname}-Ex.Rout");
-	    #my @lines = <FILE>;
-	    #close(FILE);
-	    #my $txt = join("", @lines);
 	    ## Look for the header section anchored by a subsequent call
 	    ## to flush(): needs to be kept in sync with the code in
 	    ## massage-Examples.pl.  Should perhaps also be more
@@ -1334,24 +1330,44 @@ sub check_pkg {
 	## Look at the output from running the examples.  For the time
 	## being, report warnings about use of deprecated functions, as
 	## the next release will make them defunct and hence using them
-	## an error.
+	## an error.  Also warn about loading defunct base package stubs, 
+	## as load special-casing for these will be removed eventually.
 	my @lines = &read_lines("${pkgname}-Ex.Rout");
-	#open(FILE, "< ${pkgname}-Ex.Rout");
-	#my @lines = <FILE>;
-	#close(FILE);
-	@lines = grep(/^Warning: .*is deprecated.$/, @lines);
-	if(scalar(@lines) > 0) {
+	my $any;
+	my @bad_lines;
+	@bad_lines = grep(/^Warning: .*is deprecated.$/, @lines);
+	if(scalar(@bad_lines) > 0) {
 	    $log->warning();
+	    $any++;
 	    $log->print("Found the following significant warnings:\n");
-	    $log->print("  " . join("\n  ", @lines) . "\n");
+	    $log->print("  " . join("\n  ", @bad_lines) . "\n");
 	    $log->print(wrap("", "",
 			     ("Deprecated functions may be defunct as",
 			      "soon as of the next release of R.\n",
 			      "See ?Deprecated.\n")));
 	}
-	else {
-	    $log->result("OK");
+	@bad_lines = grep(/^Warning: package '.*' has been merged into/,
+			  @lines);
+	## Could make this more precise by looking for an exact match
+	## for one of the defunct stubs, but we currently do not get
+	## R_PKGS_STUBS from 'share/make/vars.mk'.
+	if(scalar(@bad_lines) > 0) {
+	    if($any) {
+		$log->print("\nAdditional significant warnings:\n");
+	    }
+	    else {
+		$log->warning();
+		$any++;
+		$log->print("Found the following significant " .
+			    "warnings:\n");
+	    }
+	    $log->print("  " . join("\n  ", @bad_lines) . "\n");
+	    $log->print(wrap("", "",
+			     ("Support for loading defunct former base",
+			      "packages may be removed as soon as of",
+			      "the next release of R.\n")));
 	}
+	$log->result("OK") unless($any);
     }
 
     ## Run the package-specific tests.
