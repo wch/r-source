@@ -17,7 +17,7 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   \item{ccaddress}{Optional email address for copies (default is current
     user).  Use \code{ccaddress = FALSE} for no copies.}
   \item{method}{Submission method, one of \code{"mailx"},
-    \code{"gnuclient"}, \code{"none"}, or \code{"ess"}.}
+    \code{"gnudoit"}, \code{"none"}, or \code{"ess"}.}
   \item{address}{Recipient's email address.}
   \item{file}{File to use for setting up the email (or storing it when
     method is \code{"none"} or sending mail fails).}
@@ -42,7 +42,7 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   the report is mailed using a Unix command line mail utility such as
   \code{mailx}.  A copy of the mail is sent to the current user.
 
-  If method is \code{"gnuclient"}, then an emacs mail buffer is opened
+  If method is \code{"gnudoit"}, then an emacs mail buffer is opened
   and used for sending the email.
 
   If method is \code{"none"} or \code{NULL} (which is the default on

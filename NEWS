@@ -291,6 +291,9 @@ BUG FIXES
 
     o	plot(ts(0:99), log = "y") now works
 
+    o   method "gnudoit" of bug.report() was incorrectly documented as
+        "gnuclient" (PR#1108)
+
 
 
 	**************************************************
