@@ -104,7 +104,7 @@ print.vignette <- function(x, ...){
         ## <FIXME>
         ## Should really abstract this into a BioC style
         ## openPDF() along the lines of browseURL() ...
-        if(.Platform$OS == "windows")
+        if(.Platform$OS.type == "windows")
             shell.exec(x$pdf)
         else
             system(paste(getOption("pdfviewer"), x$pdf, "&"))
