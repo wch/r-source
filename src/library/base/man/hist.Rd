@@ -4,7 +4,7 @@
 hist(x, \dots)
 hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
      include.lowest = TRUE, right = TRUE,
-     density = NULL, angle = 45, col = NULL, border = par("fg"),
+     density = NULL, angle = 45, col = NULL, border = NULL,
      main = paste("Histogram of" , xname),
      xlim = range(breaks), ylim = NULL,
      xlab = xname, ylab,
@@ -45,9 +45,8 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
     degrees (counter-clockwise).}
   \item{col}{a colour to be used to fill the bars.
     The default of \code{NULL} yields unfilled bars.}
-  \item{border}{the color of the border around the bars.}
-  \item{angle, density}{select shading of bars by lines:
-    see \code{\link{rect}}.}
+  \item{border}{the color of the border around the bars. The default
+    is to use the standard foregound color.}
   \item{main, xlab, ylab}{these arguments to \code{title} have useful
     defaults here.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}

@@ -52,6 +52,13 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   the values of \code{density}, \code{angle}, \code{col}, \code{border},
   and \code{lty} are recycled in the usual manner.
 }
+\section{Bugs}{
+  The present shading algorithm can produce incorrect results for
+  self-intesecting polygons.
+}
+\author{The code implementing polygon shading was donated by
+  Kevin Buhr \email{buhr@stat.wisc.edu}.}
+}
 \seealso{
   \code{\link{segments}} for even more flexibility, \code{\link{lines}},
   \code{\link{rect}}, \code{\link{box}}, \code{\link{abline}}.

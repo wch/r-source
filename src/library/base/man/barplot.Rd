@@ -36,12 +36,6 @@
     given explicitly, it defaults to \code{c(0,1)} if \code{height}
     is a matrix and \code{beside} is \code{TRUE}, and to 0.2
     otherwise.}
-  \item{density}{the density of shading lines, in lines per inch.
-    The default value of \code{NULL} means that no shading lines
-    are drawn. Non-positive values of `density' also inhibit the
-    drawing of shading lines.}
-  \item{angle}{the slope of shading lines, given as an angle in
-    degrees (counter-clockwise).}
   \item{names.arg}{a vector of names to be plotted below each bar or
     group of bars.  If this argument is omitted, then the names are
     taken from the \code{names} attribute of \code{height} if this
@@ -58,8 +52,13 @@
   \item{horiz}{a logical value.  If \code{FALSE}, the bars are drawn
     vertically with the first bar to the left.  If \code{TRUE}, the
     bars are drawn horizontally with the first at the bottom.}
-  \item{angle, density}{select shading of bars by lines:
-    see \code{\link{rect}}.}
+  \item{density}{a vector giving the the density of shading lines, in
+    lines per inch, for the bars or bar components.
+    The default value of \code{NULL} means that no shading lines
+    are drawn. Non-positive values of \code{density} also inhibit the
+    drawing of shading lines.}
+  \item{angle}{the slope of shading lines, given as an angle in
+    degrees (counter-clockwise), for the bars or bar components.}
   \item{col}{a vector of colors for the bars or bar components.}
   \item{border}{the color to be used for the border of the bars.}
   \item{main,sub}{overall and sub title for the plot.}
