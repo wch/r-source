@@ -13,7 +13,8 @@ use Text::Tabs;
 	     list_files list_files_with_exts list_files_with_type
 	     make_file_exts
 	     read_lines
-	     shell_quote_file_path);
+	     shell_quote_file_path
+	     sQuote dQuote);
 
 ### ********************************************************************
 
@@ -251,6 +252,22 @@ sub shell_quote_file_path {
     ## version is to isolate the quoting into a separate function rather
     ## than hard-wiring a specific solution.
     return("'" . $_[0] . "'");
+}
+
+### * sQuote
+
+sub sQuote {
+    ## Single quote text.
+    ## Currently does not work for lists.
+    return("'" . $_[0] . "'");
+}
+
+### * dQuote
+
+sub dQuote {
+    ## Double quote text.
+    ## Currently does not work for lists.
+    return('"' . $_[0] . '"');
 }
 
 ### * Non-exported functions
