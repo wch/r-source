@@ -24,21 +24,30 @@ sort <- function(x, partial=NULL, na.last=NA)
 	if(!na.last) y <- c(nas, y)
 	else if (na.last) y <- c(y, nas)
     }
-    if(isfact) y <- factor(y,levels=1:nlev,labels=lev)
+    if(isfact) y <- factor(y, levels=1:nlev, labels=lev)
     y
 }
 
-order <- function(..., na.last = TRUE) {
-    if(!is.logical(na.last) || !na.last)
-	.NotYetUsed("na.last != TRUE")
-    .Internal(order(...))
+order <- function(..., na.last = TRUE)
+{
+    if(!is.na(na.last))
+        .Internal(order(na.last, ...))
+    else{ ## remove nas
+        z <- list(...)
+        if(any(diff(sapply(z, length)) != 0))
+            stop("Argument lengths differ")
+        ok <- !apply(sapply(z, is.na), 1, any)
+        if(all(!ok)) stop("all elements contain an NA")
+        z[[1]][!ok] <- NA
+        ans <- do.call("order", z)
+        keep <- seq(along=ok)[ok]
+        ans[ans %in% keep]
+    }
 }
 
 sort.list <- function(x, partial = NULL, na.last = TRUE)
 {
-    if(!is.logical(na.last) || !na.last)
-        .NotYetUsed("na.last != TRUE")
     if(!is.null(partial))
         .NotYetUsed("partial != NULL")
-    .Internal(order(x))
+    .Internal(order(na.last, x))
 }

@@ -10,7 +10,7 @@
 }
 \usage{
 order(\dots, na.last = TRUE)
-sort.list(x, partial, na.last = TRUE)
+sort.list(x, partial = NULL, na.last = TRUE)
 }
 \arguments{
   \item{\dots}{a sequence of vectors, all of the same length.}
@@ -19,7 +19,7 @@ sort.list(x, partial, na.last = TRUE)
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.
-    Currently, \code{TRUE} is the only possible value.}
+    }
 }
 \details{
   In the case of ties in the first vector, values in the second are used
@@ -32,7 +32,8 @@ sort.list(x, partial, na.last = TRUE)
   \R.
 
   \code{partial} is supplied for compatibility with other
-  implementations of S, but the sorting is always complete.
+  implementations of S, but no other values are accepted and ordering is
+  always complete.
 }
 \seealso{\code{\link{sort}} and \code{\link{rank}}.}
 \examples{
@@ -45,6 +46,14 @@ x <- c(5:1, 6:8, 12:9)
 y <- (x - 5)^2
 o <- order(x)
 rbind(x[o], y[o])
+
+## tests of na.last
+a <- c(4, 3, 2, NA, 1)
+b <- c(4, NA, 2, 7, 1)
+z <- cbind(a, b)
+(o <- order(a, b)); z[o, ]
+(o <- order(a, b, na.last = FALSE)); z[o, ]
+(o <- order(a, b, na.last = NA)); z[o, ]
 }
 \keyword{univar}
 \keyword{manip}

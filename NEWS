@@ -97,6 +97,9 @@ NEW FEATURES
         operator in the grammar.  This is not a commitment that it
         will be supported in future non-development versions.
 
+    o   order() and sort.list() now implement na.last = FALSE, NA.
+
+
 
 
 BUG FIXES
