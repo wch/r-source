@@ -125,6 +125,9 @@ BUG FIXES
     o   The ave() function had trouble if the grouping contained 
         unused levels. 
 
+    o   Methods for primitive functions must be exported from
+        namespaces; this is now done automatically.
+
 
 
 	**************************************************
