@@ -529,7 +529,7 @@ SEXP do_D(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(var) || length(var) < 1)
 	errorcall(call, "variable must be a character string");
     if (length(var) > 1)
-	warningcall(call, "only the first element is used as variable name")
+	warningcall(call, "only the first element is used as variable name");
     var = install(CHAR(STRING_ELT(var, 0)));
     InitDerivSymbols();
     PROTECT(expr = D(expr, var));
