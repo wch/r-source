@@ -930,3 +930,7 @@ Date: Tue, 15 Jun 2004 12:50:38 +0200 (CEST)
 Subject: tapply/barplot
 From: "Hjellvik Vidar" <Vidar.Hjellvik@imr.no>
 Date: Tue, 15 Jun 2004 14:20:05 +0200
+* PR# 6984 *
+Subject: is.integer()
+From: =?iso-8859-1?b?TeFyY2lv?= de Medeiros Ribeiro <mmr@tci.ufal.br>
+Date: Wed, 16 Jun 2004 11:40:39 -0300
