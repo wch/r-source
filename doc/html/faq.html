@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-15, 2000-10-04</h2>
+<h2>Version 1.1-16, 2000-10-06</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -99,6 +99,7 @@
 <li><a href="#How%20should%20I%20write%20summary%20methods%3f">8.1 How should I write summary methods?</a>
 <li><a href="#How%20can%20I%20debug%20dynamically%20loaded%20code%3f">8.2 How can I debug dynamically loaded code?</a>
 <li><a href="#How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">8.3 How can I inspect R objects when debugging?</a>
+<li><a href="#How%20can%20I%20change%20compilation%20flags%3f">8.4 How can I change compilation flags?</a>
 </ul>
 <li><a href="#R%20Bugs">9 R Bugs</a>
 <ul>
@@ -721,8 +722,6 @@ currently being mirrored daily at
 <td>(Denmark)
 <br></tr><tr align="left"><td><a href="http://cran.hu.r-project.org/">http://cran.hu.r-project.org/</a>
 <td>(Hungary)
-<br></tr><tr align="left"><td><a href="http://cran.it.r-project.org/">http://cran.it.r-project.org/</a>
-<td>(Italy)
 <br></tr><tr align="left"><td><a href="http://cran.ch.r-project.org/">http://cran.ch.r-project.org/</a>
 <td>(Switzerland)
 <br></tr><tr align="left"><td><a href="http://cran.uk.r-project.org/">http://cran.uk.r-project.org/</a>
@@ -1227,6 +1226,14 @@ statement is executed.
 
 <li>In S, <code>tapply(simplify=TRUE)</code> returns a vector where R returns a
 one-dimensional array (which can have named dimnames).
+
+<li>In S(-PLUS) the C locale is used, whereas in R the current operating
+system locale is used for determining which characters are alphanumeric
+and how they are sorted.  This affects the set of valid names for R
+objects (for example accented chars may be allowed in R) and ordering in
+sorts and comparisons (such as whether <code>"aA" &lt; "Bb"</code> is true or
+false).  From version 1.2.0 the locale can be (re-)set in R by the
+<code>Sys.setlocale()</code> function.
 
 </ul>
 
@@ -2457,6 +2464,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#How%20should%20I%20write%20summary%20methods%3f">How should I write summary methods?</a>: 
 <li><a href="#How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>: 
 <li><a href="#How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>: 
+<li><a href="#How%20can%20I%20change%20compilation%20flags%3f">How can I change compilation flags?</a>: 
 </ul>
 
 <p><hr>
@@ -2496,6 +2504,7 @@ This manual is included in the R distribution, see <a href="#What%20documentatio
 
 <p><hr>
 Node:<a name="How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,
+Next:<a rel=next href="#How%20can%20I%20change%20compilation%20flags%3f">How can I change compilation flags?</a>,
 Previous:<a rel=previous href="#How%20can%20I%20debug%20dynamically%20loaded%20code%3f">How can I debug dynamically loaded code?</a>,
 Up:<a rel=up href="#R%20Programming">R Programming</a>
 <br>
@@ -2507,6 +2516,25 @@ debugger.
 
 <p>See section "Inspecting R objects when debugging" in <cite>Writing R
 Extensions</cite>.
+
+<p><hr>
+Node:<a name="How%20can%20I%20change%20compilation%20flags%3f">How can I change compilation flags?</a>,
+Previous:<a rel=previous href="#How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">How can I inspect R objects when debugging?</a>,
+Up:<a rel=up href="#R%20Programming">R Programming</a>
+<br>
+
+<h2>8.4 How can I change compilation flags?</h2>
+
+<p>Suppose you have C code file for dynloading into R, but you want to use
+<code>R CMD SHLIB</code> with compilation flags other than the default ones
+(which were determined when R was built).  You could change the file
+<code><code>R_HOME</code>/etc/Makeconf</code> to reflect your preferences.  If you
+are a Bourne shell user, you can also pass the desired flags to Make
+(which is used for controlling compilation) via the Make variable
+<code>MAKEFLAGS</code>, as in
+
+<pre>MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
+</pre>
 
 <p><hr>
 Node:<a name="R%20Bugs">R Bugs</a>,
