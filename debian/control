@@ -72,7 +72,7 @@ Description: `GNU S' documentation in html format
 Package: r-base-dev
 Architecture: all
 Depends: r-base, blas-dev (>= 1.0-9), build-essential, g77 | g77-3.0 | f2c, gcc | gcc-3.0, g++ | g++-3.0
-Description: `GNU S'  - Allow installation of auxillary R packages
+Description: `GNU S' - Allow installation of auxiliary R packages
  R is described by its authors as "not unlike" S, which is a language
  developed at Bell Laboratories for statistical computing and graphics.
  It provides support for a variety of statistical and graphical analyses.
@@ -82,7 +82,7 @@ Description: `GNU S'  - Allow installation of auxillary R packages
  code can be linked and called at run time.
  .
  This packages ensures that other Debian packages needed for installation of
- some auxillary R packages are installed.
+ some auxiliary R packages are installed.
 
 Package: r-mathlib
 Architecture: any

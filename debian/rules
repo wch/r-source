@@ -3,7 +3,7 @@
 # Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
 # Copyright 2001      by Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.36 2001/12/11 20:56:11 bates Exp $
+# $Id: rules,v 1.36.2.1 2002/01/24 16:05:41 bates Exp $
 
 package		= r-base
 pdfpackage	= r-doc-pdf
