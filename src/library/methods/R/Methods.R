@@ -753,8 +753,7 @@ removeMethods <-
                 rm(list=f, pos = db)
                 if(!existsFunction(f, FALSE, db)) {
                     message(gettextf("restoring default function definition of \"%s\"",
-                                     f, domain = NA),
-                            domain = NA)
+                                     f), domain = NA)
                     assign(f, default, db)
                 }
                 ## else the generic is removed, nongeneric will be found elsewhere
