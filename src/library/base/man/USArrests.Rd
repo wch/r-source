@@ -25,6 +25,7 @@
   for assault, murder, and rape in each of the 50 US states in 1973.
   Also given is the percent of the population living in urban areas.
 }
+\seealso{The \code{\link{state}} data sets.}
 \references{
   McNeil, D. R. (1977) \emph{Interactive Data Analysis.}
   New York: Wiley.
