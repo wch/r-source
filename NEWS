@@ -14,11 +14,9 @@ NEW FEATURES
     o	The Macintosh port becomes a full member of the R family and its
 	sources are incorporated as from this release.	
 	See `src/macintosh/INSTALL' for how that port is built.
-	This is bound to be modified for future versions, and suggestions
-	and volunteers are very welcome.
 
     o	The API header files and export files `R.exp' are released under
-	LGPL rather than GPL to allow dynamical loaded code to be
+	LGPL rather than GPL to allow dynamically loaded code to be
 	distributed under licences other than GPL.
 
     o	Configure now uses a much expanded search list for finding a
@@ -72,6 +70,9 @@ BUG FIXES
 	Should be read as NA, and are now. 
 
     o	dnbinom(*, size, *) now works again for non-integer size (PR #842)
+
+    o   smooth.spline() allows zero weights again.
+
 
 
 		CHANGES IN R VERSION 1.2.1
