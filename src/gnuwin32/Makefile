@@ -97,7 +97,7 @@ Rcode: fixed/fixdesc
 	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
 	  $(ECHO) "  --" $$pkg; \
 	  $(MAKE) --no-print-directory -C $(PKGDIR)/$${pkg} PKG=$${pkg} \
-	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) Rcode; \
+	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) Rcode  || exit 1; \
 	  fi; \
 	done
 	@$(ECHO) "  ... done"
@@ -132,7 +132,7 @@ endif
 	fi
 	@$(ECHO)
 	@for pkg in $(R_PKGS0); do \
-	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-$${pkg}; \
+	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-$${pkg} || exit 1; \
 	done
 
 rpackageindices:
@@ -141,7 +141,7 @@ ifeq ($(strip $(HELP)),YES)
 	@$(ECHO) -n "writing help indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) -n " $${pkg}" ; \
-	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg}; \
+	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg} || exit 1; \
 	done
 	@$(ECHO)
 endif
