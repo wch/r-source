@@ -690,8 +690,11 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     /* now to splice t2 into the correct spot in actuals */
     if (t2 != R_MissingArg ) {	/* so we did something above */
-	if( CAR(actuals) == R_DotsSymbol )
-		actuals = listAppend(t2, CDR(actuals));
+	if( CAR(actuals) == R_DotsSymbol ) {
+	        UNPROTECT(1);
+	        actuals = listAppend(t2, CDR(actuals));
+	        PROTECT(actuals);
+	}
 	else {
 		for(t1=actuals; t1!=R_NilValue; t1=CDR(t1)) {
 			if( CADR(t1) == R_DotsSymbol ) {
@@ -728,3 +731,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(4);
     return rval;
 }
+
+
+
+
