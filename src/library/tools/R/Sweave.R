@@ -289,8 +289,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
         if(options$eval) err <- RweaveEvalWithOpt(ce, options)
         sink()
         close(tmpcon)
-        if(inherits(err, "try-error"))
-            stop("Error while evaluating chunk\n")
+        if(inherits(err, "try-error")) stop(err)
         
         if(object$debug)
             cat(paste(output, collapse="\n"))
@@ -334,18 +333,20 @@ RweaveLatexRuncode <- function(object, chunk, options)
             postscript(file=paste(chunkprefix, "eps", sep="."),
                        width=options$width, height=options$height,
                        paper="special", horizontal=FALSE)
-
-            SweaveHooks(options, run=TRUE)
-            eval(chunkexps, envir=.GlobalEnv)
+            
+            err <- try({SweaveHooks(options, run=TRUE);
+                        eval(chunkexps, envir=.GlobalEnv)})
             dev.off()
+            if(inherits(err, "try-error")) stop(err)
         }
         if(options$pdf){
             pdf(file=paste(chunkprefix, "pdf", sep="."),
                 width=options$width, height=options$height)
 
-            SweaveHooks(options, run=TRUE)
-            eval(chunkexps, envir=.GlobalEnv)
+            err <- try({SweaveHooks(options, run=TRUE);
+                        eval(chunkexps, envir=.GlobalEnv)})
             dev.off()
+            if(inherits(err, "try-error")) stop(err)
         }
         if(options$include)
             cat("\\includegraphics{", chunkprefix, "}\n", sep="",
