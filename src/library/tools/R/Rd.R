@@ -100,28 +100,28 @@ function(file)
     if(length(commentLineIndices) > 0)
         lines <- lines[-commentLineIndices]
     ## </NOTE>
-    
+
     aliasesRegExp <-
         "^[[:space:]]*\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
     aliases <- grep(aliasesRegExp, lines, value = TRUE)
     aliases <- gsub(aliasesRegExp, "\\1", aliases)
     aliases <- gsub("\\\\%", "%", aliases)
-    
+
     keywordsRegExp <-
         "^[[:space:]]*\\\\keyword{[[:space:]]*(.*)[[:space:]]*}.*"
     keywords <- grep(keywordsRegExp, lines, value = TRUE)
     keywords <- gsub(keywordsRegExp, "\\1", keywords)
     keywords <- gsub("\\\\%", "%", keywords)
-    
+
     ## <FIXME>
-    ## docType ... 
+    ## docType ...
     RdTypeRegExp <-
         "^[[:space:]]*\\\\docType{[[:space:]]*(.*)[[:space:]]*}.*"
     RdType <- grep(RdTypeRegExp, lines, value = TRUE)
     ## Could be none or more than one ... argh.
     RdType <- c(gsub(RdTypeRegExp, "\\1", RdType), "")[1]
     ## </FIXME>
-    
+
     txt <- paste(lines, collapse = "\n")
 
     start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
@@ -141,7 +141,7 @@ function(file)
                     substr(txt,
                            start + 7,
                            start + attr(start, "match.length") - 2))
-    
+
     list(name = RdName, type = RdType, title = RdTitle,
          aliases = aliases, keywords = keywords)
 }
@@ -162,7 +162,7 @@ function(RdFiles)
                           Title = I(character(0)),
                           Aliases = I(list()),
                           Keywords = I(list())))
-    
+
     contents <- vector("list", length(RdFiles) * 5)
     dim(contents) <- c(length(RdFiles), 5)
     for(i in seq(along = RdFiles)) {
@@ -196,7 +196,8 @@ function(RdFiles)
                Type = I(unlist(contents[ , "Type"])),
                Title = I(title),
                Aliases = I(contents[ , "Aliases"]),
-               Keywords = I(contents[ , "Keywords"]))
+               Keywords = I(contents[ , "Keywords"]),
+               row.names = NULL)  # avoid trying to compute row names
 }
 
 ### * .writeContentsRDS
@@ -205,7 +206,7 @@ function(RdFiles)
 function(contents, outFile)
 {
     ## Save Rd contents db to @file{outFile}.
-    
+
     ## <NOTE>
     ## To deal with possible changes in the format of the contents db
     ## in the future, use a version attribute and/or a formal class.
@@ -247,7 +248,7 @@ function(contents, packageName, outFile)
         contents <-
             contents[, c("Name", "Aliases", "Keywords", "Title"),
                      drop = FALSE]
-                  
+
     cat(paste(c("Entry:", "Aliases:", "Keywords:", "Description:",
                 "URL:"),
               t(cbind(contents, URLs))),
@@ -262,9 +263,9 @@ function(contents, type = NULL)
 {
     ## Build an Rd 'index' containing Rd names and titles, maybe
     ## subscripted according to the Rd type (\docType).
-    
+
     keywords <- contents[ , "Keywords"]
-    
+
     if(!is.null(type)) {
         idx <- contents[ , "Type"] %in% type
         ## Argh.  Ideally we only want to subscript according to
@@ -276,10 +277,10 @@ function(contents, type = NULL)
         contents <- contents[idx, , drop = FALSE]
         keywords <- keywords[idx]
     }
-    
+
     ## Drop all Rd objects marked as 'internal' from the index.
     idx <- is.na(sapply(keywords, function(x) match("internal", x)))
-    
+
     contents[idx, c("Name", "Title"), drop = FALSE]
 }
 
@@ -314,7 +315,7 @@ function(RdFiles, outFile = "", type = NULL,
                    "must be a character string or connection"))
 
     index <- .buildRdIndex(Rdcontents(RdFiles), type = type)
-            
+
     writeLines(formatDL(index, width = width, indent = indent),
                outFile)
 }

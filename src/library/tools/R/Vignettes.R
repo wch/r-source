@@ -250,7 +250,8 @@ function(vignetteDir)
                Title = I(vignetteTitles),
                Depends = I(contents[, "Depends"]),
                Keywords = I(contents[, "Keywords"]),
-               PDF = I(vignettePDFs))
+               PDF = I(vignettePDFs),
+               row.names = NULL) # avoid trying to compute row names
 }
 
 ### * .checkVignetteIndex
