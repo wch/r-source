@@ -30,6 +30,7 @@
 
 #include "internal.h"
 #include "ga.h"
+#include "../shext.h"		/* for selectfolder */
 
 #define BUFSIZE _MAX_PATH
 static char strbuf[BUFSIZE];
@@ -330,7 +331,6 @@ static void hit_button(control c)
 }
 
 #ifndef OLD
-extern void selectfolder(char *); /* from ../shext.c */
 
 static void browse_button(control c)
 {

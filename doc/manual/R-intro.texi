@@ -6842,7 +6842,11 @@ The startup procedure under Windows is very similar to that under UNIX,
 but references to the `home directory' need to be clarified, as this is
 not always defined on Windows.  If the environment variable @env{R_USER}
 is defined, that gives the home directory.  Next, if the environment
-variable @env{HOME} is defined, that gives the home directory. If not,
+variable @env{HOME} is defined, that gives the home directory.  After
+those two user-controllable settings, @R{} tries to find system
+defined home directories.  It first tries to use the Windows "personal"
+directory (typically @code{C:\Documents and Settings\username\My Documents}
+in Windows XP).  If that fails,
 and environment variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined
 (and they normally are under Windows NT/2000/XP) these define the home
 directory.  Failing all those, the home directory is taken to be the

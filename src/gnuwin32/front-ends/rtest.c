@@ -86,7 +86,7 @@ int main (int argc, char **argv)
 {
     structRstart rp;
     Rstart Rp = &rp;
-    char Rversion[25], RUser[MAX_PATH], RHome[MAX_PATH], *p;
+    char Rversion[25], RUser[MAX_PATH], RHome[MAX_PATH], *p, *q;
 
     sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) {
@@ -103,17 +103,25 @@ int main (int argc, char **argv)
     }
     Rp->rhome = RHome;
 /*
- * try R_USER then HOME then working directory
+ * try R_USER then HOME then Windows homes then working directory
  */
-    if (getenv("R_USER")) {
-	strcpy(RUser, getenv("R_USER"));
-    } else if (getenv("HOME")) {
-	strcpy(RUser, getenv("HOME"));
-    } else if (getenv("HOMEDIR")) {
-	strcpy(RUser, getenv("HOMEDIR"));
-	strcat(RUser, getenv("HOMEPATH"));
-    } else
+    if ((p = getenv("R_USER"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
+	strcpy(RUser, p);
+    } else if ((p = getenv("HOME"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
+	strcpy(RUser, p);
+    } else if (ShellGetPersonalDirectory(RUser)) {
+	/* nothing to do */;
+    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
+	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
+	strcpy(RUser, p);
+	if(strlen(RUser) + strlen(q) >= MAX_PATH)
+	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
+	strcat(RUser, q);
+    } else {
 	GetCurrentDirectory(MAX_PATH, RUser);
+    }
     p = RUser + (strlen(RUser) - 1);
     if (*p == '/' || *p == '\\') *p = '\0';
     Rp->home = RUser;

@@ -39,6 +39,7 @@
 #include "run.h"
 #include "Startup.h"
 #include <stdlib.h>		/* for exit */
+#include "shext.h"		/* for ShellGetPersonalDirectory */
 void CleanTempDir();		/* from extra.c */
 void editorcleanall();                  /* from editor.c */
 
@@ -706,7 +707,7 @@ int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
     R_size_t value;
-    char *p;
+    char *p, *q;
     char  s[1024];
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -882,23 +883,26 @@ int cmdlineoptions(int ac, char **av)
 
     R_tcldo = tcl_do_none;
 /*
- * try R_USER then HOME then working directory
+ * try R_USER then HOME then Windows homes then working directory
  */
+
     if ((p = getenv("R_USER"))) {
 	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
 	strcpy(RUser, p);
     } else if ((p = getenv("HOME"))) {
 	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
 	strcpy(RUser, p);
-    } else if ((p = getenv("HOMEDRIVE"))) {
+    } else if (ShellGetPersonalDirectory(RUser)) {
+	/* nothing to do */;
+    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
 	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
 	strcpy(RUser, p);
-	p = getenv("HOMEPATH");
-	if(!p || strlen(RUser) + strlen(p) >= MAX_PATH) 
+	if(strlen(RUser) + strlen(q) >= MAX_PATH)
 	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
-	strcat(RUser, p);
-    } else
+	strcat(RUser, q);
+    } else {
 	GetCurrentDirectory(MAX_PATH, RUser);
+    }
     p = RUser + (strlen(RUser) - 1);
     if (*p == '/' || *p == '\\') *p = '\0';
     Rp->home = RUser;
