@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -130,7 +130,7 @@ struct colorDataBaseEntry {
 	unsigned code;  /* Internal R Color Code */
 };
 
-typedef struct colorDataBaseEntry ColorDataBaseEntry; 
+typedef struct colorDataBaseEntry ColorDataBaseEntry;
 
 extern int ColorTableSize;
 extern unsigned int ColorTable[];
@@ -319,7 +319,7 @@ typedef struct {
 	double	usr[4];		/* Graphics window */
 				/* [0] = xmin, [1] = xmax */
 				/* [2] = ymin, [3] = ymax */
-		
+
 		/* The logged usr parameter;  if xlog, use logusr[0:1] */
 		/*                            if ylog, use logusr[2:3] */
 
@@ -357,7 +357,7 @@ typedef struct {
 	GTrans 	inner2dev;	/* Inner region to device */
 
 		/* udpated per device resize */
-		
+
 	GTrans	ndc2dev;	/* NDC to raw device */
 
 		/* updated per plot.new and per plot.window */
@@ -409,13 +409,18 @@ void vmaxset(char*);
 DevDesc* CurrentDevice();
 void DevNull(void);
 DevDesc* GetDevice(int);
-void InitGraphics(void);	
+void InitGraphics(void);
 void KillDevice(DevDesc*);
 void KillAllDevices();
 int NoDevices();
 int NumDevices();
-int deviceNumber(DevDesc*); 
+int deviceNumber(DevDesc*);
 int StartDevice(SEXP, SEXP, int, SEXP, int);
+/*- these added by MM, eliminating -Wall "implicit declaration"s: */
+void recordGraphicOperation(SEXP, SEXP, DevDesc*);
+void copyDisplayList(int);
+void playDisplayList(DevDesc*);
+void inhibitDisplayList(DevDesc*);
 
 		/* Utility Device functions */
 
@@ -456,6 +461,9 @@ double GStrHeight(char*, int, DevDesc*);
 double GStrWidth(char*, int, DevDesc*);
 void GText(double, double, int, char*, double, double, double, DevDesc*);
 
+void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
+void GMMathText(SEXP, int, double, int, double, int, DevDesc*);
+
 		/* Graphical Utilities */
 
 void GArrow(double, double, double, double, int, double, double, int, DevDesc*);
@@ -480,8 +488,14 @@ double GConvertXUnits(double, int, int, DevDesc*);
 double GConvertYUnits(double, int, int, DevDesc*);
 void GScale(double, double, int, DevDesc*);
 void GSetupAxis(int, DevDesc*);
+int GMapUnits(int);
 
 double xNPCtoUsr(double, DevDesc*);
 double yNPCtoUsr(double, DevDesc*);
+
+		/* Miscellaneous (from graphics.c) */
+
+unsigned int rgb2col(char *);
+unsigned int name2col(char *);
 
 #endif
