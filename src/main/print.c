@@ -274,7 +274,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	}
 	Rprintf("\n");
 	}
-	else Rprintf("NULL\n");
+	else Rprintf("list()\n");
 	UNPROTECT(1);
     }
 }
