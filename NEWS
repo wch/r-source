@@ -167,6 +167,11 @@ NEW FEATURES
      o	glm() now accepts `etastart' and `mustart' as alternative ways
 	to express starting values.
 
+     o	print.matrix() and prmatrix() are now separate functions.
+	prmatrix() is the old S-compatible function, and
+	print.matrix() is a proper print method, currently identical
+	to print.default().
+
 
 INSTALLATION CHANGES
 
@@ -287,6 +292,11 @@ BUG FIXES
     o	The gaussian() and inverse.gaussian() families were documented
 	to allow only one link, which has not been true in R for at
 	least four years.
+
+    o	prmatrix() forced conversion to character if `na.print' was
+	used, and that conversion neither respected `digits' nor
+	`quote'.
+ 
 
 
 

@@ -19,7 +19,7 @@
  *
  *
  *  print.default()  ->	 do_printdefault & its sub-functions.
- *			 do_printmatrix, do_sink, do_invisible
+ *			 do_sink, do_invisible
  *
  *  do_printdefault
  *	-> PrintDefaults
@@ -35,7 +35,7 @@
  *		-> printMatrix		>>>>> ./printarray.c
  *		-> printArray		>>>>> ./printarray.c
  *
- *  do_printmatrix
+ *  do_prmatrix
  *	-> PrintDefaults
  *	-> printMatrix			>>>>> ./printarray.c
  *
@@ -100,14 +100,12 @@ SEXP do_visibleflag(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #endif
 
-SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int quote;
-    SEXP a, x, rowlab, collab;
+    SEXP a, x, rowlab, collab, naprint;
     char *rowname = NULL, *colname = NULL;
-#ifdef OLD
-    SEXP oldnames;
-#endif
+
     checkArity(op,args);
     PrintDefaults(rho);
     a = args;
@@ -116,51 +114,33 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     collab = CAR(a); a = CDR(a);
 
     quote = asInteger(CAR(a)); a = CDR(a);
-    R_print.right = asInteger(CAR(a));
-
-#ifdef OLD
-    PROTECT(oldnames = getAttrib(x, R_DimNamesSymbol));
-    /* fix up the dimnames */
-    if (length(rowlab) || length(collab) ||
-	rowlab == R_NilValue || collab == R_NilValue) {
-	a = oldnames;
-	if(a == R_NilValue)
-	    a = allocList(2);
-	if(length(rowlab) || rowlab==R_NilValue)
-	    CAR(a) = rowlab;
-	if(length(collab) || collab==R_NilValue)
-	    CADR(a) = collab;
-	PROTECT(a);
-	setAttrib(x, R_DimNamesSymbol, a);
-	UNPROTECT(1);
+    R_print.right = asInteger(CAR(a)); a = CDR(a);
+    naprint = CAR(a);
+    if(!isNull(naprint))  {
+	if(!isString(naprint) || LENGTH(naprint) < 1)
+	    errorcall(call, "invalid na.print specification");
+	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
+	R_print.na_width = R_print.na_width_noquote = 
+	    strlen(CHAR(R_print.na_string));
     }
-#else
+
     if (length(rowlab) == 0) rowlab = R_NilValue;
     if (length(collab) == 0) collab = R_NilValue;
-#endif
     if (!isNull(rowlab) && !isString(rowlab))
 	errorcall(call, "invalid row labels");
     if (!isNull(collab) && !isString(collab))
 	errorcall(call, "invalid column labels");
 
-    printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, R_print.right, rowlab, collab, rowname, colname);
-#ifdef OLD
-    setAttrib(x, R_DimNamesSymbol, oldnames);
-    UNPROTECT(1);
-#endif
+    printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, R_print.right, 
+		rowlab, collab, rowname, colname);
+    PrintDefaults(rho); /* reset, as na.print.etc may have been set */
     return x;
-}/* do_printmatrix */
+}/* do_prmatrix */
 
 
 /* .Internal(print.default(x, digits, quote, na.print, print.gap)) */
-SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho){
-
-/* FIXME:
- * Should now also dispatch to e.g., print.matrix(..)
- * The 'digits' must be "stored" here, since print.matrix
- * (aka prmatrix) does NOT accept a digits argument ...
- */
-
+SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
     SEXP x, naprint;
     checkArity(op, args);
     PrintDefaults(rho);

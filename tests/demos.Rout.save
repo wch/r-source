@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-01-19)
+Version 1.7.0 Under development (unstable) (2003-01-24)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -177,6 +177,8 @@ BrandM                                          1
 M.userY:BrandM                                  , 1                  
 TempHigh:BrandM                                 . .     1            
 M.userY:TempHigh:BrandM                         . .     ,    1       
+attr(,"legend")
+[1] 0 ` ' 0.3 `.' 0.6 `,' 0.8 `+' 0.9 `*' 0.95 `B' 1
 
 > anova(detg.m0, detg.mod)
 Analysis of Deviance Table
@@ -1850,5 +1852,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  6.94 0.14 7.11 0 0 
+Time elapsed:  6.96 0.19 7.14 0 0 
 > 

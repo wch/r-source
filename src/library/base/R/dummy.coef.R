@@ -171,7 +171,7 @@ print.dummy.coef <- function(x, ..., title)
     rownames(ans) <- rn
     colnames(ans) <- rep("", nm)
     cat(if(missing(title)) "Full coefficients are" else title, "\n")
-    print.matrix(ans[1:line, , drop=FALSE], quote=FALSE, right=TRUE)
+    print(ans[1:line, , drop=FALSE], quote=FALSE, right=TRUE)
     invisible(x)
 }
 

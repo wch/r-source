@@ -7,6 +7,7 @@ print.atomic(x, quote = TRUE, \dots)
 }
 \alias{print.default}
 \alias{print.atomic}
+\alias{print.matrix}
 \arguments{
   \item{x}{the object to be printed.}
   \item{digits}{a non-null value for \code{digits} specifies the minimum

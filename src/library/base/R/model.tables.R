@@ -367,7 +367,7 @@ print.tables.aov <- function(x, digits = 4, ...)
 	    cn <- names(se.aov)
 	    se.aov <- rbind(format(se.aov, digits = digits), format(n.aov))
 	    dimnames(se.aov) <- list(c(" ", rn), cn)
-	    print.matrix(se.aov, quote=FALSE, right=TRUE, ...)
+	    print(se.aov, quote=FALSE, right=TRUE, ...)
 	} else for(i in names(se.aov)) {
 	    se <- se.aov[[i]]
 	    if(length(se) == 1) { ## single se

@@ -170,13 +170,12 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
                 if(is.null(rn)) rn <- paste("resp", 1:length(ss))
             } else rn <- "Sum of Squares"
             dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), "Residuals")
-            print.matrix(tmp, quote = FALSE, right = TRUE)
+            print(tmp, quote = FALSE, right = TRUE)
             cat("\n")
             cat("Residual standard error:", sapply(sqrt(ss/rdf), format), "\n")
         } else
-        print.matrix(matrix(0, 2, 1, dimnames=
-                            list(c("Sum of Squares", "Deg. of Freedom"),
-                                 "<empty>")))
+        print(matrix(0, 2, 1, dimnames=
+                     list(c("Sum of Squares", "Deg. of Freedom"), "<empty>")))
     } else {
         if(rdf > 0) {
             nterms <- nterms + 1
@@ -191,7 +190,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
             if(is.null(rn)) rn <- paste("resp", seq(ncol(effects)))
         } else rn <- "Sum of Squares"
         dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), nmeffect)
-        print.matrix(tmp, quote = FALSE, right = TRUE)
+        print(tmp, quote = FALSE, right = TRUE)
         rank <- x$rank
         int <- attr(x$terms, "intercept")
         nobs <- NROW(x$residuals) - !(is.null(int) || int == 0)

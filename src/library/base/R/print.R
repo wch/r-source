@@ -8,18 +8,17 @@ print.default <-
 
 print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
 
-print.matrix <- function (x, rowlab = dn[[1]], collab = dn[[2]],
-			  quote = TRUE, right = FALSE,
-			  na.print=NULL, print.gap=NULL, ...) {
+print.matrix <- print.default
+
+prmatrix <-
+    function (x, rowlab = dn[[1]], collab = dn[[2]],
+              quote = TRUE, right = FALSE,
+              na.print = NULL, ...)
+{
     x <- as.matrix(x)
     dn <- dimnames(x)
-    if(!is.null(print.gap)) .NotYetUsed("print.gap", error = FALSE)
-    ## and `na.print' could be done in .Internal(.) as well:
-    if(!is.null(na.print) && any(ina <- is.na(x)))
-	x[ina] <- na.print
-    .Internal(print.matrix(x, rowlab, collab, quote, right))
+    .Internal(prmatrix(x, rowlab, collab, quote, right, na.print))
 }
-prmatrix <- print.matrix
 
 ## print.tabular is now deprecated !
 
@@ -177,22 +176,4 @@ print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
     invisible(x)
 }
 
-print.data.frame <- function (x, ..., digits = NULL,
-                              quote = FALSE, right = TRUE)
-{
-    if (length(x) == 0) {
-        cat("NULL data frame with", length(row.names(x)), "rows\n")
-    }
-    else if (length(row.names(x)) == 0) {
-        print.default(names(x), quote = FALSE)
-        cat("<0 rows> (or 0-length row.names)\n")
-    }
-    else {
-         if (!is.null(digits)) {
-             op <- options(digits = digits)
-             on.exit(options(op))
-         }
-         print.matrix(format(x), ..., quote = quote, right = right)
-     }
-    invisible(x)
-}
+## print.data.frame here was a duplicate of that in dataframe.R

@@ -879,14 +879,9 @@ print.data.frame <-
 	print.default(names(x), quote = FALSE)
 	cat("<0 rows> (or 0-length row.names)\n")
     } else {
-	if(!is.null(digits)) {
-	    ## if 'x' has factors & numeric, as.matrix(x) will apply format(.)
-	    ## to the numbers -- set options(.) for the following print(.):
-	    op <- options(digits = digits)
-	    on.exit(options(op))
-	}
 	## avoiding picking up e.g. format.AsIs
-	print.matrix(format.data.frame(x), ..., quote = quote, right = right)
+	print(as.matrix(format.data.frame(x, digits=digits)), ...,
+              quote = quote, right = right)
     }
     invisible(x)
 }
