@@ -1,7 +1,7 @@
 \name{eapply}
 \title{Apply a Function over values in an environment}
 \usage{
-eapply(X, FUN, \dots)
+eapply(env, FUN, \dots, all.names=FALSE)
 }
 \alias{eapply}
 \arguments{
