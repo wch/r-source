@@ -86,7 +86,7 @@ print.Date <- function(x, ...)
 
 summary.Date <- function(object, ...)
 {
-    x <- summary.default(unclass(object), ...)[1:5]
+    x <- summary.default(unclass(object), ...)[1:6]# not NA's
     class(x) <- oldClass(object)
     x
 }
