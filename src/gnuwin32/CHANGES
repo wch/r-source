@@ -12,6 +12,10 @@ PATH and R_HOME not set.
 
 Using Rcmd INSTALL with a path ending in \ no longer runs amok.
 
+Internal pager no longer fails when given a file of one line and no
+line ending.
+
+
 
 rw1020
 ======
