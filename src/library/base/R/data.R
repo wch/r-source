@@ -116,16 +116,18 @@ function(..., list = character(0),
             if(tools::file_test("-f", file.path(p, "Rdata.rds"))) {
                 rds <- .readRDS(file.path(p, "Rdata.rds"))
                 if(name %in% names(rds)) {
-                    ## found it, so copy objects and be done
+                    ## found it, so copy objects from database and be done
                     found <- TRUE
                     thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
                     thispkg <- sub("_.*$", "", thispkg) # versioned installs.
                     thispkg <- paste("package:", thispkg, sep="")
                     objs <- rds[[name]]
-                    for(obj in objs)
-                        assign(obj,
-                               get(obj, thispkg, inherits = FALSE),
-                               envir = envir)
+#                     for(obj in objs)
+#                         assign(obj,
+#                                get(obj, thispkg, inherits = FALSE),
+#                                envir = envir)
+                    lazyLoad(file.path(p, "Rdata"), envir = envir,
+                             filter = function(x) x %in% objs)
                     break
                 }
             }
