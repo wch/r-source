@@ -57,6 +57,7 @@ prcomp(x, \dots)
     are omitted.  Other settings for tol could be \code{tol = 0} or
     \code{tol = sqrt(.Machine$double.eps)}, which would omit
     essentially constant components.} 
+  \item{object}{Object of class inheriting from \code{"prcomp"}}
   \item{newdata}{An optional data frame or matrix in which to look for
     variables with which to predict.  If omitted, the scores are used.
     If the original fit used a formula or a data frame or a matrix with
