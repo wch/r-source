@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-24, 2003-01-08
+Version 1.6-25, 2003-01-13
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1316,6 +1316,10 @@ distributions of R.)
      Data sets and sample linear mixed effects analyses corresponding to the
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+
+*SenSrivastava*
+     Collection of datasets from "Regression Analysis, Theory, Methods and
+     Applications" by A. Sen and M. Srivastava, 1990, Springer-Verlag.
 
 *SparseM*
      Basic linear algebra for sparse matrices.
