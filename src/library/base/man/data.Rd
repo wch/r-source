@@ -1,7 +1,7 @@
 \name{data}
 \title{Data Sets}
 \usage{
-data(..., list = character(0), package = c(.packages(),.Autoloaded),
+data(\dots, list = character(0), package = c(.packages(),.Autoloaded),
      lib.loc = .lib.loc)
 }
 \alias{data}
@@ -15,11 +15,19 @@ data(..., list = character(0), package = c(.packages(),.Autoloaded),
   Defaults to all libraries currently known.}}
 \description{
 \code{data} loads or lists available data sets.
-
 The data sets to be loaded can be specified as a sequence of \code{name}s
 or character strings, or as the character vector \code{list}, or as both.
 
 If no data sets are specified, the available data sets are displayed.
+
+Currently, two formats of data files are supported:
+\enumerate{
+  \item{files ending \code{".R} are simply \code{\link{source}()d} in.}
+  \item{\code{".tab"} files are read using
+    \code{\link{read.table}(\dots, header = TRUE)}, and hence result in
+    a \code{\link{data.frame}}.}
+
+}
 }
 \value{
 A character vector of all data sets specified for loading.
