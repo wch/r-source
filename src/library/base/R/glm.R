@@ -456,11 +456,10 @@ anova.glmlist <- function(objects, dispersion=NULL, test=NULL, ...)
     table <- data.frame(resdf, resdev, c(NA, -diff(resdf)),
                         c(NA, -diff(resdev)) )
     variables <- lapply(objects, function(x)
-                        paste(deparse(formula(x)[[3]]), collapse="\n") )
+                        paste(deparse(formula(x)), collapse="\n") )
     dimnames(table) <- list(1:nmodels, c("Resid. Df", "Resid. Dev", "Df",
 					 "Deviance"))
-    title <- paste("Analysis of Deviance Table \n\nResponse: ", responses[1],
-		   "\n", sep="")
+    title <- "Analysis of Deviance Table\n"
     topnote <- paste("Model ", format(1:nmodels),": ",
 		     variables, sep="", collapse="\n")
 

@@ -462,12 +462,11 @@ anova.lmlist <- function (object, ..., scale = 0, test = "F")
     table <- data.frame(resdf, resdev, c(NA, -diff(resdf)),
                         c(NA, -diff(resdev)) )
     variables <- lapply(objects, function(x)
-                        paste(deparse(formula(x)[[3]]), collapse="\n") )
+                        paste(deparse(formula(x)), collapse="\n") )
     dimnames(table) <- list(1:nmodels,
                             c("Res.Df", "RSS", "Df", "Sum of Sq"))
 
-    title <- paste("Analysis of Variance Table \n\nResponse: ", responses[1],
-		   "\n", sep="")
+    title <- "Analysis of Variance Table\n"
     topnote <- paste("Model ", format(1:nmodels),": ",
 		     variables, sep="", collapse="\n")
 
