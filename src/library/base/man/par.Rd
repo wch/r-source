@@ -177,7 +177,7 @@ par(\dots, no.readonly = FALSE)
       \code{"longdash"}, or \code{"twodash"}, where \code{"blank"} uses
       \sQuote{invisible lines} (i.e., doesn't draw them).
 
-      Alternatively, a string of up to 8 characters (from \code{c(0:9,
+      Alternatively, a string of up to 8 characters (from \code{c(1:9,
 	"A":"F")}) may be given, giving the length of line segments
       which are alternatively drawn and skipped.  See section
       \sQuote{Line Type Specification} below.}
