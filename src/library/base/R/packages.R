@@ -235,4 +235,46 @@ package.dependencies <- function(x, check=FALSE)
     }
 }
 
+remove.packages <- function(pkgs, lib) {
+
+    updateIndices <- function(lib) {
+        ## This should eventually be made public, as it could also be
+        ## used by install.packages() && friends.
+
+        ## This is an R version of the shell command
+        ##   cat */TITLE > LibIndex 2> /dev/null
+        ## but a bit safer in case a package has no `TITLE'.
+        con <- file(file.path(lib, "LibIndex"), "w")
+        on.exit(close(con))
+        for(p in .packages(all.available = TRUE, lib)) {
+            TITLE <- file.path(lib, p, "TITLE")
+            if(file.exists(TITLE))
+                writeLines(readLines(TITLE), con)
+            else
+                writeLines(p, con)
+        }
+
+        if(lib == .Library) {
+            ## R version of
+            ##   ${R_HOME}/bin/build-help --htmllists
+            ##   cat ${R_HOME}/library/*/CONTENTS \
+            ##     > ${R_HOME}/doc/html/search/index.txt
+            if(get("link.html.help", mode = "function"))
+                link.html.help()
+        }
+    }
+
+    ## <FIXME>
+    ## Use the same default for `lib' as in install.packages()?
+    if(missing(lib) || is.null(lib)) {
+        lib <- .lib.loc[1]
+        warning(paste("argument `lib' is missing: using", lib))
+    }
+    ## </FIXME>
+
+    paths <- .find.package(pkgs, lib)
+    unlink(paths, TRUE)
+    for(lib in unique(dirname(paths)))
+        updateIndices(lib)
+}
 
