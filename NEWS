@@ -209,7 +209,16 @@ NEW FEATURES
  
     o	legend() and symbols() now make use of xy.coords() and accept 
 	a wider range of coordinate specifications.
- 
+
+    o	Changes in package 'tools':
+
+	- Utilities for testing and listing files, manipulating file
+          paths, and delimited pattern matching are now exported.
+
+	- checkDocArgs() now also determines 'over-documented' arguments
+          which are given in the \arguments section but not in \usage.
+
+
 
 DEPRECATED & DEFUNCT
 
