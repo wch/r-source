@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-16, 2002-11-22
+Version 1.6-17, 2002-12-01
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1346,6 +1346,9 @@ distributions of R.)
 
 *akima*
      Linear or cubic spline interpolation for irregularly gridded data.
+
+*amap*
+     Another Multidimensional Analysis Package.
 
 *ape*
      Analyses of Phylogenetics and Evolution, providing functions for

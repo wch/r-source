@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-16, 2002-11-22
+@set FAQ-VERSION 1.6-17, 2002-12-01
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1602,6 +1602,8 @@ Adaptive quadrature in up to 20 dimensions.
 Analysis of growth curve experiments.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
+@item amap
+Another Multidimensional Analysis Package.
 @item ape
 Analyses of Phylogenetics and Evolution, providing functions for reading
 and plotting phylogenetic trees in parenthetic format (standard Newick
