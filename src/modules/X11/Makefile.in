@@ -51,7 +51,7 @@ R: Makefile
 	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
 
 $(R_X11_la): $(R_X11_la_OBJECTS) $(R_X11_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(R_X11_la_LDFLAGS) $(R_X11_la_OBJECTS) $(R_X11_la_LIBADD) $(LIBS)
+	$(SHLIB_LINK) -o $@ $(R_X11_la_LDFLAGS) $(R_X11_la_OBJECTS) $(R_X11_la_LIBADD)
 ## <FIXME>
 ## Not sure of we want to do this ...
 	@$(MAKE) rhome="$(abs_top_builddir)" install

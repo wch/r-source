@@ -71,7 +71,7 @@ R: Makefile
 	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
 
 $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS) $(LIBS)
+	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS)
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome="$(abs_top_builddir)" install
