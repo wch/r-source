@@ -105,14 +105,16 @@ print.POSIXlt <- function(x, ...)
     invisible(x)
 }
 
-summary.POSIXct <- function(object, digits, ...)
+summary.POSIXct <- function(object, digits=15, ...)
 {
-    x <- summary.default(unclass(object), digits=15, ...)
+    x <- summary.default(unclass(object), digits=digits, ...)
     class(x) <- class(object)
     x
 }
 
-summary.POSIXlt <- function(object, ...) summary(as.POSIXct(x), ...)
+summary.POSIXlt <- function(object, digits = 15, ...)
+    summary(as.POSIXct(object), digits = digits, ...)
+
 
 "+.POSIXct" <- function(e1, e2)
 {

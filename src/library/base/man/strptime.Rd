@@ -14,13 +14,13 @@
   dates and times.
 }
 \usage{
-format.POSIXct(x, format = "", tz = "", ...)
-format.POSIXlt(x, format = "", ...)
+format.POSIXct(x, format = "", tz = "", usetz = FALSE, ...)
+format.POSIXlt(x, format = "", usetz = FALSE, ...)
 
 as.character.POSIXct(x, ...)
 as.character.POSIXlt(x, ...)
 
-strftime(x, format="\%Y-\%m-\%d \%X", ...)
+strftime(x, format="\%Y-\%m-\%d \%X", usetz = FALSE, ...)
 strptime(x, format)
 
 ISOdatetime(year, month, day, hour, min, sec, tz = "")
@@ -37,6 +37,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   }
   \item{\dots}{Further arguments to be passed from or to other methods.}
   \item{tz}{A timezone: see \code{\link{as.POSIXct}}.}
+  \item{usetz}{logical.  Should the timezone be appended to the output?}
   \item{year, month, day}{numerical values to specify a day.}
   \item{hour, min, sec}{numerical values for a time within a day.}
 }
