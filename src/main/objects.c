@@ -262,7 +262,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP sysp, m, formals, actuals, tmp, newcall;
 	RCNTXT *cptr;
 	int nargs,i,j;
-
+	SEXP group,realgroup;
 
 	cptr=R_GlobalContext;
 	
@@ -353,6 +353,17 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	if( strlen(CHAR(STRING(generic)[0])) == 0 ) 
 		errorcall(call,"generic function not specified\n");
 
+	group=dynamicfindVar(install(".Group"),R_GlobalContext);
+	PROTECT(realgroup=duplicate(group));
+	if (group == R_UnboundValue){
+	  group=generic;
+	  realgroup=mkString("");
+	}
+	if (!isString(group) || length(group) > 1 )
+	  errorcall(call,"invalid group argument found in NextMethod\n");
+	if (strlen(CHAR(STRING(group)[0])) == 0 )
+	  group=generic;
+
 	/* we need the value of i on exit from the for loop to figure out 
 	   how many classes to drop
 	*/
@@ -361,6 +372,10 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* jump over the current call */
 	t=CAR(cptr->call);
 	for(j = 0; j<length(class); j++) {
+		sprintf(buf,"%s.%s",CHAR(STRING(group)[0]),
+				CHAR(STRING(class)[j]));
+		if(install(buf) == t)
+			break;
 		sprintf(buf,"%s.%s",CHAR(STRING(generic)[0]),
 				CHAR(STRING(class)[j]));
 		if(install(buf) == t)
@@ -369,6 +384,11 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	for(i = j+1; i<length(class); i++) {
 		sprintf(buf,"%s.%s",CHAR(STRING(generic)[0]),
+				CHAR(STRING(class)[i]));
+		nextfun=findVar(install(buf),env);
+		if(isFunction(nextfun))
+			break;
+		sprintf(buf,"%s.%s",CHAR(STRING(group)[0]),
 				CHAR(STRING(class)[i]));
 		nextfun=findVar(install(buf),env);
 		if(isFunction(nextfun))
@@ -401,10 +421,13 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	method=install(buf);
 
 	defineVar(install(".Generic"), generic, m);
+	
+	defineVar(install(".Group"),realgroup,m);
 
 	CAR(newcall) = method;
 	ans = applyMethod(newcall, nextfun, matchedarg, env, m);
 	UNPROTECT(7);
+	UNPROTECT(1);
 	return(ans);
 }
 

@@ -5,7 +5,7 @@
 # The option `-x' makes the program greedily interpret all single-quoted
 # names intended as code names.
 
-# Copyright (C) 1997 Kurt Hornik
+# Copyright (C) 1997, 1998 Kurt Hornik
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 # Bug reports to Kurt.Hornik@ci.tuwien.ac.at
 
-$VERSION = "0.2-a3";
+$VERSION = "0.2-a4";
 ($NAME = $0) =~ s|.*/||;
 
 $\ = "\n";
@@ -65,7 +65,10 @@ while (<>) {
     &section(0, "\\examples\{");
     $inVerbatim = 1;	
   }
-  if (/^\.FN/) { $fun = $word[1]; }
+  if (/^\.FN/) {
+    unless($fun) { $fun = $word[1]; }
+    push(@aliases, $word[1]);
+  }
   if (/^\.(IP|PP)/) { &output("\n"); }
   if (/^\.KW/) { 
     if ($braceLevel > 0) {
@@ -101,7 +104,9 @@ while (<>) {
   }
   if (/^\.sp/) { output("\n"); }
   if (/^\.TL/) {
-    &section(0, "\\name\{$fun\}\n\\title\{");
+    print("\\name\{$fun\}");
+    print("\\alias\{", join("\}\n\\alias\{", @aliases), "\}");
+    &section(0, "\\title\{");
     $inVerbatim = 1;
   }
   if (/^\.WR/) {

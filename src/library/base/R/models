@@ -162,6 +162,7 @@ function(formula, data = NULL, subset=NULL, na.action = na.fail, ...)
 		data <- sys.frame(sys.parent())
 	if(!inherits(formula, "terms"))
 		formula <- terms(formula, data = data)
+	subset<-eval(substitute(subset),data)
 	.Internal(model.frame(formula, data, substitute(list(...)),
 		subset, na.action))
 }
@@ -198,6 +199,9 @@ model.matrix.default <- function(formula, data, contrasts = NULL)
 		else contrasts(data[[ni]]) <- contrastsL[[nn]]
 	}
  }
+  reorder<-match(as.character(attr(t,"variables"))[-1],names(data))
+  if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
+  data<-data[,reorder,drop=F]
  .Internal(model.matrix(t, data))
 }
 

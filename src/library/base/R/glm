@@ -1,8 +1,7 @@
 # This function fits a generalized linear model via
 # iteratively reweighted least squares for any family.
 # Written by Simon Davies, Dec 1995
-
-# glm.fit modified by Thomas Lumley, Apr 1997
+# glm.fit modified by Thomas Lumley, Apr 1997, and then others..
 
 glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	subset=NULL, na.action=na.fail, start=NULL, offset=NULL,
@@ -12,13 +11,11 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	call <- match.call()
 
 	## family
-
 	if(is.character(family)) family <- get(family)
 	if(is.function(family)) family <- family()
-	if(is.null(family$family)) stop("family not recognised")
+	if(is.null(family$family)) stop("'family' not recognised")
 
 	## extract x, y, etc from the model formula and frame
-
 	mt <- terms(formula, data=data)
 	if(missing(data)) data <- sys.frame(sys.parent())
 	mf <- match.call()
@@ -49,10 +46,10 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	if(model) fit$model <- mf
 	if(!y) fit$y <- NULL
 	structure(c(fit,
-                    list(call=call, formula=formula,
-                         terms=mt, data=data, x= if(x) X,# x=x,
-                         offset=offset, control=control, method=method)),
-                  class= c(if(is.empty.model(mt)) "glm.null", "glm", "lm"))
+		    list(call=call, formula=formula,
+			 terms=mt, data=data, x= if(x) X,# x=x,
+			 offset=offset, control=control, method=method)),
+		  class= c(if(is.empty.model(mt)) "glm.null", "glm", "lm"))
 }
 
 
@@ -121,13 +118,14 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 	devold <- sum(dev.resids(y, mu, weights))
 	coefold <- start
 	boundary<-FALSE
-	## do iteration
+
+	##------------- THE Iteratively Reweighting L.S. iteration -----------
 	for (iter in 1:control$maxit) {
 		mu.eta.val <- mu.eta(eta + offset)
 		if (any(ina <- is.na(mu.eta.val)))
-		  mu.eta.val[ina]<- mu.eta(mu)[ina]
+			mu.eta.val[ina]<- mu.eta(mu)[ina]
 		if (any(is.na(mu.eta.val)))
-		  stop("NAs in d(mu)/d(eta)")
+			stop("NAs in d(mu)/d(eta)")
 		# calculate z and w using only values where mu.eta != 0
 		good <- mu.eta.val != 0
 		if (all(!good)) {
@@ -147,7 +145,7 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 			p = nvars,
 			y = w * z,
 			ny = ncols,
-			tol = 1e-07,
+			tol = min(1e-7, control$epsilon/1000),
 			coefficients = mat.or.vec(nvars, 1),
 			residuals = mat.or.vec(ngoodobs, 1),
 			effects = mat.or.vec(ngoodobs, 1),
@@ -160,12 +158,6 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 		if (nobs < fit$rank)
 			stop(paste("X matrix has rank", fit$rank,
 				   "but only", nobs, "observations"))
-		# if X matrix was not full rank then columns
-		# were pivoted, hence we need to re-label the names
-		if (fit$rank != nvars) {
-			xnames <- xnames[fit$pivot]
-			dimnames(fit$qr) <- list(NULL, xnames)
-		}
 		# calculate updated values of eta and mu with the new coef
 		start <- coef <- fit$coefficients
 		start[fit$pivot] <- coef
@@ -192,8 +184,9 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 		if (any(is.na(dev)) || any(is.na(coef))) {
 			warning("Step size truncated due to divergence")
 			ii<-1
-			while( (any(is.na(dev)) || any(is.na(start)))){
-			  if (ii>control$maxit) stop("Can't correct")
+			while((any(is.na(dev)) || any(is.na(start)))) {
+			  if (ii>control$maxit)
+				stop("inner loop 1; can't correct step size")
 			  ii<-ii+1
 			  start<-(start+coefold)/2
 			  eta[good] <- if (nvars == 1)
@@ -204,14 +197,15 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 			boundary<-TRUE
 			coef<-start
 			if (control$trace)
-			  cat("New Deviance =", dev, "\n")
-		      }
+				cat("New Deviance =", dev, "\n")
+		}
 		## check for fitted values outside domain.
 		if (!(valideta(eta) && validmu(mu))) {
 			warning("Step size truncated: out of bounds.")
 			ii<-1
 			while(!(valideta(eta) && validmu(mu))){
-			  if (ii>control$maxit) stop("Can't correct step size.")
+			  if (ii>control$maxit)
+				stop("inner loop 2; can't correct step size")
 			  ii<-ii+1
 			  start<-(start+coefold)/2
 			  eta[good] <- if (nvars == 1)
@@ -222,28 +216,34 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 			coef<-start
 			dev <- sum(dev.resids(y, mu, weights))
 			if (control$trace)
-			  cat("New Deviance =", dev, "\n")
-		      }
-
-		#check for convergence
-		if (abs(dev - devold)/(0.1 + abs(dev)) < control$epsilon) {
-		  conv <- TRUE
-		  break
+				cat("New Deviance =", dev, "\n")
 		}
-		  else {
-		    devold <- dev
-		    coefold <- coef
-		  }
-	      }
+
+		## check for convergence
+		if (abs(dev - devold)/(0.1 + abs(dev)) < control$epsilon) {
+			conv <- TRUE
+			break
+		} else {
+			devold <- dev
+			coefold <- coef
+		}
+	}#-------------- end IRLS iteration -------------------------------
 	if (!conv)
-	  warning("Algorithm did not converge")
+		warning("Algorithm did not converge")
 	if (boundary)
-	  warning("Algorithm stopped at boundary value")
-					# calculate residuals
+		warning("Algorithm stopped at boundary value")
+	## If X matrix was not full rank then columns were pivoted,
+	## hence we need to re-label the names:
+	if (fit$rank != nvars) {
+		xnames <- xnames[fit$pivot]
+		dimnames(fit$qr) <- list(NULL, xnames)
+	}
+	## calculate residuals
 	residuals <- rep(NA, nobs)
 	##	residuals[good] <- z - eta
 	residuals[good]<- z-eta[good]
-					# name output
+
+	## name output
 	fit$qr <- as.matrix(fit$qr)
 
 	nr <- min(sum(good), nvars)
@@ -263,16 +263,18 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0, nobs),
 	names(w) <- ynames
 	names(weights) <- ynames
 	names(y) <- ynames
-					# calculate null deviance
+	## calculate null deviance
 	wtdmu <-
-          if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
+	  if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
 	nulldev <- sum(dev.resids(y, wtdmu, weights))
-					# calculate df
-	nulldf <- nobs - as.numeric(intercept)
-	resdf <- nobs - fit$rank - sum(weights == 0)
-	qr <- list(qr = fit$qr, rank = fit$rank, qraux = fit$qraux)
+
+	## calculate df
+	n.ok <- nobs - sum(weights==0)
+	nulldf <- n.ok - as.integer(intercept)
+	resdf  <- n.ok - fit$rank
 	list(coefficients = coef, residuals = residuals, fitted.values = mu,
-	     effects = fit$effects, R = Rmat, rank = fit$rank, qr = qr,
+	     effects = fit$effects, R = Rmat, rank = fit$rank,
+	     qr = list(qr = fit$qr, rank = fit$rank, qraux = fit$qraux),
 	     family = family, linear.predictors = eta, deviance = dev,
 	     null.deviance = nulldev, iter = iter, weights = w^2,
 	     prior.weights = weights, df.residual = resdf, df.null = nulldf,
@@ -284,7 +286,7 @@ print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 	cat("\nCall: ", deparse(x$call), "\n\n")
 	cat("Coefficients:\n")
 	print.default(round(x$coefficients, digits), print.gap = 2)
-	cat("\nDegrees of Freedom:", length(x$residuals), "Total;",
+	cat("\nDegrees of Freedom:", x$df.null, "Total; ",
 		 x$df.residual, "Residual\n")
 	cat("Null Deviance:", format(signif(x$null.deviance, digits)), "\n")
 	cat("Residual Deviance:", format(signif(x$deviance, digits)), "\n")
@@ -368,7 +370,7 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 	## calculate test statistics if needed
 
 	if(!is.null(test))
-         table <- stat.anova(table=table, test=test, scale=sum(
+	 table <- stat.anova(table=table, test=test, scale=sum(
 			object$weights*object$residuals^2)/object$df.residual,
 			df.scale=object$df.residual, n=NROW(x))
 	structure(list(title=title, table=table), class= "anova.glm")
@@ -423,7 +425,7 @@ anova.glmlist <- function(object, na.action=na.omit, test=NULL)
 	}
 
 	structure(list(table=table, title=title),
-                  class= "anova.glm")
+		  class= "anova.glm")
 }
 
 

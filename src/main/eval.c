@@ -559,29 +559,42 @@ SEXP do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	SEXP a = args;
-	int na = 0;
+	SEXP a, v, vals;
+	int nv = 0;
+
+	/* We do the evaluation here so that we */
+	/* can tag any untagged return values if */
+	/* they are specified by symbols */
+
+	PROTECT(vals = evalList(args, rho));
+
+	a = args;
+	v = vals;
 	while(!isNull(a)) {
-		na += 1;
-		if(NAMED(CAR(a)) > 1)
-			CAR(a) = duplicate(CAR(a));
+		nv += 1;
+		if(isNull(TAG(a)) && isSymbol(CAR(a)))
+			TAG(v) = CAR(a);
+		if(NAMED(CAR(v)) > 1)
+			CAR(v) = duplicate(CAR(v));
 		a = CDR(a);
+		v = CDR(v);
 	}
-	switch(na) {
+	UNPROTECT(1);
+	switch(nv) {
 	case 0:
-		a = R_NilValue;
+		v = R_NilValue;
 		break;
 	case 1:
-		a = CAR(args);
+		v = CAR(vals);
 		break;
 	default:
-		a = args;
+		v = vals;
 		break;
 	}
 	if( R_BrowseLevel )
-		findcontext(CTXT_BROWSER, a);
+		findcontext(CTXT_BROWSER, v);
 	else
-		findcontext(CTXT_RETURN, a);
+		findcontext(CTXT_RETURN, v);
 }
 
 
@@ -1116,30 +1129,30 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho, SEXP *an
 
         j = length(class);
 	sxp = R_NilValue;
+/** Need to interleave looking for group and generic methods 
+ * eg if class(x) is "foo" "bar" then x>3 should invoke "Ops.foo" rather
+ * than ">.bar"  **/
         for(whichclass=0 ; whichclass<j ; whichclass++) {
 		sprintf(buf, "%s.%s", generic, CHAR(STRING(class)[whichclass]));
 		meth = install(buf);
 		sxp = findVar(meth, rho);
 		if(isFunction(sxp)) {
-			PROTECT(gr = mkString(""));
-			break;
+		  PROTECT(gr = mkString(""));
+		  break;
 		}
-	}
-	if ( !isFunction(sxp) )  /* no specific method look for group */
-		for( whichclass=0 ; whichclass<j ; whichclass++ ) {
-			sprintf(buf, "%s.%s", group, CHAR(STRING(class)[whichclass]));
-			meth = install(buf);
-			sxp = findVar(meth, rho);
-			if( isFunction(sxp) ) {
-				PROTECT(gr = mkString(group));
-				break;
-			}
+		sprintf(buf, "%s.%s", group, CHAR(STRING(class)[whichclass]));
+		meth = install(buf);
+		sxp = findVar(meth, rho);
+		if( isFunction(sxp) ) {
+		  PROTECT(gr = mkString(group));
+		  break;
 		}
-	if( !isFunction(sxp) )  /* no generic or group method so use default*/
-		return 0;
-
+	      }
+       if( !isFunction(sxp) )  /* no generic or group method so use default*/
+	 return 0;
+	
 	/* we either have a group method or a class method */
-
+	
 	PROTECT(newrho = allocSExp(ENVSXP));
 	PROTECT(m = allocVector(STRSXP,nargs));
 	s=args;

@@ -2,7 +2,7 @@
 ##
 ## Show all 'R' or  'S(-plus)' function definitions in a list of files
 ##
-## >>>>>>>>> REQUIRE  '<-'  assignment !!! <<<<<<<,,
+## =======> REQUIRE  '<-'  assignment !!! <=========
 ##
 ## Martin Maechler <maechler@stat.math.ethz.ch>  -- Dec. 1996
 ##
@@ -20,7 +20,7 @@ $show_file = 1 unless $opt_n;
 $show_line = 1 unless $opt_l;
 $show_fili = 1 if $show_file && $show_line;
 if($DEBUG) {
-    print STDERR "$Iam: options -> \n\t'fileX'=$show_fileX" 
+    print STDERR "$Iam: options -> \n\t'fileX'=$show_fileX"
 	. "\t'file'=$show_file\t'line'=$show_line\t'fili'=$show_fili\n\n"
 }
 FILE: foreach $file (@ARGV) {

@@ -499,7 +499,7 @@ int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
 void gc(void);
 SEXP getAttrib(SEXP, SEXP);
-int get1index(SEXP,SEXP);
+int get1index(SEXP,SEXP,int);
 SEXP GetOption(SEXP, SEXP);
 int GetOptionDigits(SEXP);
 int GetOptionWidth(SEXP);

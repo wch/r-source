@@ -1,6 +1,73 @@
 
-		CHANGES IN VERSION R VERSION 0.60.2
 
+		CHANGES IN R VERSION 0.61.1
+
+NEW FEATURES
+
+    o   None (by definition, x.y.z releases are bugfix releases now)
+
+BUG FIXES
+
+    o   Return statements of the form return(x,y) will now return
+        a list with named components.
+
+    o   Parsing of nested "if" statments was broken.  This is fixed now.
+	(Reported by Paul Gilbert).
+
+    o   Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
+	in Irix (George White <gwhite@bodnext.bio.dfo.ca>)
+
+    o   if(nmatch = 0) bug in src/main/character.c fixed (Doug Bates)
+
+    o   R_alloc/S_alloc fixes. The former allocated 4 times more than
+	needed, the latter zeroed half of what it got, sizeof() mistakes
+	in both cases.
+
+    o   c(ordered factor) caused segfault (uninitalised pointer), now
+	fixed.
+
+    o   behaviour of as.numeric() on factors changed recently; now
+	documented.
+
+    o   model.matrix() now pays attention to the names on its dataframe
+	argument.
+
+    o   Fixes to group methods.
+
+    o   autoload() caused infinite loop if function  wasn't found in
+	library on loading
+
+    o   The pager ate the rest of stdin in batch mode, now fixed. Also,
+	stdout was not flushed before call to system(). "make tests"
+	should work now.
+
+    o   Empty directories now created by configure (so that it doesn't
+        matter that "CVS export" doesn't do it)
+
+    o   as.name() made idempotent (i.e. if is.name(x) then as.name(x)==x)
+
+    o   3 problems with glm, 2 in glm.fit and a one in print.glm fixed
+	[Jim Lindsey]
+
+    o   binomial (family) now works when 'n=0'. [J.Lindsey]
+
+    o	split() now also works in split(1:10,1:2)
+
+    o	strsplit() now also works for strsplit(c,NULL)
+
+    o   A LANG='..' environment variable no longer affects  scan()ing of
+	numbers.
+
+    o   seq(.) doesn't segfault anymore in  gl(2,3):gl(1,6)
+
+    o   contour(.) now also works with integer arguments
+
+
+		CHANGES IN R VERSION 0.61
+
+We try to make development more flexible by creating a "CVS branch". This
+should make it easier to produce patches for obvious bugs in the releases,
+without having to wait for changes in other areas to stabilize.
 
 NEW FEATURES
 
@@ -16,6 +83,8 @@ NEW FEATURES
 
     o   symnum(.) function
 
+    o   The files in R/library/base/data have had a .R suffix added.
+
 BUG_FIXES
 
     o	A nasty bug which showed when attempt was made to create
@@ -30,7 +99,7 @@ BUG_FIXES
     o   format(.) is now generic;  the default method has a `digits' argument.
 
 
-		CHANGES IN VERSION R VERSION 0.60.1
+		CHANGES IN R VERSION 0.60.1
 
 NEW FEATURES
 
@@ -53,7 +122,7 @@ BUG FIXES
 
 
 
-		CHANGES IN VERSION R VERSION 0.60
+		CHANGES IN R VERSION 0.60
 
 R is about to become an official part of the GNU project.
 To quote RMS (Richard Stallman)
@@ -192,7 +261,7 @@ BUG FIXES
 
 
 
-		  CHANGES IN VERSION R VERSION 0.50
+		  CHANGES IN R VERSION 0.50
 
 WARNING!!!
 

@@ -1875,20 +1875,23 @@ again:
 		break;
 
 	case ']':
-		ifpop();
+		while (*contextp == 'i')
+			ifpop();
 		*contextp-- = 0;
 		EatLines = 0;
 		break;
 
 	case RBRACE:
-		ifpop();
+		while (*contextp == 'i')
+			ifpop();
 		if(*contextp == LBRACE)
 			PopComment();
 		*contextp-- = 0;
 		break;
 
 	case ')':
-		ifpop();
+		while (*contextp == 'i')
+			ifpop();
 		*contextp-- = 0;
 		EatLines = 0;
 		break;
