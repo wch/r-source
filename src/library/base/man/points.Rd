@@ -14,7 +14,7 @@ points.default(x, y=NULL, type="p", pch=1, col="black", \dots)
 either be a \code{\link{character}} or an integer code for a set of
 graphics symbols.  The full set of S symbols is available with \code{pch=0:18}.
 
-In addition, there is a special set of R plotting symbols which
+In addition, there is a special set of \R plotting symbols which
 can be obtained with \code{pch=19:25} and can be colored and filled
 with different colors:
 \code{pch=19}: solid circle,

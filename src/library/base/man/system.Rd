@@ -7,12 +7,12 @@ system(command, intern=FALSE)
 \arguments{
 \item{command}{the system command to be invoked, as a string.}
 \item{intern}{a logical, indicates whether to make the output of the 
-command an R object.}
+command an \R object.}
 }
 \description{
 \code{system} invokes the system command specified by \code{command}.
 If \code{intern} is \code{TRUE} then popen is used to invoke the
-command and the output collected, line by line, into an R string
+command and the output collected, line by line, into an \R string
 vector which is returned as the value of \code{system}.  If \code{intern}
 is \code{FALSE} then the C function \code{system} is used to invoke
 the command and the value returned by \code{system} is the exit

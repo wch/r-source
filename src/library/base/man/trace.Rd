@@ -7,7 +7,7 @@ untrace(fun)
 \alias{trace}
 \alias{untrace}
 \arguments{
-\item{fun}{any interpreted R function (not quoted).}
+\item{fun}{any interpreted \R function (not quoted).}
 }
 \description{
 These are both in very primitive form. 

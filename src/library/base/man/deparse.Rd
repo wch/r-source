@@ -3,7 +3,7 @@
 \usage{deparse(expr, width.cutoff = 60)}
 \alias{deparse}
 \arguments{
-\item{expr}{any R expression in a wider sense than \code{\link{expression}}'s
+\item{expr}{any \R expression in a wider sense than \code{\link{expression}}'s
 proper.}
 \item{width.cutoff}{integer in [20,500] determining the cutoff at which
 linebreaking is tried.}

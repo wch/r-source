@@ -11,9 +11,9 @@ autoload(name, file)
 }
 \description{
   Creates a promise-to-evaluate a loader function and stores it in the
-  \code{.AutoloadEnv} environment.  When R attempts to evaluate \code{name}
+  \code{.AutoloadEnv} environment.  When \R attempts to evaluate \code{name}
   the package is loaded and \code{name} is re-evaluated in the
-  new package's environment.  The result is that R behaves as if
+  new package's environment.  The result is that \R behaves as if
   \code{file} was loaded but it does not occupy memory.  
 }
 \value{

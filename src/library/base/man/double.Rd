@@ -20,7 +20,7 @@ is.double(x)
   whether its argument is of double type or not. 
 }
 \note{
-  \emph{R has no single precision data type.  All real numbers are
+  \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}. 
 }
 \seealso{

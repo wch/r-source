@@ -23,7 +23,7 @@ source(file, local = FALSE, echo = debug, print.eval = echo,
     expression.}
 }
 \description{
-  \code{source} causes R to accept its input from the named file (the
+  \code{source} causes \R to accept its input from the named file (the
   name must be quoted).  
   Input is read from that file until the end of the file is reached.
   \code{\link{parse}} is used to scan the files in, they are then

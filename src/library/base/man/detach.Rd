@@ -1,5 +1,5 @@
 \name{detach}
-\title{Detach R objects from search path}
+\title{Detach \R objects from search path}
 \usage{
 detach(name, pos = 2)
 }
@@ -10,7 +10,7 @@ detach(name, pos = 2)
 }
 \description{
 Detach a database, i.e., remove it from the \code{\link{search}()} patch
-of available R objects. Usually, this either a \code{\link{data.frame}}
+of available \R objects. Usually, this either a \code{\link{data.frame}}
 which has been \code{\link{attach}}ed or a package which was required
 previously.
 }

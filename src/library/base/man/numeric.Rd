@@ -19,6 +19,6 @@ is.numeric(x)
   or type integer and \code{FALSE} otherwise.
 }
 \note{
-  \emph{R has no single precision data type.  All real numbers are
+  \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}.
 }

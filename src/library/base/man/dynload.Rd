@@ -19,7 +19,7 @@ function or Fortran subroutine.}
 }
 \value{
 The function \code{dyn.load} is used for its side effect which
-links the specified shared library to the executing R image.
+links the specified shared library to the executing \R image.
 Calls to \code{.C} and \code{.Fortran} can then be used to execute
 C functions or Fortran subroutines contained in the library.
 }

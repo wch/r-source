@@ -24,7 +24,7 @@ and the values plotted against their indices.}
 \description{
 \code{xy.coords} is used by many function to obtain
 x and y coordinates for plotting.
-The use of this common mechanism across all R functions
+The use of this common mechanism across all \R functions
 produces a measure of consistency.
 
 \code{plot.default} and \code{\link{lowess}} are examples of functions

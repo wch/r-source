@@ -14,7 +14,7 @@ terms.default(anything)
 \description{
 The function \code{terms} is a generic function
 which can be used to extract \emph{terms} objects
-from various kinds of R data objects.
+from various kinds of \R data objects.
 }
 \value{
 All the functions above produce an object

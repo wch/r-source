@@ -1,5 +1,5 @@
 \name{quit}
-\title{Terminate an R Session}
+\title{Terminate an \R Session}
 \usage{
 quit(save="ask")
 q(save="ask")
@@ -16,5 +16,5 @@ or \code{"ask"}.
 In the first case the workspace is not saved, in the second
 it is saved and in the third the user is prompted.
 Invoking these functions results in the termination
-of the current R session.
+of the current \R session.
 }

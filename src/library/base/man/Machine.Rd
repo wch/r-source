@@ -8,7 +8,7 @@ Machine()
 \alias{.Machine}
 \description{
   \code{Machine()} returns information on numeric characteristics of the
-  machine R is running on, such as the largest double or integer and the
+  machine \R is running on, such as the largest double or integer and the
   machine's precision.  
 
   \code{.Machine} is a variable holding this information.

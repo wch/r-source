@@ -40,7 +40,7 @@ formatC(x, digits = NULL, width = max(0, digits) + 1,
 \note{
   This function was originally written by Bill Dunlap and later much
   improved by Martin Maechler.
-  It was adapted for R by Friedrich Leisch.
+  It was adapted for \R by Friedrich Leisch.
 }
 \seealso{
   \code{\link{format}}.

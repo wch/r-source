@@ -6,7 +6,7 @@ colors()
 \alias{colors}
 \alias{colours}
 \value{
-This function returns the built-in color names which R knows about.
+This function returns the built-in color names which \R knows about.
 These names can be used with a \code{col=} specification in graphics
 functions.
 

@@ -1,7 +1,9 @@
 \name{str}
-\title{Compactly Display the Structure of an Arbitrary R Object}
+\title{Compactly Display the Structure of an Arbitrary \R Object}
 \usage{
-str(object, max.level = 0, vec.len = 4, digits.d = 3,
+str(object, ...)
+str.data.frame(object, ...)
+str.default(object, max.level = 0, vec.len = 4, digits.d = 3,
     give.attr = TRUE, give.length = TRUE,
     wid = .Options$width,
     nest.lev = 0,
@@ -11,10 +13,12 @@ ls.str(name, pattern, mode = "any", max.level = 1, give.attr = FALSE)
 lsf.str(...)
 }
 \alias{str}
+\alias{str.default}
+\alias{str.data.frame}
 \alias{ls.str}
 \alias{lsf.str}
 \arguments{
-  \item{object}{any R object about which you want to have some
+  \item{object}{any \R object about which you want to have some
     information.}
   \item{max.level}{maximal level of nesting which is applied for
     displaying nested structures, e.g., a list containing sub lists.
@@ -39,7 +43,7 @@ lsf.str(...)
   \code{\link{summary}}.  Ideally, only one line for each ``basic''
   structure is displayed.  It is especially well suited to compactly
   display the (abbreviated) contents of (possibly nested) lists.
-  The idea is to give reasonable output for \bold{any} R object.
+  The idea is to give reasonable output for \bold{any} \R object.
   It calls \code{\link{args}} for (non-primitive) function objects.
 
   \code{\link{ls.str}} and \code{\link{lsf.str}} are useful ``versions''

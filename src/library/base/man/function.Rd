@@ -10,5 +10,5 @@ return(value)
 \alias{return}
 \description{
 These functions provide the base mechanisms for defining
-new functions in the R language.
+new functions in the \R language.
 }

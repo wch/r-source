@@ -26,7 +26,7 @@ Possible types are
 \item{\dots}{graphical parameters can be given as arguments to \code{plot}.}
 }
 \description{
-Generic function for plotting of R objects.
+Generic function for plotting of \R objects.
 For more details about the graphical parameter arguments, see \code{\link{par}}.
 
 A longer description will go here eventually.

@@ -7,7 +7,7 @@ undebug(fun)
 \alias{debug}
 \alias{undebug}
 \arguments{
-\item{fun}{any interpreted R function.}
+\item{fun}{any interpreted \R function.}
 }
 \description{
 These functions set and unset the debugging flag on a function.

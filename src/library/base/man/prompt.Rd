@@ -1,5 +1,5 @@
 \name{prompt}
-\title{Produce Prototype of an R Documentation File}
+\title{Produce Prototype of an \R Documentation File}
 \usage{
 prompt(object, ...)
 
@@ -10,7 +10,7 @@ prompt.default(object,
 \alias{prompt}
 \alias{prompt.default}
 \arguments{
-  \item{object}{an R object, typically a function}
+  \item{object}{an \R object, typically a function}
   \item{filename}{name of the output file}
   \item{force.function}{treat \code{object} as function in any case}
 }
@@ -24,7 +24,7 @@ prompt.default(object,
   to \code{$RHOME/src/library/base/man/}.
 }
 \seealso{
-  \code{\link{help}} and the tutorial about writing R documentation,
+  \code{\link{help}} and the tutorial about writing \R documentation,
   currently in the file \code{$RHOME/doc/manual/writing-Rd.tex}.
 }
 \examples{

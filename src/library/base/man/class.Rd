@@ -11,11 +11,11 @@ inherits(x, name)
 \alias{unclass}
 \alias{inherits}
 \description{
-  R possesses a simple generic function mechanism which can be used for
+  \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method despatch takes place
   based on the class of the first argument to the generic function.
 
-  An R ``object'' is a data object which has a \code{class} attribute.
+  An \R ``object'' is a data object which has a \code{class} attribute.
   A class attribute is a vector of character strings giving the names of
   the classes which the object ``inherits'' from.  When a generic
   function \code{fun} is applied to an object with class attribute

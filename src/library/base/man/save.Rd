@@ -1,5 +1,5 @@
 \name{save}
-\title{Save R Objects}
+\title{Save \R Objects}
 \usage{
 save(..., list = character(0), file = "", ascii = FALSE)
 }
@@ -15,7 +15,7 @@ save(..., list = character(0), file = "", ascii = FALSE)
     which leads to a more compact binary file being written.}
 }
 \description{
-  \code{save} writes a external representation of R objects to the
+  \code{save} writes a external representation of \R objects to the
   specified file.  The objects can be read back from the file at a later
   date by using the function \code{load}.
 }

@@ -2,7 +2,7 @@
 \title{Loading and Listing of Packages}
 \usage{
 library(name, help = NULL, lib.loc = .lib.loc,
-        character.only = FALSE, logical.return = FALSE)
+	character.only = FALSE, logical.return = FALSE)
 require(name, quietly = FALSE)
 provide(name)
 
@@ -24,7 +24,7 @@ library.dynam(chname)
 \arguments{
  \item{name, help}{\code{name} or character string giving the name of a
   package}
- \item{lib.loc}{a character vector describing the location of R library
+ \item{lib.loc}{a character vector describing the location of \R library
   trees to search through.}
  \item{character.only}{a logical indicating whether \code{name} or
   \code{help} can be assumed to be character strings}
@@ -37,7 +37,7 @@ library.dynam(chname)
   with name \code{name}.
   \code{require} is designed for use inside other functions; it returns
   \code{FALSE} and optionally gives a warning, rather than giving an
-  error, if the package does not exist.   
+  error, if the package does not exist.
   Both functions check and update the list of currently loaded packages
   and do not reload code that is already loaded.  \code{require} also
   checks the list \code{.Provided}.
@@ -46,10 +46,10 @@ library.dynam(chname)
   argument is stored in the list \code{.Provided}.  \code{provide}
   returns \code{FALSE} if the name was already present in
   \code{.Provided} or among the packages in \code{search()}.  The main
-  use for \code{provide} is when multiple packages share code.  This is
+  use for \code{provide} is when multiple packages share code.	This is
   most likely when the code implements features present in S(-PLUS) but
   not in R. For example, the spline functions \code{ns}, \code{bs} and
-  so on are not included in the R distribution.  A package containing
+  so on are not included in the \R distribution.  A package containing
   these functions can use \code{provide(splines)} to register this fact.
   Another package that needs the functions can execute
   \code{require(splines)} rather than \code{library(splines)} to load
@@ -61,7 +61,7 @@ library.dynam(chname)
   level objects it contains.
 
   \code{library.dynam} loads the specified (shared) object file if it
-  has not been loaded already.  It is designed to be used inside a
+  has not been loaded already.	It is designed to be used inside a
   package rather than at the command line.  The system-specific
   extension for shared libraries (e.g., ``.so'' on Unix systems) should
   not be added.
@@ -72,15 +72,15 @@ library.dynam(chname)
   \code{.Library} is a character string giving the location of the
   default library, the ``library'' subdirectory of \code{RHOME}.
   \code{.lib.loc} is a character vector with the locations of all
-  library trees that R should use.  It is initialized at startup from
+  library trees that \R should use.  It is initialized at startup from
   the environment variable \code{RLIBS}, which should be a
-  colon-separated list of directories at which R library trees are
-  rooted, and \code{.Library}. 
+  colon-separated list of directories at which \R library trees are
+  rooted, and \code{.Library}.
 }
 
 \section{Creating Packages}{
   Packages provide a mechanism for loading optional code and its
-  documentation as needed.  The R distribution provides the two example
+  documentation as needed.  The \R distribution provides the two example
   packages \code{eda} and \code{mva}.
 
   A package consists of a subdirectory containing a \code{TITLE} and
@@ -93,11 +93,11 @@ library.dynam(chname)
   description (functions such as print methods not usually called
   explicitly might not be included).
 
-  The \code{R} subdirectory contains R code files with names beginning
+  The \code{R} subdirectory contains \R code files with names beginning
   with lowercase letters.  One of these files should use
-  \code{library.dynam()} to load any necessary compiled code. 
+  \code{library.dynam()} to load any necessary compiled code.
 
-  The \code{man} subdirectory should contain R documentation files for
+  The \code{man} subdirectory should contain \R documentation files for
   the objects in the package.
 
   Source and a Makefile for the compiled code is in \code{src}, and a
@@ -108,7 +108,7 @@ library.dynam(chname)
   which can be seen in the \code{eda} package.
 
   The \code{data} subdirectory is for additional data files the package
-  makes available for loading using \code{data()}. 
+  makes available for loading using \code{data()}.
 
   Finally, \code{exec} could contain executables, typically (shell or
   Perl) scripts, the package needs.  Note that this mechanism currently
@@ -123,11 +123,11 @@ library.dynam(chname)
   To remove the package \code{pkg} from the default library or the
   library \code{lib}, do \code{R REMOVE pkg} or \code{R REMOVE pkg lib},
   respectively.
-} 
+}
 \value{
   \code{library} returns the list of loaded packages (or \code{TRUE} if
-  \code{logical.return} is \code{TRUE}). 
-  \code{require} returns a logical indicating whether the required 
+  \code{logical.return} is \code{TRUE}).
+  \code{require} returns a logical indicating whether the required
   package is available.
 }
 \seealso{
@@ -135,11 +135,11 @@ library.dynam(chname)
   \code{\link{objects}}, \code{\link{autoload}}.
 }
 \examples{
-library()                   # list all available packages
-library(lib = .Library)     # list all packages in the default library
-library(help = eda)         # documentation on package "eda"
-library(eda)                # load package "eda"
-require(eda)                # the same
-require(nonexistent)        # FALSE
+library()		    # list all available packages
+library(lib = .Library)	    # list all packages in the default library
+library(help = eda)	    # documentation on package "eda"
+library(eda)		    # load package "eda"
+require(eda)		    # the same
+require(nonexistent)	    # FALSE
 }
 \keyword{searchpath}

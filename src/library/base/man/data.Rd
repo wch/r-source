@@ -11,7 +11,7 @@ data(..., list = character(0), package = .packages(),
  \item{package}{a name or character vector giving the packages to look
   into for data sets.
   By default, all packages in the search path are used.}
- \item{lib.loc}{a character vector of directory names of R libraries.
+ \item{lib.loc}{a character vector of directory names of \R libraries.
   Defaults to all libraries currently known.}}
 \description{
 \code{data} loads or lists available data sets.

@@ -1,11 +1,11 @@
 \name{interactive}
-\title{Is R running interactively ?}
+\title{Is \R running interactively ?}
 \usage{
 interactive()
 }
 \alias{interactive}
 \value{
-This function returns \code{TRUE} when R is being used interactively
+This function returns \code{TRUE} when \R is being used interactively
 and \code{FALSE} when not. 
 }
 \seealso{

@@ -13,7 +13,7 @@ pi
 \alias{month.name}
 \alias{pi}
 \value{
-  R has a limited number of built-in constants (there is also a rather
+  \R has a limited number of built-in constants (there is also a rather
   larger library of data sets which can be loaded with the function
   \code{data}).
 

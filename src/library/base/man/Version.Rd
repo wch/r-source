@@ -14,10 +14,10 @@ version
 }
 \value{
   \code{Version} returns a list with components
-  \item{"platform"}{the platform for which R was built.  Under Unix, a
+  \item{"platform"}{the platform for which \R was built.  Under Unix, a
     triplet of the form CPU-VENDOR-OS, as determined by the configure
     script.  E.g, \code{"i586-unknown-linux"}.}
-  \item{"arch"}{the architecture (CPU) R was built on/for.}
+  \item{"arch"}{the architecture (CPU) \R was built on/for.}
   \item{"os"}{the underlying operating system}
   \item{"system"}{CPU and OS.}
   \item{"status"}{the status of the version (e.g., \code{"Alpha"})}

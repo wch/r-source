@@ -7,7 +7,7 @@ data.class(x)
 }
 \alias{data.class}  
 \arguments{
-  \item{x}{an R object}
+  \item{x}{an \R object}
 }
 \value{
   character string giving the ``class'' of \code{x}.

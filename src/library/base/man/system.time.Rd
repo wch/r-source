@@ -5,7 +5,7 @@ system.time(expr)
 }
 \alias{system.time}
 \arguments{
-  \item{expr}{Valid R expression to be ``timed''}
+  \item{expr}{Valid \R expression to be ``timed''}
 }
 \description{
   \code{system.time} calls the builtin \code{\link{proc.time}},

@@ -17,7 +17,7 @@ next
 \alias{break}
 \alias{next}
 \description{
-These are the basic control-flow constructs of the R language.
+These are the basic control-flow constructs of the \R language.
 They function in much the same way as control statements
 in any algol-like language.
 }

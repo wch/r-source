@@ -26,7 +26,7 @@ of the residual standard deviation obtained when the i-th
 case is dropped from the regression.}
 }
 \note{
-The \code{coefficients} returned by the R version
+The \code{coefficients} returned by the \R version
 of \code{lm.influence} differ from those computed by S.
 Rather than returning the coefficients which result
 from dropping each case, we return the changes in the coefficients.
