@@ -1,6 +1,6 @@
 #! /bin/sh
 
-USER_R_HOME=${R_SESSION_TMPDIR-"${HOME}"}/.R
+USER_R_HOME=$1/.R; shift
 PKGLIST="${USER_R_HOME}/doc/html/packages.html"
 SEARCHINDEX="${USER_R_HOME}/doc/html/search/index.txt"
 rm -rf ${USER_R_HOME}

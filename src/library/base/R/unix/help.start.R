@@ -12,10 +12,9 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         options(browser = browser)
     }
     cat("Making links in per-session dir ...\n")
-    .Script("sh", "help-links.sh", paste(.libPaths(), collapse = " "))
-    tmpdir <- Sys.getenv("R_SESSION_TMPDIR")
-    if(!length(tmpdir)) tmpdir <- "$HOME"
-    tmpdir <- paste("file://", tmpdir, "/.R", sep = "")
+    .Script("sh", "help-links.sh",
+            paste(tempdir(), paste(.libPaths(), collapse = " ")))
+    tmpdir <- paste("file://", tempdir(), "/.R", sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
 		 "/doc/html/index.html", sep = "")
     writeLines(strwrap(paste("If", browser, "is already running,",
@@ -25,7 +24,5 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     writeLines("Otherwise, be patient ...")
     system(paste(browser, " -remote \"openURL(", url, ")\" 2>/dev/null || ",
 		 browser, " ", url, " &", sep = ""))
-    assign("help.start.has.been.run", TRUE,
-           pos = match("package:base", search()))
     options(htmlhelp = TRUE)
 }

@@ -62,27 +62,6 @@ char * R_tmpnam(const char * prefix)
 }
 
 
-SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP  ans;
-    char *tn, *tm;
-    int i, slen=0 /* -Wall */;
-
-    checkArity(op, args);
-    if (!isString(CAR(args)) || (slen = LENGTH(CAR(args))) < 1)
-	errorcall(call, "invalid file name argument");
-    PROTECT(ans = allocVector(STRSXP, slen));
-    for(i = 0; i < slen; i++) {
-	tn = CHAR(STRING_ELT(CAR(args), i));
-	/* try to get a new file name */
-	tm = R_tmpnam(tn);
-	SET_STRING_ELT(ans, i, mkChar(tm));
-	free(tm);
-    }
-    UNPROTECT(1);
-    return (ans);
-}
-
 SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  path, ans;
@@ -959,14 +938,4 @@ void InitTempDir()
 void CleanTempDir()
 {
     R_unlink(R_TempDir, 1);
-}
-
-SEXP do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP  ans;
-
-    PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, mkChar(R_TempDir));
-    UNPROTECT(1);
-    return (ans);
 }

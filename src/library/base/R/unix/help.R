@@ -39,22 +39,15 @@ help <- function(topic, offline = FALSE, package = .packages(),
                     if(file.exists(file)) {
                         ofile <- file
                         base.pos <- match("package:base", search())
-                        if (exists("help.start.has.been.run",
-                                   where=base.pos, mode="logical") &&
-                            get("help.start.has.been.run",
-                                   pos=base.pos, mode="logical")) {
                         ## We need to use the version in per-session dir
                         ## if we can.
-                            tmpdir <- Sys.getenv("R_SESSION_TMPDIR")
-                            if(!length(tmpdir)) tmpdir <- "$HOME"
-                            lnkfile <-
-                                file.path(tmpdir, "/.R",
-                                          "library", package, "html",
-                                          paste(topic, "html", sep="."))
-                            if (any(ex <- file.exists(lnkfile))) {
-                                lnkfile <- lnkfile[ex]
-                                file <- lnkfile[1] # could be more than one
-                            }
+                        lnkfile <-
+                            file.path(tempdir(), ".R",
+                                      "library", package, "html",
+                                      paste(topic, "html", sep="."))
+                        if (any(ex <- file.exists(lnkfile))) {
+                            lnkfile <- lnkfile[ex]
+                            file <- lnkfile[1] # could be more than one
                         }
                         if (file == ofile) {
                             warning("Using non-linked HTML file: style sheet and hyperlinks may be incorrect")
