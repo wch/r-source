@@ -1228,6 +1228,11 @@ sub Rwrap
     my $nl = "";
     my $remainder = "";
 
+    if ($ll <= 0) {
+#	warn "warning. indent:\n".
+#	    &nounder(expand($ip))."\nis wider than the page\n";
+	$ll = 5;
+    }
     while ($t !~ /^\s*$/) {
 	if ($t =~ s/^([^\n]{0,$ll})(\s|\Z(?!\n))//xm) {
 	    $r .= $nl . $lead . $1;
@@ -1236,6 +1241,7 @@ sub Rwrap
 	    $r .= $nl . $lead . $1;
 	    $remainder = "\n";
 	} else {
+	    print "$t\n";
 	    die "This shouldn't happen";
 	}
 
