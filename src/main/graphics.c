@@ -5368,7 +5368,7 @@ static int nlinetype = (sizeof(linetype)/sizeof(LineTYPE)-2);
 unsigned int LTYpar(SEXP value, int ind)
 {
     char *p;
-    int i, code, shift, digit;
+    int i, code, shift, digit, len;
 
     if(isString(value)) {
 	for(i = 0; linetype[i].name; i++) { /* is it the i-th name ? */
@@ -5378,7 +5378,11 @@ unsigned int LTYpar(SEXP value, int ind)
 	/* otherwise, a string of hex digits: */
 	code = 0;
 	shift = 0;
-	for(p = CHAR(STRING_ELT(value, ind)); *p; p++) {
+	p = CHAR(STRING_ELT(value, ind));
+	len = strlen(p);
+	if(len < 2 || len > 8 || len % 2 == 1)
+	    error("invalid line type: must be length 2, 4, 6 or 8");
+	for(; *p; p++) {
 	    digit = hexdigit(*p);
 	    code  |= (digit<<shift);
 	    shift += 4;
