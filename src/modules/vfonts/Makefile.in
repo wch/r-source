@@ -24,7 +24,7 @@ DISTFILES = \
 ## FIXME:
 ## Change to `vfonts.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix install then.
-vfonts_la = vfonts.$(SHLIB_EXT)
+vfonts_la = vfonts$(SHLIB_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(vfonts_la)
 vfonts_la_SOURCES = $(SOURCES)
@@ -56,19 +56,19 @@ $(vfonts_la): $(vfonts_la_OBJECTS) $(vfonts_la_DEPENDENCIES)
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(vfonts_la) $(Rexecmodulesdir)/vfonts.$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(vfonts_la) $(Rexecmodulesdir)/vfonts$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(vfonts_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecmodulesdir)/vfonts.$(SHLIB_EXT)
+	@rm -f $(Rexecmodulesdir)/vfonts$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la *.$(SHLIB_EXT)
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la *$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

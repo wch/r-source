@@ -623,7 +623,7 @@ AC_SUBST(R_XTRA_LIBS)
 main_ld=${CC}
 shlib_ld=${CC}
 shlib_cxxld=${CXX}
-SHLIB_EXT="so"
+SHLIB_EXT=".so"
 SHLIB_LIBADD=
 
 ## Step 1.  Ask imake.
@@ -691,7 +691,7 @@ case "${host}" in
     main_ldflags="-export-dynamic"
     ;;
   *hpux*)
-    SHLIB_EXT=sl
+    SHLIB_EXT=".sl"
     case "${CC}" in
       cc|c89)
         cpicflags="+Z" ;;

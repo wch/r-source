@@ -50,15 +50,11 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(names, 4, mkChar("endian"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
-    tmp = (char *) malloc(strlen(SHLIB_EXT) + 2);
+    tmp = (char *) malloc(strlen(SHLIB_EXT) + 1);
     if(!tmp) {
 	error("Could not allocate memory");
     }
-#ifndef Macintosh    
-    sprintf(tmp, ".%s", SHLIB_EXT);
-#else    /* Usually DLL under MacOS are called "LibraryLib" without a "." */
     sprintf(tmp, "%s", SHLIB_EXT);
-#endif    
     SET_VECTOR_ELT(value, 2, mkString(tmp));
     SET_VECTOR_ELT(value, 3, mkString(R_GUIType));
 #ifdef WORDS_BIGENDIAN

@@ -32,8 +32,8 @@ Makedeps: Makefile
 	    dep="$${p}-Ex.Rout: $${p}-Ex.R"; \
 	    dep="$${dep} \$$(top_builddir)/library/$${p}/R/$${p}"; \
 	    tmp="library/$${p}/libs/$${p}" ; \
-	    if test -f $(top_builddir)/$${tmp}.$(SHLIB_EXT); then \
-	      dep="$${dep} \$$(top_builddir)/$${tmp}.\$$(SHLIB_EXT)"; \
+	    if test -f $(top_builddir)/$${tmp}$(SHLIB_EXT); then \
+	      dep="$${dep} \$$(top_builddir)/$${tmp}\$$(SHLIB_EXT)"; \
 	    fi; \
 	    dep="$${dep} \$$(FORCE)"; \
 	    echo $${dep}; \
@@ -77,9 +77,9 @@ FORCE:
 $(EX_OUT): Makefile \
   $(top_builddir)/bin/R.bin \
   $(top_builddir)/library/base/R/base \
-  $(top_builddir)/modules/lapack.$(SHLIB_EXT)
+  $(top_builddir)/modules/lapack$(SHLIB_EXT)
 
-base-Ex.Rout: $(top_builddir)/modules/vfonts.$(SHLIB_EXT)
+base-Ex.Rout: $(top_builddir)/modules/vfonts$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:

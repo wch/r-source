@@ -81,7 +81,7 @@ void R_load_X11_shlib(void)
 	R_Suicide(buf);
     }
     strcpy(X11_DLL, p);
-    strcat(X11_DLL, "/modules/R_X11.");
+    strcat(X11_DLL, "/modules/R_X11");
     strcat(X11_DLL, SHLIB_EXT); /* from config.h */
     if(stat(X11_DLL, &sb))
 	R_Suicide("Probably no X11 support: the shared library was not found");

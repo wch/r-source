@@ -166,7 +166,7 @@
 
 /* Define this to be the extension used for shared libraries on your
    system. */
-#define SHLIB_EXT "dll"
+#define SHLIB_EXT ".dll"
 
 /* Define if your system is SunOS4, which is famous for broken header
    files. */

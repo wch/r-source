@@ -78,7 +78,7 @@ R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @EXPORTFILE@
 ## FIXME:
 ## Change to `libR.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix install then.
-libR_la = libR.$(SHLIB_EXT)
+libR_la = libR$(SHLIB_EXT)
 ## </FIXME>
 Rexeclib_LTLIBRARIES = $(libR_la)
 libR_la_SOURCES = $(SOURCES)
@@ -152,7 +152,7 @@ installdirs:
 install-bin:
 	@$(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
 install-lib:
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/libR.$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/libR$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
@@ -167,7 +167,7 @@ uninstall:
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *core Makedeps *.d *.o *.lo *.la *.$(SHLIB_EXT) \
+	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(SHLIB_EXT) \
 	  $(Rexecbin_PROGRAMS)
 distclean: clean
 	@-rm -f Makefile

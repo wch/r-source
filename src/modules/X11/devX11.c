@@ -1089,14 +1089,14 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
     /* initialize the X11 device driver data structures. */
 
     if (!displayOpen) {
-      if ((display = XOpenDisplay(p)) == NULL)
-        return FALSE;
-      DisplayOpened = TRUE;
-      Rf_setX11Display(display, gamma_fac, colormodel, maxcube, TRUE);
-      displayOpen = TRUE;
-      if(xd->handleOwnEvents == FALSE)
-	  addInputHandler(R_InputHandlers, ConnectionNumber(display),
-			  R_ProcessEvents, XActivity);
+	if ((display = XOpenDisplay(p)) == NULL)
+	    return FALSE;
+	DisplayOpened = TRUE;
+	Rf_setX11Display(display, gamma_fac, colormodel, maxcube, TRUE);
+	displayOpen = TRUE;
+	if(xd->handleOwnEvents == FALSE)
+	    addInputHandler(R_InputHandlers, ConnectionNumber(display),
+			    R_ProcessEvents, XActivity);
     }
     /* whitepixel = GetX11Pixel(255, 255, 255); */
     whitepixel = GetX11Pixel(R_RED(canvascolor), R_GREEN(canvascolor), 
@@ -1141,7 +1141,7 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 		CWEventMask | CWBackPixel | CWBorderPixel | CWBackingStore,
 		&attributes)) == 0)
 		return FALSE;
-
+	    
 	    XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
 			    8, PropModeReplace, 
 			    (unsigned char*)"R Graphics", 13);
@@ -1153,7 +1153,7 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 	    /* me an event when user "destroys" window */
 	    _XA_WM_PROTOCOLS = XInternAtom(display, "WM_PROTOCOLS", 0);
 	    protocol = XInternAtom(display, "WM_DELETE_WINDOW", 0);
-	XSetWMProtocols(display, xd->window, &protocol, 1);
+	    XSetWMProtocols(display, xd->window, &protocol, 1);
 	
 	}
 	/* Save the devDesc* with the window for event dispatching */
@@ -1161,18 +1161,18 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 
 	/* Map the window */
 	if(alreadyCreated == 0) {
-	  XSelectInput(display, xd->window,
-		       ExposureMask | ButtonPressMask | StructureNotifyMask);
-   	  XMapWindow(display, xd->window);
-  	  XSync(display, 0);
-
-	   /* Gobble expose events */
-
- 	  XNextEvent(display, &event);
-	 if (event.xany.type == Expose) {
-	      while (event.xexpose.count)
-		XNextEvent(display, &event);
-	 }
+	    XSelectInput(display, xd->window,
+			 ExposureMask | ButtonPressMask | StructureNotifyMask);
+	    XMapWindow(display, xd->window);
+	    XSync(display, 0);
+	    
+	    /* Gobble expose events */
+	    
+	    XNextEvent(display, &event);
+	    if (event.xany.type == Expose) {
+		while (event.xexpose.count)
+		    XNextEvent(display, &event);
+	    }
 	}
     } else { /* PIXMAP */
 	xd->windowWidth = iw = w;

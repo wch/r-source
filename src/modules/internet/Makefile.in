@@ -24,7 +24,7 @@ DISTFILES = \
 ## FIXME:
 ## Change to `internet.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix install then.
-internet_la = internet.$(SHLIB_EXT)
+internet_la = internet$(SHLIB_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(internet_la)
 internet_la_SOURCES = $(SOURCES)
@@ -56,19 +56,19 @@ $(internet_la): $(internet_la_OBJECTS) $(internet_la_DEPENDENCIES)
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(internet_la) $(Rexecmodulesdir)/internet.$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(internet_la) $(Rexecmodulesdir)/internet$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(internet_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecmodulesdir)/internet.$(SHLIB_EXT)
+	@rm -f $(Rexecmodulesdir)/internet$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la *.$(SHLIB_EXT)
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la *$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

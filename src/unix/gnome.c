@@ -78,7 +78,7 @@ void R_load_gnome_shlib(void)
 	R_Suicide(buf);
     }
     strcpy(gnome_DLL, p);
-    strcat(gnome_DLL, "/modules/R_gnome.");
+    strcat(gnome_DLL, "/modules/R_gnome");
     strcat(gnome_DLL, SHLIB_EXT); /* from config.h */
     if(stat(gnome_DLL, &sb))
 	R_Suicide("Probably no GNOME support: the shared library was not found");

@@ -12,7 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 OBJS = dblcen.o distance.o hclust.o hclust-utils.o init.o kmns.o
-SHLIB = $(pkg).@SHLIB_EXT@
+SHLIB = $(pkg)@SHLIB_EXT@
 
 ## FIXME:
 ## We should really add FLIBS to SHLIB_LIBADD, but we need to include
@@ -37,7 +37,7 @@ include $(top_srcdir)/share/make/shlib.mk
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *.o *.$(SHLIB_EXT)
+	@-rm -f *.o *$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

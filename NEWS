@@ -117,6 +117,9 @@ NEW FEATURES
 	help to distinguish plotting "white" from plotting 
 	"transparent".
 
+    o	The macro SHLIB_EXT now includes `.', e.g. ".so" or ".dll",
+	since the Mac uses "Lib" without a `.'.
+
 
 
 

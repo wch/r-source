@@ -13,7 +13,7 @@ R_HOME = $(top_builddir)
 
 OBJS = PPsum.o burg.o eureka.o filter.o init.o pacf.o starma.o stl.o \
        carray.o mburg.o myw.o qr.o
-SHLIB = $(pkg).@SHLIB_EXT@
+SHLIB = $(pkg)@SHLIB_EXT@
 
 ## FIXME:
 ## We should really add FLIBS to SHLIB_LIBADD, but we need to include
@@ -38,7 +38,7 @@ include $(top_srcdir)/share/make/shlib.mk
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *.o *.$(SHLIB_EXT)
+	@-rm -f *.o *$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
