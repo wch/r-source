@@ -6,6 +6,7 @@ floor(x)
 round(x, digits = 0)
 signif(x, digits = 6)
 trunc(x)
+zapsmall(x, digits= .Options$digits)
 }
 \alias{ceiling}
 \alias{floor}
@@ -13,6 +14,7 @@ trunc(x)
 \alias{signif}
 \alias{trunc}
 \alias{trunc.default}
+\alias{zapsmall}
 \description{
   \code{ceiling} takes a single numeric argument \code{x} and returns a
   numeric vector containing the smallest integers not less than the
@@ -34,6 +36,10 @@ trunc(x)
   \code{trunc} takes a single numeric argument \code{x} and returns a
   numeric vector containing the integers by truncating the values in
   \code{x} toward \code{0}.
+
+  \code{zapsmall} determines a \code{digits} argument \code{dr} for calling
+  \code{round(x, digits = dr)} such that values ``close to zero'' values
+  are ``zapped'', i.e., treated as \code{0}.
 }
 \seealso{
   \code{\link{as.integer}}.
@@ -53,5 +59,8 @@ all((signif(x1, 1) != round(x1,1)) == (non.int & abs(x1)>1)) # TRUE
 x2 <- pi * 100^(-1:3)
 round(x2, 3)
 signif(x2, 3)
+
+print   (x2 / 1000, digits=4)
+zapsmall(x2 / 1000, digits=4)
 }
 \keyword{arith}

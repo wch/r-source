@@ -172,7 +172,8 @@ FUNTAB R_FunTab[] =
 {"dim<-",	do_dimgets,	0,	0,	2,	PP_FUNCALL,	0},
 {"attributes",	do_attributes,	0,	1,	1,	PP_FUNCALL,	0},
 {"attributes<-",do_attributesgets,0,	1,	1,	PP_FUNCALL,	0},
-{"attr",	do_attr,	0,	1,	2,	PP_FUNCALL,	0},
+ /*KH {"attr",	do_attr,	0,	1,	2,	PP_FUNCALL,     0},
+  */
 {"attr<-",	do_attrgets,	0,	0,	3,	PP_FUNCALL,	0},
 {"comment",	do_comment,	0,	11,	1,	PP_FUNCALL,	0},
 {"comment<-",	do_commentgets,	0,	11,	2,	PP_FUNCALL,	0},
@@ -575,7 +576,7 @@ FUNTAB R_FunTab[] =
 {"arrows",	do_arrows,	0,	111,	9,	PP_FUNCALL,	0},
 {"layout",	do_layout,	0,	111,	10,	PP_FUNCALL,	0},
 {"locator",	do_locator,	0,	11,	1,	PP_FUNCALL,	0},
-{"identify",	do_identify,	0,	11,	3,	PP_FUNCALL,	0},
+{"identify",	do_identify,	0,	11,	6,	PP_FUNCALL,	0},
 {"strheight",	do_strheight,	0,	11,	3,	PP_FUNCALL,	0},
 {"strwidth",	do_strwidth,	0,	11,	3,	PP_FUNCALL,	0},
 {"contour",	do_contour,	0,	11,	6,	PP_FUNCALL,	0},

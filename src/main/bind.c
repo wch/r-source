@@ -408,7 +408,7 @@ static void ExtractNames(SEXP args, int recurse, int check, SEXP base)
 		base = R_NilValue;
 	    } else { /* neither	 Vector	 nor  List */
 		if(!isNull(TAG(args)))
-		  STRING(ans_names)[ans_nnames++] = TAG(args);
+		  STRING(ans_names)[ans_nnames++] = PRINTNAME(TAG(args));
 		else
 		  STRING(ans_names)[ans_nnames++] = blank;
 	    }
@@ -580,6 +580,9 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (mode) {
 		a = args;
 		t = CDR(call);
+		/* FIXME KH 1998/06/23
+		   This should obviously do something useful, but
+		   currently breaks [cr]bind() if one arg is a df
 		while (a != R_NilValue) {
 			if(t == R_NilValue)
 				errorcall(call, "corrupt data frame args!\n");
@@ -589,6 +592,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 			t = CDR(t);
 			a = CDR(a);
 		}
+		*/
 		switch(PRIMVAL(op)) {
 		    case 1:
 			op = install("cbind.data.frame");
@@ -907,9 +911,11 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 				u = CAR(t);
 				k = LENGTH(u);
 				mrows = (isMatrix(u)) ? nrows(u) : 1;
+				if ( k == 0 )
+					mrows = 0;
 				for (i = 0; i < mrows; i++)
 					for (j = 0; j < cols; j++)
-						STRING(result)[i + n + (j * rows)] = STRING(u)[(i + j * mrows) % k];
+						STRING(result)[i + n + (j * rows)] =  STRING(u)[(i + j * mrows) % k] ;
 				n += mrows;
 			}
 		}

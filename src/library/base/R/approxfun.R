@@ -28,5 +28,5 @@ function (x, y=NULL, method = "linear", yleft, yright, rule=1, f=0)
 	function(v) .C("approx", as.double(x), as.double(y),
 			n, xout = as.double(v), length(v), as.integer(method),
 			as.double(yleft), as.double(yright),
-			as.double(f), NAOK=T)$xout
+			as.double(f), NAOK=TRUE)$xout
 }

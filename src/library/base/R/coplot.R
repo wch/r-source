@@ -11,10 +11,11 @@ function (x, number = 6, overlap = 0.5)
 }
 
 panel.smooth <-
-function(x, y, col, pch, f=2/3, iter=3, ...)
+function(x, y, col = par("col"), pch = par("pch"), col.smooth = "red",
+         f=2/3, iter=3, ...)
 {
 	points(x, y, pch=pch, col=col)
-	lines(lowess(x, y, f=f, iter=iter), ...)
+	lines(lowess(x, y, f=f, iter=iter), col = col.smooth, ...)
 }
 
 

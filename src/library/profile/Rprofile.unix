@@ -1,21 +1,13 @@
-.GlobalEnv <- globalenv()
-attach(NULL, name = "Autoloads")
-.AutoloadEnv <- pos.to.env(2)
-assign(".Autoloaded",NULL,env=.AutoloadEnv)
-T <- TRUE
-F <- FALSE
-version <- Version()
-.Machine <- Machine()
-options(na.action = "na.omit")
-
+###-*- R -*- Unix Specific ----
 .Library <- paste(getenv("RHOME"), "library", sep = "/")
 
 .lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))
 
 options(printcmd = getenv("R_PRINTCMD"))
 options(papersize = getenv("R_PAPERSIZE"))
-options(device = "X11")
+options(device = if(interactive() && getenv("DISPLAY") != "")
+        "X11" else "postscript")
 
-# .First <- function() {
-#   if (interactive() && getenv("DISPLAY") != "") x11()
-# }
+options(browser = "netscape")
+
+# .First <- function() { if (interactive() && getenv("DISPLAY") != "") x11() }

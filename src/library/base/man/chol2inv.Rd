@@ -11,8 +11,7 @@ matrix to be inverted.}
 \item{size}{the number of columns of \code{x} containing the
 choleski decomposition.}
 }
-\value{
-This matrix uses the given Choleski decomposition
+\value{This matrix uses the given Choleski decomposition
 to invert the original positive definite matrix.
 It returns the inverse of the decomposed matrix.
 }
@@ -22,8 +21,11 @@ Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
 Philadelphia:
 SIAM Publications.
 }
-\seealso{
-\code{\link{chol}}, \code{\link{solve}}.
+\seealso{\code{\link{chol}}, \code{\link{solve}}.}
+\examples{
+cma <- chol(ma  <- cbind(1, 1:3, c(1,3,7)))
+t(cma) \%*\% cma # = ma
+all(diag(3) == ma \%*\% chol2inv(cma))# TRUE (at least approx.)
 }
 \keyword{algebra}
 \keyword{array}

@@ -20,9 +20,7 @@ so that permutations returned by
 \code{order} move \code{NA}
 values to the top end of the array.
 }
-\seealso{
-\code{\link{sort}}.
-}
+\seealso{\code{\link{sort}} and \code{\link{rank}}.}
 \examples{
 x <- c(5:1, 6:8, 12:9)
 y <- (x - 5)^2

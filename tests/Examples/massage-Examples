@@ -21,7 +21,10 @@ FILES="$@"
 #Dbg> echo "FILES=$FILES"; echo ; echo; exit
 
 ## 1) ---- Header ----
-echo "postscript('All-Examples.ps'); iter <- 0; eigenval <- 1e-12"
+echo ".ptime <- proc.time()"
+echo "postscript('All-Examples.ps')"
+echo '.pp <- par();.par.postscript <- .pp[-match(c("cin","cra","csi","din"),names(.pp))]'
+echo "iter <- 0; eigenval <- 1e-12"
 ## 2) ---- edit a few of these files:
 for file in $FILES
 do
@@ -37,6 +40,7 @@ do
  fi
  #Dbg: echo $bf >&2
  if   [ $bf = 'on.exit' ];	then sed -e '$s/$/par(opar)/' $file
+ elif [ $bf = 'alias' ];	then sed -e '/^library(/s/^/##Test: /' $file
  elif [ $bf = 'help' ];		then sed -e '/^help(topi/s/^/##Test: /' $file
  elif [ $bf = 'match.arg' ];	then sed -e '/^cent.*Error/s/^/##Test: /' $file
  elif [ $bf = 'menu'  ];	then sed -e '6,$s/^/##INTERACTIVE> /' $file
@@ -52,6 +56,11 @@ do
     sed -e '/edit(/s/^/##INTERACTIVE> /; /^vi(/s/^/##INTERACTIVE> /' $file
  else cat $file
  fi
+ if [ -n "`grep 'par(' $file`" ]
+ then
+    echo 'par(.par.postscript)'
+ fi
 done
 ## 3) ---- Footer ----
+echo 'cat("Time elapsed:\t", proc.time() - .ptime,"\n")'
 echo "dev.off(); quit('no')"

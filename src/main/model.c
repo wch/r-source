@@ -1472,7 +1472,8 @@ static char *AppendInteger(char *buf, int i)
 
 SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	SEXP expr, factors, terms, v, vars, vnames, assign, xnames, tnames;
+	SEXP expr, factors, terms, v, vars, vnames, assign, xnames, tnames,
+		rnames;
 	SEXP count, contrast, contr1, contr2, nlevs, ordered, columns, x;
 	SEXP variable, var_i;
 	int fik, first, i, j, k, kk, ll, n, nc, nterms, nvar;
@@ -1530,6 +1531,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(length(vars) == 0)
 		errorcall(call, "don't know how many cases\n");
 	n = nrows(CAR(vars));
+	rnames = getAttrib(vars, R_RowNamesSymbol);
 
 		/* VECTOR ME */
 		/* We want random access to the variables */
@@ -1791,6 +1793,7 @@ alldone:
 		jstart = jnext;
 	}
 	PROTECT(tnames = allocList(2));
+	CAR(tnames) = rnames;
 	CADR(tnames) = xnames;
 	setAttrib(x, R_DimNamesSymbol, tnames);
 	setAttrib(x, install("assign"), assign);

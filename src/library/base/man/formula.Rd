@@ -6,15 +6,24 @@ formula(object)
 formula.default(anything)
 formula.formula(formula.obj)
 formula.terms(terms.obj)
+as.formula(object)
 }
 \alias{~}
 \alias{formula}
 \alias{formula.default}
 \alias{formula.formula}
 \alias{formula.terms}
+\alias{as.formula}
 \alias{print.formula}
 \description{
-The models fit by the \code{lm} and \code{glm} functions
+The generic function \code{formula} and its specific methods provide a
+way of extracting formulae which have been included in other objects.
+
+\code{as.formula} is almost identical, additionally preserving
+attributes when \code{object} already inherits from \code{"formula"}.
+}
+\details{
+The models fit by, e.g., the \code{\link{lm}} and \code{\link{glm}} functions
 are specified in a compact symbolic form.
 The \code{~} operator is basic in the formation of such models.
 An expression of the form \code{y~model} is interpreted
@@ -55,10 +64,6 @@ formula where the operators are used in their
 arithmetic sense.  For example, in the formula
 \code{y~a+I(b+c)}, the term \code{b+c} is to be
 interpreted as the sum of \code{b} and \code{c}.
-
-The generic function \code{formula} and its specific
-methods provide a way of extracting formulae
-which have been included in other objects.
 }
 \value{
 All the functions above produce an object

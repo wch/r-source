@@ -64,10 +64,11 @@ plot <- function(x, ...)
 UseMethod("plot")
 
 plot.default <-
-function (x, y=NULL, type="p", col=par("fg"), bg=NA, pch=par("pch"), xlim=NULL,
-	ylim=NULL, log="", axes=TRUE, frame.plot=axes, panel.first=NULL,
-	panel.last=NULL, ann=par("ann"), main=NULL, xlab=NULL, ylab=NULL,
-	cex=par("cex"), lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
+function (x, y=NULL, type="p", main=NULL, col=par("fg"), bg=NA,
+          pch=par("pch"), xlim=NULL, ylim=NULL, log="", axes=TRUE,
+          frame.plot=axes, panel.first=NULL, panel.last=NULL,
+          ann=par("ann"), xlab=NULL, ylab=NULL, cex=par("cex"),
+          lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
 {
  xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
  ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
@@ -105,7 +106,7 @@ function(x, y, ...) {
 plot.formula <-
 function(formula, data = NULL, subset, na.action, ..., ask = TRUE) {
   if (missing(na.action)) na.action <- options()$na.action
-  m <- match.call(expand.dots = F)
+  m <- match.call(expand.dots = FALSE)
   if (is.matrix(eval(m$data, sys.parent())))
     m$data <- as.data.frame(data)
   m$... <- NULL

@@ -15,28 +15,32 @@ function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
 		stop(paste("kernel must be a 'pmatch' of",
                            paste(k.list,collapse=', ')))
 	##if(! method %in% 1:4) stop("unknown density estimation kernel")
+        n.user <- n
+        n <- max(n, 512)
 	if(n > 512) n <- 2^ceiling(log2(n)) #- to be fast with FFT
 
 	if (missing(bw))
 	 bw <-
 	  if(missing(width))
-		adjust * 1.06 * min(sd (x, na.rm=has.na),
-                                    IQR(x, na.rm=has.na)/1.34) * N^-0.2
+		adjust * 0.9 * min(sd (x, na.rm=has.na),
+                                   IQR(x, na.rm=has.na)/1.34) * N^-0.2
 	  else 0.25 * width
 	if (missing(from))
 		from <- min(x, na.rm = has.na) - cut * bw
 	if (missing(to))
 		to   <- max(x, na.rm = has.na) + cut * bw
+        lo <- from - 4 * bw
+        up <- to + 4 * bw
 	y <- .C("massdist",
 		x = as.double(x),
 		nx= N,
-		xlo = as.double(from),
-		xhi = as.double(to),
+		xlo = as.double(lo),
+		xhi = as.double(up),
 		y = double(2 * n),
 		ny= as.integer(n),
                 NAOK = has.na) $ y
-	xords <- seq(from, by = (to - from)/(n - 1), length = 2 * n)
-	kords <- xords - from
+	xords <- seq(lo, up + (up-lo), length = 2 * n)
+	kords <- xords - lo
 	kords[(n + 2):(2 * n)] <- -kords[n:2]
 	kords <- switch(method,
                         dnorm(kords, sd = bw),# 1
@@ -49,16 +53,19 @@ function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
                                  (1+cos(kords/a))/(2*pi*a), 0)}# 4
                         )
 	kords <- convolve(y, kords)[1:n]
-	xords <- seq(from, by = (to - from)/(n - 1), length = n)
-	structure(list(x = xords, y = kords, bw = bw, n = N,
+	xords <- seq(lo, up, length = n)
+        keep <- (xords >= from) & (xords <= to)
+        x <- seq(from, to, length = n.user)
+	structure(list(x = x, y = approx(xords, kords, x)$y, bw = bw, n = N,
                        call=match.call(), data.name=name, has.na = has.na),
                   class="density")
 }
 
 plot.density <-
-function(s, main="", xlab=NULL, ylab="Density", type="l", ...)
+function(s, main=NULL, xlab=NULL, ylab="Density", type="l", ...)
 {
-	if(is.null(xlab)) xlab <- paste("Bandwidth =", s$bw)
+	if(is.null(xlab)) xlab <- paste("Bandwidth =", format(s$bw))
+	if(is.null(main)) main <- deparse(s$call)
 	plot.default(s, main=main, xlab=xlab, ylab=ylab, type=type, ...)
 }
 

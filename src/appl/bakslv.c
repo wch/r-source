@@ -1,130 +1,104 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997-1998  Robert Gentleman, Ross Ihaka and the R Core team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
 /* ../appl/bakslv.f -- translated by f2c (version of 1 June 1993  23:00:00).
-   You must link the resulting object file with the libraries:
-	-lf2c -lm   (in that order)
+
+  --- and hand edited by Martin Maechler.
 */
 
-#include "f2c.h"
+#include "Fortran.h"/*-> incl "Platform.h"*/
+#include "Linpack.h"/*-> incl.  Blas.h  */
 
-/* Table of constant values */
-
-static integer c__1 = 1;
-
-/* ----------------------------------------------------------------------- */
-
-/*  R : A COMPUTER LANGAGE FOR STATISTICAL DATA ANALYSIS */
-/*  COPYRIGHT (C) 1996  ROBERT GENTLEMAN AND ROSS IHAKA */
-
-/*  THIS PROGRAM IS FREE SOFTWARE; YOU CAN REDISTRIBUTE IT AND/OR MODIFY */
-/*  IT UNDER THE TERMS OF THE GNU GENERAL PUBLIC LICENSE AS PUBLISHED BY */
-/*  THE FREE SOFTWARE FOUNDATION; EITHER VERSION 2 OF THE LICENSE, OR */
-/*  (AT YOUR OPTION) ANY LATER VERSION. */
-
-/*  THIS PROGRAM IS DISTRIBUTED IN THE HOPE THAT IT WILL BE USEFUL, */
-/*  BUT WITHOUT ANY WARRANTY; WITHOUT EVEN THE IMPLIED WARRANTY OF */
-/*  MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  SEE THE */
-/*  GNU GENERAL PUBLIC LICENSE FOR MORE DETAILS. */
-
-/*  YOU SHOULD HAVE RECEIVED A COPY OF THE GNU GENERAL PUBLIC LICENSE */
-/*  ALONG WITH THIS PROGRAM; IF NOT, WRITE TO THE FREE SOFTWARE */
-/*  FOUNDATION, INC., 675 MASS AVE, CAMBRIDGE, MA 02139, USA. */
-
-/* ----------------------------------------------------------------------- */
-
-/* Subroutine */ int bkslv_(doublereal *t, integer *ldt, integer *n, 
-	doublereal *b, integer *ldb, doublereal *x, integer *job, integer *
-	info)
+void bakslv(double *t, int *ldt, int *n,
+	    double *b, int *ldb, int *nb,
+	    double *x, int *job, int *info)
 {
-    /* System generated locals */
-    integer t_dim1, t_offset, b_dim1, b_offset, x_dim1, x_offset, i__1;
 
-    /* Local variables */
-    static integer j;
-    extern /* Subroutine */ int dcopy_(integer *, doublereal *, integer *, 
-	    doublereal *, integer *), dtrsl_(doublereal *, integer *, integer 
-	    *, doublereal *, integer *, integer *);
+/* bakslv is a subroutine to solve triangular systems of
+ * the form
+ *		     t * x = b
+ * or
+ *		     t' * x = b		[ t' := transpose(t) ]
 
+ * where t is a triangular matrix of order n. here trans(t)
+ * denotes the transpose of the matrix t.  the subroutine
+ * handles the multiple right-hand side case.  it is really
+ * just a wrapper for the linpack subroutine dtrsl.
 
-/*     BACKSLV IS A SUBROUTINE TO SOLVE TRIANGULAR SYSTEMS OF */
-/*     THE FORM */
+ * on entry
 
-/*                   T * X = B */
-/*     OR */
-/*                   TRANS(T) * X = B */
+ *	t      double (ldt,n).
+ *	       t[] contains the coefficient matrix of the system
+ *	       to be solved.  only the elements above or below
+ *	       the diagonal are referenced.
 
-/*     WHERE T IS A TRIANGULAR MATRIX OF ORDER N. HERE TRANS(T) */
-/*     DENOTES THE TRANSPOSE OF THE MATRIX T.  THE SUBROUTINE */
-/*     HANDLES THE MULTIPLE RIGHT-HAND SIDE CASE.  IT IS REALLY */
-/*     JUST A WRAPPER FOR THE LINPACK SUBROUTINE DTRSL. */
-
-/*     ON ENTRY */
-
-/*        T      DOUBLE PRECISION(LDT,N). */
-/*               X CONTAINS THE COEFFICIENT MATRIX OF THE SYSTEM */
-/*               TO BE SOLVED.  ONLY THE ELEMENTS ABOVE OR BELOW */
-/*               THE DIAGONAL ARE REFERENCED. */
-
-/*        LDT    INTEGER */
-/*               LDT IS THE LEADING DIMENSION OF THE ARRAY T. */
+ *	ldt    int;	ldt is the leading dimension of the array t.
+ *	n      int;	n is the order of the system.  n <= min(ldt,ldb)
 
 
-/*        N      INTEGER */
-/*               N IS THE ORDER OF THE SYSTEM. */
+ *	b      double (ldb,nb)
+ *	       b[] contains the right hand side(s) of the system.
 
-/*        B      DOUBLE PRECISION(LDB,NB) */
-/*               B CONTAINS THE RIGHT HAND SIDE(S) OF THE SYSTEM. */
+ *	ldb    int;	ldb is the leading dimension of the array b.
+ *	nb     int;	the number of right hand sides of the system.
 
-/*        NB     INTEGER */
-/*               THE NUMBER OF RIGHT HAND SIDES OF THE SYSTEM. */
+ *	job    int;	job specifies what kind of system is to be solved.
+ *
+ *	       if job is
+ *
+ *		    00	 solve t  * x = b,	t lower triangular,
+ *		    01	 solve t  * x = b,	t upper triangular,
+ *		    10	 solve t' * x = b,	t lower triangular,
+ *		    11	 solve t' * x = b,	t upper triangular.
 
-/*        JOB    INTEGER */
-/*               JOB SPECIFIES WHAT KIND OF SYSTEM IS TO BE SOLVED. */
-/*               IF JOB IS */
+ * on return
 
-/*                    00   SOLVE T*X=B, T LOWER TRIANGULAR, */
-/*                    01   SOLVE T*X=B, T UPPER TRIANGULAR, */
-/*                    10   SOLVE TRANS(T)*X=B, T LOWER TRIANGULAR, */
-/*                    11   SOLVE TRANS(T)*X=B, T UPPER TRIANGULAR. */
+ *	x      double precision(ldb, nb)
+ *	       contains the solution(s) if info == 0.
 
-/*     ON RETURN */
+ *	info   int
+ *	       info contains zero if the system is nonsingular.
+ *	       otherwise info contains the index of
+ *	       the first zero diagonal element of t.
 
-/*        X      DOUBLE PRECISION(LDB, NB) */
-/*               CONTAINS THE SOLUTION(S) IF INFO .NE. 0. */
+ * subroutines and functions
 
-/*        INFO   INTEGER */
-/*               INFO CONTAINS ZERO IF THE SYSTEM IS NONSINGULAR. */
-/*               OTHERWISE INFO CONTAINS THE INDEX OF */
-/*               THE FIRST ZERO DIAGONAL ELEMENT OF T. */
+ *     linpack: dtrsl (t,ldt,n, b,job,info)
+ *     blas:	dcopy
+ */
 
-/*     SUBROUTINES AND FUNCTIONS */
+    /* INTERNAL VARIABLES. */
 
-/*     LINPACK DTRSL */
-/*     BLAS DAXPY,DCOPY,DDOT */
-/*     FORTRAN MOD */
+    static int c__1 = 1; /* constant */
+    int p, nn, j;
 
-/*     INTERNAL VARIABLES. */
+    p = *nb;
+    nn = *ldb;
 
-
-    /* Parameter adjustments */
-    x_dim1 = *ldb;
-    x_offset = x_dim1 + 1;
-    x -= x_offset;
-    b_dim1 = *ldb;
-    b_offset = b_dim1 + 1;
-    b -= b_offset;
-    t_dim1 = *ldt;
-    t_offset = t_dim1 + 1;
-    t -= t_offset;
-
-    /* Function Body */
-    i__1 = *n;
-    for (j = 1; j <= i__1; ++j) {
-	dcopy_(n, &b[j * b_dim1 + 1], &c__1, &x[j * x_dim1 + 1], &c__1);
-	dtrsl_(&t[t_offset], ldt, n, &x[j * x_dim1 + 1], job, info);
-	if (*info != 0) {
-	    return 0;
-	}
-/* L10: */
+    for (j = 0; j < p; ++j) {/* for each right-hand side */
+       F77_SYMBOL(dcopy)(n, &b[j * nn], &c__1,
+			    &x[j * nn], &c__1);
+       F77_SYMBOL(dtrsl)(t, ldt, n, &x[j * nn], job, info);
+       if (*info != 0) {
+	 return;
+       }
     }
-    return 0;
-} /* bkslv_ */
+    return;
+} /* bakslv */
 

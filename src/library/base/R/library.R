@@ -1,8 +1,11 @@
 require <- function(name, quietly = FALSE) {
   name <- as.character(substitute(name)) # allowing "require(eda)"
-  if (is.na(match(paste("package", name, sep=":"), search()))) {
+  if (!exists(".Provided", inherits = TRUE)) 
+    assign(".Provided", character(0), envir = .GlobalEnv)
+  if (is.na(match(paste("package", name, sep = ":"), search()))
+      && is.na(match(name, .Provided))) {
     if (!quietly)
-      cat("Autoloading required package:", name, "\n")
+      cat("Loading required package:", name, "\n")
     library(name, char = TRUE, logical = TRUE)
   }
   else

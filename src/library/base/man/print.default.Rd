@@ -8,7 +8,7 @@ print.atomic(x, quote = TRUE, \dots)
 \alias{print.default}
 \alias{print.atomic}
 \arguments{
-\item{digits}{A non-null value for \code{digits} specifies the number of
+\item{digits}{a non-null value for \code{digits} specifies the number of
   significant digits to be printed in values.  If \code{digits} is
   \code{NULL}, the value of \code{digits} set by \code{options} is
   used.}

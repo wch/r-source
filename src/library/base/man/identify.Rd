@@ -1,10 +1,12 @@
 \name{identify}
 \title{Identify Points in a Scatter Plot}
 \usage{
-identify(x, y = NULL, labels = seq(along = x), pos = FALSE,
+identify(x, \dots)
+identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
          n = length(x), plot = TRUE, offset = 0.5, \dots)
 }
 \alias{identify}
+\alias{identify.default}
 \arguments{
   \item{x,y}{coodinates of points in a scatter plot.  Alternatively, any
     object which can defines coordinates (a plotting structure, time
@@ -14,14 +16,11 @@ identify(x, y = NULL, labels = seq(along = x), pos = FALSE,
   \item{pos}{if \code{pos} is \code{TRUE}, a component is added to the
     return value which indicates where text was plotted relative to each
     identified point (1=below, 2=left, 3=above and 4=right).}
-  \item{n}{the maximum number of points to be identified.
-    (Not yet implemented.)}
+  \item{n}{the maximum number of points to be identified.}
   \item{plot}{if \code{plot} is \code{TRUE}, the labels are printed at
-    the points and if \code{FALSE} they are omitted.
-    (Not yet implemented.)}
+    the points and if \code{FALSE} they are omitted.}
   \item{offset}{the distance (in character widths) which separates the
-    label from identified points.
-    (Not yet implemented.)}
+    label from identified points.}
   \item{\dots}{further arguments to \code{par(.)}.}
 }
 \description{
@@ -31,8 +30,6 @@ identify(x, y = NULL, labels = seq(along = x), pos = FALSE,
   If this point is close to the pointer, its index will be returned as
   part of the value of the call.
 
-  \emph{The following, and the \code{n}, \code{ploy} and \code{offset}
-    arguments are \bold{not yet} implented}:
   If in addition, \code{plot} is \code{TRUE} the point is labelled with
   the corresponding element of \code{text}.
 

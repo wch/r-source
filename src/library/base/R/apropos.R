@@ -21,7 +21,7 @@ find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE) {
  if(!is.character(what))
 	what <- as.character(substitute(what))
  if(simple.words)
-        what <- gsub("\\.","\\\\.", paste("^",what,"$", sep=""))
+        what <- gsub("([.[])", "\\\\\\1", paste("^",what,"$", sep=""))
  len.s <- length(sp <- search())
  ind <- logical(len.s)
  if((check.mode <- mode != "any"))

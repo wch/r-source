@@ -20,7 +20,8 @@ then the value returned in the \code{i}-th position of the return value is
 an intuitive usage and returning a logical vector of length \code{length(x)}.
 }
 \seealso{
-\code{\link{pmatch}} for \emph{partial} string matching.
+\code{\link{pmatch}} and \code{\link{charmatch}} for (\emph{partial})
+string matching.
 }
 \examples{
 ## The intersection of two sets :
@@ -30,7 +31,9 @@ intersect(1:10,7:20)
 1:10 \%in\% c(1,3,5,9)
 sstr <- c("c","ab","B","bba","c","@","bla","a","Ba","\%")
 sstr[sstr \%in\% c(letters,LETTERS)]
+
+"\%w/o\%" <- function(x,y) x[!x \%in\% y] #--  x without y
+(1:10) \%w/o\% c(3,7,12)
 }
 \keyword{manip}
 \keyword{logic}
-

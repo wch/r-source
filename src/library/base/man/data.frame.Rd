@@ -20,6 +20,7 @@ plot(data.frame.obj)
 %- methods:
 \alias{row.names.default}
 \alias{row.names<-.data.frame}
+\alias{row.names<-.default}
 \alias{print.data.frame}
 \alias{plot.data.frame}
 %

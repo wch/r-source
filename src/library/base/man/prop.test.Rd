@@ -8,8 +8,7 @@ prop.test(x, n = NULL, p = NULL, alternative = "two.sided",
 \arguments{
   \item{x}{a vector of counts of successes or a matrix with 2 columns
     giving the counts of successes and failures, respectively.}
-  \item{n}{a vector of counts of trials; ignored if \code{x} is a
-    matrix.}
+  \item{n}{a vector of counts of trials; ignored if \code{x} is a matrix.}
   \item{p}{a vector of probabilities of success.  The length of \code{p}
     must be the same as the number of groups specified by \code{x}, and
     its elements must be greater than 0 and less than 1.}
@@ -85,5 +84,21 @@ prop.test(x, n = NULL, p = NULL, alternative = "two.sided",
   \item{method}{a character string indicating the method used, and
     whether Yates' continuity correction was applied.}
   \item{data.name}{a character string giving the names of the data.}
+}
+\examples{
+heads  <- rbinom(1, size=100, pr = .5)
+prop.test(heads, 100)# continuity correction: Here  TRUE  by default
+prop.test(heads, 100, correct = FALSE)
+
+
+## Data from Fleiss (1981), p. 139.
+## H0: The null hypothesis is that the four populations from which
+##     the patients were drawn have the same true proportion of smokers.
+## A:  The alternative is that this proportion is different in at
+##     least one of the populations.
+
+smokers  <- c( 83, 90, 129, 70 )
+patients <- c( 86, 93, 136, 82 )
+prop.test(smokers, patients)
 }
 \keyword{htest}

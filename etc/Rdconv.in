@@ -48,21 +48,27 @@ print stderr "RHOME: '$RHOME';  cwd='$cwd'\n" if $opt_debug;
 
 if($opt_type =~ /html/i){
     open(htmlout, "| cat");
+    Rdconv($ARGV[0],$opt_type,$opt_debug);
+    close(htmlout)
 }
-
-if($opt_type =~ /nroff/i){
+elsif($opt_type =~ /nroff/i){
     open(nroffout, "| cat");
+    Rdconv($ARGV[0],$opt_type,$opt_debug);
+    close(nroffout)
 }
-
-if($opt_type =~ /Sd/i){
+elsif($opt_type =~ /Sd/i){
     open(Sdout, "| cat");
+    Rdconv($ARGV[0],$opt_type,$opt_debug);
+    close(Sdout)
 }
-
-if($opt_type =~ /latex/i){
+elsif($opt_type =~ /latex/i){
     open(latexout, "| cat");
+    Rdconv($ARGV[0],$opt_type,$opt_debug);
+    close(latexout)
 }
-
-Rdconv($ARGV[0],$opt_type,$opt_debug);
+else {
+    Rdconv($ARGV[0],$opt_type,$opt_debug);
+}    
 
 
 

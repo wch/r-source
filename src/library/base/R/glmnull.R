@@ -45,7 +45,8 @@ function (x, digits = max(3, .Options$digits - 3), na.print = "",
         cat("Null Deviance:", format(signif(x$null.deviance, 
                 digits)), "\n")
         cat("Residual Deviance:", format(signif(x$deviance, digits)), 
-                "\n")
+                "\t")
+        cat("AIC:", format(signif(x$aic, digits)), "\n")
         invisible(x)
 }
 "print.summary.glm.null" <-
@@ -106,7 +107,7 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0,
         nobs), family = gaussian(), control = glm.control(), 
         intercept = NULL) 
 {
-        intercept <- FALSE
+        if(intercept) stop("null models have no intercept")
         ynames <- names(y)
         conv <- TRUE
         nobs <- NROW(y)
@@ -149,11 +150,12 @@ function (x, y, weights = rep(1, nobs), start = NULL, offset = rep(0,
         wtdmu <- linkinv(offset)
         nulldev <- sum(dev.resids(y, wtdmu, weights))
         # calculate df
-        nulldf <- nobs - as.numeric(intercept)
-        resdf <- nobs - sum(weights == 0)
+        resdf <- nulldf <- n.ok <- nobs - sum(weights==0)
+        aic.model <- family$aic(y, n, mu, weights, dev)
         return(list(coefficients = numeric(0), residuals = residuals, 
                 fitted.values = mu, rank = 0, family = family, 
-                linear.predictors = eta + offset, deviance = dev, 
+                linear.predictors = eta + offset, deviance = dev,
+                aic = aic.model,
                 null.deviance = nulldev, iter = 0, weights = w^2, 
                 prior.weights = weights, df.residual = resdf, 
                 df.null = nulldf, y = y, converged = conv, boundary = FALSE))

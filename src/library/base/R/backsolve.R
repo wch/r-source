@@ -1,19 +1,20 @@
-backsolve <-
-function(r, x, k=ncol(r))
+backsolve <- function(r, x, k=ncol(r))
 {
-	r <- as.matrix(r)
-	x <- as.matrix(x)
+	r <- as.matrix(r)# nr  x  k
+	x <- as.matrix(x)#  k  x  nb
 	if(k <= 0 || nrow(x) != k) stop("invalid parameters in backsolve")
-	z <- .Fortran("bkslv",
-		as.double(r),
-		nrow(r),
-		as.integer(k),
-		as.double(x),
-		as.integer(k),
-		y=matrix(0, k, ncol(x)),
-		as.integer(1),
-		info=integer(1),
-		DUP=FALSE)
+        nb <- ncol(x)
+	z <- .C("bakslv",
+                t  = as.double(r),
+                ldt= nrow(r),
+                n  = k,
+                b  = as.double(x),
+                ldb= k,
+                nb = nb,
+                x  = matrix(0, k, nb),
+                job= as.integer(1),
+                info= integer(1),
+                DUP= FALSE)
 	if(z$info != 0) stop("singular matrix in backsolve")
-	z$y
+	z$x
 }

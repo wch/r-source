@@ -6,8 +6,8 @@ package=r-base
 
 build:
 	dh_testdir
-	R_PAPERSIZE=letter CC=egcc CFLAGS="-Wall -g -O2" FFLAGS="-Wall -g -O2"\
-	 ./configure --prefix=/usr
+	R_PAPERSIZE=letter CFLAGS="-Wall -O2" FFLAGS="-Wall -O2"\
+	 SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr --with-g77
 	make 
 	make help
 	make html
@@ -32,6 +32,9 @@ binary-arch: build
 	dh_clean -k
 	dh_installdirs
 	make install prefix=`pwd`/debian/tmp/usr
+	sed -e '/^RHOME=.*/s::RHOME=/usr/lib/R:' \
+	    -e '/R.binary  /s::R.binary -v 8 -n 400000 :'\
+	  < bin/R > debian/tmp/usr/bin/R
 	dh_installdocs
 	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/html . &&\
 	  ln -s ../../lib/R/library .)

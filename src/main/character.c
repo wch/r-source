@@ -201,33 +201,25 @@ static SEXP stripchars(SEXP inchar, int minlen)
 
 	upper=strlen(buff1)-1;
 
-	for (i=upper; i>=0; i--) {
-		if( (buff1[i]=='a' || buff1[i]=='e' || buff1[i]=='i' ||
-			buff1[i]=='o' || buff1[i]=='u') ) {
-			if (i>0) {
-				if(!(isspace(buff1[i-1]) && isspace(buff1[i+1])) )
-					strcpy(&buff1[i],&buff1[i+1]);
-			}
-			else if(!isspace(buff1[i+1]))
-				strcpy(&buff1[i],&buff1[i+1]);
-		}
-		if(strlen(buff1)-nspace <= minlen)
-			goto donesc;
+	for (i=upper; i>0; i--) {
+	  if ((buff1[i]=='a' || buff1[i]=='e' || buff1[i]=='i' ||
+	       buff1[i]=='o' || buff1[i]=='u')) {
+	    if (!(isspace(buff1[i-1]) && isspace(buff1[i+1])))
+	      strcpy(&buff1[i],&buff1[i+1]);
+	  }
+	  if(strlen(buff1)-nspace <= minlen)
+	    goto donesc;
 	}
 
 	upper=strlen(buff1)-1;
 
 	for (i=upper; i>=0; i--) {
-		if ( islower(buff1[i]) ){
-			if(i>0) {
-				if(!(isspace(buff1[i-1]) &&isspace(buff1[i+1])) )
-					strcpy(&buff1[i],&buff1[i+1]);
-			}
-			else if(!isspace(buff1[i+1]))
-				strcpy(&buff1[i],&buff1[i+1]);
-		}
-		if(strlen(buff1)-nspace <= minlen)
-			goto donesc;
+	  if (islower(buff1[i])) {
+	    if (!(isspace(buff1[i-1]) &&isspace(buff1[i+1])))
+	      strcpy(&buff1[i],&buff1[i+1]);
+	  }
+	  if (strlen(buff1)-nspace <= minlen)
+	    goto donesc;
 	}
 
 	/* all else has failed so we use brute force */

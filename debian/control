@@ -6,7 +6,7 @@ Standards-Version: 2.4.0.0
 
 Package: r-base
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: perl, ${shlibs:Depends}
 Suggests: g77
 Description: `GNU S' - A language and environment for statistical computing.
  R is described by its authors as "not unlike" S, which is a language

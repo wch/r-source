@@ -77,7 +77,7 @@ if($opt_latex){
 
 print " >>> Building help pages for package `$pkg'\n";
 print "     Formats: ";
-print "nroff " if $opt_nroff;
+print "text " if $opt_nroff;
 print "html " if $opt_html;
 print "latex " if $opt_latex;
 print "\n";
@@ -91,39 +91,59 @@ if($opt_html){
     build_htmlfctlist($lib);
 }
 
+format STDOUT =
+  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<< @<<<<<< 
+  $manfilebase, $textflag, $htmlflag, $latexflag
+.
+
 foreach $manfile (@mandir) {
     if($manfile =~ /\.Rd$/i){
         $manfilebase = basename($manfile, (".Rd", ".rd"));
-	print "  $manfilebase";
+	$manage = (-M $manfile);
+
+	$textflag = "";
+	$htmlflag = "";
+	$latexflag = "";
 
 	if($opt_nroff){
 	    $destfile = "$dest/help/$manfilebase";
-	    open(nroffout, "| tbl | nroff -ms 2> /dev/null | " .
-		 " ${RHOME}/etc/help.pretty >$destfile");
-	    Rdconv($manfile, "nroff", "");# maybe $opt_debug
-	    close(nroffout);
+	    $destage = (-M $destfile);
+	    if(! ((-f $destfile) && ($destage < $manage))){
+		$textflag = "text";
+		open(nroffout, "| tbl | nroff -ms 2> /dev/null | " .
+		     " ${RHOME}/etc/help.pretty > '$destfile'");
+		Rdconv($manfile, "nroff", "");# maybe $opt_debug
+		close(nroffout);
+	    }
 	}
 
 	if($opt_html){
 	    my $targetfile = $anindex{$manfilebase};
 	    $destfile = "$dest/html/$targetfile.$HTML";
-	    print "\t$destfile" if $opt_debug;
-	    open(htmlout,">$destfile");
-	    Rdconv($manfile, "html", "");# maybe $opt_debug
-	    close(htmlout);
+	    $destage = (-M $destfile);
+	    if(! ((-f $destfile) && ($destage < $manage))){
+		$htmlflag = "html";
+		print "\t$destfile" if $opt_debug;
+		open(htmlout,">$destfile");
+		Rdconv($manfile, "html", "");# maybe $opt_debug
+		close(htmlout);
+	    }
 	}
 
 	if($opt_latex){
 	    $destfile = "$dest/latex/$manfilebase.tex";
-	    open(latexout,">$destfile");
-	    Rdconv($manfile, "latex", "");# maybe $opt_debug
-	    close(latexout);
+	    $destage = (-M $destfile);
+	    if(! ((-f $destfile) && ($destage < $manage))){
+		$latexflag = "latex";
+		open(latexout,">$destfile");
+		Rdconv($manfile, "latex", "");# maybe $opt_debug
+		close(latexout);
+	    }
 	}
 
-	print "\n";
+	write if ($textflag || $htmlflag || $latexflag);
     }
 }
-
 
 sub usage {
 

@@ -16,7 +16,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *
+ *  EXPORTS	printVector()
+ *	     	printNamedVector()
+ *	     	printRealVector()
+ *	     	printIntegerVector()
+ *	     	printComplexVector()
  *
  *  See ./printutils.c	 for remarks on Printing and the Encoding utils.
  *  See ./format.c	 for the formatXXXX functions used below.
@@ -55,7 +59,7 @@ static void printLogicalVector(int *x, int n, int index)
     Rprintf("\n");
 }
 
-static void printIntegerVector(int *x, int n, int index)
+void printIntegerVector(int *x, int n, int index)
 {
     int i, w, labwidth=0, width;
 

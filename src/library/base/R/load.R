@@ -7,5 +7,5 @@ save <- function(..., list = character(0), file = "", ascii = FALSE) {
 	invisible(.Internal(save( list, file, ascii)))
 }
 
-save.image <- function()
-  save(list = ls(), file = ".RData")
+save.image <- function (f = ".RData") 
+    eval(substitute(save(list = ls(), file = f)), .GlobalEnv)

@@ -291,12 +291,12 @@ static SEXP binary(SEXP op, SEXP args)
      * -----  We might be trashing arguments here.
      * If we have NAMED(x) or NAMED(y) we should duplicate!
      */
-    if( xarray || (yarray && !(xarray*yarray)) ) {
-	if(xarray && length(x)==1) {
+    if( xarray != yarray ) {
+	if(xarray && length(x)==1 && length(y)!=1) {
 	    x = CAR(args) = duplicate(x);
 	    setAttrib(x, R_DimSymbol, R_NilValue);
 	}
-	if(yarray && length(y)==1) {
+	if(yarray && length(y)==1 && length(x)!=1) {
 	    y = CADR(args) = duplicate(y);
 	    setAttrib(y, R_DimSymbol, R_NilValue);
 	}

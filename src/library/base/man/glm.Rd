@@ -7,7 +7,7 @@ glm(formula, family=gaussian, data, weightst=NULL, subsett=NULL,
         model = TRUE, method = "glm.fit", x = FALSE, y = TRUE)
 glm.control(epsilon=0.0001, maxit=10, trace=FALSE)
 glm.fit(x, y, weights=rep(1, nrow(x)),
-        start=NULL, offset=rep(0, nrow(x)),
+        start=NULL, etastart = NULL, offset=rep(0, nrow(x)),
         family=gaussian(), control=glm.control(),
         intercept=TRUE)
 }
@@ -36,6 +36,7 @@ glm.fit(x, y, weights=rep(1, nrow(x)),
   observations.}
 \item{start}{starting values for the parameters in the
   linear predictor.}
+\item{etastart}{starting values for the linear predictor.}
 \item{offset}{this can be used to specify an a-priori
   known component to be included in the linear predictor
   during fitting.}
@@ -57,9 +58,12 @@ Models for \code{glm} are specified by giving
 a symbolic description of the linear predictor and
 a description of the error distribution.
 A typical predictor has the form
-\code{reponse ~ terms} where \code{response} is the (numeric)
+\code{response ~ terms} where \code{response} is the (numeric)
 response vector and \code{terms} is a series of terms which
-specifies a linear predictor for \code{response}.
+specifies a linear predictor for \code{response}. For \code{binomial}
+models the response can also be specified as a factor (when the first
+level denotes failure and all others success) or as a two-column matrix
+with the columns giving the numbers of successes and failures.
 A terms specification of the form \code{first+second}
 indicates all the terms in \code{first} together
 with all the terms in \code{second} with duplicates

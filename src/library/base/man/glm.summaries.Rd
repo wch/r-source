@@ -8,13 +8,13 @@ anova.glmlist(object, test = NULL, na.action = na.omit)
 coefficients(x) ; coef(x)
 deviance(x)
 df.residual(x)
-effects(x)
 family(x)
 fitted.values(x) ; fitted(x)
 residuals(x, type="deviance")
 
 print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
-              na.print="", symbolic.cor = p > 4, signif.stars= TRUE, ...)
+              na.print="", symbolic.cor = p > 4,
+	      signif.stars= .Options$show.signif.stars, ...)
 }
 \alias{summary.glm}
 \alias{summary.glm.null}
@@ -24,7 +24,6 @@ print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
 \alias{coefficients.glm}
 \alias{deviance.glm}
 \alias{df.residual.glm}
-\alias{effects.glm}
 \alias{family.glm}
 \alias{fitted.values.glm}
 \alias{residuals.glm}

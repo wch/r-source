@@ -6,7 +6,7 @@
 ROUTINES="appl/ROUTINES"
 
 sed '
-s/F77_SUBROUTINE(\(.*\))/int \1_();/
+s/F77_SUBROUTINE(\(.*\))/int F77_SYMBOL(\1)();/
 s/C_FUNCTION(\(.*\))/int \1();/
 ' ${ROUTINES} > /tmp/FFDecl.h
 
@@ -24,7 +24,7 @@ fi
 
 
 sed '
-s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/
+s/F77_SUBROUTINE(\(.*\))/       { F77_QSYMBOL(\1),        F77_SYMBOL(\1)},/
 s/C_FUNCTION(\(.*\))/	{ "\1",	\1 },/
 ' ${ROUTINES} > /tmp/FFTab.h
 

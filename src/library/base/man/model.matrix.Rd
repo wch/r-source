@@ -1,17 +1,21 @@
 \name{model.matrix}
 \title{Construct design matrices}
 \usage{
-model.matrix(object, \dots)
-model.matrix.default(formula, data, contrasts=NULL)
+model.matrix   (object, \dots)
+model.matrix.lm(object, \dots)
+model.matrix.default(formula, data, contrasts.arg = NULL, xlev = NULL)
 }
 \alias{model.matrix}
 \alias{model.matrix.default}
+\alias{model.matrix.lm}
 \arguments{
   \item{formula}{a model formula or terms object.}
   \item{data}{a data frame created with \code{\link{model.frame}}.}
-  \item{contrasts}{A list, whose entries are contrasts suitable for
+  \item{contrasts.arg}{A list, whose entries are contrasts suitable for
     input to the \code{\link{contrasts}} function and whose names are
     the names of columns of \code{data} containing \code{\link{factor}}s.}
+  \item{xlev}{to be used as argument of \code{\link{model.frame}} if
+    \code{data} has no \code{"terms"} attribute.}
 }
 \description{
   Creates a design matrix from the description given in

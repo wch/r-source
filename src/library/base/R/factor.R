@@ -1,5 +1,5 @@
 "factor" <- function (x, levels = sort(unique(x), na.last = TRUE),
-	labels=levels, exclude = NA, ordered = FALSE)
+	labels=levels, exclude = NA, ordered = is.ordered(x))
 {
   if (length(x) == 0)
     return(character(0))
@@ -25,7 +25,7 @@ nlevels <- function(x) length(levels(x))
 
 "levels<-" <- function(x, value) {
   x <- as.factor(x)
-  if (length(value) != nlevels(x)) 
+  if (length(value) != nlevels(x))
     stop("Length mismatch in levels<-")
   value <- as.character(value)
   uvalue <- unique(value)
@@ -38,8 +38,10 @@ codes.factor <- function(x)
 {
   ## This is the S-plus semantics.
   ## The deeper meaning? Search me...
-  order(levels(x))[x]
+  rank(levels(x))[x]
 }
+
+codes.ordered <- .Alias(as.integer)
 
 "codes<-" <- function(x, value)
 {
@@ -48,8 +50,8 @@ codes.factor <- function(x)
   else if ( length(x) != length(value) )
     stop("Length mismatch in \"codes<-\"")
   ## S-plus again...
-  value<-rank(levels(x))[value]
-  attributes(value)<-attributes(x)
+  if ( !is.ordered(x) ) value <- order(levels(x))[value]
+  attributes(value) <- attributes(x)
   value
 }
 
@@ -64,20 +66,23 @@ codes.factor <- function(x)
 }
 
 
-"print.factor" <-
-  function (x, quote=FALSE) {
-    if(length(x) <= 0)
-      cat("factor(0)\n")
-    else
-      print(levels(x)[x], quote=quote)
-    cat("Levels: ",paste(levels(x), collapse=" "), "\n")
-  }
+print.factor <- function (x, quote=FALSE)
+{
+  if(length(x) <= 0)
+    cat("factor(0)\n")
+  else
+    print(levels(x)[x], quote=quote)
+  cat("Levels: ",paste(levels(x), collapse=" "), "\n")
+}
 
 
-"Math.factor" <- function(e1,e2)
-	stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+Math.factor <- function(x, ...)
+ 	stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
 
-"Ops.factor" <- function(e1, e2)
+Summary.factor <- function(x, ...)
+        stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+
+Ops.factor <- function(e1, e2)
 {
   ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
   if (!ok) stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
@@ -98,12 +103,12 @@ codes.factor <- function(x)
   value
 }
 
-"[.factor" <- function(x, i)
+"[.factor" <- function(x, i, drop=FALSE)
 {
   y <- NextMethod("[")
-  class(y)<-"factor"
+  class(y)<-class(x)
   attr(y,"levels")<-attr(x,"levels")
-  y
+  if ( drop ) factor(y) else y
 }
 
 "[<-.factor" <- function(x, i, value)
@@ -126,28 +131,24 @@ codes.factor <- function(x)
 
 ## ordered factors ...
 
-ordered <- function (x, levels = sort(unique(x), na.last = TRUE),
-	labels=levels, exclude = NA, ordered = TRUE)
+ordered <-
+function (x, levels = sort(unique(x), na.last = TRUE), labels = levels,
+          exclude = NA, ordered = TRUE)
 {
-  if (is.ordered(x)) return(x)
-  if (is.factor(x)) {
-    class(x) <- c("ordered", class(x))
-    return(x)
-  }
   if (length(x) == 0)
     return(character(0))
   exclude <- as.vector(exclude, typeof(x))
   levels <- levels[is.na(match(levels, exclude))]
-
-  f <- match(x, levels)
+  f <- match(as.character(x), levels)
   names(f) <- names(x)
-  attr(f, "levels") <- if (length(labels) == length(levels))
-    as.character(labels)
-  else if(length(labels) == 1)
-    paste(labels, seq(along = levels), sep = "")
-  else
-    stop("invalid labels argument in \"ordered\"")
-  attr(f, "class") <- c(if(ordered)"ordered", "factor")
+  attr(f, "levels") <-
+    if (length(labels) == length(levels))
+      as.character(labels)
+    else if (length(labels) == 1)
+      paste(labels, seq(along = levels), sep = "")
+    else
+      stop("invalid labels argument in \"ordered\"")
+  attr(f, "class") <- c(if (ordered) "ordered", "factor")
   f
 }
 

@@ -37,9 +37,17 @@ lchoose(n,k)
   The functions \code{digamma}, \code{trigamma}, \code{tetragamma} and
   \code{pentagamma} return the first, second, third and fourth
   derivatives of the logarithm of the gamma function.
+  \deqn{\code{digamma(x)} = \psi(x) = \frac{d}{dx}\ln\Gamma(x) =
+    \frac{\Gamma'(x)}{\Gamma(x)}}{%
+    \code{digamma(x)} = psi(x) = d/dx {ln Gamma(x)} = Gamma'(x) / Gamma(x)}
 
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and their logarithms.
+}
+\references{
+  Abramowitz, M. and Stegun, I. A. (1972).\cr
+  \emph{Handbook of Mathematical Functions}, Dover, New York;\cr
+  Chapter 6: Gamma and Related Functions.
 }
 \seealso{
 \code{\link{Arithmetic}} for simple and \code{\link{Math}} for miscellaneous
