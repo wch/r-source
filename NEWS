@@ -102,6 +102,10 @@ NEW FEATURES
      o	load() now returns invisibly a character vector of the names
 	of the objects which were restored.
 
+     o	It is now recommended to use the 'SystemRequirements:' field in
+	the DESCRIPTION file for specifying dependencies external to the
+	R system.
+
 
 INSTALLATION CHANGES
 
@@ -136,6 +140,23 @@ INSTALLATION CHANGES
 
     o	Perl requirements are down again to 5.004 or newer.
 
+    o	Autoconf 2.57 or later is required to build the configure
+	script.
+
+    o	Configure provides a more comprehensive summary of its results.
+
+    o	Index generation now happens when installing source packages
+	using R code in package tools.  An existing 'INDEX' file is used
+	as is; otherwise, it is automatically generated from the \name
+	and \title entries in the Rd files.  Data, demo and vignette
+	indices are computed from all available files of the respective
+	kind, and the corresponding index information (in the Rd files,
+	the 'demo/00Index' file, and the \VignetteIndexEntry{} entries,
+	respectively).  These index files, as well as the package Rd
+	contents data base, are serialized as R objects, allowing for
+	faster and more reliable index-based computations (e.g., in
+	help.search()).
+
 
 DEPRECATED & DEFUNCT
 
@@ -152,6 +173,16 @@ DEPRECATED & DEFUNCT
 
     o	The deprecated arguments `pkg' and `lib' of system.file() have
 	been removed.
+
+
+UTILITIES
+
+    o	R CMD check more compactly displays the tests of DESCRIPTION
+	meta-information.  It now reports demos and vignettes without
+	available index information.  Unless installation tests are
+	skipped, checking is aborted if the package dependencies cannot
+	be resolved at run time.  Rd files are now also explicitly
+	checked for empty \name and \title entries.
 
 
 BUG FIXES
