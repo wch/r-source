@@ -217,9 +217,9 @@ The file @file{INDEX} contains a line for each sufficiently interesting
 object in the package, giving its name and a description (functions such
 as print methods not usually called explicitly might not be included).
 Note that you can automatically create this file using something like
-@code{R CMD Rdindex man > INDEX}, provided that Perl is available on
-your system, or use the package builder (@pxref{Checking and building
-packages}) to do so.
+@code{R CMD Rdindex man > INDEX}, provided that Perl (5.005 or later) is
+available on your system, or use the package builder (@pxref{Checking
+and building packages}) to do so.
 
 @node Package subdirectories, Package bundles, The INDEX file, Package structure
 @subsection Package subdirectories
@@ -286,8 +286,8 @@ describes the datasets available.  Ideally this should have a one-line
 description of each dataset, with full documentation in the @file{man}
 directory.  Note that you can automatically create this file using
 something like @code{R CMD Rdindex --data man > data/00Index}, provided
-that Perl is available on your system, or use the package builder
-(@pxref{Checking and building packages}) to do so.
+that Perl (5.005 or later) is available on your system, or use the
+package builder (@pxref{Checking and building packages}) to do so.
 
 The @file{demo} subdirectory is for @R{} scripts (for running via
 @code{demo()}) which demonstrate some of the functionality of the
