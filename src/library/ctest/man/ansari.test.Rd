@@ -53,6 +53,15 @@ ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
   \item{conf.int}{a confidence interval for the scale parameter.
     (Only present if argument \code{conf.int = TRUE}.)}
 }
+\note{
+  To compare results of the Ansari-Bradley test to those of the F test
+  to compare two variances (under the assumption of normality), observe
+  that \eqn{s} is the ratio of scales and hence \eqn{s^2} is the ratio
+  of variances (provided they exist), whereas for the F test the ratio
+  of variances itself is the parameter of interest.  In particular,
+  confidence intervals are for \eqn{s} in the Ansari-Bradley test but
+  for \eqn{s^2} in the F test.
+}
 \references{
   Myles Hollander & Douglas A. Wolfe (1973),
   \emph{Nonparametric statistical inference}.
