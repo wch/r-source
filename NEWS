@@ -215,6 +215,9 @@ NEW FEATURES
 
     o	read.table() now uses a single pass through the dataset.
 
+    o	R CMD check now also checks the keyword entries against the list
+	of standard keywords.
+
 
 
 BUG FIXES
