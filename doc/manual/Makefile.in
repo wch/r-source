@@ -99,7 +99,7 @@ info: R-exts.info
 R-exts.info: R-exts.texi
 
 pdf: refman.pdf R-exts.pdf
-refman.pdf: refman.tex Version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
+refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
 	@echo "PDF LaTeX documentation: Reference Index ..."
 	@rm -f *.aux refman.toc refman.ind
 	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
