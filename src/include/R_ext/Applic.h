@@ -177,28 +177,96 @@ void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 typedef double (*D_fp)();
 typedef /* Subroutine */ int (*S_fp)();
 
-/* ../appl/blas.f ---> see also ./Linpack.h - "extern"s all of BLAS+Linpack*/
-double F77_NAME(dasum)(int *n, double *dx, int *incx);
-int F77_NAME(daxpy)(int *n, double *da, double *dx, int *incx,
-		    double *dy, int *incy);
-int F77_NAME(dcopy)(int *n, double *dx, int *incx, double *dy, int *incy);
-double F77_NAME(ddot)(int *n, double *dx, int *incx, double *dy, int *incy);
-double F77_NAME(dmach)(int *job);
-double F77_NAME(dnrm2)(int *n, double *x, int *incx);
-int F77_NAME(drot)(int *n, double *dx, int *incx, double *dy, int *incy,
-		   double *c__, double *s);
-int F77_NAME(drotg)(double *da, double *db, double *c__, double *s);
-int F77_NAME(dscal)(int *n, double *da, double *dx, int *incx);
-int F77_NAME(dswap)(int *n, double *dx, int *incx, double *dy, int *incy);
-int F77_NAME(idamax)(int *n, double *dx, int *incx);
-int F77_NAME(dgemm)(char *transa, char *transb, int *m, int *n, int *k,
-		    double *alpha, double *a, int *lda, double *b, int *ldb,
-		    double *beta, double *c, int *ldc);
-int F77_NAME(dtrsm)(const char* side, const char* uplo,
-		    const char* transa, const char* diag,
-		    const int* m, const int* n,
-		    const double* alpha, const double *a, const int* lda,
-		    double *b, const int* ldb);
+/* ../appl/blas.f ---> see also ./Linpack.h */
+extern double
+F77_NAME(dasum)(int *, double *, int *);
+extern int
+F77_NAME(daxpy)(int *, double *, double *, int *, double *, int *);
+extern int 
+F77_NAME(dcopy)(int *, double *, int *, double *, int *);
+extern double
+F77_NAME(ddot)(int *, double *, int *, double *, int *);
+extern int
+F77_NAME(dgbmv)(char *, int *, int *, int *, int *, double *, double *,
+		int *, double *, int *, double *, double *, int *);
+extern int
+F77_NAME(dgemm)(char *, char *, int *, int *, int *, double *, double *, int *,
+	double *, int *, double *, double *, int *);
+extern int
+F77_NAME(dgemv)(char *, int *, int *, double *, double *, int *, double *, 
+		int *, double *, double *, int *);
+extern int
+F77_NAME(dger)(int *, int *, double *, double *, int *, double *, int *, 
+	       double *, int *);
+extern double
+F77_NAME(dnrm2)(int *, double *, int *incx);
+extern int
+F77_NAME(drot)(int *, double *, int *, double *, int *, double *, double *);
+extern int
+F77_NAME(drotg)(double *, double *, double *, double *);
+extern int
+F77_NAME(drotm)(int *, double *, int *, double *, int *, double *);
+extern int
+F77_NAME(drotmg)(double *dd1, double *dd2, double * dx1, double *, double *);
+extern int
+F77_NAME(dsbmv)(char *, int *, int *, double *, double *, int *, double *, 
+		int *, double *, double *, int *);
+extern int
+F77_NAME(dscal)(int *, double *, double *, int *);
+extern int
+F77_NAME(dspmv)(char *, int *, double *, double *, double *, int *, double *, 
+		double *, int *);
+extern int
+F77_NAME(dspr)(char *, int *, double *, double *, int *, double *);
+extern int
+F77_NAME(dspr2)(char *, int *, double *, double *, int *, double *, int *, 
+		double *);
+extern int
+F77_NAME(dswap)(int *, double *, int *, double *, int *);
+extern int
+F77_NAME(dsymm)(char *, char *, int *, int *, double *, double *, int *, 
+		double *, int *, double *, double *, int *);
+extern int
+F77_NAME(dsymv)(char *, int *, double *, double *, int *, double *, int *, 
+		double *, double *, int *);
+extern int
+F77_NAME(dsyr)(char *, int *, double *, double *, int *, double *, int *);
+extern int
+F77_NAME(dsyr2)(char *, int *, double *, double *, int *, double *, 
+		int *, double *, int *);
+extern int
+F77_NAME(dsyr2k)(char *, char *, int *, int *, double *, double *, int *, 
+		 double *, int *, double *, double *, int *);
+extern int
+F77_NAME(dsyrk)(char *, char *, int *, int *, double *, double *, int *, 
+		double *, double *, int *);
+extern int
+F77_NAME(dtbmv)(char *, char *, char *, int *, int *, double *, int *, 
+		double *, int *);
+extern int
+F77_NAME(dtbsv)(char *, char *, char *, int *, int *, double *, int *, 
+		double *, int *);
+extern int
+F77_NAME(dtpmv)(char *, char *, char *, int *, double *, double *, int *);
+extern int
+F77_NAME(dtpsv)(char *, char *, char *, int *, double *, double *, int *);
+extern int
+F77_NAME(dtrmm)(char *, char *, char *, char *, int *, int *, double *, 
+		double *, int *, double *, int *);
+extern int
+F77_NAME(dtrmv)(char *, char *, char *, int *, double *, int *, double *, 
+		int *);
+extern int
+F77_NAME(dtrsm)(char *, char *, char *, char *, int *, int *, double *, 
+		double *, int *, double *, int *);
+extern int
+F77_NAME(dtrsv)(char *, char *, char *, int *, double *, int *, double *, 
+		int *);
+extern int
+F77_NAME(idamax)(int *, double *, int *);
+extern int
+F77_NAME(lsame)(char *, char *);
+
 /*----*/
 int F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
 int F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
@@ -281,23 +349,23 @@ void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
 typedef double optimfn(int, double *, void *);
 typedef void optimgr(int, double *, double *, void *);
 
-void vmmin(int n, double *b, double *Fmin, 
+void vmmin(int n, double *b, double *Fmin,
 	   optimfn fn, optimgr gr, int maxit, int trace,
 	   int *mask, double abstol, double reltol, int nREPORT,
 	   void *ex, int *fncount, int *grcount, int *fail);
-void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fn, 
+void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fn,
 	   int *fail, double abstol, double intol, void *ex,
 	   double alpha, double beta, double gamm, int trace,
 	   int *fncount, int maxit);
 void cgmin(int n, double *Bvec, double *X, double *Fmin,
-	   optimfn fn, optimgr gr, 
+	   optimfn fn, optimgr gr,
 	   int *fail, double abstol, double intol, void *ex,
 	   int type, int trace, int *fncount, int *grcount, int maxit);
 void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *Fmin, optimfn fn, optimgr gr, int *fail, void *ex,
 	    double factr, double pgtol, int *fncount, int *grcount,
 	    int maxit, char *msg, int trace, int nREPORT);
-void samin(int n, double *pb, double *yb, optimfn fn, int maxit, 
+void samin(int n, double *pb, double *yb, optimfn fn, int maxit,
 	   int tmax, double ti, int trace, void *ex);
 
 #ifdef  __cplusplus

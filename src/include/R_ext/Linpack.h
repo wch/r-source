@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1997        Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2001   The R Development Core Team.
+ *  Copyright (C) 1999-2002   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -30,17 +30,94 @@ extern "C" {
 
 	/* Double Precision Blas */
 
-extern double F77_NAME(dasum)(int*, double*, int*);
-extern int    F77_NAME(daxpy)(int*, double*, double*, int*, double*, int*);
-extern int    F77_NAME(dcopy)(int*, double*, int*, double*, int*);
-extern double F77_NAME(ddot)(int*, double*, int*, double*, int*);
-extern double F77_NAME(dmach)(int*);
-extern double F77_NAME(dnrm2)(int*, double*, int*);
-extern int    F77_NAME(drot)(int*, double*, int*, double*, int*, double*, double*);
-extern int    F77_NAME(drotg)(double*, double*, double*, double*);
-extern int    F77_NAME(dscal)(int*, double*, double*, int*);
-extern int    F77_NAME(dswap)(int*, double*, int*, double*, int*);
-extern int    F77_NAME(idamax)(int*, double*, int*);
+extern double
+F77_NAME(dasum)(int *, double *, int *);
+extern int
+F77_NAME(daxpy)(int *, double *, double *, int *, double *, int *);
+extern int 
+F77_NAME(dcopy)(int *, double *, int *, double *, int *);
+extern double
+F77_NAME(ddot)(int *, double *, int *, double *, int *);
+extern int
+F77_NAME(dgbmv)(char *, int *, int *, int *, int *, double *, double *,
+		int *, double *, int *, double *, double *, int *);
+extern int
+F77_NAME(dgemm)(char *, char *, int *, int *, int *, double *, double *, int *,
+	double *, int *, double *, double *, int *);
+extern int
+F77_NAME(dgemv)(char *, int *, int *, double *, double *, int *, double *, 
+		int *, double *, double *, int *);
+extern int
+F77_NAME(dger)(int *, int *, double *, double *, int *, double *, int *, 
+	       double *, int *);
+extern double
+F77_NAME(dnrm2)(int *, double *, int *incx);
+extern int
+F77_NAME(drot)(int *, double *, int *, double *, int *, double *, double *);
+extern int
+F77_NAME(drotg)(double *, double *, double *, double *);
+extern int
+F77_NAME(drotm)(int *, double *, int *, double *, int *, double *);
+extern int
+F77_NAME(drotmg)(double *dd1, double *dd2, double * dx1, double *, double *);
+extern int
+F77_NAME(dsbmv)(char *, int *, int *, double *, double *, int *, double *, 
+		int *, double *, double *, int *);
+extern int
+F77_NAME(dscal)(int *, double *, double *, int *);
+extern int
+F77_NAME(dspmv)(char *, int *, double *, double *, double *, int *, double *, 
+		double *, int *);
+extern int
+F77_NAME(dspr)(char *, int *, double *, double *, int *, double *);
+extern int
+F77_NAME(dspr2)(char *, int *, double *, double *, int *, double *, int *, 
+		double *);
+extern int
+F77_NAME(dswap)(int *, double *, int *, double *, int *);
+extern int
+F77_NAME(dsymm)(char *, char *, int *, int *, double *, double *, int *, 
+		double *, int *, double *, double *, int *);
+extern int
+F77_NAME(dsymv)(char *, int *, double *, double *, int *, double *, int *, 
+		double *, double *, int *);
+extern int
+F77_NAME(dsyr)(char *, int *, double *, double *, int *, double *, int *);
+extern int
+F77_NAME(dsyr2)(char *, int *, double *, double *, int *, double *, 
+		int *, double *, int *);
+extern int
+F77_NAME(dsyr2k)(char *, char *, int *, int *, double *, double *, int *, 
+		 double *, int *, double *, double *, int *);
+extern int
+F77_NAME(dsyrk)(char *, char *, int *, int *, double *, double *, int *, 
+		double *, double *, int *);
+extern int
+F77_NAME(dtbmv)(char *, char *, char *, int *, int *, double *, int *, 
+		double *, int *);
+extern int
+F77_NAME(dtbsv)(char *, char *, char *, int *, int *, double *, int *, 
+		double *, int *);
+extern int
+F77_NAME(dtpmv)(char *, char *, char *, int *, double *, double *, int *);
+extern int
+F77_NAME(dtpsv)(char *, char *, char *, int *, double *, double *, int *);
+extern int
+F77_NAME(dtrmm)(char *, char *, char *, char *, int *, int *, double *, 
+		double *, int *, double *, int *);
+extern int
+F77_NAME(dtrmv)(char *, char *, char *, int *, double *, int *, double *, 
+		int *);
+extern int
+F77_NAME(dtrsm)(char *, char *, char *, char *, int *, int *, double *, 
+		double *, int *, double *, int *);
+extern int
+F77_NAME(dtrsv)(char *, char *, char *, int *, double *, int *, double *, 
+		int *);
+extern int
+F77_NAME(idamax)(int *, double *, int *);
+extern int
+F77_NAME(lsame)(char *, char *);
 
 	/* Double Precision Linpack */
 
@@ -56,6 +133,7 @@ extern int F77_NAME(dqrsl)(double*, int*, int*, int*, double*, double*, double*,
 extern int F77_NAME(dsvdc)(double*, int*, int*, int*, double*, double*, double*, int*, double*, int*, double*, int*, int*);
 extern int F77_NAME(dtrco)(double*, int*, int*, double*, double*, int*);
 extern int F77_NAME(dtrsl)(double*, int*, int*, double*, int*, int*);
+
 
 /* The following routines are listed as they have always been declared
    here, but they are not currently included in R */

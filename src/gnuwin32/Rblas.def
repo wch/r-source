@@ -4,12 +4,29 @@ EXPORTS
  daxpy_
  dcopy_
  ddot_
+ dgbmv_;
  dgemm_
+ dgemv_;
+ dger_;
  dnrm2_
  drot_
  drotg_
+ drotm_;
+ drotmg_;
+ dsbmv_;
  dscal_
  dswap_
+ dspmv_;
+ dspr_;
+ dspr2_;
+ dspmv_;
+ dsymm_;
+ dsymv_;
+ dsyr_;
+ dsyr2_;
+ dsyr2k_;
+ dsyrk_;
+ dtbmv_;
  dtrsm_
  idamax_
  lsame_
@@ -19,8 +36,15 @@ EXPORTS
  dsymv_
  dsyr2_
  dsyr2k_
+ dsyrk_
+ dtbmv_;
+ dtbsv_;
+ dtpmv_;
+ dtpsv_;
  dtrmm_
  dtrmv_
+ dtrsv_;
+ dtrsm_;
  dtrsv_
  dzasum_
  dznrm2_
