@@ -91,7 +91,9 @@ NEW FEATURES
 	now need to use unloadNamespace("tcltk").
 
     o	Using UseMethod() with more than two arguments now gives a 
-	warning (as R-langs.texi has long claimed it did).
+	warning (as R-lang.texi has long claimed it did).
+
+    o	Standalone Rmath now has a get_seed function as requested (PR#3160). 
 
 
 DEPRECATED & DEFUNCT

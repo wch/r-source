@@ -5175,14 +5175,21 @@ double unif_rand(void)
 @noindent
 or use the one supplied (and with a shared library or DLL you will have
 to use the one supplied, which is the Marsaglia-multicarry with an entry
-point
+points
 
 @smallexample
 set_seed(unsigned int, unsigned int)
 @end smallexample
 
 @noindent
-to set its seeds).
+to set its seeds and
+
+@smallexample
+get_seed(unsigned int *, unsigned int *)
+@end smallexample
+
+@noindent
+to read the seeds).
 
 @node Generic functions and methods, R (internal) programming miscellanea, The R API, Top
 @chapter Generic functions and methods

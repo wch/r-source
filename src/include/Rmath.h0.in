@@ -320,6 +320,7 @@ double	unif_rand(void);
 double	exp_rand(void);
 #ifdef MATHLIB_STANDALONE
 void	set_seed(unsigned int, unsigned int);
+void	get_seed(unsigned int *, unsigned int *);
 #endif
 
 	/* Normal Distribution */
