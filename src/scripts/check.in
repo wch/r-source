@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.177.2.4 $ ';
+my $revision = ' $Revision: 1.177.2.5 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -738,7 +738,7 @@ sub check_pkg {
 		    break;
 		}
 	    }
-	    if($found != 0) {
+	    if(!$found) {
 		$log->error();
 		$log->print("Invalid Priority field.\n");
 		$log->print(wrap("", "",
