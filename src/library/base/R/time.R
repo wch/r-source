@@ -1,6 +1,7 @@
-system.time <- function(expr) {
+system.time <- function(expr, gcFirst = FALSE) {
     if(!exists("proc.time")) return(rep(as.numeric(NA), 5))
     loc.frame <- parent.frame()
+    if(gcFirst)  gc(FALSE)
     on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
     expr <- substitute(expr)
     time <- proc.time()

@@ -17,6 +17,9 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   system.time() has a new argument gcFirst which, when TRUE,
+        forces a garbage collection before timing begins.
+
     o	file.edit() function added:  like file.show(), but allows editing.
 
     o	edit() and fix() use the object name in the window caption on

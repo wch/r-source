@@ -1,13 +1,15 @@
 \name{system.time}
 \title{CPU Time Used}
 \usage{
-system.time(expr)
-unix.time(expr)
+system.time(expr, gcFirst)
+unix.time(expr, gcFirst)
 }
 \alias{system.time}
 \alias{unix.time}
 \arguments{
   \item{expr}{Valid \R expression to be \dQuote{timed}}
+  \item{gcFirst}{Logical - should a garbage collection be performed
+    immediately before the timing?  Default is \code{FALSE}.}}
 }
 \description{Return CPU (and other) times that \code{expr} used.
 }    
@@ -21,6 +23,12 @@ unix.time(expr)
 
   \code{unix.time} is an alias of \code{system.time}, for
   compatibility reasons.
+
+  Timings of evaluations of the same expression can vary considerably
+  depending on whether the evaluation triggers a garbage collection. When
+  \code{gcFirst} is \code{TRUE} a garbage collection (\code{\link{gc}})
+  will be performed immediately before the evaluation of \code{expr}.
+  This will usually produce more consistent timings.
 }
 \value{
   A numeric vector of length 5 containing the user cpu, system cpu, elapsed,
