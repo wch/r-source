@@ -104,6 +104,10 @@
 
 #include "WETabs.h"
 #include "WETabHooks.h"
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include "Defn.h"
 #include "Graphics.h"
 

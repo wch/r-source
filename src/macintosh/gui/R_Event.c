@@ -66,6 +66,11 @@
 #ifndef __WEDEMOAPP__
 #include "RIntf.h"
 #endif
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+#include "Defn.h"
 #include "Graphics.h"
 #include "Startup.h" /* Jago */
 #include <Rdevices.h>

@@ -37,6 +37,10 @@
 #include <stdio.h>
 #include <fp.h> /* Jago */
 #include <Quickdraw.h>
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include "Defn.h"
 #include "Graphics.h"
 #include "RIntf.h"

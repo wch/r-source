@@ -50,8 +50,12 @@
 #ifndef __WEDEMOAPP__
 # include "RIntf.h"
 #endif
-#include "Graphics.h"
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include "Defn.h"
+#include "Graphics.h"
 #include "IOStuff.h"
 #include "Parse.h"
 

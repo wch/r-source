@@ -23,7 +23,9 @@
  *  Implemented in R 1.2.2., Stefano M.Iacus, Feb 2001
  */
  
-
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include "Defn.h"
 #include "Fileio.h"
 #include "Graphics.h"
@@ -1124,17 +1126,6 @@ int __main() {return 0;}
   See ../unix/system.txt for a description of functions
  */
 
-/*
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include "Defn.h"
-#include "Fileio.h"
-#include "Startup.h"
-
-#include <string.h>
-*/
 
 #ifndef HAVE_STRDUP
 extern char *strdup();
