@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-9 2004-05-01
+Version 1.9-11 2004-05-05
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1772,6 +1772,12 @@ distributions of R.)
      and (for simulation) multivariate parametric extreme value
      distributions, and provides fitting functions which calculate maximum
      likelihood estimates for univariate and bivariate models.
+
+*evir*
+     Extreme Values in R: Functions for extreme value theory, which may be
+     divided into the following groups; exploratory data analysis, block
+     maxima, peaks over thresholds (univariate and bivariate), point
+     processes, gev/gpd distributions.
 
 *exactLoglinTest*
      Monte Carlo exact tests for log-linear models.
@@ -3924,8 +3930,18 @@ sends the bug to the correct address.  Alternatively the bug report can be
 emailed to <R-bugs@R-project.org> or submitted to the Web page at
 `http://bugs.R-project.org/'.
 
-   Bug reports on contributed packages should perhaps be sent to the
-package maintainer rather than to R-bugs.
+   Bug reports on contributed packages should be sent first to the package
+maintainer, and only submitted to the R-bugs repository by package
+maintainers, mentioning the package in the subject line.
+
+   There is a section of the bug repository for suggestions for
+enhancements for R labelled `wishlist'.  Suggestions can be submitted in
+the same ways as bugs, but please ensure that the subject line makes clear
+that this is for the wishlist and not a bug report, for example by starting
+with `Wishlist:'.
+
+   Comments on and suggestions for the Windows port of R should be sent to
+<R-windows@R-project.org>.
 
 10 Acknowledgments
 ******************
