@@ -234,7 +234,7 @@ sub read_lines {
     my @lines;
     open(FILE, "< $file")
 	or die "Error: cannot open file '$file' for reading\n";
-    chop(@lines = <FILE>);
+    chomp(@lines = <FILE>);
     close(FILE);
     @lines;
 }
