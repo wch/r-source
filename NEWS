@@ -163,6 +163,10 @@ BUG FIXES
     o	cutree() can now cut outside heights and does not return
 	garbage	for h >= max(tree$heights) anymore. (PR#1067)
 
+    o   interaction(...,drop=F) returned an object looking like a 
+        factor, but with storage mode "double", confusing 
+	model.matrix.default (PR#1003)
+
 
 
 		CHANGES IN R VERSION 1.3.0
