@@ -30,9 +30,9 @@ read.table <-
 
     if(isSeekable(file)) {
         if(skip > 0) readLines(file, skip)
-        begin <- seek(file)
         row.lens <- count.fields(file, sep, quote, 0, blank.lines.skip)
-        seek(file, begin)
+        seek(file, 0)
+        if(skip > 0) readLines(file, skip)
         tfile <- file
     } else {
         warning("readLines on a non-seekable connection can be resource-intensive")

@@ -59,6 +59,10 @@ isSeekable(con)
   argument the connection is re-positioned (if possible) to the
   specified position. \code{isSeekable} returns whether the connection
   in principle supports \code{seek}: currently only file connections do.
+#ifdef windows
+  The value returned by \code{seek(where=NA)} appears to be unreliable
+  on Windows systems, at least for text files.
+#endif
 
   Possible values for the mode \code{open} to open a connection are
   \describe{
