@@ -223,6 +223,58 @@ none
 
 Directory:  incoming
 
+* PR# 671 *
+Subject:  bounds violations, infinite loops in optim/L-BFGS-B 
+From: bolker@zoo.ufl.edu
+Date: Tue, 26 Sep 2000 10:17:27 -0400
+* PR# 652 *
+Subject: R INSTALL *.tgz fails (minor docs/feature bug)
+From: RPO <bobbyo@speakeasy.org>
+Date: Sat, 2 Sep 2000 13:34:22 -0700 (PDT)
+* PR# 640 *
+Subject: diff.default / diff.ts in wrong package bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
+* PR# 655 *
+Subject: Installing R from source 
+From: jniesch@gwdg.de
+Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
+* PR# 653 *
+Subject: bug in spline()?
+From: Ian White <imsw@holyrood.ed.ac.uk>
+Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
+* PR# 658 *
+Subject: PR 640 (diff.default computes an incorrect starting time)
+From: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
+Date: Wed, 13 Sep 2000 13:44:38 +0000
+* PR# 656 *
+Subject: .Random.seed resetting
+From: lej25@statslab.cam.ac.uk
+Date: Mon, 11 Sep 2000 13:13:27 +0200 (MET DST)
+* PR# 662 *
+Subject: phantom(0) doesn't do what I expect it to [plotmath]
+From: M.B.Gillies@pharm.uu.nl
+Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
+* PR# 665 *
+Subject: "[.data.frame" forgets about "AsIs"
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Thu, 21 Sep 2000 10:18:46 +0200
+* PR# 663 *
+Subject: bug.report("unused argument(s) crash R when options(error=quote
+From: zivan.karaman@limagrain.com
+Date: Tue, 19 Sep 2000 13:51:33 +0200
+* PR# 667 *
+Subject: (sem assunto)
+From: rangearo@ufu.br (Paulo Roberto Rangearo Peres)
+Date: Thu, 21 Sep 2000 15:27:53 -0300
+* PR# 666 *
+Subject: width in options()
+From: aprasad@fs.fed.us
+Date: Thu, 21 Sep 2000 17:46:25 +0200 (MET DST)
 * PR# 670 *
 Subject: Returned mail: User unknown
 Subject: Notification: incoming/664
@@ -239,50 +291,6 @@ Date: Mon, 25 Sep 2000 12:28:31 +0200
 Date: Thu, 21 Sep 2000 04:45:10 +0200
 Date: Thu, 21 Sep 2000 04:45:09 +0200
 Date: Mon, 18 Sep 2000 14:33:36 +1100
-* PR# 640 *
-Subject: diff.default / diff.ts in wrong package bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
-* PR# 653 *
-Subject: bug in spline()?
-From: Ian White <imsw@holyrood.ed.ac.uk>
-Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
-* PR# 652 *
-Subject: R INSTALL *.tgz fails (minor docs/feature bug)
-From: RPO <bobbyo@speakeasy.org>
-Date: Sat, 2 Sep 2000 13:34:22 -0700 (PDT)
-* PR# 656 *
-Subject: .Random.seed resetting
-From: lej25@statslab.cam.ac.uk
-Date: Mon, 11 Sep 2000 13:13:27 +0200 (MET DST)
-* PR# 655 *
-Subject: Installing R from source 
-From: jniesch@gwdg.de
-Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
-* PR# 658 *
-Subject: PR 640 (diff.default computes an incorrect starting time)
-From: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
-Date: Wed, 13 Sep 2000 13:44:38 +0000
-* PR# 663 *
-Subject: bug.report("unused argument(s) crash R when options(error=quote
-From: zivan.karaman@limagrain.com
-Date: Tue, 19 Sep 2000 13:51:33 +0200
-* PR# 662 *
-Subject: phantom(0) doesn't do what I expect it to [plotmath]
-From: M.B.Gillies@pharm.uu.nl
-Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
-* PR# 666 *
-Subject: width in options()
-From: aprasad@fs.fed.us
-Date: Thu, 21 Sep 2000 17:46:25 +0200 (MET DST)
-* PR# 665 *
-Subject: "[.data.frame" forgets about "AsIs"
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Thu, 21 Sep 2000 10:18:46 +0200
 * PR# 669 *
 Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -291,7 +299,3 @@ Date: Mon, 25 Sep 2000 10:17:15 +0200
 Subject: eval functions...
 From: aprasad@fs.fed.us
 Date: Fri, 22 Sep 2000 22:30:58 +0200 (MET DST)
-* PR# 667 *
-Subject: (sem assunto)
-From: rangearo@ufu.br (Paulo Roberto Rangearo Peres)
-Date: Thu, 21 Sep 2000 15:27:53 -0300
