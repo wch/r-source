@@ -53,10 +53,12 @@ NEW FEATURES
     o	A new entry, sizeof.pointer, has been added to .Machine.
 
     o	strsplit(x,*) now preserves names() but won't work for
-        non-character `x' anymore {formerly used as.character(x),
-        destroying names(x)}.
+	non-character `x' anymore {formerly used as.character(x),
+	destroying names(x)}.
 
     o	which.min(x) and which.max(x) now preserve names.
+
+    o	gamma(n) is very slightly more precise for integer n in 11:50.
 
 
 DEPRECATED & DEFUNCT

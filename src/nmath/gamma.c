@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-2001 The R Development Core Team
+ *  Copyright (C) 2002-2003 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,6 +35,8 @@
  *    The accuracy of this routine compares (very) favourably
  *    with those of the Sun Microsystems portable mathematical
  *    library.
+ *
+ *    MM specialized the case of  n!  for n < 50 - for even better precision
  */
 
 #include "nmath.h"
@@ -104,8 +107,8 @@ double gammafn(double x)
     }
 #else
 /* For IEEE double precision DBL_EPSILON = 2^-52 = 2.220446049250313e-16 :
- * (xmin, xmax) are non-trivial, see ./gammalims.c 
- * xsml = exp(.01)*DBL_MIN 
+ * (xmin, xmax) are non-trivial, see ./gammalims.c
+ * xsml = exp(.01)*DBL_MIN
  * dxrel = sqrt(1/DBL_EPSILON) = 2 ^ 26
 */
 # define ngam 22
@@ -185,8 +188,14 @@ double gammafn(double x)
 	    return ML_UNDERFLOW;
 	}
 
-	value = exp((y - 0.5) * log(y) - y + M_LN_SQRT_2PI + lgammacor(y));
-
+	if(y <= 50 && y == (int)y) { /* compute (n - 1)! */
+	    value = 1.;
+	    for (i = 2; i < y; i++) value *= i;
+	}
+	else { /* normal case */
+	    value = exp((y - 0.5) * log(y) - y + M_LN_SQRT_2PI +
+			((2*y == (int)2*y)? stirlerr(y) : lgammacor(y)));
+	}
 	if (x > 0)
 	    return value;
 
