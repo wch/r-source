@@ -249,6 +249,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
   as minus (its value in Adobe ISOLatin1) even though it is hyphen in
   the other encodings.  Hyphen is available as character 173 (octal
   0255) in ISOLatin1.
+
+  Computer Modern fonts are encoded rather differently and should be
+  used with \code{encoding = "TeXtext.enc"}, taking care that some
+  symbols \code{< > \ _ { }) are not available in those fonts.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -291,7 +295,7 @@ postscript("foo.ps", family = "NimbusSan")
 ## for inclusion in Computer Modern TeX documents, perhaps
 postscript("cm_test.eps", width = 4.0, height = 3.0,
            horizontal = FALSE, onefile = FALSE, paper = "special",
-           family = "ComputerModern")
+           family = "ComputerModern", encoding = "TeXtext.enc")
 ## The resultant postscript file can be used by dvips -Ppfb -j0.
 
 ## To test out encodings, you can use
@@ -309,7 +313,7 @@ TestChars <- function(encoding="ISOLatin1", family="URWHelvetica")
     }
     dev.off()
 }
-## there will be many warnings. We use URW to get a complete enough
+## there will be many warnings.  We use URW to get a complete enough
 ## set of font metrics.
 TestChars()
 TestChars("ISOLatin2")

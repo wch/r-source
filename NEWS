@@ -214,6 +214,9 @@ NEW FEATURES
     o   New function hcl() for creating colors for a given hue,
         chroma and luminance (i.e. perceptual hsv).
 
+    o   New encoding 'TeXtext.enc' improves the way postscript() works
+	with Computer Modern fonts.
+
 
 INTERNATIONALIZATION
 
