@@ -37,6 +37,8 @@
  *	C port by John C. Daub
  */
 
+#include <RCarbon.h>
+
 
 #ifndef __WEDEMOAPP__
 #include "RIntf.h"

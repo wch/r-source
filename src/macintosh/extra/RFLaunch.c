@@ -29,6 +29,8 @@
 	Change History (most recent first):
 		9/13/99 created by John Montbriand */
 
+#include <RCarbon.h>
+
 #include "RFLaunch.h"
 #include <QuickDraw.h>
 #include <AppleEvents.h>
