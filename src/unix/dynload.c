@@ -565,7 +565,7 @@ Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name)
 static DL_FUNC R_dlsym(DllInfo *info, char const *name)
 {
     char buf[MAXIDSIZE+1];
-    int i, fail = 0;
+    int fail = 0;
     if(info->numCSymbols > 0) {
       Rf_DotCSymbol *sym;
       sym = Rf_lookupRegisteredCSymbol(info, name);
@@ -733,7 +733,9 @@ extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, ptr_R_GetX11Image,
 void R_load_X11_shlib(void)
 {
     char X11_DLL[PATH_MAX], buf[1000], *p; 
-    DllInfo dll = {NULL, NULL, NULL, 0, NULL, 0, NULL, 0,NULL};
+    DllInfo dll = {(char *)NULL, (char*)NULL, (char*)NULL, 
+                   0, (Rf_DotCSymbol*)NULL, 0, (Rf_DotCallSymbol*)NULL, 
+                   0, (Rf_DotFortranSymbol*)NULL};
     struct stat sb;
 
     p = getenv("R_HOME");
@@ -774,7 +776,9 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
 void R_load_gnome_shlib(void)
 {
     char gnome_DLL[PATH_MAX], buf[1000], *p;
-    DllInfo dll = {NULL, NULL, NULL, 0, NULL, 0, NULL, 0, NULL};
+    DllInfo dll = {(char *)NULL, (char*)NULL, (char*)NULL, 
+                   0, (Rf_DotCSymbol*)NULL, 0, (Rf_DotCallSymbol*)NULL, 
+                   0, (Rf_DotFortranSymbol*)NULL};
     struct stat sb;
 
     p = getenv("R_HOME");
