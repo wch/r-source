@@ -123,7 +123,7 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 
 fixfiles: docfiles
 	@$(MKDIR) -p ../../bin
-	@$(MAKE) --no-print-directory -C ./fixed
+	@$(MAKE) --no-print-directory -C ./fixed BUILD=$(BUILD)
 
 fixed/fixdesc:
 	@sh fixed/GETDESC $(R_PKGS_BASE) $(R_PKGS_STUBS)

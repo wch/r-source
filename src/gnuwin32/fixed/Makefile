@@ -57,8 +57,13 @@ fixbin: ../../../bin/massage-Examples ../../../bin/build \
 	@$(ECHO) done > fixbin
 
 cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
+ifneq ($(strip $(BUILD)),CROSS)
+	@zip -ql bins $^
+	@unzip -oq bins -d  ../../..
+else
 	@zip -q bins $^
 	@unzip -oaq bins -d  ../../..
+endif
 	@$(RM) bins.zip
 
 fixhtml: $(wildcard ./html/*.html) ../../../doc/html/search/SearchEngine.html
