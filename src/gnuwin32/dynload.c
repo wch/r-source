@@ -149,7 +149,7 @@ static int AddDLL(char *path, int asLocal, int now)
 {
     HINSTANCE tdlh;
     char *dpath, *name, DLLname[MAX_PATH], *p, *st;
-    int i;
+    /* int i; */
 
     DeleteDLL(path);
     if (CountDLL == MAX_NUM_DLLS) {

@@ -5,12 +5,12 @@ New function savePlot() to save plots to wmf, gif or ps.
 
 There is now support for help via compiled HTML files (as used by
 current Microsoft products): set options(chmhelp=TRUE) to use this.
-You will probably need IE4 or later installed to use this, or you
-can install hhupd.exe from the Windows-NT/etc folder on CRAN.
+You will probably need IE4 or later installed to use this, or you can
+install hhupd.exe from the windows/windows-NT/etc directory on CRAN.
 
 There is support for building Windows help files (as in Windows 95) and
 compiled HTML files (as in Windows 98) and both are available for the
-standard libraries.
+standard packages.
 
 The new function update.packages() is supported if you have wget.exe:
 a copy is in the windows/windows-NT/etc directory on CRAN. You can
@@ -33,6 +33,9 @@ versions of R are now omitted here.
 
 There is more support for (support of) ActiveX Automation via the
 Rproxy.dll: see the file front-ends/readme.
+
+As under Unix, .Renviron is first searched for in the working directory, 
+then in the home directory.
 
 
 rw0650

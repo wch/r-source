@@ -568,9 +568,11 @@ static void processRenviron()
     char *opt[2], optf[MAX_PATH], buf[80];
     int   ok;
 
-    sprintf(optf, "%s/.Renviron", getenv("R_USER"));
-    if (!optopenfile(optf))
-	return;
+    
+    if (!optopenfile(".Renviron")) {
+	sprintf(optf, "%s/.Renviron", getenv("R_USER"));
+	if (!optopenfile(optf)) return;
+    }
     while ((ok = optread(opt, '='))) {
 	sprintf(buf, "%s=%s", opt[0], opt[1]);
 	Putenv(buf);
