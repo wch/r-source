@@ -1,3 +1,4 @@
+###-*- R -*-
 ###--- This "make-<name>" script is only used to create the real script <name> :
 
 ###--- We need to use such a long "real script" instead of a for loop,

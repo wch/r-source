@@ -1,4 +1,4 @@
-#### Produce an R test script
+#### Produce an R test script -*- R -*-
 ls.base <- ls(pos=length(search()))#- something more elegant ?
 base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
 bi <- ls.base[base.is.f]
