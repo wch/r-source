@@ -11,7 +11,8 @@ quote(expr)
   expression \code{expr}, substituting any variables bound in
   \code{env}.
 
-  \code{quote} simply returns the parse tree for the expression.
+  \code{quote} simply returns its argument. The argument is not evaluated
+  and can be any R expression.
 }
 \arguments{
   \item{expr}{Any syntactically valid \R expression}
