@@ -384,8 +384,7 @@ maintainer-build: \
   $(top_srcdir)/FAQ \
   $(top_srcdir)/RESOURCES \
   $(top_srcdir)/doc/html/faq.html \
-  $(top_srcdir)/doc/html/resources.html \
-  $(top_srcdir)/doc/html/R-admin.html
+  $(top_srcdir)/doc/html/resources.html
 $(top_srcdir)/FAQ: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-FAQ.texi
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
