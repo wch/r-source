@@ -59,7 +59,7 @@ logLik.lm <- function(object, REML = FALSE, ...)
     if(REML) val <- val - sum(log(abs(diag(object$qr$qr)[1:p])))
     attr(val, "nall") <- N0
     attr(val, "nobs") <- N
-    attr(val, "df") <- p
+    attr(val, "df") <- p + 1
     class(val) <- "logLik"
     val
 }

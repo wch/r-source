@@ -1,4 +1,4 @@
-% from nlme, was logLik.lm.Rd,v 1.4 2000/07/03 18:22:47 bates 
+% from nlme, was logLik.lm.Rd,v 1.4 2000/07/03 18:22:47 bates
 \name{logLik.lm}
 \alias{logLik.lm}
 \title{Extract Log-Likelihood from an lm Object}
@@ -19,8 +19,11 @@
   estimated coefficients is returned.
 }
 \value{
+  an object of class \code{logLik},
   the (restricted) log-likelihood of the linear model represented by
-  \code{object} evaluated at the estimated coefficients.
+  \code{object} evaluated at the estimated coefficients.  Note that
+  error variance \eqn{\sigma^2} is estimated in \code{lm()} and hence
+  counted as well.
 }
 \references{
   Harville, D.A. (1974).
