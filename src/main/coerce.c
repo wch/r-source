@@ -156,7 +156,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	checkArity(op, args);
 
 	if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
-		errorcall(call, "invalid type argument\n");
+		errorcall(call, "invalid \"mode\" of argument\n");
 
 	if(!strcmp("function", (CHAR(STRING(CADR(args))[0]))))
 		type = CLOSXP;
@@ -347,7 +347,7 @@ SEXP do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	checkArity(op, args);
 
 	if (!isString(CADR(args)) || LENGTH(CADR(args)) <= 0)
-		errorcall(call, "is.vector invalid \"mode\" argument\n");
+		errorcall(call, "invalid \"mode\" of argument\n");
 
 	PROTECT(ans = allocVector(LGLSXP, 1));
 
@@ -389,8 +389,10 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(args = ans);
 	checkArity(op, args);
 
+#ifdef stringent_is
 	if (!isList(CAR(args)) && !isVector(CAR(args)))
 		errorcall(call, "is.na applies only to lists and vectors\n");
+#endif
 	ans = allocVector(LGLSXP, length(CAR(args)));
 	x = CAR(args);
 	n = length(x);
@@ -401,6 +403,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else
 			PROTECT(names = getAttrib(x, R_NamesSymbol));
 	}
+	else dims = names = R_NilValue;
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	case INTSXP:
@@ -447,14 +450,16 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		break;
 	}
-	if (isVector(x)) {
+	if (dims != R_NilValue)
 		setAttrib(ans, R_DimSymbol, dims);
-		if (isArray(x))
-			setAttrib(ans, R_DimNamesSymbol, names);
-		else
-			setAttrib(ans, R_NamesSymbol, names);
-		UNPROTECT(2);
+	if (names != R_NilValue) {
+	  if (isArray(x))
+		setAttrib(ans, R_DimNamesSymbol, names);
+	  else
+		setAttrib(ans, R_NamesSymbol, names);
 	}
+	if (isVector(x))
+		UNPROTECT(2);
 	UNPROTECT(1);
 	return ans;
 }
@@ -470,8 +475,10 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(args = ans);
 	checkArity(op, args);
 
+#ifdef stringent_is
 	if (!isList(CAR(args)) && !isVector(CAR(args)))
 		errorcall(call, "is.nan applies only to lists and vectors\n");
+#endif
 	ans = allocVector(LGLSXP, length(CAR(args)));
 	x = CAR(args);
 	if (isVector(x)) {
@@ -481,6 +488,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else
 			PROTECT(names = getAttrib(x, R_NamesSymbol));
 	}
+	else dims = names = R_NilValue;
 	switch (TYPEOF(x)) {
 	case LGLSXP:
 	case INTSXP:
@@ -538,14 +546,16 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		break;
 	}
-	if (isVector(x)) {
+	if (dims != R_NilValue)
 		setAttrib(ans, R_DimSymbol, dims);
-		if (isArray(x))
-			setAttrib(ans, R_DimNamesSymbol, names);
-		else
-			setAttrib(ans, R_NamesSymbol, names);
-		UNPROTECT(2);
+	if (names != R_NilValue) {
+	  if (isArray(x))
+		setAttrib(ans, R_DimNamesSymbol, names);
+	  else
+		setAttrib(ans, R_NamesSymbol, names);
 	}
+	if (isVector(x))
+		UNPROTECT(2);
 	UNPROTECT(1);
 	return ans;
 }
@@ -555,44 +565,46 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
   SEXP ans, x, names, dims;
   int i, n;
   checkArity(op, args);
+#ifdef stringent_is
   if (!isList(CAR(args)) && !isVector(CAR(args)))
-    errorcall(call, "is.finite applies only to vectors\n");
+    errorcall(call, "is.finite applies only to lists and vectors\n");
+#endif
   x = CAR(args);
   n = length(x);
   ans = allocVector(LGLSXP, n);
   if (isVector(x)) {
     dims = getAttrib(x, R_DimSymbol);
     if (isArray(x))
-      names = getAttrib(x, R_DimNamesSymbol);
+	names = getAttrib(x, R_DimNamesSymbol);
     else
-      names = getAttrib(x, R_NamesSymbol);
+	names = getAttrib(x, R_NamesSymbol);
   }
   else dims = names = R_NilValue;
   switch (TYPEOF(x)) {
   case LGLSXP:
   case INTSXP:
     for(i=0 ; i<n ; i++)
-      INTEGER(ans)[i] = (INTEGER(x)[i] != NA_INTEGER);
+	INTEGER(ans)[i] = (INTEGER(x)[i] != NA_INTEGER);
     break;
   case REALSXP:
     for(i=0 ; i<n ; i++)
-      INTEGER(ans)[i] = FINITE(REAL(x)[i]);
+	INTEGER(ans)[i] = FINITE(REAL(x)[i]);
     break;
   case CPLXSXP:
     for(i=0 ; i<n ; i++)
-      INTEGER(ans)[i] = (FINITE(COMPLEX(x)[i].r) && FINITE(COMPLEX(x)[i].i));
+	INTEGER(ans)[i] = (FINITE(COMPLEX(x)[i].r) && FINITE(COMPLEX(x)[i].i));
     break;
   default:
     for(i=0 ; i<n ; i++)
-      INTEGER(ans)[i] = 0;
+	INTEGER(ans)[i] = 0;
   }
   if (dims != R_NilValue)
     setAttrib(ans, R_DimSymbol, dims);
   if (names != R_NilValue) {
     if (isArray(x))
-      setAttrib(ans, R_DimNamesSymbol, names);
+	setAttrib(ans, R_DimNamesSymbol, names);
     else
-      setAttrib(ans, R_NamesSymbol, names);
+	setAttrib(ans, R_NamesSymbol, names);
   }
   return ans;
 }
@@ -603,19 +615,21 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
   double xr, xi;
   int i, n;
   checkArity(op, args);
+#ifdef stringent_is
   if (!isList(CAR(args)) && !isVector(CAR(args)))
-    errorcall(call, "is.infinite applies only to vectors\n");
+    errorcall(call, "is.infinite applies only to list and vectors\n");
+#endif
   x = CAR(args);
   n = length(x);
   ans = allocVector(LGLSXP, n);
   if (isVector(x)) {
     dims = getAttrib(x, R_DimSymbol);
     if (isArray(x))
-      names = getAttrib(x, R_DimNamesSymbol);
+	names = getAttrib(x, R_DimNamesSymbol);
     else
-      names = getAttrib(x, R_NamesSymbol);
+	names = getAttrib(x, R_NamesSymbol);
   }
-  else dims = names = R_NilValue;
+  else	dims = names = R_NilValue;
 #ifdef IEEE_754
   switch (TYPEOF(x)) {
   case REALSXP:
@@ -639,7 +653,7 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     break;
   default:
     for(i=0 ; i<n ; i++)
-      INTEGER(ans)[i] = 0;
+	INTEGER(ans)[i] = 0;
   }
 #else
   for(i=0 ; i<n ; i++)
@@ -649,16 +663,16 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     setAttrib(ans, R_DimSymbol, dims);
   if (!isNull(names)) {
     if (isArray(x))
-      setAttrib(ans, R_DimNamesSymbol, names);
+	setAttrib(ans, R_DimNamesSymbol, names);
     else
-      setAttrib(ans, R_NamesSymbol, names);
+	setAttrib(ans, R_NamesSymbol, names);
   }
   return ans;
 }
 
 SEXP coerceVector(SEXP v, SEXPTYPE type)
 {
-	SEXP ans;
+	SEXP ans=R_NilValue/* -Wall */;
 
 	if (TYPEOF(v) == type)
 		return v;
