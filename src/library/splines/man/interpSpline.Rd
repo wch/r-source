@@ -10,7 +10,8 @@
   vectors, or from a formula/data.frame combination.
 }
 \usage{
-interpSpline(obj1, obj2, bSpline = FALSE, period = NULL, na.action = na.fail)
+interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
+             na.action = na.fail)
 }
 \arguments{
  \item{obj1}{Either a numeric vector of \code{x} values or a formula.}
