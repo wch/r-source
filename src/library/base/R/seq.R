@@ -1,8 +1,7 @@
 seq <- function(x, ...) UseMethod("seq")
 
-seq.default <-
-    function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
-	     length.out = NULL, along.with = NULL) {
+seq.default <- function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
+			length.out = NULL, along.with = NULL) {
 	if(!missing(along.with))
 	    length.out <- length(along.with)
 	else if(!missing(length.out))
@@ -16,19 +15,20 @@ seq.default <-
 	else if(is.null(length.out))
 	    if(missing(by))
 		from:to
-	    else {
+	    else { # dealing with 'by'
 		n <- (del <- to - from)/by
-		if(is.na(n)) {
-		    if(by == 0 && del == 0)
+		if(!length(n) || is.na(n)) {
+		    if(length(by) && by == 0 && length(del) && del == 0)
 			return(from)
-		    else stop("invalid (to - from)/by in seq(.)")
-		} else if(abs(n) > .Machine$integer.max)
+		    stop("invalid (to - from)/by in seq(.)")
+		}
+		if(abs(n) > .Machine$integer.max)
 		    stop("'by' argument is much too small")
-		else if(n < 0)
-		    stop("Wrong sign in by= argument")
+		if(n < 0)
+		    stop("Wrong sign in 'by' argument")
 
 		dd <- abs(del)/max(abs(to), abs(from))
-		if (dd < sqrt(.Machine$double.eps)) 
+		if (dd < sqrt(.Machine$double.eps))
 		    return(from)
 		eps <- .Machine$double.eps * max(1, 1/dd)
 		n <- as.integer(n * (1 + eps))
