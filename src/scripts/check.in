@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.145 $ ';
+my $revision = ' $Revision: 1.146 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -62,7 +62,7 @@ R::Vars::error("R_HOME", "R_CMD", "R_EXE");
 my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
 		    "use-gct" => \$opt_use_gct, "no-codoc", "no-perms",
-		    "no-install", "no-vignettes");
+		    "install=s" => \$opt_install, "no-vignettes");
 GetOptions(@known_options) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -76,6 +76,12 @@ $opt_codoc = 0 if $opt_no_codoc;
 $opt_perms = 0 if $opt_no_perms;
 $opt_install = 0 if $opt_no_install;
 $opt_vignettes = 0 if $opt_no_vignettes;
+
+if($opt_install eq "fake") {
+    ## If we fake installation, then we cannot *run* any code.
+    $opt_examples = $opt_tests = $opt_vignettes = 0;
+}
+$opt_install = 0 if($opt_install eq "no");
 
 my $startdir = cwd();
 $opt_outdir = $startdir unless $opt_outdir;
@@ -233,21 +239,29 @@ foreach my $pkg (@ARGV) {
 	    $log->print("Only *source* packages can be checked.\n");
 	    exit(1);
 	}
-	if($opt_install && !$ENV{'R_CHECK_SKIP_INSTALL'}) {
-	    ## Option '--no-install' turns off installation and the
-	    ## tests which require the package to be installed.  When
-	    ## testing recommended packages bundled with R we can skip
-	    ## installation, and do so in case the environment variable
-	    ## 'R_CHECK_SKIP_INSTALLED' is 'true'.
-	    print("\n");
-	    my $cmd = "${R::Vars::R_CMD} INSTALL -l $library $pkgdir";
-	    if(R_system($cmd)) {
-		$log->error();
-		$log->print("Installation failed.\n");
-		exit(1);
+	if($opt_install) {
+	    if($opt_install ne "skip") {
+		## Option '--no-install' turns off installation and the
+		## tests which require the package to be installed.  When 
+		## testing recommended packages bundled with R we can
+		## skip installation, and do so if '--install=skip' was
+		## given. 
+		print("\n");
+		my $cmd = "${R::Vars::R_CMD} INSTALL -l ${library}";
+		$cmd .= " --fake" if($opt_install eq "fake");
+		$cmd .= " ${pkgdir}";
+		if(R_system($cmd)) {
+		    $log->error();
+		    $log->print("Installation failed.\n");
+		    exit(1);
+		}
+		print("\n");
 	    }
-	    print("\n");
+	    else {
+		$log->message("skipping installation test");
+	    }
 	}
+	
     }
 
     my $is_bundle = 0;
