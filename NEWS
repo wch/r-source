@@ -147,8 +147,9 @@ BUG FIXES
     o	Some BLASes were returning NA %*% 0 as 0 and some as NA.  Now
 	slower but more careful code is used if NAs are present. (PR#4582)
 
-    o	package.skeleton() no longer generates invalid file names for
-	code and help files.
+    o	package.skeleton() no longer generates invalid filenames for
+	code and help files.  Also, care is taken not to generate
+	filenames that differ only by case. 
 
 
 
