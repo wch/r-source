@@ -35,6 +35,9 @@ get.gpar(names = NULL)
     alpha \tab Alpha channel for transparency \cr
     lty \tab Line type \cr
     lwd \tab Line width \cr
+    lineend \tab Line end style (round, butt, square) \cr
+    linejoin \tab Line join style (round, mitre, bevel) \cr
+    linemitre \tab Line mitre limit (number greater than 1) \cr
     fontsize \tab The size of text (in points) \cr
     cex \tab Multiplier applied to fontsize \cr
     fontfamily \tab The font family \cr

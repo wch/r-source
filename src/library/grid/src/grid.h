@@ -112,10 +112,13 @@
 #define GP_FONT 8
 #define GP_FONTFAMILY 9
 #define GP_ALPHA 10
+#define GP_LINEEND 11
+#define GP_LINEJOIN 12
+#define GP_LINEMITRE 13
 /* 
  * Keep fontface at the end because it is never used in C code
  */
-#define GP_FONTFACE 11
+#define GP_FONTFACE 14
 
 typedef double LTransform[3][3];
 

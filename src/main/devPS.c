@@ -1482,6 +1482,9 @@ typedef struct {
     struct {
 	double lwd;		 /* line width */
 	int lty;		 /* line type */
+	R_GE_lineend lend;
+	R_GE_linejoin ljoin;
+	double lmitre;
 	int font;
 	int fontstyle;	         /* font style, R, B, I, BI, S */
 	int fontsize;	         /* font size in points */
@@ -1787,6 +1790,51 @@ static void PostScriptSetLineWidth(FILE *fp, double linewidth)
     fprintf(fp, "%.2f setlinewidth\n", linewidth);
 }
 
+static void PostScriptSetLineEnd(FILE *fp, R_GE_lineend lend)
+{
+    int lineend;
+    switch (lend) {
+    case GE_ROUND_CAP:
+	lineend = 1;
+	break;
+    case GE_BUTT_CAP:
+	lineend = 0;
+	break;
+    case GE_SQUARE_CAP:
+	lineend = 2;
+	break;
+    default:
+	error("Invalid line end");
+    }
+    fprintf(fp, "%1d setlinecap\n", lineend);
+}
+
+static void PostScriptSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
+{
+    int linejoin;
+    switch (ljoin) {
+    case GE_ROUND_JOIN:
+	linejoin = 1;
+	break;
+    case GE_MITRE_JOIN:
+	linejoin = 0;
+	break;
+    case GE_BEVEL_JOIN:
+	linejoin = 2;
+	break;
+    default:
+	error("Invalid line join");
+    }
+    fprintf(fp, "%1d setlinejoin\n", linejoin);
+}
+
+static void PostScriptSetLineMitre(FILE *fp, double linemitre)
+{
+    if (linemitre < 1)
+	error("Invalid line mitre");
+    fprintf(fp, "%.2f setmiterlimit\n", linemitre);
+}
+
 static void PostScriptSetFont(FILE *fp, int fontnum, double size)
 {
     fprintf(fp, "/ps %.0f def /Font%d findfont %.0f s\n", size, fontnum, size);
@@ -1992,7 +2040,7 @@ static void PostScriptSetFill(FILE *fp, double r, double g, double b)
 static void SetColor(int, NewDevDesc*);
 static void SetFill(int, NewDevDesc*);
 static void SetFont(int, int, NewDevDesc*);
-static void SetLineStyle(int newlty, double newlwd, NewDevDesc *dd);
+static void SetLineStyle(R_GE_gcontext*, NewDevDesc *dd);
 static void Invalidate(NewDevDesc*);
 static int  MatchFamily(char *name);
 
@@ -2344,11 +2392,16 @@ static void SetFill(int color, NewDevDesc *dd)
 
 /* Note that the line texture is scaled by the line width. */
 
-static void SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
+static void SetLineStyle(R_GE_gcontext *gc, NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     char dashlist[8];
     int i;
+    int newlty = gc->lty;
+    double newlwd = gc->lwd;
+    R_GE_lineend newlend = gc->lend;
+    R_GE_linejoin newljoin = gc->ljoin;
+    double newlmitre = gc->lmitre;
 
     if (pd->current.lty != newlty || pd->current.lwd != newlwd) {
 	pd->current.lwd = newlwd;
@@ -2360,6 +2413,18 @@ static void SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
 	    newlty = newlty >> 4;
 	}
 	PostScriptSetLineTexture(pd->psfp, dashlist, i, newlwd * 0.75);
+    }
+    if (pd->current.lend != newlend) {
+	pd->current.lend = newlend;
+	PostScriptSetLineEnd(pd->psfp, newlend);
+    }
+    if (pd->current.ljoin != newljoin) {
+	pd->current.ljoin = newljoin;
+	PostScriptSetLineJoin(pd->psfp, newljoin);
+    }
+    if (pd->current.lmitre != newlmitre) {
+	pd->current.lmitre = newlmitre;
+	PostScriptSetLineMitre(pd->psfp, newlmitre);
     }
 }
 
@@ -2469,6 +2534,9 @@ static void Invalidate(NewDevDesc *dd)
     pd->current.fontstyle = -1;
     pd->current.lwd = -1;
     pd->current.lty = -1;
+    pd->current.lend = 0;
+    pd->current.ljoin = 0;
+    pd->current.lmitre = 0;
     pd->current.col = INVALID_COL;
     pd->current.fill = INVALID_COL;
 }
@@ -2629,7 +2697,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
 	    SetFill(gc->fill, dd);
 	if(code & 1) {
 	    SetColor(gc->col, dd);
-	    SetLineStyle(gc->lty, gc->lwd, dd);
+	    SetLineStyle(gc, dd);
 	}
 	PostScriptRectangle(pd->psfp, x0, y0, x1, y1);
 	fprintf(pd->psfp, "p%d\n", code);
@@ -2656,7 +2724,7 @@ static void PS_Circle(double x, double y, double r,
 	    SetFill(gc->fill, dd);
 	if(code & 1) {
 	    SetColor(gc->col, dd);
-	    SetLineStyle(gc->lty, gc->lwd, dd);
+	    SetLineStyle(gc, dd);
 	}
 	PostScriptCircle(pd->psfp, x, y, r);
 	fprintf(pd->psfp, "p%d\n", code);
@@ -2672,7 +2740,7 @@ static void PS_Line(double x1, double y1, double x2, double y2,
     /* FIXME : clip to the device extents here */
     if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	SetLineStyle(gc->lty, gc->lwd, dd);
+	SetLineStyle(gc, dd);
 	PostScriptStartPath(pd->psfp);
 	PostScriptMoveTo(pd->psfp, x1, y1);
 	PostScriptRLineTo(pd->psfp, x1, y1, x2, y2);
@@ -2703,7 +2771,7 @@ static void PS_Polygon(int n, double *x, double *y,
 	    SetFill(gc->fill, dd);
 	if(code & 1) {
 	    SetColor(gc->col, dd);
-	    SetLineStyle(gc->lty, gc->lwd, dd);
+	    SetLineStyle(gc, dd);
 	}
 	fprintf(pd->psfp, "np\n");
 	fprintf(pd->psfp, " %.2f %.2f m\n", x[0], y[0]);
@@ -2726,7 +2794,7 @@ static void PS_Polyline(int n, double *x, double *y,
     pd = (PostScriptDesc*) dd->deviceSpecific;
     if(R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	SetLineStyle(gc->lty, gc->lwd, dd);
+	SetLineStyle(gc, dd);
 	fprintf(pd->psfp, "np\n");
 	fprintf(pd->psfp, "%.2f %.2f m\n", x[0], y[0]);
 	for(i = 1 ; i < n ; i++) {
@@ -3575,6 +3643,9 @@ typedef struct {
     struct {
 	double lwd;		 /* line width */
 	int lty;		 /* line type */
+	R_GE_lineend lend;
+	R_GE_linejoin ljoin;
+	double lmitre;
 	int fontstyle;	         /* font style, R, B, I, BI, S */
 	int fontsize;	         /* font size in points */
 	rcolor col;		 /* color */
@@ -3929,6 +4000,9 @@ static void PDF_Invalidate(NewDevDesc *dd)
      */
     pd->current.lwd = -1;
     pd->current.lty = -1;
+    pd->current.lend = 0;
+    pd->current.ljoin = 0;
+    pd->current.lmitre = 0;
     /* page starts with black as the default fill and stroke colours */
     /*
      * Paul:  make all these settings "invalid"
@@ -4042,17 +4116,60 @@ static void PDF_SetFill(int color, NewDevDesc *dd)
     }
 }
 
+static void PDFSetLineEnd(FILE *fp, R_GE_lineend lend)
+{
+    int lineend;
+    switch (lend) {
+    case GE_ROUND_CAP:
+	lineend = 1;
+	break;
+    case GE_BUTT_CAP:
+	lineend = 0;
+	break;
+    case GE_SQUARE_CAP:
+	lineend = 2;
+	break;
+    default:
+	error("Invalid line end");
+    }
+    fprintf(fp, "%1d J\n", lineend);
+}
+
+static void PDFSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
+{
+    int linejoin;
+    switch (ljoin) {
+    case GE_ROUND_JOIN:
+	linejoin = 1;
+	break;
+    case GE_MITRE_JOIN:
+	linejoin = 0;
+	break;
+    case GE_BEVEL_JOIN:
+	linejoin = 2;
+	break;
+    default:
+	error("Invalid line join");
+    }
+    fprintf(fp, "%1d j\n", linejoin);
+}
+
 /* Note that the line texture is scaled by the line width.*/
 static void PDFSetLineTexture(FILE *fp, char *dashlist, int nlty, double lwd)
 {
     PP_SetLineTexture("d");
 }
 
-static void PDF_SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
+static void PDF_SetLineStyle(R_GE_gcontext *gc, NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     char dashlist[8];
     int i;
+    int newlty = gc->lty;
+    double newlwd = gc->lwd;
+    R_GE_lineend newlend = gc->lend;
+    R_GE_linejoin newljoin = gc->ljoin;
+    double newlmitre = gc->lmitre;
 
     if (pd->current.lty != newlty || pd->current.lwd != newlwd) {
 	pd->current.lwd = newlwd;
@@ -4064,6 +4181,18 @@ static void PDF_SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
 	    newlty = newlty >> 4;
 	}
 	PDFSetLineTexture(pd->pdffp, dashlist, i, newlwd * 0.75);
+    }
+    if (pd->current.lend != newlend) {
+	pd->current.lend = newlend;
+	PDFSetLineEnd(pd->pdffp, newlend);
+    }
+    if (pd->current.ljoin != newljoin) {
+	pd->current.ljoin = newljoin;
+	PDFSetLineJoin(pd->pdffp, newljoin);
+    }
+    if (pd->current.lmitre != newlmitre) {
+	pd->current.lmitre = newlmitre;
+	fprintf(pd->pdffp, "%.2f M\n", newlmitre);
     }
 }
 
@@ -4386,7 +4515,13 @@ static void PDF_NewPage(R_GE_gcontext *gc,
     fprintf(pd->pdffp, "%d 0 obj\n<<\n/Length %d 0 R\n>>\nstream\r\n",
 	    pd->nobjs, pd->nobjs + 1);
     pd->startstream = (int) ftell(pd->pdffp);
-    fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
+    /*
+     * Line end/join/mitre now controlled by user
+     * Same old defaults
+     *
+     * fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
+     */
+    fprintf(pd->pdffp, "q\n");
     PDF_Invalidate(dd);
     if(R_OPAQUE(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
@@ -4428,7 +4563,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 	if(pd->inText) textoff(pd);
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
-	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+	PDF_SetLineStyle(gc, dd);
 	fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re B\n", x0, y0, x1-x0, y1-y0);
     } else {
 	code = 2 * (R_OPAQUE(gc->fill)) + (R_OPAQUE(gc->col));
@@ -4438,7 +4573,7 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 		PDF_SetFill(gc->fill, dd);
 	    if(code & 1) {
 		PDF_SetLineColor(gc->col, dd);
-		PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+		PDF_SetLineStyle(gc, dd);
 	    }
 	    fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
 	    switch(code){
@@ -4467,7 +4602,7 @@ static void PDF_Circle(double x, double y, double r,
 	alphaVersion(pd)) {
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
-	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+	PDF_SetLineStyle(gc, dd);
 	/*
 	 * Due to possible bug in Acrobat Reader for rendering
 	 * semi-transparent text, only every draw Bezier curves
@@ -4494,7 +4629,7 @@ static void PDF_Circle(double x, double y, double r,
 		PDF_SetFill(gc->fill, dd);
 	    if(code & 1) {
 		PDF_SetLineColor(gc->col, dd);
-		PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+		PDF_SetLineStyle(gc, dd);
 	    }
 	    if(r > 10) { /* somewhat arbitrary, use font up to 20pt */
 		/* Use four Bezier curves, hand-fitted to quadrants */
@@ -4547,7 +4682,7 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
     if ((semiTransparent(gc->col) && alphaVersion(pd)) ||
 	(R_OPAQUE(gc->col))) {
 	PDF_SetLineColor(gc->col, dd);
-	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+	PDF_SetLineStyle(gc, dd);
 	if(pd->inText) textoff(pd);
 	fprintf(pd->pdffp, "%.2f %.2f m %.2f %.2f l S\n", x1, y1, x2, y2);
     }
@@ -4570,7 +4705,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 	if(pd->inText) textoff(pd);
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
-	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+	PDF_SetLineStyle(gc, dd);
 	xx = x[0];
 	yy = y[0];
 	fprintf(pd->pdffp, "  %.2f %.2f m\n", xx, yy);
@@ -4588,7 +4723,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 		PDF_SetFill(gc->fill, dd);
 	    if(code & 1) {
 		PDF_SetLineColor(gc->col, dd);
-		PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+		PDF_SetLineStyle(gc, dd);
 	    }
 	    xx = x[0];
 	    yy = y[0];
@@ -4623,7 +4758,7 @@ static void PDF_Polyline(int n, double *x, double *y,
 	alphaVersion(pd)) {
 	if(pd->inText) textoff(pd);
 	PDF_SetLineColor(gc->col, dd);
-	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+	PDF_SetLineStyle(gc, dd);
 	xx = x[0];
 	yy = y[0];
 	fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
@@ -4637,7 +4772,7 @@ static void PDF_Polyline(int n, double *x, double *y,
 	if(pd->inText) textoff(pd);
 	if(R_OPAQUE(gc->col)) {
 	    PDF_SetLineColor(gc->col, dd);
-	    PDF_SetLineStyle(gc->lty, gc->lwd, dd);
+	    PDF_SetLineStyle(gc, dd);
 	    xx = x[0];
 	    yy = y[0];
 	    fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);

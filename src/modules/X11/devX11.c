@@ -177,7 +177,7 @@ static double pixelWidth(void);
 static int SetBaseFont(newX11Desc*);
 static void SetColor(int, NewDevDesc*);
 static void SetFont(char*, int, int, NewDevDesc*);
-static void SetLinetype(int, double, NewDevDesc*);
+static void SetLinetype(R_GE_gcontext*, NewDevDesc*);
 static void X11_Close_bitmap(newX11Desc *xd);
 
 
@@ -835,6 +835,42 @@ static void SetColor(int color, NewDevDesc *dd)
     }
 }
 
+static int gcToX11lend(R_GE_lineend lend) {
+    int newend;
+    switch (lend) {
+    case GE_ROUND_CAP:
+        newend = CapRound;
+	break;
+    case GE_BUTT_CAP:
+        newend = CapButt;
+	break;
+    case GE_SQUARE_CAP:
+        newend = CapProjecting;
+	break;
+    default:
+        error("Invalid line end");
+    }
+    return newend;
+}
+
+static int gcToX11ljoin(R_GE_lineend ljoin) {
+    int newjoin;
+    switch (ljoin) {
+    case GE_ROUND_JOIN:
+        newjoin = JoinRound;
+	break;
+    case GE_MITRE_JOIN:
+        newjoin = JoinMiter;
+	break;
+    case GE_BEVEL_JOIN:
+        newjoin = JoinBevel;
+	break;
+    default:
+        error("Invalid line join");
+    }
+    return newjoin;
+}
+
 /* --> See "Notes on Line Textures" in ../../include/Rgraphics.h
  *
  *	27/5/98 Paul - change to allow lty and lwd to interact:
@@ -844,25 +880,31 @@ static void SetColor(int color, NewDevDesc *dd)
  *	would have "dots" which were wide, but not long, nor widely
  *	spaced.
  */
-static void SetLinetype(int newlty, double nlwd, NewDevDesc *dd)
+static void SetLinetype(R_GE_gcontext *gc, NewDevDesc *dd)
 {
     static char dashlist[8];
-    int i, newlwd;
+    int i, newlty, newlwd, newlend, newljoin;
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
-    newlwd = nlwd;/*cast*/
+    newlty = gc->lty;
+    newlwd = gc->lwd;/*cast*/
+    newlend = gcToX11lend(gc->lend);
+    newljoin = gcToX11ljoin(gc->ljoin);
     if (newlwd < 1)/* not less than 1 pixel */
 	newlwd = 1;
-    if (newlty != xd->lty || newlwd != xd->lwd) {
+    if (newlty != xd->lty || newlwd != xd->lwd ||
+	newlend!= xd->lend || newljoin!= xd->ljoin) {
 	xd->lty = newlty;
 	xd->lwd = newlwd;
+	xd->lend = newlend;
+	xd->ljoin = newljoin;
 	if (newlty == 0) {/* special hack for lty = 0 -- only for X11 */
 	    XSetLineAttributes(display,
 			       xd->wgc,
 			       newlwd,
 			       LineSolid,
-			       CapRound,
-			       JoinRound);
+			       xd->lend, /* CapRound, */
+			       xd->ljoin); /* JoinRound); */
 	}
 	else {
 	    for(i = 0 ; i < 8 && (newlty != 0); i++) {
@@ -883,8 +925,8 @@ static void SetLinetype(int newlty, double nlwd, NewDevDesc *dd)
 			       xd->wgc,
 			       newlwd,
 			       LineOnOffDash,
-			       CapButt,
-			       JoinRound);
+			       xd->lend, /* CapButt */
+			       xd->ljoin); /* JoinRound); */
 	}
     }
 }
@@ -1108,7 +1150,8 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     /* graphics call */
     xd->lty = -1;
     xd->lwd = -1;
-
+    xd->lend = 0;
+    xd->ljoin = 0;
 
     numX11Devices++;
     return TRUE;
@@ -1476,7 +1519,7 @@ static void newX11_Rect(double x0, double y0, double x1, double y1,
     }
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	SetLinetype(gc->lty, gc->lwd, dd);
+	SetLinetype(gc, dd);
 	XDrawRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
 		       (int)x1 - (int)x0, (int)y1 - (int)y0);
     }
@@ -1502,7 +1545,7 @@ static void newX11_Circle(double x, double y, double r,
 		 ix-ir, iy-ir, 2*ir, 2*ir, 0, 23040);
     }
     if (R_OPAQUE(gc->col)) {
-	SetLinetype(gc->lty, gc->lwd, dd);
+	SetLinetype(gc, dd);
 	SetColor(gc->col, dd);
 	XDrawArc(display, xd->window, xd->wgc,
 		 ix-ir, iy-ir, 2*ir, 2*ir, 0, 23040);
@@ -1525,7 +1568,7 @@ static void newX11_Line(double x1, double y1, double x2, double y2,
 
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	SetLinetype(gc->lty, gc->lwd, dd);
+	SetLinetype(gc, dd);
 	XDrawLine(display, xd->window, xd->wgc, xx1, yy1, xx2, yy2);
 #ifdef XSYNC
 	if (xd->type == WINDOW) XSync(display, 0);
@@ -1551,7 +1594,7 @@ static void newX11_Polyline(int n, double *x, double *y,
 
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	SetLinetype(gc->lty, gc->lwd, dd);
+	SetLinetype(gc, dd);
 /* Some X servers need npoints < 64K */
 	for(i = 0; i < n; i+= 10000-1) {
 	    j = n - i;
@@ -1593,7 +1636,7 @@ static void newX11_Polygon(int n, double *x, double *y,
     }
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, dd);
-	SetLinetype(gc->lty, gc->lwd, dd);
+	SetLinetype(gc, dd);
 	XDrawLines(display, xd->window, xd->wgc, points, n+1, CoordModeOrigin);
 #ifdef XSYNC
 	if (xd->type == WINDOW) XSync(display, 0);

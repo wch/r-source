@@ -2428,6 +2428,12 @@ void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd)
     gc->gamma = Rf_gpptr(dd)->gamma;
     gc->lwd = Rf_gpptr(dd)->lwd;
     gc->lty = Rf_gpptr(dd)->lty;
+    /*
+     * FIXME:  Need to add lineend/join/mitre pars so user can control these
+     */
+    gc->lend = GE_ROUND_CAP;
+    gc->ljoin = GE_ROUND_JOIN;
+    gc->lmitre = 10;
     gc->cex = Rf_gpptr(dd)->cex;
     gc->ps = (double) Rf_gpptr(dd)->ps;
     /*

@@ -89,6 +89,9 @@ typedef struct {
      */
     int lty;				/* Line type */
     double lwd;
+    R_GE_lineend lend;
+    R_GE_linejoin ljoin;
+    double lmitre;
     int col;				/* Color */
     /* fg and bg removed -- only use col and new param fill
      */

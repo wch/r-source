@@ -48,6 +48,24 @@ validGP <- function(gpars) {
     else
       check.length("lty")
   }
+  if (!is.na(match("lineend", names(gpars)))) {
+    if (is.null(gpars$lineend))
+      gpars$lineend <- NULL
+    else
+      check.length("lineend")
+  }
+  if (!is.na(match("linejoin", names(gpars)))) {
+    if (is.null(gpars$linejoin))
+      gpars$linejoin <- NULL
+    else
+      check.length("linejoin")
+  }
+  # linemitre should be larger than 1
+  numnotnull("linemitre")
+  if (!is.na(match("linemitre", names(gpars)))) {
+    if (any(gpars$linemitre < 1))
+      stop("Invalid linemitre value")
+  }    
   # alpha should be 0 to 1
   if (!is.na(match("alpha", names(gpars)))) {
     if (any(gpars$alpha < 0 || gpars$alpha > 1))
@@ -110,7 +128,7 @@ validGP <- function(gpars) {
 # The order must match the GP_* values in grid.h
 .grid.gpar.names <- c("fill", "col", "gamma", "lty", "lwd", "cex",
                       "fontsize", "lineheight", "font", "fontfamily",
-                      "alpha",
+                      "alpha", "lineend", "linejoin", "linemitre",
                       # Keep fontface at the end because it is never
                       # used in C code (it gets mapped to font)
                       "fontface")

@@ -437,6 +437,107 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd)
 }
 
 /****************************************************************
+ * Code for converting line ends and joins from SEXP to internal 
+ * representation
+ ****************************************************************
+ */
+typedef struct {
+    char *name;
+    R_GE_lineend end;
+} LineEND;
+
+static LineEND lineend[] = {
+    { "round",   GE_ROUND_CAP  },
+    { "butt",	 GE_BUTT_CAP   },
+    { "square",	 GE_SQUARE_CAP },
+    { NULL,	 0	     }
+};
+
+static int nlineend = (sizeof(lineend)/sizeof(LineEND)-2);
+
+R_GE_lineend LENDpar(SEXP value, int ind)
+{
+    int i, code;
+    double rcode;
+
+    if(isString(value)) {
+	for(i = 0; lineend[i].name; i++) { /* is it the i-th name ? */
+	    if(!strcmp(CHAR(STRING_ELT(value, ind)), lineend[i].name))
+		return lineend[i].end;
+	}
+	error("invalid line end"); /*NOTREACHED, for -Wall : */ return 0;
+    }
+    else if(isInteger(value)) {
+	code = INTEGER(value)[ind];
+	if(code == NA_INTEGER || code < 0)
+	    error("invalid line end");
+	if (code > 0)
+	    code = (code-1) % nlineend + 1;
+	return lineend[code].end;
+    }
+    else if(isReal(value)) {
+	rcode = REAL(value)[ind];
+	if(!R_FINITE(rcode) || rcode < 0)
+	    error("invalid line end");
+	code = rcode;
+	if (code > 0)
+	    code = (code-1) % nlineend + 1;
+	return lineend[code].end;
+    }
+    else {
+	error("invalid line end"); /*NOTREACHED, for -Wall : */ return 0;
+    }
+}
+
+typedef struct {
+    char *name;
+    R_GE_linejoin join;
+} LineJOIN;
+
+static LineJOIN linejoin[] = {
+    { "round",   GE_ROUND_JOIN },
+    { "mitre",	 GE_MITRE_JOIN },
+    { "bevel",	 GE_BEVEL_JOIN},
+    { NULL,	 0	     }
+};
+
+static int nlinejoin = (sizeof(linejoin)/sizeof(LineJOIN)-2);
+
+R_GE_linejoin LJOINpar(SEXP value, int ind)
+{
+    int i, code;
+    double rcode;
+
+    if(isString(value)) {
+	for(i = 0; linejoin[i].name; i++) { /* is it the i-th name ? */
+	    if(!strcmp(CHAR(STRING_ELT(value, ind)), linejoin[i].name))
+		return linejoin[i].join;
+	}
+	error("invalid line join"); /*NOTREACHED, for -Wall : */ return 0;
+    }
+    else if(isInteger(value)) {
+	code = INTEGER(value)[ind];
+	if(code == NA_INTEGER || code < 0)
+	    error("invalid line join");
+	if (code > 0)
+	    code = (code-1) % nlinejoin + 1;
+	return linejoin[code].join;
+    }
+    else if(isReal(value)) {
+	rcode = REAL(value)[ind];
+	if(!R_FINITE(rcode) || rcode < 0)
+	    error("invalid line join");
+	code = rcode;
+	if (code > 0)
+	    code = (code-1) % nlinejoin + 1;
+	return linejoin[code].join;
+    }
+    else {
+	error("invalid line join"); /*NOTREACHED, for -Wall : */ return 0;
+    }
+}
+
+/****************************************************************
  * Code to retrieve current clipping rect from device
  ****************************************************************
  */

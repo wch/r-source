@@ -190,13 +190,13 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 "       4 -1 roll lineto  exch 1 index lineto lineto",
 "       closepath clip newpath } def",
 "/rgb { setrgbcolor } def",
-"/s   { scalefont setfont } def",
+"/s   { scalefont setfont } def")
 # "/R   { /Font1 findfont } def",
 # "/B   { /Font2 findfont } def",
 # "/I   { /Font3 findfont } def",
 # "/BI  { /Font4 findfont } def",
 # "/S   { /Font5 findfont } def",
-"1 setlinecap 1 setlinejoin")
+# "1 setlinecap 1 setlinejoin")
 
 ####################
 # PostScript font database

@@ -135,6 +135,21 @@ struct _GEDevDesc {
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
 };
 
+/*
+ *  Some line end/join constants
+ */
+typedef enum {
+  GE_ROUND_CAP  = 1,
+  GE_BUTT_CAP   = 2,
+  GE_SQUARE_CAP = 3
+} R_GE_lineend;
+
+typedef enum {
+  GE_ROUND_JOIN = 1,
+  GE_MITRE_JOIN = 2,
+  GE_BEVEL_JOIN = 3
+} R_GE_linejoin;
+
 /* 
  * A structure containing graphical parameters 
  *
@@ -159,7 +174,9 @@ typedef struct {
      */
     double lwd;          /* Line width (roughly number of pixels) */
     int lty;             /* Line type (solid, dashed, dotted, ...) */
-                         /* FIXME: need to add line end/joins */
+    R_GE_lineend lend;   /* Line end */
+    R_GE_linejoin ljoin; /* line join */
+    double lmitre;       /* line mitre */
     /*
      * Text characteristics
      */
@@ -229,6 +246,9 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
 #define LTY_DOTDASH	1 + (3<<4) + (4<<8) + (3<<12)
 #define LTY_LONGDASH	7 + (3<<4)
 #define LTY_TWODASH	2 + (2<<4) + (6<<8) + (2<<12)
+
+R_GE_lineend LENDpar(SEXP value, int ind);
+R_GE_linejoin LJOINpar(SEXP value, int ind);
 
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
 void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd);

@@ -14,7 +14,8 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
     to form a vector of colors.  Values in shorter arguments are
     recycled.}
   \item{gamma}{a \dQuote{gamma correction} exponent, \eqn{\gamma}}
-  \item{alpha}{alpha value in the range \code{[0,1]}.}
+  \item{alpha}{numeric value in the range \code{[0,1]} for
+    alpha transparency channel (0 means transparent and 1 means opaque).}
 }
 \value{
   This function creates a vector of \dQuote{colors} corresponding to the
