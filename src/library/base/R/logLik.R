@@ -16,6 +16,10 @@ str.logLik <- function(object, digits = max(2, getOption("digits") - 3), ...)
         " (df=",format(attr(object,"df")),")\n",sep="")
 }
 
+## rather silly (but potentially used in pkg nlme):
+as.data.frame.logLik <- function (x, row.names = NULL, optional = FALSE)
+    as.data.frame(c(x), row.names=row.names, optional=optional)
+
 ## >> logLik.nls() in ../../nls/R/nls.R
 
 ## from package:nlme

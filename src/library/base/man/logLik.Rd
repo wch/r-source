@@ -6,10 +6,12 @@ logLik(object, ...)
 
 %notyet print(logLik(*), ...)
 %notyet   str(logLik(*), ...)
+\method{as.data.frame}{logLik}(x, row.names = NULL, optional = FALSE)
 }
 \alias{logLik}
 \alias{print.logLik}
 \alias{str.logLik}
+\alias{as.data.frame.logLik} <- function (x, row.names = NULL, optional = FALSE)
 \arguments{
  \item{object}{any object from which a log-likelihood value, or a
    contribution to a log-likelihood value, can be extracted.}
