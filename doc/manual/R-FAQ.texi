@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-16, @value{FAQ-YEAR}-11-13
+@set FAQ-VERSION 1.8-17, @value{FAQ-YEAR}-11-15
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2042,6 +2042,8 @@ Fit linear and generalized linear mixed-effects models.
 @item lmeSplines
 Fit smoothing spline terms in Gaussian linear and nonlinear
 mixed-effects models.
+@item lmm
+Linear mixed models.
 @item lmtest
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
@@ -2153,15 +2155,15 @@ Nonlinear quantile regression.
 Software for single hidden layer perceptrons (``feed-forward neural
 networks''), and for multinomial log-linear models.  Contained in the
 @file{VR} bundle.  @emph{Recommended}.
+@item nor1mix
+One-dimensional normal mixture models classes, for, e.g., density
+estimation or clustering algorithms research and teaching; providing the
+widely used Marron-Wand densities.
 @item norm
 Analysis of multivariate normal datasets with missing values.
 @item normalp
 A collection of utilities for normal of order @math{p} distributions
 (General Error Distributions).
-@item normix
-One-dimensional normal mixture models classes, for, e.g., density
-estimation or clustering algorithms research and teaching; providing the
-widely used Marron-Wand densities.
 @item nortest
 Five omnibus tests for the composite hypothesis of normality.
 @item noverlap
