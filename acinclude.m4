@@ -542,13 +542,15 @@ fi
 ## 'fort77' and fc' are wrappers around 'f2c', 'fort77' being better.
 ## It is believed that under HP-UX 'fort77' is the name of the native
 ## compiler.  On some Cray systems, fort77 is a native compiler.
-## cf77 and cft77 are (older) Cray F77 compilers.
+## frt is the Fujitsu F77 compiler.
 ## pgf77 and pgf90 are the Portland Group F77 and F90 compilers.
 ## xlf/xlf90/xlf95 are IBM (AIX) F77/F90/F95 compilers.
 ## lf95 is the Lahey-Fujitsu compiler.
 ## fl32 is the Microsoft Fortran "PowerStation" compiler.
 ## af77 is the Apogee F77 compiler for Intergraph hardware running CLIX.
 ## epcf90 is the "Edinburgh Portable Compiler" F90.
+## fort is the Compaq Fortran 90 (now 95) compiler for Tru64 and
+## Linux/Alpha.
 ## </Quote>
 ##
 ## In fact, on HP-UX fort77 is the POSIX-compatible native compiler and
@@ -566,12 +568,12 @@ elif test -z "${F2C}"; then
   F77=
   case "${host_os}" in
     hpux*)
-      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf cf77 cft77 pgf77 fl32 af77 \
-                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf frt pgf77 fl32 af77 f90 \
+                           xlf90 pgf90 epcf90 f95 fort xlf95 lf95 g95 fc])
       ;;
     *)
-      AC_CHECK_PROGS(F77, [g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 \
-                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+      AC_CHECK_PROGS(F77, [g77 f77 xlf frt pgf77 fl32 af77 fort77 f90 \
+                           xlf90 pgf90 epcf90 f95 fort xlf95 lf95 g95 fc])
       ;;
   esac
   if test -z "${F77}"; then
@@ -1204,6 +1206,21 @@ AC_DEFINE_UNQUOTED(SOCKLEN_T, ${r_cv_type_socklen},
 
 ### * System services
 
+## R_X11
+## -----
+AC_DEFUN([R_X11],
+[AC_PATH_XTRA			# standard X11 search macro
+if test -z "${no_x}"; then
+  ## We force the use of -lX11 (perhaps this is not necessary?).
+  X_LIBS="${X_LIBS} -lX11"
+  use_X11="yes"
+  AC_DEFINE(HAVE_X11, 1,
+            [Define if you have the X11 headers and libraries, and want
+             the X11 GUI to be built.])
+else
+  use_X11="no"
+fi])# R_X11
+
 ## R_GNOME
 ## -------
 AC_DEFUN([R_GNOME], 
@@ -1229,6 +1246,8 @@ AC_SUBST(HAVE_GNOME)
 AC_SUBST(GNOME_IF_FILES)
 ])# R_GNOME
 
+## R_AQUA
+## ------
 AC_DEFUN([R_AQUA],
 [use_aqua=no
 if test "${want_aqua}" = yes; then

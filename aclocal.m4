@@ -412,12 +412,12 @@ elif test -z "${F2C}"; then
   F77=
   case "${host_os}" in
     hpux*)
-      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf cf77 cft77 pgf77 fl32 af77 \
-                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf frt pgf77 fl32 af77 f90 \
+                           xlf90 pgf90 epcf90 f95 fort xlf95 lf95 g95 fc])
       ;;
     *)
-      AC_CHECK_PROGS(F77, [g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 \
-                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+      AC_CHECK_PROGS(F77, [g77 f77 xlf frt pgf77 fl32 af77 fort77 f90 \
+                           xlf90 pgf90 epcf90 f95 fort xlf95 lf95 g95 fc])
       ;;
   esac
   if test -z "${F77}"; then
@@ -957,6 +957,19 @@ AC_DEFINE_UNQUOTED(SOCKLEN_T, ${r_cv_type_socklen},
                    [Type for socket lengths: socklen_t, sock_t, int?])
 ])# R_TYPE_SOCKLEN
 
+
+AC_DEFUN([R_X11],
+[AC_PATH_XTRA			# standard X11 search macro
+if test -z "${no_x}"; then
+  ## We force the use of -lX11 (perhaps this is not necessary?).
+  X_LIBS="${X_LIBS} -lX11"
+  use_X11="yes"
+  AC_DEFINE(HAVE_X11, 1,
+            [Define if you have the X11 headers and libraries, and want
+             the X11 GUI to be built.])
+else
+  use_X11="no"
+fi])# R_X11
 
 AC_DEFUN([R_GNOME], 
 [if test ${want_gnome} = yes; then

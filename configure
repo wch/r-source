@@ -1976,7 +1976,7 @@ cat >>confdefs.h <<\_ACEOF
 #define Win32 1
 _ACEOF
 
-  cat >>confdefs.h <<\EOF
+    cat >>confdefs.h <<\EOF
 #define snprintf  _snprintf
 #define vsnprintf  _vsnprintf
 #define isnan _isnan
@@ -9603,8 +9603,8 @@ elif test -z "${F2C}"; then
   F77=
   case "${host_os}" in
     hpux*)
-      for ac_prog in g77 fort77 f77 xlf cf77 cft77 pgf77 fl32 af77 \
-                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc
+      for ac_prog in g77 fort77 f77 xlf frt pgf77 fl32 af77 f90 \
+                           xlf90 pgf90 epcf90 f95 fort xlf95 lf95 g95 fc
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -9646,8 +9646,8 @@ done
 
       ;;
     *)
-      for ac_prog in g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 \
-                           f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc
+      for ac_prog in g77 f77 xlf frt pgf77 fl32 af77 fort77 f90 \
+                           xlf90 pgf90 epcf90 f95 fort xlf95 lf95 g95 fc
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -11771,9 +11771,9 @@ done
 
 ## </NOTE>
 ## <NOTE>
-## AC_CHECK_HEADERS(libintl.h)
 ## src/main/regex.c uses HAVE_LIBINTL_H.
 ## But then we want full gettext support and AM_GNU_GETTEXT.
+## AC_CHECK_HEADERS(libintl.h)
 ## </NOTE>
 case "${host_os}" in
   sunos4*)
@@ -15446,7 +15446,7 @@ fi
     ## @option{-mieee-with-inexact} for GCC) for the C compiler:
     ## @option{-ieee} (or @option{-mieee}) are not enough.
     ## According to <Albrecht.Gebhardt@uni-klu.ac.at> and Luke Tierney
-    ## <luke@stat.umn.edu>, @option{-fpe3} is what we want for the
+    ## <luke@stat.uiowa.edu>, @option{-fpe3} is what we want for the
     ## native Fortran 77 compiler: seems that not all versions map
     ## @option{-ieee} to @option{-fpe3}.
     ## What about the C++ compilers?
@@ -16318,7 +16318,7 @@ esac
 ##   from a C or Fortran compiler).
 ## SHLIB_CXXLD, SHLIB_CXXLDFLAGS
 ##   command and flags for creating DLLs which contain object files from
-##   a C++ compiler.  According to autoconf, the C++ compiler/linker
+##   a C++ compiler.  According to Autoconf, the C++ compiler/linker
 ##   must be used for linking in this case (since special C++-ish things
 ##   need to happen at link time like calling global constructors,
 ##   instantiating templates, enabling exception support, etc.).
@@ -16497,12 +16497,11 @@ case "${host_os}" in
     fi
     ;;
   irix*)
-    shlib_ldflags="-shared"
-    shlib_cxxldflags="-shared"
-    ## PIC is default on IRIX.
     cpicflags=
     cxxpicflags=
     fpicflags=
+    shlib_ldflags="-shared"
+    shlib_cxxldflags="-shared"
     ;;
   linux*aout)			# GNU Linux/aout
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
@@ -16666,7 +16665,7 @@ case "${host_os}" in
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
-    ##  Change once the driver is modularized.
+    ## Change once the driver is modularized.
     LIBR_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libR.dylib -framework Carbon"
     ## </FIXME>
     ;;
@@ -17133,7 +17132,7 @@ else
 fi
 
 
-## do we need substitutes?
+## Do we need substitutes?
 
 
 
@@ -17219,7 +17218,7 @@ fi
 done
 
 
-## enable declarations in Defn.h?
+## Enable declarations in Defn.h?
 echo "$as_me:$LINENO: checking whether acosh is declared" >&5
 echo $ECHO_N "checking whether acosh is declared... $ECHO_C" >&6
 if test "${ac_cv_have_decl_acosh+set}" = set; then
@@ -19119,8 +19118,6 @@ fi
 
 
 ## X11.
-## Here we use the standard X11 search macro.
-## We force the use of -lX11 (perhaps this is not necessary).
 echo "$as_me:$LINENO: checking for X" >&5
 echo $ECHO_N "checking for X... $ECHO_C" >&6
 
@@ -20291,11 +20288,11 @@ fi
   LDFLAGS=$ac_save_LDFLAGS
 
 fi
-
+			# standard X11 search macro
 if test -z "${no_x}"; then
+  ## We force the use of -lX11 (perhaps this is not necessary?).
   X_LIBS="${X_LIBS} -lX11"
   use_X11="yes"
-  R_GUIS=X11
 
 cat >>confdefs.h <<\_ACEOF
 #define HAVE_X11 1
@@ -20303,6 +20300,10 @@ _ACEOF
 
 else
   use_X11="no"
+fi
+if test "${use_X11}" = yes; then
+  R_GUIS=X11
+else
   R_GUIS=
 fi
 
@@ -24687,12 +24688,12 @@ fi
 ## Doing this via AC_CONFIG_COMMANDS would require explicitly passing all
 ## configure variables to config.status.
 ## </NOTE>
-C_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
-CXX_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
+R_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
+R_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 if test -z "${F2C}"; then
-  Fortran_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
+  R_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 else
-  Fortran_compiler="${F2C} ${F2CFLAGS}"
+  R_f77_compiler="${F2C} ${F2CFLAGS}"
 fi
 echo "$as_me:$LINENO: result:
 R is now configured for ${host}
@@ -24700,9 +24701,9 @@ R is now configured for ${host}
   Source directory:          ${srcdir}
   Installation directory:    ${prefix}
 
-  C compiler:                ${C_compiler}
-  C++ compiler:              ${CXX_compiler}
-  Fortran compiler:          ${Fortran_compiler}
+  C compiler:                ${R_c_compiler}
+  C++ compiler:              ${R_cxx_compiler}
+  Fortran compiler:          ${R_f77_compiler}
 
   X11 support:               ${use_X11}
   Gnome support:             ${use_gnome}
@@ -24720,9 +24721,9 @@ R is now configured for ${host}
   Source directory:          ${srcdir}
   Installation directory:    ${prefix}
 
-  C compiler:                ${C_compiler}
-  C++ compiler:              ${CXX_compiler}
-  Fortran compiler:          ${Fortran_compiler}
+  C compiler:                ${R_c_compiler}
+  C++ compiler:              ${R_cxx_compiler}
+  Fortran compiler:          ${R_f77_compiler}
 
   X11 support:               ${use_X11}
   Gnome support:             ${use_gnome}
