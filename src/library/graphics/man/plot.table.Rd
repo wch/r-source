@@ -10,7 +10,7 @@
 \usage{
 %% Improvement ideas: see code definition, currently in ../R/plot.R
 \method{plot}{table}(x, type = "h", ylim = c(0, max(x)), lwd = 2,
-      xlab = NULL, ylab = NULL, frame.plot = is.num, \dots)
+     xlab = NULL, ylab = NULL, frame.plot = is.num, \dots)
 }
 \arguments{
   \item{x}{a \code{\link{table}} (like) object.}
