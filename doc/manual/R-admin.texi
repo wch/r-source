@@ -538,6 +538,17 @@ downloads the list of available packages and their current versions,
 compares it with those installed and offers to fetch and install any
 that have later versions on @acronym{CRAN}.
 
+An alternative way of keeping packages up-to-date is provided by the
+command @code{packageStatus()}, which returns an object with information
+on all installed packages and packages available at multiple
+repositories (CRAN, local archive, @dots{}). The @code{print} and
+@code{summary} methods give an overview of installed and available
+packages, the @code{upgrade} method offers to fetch and install outdated
+packages.  This allows R to fetch packages from several repositories and
+keep in sync with all of them, instead of only one CRAN mirror, and is
+intended to become the default package manager for future versions of R.
+
+
 @node Removing packages,  , Updating packages, Add-on packages
 @section Removing packages
 @findex remove.packages
