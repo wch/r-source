@@ -28,9 +28,11 @@ function(dataDir, contents)
     if(!fileTest("-d", dataDir))
         stop(paste("directory", sQuote(dataDir), "does not exist"))
     dataFiles <- listFilesWithType(dataDir, "data")
+    ## <FIXME> to avoid name clashes CO2 is stored as zCO2.R
     dataTopics <- unique(basename(filePathSansExt(dataFiles)))
+    dataTopics[dataTopics == "zCO2"] <- "CO2"
     if(!length(dataTopics)) return(matrix("", 0, 2))
-    dataIndex <- cbind(dataTopics, "")
+    dataIndex <- cbind(sort(dataTopics), "")
     ## Note that NROW(contents) might be 0.
     if(NROW(contents)) {
         aliasIndices <-
@@ -127,7 +129,7 @@ function(contents, packageName, libDir)
     ## useful for help.search().
 
     dbAliases <- dbConcepts <- dbKeywords <- matrix(character(), nc = 3)
-    
+
     if((nr <- NROW(contents)) > 0) {
         ## IDs are used for indexing the Rd objects in the help.search
         ## db.
@@ -139,7 +141,7 @@ function(contents, packageName, libDir)
             ## If the contents db is not a data frame, then it has the
             ## aliases collapsed.  Split again as we need the first
             ## alias as the help topic to indicate for matching Rd
-            ## objects. 
+            ## objects.
             aliases <- strsplit(contents[, "Aliases"], " +")
             ## Don't do this for keywords though, as these might be
             ## non-standard (and hence contain white space ...).
@@ -156,7 +158,7 @@ function(contents, packageName, libDir)
         ## data in a 3-column character matrix format with entry, ID of
         ## the Rd object the entry comes from, and the package the
         ## object comes from.  The latter is useful when subscripting
-        ## the help.search db according to package. 
+        ## the help.search db according to package.
         dbBase <- cbind(packageName, libDir, IDs, base,
                         topic = sapply(aliases, "[", 1))
         ## If there are no aliases at all, cbind() below would give
@@ -183,7 +185,7 @@ function(contents, packageName, libDir)
     else {
         dbBase <- matrix(character(), nc = 6)
     }
-        
+
     colnames(dbBase) <-
         c("Package", "LibPath", "ID", "name", "title", "topic")
     colnames(dbAliases) <-
