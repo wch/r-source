@@ -637,43 +637,15 @@ Date: Thu, 12 Dec 2002 00:17:26 +0100 (MET)
 Subject: R -g gnome has graphics bugs
 From: chris-public@math.uu.se
 Date: Thu, 12 Dec 2002 14:19:43 +0100 (MET)
-* PR# 2371 *
-Subject: Minor glitch in building documentation
-From: Peter Rye <prye@shiraz.apana.org.au>
-Date: 12 Dec 2002 23:47:22 +1100
-* PR# 2375 *
-Subject: Fuera estrés ya !!!
-From: "Centro Relax" <centrorelax@axtel.net>
-Date: Sun, 15 Dec 2002 07:42:53 -0600
-* PR# 2376 *
-Subject: CRY FOR HELP
-From: Mrs Marian Seseseko <seseseko@rediffmail.com>
-Date: Mon, 16 Dec 2002 00:33:55 +0000
-* PR# 2377 *
-Subject: Lattice: panel.superpose function does not pass subscripts and groups arguments
-From: volker.franz@tuebingen.mpg.de
-Date: Mon, 16 Dec 2002 14:32:29 +0100 (MET)
-* PR# 2378 *
-Subject: rsprng doesn't install on Debian (woody)
-From: charpent@bacbuc.dyndns.org
-Date: Tue, 17 Dec 2002 10:40:31 +0100 (MET)
-* PR# 2379 *
-Subject: URGENT ASSISTANCE
-From: mrs mariam sese-seko <mrs_mariamsese13@rediffmail.com>
-Date: Tue, 17 Dec 2002 19:30:58 +0000
-* PR# 2380 *
-Subject: [R] Lattice: ltext() takes only the x-part of the adj argument
-From: Wolfram Fischer <wolfram@fischer-zim.ch>
-Date: Wed, 18 Dec 2002 11:42:08 +0100
-* PR# 2381 *
-Subject: Unix Symbolic links failing ("ls -s realfile linkedas")
-From: morlan@mayo.edu
-Date: Wed, 18 Dec 2002 23:03:57 +0100 (MET)
-* PR# 2382 *
-Subject: Re: [Rd] Unix Symbolic links failing ("ls -s realfile linkedas")
-From: ripley@stats.ox.ac.uk
-Date: Wed, 18 Dec 2002 22:31:55 +0000 (GMT)
-* PR# 2383 *
-Subject: Perl library problem in docs install
-From: annis@biostat.wisc.edu
-Date: Thu, 19 Dec 2002 20:57:39 +0100 (MET)
+* PR# 2384 *
+Subject: degrees of freedom in nlme()
+From: jerome@hivnet.ubc.ca
+Date: Fri, 20 Dec 2002 01:40:06 +0100 (MET)
+* PR# 2385 *
+Subject: read.xport and lookup.xport in foreign
+From: Frank E Harrell Jr <fharrell@virginia.edu>
+Date: Fri, 20 Dec 2002 12:47:58 -0500
+* PR# 2386 *
+Subject: ace and avas in acepack
+From: Frank E Harrell Jr <fharrell@virginia.edu>
+Date: Fri, 20 Dec 2002 12:59:07 -0500
