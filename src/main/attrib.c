@@ -686,7 +686,8 @@ SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("attr<- : name must be of mode character");
 
     /* no eval(.), RHS is already evaluated: */
-    PROTECT(value = CADDR(args));
+    /* now it's a promise so we should eval it -RG- */
+    PROTECT(value = eval(CADDR(args), env));
     setAttrib(obj, name, value);
     UNPROTECT(3);
     return obj;
