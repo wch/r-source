@@ -1,4 +1,6 @@
-qqnorm <-
+qqnorm <- function(y, ...) UseMethod("qqnorm")
+
+qqnorm.default <-
     function(y, ylim, main="Normal Q-Q Plot",
 	     xlab="Theoretical Quantiles", ylab="Sample Quantiles",
 	     plot.it=TRUE, ...)
@@ -11,6 +13,8 @@ qqnorm <-
 	plot(x, y, main= main, xlab= xlab, ylab= ylab, ylim= ylim, ...)
     invisible(list(x = x, y = y))
 }
+
+## Splus also has qqnorm.aov(), qqnorm.aovlist(), qqnorm.maov() ...
 
 qqline <- function(y, ...)
 {

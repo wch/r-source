@@ -1,13 +1,16 @@
 \name{qqnorm}
 \title{Quantile-Quantile Plots}
 \usage{
-qqnorm(y, ylim, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles",
+qqnorm(y, \dots)
+\method{qqnorm}{default}(y, ylim, main = "Normal Q-Q Plot",
+       xlab = "Theoretical Quantiles",
        ylab = "Sample Quantiles", plot.it = TRUE, \dots)
 qqline(y, \dots)
 qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
        ylab = deparse(substitute(y)), \dots)
 }
 \alias{qqnorm}
+\alias{qqnorm.default}
 \alias{qqplot}
 \alias{qqline}
 
@@ -16,7 +19,8 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
  \item{y}{The second or only data sample.}
 }
 \description{
-  \code{qqnorm} produces a normal QQ plot of the values in \code{y}.
+  \code{qqnorm} is a generic functions the default method of which
+  produces a normal QQ plot of the values in \code{y}.
   \code{qqline} adds a line to a normal quantile-quantile plot which
   passes through the first and third quartiles.
 
