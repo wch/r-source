@@ -822,26 +822,10 @@ Date: Thu, 18 Dec 2003 19:19:53 +1100
 Subject: Re: [R] R GUI dies using postcript() in Windows XP Pro
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Thu, 18 Dec 2003 13:17:54 -0500
-* PR# 5957 *
-Subject: =?ISO-2022-JP?B?GyRCJCQkLSRKJGokQCQxJEkbKEI=?=
-From: happy.lucky.girl@ezweb.ne.jp
-Date: Sat, 20 Dec 2003 18:38:57 
 * PR# 6005 *
 Subject: [R] lattice: levelplot: error: min not meaningful for factor
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Mon, 22 Dec 2003 17:29:49 +0100
-* PR# 6090 *
-Subject: m0rtgage rate as 1.95%. 1 hour approval
-From: "Gil" <zpjnlmqpbo@consultant.com>
-Date: Thu, 25 Dec 2003 16:35:27 +0200
-* PR# 6167 *
-Subject: Bug repository problem
-From: p.dalgaard@biostat.ku.dk
-Date: Sun, 28 Dec 2003 20:47:18 +0100 (CET)
-* PR# 6168 *
-Subject: Bug repository problem
-From: p.dalgaard@biostat.ku.dk
-Date: Sun, 28 Dec 2003 20:57:10 +0100 (CET)
 * PR# 6196 *
 Subject: Accuracy: Correct sums in rowSums(), colSums()
 From: Nick.Efthymiou@Schwab.com
@@ -850,31 +834,15 @@ Date: Tue, 30 Dec 2003 01:57:19 +0100 (CET)
 Subject: termplot; failure to subset non-dataframe carriers
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sun, 4 Jan 2004 13:06:50 +1100
-* PR# 6383 *
-Subject: Boost Protein Expression by Codon Optimization
-From: Sally Wang <service@genscript.com>
-Date: Mon, 5 Jan 2004 18:59 -0800
 * PR# 6394 *
 Subject: bug report
 From: huan.huang@bnpparibas.com
 Date: Tue,  6 Jan 2004 11:48:40 +0100 (CET)
-* PR# 6406 *
-Subject: Bi-z-o-p Leads, LOw P-r-i-c-e-s.. rzrfnwx tdugnwyh
-From: "Herman Ponce" <ul21vwhjab@geocities.com>
-Date: Tue, 06 Jan 04 21:06:05 GMT
-* PR# 6407 *
-Subject: APPLICATION
-From: "MR.IKE COLLINS" <ikecollins001@ecplaza.net>
-Date: Tue, 6 Jan 2004 23:54:43 +0100
-* PR# 6408 *
-Subject: Fwd: Save Big on V|@gra,Valï(u)m,X(a)n@x Diet Pills lots of Meds lu mlwosrv
-From: "Jaime Darden" <yoy469dmt@earthlink.com>
-Date: Wed, 07 Jan 04 15:13:11 GMT
-* PR# 6409 *
-Subject: Wrestling, UFC, & Boxing PPV's (WWF, NWA, Boxing Heavy Weight Fights) normally cost $30-80 an event, FREE vswrdtd
-From: "Clara Heller" <906mgzxlz@precolour.com>
-Date: Wed, 07 Jan 04 05:26:40 GMT
-* PR# 6410 *
-Subject: Ge.neric Vi-ag.ra and supr vigra  a wfppqsioj ngpr
-From: "Steve Corona" <ku862ninoz@yahoo.com>
-Date: Sat, 07 Jan 06 07:21:36 GMT
+* PR# 6420 *
+Subject: na.exclude.default returns class "omit"
+From: Roger.Bivand@nhh.no
+Date: Wed,  7 Jan 2004 12:28:06 +0100 (CET)
+* PR# 6421 *
+Subject: qchisq hang
+From: statho3@web.de
+Date: Wed,  7 Jan 2004 21:45:11 +0100 (CET)
