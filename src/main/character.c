@@ -180,7 +180,7 @@ static void substr(char *buf, char *str, int sa, int so)
 #ifdef SUPPORT_MBCS
     if(mbcslocale && !utf8strIsASCII(str)) {
 	int j, used;
-	mbstate_t mb_st;    
+	mbstate_t mb_st;
 	mbs_init(&mb_st);
 	for(i = 1; i < sa; i++) str += Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
 	for(i = sa; i <= so; i++) {
@@ -330,7 +330,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok, slen;
-    int extended_opt, eflags, fixed, perl;
+    int extended_opt, cflags, fixed, perl;
     char *buf, *pt = NULL, *split = "", *bufp, *laststart;
     regex_t reg;
     regmatch_t regmatch[1];
@@ -362,8 +362,8 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 #endif
 
-    eflags = 0;
-    if(extended_opt) eflags = eflags | REG_EXTENDED;
+    cflags = 0;
+    if(extended_opt) cflags = cflags | REG_EXTENDED;
 
     len = LENGTH(x);
     tlen = LENGTH(tok);
@@ -432,11 +432,11 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		   the empty string (not a ``token'' in the strict sense).
 		*/
 		usedRegex = TRUE;
-		if(regcomp(&reg, split, eflags))
+		if(regcomp(&reg, split, cflags))
 		    errorcall(call, _("invalid split pattern '%s'"), split);
 		bufp = buf;
 		if(*bufp != '\0') {
-		    while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
+		    while(regexec(&reg, bufp, 1, regmatch, 0) == 0) {
 			/* Empty matches get the next char, so move by
 			   one. */
 			bufp += MAX(regmatch[0].rm_eo, 1);
@@ -490,7 +490,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    SET_STRING_ELT(t, j, mkChar(pt));
 		} else {
-		    regexec(&reg, bufp, 1, regmatch, eflags);
+		    regexec(&reg, bufp, 1, regmatch, 0);
 		    if(regmatch[0].rm_eo > 0) {
 			/* Match was non-empty. */
 			if(regmatch[0].rm_so > 0)
@@ -747,7 +747,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int nc = l, used;
 	    wchar_t wc;
 	    mbstate_t mb_st;
-	    
+
 	    p = this;
 	    mbs_init(&mb_st);
 	    used = Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st); p += used; nc -= used;
@@ -829,7 +829,7 @@ static int fgrep_one(char *pat, char *target, int useBytes)
 	    used = Mbrtowc(NULL,  target+ib, MB_CUR_MAX, &mb_st);
 	    if(used <= 0) break;
 	    ib += used;
-	}	
+	}
     } else
 #endif
 	for(i = 0; i <= len-plen; i++)
@@ -842,7 +842,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, vec, ind, ans;
     regex_t reg;
     int i, j, n, nmatches;
-    int igcase_opt, extended_opt, value_opt, fixed_opt, useBytes, eflags;
+    int igcase_opt, extended_opt, value_opt, fixed_opt, useBytes, cflags;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -883,11 +883,11 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	/* end NA pattern handling */
     } else {
-	eflags = 0;
-	if (extended_opt) eflags = eflags | REG_EXTENDED;
-	if (igcase_opt) eflags = eflags | REG_ICASE;
+	cflags = 0;
+	if (extended_opt) cflags = cflags | REG_EXTENDED;
+	if (igcase_opt) cflags = cflags | REG_ICASE;
 
-	if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
+	if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
 	    errorcall(call, _("invalid regular expression '%s'"),
 		      CHAR(STRING_ELT(pat, 0)));
 
@@ -895,9 +895,9 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    LOGICAL(ind)[i] = 0;
 	    if (STRING_ELT(vec, i) != NA_STRING) {
 #ifdef SUPPORT_MBCS
-		if(!useBytes && mbcslocale && 
+		if(!useBytes && mbcslocale &&
 		   !mbcsValid(CHAR(STRING_ELT(vec, i)))) {
-		    warningcall(call, 
+		    warningcall(call,
 				_("input string %d is invalid in this locale"),
 				i+1);
 		    continue;
@@ -1004,7 +1004,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regmatch_t regmatch[10];
     int i, j, n, ns, nmatch, offset;
-    int global, igcase_opt, extended_opt, fixed_opt, eflags;
+    int global, igcase_opt, extended_opt, fixed_opt, cflags, eflags;
     char *s, *t, *u;
     char *spat = NULL; /* -Wall */
     int patlen = 0, replen = 0, st, nr = 1;
@@ -1033,9 +1033,9 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(vec)) PROTECT(vec = coerceVector(vec, STRSXP));
     else PROTECT(vec);
 
-    eflags = 0;
-    if (extended_opt) eflags = eflags | REG_EXTENDED;
-    if (igcase_opt) eflags = eflags | REG_ICASE;
+    cflags = 0;
+    if (extended_opt) cflags = cflags | REG_EXTENDED;
+    if (igcase_opt) cflags = cflags | REG_ICASE;
 
 #ifdef SUPPORT_MBCS
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
@@ -1043,7 +1043,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
 	errorcall(call, _("'replacement' is invalid in this locale"));
 #endif
-    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
+    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
 	errorcall(call, _("invalid regular expression '%s'"),
 		  CHAR(STRING_ELT(pat, 0)));
     if (fixed_opt) {
@@ -1059,7 +1059,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0 ; i < n ; i++) {
       /* NA `pat' are removed in R code */
-      /* the C code is left in case we change our minds again, 
+      /* the C code is left in case we change our minds again,
 	 but this code _is_ used if 'x' contains NAs */
       /* NA matches only itself */
         if (STRING_ELT(vec,i) == NA_STRING) {
@@ -1111,9 +1111,11 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		strcat(u, s);
 	    }
 	} else {
-	    while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
+	    eflags = 0;
+	    while (regexec(&reg, &s[offset], 10, regmatch, eflags) == 0) {
 		nmatch += 1;
 		if (regmatch[0].rm_eo == 0)
+		    /* <MBCS FIXME> advance by a char */
 		    offset++;
 		else {
 		    ns += length_adj(t, regmatch, reg.re_nsub);
@@ -1121,6 +1123,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (s[offset] == '\0' || !global)
 		    break;
+		eflags = REG_NOTBOL;
 	    }
 	    if (nmatch == 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
@@ -1134,10 +1137,12 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		t = CHAR(STRING_ELT(rep, 0));
 		u = CHAR(STRING_ELT(ans, i));
 		ns = strlen(s);
-		while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
+		eflags = 0;
+		while (regexec(&reg, &s[offset], 10, regmatch, eflags) == 0) {
 		    for (j = 0; j < regmatch[0].rm_so ; j++)
 			*u++ = s[offset+j];
 		    if (regmatch[0].rm_eo == 0) {
+			/* <MBCS FIXME> advance by a char */
 			*u++ = s[offset];
 			offset++;
 		    }
@@ -1148,6 +1153,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    if (s[offset] == '\0' || !global)
 			break;
+		    eflags = REG_NOTBOL;
 		}
 		if (offset < ns)
 		    for (j = offset ; s[j] ; j++)
@@ -1166,7 +1172,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, n, st, extended_opt, fixed_opt, useBytes, eflags;
+    int i, n, st, extended_opt, fixed_opt, useBytes, cflags;
     char *spat = NULL; /* -Wall */
 
     checkArity(op, args);
@@ -1187,13 +1193,13 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(text)) PROTECT(text = coerceVector(text, STRSXP));
     else PROTECT(text);
 
-    eflags = extended_opt ? REG_EXTENDED : 0;
+    cflags = extended_opt ? REG_EXTENDED : 0;
 
 #ifdef SUPPORT_MBCS
     if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
-    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
+    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
 	errorcall(call, _("invalid regular expression '%s'"),
 		  CHAR(STRING_ELT(pat, 0)));
     if (fixed_opt) spat = CHAR(STRING_ELT(pat, 0));
@@ -1209,7 +1215,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!useBytes && mbcslocale &&
 	       !mbcsValid(CHAR(STRING_ELT(text, i)))) {
 		warningcall(call,
-			    _("input string %d is invalid in this locale"), 
+			    _("input string %d is invalid in this locale"),
 			    i+1);
 		INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 		continue;
@@ -1227,12 +1233,13 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			strlen(spat):-1;
 	    } else {
-		if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1,
-			   regmatch, 0) == 0) {
+		if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1, regmatch, 0)
+		   == 0) {
 		    st = regmatch[0].rm_so;
 		    INTEGER(ans)[i] = st + 1; /* index from one */
+		    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
 #ifdef SUPPORT_MBCS
-		    if(mbcslocale) {
+		    if(!useBytes && mbcslocale) {
 			int mlen = regmatch[0].rm_eo - st;
 			/* Unfortunately these are in bytes, so we need to
 			   use chars instead */
@@ -1250,9 +1257,8 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
 			if(INTEGER(matchlen)[i] < 0) /* an invalid string */
 			    INTEGER(matchlen)[i] = NA_INTEGER;
-		    } else
+		    }
 #endif
-			INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
 		} else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	    }
 	}
@@ -1581,7 +1587,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
 		if(nc < 0)
-		    errorcall(call, _("invalid input multibyte string %d"), 
+		    errorcall(call, _("invalid input multibyte string %d"),
 			      i+1);
 		AllocBuffer((nc+1)*sizeof(wchar_t));
 		wc = (wchar_t *) cbuff.data;
