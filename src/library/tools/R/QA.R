@@ -549,7 +549,7 @@ function(package, dir, lib.loc = NULL)
         lsArgs <- ls(envir = argsEnv, all.names = TRUE)
 
         argsInArgList <-
-            unlist(strsplit(gsub("# arglist:", "", argList), " +"))
+            unlist(strsplit(gsub("# arglist: *", "", argList), " +"))
         argsInUsage <-
             unlist(lapply(lsArgs,
                           function(f)
