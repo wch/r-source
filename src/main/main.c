@@ -368,6 +368,8 @@ void setup_Rmainloop(void)
     /* If there is an error we pass on to the repl. */
     /* Perhaps it makes more sense to quit gracefully? */
 
+    printf("*** loading base  %d ***\n", 
+	   *LOGICAL(GetOption(install("keep.source"), R_NilValue)));
     fp = R_OpenLibraryFile("base");
     R_Inputfile = NULL;
     if (fp == NULL) {
@@ -385,6 +387,8 @@ void setup_Rmainloop(void)
 	R_ReplFile(fp, R_NilValue, 0, 0);
     }
     fclose(fp);
+    printf("*** finished base  %d ***\n", 
+	   *LOGICAL(GetOption(install("keep.source"), R_NilValue)));
 
     /* This is where we try to load a user's */
     /* saved data.	The right thing to do here */

@@ -130,8 +130,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(top_builddir)/bin/R.bin
-	@$(MAKE) -C ../unix DLLs
-	(cd ../unix && $(MAKE) DLLs)
+	@(cd ../unix && $(MAKE) DLLs)
 
 ../include/config.h:
 	(cd ../include; $(MAKE) $(@F))
