@@ -509,7 +509,7 @@ static void PS_NewPage(DevDesc *dd)
 			R_GREEN(pd->col)/255.0,
 			R_BLUE(pd->col)/255.0);
 	if(dd->dp.bg != R_RGB(255,255,255)) {
-		SetColor(dd->dp.bg, dd);
+		SetFill(dd->dp.bg, dd);
 #ifdef OLD
 		PostScriptRectangle(psfp,
 			0, 0, 72.0 * pagewidth, 72.0 * pageheight);
