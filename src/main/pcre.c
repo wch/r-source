@@ -32,7 +32,7 @@
 #include "Defn.h"
 
 #ifdef HAVE_PCRE
-#ifdef HAVE_PCRE_IN_PCRE
+#ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
 #else
 #include <pcre.h>

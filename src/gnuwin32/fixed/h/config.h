@@ -230,8 +230,11 @@
 /* Define if you have the PCRE headers and libraries. */
 #define HAVE_PCRE 1
 
-/* Define if you have the PCRE headers in pcre/. */
-/* #undef HAVE_PCRE_IN_PCRE */
+/* Define to 1 if you have the <pcre.h> header file. */
+#define HAVE_PCRE_H 1
+
+/* Define to 1 if you have the <pcre/pcre.h> header file. */
+/* #undef HAVE_PCRE_PCRE_H */
 
 /* Define if you have the PNG headers and libraries. */
 #define HAVE_PNG 1
