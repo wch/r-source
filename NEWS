@@ -847,6 +847,9 @@ BUG FIXES
 	", ...) now work as they do in 'sed' (whereas the effect was
 	previously the same as gsub("[[:space:]]+", " ", ...)).
 	(In part PR#7742)
+	
+    o   Promises are now evaluated when extracted from an environment
+	using '$' or '[[ ]]'.
 
     o   reshape(direction="wide") had some sorting problems when 
         guessing time points (PR#7669)
