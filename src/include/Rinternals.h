@@ -838,4 +838,6 @@ typedef void (*R_CFinalizer_t)(SEXP);
 void R_RegisterFinalizer(SEXP s, SEXP fun);
 void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
 
+/* Protected evaluation */
+Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
 #endif /* _R_INTERNALS_H_ */

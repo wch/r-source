@@ -524,3 +524,37 @@ SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_GlobalEnv;
 }
 
+/* R_ToplevelExec - call fun(data) within a top level context to
+   insure that this functin cannot be left by a LONGJMP.  R errors in
+   the call to fun will result in a jump to top level. The return
+   value is TRUE if fun returns normally, FALSE if it results in a
+   jump to top level. */
+
+Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
+{
+    RCNTXT thiscontext;
+    RCNTXT * volatile saveToplevelContext;
+    volatile SEXP topExp;
+    Rboolean result;
+
+
+    PROTECT(topExp = R_CurrentExpr);
+    saveToplevelContext = R_ToplevelContext;
+
+    begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
+		 R_NilValue, R_NilValue);
+    if (SETJMP(thiscontext.cjmpbuf))
+	result = FALSE;
+    else {
+	R_GlobalContext = R_ToplevelContext = &thiscontext;
+	fun(data);
+	result = TRUE;
+    }
+    endcontext(&thiscontext);
+
+    R_ToplevelContext = saveToplevelContext;
+    R_CurrentExpr = topExp;
+    UNPROTECT(1);
+
+    return result;
+}
