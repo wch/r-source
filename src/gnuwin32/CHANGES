@@ -95,6 +95,8 @@ has been enabled.  The initially requested memory is no longer
 reserved, but as this malloc is able to work with non-contiguous
 memory chunks that should not matter.
 
+The installer uses LZMA compression, so Inno Setup >= 4.1.5 is required.
+
 
 Bug fixes
 ---------
