@@ -89,6 +89,8 @@ refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
 	fi
 	@echo "DVI/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-dvi
+## <FIXME>
+## Make sure echo does not interpret backslash escapes.
 	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
@@ -96,6 +98,7 @@ refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
+## </FIXME>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@-$(MAKEINDEX) refman
@@ -161,6 +164,8 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	fi
 	@echo "PDF/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-pdf
+## <FIXME>
+## Make sure echo does not interpret backslash escapes.
 	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
@@ -168,6 +173,7 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
+## </FIXME>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
