@@ -514,9 +514,17 @@ rbind(test, test1)
 rbind(test1, test)
 ## 1.6.1 treated matrix as a vector.
 
+
 ## escapes in non-quoted printing
 x <- "\\abc\\"
 names(x) <- 1
 x
 print(x, quote=FALSE)
 ## 1.6.2 had label misaligned
+
+
+## summary on data frames containing data frames (PR#1891)
+x <- data.frame(1:10)
+x$z <- data.frame(x=1:10,yyy=11:20)
+summary(x)
+## 1.6.2 had NULL labels on output with z columns stacked.

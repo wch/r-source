@@ -329,6 +329,9 @@ BUG FIXES
 	as is advisable on Linux.  Now the interval is forced to be at
 	least one clock tick.
 
+    o	summary.data.frame() was not giving interpretable results when
+	the data frame contained a data frame as a column. (PR#1891)
+
 
 
 	**************************************************

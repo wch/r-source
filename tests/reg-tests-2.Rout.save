@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-01-16)
+Version 1.7.0 Under development (unstable) (2003-01-27)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1122,6 +1122,7 @@ y    2    5 8
 5   5 10 15 20  25
 > ## 1.6.1 treated matrix as a vector.
 > 
+> 
 > ## escapes in non-quoted printing
 > x <- "\\abc\\"
 > names(x) <- 1
@@ -1132,4 +1133,18 @@ y    2    5 8
       1 
 \\abc\\ 
 > ## 1.6.2 had label misaligned
+> 
+> 
+> ## summary on data frames containing data frames (PR#1891)
+> x <- data.frame(1:10)
+> x$z <- data.frame(x=1:10,yyy=11:20)
+> summary(x)
+     X1.10             z.x             z.yyy     
+ Min.   : 1.00   Min.   : 1.00    Min.   :11.00  
+ 1st Qu.: 3.25   1st Qu.: 3.25    1st Qu.:13.25  
+ Median : 5.50   Median : 5.50    Median :15.50  
+ Mean   : 5.50   Mean   : 5.50    Mean   :15.50  
+ 3rd Qu.: 7.75   3rd Qu.: 7.75    3rd Qu.:17.75  
+ Max.   :10.00   Max.   :10.00    Max.   :20.00  
+> ## 1.6.2 had NULL labels on output with z columns stacked.
 > 
