@@ -383,6 +383,10 @@ Subject: complex numbers in library function
 From: alex.deckmyn@oma.be
 Date: Wed, 3 Jul 2002 14:25:58 +0200 (MET DST)
 --parse/deparse problem
+* PR# 1891 *
+Subject: summary.data.frame with compound elements problem
+From: b.rowlingson@lancaster.ac.uk
+Date: Fri, 9 Aug 2002 10:35:43 +0200 (MET DST)
 
 Directory:  Low-level
 
@@ -415,6 +419,11 @@ Subject:  You requested this report
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Tue, 6 Aug 2002 16:57:54 +0800
 --The bug is that we get as far as mkCLOSXP before an error is reported
+* PR# 1928 *
+Subject: Symbolic differentiation ("D","deriv", etc.)
+From: lylek@utk.edu
+Date: Thu, 22 Aug 2002 14:45:45 +0200 (MET DST)
+--same as 1119, 1637, 1797
 
 Directory:  Macintosh
 
@@ -560,23 +569,15 @@ From: John Chambers <jmc@research.bell-labs.com>
 Date: Tue, 16 Jul 2002 16:59:22 -0400
 --follow up to 1796
 --stop() allows multiple args as from 1.6.0
-* PR# 1891 *
-Subject: summary.data.frame with compound elements problem
-From: b.rowlingson@lancaster.ac.uk
-Date: Fri, 9 Aug 2002 10:35:43 +0200 (MET DST)
-* PR# 1920 *
-Subject: (±¤°?)¾???????´?±?! ?????? ´?????°? ?ü?® ?????® 1588?ð?©??´?´?.
-From: 1588bank <zzazzazan@lycos.co.kr>
-Date: Wed, 21 Aug 2002 14:38:22 +0900
-* PR# 1921 *
-Subject: Great Opportunity
-From: hegdMATEO <producermp@yahoo.com>
-Date: Wed, 21 Aug 2002 12:24:52 +0200
-* PR# 1922 *
-Subject: Great Opportunity
-From: hegdMATEO <producermp@yahoo.com>
-Date: Wed, 21 Aug 2002 12:25:02 +0200
-* PR# 1923 *
-Subject: error in plot.formula(..., ask = FALSE)
-From: cmoffet@nwrc.ars.usda.gov
-Date: Wed, 21 Aug 2002 16:10:47 +0200 (MET DST)
+* PR# 1924 *
+Subject: Re: R-1.5.1 (X11/Darwin), Mac OS 10.1.5
+From: Lincoln Davis <ld-temp-qt3i@pobox.com>
+Date: Wed, 21 Aug 2002 19:58:01 -0700
+* PR# 1929 *
+Subject: How to use R-library in C language?
+From: "Been" <u8826801@stat.nctu.edu.tw>
+Date: Fri, 23 Aug 2002 01:34:58 +0800
+* PR# 1930 *
+Subject: aov bug?
+From: <iwhite@staffmail.ed.ac.uk>
+Date: Thu, 22 Aug 2002 20:45:17 +0100 (BST)
