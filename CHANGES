@@ -2,6 +2,12 @@
 
 NEW FEATURES
 
+    o	Attributes are now propagated correctly in binary operations.
+        Changes from:
+	  Steve Oncley and Gordon Maclean
+	  National Center for Atmospheric Research
+	  Boulder, Colorado USA
+
     o	configure now also checks for fort77.
 
     o	Usage of R INSTALL now is
