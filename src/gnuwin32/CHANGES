@@ -2,7 +2,7 @@ rw0642
 ======
 
 There are few Windows-specific enhancements: rw0642 (and R-0.64.2) is
-bug-fixing release.
+a bug-fixing release.
 
 If options(pager="console") then files are listed in the console
 window, as happened prior to rw0640.
@@ -12,9 +12,12 @@ although we do not recommend this combination.
 
 The file HOME\.Renviron is read (it was HOME\Renviron, and the
 documentation used both names). Only the last line was successfully
-processed in rw0641.
+processed in rw0641, but all lines are in this version.
 
 unlink() on non-existent files no longer causes a crash.
+
+The new function win.version() will report details of the run-time
+Windows version, principally for use in bug.report().
 
 Generally TAB will move between fields in dialog boxes, and return and
 escape will work (selecting OK and Cancel) in the Change Directory
@@ -24,6 +27,9 @@ The installer will allow several packages to be selected, and will
 install them in sequence. It should give more informative messages on
 some error conditions. Usually return will select Next or Finish,
 escape will select Cancel and B Back.
+
+There is a new target `make check' for running the standard tests and 
+checking the standard packages (as on Unix).
 
 
 rw0641
