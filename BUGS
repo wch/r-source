@@ -236,6 +236,10 @@ none
 
 Directory:  incoming
 
+* PR# 629 *
+Subject: circles overshoot
+From: Valerio Aimale <valerio.aimale@biosgroup.com>
+Date: Wed, 9 Aug 2000 14:33:37 -0600 
 * PR# 628 *
 Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
