@@ -68,4 +68,5 @@ bindtextdomain <- function(domain, dirname = NULL)
 ngettext <- function(n, msg1, msg2, domain = NULL)
     .Internal(ngettext(n, msg1, msg2, domain))
 
-
+gettextf <- function(fmt, ..., domain = NULL)
+    sprintf(gettext(fmt, domain = domain), ...)

@@ -1,24 +1,30 @@
 \name{sprintf}
 \alias{sprintf}
+\alias{gettextf}
 \title{Use C-style String Formatting Commands}
 \description{
-  A wrapper for the C function \code{sprintf}, that
-  returns a character vector of length one containing a formatted
-  combination of text and variable values.
+  A wrapper for the C function \code{sprintf}, that returns a character
+  vector of length one containing a formatted combination of text and
+  variable values.
 }
 \usage{
 sprintf(fmt, \dots)
+gettextf(fmt, \dots, domain = NULL)
 }
 \arguments{
   \item{fmt}{a format string.}
   \item{\dots}{values to be passed into \code{fmt}.  Only logical,
     integer, real and character vectors are supported.}
+  \item{domain}{see \code{\link{gettext}}.}
 }
 \details{
-  This is a wrapper for the system \code{sprintf} C-library function.  
-  Attempts are made to check that the mode of the values passed match
-  the format supplied, and \R's special values (\code{NA}, \code{Inf},
-  \code{-Inf} and \code{NaN}) are handled correctly.
+  \code{sprintf} is a wrapper for the system \code{sprintf} C-library
+  function.  Attempts are made to check that the mode of the values
+  passed match the format supplied, and \R's special values (\code{NA},
+  \code{Inf}, \code{-Inf} and \code{NaN}) are handled correctly.
+
+  \code{gettextf} is a convenience function which provides C-style
+  string formatting with possible translation on the format string.
 
   The arguments (including \code{fmt}) are recycled if possible a whole
   number of times to the length of the longest, and then the formatting
@@ -99,11 +105,14 @@ sprintf(fmt, \dots)
 }
 
 \seealso{
-  \code{\link{formatC}} for a way of formatting vectors of
-  numbers in a similar fashion.
+  \code{\link{formatC}} for a way of formatting vectors of numbers in a
+  similar fashion.
 
-  \code{\link{paste}} for another way of
-  creating a vector combining text and values.
+  \code{\link{paste}} for another way of creating a vector combining
+  text and values.
+
+  \code{\link{gettext}} for the mechanisms for the automated translation
+  of text.
 }
 
 \examples{
