@@ -10,14 +10,16 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 
     complex.x <- is.complex(x)
 
-    if (any(is.na(x))){
-        if (complex.x)
-            return(list(values = as.complex(rep(NA, n)),
-                    vectors = if (!only.values) as.complex(matrix(NA, n,n))))
-        else
-            return(list(values = as.numeric(rep(NA, n)),
-                    vectors = if (!only.values) as.numeric(matrix(NA, n,n))))
-    }
+    if (any(!is.finite(x))) stop("infinite or missing values in x")
+#   this code was not even correct, and it was inconsistent with past usage
+#     if (any(is.na(x))){
+#         if (complex.x)
+#             return(list(values = as.complex(rep(NA, n)),
+#                     vectors = if (!only.values) matrix(as.complex(NA), n,n)))
+#         else
+#             return(list(values = as.numeric(rep(NA, n)),
+#                     vectors = if (!only.values) matrix(as.numeric(NA), n,n)))
+#     }
 
     if(complex.x) {
 	if(missing(symmetric)) {

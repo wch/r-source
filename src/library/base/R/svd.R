@@ -1,6 +1,7 @@
-svd <- function(x, nu=min(n,p), nv=min(n,p), LINPACK = FALSE)
+svd <- function(x, nu = min(n,p), nv = min(n,p), LINPACK = FALSE)
 {
     x <- as.matrix(x)
+    if (any(!is.finite(x))) stop("infinite or missing values in x")
     dx <- dim(x)
     n <- dx[1]
     p <- dx[2]
