@@ -69,8 +69,9 @@ file.access <- function(names, modes = 0)
     res
 }
 
-format.octmode <- as.character.octmode <- function(x)
+format.octmode <- function(x)
 {
+    if(!inherits(x, "octmode")) stop("calling wrong method")
     y <- x
     ans <- character(length(y))
     while(any(y > 0)) {
@@ -80,6 +81,7 @@ format.octmode <- as.character.octmode <- function(x)
     }
     ans
 }
+as.character.octmode <- .Alias(format.octmode)
 
 print.octmode <- function(x, ...)
 {
