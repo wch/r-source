@@ -4,25 +4,30 @@
 
 # @configure_input@
 
-REVISION='$Revision: 1.22 $'
-VERSION=`set - ${REVISION}; echo ${2}`
-USAGE_MSG="Usage: R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
+revision='$Revision: 1.23 $'
+version=`set - ${revision}; echo ${2}`
+version="R add-on package installer ${version}"
 
-CLEAN=false
-DEBUG=false
-ERROR=false
-BUILD_TEXT=true
-BUILD_HTML=true
-BUILD_LATEX=true
-BUILD_HELP=true
-BUILD_HELP_OPTS=
-BUILD_EXAMPLE=true
-SHLIB_OPTS=
+usage="Usage: R INSTALL [options] pkgs
 
-USE_ZIP=
+Install the add-on packages specified by pkgs into the default R library
+tree (${R_HOME}/library) or the tree specified via \`--library'.  The
+elements of pkgs can be relative or absolute paths to directories with
+the package (bundle) sources, or to gzipped package \`tar' archives.
+
+Options:
+  -c, --clean		remove all files created during installation
+  -d, --debug		turn on shell and build-help debugging
+  -h, --help		print short help message and exit
+  -l, --library=LIB	install packages to library tree LIB
+      --no-docs		do not build and install documentation
+      --use-zip		collect help and examples into zip archives
+  -v, --version		print version info and exit
+
+Report bugs to <R-bugs@lists.r-project.org>."
 
 INSTALL='@INSTALL@'
-
+MAKE=${MAKE-@MAKE@}
 NO_PERL5=@NO_PERL5@
 NO_PERL5_MSG="\
 *** Formatting and installing R help pages needs Perl version 5, which
@@ -30,71 +35,78 @@ NO_PERL5_MSG="\
 *** Please install either Perl 5 on your system and re-configure R or
 *** get pre-formatted help pages from the nearest CRAN server.
 *** The CRAN master site can be found at
-***    http://www.ci.tuwien.ac.at/R
-***    ftp://ftp.ci.tuwien.ac.at/pub/R"
-
-PKGS=
-lib=${R_HOME}/library
-
-MAKE=${MAKE-@MAKE@}
-
-TMPDIR="/tmp/R.INSTALL.$$"
+***    http://cran.r-project.org/"
+tmpdir="${TMPDIR:-/tmp}/R.INSTALL.$$"
 
 umask 022
 
-# get the full path names to all packages contained in $1
-# modifies PKGS
+# get the full path names to all packages contained in $1; modzifies pkgs
 get_packages () {
   if grep -s "^Contains:" "${1}/DESCRIPTION"; then
-    BUNDLEPKG=`grep -s "^Contains:" "${1}/DESCRIPTION" | \
+    bundlepkg=`grep -s "^Contains:" "${1}/DESCRIPTION" | \
       sed "s/^Contains://; s/,/ /g"`
-    for p in ${BUNDLEPKG}; do
-      PKGS="${PKGS} \"`cd "${1}/${p}"; pwd`\""
+    for p in ${bundlepkg}; do
+      pkgs="${pkgs} \"`cd "${1}/${p}"; pwd`\""
       if test -f "${1}/${p}/DESCRIPTION.in"; then
         cat "${1}/${p}/DESCRIPTION.in"  > "${1}/${p}/DESCRIPTION"
         grep -v "^Contains:" "${1}/DESCRIPTION" >> "${1}/${p}/DESCRIPTION"
       fi
     done
   else 
-      PKGS="${PKGS} \"`cd "${1}"; pwd`\""
+    pkgs="${pkgs} \"`cd "${1}"; pwd`\""
   fi
 }
 
+lib=${R_HOME}/library
+pkgs=
+clean=false
+debug=false
+error=false
+build_text=true
+build_html=true
+build_latex=true
+build_example=true
+build_help=true
+build_help_opts=
+use_zip=
+
 while test -n "${1}"; do
   case ${1} in
-    -h|--help|-\?)
-      echo "${USAGE_MSG}"; exit 0 ;;
-    -V|--version)
-      echo "${VERSION}"; exit 0 ;;
+    -h|--help)
+      echo "${usage}"; exit 0 ;;
+    -v|--version)
+      echo "${version}"; exit 0 ;;
     -c|--clean)
-      CLEAN=true ;;
-    --debug)
-      DEBUG=true; SHLIB_OPTS="${SHLIB_OPTS} --debug" ;;
+      clean=true ;;
+    -d|--debug)
+      debug=true ;;
     --no-docs)
-      BUILD_TEXT=false
-      BUILD_HTML=false
-      BUILD_LATEX=false
-      BUILD_EXAMPLE=false ;;
+      build_text=false
+      build_html=false
+      build_latex=false
+      build_example=false ;;
     --no-text)
-      BUILD_TEXT=false ;;
+      build_text=false ;;
     --no-html)
-      BUILD_HTML=false ;;
+      build_html=false ;;
     --no-latex)
-      BUILD_LATEX=false ;;
+      build_latex=false ;;
     --no-example)
-      BUILD_EXAMPLE=false ;;
+      build_example=false ;;
     --use-zip)
-      USE_ZIP=true ;;
+      use_zip=true ;;
     -l|--library)
       lib=${2}; shift ;;
+    --library=*)
+      lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     *)
       if test -f "${1}"; then
-        mkdir -p ${TMPDIR}
-	PKGNAME=`basename "${1}"`
-	PKGNAME=`echo "${PKGNAME}" | sed 's/_.*//'`
-	gzip -dc "${1}" | (cd ${TMPDIR} && tar -xf -)
-	if test -d "${TMPDIR}/${PKGNAME}"; then
-	  get_packages "${TMPDIR}/${PKGNAME}"
+        mkdir -p ${tmpdir}
+	pkgname=`basename "${1}"`
+	pkgname=`echo "${pkgname}" | sed 's/_.*//'`
+	gzip -dc "${1}" | (cd ${tmpdir} && tar -xf -)
+	if test -d "${tmpdir}/${pkgname}"; then
+	  get_packages "${tmpdir}/${pkgname}"
 	else
 	  echo "ERROR: cannot extract package from ${1}"
 	  exit 1
@@ -102,41 +114,41 @@ while test -n "${1}"; do
       elif test -d "${1}"; then
         get_packages "${1}"
       else
-	echo "WARNING: package \`"${1}"' does not exist"
+	echo "WARNING: package \`${1}' does not exist"
       fi
       ;;
   esac
   shift
 done
 
-if test -z "${PKGS}"; then
-  echo "${USAGE_MSG}"
+if test -z "${pkgs}"; then
+  echo "ERROR: no packages specified"
   exit 1
 fi
 
 if test -d ${lib} -a -w ${lib} || mkdir ${lib} 2> /dev/null; then
   lib=`cd ${lib}; pwd`
 else
-  echo "ERROR:  cannot write to or create directory \`${lib}'"
+  echo "ERROR: cannot write to or create directory \`${lib}'"
   exit 2
 fi
 
-if ${BUILD_TEXT}; then
-  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --nroff"
+if ${build_text}; then
+  build_help_opts="${build_help_opts} --nroff"
 fi
-if ${BUILD_HTML}; then
-  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --html"
+if ${build_html}; then
+  build_help_opts="${build_help_opts} --html"
 fi
-if ${BUILD_LATEX}; then
-  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --latex"
+if ${build_latex}; then
+  build_help_opts="${build_help_opts} --latex"
 fi
-if ${BUILD_EXAMPLE}; then
-  BUILD_HELP_OPTS="${BUILD_HELP_OPTS} --example"
+if ${build_example}; then
+  build_help_opts="${build_help_opts} --example"
 fi
-if test -z "${BUILD_HELP_OPTS}"; then
-  BUILD_HELP=false
-elif ${DEBUG}; then
-  BUILD_HELP_OPTS="--debug ${BUILD_HELP_OPTS}"
+if test -z "${build_help_opts}"; then
+  build_help=false
+elif ${debug}; then
+  build_help_opts="--debug ${build_help_opts}"
 fi
 
 do_install () {
@@ -152,26 +164,26 @@ do_install () {
 
   if test -d src; then
     echo " libs"
-    if ${DEBUG}; then set -x; fi
+    if ${debug}; then set -x; fi
     mkdir -p ${lib}/${pkg}/libs
     if test -f src/Makefile; then
       (cd src;
 	${MAKE} -f ${R_HOME}/etc/Makeconf -f Makefile \
 	  && cp *.@SHLIBEXT@ ${lib}/${pkg}/libs \
-	  || ERROR=true; \
-	if ${CLEAN}; then ${MAKE} clean; fi)
+	  || error=true; \
+	if ${clean}; then ${MAKE} clean; fi)
     else
       (cd src;
-	sh ${R_HOME}/bin/SHLIB ${SHLIB_OPTS} \
+	sh ${R_HOME}/bin/SHLIB \
 	   -o ${lib}/${pkg}/libs/${pkg}.@SHLIBEXT@ *.[cf] \
-	  || ERROR=true; \
-	if ${CLEAN}; then rm -f *.o; fi)
+	  || error=true; \
+	if ${clean}; then rm -f *.o; fi)
     fi
-    if ${ERROR}; then
+    if ${error}; then
       echo "ERROR: Compilation failed for package \`${pkg}'"
       exit 4
     fi
-    if ${DEBUG}; then set +x; fi
+    if ${debug}; then set +x; fi
   fi
 
   if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
@@ -202,27 +214,27 @@ do_install () {
     cp -r inst/* ${lib}/${pkg}
   fi
 
+  if test -f DESCRIPTION; then
+    cp DESCRIPTION ${lib}/${pkg}
+  fi
   if test -f INDEX; then
     cp INDEX ${lib}/${pkg}
   fi
   if test -f TITLE; then
     cp TITLE ${lib}/${pkg}
   fi
-  if test -f DESCRIPTION; then
-    cp DESCRIPTION ${lib}/${pkg}
-  fi
   (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
 
   if test -d man; then
     echo " help"
-    if ${BUILD_HELP}; then
+    if ${build_help}; then
       if ${NO_PERL5}; then
 	echo "${NO_PERL5_MSG}"
       else
-	if ${DEBUG}; then
+	if ${debug}; then
 	  echo "  ${R_HOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
 	fi
-	${R_HOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}
+	${R_HOME}/bin/build-help ${build_help_opts} ../${pkg} ${lib}
 	${R_HOME}/bin/Rd2contents ../${pkg} > ${lib}/${pkg}/CONTENTS
 	if test ${lib} = ${R_HOME}/library; then 
 	  ${R_HOME}/bin/build-help --htmllists
@@ -230,7 +242,7 @@ do_install () {
 	    > ${R_HOME}/doc/html/search/index.txt
 	fi	
       fi
-      if test -n "${USE_ZIP}" -a -n "${R_UNZIPCMD}" -a -n "${R_ZIPCMD}"; then
+      if test -n "${use_zip}" -a -n "${R_UNZIPCMD}" -a -n "${R_ZIPCMD}"; then
 	cd ${lib}/${pkg}
 	if test -d R-ex; then
 	  (cd R-ex; ${R_ZIPCMD} -m Rhelp *.R)
@@ -248,7 +260,7 @@ do_install () {
     echo "  No man pages found in package \`${pkg}'"
   fi
 
-  if ${CLEAN}; then
+  if ${clean}; then
     if test -x ./cleanup ; then
       ./cleanup
     fi
@@ -260,11 +272,11 @@ do_install () {
   echo
 }
 
-eval "for pkg in ${PKGS}; do do_install \"\${pkg}\"; done"
+eval "for pkg in ${pkgs}; do do_install \"\${pkg}\"; done"
 
-if test -d "${TMPDIR}"; then
+if test -d "${tmpdir}"; then
   cd /
-  rm -rf "${TMPDIR}"
+  rm -rf "${tmpdir}"
 fi
 
 echo "DONE (INSTALL)"

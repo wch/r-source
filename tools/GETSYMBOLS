@@ -6,27 +6,25 @@
 # code which is to be accessed via .C and .Fortran calls.
 
 TOOLS_DIR=`echo $0 | sed 's%/[^/][^/]*$%%'`
-ROUTINES=${TOOLS_DIR}/../src/appl/ROUTINES
-tmpROUT=/tmp/ROUTINES$$
+TMPDIR=${TMPDIR:-/tmp}
+ROUTINES=${TMPDIR}/ROUTINES${$}
 
-##-- Allow "#" comments in ../src/appl/ROUTINES :
+# Allow `#' comments in `../src/appl/ROUTINES':
 sed '
 /^#/d
 /#/s/#.*//
-' ${ROUTINES} > ${tmpROUT}
+' ${TOOLS_DIR}/../src/appl/ROUTINES > ${ROUTINES}
 
 sed '
 s/F77_SUBROUTINE(\(.*\))/int F77_SYMBOL(\1)();/
 s/C_FUNCTION(\(.*\))/int \1();/
-' ${tmpROUT} > /tmp/FFDecl.h
-
-${TOOLS_DIR}/move-if-change /tmp/FFDecl.h FFDecl.h
+' ${ROUTINES} > ${TMPDIR}/RFF${$}
+${TOOLS_DIR}/move-if-change ${TMPDIR}/RFF${$} FFDecl.h
 
 sed '
 s/F77_SUBROUTINE(\(.*\))/	{ F77_QSYMBOL(\1),	F77_SYMBOL(\1)},/
 s/C_FUNCTION(\(.*\))/	{ "\1",	\1 },/
-' ${tmpROUT} > /tmp/FFTab.h
+' ${ROUTINES} > ${TMPDIR}/RFF${$}
+${TOOLS_DIR}/move-if-change ${TMPDIR}/RFF${$} FFTab.h
 
-${TOOLS_DIR}/move-if-change /tmp/FFTab.h  FFTab.h
-
-rm -f ${tmpROUT}
+rm -f ${ROUTINES}

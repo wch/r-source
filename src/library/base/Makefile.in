@@ -16,7 +16,7 @@ DISTFILES = INDEX TITLE DESCRIPTION.in Makefile.in
 all: Makefile
 	@echo "building package \`base'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/R
-	@(f=/tmp/R$$$$; \
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat $(srcdir)/R/*.R $(srcdir)/R/unix/*.R >> $${f}; \
           $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/base/R/base)

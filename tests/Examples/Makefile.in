@@ -62,7 +62,7 @@ $(EX_IN): FORCE
 	  echo "updating $@ ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--nroff --example" $(MAKE) PKGS="$${pkg}" DOCS); \
-	  f=/tmp/R$$$$; \
+	  f=$${TMPDIR:-/tmp}/R$$$$; \
 	  $(top_builddir)/bin/massage-Examples $${pkg} \
 	    $(top_builddir)/library/$${pkg}/R-ex/*.R > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} $@)

@@ -10,7 +10,7 @@ unix <- function(call, intern = FALSE) {
 ##--- The following 2  should/could really be done in C [platform !] :
 tempfile <- function(pattern = "file") {
     system(paste("for p in", paste(pattern, collapse = " "), ";",
-		 "do echo /tmp/$p$$; done"),
+		 "do echo ${TMPDIR:-/tmp}/$p$$; done"),
 	   intern = TRUE)
 }
 
