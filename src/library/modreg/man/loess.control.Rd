@@ -38,3 +38,4 @@ loess.control(surface = c("interpolate", "direct"),
 \author{B.D. Ripley}
 \seealso{\code{\link{loess}}}
 \keyword{smooth}
+\keyword{loess}

@@ -110,3 +110,4 @@ cars.lo2 <- loess(dist ~ speed, cars,
 predict(cars.lo2, data.frame(speed = seq(5, 30, 1)), se = TRUE)
 }
 \keyword{smooth}
+\keyword{loess}
