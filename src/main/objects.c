@@ -888,6 +888,7 @@ SEXP R_isMethodsDispatchOn(SEXP onOff) {
 		    SETCAR(call, install("initMethodsDispatch"));
 		    eval(call, R_GlobalEnv); /* only works with
 						methods	 attached */
+		    UNPROTECT(1);
 	    }
     }
     return value;
