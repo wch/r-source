@@ -150,7 +150,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
     if (do.lines) {                     #- draw lines ---------------------
         seg.len <- 2 # length of drawn segment, in xchar units
         if(missing(lty)) lty <- 1
-	ok.l <- is.character(lty) || lty > 0
+	ok.l <- is.character(lty) | lty > 0
 	if(missing(lwd)) lwd <- par("lwd")
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)

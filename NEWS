@@ -151,6 +151,10 @@ BUG FIXES
     o	round/trunc.POSIXt were erroneously retaining information on
 	DST. (PR#1543)
 
+    o   tcltk package didn't work with tcl8.0.x. Compatibility code
+        inserted (PR#1640, thanks to René Bertin for helping out with
+        this). 
+
     o	selfStart() {pkg "nls"} now works again when parameter names are
         not specified (but implicit).
 
