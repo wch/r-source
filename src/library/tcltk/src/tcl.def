@@ -28,6 +28,7 @@ EXPORTS
  Tcl_NewStringObj
  Tcl_EvalObjv
  Tcl_UnsetVar2
-
-
-
+ Tcl_ExternalToUtfDString
+ Tcl_UtfToExternalDString
+ Tcl_DStringInit
+ Tcl_DStringFree
