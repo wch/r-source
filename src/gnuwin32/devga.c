@@ -223,7 +223,7 @@ static void GA_Timer(gadesc *xd)
 
 static void GA_Activate(NewDevDesc *dd);
 static void GA_Circle(double x, double y, double r,
-		      int col, int fill, double gamma, int lty, double lwd,
+		      R_GE_gcontext *gc,
 		      NewDevDesc *dd);
 static void GA_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
@@ -232,31 +232,34 @@ static void GA_Deactivate(NewDevDesc *dd);
 static void GA_Hold(NewDevDesc *dd);
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
-		    int col, double gamma, int lty, double lwd,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd);
-static void GA_MetricInfo(int c, int font, double cex, double ps,
+static void GA_MetricInfo(int c, 
+			  R_GE_gcontext *gc,
 			  double* ascent, double* descent,
 			  double* width, NewDevDesc *dd);
 static void GA_Mode(int mode, NewDevDesc *dd);
-static void GA_NewPage(int fill, double gamma, NewDevDesc *dd);
+static void GA_NewPage(R_GE_gcontext *gc,
+		       NewDevDesc *dd);
 static void GA_Polygon(int n, double *x, double *y,
-		       int col, int fill, double gamma, int lty, double lwd,
+		       R_GE_gcontext *gc,
 		       NewDevDesc *dd);
 static void GA_Polyline(int n, double *x, double *y,
-			int col, double gamma, int lty, double lwd,
+			R_GE_gcontext *gc,
 			NewDevDesc *dd);
 static void GA_Rect(double x0, double y0, double x1, double y1,
-		    int col, int fill, double gamma, int lty, double lwd,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd);
 static void GA_Size(double *left, double *right,
 		    double *bottom, double *top,
 		    NewDevDesc *dd);
 static void GA_Resize(NewDevDesc *dd);
-static double GA_StrWidth(char *str, int font,
-			  double cex, double ps, NewDevDesc *dd);
+static double GA_StrWidth(char *str, 
+			  R_GE_gcontext *gc,
+			  NewDevDesc *dd);
 static void GA_Text(double x, double y, char *str,
 		    double rot, double hadj,
-		    int col, double gamma, int font, double cex, double ps,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd);
 static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double,
 			Rboolean, int, int, double, int, int);
@@ -1596,14 +1599,15 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	/* asked for						*/
 	/********************************************************/
 
-static double GA_StrWidth(char *str, int font,
-			      double cex, double ps, NewDevDesc *dd)
+static double GA_StrWidth(char *str, 
+			  R_GE_gcontext *gc,
+			  NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     double a;
-    int   size = cex * ps + 0.5;
+    int   size = gc->cex * gc->ps + 0.5;
 
-    SetFont(font, size, 0.0, dd);
+    SetFont(gc->fontface, size, 0.0, dd);
     a = (double) gstrwidth(xd->gawin, xd->font, str);
     return a;
 }
@@ -1619,15 +1623,16 @@ static double GA_StrWidth(char *str, int font,
 	/* Character Metric Information */
 	/* Passing c == 0 gets font information */
 
-static void GA_MetricInfo(int c, int font, double cex, double ps,
-			      double* ascent, double* descent,
-			      double* width, NewDevDesc *dd)
+static void GA_MetricInfo(int c, 
+			  R_GE_gcontext *gc,
+			  double* ascent, double* descent,
+			  double* width, NewDevDesc *dd)
 {
     int   a, d, w;
-    int   size = cex * ps + 0.5;
+    int   size = gc->cex * gc->ps + 0.5;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    SetFont(font, size, 0.0, dd);
+    SetFont(gc->fontface, size, 0.0, dd);
     gcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     /* Some Windows systems report that space has height and depth,
        so we have a kludge.  Note that 32 is space in symbol font too */
@@ -1778,7 +1783,8 @@ static void GA_Resize(NewDevDesc *dd)
 	/* (e.g., postscript)					*/
 	/********************************************************/
 
-static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
+static void GA_NewPage(R_GE_gcontext *gc,
+		       NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
@@ -1814,11 +1820,11 @@ static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 	    xd->needsave = TRUE;
 #endif
     }
-    xd->bg = fill;
+    xd->bg = gc->fill;
     if (!R_OPAQUE(xd->bg))
 	xd->bgcolor = xd->canvascolor;
     else
-	xd->bgcolor = GArgb(xd->bg, gamma);
+	xd->bgcolor = GArgb(xd->bg, gc->gamma);
     if (xd->kind != SCREEN) {
 	xd->needsave = TRUE;
 	xd->clip = getrect(xd->gawin);
@@ -1934,8 +1940,8 @@ static void GA_Deactivate(NewDevDesc *dd)
 	/********************************************************/
 
 static void GA_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, double gamma, int lty, double lwd,
-		     NewDevDesc *dd)
+		    R_GE_gcontext *gc,
+		    NewDevDesc *dd)
 {
     int   tmp;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -1955,14 +1961,14 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	y1 = tmp;
     }
     r = rect((int) x0, (int) y0, (int) x1 - (int) x0, (int) y1 - (int) y0);
-    if (R_OPAQUE(fill)) {
-	SetColor(fill, gamma, dd);
+    if (R_OPAQUE(gc->fill)) {
+	SetColor(gc->fill, gc->gamma, dd);
 	DRAW(gfillrect(_d, xd->fgcolor, r));
 
     }
-    if (R_OPAQUE(col)) {
-	SetColor(col, gamma, dd);
-	SetLinetype(lty, lwd, dd);
+    if (R_OPAQUE(gc->col)) {
+	SetColor(gc->col, gc->gamma, dd);
+	SetLinetype(gc->lty, gc->lwd, dd);
 	DRAW(gdrawrect(_d, xd->lwd, xd->lty, xd->fgcolor, r, 0));
     }
     SH;
@@ -1984,8 +1990,8 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	/********************************************************/
 
 static void GA_Circle(double x, double y, double r,
-		       int col, int fill, double gamma, int lty, double lwd,
-		       NewDevDesc *dd)
+		      R_GE_gcontext *gc,
+		      NewDevDesc *dd)
 {
     int   ir, ix, iy;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -1999,13 +2005,13 @@ static void GA_Circle(double x, double y, double r,
     ix = (int) x;
     iy = (int) y;
     rr = rect(ix - ir, iy - ir, 2 * ir, 2 * ir);
-    if (R_OPAQUE(fill)) {
-	SetColor(fill, gamma, dd);
+    if (R_OPAQUE(gc->fill)) {
+	SetColor(gc->fill, gc->gamma, dd);
 	DRAW(gfillellipse(_d, xd->fgcolor, rr));
     }
-    if (R_OPAQUE(col)) {
-	SetLinetype(lty, lwd, dd);
-	SetColor(col, gamma, dd);
+    if (R_OPAQUE(gc->col)) {
+	SetLinetype(gc->lty, gc->lwd, dd);
+	SetColor(gc->col, gc->gamma, dd);
 	DRAW(gdrawellipse(_d, xd->lwd, xd->fgcolor, rr, 0));
     }
     SH;
@@ -2020,8 +2026,8 @@ static void GA_Circle(double x, double y, double r,
 	/********************************************************/
 
 static void GA_Line(double x1, double y1, double x2, double y2,
-		     int col, double gamma, int lty, double lwd,
-		     NewDevDesc *dd)
+		    R_GE_gcontext *gc,
+		    NewDevDesc *dd)
 {
     int   xx1, yy1, xx2, yy2;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2033,9 +2039,9 @@ static void GA_Line(double x1, double y1, double x2, double y2,
     xx2 = (int) x2;
     yy2 = (int) y2;
 
-    if (R_OPAQUE(col)) {
-	SetColor(col, gamma, dd);
-	SetLinetype(lty, lwd, dd);
+    if (R_OPAQUE(gc->col)) {
+	SetColor(gc->col, gc->gamma, dd);
+	SetLinetype(gc->lty, gc->lwd, dd);
 	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
 		       pt(xx1, yy1), pt(xx2, yy2), 0));
 	SH;
@@ -2052,8 +2058,8 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 	/********************************************************/
 
 static void GA_Polyline(int n, double *x, double *y,
-			    int col, double gamma, int lty, double lwd,
-			    NewDevDesc *dd)
+			R_GE_gcontext *gc,
+			NewDevDesc *dd)
 {
     char *vmax = vmaxget();
     point *p = (point *) R_alloc(n, sizeof(point));
@@ -2068,9 +2074,9 @@ static void GA_Polyline(int n, double *x, double *y,
 	p[i].x = (int) devx;
 	p[i].y = (int) devy;
     }
-    if (R_OPAQUE(col)) {
-	SetColor(col, gamma, dd);
-	SetLinetype(lty, lwd, dd);
+    if (R_OPAQUE(gc->col)) {
+	SetColor(gc->col, gc->gamma, dd);
+	SetLinetype(gc->lty, gc->lwd, dd);
 	DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0));
     }
     vmaxset(vmax);
@@ -2090,8 +2096,8 @@ static void GA_Polyline(int n, double *x, double *y,
 	/********************************************************/
 
 static void GA_Polygon(int n, double *x, double *y,
-			int col, int fill, double gamma, int lty, double lwd,
-			NewDevDesc *dd)
+		       R_GE_gcontext *gc,
+		       NewDevDesc *dd)
 {
     char *vmax = vmaxget();
     point *points;
@@ -2109,13 +2115,13 @@ static void GA_Polygon(int n, double *x, double *y,
 	points[i].x = (int) (devx);
 	points[i].y = (int) (devy);
     }
-    if (R_OPAQUE(fill)) {
-	SetColor(fill, gamma, dd);
+    if (R_OPAQUE(gc->fill)) {
+	SetColor(gc->fill, gc->gamma, dd);
 	DRAW(gfillpolygon(_d, xd->fgcolor, points, n));
     }
-    if (R_OPAQUE(col)) {
-	SetColor(col, gamma, dd);
-	SetLinetype(lty, lwd, dd);
+    if (R_OPAQUE(gc->col)) {
+	SetColor(gc->col, gc->gamma, dd);
+	SetLinetype(gc->lty, gc->lwd, dd);
 	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n, 0 ));
     }
     vmaxset(vmax);
@@ -2134,23 +2140,23 @@ static void GA_Polygon(int n, double *x, double *y,
 
 
 static void GA_Text(double x, double y, char *str,
-		     double rot, double hadj,
-		     int col, double gamma, int font, double cex, double ps,
-		     NewDevDesc *dd)
+		    double rot, double hadj,
+		    R_GE_gcontext *gc,
+		    NewDevDesc *dd)
 {
     int   size;
     double pixs, xl, yl, rot1;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    size = cex * ps + 0.5;
+    size = gc->cex * gc->ps + 0.5;
     pixs = - 1;
     xl = 0.0;
     yl = -pixs;
     rot1 = rot * DEG2RAD;
     x += -xl * cos(rot1) + yl * sin(rot1);
     y -= -xl * sin(rot1) - yl * cos(rot1);
-    SetFont(font, size, rot, dd);
-    SetColor(col, gamma, dd);
+    SetFont(gc->fontface, size, rot, dd);
+    SetColor(gc->col, gc->gamma, dd);
     if (R_OPAQUE(xd->fgcolor)) {
 #ifdef NOCLIPTEXT
 	gsetcliprect(xd->gawin, getrect(xd->gawin));
