@@ -3273,7 +3273,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd = CurrentDevice();					\
 									\
     checkArity(op, args);						\
-    GCheckState(dd);							\
+    /* GCheckState(dd); */						\
 									\
     str = CAR(args);							\
     if (isSymbol(str) || isLanguage(str))				\
