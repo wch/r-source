@@ -13,8 +13,7 @@ NEW FEATURES
 
     o	Changes to connections:
 
-	-  New function url() to read from URLs. [Not yet operational
-           except for file://.]
+	-  New function url() to read from URLs.
 
 	-  New function gzfile() to read from / write to compressed files.
 

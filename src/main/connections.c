@@ -102,12 +102,6 @@ static int null_fgetc(Rconnection con)
     return 0; /* -Wall */
 }
 
-static int null_ungetc(int c, Rconnection con)
-{
-    error("ungetc not enabled for this connection");
-    return 0; /* -Wall */
-}
-
 static long null_seek(Rconnection con, int where, int origin)
 {
     error("seek not enabled for this connection");
@@ -186,12 +180,6 @@ static int file_fgetc(Rconnection con)
     FILE *fp = ((Rfileconn)(con->private))->fp;
     int c = con->encoding[fgetc(fp)];
     return feof(fp) ? R_EOF : c;
-}
-
-static int file_ungetc(int c, Rconnection con)
-{
-    FILE *fp = ((Rfileconn)(con->private))->fp;
-    return ungetc(c, fp);
 }
 
 static long file_seek(Rconnection con, int where, int origin)
@@ -279,7 +267,6 @@ static Rconnection newfile(char *description, char *mode)
     new->destroy = &file_destroy;
     new->vfprintf = &file_vfprintf;
     new->fgetc = &file_fgetc;
-    new->ungetc = &file_ungetc;
     new->seek = &file_seek;
     new->truncate = &file_truncate;
     new->fflush = &file_fflush;
@@ -393,7 +380,6 @@ static Rconnection newpipe(char *description, char *mode)
     new->destroy = &pipe_destroy;
     new->vfprintf = &file_vfprintf;
     new->fgetc = &file_fgetc;
-    new->ungetc = &file_ungetc;
     new->seek = &null_seek;
     new->truncate = &null_truncate;
     new->fflush = &file_fflush;
@@ -535,25 +521,12 @@ static int gzfile_vfprintf(Rconnection con, const char *format, va_list ap)
     return res;
 }
 
-static int save = 0;
 static int gzfile_fgetc(Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
-    if (save) {
-	int c = save;
-	save = 0;
-	return c;
-    } else {
-	int c = con->encoding[gzgetc(fp)];
-	/* Looks like eof is signalled one char early */
-	return (!c && gzeof(fp)) ? R_EOF : c;
-    }
-}
-
-static int gzfile_ungetc(int c, Rconnection con)
-{
-    save = c;
-    return c;
+    int c = con->encoding[gzgetc(fp)];
+    /* Looks like eof is signalled one char early */
+    return (!c && gzeof(fp)) ? R_EOF : c;
 }
 
 static long gzfile_seek(Rconnection con, int where, int origin)
@@ -582,14 +555,14 @@ static size_t gzfile_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
-    return gzread(fp, ptr, size*nitems);
+    return gzread(fp, ptr, size*nitems)/size;
 }
 
 static size_t gzfile_write(const void *ptr, size_t size, size_t nitems,
 			   Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
-    return gzwrite(fp, (const voidp)ptr, size*nitems);
+    return gzwrite(fp, (const voidp)ptr, size*nitems)/size;
 }
 
 static Rconnection newgzfile(char *description, char *mode, int compress)
@@ -621,7 +594,6 @@ static Rconnection newgzfile(char *description, char *mode, int compress)
     new->destroy = &gzfile_destroy;
     new->vfprintf = &gzfile_vfprintf;
     new->fgetc = &gzfile_fgetc;
-    new->ungetc = &gzfile_ungetc;
     new->seek = &gzfile_seek;
     new->truncate = &null_truncate;
     new->fflush = &gzfile_fflush;
@@ -714,17 +686,7 @@ static int ConsoleGetchar()
 
 static int stdin_fgetc(Rconnection con)
 {
-    if (save) {
-	int c = save;
-	save = 0;
-	return c;
-    } else return ConsoleGetchar();
-}
-
-static int stdin_ungetc(int c, Rconnection con)
-{
-    save = c;
-    return c;
+    return ConsoleGetchar();
 }
 
 static int stdout_vfprintf(Rconnection con, const char *format, va_list ap)
@@ -781,7 +743,6 @@ static Rconnection newterminal(char *description, char *mode)
     new->destroy = &null_open;
     new->vfprintf = &null_vfprintf;
     new->fgetc = &null_fgetc;
-    new->ungetc = &null_ungetc;
     new->seek = &null_seek;
     new->truncate = &null_truncate;
     new->fflush = &null_fflush;
@@ -897,13 +858,6 @@ static int text_fgetc(Rconnection con)
     else return (int) (this->data[this->cur++]);
 }
 
-static int text_ungetc(int c, Rconnection con)
-{
-    Rtextconn this = (Rtextconn)con->private;
-    this->save = c;
-    return c;
-}
-
 static long text_seek(Rconnection con, int where, int origin)
 {
     if(where >= 0) error("seek is not relevant for text connection");
@@ -937,7 +891,6 @@ static Rconnection newtext(char *description, SEXP text)
     new->destroy = &text_destroy;
     new->vfprintf = &null_vfprintf;
     new->fgetc = &text_fgetc;
-    new->ungetc = &text_ungetc;
     new->seek = &text_seek;
     new->truncate = &null_truncate;
     new->fflush = &null_fflush;
@@ -1093,7 +1046,6 @@ static Rconnection newouttext(char *description, SEXP sfile, char *mode)
     new->destroy = &outtext_destroy;
     new->vfprintf = &text_vfprintf;
     new->fgetc = &null_fgetc;
-    new->ungetc = &null_ungetc;
     new->seek = &text_seek;
     new->truncate = &null_truncate;
     new->fflush = &null_fflush;
@@ -2096,7 +2048,6 @@ void InitConnections()
     int i;
     Connections[0] = newterminal("stdin", "r");
     Connections[0]->fgetc = stdin_fgetc;
-    Connections[0]->ungetc = stdin_ungetc;
     Connections[1] = newterminal("stdout", "w");
     Connections[1]->vfprintf = stdout_vfprintf;
     Connections[1]->fflush = stdout_fflush;
@@ -2154,12 +2105,121 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- internet access functions  --------------------- */
 
+#ifdef HAVE_LIBXML
+void	xmlNanoHTTPInit		(void);
+/* void	xmlNanoHTTPCleanup	(void); */
+void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
+int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
+void	xmlNanoHTTPClose	(void *ctx);
+int 	xmlNanoHTTPReturnCode	(void *ctx);
+
+void	xmlNanoFTPInit		(void);
+/* void	xmlNanoFTPCleanup	(void); */
+void *	xmlNanoFTPOpen		(const char *URL);
+int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
+void	xmlNanoFTPClose		(void *ctx);
+#endif
+
+static void url_open(Rconnection con)
+{
+    void *ctxt;
+    char *url = con->description;
+    UrlScheme type = ((Rurlconn)(con->private))->type;
+    int rc;
+    
+    if(con->mode[0] != 'r')
+	error("can only open URLs for reading");
+
+    switch(type) {
+    case HTTPsh:
+	xmlNanoHTTPInit();
+	ctxt = xmlNanoHTTPOpen(url, NULL);
+	if(ctxt == NULL) error("cannot open URL `%s'", url);
+	rc = xmlNanoHTTPReturnCode(ctxt);
+	if(rc != 200) {
+	    xmlNanoHTTPClose(ctxt);
+	    error("cannot open URL `%s'", url);
+	}
+	break;
+    case FTPsh:
+	xmlNanoFTPInit();
+	ctxt = xmlNanoFTPOpen(url);
+	if(ctxt == NULL) error("cannot open URL `%s'", url);
+	break;
+    default:
+	error("unknown URL scheme");
+    }
+    ((Rurlconn)(con->private))->ctxt = ctxt;
+
+    con->isopen = TRUE;
+    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
+    con->canread = !con->canwrite;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    else con->text = TRUE;
+    con->save = -1000;
+}
+
+static void url_close(Rconnection con)
+{
+    UrlScheme type = ((Rurlconn)(con->private))->type;
+    switch(type) {
+    case HTTPsh:
+	xmlNanoHTTPClose(((Rurlconn)(con->private))->ctxt);
+	break;
+    case FTPsh:
+	xmlNanoFTPClose(((Rurlconn)(con->private))->ctxt);
+	break;
+    }
+    con->isopen = FALSE;
+}
+
+static void url_destroy(Rconnection con)
+{
+    free(con->private);
+}
+
+
+static int url_fgetc(Rconnection con)
+{
+    UrlScheme type = ((Rurlconn)(con->private))->type;
+    void * ctxt = ((Rurlconn)(con->private))->ctxt;
+    unsigned char c;
+    size_t n;
+    
+    switch(type) {
+    case HTTPsh:
+	n = xmlNanoHTTPRead(ctxt, &c, 1);
+	break;
+    case FTPsh:
+	n = xmlNanoFTPRead(ctxt, &c, 1);
+	break;
+    }
+    return (n == 1) ? c : R_EOF;
+}
+
+static size_t url_read(void *ptr, size_t size, size_t nitems,
+		       Rconnection con)
+{
+    UrlScheme type = ((Rurlconn)(con->private))->type;
+    void * ctxt = ((Rurlconn)(con->private))->ctxt;
+    size_t n;
+    
+    switch(type) {
+    case HTTPsh:
+	n = xmlNanoHTTPRead(ctxt, ptr, size*nitems);
+	break;
+    case FTPsh:
+	n = xmlNanoFTPRead(ctxt, ptr, size*nitems);
+	break;
+    }
+    return n/size;
+}
+
+
 static Rconnection newurl(char *description, char *mode)
 {
     Rconnection new;
 
-    error("url connections are not yet operational");
-    
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error("allocation of url connection failed");
     new->class = (char *) malloc(strlen("file") + 1);
@@ -2177,21 +2237,20 @@ static Rconnection newurl(char *description, char *mode)
     strncpy(new->mode, mode, 4); new->mode[4] = '\0';
     new->isopen = new->incomplete = FALSE;
     new->canread = new->canwrite = TRUE; /* in principle */
-    new->canseek = TRUE;
+    new->canseek = FALSE;
     new->text = TRUE;
-    new->open = &file_open;
-    new->close = &file_close;
-    new->destroy = &file_destroy;
-    new->vfprintf = &file_vfprintf;
-    new->fgetc = &file_fgetc;
-    new->ungetc = &file_ungetc;
-    new->seek = &file_seek;
-    new->truncate = &file_truncate;
-    new->fflush = &file_fflush;
-    new->read = &file_read;
-    new->write = &file_write;
+    new->open = &url_open;
+    new->close = &url_close;
+    new->destroy = &url_destroy;
+    new->vfprintf = &null_vfprintf;
+    new->fgetc = &url_fgetc;
+    new->seek = &null_seek;
+    new->truncate = &null_truncate;
+    new->fflush = &null_fflush;
+    new->read = &url_read;
+    new->write = &null_write;
     new->nPushBack = 0;
-    new->private = (void *) malloc(sizeof(struct fileconn));
+    new->private = (void *) malloc(sizeof(struct urlconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error("allocation of url connection failed");
@@ -2206,6 +2265,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     char *url, *open, *class2 = "url";
     int i, ncon;
     Rconnection con = NULL;
+    UrlScheme type;
 
     checkArity(op, args);
     scmd = CAR(args);
@@ -2214,6 +2274,14 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(scmd) > 1)
 	warning("only first element of `description' argument used");
     url = CHAR(STRING_ELT(scmd, 0));
+    if (strncmp(url, "http://", 7) == 0) {
+	type = HTTPsh;
+    } else if (strncmp(url, "ftp://", 6) == 0) {
+	type = FTPsh;
+    } else
+	error("unsupported URL scheme");
+   
+
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
@@ -2229,6 +2297,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     } else if (strncmp(url, "http://", 7) == 0 || 
 	       strncmp(url, "ftp://", 6) == 0) {
        con = newurl(url, strlen(open) ? open : "r");
+       ((Rurlconn)con->private)->type = type;
     } else
 	error("unsupported URL schema");
 
@@ -2250,20 +2319,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-#ifdef HAVE_LIBXML
-void	xmlNanoHTTPInit		(void);
-void	xmlNanoHTTPCleanup	(void);
-void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
-int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
-void	xmlNanoHTTPClose	(void *ctx);
-int 	xmlNanoHTTPReturnCode	(void *ctx);
-
-void	xmlNanoFTPInit		(void);
-void	xmlNanoFTPCleanup	(void);
-void *	xmlNanoFTPOpen		(const char *URL);
-int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
-void	xmlNanoFTPClose		(void *ctx);
-#endif
+/* TODO select file mode based on ContentType ? */
 
 /* download(url, destfile, quiet) */
 
@@ -2324,8 +2380,6 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	xmlNanoHTTPInit();
 	if(!quiet) REprintf("trying URL `%s'\n", url);
 	ctxt = xmlNanoHTTPOpen(url, NULL);
-	rc = xmlNanoHTTPReturnCode(ctxt);
-	
 	if(ctxt == NULL) status = 1;
 	else {
 	    int rc = xmlNanoHTTPReturnCode(ctxt);
@@ -2334,7 +2388,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		status = 1;
 		if(!quiet) REprintf("return code %d\n", rc);
 	    } else {
-		if(!quiet) REprintf("opened URL `%s'\n", url);
+		if(!quiet) REprintf("opened URL\n", url);
 		while ((len = xmlNanoHTTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		    fwrite(buf, 1, len, out);
 		    nbytes += len;
@@ -2348,13 +2402,13 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		fclose(out);
 		if(!quiet) {
 		    if(nbytes > 10240)
-			REprintf("\ndownloaded %dKb\n", nbytes/1024, url);
+			REprintf("\ndownloaded %dKb\n\n", nbytes/1024, url);
 		    else
-			REprintf("\ndownloaded %d bytes\n", nbytes, url);
+			REprintf("\ndownloaded %d bytes\n\n", nbytes, url);
 		}
 	    }
 	}
-	xmlNanoHTTPCleanup();
+	/* xmlNanoHTTPCleanup();  might have a url/http connection open */
 	if (status == 1) error("cannot open URL `%s'", url);
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
@@ -2372,7 +2426,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	ctxt = xmlNanoFTPOpen(url);
 	if(ctxt == NULL) status = 1;
 	else {
-	    if(!quiet) REprintf("opened URL `%s'\n", url);
+	    if(!quiet) REprintf("opened URL\n", url);
 	    while ((len = xmlNanoFTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		fwrite(buf, 1, len, out);
 		nbytes += len;
@@ -2386,12 +2440,12 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    fclose(out);
 	    if(!quiet) {
 		if(nbytes > 10240)
-		    REprintf("\ndownloaded %dKb\n", nbytes/1024, url);
+		    REprintf("\ndownloaded %dKb\n\n", nbytes/1024, url);
 		else
-		    REprintf("\ndownloaded %d bytes\n", nbytes, url);
+		    REprintf("\ndownloaded %d bytes\n\n", nbytes, url);
 	    }
 	}
-	xmlNanoFTPCleanup();
+	/* xmlNanoFTPCleanup();  might have a url/hhtp connection open */
 	if (status == 1) error("cannot open URL `%s'", url);
 #endif
 

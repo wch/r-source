@@ -30,7 +30,7 @@ typedef struct Rconn
     void (*destroy)(struct Rconn *); /* when closing connection */
     int (*vfprintf)(struct Rconn *, const char *, va_list);
     int (*fgetc)(struct Rconn *);
-    int (*ungetc)(int c, struct Rconn *);
+/*    int (*ungetc)(int c, struct Rconn *); */
     long (*seek)(struct Rconn *, int, int);
     void (*truncate)(struct Rconn *);
     int (*fflush)(struct Rconn *);
@@ -49,7 +49,6 @@ typedef struct fileconn {
 } *Rfileconn;
 
 #ifdef HAVE_LIBZ
-
 typedef struct gzfileconn {
     void *fp;
     int cp;
@@ -69,6 +68,13 @@ typedef struct outtextconn {
     SEXP data;
     char lastline[LAST_LINE_LEN];
 } *Routtextconn;
+
+typedef enum {HTTPsh, FTPsh} UrlScheme;
+
+typedef struct urlconn {
+    void *ctxt;
+    UrlScheme type;
+} *Rurlconn;
 
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
