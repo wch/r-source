@@ -22,9 +22,9 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2003-10-26).
+   <p>The current version of this document is 1.9.0 (2003-11-05).
 
-   ISBN 3-901167-52-8
+   ISBN 3-900051-02-X
 
 <a name="Obtaining%20R"></a>
 
@@ -484,9 +484,12 @@ or later) or <code>libpng</code> (version 1.2.3 or later) and <code>zlib</code>
    <p>The <code>bitmap</code> and <code>dev2bitmap</code> devices make use of ghostscript
 (<a href="http://www.cs.wisc.edu/~ghost">http://www.cs.wisc.edu/~ghost</a>).
 
-   <p>If you have them installed (including the approrpiate headers),
-<code>zlib</code>, <code>libbz2</code> and PCRE will be used: otherwise versions
-in the R sources will be compiled in.
+   <p>If you have them installed (including the appropriate headers and of
+late enough versions), <code>zlib</code>, <code>libbz2</code> and PCRE will be used
+if specified by <code>--with-zlib</code>, <code>--with-bzlib</code> or
+<code>--with-pcre</code>: otherwise versions in the R sources will be
+compiled in.  As the latter suffice and are tested with R you should
+not need to change this.
 
 <a name="Tcl%2fTk"></a>
 
