@@ -37,9 +37,7 @@ TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.ts)
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 R: Makefile stamp-R $(TIMESTAMPS)
 	@for d in $(SUBDIRS); do \
@@ -51,12 +49,10 @@ stamp-R:
 
 config.h: stamp-h
 stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES= CONFIG_HEADERS=$(subdir)/config.h \
-	  $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/config.h
 	@echo timestamp > $@ 2> /dev/null
 $(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/stamp-h.in
-$(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.in $(top_srcdir)/acconfig.h $(top_srcdir)/aclocal.m4
+$(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.ac $(top_srcdir)/aclocal.m4
 	@cd $(top_srcdir) && $(AUTOHEADER)
 	@echo timestamp > $@ 2> /dev/null
 Rconfig.h: $(top_srcdir)/VERSION config.h
@@ -64,9 +60,7 @@ Rconfig.h: $(top_srcdir)/VERSION config.h
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(top_srcdir)/tools/GETVERSION > $@
 Rmath.h: $(srcdir)/Rmath.h.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 install: installdirs
 	@for d in $(SUBDIRS); do \
