@@ -919,7 +919,11 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 	    v = coerceVector(v, type);
 	    UNPROTECT(1);
 	}
-	if (type == LISTSXP &&
+	/* drop attributes() and class() in some cases: */
+	if ((type == LISTSXP
+	     /* already loses 'names' where it shouldn't: 
+		|| type == VECSXP) */
+	    ) &&
 	    !(TYPEOF(u) == LANGSXP || TYPEOF(u) == LISTSXP ||
 	      TYPEOF(u) == EXPRSXP || TYPEOF(u) == VECSXP)) {
 	    ATTRIB(v) = R_NilValue;
@@ -935,24 +939,6 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
     else errorcall(call, "cannot coerce to vector\n");
     return u;/* -Wall */
 }
-
-/* as.logical */
-/* as.integer */
-/* as.real */
-/* as.numeric*/
-/* as.complex */
-/* as.character */
-/* as.list */
-/* as.expression */
-/* as.function */
-/* as.name */
-
-SEXP do_as(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    checkArity(op, args);
-    return ascommon(call, CAR(args), PRIMVAL(op));
-}
-
 
 SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
