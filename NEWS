@@ -135,6 +135,12 @@ BUG FIXES
     o    scan() (and hence read.table) was not finding matches for
 	 separator chars with the upper bit set.  (PR#3035)
 
+    o    lm.(w)fit failed if the fit had rank 0.
+
+    o    lqs() did not report explicitly that it had failed if all
+	 samples gave singular fits.
+
+
 
 		CHANGES IN R VERSION 1.7.0
 
