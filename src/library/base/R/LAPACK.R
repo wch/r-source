@@ -5,7 +5,6 @@ La.eigen <- function (x, symmetric, only.values = FALSE,
 	stop("argument to La.eigen must be numeric or complex")
     method <- match.arg(method)
     if(is.complex(x) && method == "dsyevr") {
-        warning("Method \"dysevr\" is not supported for complex matrices")
         method <- "dsyev"
     }
     x <- as.matrix(x)
@@ -42,7 +41,6 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
 	stop("argument to La.svd must be numeric or complex")
     method <- match.arg(method)
     if(is.complex(x) && method == "dgesdd") {
-        warning("Method \"dgesdd\" is not supported for complex matrices")
         method <- "dgesvd"
     }
     x <- as.matrix(x)
