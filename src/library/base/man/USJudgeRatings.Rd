@@ -22,4 +22,8 @@
 \source{
     New Haven Register, 14 January, 1977 (from John Hartigan).
 }
+\examples{
+data(USJudgeRatings)
+pairs(USJudgeRatings, main = "USJudgeRatings data")
+}
 \keyword{datasets}
