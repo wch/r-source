@@ -41,16 +41,22 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value, names;
     checkArity(op, args);
-    PROTECT(value = allocVector(VECSXP, 4));
-    PROTECT(names = allocVector(STRSXP, 4));
+    PROTECT(value = allocVector(VECSXP, 5));
+    PROTECT(names = allocVector(STRSXP, 5));
     SET_STRING_ELT(names, 0, mkChar("OS.type"));
     SET_STRING_ELT(names, 1, mkChar("file.sep"));
     SET_STRING_ELT(names, 2, mkChar("dynlib.ext"));
     SET_STRING_ELT(names, 3, mkChar("GUI"));
+    SET_STRING_ELT(names, 4, mkChar("endian"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
     SET_VECTOR_ELT(value, 2, mkString(R_DynLoadExt));
     SET_VECTOR_ELT(value, 3, mkString(R_GUIType));
+#ifdef WORDS_BIGENDIAN
+    SET_VECTOR_ELT(value, 4, mkString("big"));
+#else
+    SET_VECTOR_ELT(value, 4, mkString("little"));
+#endif
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;
@@ -61,6 +67,9 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  Return the current date in a standard format.  This uses standard
  *  POSIX calls which should be available on each platform.  We should
  *  perhaps check this in the configure script.
+ */
+/* BDR 2000/7/20.
+ *  time and ctime are in fact ANSI C calls, so we don't check them.
  */
 char *R_Date()
 {
@@ -502,3 +511,145 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "file name too long");
     return mkString(R_ExpandFileName(buf));
 }
+
+#ifdef HAVE_STAT
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
+  && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)
+#include <pwd.h>
+#include <grp.h>
+#define UNIX_EXTRAS 1
+#endif
+
+SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, ans, ansnames, fsize, mtime, ctime, atime, isdir, 
+	mode, xxclass;
+#ifdef UNIX_EXTRAS
+    SEXP uid, gid, uname, grname;
+    struct passwd *stpwd;
+    struct group *stgrp;
+#endif
+    int i, n;
+    struct stat sb;
+
+    checkArity(op, args);
+    fn = CAR(args);
+    if (!isString(fn))
+        errorcall(call, "invalid filename argument");
+    n = length(fn);
+#ifdef UNIX_EXTRAS
+    PROTECT(ans = allocVector(VECSXP, 10));
+    PROTECT(ansnames = allocVector(STRSXP, 10));
+#else
+    PROTECT(ans = allocVector(VECSXP, 6));
+    PROTECT(ansnames = allocVector(STRSXP, 6));
+#endif
+    fsize = SET_VECTOR_ELT(ans, 0, allocVector(INTSXP, n));
+    SET_STRING_ELT(ansnames, 0, mkChar("size"));
+    isdir = SET_VECTOR_ELT(ans, 1, allocVector(LGLSXP, n));
+    SET_STRING_ELT(ansnames, 1, mkChar("isdir"));
+    mode  = SET_VECTOR_ELT(ans, 2, allocVector(INTSXP, n));
+    SET_STRING_ELT(ansnames, 2, mkChar("mode"));
+    mtime = SET_VECTOR_ELT(ans, 3, allocVector(REALSXP, n));
+    SET_STRING_ELT(ansnames, 3, mkChar("mtime"));
+    ctime = SET_VECTOR_ELT(ans, 4, allocVector(REALSXP, n));
+    SET_STRING_ELT(ansnames, 4, mkChar("ctime"));
+    atime = SET_VECTOR_ELT(ans, 5, allocVector(REALSXP, n));
+    SET_STRING_ELT(ansnames, 5, mkChar("atime"));
+#ifdef UNIX_EXTRAS
+    uid = SET_VECTOR_ELT(ans, 6, allocVector(INTSXP, n));
+    SET_STRING_ELT(ansnames, 6, mkChar("uid"));
+    gid = SET_VECTOR_ELT(ans, 7, allocVector(INTSXP, n));
+    SET_STRING_ELT(ansnames, 7, mkChar("gid"));
+    uname = SET_VECTOR_ELT(ans, 8, allocVector(STRSXP, n));
+    SET_STRING_ELT(ansnames, 8, mkChar("uname"));
+    grname = SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
+    SET_STRING_ELT(ansnames, 9, mkChar("grname"));
+#endif
+    for (i = 0; i < n; i++) {
+	if (STRING_ELT(fn, i) != R_NilValue && 
+	    stat(R_ExpandFileName(CHAR(STRING_ELT(fn, i))), &sb) == 0) {
+	    INTEGER(fsize)[i] = (int) sb.st_size;
+	    LOGICAL(isdir)[i] = (int) sb.st_mode & S_IFDIR;
+	    INTEGER(mode)[i]  = (int) sb.st_mode & 0007777;
+	    REAL(mtime)[i] = (double) sb.st_mtime;
+	    REAL(ctime)[i] = (double) sb.st_ctime;
+	    REAL(atime)[i] = (double) sb.st_atime;
+#ifdef UNIX_EXTRAS
+	    INTEGER(uid)[i] = (int) sb.st_uid;
+	    INTEGER(gid)[i] = (int) sb.st_gid;
+	    stpwd = getpwuid(sb.st_uid);
+	    if(stpwd) SET_STRING_ELT(uname, i, mkChar(stpwd->pw_name));
+	    else SET_STRING_ELT(uname, i, NA_STRING);
+	    stgrp = getgrgid(sb.st_gid);
+	    if(stgrp) SET_STRING_ELT(grname, i, mkChar(stgrp->gr_name));
+	    else SET_STRING_ELT(grname, i, NA_STRING);
+#endif
+	} else {
+	    INTEGER(fsize)[i] = NA_INTEGER;
+	    LOGICAL(isdir)[i] = NA_INTEGER;
+	    INTEGER(mode)[i]  = NA_INTEGER;
+	    REAL(mtime)[i] = NA_REAL;
+	    REAL(ctime)[i] = NA_REAL;
+	    REAL(atime)[i] = NA_REAL;
+#ifdef UNIX_EXTRAS
+	    INTEGER(uid)[i] = NA_INTEGER;
+	    INTEGER(gid)[i] = NA_INTEGER;
+	    SET_STRING_ELT(uname, i, NA_STRING);
+	    SET_STRING_ELT(grname, i, NA_STRING);
+#endif
+	}
+    }
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    PROTECT(xxclass = allocVector(STRSXP, 1));
+    SET_STRING_ELT(xxclass, 0, mkChar("octmode"));
+    classgets(mode, xxclass);
+    UNPROTECT(3);
+    return ans;
+}
+#else
+SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("file.info is not implemented on this system");
+    return R_NilValue; /* -Wall */
+}
+#endif
+
+#ifdef HAVE_ACCESS
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, ans;
+    int i, n, mode, modemask;
+
+    checkArity(op, args);
+    fn = CAR(args);
+    if (!isString(fn))
+        errorcall(call, "invalid names argument");
+    n = length(fn);
+    mode = asInteger(CADR(args));
+    if(mode < 0 || mode > 7) error("invalid mode value");
+    modemask = 0;
+    if (mode & 1) modemask |= X_OK;
+    if (mode & 2) modemask |= W_OK;
+    if (mode & 4) modemask |= R_OK;
+    PROTECT(ans = allocVector(INTSXP, n));
+    for (i = 0; i < n; i++)
+	INTEGER(ans)[i] = access(R_ExpandFileName(CHAR(STRING_ELT(fn, i))),
+				 modemask);
+    UNPROTECT(1);
+    return ans;
+}
+#else
+SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("file.access is not implemented on this system");
+    return R_NilValue; /* -Wall */
+}
+#endif

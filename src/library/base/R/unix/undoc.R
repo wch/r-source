@@ -34,7 +34,6 @@ undoc <- function(pkg, dir)
             stop("you must specify `pkg' or `dir'")
         if(!file.exists(dir))
             stop(paste0("directory `", dir, "' does not exist"))
-        dir <- system(paste("cd", dir, "; pwd"), intern = TRUE)
 
         if(!file.exists(docsDir <- file.path(dir, "man")))
             stop("no directory with Rd sources found")
@@ -42,33 +41,28 @@ undoc <- function(pkg, dir)
         files <- listFilesWithExts(docsDir, docsExts)
         if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
             files <- c(files, listFilesWithExts(docsOSDir, docsExts))
-        ## FIXME: Still unixy, but this version is not GNUish!
-        cmd <- paste("grep -h '^\\\\name'",
-                     paste(files, collapse = " "),
-                     "| sed 's/\\\\name{\\(.*\\)}.*/\\1/'")
-        objsdocs <- system(cmd, intern = TRUE)
-        cmd <- paste("grep -h '^\\\\alias'",
-                     paste(files, collapse = " "),
-                     "| sed 's/\\\\alias{\\(.*\\)}.*/\\1/'")
-        objsdocs <- c(objsdocs, system(cmd, intern = TRUE))
+        files <- paste(files, collapse = " ")
+        ## FIXME: Still unixy, but not GNUish anymore!
+        fname  <- system(paste("grep -h '^\\\\name'",  files),intern=TRUE)
+        falias <- system(paste("grep -h '^\\\\alias'", files),intern=TRUE)
+        objsdocs <- c(gsub("\\\\name{(.*)}.*",  "\\1", fname),
+                      gsub("\\\\alias{(.*)}.*", "\\1", falias))
         objsdocs <- gsub("\\\\%", "%", objsdocs)
         objsdocs <- gsub(" ", "", objsdocs)
         objsdocs <- sort(unique(objsdocs))
 
         if(file.exists(codeDir <- file.path(dir, "R"))) {
-            codeFile <- tempfile()
+            codeFile <- tempfile("Rbuild")
             on.exit(unlink(codeFile))
             codeExts <- c("R", "r", "S", "s", "q")
             files <- listFilesWithExts(codeDir, codeExts, path = FALSE)
             if(any(i <- grep("^zzz\\.", files)))
                files <- files[-i]
             files <- file.path(codeDir, files)
-            if(file.exists(codeOSDir <- file.path(codeDir,
-                                                  .Platform$OS)))
-                files <- c(files,
-                           listFilesWithExts(codeOSDir, codeExts))
-            system(paste("cat", paste(files, collapse = " "), ">",
-                         codeFile))
+            if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
+                files <- c(files, listFilesWithExts(codeOSDir, codeExts))
+            file.create(codeFile)
+            file.append(codeFile, files)
         }
         else
             codeFile <- ""

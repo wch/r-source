@@ -25,8 +25,8 @@ R:
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
-	@$(MAKE) zero.$(SHLIBEXT)
-zero.$(SHLIBEXT): $(srcdir)/zero.c
+	@$(MAKE) zero.$(SHLIB_EXT)
+zero.$(SHLIB_EXT): $(srcdir)/zero.c
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(INSTALL_DATA) $(srcdir)/zero.c zero.c; \
 	fi
@@ -40,7 +40,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos
 	@$(MKINSTALLDIRS) $(rhome)/demos/dynload
 install-objects:
-	@$(INSTALL_PROGRAM) zero.$(SHLIBEXT) $(rhome)/demos/dynload
+	@$(INSTALL_PROGRAM) zero.$(SHLIB_EXT) $(rhome)/demos/dynload
 install-sources:
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/demos/dynload; \
@@ -50,7 +50,7 @@ uninstall:
 
 mostlyclean:
 clean:
-	@rm -f zero.$(SHLIBEXT)
+	@rm -f zero.$(SHLIB_EXT)
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -f $(INSTFILES); \
 	fi

@@ -14,7 +14,7 @@ edit.data.frame <-
              edit.row.names =  any(row.names(name) != 1:nrow(name)), ...)
 {
     if (.Platform$OS.type == "unix")
-        if(.Platform$GUI == "unknown" || getenv("DISPLAY")=="" )
+        if(.Platform$GUI == "unknown" || Sys.getenv("DISPLAY")=="" )
             return (edit.default(name, ...))
 
     is.vector.unclass <- function(x) is.vector(unclass(x))
@@ -86,7 +86,7 @@ edit.matrix <-
     function(name, edit.row.names = any(rownames(name) != 1:nrow(name)), ...)
 {
     if (.Platform$OS.type == "unix")
-        if(.Platform$GUI == "unknown" || getenv("DISPLAY")=="" )
+        if(.Platform$GUI == "unknown" || Sys.getenv("DISPLAY")=="" )
             return (edit.default(name, ...))
     if(!is.matrix(name) ||
        !(mode(name) == "numeric" || mode(name) == "character")

@@ -103,13 +103,11 @@ refman.dvi: version.tex $(srcdir)/Rd.sty stamp-refman-dvi
 version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
-	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
-	  m=`cut -d/ -f2 < $(top_srcdir)/date-stamp`; \
-	  d=`cut -d/ -f3 < $(top_srcdir)/date-stamp`; \
-	  echo "$${v} ($${m} $${d}, $${y})") > $@
+	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
+	  echo "$${v}") > $@
 stamp-refman-dvi: $(pkgsrcs)
 	@touch $@
-$(pkgsrcs): FORCE
+$(pkgsrcs): FORCE $(top_builddir)/bin/build-help
 	@(pkg=`basename $@ -pkg.tex`; \
 	if $(top_builddir)/tools/Rdnewer \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
@@ -119,13 +117,16 @@ $(pkgsrcs): FORCE
 	  $(top_builddir)/tools/pkg2tex $${pkg}; \
 	fi)
 FORCE:
+$(top_builddir)/bin/build-help: $(top_srcdir)/src/scripts/build-help.in
+	@echo "creating $@"
+	@(cd $(top_builddir)/src/scripts; $(MAKE))
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-exts.dvi: $(texiincludes)
 version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
-	  v="$${v} (`sed 's|/| |g' $(top_srcdir)/date-stamp`)"; \
+	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  echo "@set VERSION $${v}" > $@)
 R-intro.dvi: stamp-images-eps $(texiincludes)
 stamp-images-eps:

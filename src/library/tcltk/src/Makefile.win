@@ -12,14 +12,19 @@ else
 endif
 
 DLLNAME = tcltk
-implibs: libtcl83.a libtk83.a
-libtcl83.a: tcl83.def
-libtk83.a: tk83.def
+implibs: libtcl$(TCL_VERSION).a libtk$(TCL_VERSION).a
+libtcl$(TCL_VERSION).a: tcl$(TCL_VERSION).def
+libtk$(TCL_VERSION).a: tk$(TCL_VERSION).def
+tcl$(TCL_VERSION).def: tcl.def
+	$(SED) -e 's/@VER@/$(TCL_VERSION)/' $< > $@
+tk$(TCL_VERSION).def: tk.def
+	$(SED) -e 's/@VER@/$(TCL_VERSION)/' $< > $@
+
 
 OBJS = tcltk.o tcltk_win.o
 CFLAGS = -I$(RHOME)/src/include -include $(RHOME)/src/include/globalvar.h $(DEBUGFLAG) -O2 -I "$(TCL_HOME)"/include -DWin32
 
-DLLLIBS = -L$(RHOME)/src/gnuwin32 -lR -L. -ltcl83 -ltk83
+DLLLIBS = -L$(RHOME)/src/gnuwin32 -lR -L. -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
 
 $(DLLNAME).a: $(OBJS) #
 	$(RM) -f $@

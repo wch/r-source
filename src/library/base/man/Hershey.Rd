@@ -163,7 +163,7 @@
 make.table <- function(nr, nc) {
     savepar <- par(mar=rep(0, 4), pty="s")
     plot(c(0, nc*2 + 1), c(0, -(nr + 1)),
-         type="n", xlab="", ylab="", axes=F)
+         type="n", xlab="", ylab="", axes=FALSE)
     savepar
 }
 

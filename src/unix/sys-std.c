@@ -89,22 +89,22 @@ void Rstd_Suicide(char *s)
  */
 static InputHandler BasicInputHandler = {StdinActivity, -1, NULL};
 
-/* 
+/*
    This can be reset by the initialization routines which
-   can ignore stdin, etc.. 
+   can ignore stdin, etc..
 */
 InputHandler *R_InputHandlers = &BasicInputHandler;
 
 /*
-  Initialize the input source handlers used to check for input on the 
+  Initialize the input source handlers used to check for input on the
   different file descriptors.
  */
 InputHandler * initStdinHandler(void)
 {
     InputHandler *inputs;
     extern void R_processEvents(void);
- 
-    inputs = addInputHandler(R_InputHandlers, fileno(stdin), NULL, 
+
+    inputs = addInputHandler(R_InputHandlers, fileno(stdin), NULL,
 			     StdinActivity);
     /* Defer the X11 registration until it is loaded and actually used. */
 
@@ -118,7 +118,7 @@ InputHandler * initStdinHandler(void)
   BasicInputHandler object.
  */
 InputHandler *
-addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, 
+addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler,
 		int activity)
 {
     InputHandler *input, *tmp;
@@ -155,7 +155,7 @@ removeInputHandler(InputHandler **handlers, InputHandler *it)
     InputHandler *tmp;
 
     /* If the handler is the first one in the list, move the list to point
-       to the second element. That's why we use the address of the first 
+       to the second element. That's why we use the address of the first
        element as the first argument.
     */
     if(*handlers == it) {
@@ -201,8 +201,8 @@ getInputHandler(InputHandler *handlers, int fd)
 
 
  This replaces the previous version which looked only on stdin and the X11
- device connection.  This allows more than one X11 device to be open on a different 
- connection. Also, it allows connections a la S4 to be developed on top of this 
+ device connection.  This allows more than one X11 device to be open on a different
+ connection. Also, it allows connections a la S4 to be developed on top of this
  mechanism. The return type of this routine has changed.
 */
 
@@ -230,7 +230,7 @@ static InputHandler* waitForActivity()
 	tv.tv_sec = 0;
 	tv.tv_usec = R_wait_usec;
 	maxfd = setSelectMask(R_InputHandlers, &readMask);
-    } while (!select(maxfd+1, &readMask, NULL, NULL, 
+    } while (!select(maxfd+1, &readMask, NULL, NULL,
 		     (R_wait_usec) ? &tv : NULL));
 
     return(getSelectedHandler(R_InputHandlers, &readMask));
@@ -238,7 +238,7 @@ static InputHandler* waitForActivity()
 
 /*
   Create the mask representing the file descriptors select() should
-  monitor and return the maximum of these file descriptors so that 
+  monitor and return the maximum of these file descriptors so that
   it can be passed directly to select().
 
   If the first element of the handlers is the standard input handler
@@ -254,9 +254,9 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
     FD_ZERO(readMask);
 
     /* If we are dealing with BasicInputHandler always put stdin */
-    if(handlers == &BasicInputHandler) 
+    if(handlers == &BasicInputHandler)
 	handlers->fileDescriptor = fileno(stdin);
-    
+
     while(tmp) {
 	FD_SET(tmp->fileDescriptor, readMask);
 	maxfd = maxfd < tmp->fileDescriptor ? tmp->fileDescriptor : maxfd;
@@ -284,7 +284,7 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
     */
     if(handlers == &BasicInputHandler && handlers->next)
 	tmp = handlers->next;
-   
+
     while(tmp) {
 	if(FD_ISSET(tmp->fileDescriptor, readMask))
 	    return(tmp);
@@ -503,7 +503,7 @@ void Rstd_CleanUp(int saveact, int status, int runLast)
     }
     CleanEd();
     KillAllDevices();
-    if(saveact != SA_SUICIDE && R_CollectWarnings) 
+    if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings(); /* from device close and .Last */
     fpu_setup(0);
 
@@ -603,3 +603,111 @@ void Rstd_read_history(char *s)
 #endif
 #endif
 }
+
+void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile;
+    char file[PATH_MAX];
+
+    checkArity(op, args);
+    sfile = CAR(args);
+    if (!isString(sfile) || LENGTH(sfile) < 1)
+	errorcall(call, "invalid file argument");
+    strcpy(file, R_ExpandFileName(CHAR(STRING_ELT(sfile, 0))));
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
+    if(R_Interactive && UsingReadline) {
+	clear_history();
+	read_history(file);
+    } else errorcall(call, "no history mechanism available");
+#else
+    errorcall(call, "no history mechanism available");
+#endif
+}
+
+void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile;
+    char file[PATH_MAX];
+
+    checkArity(op, args);
+    sfile = CAR(args);
+    if (!isString(sfile) || LENGTH(sfile) < 1)
+	errorcall(call, "invalid file argument");
+    strcpy(file, R_ExpandFileName(CHAR(STRING_ELT(sfile, 0))));
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
+    if(R_Interactive && UsingReadline) {
+	write_history(file);
+	history_truncate_file(file, R_HistorySize);
+    } else errorcall(call, "no history available to save");
+#else
+    errorcall(call, "no history available to save");
+#endif
+}
+
+#include <setjmp.h>
+static jmp_buf sleep_return;
+
+static int OldTimeout;
+static void (* OldHandler)(void);
+
+
+#ifdef HAVE_TIMES
+#include <sys/times.h>
+#ifndef CLK_TCK
+/* this is in ticks/second, generally 60 on BSD style Unix, 100? on SysV */
+#ifdef HZ
+#define CLK_TCK HZ
+#else
+#define CLK_TCK	60
+#endif
+#endif /* CLK_TCK */
+
+static struct tms timeinfo;
+static double timeint, start, elapsed;
+
+static void SleepHandler(void)
+{
+    elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
+/*    Rprintf("elapsed %f,  R_wait_usec %d\n", elapsed, R_wait_usec); */
+    if(elapsed >= timeint) longjmp(sleep_return, 100);
+    if(timeint - elapsed < 0.5)
+	R_wait_usec = 1e6*(timeint - elapsed) + 10000;
+    OldHandler();
+}
+
+
+SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    timeint = asReal(CAR(args));
+    if (ISNAN(timeint) || timeint < 0)
+	errorcall(call, "invalid time value");
+    OldHandler = R_PolledEvents;
+    R_PolledEvents = SleepHandler;
+    OldTimeout = R_wait_usec;
+    if(OldTimeout == 0 || OldTimeout > 500000) R_wait_usec = 500000;
+
+    start = times(&timeinfo);
+    if(setjmp(sleep_return) != 100)
+	for (;;) {
+	    InputHandler *what = waitForActivity();
+	    if(what != NULL) {
+		if(what->fileDescriptor != fileno(stdin))
+		    what->handler((void*) NULL);
+		else usleep(R_wait_usec/2);
+	    /* we can't handle console read events here, 
+	       so just sleep for a while */
+	    }
+	}
+
+    R_PolledEvents = OldHandler;
+    R_wait_usec = OldTimeout;
+    return R_NilValue;
+}
+
+#else
+SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("Sys.sleep is not implemented on this system")
+}
+#endif

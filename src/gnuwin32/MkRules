@@ -1,10 +1,10 @@
 #-*- Makefile -*-
-.SUFFIXES: .c .f .o .a .def .exp .dll .exe .d
+.SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d
 
 # Alternatives CYGWIN (-mno-cygwin), MINGW32 (mingw32 gcc), CROSS (Linux)
 BUILD=MINGW32
-# Set this to YES if you make MINGW32 and gcc-2.95.2.1 or later.
-#HAVE_SHARED=YES
+# Set this to YES if you use MINGW32 and gcc-2.95.2.1 or later, or cygwin-1.1.
+# HAVE_SHARED=YES
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
@@ -12,6 +12,7 @@ HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Where does Tcl/Tk live? Spaces allowed.
 TCL_HOME = c:/packages/Tcl
+TCL_VERSION = 83
 
 ifeq ($(strip $(BUILD)),CYGWIN)
 BINPREF=
@@ -50,9 +51,11 @@ CP=cp
 MKDIR=mkdir
 CAT=cat
 CC=$(BINPREF)gcc $(MINGW32CFLAG)
+CXX=$(BINPREF)g++ $(MINGW32CFLAG)
 F77=$(BINPREF)g77
 AS=$(BINPREF)as
-DLL=$(BINPREF)gcc $(MINGW32LDFLAG)
+DLL_LDMAIN=gcc
+DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
 DLLTOOL=$(BINPREF)dlltool -k --as $(AS)
 LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
 AR=$(BINPREF)ar
@@ -66,6 +69,15 @@ RESCOMP=$(BINPREF)windres
 
 .f.o:
 	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
+
+.cc.o:
+	$(CXX)  $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
+
+.cpp.o:
+	$(CXX)  $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
+
+.C.o:
+	$(CXX)  $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
 
 %.exe:
 	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)

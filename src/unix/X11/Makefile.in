@@ -25,7 +25,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	Makefile.in $(SOURCES) $(HEADERS)
 
-SHLIB = $(top_builddir)/bin/R_X11.$(SHLIBEXT)
+SHLIB = $(top_builddir)/bin/R_X11.$(SHLIB_EXT)
 
 all: Makefile Makedeps R
 
@@ -45,7 +45,7 @@ R DLLs: Makefile
 	@$(MAKE) $(SHLIB)
 
 $(SHLIB): $(OBJECTS)
-	$(SHLIBLD) $(SHLIBLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
+	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
 
 mostlyclean: clean
 clean:

@@ -453,8 +453,7 @@ void Rwin_fpset()
     _controlfp(_MCW_EM, _MCW_EM);    
 }
 
-#include "console.h"  /* for savehistory */
-#include "getline/getline.h"  /* for gl_savehistory */
+#include "getline/getline.h"  /* for gl_load/savehistory */
 SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
@@ -463,11 +462,100 @@ SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    if (CharacterMode == RGui)    
-	savehistory(RConsole, CHAR(STRING_ELT(sfile, 0)));
-    else if (CharacterMode == RTerm)
+    if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
 	gl_savehistory(CHAR(STRING_ELT(sfile, 0)));
     else
 	errorcall(call, "savehistory can only be used in Rgui and Rterm");
+    return R_NilValue;
+}
+
+SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile;
+    
+    checkArity(op, args);
+    sfile = CAR(args);
+    if (!isString(sfile) || LENGTH(sfile) < 1)
+	errorcall(call, "invalid file argument");
+    if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
+	gl_loadhistory(CHAR(STRING(sfile)[0]));
+    else
+	errorcall(call, "savehistory can only be used in Rgui and Rterm");
+    return R_NilValue;
+}
+
+#include <lmcons.h>
+
+SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, ansnames;
+    OSVERSIONINFO verinfo;
+    char isNT[8]="??", ver[256], 
+	name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
+    DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
+
+    checkArity(op, args);
+    PROTECT(ans = allocVector(STRSXP, 7));
+    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&verinfo);
+    switch(verinfo.dwPlatformId) {
+    case VER_PLATFORM_WIN32_NT:
+	strcpy(isNT, "NT");
+	break;
+    case VER_PLATFORM_WIN32_WINDOWS:
+	strcpy(isNT, "9x");
+	break;
+    case VER_PLATFORM_WIN32s:
+	strcpy(isNT, "win32s");
+	break;
+    default:
+	sprintf(isNT, "ID=%d", (int)verinfo.dwPlatformId);
+	break;
+    }
+
+    STRING(ans)[0] = mkChar("Windows");
+    sprintf(ver, "%s %d.%d", isNT,
+	    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion);
+    STRING(ans)[1] = mkChar(ver);
+    sprintf(ver, "(build %d) %s", LOWORD(verinfo.dwBuildNumber), 
+	    verinfo.szCSDVersion);
+    STRING(ans)[2] = mkChar(ver);
+    GetComputerName(name, &namelen);
+    STRING(ans)[3] = mkChar(name);
+    STRING(ans)[4] = mkChar("x86");
+    GetUserName(user, &userlen);
+    STRING(ans)[6] = STRING(ans)[5] = mkChar(user);
+    PROTECT(ansnames = allocVector(STRSXP, 7));
+    STRING(ansnames)[0] = mkChar("sysname");
+    STRING(ansnames)[1] = mkChar("release");
+    STRING(ansnames)[2] = mkChar("version");
+    STRING(ansnames)[3] = mkChar("nodename");
+    STRING(ansnames)[4] = mkChar("machine");
+    STRING(ansnames)[5] = mkChar("login");
+    STRING(ansnames)[6] = mkChar("user");
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    UNPROTECT(2);
+    return ans;
+}
+
+void R_ProcessEvents(void); /* from system.c */
+
+SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    DWORD mtime;
+    int ntime;
+    double time;
+    
+    checkArity(op, args);
+    time = asReal(CAR(args));
+    if (ISNAN(time) || time < 0)
+	errorcall(call, "invalid time value");
+    ntime = 1000*(time) + 0.5;
+    while (ntime > 0) {
+	mtime = min(500, ntime);
+	ntime -= mtime;
+	Sleep(mtime);
+	R_ProcessEvents();
+    }
     return R_NilValue;
 }

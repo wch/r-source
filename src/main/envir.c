@@ -683,6 +683,40 @@ SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
     return (SYMVALUE(symbol));
 }
 
+/*
+ *  ditto, but check *mode* not *type*
+ */
+
+SEXP findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
+{
+    SEXP vl;
+    int tl;
+    if (mode == INTSXP) mode = REALSXP;
+    if (mode == FUNSXP || mode ==  BUILTINSXP || mode == SPECIALSXP) 
+	mode = CLOSXP;
+    while (rho != R_NilValue) {
+	vl = findVarInFrame(rho, symbol);
+
+	if (vl != R_UnboundValue) {
+	    if (mode == ANYSXP) return vl;
+	    if (TYPEOF(vl) == PROMSXP) {
+		PROTECT(vl);
+		vl = eval(vl, rho);
+		UNPROTECT(1);
+	    }
+	    tl = TYPEOF(vl);
+	    if (tl == INTSXP) tl = REALSXP;
+	    if (tl == FUNSXP || tl ==  BUILTINSXP || tl == SPECIALSXP) 
+		tl = CLOSXP;
+	    if (tl == mode) return vl;
+	}
+	if (inherits)
+	    rho = ENCLOS(rho);
+	else
+	    return (R_UnboundValue);
+    }
+    return (SYMVALUE(symbol));
+}
 
 
 /*----------------------------------------------------------------------
@@ -1145,6 +1179,10 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* mode :  The mode of the object being sought */
 
+    /* as from R 1.2.0, this is the *mode*, not the *typeof* aka
+       storage.mode.
+    */
+
     if (isString(CAR(CDDR(args)))) {
 	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), 0)),"function"))
 	    gmode = FUNSXP;
@@ -1161,7 +1199,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call,"invalid inherits argument");
 
     /* Search for the object */
-    rval = findVar1(t1, genv, gmode, ginherits);
+    rval = findVar1mode(t1, genv, gmode, ginherits);
 
     UNPROTECT(1);
 

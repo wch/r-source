@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.8.6.1 2000/06/28 09:52:29 luke Exp $
+ *  $Id: rproxy_impl.c,v 1.8.6.2 2000/08/03 05:08:47 luke Exp $
  */
 
 #define NONAMELESSUNION
@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include "globalvar.h"
 #undef CharacterMode
+#undef R_Interactive
 #include "config.h"
 #include "Rversion.h"
 #include "Startup.h"

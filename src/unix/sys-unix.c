@@ -257,6 +257,66 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
+
+#ifdef HAVE_SYS_UTSNAME_H
+#include <sys/utsname.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#ifdef HAVE_PWD_H
+#include <pwd.h>
+#endif
+
+SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, ansnames;
+    struct utsname name;
+    char *login;
+
+    checkArity(op, args);
+    PROTECT(ans = allocVector(STRSXP, 7));
+    if(uname(&name) == -1) {
+	UNPROTECT(1);
+	return R_NilValue;
+    }
+    SET_STRING_ELT(ans, 0, mkChar(name.sysname));
+    SET_STRING_ELT(ans, 1, mkChar(name.release));
+    SET_STRING_ELT(ans, 2, mkChar(name.version));
+    SET_STRING_ELT(ans, 3, mkChar(name.nodename));
+    SET_STRING_ELT(ans, 4, mkChar(name.machine));
+    login = getlogin();
+    SET_STRING_ELT(ans, 5, login ? mkChar(login) : mkChar("unknown"));
+#if defined(HAVE_PWD_H) && defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+    {
+	struct passwd *stpwd;
+	stpwd = getpwuid(getuid());
+	SET_STRING_ELT(ans, 6, stpwd ? mkChar(stpwd->pw_name) : mkChar("unknown"));
+    }
+#else
+    SET_STRING_ELT(ans, 6, mkChar("unknown"));
+#endif
+    PROTECT(ansnames = allocVector(STRSXP, 7));
+    SET_STRING_ELT(ansnames, 0, mkChar("sysname"));
+    SET_STRING_ELT(ansnames, 1, mkChar("release"));
+    SET_STRING_ELT(ansnames, 2, mkChar("version"));
+    SET_STRING_ELT(ansnames, 3, mkChar("nodename"));
+    SET_STRING_ELT(ansnames, 4, mkChar("machine"));
+    SET_STRING_ELT(ansnames, 5, mkChar("login"));
+    SET_STRING_ELT(ansnames, 6, mkChar("user"));
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    UNPROTECT(2);
+    return ans;
+}
+#else
+SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    warning("Sys,info is not implemented on this system");
+    return R_NilValue; /* -Wall */
+}
+#endif
+
 /*
  *  helpers for start-up code
  */

@@ -14,6 +14,8 @@
 \alias{tkdestroy}
 \alias{.TkWin}
 \alias{.TkRoot}
+\alias{addTclPath}
+\alias{tclRequire}
 \description{
   These functions and variables provide the basic glue between \R and the
   Tcl interpreter and Tk GUI toolkit. Tk
@@ -35,11 +37,16 @@ is.tkwin(x)
 
 tclvar$name
 tclvar$name <- value
+
+addTclPath(path)
+tclRequire(package)
 }
 \arguments{
   \item{win}{a window structure}
   \item{x}{an object}
   \item{ID}{a window ID}
+  \item{path}{path to a directory containing Tcl packages}
+  \item{package}{a Tcl package name}
 }
 \details{
   Many of these functions are not intended for general use but are used
@@ -90,6 +97,10 @@ tclvar$name <- value
   reality \code{tclvar} is an object of class \code{tclvar} and \code{$}
   and  \code{$<-} have special methods for that class.
 
+  Tcl packages can be loaded with \code{tclRequire}; it may be necessary
+  to add the directory where they are found to the Tcl search path with
+  \code{addTclPath}.
+  
 }
 \note{ Strings containing unbalanced braces are currently not handled
   well in many circumstances.
@@ -111,7 +122,7 @@ tclvar$xyzzy <- 7913 ; .Tcl("set xyzzy")
 
 top <- tktoplevel() # a Tk widget, see Tk-widgets
 ls(envir=top, all=TRUE)
-ls(envir=.TkRoot, all=T)# .Tcl.args put a callback ref in here
+ls(envir=.TkRoot, all=TRUE)# .Tcl.args put a callback ref in here
 }
 }
 \keyword{ misc }

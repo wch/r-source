@@ -15,11 +15,14 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
     coordinates for the plot.  Any reasonable way of defining the
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
     for details.}
-  \item{type}{the type of plot desired.  The following possibilities are
-    possible; \code{"p"} for points, \code{"l"} for lines, \code{"o"}
-    for overplotted points and lines, \code{"b"} or \code{c} for points
-    joined by lines, \code{"s"} and \code{"S"} for step functions and
-    \code{"h"} for \emph{high density} vertical lines.}
+  \item{type}{1-character string giving the type of plot desired.  The
+    following values are possible, for details, see \code{\link{plot}}:
+    \code{"p"} for points, \code{"l"} for lines,
+    \code{"o"} for overplotted points and lines,
+    \code{"b"}, \code{"c"}) for (empty if \code{"c"}) points joined by lines,
+    \code{"s"} and \code{"S"} for stair steps and
+    \code{"h"} for histogram-like vertical lines.  Finally,
+    \code{"n"} does not produce any points or lines.}
   \item{xlim}{the x limits (min,max) of the plot.}
   \item{ylim}{the y limits of the plot.}
   \item{log}{a character string which contains \code{"x"} if the x axis
@@ -79,6 +82,20 @@ plot(Speed, Distance, panel.first = grid(8,8),
 plot(Speed, Distance,
      panel.first = lines(lowess(Speed, Distance), lty = "dashed"),
      pch = 0, cex = 1.2, col = "blue")
+
+## Show the different plot types
+x <- 0:12
+y <- sin(pi/5 * x)
+op <- par(mfrow = c(3,3), mar = .1+ c(2,2,3,1))
+for (tp in c("p","l","b",  "c","o","h",  "s","S","n")) {
+   plot(y ~ x, type = tp,
+        main = paste("plot(*, type = \"",tp,"\")",sep=""))
+   if(tp == "S") {
+      lines(x,y, type = "s", col = "red", lty = 2)
+      mtext("lines(*, type = \"s\", ...)", col = "red", cex=.8)
+   }
+}
+par(op)
 
 ##--- Log-Log Plot  with  custom axes
 lx <- seq(1,5, length=41)

@@ -14,7 +14,8 @@ SRC = src
 #source directory
 SSPKG=$(SPKG)/$(SRC)
 
-LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f)
+LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc \
+	$(SSPKG)/*.cpp $(SSPKG)/*.C)
 ifeq ($(strip $(LSOURCES)),)
   LOBJS=
   DYNLIB=
@@ -38,16 +39,15 @@ ifeq ($(strip RWIN32),)
   PKGRFILES=$(PKGRFILES0)
 else
   R1 = $(foreach i,$(RWIN32), $(addprefix $(SPKG)/R/, $(notdir $i)))
-  R2 = $(R1) $(SPKG)/R/system.unix.R $(SPKG)/R/system.mac.R
-  PKGRFILES=$(filter-out $(R2), $(PKGRFILES0)) $(RWIN32)
+  PKGRFILES=$(filter-out $(R1), $(PKGRFILES0)) $(RWIN32)
 endif
 
 # Others
 OFILES0=$(wildcard $(SPKG)/*)
 OFILES1= DESCRIPTION INDEX TITLE
-OFILES-NO= R r chm data man src src-c Makefile.in inst check orig \
+OFILES-NO= R r chm data man src src-c Makefile.in inst check orig tests \
 	DESCRIPTION DESCRIPTION.in INDEX TITLE index title \
-	configure configure.in
+	configure configure.in cleanup
 OFILES3=$(foreach i, $(OFILES1), $(SPKG)/$i)
 OFILES2=$(foreach i, $(OFILES-NO), $(SPKG)/$i)
 OFILES=$(filter-out $(OFILES2),$(OFILES0))

@@ -22,7 +22,8 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     convenience.}
   \item{xlim, ylim, zlim}{x-, y-  and z-limits.  The plot is produced
     so that the rectangular volume defined by these limits is visible.}
-  \item{xlab, ylab, zlab}{titles for the axes.}
+  \item{xlab, ylab, zlab}{titles for the axes. N.B. These must the
+    character strings; expressions are not accepted.}
   \item{theta, phi}{angles defining the viewing direction.
     \code{theta} gives the azimuthal direction and \code{phi}
     the colatitude.}

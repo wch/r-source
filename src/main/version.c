@@ -28,8 +28,8 @@
 void PrintGreeting(void)
 {
     Rprintf("\nR : Copyright %s, The R Development Core Team\n", R_YEAR);
-    Rprintf("Version %s.%s %s (%s %s, %s)\n\n",
-	    R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
+    Rprintf("Version %s.%s %s (%s-%s-%s)\n\n",
+	    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
 
     Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
 	    "You are welcome to redistribute it under certain conditions.\n"
@@ -80,8 +80,8 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 void PrintVersion(char *s)
 {
     char tmp[50];
-    sprintf(s, "R %s.%s %s (%s %s, %s)\n",
-	    R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
+    sprintf(s, "R %s.%s %s (%s-%s-%s)\n",
+	    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     sprintf(tmp, "Copyright (C) %s R Development Core Team\n\n", R_YEAR);
     strcat(s, tmp);
     strcat(s, "R is free software and comes with ABSOLUTELY NO WARRANTY.\n");

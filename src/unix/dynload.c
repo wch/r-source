@@ -443,7 +443,8 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 #include <sys/types.h>
 #include <sys/stat.h>
 
-extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry;
+extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, 
+    ptr_R_loadhistory, ptr_R_savehistory;
 
 void R_load_X11_shlib()
 {
@@ -458,7 +459,7 @@ void R_load_X11_shlib()
     }
     strcpy(X11_DLL, p);
     strcat(X11_DLL, "/bin/R_X11.");
-    strcat(X11_DLL, SHLIBEXT); /* from config.h */
+    strcat(X11_DLL, SHLIB_EXT); /* from config.h */
     if(stat(X11_DLL, &sb))
 	R_Suicide("Probably no X11 support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */
@@ -497,7 +498,7 @@ void R_load_gnome_shlib()
     }
     strcpy(gnome_DLL, p);
     strcat(gnome_DLL, "/gnome/R_gnome.");
-    strcat(gnome_DLL, SHLIBEXT); /* from config.h */
+    strcat(gnome_DLL, SHLIB_EXT); /* from config.h */
     if(stat(gnome_DLL, &sb))
 	R_Suicide("Probably no GNOME support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */
@@ -536,6 +537,10 @@ void R_load_gnome_shlib()
     if(!ptr_gnome_start) R_Suicide("Cannot load gnome_start");
     ptr_GTKDeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
     if(!ptr_GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
+    ptr_R_loadhistory = R_dlsym(handle, "Rgnome_loadhistory");
+    if(!ptr_R_loadhistory) R_Suicide("Cannot load Rgnome_loadhsitoryr");
+    ptr_R_savehistory = R_dlsym(handle, "Rgnome_savehistory");
+    if(!ptr_R_savehistory) R_Suicide("Cannot load Rgnome_savehsitoryr");
 /* Uncomment the next two lines to experiment with the gnome() device */
 /*    ptr_GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
       if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/

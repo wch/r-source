@@ -4877,10 +4877,10 @@ unsigned int R_ColorTable[COLOR_TABLE_SIZE];
 static unsigned int hexdigit(int digit)
 {
     if('0' <= digit && digit <= '9') return digit - '0';
-    else if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
-    else if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
-    else error("invalid hex digit in color");
-    return digit - '0';	/* never occurs but avoid compiler warnings */
+    if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
+    if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
+    /*else */ error("invalid hex digit in color or lty");
+    return digit; /* never occurs (-Wall) */
 }
 
 #ifdef UNUSED
@@ -5080,38 +5080,38 @@ unsigned int LTYpar(SEXP value, int index)
     int i, code, shift, digit;
 
     if(isString(value)) {
-	for(i = 0; linetype[i].name; i++) {
+	for(i = 0; linetype[i].name; i++) { /* is it the i-th name ? */
 	    if(!strcmp(CHAR(STRING_ELT(value, index)), linetype[i].name))
 		return linetype[i].pattern;
 	}
+	/* otherwise, a string of hex digits: */
 	code = 0;
 	shift = 0;
 	for(p = CHAR(STRING_ELT(value, index)); *p; p++) {
 	    digit = hexdigit(*p);
-	    code = code | (digit<<shift);
-	    shift = shift + 4;
+	    code  |= (digit<<shift);
+	    shift += 4;
 	}
 	return code;
     }
     else if(isInteger(value)) {
 	code = INTEGER(value)[index];
-	if(code==NA_INTEGER || code < 0)
-	    return NA_INTEGER;
-	if (code > 0)
-	    code = (code-1) % nlinetype + 1;
+#define LTY_do_int				\
+	if(code==NA_INTEGER || code < 0)	\
+	    return NA_INTEGER;			\
+	if (code > 0)				\
+	    code = (code-1) % nlinetype + 1;	\
 	return linetype[code].pattern;
+	LTY_do_int;
     }
     else if(isReal(value)) {
 	code = REAL(value)[index];
-	if(!R_FINITE(code) || code < 0)
-	    return NA_INTEGER;
-        if (code > 0)
-	    code = (code-1) % nlinetype + 1;
-	return linetype[code].pattern;
+	LTY_do_int;
+#undef LTY_do_int
     }
-    else error("invalid line type");
-    /*NOTREACHED*/
-    return 0;		/* never occurs but avoid compiler warnings */
+    else {
+	error("invalid line type"); /*NOTREACHED, for -Wall : */ return 0;
+    }
 }
 
 SEXP LTYget(unsigned int lty)

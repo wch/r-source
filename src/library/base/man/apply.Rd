@@ -75,7 +75,7 @@ stopifnot(dim(ma) == dim(apply(ma, 1:2, sum)))## wasn't ok before R 0.63.1
  marg <- list(1:2, 2:3, c(2,4), c(1,3), 2:4, 1:3, 1:4)
  for(m in marg) print(apply(arr, print(m), sum))
  for(m in marg) ## 75% of the time here was spent on the names
-   print(dim(apply(arr, print(m), quantile, names=F)) == c(5,d.arr[m]))
+   print(dim(apply(arr, print(m), quantile, names=FALSE)) == c(5,d.arr[m]))
 }
 }
 \keyword{iteration}

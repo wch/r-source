@@ -224,7 +224,7 @@ Otherwise if environment variables @code{HOMEDRIVE} and @code{HOMEPATH} are set,
 the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.@*
 If all of these fail, the current working directory is used.
 
-You can find this from R code by @code{getenv("R_USER")}.
+You can find this from R code by @code{Sys.getenv("R_USER")}.
 
 
 @newchap{}
@@ -366,11 +366,9 @@ If those all hold true, this works for us.
 and @key{Ctrl-break} or @key{Ctrl-C} in @code{Rterm.exe}: @key{Ctrl-C}
 is used for copying in the GUI version.
 
-@item Command-line editing is always available, but is much simpler than the
+@item Command-line editing is always available, but is simpler than the
 readline-based editing on Unix. For @code{Rgui.exe}, the menu item `Help |
 Console' will give details.
-
-@item The commands history is always saved between sessions.
 
 @item Using @code{help.start()} does not automatically send help
 requests to the browser: use @code{options(htmlhelp=T)} to turn this on.
@@ -442,7 +440,7 @@ Have you changed the working directory?: see Q5.2.
 Use the `File | Change Dir' menu item to select a new working
 directory: this defaults to the last directory you loaded a file
 from. The workspace is saved in the working directory. You can also
-save a snapshot of the workspace from the `Save Image' menu item.
+save a snapshot of the workspace from the `Save Workspace' menu item.
 
 
 @node Can I load workspaces saved under Unix/GNU-Linux?,  , How do I store my workspace in a different place?, Workspaces
@@ -484,9 +482,9 @@ Nineteen fonts are specified (as 1 to 19) by default: you can add to these
 @section I don't see characters with accents at the R console, for example in ?text.
 
 You need to specify a font in Rconsole (see Q4.2) that supports latin1
-encoding. The default, Courier New, does on our systems, as does FixedSys.
-This may be a problem in other locales, especially for non-Western European
-languages.
+encoding. The default, @code{Courier New}, does on our systems, as does
+@code{FixedSys}.  This may be a problem in other locales, especially for
+non-Western European languages.
 
 @node The output to the console seems to be delayed, Long lines seem to be truncated., I don't see characters with accents at the R console, The R Console and Fonts
 @section When using Rgui the output to the console seems to be delayed.
@@ -610,7 +608,7 @@ the @code{cygwin gdb} was able to catch but which terminated the
 
 If you have an X server available on the PC, there is a version of
 @code{DDD} available that runs under the cygwin emulation layer (follow
-the links at @uref{http://sourceware.cygnus.com/cygwin}) and provides a
+the links at @uref{http://sources.redhat.com/cygwin}) and provides a
 graphical user interface to @code{gdb}.  Another (Windows-native) GUI
 for @code{gdb} is @code{Insight}, part of the latest @code{cygwin}
 version of @code{gdb}
@@ -628,12 +626,10 @@ You need to do two things:
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 @file{X.cc} contains your C++ code, and @file{X_main.cc} is the wrapper,
 as in the example in `@emph{Writing R Extensions}'. Then build the DLL by
-(@code{gcc-2.95.x})
+(@code{gcc-2.95})
 
 @example
-g++ -c X.cc X_main.cc
-dlltool --export-all-symbols --output-def X.def X_main.o
-dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
+.../bin/Rcmd SHLIB X.cc X_main.cc
 @end example
 @noindent
 or (VC++, which requires extension @code{.cpp})
@@ -653,8 +649,13 @@ and call the entry point(s) in @code{X_R}, such as @code{X_main}.
 Construction of static variables will occur when the DLL is loaded, and
 destruction when the DLL is unloaded, usually when R terminates.
 
-Note that you may not see the messages from this example in the GUI
+Note that you will not see the messages from this example in the GUI
 console: see the next section.
+
+This example is in package @code{cxx_0.0-0.tar.gz} in the
+@file{src/contrib/Devel} section on CRAN, and that can be compiled as
+package in the usual way on Windows.
+
 
 @node  The output from my C code disappears., The output from my Fortran code disappears., How do I include C++ code?, Building from Source
 @section  The output from my C code disappears. Why?

@@ -38,6 +38,7 @@
 #include "rui.h"
 #include "opt.h"
 #include "Rversion.h"
+#include "getline/getline.h"  /* for gl_load/savehistory */
 
 #define TRACERUI(a)
 
@@ -51,8 +52,8 @@ static window RFrame;
 #endif
 extern int ConsoleAcceptCmd;
 static menubar RMenuBar;
-static menuitem msource, mdisplay, mload, msave, msavehistory, mpaste, mcopy, 
-    mcopypaste, mlazy, mconfig,
+static menuitem msource, mdisplay, mload, msave, mloadhistory,
+    msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, 
     mmanext, mapropos, mhelpstart, mFAQ, mrwFAQ;
 static int lmanintro, lmanref, lmanext;
@@ -140,17 +141,31 @@ static void menusaveimage(control m)
     }
 }
 
+static void menuloadhistory(control m)
+{
+    char *fn;
+
+    if (!ConsoleAcceptCmd) return;
+    setuserfilter("All files (*.*)\0*.*\0\0");
+    fn = askfilename("Load history from", R_HistoryFile);
+    show(RConsole);
+    if (fn) {
+	fixslash(fn);
+	gl_loadhistory(fn);
+    }
+}
+
 static void menusavehistory(control m)
 {
     char *fn;
 
     if (!ConsoleAcceptCmd) return;
     setuserfilter("All files (*.*)\0*.*\0\0");
-    fn = askfilesave("Save history in", ".Rhistory");
+    fn = askfilesave("Save history in", R_HistoryFile);
     show(RConsole);
     if (fn) {
 	fixslash(fn);
-	savehistory(RConsole, fn);
+	gl_savehistory(fn);
     }
 }
 
@@ -648,8 +663,10 @@ int setupui()
     MCHECK(msource = newmenuitem("Source R code", 0, menusource));
     MCHECK(mdisplay = newmenuitem("Display file", 0, menudisplay));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mload = newmenuitem("Load Image", 0, menuloadimage));
-    MCHECK(msave = newmenuitem("Save Image", 0, menusaveimage));
+    MCHECK(mload = newmenuitem("Load Workspace", 0, menuloadimage));
+    MCHECK(msave = newmenuitem("Save Workspace", 0, menusaveimage));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mloadhistory = newmenuitem("Load History", 0, menuloadhistory));
     MCHECK(msavehistory = newmenuitem("Save History", 0, menusavehistory));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("Change dir", 0, menuchangedir));
@@ -709,7 +726,8 @@ int setupui()
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("About", 0, menuabout));
     consolesetbrk(RConsole, menukill, ESC, 0);
-    readhistory(RConsole, ".Rhistory");
+    gl_hist_init(R_HistorySize, 0);
+    if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
     show(RConsole);
     return 1;
 }

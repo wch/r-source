@@ -23,7 +23,8 @@ all(\dots, na.rm = FALSE)
   If \code{x} consists of a mix of \code{TRUE} and \code{NA} values,
   then value is \code{NA}.
 }
-\seealso{\code{\link{stopifnot}(*)} which is an \code{all(*)}
+\seealso{\code{\link{any}}, the ``complement'' of \code{all}, and
+  \code{\link{stopifnot}(*)} which is an \code{all(*)}
   ``insurance''.
 }
 \examples{

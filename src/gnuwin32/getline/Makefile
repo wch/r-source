@@ -1,6 +1,6 @@
 include ../MkRules
 
-CFLAGS=-DWin32 -DHIST_SIZE=512
+CFLAGS=-DWin32
 LINKFLAGS=-s
 
 

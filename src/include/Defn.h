@@ -398,6 +398,7 @@ extern int	R_Init		INI_as(0);	/* Do we have an image loaded */
 /* History */
 extern char*	R_HistoryFile;	/* Name of the history file */
 extern int	R_HistorySize;	/* Size of the history file */
+extern int	R_RestoreHistory;	/* restore the history file? */
 
 /* Warnings/Errors */
 extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */

@@ -6,7 +6,7 @@ sample(x, size, replace=FALSE, prob)
 \alias{sample}
 \arguments{
   \item{x}{Either a (numeric, complex, character or logical)
-    vector of more than one elements from which to
+    vector of more than one element from which to
     choose, or a positive integer.}
   \item{size}{A positive integer giving the number of items to choose.}
   \item{replace}{Should sampling be with replacement?}

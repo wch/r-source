@@ -517,7 +517,6 @@ FUNTAB R_FunTab[] =
 {"winDialogString",  do_windialogstring,   0,      11,     2,      PP_FUNCALL},
 {"winMenuAdd",  do_winmenuadd, 0,      11,     3,      PP_FUNCALL},
 {"winMenuDel",  do_winmenudel, 0,      11,     2,      PP_FUNCALL},
-{"savehistory", do_savehistory,0,      11,     1,      PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	4,	PP_FUNCALL},
@@ -588,6 +587,7 @@ FUNTAB R_FunTab[] =
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL},
 {"lapply",	do_lapply,	0,	10,	2,	PP_FUNCALL},
 {"apply",	do_apply,	0,	11,	3,	PP_FUNCALL},
+{"Rprof",	do_Rprof,	0,	11,	3,	PP_FUNCALL},
 
 /* Functions To Interact with the Operating System */
 
@@ -598,16 +598,21 @@ FUNTAB R_FunTab[] =
 {"list.files",  do_listfiles,   0,      11,     4,      PP_FUNCALL},
 {"file.exists", do_fileexists,  0,      11,     1,      PP_FUNCALL},
 {"file.choose", do_filechoose,  0,      11,     1,      PP_FUNCALL},
+{"file.info",	do_fileinfo,	0,	11,	1,	PP_FUNCALL},
+{"file.access",	do_fileaccess,	0,	11,	2,	PP_FUNCALL},
 {"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 {"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
 {"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},
 {"index.search",do_indexsearch, 0,      11,     5,      PP_FUNCALL},
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
+{"putenv",	do_putenv,	0,	11,	1,	PP_FUNCALL},
 {"getwd",	do_getwd,	0,	11,	0,	PP_FUNCALL},
 {"setwd",	do_setwd,	0,	11,	1,	PP_FUNCALL},
 {"basename",	do_basename,	0,	11,	1,	PP_FUNCALL},
 {"dirname",	do_dirname,	0,	11,	1,	PP_FUNCALL},
+{"Sys.info",	do_sysinfo,	0,	11,	0,	PP_FUNCALL},
+{"Sys.sleep",	do_syssleep,	0,	11,	1,	PP_FUNCALL},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL},
@@ -699,6 +704,10 @@ FUNTAB R_FunTab[] =
 
 {"D",		do_D,		0,	11,	2,	PP_FUNCALL},
 {"deriv.default",do_deriv,	0,	11,	4,	PP_FUNCALL},
+
+/* History manipulation */
+{"loadhistory", do_loadhistory,	0,      11,     1,      PP_FUNCALL},
+{"savehistory", do_savehistory,	0,      11,     1,      PP_FUNCALL},
 
 {NULL,		NULL,		0,	0,	0,	0},
 };

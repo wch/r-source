@@ -24,6 +24,7 @@ SOURCES = \
 	gdkrotated.c \
 	gnome-find-dialog.c \
 	gtkconsole.c \
+	savehistory.c \
 	system-choosefile.c \
 	system-console.c \
 	system-showfiles.c \
@@ -53,7 +54,7 @@ HEADERS = \
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
 
-SHLIB = $(top_builddir)/gnome/R_gnome.$(SHLIBEXT)
+SHLIB = $(top_builddir)/gnome/R_gnome.$(SHLIB_EXT)
 
 all: Makefile Makedeps R
 
@@ -73,7 +74,7 @@ R DLLs: Makefile gnomedir
 	@$(MAKE) $(SHLIB)
 
 $(SHLIB): $(OBJECTS)
-	$(SHLIBLD) $(SHLIBLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
+	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
 
 gnomedir:
 	@$(MKINSTALLDIRS) $(top_builddir)/gnome

@@ -55,12 +55,12 @@ yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
 npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
                   K=factor(K), yield=yield)
 npk.aov <- aov(yield ~ block + N*P*K, npk)
-model.tables(npk.aov, "means", se=T)
+model.tables(npk.aov, "means", se=TRUE)
 
 ## as a test, not particularly sensible statistically
 options(contrasts=c("contr.helmert", "contr.treatment"))
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
-model.tables(npk.aovE,  se=T)
+model.tables(npk.aovE,  se=TRUE)
 model.tables(npk.aovE, "means")
 }
 \keyword{models}

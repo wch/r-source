@@ -18,7 +18,7 @@ contr.treatment(n, base = 1, contrasts = TRUE)
   \item{contrasts}{a logical indicating whether contrasts should be
     computed.}
   \item{base}{an integer specifying which group is considered the
-    baseline group.}
+    baseline group. Ignored if \code{contrasts} is \code{FALSE}.}
 }
 \details{
   These functions are used for creating contrast matrices for use in
@@ -26,7 +26,7 @@ contr.treatment(n, base = 1, contrasts = TRUE)
   the resulting matrices contain contrasts which can be used for coding
   a factor with \code{n} levels.  The returned value contains the
   computed contrasts.  If the argument \code{contrasts} is \code{FALSE}
-  then an additional column of ones is prepended to the matrix.
+  then a square indicator matrix is returned.
 
   Note that as from \R version 0.62.2, \code{contr.poly} returns
   contrasts based on orthogonal (rather than raw) polynomials.
@@ -46,13 +46,14 @@ contr.treatment(n, base = 1, contrasts = TRUE)
 }
 \examples{
 (cH <- contr.helmert(4))
-apply(cH, 2,sum)# column sums are 0!
-crossprod(cH)# diagonal -- columns are orthogonal
+apply(cH, 2,sum) # column sums are 0!
+crossprod(cH) # diagonal -- columns are orthogonal
+contr.helmert(4, contrasts = FALSE) # just the 4 x 4 identity matrix
 
 (cT <- contr.treatment(5))
-all(crossprod(cT) == diag(4))# TRUE: even orthonormal
+all(crossprod(cT) == diag(4)) # TRUE: even orthonormal
 
-(cP <- contr.poly(3))# Linear and Quadratic
+(cP <- contr.poly(3)) # Linear and Quadratic
 zapsmall(crossprod(cP), dig=15) # orthonormal up to fuzz
 }
 \keyword{design}

@@ -69,7 +69,6 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
 {
     if (is.null(n <- nrow(x))) stop("'x' must be a matrix")
-    if (is.null(offset)) offset <- rep(0, NROW(y))
     p <- ncol(x)
     if (p == 0) {
         ## oops, null model
@@ -79,8 +78,10 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
     }
     ny <- NCOL(y)
     ## treat one-col matrix as vector
-    if ( is.matrix(y) && ny == 1 ) y <- drop(y)
-    y <- y - offset
+    if(is.matrix(y) && ny == 1)
+        y <- drop(y)
+    if(!is.null(offset))
+        y <- y - offset
     if (NROW(y) != n)
 	stop("incompatible dimensions")
     if(method != "qr")
@@ -102,7 +103,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
     coef <- z$coefficients
     pivot <- z$pivot
     r1 <- 1:z$rank
-    dn <- colnames(x)
+    dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
     if (is.matrix(y)) {
 	coef[-r1, ] <- NA
@@ -116,8 +117,9 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
 	names(z$effects) <- nmeffects
     }
     z$coefficients <- coef
+    r1 <- y - z$residuals ; if(!is.null(offset)) r1 <- r1 + offset
     c(z[c("coefficients", "residuals", "effects", "rank")],
-      list(fitted.values= y + offset - z$residuals, assign= attr(x, "assign"),
+      list(fitted.values = r1, assign = attr(x, "assign"),
 	   qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
 	   df.residual = n - z$rank))
 }
@@ -126,9 +128,11 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 {
     if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     ny <- NCOL(y)
-    if (is.null(offset)) offset <- rep(0, NROW(y))
     ## treat one-col matrix as vector
-    if ( is.matrix(y) && ny == 1 ) y <- drop(y)
+    if(is.matrix(y) && ny == 1)
+        y <- drop(y)
+    if(!is.null(offset))
+        y <- y - offset
     if (NROW(y) != n | length(w) != n)
 	stop("incompatible dimensions")
     if (any(w < 0 | is.na(w)))
@@ -139,7 +143,6 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     if(length(list(...)))
 	warning(paste("Extra arguments", deparse(substitute(...)),
 		      "are just disregarded."))
-    y <- y - offset
     x.asgn <- attr(x, "assign")# save
     zero.weights <- any(w == 0)
     if (zero.weights) {
@@ -176,7 +179,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     coef <- z$coefficients
     pivot <- z$pivot
     r1 <- 1:z$rank
-    dn <- colnames(x)
+    dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
     if (is.matrix(y)) {
 	coef[-r1, ] <- NA
@@ -191,7 +194,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     }
     z$coefficients <- coef
     z$residuals <- z$residuals/wts
-    z$fitted.values <- (y - z$residuals)
+    z$fitted.values <- y - z$residuals
     z$weights <- w
     if (zero.weights) {
 	coef[is.na(coef)] <- 0
@@ -199,19 +202,20 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 	if (ny > 1) {
 	    save.r[ok, ] <- z$residuals
 	    save.r[nok, ] <- y0 - f0
-	    save.f[ok, ] <- z$fitted.values + offset[ok,]
-	    save.f[nok, ] <- f0 + offset[nok,]
+	    save.f[ok, ] <- z$fitted.values
+	    save.f[nok, ] <- f0
 	}
 	else {
 	    save.r[ok] <- z$residuals
 	    save.r[nok] <- y0 - f0
-	    save.f[ok] <- z$fitted.values + offset[ok]
-	    save.f[nok] <- f0 + offset[nok]
+	    save.f[ok] <- z$fitted.values
+	    save.f[nok] <- f0
 	}
 	z$residuals <- save.r
 	z$fitted.values <- save.f
 	z$weights <- save.w
-    } else
+    }
+    if(!is.null(offset))
         z$fitted.values <- z$fitted.values + offset
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
 	  "weights", "rank")],

@@ -16,7 +16,7 @@ DISTFILES = $(INSTFILES) \
 	Makeconf.in Makefile.in \
 	aclocal.m4 config.site configure configure.in \
 	date-stamp
-SUBDIRS = src afm demos doc etc tests tools
+SUBDIRS = src afm demos doc etc share tests tools
 
 GZIP = --best
 
@@ -40,7 +40,7 @@ R:
 	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
 	  done; \
 	fi
-	@for d in tools afm doc etc src demos; do \
+	@for d in tools afm doc etc share src demos; do \
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
 	@if [ ! -f src/library/stamp-docs ]; then \
@@ -52,7 +52,7 @@ docs help html latex examples:: FORCE
 FORCE:
 
 install: installdirs
-	@for d in afm demos doc etc; do \
+	@for d in afm demos doc etc share; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(INSTFILES); do \
@@ -63,11 +63,11 @@ install: installdirs
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(rhome)/bin/R
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
-	@for f in `ls bin/*.$(SHLIBEXT)`; do \
+	@for f in `ls bin/*.$(SHLIB_EXT)`; do \
 	  $(INSTALL_PROGRAM) $${f} $(rhome)/bin; \
 	done
-	@if test -n "$(GNOMEUI_LIBS)"; then \
-	  $(INSTALL_PROGRAM) gnome/R_gnome.$(SHLIBEXT) $(rhome)/gnome; \
+	@if test -f gnome/R_gnome.$(SHLIB_EXT); then \
+	  $(INSTALL_PROGRAM) gnome/R_gnome.$(SHLIB_EXT) $(rhome)/gnome; \
 	fi
 	@for f in `find bin -type f -print \
 	             | grep -v '^bin/R$$' \
@@ -118,7 +118,7 @@ uninstall:
 	@for f in $(INSTFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
-	@for d in afm demos doc etc; do \
+	@for d in afm demos doc etc share; do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
 

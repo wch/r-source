@@ -16,6 +16,8 @@ print.anova.glm(.)
 print.tabular(.)
 print.plot(.)
 save.plot(.)
+provide(package)
+.Provided
 }
 %------ PLEASE: put \alias{.} here for  EACH !
 \alias{category}
@@ -30,6 +32,8 @@ save.plot(.)
 \alias{save.plot}
 \alias{Version}
 \alias{system.test}
+\alias{provide}
+\alias{.Provided}
 %
 \description{
   The functions listed here are no longer part of \R as they are not
@@ -45,6 +49,10 @@ save.plot(.)
   The new function \code{dev.print()} should now be used for saving
   plots to a file or printing them.
 
+  \code{provide} and its object \code{.Provided} have been removed.
+  They were never used for their intended purpose, to allow one
+  package to subsume another.
+  
   \code{.Defunct} is the function to which defunct functions are set.
 }
 \seealso{\code{\link{Deprecated}}}

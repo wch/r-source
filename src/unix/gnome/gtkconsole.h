@@ -100,6 +100,7 @@ void gtk_console_write(GtkConsole *object, gchar *buf, guint buf_len);
 void gtk_console_flush(GtkConsole *object);
 
 /* History functions */
+void gtk_console_clear_history(GtkConsole *object);
 gboolean gtk_console_save_history(GtkConsole *object, gchar *filename, guint maxitems, gchar *errmsg);
 gboolean gtk_console_restore_history(GtkConsole *object, gchar *filename, guint maxitems, gchar *errmsg);
 

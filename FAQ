@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-1, 2000/06/17
+Version 1.1-7, 2000-08-02
 Kurt Hornik
 
 
@@ -322,7 +322,7 @@ distribution is available.  We hope that this will change soon.
 2.6 Are there Unix binaries for R?
 ==================================
 
-   The `bin/linux' directory of a CRAN site contains Debian 2.1/2.2/2.3
+   The `bin/linux' directory of a CRAN site contains Debian 2.2/2.3
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
 sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and Vin
@@ -466,8 +466,8 @@ include information on the system and version of R being used.  See *Note R
 Bugs:: for more details.
 
    Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the `doc/mail/mail.html' file in CRAN.  An HTML
-archive of the lists are available via
+in a monthly schedule via the `doc/html/mail.html' file in CRAN.
+Searchable archives of the lists are available via
 `http://www.ens.gu.edu.au/robertk/R/'.
 
    The R Core Team can be reached at <r-core@lists.r-project.org> for
@@ -488,6 +488,7 @@ contributed extensions, documentation for R, and binaries.
 being mirrored daily at
 
      `http://cran.dk.r-project.org/'  (Denmark)
+     `http://cran.hu.r-project.org/'  (Hungary)
      `http://cran.it.r-project.org/'  (Italy)
      `http://cran.ch.r-project.org/'  (Switzerland)
      `http://cran.uk.r-project.org/'  (United Kingdom)
@@ -1002,6 +1003,9 @@ works, was published in the Journal of Statistical Software
      Functions and datasets from the main package of Venables and Ripley,
      "Modern Applied Statistics with S-PLUS".  Contained in the `VR' bundle.
 
+*Matrix*
+     A Matrix package.
+
 *NISTnls*
      A set of test nonlinear least squares examples from NIST, the U.S.
      National Institute for Standards and Technology.
@@ -1238,11 +1242,18 @@ these a try, of course.  This area of CRAN currently contains
 *HTML*
      Functions for exporting R objects as HTML tables.
 
+*Java*
+     An interface from R to Java to create and call Java objects and
+     methods.
+
 *RMySQL*
      An interface between R and the MySQL database system.
 
 *RPgSQL*
      An interface between R and the PostgreSQL database system.
+
+*Rstreams*
+     Binary file stream support functions.
 
 *cmprsk*
      Estimation, testing and regression modeling of subdistribution
@@ -1256,6 +1267,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *dse*
      Multivariate time series.
+
+*exactDistr*
+     Exact distributions for rank tests.
 
 *foreign*
      Functions for reading data stored by statistical software like Minitab,
@@ -1271,6 +1285,9 @@ these a try, of course.  This area of CRAN currently contains
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
+
+*netCDF*
+     Read data from netCDF files.
 
 *syskern*
      Functions for writing code that is OS and R/S independent.

@@ -113,7 +113,7 @@ char *R_PromptString(int browselevel, int type)
 
 static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 {
-    int c, status;
+    int c, status, browsevalue;
     char *bufp, buf[1024];
 
     R_IoBufferWriteReset(&R_ConsoleIob);
@@ -164,8 +164,15 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
 	    R_IoBufferReadReset(&R_ConsoleIob);
 	    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status);
-	    if (browselevel && ParseBrowser(R_CurrentExpr, rho))
-		return;
+	    if (browselevel) {
+		browsevalue = ParseBrowser(R_CurrentExpr, rho);
+		if(browsevalue == 1 )
+		    return;
+		if(browsevalue == 2 ) {
+		    R_IoBufferWriteReset(&R_ConsoleIob);
+		    break;
+		}
+	    }		    
 	    R_Visible = 0;
 	    R_EvalDepth = 0;
 	    PROTECT(R_CurrentExpr);
@@ -469,6 +476,23 @@ void mainloop(void)
     end_Rmainloop();
 }
 
+/*this functionality now appears in 3
+  places-jump_to_toplevel/profile/here */
+
+static void printwhere(void)
+{
+  RCNTXT *cptr;
+  int lct = 1;
+
+  for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+    if ((cptr->callflag & CTXT_FUNCTION) && 
+	(TYPEOF(cptr->call) == LANGSXP)) {
+	Rprintf("where %d: ",lct++);
+	PrintValue(cptr->call);
+    }
+  }
+  Rprintf("\n");
+}
 
 static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
@@ -489,6 +513,11 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
 	    R_BrowseLevel = 0;
             LONGJMP(R_Toplevel.cjmpbuf, CTXT_TOPLEVEL);
+	}
+	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {
+	    printwhere();
+	    SET_DEBUG(rho, 1);
+	    rval=2;
 	}
     }
     return rval;

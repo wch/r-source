@@ -4,8 +4,8 @@
 \alias{chickwts}
 \format{A data frame with 71 observations on 2 variables.
   \describe{
-    \item{weight:}{a numeric variable giving the chick weight.}
-    \item{feed:}{a factor giving the feed type.}
+    \item{weight}{a numeric variable giving the chick weight.}
+    \item{feed}{a factor giving the feed type.}
   }
 }
 \source{

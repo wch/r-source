@@ -12,9 +12,85 @@
 NEW FEATURES
 
     o   hclust() takes new argument `members' allowing dissimilarity
-	matrices both for singletons (as until now) and clusters. 
+	matrices both for singletons (as until now) and clusters.
+
+    o	hist() now returns a "histogram" object and calls the new
+	function plot.histogram() for plotting.
+	It now also allows character labels.
 
     o	The more recent GNU regex from grep-2.4.2 is used.
+
+    o   `where' command added to debug.
+
+    o   inherits() is now an internal function and compatible with S.
+
+    o   R CMD build and check have been completely re-written in perl. In
+        addition to running examples, check now also checks the directory
+        structure and control files, makes a temporary installation and
+        runs LaTeX on the help pages. Build has been reduced to
+        cleaning, rewriting indices and creating tar files.
+
+	The same files of Perl code are now also used under Windows.
+
+    o   Add-ons for utilities like perl or LaTeX have now a central
+        place in $R_HOME/share. Migration of existing files might take
+        a while, though.
+
+    o   --nsize up to 50M (2Gb on 64-bit Solaris) allowed.
+
+    o	The commands history can be loaded with loadhistory(), saved
+	with savehistory() and displayed with history(), under Windows
+	and under Unix using the readline or GNOME interfaces.
+
+    o	if(*) now gives a more intelligible error message
+        when "*" cannot be coerced to logical.
+
+    o	New function Rprof() for profiling R expressions under Unix.
+	Configure with --enable-R-profiling to make this operational.
+
+    o	New functions file.access() and file.info() for information on
+	files on the user's file systems.
+
+    o	New convenience function file.copy().
+
+    o	New function Sys.info() for platform, host and user information.
+
+    o	New function Sys.sleep() to suspend execution for a while.
+
+    o	Sys.getenv() becomes the preferred name for getenv(), which is
+	now deprecated.
+
+    o	New function Sys.putenv() to set environment variables.
+
+    o	Formerly deprecated function provide() is now defunct.
+
+    o	New command-line option --no-restore-history implied by --vanilla.
+
+    o	Command-line option --restore is now --no-restore-data and
+	--no-restore implies --no-restory-* (currently `data' and
+	`history').
+
+    o	The `mode' argument of exists() and get() is interpreted
+	as mode(x) rather than typeof(x), following S.
+
+    o	Configure/build variables MAINLD and MAINLDFLAGS are renamed to
+	MAIN_LD and MAIN_LDFLAGS for consistency with other MAIN_* vars,
+	simlarly for SHLIBLD and SHLIBLDFLAGS.
+
+    o	Much improved support for C++ code in add-on packages under Unix.
+	New configure/build variables SHLIB_CXXLD and SHLIB_CXXLDFLAGS
+	for specifying the command and flags needed for building shared
+	libraries containing objects from a C++ compiler.
+	Configure tries to get these right in typical cases (GNU tools
+	and/or common platforms).
+	C++ source suffixes `.cpp' and `.C' are now recognized in
+	adddition to `.cc'.
+
+    o	save(, oldstyle=TRUE) is now deprecated, and will be removed
+	by 1.3.0.
+
+    o	.Platform has new component "endian", useful for binary file
+	manipulations.
 
 
 
@@ -23,6 +99,91 @@ NEW FEATURES
 	*	       1.1 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 1.1.1
+
+
+NEW FEATURES
+
+    o	data(), example() and help() now search the loaded packages, then
+	in their .lib.loc argument, the latter as pre-0.99.0.  See
+	their help pages for the precise details.
+
+    o	help() has a new argument `try.all.packages' set by the option
+	"help.try.all.packages". If help is not found in the normal
+	path and this is TRUE then a search is made of all packages 
+	for possible matches.
+
+
+BUG FIXES
+
+    o	data() now works correctly with data-only packages.
+
+    o	Standalone Mathlib can now be made if builddir = srcdir
+	(working around an undocumented autoconf `feature').
+
+    o	Check for pre-1.1.0 saved object .Postscript.options in postscript().
+
+    o	More stringent checks on the arguments to dataentry().
+
+    o   Specifying xlab as an expression now works again.
+
+    o   dev2bitmap() works again.
+
+    o   Numerous uses of `F' and `T' replaced by `FALSE' and `TRUE'.
+
+    o	bxp() now extends `ylim' properly when notch=TRUE (and a
+	notch is more extreme than other stats).
+	Also, varwidth is okay again, see example(split).
+
+    o   Making manuals without making R first now works.
+
+    o	princomp() now works when some eigenvalues are tiny negative
+	values (which are treated as zero).
+
+    o   SearchEngine.html was not installed when builddir != srcdir.
+
+    o	lm.{w}fit(x,y,..) now work when x has no column names.
+	These functions no longer add and subtract n zeros when there's no
+	offset.  They are now documented somewhat.
+
+    o   Some HTML files used src="R.css" instead of href="R.css"
+        causing some browsers to ignore the style sheet. R.css now
+	passes the w3c CSS validator and gives the intended results
+	with Internet Explorer.
+
+    o	The data editor no longer crashes when entries contain more than
+	45 characters, and works correctly if the field width is
+	larger than the window width.
+
+    o	Recording plots used to ignore graphics events before the last
+	replay.
+
+    o	plot(), points(), etc now give warnings and error for invalid
+	`type' arguments.
+
+    o	matplot() now allows the same `type's as plot().
+
+    o	dev.print() and dev.copy2eps() now work when called from a function.
+
+    o	anova.glmlist works correctly with decreasing models and
+	test="F" now gets the correct residual df.
+
+    o	Functions created (not just edited) with fix() now get
+	environment .GlobalEnv not the body of fix.
+
+    o	Rdconv was ignoring OS-specific parts of the files with some
+	Perl versions. (This did not affect installing packages.)
+
+    o	R CMD check  did not run more than one specific test.
+
+    o	keyword2html omitted items when changing up a level, so 
+	the HTML search engine keyword list was missing `data' and
+	`utilities', for example.
+
+    o	aov() with multiple strata was setting some spurious options.
+
 
 
 		CHANGES IN R VERSION 1.1.0
@@ -43,7 +204,7 @@ NEW FEATURES
 	experimental so don't go churning out thousands of lines of
 	GUI code and then blame us for changing the API later on. It does
 	not currently work with GNOME because of event loop differences.
-	See demo(tkttest) and demo(tkdensity). 
+	See demo(tkttest) and demo(tkdensity).
 
     o	Internally using global R_Expressions [getOption("expressions")]
 	dramatically speeds up eval.c.

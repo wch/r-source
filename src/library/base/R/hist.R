@@ -2,93 +2,124 @@ hist <- function(x, ...) UseMethod("hist")
 
 hist.default <-
     function (x, breaks, freq= NULL, probability = !freq, include.lowest= TRUE,
-	      right=TRUE, col = NULL, border = par("fg"),
-	      main = paste("Histogram of" , deparse(substitute(x))),
-	      xlim = range(breaks), ylim = range(y, 0),
-	      xlab = deparse(substitute(x)), ylab,
-	      axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL, ...)
+              right= TRUE, col = NULL, border = par("fg"),
+              main = paste("Histogram of" , xname),
+              xlim = range(breaks), ylim = NULL,
+              xlab = xname, ylab,
+              axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL, ...)
 {
     if (!is.numeric(x))
-	stop("hist: x must be numeric")
-    main # eval() now: defeat lazy eval
-    xlab
+        stop("`x' must be numeric")
+    xname <- deparse(substitute(x))
     n <- length(x <- x[!is.na(x)])
     use.br <- !missing(breaks)
     if(use.br) {
-	if(!missing(nclass))
-	    warning("`nclass' not used when `breaks' specified")
+        if(!missing(nclass))
+            warning("`nclass' not used when `breaks' specified")
     }
     else if(!is.null(nclass) && length(nclass) == 1)
-	breaks <- nclass
+        breaks <- nclass
     use.br <- use.br && (nB <- length(breaks)) > 1
     if(use.br)
-	breaks <- sort(breaks)
-    else { # construct vector of breaks
-	rx <- range(x)
-	nnb <-
-	    if(missing(breaks)) 1 + log2(n)
-	    else { # breaks = `nclass'
-		if (is.na(breaks) | breaks < 2)
-		    stop("invalid number of breaks")
-		breaks
-	    }
-	breaks <- pretty (rx, n = nnb, min.n=1, eps.corr = 2)
-	nB <- length(breaks)
-	if(nB <= 1) { ##-- Impossible !
-	    stop(paste("hist.default: pretty() error, breaks=",format(breaks)))
-	}
+        breaks <- sort(breaks)
+    else {                              # construct vector of breaks
+        rx <- range(x)
+        nnb <-
+            if(missing(breaks)) 1 + log2(n)
+            else {                      # breaks = `nclass'
+                if (is.na(breaks) | breaks < 2)
+                    stop("invalid number of breaks")
+                breaks
+            }
+        breaks <- pretty (rx, n = nnb, min.n=1, eps.corr = 2)
+        nB <- length(breaks)
+        if(nB <= 1) ##-- Impossible !
+            stop(paste("hist.default: pretty() error, breaks=",format(breaks)))
     }
     storage.mode(x) <- "double"
     storage.mode(breaks) <- "double"
     counts <- .C("bincount",
-		 x,
-		 n,
-		 breaks,
-		 nB,
-		 counts = integer(nB - 1),
-		 right	= as.logical(right),
-		 include= as.logical(include.lowest),
-		 NAOK = FALSE, DUP = FALSE, PACKAGE = "base") $counts
+                 x,
+                 n,
+                 breaks,
+                 nB,
+                 counts = integer(nB - 1),
+                 right = as.logical(right),
+                 include= as.logical(include.lowest),
+                 NAOK = FALSE, DUP = FALSE, PACKAGE = "base") $counts
     if (any(counts < 0))
-	stop("negative `counts'. Internal Error in C-code for \"bincount\"")
+        stop("negative `counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
-	stop("some `x' not counted; maybe `breaks' do not span range of `x'")
+        stop("some `x' not counted; maybe `breaks' do not span range of `x'")
     h <- diff(breaks)
     if (!use.br && any(h <= 0))
-	stop("not strictly increasing `breaks'.")
+        stop("not strictly increasing `breaks'.")
     if (is.null(freq)) {
-	freq <- if(!missing(probability))
-	    !as.logical(probability)
-	else if(use.br) {
-	    ##-- Do frequencies if breaks are evenly spaced
-	    max(h)-min(h) < 1e-7 * mean(h)
-	} else TRUE
+        freq <- if(!missing(probability))
+            !as.logical(probability)
+        else if(use.br) {
+            ##-- Do frequencies if breaks are evenly spaced
+            max(h)-min(h) < 1e-7 * mean(h)
+        } else TRUE
     } else if(!missing(probability) && any(probability == freq))
-	stop("`probability is an alias for `!freq', however they differ.")
+        stop("`probability' is an alias for `!freq', however they differ.")
     intensities <- counts/(n*h)
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
-    y <- if (freq) counts else intensities
-    r <- list(breaks = breaks, counts = counts,
-	      intensities = intensities, mids = mids)
+    equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
+    r <- structure(list(breaks = breaks, counts = counts,
+                        intensities = intensities, mids = mids,
+                        xname = xname, equidist = equidist),
+                   class="histogram")
     if (plot) {
-	plot.new()
-	plot.window(xlim, ylim, "") #-> ylim's default from 'y'
-	if (missing(ylab))
-	    ylab <- paste(if(!freq)"Relative ", "Frequency", sep="")
-	if(freq && use.br && max(h)-min(h) > 1e-7 * mean(h))
-	    warning("the AREAS in the plot are wrong -- maybe use `freq=FALSE'")
-	title(main = main, xlab = xlab, ylab = ylab, ...)
-	if(axes) {
-	    axis(1, ...)
-	    axis(2, ...)
-	}
-	rect(breaks[-nB], 0, breaks[-1], y,
-	     col = col, border = border)
-	if(labels)
-	    text(mids, y,
-		 labels = if(freq) counts else round(intensities,3),
-		 adj = c(0.5, -0.5))
-	invisible(r)
+##-         if(missing(ylim))
+##-             y <- if (freq) .Alias(counts) else .Alias(intensities)
+        plot(r, freq = freq, col = col, border = border,
+             main = main, xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
+             axes = axes, labels = labels, ...)
+        invisible(r)
     }
     else r
 }
+
+plot.histogram <-
+    function (x, freq = equidist, col = NULL, border = par("fg"), lty = NULL,
+              main = paste("Histogram of", x$xname),
+              xlim = range(x$breaks), ylim = NULL,
+              xlab = x$xname, ylab,
+              axes = TRUE, labels = FALSE, add = FALSE, ...)
+{
+    equidist <-
+        if(is.logical(x$equidist)) x$equidist
+        else { h <- diff(x$breaks) ; diff(range(h)) < 1e-7 * mean(h) }
+    if(freq && !equidist)
+        warning("the AREAS in the plot are wrong -- rather use `freq=FALSE'!")
+
+    y <- if (freq) x$counts else x$intensities
+    nB <- length(x$breaks)
+    if(is.null(y) || 0 == nB) stop("`x' is wrongly structured")
+
+    if(!add) {
+        if(is.null(ylim))
+            ylim <- range(y, 0)
+        if (missing(ylab))
+            ylab <- paste(if(!freq)"Relative ", "Frequency", sep="")
+        plot.new()
+        plot.window(xlim, ylim, "")     #-> ylim's default from 'y'
+        title(main = main, xlab = xlab, ylab = ylab, ...)
+        if(axes) {
+            axis(1, ...)
+            axis(2, ...)
+        }
+    }
+    rect(x$breaks[-nB], 0, x$breaks[-1], y,
+         col = col, border = border, lty = lty)
+    if((logl <- is.logical(labels) && labels) || is.character(labels))
+        text(x$mids, y,
+             labels = if(logl) {
+                 if(freq) x$counts else round(x$intensities,3)
+             } else labels,
+             adj = c(0.5, -0.5))
+    invisible()
+}
+
+lines.histogram <- function(x, ...) plot.histogram(x, ..., add = TRUE)

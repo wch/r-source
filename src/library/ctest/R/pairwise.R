@@ -8,8 +8,8 @@ pairwise.t.test <- function(x, g, p.adjust.method=p.adjust.methods, pool.sd = TR
     if (pool.sd)
     {
         METHOD <- "t tests with pooled SD"
-        xbar <- tapply(x, g, mean, na.rm = T)
-        s <- tapply(x, g, sd, na.rm = T)
+        xbar <- tapply(x, g, mean, na.rm = TRUE)
+        s <- tapply(x, g, sd, na.rm = TRUE)
         n <- tapply(!is.na(x), g, sum)
         degf <- n - 1
         total.degf <- sum(degf)

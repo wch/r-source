@@ -1,14 +1,14 @@
-\name{getenv}
+\name{Sys.getenv}
 \title{Get Environment Variables}
 \usage{
-getenv(x)
+Sys.getenv(x)
 }
-\alias{getenv}
+\alias{Sys.getenv}
 \arguments{
   \item{x}{a character vector, or missing}
 }
 \description{
-  \code{getenv} obtains the values of the environment variables named by
+  \code{Sys.getenv} obtains the values of the environment variables named by
   \code{x}.
 }
 \value{
@@ -17,12 +17,18 @@ getenv(x)
   environment variable named by the corresponding component of \code{x}
   (or \code{""} if no environment variable with that name was found).
 
-  On some platforms \code{getenv()} will return a named vector giving
+  On most platforms \code{Sys.getenv()} will return a named vector giving
   the values of all the environment variables.
 }
-\seealso{\code{\link{getwd}} for the working directory.}
+\note{
+  \code{getenv} is an alias for backwards compatibility.
+}
+\seealso{
+  \code{\link{Sys.putenv}},
+  \code{\link{getwd}} for the working directory.
+}
 \examples{
-getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
+Sys.getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 }
 \keyword{environment}
 \keyword{utilities}

@@ -4,7 +4,7 @@
 \title{Restart an Expression}
 \usage{
 restart(on = TRUE)
-try(expr, first = T)
+try(expr, first = TRUE)
 }
 \arguments{
   \item{on}{if true a jump point is set; if false the jump point is removed}
@@ -45,5 +45,23 @@ options(show.error.messages = FALSE)
 try(log("a"))
 print(.Last.value)
 options(show.error.messages = TRUE)
+
+## run a simulation, keep only results that worked.
+set.seed(123)
+x <- rnorm(50)
+doit <- function(x)
+{
+    x <- sample(x, replace=TRUE)
+    if(length(unique(x)) > 30) mean(x)
+    else stop("too few unique points")
+}
+options(show.error.messages = FALSE)
+## alternative 1
+res <- lapply(1:100, function(i) try(doit(x)))
+## alternative 2
+\dontrun{res <- vector("list", 100)
+for(i in 1:100) res[[i]] <- try(doit(x))}
+options(show.error.messages = TRUE)
+unlist(res[sapply(res, function(x) !inherits(x, "try-error"))])
 }
 \keyword{programming}

@@ -45,6 +45,12 @@ extern void R_ProcessEvents();
 #endif
 
 #ifdef R_PROFILING
+
+/* BDR 2000/7/15
+   Profiling is now controlled by the R function Rprof(), and should
+   have negligible cost when not enabled.
+*/
+
 /* A simple mechanism for profiling R code.  When R_PROFILING is
    enabled, eval will write out the call stack every PROFSAMPLE
    microseconds using the SIGPROF handler triggered by timer signals
@@ -84,44 +90,91 @@ extern void R_ProcessEvents();
 #include <signal.h>
 
 FILE *R_ProfileOutfile = NULL;
-#define PROFOUTNAME "R.profout"
-
-#define PROFSAMPLE 20000
+static int R_Profiling = 0;
 
 static void doprof(int sig)
 {
-  RCNTXT *cptr;
-  int newline = 0;
-  for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
-    if (((cptr->callflag & CTXT_FUNCTION) || (cptr->callflag & CTXT_BUILTIN))
-	&& TYPEOF(cptr->call) == LANGSXP) {
-      SEXP fun = CAR(cptr->call);
-      if (! newline)
-	newline = 1;
-      fprintf(R_ProfileOutfile, "\"%s\" ",
-	      TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) : "<Anonymous>");
+    RCNTXT *cptr;
+    int newline = 0;
+    for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+	if (((cptr->callflag & CTXT_FUNCTION) || (cptr->callflag & CTXT_BUILTIN))
+	    && TYPEOF(cptr->call) == LANGSXP) {
+	    SEXP fun = CAR(cptr->call);
+	    if (! newline)
+		newline = 1;
+	    fprintf(R_ProfileOutfile, "\"%s\" ",
+		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) : "<Anonymous>");
+	}
     }
-  }
-  if (newline)
-    fprintf(R_ProfileOutfile, "\n");
+    if (newline)
+	fprintf(R_ProfileOutfile, "\n");
+    signal(SIGPROF, doprof);
 }
 
-static void R_InitProfiling(void)
+static void doprof_null(int sig)
+{
+    signal(SIGPROF, doprof_null);
+}
+
+static void R_EndProfiling()
+{
+    struct itimerval itv;
+
+    itv.it_interval.tv_sec = 0;
+    itv.it_interval.tv_usec = 0;
+    itv.it_value.tv_sec = 0;
+    itv.it_value.tv_usec = 0;
+    setitimer(ITIMER_PROF, &itv, NULL);
+    signal(SIGPROF, doprof_null);
+    fclose(R_ProfileOutfile);
+    R_ProfileOutfile = NULL;
+    R_Profiling = 0;
+}
+
+static void R_InitProfiling(char * filename, int append, double dinterval)
 {	
-  struct itimerval itv;
+    struct itimerval itv;
+    int interval = 1e6 * dinterval+0.5;
 
-  R_ProfileOutfile = fopen(PROFOUTNAME, "w");
-  if (R_ProfileOutfile == NULL)
-    R_Suicide("can't open profile file");
-  fprintf(R_ProfileOutfile, "%d\n", PROFSAMPLE);
-  signal(SIGPROF, doprof);
+    if(R_ProfileOutfile != NULL) R_EndProfiling();
+    R_ProfileOutfile = fopen(filename, append ? "a" : "w");
+    if (R_ProfileOutfile == NULL)
+	R_Suicide("can't open profile file");
+    fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
+    signal(SIGPROF, doprof);
 
-  itv.it_interval.tv_sec = 0;
-  itv.it_interval.tv_usec = PROFSAMPLE;
-  itv.it_value.tv_sec = 0;
-  itv.it_value.tv_usec = PROFSAMPLE;
-  if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
-    R_Suicide("setting profile timer failed");
+    itv.it_interval.tv_sec = 0;
+    itv.it_interval.tv_usec = interval;
+    itv.it_value.tv_sec = 0;
+    itv.it_value.tv_usec = interval;
+    if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
+	R_Suicide("setting profile timer failed");
+    R_Profiling = 1;
+}
+
+SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    char *filename;
+    int append_mode;
+    double dinterval;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
+	errorcall(call, "invalid filename argument");
+    append_mode = asLogical(CADR(args));
+    dinterval = asReal(CADDR(args));
+    filename = CHAR(STRING(CAR(args))[0]);
+    if (strlen(filename))
+	R_InitProfiling(filename, append_mode, dinterval);
+    else
+	R_EndProfiling();
+    return R_NilValue;
+}
+#else
+SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("R profiling is not available on this system");
+    return R_NilValue; /* -Wall */
 }
 #endif
 
@@ -240,8 +293,8 @@ SEXP eval(SEXP e, SEXP rho)
 #endif
     case LANGSXP:
 #ifdef R_PROFILING
-	if (R_ProfileOutfile == NULL)
-	    R_InitProfiling();
+/*	if (R_ProfileOutfile == NULL)
+	    R_InitProfiling(PROFOUTNAME, 0); */
 #endif
 	if (TYPEOF(CAR(e)) == SYMSXP)
 	    PROTECT(op = findFun(CAR(e), rho));
@@ -265,16 +318,23 @@ SEXP eval(SEXP e, SEXP rho)
 	else if (TYPEOF(op) == BUILTINSXP) {
 	    int save = R_PPStackTop;
 #ifdef R_PROFILING
-	    RCNTXT cntxt;
-	    begincontext(&cntxt, CTXT_BUILTIN, e,
-			 R_NilValue, R_NilValue, R_NilValue);
+	    if (R_Profiling) {
+		RCNTXT cntxt;
+		begincontext(&cntxt, CTXT_BUILTIN, e,
+			     R_NilValue, R_NilValue, R_NilValue);
+		PROTECT(tmp = evalList(CDR(e), rho));
+		R_Visible = 1 - PRIMPRINT(op);
+		tmp = PRIMFUN(op) (e, op, tmp, rho);
+		UNPROTECT(1);
+		endcontext(&cntxt);
+	    } else {
 #endif
-	    PROTECT(tmp = evalList(CDR(e), rho));
-	    R_Visible = 1 - PRIMPRINT(op);
-	    tmp = PRIMFUN(op) (e, op, tmp, rho);
-	    UNPROTECT(1);
+		PROTECT(tmp = evalList(CDR(e), rho));
+		R_Visible = 1 - PRIMPRINT(op);
+		tmp = PRIMFUN(op) (e, op, tmp, rho);
+		UNPROTECT(1);
 #ifdef R_PROFILING
-	    endcontext(&cntxt);
+	    }
 #endif
 	    if(save != R_PPStackTop) {
 		Rprintf("stack imbalance in %s, %d then %d\n",
@@ -513,9 +573,13 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
 
 SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int cond = asLogical(eval(CAR(args), rho));
-    if (cond == NA_LOGICAL)
-	errorcall(call, "missing value where logical needed");
+    SEXP Cond = eval(CAR(args), rho);
+    int cond;
+
+    if ((cond = asLogical(Cond)) == NA_LOGICAL)
+	errorcall(call, isLogical(Cond)
+		  ? "missing value where logical needed"
+		  : "argument of if(*) is not interpretable as logical");
     else if (cond)
 	return (eval(CAR(CDR(args)), rho));
     else if (length(args) > 2)
@@ -1216,7 +1280,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	expr = tmp;
     }
-    if (PRIMVAL(op)) {
+    if (PRIMVAL(op)) { /* eval.with.vis(*) : */
 	PROTECT(expr);
 	PROTECT(env = allocVector(VECSXP, 2));
 	PROTECT(encl = allocVector(STRSXP, 2));

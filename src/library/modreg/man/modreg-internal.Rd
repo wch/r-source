@@ -9,7 +9,7 @@
 \usage{
 predLoess(y, x, newx, s, weights, robust, span, degree, normalize, 
     parametric, drop.square, surface, cell, family, kd, divisor, 
-    se = F)
+    se = FALSE)
 simpleLoess(y, x, weights, span = 0.75, degree = 2, parametric = FALSE, 
     drop.square = FALSE, normalize = TRUE, statistics = "approximate", 
     surface = "interpolate", cell = 0.2, iterations = 1,

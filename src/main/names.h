@@ -53,12 +53,7 @@ SEXP do_XFig(SEXP, SEXP, SEXP, SEXP);
 
 /* Function Names */
 
-#ifdef Unix
-SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
-#endif
-
 #ifdef Win32
-SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
@@ -73,10 +68,10 @@ SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
-SEXP do_savehistory(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
+SEXP do_abline(SEXP, SEXP, SEXP, SEXP);
 SEXP do_alias(SEXP, SEXP, SEXP, SEXP);
 SEXP do_allnames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_anydf(SEXP, SEXP, SEXP, SEXP);
@@ -167,10 +162,12 @@ SEXP do_erase(SEXP, SEXP, SEXP, SEXP);
 SEXP do_External(SEXP, SEXP, SEXP, SEXP);
 SEXP do_eval(SEXP, SEXP, SEXP, SEXP);
 SEXP do_expression(SEXP, SEXP, SEXP, SEXP);
+SEXP do_fileaccess(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileappend(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filechoose(SEXP, SEXP, SEXP, SEXP);
-SEXP do_fileexists(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filecreate(SEXP, SEXP, SEXP, SEXP);
+SEXP do_fileexists(SEXP, SEXP, SEXP, SEXP);
+SEXP do_fileinfo(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileremove(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileshow(SEXP, SEXP, SEXP, SEXP);
 SEXP do_first_max(SEXP, SEXP, SEXP, SEXP);
@@ -186,6 +183,7 @@ SEXP do_gc(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gcinfo(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gctorture(SEXP, SEXP, SEXP, SEXP);
 SEXP do_get(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_geterrmessage(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getwd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_globalenv(SEXP, SEXP, SEXP, SEXP);
@@ -214,6 +212,7 @@ SEXP do_lengthgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_libfixup(SEXP, SEXP, SEXP, SEXP);
 SEXP do_listfiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_load (SEXP, SEXP, SEXP, SEXP);
+SEXP do_loadhistory(SEXP, SEXP, SEXP, SEXP);
 SEXP do_locator(SEXP, SEXP, SEXP, SEXP);
 SEXP do_log(SEXP, SEXP, SEXP, SEXP);
 SEXP do_logic(SEXP, SEXP, SEXP, SEXP);
@@ -255,24 +254,22 @@ SEXP do_parse(SEXP, SEXP, SEXP, SEXP);
 SEXP do_paste(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pause(SEXP, SEXP, SEXP, SEXP);
 SEXP do_persp(SEXP, SEXP, SEXP, SEXP);
+SEXP do_plot_new(SEXP, SEXP, SEXP, SEXP);
+SEXP do_plot_window(SEXP, SEXP, SEXP, SEXP);
+SEXP do_plot_xy(SEXP, SEXP, SEXP, SEXP);
 SEXP do_polyroot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pos2env(SEXP, SEXP, SEXP, SEXP);
 #ifdef HAVE_TIMES
 SEXP do_proctime(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gctime(SEXP, SEXP, SEXP, SEXP);
 #endif
-SEXP do_abline(SEXP, SEXP, SEXP, SEXP);
-SEXP do_plot_xy(SEXP, SEXP, SEXP, SEXP);
-SEXP do_plot_new(SEXP, SEXP, SEXP, SEXP);
-SEXP do_plot_window(SEXP, SEXP, SEXP, SEXP);
-SEXP do_title(SEXP, SEXP, SEXP, SEXP);
-SEXP do_trace(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Platform(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pmatch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_polygon(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printdefault(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printdf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printmatrix(SEXP, SEXP, SEXP, SEXP);
+SEXP do_putenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_psort(SEXP, SEXP, SEXP, SEXP);
 SEXP do_quit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_random1(SEXP, SEXP, SEXP, SEXP);
@@ -294,11 +291,13 @@ SEXP do_return(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rgb(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Rhome(SEXP, SEXP, SEXP, SEXP);
 SEXP do_RNGkind(SEXP, SEXP, SEXP, SEXP);
+SEXP do_Rprof(SEXP, SEXP, SEXP, SEXP);
 SEXP do_round(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rownames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rowscols(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sample(SEXP, SEXP, SEXP, SEXP);
 SEXP do_save(SEXP, SEXP, SEXP, SEXP);
+SEXP do_savehistory(SEXP, SEXP, SEXP, SEXP);
 SEXP do_scan(SEXP, SEXP, SEXP, SEXP);
 SEXP do_search(SEXP, SEXP, SEXP, SEXP);
 SEXP do_segments(SEXP, SEXP, SEXP, SEXP);
@@ -315,6 +314,8 @@ SEXP do_sort(SEXP, SEXP, SEXP, SEXP);
 SEXP do_split(SEXP, SEXP, SEXP, SEXP);
 SEXP do_stop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strsplit(SEXP,SEXP,SEXP,SEXP);
+SEXP do_sysinfo(SEXP,SEXP,SEXP,SEXP);
+SEXP do_syssleep(SEXP,SEXP,SEXP,SEXP);
 SEXP do_subassign(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign3(SEXP, SEXP, SEXP, SEXP);
@@ -336,8 +337,10 @@ SEXP do_tempfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_termsform(SEXP, SEXP, SEXP, SEXP);
 SEXP do_text(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tilde(SEXP, SEXP, SEXP, SEXP);
+SEXP do_title(SEXP, SEXP, SEXP, SEXP);
 SEXP do_tolower(SEXP, SEXP, SEXP, SEXP);
 SEXP do_toupper(SEXP, SEXP, SEXP, SEXP);
+SEXP do_trace(SEXP, SEXP, SEXP, SEXP);
 SEXP do_transpose(SEXP, SEXP, SEXP, SEXP);
 SEXP do_typecvt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_typeof(SEXP, SEXP, SEXP, SEXP);

@@ -7,7 +7,7 @@
 \usage{
 dev.copy(device, \dots, which=dev.next())
 dev.print(device=postscript, \dots)
-dev.copy.eps(\dots)
+dev.copy2eps(\dots)
 dev.control(displaylist)
 }
 \arguments{

@@ -162,6 +162,7 @@ void R_SaveGlobalEnv(void)
  * This call provides a simple interface to the "stat" system call.
  */
 
+#ifdef HAVE_STAT
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -170,6 +171,12 @@ int R_FileExists(char *path)
     struct stat sb;
     return stat(R_ExpandFileName(path), &sb) == 0;
 }
+#else
+int R_FileExists(char *path)
+{
+    error("file existence is not available on this system");
+}
+#endif
 
     /*
      *  Unix file names which begin with "." are invisible.
@@ -250,6 +257,32 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
+SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#ifdef HAVE_PUTENV
+    int i, n;
+    SEXP ans, vars;
+
+    checkArity(op, args);
+
+    if (!isString(vars =CAR(args)))
+	errorcall(call, "wrong type for argument");
+
+    n = LENGTH(vars);
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for (i = 0; i < n; i++) {
+	LOGICAL(ans)[i] = putenv(CHAR(STRING_ELT(vars, i))) == 0;
+    }
+    UNPROTECT(1);
+    return ans;
+#else
+    error("`putenv' is not available on this system");
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+
+
 SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval;
@@ -287,8 +320,10 @@ void R_DefParams(Rstart Rp)
 #endif
 }
 
-#define Max_Nsize 20000000	/* must be < LONG_MAX (= 2^32 - 1 =)
+#define Max_Nsize 50000000	/* must be < LONG_MAX (= 2^32 - 1 =)
 				   2147483647 = 2.1e9 */
+                                /* limit was 2e7, changed to 5e7, which gives
+                                   nearly 2Gb of cons cells */ 
 #define Max_Vsize (2048*Mega)	/* 2048*Mega = 2^(11+20) must be < LONG_MAX */
 
 #define Min_Nsize 160000
@@ -318,7 +353,8 @@ static void SetSize(int vsize, int nsize)
 {
     char msg[1024];
 
-    if (vsize < 1000) {
+    /* vsize >0 to catch long->int overflow */
+    if (vsize < 1000 && vsize > 0) {
 	R_ShowMessage("WARNING: vsize ridiculously low, Megabytes assumed\n");
 	vsize *= Mega;
     }
@@ -411,6 +447,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
     long value;
     char *p, **av = argv, msg[1024];
 
+    R_RestoreHistory = 1;
     while(--ac) {
 	if(**++av == '-') {
 	    if (!strcmp(*av, "--version")) {
@@ -437,6 +474,13 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 	    }
 	    else if(!strcmp(*av, "--no-restore")) {
 		Rp->RestoreAction = SA_NORESTORE;
+		R_RestoreHistory = 0;
+	    }
+	    else if(!strcmp(*av, "--no-restore-data")) {
+		Rp->RestoreAction = SA_NORESTORE;
+	    }
+	    else if(!strcmp(*av, "--no-restore-history")) {
+		R_RestoreHistory = 0;
 	    }
 	    else if (!strcmp(*av, "--silent") ||
 		     !strcmp(*av, "--quiet") ||
@@ -448,6 +492,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		Rp->RestoreAction = SA_NORESTORE; /* --no-restore */
 		Rp->LoadSiteFile = False; /* --no-site-file */
 		Rp->LoadInitFile = False; /* --no-init-file */
+		R_RestoreHistory = 0;     /* --no-restore-history */
 	    }
 	    else if (!strcmp(*av, "--verbose")) {
 		Rp->R_Verbose = True;

@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.12 $'
+revision='$Revision: 1.12.6.1 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}"
 
@@ -26,8 +26,9 @@ lib=
 objs=
 MAKE=${MAKE-@MAKE@}
 makefiles="-f ${R_HOME}/etc/Makeconf"
-SHLIBLD=@SHLIBLD@
-CXX=@CXX@
+SHLIB_CXXLD=@SHLIB_CXXLD@
+SHLIB_CXXLDFLAGS=@SHLIB_CXXLDFLAGS@
+with_cxx=false
 
 while test -n "${1}"; do
   case ${1} in
@@ -39,16 +40,16 @@ while test -n "${1}"; do
       lib=${2}; shift ;;
     --output=*)
       lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-    *.cc)
+    *.cc|*.cpp|.*C)
+      with_cxx=true
       if test -z "${lib}"; then
-	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`"
+	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIB_EXT@/'`"
       fi
       objs="${objs} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
-      SHLIBLD=${CXX}
       ;;
     *.[cfo])
       if test -z "${lib}"; then
-	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`"
+	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIB_EXT@/'`"
       fi
       objs="${objs} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
       ;;
@@ -60,7 +61,11 @@ if test -r Makevars; then
   makefiles="-f Makevars ${makefiles}"
 fi
 
-${MAKE} ${makefiles} SHLIBLD="${SHLIBLD}" SHLIB="${lib}" OBJS="${objs}"
+if ${with_cxx}; then
+  ${MAKE} ${makefiles} SHLIB_LD="${SHLIB_CXXLD}" SHLIB_LDFLAGS="${SHLIB_CXXLDFLAGS}" SHLIB="${lib}" OBJS="${objs}"
+else
+  ${MAKE} ${makefiles} SHLIB="${lib}" OBJS="${objs}"
+fi
 
 ### Local Variables: ***
 ### mode: sh ***
