@@ -2,6 +2,8 @@
 
 BUG FIXES
 
+    o   first=0 (or negative) argument to substr() caused trouble.
+
     o   1%o%1 would segfault
 
     o   .Dyn.libs would linger in .RData causing code not to be dyn.loaded.

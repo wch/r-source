@@ -74,6 +74,8 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		start = INTEGER(sa)[i % k];
 		stop = INTEGER(so)[i % l];
 		slen = strlen(CHAR(STRING(x)[i]));
+		if ( start < 1 )
+			start = 1;
 		if (start > stop || start > slen) {
 			buff[0]='\0';
 			STRING(s)[i] = mkChar(buff);
