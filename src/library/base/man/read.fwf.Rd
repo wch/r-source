@@ -39,6 +39,6 @@ ff <- tempfile()
 system(paste("echo '123456' >", ff))
 system(paste("echo '987654' >>", ff))
 read.fwf(ff, width=c(1,2,3))	#> 1 23 456 \\ 9 87 654
-unlink(ff); rm(sys)
+unlink(ff)
 }
 \keyword{file}
