@@ -339,98 +339,99 @@ msgid "rows in value to replace"
 msgstr ""
 
 msgid "replacement data has"
-msgstr ""
+msgstr "dati sostitutivi contengono"
 
 msgid "provided"
-msgstr ""
+msgstr "fornito"
 
 msgid "variables to replace"
-msgstr ""
+msgstr "variabili da sostituire"
 
 msgid "variables"
-msgstr ""
+msgstr "variabili"
 
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
-msgstr ""
+msgstr "le sole istruzioni valide sono x[[j]] <- valore o x[[i,j]] <- valore"
 
 msgid "replacing element in non-existent column:"
-msgstr ""
+msgstr "sostituzione di un elemento nella colonna non esistente:"
 
 msgid "only a single element should be replaced"
-msgstr ""
+msgstr "si può sostituire un solo elemento alla volta"
 
 msgid "names don't match previous names:"
-msgstr ""
+msgstr "names non coincide con la precedente assegnazione"
 
 msgid "invalid list argument: all variables should have the same length"
-msgstr ""
+msgstr "argomento list non valido: tutte le variabili devono avere la stessa lunghezza"
 
 msgid "non-numeric variable in data frame:"
-msgstr ""
+msgstr "variabile non numerica nel data frame:"
 
 msgid "only defined for equally-sized data frames"
-msgstr ""
+msgstr "è definita solo per data frame della stessa ampiezza"
 
 msgid "list of length"
-msgstr ""
+msgstr "lista di lunghezza"
 
 msgid "not meaningful"
-msgstr ""
+msgstr "senza senso"
 
 msgid "only defined on a data frame with all numeric or complex variables"
-msgstr ""
+msgstr "è definita solo per data frame con variabili tutte numeric o complex"
 
 msgid "character string is not in a standard unambiguous format"
-msgstr ""
+msgstr "la stringa di caratteri non è in formato ambiguo e non standard"
 
 msgid "Don't know how to convert"
-msgstr ""
+msgstr "Non so come convertire"
 
 msgid "to class \"Date\""
-msgstr ""
+msgstr "in classe \"Date\""
 
 msgid "is not a \"dates\" object"
-msgstr ""
+msgstr "non è un oggetto \"dates\""
 
 msgid "binary + is not defined for Date objects"
-msgstr ""
+msgstr "operatore binario + non definito per oggetti di tipo Date"
 
 msgid "Can only subtract from Date objects"
-msgstr ""
+msgstr "Posso solo sottrarre da oggetti di tipo Date"
 
 msgid "unary - is not defined for Date objects"
-msgstr ""
+msgstr "operatore unario - non definito per oggetti di tipo Date"
 
 msgid "can only subtract numbers from Date objects"
-msgstr ""
+msgstr "posso solo sottrarre numeri da oggetti di tipo Date"
 
 msgid "unary"
-msgstr ""
+msgstr "unario"
 
 msgid "not defined for Date objects"
-msgstr ""
+msgstr "non definito per oggetti di tipo Date"
 
 msgid "'from' must be specified"
-msgstr ""
+msgstr "si deve specificare 'from'"
 
 msgid "'from' must be a Date object"
-msgstr ""
+msgstr "'from' deve essere un oggetto di tipo Date"
 
 msgid "'from' must be of length 1"
-msgstr ""
+msgstr "'from' deve avere lunghezza 1"
 
 msgid "'to' must be a Date object"
-msgstr ""
+msgstr "'to' deve essere un oggetto di tipo Date"
 
 msgid "'to' must be of length 1"
-msgstr ""
+msgstr "'to' deve avere  lunghezza 1"
 
 msgid "'length.out' must be of length 1"
-msgstr ""
+msgstr "'lenght.out' deve avere lunghezza 1"
 
 msgid ""
 "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
 msgstr ""
+"si devono specificare esattamente due tra 'to', 'by' e 'length.out' / 'along.with'"
 
 msgid "'by' must be of length 1"
 msgstr ""
