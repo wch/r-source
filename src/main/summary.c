@@ -22,11 +22,12 @@
 #include "Mathlib.h"
 
 /*extern int errno;*/
-/* These are set/initialized in do_summary */
+
+/* These GLOBALS are set/initialized in do_summary: */
 static int narm;
 static int count;
 
-static void isum(int *x, int n, double *value)
+static void isum(int *x, int n, int *value)
 {
 	double s;
 	int i;
@@ -34,15 +35,19 @@ static void isum(int *x, int n, double *value)
 	for (i=0; i<n; i++) {
 		if (x[i] != NA_INTEGER) {
 			s += x[i];
-			count += 1;
+			count++;
 		}
 		else if (!narm) {
-			count += 1;
-			*value = NA_REAL;
+			count++;
+			*value = NA_INTEGER;
 			return;
 		}
 	}
-	*value = s;
+	if(s > INT_MAX || s < INT_MIN){
+	   REprintf("Integer overflow in sum(..); use  sum(as.numeric(..))\n");
+	   *value = NA_INTEGER;
+	} else
+	  *value = s;
 }
 
 static void rsum(double *x, int n, double *value)
@@ -52,11 +57,11 @@ static void rsum(double *x, int n, double *value)
 	s = 0;
 	for (i=0; i<n; i++) {
 		if (!ISNAN(x[i])) {
-			count += 1;
+			count++;
 			s += x[i];
 		}
 		else if (!narm) {
-			count += 1;
+			count++;
 #ifdef IEEE_754
 			s += x[i];
 #else
@@ -77,18 +82,18 @@ static void csum(complex *x, int n, complex *value)
 	for (i=0; i<n; i++) {
 #ifdef IEEE_754
 		if ((!ISNAN(x[i].r) && !ISNAN(x[i].i)) || !narm) {
-			count += 1;
+			count++;
 			s.r = x[i].r;
 			s.i = x[i].i;
 		}
 #else
 		if (!ISNAN(x[i].r) && !ISNAN(x[i].i)) {
-			count += 1;
+			count++;
 			s.r += x[i].r;
 			s.i += x[i].i;
 		}
 		else if (!narm) {
-			count += 1;
+			count++;
 			value->r = NA_REAL;
 			value->i = NA_REAL;
 			return;
@@ -99,7 +104,7 @@ static void csum(complex *x, int n, complex *value)
 	value->i = s.i;
 }
 
-static void imin(int *x, int n, double *value)
+static void imin(int *x, int n, int *value)
 {
 	int i, s;
 	s = NA_INTEGER;
@@ -107,10 +112,10 @@ static void imin(int *x, int n, double *value)
 		if (x[i] != NA_INTEGER) {
 			if (s == NA_INTEGER || s > x[i])
 				s = x[i];
-			count += 1;
+			count++;
 		}
 		else if (!narm) {
-			*value = NA_REAL;
+			*value = NA_INTEGER;
 			return;
 		}
 	}
@@ -127,14 +132,21 @@ static void rmin(double *x, int n, double *value)
 		if (ISNAN(x[i])) {
 			if (!narm) {
 				s = s + x[i];
-				count += 1;
+				count++;
 			}
 		}
 		else if (x[i] < s) {
 			s = x[i];
-			count += 1;
+			count++;
 		}
 	}
+/* FIXME??:  in do_summary(.) [below], we have	count = oldcount !!
+ * -------   should not test  (count == 0) , but rather
+ *		(count == oldcount)   [in  do_summary, not here] !?!
+ *
+ * BTW:	 MM thinks the whole 'count' thing should be drastically cleaned,
+ * ---	 at the same time, dropping   mean(.) which is not used anymore...
+ */
 	*value = (count == 0) ? NA_REAL : s;
 #else
 	s = NA_REAL;
@@ -142,7 +154,7 @@ static void rmin(double *x, int n, double *value)
 		if (!ISNAN(x[i])) {
 			if (ISNAN(s) || s > x[i])
 				s = x[i];
-			count += 1;
+			count++;
 		}
 		else if (!narm) {
 			*value = NA_REAL;
@@ -153,7 +165,7 @@ static void rmin(double *x, int n, double *value)
 #endif
 }
 
-static void imax(int *x, int n, double *value)
+static void imax(int *x, int n, int *value)
 {
 	int i, s;
 	s = NA_INTEGER;
@@ -161,7 +173,7 @@ static void imax(int *x, int n, double *value)
 		if (x[i] != NA_INTEGER) {
 			if (s == NA_INTEGER || s < x[i])
 				s = x[i];
-			count += 1;
+			count++;
 		}
 		else if (!narm) {
 			*value = NA_REAL;
@@ -181,12 +193,12 @@ static void rmax(double *x, int n, double *value)
 		if (ISNAN(x[i])) {
 			if (!narm) {
 				s = s + x[i];
-				count += 1;
+				count++;
 			}
 		}
 		else if (x[i] > s) {
 			s = x[i];
-			count += 1;
+			count++;
 		}
 	}
 	*value = (count == 0) ? NA_REAL : s;
@@ -196,7 +208,7 @@ static void rmax(double *x, int n, double *value)
 		if (!ISNAN(x[i])) {
 			if (ISNAN(s) || s < x[i])
 				s = x[i];
-			count += 1;
+			count++;
 		}
 		else if (!narm) {
 			*value = NA_REAL;
@@ -215,10 +227,10 @@ static void iprod(int *x, int n, double *value)
 	for (i=0; i<n; i++) {
 		if (x[i] != NA_INTEGER) {
 			s = MATH_CHECK(s * x[i]);
-			count += 1;
+			count++;
 		}
 		else if (!narm) {
-			count += 1;
+			count++;
 			*value = NA_REAL;
 			return;
 		}
@@ -238,14 +250,14 @@ static void rprod(double *x, int n, double *value)
 	for (i=0; i<n; i++) {
 #ifdef IEEE_754
 		s *= x[i];
-		count += 1;
+		count++;
 #else
 		if (!ISNAN(x[i])) {
 			s = MATH_CHECK(s * x[i]);
-			count += 1;
+			count++;
 		}
 		else if (!narm) {
-			count += 1;
+			count++;
 			*value = NA_REAL;
 			return;
 		}
@@ -267,7 +279,7 @@ static void cprod(complex *x, int n, complex *value)
 	for (i=0; i<n; i++) {
 #ifdef IEEE_754
 		if ((!ISNAN(x[i].r) && !ISNAN(x[i].i)) || !narm) {
-			count += 1;
+			count++;
 			t.r = s.r;
 			t.i = s.i;
 			s.r = t.r * x[i].r - t.i * x[i].i;
@@ -275,14 +287,14 @@ static void cprod(complex *x, int n, complex *value)
 		}
 #else
 		if (!ISNAN(x[i].r) && !ISNAN(x[i].i)) {
-			count += 1;
+			count++;
 			t.r = s.r;
 			t.i = s.i;
 			s.r = MATH_CHECK(t.r * x[i].r - t.i * x[i].i);
 			s.i = MATH_CHECK(t.r * x[i].i + t.i * x[i].r);
 		}
 		else if (!narm) {
-			count += 1;
+			count++;
 			value->r = NA_REAL;
 			value->i = NA_REAL;
 			return;
@@ -301,12 +313,21 @@ static void cprod(complex *x, int n, complex *value)
 SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	/* do_summary provides a variety of data summaries */
-	/* note that mean is no longer processed by this code */
+
+	/* op :	  0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
+
+/* NOTE: mean() [op = 1]  is no longer processed by this code
+ * ----
+ * I.e., all the fuzz with  'count' could be replaced by
+ * a simple "logical" named ``non_null''
+ *	  (=1 if there is >=1 non-null argument) [MM]
+ */
 
 	SEXP ans, a;
 	double tmp;
 	complex z, ztmp, zcum;
-	int complex_ans, oldcount;
+	int oldcount, itmp, icum=0, int_a;
+	SEXPTYPE ans_type=INTSXP; /* only INTEGER, REAL, or COMPLEX here */
 
 	 if( DispatchGroup("Summary",call, op, args, env, &ans) )
 		return ans;
@@ -314,219 +335,270 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	ans = matchArg(R_NaRmSymbol, &args);
 	narm = asLogical(ans);
 	oldcount = 0;
-	complex_ans = 0;
+	switch(PRIMVAL(op)) {
 
-	/* 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
+	case 0:/* sum */
+	case 2:/* min */
+	case 3:/* max */
+	  ans_type = INTSXP;/* try to keep if possible.. */
+	  break;
+
+	case 1:/* mean */
+	case 4:/* prod */
+	  ans_type = REALSXP;
+	  break;
+
+	default:
+	  errorcall(call,"internal error ('op' in do_summary).	Call a Guru\n");
+	}
 
 	if(PRIMVAL(op) == 0 || PRIMVAL(op) == 1) {	/* "sum" and "mean" */
-		zcum.r = 0.0;
-		zcum.i = 0.0;
-		while(args != R_NilValue) {
-			a = CAR(args);
-			if(length(a) > 0) {
-				count = oldcount;
-				switch(TYPEOF(a)) {
-				case LGLSXP:
-				case INTSXP:
-					isum(INTEGER(a), length(a), &tmp);
-					if(count != oldcount) {
+	  zcum.r = zcum.i = 0.0;
+	  icum = 0;
+	  while(args != R_NilValue) {
+		a = CAR(args);
+		if(length(a) > 0) {
+			count = oldcount;
+			switch(TYPEOF(a)) {
+			case LGLSXP:
+			case INTSXP:
+				isum(INTEGER(a), length(a), &itmp);
+				if(count != oldcount) {
 #ifndef IEEE_754
-						if(ISNAN(tmp))
-							goto na_answer;
+					if(ISNAN(tmp))
+						goto na_answer;
 #endif
-						zcum.r = zcum.r + tmp;
-					}
-					break;
-				case REALSXP:
-					rsum(REAL(a), length(a), &tmp);
-					if(count != oldcount) {
-#ifndef IEEE_754
-						if(ISNAN(tmp))
-							goto na_answer;
-#endif
-						zcum.r = zcum.r + tmp;
-					}
-					break;
-				case CPLXSXP:
-					complex_ans = 1;
-					csum(COMPLEX(a), length(a), &ztmp);
-					if(count != oldcount) {
-#ifndef IEEE_754
-						if(ISNAN(ztmp.r))
-							goto na_answer;
-#endif
-						zcum.r = zcum.r + ztmp.r;
-						zcum.i = zcum.i + ztmp.i;
-					}
-					break;
-				default:
-					goto badarg;
+					if(ans_type == INTSXP)
+					  icum += itmp;
+					else
+					  zcum.r += (double)itmp;
 				}
+				break;
+			case REALSXP:
+				if(ans_type == INTSXP) {
+					ans_type = REALSXP;
+					zcum.r = (double)icum;
+				}
+				rsum(REAL(a), length(a), &tmp);
+				if(count != oldcount) {
+#ifndef IEEE_754
+					if(ISNAN(tmp))
+						goto na_answer;
+#endif
+						zcum.r += tmp;
+				}
+				break;
+			case CPLXSXP:
+				ans_type = CPLXSXP;
+				csum(COMPLEX(a), length(a), &ztmp);
+				if(count != oldcount) {
+#ifndef IEEE_754
+					if(ISNAN(ztmp.r))
+						goto na_answer;
+#endif
+					zcum.r += ztmp.r;
+					zcum.i += ztmp.i;
+				}
+				break;
+			default:
+				goto badarg;
 			}
-			args = CDR(args);
 		}
-		if(PRIMVAL(op) == 1) {
-			if(count > 0) {
-				zcum.r /= count;
-				zcum.i /= count;
-			}
-			else {
-				zcum.r = NA_REAL;
-				zcum.i = NA_REAL;
-			}
+		args = CDR(args);
+	  }
+	  if(PRIMVAL(op) == 1) {/* mean(.), not sum(.) */
+		if(count > 0) {
+			zcum.r /= count;
+			zcum.i /= count;
+		} else {
+			zcum.r = NA_REAL;
+			zcum.i = NA_REAL;
 		}
+	  }
 	}
 	else if(PRIMVAL(op) == 2) {	/* min */
+	  icum = INT_MAX;
 #ifdef IEEE_754
-		zcum.r = R_PosInf;
+	  zcum.r = R_PosInf;
 #else
-		zcum.r = NA_REAL;
+	  zcum.r = NA_REAL;
 #endif
-		while(args != R_NilValue) {
-			a = CAR(args);
-			if(length(a) > 0) {
-				oldcount = count;
-				switch(TYPEOF(a)) {
-				case LGLSXP:
-				case INTSXP:
-					imin(INTEGER(a), length(a), &tmp);
-					break;
-				case REALSXP:
-					rmin(REAL(a), length(a), &tmp);
-					break;
-				default:
-					goto badarg;
+	  while(args != R_NilValue) {
+		a = CAR(args); int_a = 0;
+		if(length(a) > 0) {
+			oldcount = count;
+			switch(TYPEOF(a)) {
+			case LGLSXP:
+			case INTSXP:
+				imin(INTEGER(a), length(a), &itmp);
+				int_a = 1;
+				break;
+			case REALSXP:
+				if(ans_type == INTSXP) {/* change to REAL */
+					ans_type = REALSXP;
+					zcum.r = (double)icum;
 				}
+				rmin(REAL(a), length(a), &tmp);
+				break;
+			default:
+				goto badarg;
+			}
+			if(ans_type == INTSXP) {
+			  if(itmp < icum)
+				icum = itmp;
+			} else { /* real */
 #ifdef IEEE_754
-				if (ISNAN(tmp))
-					zcum.r = zcum.r + tmp;
-				else if (tmp < zcum.r)
-					zcum.r = tmp;
+			  if (ISNAN(tmp))
+				zcum.r = zcum.r + tmp;
+			  else if (int_a && itmp < zcum.r)
+				zcum.r = (double)itmp;
+			  else if (tmp < zcum.r)
+				zcum.r = tmp;
 #else
-				if(ISNAN(tmp)) goto na_answer;
-				if(count != oldcount
-				   && (ISNAN(zcum.r) || tmp < zcum.r))
-					zcum.r = tmp;
+			  if(ISNAN(tmp)) goto na_answer;
+			  if(count != oldcount) {
+			    if (int_a && itmp < zcum.r)
+				zcum.r = (double)itmp;
+			    else if(ISNAN(zcum.r) || tmp < zcum.r)
+				zcum.r = tmp;
+			  }
 #endif
 			}
-			args = CDR(args);
 		}
+		args = CDR(args);
+	  }
 	}
 	else if(PRIMVAL(op) == 3) {	/* max */
+	  icum = 1+INT_MIN;/* since INT_MIN is the NA_INTEGER value !! */
 #ifdef IEEE_754
-		zcum.r = R_NegInf;;
+	  zcum.r = R_NegInf;;
 #else
-		zcum.r = NA_REAL;
+	  zcum.r = NA_REAL;
 #endif
-		while(args != R_NilValue) {
-			a = CAR(args);
-			if(length(a) > 0) {
-				oldcount = count;
-				switch(TYPEOF(a)) {
-				case LGLSXP:
-				case INTSXP:
-					imax(INTEGER(a), length(a), &tmp);
-					break;
-				case REALSXP:
-					rmax(REAL(a), length(a), &tmp);
-					break;
-				default:
-					goto badarg;
+	  while(args != R_NilValue) {
+		a = CAR(args); int_a = 0;
+		if(length(a) > 0) {
+			oldcount = count;
+			switch(TYPEOF(a)) {
+			case LGLSXP:
+			case INTSXP:
+				imax(INTEGER(a), length(a), &itmp);
+				int_a = 1;
+				break;
+			case REALSXP:
+				if(ans_type == INTSXP) {/* change to REAL */
+					ans_type = REALSXP;
+					zcum.r = (double)icum;
 				}
+				rmax(REAL(a), length(a), &tmp);
+				break;
+			default:
+				goto badarg;
+			}
+			if(ans_type == INTSXP) {
+			  if(itmp > icum)
+				icum = itmp;
+			} else { /* real */
 #ifdef IEEE_754
-				if (ISNAN(tmp))
-					zcum.r = zcum.r + tmp;
-				else if (tmp > zcum.r)
-					zcum.r = tmp;
+			  if (ISNAN(tmp))
+				zcum.r = zcum.r + tmp;
+			  else if (int_a && itmp > zcum.r)
+				zcum.r = (double)itmp;
+			  else if (tmp > zcum.r)
+				zcum.r = tmp;
 #else
-				if(ISNAN(tmp)) goto na_answer;
-				if(count != oldcount
-				   && (ISNAN(zcum.r) || tmp > zcum.r))
-					zcum.r = tmp;
+			  if(ISNAN(tmp)) goto na_answer;
+			  if(count != oldcount) {
+			    if (int_a && itmp > zcum.r)
+				zcum.r = (double)itmp;
+			    else if(ISNAN(zcum.r) || tmp > zcum.r)
+				zcum.r = tmp;
+			  }
 #endif
 			}
-			args = CDR(args);
 		}
+		args = CDR(args);
+	  }
 	}
 	else if(PRIMVAL(op) == 4) {	/* prod */
-		zcum.r = 1;
-		zcum.i = 0;
-		while(args != R_NilValue) {
-			a = CAR(args);
-			if(length(a) > 0) {
-				oldcount = count;
-				switch(TYPEOF(a)) {
-				case LGLSXP:
-				case INTSXP:
-					iprod(INTEGER(a), length(a), &tmp);
-					if(count != oldcount ) {
+	  zcum.r = 1;
+	  zcum.i = 0;
+	  while(args != R_NilValue) {
+		a = CAR(args);
+		if(length(a) > 0) {
+			oldcount = count;
+			switch(TYPEOF(a)) {
+			case LGLSXP:
+			case INTSXP:
+				iprod(INTEGER(a), length(a), &tmp);
+				if(count != oldcount ) {
 #ifndef IEEE_754
-						if(ISNAN(tmp))
-							goto na_answer;
+					if(ISNAN(tmp))
+						goto na_answer;
 #endif
-						zcum.r = zcum.r * tmp;
-						zcum.i = zcum.i * tmp;
-					}
-					break;
-				case REALSXP:
-					rprod(REAL(a), length(a), &tmp);
-					if(count != oldcount ) {
-#ifndef IEEE_754
-						if(ISNAN(tmp))
-							goto na_answer;
-#endif
-						zcum.r = zcum.r * tmp;
-						zcum.i = zcum.i * tmp;
-					}
-					break;
-				case CPLXSXP:
-					complex_ans = 1;
-					cprod(COMPLEX(a), length(a), &ztmp);
-					if(count != oldcount ) {
-#ifndef IEEE_754
-						if(ISNAN(ztmp.r))
-							goto na_answer;
-#endif
-						z.r = zcum.r;
-						z.i = zcum.i;
-						zcum.r = MATH_CHECK(z.r * ztmp.r - z.i * ztmp.i);
-						zcum.i = MATH_CHECK(z.r * ztmp.i + z.i * ztmp.r);
-					}
-					break;
-				default:
-					goto badarg;
+					zcum.r *= tmp;
+					zcum.i *= tmp;
 				}
+				break;
+			case REALSXP:
+				rprod(REAL(a), length(a), &tmp);
+				if(count != oldcount ) {
+#ifndef IEEE_754
+					if(ISNAN(tmp))
+						goto na_answer;
+#endif
+					zcum.r *= tmp;
+					zcum.i *= tmp;
+				}
+				break;
+			case CPLXSXP:
+				ans_type = CPLXSXP;
+				cprod(COMPLEX(a), length(a), &ztmp);
+				if(count != oldcount ) {
+#ifndef IEEE_754
+					if(ISNAN(ztmp.r))
+						goto na_answer;
+#endif
+					z.r = zcum.r;
+					z.i = zcum.i;
+					zcum.r = MATH_CHECK(z.r * ztmp.r - z.i * ztmp.i);
+					zcum.i = MATH_CHECK(z.r * ztmp.i + z.i * ztmp.r);
+				}
+				break;
+			default:
+				goto badarg;
 			}
-			args = CDR(args);
 		}
+		args = CDR(args);
+	  }
 	}
 	else errorcall(call, "internal error (do_summary).  Call a Guru\n");
 
-	if(complex_ans) {
-		ans = allocVector(CPLXSXP, 1);
-		COMPLEX(ans)[0].r = zcum.r;
-		COMPLEX(ans)[0].i = zcum.i;
-	}
-	else {
-		ans = allocVector(REALSXP, 1);
-		REAL(ans)[0] = zcum.r;
+	ans = allocVector(ans_type, 1);
+	switch(ans_type) {
+	case INTSXP:	INTEGER(ans)[0] = icum; break;
+	case REALSXP:	REAL(ans)[0] = zcum.r; break;
+	case CPLXSXP:
+	  COMPLEX(ans)[0].r = zcum.r;
+	  COMPLEX(ans)[0].i = zcum.i;
 	}
 	return ans;
 
-/* na_answer: */
-	if(complex_ans) {
-		ans = allocVector(CPLXSXP, 1);
+#ifndef IEEE_754
+na_answer:
+	ans = allocVector(ans_type, 1);
+	switch(ans_type) {
+	case INTSXP:	INTEGER(ans)[0] = NA_INTEGER; break;
+	case REALSXP:	REAL(ans)[0] = NA_REAL; break;
+	case CPLXSXP:
 		COMPLEX(ans)[0].r = NA_REAL;
 		COMPLEX(ans)[0].i = NA_REAL;
 	}
-	else {
-		ans = allocVector(REALSXP, 1);
-		REAL(ans)[0] = NA_REAL;
-	}
 	return ans;
+#endif
 
 badarg:
-	errorcall(call, "invalid argument type\n");
+	errorcall(call, "invalid mode of argument\n");
 	return R_NilValue;/* for -Wall */
 }/* do_summary */
 
@@ -635,6 +707,6 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	return rval;
 bad:	error("complete.cases: not all arguments have the same length\n");
-bad2:	error("complete.cases: invalid argument type\n");
+bad2:	error("complete.cases: invalid mode of argument\n");
 	return R_NilValue;/* NOTREACHED; for -Wall */
 }
