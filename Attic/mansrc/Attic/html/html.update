@@ -1,4 +1,0 @@
-#!/bin/sh
-
-HTMLDIR=../../../html
-doc2html src/$1 > $HTMLDIR/funs/$1.html
