@@ -35,6 +35,7 @@
  *    Journal of Statistical Computation and Simulation 22, 127-145.
  */
 
+#include "Defn.h"/* only for  REprintf(.) below  [-Wall] */
 #include "Mathlib.h"
 
 /* TRUE and FALSE conflict with the MAC */
@@ -65,6 +66,7 @@ static double afc(int i)
     double di, value;
     if (i < 0) {
       REprintf("rhyper.c: afc(i), i=%d < 0 -- SHOULD NOT HAPPEN!\n",i);
+      return -1;/* unreached (Wall) */
     } else if (i <= 7) {
 	value = al[i + 1];
     } else {
@@ -167,10 +169,10 @@ double rhyper(double nn1in, double nn2in, double kkin)
     if (minjx == maxjx) {
 	/* degenerate distribution */
 	ix = maxjx;
-	/* return ix;  
+	/* return ix;
 	   No, need to unmangle <TSL>*/
 	/* return appropriate variate */
-	
+
 	if (kk + kk >= tn) {
 	  if (nn1 > nn2) {
 	    ix = kk - nn2 + ix;
@@ -182,7 +184,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	    ix = kk - ix;
 	}
 	return ix;
-	
+
     } else if (m - minjx < 10) {
 	/* inverse transformation */
 	if (setup1 || setup2) {

@@ -84,8 +84,10 @@ static SEXP asFunction(SEXP x)
 
 static SEXP ascommon(SEXP call, SEXP u, int type)
 {
-	SEXP n, v;
-
+	SEXP  v;
+#ifdef OLD
+	SEXP  n;
+#endif
 	if (type == SYMSXP) {
 		if (TYPEOF(u) == SYMSXP)
 			return u;
