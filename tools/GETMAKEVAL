@@ -1,4 +1,0 @@
-#! /bin/sh
-
-expression="^ *${1} *= *"
-grep "${expression}" Makefile | sed "s/${expression}//"
