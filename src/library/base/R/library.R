@@ -313,7 +313,7 @@ function(package = .packages(), quiet = FALSE)
     if(any(m <- is.na(pos))) {
         if(!quiet) {
             if(all(m))
-                stop(paste("none of the packages are not loaded"))
+                stop(paste("none of the packages are loaded"))
             else
                 warning(paste("package(s)",
                               paste(package[m], collapse=", "),
