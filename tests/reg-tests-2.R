@@ -1112,3 +1112,25 @@ X$y <- y3
 X
 sapply(X, dim)
 ## The last one fails in S.
+
+## test of user hooks
+for(id in c("A", "B")) {
+    eval(substitute(
+    {
+setHook(pkgEvent("stats4", "onLoad"),
+        function(pkgname, ...) cat("onLoad", sQuote(pkgname), id, "\n"));
+setHook(pkgEvent("stats4", "attach"),
+        function(pkgname, ...) cat("attach", sQuote(pkgname), id, "\n"));
+setHook(pkgEvent("stats4", "detach"),
+        function(pkgname, ...) cat("detach", sQuote(pkgname), id, "\n"));
+setHook(pkgEvent("stats4", "onUnload"),
+        function(pkgname, ...) cat("onUnload", sQuote(pkgname), id, "\n"))
+    },
+                    list(id=id)))
+}
+loadNamespace("stats4")
+library("stats4")
+detach("package:stats4")
+unloadNamespace("stats4")
+## Just tests
+

@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-01-08), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2004-01-15), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3486,4 +3486,35 @@ $y
 [1] 10  2  2
 
 > ## The last one fails in S.
+> 
+> ## test of user hooks
+> for(id in c("A", "B")) {
++     eval(substitute(
++     {
++ setHook(pkgEvent("stats4", "onLoad"),
++         function(pkgname, ...) cat("onLoad", sQuote(pkgname), id, "\n"));
++ setHook(pkgEvent("stats4", "attach"),
++         function(pkgname, ...) cat("attach", sQuote(pkgname), id, "\n"));
++ setHook(pkgEvent("stats4", "detach"),
++         function(pkgname, ...) cat("detach", sQuote(pkgname), id, "\n"));
++ setHook(pkgEvent("stats4", "onUnload"),
++         function(pkgname, ...) cat("onUnload", sQuote(pkgname), id, "\n"))
++     },
++                     list(id=id)))
++ }
+> loadNamespace("stats4")
+onLoad 'stats4' A 
+onLoad 'stats4' B 
+<environment: namespace:stats4>
+> library("stats4")
+attach 'stats4' A 
+attach 'stats4' B 
+> detach("package:stats4")
+detach 'stats4' B 
+detach 'stats4' A 
+> unloadNamespace("stats4")
+onUnload 'stats4' B 
+onUnload 'stats4' A 
+> ## Just tests
+> 
 > 

@@ -38,7 +38,7 @@ detach <- function(name, pos=2, version)
     if(length(grep("^package:", packageName))) {
         pkgname <- sub("^package:", "", packageName)
         hook <- getHook(pkgEvent(pkgname, "detach")) # might be list()
-        for(fun in hook) try(fun(pkgname, libpath))
+        for(fun in rev(hook)) try(fun(pkgname, libpath))
     }
     if(exists(".Last.lib", mode = "function", where = pos, inherits=FALSE)) {
         .Last.lib <- get(".Last.lib",  mode = "function", pos = pos,

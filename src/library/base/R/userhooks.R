@@ -61,7 +61,7 @@ getUserDetachHook <- function(pkgname)
     getHook(pkgEvent(pkgname, "detach"))
 }
 
-setUserDetachHook <- function(pkgname, value, action = "prepend")
+setUserDetachHook <- function(pkgname, value, action = "append")
 {
     .Deprecated("setHook(pkgEvent())")
     setHook(pkgEvent(pkgname, "detach"), value, action)
@@ -73,7 +73,7 @@ getUserOnUnloadHook <- function(pkgname)
     getHook(pkgEvent(pkgname, "onUnload"))
 }
 
-setUserOnUnloadHook <- function(pkgname, value, action = "prepend")
+setUserOnUnloadHook <- function(pkgname, value, action = "append")
 {
     .Deprecated("setHook(pkgEvent())")
     setHook(pkgEvent(pkgname, "onUnload"), value, action)

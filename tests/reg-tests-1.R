@@ -2905,19 +2905,3 @@ stopifnot(qbinom(0.95, 0, 0.5) == 0)
 stopifnot(inherits(try(base::lm), "try-error"))
 stopifnot(inherits(try(graphics::log), "try-error"))
 ## equivalent constructs succeeded in 1.8.1
-
-
-## test of user hooks
-setHook(pkgEvent("stats4", "onLoad"),
-        function(pkgname, ...) cat("onLoad", sQuote(pkgname), "\n"))
-setHook(pkgEvent("stats4", "attach"),
-        function(pkgname, ...) cat("attach", sQuote(pkgname), "\n"))
-setHook(pkgEvent("stats4", "detach"),
-        function(pkgname, ...) cat("detach", sQuote(pkgname), "\n"))
-setHook(pkgEvent("stats4", "onUnload"),
-        function(pkgname, ...) cat("onUnload", sQuote(pkgname), "\n"))
-loadNamespace("stats4")
-library("stats4")
-detach("package:stats4")
-unloadNamespace("stats4")
-## Just tests

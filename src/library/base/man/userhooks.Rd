@@ -29,10 +29,10 @@ getUserAttachHook(pkgname)
 setUserAttachHook(pkgname, value, action = "append")
 
 getUserDetachHook(pkgname)
-setUserDetachHook(pkgname, value, action = "prepend")
+setUserDetachHook(pkgname, value, action = "append")
 
 getUserOnUnloadHook(pkgname)
-setUserOnUnloadHook(pkgname, value, action = "prepend")
+setUserOnUnloadHook(pkgname, value, action = "append")
 }
 \arguments{
   \item{hookName}{character string: the hook name}
@@ -68,8 +68,9 @@ setUserOnUnloadHook(pkgname, value, action = "prepend")
   package being on the search path, so objects in the package need to be
   referred to using the double colon operator as in the example.
 
-  The hooks are run in the order shown by the \code{get*} functions, and
-  the default actions for the wrapper functions are to add new functions
+  Hooks are normally run in the order shown by the \code{get*}
+  functions, but the \code{"detach"} and \code{"onUnload"} hooks are run
+  in reverse order so the default for package events is to add hooks
   \sQuote{inside} existing ones.
   
   Note that when an \R is finished, packages are not detached and
