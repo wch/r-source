@@ -1290,6 +1290,11 @@ R is now configured for ${host}
   Tcl/Tk support:            ${use_tcltk}
   Readline support:          ${use_readline}
 
+  PNG support:               ${have_png}
+  JPEG support:              ${have_jpeg}
+  bzip2 support:             ${have_bzlib}
+  PCRE support:              ${have_pcre}
+
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
 
