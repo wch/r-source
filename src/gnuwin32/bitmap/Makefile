@@ -1,15 +1,17 @@
 include ../MkRules
 
 JPEGDIR=jpeg-6b
+PNGDIR=libpng
 
-all: buildzlib buildpng buildjpeg Rbitmap.dll installdll
+all:
+	@$(MAKE) --no-print-directory buildzlib buildpng buildjpeg rbitmap.o 
+	@$(MAKE) --no-print-directory installdll
 
 buildzlib:
-#	$(MAKE) CC='$(CC)' AR='$(AR) rcs' -C zlib -f nt/Makefile.gcc libz.a
-	$(MAKE) -C ../../extra/zlib -f Makefile.win
+	@$(MAKE) -C ../../extra/zlib -f Makefile.win
 
 buildpng:
-	$(MAKE) CC='$(CC)' RANLIB=$(RANLIB) ZLIBLIB=../../../extra/zlib ZLIBINC=../../../extra/zlib -C libpng -f scripts/makefile.std libpng.a
+	@$(MAKE) CC='$(CC)' RANLIB=$(RANLIB) ZLIBLIB=../../../extra/zlib ZLIBINC=../../../extra/zlib -C $(PNGDIR) -f scripts/makefile.std libpng.a
 
 # jconfig.h and Makefile obtained running 'CC="gcc -mno-cygwin" ./configure'
 # under CYGWIN. They are here since the configure script doesn't run 
@@ -21,17 +23,17 @@ $(JPEGDIR)/jconfig.h: jconfig.h
 	$(CP) jconfig.h $(JPEGDIR)/jconfig.h
 
 rbitmap-CFLAGS=-Wall -pedantic -DHAVE_PNG -DHAVE_JPEG -I../../extra/zlib -I./libpng -I$(JPEGDIR) -I../../include
-Rbitmap-DLLLIBS=-L./libpng -lpng -L$(JPEGDIR) -ljpeg -L../ -lR
+Rbitmap-DLLLIBS=-L$(PNGDIR) -lpng -L$(JPEGDIR) -ljpeg -L../ -lR
 Rbitmap-DLLFLAGS=-s
 
 Rbitmap.dll: rbitmap.o
 
-installdll: 
+installdll: Rbitmap.dll
 	$(CP) Rbitmap.dll ../../../bin
 
 clean:
 	$(RM) *.o *.a *.dll *.def *~ \#*\#
-	-$(MAKE) CC='$(CC)' -C libpng -f scripts/makefile.std clean
+	-$(MAKE) CC='$(CC)' -C $(PNGDIR) -f scripts/makefile.std clean
 	-$(MAKE) CC='$(CC)' -C $(JPEGDIR) -f ../Makefile.jpeg clean
 
 
