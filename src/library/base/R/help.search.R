@@ -93,7 +93,6 @@ function(pattern, fields = c("alias", "title"),
 	dir <- switch(.Platform$OS.type,
 		      "windows" = Sys.getenv("R_USER"),
 		      "unix" = Sys.getenv("HOME"),
-		      "mac" = R.home(),
 		      "")
 	if(nchar(dir) == 0) dir <- getwd()
 	dir <- file.path(dir, ".R")

@@ -12,7 +12,7 @@ package R::Vars;
       ## do windows-specific things
   }
   else {
-      ## do things on mac or unix
+      ## do things on  unix
   }
 
   ## stop if no valid command for R itself or the 'R CMD' mechanism is
@@ -26,7 +26,7 @@ package R::Vars;
     platform-specific differences of R, some of these can be set using
     environment variables, these are listed in square brackates.
 
-    OSTYPE     "mac", "unix" or "windows"
+    OSTYPE     "unix" or "windows"
     TMPDIR     name of directory for temporary files [TMPDIR]
 
     R_HOME     path to R installation top directory [R_HOME]
@@ -46,9 +46,6 @@ use Carp;
 if($^O =~ /^(MS)?Win32$/i){
     $OSTYPE = "windows";
 }
-# elsif($^O =~ /^MacOS$/i){
-#     $OSTYPE = "mac";
-# }
 else{
     $OSTYPE = "unix";
 }
@@ -65,10 +62,6 @@ if($OSTYPE eq "windows"){
     getenv("TMPDIR", "TMPDIR", "C:/TEMP");
     $TMPDIR = "" unless (-d $TMPDIR);
     $TMPDIR =~ s+\\+/+g;  ## ensure forward slashes only
-}
-elsif($OSTYPE eq "mac"){
-    require Mac::Files;
-    $TMPDIR = Mac::Files::FindFolder(kOnSystemDisk, kTemporaryFolderType);
 }
 else{
     if($R_HOME){

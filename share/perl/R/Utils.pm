@@ -65,13 +65,6 @@ sub file_path {
     my $filesep = "/";
     my $v;
 
-    if($R::Vars::OSTYPE eq "mac") {
-	foreach $v (@args) {
-	    $v =~ s/:\z//;
-	}
-	$filesep = ":";
-    }
-
     join($filesep, @args);
 }
 
@@ -100,12 +93,7 @@ sub list_files_with_exts {
     my @files;
     $exts = ".*" unless $exts;
     opendir(DIR, $dir) or die "cannot opendir $dir: $!";
-    if($R::Vars::OSTYPE eq "mac"){
-	@files = grep { /\.$exts$/ && -f "$dir:$_" } readdir(DIR);
-    }
-    else{
-	@files = grep { /\.$exts$/ && -f "$dir/$_" } readdir(DIR);
-    }
+    @files = grep { /\.$exts$/ && -f "$dir/$_" } readdir(DIR);
     closedir(DIR);
     ## We typically want the paths to the files, see also the R variant
     ## .listFilesWithExts() used in some of the QC tools.

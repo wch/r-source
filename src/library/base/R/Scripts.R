@@ -6,13 +6,10 @@
                      args)
         system(cmd, invisible = TRUE)
     }
-    else if(.Platform$OS.type == "mac") {
-        .Internal(applescript(file.path(R.home(), "script"), "demo"))
-    }
     else
         system(paste(file.path(R.home(), "bin", "Rcmd"),
-                     interpreter, 
+                     interpreter,
                      file.path(R.home(), "share", interpreter, script),
-                     args), 
+                     args),
                ...)
 }

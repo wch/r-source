@@ -113,7 +113,6 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
     }
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- switch(.Platform$OS.type,
-                               "mac" = "MacRoman.enc",
                                "windows" = "WinAnsi.enc",
                                "ISOLatin1.enc")
     .Internal(PS(file, old$paper, old$family, old$encoding, old$bg, old$fg,
@@ -143,7 +142,6 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 			 reset = FALSE, assign.opt = FALSE)
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- switch(.Platform$OS.type,
-                               "mac" = "MacRoman.enc",
                                "windows" = "WinAnsi.enc",
                                "ISOLatin1.enc")
     .Internal(PDF(file, old$family, old$encoding, old$bg, old$fg,

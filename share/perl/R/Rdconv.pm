@@ -735,9 +735,6 @@ sub code2html {
 		}
 	    } else {
 		my $uxfile = $htmlfile;
-		if($R::Vars::OSTYPE eq "mac") {
-		    $uxfile =~ s|:|\/|g;
-		}
 		if ($uxfile =~ s+^$pkgname/html/++) {
 		    # in the same html file
 		    $text =~

@@ -34,13 +34,9 @@ $out = $opt_o if(defined $opt_o && length($opt_o));
 
 my $pkg;
 
-if($R::Vars::OSTYPE eq "mac") {
-    $ARGV[0] =~ /([^\:]*)$/;
-    $pkg = $1;
-} else {
-    $ARGV[0] =~ /([^\/]*)$/;
-    $pkg = $1;
-}
+$ARGV[0] =~ /([^\/]*)$/;
+$pkg = $1;
+
 
 my $outfile;
 if($out) {

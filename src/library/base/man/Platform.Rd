@@ -14,9 +14,7 @@
   
   \item{OS.type}{
     character, giving the \bold{O}perating \bold{S}ystem
-    (family) of the computer.  One of the following values is returned:
-    \code{"unix"},  \code{"mac"}, or  \code{"windows"} (in historical
-    order).
+    (family) of the computer.  One of \code{"unix"} or \code{"windows"}.
   }
   \item{file.sep}{
     character, giving the \bold{file} \bold{sep}arator,
