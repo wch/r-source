@@ -26,7 +26,7 @@ print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{coefficients.lm}
 \alias{deviance.lm}
 \alias{df.residual.lm}
-\alias{effects.lm}
+# \alias{effects.lm}
 \alias{family.lm}
 \alias{formula.lm}
 \alias{fitted.values.lm}
@@ -67,9 +67,9 @@ various useful features of the value returned by \code{lm}.
     the estimated coefficient, its standard error, t-statistic and
     corresponding (two-sided) p-value.}
   \item{sigma}{the square root of the estimated variance of the random
-    error,
-    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2}}{%
-      sigma^2 = 1/(n-p) Sum(R[i]^2)},
+    error
+    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2},}{%
+      sigma^2 = 1/(n-p) Sum(R[i]^2),}
     where \eqn{R_i}{R[i]} is the \eqn{i}-th residual,
     \code{residuals[i]}.}
   \item{df}{degrees of freedom, a 3-vector \eqn{(p,n-p,p*)} ...}
