@@ -94,7 +94,7 @@ sub get_usages {
 
 	## Remove R comment lines.  (Removing all comments is a bit
 	## tricky as '#' could occur inside a string ...)
-	$usage =~ s/(^|\n)[\s\n]*\#.*(\n|$)//g;
+	$usage =~ s/(^|\n)[\s\n]*\#.*(\n|$)/$2/g;
 
 	while($usage) {
 	    $usage =~ s/^[\s\n]*//g;
