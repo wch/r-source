@@ -1,50 +1,49 @@
 \name{chisq.test}
 \alias{chisq.test}
 \title{Pearson's Chi-squared Test for Count Data}
+\description{
+  \code{chisq.test} performs chi-squared tests on contingency tables.
+}
 \usage{
 chisq.test(x, y = NULL, correct = TRUE,
            p = rep(1/length(x), length(x)),
            simulate.p.value = FALSE, B = 2000)
 }
 \arguments{
-    \item{x}{a vector or matrix.}
-    \item{y}{a vector; ignored if \code{x} is a matrix.}
-    \item{correct}{a logical indicating whether to apply continuity
-    	correction when computing the test statistic.}
-    \item{p}{a vector of probabilities of the same length of \code{x}.}
-    \item{simulate.p.value}{a logical indicating whether to compute
-	p-values by Monte Carlo simulation.}
-    \item{B}{an integer specifying the number of replicates used in the
-	Monte Carlo simulation.}
-}
-\description{
-    \code{chisq.test} performs chi-squared tests on contingency tables.
+  \item{x}{a vector or matrix.}
+  \item{y}{a vector; ignored if \code{x} is a matrix.}
+  \item{correct}{a logical indicating whether to apply continuity
+    correction when computing the test statistic.}
+  \item{p}{a vector of probabilities of the same length of \code{x}.}
+  \item{simulate.p.value}{a logical indicating whether to compute
+    p-values by Monte Carlo simulation.}
+  \item{B}{an integer specifying the number of replicates used in the
+    Monte Carlo simulation.}
 }
 \details{
-    If \code{x} is a matrix with one row or column, or if \code{x} is a
-    vector and \code{y} is not given, \code{x} is treated as a
-    one-dimensional contingency table.  In this case, the hypothesis
-    tested is whether the population probabilities equal those in
-    \code{p}, or are all equal if \code{p} is not given. 
+  If \code{x} is a matrix with one row or column, or if \code{x} is a
+  vector and \code{y} is not given, \code{x} is treated as a
+  one-dimensional contingency table.  In this case, the hypothesis
+  tested is whether the population probabilities equal those in
+  \code{p}, or are all equal if \code{p} is not given.
 
-    If \code{x} is a matrix with at least two rows and columns, it is
-    taken as a two-dimensional contingency table, and hence its entries
-    should be nonnegative integers.  Otherwise, \code{x} and \code{y}
-    must be vectors or factors of the same length; incomplete cases are
-    removed, the objects are coerced into factor objects, and the
-    contingency table is computed from these.  Then, Pearson's
-    chi-squared test of the null that the joint distribution of the cell
-    counts in a 2-dimensional contingency table is the product of the row
-    and column marginals is performed.  If \code{simulate.p.value} is
-    \code{FALSE}, the p-value is computed from the asymptotic
-    chi-squared distribution of the test statistic; continuity
-    correction is only used in the 2-by-2 case if \code{correct} is
-    \code{TRUE}.  Otherwise, if \code{simulate.p.value} is \code{TRUE},
-    the p-value is computed by Monte Carlo simulation with \code{B}
-    replicates.  This is done by random sampling from the set of all
-    contingency tables with given marginals, and works only if the
-    marginals are positive.  (A C translation of the algorithm of
-    Patefield (1981) is used.)
+  If \code{x} is a matrix with at least two rows and columns, it is
+  taken as a two-dimensional contingency table, and hence its entries
+  should be nonnegative integers.  Otherwise, \code{x} and \code{y} must
+  be vectors or factors of the same length; incomplete cases are
+  removed, the objects are coerced into factor objects, and the
+  contingency table is computed from these.  Then, Pearson's chi-squared
+  test of the null that the joint distribution of the cell counts in a
+  2-dimensional contingency table is the product of the row and column
+  marginals is performed.  If \code{simulate.p.value} is \code{FALSE},
+  the p-value is computed from the asymptotic chi-squared distribution
+  of the test statistic; continuity correction is only used in the
+  2-by-2 case if \code{correct} is \code{TRUE}.  Otherwise, if
+  \code{simulate.p.value} is \code{TRUE}, the p-value is computed by
+  Monte Carlo simulation with \code{B} replicates.  This is done by
+  random sampling from the set of all contingency tables with given
+  marginals, and works only if the marginals are positive.  (A C
+  translation of the algorithm of Patefield (1981) is used.)
 }
 \value{
   A list with class \code{"htest"} containing the following
@@ -65,9 +64,9 @@ chisq.test(x, y = NULL, correct = TRUE,
 }
 \references{
   Patefield, W. M. (1981)
-  Algorithm AS159. An efficient method of generating r x c tables
-  with given row and column totals. \emph{Applied Statistics} \bold{30},
-  91--97.
+  Algorithm AS159.  An efficient method of generating r x c tables
+  with given row and column totals.
+  \emph{Applied Statistics} \bold{30}, 91--97.
 } 
 \examples{
 data(InsectSprays)              # Not really a good example

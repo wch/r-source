@@ -3,17 +3,17 @@
 
    Performs an iterative proportional fit of the marginal totals of a
    contingency table.
-   */
+*/
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
-#ifndef Macintosh
-#include <math.h>
+#ifdef Macintosh
+# include <fp.h>
 #else
-#include <fp.h>
-#endif /* mac */
+# include <math.h>
+#endif
 
 #include <stdio.h>
 #include <R_ext/Memory.h>
@@ -233,7 +233,7 @@ L240:
    All parameters are assumed valid without test.
 
    The larger table is X and the smaller one is Y.
-   */
+*/
 
 void collap(int *nvar, double *x, double *y, int *locy, int *nx, int
 	   *ny, int *dim, int *config)
@@ -402,7 +402,8 @@ L50:
 /* Auxiliary routine to get rid of limitations on the number of factors
    in the model. 
 
-   Changed to use R_alloc to avoid memory leak if routine was interrupted. 
+   Changed to use R_alloc to avoid memory leak if routine was
+   interrupted.
 */
 
 static int *lvector(int n) {
