@@ -1,6 +1,6 @@
 
-R : Copyright 1999, The R Development Core Team
-Version 0.99.0 Under development (unstable) (December 20, 1999)
+R : Copyright 2000, The R Development Core Team
+Version 0.99.0 Under development (unstable) (January 7, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -68,9 +68,9 @@ Type	"q()" to quit R.
 > is.nan(i1 / i1)
 [1] TRUE
 > 
-> 1/0 == Inf
+> 1/0 == Inf & 0 ^ -1 == Inf
 [1] TRUE
-> 1/Inf == 0
+> 1/Inf == 0 & Inf ^ -1 == 0
 [1] TRUE
 > 
 > !is.na(Inf) & !is.nan(Inf) &   is.infinite(Inf) & !is.finite(Inf)

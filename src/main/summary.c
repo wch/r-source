@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1997-2000   Robert Gentleman, Ross Ihaka and the
+ *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -143,12 +143,13 @@ static void rmin(double *x, int n, double *value)
 #ifdef IEEE_754
     s = R_PosInf;
     for (i = 0; i < n; i++) {
-	if (ISNAN(x[i])) {
+	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
-		s += x[i];/* Na(N) */
+		s = NA_REAL;/* was s += x[i];*/
 		if(!updated) updated = 1;
 	    }
-	} else if (x[i] < s) {
+	}
+	else if (x[i] < s) {
 	    s = x[i];
 	    if(!updated) updated = 1;
 	}
@@ -199,9 +200,9 @@ static void rmax(double *x, int n, double *value)
 #ifdef IEEE_754
     s = R_NegInf;
     for (i = 0; i < n; i++) {
-	if (ISNAN(x[i])) {
+	if (ISNAN(x[i])) {/* Na(N) */
 	    if (!narm) {
-		s += x[i];/* Na(N) */
+		s = NA_REAL;/* was s += x[i];*/
 		if(!updated) updated = 1;
 	    }
 	}

@@ -40,8 +40,8 @@ i1 ==  i1 * i1
 is.nan(i1 - i1)
 is.nan(i1 / i1)
 
-1/0 == Inf
-1/Inf == 0
+1/0 == Inf & 0 ^ -1 == Inf
+1/Inf == 0 & Inf ^ -1 == 0
 
 !is.na(Inf) & !is.nan(Inf) &   is.infinite(Inf) & !is.finite(Inf)
 !is.na(-Inf)& !is.nan(-Inf)&   is.infinite(-Inf)& !is.finite(-Inf)

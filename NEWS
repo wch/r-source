@@ -64,16 +64,18 @@ NEW FEATURES
 
     o	Added setequal() for set equality.
 
-    o	First argument renamed to "package" for library(), require(), 
+    o	First argument renamed to "package" for library(), require(),
 	provide().
 
-    o   model.frame now accepts data= arguments that can be coerced to
+    o	model.frame now accepts data= arguments that can be coerced to
 	data frames
 
     o	help files can now contain \describe groups.
 
 
 BUG FIXES
+
+    o	0 ^ -1 == Inf  &  min(NA,NaN) is NA now always
 
     o	R CMD xxx sets $R_HOME/bin to be first in PATH
 
@@ -98,7 +100,7 @@ BUG FIXES
 
     o	format.char(.) is much faster for long vector argument [Jens O.-A.]
 
-    o   \enumerate now enumerates in text conversion of .Rd files.
+    o	\enumerate now enumerates in text conversion of .Rd files.
 
 
 		CHANGES IN R VERSION 0.90.1
