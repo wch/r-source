@@ -20,7 +20,8 @@ NEW FEATURES
 
 BUG FIXES
     
-    o	as.POSIXlt (and *ct) dropped the time part in some cases.
+    o	as.POSIXlt (and *ct) operating on a character string
+	only extracted the date (and not the time) in some cases.
 
 
 
