@@ -1,3 +1,14 @@
+r-base (1.6.2.cvs.20030405-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2003-04-05 of R 1.7.0
+  * debian/rules: Configure with --with-blas, not --with-blas=blas
+  * debian/r-base-core.prerm: s/treu/true/
+  * debian/rules: Link $R_HOME/doc into /usr/share/doc/r-base-core, rather
+    than its subdirectories doc and manual as e.g. manual link could be
+    dangling if r-doc-pdf is not installed (Closes: #187573)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Sat,  5 Apr 2003 08:35:37 -0600
+
 r-base (1.6.2.cvs.20030403-1) unstable; urgency=low
 
   * Upgraded to release candidate dated 2003-04-03 of R 1.7.0
