@@ -58,12 +58,12 @@ browseURL <- function(url, browser = getOption("browser"))
                "gnome-moz-remote" =, "open" = quotedUrl,
                "galeon" = paste("-x", quotedUrl),
                "kfmclient" = paste("openURL", quotedUrl),
-               "netscape" =, "mozilla" =, "opera" =, {
+               "netscape" =, "mozilla" =, "opera" =, "firefox" = {
                    paste("-remote \"openURL(",
                          ## Quote ',' and ')' ...
-                         gsub("([,)])", "%\\1", quotedUrl), ")\"",
+                         gsub("([,)$])", "%\\1", url), ")\"",
                          sep = "")
-               })
+               }, quotedUrl)
     else quotedUrl
     system(paste(browser, remoteCmd, "2>&1 >/dev/null ||",
                  browser, quotedUrl, "&"))

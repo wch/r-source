@@ -25,7 +25,8 @@ browseURL(url, browser = getOption("browser"))
   it, the URL is opened in any already running browser or a new one if
   necessary.  This mechanism currently is available for browsers which
   support the \code{"-remote openURL(...)"} interface (which includes
-  Netscape 4.x, 6.2.x (but not 6.0/1), Opera 5/6 and Mozilla >= 0.9.5),
+  Netscape 4.x, 6.2.x (but not 6.0/1), 7.1, Opera 5/6, Mozilla >= 0.9.5
+  and Mozilla Firefox),
   Galeon, KDE konqueror (via kfmclient) and the GNOME interface to
   Mozilla.  Netscape 7.0 behaves slightly differently, and you will need
   to open it first.  Note that the type of browser is determined from

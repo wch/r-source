@@ -623,6 +623,9 @@ BUG FIXES
     o	The Unix version of browseURL() now protects the URL from the
 	shell, for example allowing & and $ to occur in the URL.
 
+	It was incorrectly attempting to use -remote "openURL()" for
+	unknown browsers.
+
 
 
 
