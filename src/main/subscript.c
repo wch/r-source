@@ -187,13 +187,21 @@ static SEXP nullSubscript(int n)
     return index;
 }
 
-static SEXP logicalSubscript(SEXP s, int ns, int nx)
+static SEXP logicalSubscript(SEXP s, int ns, int nx, int *stretch)
 {
-    int count, i;
+    int canstretch, count, i, nmax;
     SEXP index;
+    canstretch = *stretch;
+#ifdef OLD
     if (ns > nx)
 	error("subscript (%d) out of bounds, should be at most %d\n",
 	      ns, nx);
+#else
+    if (!canstretch && ns > nx)
+	error("(subscript) logical subscript too long\n");
+    nmax = (ns > nx) ? ns : nx;
+    *stretch = (ns > nx) ? ns : 0;
+#endif
     if (ns == 0)
 	return(allocVector(INTSXP, 0));
     count = 0;
@@ -202,7 +210,11 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx)
 	    count++;
     index = allocVector(INTSXP, count);
     count = 0;
+#ifdef OLD
     for (i = 0; i < nx; i++)
+#else
+    for (i = 0; i < nmax; i++)
+#endif
 	if (LOGICAL(s)[i%ns]) {
 	    if (LOGICAL(s)[i%ns] == NA_LOGICAL)
 		INTEGER(index)[count++] = NA_INTEGER;
@@ -215,6 +227,7 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx)
 static SEXP negativeSubscript(SEXP s, int ns, int nx)
 {
     SEXP index;
+    int stretch = 0;
     int i;
     PROTECT(index = allocVector(INTSXP, nx));
     for (i = 0; i < nx; i++)
@@ -222,7 +235,7 @@ static SEXP negativeSubscript(SEXP s, int ns, int nx)
     for (i = 0; i < ns; i++)
 	if (INTEGER(s)[i] != 0)
 	    INTEGER(index)[-INTEGER(s)[i] - 1] = 0;
-    s = logicalSubscript(index, nx, nx);
+    s = logicalSubscript(index, nx, nx, &stretch);
     UNPROTECT(1);
     return s;
 }
@@ -342,7 +355,7 @@ SEXP arraySubscript(int dim, SEXP s, SEXP x)
     case NILSXP:
 	return allocVector(INTSXP, 0);
     case LGLSXP:
-	return logicalSubscript(s, ns, nd);
+	return logicalSubscript(s, ns, nd, &stretch);
     case INTSXP:
 	return integerSubscript(s, ns, nd, &stretch);
     case REALSXP:
@@ -387,8 +400,8 @@ SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 	    ans = allocVector(INTSXP, 0);
 	    break;
 	case LGLSXP:
-	    *stretch = 0;
-	    ans = logicalSubscript(s, ns, nx);
+	    /* *stretch = 0; */
+	    ans = logicalSubscript(s, ns, nx, stretch);
 	    break;
 	case INTSXP:
 	    ans = integerSubscript(s, ns, nx, stretch);
