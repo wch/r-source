@@ -33,7 +33,7 @@ library <- function(name, help, lib.loc = .lib.loc,
 library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
   # FIXME
   if (!exists(".Dyn.libs"))
-    assign(".Dyn.libs", character(0), envir = .GlobalEnv)
+    assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
   LEN <- nchar(name)
   if (substr(name, LEN - 2, LEN) == ".so") {
     name <- substr(name, 1, LEN - 3)
@@ -45,7 +45,7 @@ library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
       stop(paste("dynamic library `", name, "' not found", sep = ""))
     }
     .Internal(dyn.load(file))
-    assign(".Dyn.libs", c(.Dyn.libs, name), envir = .GlobalEnv)
+    assign(".Dyn.libs", c(.Dyn.libs, name), envir = .AutoloadEnv)
   }
   invisible(.Dyn.libs)
 }
