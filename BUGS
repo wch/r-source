@@ -508,3 +508,23 @@ Date: Wed, 19 Jun 2002 09:20:02 -0400 (EDT)
 Subject: levels() counter-intuitif?
 From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
 Date: Wed, 19 Jun 2002 18:57:13 +0200
+* PR# 1694 *
+Subject: Re: [R] cut with infinite values -> NA
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 20 Jun 2002 13:04:08 +0100 (BST)
+* PR# 1695 *
+Subject: Possible bug with glm.nb and starting values 
+From: bcooper@hsph.harvard.edu
+Date: Thu, 20 Jun 2002 18:59:35 +0200 (MET DST)
+* PR# 1696 *
+Subject: documentation fix for hclust.Rd
+From: Stephen Eglen <eglen@pcg.wustl.edu>
+Date: Thu, 20 Jun 2002 14:16:28 -0500 (CDT)
+* PR# 1697 *
+Subject: Bug in printing symbolic derivative
+From: Duncan Murdoch <murdoch@stats.uwo.ca>
+Date: Thu, 20 Jun 2002 16:27:37 -0400
+* PR# 1698 *
+Subject: tree construction crashes
+From: petr.savicky@ff.cuni.cz
+Date: Thu, 20 Jun 2002 22:35:03 +0200 (MET DST)
