@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.177.2.3 $ ';
+my $revision = ' $Revision: 1.177.2.4 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -160,7 +160,7 @@ while(<MAKEVARS>) {
     @R_pkgs_recommended =
 	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
     @R_pkgs_stubs =
-	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
+	split(/ +/, $2) if(/^(R_PKGS_STUBS *=)(.*)/);
 }
 
 ## <FIXME>
@@ -738,7 +738,7 @@ sub check_pkg {
 		    break;
 		}
 	    }
-	    if(!$found) {
+	    if($found != 0) {
 		$log->error();
 		$log->print("Invalid Priority field.\n");
 		$log->print(wrap("", "",
