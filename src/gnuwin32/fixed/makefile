@@ -1,6 +1,6 @@
 include ../MkRules
 
-MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd
+MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd x11.Rd
 
 all: profiles fixh fixr fixRd fixbin 
 
@@ -35,15 +35,6 @@ fixbin: $(filter-out ./bin/CVS,$(wildcard ./bin/*))
 	$(CP) -p  $^ ../../../bin
 	$(ECHO) done > fixbin
 
-
-#fixc: $(wildcard ./c/*.c) 
-#	$(CP) -p ./c/names.c ../../main/names.c
-#	$(CP) -p ./c/eval.c ../../main/eval.c	
-#	$(CP) -p ./c/gram.c ../../main/gram.c		
-#	$(CP) -p ./c/graphics.c ../../main/graphics.c
-#	$(CP) -p ./c/devices.c ../../main/devices.c	
-#	$(ECHO) done > fixc	
-
 fixr: $(wildcard ./r/*.r) ./r/zero.R $(wildcard ./r/*.html)  \
       ./profile/rconsole ./profile/rgb.txt ./profile/rdevga
 	$(CP) -p ./r/*.gnw.r ../../library/base/R
@@ -61,4 +52,4 @@ fixRd: $(wildcard man/*.Rd)
 
 
 clean:
-	$(RM) *~ */*~ fixr fixh fixc fixRd fixbin fixgif
+	$(RM) *~ */*~ fixr fixh fixRd fixbin
