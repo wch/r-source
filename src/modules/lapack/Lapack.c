@@ -408,7 +408,7 @@ SEXP La_rs_cmplx(SEXP x, SEXP only_values)
     if (ov == NA_LOGICAL) error("invalid `only.values'");
     if (ov) jobv[0] = 'N'; else jobv[0] = 'V';
 
-    values = allocVector(REALSXP, n);
+    PROTECT(values = allocVector(REALSXP, n));
     rvalues = REAL(values);
     rwork = (double *) R_alloc((3*n-2) > 1 ? 3*n-2 : 1, sizeof(double));
     /* ask for optimal size of work array */
@@ -434,7 +434,7 @@ SEXP La_rs_cmplx(SEXP x, SEXP only_values)
     SET_STRING_ELT(nm, 0, mkChar("values"));
     setAttrib(ret, R_NamesSymbol, nm);
     SET_VECTOR_ELT(ret, 0, values);
-    UNPROTECT(2);
+    UNPROTECT(3);
     return ret;
 #else
     error("Fortran complex functions are not available on this platform");
