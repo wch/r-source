@@ -168,7 +168,7 @@ MethodsListSelect <-
              finalDefault = finalDefaultMethod(mlist, f),
              evalArgs = TRUE,
              useInherited = TRUE,  ## supplied when evalArgs is FALSE
-             fdef = getGeneric(f), # MUST BE SAFE FROM RECUSIVE METHOD SELECTION
+             fdef = getGeneric(f, where = env), # MUST BE SAFE FROM RECUSIVE METHOD SELECTION
              resetAllowed = TRUE # FALSE when called from selectMethod, .findNextMethod
  )
 {
