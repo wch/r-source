@@ -48,13 +48,6 @@ static char *falsenames[] = {
     (char *) 0,
 };
 
-int isBlankString(unsigned char *s)
-{
-    while (*s)
-	if (!isspace(*s++)) return 0;
-    return 1;
-}
-
 #define WARN_NA	   1
 #define WARN_INACC 2
 #define WARN_IMAG  4

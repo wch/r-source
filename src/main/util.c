@@ -648,6 +648,13 @@ SEXP type2str(SEXPTYPE t)
     return R_NilValue; /* for -Wall */
 }
 
+int isBlankString(unsigned char *s)
+{
+    while (*s)
+	if (!isspace(*s++)) return 0;
+    return 1;
+}
+
 int StringBlank(SEXP x)
 {
     if (x == R_NilValue) return 1;
