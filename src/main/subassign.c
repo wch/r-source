@@ -1269,15 +1269,23 @@ static SEXP DeleteOneVectorListItem(SEXP x, int which)
 
 SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP dims, index, names, newname, subs, x, y, ans;
-    int i, ndims, nsubs, offset, stretch, which;
-
-    gcall = call;
+    SEXP ans;
+    SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
     if(DispatchOrEval(call, "[[<-", args, rho, &ans, 0))
       return(ans);
 
-    PROTECT(args = ans);
+    return do_subassign2_dflt(call, op, ans, rho);
+}
+
+SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP dims, index, names, newname, subs, x, y;
+    int i, ndims, nsubs, offset, stretch, which;
+
+    gcall = call;
+
+    PROTECT(args);
 
     SubAssignArgs(args, &x, &subs, &y);
 
@@ -1525,16 +1533,19 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 */
 SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, nlist, val, t, ans, input;
+    SEXP nlist, ans, input;
+    int iS;
+    SEXP R_subassign3(SEXP, SEXP, SEXP, SEXP);
+
     checkArity(op, args);
-    gcall = call;
 
     /* Note the RHS has alreaty been evaluated at this point */
 
     input = allocVector(STRSXP, 1);
 
     nlist = CADR(args);
-    if(isSymbol(nlist) )
+    iS = isSymbol(nlist);
+    if (iS)
 	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
     else if(isString(nlist) )
 	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
@@ -1549,20 +1560,26 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     if(DispatchOrEval(call, "$<-", args, env, &ans, 0))
       return(ans);
 
-#ifdef OLD
-    PROTECT(x = eval(CAR(args), env));
-    val = eval( CADDR(args), env);
-#else
-    PROTECT(x = CAR(ans));
-    val = CADDR(ans);
-#endif
-    if (NAMED(val)) val = duplicate(val);
-    PROTECT(val);
+    if (! iS)
+	nlist = install(CHAR(STRING_ELT(input, 0)));
+
+    return R_subassign3(call, CAR(ans), nlist, CADDR(ans));
+}
+
+SEXP R_subassign3(SEXP call, SEXP x, SEXP nlist, SEXP val)
+{
+    SEXP t;
+    PROTECT_INDEX pvalidx;
+
+    gcall = call;
+
+    PROTECT(x);
+    PROTECT_WITH_INDEX(val, &pvalidx);
+
+    if (NAMED(val))
+	REPROTECT(val = duplicate(val), pvalidx);
 
     if ((isList(x) || isLanguage(x)) && !isNull(x)) {
-	nlist = CADR(args);
-	if (isString(nlist))
-	    nlist = install(CHAR(STRING_ELT(nlist, 0)));
 	if (TAG(x) == nlist) {
 	    if (val == R_NilValue) {
 		SET_ATTRIB(CDR(x), ATTRIB(x));
@@ -1605,11 +1622,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	names = getAttrib(x, R_NamesSymbol);
 	nx = length(x);
-	nlist = CADR(args);
-	if (isString(nlist))
-	    nlist = STRING_ELT(nlist, 0);
-	else
-	    nlist = PRINTNAME(nlist);
+	nlist = PRINTNAME(nlist);
 	if (isNull(val)) {
 	    /* If "val" is NULL, this is an element deletion */
 	    /* if there is a match to "nlist" otherwise "x" */
