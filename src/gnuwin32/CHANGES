@@ -51,6 +51,13 @@ README.packages).
 
 New makefile target zipdata-% to zip up data directories in packages.
 
+There is an example package `windlgs' in the package sources
+distribution that shows how to use graphapp to build dialog boxes to
+be called from menus, with a worked example of a t test done in three
+ways.  More details of graphapp, including a tutorial and a reference
+manual, are at http://www.cs.usyd.edu.au/~loki/GraphApp.
+
+
 A long-standing bug in the (vertical) alignment of symbols in plotmath
 has been corrected.
 

@@ -33,3 +33,10 @@ R_BlankString
 R_PreciousList
 R_Visible
 R_EvalDepth
+ArrowCursor
+BlankCursor
+WatchCursor
+CaretCursor
+TextCursor
+HandCursor
+RConsole

@@ -1,0 +1,7 @@
+Package: windlgs
+Version: 1.1.0
+Priority: base
+Title: Examples of Windows Dialogs
+Description: Examples of Windows Dialogs
+Depends:
+License: GPL

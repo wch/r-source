@@ -1,0 +1,1 @@
+CFLAGS+= -I$(RHOME)/src/gnuwin32/graphapp

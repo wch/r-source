@@ -630,11 +630,17 @@ dlltool --export-all-symbols --output-def X.def X_main.o
 dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
 @end example
 @noindent
-or (VC++)
+or (VC++, which requires extension @code{.cpp})
 
 @example
 cl /MT /c X.cpp X_main.cpp
-link /dll /out:XX.dll /export:X_main X.obj X_main.obj
+link /dll /out:X.dll /export:X_main X.obj X_main.obj
+@end example
+@noindent
+or (Borland C++)
+
+@example
+bcc32 -u- -WDE X.cpp X_main.cpp
 @end example
 @noindent
 and call the entry point(s) in @code{X_R}, such as @code{X_main}.
@@ -665,14 +671,14 @@ documented in the @emph{`Writing R Extensions'} manual.
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 May 10 by Brian Ripley
+Last edited 2000 May 12 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 May 10 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 May 12 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

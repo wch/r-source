@@ -334,6 +334,8 @@ packagedist:
 	$(CP) readme.packages $(RPREFIX)
 	$(CP) ../../etc/Rdconvlib.pl ../../etc/buildlib.pl \
 	   ../../etc/html-layout.pl $(RPREFIX)/etc
+	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
+	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
