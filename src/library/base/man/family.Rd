@@ -32,7 +32,7 @@ print.family(x, \dots)
     the \code{quasi} family the links \code{logit}, \code{probit},
     \code{cloglog},  \code{identity}, \code{inverse}, \code{log},
     \code{1/mu^2} and \code{sqrt}.
-    The function \code{power} can also be used to create a
+    The function \code{\link{power}} can also be used to create a
     power link function for the \code{quasi} family.
 
     The other families have only one permissible link function:
@@ -67,7 +67,7 @@ print.family(x, \dots)
   London: Chapman and Hall.
 }
 \seealso{
-  \code{\link{glm}}
+  \code{\link{glm}}, \code{\link{power}}.
 }
 \examples{
 nf <- gaussian()# Normal family
