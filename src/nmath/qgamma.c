@@ -36,7 +36,12 @@
 
 #include "Mathlib.h"
 
+#ifdef DEBUG_q
+# include "PrtUtil.h"
+#endif
+
 double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
+/*			shape = alpha */
 {
 #define C7	4.67
 #define C8	6.66
@@ -68,6 +73,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     R_Q_P01_check(p);
     if (alpha <= 0) ML_ERR_return_NAN;
 
+    /* FIXME: This (cutoff to {0, +Inf}) is far from optimal when log_p: */
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
     if (/* 0 <= */ p_ < pMIN) return 0;
     if (/* 1 >= */ p_ > pMAX) return ML_POSINF;
@@ -80,9 +86,16 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 
 /*----- Phase I : Starting Approximation */
 
+#ifdef DEBUG_qgamma
+    REprintf("qgamma(p=%7g, alpha=%7g, scale=%7g, l.t.=%2d, log_p=%2d): ",
+	     p,alpha,scale, lower_tail, log_p);
+#endif
 
     if(v < (-1.24)*R_DT_log(p)) {	/* for small chi-squared */
 
+#ifdef DEBUG_qgamma
+	REprintf(" small chi-sq.\n");
+#endif
 	/* FIXME: Improve this "if (log_p)" :
 	 *	  (A*exp(b)) ^ 1/al */
 	ch = pow(p_* alpha*exp(g+alpha*M_LN2), 1/alpha);
@@ -96,6 +109,9 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 	p1 = 0.222222/v;
 	ch = v*pow(x*sqrt(p1)+1-p1, 3);
 
+#ifdef DEBUG_qgamma
+	REprintf(" v > .32: Wilson-Hilferty; x = %7g\n", x);
+#endif
 	/* starting approximation for p tending to 1 */
 
 	if( ch > 2.2*v + 6 )
@@ -105,6 +121,9 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 
 	ch = 0.4;
 	a = R_DT_Clog(p) + g + c*M_LN2;
+#ifdef DEBUG_qgamma
+	REprintf(" v <= .32: a = %7g\n", a);
+#endif
 	do {
 	    q = ch;
 	    p1 = 1. / (1+ch*(C7+ch));
@@ -113,6 +132,10 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 	    ch -= (1- exp(a+0.5*ch)*p2*p1)/t;
 	} while(fabs(q - ch) > EPS1*fabs(ch));
     }
+
+#ifdef DEBUG_qgamma
+    REprintf("\t==> ch = %10g:", ch);
+#endif
 
 /*----- Phase II: Iteration
  *	Call pgamma() [AS 239]	and calculate seven term taylor series

@@ -31,6 +31,10 @@
  */
 #include "Mathlib.h"
 
+#ifdef DEBUG_qbinom
+# include "PrtUtil.h"
+#endif
+
 double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 {
     double q, mu, sigma, gamma, z, y;
@@ -55,6 +59,11 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     sigma = sqrt(n * pr * q);
     gamma = (q - pr) / sigma;
 
+#ifdef DEBUG_qbinom
+    REprintf("qbinom(p=%7g, n=%7g, pr=%7g, l.t.=%2d, log=%2d): "
+	     "sigm=%7g, gam=%5g\n",
+	     p,n,pr, lower_tail, log_p, sigma, gamma);
+#endif
     /* FIXME: This is far from optimal :
        -- "same" code in qpois.c, qbinom.c, qnbinom.c */
     if(!lower_tail || log_p)
@@ -63,10 +72,17 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     z = qnorm(p, 0., 1., /*lower_tail*/LTRUE, /*log_p*/LFALSE);
     y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
 
+#ifdef DEBUG_qbinom
+    REprintf("  new p=%7g, z=%7g, y=%5g\n", p, z, y);
+#endif
     z = pbinom(y, n, pr, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
 
     /* fuzz to ensure left continuity: */
     p *= 1 - 64*DBL_EPSILON;
+#ifdef DEBUG_qbinom
+    REprintf("\tnew z=%7g >=? p = %7g\n", z,p);
+#endif
+
 #ifdef maybe_future
     if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
 #else
