@@ -12,13 +12,15 @@ file.info(...)
   \item{\dots}{character vectors containing file names.}
 }
 \details{
-  The file times given by this function are in days and partial days
-  since 1970-1-1.  These will be interpreted by the \code{chron}
-  function in package \code{chron} as days and times in the UTC
-  time zone, that is ignoring any timezone information.
+  What is meant by ``file access'' and hence the last access time is
+  system-dependent.
 
+#ifdef unix
+  On most systems symbolic links are followed, so information is given
+  about the file to which the link points rather than about the link.
+#endif
 #ifdef windows
-  File modes are probably only useful on Windows NT machines.
+  File modes are probably only useful on Windows NT/2000 machines.
 #endif
 }
 \value{
@@ -27,8 +29,8 @@ file.info(...)
   \item{isdir}{logical: Is the file a directory?}
   \item{mode}{integer of class \code{"octmode"}.  The file permissions,
     printed in octal, for example \code{644}.}
-  \item{mtime, ctime, atime}{real: file modification, creation and last
-    access times in days since 1970-1-1 in the UTC timezone.}
+  \item{mtime, ctime, atime}{integer of class \code{"POSIXct"}:
+    file modification, creation and last access times.}
 #ifdef unix
   \item{uid}{integer: the user ID of the file's owner.}
   \item{gid}{integer: the group ID of the file's group.}
@@ -43,23 +45,16 @@ The \code{uid}}, \code{gid}, \code{uname} and \code{grname} columns
 may not be supplied on a non-POSIX Unix system.
 #endif
 }
-
-\author{B. D. Ripley}
-
 \note{
   This function will only be operational on systems with the
   \code{stat} system call, but that seems very widely available.
-
-  The internal function returns times in the Unix format of seconds
-  since 1970-1-1 should that ever be required.
-
-  What is meant by file access time is system-dependent.
 }
-\section{Warning}{
-  The format and handling of file dates will be changed before release.
-}
+\author{B. D. Ripley}
+
 \seealso{
-  \code{\link{file}}, \code{\link{file.access}}, \code{\link{list.files}}
+  \code{\link{file}}, \code{\link{file.access}},
+  \code{\link{list.files}},
+  and \code{\link{DateTimeClasses}} for the date formats.
 }
 \examples{
 %-- the output of this should be "diff"able
