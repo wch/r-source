@@ -45,6 +45,16 @@ library <-
                        "See the Note in ?library"))
     }
 
+    checkNoGenerics <- function(env) {
+        if (exists(".noGenerics", envir = env, inherits = FALSE))
+            TRUE
+        else {
+            ## A package will have created a generic
+            ## only if it has created a formal method.
+            length(objects(env, pattern="^\\.__M", all=TRUE)) == 0
+        }
+    }
+
     checkConflicts <- function(package, pkgname, pkgpath, nogenerics)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
@@ -155,13 +165,7 @@ library <-
                     if (logical.return) return(FALSE)
                     else stop(".First.lib failed")
             }
-            nogenerics <- exists(".noGenerics", envir = env, inherits = FALSE)
-            if(!nogenerics) {
-                ## A package will have created a generic
-                ## only if it has created a formal method.
-                nogenerics <-
-                    length(objects(env, pattern="^\\.__M", all=TRUE)) == 0
-            }
+            nogenerics <- checkNoGenerics(env)
 	    if(warn.conflicts &&
                !exists(".conflicts.OK", envir = env, inherits = FALSE))
                 checkConflicts(package, pkgname, pkgpath, nogenerics)
