@@ -11,6 +11,9 @@ We work around reported bugs in Windows XP as to which characters are
 printable by attempting to print all non-control characters when using
 print().
 
+There are now facilities (documented in file src/gnuwin32/INSTALL) to
+add packages when building the R installer.
+
 
 
 R 2.0.1

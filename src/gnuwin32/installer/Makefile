@@ -4,8 +4,11 @@ include ../MkRules
 R_HOME = ../../..
 include $(R_HOME)/share/make/vars.mk
 
+## use next to install other packages from main library
+EXTRA_PKGS =
+
 RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
-LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
+LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
 INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ NEWS ONEWS README RESOURCES \
 	THANKS Y2K

@@ -540,8 +540,9 @@ else
 	done
 endif
 
+EXTRA_PKGS=
 rinstaller:
-	$(MAKE) -C installer
+	$(MAKE) -C installer EXTRA_PKGS='$(EXTRA_PKGS)'
 	$(MAKE) -C installer clean
 
 crandir:
