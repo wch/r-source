@@ -93,10 +93,15 @@ version.tex: $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	  OPTS="--latex" $(MAKE) PKGS="$*" DOCS
 	./lib2tex $*
 FORCE:
-R-exts.dvi: R-exts.texi $(srcdir)/texinfo.tex
+R-exts.dvi: R-exts.texi version.texi $(srcdir)/texinfo.tex
+
+version.texi: $(top_srcdir)/VERSION
+	@echo "creating $(subdir)/$@"
+	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
+	  echo "@set VERSION $${v}" > $@)
 
 info: R-exts.info
-R-exts.info: R-exts.texi
+R-exts.info: R-exts.texi version.texi
 
 pdf: refman.pdf R-exts.pdf
 refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
@@ -109,7 +114,7 @@ refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
-R-exts.pdf: R-exts.texi $(srcdir)/texinfo.tex
+R-exts.pdf: R-exts.texi version.texi $(srcdir)/texinfo.tex
 
 install: installdirs install-tex
 	@echo "Installing doc/manual ..."
@@ -164,7 +169,8 @@ clean:
 	fi
 	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.info* *.ky *.kys \
 	  *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp *.toc *.tp  \
-	  *.vr *.vrs *-pkg.tex refman.i?? refman.tex version.tex
+	  *.vr *.vrs *-pkg.tex refman.i?? refman.tex version.tex \
+	  version.texi
 distclean: clean
 	@-rm -f Makefile lib2tex refman.top
 maintainer-clean: distclean

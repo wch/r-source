@@ -2,7 +2,6 @@
 @c %**start of header
 @setfilename R-exts.info
 @settitle Writing R Extensions
-@set VERSION 0.90.1-0
 @setchapternewpage on
 @c %**end of header
 
@@ -16,6 +15,7 @@
 @finalout
 
 @include R-defs.texi
+@include version.texi
 
 @ifinfo
 This is a guide to extending R.
