@@ -50,7 +50,9 @@
   Jonathan Rougier,
   Bill Simpson,
   Terry Therneau,
-  Bill Venables, and
+  Bill Venables,
+  Gregory R. Warnes,
+  and
   Andreas Weingessel.
 
   We have probably omitted some important names here because of
