@@ -414,6 +414,9 @@ C-LEVEL FACILITIES
 	(Note that the interface is changed from that used in the
 	unexported header Parse.h in earlier versions.)
 
+    o   The header R_ext/Mathlib.h has been removed.  It was replaced by
+	Rmath.h in R 1.2.0.
+
 
 UTILITIES
 
