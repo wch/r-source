@@ -32,6 +32,9 @@ rep(x, times, length.out)
   \code{length.out} and \code{times} are specified, \code{times}
   determines the replication, and \code{length.out} can be used to
   truncate the output vector (or extend it by \code{NA}s).
+
+  Non-integer values of \code{times} will be truncated towards zero.
+  If \code{times} is a computed quantity it is prudent to add a small fuzz.
 }
 \note{
   If the original vector has names, these are also replicated and so
@@ -46,6 +49,9 @@ rep(1:4, c(2,2,2,2))     # same as above, length 8.
 rep(1:4, c(2,1,2,1))
 rep(1:4, c(2,2,2,2), 4)  # first 4 only.
 rep(1:4, c(2,2,2,2), 10) # 8 intgers plus two NAs
+
+rep(1, 40*(1-.8)) # length 7 on most platforms
+rep(1, 40*(1-.8)+1e-7) # better
 
 ## replicate a list
 fred <- list(happy = 1:10, name = "squash")
