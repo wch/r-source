@@ -7,11 +7,6 @@
 @set RVERSION @RVER@
 @c %**end of header
 
-@dircategory Programming
-@direntry
-* R for Windows FAQ: (rw-FAQ).  The R for Windows FAQ.
-@end direntry
-
 @finalout
 
 @macro newchap{}
