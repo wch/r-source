@@ -327,7 +327,7 @@ sub build_index { # lib, dest
 		my $an = $main::aliasnm{$alias};
 		if ($an) {
 		    if($an ne $manfilebase) {
-			warn "\\$1\{$alias\} already in $an.Rd -- " .
+			warn "\\alias\{$alias\} already in $an.Rd -- " .
 			    "skipping the one in $manfilebase.Rd\n";
 		    }
 		} else {
