@@ -56,7 +56,7 @@ NEW FEATURES
 	that indicates that the result is intended to be human-readable.
 	When TRUE, some details (e.g. attributes, quoting) are omitted.
 	When FALSE, the result is usually parseable to reproduce the
-	object. dump() defaults to FALSE, the others default to TRUE.
+	object.  dump() defaults to FALSE, the others default to TRUE.
 
 	deparse(), dput() and dump() have a new 'useSource' argument
 	that indicates they should used saved source for function
@@ -124,9 +124,9 @@ NEW FEATURES
     o	There is a new atomic vector type, class "raw".	 See ?raw for
 	full details including the operators and utility functions provided.
 
-    o	The png() and jpeg() devices (and the bmp() device under
-	Windows) now allow a nominal resolution to be recorded in the file.
-
+    o	The png() and jpeg() devices (and the bmp() device under Windows) 
+	now allow a nominal resolution to be recorded in the file.
+ 
     o	ls.str() and lsf.str() now return an object of class "ls_str" which
 	has a print method.
 
