@@ -132,9 +132,10 @@ It will display in the currently set pager (use options(pager=) to change).
 (ii) Compiled HTML files.  Set this as the default by
 options(chmhelp=T) or for individual help items by help(topic,
 chmhelp=T).  Full text search is available from the Search tab.
-According to Microsoft, to make use of this you will need a recent
-version of Windows or have IE4 or later installed, or use the updater
-hhupd.exe on CRAN at bin/windows/windows-NT/etc.
+According to Microsoft, to make use of this you will need to have IE3
+or later installed and a recent version of Windows or (not Windows
+2000) use the updater hhupd.exe at
+http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm.
 
 (iii) Windows .hlp files. Set this as the default by
 options(winhelp=T) or for individual help items by help(topic,
