@@ -35,6 +35,8 @@ BUG FIXES
     o	monthly multivariate time series now print proper month names
 	in all cases.
 
+    o	print.stl(), print.princomp() and print.prcomp() now pass on
+	`digits =' etc.
 
 
 		CHANGES IN R VERSION 1.2.0
