@@ -720,7 +720,7 @@ as.data.frame.POSIXlt <- function(x, row.names = NULL, optional = FALSE)
 }
 
 hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
-                        axes = TRUE, plot = TRUE, freq = FALSE,
+                        plot = TRUE, freq = FALSE,
                         start.on.monday = TRUE, format)
 {
     if(!inherits(x, "POSIXt")) stop("wrong method")
@@ -773,17 +773,26 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
     res$intensities <- res$intensities*incr
     res$xname <- xlab
     if(plot) {
-        plot(res, xlab = xlab, axes = FALSE, freq = freq, ...)
-        if(axes) {
-            axis(2, ...)
-            if(num.br)
-                breaks <- c.POSIXct(res$breaks)
-            axis.POSIXct(1, at = breaks,  format = format, ...)
+        ## trick to swallow arguments for hist.default, separate out `axes'
+        myplot <- function(res, xlab, freq, format, breaks,
+                           right, include.lowest, labels = FALSE,
+                           axes = TRUE, ...)
+        {
+            plot(res, xlab = xlab, axes = FALSE, freq = freq,
+                 labels = labels, ...)
+            if(axes) {
+                axis(2, ...)
+                if(num.br) breaks <- c.POSIXct(res$breaks)
+                axis.POSIXct(1, at = breaks,  format = format, ...)
                                         # `...' : e.g. cex.axis
+            }
         }
+        myplot(res, xlab, freq, format, breaks, ...)
      }
     invisible(res)
 }
+
+# ---- additions in 1.8.0 -----
 
 rep.POSIXct <- function(x, times, ...)
 {

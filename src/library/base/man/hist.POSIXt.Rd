@@ -10,7 +10,7 @@
 }
 \synopsis{
 hist.POSIXt(x, breaks, ..., xlab = deparse(substitute(x)),
-            axes = TRUE, plot = TRUE, freq = FALSE,
+            plot = TRUE, freq = FALSE,
             start.on.monday = TRUE, format)
 }
 \arguments{
@@ -22,7 +22,9 @@ hist.POSIXt(x, breaks, ..., xlab = deparse(substitute(x)),
     \code{"hours"}, \code{"days"}, \code{"weeks"}, \code{"months"}
     or \code{"years"}.
  }
-  \item{\dots}{graphical parameters.}
+  \item{\dots}{graphical parameters, or arguments to
+    \code{\link{hist.default}} such as \code{include.lowest},
+      \code{right} and \code{labels}.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
     plotted, otherwise a list of breaks and counts is returned.}
   \item{freq}{logical; if \code{TRUE}, the

@@ -82,8 +82,8 @@ NEW FEATURES
     o   xy.coords() coerces "POSIXt" objects to "POSIXct", allowing
 	lines etc to added to plot.POSIXlt() plots.
 
-    o   plot.mts() has a new argument `nc' controlling the number of
-	columns (with default the old behaviour).
+    o   plot.ts() has a new argument `nc' controlling the number of
+	columns (with default the old behaviour for plot.mts).
 
     o	capture.output() takes arbitrary connections for `file' argument.
 
@@ -111,6 +111,8 @@ NEW FEATURES
 
     o	*, - and / work more generally on difftime objects, which now
 	have a diff() method.
+
+    o	hist.POSIXt() can now pass arguments to hist.default()
 
 
 DEPRECATED & DEFUNCT
