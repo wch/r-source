@@ -22,5 +22,5 @@ md5sum(files)
 \examples{
 md5sum(dir())
 }
-\keyword{utilitiest}
+\keyword{utilities}
 
