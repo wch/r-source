@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -217,7 +217,7 @@ SEXP complex_binary(int code, SEXP s1, SEXP s2)
 }
 
 SEXP do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
-{ 
+{
     SEXP x, y;
     int i, n;
 
@@ -342,7 +342,7 @@ static void z_rround(complex *r, complex *x, complex *p)
 }
 
 	/* Question:  This treats real and imaginary parts */
-	/* separately.  Should it do them jointly? */
+	/* separately.	Should it do them jointly? */
 
 static void z_prec(complex *r, complex *x, complex *p)
 {
@@ -368,7 +368,7 @@ static void z_exp(complex *r, complex *z)
 {
     double expx;
     expx = exp(z->r);
-    r->r = expx * cos(z->i); 
+    r->r = expx * cos(z->i);
     r->i = expx * sin(z->i);
 }
 
@@ -399,7 +399,7 @@ static void z_cos(complex *r, complex *z)
 static void z_sin(complex *r, complex *z)
 {
     r->r = sin(z->r) * cosh(z->i);
-    r->i = cos(z->r) * sinh(z->i);  
+    r->i = cos(z->r) * sinh(z->i);
 }
 
 static void z_tan(complex *r, complex *z)
@@ -414,7 +414,7 @@ static void z_tan(complex *r, complex *z)
 
 	/* Complex Arcsin Function */
 	/* Equation (4.4.37) Abramowitz and Stegun */
-	
+
 static void z_asin(complex *r, complex *z)
 {
     double alpha, beta, t1, t2, x, y;
@@ -462,7 +462,7 @@ static void z_atan2(complex *r, complex *csn, complex *ccs)
 	}
 	else {
 	    r->r = fsign(0.5*pi, csn->r);
-	    r->i = 0;  
+	    r->i = 0;
 	}
     }
     else {
@@ -470,7 +470,7 @@ static void z_atan2(complex *r, complex *csn, complex *ccs)
 	z_atan(r, &tmp);
 	if(ccs->r < 0) r->r += pi;
 	if(r->r > pi) r->r -= 2 * pi;
-    }       
+    }
 }
 
 static void z_acosh(complex *r, complex *z)
@@ -531,7 +531,7 @@ static void z_tanh(complex *r, complex *z)
 
 static void cmath1(void (*f)(), complex *x, complex *y, int n)
 {
-    int i;		  
+    int i;
 
     for (i=0; i<n; i++) {
 	if (ISNA(x[i].r) || ISNA(x[i].i)) {
@@ -564,6 +564,8 @@ SEXP complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 10002: cmath1(z_atan, COMPLEX(x), COMPLEX(y), n); break;
     case 10003: cmath1(z_log, COMPLEX(x), COMPLEX(y), n); break;
 
+    case 0: errorcall(call,
+		      "'abs' unimplemented for complex; use Mod(.)\n"); break;
     case 3:  cmath1(z_sqrt, COMPLEX(x), COMPLEX(y), n); break;
 
     case 10: cmath1(z_exp, COMPLEX(x), COMPLEX(y), n); break;
@@ -585,6 +587,7 @@ SEXP complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	MATH1(40, lgamma);
 	MATH1(41, gamma);
 #endif
+
 
     default:
 	errorcall(call, "unimplemented complex function\n");
@@ -649,7 +652,7 @@ static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, void (*f)())
     return sy;
 }
 
-        /* Complex Functions of Two Arguments */
+	/* Complex Functions of Two Arguments */
 
 SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
