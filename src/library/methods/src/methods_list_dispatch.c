@@ -6,6 +6,8 @@
 #include "RSMethods.h"
 
 /* from Defn.h */
+#define type2str		Rf_type2str
+SEXP type2str(SEXPTYPE);
 #define type2symbol		Rf_type2symbol
 SEXP type2symbol(SEXPTYPE);
 #define findVarInFrame		Rf_findVarInFrame
@@ -125,7 +127,7 @@ static SEXP R_data_class(SEXP obj)
 		class = mkChar("array");
 	}
 	else {
-	    class = R_mode(obj);
+	    class = type2str(TYPEOF((obj)));
 	}
     }
     else
