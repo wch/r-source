@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-6, 2000-12-20
+Version 1.2-7, 2000-12-22
 Kurt Hornik
 
 
@@ -343,8 +343,8 @@ packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x/7.x packages for the alpha and i386
 platforms and 6.x packages for the sparc platform (maintained by Naoki
 Takebayashi, Vin Everett, and Martyn Plummer, respectively), SuSE 6.4/7.0
-i386 packages by Albrecht Gebhardt, Mandrake 7.1 i386 packages by Michele
-Alzetta, and Linuxppc 5.0 RPMs by Alex Buerkle.
+i386 packages by Albrecht Gebhardt, Mandrake 7.1/7.2 i386 packages by
+Michele Alzetta, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
