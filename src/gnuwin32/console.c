@@ -377,7 +377,7 @@ newconsoledata(font f, int rows, int cols,
     FH = fontheight(f);
     FW = fontwidth(f);
     WIDTH = (COLS + 1) * FW;
-    HEIGHT = (ROWS + 1) * FH;
+    HEIGHT = (ROWS + 1) * FH + 1; /* +1 avoids size problems in MDI */
     FV = FC = 0;
     p->newfv = p->newfc = 0;
     p->firstkey = p->numkeys = 0;
@@ -1664,11 +1664,12 @@ static void pagermenuact(control m)
     }
 }
 
+extern RECT RframeRect; /* client area of main window */
 #define MCHECK(a) if (!(a)) {freeConsoleData(p);del(c);return NULL;}
 static pager pagercreate()
 {
     ConsoleData p;
-    int w, h, i, x, y;
+    int w, h, i, x, y, w0, h0;
     pager c;
     menuitem m;
 
@@ -1678,7 +1679,7 @@ static pager pagercreate()
 		       PAGER);
     if (!p) return NULL;
 
-    if (ismdi()) {
+/*    if (ismdi()) {
 	x = y = w = h = 0;
     }
     else {
@@ -1686,6 +1687,26 @@ static pager pagercreate()
 	h = HEIGHT;
 	x = (devicewidth(NULL) - w) / 2;
 	y = (deviceheight(NULL) - h) / 2 ;
+	} */
+    w = WIDTH ;
+    h = HEIGHT;
+    /* centre a single pager, randomly place each of multiple pagers */
+    if(ismdi()) {
+	w0 = RframeRect.right;
+	h0 = RframeRect.bottom - 50; /* allow for toolbar, menubar */
+    } else {
+	w0 = devicewidth(NULL);
+	h0 = deviceheight(NULL);
+    }
+    x = (w0 - w) / 2; x = x > 20 ? x:20;
+    y = (h0 - h) / 2; y = y > 20 ? y:20;
+    if(pagerMultiple) {
+	DWORD rand = GetTickCount();
+	int w0 = 0.4*x, h0 = 0.4*y;
+	w0 = w0 > 20 ? w0 : 20;
+	h0 = h0 > 20 ? h0 : 20;
+	x += (rand % w0) - w0/2;
+	y += ((rand/w0) % h0) - h0/2;
     }
     c = (pager) newwindow("PAGER", rect(x, y, w, h),
 			  Document | StandardWindow | Menubar |
@@ -2023,10 +2044,12 @@ static void apply(button b)
     pagerrow = newGUI.prows;
     pagercol = newGUI.pcols;
 
-    if(haveusedapager && newGUI.pagerMultiple != pagerMultiple) {
-	if(askokcancel("Do not change pager type if any pager is open\nProceed?") 
-	   == YES)  pagerMultiple = newGUI.pagerMultiple;
-	else if(pagerMultiple) {
+    if(newGUI.pagerMultiple != pagerMultiple) {
+	if(!haveusedapager || 
+	   askokcancel("Do not change pager type if any pager is open\nProceed?") 
+	   == YES)  
+	    pagerMultiple = newGUI.pagerMultiple;
+	if(pagerMultiple) {
 	    check(rb_mwin); uncheck(rb_swin);
 	} else {check(rb_swin); uncheck(rb_mwin);}
     }
@@ -2041,7 +2064,9 @@ static void save(button b)
     FILE *fp;
 
     setuserfilter("All files (*.*)\0*.*\0\0");
-    file = askfilesave("Select directory for Rconsole", "Rconsole");
+    strcpy(buf, getenv("R_USER"));
+    file = askfilesavewithdir("Select directory for Rconsole", 
+			      "Rconsole", buf);
     if(!file) return;
     strcpy(buf, file);
     p = buf + strlen(buf) - 2;
@@ -2175,8 +2200,8 @@ void Rgui_configure()
 	setlistitem(f_font, cmatch(pf, FontsList));
     }
 
-    l_point = newlabel("size", rect(310, 100, 30, 20), AlignLeft);
-    d_point = newdropfield(PointsList, rect(350, 100, 50, 20), NULL);
+    l_point = newlabel("size", rect(300, 100, 30, 20), AlignLeft);
+    d_point = newdropfield(PointsList, rect(335, 100, 50, 20), NULL);
     sprintf(buf, "%d", pointsize);
     setlistitem(d_point, cmatch(buf, PointsList));
     l_style = newlabel("style", rect(410, 100, 40, 20), AlignLeft);

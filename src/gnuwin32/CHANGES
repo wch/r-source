@@ -15,6 +15,9 @@ it to ghostscript to interpret PostScript for the printer): the RedMon
 suite available from http://www.cs.wisc.edu/~ghost/rjl.html should
 provide suitable tools.
 
+The placement of multiple pagers is now `random' and under the MDI
+interface the pager rows and columns settings are respected.
+
 
 rw1001
 ======

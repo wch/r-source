@@ -184,6 +184,7 @@ void redraw(control obj)
 */
 void resize(control obj, rect r)
 {
+        RECT R;
 	WINDOWPLACEMENT W;
 	int dw, dh, dx, dy;
 
@@ -198,8 +199,13 @@ void resize(control obj, rect r)
 			GetWindowPlacement(obj->handle, &W);
 			dx = r.x - obj->rect.x;
 			dy = r.y - obj->rect.y;
+			/* don't believe current sizes!
 			dw = r.width - obj->rect.width;
 			dh = r.height - obj->rect.height;
+			Rprintf("dw %d dh %d\n", dw, dh); */
+			GetClientRect(obj->handle, &R);
+			dw = r.width - (R.right - R.left);
+			dh = r.height - (R.bottom - R.top);
 			W.rcNormalPosition.left += dx;
 			W.rcNormalPosition.top += dy;
 			W.rcNormalPosition.right += dx + dw;

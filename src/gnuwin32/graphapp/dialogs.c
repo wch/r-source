@@ -181,6 +181,11 @@ char *askfilename(char *title, char *default_name)
 
 char *askfilesave(char *title, char *default_name)
 {
+    return askfilesavewithdir(title, default_name, NULL);
+}
+
+char *askfilesavewithdir(char *title, char *default_name, char *dir)
+{
 	int i;
 	OPENFILENAME ofn;
         char cwd[MAX_PATH];
@@ -201,10 +206,14 @@ char *askfilesave(char *title, char *default_name)
 	ofn.nMaxFile        = _MAX_PATH;
 	ofn.lpstrFileTitle  = NULL;
 	ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
-        if (GetCurrentDirectory(MAX_PATH,cwd))
-            ofn.lpstrInitialDir = cwd;
-        else
-            ofn.lpstrInitialDir = NULL;
+	if(dir && strlen(dir) > 0)
+	    ofn.lpstrInitialDir = dir;
+	else {
+	    if (GetCurrentDirectory(MAX_PATH,cwd))
+		ofn.lpstrInitialDir = cwd;
+	    else
+		ofn.lpstrInitialDir = NULL;
+	}
 	ofn.lpstrTitle      = title;
 	ofn.Flags           = OFN_OVERWRITEPROMPT |
                               OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
@@ -387,7 +396,7 @@ static int handle_message_dialog(window w)
 	return d->hit;
 }
 
-static window init_askstr_dialog(char *title, char *question, 
+static window init_askstr_dialog(char *title, char *question,
 				 char *default_str)
 {
 	window win;
@@ -414,7 +423,7 @@ static window init_askstr_dialog(char *title, char *question,
 	if (title == FINDDIR_TITLE) {
 	    bw = strwidth(SystemFont, BROWSE_STRING) * 3/2;
 	    d->text = newfield(default_str, rect(10,h*4,tw+4-bw,h*3/2));
-	    newbutton(BROWSE_STRING, rect(20+tw-bw, h*4-2, bw, h+10), 
+	    newbutton(BROWSE_STRING, rect(20+tw-bw, h*4-2, bw, h+10),
 		      browse_button);
 	}
 	else if (title == PASSWORD_TITLE)

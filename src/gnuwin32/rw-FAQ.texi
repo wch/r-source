@@ -203,12 +203,12 @@ path_to_R\bin\rterm.exe --vsize=10M --nsize=500k --no-restore --no-save < %1 > %
 @node Can I use rwXxxx with ESS and emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
 @section Can I use rwXxxx with ESS and emacs?
 
-Yes. The latest versions of ESS (e.g. 5.1.11) come with support for this
-version of R, and @code{rw0650} and later have support for interrupting
-the R process from ESS (by @code{C-c C-c}).
+Yes. The latest versions of ESS (e.g. 5.1.13) come with support for this
+version of R, and there is support for interrupting the R process from
+ESS (by @code{C-c C-c}).
 
-For help with ESS, please send email to @uref{ESS-help@@stat.ethz.ch}, not the R
-mailing lists.
+For help with ESS, please send email to @uref{ESS-help@@stat.ethz.ch},
+not the R mailing lists.
 
 
 @node What are HOME and working directories?,  , Can I use rwXxxx with ESS and emacs?, Installation and Usage
@@ -221,7 +221,7 @@ The working directory is the directory from which @code{Rgui} or
 by the `Start in' field of the shortcut's properties. You can find this
 from R code by the call @code{getwd()}.
 
-The home directory is set as follows (@code{rw0650} on):@*
+The home directory is set as follows:@*
 If environment variable @code{R_USER} is set, its value is used.@*
 Otherwise if environment variable @code{HOME} is set, its value is used.@*
 Otherwise if environment variables @code{HOMEDRIVE} and @code{HOMEPATH} are set,
@@ -394,26 +394,29 @@ and copy the graphics to @code{png}, @code{jpeg}, @code{bmp},
 shortcuts to menu items, and optionally toolbars with buttons giving
 shortcuts to frequent operations.
 
-If you resize the R console the @code{options(width=)} is automatically set to the
-console width (unless disabled in the configuration file).
+If you resize the R console the @code{options(width=)} is automatically
+set to the console width (unless disabled in the configuration file).
 
 The graphics has a history mechanism. As the README says:
 
 @quotation
 `The History menu allows the recording of plots. When plots have been
-recorded they can be reviewed by @key{PgUp} and @key{PgDn}, saved and replaced.
-Recording can be turned on automatically (the Recording item on the list) or
-individual plots can be added (Add or the @key{INS} key). The whole plot history
-can be saved to or retrieved from an R variable in the global environment.
+recorded they can be reviewed by @key{PgUp} and @key{PgDn}, saved and
+replaced.  Recording can be turned on automatically (the Recording item
+on the list) or individual plots can be added (Add or the @key{INS}
+key). The whole plot history can be saved to or retrieved from an R
+variable in the global environment.
 
 There is only one graphics history shared by all the windows devices.'
 @end quotation
 @noindent
-The R console and graphics windows have configuration files stored in the
-@file{RHOME\etc} directory called @file{Rconsole} and @file{Rdevga}; you can
-keep personal copies in your @file{HOME} directory. They contain comments which
-should suffice for you to edit them to your preferences. For more details
-see @code{?Rconsole}.
+The R console and graphics windows have configuration files stored in
+the @file{RHOME\etc} directory called @file{Rconsole} and @file{Rdevga};
+you can keep personal copies in your @file{HOME} directory. They contain
+comments which should suffice for you to edit them to your
+preferences. For more details see @code{?Rconsole}.  From @code{rw1010}
+there is a Preferences editor invoked from the @code{Edit} menu which
+can be used to edit the file @file{Rconsole}.
 
 @newchap{}
 @node Workspaces, The R Console and Fonts, Windows Features, Top
@@ -635,7 +638,7 @@ or (VC++)
 
 @example
 cl /MT /c X.cpp X_R.cpp
-ink /dll /out:XX.dll /export:X_main X.obj X_R.obj
+link /dll /out:XX.dll /export:X_main X.obj X_R.obj
 @end example
 @noindent
 and call the entry point(s) in @code{X_R}.  Construction of static variables
@@ -664,14 +667,14 @@ documented in the @emph{`Writing R Extensions'} manual.
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 February 4 by Brian Ripley
+Last edited 2000 April 6 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 February 4 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 April 6 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

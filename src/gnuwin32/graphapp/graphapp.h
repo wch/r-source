@@ -687,6 +687,7 @@ char *	askpassword(char *question, char *default_string);
 char *	askcdstring(char *question, char *default_string);
 char *	askfilename(char *title, char *default_name);
 char *	askfilesave(char *title, char *default_name);
+char *	askfilesavewithdir(char *title, char *default_name, char *dir);
 
 /*
  *  Time functions.
