@@ -79,6 +79,22 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.6.2
+
+
+BUG FIXES
+
+    o	plot.stepfun() now obeys a `ylim=.' specification.
+
+    o   removeClass() does a better job of removing inheritance
+        information.
+
+    o   setIs() will not allow mismatched representations between two
+        classes (without an explicit coerce method).
+
+
+
+
 		CHANGES IN R VERSION 1.6.1
 
 
@@ -181,6 +197,10 @@ BUG FIXES
 
     o	pretty() values close to 0 in some cases which are now 0 (PR#1032
 	and D.Brahm's mails).
+
+    o	factor.scope() was giving an error rather than a reasonable
+	default in some cases when it was called incorrectly (e.g. via
+	incorrect formula in add1()).
 
 
 BUILD ISSUES

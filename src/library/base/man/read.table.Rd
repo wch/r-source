@@ -189,7 +189,6 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{\link{scan}}, \code{\link{type.convert}},
   \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth
   \emph{f}ormatted input;
-  \code{\link{read.table.url}} for ``reading'' data from the internet;
   \code{\link{write.table}};
   \code{\link{data.frame}}.
 

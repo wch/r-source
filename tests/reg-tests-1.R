@@ -1009,12 +1009,23 @@ dimnames(A) <- list(LETTERS[1:5], letters[1:5])
 stopifnot(is.null(colnames(ev)))
 ## had colnames in 1.6.0
 
+
 ## pretty was not pretty {because seq() isn't} (PR#1032 and D.Brahm)
 stopifnot(pretty(c(-.1, 1))[2] == 0, ## [2] was -2.775558e-17
           pretty(c(-.4,.8))[3] == 0, ## [3] was 5.551115e-17
           pretty(100+ c(0, pi*1e-10))[4] > 100,# < not too much rounding!
           pretty(c(2.8,3))[1] == 2.8)
 ## last differed by 4.44e-16 in R 1.1.1
+
+
+## add1 was giving misleading message when scope was nonsensical.
+counts <- c(18,17,15,20,10,20,25,13,12)
+fit <- glm(counts ~ 1, family=poisson)
+res <- try(add1(fit, ~ .))
+## error in 1.6.0 was
+## `Error in if (ncol(add) > 1) { : missing value where logical needed'
+stopifnot(length(grep("missing value", res)) == 0)
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
