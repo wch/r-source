@@ -37,7 +37,7 @@
   class of the object.
 
   Missing values in \code{newdata} are handled by returning \code{NA} if the
-  linear discriminants cannot be evaluated. If \code{newdata} is omitted and
+  linear fit cannot be evaluated. If \code{newdata} is omitted and
   the \code{na.action} of the fit omitted cases, these will be omitted on the
   prediction.
 }

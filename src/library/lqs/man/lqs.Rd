@@ -7,7 +7,7 @@
 \alias{lqs.default}
 \alias{lmsreg}
 \alias{ltsreg}
-\alias{print.lqs}
+%\alias{print.lqs}
 \title{
 Resistant Regression
 }
