@@ -13,40 +13,42 @@ lsf.str(...)
 \alias{ls.str}
 \alias{lsf.str}
 \arguments{
-\item{object}{any R object about which you want to have some information.}
-\item{max.level}{maximal level of nesting which is applied for
-  displaying nested structures, e.g., a list containing sub lists.
-  Default 0: Display all nesting levels.}
-\item{vec.len}{numeric indicating how many "first few" elements are
-  displayed of each vector. The number is multiplied by different
-  factors (from .5 to 3) depending on the kind of vector.  Default 4.}
-\item{digits.d}{number of digits for numerical components (as for
+  \item{object}{any R object about which you want to have some
+    information.}
+  \item{max.level}{maximal level of nesting which is applied for
+    displaying nested structures, e.g., a list containing sub lists.
+    Default 0: Display all nesting levels.}
+  \item{vec.len}{numeric indicating how many ``first few'' elements are
+    displayed of each vector. The number is multiplied by different
+    factors (from .5 to 3) depending on the kind of vector.  Default 4.}
+  \item{digits.d}{number of digits for numerical components (as for
     \code{\link{print}}).}
-\item{give.attr}{logical; if \code{TRUE} (= default), show attributes as
-  sub structures.}
-\item{give.length}{logical; if \code{TRUE} (= default), indicate length
-  (as \code{[1:\dots]}).}
-\item{wid}{the page width to be used. Defaults to the currently active
-  \code{\link{option}("width")}.}
-\item{nest.lev}{current nesting level in the recursive calls to \code{str}.}
-\item{indent.str}{the indentation string to use.}
+  \item{give.attr}{logical; if \code{TRUE} (= default), show attributes
+    as sub structures.}
+  \item{give.length}{logical; if \code{TRUE} (= default), indicate
+    length (as \code{[1:\dots]}).}
+  \item{wid}{the page width to be used.  The default is the currently
+    active \code{\link{option}("width")}.}
+  \item{nest.lev}{current nesting level in the recursive calls to
+    \code{str}.}
+  \item{indent.str}{the indentation string to use.}
 }
 \description{
-This is a "diagnostic" function, and an alternative to \code{\link{summary}}.
-Ideally, only one line for each "basic" structure is displayed.
-It is especially well suited to compactly display the (abbreviated)
-contents of (possibly nested) lists.
-The idea is to give reasonable output for \bold{any} R object.
-It calls \code{\link{args}} for (non-primitive) function objects.
+  This is a ``diagnostic'' function, and an alternative to
+  \code{\link{summary}}.  Ideally, only one line for each ``basic''
+  structure is displayed.  It is especially well suited to compactly
+  display the (abbreviated) contents of (possibly nested) lists.
+  The idea is to give reasonable output for \bold{any} R object.
+  It calls \code{\link{args}} for (non-primitive) function objects.
 
-\code{\link{ls.str}} and \code{\link{lsf.str}} are useful ``versions'' of
-\code{\link{ls}}, calling \code{str} on each object.
-They are not foolproof and should rather not be used for programming,
-but are provided for their usefulness.
+  \code{\link{ls.str}} and \code{\link{lsf.str}} are useful ``versions''
+  of \code{\link{ls}}, calling \code{str} on each object.  They are not
+  foolproof and should rather not be used for programming, but are
+  provided for their usefulness.
 }
 \value{
-Nothing, for efficiency reasons.
-The obvious side effect is output to the terminal.
+  Nothing, for efficiency reasons.
+  The obvious side effect is output to the terminal.
 }
 \author{
   Martin Maechler \email{maechler@stat.math.ethz.ch} since 1990.
