@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -39,25 +39,26 @@ static int integerOneIndex(int i, int len) {
     return(indx);
 }
 
-int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
+int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos)
 {
     SEXP names;
     int i, indx, nx;
 
-    if (length(s) > 1)
+    if (pos < 0 && length(s) > 1)
 	error("attempt to select more than one element");
-    if (length(s) < 1)
+    if (pos < 0 && length(s) < 1)
 	error("attempt to select less than one element");
+    if(pos < 0) pos = 0;
 
     indx = -1;
     *newname = R_NilValue;
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	indx = integerOneIndex(INTEGER(s)[0], len);
+	indx = integerOneIndex(INTEGER(s)[pos], len);
 	break;
     case REALSXP:
-	indx = integerOneIndex(REAL(s)[0], len);
+	indx = integerOneIndex(REAL(s)[pos], len);
 	break;
     case STRSXP:
 	nx = length(x);
@@ -66,16 +67,16 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 	    /* Try for exact match */
 	    for (i = 0; i < nx; i++)
 		if (streql(CHAR(STRING_ELT(names, i)),
-			   CHAR(STRING_ELT(s, 0)))) {
+			   CHAR(STRING_ELT(s, pos)))) {
 		    indx = i;
 		    break;
 		}
 	    /* Try for partial match */
 	    if (partial && indx < 0) {
-		len = strlen(CHAR(STRING_ELT(s, 0)));
+		len = strlen(CHAR(STRING_ELT(s, pos)));
 		for(i = 0; i < nx; i++) {
 		    if(!strncmp(CHAR(STRING_ELT(names, i)),
-				CHAR(STRING_ELT(s, 0)), len)) {
+				CHAR(STRING_ELT(s, pos)), len)) {
 			if(indx == -1 )
 			    indx = i;
 			else
@@ -86,7 +87,7 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 	}
 	if (indx == -1)
 	    indx = nx;
-	*newname = STRING_ELT(s, 0);
+	*newname = STRING_ELT(s, pos);
 	break;
     case SYMSXP:
 	nx = length(x);
@@ -101,7 +102,7 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 	}
 	if (indx == -1)
 	    indx = nx;
-	*newname = STRING_ELT(s, 0);
+	*newname = STRING_ELT(s, pos);
 	break;
     default:
 	error("invalid subscript type");
@@ -109,7 +110,7 @@ int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
     return indx;
 }
 
-int get1index(SEXP s, SEXP names, int len, Rboolean pok)
+int get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
 {
 /* Get a single index for the [[ operator.
    Check that only one index is being selected.
@@ -118,38 +119,42 @@ int get1index(SEXP s, SEXP names, int len, Rboolean pok)
     int indx, i;
     double dblind;
 
-    if (length(s) != 1) {
+    if (pos < 0 && length(s) != 1) {
 	if (length(s) > 1)
 	    error("attempt to select more than one element");
 	else
 	    error("attempt to select less than one element");
-    }
+    } else 
+	if(pos >= length(s))
+	    error("internal error in use of recursive indexing");
+    if(pos < 0) pos = 0;
     indx = -1;
     switch (TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	i = INTEGER(s)[0];
+	i = INTEGER(s)[pos];
 	if(i != NA_INTEGER)
 	    indx = integerOneIndex(i, len);
 	break;
     case REALSXP:
-	dblind = REAL(s)[0];
+	dblind = REAL(s)[pos];
 	if(!ISNAN(dblind))
 	    indx = integerOneIndex((int)dblind, len);
 	break;
     case STRSXP:
 	/* Try for exact match */
 	for (i = 0; i < length(names); i++)
-	    if (streql(CHAR(STRING_ELT(names, i)), CHAR(STRING_ELT(s, 0)))) {
+	    if (streql(CHAR(STRING_ELT(names, i)), 
+		       CHAR(STRING_ELT(s, pos)))) {
 		indx = i;
 		break;
 	    }
 	/* Try for partial match */
 	if (pok && indx < 0) {
-	    len = strlen(CHAR(STRING_ELT(s, 0)));
+	    len = strlen(CHAR(STRING_ELT(s, pos)));
 	    for(i = 0; i < length(names); i++) {
 		if(!strncmp(CHAR(STRING_ELT(names, i)),
-			    CHAR(STRING_ELT(s, 0)), len)) {
+			    CHAR(STRING_ELT(s, pos)), len)) {
 		    if(indx == -1)/* first one */
 			indx = i;
 		    else

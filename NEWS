@@ -187,6 +187,9 @@ NEW FEATURES
      o	New function r2dtable() for generating random samples of two-way
 	tables with given marginals using Patefield's algorithm.
 
+     o	Recursive indexing of lists is allowed, so x[[c(4,2)]] is
+	shorthand for x[[4]][[2]] etc.  (Wishlist PR#1588)
+
 
 INSTALLATION CHANGES
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2002  The R Development Core Team.
+ *  Copyright (C) 1998--2003  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -677,7 +677,7 @@ SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
-int get1index(SEXP, SEXP, int, Rboolean);
+int get1index(SEXP, SEXP, int, Rboolean, int);
 SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
 int hashpjw(char*);
@@ -720,7 +720,7 @@ SEXP NewEnvironment(SEXP, SEXP, SEXP);
 void onintr();
 void onsigusr1();
 void onsigusr2();
-int OneIndex(SEXP, SEXP, int, int, SEXP*);
+int OneIndex(SEXP, SEXP, int, int, SEXP*, int);
 SEXP parse(FILE*, int);
 void PrintGreeting(void);
 void PrintVersion(char *);

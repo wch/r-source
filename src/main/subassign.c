@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000   The R Development Core Team
+ *  Copyright (C) 1997-2003   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1315,8 +1315,8 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP dims, indx, names, newname, subs, x, y;
-    int i, ndims, nsubs, offset, stretch, which;
+    SEXP dims, indx, names, newname, subs, x, xtop, xup, y;
+    int i, ndims, nsubs, offset, off = -1 /* -Wall */, stretch, which;
 
     PROTECT(args);
 
@@ -1341,6 +1341,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (NAMED(x) == 2) {
 	SETCAR(args, x = duplicate(x));
     }
+    xtop = xup = x; /* x will be the element which is assigned to */
 
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
@@ -1348,16 +1349,35 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stretch = 0;
     if (isVector(x)) {
+	Rboolean recursed = FALSE;
 	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error("more elements supplied than there are to replace");
 	if (nsubs == 0 || CAR(subs) == R_MissingArg)
 	    error("[[]] with missing subscript");
 	if (nsubs == 1) {
-	    offset = OneIndex(x, CAR(subs), length(x), 0, &newname);
+	    SEXP thesub = CAR(subs);
+	    int i = -1, len = length(thesub);
+	    /* new case in 1.7.0, one vector index for a list */
+	    if(isVectorList(x) && length(thesub) > 1) {
+		for(i = 0; i < len - 1; i++) {
+		    if(!isVectorList(x))
+			error("recursive indexing failed at level %d\n", i+1);
+		    off = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
+				    length(x), /*partial ok*/TRUE, i);
+		    xup = x;
+		    recursed = TRUE;
+		    x = VECTOR_ELT(x, off);
+		}
+	    }
+	    if (recursed && !isVectorList(x) && LENGTH(y) > 1)
+		error("more elements supplied than there are to replace");
+	    offset = OneIndex(x, thesub, length(x), 0, &newname, i);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
+		if(recursed) SET_VECTOR_ELT(xup, off, x);
+		else xtop = x;
 		UNPROTECT(1);
-		return x;
+		return xtop;
 	    }
 	    if (offset < 0)
 		error("[[]] subscript out of bounds");
@@ -1373,7 +1393,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		INTEGER(indx)[i] = get1index(CAR(subs), isNull(names) ?
 					      R_NilValue : VECTOR_ELT(names, i),
 					      INTEGER(dims)[i],
-					      /*partial ok*/FALSE);
+					      /*partial ok*/FALSE, -1);
 		subs = CDR(subs);
 		if (INTEGER(indx)[i] < 0 ||
 		    INTEGER(indx)[i] >= INTEGER(dims)[i])
@@ -1516,6 +1536,8 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else
 		SET_STRING_ELT(names, offset, newname);
 	}
+	if(recursed) SET_VECTOR_ELT(xup, off, x);
+	else xtop = x;
 	UNPROTECT(1);
     }
     else if (isList(x) || isLanguage(x)) {
@@ -1540,7 +1562,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(indx)[i] = get1index(CAR(subs), CAR(names),
 					      INTEGER(dims)[i],
-					      /*partial ok*/FALSE);
+					      /*partial ok*/FALSE, -1);
 		subs = CDR(subs);
 		if (INTEGER(indx)[i] < 0 ||
 		    INTEGER(indx)[i] >= INTEGER(dims)[i])
@@ -1553,13 +1575,14 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SETCAR(nthcdr(x, offset), duplicate(y));
 	    UNPROTECT(1);
 	}
+	xtop = x;
 	UNPROTECT(1);
     }
     else errorcall(call, "object is not subsetable");
 
     UNPROTECT(1);
-    SET_NAMED(x, 0);
-    return x;
+    SET_NAMED(xtop, 0);
+    return xtop;
 }
 
 /* $<-(x, elt, val), and elt does not get evaluated it gets matched.

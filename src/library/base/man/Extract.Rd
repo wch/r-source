@@ -70,6 +70,11 @@ x$name
   element of the list while the \code{[} operator returns a list with
   the specified element(s) in it.
 
+  As from \R 1.7.0 \code{[[} can be applied recursively to lists, so
+  that if the single index \code{i} is a vector of length \code{p},
+  \code{alist[[i]]} is equivalent to \code{alist[[i1]]\dots[[ip]]}
+  providing all but the final indexing results in a list.
+
   The operators \code{$} and \code{$<-} do not evaluate their second
   argument.  It is translated to a string and that string is used to
   locate the correct component of the first argument.
@@ -104,6 +109,14 @@ swiss[ c(1, 1:2), ]   # duplicate row, unique row names
 ## non-integer indices are truncated:
 (i <- 3.999999999) # "4" is printed
 (1:5)[i]  # 3
+
+## recursive indexing into lists
+z <- list( a=list( b=9, c='hello'), d=1:5)
+unlist(z)
+z[[c(1, 2)]]
+z[[c(1, 2, 1)]]  # both "hello"
+z[[c("a", "b")]] <- "new"
+unlist(z)
 }
 \keyword{array}
 \keyword{list}
