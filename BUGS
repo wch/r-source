@@ -588,23 +588,15 @@ Date: Sun, 8 Sep 2002 13:47:00 +0100
 Subject: t() of a time series
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Tue, 10 Sep 2002 09:53:05 -0400
-* PR# 1999 *
-Subject: Under the following copyright
-From: don-sherry <don-sherry@erols.com>
-Date: Tue, 10 Sep 2002 20:32:06 -0500
-* PR# 2000 *
-Subject: (±¤°í)"¸®¾ç"ÀÇ ¿µ¾î¿ÏÀü ºñ¹ý °ø°³! ¹«·áÃ¼Çè ½ÅÃ»ÇÏ½Ã´Â ºÐ²²´Â ¿Â´©¸®ÆùÀ» º¸³»µå¸³´Ï´Ù!
-From: Å©·¹ÀÌÁöÀ×±Û¸®½¬<hyun10310@kornet.net>
-Date: Wed, 11 Sep 2002 22:41:09 +0900
-* PR# 2001 *
-Subject: [±¤°?]??????±???, ????±??? ???¨ ???±°? ??????.. ?¥±??? ???????? ?ú????°? ??????´?´?.
-From: ???µ?? <ntmaster_mail@empal.com>
-Date: Fri, 30 Aug 2002 07:34:30 +0900
-* PR# 2002 *
-Subject: (±¤°?)"?®¾?"?? ?µ¾????ü ºñ?ý °?°?! ???????? ????????´? º?²²´? ??´©?®???? º???µ???´?´?!
-From: ?©????????±??®?¬<hyun10310@kornet.net>
-Date: Thu, 12 Sep 2002 05:51:24 +0900
 * PR# 2003 *
 Subject: rhome.c: getRHOME() fails, if R is called from SJava
 From: grimm.heinz@rcc.ch
 Date: Wed, 11 Sep 2002 15:17:53 +0200 (MET DST)
+* PR# 2005 *
+Subject: R_HOME/etc/Renviron.site not interpreted on windows
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Thu, 12 Sep 2002 13:34:55 +0200
+* PR# 2007 *
+Subject: The USA is Calling You!
+From: profile@bitsmart.com
+Date: Thu, 12 Sep 2002 16:42:16 -0400
