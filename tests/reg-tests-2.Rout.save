@@ -2225,9 +2225,9 @@ par("usr")[3:4]:     1.784     4.499
 par("yaxp") :            2         4         4
 
 Warning messages:
-1: relative range of values =  43 * EPS, is small (axis 2). 
-2: relative range of values =  36 * EPS, is small (axis 2). 
-3: relative range of values =  17 * EPS, is small (axis 2). 
+1: relative range of values =  43 * EPS, is small (axis 2) 
+2: relative range of values =  36 * EPS, is small (axis 2) 
+3: relative range of values =  17 * EPS, is small (axis 2) 
 > par(mfrow = c(1,1))
 > ## The warnings from inside GScale() will differ in their  relrange() ...
 > ## >> do sloppy testing
