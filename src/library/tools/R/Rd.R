@@ -61,7 +61,7 @@ function(lines)
         }
     }
 
-    lines[-skipIndices]
+    .stripRdComments(lines[-skipIndices])
 }
 
 ### * .stripRdComments
@@ -95,13 +95,6 @@ function(file)
                    "must be a character string or connection"))
 
     lines <- Rdpp(readLines(file))
-
-    ## <NOTE>
-    ## Compatibility code for R::Rdtools::Rdpp(): strip comment lines.
-    commentLineIndices <- grep("^[[:space:]]*\%", lines)
-    if(length(commentLineIndices) > 0)
-        lines <- lines[-commentLineIndices]
-    ## </NOTE>
 
     aliasesRegExp <-
         "^[[:space:]]*\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
