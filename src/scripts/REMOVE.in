@@ -1,10 +1,10 @@
 #! /bin/sh
-
 # ${R_HOME}/bin/REMOVE for removing add-on packages
+#
 # Usage:
 #	R REMOVE [options] [-l lib] pkg_1 ... pkg_n
 
-REVISION='$Revision: 1.5 $'
+REVISION='$Revision: 1.6 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage:  R REMOVE [options] [-l lib] pkg_1 ... pkg_n"
 PKGS=
@@ -61,3 +61,8 @@ if test ${lib} = ${R_HOME}/library; then
   ${R_HOME}/bin/build-help --htmllists
   cat ${R_HOME}/library/*/CONTENTS > ${R_HOME}/doc/html/search/index.txt
 fi
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

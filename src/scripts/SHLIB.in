@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-REVISION='$Revision: 1.7 $'
+REVISION='$Revision: 1.8 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage:  R SHLIB [-o lib] obj_1 ... obj_n"
 
@@ -40,5 +40,5 @@ ${MAKE} -f ${R_HOME}/etc/Makeconf SHLIB="${lib}" OBJS="${OBJS}"
 
 ### Local Variables: ***
 ### mode: sh ***
-### sh-indent: 2 ***
+### sh-indentation: 2 ***
 ### End: ***

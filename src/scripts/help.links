@@ -55,3 +55,7 @@ cat ${R_HOME}/doc/html/packages-foot.html >> ${PKGLIST}
 rm -f ${SEARCHINDEX}
 cat ${USER_R_HOME}/library/*/CONTENTS > ${SEARCHINDEX}
 
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

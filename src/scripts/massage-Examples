@@ -51,3 +51,8 @@ cat <<_EOF_
 cat("Time elapsed: ", proc.time() - get("ptime", env = .CheckExEnv),"\n")
 dev.off(); quit('no')
 _EOF_
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

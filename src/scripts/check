@@ -2,7 +2,7 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
-REVISION='$Revision: 1.9 $'
+REVISION='$Revision: 1.10 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage: R CMD check [options] [-l lib] pkg_1 ... pkg_n"
 
@@ -98,3 +98,8 @@ for pkg in ${PKGS}; do
   fi
 
 done
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

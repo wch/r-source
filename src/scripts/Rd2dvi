@@ -6,7 +6,7 @@
 #  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 #                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-REVISION='$Revision: 1.12 $'
+REVISION='$Revision: 1.13 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage: R CMD Rd2dvi [options] files"
 
@@ -127,3 +127,8 @@ fi
 if ${USE_XDVI}; then
   xdvi Rd2.dvi
 fi
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

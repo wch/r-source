@@ -2,8 +2,7 @@
 #
 # ${R_HOME}/bin/help
 
-if [ "${1}" = "INDEX" ];
-then
+if [ "${1}" = "INDEX" ]; then
     subject=${2}
     shift 2
     for index in ${*}
@@ -19,8 +18,7 @@ then
 	fi
     done    
     echo
-elif [ "${1}" = "PRINT" ];
-then
+elif [ "${1}" = "PRINT" ]; then
     LATEX=${4}
     if [ "${LATEX}" = "false" ];
     then
@@ -45,3 +43,8 @@ then
     fi
     rm -f ${1}.aux ${1}.dvi ${1}.log
 fi
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

@@ -6,7 +6,7 @@
 
 # @configure_input@
 
-REVISION='$Revision: 1.20 $'
+REVISION='$Revision: 1.21 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 USAGE_MSG="Usage: R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
@@ -273,5 +273,5 @@ echo "DONE (INSTALL)"
 
 ### Local Variables: ***
 ### mode: sh ***
-### sh-indent: 2 ***
+### sh-indentation: 2 ***
 ### End: ***
