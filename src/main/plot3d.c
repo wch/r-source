@@ -1933,7 +1933,7 @@ double labelAngle(double x1, double y1, double x2, double y2) {
 static void PerspAxis(double *x, double *y, double *z, 
 		      int axis, int axisType, int nTicks, int tickType, 
 		      char *label, DevDesc *dd) {
-    Vector3d u1, u2, u3, u4, v1, v2, v3, v4;
+    Vector3d u1, u2, u3, v1, v2, v3;
     double tickLength = .03; /* proportion of axis length */
     double min, max, *range;
     double axp[3];

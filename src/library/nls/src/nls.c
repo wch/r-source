@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.3 2000/02/20 15:32:13 bates Exp $ 
+ *  $Id: nls.c,v 1.4 2000/02/23 08:36:26 hornik Exp $ 
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -200,7 +200,7 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 SEXP
 numeric_deriv(SEXP expr, SEXP theta, SEXP rho) {
 
-  SEXP ans, gradient, pars, dims;
+  SEXP ans, gradient, pars;
   double eps = sqrt(DOUBLE_EPS);
   int start, i, j, k, lengthTheta = 0;
 
