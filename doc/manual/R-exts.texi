@@ -1727,10 +1727,11 @@ settings).
 @node R messages,  , C-level messages, Localization
 @subsection R messages
 
-Mechanisms to support the translation of @R{} @code{warning} and
-@code{stop} messages are in place.  They make use of message catalogs in
-the same way as C-level messages, but using domain @code{R-@var{pkg}}
-rather than @code{@var{pkg}}.  Translation of terms in @code{stop} and
+Mechanisms to support the automatic translation of @R{} @code{warning}
+and @code{stop} messages are in place, provided the package has a
+namespace.  They make use of message catalogs in the same way as C-level
+messages, but using domain @code{R-@var{pkg}} rather than
+@code{@var{pkg}}.  Translation of terms in @code{stop} and
 @code{warning} calls is automatically enabled, as well as other messages
 enclosed in calls to @code{gettext}.
 
@@ -1741,6 +1742,8 @@ Some of these are likely to be spurious and so the file is likely to
 need manual editing.  @code{xgettext} extracts the actual calls and so
 is more useful when tidying up error messages.
 
+Packages without namespaces will need to use @code{domain="R-@var{pkg}"}
+explicitly.
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files
