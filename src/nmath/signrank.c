@@ -38,10 +38,6 @@
 #include "nmath.h"
 #include "dpq.h"
 
-#ifndef MATHLIB_STANDALONE
-void R_CheckUserInterrupt(void);
-#endif
-
 static double **w;
 static int allocated_n;
 
