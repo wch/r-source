@@ -224,6 +224,12 @@ void DoTools(SInt16 menuItem);
 SavingOption DoWeSaveIt(WindowPtr window);
 
 OSErr MyOpenDocument(FSSpec *documentFSSpec, SFTypeList *typeList);
+OSErr R_EditFile(SEXP call, char *fname, Boolean isanewfile);
+SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho);
+OSErr R_NewFile(SEXP call, char *fname);
+SEXP do_newfile(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+
 
 /*    enum     */
 enum {
@@ -706,16 +712,167 @@ OSErr DoOpenText(Boolean editable)
     err = ReadTextFile(&myfss,
 		       GetWindowWE(Edit_Windows[Edit_Window-1]));
     
-    
-//    if(err != noErr)
-//	 REprintf("\n ReadTextFile error: %d\n",err);
-   	
    	UniqueWinTitle();
 	if(Edit_Window>2)
     	RepositionWindow(Edit_Windows[Edit_Window - 1], 
         Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
 
     SetWindowProxyFSSpec(Edit_Windows[Edit_Window - 1], &myfss);
+    
+    return err;
+}
+
+
+
+/*
+   do_fileedit: R-internal function. It opens a file and
+   displays it on an editable. This is similar to do_fileshow
+   but the user is allowed to edit files.
+   The routine accepts only one filename per call.
+   New in R 1.4.0 Jago Nov 2001, Stefano M. Iacus.
+*/
+
+SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn;
+    char *f, *vm; 
+    Boolean isanewfile = FALSE;
+    
+    checkArity(op, args);
+    vm = vmaxget();
+    fn = CAR(args); args = CDR(args);
+
+    if (!isString(fn))
+	errorcall(call, "invalid filename specification");
+
+   /* we consider one filename at time */
+	if (!isNull(STRING_ELT(fn, 0)))
+	    f = CHAR(STRING_ELT(fn, 0));
+	else
+	    f = CHAR(R_BlankString);
+
+    if( strlen(f) == 0)
+     isanewfile = TRUE;
+     
+    R_EditFile(call, f, isanewfile);
+    
+    vmaxset(vm);
+    return R_NilValue;
+}
+
+/* This routine is MacOS front-end of do_fileedit
+   that is an R command equivalent to open edit
+   windows.
+   New in R 1.4.0 Jago Nov 2001, Stefano M. Iacus.
+*/
+
+OSErr R_EditFile(SEXP call, char *fname, Boolean isanewfile)
+{
+    FInfo		fileInfo;
+    SFTypeList	typeList;
+    OSErr		err = noErr;
+    FSSpec  	myfss;
+    Str255      fileName;
+    
+    typeList[0] = kTypeText;
+    typeList[1] = ftSimpleTextDocument;
+ 
+    if(strlen(fname) == 0) { 
+     errorcall(call,"no filename specified");
+     return(-1);
+    }
+ 
+    CopyCStringToPascal(fname,fileName);
+ 
+    if( (err =  FSMakeFSSpecFromPath(fileName, &myfss)) != noErr){
+	  errorcall(call,"Cannot find file");
+	  return(err); 								
+	}
+	 
+    DoNew(TRUE);
+       
+    RemWinMenuItem();
+   
+    err = ReadTextFile(&myfss,
+		       GetWindowWE(Edit_Windows[Edit_Window-1]));
+    
+  
+   	UniqueWinTitle();
+
+  
+	if(Edit_Window>2)
+    	RepositionWindow(Edit_Windows[Edit_Window - 1], 
+        Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
+
+    SetWindowProxyFSSpec(Edit_Windows[Edit_Window - 1], &myfss);
+    
+    return err;
+}
+
+/*
+   do_newfile: R-internal function. It opens a new editable
+   window. If no filename is specified the window will be 
+   called "NewFile".
+   The routine accepts only one filename per call.
+   New in R 1.4.0 Jago Nov 2001, Stefano M. Iacus.
+*/
+
+SEXP do_newfile(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn;
+    char *f, *vm; 
+    Boolean isanewfile = FALSE;
+    
+    checkArity(op, args);
+    vm = vmaxget();
+    fn = CAR(args); args = CDR(args);
+
+    if (!isString(fn))
+	errorcall(call, "invalid filename specification");
+
+   /* we consider one filename at time */
+	if (!isNull(STRING_ELT(fn, 0)))
+	    f = CHAR(STRING_ELT(fn, 0));
+	else
+	    f = CHAR(R_BlankString);
+     
+    R_NewFile(call, f);
+    
+    vmaxset(vm);
+    return R_NilValue;
+}
+
+/* This routine is MacOS front-end of do_newfile
+   that is an R command equivalent to open new
+   windows.
+   New in R 1.4.0 Jago Nov 2001, Stefano M. Iacus.
+*/
+
+OSErr R_NewFile(SEXP call, char *fname)
+{
+    OSErr		err = noErr;
+    Str255      winName;
+ 
+    if(strlen(fname) == 0) { 
+     CopyCStringToPascal("NewFile",winName);      
+    }
+    else
+     CopyCStringToPascal(fname,winName);      
+ 
+	 
+    DoNew(TRUE);
+   
+    
+    RemWinMenuItem();
+  
+   	SetWTitle(Edit_Windows[Edit_Window-1], winName);
+   
+    SelectWindow(Edit_Windows[Edit_Window-1]);
+
+   	UniqueWinTitle();
+	if(Edit_Window>2)
+    	RepositionWindow(Edit_Windows[Edit_Window - 1], 
+        Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
     
     return err;
 }
