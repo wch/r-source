@@ -5783,6 +5783,7 @@ The argument names are not all quite the same as the @R{} ones.
 @findex trigamma
 @findex tetragamma
 @findex pentagamma
+@findex psigamma
 @cindex Gamma function
 @deftypefun double gammafn (double @var{x})
 @deftypefunx double lgammafn (double @var{x})
@@ -5790,7 +5791,9 @@ The argument names are not all quite the same as the @R{} ones.
 @deftypefunx double trigamma (double @var{x})
 @deftypefunx double tetragamma (double @var{x})
 @deftypefunx double pentagamma (double @var{x})
-The Gamma function, its natural logarithm and first four derivatives.
+@deftypefunx double psigamma (double @var{x}, double @var{deriv})
+The Gamma function, its natural logarithm and first four derivatives and
+the n-th derivative of Psi, the digamma function.
 @end deftypefun
 
 @findex beta

@@ -44,7 +44,8 @@ lfactorial(x)
 
   The functions \code{gamma} and \code{lgamma} return the gamma function
   \eqn{\Gamma(x)} and the natural logarithm of the absolute value of the
-  gamma function.  The gamma function is defined by (Abramowitz and Stegun (6.1.1), page 255)
+  gamma function.  The gamma function is defined by
+  (Abramowitz and Stegun (6.1.1), page 255)
   \deqn{\Gamma(x) = \int_0^\infty t^{a-1} e^{-t} dt}{integral_0^Inf t^(a-1) exp(-t) dt}
   \code{factorial(x)} is \eqn{x!} and identical to
   \code{gamma(x+1)} and \code{lfactorial} is \code{lgamma(x+1)}.
@@ -65,8 +66,9 @@ lfactorial(x)
   \cr \code{choose(*,k)} uses direct arithmetic (instead of
   \code{[l]gamma} calls) for small \code{k}, for speed and accuracy reasons.
 
-  All the \code{*gamma*} functions are generic: methods can be
-  defined for them individually or via the \code{\link{Math}} group generic.
+  The \code{gamma}, \code{lgamma}, \code{digamma} and \code{trigamma}
+  functions are generic: methods can be defined for them individually or
+  via the \code{\link{Math}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

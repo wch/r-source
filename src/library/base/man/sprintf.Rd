@@ -105,10 +105,11 @@ sprintf(fmt, \dots)
 \examples{
 % Escape all the '%' here !
 ## be careful with the format: most things in R are floats
+## only integer-valued reals get coerced to integer.
 
-sprintf("\%s is \%f feet tall\n", "Sven", 7) # OK
-try(sprintf("\%s is \%i feet tall\n", "Sven", 7)) # not OK
-sprintf("\%s is \%i feet tall\n", "Sven", as.integer(7)) # OK again
+sprintf("\%s is \%f feet tall\n", "Sven", 7.1) # OK
+try(sprintf("\%s is \%i feet tall\n", "Sven", 7.1)) # not OK
+try(sprintf("\%s is \%i feet tall\n", "Sven", 7)) # OK
 
 ## use a literal \% :
 
@@ -143,6 +144,7 @@ sapply(1:18, function(n)
        sprintf(paste("e with \%2d digits = \%.",n,"g",sep=""),
                n, exp(1)))
 
+## Using arguments out of order
 sprintf("second \%2$1.0f, first \%1$5.2f, third \%3$1.0f", pi, 2, 3)
 }
 \keyword{print}

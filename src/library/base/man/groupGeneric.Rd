@@ -103,8 +103,7 @@ Complex(z)
 
       \item
       \code{lgamma}, \code{gamma}, \code{gammaCody},\cr
-      \code{digamma}, \code{trigamma}, \code{tetragamma},
-      \code{pentagamma}
+      \code{digamma}, \code{trigamma}
       %   do_math1() [arithmetic.c:794]: if (DispatchGroup("Math",...))
       %
       %
