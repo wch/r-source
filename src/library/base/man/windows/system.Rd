@@ -72,7 +72,7 @@ system(command, intern = FALSE, wait = TRUE, input = "",
   \code{unix} is a \emph{deprecated} alternative, available for
   backwards compatibility.
 }
-\section{WARNING}{
+\section{Warning}{
     The command cannot be interrupted by the \R process.
 
     Do not run console applications that require user

@@ -1589,7 +1589,7 @@ indices has the same effect as if they were omitted.
 
 @item
 @strong{Other numeric}.  Non-integer values are converted to integer
-before use.
+(by truncation towards zero) before use.
 
 @item
 @strong{Logical}.  The indexing @code{i} should generally have the same

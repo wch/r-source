@@ -358,6 +358,9 @@ BUG FIXES
         inconsistent.  On such platforms this is a run-time test to
         allow e.g. R compiled on RH7.2 to run on RH8.0.
 
+    o   Clipping was not being reset properly between plots on the gtk()
+        device (the default under the GNOME interface). (PR#2366)
+
 
 
 		CHANGES IN R VERSION 1.6.1
