@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-56, 2001-05-17
+@set FAQ-VERSION 1.2-57, 2001-05-18
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1377,6 +1377,9 @@ The following packages are available from the @acronym{CRAN}
 @file{src/contrib} area.
 
 @table @strong
+@item AnalyzeIO
+Functions for I/O of ANALYZE format @file{.img} and @file{.hdr} image
+files.
 @item CoCoAn
 Constrained Correspondence Analysis.
 @item Devore5
@@ -1548,6 +1551,8 @@ and H. Sonnberger, 1986, Physica.
 Local Regression, likelihood and density estimation.
 @item logspline
 Logspline density estimation.
+@item lpridge
+Local polynomial (ridge) regression.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
@@ -1714,8 +1719,13 @@ Ensembles of tree classifiers.
 @item funfits
 An integrated set of functions for fitting curves and surfaces including
 thin plate splines, kriging and neural networks.
+@item grid
+The Grid graphics package, a rewrite of the graphics layout
+capabilities, plus some support for interaction.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
+@item lattice
+Lattice graphics, an implementation of Trellis Graphics functions.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
