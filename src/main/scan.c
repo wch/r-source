@@ -88,8 +88,11 @@ static int sequal(char *str1, char *str2)
 
 static HashData *HashTableSetup(int maxstrings)
 {
-    int n4 = 2 * maxstrings;
+    int n4;
     HashData *d;
+
+    maxstrings = imin2(maxstrings, 536870912); /* 2^29 */
+    n4 = 2 * maxstrings;
     d = (HashData *) R_alloc(1, sizeof(HashData));
     d->M = 2;
     d->K = 1;

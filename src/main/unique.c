@@ -48,7 +48,7 @@ struct _HashData {
    are used as the hash code.
    
    NB: lots of this code relies on M being a power of two and
-   on silent integer overflow.
+   on silent integer overflow mod 2^32.  It also relies on M < 31.
 
    <FIXME>  Integer keys are wasteful for logical and raw vectors, 
    but the tables are small in that case.
@@ -250,7 +250,7 @@ static int vequal(SEXP x, int i, SEXP y, int j)
 /*
   Choose M to be the smallest power of 2
   not less than 2*n and set K = log2(M).
-  Need K >= 1 and hence M >= 2.
+  Need K >= 1 and hence M >= 2, and 2^M <= 2^31 -1, hence n <= 2^29.
 
   Dec 2004: modified from 4*n to 2*n, since in the worst case we have
   a 50% full table, and that is still rather efficient -- see
@@ -259,6 +259,9 @@ static int vequal(SEXP x, int i, SEXP y, int j)
 static void MKsetup(int n, HashData *d)
 {
     int n4 = 2 * n;
+
+    if(n < 0 || n > 536870912) /* protect against overflow to -ve */
+	error("length %d is too large for hashing", n);
     d->M = 2;
     d->K = 1;
     while (d->M < n4) {
