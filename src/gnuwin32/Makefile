@@ -205,6 +205,7 @@ distclean veryclean: clean
 	../../etc/rgb.txt ../../etc/Makeconf-tests \
 	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
 	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
+	-$(MAKE) -C installer ISdistclean
 
 cleanwin:
 	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 \
@@ -217,7 +218,7 @@ cleanwin:
 	$(MAKE) -C ../extra/xdr clean
 	$(MAKE) -C math clean
 	$(MAKE) -C bitmap clean
-	-$(MAKE) -C installer clean
+	-$(MAKE) -C installer clean ISclean
 
 
 #                          ===== testing ======
@@ -321,6 +322,9 @@ endif
 	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
 	$(RM) -r $(RPREFIX)/doc
+	mkdir -p  $(RPREFIX)/doc/html
+	$(CP) -p ../../doc/html/faq.html ../../doc/html/rw-FAQ.html \
+	  $(RPREFIX)/doc/html
 	zip -rm9X $(RPREFIX)b2.zip $(RPREFIX)/library
 	zip -r9X $(RPREFIX)b1.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)

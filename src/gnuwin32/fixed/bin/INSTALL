@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.12 $ ';
+my $revision = ' $Revision: 1.13 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -80,7 +80,7 @@ foreach $pkg (@ARGV){
 	my $dir = "R.INSTALL";
 	$dir =~ s+\\+/+g;
 	mkdir($dir, 755);
-	system("tar zxf $pkg -C $dir");
+	system("gzip -dc $pkg | tar -xf $pkg -C $dir");
 	$pkg = $dir."/".$pkgname;
 	$istar = 1;
     }

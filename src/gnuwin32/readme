@@ -28,7 +28,7 @@ The distribution consists of several zip files:
 @RWVER@ch.zip				compiled HTML help
 @RWVER@w.zip				HTML help files
 @RWVER@l.zip				latex help files for offline help
-@RWVER@wh.zip				WinHelp help files
+@RWVER@wh.zip				WinHlp help files
 @RWVER@d1.zip				PDF manuals except
 @RWVER@d2.zip				  PDF version of the reference manual
 @RWVER@sp.zip				files to build packages from source
