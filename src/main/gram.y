@@ -133,6 +133,7 @@ static int	xxvalue(SEXP, int);
 %token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR
+%token		NS_GET
 
 %left		'?'
 %left		LOW WHILE FOR REPEAT
@@ -152,7 +153,7 @@ static int	xxvalue(SEXP, int);
 %left		':'
 %left		UMINUS UPLUS
 %right		'^'
-%left		'$' '@'
+%left		'$' '@' NS_GET
 %nonassoc	'(' '[' LBB
 
 %%
@@ -216,6 +217,10 @@ expr	: 	NUM_CONST			{ $$ = $1; }
 	|	REPEAT expr_or_assign			{ $$ = xxrepeat($1,$2); }
 	|	expr LBB sublist ']' ']'	{ $$ = xxsubscript($1,$2,$3); }
 	|	expr '[' sublist ']'		{ $$ = xxsubscript($1,$2,$3); }
+	|	SYMBOL NS_GET SYMBOL		{ $$ = xxbinary($2,$1,$3); }
+	|	SYMBOL NS_GET STR_CONST		{ $$ = xxbinary($2,$1,$3); }
+	|	STR_CONST NS_GET SYMBOL		{ $$ = xxbinary($2,$1,$3); }
+	|	STR_CONST NS_GET STR_CONST	{ $$ = xxbinary($2,$1,$3); }
 	|	expr '$' SYMBOL			{ $$ = xxbinary($2,$1,$3); }
 	|	expr '$' STR_CONST		{ $$ = xxbinary($2,$1,$3); }
 	|	expr '@' SYMBOL			{ $$ = xxbinary($2,$1,$3); }
@@ -1785,6 +1790,10 @@ static int token()
 	yylval = install("=");
 	return EQ_ASSIGN;
     case ':':
+	if (nextchar(':')) {
+	    yylval = install("::");
+	    return NS_GET;
+	}
 	if (nextchar('=')) {
 	    yylval = install(":=");
 	    return LEFT_ASSIGN;
