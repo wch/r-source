@@ -26,7 +26,7 @@ cbind.ts <- function(..., dframe = FALSE, union = TRUE)
     sers <- lapply(sers, as.ts)
     nsers <- sapply(sers, NCOL)
     tsps <- sapply(sers[tsser], tsp)
-    freq <- round(mean(tsps[3,]))
+    freq <- mean(tsps[3,])
     if(max(abs(tsps[3,] - freq)) > .Options$ts.eps) {
         stop("Not all series have the same frequency")
     }
