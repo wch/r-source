@@ -16050,7 +16050,7 @@ fi
 if eval "test \"`echo '$r_cv_prog_cxx_flag_'$ac_safe`\" = yes"; then
   echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6
-  R_XTRA_CXXFLAGS="${R_XTRA_CFLAGS} -mieee"
+  R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee"
 else
   echo "$as_me:$LINENO: result: no" >&5
 echo "${ECHO_T}no" >&6
@@ -16121,7 +16121,7 @@ fi
 if eval "test \"`echo '$r_cv_prog_cxx_flag_'$ac_safe`\" = yes"; then
   echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6
-  R_XTRA_CXXFLAGS="${R_XTRA_CFLAGS} -ieee"
+  R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -ieee"
 else
   echo "$as_me:$LINENO: result: no" >&5
 echo "${ECHO_T}no" >&6
