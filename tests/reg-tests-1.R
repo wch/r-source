@@ -931,27 +931,38 @@ q2 <- expression(c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19))
 stopifnot(nchar(q3) == 68)
 ## was 61 in 1.5.1
 
-##Ops wasn't using NextMethod correctly
+## Ops wasn't using NextMethod correctly
 
-a<-ordered(c("a","b","c"))
-stopifnot(  (a=="a") == c(TRUE,FALSE,FALSE))
-stopifnot( all(a==a))
+## Ops.ordered:
+or <- ordered(c("a","b","c"))
+stopifnot( (or == "a") == c(TRUE,FALSE,FALSE))
+stopifnot(or == or)
+stopifnot(or != "d")
+##  last was NA NA NA in 1.5.1
 
-Ops.foo<-function(e1, e2){
+Ops.foo <- function(e1, e2) {
+    NextMethod()
+}
+Ops.baz <- function(e1, e2) {
    NextMethod()
 }
+a <- 1
+class(a) <- c("foo","bar","baz")
+stopifnot(a == 1)
 
-Ops.baz<-function(e1, e2){
-   NextMethod()
-}
+b <- 1
+class(b) <- c("foo","baz")
+stopifnot(b == a)
 
-a<-1
-class(a)<-c("foo","bar","baz")
-a==1
 
-b<-1
-class(b)<-c("foo","baz")
-b==a
+## t() wrongly kept "ts" class and "tsp"
+t(ts(c(a=1, d=2)))
+## gave error while printing in 1.5.1
+at <- attributes(t(ts(cbind(1, 1:20))))
+stopifnot(length(at) == 2,
+          at$dim == c(2, 20),
+          at$dimnames[[1]] == paste("Series", 1:2))
+## failed in 1.5.1
 
 
 ## keep at end, as package `methods' has had persistent side effects

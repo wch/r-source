@@ -655,3 +655,11 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
 #     }
     else y
 }
+
+t.ts <- function(x) {
+    cl <- class(x)
+    other <- !(cl %in% c("ts","mts"))
+    class(x) <- if(any(other)) cl[other]
+    attr(x, "tsp") <- NULL
+    t(x)
+}

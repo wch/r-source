@@ -49,7 +49,7 @@ NEW FEATURES
 	  description on page 450 of "Programming with Data".  Use it
 	  if old-style classes are to be supplied in signatures for
 	  setMethod, particularly if the old-style classes have
-	  inheritance.  Many of the old-style classes in the base
+	  inheritance.	Many of the old-style classes in the base
 	  package should be pre-specified; try getClass("mlm"), e.g.
 
 	- The setGeneric() function applies some heuristics to warn
@@ -244,7 +244,7 @@ NEW FEATURES
     o	p.adjust() has two new methods, 'Hommel' and 'FDR', contributed
 	by Gordon Smyth <smyth@wehi.edu.au>.
 
-    o   stars() now has add and plot arguments.
+    o	stars() now has add and plot arguments.
 
 
 DEPRECATED & DEFUNCT
@@ -499,9 +499,12 @@ BUG FIXES
 
    o	as.hclust(x) now also works (as identity) for "hclust" objects.
 
-   o    NextMethod didn't work right in Ops.
+   o	NextMethod didn't work right in Ops.
 
    o	dotchart() now obeys `xlim ='.
+
+   o	t(x) behaves when x is a (multivariate) time series. (PR#1998)
+
 
 
 		CHANGES IN R VERSION 1.5.1
