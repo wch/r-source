@@ -101,26 +101,10 @@ R_ARG_WITH_EXCLUSIVE(g77, f2c,
   AC_MSG_WARN(${warn_g77_and_f2c})
   use_f2c=false])
 
-AC_ARG_WITH(libmoto,
-  [  --with-libmoto          use libmoto math library (if available)],
-  R_ARG_USE(libmoto),
-  use_libmoto=true)
 AC_ARG_WITH(blas,
   [  --with-blas             use specified BLAS library],
   R_ARG_USE(blas),
   use_blas=true)
-AC_ARG_WITH(blas_risc,
-  [  --with-blas_risc        use RISC Optimized BLAS library (if available)],
-  R_ARG_USE(blas_risc),
-  use_blas_risc=true)
-AC_ARG_WITH(dxml,
-  [  --with-dxml             use DXML library (if available)],
-  R_ARG_USE(dxml),
-  use_dxml=true)
-AC_ARG_WITH(atlas,
-  [  --with-atlas            use ATLAS library (if available)],
-  R_ARG_USE(atlas),
-  use_atlas=true)
 
 AC_ARG_WITH(readline,
   [  --with-readline         use readline library (if available)],
