@@ -25,7 +25,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.13 $ ';
+my $revision = ' $Revision: 1.14 $ ';
 my $version;
 my $name;
 
@@ -131,6 +131,7 @@ while (<INFILE>) {
 	    $text =~ s/\\/\\\\/g;
 	    $text =~ s/\"/\\\"/g;
 	    $text =~ s/\n/\\\n/g;
+	    $text =~ s/\r//g;
 	    $out->print("\"$text\"\n");
 	}
 
