@@ -18,6 +18,8 @@ USER-VISIBLE CHANGES
     o	Saving data containing name space references no longer warns
 	about name spaces possibly being unavailable on load.
 
+    o   det uses an LU decomposition and Lapack.  The `method'
+        argument to det no longer has any effect.
 
 NEW FEATURES
 
