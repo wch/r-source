@@ -716,24 +716,24 @@ Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the @R{}
 executable and each BLAS-using package.  In any case, the BLAS library
-must be usable with dynamically-loadable code.
+must be usable with dynamically-loadable code: this can be a problem
+with ATLAS that is not by default built with position-independent code.
 
 You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
 
 @cindex LAPACK library
-Provision is made for using an external LAPACK
-library, principally to cope with BLAS libraries which contain a copy of
-LAPACK (such as @code{libsunperf} on Solaris and @code{vecLib} on MacOS
-10.2.2).  However, the likely performance gains are thought to be small
-(and may be negative), and the default is not to search for a suitable
-LAPACK library.  You can specify a specific LAPACK library or a search
-for a generic library by the configuration option
-@option{--with-lapack}.  The default for @option{--with-lapack} is to
-check the BLAS library and then look for an external library
-@code{-llapack}.  Sites searching for the fastest possible linear
-algebra may want to build a LAPACK library using the ATLAS-optimized
-subset of LAPACK.  To do so specify something like
+Provision is made for using an external LAPACK library, principally to
+cope with BLAS libraries which contain a copy of LAPACK (such as
+@code{libsunperf} on Solaris and @code{vecLib} on MacOS 10.2.2).
+However, the likely performance gains are thought to be small (and may
+be negative), and the default is not to search for a suitable LAPACK
+library.  You can specify a specific LAPACK library or a search for a
+generic library by the configuration option @option{--with-lapack}.  The
+default for @option{--with-lapack} is to check the BLAS library and then
+look for an external library @code{-llapack}.  Sites searching for the
+fastest possible linear algebra may want to build a LAPACK library using
+the ATLAS-optimized subset of LAPACK.  To do so specify something like
 @smallexample
 --with-lapack="-L/path/to/libs -llapack -lcblas"
 @end smallexample
@@ -1107,6 +1107,15 @@ sometimes problems with missing components such as the Fortran
 compiler.  Searching the @samp{R-help} archives will normally reveal
 what is needed.
 
+It seems that the @samp{gcc} compilers normally produce PIC code on
+@samp{ix86} Linux but do not necessarily do so on 64-bit versions such
+as that for AMD Opteron.  So care can be needed with BLAS libraries and
+when building @R{} as a shared library to ensure that
+position-independent code is used in any static libraries (such as the
+Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and @code{zlib}) which
+might be linked against.  Fortunately these are normally built as shared
+libraries with the exception of the ATLAS BLAS libraries.
+
 
 @node MacOS X, Solaris, Linux, Platform notes
 @subsection MacOS X
@@ -1224,25 +1233,25 @@ Note that @samp{/usr/local/lib/sparcv9} will need to be in the
 @cindex BLAS library
 @cindex LAPACK library
 
-Note that using @command{f95} allows the Sun
-performance library @code{libsunperf} to be selected: it will not work
-with @command{f77}, nor with @command{g77}.  @code{libsunperf}
-contains both BLAS and LAPACK code, and @option{--with-lapack} is 
-recommended for 32-bit builds using @command{f95}, but not for
-64-bit builds where on our test system it failed in both Forte 6U1 and
-7, albeit in different ways.  Our experience has been that ATLAS's BLAS
-is faster than @code{libsunperf}, especially for complex numbers.
+Note that using @command{f95} allows the Sun performance library
+@code{libsunperf} to be selected: it will not work with @command{f77},
+nor with @command{g77}.  @code{libsunperf} contains both BLAS and LAPACK
+code, and @option{--with-lapack} is recommended for 32-bit builds using
+@command{f95}, but not for 64-bit builds where on our test system it
+failed in both Forte 6U1 and 7, albeit in different ways.  Our
+experience has been that ATLAS's BLAS is faster than @code{libsunperf},
+especially for complex numbers.
 
 Some care is needed to ensure that libraries found by
 @command{configure} are compatible with the R executable and modules, as
 the testing process will not detect many of the possible problems.  For
 32-bit builds under @command{cc} the flag @option{-dalign} is needed for
 some of the Sun libraries: fortunately the equivalent flag for
-@command{gcc}, @option{-mno-unaligned-doubles}, is the default.  In theory,
-libraries such as @code{libpng}, @code{libjpeg}, @code{zlib} and the
-ATLAS libraries need to be built with a @code{pic} or @code{PIC} flag,
-which could be a problem if static libraries are used.  In practice this
-seems to give little problem for 32-bit builds.
+@command{gcc}, @option{-mno-unaligned-doubles}, is the default.  In
+theory, libraries such as @code{libpng}, @code{libjpeg}, @code{zlib} and
+the ATLAS libraries need to be built with a @code{pic} or @code{PIC}
+flag, which could be a problem if static libraries are used.  In
+practice this seems to give little problem for 32-bit builds.
 
 For a 64-bit build, 64-bit libraries must be used.  As the configuration
 process by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib},

@@ -31,6 +31,13 @@ debugger R is likely to crash.
 
 
 
+rw1082
+======
+
+Fixed list.files() to properly handle paths like "C:", etc.
+
+
+
 rw1081
 ======
 

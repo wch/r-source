@@ -209,7 +209,13 @@ zz <- c(-1.30167, -0.4957, -1.46749, 0.46927)
 r <- cor(zz,zz); r - 1
 stopifnot(r <= 1) # fails in R <= 1.3.x, for versions of Linux and Solaris
 ## end of moved from cor.Rd
-
+## Spearman correlations ranked missing values at end <= 1.8.1
+X <- cbind(c(1,3,4,NA),c(1,4,2,NA))
+X1 <- X[-4,]
+stopifnot(all.equal(cor(X,X,method="spearman",use="complete"),
+                    cor(X1,X1,method="spearman",use="complete")))
+stopifnot(all.equal(cov(X,X,method="spearman",use="complete"),
+                    cov(X1,X1,method="spearman",use="complete")))
 
 ## DateTimeClasses
 (dls <- .leap.seconds[-1] - .leap.seconds[-22])

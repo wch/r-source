@@ -558,8 +558,22 @@ static SEXP filename(char *dir, char *file)
 {
     SEXP ans;
     if (dir) {
+#ifdef Win32
+	switch (dir[strlen(dir)-1])
+	{
+	    case '/':
+	    case '\\':
+	    case ':':
+	    	ans = allocString(strlen(dir) + strlen(file));
+	    	sprintf(CHAR(ans), "%s%s", dir, file);
+	    	break;
+	    default:
+#endif
 	ans = allocString(strlen(dir) + strlen(R_FileSep) + strlen(file));
 	sprintf(CHAR(ans), "%s%s%s", dir, R_FileSep, file);
+#ifdef Win32
+    	}
+#endif
     }
     else {
 	ans = allocString(strlen(file));
@@ -587,7 +601,7 @@ static void count_files(char *dnp, int *count,
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
 #ifdef HAVE_STAT
 		if(recursive) {
-		    snprintf(p, PATH_MAX, "%s%s%s", dnp, 
+		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
 			     R_FileSep, de->d_name);
 		    stat(p, &sb);
 		    if((sb.st_mode & S_IFDIR) > 0) {
@@ -621,12 +635,12 @@ static void list_files(char *dnp, char *stem, int *count, SEXP ans,
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
 #ifdef HAVE_STAT
 		if(recursive) {
-		    snprintf(p, PATH_MAX, "%s%s%s", dnp, 
+		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
 			     R_FileSep, de->d_name);
 		    stat(p, &sb);
 		    if((sb.st_mode & S_IFDIR) > 0) {
 			if(stem)
-			    snprintf(stem2, PATH_MAX, "%s%s%s", stem, 
+			    snprintf(stem2, PATH_MAX, "%s%s%s", stem,
 				     R_FileSep, de->d_name);
 			else
 			    strcpy(stem2, de->d_name);
@@ -672,7 +686,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     recursive = asLogical(CAR(args));
 #ifndef HAVE_STAT
     if(recursive) {
-	warningcall(call, 
+	warningcall(call,
 		    "`recursive = TRUE' is not supported on this platform");
 	recursive = FALSE;
     }

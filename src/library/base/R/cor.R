@@ -13,7 +13,9 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
         stop("supply both x and y or a matrix-like x")
     if(method != "pearson") {
         ## Rank transform
-        Rank <- function(u) if(is.matrix(u)) apply(u, 2, rank) else rank(u)
+        Rank <- function(u) 
+	    if(is.matrix(u)) apply(u, 2, rank, na.last="keep")
+	    else rank(u, na.last="keep")
         x <- Rank(x)
         if(!is.null(y)) y <- Rank(y)
     }
@@ -32,7 +34,9 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
         stop("supply both x and y or a matrix-like x")
     if(method != "pearson") {
         ## Rank transform
-        Rank <- function(u) if(is.matrix(u)) apply(u, 2, rank) else rank(u)
+        Rank <- function(u) 
+	    if(is.matrix(u)) apply(u, 2, rank, na.last="keep")
+	    else rank(u, na.last="keep")
         x <- Rank(x)
         if(!is.null(y)) y <- Rank(y)
     }
