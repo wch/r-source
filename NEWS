@@ -63,6 +63,10 @@ BUG FIXES
     o	plot.POSIX[cl]t were not passing graphics parameters on to
 	axis.POSIXct.
 
+    o	On some HP-UX systems, installed scripts were not executable
+	when using the BSD-compatible install system program found by
+	configure.  We now always use install-sh on HP-UX (PR#2091).
+
 
 
 		CHANGES IN R VERSION 1.6.1
