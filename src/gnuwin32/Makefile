@@ -182,7 +182,7 @@ ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
-	   -L. -lR -lg2c -lf77blas -lcblas -latlas
+	   -L. -lR -lg2c -lf77blas -latlas
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
 	$(CC) -O2  -c $< -o $@
