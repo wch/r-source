@@ -205,6 +205,10 @@ none
 
 Directory:  incoming
 
+* PR# 638 *
+Subject: make.function.html and datasets
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Fri, 18 Aug 2000 17:20:47 +0200
 * PR# 637 *
 Subject: Install Error on SGI Irix 6.5
 From: "Thomas Dick" <dick@b6ori1.bauv.unibw-muenchen.de>
