@@ -21,7 +21,7 @@ RLIBsrc = $(top_srcdir)/src/library
 mansrcs = Manual.tex $(srcdir)/writing-Rd.tex \
 	  $(srcdir)/plotmath.tex $(srcdir)/primitive-funs.tex
 pkgsrcs = pkg-base.tex pkg-eda.tex pkg-lqs.tex pkg-modreg.tex \
-	pkg-mva.tex pkg-stepfun.tex
+	pkg-mva.tex pkg-stepfun.tex pkg-ts.tex
 Manparts = Man-1.ps Man-2.ps Man-3.ps Man-4.ps \
 	   Man-5.ps Man-6.ps Man-7.ps Man-8.ps
 Manbooks = $(Manparts:.ps=.bps)
@@ -29,7 +29,7 @@ Manbooks = $(Manparts:.ps=.bps)
 all: Makefile R lib2tex dvi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
@@ -39,17 +39,17 @@ R:
 	fi
 
 lib2tex: $(srcdir)/lib2tex.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
 Manual.tex: $(srcdir)/Manual.tex.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
 Reference.tex: $(srcdir)/Reference.tex.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 

@@ -32,6 +32,7 @@
 \input{pkg-modreg}
 \input{pkg-mva}
 \input{pkg-stepfun}
+\input{pkg-ts}
 
 \cleardoublepage
 \addcontentsline{toc}{chapter}{Index}
