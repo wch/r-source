@@ -4122,14 +4122,14 @@ string and vice versa.
 @subsection Identifiers
 
 @cindex identifier
-Identifiers consist of a sequence of letters, digits and the period
-(@samp{.}).  They must not start with a digit, nor with a period
-followed by a digit.
+Identifiers consist of a sequence of letters, digits, the period
+(@samp{.}) and the underscore.  They must not start with a digit nor
+underscore, nor with a period followed by a digit.
 
 The definition of a letter depends on the current locale: the precise
-set of characters allowed is given by the C expression
-@code{(isalnum(c) || c=='.')} and will include accented letters in
-many Western European locales.
+set of characters allowed is given by the C expression @code{(isalnum(c)
+|| c == '.' || c == '_')} and will include accented letters in many
+Western European locales.
 
 Notice that identifiers starting with a period are not by default listed
 by the @code{ls} function and that @samp{...} and @samp{..1},

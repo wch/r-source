@@ -18,9 +18,10 @@ make.names(names, unique = FALSE)
   a syntactically valid name.
 }
 \details{
-  A syntactically valid name consists of letters, numbers, and the dot
-  character and starts with a letter or the dot.  Names such as
-  \code{".2"} are not valid, and neither are the reserved words.
+  A syntactically valid name consists of letters, numbers and the dot or
+  underline characters and starts with a letter or the dot not followed
+  by a number.  Names such as \code{".2way"} are not valid, and neither
+  are the reserved words.
 
   The character \code{"X"} is prepended if necessary.
   All invalid characters are translated to \code{"."}.  A missing value

@@ -22,6 +22,8 @@
 #define DEFN_H_
 
 #define COUNTING
+/* allows underscore in syntactic names, as from 1.9.0 */
+#define UNDERSCORE_IN_NAMES 1
 
 #define BYTECODE
 #define NEW_CONDITION_HANDLING

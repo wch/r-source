@@ -1,17 +1,18 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Patched (2003-05-20)
+R : Copyright 2003, The R Foundation for Statistical Computing
+Version 1.9.0 Under development (unstable) (2003-11-18), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ###-- Linear Models, basic functionality -- weights included.
 > 
@@ -69,7 +70,7 @@ attr(,"constant")
 Influence measures of
 	 lm(formula = weight ~ depression, data = roller, weights = 0:9) :
 
-    dfb.1. dfb.dprs   dffit cov.r   cook.d    hat inf
+    dfb.1_ dfb.dprs   dffit cov.r   cook.d    hat inf
 2  -0.0530   0.0482 -0.0530 1.551 0.001635 0.1277    
 3  -0.1769   0.1538 -0.1782 1.569 0.018065 0.1742    
 4   0.0130  -0.0113  0.0131 1.842 0.000100 0.2613    
@@ -126,7 +127,7 @@ Residuals   7 204.202  29.172
 Influence measures of
 	 lm(formula = sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings) :
 
-                 dfb.1.  dfb.pp15 dfb.pp75  dfb.dpi  dfb.ddpi   dffit cov.r
+                 dfb.1_  dfb.pp15 dfb.pp75  dfb.dpi  dfb.ddpi   dffit cov.r
 Australia       0.01232 -0.010436 -0.02653  0.04534 -0.000159  0.0627 1.193
 Austria        -0.01005  0.005944  0.04084 -0.03672 -0.008182  0.0632 1.268
 Belgium        -0.06416  0.051496  0.12070 -0.03472 -0.007265  0.1878 1.176

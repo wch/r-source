@@ -9,6 +9,14 @@
 		CHANGES IN R VERSION 1.9.0
 
 
+USER-VISIBLE CHANGES
+
+    o	Underscore '_' is now allowed in syntactically valid names, and
+	make.names() no longer changes underscores.  Very old code
+	that makes use of underscore for assignment may now give
+	confusing error messages.
+
+
 NEW FEATURES
 
     o	The perl=TRUE argument to grep/regexpr/(g)sub() now uses
