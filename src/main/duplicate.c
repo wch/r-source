@@ -142,8 +142,8 @@ SEXP duplicate(SEXP s)
 	/* direct copying and bypassing the write barrier is OK since
 	   t was just allocated and so it cannot be older than any of
 	   the elements in s.  LT */
-	    DUPLICATE_ATOMIC_VECTOR(SEXP, STRING_PTR, t, s);
-	    break;
+	DUPLICATE_ATOMIC_VECTOR(SEXP, STRING_PTR, t, s);
+	break;
     case PROMSXP: /* duplication requires that we evaluate the promise */
 #ifdef OLD
 	if (PRVALUE(s) == R_UnboundValue) {
