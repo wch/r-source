@@ -22,7 +22,7 @@
 use Getopt::Long;
 use R::Utils;
 
-my $revision = ' $Revision: 1.17 $ ';
+my $revision = ' $Revision: 1.18 $ ';
 my $version;
 my $name;
 
@@ -206,39 +206,6 @@ sub doS3 {
       output("Functions with names beginning in \\code\{$fun.\} will be");
       output("methods for this function.");
       output("Classes with methods for this function include:");
-    }
-    &section(1, "\\item\{" . join(" ", @word[1..$#word]) . "\}\{");
-  }
-  if (/^\.RT/) {
-    $needVal = 1;
-    $doprint = 0;
-    $output = "";
-  }
-  if (/^\.SA/) {
-    &section(0, "\\seealso\{");
-    $inSeeAlso = 1;
-  }
-  if (/^\.SE/) { &section(0, "\\section\{Side Effects\}\{"); }
-  if (/^\.SH/) {
-    if ($word[1] =~ /REFERENCE/) {
-      &section(0, "\\references\{");
-      $inReferences = 1;
-    } elsif ($word[1] =~ /NOTE/) {
-      &section(0, "\\note\{");
-    } elsif ($word[1] =~ /SOURCE/) {
-      &section(0, "\\source\{");
-      $inReferences = 1;
-    } elsif ($word[1] =~ /SUMMARY/) {
-      &section(0, "\\description\{");
-    } elsif ($word[1] =~ /Warning/) {
-      &section(0, "\\section{Warning}\{");
-    } elsif (join(" ", @word[1..2]) =~ /DATA DESCRIPTION/) {
-      &section(0, "\\usage\{\ndata($fun)");
-      &section(0, "\\format\{");
-    } else {
-      # This line may be of the form .SH "A B C"
-      ($tmp = join(" ", @word[1..$#word])) =~ s/\"(.*)\"/$1/;
-      &section(0, "\\section\{$tmp\}\{");
     }
     if (/^\.GR/) {
       output("Graphical parameters (see \\code\{\\link\{par\}\}) may also");
