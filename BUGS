@@ -335,3 +335,11 @@ Date: Sun, 31 Oct 1999 01:29:05 +0200 (MET DST)
 Subject: bugs in scan()
 From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
 Date: Mon, 1 Nov 1999 12:20:33 +1300 (NZDT)
+* PR# 305 *
+Subject: bug in sample
+From: Robert Gentleman <rgentlem@jimmy.harvard.edu>
+Date: Mon, 1 Nov 1999 16:32:15 -0500
+* PR# 306 *
+Subject: problem with "[[<-"
+From: Saikat DebRoy <saikat@stat.wisc.edu>
+Date: 01 Nov 1999 16:11:09 -0600
