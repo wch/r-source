@@ -45,6 +45,17 @@ NEW FEATURES
 	for unconstrained minimization and maximization with and
 	without derivatives.
 
+    o	strsplit() now uses split regexps, and no longer insists on
+	splitting into non-empty tokens.
+
+    o	Long-named options with arguments such as `--vsize' now use the
+	`--name=VALUE' form; the old `--name VALUE' is deprecated.
+	Old-style command line options `-v' and `-n' are now defunct.
+
+    o	If R_PAPERSIZE is not specified otherwise, configure now tries
+	to compute it by calling paperconf.
+
+
 
 BUG FIXES
 
