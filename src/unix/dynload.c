@@ -228,7 +228,7 @@ static int AddDLL(char *path, int asLocal, int now)
     return 1;
 }
 
- /* 
+ /*
 
     Computes the flag to be passed as the second argument to dlopen(),
     controlling whether the local or global symbol integration
@@ -237,7 +237,7 @@ static int AddDLL(char *path, int asLocal, int now)
     to use and the results are or'ed together. We need a separate
     routine to keep things clean(er) because some symbolic constants
     may not  be defined, such as RTLD_LOCAL on certain Solaris 2.5.1
-    and Irix 6.4    boxes. In such cases, we emit a warning message and 
+    and Irix 6.4    boxes. In such cases, we emit a warning message and
     use the default by not modifying the value of the flag.
 
     Called only by AddDLL().
@@ -313,7 +313,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
     char buf[MAXIDSIZE+1];
     DL_FUNC fcnptr;
     int i, all=(strlen(pkg) == 0), doit;
-    
+
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
     sprintf(buf, "%s", name);
 #else
@@ -369,15 +369,15 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 /*
   Extended to support 2 additional arguments (3 in total).
   First argument is the name of the library.
-  Second argument is a logical indicating whether we 
+  Second argument is a logical indicating whether we
   want the symbols to be kept in their own local symbol table
   or added to the global symbol table of the application.
-  Third argument is a logical indicating whether the 
-  dynamic loading should relocate all routine symbols 
+  Third argument is a logical indicating whether the
+  dynamic loading should relocate all routine symbols
   now and signal any errors immediately or lazily relocate
-  the symbols as they are invoked. This is useful for 
-  developers so that they can ensure that all the symbols 
-  are available before they release, and allows users to 
+  the symbols as they are invoked. This is useful for
+  developers so that they can ensure that all the symbols
+  are available before they release, and allows users to
   call routines from "incomplete" libraries.
  */
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -389,7 +389,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
     if(!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
-	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
+	errorcall(call, "unable to load shared library \"%s\":\n  %s",
 		  buf, DLLerror);
     return R_NilValue;
 }

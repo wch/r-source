@@ -180,7 +180,7 @@ static void expected(char *what, char *got)
     }
     else
 	fclose(fp);
-    error("\"scan\" expected %s, got \"%s\"\n", what, got);
+    error("\"scan\" expected %s, got \"%s\"", what, got);
 }
 
 static void extractItem(char *buffer, SEXP ans, int i)

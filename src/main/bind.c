@@ -804,7 +804,7 @@ SEXP FetchMethod(char *generic, char *classname, SEXP env)
     char buf[LNAMBUF];
     SEXP method;
     if (strlen(generic) + strlen(classname) + 2 > LNAMBUF)
-	error("class name too long in %s\n", generic);
+	error("class name too long in %s", generic);
     sprintf(buf, "%s.%s", generic, classname);
     method = findVar(install(buf), env);
     if (TYPEOF(method) != CLOSXP)
@@ -827,7 +827,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
      * is still in a position to use "substitute" to get the actual
      * expressions which generated the argument (for naming purposes).
      *
-     * The dispatch rule here is as follows: 
+     * The dispatch rule here is as follows:
      *
      * 1) For each argument we get the list of possible class
      *    memberships from the class attribute.

@@ -249,7 +249,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 #endif
 	    else
-		errorcall(call, "argument %d not yet handled by cat\n",1+iobj);
+		errorcall(call, "argument %d not yet handled by cat",1+iobj);
 	    /* FIXME : cat(...) should handle ANYTHING */
 	    w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);

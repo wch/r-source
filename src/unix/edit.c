@@ -115,7 +115,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (rc == NOLAUNCH)
 	errorcall(call, "unable to run editor");
     if (rc != 0)
-	warningcall(call, "editor ran but returned error status\n");
+	warningcall(call, "editor ran but returned error status");
 #else
     sprintf(editcmd, "%s %s", CHAR(STRING(ed)[0]), filename);
     rc = system(editcmd);
