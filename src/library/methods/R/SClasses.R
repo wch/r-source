@@ -29,6 +29,7 @@ setClass <-
         superClasses <- names(classDef@contains)
     }
     ## confirm the validity of the class definition
+    .completeClassSlots(classDef)
     completeExtends(classDef)
     for(class2 in superClasses) # store the metadata for class relations
         setIs(Class, class2, where = where, classDef = classDef)

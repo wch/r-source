@@ -108,12 +108,6 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
 }
 \examples{
 \testonly{
-if(isClass("track"))
-  removeClass("track")
-if(isClass("trackCurve"))
-  removeClass("trackCurve")
-if(isClass("trackMultiCurve"))
-  removeClass("trackMultiCurve")
 ## A simple class with two slots
 setClass("track",
          representation(x="numeric", y="numeric"))
@@ -127,18 +121,45 @@ setClass("trackCurve",
 setClass("trackMultiCurve",
          representation(x="numeric", y="matrix", smooth="matrix"),
          prototype = structure(list(), x=numeric(), y=matrix(0,0,0),
+
                                smooth= matrix(0,0,0)))
-## Define a multi-curve to extend a single curve ONLY
+## Automatically convert an object from class "trackCurve" into
+## "trackMultiCurve", by making the y, smooth slots into 1-column matrices
+setIs("trackCurve",
+      "trackMultiCurve",
+      coerce = function(obj) {
+        new("trackMultiCurve",
+            x = obj@x,
+            y = as.matrix(obj@y),
+            curve = as.matrix(obj@smooth))
+      },
+      replace = function(obj, value) {
+        obj@y <- as.matrix(value@y)
+        obj@x <- value@x
+        obj@smooth <- as.matrix(value@smooth)
+        obj})
+
+## Automatically convert the other way, but ONLY
 ## if the y data is one variable.
 setIs("trackMultiCurve",
       "trackCurve",
-      test = function(obj) {ncol(slot(obj, "y")) == 1},
+      test = function(obj) {ncol(obj@y) == 1},
       coerce = function(obj) {
         new("trackCurve",
             x = slot(obj, "x"),
-            y = as.numeric(slot(obj,"y")),
-            curve = as.numeric(slot(obj, "curve")))
-      })
+            y = as.numeric(obj@y),
+            smooth = as.numeric(obj@smooth))
+      },
+      replace = function(obj, value) {
+        obj@y <- matrix(value@y, ncol=1)
+        obj@x <- value@x
+        obj@smooth <- value@smooth
+        obj})
+\testonly{
+removeClass("trackMultiCurve")
+removeClass("trackCurve")
+removeClass("track")
+}
 }
 \keyword{programming}
 \keyword{classes}

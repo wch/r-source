@@ -79,7 +79,7 @@
     ## it can be promoted to an S4 class with metadata, slot checking, etc.
     ## The initialize method uses newBasic(...), so should be consistent with the old code,
     ## (see def'n of BasicClasses above).
-    setClass("ts", representation(tsp = "numeric"), contains = "vector",
+    setClass("ts", representation(.Data = "vector", tsp = "numeric"), contains = "vector",
              prototype = newBasic("ts"), sealed = TRUE, where = envir)
     
 

@@ -67,7 +67,7 @@
 \usage{
 testVirtual(properties, extends, prototype)
 
-makePrototypeFromClassDef(properties, ClassDef, extends)
+makePrototypeFromClassDef(slots, ClassDef, extends)
 
 newEmptyObject()
 

@@ -19,15 +19,20 @@ as <-
     if(is.null(asMethod)) {
         if(is(object, Class)) {
             asMethod <- possibleExtends(thisClass, Class)
+            canCache <- TRUE
              if(identical(asMethod, FALSE))
-                stop(paste("Internal problem in as():  \"", thisClass, "\" extends \"",
-                           Class, "\", but no coerce method found", sep=""))
+                stop("Internal problem in as():  \"", thisClass, "\" is(object, \"",
+                           Class, "\) is TRUE, but the metadata asserts that the is relation is FALSE", sep="")
             else if(identical(asMethod, TRUE)) 
                 asMethod <- .makeAsMethod(quote(from), TRUE, Class)
-             else
+             else {
+                 test <- asMethod@test
                  asMethod <- .makeAsMethod(asMethod@coerce, asMethod@simple, Class)
+                 canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+             }
             ## cache for next call
-            cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
+            if(canCache)
+                cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
         }
         else
             asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
@@ -61,10 +66,13 @@ as <-
                 class(value) <- class(object)
                 return(value)
             }
-            else asMethod <- asMethod@replace
-            ## cache for next call
-            cacheMethod("coerce<-", c(from = thisClass, to = Class), asMethod)
-        }
+            else {
+                test <- asMethod@test
+                asMethod <- asMethod@replace
+                if((!is(test, "function")) || identical(body(test), TRUE))
+                    cacheMethod("coerce<-", c(from = thisClass, to = Class), asMethod)
+           }
+         }
         else
             asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
     }
