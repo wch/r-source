@@ -219,12 +219,19 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 void R_ProcessEvents(void)
 {
     EventRef theEvent;
+    EventRecord	outEvent;
     EventTargetRef theTarget = GetEventDispatcherTarget();
+    bool	conv = false;
 
    if(CheckEventQueueForUserCancel())
       onintr();
 
-   if(ReceiveNextEvent(0, NULL,kEventDurationNoWait,true,&theEvent)== noErr){         
+   if(ReceiveNextEvent(0, NULL,kEventDurationNoWait,true,&theEvent)== noErr){       
+         conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
+    
+        if(conv && (outEvent.what == kHighLevelEvent))
+            AEProcessAppleEvent(&outEvent);
+   
         SendEventToEventTarget (theEvent, theTarget);
         ReleaseEvent(theEvent);
             

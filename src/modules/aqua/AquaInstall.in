@@ -26,7 +26,7 @@ if !(test -f MacOS/RAqua); then
   ln -s RAqua R.bin
   cd ..
 fi
-./R.fix
+sh R.fix
 rm R.fix
 cd ${here}
 cd ${top_srcdir}
