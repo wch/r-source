@@ -41,9 +41,12 @@ methods(generic.function, class)
   If no class name produces a suitable function, the function
   \code{fun.default} is used.
 
-  \code{methods} can be used to find out about the methods for a
+  \code{methods} can be used to find out about the visible methods for a
   particular generic function or class.  See the examples below for
-  details.
+  details.  Note that currently \code{methods} only reports
+  \emph{user-visible} methods (those which can be called directly):
+  packages which are in namespace may contain other methods which are
+  available to the dispatch mechanism but not to the end user.
 
   Now for some obscure details that need to appear somewhere.  These
   comments will be slightly different than those in Appendix A of the
