@@ -1691,6 +1691,9 @@ An integrated set of functions for fitting curves and surfaces including
 thin plate splines, kriging and neural networks.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
+@item maxstat
+Maximally selected rank and Gauss statistics with several p-value
+approximations.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
@@ -2542,9 +2545,7 @@ package @strong{mgcv}, but it is not an exact clone of what is described
 in the White Book (no @code{lo()} for example).  Package @strong{gss}
 can fit spline-based GAMs too.  And if you can accept regression splines
 you can use @code{glm()}.  For gaussian GAMs you can use @code{bruto()}
-from package @strong{mda}.  The long-term plan is to have something
-better than @code{gam()} for additive models, perhaps along the lines of
-BRUTO.
+from package @strong{mda}.
 
 @c FIXME:
 @c Simon Wood <snw@mcs.st-and.ac.uk> says that for GAMs,

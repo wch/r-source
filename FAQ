@@ -1494,6 +1494,10 @@ these a try, of course.  This area of CRAN currently contains
 *hdf5*
      Interface to the NCSA HDF5 library.
 
+*maxstat*
+     Maximally selected rank and Gauss statistics with several p-value
+     approximations.
+
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
@@ -2148,9 +2152,7 @@ language:
 *mgcv*, but it is not an exact clone of what is described in the White Book
 (no `lo()' for example).  Package *gss* can fit spline-based GAMs too.  And
 if you can accept regression splines you can use `glm()'.  For gaussian
-GAMs you can use `bruto()' from package *mda*.  The long-term plan is to
-have something better than `gam()' for additive models, perhaps along the
-lines of BRUTO.
+GAMs you can use `bruto()' from package *mda*.
 
 7.19 Why is the output not printed when I source() a file?
 ==========================================================
