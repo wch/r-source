@@ -21,6 +21,8 @@ pkg:::name
   a name space.  The package will be loaded if it was not loaded already
   before the call.  Assignment into name spaces is not supported.
 }
+\seealso{
+  \code{\link{get}} to access an object masked by another of the same name.       }
 \examples{
 base::log
 base::"+"
