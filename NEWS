@@ -202,6 +202,7 @@ NEW FEATURES
         only happens when no numbers of grid cells are specified.  New
         arguments lwd and equilogs, see ?grid.
 
+    o	installed.packages() has a new argument `priority'.
 
 
 DEPRECATED & DEFUNCT

@@ -168,26 +168,29 @@ package.description <- function(pkg, lib.loc=NULL, fields=NULL)
 }
 
 
-installed.packages <- function(lib.loc = NULL)
+installed.packages <- function(lib.loc = NULL, priority = NULL)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-
-    retval <- NULL
-    for(lib in lib.loc)
-    {
+    pkgFlds <- c("Version", "Priority", "Bundle", "Depends")
+    if(!is.null(priority)) {
+        if(!is.character(priority))
+            stop("`priority' must be character or NULL")
+        if(any(b <- priority == "high"))
+            priority <- c(priority[!b], "recommended","base")
+    }
+    retval <- character()
+    for(lib in lib.loc) {
         pkgs <- .packages(all.available=TRUE, lib.loc = lib)
         for(p in pkgs){
-            desc <- package.description(p, lib=lib,
-                                        fields=c("Version", "Priority",
-                                        "Bundle", "Depends"))
-
+            desc <- package.description(p, lib=lib, fields= pkgFlds)
+            if(!is.null(priority)) # skip if priority does not match
+                if(is.na(pmatch(desc["Priority"], priority))) next
             retval <- rbind(retval, c(p, lib, desc))
         }
     }
     if (!is.null(retval))
-        colnames(retval) <- c("Package", "LibPath", "Version",
-                              "Priority", "Bundle", "Depends")
+        colnames(retval) <- c("Package", "LibPath", pkgFlds)
     retval
 }
 
