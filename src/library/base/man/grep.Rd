@@ -50,7 +50,7 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
   For \code{regexpr} it is an error for \code{pattern} to be \code{NA},
   otherwise \code{NA} is permitted and matches only itself.
 
-  The \link{regular expressions} used are those specified by POSIX 1003.2,
+  The regular expressions used are those specified by POSIX 1003.2,
   either extended or basic, depending on the value of the
   \code{extended} argument, unless \code{perl = TRUE} when they are
   those of PCRE,

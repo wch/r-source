@@ -32,7 +32,8 @@
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed
   if \code{extended = TRUE} in \code{grep}, \code{regexpr}, \code{sub}
-  and \code{gsub}.
+  \code{gsub} and \code{strsplit}.  They are the GNU implementation of
+  the standard POSIX 1003.2.
   
   Regular expressions are constructed analogously to arithmetic
   expressions, by using various operators to combine smaller expressions.
@@ -50,8 +51,8 @@
   and last characters, separated by a hyphen.
 
   Certain named classes of characters are predefined, as
-  follows.  Their interpretation depends on the \code{locale}; the
-  interpretation below is that of the POSIX locale.
+  follows.  Their interpretation depends on the \emph{locale} (see
+  \link{locales}); the interpretation below is that of the POSIX locale.
 
   \describe{
     \item{\code{[:alnum:]}}{Alphanumeric characters: \code{[:alpha:]}
@@ -72,7 +73,7 @@
     \item{\code{[:graph:]}}{Graphical characters: \code{[:alnum:]} and
       \code{[:punct:]}.}
     
-    \item{\code{[:lower:]}}{Lower-case letters.}
+    \item{\code{[:lower:]}}{Lower-case letters in the current locale.}
 
     \item{\code{[:print:]}}{
       Printable characters: \code{[:alnum:]}, \code{[:punct:]} and space.}
@@ -84,14 +85,14 @@
       Space characters: tab, newline, vertical tab, form feed, carriage
       return, and space.}
 
-    \item{\code{[:upper:]'}}{Upper-case letters.}
+    \item{\code{[:upper:]'}}{Upper-case letters in the current locale.}
 
     \item{\code{[:xdigit:]}}{Hexadecimal digits: \code{0 1 2 3 4 5 6 7 8 9 A
 	B C D E F a b c d e f}.}
   }
    
   For example, \code{[[:alnum:]]} means \code{[0-9A-Za-z]}, except the latter
-  depends upon the POSIX locale and the ASCII character encoding, whereas
+  depends upon the locale and the character encoding, whereas
   the former is independent of locale and character set.  (Note that the
   brackets in these class names are part of the symbolic names, and must
   be included in addition to the brackets delimiting the bracket list.)
@@ -151,6 +152,10 @@
   an extension.)
 }
 \section{Basic Regular Expressions}{
+  This section covers the regular expressions allowed
+  if \code{extended = FALSE} in \code{grep}, \code{regexpr}, \code{sub}
+  \code{gsub} and \code{strsplit}.
+
   In basic regular expressions the metacharacters \code{?}, \code{+},
   \code{\{}, \code{|}, \code{(}, and \code{)} lose their special meaning;
   instead use the backslashed versions \code{\?}, \code{\+},
@@ -163,6 +168,8 @@
     pcrepattern} or if that does not exist, \code{man pcre}) on your system
   or from the sources at
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}.
+  If PCRE support was compiled from the sources within \R, the PCRE
+  version is 3.9: PCRE >= 4.0 supports more of the Perl regular expressions.
 }
 \author{
   This help page is based on the documentation of GNU grep 2.4.2, from
