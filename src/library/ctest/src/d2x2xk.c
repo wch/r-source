@@ -1,6 +1,5 @@
 #include <R.h>
-#include <R_ext/Error.h>
-#include <R_ext/Mathlib.h>
+#include <Rmath.h>
 
 void
 d2x2xk(Sint *k, double *m, double *n, double *t, double *d)

@@ -5,7 +5,7 @@
    */
 
 #include <R.h>
-#include <R_ext/Mathlib.h>
+#include <Rmath.h>
 
 static double **w;
 

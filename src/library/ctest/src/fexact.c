@@ -48,7 +48,7 @@ static Sint iwork(Sint iwkmax, Sint *iwkpt, Sint number, Sint itype);
 
 #ifdef USING_R
 # define isort(n, ix)		R_isort(ix, *n)
-# include <R_ext/Mathlib.h>	/* -> pgamma() */
+# include <Rmath.h>	/* -> pgamma() */
 #else
  static void isort(Sint *n, Sint *ix);
  static double gammds(double *y, double *p, Sint *ifault);
