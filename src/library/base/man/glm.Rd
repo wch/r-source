@@ -12,11 +12,13 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
         offset = rep(0, nrow(x)),
         family = gaussian(), control = glm.control(),
         intercept = TRUE)
+weights.glm(object, type = c("prior", "working"), ...)
 }
 \alias{glm}
 \alias{glm.control}
 \alias{glm.fit}
 \alias{glm.fit.null}
+\alias{weights.glm}
 \arguments{
   \item{formula}{a symbolic description of the model to be fit.
     The details of model specification are given below.}
@@ -67,6 +69,10 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
 
   \item{contrasts}{an optional list. See the \code{contrasts.arg}
     of \code{model.matrix.default}.}
+
+  \item{object}{an object inheriting from class{"glm"}.}
+  \item{type}{character, partial matching allowed.  Type of weights to
+    extract from the fitted modle object.}
 }
 \description{
   \code{glm} is used to fit generalized linear models.
@@ -104,6 +110,9 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
   The generic accessor functions \code{\link{coefficients}},
   \code{effects}, \code{fitted.values} and \code{residuals} can be used to
   extract various useful features of the value returned by \code{glm}.
+
+  \code{weights} extracts a vector of weights, one for each case in the
+  fit (after subsetting and \code{na.action}).
 }
 \seealso{
   \code{\link{anova.glm}}, \code{\link{summary.glm}}, etc. for

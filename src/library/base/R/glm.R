@@ -667,3 +667,9 @@ model.frame.glm <-
     }
     else formula$model
 }
+
+weights.glm <- function(object, type = c("prior", "working"), ...)
+{
+    type <- match.arg(type)
+    if(type == "prior") object$prior.weights else object$weights
+}

@@ -77,6 +77,10 @@ BUG FIXES
 
     o   Rdindex now handles multi-line \title{}'s correctly
 
+    o   Add weights.glm so that plot.lm gets the correct weights from
+	glm objects (the ones that go with deviance residuals not
+	working residuals).
+
 
 
 		CHANGES IN R VERSION 1.2.0
