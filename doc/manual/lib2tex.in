@@ -1,5 +1,5 @@
 #! @PERL@
-### $Id: lib2tex.in,v 1.2 1998/09/28 05:54:26 hornik Exp $
+### $Id: lib2tex.in,v 1.3 1999/02/22 16:29:03 leisch Exp $
 
 ## Create a single pkg-pkgname.tex file from the Latex subdirectories
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
@@ -54,7 +54,7 @@ for (@ARGV) {
 
 sub do_header {
     my( $pkgname, $outfile ) = @_;
-    $outfile->print("\n\\section\{The \\texttt\{$pkgname\} package\}\n");
+    $outfile->print("\n\\chapter\{The \\texttt\{$pkgname\} package\}\n");
 }
 
 sub do_tex_files {

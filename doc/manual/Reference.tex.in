@@ -1,0 +1,39 @@
+\documentclass[@R_PAPERSIZE@paper]{book}
+
+\usepackage{Rd}
+\usepackage{makeidx}
+
+\makeindex
+\sloppy{}
+
+\begin{document}\pagenumbering{roman}
+
+\title{The \R\ Reference Index}
+
+\date{\vspace*{15ex}\textsc{\small\input{Version}}}
+
+\author{The \R\ Development Core Team}
+
+\maketitle
+\pagestyle{empty}
+%%-- for ``2 pages on 1'' printing (make Manbooks):
+\ \ \clearpage \ \ \clearpage
+
+\pagestyle{headings}
+\pagenumbering{roman}
+\tableofcontents
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+\input{pkg-base}
+\input{pkg-eda}
+\input{pkg-lqs}
+\input{pkg-modreg}
+\input{pkg-mva}
+\input{pkg-stepfun}
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+\end{document}

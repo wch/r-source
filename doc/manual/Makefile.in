@@ -11,13 +11,14 @@ subdir = doc/manual
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = EQN ABOUT.tex.in Man.tex.in plotmath.tex primitive-funs.tex \
-	writing-Rd.tex Rd.sty lib2tex.in Makefile.in
+DISTFILES = Manual.tex.in Reference.tex.in \
+	plotmath.tex primitive-funs.tex \
+	writing-Rd.tex Rd.sty lib2tex.in Makefile.in 
 
 RLIB = $(top_builddir)/library
 RLIBsrc = $(top_srcdir)/src/library
 
-mansrcs = Man.tex $(srcdir)/writing-Rd.tex \
+mansrcs = Manual.tex $(srcdir)/writing-Rd.tex \
 	  $(srcdir)/plotmath.tex $(srcdir)/primitive-funs.tex
 pkgsrcs = pkg-base.tex pkg-eda.tex pkg-lqs.tex pkg-modreg.tex \
 	pkg-mva.tex pkg-stepfun.tex
@@ -41,24 +42,34 @@ lib2tex: $(srcdir)/lib2tex.in $(top_builddir)/config.status
 	cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
-ABOUT.tex: $(srcdir)/ABOUT.tex.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
-Man.tex: $(srcdir)/Man.tex.in $(top_builddir)/config.status
+
+Manual.tex: $(srcdir)/Manual.tex.in $(top_builddir)/config.status
 	cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-dvi: ABOUT.dvi Man.dvi
+Reference.tex: $(srcdir)/Reference.tex.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
 
-Man.dvi: Version.tex $(pkgsrcs) $(mansrcs) $(srcdir)/Rd.sty
+dvi: Manual.dvi Reference.dvi
+
+Manual.dvi: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 	@echo "Making LaTeX documentation ..."
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{Man.tex}'
-	@$(MAKEINDEX) Man
+	  $(LATEX) '\nonstopmode\input{Manual.tex}'
+	@$(MAKEINDEX) Manual
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
-	  $(LATEX) '\nonstopmode\input{Man.tex}'
+	  $(LATEX) '\nonstopmode\input{Manual.tex}'
+
+Reference.dvi: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
+	@echo "LaTeX documentation: Reference Index ..."
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	  $(LATEX) '\nonstopmode\input{Reference.tex}'
+	@$(MAKEINDEX) Reference
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	  $(LATEX) '\nonstopmode\input{Reference.tex}'
 
 Version.tex: $(top_builddir)/bin/R
 	$(top_builddir)/bin/R --version > $@
@@ -123,53 +134,11 @@ clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -f Rd.sty; \
 	fi
-	@-rm -f *.aux *.toc Man.i?? *.dvi *.log *.ps *.ps-2
+	@-rm -f *.aux *.toc Manual.i?? *.dvi *.log *.ps *.ps-2
 distclean: clean
 	@-rm -f auto Version.tex pkg-*.tex Makefile lib2tex \
-	  ABOUT.tex Man.tex
+	  ABOUT.tex Manual.tex
 maintainer-clean: distclean
-
-Man.ps:	Man.dvi
-	$(DVIPS) -f $< -o $@
-
-ABOUT.dvi: ABOUT.tex $(srcdir)/writing-Rd.tex $(srcdir)/Rd.sty
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(LATEX) $<
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(LATEX) $<
-ABOUT.ps: ABOUT.dvi
-	@$(DVIPS) -f $< -o $@
-
-$(Manparts): Man.dvi
-	$(DVIPS)        -l36 -f $< -o Man-1.ps
-	$(DVIPS)  -p37  -l72 -f $< -o Man-2.ps
-	$(DVIPS)  -p73 -l108 -f $< -o Man-3.ps
-	$(DVIPS) -p109 -l144 -f $< -o Man-4.ps
-	$(DVIPS) -p145 -l180 -f $< -o Man-5.ps
-	$(DVIPS) -p181 -l216 -f $< -o Man-6.ps
-	$(DVIPS) -p217 -l252 -f $< -o Man-7.ps
-	$(DVIPS) -p253 -l288 -f $< -o Man-8.ps
-	$(DVIPS) -p289       -f $< -o Man-9.ps
-
-Manbooks:: $(Manbooks)
-
-%.bps: %.ps
-	psbook $< | pstops \
-	 -w21cm -h29.7cm  '2:0L@.80(1.09w,-.04h)+1L@.80(1.09w,.46h)' > $@
-
-Man-plotmath.ps: Man.dvi
-	$(DVIPS) -f $< -pp5-6 -S 2   -i -o $@
-	b=`basename $@ .ps`; rm -f $$b.001; mv $$b.002 $@
-
-Man_2on1.dvi: Man.dvi
-	-dvidvi -m "2:0,1(21.1cm,0)" $^ $@
-Man.ps-2: Man_2on1.dvi
-	-$(DVIPS) -f $< -x 707 -t landscape -O -0.69cm,-0.70cm -o $@
-Man-index.ps-2: Man.ps-2
-	P=`perl -ne 'next unless /\bbop\b.*\bIndex\b/; @_=split; printf "%s\n", int(.5+$$_[1]/2)' Man.ps`; psselect -p"$$P"- $^ > $@
-
-##-- double sided printing.. [NOT tested for a while...]
-print2:	Man.ps
-	mpage -P -2 $< > Man.ps-2
-	lpr -s Man.ps-2
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
@@ -177,3 +146,4 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
         done
+
