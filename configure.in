@@ -837,9 +837,7 @@ fi
 if test -z "${FPICFLAGS}" \
     && test -z "${F2C}"; then
   case "${host}" in
-    *aix4.[[2-9]]*)
-      ;;
-    alpha*osf*)
+    *aix4.[[2-9]]*|alpha*osf*|*sgi*)
       ;;
     *)
       AC_MSG_WARN([I could not determine FPICFLAGS.])
@@ -851,9 +849,7 @@ fi
 : ${CXXPICFLAGS=${cxxpicflags}}
 if test -z "${CXXPICFLAGS}"; then
   case "${host}" in
-    *aix4.[[2-9]]*)
-      ;;
-    alpha*osf*)
+    *aix4.[[2-9]]*|alpha*osf*|*sgi*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS"
