@@ -47,7 +47,7 @@
  *
  */
 
-/* @(#) $Id: deflate.c,v 1.3 2004/03/15 09:15:23 ripley Exp $ */
+/* @(#) $Id: deflate.c,v 1.4 2004/06/25 07:43:52 ripley Exp $ */
 
 #include "deflate.h"
 
@@ -543,6 +543,10 @@ int ZEXPORT deflate (strm, flush)
     s->strm = strm; /* just in case */
     old_flush = s->last_flush;
     s->last_flush = flush;
+
+    /* R ADDITION, as never initialized */
+    s->data_type = Z_UNKNOWN;
+    /* end of R ADDITION */
 
     /* Write the header */
     if (s->status == INIT_STATE) {
