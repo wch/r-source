@@ -59,7 +59,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < len; i++) {
 	ch = STRING_ELT(x, i);
 	/* give print width for an NA_STRING */
-	INTEGER(s)[i] = 
+	INTEGER(s)[i] =
 	    (ch == NA_STRING) ? R_print.na_width : strlen(CHAR(ch));
     }
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
@@ -127,7 +127,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     if(len > 0) {
       if (!isInteger(sa) || !isInteger(so) || k==0 || l==0)
 	errorcall(call, "invalid substring argument(s) in substr()");
-      
+
       for (i = 0; i < len; i++) {
 	start = INTEGER(sa)[i % k];
 	stop = INTEGER(so)[i % l];
@@ -181,11 +181,11 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if(len > 0) {
       if (!isInteger(sa) || !isInteger(so) || k==0 || l==0)
 	errorcall(call,"invalid substring argument(s) in substr<-()");
-      
+
       v = LENGTH(value);
       if (!isString(value) || v == 0)
 	errorcall(call, "invalid rhs in substr<-()");
-      
+
       for (i = 0; i < len; i++) {
 	start = INTEGER(sa)[i % k];
 	stop = INTEGER(so)[i % l];
@@ -212,12 +212,12 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-/* strsplit is going to split the strings in the first argument into */
-/* tokens depending on the second argument. The characters of the second */
-/* argument are used to split the first argument.  A list of vectors is */
-/* returned of length equal to the input vector x, each element of the */
-/* list is the collection of splits for the corresponding element of x. */
-
+/* strsplit is going to split the strings in the first argument into
+ * tokens depending on the second argument. The characters of the second
+ * argument are used to split the first argument.  A list of vectors is
+ * returned of length equal to the input vector x, each element of the
+ * list is the collection of splits for the corresponding element of x.
+*/
 SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
@@ -234,10 +234,10 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!isString(x) || !isString(tok))
 	errorcall_return(call,"non-character argument in strsplit()");
-    if(extended_opt == NA_INTEGER) extended_opt = 1;    
-    
+    if(extended_opt == NA_INTEGER) extended_opt = 1;
+
     eflags = 0;
-    if(extended_opt) eflags = eflags | REG_EXTENDED;    
+    if(extended_opt) eflags = eflags | REG_EXTENDED;
 
     len = LENGTH(x);
     tlen = LENGTH(tok);
@@ -956,7 +956,7 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
     apse_t *aps;
     char *str;
-    
+
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     vec = CAR(args); args = CDR(args);
