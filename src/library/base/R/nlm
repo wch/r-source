@@ -4,9 +4,11 @@ function(f, p, hessian=FALSE, typsize=rep(1,length(p)),
 	stepmax=max(1000 * sqrt(sum((p/typsize)^2)), 1000),
 	steptol=1e-6, iterlim=100)
 {
-	if(0 == print.level <- as.integer(print.level)) msg <- 9
-	else if(print.level == 1) msg <- 1
-	else if(print.level == 2) msg <- 17
+
+	print.level <- as.integer(print.level)
+	if(print.level < 0 || print.level > 2)
+		stop("`print.level' must be in {0,1,2}")
+	msg <- c(9,1,17)[1+print.level]
 	.Internal(nlm(f, p, hessian, typsize, fscale, msg, ndigit, gradtol,
 		stepmax, steptol, iterlim))
 }
