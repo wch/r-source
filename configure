@@ -3483,7 +3483,6 @@ etc/build-htmlpkglist
 etc/help.pretty
 etc/html2dos
 demos/dynload/Makefile
-src/library/LIBSETUP
 src/library/LIBCLEAN
 cmd/fwf2table
  src/include/Platform.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
@@ -3601,7 +3600,6 @@ etc/build-htmlpkglist
 etc/help.pretty
 etc/html2dos
 demos/dynload/Makefile
-src/library/LIBSETUP
 src/library/LIBCLEAN
 cmd/fwf2table
 "}
