@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-29, 2003-07-21
+Version 1.7-30, 2003-07-23
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1247,6 +1247,12 @@ distributions of R.)
      clustering, character string manipulation, conversion of S objects to
      LaTeX code, recoding variables, and bootstrap repeated measures
      analysis.
+
+*HyperbolicDist*
+     Basic functions for the hyperbolic distribution: probability density
+     function, distribution function, quantile function, a routine for
+     generating observations from the hyperbolic, and a function for fitting
+     the hyperbolic distribution to data.
 
 *ISwR*
      Data sets for "Introductory Statistics with R" by Peter Dalgaard,
