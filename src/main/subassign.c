@@ -1373,6 +1373,8 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 			error("recursive indexing failed at level %d\n", i+1);
 		    off = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 				    length(x), /*partial ok*/TRUE, i);
+		    if(off < 0)
+			error("no such index at level %d\n", i+1);
 		    xup = x;
 		    recursed = TRUE;
 		    x = VECTOR_ELT(x, off);

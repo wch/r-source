@@ -292,9 +292,13 @@ BUG FIXES
 
     o	methods("$") and methods("$<-") were failing to find methods.
 
-    o	get and exists were ignoring mode argument for variables in base.
-	The error message for get now mentions the mode requested if
-	not "any".  A bug in setting the NAMED field in do_get was fixed.
+    o	Recursive indexing of lists had too little error-checking.
+
+    o	get() and exists() were ignoring the `mode' argument for
+	variables in base.  The error message for get() now mentions
+	the mode requested if not "any".  A bug in setting the NAMED
+	field in do_get was fixed.
+
 
 
 
