@@ -12,7 +12,7 @@ sprintf(fmt, \dots)
 \arguments{
   \item{fmt}{a format string.}
   \item{\dots}{values to be passed into \code{fmt}.  Only logical,
-    integer, real and character vectors are accepted.}
+    integer, real and character vectors are supported.}
 }
 \details{
   This is a wrapper for the system \code{sprintf} C-library function.  
@@ -77,9 +77,9 @@ sprintf(fmt, \dots)
   arguments to referenced out of order and is mainly intended for
   translators of error messages.  If this is done it is best if all
   formats are numbered: if not the unnumbered ones process the arguments
-  in order.
+  in order.  See the examples.
 
-  The result has a length limit, probably 8192 characters, and attempts
+  The result has a length limit, probably 8192 bytes, and attempts
   to exceed this may result in an error, or truncation with a warning.
 }
 
@@ -139,8 +139,8 @@ sprintf("\%G", 1e-6 * pi)
 ## no truncation:
 sprintf("\%1.f",101)
 
-n <- 0:15
-xx <- sprintf("\%d \%x \%X", n, n, n)
+## re-use one argument three times, show difference between \%x and \%X
+xx <- sprintf("\%1$d \%1$x \%1$X", 0:15)
 xx <- matrix(xx, dimnames=list(rep("", 16), "\%d\%x\%X"))
 noquote(format(xx, justify="right"))
 
