@@ -3,11 +3,16 @@
 \newcommand{\var}[1]{{{\normalfont\textit{#1}}}}
 \newcommand{\COMMENT}[1]{%
   \hfill\makebox[.5\textwidth][l]{{\normalfont{\% #1}}}}
-\newcommand{\EXPLAIN}[1]{%
-  \par\relax\qquad\parbox{0.8\textwidth}{#1}\\}
-\newcommand{\CMD}[1]{\texttt{{\char`\\}#1}}
-\newcommand{\LB}{\texttt{{\char`\{}}}
-\newcommand{\RB}{\texttt{{\char`\}}}}
+\newcommand{\EXPLAIN}[1]{\par\relax\qquad\parbox{0.8\textwidth}{#1}\\}
+\newcommand{\CMD}[1]{\texttt{{\char`\\}#1}}% prepend "\"
+\newcommand{\LB}{\texttt{{\char`\{}}}% left  bracket "{"
+\newcommand{\RB}{\texttt{{\char`\}}}}% right bracket "}"
+\newcommand{\CMDb}[2]{\texttt{{\char`\\}#1}{\LB{#2}\RB}}% ``\cmd{xx}''
+\newcommand{\CMDv}[2]{\texttt{{\char`\\}#1}{\LB\var{#2}\RB}}% ``\cmd{xx}''
+%
+\newcommand{\Ind}{\strut\quad}% indent at beginning of line
+\newcommand{\nlInd}{\\\Ind}% newline + indent
+\newcommand{\nlIInd}{\\\strut\qquad}% newline + more indent
 
 \section{The Documentation Source Tree}
 
@@ -32,12 +37,12 @@ produce the file \file{do.this.Rd}.
 
 %%-- Not anymore! (yes ?)
 Note that each file should contain at least one
-\CMD{alias\LB\var{name}\RB} line.
+\CMDv{alias}{name} line.
 
 \begin{quote}
-  \CMD{name}\LB\var{myfunction}\RB
+  \CMDv{name}{myfunction}
   \COMMENT{1st argument of old TITLE(. @@ .)} \\
-  \CMD{title}\LB\var{Description}\RB
+  \CMDv{title}{Description}
   \COMMENT{2nd argument of old TITLE(. @@ .)}
 
   \CMD{usage}\LB \\
@@ -47,66 +52,81 @@ Note that each file should contain at least one
     typewriter font.}
   \RB
 
-  \CMD{alias}\LB\var{myfunction}\RB \\
-  \CMD{alias}\LB\var{more\_aliases\_1}\RB
-  \COMMENT{Need one \CMD{alias\LB\RB} for each topic explained} \\
-  \CMD{alias}\LB\var{more\_aliases\_2}\RB
-  \COMMENT{in this help page in addition to \var{myfunction}.} \\
-  \strut\quad {etc.}
+  \CMDv{alias}{myfunction} \\
+  \CMDv{alias}{more\_aliases\_1}
+  \COMMENT{Need one \CMDb{alias}{}\ for each topic explained} \\
+  \CMDv{alias}{more\_aliases\_2}
+  \COMMENT{in this help page in addition to \var{myfunction}.} \nlInd
+  {etc.}
 
-  \CMD{arguments}\LB \\
-  \strut\quad\var{Some optional text \emph{before} the optional list} \\
-  \strut\quad\CMD{item}\LB\var{arg1}\RB\LB\var{Description of arg1.}\RB \\
-  \strut\quad\CMD{item}\LB\var{arg2}\RB\LB\var{Description of arg2.}\RB \\
-  \strut\qquad\textrm{etc.} \\
-  \strut\quad\var{Some optional text \emph{after} the list.} \\
+  \CMD{arguments}\LB \nlInd
+        \var{Some optional text \emph{before} the optional list} \nlInd
+        \CMDv{item}{arg1}\LB\var{Description of arg1.}\RB \nlInd
+        \CMDv{item}{arg2}\LB\var{Description of arg2.}\RB \nlIInd
+                \textrm{etc.} \nlInd
+        \var{Some optional text \emph{after} the list.} \\
   \RB
 
-  \CMD{description}\LB\var{A precise description of what the function
-    does.}\RB
+  \CMD{description}\LB\var{A short description of what the function(s) do(es)
+    \nlInd (\small{one paragraph, a few lines only}).}\RB
+
+  \CMD{details}\LB
+  \EXPLAIN{A detailed if possible precise description of
+    the functionality provided.  Sometimes, precise \CMDb{references}{.}
+    can be given instead.}\RB
 
   \CMD{value}\LB\var{A description of the value returned by the function.}
 
-  \strut\quad If a list with  multiple values is returned, you can use \\
-  \strut\quad\CMD{item}\LB\var{comp1}\RB\LB\var{Description of result
-    component `comp1'}\RB \\
-  \strut\quad\CMD{item}\LB\var{comp2}\RB\LB\var{Description of result
-    component `comp2'}\RB \\
-  \strut\qquad etc. \\
+        \Ind If a list with  multiple values is returned, you can use \nlInd
+        \CMDv{item}{comp1}\LB\var{Description of result component `comp1'}\RB
+        \nlInd
+        \CMDv{item}{comp2}\LB\var{Description of result component `comp2'}\RB
+        \nlInd etc.\\
   \RB
 
   \CMD{references}\LB
-  \EXPLAIN{References section.  Optional as well as all the following
-    sections}
+  \EXPLAIN{Section of references to the literature; use \CMDb{url}{.}
+    for web pointers. \ \
+    Optional as well as all the following sections.}
   \RB
 
-  \CMD{section}\LB\var{name}\RB\LB\var{text \dots\dots}\RB
+  \CMDv{section}{name}\LB\var{text \dots\dots}\RB
 
-  \strut\qquad and maybe more \CMD{section\LB..\RB} environments
+        \Ind and maybe more \CMD{section\LB..\RB} environments
 
-  \CMD{note}\LB\var{Some note you want to have pointed out \dots.}\RB
+  \CMDv{note}{Some note you want to have pointed out \dots.}
 
-  \CMD{author}\LB\var{Whoever you are (if you are not one of R \& R)}\RB
+  \CMD{author}\LB
+  \EXPLAIN{Whoever you are (if you are not one of R \& R).  Use \CMDb{email}{}{}
+  without extra delimiters (``\texttt{(.)}'' or ``$<.>$'') or
+  \CMDb{url}{xxx:..}}\RB 
 
   \CMD{seealso}\LB
-  \EXPLAIN{Pointers to related \R{} functions, using \CMD{link\LB.\RB},
-    usually in the form of \CMD{code\LB\CMD{link}\LB.\RB\RB}.}
+  \EXPLAIN{Pointers to related \R{} functions, using \CMDb{link}{.},
+    usually in the form of \CMDb{code}{\CMDb{link}{.}}}
   \RB
 
   \CMD{examples}\LB
-  \EXPLAIN{Examples of how to use the function.  These are set verbatim
-    in typewriter font.
-    \begin{center}
-      \textbf{Use examples which are \emph{directly} executable!}
-    \end{center}
-    Use random number generators (e.g., \code{x <- rnorm(100)}), or a
-    standard dataset loadable via \code{data(\dots)} (see \code{data()}
-    for info) to define data!}
+    \EXPLAIN{Examples of how to use the function.  These are set verbatim
+      in typewriter font.
+      \begin{center}
+        \textbf{Use examples which are \emph{directly} executable!}
+      \end{center}
+      Use random number generators (e.g., \code{x <- rnorm(100)}), or a
+      standard dataset loadable via \code{data(\dots)} (see \code{data()}
+      for info) to define data!}
+
+    \EXPLAIN{\CMDv{dontrun}{commands that should only be shown, but
+        not run through \R}.}
+
+    \EXPLAIN{\CMD{testonly}\LB\var{for extra commands \emph{testing} \R{}
+        functionality. These will be run (by ``\texttt{make check}'') but not
+        shown in the help outputs}\RB.}
   \RB
 
-  \CMD{keyword}\LB\var{key\_1}\RB
+  \CMDv{keyword}{key\_1}
   \COMMENT{Use at least one  keyword out of the list} \\
-  \CMD{keyword}\LB\var{key\_2}\RB
+  \CMDv{keyword}{key\_2}
   \COMMENT{in \RHOMEdir{doc/KEYWORDS}}
 \end{quote}
 
@@ -116,12 +136,12 @@ To begin a new paragraph or leave a blank in an example, just insert an
 empty line (as in (La)\TeX).  To break a line, use \CMD{cr}.
 
 In addition to the predefined sections (such as
-\CMD{description\LB..\RB}, \CMD{value\LB..\RB}, etc.), you can
+\CMDb{description}{..}, \CMDb{value}{..}, etc.), you can
 ``define'' arbitrary ones by
-\CMD{section\LB\var{section\_title}\RB\LB\ldots\RB}.  E.g.,
+\CMDv{section}{section\_title}\LB\ldots\RB.  E.g.,
 \begin{quote}
 \begin{alltt}
-\CMD{section}\LB{}Warning\RB\LB{}You must not call this function unless ...\RB
+\CMDb{section}{Warning}\LB{}You must not call this function unless ...\RB
 \end{alltt}
 \end{quote}
 Note that the additonal named sections are always inserted at fixed
@@ -134,31 +154,25 @@ The following logical markup commands are available for indicating
 specific kinds of text.
 \begin{quote}
   \begin{tabular}{ll}
-    \CMD{bold\LB\var{word}\RB}
-    & set \emph{word} in \textbf{bold} font if possible. \\
-    \CMD{emph\LB\var{word}\RB}
-    & emphasize \emph{word} using \var{italic} font if possible
-    \\
-    \CMD{code\LB\var{word}\RB}
-    & to indicate pieces of code, using \texttt{typewriter} font if
-    possible \\
-    \CMD{file\LB\var{word}\RB}
-    & for file names. \\
-    \CMD{email\LB\var{word}\RB}
-    & for email addresses \\
-    \CMD{url\LB\var{word}\RB}
-    & for URLs
+    \CMDv{bold}{word}   & set \emph{word} in \textbf{bold} font if possible\\
+    \CMDv{emph}{word}
+                & emphasize \emph{word} using \var{italic} font if possible\\
+    \CMDv{code}{word}
+       &to indicate pieces of code, using \texttt{typewriter} font if possible\\
+    \CMDv{file}{word}           & for file names\\
+    \CMDv{email}{word}          & for email addresses\\
+    \CMDv{url}{word}            & for URLs
   \end{tabular}
 \end{quote}
 The first two, \CMD{bold} and \CMD{emph}, should be used in plain text
 for emphasis.
 
-Fragments of \R\ code, including the names of \R\ objects, should be marked
+Fragments of \R{} code, including the names of \R{} objects, should be marked
 using \CMD{code}.  Only backslashes and percent signs need to be escaped
 inside \CMD{code}.
 
-Finally, \CMD{link\LB{}foo\RB} (usually in the combination
-\CMD{code\LB\CMD{link}\LB{}foo\RB\RB}) produces a hyperlink to the
+Finally, \CMDb{link}{foo} (usually in the combination
+\CMDb{code}{\CMDb{link}{foo}}) produces a hyperlink to the
 help page for function \texttt{foo}.  One main usage of \CMD{link} is in
 the \CMD{seealso} section of the help page, see~\ref{sec:doc-format},
 above.  (Currently, this only affects the creation of the \HTML{} pages
@@ -172,8 +186,8 @@ subsequently) and still want something useful for ASCII and \HTML{}
 online help.
 
 To this end, the two commands
-\CMD{eqn\LB\var{latex}\RB\LB\var{ascii}\RB} and
-\CMD{deqn\LB\var{latex}\RB\LB\var{ascii}\RB} are used.
+\CMDv{eqn}{latex}\LB\var{ascii}\RB{} and
+\CMDv{deqn}{latex}\LB\var{ascii}\RB{} are used.
 Where \CMD{eqn} is used for ``inline'' formula (corresponding to (La)\TeX's
 \texttt{\$\ldots\$}), \CMD{deqn} gives ``displayed equations'' ({\`a} la
 \LaTeX's \texttt{displaymath} environment, or \TeX's
@@ -216,8 +230,7 @@ and \CMD{ldots} for $\ldots$ (ellipsis dots).
 
 After a \texttt{\%}, you can put your own comments regarding the help
 text. This will be completely disregarded, normally. Therefore, you can
-also use it to make part of the `help' invisible.  If \texttt{\%} occurs
-in \R{} code, you must ``escape'' it as `\%'.
+also use it to make part of the `help' invisible.
 
 \paragraph{Escaping Special Characters.}
 You can produce a backslash (`\bsl') by escaping it by another
