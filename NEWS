@@ -749,6 +749,9 @@ BUG FIXES
     o   Fix some issues with nonsyntactical names in modelling code
         (PR#7202), relating to backquoting.  There are likely more.
 
+    o   Support for S4 classes that extend basic classes has been fixed
+        in several ways.  as() methods and x@.Data should work better.
+
 
 
 

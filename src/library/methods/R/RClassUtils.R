@@ -1050,20 +1050,42 @@ validSlotNames <- function(names) {
 
 ### utility function called from primitive code for "@"
 getDataPart <- function(object) {
-    classDef <- getClass(class(object))
-    temp <- getSlots(classDef)
-    slots <- c("class", names(temp))
-    attrVals <- attributes(object)
-    attrs <- names(attrVals)
-    if(identical(slots, attrs)) # basic vector as .Data
-        attributes(object) <- NULL
-    else {
-        attrs <- attrs[is.na(match(attrs, slots))]
-        attributes(object) <- attrVals[attrs]
-        ## matrix, array, or ts are currently (R 1.7) the only other possible .Data's
-        if(!is.na(match("tsp", attrs))) # set the class (S3-style) to "ts"
-            class(object) <- "ts"
-    }
+    temp <- getClass(class(object))@slots
+    if(length(temp) == 0)
+        return(object)
+    if(is.na(match(".Data", names(temp))))
+       stop("No .Data slot defined for class \"", class(object), "\"")
+    dataPart <- temp[[".Data"]]
+    switch(dataPart,
+           ## the common cases, for efficiency
+           numeric = , vector = , integer = , character = , logical = ,
+           complex = , list =
+              attributes(object) <- NULL,
+           matrix = , array = {
+               value <- object
+               attributes(value) <- NULL
+               attr(value, "dim") <- attr(object, "dim")
+               attr(value, "dimnames") <- attr(object, "dimnames")
+               object <- value
+           },
+           ts = {
+               value <- object
+               attributes(value) <- NULL
+               attr(value, "ts") <- attr(object, "ts")
+               object <- value
+           },
+           ## default:  
+           if(is.na(match(dataPart, .BasicClasses))) {
+               ## keep attributes not corresponding to slots
+               attrVals <- attributes(object)
+               attrs <- names(attrVals)
+               attrs <- attrs[is.na(match(attrs, c("class", names(temp))))]
+               attributes(object) <- attrVals[attrs]
+           }
+           else
+           ## other basic classes have no attributes
+               attributes(object) <- NULL
+           )
     object
 }
 
