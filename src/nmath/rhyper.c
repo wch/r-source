@@ -237,13 +237,18 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
 	if (m < 100 || ix <= 50) {
 	    /* explicit evaluation */
+            /* The original algorithm (and TOMS 668) have 
+                   f = f * i * (n2 - k + i) / (n1 - i) / (k - i);
+	       in the (m > ix) case, but the definition of the 
+               recurrence relation on p134 shows that the +1 is 
+               needed. */
 	    f = 1.0;
 	    if (m < ix) {
 		for (i = m + 1; i <= ix; i++)
 		    f = f * (n1 - i + 1) * (k - i + 1) / (n2 - k + i) / i;
 	    } else if (m > ix) {
 		for (i = ix + 1; i <= m; i++)
-		    f = f * i * (n2 - k + i) / (n1 - i) / (k - i);
+		    f = f * i * (n2 - k + i) / (n1 - i + 1) / (k - i + 1);
 	    }
 	    if (v <= f) {
 		reject = FALSE;

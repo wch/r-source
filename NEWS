@@ -795,6 +795,9 @@ BUG FIXES
     o	packageSlot() and getGroupMembers() are now exported from methods
 	as they should from documentation and the green book.
 
+    o   rhyper() was giving numbers slightly too small, due to a bug in the
+        original algorithm (PR#7314)
+
 
 
 	**************************************************

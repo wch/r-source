@@ -123,6 +123,10 @@ dkwtest("f",df1 = 30,df2 =  3)
 dkwtest("weibull",shape = 1)
 dkwtest("weibull",shape = 4,scale = 4)
 
-
+## regression test for PR#7314
+dkwtest("hyper", m=60, n=100, k=50)
+dkwtest("hyper", m=6, n=10, k=5)
+dkwtest("hyper", m=600, n=1000, k=500)
+        
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
 
