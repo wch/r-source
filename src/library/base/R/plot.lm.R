@@ -17,9 +17,12 @@ plot.lm <- function (x, which = 1:4,
     hii <- lm.influence(x)$hat
     s <- sqrt(deviance(x)/df.residual(x))
     if (any(show[2:3])) {
-	ylab23 <- if(inherits(x, "glm"))
-	    "Std. dev. residuals" else "Standardized residuals"
-	rs <- r/sqrt(1 - hii)/s
+        w <- weights(x)
+        ## r.wgt <- weighted.residuals(x,drop=FALSE):
+        r.w <- if(is.null(w)) .Alias(r) else (sqrt(w)*r)[w!=0]
+        ylab23 <- if(inherits(x, "glm"))
+          "Std. dev. residuals" else "Standardized residuals"
+        rs <- r.w/sqrt(1 - hii)/s
     }
     one.fig <- prod(par("mfcol")) == 1
     if (ask) {
@@ -76,9 +79,10 @@ plot.lm <- function (x, which = 1:4,
 	sqrtabsr <- sqrt(abs(rs))
 	ylim <- c(0, max(sqrtabsr))
 	yl <- as.expression(substitute(sqrt(abs(YL)), list(YL=as.name(ylab23))))
-	plot(yh, sqrtabsr, xlab = "Fitted values", ylab = yl, main = main,
+        yhn0 <- if(is.null(w)) .Alias(yh) else yh[w!=0]
+	plot(yhn0, sqrtabsr, xlab = "Fitted values", ylab = yl, main = main,
 	     ylim = ylim, type = "n", ...)
-	panel(yh, sqrtabsr, ...)
+	panel(yhn0, sqrtabsr, ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	mtext(caption[3], 3, 0.25)

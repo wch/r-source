@@ -139,6 +139,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 	warning(paste("Extra arguments", deparse(substitute(...)),
 		      "are just disregarded."))
     y <- y - offset
+    x.asgn <- attr(x, "assign")# save
     zero.weights <- any(w == 0)
     if (zero.weights) {
 	save.r <- y
@@ -213,7 +214,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
         z$fitted.values <- z$fitted.values + offset
     c(z[c("coefficients", "residuals", "fitted.values", "effects",
 	  "weights", "rank")],
-      list(assign = attr(x, "assign"),
+      list(assign = x.asgn,
 	   qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
 	   df.residual = n - z$rank))
 }

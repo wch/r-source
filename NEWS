@@ -10,16 +10,16 @@
 
 NEW FEATURES
 
-    o   R CMD Rd2dvi has new options --pdf, --title and --output
+    o	R CMD Rd2dvi has new options --pdf and --title
 
-    o   new date and URL fields in DESCRIPTION file of packages.
+    o	new date and URL fields in DESCRIPTION file of packages.
 
     o	residuals.lm() has "type" argument, as S does.
 
-    o   the underlying code for nlm has been translated from Fortran
-        to C and made re-entrant (changes contributed by Saikat DebRoy).
+    o	the underlying code for nlm has been translated from Fortran
+	to C and made re-entrant (changes contributed by Saikat DebRoy).
 
-    o   R now compiles in the GNU version of regex, so regular
+    o	R now compiles in the GNU version of regex, so regular
 	expressions (grep, sub, gsub, regexpr, "pattern" in ls) are
 	always available. The class of regular expressions supported
 	will be slightly wider on some Unix platforms.
@@ -31,22 +31,14 @@ NEW FEATURES
     o	New utility `R CMD build' for building add-on packages along
 	with some useful testing and cleaning up.
 
-    o	The ``Introduction to R'' manual.
-
-    o	Conversion of .Rd help files to text format is done in Perl,
-	and no longer requires nroff.  This makes the conversion 8-bit
-	clean and more accurate.
-
-    o	Building help for a package now removes help files that no
-	longer exist in the source.
 
 
 BUG FIXES
 
-    o   R CMD xxx sets $R_HOME/bin to be first in PATH 
+    o	R CMD xxx sets $R_HOME/bin to be first in PATH
 
-    o   added more warnings to update.packages & friends. new function
-        old.packages for better control of update.packages.
+    o	added more warnings to update.packages & friends. new function
+	old.packages for better control of update.packages.
 
     o	adding matrices to data frames now happens column by column as
 	documented, so character or logical matrices generate factor
@@ -54,6 +46,11 @@ BUG FIXES
 
     o	formulae containing interactions with the response were
 	handled incorrectly by model.matrix, giving wrong answers or crashes.
+
+    o	anova(lm(.)) with 0 weights now works.
+
+    o	plot.lm(), dffits(), covratio() now do the right thing for weighted
+	lm regression.
 
 
 

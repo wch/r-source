@@ -64,7 +64,7 @@ dfbetas <- function (lm.obj)
 dffits <- function(lm.obj)
 {
     infl <- lm.influence(lm.obj)
-    sqrt(infl$hat)*residuals(lm.obj)/(infl$sigma*(1-infl$hat))
+    sqrt(infl$hat)*weighted.residuals(lm.obj)/(infl$sigma*(1-infl$hat))
 }
 
 covratio <- function(lm.obj)
@@ -72,17 +72,19 @@ covratio <- function(lm.obj)
     infl <- lm.influence(lm.obj)
     n <- nrow(lm.obj$qr$qr)
     p <- lm.obj$rank
-    e.star <- residuals(lm.obj)/(infl$sigma*sqrt(1-infl$hat))
+    e.star <- weighted.residuals(lm.obj)/(infl$sigma*sqrt(1-infl$hat))
     1/((((n - p - 1)+e.star^2)/(n - p))^p*(1-infl$hat))
 }
 
-cooks.distance <- function(lm.obj)
+## Used in plot.lm(); allow passing of known parts:
+cooks.distance <- function(lm.obj,
+                           res = weighted.residuals(lm.obj),
+                           sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)),
+                           hat= lm.influence(lm.obj)$hat
+                          )
 {
     p <- lm.obj$rank
-    e <- weighted.residuals(lm.obj)
-    s <- sqrt(deviance(lm.obj)/df.residual(lm.obj))
-    h <- lm.influence(lm.obj)$hat
-    ((e/(s * (1 - h)))^2 * h)/p
+    ((res/(sd * (1 - hat)))^2 * hat)/p
 }
 
 influence.measures <- function(lm.obj)
