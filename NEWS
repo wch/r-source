@@ -394,7 +394,16 @@ INSTALLATION CHANGES
 
     o	If a system function log1p is found, it is tested for accuracy
 	and if inadequate the substitute function in src/nmath is
-	used, with name remapped to Rlog1p.
+	used, with name remapped to Rlog1p.  (Apparently needed on
+	OpenBSD/NetBSD.)
+
+
+C-LEVEL FACILITIES
+
+    o	There is a new installed header file R_ext/Parse.h which
+	allows R_ParseVector to be called by those writing extensions.
+	(Note that the interface is changed from that used in the
+	unexported header Parse.h in earlier versions.)
 
 
 UTILITIES

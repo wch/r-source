@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.17 2002/04/30 19:13:56 ripley Exp $
+ *  $Id: rproxy_impl.c,v 1.18 2003/08/30 07:20:40 ripley Exp $
  */
 
 #define NONAMELESSUNION
@@ -29,7 +29,6 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-//#include "globalvar.h"
 //#undef CharacterMode
 //#undef R_Interactive
 #include <config.h>
@@ -528,7 +527,7 @@ int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
   IoBuffer lBuffer;
   SEXP lSexp;
   int lRc;
-  int lStatus;
+  ParseStatus lStatus;
   SEXP lResult;
 
   // for SETJMP/LONGJMP
@@ -599,7 +598,7 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
   IoBuffer lBuffer;
   SEXP lSexp;
   int lRc;
-  int lStatus;
+  ParseStatus lStatus;
 
   // for SETJMP/LONGJMP
   s_EvalInProgress = 0;
@@ -668,7 +667,7 @@ int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData)
   IoBuffer lBuffer;
   SEXP lSexp;
   SEXP lVar;
-  int lStatus;
+  ParseStatus lStatus;
 
   R_IoBufferInit (&lBuffer);
   R_IoBufferPuts ((char*) pSymbol,&lBuffer);

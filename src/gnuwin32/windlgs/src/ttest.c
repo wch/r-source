@@ -132,16 +132,14 @@ void menu_ttest2()
 
 /* assemble and evaluate call in C code */
 #include <Rinternals.h>
-
-/* From Parse.h, which is not public */
-#define PARSE_OK  1
-SEXP R_ParseVector(SEXP, int, int *);
+#include <R_ext/Parse.h>
 
 SEXP menu_ttest3()
 {
     char cmd[256];
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
-    int i, status;
+    int i;
+    ParseStatus status;
     
     done = 0;
     create_dialog();

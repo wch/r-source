@@ -2210,6 +2210,7 @@ output files can be very large if long runs are profiled.
 * Handling R objects in C::     
 * Interface functions .Call and .External::  
 * Evaluating R expressions from C::  
+* Parsing R code from C::       
 * Debugging::                   
 @end menu
 
@@ -3673,7 +3674,7 @@ character strings can be tested by equality to the constants
 The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
 @code{R_NaReal} can be used to set @code{double}s to the special values.
 
-@node Evaluating R expressions from C, Debugging, Interface functions .Call and .External, System and foreign language interfaces
+@node Evaluating R expressions from C, Parsing R code from C, Interface functions .Call and .External, System and foreign language interfaces
 @section Evaluating R expressions from C
 @cindex Evaluating R expressions from C
 
@@ -4110,7 +4111,56 @@ having the symbol @code{R_DimNamesSymbol}.  Finally we set the gradient
 matrix as the gradient attribute of @code{ans}, unprotect the remaining
 protected locations and return the answer @code{ans}.
 
-@node Debugging,  , Evaluating R expressions from C, System and foreign language interfaces
+@node Parsing R code from C, Debugging, Evaluating R expressions from C, System and foreign language interfaces
+@section Parsing R code from C
+@cindex Parsing R code from C
+
+Suppose an @R{} extension want to accept an @R{} expression from the
+user and evaluate it.  The previous section covered evaluation, but the
+expression will be entered as text and needs to be parsed first.  A
+small part of @R{}'s parse interface is declared in header file
+@file{R_ext/Parse.h}@footnote{This was added at @R{} version 1.8.0, and
+is only guaranteed to show the current interface: it is liable to
+change.}.
+
+An example of the usage can be found in the (example) Windows package
+@pkg{windlgs} included in the @R{} source tres.  The essential part is
+
+@smallexample
+@group
+#include <Rinternals.h>
+#include <R_ext/Parse.h>
+
+SEXP menu_ttest3()
+@{
+    char cmd[256];
+    SEXP cmdSexp, cmdexpr, ans = R_NilValue;
+    int i;
+    ParseStatus status;
+   ...
+    if(done == 1) @{
+	PROTECT(cmdSexp = allocVector(STRSXP, 1));
+	SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
+	cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status));
+	if (status != PARSE_OK) @{
+	    UNPROTECT(2);
+	    error("invalid call %s", cmd);
+	@}
+	/* Loop is needed here as EXPSEXP will be of length > 1 */
+	for(i = 0; i < length(cmdexpr); i++)
+	    ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
+	UNPROTECT(2);
+    @}
+    return ans;
+@}
+@end group
+@end smallexample
+
+@noindent
+Note that a single line of text may give rise to more than one @R{}
+expression.
+
+@node Debugging,  , Parsing R code from C, System and foreign language interfaces
 @section Debugging compiled code
 @cindex Debugging
 
