@@ -1013,6 +1013,7 @@ of compilers and support libraries.
 * IRIX::                        
 * Alpha/OSF1::                  
 * Alpha/FreeBSD::               
+* AIX::                         
 @end menu
 
 @node MacOS X, Solaris, Platform notes, Platform notes
@@ -1211,7 +1212,7 @@ touch reg-tests-1.Rout
 @end smallexample
 
 
-@node Alpha/FreeBSD,  , Alpha/OSF1, Platform notes
+@node Alpha/FreeBSD, AIX, Alpha/OSF1, Platform notes
 @subsection Alpha/FreeBSD
 
 Attempts to build @R{} on an Alpha with FreeBSD 4.3 have been only
@@ -1221,6 +1222,22 @@ partly successful.  Configuring with @option{-mieee} added to both
 rather than suppressing them entirely.  Advice on how to complete this
 port would be greatly appreciated.
 
+@node AIX,  , Alpha/FreeBSD, Platform notes
+@subsection AIX
+
+On AIX 4.3.3 and AIX 5.1, it was found that the use of ``run time
+linking'' (as opposed to normal AIX style linking) was required.  For
+this, the R main program must be linked to the runtime linker with the
+@option{-brtl} linker option, and shareable objects must be enabled for
+runtime linking with the @option{-G} linker option.  Without these
+options, the AIX linker will not automatically link to any shared object
+with a @file{.so} extension.  Also, the R main program is unable to
+dynamically load modules (such as X11) with the @code{dlopen} call.
+
+When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
+note that linker flags must be escaped using @samp{-Wl,} if
+@command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
+and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
 
 @node New platforms, Function and variable index, Configuration on Unix, Top
 @appendix New platforms
