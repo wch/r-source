@@ -24,7 +24,7 @@ make.packages.html <- function()
     for (i in  pg) {
         t.file <- system.file("TITLE", pkg = i)
         if (nchar(t.file) > 0)
-            f.t <- scan(t.file, what="c", quiet=TRUE)
+            f.t <- scan(t.file, what="c", quiet=TRUE, quote="")
         else {
             title <- package.description(i, field="Title")[1]
             if (title == "NA") title <- "-- Title is missing --"
@@ -51,10 +51,10 @@ make.function.html <- function()
     for (p in pg) {
         f1 <- system.file("/help/AnIndex", pkg=p)
         if (f1=="") next
-        b <- scan(f1, what="c", sep="\t", quiet = TRUE)
+        b <- scan(f1, what="c", sep="\t", quiet = TRUE, quote="")
         b <- matrix(b, ncol=2, byrow=TRUE)
         f1 <- system.file("/help/00Titles", pkg = p)
-        d <- scan(f1, what="c", sep="\t", quiet = TRUE)
+        d <- scan(f1, what="c", sep="\t", quiet = TRUE, quote="")
         d <- matrix(d, ncol=2, byrow=TRUE)
         m <- match(b[,2], d[, 1])
         b <- cbind(b, d[m, 2], p)
@@ -100,7 +100,7 @@ make.search.html <- function()
     for (i in  .packages(all.available=TRUE, lib.loc=.Library)) {
         cfile <- system.file("CONTENTS", pkg = i)
         if(nchar(cfile)) {
-            f.t <- scan(cfile, what="", quiet=TRUE, sep="\n")
+            f.t <- scan(cfile, what="", quiet=TRUE, sep="\n", quote="")
             cat(paste(f.t, collapse="\n"), "\n", file=f.tg, append=TRUE)
         }
     }
