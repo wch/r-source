@@ -169,7 +169,10 @@ sunspot.ar <- ar(sunspot.year)
 sunspot.ar
 ar(x = sunspot.year, method = "burg")
 ar(x = sunspot.year, method = "ols")
+\dontrun{## next is slow and may have convergence problems,
+## as it cares about invertibility
 ar(x = sunspot.year, method = "mle")
+}
 predict(sunspot.ar, n.ahead=25)
 
 data(BJsales)
