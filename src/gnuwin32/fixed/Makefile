@@ -86,7 +86,7 @@ clean:
 distclean: clean
 	$(RM) -f ../../../tools/GV
 
-../../../doc/html/search/SearchEngine.html:../../../doc/KEYWORDS.db
+../../../doc/html/search/SearchEngine.html: ../../../doc/html/search/SearchEngine-head.html ../../../doc/html/search/SearchEngine-foot.html ../../../doc/KEYWORDS.db
 	(cd ../../../doc; \
 	cat html/search/SearchEngine-head.html > html/search/SearchEngine.html; \
 	perl ../tools/keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \

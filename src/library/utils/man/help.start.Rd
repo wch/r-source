@@ -53,9 +53,15 @@ help.start(update = TRUE, gui = "irrelevant",
   specified, but \code{help} will still use the file association mechanism.
 
   \code{help.start} and the Java-based search engine have been tested
-  under Internet Explorer 6, Netscape 6.2.3/7.0/7.1, Opera 6.01,
-  Mozilla 1.5 and MozillaFirefox 0.8.
+  under Internet Explorer 6, Netscape 6.2.3/7.0/7.1, Opera 7.23,
+  Mozilla 1.6 and MozillaFirefox 0.8.
 #endif
+}
+\note{
+  There is a Java-based search facility available from the HTML page
+  that \code{help.start} brings up.  Should this not work, please
+  consult the \sQuote{R Installation and Administration} manual which is
+  linked from that page.
 }
 
 \seealso{
@@ -69,7 +75,7 @@ help.start(update = TRUE, gui = "irrelevant",
 #ifdef windows
 help.start(browser="C:\\\\Program Files\\\\Internet Explorer\\\\IEXPLORE.EXE")
 help.start(browser="C:/Program Files/Netscape/Netscape/netscp.exe")
-help.start(browser="C:/Program Files/Opera/Opera.exe")
+help.start(browser="C:/Program Files/Opera7/Opera.exe")
 help.start(browser="C:/Program Files/mozilla.org/Mozilla/mozilla.exe")
 help.start(browser="C:/Program Files/Mozilla Firefox/firefox.exe")
 #endif

@@ -1502,8 +1502,8 @@ started}.) Then click on one of the keywords and after a short delay
 If this fails you should double-check that Java is enabled in your
 browser by visiting a page such as
 @uref{http://www.java.com/en/download/help/testvm.jsp} (although that
-will fail for earlier versions of Java which do work with R).  You can
-check which version of Java is in use at
+will fail for earlier versions of Java such as the Microsoft JVM which
+do work with R).  You can check which version of Java is in use at
 @uref{http://java.sun.com/docs/books/tutorial/applet/practical/properties.html}.
 
 Many thanks to Marc Schwartz in tracking down many of these issues with
