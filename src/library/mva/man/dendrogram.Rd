@@ -8,9 +8,9 @@
 \alias{print.dendrogram}
 \alias{str.dendrogram}
 \alias{plot.dendrogram}
-\alias{plotNode}
-\alias{plotNodeLimit}
-\alias{isLeaf}
+%\alias{plotNode}
+%\alias{plotNodeLimit}
+%\alias{isLeaf}
 \description{
   Class \code{"dendrogram"} provides general functions for handling
   tree-like structures.  It is intended as a replacement for similar

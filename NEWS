@@ -41,16 +41,20 @@ USER-VISIBLE CHANGES
     o	The tables for plotmath, Hershey and Japanese have been moved
 	from the help pages (example(plotmath) etc) to demo(plotmath) etc.
 
-    o	plot.dendrogram (`mva' package) now draws leaf labels if present
-	by default.
-
     o	Errors and warnings are sent to stderr not stdout on
 	command-line versions of R (Unix and Windows).
 
     o   The default random number generators have been changed to
-        Mersenne-Twister and Inversion. A new RNGversion() function
+        Mersenne-Twister and Inversion.  A new RNGversion() function
         allows you to restore the generators of an earlier R version
         if reproducibility is required. 
+
+    o	Namespaces can now be defined for packages other than `base':
+	see `Writing R Extensions'.  This hides some internal objects
+	and changes the search path from objects in a namespace.
+	Packages `lqs', `mva', `KernSmooth', `MASS', `boot', `class',
+	`nnet', `rpart' and `spatial' are currently in a namespace.
+
 
 NEW FEATURES
 
@@ -315,11 +319,14 @@ NEW FEATURES
 
     o	New function runmed() for fast runnning medians (`modreg' package).
 
+    o	plot.dendrogram (`mva' package) now draws leaf labels if present
+	by default.
+
     o   An attempt to open() an already open connection will be detected
 	and ignored with a warning.  This avoids improperly closing
 	some types of connections if they are opened repeatedly.
 
-    o	New function force() to force evaluatio of formal argument.
+    o	New function force() to force evaluation of a formal argument.
 
 
 INSTALLATION CHANGES

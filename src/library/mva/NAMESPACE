@@ -1,0 +1,42 @@
+useDynLib(mva)
+
+export("[[.dendrogram", as.dendrogram, as.dendrogram.hclust, as.dist,
+       as.hclust, as.hclust.default, as.hclust.twins, as.matrix.dist,
+       biplot, biplot.default, biplot.princomp, cancor, cmdscale,
+       cophenetic, cut.dendrogram, cutree, dist, factanal, factanal.fit.mle,
+       format.dist, hclust, heatmap, identify.hclust, kmeans,
+       loadings, names.dist, "names<-.dist", order.dendrogram, plclust,
+       plot.dendrogram, plot.hclust, plot.prcomp, plot.princomp,
+       prcomp, predict.princomp, princomp, princomp.default,
+       princomp.formula, print.dendrogram, print.dist, print.factanal,
+       print.hclust, print.loadings, print.prcomp, print.princomp,
+       print.summary.prcomp, print.summary.princomp, promax, rect.hclust,
+       reorder, reorder.dendrogram, screeplot, str.dendrogram,
+       summary.prcomp, summary.princomp, varimax)
+
+S3method("[[", dendrogram)
+S3method(as.matrix, dist)
+S3method(format, dist)
+S3method(identify, hclust)
+S3method(names, dist)
+S3method("names<-", dist)
+S3method(plot, dendrogram)
+S3method(plot, hclust)
+S3method(plot, prcomp)
+S3method(plot, princomp)
+S3method(predict, princomp)
+S3method(princomp, default)
+S3method(princomp, formula)
+S3method(print, dendrogram)
+S3method(print, dist)
+S3method(print, factanal)
+S3method(print, hclust)
+S3method(print, loadings)
+S3method(print, prcomp)
+S3method(print, princomp)
+S3method(print, summary.prcomp)
+S3method(print, summary.princomp)
+S3method(rect, hclust)
+S3method(str, dendrogram)
+S3method(summary, prcomp)
+S3method(summary, princomp)
