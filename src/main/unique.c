@@ -81,7 +81,9 @@ static int rhash(SEXP x, int indx, HashData *d)
     double tmp = (REAL(x)[indx] == 0.0) ? 0.0 : REAL(x)[indx];
     /* need to use both 32-byte chunks or endianness is an issue */
 #ifdef IEEE_754 /* otherwise always false */
-    if (R_IsNaN(tmp)) tmp = R_NaN; /* we want all NaNs except NA equal */
+    /* we want all NaNs except NA equal, and all NAs equal */
+    if (R_IsNA(tmp)) tmp = NA_REAL;
+    else if (R_IsNaN(tmp)) tmp = R_NaN;
 #endif
     if (sizeof(double) >= sizeof(unsigned int)*2) {
 	union foo tmpu;
@@ -98,8 +100,11 @@ static int chash(SEXP x, int indx, HashData *d)
     tmp.r = (COMPLEX(x)[indx].r == 0.0) ? 0.0 : COMPLEX(x)[indx].r;
     tmp.i = (COMPLEX(x)[indx].i == 0.0) ? 0.0 : COMPLEX(x)[indx].i;
 #ifdef IEEE_754 /* otherwise always false */
-    if (R_IsNaN(tmp.r)) tmp.r = R_NaN; /* we want all NaNs except NA equal */
-    if (R_IsNaN(tmp.i)) tmp.i = R_NaN;
+    /* we want all NaNs except NA equal, and all NAs equal */
+    if (R_IsNA(tmp.r)) tmp.r = NA_REAL; 
+    else if (R_IsNaN(tmp.r)) tmp.r = R_NaN;
+    if (R_IsNA(tmp.i)) tmp.i = NA_REAL; 
+    else if (R_IsNaN(tmp.i)) tmp.i = R_NaN;
 #endif
     if (sizeof(double) >= sizeof(unsigned int)*2) {
 	union foo tmpu;

@@ -860,6 +860,13 @@ stopifnot(x == res) # can't have rounding error here
 ## gave incorrect result with warning in 1.5.1.
 
 
+## matching NAs on Solaris (MM 2002-08-02)
+x <- as.double(NA)
+identical(x + 0, x)
+stopifnot(match(x + 0, x, 0) == 1)
+## match failed on Solaris with some compiler settings
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

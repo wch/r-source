@@ -300,6 +300,8 @@ BUG FIXES
     o   loess() was not checking for too small a span (so no points
 	were included in the smoothing window).
 
+    o   match() was assuming that there was only one possible bit
+	pattern for a numeric NA, so some matches failed on Solaris.
 
 
 
