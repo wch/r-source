@@ -14,7 +14,7 @@ R_PAPERSIZE=a4
 # for gcc and then cc.  If you wish to override this choice
 # enter the name of the command which runs the compiler here,
 # for example "CC=c89".
-CC=cc
+CC=
 
 # Options for the C compiler.
 # Use this to specify CFLAGS for the version of the C compiler
@@ -52,7 +52,7 @@ DLLFLAGS=
 # something like -fpic or -fPIC.  If this variable is left
 # unspecified an attempt is made to automatically detect the
 # correct value by configure.
-PICFLAGS="-KPIC"
+PICFLAGS=
 
 # The following variable can be used to provide any PIC flags
 # for the fortran compiler (if you are using one).  If this is
