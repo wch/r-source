@@ -284,8 +284,9 @@ NEW FEATURES
     o	Generic functions logLik() and AIC() moved from nls an nlme to
 	base, as well as their *.lm methods.
 
-    o	acf.plot makes() better use of white space for `nser > 2' and 
-	has new optional arguments.
+    o	plot.acf() makes better use of white space for `nser > 2', 
+	has new optional arguments and uses a much better layout when more
+	than one page of plots is produced.
 
     o	format() on character arrays was losing the dimensions.
 
