@@ -82,7 +82,7 @@ as.data.frame.data.frame <- function(x, row.names = NULL, optional = FALSE)
     if(is.character(row.names)){
 	if(length(row.names) == length(attr(x, "row.names")))
 	    attr(x, "row.names") <- row.names
-	else stop(gettextf("invalid row.names, length %d for a data frame with %d rows",
+	else stop(gettextf("invalid 'row.names', length %d for a data frame with %d rows",
                            length(row.names), length(attr(x, "row.names"))),
                   domain = NA)
     }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-01 10:10+0000\n"
+"POT-Creation-Date: 2005-03-02 09:33+0000\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -414,7 +414,7 @@ msgstr "NaNs produzidos"
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argumento não-numérico para função matemática"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3665
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3666
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "argumento inválido"
@@ -2236,8 +2236,8 @@ msgstr "Não foi possível alocar memória para Encodebuf "
 #: src/main/deparse.c:184 src/main/plot.c:951 src/main/plot.c:1447
 #: src/main/plot.c:1733 src/main/plot.c:1798 src/main/plot.c:1886
 #: src/main/plot.c:2011 src/main/plot.c:2101 src/main/plot.c:2391
-#: src/main/plot.c:2591 src/main/plot.c:2834 src/main/plot.c:3427
-#: src/main/plot.c:3503 src/main/plot.c:3756 src/main/plot3d.c:1383
+#: src/main/plot.c:2591 src/main/plot.c:2834 src/main/plot.c:3428
+#: src/main/plot.c:3504 src/main/plot.c:3757 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "muitos poucos argumentos"
@@ -4823,7 +4823,7 @@ msgstr "comprimentos de 'x' e 'y' diferem em %s()"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "gráfico do tipo '%s' vai ser truncado para o primeiro caractere"
 
-#: src/main/plot.c:1481 src/main/plot.c:3093
+#: src/main/plot.c:1481 src/main/plot.c:3094
 msgid "invalid plot type"
 msgstr "tipo de gráfico inválido"
 
@@ -4928,123 +4928,123 @@ msgstr "especificação a=, b= inválida"
 msgid "'a' and 'b' must be finite"
 msgstr "'a' e 'b' devem ser finitos"
 
-#: src/main/plot.c:3015
+#: src/main/plot.c:3016
 msgid "invalid 'which' specification"
 msgstr "especificação 'which' inválida"
 
-#: src/main/plot.c:3088
+#: src/main/plot.c:3089
 msgid "invalid number of points in locator()"
 msgstr "número de pontos inválidos em locator()"
 
-#: src/main/plot.c:3209
+#: src/main/plot.c:3210
 msgid "invalid number of points in identify()"
 msgstr "número de pontos inválidos em identify()"
 
-#: src/main/plot.c:3211
+#: src/main/plot.c:3212
 msgid "incorrect argument type"
 msgstr "tipo de argumento inválido"
 
-#: src/main/plot.c:3213
+#: src/main/plot.c:3214
 msgid "different argument lengths"
 msgstr "argumentos de comprimentos diferentes"
 
-#: src/main/plot.c:3248
+#: src/main/plot.c:3249
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "aviso: nenhum ponto com %.2f polegadas\n"
 
-#: src/main/plot.c:3253
+#: src/main/plot.c:3254
 msgid "warning: nearest point already identified\n"
 msgstr "aviso: ponto mais próximo já identificado\n"
 
-#: src/main/plot.c:3328
+#: src/main/plot.c:3329
 msgid "invalid units"
 msgstr "unidades inválidas"
 
-#: src/main/plot.c:3334
+#: src/main/plot.c:3335
 msgid "invalid 'cex' value"
 msgstr "valor de 'cex' inválido"
 
-#: src/main/plot.c:3487 src/main/plot.c:3596
+#: src/main/plot.c:3488 src/main/plot.c:3597
 msgid "invalid dendrogram input"
 msgstr "entrada inválida de dendograma"
 
-#: src/main/plot.c:3627
+#: src/main/plot.c:3628
 msgid "cannot take snapshot of old-style device"
 msgstr "não foi possível fazer uma imagem do dispositivo de modo antigo"
 
-#: src/main/plot.c:3640
+#: src/main/plot.c:3641
 msgid "cannot play snapshot on old-style device"
 msgstr "não é possível usar uma imagem em um dispositivo de modo antigo"
 
-#: src/main/plot.c:3696
+#: src/main/plot.c:3697
 msgid "invalid graphics parameter list"
 msgstr "lista de parâmetros gráficos inválidos"
 
-#: src/main/plot.c:3738
+#: src/main/plot.c:3739
 msgid "invalid symbol parameter vector"
 msgstr "vetor de parâmetros de símbolos inválido"
 
-#: src/main/plot.c:3761
+#: src/main/plot.c:3762
 msgid "invalid symbol coordinates"
 msgstr "coordenadas de símbolo inválidas"
 
-#: src/main/plot.c:3769
+#: src/main/plot.c:3770
 msgid "x/y/parameter length mismatch"
 msgstr "comprimento dos parâmetros x/y incompatíveis"
 
-#: src/main/plot.c:3788
+#: src/main/plot.c:3789
 msgid "invalid circles data"
 msgstr "dados circulares inválidos"
 
-#: src/main/plot.c:3790 src/main/plot.c:3808 src/main/plot.c:3834
-#: src/main/plot.c:3863
+#: src/main/plot.c:3791 src/main/plot.c:3809 src/main/plot.c:3835
+#: src/main/plot.c:3864
 msgid "invalid symbol parameter"
 msgstr "parâmetro de símbolo inválido"
 
-#: src/main/plot.c:3806
+#: src/main/plot.c:3807
 msgid "invalid squares data"
 msgstr "dados quadrados inválidos"
 
-#: src/main/plot.c:3832
+#: src/main/plot.c:3833
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "dados retangulares inválidos (2 colunas necessárias)"
 
-#: src/main/plot.c:3861
+#: src/main/plot.c:3862
 msgid "invalid stars data"
 msgstr "dados de estrela inválidos"
 
-#: src/main/plot.c:3903
+#: src/main/plot.c:3904
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "dados de termômetro inválidos (3 ou 4 colunas necessárias)"
 
-#: src/main/plot.c:3906
+#: src/main/plot.c:3907
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "thermometers[,%s] inválidos"
 
-#: src/main/plot.c:3910
+#: src/main/plot.c:3911
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "thermometers[,%s] não estão em [0,1] - pode não dar um bom resultado"
 
-#: src/main/plot.c:3913
+#: src/main/plot.c:3914
 msgid "invalid thermometers[,1:2]"
 msgstr "thermometers[,1:2] inválidos"
 
-#: src/main/plot.c:3952
+#: src/main/plot.c:3953
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "dados de boxplots inválidos (5 colunas necessárias)"
 
-#: src/main/plot.c:3962
+#: src/main/plot.c:3963
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] fora do intervalo [0,1] - pode não dar um bom resultado"
 
-#: src/main/plot.c:3964
+#: src/main/plot.c:3965
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[, 1:4] inválidos"
 
-#: src/main/plot.c:4010
+#: src/main/plot.c:4011
 msgid "invalid symbol type"
 msgstr "tipo de símbolo inválido"
 
@@ -6065,35 +6065,35 @@ msgstr "formato desconhecido no fim da string"
 msgid "reference to non-existent argument %d"
 msgstr "referência a um argumento não existente %d"
 
-#: src/main/sprintf.c:155
+#: src/main/sprintf.c:160
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "use o formato %d ou %i para objetos lógicos"
 
-#: src/main/sprintf.c:168
+#: src/main/sprintf.c:173
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "use o formato %d, %i, %x ou %X para objetos inteiros"
 
-#: src/main/sprintf.c:181
+#: src/main/sprintf.c:186
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr "use o formato %f, %e ou %g para objetos numéricos"
 
-#: src/main/sprintf.c:215
+#: src/main/sprintf.c:220
 #, c-format
 msgid "use format %s for character objects"
 msgstr "use o formato %s para objetos caractere"
 
-#: src/main/sprintf.c:218
+#: src/main/sprintf.c:223
 msgid "Likely truncation of character string"
 msgstr "Provável truncamento de string de caracteres"
 
-#: src/main/sprintf.c:224
+#: src/main/sprintf.c:229
 msgid "unsupported type"
 msgstr "tipo não suportado"
 
-#: src/main/sprintf.c:239
+#: src/main/sprintf.c:244
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr "Comprimento da string excede buffer de tamanho %d"

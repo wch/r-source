@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-01 22:04\n"
+"POT-Creation-Date: 2005-03-02 09:43\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: Fei Chen <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -257,11 +257,8 @@ msgid "cannot coerce class \"%s\" into a data.frame"
 msgstr "不能强迫变表"
 
 #, fuzzy
-msgid "invalid row.names, length %d for a data frame with %d rows"
+msgid "invalid 'row.names', length %d for a data frame with %d rows"
 msgstr "数据框的dimnames给得不对"
-
-msgid "row.names"
-msgstr ""
 
 msgid "supplied %d row names for %d rows"
 msgstr ""
