@@ -9,9 +9,9 @@
 \usage{
 bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480, pointsize = 12,
     bg = "white")
-jpeg(filename = "Rplot\%03d..jpg", width = 480, height = 480, pointsize = 12,
+jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480, pointsize = 12,
      quality = 75, bg = "white")
-png(filename = "Rplot\%03d..png", width = 480, height = 480, pointsize = 12,
+png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
     bg = "white")
 }
 \arguments{

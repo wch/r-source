@@ -10,7 +10,8 @@
   \code{xfig} and \code{postscript}.
 }
 \usage{
-xfig(file = "Rplots.fig", onefile = FALSE, \dots)
+xfig(file = ifelse(onefile, "Rplots.fig", "Rplot%03d.fig"),
+     onefile = FALSE, \dots)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is

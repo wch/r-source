@@ -18,7 +18,6 @@
 \alias{[.ts}
 \alias{[<-.factor}
 \alias{[.noquote}
-\alias{[<-.noquote}
 \alias{.subset}
 \alias{.subset2}
 \description{

@@ -6,7 +6,7 @@
   Transfer text between a character vector and the Windows clipboard.
 }
 \usage{
-getClipboard()
+readClipboard()
 writeClipboard{str}
 }
 \arguments{

@@ -1,8 +1,8 @@
 \name{factor}
 \title{Factors}
 \usage{
-factor(x, levels = sort(unique(x), na.last = TRUE), labels = levels,
-       exclude = NA, ordered = is.ordered(x))
+factor(x, levels = sort(unique.default(x), na.last = TRUE),
+       labels = levels, exclude = NA, ordered = is.ordered(x))
 ordered(x, \dots)
 
 is.factor(x)

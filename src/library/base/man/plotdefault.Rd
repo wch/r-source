@@ -10,8 +10,8 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
              log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
              ann = par("ann"), axes = TRUE, frame.plot = axes,
              panel.first = NULL, panel.last = NULL,
-             col = par("fg"), bg = NA, pch = par("pch"),
-             cex = par("cex"), lty = par("lty"), lab = par("lab"),
+             col = par("col"), bg = NA, pch = par("pch"),
+             cex = 1, lty = par("lty"), lab = par("lab"),
              lwd = par("lwd"), asp = NA, \dots)
 }
 \arguments{

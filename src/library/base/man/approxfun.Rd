@@ -7,13 +7,13 @@
   or a function performing the linear (or constant) interpolation.
 }
 \usage{
-approx   (x, y, xout, method="linear", n=50,
+approx   (x, y = NULL, xout, method="linear", n=50,
           yleft, yright, rule = 1, f=0, ties = mean)
-approxfun(x, y,       method="linear",
+approxfun(x, y = NULL,       method="linear",
           yleft, yright, rule = 1, f=0, ties = mean)
 }
 \arguments{
-  \item{x,y}{vectors giving the coordinates of the points to be
+  \item{x, y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
     specified: see \code{\link{xy.coords}}.}
   \item{xout}{an optional set of values specifying where interpolation

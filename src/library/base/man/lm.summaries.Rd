@@ -1,18 +1,14 @@
 \name{lm.summaries}
-\alias{coefficients.lm}
 \alias{family.lm}
 \alias{formula.lm}
-\alias{fitted.values.lm}
 \alias{residuals.lm}
 \alias{weights}
 \alias{weights.lm}
 \alias{weights.default}
 \title{Accessing Linear Model Fits}
 \usage{
-\method{coefficients}{lm}(object, \dots) ; \method}{lm}{coef(object, \dots)
 \method{family}{lm}(object, \dots)
 \method{formula}{lm}(x, \dots)
-\method{fitted.values}{lm}(object, \dots)
 \method{residuals}{lm}(object,
           type=c("working","response", "deviance","pearson", "partial"), \dots)
 weights(object, \dots)
@@ -26,16 +22,16 @@ weights(object, \dots)
 All these functions are \code{\link{methods}} for class \code{"lm"}  objects.
 }
 \details{
-The generic accessor functions \code{coefficients}, \code{effects},
-\code{fitted.values} and \code{residuals} can be used to extract
+The generic accessor functions \code{coef}, \code{effects},
+\code{fitted} and \code{residuals} can be used to extract
 various useful features of the value returned by \code{lm}.
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{anova.lm}}.
 
-  \code{\link{coefficients}}, \code{\link{deviance}},
+  \code{\link{coef}}, \code{\link{deviance}},
   \code{\link{df.residual}},
-  \code{\link{effects}}, \code{\link{fitted.values}},
+  \code{\link{effects}}, \code{\link{fitted}},
   \code{\link{glm}} for \bold{generalized} linear models,
   \code{\link{lm.influence}} for regression diagnostics,
   \code{\link{weighted.residuals}},

@@ -10,8 +10,7 @@
 \usage{
 %% Improvement ideas: see code definition, currently in ../R/plot.R
 plot.table(x, type = "h", ylim = c(0, max(x)), lwd = 2,
-           xlab = NULL, ylab = deparse(substitute(x)),
-           frame.plot = is.num, ...)
+           xlab = NULL, ylab = NULL, frame.plot = is.num, ...)
 }
 \arguments{
   \item{x}{a \code{\link{table}} (like) object.}

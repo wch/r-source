@@ -6,7 +6,7 @@
 \title{Compute Orthogonal Polynomials}
 \usage{
 poly(x, ..., degree = 1, coefs = NULL)
-polym(..., degree)
+polym(..., degree = 1)
 \method{predict}{poly}(object, newdata, \dots)
 }
 \description{

@@ -10,7 +10,7 @@
         sub.caption = deparse(x$call), main = "",
         ask = prod(par("mfcol")) < length(which) && dev.interactive(),
         \dots,
-        id.n = 3, labels.id = names(residuals(x)), cex.id = 0.25)
+        id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75)
 }
 \arguments{
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
