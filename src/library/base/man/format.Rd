@@ -3,14 +3,15 @@
 \usage{
 format(x, \dots)
 format.default(x, trim=FALSE, digits = getOption("digits"))
-format.pval(x, digits= max(1,getOption("digits")-2), eps = .Machine$double.eps)
+format.pval(x, digits= max(1, getOption("digits") - 2),
+            eps = .Machine$double.eps)
 }
 \alias{format}
 \alias{format.default}
 \alias{format.pval}
 \description{
   Format an \R object for pretty printing: \code{format.pval} is
-  intended for formatting p--values.
+  intended for formatting p-values.
 }
 \arguments{
   \item{x}{any \R object (conceptually); typically numeric.}
@@ -22,22 +23,21 @@ format.pval(x, digits= max(1,getOption("digits")-2), eps = .Machine$double.eps)
     this many significant digits.}
 }
 \details{
-These functions convert their first argument to a vector (or array) of
-character strings which have a common format (as is done by
-\code{\link{print}}).
-The trimming with \code{trim = TRUE} is useful when the strings are to
-be used for plot \code{\link{axis}} annotation.
+  These functions convert their first argument to a vector (or array) of
+  character strings which have a common format (as is done by
+  \code{\link{print}}).  The trimming with \code{trim = TRUE} is useful
+  when the strings are to be used for plot \code{\link{axis}} annotation.
 
-\code{format.pval} is mainly an auxiliary function for
-\code{\link{print.summary.lm}} etc., does separate formatting for
-fixed, floating point and very small values (those \code{< eps}).
+  \code{format.pval} is mainly an auxiliary function for
+  \code{\link{print.summary.lm}} etc., does separate formatting for
+  fixed, floating point and very small values (those \code{< eps}).
 
-The function \code{\link{formatC}} provides a rather more flexible
-formatting facility for numbers, does \emph{not} provide a common format
-for several numbers, however.
+  The function \code{\link{formatC}} provides a rather more flexible
+  formatting facility for numbers, does \emph{not} provide a common
+  format for several numbers, however.
 }
 \seealso{
-\code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}}.
+  \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}}.
 }
 \examples{
 format(1:10)
