@@ -158,7 +158,7 @@ typedef struct {
 #define BYTE2VEC(n)	(((n)>0)?(((n)-1)/sizeof(VECREC)+1):0)
 #define INT2VEC(n)	(((n)>0)?(((n)*sizeof(int)-1)/sizeof(VECREC)+1):0)
 #define FLOAT2VEC(n)	(((n)>0)?(((n)*sizeof(double)-1)/sizeof(VECREC)+1):0)
-#define COMPLEX2VEC(n)	(((n)>0)?(((n)*sizeof(complex)-1)/sizeof(VECREC)+1):0)
+#define COMPLEX2VEC(n)	(((n)>0)?(((n)*sizeof(Rcomplex)-1)/sizeof(VECREC)+1):0)
 #define PTR2VEC(n)	(((n)>0)?(((n)*sizeof(SEXP)-1)/sizeof(VECREC)+1):0)
 
 
@@ -272,7 +272,7 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 #define INI_as(v)
 #endif
 
-extern int	errno;
+/* extern int	errno; already have errno.h ! */
 extern int	gc_inhibit_torture INI_as(1);
 
 /* R Home Directory */

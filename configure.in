@@ -53,12 +53,11 @@ AC_SUBST(VERSION)
 ### Defaults
 
 f="${srcdir}/config.site"
-if test -r $f; then echo "loading site script $f"; . $f ; fi
+if test -r ${f}; then echo "loading site script ${f}"; . ${f}; fi
 f="${HOME}/.Rconf"
-if test -r $f; then echo "loading user script $f"; . $f ; fi
+if test -r ${f}; then echo "loading user script ${f}"; . ${f} ; fi
 f="./config.site"
-if test -r $f; then echo "loading build specific script $f"; . $f ; fi
-
+if test -r ${f}; then echo "loading build specific script ${f}"; . ${f} ; fi
 
 ### Handle arguments to configure
 
@@ -155,7 +154,6 @@ AC_ARG_WITH(gnome,
 ### Programs.
 
 AC_PROG_AWK
-
 AC_PROG_INSTALL
 warn_install="redefining INSTALL to be `pwd`/tools/install-sh -c"
 case "${INSTALL}" in
@@ -174,7 +172,6 @@ case "${host}" in
     AC_MSG_WARN([${warn_install}])
     ;;
 esac
-
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
@@ -182,26 +179,24 @@ AC_PROG_YACC
 AC_CHECK_PROG(AR, [${AR} ar], ar)
 : ${ARFLAGS="rc"}
 AC_SUBST(ARFLAGS)
-## LaTeX && friends
-AC_PATH_PROG(LATEX, [${LATEX} latex], false)
-AC_PATH_PROG(DVIPS, [${DVIPS} dvips], false)
-AC_PATH_PROG(MAKEINDEX, [${MAKEINDEX} makeindex], false)
-## Nroff && friends
-AC_PATH_PROG(NROFF, [${NROFF} nroff], false)
-AC_PATH_PROG(TBL, [${TBL} tbl], false)
-## Unzip && zip
-AC_PATH_PROG(R_UNZIPCMD, [${UNZIP} unzip], "")
-AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
 ## Echo.
 R_PROG_ECHO_N
 ## Make.
 : ${MAKE=make}
 AC_SUBST(MAKE)
+## Nroff && friends
+AC_PATH_PROG(NROFF, [${NROFF} nroff], false)
+AC_PATH_PROG(TBL, [${TBL} tbl], false)
 ## Perl.
 R_PROG_PERL
 ## Tar.
 : ${TAR=tar}
 AC_SUBST(TAR)
+## TeXMF stuff
+R_PROG_TEXMF
+## Unzip && zip
+AC_PATH_PROG(R_UNZIPCMD, [${UNZIP} unzip], "")
+AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
 
 ## C compiler.
 
@@ -348,9 +343,10 @@ if test -n "${BLAS}" && ${use_blas}; then
     [ FLIBS="-lblas ${FLIBS}" BLAS=""
       if ${use_blas_risc}; then
         AC_CHECK_LIB(blas_risc, main,
-	  FLIBS="-lblas_risc ${FLIBS}", , -lblas -lf2c)
+	  FLIBS="-lblas_risc ${FLIBS}", , ${FLIBS})
       fi
-    ])
+    ], ,
+    ${FLIBS})
 fi
 AC_SUBST(BLAS)
 
@@ -658,9 +654,8 @@ AC_OUTPUT(Makeconf
   doc/Makefile
   doc/keyword-test
   doc/manual/Makefile
-  doc/manual/Reference.tex
-  doc/manual/Manual.tex
   doc/manual/lib2tex
+  doc/manual/refman.top
   etc/Makefile
   etc/Makeconf
   src/Makefile
@@ -715,10 +710,12 @@ AC_OUTPUT(Makeconf
   src/unix/Makefile
   tests/Makefile
   tests/Examples/Makefile
+  tools/Makefile
+  tools/install-info
 )
 
 AC_OUTPUT_COMMANDS(
-  chmod +x doc/keyword-test doc/manual/lib2tex
+  chmod +x doc/keyword-test doc/manual/lib2tex tools/install-info
 )
 
 if test -z "${F77}"; then
@@ -737,3 +734,8 @@ R is now configured for ${host}
   FORTRAN compiler:         ${FORT}
   Gnome support:            ${use_gnome}
 ])
+
+dnl Local Variables: ***
+dnl mode: sh ***
+dnl sh-indentation: 2 ***
+dnl End: ***

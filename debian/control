@@ -7,6 +7,7 @@ Standards-Version: 2.4.0.0
 Package: r-base
 Architecture: any
 Depends: perl5, zlib-bin, ${shlibs:Depends}
+Conflicts: r-cran
 Suggests: g77, libpaperg, ess
 Description: `GNU S' - A language and environment for statistical computing.
  R is described by its authors as "not unlike" S, which is a language
@@ -18,3 +19,8 @@ Description: `GNU S' - A language and environment for statistical computing.
  code can be linked and called at run time.
  .
  S is the statistician's Matlab and R is to S what Octave is to Matlab.
+ .
+ Versions 0.90.0 and higher have R functions CRAN.packages, install.packages,
+ and update.packages that can be used to select and update R packages from the
+ Comprehensive R Archive Network.  The Debian packages r-cran, r-cran-non-free,
+ and r-mlbench are no longer needed and have been withdrawn.

@@ -27,4 +27,8 @@
 \references{
     McNeil, D. R. (1977).  Interactive Data Analysis.  New York: Wiley.
 }
+\examples{
+data(USArrests)
+pairs(USArrests, panel = panel.smooth, main = "USArrests data")
+}
 \keyword{datasets}

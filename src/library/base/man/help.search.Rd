@@ -2,9 +2,12 @@
 \alias{help.search}
 \title{Search the Help System}
 \usage{
-help.search(what, fields = c("name", "title"),
+help.search(topic, fields = c("name", "title"),
             apropos, keyword, whatis, ignore.case = TRUE,
-            packages = NULL, lib.loc = .lib.loc, verbose = .Options$verbose)
+            packages = NULL, lib.loc = .lib.loc,
+            help.db = .Options$help.db,
+            verbose = .Options$verbose,
+            rebuild = FALSE)
 }
 \arguments{
   \item{what}{a character string containing a regular expression to be
@@ -29,7 +32,11 @@ help.search(what, fields = c("name", "title"),
     in the specified library trees \code{lib.loc} are searched.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through.}
+  \item{help.db}{a character string giving the file path to a previously
+    built and saved help data base, or \code{NULL}.}
   \item{verbose}{logical; if \code{TRUE}, the search process is traced.}
+  \item{rebuild}{a logical indicating whether the help data base should
+    be rebuilt.}
 }
 \description{
   Allows for searching the help system for documentation matching a
@@ -46,6 +53,10 @@ help.search(what, fields = c("name", "title"),
 
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.
+
+  If possible, the help data base is saved to the file \file{help.db} in
+  the \file{.R} subdirectory of the user's home directory or the current
+  working directory.
 
   Note that currently, the aliases in the matching help files are not
   displayed.

@@ -20,7 +20,9 @@ ppr(formula, data=sys.parent(), weights,
     bass=0, span=0, df=5, gcvpen=1)
 
 ppr(x, y, weights=rep(1,n),
-    ww=\dots\dots (as above) \dots)
+    ww=rep(1,q), nterms, max.terms=nterms, optlevel=2, 
+    sm.method=c("supsmu", "spline", "gcvspline"),
+    bass=0, span=0, df=5, gcvpen=1)
 }
 \arguments{
 \item{formula}{
@@ -60,7 +62,7 @@ the contrasts to be used when any factor explanatory variables are coded.
 maximum number of terms to choose from when building the model.
 }
 \item{optlevel}{
-integer from 0 to 3 which determines the throughness of an
+integer from 0 to 3 which determines the thoroughness of an
 optimization routine in the SMART program. See the \bold{Details} section.
 }
 \item{sm.method}{

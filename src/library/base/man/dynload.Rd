@@ -57,7 +57,7 @@ the symbols in their own namespace is good practice, the ability to
 share symbols across related ``chapters'' is useful in many cases.
 Additionally, on certain platforms and versions of an operating
 system, certain libraries must have their symbols loaded globally to
-succesfully resolve all symbols.
+successfully resolve all symbols.
 
 One should be careful of the potential side-effect of using lazy
 loading via the `now' argument as `FALSE'. If a routine is called that
@@ -76,18 +76,16 @@ to all other elements of the application and so can be shared across
 two different DLLs.
 
 Some systems do not provide (explicit) support for local/global and
-lazy/eager symbol resolution. This can be the source of subtle bugs.
+lazy/eager symbol resolution.  This can be the source of subtle bugs.
 One can arrange to have warning messages emitted when unsupported
-options are used. This is done by setting either of the options
+options are used.  This is done by setting either of the options
 \code{verbose} or \code{warn} to be non-zero via the
 \code{\link{options}} function.  Currently, we know of only 2
-platforms that do not provide a value for local load
-(RTLD\_LOCAL). These are IRIX6.4 and unpatched versions of Solaris
-2.5.1. 
-
+platforms that do not provide a value for local load (RTLD\_LOCAL).
+These are IRIX6.4 and unpatched versions of Solaris 2.5.1.
 
 There is a short discussion of these additional arguments with some
-example code available at 
+example code available at
 \url{http://cm.bell-labs.com/stat/duncan/R/dynload}.
 }
 \note{
@@ -105,8 +103,11 @@ was provided by Heiner Schwarte.
 The compatibility code for HP-UX was provided by Luke Tierney.
 }
 \seealso{
-\code{\link{.C}}, \code{\link{.Fortran}}, \code{\link{.External}},
-\code{\link{.Call}}.
+  \code{\link{library.dynam}} to be used inside a package's
+  \code{\link{.First.lib}} initialization.
+
+  \code{\link{.C}}, \code{\link{.Fortran}}, \code{\link{.External}},
+  \code{\link{.Call}}.
 }
 \examples{
 is.loaded(symbol.For("hcass2")) #-> probably  FALSE

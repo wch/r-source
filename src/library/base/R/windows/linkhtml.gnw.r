@@ -1,5 +1,11 @@
-link.html.help <- function()
+link.html.help <- function(verbose=FALSE)
 {
+    if(!file.exists(file.path(R.home(), "doc", "html")))
+       return(invisible(NULL))
+    if(verbose) {
+        cat("updating HTML package descriptions\n")
+        flush.console()
+    }
     make.packages.html()
     make.function.html()
     make.search.html()

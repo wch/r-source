@@ -179,7 +179,9 @@ par(\dots, no.readonly = FALSE)
   \item{mgp}{The margin line (in \code{mex} units) for the axis title,
     axis labels and axis line.  The default is \code{c(3, 1, 0)}.}
   \item{mkh}{The height in inches of symbols to be drawn when the value
-    of \code{pch} is an integer.}
+    of \code{pch} is an integer.
+%%--- FIXME ---
+    \bold{Completely ignored currently}.}
   \item{new}{logical, defaulting to \code{FALSE}.  If set to
     \code{TRUE}, the next high-level plotting command (actually
     \code{\link{plot.new}(.)} should \emph{not clean} the frame before
@@ -192,7 +194,7 @@ par(\dots, no.readonly = FALSE)
   \item{omi}{A vector of the form \code{c(bottom, left, top, right)} giving the
     size of the outer margins in inches.}
   \item{pch}{Either an integer specifying a symbol or a single character
-    to be used as the default in plotting points.}
+    to be used as the default in plotting points. }
   \item{pin}{The width and height of the current plot in inches.}
   \item{plt}{A vector of the form \code{c(x1, x2, y1, y2)} giving
     the coordinates of the plot region as fractions of the current

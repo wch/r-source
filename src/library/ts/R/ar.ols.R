@@ -1,8 +1,9 @@
 ## code by Adrian Trapletti
 ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-                    demean = TRUE, series = NULL, ...)
+                    demean = TRUE, intercept = demean, series = NULL, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
+    rescale <- TRUE
     ists <- is.ts(x)
     x <- na.action(as.ts(x))
     xfreq <- frequency(x)
@@ -11,6 +12,10 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     x <- as.matrix(x)
     n.used <- nrow(x)
     nser <- ncol(x)
+    if(rescale) {
+        sc <- sqrt(drop(apply(x, 2, var)))
+        x <- x/rep(sc, rep(n.used, nser))
+    } else sc <- rep(1, nser)
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
     else round(order.max)
 
@@ -34,7 +39,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     for (m in order.min:order.max)
     {
         y <- embed(x, m+1)
-        if(demean) {
+        if(intercept) {
             if (m > 0) X <- cbind(rep(1,nrow(y)), y[, (nser+1):ncol(y)])
             else X <- as.matrix(rep(1, nrow(y)))
         } else {
@@ -61,7 +66,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         seA[[m - order.min+1]] <- if(ncol(varA) > 0) sqrt(diag(varA))
         else numeric(0)
         aic[m - order.min+1] <-
-            n.used*log(det(varE[[m-order.min+1]]))+2*nser*(nser*m+demean)
+            n.used*log(det(varE[[m-order.min+1]]))+2*nser*(nser*m+intercept)
     }
 
     m <- which(aic==min(aic)) + order.min - 1 # Determine best model
@@ -70,7 +75,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
 
     y <- embed(x, m+1)
     AA <- A[[m - order.min + 1]]
-    if(demean) {
+    if(intercept) {
         xint <- AA[, 1]
         ar <- AA[, -1]
         if (m > 0) X <- cbind(rep(1,nrow(y)), y[, (nser+1):ncol(y)])
@@ -90,7 +95,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     dim(ar) <- c(nser, nser, m)
     ar <- aperm(ar, c(3,1,2))
     ses <- seA[[m - order.min + 1]]
-    if(demean) {
+    if(intercept) {
         sem <- ses[1:nser]
         ses <- ses[-(1:nser)]
     } else sem <- rep(0, nser)
@@ -106,6 +111,18 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if(ists) {
         attr(E, "tsp") <- xtsp
         attr(E, "class") <- "ts"
+    }
+    if(rescale) {
+        xm <- xm * sc
+        if(!is.null(xint)) xint <- xint * sc
+        aa <- outer(sc, 1/sc)
+        if(nser > 1 && m > 0)
+            for(i in 1:m) ar[i,,] <- ar[i,,]*aa
+        var.pred <- var.pred * outer(sc, sc)
+        E <- E * rep(sc, rep(NROW(E), nser))
+        sem <- sem*sc
+        if(m > 0)
+            for(i in 1:m) ses[i,,] <- ses[i,,]*aa
     }
     res <- list(order = m, ar = ar, var.pred = var.pred,
                 x.mean = xm, x.intercept = xint, aic = aic,

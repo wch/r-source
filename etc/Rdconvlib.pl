@@ -405,7 +405,7 @@ sub drop_full_command {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd") &&  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
-	$text =~ s/\\$cmd$id.*$id/$`$'/s;
+	$text =~ s/\\$cmd$id.*$id//s;
     }
     $text;
 }

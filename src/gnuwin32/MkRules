@@ -1,3 +1,4 @@
+#-*- Makefile -*-
 .SUFFIXES: .c .f .o .a .def .exp .dll .exe .d
 
 # Alternatives CYGWIN (--no-cygwin), MINGW32 (mingw32 gcc), CROSS (Linux)
@@ -54,7 +55,7 @@ RESCOMP=$(BINPREF)windres
 
 .c.o:
 	$(CC)  $(CFLAGS) $($*-CFLAGS) -c $< -o $@
-	
+
 .f.o:
 	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
@@ -88,11 +89,11 @@ RESCOMP=$(BINPREF)windres
 lib%.a: %.def
 	@$(ECHO) -------- Building $@ from $^ --------
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib lib$*.a
-	 
+
 lib%.a: %.exp
 	@$(ECHO) -------- Building $@ from $^ --------
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.exe --def $*.exp --output-lib lib$*.a	 
-	 
+
 %.a:    
 	@$(ECHO) -------- Building $@ from $^ --------
 	$(AR) cr $@ $^
@@ -101,5 +102,3 @@ lib%.a: %.exp
 
 %.o:    %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $^ -o $@
-	
-	

@@ -25,8 +25,13 @@
 #define PSIGNAL
 #include "psignal.h"
 
+#ifndef _MSC_VER
 #define CharacterMode (*__imp_CharacterMode)
 #define UserBreak     (*__imp_UserBreak)
+#else
+#define CharacterMode (*_imp__CharacterMode)
+#define UserBreak     (*_imp__UserBreak)
+#endif
 
 extern void cmdlineoptions(int, char **);
 extern void setup_term_ui(void);

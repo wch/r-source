@@ -14,7 +14,7 @@ C(object, contr, how.many, ...)
    \code{contr.poly} or a character string giving the name of the function}
  \item{how.many}{the number of contrasts to set, by default one less
    than \code{nlevels(object)}.}
- \item{\dots}{Addtional arguments for the function \code{contr}.}
+ \item{\dots}{Additional arguments for the function \code{contr}.}
 }
 \description{
  Sets the \code{"contrasts"} attribute for the factor.

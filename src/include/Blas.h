@@ -42,15 +42,15 @@ extern int    F77_SYMBOL(idamax)(int*, double*, int*);
 
 	/* Double Precision Complex Blas */
 
-extern double F77_SYMBOL(dznrm2)(int*, complex *x, int*);
-extern int    F77_SYMBOL(izamax)(int*, complex *zx, int*);
-extern int    F77_SYMBOL(zaxpy)(int*, complex *za, complex *zx, int*, complex *zy, int*);
-extern int    F77_SYMBOL(zcopy)(int*, complex *zx, int*, complex *zy, int*);
-extern void   F77_SYMBOL(zdotc)(complex * ret_val, int*, complex *zx, int*, complex *zy, int*);
-extern void   F77_SYMBOL(zdotu)(complex * ret_val, int*, complex *zx, int*, complex *zy, int*);
-extern int    F77_SYMBOL(zdscal)(int*, double*, complex *zx, int*);
-extern int    F77_SYMBOL(zrotg)(complex *ca, complex *cb, double*, complex *s);
-extern int    F77_SYMBOL(zscal)(int*, complex *za, complex *zx, int*);
-extern int    F77_SYMBOL(zswap)(int*, complex *zx, int*, complex *zy, int*);
+extern double F77_SYMBOL(dznrm2)(int*, Rcomplex *x, int*);
+extern int    F77_SYMBOL(izamax)(int*, Rcomplex *zx, int*);
+extern int    F77_SYMBOL(zaxpy)(int*, Rcomplex *za, Rcomplex *zx, int*, Rcomplex *zy, int*);
+extern int    F77_SYMBOL(zcopy)(int*, Rcomplex *zx, int*, Rcomplex *zy, int*);
+extern void   F77_SYMBOL(zdotc)(Rcomplex * ret_val, int*, Rcomplex *zx, int*, Rcomplex *zy, int*);
+extern void   F77_SYMBOL(zdotu)(Rcomplex * ret_val, int*, Rcomplex *zx, int*, Rcomplex *zy, int*);
+extern int    F77_SYMBOL(zdscal)(int*, double*, Rcomplex *zx, int*);
+extern int    F77_SYMBOL(zrotg)(Rcomplex *ca, Rcomplex *cb, double*, Rcomplex *s);
+extern int    F77_SYMBOL(zscal)(int*, Rcomplex *za, Rcomplex *zx, int*);
+extern int    F77_SYMBOL(zswap)(int*, Rcomplex *zx, int*, Rcomplex *zy, int*);
 
 #endif

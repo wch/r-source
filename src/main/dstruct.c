@@ -64,8 +64,22 @@ SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
     PROTECT(body);
     PROTECT(rho);
     c = allocSExp(CLOSXP);
+
+#ifdef not_used_CheckFormals
+    if(isList(formals))
+	FORMALS(c) = formals;
+    else
+        error("invalid formal arguments for \"function\"");
+#else
     FORMALS(c) = formals;
-    BODY(c) = body;
+#endif
+    if(isList(body) || isLanguage(body) || isSymbol(body)
+       || isExpression(body) || isVector(body))
+	BODY(c) = body;
+    else
+        error("invalid body argument for \"function\"\n"
+	      "Should NEVER happen; please bug.report() [mkCLOSXP]\n");
+
     if(rho == R_NilValue)
 	CLOENV(c) = R_GlobalEnv;
     else
@@ -73,7 +87,6 @@ SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
     UNPROTECT(3);
     return c;
 }
-
 
 /* mkChar - make a character (CHARSXP) variable */
 

@@ -52,6 +52,8 @@ field fRver, fSrc, fDest;
 #define RVER ""
 #endif
 
+static char Rversion[20];
+
 int FullInstall = 1, over;
 char Rver[20]=RVER, src[MAX_PATH], dest[MAX_PATH];
 char selpkg[80], *pkglist[100], *selpkglist[100];
@@ -136,6 +138,19 @@ void next1(button b)
     char str[MAX_PATH];
     FullInstall = ischecked(sys);
     strcpy(Rver, gettext(fRver));
+    if(FullInstall && strcmp(Rver, Rversion) > 0) {
+	sprintf(str, 
+		"This installer is for version %s\nIt may not work for %s", 
+		Rversion, Rver);
+	askok(str);
+    }
+    if(FullInstall && strcmp(Rver, "rw0900") < 0) {
+	sprintf(str, 
+		"This installer is for version rw0900 and later only");
+	askok(str);
+	settext(fRver, Rversion);
+ 	return;
+   }
     strcpy(src, gettext(fSrc));
     dosslash(src);
     settext(fSrc, src);
@@ -169,7 +184,7 @@ void next1(button b)
 	    return;
 	}
     }
-    if(!FullInstall && strcmp("rw0900", dest + strlen(dest) - 6) == 0 ) {
+    if(!FullInstall && strcmp(Rver, dest + strlen(dest) - 6) == 0 ) {
 	strcat(dest, "\\library");
     }
     
@@ -503,6 +518,7 @@ void page1()
 	strcpy(tmp, R_MINOR); tmp[2] = '\0';
 	sprintf(Rver, "rw%s%s%s", R_MAJOR, tmp, tmp+3);
     }
+    strcpy(Rversion, Rver);
 
     ypos = 50;
     lwhat1 = newlabel("What do you want to install?",

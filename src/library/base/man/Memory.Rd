@@ -59,7 +59,7 @@ R --vsize v --nsize n
 
     The defaults for \code{--nsize} and \code{--vsize} can be changed by
     setting the environment variables \code{R_NSIZE} and \code{R_VSIZE}
-    respectively, perhaps most conveniently on Unix in the file
+    respectively, perhaps most conveniently in the file \file{.Renviron} or
     \file{~/.Renviron}.
 
     When using \code{\link{read.table}}, the memory requirements are in

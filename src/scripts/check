@@ -93,7 +93,7 @@ for pkg in ${PKGS}; do
   if ${CLEAN}; then
     cd .. && rm -rf ${CHECK_DIR}
   else
-    echo " Results of \`check' are available in directory ${pkg}/${CHECK_DIR}"
+    echo " Results of \`check' are available in directory ${CHECK_DIR}"
   fi
 
 done

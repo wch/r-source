@@ -1,3 +1,11 @@
+### This is the system Rprofile file. It is always run on startup.
+### Additional commands can be placed in site or user Rprofile files
+### (see ?Rprofile).
+
+### Notice that it is a bad idea to use this file as a template for
+### personal startup files, since things will be executed twice and in
+### the wrong environment since user profiles are run in .GlobalEnv.
+
 .GlobalEnv <- globalenv()
 attach(NULL, name = "Autoloads")
 .AutoloadEnv <- pos.to.env(2)

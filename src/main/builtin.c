@@ -65,7 +65,7 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ctxt = ctxt->nextcontext;
     if (ctxt->callflag & CTXT_FUNCTION)
     {
-	if (addit && (oldcode = ctxt->conexit) != R_NilValue )
+	if (addit && (oldcode = ctxt->conexit) != R_NilValue ) {
 	    if ( CAR(oldcode) != install("{") )
 	    {
 		PROTECT(tmp = allocList(3));
@@ -83,6 +83,7 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ctxt->conexit = listAppend(oldcode,tmp);
 		UNPROTECT(1);
 	    }
+	}
 	else
 	    ctxt->conexit = code;
     }

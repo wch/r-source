@@ -46,7 +46,7 @@
 }
 \examples{
 data(swiss)
-pairs(swiss)
+pairs(swiss, panel = panel.smooth, main = "swiss data")
 summary(lm(Fertility ~ . , data = swiss))
 }
 \keyword{datasets}

@@ -34,7 +34,7 @@ unlink <- function(x) invisible(.Internal(unlink(x)))
 flush.console <- function() .Internal(flush.console())
 
 shell <- function(cmd, shell, flag="/c", intern=FALSE,
-                  wait=TRUE, translate=FALSE, mustWork=FALSE)
+                  wait=TRUE, translate=FALSE, mustWork=FALSE, ...)
 {
     if(missing(shell)) {
         shell <- getenv("R_SHELL")
@@ -46,7 +46,7 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
     if(translate) cmd <- gsub("/", "\\\\", cmd)
     if(!is.null(shell)) cmd <- paste(shell, flag, cmd)
     res <- system(cmd, intern=intern, wait=wait | intern,
-                  show.output.on.console=wait)
+                  show.output.on.console=wait, ...)
     if(!intern && res !=0)
         if(mustWork)
             if(res == -1) stop("cmd could not be run")
@@ -58,3 +58,7 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
 }
 
 shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
+
+dir.create <- function(path)
+    invisible(.Internal(dir.create(path)))
+

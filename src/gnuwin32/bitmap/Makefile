@@ -30,9 +30,9 @@ installdll:
 
 clean:
 	$(RM) *.o *.a *.dll *.def *~ \#*\#
-	$(MAKE) CC="$(CC)" RM="$(RM)" -C zlib -f nt/Makefile.gcc clean
-	$(MAKE) CC="$(CC)" -C libpng -f scripts/makefile.std clean
-	$(MAKE) CC="$(CC)" -C $(JPEGDIR) -f ../Makefile.jpeg clean
+	-$(MAKE) CC="$(CC)" RM="$(RM)" -C zlib -f nt/Makefile.gcc clean
+	-$(MAKE) CC="$(CC)" -C libpng -f scripts/makefile.std clean
+	-$(MAKE) CC="$(CC)" -C $(JPEGDIR) -f ../Makefile.jpeg clean
 
 
 

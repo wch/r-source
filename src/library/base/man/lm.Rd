@@ -4,8 +4,10 @@
 lm(formula, data, subset, weights, na.action=na.omit,
    method="qr", model=TRUE, singular.ok = TRUE)
 
-lm.fit[.null] (x, y,    method = "qr", tol = 1e-7, \dots)
-lm.wfit[.null](x, y, w, method = "qr", tol = 1e-7, \dots)
+lm.fit (x, y,    method = "qr", tol = 1e-7, \dots)
+lm.wfit(x, y, w, method = "qr", tol = 1e-7, \dots)
+lm.fit.null (x, y,    method = "qr", tol = 1e-7, \dots)
+lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
 }
 \alias{lm}
 \alias{lm.fit}
@@ -21,7 +23,9 @@ the environment which \code{lm} is called from.}
 \item{subset}{an optional vector specifying a subset of observations
 to be used in the fitting process.}
 \item{weights}{an optional vector of weights to be used
-in the fitting process.}
+in the fitting process. If specified, weighted least squares is used
+with weights \code{weights} (that is, minimizing \code{sum(w*e^2)});
+otherwise ordinary least squares is used.}
 \item{na.action}{a function which indicates what should happen
 when the data contain \code{NA}s.  The default action (\code{na.omit})
 is to omit any incomplete observations.
@@ -37,11 +41,12 @@ observations.}
 \item{\dots}{currently disregarded.}
 }
 \description{
-\code{lm} is used to fit linear models.
-It can be used to carry out regression,
-single stratum analysis of variance and
-analysis of covariance.
-
+    \code{lm} is used to fit linear models.
+    It can be used to carry out regression,
+    single stratum analysis of variance and
+    analysis of covariance.
+}
+\details{
 Models for \code{lm} are specified symbolically.
 A typical model has the form
 \code{response ~ terms} where \code{response} is the (numeric)
@@ -69,7 +74,8 @@ extract various useful features of the value returned by \code{lm}.
 }
 \seealso{
   \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for
-  the ANOVA table.
+  the ANOVA table. \code{\link{aov}} for a difference interface.
+
   The generic functions \code{\link{coefficients}}, \code{\link{effects}},
   \code{\link{residuals}}, \code{\link{fitted.values}};
   \code{\link{lm.influence}} for regression diagnostics, and

@@ -407,7 +407,7 @@ sub drop_full_command {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd") &&  $text =~ /\\$cmd/){
 	my ($id, $arg)	= get_arguments($cmd, $text, 1);
-	$text =~ s/\\$cmd$id.*$id/$`$'/s;
+	$text =~ s/\\$cmd$id.*$id//s;
     }
     $text;
 }
@@ -1564,9 +1564,9 @@ sub latex_code_cmd {
     my $code = $_[0];
 
     if($code =~ /[$LATEX_SPECIAL]/){
-	die("\nERROR: found `\@' in \\code{...\}\n")
+	warn("\nERROR: found `\@' in \\code{...\}\n")
 	  if $code =~ /@/;
-	die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
+	warn("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
 	  if $code =~ /HYPERLINK\(/;
 	## till 0.63.1 
 	## $code = "\\verb@" . $code . "@";

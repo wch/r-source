@@ -4,11 +4,21 @@
 
 package=r-base
 
+debbase		:= $(shell pwd)/debian
+debtmp		:= $(debbase)/tmp
+debdoc		:= $(debtmp)/usr/share/doc/$(package)
+
+# edd 10 Feb 98	See section 4.1 of Policy Manual
+arch 		= $(shell dpkg --print-architecture)-linux
+
 build:
 	dh_testdir
 	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip\
 	CFLAGS="-Wall -O2" FFLAGS="-Wall -O2"\
-	 SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr --with-g77
+	SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr 		 \
+					--with-g77			 \
+					--mandir=$(debtmp)/usr/share/man \
+					--host $(arch)
 	make 
 	make help
 	make html
@@ -38,12 +48,17 @@ binary-arch: build
 	  < bin/R > debian/tmp/usr/bin/R
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/lib/R/bin/R
-	dh_installdocs
-	(cd debian/tmp/usr/doc/r-base/doc && ln -s ../../../lib/R/doc/html .)
-	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/library .)
+	# remove unneeded license files
+	rm -v $(debtmp)/usr/lib/R/library/base/help/license     	\
+	      $(debtmp)/usr/lib/R/library/base/latex/license.tex	\
+	      $(debtmp)/usr/lib/R/COPYING  
+	dh_installdocs BUGS PLATFORMS Y2K 
+	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
+	(cd $(debdoc) && ln -s ../../../lib/R/library .)
 	dh_installmenu
-	dh_installmanpages re_format.7 regex.3
-	dh_installchangelogs NEWS
+	dh_installmanpages re_format.7 regex.3 getline.3
+#	dh_undocumented	Rd2txt.1 Rdindex.1 Sd2Rd.1
+	dh_installchangelogs NEWS 
 	dh_strip
 	dh_compress
 	dh_fixperms
@@ -52,6 +67,7 @@ binary-arch: build
 	dh_gencontrol
 	dh_makeshlibs
 	dh_md5sums -X'usr/bin/R'  -XLibIndex -Xindex.txt -Xfunction.html -Xpackages.html
+#	dh_md5sums 
 	dh_builddeb
 
 # Below here is fairly generic really

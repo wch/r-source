@@ -1,13 +1,14 @@
 # to be run from RHOME/src/library/$(PKG)/check
-include ../../../gnuwin32/MkRules
+include $(RHOME)/src/gnuwin32/MkRules
 
 run: $(PKG)-Ex.R
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
-	../../../../bin/rterm --vanilla < $(PKG)-Ex.R > $(PKG)-Ex.Rout
+	$(RHOME)/bin/rterm --vanilla R_LIBS="$(RLIB);$(R_LIBS)" < $(PKG)-Ex.R > $(PKG)-Ex.Rout
 
 
-$(PKG)-Ex.R: ../../../../library/$(PKG)/R-ex/*.R
+$(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*.R
 	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
-	@$(SED) s/@PKG@/$(PKG)/ ../../../gnuwin32/check/makeRex.R > MakeRex.R
-	@../../../../bin/rterm  --quiet --vanilla < makeRex.R > nul
+	@$(SED) -e s/@PKG@/$(PKG)/ -e s+@RLIB@+$(RLIB)+ \
+	  $(RHOME)/src/gnuwin32/check/makeRex.R > MakeRex.R
+	@$(RHOME)/bin/rterm  --quiet --vanilla < makeRex.R > nul
 	@$(RM) makeRex.R

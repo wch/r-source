@@ -77,8 +77,10 @@ SOURCES = \
 	unique.c \
 	util.c \
 	version.c
+SOURCES_F = \
+	xxxpr.f
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = $(SOURCES:.c=.o) $(SOURCES_F:.f=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(SOURCES) arithmetic.h names.h gram.y

@@ -1,9 +1,15 @@
+#-*- Makefile -*-
 # Makefile for packages, only.
 
 include MkRules
 
 HELP=YES
 WINHELP=NO # Ue one of NO, CHM, BOTH (chm and winhelp)
+
+RHOME=$(shell cd ../..; pwd)# must be absolute path
+RLIB=$(RHOME)/library
+PKGDIR=$(RHOME)/src/library
+PKGD=$(shell cd $(PKGDIR); pwd)# must be absolute path
 
 ifdef DEBUG
  OPTFLAGS=-g -O2 -Wall
@@ -18,37 +24,42 @@ FFLAGS=$(OPTFLAGS)
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
 
-base-HELP=ziponly
-
 
 pkg-%:  libR.a #../include/globalvar.h
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg
+	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
-	$(MAKE) -C ./help $($*-HELP)help-$*
-	$(MAKE) -C ./help contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 ifeq ($(strip $(WINHELP)),CHM)
-	$(MAKE) -C ./help chm-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) chm-$*
 endif
 ifeq ($(strip $(WINHELP)),BOTH)
-	$(MAKE) -C ./help winhlp-$* # also makes chm
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) winhlp-$* # also makes chm
 endif
 endif
+
+pkgclean-%:
+	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) RHOME=$(RHOME) \
+	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:
-	-mkdir -p ../library/$*/check
-	$(MAKE) -C ../library/$*/check PKG=$* -f ../../../gnuwin32/check/PkgCheck
-
+	@$(ECHO) -------- Testing package $* --------
+	-@mkdir -p $(PKGDIR)/$*/check
+	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
 
 ziphelp-%:
-	$(MAKE) -C ./help ziphelp-$*
-	$(MAKE) -C ./help contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
 ziponly-%:
-	$(MAKE) -C ./help ziponlyhelp-$*
-	$(MAKE) -C ./help contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
-
-
+bundle-%:
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 bootstrap-DLLNM=boott
 

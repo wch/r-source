@@ -8,7 +8,7 @@ identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
 \alias{identify}
 \alias{identify.default}
 \arguments{
-  \item{x,y}{coodinates of points in a scatter plot.  Alternatively, any
+  \item{x,y}{coordinates of points in a scatter plot.  Alternatively, any
     object which defines coordinates (a plotting structure, time
     series etc.) can be given as \code{x} and \code{y} left undefined.}
   \item{labels}{an optional vector, the same length as \code{x} and

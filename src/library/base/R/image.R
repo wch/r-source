@@ -34,6 +34,8 @@ image <- function (x = seq(0, 1, len = nrow(z)),
     }
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
 	stop("increasing x and y values expected")
+    if (!is.matrix(z))
+        stop("`z' must be a matrix")
     if(length(x) > 1 && length(x) == nrow(z)) { # midpoints
         dx <- 0.5*diff(x)
         x <- c(x[1] - dx[1], x[1]+dx[1], x[-1]+dx)

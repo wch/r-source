@@ -17,4 +17,9 @@
     \emph{Interactive Data Analysis}.
     New York: Wiley.
 }
+\examples{
+data(precip)
+dotplot(precip[order(precip)], main = "precip data")
+title(sub = "Average annual precipitation (in.)")
+}
 \keyword{datasets}

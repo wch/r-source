@@ -12,7 +12,7 @@ rnorm(n, mean=0, sd=1)
 \alias{rnorm}
 \arguments{
   \item{x,q}{vector of quantiles.}
-  \item{p}{vector of probabilites.}
+  \item{p}{vector of probabilities.}
   \item{n}{number of observations.}
   \item{mean}{vector of means.}
   \item{sd}{vector of standard deviations.}

@@ -1,0 +1,23 @@
+@macro R{}
+R
+@end macro
+
+@macro Sl{}
+S
+@end macro
+
+@macro SPLUS{}
+@sc{S-plus}
+@end macro
+
+@macro HTML{}
+@sc{Html}
+@end macro
+
+@macro plusminus
+@ifinfo
++/-
+@end ifinfo
+@tex $\\pm$%
+@end tex
+@end macro

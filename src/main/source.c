@@ -27,7 +27,7 @@
 #include "Parse.h"
 
 extern IoBuffer R_ConsoleIob;
-extern int errno;
+/* extern int errno; No longer used */
 
 /* "do_parse" - the user interface input/output to files.
 

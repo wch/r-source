@@ -6,6 +6,9 @@
 \title{
 Plot Ridge Functions for Projection Pursuit Regression Fit
 }
+\description{
+Plot ridge functions for projection pursuit regression fit.
+}
 \usage{
 plot.ppr(fit, ask, type="o", \dots)
 }

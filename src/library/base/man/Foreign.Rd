@@ -79,7 +79,7 @@ facilitate the interfacing of existing C and Fortran code.
 The C type \code{complex} is defined in \file{Complex.h} as a
 \code{typedef struct {double r; double i;}}. Fortran type
 \code{double complex} is an extension to the Fortran standard, and
-the availibility of a mapping of \code{complex} to Fortran may be
+the availability of a mapping of \code{complex} to Fortran may be
 compiler dependent.
 
 \emph{Note:} The C types corresponding to \code{integer} and

@@ -24,7 +24,8 @@ title(main = "", sub = "", xlab = "", ylab = "", \dots)
   greek letters, fractions, etc.
 }
 \seealso{
-  \code{\link{mtext}}, \code{\link{text}}.
+  \code{\link{mtext}}, \code{\link{text}};
+  \code{\link{plotmath}} for details on mathematical annotation.
 }
 \examples{
 \testonly{data(cars)}

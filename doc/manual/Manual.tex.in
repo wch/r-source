@@ -6,7 +6,7 @@
 \makeindex
 \sloppy{}
 
-\begin{document}\pagenumbering{Roman}
+\begin{document}\pagenumbering{roman}
 
 \title{(A Start of the) \R\ Manual\\}
 

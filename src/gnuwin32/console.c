@@ -799,7 +799,7 @@ static void normalkeyin(control c,int k)
 FBEGIN
     int st;
 
-    st = getkeystate();
+    st = ggetkeystate();
     if ((p->chbrk) && (k == p->chbrk) &&
 	((!p->modbrk) || ((p->modbrk) && (st == p->modbrk)))) {
 	p->fbrk(c);
@@ -866,7 +866,7 @@ static void ctrlkeyin(control c, int key)
 FBEGIN
     int st;
 
-    st = getkeystate();
+    st = ggetkeystate();
     if ((p->chbrk) && (key == p->chbrk) &&
 	((!p->modbrk) || ((p->modbrk) && (st == p->modbrk)))) {
 	p->fbrk(c);
@@ -1457,7 +1457,9 @@ void  consolehelp()
     strcat(s,"     to the console, Ctrl+X first copy then paste\n\n");
     strcat(s,"Note: Console is updated only when some input is required.\n");
     strcat(s,"  Use Ctrl+W to toggle this feature off/on.\n\n");
-    strcat(s,"Use ESC to stop the interpreter.");
+    strcat(s,"Use ESC to stop the interpreter.\n\n");
+    strcat(s,"Standard Windows hotkeys can be used to switch to the\n");
+    strcat(s,"graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)");
     askok(s);
 }
 

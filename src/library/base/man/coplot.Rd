@@ -47,7 +47,7 @@ co.intervals(x, number = 6, overlap = 0.5)
   \item{col}{a vector of colors to be used to plot the points.  If too
     short, the values are recycled.}
   \item{pch}{a vector of plotting symbols or characters.  If too short,
-    the values are recycyled.}
+    the values are recycled.}
   \item{xlab}{character; label to use for the 1st conditioning variable.}
   \item{ylab}{character; label to use for the 2nd conditioning variable.}
   \item{number}{integer; the number of conditioning intervals,

@@ -3,8 +3,13 @@
 \usage{
 help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
      lib.loc = .lib.loc, verbose = .Options$verbose,
+#ifdef unix
      htmlhelp = .Options$htmlhelp)
-
+#endif
+#ifdef windows
+     chmhelp = .Options$chmhelp,
+     htmlhelp = .Options$htmlhelp, winhelp = .Options$winhelp)
+#endif
 ?topic
 }
 \alias{help}
@@ -16,23 +21,36 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
    displayed on-line to the screen (the default) or hardcopy of it
    should be produced.}
  \item{package}{a name or character vector giving the packages to look
-  into for documentation.  By default, all packages in the search path
-  are used.}
+   into for documentation.  By default, all packages in the search path
+   are used.}
  \item{lib.loc}{A character vector of directory names of \R libraries.
-  Defaults to all libraries currently known.}
+   Defaults to all libraries currently known.}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
+#ifdef unix
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
      default after \code{\link{help.start}} has been called), the HTML
      version of the help will be shown in a browser.}
+#endif
+#ifdef windows
+  \item{chmhelp}{logical (or \code{NULL}).  If \code{TRUE} the
+    Compiled HTML version of the help will be shown in a help viewer.}
+  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
+    version of the help will be shown in a browser.}
+  \item{winhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
+    \code{.hlp} file will be used if one is available.}
+#endif  
 }
 \description{
   These functions provide access to documentation.
   Documentation on a topic with name \code{name} (typically, an \R
   object or a data set) can be printed with either \code{help(name)} or
   \code{?name}.
+}
+\details{
   In the case of unary and binary operators and control-flow special
   forms, the name may need to be quoted.
 
+#ifdef unix
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through
   \code{latex} (note that LaTeX 2e is needed) and \code{dvips}.
@@ -43,6 +61,15 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
   variables \code{R_LATEXCMD} and \code{R_DVIPSCMD} appropriately.
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
+#endif
+#ifdef windows
+  If \code{offline} is \code{TRUE}, hardcopy of the documentation is
+  produced by running the LaTeX version of the help page through
+  \code{latex} (note that LaTeX 2e is needed). You need to customize
+  the file \file{R\_HOME/bin/helpPRINT.bat} which contains an example.  
+  The appearance of the output can be customized through a file
+  \file{Rhelp.cfg} somewhere in your LaTeX search path.
+#endif
 }
 \note{
   Currently, you only get help for \R objects in your

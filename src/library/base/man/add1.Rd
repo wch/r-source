@@ -67,7 +67,7 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
   \code{fit} methods directly.
 
   The default output table gives AIC, defined as minus twice log
-  likelihood plus \eqn{2p} where \eqn{p} is the rank of the model (the
+  likeliihood plus \eqn{2p} where \eqn{p} is the rank of the model (the
   number of effective parameters).  This is only defined up to an
   additive constant (like log-likelhoods).  For linear Gaussian models
   with fixed scale, the constant is chosen to give Mallows' Cp,

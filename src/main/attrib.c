@@ -459,7 +459,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	if (VECTOR(val)[i] != R_NilValue) {
 	    if (!isVector(VECTOR(val)[i]))
 		error("invalid type for dimname (must be a vector)");
-	    if (INTEGER(dims)[i] != LENGTH(VECTOR(val)[i]) 
+	    if (INTEGER(dims)[i] != LENGTH(VECTOR(val)[i])
 		&& LENGTH(VECTOR(val)[i]) != 0)
 		error("length of dimnames[%d] not equal to array extent",i+1);
 	    if (LENGTH(VECTOR(val)[i]) == 0) {
@@ -640,7 +640,7 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);
 	if (names == R_NilValue)
-	    errorcall(call, "attributes must be named");	
+	    errorcall(call, "attributes must be named");
 	for (i = 0; i < nattrs; i++) {
 	    if (STRING(names)[i] == R_NilValue ||
 		CHAR(STRING(names)[i])[0] == '\0') {
@@ -682,8 +682,8 @@ SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(obj);
 
     PROTECT(name = eval(CADR(args), env));
-    if (!isString(name))
-	error("attr<- : name must be of mode character");
+    if (!isValidString(name))
+	errorcall(call, "name must be non-null character");
 
     /* no eval(.), RHS is already evaluated: */
     /* now it's a promise so we should eval it -RG- */

@@ -18,31 +18,30 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
- *    double dlnrel(double x);
+ *	#include "Mathlib.h"
+ *	double logrelerr(double x);
  *
  *  DESCRIPTION
  *
  *    Compute the relative error logarithm.
  *
- *                      log(1 + x)
+ *			log(1 + x)
  *
  *  NOTES
  *
- *    This code is a translation of a Fortran subroutine of the
- *    same name written by W. Fullerton of Los Alamos Scientific
- *    Laboratory.
+ *	This code is a translation of the Fortran subroutine `dlnrel'
+ *	written by W. Fullerton of Los Alamos Scientific Laboratory.
  */
 
 #include "Mathlib.h"
 
 double logrelerr(double x)
 {
-    /* series for alnr on the interval -3.75000e-01 to  3.75000e-01 */
-    /*                               with weighted error   6.35e-32 */
-    /*                                log weighted error  31.20     */
-    /*                      significant figures required  30.93     */
-    /*                           decimal places required  32.01     */
+    /* series for alnr on the interval -3.75000e-01 to	3.75000e-01 */
+    /*				     with weighted error   6.35e-32 */
+    /*				      log weighted error  31.20	    */
+    /*			    significant figures required  30.93	    */
+    /*				 decimal places required  32.01	    */
     static double alnrcs[43] = {
 	+.10378693562743769800686267719098e+1,
 	-.13364301504908918098766041553133e+0,
@@ -92,8 +91,8 @@ double logrelerr(double x)
     static double xmin = 0.;
 
     if (nlnrel == 0) {
-        nlnrel = chebyshev_init(alnrcs, 43, 0.1 * d1mach(3));
-        xmin = -1.0 + sqrt(d1mach(4));
+	nlnrel = chebyshev_init(alnrcs, 43, 0.1 * d1mach(3));
+	xmin = -1.0 + sqrt(d1mach(4));
     }
 
     if (x <= -1) {

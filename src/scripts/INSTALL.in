@@ -6,7 +6,6 @@
 
 # @configure_input@
 
-VERSION="0.2-2"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 CLEAN=false
@@ -43,12 +42,28 @@ TMPDIR="/tmp/R.INSTALL.$$"
 
 umask 022
 
+# get the full path names to all packages contained in $1
+# modifies PKGS
+get_packages () {
+  if grep -s "^Contains:" "${1}/DESCRIPTION"; then
+    BUNDLEPKG=`grep -s "^Contains:" "${1}/DESCRIPTION" | \
+      sed "s/^Contains://; s/,/ /g"`
+    for p in ${BUNDLEPKG}; do
+      PKGS="${PKGS} \"`cd "${1}/${p}"; pwd`\""
+      if test -f "${1}/${p}/DESCRIPTION.in"; then
+        cat "${1}/${p}/DESCRIPTION.in"  > "${1}/${p}/DESCRIPTION"
+        grep -v "^Contains:" "${1}/DESCRIPTION" >> "${1}/${p}/DESCRIPTION"
+      fi
+    done
+  else 
+      PKGS="${PKGS} \"`cd "${1}"; pwd`\""
+  fi
+}
+
 while test -n "${1}"; do
   case ${1} in
     -h|--help|-\?)
       echo "${USAGE_MSG}"; exit 0 ;;
-    -V|--version)
-      echo "${VERSION}"; exit 0 ;;
     -c|--clean)
       CLEAN=true ;;
     --debug)
@@ -77,13 +92,13 @@ while test -n "${1}"; do
 	PKGNAME=`echo "${PKGNAME}" | sed 's/_.*//'`
 	gzip -dc "${1}" | (cd ${TMPDIR} && tar -xf -)
 	if test -d "${TMPDIR}/${PKGNAME}"; then
-	  PKGS="${PKGS} \"`cd "${TMPDIR}/${PKGNAME}"; pwd`\""
+	  get_packages "${TMPDIR}/${PKGNAME}"
 	else
 	  echo "ERROR: cannot extract package from ${1}"
 	  exit 1
 	fi    
       elif test -d "${1}"; then
-	PKGS="${PKGS} \"`cd "${1}"; pwd`\""
+        get_packages "${1}"
       else
 	echo "WARNING: package \`"${1}"' does not exist"
       fi

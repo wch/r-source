@@ -212,13 +212,19 @@ static void PicTeX_Deactivate(DevDesc *dd)
 {
 }
 
-#ifdef _not_used_
-static void PicTeX_MetricInfo(int c, double *accent, double *descent,
+static void PicTeX_MetricInfo(int c, double *ascent, double *descent,
 			      double *width, DevDesc *dd)
 {
+#ifdef BUG61
 	error("Metric information not yet available for this device");
-}
+#else
+    /* metric information not available => return 0,0,0 */
+    *ascent = 0.0;
+    *descent = 0.0;
+    *width = 0.0;
 #endif
+}
+
 	/* Initialize the device */
 
 static int PicTeX_Open(DevDesc *dd, picTeXDesc *ptd)
@@ -654,10 +660,7 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
 	dd->dp.locator = PicTeX_Locator;
 	dd->dp.mode = PicTeX_Mode;
 	dd->dp.hold = PicTeX_Hold;
-
-/*	dd->dp.metricInfo = PicTeX_MetricInfo;
- */
-	dd->dp.metricInfo = NULL;
+	dd->dp.metricInfo = PicTeX_MetricInfo;
 
 	/* Screen Dimensions in Pixels */
 

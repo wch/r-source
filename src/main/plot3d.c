@@ -1294,7 +1294,7 @@ static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
 {
     Vector3d u0, v0, u1, v1, u2, v2, u3, v3;
     double d[3], e[3];
-    int f, i, p0, p1, p2, p3, near;
+    int f, i, p0, p1, p2, p3, nearby;
     int ltysave = dd->gp.lty;
     if (front)
 	dd->gp.lty = LTY_DOTTED;
@@ -1336,9 +1336,9 @@ static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
 	    d[i] = v1[i]/v1[3] - v0[i]/v0[3];
 	    e[i] = v2[i]/v2[3] - v1[i]/v1[3];
         }
-	near = (d[0]*e[1] - d[1]*e[0]) < 0;
+	nearby = (d[0]*e[1] - d[1]*e[0]) < 0;
 
-	if ((front && near) || (!front && !near)) {
+	if ((front && nearby) || (!front && !nearby)) {
 	    if (!EdgeDone[Edge[f][0]]++)
 		GLine(v0[0]/v0[3], v0[1]/v0[3],
 		      v1[0]/v1[3], v1[1]/v1[3], USER, dd);

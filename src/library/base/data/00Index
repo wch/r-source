@@ -1,10 +1,13 @@
 Formaldehyde	Determination of Formaldehyde concentration
+HairEyeColor	Hair and eye color of statistics students
 InsectSprays	Effectiveness of insect sprays
 LifeCycleSavings
 		Intercountry life-cycle savings data
 OrchardSprays	Potency of orchard sprays
 PlantGrowth	Results from an experiment on plant growth
+Titanic		Survival of passengers on the Titanic
 ToothGrowth	The effect of vitamin C on tooth growth in guinea pigs
+UCBAdmissions	Student admissions at UC Berkeley
 USArrests	Violent crime statistics for the USA
 USJudgeRatings	Lawyers' ratings of state judges in the US Superior Court
 USPersonalExpenditure

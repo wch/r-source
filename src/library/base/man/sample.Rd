@@ -16,7 +16,7 @@ of the elements of \code{x}.
 If \code{x} has length 1, sampling takes place from
 \code{1:x}.
 
-The optional \code{prob} agrument can be used to give a vector
+The optional \code{prob} argument can be used to give a vector
 of probabilities of obtaining the elements of the vector being
 sampled.
 }

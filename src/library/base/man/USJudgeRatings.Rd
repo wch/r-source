@@ -2,7 +2,7 @@
 \title{Lawyers' Ratings of State Judges in the US Superior Court}
 \usage{data(USJudgeRatings)}
 \alias{USJudgeRatings}
-\format{A data frame contaning 43 observations on 12 variables.
+\format{A data frame containing 43 observations on 12 variables.
     \tabular{rlll}{
     	[,1]  \tab CONT  \tab numeric  \tab Number of contacts \cr
     	\tab \tab \tab of lawyer with judge. \cr
@@ -21,5 +21,9 @@
 }
 \source{
     New Haven Register, 14 January, 1977 (from John Hartigan).
+}
+\examples{
+data(USJudgeRatings)
+pairs(USJudgeRatings, main = "USJudgeRatings data")
 }
 \keyword{datasets}

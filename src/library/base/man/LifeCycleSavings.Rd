@@ -19,7 +19,7 @@
 \description{
     Under the life-cycle savings hypothesis as developed by Franco
     Modigliani, the savings ratio (aggregate personal saving divided by
-    disposable income is explained by per-capita disposable income, the
+    disposable income) is explained by per-capita disposable income, the
     percentage rate of change in per-capita disposable income, and two
     demographic variables: the percentage of population less than 15
     years old and the percentage of the population over 75 years old.
@@ -32,5 +32,12 @@
 
     Belsley, D. A., E. Kuh and R. E. Welsch (1980).
     \emph{Regression Diagnostics}.  New York: Wiley.
+}
+\examples{
+data(LifeCycleSavings)
+pairs(LifeCycleSavings, panel = panel.smooth,
+      main = "LifeCycleSavings data")
+fm1 <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+summary(fm1)
 }
 \keyword{datasets}

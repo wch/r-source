@@ -19,6 +19,18 @@ loom corresponds to a fixed length of yarn.
 }
 \references{Tukey, J. W. (1977).  Exploratory Data Analysis.  Addison-Wesley.
 McNeil, D. (1977).  Interactive Data Analysis.  Wiley.
-
+}
+\examples{
+data(warpbreaks)
+summary(warpbreaks)
+opar <- par(mfrow = c(1,2), oma = c(0, 0, 1.1, 0))
+plot(breaks ~ tension, data = warpbreaks, col = "lightgray",
+     varwidth = TRUE, subset = wool == "A", main = "Wool A")
+plot(breaks ~ tension, data = warpbreaks, col = "lightgray",
+     varwidth = TRUE, subset = wool == "B", main = "Wool B")
+mtext("warpbreaks data", side = 3, outer = TRUE)
+par(opar)
+summary(fm1 <- lm(breaks ~ wool*tension, data = warpbreaks))
+anova(fm1)
 }
 \keyword{datasets}

@@ -44,7 +44,7 @@ static SEXP cumsum(SEXP x, SEXP s)
 static SEXP ccumsum(SEXP x, SEXP s)
 {
     int i;
-    complex sum;
+    Rcomplex sum;
     sum.r = 0;
     sum.i = 0;
     for (i = 0 ; i < length(x) ; i++) {
@@ -78,7 +78,7 @@ static SEXP cumprod(SEXP x, SEXP s)
 
 static SEXP ccumprod(SEXP x, SEXP s)
 {
-    complex prod, tmp;
+    Rcomplex prod, tmp;
     int i;
     prod.r = 1;
     prod.i = 0;

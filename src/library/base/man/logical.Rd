@@ -26,7 +26,8 @@ is.logical(x)
   Each element of the vector is equal to \code{FALSE}.
 
   \code{as.logical} attempts to coerce its argument to be of logical
-  type.
+  type.  For \code{\link{factor}}s, this uses the \code{\link{levels}}
+  (labels) and not the \code{\link{codes}}.
 
   \code{is.logical} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of logical type or not.

@@ -1,5 +1,5 @@
 \name{coefficients}
-\title{Extract Model Coefficents}
+\title{Extract Model Coefficients}
 \usage{
 coef(x, \dots)
 coefficients(x, \dots)
@@ -20,7 +20,7 @@ coefficients(x, \dots)
   Coefficients extracted from the model object \code{x}.
 }
 \description{
-  \code{coef} is a generic function which extracts model coefficents
+  \code{coef} is a generic function which extracts model coefficients
   from objects returned by modeling functions.  \code{coefficients} is
   an \emph{alias} (\code{\link{.Alias}}) for it.
 }

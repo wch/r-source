@@ -11,7 +11,7 @@ subdir = doc
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = KEYWORDS R.1 Rdconv.1 keyword-test.in Makefile.in
+DISTFILES = KEYWORDS KEYWORDS.db R.1 Rdconv.1 keyword-test.in Makefile.in
 SUBDIRS = html manual
 
 all docs: Makefile keyword-test R
