@@ -10,6 +10,8 @@ getPackageName <- function(where = topenv(parent.frame())) {
         env <- as.environment(where)
         if(identical(env, .GlobalEnv))
             pkg <- ".GlobalEnv"
+        else if(identical(env, .BaseNamespaceEnv))
+            pkg <- "base"
         else {
             if(is.numeric(where))
                 pkg <- search()[[where]]

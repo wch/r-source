@@ -30,32 +30,35 @@ setGeneric <-
         fdef <- getFunction(name, mustFind = FALSE)
     if(is.null(fdef) && is.function(useAsDefault))
         fdef <- useAsDefault
-    if(is(fdef, "genericFunction"))
+    ## Use the previous function definition to get the default
+    ## and to set the package if not supplied.
+    if(is(fdef, "genericFunction")) {
         prevDefault <- finalDefaultMethod(getMethods(fdef))
-    else if(is.function(fdef))
+        if(is.null(package))
+            package <- fdef@package
+    }
+    else if(is.function(fdef)) {
         prevDefault <- fdef
+        if(is.null(package))
+            package <- getPackageName(environment(fdef))
+    }
     else
         prevDefault <- NULL
     if(is.primitive(fdef)) ## get the pre-defined version
         fdef <- getGeneric(name)
     else if(is.function(fdef))
         body(fdef, envir = as.environment(where)) <- stdGenericBody
-    if(is.null(package)) {
-        if(is(fdef, "genericFunction"))
-            package <- fdef@package
-        else
-            package <- getPackageName(where)
-    }
     if(!is.null(def)) {
         if(is.primitive(def) || !is(def, "function"))
             stop("If the `def' argument is supplied, it must be a function that calls standardGeneric(\"",
                  name, "\") to dispatch methods.")
         fdef <- def
         if(is.null(genericFunction) && .NonstandardGenericTest(body(fdef), name, stdGenericBody))
-            genericFunction <- new("nonstandardGenericFunction")
-        if(is.null(package))
-            package <- getPackageName(where)
+            genericFunction <- new("nonstandardGenericFunction") # force this class for fdef
     }
+    if(is.null(package) || nchar(package) == 0)
+        ## either no previous def'n or failed to find its package name
+        package <- getPackageName(where)
     if(is.null(fdef))
         stop("Must supply a function skeleton, explicitly or via an existing function")
     if(!is(fdef, "genericFunction")) {
