@@ -1089,9 +1089,9 @@ SEXP do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != ENVSXP && TYPEOF(CAR(args)) != EXTPTRSXP)
-	errorcall(call, _("1st arg must be environment or external pointer"));
+	errorcall(call, _("first arg must be environment or external pointer"));
     if (TYPEOF(CADR(args)) != CLOSXP)
-	errorcall(call, _("2nd arg must be a function"));
+	errorcall(call, _("second arg must be a function"));
     
     R_RegisterFinalizer(CAR(args), CADR(args));
     return R_NilValue;
@@ -1911,7 +1911,7 @@ SEXP do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
 #else /* not _R_HAVE_TIMING_ */
 SEXP do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    error(_("gc.time is not implemented on this system"));
+    error(_("gc.time() is not implemented on this system"));
     return R_NilValue;		/* -Wall */
 }
 #endif /* not _R_HAVE_TIMING_ */

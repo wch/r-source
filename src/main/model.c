@@ -464,7 +464,7 @@ static SEXP PowerTerms(SEXP left, SEXP right)
     int i, ip;
     ip = asInteger(right);
     if (ip==NA_INTEGER || ip <= 1)
-	error(_("Invalid power in formula"));
+	error(_("invalid power in formula"));
     term = R_NilValue;		/* -Wall */
     PROTECT(left = EncodeVars(left));
     right = left;
@@ -1577,7 +1577,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isNewList(vars) || length(vars) < nVar)
 	errorcall(call, _("invalid model frame"));
     if (length(vars) == 0)
-	errorcall(call, _("don't know how many cases"));
+	errorcall(call, _("do not know how many cases"));
     n = nrows(VECTOR_ELT(vars, 0));
     rnames = getAttrib(vars, R_RowNamesSymbol);
 

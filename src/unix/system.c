@@ -186,10 +186,10 @@ int Rf_initialize_R(int ac, char **av)
 	    else {
 #ifdef HAVE_X11
 		snprintf(msg, 1024,
-			 _("WARNING: unknown gui `%s', using X11\n"), p);
+			 _("WARNING: unknown gui '%s', using X11\n"), p);
 #else
 		snprintf(msg, 1024,
-			 _("WARNING: unknown gui `%s', using none\n"), p);
+			 _("WARNING: unknown gui '%s', using none\n"), p);
 #endif
 		R_ShowMessage(msg);
 	    }
@@ -269,7 +269,7 @@ int Rf_initialize_R(int ac, char **av)
  */
     if (!R_Interactive && Rp->SaveAction != SA_SAVE && 
 	Rp->SaveAction != SA_NOSAVE)
-	R_Suicide(_("you must specify `--save', `--no-save' or `--vanilla'"));
+	R_Suicide(_("you must specify '--save', '--no-save' or '--vanilla'"));
 
     R_setupHistory();
     if (R_RestoreHistory)

@@ -206,7 +206,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 				 *av);
 		    else
 			sprintf(msg, 
-				_("WARNING: %s=%lu`%c': too large and ignored\n"),
+				_("WARNING: %s=%lu'%c': too large and ignored\n"),
 				*av, (unsigned long) value,
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
 		    R_ShowMessage(msg);
@@ -252,7 +252,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, _("WARNING: --vsize value is invalid: ignored\n"));
 		    else
-			sprintf(msg, _("WARNING: --vsize=%ld`%c': too large and ignored\n"),
+			sprintf(msg, _("WARNING: --vsize=%ld'%c': too large and ignored\n"),
 				value,
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
 		    R_ShowMessage(msg);
@@ -275,7 +275,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, _("WARNING: --nsize value is invalid: ignored\n"));
 		    else
-			sprintf(msg, _("WARNING: --nsize=%lu`%c': too large and ignored\n"),
+			sprintf(msg, _("WARNING: --nsize=%lu'%c': too large and ignored\n"),
 			    value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(msg);

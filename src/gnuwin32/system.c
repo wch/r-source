@@ -462,8 +462,8 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     /*
      *     nfile   = number of files
      *     file    = array of filenames
-     *     headers = the `headers' args of file.show. Printed before each file.
-     *     wtitle  = title for window: the `title' arg of file.show
+     *     headers = the 'headers' args of file.show. Printed before each file.
+     *     wtitle  = title for window: the 'title' arg of file.show
      *     del     = flag for whether files should be deleted after use
      *     pager   = pager to be used.
      */
@@ -861,7 +861,7 @@ int cmdlineoptions(int ac, char **av)
 		    if(ierr < 0)
 			sprintf(s, _("WARNING: --max-mem-size value is invalid: ignored\n"));
 		    else
-		    sprintf(s, _("WARNING: --max-mem-size=%lu`%c': too large and ignored\n"),
+		    sprintf(s, _("WARNING: --max-mem-size=%lu'%c': too large and ignored\n"),
 			    (unsigned long) value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(s);
@@ -919,7 +919,7 @@ int cmdlineoptions(int ac, char **av)
  */
     if (!R_Interactive && Rp->SaveAction != SA_SAVE && 
 	Rp->SaveAction != SA_NOSAVE)
-	R_Suicide(_("you must specify `--save', `--no-save' or `--vanilla'"));
+	R_Suicide(_("you must specify '--save', '--no-save' or '--vanilla'"));
 
     if (InThreadReadConsole &&
         (!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||

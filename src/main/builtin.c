@@ -521,7 +521,7 @@ SEXP lengthgets(SEXP x, R_len_t len)
     R_len_t lenx, i;
     SEXP rval, names, xnames, t;
     if (!isVector(x) && !isVectorizable(x))
-	error(_("can not set length of non-vector"));
+	error(_("cannot set length of non-vector"));
     lenx = length(x);
     if (lenx == len)
 	return (x);

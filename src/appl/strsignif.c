@@ -37,7 +37,7 @@
  *  BDR 2001-10-30 use R_alloc not Calloc as memory was not
  *  reclaimed on error (and there are many error exits).
  *
- *	type	"double" or "integer" (R - numeric `mode').
+ *	type	"double" or "integer" (R - numeric 'mode').
  *
  *	width	The total field width; width < 0 means to left justify
  *		the number in this field (equivalent to flag = "-").
@@ -120,7 +120,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	    for (i=0; i < nn; i++)
 		sprintf(result[i], form, wid, ((int *)x)[i]);
 	else
-	    error(_(".C(..): `type' must be \"integer\" for  \"d\"-format"));
+	    error(_(".C(..): 'type' must be \"integer\" for  \"d\"-format"));
     }
     else { /* --- floating point --- */
 	if (len_flag == 0)
@@ -212,6 +212,6 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 #endif
 		}
 	} else
-	    error(_(".C(..): `type' must be \"real\" for this format"));
+	    error(_(".C(..): 'type' must be \"real\" for this format"));
     }
 }

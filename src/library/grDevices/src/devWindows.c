@@ -1503,7 +1503,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
 	r.x += (btsize + 6);
 
 	MCHECK(bt = newtoolbutton(console_image, r, menuconsole));
-	MCHECK(addtooltip(bt, G_("Return focus to console")));
+	MCHECK(addtooltip(bt, G_("Return focus to Console")));
 	gsetcursor(bt, ArrowCursor);
 	setdata(bt, (void *) dd);
 	r.x += (btsize + 6);

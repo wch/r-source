@@ -389,7 +389,7 @@ static SEXP R_HashResize(SEXP table)
 
     /* Do some checking */
     if (TYPEOF(table) != VECSXP) {
-	error(_("1st arg (table) not of type VECSXP,  from R_HashResize"));
+	error(_("first arg (table) not of type VECSXP,  from R_HashResize"));
     }
 
     /* This may have to change.	 The growth rate should
@@ -448,7 +448,7 @@ static int R_HashSizeCheck(SEXP table)
 
     /* Do some checking */
     if (TYPEOF(table) != VECSXP){
-	error(_("1st arg (table) not of type VECSXP, R_HashSizeCheck"));
+	error(_("first arg (table) not of type VECSXP, R_HashSizeCheck"));
     }
     resize = 0; thresh_val = 0.85;
     if ((double)HASHPRI(table) > (double)HASHSIZE(table) * thresh_val)
@@ -476,7 +476,7 @@ static SEXP R_HashFrame(SEXP rho)
 
     /* Do some checking */
     if (TYPEOF(rho) != ENVSXP) {
-	error(_("1st arg (table) not of type ENVSXP, from R_HashVector2Hash"));
+	error(_("first arg (table) not of type ENVSXP, from R_HashVector2Hash"));
     }
     table = HASHTAB(rho);
     frame = FRAME(rho);

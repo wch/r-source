@@ -899,7 +899,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 46: return MATH1(gamma_cody);
 
     default:
-	errorcall(call, _("unimplemented real function (of 1 arg.)"));
+	errorcall(call, _("unimplemented real function (of 1 argument)"));
     }
     return s;			/* never used; to keep -Wall happy */
 }
@@ -1088,7 +1088,8 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 26: return Math2(args, psigamma);
 
     default:
-	errorcall(call, _("unimplemented real function of 2 numeric args"));
+	errorcall(call,
+		  _("unimplemented real function of %d numeric arguments"), 2);
     }
     return op;			/* never used; to keep -Wall happy */
 }
@@ -1113,7 +1114,7 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    return math2(CAR(args), CADR(args), atan2, call);
     default:
-	error(_("%d arguments passed to \"atan\" which requires 1 or 2"), n);
+	error(_("%d arguments passed to 'atan' which requires 1 or 2"), n);
     }
     return s;			/* never used; to keep -Wall happy */
 }
@@ -1147,13 +1148,13 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return math1(CAR(args), R_log, call);
     case 2:
 	if (length(CADR(args)) == 0)
-	    errorcall(call, _("illegal 2nd arg of length 0"));
+	    errorcall(call, _("invalid second argument of length 0"));
 	if (isComplex(CAR(args)) || isComplex(CDR(args)))
 	    return complex_math2(call, op, args, env);
 	else
 	    return math2(CAR(args), CADR(args), logbase, call);
     default:
-	error(_("%d arguments passed to \"log\" which requires 1 or 2"), n);
+	error(_("%d arguments passed to 'log' which requires 1 or 2"), n);
     }
     return s;			/* never used; to keep -Wall happy */
 }
@@ -1365,7 +1366,8 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     default:
-	errorcall(call, _("unimplemented real function of 3 numeric args"));
+	errorcall(call, 
+		  _("unimplemented real function of %d numeric arguments"), 3);
     }
     return op;			/* never used; to keep -Wall happy */
 } /* do_math3() */
@@ -1558,7 +1560,8 @@ SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
     case 11: return Math4_2(args, ptukey);
     case 12: return Math4_2(args, qtukey);
     default:
-	errorcall(call, _("unimplemented real function of 4 numeric args"));
+	errorcall(call,
+		  _("unimplemented real function of %d numeric arguments"), 4);
     }
     return op;			/* never used; to keep -Wall happy */
 }
@@ -1686,7 +1689,8 @@ SEXP do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
     case  3: return Math5(args, q...);
 #endif
     default:
-	errorcall(call, _("unimplemented real function of 5 numeric args"));
+	errorcall(call, 
+		  _("unimplemented real function of %d numeric args"), 5);
     }
     return op;			/* never used; to keep -Wall happy */
 } /* do_math5() */

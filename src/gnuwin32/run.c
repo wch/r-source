@@ -47,7 +47,7 @@ static char * expandcmd(char *cmd)
     for (q = p, d = 0; *q && ( d || !isspace(*q) ); q++)
       if (*q == '\"') d = d ? 0 : 1;
     if (d) {
-	strcpy(RunError, _("A \" is missing(expandcmd)"));
+	strcpy(RunError, _("A \" is missing (expandcmd)"));
 	return NULL;
     }
     c = *q;

@@ -290,7 +290,7 @@ static void SetupGrayScale()
 	d--;
     if (!res) {
 	/* Can't find a sensible grayscale, so revert to monochrome */
-	warning(_("can't set grayscale: reverting to monochrome"));
+	warning(_("cannot set grayscale: reverting to monochrome"));
 	model = MONOCHROME;
 	SetupMonochrome();
     }
