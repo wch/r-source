@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-03-11 08:05+0000\n"
-"PO-Revision-Date: 2005-03-10 09:52+0100\n"
+"PO-Revision-Date: 2005-03-11 18:23+0100\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -197,7 +197,7 @@ msgstr "falsches Argument"
 
 #: src/gnuwin32/extra.c:766
 msgid "don't be silly!: your machine has a 4Gb address limit"
-msgstr "Stell Dich nicht dumm!: Deine Kiste kann nur 4Gb addressieren"
+msgstr "Seien Sie nicht unrealistisch!: Ihr Computer kann nur 4Gb addressieren"
 
 #: src/gnuwin32/extra.c:769
 msgid "cannot decrease memory limit"
@@ -391,14 +391,12 @@ msgstr "Argument '%s' __ignoriert__\n"
 
 #: src/gnuwin32/system.c:940 src/unix/system.c:277
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
-msgstr "du musst '--save', '--nosave' oder '--vanilla' angeben"
+msgstr "Sie müssen '--save', '--nosave' oder '--vanilla' angeben"
 
 #: src/gnuwin32/system.c:945
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
-msgstr ""
-"kann keinen 'reader thread' erzeugen; du musst einige Systemresourcen "
-"freigeben"
+msgstr "kann keinen 'reader thread' erzeugen; Sie müssen einige Systemresourcen freigeben"
 
 #: src/include/Errormsg.h:31
 msgid "NaNs produced"
@@ -6464,7 +6462,7 @@ msgid ""
 msgstr ""
 "R ist freie Software und kommt OHNE JEGLICHE GARANTIE.\n"
 "Sie sind eingeladen, es unter bestimmten Bedingungen weiter zu verbreiten.\n"
-"Tippen Sie 'license()' or 'licence()' für Details dazu.\n"
+"Tippen Sie 'license()' oder 'licence()' für Details dazu.\n"
 "\n"
 
 #: src/main/version.c:37
