@@ -17,6 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> the only interpretation of char is ASCII */
 
 /* based on libxml2-2.4.10:
  * nanoftp.c: basic FTP client support

@@ -1,3 +1,6 @@
+/* <UTF8> 
+   Does byte-level handling in primitive_case, but only of ASCII chars
+*/
 
 #include <R.h>
 #include <Rdefines.h>

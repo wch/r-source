@@ -16,6 +16,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+/* <UTF8> Only does ASCII char comparisons */
+
 /* Functions for dynamically allocating arrays
 
    The Array structure contains pointers to arrays which are allocated

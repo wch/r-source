@@ -17,6 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> the only interpretation of char is ASCII */
+
 
 /* based on libxml2-2.3.6:
  * nanohttp.c: minimalist HTTP GET implementation to fetch external subsets.

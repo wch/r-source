@@ -1,3 +1,5 @@
+/* <UTF8> OK, provided the delimiters are ASCII */
+
 #include <R.h>
 #include "tools.h"
 

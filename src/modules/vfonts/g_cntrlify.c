@@ -4,6 +4,8 @@
    All references to "plotter" replaced with references to "GEDevDesc"
 */
 
+/* <UTF8-FIXME> This assumes single-byte encoding */
+
 /* _controlify() converts a "label" (i.e. a character string), which may
    contain troff-like escape sequences, into a string of unsigned shorts.
    The possible troff-like escape sequences are listed in g_cntrlify.h.

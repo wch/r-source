@@ -17,6 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> OK since this is intended to treat chars as byte streams */
+
 #include <R.h>
 #include "tools.h"
 #include "md5.h"

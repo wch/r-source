@@ -12,6 +12,10 @@
  * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  */
 
+/* <UTF8> chars are handled as whole strings.
+   They are passed from Fortran so had better be ASCII.
+ */
+
 /*
  *  Altered by B.D. Ripley to use F77_*, declare routines before use.
  *

@@ -19,10 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME> 
+/* <UTF8> 
    char here is mainly handled as a whole string.
    Does handle file names.
-   R_ExpandFileName_unix uses isalpha, which needs fixing.
    Chopping final \n is OK in UTF-8.
  */
 
@@ -89,13 +88,13 @@ static char newFileName[PATH_MAX];
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
 
-/* <UTF8-FIXME> */
+/* Only interpret inputs of the form ~ and ~/... */
 static char *R_ExpandFileName_unix(char *s, char *buff)
 {
     char *p;
 
     if(s[0] != '~') return s;
-    if(isalpha(s[1])) return s;
+    if(strlen(s) > 1 && s[1] != "/") return s;
     if(HaveHOME < 0) {
 	p = getenv("HOME");
 	if(p && strlen(p) && (strlen(p) < PATH_MAX)) {

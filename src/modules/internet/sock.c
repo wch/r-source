@@ -19,6 +19,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> chars are only handled as a whole */
+
 /* Simple sockets interface derived from the sockets UICI
    implementation in Appendix B of Practical UNIX Programming,
    K. A. Robbins and S. Robbins, Prentice Hall, 1996. */
