@@ -299,12 +299,23 @@ FUNTAB R_FunTab[] =
 {"pnchisq",	do_math3,	35,	11,	3,	PP_FUNCALL,	0},
 {"qnchisq",	do_math3,	36,	11,	3,	PP_FUNCALL,	0},
 
+{"dnt",		do_math3,	37,	11,	3,	PP_FUNCALL,	0},
+{"pnt",		do_math3,	38,	11,	3,	PP_FUNCALL,	0},
+{"qnt",		do_math3,	39,	11,	3,	PP_FUNCALL,	0},
 
 /* Mathematical Functions of Four Variables */
 
 {"dhyper",	do_math4,	1,	11,	4,	PP_FUNCALL,	0},
 {"phyper",	do_math4,	2,	11,	4,	PP_FUNCALL,	0},
 {"qhyper",	do_math4,	3,	11,	4,	PP_FUNCALL,	0},
+
+{"dnbeta",	do_math4,	4,	11,	4,	PP_FUNCALL,	0},
+{"pnbeta",	do_math4,	5,	11,	4,	PP_FUNCALL,	0},
+{"qnbeta",	do_math4,	6,	11,	4,	PP_FUNCALL,	0},
+
+{"dnf",		do_math4,	7,	11,	4,	PP_FUNCALL,	0},
+{"pnf",		do_math4,	8,	11,	4,	PP_FUNCALL,	0},
+{"qnf",		do_math4,	9,	11,	4,	PP_FUNCALL,	0},
 
 
 /* Random Numbers */

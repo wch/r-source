@@ -2,7 +2,7 @@
 \title{The F Distribution}
 \usage{
 df(x, n1, n2)
-pf(q, n1, n2)
+pf(q, n1, n2, ncp=0)
 qf(p, n1, n2)
 rf(n, n1, n2)
 }
@@ -12,7 +12,8 @@ rf(n, n1, n2)
 \alias{rf}
 \value{
   These functions provide information about the F distribution with
-  \code{n1} and \code{n2} degrees of freedom. 
+  \code{n1} and \code{n2} degrees of freedom (and optional non-centrality
+  parameter \code{ncp}). 
   \code{df} gives the density,
   \code{pf} gives the distribution function
   \code{qf} gives the quantile function

@@ -265,4 +265,25 @@ double	plogis(double, double, double);
 double	qlogis(double, double, double);
 double	rlogis(double, double);
 
+	/* Non-central Beta Distribution */
+
+double	dnbeta(double, double, double, double);
+double	pnbeta(double, double, double, double);
+double	qnbeta(double, double, double, double);
+double	rnbeta(double, double, double);
+
+	/* Non-central F Distribution */
+
+double	dnf(double, double, double, double);
+double	pnf(double, double, double, double);
+double	qnf(double, double, double, double);
+double	rnf(double, double, double);
+
+	/* Non-central Student t Distribution */
+
+double	dnt(double, double, double);
+double	pnt(double, double, double);
+double	qnt(double, double, double);
+double	rnt(double, double);
+
 #endif

@@ -2,7 +2,7 @@
 \title{The Beta Distribution}
 \usage{
 dbeta(x, a, b)
-pbeta(q, a, b)
+pbeta(q, a, b, ncp=0)
 qbeta(p, a, b)
 rbeta(n, a, b)
 }
@@ -18,7 +18,8 @@ rbeta(n, a, b)
 }
 \value{
 These functions provide information about the Beta distribution
-with parameters \code{a} and \code{b}.  \code{dbeta} gives the density,
+with parameters \code{a} and \code{b} (and optional non-centrality
+parameter \code{ncp}).  \code{dbeta} gives the density,
 \code{pbeta} the distribution function, \code{qbeta} the
 quantile function and \code{rbeta} generates random deviates.
 

@@ -21,7 +21,6 @@ OBJ=	\
 	df.o pf.o qf.o rf.o \
 	dt.o pt.o qt.o rt.o \
 	dchisq.o pchisq.o qchisq.o rchisq.o \
-	pnchisq.o qnchisq.o \
 	dbinom.o pbinom.o qbinom.o rbinom.o \
 	dcauchy.o pcauchy.o qcauchy.o rcauchy.o \
 	dexp.o pexp.o qexp.o rexp.o \
@@ -30,7 +29,9 @@ OBJ=	\
 	dnbinom.o pnbinom.o qnbinom.o rnbinom.o \
 	dpois.o ppois.o qpois.o rpois.o \
 	dweibull.o pweibull.o qweibull.o rweibull.o \
-	dlogis.o plogis.o qlogis.o rlogis.o
+	dlogis.o plogis.o qlogis.o rlogis.o \
+	pnchisq.o qnchisq.o \
+	pnbeta.o pnf.o pnt.o
 
 LIB=		../lib/libmath.a
 

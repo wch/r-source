@@ -28,12 +28,6 @@ save.plot(file)
   \code{x11} starts a graphics device driver for the X Window System
   (version 11).  This should be done automagically at start up time
   and can only be done on machines that run X.
-
-  \code{print.plot()} prints the plot using the \code{printcmd}
-  command.  \code{save.plot("fig.ps")} saves an encapsulated postscript
-  version of the plot in the file "fig.ps" (attempting to be pretty
-  wysiwyg).  Both make use of the \code{paper} and \code{orientation}
-  arguments.
 }
 \seealso{
   \code{\link{postscript}}, \code{\link{macintosh}},

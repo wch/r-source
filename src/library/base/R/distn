@@ -41,7 +41,10 @@ rweibull <- function(n, shape, scale=1) .Internal(rweibull(n, shape, scale))
 
 ##--- Argument names taken from  ../man/Beta :
 dbeta <- function(x, a, b) .Internal(dbeta(x, a, b))
-pbeta <- function(q, a, b) .Internal(pbeta(q, a, b))
+pbeta <- function(q, a, b, ncp=0) {
+if(missing(ncp)) .Internal(pbeta(q, a, b))
+else .Internal(pnbeta(q, a, b, ncp))
+}
 qbeta <- function(p, a, b) .Internal(qbeta(p, a, b))
 rbeta <- function(n, a, b) .Internal(rbeta(n, a, b))
 ##--- Argument names taken from  ../man/Binomial :
@@ -51,7 +54,10 @@ qbinom <- function(prob, n, p) .Internal(qbinom(prob, n, p))
 rbinom <- function(nobs, n, p) .Internal(rbinom(nobs, n, p))
 ##--- Argument names taken from  ../man/[N]Chisquare :
 dchisq <- function(x, df) .Internal(dchisq(x, df))
-pchisq <- function(q, df) .Internal(pchisq(q, df))
+pchisq <- function(q, df, ncp=0) {
+if(missing(ncp)) .Internal(pchisq(q, df))
+else .Internal(pnchisq(q, df, ncp))
+}
 qchisq <- function(p, df) .Internal(qchisq(p, df))
 rchisq <- function(n, df) .Internal(rchisq(n, df))
 dnchisq <- function(x, df, lambda) .Internal(dnchisq(x, df, lambda))
@@ -60,7 +66,10 @@ qnchisq <- function(p, df, lambda) .Internal(qnchisq(p, df, lambda))
 rnchisq <- function(n, df, lambda) .Internal(rnchisq(n, df, lambda))
 ##--- Argument names taken from  ../man/F :
 df <- function(x, n1, n2) .Internal(df(x, n1, n2))
-pf <- function(q, n1, n2) .Internal(pf(q, n1, n2))
+pf <- function(q, n1, n2, ncp=0) {
+if(missing(ncp)) .Internal(pf(q, n1, n2))
+else .Internal(pnf(q, n1, n2, ncp))
+}
 qf <- function(p, n1, n2) .Internal(qf(p, n1, n2))
 rf <- function(n, n1, n2) .Internal(rf(n, n1, n2))
 ##--- Argument names taken from  ../man/Geometric :
@@ -85,6 +94,9 @@ qpois <- function(p, lambda) .Internal(qpois(p, lambda))
 rpois <- function(n, lambda) .Internal(rpois(n, lambda))
 ##--- Argument names taken from  ../man/T
 dt <- function(x, df) .Internal(dt(x, df))
-pt <- function(q, df) .Internal(pt(q, df))
+pt <- function(q, df, ncp) {
+if(missing(ncp)) .Internal(pt(q, df))
+else .Internal(pnt(q, df, ncp))
+}
 qt <- function(p, df) .Internal(qt(p, df))
 rt <- function(n, df) .Internal(rt(n, df))

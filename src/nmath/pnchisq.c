@@ -1,59 +1,96 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  algorithm as 275 appl.statist. (1992), vol.41, no.2
+ *  computes the noncentral chi-square distribution function with
+ *  positive real degrees of freedom f and nonnegative noncentrality
+ *  parameter theta
  */
 
 #include "Mathlib.h"
 
-double pnchisq(double x, double n, double lambda)
-{
-	double df, df1, val, lambda2, c, t, term;
-	double igamma();
-	double acc = 1.0e-12;
+#define TRUE	1
+#define FALSE	0
 
-	n = floor(n + 0.5);
+double pnchisq(double x, double f, double theta)
+{
+    double ans, lam, n, u, v, x2, f2, t, term, bound;
+    int flag;
+
+    static double errmax = 1e-12;
+    static double zero = 0;
+    static double one = 1;
+    static double two = 2;
+    static int itrmax = 100;
+
 #ifdef IEEE_754
-	if (ISNAN(x) || ISNAN(n) || ISNAN(lambda))
-		return x + n + lambda;
-	if (!finite(n) || !finite(lambda)) {
-		ML_ERROR(ME_DOMAIN);
-		return ML_NAN;
-	}
+    if (ISNAN(x) || ISNAN(f) || ISNAN(theta))
+	return x + f + theta;
+    if (!FINITE(f) || !FINITE(theta)) {
+	ML_ERROR(ME_DOMAIN);
+	return ML_NAN;
+    }
 #endif
-	if (n <= 0 || lambda < 0) {
-		ML_ERROR(ME_DOMAIN);
-		return ML_NAN;
+
+    if (f < zero && theta < zero) {
+	ML_ERROR(ME_DOMAIN);
+	return ML_NAN;
+    }
+    if (x <= zero)
+	return 0;
+#ifdef IEEE_754
+    if(!FINITE(x))
+	return 1;
+#endif
+
+    lam = theta / two;
+
+    /* evaluate the first term */
+
+    n = one;
+    u = exp(-lam);
+    v = u;
+    x2 = x / two;
+    f2 = f / two;
+    t = pow(x2, f2) * exp(-x2) / exp(lgamma((f2 + one)));
+
+    /* there is no need to test ifault si */
+    /* already been checked */
+
+    term = v * t;
+    ans = term;
+
+    /* check if (f+2n) is greater than x */
+
+    flag = FALSE;
+    for(;;) {
+	if (f + two * n - x > zero) {
+
+	    /* find the error bound and */
+	    /* check for convergence */
+
+	    flag = TRUE;
+	    goto L10;
 	}
-	if (x <= 0)
-		return 0;
-	df = n;
-	df1 = 0.5 * df;
-	x = 0.5 * x;
-	val = pgamma(x, df1, 1.0);
-	lambda2 = 0.5 * lambda;
-	c = 1;
-	t = 0;
-	do {
-		t = t + 1;
-		c = c * lambda2 / t;
-		df1 = df1 + 1.0;
-		term = c * pgamma(x, df1, 1.0);
-		val = val + term;
+	for(;;) {
+
+	    /* evaluate the next term of the */
+	    /* expansion and then the partial sum */
+
+	    u = u * lam / n;
+	    v = v + u;
+	    t = t * x / (f + two * n);
+	    term = v * t;
+	    ans = ans + term;
+	    n = n + one;
+	    if (!flag)
+		break;
+	  L10:
+	    bound = t * x / (f + two * n - x);
+	    if (bound <= errmax || (int)n > itrmax)
+		goto L20;
 	}
-	while (term >= acc);
-	return val * exp(-lambda2);
+    }
+  L20:
+    if (bound > errmax)
+	ML_ERROR(ME_PRECISION);
+    return ans;
 }

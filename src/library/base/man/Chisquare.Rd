@@ -2,7 +2,7 @@
 \title{The Chi-Square Distribution}
 \usage{
 dchisq(x, df)
-pchisq(q, df)
+pchisq(q, df, ncp=0)
 qchisq(p, df)
 rchisq(n, df)
 }
@@ -11,16 +11,18 @@ rchisq(n, df)
 \alias{qchisq}
 \alias{rchisq}
 \value{
-These functions provide information about the chi-square distribution
-with \code{df} degrees of freedom.  \code{dchisq} gives the density,
-\code{pchisq} gives the distribution function \code{qchisq} gives
-the quantile function and \code{rchisq} generates random deviates.
+    These functions provide information about the chi-square distribution
+    with \code{df} degrees of freedom (and optional non-centrality parameter
+    \code{ncp}).  \code{dchisq} gives the density,
+    \code{pchisq} gives the distribution function \code{qchisq} gives
+    the quantile function and \code{rchisq} generates random deviates.
 
-The chi-square distribution with \code{df} \eqn{= n} degrees of freedom has density
-\deqn{f(x) =
-\frac{1}{{2}^{n/2} \Gamma (n/2)}
-{x}^{n/2-1} {e}^{-x/2}}{f(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
-for \eqn{x > 0}.
+    The chi-square distribution with \code{df} \eqn{= n} degrees of freedom
+    has density
+    \deqn{f(x) =
+    \frac{1}{{2}^{n/2} \Gamma (n/2)}
+    {x}^{n/2-1} {e}^{-x/2}}{f(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
+    for \eqn{x > 0}.
 }
 \seealso{
 \code{\link{dnchisq}}, \code{\link{dgamma}}, \code{\link{dexp}}.
