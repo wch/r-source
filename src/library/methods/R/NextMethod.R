@@ -1,4 +1,4 @@
-.findNextMethod <- function(method, f = "<unknown>", mlist, optional = FALSE, excluded) {
+.findNextMethod <- function(method, f = "<unknown>", mlist, optional = FALSE, excluded, envir) {
     ## find the next method for dispatch, and return that method
     ## If no next method can be found, returns NULL or error
     ##
@@ -9,11 +9,14 @@
         stop("NextMethod not defined because the the current method is not a MethodDefinition object")
     ## remove all cached methods
     mlist@allMethods <- list()
-    ## delete the excluded methods
-    for(signature in excluded)
-        mlist <- insertMethod(mlist, as.character(signature), names(signature), NULL, FALSE)
+    ## delete the excluded method(s)
+    for(signature in excluded) {
+        if(!is(signature, "signature"))
+            stop("expected a list of signature objects, got \"", class(signature), "\"")
+        mlist <- insertMethod(mlist, signature, names(signature), NULL, FALSE)
+    }
     ## and now redo method selection 
-    value <- selectMethod(f, method@target, optional, TRUE, mlist)
+    value <- selectMethod(f, envir, optional, TRUE, mlist)
     value
 }
 
@@ -40,7 +43,7 @@ callNextMethod <- function(...) {
                 stop("call to NextMethod doesn't appear to be in a method or NextMethod context")
         }
         if(is(method, "MethodDefinition")) {
-            newMethod <- findNextMethod(method, f, getMethods(f))
+            newMethod <- findNextMethod(method, f, getMethods(f), envir=envir)
             ## cache the method with the nextMethod included,
             ## so later calls will load this information.  But can't do this
             ## if this call was from a next method, because dispatch may be
@@ -55,12 +58,13 @@ callNextMethod <- function(...) {
     }
     if(nargs()>0)
         eval(substitute(.nextMethod(...)), envir)
-    else 
+    else {
+        call <- match.call(if(is.primitive(method)) get(".Method", envir = envir)
+                   else method, sys.call(-1), expand.dots = FALSE)
         .Call("R_nextMethodCall",
-              match.call(
-                   if(is.primitive(method)) get(".Method", envir = envir)
-                   else method, sys.call(-1)),
+              call,
               envir, PACKAGE="methods")
+    }
 }
 
 loadMethod <- function(method, fname, envir)

@@ -33,8 +33,16 @@
                             group = "list", valueClass = "character",
                             signature = "character", default = "MethodsList",
                             skeleton = "call"))
+    setClass("nonstandardGeneric", # virtual class to mark special generic/group generic
+             sealed = TRUE, where = envir)
+    setClass("nonstandardGenericFunction",
+             representation("genericFunction", "nonstandardGeneric"),
+             sealed = TRUE, where = envir)
     setClass("groupGenericFunction",
              representation("genericFunction", groupMembers = "list"),
+             sealed = TRUE, where = envir)
+    setClass("nonstandardGroupGenericFunction",
+             representation("groupGenericFunction", "nonstandardGeneric"),
              sealed = TRUE, where = envir)
     setClass("ObjectsWithPackage", representation("character", package = "character"),
              sealed = TRUE, where = envir)
@@ -80,18 +88,18 @@
                   assign(".nextMethod", method@nextMethod, envir = envir)
                   method
               }, where = envir)
-    setGeneric("findNextMethod", function(method, f = "<unknown>", mlist, optional = FALSE)
+    setGeneric("findNextMethod", function(method, f = "<unknown>", mlist, optional = FALSE, envir)
                standardGeneric("findNextMethod"), where = envir)
     setMethod("findNextMethod", "MethodDefinition",
-              function(method, f, mlist, optional) {
-                  value <- .findNextMethod(method, f, mlist, optional, method@defined)
+              function(method, f, mlist, optional, envir) {
+                  value <- .findNextMethod(method, f, mlist, optional, list(method@defined), envir)
                   new("MethodWithNext", method, nextMethod = value,
                       excluded = list(method@defined))
               }, where = envir)
     setMethod("findNextMethod", "MethodWithNext",
-              function(method, f, mlist, optional) {
+              function(method, f, mlist, optional, envir) {
                   excluded <- c(method@excluded, list(method@defined))
-                  value <- .findNextMethod(method, f, mlist, optional, excluded)
+                  value <- .findNextMethod(method, f, mlist, optional, excluded, envir)
                   new("MethodWithNext", method, nextMethod = value,
                       excluded = excluded)
               }, where = envir)
