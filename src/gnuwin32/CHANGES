@@ -23,6 +23,9 @@ packages index) when it is started up.  link.html.help() works better
 when R_LIBS omits the drive, and uses relative links for the main
 library, so R installations can be relocated in the file system.
 
+The background colour of the GUI preferences editor and the
+select.list() popup is now taken from the Windows colour scheme.
+
 Rcmd INSTALL now rejects invalid options for --docs (rather than
 ignoring them), and checks for the R version in the DESCRIPTION file
 exactly the same way as Rcmd check (so with fewer spurious messages).
