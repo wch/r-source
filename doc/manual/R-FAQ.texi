@@ -424,26 +424,26 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-12-23:
+@c Linux binaries as of 2002-06-02:
 @c
-@c debian   2.2 i386  1.3.1  Dirk Eddelbuettel <edd@debian.org>
-@c          3.0 i386  1.4.1  Dirk Eddelbuettel <edd@debian.org>
-@c linuxppc 5.0 ppc   1.4.1  Alex Buerkle <buerkla@uwec.edu>
+@c debian   2.2 i386  1.5.0  Douglas Bates <bates@stat.wisc.edu>
+@c          3.0 i386  1.5.0  Dirk Eddelbuettel <edd@debian.org>
+@c linuxppc 5.0 ppc   1.5.0  Alex Buerkle <buerkla@uwec.edu>
 @c mandrake 8.1 i386  1.5.0  Michele Alzetta <mikalzet@libero.it>
 @c          8.2 i386  1.5.0  Michele Alzetta <mikalzet@libero.it>
-@c redhat   6.x i386  1.4.1  Stephen Eglen <stephen@gnu.org>
-@c          7.x alpha 1.4.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.4.1  Martyn Plummer <plummer@iarc.fr>
-@c          7.2 i386  1.5.0  Martyn Plummer <plummer@iarc.fr>
+@c redhat   6.x i386  1.5.0  Stephen Eglen <stephen@gnu.org>xsx1
+@c          7.x alpha 1.5.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.5.0  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.2 i386  1.3.0  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 potato/woody packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
-i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
-and Naoki Takebayashi, respectively), SuSE 7.2 i386 packages by Albrecht
-Gebhardt, Mandrake 8.1 and 8.2 i386 packages by Michele Alzetta, and
-LinuxPPC 5.0 RPMs by Alex Buerkle.
+distribution and maintained by Doug Bates and Dirk Eddelbuettel,
+respectively), Red Hat 6.x i386, 7.x i386 and 7.x alpha packages
+(maintained by Stephen Eglen, Martyn Plummer and Naoki Takebayashi,
+respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt, Mandrake 8.1
+and 8.2 i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs by Alex
+Buerkle.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
