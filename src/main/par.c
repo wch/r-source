@@ -984,15 +984,6 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    if (NoDevices()) {
-	SEXP defdev = GetOption(install("device"), R_NilValue);
-	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	}
-	else errorcall(call, "No active or default device");
-	eval(defdev, R_GlobalEnv);
-	UNPROTECT(1);
-    }
     dd = CurrentDevice();
     new_spec = 0;
     args = CAR(args);
@@ -1048,17 +1039,7 @@ SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
     int nreadonly;
 
     checkArity(op, args);
-    /* need a device open: called from par() which would open a
-       device later, so do it now */
-    if (NoDevices()) {
-	SEXP defdev = GetOption(install("device"), R_NilValue);
-	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	}
-	else errorcall(call, "No active or default device");
-	eval(defdev, R_GlobalEnv);
-	UNPROTECT(1);
-    }
+
     dd = GEcurrentDevice();
     canChangeGamma = dd->dev->canChangeGamma;
 
@@ -1103,17 +1084,8 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP originalArgs = args;
     DevDesc *dd;
 
-    if (NoDevices()) {
-	SEXP defdev = GetOption(install("device"), R_NilValue);
-	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	}
-	else errorcall(call, "No active or default device");
-	eval(defdev, R_GlobalEnv);
-	UNPROTECT(1);
-    }
-
     checkArity(op, args);
+
     dd = CurrentDevice();
 
     /* num.rows: */

@@ -1748,20 +1748,6 @@ DevDesc *GNewPlot(Rboolean recording)
 {
     DevDesc *dd;
 
-    /* If there are no active devices
-     * check the options for a "default device".
-     * If there is one, start it up. */
-
-    if (NoDevices()) {
-	SEXP defdev = GetOption(install("device"), R_NilValue);
-	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	}
-	else error("No active or default device");
-	eval(defdev, R_GlobalEnv);
-	UNPROTECT(1);
-    }
-
     /* Restore Default Parameters */
 
     dd = CurrentDevice();
@@ -4347,6 +4333,18 @@ int NumDevices(void)
 
 DevDesc* CurrentDevice(void)
 {
+    /* If there are no active devices
+     * check the options for a "default device".
+     * If there is one, start it up. */
+    if (NoDevices()) {
+	SEXP defdev = GetOption(install("device"), R_NilValue);
+	if (isString(defdev) && length(defdev) > 0) 
+	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
+	else 
+	    error("No active or default device");
+	eval(defdev, R_GlobalEnv);
+	UNPROTECT(1);
+    }
     return R_Devices[R_CurrentDevice];
 }
 
