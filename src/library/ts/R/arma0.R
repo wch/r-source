@@ -43,7 +43,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     class(xreg) <- NULL
     if(include.mean && (nd == 0)) {
         if(is.matrix(xreg) && is.null(colnames(xreg)))
-            colnames(x) <- paste("xreg", 1:ncxreg, sep = "")
+            colnames(xreg) <- paste("xreg", 1:ncxreg, sep = "")
         xreg <- cbind(intercept = rep(1, n), xreg = xreg)
         ncxreg <- ncxreg + 1
     }
@@ -59,8 +59,10 @@ arima0 <- function(x, order = c(0, 0, 0),
         if(method == "CSS-ML") method <- "ML"
     }
     storage.mode(x) <- storage.mode(xreg) <- "double"
+    if(method == "CSS") transform.pars <- 0
     G <- .Call("setup_starma", as.integer(arma), x, n.used, xreg,
-               ncxreg, delta, transform.pars > 0, PACKAGE = "ts")
+               ncxreg, delta, transform.pars > 0,
+               ncond - (n - n.used), PACKAGE = "ts")
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
     .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
     init <- rep(0, sum(arma[1:4]))
@@ -96,6 +98,7 @@ arima0 <- function(x, order = c(0, 0, 0),
                      control = list(reltol = 100*.Machine$double.eps))
         coef <- res$par
     }
+    arma0f(coef)  # reset pars
     sigma2 <- .Call("get_s2", G, PACKAGE = "ts")
     resid <- .Call("get_resid", G, PACKAGE = "ts")
     tsp(resid) <- xtsp
@@ -153,7 +156,7 @@ print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
     else
         cat("\nsigma^2 estimated as ",
             format(x$sigma2, digits = digits),
-            ":  half log mean square = ", format(round(x$loglik,2)),
+            ": part log likelihood = ", format(round(x$loglik,2)),
             "\n", sep="")
     invisible(x)
 }
@@ -196,7 +199,7 @@ predict.arima0 <-
     }
     storage.mode(data) <- "double"
     G <- .Call("setup_starma", as.integer(arma), data, n, rep(0, n),
-               0, -1, 0, 0, PACKAGE = "ts")
+               0, -1, 0, 0, 0, PACKAGE = "ts")
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
     .Call("Starma_method", G, TRUE, PACKAGE = "ts")
     .Call("arma0fa", G, as.double(coefs), PACKAGE = "ts")

@@ -39,7 +39,8 @@ arima0.diag(fit, gof.lag = 10)
   \item{transform.pars}{If greater than 0, the ARMA parameters are
     transformed to ensure that they remain in the region of
     invertibility.  If equal to 2, the optimization is rerun on
-    the original scale to find the Hessian.}
+    the original scale to find the Hessian.  Not used for \code{method =
+    "CSS"}.}
 
   \item{fixed}{optional numeric vector of the same length as the total
     number of parameters.  If supplied, only non-\code{NA} entries in

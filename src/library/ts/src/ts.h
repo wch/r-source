@@ -53,7 +53,7 @@ F77_SUB(stl)(double *y, int *n, int *np, int *ns,
 
 typedef struct
 {
-    int p, q, r, np, nrbar, n, m, trans, method;
+    int p, q, r, np, nrbar, n, ncond, m, trans, method;
     int mp, mq, msp, msq, ns;
     double delta, s2;
     double *params, *phi, *theta, *a, *P, *V;
@@ -68,7 +68,7 @@ void forkal(Starma G, int id, int il, double *delta, double *y,
 	    double *amse, int *ifault);
 
 SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm, 
-		  SEXP dt, SEXP ptrans);
+		  SEXP dt, SEXP ptrans, SEXP sncond);
 SEXP free_starma(SEXP pG);
 SEXP set_trans(SEXP pG, SEXP ptrans);
 SEXP arma0fa(SEXP pG, SEXP inparams);

@@ -77,7 +77,7 @@ static SEXP Starma_tag;
     G = (Starma) R_ExternalPtrAddr(pG)
 
 SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm,
-		  SEXP dt, SEXP ptrans)
+		  SEXP dt, SEXP ptrans, SEXP sncond)
 {
     Starma G;
     int i, n, m, ip, iq, ir, np;
@@ -90,6 +90,7 @@ SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm,
     G->msq = INTEGER(na)[3];
     G->ns = INTEGER(na)[4];
     G->n = n = asInteger(pn);
+    G->ncond = asInteger(sncond);
     G->m = m = asInteger(pm);
     G->params = Calloc(G->mp + G->mq + G->msp + G->msq + G->m, double);
     G->p = ip = G->ns*G->msp + G->mp;
@@ -201,12 +202,12 @@ SEXP arma0fa(SEXP pG, SEXP inparams)
     if(G->method == 1) {
 	int p = G->mp + G->ns * G->msp, q = G->mq + G->ns * G->msq, nu = 0;
 	ssq = 0.0;
-	for(i = 0; i < p; i++) G->resid[i] = 0.0;
-	for(i = p; i < G->n; i++) {
+	for(i = 0; i < G->ncond; i++) G->resid[i] = 0.0;
+	for(i = G->ncond; i < G->n; i++) {
 	    tmp = G->w[i];
 	    for(j = 0; j < p; j++)
 		tmp -= G->phi[j] * G->w[i - j - 1];
-	    for(j = 0; j < min(i, q); j++)
+	    for(j = 0; j < min(i - G->ncond, q); j++)
 		tmp -= G->theta[j] * G->resid[i - j - 1];
 	    G->resid[i] = tmp;
 	    if(!ISNAN(tmp)) {
