@@ -5959,8 +5959,6 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->fig[3] = Rf_dpSavedptr(dd)->fig[3];
     Rf_dpptr(dd)->fin[0] = Rf_dpSavedptr(dd)->fin[0];
     Rf_dpptr(dd)->fin[1] = Rf_dpSavedptr(dd)->fin[1];
-    Rf_dpptr(dd)->fin[2] = Rf_dpSavedptr(dd)->fin[2];
-    Rf_dpptr(dd)->fin[3] = Rf_dpSavedptr(dd)->fin[3];
     Rf_dpptr(dd)->fUnits = Rf_dpSavedptr(dd)->fUnits;
     Rf_dpptr(dd)->defaultFigure = Rf_dpSavedptr(dd)->defaultFigure;
     Rf_dpptr(dd)->mar[0] = Rf_dpSavedptr(dd)->mar[0];
@@ -6013,8 +6011,6 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->plt[3] = Rf_dpSavedptr(dd)->plt[3];
     Rf_dpptr(dd)->pin[0] = Rf_dpSavedptr(dd)->pin[0];
     Rf_dpptr(dd)->pin[1] = Rf_dpSavedptr(dd)->pin[1];
-    Rf_dpptr(dd)->pin[2] = Rf_dpSavedptr(dd)->pin[2];
-    Rf_dpptr(dd)->pin[3] = Rf_dpSavedptr(dd)->pin[3];
     Rf_dpptr(dd)->pUnits = Rf_dpSavedptr(dd)->pUnits;
     Rf_dpptr(dd)->defaultPlot = Rf_dpSavedptr(dd)->defaultPlot;
     Rf_dpptr(dd)->pty = Rf_dpSavedptr(dd)->pty;
