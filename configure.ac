@@ -212,7 +212,7 @@ fi],
 ## Aqua.
 AC_ARG_WITH([aqua],
 [AC_HELP_STRING([--with-aqua],
-                [use Aqua (if available) @<:@no@:>@])],
+                [use Aqua (if available) (experimental) @<:@no@:>@])],
 [want_aqua=yes])
 
 ## Tcl/Tk.

@@ -35,6 +35,10 @@
    */
 #undef HAVE_ALLOCA_H
 
+/* Define if you have the Aqua headers and libraries, and want the Aqua GUI to
+   be built. */
+#undef HAVE_AQUA
+
 /* Define to 1 if you have the <arpa/inet.h> header file. */
 #undef HAVE_ARPA_INET_H
 
@@ -149,8 +153,8 @@
    problem with getting the prototype of strptime(). */
 #undef HAVE_GLIBC2
 
-/* Define if the GNOME headers and libraries are available, and want the GNOME
-   GUI to be built. */
+/* Define if you have the GNOME headers and libraries, and want the GNOME GUI
+   to be built. */
 #undef HAVE_GNOME
 
 /* Define to 1 if you have the <grp.h> header file. */
