@@ -23,6 +23,7 @@
 #include "Mathlib.h"
 #include "Graphics.h"
 #include "Defn.h"
+
 #ifdef max
 #undef max
 #endif
@@ -37,7 +38,7 @@ static double max(double x, double y)
     else return y;
 }
 
-/* Determine match between symbol name and string. */
+/* Determine a match between symbol name and string. */
 
 static int symbolMatch(SEXP expr, char *aString)
 {
@@ -124,78 +125,163 @@ static struct {
     char *name;
     int code;
 }
-GreekTable[] = {
+SymbolTable[] = {
+    "Alpha",          65,    /* Upper Case Greek Characters */
+    "Beta",           66,
+    "Chi",            67,
+    "Delta",          68,
+    "Epsilon",        69,
+    "Phi",            70,
+    "Gamma",          71,
+    "Eta",            72,
+    "Iota",           73,
+    "Phi1",           74,
+    "Kappa",          75,
+    "Lambda",         76,
+    "Mu",             77,
+    "Nu",             78,
+    "Omicron",        79,
+    "Pi",             80,
+    "Theta",          81,
+    "Rho",            82,
+    "Sigma",          83,
+    "Tau",            84,
+    "Upsilon",        85,
+    "sigma1",         86,
+    "Omega",          87,
+    "Xi",             88,
+    "Psi",            89,
+    "Zeta",           90,
 
-    "Alpha",    65,
-    "Beta",     66,
-    "Chi",      67,
-    "Delta",    68,
-    "Epsilon",  69,
-    "Phi",      70,
-    "Gamma",    71,
-    "Eta",      72,
-    "Iota",     73,
-    "Phi1",     74,
-    "Kappa",    75,
-    "Lambda",   76,
-    "Mu",       77,
-    "Nu",       78,
-    "Omicron",  79,
-    "Pi",       80,
-    "Theta",    81,
-    "Rho",      82,
-    "Sigma",    83,
-    "Tau",      84,
-    "Upsilon",  85,
-    "sigma1",   86,
-    "Omega",    87,
-    "Xi",       88,
-    "Psi",      89,
-    "Zeta",     90,
+    "alpha",          97,    /* Lower Case Greek Characters */
+    "beta",           98,
+    "chi",            99,
+    "delta",         100,
+    "epsilon",       101,
+    "phi",           102,
+    "gamma",         103,
+    "eta",           104,
+    "iota",          105,
+    "phi1",          106,
+    "kappa",         107,
+    "lambda",        108,
+    "mu",            109,
+    "nu",            110,
+    "omicron",       111,
+    "pi",            112,
+    "theta",         113,
+    "rho",           114,
+    "sigma",         115,
+    "tau",           116,
+    "upsilon",       117,
+    "omega1",        118,
+    "omega",         119,
+    "xi",            120,
+    "psi",           121,
+    "zeta",          122,
 
-    "alpha",    97,
-    "beta",     98,
-    "chi",      99,
-    "delta",   100,
-    "epsilon", 101,
-    "phi",     102,
-    "gamma",   103,
-    "eta",     104,
-    "iota",    105,
-    "phi1",    106,
-    "kappa",   107,
-    "lambda",  108,
-    "mu",      109,
-    "nu",      110,
-    "omicron", 111,
-    "pi",      112,
-    "theta",   113,
-    "rho",     114,
-    "sigma",   115,
-    "tau",     116,
-    "upsilon", 117,
-    "omega1",  118,
-    "omega",   119,
-    "xi",      120,
-    "psi",     121,
-    "zeta",    122,
+    "universal",      34,    /* Miscellaneous Special Characters */
+    "existential",    36,
+    "therefore",      92,
+    "perpendicular",  94,
+    "minute",        162,
+    "infinity",      165,
+    "club",          167,
+    "diamond",       168,
+    "heart",         169,
+    "spade",         170,
+    "degree",        176,
+    "second",        178,
+    "partialdiff",   182,
+    "bullet",        183,
+    "ellipsis",      188,
+    "aleph",         192,
+    "Ifraktur",      193,
+    "Rfraktur",      194,
+    "weierstrass",   195,
+    "emptyset",      198,
+    "angle",         208,
+    "gradient",      209,
 
-    NULL,      0,
+    NULL,              0,
 };
 
-static int greekAscii(SEXP expr)
+static int symbolAscii(SEXP expr)
 {
     int i;
-    for (i = 0; GreekTable[i].code; i++)
-	if (symbolMatch(expr, GreekTable[i].name))
-	    return GreekTable[i].code;
+    for (i = 0; SymbolTable[i].code; i++)
+	if (symbolMatch(expr, SymbolTable[i].name))
+	    return SymbolTable[i].code;
     return 0;
 }
 
-static int relAscii()
-{
-    return 61;
+
+static struct {
+    char *name;
+    int code;
 }
+RelationTable[] = {
+    "<",                 60,    /* Binary Relationships */
+    "==",                61,
+    ">",                 62,
+    "%=~%",              64,
+    "!=",               185,
+    "<=",               163,
+    "%+-%",             177,
+    ">=",               179,
+    "%*%",              180,
+    "%/%",              184,
+    "%==%",             186,
+    "%~~%",             187,
+    "&",                217,
+    "&&",               217,
+    "|",                218,
+    "||",               218,
+
+    "%<->%",            171,    /* Arrows */
+    "%<-%",             172,
+    "%arrowup%",        173,
+    "%->%",             174,
+    "%arrowdown%",      175,
+    "%<=>%",            219,
+    "%<=%",             220,
+    "%arrowdblup%",     221,
+    "%=>%",             222,
+    "%arrowdbldown%",   223,
+
+    "%congruent%",       64,    /* Long (PostScript) Names */
+    "%plusminus%",      177,
+    "%multiply%",       180,
+    "%proportional%",   181,
+    "%divide%",         184,
+    "%equivalence%",    186,
+    "%approxequal%",    187,
+    "%intersection%",   199,
+    "%union%",          200,
+    "%propersuperset%", 201,
+    "%reflexsuperset%", 202,
+    "%notsubset%",      203,
+    "%propersubset%",   204,
+    "%reflexsubset%",   205,
+    "%element%",        206,
+    "%notelement%",     207,
+    "logicaland%",      217,
+    "logicalor%",       218,
+
+    NULL,                0,
+};
+
+
+/* Added argument - ihaka */
+static int relAscii(SEXP expr)
+{
+    int i;
+    for (i = 0; RelationTable[i].code; i++)
+	if (symbolMatch(expr, RelationTable[i].name))
+	    return RelationTable[i].code;
+    return 0;
+}
+
 
 /* Initialisation code for mathematical notation. */
 
@@ -204,26 +290,6 @@ static double scriptScale = 0.65;
 static int ratioDepth = 0;
 static int metricUnit = INCHES;
 
-static SEXP plusSymbol;
-static SEXP minusSymbol;
-static SEXP timesSymbol;
-static SEXP divideSymbol;
-static SEXP equalSymbol;
-static SEXP superSymbol;
-static SEXP subSymbol;
-static SEXP groupSymbol;
-
-static void initFormulaSymbols()
-{
-    plusSymbol = install("+");
-    minusSymbol = install("-");
-    timesSymbol = install("*");
-    divideSymbol = install("/");
-    equalSymbol = install("==");
-    superSymbol = install("^");
-    subSymbol = install("[");
-    groupSymbol = install("(");
-}
 
 /* Code to determine the nature of an expression. */
 
@@ -249,38 +315,55 @@ static int stringAtom(SEXP expr)
     return (TYPEOF(expr) == STRSXP);
 }
 
+static int spaceAtom(SEXP expr)
+{
+    return symbolAtom(expr) && symbolMatch(expr, "~");
+}
+
+static struct {
+    char *name;
+    int code;
+}
+BinopTable[] = {
+    "*",                42,    /* Binary Relationships */
+    "+",                43,
+    "-",                45,
+    "/",                47,
+    ":",                58,
+    NULL,                0
+};
+
 static int binAtom(SEXP expr)
 {
-    int result = symbolAtom(expr) &&
-	((expr == plusSymbol)  ||
-	 (expr == minusSymbol) ||
-	 (expr == timesSymbol) ||
-	 (expr == divideSymbol));
-    return result;
+    int i;
+    for (i = 0; BinopTable[i].code; i++)
+	if (symbolMatch(expr, BinopTable[i].name))
+	    return BinopTable[i].code;
+    return 0;
 }
 
 static int relAtom(SEXP expr)
 {
-    return symbolAtom(expr) &&
-	(expr == equalSymbol);
+    int i;
+    for (i = 0; RelationTable[i].code; i++)
+	if (symbolMatch(expr, RelationTable[i].name))
+	    return 1;
+    return 0;
 }
 
 static int multiplicationOperator(SEXP expr)
 {
-    return binAtom(expr) &&
-	(expr == timesSymbol);
+    return binAtom(expr) == 42;
 }
 
 static int superAtom(SEXP expr)
 {
-    return symbolAtom(expr) &&
-	(expr == superSymbol);
+    return symbolAtom(expr) && symbolMatch(expr, "^");
 }
 
 static int subAtom(SEXP expr)
 {
-    return symbolAtom(expr) &&
-	(expr == subSymbol);
+    return symbolAtom(expr) && symbolMatch(expr, "[");
 }
 
 static int hatAtom(SEXP expr)
@@ -307,7 +390,7 @@ static int fractionAtom(SEXP expr)
 
 static int groupAtom(SEXP expr)
 {
-    return symbolAtom(expr) && (expr == groupSymbol);
+    return symbolAtom(expr) && symbolMatch(expr, "(");
 }
 
 static int operatorAtom(SEXP expr)
@@ -376,12 +459,12 @@ static int concatenateAtom(SEXP expr)
     return symbolAtom(expr) && symbolMatch(expr, "paste");
 }
 
-static int greekSymbol(SEXP expr)
+static int symbolSymbol(SEXP expr)
 {
     int i;
     if (symbolAtom(expr)) {
-	for (i = 0; GreekTable[i].code; i++)
-	    if (symbolMatch(expr, GreekTable[i].name))
+	for (i = 0; SymbolTable[i].code; i++)
+	    if (symbolMatch(expr, SymbolTable[i].name))
 		return 1;
     }
     return 0;
@@ -403,20 +486,25 @@ static void boldItalicFont() { setFont(4); }
 
 static int isItalic() { return (getFont() == 3 || getFont() == 4); }
 
+/* Determine the appropriate font for an atom. */
+/* Switch to symbol for greek and math and */
+/* switch to plain for numbers. */
+
+/* FIXME : Should this switch to font=3 if the */
+/* current font is 4 (bolditalic). */
+
 static int atomFontFace(SEXP expr)
 {
-    int fontFace = 1;
-    if (symbolAtom(expr)) {
-	if (greekSymbol(expr) ||
-	    binAtom(expr) ||
-	    relAtom(expr) ||
-	    groupAtom(expr) ||
-	    operatorAtom(expr) ||
-	    radicalAtom(expr))
-	    fontFace = 5;
-	else
-	fontFace = getFont();
-    }
+    int fontFace = getFont();
+    if (symbolAtom(expr) && (symbolSymbol(expr) ||
+			     binAtom(expr) ||
+			     relAtom(expr) ||
+			     groupAtom(expr) ||
+			     operatorAtom(expr) ||
+			     radicalAtom(expr)))
+	fontFace = 5;
+    else if (numberAtom(expr))
+	fontFace = 1;
     return fontFace;
 }
 
@@ -1033,16 +1121,16 @@ static void drawChar(char *str, SEXP expr)
 
 static BBOX symbolBBox(SEXP expr)
 {
-    if (greekSymbol(expr))
-	return asciiBBox(greekAscii(expr));
+    if (symbolSymbol(expr))
+	return asciiBBox(symbolAscii(expr));
     else
 	return charBBox(CHAR(PRINTNAME(expr)), expr);
 }
 
 static void drawSymbol(SEXP expr)
 {
-    if (greekSymbol(expr))
-	drawAscii(greekAscii(expr));
+    if (symbolSymbol(expr))
+	drawAscii(symbolAscii(expr));
     else
 	drawChar(CHAR(PRINTNAME(expr)), expr);
 }
@@ -1051,12 +1139,26 @@ static void drawSymbol(SEXP expr)
 
 static BBOX numberBBox(SEXP expr)
 {
+#ifdef OLD
+    int fontFace = getFont();
+    setFont(1);
+#endif
     return charBBox(CHAR(asChar(expr)), expr);
+#ifdef OLD
+    setFont(fontFace);
+#endif
 }
 
 static void drawNumber(SEXP expr)
 {
+#ifdef OLD
+    int fontFace = getFont();
+    setFont(1);
+#endif
     drawChar(CHAR(asChar(expr)), expr);
+#ifdef OLD
+    setFont(fontFace);
+#endif
 }
 
 /* code for string atoms */
@@ -1211,6 +1313,37 @@ static double binGapBetween(SEXP operand1, SEXP operand2)
 static double binGapAfter(SEXP afterOperand)
 {
     return 0.2;
+}
+
+static BBOX spaceBBox(SEXP expr)
+{
+    SEXP operator, operand1, operand2;
+    BBOX middleBBox;
+
+    operator = CAR(expr);
+    operand1 = CADR(expr);
+    setGapCEX();
+    if(length(expr) == 3) {
+	operand2 = CADDR(expr);
+	middleBBox = asciiBBox(' ');
+	return combineBBoxes(elementBBox(operand1),
+			     combineBBoxes(middleBBox,
+					   elementBBox(operand2)));
+    }
+    else error("invalid formula\n");
+}
+
+static void drawSpace(SEXP expr)
+{
+    SEXP operator, operand1, operand2;
+
+    operator = CAR(expr);
+    operand1 = CADR(expr);
+    setGapCEX();
+    operand2 = CADDR(expr);
+    drawElement(operand1);
+    drawAscii(' ');
+    drawElement(operand2);
 }
 
 static BBOX binBBox(SEXP expr)
@@ -1748,7 +1881,6 @@ static void drawOperator(SEXP expr)
 	    moveTo(savedX, savedY);
 	    moveAcross(operatorHShiftAll(operator, lower, upper));
 	}
-
 	else{
 	    moveUp(-operatorLowerShift(operator, lower));
 	    moveAcross(operatorLowerHShift(operator, lower));
@@ -1927,6 +2059,7 @@ static double relGap()
 
 static BBOX relBBox(SEXP expr)
 {
+    SEXP op = CAR(expr);
     SEXP arg1 = CADR(expr);
     SEXP arg2 = CADDR(expr);
 
@@ -1935,7 +2068,7 @@ static BBOX relBBox(SEXP expr)
 	      combineBBoxes(
 	         gapBBox(relGap()),
 	         combineBBoxes(
-		    asciiBBox(relAscii()),
+		    asciiBBox(relAscii(op)),
 		    combineBBoxes(
 		       gapBBox(relGap()),
 		       elementBBox(arg2)))));
@@ -1943,12 +2076,13 @@ static BBOX relBBox(SEXP expr)
 
 static void drawRel(SEXP expr)
 {
+    SEXP op = CAR(expr);
     SEXP arg1 = CADR(expr);
     SEXP arg2 = CADDR(expr);
 
     drawElement(arg1);
     drawGap(relGap());
-    drawAscii(relAscii());
+    drawAscii(relAscii(op));
     drawGap(relGap());
     drawElement(arg2);
 }
@@ -2047,7 +2181,7 @@ static void drawBoldItalic(SEXP expr)
     setFont(savedFont);
 }
 
-/* code for concatenating expressions c(...) */
+/* code for concatenating expressions paste(...) */
 
 static BBOX concatenateBBox(SEXP expr)
 {
@@ -2062,7 +2196,7 @@ static BBOX concatenateBBox(SEXP expr)
     lastArg = CAR(args);
     args = CDR(args);
 
-    for (i=1; i<numArgs; i++) {
+    for (i = 1; i < numArgs; i++) {
 	result = combineBBoxes(result,
 		    combineBBoxes(
 		       correctionBetweenBBox(lastArg, CAR(args)),
@@ -2081,7 +2215,7 @@ static void drawConcatenate(SEXP expr)
     int i;
     int numArgs = length(args);
 
-    for (i=0; i<numArgs; i++) {
+    for (i = 0; i < numArgs; i++) {
 	if (i > 0)
 	    drawCorrectionBetween(lastArg, CAR(args));
 	drawElement(CAR(args));
@@ -2096,7 +2230,9 @@ static BBOX formulaBBox(SEXP expr)
 {
     SEXP head = CAR(expr);
 
-    if (binAtom(head))
+    if (spaceAtom(head))
+	return spaceBBox(expr);
+    else if (binAtom(head))
 	return binBBox(expr);
     else if (superAtom(head))
 	return supBBox(expr);
@@ -2136,7 +2272,9 @@ static void drawFormula(SEXP expr)
 {
     SEXP head = CAR(expr);
 
-    if (binAtom(head))
+    if (spaceAtom(head))
+	drawSpace(expr);
+    else if (binAtom(head))
 	drawBin(expr);
     else if (superAtom(head))
 	drawSuper(expr);
@@ -2227,10 +2365,7 @@ void GMathText(double x, double y, int coords, SEXP expr,
     BBOX expressionBBox;
 
     mathDevice = dd;
-
-    initFormulaSymbols();
     expressionBBox = elementBBox(expr);
-
     referenceX = x;
     referenceY = y;
     GConvert(&referenceX, &referenceY, coords, INCHES, dd);

@@ -120,11 +120,11 @@ static int	xxvalue(SEXP, int);
 %left		ELSE
 %right		LEFT_ASSIGN
 %left		RIGHT_ASSIGN
-%nonassoc	'~' TILDE
+%left		'~' TILDE
 %left		OR
 %left		AND
 %left		UNOT NOT
-%nonassoc	GT GE LT LE EQ NE
+%left   	GT GE LT LE EQ NE
 %left		'+' '-'
 %left		'*' '/' '%'
 %left		SPECIAL
