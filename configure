@@ -21420,7 +21420,7 @@ R is now configured for ${host}
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
 " >&6
-if test -m "${warn_arg_var_FC}"; then
+if test -n "${warn_arg_var_FC}"; then
   { echo "$as_me:21424: WARNING: ${warn_arg_var_FC}" >&5
 echo "$as_me: WARNING: ${warn_arg_var_FC}" >&2;}
 fi
