@@ -1044,6 +1044,11 @@ AC_CACHE_VAL([r_cv_type_socklen],
                     [r_cv_type_socklen=${t}; break],
                     [r_cv_type_socklen=])
 done])
+case "${host_os}" in
+  cygwin*|mingw*|windows*|winnt)
+    r_cv_type_socklen=int
+    ;;
+esac
 if test "x${r_cv_type_socklen}" = x; then
   warn_type_socklen="could not determine type of socket length"
   AC_MSG_WARN([${warn_type_socklen}])

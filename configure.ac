@@ -24,7 +24,7 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.86 $)
+AC_REVISION($Revision: 1.87 $)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -47,15 +47,6 @@ AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AH_TOP([#ifndef _CONFIG_H
 #define _CONFIG_H])
 AH_BOTTOM([
-#ifdef Win32
-# define snprintf  _snprintf
-# define vsnprintf  _vsnprintf
-# define isnan(a) _isnan(a)
-# define finite(a) _finite(a)
-/* 2000-03-27 win32-api needs this for ANSI compliance */
-# define NONAMELESSUNION
-#endif /* Win32 */
-
 #endif /* not _CONFIG_H */])
 
 ### ** Platform.
@@ -82,12 +73,6 @@ case "${host_os}" in
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(Win32, 1,
               [Define according to your operating system type.])
-    cat >>confdefs.h <<\EOF
-#define snprintf  _snprintf
-#define vsnprintf  _vsnprintf
-#define isnan _isnan
-#define finite _finite
-EOF
     R_OSTYPE="windows"
     ;;
   *)
