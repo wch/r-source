@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-18 2004-05-22
+Version 1.9-19 2004-05-26
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1636,6 +1636,10 @@ distributions of R.)
 
 *chron*
      A package for working with chronological objects (times and dates).
+
+*circular*
+     Circular statistics, from "Topics in Circular Statistics" by Rao
+     Jammalamadaka and A. SenGupta, 2001, World Scientific.
 
 *class*
      Functions for classification (k-nearest neighbor and LVQ).  Contained

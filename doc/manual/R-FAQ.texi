@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-18 @value{FAQ-YEAR}-05-22
+@set FAQ-VERSION 1.9-19 @value{FAQ-YEAR}-05-26
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1877,6 +1877,9 @@ finding the number of clusters in a data set.
 Analysis of configuration frequencies.
 @item chron
 A package for working with chronological objects (times and dates).
+@item circular
+Circular statistics, from ``Topics in Circular Statistics'' by Rao
+Jammalamadaka and A. SenGupta, 2001, World Scientific.
 @item class
 Functions for classification (@math{k}-nearest neighbor and LVQ).
 Contained in the @file{VR} bundle.  @emph{Recommended}.
