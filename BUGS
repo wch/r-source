@@ -216,14 +216,6 @@ Date: Mon, 18 Dec 2000 13:46:02 +0100 (MET)
 
 Directory:  Models
 
-* PR# 778 *
-Subject: Bug in glm.fit() or plot.lm()
-From: murdoch@stats.uwo.ca (Duncan Murdoch)
-Date: Tue, 19 Dec 2000 14:57:59 -0500
-* PR# 771 *
-Subject: problems with glm
-From: Jim Lindsey <james.lindsey@luc.ac.be>
-Date: Mon, 18 Dec 2000 09:28:01 +0100 (MET)
 * PR# 758 *
 Subject: Inconsistency, possibly a bug?
 From: Brett Presnell <presnell@stat.ufl.edu>
@@ -304,6 +296,10 @@ none
 
 Directory:  incoming
 
+* PR# 796 *
+Subject: aic in binomial models is often wrong
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 29 Dec 2000 11:38:48 +0000 (GMT)
 * PR# 795 *
 Subject: Re: [Rd] some (may be related) problems with windows(rescale=)
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
