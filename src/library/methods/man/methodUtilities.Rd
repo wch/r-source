@@ -5,8 +5,6 @@
 \alias{el}
 \alias{elNamed}
 \alias{formalArgs}
-\alias{existsFunction}
-\alias{findFunction}
 \alias{Quote}
 \alias{message}
 \title{Utility Functions for Methods and S-Plus Compatibility}
@@ -16,8 +14,6 @@ functionBody(fun=sys.function(sys.parent()))
 allNames(x)
 
 getFunction(name, generic=T, mustFind=T, where)
-existsFunction(name, generic=TRUE, where)
-findFunction(name, generic=TRUE)
 
 el(object, where)
 
