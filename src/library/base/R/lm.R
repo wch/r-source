@@ -522,4 +522,15 @@ effects.lm <- function(...) .NotYetImplemented()
 ##  tapply(effects,z$model.frame[factors & pattern!=0],mean,na.rm=TRUE)
 ##}
 
-plot.lm <- function(...) .NotYetImplemented()
+plot.lm <- function(x,...) {
+  if(!any(class(x) == "lm")) stop("Use only with 'lm' objects")
+  r <- residuals(x)
+  yh<- fitted(x)
+  hii <- lm.influence(x)$hat
+  if(prod(par("mfcol")) < 2) { op <- par(ask = TRUE); on.exit(par(op)) }
+  plot(yh,r, xlab="Fitted values", ylab="Residuals",
+       main = paste("Tukey-Anscombe plot of", deparse(x$call)))
+  abline(h=0, lty=3, col = "gray")
+  
+  qqnorm(r/sqrt(1-hii), ylab = "Standardized Residuals")
+}
