@@ -43,9 +43,12 @@ help <- function(topic, offline = FALSE, package = .packages(),
                                    where=base.pos, mode="logical") &&
                             get("help.start.has.been.run",
                                    pos=base.pos, mode="logical")) {
-                        ## we need to use the version in ~/.R if we can.
+                        ## We need to use the version in per-session dir
+                        ## if we can.
+                            tmpdir <- Sys.getenv("R_SESSION_TMPDIR")
+                            if(!length(tmpdir)) tmpdir <- "$HOME"
                             lnkfile <-
-                                file.path(Sys.getenv("HOME"), ".R",
+                                file.path(tmpdir, "/.R",
                                           "library", package, "html",
                                           paste(topic, "html", sep="."))
                             if (any(ex <- file.exists(lnkfile))) {
@@ -56,7 +59,7 @@ help <- function(topic, offline = FALSE, package = .packages(),
                         if (file == ofile) {
                             warning("Using non-linked HTML file: style sheet and hyperlinks may be incorrect")
                         }
-                        file <- paste("file:", file, sep="")
+                        file <- paste("file://", file, sep = "")
                         if (is.null(getOption("browser")))
                             stop("options(\"browser\") not set")
                         browser <- getOption("browser")

@@ -206,6 +206,10 @@ void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
       curfile = g_list_next(curfile);
     }
 */
+    if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
+	sprintf(buf, "rm -rf %s", tmpdir);
+	system(buf);
+    }
 
 
     /* close all the graphics devices */

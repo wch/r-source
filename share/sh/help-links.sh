@@ -1,6 +1,6 @@
 #! /bin/sh
 
-USER_R_HOME="${HOME}/.R"
+USER_R_HOME=${R_SESSION_TMPDIR-"${HOME}"}/.R
 PKGLIST="${USER_R_HOME}/doc/html/packages.html"
 SEARCHINDEX="${USER_R_HOME}/doc/html/search/index.txt"
 rm -rf ${USER_R_HOME}
@@ -76,9 +76,10 @@ for lib in $*; do
 		    ${pkgname}</a><td>${pkgtitle}</td></tr>" \
 		>> ${PKGLIST}
 
-	    cat ${pkg}/CONTENTS | \
-	      sed "s/\/library\/${pkgname}\//\/library\/${targetname}\//;" \
-	      >> ${SEARCHINDEX}
+	    if test -r ${pkg}/CONTENTS; then
+		cat ${pkg}/CONTENTS | \
+		    sed "s/\/library\/${pkgname}\//\/library\/${targetname}\//;"  >> ${SEARCHINDEX}
+	    fi
 
 
 	fi

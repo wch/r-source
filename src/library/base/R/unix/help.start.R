@@ -1,5 +1,6 @@
 help.start <- function (gui = "irrelevant", browser = getOption("browser"),
-			remote = NULL) {
+			remote = NULL)
+{
     if(is.null(browser))
 	stop("Invalid browser name, check options(\"browser\").")
     if(browser != getOption("browser")) {
@@ -10,9 +11,12 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         writeLines(strwrap(msg, exdent = 4))
         options(browser = browser)
     }
-    cat("Making links in ~/.R ...\n")
+    cat("Making links in per-session dir ...\n")
     .Script("sh", "help-links.sh", paste(.libPaths(), collapse = " "))
-    url <- paste(if (is.null(remote)) "$HOME/.R" else remote,
+    tmpdir <- Sys.getenv("R_SESSION_TMPDIR")
+    if(!length(tmpdir)) tmpdir <- "$HOME"
+    tmpdir <- paste("file://", tmpdir, "/.R", sep = "")
+    url <- paste(if (is.null(remote)) tmpdir else remote,
 		 "/doc/html/index.html", sep = "")
     writeLines(strwrap(paste("If", browser, "is already running,",
                              "it is *not* restarted, and you must",

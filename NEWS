@@ -131,6 +131,11 @@ NEW FEATURES
     o   pdf() now uses PDF not R code for clipping, which ensures that
 	partially visible text strings are (partially) shown.
 
+    o   help.start() on Unix now uses a per-session temporary
+	directory and not ~/.R.  A side effect is that ~/.R is now never
+	deleted by R.
+
+
 
 DEPRECATED & DEFUNCT
 
@@ -265,10 +270,12 @@ BUG FIXES
 
     o   termplot() now needs data= argument more rarely (PR#828)
 
-    o   abline() on log scale doesn't draw -ve points (PR#1243)
+    o   abline() on log scale doesn't draw -ve points. (PR#1243)
 
     o   The Java search engine now works within Mozilla 1.0 and 
 	Netscape 6.2.x / 7.0pr1.
+
+    o   unsplit() failed if f was a list of factors. (PR#1843)
 
 
 

@@ -561,6 +561,7 @@ void R_RunExitFinalizers(void);	/* in memory.c */
 void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     unsigned char buf[128];
+    char * tmpdir;
 
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
 	saveact = SaveAction;
@@ -613,6 +614,10 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
     }
     R_RunExitFinalizers();
     CleanEd();
+    if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
+	sprintf(buf, "rm -rf %s", tmpdir);
+	system(buf);
+    }
     if(saveact != SA_SUICIDE) KillAllDevices();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings();	/* from device close and .Last */

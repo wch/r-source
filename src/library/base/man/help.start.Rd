@@ -29,8 +29,10 @@ help.start(update = TRUE, gui = "irrelevant",
 }
 \details{
 #ifdef unix
-  All the packages in the known library trees are linked to a directory
-  \code{.R} in the user's home directory.
+  All the packages in the known library trees are linked to directory
+  \file{.R} in the per-session temporary directory.  The links are
+  re-made each time \code{help.start} is run, which should be done
+  after packages are installed, updated or removed.
 
   The \code{browser} needs to work with a \code{"-remote openURL(...)"}
   call. Then, the hypertext \R help interface is opened in any already
