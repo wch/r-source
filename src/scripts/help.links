@@ -1,6 +1,6 @@
 #! /bin/sh
 
-URHOME="${HOME}/.Rhome"
+URHOME="${HOME}/.R"
 PKGLIST="${URHOME}/doc/html/packages.html"
 rm -rf ${URHOME}
 

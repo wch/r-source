@@ -216,7 +216,7 @@ help.start <-
     if(is.null(browser))
 	stop("Invalid browser name, check options(\"browser\").")
 
-    url <- paste(if (is.null(remote)) "$HOME/.Rhome" else remote,
+    url <- paste(if (is.null(remote)) "$HOME/.R" else remote,
 		 "/doc/html/index.html", sep = "")
     
     cat("If", browser, " is already running,\tit is *not* restarted,\n",
