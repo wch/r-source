@@ -161,6 +161,8 @@ BUG FIXES
 
     o	Fix problems in scan(flush = TRUE).
 
+    o   scan() got confused by trailing whitespace.
+
     o	split(x,f) now works even when f is a factor with unused levels
 	(PR#294).
 
@@ -187,6 +189,8 @@ BUG FIXES
     o	Math text in outer margins didn't work.
 
     o	Text clipping now works in the X11 driver.
+
+    o   Pixel rows sometimes got doubled in rotated text.
 
     o	par("yaxt") is now ok.
 
