@@ -6,7 +6,7 @@ rowsum <- function(x, group, reorder=TRUE) {
 
     if (length(group) !=n)  stop("Incorrect length for 'group'")
     if (any(is.na(group)))  stop("Missing values for 'group'")
-    na.indicator <- max(1,x[!is.na(x)]) * n   #larger than any possible sum
+    na.indicator <- 1+max(1,x[!is.na(x)]) * n   #larger than any possible sum
     x[is.na(x)] <- na.indicator
 
     if (!is.numeric(group)) group <- as.factor(group)
