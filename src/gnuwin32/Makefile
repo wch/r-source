@@ -398,9 +398,9 @@ bindist: tcl bitmapdll docfiles
 # morley.tab is needed for R-intro Appendix A
 	$(CP) -p ../library/base/data/morley.tab $(RPREFIX)/library/base/data
 	$(RM) $(RPREFIX)/*/Makefile.in
-	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
+	(cd $(RPREFIX)/bin; $(RM) INSTALL REMOVE SHLIB build check \
 	   massage-Examples Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
-           Sd2Rd Rprof)
+           Sd2Rd)
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
@@ -483,7 +483,7 @@ packagedist:
 	  ../../bin/build ../../bin/check ../../bin/massage-Examples \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
 	  ../../bin/Rdindex ../../bin/Rdiff.sh \
-	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
+	  ../../bin/Sd2Rd  \
           $(RPREFIX)/bin
 	$(CP) ../../share/make/wintests.mk $(RPREFIX)/share/make
 	$(CP) -pr ../../share/R $(RPREFIX)/share

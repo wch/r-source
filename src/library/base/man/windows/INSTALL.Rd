@@ -18,6 +18,9 @@
   one, use \code{Rcmd INSTALL -l lib pkgs}.
 }
 \details{
+  Windows Perl and the files for installing from source packages need to
+  be installed.
+  
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names. \code{pkgs} can also contain name of package
   archive files of the form \file{pkg\_version.tar.gz} as obtained from
@@ -35,7 +38,6 @@
   be executed when the package is attached, after loading the saved
   image.  
 
-  
   For checking (via the examples in the help files \file{man/*.Rd},
   use \code{Rcmd check [-l lib] <pkg>}: use \code{Rcmd check --help}
   for more information.

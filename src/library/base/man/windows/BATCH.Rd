@@ -15,6 +15,8 @@
     extension stripped, and \file{.Rout} appended.}
 }
 \details{
+  Windows Perl needs to be installed.
+  
   By default, the input commands are printed along with the
   output.  To suppress this behavior, add \code{options(echo = FALSE)}
   at the beginning of \code{infile}.
