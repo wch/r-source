@@ -26,7 +26,6 @@
  *  See ./format.c	 for the formatXXXX functions used below.
  */
 
-#include "Defn.h"
 #include "Print.h"
 
 static void printLogicalVector(int *x, int n, int index)
