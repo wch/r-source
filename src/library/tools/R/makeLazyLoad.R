@@ -193,7 +193,6 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                              enclos = parent.env(e))
                 key <- lazyLoadDBinsertValue(data, datafile, ascii,
                                              compress, envhook)
-                # key[1] <- pos; pos <<- pos + key[2]
                 assign(name, key, env = envenv)
             }
             name
@@ -212,14 +211,12 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
     }
     else stop("source must be an environment or a list");
 
-    pos <- as.integer(0)
     for (i in seq(along = vars)) {
         key <- if (is.null(from) || is.environment(from))
             lazyLoadDBinsertVariable(vars[i], from, datafile,
                                      ascii, compress,  envhook)
         else lazyLoadDBinsertListElement(from, i, datafile, ascii,
                                          compress, envhook)
-        # key[1] <- pos; pos <- pos + key[2]
         assign(vars[i], key, env = varenv)
     }
 

@@ -25,7 +25,7 @@ print.by <- function(x, ..., vsep)
     dnn <- names(dn)
     if(missing(vsep))
         vsep <- paste(rep("-", 0.75*getOption("width")), collapse = "")
-    lapply(seq(along = x), function(i, x, labs, vsep, ...) {
+    lapply(seq(along = x), function(i, x, vsep, ...) {
         if(i != 1 && !is.null(vsep)) cat(vsep, "\n")
         ii <- i - 1
         for(j in seq(along = dn)) {
@@ -33,6 +33,6 @@ print.by <- function(x, ..., vsep)
             cat(dnn[j], ": ", dn[[j]][iii], "\n", sep = "")
         }
         print(x[[i]], ...)
-    } , x, labs, vsep, ...)
+    } , x, vsep, ...)
     invisible(x)
 }

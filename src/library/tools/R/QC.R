@@ -827,7 +827,7 @@ function(package, lib.loc = NULL)
     aliases <- unlist(aliases[idx])
     Rd_slots <- Rd_slots[idx]
 
-    names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
+    names(db) <- .get_Rd_names_from_Rd_db(db)
 
     .get_slot_names_from_slot_section_text <- function(txt) {
         ## Get \describe (inside user-defined section 'Slots'
@@ -1083,7 +1083,6 @@ function(package, dir, lib.loc = NULL)
     if(!file_test("-d", docs_dir))
         stop(paste("directory", sQuote(dir),
                    "does not contain Rd sources"))
-    is_base <- basename(dir) == "base"
 
     db <- if(!missing(package))
         Rd_db(package, lib.loc = dirname(dir))

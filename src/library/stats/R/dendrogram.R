@@ -147,7 +147,7 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
        substr(istr, nind,nind) <- "`"
     cat(istr, stem, sep="")
 
-    nAt <- names(at <- attributes(object))
+    at <- attributes(object)
     memb <- at[["members"]]
     hgt	 <- at[["height"]]
     if(!is.leaf(object)) {

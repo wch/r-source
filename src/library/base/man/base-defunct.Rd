@@ -89,8 +89,7 @@ parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 % </Removed 1.4.0>
 % Removed in 1.5.0
 .Alias(expr)
-reshapeWide(x, i = reshape.i, j = reshape.j, val = reshape.v,
-            jnames = levels(j))
+reshapeWide(x, i, j, val, jnames = levels(j))
 reshapeLong(x,jvars,  ilev = row.names(x),
             jlev = names(x)[jvars], iname = "reshape.i",
             jname = "reshape.j", vname = "reshape.v")
@@ -122,10 +121,8 @@ plot.mts(x, plot.type = c("multiple", "single"), panel = lines,
 print.coefmat(x, digits=max(3, getOption("digits") - 2),
               signif.stars = getOption("show.signif.stars"),
               dig.tst = max(1, min(5, digits - 1)),
-              cs.ind = 1:k, tst.ind = k + 1, zap.ind = integer(0),
-              P.values = NULL,
-              has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
-              eps.Pvalue = .Machine$double.eps,
+              cs.ind, tst.ind, zap.ind = integer(0),
+              P.values = NULL, has.Pvalue, eps.Pvalue = .Machine$double.eps,
               na.print = "", \dots)
 
 codes(x, \dots)
@@ -134,8 +131,8 @@ codes(x, \dots) <- value
 anovalist.lm(object, \dots, test = NULL)
 lm.fit.null(x, y, method = "qr", tol = 1e-07, \dots)
 lm.wfit.null(x, y, w, method = "qr", tol = 1e-07, \dots)
-glm.fit.null(x, y, weights = rep(1, nobs), start = NULL,
-             etastart = NULL, mustart = NULL, offset = rep(0, nobs),
+glm.fit.null(x, y, weights, start = NULL,
+             etastart = NULL, mustart = NULL, offset,
              family = gaussian(), control = glm.control(),
              intercept = FALSE)
 print.atomic(x, quote = TRUE, \dots)

@@ -269,7 +269,7 @@ setGrob <- function(gTree, gPath, newGrob, strict=FALSE) {
     stop("Invalid path")
   if (depth(gPath) == 1 && strict) {
     # gPath must specify an existing child
-    if (old.pos <- match(gPath$name, gTree$childrenOrder, nomatch=FALSE)) {
+    if (match(gPath$name, gTree$childrenOrder, nomatch=FALSE)) {
       # newGrob name must match gPath
       if (match(gPath$name, newGrob$name, nomatch=FALSE)) {
         gTree$children[[newGrob$name]] <- newGrob
@@ -325,7 +325,7 @@ addGrob <- function(gTree, child, gPath=NULL, strict=FALSE,
   if (old.pos <- match(child$name, gTree$childrenOrder, nomatch=0))
     gTree$childrenOrder <- gTree$childrenOrder[-old.pos]
   gTree$childrenOrder <- c(gTree$childrenOrder, child$name)
-  if (!is.null(gPath)) 
+  if (!is.null(gPath))
     gTree <- setGrob(origTree, gPath, gTree, strict)
   gTree
 }
@@ -400,7 +400,7 @@ removeGrob <- function(gTree, gPath, strict=FALSE,
       if (warn)
         stop(paste("gPath (", gPath, ") not found"))
       gTree <- orig.gTree
-    }      
+    }
   }
   gTree
 }
@@ -548,7 +548,7 @@ getGTree <- function(gTree, pathsofar, gPath, strict) {
           if (strict)
             fullmatch <- match(pathsofar, gPath$path, nomatch=FALSE)
           else
-            fullmatch <- 
+            fullmatch <-
               length(grep(paste(gPath$path, "$", sep=""), pathsofar)) > 0
         if (fullmatch) {
           if (match(gPath$name, childName, nomatch=0)) {
@@ -682,7 +682,7 @@ setGTree <- function(gTree, pathsofar, gPath, newGrob, strict) {
           if (strict)
             fullmatch <- match(pathsofar, gPath$path, nomatch=FALSE)
           else
-            fullmatch <- 
+            fullmatch <-
               length(grep(paste(gPath$path, "$", sep=""), pathsofar)) > 0
         if (fullmatch) {
           if (match(gPath$name, childName, nomatch=FALSE)) {
@@ -756,9 +756,9 @@ setDLfromGPath <- function(gPath, newGrob, strict) {
 
 editThisGrob <- function(grob, specs) {
   for (i in names(specs))
-    if (nchar(i) > 0) 
+    if (nchar(i) > 0)
       # If there is no slot with the argument name, just ignore that argument
-      if (match(i, names(grob), nomatch=0)) 
+      if (match(i, names(grob), nomatch=0))
         # Handle NULL as special case
         if (is.null(specs[[i]]))
           grob[i] <- eval(substitute(list(i=NULL)))
@@ -778,7 +778,7 @@ removeGrobfromGPath <- function(grob, gPath) {
 removeGrobfromGPath.grob <- function(grob, gPath) {
   NULL
 }
-  
+
 removeGrobfromGPath.gTree <- function(grob, gPath) {
   gTree <- NULL
   if (old.pos <- match(gPath$name, grob$childrenOrder, nomatch=0)) {
@@ -800,7 +800,7 @@ removeGrobfromGPath.gTree <- function(grob, gPath) {
   gTree
 }
 
-# Only called with gPath of depth 1 
+# Only called with gPath of depth 1
 removeGrobFromDL <- function(gPath, warn, strict, redraw) {
   # Look first for top-level match (force strict=TRUE)
   dl.index <- grid.Call("L_getDLindex")
@@ -825,7 +825,7 @@ removeGrobFromDL <- function(gPath, warn, strict, redraw) {
     if (redraw)
       draw.all()
   } else {
-    # If strict=TRUE then we have failed 
+    # If strict=TRUE then we have failed
     if (strict) {
       if (warn)
         stop(paste("gPath (", gPath, ") not found on display list", sep=""))
@@ -863,7 +863,7 @@ removeGrobFromDL <- function(gPath, warn, strict, redraw) {
         grid.Call("L_setDLindex", as.integer(dl.index))
         if (redraw)
           draw.all()
-      } 
+      }
     }
   }
 }
@@ -913,7 +913,7 @@ findGrobinChildren <- function(name, children) {
 }
 
 ################
-# grid.draw 
+# grid.draw
 ################
 # Use generic function "draw" rather than generic function "print"
 # because want graphics functions to produce graphics output
@@ -1007,7 +1007,7 @@ preDraw.gTree <- function(x) {
   if (!is.null(x$childrenvp)) {
     pushViewport(x$childrenvp, recording=FALSE)
     upViewport(depth(x$childrenvp), recording=FALSE)
-  }  
+  }
   preDrawDetails(x)
 }
 
@@ -1057,7 +1057,7 @@ grid.draw.gTree <- function(x, recording=TRUE) {
     record(x)
   invisible()
 }
-               
+
 draw.all <- function() {
   grid.newpage(recording=FALSE)
   dl.index <- grid.Call("L_getDLindex")

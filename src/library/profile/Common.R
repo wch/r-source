@@ -51,7 +51,6 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
 
 .First.sys <- function()
 {
-    last <- rev(getOption("defaultPackages"))[1]
     for(pkg in getOption("defaultPackages")) {
         res <- require(pkg, quietly = TRUE, warn.conflicts = FALSE,
                        character.only = TRUE, save = FALSE)

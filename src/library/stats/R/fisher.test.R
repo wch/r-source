@@ -37,7 +37,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
     }
     ## x is integer
     con <- list(mult = 30)
-    con[(namc <- names(control))] <- control
+    con[names(control)] <- control
     if((mult <- as.integer(con$mult)) < 2)
         stop("'mult' must be integer >= 2, typically = 30")
 
