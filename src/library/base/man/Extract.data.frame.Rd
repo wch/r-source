@@ -28,7 +28,8 @@ x[[i, j]] <- value
   \item{drop}{logical.  If \code{TRUE} the result is coerced to the
     lowest possible dimension: however, see the Warning below.}
   \item{value}{A suitable replacement value: it will be repeated a whole
-    number of times if necessary.}
+    number of times if necessary and it may be coerced: see the
+    Coercion section.}
 }
 \details{
   Data frames can be indexed in several modes.  When \code{[} and
@@ -49,17 +50,43 @@ x[[i, j]] <- value
   right-hand edge of the data frame and numerical indices must be
   contiguous to existing indices.
 
-  As a special case, when using \code{[} for replacement, a logical
+  When using \code{[} for replacement (only) a logical
   matrix can be used to select the elements to be replaced in the same
   ways as for a matrix.  Missing values in the matrix are
   treated as false, unlike S which does not replace them but uses up the
   corresponding values in \code{value}.
+}
+\section{Coercion}{
+  The story over when replacement values are coerced is a complicated
+  one, and one that has changed during \R's development.  This section
+  is guide only.
+
+  When \code{[} and \code{[[} are used with a single index to add or
+  replace a column, no coercion takes place but \code{value} will be
+  relicated (by calling the generic function \code{\link{rep}}) to the
+  right length.  (Currently only for length-one values for \code{[} and
+  for an exact number of repeats for \code{[[}.)
+
+  When \code{[} is used with a logical matrix, each value is coerced to
+  the type of the column in which it is to be placed.
+
+  When  \code{[} and \code{[[} are used with with two indices, the
+  column will be coerced as necessary to accomodate the value.
+  If either \code{value} is a list or an index of the form \code{[, j]}
+  is used then \code{\link{as.data.frame}} is called on \code{value},
+  which will coerce character columns to factors (and they will 
+  be coerced to numeric if the replacement is within a numeric columns).
 }
 \section{Warning}{
   Although the default for \code{drop} is \code{TRUE}, the default
   behaviour is equivalent to specifying \code{drop=FALSE} when only one
   \emph{row} is left.  To drop from a data frame to a list, \code{drop =
     FALSE} has to specified explicitly.
+
+  Since a data frame is a list, it is possible to apply the \code{$} and
+  \code{$<-} operators to add or replace a column.  This is a bad idea
+  as it circumvents integrity checks on the data frame, for example
+  having all columns of the same length.
 }
 \value{
   For \code{[} a data frame, list or vector (the latter two only when
@@ -90,5 +117,15 @@ swiss[ c(1, 1:2), ]   # duplicate row, unique row names are created
 
 sw[sw <= 6] <- 6  # logical matrix indexing
 sw
-}
+
+## adding a column
+sw["new1"] <- LETTERS[1:5]   # adds a character column
+sw[["new2"]] <- letters[1:5] # ditto
+sw[, "new3"] <- LETTERS[1:5] # this gets converted to a factor
+sapply(sw, class)
+
+## DON'T do this
+\dontrun{
+sw$new4 <- 1:3  ## will run but result in an unprintable object
+}}
 \keyword{array}
