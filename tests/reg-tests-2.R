@@ -1406,3 +1406,11 @@ read.fwf("test.txt", width=c(2,2,3), skip=1)      # 1 line short
 read.fwf("test.txt", width=c(2,2,3), skip=0)
 unlink("test.txt")
 ##
+
+
+## split was not handling lists and raws
+split(as.list(1:3), c(1,1,2))
+(y <- charToRaw("A test string"))
+(z <- split(y, rep(1:5, times=c(1,1,4,1,6))))
+sapply(z, rawToChar)
+## wrong results in 2.0.0

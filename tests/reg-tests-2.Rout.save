@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-10-27), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-11-11), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -19,7 +19,7 @@ Type 'q()' to quit R.
 > 
 > postscript("reg-tests-2.ps")
 > RNGversion("1.6.2")
-Warning message: 
+Warning message:
 Buggy version of Kinderman-Ramage generator used. in: RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage") 
 > 
 > ### moved from various .Rd files
@@ -469,7 +469,7 @@ numeric(0)
 > (ix <- structure(as.integer(x),names= names(x)))
    100 -1e-13    Inf   -Inf    NaN   3.14     NA 
    100      0     NA     NA     NA      3     NA 
-Warning message: 
+Warning message:
 NAs introduced by coercion 
 > ##-   100 -1e-13    Inf   -Inf    NaN   3.14     NA
 > ##-   100      0     NA     NA     NA      3     NA
@@ -1472,7 +1472,7 @@ Error in log(x) : Non-numeric argument to mathematical function
 [1] 0.75
 > mean(as.factor(x))
 [1] NA
-Warning message: 
+Warning message:
 argument is not numeric or logical: returning NA in: mean.default(as.factor(x)) 
 > ## last had confusing error message in 1.3.1.
 > 
@@ -1657,11 +1657,11 @@ Levels: C A B
 > x <- as.integer(2^30)
 > sum(x, x)    # did not warn in 1.4.1
 [1] NA
-Warning message: 
+Warning message:
 Integer overflow in sum(.); use sum(as.numeric(.)) 
 > sum(c(x, x)) # did warn
 [1] NA
-Warning message: 
+Warning message:
 Integer overflow in sum(.); use sum(as.numeric(.)) 
 > (z <- sum(x, x, 0.0)) # was NA in 1.4.1
 [1] 2147483648
@@ -1744,7 +1744,7 @@ Sep 1961  20  30
 +        1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0)
 > try(glm(y ~ x, family = poisson(identity)))
 Error: no valid set of coefficients has been found:please supply starting values
-In addition: Warning message: 
+In addition: Warning message:
 NaNs produced in: log(x) 
 > ## failed because start = NULL in 1.4.1
 > ## now gives useful error message
@@ -1759,7 +1759,7 @@ Coefficients:
 Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    68.01 
 Residual Deviance: 60.66 	AIC: 168.7 
-Warning messages: 
+Warning messages:
 1: Step size truncated: out of bounds 
 2: Step size truncated: out of bounds 
 > ## step reduction failed in 1.4.1
@@ -2225,7 +2225,7 @@ j.f = 1e-14 ;  rel.range =     0 * EPS
 par("usr")[3:4]:     1.784     4.499
 par("yaxp") :            2         4         4
 
-Warning messages: 
+Warning messages:
 1: relative range of values =  43 * EPS, is small (axis 2). 
 2: relative range of values =  36 * EPS, is small (axis 2). 
 3: relative range of values =  17 * EPS, is small (axis 2). 
@@ -2523,7 +2523,7 @@ x3  0.81       -0.97
 13     70
 14     71
 15     72
-Warning message: 
+Warning message:
 drop argument will be ignored in: "[.data.frame"(women, "height", drop = FALSE) 
 > women["height", drop = TRUE]   # ditto
    height
@@ -2542,7 +2542,7 @@ drop argument will be ignored in: "[.data.frame"(women, "height", drop = FALSE)
 13     70
 14     71
 15     72
-Warning message: 
+Warning message:
 drop argument will be ignored in: "[.data.frame"(women, "height", drop = TRUE) 
 > women[,"height", drop = FALSE] # no warning
    height
@@ -2766,7 +2766,7 @@ $df
 $residual.scale
 [1] 0.5234843
 
-Warning message: 
+Warning message:
 prediction from a rank-deficient fit may be misleading in: predict.lm(fit, data.frame(x = x), se = TRUE) 
 > predict(fit, type="terms", se=TRUE)
 $fit
@@ -2966,7 +2966,7 @@ $se.fit
 $residual.scale
 [1] 0.5234843
 
-Warning message: 
+Warning message:
 prediction from a rank-deficient fit may be misleading in: predict.lm(object, newdata, se.fit, scale = residual.scale, type = ifelse(type ==  
 > predict(fit, type="terms", se=TRUE)
 $fit
@@ -3715,7 +3715,7 @@ probability of success
 Error in vector("double", length) : vector size specified is too large
 > try(matrix( , 2^31, 1))
 Error in matrix(, 2^31, 1) : matrix: invalid nrow value (too large or NA)
-In addition: Warning message: 
+In addition: Warning message:
 NAs introduced by coercion 
 > try(matrix( , 2^31/10, 100))
 Error in matrix(, 2^31/10, 100) : matrix: too many elements specified
@@ -3737,7 +3737,7 @@ Error in array(dim = c(2^31/10, 100)) : dim specifies too large an array
 +                         f2=factor(rep(c("g1","g2","g3"),each=18))
 + )
 > sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
-Warning message: 
+Warning message:
 Error model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) 
 > sample.aov
 
@@ -3791,7 +3791,7 @@ Error: Within
           Df  Sum Sq Mean Sq F value Pr(>F)
 Residuals 42 29204.1   695.3               
 > sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)
-Warning message: 
+Warning message:
 Error model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), data = sample.df) 
 > sample.aov
 
@@ -3889,7 +3889,7 @@ Residuals 42 29204.1   695.3
 > y1 <- rnorm(4)
 > x1 * y1
 [1]  0.5574682  0.1410502  0.1609194 -0.3641637
-Warning message: 
+Warning message:
 longer object length
 	is not a multiple of shorter object length in: x1 * y1 
 > x1 * as.matrix(y1) # no warning in 1.8.1
@@ -3898,21 +3898,21 @@ longer object length
 [2,]  0.1410502
 [3,]  0.1609194
 [4,] -0.3641637
-Warning message: 
+Warning message:
 longer object length
 	is not a multiple of shorter object length in: x1 * as.matrix(y1) 
 > x1 * matrix(y1,2,2)# ditto
           [,1]       [,2]
 [1,] 0.5574682  0.1609194
 [2,] 0.1410502 -0.3641637
-Warning message: 
+Warning message:
 longer object length
 	is not a multiple of shorter object length in: x1 * matrix(y1, 2, 2) 
 > z1 <- x1 > 0
 > z2 <- y1 > 0
 > z1 & z2
 [1]  TRUE  TRUE  TRUE FALSE
-Warning message: 
+Warning message:
 longer object length
 	is not a multiple of shorter object length in: z1 & z2 
 > z1 & as.matrix(z2) # no warning in 1.8.1
@@ -3921,12 +3921,12 @@ longer object length
 [2,]  TRUE
 [3,]  TRUE
 [4,] FALSE
-Warning message: 
+Warning message:
 longer object length
 	is not a multiple of shorter object length in: z1 & as.matrix(z2) 
 > x1 < y1            # no warning in 1.8.1
 [1] FALSE  TRUE FALSE FALSE
-Warning message: 
+Warning message:
 longer object length
 	is not a multiple of shorter object length in: x1 < y1 
 > x1 < as.matrix(y1) # ditto
@@ -3935,7 +3935,7 @@ longer object length
 [2,]  TRUE
 [3,] FALSE
 [4,] FALSE
-Warning message: 
+Warning message:
 longer object length
 	is not a multiple of shorter object length in: x1 < as.matrix(y1) 
 > ##
@@ -4109,7 +4109,7 @@ quote(b)
 [1] 18
 > readBin(zz, "character", 100)  # is confused by embedded nul.
 [1] "A test string" ""             
-Warning message: 
+Warning message:
 incomplete string at end of file has been discarded 
 > seek(zz, 0, "start")
 [1] 18
@@ -4148,7 +4148,7 @@ Coefficients:
  1.83760728  0.93041126  0.17714205  0.19350695  1.13343277  0.84194402 
           7           8           9          10 
  0.08867482  0.25896653  0.27533143 -0.47793778 
-Warning message: 
+Warning message:
 'newdata' had 2 rows but variable(s) found have 10 rows 
 > ## warns as from 2.0.0
 > 
@@ -4286,4 +4286,43 @@ Warning message:
 3 12 34   5
 > unlink("test.txt")
 > ##
+> 
+> 
+> ## split was not handling lists and raws
+> split(as.list(1:3), c(1,1,2))
+$"1"
+$"1"[[1]]
+[1] 1
+
+$"1"[[2]]
+[1] 2
+
+
+$"2"
+$"2"[[1]]
+[1] 3
+
+
+> (y <- charToRaw("A test string"))
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67
+> (z <- split(y, rep(1:5, times=c(1,1,4,1,6))))
+$"1"
+[1] 41
+
+$"2"
+[1] 20
+
+$"3"
+[1] 74 65 73 74
+
+$"4"
+[1] 20
+
+$"5"
+[1] 73 74 72 69 6e 67
+
+> sapply(z, rawToChar)
+       1        2        3        4        5 
+     "A"      " "   "test"      " " "string" 
+> ## wrong results in 2.0.0
 > 
