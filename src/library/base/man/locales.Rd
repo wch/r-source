@@ -43,10 +43,11 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
   For \code{category = "LC_ALL"} the details of the string are
   system-specific: it might be a single locale or a set of locales
-  separated by \code{"/"} (Solaris) or \code{";"} (Windows). For
-  portability, it is best to query categories individually. It is
-  guaranteed that the result of \code{foo <- Sys.getlocale()} can used
-  in \code{Sys.setlocale("LC_ALL", locale = foo)} on the same machine.
+  separated by \code{"/"} (Solaris) or \code{";"} (Windows).  For
+  portability, it is best to query categories individually.  It is
+  guaranteed that the result of \code{foo <- Sys.getlocale()} can be
+  used in \code{Sys.setlocale("LC_ALL", locale = foo)} on the same
+  machine.
 }
 \section{Warning}{
   Setting \code{"LC_NUMERIC"} can produce output that \R cannot then
