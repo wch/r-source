@@ -81,6 +81,15 @@ sub buildinit {
     }
     $pkg_name = basename($tmp) unless($pkg_name);
 
+    my $version;
+    if(-r &file_path($pkg_dir, "DESCRIPTION")) {
+	$description =
+	    new R::Dcf(&file_path($pkg_dir, "DESCRIPTION"));
+	if(defined($description->{"Version"})) {
+	    $version = $description->{"Version"};
+	} else {$version = "";}
+    } else {$version = "";}
+
     chdir "man" or die("There are no man pages in ${pkg_dir}\n");
 
     ## <FIXME>
@@ -112,7 +121,7 @@ sub buildinit {
     }
     ## </FIXME>
 
-    ($pkg_name, $lib, @mandir);
+    ($pkg_name, $version, $lib, @mandir);
 }
 
 
@@ -284,10 +293,11 @@ sub encodealias { # text
 
 sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 
-sub build_index { # lib, dest
+sub build_index { # lib, dest, version, [chmdir]
     my $lib = $_[0];
     my $dest = $_[1];
-    my $chmdir = $_[2];
+    my $version = $_[2];
+    my $chmdir = $_[3];
 
     if(! -d $lib){
         mkdir("$lib", $dir_mod) or die "Could not create directory $lib: $!\n";
@@ -298,8 +308,13 @@ sub build_index { # lib, dest
     }
 
     my $title = "";
+    my $pkg_name = "";
     if(-r "../DESCRIPTION") {
 	my $rdcf = R::Dcf->new("../DESCRIPTION");
+	if($rdcf->{"Package"}) {
+	    $pkg_name = $rdcf->{"Package"};
+	    chomp $pkg_name;
+	}
 	if($rdcf->{"Title"}) {
 	    $title = $rdcf->{"Title"};
 	    chomp $title;
@@ -401,14 +416,21 @@ sub build_index { # lib, dest
 
     if($main::opt_chm) {
 	print chmfile chm_pagehead("$title");
+	print chmfile "<h2>Help pages for package `", $pkg_name, "'"; 
+	print chmfile " version ", $version if $version != "";
+	print chmfile "</h2>\n\n";
     }
+
+    print htmlfile "<h2>Documentation for package `", $pkg_name, "'"; 
+    print htmlfile " version ", $version if $version != "";
+    print htmlfile "</h2>\n\n";
 
     if(-d file_path($dest, "doc")){
 	print htmlfile "<h2>User Guides and Package Vignettes</h2>\n"
 	    . "Read <a href=\"../doc/index.html\">overview</a> or "
-	    . "browse <a href=\"../doc\">directory</a>.\n\n"
-	    . "<h2>Help Pages</h2>\n\n";
+	    . "browse <a href=\"../doc\">directory</a>.\n\n";
     }
+    print htmlfile "<h2>Help Pages</h2>\n\n";
 	
     if($naliases>100){
 	print htmlfile html_alphabet(keys(%firstlettersfound));

@@ -373,6 +373,10 @@ DOCUMENTATION
 	resolves cross-references to object names containing _, for
 	example.
 
+    o	HTML help pages now contain a reference to the package and
+	version in the footer, and package pages give their name and
+	version at the top.
+
 
 C-LEVEL FACILITIES
 

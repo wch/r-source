@@ -70,7 +70,7 @@ my $ECMD = "escaped-command";	# maybe something better?
 my @special_commands = ("command", "env", "file", "kbd", "option",
 			"samp", "url", "var");
 
-sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
+sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
 
     $Rdname = $_[0];
     open(rdfile, "<$Rdname") or die "Rdconv(): Couldn't open '$Rdfile': $!\n";
@@ -78,6 +78,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     $type = $_[1];
     $debug = $_[2];
     $pkgname = $_[4];
+    $version = $_[5];
 
     if($type !~ /,/) {
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one
@@ -643,7 +644,7 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
     html_print_block("seealso", "See Also");
     html_print_codeblock("examples", "Examples");
 
-    print $htmlout (html_functionfoot());
+    print $htmlout (html_functionfoot($pkgname, $version));
 }
 
 sub html_striptitle {
@@ -1193,11 +1194,14 @@ sub html_functionhead
 
 sub html_functionfoot
 {
+    my ($pkgname, $version) = @_;
     my $retval;
 
     if($HTML){
-	$retval .= "\n\n<hr><div align=\"center\">" .
-	    "<a href=\"00Index$HTML\">[Package Contents]</a></div>\n\n";
+	$retval .= "\n\n<hr><div align=\"center\">[Package";
+ 	$retval .= " <em>$pkgname</em>" if $pkgname ne "unknown";
+	$retval .= " version $version" if $version ne "";
+	$retval .= " <a href=\"00Index$HTML\">Index]</a></div>\n\n";
     }
 
     $retval .= "</body></html>\n";
@@ -2714,7 +2718,7 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
     html_print_codeblock("examples", "Examples");
 
     JScript() if $using_chm && $nlink > 0;
-    print $htmlout (html_functionfoot());
+    print $htmlout (html_functionfoot($pkgname, $version));
     if($_[0]) { close $htmlout; }
     $using_chm = 0;
 }

@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2003 R Development Core Team
+# Copyright (C) 1997-2004 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
     $opt_example = 1;
 }
 
-($pkg, $lib, @mandir) = buildinit();
+($pkg, $version, $lib, @mandir) = buildinit();
 
 
 ## !!! Attempting to create the ability to have packages stored in a 
@@ -100,7 +100,7 @@ if (!$dest) {
 
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
 
-build_index($lib, $dest, "");
+build_index($lib, $version, $dest, "");
 if($opt_index){
     exit 0;
 }
@@ -164,7 +164,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv($manfile, "txt", "", "$destfile", $pkg);
+		Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -175,7 +175,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile", $pkg);
+		Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -184,7 +184,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "latex", $targetfile.".tex");
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile");
+		Rdconv($manfile, "latex", "", "$destfile", $version);
 	    }
 	}
 
@@ -193,7 +193,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
 		if(-f $destfile) {unlink $destfile;}
-		Rdconv($manfile, "example", "", "$destfile");
+		Rdconv($manfile, "example", "", "$destfile", $version);
 		if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
@@ -265,6 +265,7 @@ Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
   -d, --debug           print debugging information
+  -os, --OS             OS to assume: unix (default) or windows
   --rhome               R home directory, defaults to environment R_HOME
   --html                build HTML files    (default is all)
   --txt                 build text files    (default is all)

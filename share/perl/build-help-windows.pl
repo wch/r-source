@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2003 R Development Core Team
+# Copyright (C) 1997-2004 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
     $opt_chm = 1;
 }
 
-($pkg, $lib, @mandir) = buildinit();
+($pkg, $version, $lib, @mandir) = buildinit();
 $dest = $ARGV[2];
 if (!$dest) {
     $dest = file_path($lib, $pkg);
@@ -88,7 +88,7 @@ if($opt_chm) {
     }
     open_hhp($pkg);
 }
-build_index($lib, $dest, $chmdir);
+build_index($lib, $dest, $version, $chmdir);
 if($opt_index){
     exit 0;
 }
@@ -167,7 +167,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv($manfile, "txt", "", "$destfile", $pkg);
+		Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -178,7 +178,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile", $pkg);
+		Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -190,7 +190,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile,$manage)) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "chm", "", "$destfile", $pkg);
+		Rdconv($manfile, "chm", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -199,7 +199,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "latex", $targetfile.".tex");
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile");
+		Rdconv($manfile, "latex", "", "$destfile", $version);
 	    }
 	}
 
@@ -208,7 +208,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
 		if(-f $destfile) {unlink $destfile;}
-		Rdconv($manfile, "example", "", "$destfile");
+		Rdconv($manfile, "example", "", "$destfile", $version);
 		if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
