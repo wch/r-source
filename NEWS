@@ -309,6 +309,8 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
+    o   minor copy-paste error in example(names) (PR#6594)
+
     o	contrasts() turns a logical variable into a factor.  This now
 	always has levels c("FALSE", "TRUE") even if only one (or
 	none) of these occur in the variable.

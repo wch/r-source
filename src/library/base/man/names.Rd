@@ -55,10 +55,10 @@ names(z)
 names(z)[3] <- "c2"
 z
 
-## assign just one name
+
 z <- 1:3
 names(z)
-# change just the name of the third element.
+## assign just one name
 names(z)[2] <- "b"
 z
 }
