@@ -535,6 +535,8 @@ stopifnot(kronecker(diag(1, 3), M) == diag(1, 3) %x% M)
 
 
 ## list
+str(pl <- as.pairlist(ps.options()))
+
 ## These are all TRUE:
 stopifnot(is.list(pl) && is.pairlist(pl),
           !is.null(list()),
