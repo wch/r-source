@@ -79,10 +79,10 @@ writeChar(object, con, nchars = nchar(object), eos = "")
 
 \value{
   For \code{readBin}, a vector of appropriate mode and length the number of
-  items read (which might be less than \code{length(nchars)}).
+  items read (which might be less than \code{n}).
 
   For \code{readChar}, a character vector of length the number of
-  items read (which might be less than \code{n}).
+  items read (which might be less than \code{length(nchars)}).
 
   For \code{writeBin} and \code{writeChar}, none.
 }
