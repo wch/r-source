@@ -51,12 +51,12 @@ libR:
 	@$(MAKE) --no-print-directory -C $(RHOME)/src/gnuwin32 libR.a
 
 $(DLLNAME)_res.rc:
-	PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
+	@PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
 
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/src/include/Rversion.h
 
 $(DLLNAME).a: $(OBJS)
-	$(RM) -f $@
+	@$(RM) -f $@
 	$(AR) cr $@ *.o
 	$(RANLIB) $@
 

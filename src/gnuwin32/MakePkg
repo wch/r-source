@@ -155,8 +155,8 @@ $(DATA): $(DSOURCES)
 
 
 $(DYNLIB): $(SSPKG)/$(DLLNAME).dll
-	$(MKDIR) -p $(DPKG)/libs
-	$(CP) $^ $@
+	@$(MKDIR) -p $(DPKG)/libs
+	@$(CP) $^ $@
 
 $(SSPKG)/$(DLLNAME).dll: FORCE
 	@echo "  making DLL"
@@ -183,8 +183,13 @@ MANWIN32=$(wildcard $(SPKG)/man/windows/*.[Rr]d)
 
 mansrcs: $(DPKG)/man/$(PKG).Rd
 
+PKGMANFILES=$(MANMAIN) $(MANWIN32)
 $(DPKG)/man/$(PKG).Rd: $(MANMAIN) $(MANWIN32)
+ifneq ($(strip $(PKGMANFILES)),)
 	@echo "  installing man source files"
 	@$(RM) -rf $(DPKG)/man
 	@$(MKDIR) -p $(DPKG)/man
 	@$(CAT) $^ > $(DPKG)/man/$(PKG).Rd
+else
+	@$(ECHO) "  no man files in this package"
+endif
