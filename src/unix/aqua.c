@@ -86,7 +86,7 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
 
 void R_ProcessEvents(void);
 
-//#define AQUA_POLLED_EVENTS 1
+/* #define AQUA_POLLED_EVENTS 1 */
  
 #ifdef AQUA_POLLED_EVENTS 
 static void (* otherPolledEventHandler)(void);
