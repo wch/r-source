@@ -50,7 +50,6 @@ SOURCES_C = \
 	list.c \
 	logic.c \
 	main.c \
-	map.c \
 	match.c \
 	memory.c \
 	model.c \
