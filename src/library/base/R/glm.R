@@ -471,7 +471,7 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 	   },
 	   "F" = {
 	       Fvalue <- abs((table[, dev.col]/table[, "Df"])/scale)
-	       cbind(table, FALSE = Fvalue,
+	       cbind(table, F = Fvalue,
 		     "Pr(>F)" = 1-pf(Fvalue, abs(table[, "Df"]), abs(df.scale)))
 	   },
 	   "Cp" = {
