@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 2.0.0 (2004-07-09).
+   <p>The current version of this document is 2.0.0 (2004-07-11).
 
    ISBN 3-900051-02-X
 
@@ -51,6 +51,10 @@ can use
 
 <pre class="smallexample">     gzip -dc R-<var>x</var>.<var>y</var>.<var>z</var>.tgz | tar xvf -
      </pre>
+
+   <p>The pathname of the directory into which the sources are unpacked should
+not contain spaces, as <code>make</code> (specifically GNU make 3.80) does not
+expect spaces.
 
    <p>If you need to transport the sources on floppy disks, you can download
 the <code>R-</code><var>x</var><code>.</code><var>y</var><code>.</code><var>z</var><code>.tgz-split.*</code> files and paste them
@@ -209,7 +213,8 @@ directory (say, <code></code><var>TOP_SRCDIR</var><code></code>).  To build in
 
 <p>and so on, as described further below.  This has the advantage of always
 keeping your source tree "clean".  (You may need GNU <code>make</code> to
-allow this.)
+allow this, and the pathname of the build directory should not contain
+spaces.)
 
    <p>Make will also build plain text help pages as well as <small>HTML</small> and
 LaTeX versions of the R object documentation (the three kinds can
