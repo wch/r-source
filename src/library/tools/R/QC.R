@@ -184,28 +184,29 @@ function(package, dir, lib.loc = NULL)
        && basename(dir) == "methods") {
         ## Undocumented S4 methods?
         ## Only do this for package methods itself, to get us started.
-        where <- paste("package:", basename(dir), sep = "")
         ## Courtesy JMC for advice on finding all S4 methods ...
         S4methods <-
-            sapply(getGenerics(where),
+            sapply(getGenerics(codeEnv),
                    function(f) {
                        meths <-
-                           linearizeMlist(getMethods(f, where = where)) 
+                           linearizeMlist(getMethods(f, codeEnv))
                        sigs <-
-                           sapply(meths@classes,
-                                  function(x) paste(x, collapse = ","))
+                           sapply(meths@classes, paste, collapse = ",") 
                        if(length(sigs))
                            paste(f, ",", sigs, sep = "")
                        else
                            character()
                    })
         S4methods <- unlist(S4methods, use.names = FALSE)
+        S4methods <-
+            S4methods[!sapply(S4methods,
+                              function(u) topicName("method", u))
+                      %in% allDocTopics]
         undocObjs <-
-            c(undocObjs,
-              list("S4 methods" =
-                   S4methods[!sapply(S4methods,
-                                     function(u) topicName("method", u))
-                             %in% allDocTopics]))
+            c(undocObjs, list("S4 methods" =
+                              sub("([^,]*),(.*)",
+                                  "\\\\S4method{\\1}{\\2}",
+                                  S4methods)))
     }
                              
     class(undocObjs) <- "undoc"
@@ -349,9 +350,29 @@ function(package, dir, lib.loc = NULL,
     }
     ## </FIXME>
 
+    useS4methods <- !is.na(match("package:methods", search()))
+    S4methods <- character()
+    S4methodsEnv <- new.env()
+    if(useS4methods) {
+        lapply(getGenerics(codeEnv),
+               function(f) {
+                   meths <-
+                       linearizeMlist(getMethods(f, codeEnv))
+                   sigs <-
+                       sapply(meths@classes, paste, collapse = ",")
+                   if(!length(sigs)) return()
+                   names <- paste("\\S4method{", f, "}{", sigs, "}",
+                                  sep = "")
+                   for(i in seq(along = sigs))
+                       assign(names[i], meths@methods[[i]],
+                              envir = S4methodsEnv)
+                   S4methods <- c(S4methods, names)
+               })
+    }
+                   
     docsEnv <- new.env()
-    checkCoDoc <- function(f) {
-        ffc <- formals(get(f, envir = codeEnv))
+    checkCoDoc <- function(f, envir = codeEnv) {
+        ffc <- formals(get(f, envir = envir))
         ffd <- formals(get(f, envir = docsEnv))
         if(!use.positions) {
             ffc <- ffc[sort(names(ffc))]
@@ -411,6 +432,12 @@ function(package, dir, lib.loc = NULL,
         usages <- ls(envir = docsEnv, all.names = TRUE)
         for(f in usages[usages %in% funs])
             badUsagesInFile <- c(badUsagesInFile, checkCoDoc(f))
+        if(useS4methods) {
+            for(f in usages[usages %in% S4methods])
+                badUsagesInFile <-
+                    c(badUsagesInFile,
+                      checkCoDoc(f, envir = S4methodsEnv))
+        }
         if(length(badUsagesInFile) > 0)
             badDocObjs[[docObj]] <- badUsagesInFile
 
@@ -490,9 +517,9 @@ function(x, ...)
     usagesNotInCode <- attr(x, "usagesNotInCode")
     if(length(usagesNotInCode) > 0) {
         for(fname in names(usagesNotInCode)) {
-            writeLines(paste("Objects with usage in documentation",
-                             "object", sQuote(fname),
-                             "but missing from code:"))
+            writeLines(paste("Functions/methods with usage in",
+                             "documentation object", sQuote(fname),
+                             "but not in code:"))
             print(unique(usagesNotInCode[[fname]]))
             writeLines("")
         }
@@ -804,6 +831,8 @@ function(package, dir, lib.loc = NULL)
             c(allGenerics,
               allObjs[sapply(allObjs, .isS3Generic, env) == TRUE])
     }
+    ## R internal S3 generics.
+    allGenerics <- c(allGenerics, .getInternalS3generics())
 
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
@@ -811,12 +840,12 @@ function(package, dir, lib.loc = NULL)
     methodsStopList <- .makeS3MethodsStopList(basename(dir))
     methodsInPackage <- sapply(allGenerics, function(g) {
         ## <FIXME>
-        ## Code taken from older versions of methods().
         ## We should really determine the name g dispatches for, see
         ## a current version of methods() [2003-07-07].
-        name <- paste("^", g, ".", sep = "")
-        methods <- grep(gsub("([.[])", "\\\\\\1", name),
-                        funs, value = TRUE)
+        ## Matching via grep() is tricky with e.g. a '$' in the name of
+        ## the generic function ... hence substr().
+        name <- paste(g, ".", sep = "")
+        methods <- funs[substr(funs, 1, nchar(name)) == name]
         ## </FIXME>
         methods <- methods[! methods %in% methodsStopList]
         if(hasNamespace) {
@@ -891,7 +920,9 @@ function(package, dir, lib.loc = NULL)
 
         methodsWithFullName <-
             sapply(usages[usages %in% allMethodsInPackage],
-                   function(f) any(grep(paste(f, "*<-"), usageTxt)))
+                   function(f)
+                   any(grep(paste("\"?", f, "\"? *<-", sep = ""),
+                            usageTxt)))
         methodsWithFullName <-
             methodsWithFullName[methodsWithFullName == TRUE]
 
@@ -911,25 +942,27 @@ function(package, dir, lib.loc = NULL)
 print.checkDocStyle <-
 function(x, ...) {
     for(docObj in names(x)) {
-        writeLines(paste("Usages in documentation object ",
-                         sQuote(docObj), ":", sep = ""))
-        methodsWithGeneric <- x[[docObj]][["withGeneric"]]
-        if(length(methodsWithGeneric) > 0) {
-            writeLines("Methods shown alongside generic:")
-            for(g in names(methodsWithGeneric)) {
-                methods <- paste(methodsWithGeneric[[g]],
-                                 collapse = " ")
-                writeLines(strwrap(paste(g, ": ", methods, sep = ""),
-                                   indent = 2, exdent = 4))
-            }
-        }
+        ## <NOTE>
+        ## With \method{GENERIC}{CLASS} now being transformed to show
+        ## both GENERIC and CLASS info, documenting S3 methods on the
+        ## same page as their generic is not necessarily a problem any
+        ## more (as one can refer to the generic or the methods in the
+        ## documentation, in particular for the primary argument).
+        ## Hence, even if we still provide information about this, we
+        ## no longer print it by default.  One can still access it via
+        ##   lapply(checkDocStyle("foo"), "[[", "withGeneric")
+        ## (but of course it does not print that nicely anymore),
+        ## </NOTE>
         methodsWithFullName <- x[[docObj]][["withFullName"]]
         if(length(methodsWithFullName > 0)) {
-            writeLines("Methods shown with their own name:")
-            writeLines(strwrap(paste(names(methodsWithFullName)),
-                               indent = 2, exdent = 4))
+            writeLines(paste("S3 methods shown with full name in ",
+                             "documentation object ",
+                             sQuote(docObj), ":", sep = ""))
+            writeLines(strwrap(paste(names(methodsWithFullName),
+                                     collapse = " "),
+                               indent = 2, exdent = 2))
+            writeLines("")
         }
-        writeLines("")
     }
     invisible(x)
 }
@@ -1017,20 +1050,33 @@ function(package, dir, file, lib.loc = NULL,
         }
     }
 
-    exprs <- if(useSaveImage) {
+    if(useSaveImage) {
         if(verbose) writeLines("loading saved image ...")
         codeEnv <- new.env()
         load(file, envir = codeEnv)
-        lapply(ls(envir = codeEnv, all.names = TRUE),
-               function(f) {
-                   f <- get(f, envir = codeEnv)
-                   if(typeof(f) == "closure") body(f) else NULL
-               })
+        exprs <- lapply(ls(envir = codeEnv, all.names = TRUE),
+                        function(f) {
+                            f <- get(f, envir = codeEnv)
+                            if(typeof(f) == "closure")
+                                body(f)
+                            else
+                                NULL
+                        })
+        if(!is.na(match("package:methods", search()))) {
+            ## Also check the code in S4 methods.
+            ## This may find things twice if a setMethod() with a bad FF
+            ## call is from inside a function (e.g., InitMethods()).
+            for(f in getGenerics(codeEnv)) {
+                meths <- linearizeMlist(getMethods(f, codeEnv))
+                exprs <- c(exprs, lapply(meths@methods, body))
+            }
+        }
     }
-    else
-        try(parse(file = file, n = -1))
-    if(inherits(exprs, "try-error"))
-        stop(paste("parse error in file", sQuote(file)))
+    else {
+        exprs <- try(parse(file = file, n = -1))
+        if(inherits(exprs, "try-error"))
+            stop(paste("parse error in file", sQuote(file)))
+    }
     for(i in seq(along = exprs)) findBadExprs(exprs[[i]])
     class(badExprs) <- "checkFF"
     if(verbose)
@@ -1226,6 +1272,22 @@ function(package, dir, lib.loc = NULL)
             ls(envir = env, all.names = TRUE)
         genFuns <- allObjs[sapply(allObjs, .isS3Generic, env) == TRUE]
 
+        ## If we're checking the S3 generics from base, also add the
+        ## internal ones.  Currently, only two of there (unlist and
+        ## as.vector) are not .Primitive and hence have formals, but
+        ## anyway ...
+        ## <FIXME>
+        ## We cannot simply add all of .getInternalS3generics() as
+        ## checkArgs() (currently?) does not know about .Primitive.
+        ## Either change that, or at least use
+        ##   internalS3generics <- .getInternalS3generics()
+        ##   internalS3generics[!sapply(internalS3generics,
+        ##                              .isPrimitive, NULL)]
+        ## for adding ...
+        if(identical(env, as.environment(NULL)))
+            genFuns <- c(genFuns, c("as.vector", "unlist"))
+        ## </FIXME>
+
         for(g in genFuns) {
             ## Find all methods in funs for generic g.
             ## <FIXME>
@@ -1359,6 +1421,15 @@ function(package, dir, lib.loc = NULL)
     }
 
     replaceFuns <- c(replaceFuns, grep("<-", lsCode, value = TRUE))
+
+    .checkLastFormalArg <- function(f) {
+        argNames <- names(formals(f))
+        if(!length(argNames))
+            TRUE                        # most likely a .Primitive()
+        else
+            identical(argNames[length(argNames)], "value")
+    }
+    
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
     badReplaceFuns <-
@@ -1367,22 +1438,38 @@ function(package, dir, lib.loc = NULL)
             ## Should maybe get S3 methods from the registry ...
             f <- get(f, envir = codeEnv)
             if(!is.function(f)) return(TRUE)
-            argNames <- names(formals(f))
-            if(!length(argNames))
-                TRUE                    # most likely a .Primitive()
-            else
-                identical(argNames[length(argNames)], "value")
+            .checkLastFormalArg(f)
         }) == FALSE]
+
+    if(!is.na(match("package:methods", search()))) {
+        S4generics <- getGenerics(codeEnv)
+        ## Assume that the ones with names ending in '<-' are always
+        ## replacement functions.
+        S4generics <- grep("<-$", S4generics, value = TRUE)
+        badS4ReplaceMethods <-
+            sapply(S4generics,
+                   function(f) {
+                       meths <- linearizeMlist(getMethods(f, codeEnv))
+                       ind <- which(sapply(meths@methods,
+                                           .checkLastFormalArg)
+                                    == FALSE)
+                       if(!length(ind))
+                           character()
+                       else {
+                           sigs <- sapply(meths@classes[ind], paste,
+                                          collapse = ",")
+                           paste("\\S4method{", f, "}{", sigs, "}",
+                                 sep = "")
+                       }
+                   })
+        badReplaceFuns <-
+            c(badReplaceFuns,
+              unlist(badS4ReplaceMethods, use.names = FALSE))
+    }
+        
 
     class(badReplaceFuns) <- "checkReplaceFuns"
     badReplaceFuns
-}
-
-print.checkReplaceFuns <-
-function(x, ...)
-{
-    if(length(x) > 0) print(unclass(x), ...)
-    invisible(x)
 }
 
 print.checkReplaceFuns <-
