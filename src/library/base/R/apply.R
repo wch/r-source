@@ -8,7 +8,7 @@ apply <- function(X, MARGIN, FUN, ...)
     if(dl == 0)
 	stop("dim(X) must have a positive length")
     ds <- 1:dl
-    if(length(class(X)) > 0)
+    if(length(oldClass(X)) > 0)
 	X <- if(dl == 2) as.matrix(X) else as.array(X)
     dn <- dimnames(X)
 

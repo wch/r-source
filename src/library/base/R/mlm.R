@@ -18,7 +18,7 @@ summary.mlm <- function(object, ...)
     }
     value <- vector("list", ny)
     names(value) <- paste("Response", ynames)
-    cl <- class(object)
+    cl <- oldClass(object)
     class(object) <- cl[match("mlm", cl):length(cl)][-1]
     for(i in seq(ny)) {
 	object$coefficients <- coef[, i]

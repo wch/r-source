@@ -26,7 +26,7 @@ summary.default <-
 	for(i in 1:n) {
 	    ii <- object[[i]]
 	    ll[i] <- length(ii)
-	    cls <- class(ii)
+	    cls <- oldClass(ii)
 	    sumry[i, 2] <- if(length(cls)>0) cls[1] else "-none-"
 	    sumry[i, 3] <- mode(ii)
 	}

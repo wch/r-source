@@ -80,7 +80,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	fc <- object$call
 	fc$formula <- Terms
 	fob <- list(call = fc)
-	class(fob) <- class(object)
+	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
         oldn <- length(y)
@@ -170,7 +170,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	fc <- object$call
 	fc$formula <- Terms
 	fob <- list(call = fc)
-	class(fob) <- class(object)
+	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
         oldn <- length(y)

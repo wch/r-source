@@ -9,7 +9,7 @@ print.logLik <- function(x, digits = getOption("digits"), ...)
 
 str.logLik <- function(object, digits = max(2, getOption("digits") - 3), ...)
 {
-    cl <- class(object)
+    cl <- oldClass(object)
     cat("Class", if (length(cl) > 1) "es",
         " `", paste(cl, collapse = "', `"), "' : ",
         format(c(object), digits=digits),

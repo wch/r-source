@@ -137,7 +137,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     }
     environment(terms) <- environment(x)
     if(!inherits(terms, "formula"))
-        class(terms) <- c(class(terms), "formula")
+        class(terms) <- c(oldClass(terms), "formula")
     terms
 }
 

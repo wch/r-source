@@ -28,7 +28,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 	    if(is.matrix(obj))
 		md <- "matrix"
 	}
-	obj.class <- class(obj)
+	obj.class <- oldClass(obj)
 	if(!is.null(obj.class)) {
 	    md <- obj.class[1]
 	    if(inherits(obj, "factor"))

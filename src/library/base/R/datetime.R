@@ -121,7 +121,7 @@ print.POSIXlt <- function(x, ...)
 summary.POSIXct <- function(object, digits=15, ...)
 {
     x <- summary.default(unclass(object), digits=digits, ...)
-    class(x) <- class(object)
+    class(x) <- oldClass(object)
     x
 }
 
@@ -189,7 +189,7 @@ Summary.POSIXct <- function (x, ...)
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(paste(.Generic, "not defined for POSIXct objects"))
     val <- NextMethod(.Generic)
-    class(val) <- class(x)
+    class(val) <- oldClass(x)
     val
 }
 
@@ -205,7 +205,7 @@ Summary.POSIXlt <- function (x, ...)
 "[.POSIXct" <-
 function(x, ..., drop = TRUE)
 {
-    cl <- class(x)
+    cl <- oldClass(x)
     class(x) <- NULL
     val <- NextMethod("[")
     class(val) <- cl
@@ -215,7 +215,7 @@ function(x, ..., drop = TRUE)
 "[[.POSIXct" <-
 function(x, ..., drop = TRUE)
 {
-    cl <- class(x)
+    cl <- oldClass(x)
     class(x) <- NULL
     val <- NextMethod("[[")
     class(val) <- cl
@@ -226,7 +226,7 @@ function(x, ..., drop = TRUE)
 function(x, ..., value) {
     if(!as.logical(length(value))) return(x)
     value <- as.POSIXct(value)
-    cl <- class(x)
+    cl <- oldClass(x)
     class(x) <- class(value) <- NULL
     x <- NextMethod(.Generic)
     class(x) <- cl
@@ -236,7 +236,7 @@ function(x, ..., value) {
 as.character.POSIXt <- function(x, ...) format(x, ...)
 
 str.POSIXt <- function(object, ...) {
-    cl <- class(object)
+    cl <- oldClass(object)
     cat("`", cl[min(2, length(cl))],"', format:", sep = "")
     str(format(object), ...)
 }
@@ -401,7 +401,7 @@ round.difftime <- function (x, digits = 0)
 
 "[.difftime" <- function(x, ..., drop = TRUE)
 {
-    cl <- class(x)
+    cl <- oldClass(x)
     class(x) <- NULL
     val <- NextMethod("[")
     class(val) <- cl
@@ -717,7 +717,7 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
 {
     if(!as.logical(length(value))) return(x)
     value <- as.POSIXlt(value)
-    cl <- class(x)
+    cl <- oldClass(x)
     class(x) <- class(value) <- NULL
     for(n in names(x)) x[[n]][i] <- value[[n]]
     class(x) <- cl

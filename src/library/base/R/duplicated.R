@@ -1,6 +1,5 @@
 duplicated <- function(x, incomparables = FALSE, ...)
 {
-    if (!is.null(x) && is.null(class(x))) class(x) <- data.class(x)
     UseMethod("duplicated", x, incomparables, ...)
 }
 
@@ -36,7 +35,6 @@ duplicated.matrix <- duplicated.array <-
 
 unique <- function(x, incomparables = FALSE, ...)
 {
-    if (!is.null(x) && is.null(class(x))) class(x) <- data.class(x)
     UseMethod("unique", x, incomparables, ...)
 }
 

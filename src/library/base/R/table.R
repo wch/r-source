@@ -150,7 +150,7 @@ as.table.default <- function(x, ...)
         for(i in which(sapply(dnx, is.null)))
             dnx[[i]] <- LETTERS[seq(length = dim(x)[i])]
         dimnames(x) <- dnx
-        class(x) <- c("table", class(x))
+        class(x) <- c("table", oldClass(x))
         return(x)
     }
     else

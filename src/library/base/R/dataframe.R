@@ -74,6 +74,7 @@ dimnames.data.frame <- function(x) list(attr(x,"row.names"), names(x))
     x
 }
 
+## <FIXME> what is really intended here </FIXME>
 as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
     if(is.null(x))			# can't assign class to NULL
 	return(as.data.frame(list()))
@@ -89,7 +90,7 @@ as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
 
 as.data.frame.data.frame <- function(x, row.names = NULL, optional = FALSE)
 {
-    cl <- class(x)
+    cl <- oldClass(x)
     i <- match("data.frame", cl)
     if(i > 1)
 	class(x) <- cl[ - (1:(i-1))]
@@ -203,10 +204,12 @@ as.data.frame.model.matrix <- function(x, row.names = NULL, optional = FALSE)
     value
 }
 
+## will always have a class here
 "[.AsIs" <- function(x, i, ...) structure(NextMethod("["), class = class(x))
 
 as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
 {
+    ## why not remove class and NextMethod here?
     if(length(dim(x))==2)
 	as.data.frame.model.matrix(x, row.names, optional)
     else
@@ -292,7 +295,7 @@ data.frame <-
             }
             if(is.character(xi1) && class(xi1) == "AsIs") {
                 ## simple char vectors only
-                cl <- class(xi1) # `methods' adds a class
+                cl <- class(xi1) # `methods' adds a class -- Eh?
                 vlist[[i]] <- list(structure(rep(xi1, length=nr), class=cl))
                 next
             }
@@ -349,14 +352,14 @@ data.frame <-
 	y <- NextMethod("[")
 	if(any(is.na(names(y))))
 	    stop("undefined columns selected")
-	return(structure(y, class = class(x), row.names = row.names(x)))
+	return(structure(y, class = oldClass(x), row.names = row.names(x)))
     }
 
     ## preserve the attributes for later use ...
 
     rows <- attr(x, "row.names")
     cols <- names(x)
-    cl <- class(x)
+    cl <- oldClass(x) # doesn't really matter unless called directly
     class(x) <- attr(x, "row.names") <- NULL
 
     ## handle the column only subsetting ...
@@ -457,7 +460,7 @@ data.frame <-
     else {
 	stop("Need 0, 1, or 2 subscripts")
     }
-    cl <- class(x)
+    cl <- oldClass(x)
     ## delete class: Version 3 idiom
     ## to avoid any special methods for [[, etc
     class(x) <- NULL
@@ -577,7 +580,7 @@ data.frame <-
 
 "[[<-.data.frame"<- function(x, i, j, value)
 {
-    cl <- class(x)
+    cl <- oldClass(x)
     ## delete class: Version 3 idiom
     ## to avoid any special methods for [[, etc
     class(x) <- NULL
@@ -669,7 +672,7 @@ xpdrows.data.frame <- function(x, old.rows, new.rows)
     for (i in 1:nc) {
 	y <- x[[i]]
 	dy <- dim(y)
-	cy <- class(y)
+	cy <- oldClass(y)
 	class(y) <- NULL
 	if (length(dy) == 2) {
 	    dny <- dimnames(y)
@@ -745,7 +748,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
         if(is.matrix(xi)) allargs[[i]] <- xi <- as.data.frame(xi)
 	if(inherits(xi, "data.frame")) {
 	    if(is.null(cl))
-		cl <- class(xi)
+		cl <- oldClass(xi)
 	    ri <- row.names(xi)
 	    ni <- length(ri)
 	    if(is.null(clabs))
@@ -957,7 +960,7 @@ Math.data.frame <- function (x, ...)
 	sapply(x, is.complex)
     if (all(mode.ok)) {
 	r <- lapply(x, var.f)
-	class(r) <- class(x)
+	class(r) <- oldClass(x)
 	row.names(r) <- row.names(x)
 	return(r)
     }

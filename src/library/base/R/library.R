@@ -1,8 +1,8 @@
 library <-
-function(package, help, lib.loc = NULL, character.only = FALSE,
-         logical.return = FALSE, warn.conflicts = TRUE,
-         keep.source = getOption("keep.source.pkgs"),
-         verbose = getOption("verbose"))
+    function(package, help, lib.loc = NULL, character.only = FALSE,
+             logical.return = FALSE, warn.conflicts = TRUE,
+             keep.source = getOption("keep.source.pkgs"),
+             verbose = getOption("verbose"))
 {
     testRversion <- function(descfile)
     {
@@ -44,6 +44,49 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                        "See the Note in ?library"))
     }
 
+    checkConflicts <- function(package, pkgname, pkgpath)
+    {
+        dont.mind <- c("last.dump", "last.warning", ".Last.value",
+                       ".Random.seed", ".First.lib", ".packageName")
+        sp <- search()
+        lib.pos <- match(pkgname, sp)
+        if(file.exists(objectsFile <-
+                       file.path(pkgpath, "Meta", "objects.rds"))) {
+            ob <- .readRDS(objectsFile)
+            ob <- ob[!(ob$class == "genericFunction"
+                       && ob$origpkg !=package), 1]
+        } else {
+            ob <- objects(lib.pos, all = TRUE)
+            if("package:methods" %in% sp) {
+                ## ignore generics not defined for the package
+                if( length(ob) > 0 )
+                    ob <- ob[sapply(ob, function(f) {
+                        f <- get(f, pos = lib.pos)
+                        fAttr <- c(class(f), attr(f, "package"))
+                        !(length(fAttr) == 2
+                          && fAttr[1] == "genericFunction"
+                          && fAttr[2] != package)})]
+            }
+        }
+        fst <- TRUE
+        ipos <- seq(along = sp)[-c(lib.pos, match("Autoloads", sp))]
+        for (i in ipos) {
+            obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
+            if (any(obj.same > 0) &&
+                length(same <- (obs <- ob[obj.same])
+                       [!obs %in% dont.mind])) {
+                if (fst) {
+                    fst <- FALSE
+                    cat("\nAttaching package ", sQuote(package),
+                        ":\n\n", sep = "")
+                }
+                cat("\n\tThe following object(s) are masked",
+                    if (i < lib.pos) "_by_" else "from", sp[i],
+                    ":\n\n\t", same, "\n\n")
+            }
+        }
+    }
+
     sQuote <- function(s) paste("'", s, "'", sep = "")
     if(!missing(package)) {
 	if(!character.only)
@@ -60,17 +103,16 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             ## Note for detail: this does _not_ test whether dispatch is
             ## currently on, but rather whether the package is attached
             ## (cf .isMethodsDispatchOn).
-            hasMethods <- !is.na(match("package:methods", search()))
+            hadMethods <- "package:methods" %in% search()
+
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
             if(length(pkgpath) == 0) {
-                txt <- paste("There is no package called",
-                             sQuote(package))
+                txt <- paste("There is no package called", sQuote(package))
                 if(logical.return) {
                     warning(txt)
 		    return(FALSE)
-		}
-		else stop(txt)
+		} else stop(txt)
             }
             which.lib.loc <- dirname(pkgpath)
             descfile <- system.file("DESCRIPTION", package = package,
@@ -104,6 +146,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             .Internal(lib.fixup(loadenv, env))
             ## save the package name in the environment
             assign(".packageName", package, envir = env)
+
             ## run .First.lib
 	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
@@ -118,45 +161,12 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                     if (logical.return) return(FALSE)
                     else stop(".First.lib failed")
             }
+
 	    if(warn.conflicts &&
-               !exists(".conflicts.OK", envir = env, inherits = FALSE)) {
-		## Check for conflicts
-		dont.mind <- c("last.dump", "last.warning",
-                               ".Last.value", ".Random.seed")
-		lib.pos <- match(pkgname, search())
-		ob <- objects(lib.pos)
-                ## ignore generics not defined for the package
-                if(!is.na(match("package:methods", search()))) {
-                    if( length(ob) > 0 )
-                        ob <- ob[sapply(ob, function(f) {
-                            f<- get(f, pos = lib.pos)
-                            fAttr <- c(class(f), attr(f, "package"))
-                            (length(fAttr) == 2
-                             && fAttr[1] == "genericFunction"
-                             && fAttr[2] != package)
-                        }) == FALSE]
-                }
-		fst <- TRUE
-		ipos <- seq(along = sp <- search())[-c(lib.pos,
-			    match("Autoloads", sp))]
-		for (i in ipos) {
-		    obj.same <- match(objects(i), ob, nomatch = 0)
-		    if (any(obj.same > 0) &&
-			length(same <- (obs <- ob[obj.same])
-			       [!obs %in% dont.mind])) {
-			if (fst) {
-			    fst <- FALSE
-			    cat("\nAttaching package ", sQuote(package),
-                                ":\n\n", sep = "")
-			}
-			cat("\n\tThe following object(s) are masked",
-			    if (i < lib.pos) "_by_" else "from", sp[i],
-			    ":\n\n\t", same, "\n\n")
-		    }
-		}
-	    }
-            if(hasMethods
-               && !identical(pkgname, "package:methods"))
+               !exists(".conflicts.OK", envir = env, inherits = FALSE))
+                checkConflicts(package, pkgname, pkgpath)
+
+            if(hadMethods && !identical(pkgname, "package:methods"))
                cacheMetaData(env, TRUE)
             on.exit()
 	}
@@ -277,8 +287,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 }
 
 library.dynam <-
-function(chname, package = .packages(), lib.loc = NULL, verbose =
-         getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
+    function(chname, package = .packages(), lib.loc = NULL, verbose =
+             getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
     sQuote <- function(s) paste("'", s, "'", sep = "")
 
@@ -308,8 +318,8 @@ function(chname, package = .packages(), lib.loc = NULL, verbose =
 }
 
 require <-
-function(package, quietly = FALSE, warn.conflicts = TRUE,
-         keep.source = getOption("keep.source.pkgs"), character.only=FALSE)
+    function(package, quietly = FALSE, warn.conflicts = TRUE,
+             keep.source = getOption("keep.source.pkgs"), character.only=FALSE)
 {
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -320,8 +330,7 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     } else TRUE
 }
 
-.packages <-
-function(all.available = FALSE, lib.loc = NULL)
+.packages <- function(all.available = FALSE, lib.loc = NULL)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -341,8 +350,7 @@ function(all.available = FALSE, lib.loc = NULL)
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
 }
 
-.path.package <-
-function(package = .packages(), quiet = FALSE)
+.path.package <- function(package = .packages(), quiet = FALSE)
 {
     if(length(package) == 0) return(character(0))
     s <- search()
@@ -366,8 +374,8 @@ function(package = .packages(), quiet = FALSE)
 }
 
 .find.package <-
-function(package, lib.loc = NULL, quiet = FALSE,
-         verbose = getOption("verbose"))
+    function(package, lib.loc = NULL, quiet = FALSE,
+             verbose = getOption("verbose"))
 {
     sQuote <- function(s) paste("'", s, "'", sep = "")
 
@@ -415,8 +423,7 @@ function(package, lib.loc = NULL, quiet = FALSE,
     paths
 }
 
-print.packageInfo <-
-function(x, ...)
+print.packageInfo <- function(x, ...)
 {
     if(!inherits(x, "packageInfo")) stop("wrong class")
     sQuote <- function(s) paste("'", s, "'", sep = "")

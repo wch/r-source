@@ -64,7 +64,7 @@ function(dir, outDir)
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!.fileTest("-d", outMetaDir)) dir.create(outMetaDir)
-    
+
     .installPackageRdIndices(dir, outDir)
     .installPackageVignetteIndex(dir, outDir)
     .installPackageDemoIndex(dir, outDir)
@@ -78,10 +78,10 @@ function(dir, outDir)
     dir <- .convertFilePathToAbsolute(dir)
     docsDir <- file.path(dir, "man")
     if(!.fileTest("-d", docsDir)) return()
-    
+
     dataDir <- file.path(dir, "data")
     packageName <- basename(dir)
-    
+
     indices <- c(file.path("Meta", "Rd.rds"), "CONTENTS", "INDEX")
     upToDate <- .fileTest("-nt", file.path(outDir, indices), docsDir)
     if(.fileTest("-d", dataDir)) {
@@ -115,7 +115,7 @@ function(dir, outDir)
         .saveRDS(.buildDataIndex(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     }
-    
+
 }
 
 ### * .installPackageVignetteIndex
@@ -153,6 +153,31 @@ function(dir, outDir)
     .saveRDS(demoIndex,
              file = file.path(outDir, "Meta", "demo.rds"))
 }
+
+
+### * .installObjectsFile
+
+.installObjectsFile <- function(pkg, outDir)
+{
+    require(pkg, character.only = TRUE)
+    pos <- match(paste("package", pkg, sep = ""), search())
+    ob <- objects(pos, all = TRUE)
+    if( length(ob) > 0 ) {
+        ex <- sapply(ob, function(f) {
+            f <- get(f, pos)
+            pkg <- attr(f, "package")
+            ## ensure we get the method's view of the class
+            c(.Primitive("dataClass")(f), ifelse(is.null(pkg), "", pkg))
+        })
+        ob <- data.frame(name=I(ob), class=I(ex[1,]), orig=I(ex[2,]))
+    } else ob <- data.frame(name=I(character(0)), class=I(character(0)),
+                            origpkg=I(character(0)))
+    row.names(ob) <- seq(len = nrow(ob))
+
+    if(.fileTest("-d", outDir))
+        .saveRDS(ob, file.path(outDir, "Meta", "objects.rds"))
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.23 2002/07/04 14:16:50 maechler Exp $
+    ## $Id: str.R,v 1.24 2003/02/01 18:36:52 ripley Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -12,7 +12,7 @@ str.data.frame <- function(object, ...)
 
     ## Show further classes // Assume that they do NOT have an own Method --
     ## not quite perfect ! (.Class = 'remaining classes', starting with current)
-    cl <- class(object); cl <- cl[cl != "data.frame"]  #- not THIS class
+    cl <- oldClass(object); cl <- cl[cl != "data.frame"]  #- not THIS class
     if(0 < length(cl)) cat("Classes", cl, " and ")
 
     cat("`data.frame':	", nrow(object), " obs. of  ",
@@ -41,7 +41,7 @@ str.default <-
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.23 2002/07/04 14:16:50 maechler Exp $
+    ## $Id: str.R,v 1.24 2003/02/01 18:36:52 ripley Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)

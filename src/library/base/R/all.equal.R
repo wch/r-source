@@ -3,6 +3,7 @@ all.equal <- function(target, current, ...) UseMethod("all.equal")
 all.equal.default <- function(target, current, ...)
 {
     ## Really a dispatcher given mode() of args :
+    ## use data.class as unlike class it does not give "Integer"
     if(is.language(target) || is.function(target))
 	return(all.equal.language(target, current, ...))
     if(is.recursive(target))

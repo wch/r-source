@@ -19,7 +19,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         fit <- eval(lmcall, parent.frame())
         if(projections) fit$projections <- proj(fit)
         class(fit) <- if(inherits(fit, "mlm"))
-            c("maov", "aov", class(fit)) else c("aov", class(fit))
+            c("maov", "aov", oldClass(fit)) else c("aov", oldClass(fit))
         fit$call <- Call
         return(fit)
     } else {
@@ -107,7 +107,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
                              df.residual = NROW(y))
             }
             if(projections) fiti$projections <- proj(fiti)
-            class(fiti) <- c(if(maov) "maov", "aov", class(er.fit))
+            class(fiti) <- c(if(maov) "maov", "aov", oldClass(er.fit))
             result[[i]] <- fiti
         }
         class(result) <- c("aovlist", "listof")

@@ -154,7 +154,7 @@ Ops.factor <- function(e1, e2)
 "[.factor" <- function(x, i, drop=FALSE)
 {
     y <- NextMethod("[")
-    class(y)<-class(x)
+    class(y) <- oldClass(x)
     attr(y,"contrasts")<-attr(x,"contrasts")
     attr(y,"levels")<-attr(x,"levels")
     if ( drop ) factor(y) else y
@@ -163,7 +163,7 @@ Ops.factor <- function(e1, e2)
 "[<-.factor" <- function(x, i, value)
 {
     lx <- levels(x)
-    cx <- class(x)
+    cx <- oldClass(x)
 #    nas <- is.na(x) # unused
     if (is.factor(value))
 	value <- levels(value)[value]
@@ -232,7 +232,7 @@ function (e1, e2)
 "is.na<-.factor" <- function(x, value)
 {
     lx <- levels(x)
-    cx <- class(x)
+    cx <- oldClass(x)
     class(x) <- NULL
     x[value] <- NA
     structure(x, levels = lx, class = cx)

@@ -70,7 +70,7 @@ tsp <- function(x) attr(x, "tsp")
 
 "tsp<-" <- function(x, value)
 {
-    cl <- class(x)
+    cl <- oldClass(x)
     attr(x, "tsp") <- value # does error-checking internally
     if (inherits(x, "ts") && is.null(value))
         class(x) <- if(!identical(cl,"ts")) cl["ts" != cl]
@@ -658,7 +658,7 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
 }
 
 t.ts <- function(x) {
-    cl <- class(x)
+    cl <- oldClass(x)
     other <- !(cl %in% c("ts","mts"))
     class(x) <- if(any(other)) cl[other]
     attr(x, "tsp") <- NULL
