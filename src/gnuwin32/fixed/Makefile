@@ -58,7 +58,7 @@ fixh: version h/config.h \
 	$(SED) -e 1d -e s/\"unix\"/\"windows\"/ -e "s/R CMD/Rcmd/" $< > $@
 
 ../../../bin/Rdiff.sh: ../../scripts/Rdiff
-	$(SED) -e 1d $< > $@
+	$(SED) -e 1d -e 's/\$${EGREP}/grep -E/' $< > $@
 
 ../../../bin/Rprof: ../../scripts/Rprof.in
 	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
