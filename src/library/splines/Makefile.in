@@ -29,7 +29,7 @@ all: Makefile DESCRIPTION
 	fi; \
 	done
 	@if test -f $(top_builddir)/$(subdir)/DESCRIPTION; then \
-	  $(INSTALL_DATA)  $(top_builddir)/$(subdir)/DESCRIPTION \
+	  $(INSTALL_DATA) $(top_builddir)/$(subdir)/DESCRIPTION \
 	    $(top_builddir)/library/$(pkg); \
 	fi
 	@if test -d $(srcdir)/data; then \
@@ -40,9 +40,8 @@ all: Makefile DESCRIPTION
 	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  for f in `ls -d $(srcdir)/man/*.[Rr]d`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/man; \
-	  done; \
+	  cp -p $(srcdir)/man/*.[Rr]d $(top_builddir)/library/$(pkg)/man; \
+	  chmod 644 $(top_builddir)/library/$(pkg)/man/*.[Rr]d; \
 	fi
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \

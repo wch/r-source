@@ -42,10 +42,9 @@ all: Makefile DESCRIPTION
 	done
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
-	  for f in `ls -d $(srcdir)/man/*.[Rr]d \
-		          $(srcdir)/man/unix/*.[Rr]d`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/man; \
-	  done; \
+	  cp -p $(srcdir)/man/*.[Rr]d $(srcdir)/man/unix/*.[Rr]d \
+	    $(top_builddir)/library/$(pkg)/man; \
+	  chmod 644 $(top_builddir)/library/$(pkg)/man/*.[Rr]d; \
 	fi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
