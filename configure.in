@@ -433,12 +433,14 @@ BLAS="blas.o"
 if ${use_dxml}; then
   AC_CHECK_LIB(dxml, main, FLIBS="-ldxml ${FLIBS}" BLAS="")
 fi
-if test -n "${BLAS}" && ${use_blas_risc}; then
-  AC_CHECK_LIB(blas_risc, main,
-    FLIBS="-lblas_risc -lblas -lf2c ${FLIBS}" BLAS="", ,-lblas -lf2c)
-fi
 if test -n "${BLAS}" && ${use_blas}; then
-  AC_CHECK_LIB(blas, main, FLIBS="-lblas ${FLIBS}" BLAS="")
+  AC_CHECK_LIB(blas, main,
+    [ FLIBS="-lblas ${FLIBS}" BLAS=""
+      if ${use_blas_risc}; then
+        AC_CHECK_LIB(blas_risc, main,
+	  FLIBS="-lblas_risc ${FLIBS}", ,-lblas -lf2c)
+      fi
+    ])
 fi
 AC_SUBST(BLAS)
 for arg in ${LIBS}; do
