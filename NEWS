@@ -19,15 +19,16 @@ NEW FEATURES
 	are printed after the error message (unless the error makes
 	this impossible).
 
-    o	The scaling of symbols is now linear in cex=, rather than being
-	tied to the available font's size. The fonts on an X11 device
-	also scale linearly with cex= insofar as your X server can do it.
-	On systems with the scalable type 1 PostScript fonts installed, this
-	looks particularly nice. Note that the scaling is linear in
-	the *diameter*, but quadratic in area. The distance between lines of
-	margin text in the X11 device is now proportional to the
-	size given to x11(pointsize).
-
+    o   A couple of substantial graphics changes, esp. in the X11
+	driver. The scaling of symbols is now linear in cex=, rather
+	than being tied to the available font's size. The fonts on an
+	X11 device also scale linearly with cex= insofar as your X
+	server can do it. On systems with the scalable type 1
+	PostScript fonts installed, this looks particularly nice. Note
+	that the scaling is linear in the *diameter*, but quadratic in
+	area. The distance between lines of margin text in the X11
+	device is now proportional to the size given to
+	x11(pointsize).
 
     o	abline(a,b) now (again) refers to transformed coordinates on
 	plots with log-axes, so that abline(lm(log10(y)~log10(x)))
@@ -38,8 +39,9 @@ NEW FEATURES
     o	barplot.default() has new `axisnames' (and `sub') arguments, easily
 	allowing suppression of bar labeling.
 
-    o	cbind()/rbind() will now usually label the columns/rows by the
-	names of the arguments.
+    o   cbind() and rbind() now actually do what deparse.level=1 implies:
+	add column/row names based on the deparsed argument, provided it
+	is a simple symbol. The behaviour is still hardcoded, though.
 
     o  	gc() now reports the total sizes in Mb as well as numbers.
 
@@ -104,7 +106,6 @@ NEW FEATURES
 
     o	New subroutine REALPR callable from Fortran (like DBLEPR but
 	for real arguments): useful if as.single is in use.
-
 
     o	The cex= argument to plot() etc. can be a vector, like pch=.
 
@@ -191,6 +192,7 @@ BUG FIXES
 
     o	R CMD check had a typo which made the final message fail.
 
+    o   R_EOF redefined as -1, was causing trouble with isxxxx contructions.
 
 
 	**************************************************
