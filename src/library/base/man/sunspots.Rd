@@ -16,7 +16,8 @@
     Student and Research Worker}.
   New York: Springer-Verlag.
 }
-\seealso{\code{\link[ts]{sunspot.month}} has a longer (and a bit different) series.}
+\seealso{\code{\link[ts]{sunspot.month}} (package \code{ts}) has a
+  longer (and a bit different) series.} 
 \examples{
 data(sunspots)
 plot(sunspots, main = "sunspots data", xlab = "Year",
