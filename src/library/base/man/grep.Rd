@@ -16,11 +16,14 @@
 \usage{
 grep(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
      value = FALSE, fixed = FALSE)
+
 sub(pattern, replacement, x,
-    ignore.case = FALSE, extended = TRUE, perl = FALSE)
+    ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE)
+
 gsub(pattern, replacement, x,
-     ignore.case = FALSE, extended = TRUE, perl = FALSE)
-regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
+     ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE)
+
+regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
 }
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}

@@ -203,6 +203,8 @@ NEW FEATURES
 	Previously only \n and \r were interpreted, and then only
 	within quoted strings when no separator was supplied.
 
+    o	gsub/sub have a new 'fixed' method.
+
 
 INTERNATIONALIZATION
 
