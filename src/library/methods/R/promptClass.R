@@ -1,6 +1,6 @@
 "promptClass" <-
 function (clName, filename = NULL, type = "class",
-          keywords = "classes", where = -1)
+          keywords = "classes", where = topenv(parent.frame()))
 {
     if(is.null(filename))
         filename <- paste(topicName(type, clName), ".Rd", sep = "")
@@ -27,7 +27,7 @@ function (clName, filename = NULL, type = "class",
     # given a class cl
     # obtain list of all generics with cl in
     # one of its signatures
-        allgen <- getGenerics()
+        allgen <- getGenerics(where=where)
         o <- list()
         for (i in seq(along=allgen)) o[[allgen[i]]] <- classesInSig(allgen[i],
             where)
@@ -168,16 +168,22 @@ function (clName, filename = NULL, type = "class",
     }
     else
         .extends <- character()
-    nmeths <- length(methnms <- genWithClass(clName, where))
+    nmeths <- length(methnms <- genWithClass(clName, where=whereClass))
     .meths.head <- "\\section{Methods}{"
+    .methAliases <- ""
     if (nmeths > 0) {
         .meths.body <- "  \\describe{"
         for (i in 1:nmeths) {
             .sigmat <- sigsList(methnms[i], where)
             for (j in seq(along = .sigmat)) {
-                if (!all(is.na(match(.sigmat[[j]],clName))))
+                if (!all(is.na(match(.sigmat[[j]],clName)))) {
                 .meths.body <- c(.meths.body, paste0("    \\item{",
                   methnms[i], "}{\\code{signature", pastePar(.sigmat[[j]]), "}: ... }"))
+
+                  cur <- paste(.sigmat[[j]], collapse = ",")
+                  .methAliases <- paste(.methAliases, "\\alias{",
+                    methnms[i], ",", cur, "-method}\n", sep = "")
+                 }
             }
         }
         .meths.body <- c(.meths.body, "  }")
@@ -194,6 +200,7 @@ function (clName, filename = NULL, type = "class",
         list(name = .name,
              type = .type,
              aliases = .alias,
+        methAliases = .methAliases,
              title = .title,
              description = .desc,
              "section{Objects from the Class}" = .usage,
@@ -236,4 +243,20 @@ function (clName, filename = NULL, type = "class",
         what <- ""                      # what, indeed?
     message("A shell of class documentation has been written",what,".\n")
     invisible(filename)
+}
+
+
+.makeCallString <- function (def, name = substitute(def), args = formalArgs(def)) 
+{
+#
+# need this for experimentation because the function is not exported
+#
+    if (is.character(def)) {
+        if (missing(name)) 
+            name <- def
+        def <- getFunction(def)
+    }
+    if (is(def, "function")) 
+        paste(name, "(", paste(args, collapse = ", "), ")", sep = "")
+    else ""
 }
