@@ -74,16 +74,16 @@
 * with interrupts, etc. not restoring values.
 
 * The previous issue with the global "cutoff" variable is now implemented
-* by creating a deparse1WithCutoff() routine which takes the cutoff from 
-* the caller and passes this to the different routines as a member of the 
+* by creating a deparse1WithCutoff() routine which takes the cutoff from
+* the caller and passes this to the different routines as a member of the
 * LocalParseData struct. Access to the deparse1() routine remains unaltered.
 * This is exactly as Ross had suggested ...
 *
-* One possible fix is to restructure the code with another function which 
-* takes a cutoff value as a parameter.	 Then "do_deparse" and "deparse1" 
-* could each call this deeper function with the appropriate argument. 
-* I wonder why I didn't just do this? -- it would have been quicker than 
-* writing this note.  I guess it needs a bit more thought ... 
+* One possible fix is to restructure the code with another function which
+* takes a cutoff value as a parameter.	 Then "do_deparse" and "deparse1"
+* could each call this deeper function with the appropriate argument.
+* I wonder why I didn't just do this? -- it would have been quicker than
+* writing this note.  I guess it needs a bit more thought ...
 */
 
 #ifdef HAVE_CONFIG_H
@@ -111,9 +111,9 @@ typedef struct {
  int linenumber;
  int len;
  int incurly;
- int inlist; 
+ int inlist;
  Rboolean startline; /* = TRUE; */
- int indent; 
+ int indent;
  SEXP strvec;
 
  DeparseBuffer buffer;
@@ -136,7 +136,7 @@ static void deparse2(SEXP, SEXP, LocalParseData *);
 /*
   Perhaps we can consolidate all the AllocBuffers into a single
   routine across the files that provide something like this:
-    character.c, 
+    character.c,
     saveload.c & scan.c (are identical modulo variable names.)
     deparse.c, printutils.c (identical and merged)
  */
@@ -199,7 +199,16 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff)
 */
     SEXP svec;
     int savedigits;
-    LocalParseData localData = {0, 0, 0, 0, TRUE, 0, R_NilValue, {NULL, 0, BUFSIZE}, DEFAULT_Cutoff};
+    /* The following gives warning (when "-pedantic" is used):
+       In function `deparse1WithCutoff': initializer element
+       is not computable at load time -- and its because of R_NilValue
+       (RH 7.1 gcc 2.96  wrongly gives an error with "-pedantic")
+    */
+    LocalParseData localData =
+	    {0, 0, 0, 0, /*startline = */TRUE, 0,
+	     /*strvec = */R_NilValue,
+	     /*DeparseBuffer=*/{NULL, 0, BUFSIZE},
+	     DEFAULT_Cutoff};
     DeparseBuffer *buffer = &localData.buffer;
     localData.cutoff = cutoff;
 
@@ -264,7 +273,7 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (ifile != 1) {
 	con = getConnection(ifile);
 	wasopen = con->isopen;
-	if(!wasopen) 
+	if(!wasopen)
 	    if(!con->open(con)) error("cannot open the connection");
     }/* else: "Stdout" */
     for (i = 0; i < LENGTH(tval); i++)
