@@ -755,7 +755,7 @@ FUNTAB R_FunTab[] =
 {"inherits",	do_inherits,	0,	11,	3,	PP_FUNCALL},
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL},
 {"NextMethod",	do_nextmethod,	0,	10,	-1,	PP_FUNCALL},
-{"standardGeneric",do_standardGeneric,0, 1,	1,	PP_FUNCALL},
+{"standardGeneric",do_standardGeneric,0, 1,	-1,	PP_FUNCALL},
 
 /* Modelling Functionality */
 
