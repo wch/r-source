@@ -264,6 +264,10 @@ C
 C is golden-section necessary
 C
 	 if(abs(e) .le. tol1)	   go to 40
+C  if had Inf then go to golden-section
+         if (fx .ge. 1d100) 	   go to 40
+         if (fv .ge. 1d100) 	   go to 40
+         if (fw .ge. 1d100) 	   go to 40
 C
 C  fit parabola
 C
