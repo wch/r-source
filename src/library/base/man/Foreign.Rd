@@ -55,8 +55,8 @@ real \tab double * \tab double precision\cr
 complex \tab complex * \tab double complex\cr
 logical \tab int * \tab integer \cr
 character \tab char ** \tab [compiler dependent]\cr
-list \tab void * (SEXP *)\tab \cr
-other \tab void * (SEXP)\tab \cr
+list \tab  SEXP *\tab \cr
+other \tab SEXP\tab \cr
 }
     The C type \code{complex} is defined in \file{Complex.h} as a
     \code{typedef struct {double r; double i;}}. Fortran type
@@ -71,15 +71,19 @@ other \tab void * (SEXP)\tab \cr
     Fortran: the first string may be usable if its length is passed
     separately.
 
-    Lists, functions, expressions, environments and other language
-elements are passed as generic pointers (\code{void *}). R functions can
-be invoked using \code{call_S} or \code{call_R} and can be passed
+Functions, expressions, environments and other language
+elements are passed as the internal \R pointer type \code{SEXP}. This type is
+defined in \code{Rinternals.h} or the arguments can be declared
+as generic pointers, \code{void *}. Lists are passed as C arrays of
+\code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
+
+R functions can be invoked using \code{call_S} or \code{call_R} and can be passed
 lists or the simple types as arguments.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM):
 \note{\emph{\code{DUP=FALSE} is dangerous.}
     
-There are two important dangers with \code{DUP=FALSE}. The first is that
+There are three important dangers with \code{DUP=FALSE}. The first is that
 garbage collection may move the object, resulting in the pointers
 pointing nowhere useful and causing hard-to-reproduce bugs.
 
@@ -88,6 +92,11 @@ function to \code{.C}/\code{.Fortran} with \code{DUP=FALSE}, it may not
 necessarily be copied.  You may be able to change not only the local
 variable but the variable one level up.  This will also be very hard to
 trace.
+
+The third is that lists are passed as a single \R \code{SEXP} with
+\code{DUP=FALSE}, not as an array of \code{SEXP}. This meansthe
+accessor macros in \code{Rinternals.h} are needed to get at the list
+elements and the lists cannot be passed to \code{call_S}/\code{call_R}.
 
 1.  If your C/Fortran routine calls back any \R function including
 \code{S_alloc}/\code{R_alloc} then do not use \code{DUP=FALSE}.  Do not
@@ -103,11 +112,7 @@ affected, e.g.,
 In this case the output variable didn't exist before the call so it can't
 cause trouble. If the input variable is not changed in \code{Cfunction} you are
 safe.
-
-Also note that with \code{DUP=FALSE}, lists are passed in the internal
-R format \code{(SEXP)} like any other non-atomic object. The accessor
-macros in \code{Rinternals.h} are needed to get at the list elements.
-}
+ }
 
 \section{Header files for external code}{
     Writing code for use with \code{.External} will typically use
