@@ -18,7 +18,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#define __GNOME_TERMINAL_C__
 #include "terminal.h"
+#undef __GNOME_TERMINAL_C__
+
 #include "terminal-find.h"
 #include "terminal-functions.h"
 #include "terminal-toolbar.h"
