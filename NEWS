@@ -223,6 +223,7 @@ NEW FEATURES
     o	chisq.test() has a new argument 'rescale.p' and allows to (slowly)
 	simulate the P value also in the 1D case (contributed by Rolf Turner).
 
+    o   contr.SAS() has been moved from the nlme package to the stats package.
 
 INTERNATIONALIZATION
 

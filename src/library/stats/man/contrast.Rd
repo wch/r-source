@@ -3,6 +3,7 @@
 \alias{contr.poly}
 \alias{contr.sum}
 \alias{contr.treatment}
+\alias{contr.SAS}
 \title{Contrast Matrices}
 \description{
   Return a matrix of contrasts.
@@ -12,6 +13,7 @@ contr.helmert(n, contrasts = TRUE)
 contr.poly(n, scores = 1:n, contrasts = TRUE)
 contr.sum(n, contrasts = TRUE)
 contr.treatment(n, base = 1, contrasts = TRUE)
+contr.SAS(n, contrasts = TRUE)
 }
 \arguments{
   \item{n}{a vector of levels for a factor, or the number of levels.}
@@ -40,7 +42,13 @@ contr.treatment(n, base = 1, contrasts = TRUE)
   (specified by \code{base}): the baseline level is omitted.  Note that
   this does not produce \dQuote{contrasts} as defined in the standard
   theory for linear models as they are not orthogonal to the constant.
-}
+
+  \code{contr.SAS} is a trivial modification of
+  \code{\link[stats]{contr.treatment}} that sets the base level to be
+  the last level of the factor.  The coefficients produced when using
+  these contrasts should be equivalent to those produced by many (but
+  not all) SAS procedures.
+  }
 \value{
   A matrix with \code{n} rows and \code{k} columns, with \code{k=n-1} if
   \code{contrasts} is \code{TRUE} and \code{k=n} if \code{contrasts} is
@@ -68,6 +76,9 @@ contr.helmert(4, contrasts = FALSE) # just the 4 x 4 identity matrix
 
 (cT <- contr.treatment(5))
 all(crossprod(cT) == diag(4)) # TRUE: even orthonormal
+
+(cP <- contr.SAS(5))
+all(crossprod(cP) == diag(4)) # TRUE: even orthonormal
 
 (cP <- contr.poly(3)) # Linear and Quadratic
 zapsmall(crossprod(cP), dig=15) # orthonormal up to fuzz

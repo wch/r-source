@@ -111,3 +111,10 @@ contr.sum <-
     }
     cont
 }
+
+contr.SAS <- function(n, contrasts = TRUE)
+{
+    contr.treatment(n,
+                    base = if (is.numeric(n) && length(n) == 1) n else length(n),
+                    contrasts)
+}
