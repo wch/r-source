@@ -1,4 +1,4 @@
-rowsum <- function(x, group, reorder=T) {
+rowsum <- function(x, group, reorder=TRUE) {
     if (!is.numeric(x)) stop("x must be numeric")
     if (is.matrix(x)) dd <- dim(x)
     else              dd <- c(length(x), 1)
