@@ -55,7 +55,7 @@ spline(x, y, n = 3*length(x), method = "fmm",
 
   Package \code{splines}, especially \code{\link{interpSpline}} and
   \code{\link{periodicSpline}} for interpolation splines.  That package
-  also generates spline bases that can be sued for regression splines.
+  also generates spline bases that can be used for regression splines.
 
   \code{\link{smooth.spline}} in package \code{modreg} for smoothing splines.
 }
