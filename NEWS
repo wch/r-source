@@ -307,7 +307,9 @@ INTERNATIONALIZATION
 	packages have been marked and splines is set up to do translation.
 
     o	R-level stop() and warning() messages can be translated, as can
-	other messages via the new function gettext().
+	other messages via the new function gettext().  Tools
+	xgettext() and xgettext2pot() are provided in package tools to
+	help manage error messages.
 
 
 UTILITIES
