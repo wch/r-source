@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.171 $ ';
+my $revision = ' $Revision: 1.172 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1649,7 +1649,11 @@ sub check_pkg {
 	    $pdf_file =~ s/\.[[:alpha:]]+$/.pdf/;
 	    push(@bad_vignettes, $file) unless(-f $pdf_file);
 	}
-	if(scalar(@bad_vignettes) > 0) {
+        ## A base package may not have PDFs to avoid blowing
+        ## out the ditribution size
+        ## NOTE it is assumed that base packages can be
+        ## woven (i.e., that they only contain "standard" LaTeX)
+	if(!$is_base_pkg && scalar(@bad_vignettes) > 0) {
 	    $log->warning();
 	    $any++;
 	    $log->print("Package vignettes without corresponding PDF:\n");
@@ -1662,7 +1666,8 @@ sub check_pkg {
 	    ## Should checking the vignettes assume the system default
 	    ## packages, or just base?
 	    my $Rcmd = "library(tools)\n";
-	    if($opt_install) {
+            ## A base package does not get installed during check
+	    if(!$is_base_pkg && $opt_install) {
 		$Rcmd .= "checkVignettes(package = \"${pkgname}\", " .
 		         "lib.loc = \"${library}\", " .
 		         "workdir = \"src\")\n";
