@@ -5,7 +5,7 @@
 @setchapternewpage on
 @c %**end of header
 
-@c @documentencoding ISO-8859-1
+@documentencoding ISO-8859-1
 
 @syncodeindex fn vr
 
@@ -1636,7 +1636,7 @@ a single format string containing all English words in the messages.
 
 In R error messages do not construct a message with @code{paste} (such
 messages will not be translated) but via multiple arguments to
-@code{stop} or @code{warning}.
+@code{stop} or @code{warning}, or via @code{sprintf}.
 
 @item
 Do not use colloquialisms such as ``can't'' and ``don't''.
@@ -1659,7 +1659,21 @@ as
 
 Since ASCII does not contain directional quotation marks, it is best to
 use @code{'} and let the translator (including automatic translation)
-use directional quotations where available.
+use directional quotations where available.  The range of quotation
+styles is immense: here are some from the @code{gettext-tools} system
+@example
+"invalid argument `%s' for `%s'"
+"argument invalide « %s » pour « %s »"
+"ungültiges Argument »%s« für »%s«"
+"neveljaven argument %s za ,%s`"
+"Öffnen der Datei »%s« zum Lesen fehlgeschlagen"
+"feil under åpning av «%s» for lesing"
+"feil under skriving av fila \"%s\""
+"fejl ved læse-åbning af '%s'"
+@end example
+and there are others we cannot reproduce in ISO-8859-1, for example
+bidirectional single quotes in Taiwanese Chinese and bidirectional
+double quotes in Japanese.
 
 @end itemize
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002     the R Development Core Team
+ *  Copyright (C) 2002-5     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,12 +36,12 @@
 */
 SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int nargs;
+    int i, nargs, cnt = 0, v;
     char *formatString;
     char fmt[MAXLINE+1], bit[MAXLINE+1], outputString[MAXLINE+1] = "";
     size_t n, cur, chunk;
 
-    SEXP format, ans;
+    SEXP format, ans, this, a[100];
 
     /* grab the format string */
 
@@ -52,8 +52,14 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     formatString = CHAR(STRING_ELT(format, 0));
     n = strlen(formatString);
     if (n > MAXLINE)
-	errorcall(call, _("string length exceeds maximal buffer length %d"),
+	errorcall(call, _("'fmt' length exceeds maximal buffer length %d"),
 		  MAXLINE);
+    args = CDR(args); nargs--;
+    if(nargs >=100)
+	errorcall(call, _("only 100 arguments are allowed"));
+
+    /* record the args for later re-ordering */
+    for(i = 0; i < nargs; i++, args = CDR(args)) a[i] = CAR(args);
 
     /* process the format string */
     for (cur = 0; cur < n; cur += chunk) {
@@ -68,23 +74,44 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		/* recognise selected types from Table B-1 of K&R */
 
-		chunk = strcspn(formatString + cur, "disfeEgG") + 1;
+		chunk = strcspn(formatString + cur, "disfeEgGx") + 1;
 		if (cur + chunk > n)
 		    errorcall(call, _("unrecognised format at end of string"));
 
 		strncpy(fmt, formatString + cur, chunk);
 		fmt[chunk] = '\0';
 
-		if (--nargs > 0)
-		    args = CDR(args);
-		else errorcall(call, _("too few arguments"));
+		this = NULL;
+		/* now look for %n$ or %nn$ form */
+		if (strlen(fmt) > 3 && fmt[1] >= '1' && fmt[1] <= '9') {
+		    v = fmt[1] - '0';
+		    if(fmt[2] == '$') {
+			if(v > nargs)
+			    errorcall(call, _("reference to non-existent argument %d"), v);
+			this = a[v-1];
+			memmove(fmt+1, fmt+3, strlen(fmt)-2);
+		    } else if(fmt[2] >= '1' && fmt[2] <= '9' 
+			      && fmt[3] == '$') {
+			v = 10*v + fmt[2] - '0';
+			if(v > nargs)
+			    errorcall(call, _("reference to non-existent argument %d"), v);
+			this = a[v-1];
+			memmove(fmt+1, fmt+4, strlen(fmt)-3);
+		    }
+		}
+		
+		if(!this) {
+		    if (cnt >= nargs) errorcall(call, _("too few arguments"));
+		    this = a[cnt++];
+		}
 
-		if (LENGTH(CAR(args)) < 1)
-		    error(_("zero-length argument"));
-		switch(TYPEOF(CAR(args))) {
+		if (LENGTH(this) < 1)
+		    errorcall(call, _("zero-length argument"));
+
+		switch(TYPEOF(this)) {
 		case LGLSXP:
 		{
-		    int x = LOGICAL(CAR(args))[0];
+		    int x = LOGICAL(this)[0];
 		    if (strcspn(fmt, "di") >= strlen(fmt))
 			error("%s", 
 			      _("use format %d or %i for logical objects"));
@@ -97,10 +124,10 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		case INTSXP:
 		{
-		    int x = INTEGER(CAR(args))[0];
-		    if (strcspn(fmt, "di") >= strlen(fmt))
+		    int x = INTEGER(this)[0];
+		    if (strcspn(fmt, "dix") >= strlen(fmt))
 			error("%s",
-			      _("use format %d or %i for integer objects"));
+			      _("use format %d, %i or %x for integer objects"));
 		    if (x == NA_INTEGER) {
 			fmt[chunk-1] = 's';
 			sprintf(bit, fmt, "NA");
@@ -110,7 +137,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		case REALSXP:
 		{
-		    double x = REAL(CAR(args))[0];
+		    double x = REAL(this)[0];
 		    if (strcspn(fmt, "feEgG") >= strlen(fmt))
 			error("%s", 
 			      _("use format %f, %e or %g for numeric objects"));
@@ -148,10 +175,9 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* NA_STRING will be printed as `NA' */
 		    if (strcspn(fmt, "s") >= strlen(fmt))
 			error("%s", _("use format %s for character objects"));
-		    if(strlen(CHAR(STRING_ELT(CAR(args), 0))) > MAXLINE)
+		    if(strlen(CHAR(STRING_ELT(this, 0))) > MAXLINE)
 			warning(_("Likely truncation of character string"));
-		    snprintf(bit, MAXLINE, fmt, 
-			     CHAR(STRING_ELT(CAR(args), 0)));
+		    snprintf(bit, MAXLINE, fmt, CHAR(STRING_ELT(this, 0)));
 		    bit[MAXLINE] = '\0';
 		    break;
 		default:
@@ -173,11 +199,10 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcat(outputString, bit);
     }
 
+    /* no longer makes sense with out-of-order args 
+       if (cnt < nargs) warning(_("Unused arguments")); */
+
     /* return outputString as SEXP */
-
-    if (nargs > 1)
-	warning(_("Unused arguments"));
-
     PROTECT(ans = allocVector(STRSXP, 1));
     SET_STRING_ELT(ans, 0, mkChar(outputString));
     UNPROTECT(1);

@@ -27,26 +27,30 @@ sprintf(fmt, \dots)
   to the output string, and also special characters that operate on the
   arguments provided through \code{\dots}.  Special characters start
   with a \code{\%} and terminate with one of the letters in the set
-  \code{difeEgGs\%}.  These letters denote the following types:
+  \code{difeEgGsx\%}.  These letters denote the following types:
 
   \describe{
-    \item{\code{d,i}}{Integer value}
+    \item{\code{d,i,x}}{Integer value, \code{x} being hexadecimal.}
 
-    \item{\code{f}}{Double precision value, in decimal notation of the form
-      "[-]mmm.ddd".  The number of decimal places is specified by the
-      precision: the default is 6; a precision of 0 suppresses the decimal point.}
-
-    \item{\code{e,E}}{Double precision value, in decimal notation of the form
-      \code{[-]m.ddde[+-]xx} or \code{[-]m.dddE[+-]xx}}
+    \item{\code{f}}{Double precision value, in decimal notation of the
+      form "[-]mmm.ddd".  The number of decimal places is specified by
+      the precision: the default is 6; a precision of 0 suppresses the
+      decimal point.
+    }
+    
+    \item{\code{e,E}}{Double precision value, in decimal notation of the
+      form \code{[-]m.ddde[+-]xx} or \code{[-]m.dddE[+-]xx}.
+    }
 
     \item{\code{g,G}}{Double precision value, in \code{\%e} or
       \code{\%E} format if the exponent is less than -4 or greater than or
-      equal to the precision, and \code{\%f} format otherwise}
+      equal to the precision, and \code{\%f} format otherwise.
+    }
 
-    \item{\code{s}}{Character string}
+    \item{\code{s}}{Character string.}
 
     \item{\code{\%}}{Literal \code{\%} (none of the formatting
-      characters given below are permitted in this case)}
+      characters given below are permitted in this case).}
   }
 
   In addition, between the initial \code{\%} and the terminating
@@ -60,6 +64,12 @@ sprintf(fmt, \dots)
     \item{a space}{Prefix a space if the first number is not a sign}
     \item{\code{0}}{For numbers, pad to the field width with leading zeros}
   }
+  Further, as from \R 2.1.0, immediately after \code{\%} may come
+  \code{1$} to \code{99$} to refer to the numbered argument: this allows
+  arguments to referenced out of order and is mainly intended for
+  translators of error messages.  If this is done it is best if all
+  formats are numbered: if not the unnumbered ones process the arguments
+  in order.
 
   The result has a length limit, probably 8192 characters, and attempts
   to exceed this may result in an error, or truncation with a warning.
@@ -77,7 +87,7 @@ sprintf(fmt, \dots)
 }
 
 \author{
-  Original code by Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk}
+  Original code by Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk}.
 }
 
 \seealso{
@@ -128,6 +138,8 @@ lapply(c("a", "ABC", "and an even longer one"),
 sapply(1:18, function(n)
        sprintf(paste("e with \%2d digits = \%.",n,"g",sep=""),
                n, exp(1)))
+
+sprintf("second \%2$1.0f, first \%1$5.2f, third \%3$1.0f", pi, 2, 3)
 }
 \keyword{print}
 \keyword{character}
