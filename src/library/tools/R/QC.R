@@ -134,21 +134,20 @@ function(package, dir, lib.loc = NULL)
         ## nondocumentd generics in some cases (e.g., the generic was
         ## created locally from an inconsistent version).
         ## In the long run we need dynamic documentation.
-        if(.isMethodsDispatchOn()
-           && require("methods", quiet = TRUE)) {
+        if(.isMethodsDispatchOn()) {
             codeObjs <-
                 codeObjs[sapply(codeObjs, function(f) {
                     fdef <- get(f, envir = codeEnv)
-                    if(is(fdef, "genericFunction")) {
+                    if(methods::is(fdef, "genericFunction")) {
                         fOther <-
-                            getFunction(f, generic = FALSE,
-                                        mustFind = FALSE,
-                                        where = topenv(environment(fdef)))
+                            methods::getFunction(f, generic = FALSE,
+                                                 mustFind = FALSE,
+                                                 where = topenv(environment(fdef)))
                         if(is.null(fOther))
                             TRUE
                         else 
-                            !is(finalDefaultMethod(getMethodsMetaData(f, codeEnv)),
-                                "derivedDefaultMethod")
+                            !methods::is(methods::finalDefaultMethod(methods::getMethodsMetaData(f, codeEnv)),
+                                         "derivedDefaultMethod")
                     }
                     else
                         TRUE
@@ -178,10 +177,9 @@ function(package, dir, lib.loc = NULL)
              "data sets" =
              unique(dataObjs[! dataObjs %in% allDocTopics]))
 
-    if(.isMethodsDispatchOn()
-       && require("methods", quiet = TRUE)) {
+    if(.isMethodsDispatchOn()) {
         ## Undocumented S4 classes?
-        S4classes <- getClasses(codeEnv)
+        S4classes <- methods::getClasses(codeEnv)
         ## <NOTE>
         ## There is no point in worrying about exportClasses directives
         ## in a NAMESPACE file when working on a package source dir, as
@@ -197,8 +195,7 @@ function(package, dir, lib.loc = NULL)
             c(undocThings, list("S4 classes" = unique(S4classes)))
     }
 
-    if(.isMethodsDispatchOn()
-       && require("methods", quiet = TRUE)) {
+    if(.isMethodsDispatchOn()) {
         ## Undocumented S4 methods?
         ## <NOTE>
         ## There is no point in worrying about exportMethods directives
@@ -207,16 +204,17 @@ function(package, dir, lib.loc = NULL)
         ## S4 classes or methods.
         ## </NOTE>
         methodsSignatures <- function(f) {
-            mlist <- getMethodsMetaData(f, codeEnv)
-            meths <- linearizeMlist(mlist, FALSE)
-            classes <- meths@classes
+            mlist <- methods::getMethodsMetaData(f, codeEnv)
+            meths <- methods::linearizeMlist(mlist, FALSE)
+            classes <- methods::slot(meths, "classes")
             default <-
                 as.logical(lapply(classes,
                                   function(x)
                                   identical(all(x == "ANY"), TRUE)))
             if(any(default)) {
                 ## Don't look for doc on a generated default method.
-                if(is(finalDefaultMethod(mlist), "derivedDefaultMethod"))
+                if(methods::is(methods::finalDefaultMethod(mlist),
+                               "derivedDefaultMethod"))
                     classes <- classes[!default]
             }
             sigs <- sapply(classes, paste, collapse = ",")
@@ -226,7 +224,7 @@ function(package, dir, lib.loc = NULL)
                 character()
         }
         S4methods <-
-            sapply(getGenerics(codeEnv), methodsSignatures)
+            sapply(methods::getGenerics(codeEnv), methodsSignatures)
         S4methods <- as.character(unlist(S4methods, use.names = FALSE))
         ## The bad ones:
         S4methods <-
@@ -276,6 +274,15 @@ function(package, dir, lib.loc = NULL,
     hasNamespace <- FALSE
 
     ## Argument handling.
+    ## <FIXME>
+    ## Remove these arguments for 2.0.
+    if(!missing(use.positions))
+        warning("argument", sQuote("use.positions"),
+                "is deprecated")
+    if(!missing(ignore.generic.functions))
+        warning("argument", sQuote("ignore.generic.functions"),
+                "is deprecated")
+    ## </FIXME>
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -401,20 +408,22 @@ function(package, dir, lib.loc = NULL,
         lapply(functionsInCode,
                function(f) formals(get(f, envir = codeEnv)))
     names(functionArgsInCode) <- functionsInCode
-    if(.isMethodsDispatchOn()
-       && require("methods", quiet = TRUE)) {
+    if(.isMethodsDispatchOn()) {
         ## <NOTE>
         ## There is no point in worrying about exportMethods directives
         ## in a NAMESPACE file when working on a package source dir, as
         ## we only source the assignments, and hence do not get any
         ## S4 classes or methods.
         ## </NOTE>
-        lapply(getGenerics(codeEnv),
+        lapply(methods::getGenerics(codeEnv),
                function(f) {
-                   meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
-                   sigs <- sapply(meths@classes, paste, collapse = ",")
+                   meths <-
+                       methods::linearizeMlist(methods::getMethodsMetaData(f, codeEnv))
+                   sigs <- sapply(methods::slot(meths, "classes"),
+                                  paste, collapse = ",")
                    if(!length(sigs)) return()
-                   args <- lapply(meths @ methods, formals)
+                   args <- lapply(methods::slot(meths, "methods"),
+                                  formals)
                    names(args) <-
                        paste("\\S4method{", f, "}{", sigs, "}",
                              sep = "")
@@ -426,19 +435,32 @@ function(package, dir, lib.loc = NULL,
         ## Compare the formals of the function in the code named 'fName'
         ## and formals 'ffd' obtained from the documentation.
         ffc <- functionArgsInCode[[fName]]
-        if(!use.positions) {
+        if(identical(use.positions, FALSE)) {
             ffc <- ffc[sort(names(ffc))]
             ffd <- ffc[sort(names(ffd))]
         }
-        if(!use.values) {
+        if(identical(use.values, FALSE)) {
             ffc <- names(ffc)
             ffd <- names(ffd)
+            ok <- identical(ffc, ffd)
+        } else {
+            if(!identical(names(ffc), names(ffd)))
+                ok <- FALSE
+            else {
+                vffc <- as.character(ffc) # values
+                vffd <- as.character(ffd) # values
+                if(!identical(use.values, TRUE)) {
+                    ind <- nchar(as.character(ffd)) > 0
+                    vffc <- vffc[ind]
+                    vffd <- vffd[ind]
+                }
+                ok <- identical(vffc, vffd)
+            }
         }
-        if(identical(ffc, ffd))
+        if(ok)
             NULL
-        else {
+        else
             list(list(name = fName, code = ffc, docs = ffd))
-        }
     }
 
     db <- if(!missing(package))
@@ -739,10 +761,10 @@ function(package, lib.loc = NULL)
     codeEnv <-
         as.environment(paste("package", package, sep = ":"))
 
-    if(!(.isMethodsDispatchOn() && require("methods", quiet = TRUE)))
+    if(!.isMethodsDispatchOn())
         return(badRdObjects)
 
-    S4classes <- getClasses(codeEnv)
+    S4classes <- methods::getClasses(codeEnv)
     if(!length(S4classes)) return(badRdObjects)
 
     ## Build Rd data base.
@@ -811,7 +833,9 @@ function(package, lib.loc = NULL)
             ## Add sanity checking later ...
             S4classesChecked <- c(S4classesChecked, cl)
             slotsInCode <-
-                sort(names(getClass(cl, where = codeEnv) @ slots))
+                sort(names(methods::slot(methods::getClass(cl, where =
+                                                           codeEnv),
+                                         "slots")))
             slotsInDocs <-
                 sort(.getSlotNamesFromSlotSectionText(RdSlots[[idx]]))
             if(!identical(slotsInCode, slotsInDocs)) {
@@ -1622,14 +1646,16 @@ function(package, dir, file, lib.loc = NULL,
                             else
                                 NULL
                         })
-        if(.isMethodsDispatchOn()
-           && require("methods", quiet = TRUE)) {
+        if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
-            for(f in getGenerics(codeEnv)) {
-                meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
-                exprs <- c(exprs, lapply(meths@methods, body))
+            for(f in methods::getGenerics(codeEnv)) {
+                meths <-
+                    methods::linearizeMlist(methods::getMethodsMetaData(f, codeEnv))
+                exprs <-
+                    c(exprs,
+                      lapply(methods::slot(meths, "methods"), body))
             }
         }
     }
@@ -2019,24 +2045,26 @@ function(package, dir, lib.loc = NULL)
             .checkLastFormalArg(f)
         }) == FALSE]
 
-    if(.isMethodsDispatchOn()
-       && require("methods", quiet = TRUE)) {
-        S4generics <- getGenerics(codeEnv)
+    if(.isMethodsDispatchOn()) { 
+        S4generics <- methods::getGenerics(codeEnv)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
         S4generics <- grep("<-$", S4generics, value = TRUE)
         badS4ReplaceMethods <-
             sapply(S4generics,
                    function(f) {
-                       meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
-                       ind <- which(sapply(meths@methods,
+                       meths <- methods::linearizeMlist(methods::getMethodsMetaData(f, codeEnv))
+                       ind <- which(sapply(methods::slot(meths,
+                                                         "methods"),
                                            .checkLastFormalArg)
                                     == FALSE)
                        if(!length(ind))
                            character()
                        else {
-                           sigs <- sapply(meths@classes[ind], paste,
-                                          collapse = ",")
+                           sigs <-
+                               sapply(methods::slot(meths,
+                                                    "classes")[ind],
+                                      paste, collapse = ",")
                            paste("\\S4method{", f, "}{", sigs, "}",
                                  sep = "")
                        }
