@@ -99,7 +99,7 @@ The information here applies only to recent versions of R for Windows,
 * There seems to be a limit on the memory it uses!::
 * How can I keep workspaces for different projects in different directories?::
 * How do I print from R?::
-* Can I use R BATCH?::
+* Can I use R CMD BATCH?::
 * Can I use @RWVER@ with ESS and (X)emacs?::
 * What are HOME and working directories?::
 * How do I set environment variables?::
@@ -298,7 +298,7 @@ file with extension @file{.RData} onto an R shortcut.  In either case,
 the working directory will be set to that containing the file.
 
 
-@node How do I print from R?, Can I use R BATCH?, How can I keep workspaces for different projects in different directories?, Installation and Usage
+@node How do I print from R?, Can I use R CMD BATCH?, How can I keep workspaces for different projects in different directories?, Installation and Usage
 @section How do I print from R?
 
 It depends what you want to print.
@@ -319,11 +319,12 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @end itemize
 
 
-@node Can I use R BATCH?, Can I use @RWVER@ with ESS and (X)emacs?, How do I print from R?, Installation and Usage
-@section Can I use @code{R BATCH}?
+@node Can I use R CMD BATCH?, Can I use @RWVER@ with ESS and (X)emacs?, How do I print from R?, Installation and Usage
+@section Can I use @code{R CMD BATCH}?
 
-Yes: use @code{R CMD BATCH
---help} for full details.  (Perl is no longer required.)
+Yes: use @code{R CMD BATCH --help} for full details.  (Perl use to be
+required, but is no longer.)  @code{R BATCH} can be used, but @code{R
+CMD BATCH} is preferred.
 
 You can set also up a batch file using @code{Rterm.exe}.  A sample
 batch file might contain (as one line)
@@ -334,12 +335,12 @@ path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 @noindent
 The purpose of @code{2>&1} is to redirect warnings and errors to the
 same file as normal output, and users of Windows 95/98/ME's default
-@code{command.com} `shell' will need to omit it. (That program has no
+@code{command.com} `shell' will need to omit it.  (That program has no
 means to redirect @file{stderr}, and @code{Rterm.exe} sends warnings and
 errors to the normal output file on such systems.)
 
 
-@node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
+@node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
 @section Can I use @RWVER@ with ESS and (X)emacs?
 
 Yes.  Recent versions of ESS (e.g. 5.1.20) come with support for this
