@@ -333,6 +333,8 @@ BUG FIXES
 
     o	plot.lm(*, which=4) now works thanks to Marcel Wolbers.
 
+    o   as.hclust.twins sets method=NA (PR#538)
+
 
 		CHANGES IN R VERSION 1.0.1
 
