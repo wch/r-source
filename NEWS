@@ -452,6 +452,10 @@ BUG FIXES
 
     o	pairs() now obeys an "cex = " argument, and so does panel.smooth().
 
+    o   pf() had a bug in the code handling large noncentrality
+        parameters, going all the way back to the original Appl.Stat.
+	algorithm (PR#752). This affected pbeta() as well.
+
     o	phantom(expr) in plotmath was used to calculate the bounding
 	boxes, but the space was not actually used in typesetting the 
 	expression (PR#622).
