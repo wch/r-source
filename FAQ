@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-04
+Version 2.0.2005-02-07
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2080,6 +2080,9 @@ distributions of R.)
      Generalized estimating equations solver for parameters in mean, scale,
      and correlation structures, through mean link, scale link, and
      correlation link.  Can also handle clustered categorical responses.
+
+*genalg*
+     R based genetic algorithm for binary and floating point chromosomes.
 
 *genetics*
      Classes and methods for handling genetic data.  Includes classes to

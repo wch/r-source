@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-04
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-07
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2290,6 +2290,8 @@ approach to GLMs for dependent data.
 Generalized estimating equations solver for parameters in mean, scale,
 and correlation structures, through mean link, scale link, and
 correlation link.  Can also handle clustered categorical responses.
+@item genalg
+R based genetic algorithm for binary and floating point chromosomes.
 @item genetics
 Classes and methods for handling genetic data.  Includes classes to
 represent genotypes and haplotypes at single markers up to multiple
