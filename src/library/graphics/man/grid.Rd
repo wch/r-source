@@ -6,8 +6,8 @@
   existing plot.
 }
 \usage{
-grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted", lwd = NULL,
-     equilogs = TRUE)
+grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted",
+     lwd = NULL, equilogs = TRUE)
 }
 \arguments{
   \item{nx,ny}{number of cells of the grid in x and y direction.  When
@@ -20,8 +20,9 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted", lwd = NULL,
   \item{lwd}{non-negative numeric giving line width of the grid lines;
     defaults to \code{par("lwd")}.}
   \item{equilogs}{logical, only used when \emph{log} coordinates and
-    alignment with the axis tick marks are active.  Setting{equilogs =
-      FALSE} in that case gives \emph{non equidistant} tick aligned grid lines.}
+    alignment with the axis tick marks are active.  Setting \code{equilogs =
+      FALSE} in that case gives \emph{non equidistant} tick aligned
+    grid lines.}
 }
 \note{
   If more fine tuning is required, use \code{\link{abline}(h = ., v = .)}

@@ -8,7 +8,7 @@
 }
 \usage{
 bxp(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
-    notch.frac = 0.5, log = "", border=par("fg"), col=par("bg"),
+    notch.frac = 0.5, log = "", border=par("fg"), col = par("bg"),
     pars = NULL, frame.plot = axes, horizontal = FALSE,
     add = FALSE, at = NULL, show.names = NULL, \dots)
 }
@@ -115,9 +115,10 @@ par(op)
 op <- par(mfrow= c(1,2))
 
 ## single group -- no label
-boxplot (weight ~ group, data = PlantGrowth, subset= group=="ctrl")
+boxplot (weight ~ group, data = PlantGrowth, subset = group=="ctrl")
 ## with label
-bx <- boxplot(weight~group, data=PlantGrowth, subset=group=="ctrl",plot=FALSE)
+bx <- boxplot(weight ~ group, data = PlantGrowth,
+              subset = group=="ctrl", plot = FALSE)
 bxp(bx,show.names=TRUE)
 par(op)
 
@@ -129,7 +130,8 @@ boxplot(z, whisklty=3, main="boxplot(z, whisklty = 3)")
 op <- par(mfrow=1:2, bg="light gray", fg="midnight blue")
  boxplot(z,   col.axis="skyblue3", main="boxplot(*, col.axis=..,main=..)")
  plot(z[[1]], col.axis="skyblue3", main=   "plot(*, col.axis=..,main=..)")
- mtext("par(bg=\"light gray\", fg=\"midnight blue\")",outer=TRUE, line=-1.2)
+ mtext("par(bg=\"light gray\", fg=\"midnight blue\")",
+       outer = TRUE, line = -1.2)
 par(op)
 
 ## Mimic S-Plus:

@@ -7,7 +7,9 @@
 \usage{
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
-write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
+
+write.ftable(x, file = "", quote = TRUE,
+             digits = getOption("digits"))
 
 \method{as.table}{ftable}(x, \dots)
 }

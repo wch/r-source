@@ -13,7 +13,8 @@
   in the future and are currently work in progress.
 }
 \usage{
-packageStatus(lib.loc = NULL, repositories = getOption("repositories")())
+packageStatus(lib.loc = NULL,
+              repositories = getOption("repositories")())
 
 \method{summary}{packageStatus}(object, \dots)
 

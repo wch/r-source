@@ -8,12 +8,12 @@
 \usage{
 grid.segments(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
               x1 = unit(1, "npc"), y1 = unit(1, "npc"),
-              default.units = "npc", units.per.obs = FALSE, name = NULL,
-              gp = gpar(), draw = TRUE, vp = NULL)
+              default.units = "npc", units.per.obs = FALSE,
+              name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
 segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
               x1 = unit(1, "npc"), y1 = unit(1, "npc"),
-              default.units = "npc", units.per.obs = FALSE, name = NULL,
-              gp = gpar(), vp = NULL)
+              default.units = "npc", units.per.obs = FALSE,
+              name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{x0}{ Numeric indicating the starting x-values of the line segments. }

@@ -6,10 +6,11 @@
   These functions create and draw an x-axis.
 }
 \usage{
-grid.xaxis(at = NULL, label = TRUE, main = TRUE, name = NULL, gp = gpar(),
-           draw = TRUE, vp = NULL)
-xaxisGrob(at = NULL, label = TRUE, main = TRUE, name = NULL, gp = gpar(),
-         vp = NULL)
+grid.xaxis(at = NULL, label = TRUE, main = TRUE, name = NULL,
+           gp = gpar(), draw = TRUE, vp = NULL)
+
+xaxisGrob(at = NULL, label = TRUE, main = TRUE, name = NULL,
+          gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{at}{A numeric vector of x-value locations for the tick marks.}

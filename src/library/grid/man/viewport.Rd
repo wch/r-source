@@ -16,8 +16,9 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          gp = gpar(), clip = "inherit",
          xscale = c(0, 1), yscale = c(0, 1),
          angle = 0,
-         layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL,
-         name=NULL)
+         layout = NULL,
+         layout.pos.row = NULL, layout.pos.col = NULL,
+         name = NULL)
 vpList(...)
 vpStack(...)
 vpTree(parent, children)

@@ -11,7 +11,8 @@
 \usage{
 wilcox.test(x, \dots)
 
-\method{wilcox.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+\method{wilcox.test}{default}(x, y = NULL,
+            alternative = c("two.sided", "less", "greater"),
             mu = 0, paired = FALSE, exact = NULL, correct = TRUE,
             conf.int = FALSE, conf.level = 0.95, \dots)
 

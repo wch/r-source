@@ -12,7 +12,8 @@
   table of the counts at each combination of factor levels.
 }
 \usage{
-table(\dots, exclude = c(NA, NaN), dnn = list.names(...), deparse.level = 1)
+table(\dots, exclude = c(NA, NaN), dnn = list.names(...),
+      deparse.level = 1)
 as.table(x, \dots)
 is.table(x)
 

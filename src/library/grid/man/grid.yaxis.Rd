@@ -6,10 +6,11 @@
   These functions create and draw a y-axis.
 }
 \usage{
-grid.yaxis(at = NULL, label = TRUE, main = TRUE, name = NULL, gp  =gpar(),
-           draw = TRUE, vp = NULL)
-yaxisGrob(at = NULL, label = TRUE, main = TRUE, name = NULL, gp  =gpar(),
-          vp = NULL)
+grid.yaxis(at = NULL, label = TRUE, main = TRUE, name = NULL,
+           gp = gpar(), draw = TRUE, vp = NULL)
+
+yaxisGrob(at = NULL, label = TRUE, main = TRUE, name = NULL,
+          gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{at}{A numeric vector of y-value locations for the tick marks.}

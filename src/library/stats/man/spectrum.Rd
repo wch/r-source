@@ -7,8 +7,8 @@
   time series.
 }
 \usage{
-spectrum(x, method = c("pgram", "ar"), plot = TRUE, na.action = na.fail,
-         \dots)
+spectrum(x, method = c("pgram", "ar"), plot = TRUE,
+         na.action = na.fail, \dots)
 }
 %% spectrum() dispatches to spec.pgram() or spec.ar() which have quite
 %%            different extra arguments

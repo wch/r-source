@@ -17,9 +17,11 @@ ar(x, aic = TRUE, order.max = NULL,
 
 ar.burg(x, \dots)
 \method{ar.burg}{default}(x, aic = TRUE, order.max = NULL,
-        na.action = na.fail, demean = TRUE, series, var.method = 1, \dots)
+        na.action = na.fail, demean = TRUE, series,
+        var.method = 1, \dots)
 \method{ar.burg}{mts}(x, aic = TRUE, order.max = NULL,
-        na.action = na.fail, demean = TRUE, series, var.method = 1, \dots)
+        na.action = na.fail, demean = TRUE, series,
+        var.method = 1, \dots)
 
 ar.yw(x, \dots)
 \method{ar.yw}{default}(x, aic = TRUE, order.max = NULL,
@@ -27,8 +29,8 @@ ar.yw(x, \dots)
 \method{ar.yw}{mts}(x, aic = TRUE, order.max = NULL,
       na.action = na.fail, demean = TRUE, series, \dots)
 
-ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail, demean = TRUE,
-       series, \dots)
+ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
+       demean = TRUE, series, \dots)
 
 \method{predict}{ar}(object, newdata, n.ahead = 1, se.fit = TRUE, \dots)
 }

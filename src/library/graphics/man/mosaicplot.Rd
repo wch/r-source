@@ -8,14 +8,15 @@
 mosaicplot(x, \dots)
 
 \method{mosaicplot}{default}(x, main = deparse(substitute(x)), 
-                   sub = NULL, xlab = NULL, ylab = NULL,
-                   sort = NULL, off = NULL, dir = NULL,
-                   color = FALSE, shade = FALSE, margin = NULL,
-                   cex.axis = 0.66, las = par("las"),
-                   type = c("pearson", "deviance", "FT"), \dots)
+           sub = NULL, xlab = NULL, ylab = NULL,
+           sort = NULL, off = NULL, dir = NULL,
+           color = FALSE, shade = FALSE, margin = NULL,
+           cex.axis = 0.66, las = par("las"),
+           type = c("pearson", "deviance", "FT"), \dots)
 
 \method{mosaicplot}{formula}(formula, data = NULL, \dots,
-          main = deparse(substitute(data)), subset, na.action = stats::na.omit)
+           main = deparse(substitute(data)), subset,
+           na.action = stats::na.omit)
 }
 \arguments{
   \item{x}{a contingency table in array form, with optional category
@@ -152,6 +153,7 @@ mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 ## Formula interface for raw data: visualize crosstabulation of numbers
 ## of gears and carburettors in Motor Trend car data.
 mosaicplot(~ gear + carb, data = mtcars, color = TRUE, las = 1)
-mosaicplot(~ gear + carb, data = mtcars, color = 2:3, las = 1)# color recycling
+# color recycling
+mosaicplot(~ gear + carb, data = mtcars, color = 2:3, las = 1)
 }
 \keyword{hplot}

@@ -6,8 +6,8 @@
 }
 \usage{
 pie(x, labels = names(x), edges = 200, radius = 0.8,
-    density = NULL, angle = 45, col = NULL, border = NULL, lty = NULL,
-    main = NULL, \dots)
+    density = NULL, angle = 45, col = NULL, border = NULL,
+    lty = NULL, main = NULL, \dots)
 }
 \arguments{
   \item{x}{a vector of positive quantities.

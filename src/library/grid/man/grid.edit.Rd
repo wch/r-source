@@ -7,9 +7,10 @@
  and redraws the grob.
 }
 \usage{
-grid.edit(gPath, ..., strict=FALSE, grep=FALSE, global=FALSE,
-          allDevices=FALSE, redraw=TRUE) 
-editGrob(grob, gPath=NULL, ..., strict=FALSE, grep=FALSE, global=FALSE) 
+grid.edit(gPath, ..., strict = FALSE, grep = FALSE, global = FALSE,
+          allDevices = FALSE, redraw = TRUE) 
+editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
+         global = FALSE) 
 }
 \arguments{
   \item{grob}{A grob object.}
@@ -61,12 +62,12 @@ editGrob(grob, gPath=NULL, ..., strict=FALSE, grep=FALSE, global=FALSE)
 }
 \examples{
 grid.newpage()
-grid.xaxis(name="xa", vp=viewport(width=.5, height=.5))
-grid.edit("xa", gp=gpar(col="red"))
+grid.xaxis(name = "xa", vp = viewport(width=.5, height=.5))
+grid.edit("xa", gp = gpar(col="red"))
 # won't work because no ticks (at is NULL)
-try(grid.edit(gPath("xa", "ticks"), gp=gpar(col="green")))
-grid.edit("xa", at=1:4/5)
+try(grid.edit(gPath("xa", "ticks"), gp = gpar(col="green")))
+grid.edit("xa", at = 1:4/5)
 # Now it should work
-try(grid.edit(gPath("xa", "ticks"), gp=gpar(col="green")))
+try(grid.edit(gPath("xa", "ticks"), gp = gpar(col="green")))
 }
 \keyword{dplot}

@@ -9,11 +9,16 @@
   sets that location.
 }
 \usage{
-grid.move.to(x=0, y=0, default.units="npc", name=NULL, draw=TRUE, vp=NULL)
-moveToGrob(x=0, y=0, default.units="npc", name=NULL, vp=NULL)
-grid.line.to(x=1, y=1, default.units="npc", name=NULL, gp=gpar(),
-             draw=TRUE, vp=NULL)
-lineToGrob(x=1, y=1, default.units="npc", name=NULL, gp=gpar(), vp=NULL)
+grid.move.to(x = 0, y = 0, default.units = "npc", name = NULL,
+             draw = TRUE, vp = NULL)
+
+moveToGrob(x = 0, y = 0, default.units = "npc", name = NULL, vp = NULL)
+
+grid.line.to(x = 1, y = 1, default.units = "npc", name = NULL,
+             gp = gpar(), draw = TRUE, vp = NULL)
+
+lineToGrob(x = 1, y = 1, default.units = "npc", name = NULL,
+           gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{x}{A numeric value or a unit object specifying an x-value.}

@@ -12,10 +12,10 @@ persp(x, \dots)
 \method{persp}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE),
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
-      theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1,
-      col = "white", border = NULL, ltheta = -135, lphi = 0, shade = NA,
-      box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
-      \dots)
+      theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE,
+      expand = 1, col = "white", border = NULL, ltheta = -135, lphi = 0,
+      shade = NA, box = TRUE, axes = TRUE, nticks = 5,
+      ticktype = "simple", \dots)
 }
 \arguments{
   \item{x, y}{locations of grid lines at which the values in \code{z} are

@@ -48,12 +48,13 @@ xyz.coords(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL, log=NULL,
 \examples{
 xyz.coords(data.frame(10*1:9, -4), y = NULL, z = NULL)
 
-xyz.coords(1:6, fft(1:6), z = NULL, xlab="X", ylab="Y")
+xyz.coords(1:6, fft(1:6), z = NULL, xlab = "X", ylab = "Y")
 
 y <- 2 * (x2 <- 10 + (x1 <- 1:10))
 xyz.coords(y ~ x1 + x2, y = NULL, z = NULL)
 
-xyz.coords(data.frame(x=-1:9, y=2:12, z=3:13), y = NULL, z = NULL, log="xy")
+xyz.coords(data.frame(x = -1:9, y = 2:12, z = 3:13), y = NULL, z = NULL,
+           log = "xy")
 ##> Warning message: 2 x values <= 0 omitted ...
 }
 \keyword{dplot}

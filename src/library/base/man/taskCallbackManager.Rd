@@ -13,7 +13,8 @@
   variables to manage the list of user-level callbacks.
 }
 \usage{
-taskCallbackManager(handlers = list(), registered = FALSE, verbose = FALSE)
+taskCallbackManager(handlers = list(), registered = FALSE,
+                    verbose = FALSE)
 }
 \arguments{
   \item{handlers}{this can be a list of callbacks in which each element
@@ -71,9 +72,9 @@ taskCallbackManager(handlers = list(), registered = FALSE, verbose = FALSE)
   in the future.
 }
 \seealso{
-  \code{\link{addTaskCallback}}
-  \code{\link{removeTaskCallback}}
-  \code{\link{getTaskCallbackNames}}
+  \code{\link{addTaskCallback}},
+  \code{\link{removeTaskCallback}},
+  \code{\link{getTaskCallbackNames}}\\
   \url{http://developer.r-project.org/TaskHandlers.pdf}  
 }
 \examples{

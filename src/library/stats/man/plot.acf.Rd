@@ -6,7 +6,8 @@
 }
 \usage{
 \method{plot}{acf}(x, ci = 0.95, type = "h", xlab = "Lag", ylab = NULL,
-     ylim = NULL, main = NULL, ci.col="blue", ci.type = c("white", "ma"),
+     ylim = NULL, main = NULL,
+     ci.col = "blue", ci.type = c("white", "ma"),
      max.mfrow = 6, ask = Npgs > 1 && dev.interactive(),
      mar = if(nser > 2) c(3,2,2,0.8) else par("mar"),
      oma = if(nser > 2) c(1,1.2,1,1) else par("oma"),

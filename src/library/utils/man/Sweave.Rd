@@ -11,8 +11,11 @@
   text and the output of the statistical anlysis. 
 }
 \usage{
-Sweave(file, driver=RweaveLatex(), syntax=getOption("SweaveSyntax"), ...)
-Stangle(file, driver=Rtangle(), syntax=getOption("SweaveSyntax"), ...)
+Sweave(file, driver = RweaveLatex(),
+       syntax = getOption("SweaveSyntax"), ...)
+
+Stangle(file, driver = Rtangle(),
+        syntax = getOption("SweaveSyntax"), ...)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}

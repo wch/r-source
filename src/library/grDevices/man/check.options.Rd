@@ -3,7 +3,8 @@
 \title{Set Options with Consistency Checks}
 \usage{
 check.options(new, name.opt, reset = FALSE, assign.opt = FALSE,
-              envir = .GlobalEnv, check.attributes = c("mode", "length"),
+              envir = .GlobalEnv,
+              check.attributes = c("mode", "length"),
               override.check = FALSE)
 }
 \description{

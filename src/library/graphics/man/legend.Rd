@@ -2,11 +2,12 @@
 \alias{legend}
 \title{Add Legends to Plots}
 \usage{
-legend(x, y = NULL, legend, fill = NULL, col = "black", lty, lwd, pch,
+legend(x, y = NULL, legend, fill = NULL, col = "black",
+       lty, lwd, pch,
        angle = 45, density = NULL, bty = "o", bg = par("bg"),
        pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
-       xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
-       text.width = NULL, text.col = par("col"),
+       xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1,
+       adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE)
 }
@@ -171,11 +172,13 @@ par(mfrow=c(1,1))
 
 ##-- Math expressions:  ------------------------------
 x <- seq(-pi, pi, len = 65)
-plot(x, sin(x), type="l", col = 2,xlab=expression(phi),ylab=expression(f(phi)))
+plot(x, sin(x), type="l", col = 2, xlab = expression(phi),
+     ylab = expression(f(phi)))
 abline(h=-1:1, v=pi/2*(-6:6), col="gray90")
 lines(x, cos(x), col = 3, lty = 2)
 ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))# 2 ways
-utils::str(legend(-3, .9, ex.cs1, lty=1:2, plot=FALSE, adj = c(0, .6)))# adj y !
+utils::str(legend(-3, .9, ex.cs1, lty=1:2, plot=FALSE,
+           adj = c(0, .6)))# adj y !
 legend(-3, .9, ex.cs1, lty=1:2, col=2:3,    adj = c(0, .6))
 
 x <- rexp(100, rate = .5)
@@ -197,12 +200,14 @@ x <- 0:64/64
 matplot(x, outer(x, 1:7, function(x, k) sin(k * pi * x)),
         type = "o", col = 1:7, ylim = c(-1, 1.5), pch = "*")
 op <- par(bg="antiquewhite1")
-legend(0, 1.5, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",
-       ncol = 4, cex=.8)
-legend(.8,1.2, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",cex=.8)
-legend(0, -.1, paste("sin(",1:4,"pi * x)"), col=1:4, lty=1:4, ncol=2, cex=.8)
-legend(0, -.4, paste("sin(",5:7,"pi * x)"), col=4:6,  pch=24, ncol=2, cex=1.5,
-       lwd = 2, pt.bg= "pink", pt.cex= 1:3)
+legend(0, 1.5, paste("sin(", 1:7, "pi * x)"), col=1:7, lty=1:7, pch = "*",
+       ncol = 4, cex = 0.8)
+legend(.8,1.2, paste("sin(", 1:7, "pi * x)"), col=1:7, lty=1:7,
+       pch = "*", cex = 0.8)
+legend(0, -.1, paste("sin(", 1:4, "pi * x)"), col=1:4, lty=1:4,
+       ncol = 2, cex = 0.8)
+legend(0, -.4, paste("sin(", 5:7, "pi * x)"), col=4:6,  pch=24,
+       ncol = 2, cex = 1.5, lwd = 2, pt.bg = "pink", pt.cex = 1:3)
 par(op)
 
 ## point covering line :

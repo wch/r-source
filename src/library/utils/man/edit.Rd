@@ -11,7 +11,9 @@
   Invoke a text editor on an \R object.
 }
 \usage{
-\method{edit}{default}(name = NULL, file = "", title = NULL, editor = getOption("editor"), \dots)
+\method{edit}{default}(name = NULL, file = "", title = NULL,
+     editor = getOption("editor"), \dots)
+
 vi(name = NULL, file = "")
 emacs(name = NULL, file = "")
 pico(name = NULL, file = "")

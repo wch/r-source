@@ -6,7 +6,8 @@
   Create and save a formal method for a given function and list of classes.
 }
 \usage{
-setMethod(f, signature=character(), definition, where= topenv(parent.frame()),
+setMethod(f, signature=character(), definition,
+          where = topenv(parent.frame()),
           valueClass = NULL, sealed = FALSE)
 
 removeMethod(f, signature, where)

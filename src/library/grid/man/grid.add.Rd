@@ -6,9 +6,11 @@
   Add a grob to a gTree or a descendant of a gTree.
 }
 \usage{
-grid.add(gPath, child, strict = FALSE, grep=FALSE, global=FALSE,
-         allDevices=FALSE, redraw=TRUE) 
-addGrob(gTree, child, gPath = NULL, strict = FALSE, grep=FALSE, global=FALSE) 
+grid.add(gPath, child, strict = FALSE, grep = FALSE, global = FALSE,
+         allDevices = FALSE, redraw = TRUE) 
+
+addGrob(gTree, child, gPath = NULL, strict = FALSE, grep = FALSE,
+        global = FALSE) 
 }
 \arguments{
   \item{gTree}{A gTree object.}

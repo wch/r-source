@@ -11,7 +11,8 @@ str(object, \dots)
     indent.str = paste(rep(" ", max(0, nest.lev + 1)), collapse = ".."),
     \dots)
 
- ls.str(pos = 1, pattern, \dots,  envir = as.environment(pos), mode = "any")
+ ls.str(pos = 1, pattern, \dots,  envir = as.environment(pos),
+        mode = "any")
 lsf.str(pos = 1, \dots, envir = as.environment(pos))
 \method{print}{ls_str}(x, max.level = 1, give.attr = FALSE, \dots)
 }

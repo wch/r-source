@@ -6,8 +6,9 @@
   possibly restricted to those involving specified classes.
 }
 \usage{
-showMethods(f = character(), where = topenv(parent.frame()), classes = NULL,
-            includeDefs = FALSE, inherited = TRUE, printTo = stdout())
+showMethods(f = character(), where = topenv(parent.frame()),
+            classes = NULL, includeDefs = FALSE, inherited = TRUE,
+            printTo = stdout())
 }
 \arguments{
   \item{f}{one or more function names.  If omitted, all functions

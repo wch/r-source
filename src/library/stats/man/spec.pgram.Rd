@@ -4,7 +4,7 @@
     Periodogram}
 \usage{
 spec.pgram(x, spans = NULL, kernel, taper = 0.1,
-           pad = 0, fast = TRUE, demean = FALSE, detrend =TRUE,
+           pad = 0, fast = TRUE, demean = FALSE, detrend = TRUE,
            plot = TRUE, na.action = na.fail, \dots)
 }
 \arguments{

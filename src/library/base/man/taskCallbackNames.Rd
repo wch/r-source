@@ -28,9 +28,9 @@ getTaskCallbackNames()
   more directly.
 }
 \seealso{
-  \code{\link{addTaskCallback}}
-  \code{\link{removeTaskCallback}}
-  \code{\link{taskCallbackManager}}
+  \code{\link{addTaskCallback}},
+  \code{\link{removeTaskCallback}},
+  \code{\link{taskCallbackManager}}\\
   \url{http://developer.r-project.org/TaskHandlers.pdf}  
 }
 \examples{

@@ -6,7 +6,8 @@
   information about the packages the vignette depends on.
 }
 \usage{
-vignetteDepends(vignette, recursive = TRUE, reduce = TRUE, local=TRUE, lib.loc=NULL)
+vignetteDepends(vignette, recursive = TRUE, reduce = TRUE,
+                local = TRUE, lib.loc = NULL)
 }
 \arguments{
   \item{vignette}{The name of the vignette}

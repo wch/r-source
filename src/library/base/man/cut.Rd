@@ -87,7 +87,9 @@ y <- rnorm(100)
 table(cut(y, breaks = pi/3*(-3:3)))
 table(cut(y, breaks = pi/3*(-3:3), dig.lab=4))
 
-table(cut(y, breaks =  1*(-3:3), dig.lab=4))# extra digits don't "harm" here
-table(cut(y, breaks =  1*(-3:3), right = FALSE))#- the same, since no exact INT!
+table(cut(y, breaks =  1*(-3:3), dig.lab=4))
+# extra digits don't "harm" here
+table(cut(y, breaks =  1*(-3:3), right = FALSE))
+#- the same, since no exact INT!
 }
 \keyword{category}

@@ -26,8 +26,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE,
            paper, family, encoding, bg, fg,
            width, height, horizontal, pointsize,
-           pagecentre, print.it, command, title = "R Graphics Output",
-           fonts=NULL)
+           pagecentre, print.it, command,
+           title = "R Graphics Output", fonts = NULL)
 
 % paper, horizontal, width, height, family, pointsize, bg, fg)
 ps.options(paper, horizontal, width, height, family, encoding,

@@ -8,12 +8,13 @@
 \usage{
 grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
           just = "centre", rot = 0,
-          check.overlap = FALSE, default.units = "npc", name = NULL,
-          gp=gpar(), draw = TRUE, vp = NULL)
+          check.overlap = FALSE, default.units = "npc",
+          name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
+
 textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
           just = "centre", rot = 0,
-          check.overlap = FALSE, default.units = "npc", name = NULL,
-          gp=gpar(), vp = NULL)
+          check.overlap = FALSE, default.units = "npc",
+          name = NULL, gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{label}{A vector of strings or expressions to draw.}

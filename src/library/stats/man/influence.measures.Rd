@@ -51,7 +51,8 @@ cooks.distance(model, \dots)
                sd = sqrt(deviance(model)/df.residual(model)),
                hat = infl$hat, \dots)
 \method{cooks.distance}{glm}(model, infl = influence(model, do.coef=FALSE),
-               res = infl$pear.res, dispersion = summary(model)$dispersion,
+               res = infl$pear.res,
+               dispersion = summary(model)$dispersion,
                hat = infl$hat, \dots)
 
 hatvalues(model, \dots)

@@ -4,8 +4,8 @@
 \title{Kernel Density Estimation}
 \usage{
 density(x, bw = "nrd0", adjust = 1,
-        kernel = c("gaussian", "epanechnikov", "rectangular", "triangular",
-                   "biweight", "cosine", "optcosine"),
+        kernel = c("gaussian", "epanechnikov", "rectangular",
+                   "triangular", "biweight", "cosine", "optcosine"),
         window = kernel, width,
         give.Rkern = FALSE,
         n = 512, from, to, cut = 3, na.rm = FALSE)

@@ -15,7 +15,8 @@
 help(topic, offline = FALSE, package = NULL,
      lib.loc = NULL, verbose = getOption("verbose"),
      try.all.packages = getOption("help.try.all.packages"),
-     chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),
+     chmhelp = getOption("chmhelp"),
+     htmlhelp = getOption("htmlhelp"),
      pager = getOption("pager"))
 ?topic
 type?topic

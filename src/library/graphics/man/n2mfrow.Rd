@@ -25,7 +25,8 @@ n <- 5 ; x <- seq(-2,2, len=51)
 ## suppose now that 'n' is not known {inside function}
 op <- par(mfrow = n2mfrow(n))
 for (j in 1:n)
-   plot(x, x^j, main = substitute(x^ exp, list(exp = j)), type='l', col="blue")
+   plot(x, x^j, main = substitute(x^ exp, list(exp = j)), type = "l",
+   col = "blue")
 
 sapply(1:10, n2mfrow)
 }

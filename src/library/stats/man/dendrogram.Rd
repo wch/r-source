@@ -27,10 +27,11 @@ as.dendrogram(object, \dots)
 \method{as.dendrogram}{hclust}(object, hang = -1, \dots)
 
 \method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
-      center = FALSE, edge.root = is.leaf(x) || !is.null(attr(x,"edgetext")),
+      center = FALSE,
+      edge.root = is.leaf(x) || !is.null(attr(x,"edgetext")),
       nodePar = NULL, edgePar = list(),
-      leaflab = c("perpendicular", "textlike", "none"), dLeaf = NULL,
-      xlab = "", ylab = "", xaxt = "n", yaxt = "s",
+      leaflab = c("perpendicular", "textlike", "none"),
+      dLeaf = NULL, xlab = "", ylab = "", xaxt = "n", yaxt = "s",
       horiz = FALSE, frame.plot = FALSE, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)

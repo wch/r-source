@@ -6,8 +6,8 @@
   x- and/or y-scales based on numeric values passed to the function.
 }
 \usage{
-dataViewport(xData = NULL, yData = NULL, xscale = NULL, yscale = NULL,
-             extension = 0.05, ...)
+dataViewport(xData = NULL, yData = NULL, xscale = NULL,
+             yscale = NULL, extension = 0.05, ...)
 }
 \arguments{
   \item{xData}{ A numeric vector of data. }

@@ -2,8 +2,10 @@
 \alias{bug.report}
 \title{Send a Bug Report}
 \usage{
-bug.report(subject = "", ccaddress = Sys.getenv("USER"),
-           method = getOption("mailer"), address = "r-bugs@r-project.org",
+bug.report(subject = "",
+           ccaddress = Sys.getenv("USER"),
+           method = getOption("mailer"),
+           address = "r-bugs@r-project.org",
 #ifdef windows
            file = "R.bug.report", wait = TRUE)
 #endif

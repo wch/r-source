@@ -6,9 +6,11 @@
   Remove a grob from a gTree or a descendant of a gTree.
 }
 \usage{
-grid.remove(gPath, warn=TRUE, strict = FALSE, grep=FALSE, global=FALSE,
-            allDevices=FALSE, redraw=TRUE) 
-removeGrob(gTree, gPath, strict=FALSE, grep=FALSE, global=FALSE, warn=TRUE) 
+grid.remove(gPath, warn = TRUE, strict  =  FALSE, grep = FALSE,
+            global = FALSE, allDevices = FALSE, redraw = TRUE)
+
+removeGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE,
+           warn = TRUE) 
 }
 \arguments{
   \item{gTree}{A gTree object.}

@@ -7,12 +7,12 @@
   A graphics device for BMP, JPEG or PNG format bitmap files.
 }
 \usage{
-bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480, pointsize = 12,
-    bg = "white", res = NA)
-jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480, pointsize = 12,
-     quality = 75, bg = "white", res = NA)
-png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
-    bg = "white", res = NA)
+bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480,
+    pointsize = 12, bg = "white", res = NA)
+jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480,
+     pointsize = 12, quality = 75, bg = "white", res = NA)
+png(filename = "Rplot\%03d.png", width = 480, height = 480,
+    pointsize = 12, bg = "white", res = NA)
 }
 \arguments{
   \item{filename}{the name of the output file, up to 511 characters.

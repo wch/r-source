@@ -5,7 +5,8 @@
   Finding the top level environment.
 }
 \usage{
-topenv(envir = parent.frame(), matchThisEnv = getOption("topLevelEnvironment"))
+topenv(envir = parent.frame(),
+       matchThisEnv = getOption("topLevelEnvironment"))
 }
 \arguments{
   \item{envir}{environment.}

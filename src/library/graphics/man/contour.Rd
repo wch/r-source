@@ -19,8 +19,10 @@ contour(x, \dots)
         axes = TRUE, frame.plot = axes,
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
+
 contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
-	     z, nlevels = 10, levels = pretty(range(z, na.rm=TRUE), nlevels))
+	     z, nlevels = 10,
+             levels = pretty(range(z, na.rm=TRUE), nlevels))
 }
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are

@@ -6,8 +6,8 @@
   rows and columns in a contingency table with fixed marginals.
 }
 \usage{
-fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE, control = list(),
-            or = 1, alternative = "two.sided",
+fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
+            control = list(), or = 1, alternative = "two.sided",
             conf.int = TRUE, conf.level = 0.95)
 }
 \arguments{

@@ -7,8 +7,12 @@
 matplot(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL, col = 1:6,
         cex = NULL, xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
         \dots, add = FALSE, verbose = getOption("verbose"))
-matpoints(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
-matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
+
+matpoints(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL,
+          col = 1:6, \dots)
+
+matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
+          col = 1:6, \dots)
 }
 \arguments{
   \item{x,y}{vectors or matrices of data for plotting.  The number of

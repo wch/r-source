@@ -15,8 +15,8 @@
   can be temporarily turned on or off globally by calling \code{tracingState}.
 }
 \usage{
-trace(what, tracer, exit, at, print, signature, where = topenv(parent.frame()),
-       edit = FALSE)
+trace(what, tracer, exit, at, print, signature,
+      where = topenv(parent.frame()), edit = FALSE)
 untrace(what, signature = NULL, where = topenv(parent.frame()))
 
 tracingState(on = NULL)

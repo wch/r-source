@@ -8,7 +8,8 @@
   of \R's modeling software.
 }
 \usage{
-data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
+data.frame(\dots, row.names = NULL, check.rows = FALSE,
+           check.names = TRUE)
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or

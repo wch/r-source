@@ -6,8 +6,9 @@
   argument in e.g., \code{\link{coplot}} or \code{\link{pairs}}.
 }
 \usage{
-panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"), cex = 1,
-             col.smooth = "red", span = 2/3, iter=3, \dots)
+panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"),
+             cex = 1, col.smooth = "red", span = 2/3, iter = 3,
+             \dots)
 }
 \arguments{
   \item{x,y}{numeric vectors of the same length}

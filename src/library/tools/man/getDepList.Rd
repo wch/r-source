@@ -9,9 +9,11 @@
   which unresolved dependencies were not found online, and any R dependencies.
 }
 \usage{
-getDepList(depMtrx, instPkgs, recursive=TRUE, local=TRUE, reduce=TRUE,
-           lib.loc=NULL)
-pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE, lib.loc=NULL)
+getDepList(depMtrx, instPkgs, recursive = TRUE, local = TRUE,
+           reduce = TRUE, lib.loc = NULL)
+
+pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE,
+           lib.loc = NULL)
 }
 \arguments{
   \item{depMtrx}{A dependency matrix as from \code{package.dependencies}}

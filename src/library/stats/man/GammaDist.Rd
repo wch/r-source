@@ -13,8 +13,10 @@
 }
 \usage{
 dgamma(x, shape, rate = 1, scale = 1/rate, log = FALSE)
-pgamma(q, shape, rate = 1, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
-qgamma(p, shape, rate = 1, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
+pgamma(q, shape, rate = 1, scale = 1/rate, lower.tail = TRUE,
+       log.p = FALSE)
+qgamma(p, shape, rate = 1, scale = 1/rate, lower.tail = TRUE,
+       log.p = FALSE)
 rgamma(n, shape, rate = 1, scale = 1/rate)
 }
 \arguments{

@@ -6,8 +6,10 @@
   Retrieve a grob or a descendant of a grob.
 }
 \usage{
-grid.get(gPath, strict=FALSE, grep=FALSE, global=FALSE, allDevices=FALSE) 
-getGrob(gTree, gPath, strict=FALSE, grep=FALSE, global=FALSE) 
+grid.get(gPath, strict = FALSE, grep = FALSE, global = FALSE,
+         allDevices = FALSE)
+
+getGrob(gTree, gPath, strict = FALSE, grep = FALSE, global = FALSE) 
 }
 \arguments{
   \item{gTree}{A gTree object.}

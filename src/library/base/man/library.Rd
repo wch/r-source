@@ -15,8 +15,9 @@
   \code{.Last.lib} is called when a package is detached.
 }
 \usage{
-library(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
-        logical.return = FALSE, warn.conflicts = TRUE,
+library(package, help, pos = 2, lib.loc = NULL,
+        character.only = FALSE, logical.return = FALSE,
+        warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
         verbose = getOption("verbose"), version)
 require(package, quietly = FALSE, warn.conflicts = TRUE,

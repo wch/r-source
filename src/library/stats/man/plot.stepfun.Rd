@@ -10,8 +10,9 @@
 \method{plot}{stepfun}(x, xval, xlim, ylim,
      xlab = "x", ylab = "f(x)", main = NULL,
      add = FALSE, verticals = TRUE, do.points = TRUE,
-     pch = par("pch"), col.points=par("col"), cex.points=par("cex"),
-     col.hor = par("col"), col.vert= par("col"),
+     pch = par("pch"),
+     col.points = par("col"), cex.points = par("cex"),
+     col.hor = par("col"), col.vert = par("col"),
      lty = par("lty"), lwd = par("lwd"), \dots)
 
 \method{lines}{stepfun}(x, \dots)

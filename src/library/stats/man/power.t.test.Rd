@@ -2,9 +2,11 @@
 \alias{power.t.test}
 \title{Power calculations for one and two sample t tests}
 \usage{
-power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
-             type=c("two.sample", "one.sample", "paired"),
-             alternative=c("two.sided", "one.sided"), strict=FALSE)
+power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
+             power = NULL,
+             type = c("two.sample", "one.sample", "paired"),
+             alternative = c("two.sided", "one.sided"),
+             strict = FALSE)
 }
 \arguments{
  \item{n}{Number of observations (per group)}
@@ -27,7 +29,7 @@ power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
   non-NULL defaults so NULL must be explicitly passed if you want to
   compute them.
 
-  If \code{strict=TRUE} is used, the power will include the probability of
+  If \code{strict = TRUE} is used, the power will include the probability of
   rejection in the opposite direction of the true effect, in the two-sided 
   case. Without this the power will be half the significance level if the 
   true difference is zero.
@@ -47,9 +49,9 @@ power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
 \seealso{\code{\link{t.test}}, \code{\link{uniroot}}}
 
 \examples{
- power.t.test(n=20, delta=1)
- power.t.test(power=.90, delta=1)
- power.t.test(power=.90, delta=1, alt="one.sided")
+ power.t.test(n = 20, delta = 1)
+ power.t.test(power = .90, delta = 1)
+ power.t.test(power = .90, delta = 1, alt = "one.sided")
 }
 \keyword{htest}
 

@@ -14,8 +14,9 @@
 windows(width = 7, height = 7, pointsize = 12,
         record = getOption("graphics.record"),
         rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-        bg = "transparent", canvas = "white", gamma = getOption("gamma"),
-        xpos = NA, ypos = NA, buffered = getOption("windowsBuffered"))
+        bg = "transparent", canvas = "white",
+        gamma = getOption("gamma"), xpos = NA, ypos = NA,
+        buffered = getOption("windowsBuffered"))
 
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)

@@ -8,8 +8,9 @@
 scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      quote = if (sep=="\n") "" else "'\"", dec = ".",
      skip = 0, nlines = 0, na.strings = "NA",
-     flush = FALSE, fill = FALSE, strip.white = FALSE, quiet = FALSE,
-     blank.lines.skip = TRUE, multi.line = TRUE, comment.char = "")
+     flush = FALSE, fill = FALSE, strip.white = FALSE,
+     quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
+     comment.char = "")
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -31,7 +32,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
     \code{file} can also be a complete URL.
   }
-  
+
   \item{what}{the type of \code{what} gives the type of data to be read.
     If \code{what} is a list, it is assumed that the lines of the data file
     are records each containing \code{length(what)} items (\dQuote{fields}).
@@ -70,11 +71,11 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     end of the line after reading the last of the fields requested.
     This allows putting comments after the last field, but precludes
     putting more that one record on a line.}
-  
+
   \item{fill}{logical: if \code{TRUE}, \code{scan} will implicitly add
     empty fields to any lines with fewer fields than implied by
     \code{what}.}
-  
+
   \item{strip.white}{vector of logical value(s) corresponding to items
     in the \code{what} argument. It is used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing
@@ -86,7 +87,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     \code{i}-th field is of mode character (because \code{what[i]} is)
     then the leading and trailing white space from field \code{i} is
     stripped.}
-  
+
   \item{quiet}{logical: if \code{FALSE} (default), scan() will print a
     line, saying how many items have been read.}
 
@@ -98,7 +99,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     than one record can appear on a single line).  Note that using
     \code{fill = TRUE} implies that a record will terminated at the end
     of a line.}
-  
+
   \item{comment.char}{character: a character vector of length one
     containing a single character or an empty string.  Use \code{""} to
     turn off the interpretation of comments altogether (the default).}
@@ -117,13 +118,13 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   Empty character fields are scanned as empty character vectors, unless
   \code{na.strings} contains \code{""} when they are regarded as missing
   values.
-  
+
   If \code{sep} is the default (\code{""}), the character \code{\\}
   in a quoted string escapes the following character, so quotes may be
   included in the string by escaping them.
-  
+
   If \code{sep} is non-default, the fields may be quoted in the style of
-  \file{.csv} files where separators inside quotes (\code{''} or 
+  \file{.csv} files where separators inside quotes (\code{''} or
   \code{""}) are ignored and quotes may be put inside strings by
   doubling them.  However, if \code{sep = "\\n"} it is assumed
   by default that one wants to read entire lines verbatim.
@@ -141,7 +142,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   field), it signals that the rest of the line
   should be regarded as a comment and be discarded.  Lines beginning
   with a comment character (possibly after white space) are treated
-  as blank lines. 
+  as blank lines.
 }
 \value{
   if \code{what} is a list, a list of the same length and same names (as
@@ -152,7 +153,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 \note{
   The default for \code{multi.line} differs from S.  To read one record
   per line, use \code{flush = TRUE} and \code{multi.line = FALSE}.
-  
+
   If number of items is not specified, the internal
   mechanism re-allocates memory in powers of two and so could use up
   to three times as much memory as needed.  (It needs both old and new
