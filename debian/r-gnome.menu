@@ -1,1 +1,1 @@
-?package(r-gnome):needs="text" section="Apps/Math"  title="R-gnome" command="/usr/bin/R --gui=GNOME"
+?package(r-gnome):needs="x11" section="Apps/Math"  title="R-gnome" command="/usr/bin/R --gui=GNOME"

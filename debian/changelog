@@ -1,3 +1,37 @@
+r-base (1.6.2.cvs.20030326-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2003-03-26 of R 1.7.0
+  * debian/rules: Configure with --with-lapack
+  * debian/control: Build-Depends on lapack-dev
+  * debian/rules: Explicitly use gcc/g77/g++-3.2 for builds on testing
+  * debian/r-gnome.menu: Needs entry corrected to "x11"
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed, 26 Mar 2003 09:19:07 -0600
+
+r-base (1.6.2-2) unstable; urgency=low
+
+  * Rebuilding on Debian unstable with gcc/g++/g77 as the new default
+  * debian/control: Depends g77 (>= 3.2.2), g++ (>= 3.2.2) for r-base{,-dev}
+  * debian/rules: Adjusted accordingly by defaulting to gcc, g++, g77
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 18 Jan 2003 20:21:21 -0600
+
+r-base (1.6.2-1) unstable; urgency=low
+
+  * New upstream version 1.6.2 released today
+  * debian/r-base-core.lintian: Added exceptions for 
+    image-file-in-usr-lib usr/lib/R/doc/html/{left,logo,logosm,right,up}.jpg
+  * debian/rules: Substitute Perl path to /usr/bin/perl for 
+    usr/lib/R/bin/{Rdconv,Rdindex,Rprof,Sd2Rd,build,check}
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri, 10 Jan 2003 20:30:26 -0600
+
+r-base (1.6.1.cvs.20030103-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2003-01-03 of R 1.6.2
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri,  3 Jan 2003 09:42:18 -0600
+
 r-base (1.6.1.cvs.20021230-1) unstable; urgency=low
 
   * Upgraded to release candidate dated 2002-12-30 of R 1.6.2
