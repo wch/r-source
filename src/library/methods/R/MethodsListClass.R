@@ -139,13 +139,29 @@
                   value
               }, where = envir)
     ## make sure body(m) <- .... leaves a method as a method
-    setGeneric("body<-")
+    setGeneric("body<-", where = envir)
     setMethod("body<-", "MethodDefinition", function (f, value, envir) {
         ff <- as(f, "function")
         body(ff, envir = envir) <- value
         f@.Data <- ff
         f
-    })
+    }, where = envir)
+    ## a show method for lists of generic functions, etc; see metaNameUndo
+    setMethod("show", "ObjectsWithPackage",
+              function(object) {
+                  pkg <- object@package
+                  data <- as(object, "character")
+                  cat("An object of class \"", class(object), "\":\n", sep="")
+                  if(length(unique(pkg))==1) {
+                      show(data)
+                      cat("(All from \"", unique(pkg), "\")\n", sep="")
+                  }
+                  else {
+                      mat <- rbind(data, pkg)
+                      dimnames(mat) <- list(c("Object:", "From:"), rep("", length(data)))
+                      show(mat)
+                  }
+              }, where = envir)
 ### Uncomment next line if we want special initialize methods for basic classes
 ###    .InitBasicClassMethods(where)
 }
