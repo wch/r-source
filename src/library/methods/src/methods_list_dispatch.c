@@ -248,8 +248,8 @@ static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
 SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
 {
     /* Match the list of (evaluated) args to the methods list. */
-    SEXP object, methods, value;
-    char *class;
+    SEXP object, methods, value, retValue = R_NilValue;
+    char *class; int nprotect = 0;
     if(!mlist)
 	return R_NilValue;
     methods = R_do_slot(mlist, s_allMethods);
@@ -257,14 +257,25 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
       {  return R_NilValue;}
     while(!isNull(args) && !isNull(methods)) {
 	object = CAR(args); args = CDR(args);
+	if(TYPEOF(object) == PROMSXP) {
+	    if(PRVALUE(object) == R_UnboundValue) {
+		SEXP tmp = eval(PREXPR(object), PRENV(object));
+		PROTECT(tmp); nprotect++;
+		SET_PRVALUE(object,  tmp);
+		object = tmp;
+	    }
+	}
 	class = CHAR(asChar(R_data_class(object, TRUE)));
 	value = R_element_named(methods, class);
-	if(isNull(value) || isFunction(value))
-	    return value;
+	if(isNull(value) || isFunction(value)){
+	    retValue = value;
+	    break;
+	}
 	/* continue matching args down the tree */
 	methods = R_do_slot(value, s_allMethods);
     }
-    return(R_NilValue);
+    UNPROTECT(nprotect);
+    return(retValue);
 }
 
 /* call some S language functions */
@@ -287,8 +298,9 @@ static SEXP R_S_getAllMethods(SEXP fname, SEXP fdef)
 static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
 				  SEXP f_env)
 {
-    SEXP e, val;
-    PROTECT(e = allocVector(LANGSXP, 5));
+    SEXP e, val; int n;
+    n = isNull(f_env) ? 4 : 5;
+    PROTECT(e = allocVector(LANGSXP, n));
     SETCAR(e, s_MethodsListSelect);
     val = CDR(e);
     SETCAR(val, fname);
@@ -296,8 +308,10 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
     SETCAR(val, ev);
     val = CDR(val);
     SETCAR(val, mlist);
-    val = CDR(val);
-    SETCAR(val, f_env);
+    if(n == 5) {
+	    val = CDR(val);
+	    SETCAR(val, f_env);
+    }
     val = eval(e, R_GlobalEnv);
     UNPROTECT(1);
     return val;
@@ -656,9 +670,9 @@ SEXP R_missingArg(SEXP symbol, SEXP ev) {
 
     
 
-SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist)
+SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist, SEXP evalArgs)
 {
-    return do_dispatch(fname, ev, mlist, TRUE, FALSE);
+    return do_dispatch(fname, ev, mlist, TRUE, asLogical(evalArgs));
 }
 
 static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
@@ -736,44 +750,44 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 }
 
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
-    SEXP e, val, args, arg1, this_sym;
+    SEXP e, val, args, arg1, this_sym, op;
     int nprotect = 0, i, extras, nargs = length(matched_call)-1, error_flag;
-    Rboolean prim_case, set_tag;
+    Rboolean prim_case;
     PROTECT(e = duplicate(matched_call)); nprotect++;
-    /* for primitive .nextMethod's, unset the object bit of the first
-       argument, to avoid  going into an infinite loop of method calls
+    /* for primitive .nextMethod's, suppress further dispatch to avoid
+     * going into an infinite loop of method calls
     */
-    val = findVar(R_dot_nextMethod, ev);
-    prim_case = isPrimitive(val);
-    if(!prim_case)
-	SETCAR(e, R_dot_nextMethod); val = CDR(e);
-    /* else, retain the call to the C code for special magic in
-       argument handling, etc.  (esp. for "[" and friends).  The
-       mangling of the object bit should prevent recursive looping.  */
+    op = findVar(R_dot_nextMethod, ev);
+    prim_case = isPrimitive(op);
+    if(prim_case) {
+	/* retain call to primitive function, suppress method
+	   dispatch for it */
+        do_set_prim_method(op, "suppress", R_NilValue, R_NilValue);
+	PROTECT(op); nprotect++; /* needed? */
+    }
+    else
+	SETCAR(e, R_dot_nextMethod); /* call .nextMethod instead */
     args = CDR(e);
-    set_tag = FALSE;
+    /* e is a copy of a match.call, with expand.dots=FALSE.  Turn each
+    <TAG>=value into <TAG> = <TAG>, except  ... = value goes into
+    ... (no arg name of course for ...) */
     for(i=0; i<nargs; i++) {
 	this_sym = TAG(args);
-	if(prim_case && i == 0) {
-	    PROTECT(arg1 = R_tryEval(this_sym, ev, &error_flag)); nprotect++;
-	    if(error_flag)
-		    Rf_error("Error in finding first argument  for primitive next method");
-	    SET_OBJECT(arg1, 0);
-	    SETCAR(val, arg1);
-	}
-	else 
-	    SETCAR(val, this_sym);
-	val = CDR(val);
+	if(this_sym == R_DotsSymbol)
+		SET_TAG(args, R_NilValue);
+	SETCAR(args, this_sym);
 	args = CDR(args);
     }
     if(prim_case) {
-	    val = R_tryEval(e, ev, &error_flag);
-	    SET_OBJECT(arg1, 1);
-	    if(error_flag)
-		    Rf_error("Error in evaluating a primitive next method");
+	val = R_tryEval(e, ev, &error_flag);
+	/* reset the methods:  R_NilValue for the mlist argument
+	   leaves the previous function, methods list unchanged */
+	do_set_prim_method(op, "set", R_NilValue, R_NilValue);
+	if(error_flag)
+	    Rf_error("Error in evaluating a primitive next method");
     }
     else
-	    val = eval(e, ev);
+	val = eval(e, ev);
     UNPROTECT(nprotect);
     return val;
 }
