@@ -620,6 +620,22 @@ info$isdir
 stopifnot(info$isdir == TRUE)
 ## 1.4.1 had a TRUE value that was not internally integer 1.
 
+## PR#1473 predict.*bSpline() bugs extrapolating for deriv >= 1
+library(splines)
+x <- c(1:3,5:6)
+y <- c(3:1,5:6)
+(isP <- interpSpline(x,y))# poly-spline representation
+(isB <- interpSpline(x,y, bSpl = TRUE))# B-spline repr.
+xo <- c(0, x, 10)# x + outside points
+op <- options(digits = 4)
+for(der in 0:3) # deriv=3 fails!
+    print(formatC(try(predict(isP, xo, deriv = der)$y), wid=7,format="f"),
+          quote = FALSE)
+## and for B-spline (instead of polynomial):
+for(der in 0:3)  # deriv=3 failed
+    print(formatC(try(predict(isB, xo, deriv = der)$y), wid=7,format="f"),
+          quote = FALSE)
+options(op)
 
 ## This example last: needed < 1.5.0 ##
 

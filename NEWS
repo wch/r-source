@@ -14,9 +14,9 @@ NEW FEATURES
     o   Enhancements to mathematical annotation of plots:
 
 	- expressions involving dot(<something>) now produce a dot accent
-	  above the <something> (initial patch from Ben Bolker).  
+	  above the <something> (initial patch from Ben Bolker).
 
-	- within an expression, the symbol partialdiff is now converted 
+	- within an expression, the symbol partialdiff is now converted
 	  to a partial differential symbol (greek delta).
 
 
@@ -45,7 +45,10 @@ BUG FIXES
 
     o   RweaveLatex.Rd had unbalanced braces in section "Supported
         Options".
-    
+
+    o	predict.*bSpline() bugs extrapolating for deriv >= 1 (PR#1473),
+        and predict.[bn]s bug e.g. for bs(x), reported by Ch.Sangiorgio.
+
 
 		CHANGES IN R VERSION 1.5.0
 
@@ -123,7 +126,7 @@ NEW FEATURES
 
         -  Now works with the GNOME user interface.
 
-        -  Several new functions allow access to C level Tcl objects. 
+        -  Several new functions allow access to C level Tcl objects.
 	   These are implemented using a new `tclObj' class, and this
 	   is now the class of the return value from .Tcl() and tkcmd().
 
@@ -162,7 +165,7 @@ NEW FEATURES
 
 	-  New function monthplot() (contributed by Duncan Murdoch).
 
-	-  New functions decompose() and HoltWinters() (contributed by 
+	-  New functions decompose() and HoltWinters() (contributed by
 	   David Meyer) for classical seasonal decomposition and
 	   exponentially-weighted forecasting.
 
@@ -675,7 +678,7 @@ BUG FIXES
 
     o   rect(lty = "blank") was incorrectly drawing with a dashed line.
 
-    o   type.convert() was not reporting incorrectly formatted complex 
+    o   type.convert() was not reporting incorrectly formatted complex
 	inputs. (PR#1477)
 
     o   readChar() was not resetting vmax, so causing memory build-up.
