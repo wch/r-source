@@ -3168,14 +3168,14 @@ stopifnot(identical(names(cumsum(x)), nm),
 
 
 ## complex superassignments
-e <- c(a=1,b=2)
-f <- c(a=1,b=2)
+e <- c(a=1, b=2)
+f <- c(a=1, b=2)
 g <- e
-h <- list(a=1,list(b=2,list(c=3,d=4),list(e=5)))
-j <- matrix(1,2,2)
+h <- list(a=1, list(b=2, list(c=3, d=4), list(e=5)))
+j <- matrix(1, 2, 2)
 a <- "A"
 local({
-  eold <- e <- c(A=10,B=11)
+  eold <- e <- c(A=10, B=11)
   hold <- h <- 2
   jold <- j <- 7
   gold <- g <- e
@@ -3186,33 +3186,33 @@ local({
   g <<- 1
   h[[2]][[h]][[ f[e==10] ]] <<- h
   names(h[[2]][[h]])[f[e==10] ] <<- a
-  j[h,h] <<- h
+  j[h, h] <<- h
   colnames(j)[2] <<- a
 
-  stopifnot(identical(e,eold))
-  stopifnot(identical(h,hold))
-  stopifnot(identical(g,gold))
-  stopifnot(identical(j,jold))
+  stopifnot(identical(e, eold))
+  stopifnot(identical(h, hold))
+  stopifnot(identical(g, gold))
+  stopifnot(identical(j, jold))
 })
 
-stopifnot(identical(e, c(a=1,b=12)))
-stopifnot(identical(f, c(a=1,B=2)))
+stopifnot(identical(e, c(a=1, b=12)))
+stopifnot(identical(f, c(a=1, B=2)))
 stopifnot(identical(g, 1))
-stopifnot(identical(h, list(a=1,list(b=2, list(B=2,d=4), list(e=5)))))
-stopifnot(identical(as.vector(j), c(1,1,1,2)))
+stopifnot(identical(h, list(a=1, list(b=2, list(B=2, d=4), list(e=5)))))
+stopifnot(identical(as.vector(j), c(1, 1, 1, 2)))
 stopifnot(identical(colnames(j), c(NA,"B")))
-## gave error 'subscript out of bounds' in 1.x.x
+## gave error 'subscript out of bounds' in 1.9.1
 
 ## make sure we don't get cycles out of changes to subassign3.
-x <- list(a=1,y=2)
+x <- list(a=1, y=2)
 x$a <- x
 print(x)
-x$d<-x
+x$d <- x
 print(x)
 y <- x
 x$b <- y
 print(x)
-x$f<-y
+x$f <- y
 print(x)
 ##
 
@@ -3245,12 +3245,13 @@ apply(a, 1:2, func1)
 
 # col2rgb must return a matrix for a single colour
 stopifnot(is.matrix(col2rgb("red")))
+## was vector at one point in pre-2.0.0
 
 
-### Subscripting matrices with NA's
-
-AAA<-array(1:6,c(6,1,1))
-idx<-c(1,2,NA,NA,5,6)
-B<-10*(1:6)
-AAA[idx,1,1]<-B
-all.equal(as.vector(AAA),c(10,20,3,4,50,60))
+## Subscripting matrices with NA's
+# AAA <- array(1:6, c(6,1,1))
+# idx <- c(1,2,NA,NA,5,6)
+# B <- 10*(1:6)
+# AAA[idx,1,1] <- B
+# all.equal(as.vector(AAA),c(10,20,3,4,50,60))
+## assigned only the first element in 1.9.1. An error in 2.0.0.

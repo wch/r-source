@@ -99,6 +99,19 @@ x$name
   assignment will either create a new binding or change the existing
   binding in \code{x}.
 }
+\section{NAs in indexing}{
+  When subscripting, a numerical, logical or character \code{NA} picks
+  an unknown element and so returns \code{NA} in the corresponding
+  element of a logical, integer, numeric, complex or character result,
+  and \code{NULL} for a list.
+
+  When replacing (that is using subscripting on the lhs of an
+  assignment) \code{NA} does not select any element to be replaced.  As
+  there is ambiguity as to whether an element of the rhs should
+  be used or not (and \R handled this inconsistently prior to \R 2.0.0),
+  this is only allowed if the rhs value is of length one (so the two
+  interpretations would have the same outcome).  
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

@@ -368,6 +368,10 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     stretch = 1;
     PROTECT(indx = makeSubscript(x, s, &stretch));
     n = length(indx);
+    if(length(y) > 1)
+	for(i = 0; i < n; i++)
+	    if(INTEGER(indx)[i] == NA_INTEGER)
+		error("NAs are not allowed in subscripted assignments");
 
     /* Here we make sure that the LHS has */
     /* been coerced into a form which can */
@@ -631,6 +635,14 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 				   (STRING_ELT), x));
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
+    if(ny > 1) {
+	for(i = 0; i < nrs; i++)
+	    if(INTEGER(sr)[i] == NA_INTEGER)
+		error("NAs are not allowed in subscripted assignments");
+	for(i = 0; i < ncs; i++)
+	    if(INTEGER(sc)[i] == NA_INTEGER)
+		error("NAs are not allowed in subscripted assignments");
+    }
 
     n = nrs * ncs;
 
@@ -888,6 +900,13 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	errorcall(call, "nothing to replace with");
     if (n > 0 && n % ny)
 	errorcall(call, "number of items to replace is not a multiple of replacement length");
+
+    if (ny > 1) { /* check for NAs in indices */
+	for (i = 0; i < k; i++)
+	    for (j = 0; j < bound[i]; j++)
+		if (subs[i][j] == NA_INTEGER)
+		    error("NAs are not allowed in subscripted assignments");
+    }
 
     offset[0] = 1;
     for (i = 1; i < k; i++)
@@ -1608,8 +1627,8 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(indx)[i] = get1index(CAR(subs), CAR(names),
-					      INTEGER(dims)[i],
-					      /*partial ok*/FALSE, -1);
+					     INTEGER(dims)[i],
+					     /*partial ok*/FALSE, -1);
 		subs = CDR(subs);
 		if (INTEGER(indx)[i] < 0 ||
 		    INTEGER(indx)[i] >= INTEGER(dims)[i])
@@ -1682,7 +1701,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     if (NAMED(x) == 2)
 	REPROTECT(x = duplicate(x), pxidx);
 
-    /* If we aren't creating a new entry and NAMED>0 
+    /* If we aren't creating a new entry and NAMED>0
        we need to duplicate to prevent cycles.
        If we are creating a new entry we could duplicate
        or increase NAMED. We duplicate if NAMED==1, but

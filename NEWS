@@ -364,6 +364,11 @@ NEW FEATURES
     o	The screen devices x11(), windows() and quartz() have a new
 	argument 'bg' to set the default background colour.
 
+
+    o	Subassignments involving NAs and with a replacement value of
+	length > 0 are now disallowed.  (They were handled
+	inconsistently in R < 2.0.0, see PR#7210.)
+
     o	The way the comparison operators handle a list argument has
 	been rationalized so a few more cases will now work -- see
 	?Comparison.
