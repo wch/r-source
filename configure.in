@@ -442,15 +442,20 @@ case "${host}" in
     ;;
   alpha*osf*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    R_PROG_CC_FLAG(-ieee_with_inexact,
-      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact")
     ## <Albrecht.Gebhardt@uni-klu.ac.at>
     if test -z "${GCC}"; then
+      R_PROG_CC_FLAG(-ieee_with_inexact,
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact")
       R_PROG_CC_FLAG(-std1,
-        R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1")
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1")
+    else
+      R_PROG_CC_FLAG(-mieee,
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee")
     fi
     if test -z "${G77}"; then
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -fpe3"
+    else
+      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"
     fi
     ## </Albrecht.Gebhardt@uni-klu.ac.at>
     ;;
