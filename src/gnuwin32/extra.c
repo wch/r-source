@@ -44,7 +44,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     /* try to get a new file name */
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
-    if (!tmp) tmp = getenv("R_HOME");
+    if (!tmp) tmp = getenv("R_USER");
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
         sprintf(tm, "%s\\%s%d", tmp, tn, rand());
@@ -110,9 +110,9 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     FILE *ff;
 
     checkArity(op, args);
-    home = getenv("RHOME");
+    home = getenv("R_HOME");
     if (home == NULL)
-	error("RHOME not set\n");
+	error("R_HOME not set\n");
     sprintf(buf, "%s\\doc\\html\\index.html", home);
     ff = fopen(buf, "r");
     if (!ff) {
@@ -160,9 +160,9 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(buf);
 	}
 	fclose(ff);
-	home = getenv("RHOME");
+	home = getenv("R_HOME");
 	if (home == NULL)
-	    error("RHOME not set\n");
+	    error("R_HOME not set\n");
 	ShellExecute(NULL, "open", item, NULL, home, SW_SHOW);
     } else if (type == 2) {
 	if (!isString(CADDR(args)))

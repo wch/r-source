@@ -336,9 +336,9 @@ static void readconsolecfg()
     if (MDIset == -1)
 	RguiMDI = RguiMDI &= ~RW_MDI;
 
-    sprintf(optf, "%s/RConsole", getenv("R_HOME"));
+    sprintf(optf, "%s/RConsole", getenv("R_USER"));
     if (!optopenfile(optf)) {
-	sprintf(optf, "%s/etc/RConsole", getenv("RHOME"));
+	sprintf(optf, "%s/etc/RConsole", getenv("R_HOME"));
 	if (!optopenfile(optf))
 	    return;
     }

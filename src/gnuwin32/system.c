@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997-1999  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -172,6 +172,7 @@ static int DefaultRestoreAction = 1;
 static int LoadSiteFile = 1;
 static int LoadInitFile = 1;
 static int DebugInitFile = 0;
+static int NoRenviron = 0;
 
 int   CharacterMode;
 static int PipedInput = 0;
@@ -472,6 +473,8 @@ FILE *R_OpenSiteFile(void)
     fp = NULL;
 
     if (LoadSiteFile) {
+	if ((fp = R_fopen(getenv("R_PROFILE"), "r")))
+	    return fp;
 	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
 	    return fp;
 	sprintf(buf, "%s/etc/Rprofile", R_Home);
@@ -491,7 +494,7 @@ FILE *R_OpenInitFile(void)
     if (LoadInitFile) {
 	if ((fp = R_fopen(".Rprofile", "r")))
 	    return fp;
-	sprintf(buf, "%s/.Rprofile", getenv("R_HOME"));
+	sprintf(buf, "%s/.Rprofile", getenv("R_USER"));
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
     }
@@ -505,8 +508,8 @@ FILE *R_OpenInitFile(void)
 static long StartTime;
 #endif
 
-static char RHome[MAX_PATH + 6];
-static char UserRHome[MAX_PATH + 6];
+static char RHome[MAX_PATH + 7];
+static char UserRHome[MAX_PATH + 7];
 char *getRHOME();
 void  closeAllHlpFiles();
 void UnLoad_Unzip_Dll();
@@ -582,7 +585,7 @@ int cmdlineoptions(int ac, char **av)
     while (--ac) {
 	if (**++av == '-') {
 	    if (!strcmp(*av, "-V") || !strcmp(*av, "--version")) {
-		sprintf(s, "Version %s.%s %s (%s %s, %s)\nCopyright (C) %s R Core Team\n\n",
+		sprintf(s, "Version %s.%s %s (%s %s, %s)\nCopyright (C) %s R Develpment Core Team\n\n",
 		R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR, R_YEAR);
 		strcat(s, "R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
 		strcat(s, "You are welcome to redistribute it under the terms of the\n");
@@ -607,6 +610,7 @@ int cmdlineoptions(int ac, char **av)
 		DefaultRestoreAction = 0;	/* --no-restore */
 		LoadSiteFile = 0;	/* --no-site-file */
 		LoadInitFile = 0;	/* --no-init-file */
+		NoRenviron = 1;
 	    } else if (!strcmp(*av, "--verbose")) {
 		R_Verbose = 1;
 	    } else if (!strcmp(*av, "--slave") ||
@@ -620,6 +624,8 @@ int cmdlineoptions(int ac, char **av)
 		LoadInitFile = 0;
 	    } else if (!strcmp(*av, "--debug-init")) {
 		DebugInitFile = 1;
+	    } else if (!strcmp(*av, "--no-environ")) {
+		NoRenviron = 1;
 	    } else if (!strcmp(*av, "-save") ||
 		       !strcmp(*av, "-nosave") ||
 		       !strcmp(*av, "-restore") ||
@@ -718,21 +724,21 @@ int cmdlineoptions(int ac, char **av)
 	}
     }
     R_Home = getRHOME();
-    sprintf(RHome, "RHOME=%s", R_Home);
+    sprintf(RHome, "R_HOME=%s", R_Home);
     putenv(RHome);
 
 /*
- * try R_HOME then HOME then working directory
- * put these here to allow R_HOME or HOME to be set on the command line.
+ * try R_USER then HOME then working directory
+ * put these here to allow R_USER or HOME to be set on the command line.
  */
-    if (!getenv("R_HOME")) {
+    if (!getenv("R_USER")) {
 	if (getenv("HOME")) {
-	    sprintf(UserRHome, "R_HOME=%s", getenv("HOME"));
+	    sprintf(UserRHome, "R_USER=%s", getenv("HOME"));
 	    p = UserRHome + (strlen(UserRHome) - 1);
 	    if (*p == '/' || *p == '\\')
 		*p = '\0';
 	} else {
-	    strcpy(UserRHome, "R_HOME=");
+	    strcpy(UserRHome, "R_USER=");
 	    GetCurrentDirectory(MAX_PATH, &UserRHome[7]);
 	}
 	putenv(UserRHome);
@@ -1116,7 +1122,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 
 char *R_HomeDir()
 {
-    return getenv("RHOME");
+    return getenv("R_HOME");
 }
 
 /* Prompt the user for a file name.  Return the length of */

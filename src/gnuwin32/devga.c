@@ -243,12 +243,12 @@ static void RFontInit()
     char *opt[2];
     char  oops[256];
 
-    sprintf(oops, "%s/Rdevga", getenv("R_HOME"));
+    sprintf(oops, "%s/Rdevga", getenv("R_USER"));
     notdone = 1;
     fontnum = 0;
     fontinitdone = 1;
     if (!optopenfile(oops)) {
-	sprintf(oops, "%s/etc/Rdevga", getenv("RHOME"));
+	sprintf(oops, "%s/etc/Rdevga", getenv("R_HOME"));
 	if (!optopenfile(oops)) {
 	    RStandardFonts();
 	    notdone = 0;

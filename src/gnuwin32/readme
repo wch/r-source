@@ -123,8 +123,8 @@ Many aspects of the console (size, appearance, font, colours) can be
 customized by editing the file etc\Rconsole, and a copy with a user's
 settings can be put in her HOME directory or in the working
 directory. (The exact sequence is to search the directories pointed to
-by the environment variables R_HOME then HOME then the working
-directory, finally RHOME\etc.) The file contains a description of the
+by the environment variables R_USER then HOME then the working
+directory, finally R_HOME\etc.) The file contains a description of the
 settings that can be altered. See also ?Rconsole.
 
 The mapping between Windows fonts and R font's number can be set by
@@ -133,7 +133,7 @@ put in the HOME or working directory (see the description of
 Rconsole). This mapping applies to both the screen device and the
 printer device.
 
-Many R defaults can be set in the file RHOME\etc\Rprofile or a user's
+Many R defaults can be set in the file R_HOME\etc\Rprofile or a user's
 file .Rprofile. In particular:
 
 - The pager is set by options(pager=). The default is "internal" which
@@ -179,7 +179,7 @@ in the environment or on the command line, or add the line
 
 .lib.loc <- c("R:/libraries/gm", .lib.loc)
 
-to your .Rprofile or at the end of RHOME/etc/Rprofile.
+to your .Rprofile or at the end of R_HOME/etc/Rprofile.
 
 To install a package from source code you need the source-package
 distribution rw0641sp.zip installed (but not the R source). This contains

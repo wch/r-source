@@ -50,7 +50,7 @@ void InitEd()
 
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
-    if (!tmp) getenv("R_HOME");
+    if (!tmp) getenv("R_USER");
     sprintf(DefaultFileName,"%s/XXXXXX",tmp);
     mktemp(DefaultFileName);
 }
