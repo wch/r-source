@@ -946,12 +946,13 @@ in the @file{NAMESPACE} file, so this approach is usually not
 recommended.
 
 The standard dispatching method for S3-style @code{UseMethod}
-dispatching might fail to locate methods located in a package that is
-imported but not attached to the search path.  To insure that these
-methods are available they should be registered with @code{S3method}
-directives.  If a package defines a function @code{print.foo} intended
-to be used as a @code{print} method for class @code{foo}, then the
-directive
+dispatching might fail to locate methods defined in a package that is
+imported but not attached to the search path.  To ensure that these
+methods are available the packages defining the methods should ensure
+that the generics are imported and register the methods using
+@code{S3method} directives.  If a package defines a function
+@code{print.foo} intended to be used as a @code{print} method for class
+@code{foo}, then the directive
 
 @smallexample
 S3method(print, foo)
@@ -960,6 +961,12 @@ S3method(print, foo)
 @noindent
 ensures that the method is registered and available for @code{UseMethod}
 dispatch.  The function @code{print.foo} does not need to be exported.
+Since the generic @code{print} is defined in base it does not need to be
+imported explicitly.  This mechanism is intended for use with generics
+that are defined in a name space.  Any methods for a generic defined in
+a package that does not use a name space should be exported, and the
+package defining and exporting the method should be attached to the
+search path if the methods are to be found.
 
 Packages with name spaces do not use the @code{.First.lib} function.
 Since loading and attaching are distinct operations when a name space is
