@@ -4,14 +4,20 @@ stderr <- function() .Internal(stderr())
 
 readLines <- function(con = stdin(), n = -1, ok = TRUE)
 {
-    if(is.character(con)) con <- file(con, "r")
+    if(is.character(con)) {
+        con <- file(con, "r")
+        on.exit(close(con))
+    }
     .Internal(readLines(con, n, ok))
 }
 
 
 writeLines <- function(text, con = stdout(), sep = "\n")
 {
-    if(is.character(con)) con <- file(con, "w")
+    if(is.character(con)) {
+        con <- file(con, "w")
+        on.exit(close(con))
+    }
     invisible(.Internal(writeLines(text, con, sep)))
 }
 
