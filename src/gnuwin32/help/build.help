@@ -27,14 +27,12 @@
 # (defaults are `${R_HOME}/src/library/base' and the default library,
 #  `${R_HOME}/library', respectively).
 
-# This version: if pkg is not found, it is tried in $R_HOME/src/library.
-
 use File::Basename;
 use Cwd;
 use Getopt::Long;
 
 fileparse_set_fstype; # Unix, in case one gets anything else.
-$OSdir ="windows";
+$OSdir = "windows";
 
 
 @knownoptions = ("rhome:s", "html", "nroff", "latex", "example", "debug",
@@ -59,7 +57,7 @@ else{
 $R_HOME =~ s+\\+/+g; # Unix-style path
 
 require "$R_HOME/etc/Rdconvlib.pl";
-require "$R_HOME/src/gnuwin32/help/buildlib.pl";
+require "$R_HOME/etc/buildlib.pl";
 
 chdir($cwd);
 print STDERR "Current directory (cwd): '$cwd'\n" if $opt_debug;
@@ -251,5 +249,47 @@ sub open_hhp {
     "Full-text search=Yes\n",
     "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
     "\n\n[FILES]\n00Index.html\n";
+}
+
+
+sub build_chm_toc {
+    open tocfile, ">../chm/$pkg.toc"
+	|| die "Couldn't open the chm toc file";
+    print tocfile
+	"<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
+	"<HEAD></HEAD><HTML><BODY>\n<UL>\n";
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  Contents\">\n",
+	"<param name=\"Local\" value=\"00Index.html\">\n",
+	"</OBJECT>\n";
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  R objects\">\n",
+	"</OBJECT>\n";
+    print tocfile "<UL>\n";   # contents of a book
+    foreach $alias (sort foldorder keys %aliasnm) {
+	print tocfile
+	    "<LI> <OBJECT type=\"text/sitemap\">\n",
+	    "<param name=\"Name\" value=\"$alias\">\n",
+	    "<param name=\"Local\" value=\"$aliasnm{$alias}.html\">\n",
+	    "</OBJECT>\n";
+    }
+    print tocfile "</UL>\n";  # end of a book
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  Titles\">\n",
+	"</OBJECT>\n";
+    print tocfile "<UL>\n";   # contents of a book
+    foreach $title (sort foldorder keys %title2file) {
+	print tocfile
+	    "<LI> <OBJECT type=\"text/sitemap\">\n",
+	    "<param name=\"Name\" value=\"$title\">\n",
+	    "<param name=\"Local\" value=\"$title2file{$title}.html\">\n",
+	    "</OBJECT>\n";
+    }
+    print tocfile "</UL>\n";  # end of a book
+    print tocfile "</UL>\n</BODY></HTML>\n";
+    close tocfile;
 }
 
