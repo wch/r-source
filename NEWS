@@ -267,6 +267,9 @@ BUG FIXES
 
     o   abline() on log scale doesn't draw -ve points (PR#1243)
 
+    o   The Java search engine now works within Mozilla 1.0 and 
+	Netscape 6.2.x / 7.0pr1.
+
 
 
 	**************************************************

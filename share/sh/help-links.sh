@@ -26,11 +26,18 @@ for f in ${R_HOME}/doc/html/*; do
     fi
 done
 
-for f in ${R_HOME}/doc/html/search/*; do
+# class files must be copied for mozilla to work
+for f in ${R_HOME}/doc/html/search/*.class; do
+    if test -f $f; then
+	cp ${f} ${USER_R_HOME}/doc/html/search
+    fi
+done
+for f in ${R_HOME}/doc/html/search/*.html; do
     if test -f $f; then
 	ln -s ${f} ${USER_R_HOME}/doc/html/search
     fi
 done
+ln -s ${R_HOME}/doc/html/search/index.txt ${USER_R_HOME}/doc/html/search
 
 rm -f ${PKGLIST}
 rm -f ${SEARCHINDEX}

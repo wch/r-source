@@ -35,8 +35,8 @@ help.start(update = TRUE, gui = "irrelevant",
   The \code{browser} needs to work with a \code{"-remote openURL(...)"}
   call. Then, the hypertext \R help interface is opened in any already
   running browser or a new one if necessary.  Browsers that support this
-  interface include Netscape 4.x, 6.2.x (but not 6.0/1), Opera 5/6 and
-  Mozilla >= 0.9.5.
+  interface include Netscape 4.x, 6.2.x, 7.0pr1 (but not 6.0/1),
+  Opera 5/6 and Mozilla >= 0.9.5.
 
   If the browser given by the \code{browser} argument is different from
   the default browser as specified by \code{options("browser")}, the
