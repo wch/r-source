@@ -24,6 +24,8 @@ NEW FEATURES
 	Internal GPretty() [implicitly used by	axis(.., at = NULL,..)
 	now uses pretty.
 
+    o   new generic function aggregate() with a method for data frames.
+
 BUG FIXES
 
     o	model.frame(,subset=) no longer loses contrasts
