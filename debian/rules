@@ -67,9 +67,9 @@ install: build
 	make check 
 	make install		prefix=`pwd`/debian/tmp/usr
 	make install-pdf	prefix=`pwd`/debian/tmp/usr
-	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
+	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
 	  < bin/R > debian/tmp/usr/bin/R
-	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
+	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
 	  < bin/R > debian/tmp/usr/lib/R/bin/R
 	# remove unneeded license file
 	rm -v $(debtmp)/usr/lib/R/COPYING  
