@@ -456,14 +456,25 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 #define LOWVOW(i) (buff1[i] == 'a' || buff1[i] == 'e' || buff1[i] == 'i' || \
 		   buff1[i] == 'o' || buff1[i] == 'u')
 
+
+/* memmove does allow overlapping src and dest */
+static void mystrcpy(char *dest, const char *src)
+{
+    memmove(dest, src, strlen(src)+1);
+}
+
+
 static SEXP stripchars(SEXP inchar, int minlen)
 {
 /* abbreviate(inchar, minlen) */
 
+/* This routine used strcpy with overlapping dest and src. 
+   That is not allowed by ISO C. 
+ */
     int i, j, nspace = 0, upper;
     char buff1[MAXELTSIZE];
 
-    strcpy(buff1, CHAR(inchar));
+    mystrcpy(buff1, CHAR(inchar));
     upper = strlen(buff1)-1;
 
     /* remove leading blanks */
@@ -474,7 +485,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 	else
 	    break;
 
-    strcpy(buff1, &buff1[j]);
+    mystrcpy(buff1, &buff1[j]);
     upper = strlen(buff1) - 1;
 
     if (strlen(buff1) < minlen)
@@ -497,7 +508,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) -1;
     for (i = upper; i > 0; i--) {
 	if(LOWVOW(i) && LASTCHAR(i))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -505,7 +516,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) -1;
     for (i = upper; i > 0; i--) {
 	if (LOWVOW(i) && !FIRSTCHAR(i))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -513,7 +524,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) - 1;
     for (i = upper; i > 0; i--) {
 	if (islower((int)buff1[i]) && LASTCHAR(i))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -521,7 +532,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) -1;
     for (i = upper; i > 0; i--) {
 	if (islower((int)buff1[i]) && !FIRSTCHAR(i))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -531,7 +542,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     upper = strlen(buff1) - 1;
     for (i = upper; i > 0; i--) {
 	if (!FIRSTCHAR(i) && !isspace((int)buff1[i]))
-	    strcpy(&buff1[i], &buff1[i + 1]);
+	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
     }
@@ -542,7 +553,7 @@ donesc:
     if (upper > minlen)
 	for (i = upper - 1; i > 0; i--)
 	    if (isspace((int)buff1[i]))
-		strcpy(&buff1[i], &buff1[i + 1]);
+		mystrcpy(&buff1[i], &buff1[i + 1]);
 
     return(mkChar(buff1));
 }
