@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-2 @value{FAQ-YEAR}-04-14
+@set FAQ-VERSION 1.9-3 @value{FAQ-YEAR}-04-18
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2192,6 +2192,8 @@ and undirected graphs.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
+@item mcgibbsit
+Warnes and Raftery's MCGibbsit MCMC diagnostic.
 @item mclust
 Model-based cluster analysis: the 2002 version of MCLUST.
 @c <COMMENT>

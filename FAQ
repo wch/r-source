@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-2 2004-04-14
+Version 1.9-3 2004-04-18
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2071,6 +2071,9 @@ distributions of R.)
 *maxstat*
      Maximally selected rank and Gauss statistics with several p-value
      approximations.
+
+*mcgibbsit*
+     Warnes and Raftery's MCGibbsit MCMC diagnostic.
 
 *mclust*
      Model-based cluster analysis: the 2002 version of MCLUST.
