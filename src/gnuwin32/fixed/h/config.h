@@ -9,6 +9,10 @@
 /* Define to 1 if using `alloca.c'. */
 /* #undef C_ALLOCA */
 
+/* Define to 1 if translation of program messages to the user's native
+   language is requested. */
+/* #undef ENABLE_NLS */
+
 /* Define to dummy `main' function (if any) required to link to the Fortran
    libraries. */
 /* #undef F77_DUMMY_MAIN */
@@ -54,6 +58,10 @@
 
 /* Define to 1 if you have the `chdir' function. */
 #define HAVE_CHDIR 1
+
+/* Define if the GNU dcgettext() function is already present or preinstalled.
+   */
+/* #undef HAVE_DCGETTEXT */
 
 /* Define to 1 if you have the declaration of `acosh', and to 0 if you don't.
    */
@@ -165,6 +173,9 @@
 
 /* Define to 1 if you have the `getpwuid' function. */
 /* #undef HAVE_GETPWUID */
+
+/* Define if the GNU gettext() function is already present or preinstalled. */
+/* #undef HAVE_GETTEXT */
 
 /* Define to 1 if you have the `getuid' function. */
 /* #undef HAVE_GETUID */
