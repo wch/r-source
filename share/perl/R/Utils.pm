@@ -62,8 +62,12 @@ sub text2html {
 sub file_path {
     my @args = @_;
     my $filesep = "/";
+    my $outpath ="";
+    
     $filesep = ":" if($R::Vars::OSTYPE eq "mac");
-    join($filesep, @args);
+    $outpath = join($filesep, @args);
+    $outpath =~ s/::/:/g;
+    return($outpath);
 }
 
 sub env_path {
