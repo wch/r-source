@@ -11,8 +11,8 @@ This version of R needs more memory and is slower to start up, because
 it loads more packages by default.  This is only likely to be a
 concern on machines with 16Mb of memory or less than 300MHz
 processors.  For such machines append R_DEFAULT_PACKAGES=ctest to the
-command line in the shortcut to run R, when the memory usage will be
-about equal to that of rw1062.
+command line in the shortcut used to run R, when the memory usage will
+be about equal to that of rw1062.
 
 There is a new option to use file("clipboard") to read from or write
 to the clipboard.  As most input/output functions in R use file(),
@@ -35,12 +35,8 @@ the `R_ENVIRON' environment variable) is now implemented on Windows.
 The variable .SavedPlots in which plots are stored has been moved from
 package:base to the user's workspace.
 
-Added an optional warning to the internal dyn.load() 
-whenever the loaded DLL changes the floating point control word.
-If changed, it will be changed back to the R default.  NB:  if 
-the warning says "DLL attempted to change FPU control word from 
-XXXXX to 8001f", that's a sign of an internal bug somewhere else:
-8001f is the R default value.
+The warnings about changing the floating point control word are now
+optional, selected by options(warn.FPU = TRUE).
 
 The main thread is suspended briefly after Rprof() is called.  This
 ensures that the timing thread gets started: on some builds and on
@@ -51,7 +47,7 @@ Installation changes
 --------------------
 
 The installers have new options under `Additional tasks' which allow
-the creation of Registry entries to be de-selected by the user.
+the creation of Windows Registry entries to be de-selected by the user.
 
 Rcmd.exe and Rprof have been moved to the main distribution (although
 to use them you will need perl installed).
@@ -96,11 +92,10 @@ stay maximized throughout window operations.
 
 The internal pager will page down with space or CTRL-F and page up
 with minus or CTRL-B (key sequences which are widely used in Unix
-pagers).  CTRL-A selects all.
+pagers).  CTRL-A selects all the text.
 
 The Change Directory dialog now starts in the current directory, not
 always at the desktop.
-
 
 RTerm changes
 -------------
@@ -118,6 +113,10 @@ something like
 Installing packages
 -------------------
 
+Binary packages are retrieved from the bin/windows/contrib/1.7
+directory on CRAN, so each new version will have its own set of
+compatible packages.
+
 Files in the top-level directory of a source package are no longer
 installed automatically: files to be installed must be put in an `inst'
 sub-directory (as has long been recommended).  (The `demo' and `exec'
@@ -130,6 +129,10 @@ in Makevars(.win).
 MD5 checksums are created on installation from sources (see
 ?checkMD5sums in package tools), and checked on installation by
 install.packages().
+
+There is a new command-line flag --auto-zip to Rcmd INSTALL which
+selects whether to zip up the data and/or help directories depending
+on their size.
 
 
 

@@ -2,6 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file shext.c
  *  Copyright (C) 2001  Guido Masarotto and Brian Ripley
+ *                2003  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,13 +25,15 @@
 #include <windows.h>
 #include <shlobj.h>
 
-/* browse for a folder under the Desktop, return the path in the argument */
-
-int CALLBACK InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData )
+int CALLBACK 
+InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData )
 {
-    if (uMsg == BFFM_INITIALIZED) SendMessage(hwnd, BFFM_SETSELECTION, 1, lpData);
+    if (uMsg == BFFM_INITIALIZED) 
+	SendMessage(hwnd, BFFM_SETSELECTION, 1, lpData);
     return(0);
 }
+
+/* browse for a folder under the Desktop, return the path in the argument */
 
 void selectfolder(char *folder)
 {
