@@ -270,23 +270,24 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-      DL_FUNC fun;
-      SEXP retval;
-      /* I don't like this messing with vmax <TSL> */
-      /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
-      char *vmax = vmaxget();
+    DL_FUNC fun;
+    SEXP retval;
+    /* I don't like this messing with vmax <TSL> */
+    /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
+    char *vmax = vmaxget();
 
-      op = CAR(args);
-      if (!isString(op))
-	  errorcall(call,"function name must be a string\n");
-      if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
-	  errorcall(call, "C-R function not in load table\n");
+    op = CAR(args);
+    if (!isString(op) || LENGTH(op) != 1)
+	errorcall(call, "function name must be a string (of length 1)\n");
+    if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
+	errorcall(call, "C-R function not in load table\n");
 
-      retval = (SEXP)fun(args);
-      vmaxset(vmax);
-      return retval;
+    retval = (SEXP)fun(args);
+    vmaxset(vmax);
+    return retval;
 }
 
+/* .Call(name, <args>) */
 SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC fun;
@@ -294,8 +295,8 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     int nargs;
     char *vmax = vmaxget();
     op = CAR(args);
-    if (!isString(op))
-        errorcall(call,"function name must be a string\n");
+    if (!isString(op) || LENGTH(op) != 1)
+	errorcall(call, "function name must be a string (of length 1)\n");
     if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
         errorcall(call, "C-R function not in load table\n");
     args = CDR(args);
