@@ -91,8 +91,8 @@ ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 .SUFFIXES:
 .SUFFIXES: .c .f .d .lo .o
 
-@cc_rules_frag@
-@f77_rules_frag@
+@r_cc_rules_frag@
+@r_f77_rules_frag@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
