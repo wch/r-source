@@ -35,6 +35,9 @@ export R_RD4DVI R_RD4PDF
 : ${R_ZIPCMD=@R_ZIPCMD@}
 export R_UNZIPCMD R_ZIPCMD
 
+EDITOR=${EDITOR-${VISUAL-vi}}
+export EDITOR
+
 # Default environment file -- used if there's none in current
 : ${R_ENVIRON="${HOME}/.Renviron"}
 use_r_environ=true
@@ -94,6 +97,7 @@ Report bugs to <R-bugs@lists.r-project.org>."
 # Argument loop
 args=
 debugger=
+gui=X11
 while test -n "${1}"; do
   case ${1} in
     RHOME)
@@ -102,8 +106,14 @@ while test -n "${1}"; do
       cmd="${1}"; shift; exec sh "${R_HOME}/bin/${cmd}" "${@}" ;;
     CMD)
       shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
-    -g|--gnome)
-      R_binary="R.gnome" ;;
+    -g)
+      gui="${2}"; shift ;;
+    --gui=*)
+      gui=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    --gnome)
+      echo "option \`--gnome' is defunct, use \`--gui=GNOME'"
+      exit 1
+      ;;
     -d)
       debugger="${2}"; shift ;;
     --debugger=*)
@@ -122,6 +132,15 @@ while test -n "${1}"; do
   esac
   shift
 done
+
+case "${gui}" in
+  X11)
+    R_binary="R.X11" ;;
+  GNOME|gnome)
+    R_binary="R.gnome" ;;
+  *)
+    echo "GUI \`${gui}' is not supported" && exit 1 ;;
+esac
 
 # Startup
 if ${use_r_environ}; then # use the one in current dir, or default
