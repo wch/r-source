@@ -17,12 +17,12 @@ system(command, intern = FALSE, wait = TRUE, input = "",
     \item{input}{if a character vector is supplied, this is copied one
 	string per line to a temporary file, and the standard input of
 	\code{command} is redirected to the file.}
-    \item{show.output.on.console}{a logical, indicates whether to capture 
+    \item{show.output.on.console}{a logical, indicates whether to capture
           the output of the command and show it on the \R console (not used
 	  by \code{Rterm}, which captures the output unless \code{wait}
 	  is false).}
     \item{minimized}{a logical, indicates whether the command window
-	  should be initially displayed as a minimized window.}      
+	  should be initially displayed as a minimized window.}
     \item{invisible}{a logical, indicates whether the command window
 	  should be visible on the screen.}
 }
@@ -41,16 +41,16 @@ system(command, intern = FALSE, wait = TRUE, input = "",
   is the error code returned by the command, and if \code{wait = TRUE}
   it is the zero (the conventional success value),
 
-  If \code{intern = FALSE} and \code{show.output.on.console = TRUE} 
-  the text output from a command that is a console application will 
-  appear in the \R console (\code{Rgui}) or the window running \R 
+  If \code{intern = FALSE} and \code{show.output.on.console = TRUE}
+  the text output from a command that is a console application will
+  appear in the \R console (\code{Rgui}) or the window running \R
   (\code{Rterm}).
 }
 \details{
   \code{cmd} is parsed as a command plus arguments separated by spaces.
   So if the path to the command contains spaces, it must be quoted.
   See the examples.
-  
+
   The command is run directly as a Windows command by the Windows API
   call \code{CreateProcess}: extensions of \code{.exe}, \code{.com},
   \code{.cmd} and \code{.bat} are tried in turn if none
@@ -82,14 +82,15 @@ system(command, intern = FALSE, wait = TRUE, input = "",
 
 \author{Guido Masarotto and Brian Ripley}
 
-\seealso{\code{\link{shell}} for a less raw interface.}
+\seealso{\code{\link{shell}} or \code{\link{shell.exec}} for a less raw
+interface.}
 
 \examples{
 # launch an editor, wait for it to quit
 \dontrun{system("notepad myfile.txt")}
 # launch a Windows 9x process monitor (from Win9x KernelToys)
 \dontrun{system("wintop", wait = FALSE)}
-# launch your favourite (!) shell: 
+# launch your favourite (!) shell:
 \dontrun{system("command.com")}
 \dontrun{
 system(paste('"c:/Program Files/Netscape/Netscape 6/netscp6.exe"',
@@ -98,3 +99,4 @@ system(paste('"c:/Program Files/Netscape/Netscape 6/netscp6.exe"',
 \keyword{interface}
 \keyword{file}
 \keyword{utilities}
+
