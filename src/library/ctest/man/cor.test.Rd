@@ -57,10 +57,10 @@
 }
 \details{
   The three methods each estimate the association between paired samples
-  and compute a test of the value being zero.  They use
-  different measures of association, all in the range \eqn{[-1, 1]} with
-  \eqn{0} indicating no association.  These are sometimes referred to as
-  tests of no \emph{correlation}, but that term is often confined to the
+  and compute a test of the value being zero.  They use different
+  measures of association, all in the range \eqn{[-1, 1]} with \eqn{0}
+  indicating no association.  These are sometimes referred to as tests
+  of no \emph{correlation}, but that term is often confined to the 
   default method.
   
   If \code{method} is \code{"pearson"}, the test statistic is based on
@@ -71,7 +71,8 @@
   If \code{method} is \code{"kendall"} or \code{"spearman"}, Kendall's
   \eqn{\tau}{tau} or Spearman's \eqn{\rho}{rho} statistic is used to
   estimate a rank-based measure of association.  These tests may be used
-  if the data do not necessarily come from a bivariate normal distribution.
+  if the data do not necessarily come from a bivariate normal
+  distribution.
 
   For Kendall's test, by default (if \code{exact} is NULL), an exact
   p-value is computed if there are less than 50 paired samples containing
@@ -115,5 +116,10 @@ cor.test(x, y, method = "kendall", alternative = "greater",
 ## Compare this to
 cor.test(x, y, method = "spearm", alternative = "g")
 cor.test(x, y,                    alternative = "g")
+
+## Formula interface.
+data(USJudgeRatings)
+pairs(USJudgeRatings)
+cor.test(~ CONT + INTG, data = USJudgeRatings)
 }
 \keyword{htest}
