@@ -37,5 +37,15 @@ unlist(strsplit("a.b.c", "."))
 ## If you really want to split on `.', use
 unlist(strsplit("a.b.c", "\\\\."))
 ## [1] "a" "b" "c"
+
+## a useful function: rev() for strings
+strReverse <- function(x)
+	sapply(lapply(strsplit(x,NULL), rev), paste, collapse="")
+strReverse(c("abc", "Statistics"))
+
+a <- readLines(file.path(R.home(),"AUTHORS"))[-(1:8)]
+a <- a[0:1-length(a)]
+sub("\t.*","", a)
+strReverse(sub(" .*","", a))
 }
 \keyword{character}
