@@ -212,6 +212,7 @@ endif
 endif
 
 base-HELP = ziponly
+methods-HELP = ziponly
 nls-HELP = ziponly
 ts-HELP = ziponly
 base-ZIPDATA = zip
