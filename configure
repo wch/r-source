@@ -572,11 +572,11 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MINOR "62.0"
+#define R_MINOR "63.0"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_STATUS ""
+#define R_STATUS "Unstable"
 EOF
 
 cat >> confdefs.h <<\EOF
