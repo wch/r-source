@@ -19,23 +19,21 @@ export("absolute.size", "convertNative", "current.viewport",
 ## Documented as internal but in Paul's first attempt at a sensible
 ## export list:
 export("draw.details", "editDetails", "grid.legend", "grid.multipanel",
-       "grid.panel", "grid.prop.list", "grid.strip", 
+       "grid.panel", "grid.prop.list", "grid.strip",
        "height.post.details", "height.pre.details", "layoutRegion",
        "viewport.layout", "viewport.transform", "width.post.details",
        "width.pre.details")
 
-## <FIXME>
 ## Manipulated via C code ...
-export("get.gpar", "grid.top.level.vp", "height", "height.post",
-       "height.pre", "width", "width.post", "width.pre")
-## </FIXME>
+## export("get.gpar", "grid.top.level.vp", "height", "height.post",
+##        "height.pre", "width", "width.post", "width.pre")
 
 ## <FIXME>
 ## In the grid.layout.Rd \example ...
 export("layout.torture")
 ## </FIXME>
 
-
+## methods for generics in base
 S3method("[", "unit")
 S3method("[", "unit.arithmetic")
 S3method("[", "unit.list")
@@ -47,6 +45,11 @@ S3method("as.character", "unit.list")
 S3method("print", "grob")
 S3method("print", "unit")
 S3method("print", "viewport")
+
+## methods for exported generics in grid
+S3method("unit.length", "unit")
+S3method("unit.length", "unit.list")
+S3method("unit.length", "unit.arithmetic")
 
 S3method("draw.details", "arrows")
 S3method("draw.details", "circle")

@@ -338,7 +338,7 @@ void initVP(GEDevDesc *dd)
     SEXP ff, font, lh, fs;
     SEXP currentgp = gridStateElement(dd, GSS_GPAR);
     SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
-    PROTECT(vpfnname = findFun(install("grid.top.level.vp"), R_GlobalEnv));
+    PROTECT(vpfnname = findFun(install("grid.top.level.vp"), R_gridEvalEnv));
     PROTECT(vpfn = lang1(vpfnname));
     PROTECT(vp = eval(vpfn, R_GlobalEnv));
     /* 

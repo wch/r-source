@@ -6,7 +6,7 @@
 # get garbage collected.
 .GRID.STATE <- vector("list", 64)
 ## 64 comes from the maximum number of R devices allowed to be open at
-## one tim, see R_MaxDevices in Graphics.h.
+## one time, see R_MaxDevices in Graphics.h.
 
 # FIXME:  all grid functions should check that .grid.started is TRUE
 .grid.loaded <- FALSE
@@ -34,12 +34,12 @@ push.vp <- function(vps, index, len, recording) {
   vp$cur.font <- get.gpar("font")
   vp$cur.fontsize <- get.gpar("fontsize")
   vp$cur.lineheight <- get.gpar("lineheight")
-  # Calculate viewport transform 
+  # Calculate viewport transform
   # NOTE that we will have modified "vp" within L_setviewport
   # to record the current transformation and layout
   grid.Call.graphics("L_setviewport", vp, TRUE)
   # Push further viewports if required
-  if (index < len) 
+  if (index < len)
     push.vp(vps, index+1, len, recording)
 }
 
@@ -144,7 +144,7 @@ grid.display.list <- function(on=TRUE) {
     grid.Call("L_setDisplayList", vector("list", 100))
     grid.Call("L_setDLindex", as.integer(0))
   }
-  else 
+  else
     grid.Call("L_setDisplayList", NULL)
 }
 

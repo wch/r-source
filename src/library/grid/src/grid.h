@@ -142,10 +142,13 @@ typedef struct {
     int vjust;
 } LViewportContext;
 
+/* Evaluation environment */
+SEXP R_gridEvalEnv;
+
 /* Functions called by R code
  * (from all over the place)
  */
-SEXP L_initGrid(); 
+SEXP L_initGrid(SEXP GridEvalEnv); 
 SEXP L_killGrid(); 
 SEXP L_gridDirty();
 SEXP L_currentViewport(); 
