@@ -30,6 +30,7 @@ axis <- function (which, at, labels = TRUE, ...)
 	if (log) (10^usr[1] <= at & at <= 10^usr[2])
 	else (usr[1] <= at & at <= usr[2])
  }
+ n.at <- length(at)
  if(any(ind)) {
 	op <- options(digits=7); on.exit(options(op))
 	labels <-
@@ -39,11 +40,16 @@ axis <- function (which, at, labels = TRUE, ...)
 				at[abs(at/(max(at) - min(at))) < 0.001] <- 0
 			format(at, trim = T)
 		}
-		else rep("", length(at))
-	  } else if(is.expression(labels))
-		labels
-	  else
-		format(labels, trim = T)
+		else rep("", n.at)
+	  } else {
+		if(is.expression(labels))
+			labels
+		else
+			format(labels, trim = T)
+	  }
+        if(length(labels) != n.at)
+		stop(paste("length(labels)=",length(labels),
+			   " != lenth(at) =",n.at))
 	.Internal(axis(which, as.double(at[ind]), as.char.or.expr(labels[ind]),
 		       ...))
  }
