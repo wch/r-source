@@ -175,7 +175,7 @@ function(formula, data = NULL, subset=NULL, na.action = na.fail, ...)
 		data <- sys.frame(sys.parent())
 	if(!inherits(formula, "terms"))
 		formula <- terms(formula, data = data)
-	subset<-eval(substitute(subset),data)
+        subset<-eval(substitute(subset),data)
 	.Internal(model.frame(formula, data, substitute(list(...)),
 		subset, na.action))
 }
@@ -283,7 +283,8 @@ model.extract <- function (frame, component)
 	return(rval)
 }
 
-update <- function(x, ...) UseMethod("update")
+preplot <- function(object, ...) UseMethod("preplot")
+update <- function(object, ...) UseMethod("update")
 
 is.empty.model<-function (x)
 {
