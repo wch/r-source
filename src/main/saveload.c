@@ -1242,12 +1242,14 @@ void R_LoadSavedData(FILE *fp, SEXP aenv)
 
 SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP aenv;
+    SEXP fname, aenv;
     FILE *fp;
 
     checkArity(op, args);
 
-    if (TYPEOF(CAR(args)) != STRSXP)
+    fname = CAR(args);
+
+    if (TYPEOF(fname) != STRSXP || LENGTH(fname) <= 0 )
 	errorcall(call, "first argument must be a string\n");
 
     /* GRW 1/26/99 GRW : added environment parameter so that */
@@ -1258,7 +1260,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid envir argument\n");
 
     /* Process the saved file to obtain a list of saved objects. */
-    fp = R_fopen(R_ExpandFileName(CHAR(STRING(CAR(args))[0])), "rb");
+    fp = R_fopen(R_ExpandFileName(CHAR(STRING(fname)[0])), "rb");
     if (!fp)
 	errorcall(call, "unable to open file\n");
     R_LoadSavedData(fp, aenv);

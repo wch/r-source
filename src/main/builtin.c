@@ -520,7 +520,7 @@ SEXP do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
     int argval;
     SEXP x, y, w;
     x = eval(CAR(args), rho);
-    if (!isVector(x) && length(x) != 1)
+    if (!isVector(x) || length(x) != 1)
 	error("switch: EXPR must return a length 1 vector\n");
     PROTECT(w = switchList(CDR(args), rho));
     if (isString(x)) {
@@ -548,3 +548,4 @@ SEXP do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return x;
 }
+
