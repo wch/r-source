@@ -49,194 +49,173 @@
 static void file_exit_cb(GtkWidget *widget,
 			 gpointer data)
 {
-  R_gtk_terminal_quit();
+    R_gtk_terminal_quit();
 }
 
 
 
 static void edit_cut_cb(GtkWidget *widget, gpointer data)
 {
-  gtk_editable_cut_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
+    gtk_editable_cut_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
 }
 
 static void edit_copy_cb(GtkWidget *widget, gpointer data)
 {
-  gtk_editable_copy_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
+    gtk_editable_copy_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
 }
 
 static void edit_paste_cb(GtkWidget *widget, gpointer data)
 {
-  gtk_editable_paste_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
-  gtk_editable_select_region(GTK_EDITABLE(R_gtk_terminal_text),
-			     gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)),
-			     gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)));
+    gtk_editable_paste_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
+    gtk_editable_select_region(GTK_EDITABLE(R_gtk_terminal_text),
+			       gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)),
+			       gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)));
 }
 
 static void edit_copy_paste_cb(GtkWidget *widget, gpointer data)
 {
-  gtk_editable_copy_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
-  gtk_editable_paste_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
-  gtk_editable_select_region(GTK_EDITABLE(R_gtk_terminal_text),
-			     gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)),
-			     gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)));
+    gtk_editable_copy_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
+    gtk_editable_paste_clipboard(GTK_EDITABLE(R_gtk_terminal_text));
+    gtk_editable_select_region(GTK_EDITABLE(R_gtk_terminal_text),
+			       gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)),
+			       gtk_editable_get_position(GTK_EDITABLE(R_gtk_terminal_text)));
 }
 
 static void edit_clear_cb(GtkWidget *widget, gpointer data)
 {
-  gtk_editable_delete_selection(GTK_EDITABLE(R_gtk_terminal_text));
+    gtk_editable_delete_selection(GTK_EDITABLE(R_gtk_terminal_text));
 }
 
 
 
 static void commands_interrupt_cb(GtkWidget *widget, gpointer data)
 {
-  R_gtk_terminal_interrupt();
+    R_gtk_terminal_interrupt();
 }
 
 static void commands_source_ok(GtkWidget *widget, gpointer data)
 {
-  gchar *fname;
+    gchar *fname;
 
-  fname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-  R_gtk_terminal_run_initial();
-  R_gtk_terminal_run_partial("source(\"");
-  R_gtk_terminal_run_partial(fname);
-  R_gtk_terminal_run_final("\")");
+    fname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
+    R_gtk_terminal_run_initial();
+    R_gtk_terminal_run_partial("source(\"");
+    R_gtk_terminal_run_partial(fname);
+    R_gtk_terminal_run_final("\")");
 
-  gtk_widget_destroy(GTK_WIDGET(data));
+    gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 static void commands_source_cb(GtkWidget *widget, gpointer data)
 {
-  GtkWidget *fs;
+    GtkWidget *fs;
 
-  fs = gtk_file_selection_new("Source R file");
+    fs = gtk_file_selection_new("Source R file");
 
-  gtk_window_set_transient_for(GTK_WINDOW(fs), GTK_WINDOW(R_gtk_main_window));
-  gtk_window_set_modal(GTK_WINDOW(fs), TRUE);
+    gtk_window_set_transient_for(GTK_WINDOW(fs), GTK_WINDOW(R_gtk_main_window));
+    gtk_window_set_modal(GTK_WINDOW(fs), TRUE);
 
-  gtk_signal_connect_object(GTK_OBJECT(GTK_FILE_SELECTION(fs)->cancel_button),
+    gtk_signal_connect_object(GTK_OBJECT(GTK_FILE_SELECTION(fs)->cancel_button),
 			      "clicked",
 			      (GtkSignalFunc) gtk_widget_destroy,
 			      GTK_OBJECT(fs));
-  gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(fs)->ok_button),
-		     "clicked",
-		     (GtkSignalFunc) commands_source_ok,
-		     GTK_OBJECT(fs));
+    gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(fs)->ok_button),
+		       "clicked",
+		       (GtkSignalFunc) commands_source_ok,
+		       GTK_OBJECT(fs));
 
-  gtk_widget_show(fs);
+    gtk_widget_show(fs);
 }
 
 
 static void graphics_new_cb(GtkWidget *widget, gpointer data)
 {
-  R_gtk_terminal_run("gtk()\n");
+    R_gtk_terminal_run("gtk()\n");
 }
 
 static void graphics_close_cb(GtkWidget *widget, gpointer data)
 {
-  R_gtk_terminal_run("dev.off()\n");
+    R_gtk_terminal_run("dev.off()\n");
 }
 
 static void graphics_closeall_cb(GtkWidget *widget, gpointer data)
 {
-  R_gtk_terminal_run("graphics.off()\n");
+    R_gtk_terminal_run("graphics.off()\n");
 }
 
 
 
 static void help_html_index_cb(GtkWidget *widget, gpointer data)
 {
-  R_gtk_terminal_run("help.start()\n");
+    R_gtk_terminal_run("help.start()\n");
 }
 
 static void help_text_index_cb(GtkWidget *widget, gpointer data)
 {
-  R_gtk_terminal_run("help()\n");
+    R_gtk_terminal_run("help(help, htmlhelp=FALSE)\n");
 }
 
 static void help_license_cb(GtkWidget *widget,
 			    gpointer data)
 {
-  R_gtk_terminal_run("?license\n");
+    R_gtk_terminal_run("license()\n");
 }
 
 static void help_contributors_cb(GtkWidget *widget,
 				 gpointer data)
 {
-  R_gtk_terminal_run("?contributors\n");
+  R_gtk_terminal_run("contributors()\n");
 }
 
 static void help_demos_index_cb(GtkWidget *widget,
 				gpointer data)
 {
-  R_gtk_terminal_run("demo()\n");
+    R_gtk_terminal_run("demo()\n");
 }
 
 static void help_demos_run_cb(GtkWidget *widget,
 			      gpointer data)
 {
-  R_gtk_terminal_run_initial();
-  R_gtk_terminal_run_partial("demo(\"");
-  R_gtk_terminal_run_partial((gchar *) data);
-  R_gtk_terminal_run_final("\")\n");
+    R_gtk_terminal_run_initial();
+    R_gtk_terminal_run_partial("demo(\"");
+    R_gtk_terminal_run_partial((gchar *) data);
+    R_gtk_terminal_run_final("\")\n");
 }
-
-
 
 static void help_about_cb(GtkWidget *widget,
 			  gpointer data)
 {
-  GtkWidget *about_box, *hbox, *home_href, *FAQ_href;
-  gchar *version;
-  gchar *copyright;
+    GtkWidget *about_box, *hbox, *home_href, *FAQ_href;
+    gchar *version;
+    gchar *copyright;
 
-  const gchar *authors[] = {
-    "Douglas Bates",
-    "John Chambers",
-    "Peter Dalgaard",
-    "Robert Gentleman",
-    "Kurt Hornik",
-    "Ross Ihaka",
-    "Friedrich Leisch",
-    "Thomas Lumley",
-    "Martin Maechler",
-    "Guido Masarotto",
-    "Paul Murrell",
-    "Brian Ripley",
-    "Heiner Schwarte",
-    "Duncan Temple Lang",
-    "Luke Tierney",
-    "Lyndon Drake, GNOME interface",
-    NULL
-  };
+    const gchar *authors[] = { NULL };
 
-  version = g_strdup_printf("%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
-  copyright = g_strdup_printf("Copyright (C) %s R Development Core Team",
-			      R_YEAR);
+    version = g_strdup_printf("%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
+    copyright = g_strdup_printf("Copyright (C) %s R Development Core Team",
+				R_YEAR);
 
-  g_assert(version != NULL);
-  g_assert(copyright != NULL);
+    g_assert(version != NULL);
+    g_assert(copyright != NULL);
 
-  about_box = gnome_about_new("R", version, copyright, authors,
-			      "R is a system for statistical computation and graphics.  It is a dialect of the S programming language from Bell Labs.  R is free software and comes with ABSOLUTELY NO WARRANTY.  You are welcome to redistribute it under certain conditions.  Type	?license or ?licence for distribution details.  R is a collaborative project with many contributors.  Type ?contributors for a list.",
-			      "R-logo-sm.xpm");
+    about_box = gnome_about_new("R", version, copyright, authors,
+				"`GNU S' - A language and environment for statistical computing and graphics. R is similar to S, which was developed at Bell Laboratories by John Chambers et al. It provides a wide variety of statistical and graphical techniques (linear and nonlinear modelling, statistical tests, time series analysis, classification, clustering, ...).\n \nR is designed as a true computer language with control-flow constructions for iteration and alternation, and it allows users to add additional functionality by defining new functions. For computationally intensive tasks, C and Fortran code can be linked and called at run time.", "R-logo-sm.xpm");
 
-  hbox = gtk_hbox_new(TRUE, 0);
-  home_href = gnome_href_new("http://www.r-project.org/", "R home page");
-  FAQ_href = gnome_href_new("http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html", "R FAQ");
-  gtk_box_pack_start(GTK_BOX(hbox), home_href, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), FAQ_href, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(about_box)->vbox),
-		     hbox, TRUE, FALSE, 0);
-  gtk_widget_show_all(hbox);
+    hbox = gtk_hbox_new(TRUE, 0);
+    home_href = gnome_href_new("http://www.r-project.org/", "R home page");
+    FAQ_href = gnome_href_new("http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html", "R FAQ");
+    gtk_box_pack_start(GTK_BOX(hbox), home_href, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), FAQ_href, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(about_box)->vbox),
+		       hbox, TRUE, FALSE, 0);
+    gtk_widget_show_all(hbox);
 
-  gnome_dialog_set_parent(GNOME_DIALOG(about_box), GTK_WINDOW(R_gtk_main_window));
+    gnome_dialog_set_parent(GNOME_DIALOG(about_box), GTK_WINDOW(R_gtk_main_window));
 
-  gnome_dialog_run_and_close(GNOME_DIALOG(about_box));
+    gnome_dialog_run_and_close(GNOME_DIALOG(about_box));
 
-  g_free(version);
-  g_free(copyright);
+    g_free(version);
+    g_free(copyright);
 }
 
 

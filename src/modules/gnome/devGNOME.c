@@ -30,7 +30,6 @@
 #include "Rdevices.h"
 #include "devGNOME.h"
 #include "terminal.h"
-#include "device-support.h"
 
 #define CURSOR		GDK_CROSSHAIR		/* Default cursor */
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */
@@ -108,6 +107,11 @@ static char *weight[] = {"medium", "bold"};
 
 static char *fontname = NULL;
 static GHashTable *font_htab = NULL;
+
+static int RDeviceNumber(NewDevDesc *dd)
+{
+    return devNumber((DevDesc*) dd) + 1;
+}
 
 static GdkFont *RGTKLoadFont(char *font)
 {
@@ -307,11 +311,14 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event,
 static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data) 
 {
     NewDevDesc *dd;
+    gchar *cmd;
 
     dd = (NewDevDesc *) data;
     g_return_val_if_fail(dd != NULL, FALSE);
 
-    KillDevice((DevDesc*) GetDevice(devNumber((DevDesc*) dd)));
+    cmd = g_strdup_printf("dev.off(%d)\n", RDeviceNumber(dd));
+    R_gtk_terminal_run(cmd);
+    g_free(cmd);
 
     return TRUE;
 }
@@ -319,87 +326,105 @@ static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 static void toolbar_activate_cb(GtkWidget *widget, gpointer data) 
 {
     NewDevDesc *dd;
+    gchar *cmd;
 
     g_return_if_fail(data);
     dd = (NewDevDesc *) data;
 
-    selectDevice(devNumber((DevDesc*)dd));
+    cmd = g_strdup_printf("dev.set(%d)\n", RDeviceNumber(dd));
+    R_gtk_terminal_run(cmd);
+    g_free(cmd);
 }
 
 static void toolbar_close_cb(GtkWidget *widget, gpointer data) 
 {
     NewDevDesc *dd;
+    gchar *cmd;
+
+    g_return_if_fail(data);
 
     dd = (NewDevDesc *) data;
-    g_return_if_fail(dd != NULL);
-
-    KillDevice((DevDesc*) GetDevice(devNumber((DevDesc*) dd)));
+    cmd = g_strdup_printf("dev.off(%d)\n", RDeviceNumber(dd));
+    R_gtk_terminal_run(cmd);
+    g_free(cmd);
 }
 
 static void
 save_ok (GtkWidget *ok_button, gpointer data)
 {
-  GtkFileSelection *fsel = GTK_FILE_SELECTION(data);
-  char *filename = gtk_file_selection_get_filename(fsel);
-  NewDevDesc *dd;
+    NewDevDesc *dd;
+    GtkFileSelection *fsel = GTK_FILE_SELECTION(data);
+    char *filename = gtk_file_selection_get_filename(fsel);
+    char *cmd;
 
-  if (!filename)
-    return;
-  dd = gtk_object_get_user_data(GTK_OBJECT(fsel));
-  SaveAsPostscript(dd, filename);
-  gtk_widget_destroy (GTK_WIDGET(fsel));
+    if (!filename)
+	return;
+    
+    dd = gtk_object_get_user_data(GTK_OBJECT(fsel));
+    cmd = g_strdup_printf("dev.set(%d)\ndev.print(file=\"%s\")\n",
+			  RDeviceNumber(dd), filename);
+    R_gtk_terminal_run(cmd);
+    
+    g_free(cmd);
+    gtk_widget_destroy (GTK_WIDGET(fsel));
+
 }
 
 
 static void toolbar_save_as_cb(GtkWidget *widget, gpointer data)
 {
-  NewDevDesc *dd = (NewDevDesc*) data;
-  gnomeDesc *gd = (gnomeDesc*) dd->deviceSpecific;
+    NewDevDesc *dd = (NewDevDesc*) data;
+    gnomeDesc *gd = (gnomeDesc*) dd->deviceSpecific;
 
-  GtkFileSelection *fsel = 
-    GTK_FILE_SELECTION(gtk_file_selection_new("Save as PostScript"));
+    GtkFileSelection *fsel = 
+	GTK_FILE_SELECTION(gtk_file_selection_new("Save as PostScript"));
 
-  gtk_object_set_user_data(GTK_OBJECT(fsel), dd);
+    gtk_object_set_user_data(GTK_OBJECT(fsel), dd);
+    gtk_file_selection_set_filename(fsel, "Rplots.ps");
+  
+    gtk_signal_connect(GTK_OBJECT(fsel->ok_button), "clicked",
+		       GTK_SIGNAL_FUNC(save_ok), fsel);
+    gtk_signal_connect_object(GTK_OBJECT(fsel->cancel_button), "clicked",
+			      GTK_SIGNAL_FUNC(gtk_widget_destroy),
+			      GTK_OBJECT(fsel));
 
-  gtk_signal_connect(GTK_OBJECT(fsel->ok_button), "clicked",
-                     GTK_SIGNAL_FUNC(save_ok), fsel);
-  gtk_signal_connect_object(GTK_OBJECT(fsel->cancel_button), "clicked",
-                            GTK_SIGNAL_FUNC(gtk_widget_destroy),
-                            GTK_OBJECT(fsel));
 
-
-  gtk_window_position(GTK_WINDOW(fsel), GTK_WIN_POS_MOUSE);
-  gtk_window_set_transient_for(GTK_WINDOW(fsel), GTK_WINDOW(gd->window));
-  gtk_widget_show(GTK_WIDGET(fsel));
-
+    gtk_window_position(GTK_WINDOW(fsel), GTK_WIN_POS_MOUSE);
+    gtk_window_set_transient_for(GTK_WINDOW(fsel), GTK_WINDOW(gd->window));
+    gtk_widget_show(GTK_WIDGET(fsel));
 }
 
 static void toolbar_print_cb (GtkWidget *widget, gpointer data)
 {
-  NewDevDesc *dd = (NewDevDesc*) data;
-  SaveAsPostscript(dd, "");
+    NewDevDesc *dd = (NewDevDesc*) data;
+    gchar *cmd;
+
+    cmd = g_strdup_printf("dev.cur(%d)\ndev.print()",
+			  RDeviceNumber(dd));
+    R_gtk_terminal_run(cmd);
+    g_free(cmd);
 }
 
 static GnomeUIInfo graphics_toolbar[] =
 {
-  { GNOME_APP_UI_ITEM, "Activate", "Make this window the current device",
-    toolbar_activate_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK,
-    GNOME_STOCK_PIXMAP_JUMP_TO, 0, (GdkModifierType) 0, NULL },
-  GNOMEUIINFO_SEPARATOR,
-  { GNOME_APP_UI_ITEM, "Save As", "Save as a PostScript file", 
-    toolbar_save_as_cb, NULL, NULL, 
-    GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_SAVE_AS, 0, 
-    (GdkModifierType) 0, NULL },
-  { GNOME_APP_UI_ITEM, "Print", "Print graphics", 
-    toolbar_print_cb, NULL, NULL, 
-    GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_PRINT, 0, 
-    (GdkModifierType) 0, NULL },
-  GNOMEUIINFO_SEPARATOR,
-  { GNOME_APP_UI_ITEM, "Close", "Close this graphics device",
-    toolbar_close_cb, NULL, NULL,
-    GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_CLOSE, 0, 
-    (GdkModifierType) 0, NULL },
-  GNOMEUIINFO_END
+    { GNOME_APP_UI_ITEM, "Activate", "Make this window the current device",
+      toolbar_activate_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK,
+      GNOME_STOCK_PIXMAP_JUMP_TO, 0, (GdkModifierType) 0, NULL },
+    GNOMEUIINFO_SEPARATOR,
+    { GNOME_APP_UI_ITEM, "Save As", "Save as a PostScript file", 
+      toolbar_save_as_cb, NULL, NULL, 
+      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_SAVE_AS, 0, 
+      (GdkModifierType) 0, NULL },
+    { GNOME_APP_UI_ITEM, "Print", "Print graphics", 
+      toolbar_print_cb, NULL, NULL, 
+      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_PRINT, 0, 
+      (GdkModifierType) 0, NULL },
+    GNOMEUIINFO_SEPARATOR,
+    { GNOME_APP_UI_ITEM, "Close", "Close this graphics device",
+      toolbar_close_cb, NULL, NULL,
+      GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_CLOSE, 0, 
+      (GdkModifierType) 0, NULL },
+    GNOMEUIINFO_END
 };
 
 static void GNOME_NewPage(int fill, double gamma, NewDevDesc *dd)
