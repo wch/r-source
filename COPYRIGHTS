@@ -23,4 +23,8 @@ src/library/base/R/predict.glm.R
 src/library/base/R/update.R
 src/library/mva/R/princomp-add.R
 
-	copyright (C) 1998 W. N. Venables and B. D. Ripley
+	Copyright (C) 1998 W. N. Venables and B. D. Ripley
+
+src/library/modreg:
+
+	See the file src/library/modreg/COPYRIGHTS

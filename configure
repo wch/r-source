@@ -4093,6 +4093,7 @@ trap 'rm -fr `echo "Makeconf Makefile
   src/scripts/Makefile src/unix/Makefile
   src/library/base/Makefile src/library/profile/Makefile
   src/library/eda/Makefile src/library/eda/src/Makefile
+  src/library/modreg/Makefile src/library/modreg/src/Makefile
   src/library/mva/Makefile src/library/mva/src/Makefile
   src/library/stepfun/Makefile
   src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE
@@ -4228,6 +4229,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf Makefile
   src/scripts/Makefile src/unix/Makefile
   src/library/base/Makefile src/library/profile/Makefile
   src/library/eda/Makefile src/library/eda/src/Makefile
+  src/library/modreg/Makefile src/library/modreg/src/Makefile
   src/library/mva/Makefile src/library/mva/src/Makefile
   src/library/stepfun/Makefile
   src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE

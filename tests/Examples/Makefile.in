@@ -11,11 +11,11 @@ subdir = tests/Examples
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in massage-Examples
+DISTFILES = Makefile.in
 
 R = $(top_builddir)/bin/R --vanilla --vsize 6
 
-Pkgs = base eda mva stepfun
+Pkgs = base eda modreg mva stepfun
 Ex_R = $(Pkgs:=-Ex.R)
 Ex_Rout = $(Ex_R:.R=.Rout)
 .SUFFIXES: -Ex.R -Ex.Rout
@@ -41,7 +41,7 @@ $(Ex_Rout): %-Ex.Rout: %-Ex.R $(top_builddir)/stamp-R \
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Massaging examples into $@ ..."
-	-@$(srcdir)/massage-Examples $* \
+	-@$(top_builddir)/bin/massage-Examples $* \
 	  $(top_builddir)/library/$*/R-ex/*.R > $@
 
 $(top_builddir)/stamp-R:

@@ -2,33 +2,38 @@
 
 NEW FEATURES
 
-    o   par() has a 'no.readonly = FALSE' argument which allows more
+    o	New standard package `modreg' (smoothing and local MODern
+	REGression methods) contributed by B. D. Ripley.
+
+    o   par() has a `no.readonly = FALSE' argument which allows more
 	sensible  op <- par(no.readonly = TRUE);  on.exit(par(op)).
 
     o   Real Bessel functions of 1st to 3rd kind, of arbitrary order:
-	besselI(.), besselK(.),	besselJ(.), besselY(.) are the
-	I(), K(), J(), Y() Bessel functions.
+	besselI(), besselK(), besselJ(), besselY() are the I(), K(),
+	J(), and Y() Bessel functions.
 
-    o   uniroot has a new 'maxiter' argument and returns #{iter} and precision.
+    o   uniroot has a new `maxiter' argument and returns #{iter} and
+	precision.
 
-    o   New options "show.coef.Pvalue" (= TRUE).  If FALSE, print.summary.[g]lm
-	does not print P values.
+    o   New option `show.coef.Pvalue' (default: TRUE).  If FALSE,
+	print.summary.[g]lm does not print P values.
 
-    o   New 'R --vanilla' is equivalent to
-	R --no-save --no-restore --no-site-file --no-init-file
+    o   New `R --vanilla' is equivalent to
+	  R --no-save --no-restore --no-site-file --no-init-file
 
-    o   gc() has now a 'verbose' argument and returns a matrix with free
+    o   gc() has now a `verbose' argument and returns a matrix with free
 	and total n- and v-cells(heap).
 
-    o   New example(<foo>) function runs the \emph{Examples} R code of <foo>.
-	example(.) calls source(..) which now has a `verbose' instead of `debug'
-	argument.
+    o   New example(<foo>) function runs the \emph{Examples} R code of
+	<foo>.  example() calls source() which now has a `verbose'
+	instead of `debug' argument.
 
     o   experimental functions [as.|is.|]pairlist() for the few old-style
 	dotted pair lists [undocumented].
 
-    o   options(check.bounds = TRUE) makes sub-assignments which "stretch"
-	a vector give a warning [dropped undocumented check.bounds() function].
+    o   options(check.bounds = TRUE) makes sub-assignments which
+	"stretch" a vector give a warning [dropped undocumented
+	check.bounds() function].
 
     o   Makefiles should now conform (mostly) with the GNU Coding
 	Standards.  In particular, `make install', `make uninstall'
@@ -83,7 +88,7 @@ NEW FEATURES
     o	Added split.screen etc functions for manipulating multiple
 	screens on a single device
 
-    o   After help.start() the html help system is used for all help()
+    o   After help.start() the HTML help system is used for all help()
         requests. The name of the browser is now controlled by
         options("browser").
 
@@ -370,7 +375,8 @@ BUG FIXES
     o	backsolve() now working;  bakslv.c not depending on
 	Fortran_underscores.
 
-    o	Tick marks acting up on log axes in postscript (fix from Martyn Plummer)
+    o	Tick marks acting up on log axes in postscript (fix from Martyn
+	Plummer) 
 
     o	The Rd format has a new section \details{} (needed for proper
 	Sd2Rd translation). \R was not understood for nroff
@@ -425,19 +431,19 @@ NEW FEATURES
 	"double" instead of "real", for compatibility.
 	"real" is still allowed as synomym for "double".
 
-    o	A tests/ directory has been added (in the source), and "make tests"
-	has been modified to run more than all the examples from the base
-	package.  The exact 'make tests' behavior is still bound to change.
+    o	A `tests' directory has been added (in the source), and "make
+	tests" has been modified to run more than all the examples from
+	the base package.  The exact `make tests' behavior is still
+	bound to change.
 
-    o	An experimental directory etc/Rdoc has been added with a perl5
+    o	An experimental directory `etc/Rdoc' has been added with a perl5
 	module to parse R documentation files.	Sample perl programs
 	to use this module are also included.
 
-    o	All internal mechanisms to support factors and data.frames
-	have been removed.  These are now entirely supported by
-	interpreted code! `is.unordered' has been eliminated.
-	Thanks to John Chambers for allowing the distribution of his
-	StatLib code.
+    o	All internal mechanisms to support factors and data.frames have
+	been removed.  These are now entirely supported by interpreted
+	code!  `is.unordered' has been eliminated.  Thanks to John
+	Chambers for allowing the distribution of his StatLib code.
 
     o	"pmatch" is now completely S compatible and is not just another
 	name for "charmatch".
@@ -664,8 +670,8 @@ BUG FIXES (many of which resulted from the added features...)
 
     o	plot(-1) now labels properly.
 
-    o	Many small code changes (eliminating extraneous variables, nested comm.)
-	in C code in order to satisfy `gcc -Wall' [Doug Bates].
+    o	Many small code changes (eliminating extraneous variables, nested
+	comm.) in C code in order to satisfy `gcc -Wall' [Doug Bates].
 
     o	model.extract() will now extract arbitrary model frame arguments.
 

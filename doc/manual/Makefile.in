@@ -19,7 +19,8 @@ RLIBsrc = $(top_srcdir)/src/library
 
 mansrcs = $(srcdir)/Man.tex $(srcdir)/writing-Rd.tex \
 	  $(srcdir)/plotmath.tex $(srcdir)/primitive-funs.tex
-pkgsrcs = pkg-base.tex pkg-eda.tex pkg-mva.tex pkg-stepfun.tex
+pkgsrcs = pkg-base.tex pkg-eda.tex pkg-modreg.tex pkg-mva.tex \
+	pkg-stepfun.tex
 Manparts = Man-1.ps Man-2.ps Man-3.ps Man-4.ps \
 	   Man-5.ps Man-6.ps Man-7.ps Man-8.ps
 Manbooks = $(Manparts:.ps=.bps)
@@ -61,6 +62,13 @@ pkg-eda.tex: $(RLIB)/eda/latex/*.tex
 $(RLIB)/eda/latex/%.tex: $(RLIBsrc)/eda/man/%.Rd
 	(cd $(top_builddir)/src/library && \
 	  $(MAKE) PKGS=eda stamp-latex)
+
+pkg-modreg.tex: $(RLIB)/modreg/latex/*.tex
+	@echo "Collecting components of $@ ..."
+	./lib2tex modreg
+$(RLIB)/modreg/latex/%.tex: $(RLIBsrc)/modreg/man/%.Rd
+	(cd $(top_builddir)/src/library && \
+	  $(MAKE) PKGS=modreg stamp-latex)
 
 pkg-mva.tex: $(RLIB)/mva/latex/*.tex
 	@echo "Collecting components of $@ ..."
