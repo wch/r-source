@@ -216,6 +216,9 @@ BUG FIXES
     o   Fixed some cases where the deparser gave code that threw a
         syntax error when parsed.
 
+    o   The implementation of sys.function() did not work when the
+        current function was already a function (e.g., a closure).
+
 
 	**************************************************
 	*						 *
