@@ -493,16 +493,18 @@ FUNTAB R_FunTab[] =
 #else
 {"system",	do_system,	0,	11,	2,	PP_FUNCALL},
 #endif
-#ifdef Win32
+#if defined(Win32) || defined(macintosh)
 {"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
-{"flush.console",do_flushconsole,0,	11,	0,	PP_FUNCALL},
 {"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
+{"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
+#endif
+#ifdef Win32
+{"flush.console",do_flushconsole,0,	11,	0,	PP_FUNCALL},
 {"win.version", do_winver,	0,	11,	0,	PP_FUNCALL},
 {"saveDevga",	do_saveDevga,	0,	11,	3,	PP_FUNCALL},
 {"shell.exec",	do_shellexec,	0,	11,	1,	PP_FUNCALL},
-{"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
 {"winDialog",	do_windialog,	0,	11,	2,	PP_FUNCALL},
 {"winDialogString", do_windialogstring, 0, 11,	2,	PP_FUNCALL},
 {"winMenuAdd",	do_winmenuadd,	0,	11,	3,	PP_FUNCALL},
@@ -613,8 +615,10 @@ FUNTAB R_FunTab[] =
 {"setwd",	do_setwd,	0,	11,	1,	PP_FUNCALL},
 {"basename",	do_basename,	0,	11,	1,	PP_FUNCALL},
 {"dirname",	do_dirname,	0,	11,	1,	PP_FUNCALL},
+#ifndef macintosh
 {"Sys.info",	do_sysinfo,	0,	11,	0,	PP_FUNCALL},
 {"Sys.sleep",	do_syssleep,	0,	11,	1,	PP_FUNCALL},
+#endif
 {"getlocale",	do_getlocale,	0,	11,	1,	PP_FUNCALL},
 {"setlocale",	do_setlocale,	0,	11,	2,	PP_FUNCALL},
 {"localeconv",	do_localeconv,	0,	11,	0,	PP_FUNCALL},
@@ -638,6 +642,9 @@ FUNTAB R_FunTab[] =
 {"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
 {"gnome",	do_Gnome,	0,	111,	4,	PP_FUNCALL},
 {"GTK",		do_GTK,		0,	111,	4,	PP_FUNCALL},
+#endif
+#ifdef macintosh
+{"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},
 #endif
 
 /* Graphics */

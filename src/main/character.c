@@ -23,8 +23,10 @@
 #include <config.h>
 #endif
 
-#ifndef Macintosh
+#ifndef macintosh
 #include <sys/types.h>
+#else 
+#include <types.h>
 #endif
 
 #include "Defn.h"

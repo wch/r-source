@@ -28,7 +28,9 @@
 #define deviceNumber		Rf_deviceNumber
 #define DevNull			Rf_DevNull
 #define inhibitDisplayList	Rf_inhibitDisplayList
+#ifndef macintosh
 #define InitGraphics		Rf_InitGraphics
+#endif
 #define GetDevice		Rf_GetDevice
 #define KillAllDevices		Rf_KillAllDevices
 #define KillDevice		Rf_KillDevice
@@ -45,7 +47,8 @@ void InitGraphics(void);
 /* Kill all active devices (used at shutdown). */
 void KillAllDevices(void);
 
-		/* Drivers from ../main/dev....c , description there: */
+/* Drivers from ../main/devices.c , 
+ * description there;   platform-specific drivers in platform directories! */
 
 Rboolean 
 PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, Rboolean);
@@ -58,11 +61,6 @@ Rboolean
 XFigDeviceDriver(DevDesc*, char*, char*, char*,
 		 char*, char*, double, double, 
 		 Rboolean, double, Rboolean, Rboolean);
-
-
-#ifdef OLD_Macintosh
-Rboolean MacDeviceDriver(char**, int, double*, int);
-#endif
 
 
 /*-------------------------------------------------------------------

@@ -42,7 +42,12 @@
 #include <errno.h>
 #include <limits.h>
 #include <float.h>
-#include <math.h>
+#ifdef macintosh
+# include <fp.h>
+#else
+# include <math.h>
+#endif
+
 #include <stdlib.h>
 
 	/* Undo SGI Madness */

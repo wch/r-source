@@ -27,6 +27,7 @@
 #include <Graphics.h>
 #include <Devices.h>
 
+
 /* Return a non-relocatable copy of a string */
 
 static SEXP gcall;
