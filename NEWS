@@ -11,6 +11,20 @@
 
 NEW FEATURES
 
+    o	New functions factanal(), varimax(), promax() and examples in
+	package mva.
+
+    o	New functions readBin() and writeBin() to transfer binary data
+	to and from connections.
+
+    o	merge() is partially moved to C to reduce its memory usage.
+
+    o	library(help = PKG) now displays the contents of the package's
+	DESCRIPTION file in addition to its INDEX.
+
+    o	Sd2Rd can handle S4-style documentation too: see `Writing R
+	Extensions'.
+
     o	prompt() now also works with a character argument (useful for
 	producing many *.Rd files in a loop).
 
@@ -20,9 +34,6 @@ NEW FEATURES
     o	Connections functions such as file() now accept a description of
 	length > 1, with a warning.
 
-    o	library(help = PKG) now displays the contents of the package's
-	DESCRIPTION file in addition to its INDEX.
-
     o	All text-mode connections now accept input with LF, CR or CRLF
 	line endings.  This means that readLines() can be used on DOS
 	files and source() on Mac files, for example.
@@ -31,22 +42,10 @@ NEW FEATURES
 
     o	DESCRIPTION file has a new recommended `Maintainer:' field.
 
-    o	New functions factanal(), varimax(), promax() and examples in
-	package mva.
-
-    o	New functions readBin() and writeBin() to transfer binary data
-	to and from connections.
-
-    o	Sd2Rd can handle S4-style documentation too: see `Writing R
-	Extensions'.
-
     o	stars() now uses a larger "cex" for the labels, and cex and lwd 
 	are now arguments. Further, the argument names (xlim, ylim,
 	axes) are now consistent with other plot functions.  The key symbol
 	is not clipped anymore into the plot region by default.
-
-    o	On startup, file .RData is now restored *after* the site and
-	user profiles are loaded (if at all).
 
     o	Date-time quantities are now printed with the timezone, if
 	known.
@@ -58,6 +57,10 @@ NEW FEATURES
 
 BUG FIXES
     
+    o	On startup, file .RData is now restored *after* the site and
+	user profiles are loaded (if at all).  This is as previously
+	documented.
+
     o	as.POSIXlt (and *ct) operating on a character string
 	only extracted the date (and not the time) in some cases.
 
