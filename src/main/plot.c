@@ -312,6 +312,48 @@ SEXP FixupCex(SEXP cex, double dflt)
     return ans;
 }
 
+SEXP FixupVFont(SEXP vfont) {
+    SEXP ans = R_NilValue;/* -Wall*/
+    if (isNull(vfont))
+	ans = R_NilValue;
+    else {
+	SEXP vf;
+	int typeface, fontindex;
+	int minindex, maxindex;
+	int i;
+	PROTECT(vf = coerceVector(vfont, INTSXP));
+	if (length(vf) != 2)
+	    error("Invalid vfont value");
+	typeface = INTEGER(vf)[0];
+	if (typeface < 0 || typeface > 7)
+	    error("Invalid vfont value");
+	minindex = 0;
+	switch (typeface) {
+	case 0:
+	case 1:
+	case 6:
+	    maxindex = 4;
+	    break;
+	case 2:
+	    maxindex = 3;
+	    break;
+	case 3:
+	case 4:
+	case 5:
+	    maxindex = 1;
+	case 7:
+	    maxindex = 2;
+	}
+	fontindex = INTEGER(vf)[1];
+	if (fontindex < minindex || fontindex > maxindex)
+	    error("Invalid vfont value");	
+	ans = allocVector(INTSXP, 2);
+	for (i=0; i<2; i++)
+	    INTEGER(ans)[i] = INTEGER(vf)[i];
+	UNPROTECT(1);
+    }
+    return ans;
+}
 
     /* GRAPHICS FUNCTION ENTRY POINTS */
 
@@ -479,7 +521,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-static void GetAxisLimits(double left, double right, double *low, double *high)
+void GetAxisLimits(double left, double right, double *low, double *high)
 {
 /*	Called from do_axis()	such as
  *	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high)
@@ -502,7 +544,7 @@ static void GetAxisLimits(double left, double right, double *low, double *high)
 
 /* axis(side, at, labels, ...) */
 
-static SEXP labelformat(SEXP labels)
+SEXP labelformat(SEXP labels)
 {
     SEXP ans = R_NilValue;/* -Wall*/
     int save_digits, i, n, w, d, e, wi, di, ei;
@@ -564,7 +606,7 @@ static SEXP labelformat(SEXP labels)
     return ans;
 }
 
-static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
+SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 {
 /*	Create an  'at = ...' vector for  axis(.) / do_axis,
  *	i.e., the vector of tick mark locations,
@@ -1621,11 +1663,12 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP sx, sy, sxy, txt, adj, pos, cex, col, font;
+    SEXP sx, sy, sxy, txt, adj, pos, cex, col, font, vf, vfont;
     int i, n, ncex, ncol, nfont, ntxt, xpd;
     double adjx = 0, adjy = 0, offset = 0.5;
     double *x, *y;
     double xx, yy;
+    int vectorFonts = 0;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1682,6 +1725,11 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     offset = GConvertXUnits(asReal(CAR(args)), CHARS, INCHES, dd);
+    args = CDR(args);
+
+    PROTECT(vfont = FixupVFont(CAR(args)));
+    if (!isNull(vfont)) 
+	vectorFonts = 1;
     args = CDR(args);
 
     PROTECT(cex = FixupCex(GetPar("cex", args), 1.0));
@@ -1747,20 +1795,25 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 		    break;
 		}
 	    }
-	    if (isExpression(txt))
-		GMathText(xx, yy, INCHES,
-			  VECTOR(txt)[i % ntxt],
-			  adjx, adjy, dd->gp.srt, dd);
+	    if (vectorFonts)
+		GVText(xx, yy, INCHES, CHAR(STRING(txt)[i % ntxt]),
+		       INTEGER(vfont)[0], INTEGER(vfont)[1],
+		       adjx, adjy, dd->gp.srt, dd);
 	    else
-		GText(xx, yy, INCHES,
-		      CHAR(STRING(txt)[i % ntxt]),
-		      adjx, adjy, dd->gp.srt, dd);
+		if (isExpression(txt))
+		    GMathText(xx, yy, INCHES,
+			      VECTOR(txt)[i % ntxt],
+			      adjx, adjy, dd->gp.srt, dd);
+		else
+		    GText(xx, yy, INCHES,
+			  CHAR(STRING(txt)[i % ntxt]),
+			  adjx, adjy, dd->gp.srt, dd);
 	}
     }
     GMode(0, dd);
 
     GRestorePars(dd);
-    UNPROTECT(5);
+    UNPROTECT(6);
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
     if (call != R_NilValue)
