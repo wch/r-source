@@ -458,7 +458,8 @@ Rcomplex Rf_asComplex(SEXP);
 int Rf_asInteger(SEXP);
 int Rf_asLogical(SEXP);
 double Rf_asReal(SEXP);
-SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP), SEXP);
+SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
+                       SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 Rboolean Rf_conformable(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
@@ -577,7 +578,8 @@ Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
 void Rf_unprotect(int);
 void Rf_unprotect_ptr(SEXP);
-SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP), SEXP);
+SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
+                        SEXP (*)(SEXP, int), SEXP);
 
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
