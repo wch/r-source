@@ -12,6 +12,8 @@ most often as the result of a call to \code{mle}.
   \describe{
     \item{\code{call}:}{Object of class \code{"language"}. The call to \code{mle}}
     \item{\code{coef}:}{Object of class \code{"numeric"}. Estimated parameters}
+    \item{\code{fullcoef}:}{Object of class \code{"numeric"}.
+      Fixed and estimated parameters}
     \item{\code{vcov}:}{Object of class \code{"matrix"}. Approximate
       variance-covariance matrix}
     \item{\code{min}:}{Object of class \code{"numeric"}. Minimum value
