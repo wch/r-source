@@ -352,6 +352,7 @@ SEXP do_subsetdf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subsetdf2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_substitute(SEXP, SEXP, SEXP, SEXP);
 SEXP do_substr(SEXP,SEXP,SEXP,SEXP);
+SEXP do_substrgets(SEXP,SEXP,SEXP,SEXP);
 SEXP do_summary(SEXP, SEXP, SEXP, SEXP);
 SEXP do_surface(SEXP, SEXP, SEXP, SEXP);
 SEXP do_switch(SEXP, SEXP, SEXP, SEXP);

@@ -1,17 +1,25 @@
-strsplit <-
-function(x, split, extended = TRUE)
+strsplit <- function(x, split, extended = TRUE)
     .Internal(strsplit(as.character(x),
                        as.character(split),
                        as.logical(extended)))
 
-substr <- function(x,start,stop)
-  .Internal(substr(x,as.integer(start),as.integer(stop)))
+substr <- function(x, start, stop)
+    .Internal(substr(x, as.integer(start), as.integer(stop)))
+
 substring <- function(text,first,last=1000000)
 {
     storage.mode(text) <- "character"
     n <- max(lt <- length(text), length(first), length(last))
     if(lt < n) text <- rep(text, length = n)
     substr(text, first, last)
+}
+
+"substr<-" <- function(x, start, stop, value)
+    .Internal(substrgets(x, as.integer(start), as.integer(stop), value))
+
+"substring<-" <- function(text, first, last=1000000, value)
+{
+    "substr<-"(text, first, last, value)
 }
 
 abbreviate <-

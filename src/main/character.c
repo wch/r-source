@@ -114,7 +114,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     l = LENGTH(so);
 
     if (!isString(x) || !isInteger(sa) || !isInteger(so) || k==0 || l==0)
-	errorcall(call,"invalid argument in substr()");
+	errorcall(call, "invalid argument in substr()");
 
     len = LENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
@@ -132,10 +132,6 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    AllocBuffer(slen);
 	    if (stop > slen)
 		stop = slen;
-	    /* if (stop > MAXELTSIZE) {
-		stop = MAXELTSIZE;
-		warningcall(call, "a string was truncated in substr()");
-		}*/
 	    substr(buff, CHAR(STRING_ELT(x, i)), start, stop);
 	}
 	SET_STRING_ELT(s, i, mkChar(buff));
@@ -145,6 +141,61 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
+static void substrset(char *buf, char *str, int sa, int so)
+{
+/* Replace the substring str [sa:so] in buf[] */
+    int i;
+    buf += (sa - 1);
+    for (i = 0; i <= (so - sa); i++)
+	*buf++ = *str++;
+}
+
+SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP s, x, sa, so, value;
+    int i, len, start, stop, slen, vlen, k, l, v;
+
+    checkArity(op, args);
+    x = CAR(args);
+    sa = CADR(args);
+    so = CADDR(args);
+    value = CADDDR(args);
+    k = LENGTH(sa);
+    l = LENGTH(so);
+
+    if (!isString(x) || !isInteger(sa) || !isInteger(so) || k==0 || l==0)
+	errorcall(call,"invalid argument in substr<-()");
+
+    v = LENGTH(value);
+    if (!isString(value) || v == 0)
+	errorcall(call, "invalid rhs in substr<-()");
+
+    len = LENGTH(x);
+    PROTECT(s = allocVector(STRSXP, len));
+    for (i = 0; i < len; i++) {
+	start = INTEGER(sa)[i % k];
+	stop = INTEGER(so)[i % l];
+	slen = strlen(CHAR(STRING_ELT(x, i)));
+	if (start < 1) start = 1;
+	if (stop > slen) stop = slen;
+	if (start > stop) {
+	    AllocBuffer(0); /* since we reset later */
+	    /* just copy element across */
+	    SET_STRING_ELT(s, i, STRING_ELT(x, i));
+	}
+	else {
+	    AllocBuffer(slen);
+	    strcpy(buff, CHAR(STRING_ELT(x, i)));
+	    vlen = strlen(CHAR(STRING_ELT(value, i % v)));
+	    if(stop > start + vlen) stop = start + vlen;
+	    substrset(buff, CHAR(STRING_ELT(value, i % v)), start, stop);
+	    SET_STRING_ELT(s, i, mkChar(buff));
+	}
+    }
+    UNPROTECT(1);
+    AllocBuffer(-1);
+    return s;
+}
 
 /* strsplit is going to split the strings in the first argument into */
 /* tokens depending on the second argument. The characters of the second */

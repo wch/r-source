@@ -47,6 +47,9 @@ NEW FEATURES
 
     o	The four bessel[IJKY](x,nu) functions are now defined for nu < 0.
 
+    o	New functions substr<-() and substring<-().
+
+
 
 BUG FIXES
 
