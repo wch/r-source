@@ -1,7 +1,7 @@
 % Originally file MASS/max.col.d
 % copyright (C) 1999 W. N. Venables and B. D. Ripley
 % copyright (C) 2000, 2003 The R Core Development Team
-\name{max.col}
+\name{maxCol}
 \alias{max.col}
 \title{Find Maximum Position in Matrix}
 \description{

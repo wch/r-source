@@ -203,7 +203,7 @@ test-Specific:
 test-Packages:
 	@for p in $(R_PKGS_BASE); do \
 	  echo "* checking package '$${p}'"; \
-	  $(top_builddir)/bin/R CMD check \
+	  R_CHECK_FF_CALLS=yes $(top_builddir)/bin/R CMD check \
 	    $(top_srcdir)/src/library/$${p} || echo; \
 	done
 

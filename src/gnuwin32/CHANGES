@@ -14,6 +14,11 @@ The File|Change Dir...|Browse dialog could cause R to crash.
 
 Fixed bug in versioned install of binary package bundles.
 
+Help for max.col was not being found in CHTML help: we have worked around
+a bug in HHW.
+
+
+
 rw1070
 ======
 

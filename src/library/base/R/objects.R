@@ -33,7 +33,8 @@ methods <- function (generic.function, class)
             else .BaseNamespaceEnv
         }
         S3reg <- ls(get(".__S3MethodsTable__.", envir = defenv))
-        an <- c(an, S3reg)
+        ## might both export and register a method
+        an <- unique(c(an, S3reg))
     }
     else if (!missing(class)) {
 	if (!is.character(class))
