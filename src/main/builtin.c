@@ -392,6 +392,7 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	if (xnames != R_NilValue)
 		names = allocVector(STRSXP, len);
+	else names = R_NilValue;/*- just for -Wall --- should we do this ? */
 
 	switch (TYPEOF(x)) {
 	case LGLSXP:
@@ -503,9 +504,10 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error("invalid first argument to remove.\n");
 
 	if (CADR(args) != R_NilValue) {
-		if (TYPEOF(CADR(args)) != ENVSXP)
+		if (TYPEOF(CADR(args)) != ENVSXP) {
 			error("invalid envir argument\n");
-		else
+			aenv = R_NilValue;/* -Wall */
+		} else
 			aenv = CADR(args);
 	}
 	else
@@ -566,8 +568,10 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* It must be present and a string */
 
 	if (!isString(CAR(args)) || length(CAR(args)) < 1
-	    || strlen(CHAR(STRING(CAR(args))[0])) == 0)
+	    || strlen(CHAR(STRING(CAR(args))[0])) == 0) {
 		errorcall(call, "invalid first argument\n");
+		t1 = R_NilValue;
+	}
 	else
 		t1 = install(CHAR(STRING(CAR(args))[0]));
 
@@ -579,8 +583,10 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else if (TYPEOF(CADR(args)) == ENVSXP || CADR(args) == R_NilValue)
 		genv = CADR(args);
-	else
+	else {
 		errorcall(call,"invalid envir argument\n");
+		genv = R_NilValue;/* -Wall */
+	}
 
 	/* The mode of the object being sought */
 
@@ -589,7 +595,10 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 			gmode = FUNSXP;
 		else
 			gmode = str2type(CHAR(STRING(CAR(CDDR(args)))[0]));
-	} else errorcall(call,"invalid mode argument\n");
+	} else {
+		errorcall(call,"invalid mode argument\n");
+		gmode = FUNSXP;/* -Wall */
+	}
 
 	if (isLogical(CAR(nthcdr(args, 3))))
 		ginherits = LOGICAL(CAR(nthcdr(args, 3)))[0];
