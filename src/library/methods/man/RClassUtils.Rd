@@ -8,7 +8,6 @@
 \alias{setSubclassMetaData}
 \alias{subclassesMetaName}
 \alias{extendsMetaName}
-\alias{completeSubclasses}
 \alias{classPrototypeDef-class}
 \alias{trySilent}
 %%

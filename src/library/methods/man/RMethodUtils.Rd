@@ -10,7 +10,6 @@
 \alias{substituteFunctionArgs}
 \alias{makeGeneric}
 \alias{makeStandardGeneric}
-\alias{getAllMethods}
 \alias{generic.skeleton}
 \alias{defaultDumpName}
 \alias{getAllMethods}
