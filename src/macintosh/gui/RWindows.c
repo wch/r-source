@@ -972,10 +972,7 @@ void DoUpdate ( WindowRef window )
     GEDevDesc *gedd;
     NewDevDesc *dd;
     double left,right,top,bottom;
-  
-#if TARGET_API_MAC_CARBON
 	Rect		portRect ;
-#endif
 
 	// if we have no windows, there's nothing to update!
 	if ( window == nil )
@@ -992,16 +989,11 @@ void DoUpdate ( WindowRef window )
 
 	updateRgn = NewRgn ( ) ;
 
-#if TARGET_API_MAC_CARBON
 	//	set updateRgn to the whole window rectangle
 	//	in the future, when Carbon gives us an API to get the "drawable" region
 	//	of a window, use that!
 	RectRgn ( updateRgn, GetWindowPortBounds ( window, & portRect ) ) ;
-#else
-	//	in a classic, non-Carbon environment, the visRgn of the window
-	//	is set to the region to redraw between BeginUpdate and EndUpdate
-	MacCopyRgn ( window -> visRgn, updateRgn ) ;
-#endif
+
 
 	// erase the update region
 	if(!isGraphicWindow(window))
@@ -1012,9 +1004,12 @@ void DoUpdate ( WindowRef window )
   	 UpdateControls ( window, updateRgn ) ;
 
 	//	draw text
-	if(!isGraphicWindow(window))
+	if(!isGraphicWindow(window)){
 	 WEUpdate ( updateRgn, GetWindowWE ( window ) ) ;
-    else{
+    // tell everything we're done updating
+	 EndUpdate ( window ) ;
+	 DisposeRgn ( updateRgn ) ;
+    } else{
     //    if (QDIsPortBuffered(GetWindowPort(window)))
     //    QDFlushPortBuffer(GetWindowPort(window), NULL);
  /* This way of refreshing windows is rather slow */
@@ -1031,10 +1026,6 @@ void DoUpdate ( WindowRef window )
     GEplayDisplayList(gedd);
 }
 
-	// tell everything we're done updating
-	EndUpdate ( window ) ;
-	DisposeRgn ( updateRgn ) ;
- 
 	// restore the old graphics port
 	SetPort ( savePort ) ;
 }
