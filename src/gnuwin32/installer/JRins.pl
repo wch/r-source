@@ -25,7 +25,9 @@ my $fn, $component, $path;
 my $startdir=getcwd();
 my $RVER=$ARGV[0];
 my $RW=$ARGV[1];
-my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
+my $iconpars="WorkingDir: \"{app}\"" ;
+## add to the target command line as in the next example
+# my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
 
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
