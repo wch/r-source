@@ -1,5 +1,5 @@
 /* <UTF8> OK, provided the delimiters are ASCII 
-   match length is in bytes.
+   match length is in now in chars.
 */
 
 #include <R.h>
@@ -88,14 +88,16 @@ delim_match(SEXP x, SEXP delims)
 	}
 	if(end > -1) {
 	    INTEGER(ans)[i] = start + 1; /* index from one */
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 	    if(mbcslocale) {
 		char save = s0[end+1];
 		s0[end+1] = '\0';
 		INTEGER(matchlen)[i] = mbstowcs(NULL, s0 + start, 0);
 		s0[end+1] = save;
-		if(INTEGER(matchlen)[i] < 0)
-		    warning("invalid UTF-8 string in delimMatch");
+		if(INTEGER(matchlen)[i] < 0) {
+		    warning("invalid MBCS string in delimMatch");
+		    INTEGER(matchlen)[i] = NA_INTEGER;
+		}
 	    } else
 #endif
 		INTEGER(matchlen)[i] = end - start + 1;
