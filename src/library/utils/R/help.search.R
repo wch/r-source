@@ -132,18 +132,21 @@ function(pattern, fields = c("alias", "concept", "title"),
         ## information.  When building the global index, it seems (see
         ## e.g. also the code in tools:::Rdcontents()), most efficient to
         ## create a list *matrix* (dbMat below), stuff the individual
-        ## indices into its rows, and finally create the base, aliases
-        ## and keyword information in rbind() calls on the columns.
-        ## This is *much* more efficient than building incrementally.
+        ## indices into its rows, and finally create the base, alias,
+        ## keyword, and concept information in rbind() calls on the
+        ## columns.  This is *much* more efficient than building
+        ## incrementally.
         dbMat <- vector("list", length(packages_in_hsearch_db) * 4)
         dim(dbMat) <- c(length(packages_in_hsearch_db), 4)
-
+        defunct_standard_package_names <- 
+            tools:::.get_standard_package_names()$stubs
+            
 	for(p in packages_in_hsearch_db) {
             np <- np + 1
 	    if(verbose)
 		cat("", p, if((np %% 5) == 0) "\n")
             ## skip stub packages
-            if(p %in% tools:::.get_standard_package_names()$stubs)
+            if(p %in% defunct_standard_package_names)
                 next
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
@@ -204,8 +207,8 @@ function(pattern, fields = c("alias", "concept", "title"),
                 matrix(character(), nc = 3,
                        dimnames = list(NULL,
                        c("Concepts", "ID", "Package")))
-        ## And finally, make the IDs globally unique by prefixing them
-        ## with the number of the package in the global index.
+        ## Make the IDs globally unique by prefixing them with the
+        ## number of the package in the global index.
         for(i in which(sapply(db, NROW) > 0)) {
             db[[i]][, "ID"] <-
                 paste(rep.int(seq(along = packages_in_hsearch_db),
