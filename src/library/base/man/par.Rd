@@ -221,8 +221,21 @@ par(\dots, no.readonly = FALSE)
   \item{xaxp}{A vector of the form \code{c(x1, x2, n)} giving the
     coordinates of the extreme tick marks and the number of intervals
     between tick-marks.}
-  \item{xaxs}{(\emph{Unimplemented}) The style of axis interval
-    calculation to be used for the x-axis.}
+  \item{xaxs}{The style of axis interval
+    calculation to be used for the x-axis. Possible values are
+    \code{"r"}, \code{"i"}, \code{"e"}, \code{"s"}, \code{"d"}. The
+    styles are generally controlled by the range of data or \code{xlim},
+    if given. Style \code{"r"} (regular) first extends the data range by
+    4 percent and then finds an axis with pretty labels that fits within the
+    range. Style \code{"i"} (internal) just finds an axis with pretty
+    labels that fits within the original data range. Style \code{"s"}
+    (standard) finds an axis with pretty labels within which the
+    original data range fits. Style \code{"e"} (extended) is like style
+    \code{"s"}, except that it is also ensured that there is room for
+    plotting symbols within the bounding box.   Style \code{"d"}
+    (direct) specifies that the current axis should be used on
+    subsequent plots. (\emph{Only "r" and "i"
+	styles are currently implemented})}
   \item{xaxt}{A character which specifies the axis type.
     Specifying \code{"n"} causes an axis to be set up, but not plotted.}
   \item{xlog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
@@ -236,8 +249,8 @@ par(\dots, no.readonly = FALSE)
   \item{yaxp}{A vector of the form \code{c(y1, y2, n)} giving
     the coordinates of the extreme tick marks and the number of
     intervals between tick-marks.}
-  \item{yaxs}{(\emph{Unimplemented}) The style of axis interval
-    calculation to be used for the y-axis.}
+  \item{yaxs}{The style of axis interval
+    calculation to be used for the y-axis. See \code{xaxs} above.}
   \item{yaxt}{A character which specifies the axis type.
     Specifying \code{"n"} causes an axis to be set up, but not plotted.}
   \item{ylog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
