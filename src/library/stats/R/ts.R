@@ -61,6 +61,8 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
     ##  	fixed equivalent of ts.eps := 1e-5
     attr(data, "tsp") <- c(start, end, frequency) #-- order is fixed
     if(!is.null(class) && class != "none") attr(data, "class") <- class
+    ## if you alter the return structure, you also need to alter
+    ## newBasic in methods/R/RClassUtils.R.  So please don't.
     data
 }
 
