@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.150 $ ';
+my $revision = ' $Revision: 1.151 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -84,7 +84,8 @@ if($opt_install eq "fake") {
 }
 $opt_install = 0 if($opt_install eq "no");
 
-$ENV{"R_DEFAULT_PACKAGES"} = "tools";
+## Use system default unless explicitly specified otherwise.
+$ENV{"R_DEFAULT_PACKAGES"} = "";
 
 my $startdir = cwd();
 $opt_outdir = $startdir unless $opt_outdir;
@@ -762,7 +763,8 @@ sub check_pkg {
 	else {
 	    my $dir = "demo";
 	    my $cmd = ".checkDemoIndex(\"$dir\")\n";
-	    my @out = R_runR($cmd, "${R_opts} --quiet");
+	    my @out = R_runR($cmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
 		$log->warning() unless($any);
@@ -776,7 +778,8 @@ sub check_pkg {
 				"vignette")) {
 	my $dir = &file_path("inst", "doc");
 	my $cmd = ".checkVignetteIndex(\"$dir\")\n";
-	my @out = R_runR($cmd, "${R_opts} --quiet");
+	my @out = R_runR($cmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning() unless($any);
@@ -938,7 +941,8 @@ sub check_pkg {
 	    $Rcmd .= "checkS3methods(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
@@ -963,7 +967,8 @@ sub check_pkg {
 	    $Rcmd .= "checkReplaceFuns(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
         @out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    ## <NOTE>
@@ -992,7 +997,8 @@ sub check_pkg {
 	    $Rcmd .= "checkFF(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
@@ -1215,7 +1221,8 @@ sub check_pkg {
 	    $Rcmd .= "undoc(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+                         "R_DEFAULT_PACKAGES=tools");
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^\>/, @out);
 	if($#err < 0) {
@@ -1257,7 +1264,8 @@ sub check_pkg {
 	    else {
 		$Rcmd .= "codoc(dir = \"${pkgdir}\")\n";
 	    }
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 
 	    ## <FIXME>
 	    ## With the current heuristics codoc() may throw an error
@@ -1276,7 +1284,8 @@ sub check_pkg {
 	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
 	    my $Rcmd = "codocData(package = \"${pkgname}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
 		$log->warning() unless($any);
@@ -1288,7 +1297,8 @@ sub check_pkg {
 	## Check for code/documentation mismatches in S4 classes.
 	if($opt_install && (-d "R")) {
 	    my $Rcmd = "codocClasses(package = \"${pkgname}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
 		$log->warning() unless($any);
@@ -1316,7 +1326,8 @@ sub check_pkg {
 	    $Rcmd .= "checkDocFiles(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
@@ -1535,7 +1546,8 @@ sub check_pkg {
 		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\")\n";
 	    }
 
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
 	    @out = grep(!/^[[:alnum:]]*\>/, @out);
 	    if($#out >= 0) {
