@@ -111,6 +111,9 @@ NEW FEATURES
     o	rect() accepts additional graphics parameters through a ...
 	argument (in the same way as polygon).
 
+    o	strwidth/strheight() now coerce their first argument in exactly
+	the same way text() does, so a wider range of inputs is allowed.
+
 
 DEPRECATED & DEFUNCT
 
@@ -184,8 +187,10 @@ BUG FIXES
     o   step(fit, direction="both") now uses both directions even if 
 	no scope is supplied.
 
-    o	strwidth(), strheight() all now give 0 on NA strings (as they
+    o	strwidth(), strheight() now give 0 on NA strings (as they
 	are no longer plotted). (PR#1739)
+
+    o	plot.hclust() no longer plots NA labels.
 
 
 

@@ -8,10 +8,12 @@ strheight(s, units = "user", cex = NULL)
 \alias{strheight}
 \arguments{
   \item{s}{character vector or \code{\link{expression}}s whose string
-    widths in plotting units are to be determined.}
+    widths in plotting units are to be determined.  An attempt is made
+    to coerce other vectors to character, and other language objects
+    to expressions.}
   \item{units}{character indicating in which units \code{s} is measured;
     should be one of \code{"user"}, \code{"inches"}, \code{"figure"};
-    partially matching is performed.}
+    partial matching is performed.}
   \item{cex}{character expansion to which is applies.  By default, the
     current \code{par("cex")} is used.}
 }

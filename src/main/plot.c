@@ -1103,13 +1103,14 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 				   axis_lab, 0, x, Rf_gpptr(dd)->las, dd);
 		    }
 		    else {
-			labw = GStrWidth(CHAR(STRING_ELT(lab, ind[i])), NFC, dd);
-			tnew = temp - 0.5 * labw;
-			/* Check room for perpendicular labels. */
-			if (Rf_gpptr(dd)->las == 2 || Rf_gpptr(dd)->las == 3 ||
-			    tnew - tlast >= gap) {
-			    label = STRING_ELT(lab, ind[i]);
-			    if(label != NA_STRING) {
+			label = STRING_ELT(lab, ind[i]);
+			if(label != NA_STRING) {
+			    labw = GStrWidth(CHAR(label), NFC, dd);
+			    tnew = temp - 0.5 * labw;
+			    /* Check room for perpendicular labels. */
+			    if (Rf_gpptr(dd)->las == 2 ||
+				Rf_gpptr(dd)->las == 3 ||
+				tnew - tlast >= gap) {
 				GMtext(CHAR(label), side, axis_lab, 0, x,
 				       Rf_gpptr(dd)->las, dd);
 				tlast = temp + 0.5 *labw;
@@ -1207,14 +1208,15 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 				   axis_lab, 0, y, Rf_gpptr(dd)->las, dd);
 		    }
 		    else {
-			labw = GStrWidth(CHAR(STRING_ELT(lab, ind[i])), INCHES, dd);
-			labw = GConvertYUnits(labw, INCHES, NFC, dd);
-			tnew = temp - 0.5 * labw;
-			/* Check room for perpendicular labels. */
-			if (Rf_gpptr(dd)->las == 1 || Rf_gpptr(dd)->las == 2 ||
-			    tnew - tlast >= gap) {
-			    label = STRING_ELT(lab, ind[i]);
-			    if(label != NA_STRING) {
+			label = STRING_ELT(lab, ind[i]);
+			if(label != NA_STRING) {
+			    labw = GStrWidth(CHAR(label), INCHES, dd);
+			    labw = GConvertYUnits(labw, INCHES, NFC, dd);
+			    tnew = temp - 0.5 * labw;
+			    /* Check room for perpendicular labels. */
+			    if (Rf_gpptr(dd)->las == 1 ||
+				Rf_gpptr(dd)->las == 2 ||
+				tnew - tlast >= gap) {
 				GMtext(CHAR(label), side, axis_lab, 0, y,
 				       Rf_gpptr(dd)->las, dd);
 				tlast = temp + 0.5 *labw;
@@ -3046,116 +3048,6 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 }
 
-#ifdef using_internal_dotplot
-SEXP do_dotplot(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP x, labs, offset, saveargs;
-    double adj, xpd, wd, ht, lw, gw, xi, xmin, xmax;
-#ifdef OLD
-    SEXP colors, ltypes;
-    double save_mar[4];
-#endif
-    int save_mUnits, save_defaultPlot;
-    int i, n;
-    DevDesc *dd;
-
-    /* checkArity(op, args); */
-
-    saveargs = args;
-    x = CAR(args); args = CDR(args);		/* real */
-    labs = CAR(args); args = CDR(args);		/* character */
-    offset = CAR(args); args = CDR(args);	/* logical */
-#ifdef OLD
-    colors = CAR(args); args = CDR(args);	/* integer */
-    ltypes = CAR(args); args = CDR(args);	/* integer */
-#endif
-
-    /* checks on lengths/types here */
-
-    n = length(labs);
-
-    /* compute the plot layout */
-
-    dd = GNewPlot(GRecording(call));
-    lw = 0;
-    gw = 0;
-    ht = GStrHeight("M", INCHES, dd);
-    xmin = DBL_MAX;
-    xmax = DBL_MIN;
-    for (i = 0; i < n; i++) {
-	wd = GStrWidth(CHAR(STRING_ELT(labs, i)), INCHES, dd) / ht;
-	if (wd > 0) {
-	    if (INTEGER(offset)[i] == 1) {
-		if (wd > gw) gw = wd;
-	    }
-	    else {
-		if (wd > lw) lw = wd;
-	    }
-	}
-	xi = REAL(x)[i];
-	if (R_FINITE(xi)) {
-	    if (xi < xmin) xmin = xi;
-	    if (xi > xmax) xmax = xi;
-	}
-    }
-    if (gw > 0) {
-	if (gw < lw + 1)
-	    gw = lw + 1;
-	lw = lw + 1;
-	gw = gw + 1;
-    }
-    else {
-	lw = lw + 1;
-	gw = lw;
-    }
-    save_mUnits = Rf_gpptr(dd)->mUnits;
-    save_defaultPlot = Rf_dpptr(dd)->defaultPlot;
-    Rf_gpptr(dd)->mar[1] = Rf_gpptr(dd)->mar[3] + gw;
-    Rf_dpptr(dd)->mUnits = Rf_gpptr(dd)->mUnits = LINES;
-    Rf_dpptr(dd)->defaultPlot = Rf_gpptr(dd)->defaultPlot = 1;
-    GReset(dd);
-
-    /* Set up the plotting window */
-
-    Rf_gpptr(dd)->yaxs = 'i';
-    GScale(xmin, xmax, 1, dd);
-    GScale((double)0.5, (double)(n + 0.5), 2, dd);
-    GMapWin2Fig(dd);
-    GSetState(1, dd);
-
-    /* Axis labelling must be done here. */
-    /* The offsets must be recomputed */
-    /* each time the plot is redrawn. */
-
-    adj = Rf_gpptr(dd)->adj;
-    xpd = Rf_gpptr(dd)->xpd;
-    Rf_gpptr(dd)->adj = 0;
-    /* override par("xpd") and force clipping to figure region */
-    /* NOTE: don't override to _reduce_ clipping region */
-    if (Rf_gpptr(dd)->xpd < 1)
-	xpd = 1;
-
-    for (i = 0; i < n; i++) {
-	if (strlen(CHAR(STRING_ELT(labs, i))) > 0) {
-	    if (LOGICAL(offset)[i])
-		GMtext(CHAR(STRING_ELT(labs, i)), 2, gw, 0, (double)(i+1), 2, dd);
-	    else
-		GMtext(CHAR(STRING_ELT(labs, i)), 2, lw, 0, (double)(i+1), 2, dd);
-	}
-    }
-    Rf_gpptr(dd)->adj = adj;
-    Rf_gpptr(dd)->xpd = xpd;
-
-    /* Plotting could be done here */
-    /* or later in interpreted code. */
-
-    if (GRecording(call))
-	recordGraphicOperation(op, saveargs, dd);
-    return R_NilValue;
-}
-#endif /* using_internal_dotplot */
-
-
 SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* strheight(str, units) */
@@ -3168,8 +3060,11 @@ SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
 
     str = CAR(args);
-    if ((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
-	errorcall(call, "character or expression first argument expected");
+    if (isSymbol(str) || isLanguage(str))
+	str = coerceVector(str, EXPRSXP);
+    else if (!isExpression(str))
+	str = coerceVector(str, STRSXP);
+    PROTECT(str);
     args = CDR(args);
 
     if ((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)
@@ -3195,7 +3090,7 @@ SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
 		GStrHeight(CHAR(ch), GMapUnits(units), dd);
 	}
     Rf_gpptr(dd)->cex = cexsave;
-    UNPROTECT(1);
+    UNPROTECT(2);
     return ans;
 }
 
@@ -3212,8 +3107,12 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
 
     str = CAR(args);
-    if ((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
-	errorcall(call, "character or expression first argument expected");
+    if (isSymbol(str) || isLanguage(str))
+	str = coerceVector(str, EXPRSXP);
+    else if (!isExpression(str))
+	str = coerceVector(str, STRSXP);
+    PROTECT(str);
+
     args = CDR(args);
 
     if ((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)
@@ -3235,11 +3134,11 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 					    GMapUnits(units), dd);
 	else {
 	    ch = STRING_ELT(str, i);
-	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 : 
+	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 :
 		GStrWidth(CHAR(ch), GMapUnits(units), dd);
 	}
     Rf_gpptr(dd)->cex = cexsave;
-    UNPROTECT(1);
+    UNPROTECT(2);
     return ans;
 }
 
@@ -3265,8 +3164,9 @@ static void drawdend(int node, double *x, double *y, DevDesc *dd)
 	xl = dnd_xpos[-k-1];
 	if (dnd_hang >= 0) yl = *y - dnd_hang;
 	else yl = 0;
-	GText(xl, yl-dnd_offset, USER, CHAR(dnd_llabels[-k-1]),
-	      1.0, 0.3, 90.0, dd);
+	if(dnd_llabels[-k-1] != NA_STRING)
+	    GText(xl, yl-dnd_offset, USER, CHAR(dnd_llabels[-k-1]),
+		  1.0, 0.3, 90.0, dd);
     }
     k = dnd_rptr[node-1];
     if (k > 0) drawdend(k, &xr, &yr, dd);
@@ -3274,8 +3174,9 @@ static void drawdend(int node, double *x, double *y, DevDesc *dd)
 	xr = dnd_xpos[-k-1];
 	if (dnd_hang >= 0) yr = *y - dnd_hang;
 	else yr = 0;
-	GText(xr, yr-dnd_offset, USER, CHAR(dnd_llabels[-k-1]),
-	      1.0, 0.3, 90.0, dd);
+	if(dnd_llabels[-k-1] != NA_STRING)
+	    GText(xr, yr-dnd_offset, USER, CHAR(dnd_llabels[-k-1]),
+		  1.0, 0.3, 90.0, dd);
     }
     xx[0] = xl; yy[0] = yl;
     xx[1] = xl; yy[1] = *y;
@@ -3359,7 +3260,7 @@ SEXP do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, imax, n;
     double pin, *ll, tmp, yval, *y, ymin, ymax, yrange;
-    SEXP originalArgs, merge, height, llabels;
+    SEXP originalArgs, merge, height, llabels, str;
     char *vmax;
     DevDesc *dd;
     dd = CurrentDevice();
@@ -3405,8 +3306,9 @@ SEXP do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     ymax = REAL(height)[n - 1];
     pin = Rf_gpptr(dd)->pin[1];
     for (i = 0; i < n; i++)
-	ll[i] = GStrWidth(CHAR(STRING_ELT(llabels, i)), INCHES, dd)
-	    + dnd_offset;
+	str = STRING_ELT(llabels, i);
+	ll[i] = (str == NA_STRING) ? 0.0 :
+	    GStrWidth(CHAR(str), INCHES, dd) + dnd_offset;
     if (dnd_hang >= 0) {
 	ymin = ymax - (1 + dnd_hang) * (ymax - ymin);
 	yrange = ymax - ymin;
