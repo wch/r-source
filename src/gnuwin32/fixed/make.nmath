@@ -7,8 +7,8 @@ FFLAGS=$(OPTFLAGS)
 SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
-fround.o: fround.c
-	$(CC) -I../include  -o $@ -c $<
+#fround.o: fround.c
+#	$(CC) -I../include  -o $@ -c $<
 
 
 ../gnuwin32/libmath.a: $(OBJS)
