@@ -1,12 +1,12 @@
 PKG <- "@PKG@"
-exloc <- file.path("../../../library", PKG, "R-ex")
+exloc <- file.path("../../../../library", PKG, "R-ex")
 if(!file.exists(exloc)) stop("no examples found")
 list.of.files <- list.files(exloc, ".*\\.R")
-file <- paste("check/", PKG, "-ex.R", sep="")
+file <- paste(PKG, "-ex.R", sep="")
 file.create(file)
 cat(file=file, append=T, '.ptime <- proc.time()\n')
 cat(file=file, append=T,
-    paste('postscript("check/', PKG, '-Examples.ps")\n', sep=""))
+    paste('postscript("', PKG, '-Examples.ps")\n', sep=""))
 cat(file=file, append=T, '.par.postscript <- par(no.readonly = TRUE)\n')
 cat(file=file, append=T, 'options(contrasts = c(unordered = "contr.treatment", ordered =  "contr.poly"))\n')
 if(PKG != "base")

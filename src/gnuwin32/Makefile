@@ -106,8 +106,8 @@ R.exp1: R.a $(EXTRALIBS) exported-vars
 
 # avoid building globalvar.h with errors
 ../include/globalvar.h: exported-vars
-	($(AWK) -- '//{if ($$1 != "") print "#define " $$1 " (*__imp_" $$1 ")"}' \
-	           exported-vars > ../include/globalvar.h) || $(RM) $@
+	$(AWK) -- '//{if ($$1 != "") print "#define " $$1 " (*__imp_" $$1 ")"}' \
+	           exported-vars > ../include/globalvar.h
 
 base-HELP=ziponly
 
@@ -119,7 +119,8 @@ ifeq ($(strip $(HELP)),YES)
 endif
 
 pkgcheck-%:
-	$(MAKE) -C ../library/$* PKG=$* -f ../../gnuwin32/check/PkgCheck
+	-mkdir -p ../library/$*/check
+	$(MAKE) -C ../library/$*/check PKG=$* -f ../../../gnuwin32/check/PkgCheck
 
 ziphelp-%:
 	$(MAKE) -C ./help ziphelp-$*
