@@ -21,6 +21,7 @@
 #define DEVICES_H_
 
 #include <Rgraphics.h>
+#include <R_ext/Boolean.h>
 
 #define addDevice		Rf_addDevice
 #define copyDisplayList		Rf_copyDisplayList
@@ -83,6 +84,7 @@ int deviceNumber(DevDesc*);
 int StartDevice(SEXP, SEXP, int, SEXP, int);
 /* Check for an available device slot */
 void R_CheckDeviceAvailable(void);
+Rboolean R_CheckDeviceAvailableBool(void);
 
 void DevNull(void);
 

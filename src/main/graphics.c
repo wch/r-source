@@ -5145,6 +5145,12 @@ void R_CheckDeviceAvailable(void)
 	error("too many open devices");
 }
 
+Rboolean R_CheckDeviceAvailableBool(void)
+{
+    if (R_NumDevices >= R_MaxRegularDevices) return FALSE;
+    else return TRUE;
+}
+
 void InitGraphics(void)
 {
     int i;
@@ -5272,7 +5278,7 @@ void addDevice(DevDesc *dd)
        before starting its allocation, we complete the allocation and
        then call killDevice here.  This insures that the device gets a
        chance to deallocate its resources and the current active
-       device is testored to a sane value. */
+       device is restored to a sane value. */
     if (i == R_LastDeviceEntry) {
         killDevice(i);
         error("too many devices open");

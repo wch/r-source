@@ -207,6 +207,12 @@ static void SaveAsWin(DevDesc *dd, char *display)
 	R_ShowMessage("No enough memory to copy graphics window");
 	return;
     }
+    if(!R_CheckDeviceAvailableBool()) {
+	free(ndd);
+	R_ShowMessage("No device available to copy graphics window");
+	return;
+    }
+    
     ndd->displayList = R_NilValue;
     GInit(&ndd->dp);
     if (GADeviceDriver(ndd, display,
@@ -227,6 +233,12 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 	R_ShowMessage("No enough memory to copy graphics window");
 	return;
     }
+    if(!R_CheckDeviceAvailableBool()) {
+	free(ndd);
+	R_ShowMessage("No device available to copy graphics window");
+	return;
+    }
+
     ndd->displayList = R_NilValue;
     GInit(&ndd->dp);
 
