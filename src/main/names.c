@@ -583,6 +583,7 @@ FUNTAB R_FunTab[] =
 {"lapply",	do_lapply,	0,	10,	2,	PP_FUNCALL},
 {"apply",	do_apply,	0,	11,	3,	PP_FUNCALL},
 {"Rprof",	do_Rprof,	0,	11,	3,	PP_FUNCALL},
+{"object.size",	do_objectsize,	0,	11,	1,	PP_FUNCALL},
 
 /* Functions To Interact with the Operating System */
 

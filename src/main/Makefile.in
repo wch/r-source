@@ -76,6 +76,7 @@ SOURCES_C = \
 	saveload.c \
 	scan.c \
 	seq.c \
+	size.c \
 	sort.c \
 	source.c \
 	split.c \

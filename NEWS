@@ -226,6 +226,8 @@ NEW FEATURES
 
     o   new `tkfaq' demo for tcltk: displays the R FAQ in a text widget.
 
+    o   New function object.size() to give approximate memory allocation.
+
 
 BUG FIXES
 
