@@ -75,7 +75,7 @@
 #define LTY_SOLID	0
 #define LTY_DASHED	4 + (4<<4)
 #define LTY_DOTTED	1 + (3<<4)
-#define LTY_DOTDASH	3 + (1<<4) + (3<<8) + (4<<12)
+#define LTY_DOTDASH	1 + (3<<4) + (4<<8) + (3<<12)
 #endif
 
 #ifdef Windows
