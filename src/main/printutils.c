@@ -276,7 +276,8 @@ char *EncodeString(char *s, int w, int quote, int right)
     char *p, *q;
 
     i = Rstrlen(s);
-    AllocBuffer(i + 2); /* allow for quotes */
+    AllocBuffer(w); 
+    if( w >= BUFSIZE ) w = BUFSIZE-1; /* just so we don't fall off */
     q = Encodebuf;
     if(right) { /* Right justifying */
 	b = w - i - (quote ? 2 : 0);
@@ -328,7 +329,7 @@ char *EncodeString(char *s, int w, int quote, int right)
     if(quote) *q++ = quote;
     if(!right) { /* Left justifying */
 	*q = '\0';
-	b = w - strlen(Encodebuf);
+	b = w - strlen(Encodebuf) - 1;
 	for(i=0 ; i<b ; i++) *q++ = ' ';
     }
     *q = '\0';

@@ -942,6 +942,8 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## Look for tk.h in
       ##   ${TK_PREFIX}/include/tk${TK_VERSION}
       ##   ${TK_PREFIX}/include
+      OLD_CPPFLAGS=$CPPFLAGS
+      CPPFLAGS="$CPPFLAGS -I$x_includes $TCLTK_CPPFLAGS"
       AC_CHECK_HEADER(${TK_PREFIX}/include/tk${TK_VERSION}/tk.h,
         [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include/tk${TK_VERSION}"
 	  found_tk_h=yes])
@@ -950,6 +952,7 @@ if test -z "${TCLTK_CPPFLAGS}"; then
           [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include"
             found_tk_h=yes])
       fi
+      CPPFLAGS=$OLD_CPPFLAGS
     fi
     if test "${found_tk_h}" = no; then
       AC_CHECK_HEADER(tk.h, , have_tcltk=no)
