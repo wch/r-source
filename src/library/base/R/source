@@ -85,7 +85,7 @@ demo <- function(topic, device = x11, directory.sep = "/")
 		     "demos",
 		     Topics["dir",  i.top],
 		     Topics["file", i.top], sep= directory.sep),
-	       echo = TRUE)
+	       echo = TRUE, max.deparse.length=10000)
  }
 }
 
