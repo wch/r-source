@@ -2,6 +2,10 @@
 \alias{persp}
 \alias{persp.default}
 \title{Perspective Plots}
+\description{
+  This function draws perspective plots of surfaces over the
+  x--y plane. \code{persp} is a generic function.
+}
 \usage{
 persp(x, ...)
 persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
@@ -73,9 +77,15 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     axes.  Has no effect if \code{ticktype} is "simple".}
   \item{\dots}{additional graphical parameters (see \code{\link{par}}).}
 }
-\description{
-  This function draws perspective plots of surfaces over the
-  x--y plane. \code{persp} is a generic function.
+\value{
+  The \emph{viewing transformation matrix}, say \code{VT}, a
+  \eqn{4 \times 4}{4 x 4} matrix suitable for projecting 3D coordinates
+  \eqn{(x,y,z)} into the 2D plane using homogenous 4D coordinates
+  \eqn{(x,y,z,t)}.
+  It can be used to superimpose additional graphical elements on the 3D
+  plot, by \code{\link{lines}()} or \code{\link{points}()}, e.g.
+  using the function \code{trans3d} given in the last examples section
+  below.
 }
 \details{
   The plots are produced by first transforming the
@@ -105,9 +115,27 @@ op <- par(bg = "white")
 persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue")
 persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
       ltheta = 120, shade = 0.75, ticktype = "detailed",
-      xlab = "X", ylab = "Y", zlab = "Sinc( r )")
+      xlab = "X", ylab = "Y", zlab = "Sinc( r )"
+) -> res
+round(res, 3)
 
-# (2) Visualizing a simple DEM model
+# (2) Add to existing persp plot :
+
+trans3d <- function(x,y,z, pmat) {
+  tr <- cbind(x,y,z,1) \%*\% pmat
+  list(x = tr[,1]/tr[,4], y= tr[,2]/tr[,4])
+}
+xE <- c(-10,10); xy <- expand.grid(xE, xE)
+points(trans3d(xy[,1], xy[,2], 6, pm = res), col = 2, pch =16)
+lines (trans3d(x, y=10, z= 6 + sin(x), pm = res), col = 3)
+
+phi <- seq(0, 2*pi, len = 201)
+r1 <- 7.725 # radius of 2nd maximum
+xr <- r1 * cos(phi)
+yr <- r1 * sin(phi)
+lines(trans3d(xr,yr, f(xr,yr), res), col = "pink", lwd=2)## (no hidden lines)
+
+# (3) Visualizing a simple DEM model
 
 data(volcano)
 z <- 2 * volcano        # Exaggerate the relief
