@@ -77,6 +77,8 @@ BUG FIXES
 	should now be correct.  Via SHLIBLDFLAGS, add-ons will also be
 	linked against these libraries.
 
+    o   Modified makefiles so configure followed by "make distclean"
+        should restore the source tree to its original form.
 
 		CHANGES IN R VERSION 0.62.2
 
