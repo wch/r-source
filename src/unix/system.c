@@ -556,7 +556,9 @@ int main(int ac, char **av)
 #endif
 
 #ifdef linux
+#ifdef HAVE____SETFPUCW
     __setfpucw(_FPU_IEEE);
+#endif    
 #endif
 
 #ifdef HAVE_LIBREADLINE
@@ -637,7 +639,9 @@ void R_CleanUp(int ask)
 #endif
 
 #ifdef linux
+#ifdef HAVE____SETFPUCW
     __setfpucw(_FPU_DEFAULT);
+#endif    
 #endif
 
     exit(0);
