@@ -2,14 +2,8 @@ include MkRules
 
 HELP=YES
 
-RHOME=../..
-HOSTRHOME=/usr/local/share/R
 PACKAGES=base eda lqs modreg mva stepfun
-OTHERPACKAGES=$(filter-out $(wildcard ../library/Makefile* ../library/stamp*) $(foreach i, $(PACKAGES),../library/$i) ../library/profile, $(wildcard ../library/*))
-DISTPACKAGES=$(foreach i, $(OTHERPACKAGES), dist-$(notdir $i))
-RDIR=gnuwin32
 RPREFIX=rw0641-2
-
 
 DIRS=  . ../nmath ../appl ../main
 R-DLLFLAGS=-s -mwindows
@@ -25,15 +19,9 @@ PKGS=$(foreach i, $(PACKAGES), pkg-$i)
 DIRSOBJ=$(foreach i, $(DIRS) ../unix , $i/*.o)
 EXTRALIBS=rx.a ga.a gl.a xdr.a
 
-
-
-
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
-all: fixfiles rbuild rdemo rpackage
-
-
-
+all: rbuild rdemo rpackage
 
 OPTFLAGS=-O2 -Wall
 CFLAGS=$(OPTFLAGS) -I../include
@@ -45,16 +33,13 @@ FFLAGS=$(OPTFLAGS)
 ../unix/sock-CFLAGS=-DWin32
 ../unix/Rsock-CFLAGS=-DWin32
 
-
 rbuild: fixfiles rlibs ../../bin/R.dll libR.a ../include/globalvar.h \
 	front-ends COPYRIGHTS
-
 
 rpackage: $(PKGS)
 
 rdemo:  libR.a
 	make -C ../../demos/dynload -f ../../src/gnuwin32/MkDyndemo
-
 
 rlibs $(EXTRALIBS):
 	$(MAKE) -C ./regex
@@ -69,7 +54,6 @@ fixfiles:
 	$(MKDIR) -p ../../bin 
 	$(MAKE) -C ./fixed
 	$(CP) -pr unzip ../..
-
 
 R.dll: R.a $(EXTRALIBS)
 
@@ -103,9 +87,7 @@ R.exp1: R.a $(EXTRALIBS) exported-vars
 	$(CAT) exported-vars >> $@
 	$(RM) RDefs
 
-
 ../main/gram.c: ;
-
 
 ../nmath/fround.o: ../nmath/fround.c
 	$(CC) -I../include  -o $@ -c $^
@@ -134,8 +116,6 @@ ziphelp-%:
 ziponly-%:
 	$(MAKE) -C ./help ziponlyhelp-$*
 	$(MAKE) -C ./help contents-$*
-
-all-packages: $(DISTPACKAGES)
 
 integrate-DLLNM=adapt
 bootstrap-DLLNM=boott
@@ -212,7 +192,8 @@ SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Errormsg.h \
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip src
 	$(MKDIR) src src/include src/library src/gnuwin32 src/gnuwin32/help
-	$(CP) -p ../../copying exported-vars R.exp Makefile MkRules MakePkg MakeDll src/gnuwin32
+	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll src/gnuwin32
+	$(CP) -p Makefile.packages src/gnuwin32/Makefile
 	$(CP) -p help/* src/gnuwin32/help
 	$(MAKE) -C src/gnuwin32/help clean
 	$(CP) -p $(foreach i,$(SRC_HEADERS),../include/$i) src/include
