@@ -264,10 +264,14 @@ none
 
 Directory:  incoming
 
-* PR# 906 *
-Subject: Win98 wheelmouse graphics lock problem
-From: cpaul@ucla.edu
-Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
+* PR# 908 *
+Subject: using bitmap to make a multi-page pdf file results in duplication of
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Wed, 11 Apr 2001 17:39:43 -0400
+* PR# 899 *
+Subject: documentation problems in str.Rd
+From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
+Date: Sat, 7 Apr 2001 23:08:23 +0200
 * PR# 898 *
 Subject: silent extern error
 From: bellis@hsph.harvard.edu
@@ -276,14 +280,6 @@ Date: Sat, 7 Apr 2001 23:32:50 +0200 (MET DST)
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
 Date: Wed, 14 Mar 2001 17:45:25 +0100
-* PR# 900 *
-Subject: Bug in help for profile; more general problem?
-From: Duncan Murdoch <dmurdoch@pair.com>
-Date: Mon, 09 Apr 2001 08:54:48 -0400
-* PR# 899 *
-Subject: documentation problems in str.Rd
-From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
-Date: Sat, 7 Apr 2001 23:08:23 +0200
 * PR# 902 *
 Subject:  segfaults when warning string is too long (??) 
 From: Ben Bolker <ben@localhost.localdomain>
@@ -292,6 +288,10 @@ Date: Mon, 9 Apr 2001 14:54:55 -0400
 Subject: syntax error in datetime.c
 From: ntakebay@bio.indiana.edu
 Date: Mon, 9 Apr 2001 20:07:47 +0200 (MET DST)
+* PR# 900 *
+Subject: Bug in help for profile; more general problem?
+From: Duncan Murdoch <dmurdoch@pair.com>
+Date: Mon, 09 Apr 2001 08:54:48 -0400
 * PR# 905 *
 Subject: segfault on Linux from buffer overflow in warning() ?
 From: ben@zoo.ufl.edu
@@ -300,3 +300,14 @@ Date: Tue, 10 Apr 2001 10:58:46 -0400 (EDT)
 Subject:  Segmentation fault in subscripting array of lists 
 From: J.C.Rougier@durham.ac.uk
 Date: Tue, 10 Apr 2001 15:01:52 +0100 (BST)
+* PR# 907 *
+Subject: replicating lists (fwd)
+Subject: replicating lists
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+From: Jonathan Rougier <dma0jcr@euclid.dur.ac.uk>
+Date: Wed, 11 Apr 2001 09:34:30 +0100 (BST)
+Date: Wed, 11 Apr 2001 09:15:26 +0100 (BST)
+* PR# 906 *
+Subject: Win98 wheelmouse graphics lock problem
+From: cpaul@ucla.edu
+Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
