@@ -140,6 +140,14 @@ BUG FIXES
 	used and have been removed.  glm had na.action=na.fail, again
 	never used.
 
+    o	tools:::.getInternalS3generics() was omitting all the members
+	of the S3 group generics, which also accept methods for members.
+
+    o	find(simple.words=TRUE) (the default) was still using regular
+	expressions for e.g. "+" and "*".  Also, it checked the mode 
+	only of the first object matching a regular expression found 
+	in a package.
+
 
 
 
