@@ -85,6 +85,13 @@ BUG FIXES
 
     o	format.AsIs was not handling matrices.
 
+    o   sd() was not passing na.rm to var() for matrices and data frames.
+
+
+INTERNALS
+
+    o   Toplevel Makefile was missing dependency of "docs" on "R" (causing
+        parallel makes to go wrong)
 
 
 		CHANGES IN R VERSION 1.6.0
