@@ -286,10 +286,13 @@ stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
 mostlyclean: clean
 clean:
 	@-(cd Examples; $(MAKE) $@)
+	@-(cd Embedding; $(MAKE) $@)
 	@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
 	  reg-plot.ps
+	@rm -rf anRpackage
 distclean: clean
 	@-(cd Examples; $(MAKE) $@)
+	@-(cd Embedding; $(MAKE) $@)
 	@rm -f Makefile $(test-out) $(test-src-auto) .RData
 maintainer-clean: distclean
 
