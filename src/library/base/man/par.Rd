@@ -53,8 +53,9 @@ par(\dots, no.readonly = FALSE)
   \item{adj}{The value of \code{adj} determines the way in which text
     strings are justified.  A value of \code{0} produces
     left-justified text, \code{0.5} centered text and \code{1}
-    right-justified text.  Note that the \code{adj} argument of
-    \code{\link{text}} also allows
+    right-justified text.  (Any value in \eqn{[0, 1]} is allowed, and
+    on most devices values outside that interval will also work.)
+    Note that the \code{adj} argument of \code{\link{text}} also allows
     \code{adj = c(x,y)} for different adjustment in x- and y- direction.}
   \item{ann}{If set to \code{FALSE}, high-level plotting functions do
     not annotate the plots they produce with axis and overall titles.

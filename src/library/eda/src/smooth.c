@@ -1,5 +1,6 @@
 /* Tukey Median Smoothing */
 
+#include <stdlib.h> /* for abs */
 #include <math.h>
 #include "R_ext/Boolean.h"
 #include "R_ext/Error.h"

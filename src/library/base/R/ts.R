@@ -418,10 +418,10 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 		stop("`xy.labels' must be logical or character")
 	    do.lab <- TRUE
 	} else do.lab <- xy.labels
-	    
+
         ptype <-
             if(do.lab) "n" else if(missing(type)) "p" else type
-	plot.default(xy, type = ptype, 
+	plot.default(xy, type = ptype,
 		     xlab = xlab, ylab = ylab,
 		     xlim = xlim, ylim = ylim, log = log, col = col, bg = bg,
 		     pch = pch, axes = axes, frame.plot = frame.plot,
@@ -477,7 +477,7 @@ lines.ts <- function(x, ...)
 plot.mts <- function (x, plot.type = c("multiple", "single"), panel = lines,
                       log = "", col = par("col"),  bg = NA, pch = par("pch"),
                       cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
-                      ann = par("ann"),  xlab = "Time", main=NULL,
+                      ann = par("ann"),  xlab = "Time", type = "l", main=NULL,
                       oma=c(6, 0, 5, 0),...)
 {
     addmain <- function(main, cex.main=par("cex.main"),
@@ -508,8 +508,8 @@ plot.mts <- function (x, plot.type = c("multiple", "single"), panel = lines,
     for(i in 1:nser) {
         plot(x[, i], axes = FALSE, xlab="", ylab="",
              log = log, col = col, bg = bg, pch = pch, ann = ann,
-             type="n", ...)
-        panel(x[, i], col = col, bg = bg, pch = pch, ...)
+             type = "n", ...)
+        panel(x[, i], col = col, bg = bg, pch = pch, type=type, ...)
         box()
         axis(2, xpd=NA)
         mtext(nm[i], 2, 3)

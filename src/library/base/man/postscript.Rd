@@ -80,7 +80,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.}
   \item{pointsize}{the default point size to be used.}
-  \item{bg}{the default background color to be used.}
+  \item{bg}{the default background color to be used. If "white" (or a
+    specification equivalent to white), no background is painted.}
   \item{fg}{the default foreground color to be used.}
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file. If false, generate a
@@ -216,7 +217,8 @@ str(ps.options(reset = TRUE))
 ### ---- error checking of arguments: ----
 ps.options(width=0:12, onefile=0, bg=pi)
 # override the check for 'onefile', but not the others:
-str(ps.options(width=0:12, onefile=1, bg=pi, override.check = c(F,T,F)))
+str(ps.options(width=0:12, onefile=1, bg=pi,
+               override.check = c(FALSE,TRUE,FALSE)))
 
 \dontrun{###  ---- Use TeX's Computer Modern fonts --- 
 ## Only use alphanumeric chars here.

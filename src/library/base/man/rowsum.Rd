@@ -31,7 +31,7 @@ rowsum(x, group, reorder = TRUE)
 }
 \examples{
 x <- matrix(runif(100), ncol=5)
-group <- sample(1:8, 20, T)
+group <- sample(1:8, 20, TRUE)
 xsum <- rowsum(x, group)
 
 ## same result another way, slower, and temp may be much larger than x

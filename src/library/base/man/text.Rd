@@ -15,7 +15,8 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   \item{labels}{one or more character strings or expressions specifying
     the \emph{text} to be written.}
   \item{adj}{one or two values in \eqn{[0,1]} which specify the x
-    (and optionally y) adjustment of the labels.}
+    (and optionally y) adjustment of the labels.  On most devices values
+    outside that interval will also work.}
   \item{pos}{a position specifier for the text.  If specified this
     overrides any \code{adj} value given.  Values of \code{1},
     \code{2}, \code{3} and \code{4}, respectively indicate

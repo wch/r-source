@@ -31,7 +31,7 @@ which(x, arr.ind = FALSE)
   the minimum or maximum.}
 \examples{
 which(LETTERS == "R")
-which(ll <- c(T,F,T,NA,F,F,T))#> 1 3 7
+which(ll <- c(TRUE,FALSE,TRUE,NA,FALSE,FALSE,TRUE))#> 1 3 7
 names(ll) <- letters[seq(ll)]
 which(ll)
 which((1:12)\%\%2 == 0) # which are even?

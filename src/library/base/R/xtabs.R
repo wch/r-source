@@ -28,7 +28,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset,
     })
     x <-
 	if(is.null(y))
-	    do.call("table", mf)
+	    do.call("table", by)
 	else if(NCOL(y) == 1)
 	    tapply(y, by, sum)
 	else {
