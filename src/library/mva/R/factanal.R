@@ -273,7 +273,6 @@ promax <- function(x, m = 4)
 {
     if(ncol(x) < 2) return(x)
     dn <- dimnames(x)
-    Phi <- attr(x, "covariance")
     xx <- varimax(x)
     x <- xx$loadings
     Q <- x * abs(x)^(m-1)
@@ -284,6 +283,5 @@ promax <- function(x, m = 4)
     z <- x %*% U
     U <- xx$rotmat %*% U
     dimnames(z) <- dn
-    attr(z, "covariance") <- crossprod(U)
     list(loadings = z, rotmat = U)
 }
