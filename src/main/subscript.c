@@ -329,7 +329,7 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names, int *stretch)
 
 SEXP arraySubscript(int dim, SEXP s, SEXP x)
 {
-    int i, nd, ns, stretch = 0;
+    int nd, ns, stretch = 0;
     SEXP dims, dnames;
     ns = length(s);
     dims = getAttrib(x, R_DimSymbol);

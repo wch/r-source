@@ -38,7 +38,7 @@ SEXP GetRowNames(SEXP dimnames)
 	return CAR(dimnames);
     else
 	return R_NilValue;
-}	     
+}
 
 SEXP GetColNames(SEXP dimnames)
 {
@@ -47,7 +47,7 @@ SEXP GetColNames(SEXP dimnames)
     else if (TYPEOF(dimnames) == LISTSXP)
 	return CADR(dimnames);
     else
-	return R_NilValue;	     
+	return R_NilValue;
 }
 
 SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -81,7 +81,7 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
 		 ((lendat < nc) && (nc / lendat) * lendat != nc))
 	    warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
-    } 
+    }
 	else if ((lendat > 1) && (nr * nc == 0)){
 	  warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
 	}
@@ -141,7 +141,7 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
 
 SEXP DropDims(SEXP x)
 {
-    SEXP p, q, dims, dimnames;
+    SEXP q, dims, dimnames;
     int i, n, ndims;
 
     PROTECT(x);
@@ -199,7 +199,6 @@ SEXP DropDims(SEXP x)
     else {
 	/* We have a lower dimensional array. */
 	SEXP newdims, newdimnames;
-	int j = 0;
 	PROTECT(newdims = allocVector(INTSXP, n));
 	for (i = 0, n = 0; i < ndims; i++)
 	    if (INTEGER(dims)[i] != 1)
@@ -455,7 +454,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (LENGTH(x) == nry) {
 		nrx = 1;
 		ncx = LENGTH(x);
-	    } 
+	    }
 	    else if (LENGTH(x) == ncy) {
 		ncx=1;
 		nrx=LENGTH(x);

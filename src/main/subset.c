@@ -162,7 +162,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
 SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 {
-    SEXP a, attr, p, result, sr, sc;
+    SEXP attr, result, sr, sc;
     int nr, nc, nrs, ncs;
     int i, j, ii, jj, ij, iijj;
 

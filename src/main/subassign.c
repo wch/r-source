@@ -260,7 +260,7 @@ static void SubassignTypeFix(SEXP *x, SEXP *y,
 static SEXP DeleteListElements(SEXP x, SEXP which)
 {
     SEXP include, xnew, xnames, xnewnames;
-    int i, ii, len, newlen, lenw;
+    int i, ii, len, lenw;
     len = length(x);
     lenw = length(which);
     /* calculate the length of the result */
@@ -308,7 +308,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
     SEXP dim, index;
-    int i, ii, iy, n, ns, nx, ny, stretch, which;
+    int i, ii, iy, n, nx, ny, stretch, which;
     double ry;
 
     if (isNull(x) && isNull(y)) {
@@ -1294,7 +1294,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, int which)
 SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP dims, index, names, newname, subs, x, y;
-    int i, k, ndims, nsubs, offset, stretch, which;
+    int i, ndims, nsubs, offset, stretch, which;
     RCNTXT cntxt;
 
     gcall = call;

@@ -394,7 +394,6 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 {
     SEXP names, namei;
     int i, n, savecount, saveseqno, savefirstpos;
-    int usedefault;
 
     /* If we beneath a new tag, we reset the index */
     /* sequence and create the new basename string. */
@@ -812,7 +811,7 @@ SEXP substituteList(SEXP, SEXP);
 SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int mode = ANYSXP;	/* for -Wall; none from the ones below */
-    SEXP a, p, t;
+    SEXP a, t;
 
     /* First we check to see if any of the */
     /* arguments are data frames.  If there */

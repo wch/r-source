@@ -286,7 +286,7 @@ SEXP StringFromComplex(complex x, int *warn)
 
 SEXP PairToVectorList(SEXP x)
 {
-    SEXP xptr, xnew, xnames, blank;
+    SEXP xptr, xnew, xnames;
     int i, len = 0, named = 0;
     for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr)) {
 	named = named | (TAG(xptr) != R_NilValue);
@@ -518,7 +518,7 @@ static SEXP coerceToString(SEXP v)
 
 static SEXP coerceToExpression(SEXP v)
 {
-    SEXP ans, tmp;
+    SEXP ans;
     int i, n;
     if (isVectorObject(v)) {
 	n = LENGTH(v);
