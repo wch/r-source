@@ -87,7 +87,12 @@ You also need the R source (R-1.x.y.tgz).
 
 Then: untar R-1.x.y.tgz somewhere (with no spaces in the path names),
 
+	cd /somewhere
+	tar zxvf /path/to/R-1.x.y.tgz
 	cd /somewhere/R-1.x.y/src/gnuwin32
+
+BEWARE: do untar the sources, and not use broken tools such as WinZip that
+don't understand about symbolic links.
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed and to
 set the type(s) of help that you want built.  BEWARE: MkRules contains
