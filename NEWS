@@ -166,6 +166,8 @@ NEW FEATURES
         this allows S3-style generics to also have formal methods (not
         really recommended in the long run, but it should at least work).
 
+    o   readline() allows up to 256 chars for the prompt.
+
 
 
 BUG FIXES
