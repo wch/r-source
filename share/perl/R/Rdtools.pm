@@ -46,24 +46,26 @@ sub get_usages {
     my %usages;
     my @text;
     my $name;
+    my $maybe_is_data_set_doc = 0;
 
     ## Get the \name documented.
     $name = $delimcurly->match(substr($text, index($text, "\\name")));
     $name = substr($name, 1, $#name);
 
-    if($text =~ "\\keyword\{datasets\}") {
-	## FIXME:
-	## Skip documentation for data set.
-	## If Rd is extended so that there is an Rd type for data docs,
-	## do something smarter.  Currently, the data(FOO) usage for
-	## data sets overrides the docs for function data().  Hence, we
-	## ignore all files which have `datasets' as their only keyword.
-	my @foo = split(/\\keyword\{/, $text);
-	if($#foo <= 1) {
-	    return;
-	}
-	## </FIXME>
-    }
+    ## <FIXME>
+    ## We need to special-case documentation for data sets, or the
+    ## data(FOO) usage for data sets overrides the docs for function
+    ## data().  Unless Rd is extended so that there is an Rd type for
+    ## data docs, we need to rely on heuristics.  Older versions ignored
+    ## all Rd files having `datasets' as their only keyword.  But this
+    ## is a problem: Rd authors might use other keywords to indicate
+    ## that a data set is useful for a certain kind of statistical
+    ## analysis.  Hence, we do the following: ignore all usages of
+    ## data(FOO) in a file with keyword `datasets' where FOO as only one
+    ## argument in the sense that it does not match `,'.
+    $maybe_is_data_set_doc = 1 if($text =~ "\\keyword\{datasets\}");
+    ## </FIXME>
+    
     ## In `codoc' mode, use \synopsis in case there is one, but warn
     ## about doing so.
     @text = split(/\\synopsis/, $text) if ($mode eq "codoc");
@@ -115,6 +117,13 @@ sub get_usages {
 		if($prefix) {
 		    ## $prefix should now be the function name, and
 		    ## $match its arg list.
+		    ## <FIXME>
+		    ## Heuristics for data set documentation once more.
+		    if($maybe_is_data_set_doc
+		       && ($prefix eq "data")
+		       && ($match !~ /\,/)) {
+			return;
+		    }
 		    if($usages{$prefix}) {
 			## Multiple usages for a function are trouble.
 			## We could try to build the full arglist for
