@@ -27108,7 +27108,11 @@ case "${host_os}" in
     ##    else
    ##      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
    ##     LIBR_LDFLAGS="-dynamiclib"
-        LIBR_LDFLAGS="-dynamiclib -install_name /Library/Frameworks/R.framework/R -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
+   if test -z ${Rframework_path}; then
+    Rframework_path=/Library/Frameworks
+   fi
+    
+        LIBR_LDFLAGS="-dynamiclib -install_name ${Rframework_path}/R.framework/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
    ##    fi
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
