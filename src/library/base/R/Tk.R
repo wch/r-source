@@ -27,14 +27,15 @@ TkNew.win <- function(ID){
 TkNew.subwin <- function(parent) {
     ID <- evalq({num.subwin<-num.subwin+1;
            paste(ID,num.subwin,sep=".")}, parent)
-    New.win(ID)
+    TkNew.win(ID)
 }
 
-TkWin <- local({num.subwin<-0 ; environment()})
-
-.TkRoot <- TkNew.win("")
-
-TkVar <- structure(NULL,class="tkvar")
+TkInit <- function() {
+    # Cannot run this during loading of base lib
+    TkWin <<- local({num.subwin<-0 ; environment()})
+    .TkRoot <<- TkNew.win("")
+    TkVar <<- structure(NULL,class="tkvar")
+}
 
 "$.tkvar" <- function(x, name) .Tk(paste("set", name))
 "$<-.tkvar" <- function(x, name, value) { .Tk(paste("set", name, value)) ; x }
