@@ -155,15 +155,15 @@ The tarballs are available from
 @samp{.tar.bz2} versions) and unpack as described in the previous
 section.  
 
-These tarballs do not contain the current sources for the
-recommended packages, which can be obtained by rsync (see the next
-section) or from CRAN.  Do ensure that you have the correct versions of
-the recommended packages: if the number in the file @file{VERSION} is
+These versions do not contain the current sources for the recommended
+packages, which can be obtained by rsync (see the next section) or from
+CRAN.  Do ensure that you have the correct versions of the recommended
+packages: if the number in the file @file{VERSION} is
 @samp{@var{x}.@var{y}.@var{z}} you need to download the contents of
 @samp{http://cran.r-project.org/src/contrib/@var{x}.@var{y}.@var{z}/Recommended}
 to directory @file{src/library/Recommended} in the sources you have
 unpacked.  Normally @samp{R-patched.tar.gz} will have the number of the
-last released version, and  @samp{R-devel.tar.gz} that of the next minor
+last released version, and @samp{R-devel.tar.gz} that of the next minor
 (@samp{@var{x}.@var{y}.0}) release.
 
 
@@ -191,7 +191,7 @@ Note that the sources available via rsync do not include the recommended
 packages, whereas these are included in the tarballs of released
 versions.  To install the appropriate sources for the recommended
 packages, run @command{./tools/rsync-recommended} from the top-level of
-the R sources that you pulled by rsync.
+the R sources.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
@@ -1506,6 +1506,7 @@ browser by visiting a page such as
 will fail for earlier versions of Java such as the Microsoft JVM which
 do work with R).  You can check which version of Java is in use at
 @uref{http://java.sun.com/docs/books/tutorial/applet/practical/properties.html}.
+Java 1.1 is sufficent.
 
 Many thanks to Marc Schwartz in tracking down many of these issues with
 enabling the Java search engine.
@@ -1525,40 +1526,35 @@ later do not work under Linux.  Current browsers of the Mozilla family
 @code{gcc 3.x} and @emph{require} the @code{ns610-gcc32} version of the
 Java plugin that was introduced with @code{j2re 1.4.2}, so the only Java
 version that we know to work is @code{j2re 1.4.2_01}.  Marc Schwartz has
-kindly made available the @code{i586} RPM and tarball at
+kindly made Solaris and Linux @code{i586} distributions available: see
 
 @smallexample
-http://www.MedAnalytics.com/j2re-1_4_2_01-linux-i586-rpm.bin
-http://www.MedAnalytics.com/j2re-1_4_2_01-linux-i586.bin
+http://www.MedAnalytics.com/INSTALL
 @end smallexample
 
 @noindent
-The installation instructions are at
-@uref{http://www.java.com/en/download/help/linux_install.jsp} and the
-Mozilla FAQ at @uref{http://plugindoc.mozdev.org/faqs/java.html}.  Note
-that various installation instructions have omitted the need to link the
-browser plugin to the @code{plugins} directory.  Use
+Other Java installations, for example those from Blackdown and IBM, have
+been used.
 
-@smallexample
-ln -s path_to_java/plugin/i386/ns610-gcc32/libjavaplugin_oji.so
-@end smallexample
+Other useful links are for Mozilla,
+@uref{http://plugindoc.mozdev.org/faqs/java.html} and
+@uref{http://www.mozilla.org/releases/mozilla1.6/installation-extras.html},
+for Konqueror @uref{http://www.konqueror.org/javahowto/}, for Opera
+@uref{http://www.opera.com/support/search/supsearch.dml?index=459} and
+for Debian GNU/Linux
+@uref{http://www.debian.org/doc/manuals/debian-java-faq/}.
 
-@noindent
-in either the browser's @code{plugins} directory or your personal plugin
-directory, @code{~/.mozilla/plugins}.
-
-
-It is likely that similar issues apply to Unix Java platforms, and
-@code{j2re 1.4.x} is said not to work with Mozilla under MacOS X.
+It is likely that similar issues apply to Unix Java platforms, and Sun's
+@code{j2re 1.4.x} is said not to work with Mozilla 1.6 under MacOS X.
 
 @node Java Virtual Machines on Windows ,  , Java Virtual Machines on Linux , Enabling search in HTML help
 @section Java Virtual Machines on Windows
 
 We have not seen any problems on Windows provided a Java Virtual Machine
-has been installed and is operational: @code{j2re 1.4.2_03} works in
-Netscape 7.1 and Mozilla FireFox 0.8 on Windows XP.  Note that a recent
-Windows system may not have Java installed at all.  For
-Netscape/Mozilla/FireFox visit
+has been installed and is operational: Sun's current @code{j2re
+1.4.2_03} works in Netscape 7.1 and Mozilla FireFox 0.8 on Windows XP.
+Note that a recent Windows system may not have Java installed at all.
+For Netscape/Mozilla/FireFox visit
 @uref{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
 Which (if any) JVM is enabled can be set in `Set Program Access and
 Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
