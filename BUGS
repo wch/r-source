@@ -304,15 +304,11 @@ none
 
 Directory:  incoming
 
-* PR# 1080 *
-Subject: bug in histogram rendering
-From: ljlehou@sandia.gov
-Date: Thu, 30 Aug 2001 01:40:13 +0200 (MET DST)
-* PR# 1083 *
-Subject: --quiet flag sets echo option to TRUE
-From: "David Kane  <David Kane" <a296180@mica.fmr.com>
-Date: Fri, 31 Aug 2001 13:07:19 -0400
-* PR# 1085 *
-Subject: file.copy() problems on WinNT
-From: Uwe Ligges <ligges@amadeus.statistik.uni-dortmund.de>
-Date: Thu, 06 Sep 2001 15:07:26 +0200
+* PR# 1088 *
+Subject:  barplot forces xpd=TRUE 
+From: Peter Whiting <pwhiting@whitings.org>
+Date: Sat, 8 Sep 2001 10:19:00 -0500
+* PR# 1089 *
+Subject: Debian Woody r-base depends on blas2
+From: michael_odonnell@acm.org
+Date: Sat, 8 Sep 2001 20:25:32 +0200 (MET DST)
