@@ -628,6 +628,12 @@ well as for @R{} itself.  This means that it is better to use a
 shared BLAS library, as most of a static library will be compiled into
 the @R{} executable and each BLAS-using package.
 
+You will need double-precision and double-complex versions of the BLAS,
+but not single-precision nor complex routines.
+
+Optimized versions of LAPACK are available, but no provision is made for
+using them with @R{} as the likely performance gains are thought to be small.
+
 @node Configuration on Unix, New Platforms, Essential and Useful Other Programs, Top
 @appendix Configuration on Unix
 
@@ -661,7 +667,7 @@ You can use @code{--without-foo} or @code{--disable-foo} for the
 negatives.
 
 You will want to use @code{--disable-R-profiling} if you are building a
-profiled copy of @R{}.
+profiled executable of @R{} (e.g. with @code{-pg)}.
 
 Flag @code{--enable-R-shlib} causes the make process to make @file{libR.so},
 and to take considerably longer, so you probably only want this if you
@@ -746,6 +752,17 @@ You must set whatever compilation flags (if any) are needed to ensure
 that @sc{Fortran} @code{integer} is equivalent to a C @code{int} pointer and
 @sc{Fortran} @code{double precision} is equivalent to a C @code{double}
 pointer.  This is checked during the configuration process.
+
+Some of the @sc{Fortran} code makes use of @code{COMPLEX*16} variables,
+which is a @sc{Fortran 90} extension.  This is checked for at configure
+time@footnote{as well as its equivalence to the @code{Rcomplex}
+structure defined in @code{R_ext/Complex.h}.}, but you may need to avoid
+compiler flags@footnote{In particular, avoid @code{g77}'s
+@code{-pedantic}, which gives confusing error messages.} asserting
+@sc{Fortran 77} compliance.
+
+For performance reasons@footnote{e.g. to use an optimized BLAS on
+Sun/Sparc} you may want to choose a @sc{Fortran 90/95} compiler.
 
 @node Compile and Load Flags, Building the GNOME Interface, Using Fortran, Configuration on Unix
 @section Compile and Load Flags
