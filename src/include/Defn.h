@@ -694,6 +694,7 @@ int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
+int envlength(SEXP);
 int factorsConform(SEXP, SEXP);
 SEXP FetchMethod(char *, char *, SEXP);
 void findcontext(int, SEXP, SEXP);

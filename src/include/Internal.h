@@ -186,6 +186,7 @@ SEXP do_dump(SEXP, SEXP, SEXP, SEXP);
 SEXP do_duplicated(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dynload(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dynunload(SEXP, SEXP, SEXP, SEXP);
+SEXP do_eapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_edit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envir(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envirgets(SEXP, SEXP, SEXP, SEXP);

@@ -2306,7 +2306,75 @@ SEXP do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans);
 }
 
-  
+/*
+ * apply a function on objects in an environment and return the
+ * results in a list. Equivalent to lapply(as.list(env, all.names=all.names),
+ *                                         FUN, ...)
+ */
+
+SEXP do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP env, ans, names, R_fcall, FUN, tmp;
+    int i, k, all;
+
+    checkArity(op, args);
+
+    env = eval(CAR(args), rho);
+    if( !isEnvironment(env) )
+        error("argument must be an environment");
+
+    if( env == R_NilValue )
+      return(R_NilValue);
+
+    FUN = CADR(args);
+    if (!isSymbol(FUN))
+        errorcall(call, "arguments must be symbolic");
+
+    all = asLogical(eval(CADDR(args), rho));
+    if (all == NA_LOGICAL)
+      all = 0;
+
+    if( HASHTAB(env) != R_NilValue)
+        k = HashTableSize(HASHTAB(env), all);
+    else
+        k = FrameSize(FRAME(env), all);
+
+    PROTECT(names = allocVector(STRSXP, k));
+
+    PROTECT(ans = allocVector(VECSXP, k));
+
+    k = 0;
+    if(HASHTAB(env) != R_NilValue) 
+      HashTableValues(HASHTAB(env), all, ans, &k);
+    else
+      FrameValues(FRAME(env), all, ans, &k);
+
+    tmp = LCONS(R_NilValue, LCONS(R_DotsSymbol, R_NilValue));
+    PROTECT(R_fcall = LCONS(FUN, tmp));
+
+    for(i = 0; i < k; i++) {
+        SETCAR(tmp, VECTOR_ELT(ans, i));
+        SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
+    }
+
+    k = 0;
+    if(HASHTAB(env) != R_NilValue) 
+        HashTableNames(HASHTAB(env), all, names, &k);
+    else
+        FrameNames(FRAME(env), all, names, &k);
+
+    setAttrib(ans, R_NamesSymbol, names);
+    UNPROTECT(3);
+    return(ans);
+}
+
+int envlength(SEXP rho)
+{
+    if( HASHTAB(rho) != R_NilValue)
+        return HashTableSize(HASHTAB(rho), 1);
+    else
+        return FrameSize(FRAME(rho), 1);
+}
 
 /*----------------------------------------------------------------------
 

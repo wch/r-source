@@ -648,6 +648,7 @@ FUNTAB R_FunTab[] =
 {"sink.number",	do_sinknumber,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"lib.fixup",	do_libfixup,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"pos.to.env",	do_pos2env,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"eapply",	do_eapply,	0,	10,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"lapply",	do_lapply,	0,	10,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"apply",	do_apply,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"colSums",	do_colsum,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
