@@ -82,7 +82,7 @@ download.packages <- function(pkgs, destdir, available=NULL,
                 url <- paste(contriburl, fn, sep="/")
                 destfile <- file.path(destdir, fn)
 
-                if(download.file(url, destfile, method) == 0)
+                if(download.file(url, destfile, method, mode="wb") == 0)
                     retval <- rbind(retval, c(p, destfile))
                 else
                     warning(paste("Download of package", p, "failed"))
