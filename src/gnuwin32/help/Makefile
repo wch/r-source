@@ -11,20 +11,27 @@ PKGDIR=../../library
 RLIB=$(RHOME)/library
 
 indices:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
+	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	  ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
 
 pkg-% help-%:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl  ${DOS} -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
+	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	  ../../../share/perl/build-help-windows.pl ${DOS} \
+	  -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
 
 chm-%:
-	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl ${DOS} -chm $(PKGDIR)/$* $(RLIB)
+	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	  ../../../share/perl/build-help-windows.pl ${DOS} \
+	  -chm $(PKGDIR)/$* $(RLIB)
 # hhc always gives an error code
-	$(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
+	$(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
+	  -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
 	$(MKDIR) -p $(RLIB)/$*/chtml
 	$(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml
 
 winhlp-%: chm-%
-	$(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm -f $(RHOME)/src/gnuwin32/help/Makefile $*.hlp
+	$(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
+	  -f $(RHOME)/src/gnuwin32/help/Makefile $*.hlp
 	$(MKDIR) -p $(RLIB)/$*/winhlp
 	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp
 
@@ -35,21 +42,27 @@ contents-%:
 	  --os=windows -o $(RLIB)/$*/CONTENTS $(PKGDIR)/$*
 	@$(MKDIR) -p $(RHOME)/doc/html/search
 	$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
-	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
+	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	  ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
 
 ziphelp-%:
-	@$(MAKE) --no-print-directory -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
+	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
+	  -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
 
 ziponlyhelp-%:
-	@$(MAKE) --no-print-directory -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqmX PKG=$* zipit
+	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
+	  -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqmX PKG=$* zipit
 
 
 winhelp-%:
-	$(MAKE) --no-print-directory -C $(PKGDIR)/$* -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* win
+	$(MAKE) --no-print-directory -C $(PKGDIR)/$* \
+	  -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* win
 
 latex-%:
-	@$(MAKE) --no-print-directory -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* unzipit
-	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl ${DOS} -latex $(PKGDIR)/$*
+	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
+	-f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* unzipit
+	PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	  ../../../share/perl/build-help-windows.pl ${DOS} -latex $(PKGDIR)/$*
 
 clean:
 	$(RM) -fr *~ *.o *.obj *.dll *.def *.a
@@ -79,13 +92,23 @@ logo.bmp: $(RHOME)/src/gnuwin32/help/logo.bmp
 
 zipit: help/Rhelp.zip zipup
 unzipit:
-	-@$(MAKE) --no-print-directory -C latex -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
+	-@$(MAKE) --no-print-directory -C latex 
+	  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
 
 help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
 ../../src/library/$(PKG)/man/windows/*.Rd)
-	-@$(MAKE) --no-print-directory -C help  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
-	-@$(MAKE) --no-print-directory -C R-ex  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rex
-	-@$(MAKE) --no-print-directory -C latex -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
+	-@if test -d help ; then \
+	  $(MAKE) --no-print-directory -C help  \
+            -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp; \
+	fi
+	-@if test -d R-ex ; then \
+	  $(MAKE) --no-print-directory -C R-ex \
+	    -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rex; \
+	fi
+	-@if test -d latex ; then \
+	  $(MAKE) --no-print-directory -C latex \
+	    -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp; \
+	fi
 	-$(MAKE) --no-print-directory -C $(RHOME)/src/gnuwin32/help help-$(PKG)
 	@$(RM) -f help/Rhelp.zip latex/Rhelp.zip R-ex/Rex.zip
 

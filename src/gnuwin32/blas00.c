@@ -44,5 +44,3 @@ void blas_dummy()
     ztrsv_();
     xerbla_();
 }
-
-   
