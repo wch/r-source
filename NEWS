@@ -40,6 +40,10 @@ NEW FEATURES
 	it such as update.packages()) is now "internal", and uses code
 	compiled into R.
 
+    o	The internal ftp/http access code maintains the event loop, so
+	you can download whilst running tcltk or Rggobi, say. It can
+	be hooked into package XML too.
+
     o	`hessian' argument added to deriv and its methods.  A new function
 	deriv3() provides identical capabilities to deriv() except that
 	`hessian' is TRUE by default.
