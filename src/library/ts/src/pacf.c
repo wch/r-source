@@ -268,7 +268,6 @@ void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
     
     a1 = (double *) R_alloc(ird, sizeof(double));
     p1 = (double *) R_alloc(irz, sizeof(double));
-    resid = (double *) R_alloc(n, sizeof(double));
     e1 = (double *) R_alloc(ir, sizeof(double));
     store = (double *) R_alloc(ird, sizeof(double));
 
