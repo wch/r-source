@@ -11,5 +11,5 @@ function(x, ...)
 UseMethod("names<-")
 
 "names<-.default" <- 
-function(x, n)
-.Internal("names<-"(x, n))
+function(x, value)
+.Internal("names<-"(x, value))

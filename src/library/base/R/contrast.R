@@ -14,24 +14,24 @@ function(x, contrasts=TRUE)
 }
 
 "contrasts<-" <-
-function(x, ctr)
+function(x, value)
 {
  if(!is.factor(x))
 	stop("contrasts apply only to factors")
- if(is.numeric(ctr)) {
-	ctr <- as.matrix(ctr)
+ if(is.numeric(value)) {
+	value <- as.matrix(value)
 	nlevs <- nlevels(x)
-	if(nrow(ctr) != nlevs || (nc <- ncol(ctr)) >= nlevs)
+	if(nrow(value) != nlevs || (nc <- ncol(value)) >= nlevs)
 		stop("invalid contrast matrix extents")
-	cm <- qr(cbind(1,ctr))
+	cm <- qr(cbind(1,value))
 	if(cm$rank != nc+1) stop("singular contrast matrix")
 	cm <- qr.qy(cm, diag(nlevs))[,2:nlevs]
-	cm[,1:nc] <- ctr
+	cm[,1:nc] <- value
 	dimnames(cm) <- list(levels(x),NULL)
  }
- else if(is.character(ctr))
-	cm <- ctr
- else if(is.null(ctr))
+ else if(is.character(value))
+	cm <- value
+ else if(is.null(value))
 	cm <- NULL
  else stop("numeric contrasts or contrast name expected")
  attr(x, "contrasts") <- cm

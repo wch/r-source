@@ -317,6 +317,7 @@ static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
 		args = CDR(args);
 	}
 	CAR(ptmp) = rhs;
+	TAG(ptmp) = install("value");
 	TYPEOF(tmp) = LANGSXP;
 	return tmp;
 }

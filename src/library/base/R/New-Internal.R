@@ -1,6 +1,6 @@
 ##vector <- function(mode = "logical", length = 0).Internal(vector(mode,length))
 comment <- function(x).Internal(comment(x))
-"comment<-" <- function(x,cmt).Internal("comment<-"(x,cmt))
+"comment<-" <- function(x,value).Internal("comment<-"(x,value))
 
 round <- function(x, digits = 0).Internal(round(x,digits))
 signif <- function(x, digits = 6).Internal(signif(x,digits))

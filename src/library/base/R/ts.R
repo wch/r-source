@@ -62,9 +62,9 @@ ts <- function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
 
 tsp <- function(x) attr(x, "tsp")
 
-"tsp<-" <- function(x, tsp)
+"tsp<-" <- function(x, value)
 {
-	attr(x,"tsp") <- tsp
+	attr(x,"tsp") <- value
 	class(x) <- "ts"
 	x
 }
