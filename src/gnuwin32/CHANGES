@@ -69,6 +69,10 @@ install tcl831.exe from dev.scriptics.com, and you will need the Tcl
 and Tk dlls in your path.  Also, you need to set the environment
 variable TCL_LIBRARY, to something like c:/Program Files/Tcl/lib/tcl8.3.
 
+The R mathematical functions can now be built as a DLL for use
+with your own C programs.  See  src/nmath/standalone/README is the
+sources.
+
 Rdconv.bat no longer depends on having a Unix-compatible `cat' program
 in your path.
 

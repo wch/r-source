@@ -1,7 +1,11 @@
-Making in this directory will make standalone libraries libRmath.a and
-libRmath.so.  `make archive'  and `make shared'  make just one of them.
+Under Unix, making in this directory will make standalone libraries
+libRmath.a and libRmath.so.  `make archive' and `make shared' make
+just one of them.
 
 You may find you need GNU make, especially if builddir != srcdir.
+
+Under Windows, use make -f Makefile.win. This makes Rmath.dll with
+import library libRmath.a.
 
 
 To use the routines in your own C programs, include
@@ -9,15 +13,22 @@ To use the routines in your own C programs, include
 #define MATHLIB_STANDALONE
 #include "R_ext/Mathlib.h"
 
+and link against -lRmath.  The example test.c does nothing useful,
+but is provided to test the process.
+
 
 A little care is needed to use the random-number routines. You will
 need to supply the uniform random number generator 
 
-     double unif_rand(void)
+    double unif_rand(void)
 
-or use the one supplied (and with a shared library you will have to
-use the one supplied, which is the Marsaglia-multicarry with a call
-set_seed to set its seed).
+or use the one supplied (and with a shared library or DLL you will
+have to use the one supplied, which is the Marsaglia-multicarry with
+an entry point
+
+    set_seed(unsigned int, unsigned int)
+
+to set its seeds).
 
 The facilties to change the normal random number generator are
 available through the constant N01_kind. This takes values
