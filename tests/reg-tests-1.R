@@ -531,6 +531,7 @@ tmp <- data.frame(x = -5:5)
 abs(tmp)
 ## failed in 1.4.1.
 
+
 ## PR 1363 La.svd was not working for integer args
 m <- matrix(1:4, 2)
 (s1 <- svd(m))
@@ -541,11 +542,21 @@ stopifnot(all.equal(s1$d, s2$d), all.equal(s1$u, s2$u),
 (e2 <- La.eigen(m))
 stopifnot(all.equal(e1$d, e1$d))
 
+
 ## order/sort.list on NA_STRING
 x <- c("A", NA, "Z")
 stopifnot(sort(x, na.last = TRUE) == x[sort.list(x, na.last = TRUE)])
 stopifnot(sort(x, na.last = FALSE) == x[sort.list(x, na.last = FALSE)])
 ## 1.4.1 sorted NA correctly with sort but not sort.list.
+
+
+## Don MacQueen 2002-03-26
+stopifnot(length(seq(1024902010, 1024902025, by=1)) == 16)
+t0 <- ISOdatetime(2002,6,24,0,0,10)
+x <- seq.POSIXt(from=t0,to=t0+15,by='1 sec')
+stopifnot(length(x) == 16)
+
+
 
 ## This example last: needed < 1.5.0 ##
 
