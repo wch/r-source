@@ -4,13 +4,14 @@
 \alias{.Last}
 \title{Terminate an R Session}
 \usage{
-quit(save="default", status=0, runLast=TRUE)
-   q(save="default", status=0, runLast=TRUE)
+quit(save = "default", status = 0, runLast = TRUE)
+   q(save = "default", status = 0, runLast = TRUE)
 .Last <- function(x) { \dots\dots }
 }
 \arguments{
     \item{save}{a character string indicating whether the environment
-	(workspace) should be saved.}
+	(workspace) should be saved, one of \code{"no"}, \code{"yes"},
+	\code{"ask"} or \code{"default"}.}
     \item{status}{the (numerical) error status to be returned to the
 	operating system, where relevant. Conventionally \code{0}
 	indicates successful completion.}
@@ -18,7 +19,10 @@ quit(save="default", status=0, runLast=TRUE)
 }
 \description{
     The function \code{quit} or its alias \code{q} terminate the current
-    \R session.  \code{save} must be one of \code{"no"}, \code{"yes"},
+    \R session.
+}
+\details{
+    \code{save} must be one of \code{"no"}, \code{"yes"},
     \code{"ask"} or \code{"default"}.  In the first case the workspace
     is not saved, in the second it is saved and in the third the user is
     prompted and can also decide \emph{not} to quit.  The default is to
@@ -30,8 +34,7 @@ quit(save="default", status=0, runLast=TRUE)
     interactive use there are errors in
     the \code{.Last} function, control will be returned to the command
     prompt, so do test the function thoroughly.
-}
-\details{
+
     Some error statuses are used by \R itself.  The default error
     handler for non-interactive effectively calls \code{q("no", 1,
 	FALSE)} and returns error code 1. Error status 2 is used for \R

@@ -1,6 +1,6 @@
-% $Id: SSlogis.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: SSlogis.Rd,v 1.2 1999/12/15 17:20:29 pd Exp $
 \name{SSlogis}
-\title{Logistic model}
+\title{Logistic Model}
 \usage{
 SSlogis(input, Asym, xmid, scal)
 }

@@ -1,5 +1,5 @@
 \name{machine}
-\title{Determine the Machine \R is Running On}
+\title{Determine the Machine R is Running On}
 \usage{
 machine()
 }

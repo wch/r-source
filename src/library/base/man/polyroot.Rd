@@ -1,5 +1,5 @@
 \name{polyroot}
-\title{Find Zeros of a Complex Polynomial}
+\title{Find Zeros of a Real or Complex Polynomial}
 \usage{
 polyroot(z)
 }
@@ -8,6 +8,9 @@ polyroot(z)
   \item{z}{the vector of polynomial coefficients in decreasing order.}
 }
 \description{
+  Find zeros of a real or complex polynomial.
+}
+\details{
   A polynomial of degree \eqn{n - 1},
   \deqn{
     p(x) = z_1 + z_2 x + \cdots + z_n x^{n-1}}{

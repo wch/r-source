@@ -20,6 +20,9 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
     variables in result..}
 }
 \description{
+  Compute derivatives of simple expressions, symbolically.
+}
+\details{
   \code{D} is modelled after its S namesake for taking simple symbolic
   derivatives.
 

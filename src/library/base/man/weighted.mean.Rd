@@ -13,6 +13,9 @@ the weights to use for each element of \code{x}.}
 values in \code{x} should be stripped before the computation proceeds.}
 }
 \description{
+  Computed a weighted mean of a numeric vector.
+}
+\details{
 If \code{w} is missing then all elements of \code{x} are
 given the same weight.
 

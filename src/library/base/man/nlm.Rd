@@ -1,5 +1,5 @@
 \name{nlm}
-\title{non-linear minimization}
+\title{Non-Linear Minimization}
 \usage{
 nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
     print.level = 0, ndigit=12, gradtol = 1e-6,

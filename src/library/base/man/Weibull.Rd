@@ -22,7 +22,8 @@ rweibull(n, shape, scale = 1)
   the density, \code{pweibull} gives the distribution function,
   \code{qweibull} gives the quantile function and \code{rweibull}
   generates random deviates.
-
+}
+\details{
   If \code{scale} is omitted it assumes the default value of \code{1}.
 
   The Weibull distribution with \code{shape} parameter \eqn{a} and

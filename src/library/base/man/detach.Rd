@@ -1,5 +1,5 @@
 \name{detach}
-\title{Detach \R objects from search path}
+\title{Detach Objects from the Search Path}
 \usage{
 detach(name, pos = 2)
 }

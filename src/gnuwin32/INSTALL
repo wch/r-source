@@ -1,7 +1,7 @@
-R 0.90.0 for Windows 9x and NT
+R 0.90.1 for Windows 9x and NT
 ==============================
 
-This distribution contains a binary distribution of R-0.90.0 to run on
+This distribution contains a binary distribution of R-0.90.1 to run on
 Windows 95, 98 and NT4 on Intel/clone chips. See README for fuller
 details, including how to install the binary versions.
 
@@ -55,14 +55,14 @@ ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
-You also need: the R source (R-0.90.0.tgz), and to build the
+You also need: the R source (R-0.90.1.tgz), and to build the
 installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
 MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
 
 
-Then: untar R-0.90.0.tgz somewhere,
+Then: untar R-0.90.1.tgz somewhere,
 
-	cd /somewhere/R-0.90.0/src/gnuwin32
+	cd /somewhere/R-0.90.1/src/gnuwin32
 
 edit MkRules to set the appropriate paths as needed
 edit Makefile to set the type(s) of help that you want built.
@@ -72,19 +72,19 @@ and run
 	make BUILD=MINGW32 or CYGWIN
 
 
-Note 1: the file rw0900\unzip\unzip32.dll is not in the source
+Note 1: the file rw0901\unzip\unzip32.dll is not in the source
 distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
-The file rw0900\bin\Rchtml.dll is only built if chm help is specifed
+The file rw0901\bin\Rchtml.dll is only built if chm help is specifed
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
 VC++ library will check versions of the components needed. You can just
 copy this from a binary distribution.
 
-The file rw0900\bin\Rbitmap.dll is not built automatically:
+The file rw0901\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.  You
 can just copy this from a binary distribution.
 
@@ -114,12 +114,12 @@ ftp://ftp.objsw.com/pub/crossgcc/linux-x-win32
 for source and binary distributions, and ensure that these are in your
 path. You will need Perl and nroff installed.
 
-You also need: the R source (R-0.90.0.tgz), and to build the installer,
+You also need: the R source (R-0.90.1.tgz), and to build the installer,
 unzip5.40.zip from any Info-ZIP mirror.
 
-Then: untar R-0.90.0.tgz somewhere
+Then: untar R-0.90.1.tgz somewhere
 
-	cd /somewhere/R-0.90.0/src/gnuwin32
+	cd /somewhere/R-0.90.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Edit Makefile to set the type(s) of help that you want built. (You

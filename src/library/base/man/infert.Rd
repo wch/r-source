@@ -1,5 +1,5 @@
 \name{infert}
-\title{Infertility after spontaneous and induced abortion}
+\title{Infertility after Spontaneous and Induced Abortion}
 \usage{data(infert)}
 \alias{infert}
 \format{

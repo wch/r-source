@@ -11,13 +11,18 @@ seq(along)
 \alias{seq.default}
 \alias{:}
 \description{
-The \code{:} and the first \code{seq(.)} form above generate the sequence
+  Generate regular sequences.
+}
+\details{
+The operator \code{:} and the first \code{seq(.)} form generate the sequence
 \code{from, from+1}, \ldots, \code{to}.
 \code{seq} is a generic function.
 
-The second, \code{from, from+by}, \ldots, \code{to}.
+The second form generates \code{from, from+by}, \ldots, \code{to}.
+
 The third generates a sequence of \code{length} equally spaced values from
 \code{from} to \code{to}.
+
 The last generates the sequence
 \code{1, 2}, \ldots, \code{length(along)}.
 

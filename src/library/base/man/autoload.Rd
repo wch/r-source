@@ -1,5 +1,5 @@
 \name{autoload}
-\title{On-demand loading of packages}
+\title{On-demand Loading of Packages}
 \usage{
 autoload(name, file)
 autoloader(name, file)
@@ -21,7 +21,7 @@ autoloader(name, file)
   \code{file} was loaded but it does not occupy memory.
 }
 \value{
-see description
+This function is invoked for its side-effect.
 }
 \seealso{
 \code{\link{delay}}, \code{\link{library}}

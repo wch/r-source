@@ -11,7 +11,10 @@ match.arg(arg, choices)
 }
 \description{
   \code{match.arg} matches \code{arg} against a table of candidate
-  values as specified by \code{choices}.  In the one-argument form
+  values as specified by \code{choices}.
+}
+\details{
+  In the one-argument form
   \code{match.arg(arg)}, the choices are obtained from a default setting
   for the formal argument \code{arg} of the function from which
   \code{match.arg} was called.

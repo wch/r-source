@@ -1,6 +1,6 @@
 \name{sleep}
 \alias{sleep}
-\title{Student's Sleep Data}
+\title{Students' Sleep Data}
 \usage{data(sleep)}
 \description{
     Data which show the effect of two soporific drugs (increase in hours

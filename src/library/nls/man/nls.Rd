@@ -8,8 +8,7 @@
 \alias{summary.nls}
 \alias{print.summary.nls}
 \alias{weights.nls}
-%- Also NEED an `\alias' for EACH other topic documented here.
-\title{Nonlinear least squares}
+\title{Nonlinear Least Squares}
 \usage{
 nls(formula, data, start, control=nls.control(),
     algorithm="default", trace=F, subset, na.action)

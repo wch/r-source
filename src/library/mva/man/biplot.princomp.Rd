@@ -5,10 +5,10 @@ Biplot for Principal Components
 }
 \description{
     Produces a biplot (in the strict sense) from the output of
-    \code{\link{princomp}(.)}.
+    \code{\link{princomp}}.
 }
 \usage{
-biplot.princomp(x, choices=1:2, scale=1, pc.biplot=FALSE, \dots)
+biplot.princomp(x, choices = 1:2, scale = 1, pc.biplot = FALSE, \dots)
 }
 \arguments{
 \item{x}{an object of class \code{"princomp"}.}

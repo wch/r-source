@@ -573,7 +573,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames, dimnamesnames, dnx, dny;
+	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
 	    PROTECT(dimnames = allocVector(VECSXP, 2));
 	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
 	    if (xdims != R_NilValue) {
@@ -588,7 +588,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if(!isNull(dny))
 		    STRING(dimnamesnames)[1] = STRING(dny)[1];
 	    }
-	    if(!isNull(dnx) || !isNull(dny))
+	    if (!isNull(dnx) || !isNull(dny))
 		setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
 	    setAttrib(ans, R_DimNamesSymbol, dimnames);
 	    UNPROTECT(2);

@@ -1,6 +1,6 @@
 \name{sink}
 \alias{sink}
-\title{Send \R Output to a File}
+\title{Send R Output to a File}
 \usage{
 sink(file = NULL, append = FALSE)
 }

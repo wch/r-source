@@ -5,30 +5,29 @@
 range.default(\dots, na.rm = FALSE, finite = FALSE)
 }
 \arguments{
-    \item{\dots}{any \code{\link{numeric}} objects.}
-    \item{na.rm}{logical, indicating if \code{\link{NA}}'s should be
-	omitted.}
-    \item{finite}{logical, indicating if all non-finite elements should
-	be omitted.}
+  \item{\dots}{any \code{\link{numeric}} objects.}
+  \item{na.rm}{logical, indicating if \code{\link{NA}}'s should be
+    omitted.}
+  \item{finite}{logical, indicating if all non-finite elements should
+    be omitted.}
 }
 \description{
-    \code{range.default} returns a vector containing the minimum and
-    maximum of all the values present in its first arguments, unless
-    \code{na.rm} or \code{finite} is \code{TRUE}.  If \code{na.rm} is
-    \code{FALSE}, \code{NA} and \code{NaN} values in any of the
-    arguments will cause NA values to be returned, otherwise \code{NA}
-    values are ignored.  If \code{finite} is \code{TRUE}, the minimum
-    and maximum of all finite values is computed, i.e.,
-    \code{finite=TRUE} \emph{includes} \code{na.rm=TRUE}. 
+  \code{range.default} returns a vector containing the minimum and
+  maximum of all the values present in its first arguments.
 }
 \details{
-    This is the default method of the generic function
-    \code{\link{range}}.
-}
+  This is the default method of the generic function \code{\link{range}}.
+  
+  If \code{na.rm} is
+  \code{FALSE}, \code{NA} and \code{NaN} values in any of the
+  arguments will cause NA values to be returned, otherwise \code{NA}
+  values are ignored.  If \code{finite} is \code{TRUE}, the minimum
+  and maximum of all finite values is computed, i.e.,
+  \code{finite=TRUE} \emph{includes} \code{na.rm=TRUE}. }
 \seealso{
-    \code{\link{range}},
-    \code{\link{min}},
-    \code{\link{max}}.
+  \code{\link{range}},
+  \code{\link{min}},
+  \code{\link{max}}.
 }
 \examples{
 print(r.x <- range(rnorm(100)))

@@ -40,10 +40,10 @@ predict.glm(object, newdata=NULL, type=c("link", "response", "terms"),
     dispersion used in computing the standard errors.}
 }
 \author{B.D. Ripley}
-\note{This method is also currently used for objects of
-  class \code{"survreg"} (parametric survival fits from package
-  \code{survival4}) and possibly others. The assumptions made by
-  \code{predict.glm} may not always be right for such objects.}
+%  \note{This method is also currently used for objects of
+%    class \code{"survreg"} (parametric survival fits from package
+%    \code{survival4}) and possibly others. The assumptions made by
+%    \code{predict.glm} may not always be right for such objects.}
 
 \seealso{\code{\link{glm}}}
 

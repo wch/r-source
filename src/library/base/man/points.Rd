@@ -39,7 +39,8 @@ points.default(x, y=NULL, type="p", pch=1, col="black", bg=NA, cex=1, \dots)
   \code{points} is a generic function to draw a sequence of points at
   the specified coordinates.  The specified character(s) are plotted,
   centered at the coordinates.
-
+}
+\details{
   Graphical parameters are permitted as arguments to this function.
 }
 \seealso{

@@ -3,8 +3,8 @@
 \alias{sunspot.month}
 \alias{sunspot.year}
 \title{
-  Yearly Sunspot Data, 1700-1988.
-  Monthly Sunspot Data, 1749-1997.
+  Yearly Sunspot Data, 1700--1988.
+  Monthly Sunspot Data, 1749--1997.
 }
 \usage{
 data(sunspot)
@@ -22,9 +22,9 @@ data(sunspot)
     in base \R, that runs until 1988.
 }
 \source{
-    Monthly data: SUNSPOT INDEX DATA CENTER,
-    WORLD DATA CENTER-C1 FOR SUNSPOT INDEX
-    ROYAL OBSERVATORY OF BELGIUM, Av. Circulaire, 3 - B-1180 BRUSSELS
+    Monthly data: Sunspot Index Data Center,
+    World Data Center-C1 For Sunspot Index
+    Royal Observatory of Belgium, Av. Circulaire, 3, B-1180 BRUSSELS
     \url{http://www.oma.be/KSB-ORB/SIDC/sidc\_txt.html}
 
     Yearly data: H. Tong (1996)

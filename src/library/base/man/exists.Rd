@@ -1,31 +1,34 @@
 \name{exists}
-\title{Is a Variable Defined?}
+\title{Is an Object Defined?}
 \usage{
-exists(x, where =NULL, envir=sys.frame(sys.parent()), frame =NULL,
-       mode = "any", inherits = TRUE)
+exists(x, where = NULL, envir = sys.frame(sys.parent()),
+       frame = NULL, mode = "any", inherits = TRUE)
 }
 \alias{exists}
 \arguments{
-\item{x}{a variable name (given as a quoted string).}
-\item{where, envir, frame}{an environment to be searched.
+  \item{x}{a variable name (given as a character string).}
+  \item{where, envir, frame}{an environment to be searched.
     By default this is the
-environment where the call to \code{envir} takes place.}
-\item{mode}{the type of interest for the object.}
-\item{inherits}{should the enclosing frames of the environment be inspected.}
+    environment where the call to \code{envir} takes place.}
+  \item{mode}{the type of interest for the object.}
+  \item{inherits}{should the enclosing frames of the environment be inspected.}
 }
 \description{
-This function looks to see if the name \code{x} has a value bound to it.
-If \code{inherits} is \code{TRUE} and a value is not found for \code{x},
-then the parent frames of \code{envir} are searched until the name
-\code{x} is encountered. \bold{Warning:} This is the default behaviour
-for \R but not for S.
+  Search for an \R object of the given name on the search path.
+}
+\details{    
+  This function looks to see if the name \code{x} has a value bound to it.
+  If \code{inherits} is \code{TRUE} and a value is not found for \code{x},
+  then the parent frames of \code{envir} are searched until the name
+  \code{x} is encountered. \bold{Warning:} This is the default behaviour
+  for \R but not for S.
 
-If \code{mode} is specified then only objects of that mode are sought.
-The function returns \code{TRUE} if the variable is encountered and
-\code{FALSE} if not.
+  If \code{mode} is specified then only objects of that mode are sought.
+  The function returns \code{TRUE} if the variable is encountered and
+  \code{FALSE} if not.
 }
 \seealso{
-\code{\link{get}}.
+  \code{\link{get}}.
 }
 \examples{
 ##  Define a substitute function if necessary:

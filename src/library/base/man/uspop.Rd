@@ -8,7 +8,7 @@
 }
 \description{
     This data set gives the population of the United States (in millions)
-    as recorded by the decennial census for the period 1790-1970.
+    as recorded by the decennial census for the period 1790--1970.
 }
 \references{}
 \examples{

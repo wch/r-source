@@ -1,5 +1,5 @@
 \name{layout}
-\title{Specifying complex plot arrangements}
+\title{Specifying Complex Plot Arrangements}
 \author{Paul R. Murrell}
 \usage{
 layout(mat,

@@ -9,21 +9,30 @@ is.vector(x, mode = "any")
 \alias{as.vector}
 \alias{as.vector.factor}
 \alias{is.vector}
+\arguments{
+  \item{mode}{A character string giving an atomic mode, or \code{"any"}.}
+  \item{length}{A non-negative integer specifying the desired length.}
+  \item{x}{An object.}
+}
 \description{
-  \code{vector} produces a vector of the given length and mode.  Logical
-  vector elements are initialized to \code{FALSE}, numeric vector
-  elements to \code{0} and character vector elements to \code{""}.
+  \code{vector} produces a vector of the given length and mode.
 
   \code{as.vector}, a generic, attempts to coerce its argument into a
   vector of mode \code{mode} (the default is to coerce to whichever mode
   is most convenient).  The attributes of \code{x} are removed.
 
   \code{is.vector} returns \code{TRUE} if \code{x} is a vector (of mode
-  logical, integer, real or character) and \code{FALSE}
-  otherwise.
-
+  logical, integer, real or character if not specified) and
+  \code{FALSE} otherwise.
+}
+\details{
   Note that factors are \emph{not} vectors;  \code{is.vector} returns
   \code{FALSE} and \code{as.vector} converts to character mode.
+}
+\value{
+  For \code{vector}, a vector of the given length and mode.  Logical
+  vector elements are initialized to \code{FALSE}, numeric vector
+  elements to \code{0} and character vector elements to \code{""}.
 }
 \seealso{
 \code{\link{c}}, \code{\link{is.numeric}}, \code{\link{is.list}}, etc.

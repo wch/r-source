@@ -1,5 +1,5 @@
 \name{predict.bs}
-\title{Evaluate a predefined spline basis at new values}
+\title{Evaluate a Predefined Spline Basis at New Values}
 \usage{
 predict.bs(object, newx, \dots)
 predict.ns(object, newx, \dots)

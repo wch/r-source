@@ -1,5 +1,5 @@
 \name{bug.report}
-\title{Send a bug report}
+\title{Send a Bug Report}
 \usage{
 bug.report(subject="", ccaddress=getenv("USER"),
            method=.Options$mailer, address="r-bugs@biostat.ku.dk",

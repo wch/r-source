@@ -1,5 +1,5 @@
 \name{offset}
-\title{Include an offset in a model formula}
+\title{Include an Offset in a Model Formula}
 \usage{
 offset(x)
 }

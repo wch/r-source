@@ -10,6 +10,12 @@
 
 NEW FEATURES
 
+    o	rect(.) has `lwd' argument.
+
+    o	legend() has a `adj' argument and has been streamlined (and fixed up).
+
+    o   `unname' convenience function [experimental data.frame behavior].
+
     o   `examples' sections have been added to the documentation
         for most of the data sets in the base library.
 
@@ -52,6 +58,10 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o	Many help pages have been revised and enhanced.
+
+    o   predict.glm() works again with type="link".
 
     o   subscripting arrays and matrices no longer loses the names of
 	the dimnames vector.  Transpose also preserves the names.
@@ -224,8 +234,6 @@ NEW FEATURES
 
 
 BUG FIXES
-
-    o   segfault in rbind of a vector without names fixed. cbind, too.
 
     o	apply should now work for all un-dimnamed arrays (PR#318).
 

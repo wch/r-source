@@ -67,9 +67,9 @@ download.file <- function(url, destfile, method="auto")
     }
 
     if(method=="wget")
-        status <- system(paste("wget", url, "-O", destfile))
+        status <- system(paste("wget '", url, "' -O", destfile, sep=""))
     else if(method=="lynx")
-        status <- system(paste("lynx -dump", url, ">", destfile))
+        status <- system(paste("lynx -dump '", url, "' >", destfile, sep=""))
     else if(method=="cp") {
         url <- sub("^file:","",url)
         status <- system(paste("cp", url, destfile))

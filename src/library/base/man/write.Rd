@@ -1,5 +1,5 @@
 \name{write}
-\title{Write data to a file}
+\title{Write Data to a File}
 \usage{
 write(x, file="data",
         ncolumns=if(is.character(x)) 1 else 5,

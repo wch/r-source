@@ -1,7 +1,5 @@
-% copyright (C) 1998 B. D. Ripley
-%
 \name{proj}
-\title{Projections of models}
+\title{Projections of Models}
 \usage{
 proj 	 (object, \dots)  
 proj.aov    (object, onedf = FALSE, unweighted.scale = FALSE)  

@@ -1,5 +1,5 @@
 \name{interactive}
-\title{Is \R running interactively ?}
+\title{Is R Running Interactively?}
 \usage{
 interactive()
 }

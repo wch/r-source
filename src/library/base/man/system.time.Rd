@@ -16,15 +16,22 @@ unix.time(expr)
   evaluates \code{expr}, and then calls \code{proc.time} once more,
   returning the difference between the two \code{proc.time} calls.
 
-  The values returned by the \code{proc.time} are (currently) those
+  The values returned by the \code{proc.time} are (on Unix) those
   returned by the C library function \code{times}(3v).
 
   \code{unix.time} is an \code{\link{.Alias}} of \code{system.time}, for
   compatibility reasons.
 }
 \value{
-  A numeric vector of length 5 containing the cpu, user, total,
-  subproc1, subproc2 times.
+  A numeric vector of length 5 containing the user cpu, system cpu, elapsed,
+  subproc1, subproc2 times. The subproc times are the the user and
+  system cpu time used by child processes (and so are usually zero).
+#ifdef windows
+  On Windows the subproc times are not available and so are always
+  \code{NA}. The first two components are not available on Windows 9x,
+  and so are reported as \code{NA}; they do return real values on
+  Windows NT4 and 2000.
+#endif  
 }
 \seealso{
   \code{\link{proc.time}}, \code{\link{time}} which is for time series.

@@ -48,32 +48,35 @@ lines(ts.obj, ...)
     \item{\dots}{additional arguments to print or plot.}
 }
 \description{
-    The function \code{ts} is used to create time-series objects.  These
-    are vector or matrices with class of \code{"ts"} (and additional
-    attributes) which represent data which has been sampled at equispaced
-    points in time.  In the matrix case, each column of the matrix
-    \code{data} is assumed to contain a single (univariate) time series.
-
-    \code{as.ts} and \code{is.ts} coerce an object to a
-    time-series and test whether an object is a time series.
-
-    Class \code{"ts"} has a number of methods. In particular arithmetic
-    will attempt to align time axes, and subsetting to extract
-    subsets of series can be used (e.g. \code{EuStockMarkets[, "DAX"]}).
-    However, subsetting the first (or only) dimension will return a
-    matrix or vector, as will matrix subsetting.
+  The function \code{ts} is used to create time-series objects.
+  
+  \code{as.ts} and \code{is.ts} coerce an object to a
+  time-series and test whether an object is a time series.
 }
 \details{
-    The value of argument \code{frequency} is used when the series is
-    sampled an integral number of times in each unit time interval.  For
-    example, one could use a value of \code{7} for \code{frequency} when
-    the data are sampled daily, and the natural time period is a week, or
-    \code{12} when the data are sampled monthly and the natural time
-    period is a year. Values of \code{4} and \code{12} are assumed in (e.g.)
-    \code{print} methods to imply a quarterly and monthly series respectively.
+  The function \code{ts} is used to create time-series objects.  These
+  are vector or matrices with class of \code{"ts"} (and additional
+  attributes) which represent data which has been sampled at equispaced
+  points in time.  In the matrix case, each column of the matrix
+  \code{data} is assumed to contain a single (univariate) time series.
+    
 
-    \code{as.ts} will use the \code{\link{tsp}} attribute of the object if
-    it has one to set the start and end times and frequency.
+  Class \code{"ts"} has a number of methods. In particular arithmetic
+  will attempt to align time axes, and subsetting to extract
+  subsets of series can be used (e.g. \code{EuStockMarkets[, "DAX"]}).
+  However, subsetting the first (or only) dimension will return a
+  matrix or vector, as will matrix subsetting.
+
+  The value of argument \code{frequency} is used when the series is
+  sampled an integral number of times in each unit time interval.  For
+  example, one could use a value of \code{7} for \code{frequency} when
+  the data are sampled daily, and the natural time period is a week, or
+  \code{12} when the data are sampled monthly and the natural time
+  period is a year. Values of \code{4} and \code{12} are assumed in (e.g.)
+  \code{print} methods to imply a quarterly and monthly series respectively.
+
+  \code{as.ts} will use the \code{\link{tsp}} attribute of the object if
+  it has one to set the start and end times and frequency.
 }
 \seealso{
   \code{\link{tsp}},
@@ -81,8 +84,9 @@ lines(ts.obj, ...)
   \code{\link{start}},
   \code{\link{end}},
   \code{\link{time}},
-  \code{\link{window}}, standard package \code{ts} for many additional
-  time-series functions.
+  \code{\link{window}}
+
+  Standard package \code{ts} for many additional time-series functions.
 }
 \examples{
 ts(1:10, frequency = 4, start = c(1959, 2)) # 2nd Quarter of 1959

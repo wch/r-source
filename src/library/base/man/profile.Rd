@@ -1,6 +1,6 @@
 \name{profile}
 \alias{profile}
-\title{ Generic function for profiling models}
+\title{Generic Function for Profiling Models}
 \usage{
 profile(fitted, ...)
 }

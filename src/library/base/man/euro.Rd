@@ -1,5 +1,5 @@
 \name{euro}
-\title{Euro conversion rates}
+\title{Euro Conversion Rates}
 \alias{euro}
 \alias{euro.cross}
 \usage{data(euro)}

@@ -18,6 +18,8 @@ left hand sides.}
 The least squares estimate of \bold{\eqn{\beta}{b}} in the model
 \deqn{\bold{Y} = \bold{X \beta} + \bold{\epsilon}}{y = X b + e}
 is found.
+}
+\details{
 If weights are specified then a weighted least squares is performed
 with the weight given to the \emph{j}th case specified by the \emph{j}th
 entry in \code{wt}.

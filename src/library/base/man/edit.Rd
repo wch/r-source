@@ -1,12 +1,12 @@
 \name{edit}
 \title{Invoke a Text Editor}
 \usage{
-edit(name=NULL, file="", editor = "vi")
-vi(name=NULL, file="")
-emacs(name=NULL, file="")
-pico(name=NULL, file="")
-xemacs(name=NULL, file="")
-xedit(name=NULL, file="")
+edit(name = NULL, file = "", editor = "vi")
+vi(name = NULL, file = "")
+emacs(name = NULL, file = "")
+pico(name = NULL, file = "")
+xemacs(name = NULL, file = "")
+xedit(name = NULL, file = "")
 }
 \alias{edit}
 \alias{vi}
@@ -21,6 +21,9 @@ file specified by \code{file} is opened for editing.}
 \item{editor}{a string naming the text editor you want to use.}
 }
 \description{
+  Invoke a text editor on an \R object.
+}
+\details{
 \code{edit} invokes the text editor specified by \code{editor} with the object
 \code{name} to be edited.
 \code{data.entry} can be used to edit data.
@@ -45,10 +48,10 @@ result in the temporary file being reopened for further editing.
 \examples{
 \dontrun{
 # use xedit on the function mean and assign the changes
-mean <- edit(mean, editor="xedit")
+mean <- edit(mean, editor = "xedit")
 
 # use vi on mean and write the result to file mean.out
-vi(mean, file="mean.out")
+vi(mean, file = "mean.out")
 }
 }
 \keyword{utilities}

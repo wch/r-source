@@ -14,53 +14,57 @@ besselJ(x, nu)
 besselY(x, nu)
 gammaCody(x)
 }
-\description{Bessel Functions of integer and fractional order, of first
-    and second kind, \eqn{J_{\nu}}{J(nu)} and \eqn{Y_{\nu}}{Y(nu)}, and
-    Modified Bessel functions (of first and third kind),
-    \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}. 
+\description{
+  Bessel Functions of integer and fractional order, of first
+  and second kind, \eqn{J_{\nu}}{J(nu)} and \eqn{Y_{\nu}}{Y(nu)}, and
+  Modified Bessel functions (of first and third kind),
+  \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}. 
 
-    \code{gammaCody} is the \eqn{(\Gamma)} Function as from the Specfun
-    package and originally used in the Bessel code.
+  \code{gammaCody} is the \eqn{(\Gamma)} function as from the Specfun
+  package and originally used in the Bessel code.
 }
 \arguments{
-    \item{x}{numeric, \eqn{\ge 0}{>= 0}.}
-    \item{nu}{numeric; \eqn{\ge 0}{>= 0} unless in \code{besselK} which
-	is symmetric in \code{nu}.  The \emph{order} of the
-      corresponding Bessel function.}
-    \item{expon.scaled}{logical; if \code{TRUE}, the results are
-      exponentially scaled in order to avoid overflow
-      (\eqn{I_{\nu}}{I(nu)}) or underflow (\eqn{K_{\nu}}{K(nu)}),
-      respectively.}
+  \item{x}{numeric, \eqn{\ge 0}{>= 0}.}
+
+  \item{nu}{numeric; \eqn{\ge 0}{>= 0} unless in \code{besselK} which
+    is symmetric in \code{nu}.  The \emph{order} of the
+    corresponding Bessel function.}
+
+  \item{expon.scaled}{logical; if \code{TRUE}, the results are
+    exponentially scaled in order to avoid overflow
+    (\eqn{I_{\nu}}{I(nu)}) or underflow (\eqn{K_{\nu}}{K(nu)}),
+    respectively.}
 }
 \value{
-    numeric of the same length of \code{x} with the (scaled, if
-    \code{expon.scale=T}) values of the corresponding Bessel function.
+  Numeric vector of the same length of \code{x} with the (scaled, if
+  \code{expon.scale=TRUE}) values of the corresponding Bessel function.
 }
 \details{
-    The underlying code for these functions stem from \emph{Netlib},
-    \file{http://www.netlib.org/specfun/r[ijky]besl}.
+  The underlying C code stems from \emph{Netlib}
+  (\url{http://www.netlib.org/specfun/r[ijky]besl}).
 
-    If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},
-    or \eqn{e^{x} K_{\nu}(x)}{exp(x) K(x;nu)} are returned.
+  If \code{expon.scaled = TRUE}, \eqn{e^{-x} I_{\nu}(x)}{exp(-x) I(x;nu)},
+  or \eqn{e^{x} K_{\nu}(x)}{exp(x) K(x;nu)} are returned.
 
-    \code{gammaCody} may be somewhat faster but less
-    precise and/or robust than \R's standard \code{\link{gamma}}.
-    It is here for experimental purpose mainly, and \emph{may be defunct
-      	very soon}.
+  \code{gammaCody} may be somewhat faster but less precise and/or robust
+  than \R's standard \code{\link{gamma}}.  It is here for experimental
+  purpose mainly, and \emph{may be defunct very soon}.
 }
 \references{
-  Abramowitz, M. and Stegun, I. A. (1972).\cr
-  \emph{Handbook of Mathematical Functions}, Dover, New York;\cr
+  Abramowitz, M. and Stegun, I. A. (1972).
+  \emph{Handbook of Mathematical Functions}, Dover, New York;
   Chapter 9: Bessel Functions of Integer Order.
 }
-\seealso{Other special mathematical functions, as the
-    \code{\link{gamma}}, \eqn{\Gamma(x)}, and \code{\link{beta}},
-    \eqn{B(x)}.
+\seealso{
+  Other special mathematical functions, as the
+  \code{\link{gamma}}, \eqn{\Gamma(x)}, and \code{\link{beta}},
+  \eqn{B(x)}.
 }
-\author{Original Fortran code:
-    W. J. Cody, Argonne National Laboratory \cr
-    Translation to C and adaption to \R:
-    Martin Maechler \email{maechler@stat.math.ethz.ch.}
+\author{
+  Original Fortran code:
+  W. J. Cody, Argonne National Laboratory \cr
+  Translation to C and adaption to \R:
+  Martin Maechler \email{maechler@stat.math.ethz.ch.}
 \examples{
 nus <- c(0:5,10,20)
 

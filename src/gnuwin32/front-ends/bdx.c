@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: bdx.c,v 1.3 1999/12/11 20:57:35 pd Exp $
+ *  $Id: bdx.c,v 1.4 1999/12/15 17:20:28 pd Exp $
  */
 
 #include <stdlib.h>

@@ -22,8 +22,9 @@ ar <-
 
 ar.yw <- function(x, ...) UseMethod("ar.yw")
 
-ar.yw.ts <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-                   demean = TRUE, series = NULL, ...)
+ar.yw.default <-
+    function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
+              demean = TRUE, series = NULL, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
     ists <- is.ts(x)

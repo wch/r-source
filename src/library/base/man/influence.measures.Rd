@@ -18,6 +18,7 @@ hat(xmat)
 \alias{summary.infl}
 
 \alias{hat}
+\alias{rstandard}
 \alias{rstudent}
 \alias{dfbetas}
 \alias{dffits}
@@ -39,9 +40,13 @@ hat(xmat)
   the diagonal elements of the hat matrix.  Cases which are influential
   with respect to any of these measures are marked with an asterisk.
 
-  The functions \code{rstudent}, \code{dfbetas}, \code{dffits},
+  The functions \code{dfbetas}, \code{dffits},
   \code{covratio} and \code{cooks.distance} provide direct access to the
-  corresponding diagnostic quantities.
+  corresponding diagnostic quantities.  Functions \code{rstandard} and
+  \code{rstudent} give the standardized and Studentized residuals
+  respectively. (These re-normalize the residuals to have unit variance,
+  using an overall and leave-one-out measure of the error variance
+  respectively.)
 
   Note that cases with \code{weights == 0} are \emph{dropped} from all
   these functions.
@@ -67,6 +72,7 @@ inflm.SR
 which(apply(inflm.SR$is.inf, 1, any)) # which observations `are' influential
 dim(dfb <- dfbetas(lm.SR))            # the 1st columns of influence.measures
 all(dfb == inflm.SR$infmat[, 1:5])
+rstandard(lm.SR)
 rstudent(lm.SR)
 dffits(lm.SR)
 covratio(lm.SR)

@@ -1,11 +1,9 @@
 \name{clearNames}
 \alias{clearNames}
-%- Also NEED an `\alias' for EACH other topic documented here.
-\title{remove the names from an object}
+\title{Remove the Names from an Object}
 \usage{
 clearNames(object)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
  \item{object}{ an object that may have a \code{names} attribute }
 }
@@ -24,4 +22,4 @@ data( women )
 lapply( women, mean )               # has a names attribute
 clearNames( lapply( women, mean ) ) # removes the names
 }
-\keyword{ data, list }%-- one or more ...
+\keyword{ data, list }.

@@ -11,9 +11,11 @@ storage.mode(x) <- "<mode>"
 \alias{storage.mode}
 \alias{storage.mode<-}
 \description{
-  \code{mode} and \code{storage.mode} provide means of determining the
-  type or storage mode of an object.  Both return a character string
-  giving the (storage) mode of the object -- often the same -- both
+  Get or set the type or storage mode of an object.
+
+\details{
+  Both \code{mode} and \code{storage.mode} return a character string
+  giving the (storage) mode of the object --- often the same --- both
   relying on the output of \code{\link{typeof}(x)}, see the example
   below.
 
@@ -21,19 +23,17 @@ storage.mode(x) <- "<mode>"
   \code{mode(x) <- newmode} and \code{storage.mode(x) <- newmode} change
   the \code{mode} or \code{storage.mode} of object \code{x} to
   \code{newmode}.
+
+  As storage mode "single" is only a pseudo-mode in \R, it will not be
+  reported by \code{mode} or \code{storage.mode}: use
+  \code{attr(object, "Csingle")} to examine this. However, the
+  assignment versions can be used to set the mode to \code{"single"},
+  which sets the real mode to \code{"double"} and the \code{"Csingle"}
+  attribute to \code{TRUE}. Setting any other mode will remove the
 }
 \seealso{
   \code{\link{typeof}} for the R-internal ``mode'',
   \code{\link{attributes}}.
-}
-\details{
-    As storage mode "single" is only a pseudo-mode in \R, it will not be
-    reported by \code{mode} or \code{storage.mode}: use
-    \code{attr(object, "Csingle")} to examine this. However, the
-    assignment versions can be used to set the mode to \code{"single"},
-    which sets the real mode to \code{"double"} and the \code{"Csingle"}
-    attribute to \code{TRUE}. Setting any other mode will remove the
-    \code{"Csingle"} attribute.
 }
 \examples{
 sapply(options(),mode)

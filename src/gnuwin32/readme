@@ -1,7 +1,7 @@
-R 0.90.0 for Windows 9x and NT
+R 0.90.1 for Windows 9x and NT
 ==============================
 
-This distribution contains a binary distribution of R-0.90.0 to run on
+This distribution contains a binary distribution of R-0.90.1 to run on
 Windows 95, 98 and NT4 on Intel/clone chips. It is designed to
 be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
@@ -16,25 +16,25 @@ Installation
 The simplest way is to run the installer (double-click on the icon for
 rwinst.exe and navigate its wizard-like pages).
 
-To install manually, unpack rw0900b1.zip and rw0900b2.zip anywhere you
-like. It will unpack to a directory tree under rw0900. The help, HTML
-and latex help files are in separate files rw0900h.zip, rw0900w.zip
-and rw0900l.zip which should be unpacked in the same directory you
-unpacked rw0900b.zip.  File rw0900d.zip contains PDF versions of the
-(draft) manuals for R, which unpack into rw0900/doc/manual.
+To install manually, unpack rw0901b1.zip and rw0901b2.zip anywhere you
+like. It will unpack to a directory tree under rw0901. The help, HTML
+and latex help files are in separate files rw0901h.zip, rw0901w.zip
+and rw0901l.zip which should be unpacked in the same directory you
+unpacked rw0901b.zip.  File rw0901d.zip contains PDF versions of the
+(draft) manuals for R, which unpack into rw0901/doc/manual.
 
 
 Usage
 =====
 
-There are two executables in rw0900\bin:
+There are two executables in rw0901\bin:
 
 GUI:
 
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window. It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
-...\rw0900\bin\rgui.exe and adding the arguments in the Target field.
+...\rw0901\bin\rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and
 loaded from).
@@ -131,7 +131,7 @@ help(topic, htmlhelp=T).  Using help.start() sets the browser to the
 top-level page, from which you can access a search engine.
 
 (v) Latex help files are available for use with help(topic, offline=T).
-You will need to customize the file rw0651\bin\helpPRINT.bat: it
+You will need to customize the file rw0901\bin\helpPRINT.bat: it
 contains instructions.
 
 
@@ -175,7 +175,7 @@ Adding packages
 
 Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in rw0900\library. They are then available for use. You
+be unpacked in rw0901\library. They are then available for use. You
 can also use the installer rwinst.exe to selectively unpack the zip
 files.
 
@@ -185,10 +185,10 @@ search engine can be updated from a running R process by the command
 	link.html.help()
 
 provided the owner of the process has write permission on
-rw0900\doc\html.  If you have the source-package files and Perl
+rw0901\doc\html.  If you have the source-package files and Perl
 installed you can use
 
-	cd ...\rw0900\src\gnuwin32\help
+	cd ...\rw0901\src\gnuwin32\help
 	make indices
 
 Private libraries of packages can be used and can be specified by the
@@ -205,7 +205,7 @@ in the environment or on the command line, or add the line
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution rw0900sp.zip installed (but not the R source). This contains
+distribution rw0901sp.zip installed (but not the R source). This contains
 detailed instructions.
 
 
