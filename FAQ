@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-40, 2003-03-19
+Version 1.7-0, 2004-04-10
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -238,7 +238,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.6.2.  Based on this
+   The current released version is 1.7.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -1733,6 +1733,10 @@ distributions of R.)
 *mimR*
      An R interface to MIM for graphical modeling in R.
 
+*mix*
+     Estimation/multiple imputation programs for mixed categorical and
+     continuous data.
+
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
      problems, including the Boston housing data.
@@ -1824,6 +1828,9 @@ distributions of R.)
 *pixmap*
      Functions for import, export, plotting and other manipulations of
      bitmapped images.
+
+*pls.pcr*
+     Multivariate regression by PLS and PCR.
 
 *polspline*
      Routines for the polynomial spline fitting routines hazard regression,
