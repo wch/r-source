@@ -5,6 +5,15 @@
 	*						 *
 	**************************************************
 
+		CHANGES IN R VERSION 1.7.1
+
+
+BUG FIXES
+
+    o	print.table() has used too much white space in some cases
+	in 1.7.0.
+
+
 
 		CHANGES IN R VERSION 1.7.0
 
@@ -743,7 +752,7 @@ BUG FIXES
 
     o   read.socket() dropped certain non-alphanumeric characters. (PR#2639)
 
-    o   termplot() handles missing data better (PR#2687, 
+    o   termplot() handles missing data better (PR#2687,
          <Mark.Bravington@csiro.au>)
 
     o	Corrected MacRoman encoding for Icircumflex etc.
