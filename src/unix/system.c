@@ -32,7 +32,7 @@
  *  This function displays the given message and the causes R to
  *  die immediately.  It is used for non-recoverable errors such as
  *  not having enough memory to launch etc.  The phrase "dialog box"
- *  springs to mind for non-unix platforms.
+ *  springs to mind for non-Unix platforms.
  *
  *
  *  2. CONSOLE I/O
@@ -43,7 +43,7 @@
  *    int   R_ReadConsole(char *prompt, char *buf, int buflen, int hist)
  *
  *  This function prints the given prompt at the console and then
- *  does a gets(3)-like operation, transfering up to "buflen" characters
+ *  does a gets(3)-like operation, transferring up to "buflen" characters
  *  into the buffer "buf".  The last two characters are set to "\n\0"
  *  to preserve sanity.	 If "hist" is non-zero, then the line is added
  *  to any command history which is being maintained.  Note that this
@@ -115,7 +115,7 @@
  *  this is the case if the file name begins with a '.'.  On the Mac
  *  a file is hidden if the file name ends in '\r'.
  *
- *    int R_ShowFiles(int nfile, char **file, char **title, char *wtitle, 
+ *    int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle, 
  *		      int del, char *pager)
  *
  *  This function is used to display the contents of files.  On (raw)
