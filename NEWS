@@ -10,12 +10,15 @@
 
 NEW FEATURES
 
+    o	RLIBS is no longer accepted as well as R_LIBS (which has been
+	the documented form since 0.65.0).
+
     o	demo(nlm) has examples of using analytical gradients and
 	Hessians.
 
-    o	.Platform$OS.type is standardized.
+    o	.Platform$OS.type is standardized to be `unix', `mac' or `windows'
 
-    o	matplot(matrix(1:25,5), cex=1:5) now works
+    o	setting cex in matplot(matrix(1:25,5), cex=1:5) now works
 
     o   ar.ols() has separate demean and intercept arguments, uses
         internal scaling for greater accuracy.
@@ -37,6 +40,7 @@ BUG FIXES
     o  blunder in do_memoryprofile, causing segfault on Alpha machines
 
     o  erroneous error message in coerceToSymbol
+
 
 		CHANGES IN R VERSION 0.90.0
 
