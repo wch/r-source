@@ -65,6 +65,8 @@ static void vfonts_Init(void)
     int res = moduleCdynload("vfonts", 1, 1);
     initialized = -1;
     if(!res) return;
+    if(!ptr->GEVStrWidth)
+	error("vfont routines cannot be accessed in module");
     initialized = 1;    
     return;
 }

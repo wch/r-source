@@ -54,7 +54,8 @@ static void La_Init(void)
     int res = moduleCdynload("lapack", 1, 1);
     initialized = -1;
     if(!res) return;
-
+    if(!ptr->svd)
+	error("lapack routines cannot be accessed in module");
     initialized = 1;    
     return;
 }

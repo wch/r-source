@@ -85,6 +85,8 @@ static void internet_Init(void)
 #endif
     initialized = -1;
     if(!res) return;
+    if(!ptr->download)
+	error("internet routines cannot be accessed in module");
     initialized = 1;    
     return;
 }

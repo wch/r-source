@@ -52,6 +52,8 @@ int R_X11_Init(void)
     }
     res = moduleCdynload("R_X11", 1, 1);
     if(!res) return initialized;
+    if(!ptr->access)
+	error("X11 routines cannot be accessed in module");
     initialized = 1;    
     return initialized;
 }
