@@ -112,32 +112,11 @@ print.mts <- function (x, calendar, ...)
 }
 }
 
-plot.mts <-
-function (x, ...)
-{
-    nser <- ncol(x)
-    nm <- colnames(x)
-    if(nser > 10) stop("Can't plot more than 10 series")
-    nc <- if(nser >  4) 2 else 1
-    oldpar <- par("mar", "oma", "mfcol")
-    on.exit(par(oldpar))
-    par(mar = c(0, 5.1, 0, 2.1), oma = c(4, 0, 6, 0))
-    nr <- ceiling(nser %/% nc)
-    par(mfcol = c(nr, nc))
-    for(i in 1:nser) {
-        plot(x[, i], axes = F, xlab="", ylab="",...)
-        box()
-        axis(2, xpd=NA)
-        mtext(nm[i], 2, 3)
-        if(i%%nr==0 || i==nser) axis(1, xpd=NA)
-    }
-    invisible()
-}
 
 ts.plot <- function(..., gpars=list())
 {
     sers <- ts.union(...)
-    do.call("plot.ts", c(list(sers), gpars))
+    do.call("plot.ts", c(list(sers, plot.type="single"), gpars))
 }
 
 Ops.ts <- function(e1, e2)

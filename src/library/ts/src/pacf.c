@@ -55,7 +55,7 @@ void uni_pacf(double *cor, double *p, int *pnlag)
 
 static int ip, iq, mp, mq, msp, msq, ns, ir, np, nrbar, n, m, trans;
 static double *a, *p, *v, *thetab, *xnext, *xrow, *rbar, *e,
-    *w, *wkeep, delta, *resid, *phi, *theta, s2, *reg;
+    *w, *wkeep, delta, *resid, *phi, *theta, s2, *reg, *params;
 
 void F77_NAME(starma)(int* ip, int* iq, int* ir, int* np, double* phi,
 		      double* theta, double* a,
@@ -93,6 +93,7 @@ void setup_starma(int *na, double *x, int *pn, double *xreg, int *pm,
     ns = na[4];
     n = *pn;
     m = *pm;
+    params = Calloc(mp+mq+msp+msq+m, double);
     ip = ns*msp + mp;
     iq = ns*msq + mq;
     ir = max(ip, iq+1);
@@ -120,18 +121,24 @@ void setup_starma(int *na, double *x, int *pn, double *xreg, int *pm,
 
 void free_starma()
 {
-    Free(a); Free(p); Free(v); Free(thetab);
+    Free(params); Free(a); Free(p); Free(v); Free(thetab);
     Free(xnext); Free(xrow); Free(rbar); Free(e);
     Free(w); Free(wkeep); Free(resid); Free(phi); Free(theta); Free(reg);
 }
 
-void arma0fa(double *params, double *res)
+void dotrans(double *, double *, int);
+
+void arma0fa(double *inparams, double *res)
 {
     int i, j, ifault, it, iupd, streg;
     double sumlog, ssq, tmp;
 
-/*    for(i=0; i < mp+mq+msp+msq; i++)
-      printf(" %f", params[i]); printf("\n"); */
+    /*for(i=0; i < mp+mq+msp+msq+m; i++)
+      printf(" %f", inparams[i]); printf("\n");  */
+    dotrans(inparams, params, trans);
+    /*for(i=0; i < mp+mq+msp+msq+m; i++)
+      printf(" %f", params[i]); printf("\n");  */
+    
     if(ns > 0) {
 	/* expand out seasonal ARMA models */
 	for(i = 0; i < mp; i++) phi[i] = params[i];
@@ -328,4 +335,38 @@ void arimatoma(int *arma, double *params, double *psi, int *npsi)
 	if(i < iq) tmp += theta[i];
 	psi[i] = tmp;
     }
+}
+
+static void partrans(int np, double *raw, double *new)
+{
+    int i, j;
+
+    for(i = 0; i < np; i++) raw[i] = new[i] = tanh(raw[i]);
+    for(j = 1; j < np; j++)
+	for(i = 0; i < j; i++)
+	    raw[i] -= new[j] * new[j - i - 1];
+	    for(i = 0; i < j; i++) new[i] = raw[i];
+}
+
+/* raw is overwritten */
+void dotrans(double *raw, double *new, int trans)
+{
+    int i, v;
+
+    if(trans) {
+    v = 0;
+    for(i = 0; i < mp; i++)
+	partrans(mp, raw+v, new+v);
+    v += mp;
+    for(i = 0; i < mq; i++)
+	partrans(mq, raw+v, new+v);
+    v += mq;
+    for(i = 0; i < msp; i++)
+	partrans(msp, raw+v, new+v);
+    v += msp;
+    for(i = 0; i < msq; i++)
+	partrans(msq, raw+v, new+v);
+    for(i = mp+mq+msp+msq; i < mp+mq+msp+msq + m; i++) new[i] = raw[i];
+    } else
+	for(i = 0; i < mp+mq+msp+msq+m; i++) new[i] = raw[i];
 }

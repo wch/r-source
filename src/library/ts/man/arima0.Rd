@@ -7,7 +7,7 @@
 arima0(x, order = c(0, 0, 0),
        seasonal = list(order = c(0, 0, 0), period = NA),
        xreg = NULL, include.mean, na.action = na.fail,
-       delta = 0.01, transform.pars = FALSE)
+       delta = 0.01, transform.pars = 2)
 predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
 }
 \arguments{
@@ -33,8 +33,10 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
  \item{delta}{A value to indicate at which point `fast recursions'
      should be used. See the Details section.}
 
- \item{transform.pars}{If true, the ARMA parameters are transformed to
-     ensure that they remain in the region of invertibility.}
+ \item{transform.pars}{If grater than 0, the ARMA parameters are
+     transformed to ensure that they remain in the region of
+     invertibility. If equal to 2, the optimization is rerun on
+     the original scale to find the Hessian.}
 
  \item{arima0.obj}{The result of an \code{arima0} fit.}
 
@@ -81,7 +83,8 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
   \item{sigma2}{the MLE of the innovations variance.}
 
   \item{var.coef}{the estimated variance matrix of the coefficients
-      \code{coef}.}
+      \code{coef}. If \code{transform.pars = 1}, only the portion
+      corresponding to the untransformed parameters is returned.}
 
   \item{loglik}{the maximized log-likelihood (of the differenced data).}
 

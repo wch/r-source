@@ -1,7 +1,7 @@
 arima0 <- function(x, order=c(0,0,0),
                    seasonal=list(order=c(0,0,0), period=NA), xreg=NULL,
                    include.mean=TRUE, na.action=na.fail, delta=0.01,
-                   transform.pars=FALSE)
+                   transform.pars=2)
 {
     series <- deparse(substitute(x))
     if(is.matrix(ts))
@@ -37,17 +37,26 @@ arima0 <- function(x, order=c(0,0,0),
     .C("setup_starma",
        as.integer(arma), as.double(x), as.integer(n.used),
        as.double(xreg), as.integer(ncxreg), as.double(delta),
-       as.integer(transform.pars))
+       as.integer(transform.pars > 0))
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0) {
         init <- c(init, coef(lm(x ~ xreg+0)))
     }
-    res <- nlm(arma0f, init, hessian=TRUE)
+    res <- nlm(arma0f, init, hessian=transform.pars < 2)
     if(res$code > 2)
         warning(paste("possible convergence problem: nlm gave code=",
                       res$code))
-    .C("free_starma")
     coef <- res$estimate
+    if(transform.pars) coef <- .C("dotrans", coef, new=coef)$new
+    .C("free_starma")
+    if(transform.pars == 2) {
+        .C("setup_starma",
+           as.integer(arma), as.double(x), as.integer(n.used),
+           as.double(xreg), as.integer(ncxreg), as.double(delta),
+           as.integer(0))
+        res <- nlm(arma0f, coef, hessian=TRUE)
+        coef <- res$estimate
+    }
     sigma2 <- .C("get_s2", res=double(1))$res
     resid <- .C("get_resid", res=double(n.used))$res
     tsp(resid) <- xtsp
@@ -62,6 +71,12 @@ arima0 <- function(x, order=c(0,0,0),
     names(arma) <- c("ar", "ma", "sar", "sma", "period", "diff", "sdiff")
     var <- solve(res$hessian*length(x))
     dimnames(var) <- list(nm, nm)
+    if(transform.pars == 1) {
+        if(ncxreg > 0) {
+            ind <- sum(arma[1:4]) + 1:ncxreg
+            var <- var[ind, ind, drop=FALSE]
+        } else var <- matrix(NA, 0, 0)
+    }
     value <- 2 * n.used * res$minimum + n.used + n.used*log(2*pi)
     aic <- value + 2*length(coef)
     res <- list(coef = coef, sigma2 = sigma2, var.coef = var,
@@ -84,11 +99,11 @@ print.arima0 <- function(x, digits = max(3, .Options$digits - 3),
     cat("Coefficients:\n")
     coef <- round(x$coef, digits = digits)
     print.default(coef, print.gap = 2)
-    if(se) {
-    ses <- round(sqrt(diag(x$var.coef)), digits = digits)
-    names(ses) <- names(coef)
-    cat("\nApprox standard errors:\n")
-    print.default(ses, print.gap = 2)
+    if(se && nrow(x$var.coef)) {
+        ses <- round(sqrt(diag(x$var.coef)), digits = digits)
+        names(ses) <- rownames(x$var.coef)
+        cat("\nApprox standard errors:\n")
+        print.default(ses, print.gap = 2)
     }
     cat("\nsigma^2 estimated as ",
         format(x$sigma2, digits = digits),

@@ -23,6 +23,9 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
 
     det <- function(x) { prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1) }
 
+    ## remove means for conditioning
+    xm <- apply(x, 2, mean)
+    x <- sweep(x, 2, xm)
     ## Fit models of increasing order
 
     for (m in order.min:order.max)
@@ -75,7 +78,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         x.mean <- rep(0, nser)
         ar <- AA
     }
-    Y <- t(y[, 1:nser])
+    Y <- t(y[, 1:nser, drop=FALSE])
     YH <- AA %*% t(X)
     E <- rbind(matrix(NA, m, nser), t(Y - YH))
 
@@ -102,7 +105,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         attr(E, "class") <- "ts"
     }
     res <- list(order = m, ar = ar, var.pred = var.pred,
-                x.mean = x.mean, aic = aic,
+                x.mean = x.mean + xm, aic = aic,
                 n.used = n.used, order.max = order.max,
                 partialacf=NULL, resid=E, method = "Unconstrained LS",
                 series = series, frequency = xfreq, call = match.call(),
