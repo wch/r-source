@@ -493,7 +493,8 @@ sub check_pkg {
 
     ## next check for name clashes on case-insensitive file systems
     ## (that is on Windows).
-    my @seen = (), @duplicated = ();
+    %seen = (); 
+    my @duplicated = ();
     sub check_case_names {
 	my $file_path = lc($File::Find::name);
 	if($seen{$file_path}) {push(@duplicated, $file_path);}
