@@ -1197,27 +1197,25 @@ void Kill_G_History(SInt16 WinIndex)
 
 void GraResize(WindowPtr window)
 {
-    SInt16 WinIndex;
-    Rect    portRect;
-    GrafPtr	savePort;
-    GEDevDesc *gedd;
-    NewDevDesc *dd;
-    MacDesc *xd;
+    SInt16 		WinIndex;
+    NewDevDesc  *dd;
+    GEDevDesc  	*gedd;
+    MacDesc		*xd;
+    double 		left, right, bottom, top;
+
     
     WinIndex = isGraphicWindow(window);
 
     if (WinIndex && (gGReference[WinIndex].newdevdesc != nil)) {
-
-	GetPort(&savePort);
-
-    SetPortWindowPort(window);
-    GetWindowPortBounds(window,&portRect);
-
-
-	SetPort(savePort);
 	dd = (NewDevDesc*)gGReference[WinIndex].newdevdesc;
-	xd = (MacDesc*)(dd->deviceSpecific);
-	xd->resize = true;
+	 gedd = (GEDevDesc*)gGReference[WinIndex].gedevdesc;
+     xd = (MacDesc *)dd->deviceSpecific;
+	 dd->size(&left,&right,&bottom,&top,dd);
+	 dd->left = left;
+	 dd->right = right;
+	 dd->top = top;
+	 dd->bottom = bottom; 
+	 xd->resize=TRUE;
 	gExpose = WinIndex;
     }
 }
