@@ -1,0 +1,10 @@
+#! @PERL@
+#-*- perl -*-
+
+$RHOME=$ENV{"RHOME"} or die("Environment variable RHOME not found\n");
+
+require "$RHOME/etc/buildlib.pl";
+
+build_htmlpkglist("$RHOME/library");
+
+

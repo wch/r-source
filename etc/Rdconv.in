@@ -23,6 +23,7 @@
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
 use Getopt::Long;
+use NDBM_File;
 
 $RHOME=$ENV{"RHOME"} or die("Environment variable RHOME not found\n");
 
@@ -34,10 +35,13 @@ GetOptions (@knownoptions) || usage();
 usage() if $opt_help;
 
 if($opt_type =~ /html/i){
-    tie %htmlindex, DB_File, "$RHOME/library/htmlindex";
+    tie %htmlindex, NDBM_File, "$RHOME/library/htmlindex", O_RDWR|O_CREAT, 0644;
     open(htmlout, "|-");
 }
 
 Rdconv($ARGV[0],$opt_type,$opt_debug);
+
+untie %htmlindex;
+
 
 

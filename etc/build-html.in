@@ -1,4 +1,5 @@
 #! @PERL@
+#-*- perl -*-
 #
 # ${RHOME}/etc/build-html
 # Usage:  build-html [pkg] [lib]
@@ -6,43 +7,16 @@
 # (defaults are `${RHOME}/src/library/base' and the default library,
 # `${RHOME}/library', respectively). 
 
-use Cwd;
-use File::Basename;
-use DB_File;
-
-
 $RHOME=$ENV{"RHOME"} or die("Environment variable RHOME not found\n");
 
 require "$RHOME/etc/Rdconvlib.pl";
+require "$RHOME/etc/buildlib.pl";
 
-$pkg = $ARGV[0];
-$lib = $ARGV[1];
+($pkg, $lib) = buildinit();
 
-$currentdir = getcwd();
+print " >>> Building HTML pages for package `$pkg'\n";
 
-if($pkg){
-    die("Package $pkg does not exit\n") unless (-d $pkg);
-}
-else{
-    $pkg="$RHOME/src/library/base";
-}
-
-chdir $currentdir;
-
-if($lib){
-    system("mkdir -p $lib");
-    chdir($lib) or die("Cannot create $lib\n");
-    $lib=getcwd();
-}
-else{
-    $lib="$RHOME/library";
-}
-
-chdir $currentdir;
-
-chdir($pkg) or die("Cannot change to $pkg\n");
-$pkg = basename(getcwd());
-chdir man or die("There are no man pages in $pkg\n");
+chdir "man" or die("There are no man pages in $pkg\n");
 
 $dest = "$lib/$pkg/html";
 system("mkdir -p $dest");
@@ -51,7 +25,7 @@ die("Cannot create $dest\n") unless (-d $dest);
 opendir man, '.';
 @mandir = readdir(man);
 
-tie %htmlindex, DB_File, "$lib/htmlindex", O_RDWR|O_CREAT, 0640, $DB_BTREE;
+%htmlindex = read_htmlindex($lib);
 
 foreach $manfile (@mandir) {
     if($manfile =~ /\.Rd$/){
@@ -64,7 +38,11 @@ foreach $manfile (@mandir) {
     }
 }
 
-untie %htmlindex;
+
+
+
+
+
 
 
 

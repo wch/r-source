@@ -29,8 +29,6 @@ $VERSION = "0.1.5";
 @multiblocknames = ("alias", "keyword");
 
 
-$max_bracket = 0;
-$max_section = 0;
 $NB = "normal_bracket";
 $BN = "bracket_normal";
 $EOB = "escaped_opening_bracket";
@@ -46,9 +44,13 @@ sub Rdconv {
     $type = $_[1];
     $debug = $_[2];
     
+    $max_bracket = 0;
+    $max_section = 0;
+    
     undef $complete_text;
     undef %blocks;
-    undef @sections;
+    undef @section_body;
+    undef @section_title;
     
 
     #-- remove comments (everything after a %)
@@ -165,7 +167,7 @@ sub get_multi {
 }
 
 # Write the user defined sections into the 
-# global hash @sections
+# global hashs @section_body and @section_title
 sub get_sections {
     
     my $text = $_[0];
@@ -295,8 +297,8 @@ sub rdoc2html {
     print htmlout $blocks{"title"};
     print htmlout "</title></HEAD><BODY>\n";
 
-    print htmlout "[ <A HREF=\"../index.html\">top</A>";
-    print htmlout "| <A HREF=\"index.html\">up</A> ]\n";
+    print htmlout "[ <A HREF=\"../../../html/index.html\">top</A>";
+    print htmlout " | <A HREF=\"00Index.html\">up</A> ]\n";
     
     print htmlout "<H2 align=center><I>";
     print htmlout $blocks{"title"};

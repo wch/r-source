@@ -26,7 +26,7 @@ if test -d ${pkg};
 then
     rm -rf ${pkg}
     cat */TITLE > LibIndex 2> /dev/null
-    ${RHOME}/etc/remove-html ${pkg} ${lib}
+    ${RHOME}/etc/build-htmlpkglist
 else
     echo "There is no pkg \`${pkg}' in lib \`${lib}'"
     exit 1

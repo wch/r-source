@@ -1,63 +1,37 @@
 #! @PERL@
+#-*- perl -*-
 #
 # ${RHOME}/etc/build-index
 # Usage:  build-index [pkg] [lib]
 
-use Cwd;
-use File::Basename;
-use DB_File;
-
 $RHOME=$ENV{"RHOME"} or die("Environment variable RHOME not found\n");
 
-$pkg = $ARGV[0];
-$lib = $ARGV[1];
+require "$RHOME/etc/buildlib.pl";
 
-$currentdir = getcwd();
+($pkg, $lib) = buildinit();
 
-if($pkg){
-    die("Package $pkg does not exit\n") unless (-d $pkg);
-}
-else{
-    $pkg="$RHOME/src/library/base";
-}
+$dest = "$lib/$pkg";
 
-chdir $currentdir;
+system("mkdir -p $dest");
+die("Cannot create $dest\n") unless (-d "$dest");
 
-if($lib){
-    system("mkdir -p $lib");
-    chdir($lib) or die("Cannot create $lib\n");
-    $lib=getcwd();
-}
-else{
-    $lib="$RHOME/library";
-}
-
-chdir $currentdir;
-
-chdir($pkg) or die("Cannot change to $pkg\n");
-$pkg = basename(getcwd());
-
-tie %htmltitles, DB_File, "$lib/htmltitles";
-open(title, "<TITLE");
+system("/bin/cp TITLE $dest/TITLE");
+open title, "<TITLE";
 $title = <title>;
 close title;
 $title =~ s/^\S*\s*(.*)/$1/;
-$htmltitles{$pkg} = $title;
 
-chdir man or die("There are no man pages in $pkg\n");
-
-$dest = "$lib/$pkg";
 system("mkdir -p $dest/help");
 die("Cannot create $dest/help\n") unless (-d "$dest/help");
 system("mkdir -p $dest/html");
 die("Cannot create $dest/html\n") unless (-d "$dest/html");
 
+chdir "man" or die("There are no man pages in $pkg\n");
 opendir man, '.';
 @mandir = readdir(man);
 
 $anindex = "$lib/$pkg/help/AnIndex";
-open(anindex, ">$anindex.in");
-tie %htmlindex, DB_File, "$lib/htmlindex", O_RDWR|O_CREAT, 0640, $DB_BTREE;
+open(anindex, ">${anindex}.in");
 
 foreach $manfile (@mandir) {
     if($manfile =~ /\.Rd$/){
@@ -67,36 +41,34 @@ foreach $manfile (@mandir) {
 	    print anindex "$manfilebase\t$manfilebase\n";
 	}
 	
-	$htmlindex{$manfilebase} = "../../$pkg/html/$manfilebase.html";
 	open(aliases, "grep '^\\\\alias' $manfile |");
 	while(<aliases>){
 	    /\\alias\{(.*)\}/;
 	    $alias = $1;
 	    print anindex "$alias\t$manfilebase\n";
-	    $htmlindex{$alias} = "../../$pkg/html/$manfilebase.html";
 	}
 	close aliases;
     }
 }
 
 close anindex;
-untie %htmlindex;
 
-system("sort -f -d $anindex.in | uniq > $anindex; rm -f $anindex.in");
+system("sort -f -d ${anindex}.in | uniq > ${anindex}");
+unlink ("$anindex.in");
 
 
 ### Build the local index.html file
 
 open(anindex, "<$anindex");
-open(htmlfile, ">$lib/$pkg/html/index.html");
+open(htmlfile, ">$lib/$pkg/html/00Index.html");
 
 print htmlfile "<HEAD><TITLE>R Function Index: $pkg</TITLE></HEAD>\n";
 print htmlfile "<BODY LINK=#0000EF VLINK=#0000EF>\n";
-print htmlfile "<A HREF =\"../../index.html\">[up]</A>\n";
-print htmlfile "<A HREF =\"../../../html/index.html\">[top]</A>\n";
+print htmlfile "[ <A HREF =\"../../../html/index.html\">top</A> | \n";
+print htmlfile "<A HREF =\"../../index.html\">up</A> ]\n";
 print htmlfile "<HR ALIGN=middle>\n";
 print htmlfile "<H2><CENTER>";
-print htmlfile $htmltitles{$pkg};
+print htmlfile $title;
 print htmlfile "</CENTER></H2>\n";
 print htmlfile "<HR ALIGN=middle>\n";
 print htmlfile "<CENTER><TABLE>\n";
@@ -121,33 +93,5 @@ close htmlfile;
 close anindex;
 
 
-### Rebuild the global library index.html file
-
-open(htmlfile, ">$lib/index.html");
-
-print htmlfile "<HEAD><TITLE>R Function Index</TITLE></HEAD>\n";
-print htmlfile "<BODY LINK=#0000EF VLINK=#0000EF>\n";
-print htmlfile "<A HREF =\"../html/index.html\">[top]</A>\n";
-print htmlfile "<HR ALIGN=middle>\n";
-print htmlfile "<H2><CENTER>";
-print htmlfile "R Function Index";
-print htmlfile "</CENTER></H2>\n";
-print htmlfile "<HR ALIGN=middle>\n";
-print htmlfile "The following packages are currently installed:\n";
-print htmlfile "<P><TABLE>\n";
-
-foreach $key (sort(keys %htmltitles)) {
-    print htmlfile "<TR ALIGN=LEFT>\n";
-    print htmlfile "<TD><A HREF=\"$key/html/index.html\">";
-    print htmlfile "$key</A><TD>";
-    print htmlfile $htmltitles{$key};
-
-}
-
-print htmlfile "</TABLE>\n";
-print htmlfile "</BODY>\n";
-
-close htmlfile;
-untie %htmltitles;
-
+build_htmlpkglist($lib);
     

@@ -44,37 +44,7 @@ else
 fi    
 
 DEST=${lib}/${pkg}/help
-if mkdir -p ${DEST}
-then
-   cp /dev/null ${DEST}/AnIndex
-else    
-   echo "Cannot write to \`${DEST}'"
-   exit 1
-fi
-
 FILES=`ls *.Rd`
-
-echo -n " >>> Building help index for package \`${pkg}' ..."
-(
-    for file in ${FILES}
-    do
-	name=`basename ${file} .Rd`
-	## In the base library, each help file should have an alias for
-	## all topics it provides documentation for (the help file name
-	## may differ from ANY object (eg `Special')
-	if [ ${pkg} != "base" ]
-	then
-	    echo "${name}	${name}"
-	fi
-	ALIASES=`grep '^\\\\alias' ${file} |
-	    sed 's/\\\\alias{\(.*\)} *$/\1/; '`
-	for alias in ${ALIASES}
-	do
-	    echo "${alias}	${name}"
-	done
-    done
-) | sort -d -f | uniq >> ${DEST}/AnIndex
-echo " done."
 
 echo " >>> Building help pages for package \`${pkg}'"
 for file in ${FILES}
@@ -84,3 +54,7 @@ do
 	| nroff -ms 2> /dev/null > ${DEST}/${name}	
     echo "  ${name}"
 done
+
+
+
+
