@@ -9,7 +9,8 @@
 load(file, envir = parent.frame())
 }
 \arguments{
-  \item{file}{a character string giving the name of the file to load.}
+  \item{file}{a connection or a character string giving the name of the file
+              to load.}
   \item{envir}{the environment where the data should be loaded.}
 }
 \seealso{

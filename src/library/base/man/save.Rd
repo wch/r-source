@@ -2,8 +2,9 @@
 \title{Save R Objects}
 \usage{
 save(\dots, list = character(0), file = "", ascii = FALSE,
-     version = NULL, envir = parent.frame())
-save.image(file = ".RData", version = NULL)
+     version = NULL, envir = parent.frame(), compress = FALSE)
+save.image(file = ".RData", version = NULL, ascii = FALSE,
+           compress = FALSE)
 }
 \alias{save}
 \alias{save.image}
@@ -11,7 +12,8 @@ save.image(file = ".RData", version = NULL)
   \item{\dots}{the names of the objects to be saved.}
   \item{list}{A character vector containing the names of objects to be
     saved.}
-  \item{file}{the name of the file where the data will be saved.}
+  \item{file}{a connection or the name of the file where the data will be
+    saved.  Must be a file name for workspace format version 1.}
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is
     written.  This is useful for transporting data between machines of
     different types.  The default value of \code{ascii} is \code{FALSE}
@@ -21,6 +23,9 @@ save.image(file = ".RData", version = NULL)
     \R 1.3.1 is version 1.  The default format as from \R 1.4.0 is
     version 2.}
   \item{envir}{environment to search for objects to be saved.}
+  \item{compress}{logical specifying whether saving to a named file is to
+    use compression. Ignored when \code{file} is a connection and for
+    workspace format version 1.}
   }
 }
 \description{
