@@ -60,6 +60,11 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
+## we need to force stores with gcc 3.4.0 on i686
+#DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS) -ffloat-store
+#dlamc.lo: dlamc.f
+#	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
+
 R: Makefile
 	@$(MAKE) Makedeps
 @USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) $(Rlapack_la) Rlapack_install
