@@ -249,7 +249,8 @@ summary.lm <- function (object, correlation = FALSE)
 }
 
 print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
-			      symbolic.cor = p > 4, signif.stars= TRUE, ...)
+	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
+	...)
 {
 	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -353,7 +354,7 @@ weights.lm <- function(x) x$weights
 df.residual.lm <- function(x) x$df.residual
 deviance.lm <- function(x) sum((x$residuals)^2)
 formula.lm <- function(x) formula(x$terms)
-family.lm <- function(object, ...) { gaussian() }
+family.lm <- function(x) { gaussian() }
 
 model.frame.lm <-
 function(formula, data, na.action, ...) {

@@ -561,10 +561,10 @@ summary.glm <- function(object, dispersion = NULL,
 }
 
 print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
-	formatfun = format,
-	na.print="", symbolic.cor = p > 4, signif.stars= TRUE, ...)
+	formatfun = format, na.print = "",
+	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
+	...)
 {
-	lformat <- function(ll) format(unlist(ll), digits = digits)
 	cat("\nCall:\n")
 	cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")
 	cat("Deviance Residuals: \n")
@@ -610,14 +610,15 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 	if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
 	##
 	cat("\n(Dispersion parameter for ", x$family$family,
-	    " family taken to be ", lformat(x$dispersion), ")\n\n",
+	    " family taken to be ", format(x$dispersion), ")\n\n",
 	    apply(cbind(paste(format.char(c("Null","Residual"),width=8,flag=""),
 			      "deviance:"),
-			lformat(x[c("null.deviance","deviance")]), " on",
-			lformat(x[c("df.null","df.residual")]),
+			format(unlist(x[c("null.deviance","deviance")]),
+			       digits= max(5, digits+1)), " on",
+			format(unlist(x[c("df.null","df.residual")])),
 			" degrees of freedom\n"),
 		  1, paste, collapse=" "),
-	    "AIC: ", lformat(x$aic),"\n\n",
+	    "AIC: ", format(x$aic, digits= max(4, digits+1)),"\n\n",
 	    "Number of Fisher Scoring iterations: ", x$iter,
 	    "\n\n", sep="")
 
@@ -651,7 +652,9 @@ deviance.glm <- function(x) x$deviance
 effects.glm <- function(x) x$effects
 fitted.glm<- function(x) x$fitted.values
 
-family.glm <- function(object, ...) object$family
+family.glm <- function(x) {
+  get(as.character(x$family$family), mode="function")()
+}
 
 residuals.glm <- function(x, type="deviance")
 {
