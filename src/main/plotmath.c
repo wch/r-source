@@ -25,10 +25,12 @@
 #include <Rconfig.h>
 #endif
 
+#include <ctype.h>
+
 #include "Mathlib.h"
 #include "Graphics.h"
 #include "Defn.h"
-#include "ctype.h"
+
 
 /* The R graphics device */
 
