@@ -18,6 +18,7 @@ format.default <-
     f.char <- function(x, justify) {
 	if(length(x) <= 1) return(x)
 	nc <- nchar(x)
+        nc[is.na(nc)] <- 2
 	w <- max(nc)
 	all <- substring(paste(rep(" ", w), collapse=""), 1, w-nc)
 	res <- if(justify == "left") paste(x, all, sep="")
@@ -67,6 +68,7 @@ format.char <- function(x, width = NULL, flag = "-")
 
     at <- attributes(x)
     nc <- nchar(x)			#-- string lengths
+    nc[is.na(nc)] <- 2
     if(is.null(width)) width <- max(nc)
     else if(width<0) { flag <- "-"; width <- -width }
     ##- 0.90.1 and earlier:
