@@ -45,16 +45,16 @@ sub html_pagehead
         "<div align=\"center\">\n";
 
     $retval .= "<A HREF=\"$prev\"><IMG SRC=\"$top/left.jpg\"\n" .
-	"ALT=\"[$prevtext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"
+	"ALT=\"[$prevtext]\" WIDTH=\"30\" HEIGHT=\"30\" BORDER=\"0\"></A>\n"
 	    if $prev;
 
     $retval .=
 	"<A HREF=\"$up\"><IMG SRC=\"$top/up.jpg\"" .
-        "ALT=\"[$uptext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"
+        "ALT=\"[$uptext]\" WIDTH=\"30\" HEIGHT=\"30\" BORDER=\"0\"></A>\n"
 	    if $up;
 
     $retval .= "<A HREF=\"$next\"><IMG SRC=\"$top/right.jpg\"\n" .
-    "ALT=\"[$nextext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"
+    "ALT=\"[$nextext]\" WIDTH=\"30\" HEIGHT=\"30\" BORDER=\"0\"></A>\n"
 	if $next;
 
     $retval .= "</DIV>\n\n";
@@ -75,9 +75,9 @@ sub html_functionhead
 	"</HEAD><BODY>\n\n";
 
     if($pkgname){
-	$retval .= "<table width=100%><tr>" .
-	    "<td>$name {$pkgname}</td>" .
-	    "<td align=\"right\">R Documentation</td></tr></table>";
+	$retval .= "<TABLE WIDTH=\"100%\"><TR>" .
+	    "<TD>$name {$pkgname}</TD>" .
+	    "<TD ALIGN=\"right\">R Documentation</TD></TR></TABLE>";
     }
 
     $retval .= html_title2($title);
@@ -183,9 +183,9 @@ sub chm_functionhead
 	"BACKGROUND=\"white\">\n\n";
 
     if($pkgname){
-	$retval .= "<table width=100%><tr>" .
-	    "<td>$name($pkgname)</td>" .
-	    "<td align=\"right\">R Documentation</td></tr></table><p>";
+	$retval .= "<TABLE WIDTH=\"100%\"><TR>" .
+	    "<TD>$name($pkgname)</TD>" .
+	    "<TD ALIGN=\"right\">R Documentation</TD></TR></TABLE>";
     }
 
     $retval .= "<OBJECT TYPE=\"application/x-oleobject\" CLASSID=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n";

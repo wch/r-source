@@ -501,7 +501,7 @@ sub text2html {
 
     my $text = $_[0];
 
-    $text =~ s/&/&amp;/go;
+    $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
     $text =~ s/>/&gt;/go;
     $text =~ s/</&lt;/go;
     $text =~ s/\\le/&lt;=/go;
