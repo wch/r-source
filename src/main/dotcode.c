@@ -275,7 +275,8 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
       SEXP retval;
 
       /* I don't like this messing with vmax <TSL> */
-      /* vmax = vmaxget(); */
+      /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
+      vmax = vmaxget();
       op = CAR(args);
       if (!isString(op))
 	  errorcall(call,"function name must be a string\n");
@@ -290,7 +291,7 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 
       retval = (SEXP)fun(args);
 
-      /* vmaxset(vmax); */
+      vmaxset(vmax);
       return retval;
 }
 
