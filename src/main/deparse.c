@@ -87,7 +87,6 @@
 /* ----- MAX_Cutoff  <	BUFSIZE !! */
 
 static int cutoff = DEFAULT_Cutoff;
-extern int isValidName(char*);
 
 static char buff[BUFSIZE];
 static int linenumber;
@@ -349,28 +348,13 @@ static void deparse2buff(SEXP s)
     int fop, lookahead, lbreak = 0;
     SEXP op, t;
     char tpb[120];
-    char * str;
 
     switch (TYPEOF(s)) {
     case NILSXP:
 	print2buff("NULL");
 	break;
     case SYMSXP:
-    	str = CHAR(PRINTNAME(s));
-	if( isValidName(str) )
-		print2buff(str);
-        else {
-                if( strlen(str)< 119 ) {
-                    sprintf(tpb,"\"%s\"",str);
-                    print2buff(tpb);
-                }
-                else {
-                    sprintf(tpb,"\"");
-                    strncat(tpb, str, 117);
-                    strcat(tpb, "\"");
-                    print2buff(tpb);
-                }
-        }
+	print2buff(CHAR(PRINTNAME(s)));
 	break;
     case CHARSXP:
 	print2buff(CHAR(s));
@@ -394,17 +378,13 @@ static void deparse2buff(SEXP s)
 	print2buff("<environment>");
 	break;
     case VECSXP:
-	fop = 0;
 	if(length(s) <= 0) print2buff("NULL");
 	else {
-    	    if(length(ATTRIB(s)) > 1 || TAG(ATTRIB(s)) != R_NamesSymbol) {
-	        attr1(s); 
-		fop = 1;
-	    }
+	    attr1(s);
 	    print2buff("list(");
 	    vec2buff(s);
 	    print2buff(")");
-	    if (fop) attr2(s);
+	    attr2(s);
 	}
 	break;
     case EXPRSXP:
@@ -444,8 +424,18 @@ static void deparse2buff(SEXP s)
 		op = CAR(s);
 		fop = PPINFO(SYMVALUE(op));
 		s = CDR(s);
-		if (fop == PP_BINARY && length(s) == 1)
-		    fop = PP_UNARY;
+		if (fop == PP_BINARY) {
+		    switch (length(s)) {
+		    case 1:
+			fop = PP_UNARY;
+			break; 
+		    case 2:
+			break; 
+		    default:
+			fop = PP_FUNCALL;
+			break;
+		    }
+		}
 		switch (fop) {
 		case PP_IF:
 		    print2buff("if (");
@@ -756,13 +746,7 @@ static void vec2buff(SEXP v)
 	linebreak(&lbreak);
 	if (!isNull(nv) && !isNull(STRING(nv)[i])
 	    && *CHAR(STRING(nv)[i])) {
-	    if( isValidName(CHAR(STRING(nv)[i])) )
-	        deparse2buff(STRING(nv)[i]);
-	    else {
-		print2buff("\"");
-		deparse2buff(STRING(nv)[i]);
-		print2buff("\"");
-	    }
+	    deparse2buff(STRING(nv)[i]);
 	    print2buff(" = ");
 	}
 	deparse2buff(VECTOR(v)[i]);
