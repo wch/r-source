@@ -5061,7 +5061,7 @@ adequate.  Now do the fit:
 @findex nlm
 
 After the fitting, @code{out$minimum} is the SSE, and
-@code{out$estimates} are the least squares estimates of the parameters.
+@code{out$estimate} are the least squares estimates of the parameters.
 To obtain the approximate standard errors (SE) of the estimates we do:
 
 @example
@@ -5145,7 +5145,7 @@ We pick sensible starting values and do the fit:
 
 @noindent
 After the fitting, @code{out$minimum} is the negative log-likelihood,
-and @code{out$estimates} are the maximum likelihood estimates of the
+and @code{out$estimate} are the maximum likelihood estimates of the
 parameters.  To obtain the approximate SEs of the estimates we do:
 
 @example
