@@ -249,6 +249,10 @@ none
 
 Directory:  incoming
 
+* PR# 877 *
+Subject: segmentation fault of unknown cause
+From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
+Date: Wed, 14 Mar 2001 17:45:25 +0100
 * PR# 876 *
 Subject: 
 From: Ian Wilson <I.Wilson@maths.abdn.ac.uk>
