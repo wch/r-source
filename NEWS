@@ -69,6 +69,19 @@ NEW FEATURES
     o   library() has a pos argument, controlling where the package is
 	attached (defaulting to pos=2 as before).
 
+    o	The predict() methods for classes lm, glm, mlm and lqs take a
+	`na.action' argument that controls how missing values in
+	`newdata' are handled (and defaults to predicting NA).
+	[Previously the value of getOption("na.action") was used and
+	this by default omitted cases with missing values, even if set
+	to `na.exclude'.]
+
+    o   xy.coords() coerces "POSIXt" objects to "POSIXct", allowing
+	lines etc to added to plot.POSIXlt() plots.
+
+    o   plot.mts() has a new argument `nc' controlling the number of
+	columns (with default the old behaviour).
+
 
 DEPRECATED & DEFUNCT
 
@@ -117,7 +130,7 @@ BUG FIXES
 	coefficients() and fitted.values() were fixed in 1.7.1.)
 
     o   body() and formals() were looking for named functions in
-	different places: they now all look starting at the
+	different places: they now both look starting at the
 	environment in which they are called.  Several documentation
 	errors for these functions have been corrected.
 

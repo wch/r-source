@@ -58,6 +58,8 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 	    x <- 1:length(x)
 	}
     }
+    ## to allow e.g. lines, points, identify to be used with plot.POSIXlt
+    if(inherits(x, "POSIXt")) x <- as.POSIXct(x)
 
     if(length(x) != length(y)) {
 	if(recycle) {

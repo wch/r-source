@@ -15,7 +15,8 @@ plot.ts(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 	  lty = par("lty"), lwd = par("lwd"),
 	  axes = TRUE, frame.plot = axes, ann = par("ann"),
 	  main = NULL, plot.type = c("multiple", "single"),
-	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines, ...)
+	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines,
+          nc, ...)
 }
 \usage{
 \method{plot}{ts}(x, y = NULL, type = "l", frame.plot = axes,
@@ -42,7 +43,10 @@ lines(x, \dots)
     drawn as well.}
   \item{panel}{a \code{function(x, col, bg, pch, type, ...)} which gives the
     action to be carried out in each panel of the display for
-    \code{plot.type="multiple"}.  The default is \code{lines}.} 
+    \code{plot.type="multiple"}.  The default is \code{lines}.}
+
+  \item{nc}{the number of columns to use when \code{type="multiple"}.
+    Defaults to 1 for up to 4 series, otherwise to 2.}
 
   \item{\dots}{additional graphical arguments, see \code{\link{plot}},
     \code{\link{plot.default}} and \code{\link{par}}.}

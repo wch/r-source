@@ -400,7 +400,7 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 	  lty = par("lty"), lwd = par("lwd"),
 	  axes = TRUE, frame.plot = axes, ann = par("ann"),
 	  main = NULL, plot.type = c("multiple", "single"),
-	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines, ...)
+	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines, nc, ...)
 {
     xlabel <- if (!missing(x)) deparse(substitute(x))## else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y))
@@ -501,7 +501,7 @@ plot.mts <- function (x, plot.type = c("multiple", "single"), panel = lines,
                       log = "", col = par("col"),  bg = NA, pch = par("pch"),
                       cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
                       ann = par("ann"),  xlab = "Time", type = "l", main=NULL,
-                      oma=c(6, 0, 5, 0),...)
+                      oma=c(6, 0, 5, 0), nc, ...)
 {
     addmain <- function(main, cex.main=par("cex.main"),
                         font.main=par("font.main"),
@@ -522,7 +522,7 @@ plot.mts <- function (x, plot.type = c("multiple", "single"), panel = lines,
     if(is.null(main)) main <- deparse(substitute(x))
     nm <- colnames(x)
     if(is.null(nm)) nm <- paste("Series", 1:nser)
-    nc <- if(nser >  4) 2 else 1
+    if(missing(nc)) nc <- if(nser >  4) 2 else 1
     oldpar <- par("mar", "oma", "mfcol")
     on.exit(par(oldpar))
     par(mar = c(0, 5.1, 0, 2.1), oma = oma)
