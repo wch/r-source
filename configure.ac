@@ -245,19 +245,19 @@ AC_ARG_WITH([jpeglib],
 [use_jpeglib=yes])
 AC_ARG_WITH([zlib],
 [AC_HELP_STRING([--with-zlib],
-                [use zlib library (if available) @<:@yes@:>@])],
+                [use system zlib library (if available) @<:@no@:>@])],
 [R_ARG_USE(zlib)],
-[use_zlib=yes])
+[use_zlib=no])
 AC_ARG_WITH([bzlib],
 [AC_HELP_STRING([--with-bzlib],
-                [use bzlib library (if available) @<:@yes@:>@])],
+                [use system bzlib library (if available) @<:@no@:>@])],
 [R_ARG_USE(bzlib)],
-[use_bzlib=yes])
+[use_bzlib=no])
 AC_ARG_WITH([pcre],
 [AC_HELP_STRING([--with-pcre],
-                [use PCRE library (if available) @<:@yes@:>@])],
+                [use system PCRE library (if available) @<:@no@:>@])],
 [R_ARG_USE(pcre)],
-[use_pcre=yes])
+[use_pcre=no])
 
 
 ## <FIXME>
@@ -1474,8 +1474,8 @@ if test "${have_jpeg}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
 fi
 ## always have these two on Unix.
-R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
-R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
+## R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
+## R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
 r_options=
 if test "${want_R_shlib}" = yes; then
   R_SH_VAR_ADD(r_options, [shared library], [, ])

@@ -11,12 +11,9 @@
 
 NEW FEATURES
 
-    o	The included PCRE sources have been updated to version 4.4,
-	and the configure check now requires PCRE >= 4.0.  This is in
-	preparation for documenting exactly what grep(perl=TRUE) does.
-
-	PCRE now uses character tables prepared for the locale in use
-	each time it is used, rather than those of the C locale.
+    o	The perl=TRUE argument to grep/regexpr/(g)sub() now uses
+	character tables prepared for the locale currently in use each
+	time it is used, rather than those of the C locale.
 
 
 UTILITIES
@@ -24,6 +21,11 @@ UTILITIES
     o	R CMD check  now runs the (Rd) examples with default RNGkind
 	(uniform & normal) and set.seed(1).
 	example(*, setRNG = TRUE) does the same.
+
+    o	undoc() in `tools' has a new default of	 `use.values = NULL'
+	which produces a warning whenever the default values of function
+	arguments differ between documentation and code.
+	Note that this affects "R CMD check" as well.
 
 
 DEPRECATED & DEFUNCT
@@ -39,12 +41,16 @@ DEPRECATED & DEFUNCT
     o	print.atomic() is defunct.
 
 
-STANDARD PACKAGES
+INSTALLATION CHANGES
 
-    o	undoc() in `tools' has a new default of	 `use.values = NULL'
-	which produces a warning whenever the default values of function
-	arguments differ between documenation and code.
-	Note that this affects "R CMD check" as well.
+    o	The defaults for configure are now --without-zlib
+	--without-bzlib --without-pcre.  PCRE >= 4.0 is now required:
+	the included PCRE sources have been updated to version 4.4.
+
+    o	configure no longer lists bzip2 and PCRE as `additional
+	capabilities' as all builds of R have had them for a while.
+
+
 
 
 	**************************************************
