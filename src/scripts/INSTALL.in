@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.113 $'
+revision='$Revision: 1.114 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -40,11 +40,8 @@ Options:
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
       --no-docs		do not build and install documentation
-      --with-package-versions	Allow for multiple versions of the
-				same package.
-      --check-R-version=true	For binary packages, make sure that the R
-                                 version matches the R version the package
-                                 was built under.
+      --with-package-versions
+                        allow for multiple versions of the same package
       --use-zip-data	collect data files in zip archive
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine '--use-zip-data' and '--use-zip-help'
@@ -148,8 +145,7 @@ use_zip_data=
 use_zip_help=
 configure_args=
 configure_vars=
-package_versions=false
-check_R_version=true
+with_package_versions=false
 save="CHECK"
 save_args="--no-site-file --no-init-file";
 
@@ -170,9 +166,7 @@ while test -n "${1}"; do
     -d|--debug)
       debug=true ;;
     --with-package-versions)
-      package_versions=true ;;
-    --check-R-version=*)
-      check_R_version=`echo "${1}" | sed -e 's/[^=]*=//' | awk '{print(tolower($0))}'`;;
+      with_package_versions=true ;;
     --no-configure)
       use_configure=false ;;
     --no-docs)
@@ -205,7 +199,7 @@ while test -n "${1}"; do
       configure_vars=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     *)
       if test -f "${1}"; then
-        mkdir -p ${tmpdir}
+        mkdir -p "${tmpdir}"
 	pkgname=`basename "${1}"`
 	## Also allow for 'package.tgz' ...
 	pkgname=`basename "${pkgname}" .tgz`
@@ -269,9 +263,13 @@ fi
 do_install_binary () {
   pkg="${1}"
   R_PACKAGE_DIR="${2}"
-  R_FULL_PKG="${3}"
+  R_PACKAGE_NAME="${3}"
 
-  message "Installing *binary* package '${R_FULL_PKG}' ..."
+  if test "${pkg}" = "${R_PACKAGE_NAME}"; then
+    message "Installing *binary* package '${pkg}' ..."
+  else
+    message "Installing *binary* package '${pkg}' as '${R_PACKAGE_NAME}' ..."
+  fi  
   cp -r . "${R_PACKAGE_DIR}"
 }
 
@@ -284,14 +282,17 @@ do_install_source () {
   ## Make the destination directories available to the developer's
   ## installation scripts (e.g. configure, etc.)
   R_PACKAGE_DIR="${2}"
-  R_FULL_PKG="${3}"
+  R_PACKAGE_NAME="${3}"
   R_LIBRARY_DIR="${lib}"
-  R_PACKAGE_NAME="${pkg}"
   export R_LIBRARY_DIR
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
 
-  message "Installing *source* package '${R_FULL_PKG}' ..."
+  if test "${pkg}" = "${R_PACKAGE_NAME}"; then
+    message "Installing *source* package '${pkg}' ..."
+  else
+    message "Installing *source* package '${pkg}' as '${R_PACKAGE_NAME}' ..."
+  fi  
   stars="**"
 
   if ${use_configure} && test -x ./configure ; then
@@ -351,8 +352,7 @@ do_install_source () {
     Rfiles=`LC_COLLATE=C ls R/*.[RSqrs] R/${R_OSTYPE}/*.[RSqrs] 2>/dev/null`
     if test -n "${Rfiles}"; then
       mkdir -p "${R_PACKAGE_DIR}/R"
-	rm -f "${R_PACKAGE_DIR}/R/"*
-	echo ".packageName <- \"${R_FULL_PKG}\"" > "${R_PACKAGE_DIR}/R/${pkg}"
+      rm -f "${R_PACKAGE_DIR}/R/"*
       cat ${Rfiles} >> "${R_PACKAGE_DIR}/R/${pkg}"
     fi
   fi
@@ -415,7 +415,7 @@ do_install_source () {
     message "save image"
     if test -f NAMESPACE; then
       echo "ERROR: cannot use --save if package has NAMESPACE yet"
-	exit 1
+      exit 1
     fi
     ## <NOTE>
     ## We want R to run as quietly as possible when creating the save
@@ -433,7 +433,7 @@ do_install_source () {
     ## </NOTE>
     if test ${?} -ne 0; then
       echo "ERROR: execution of package source for '${pkg}' failed"
-	exit 1
+      exit 1
     fi
     mv .RData "${R_PACKAGE_DIR}/R/all.rda"
     mv "${R_PACKAGE_DIR}/R/${pkg}" "${R_PACKAGE_DIR}/R/${pkg}.R"
@@ -477,10 +477,10 @@ do_install_source () {
 	echo "${NO_PERL5_MSG}"
       else
 	if ${debug}; then
-	  echo "DEBUG: build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib} ${R_LIB_DIR}/${R_FULL_PKG}"
+	  echo "DEBUG: build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib} ${R_PACKAGE_DIR}"
 	fi
 	${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" \
-	  ${build_help_opts} "../${pkg}" "${lib}" "${R_LIB_DIR}/${R_FULL_PKG}"
+	  ${build_help_opts} "../${pkg}" "${lib}" "${R_PACKAGE_DIR}"
 	if test ${?} -ne 0; then
 	  echo "ERROR: building help failed for package '${pkg}'"
 	  exit 6
@@ -528,44 +528,38 @@ do_install () {
   cd "${1}"
   pkg=`basename "${1}"`
 
-  ## Set R_PACKAGE_DIR here at the top level.  If a version
-  ## is being specified, tack that on.  Also changed all
-  ## occurances of ${lib}/$[pkg} with R_PACKAGE_DIR JG
-  if ${package_versions}; then
-    ## Get package version
+  ## Set R_PACKAGE_DIR here at the top level.  If a version is being
+  ## specified, tack that on.
+  if ${with_package_versions}; then
     version=`get_dcf_field Version DESCRIPTION`
-    R_FULL_PKG="${lib}/${pkg}_${version}"
+    R_PACKAGE_NAME="${pkg}_${version}"
     R_PACKAGE_DIR="${lib}/${pkg}_${version}"
   else
-      R_FULL_PKG="${lib}/${pkg}"
-      R_PACKAGE_DIR="${R_FULL_PKG}"
+    R_PACKAGE_NAME="${pkg}"
+    R_PACKAGE_DIR="${lib}/${pkg}"
   fi
   export R_PACKAGE_DIR
-  export R_FULL_PKG
+  export R_PACKAGE_NAME
 
-  ## Unrelated to toher changes, put in the ability to force a package
-  ## to be installed even if the R version does not match up. JG
-  if ${check_R_version}; then
-    depends=`get_dcf_field Depends DESCRIPTION`
-    depends=`echo "${depends}" | grep 'R *('`
-    if test "${depends}"; then
-      depends=`echo "${depends}" | sed 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
-      dep_operator=`set - ${depends}; echo ${1}`
-      dep_version=`set - ${depends}; echo ${2}`
-      ## Currently, only operators '<=' and '>=' are supported.  Hence we
-      ## check this, and also whether we found a version string.
-	if (test "${dep_operator}" = "<=" \
-	  || test "${dep_operator}" = ">=") \
-	  && test -n "${dep_version}"; then
-	dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
-	if test ${dep_ok} -eq 0; then
-	  echo "ERROR: This R is version ${R_VERSION}"
-	  echo "       package '${pkg}' depends on R ${dep_version}"
-	  exit 1;
-	fi
-      else
-	echo "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
+  depends=`get_dcf_field Depends DESCRIPTION`
+  depends=`echo "${depends}" | grep 'R *('`
+  if test "${depends}"; then
+    depends=`echo "${depends}" | sed 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
+    dep_operator=`set - ${depends}; echo ${1}`
+    dep_version=`set - ${depends}; echo ${2}`
+    ## Currently, only operators '<=' and '>=' are supported.  Hence we
+    ## check this, and also whether we found a version string.
+    if (test "${dep_operator}" = "<=" \
+         || test "${dep_operator}" = ">=") \
+         && test -n "${dep_version}"; then
+      dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
+      if test ${dep_ok} -eq 0; then
+        echo "ERROR: This R is version ${R_VERSION}"
+        echo "       package '${pkg}' depends on R ${dep_version}"
+        exit 1;
       fi
+    else
+      echo "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
     fi
   fi
 
@@ -600,10 +594,10 @@ do_install () {
 
   if ${is_source_package}; then
     ## This is a source package ... hopefully.
-    do_install_source "${pkg}" "${R_PACKAGE_DIR}" "${R_FULL_PKG}"
+    do_install_source "${pkg}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
   else  
     ## This is a binary package ... hopefully.
-    do_install_binary "${pkg}" "${R_PACKAGE_DIR}" "${R_FULL_PKG}"
+    do_install_binary "${pkg}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
   fi
 
   chmod -R a+r "${R_PACKAGE_DIR}"
@@ -631,7 +625,7 @@ eval "for pkg in ${pkgs}; do do_install \"\${pkg}\"; done"
 cp "${R_HOME}/doc/html/R.css" "${lib}"
 
 ## Solaris will not remove any directory in the current path
-cd ${startdir}
+cd "${startdir}"
 if test -d "${tmpdir}"; then
   rm -rf "${tmpdir}"
 fi
