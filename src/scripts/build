@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.12 $'
+revision='$Revision: 1.13 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -75,6 +75,7 @@ checking () {
     echo ${ECHO_N} "* checking $@ ...${ECHO_C}"
   fi
 }
+creating () { echo ${ECHO_N} "* creating $@ ...${ECHO_C}"; }
 message () { echo "* $@"; }
 result () { echo "${ECHO_T} $@"; }
 
@@ -202,7 +203,7 @@ buildpkg () {
   else
     result "NO"
     if test -n "${title}"; then
-      message "creating \`TITLE' from \`DESCRIPTION' title entry"
+      creating "\`TITLE' from \`DESCRIPTION' title entry"
       ${R_HOME}/bin/maketitle > TITLE
       if test ${?} -ne 0; then
 	result "ERROR"
@@ -252,7 +253,7 @@ buildpkg () {
   else
     result "NO"
     if test -n "${Rdfiles}"; then
-      message "creating \`INDEX' from Rd files"
+      creating "\`INDEX' from Rd files"
       ${R_HOME}/bin/Rdindex ${Rdfiles} > INDEX
       if test ${?} -ne 0; then
 	result "ERROR"
@@ -281,7 +282,7 @@ buildpkg () {
     else
       result "NO"
       if test -n "${Rdfiles}"; then
-	message "creating \`data/00Index' from Rd files"
+	creating "\`data/00Index' from Rd files"
 	${R_HOME}/bin/Rdindex ${Rdfiles} > data/00Index
 	if test ${?} -ne 0; then
 	  result "ERROR"
