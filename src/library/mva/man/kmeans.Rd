@@ -11,7 +11,8 @@ kmeans(x, centers, iter.max = 10)
 }
 \arguments{
 \item{x}{
-A data frame or matrix of data.
+  A numeric matrix of data, or an object that can be coerced to such a
+  matrix (such as a numeric vector or a data frame with all numeric columns).
 }
 \item{centers}{
   Either the number of clusters or a set of initial cluster centers.

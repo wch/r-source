@@ -103,10 +103,14 @@ BUG FIXES
 	correctly if they are vectors of length > 1.  (It is not clear
 	from the help that this was ever intended.)
 
-    o	Error messages of do.call(), e.g., are now spaced properly.
+    o	Error messages of e.g. do.call() are now spaced properly.
 
-    o   scan() recognises quoted strings again. The default for the
-        quote= argument got set wrongly when it was introduced.
+    o   scan() recognises quoted strings by default again. The default 
+	for the quote= argument got set wrongly when it was introduced.
+
+    o	kmeans was failing on vector inputs (although not documented
+	to accept such).
+
 
 
 		CHANGES IN R VERSION 1.1.0
