@@ -32,7 +32,7 @@ NEW FEATURES
 
 	The same files of Perl code are now also used under Windows.
 
-    o   Add-ons for utilities like perl or LaTeX have now a central
+    o   Add-ons for utilities like Perl or LaTeX have now a central
         place in $R_HOME/share. Migration of existing files might take
         a while, though.
 
@@ -66,7 +66,7 @@ NEW FEATURES
 
     o	New command-line option --no-restore-history implied by --vanilla.
 
-    o	Command-line option --restore is now --no-restore-data and
+    o	Command-line option --no-restore is now --no-restore-data and
 	--no-restore implies --no-restory-* (currently `data' and
 	`history').
 
@@ -142,7 +142,7 @@ BUG FIXES
     o   old.packages() now sorts version strings correctly by
 	splitting at "." and "-".
 
-    o   Page sizes for "a4" and "legal" were interchanged in dev.print.
+    o   Paper sizes for "a4" and "legal" were interchanged in dev.print.
 
     o   data(state)'s  state.abb  has been corrected to use official
         2-letter abbrevations.
