@@ -1441,12 +1441,11 @@ static unsigned long bitgp(XImage *xi, int x, int y)
 	    r = ((i>>RShift)&RMask) * 255 /(RMask);
 	    g = ((i>>GShift)&GMask) * 255 /(GMask);
 	    b = ((i>>BShift)&BMask) * 255 /(BMask);
-//	    Rprintf("i %x rgb %x %x %x ", i, r,g,b);
 	    return (r<<16) | (g<<8) | b;
     default:
 	return 0;
     }
-    return 0;
+    return 0; /* not reached, needed for some compilers */
 }
 
 	/********************************************************/
