@@ -41,6 +41,7 @@
   Ben Bolker,
   Goran Brostrom,
   Saikat DebRoy,
+  Lyndon Drake,
   Paul Gilbert,
   Robert King,
   Philippe Lambert,
