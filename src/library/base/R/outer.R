@@ -7,9 +7,14 @@ outer <- function (X, Y, FUN = "*", ...)
         dim(robj) <- c(dX, dY)
     } else {
         FUN <- match.fun(FUN)
-        Y <- rep.int(Y, rep.int(length(X), length(Y)))
-        X <- rep(X, length.out = length(Y))
-        robj <- array(FUN(X, Y, ...), c(dX, dY))
+        ## Y may have a class, so don't use rep.int
+        Y <- rep(Y, rep.int(length(X), length(Y)))
+        ##  length.out is not an argument of the generic rep()
+##        X <- rep(X, length.out = length(Y))
+        if(length(X) > 0)
+            X <- rep(X, times = ceiling(length(Y)/length(X)))
+        robj <- FUN(X, Y, ...)
+        dim(robj) <- c(dX, dY) # careful not to lose class here
     }
     ## no dimnames if both don't have ..
     if(no.nx) nx <- vector("list", length(dX)) else

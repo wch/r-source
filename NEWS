@@ -140,6 +140,11 @@ NEW FEATURES
 	in the ... of graphics functions without a warning.  It now
 	works as expected in contour().
 
+    o   The "POSIXct" and "POSIXlt" methods for rep() now pass ... on
+	to the default method (as expected by PR#5818).
+
+    o   The print() method for "difftime" objects now handles arrays.
+
 
 UTILITIES
 
@@ -237,6 +242,8 @@ BUG FIXES
     o   Specifying asp is now respected in calls like plot(1, 10, asp=1)
 	with zero range on both axes.
 
+    o   outer() called rep() with an argument the generic does not
+	have, and discarded the class of the answer.
 
 
 

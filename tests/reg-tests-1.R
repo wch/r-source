@@ -2865,3 +2865,10 @@ stopifnot(mode(as.matrix(lll)) == "character")
 ## both were char before 1.9.0
 
 
+## outer called rep with a non-generic arg
+x <- .leap.seconds[1:6]
+outer(x, x, "<")
+outer(x, x, "-")
+(z <- outer(x, x, "difftime", units="days"))
+stopifnot(class(z) == "difftime")
+## failed in 1.8.1
