@@ -11,7 +11,8 @@
 heatmap(x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
         scale=c("row", "column", "none"), na.rm = TRUE,
         margins = c(5, 5), ColSideColors, RowSideColors,
-        main=NULL, xlab=NULL, ylab=NULL, \dots)
+        cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
+        main = NULL, xlab = NULL, ylab = NULL, \dots)
 }
 \arguments{
   \item{x}{numeric matrix of the values to be plotted. }
@@ -41,6 +42,9 @@ heatmap(x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
   \item{RowSideColors}{(optional) character vector of length \code{nrow(x)}
     containing the color names for a vertical side bar that may be used to
     annotate the rows of \code{x}.}
+  \item{cexRow, cexCol}{positive numbers, used as \code{cex.axis} in
+    for the row or column axis labeling.  The defaults currently only
+    use number of rows or columns, respectively.}
   \item{main, xlab, ylab}{main, x- and y-axis titles; defaults to none.}
   \item{\dots}{additional arguments passed on to \code{\link{image}},
     e.g., \code{col} specifying the colors.} %

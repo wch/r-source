@@ -301,7 +301,7 @@ STANDARD PACKAGES
 	- factanal() now returns the test statistic and P-value formerly
 	  computed in the print method.
 
-	- heatmap() has more arguments, partly thanks to Wolfgang Huber.
+	- heatmap() has more arguments, mostly thanks to Wolfgang Huber.
 
 	- Arguments `unit' and `hmin' of plclust() are now implemented.
 

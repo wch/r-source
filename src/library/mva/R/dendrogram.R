@@ -443,6 +443,7 @@ heatmap <-
 function (x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
 	  scale = c("row", "column", "none"), na.rm=TRUE,
 	  margins = c(5, 5), ColSideColors, RowSideColors,
+          cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
 	  main = NULL, xlab = NULL, ylab = NULL, ...)
 {
     scale <- match.arg(scale)
@@ -454,9 +455,6 @@ function (x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
 	stop("`x' must have at least 2 rows and 2 columns")
     if(!is.numeric(margins) || length(margins) != 2)
 	stop("`margins' must be a numeric vector of length 2")
-
-    r.cex <- 0.2 + 1/log10(nr)
-    c.cex <- 0.2 + 1/log10(nc)
 
     ## by default order by row/col means
     if(is.null(Rowv)) Rowv <- rowMeans(x, na.rm = na.rm)
@@ -545,11 +543,11 @@ function (x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
 	  xlab = "",ylab = "", ...)
     axis(1, 1:nc, las = 2, line = -0.5, tick = 0,
 	 labels = if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x),
-	 cex.axis = c.cex)
+	 cex.axis = cexCol)
     if(!is.null(xlab)) mtext(xlab, side = 1, line = margins[1] - 1.25)
     axis(4, 1:nr, las = 2, line = -0.5, tick = 0,
 	 labels = if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x),
-	 cex.axis = r.cex)
+	 cex.axis = cexRow)
     if(!is.null(ylab)) mtext(ylab, side = 4, line = margins[2] - 1.25)
 
     if (!missing(add.expr))
