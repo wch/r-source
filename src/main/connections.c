@@ -949,10 +949,14 @@ static Rboolean bzfile_open(Rconnection con)
     FILE* fp;
     BZFILE* bfp;
     int bzerror;
+    char mode = "rb";
 
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
-    fp = fopen(R_ExpandFileName(con->description), con->mode);
+    /* regardless of the R view of the file, the file must be opened in
+       binary mode where it matters */
+    mode[0] = con->mode[0];
+    fp = fopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
 	warning("cannot open bzip2-ed file `%s'",
 		R_ExpandFileName(con->description));
