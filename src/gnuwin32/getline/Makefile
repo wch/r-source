@@ -3,6 +3,9 @@ include ../MkRules
 CFLAGS=-DWin32
 LINKFLAGS=-s
 
+ifdef DEBUG
+ CFLAGS+=-g
+endif
 
 gl.a: getline.o
 

@@ -13,6 +13,10 @@ header-install: libintl.h
 ## Windows never uses the locale or charset alias files.
 DEFS = -DIN_LIBINTL -DNO_XMALLOC -DHAVE_CONFIG_H
 
+ifdef DEBUG
+ DEFS+=-g
+endif
+
 CFLAGS = -O2 $(DEFS) -I. -I../../include
 dcigettext-CFLAGS=-DLOCALEDIR=\"\"
 
