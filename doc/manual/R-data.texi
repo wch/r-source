@@ -9,7 +9,7 @@
 
 @dircategory Programming
 @direntry
-* R Data: (R-data).      R Data Import/Export
+* R Data: (R-data).      R Data Import/Export.
 @end direntry
 
 @finalout

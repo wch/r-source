@@ -9,7 +9,7 @@
 
 @dircategory Programming
 @direntry
-* R Language: (R-lang).      The R Language Definition
+* R Language: (R-lang).      The R Language Definition.
 @end direntry
 
 @finalout
