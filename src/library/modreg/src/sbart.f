@@ -2,13 +2,13 @@ C  sbart() : The cubic spline smoother
 C  -------
 C Calls	 sgram	(sg0,sg1,sg2,sg3,knot,nk)
 C	 stxwx	(xs,ys,ws,n,knot,nk,xwy,hs0,hs1,hs2,hs3)
-C	 sslvrg (penalt,dofoff,xs,ys,ws,n,knot,nk,  coef,sz,lev,crit,icrit,
+C	 sslvrg (penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,  coef,sz,lev,crit,icrit,
 C		 spar,ratio, xwy, hs0,hs1,hs2,hs3, sg0,sg1,sg2,sg3,
 C		 abd,p1ip,p2ip,ld4,ldnk,ier)
 C
 C is itself called from  qsbart() [./qsbart.f]   which has only one work array
 C
-      subroutine sbart(penalt,dofoff,xs,ys,ws,n,knot,nk,
+      subroutine sbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &	   coef,sz,lev, crit,icrit,
      &	   spar,ispar,lspar,uspar,
      &	   tol,isetup, xwy,
@@ -69,7 +69,7 @@ C   p2ip(ldnk,nk)	all inner products between columns of L inverse
 C			where  L'L = [X'WX + lambda*SIGMA]  NOT REFERENCED
       
       integer n, nk,isetup,icrit,ispar,ld4,ldnk,ier
-      double precision penalt,dofoff,xs(n),ys(n),ws(n),
+      double precision penalt,dofoff,xs(n),ys(n),ws(n),ssw,
      &     knot(nk+4), coef(nk),sz(n),lev(n), crit,spar,lspar,uspar,tol,
      &     xwy(nk),hs0(nk),hs1(nk),hs2(nk),hs3(nk), 
      &     sg0(nk),sg1(nk),sg2(nk),sg3(nk),
@@ -85,6 +85,7 @@ c     unnecessary initialization of d u to keep g77 -Wall happy
 c
       d = 0.0d0
       u = 0.0d0
+
 C  Compute SIGMA, X' W**2 X, X' W**2 z, trace ratio, s0, s1.
 
 C     		SIGMA     -> sg0,sg1,sg2,sg3
@@ -118,7 +119,7 @@ C     Compute estimate
       
       if(ispar.eq.1) then
 C     Value of spar supplied
-         call sslvrg(penalt,dofoff,xs,ys,ws,n,knot,nk,
+         call sslvrg(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &        coef,sz,lev,crit,icrit,
      &        spar,ratio, xwy,
      &        hs0,hs1,hs2,hs3, sg0,sg1,sg2,sg3,
@@ -200,7 +201,7 @@ C
       x = v
       e = 0.0
       spar = x
-      call sslvrg(penalt,dofoff,xs,ys,ws,n,knot,nk,
+      call sslvrg(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &	   coef,sz,lev,crit,icrit,
      &	   spar,ratio, xwy,
      &	   hs0,hs1,hs2,hs3, sg0,sg1,sg2,sg3,
@@ -267,7 +268,7 @@ C
       if (abs(d) .lt. tol1) u = x + sign(tol1, d)
       
       spar = u
-      call sslvrg(penalt,dofoff,xs,ys,ws,n,knot,nk,
+      call sslvrg(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &	   coef,sz,lev,crit,icrit,
      &	   spar,ratio, xwy,
      &	   hs0,hs1,hs2,hs3, sg0,sg1,sg2,sg3,

@@ -1,8 +1,7 @@
-C An interface to sbart() --- less arguments BUT unspecified scrtch() dimension
+C An interface to sbart() --- fewer arguments BUT unspecified scrtch() dimension
 C
-C unused !
 C
-      subroutine qsbart(penalt,dofoff,xs,ys,ws,n,knot,nk,
+      subroutine qsbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &     coef,sz,lev,
      &     crit,iparms,spar,parms,
      &     isetup, scrtch, ld4,ldnk,ier)
@@ -10,13 +9,13 @@ c
       implicit none
 
       integer n,nk,isetup, iparms(2), ld4,ldnk,ier
-      double precision penalt,dofoff, xs(n),ys(n),ws(n),
+      double precision penalt,dofoff, xs(n),ys(n),ws(n),ssw,
      &     knot(nk+4), coef(nk),sz(n),lev(n), 
      &     crit,spar,parms(3),
      &     scrtch(*)
 C          ^^^^^^^^ dimension (9+2*ld4+nk)*nk
 
-      call sbart(penalt,dofoff,xs,ys,ws,n,knot,nk,
+      call sbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &     coef,sz,lev, crit,
      &     iparms(1),spar,iparms(2),parms(1),parms(2),parms(3),
      &     isetup,

@@ -383,6 +383,9 @@ BUG FIXES
     o   Changing column modes from factor/character to numeric in
 	edit.data.frame (and fix on data frames) is now allowed.
 
+    o   smooth.spline()'s GCV method now uses a more accurate formula
+	when there are repeated x points.
+
     o	The `ask' argument of plot.new() can now be used... <<<<not yet>>
 
 

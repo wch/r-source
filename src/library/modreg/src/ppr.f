@@ -1219,7 +1219,7 @@ C	par = (icrit, ispar)
       param(3) = 1d-2
       isetup = 0
       ier = 1
-      call qsbart(gcvpen,df1,dx,dy,dw,n,knot,nk,coef,dsmo,lev,crit,
+      call qsbart(gcvpen,df1,dx,dy,dw,0.0,n,knot,nk,coef,dsmo,lev,crit,
      & par,lambda,param,isetup, work,4,1,ier)
       if(ier .gt. 0) call intpr('TROUBLE:',8, ier, 1)
       do 50 i = 1,n

@@ -1,12 +1,12 @@
 C Output from Public domain Ratfor, version 1.0
-      subroutine sslvrg(penalt,dofoff, x,y,w,n, knot,nk, coef,sz,lev,
+      subroutine sslvrg(penalt,dofoff,x,y,w,ssw,n,knot,nk,coef,sz,lev,
      *     crit,icrit, spar,ratio, xwy, hs0,hs1,hs2,hs3,
      *     sg0,sg1,sg2,sg3, abd,p1ip,p2ip,ld4,ldnk,info)
 
       implicit none
 c     -------------
       integer n,nk,icrit,ld4,ldnk,info
-      DOUBLE precision penalt,dofoff,x(n),y(n),w(n),
+      DOUBLE precision penalt,dofoff,x(n),y(n),w(n),ssw,
      &     knot(nk+4), coef(nk),sz(n),lev(n), crit, spar,ratio,
      *     xwy(nk), hs0(nk),hs1(nk),hs2(nk),hs3(nk),
      *     sg0(nk),sg1(nk),sg2(nk),sg3(nk), abd(ld4,nk),
@@ -19,31 +19,28 @@ C local variables
       integer i,icoef,ileft,ilo,j,mflag, lenkno
       double precision lambda,b0,b1,b2,b3,eps, xv,rss,df, sumw
 
-      lenkno=nk+4
+      lenkno = nk+4
       ilo = 1
-      eps = .1d-10
+      eps = 0.1d-10
 C Purpose : Solves the smoothing problem and computes the
 C           criterion function (OCV or GCV).
 C The coeficients of estimated smooth
       lambda = ratio*16.**(-2. + spar*(6.))
       do 1 i=1,nk
-         coef(i) = xwy(i)
- 1    continue
-      do   2 i=1,nk
-         abd(4,i) = hs0(i)+lambda*sg0(i)
- 2    continue
+ 1       coef(i) = xwy(i)
 
-      do   4 i=1,(nk-1)
+      do 2 i=1,nk
+ 2       abd(4,i) = hs0(i)+lambda*sg0(i)
+
+      do 4 i=1,(nk-1)
          abd(3,i+1) = hs1(i)+lambda*sg1(i)
  4    continue
 
-      do   6 i=1,(nk-2)
-         abd(2,i+2) = hs2(i)+lambda*sg2(i)
- 6    continue
+      do 6 i=1,(nk-2)
+ 6       abd(2,i+2) = hs2(i)+lambda*sg2(i)
 
-      do   8 i=1,(nk-3)
-         abd(1,i+3) = hs3(i)+lambda*sg3(i)
- 8    continue
+      do 8 i=1,(nk-3)
+ 8       abd(1,i+3) = hs3(i)+lambda*sg3(i)
 
       call dpbfa(abd,ld4,nk,3,info)
       if(info.ne.0)then
@@ -54,28 +51,25 @@ C     Value of smooth at the data points
       icoef = 1
       do 12 i=1,n
          xv = x(i)
-C        sz(i) = bvalu (knot,       coef, nk,4,0,xv,icoef,work(1)) 
-         sz(i) = bvalue(knot,lenkno,coef, nk,4,xv,0)
+ 12      sz(i) = bvalue(knot,lenkno,coef, nk,4,xv,0)
 C     Compute the criterion function if requested
- 12   continue
 
-      if(icrit.eq.0)then
+      if(icrit .eq. 0)then
          return
       else
 C     Ordinary or Generalized CV
 C     Get Leverages First
          call sinerp(abd,ld4,nk,p1ip,p2ip,ldnk,0)
-         do    16 i=1,n
+         do 16 i=1,n
             xv = x(i)
-C     call intrv(knot(1),(nk+1),xv,ilo,ileft,mflag)
             call interv(knot(1),(nk+1),xv,ileft,mflag)
-            if(mflag.eq.-1)then
+            if(mflag .eq. -1) then
                ileft = 4
                xv = knot(4)+eps
             endif
-            if(mflag.eq.1)then
+            if(mflag .eq. 1) then
                ileft = nk
-               xv = knot(nk+1)-eps
+               xv = knot(nk+1) - eps
             endif
             j=ileft-3
 C     call bspvd(knot,4,1,xv,ileft,4,vnikx,work)
@@ -91,39 +85,43 @@ C     call bspvd(knot,4,1,xv,ileft,4,vnikx,work)
      *           2.*p1ip(2,j+1)*b1*b3 +    p1ip(4,j+2)*b2**2 +
      &           2.*p1ip(3,j+2)*b2*b3 +    p1ip(4,j+3)*b3**2
      &           )*w(i)**2
-C     Evaluate Criterion
  16      continue
 
-         if(icrit.eq.1)then
+C     Evaluate Criterion
+
+         if(icrit .eq. 1)then
 C     Generalized CV
-            rss= 0d0
+            rss = ssw
             df = 0d0
-            sumw=0d0
-            do    24 i=1,n
+            sumw = 0d0
+            do 24 i=1,n
                rss = rss + ((y(i)-sz(i))*w(i))**2
  24         continue
-            do    26 i=1,n
-               df = df + lev(i)
-C     do i=1,n { sumw  = sumw  + w(i)}
- 26         continue
+            do 26 i=1,n
+ 26            df = df + lev(i)
+c Here w(i) is the square root of the weights
+            do 28 i = 1, n
+ 28            sumw = sumw + w(i)**2
 
-            crit = (rss/n)/((1d0-(dofoff+penalt*df)/n)**2)
-C     crit = (rss/n)/((1d0-(dofoff+penalt*df)/sumw)**2)
+c scaling made sumw the total number of observations
+            crit = (rss/sumw)/((1d0-(dofoff+penalt*df)/sumw)**2)
+c            call dblepr("spar", 4, spar, 1)
+c            call dblepr("crit", 4, crit, 1)
          else
-            if(icrit.eq.2)then
+            if(icrit .eq. 2) then
 C     Ordinary CV
                crit = 0d0
-               do    30 i=1,n
-                  crit = crit + (((y(i)-sz(i))*w(i))/(1-lev(i)))**2
- 30            continue
-               crit=crit/n
+               do 30 i = 1,n
+ 30               crit = crit + (((y(i)-sz(i))*w(i))/(1-lev(i)))**2
+               crit = crit/n
+c            call dblepr("spar", 4, spar, 1)
+c            call dblepr("crit", 4, crit, 1)
             else
 C     df matching
-               crit=0d0
-               do    32 i=1,n
-                  crit=crit+lev(i)
- 32            continue
-               crit=3+(dofoff-crit)**2
+               crit = 0d0
+               do 32 i=1,n
+ 32               crit = crit+lev(i)
+               crit = 3 + (dofoff-crit)**2
             endif
          endif
          return

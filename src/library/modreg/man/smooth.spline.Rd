@@ -37,6 +37,12 @@ smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
   If \code{spar} is missing or 0, the value of \code{df} is used to
   determine the degree of smoothing. If both are missing, leave-one-out
   cross-validation is used to determine \eqn{\lambda}.
+
+  The `generalized' cross-validation method will work correctly when
+  there are duplicated points in \code{x}.  However, it is ambiguous what
+  leave-one-out cross-validation means with duplicated points, and the
+  internal code uses an approximation that involves leaving out groups
+  of duplicated points.  \code{cv=TRUE} is best avoided in that case.
 }
 \value{
   An object of class \code{"smooth.spline"} with components
@@ -60,8 +66,9 @@ attach(cars)
 plot(speed, dist, main = "data(cars)  &  smoothing splines")
 cars.spl <- smooth.spline(speed, dist)
 (cars.spl)
-all(cars.spl $ w == table(speed)) # TRUE (weights = multiplicities)
+## This example has duplicate points, so avoid cv=TRUE
 \testonly{
+  all(cars.spl $ w == table(speed)) # TRUE (weights = multiplicities)
   str(cars.spl, digits=5, vec.len=6)
   cars.spl$fit
 }

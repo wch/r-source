@@ -50,11 +50,13 @@ smooth.spline <-
     ux <- unique(sort(x))
     ox <- match(x, ux)
     tmp <- matrix(unlist(tapply(seq(along=y), ox,
-				function(i,y,w) c(mean(y[i]), sum(w[i])),
+				function(i,y,w)
+                                c(sum(w[i]), sum(w[i]*y[i]),sum(w[i]*y[i]^2)),
 				y = y, w = w)),
-		  ncol = 2, byrow=TRUE)
-    ybar <- tmp[, 1]
-    wbar <- tmp[, 2]
+		  ncol = 3, byrow=TRUE)
+    wbar <- tmp[, 1]
+    ybar <- tmp[, 2]/wbar
+    yssw <- sum(tmp[, 3] - wbar*ybar^2)
     nx <- length(ux)
     r.ux <- ux[nx] - ux[1]
     xbar <- (ux - ux[1])/r.ux
@@ -73,6 +75,7 @@ smooth.spline <-
 		    x = as.double(xbar),
 		    y = as.double(ybar),
 		    w = as.double(wbar),
+                    ssw = as.double(yssw),
 		    as.integer(nx),
 		    as.double(knot),
 		    as.integer(nk),
@@ -80,13 +83,13 @@ smooth.spline <-
 		    ty = double(nx),
 		    lev = double(nx),
 		    crit = double(1),
-		    iparms =as.integer(c(icrit, ispar)),
+		    iparms = as.integer(c(icrit, ispar)),
 		    spar = as.double(spar),
-		    parms= as.double(c(0, 1.5, 0.001)),
-		    isetup= as.integer(0),
-		    scrtch= double((17 + nk) * nk),
-		    ld4= as.integer(4),
-		    ldnk= as.integer(1),
+		    parms = as.double(c(0, 1.5, 0.001)),
+		    isetup = as.integer(0),
+		    scrtch = double((17 + nk) * nk),
+		    ld4 = as.integer(4),
+		    ldnk = as.integer(1),
 		    ier = as.integer(1),
 		    DUP = FALSE, PACKAGE="modreg"
 		    )[c("coef","ty","lev","spar","ier")]
@@ -102,7 +105,7 @@ smooth.spline <-
 	    ww[!(ww > 0)] <- 1
 	    weighted.mean(((y - fit$ty[ox])/(1 - (lev[ox] * w)/ww[ox]))^2, w)
 	} else weighted.mean((y - fit$ty[ox])^2, w)/
-	    (1 - (df.offset + penalty * df)/sum(wbar))^2
+	    (1 - (df.offset + penalty * df)/n)^2
     pen.crit <- sum(wbar * (ybar - fit$ty) * ybar)
     fit.object <- list(knot = knot, nk = nk, min = ux[1], range = r.ux,
 		       coef = fit$coef)
@@ -120,7 +123,9 @@ print.smooth.spline <- function(x, ...)
 	cat("Call:\n")
 	dput(cl)
     }
-    if(is.null(cv <- cl$cv)) cv <- FALSE
+    cv <- cl$cv
+    if(is.null(cl$cv)) cv <- FALSE
+    if(is.name(cv)) cv <- eval(cv)
     cat("\nSmoothing Parameter (Spar):", format(x$spar), "\n")
     cat("Equivalent Degrees of Freedom (Df):", format(x$df), "\n")
     cat("Penalized Criterion:", format(x$pen.crit), "\n")
