@@ -14768,7 +14768,16 @@ if test "${r_cv_prog_cc_m+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   echo "#include <math.h>" > conftest.c
-for prog in "${CC} -M" "${CPP} -M" "cpp -M"; do
+cc_minus_MM=false
+if test "${GCC}" = yes; then
+  gcc_version=`${CC} -v 2>&1 | grep "^.*g.. version" | \
+    sed -e 's/^.*g.. version *//'`
+  case "${gcc_version}" in
+    1.*|2.*|3.[01]*) ;;
+    *) cc_minus_MM="${CC} -MM" ;;
+  esac
+fi
+for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
   if ${prog} conftest.c 2>/dev/null | \
       grep 'conftest.o: conftest.c' >/dev/null; then
     r_cv_prog_cc_m="${prog}"
@@ -14903,7 +14912,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:14906: \"$ac_link\") >&5
+(eval echo $as_me:14915: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -14983,7 +14992,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:14986: \"$ac_link\") >&5
+(eval echo $as_me:14995: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -18532,6 +18541,11 @@ done
 ## </NOTE>
 
 ## Used to build src/include/Rmath.h.
+## <NOTE>
+## we don't use AC_CONFIG_HEADERS on Rmath.h.in because
+## a) that would comment out #undef statements in Rmath.h.in and
+## b) Rmath.h should be a self-contained file for standalone Rmath use.
+## </NOTE>
 if test "${ac_cv_func_expm1}" = yes; then
   RMATH_HAVE_EXPM1="# define HAVE_EXPM1 1"
 else

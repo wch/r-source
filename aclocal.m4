@@ -205,7 +205,16 @@ AC_DEFUN([R_PROG_CC_M],
 [AC_MSG_CHECKING([whether we can compute C Make dependencies])
 AC_CACHE_VAL([r_cv_prog_cc_m],
 [echo "#include <math.h>" > conftest.c
-for prog in "${CC} -M" "${CPP} -M" "cpp -M"; do
+cc_minus_MM=false
+if test "${GCC}" = yes; then
+  gcc_version=`${CC} -v 2>&1 | grep "^.*g.. version" | \
+    sed -e 's/^.*g.. version *//'`
+  case "${gcc_version}" in
+    1.*|2.*|3.[[01]]*) ;;
+    *) cc_minus_MM="${CC} -MM" ;;
+  esac
+fi
+for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
   if ${prog} conftest.c 2>/dev/null | \
       grep 'conftest.o: conftest.c' >/dev/null; then
     r_cv_prog_cc_m="${prog}"
