@@ -116,6 +116,7 @@ typedef struct {
     int fontsize;           /* Size in points */
     int usefixed;
     int color;		        /* color */
+	int bg;					/* bg color */
     int fill;	        	/* fill color */
     WindowPtr window;
     int	lineType;
