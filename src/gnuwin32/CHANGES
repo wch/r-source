@@ -30,7 +30,11 @@ Rterm reverts to sending warning/error messages to stdout on Windows
 95/98/ME.
 
 Rcmd BATCH no longer attempts to redirect stderr on Windows 95/98/ME,
-and so should work again there.
+and so may work again there.
+
+Calling dev.off() (or ending a session) when a windows() device is
+open and recording plots automatically saves the current plot as the
+last saved plot.
 
 
 

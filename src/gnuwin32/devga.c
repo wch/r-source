@@ -851,9 +851,9 @@ static void menuclose(control m)
 
 #ifdef PLOTHISTORY
 
-extern SEXP savedSnapshot;
+/* extern SEXP savedSnapshot;*/
 
-/* NB: this puts .SavedPlots in package:base */
+/* NB: this puts .SavedPlots in .GlobalEnv */
 #define GROWTH 4
 #define GETDL SEXP vDL=findVar(install(".SavedPlots"), R_GlobalEnv)
 #define SETDL defineVar(install(".SavedPlots"), vDL, R_GlobalEnv)
@@ -1833,8 +1833,15 @@ static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 static void GA_Close(NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    GEDevDesc *gdd = (GEDevDesc *) GetDevice(devNumber((DevDesc*) dd));
+    GETDL;
 
-    if (xd->kind==SCREEN) {
+    if (xd->kind == SCREEN) {
+	if(xd->recording) {
+	    AddtoPlotHistory(GEcreateSnapshot(gdd), 0);
+	    pCURRENTPOS++; /* so PgUp goes to the last saved plot
+			      when a windows() device is opened */
+	}
 	hide(xd->gawin);
 	del(xd->bm);
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
@@ -1845,7 +1852,7 @@ static void GA_Close(NewDevDesc *dd)
 /*
  * this is needed since the GraphApp delayed clean-up
  * ,i.e, I want free all resources NOW
-*/
+ */
     doevent();
     free(xd);
 }
