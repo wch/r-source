@@ -407,9 +407,11 @@ invoking the build procedure.
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.  The Windows equivalent is to set
 @code{R_HOME} and then run
+
 @smallexample
 sh $@{R_HOME@}/bin/build.sh pkgname
 @end smallexample
+
 @noindent
 (Replace @file{pkgname} by @file{--help} for further details.)
 
@@ -3490,25 +3492,31 @@ Utilities} and the constants in @ref{Mathematical Constants}.
 The library is not built automatically when @R{} is installed, but
 can be built in the directory @file{src/nmath/standalone}. See the file
 @file{README} there.  To use the code in your own C program include
+
 @smallexample
 #define MATHLIB_STANDALONE
 #include "R_ext/Mathlib.h"
 @end smallexample
+
 @noindent
 and link against @code{-lRmath}.  There is an example file @file{test.c}.
 
 A little care is needed to use the random-number routines. You will
 need to supply the uniform random number generator 
+
 @smallexample
 double unif_rand(void)
 @end smallexample
+
 @noindent
 or use the one supplied (and with a shared library or DLL you will have
 to use the one supplied, which is the Marsaglia-multicarry with an entry
 point
+
 @smallexample
 set_seed(unsigned int, unsigned int)
 @end smallexample
+
 @noindent
 to set its seeds).
 
