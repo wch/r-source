@@ -1,6 +1,6 @@
 acid		Determination of Formaldehyde Concentration
 airmiles	Passenger-Miles on US Airlines 1937-1960
-airquality	Chambers et al?
+airquality	New York Air Quality Measurements
 anscombe	Anscombe's quartet of regression data
 attenu		Joiner-Boore Attenuation Data
 attitude	Chatterjee-Price Attitude Data
@@ -10,7 +10,7 @@ chickwts	The Effect of Dietary Supplements on Chick Weights
 consume		Consumption Statistics
 crimes		Violent Crime Statistics for the USA
 deaths		Death Rates in Virginia (1940)
-discoveries	Yearly Numbers of "Important" Discoveries
+discoveries	Yearly Numbers of `Important' Discoveries
 esoph		(O)esophageal Cancer Case-control study
 euro		Conversion rates of Euro currencies
 eurodist	Distances between European Cities
@@ -18,8 +18,8 @@ faithful	Old Faithful Geyser Data
 freeny		Freeny's Revenue Data
 infert		Secondary infertility matched case-control study
 insects		The Effect of Insecticides on Insect Counts
-iris		Edgar Anderson's Iris Data  as data.frame
-iris3		Edgar Anderson's Iris Data  as array of rank 3
+iris		Edgar Anderson's Iris Data as data.frame
+iris3		Edgar Anderson's Iris Data as 3-d array
 islands		World Landmass Areas
 judges		Lawyer's rating's of State Judges in the Superior Court.
 longley		Longley's Economic Regression Data
@@ -38,7 +38,7 @@ savings		Intercountry Life-Cycle Savings Data
 sleep		Student's Sleep Data
 stackloss	Brownlee's Stack Loss Plant Data
 state		US State Facts and Figures
-sunspots	Yearly Average Sunspot Counts (compare with nhtemp)
+sunspots	Monthly Mean Relative Sunspot Numbers
 swiss		Swiss Demographic Data
 trees		Girth, Height and Volume for Black Cherry Trees
 uspop		Populations Recorded by the US Census
