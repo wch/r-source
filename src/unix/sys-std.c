@@ -456,7 +456,7 @@ static void readline_handler(char *line)
  signals itself.
 */
 static void
-handleInterrupt(void)
+handleInterrupt(int dummy)
 { 
     popReadline();
     onintr();
