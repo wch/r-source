@@ -417,6 +417,12 @@ BUG FIXES
 
     o	R CMD Rd2dvi now again works with file names containing "_" or "$".
 
+    o	dev.print() and dev.copy2eps() now evaluate arguments as
+	needed, so e.g. dev.print(file="junk.ps", horizontal=F) will
+	work (previously =FALSE was needed).
+
+
+
 
 	**************************************************
 	*						 *
