@@ -1,0 +1,94 @@
+#!/usr/local/bin/perl
+##
+## Show all 'R' or  'S(-plus)' function definitions in a list of files
+##
+## =======> REQUIRE  '<-'  assignment !!! <=========
+##
+## Martin Maechler <maechler@stat.math.ethz.ch>  -- Dec. 1996
+##
+$Iam=`basename $0`; chop($Iam);
+
+require "getopts.pl"; #-- /usr/local/lib/perl5/getopts.pl
+&Getopts("lnfsNhd") || do { print STDERR "$0:Getopts - problem\n"; &Usage() };
+
+$DEBUG=$opt_d if defined($opt_d);
+print STDERR "DEBUG: ON --> Iam=$Iam\n" if $DEBUG;
+
+&Usage if $opt_h || $#ARGV < 0;
+$opt_n = $show_fileX = 1  if $opt_f;
+$show_file = 1 unless $opt_n;
+$show_line = 1 unless $opt_l;
+$show_fili = 1 if $show_file && $show_line;
+if($DEBUG) {
+    print STDERR "$Iam: options -> \n\t'fileX'=$show_fileX"
+	. "\t'file'=$show_file\t'line'=$show_line\t'fili'=$show_fili\n\n"
+}
+FILE: foreach $file (@ARGV) {
+  next FILE unless -T $file;
+  print "\n~~~~~~~~~~~~~~\n\n$file:\n" if $DEBUG;
+  $hasF = 0 if $show_fileX;
+  if(open(F, $file)) {
+  LINE: while(<F>) {
+      next LINE unless /(<-|_)/;
+      #- append the next line while ending on '<-' :
+      while(/(<-|_)\s*$/) {
+	chop; $_ .= " " . <F>; print STDERR "$Iam:app.(<-): $.: $_" if $DEBUG;
+      }
+      next LINE unless /(<-|_)\s*function\s*\(/; # ' <- function ( '
+      $Before = $`;
+      next LINE if $Before =~ /\#/; #-- drop 'outcommented' ones
+      ## Either allow leading white space, or make sure there is n't:
+      next LINE unless $opt_s || /^\S/;
+      ## Proper 'Function name'
+      next LINE unless $Before =~ /^\s*\"?[.A-Za-z][.A-Za-z\d]*\"?\s*/;
+      if($opt_N) { #-- drop the whole "<- ..." part
+	  $_ = $Before; s/\s+$//; s/"(.*)"/\1/;  $_ .= "\n";
+      } else {
+	  #- append following lines as long as not having a ')' :
+	  while(! /\)/) {
+	      chop; $_ .= <F>; print STDERR "$Iam:app(')'): $.: $_" if $DEBUG;;
+	  }
+      }
+      if($show_fileX && !$hasF) {
+	  $hasF = 1;
+	  print "\n$file";
+	  print ":\n" if $show_line;
+      }
+      print "$file" if $show_file;
+      print ":$.:"  if $show_fili;
+      if($show_line) { print; } else { print "\n"; }
+    }
+  } else {
+    warn "\n>>>>> Couldn't open file '$file': $!\n\n";
+  }
+}
+print "\n" if $show_fileX && !$show_line;
+
+###------------------------------------------------------------------------
+
+sub Usage { &print_usage; exit !$opt_h;
+}
+
+sub print_usage
+{
+    $0 =~ s#.*/##;
+    print STDERR <<EOUsage;
+
+Usage: $0 [options] file1 [ file2 file3 ...]
+
+where options can be:
+  -l    Only   show NAMES of files that contain R functions
+  -n    Do not show names of files in front of 'function' lines
+  -f    '-n' + show names of files SEPARATELY BEFORE 'function' lines
+  -s	Allow SPACEs before the function definition
+  -N    Drop the whole '<- function(.....' part
+
+  -h	Print just the  usage  message,  then exit
+  -d	turn on Debugging.
+
+Examples:
+	 $Iam ~/R/*.R
+	 $Iam -fnN ../../src/library/base/funs/q*
+
+EOUsage
+}

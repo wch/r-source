@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# ${RHOME}/tools/GETVERSION
+
+echo "/* src/include/R_ext/Rver.h.  Generated automatically */"
+echo "#ifndef R_EXT_RVER_H"
+echo "#define R_EXT_RVER_H"
+echo
+TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+(cd ${TOOLS_DIR}/..
+  ver=`sed 's/\([^ .]*\).\([^ .]*\).\([^ .]*\) *\(.*\)/\1\2\3/' < VERSION`
+  echo "#define R_VERSION  ${ver}"
+)
+echo
+echo "#ifndef RCONFIG_H_"
+echo
+us=`sed -n /HAVE_F77_UNDERSCORE/p Rconfig.h | sed -n 1p | sed s/.\*HAVE_F77_UNDERSCORE//`
+if [ $us = 1 ] ; then
+echo "#define F77_SYMBOL(x)	x ## _"
+else
+echo "#define F77_SYMBOL(x)	x"
+fi
+echo
+ieee=`sed -n /HAVE_F77_UNDERSCORE/p Rconfig.h | sed -n 1p | sed s/.\*HAVE_F77_UNDERSCORE//`
+if [ $ieee = 1 ] ; then
+echo "#define IEEE_754 1"
+fi
+echo
+echo "#endif"
+echo "#endif"

@@ -1,0 +1,49 @@
+#
+# ${R_HOME}/src/regex/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../..
+subdir = src/regex
+
+include $(top_builddir)/Makeconf
+
+SOURCES = regex.c
+DEPENDS = $(SOURCES:.c=.d)
+DISTFILES = $(SOURCES) regex.h Makefile.in Makefile.win
+
+all: Makefile Makedeps R
+
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
+
+R: regex.o
+
+
+mostlyclean: clean
+clean:
+	@echo "Cleaning in $(subdir)"
+	@-rm -f  Makedeps *.d *.o
+distclean: clean
+	@-rm -f Makefile
+
+tags: *.h *.c
+	ctags *.h *.c
+TAGS: *.h *.c
+	etags *.h *.c
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+
+# Unused targets
+
+install install-strip uninstall info dvi check::
+
+## Automagically generated dependencies:
