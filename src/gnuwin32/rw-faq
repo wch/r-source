@@ -35,6 +35,7 @@ Table of Contents
   3.5 Loading a package fails.
   3.6 Package TclTk does not work.
   3.7 Hyperlinks in Compiled HTML sometimes do not work.
+  3.8 `update.packages()' fails
 
 4 Windows Features
   4.1 What should I expect to behave differently from the Unix version of R?
@@ -482,6 +483,16 @@ They may well not work between packages installed in different
 libraries.  This is solved under Unix using symbolic links which Windows
 does not implement.
 
+3.8 `update.packages()' fails
+=============================
+
+You may not be able to update a package which is in use: Windows `locks'
+the package's DLL when it is loaded.  So use `update.packages()' (or
+the menu equivalent) in a new session.
+
+If you put `library(foo)' in your `.Rprofile' you will need to start R
+with `--vanilla' to be able to update package `foo'.
+
 
 4 Windows Features
 ******************
@@ -674,9 +685,9 @@ Fast BLAS (Basic Linear Algebra Subprograms,
 `http://www.netlib.org/blas/faq.html') routines are used to speed up
 numerical linear algebra.  If you compile R from sources yourself,
 there is support for the `tuned' BLAS called ATLAS
-(`http://www.netlib.org/atlas/').  The savings can be appreciable: on a
-366MHz PIIM and a 1000 x 1000 matrix `La.svd' took 182 sec with the
-standard BLAS and 59 sec with ATLAS.  Because ATLAS is tuned to a
+(`http://math-atlas.sourceforge.net').  The savings can be appreciable:
+on a 366MHz PIIM and a 1000 x 1000 matrix `La.svd' took 182 sec with
+the standard BLAS and 59 sec with ATLAS.  Because ATLAS is tuned to a
 particular chip we can't use it generally: the optimal routines for a
 PIII or an Athlon XP are quite different and neither will not run at all
 on a PII.
@@ -687,7 +698,9 @@ located.  You will need to make the libraries yourself: none of the
 binaries we have seen are compiled for the correct compiler.
 
 BLAS support is supplied by the single DLL `R_HOME\bin\Rblas.dll', and
-you can add a fast BLAS just by replacing that.
+you can add a fast BLAS just by replacing that.  Replacements for some
+of the more common chips are available on CRAN in directory
+`bin/windows/contrib/ATLAS'.
 
 7.3 How do I include compiled C code?
 =====================================

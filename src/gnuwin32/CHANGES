@@ -18,6 +18,7 @@ information to MakeDll: this is useful when experimenting with
 packages, and especially for the packages which ship with R.
 
 
+
 rw1051
 ======
 
@@ -31,7 +32,7 @@ Bulding the standalone Rmath.dll was not making the import library
 libRmath.a.
 
 We may have been able to track down (to the isprint routine) the cause
-of the FAQ Q2.14 about crashes caused be non-ASCII characters, and
+of the FAQ Q2.14 about crashes caused by non-ASCII characters, and
 hence to circumvent it.
 
 File | Print on the menu of a windows() graphics device was not working.

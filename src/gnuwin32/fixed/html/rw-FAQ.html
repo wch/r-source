@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta name="generator" content=
-"HTML Tidy for Linux/x86 (vers 1st April 2002), see www.w3.org">
+"HTML Tidy for Windows (vers 1st April 2002), see www.w3.org">
 <title>R for Windows FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R for Windows FAQ">
@@ -111,6 +111,9 @@ TclTk does not work.</a></li>
 <li><a href=
 "#Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work.">3.7
 Hyperlinks in Compiled HTML sometimes do not work.</a></li>
+
+<li><a href="#update.packages()%20fails">3.8
+<code>update.packages()</code> fails</a></li>
 </ul>
 </li>
 
@@ -729,7 +732,20 @@ something like<br>
 
 <p>They may well not work between packages installed in different
 libraries. This is solved under Unix using symbolic links which
-Windows does not implement.</p>
+Windows does not implement. <a name=
+"update.packages()%20fails"></a></p>
+
+<h3>3.8 <code>update.packages()</code> fails</h3>
+
+<p>You may not be able to update a package which is in use: Windows
+`locks' the package's DLL when it is loaded. So use
+<code>update.packages()</code> (or the menu equivalent) in a new
+session.</p>
+
+<p>If you put <code>library(foo)</code> in your
+<code>.Rprofile</code> you will need to start R with
+<code>--vanilla</code> to be able to update package
+<code>foo</code>.</p>
 
 <hr>
 <a name="Windows%20Features"></a> 
@@ -964,7 +980,7 @@ file names to lower case) did not work. <a name=
 routines are used to speed up numerical linear algebra. If you
 compile R from sources yourself, there is support for the `tuned'
 BLAS called ATLAS (<a href=
-"http://www.netlib.org/atlas/">http://www.netlib.org/atlas/</a>).
+"http://math-atlas.sourceforge.net">http://math-atlas.sourceforge.net</a>).
 The savings can be appreciable: on a 366MHz PIIM and a 1000 x 1000
 matrix <code>La.svd</code> took 182 sec with the standard BLAS and
 59 sec with ATLAS. Because ATLAS is tuned to a particular chip we
@@ -981,7 +997,9 @@ for the correct compiler.</p>
 
 <p>BLAS support is supplied by the single DLL
 <code>R_HOME\bin\Rblas.dll</code>, and you can add a fast BLAS just
-by replacing that. <a name=
+by replacing that. Replacements for some of the more common chips
+are available on CRAN in directory
+<code>bin/windows/contrib/ATLAS</code>. <a name=
 "How%20do%20I%20include%20compiled%20C%20code%3f"></a></p>
 
 <h3>7.3 How do I include compiled C code?</h3>
