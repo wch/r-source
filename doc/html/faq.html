@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2005-02-21</h2>
+<h2>Version 2.0.2005-02-22</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -529,15 +529,16 @@ packages.
 
    <blockquote>
         <p><table summary=""><tr align="left"><th valign="top"></th><th valign="top">CPU </th><th valign="top">Versions </th><th valign="top">Provider
-<br></th></tr><tr align="left"><td valign="top">Mandrake </td><td valign="top">i386 </td><td valign="top">10.0 </td><td valign="top">Michele Alzetta
+<br></th></tr><tr align="left"><td valign="top">Debian   </td><td valign="top">i386 </td><td valign="top">stable </td><td valign="top">Christian Steigies
+<br></td></tr><tr align="left"><td valign="top">Mandrake </td><td valign="top">i386 </td><td valign="top">10.0 </td><td valign="top">Michele Alzetta
 <br></td></tr><tr align="left"><td valign="top">Red Hat  </td><td valign="top">i386 </td><td valign="top">8/9/Fedora1/Fedora2/Fedora3 </td><td valign="top">Martyn
 Plummer
 <br></td></tr><tr align="left"><td valign="top"></td><td valign="top">x86_64 </td><td valign="top">Fedora1 </td><td valign="top">James Henstridge
 <br></td></tr><tr align="left"><td valign="top"></td><td valign="top">x86_64 </td><td valign="top">Fedora3 </td><td valign="top">Brian Ripley
-<br></td></tr><tr align="left"><td valign="top"></td><td valign="top">i386   </td><td valign="top">Enterprise Linux </td><td valign="top">Matthew P Cox
+<br></td></tr><tr align="left"><td valign="top"></td><td valign="top">i386   </td><td valign="top">Enterprise Linux </td><td valign="top">Matthew P. Cox
 <br></td></tr><tr align="left"><td valign="top">SuSE     </td><td valign="top">i386   </td><td valign="top">7.3/8.0/8.1/8.2 </td><td valign="top">Detlef Steuer
 <br></td></tr><tr align="left"><td valign="top"></td><td valign="top">i586   </td><td valign="top">9.0/9.1/9.2 </td><td valign="top">Detlef Steuer
-<br></td></tr><tr align="left"><td valign="top">VineLinux </td><td valign="top">i386 </td><td valign="top">2.6 </td><td valign="top">Susunu Tanimura
+<br></td></tr><tr align="left"><td valign="top">VineLinux </td><td valign="top">i386 </td><td valign="top">3.0 </td><td valign="top">Susunu Tanimura
         <br></td></tr></table>
 </blockquote>
 
@@ -547,24 +548,25 @@ Plummer
 <!-- Brian Ripley respectively, SuSE 7.3/8.0/8.1/8.2 i386 and 9.0/9.1/9.2 -->
 <!-- i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages by -->
 <!-- Susunu Tanimura. -->
-<p>Debian packages, maintained by Dirk Eddelbuettel, have long been part of
-the Debian distribution, and can be accessed through APT, the Debian
-package maintenance tool.  Use e.g. <code>apt-get install r-base
-r-recommended</code> to install the R environment and recommended packages. 
-If you also want to build R packages from source, also run <code>apt-get
-install r-base-dev</code> to obtain the additional tools required for this.
+<p>Debian packages, maintained by Dirk Eddelbuettel and Doug Bates, have
+long been part of the Debian distribution, and can be accessed through
+APT, the Debian package maintenance tool.  Use e.g. <code>apt-get
+install r-base r-recommended</code> to install the R environment and
+recommended packages.  If you also want to build R packages from source,
+also run <code>apt-get install r-base-dev</code> to obtain the additional
+tools required for this.  So-called &ldquo;backports&rdquo; of the current R
+packages for the <dfn>stable</dfn> distribution are provided by Christian
+Steigies, and available from CRAN.  Simply add the line
 
-<!-- Simply add the line -->
-<!-- @example -->
-<!-- deb http://cran.R-project.org/bin/linux/debian @var{distribution} main -->
-<!-- @end example -->
-<!-- @noindent -->
-<!-- (where @var{distribution} is either @samp{stable} or @samp{testing}; -->
-<!-- feel free to use a @CRAN{} mirror instead of the master) to the file -->
-<!-- @file{/etc/apt/sources.list}.  Once you have added that line the -->
-<!-- programs @command{apt-get}, @command{apt-cache}, and @command{dselect} -->
-<!-- (using the apt access method) will automatically detect and install -->
-<!-- updates of the R packages. -->
+<pre class="example">     deb http://cran.R-project.org/bin/linux/debian stable
+</pre>
+   <p class="noindent">(feel free to use a <acronym>CRAN</acronym> mirror instead of the master) to the file
+<span class="file">/etc/apt/sources.list</span>, and install as usual.
+
+<!-- Once you have added that line the programs @command{apt-get}, -->
+<!-- @command{apt-cache}, and @command{dselect} (using the apt access -->
+<!-- method) will automatically detect and install updates of the R -->
+<!-- packages. -->
 <!-- The @file{bin/osf} directory of a @CRAN{} site contains RPMs -->
 <!-- by Albrecht Gebhardt for alpha systems running Alpha Unix -->
 <!-- (OSF/Tru64). -->
@@ -2583,6 +2585,7 @@ estimating spatial simultaneous autoregressive (SAR) models.  (Was
 formerly the three packages: <strong>spweights</strong>, <strong>sptests</strong>, and
 <strong>spsarlm</strong>.) 
 <br><dt><strong>spe</strong><dd>Stochastic Proximity Embedding. 
+<br><dt><strong>spectrino</strong><dd>Spectra organizer, visualization and data extraction from within R. 
 <br><dt><strong>splancs</strong><dd>Spatial and space-time point pattern analysis functions. 
 <!-- <COMMENT> -->
 <!-- Deprecated in favor of new @strong{spdep} along with 1.5.0 release. -->

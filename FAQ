@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-21
+Version 2.0.2005-02-22
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -373,21 +373,30 @@ The `bin/linux' directory of a CRAN site contains the following packages.
 
                  CPU      Versions                        Provider
      ------------------------------------------------------------------------ 
+     Debian      i386     stable                          Christian Steigies
      Mandrake    i386     10.0                            Michele Alzetta
      Red Hat     i386     8/9/Fedora1/Fedora2/Fedora3     Martyn Plummer
                  x86_64   Fedora1                         James Henstridge
                  x86_64   Fedora3                         Brian Ripley
-                 i386     Enterprise Linux                Matthew P Cox
+                 i386     Enterprise Linux                Matthew P. Cox
      SuSE        i386     7.3/8.0/8.1/8.2                 Detlef Steuer
                  i586     9.0/9.1/9.2                     Detlef Steuer
-     VineLinux   i386     2.6                             Susunu Tanimura
+     VineLinux   i386     3.0                             Susunu Tanimura
 
-   Debian packages, maintained by Dirk Eddelbuettel, have long been part of
-the Debian distribution, and can be accessed through APT, the Debian
-package maintenance tool.  Use e.g. `apt-get install r-base r-recommended'
-to install the R environment and recommended packages.  If you also want to
-build R packages from source, also run `apt-get install r-base-dev' to
-obtain the additional tools required for this.
+   Debian packages, maintained by Dirk Eddelbuettel and Doug Bates, have
+long been part of the Debian distribution, and can be accessed through APT,
+the Debian package maintenance tool.  Use e.g. `apt-get install r-base
+r-recommended' to install the R environment and recommended packages.  If
+you also want to build R packages from source, also run `apt-get install
+r-base-dev' to obtain the additional tools required for this.  So-called
+"backports" of the current R packages for the "stable" distribution are
+provided by Christian Steigies, and available from CRAN.  Simply add the
+line
+
+     deb http://cran.R-project.org/bin/linux/debian stable
+
+(feel free to use a CRAN mirror instead of the master) to the file
+`/etc/apt/sources.list', and install as usual.
 
    No other binary distributions are currently publically available.
 
@@ -2926,6 +2935,9 @@ distributions of R.)
 
 *spe*
      Stochastic Proximity Embedding.
+
+*spectrino*
+     Spectra organizer, visualization and data extraction from within R.
 
 *splancs*
      Spatial and space-time point pattern analysis functions.
