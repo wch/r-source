@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-30 2004-07-04
+Version 1.9-31 2004-07-09
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1130,11 +1130,10 @@ same time being as compatible as possible with S.
 
    * In S, `dump()', `dput()' and `deparse()' are essentially different
      interfaces to the same code.  In R from version 2.0.0, this is only
-     true if the same values are passed in the `forDisplay' and `useSource'
-     arguments, but by default they are not.  By default `dump()' tries to
-     write code that will evaluate to reproduce the object, whereas
-     `dput()' and `deparse()' default to options for producing deparsed
-     code that is readable.
+     true if the same `control' argument is used, but by default it is not.
+     By default `dump()' tries to write code that will evaluate to
+     reproduce the object, whereas `dput()' and `deparse()' default to
+     options for producing deparsed code that is readable.
 
 
    There are also differences which are not intentional, and result from
