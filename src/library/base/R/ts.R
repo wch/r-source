@@ -157,11 +157,11 @@ plot.ts <-
 	      col=par("col"), bg=NA, pch=par("pch"), lty=par("lty"),
 	      axes = TRUE, frame.plot = axes, ann = par("ann"), main = NULL, ...)
 {
+    if(missing(ylab)) ylab <- deparse(substitute(x))
     x <- as.ts(x)
     time.x <- time(x)
     if(is.null(xlim)) xlim <- range(time.x)
     if(is.null(ylim)) ylim <- range(x, finite=TRUE)
-    if(missing(ylab)) ylab <- deparse(substitute(x))
     plot.new()
     plot.window(xlim, ylim, log)
     if(is.matrix(x)) {
