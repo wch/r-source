@@ -12,7 +12,7 @@ R_PAPERSIZE=a4
 # The default behavior R which it encounters EOF in batch mode.
 # Set this to one of "-save" or "-nosave" depending whether you
 # want automatic saving of .Rdata or not.
-R_BATCHSAVE="-nosave"
+R_BATCHSAVE=
 
 # The command which runs the C compiler.
 # If you leave this blank, then a search is made, first
