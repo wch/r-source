@@ -593,6 +593,11 @@ Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
 ..According to Simon Urbanek this is a java security issue.  With RAqua a good
 ..alternative is starting HTML 
 ..help and then using help.search() or  Help|Search Help on...
+* PR# 6647 *
+Subject: macintosh OS X 10.3.2 not working at all
+From: swheelan@jhmi.edu
+Date: Thu,  4 Mar 2004 22:55:35 +0100 (CET)
+..not much to reproduce
 
 Directory:  Misc
 
@@ -818,101 +823,3 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6550 *
-Subject: Bug
-From: huan.huang@bnpparibas.com
-Date: Fri,  6 Feb 2004 18:40:05 +0100 (CET)
-..Report of mailman bug
-* PR# 6601 *
-Subject: Process R segmentation with strsplit()
-From: "wolski" <wolski@molgen.mpg.de>
-Date: Thu, 19 Feb 2004 19:05:49 +0100
-..mangled input supplied.
-* PR# 6624 *
-Subject: Line splitting in system()
-From: Mark White <mjw@celos.net>
-Date: Sat, 28 Feb 2004 15:41:47 +0000
-* PR# 6625 *
-From: fvrfnc@yahoo.com
-Date: Sun, 29 Feb 2004 01:00:58 +0100 (CET)
-* PR# 6626 *
-Subject: digamma with negative arguments
-From: cspark@ces.clemson.edu
-Date: Sun, 29 Feb 2004 22:14:32 +0100 (CET)
-* PR# 6627 *
-Subject: Trovato virus nel messaggio "fake"
-From: "Elisa Marini" <e.marini@nuovaedart.it>
-Date: Mon, 1 Mar 2004 08:18:33 +0100
-* PR# 6628 *
-Subject: Trovato virus nel messaggio "fake"
-From: "Lisa Montiani" <l.montiani@nuovaedart.it>
-Date: Mon, 1 Mar 2004 08:28:10 +0100
-* PR# 6629 *
-Subject: Delivery failure to smbadmin@parkwaywest.org
-Subject: [Samba] warning
-From: TZO Mailer <mailer@tzo.com>
-From: "r-bugs@r-project.org"@samba.org
-Date: Mon, 01 Mar 2004 09:32:36 GMT
-Date: Mon, 1 Mar 2004 11:29:05 +0200
-* PR# 6630 *
-Subject: failure notice
-Subject: Important
-From: administrador@provida.org.br
-From: r-bugs@r-project.org
-Date: 1 Mar 2004 15:02:06 -0000
-Date: Mon, 1 Mar 2004 16:04:01 +0100
-* PR# 6631 *
-From: ALEX@CLEARLEASE.COM
-Date: Tue,  2 Mar 2004 02:54:08 +0100 (CET)
-* PR# 6632 *
-Subject: get ur own needed softwares at 90% off
-From: "Evelin " <rvynn01um@quiknet.com>
-Date: Tue, 02 Mar 2004 21:44:16 +0300
-* PR# 6633 *
-Subject: *s behaviour 
-From: Berwin A Turlach <berwin@maths.uwa.edu.au>
-Date: Tue, 02 Mar 2004 12:56:23 +0800
-* PR# 6639 *
-Subject: ^_^ meay-meay!
-From: ESS-bugs@stat.math.ethz.ch
-Date: Tue, 02 Mar 2004 12:39:58 -0800
-* PR# 6640 *
-Subject: Bug in plot.lm 
-From: Berwin A Turlach <berwin@maths.uwa.edu.au>
-Date: Wed, 03 Mar 2004 18:10:00 +0800
-* PR# 6641 *
-Subject: cor(...,method="spearman") or cor(...,method="kendall")
-From: "Joe Ritter" <JRitter@hhh.umn.edu>
-Date: Wed, 03 Mar 2004 13:59:01 -0600
-* PR# 6642 *
-Subject: 80% D1SC0UNT ON V.1.AGRA!!
-From: "Maude Stanford" <rbjeavmkeqsli@india.com>
-Date: Thu, 04 Mar 2004 08:53:20 -0300
-* PR# 6643 *
-Subject: Hi
-From: ESS-bugs@stat.math.ethz.ch
-Date: Thu, 04 Mar 2004 15:22:19 +0800
-* PR# 6644 *
-Subject: Hi! :-)
-From: r-devel-request@stat.math.ethz.ch
-Date: Thu, 04 Mar 2004 15:22:07 +0800
-* PR# 6645 *
-Subject: error? at stem() 
-From: hamaoka@fbc.keio.ac.jp
-Date: Thu,  4 Mar 2004 13:27:46 +0100 (CET)
-* PR# 6646 *
-Subject: Application of step to coxph using method="exact"
-From: kolassa@stat.rutgers.edu
-Date: Thu,  4 Mar 2004 18:14:23 +0100 (CET)
-* PR# 6647 *
-Subject: macintosh OS X 10.3.2 not working at all
-From: swheelan@jhmi.edu
-Date: Thu,  4 Mar 2004 22:55:35 +0100 (CET)
-* PR# 6648 *
-Subject: qnorm(2) ends with segmentation fault
-From: linuxfavor@sohu.com
-Date: Fri,  5 Mar 2004 15:20:46 +0100 (CET)
-* PR# 6649 *
-Subject: RE: important
-From: Norma Goodrich <uisdunyegoalx@cnnic.net.cn>
-Date: Fri, 05 Mar 2004 23:54:37 -0700
