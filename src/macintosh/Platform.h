@@ -58,7 +58,7 @@
 #undef USE_BUILTIN_RINT
 
 /* POSIX Regular Expressions Available */
-#undef HAVE_REGCOMP
+#define HAVE_REGCOMP
 
 /* Compatibility for "memmove" on older BSD platforms */
 #define HAVE_MEMMOVE
