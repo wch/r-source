@@ -6,7 +6,9 @@ rm150
 
 * using dev.off() when a user close a windows instead
   of killing directly the device
-   
+* changed MPWBuild to take care of changes in the src/include   
+  directory
+* fixed a bug with path length (Thanks to T.Lumley)    
     
 
 

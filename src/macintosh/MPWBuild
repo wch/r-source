@@ -225,7 +225,6 @@ echo "### Generates Rconfig.h" >>MakeR
 echo Rconfig.h Ä ::include:config.h config.mac.h >> MakeR
 echo '	' Duplicate -y config.mac.h ::include:config.h >>MakeR
 echo "	 execute :tools:GETCONFIG > Rconfig.h" >> MakeR
-echo Rmath.h Ä ::include:Rmath.h.in >> MakeR
 echo '	' Duplicate -y ::include:Rmath.h.in ::include:Rmath.h >>MakeR
 echo " " >>MakeR
 echo " " >>MakeR
@@ -328,12 +327,9 @@ echo '	'-w 35,2,7,29,30,23 -d HAVE_CONFIG_H  -d Macintosh  -d ¶
 TARGET_API_MAC_CARBON '¶' >> MakeR
 echo '	'-typecheck relaxed -noMapCR -ansi off ¶
 -prefix RHeaders.h -alloca  -enum int >> MakeR
-
-
 if `Exists :expvar`
  Delete :expvar
 end
-
 echo " " >> MakeR
 echo "### Main command build" >> MakeR
 echo " " >> MakeR

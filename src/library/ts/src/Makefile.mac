@@ -48,7 +48,9 @@ SrcFiles        =  	burg.c ¶
 					PPsum.c ¶
 					qr.c ¶
 					starma.c ¶
-					stl.c
+					stl.c ¶
+					arima.c
+					
 
 
 FortFiles		= 	eureka.f ¶
@@ -68,7 +70,9 @@ ObjFiles-PPC    =   burg.o ¶
 					PPsum.o ¶
 					qr.o ¶
 					starma.o ¶
-					stl.o
+					stl.o ¶
+					arima.o
+					
 
 
 
@@ -138,6 +142,7 @@ PPsum.o		Ä	PPsum.c
 qr.o		Ä	qr.c
 starma.o	Ä	starma.c
 stl.o		Ä	stl.c
+arima.o     Ä   arima.c
 
 ### Optional Dependencies ###
 ### Build this target to generate "include file" dependencies. ###

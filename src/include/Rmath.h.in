@@ -34,12 +34,14 @@
 # define R_NO_REMAP 1
 #endif
 
+#ifndef Macintosh
 #ifndef HAVE_LOG1P
 @RMATH_HAVE_LOG1P@
 #endif
 
 #ifndef HAVE_EXPM1
 @RMATH_HAVE_EXPM1@
+#endif
 #endif
 
 #include <errno.h>
