@@ -26,7 +26,6 @@
 #define __R_Names__
 #include "Defn.h"
 #include "Print.h"
-#include "names.h"
 #include "arithmetic.h"
 
 /* Table of  .Internal(.) and .Primitive(.)  R functions
