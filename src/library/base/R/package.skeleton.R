@@ -5,6 +5,16 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     if(missing(list))
         list<-ls(env=environment)
 
+    if(!is.character(list))
+        stop("'list' should be a character vector naming R objects")
+    have <- sapply(list, exists)
+    if(any(!have))
+        warning("object(s) ", paste(sQuote(list[!have]), collapse=", "),
+                " not found")
+    list <- list[have]
+    if(!length(list))
+        stop("no R objects specified or available")
+
     cat("Creating directories ...\n")
     ## Make the directories
     if(file.exists(file.path(path,name)) && !force)
@@ -131,6 +141,12 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     unlink(outFile)
     if(inherits(yy, "try-error"))
         stop(yy)
+
+    ## Now we may have created an empty data or R directory
+    Rdir <- file.path(path, name, "R")
+    if(length(list.files(Rdir)) == 0) unlink(Rdir, recursive=TRUE)
+    datadir <- file.path(path, name, "data")
+    if(length(list.files(datadir)) == 0) unlink(datadir, recursive=TRUE)
 
     cat("Done.\n")
     cat(paste("Further steps are described in",

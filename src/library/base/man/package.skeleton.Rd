@@ -8,16 +8,16 @@
   files describing further steps in packaging.
 }
 \usage{
-package.skeleton(name="anRpackage", list, environment=.GlobalEnv, 
-	path=".", force=FALSE)
+package.skeleton(name = "anRpackage", list, environment = .GlobalEnv, 
+	         path = ".", force = FALSE)
 }
 \arguments{
-  \item{name}{directory name for your package}
-  \item{list}{vector of names of R objects to put in the package}
+  \item{name}{character string: the directory name for your package.}
+  \item{list}{character vector naming the R objects to put in the package}
   \item{environment}{if \code{list} is omitted, the contents of this
-    environment are packaged}
-  \item{path}{path to put the package directories in}
-  \item{force}{If \code{FALSE} will not overwrite an existing directory}
+    environment are packaged.}
+  \item{path}{path to put the package directories in.}
+  \item{force}{If \code{FALSE} will not overwrite an existing directory.}
 }
 \value{
   used for its side-effects.
@@ -26,19 +26,21 @@ package.skeleton(name="anRpackage", list, environment=.GlobalEnv,
   This tries to create filenames valid for all OSes known to run R.
   Invalid characters are replaced by \code{_}, invalid names are
   preceeded by \code{zz}, and finally the converted names are made
-  unique by \code{\link{make.unique}}.  This can be done for code and
-  help files but not data files (which are looked for by name).
+  unique by \code{\link{make.unique}(sep = "_")}.  This can be done for
+  code and help files but not data files (which are looked for by name).
 }
 
 \references{Read the \emph{Writing R Extensions} manual for more details }
-\seealso{\code{\link{install.packages}}}
+\seealso{
+  \code{\link{prompt}}, \code{\link{install.packages}}
+}
 
 \examples{
 \dontrun{
-    f<-function(x,y) x+y
-    g<-function(x,y) x-y
-    d<-data.frame(a=1,b=2)
-    e<-rnorm(1000)
+    f <- function(x,y) x+y
+    g <- function(x,y) x-y
+    d <- data.frame(a=1,b=2)
+    e <- rnorm(1000)
     package.skeleton(list=c("f","g","d","e"), name="AnExample")
 }
 }
