@@ -207,7 +207,7 @@ sub mark_brackets {
 		    "mismatched or missing braces") &&
 	  $complete_text =~ /{([^{}]*)}/s){
 	my $id = $NB . ++$max_bracket . $BN;
-	die "too many pairs of braces in this file") 
+	die "too many pairs of braces in this file" 
 	  if $max_bracket > $MAXLOOPS;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print STDERR "." if $debug;
