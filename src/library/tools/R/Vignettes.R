@@ -130,34 +130,33 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
     on.exit(setwd(wd))
 
     origfiles <- list.files()
+    have.makefile <- "makefile" %in% tolower(origfiles)
 
-
-    if("makefile" %in% tolower(origfiles))
-    {
-        yy <- system(paste(Sys.getenv("MAKE"), "pdf"))
-        if(yy>0) return("Error: running 'make pdf' failed")
-        yy <- system(paste(Sys.getenv("MAKE"), "clean"))
-        if(yy>0) return("Error: running 'make clean' failed")
-
-    }
-    else{
-        pdfs <- character(0)
-        for(f in vigns$docs){
+    pdfs <- character(0)
+    for(f in vigns$docs){
             
-            f <- basename(f)
-            bf <- sub("\\..[^\\.]*$", "", f)
-            bft <- paste(bf, ".tex", sep="")
-            pdfs <- c(pdfs, paste(bf, ".pdf", sep=""))
+        f <- basename(f)
+        bf <- sub("\\..[^\\.]*$", "", f)
+        bft <- paste(bf, ".tex", sep="")
+        pdfs <- c(pdfs, paste(bf, ".pdf", sep=""))
             
-            yy <- try(Sweave(f, quiet=TRUE))
-            if(inherits(yy, "try-error")) return(yy)
+        yy <- try(Sweave(f, quiet=TRUE))
+        if(inherits(yy, "try-error")) return(yy)
+        if(!have.makefile){
             yy <- system(paste(file.path(R.home(), "bin", "texi2dvi"),
                                "--pdf", bft, ">",
                                paste(bf, ".stdout", sep="")))
             if(yy>0)
                 return(paste("Error: running texi2dvi on", bft, "failed"))
-
         }
+    }
+    
+    if(have.makefile)
+    {
+        yy <- system(Sys.getenv("MAKE"))
+        if(yy>0) return("Error: running make failed")
+    }
+    else{
         f <- list.files()
         f <- f[!(f %in% c(pdfs, origfiles))]
         unlink(f)
