@@ -44,8 +44,8 @@ Usage: R [OPTIONS] [< INFILE] [> OUTFILE]
    or  R command      [arguments]
    or  R CMD Rcommand [arguments]
 
-If a long option shows an argument as mandatory, then it is mandatory
-for the equivalent short option also.
+Start R, a system for statistical computation and graphics, with the
+specified options, or invoke an R tool via the \`R CMD' interface.
 
 Options:
   -g, --gnome		Run the gnome binary
