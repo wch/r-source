@@ -123,7 +123,7 @@ RESCOMP=$(BINPREF)windres
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
 %.dll:
-	@$(ECHO) ------- Building $@ from $^ --------
+#	@$(ECHO) ------- Building $@ from $^ --------
 	@$(ECHO) LIBRARY $* > $*.def
 	@$(ECHO) EXPORTS >> $*.def
 	@$(NM) $^ > Defs
@@ -137,9 +137,9 @@ lib%.a: %.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib lib$*.a
 
 %.a:
-	@$(ECHO) -------- Building $@ from $^ --------
-	@$(AR) cr $@ $^
-	@$(RANLIB) $@
+#	@$(ECHO) -------- Building $@ from $^ --------
+	$(AR) cr $@ $^
+	$(RANLIB) $@
 
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
