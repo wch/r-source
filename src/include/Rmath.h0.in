@@ -28,6 +28,10 @@
 #ifndef RMATH_H
 #define RMATH_H
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /*-- Mathlib as part of R --  define this for standalone : */
 /* #undef MATHLIB_STANDALONE */
 
@@ -317,9 +321,6 @@ double  Rlog1p(double);
 #undef trunc
 #define	trunc	ftrunc
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
 
 	/* R's versions with !R_FINITE checks */
 
