@@ -18,16 +18,20 @@ cygwin distribution (http://www.cygwin.com/mirrors.html) or (gzip)
 compiled from the sources.
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
-the mingw32 site).  There are also problems with several earlier
+the mingw site).  There were also problems with several earlier
 versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set.
 
 
-We recommend that you use the mingw32 port of gcc-2.95.2-1 by Mumit
+We recommend that you use the mingw port of gcc-2.95.2-1 by Mumit
 Khan from http://www.mingw.org/.  (The `portal' gives more precise
 instructions on the current locations.)  As R itself is built against
 msvcrt.dll, we strongly recommend that you use that version of the
 compilers.
+
+BEWARE: you *cannot* use earlier versions of the mingw compilers, for
+example the gcc-2.95.2 (no -1): the symptom is a report that `-shared'
+is not understood.
 
 It might also be possible to use the compilers from the cygwin 1.1 net
 release with the -mno-cygwin -mwin32 flags; the current versions use
@@ -61,6 +65,7 @@ the appropriate paths as needed.  (IMPORTANT: if you use cygwin you
 must edit MkRules and set BUILD=CYGWIN.)
 
 BEWARE: if you have Norton Anti-Virus you may need to disable it.
+Some versions lock up the machine when windres is run.
 
 BEWARE: Don't expect this to work if the path to R_HOME contains spaces.
 
@@ -235,7 +240,7 @@ implib R.lib R.def
 and then add R.lib to the bcc32 command line, for example (from
 Venables & Ripley's `S Programming')
 
-bcc32 -u- -6 -O2 -WDE -I\R\rw1010\src\include VCrndR.c R.lib
+bcc32 -u- -6 -O2 -WDE -I\R\rw1030\src\include VCrndR.c R.lib
 
 We believe that when referencing variables (rather than functions)
 exported from R.dll these must be declared __declspec(dllimport) just
@@ -246,14 +251,13 @@ Using other compilers and languages
 ===================================
 
 To use C++ see the section in the R for Windows FAQ.  You can include
-C++ code in packages as from R 1.1.1, and the supplied Makefiles will
-compile with g++ and link the DLL using g++ (and hence link against
-libstc++.a).  Use of C++ I/O may or may not work, and has been seen
-to crash R.
+C++ code in packages and the supplied Makefiles will compile with g++
+and link the DLL using g++ (and hence link against libstc++.a).  Use
+of C++ I/O may or may not work, and has been seen to crash R.
 
 For other compilers you will need to arrange to produce a DLL with
-cdecl (also known as _cdecl or __cdecl) linkage.  The mingw32 port
-(and VC++) uses no `name mangling' at all, so that if for example your
+cdecl (also known as _cdecl or __cdecl) linkage.  The mingw port (and
+VC++) uses no `name mangling' at all, so that if for example your
 compiler adds leading or trailing underscores you will need to use the
 transformed symbol in the call to .C in your R code.  Many compilers
 can produce cdecl DLLs by a suitable choice of flags, but if yours
@@ -266,12 +270,12 @@ conversion at all to the symbol name.  It is normally best to use
 
 Care is needed in passing character strings to and from a DLL by .C:
 they must be equivalent to the C type char** and null-terminated.  Not
-even the mingw32 g77 Fortran uses null-terminated strings.
+even the mingw g77 Fortran uses null-terminated strings.
 
 WARNING: DLLs made with some compilers reset the FPU in their startup
-code (Delphi is one), and this will cause operations such as 0./0. to
-crash R.  You can re-set the FPU to the correct values by a call to
-the C entry point Rwin_fpset().
+code (Delphi has been one), and this will cause operations such as
+0./0. to crash R.  You can re-set the FPU to the correct values by a
+call to the C entry point Rwin_fpset().
 
 
 Simple Ports
@@ -330,9 +334,9 @@ Cross-building packages on Linux
 ================================
 
 It is straightforward to build a package on a ix86-linux system,
-although it is not possible (as far as we know) to cross-build .chm or
-.hlp files.  For a package without compiled code you can just zip up
-the Linux installation of the package.
+although it is not possible (and we have tried, including using WINE)
+to cross-build .chm or .hlp files.  For a package without compiled
+code you can just zip up the Linux installation of the package.
 
 First you need to set up the cross-compilers and tools (see file
 src/gnuwin32/INSTALL in the full source distribution) and have them
@@ -350,7 +354,7 @@ Then packages can be made as natively, for example by
 	cd /R/win/library
 	zip -rl /dest/mypkg.zip mypkg
 
-(Rcmd is a Windows executable, so cannot be used.)
+(Rcmd is a Windows executable, so cannot be used.  Notice the STAMP=NO line.)
 
 
 Feedback

@@ -13,23 +13,34 @@ so the miniR* distribution now needs seven floppies rather than four.
 New menu `Packages' with items to load packages, to install
 packages from CRAN or from local zip files, and to update packages.
 
-The packages list shown by help.start() now lists all packages in all
-libraries, but the search index is still confined to the system
+The packages list shown by help.start() now includes all packages in
+all libraries, but the search index is still confined to the system
 library.
 
-The installers set up a file association for .RData files.
+The installers set up a file association for .RData files, so
+double-clicking on a .RData file launches R in that directory (and so
+loads the .RData file initially).
 
 Drag-and-drop of images (.RData and .rda) and source files (.R)
-to the Rgui.exe console window is now supported.
+onto the Rgui.exe console window is now supported.
 
 Profiling is now available.
 
-Support for earlier (pre-Feb 2000) compilers has been dropped: you
-must use a compiler system that supports --shared and has an in-memory
-dlltool.
+There is a new `Save as PDF' option on the graphics device menu.
+
+Support for earlier (pre-Feb 2000) mingw compilers has been dropped:
+you must use a compiler system that supports --shared and has an
+in-memory dlltool.
 
 Under the default compilation options, Internet Explorer 4.0 or later
-is required.
+is required for the DLL modules\internet.dll, but this is only
+used for functions accessing URLs or sockets.
+
+Rcmd check has been changed to be more robust to reported problems with
+Perl's system() command under 16-bit versions of Windows.
+
+The correct file version information should now appear on Windows 2000
+Version tab under Properties (working around a Windows 2000 bug).
 
 rwinst.exe is no longer part of the distribution: use the newer
 installers to install R, and the Packages menu to install pre-compiled
@@ -37,12 +48,6 @@ packages.
 
 The old-style Windows help is no longer part of the standard distribution,
 but can be made from the sources.
-
-Rcmd check has been changed to be more robust to reported problems with
-Perl's system() command.
-
-File version information should now appears on Windows 2000 Version
-tab under Properties.
 
 
 

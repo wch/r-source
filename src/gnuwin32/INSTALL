@@ -22,7 +22,7 @@ Collect the tools
 You will need suitable versions of at least make, sh, cat, cp, cut,
 diff, echo, egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch;
 we use those from the cygwin distribution
-(http:/www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
+(http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
 compiled from the sources.  We have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
@@ -32,13 +32,17 @@ versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set.
 
 
-We recommend that you use the mingw32 port of gcc-2.95.2-1 by Mumit
+We recommend that you use the mingw port of gcc-2.95.2-1 by Mumit
 Khan from http://www.mingw.org/.  (The `portal' gives more precise
 instructions on the current locations.)  You can build R against
 either the crtdll.dll or msvcrt.dll runtime systems, and we strongly
 recommend the latter.  (In particular, locale support is poor with
 crtdll.dll, non-existent under Win9x and crtdll.dll has many memory
 leaks.)
+
+BEWARE: you *cannot* use earlier versions of the mingw compilers, for
+example gcc-2.95.2 (no -1): the symptom is a report that `-shared' is
+not understood.
 
 An alternative is to use a more recent snapshot of the mingw compiler
 set from http://prdownloads.sourceforge.net/mingw/.  You will need the
@@ -105,8 +109,8 @@ to build it under VC++6, and it is preferable to use that as the
 VC++ library will check versions of the components needed. You can just
 copy this from a binary distribution.
 
-Note 2: we have had a report that a version of Norton Anti-Virus
-locks up the machine when windres is run.
+Note 2: we have had reports that Norton Anti-Virus locks up the
+machine when windres is run, so you may need to disable it.
 
 Note 3: By default Doug Lea's malloc in the file src/gnuwin32/malloc.c is
 used.  You can opt out of this by commenting the line LEA_MALLOC=YES
@@ -172,7 +176,7 @@ To make HTML versions of the manuals (not the Reference Manual) use
 	cd ../../doc/manual
 	make -f Makefile.win html
 
-This makes use of tidy.exe, from http://www.w3c.org/.
+This makes use of tidy.exe, from http://www.w3.org/.
 
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.
