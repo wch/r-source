@@ -266,7 +266,8 @@ void GetRNGstate()
     SEXP seeds;
     RNGtype newRNG; N01type newN01;
     
-    seeds = findVar(R_SeedsSymbol, R_GlobalEnv);
+    /* look only in the workspace */
+    seeds = findVarInFrame(R_GlobalEnv, R_SeedsSymbol);
     if (seeds == R_UnboundValue) {
 	Randomize(RNG_kind);
     }
@@ -341,7 +342,8 @@ void PutRNGstate()
     for(j = 0; j < len_seed; j++)
 	INTEGER(seeds)[j+1] = RNG_Table[RNG_kind].i_seed[j];
 
-    setVar(R_SeedsSymbol, seeds, R_GlobalEnv);
+    /* assign only in the workspace */
+    defineVar(R_SeedsSymbol, seeds, R_GlobalEnv);
     UNPROTECT(1);
 }
 

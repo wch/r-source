@@ -104,11 +104,11 @@ lqs.default <-
 	nsamp <- nexact
 
     if(samp && !missing(seed)) {
-	if(exists(".Random.seed", envir=.GlobalEnv))  {
-	    seed.keep <- .Random.seed
+	if(exists(".Random.seed", envir=.GlobalEnv, inherits=FALSE))  {
+	    seed.keep <- get(".Random.seed", envir=.GlobalEnv, inherits=FALSE)
 	    on.exit(assign(".Random.seed", seed.keep, envir=.GlobalEnv))
 	}
-	.Random.seed <<- seed
+	assign(".Random.seed", seed, envir=.GlobalEnv)
     }
     z <-  .C("lqs_fitlots",
 	     as.double(x), as.double(y), as.integer(n), as.integer(p),
@@ -215,11 +215,11 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
 	} else nsamp <- nexact
 
 	if(samp && !missing(seed)) {
-	    if(exists(".Random.seed", envir=.GlobalEnv))  {
-		seed.keep <- .Random.seed
+	    if(exists(".Random.seed", envir=.GlobalEnv, inherits=FALSE))  {
+		seed.keep <- get(".Random.seed", envir=.GlobalEnv, inherits=FALSE)
 		on.exit(assign(".Random.seed", seed.keep, envir=.GlobalEnv))
 	    }
-	    .Random.seed <<- seed
+            assign(".Random.seed", seed, envir=.GlobalEnv)
 	}
 	z <-  .C("mve_fitlots",
 		 as.double(x), as.integer(n), as.integer(p),

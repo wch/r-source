@@ -134,6 +134,9 @@ set.seed(seed, kind = NULL)
   not save the state of the Box--Muller normal generator.  If you want
   to reproduce work later, call \code{set.seed} rather than set
   \code{.Random.seed}.
+
+  As from \R 1.8.0, \code{.Random.seed} is only looked for in the user's
+  workspace.
 }
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first

@@ -285,8 +285,12 @@ NEW FEATURES
 
     o	lm(singular.ok = FALSE) is now implemented.
 
-    o	dev.control() now accepts "enable" as well as
-	"inhibit". (Wishlist PR#3424)
+    o	dev.control() now accepts "enable" as well as "inhibit". 
+	(Wishlist PR#3424)
+
+    o	.Random.seed is only looked for and stored in the user's
+	workspace.  Previously the first place a variable of that name
+	was found on the search path was used.
 
 
 DEPRECATED & DEFUNCT

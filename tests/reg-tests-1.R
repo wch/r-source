@@ -2383,6 +2383,17 @@ x[, num] <- list()
 ## x[num] etc failed in 1.7.x.
 
 
+## .Random.seed was searched for with inherits=TRUE
+rm(.Random.seed)
+attach(list(.Random.seed=c(0:4)))
+runif(1)
+detach(2)
+(new <- RNGkind())
+stopifnot(identical(new, c("Mersenne-Twister", "Inversion")))
+stopifnot(identical(find(".Random.seed"), ".GlobalEnv"))
+## took from and assigned to list in 1.7.x.
+
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
