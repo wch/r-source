@@ -324,7 +324,7 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if( !asLogical(CAR(args)) )
+    if( !isLogical(CAR(args)) || LENGTH(CAR(args))!= 1 )
 	return(R_NilValue);
     for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext;
 	    cptr = cptr->nextcontext) {
