@@ -87,7 +87,7 @@ for further details and examples.
   John Chambers
 }
 \examples{
-\testonly{  library(modreg)
+\testonly{  if(!exists("smooth.spline")) library(modreg)
   setClass("track",
     representation(x="numeric", y = "numeric"))
   setClass("trackCurve", representation("track",
@@ -141,7 +141,19 @@ plot(t1[1:15])
 setMethod("length", "track", function(x)length(x@y))
 length(t1)
 
+## methods can be defined for missing arguments as well
+setGeneric("summary") ## make the function into a generic
+
+## A method for summary()
+## The method definition can include the arguments, but
+## if they're omitted, class "missing" is assumed.
+
+setMethod("summary", "missing", function() "<No Object>")
+
 \testonly{
+
+stopifnot(identical(summary(), "<No Object>"))
+
 ## for the primitives
 ## inherited methods
 
@@ -171,9 +183,16 @@ ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
 
 ## verify we can remove methods and generic
 
-stopifnot(removeMethods("-"))
-stopifnot(removeMethods("length"))
-stopifnot(removeMethods("plot"))
+removeMethods("-")
+removeMethods("length")
+
+## repeat the test one more time on the primitives
+
+length(ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1))
+
+removeMethods("plot")
+
+stopifnot(existsFunction("plot", FALSE) && !isGeneric("plot", 1))
 
 ## methods for plotData
 plotData <- function(x, y, ...) plot(x, y, ...)
@@ -184,7 +203,8 @@ setMethod("plotData", signature(x="track", y="missing"),
   function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...)
 )
 ## and now remove the whole generic
-stopifnot(removeGeneric("plotData"))
+removeGeneric("plotData")
+
 stopifnot(!exists("plotData", 1))
 
 }
