@@ -381,7 +381,7 @@ make info     @r{to create info files (not @samp{refman}).}
 @end example
 
 You will not be able to build the info files unless you have
-@command{makeinfo} version 4.5 or later installed.
+@command{makeinfo} version 4.7 or later installed.
 
 The DVI versions can be previewed and printed using standard programs
 such as @command{xdvi} and @command{dvips}.  The PDF versions can be
@@ -805,10 +805,10 @@ You will need Perl version 5.004 or later, available via
 documentation.
 
 You will not be able to build the info files unless you have
-@command{makeinfo} version 4.5 or later installed, and if not some of
-the HTML manuals will be linked to @acronym{CRAN}.  (@command{makeinfo}
-version 4.6 is known to create incorrect HTML files, so use 4.7 or later
-if possible.)
+@command{makeinfo} version 4.7 or later installed, and if not some of
+the @acronym{HTML} manuals will be linked to @acronym{CRAN}.
+(@command{makeinfo} version 4.7 is fairly recent, but version 4.6 is
+known to create incorrect @acronym{HTML} files.)
 
 @cindex vignettes
 The typeset documentation and building vignettes needs @command{tex} and

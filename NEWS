@@ -335,7 +335,7 @@ DOCUMENTATION
 
     o	File doc/html/faq.html no longer exists, and doc/manual/R-FAQ.html
 	(which has active links to other manuals) is used instead.
-	(If makeinfo >= 4.5 is not available, the version on CRAN is
+	(If makeinfo >= 4.7 is not available, the version on CRAN is
 	linked to.)
 
     o	Manual 'Writing R Extensions' has further details on writing
@@ -412,6 +412,9 @@ INSTALLATION CHANGES
 
     o	R is now linked against ncurses/termlib/termcap only if
 	readline is specified (the default) and that requires it.
+
+    o	Makeinfo 4.7 or later is now required for building the HTML and
+        Info versions of the manuals.
 
 
 PACKAGE INSTALLATION CHANGES

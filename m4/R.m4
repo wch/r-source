@@ -202,11 +202,11 @@ fi
 
 ## _R_PROG_MAKEINFO_VERSION
 ## ------------------------
-## Building the R Texinfo manuals requires Makeinfo v4.5 or better.
+## Building the R Texinfo manuals requires Makeinfo v4.7 or better.
 ## Set shell variable r_cv_prog_makeinfo_v4 to 'yes' if a recent
 ## enough Makeinfo is found, and to 'no' otherwise.
 AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
-[AC_CACHE_CHECK([whether makeinfo version is at least 4.5],
+[AC_CACHE_CHECK([whether makeinfo version is at least 4.7],
                 [r_cv_prog_makeinfo_v4],
 [makeinfo_version=`${MAKEINFO_CMD} --version | \
   grep "^makeinfo" | sed 's/[[^)]]*) \(.*\)/\1/'`
@@ -216,7 +216,7 @@ if test -z "${makeinfo_version_maj}" \
      || test -z "${makeinfo_version_min}"; then
   r_cv_prog_makeinfo_v4=no
 elif test ${makeinfo_version_maj} -lt 4 \
-     || test ${makeinfo_version_min} -lt 5; then
+     || test ${makeinfo_version_min} -lt 7; then
   r_cv_prog_makeinfo_v4=no
 else
   r_cv_prog_makeinfo_v4=yes
