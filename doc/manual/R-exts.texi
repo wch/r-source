@@ -2607,7 +2607,10 @@ The usual @R{} object modes are given in the table.
 
 @noindent
 Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
-@code{CHARSXP} etc.
+@code{CHARSXP} etc.  (@strong{Note:} although it is possible to return
+objects of internal types, it is unsafe to do so as assumptions are
+made about how they are handled which may be violated at user-level
+evaluation.)
 
 Unless you are very sure about the type of the arguments, the code
 should check the data types.  Sometimes it may also be necessary to
