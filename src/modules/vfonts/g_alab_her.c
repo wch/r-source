@@ -216,9 +216,9 @@ double GVStrHeight (const unsigned char *s, int typeface, int fontindex,
 /* this is the version of the falabel() method that is specific
    to the case when the current Plotter font is a Hershey font */
 void GVText (double x, double y, int unit, char *s, 
-	       int typeface, int fontindex,
-	       double x_justify, double y_justify, double rotation,
-	       DevDesc *dd)
+	     int typeface, int fontindex,
+	     double x_justify, double y_justify, double rotation,
+	     DevDesc *dd)
 {
   unsigned short *codestring;
   double label_width, label_height;

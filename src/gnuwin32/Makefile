@@ -65,8 +65,8 @@ tcl:
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
 
-rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
-	../include/globalvar.h front-ends COPYRIGHTS
+rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a rmodules CHTML \
+	 ../include/globalvar.h front-ends COPYRIGHTS
 
 rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)
@@ -86,6 +86,7 @@ ifdef USE_LIBXML
 	$(MAKE) -C ../extra/libxml OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 endif
 
+rmodules: ../../bin/vfonts.dll
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -109,6 +110,9 @@ Rdll: makeMakedeps ../../bin/R.dll
 ../../bin/R.dll: fixfiles rlibs R.dll
 	$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
+
+../../bin/vfonts.dll: 
+	$(MAKE) -C ../modules/vfonts OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 
 front-ends: libR.a
 	$(MAKE) -C front-ends
@@ -211,6 +215,8 @@ clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
 	-$(MAKE) -C ../nmath/standalone -f Makefile.win distclean
+	-$(MAKE) -C ../extra/libxml -f Makefile.win clean
+	-$(MAKE) -C ../modules/vfonts -f Makefile.win clean
 
 distclean veryclean: clean
 	$(RM) -rf R.exp globalvar.h ../../bin ../../library
@@ -295,7 +301,7 @@ distribution: bindist packagedist docsdist
 bindist: docfiles
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
-	$(CP) -pr ../../bin ../../afm ../../unzip $(RPREFIX)
+	$(CP) -pr ../../bin ../../modules ../../afm ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/*/Makefile.in

@@ -604,6 +604,16 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
   are available before they release, and allows users to
   call routines from "incomplete" libraries.
  */
+
+static int Cdynload(SEXP call, char *dllpath, int local, int now)
+{
+    char buf[2 * PATH_MAX];
+
+    GetFullDLLPath(call, buf, dllpath);
+    DeleteDLL(buf);
+    return AddDLL(buf, local, now);
+}
+
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
@@ -611,12 +621,24 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, "character argument expected");
-    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
+   if(!Cdynload(call, CHAR(STRING_ELT(CAR(args), 0)), LOGICAL(CADR(args))[0], 
+      LOGICAL(CADDR(args))[0]))
+/*    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
     DeleteDLL(buf);
-    if(!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
+    if(!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))*/
 	errorcall(call, "unable to load shared library \"%s\":\n  %s",
 		  buf, DLLerror);
     return R_NilValue;
+}
+
+int moduleCdynload(char *module, int local, int now)
+{
+    char dllpath[PATH_MAX], *p = getenv("R_HOME");
+
+    if(!p) return 0;
+    sprintf(dllpath, "%s%smodules%s%s.%s", p, FILESEP, FILESEP, 
+	    module, SHLIB_EXT);
+    return Cdynload(R_NilValue, dllpath, local, now);
 }
 
 SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)

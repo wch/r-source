@@ -1009,6 +1009,7 @@ AC_OUTPUT(Makeconf
   src/modules/X11/Makefile
   src/modules/gnome/Makefile
   src/modules/lapack/Makefile
+  src/modules/vfonts/Makefile
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile

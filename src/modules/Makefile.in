@@ -13,9 +13,9 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = X11 gnome lapack
+SUBDIRS = X11 gnome lapack vfonts
 
-MODULES = $(R_GUIS)
+MODULES = $(R_GUIS) vfonts
 
 all: Makefile R
 

@@ -20,8 +20,7 @@ SOURCES_C = \
 	devices.c dotcode.c dstruct.c duplicate.c \
 	envir.c errors.c eval.c \
 	format.c fourier.c \
-	g_her_glyph.c g_fontdb.c g_cntrlify.c g_alab_her.c gram.c \
-	gram-ex.c graphics.c \
+	gram.c gram-ex.c graphics.c \
 	iosupport.c \
 	list.c logic.c \
 	main.c match.c memory.c model.c \
@@ -34,7 +33,8 @@ SOURCES_C = \
 	saveload.c scan.c seq.c size.c sort.c source.c split.c \
 	subassign.c subscript.c subset.c summary.c \
 	unique.c util.c \
-	version.c
+	version.c \
+	../modules/vfonts/vfonts.c
 SOURCES_F = \
 	xxxpr.f
 ## FIXME: Need better names ...
@@ -45,8 +45,7 @@ SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
 	Rregex.h Rstrptime.h \
-	arithmetic.h \
-	g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
+	arithmetic.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win \

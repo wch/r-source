@@ -1,0 +1,33 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+all: makeMakedeps ../../../modules/vfonts.dll
+
+CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
+FFLAGS=$(OPTFLAGS)
+SOURCES=g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
+OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
+
+../../../modules/vfonts.dll: vfonts.dll
+	$(MKDIR) -p ../../../modules
+	$(CP) $< $@
+
+DLLLIBS=-L../../gnuwin32 -lR
+vfonts.dll: $(OBJS)
+
+clean:
+	rm Makedeps *.d *.o vfonts.def vfonts.dll
+
+# Dependencies
+CSOURCES=$(wildcard *.c)
+DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
+
+.c.d:
+	@echo "making $@ from $<"
+	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps
