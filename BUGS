@@ -344,3 +344,11 @@ Date: Thu, 4 Oct 2001 07:27:39 -0400
 Subject: get.hist.quote does not work
 From: arto.luoma@uta.fi
 Date: Thu, 4 Oct 2001 14:45:29 +0200 (MET DST)
+* PR# 1117 *
+Subject: html bug in internal links of documentation
+From: cmaley@alum.mit.edu
+Date: Fri, 5 Oct 2001 01:28:50 +0200 (MET DST)
+* PR# 1118 *
+Subject: Installed file locations
+From: Gordon Lack <gml4410@ggr.co.uk>
+Date: Fri, 05 Oct 2001 14:55:21 +0100
