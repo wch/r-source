@@ -38,7 +38,6 @@
 # include "RIntf.h"
 #endif
 #include "Graphics.h"
-#include "StandardGetFolder.h"
 #include "Defn.h"
 #include "IOStuff.h"
 #include "Parse.h"
@@ -331,11 +330,7 @@ void R_EditWindow(char** lines, int nlines, WindowPtr window)
     for (i=0; i < nlines ; i++){
 	WEPut(kCurrentSelection, kCurrentSelection, lines[i], 
 	      strlen(lines[i]), kTextEncodingMultiRun, 0, 0, nil, nil, we );  
-/*   WEInsert(lines[i], strlen(lines[i]), nil, nil, we);
- */
 	WEPut(kCurrentSelection,kCurrentSelection, "\r", 1,kTextEncodingMultiRun, 0,0,nil,nil,we );  
-/*   WEInsert("\r", 1 , nil, nil , we);
- */	
     }
     HUnlock(lines);
 }

@@ -70,9 +70,9 @@
 
 extern AEIdleUPP gAEIdleUPP;  	/* defined in R_Event.c */
 
-short gInteract 	= 1; 		/* 1 => R and MacZip never interact             */
-short replyValue 	= 0; 		/* 0 => R does not wait for a reply from MacZip */
-short gSwitchLayer 	= false; 	/* We leave MacZip work background              */
+short gInteract 	= 1; 		/* 1 => R and MacZip never interact       */
+short replyValue 	= 1; 		/* 1 => R waits for a reply from MacZip   */
+short gSwitchLayer 	= false; 	/* We leave MacZip work background        */
 
 
 /* Apple Events switches */
@@ -146,13 +146,7 @@ SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
    refere to the original MacZip doc. A free copy of MacZip
    can be found at http://www.sitec.net/maczip.
 
-   This routine has a little drawback: R does not wait for MacZip
-   to finish it operation. When using this to extract help files
-   sometimes R search for the uncompressed file when it is not
-   yet ready and 'file.exists' fails. This will be fixed when the
-   R behaviour is changed to work in a better multitasking.
-
- Implemented on 1/2/2001, Stefano M. Iacus
+   Implemented on 1/2/2001, Stefano M. Iacus
 ***************************************************************************/
 
 
@@ -197,7 +191,8 @@ static int do_unzip(char *zipname, char *dest, int nfiles, char **files,
     /* Send the Event */
 
     if (replyLevels[replyValue] == kAEWaitReply && !gSwitchLayer) {
-        sendIt = StopAlert(kBadCombo, nil);
+       AESend(&ourEvent, &ourReply, (gSendInteractArray[gInteract] + gSwitchLayer) + replyLevels[replyValue], kAENormalPriority,
+               kAEDefaultTimeout,gAEIdleUPP, nil);
     }
 
     if (sendIt == 2) {
