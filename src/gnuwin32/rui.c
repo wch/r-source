@@ -545,7 +545,7 @@ int setupui()
           MCHECK(addtooltip(bt, "Copy and paste"));
           r.x += (btsize + 6);
 
-          MCHECK(bt = newimagebutton(stop_image,r,menukill));
+          MCHECK(bt = newimagebutton(stop_image, r, menukill));
           MCHECK(addtooltip(bt,"Stop current computation"));
           r.x += (btsize + 6) ;
 

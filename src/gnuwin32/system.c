@@ -818,10 +818,10 @@ void R_CleanUp(int ask)
 void R_Busy(int which)
 {
 /* currently cursor is never set off busy */
-    /*if(!CharacterMode) {
-	if(which == 1) setcursor(WatchCursor);
-	if(which == 0) setcursor(ArrowCursor);
-	}*/
+    if(!CharacterMode) {
+	if (which == 1) gsetcursor(RConsole, WatchCursor);
+	if (which == 0) gsetcursor(RConsole, ArrowCursor);
+    }
 }
 
 	/* Saving and Restoring the Global Environment */
