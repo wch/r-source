@@ -54,4 +54,4 @@ data(women)
 bs(women$height, df = 5)
 summary(fm1 <- lm(weight ~ bs(height, df = 5), data = women))
 }
-\keyword{nonparametric}
+\keyword{smooth}

@@ -36,4 +36,4 @@ newX <- seq(58, 72, len = 51)
 # evaluate the basis at the new data
 predict(basis, newX)
 }
-\keyword{nonparametric}
+\keyword{smooth}
