@@ -56,6 +56,9 @@ BUG FIXES
     o	glm() now returns correct linear predictor and fitted values
 	for zero-weight cases.
 
+    o	scan(strip.white=TRUE) and readline() could give incorrect 
+	answers when an input field was empty or blank.
+
 
 
 		CHANGES IN R VERSION 1.2.0
