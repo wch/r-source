@@ -18,12 +18,12 @@ confint.lm <- function(object, parm, level = 0.95, ...)
 }
 
 confint.glm <- function(object, parm, level = 0.95, ...)
-    MASS:::confint.glm(object, parm, level, ...)
+    try(MASS:::confint.glm(object, parm, level, ...))
 
 confint.nls <- function(object, parm, level = 0.95, ...)
-    MASS:::confint.nls(object, parm, level, ...)
+    try(MASS:::confint.nls(object, parm, level, ...))
 
-confint.default <- function (object, parm, level=0.95, ...)
+confint.default <- function (object, parm, level = 0.95, ...)
 {
     cf <- coef(object)
     pnames <- names(cf)
