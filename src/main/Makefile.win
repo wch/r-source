@@ -4,6 +4,9 @@ include ../gnuwin32/MkRules
 all: makeMakedeps libmain.a
 
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+ifdef SUPPORT_UTF8
+CFLAGS += -DSUPPORT_UTF8
+endif
 FFLAGS=$(OPTFLAGS)
 CSOURCES=\
 	CConverters.c CommandLineArgs.c \
