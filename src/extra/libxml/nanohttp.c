@@ -525,7 +525,7 @@ RxmlNanoHTTPRecv(RxmlNanoHTTPCtxtPtr ctxt)
             ctxt->content = ctxt->in + d_content;
             ctxt->inrptr = ctxt->in + d_inrptr;
 	}
-    
+
 	while(1) {
 	    int maxfd = 0, howmany;
 #ifdef Unix
@@ -535,7 +535,7 @@ RxmlNanoHTTPRecv(RxmlNanoHTTPCtxtPtr ctxt)
 		R_PolledEvents();
 		tv.tv_sec = 0;
 		tv.tv_usec = R_wait_usec;
-	    } else {   
+	    } else {
 		tv.tv_sec = timeout;
 		tv.tv_usec = 0;
 	    }
@@ -570,11 +570,12 @@ RxmlNanoHTTPRecv(RxmlNanoHTTPCtxtPtr ctxt)
 		if(used >= timeout) return(0);
 		continue;
 	    }
-	    
+
 #ifdef Unix
-	    if(!FD_ISSET(ctxt->fd, &rfd)) { /* was one of the extras */
+	    if(!FD_ISSET(ctxt->fd, &rfd) || howmany > 1) {
+		/* was one of the extras */
 		what = getSelectedHandler(R_InputHandlers, &rfd);
-		if(!what) what->handler((void*) NULL);
+		if(what != NULL) what->handler((void*) NULL);
 		continue;
 	    }
 #endif
@@ -602,7 +603,7 @@ RxmlNanoHTTPRecv(RxmlNanoHTTPCtxtPtr ctxt)
 	    }
 	}
     }
-    
+
     return(0);
 }
 
@@ -796,7 +797,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 
 
     if ((connect(s, addr, sizeof(*addr))==-1)) {
-	
+
 	switch (socket_errno()) {
 	case EINPROGRESS:
 	case EWOULDBLOCK:
@@ -817,7 +818,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 	    R_PolledEvents();
 	    tv.tv_sec = 0;
 	    tv.tv_usec = R_wait_usec;
-	} else {   
+	} else {
 	    tv.tv_sec = timeout;
 	    tv.tv_usec = 0;
 	}
@@ -860,7 +861,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 	if ( FD_ISSET(s, &wfd) ) {
 	    SOCKLEN_T len;
 	    len = sizeof(status);
-	    if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char*)&status, &len) < 0) {
+	    if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char*)&status, &len) < 0){
 		/* Solaris error code */
 		return (-1);
 	    }
@@ -872,7 +873,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 #ifdef Unix
 	} else { /* some other handler needed */
 	    what = getSelectedHandler(R_InputHandlers, &rfd);
-	    if(!what) what->handler((void*) NULL);
+	    if(what != NULL) what->handler((void*) NULL);
 	    continue;
 #endif
 	}
@@ -938,7 +939,7 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
 #endif
 	} else
 	    break; /* for */
-	
+
 	s = RxmlNanoHTTPConnectAttempt(addr);
 	if (s != -1)
 	    return(s);

@@ -54,7 +54,7 @@
 #endif
 
 #ifdef HAVE_FCNTL_H
-#include <fcntl.h> 
+#include <fcntl.h>
 #endif
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -427,7 +427,7 @@ RxmlNanoFTPFreeCtxt(void * ctx) {
  * @ctx:  the FTP connection context
  * @buf:  the buffer containing the response
  * @len:  the buffer length
- * 
+ *
  * Parsing of the server answer, we just extract the code.
  *
  * returns 0 for errors
@@ -525,7 +525,7 @@ static void RxmlFindLength(void *ctxt, char *ptr)
 {
     char *p, *q;
     int len;
-    
+
     p = strrchr(ptr, '(');
     if(p) {
 	p++;
@@ -1267,7 +1267,7 @@ RxmlNanoFTPGetSocket(void *ctx, const char *filename) {
  */
 
 int
-RxmlNanoFTPRead(void *ctx, void *dest, int len) 
+RxmlNanoFTPRead(void *ctx, void *dest, int len)
 {
     RxmlNanoFTPCtxtPtr ctxt = (RxmlNanoFTPCtxtPtr) ctx;
     int got = 0, res;
@@ -1288,7 +1288,7 @@ RxmlNanoFTPRead(void *ctx, void *dest, int len)
 	    R_PolledEvents();
 	    tv.tv_sec = 0;
 	    tv.tv_usec = R_wait_usec;
-	} else {   
+	} else {
 	    tv.tv_sec = 1;
 	    tv.tv_usec = 0;
 	}
@@ -1300,7 +1300,7 @@ RxmlNanoFTPRead(void *ctx, void *dest, int len)
 	tv.tv_sec = 1;
 	tv.tv_usec = 0;
 #endif
-	
+
 #ifdef Unix
 	maxfd = setSelectMask(R_InputHandlers, &rfd);
 #else
@@ -1331,13 +1331,14 @@ RxmlNanoFTPRead(void *ctx, void *dest, int len)
 	}
 	/* one or more fd is ready */
 #ifdef Unix
-	if(!FD_ISSET(ctxt->dataFd, &rfd)) { /* was one of the extras */
+	if(!FD_ISSET(ctxt->dataFd, &rfd) || res > 1) {
+	    /* was one of the extras */
 	    what = getSelectedHandler(R_InputHandlers, &rfd);
-	    if(!what) what->handler((void*) NULL);
+	    if(what != NULL) what->handler((void*) NULL);
 	    continue;
 	}
 #endif
-	
+
 	/* was the socket */
 	got = recv(ctxt->dataFd, dest, len, 0);
 	if (got < 0) {
