@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-2000   Lyndon Drake
+ *  Copyright (C) 1998-2002   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "Defn.h"
 #include "Fileio.h"
 
@@ -30,6 +34,10 @@
 
 #include <regex.h>
 
+/* for strncasecmp, possibly */
+#if defined(HAVE_STRINGS_H)
+# include <strings.h>
+#endif
 
 #define ERRBUF_SIZE 500
 #define MSGBUF_SIZE 2000

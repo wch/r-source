@@ -5,6 +5,10 @@
    - SaveAsPostscript: Set "command" so we can print
 */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <gnome.h>
 #include "Defn.h"
 #include "Graphics.h"

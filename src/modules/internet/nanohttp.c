@@ -125,31 +125,15 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 #define SOCKET int
 #endif
 
-#ifdef HAVE_STRNCASECMP
-/* where strncasecmp is defined seems system-specific */
-# if defined(HAVE_STRINGS_H) && !defined(Win32)
-#  include <strings.h>
-# endif
-# define xmlStrncasecmp(a, b, n) strncasecmp((char *)a, (char *)b, n)
-#else
-# define xmlStrncasecmp(a, b, n) mystrncasecmp((char *)a, (char *)b, n)
-static int mystrncasecmp(const char *s1, const char *s2, size_t n)
-{
-    char c1, c2;
-    int i;
-
-    for (i = 0; i < n; i++) {
-	c1 = s1[i]; c2 = s2[i];
-	if ((c1 >= 'a') && (c1 <= 'z')) c1 -= 0x20;
-	if ((c2 >= 'a') && (c2 <= 'z')) c2 -= 0x20;
-	if (c1 == '\0') return ((c2 == '\0') ? 0 : -1);
-	if (c2 == '\0') return 1;
-	if (c1 < c2) return -1;
-	if (c1 > c2) return 1;
-    }
-    return 0;
-}
+/* where strncasecmp is defined seems system-specific,
+   and on Windows the cross-compiler doesn't find strings.h */
+#if defined(HAVE_STRINGS_H) && !defined(Win32)
+# include <strings.h>
 #endif
+#if defined(HAVE_DECL_STRNCASECMP) || !HAVE_DECL_STRNCASECMP
+extern int strncasecmp(const char *s1, const char *s2, size_t n);
+#endif
+#define xmlStrncasecmp(a, b, n) strncasecmp((char *)a, (char *)b, n)
 
 #define XML_NANO_HTTP_MAX_REDIR	10
 
