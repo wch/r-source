@@ -3,7 +3,7 @@ include MkRules
 HELP=YES
 
 PACKAGES=base eda lqs modreg mva stepfun
-RPREFIX=rw0641-3
+RPREFIX=prerw0641
 
 ifdef DEBUG
  OPTFLAGS=-g -O2
@@ -25,7 +25,7 @@ OBJS-NO=
 OBJS=$(filter-out $(OBJS-NO),$(OBJSO))
 PKGS=$(foreach i, $(PACKAGES), pkg-$i)
 DIRSOBJ=$(foreach i, $(DIRS) ../unix , $i/*.o)
-EXTRALIBS=rx.a ga.a gl.a xdr.a
+EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
@@ -53,6 +53,7 @@ rlibs $(EXTRALIBS):
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
 	$(MAKE) -C ./xdr
+	$(MAKE) -C ./math
 
 COPYRIGHTS: ../../COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -144,7 +145,8 @@ cleanwin:
 	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean
 	$(MAKE) -C xdr clean
-	$(MAKE) -C installer clean
+	$(MAKE) -C math clean
+	-$(MAKE) -C installer clean
 
 
 bindist:
@@ -166,6 +168,7 @@ bindist:
 	$(CP) -p rw-faq $(RPREFIX)/rw-faq
 	$(CP) -p Announce $(RPREFIX)/Announce
 	$(CP) -p CHANGES $(RPREFIX)/CHANGES
+	$(CP) -p  COPYRIGHTS.win $(RPREFIX)/
 	$(RM) -rf $(RPREFIX)b.zip $(RPREFIX)h.zip $(RPREFIX)w.zip $(RPREFIX)l.zip
 	$(RM) anindex.zip
 	zip -mr anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
@@ -199,15 +202,18 @@ SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Errormsg.h \
 	 Random.h Utils.h Platform.h FFDecl.h FFTab.h globalvar.h
 
 packagedist:
-	$(RM) -r $(RPREFIX)sp.zip src
-	$(MKDIR) src src/include src/library src/gnuwin32 src/gnuwin32/help
-	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll src/gnuwin32
-	$(CP) -p Makefile.packages src/gnuwin32/Makefile
-	$(CP) -p help/* src/gnuwin32/help
-	$(MAKE) -C src/gnuwin32/help clean
-	$(CP) -p $(foreach i,$(SRC_HEADERS),../include/$i) src/include
-	zip -r $(RPREFIX)sp.zip readme.packages src
-	$(RM) -r src
+	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/src $(RPREFIX)/src/include 
+	$(MKDIR) $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 
+	$(MKDIR) $(RPREFIX)/src/gnuwin32/help
+	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll $(RPREFIX)/src/gnuwin32
+	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
+	$(CP) -p help/* $(RPREFIX)/src/gnuwin32/help
+	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
+	$(CP) -p $(foreach i,$(SRC_HEADERS),../include/$i) $(RPREFIX)/src/include
+	$(CP) readme.packages $(RPREFIX)
+	zip -r $(RPREFIX)sp.zip $(RPREFIX)
+	$(RM) -r $(RPREFIX)
 
 
 distribution: bindist srcdist packagedist

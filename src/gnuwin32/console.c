@@ -629,7 +629,11 @@ void consolecmd(control c, char *cmd)
 FBEGIN
     char *ch;
     int i;
-
+    if (p->sel) {
+	p->sel = 0;
+	p->needredraw = 1; 
+	REDRAW;
+    }
     storekey(c, BEGINLINE);
     storekey(c, KILLRESTOFLINE);
     for (ch = cmd; *ch; ch++) storekey(c, *ch);
@@ -647,6 +651,11 @@ void consolepaste(control c)
 FBEGIN
     HGLOBAL hglb;
     char *pc, *new = NULL;
+    if (p->sel) {
+	p->sel = 0;
+	p->needredraw = 1; 
+	REDRAW;
+     }
     if (p->kind == PAGER) FVOIDRETURN;
     if ( OpenClipboard(NULL) &&
          (hglb = GetClipboardData(CF_TEXT)) &&
@@ -845,9 +854,8 @@ FVOIDEND
 
 static void ctrlkeyin(control c, int key)
 FBEGIN
-    int st, sel;
+    int st;
 
-    sel = 0;
     st = getkeystate();
     if ((p->chbrk) && (key == p->chbrk) &&
 	((!p->modbrk) || ((p->modbrk) && (st == p->modbrk)))) {
@@ -912,9 +920,9 @@ FBEGIN
 	     consolepaste(c);
 	 break;
     }
-    if ((sel == 0) && (p->sel)) {
+    if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1;  /* FIXME */
+	p->needredraw = 1; 
 	REDRAW;
     }
 FVOIDEND
@@ -950,7 +958,7 @@ static void delconsole(control c)
 }
 
 /* console readline (coded looking to the GNUPLOT 3.5 readline)*/
-
+void ProcessEvents();
 static char consolegetc(control c)
 {
     ConsoleData p;
@@ -961,8 +969,13 @@ static char consolegetc(control c)
     while((p->numkeys == 0) && (!p->clp))
     {
 	if (!peekevent()) WaitMessage();
-	doevent();
+	ProcessEvents();
     }
+    if (p->sel) {
+	p->sel = 0;
+	p->needredraw = 1; 
+	REDRAW;
+    }    
     if (!p->already && p->clp)
     {
 	ch = p->clp[p->pclp++];
@@ -1002,10 +1015,15 @@ FVOIDEND
 static void draweditline(control c)
 FBEGIN
     checkvisible(c);
-    PBEGIN
-        WRITELINE(NUMLINES - 1, p->r);
-        RSHOW(RLINE(p->r));
-    PEND
+    if (p->needredraw) {
+        REDRAW;
+    }
+    else {
+        PBEGIN
+          WRITELINE(NUMLINES - 1, p->r);
+          RSHOW(RLINE(p->r));
+        PEND
+    }
 FVOIDEND
 
 int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
@@ -1649,17 +1667,17 @@ static pager pagercreate()
         MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
         addto(tb);
-        MCHECK(bt = newimagebutton(copy1_image, r, pagerpaste));
+        MCHECK(bt = newtoolbutton(copy1_image, r, pagerpaste));
         MCHECK(addtooltip(bt, "Paste to console"));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
-        MCHECK(bt = newimagebutton(print_image, r, pagerprint));
+        MCHECK(bt = newtoolbutton(print_image, r, pagerprint));
         MCHECK(addtooltip(bt, "Print"));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
-        MCHECK(bt = newimagebutton(console_image, r, pagerconsole));
+        MCHECK(bt = newtoolbutton(console_image, r, pagerconsole));
         MCHECK(addtooltip(bt, "Return focus to Console"));
 	gsetcursor(bt, ArrowCursor);
     }

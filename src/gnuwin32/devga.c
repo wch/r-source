@@ -1033,25 +1033,25 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 		gsetcursor(tb, ArrowCursor);
                 addto(tb);
 
-                MCHECK(bt = newimagebutton(cam_image, r, menuclpwm));
+                MCHECK(bt = newtoolbutton(cam_image, r, menuclpwm));
                 MCHECK(addtooltip(bt, "Copy to the clipboard as a metafile"));
 		gsetcursor(bt, ArrowCursor);
 		setdata(bt, (void *) dd);
                 r.x += (btsize + 6);
 
-                MCHECK(bt = newimagebutton(print_image, r, menuclpwm));
+                MCHECK(bt = newtoolbutton(print_image, r, menuclpwm));
                 MCHECK(addtooltip(bt, "Print"));
 		gsetcursor(bt, ArrowCursor);
                 setdata(bt, (void *) dd);
                 r.x += (btsize + 6);
 
-                MCHECK(bt = newimagebutton(console_image, r, menuconsole));
+                MCHECK(bt = newtoolbutton(console_image, r, menuconsole));
                 MCHECK(addtooltip(bt, "Return focus to console"));
 		gsetcursor(bt, ArrowCursor);
                 setdata(bt, (void *) dd);
                 r.x += (btsize + 6);
 
-                MCHECK(xd->stoploc = newimagebutton(stop_image, r, menustop));
+                MCHECK(xd->stoploc = newtoolbutton(stop_image, r, menustop));
                 MCHECK(addtooltip(xd->stoploc, "Stop locator"));
 		gsetcursor(bt, ArrowCursor);
                 setdata(xd->stoploc,(void *) dd);            
@@ -1315,12 +1315,8 @@ static void X11_NewPage(DevDesc *dd)
     xd->bgcolor = rgb(R_RED(xd->bg),
 		      R_GREEN(xd->bg),
 		      R_BLUE(xd->bg));
-    if (xd->kind)
-	xd->clip = getrect(xd->gawin);
-    else
-	xd->clip = getrect(xd->bm);
-    gfillrect(xd->gawin, xd->bgcolor, getrect(xd->gawin));
-    NOBM(gfillrect(xd->bm, xd->bgcolor, getrect(xd->bm)));
+    xd->clip = getrect(xd->gawin);
+    DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
     if (xd->kind)
 	xd->needsave = 1;
 }

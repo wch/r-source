@@ -521,35 +521,35 @@ int setupui()
           MCHECK(tb = newtoolbar(btsize + 4));
           addto(tb);
 
-          MCHECK(bt = newimagebutton(open_image, r, menusource));
+          MCHECK(bt = newtoolbutton(open_image, r, menusource));
           MCHECK(addtooltip(bt, "Source R code"));
           r.x += (btsize + 1) ;
           
-          MCHECK(bt = newimagebutton(open1_image, r, menuloadimage));
+          MCHECK(bt = newtoolbutton(open1_image, r, menuloadimage));
           MCHECK(addtooltip(bt, "Load image"));
           r.x += (btsize + 1) ;
 
-          MCHECK(bt = newimagebutton(save_image, r, menusaveimage));
+          MCHECK(bt = newtoolbutton(save_image, r, menusaveimage));
           MCHECK(addtooltip(bt,  "Save image"));
           r.x += (btsize + 6);
 
-          MCHECK(bt = newimagebutton(copy_image, r, menucopy));
+          MCHECK(bt = newtoolbutton(copy_image, r, menucopy));
           MCHECK(addtooltip(bt, "Copy"));
           r.x += (btsize + 1);
 
-          MCHECK(bt = newimagebutton(paste_image, r, menupaste));
+          MCHECK(bt = newtoolbutton(paste_image, r, menupaste));
           MCHECK(addtooltip(bt, "Paste"));
           r.x += (btsize + 1);
 
-          MCHECK(bt = newimagebutton(copypaste_image, r, menucopypaste));
+          MCHECK(bt = newtoolbutton(copypaste_image, r, menucopypaste));
           MCHECK(addtooltip(bt, "Copy and paste"));
           r.x += (btsize + 6);
 
-          MCHECK(bt = newimagebutton(stop_image, r, menukill));
+          MCHECK(bt = newtoolbutton(stop_image,r,menukill));
           MCHECK(addtooltip(bt,"Stop current computation"));
           r.x += (btsize + 6) ;
 
-          MCHECK(bt = newimagebutton(print_image, r, menuprint));
+          MCHECK(bt = newtoolbutton(print_image, r, menuprint));
           MCHECK(addtooltip(bt, "Print"));
     }
     if (ismdi() && (RguiMDI & RW_STATUSBAR)) {

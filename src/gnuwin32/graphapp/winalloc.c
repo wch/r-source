@@ -81,7 +81,10 @@ void *realloc(void *u, size_t newsize)
 
 void *calloc(size_t n, size_t m)
 {
-    return winmalloc(n * m);
+    size_t size = n * m;
+    void   *u   = winmalloc(size);
+    if (u) ZeroMemory( (PVOID) u, (DWORD) size);
+    return u; 
 }
 #endif
 

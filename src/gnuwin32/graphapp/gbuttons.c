@@ -61,12 +61,32 @@ control newtoolbar(int height)
     c->toolbar = newwindow("TOOLBAR", rect(0, 0, 100, height),
 			   ChildWindow | Border);
     if (c->toolbar) {
+        DWORD wcol = GetSysColor(COLOR_MENU);
 	hide(c->toolbar);
-	setbackground(c->toolbar, GetSysColor(COLOR_MENU));
+	setbackground(c->toolbar, 
+                      rgb( (wcol >> 0) &  0x000000FFL,
+                           (wcol >> 8) &  0x000000FFL,
+                           (wcol >> 16) &  0x000000FFL));
     }
     addto(c);
     return (control) c->toolbar;
 }
+
+/* Fix background color for image on the toolbar.
+   Designed to work with image in stdimc.c:
+   (a) background is pixel (0,0);
+   (b) image depth is 8 bits;
+   (c) image is changed not copied.
+*/
+button newtoolbutton(image img, rect r, actionfn fn) {
+   DWORD wcol = GetSysColor(COLOR_MENU);
+   rgb    col = rgb( (wcol >> 0) &  0x000000FFL,
+                     (wcol >> 8) &  0x000000FFL,
+                     (wcol >> 16) &  0x000000FFL);
+   img->cmap[img->pixels[0]] = col;
+   return newimagebutton(img, r, fn);
+}
+    
 
 void scrolltext(textbox c, int lines)
 {
