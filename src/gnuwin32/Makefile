@@ -463,7 +463,7 @@ CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)$(RVER-PAT)/Recommended
 rsync-recommended:
 	@(cd ../library; \
 	rsync -rvCt --delete --exclude=Makefile.in --exclude=.cvsignore \
-	  --include=*.tar.gz --exclude=*.tgz $(CRANREC) . ); \
+	  --include=*.tar.gz --exclude=*.tgz $(CRANREC)  --exclude=".svn" . ); \
 	$(RM) ../library/Recommended/*.tgz; \
 	(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
