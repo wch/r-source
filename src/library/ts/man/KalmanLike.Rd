@@ -12,7 +12,7 @@
 KalmanLike(y, mod, nit = 0)
 KalmanRun(y, mod, nit = 0)
 KalmanForecast(n.ahead = 10, mod)
-makeARIMA(phi, theta, Delta)
+makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{
   \item{y}{a univariate time series.}
@@ -24,8 +24,10 @@ makeARIMA(phi, theta, Delta)
     required.}
   \item{phi, theta}{numeric vectors of length >=0 giving AR and MA
     parameters.}
-  \item{Delta}{vector of differencing coefficients, so ARMA model is
+  \item{Delta}{vector of differencing coefficients, so an ARMA model is
     fitted to \code{y[t] - Delta[1]*y[t-1] - \dots}.}
+  \item{kappa}{the prior variance (as a multiple of the innovations
+    variance) for the past observations in a differenced model.}
 }
 \details{
   These functions work with a general univariate state-space model
