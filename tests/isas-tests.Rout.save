@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2003-12-11), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2003-12-20), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -90,6 +90,8 @@ Type 'q()' to quit R.
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ts(res))
 > 
@@ -206,6 +208,10 @@ IS: [1] TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -293,6 +299,8 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.hclust( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
+> f <- try(as.stepfun( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.stepfun( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
@@ -362,6 +370,8 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] FALSE
 Error: x is not TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ts(res))
 > 
@@ -477,6 +487,10 @@ IS: [1] TRUE
 +    } else   !isall.equal(x, res)})
 [1] FALSE
 Error: x is not TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -561,6 +575,8 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.hclust( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
+> f <- try(as.stepfun( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.stepfun( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
@@ -629,6 +645,8 @@ Error: x is not TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ts(res))
 > 
@@ -743,6 +761,10 @@ IS: [1] TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -828,6 +850,8 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.hclust( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
+> f <- try(as.stepfun( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.stepfun( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > 
@@ -902,6 +926,8 @@ IS: [1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ts(res))
 [1] TRUE
@@ -1023,6 +1049,10 @@ IS: [1] TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -1115,6 +1145,8 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.hclust( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
+> f <- try(as.stepfun( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.stepfun( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
@@ -1190,6 +1222,8 @@ IS: [1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ts(res))
 [1] TRUE
@@ -1311,6 +1345,10 @@ IS: [1] TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -1403,6 +1441,8 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.hclust( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
+> f <- try(as.stepfun( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.stepfun( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
@@ -1476,6 +1516,8 @@ IS: [1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ts(res))
 [1] TRUE
@@ -1595,6 +1637,10 @@ IS: [1] TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -1686,6 +1732,8 @@ Error in strptime(tim, format = format) : invalid `x' argument
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.hclust( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
+> f <- try(as.stepfun( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.stepfun( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
@@ -1757,6 +1805,8 @@ Error in strptime(tim, format = format) : invalid `x' argument
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ts(res))
 [1] TRUE
@@ -1874,6 +1924,10 @@ IS: [1] TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 IS: [1] TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -1962,6 +2016,8 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.formula( f )))
 > f <- try(as.hclust( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
+> f <- try(as.stepfun( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.stepfun( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 [1] TRUE
@@ -2033,6 +2089,8 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] FALSE
 Error: x is not TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error')) report(is.stepfun(res))
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ts(res))
 > 
@@ -2152,6 +2210,10 @@ Error: x is not TRUE
 +    } else   !isall.equal(x, res)})
 [1] FALSE
 Error: x is not TRUE
+> res <- try(as.stepfun( x ), silent = TRUE)
+> if(!inherits(res, 'try-error'))
++    report({if(is.stepfun(x)) { cat('IS: ');all.equal(x, res, tol=0)
++    } else   !isall.equal(x, res)})
 > res <- try(as.ts( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2239,9 +2301,11 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.hclust( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hclust( f )))
+> f <- try(as.stepfun( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.stepfun( f )))
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.23 0.01 0.24 0 0 
+Time elapsed:  1.38 0.03 1.41 0 0 
 > 
 > 
