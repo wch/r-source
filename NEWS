@@ -21,8 +21,10 @@ USER-VISIBLE CHANGES
 	installation, but the separation allows a 'lean and mean'
 	version of R to be used for tasks such as building indices.
 
-	Packages ctest, eda, modreg and mva have been merged into stats.
-	[Some of packages nls and ts will follow.]
+	Packages ctest, eda, modreg, mva, nls and ts have been merged
+	into stats, and lqs has been returned to MASS.  In all cases a
+	stub has been left that will issue a warning and ensure that
+	the appropriate new home is loaded.
 
 	A few packages made assumptions about where functions were and
 	will need updating.

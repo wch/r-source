@@ -2834,22 +2834,22 @@ To access data from another package, use the @code{package} argument,
 for example
 
 @example
-data(package="nls")
-data(Puromycin, package="nls")
+data(package="stats")
+data(Puromycin, package="stats")
 @end example
 
 If a package has been attached by @code{library}, its datasets are
 automatically included in the search, so that
 
 @example
-library(nls)
+library(stats) # normally attached
 data()
 data(Puromycin)
 @end example
 
 @noindent
 will list all the datasets in all the currently attached packages (at
-least @pkg{base} and @pkg{nls}) and then load @code{Puromycin} from the
+least @pkg{base} and @pkg{stats}) and then load @code{Puromycin} from the
 first package in which such a dataset is found.
 
 User-contributed packages can be a rich source of datasets.
@@ -5023,7 +5023,7 @@ SE.  We can superimpose the least squares fit on a new plot:
 > lines(spline(xfit, yfit))
 @end example
 
-The standard package @pkg{nls} provides much more extensive facilities
+The standard package @pkg{stats} provides much more extensive facilities
 for fitting non-linear models by least squares.  The model we have just
 fitted is the Michaelis-Menten model, so we can use
 

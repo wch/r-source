@@ -203,7 +203,7 @@ print.atomic(x, quote = TRUE, \dots)
   \code{printNoClass} was in package \pkg{methods} and calls directly the
   internal function \code{print.default}.
 
-  \code{plot.mts} has been removed, as \code{\link[ts]{plot.ts}} now has the
+  \code{plot.mts} has been removed, as \code{\link[stats]{plot.ts}} now has the
   same functionality.
 
   \code{print.coefmat} was an older name for \code{\link[stats]{printCoefmat}}

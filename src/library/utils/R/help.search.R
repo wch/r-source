@@ -133,7 +133,8 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    if(verbose)
 		cat("", p, if((np %% 5) == 0) "\n")
             ## skip stub packages
-            if(p %in% c("ctest", "modreg", "mva")) next
+            if(p %in% c("ctest", "eda", "lqs", "modreg", "mva",
+                        "nls", "ts")) next
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
 		stop("could not find package ", sQuote(p))

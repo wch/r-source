@@ -93,7 +93,7 @@ export(add.scope, add1, add1.default, add1.glm, add1.lm, add1.mlm,
        weights.default, weights.glm, window, window.default,
        window.ts, write.ftable)
 
-importFrom(graphics, plot)
+importFrom(graphics, identify, plot)
 importFrom(utils, str)
 
 S3method("[", formula)
@@ -184,8 +184,6 @@ export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
 ##        print.loadings, print.summary.princomp, str.dendrogram,
 ##        summary.princomp)
 
-importFrom(graphics, identify)
-
 S3method("[[", dendrogram)
 S3method(as.dendrogram, hclust)
 S3method(as.hclust, default)
@@ -219,3 +217,111 @@ S3method(rev, dendrogram)
 S3method(str, dendrogram)
 S3method(summary, prcomp)
 S3method(summary, princomp)
+
+## from nls
+export(NLSstAsymptotic, NLSstClosestX, NLSstLfAsymptote,
+       NLSstRtAsymptote, SSasymp, SSasympOff, SSasympOrig, SSbiexp,
+       SSfol, SSfpl, SSgompertz, SSlogis, SSmicmen, SSweibull,
+       asOneSidedFormula, clearNames,
+       getInitial, nls, nls.control, nlsModel, numericDeriv, profiler,
+       selfStart, setNames, sortedXyData)
+
+# documented but not exported
+# export(formula.nls, plot.profile.nls, predict.nls, profile.nls, profiler.nls)
+
+S3method(NLSstAsymptotic, sortedXyData)
+S3method(NLSstClosestX, sortedXyData)
+S3method(NLSstLfAsymptote, sortedXyData)
+S3method(NLSstRtAsymptote, sortedXyData)
+S3method(anova, nls)
+S3method(coef, nls)
+S3method(deviance, nls)
+S3method(df.residual, nls)
+S3method(fitted, nls)
+S3method(formula, nls)
+S3method(getInitial, default)
+S3method(getInitial, formula)
+S3method(getInitial, selfStart)
+S3method(logLik, nls)
+S3method(nlsModel, plinear)
+S3method(plot, profile.nls)
+S3method(predict, nls)
+S3method(print, nls)
+S3method(print, summary.nls)
+S3method(profile, nls)
+S3method(profiler, nls)
+S3method(residuals, nls)
+S3method(selfStart, default)
+S3method(selfStart, formula)
+S3method(sortedXyData, default)
+S3method(summary, nls)
+S3method(vcov, nls)
+S3method(weights, nls)
+
+## from ts: Box.test and PP.test are covered above.
+export(acf, acf2AR, ar, ar.burg, ar.mle, ar.ols, ar.yw, arima,
+       arima.sim, arima0, arima0.diag, ARMAacf, ARMAtoMA,
+       bandwidth.kernel, ccf, cpgram, decompose, df.kernel,
+       diffinv, embed, filter, HoltWinters, is.tskernel,
+       KalmanForecast, KalmanLike, KalmanRun, KalmanSmooth, kernapply,
+       kernel, lag, lag.plot, makeARIMA, monthplot, na.contiguous,
+       pacf, plot.spec, plot.spec.coherency, plot.spec.phase,
+       spec.ar, spec.pgram, spec.taper, spectrum, stl, StructTS,
+       toeplitz, ts.intersect, ts.plot, ts.union, tsdiag, tsSmooth)
+
+# methods which are documented and registered
+# export(ar.burg.default, ar.burg.mts, ar.yw.default, ar.yw.mts,
+#        diffinv.default, diffinv.ts, kernapply.default,
+#        kernapply.ts, kernapply.tskernel, kernapply.vector,
+#        lag.default, monthplot.default, monthplot.stl,
+#        monthplot.StructTS, monthplot.ts, pacf.default,
+#        plot.acf, plot.HoltWinters, plot.stl, predict.ar,
+#        predict.Arima, predict.arima0, predict.HoltWinters,
+#        tsdiag.Arima, tsdiag.arima0, tsdiag.StructTS,
+#        tsSmooth.StructTS)
+
+S3method("[", tskernel)
+S3method(ar.burg, default)
+S3method(ar.burg, mts)
+S3method(ar.yw, default)
+S3method(ar.yw, mts)
+S3method(coef, Arima)
+S3method(diffinv, default)
+S3method(diffinv, ts)
+S3method(diffinv, vector)
+S3method(kernapply, default)
+S3method(kernapply, ts)
+S3method(kernapply, tskernel)
+S3method(kernapply, vector)
+S3method(lag, default)
+S3method(logLik, Arima)
+S3method(monthplot, default)
+S3method(monthplot, stl)
+S3method(monthplot, StructTS)
+S3method(monthplot, ts)
+S3method(pacf, default)
+S3method(plot, acf)
+S3method(plot, decomposed.ts)
+S3method(plot, HoltWinters)
+S3method(plot, spec)
+S3method(plot, stl)
+S3method(plot, tskernel)
+S3method(predict, ar)
+S3method(predict, Arima)
+S3method(predict, arima0)
+S3method(predict, HoltWinters)
+S3method(predict, StructTS)
+S3method(print, ar)
+S3method(print, Arima)
+S3method(print, arima0)
+S3method(print, HoltWinters)
+S3method(print, stl)
+S3method(print, StructTS)
+S3method(print, tskernel)
+S3method(residuals, HoltWinters)
+S3method(summary, stl)
+S3method(tsdiag, Arima)
+S3method(tsdiag, arima0)
+S3method(tsdiag, StructTS)
+S3method(tsSmooth, StructTS)
+S3method(vcov, Arima)

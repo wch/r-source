@@ -44,7 +44,7 @@ diff(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[stats]{diff.ts}}, \code{\link[ts]{diffinv}}.
+  \code{\link[stats]{diff.ts}}, \code{\link[stats]{diffinv}}.
 }
 \examples{
 diff(1:10, 2)

@@ -9,7 +9,7 @@ setClass("mle", representation(call = "language",
 
 setClass("summary.mle", representation(call = "language",
                                coef = "matrix",
-                               m2logL = "numeric"))  
+                               m2logL = "numeric"))
 
 setClass("profile.mle", representation(profile="list",
                                        summary="summary.mle"))
@@ -47,13 +47,13 @@ setMethod("show", "summary.mle", function(object){
     print(object@coef)
     cat("\n-2 log L:", object@m2logL, "\n")
 })
- 
+
 setMethod("summary", "mle", function(object, ...){
     cmat <- cbind(Estimate = object@coef,
                   `Std. Error` = sqrt(diag(object@vcov)))
     m2logL <- 2*object@min
-    new("summary.mle", call=object@call, coef=cmat, m2logL= m2logL) 
-})   
+    new("summary.mle", call=object@call, coef=cmat, m2logL= m2logL)
+})
 
 setMethod("profile", "mle",
           function (fitted, which = 1:p, maxsteps = 100,
@@ -119,7 +119,7 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
     absVal = TRUE, ...)
 {
     ## Plot profiled likelihood
-    ## Based on profile.nls (package nls)
+    ## Based on profile.nls (package stats)
     require(splines)
     obj <- x@profile
 

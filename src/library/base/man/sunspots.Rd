@@ -17,7 +17,7 @@
     Student and Research Worker}.
   New York: Springer-Verlag.
 }
-\seealso{\code{\link[ts]{sunspot.month}} (package \pkg{ts}) has a
+\seealso{\code{\link[stats]{sunspot.month}} (package \pkg{stats}) has a
   longer (and a bit different) series.} 
 \examples{
 data(sunspots)

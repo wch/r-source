@@ -37,17 +37,17 @@ predict (object, \dots)
   \code{\link{predict.glm}},
   \code{\link{predict.lm}},
   \code{\link{predict.loess}},
-  \code{\link[nls]{predict.nls}},
+  \code{\link{predict.nls}},
   \code{\link{predict.poly}},
   \code{\link[stats:princomp]{predict.princomp}},
   \code{\link{predict.smooth.spline}}.
 
   For time-series prediction,
-  \code{\link[ts:ar]{predict.ar}},
-  \code{\link[ts]{predict.Arima}},
-  \code{\link[ts:arima0]{predict.arima0}},
-  \code{\link[ts]{predict.HoltWinters}},
-  \code{\link[ts:StructTS]{predict.StructTS}}.
+  \code{\link[stats:ar]{predict.ar}},
+  \code{\link{predict.Arima}},
+  \code{\link[stats:arima0]{predict.arima0}},
+  \code{\link{predict.HoltWinters}},
+  \code{\link[stats:StructTS]{predict.StructTS}}.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

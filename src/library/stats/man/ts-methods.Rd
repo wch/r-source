@@ -31,6 +31,6 @@
 \seealso{
   \code{\link{diff}};
   \code{\link{na.omit}}, \code{\link{na.fail}},
-  \code{\link[ts]{na.contiguous}}.
+  \code{\link{na.contiguous}}.
 }
 \keyword{ts}

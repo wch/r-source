@@ -20,7 +20,7 @@ profile(fitted, \dots)
   individual methods for further details.
 }
 \seealso{
-  \code{\link[nls]{profile.nls}} in package \pkg{nls},
+  \code{\link{profile.nls}},
   \code{\link[MASS:confint]{profile.glm}} in package \pkg{MASS},
   \ldots
 
