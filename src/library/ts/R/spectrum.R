@@ -276,7 +276,7 @@ plot.spec.coherency <-
         opar <- par(mfrow = c(nser-1, nser-1), mar = c(1.5, 1.5, 0.5, 0.5),
                     oma = c(4, 4, 6, 4))
         on.exit(par(opar))
-        frame()
+        plot.new()
         for (j in 2:nser) for (i in 1:(j-1)) {
             par(mfg=c(j-1,i, nser-1, nser-1))
             ind <- i + (j - 1) * (j - 2)/2
@@ -324,7 +324,7 @@ plot.spec.phase <-
         opar <- par(mfrow = c(nser-1, nser-1), mar = c(1.5, 1.5, 0.5, 0.5),
                     oma = c(4, 4, 6, 4))
         on.exit(par(opar))
-        frame()
+        plot.new()
         for (j in 2:nser) for (i in 1:(j-1)) {
             par(mfg=c(j-1,i, nser-1, nser-1))
             ind <- i + (j - 1) * (j - 2)/2
