@@ -1544,6 +1544,8 @@ SHLIB_LDFLAGS=-Wl,-G
 but was unable to use the X libraries or the native BLAS (ESSL) and so
 used @option{--without-x --without-blas}.
 
+We understand that @option{--enable-R-shlib} does not work under AIX.
+
 
 @node Enabling search in HTML help, New platforms, Configuration on Unix, Top
 @chapter Enabling search in HTML help
