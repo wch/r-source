@@ -19,10 +19,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME> 
-   used XTextWidth and XDrawText, so need to use fontsets
+/* <UTF8> 
+   Used XTextWidth and XDrawText, so need to use fontsets
 
-   I just don't seem to be able to get XCreateIC right.
+   Also needed input context.
 */
 
 /* The version for R 2.1.0 is partly based on patches by 
@@ -172,7 +172,7 @@ static char             *font_name="9x15";
 static XFontSet         font_set;
 static XFontStruct	**fs_list;
 static int		font_set_cnt;
-static char             *fontset_name="-alias-fixed-medium-r-normal--12-";
+static char             *fontset_name="-*-fixed-medium-r-normal--13-";
 static XIM		ioim;
 static XIC		ioic;
 #endif
@@ -1552,7 +1552,27 @@ static Rboolean initwin(void) /* TRUE = Error */
     protocol = XInternAtom(iodisplay, "WM_DELETE_WINDOW", 0);
     XSetWMProtocols(iodisplay, iowindow, &protocol, 1);
     XSetWMHints(iodisplay, iowindow, &hints);
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	ioim = XOpenIM(iodisplay, NULL, NULL, NULL);
+	if(!ioim) {
+	    XDestroyWindow(iodisplay, iowindow);
+	    XCloseDisplay(iodisplay);
+	    error("unable to open X Input Method");
+	}
 
+	ioic = XCreateIC(ioim, 
+			 XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
+			 XNClientWindow, iowindow,
+			 NULL);
+	if(!ioic) {
+	    XCloseIM(ioim);
+	    XDestroyWindow(iodisplay, iowindow);
+	    XCloseDisplay(iodisplay);
+	    error("unable to open X Input Context");
+	}
+    }
+#endif
 
     iogc = XCreateGC(iodisplay, iowindow, 0, 0);
 #ifdef SUPPORT_UTF8
@@ -1568,31 +1588,6 @@ static Rboolean initwin(void) /* TRUE = Error */
 		 ButtonPressMask | KeyPressMask
 		 | ExposureMask | StructureNotifyMask);
     XMapRaised(iodisplay, iowindow);
-#ifdef SUPPORT_UTF8
-    /* FIXME  create ic by something like */
-    if(utf8locale) {
-	ioim = XOpenIM(iodisplay, NULL, NULL, NULL);
-
-	if(!ioim) {
-	    XFreeGC(iodisplay, iogc);
-	    XDestroyWindow(iodisplay, iowindow);
-	    XCloseDisplay(iodisplay);
-	    error("unable to open X Input Method");
-	}
-	ioic = XCreateIC(ioim, 
-			 XNInputStyle, XIMPreeditNone | XIMStatusNothing, 
-			 XNClientWindow, iowindow,
-			 NULL);
-	if(!ioic) {
-	    XFreeGC(iodisplay, iogc);
-	    XCloseIM(ioim);
-	    XDestroyWindow(iodisplay, iowindow);
-	    XCloseDisplay(iodisplay);
-	    error("unable to open X Input Context");
-	}
-    }
-    
-#endif
 
     /* now set up the menu-window, for now use the same text
        dimensions as above */
