@@ -171,7 +171,7 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
     if(any(empty <- nchar(collabs)==0))
 	collabs[empty] <- paste("V", ic, sep = "")[empty]
     value <- vector("list", ncols)
-    if(mode(x) == "character") {
+    if(mode(x) == "character" || mode(x) == "logical") {
 	for(i in ic)
 	    value[[i]] <- as.factor(x[,i])
     } else {
