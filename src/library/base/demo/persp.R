@@ -1,6 +1,8 @@
 ### Demos for  persp()  plots   -- things not in  example(persp)
 ### -------------------------
 
+## make sure a device is open
+if(dev.cur() <= 1) get(getOption("device"))()
 ## is FALSE in demo() {using source()}:
 ## if(dev.interactive())
 ## Use a ``portable'' (;-) hack instead:
