@@ -511,6 +511,8 @@ function(dir, outDir)
     ## Windows.
     setwd(cwd)
     unlink(buildDir, recursive = TRUE)
+    ## Now you need to update the HTML index!
+    .install_package_vignette_index(dir, outDir)
     invisible()
 }
 
