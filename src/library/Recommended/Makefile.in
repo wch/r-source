@@ -12,13 +12,13 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in .cvsignore
-R = $(top_builddir)/bin/R
+R = R_LIBS= $(top_builddir)/bin/R
 
-# foo.ts is the timestamp for package foo
-# foo_tgz is a symlink to foo_x.y-z.tar.gz in the source dir
+## foo.ts is the timestamp for package foo
+## foo_tgz is a symlink to foo_x.y-z.tar.gz in the source dir
 
-#  For developers: A shell script, tools/rsync-recommended, updates
-#  packages from the CRAN master directory. 
+##  For developers: A shell script, tools/rsync-recommended, updates
+##  packages from the CRAN master directory. 
 
 .SUFFIXES: _tgz .ts
 OBJECTS=$(R_PKGS_RECOMMENDED:=.ts)
@@ -30,12 +30,10 @@ all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ $(OBJECTS)
 
 _tgz.ts:
 	$(R) CMD INSTALL $<
-	touch $@
+	@touch $@
 
-# survival needs to be installed before boot
+## survival needs to be installed before boot
 boot.ts: survival.ts boot_tgz
-	$(R) CMD INSTALL $(srcdir)/boot_tgz
-	touch $@
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
