@@ -9,6 +9,13 @@ rw2001
 
 jpeg(), png() and bmp() were not handling background colours properly.
 
+It seems that on some systems (but not the maintainers') Mozilla 1.7.3
+requires \ not / in filepaths, so help(topic, htmlhelp=TRUE) now uses
+\.  (PR#7269) Hopefully no system requires / not \!
+
+Changes to help() meant that help(topic, chmhelp=TRUE) was no longer
+working if `topic' was an alias.  (PR#7269)
+
 
     -------------------------------------------------------------------
 
