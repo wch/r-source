@@ -62,8 +62,8 @@ url <- function(description, open = "", encoding = getOption("encoding"))
     .Internal(url(description, open, encoding))
 
 gzfile <- function(description, open = "",
-                   encoding = getOption("encoding"), compress = 6)
-    .Internal(gzfile(description, open, encoding, compress))
+                   encoding = getOption("encoding"), compression = 6)
+    .Internal(gzfile(description, open, encoding, compression))
 
 textConnection <- function(object, open = "r")
     .Internal(textConnection(deparse(substitute(object)), object, open))
