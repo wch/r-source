@@ -11,8 +11,9 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         xlim = range(x, finite = TRUE),
         ylim = range(y, finite = TRUE),
         zlim = range(z, finite = TRUE),
-        labcex = 0.6, drawlabels = TRUE, method = "flattest", 
+        labcex = 0.6, drawlabels = TRUE, method = "flattest",
 	vfont = c("sans serif", "plain"),
+        axes = TRUE, frame.plot = axes,
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
 }
@@ -30,7 +31,7 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     \code{levels} is not supplied.}
   \item{levels}{numeric vector of levels at which to draw contour
     lines.}
-  \item{labels}{a vector giving the labels for the contour lines.  If 
+  \item{labels}{a vector giving the labels for the contour lines.  If
     \code{NULL} then the levels are used as labels.}
   \item{labcex}{\code{cex} for contour labelling.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
@@ -38,11 +39,13 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     located. Possible values are \code{"simple"}, \code{"edge"} and
     \code{"flattest"} (the default). See the Details section.}
   \item{vfont}{if a character vector of length 2 is specified, then Hershey
-    vector fonts are used for the contour labels.  
+    vector fonts are used for the contour labels.
     The first element of the vector
-    selects a typeface and the second element selects a fontindex 
-    (see \code{\link{text}} for more information).} 
+    selects a typeface and the second element selects a fontindex
+    (see \code{\link{text}} for more information).}
   \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot.}
+  \item{axes, frame.plot}{logical indicating whether axes or a box
+    should be drawn, see \code{\link{plot.default}}.}
   \item{col}{color for the lines drawn.}
   \item{lty}{line type for the lines drawn.}
   \item{lwd}{line width for the lines drawn.}
@@ -78,7 +81,7 @@ z <- outer(x, sqrt(abs(x)), FUN = "/")
 ## Should not be necessary:
 z[!is.finite(z)] <- NA
 image(x, x, z)
-contour(x, x, z, col = "pink", add = TRUE, method = "edge", 
+contour(x, x, z, col = "pink", add = TRUE, method = "edge",
 	vfont = c("sans serif", "plain"))
 contour(x, x, z, ylim = c(1, 6), method = "simple", labcex = 1)
 contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2, method = "simple")
@@ -88,7 +91,9 @@ par(op)
 x <- y <- seq(-4*pi, 4*pi, len = 27)
 r <- sqrt(outer(x^2, y^2, "+"))
 opar <- par(mfrow = c(2, 2), mar = rep(0, 4))
-for(f in pi^(0:3)) contour(cos(r^2)*exp(-r/f), drawlabels = FALSE)
+for(f in pi^(0:3))
+  contour(cos(r^2)*exp(-r/f),
+          drawlabels = FALSE, axes = FALSE, frame = TRUE)
 
 data("volcano")
 rx <- range(x <- 10*1:nrow(volcano))
@@ -99,7 +104,7 @@ par(opar); par(mfrow=c(1,1)); opar <- par(pty = "s", bg = "lightcyan")
 plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
 u <- par("usr")
 rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
-contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE, 
+contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
 	vfont = c("sans serif", "plain"))
 title("A Topographic Map of Maunga Whau", font = 4)
 abline(h = 200*0:4, v = 200*0:4, col = "lightgray", lty = 2, lwd = 0.1)

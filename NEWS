@@ -168,11 +168,12 @@ NEW FEATURES
 
     o	bxp() has new argument "frame.plot", as plot.default().
 
+    o	contour() now has axes and frame.plot args.
+
     o	dump() has new argument append, argument "fileout" has been
 	renamed to "file" (for consistency with all other functions).
 
-    o	The set of valid R names is now described (at last) in
-	R-intro.
+    o	The set of valid R names is now described (at last) in R-intro.
 
 
 BUG FIXES
