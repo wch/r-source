@@ -181,8 +181,10 @@ void GERect(double x0, double y0, double x1, double y1,
 	    int col, int fill, double gamma, int lty, double lwd,
 	    GEDevDesc *dd);
 void GEText(double x, double y, char *str,
-	    double xc, double yc, double rot, 
-	    int col, double gamma, int font, double cex, double ps,
+	    double xc, double yc, double rot,
+	    int col, double gamma, 
+	    char *fontfamily, int fontface, double lineheight,
+	    double cex, double ps,
 	    GEDevDesc *dd);
 void GEMode(int mode, GEDevDesc* dd);
 void GESymbol(double x, double y, int pch, double size,
@@ -193,10 +195,15 @@ void GEPretty(double *lo, double *up, int *ndiv);
 void GEMetricInfo(int c, int font, double cex, double ps,
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd);
-double GEStrWidth(char *str, int font, double cex, double ps, GEDevDesc *dd);
-double GEStrHeight(char *str, int font, double cex, double ps, GEDevDesc *dd);
+double GEStrWidth(char *str, 
+		  char *fontfamily, int fontface, double lineheight,
+		  double cex, double ps, GEDevDesc *dd);
+double GEStrHeight(char *str, 
+		   char *fontfamily, int fontface, double lineheight,
+		   double cex, double ps, GEDevDesc *dd);
 
-/* From plotmath.c 
+/* 
+ * From plotmath.c 
  */
 double GEExpressionWidth(SEXP expr, 
 			 int font, double cex, double ps,
@@ -208,7 +215,60 @@ void GEMathText(double x, double y, SEXP expr,
 		double xc, double yc, double rot, 
 		int col, double gamma, int font, double cex, double ps,
 		GEDevDesc *dd);
-/* (End from plotmath.c)
+/* 
+ * (End from plotmath.c)
+ */
+
+/* 
+ * From plot3d.c 
+ */
+SEXP GEcontourLines(double *x, int nx, double *y, int ny,
+		    double *z, double *levels, int nl,
+		    GEDevDesc *dd);
+/* 
+ * (End from plot3d.c)
+ */
+
+/* 
+ * From vfonts.c
+ */
+typedef void (*R_GE_VTextRoutine)(double x, double y, char *s, 
+				 int typeface, int fontindex,
+				 double x_justify, double y_justify, 
+				 double rotation,
+				 int col, double gamma, double lineheight,
+				 double cex, double ps,
+				 GEDevDesc *dd);
+
+typedef double (*R_GE_VStrWidthRoutine)(const unsigned char *s, 
+					int typeface, int fontindex,
+					double lineheight, double cex, 
+					double ps, GEDevDesc *dd);
+
+typedef double (*R_GE_VStrHeightRoutine)(const unsigned char *s, 
+					 int typeface, int fontindex,
+					 double lineheight, double cex, 
+					 double ps, GEDevDesc *dd);
+
+void R_GE_setVFontRoutines(R_GE_VStrWidthRoutine vwidth, 
+			   R_GE_VStrHeightRoutine vheight, 
+			   R_GE_VTextRoutine vtext);
+
+double R_GE_VStrWidth(const unsigned char *s, int typeface, int fontindex,
+		      double lineheight, double cex, double ps, GEDevDesc *dd);
+
+double R_GE_VStrHeight(const unsigned char *s, int typeface, int fontindex,
+		       double lineheight, double cex, double ps, 
+		       GEDevDesc *dd);
+
+void R_GE_VText(double x, double y, char *s, 
+		int typeface, int fontindex,
+		double x_justify, double y_justify, double rotation,
+		int col, double gamma, double lineheight,
+		double cex, double ps,
+		GEDevDesc *dd);
+/* 
+ * (End from vfonts.c)
  */
 
 #define	DEG2RAD 0.01745329251994329576
