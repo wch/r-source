@@ -20,5 +20,7 @@ sum(\dots, na.rm=FALSE)
   The sum. If all of \code{\dots} are of type integer, then so is the
   sum, and in that case the result will be \code{NA} (with a warning)
   if integer overflow occurs.
+
+  NB: the sum of an empty set is zero, by definition.
 }
 \keyword{arith}
