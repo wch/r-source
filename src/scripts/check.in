@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.138 $ ';
+my $revision = ' $Revision: 1.139 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -219,7 +219,12 @@ foreach my $pkg (@ARGV) {
 	    $log->print("Only *source* packages can be checked.\n");
 	    exit(1);
 	}
-	if($opt_install) {
+	if($opt_install && !$ENV{'R_CHECK_SKIP_INSTALL'}) {
+	    ## Option '--no-install' turns off installation and the
+	    ## tests which require the package to be installed.  When
+	    ## testing recommended packages bundled with R we can skip
+	    ## installation, and do so in case the environment variable
+	    ## 'R_CHECK_SKIP_INSTALLED' is 'true'.
 	    print("\n");
 	    my $cmd = "${R::Vars::R_CMD} INSTALL -l $library $pkgdir";
 	    if(R_system($cmd)) {

@@ -365,6 +365,22 @@ test-undoc:
 	  fi; \
 	done
 
+test-Packages-Recommended:
+	@test -d Packages || mkdir Packages
+	@for p in $(R_PKGS_RECOMMENDED); do \
+	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
+	    (cd Packages && $(TAR) xf -) ; \
+	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \
+	  then \
+	    echo "* checking bundle '$${p}'"; \
+	  else \
+	    echo "* checking package '$${p}'"; \
+	  fi; \
+	  R_LIBS= R_CHECK_SKIP_INSTALL=yes R_CHECK_FF_CALLS=yes \
+	    $(top_builddir)/bin/R CMD check \
+	    --library="$(top_builddir)/library" Packages/$${p} || echo; \
+	done
+
 mostlyclean: clean
 clean:
 	-@for d in $(SUBDIRS); do \
@@ -378,7 +394,7 @@ distclean: clean
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f Makefile $(test-out) $(test-src-auto) .RData
-	-@rm -rf *.Rcheck
+	-@rm -rf *.Rcheck Packages
 maintainer-clean: distclean
 
 R install install-strip uninstall TAGS info dvi:
