@@ -9,7 +9,6 @@ par(\dots, no.readonly = FALSE)
 <highlevel plot> (\dots, <tag> = <value>)
 }
 \description{
-  % \code{par} is an abomination before man and god.
   \code{par} can be used to set or query graphical parameters.
   Parameters can be set by specifying them as arguments to \code{par} in
   \code{tag = value} form, or by passing them as a list of tagged values.

@@ -16,7 +16,6 @@ range.default(\dots, na.rm = FALSE, finite = FALSE)
 \description{
   \code{range} returns a vector containing the minimum and maximum of
   all the given arguments.
-
 }
 \details{
   This is a generic function; currently, it has only a default method

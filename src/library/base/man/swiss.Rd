@@ -5,7 +5,6 @@
 \description{
   Standardized fertility measure and socio-economic indicators for each
   of 47 French-speaking provinces of Switzerland at about 1888.
-
 }
 \format{A data frame with 47 observations on 6 variables, \emph{each} of
   which is in percent, i.e., in \eqn{[0,100]}.
