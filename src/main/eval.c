@@ -148,6 +148,7 @@ static void doprof(int sig)
     }
     if (newline)
 	fprintf(R_ProfileOutfile, "\n");
+    signal(SIGPROF, doprof);
 }
 
 static void doprof_null(int sig)

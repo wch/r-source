@@ -1306,7 +1306,7 @@ recommended for the source code of @R{} itself.
 It is possible to profile @R{} code on most Unix-like versions of @R{},
 @R{} has to be built to enable this, by supplying the option
 @option{--enable-R-profiling}, profiling being enabled in a default
-build.  Profiling is also available on Windows.
+build.  Profiling is also available on Windows, but not on the Macintosh.
 
 The command @code{Rprof} is used to control profiling, and its help page
 can be consulted for full details.  Profiling works by recording at
@@ -1344,46 +1344,45 @@ Having run this we can summarize the results by
 R CMD Rprof boot.out
 
 Each sample represents 0.02 seconds.
-Total run time: 153.72 seconds.
+Total run time: 80.74 seconds.
 
 Total seconds: time spent in function and callees.
 Self seconds: time spent in function alone.
 
    %       total       %       self
  total    seconds     self    seconds    name
-100.00    153.72      0.21      0.32     "boot"
- 99.67    153.22      0.57      0.88     "statistic"
- 96.10    147.72      2.15      3.30     "nls"
- 53.36     82.02      1.12      1.72     "<Anonymous>"
- 49.92     76.74      0.88      1.36     "list"
- 49.38     75.90      1.20      1.84     ".Call"
- 21.35     32.82      2.35      3.62     "eval"
- 18.87     29.00      0.77      1.18     "as.list"
- 18.64     28.66      0.43      0.66     "switch"
- 17.47     26.86      2.55      3.92     "nlsModel"
- 16.82     25.86      0.42      0.64     "model.frame"
- 16.41     25.22      1.14      1.76     "model.frame.default"
- 15.86     24.38      1.42      2.18     "qr.qty"
- 14.06     21.62      2.76      4.24     "assign"
- 13.06     20.08      1.57      2.42     "qr.coef"
- 10.76     16.54      2.81      4.32     "storage.mode<-"
+100.00     80.74      0.22      0.18     "boot"
+ 99.65     80.46      1.19      0.96     "statistic"
+ 96.33     77.78      2.68      2.16     "nls"
+ 50.21     40.54      1.54      1.24     "<Anonymous>"
+ 47.11     38.04      1.83      1.48     ".Call"
+ 23.06     18.62      2.43      1.96     "eval"
+ 19.87     16.04      0.67      0.54     "as.list"
+ 18.97     15.32      0.64      0.52     "switch"
+ 17.88     14.44      0.47      0.38     "model.frame"
+ 17.41     14.06      1.73      1.40     "model.frame.default"
+ 17.41     14.06      2.80      2.26     "nlsModel"
+ 15.43     12.46      1.88      1.52     "qr.qty"
+ 13.40     10.82      3.07      2.48     "assign"
+ 12.73     10.28      2.33      1.88     "storage.mode<-"
+ 12.34      9.96      1.81      1.46     "qr.coef"
+ 10.13      8.18      5.42      4.38     "paste"
   ...
 
 
    %       self        %       total
  self     seconds    total    seconds    name
-  5.80      8.92      6.61     10.16     "paste"
-  4.25      6.54      8.13     12.50     "as.integer"
-  4.07      6.26      7.62     11.72     "names"
-  3.97      6.10      9.80     15.06     ".Fortran"
-  3.36      5.16      4.74      7.28     "as.double"
-  2.81      4.32     10.76     16.54     "storage.mode<-"
-  2.76      4.24     14.06     21.62     "assign"
-  2.55      3.92     17.47     26.86     "nlsModel"
-  2.35      3.62     21.35     32.82     "eval"
-  2.15      3.30     96.10    147.72     "nls"
-  2.00      3.08      8.99     13.82     "lapply"
-  1.99      3.06      1.99      3.06     "as.integer.default"
+  5.42      4.38     10.13      8.18     "paste"
+  3.37      2.72      6.71      5.42     "as.integer"
+  3.29      2.66      5.00      4.04     "as.double"
+  3.20      2.58      4.29      3.46     "seq.default"
+  3.07      2.48     13.40     10.82     "assign"
+  2.92      2.36      5.95      4.80     "names"
+  2.80      2.26     17.41     14.06     "nlsModel"
+  2.68      2.16     96.33     77.78     "nls"
+  2.53      2.04      2.53      2.04     ".Fortran"
+  2.43      1.96     23.06     18.62     "eval"
+  2.33      1.88     12.73     10.28     "storage.mode<-"
   ...
 @end example
 
