@@ -87,6 +87,7 @@ void R_load_gnome_shlib(void); /* in dynload.c */
 	and in unix/aqua.c
 */
 Rboolean useaqua = FALSE;
+Rboolean CocoaGUI = FALSE;
 #endif
 
 
@@ -274,8 +275,8 @@ int Rf_initialize_R(int ac, char **av)
     fpu_setup(1);
 
 #ifdef HAVE_AQUA
-    if(useaqua)
-	R_StartConsole(TRUE);
+    if(useaqua & !CocoaGUI)
+		R_StartConsole(TRUE);
 #endif
 
  return(0);
