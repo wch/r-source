@@ -94,7 +94,8 @@ metafile newmetafile(char *name,rect r)
     wr.right =  (ppix * r.width) / cppix ;
     wr.bottom = (ppiy * r.height) / cppiy ;
 
-    hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr, "GraphApp");
+    hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr, 
+			    "GraphApp\0\0");
     if ( !hDC ) {
 	R_ShowMessage("Unable to create metafile");
 	return NULL;
@@ -106,7 +107,7 @@ metafile newmetafile(char *name,rect r)
 	return NULL;
     }
     obj->rect = rect(0, 0, (ppix * r.width)/2540, (ppiy * r.height)/2540);
-    obj->depth=GetDeviceCaps(hDC, BITSPIXEL)* GetDeviceCaps(hDC, PLANES);
+    obj->depth = GetDeviceCaps(hDC, BITSPIXEL) * GetDeviceCaps(hDC, PLANES);
     obj->die = private_delmetafile ;
     obj->drawstate = copydrawstate();
     obj->drawstate->dest = obj;
