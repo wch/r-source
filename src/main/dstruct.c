@@ -172,7 +172,7 @@ R_len_t length(SEXP s)
 	}
 	return i;
     case ENVSXP:
-	return length(FRAME(s));
+	return envlength(s);
     default:
 	return 1;
     }
