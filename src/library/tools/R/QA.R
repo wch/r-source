@@ -1044,7 +1044,7 @@ function(package, dir, lib.loc = NULL)
         dotsPos <- which(mArgs == "...")
         if(length(dotsPos) > 0)
             ipos <- ipos[seq(from = 1, length = dotsPos - 1)]
-        PosMatchOK <- all(gArgs[ipos] == mArgs[ipos])
+        PosMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         ArgMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0
         if(PosMatchOK && ArgMatchOK)
             NULL
