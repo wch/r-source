@@ -49,7 +49,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	ei <- exprs[i]
 	if (echo) {
 	    # drop "expression("
-	    dep <- substr(paste(deparse(ei), collapse = "\n"),
+	    dep <- substr(paste(deparse(ei, useSource = TRUE), collapse = "\n"),
 			  12, 1e+06)
 	    # -1: drop ")"
 	    nd <- nchar(dep) - 1
@@ -77,7 +77,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	if (print.eval && yy$visible)
 	    print(yy$value)
 	if (verbose)
-	    cat(" .. after ", sQuote(deparse(ei)), "\n", sep = "")
+	    cat(" .. after ", sQuote(deparse(ei, useSource = TRUE)), "\n", sep = "")
     }
     invisible(yy)
 }

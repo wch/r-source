@@ -251,7 +251,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
     }
     else if(w == 1) {	/* print as they happen */
 	if( call != R_NilValue ) {
-	    dcall = CHAR(STRING_ELT(deparse1(call, 0, TRUE), 0));
+	    dcall = CHAR(STRING_ELT(deparse1(call, 0, TRUE, FALSE), 0));
 	    REprintf("Warning in %s : ", dcall);
 	    if (strlen(dcall) > LONGCALL) REprintf("\n	 ");
 	}
@@ -348,7 +348,7 @@ void PrintWarnings(void)
 	   REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
 	else
 	   REprintf("%s in: %s \n", CHAR(STRING_ELT(names, 0)),
-		CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0), 0, TRUE), 0)));
+		CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0), 0, TRUE, FALSE), 0)));
     }
     else if( R_CollectWarnings <= 10 ) {
 	REprintf("Warning messages: \n");
@@ -358,7 +358,7 @@ void PrintWarnings(void)
 	       REprintf("%d: %s \n",i+1, CHAR(STRING_ELT(names, i)));
 	    else
 	       REprintf("%d: %s in: %s \n", i+1, CHAR(STRING_ELT(names, i)),
-		   CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings,i), 0, TRUE), 0)));
+		   CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings,i), 0, TRUE, FALSE), 0)));
 	}
     }
     else {
@@ -437,7 +437,7 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	char *tail = "\n\t";/* <- TAB */
 	int len = strlen(head) + strlen(mid) + strlen(tail);
 
-	dcall = CHAR(STRING_ELT(deparse1(call, 0, TRUE), 0));
+	dcall = CHAR(STRING_ELT(deparse1(call, 0, TRUE, FALSE), 0));
 	if (strlen(dcall) + len < BUFSIZE) {
 	    sprintf(errbuf, "%s%s%s", head, dcall, mid);
 	    if (strlen(dcall) > LONGCALL) strcat(errbuf, tail);
@@ -923,7 +923,7 @@ SEXP R_GetTraceback(int skip)
 	    if (skip > 0)
 		skip--;
 	    else {
-		SETCAR(t, deparse1(c->call, 0, TRUE));
+		SETCAR(t, deparse1(c->call, 0, TRUE, FALSE));
 		t = CDR(t);
 	    }
 	}

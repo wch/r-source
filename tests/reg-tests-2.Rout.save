@@ -366,9 +366,9 @@ NULL data frame with 0 rows
 NULL data frame with 0 rows
 > !identical(d00, d000)
 [1] TRUE
-> dput(d00, fordisplay=FALSE)
+> dput(d00, forDisplay=FALSE)
 structure(list(), .Names = character(0), row.names = character(0), class = "data.frame")
-> dput(d000, fordisplay=FALSE)
+> dput(d000, forDisplay=FALSE)
 structure(list(), row.names = character(0), class = "data.frame")
 > stopifnot(identical(d, cbind(d, d0)),
 +           identical(d, cbind(d0, d)),

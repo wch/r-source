@@ -44,11 +44,20 @@ NEW FEATURES
 	been rationalized so a few more cases will now work -- see
 	?Comparison.
 
-    o	deparse() and dput() have a new 'fordisplay' argument that
-	indicates that the result is intended to be human-readable.
+    o	deparse(), dput() and dump() have a new 'forDisplay' argument
+	that indicates that the result is intended to be human-readable.
 	When TRUE, some details (e.g. attributes, quoting) are omitted.
 	When FALSE, the result is usually parseable to reproduce the
-	object. dump() always produces the parseable format.
+	object. dump() defaults to FALSE, the others default to TRUE.
+	
+    o	deparse(), dput() and dump() also have a new 'useSource'
+	argument that indicates they should used saved source for
+	function definitions (including comments and formatting) rather
+	than deparsing the internal representation.  dump() defaults to
+	TRUE, the others default to FALSE.
+    	
+    o	source() with 'echo = TRUE' uses 'useSource = TRUE' when
+	displaying commands as they are parsed.  
 
     o	The screen devices x11(), windows() and quartz() have a new
 	argument 'bg' to set the default background colour.

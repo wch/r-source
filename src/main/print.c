@@ -499,7 +499,7 @@ static void PrintExpression(SEXP s)
     SEXP u;
     int i, n;
 
-    u = deparse1(s, 0, TRUE);
+    u = deparse1(s, 0, TRUE, FALSE);
     n = LENGTH(u);
     for (i = 0; i < n ; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i)));
@@ -535,7 +535,7 @@ void PrintValueRec(SEXP s,SEXP env)
 	break;
     case SYMSXP: /* Use deparse here to handle backtick quotification
 		  * of "weird names" */
-	t = deparse1(s, 0, TRUE);
+	t = deparse1(s, 0, TRUE, FALSE);
 	Rprintf("%s\n", CHAR(STRING_ELT(t, 0)));
 	break;
     case SPECIALSXP:
@@ -554,7 +554,7 @@ void PrintValueRec(SEXP s,SEXP env)
     case LANGSXP:
 	t = getAttrib(s, R_SourceSymbol);
 	if (isNull(t))
-	    t = deparse1(s, 0, TRUE);
+	    t = deparse1(s, 0, TRUE, FALSE);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING_ELT(t, i)));
 #ifdef BYTECODE

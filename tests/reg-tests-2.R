@@ -66,8 +66,8 @@ str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
 (d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
 (d000 <- data.frame()) #but not quite the same as d00:
 !identical(d00, d000)
-dput(d00, fordisplay=FALSE)
-dput(d000, fordisplay=FALSE)
+dput(d00, forDisplay=FALSE)
+dput(d000, forDisplay=FALSE)
 stopifnot(identical(d, cbind(d, d0)),
           identical(d, cbind(d0, d)),
           identical(d, rbind(d,d.0)),
