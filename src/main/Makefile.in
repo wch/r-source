@@ -40,6 +40,7 @@ SOURCES_F = \
 EXTRA_SOURCES_C = alloca.c strdup.c
 ## </FIXME>
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
+SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
 	Rstrptime.h \
@@ -159,10 +160,9 @@ maintainer-clean: distclean
 	@echo "deletes files that may need special rules to rebuild"
 	@rm -f gram.c
 
-tags: *.h *.c
-	ctags *.h *.c
-TAGS: *.h *.c
-	etags *.h *.c
+tags: TAGS
+TAGS: $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)
+	etags $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
