@@ -27,21 +27,9 @@
 #include <config.h>
 #endif
 
-/*
-if defined(__MWERKS__) && defined(Macintosh)
-#  define MACINTOSH
-#  define EINTR 15
-#endif  
- Jago: Gusi not available
-*/
-
 #include <stdio.h>
 #include <string.h>
-#if !defined(Macintosh)  /* Jago */
 #include <sys/types.h>
-#else
-#include <types.h>
-#endif
 #include <signal.h>
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
@@ -50,8 +38,6 @@ if defined(__MWERKS__) && defined(Macintosh)
 #if defined(Win32)
 #  include <winsock.h>
 #  include <io.h>
-#elif defined(MACINTOSH)
-#  include <GUSI.h>
 #else
 #  ifdef HAVE_UNISTD_H
 #    include <unistd.h>
@@ -66,8 +52,8 @@ if defined(__MWERKS__) && defined(Macintosh)
 #include <R_ext/Error.h>
 #include "sock.h"
 
-#if defined(__hpux) || defined(MACINTOSH)
-   extern int h_errno; /* HP-UX 9.05 and GUSI forget to declare this in netdb.h */
+#if defined(__hpux)
+   extern int h_errno; /* HP-UX 9.05 forgets to declare this in netdb.h */
 #endif
 
 #define MAXBACKLOG 5

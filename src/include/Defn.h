@@ -66,11 +66,6 @@ void R_ProcessEvents(void);
 # define FILESEP     "/"
 #endif /* Unix */
 
-#ifdef Macintosh
-# define OSTYPE      "mac"
-# define FILESEP     ":"
-#endif /* Macintosh */
-
 #ifdef Win32
 # define OSTYPE      "windows"
 # define FILESEP     "/"
@@ -108,11 +103,7 @@ typedef unsigned long R_size_t;
 #define	R_VSIZE		6291456L
 #endif
 
-#ifdef Macintosh
-#include <fp.h>
-#else
 #include <math.h>
-#endif
 
 /* declare substitutions */
 #if defined(HAVE_DECL_ACOSH) && !HAVE_DECL_ACOSH
@@ -176,7 +167,7 @@ extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 /* Availability of timing: on Unix, we need times(2).
    On Windows and the Mac, we can do without.
 */
-#if (defined(HAVE_TIMES) || defined(Win32) || defined(Macintosh))
+#if (defined(HAVE_TIMES) || defined(Win32))
 # define _R_HAVE_TIMING_ 1
 #endif
 

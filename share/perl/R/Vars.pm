@@ -46,9 +46,9 @@ use Carp;
 if($^O =~ /^(MS)?Win32$/i){
     $OSTYPE = "windows";
 }
-elsif($^O =~ /^MacOS$/i){
-    $OSTYPE = "mac";
-}
+# elsif($^O =~ /^MacOS$/i){
+#     $OSTYPE = "mac";
+# }
 else{
     $OSTYPE = "unix";
 }
