@@ -2103,7 +2103,7 @@ c
      +	   stepmx,steptl,sx,ipr)
       if(method.eq.2)
      +	   call dogdrv(nr,n,x,f,g,a,p,xpls,fpls,fcn,sx,stepmx,
-     +	   steptl,dlt,iretcd,mxtake,wrk0,wrk1,wrk2,wrk3,ipr)
+     +	   steptl,dlt,iretcd,mxtake,wrk0,wrk1,wrk2,wrk3,ipr,itncnt)
       if(method.eq.3)
      +	   call hookdr(nr,n,x,f,g,a,udiag,p,xpls,fpls,fcn,sx,stepmx,
      +	   steptl,dlt,iretcd,mxtake,amu,dltp,phi,phip0,wrk0,
