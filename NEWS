@@ -140,6 +140,9 @@ BUG FIXES
     o	attr(x, "class") <- character(0) was segfaulting.  Similar problem
 	with "comment" attribute also fixed.
 
+    o	loadings() results from PCA (as well as factor analysis) 
+	are now printed by print.loadings.
+
 
 
 		CHANGES IN R VERSION 1.3.0

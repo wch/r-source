@@ -41,7 +41,8 @@ princomp <- function(x, cor = FALSE, scores = TRUE, covmat = NULL,
     scr <- if (scores && !missing(x))
         scale(z, center = TRUE, scale = sc) %*% edc$vectors
     if (is.null(cen)) cen <- rep(NA, nrow(cv))
-    edc <- list(sdev = sdev, loadings = edc$vectors,
+    edc <- list(sdev = sdev,
+                loadings = structure(edc$vectors, class="loadings"),
                 center = cen, scale = sc, n.obs = n.obs,
                 scores = scr, call = match.call())
     ## The Splus function also return list elements factor.sdev,

@@ -1,8 +1,6 @@
 \name{factanal}
 \alias{factanal}
 \alias{factanal.fit.mle}
-\alias{print.factanal}
-\alias{print.loadings}
 \title{Factor Analysis}
 \description{
   Perform maximum-likelihood factor analysis on a covariance matrix or
@@ -12,8 +10,6 @@
 factanal(x, factors, data, covmat = NULL, n.obs = NA, subset, na.action,
          start = NULL, scores = c("none", "regression", "Bartlett"),
          rotation = "varimax", control = NULL, ...)
-print.factanal(x, digits = 3, ...)
-print.loadings(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
 }
 \arguments{
   \item{x}{Either a formula or a numeric matrix or an object that can be
@@ -53,16 +49,6 @@ print.loadings(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
   }
   \item{\dots}{Components of \code{control} can also be supplied as
     named arguments to \code{factanal}.}
-  \item{digits}{number of decimal places to use in printing uniquenesses
-    and loadings.}
-  \item{cutoff}{loadings smaller than this (in absolute value) are suppressed.}
-  \item{sort}{logical. If true, the variables are sorted by their
-    importance on each factor.  Each variable with any loading larger
-    than 0.5 (in modulus) is assigned to the factor with the largest
-    loading, and the variables are printed in the order of the factor
-    they are assigned to, then those unassigned.}
-  \item{\dots}{further arguments, such as \code{cutoff} and \code{sort} for
-    \code{print.factanal}.}
 }
 \details{
   The factor analysis model is
@@ -164,6 +150,7 @@ print.loadings(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
 \author{B. D. Ripley}
 
 \seealso{
+  \code{\link{print.loadings}},
   \code{\link{varimax}}, \code{\link{princomp}},
   \code{\link{ability.cov}}, \code{\link{Harman23.cor}},
   \code{\link{Harman74.cor}}
