@@ -120,6 +120,9 @@ BUG FIXES
     o	Many documentation clean-ups: formerly undocumented arguments,
 	use of T/F rather than TRUE/FALSE.
 
+    o	df[] <- foo now works for data frames (PR#1047).
+
+    o	nargs() was documented incorrectly.
 
 
 

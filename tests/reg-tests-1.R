@@ -173,6 +173,11 @@ x <- try(readLines("foo", 100, ok=FALSE))
 unlink("foo")
 stopifnot(length(class(x)) == 1 &&class(x) == "try-error")
 
+## PR 1047 [<-data.frame failure, BDR 2001-08-10
+test <- df <- data.frame(x=1:10, y=11:20, row.names=letters[1:10])
+test[] <- lapply(df, factor)
+test
+## error in 1.3.0 in test[]
 
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
