@@ -92,8 +92,10 @@
     }
 }
 
-.onUnload <- function(libpath)
+.onUnload <- function(libpath) {
+    .isMethodsDispatchOn(FALSE)
     library.dynam.unload("methods", libpath)
+}
 
 
 .onAttach <- function(libname, pkgName) {
@@ -101,6 +103,10 @@
     env <- environment(sys.function())
     ## unlock some bindings that must be modifiable to set methods
     unlockBinding(".BasicFunsList", env)
+}
+
+.Last.lib <- function(libpath) {
+    methods:::.onUnload(libpath)
 }
 
 ### The following code is only executed when dumping
