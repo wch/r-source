@@ -22,20 +22,21 @@ make.names(names, unique = FALSE)
   character and starts with a letter or the dot.
 
   All invalid characters are translated to \code{"."}.  A missing value
-  is translated to \code{"NA"}.
-
-  If \code{unique = TRUE} a sequence number is appended to each
-  duplicate (after coercion).
+  is translated to \code{"NA"}.  Names which match \R keywords have a dot
+  appended to them.  Duplicated values are altered by
+  \code{\link{make.unique}}.
 }
 \seealso{
+  \code{\link{make.unique}},
   \code{\link{names}},
   \code{\link{character}},
   \code{\link{data.frame}}.
 }
 \examples{
-make.names(c("a and b", "a_and_b"), unique=TRUE)#-> "a.and.b"  "a.and.b1"
+make.names(c("a and b", "a_and_b"), unique=TRUE)
+# "a.and.b"  "a.and.b.1"
 
 data(state)
-state.name[make.names(state.name) != state.name]# those 10 with a space
+state.name[make.names(state.name) != state.name] # those 10 with a space
 }
 \keyword{character}

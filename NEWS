@@ -121,6 +121,9 @@ NEW FEATURES
     o   file.path() now returns an empty character vector if given at
 	least one zero-length argument.
 
+    o   make.names() has improvements, and there is a new auxiliary
+	function make.unique().  (Contributed by Tom Minka.)
+
 
 DEPRECATED & DEFUNCT
 
@@ -209,6 +212,9 @@ BUG FIXES
     o   as.data.frame.matrix() ignored the `row.names' argument.
 
     o   paste() applied to 0-length vectors gave "" not a 0-length vector.
+
+    o   as.data.frame.list(optional = TRUE) was converting names, and
+	hence data.frame(list(...), check.names = FALSE) was.  (PR#3280)
 
 
 

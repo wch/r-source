@@ -31,8 +31,8 @@ is.data.frame(x)
   \item{x}{any \R object.}
   \item{row.names}{\code{NULL} or a character vector giving the row
     names for the data frame.  Missing values are not allowed.}
-  \item{optional}{logical. If \code{TRUE}, setting row names is
-    optional.}
+  \item{optional}{logical. If \code{TRUE}, setting row names and
+    converting column names (to syntactic names) is optional.}
 }
 \value{
   \code{as.data.frame} returns a data frame, normally with all row names

@@ -2309,6 +2309,23 @@ stopifnot(identical(paste(character(0), character(0), collapse="+"), ""))
 ##
 
 
+## concatenation of make.names (Tom Minka, R-help, 2003-06-17)
+a1 <- make.names(c("a", "a", "a"), unique=TRUE)
+a2 <- make.names(c(make.names(c("a", "a"), unique=TRUE), "a"), unique=TRUE)
+stopifnot(identical(a1, a2))
+
+df1 <- rbind(data.frame(x=1), data.frame(x=2), data.frame(x=3))
+df2 <- rbind(rbind(data.frame(x=1), data.frame(x=2)), data.frame(x=3))
+stopifnot(identical(df1, df2))
+##
+
+
+## PR#3280 data.frame(check.name=FALSE) was not always respected
+DF <- data.frame(list("a*" = 3), check.names = FALSE)
+stopifnot(identical(names(DF), "a*"))
+## gave "a." in 1.7.1
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
