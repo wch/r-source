@@ -45,7 +45,7 @@ png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
 
   \R can be compiled without support for either or both of these
   devices: this will be reported if you attempt to use them on a system
-  where they are not supported.  They will not be not available if \R has
+  where they are not supported.  They will not be available if \R has
   been started with \code{--gui=none} (and will give a different error
   message), and they may not be usable unless the X11 display is
   available to the owner of the \R process.
