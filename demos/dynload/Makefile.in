@@ -1,5 +1,5 @@
 CC=@CC@
-CFLAGS=@CFLAGS@ @PICFLAGS@
+CFLAGS=@CFLAGS@ @CPICFLAGS@
 LD=ld
 SHLIBLDFLAGS=@SHLIBLDFLAGS@
 
@@ -14,5 +14,5 @@ zero.o:		zero.c
 clean:
 		@rm -f *.o *.so
 
-realclean:
-		@rm -f Makefile *.o *.so
+realclean:	clean
+		@rm -f Makefile
