@@ -623,7 +623,8 @@ seq.POSIXt <-
 }
 
 cut.POSIXt <-
-    function (x, breaks, labels = NULL, start.on.monday = TRUE, ...)
+    function (x, breaks, labels = NULL, start.on.monday = TRUE,
+              right = FALSE, ...)
 {
     if(!inherits(x, "POSIXt")) stop("`x' must be a date-time object")
     x <- as.POSIXct(x)
@@ -655,7 +656,8 @@ cut.POSIXt <-
 	breaks <- seq(start, maxx + incr, breaks)
 	breaks <- breaks[1:(1+max(which(breaks < maxx)))]
     } else stop("invalid specification of `breaks'")
-    res <- cut(unclass(x), unclass(breaks), labels = labels, right = FALSE)
+    res <- cut(unclass(x), unclass(breaks), labels = labels,
+               right = right, ...)
     if(is.null(labels)) levels(res) <- as.character(breaks[-length(breaks)])
     res
 }
@@ -789,7 +791,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         }
         else stop("invalid specification of `breaks'")
     }
-    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE)
+    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, ...)
     res$equidist <- TRUE # years are of uneven lengths
     res$intensities <- res$intensities*incr
     res$xname <- xlab

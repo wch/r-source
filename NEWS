@@ -399,6 +399,8 @@ BUG FIXES
     o	qbeta() now has slightly improved C code in two places, as suggested
 	in the 2nd followup to PR#2894.
 
+    o	cut.POSIXt() now passes on ... to cut.default(), as documented.
+
 
 
 		CHANGES IN R VERSION 1.7.0

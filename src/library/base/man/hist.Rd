@@ -28,7 +28,7 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of
     the result; if \code{FALSE}, \emph{relative} frequencies
-    (``probabilities''), component\code{density},
+    (``probabilities''), component \code{density},
     are plotted.   Defaults to \code{TRUE} \emph{iff} \code{breaks} are
     equidistant (and \code{probability} is not specified).}
   \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
@@ -69,6 +69,17 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   \code{\link{plot.histogram}}, before it is returned.
 }
 \details{
+  The definition of ``histogram'' differs by source (with
+  country-specific biases).  \R's default with equi-spaced breaks (also
+  the default) is to plot the counts in the cells defined by
+  \code{breaks}. Thus the height of a rectangle is proportional to
+  the number of points falling into the cell, as is the area
+  \emph{provided} the breaks are equally-spaced.
+  
+  The default with non-equi-spaced breaks is to give
+  a plot of area one, in which the \emph{area} of the rectangles is the
+  fraction of the data points falling in the cells.
+  
   If \code{right = TRUE} (default), the histogram cells are intervals
   of the form \code{(a, b]}, i.e. they include their right-hand endpoint,
   but not their left one, with the exception of the first cell when
@@ -84,7 +95,9 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   The default for \code{breaks} is \code{"Sturges"}: see
   \code{\link{nclass.Sturges}}.  Other names for which algorithms
   are supplied are \code{"Scott"} and \code{"FD"} /
-  \code{"Friedman-Diaconis"}.  Case is ignored and partial matching is used.
+  \code{"Friedman-Diaconis"} (with corresponding functions
+  \code{\link{nclass.scott}} and \code{\link{nclass.FD}}).
+  Case is ignored and partial matching is used.
   Alternatively, a function can be supplied which
   will compute the intended number of breaks as a function of \code{x}.
 }
@@ -127,7 +140,7 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
 
 \seealso{
   \code{\link{nclass.Sturges}}, \code{\link{stem}},
-  \code{\link{density}}.
+  \code{\link{density}},  \code{\link[MASS]{truehist}}.
 }
 
 \examples{

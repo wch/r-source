@@ -32,11 +32,6 @@ nclass.FD(x)
   \code{nclass.FD} uses the
   Freedman-Diaconis choice based on the inter-quartile range.
 }
-\note{
-  For consistency with earlier versions of \R, \code{nclass.Sturges}
-  rounds down.  This is incompatible with S-PLUS, and probably wrong:
-  however the other algorithms are to be preferred.
-}
 \references{
   Venables, W. N. and Ripley, B. D. (2002)
   \emph{Modern Applied Statistics with S-PLUS.}
