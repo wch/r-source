@@ -735,13 +735,8 @@ SEXP Raqua_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadOnlyTag, RReadOnlyData);
     DataEntryFinished = false;
     OpenDataEntry();
-#ifdef NEWAQUAELOOP
     while(!DataEntryFinished)
         ProcessOneEvent();
-#else
-    QuitApplicationEventLoop();
-    RunApplicationEventLoop();
-#endif
     
     /* drop out unused columns */
     for(i = 0, cnt = 0; i < xmaxused; i++)

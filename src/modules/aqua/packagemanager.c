@@ -538,13 +538,8 @@ SEXP Raqua_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
   TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadOnlyTag, RReadOnlyData);
   PackageManagerFinished = false;
   OpenPackageManager();
-#ifdef NEWAQUAELOOP
   while(!PackageManagerFinished)
     ProcessOneEvent();
-#else
-    QuitApplicationEventLoop();
-    RunApplicationEventLoop();
-#endif
     
   PROTECT(ans = NEW_LOGICAL(NumOfAllPkgs));
   for(i=1;i<=NumOfAllPkgs;i++)

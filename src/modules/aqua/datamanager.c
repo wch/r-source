@@ -527,13 +527,8 @@ SEXP Raqua_datamanger(SEXP call, SEXP op, SEXP args, SEXP env)
   TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadOnlyTag, RReadOnlyData);
   DataManagerFinished = false;
   OpenDataManager();
-#ifdef NEWAQUAELOOP
   while(!DataManagerFinished)
    ProcessOneEvent();
-#else
-    QuitApplicationEventLoop();
-    RunApplicationEventLoop();
-#endif
 
   PROTECT(ans = NEW_LOGICAL(NumOfDSets));
   for(i=1;i<=NumOfDSets;i++)
