@@ -209,6 +209,12 @@ else
 fi],
 [want_gnome=no])
 
+## Aqua.
+AC_ARG_WITH([aqua],
+[AC_HELP_STRING([--with-aqua],
+                [use Aqua (if available) @<:@no@:>@])],
+[want_aqua=yes])
+
 ## Tcl/Tk.
 AC_ARG_WITH([tcltk],
 [AC_HELP_STRING([--with-tcltk],
@@ -736,7 +742,9 @@ case "${host_os}" in
   darwin*)
     cpicflags="-fno-common"
     cxxpicflags="-fno-common"
-    fpicflags="-fno-common"
+    if test "${G77}" = yes; then
+      fpicflags="-fno-common"
+    fi
     ## <FIXME>
     ## Needed because currently the Quartz device driver gets linked to
     ## the main binary.  Change once the driver is modularized.
@@ -1050,6 +1058,12 @@ fi
 
 AC_SUBST(R_GUIS)
 
+## Aqua
+R_AQUA
+if test "${use_aqua}" = yes; then
+  R_GUIS="${R_GUIS} aqua";
+fi
+
 ## Tcl/Tk.
 R_TCLTK
 
@@ -1225,6 +1239,7 @@ AC_CONFIG_FILES(
   src/main/Makefile
   src/modules/Makefile
   src/modules/X11/Makefile
+  src/modules/aqua/Makefile
   src/modules/gnome/Makefile
   src/modules/internet/Makefile
   src/modules/lapack/Makefile
