@@ -394,6 +394,12 @@ installed.
 
 If those all hold true, this works for us.
 
+If the help search system does not work _at all_, this probably
+indicates that Java support is either not installed or not enabled in
+your browser.  Recent versions of browsers have made Java support
+optional: for example it is optional in Netscape 6.x and Opera, and may
+not be installed for IE6 on Windows XP.
+
 3.5 Loading a package fails.
 ============================
 

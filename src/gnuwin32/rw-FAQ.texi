@@ -474,6 +474,11 @@ installing the package.
 @noindent
 If those all hold true, this works for us.
 
+If the help search system does not work @emph{at all}, this probably
+indicates that Java support is either not installed or not enabled in
+your browser.  Recent versions of browsers have made Java support
+optional: for example it is optional in Netscape 6.x and Opera, and may
+not be installed for IE6 on Windows XP.
 
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
 @section Loading a package fails.
