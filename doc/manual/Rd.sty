@@ -15,7 +15,8 @@
 \DeclareOption{ae}{\setboolean{Rd@use@ae}{true}}
 \DeclareOption{hyper}{\setboolean{Rd@use@hyper}{true}}
 \ProcessOptions
-
+\RequirePackage{longtable}
+\setcounter{LTchunksize}{250}
 \ifthenelse{\boolean{Rd@use@hyper}}
 {\IfFileExists{hyperref.sty}{}{\setboolean{Rd@use@hyper}{false}
   \message{package hyperref not found}}}
@@ -96,9 +97,9 @@
 \newcommand{\describe}[1]{\begin{description}{#1}\end{description}}
 
 \newcommand{\Tabular}[2]{%
-  \par\begin{tabular}{#1}
+  \par\begin{longtable}{#1}
     #2
-  \end{tabular}}
+  \end{longtable}}
 
 \newlength{\ldescriptionwidth}
 \newcommand{\ldescriptionlabel}[1]{%

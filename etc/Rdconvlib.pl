@@ -2050,7 +2050,8 @@ sub text2latex {
 # A mess:  map  & \& \\& \\\& to  \& \& \bsl{}\& \bsl{}\&
     $text =~ s/([^\\])&/$1\\&/go;
     $text =~ s/\\R(\s+)/\\R\{\}$1/go;
-    $text =~ s/\\cr/\\\\\{\}%/go;
+    $text =~ s/\\cr\n\[/\\\\\{\}\n\[/go;
+    $text =~ s/\\cr/\\\\/go;
     $text =~ s/\\tab(\s+)/&$1/go;
 
     ##-- We should escape $LATEX_SPEC  unless within `eqn' above ...
