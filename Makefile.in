@@ -163,40 +163,40 @@ reset-recommended:
 
 install-Rframework:
 	@(cd $(top_builddir) && \
-	$(MAKE) install \
-	rhome="@R_FW_PATH@/R.framework/Versions/$(VERSION)/Resources" \
-	mandir="@R_FW_PATH@/R.framework/Versions/$(VERSION)/Resources" \
-	bindir="@R_FW_PATH@/R.framework/Versions/$(VERSION)/Resources" )
+	  $(MAKE) install \
+	    rhome="@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources" \
+	    mandir="@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources" \
+	    bindir="@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources" )
 	@(cd $(top_builddir)/src/modules/aqua && \
-	cp Info.plist "@R_FW_PATH@/R.framework/Versions/$(VERSION)/Resources")
-	@(cd "@R_FW_PATH@/R.framework/Versions/$(VERSION)" && \
-	ln -f -s Resources/include Headers && \
-	ln -f -s Resources/bin/libR.dylib R)
-	@(cd "@R_FW_PATH@/R.framework/Versions" && \
-	ln -f -s $(VERSION) Current)
-	@(cd "@R_FW_PATH@/R.framework"  && \
-	ln -f -s Versions/Current/Headers Headers&& \
-	ln -f -s Versions/Current/R R && \
-	ln -f -s Versions/Current/Resources Resources)
+	  cp Info.plist "@R_FRAMEWORK_DIR@/Versions/$(VERSION)/Resources")
+	@(cd "@R_FRAMEWORK_DIR@/Versions/$(VERSION)" && \
+	  ln -f -s Resources/include Headers && \
+	  ln -f -s Resources/bin/libR.dylib R)
+	@(cd "@R_FRAMEWORK_DIR@/Versions" && \
+	  ln -f -s $(VERSION) Current)
+	@(cd "@R_FRAMEWORK_DIR@"  && \
+	  ln -f -s Versions/Current/Headers Headers&& \
+	  ln -f -s Versions/Current/R R && \
+	  ln -f -s Versions/Current/Resources Resources)
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
-	cp -R * "@R_FW_PATH@/R.framework/Resources/bin")
-	@(cd "@R_FW_PATH@/R.framework/Resources/bin" && \
-	sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
-	chmod 755 RAqua)
+	  cp -R * "@R_FRAMEWORK_DIR@/Resources/bin")
+	@(cd "@R_FRAMEWORK_DIR@/Resources/bin" && \
+	  sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
+	  chmod 755 RAqua)
 
 install-aqua:
 	@(rm -rf /Applications/R.app)
 	@(mkdir -p /Applications/R.app/Contents/Resources)
 	@(cd "$(srcdir)/src/modules/aqua/Contents" && \
-	cp PkgInfo /Applications/R.app/Contents)
+	  cp PkgInfo /Applications/R.app/Contents)
 	@(cd "$(top_builddir)/src/modules/aqua/Contents" && \
-	cp Info.plist  /Applications/R.app/Contents)
+	  cp Info.plist  /Applications/R.app/Contents)
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
-	cp -R * /Applications/R.app/Contents/Resources)
+	  cp -R * /Applications/R.app/Contents/Resources)
 	@(mkdir -p /Applications/R.app/Contents/MacOS)
-	@test -f "@R_FW_PATH@/R.framework/Resources/bin/RAqua"  \
-	|| (echo "please, make install-Rframework first" &&  exit 1)
+	@test -f "@R_FRAMEWORK_DIR@/Resources/bin/RAqua"  \
+	  || (echo "please, make install-Rframework first" &&  exit 1)
 	@(cd /Applications/R.app/Contents/MacOS && \
-	ln -f "@R_FW_PATH@/R.framework/Resources/bin/RAqua" R && \
-	chmod 755 R)
+	  ln -f "@R_FRAMEWORK_DIR@/Resources/bin/RAqua" R && \
+	  chmod 755 R)
 TAGS:

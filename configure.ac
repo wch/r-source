@@ -140,6 +140,40 @@ else
 fi
 AC_SUBST(LIBR)
 
+## Allow the user to specify building an R framework (Darwin).
+AC_ARG_ENABLE([R-framework],
+[AC_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],
+                [build R framework (if possible), and specify its
+                 installation dir @<:@yes, /Library/Frameworks@:>@])],
+[want_R_framework="${enableval}"],
+[want_R_framework=no])
+## Can only build frameworks on Darwin.
+if test "${want_R_framework}" != no; then
+  case "${host_os}" in
+    darwin*)
+      if test "${want_R_framework}" = yes; then
+	R_FRAMEWORK_DIR="/Library/Frameworks/R.framework"
+      else
+	R_FRAMEWORK_DIR="${want_R_framework}/R.framework"
+	want_R_framework=yes
+      fi
+      ;;
+    *)
+      want_R_framework=no
+      ;;
+  esac
+fi
+## Building a framework implies building R shared libraries.
+if test "${want_R_framework}" = yes; then
+  ## <NOTE>
+  ## We might want to warn about the case where '--disable-R-shlib' was
+  ## given explicitly.
+  want_R_shlib=yes
+  ## </NOTE>
+  LIBR="-framework R"
+fi
+AC_SUBST(R_FRAMEWORK_DIR)
+
 ## Enable maintainer-specific portions of Makefiles.
 AC_ARG_ENABLE([maintainer-mode],
 [AC_HELP_STRING([--enable-maintainer-mode],
@@ -1054,14 +1088,11 @@ case "${host_os}" in
     ##    if test "x${want_aqua}" = xyes; then
     ##      LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Contents/Frameworks/libR.dylib"
     ##    else
-##      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
-   ##     LIBR_LDFLAGS="-dynamiclib"
-   if test -z "${R_FW_PATH}"; then
-    R_FW_PATH="/Library/Frameworks"
-   fi
+    ##      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
+    ##     LIBR_LDFLAGS="-dynamiclib"
    
-        LIBR_LDFLAGS="-dynamiclib -install_name ${R_FW_PATH}/R.framework/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
-   ##    fi
+    LIBR_LDFLAGS="-dynamiclib -install_name ${R_FRAMEWORK_DIR}/R.framework/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
+    ##    fi
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
@@ -1117,7 +1148,6 @@ system.])
 AM_CONDITIONAL(USE_EXPORTFILES, [test "x${use_exportfiles}" = xyes])
 AC_SUBST(DYLIB_EXT)
 AC_SUBST(LIBR_LDFLAGS)
-AC_SUBST(R_FW_PATH)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)
 
@@ -1489,7 +1519,9 @@ fi
 ## R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
 ## R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
 r_options=
-if test "${want_R_shlib}" = yes; then
+if test "${want_R_framework}" = yes; then
+  R_SH_VAR_ADD(r_options, [framework], [, ])
+elif test "${want_R_shlib}" = yes; then
   R_SH_VAR_ADD(r_options, [shared library], [, ])
 fi
 if test "${want_R_profiling}" = yes; then
