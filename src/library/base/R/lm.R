@@ -5,7 +5,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 {
     ret.x <- x
     ret.y <- y
-#    mt <- terms(formula, data = data)
+##    mt <- terms(formula, data = data)
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
     mf$singular.ok <- mf$model <- mf$method <- NULL
@@ -16,8 +16,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     if (method == "model.frame")
 	return(mf)
     else if (method != "qr")
-	warning(paste("method =", method,
-		      "is not supported. Using \"qr\"."))
+	warning("method = ", method, " is not supported. Using \"qr\".")
     mt <- attr(mf, "terms") # allow model.frame to update it
     na.act <- attr(mf, "na.action")
     xvars <- as.character(attr(mt, "variables"))[-1]
@@ -33,8 +32,8 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     w <- model.weights(mf)
     offset <- model.offset(mf)
     if(!is.null(offset) && length(offset) != NROW(y))
-	stop(paste("Number of offsets is", length(offset),
-		   ", should equal", NROW(y), "(number of observations)"))
+	stop("Number of offsets is ", length(offset),
+             ", should equal ", NROW(y), " (number of observations)")
 
     if (is.empty.model(mt)) {
 	x <- NULL
@@ -88,11 +87,10 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
     if (NROW(y) != n)
 	stop("incompatible dimensions")
     if(method != "qr")
-	warning(paste("method =",method,
-		      "is not supported. Using \"qr\"."))
+	warning("method = ",method, " is not supported. Using \"qr\".")
     if(length(list(...)))
-	warning(paste("Extra arguments", deparse(substitute(...)),
-		      "are just disregarded."))
+	warning("Extra arguments ", deparse(substitute(...)),
+                " are just disregarded.")
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
     z <- .Fortran("dqrls",
@@ -144,11 +142,10 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     if (any(w < 0 | is.na(w)))
 	stop("missing or negative weights not allowed")
     if(method != "qr")
-	warning(paste("method =",method,
-		      "is not supported. Using \"qr\"."))
+	warning("method = ",method, " is not supported. Using \"qr\".")
     if(length(list(...)))
-	warning(paste("Extra arguments", deparse(substitute(...)),
-		      "are just disregarded."))
+	warning("Extra arguments ", deparse(substitute(...)),
+                " are just disregarded.")
     x.asgn <- attr(x, "assign")# save
     zero.weights <- any(w == 0)
     if (zero.weights) {
@@ -377,13 +374,14 @@ residuals.lm <-
     r <- object$residuals
     res <- switch(type,
                   working =, response = r,
-                  deviance=,
-                  pearson =if(is.null(object$weights)) r else r * sqrt(object$weights),
+                  deviance=, pearson =
+                  if(is.null(object$weights)) r else r * sqrt(object$weights),
                   partial = r + predict(object,type="terms")
            )
     if(is.null(object$na.action)) res
     else naresid(object$na.action, res)
 }
+
 fitted.lm <- function(object, ...)
 {
     if(is.null(object$na.action)) object$fitted.values
@@ -473,9 +471,9 @@ anova.lmlist <- function (object, ..., scale = 0, test = "F")
     sameresp <- responses == responses[1]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning(paste("Models with response",
-		      deparse(responses[!sameresp]),
-		      "removed because response differs from", "model 1"))
+	warning("Models with response ",
+                deparse(responses[!sameresp]),
+                " removed because response differs from ", "model 1")
     }
 
     ns <- sapply(objects, function(x) length(x$residuals))
@@ -528,9 +526,8 @@ anovalist.lm <- function (object, ..., test = NULL)
     sameresp <- responses == responses[1]
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning(paste("Models with response",
-		      deparse(responses[!sameresp]),
-		      "removed because response differs from", "model 1"))
+	warning("Models with response ", deparse(responses[!sameresp]),
+                " removed because response differs from ", "model 1")
     }
     ## calculate the number of models
     nmodels <- length(objects)
