@@ -19,7 +19,7 @@ solve(a, b, \dots)
     versions of R may use a tighter tolerance. Not presently used with
     complex matrices \code{a}.}
   \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
-    \R < 1.7.0)?}
+    \R < 1.7.0)?  Otherwise LAPACK is used.}
   \item{\dots}{further arguments passed to or from other methods}
 }
 \description{
@@ -27,10 +27,9 @@ solve(a, b, \dots)
   where \code{b} can be either a vector or a matrix.
 }
 \details{
-  As from \R 1.3.0, \code{a} or \code{b} can be complex, in
-  which case LAPACK routine \code{ZESV} is used.
-  This uses double complex arithmetic which might not be available on all
-  platforms.
+  \code{a} or \code{b} can be complex, but this uses double complex
+  arithmetic which might not be available on all platforms and LAPACK
+  will always be used.
 
   The row and column names of the result are taken from the column
   names of \code{a} and of \code{b} respectively.  As from \R 1.7.0
