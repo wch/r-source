@@ -99,7 +99,9 @@ function(x, digits = max(1, getOption("digits") - 3), ...)
 {
     if(!inherits(x, "summary.table"))
 	stop("x must inherit from class `summary.table'")
-    if(!is.null(x$call)) cat("Call:", x$call, "\n")
+    if(!is.null(x$call)) {
+        cat("Call: "); print(x$call)
+    }
     cat("Number of cases in table:", x$n.cases, "\n")
     cat("Number of factors:", x$n.vars, "\n")
     cat("Test for independence of all factors:\n")
