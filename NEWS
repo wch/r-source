@@ -90,6 +90,8 @@ NEW FEATURES
 
     o	scale() is now generic with scale.default method.
 
+    o	R CMD build now also works for package bundles.
+
 
 BUG FIXES
 
