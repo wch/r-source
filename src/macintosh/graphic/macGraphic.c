@@ -239,6 +239,7 @@ static Rboolean Mac_Open(NewDevDesc *dd, MacDesc *xd, char *dsp,
 //    dd->col = R_RGB(0, 0, 0);
     xd->resize = false;
     xd->lineType = 0;
+    xd->lineWidth = 1;
     return TRUE;
 }
 
@@ -551,7 +552,8 @@ static void Mac_Rect(double x0, double y0, double x1, double y1,
 
     SetPort(port);
 
-    SetLinetype(lty, round(lwd), dd);
+    
+    SetLinetype(lty, lwd, dd);
 
 
     if (fill != NA_INTEGER){
@@ -683,7 +685,7 @@ static void Mac_Line(double x1, double y1, double x2, double y2,
     SetPort(port);
    
     Mac_SetFill(col, dd);
-    SetLinetype(lty, round(lwd), dd);
+    SetLinetype(lty, lwd, dd);
        
     /* FIXME: lwd and lty are not set correctly */
        
@@ -1492,7 +1494,7 @@ static void SetLinetype(int newlty, double nlwd, NewDevDesc *dd)
        sNumDashes:	the number of segments in the current line type.
     */
 
-    if( newlty != xd->lineType ) {
+
 	xd->lineType = newlty;
 	xd->numDashes = 0;
 	xd->currentDash = 0;
@@ -1514,11 +1516,12 @@ static void SetLinetype(int newlty, double nlwd, NewDevDesc *dd)
 		xd->numDashes = numDashes * 2;
 	    }
 	}
-    }
+
     if(nlwd < 1)
      lwd = 1;
     else
-     lwd = (int)nlwd;
+     lwd = (int)round(nlwd);
+    xd -> lineWidth = lwd;
       
     PenSize(lwd,lwd);
 }
@@ -1540,6 +1543,13 @@ void DrawLineType(int xx1, int yy1, int xx2, int yy2, NewDevDesc *dd)
     Boolean notFirst = false;
     MacDesc *xd = (MacDesc *) dd->deviceSpecific;
 
+    if(xd->lineType == 0){
+     MoveTo( xx1, yy1 );
+	 LineTo( xx2, yy2);
+	 return;
+    }
+    
+    
     xd->dashStart_x = xx1;
     xd->dashStart_y = yy1;
     startx = xd->dashStart_x;
