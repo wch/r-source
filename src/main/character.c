@@ -30,7 +30,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
-	error("invalid type, nchar requires a character vector\n");
+	errorcall(call, "nchar() requires a character vector\n");
     len = LENGTH(x);
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++)
@@ -63,13 +63,13 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     sa = CADR(args);
     so = CAR(CDDR(args));
-
-    if (!isString(x) || !isInteger(sa) || !isInteger(so))
-	error("invalid type to substr\n");
-
-    len = LENGTH(x);
     k = LENGTH(sa);
     l = LENGTH(so);
+
+    if (!isString(x) || !isInteger(sa) || !isInteger(so) || k==0 || l==0)
+	errorcall(call,"invalid argument in substr()\n");
+
+    len = LENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
     for (i = 0; i < len; i++) {
 	start = INTEGER(sa)[i % k];
@@ -86,7 +86,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		stop = slen;
 	    if (stop > MAXELTSIZE) {
 		stop = MAXELTSIZE;
-		warning("a string was truncated in substr\n");
+		warningcall(call, "a string was truncated in substr()\n");
 	    }
 	    substr(buff, CHAR(STRING(x)[i]), start, stop);
 	    STRING(s)[i] = mkChar(buff);
@@ -113,7 +113,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     tok = CADR(args);
     if (!isString(x) || !isString(tok))
-	error("invalid type to strsplit\n");
+	errorcall(call,"non-character argument in strsplit()\n");
     len = LENGTH(x);
     tlen = LENGTH(tok);
     PROTECT(s = allocVector(VECSXP, len));
@@ -173,8 +173,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     strcpy(buff1, CHAR(inchar));
     upper = strlen(buff1)-1;
 
-    /*remove beginning blanks */
-
+    /* remove leading blanks */
     j = 0;
     for (i = 0 ; i < upper ; i++)
 	if (isspace(buff1[i]))
@@ -229,7 +228,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
 	    goto donesc;
     }
 
- donesc:
+donesc:
 
     upper = strlen(buff1);
     if (upper > minlen)
@@ -300,6 +299,11 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_REGCOMP
 #include <sys/types.h>
 #include <regex.h>
+#else
+#define NO_REGEX_ERROR() \
+	errorcall(call, "POSIX regular expressions not available.\nSee " \
+		"R../src/regex/README, install it; then ./configure and make R.\n");\
+	return R_NilValue;
 #endif
 
 SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -359,15 +363,15 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 #else
-    errorcall(call, "POSIX regular expressions not available\n");
+    NO_REGEX_ERROR();
 #endif
 }
 
 #ifdef HAVE_REGCOMP
 
-/* The following R functions do substitution for regular expressions, */
-/* either once or globally.  The functions are loosely patterned on the */
-/* "sub" and "gsub" in "nawk". */
+/* The following R functions do substitution for regular expressions,
+ * either once or globally.
+ * The functions are loosely patterned on the "sub" and "gsub" in "nawk". */
 
 static int length_adj(char *repl, regmatch_t *regmatch, int nsubexpr)
 {
@@ -499,6 +503,6 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 #else
-    errorcall(call, "POSIX regular expressions not available\n");
+    NO_REGEX_ERROR();
 #endif
 }
