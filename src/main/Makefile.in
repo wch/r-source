@@ -1,116 +1,84 @@
+#
 # ${RHOME}/src/main/Makefile
 
+VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
-include $(top_srcdir)/Makeconf
+top_builddir = ../..
 
-RLIBS=	\
-		../lib/libgraphics.a \
-		../lib/libunix.a \
-		../lib/libappl.a \
-		../lib/libmath.a
+include $(top_builddir)/Makeconf
 
-OBJS=		arithmetic.o \
-		array.o \
-		attrib.o \
-		bind.o \
-		builtin.o \
-		character.o \
-		coerce.o \
-		colors.o \
-		complex.o \
-		context.o \
-		cov.o \
-		cum.o \
-		debug.o \
-		deparse.o \
-		deriv.o \
-		devices.o \
-		dotcode.o \
-		dstruct.o \
-		duplicate.o \
-		envir.o \
-		errors.o \
-		eval.o \
-		format.o \
-		fourier.o \
-		iosupport.o \
-		gram.o \
-		list.o \
-		logic.o \
-		main.o \
-		match.o \
-		memory.o \
-		model.o \
-		names.o \
-		objects.o \
-		optimize.o \
-		options.o \
-		par.o \
-		paste.o\
-		plot.o \
-		plot3d.o \
-		plotmath.o \
-		print.o \
-		printarray.o \
-		printvector.o \
-		printutils.o \
-		random.o \
-		relop.o \
-		saveload.o \
-		scan.o \
-		seq.o \
-		sort.o \
-		source.o \
-		split.o \
-		subassign.o \
-		subscript.o \
-		subset.o \
-		summary.o \
-		unique.o \
-		util.o \
-		version.o
+OBJS = arithmetic.o array.o attrib.o bind.o builtin.o character.o    \
+	coerce.o colors.o complex.o context.o cov.o cum.o debug.o    \
+	deparse.o deriv.o devices.o dotcode.o dstruct.o duplicate.o  \
+	envir.o errors.o eval.o format.o fourier.o gram.o graphics.o \
+	iosupport.o list.o logic.o main.o match.o memory.o model.o   \
+	names.o objects.o optimize.o options.o par.o paste.o plot.o  \
+	plot3d.o plotmath.o print.o printarray.o printvector.o       \
+	printutils.o random.o relop.o saveload.o scan.o seq.o sort.o \
+	source.o split.o subassign.o subscript.o subset.o summary.o  \
+	unique.o util.o version.o
 
+RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
 
-R.binary:	$(OBJS) $(RLIBS)
-		$(LDCMD) $(DLLFLAGS) -o R.binary $(OBJS) $(RLIBS) $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS) $(LIBS)
+ALL_LIBS = $(RLIBS) $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS) $(LIBS)
 
+all: R
 
-install:	R.binary
-		$(INSTALL_PROGRAM) R.binary ../../bin
-		@echo R binary installed
+R: $(top_builddir)/bin/R.binary
 
-$(OBJS):	../include/Defn.h
+$(top_builddir)/bin/R.binary: $(OBJS) $(RLIBS)
+	$(LDCMD) $(DLLFLAGS) -o $@ $(OBJS) $(ALL_LIBS)
 
-tags:		*.h *.c
-		ctags *.h *.c
+../unix/libunix.a:
+	(cd ../unix;  $(MAKE) $(@F))
+../appl/libappl.a:
+	(cd ../appl;  $(MAKE) $(@F))
+../nmath/libmath.a:
+	(cd ../nmath; $(MAKE) $(@F))
 
-gram.c:		gram.y
-		$(YACC) gram.y
-		mv y.tab.c gram.c
+$(OBJS): $(top_srcdir)/src/include/Defn.h
 
+gram.c:	gram.y
+	$(YACC) gram.y
+	mv y.tab.c gram.c
+
+mostlyclean: clean
 clean:
-		@echo Cleaning in src/main
-		@-rm -f R.binary R-Image *core *.o
+	@-rm -f R.binary R-Image *core *.o
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+	@rm -f gram.c
 
-realclean:	clean
-		@-rm -f Makefile
+tags: *.h *.c
+	ctags *.h *.c
+TAGS: *.h *.c
+	etags *.h *.c
 
-dotcode.o:	../include/FFDecl.h ../include/FFTab.h
+# Dependencies
 
-colors.o:	../include/Graphics.h
-par.o:		../include/Graphics.h
-plot.o:		../include/Graphics.h
+colors.o:	$(top_srcdir)/src/include/Graphics.h
+graphics.o:	$(top_srcdir)/src/include/Graphics.h
+par.o:		$(top_srcdir)/src/include/Graphics.h
+plot.o:		$(top_srcdir)/src/include/Graphics.h
 
-arithmetic.o:	../include/Mathlib.h
-random.o:	../include/Mathlib.h
+arithmetic.o:	$(top_srcdir)/src/include/Mathlib.h
+random.o:	$(top_srcdir)/src/include/Mathlib.h
 
 deparse.o:	names.h
 names.o:	names.h
-printArray.o:	../include/Print.h
-printMatrix.o:	../include/Print.h
-printScalar.o:	../include/Print.h
-printVector.o:	../include/Print.h
-sprintScalar.o:	../include/Print.h
+
+print.o:	$(top_srcdir)/src/include/Print.h
+printarray.o:	$(top_srcdir)/src/include/Print.h
+printutils.o:	$(top_srcdir)/src/include/Print.h
+printvector.o:	$(top_srcdir)/src/include/Print.h
+
 version.o:	../include/Platform.h
+../include/Platform.h:
+	(cd ../include; $(MAKE) Platform.h)
+
+# Unused targets
+
+install install-strip uninstall info dvi check::

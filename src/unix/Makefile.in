@@ -1,54 +1,59 @@
+#
 # ${RHOME}/src/unix/Makefile
 
+VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
-include $(top_srcdir)/Makeconf
+top_builddir = ../..
 
-OBJ= \
+include $(top_builddir)/Makeconf
+
+OBJS = \
 	dataentry.o \
-	devX11.o \
 	devPS.o \
+	devPicTeX.o \
+	devX11.o \
 	dynload.o \
 	edit.o \
 	fileio.o \
 	rotated.o \
 	system.o \
-	devPicTeX.o
 
-LIB=		../lib/libunix.a
+LIB = libunix.a
 
-$(LIB):		$(OBJ)
-		$(AR) cr $(LIB) $(OBJ)
-		$(RANLIB) $(LIB)
+all: R
 
-dynload.o:	dynload.c ../include/FFTab.h ../include/FFDecl.h
-		$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+R: $(LIB)
 
-dataentry.o:	dataentry.h dataentry.c ../include/Defn.h
-		$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c dataentry.c
+$(LIB): $(OBJS)
+	$(AR) cr $(LIB) $(OBJS)
+	$(RANLIB) $(LIB)
 
-fileio.o:	fileio.c ../include/Fileio.h
-		$(CC) $(CFLAGS) $(CPPFLAGS) -c fileio.c
+dynload.o: $(srcdir)/dynload.c ../include/FFTab.h ../include/FFDecl.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+dataentry.o: $(srcdir)/dataentry.c $(srcdir)/dataentry.h $(top_srcdir)/src/include/Defn.h
+	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
+fileio.o: $(srcdir)/fileio.c $(top_srcdir)/src/include/Fileio.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+rotated.o: $(srcdir)/rotated.c $(srcdir)/rotated.h
+	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
+devX11.o: $(srcdir)/devX11.c $(srcdir)/psx11.h $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
+	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
+devPS.o: $(srcdir)/devPS.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+devPicTeX.o: $(srcdir)/devPicTeX.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+system.o: $(srcdir)/system.c $(top_srcdir)/src/include/Defn.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 
-rotated.o:	rotated.c rotated.h
-		$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c rotated.c
+../include/FFTab.h ../include/FFDecl.h::
+	(cd ../include; $(MAKE) $(@F))
 
-devX11.o:	devX11.c psx11.h ../include/Graphics.h ../include/Defn.h
-		$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c devX11.c
-
-devPS.o:	devPS.c ../include/Graphics.h ../include/Defn.h
-		$(CC) $(CFLAGS) $(CPPFLAGS) -c devPS.c
-
-devPicTeX.o:	devPicTeX.c ../include/Graphics.h ../include/Defn.h
-		$(CC) $(CFLAGS) $(CPPFLAGS) -c devPicTeX.c
-
-system.o:	system.c ../include/Defn.h
-		$(CC) $(CFLAGS) $(CPPFLAGS) -c system.c
-
+mostlyclean: clean
 clean:
-		@echo Cleaning in src/unix
-		@-rm -f *.o *.a
-
-realclean:	clean
-		@-rm -f Makefile
+	@echo Cleaning in src/unix
+	@-rm -f *.o *.a
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean

@@ -1,11 +1,15 @@
+#
 # ${RHOME}/src/appl/Makefile
 
+VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
-include $(top_srcdir)/Makeconf
+top_builddir = ../..
 
-OBJ= \
+include $(top_builddir)/Makeconf
+
+OBJS = \
 	approx.o \
 	bakslv.o \
 	binning.o \
@@ -42,15 +46,19 @@ OBJ= \
 	uncmin.o \
 	zeroin.o
 
-LIB=		../lib/libappl.a
+LIB = libappl.a
 
-$(LIB):		$(OBJ)
-		$(AR) cr $(LIB) $(OBJ)
-		$(RANLIB) $(LIB)
+all: R
 
+R: $(LIB)
+
+$(LIB):	$(OBJS)
+	$(AR) cr $(LIB) $(OBJS)
+	$(RANLIB) $(LIB)
+
+mostlyclean: clean
 clean:
-		@echo Cleaning in src/appl
-		@-rm -f *.o *.a
-
-realclean:	clean
-		@-rm -f Makefile
+	@-rm -f *.o *.a
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean

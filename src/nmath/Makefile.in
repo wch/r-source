@@ -1,11 +1,15 @@
+#
 # ${RHOME}/src/nmath/Makefile
 
+VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
-include $(top_srcdir)/Makeconf
+top_builddir = ../..
 
-OBJ=	\
+include $(top_builddir)/Makeconf
+
+OBJS =	\
 	mlutils.o \
 	d1mach.o i1mach.o \
 	fmax2.o fmin2.o fmod.o fprec.o fround.o ftrunc.o \
@@ -38,17 +42,22 @@ OBJ=	\
 	ptukey.o qtukey.o \
 	dwilcox.o pwilcox.o qwilcox.o rwilcox.o
 
-LIB=		../lib/libmath.a
+LIB = libmath.a
 
-$(LIB):		$(OBJ)
-		$(AR) cr $(LIB) $(OBJ)
-		$(RANLIB) $(LIB)
+all: R
 
-$(OBJ):		../include/Mathlib.h
+R: $(LIB)
 
+$(LIB): $(OBJS)
+	$(AR) cr $(LIB) $(OBJS)
+	$(RANLIB) $(LIB)
+
+$(OBJS): $(top_srcdir)/src/include/Mathlib.h
+
+mostlyclean: clean
 clean:
-		@echo Cleaning in src/math
-		@-rm -f *.o *.a
-
-realclean:	clean
-		@-rm -f Makefile
+	@echo Cleaning in src/math
+	@-rm -f *.o *.a
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
