@@ -625,6 +625,7 @@ static SEXP modLa_chol(SEXP A)
 	int i, j;
 	
 	if (m != n) error("A must be a square matrix");
+	if (m <= 0) error("A must have dims > 0");
 	for (j = 0; j < n; j++) {	/* zero the lower triangle */
 	    for (i = j+1; i < n; i++) {
 		REAL(ans)[i + j * n] = 0.;
