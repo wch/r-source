@@ -587,13 +587,19 @@ double yDevtoCharUnits(double y, DevDesc *dd)
 	return yDevtoNDCUnits(y, dd)/(dd->gp.cex * dd->gp.yNDCPerChar);
 }
 
+static void BadUnitsError(char *where)
+{
+	error("Bad units specified in %s, please report!\n", where);
+}
+
 	/* the functions GConvertXUnits and ConvertYUnits convert a single */
 	/* value fromUnits toUnits */
 
 double GConvertXUnits(double x, int fromUnits, int toUnits, DevDesc *dd)
 {
-	double dev = x, final;
+	double dev, final;
 	switch (fromUnits) {
+		case DEVICE: dev = x; break;
 		case NDC: dev = xNDCtoDevUnits(x, dd); break;
 		case NIC: dev = xNICtoDevUnits(x, dd); break;
 		case NFC: dev = xNFCtoDevUnits(x, dd); break;
@@ -602,11 +608,11 @@ double GConvertXUnits(double x, int fromUnits, int toUnits, DevDesc *dd)
 		case INCHES: dev = xInchtoDevUnits(x, dd); break;
 		case LINES: dev = xLinetoDevUnits(x, dd); break;
 		case CHARS: dev = xChartoDevUnits(x, dd); break;
-	case DEVICE: break;
+		default: dev = 0; BadUnitsError("GConvertXUnits");
+			
 	}
-
-	final = dev;
 	switch (toUnits) {
+		case DEVICE: final = dev; break;
 		case NDC: final = xDevtoNDCUnits(dev, dd); break;
 		case NIC: final = xDevtoNICUnits(dev, dd); break;
 		case NFC: final = xDevtoNFCUnits(dev, dd); break;
@@ -615,15 +621,16 @@ double GConvertXUnits(double x, int fromUnits, int toUnits, DevDesc *dd)
 		case INCHES: final = xDevtoInchUnits(dev, dd); break;
 		case LINES: final = xDevtoLineUnits(dev, dd); break;
 		case CHARS: final = xDevtoCharUnits(dev, dd); break;
-	case DEVICE: break;
+		default: final = 0; BadUnitsError("GConvertXUnits");
 	}
 	return final;
 }
 
 double GConvertYUnits(double y, int fromUnits, int toUnits, DevDesc *dd)
 {
-	double dev = y, final;
+	double dev, final;
 	switch (fromUnits) {
+		case DEVICE: dev = y; break;
 		case NDC: dev = yNDCtoDevUnits(y, dd); break;
 		case NIC: dev = yNICtoDevUnits(y, dd); break;
 		case NFC: dev = yNFCtoDevUnits(y, dd); break;
@@ -632,11 +639,10 @@ double GConvertYUnits(double y, int fromUnits, int toUnits, DevDesc *dd)
 		case INCHES: dev = yInchtoDevUnits(y, dd); break;
 		case LINES: dev = yLinetoDevUnits(y, dd); break;
 		case CHARS: dev = yChartoDevUnits(y, dd); break;
-	case DEVICE: break;
+		default: dev = 0; BadUnitsError("GConvertYUnits");
 	}
-
-	final = dev;
 	switch (toUnits) {
+		case DEVICE: final = dev; break;
 		case NDC: final = yDevtoNDCUnits(dev, dd); break;
 		case NIC: final = yDevtoNICUnits(dev, dd); break;
 		case NFC: final = yDevtoNFCUnits(dev, dd); break;
@@ -645,7 +651,7 @@ double GConvertYUnits(double y, int fromUnits, int toUnits, DevDesc *dd)
 		case INCHES: final = yDevtoInchUnits(dev, dd); break;
 		case LINES: final = yDevtoLineUnits(dev, dd); break;
 		case CHARS: final = yDevtoCharUnits(dev, dd); break;
-	case DEVICE:  break;
+		default: final = 0; BadUnitsError("GConvertYUnits");
 	}
 	return final;
 }
@@ -909,10 +915,14 @@ double yDevtoxMAR4(double y, DevDesc *dd) { return yDevtoUsr(y, dd); }
 
 void GConvert(double *x, double *y, int from, int to, DevDesc *dd)
 {
-	double devx = *x, devy = *x;
+	double devx, devy;
 
 	switch (from) {
-		case NDC: 
+	        case DEVICE:
+		        devx = *x;
+			devy = *y;
+			break;
+	        case NDC: 
 			devx = xNDCtoDev(*x, dd);
 			devy = yNDCtoDev(*y, dd);
 			break;
@@ -968,16 +978,17 @@ void GConvert(double *x, double *y, int from, int to, DevDesc *dd)
 			devx = xUsrtoDev(*x, dd);
 			devy = yUsrtoDev(*y, dd);
 			break;
-	case DEVICE:
-	  break;
 		default:
-			error("unable to convert from coordinate system\n");
+			devx = 0;	/* for -Wall */
+			devy = 0;
+			BadUnitsError("GConvert");
 	}
-	if (to == DEVICE) {
-		*x = devx;
-		*y = devy;
-	}
+
 	switch (to) {
+	        case DEVICE:
+		        *x = devx;
+			*y = devy;
+			break;
 		case NDC: 
 			*x = xDevtoNDC(devx, dd);
 			*y = yDevtoNDC(devy, dd);
@@ -1034,12 +1045,8 @@ void GConvert(double *x, double *y, int from, int to, DevDesc *dd)
 			*x = yDevtoxMAR4(devy, dd);
 			*y = xDevtoyMAR4(devx, dd);
 			break;
-		case DEVICE:
-		  *x = devx;
-		  *y = devy;
-		  break;
 		default:
-			error("unable to convert to coordinate system\n");
+			BadUnitsError("GConvert");
 	}
 }
 
