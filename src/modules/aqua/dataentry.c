@@ -229,6 +229,7 @@ Boolean OpenDataEntry(void)
 {
 	OSStatus err = noErr;
 	int i,j,k;
+        Rect	bounds;
         EventTypeSpec deEvents[] = {
 		{ kEventClassCommand,	kEventCommandProcess }, 
 		{ kEventClassCommand,	kEventCommandUpdateStatus }, 
@@ -296,6 +297,8 @@ Boolean OpenDataEntry(void)
 //SetAutomaticControlDragTrackingEnabledForWindow( DataEntryWindow, true );	
     ShowWindow(DataEntryWindow);
 
+    GetPortBounds(GetWindowPort(DataEntryWindow), &bounds);
+    SizeControl(DataEntryControl, bounds.right - bounds.left, bounds.bottom - bounds.top);
 
 }
 

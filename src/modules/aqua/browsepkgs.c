@@ -127,6 +127,7 @@ Boolean OpenBrowsePkg(void)
 {
 	OSStatus err = noErr;
 	int i,j,k;
+        Rect	bounds;
          EventTypeSpec bpEvents[] = {
 		{ kEventClassCommand,	kEventCommandProcess }, 
 		{ kEventClassCommand,	kEventCommandUpdateStatus }, 
@@ -192,6 +193,9 @@ Boolean OpenBrowsePkg(void)
   
 
     ShowWindow(BrowsePkgWindow);
+
+    GetPortBounds(GetWindowPort(BrowsePkgWindow), &bounds);
+    SizeControl(BrowsePkgControl, bounds.right - bounds.left, bounds.bottom - bounds.top);
 
 
 }
