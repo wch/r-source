@@ -84,7 +84,7 @@ setMethod("profile", "mle",
         fix <- list(bi)
         names(fix) <- pi
         call$fixed <- fix
-        pfit <- try(eval(call), silent=TRUE)
+        pfit <- try(eval.parent(call, 2), silent=TRUE)
         if(inherits(pfit, "try-error")) return(NA)
         else {
             zz <- 2*(pfit@min - fitted@min)
@@ -113,10 +113,14 @@ setMethod("profile", "mle",
     names(prof) <- Pnames[which]
     call <- fitted@call
     call$minuslogl <- fitted@minuslogl
+    ndeps <- eval.parent(call$control$ndeps)
+    parscale <- eval.parent(call$control$parscale)
     for (i in which) {
         zi <- 0
         pvi <- pv0
         pi <- Pnames[i]
+        if (!is.null(ndeps)) call$control$ndeps <- ndeps[-i]
+        if (!is.null(parscale)) call$control$parscale <- parscale[-i]
         for (sgn in c(-1, 1)) {
             if (trace)
                 cat("\nParameter:", pi, c("down", "up")[(sgn + 1)/2 + 1], "\n")

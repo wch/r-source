@@ -773,6 +773,11 @@ BUG FIXES
 
     o   t.test() now detects nearly-constant input data.  (PR#7225)
 
+    o   mle() had problems if ndeps or parscale was supplied in the
+        control arguments for optim(). Also, the profiler is now more
+        careful to reevaluate modified mle() calls in its parent
+        environment. 
+
 
 
 
