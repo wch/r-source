@@ -32,8 +32,12 @@ replace `make distribution' by something like
 
 
 2) If you don't want to make R from the sources yourself, make a full
-installation of R from the standard installer, then add packages and
-make other customizations.  In this directory run
+installation of R from the standard installer (that is, select 'Full
+Installation' from the 'Select Components' screen), then add packages
+and make other customizations.
+
+Edit ISDIR in ../MkRules if you have not already done so.  Then in
+this directory run
 
 	make myR IMAGEDIR=rootdir
 
