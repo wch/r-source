@@ -6,6 +6,19 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.4.2
+
+
+BUG FIXES
+
+    o	the man page (doc/R.1) wasn't updated with the proper VERSION.
+
+    o	new function validSlotNames().
+
+    o	smooth.spline() had a "df = 5" default which was never used and
+	hence extraneous and misleading.
+
+
 		CHANGES IN R VERSION 1.4.1
 
 
@@ -797,7 +810,7 @@ BUG FIXES
 	no row names. (PR#1219)
 
     o	rlnorm( *, *, sd=0) now returns the mean,
-     	rnbinom(*, *, prob=1) gives 0, (PR#1218).
+	rnbinom(*, *, prob=1) gives 0, (PR#1218).
 
 
 	**************************************************
