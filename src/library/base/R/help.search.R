@@ -103,7 +103,8 @@ function(pattern, fields = c("alias", "title"),
     ## Retval.
     y <- list(pattern = pattern,
               fields = fields,
-              matches = db[, c("name", "title", "Package", "LibPath")])
+              matches = db[, c("name", "title", "Package", "LibPath"),
+              drop = FALSE])
     class(y) <- "hsearch"
     y
 }
