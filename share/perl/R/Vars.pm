@@ -1,48 +1,139 @@
 package R::Vars;
 
-## return the value of an environment variable; or the default if no
-## such environment variable is set or it is empty.
-sub getenv {
+=head1 NAME
+    
+  R::Vars - Platform-Specific Variables
+    
+=head1 SYNOPSIS
 
-    my ($envvar, $default) = @_;
-    if($ENV{$envvar}){
-	return($ENV{$envvar});
-    }
-    else{
-	return($default);
-    }
+  use R::Vars;
+
+  if($R::Vars::OSTYPE eq "windows"){
+      ## do windows-specific things
+  }
+  else {
+      ## do things on mac or unix
+  }
+
+  ## stop if no valid command for R itself or the 'R CMD' mechanism is
+  ## available 
+  R::Vars::error("CMD", "EXE");  
+
+    
+=head1 DESCRIPTION
+
+    This package provides variables that help to handle
+    platform-specific differences of R, some of these can be set using
+    environment variables, these are lsited in square brackates.
+
+    OSTYPE     "mac", "unix" or "windows"
+    TMPDIR     name of directory for temporary files [TMPDIR]
+    
+    RHOME      path to R installation top directory [R_HOME]
+    EXE        name of the R executable including path
+    CMD        string for 'R CMD' including path
+
+    MAKE       command string for 'make' [MAKE]
+    LATEX      command string for 'latex' [LATEX]
+
+    Most have sensible defaults for all platforms.
+    
+=cut
+          
+use Carp;
+
+## perl 5.6 uses MSWin32, older versions of perl have win32 
+if($^O =~ /^(MS)?Win32$/i){
+    $OSTYPE = "windows";
 }
-
-sub file_path {
-    my @args = @_;
-    my $filesep = "/";
-    $filesep = ":" if($R::Vars::OSTYPE eq "mac");
-    join($filesep, @args);
-}
-
-## <FIXME>
-## Currently, R_OSTYPE is always set on Unix/Windows when run via Rcmd
-$OSTYPE = getenv("R_OSTYPE", "mac");
-## </FIXME>
-
-
-$LATEX = getenv("LATEX", "latex");
-$MAKE = getenv("MAKE", "make");
-
-$RHOME = $ENV{'R_HOME'};
-#    croak "Error: environment variable R_HOME not found";
-
-$CMD = $ENV{'R_CMD'};
-#    croak "Error: environment variable R_CMD not found";
-
-if($OSTYPE eq "windows"){
-    $EXE = file_path($R_HOME, "Rterm.exe");
-    $TMPDIR = getenv("TMPDIR", "/TEMP");
+elsif($^O =~ /^(MacOS|darwin)$/i){
+    $OSTYPE = "mac";
 }
 else{
-    $EXE = file_path($R_HOME, "bin", "R");
-    $TMPDIR = getenv("TMPDIR", "/tmp");
+    $OSTYPE = "unix";
 }
-#croak "Error: please set TMPDIR to a valid temporary directory\n"
-#    unless (-e $R_TMPDIR);
 
+getenv("LATEX", "LATEX", "latex");
+getenv("MAKE", "MAKE", "make");
+getenv("RHOME", "R_HOME");
+
+if($OSTYPE eq "windows"){
+    if($RHOME){
+	$EXE = "${RHOME}/bin/Rterm.exe";
+	$CMD = "${RHOME}/bin/Rcmd.exe";
+    }
+    else{
+	$EXE = "Rterm.exe";
+	$CMD = "Rcmd.exe";
+    }
+    $TMPDIR = getenv("TMPDIR", "/TEMP");
+    $TMPDIR = "" unless (-d $TMPDIR);
+}
+else{
+    if($RHOME){
+	$EXE = "${RHOME}/bin/R";
+    }
+    else{
+	$EXE = "R";
+    }
+    $CMD = "$EXE CMD";
+    $TMPDIR = getenv("TMPDIR", "/tmp");
+    $TMPDIR = "" unless (-d $TMPDIR);
+}
+
+
+## return the value of an environment variable; or the default if no
+## such environment variable is set or it is empty. additionally
+## record it in hash envnames (for suitable error messages below.
+
+my %envnames;
+sub getenv {
+
+    my ($var, $envvar, $default) = @_;
+    if($ENV{$envvar}){
+	${$var} = $ENV{$envvar};
+    }
+    else{
+	${$var} = $default;
+    }
+    $envnames{$var} = $envvar;
+}
+
+## check all arguments if they are the name of a variable in this
+## package and not empty, issue a warning if not.
+
+sub warning {
+    my $v;
+    foreach $v (@_) {
+	if(! ${"R::Vars::$v"}){
+	    if($envnames{$v}){
+		carp "Warning: environment variable $envnames{$v} not set " .
+		    "and no default available.\n";
+	    }
+	    else{
+		carp "Warning: R::Vars::$v not defined";
+	    }
+
+	}
+    }
+}
+	
+## check all arguments if they are the name of a variable in this
+## package and not empty, issue an error and stop if not.
+
+sub error {
+    my $v;
+    foreach $v (@_) {
+	if(! ${"R::Vars::$v"}){
+	    if($envnames{$v}){
+		croak "Error: environment variable $envnames{$v} not set " .
+		    "and no default available.\n";
+	    }
+	    else{
+		croak "Error: R::Vars::$v not defined";
+	    }
+
+	}
+    }
+}
+	

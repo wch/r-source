@@ -99,11 +99,16 @@ sub R_tempfile {
 
     my $pat = "Rutils";
     $pat = $_[0] if $_[0];
+    R::Vars::error("TMPDIR");
     my $retval = file_path($R::Vars::TMPDIR,
 			   $pat . $$ . sprintf("%05d", rand(10**5)));
+
+    my $n=0;
     while(-f $retval){
 	$retval = file_path($R::Vars::TMPDIR,
 			    $pat . $$ . sprintf("%05d", rand(10**5)));
+	croak "Cannot find unused name for temporary file"
+	    if($n++ > 1000);
     }
     $retval;
 }
@@ -131,15 +136,17 @@ sub R_runR
     my $Ropts = $_[1];
     my $Rin = R_tempfile("Rin");
     my $Rout = R_tempfile("Rout");
+
+    R::Vars::error("EXE");
     open RIN, "> $Rin" or die "Error: cannot write to \`$Rin'\n";
     print RIN "$cmd\n";
     close RIN;
-    R_system("${R_EXE} ${Ropts} < ${Rin} > ${Rout}");
+    R_system("${R::Vars::EXE} ${Ropts} < ${Rin} > ${Rout}");
     my @out;
     open ROUT, "< $Rout";
     while(<ROUT>) {chomp; push(@out, $_);}
     close ROUT;
-    unlink($Rcmd);
+    unlink($Rin);
     unlink($Rout);
     return(@out);
 }
