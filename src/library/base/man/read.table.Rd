@@ -159,7 +159,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   Comment characters are allowed unless \code{comment.char = ""}, and
   complete comment lines are allowed provided \item{blank.lines.skip = TRUE}
   However, comment lines prior to the header must have
-  the comment character in the first column.
+  the comment character in the first non-blank column.
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include
@@ -168,7 +168,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   Less memory will be used if \code{colClasses} is specified as one of
   the five atomic vector classes.
 
-  Using \code{nrows}, even as a mild over-estimate, will help memory usage.
+  Using \code{nrows}, even as a mild over-estimate, will help memory
+  usage.
+
+  Using \code{comment.char = ""} will be appreciably faster.
 }
 \seealso{
   The \emph{R Data Import/Export} manual.
