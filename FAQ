@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-12, 2002-01-31
+Version 1.4-13, 2002-02-01
 Kurt Hornik
 
 
@@ -1326,6 +1326,9 @@ works, was published in the Journal of Statistical Software
      Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
      simulations.
 
+*combinat*
+     Combinatorics utilities.
+
 *conf.design*
      A series of simple tools for constructing and manipulating confounded
      and fractional factorial designs.
@@ -1367,6 +1370,13 @@ works, was published in the Journal of Statistical Software
 *emplik*
      Empirical likelihood ratio for means/quantiles/hazards from possibly
      right censored data.
+
+*evd*
+     Functions for extreme value distributions.  Extends simulation,
+     distribution, quantile and density functions to univariate, bivariate
+     and (for simulation) multivariate parametric extreme value
+     distributions, and provides fitting functions which calculate maximum
+     likelihood estimates for univariate and bivariate models.
 
 *event.chart*
      Package for creating event charts.
