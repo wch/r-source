@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-07
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-08
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2587,6 +2587,9 @@ Mean Score method for missing covariate data in logistic regression
 models.
 @item merror
 Accuracy and precision of measurements.
+@item meta
+Fixed and random effects meta-analysis, with functions for tests of
+bias, forest and funnel plot.
 @item mfp
 Multiple Fractional Polynomials.
 @item mgcv
