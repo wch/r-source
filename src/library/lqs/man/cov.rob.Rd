@@ -103,7 +103,7 @@ cov.mcd(\dots)
   For method \code{"mve"} the search is made over ellipsoids determined
   by the covariance matrix of \code{p} of the data points. For method
   \code{"mcd"} an additional improvement step suggested by Rousseeuw and
-  van Driessen (1997) is used, in which once a subset of size
+  van Driessen (1999) is used, in which once a subset of size
   \code{quantile.used} is selected, an ellipsoid based on its covariance
   is tested (as this will have no larger a determinant, and may be smaller).
 }
