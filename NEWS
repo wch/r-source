@@ -47,6 +47,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   plotting math expressions now also works for objects of mode
+        "call" (in particular on the result of substitute())
+
     o   locator() on log axes: value antilogged twice
 
     o   (a real oldie - and trival too) is.recursive now TRUE for
