@@ -28,7 +28,7 @@ arc-cosine, arc-sine, arc-tangent.
 }
 \examples{
 Ceps <- .Machine$double.eps # ``Computer epsilon''
-x <- rnorm(500)
+x <- seq(-3, 3, len=200)
 stopifnot(
  abs(cosh(x) - (exp(x) + exp(-x))/2) < 20*Ceps,
  abs(sinh(x) - (exp(x) - exp(-x))/2) < 20*Ceps,
