@@ -63,7 +63,7 @@ SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* .Internal(apply(X, FUN)) */
+/* .Internal(apply(X, X1, FUN)) */
 /* X is a matrix, and the last dimension is the one we want to 
    loop over */
 
@@ -73,21 +73,17 @@ SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, nr, nc;
 
     checkArity(op, args);
-    X = CAR(args);
+    X = CAR(args); args = CDR(args);
     if(!isMatrix(X))
 	errorcall(call, "First arg is not a matrix");
     Xd = getAttrib(X, R_DimSymbol);
     nr = INTEGER(Xd)[0];
     nc = INTEGER(Xd)[1];
-    args = CDR(args);
-    X1 = CAR(args);
-    args = CDR(args);
-    FUN = CAR(args);
-    if(!isFunction(FUN))
-	errorcall(call, "argument FUN is not a function");
-    PROTECT(R_fcall = LCONS(FUN, args));
+    X1 = CAR(args); args = CDR(args);
+    FUN = CAR(args); args = CDR(args);
+
+    PROTECT(R_fcall = LCONS(FUN, LCONS(X1, LCONS(R_DotsSymbol, R_NilValue))));
     PROTECT(ans = allocVector(VECSXP, nc));
-    CADR(R_fcall) = X1;
     for(i = 0; i < nc; i++) {
 	switch(TYPEOF(X)) {
 	case REALSXP:

@@ -26,18 +26,17 @@ apply <- function(X, MARGIN, FUN, ...)
 
     newX <- aperm(X, c(s.call, s.ans))
     dim(newX) <- c(prod(d.call), d2 <- prod(d.ans))
-#    i.vec <- length(d.call) < 2
     ans <- vector("list", d2)
     if(length(d.call) < 2) {# vector
         if (length(dn.call)) dimnames(newX) <- c(dn.call, list(NULL))
-	for(i in 1:d2) ans[[i]] <- FUN(newX[,i], ...)
+        for(i in 1:d2) ans[[i]] <- FUN(newX[,i], ...)
     } else
-	for(i in 1:d2) ans[[i]] <- FUN(array(newX[,i], d.call, dn.call), ...)
-#    if(length(d.call) == 1) {
-#        X1 <- newX[,1]
-#        if (length(dn.call)) names(X1) <- dn.call[[1]]
-#    } else X1 <- array(newX[,1], d.call, dn.call)
-#    ans <- .Internal(apply(newX, X1, function(x) FUN(x, ...)))
+       for(i in 1:d2) ans[[i]] <- FUN(array(newX[,i], d.call, dn.call), ...)
+#     if(length(d.call) == 1) {
+#         X1 <- newX[,1]
+#         if (length(dn.call)) names(X1) <- dn.call[[1]]
+#     } else X1 <- array(newX[,1], d.call, dn.call)
+#     ans <- .Internal(apply(newX, X1, FUN))
 
     ## answer dims and dimnames
 
@@ -45,9 +44,6 @@ apply <- function(X, MARGIN, FUN, ...)
     l.ans <- length(ans[[1]])
 
     ans.names <- names(ans[[1]])
-#    if(i.vec && is.null(ans.names) && length(dn.call) &&
-#       l.ans == length(an <- dn.call[[1]]))
-#	ans.names <- an
     if(!ans.list)
 	ans.list <- any(unlist(lapply(ans, length)) != l.ans)
     if(!ans.list && length(ans.names)) {
