@@ -26,12 +26,13 @@ apply(x, MARGIN, FUN, \dots)
   \code{apply} returns a list of length \code{dim(x)[MARGIN]}.
 }
 \seealso{
-  \code{\link{lapply}}, \code{\link{tapply}}, \code{\link{sweep}}.
+  \code{\link{lapply}}, \code{\link{tapply}}, and conveniency functions
+  \code{\link{sweep}} and \code{\link{aggregate}}.
 }
 \examples{
 ## Compute row and column sums for a matrix:
 x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
-dimnames(x)[[1]] <- letters[1:8] 
+dimnames(x)[[1]] <- letters[1:8]
 apply(x, 2, mean, trim = .2)
 col.sums <- apply(x, 2, sum)
 row.sums <- apply(x, 1, sum)

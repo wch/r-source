@@ -35,6 +35,7 @@ tapply(X, INDEX, FUN = NULL, simplify = TRUE, \dots)
   list with a \code{\link{dim}} attribute.
 }
 \seealso{
+  the convenience function \code{\link{aggregate}} (using \code{tapply});
   \code{\link{apply}}, \code{\link{lapply}} with its version
   \code{sapply}.
 }
