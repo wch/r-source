@@ -14,7 +14,7 @@ endif
 
 ## configuration macros
 HELP = YES
-WINHELP =  NO # NO, CHM, BOTH
+WINHELP =  CHM # NO, CHM, BOTH
 
 LEA_MALLOC=YES
 

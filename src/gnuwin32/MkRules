@@ -2,14 +2,14 @@
 .SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d
 
 # Alternatives MINGW (mingw32 gcc), CROSS (Linux)
-BUILD=CROSS
+BUILD=MINGW
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
 HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Where does Tcl/Tk live? Spaces allowed.
-TCL_HOME = $(RHOME)/src/gnuwin32/Tcl
+TCL_HOME = c:/packages/Tcl
 TCL_VERSION = 83
 
 ifeq ($(strip $(BUILD)),MINGW)
