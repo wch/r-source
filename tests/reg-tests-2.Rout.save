@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-04-06)
+Version 1.5.0 Patched (2002-06-12)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -993,4 +993,30 @@ Warning messages:
 10: Step size truncated: out of bounds
 11: Algorithm did not converge in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
 12: Algorithm stopped at boundary value in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
+> 
+> ## PR#1662:  overflow in integers in fisher.test()
+> d4 <- matrix(c(0, 0, 0, 0, 0,  0, 3, 0, 1, 0,  0, 0, 0, 0, 0,
++                1, 0, 0, 0, 0,  1, 0, 0, 2, 0,  0, 0, 1, 0, 0,
++                0, 1, 0, 1, 0,  4, 0, 2, 0, 0,  0, 1, 0, 0, 0,  0, 0, 0, 0, 0,
++                0, 1, 0, 0, 2,  0, 0, 0, 2, 2,  0, 1, 0, 0, 0,
++                0, 0, 1, 1, 0,  0, 0, 0, 0, 0,  0, 1, 0, 0, 0,
++                1, 0, 0, 0, 2,  0, 0, 0, 3, 0,  0, 0, 0, 0, 1,  0, 0, 0, 0, 0,
++                2, 0, 0, 0, 0,  0, 0, 0, 0, 0,  0, 0, 1, 0, 1,
++                0, 0, 0, 0, 2,  0, 0, 0, 0, 8,  0, 0, 0, 3, 0,
++                0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  0, 0, 0, 0, 1,
++                0, 0, 1, 0, 0,  0, 0, 0, 0, 0,  2, 0, 0, 1, 0,
++                0, 2, 0, 0, 0,  0, 2, 0, 0, 1,  3, 0, 0, 0, 0,
++                0, 0, 0, 0, 0,  0, 0, 0, 0, 1,  0, 0, 1, 0, 0,  4, 0, 0, 0, 0),
++              nr=50)
+> 
+> fisher.test(d4)
+
+	Fisher's Exact Test for Count Data
+
+data:  d4 
+p-value = < 2.2e-16
+alternative hypothesis: two.sided 
+
+> ## either crashed or gave `this should not occur' message under 1.5.0.
+> 
 > 

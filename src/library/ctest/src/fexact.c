@@ -1081,6 +1081,7 @@ L120:
 	}
 	/* Table index */
 	ipn = key % ldst + 1;
+	if (ipn < 1) ipn += ldst; /* because key might be negative */
 	/* Find empty position */
 	for (itp = ipn, ii = ks + ipn; itp <= ldst; ++itp, ++ii) {
 	    if (ist[ii] < 0) {

@@ -187,6 +187,11 @@ BUG FIXES
     o	HoltWinters() now initializes correctly in the exponential
 	smoothing case, and plot.HoltWinters() allows lty to be set. 
 
+    o   fisher.test() could crash due to integer overflow on some
+	large problems. (PR#1662)
+
+
+
 
 		CHANGES IN R VERSION 1.5.0
 
