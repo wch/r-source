@@ -4,7 +4,7 @@
 ###--- because "error --> jump_to_toplevel", i.e., outside any loop.
 sink("no-segfault.R")
 
-cat("options(error.halt = FALSE)",
+cat('options(error.halt = FALSE, pager = "cat")',
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 
 core.pkgs <- ##.packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
@@ -26,7 +26,7 @@ stop.list[["base"]] <-
 	## "Interactive" ones:
 	dev.int <- c("X11", "windows", "macintosh")
 	misc.2 <- c("help.start",
-                    "gctorture",
+                    "gctorture", "q", "quit",
 		    "data.entry", "dataentry", "de", apropos("^de\."))
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
     }
