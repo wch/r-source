@@ -328,3 +328,19 @@ Date: Wed, 3 Oct 2001 18:52:03 +0200 (MET DST)
 Subject: RE: [R] Several R vs S-Plus issues
 From: "Monder, Harvey" <Harvey.Monder@pharma.com>
 Date: Wed, 3 Oct 2001 14:29:03 -0400 
+* PR# 1113 *
+Subject: bug.report() & docs should mention r-devel
+From: murdoch@stats.uwo.ca
+Date: Thu, 4 Oct 2001 01:23:27 +0200 (MET DST)
+* PR# 1114 *
+Subject: PS & box(col=0)
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Wed, 03 Oct 2001 21:21:52 -0400
+* PR# 1115 *
+Subject: Bug when trying to save a character vector with an embedded /
+From: "David Kane  <David Kane" <a296180@mica.fmr.com>
+Date: Thu, 4 Oct 2001 07:27:39 -0400
+* PR# 1116 *
+Subject: get.hist.quote does not work
+From: arto.luoma@uta.fi
+Date: Thu, 4 Oct 2001 14:45:29 +0200 (MET DST)
