@@ -1,12 +1,12 @@
 \name{mle-class}
 \docType{class}
 \alias{mle-class}
-\title{Class "mle". Result of maximum likelihood estimation.}
+\title{Class "mle". Result of Maximum Likelihood Estimation.}
 \description{This class encapsulates results of a generic maximum
   likelihood procedure.}
 \section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("mle", ...)}, but
-most often as the result of a call to \code{mle}.
+  Objects can be created by calls of the form \code{new("mle", \dots)}, but
+  most often as the result of a call to \code{\link{mle}}.
 }
 \section{Slots}{
   \describe{
@@ -30,11 +30,16 @@ most often as the result of a call to \code{mle}.
   \describe{
     \item{confint}{\code{signature(object = "mle")}: Confidence
       intervals from likelihood profiles.}
+    \item{logLik}{\code{signature(object = "mle")}: Extract maximized
+      log-likelihood.}
     \item{profile}{\code{signature(fitted = "mle")}: Likelihood profile
       generation.}
     \item{show}{\code{signature(object = "mle")}: Display object
       briefly.}
     \item{summary}{\code{signature(object = "mle")}: Generate object summary.}
+    \item{update}{\code{signature(object = "mle")}:  Update fit.}
+    \item{vcov}{\code{signature(object = "mle")}: Extract
+      variance-covariance matrix.}
   }
 }
 \keyword{classes}

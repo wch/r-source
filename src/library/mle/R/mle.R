@@ -32,7 +32,7 @@ mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
         do.call("minuslogl", l)
     }
     start <- sapply(start, eval.parent) # expressions are allowed
-    oout <- stats::optim(start, f, method=method, hessian=TRUE, ...)
+    oout <- optim(start, f, method=method, hessian=TRUE, ...)
     coef <- oout$par
     vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(0),0,0)
     min <-  oout$value
@@ -115,7 +115,7 @@ setMethod("profile", "mle",
             step <- 0
             z <- 0
 
-            ## FIXME: This logic is a bit frail in some cases with
+            ## This logic was a bit frail in some cases with
             ## high parameter curvature. We should probably at least
             ## do something about cases where the mle call fails
             ## because the parameter gets stepped outside the domain.
@@ -261,8 +261,7 @@ setMethod("confint", "mle",
 function (object, parm, level = 0.95, ...)
 {
     cat("Profiling...\n")
-    pr <- profile(object)
-    confint(pr)
+    confint(profile(object), parm, level, ...)
 })
 
 setMethod("logLik", "mle",
@@ -277,5 +276,20 @@ function (object, ...)
 })
 
 setMethod("vcov", "mle", function (object, ...) object@vcov)
+
+setMethod("update", "mle", function (object, ..., evaluate = TRUE)
+{
+    call <- object@call
+    extras <- match.call(expand.dots = FALSE)$...
+    if (length(extras) > 0) {
+        existing <- !is.na(match(names(extras), names(call)))
+        for (a in names(extras)[existing]) call[[a]] <- extras[[a]]
+        if (any(!existing)) {
+            call <- c(as.list(call), extras[!existing])
+            call <- as.call(call)
+        }
+    }
+    if (evaluate) eval(call, parent.frame()) else call
+})
 
 .onLoad <- function(lib, pkg) require(methods)

@@ -1,6 +1,6 @@
 \name{mle}
 \alias{mle}
-\title{Maximum likelihood estimation}
+\title{Maximum Likelihood Estimation}
 \description{
   Estimate parameters by the method of maximum likelihood.
 }
@@ -17,16 +17,18 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
   \item{\dots}{Further arguments to pass to \code{\link{optim}}.}
 }
 \details{
-  The \code{optim} optimizer is used to find the minimum of the negative
-  log-likelihood. An approximate covariance matrix for the parameters is
-  obtained by inverting the Hessian matrix at the optimum.
+  The \code{\link{optim}} optimizer is used to find the minimum of the
+  negative log-likelihood.  An approximate covariance matrix for the
+  parameters is obtained by inverting the Hessian matrix at the optimum.
 }
 \value{
   An object of class \code{"mle"}
 }
-\note{Be careful to note that the argument is -log L (not -2 log L). It
+\note{
+  Be careful to note that the argument is -log L (not -2 log L). It
   is for the user to ensure that the likelihood is correct, and that
-  asymptotic likelihood inference is valid.}
+  asymptotic likelihood inference is valid.
+}
 \seealso{
   \code{\link{mle-class}}
 }
@@ -45,6 +47,7 @@ plot(profile(fit), absVal=FALSE)
 confint(fit)
 
 ## use bounded optimization
+## the lower bounds are really > 0, but we use >=0 to stress-test profiling
 (fit1 <- mle(ll, method="L-BFGS-B", lower=c(0, 0)))
 plot(profile(fit1), absVal=FALSE)
 
