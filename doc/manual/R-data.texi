@@ -312,6 +312,12 @@ a file, and thereby capture the output of (possibly implicit)
 @code{print} statements.  This is not usually the most efficient route,
 and the @code{options(width)} setting may need to be increased.
 
+@findex write.foreign
+@code{write.foreign} uses @code{write.table} to produce a text file
+and also writes a code file that will read this text file into another
+statistical package. There is currently support for export to @code{SPSS} and
+@code{Stata}.
+
 @node XML,  , Export to text files, Introduction
 @section XML
 @cindex XML
@@ -767,7 +773,7 @@ may be unavoidable if the originating system is not available.
 The recommended package @pkg{foreign} provides import facilities for
 files produced by these statistical systems, and for export to Stata. In
 some cases these function may require substantially less memory than
-@code{read.table} would.
+@code{read.table} would. @code{write.foreign} (See @ref{Export to text files}) provides an export mechanism with support currently for @code{SPSS} and @code{Stata}.
 
 @cindex EpiInfo
 @cindex EpiData
