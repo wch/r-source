@@ -123,8 +123,8 @@ $(top_builddir)/bin/R.gnome: $(OBJS) $(RGNOMELIBS)
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(LDCMD) $(DLLFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJS) $(ALL_GNOME_LIBS)
 
-$(top_builddir)/etc/R.exp: $(OBJS) $(ALL_LIBS)
-	@$(top_srcdir)/tools/ldAIX4 $(OBJS) $(ALL_LIBS) -o $@
+$(top_builddir)/etc/R.exp: $(OBJS) $(RLIBS)
+	@$(top_srcdir)/tools/ldAIX4 -o $@ $(OBJS) $(RLIBS)
 
 ../unix/libunix.a:
 	(cd ../unix;  $(MAKE) $(@F))

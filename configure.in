@@ -523,9 +523,11 @@ AC_MSG_RESULT(done)
 case "${host}" in
   *aix4.[[2-9]]*)
     EXPORTFILE="\$(top_builddir)/etc/R.exp"
-    dllflags="-bdynamic -bE:${EXPORTFILE}"
+    ldcmd=${F77:-cc}
+    dllflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE -lc -lm"
+    shlibld=${F77:-cc}
     shlibldflags="-bM:SRE -H512 -T512 -bnoentry -bexpall \
-      -bI:\$(R_HOME)/etc/R.exp"
+      -bI:\$(R_HOME)/etc/R.exp -lc -lm"
     ;;
   alpha*osf*)
     cpicflags=
