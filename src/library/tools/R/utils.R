@@ -189,17 +189,18 @@ function(package)
     ## Return a character vector with the names of the functions in
     ## @code{package} which 'look' like S3 methods, but are not.
     switch(package,
-           base = c("boxplot.stats",
-           "close.screen", "close.socket",
-           "flush.console",
-           "format.char", "format.info", "format.pval",
-           "plot.new", "plot.window", "plot.xy",
-           "split.screen",
-           "update.packages"),
-           quadprog = c("solve.QP", "solve.QP.compact"),
-           sm = "print.graph",
-           ts = "lag.plot",
-           character(0))
+	   base = c("boxplot.stats",
+	   "close.screen", "close.socket",
+	   "flush.console",
+	   "format.char", "format.info", "format.pval",
+	   "influence.measures",
+	   "plot.new", "plot.window", "plot.xy",
+	   "split.screen",
+	   "update.packages"),
+	   quadprog = c("solve.QP", "solve.QP.compact"),
+	   sm = "print.graph",
+	   ts = "lag.plot",
+	   character(0))
 }
 
 ### * .sourceAssignments
