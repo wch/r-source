@@ -1,7 +1,7 @@
 fisher.test <-
 function(x, y = NULL, workspace = 200000, hybrid = FALSE,
-         control = list(),
-         or = 1, alternative = "two.sided", conf.level = 0.95)
+         control = list(), or = 1, alternative = "two.sided",
+         conf.int = TRUE, conf.level = 0.95)
 {
     DNAME <- deparse(substitute(x))
 
@@ -192,47 +192,48 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
         ESTIMATE <- mle(x)
         names(ESTIMATE) <- "odds ratio"
 
-        ## Determine confidence intervals for the odds ratio.
-        ncp.U <- function(x, alpha) {
-            if(x == hi)
-                return(Inf)
-            p <- pnhyper(x, 1)
-            if(p < alpha)
-                uniroot(function(t) pnhyper(x, t) - alpha,
-                        c(0, 1))$root
-            else if(p > alpha)
-                1 / uniroot(function(t) pnhyper(x, 1/t) - alpha,
-                            c(.Machine$double.eps, 1))$root
-            else
-                1
-        }
-        ncp.L <- function(x, alpha) {
-            if(x == lo)
-                return(0)
+        if(conf.int) {
+            ## Determine confidence intervals for the odds ratio.
+            ncp.U <- function(x, alpha) {
+                if(x == hi)
+                    return(Inf)
+                p <- pnhyper(x, 1)
+                if(p < alpha)
+                    uniroot(function(t) pnhyper(x, t) - alpha,
+                            c(0, 1))$root
+                else if(p > alpha)
+                    1 / uniroot(function(t) pnhyper(x, 1/t) - alpha,
+                                c(.Machine$double.eps, 1))$root
+                else
+                    1
+            }
+            ncp.L <- function(x, alpha) {
+                if(x == lo)
+                    return(0)
 
-            p <- pnhyper(x, 1, upper = TRUE)
-            if(p > alpha)
-                uniroot(function(t)
-                        pnhyper(x, t, upper = TRUE) - alpha,
-                        c(0, 1))$root
-            else if(p < alpha)
-                1 / uniroot(function(t)
-                            pnhyper(x, 1/t, upper = TRUE) - alpha,
-                            c(.Machine$double.eps, 1))$root
-            else
-                1
+                p <- pnhyper(x, 1, upper = TRUE)
+                if(p > alpha)
+                    uniroot(function(t)
+                            pnhyper(x, t, upper = TRUE) - alpha,
+                            c(0, 1))$root
+                else if(p < alpha)
+                    1 / uniroot(function(t)
+                                pnhyper(x, 1/t, upper = TRUE) - alpha,
+                                c(.Machine$double.eps, 1))$root
+                else
+                    1
+            }
+            CINT <- switch(alternative,
+                           less = c(0, ncp.U(x, 1 - conf.level)),
+                           greater = c(ncp.L(x, 1 - conf.level), Inf),
+                           two.sided = {
+                               alpha <- (1 - conf.level) / 2
+                               c(ncp.L(x, alpha), ncp.U(x, alpha))
+                           })
+            attr(CINT, "conf.level") <- conf.level
         }
-        CINT <- switch(alternative,
-                       less = c(0, ncp.U(x, 1 - conf.level)),
-                       greater = c(ncp.L(x, 1 - conf.level), Inf),
-                       two.sided = {
-                           alpha <- (1 - conf.level) / 2
-                           c(ncp.L(x, alpha), ncp.U(x, alpha))
-                       })
-        attr(CINT, "conf.level") <- conf.level
-
         RVAL <- c(RVAL,
-                  list(conf.int = CINT,
+                  list(conf.int = if(conf.int) CINT,
                        estimate = ESTIMATE,
                        null.value = NVAL))
     } ## end (2 x 2)

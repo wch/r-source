@@ -73,6 +73,9 @@ NEW FEATURES
 
     o	str(obj) now more reasonably displays the STRucture of S4 objects.
 
+    o	fisher.test(*, conf.int=FALSE) allows to skip the confidence
+	interval computation
+
 
 UTILITIES
 

@@ -7,7 +7,8 @@
 }
 \usage{
 fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE, control = list(),
-            or = 1, alternative = "two.sided", conf.level = 0.95)
+            or = 1, alternative = "two.sided",
+            conf.int = TRUE, conf.level = 0.95)
 }
 \arguments{
   \item{x}{either a two-dimensional contingency table in matrix form,
@@ -25,6 +26,8 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE, control = list(),
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
     You can specify just the initial letter.  Only used in the 2 by
     2 case.}
+  \item{conf.int}{logical indicating if a confidence interval should be
+    computed (and returned).}
   \item{conf.level}{confidence level for the returned confidence
     interval.  Only used in the 2 by 2 case.}
 }
@@ -122,6 +125,7 @@ matrix(c(2, 10, 15, 3),
             c("Convicted", "Not convicted")))
 Convictions
 fisher.test(Convictions, alternative = "less")
+fisher.test(Convictions, conf.int = FALSE)
 fisher.test(Convictions, conf.level = 0.95)$conf.int
 fisher.test(Convictions, conf.level = 0.99)$conf.int
 }
