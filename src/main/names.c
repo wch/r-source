@@ -793,6 +793,17 @@ FUNTAB R_FunTab[] =
 {"setToCConverterActiveStatus", do_setToCConverterActiveStatus, 0, 11, 2, PP_FUNCALL},
 {"removeToCConverterActiveStatus", do_setToCConverterActiveStatus, 1, 11, 1, PP_FUNCALL},
 
+#ifdef ENVIRONMENT_LOCKING
+{"lockEnvironment", 	do_lockEnv,	0,      11,     2,      PP_FUNCALL},
+{"environmentIsLocked",	do_envIsLocked,	0,      11,     1,      PP_FUNCALL},
+#endif
+#ifdef FANCY_BINDINGS
+{"lockBinding", 	do_lockBnd,	0,      11,     2,      PP_FUNCALL},
+{"bindingIsLocked",	do_bndIsLocked,	0,      11,     2,      PP_FUNCALL},
+{"makeActiveBinding", 	do_mkActiveBnd,	0,      11,     3,      PP_FUNCALL},
+{"bindingIsActive",	do_bndIsActive,	0,      11,     2,      PP_FUNCALL},
+#endif
+
 {NULL,		NULL,		0,	0,	0,	0},
 };
 

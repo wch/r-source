@@ -2158,6 +2158,23 @@ Rboolean R_EnvironmentIsLocked(SEXP env)
     else
 	return FRAME_IS_LOCKED(env);
 }
+
+SEXP do_lockEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP frame;
+    Rboolean bindings;
+    checkArity(op, args);
+    frame = CAR(args);
+    bindings = asLogical(CADR(args));
+    R_LockEnvironment(frame, bindings);
+    return R_NilValue;
+}
+
+SEXP do_envIsLocked(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    return ScalarLogical(R_EnvironmentIsLocked(CAR(args)));
+}
 #endif
 #ifdef FANCY_BINDINGS
 void R_LockBinding(SEXP sym, SEXP env)
@@ -2208,6 +2225,7 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	    warning("saved workspaces with active bindings may not work"
 		    " properly when loaded into older versions of R");
 	    defineVar(sym, fun, env); /* fails if env is locked */
+	    binding = findVarLocInFrame(env, sym);
 	    SET_ACTIVE_BINDING_BIT(binding);
 	}
 	else if (! IS_ACTIVE_BINDING(binding))
@@ -2284,6 +2302,45 @@ Rboolean R_HasFancyBindings(SEXP rho)
 	return FALSE;
     }
 }    
+
+SEXP do_lockBnd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sym, env;
+    checkArity(op, args);
+    sym = CAR(args);
+    env = CADR(args);
+    R_LockBinding(sym, env);
+    return R_NilValue;
+}
+
+SEXP do_bndIsLocked(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sym, env;
+    checkArity(op, args);
+    sym = CAR(args);
+    env = CADR(args);
+    return ScalarLogical(R_BindingIsLocked(sym, env));
+}
+
+SEXP do_mkActiveBnd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sym, fun, env;
+    checkArity(op, args);
+    sym = CAR(args);
+    fun = CADR(args);
+    env = CADDR(args);
+    R_MakeActiveBinding(sym, fun, env);
+    return R_NilValue;
+}
+
+SEXP do_bndIsActive(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sym, env;
+    checkArity(op, args);
+    sym = CAR(args);
+    env = CADR(args);
+    return ScalarLogical(R_BindingIsActive(sym, env));
+}
 #endif
 
 void R_RestoreHashCount(SEXP rho)

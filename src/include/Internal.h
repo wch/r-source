@@ -435,3 +435,14 @@ SEXP do_sumconnection(SEXP, SEXP, SEXP, SEXP);
 SEXP do_download(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sockconn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_nsl(SEXP, SEXP, SEXP, SEXP);
+
+#ifdef ENVIRONMENT_LOCKING
+SEXP do_lockEnv(SEXP, SEXP, SEXP, SEXP);
+SEXP do_envIsLocked(SEXP, SEXP, SEXP, SEXP);
+#endif
+#ifdef FANCY_BINDINGS
+SEXP do_lockBnd(SEXP, SEXP, SEXP, SEXP);
+SEXP do_bndIsLocked(SEXP, SEXP, SEXP, SEXP);
+SEXP do_mkActiveBnd(SEXP, SEXP, SEXP, SEXP);
+SEXP do_bndIsActive(SEXP, SEXP, SEXP, SEXP);
+#endif
