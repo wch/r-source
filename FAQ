@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-12-03
+Version 2.0.2004-12-04
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2516,6 +2516,9 @@ distributions of R.)
      Routines for the polynomial spline fitting routines hazard regression,
      hazard estimation with flexible tails, logspline, lspec, polyclass, and
      polymars, by C. Kooperberg and co-authors.
+
+*polycor*
+     Polychoric and polyserial correlations.
 
 *polynom*
      A collection of functions to implement a class for univariate
