@@ -34,3 +34,12 @@ KalmanForecast <- function(n.ahead = 10, mod)
     x
 }
 
+KalmanSmooth <- function(y, mod, nit = 0)
+{
+    z <- .Call("KalmanSmooth", y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
+               mod$Pn, as.integer(nit), PACKAGE = "ts")
+    names(z) <- c("smooth", "var")
+    dn <- dim(z$smooth)
+    dim(z$var) <- dn[c(1, 2, 2)]
+    z
+}

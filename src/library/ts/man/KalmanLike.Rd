@@ -6,11 +6,12 @@
 \title{Kalman Filtering}
 \description{
   Use Kalman Filtering to find the (Gaussian) log-likelihood, or for
-  forecasting.
+  forecasting or smoothing.
 }
 \usage{
 KalmanLike(y, mod, nit = 0)
 KalmanRun(y, mod, nit = 0)
+KalmanSmooth(y, mod, nit = 0)
 KalmanForecast(n.ahead = 10, mod)
 makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
@@ -47,6 +48,10 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
     \item{\code{Pn}}{the estimate at time \eqn{t-1} of the state
       uncertainty matrix}
   }
+
+  \code{KalmanSmooth} is the workhorse function for
+  \code{\link{tsSmooth}}.
+  
   \code{makeARIMA} constructs the state-space model for an ARIMA model.
 }
 
@@ -58,8 +63,13 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   For \code{KalmanRun}, a list with components \code{values}, a vector
   of length 2 giving the output of \code{KalmanLike}, \code{resid} (the
   residuals) and \code{states}, the contemporaneous state estimates,
-  a matrix with one column for each time.
+  a matrix with one row for each time.
 
+  For \code{KalmanSmooth}, a list with two components.
+  Component \code{smooth} is a \code{n x p} matrix of state estimates
+  based on all the observations, with one row for each time.  Component
+  \code{smooth} is a \code{n x p x p} array of variance matrices.
+  
   For \code{KalmanForecast}, a list with components \code{pred}, the
   predictions, and \code{var}, the unscaled variances of the prediction
   errors (to be muliplied by \code{s2}).
@@ -75,6 +85,6 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 \author{B. D. Ripley}
 
 \seealso{
-   \code{\link{arima}}
+   \code{\link{arima}}, \code{\link{tsSmooth}}.
  }
 \keyword{ts}

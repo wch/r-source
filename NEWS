@@ -127,6 +127,10 @@ NEW FEATURES
 	-  New function acf2AR() to compute the AR process with a given
            autocorrelation function.
 
+	-  New function StructTS() to fit structural time series, and
+	   new generic function tsSmooth() for fixed-interval
+	   state-space smoothing of such models.
+
     o   Much improved printing of matrices and arrays of type "list".
 
     o   deriv/deriv3() can now handle expressions involving pnorm and

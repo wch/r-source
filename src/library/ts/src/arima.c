@@ -37,7 +37,7 @@
    h = var(eps_t)
    anew used for a[t|t-1]
    Pnew used for P[t|t -1]
-   M used for M = P[t|t -1]z
+   M used for M = P[t|t -1]Z
 
    No checking here!
  */
@@ -58,7 +58,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     if(lop) {
 	PROTECT(ans = allocVector(VECSXP, 3));
 	SET_VECTOR_ELT(ans, 1, resid=allocVector(REALSXP, n));	
-	SET_VECTOR_ELT(ans, 2, states=allocMatrix(REALSXP, p, n));
+	SET_VECTOR_ELT(ans, 2, states=allocMatrix(REALSXP, n, p));
     }
     for (l = 0; l < n; l++) {
 	for (i = 0; i < p; i++) {
@@ -111,7 +111,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	    if(lop) REAL(resid)[l] = NA_REAL;
 	}
 	if(lop)
-	    for(j = 0; j < p; j++) REAL(states)[j+p*l] = a[j];
+	    for(j = 0; j < p; j++) REAL(states)[l + n*j] = a[j];
     }
     if(lop) {
 	SET_VECTOR_ELT(ans, 0, res=allocVector(REALSXP, 2));	
@@ -123,6 +123,175 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
 	return res;
     }
+}
+
+SEXP 
+KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
+	     SEXP sV, SEXP sh, SEXP sPn, SEXP sUP)
+{
+    SEXP ssa, ssP, ssPn, res, states = R_NilValue, sN;
+    int n = LENGTH(sy), p = LENGTH(sa);
+    double *y = REAL(sy), *Z = REAL(sZ), *a, *P, 
+	*T = REAL(sT), *V = REAL(sV), h = asReal(sh), *Pnew;
+    double resid0, gain, tmp, *anew, *mm, *M;
+    double *at, *rt, *Pt, *gains, *resids, *Mt, *L, gn, *Nt;
+    int i, j, k, l;
+    Rboolean var = TRUE;
+
+    PROTECT(ssa = duplicate(sa)); a = REAL(ssa);
+    PROTECT(ssP = duplicate(sP)); P = REAL(ssP);
+    PROTECT(ssPn = duplicate(sPn)); Pnew = REAL(ssPn);
+    
+    PROTECT(res = allocVector(VECSXP, 2));
+    SET_VECTOR_ELT(res, 0, states = allocMatrix(REALSXP, n, p)); 
+    at = REAL(states);
+    SET_VECTOR_ELT(res, 1, sN = allocVector(REALSXP, n*p*p));
+    Nt = REAL(sN);
+
+    anew = (double *) R_alloc(p, sizeof(double));
+    M = (double *) R_alloc(p, sizeof(double));
+    mm = (double *) R_alloc(p * p, sizeof(double));
+
+    Pt = (double *) R_alloc(n * p * p, sizeof(double));
+    gains = (double *) R_alloc(n, sizeof(double));
+    resids = (double *) R_alloc(n, sizeof(double));
+    Mt = (double *) R_alloc(n * p, sizeof(double));
+    L = (double *) R_alloc(p * p, sizeof(double));
+
+    for (l = 0; l < n; l++) {
+	for (i = 0; i < p; i++) {
+	    tmp = 0.0;
+	    for (k = 0; k < p; k++)
+		tmp += T[i + p * k] * a[k];
+	    anew[i] = tmp;
+	}
+	if (l > asInteger(sUP)) {
+	    for (i = 0; i < p; i++)
+		for (j = 0; j < p; j++) {
+		    tmp = 0.0;
+		    for (k = 0; k < p; k++)
+			tmp += T[i + p * k] * P[k + p * j];
+		    mm[i + p * j] = tmp;
+		}
+	    for (i = 0; i < p; i++)
+		for (j = 0; j < p; j++) {
+		    tmp = V[i + p * j];
+		    for (k = 0; k < p; k++)
+			tmp += mm[i + p * k] * T[j + p * k];
+		    Pnew[i + p * j] = tmp;
+		}
+	}
+	for (i = 0; i < p; i++) at[l + n*i] = anew[i];
+	for (i = 0; i < p*p; i++) Pt[l + n*i] = Pnew[i];
+	if (!ISNAN(y[l])) {
+	    resid0 = y[l];
+	    for (i = 0; i < p; i++)
+		resid0 -= Z[i] * anew[i];
+	    gain = h;
+	    for (i = 0; i < p; i++) {
+		tmp = 0.0;
+		for (j = 0; j < p; j++)
+		    tmp += Pnew[i + j * p] * Z[j];
+		Mt[l + n*i] = M[i] = tmp;
+		gain += Z[i] * M[i];
+	    }
+	    gains[l] = gain;
+	    resids[l] = resid0;
+	    for (i = 0; i < p; i++)
+		a[i] = anew[i] + M[i] * resid0 / gain;
+	    for (i = 0; i < p; i++)
+		for (j = 0; j < p; j++)
+		    P[i + j * p] = Pnew[i + j * p] - M[i] * M[j] / gain;
+	} else {
+	    for (i = 0; i < p; i++)
+		a[i] = anew[i];
+	    for (i = 0; i < p * p; i++)
+		P[i] = Pnew[i];
+	    gains[l] = NA_REAL;
+	    resids[l] = NA_REAL;
+	}
+    }
+
+    /* rt stores r_{t-1} */
+    rt = (double *) R_alloc(n * p, sizeof(double));
+    for (l = n - 1; l >= 0; l--) {
+	if (!ISNAN(gains[l])) {
+	    gn = 1/gains[l];
+	    for (i = 0; i < p; i++) 
+		rt[l + n * i] = Z[i] * resids[l] * gn;
+	} else {
+	    for (i = 0; i < p; i++) rt[l + n * i] = 0.0;
+	    gn = 0.0;
+	}
+	
+	if (var) {
+	    for (i = 0; i < p; i++)
+		for (j = 0; j < p; j++)
+		    Nt[l + n*i + n*p*j] = Z[i] * Z[j] * gn;
+	}
+	
+	if (l < n - 1) {
+	    /* compute r_{t-1} */
+	    for (i = 0; i < p; i++)
+		for (j = 0; j < p; j++)
+		    mm[i + p * j] = ((i==j)?1:0) - Mt[l + n * i] * Z[j] * gn;
+	    for (i = 0; i < p; i++)
+		for (j = 0; j < p; j++) {
+		    tmp = 0.0;
+		    for (k = 0; k < p; k++)
+			tmp += T[i + p * k] * mm[k + p * j];
+		    L[i + p * j] = tmp;
+		}
+	    for (i = 0; i < p; i++) {
+		tmp = 0.0;
+		for (j = 0; j < p; j++)
+		    tmp += L[j + p * i] * rt[l + 1 + n * j];
+		rt[l + n * i] += tmp;
+	    }
+	    if(var) { /* compute N_{t-1} */
+		for (i = 0; i < p; i++)
+		    for (j = 0; j < p; j++) {
+			tmp = 0.0;
+			for (k = 0; k < p; k++)
+			    tmp += L[k + p * i] * Nt[l + 1 + n*k + n*p*j];
+			mm[i + p * j] = tmp;
+		    }    
+		for (i = 0; i < p; i++)
+		    for (j = 0; j < p; j++) {
+			tmp = 0.0;
+			for (k = 0; k < p; k++)
+			    tmp += mm[i + p * k] * L[k + p * j];
+			Nt[l + n*i + n*p*j] += tmp;
+		    }    
+	    }
+	}
+
+	for (i = 0; i < p; i++) {
+	    tmp = 0.0;
+	    for (j = 0; j < p; j++) 
+		tmp += Pt[l + n*i + n*p*j] * rt[l + n * j];
+	    at[l + n*i] += tmp;
+	}
+    }
+    if (var)
+	for (l = 0; l < n; l++) {
+	    for (i = 0; i < p; i++)
+		for (j = 0; j < p; j++) {
+		    tmp = 0.0;
+		    for (k = 0; k < p; k++)
+			tmp += Pt[l + n*i + n*p*k] * Nt[l + n*k + n*p*j];
+		    mm[i + p * j] = tmp;
+		}
+	    for (i = 0; i < p; i++)
+		for (j = 0; j < p; j++) {
+		    tmp = Pt[l + n*i + n*p*j];
+		    for (k = 0; k < p; k++)
+			tmp += mm[i + p * k] * Pt[l + n*k + n*p*j];
+		    Nt[l + n*i + n*p*j] = tmp;
+		}
+	}
+    UNPROTECT(4);
+    return res;
 }
 
 SEXP 
@@ -181,6 +350,7 @@ KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
     UNPROTECT(1);
     return res;
 }
+
 
 static void partrans(int p, double *raw, double *new)
 {

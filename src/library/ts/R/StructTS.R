@@ -1,0 +1,145 @@
+StructTS <- function(x, type = c("level", "trend", "BSM"), init=NULL)
+{
+    KalmanLike2 <- function (y, mod, nit = 0)
+    {
+        x <- .Call("KalmanLike", y, mod$Z, mod$a, mod$P, mod$T, mod$V,
+                   mod$h, mod$Pn, as.integer(nit), FALSE, PACKAGE = "ts")
+        0.5 * sum(x)/length(y)
+    }
+    makeLevel <- function(x)
+    {
+        T <- matrix(1, 1, 1)
+        Z <- 1
+        a <- x[1]
+        P <- Pn <- matrix(0, 1, 1)
+        h <- 1
+        V <- diag(1)
+        return(Z, a, P, T, V, h, Pn)
+    }
+    makeTrend <- function(x)
+    {
+        T <- matrix(c(1,0,1,1), 2, 2)
+        Z <- c(1, 0)
+        a <- c(x[1], 0)
+        P <- Pn <- matrix(0, 2, 2)
+        h <- 1
+        V <- diag(2)
+        return(Z, a, P, T, V, h, Pn)
+    }
+    makeBSM <- function(x, nf)
+    {
+        if(nf <= 1) stop("frequency must be a positive integer for BSM")
+        T <- matrix(0, nf + 1, nf + 1)
+        T[1:2, 1:2] <- c(1, 0, 1, 1)
+        T[3, ] <- c(0, 0, rep(-1, nf - 1))
+        ind <- 3:nf
+        T[cbind(ind+1, ind)] <- 1
+        Z <- c(1, 0, 1, rep(0, nf - 2))
+        a <- c(x[1], rep(0, nf))
+        P <- Pn <- matrix(0, nf+1, nf+1)
+        h <- 1
+        V <- diag(c(1, 1, 1, rep(0, nf-2)))
+        return(Z, a, P, T, V, h, Pn)
+    }
+    getLike <- function(p)
+    {
+        if(all(p == 0)) return(-1000)
+        Z$V[cbind(1:np, 1:np)] <- p[-(np+1)]*vx
+        Z$h <- p[np+1]*vx
+        Z$P[] <- 1e6*vx
+        Z$a <- a0
+        res <- KalmanLike2(y, Z, -1)
+#        print(c(res, p))
+        res
+    }
+
+    series <- deparse(substitute(x))
+    if(NCOL(x) > 1)
+        stop("only implemented for univariate time series")
+    x <- as.ts(x)
+    type <- if(missing(type)) if(frequency(x) > 1) "BSM" else "trend"
+    else match.arg(type)
+    dim(x) <- NULL
+    n <- length(x)
+    xtsp <- tsp(x)
+    nf <- frequency(x)
+    Z <- switch(type,
+                "level" = makeLevel(x),
+                "trend" = makeTrend(x),
+                "BSM" = makeBSM(x, nf)
+                )
+    a0 <- Z$a
+    vx <- var(x, na.rm=TRUE)/100
+    np <- switch(type, "level" = 1, "trend" = 2, "BSM" = 3)
+    if(is.null(init)) init <- rep(1, np+1) else init <- init/vx
+    y <- x
+    res <- optim(init, getLike, method="L-BFGS-B",
+                 lower=rep(0, np+1), upper=rep(Inf, np+1))
+        if(res$convergence > 0)
+            warning(paste("possible convergence problem: optim gave code=",
+                          res$convergence, res$message))
+    coef <- res$par
+    Z$V[cbind(1:np, 1:np)] <- coef[1:np]*vx
+    Z$h <- coef[np+1]*vx
+    Z$P[] <- 1e6*vx
+    Z$a <- a0
+    z <- KalmanRun(y, Z, -1)
+    resid <- ts(z$resid)
+    tsp(resid) <- xtsp
+    Z0 <- Z; Z0$P[] <- 1e6*vx; Z0$a <- a0
+
+    cn <- switch(type,
+                 "level" = c("level"),
+                 "trend" = c("level", "slope"),
+                 "BSM" = c("level", "slope", "sea")
+                 )
+    states <- z$states
+    if(type == "BSM") states <- states[, 1:3]
+    dimnames(states) <- list(time(x), cn)
+    states <- ts(states, start = xtsp[1], frequency = nf)
+
+    coef <- coef*vx
+    names(coef) <- switch(type,
+                          "level" = c("level", "epsilon"),
+                          "trend" = c("level", "slope", "epsilon"),
+                          "BSM" = c("level", "slope", "seas", "epsilon")
+                          )
+    res <- list(coef = coef, loglik = res$value, data = y,
+                residuals = resid, fitted = states,
+                call = match.call(), series = series,
+                code = res$convergence, model = Z, model0 = Z0, xtsp = xtsp)
+    class(res) <- "StructTS"
+    res
+}
+
+print.StructTS <- function(x, digits = max(3, getOption("digits") - 3))
+{
+    cat("\nCall:", deparse(x$call, width = 75), "", sep = "\n")
+    cat("Variances:\n")
+    print.default(x$coef, print.gap = 2, digits=digits)
+    invisible(x)
+}
+
+predict.StructTS <- function(object, n.ahead = 1, se.fit = TRUE, ...)
+{
+    xtsp <- object$xtsp
+    z <- KalmanForecast(n.ahead, object$model)
+    pred <- ts(z[[1]], start = xtsp[2] + 1/xtsp[3], frequency = xtsp[3])
+    if (se.fit) {
+        se <- ts(sqrt(z[[2]]), start = xtsp[2] + 1/xtsp[3],
+                 frequency = xtsp[3])
+        return(pred, se)
+    }
+    else return(pred)
+}
+
+tsSmooth <- function(object, ...) UseMethod("tsSmooth")
+
+tsSmooth.StructTS <- function(object, ...)
+{
+    res <- KalmanSmooth(object$data, object$model0, -1)$smooth
+    dn <- dim(fitted(object))
+    res <- res[, 1:dn[2], drop = FALSE]
+    dimnames(res) <- dimnames(fitted(object))
+    ts(res, start = object$xtsp[1], frequency = object$xtsp[3])
+}

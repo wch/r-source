@@ -34,11 +34,12 @@ attributes(ap0) <- attributes(AirPassengers)
 arima(ap0, c(0, 1, 1), seasonal = list(order=c(0, 1 ,1), period=12))
 arima(ap0, c(0, 1, 1), seasonal = list(order=c(0, 1 ,1), period=12),
       method = "CSS")
-\dontrun{
+
+## Structural Time Series
 ap <- log10(AirPassengers) - 2
 (fit <- StructTS(ap, type= "BSM"))
 par(mfrow=c(1,2))
 plot(cbind(ap, fitted(fit)), plot.type = "single")
-plot(cbind(ap, tsStruct(fit)), plot.type = "single")
-}}
+plot(cbind(ap, tsSmooth(fit)), plot.type = "single")
+}
 \keyword{datasets}
