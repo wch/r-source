@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 alpha (2004-03-20), ISBN 3-900051-00-3
+Version 1.9.0 Patched (2004-05-05), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4018,4 +4018,9 @@ attr(,".Environment")
 > try(x[-c(1, NA)])
 Error in try(x[-c(1, NA)]) : only 0's may mix with negative subscripts
 > ## worked on some platforms, segfaulted on others in 1.8.1
+> 
+> ## vector 'border' (and no 'pch', 'cex' nor 'bg'):
+> data(InsectSprays)
+> boxplot(count ~ spray, data = InsectSprays, border=2:7)
+> ## gave warnings in 1.9.0
 > 
