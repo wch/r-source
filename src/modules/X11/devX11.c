@@ -1185,11 +1185,15 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	    
 	    /* Gobble expose events */
 	    
-	    XNextEvent(display, &event);
-	    if (event.xany.type == Expose) {
-		while (event.xexpose.count)
-		    XNextEvent(display, &event);
-	    }
+	    while ( XPeekEvent(display, &event), 
+		    !XCheckTypedEvent(display, Expose, &event))
+                ;
+	    /* XNextEvent(display, &event);
+	       if (event.xany.type == Expose) {
+	       while (event.xexpose.count)
+	       XNextEvent(display, &event);
+	       }
+	    */
 	}
     } else { /* PIXMAP */
 	xd->windowWidth = iw = w;
