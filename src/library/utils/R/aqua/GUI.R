@@ -43,12 +43,12 @@ browse.pkgs <- function (where = c("CRAN", "BIOC"), type = c("binary", "source")
     else locn <- .libPaths()[1]
     if (length(ui.pkgs) > 0) {
         if (missing(contriburl)) {
-            switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where),
+            switch(type, source = install.packages(ui.pkgs, repos = getOption(where),
                 lib = .libPaths()[1]), binary = install.binaries(ui.pkgs,
                 CRAN = getOption(where), lib = .libPaths()[1]))
         }
         else {
-            switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where),
+            switch(type, source = install.packages(ui.pkgs, repos = getOption(where),
                 contriburl = contriburl, lib = .libPaths()[1]),
                 binary = install.binaries(ui.pkgs, CRAN = getOption(where),
                   contriburl = contriburl, lib = .libPaths()[1]))
