@@ -39,6 +39,7 @@ hist(x, \dots)
     unless \code{breaks} is a vector.}
   \item{right}{logical; if \code{TRUE}, the histograms cells are
     right-closed (left open) intervals.}
+
   \item{density}{the density of shading lines, in lines per inch.
     The default value of \code{NULL} means that no shading lines
     are drawn. Non-positive values of \code{density} also inhibit the
@@ -47,11 +48,13 @@ hist(x, \dots)
     degrees (counter-clockwise).}
   \item{col}{a colour to be used to fill the bars.
     The default of \code{NULL} yields unfilled bars.}
-  \item{border}{the color of the border around the bars. The default
+  \item{border}{the color of the border around the bars.  The default
     is to use the standard foreground color.}
   \item{main, xlab, ylab}{these arguments to \code{title} have useful
     defaults here.}
-  \item{xlim, ylim}{the range of x and y values with sensible defaults.}
+  \item{xlim, ylim}{the range of x and y values with sensible defaults.
+    Note that \code{xlim} is \emph{not} used to define the histogram (breaks),
+    but only for plotting (when \code{plot = TRUE}).}
   \item{axes}{logical.  If \code{TRUE} (default), axes are draw if the
     plot is drawn.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
@@ -76,11 +79,11 @@ hist(x, \dots)
   \code{breaks}. Thus the height of a rectangle is proportional to
   the number of points falling into the cell, as is the area
   \emph{provided} the breaks are equally-spaced.
-  
+
   The default with non-equi-spaced breaks is to give
   a plot of area one, in which the \emph{area} of the rectangles is the
   fraction of the data points falling in the cells.
-  
+
   If \code{right = TRUE} (default), the histogram cells are intervals
   of the form \code{(a, b]}, i.e., they include their right-hand endpoint,
   but not their left one, with the exception of the first cell when
@@ -91,7 +94,7 @@ hist(x, \dots)
   \dQuote{\emph{include highest}}.
 
   A numerical tolerance of \eqn{10^{-7}}{1e-7} times the range of the
-  breaks is applied when counting entries on the edges of bins. 
+  breaks is applied when counting entries on the edges of bins.
 
   The default for \code{breaks} is \code{"Sturges"}: see
   \code{\link{nclass.Sturges}}.  Other names for which algorithms
