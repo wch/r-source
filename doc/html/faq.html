@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.2-10, 2001-01-03</h2>
+<h2>Version 1.2-11, 2001-01-05</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1081,13 +1081,15 @@ startup file <code><code>$R_HOME</code>/library/base/R/Rprofile</code>.  Then, i
 searches for a site-wide startup profile unless the command line option
 <code>--no-site-file</code> was given.  The name of this file is taken from
 the value of the <code>R_PROFILE</code> environment variable.  If that variable
-is unset, the default is <code><code>$R_HOME</code>/etc/Rprofile</code>.  Then,
-unless <code>--no-init-file</code> was given, R searches for a file called
+is unset, the default is <code><code>$R_HOME</code>/etc/Rprofile</code>.  This code
+is loaded in package <strong>base</strong>.  Then, unless
+<code>--no-init-file</code> was given, R searches for a file called
 <code>.Rprofile</code> in the current directory or in the user's home
-directory (in that order) and sources it.  It also loads a saved image
-from <code>.RData</code> in case there is one (unless <code>--no-restore</code>
-was specified).  If needed, the functions <code>.First()</code> and
-<code>.Last()</code> should be defined in the appropriate startup profiles.
+directory (in that order) and sources it into the user workspace.  It
+then loads a saved image of the user workspace from <code>.RData</code>
+ in case there is one (unless <code>--no-restore</code> was specified).  If
+needed, the functions <code>.First()</code> and <code>.Last()</code> should be
+defined in the appropriate startup profiles.
 
 </p><li>In R, <code>T</code> and <code>F</code> are just variables being set to <code>TRUE</code>
 and <code>FALSE</code>, respectively, but are not reserved words as in S and
