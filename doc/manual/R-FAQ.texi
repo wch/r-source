@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-29
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-03
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1921,6 +1921,9 @@ A collection of tools for the analysis of habitat selection by animals.
 Analysis of growth curve experiments.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
+@item alr3
+Methods and data to accompany the textbook ``Applied Linear Regression''
+by S. Weisberg, 2005, Wiley.
 @item amap
 Another Multidimensional Analysis Package.
 @item anm
@@ -2012,6 +2015,10 @@ Contained in the @file{VR} bundle.  @emph{Recommended}.
 Projection Pursuit for supervised classification.
 @item clim.pact
 Climate analysis and downscaling for monthly and daily data.
+@item climatol
+Functions to fill missing data in climatological (monthly) series and to
+test their homogeneity, plus functions to draw wind-rose and
+Walter&Lieth diagrams. 
 @item clines
 Calculates Contour Lines.
 @item cluster

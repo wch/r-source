@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-11-29
+Version 2.0.2004-12-03
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1593,6 +1593,10 @@ distributions of R.)
 *akima*
      Linear or cubic spline interpolation for irregularly gridded data.
 
+*alr3*
+     Methods and data to accompany the textbook "Applied Linear Regression"
+     by S. Weisberg, 2005, Wiley.
+
 *amap*
      Another Multidimensional Analysis Package.
 
@@ -1707,6 +1711,11 @@ distributions of R.)
 
 *clim.pact*
      Climate analysis and downscaling for monthly and daily data.
+
+*climatol*
+     Functions to fill missing data in climatological (monthly) series and
+     to test their homogeneity, plus functions to draw wind-rose and
+     Walter&Lieth diagrams.
 
 *clines*
      Calculates Contour Lines.
