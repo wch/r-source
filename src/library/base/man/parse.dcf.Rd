@@ -14,12 +14,12 @@ parse.dcf(desc=NULL, file="", fields=NULL, versionfix=FALSE)
  \item{file}{Name of the file to be parsed.}
  \item{fields}{A character vector of fields to return (if other fields
    occur in the file they are ignored.}
- \item{versionfix}{Logical, if \code{TRUE} than the versionfiled is
+ \item{versionfix}{Logical, if \code{TRUE} than the version field is
    truncated at the first whitespace character.}
 }
 \value{
-  If \code{fields=NULL}, the a list with one element per entry is
-  returned. Each entry is itself a list of character strings per field.
+  If \code{fields=NULL}, a list with one element per entry is
+  returned. Each entry is a list of character vectors, one per field.
   If \code{fields} are specified, then a character matrix with one row
   per entry and one column per field is returned. 
 }
