@@ -17,7 +17,7 @@ NEW FEATURES
         save or SIGUSR2 to quit and save without running .Last and
         on.exit expressions.
 
-    o   Option for user-supplied normal rbndom generator in RNGkind().
+    o   Option for user-supplied normal random generator in RNGkind(). 
 
     o	New functions tolower() and toupper() for converting alphabetic
 	characters to lower-case and upper-case, respectively.
