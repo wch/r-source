@@ -1,4 +1,4 @@
-### $Id: profile.R,v 1.1 1999/11/11 21:09:49 bates Exp $
+### $Id: profile.R,v 1.2 1999/11/14 19:43:24 ripley Exp $
 ###
 ### Profiling nonlinear least squares for R
 ###
@@ -9,13 +9,13 @@
 ### It is made available under the terms of the GNU General Public
 ### License, version 2, or at your option, any later version,
 ### incorporated herein by reference.
-### 
+###
 ### This program is distributed in the hope that it will be
 ### useful, but WITHOUT ANY WARRANTY; without even the implied
 ### warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 ### PURPOSE.  See the GNU General Public License for more
 ### details.
-### 
+###
 ### You should have received a copy of the GNU General Public
 ### License along with this program; if not, write to the Free
 ### Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
@@ -26,7 +26,7 @@ profiler <-
   UseMethod("profiler")
 
 profile <-
-  function(fitted, which, maxpts, ...)
+  function(fitted, ...)
   UseMethod("profile")
 
 profiler.nls <-
@@ -117,7 +117,7 @@ profiler.nls <-
 }
 
 profile.nls <-
-  function(fitted, which = 1:npar, maxpts = 100, alphamax = 0.01, delta.t = 
+  function(fitted, which = 1:npar, maxpts = 100, alphamax = 0.01, delta.t =
            cutoff/5)
 {
   f.summary <- summary(fitted)
@@ -153,7 +153,7 @@ profile.nls <-
       par.vals[count, ] <- pars <- ans$parameters
       if(abs(tau[count]) > cutoff)
         break
-      pars <- pars + ((pars - par.vals[count - 1,  ]) * 
+      pars <- pars + ((pars - par.vals[count - 1,  ]) *
                       delta.t)/abs(tau[count] - tau[count - 1])
     }
     tau[1:count] <- tau[count:1]
@@ -162,7 +162,7 @@ profile.nls <-
     newmax <- count + maxpts
     pars <- par.vals[count,  ]
     while(count <= newmax) {
-      pars <- pars + ((pars - par.vals[count - 1,  ]) * 
+      pars <- pars + ((pars - par.vals[count - 1,  ]) *
                       delta.t)/abs(tau[count] - tau[count - 1])
       if(abs(pars[par] - base)/std.err[par] > 10 * cutoff)
         break
@@ -174,7 +174,7 @@ profile.nls <-
       if(abs(tau[count]) > cutoff)
         break
     }
-    out[[par]] <- structure(list(tau = tau[1:count], par.vals = 
+    out[[par]] <- structure(list(tau = tau[1:count], par.vals =
                                  par.vals[1:count,  ]), class = "data.frame",
                             row.names = as.character(1:count),
                             parameters = list(par = par,
