@@ -10,7 +10,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, fill = FALSE, strip.white = FALSE,
      quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
-     comment.char = "")
+     comment.char = "", allowEscapes = TRUE)
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -112,6 +112,11 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{comment.char}{character: a character vector of length one
     containing a single character or an empty string.  Use \code{""} to
     turn off the interpretation of comments altogether (the default).}
+
+  \item{allowEscapes}{logical.  Should C-style escapes such as
+    \code{\n} be processed (the default) or read verbatim?   Note that if
+    not within quotes these could be interpreted as a delimiter (but not
+    as a comment character).}
 }
 \details{
   The value of \code{what} can be a list of types, in which case
@@ -154,10 +159,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   as blank lines.
 
   As from \R 2.1.0, \code{scan} attempts to share storage with
-  character strings that have already been read.  If an upper bound on
-  the number of character strings cannot be deduced from \code{nmax} or
-  \code{n}, sharing is used for the first 10000 unique strings which are
-  read in.
+  character strings that have already been read in the call.
+  If an upper bound on the number of character strings cannot be deduced
+  from \code{nmax} or \code{n}, sharing is used for the first 10000
+  unique strings which are read in.
 }
 \value{
   if \code{what} is a list, a list of the same length and same names (as

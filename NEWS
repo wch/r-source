@@ -218,6 +218,11 @@ NEW FEATURES
 
     o	p.adjust() has a new argument `na.rm'.
 
+    o	scan() has a new argument 'allowEscapes' (default TRUE) that
+	controls when C-style escapes in the input are interpreted.
+	Previously only \n and \r were interpreted, and then only
+	within quoted strings when no separator was supplied.
+
 
 
 UTILITIES

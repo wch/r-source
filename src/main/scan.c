@@ -61,6 +61,7 @@ typedef struct {
     int ttyflag;
     Rconnection con;
     Rboolean wasopen;
+    Rboolean escapes;
     int save; /* = 0; */
     void *hash;
 
@@ -74,7 +75,7 @@ typedef struct _HashData {
   int nins, maxstrings;
 } HashData;
 
-static int scatter(unsigned int key, HashData *d)
+static R_INLINE int scatter(unsigned int key, HashData *d)
 {
     return 3141592653U * key >> (32 - d->K);
 }
@@ -284,6 +285,17 @@ strtoraw (const char *nptr, char **endptr)
     return (Rbyte) val;
 }
 
+static R_INLINE int scanchar_raw(LocalData *d)
+{
+    return (d->ttyflag) ? ConsoleGetcharWithPushBack(d->con) :
+	Rconn_fgetc(d->con);
+}
+
+static R_INLINE void unscanchar(int c, LocalData *d)
+{
+    d->save = c;
+}
+
 static int scanchar(Rboolean inQuote, LocalData *d)
 {
     int next;
@@ -291,20 +303,51 @@ static int scanchar(Rboolean inQuote, LocalData *d)
 	next = d->save;
 	d->save = 0;
     } else
-	next = (d->ttyflag) ? ConsoleGetcharWithPushBack(d->con) :
-	    Rconn_fgetc(d->con);
+	next = scanchar_raw(d);
     if(next == d->comchar && !inQuote) {
 	do
-	    next = (d->ttyflag) ? ConsoleGetcharWithPushBack(d->con) :
-		Rconn_fgetc(d->con);
+	    next = scanchar_raw(d);
 	while (next != '\n' && next != R_EOF);
     }
+    if(next == '\\' && d->escapes) {
+	next = scanchar_raw(d);
+	if ('0' <= next && next <= '8') {
+	    int octal = next - '0';
+	    if ('0' <= (next = scanchar_raw(d)) && next <= '8') {
+		octal = 8 * octal + next - '0';
+		if ('0' <= (next = scanchar_raw(d)) && next <= '8') {
+		    octal = 8 * octal + next - '0';
+		} else unscanchar(next, d);
+	    } else unscanchar(next, d);
+	    next = octal;
+	} else
+	    switch(next) {
+	    case 'a': next = '\a'; break;
+	    case 'b': next = '\b'; break;
+	    case 'f': next = '\f'; break;
+	    case 'n': next = '\n'; break;
+	    case 'r': next = '\r'; break;
+	    case 't': next = '\t'; break;
+	    case 'v': next = '\v'; break;
+	    case 'x': {
+		int val = 0; int i, ext;
+		for(i = 0; i < 2; i++) {
+		    next = scanchar_raw(d);
+		    if(next >= '0' && next <= '9') ext = next - '0';
+		    else if (next >= 'A' && next <= 'F') ext = next - 'A' + 10;
+		    else if (next >= 'a' && next <= 'f') ext = next - 'a' + 10;
+		    else {unscanchar(next, d); break;}
+		    val = 16*val + ext;
+		}
+		next = val;
+	    }
+		break;
+	    default:
+		/* Any other char and even EOF escapes to itself */
+		break;
+	    }
+    }
     return next;
-}
-
-static void unscanchar(int c, LocalData *d)
-{
-    d->save = c;
 }
 
 #include "RBufferUtils.h"
@@ -343,19 +386,6 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		if (m >= nbuf - 2) {
 		    nbuf *= 2;
 		    R_AllocStringBuffer(nbuf, buffer);
-		}
-		if (c == '\\') {
-		    c = scanchar(TRUE, d);
-		    if (c == R_EOF) break;
-		    switch(c) {
-		    case 'a': c = '\a'; break;
-		    case 'b': c = '\b'; break;
-		    case 'f': c = '\f'; break;
-		    case 'n': c = '\n'; break;
-		    case 'r': c = '\r'; break;
-		    case 't': c = '\t'; break;
-		    case 'v': c = '\v'; break;
-		    }
 		}
 		buffer->data[m++] = c;
 	    }
@@ -451,7 +481,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 /* If mode = 0 use for numeric fields where "" is NA
    If mode = 1 use for character fields where "" is verbatim unless
    na.strings includes "" */
-static int isNAstring(char *buf, int mode, LocalData *d)
+static R_INLINE int isNAstring(char *buf, int mode, LocalData *d)
 {
     int i;
 
@@ -461,7 +491,7 @@ static int isNAstring(char *buf, int mode, LocalData *d)
     return 0;
 }
 
-static void expected(char *what, char *got, LocalData *d)
+static R_INLINE void expected(char *what, char *got, LocalData *d)
 {
     int c;
     if (d->ttyflag) {
@@ -826,9 +856,10 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
-    int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline;
+    int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, escapes;
     char *p, *vmax;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
@@ -849,7 +880,8 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     data.quiet = asLogical(CAR(args));  args = CDR(args);
     blskip = asLogical(CAR(args)); args = CDR(args);
     multiline = asLogical(CAR(args)); args = CDR(args);
-    comstr = CAR(args);
+    comstr = CAR(args);            args = CDR(args);
+    escapes = asLogical(CAR(args));
 
     if (data.quiet == NA_LOGICAL)			data.quiet = 0;
     if (blskip == NA_LOGICAL)			blskip = 1;
@@ -912,6 +944,8 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     data.comchar = NO_COMCHAR; /*  here for -Wall */
     if (strlen(p) > 1) errorcall(call, "invalid comment.char value");
     else if (strlen(p) == 1) data.comchar = (unsigned char)*p;
+    if(escapes == NA_LOGICAL) errorcall(call, "invalid allowEscapes value");
+    data.escapes = escapes != 0;
 
     i = asInteger(file);
     data.con = getConnection(i);
@@ -964,7 +998,8 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nfields, nskip, i, c, inquote, quote = 0;
     int blocksize, nlines, blskip;
     char *p;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
@@ -1129,7 +1164,8 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean islogical = TRUE, isinteger = TRUE, isreal = TRUE,
 	iscomplex = TRUE, done = FALSE;
     char *endp, *tmp = NULL;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
     checkArity(op,args);
@@ -1356,7 +1392,8 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     double first;
     char buffer[MAXELTSIZE], *bufp = buffer;
     SEXP ans;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
     checkArity(op,args);
@@ -1405,7 +1442,8 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
     char *p, *buf;
     Rboolean empty, skip;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);

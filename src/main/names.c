@@ -636,7 +636,7 @@ FUNTAB R_FunTab[] =
 {"rank",	do_rank,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"missing",	do_missing,	1,	0,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"nargs",	do_nargs,	1,	0,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"scan",	do_scan,	0,	11,	16,	{PP_FUNCALL, PREC_FN,	0}},
+{"scan",	do_scan,	0,	11,	17,	{PP_FUNCALL, PREC_FN,	0}},
 {"count.fields",do_countfields,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"readTableHead",do_readtablehead,0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"t.default",	do_transpose,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
