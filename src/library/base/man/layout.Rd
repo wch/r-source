@@ -82,8 +82,8 @@ and \code{\link{par}(mfg=..)}
 
  ##-- Create a scatterplot with marginal histograms -----
 
- x <- rnorm(50)
- y <- rnorm(50)
+ x <- pmin(3, pmax(-3, rnorm(50)))
+ y <- pmin(3, pmax(-3, rnorm(50)))
  xhist <- hist(x, breaks=seq(-3,3,0.5), plot=FALSE)
  yhist <- hist(y, breaks=seq(-3,3,0.5), plot=FALSE)
  top <- max(c(xhist$counts, yhist$counts))

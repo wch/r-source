@@ -11,7 +11,7 @@ cmdscale(d, k = 2, eig = FALSE)
   \item{eig}{indicates whether eigenvalues should be returned.}
 }
 \description{
-  Classical muiltidimensional scaling of a data matrix.
+  Classical multidimensional scaling of a data matrix.
 }
 \details{
   Multidimensional scaling takes a set of dissimilarities
@@ -22,11 +22,13 @@ cmdscale(d, k = 2, eig = FALSE)
   \file{MASS} provide alternative ordination techniques.
 }
 \value{
-  A list containing the following components.
+  If \code{eig = FALSE}, a a matrix with \code{k} columns whose rows give the
+  coordinates of the points chosen to represent the dissimilarities.
+
+  Otherwise, a list containing the following components.
   \item{points}{a matrix with \code{k} columns whose rows give the
     coordinates of the points chosen to represent the dissimilarities.}
-  \item{eig}{if requested, the eigenvalues computed during the scaling
-    process.}
+  \item{eig}{the eigenvalues computed during the scaling process.}
 }
 \references{
   Seber, G. A. F. (1984). \emph{Multivariate Analysis}. New York: Wiley.
