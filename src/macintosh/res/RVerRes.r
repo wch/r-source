@@ -65,7 +65,7 @@ resource 'vers' (1) {
 	kNonFinalRelease,
 	kRegionCode,
 	kVersString,
-	"\0xA9 2001 The R Development Core Team,\n" kVersString ", porting by Stefano M. Iacus"
+	"\0xA9 1998-2002 The R Foundation,\n" kVersString ", porting by Stefano M. Iacus"
 };
 
 
@@ -92,7 +92,7 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
 		/*	The R copyright text */
 		{ 13, 221, 92, 500 }, StaticText {enabled, 
 		"R for MacOS and MacOS X\n"	/*	Version */
-		"\0xA9 2002 R Development Core Team\n"	/*	(c)  */
+		"\0xA9 2002 R Foundation\n"	/*	(c)  */
 		"http://www.r-project.org\n"/*	HTTP URL */
 		kVersString " - " kStatusString 
 		 },
