@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,17 +20,6 @@
 #include "Defn.h"
 #include "Print.h"
 #include "names.h"
-
-#ifdef Unix
-SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
-#endif
-
-#ifdef Win32
-SEXP do_winedit(SEXP, SEXP, SEXP, SEXP);
-SEXP do_sysfile(SEXP, SEXP, SEXP, SEXP);
-SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
-#endif
-
 
 /* Table of  .Internal(.) and .Primitive(.)  R functions
  * =====     =========	      ==========
@@ -588,7 +577,7 @@ FUNTAB R_FunTab[] =
 {"replay",	do_replay,	0,	111,	0,	PP_FUNCALL},
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL},
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL},
-{"persp",       do_persp,       0,      111,    4,      PP_FUNCALL},
+{"persp",	do_persp,	0,	111,	4,	PP_FUNCALL},
 
 /* Objects */
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL},
@@ -770,7 +759,7 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
     UNPROTECT(1);
     if (save != R_PPStackTop) {
-	printf("stack imbalance in internal %s, %d then %d\n",
+	REprintf("stack imbalance in internal %s, %d then %d\n",
 	       PRIMNAME(INTERNAL(fun)), save, R_PPStackTop);
     }
     return (args);

@@ -48,6 +48,16 @@ SEXP do_PicTeX(SEXP, SEXP, SEXP, SEXP);
 
 /* Function Names */
 
+#ifdef Unix
+SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
+#endif
+
+#ifdef Win32
+SEXP do_winedit(SEXP, SEXP, SEXP, SEXP);
+SEXP do_sysfile(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
+#endif
+
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
 SEXP do_alias(SEXP, SEXP, SEXP, SEXP);
 SEXP do_allnames(SEXP, SEXP, SEXP, SEXP);
