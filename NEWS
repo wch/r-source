@@ -333,6 +333,9 @@ BUG FIXES
 
     o	print.ftable() now returns its argument.
 
+    o	proj.aovlist() now gives a non-zero result for strata with 
+	no fitted effects.
+
     o	rgeom(, prob=1) gives 0 rather than NA
 
     o	rpois(*, lambda) now works when lambda > .Machine$integer.max

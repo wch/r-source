@@ -166,6 +166,7 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE)
 	if(unweighted.scale) prj <- prj/sqrt(wt)
 	result.i <- matrix(0, n, ncol(prj), dimnames = list(D1, colnames(prj)))
 	select <- rownames(object[[i]]$qr$qr)
+	if(is.null(select)) select <- rownames(object[[i]]$residuals)
 	result.i[select,  ] <- prj
 	result[[i]] <- as.matrix(qr.qy(err.qr, result.i))
 	attr.assign(result[[i]]) <- attr.xdim(prj)
