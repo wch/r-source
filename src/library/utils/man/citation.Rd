@@ -1,14 +1,15 @@
 \name{citation}
 \title{Citing R and R Packages in Publications}
 \alias{citation}
-\alias{bibtex}
-\alias{print.bibtex}
+\alias{bibtex.citation}
+\alias{bibtex.citationList}
 \description{
   How to cite R and R packages in publications.
 }
 \usage{
 citation(package = "base", lib.loc = NULL)
-bibtex(object, ...)
+\S3method{bibtex}{citation}(object, \dots)
+\S3method{bibtex}{citationList}(object, \dots)
 }
 \arguments{
   \item{package}{a character string with the name of a single package.

@@ -23,6 +23,9 @@ as.personList(x)
 
 \S3method{as.character}{person}(x, ...)
 \S3method{as.character}{personList}(x, ...)
+
+\S3method{bibtex}{person}(object, ...)
+\S3method{bibtex}{personList}(object, ...)
 }
 \arguments{
   \item{first}{character string, first name}
@@ -32,6 +35,8 @@ as.personList(x)
   \item{\dots}{for \code{personList} an arbitrary number of \code{person}
     objects}
   \item{x}{a character string or an object of class \code{person} or
+    \code{personList}}
+  \item{object}{an object of class \code{person} or
     \code{personList}}
 }
 \keyword{misc}
@@ -49,4 +54,7 @@ p <- personList(p1, p2)
 ps <- as.character(p)
 ps
 as.personList(ps)
+
+## convert to BibTeX author field
+bibtex(p)
 }

@@ -250,6 +250,8 @@ NEW FEATURES
 
 	prcomp() now has a simple predict() method.
 
+    o   printCoefmat() has a new logical argument 'signif.legend'.
+
     o	quantile() has the option of several methods described in
 	Hyndman & Fan (1996). (Contributed by Rob Hyndman.)
 
@@ -337,12 +339,6 @@ NEW FEATURES
 
 UTILITIES
 
-    o	Package 'utils' now contains a much improved citation() function
-	which also has a package argument.  By default the citation is
-	auto-generated from the package DESCRIPTION, the file
-	'inst/CITATION' can be used to override this, see
-	help(citation) and help(citEntry).
-
     o	R CMD check now checks for file names in a directory that
 	differ only by case.
 
@@ -365,6 +361,20 @@ UTILITIES
     o	tools::codoc() (and hence R CMD check) now checks any documentation
 	for registered S3 methods and unexported objects in packages
 	with namespaces.
+
+    o	Package 'utils' contains several new functions:
+
+        - Generics for converting R objects to BibTeX and LaTeX (but
+          almost no methods yet).
+
+        - A much improved citation() function which also has a package
+	  argument.  By default the citation is auto-generated from
+	  the package DESCRIPTION, the file 'inst/CITATION' can be
+	  used to override this, see help(citation) and
+	  help(citEntry).
+
+	- sessionInfo() can be used to include version information about
+          R and R packages in text or LaTeX documents.
 
 
 DOCUMENTATION

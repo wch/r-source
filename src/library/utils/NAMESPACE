@@ -9,13 +9,13 @@ export("?", CRAN.packages, Rprof, apropos, assignInNamespace,
        example, file.edit, find, fix, fixInNamespace, getAnywhere,
        getFromNamespace, getS3method, head, help, help.search,
        help.start, history, index.search, install.packages,
-       installed.packages, limitedLabels, loadhistory, ls.str,
+       latex, installed.packages, limitedLabels, loadhistory, ls.str,
        lsf.str, make.packages.html, make.socket, menu, methods,
        object.size, old.packages, package.contents, package.skeleton,
        packageDescription, packageStatus, page, person, personList,
        pico, prompt, promptData, readCitationFile, read.fwf,
        read.fortran, read.socket, recover, remove.packages,
-       savehistory, str, summaryRprof, tail, topicName,
+       savehistory, str, sessionInfo, summaryRprof, tail, topicName,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.socket, wsbrowser, xedit, xemacs)
 
@@ -36,7 +36,9 @@ S3method(head, data.frame)
 S3method(head, default)
 S3method(head, "function")
 S3method(head, matrix)
+S3method(latex, sessionInfo)
 S3method(print, citation)
+S3method(print, bibtex)
 S3method(print, citationList)
 S3method(print, getAnywhere)
 S3method(print, hsearch)
@@ -46,6 +48,7 @@ S3method(print, MethodsFunction)
 S3method(print, packageDescription)
 S3method(print, packageIQR)
 S3method(print, packageStatus)
+S3method(print, sessionInfo)
 S3method(print, socket)
 S3method(prompt, data.frame)
 S3method(prompt, default)

@@ -1,6 +1,7 @@
 printCoefmat <-
     function(x, digits = max(3, getOption("digits") - 2),
 	     signif.stars = getOption("show.signif.stars"),
+             signif.legend = signif.stars,
 	     dig.tst = max(1, min(5, digits - 1)),
 	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0),
 	     P.values = NULL,

@@ -179,14 +179,6 @@ as.character.personList <- function(x, ...)
 
 ###**********************************************************
 
-bibtex <- function(object, ...) UseMethod("bibtex")
-
-print.bibtex <- function(x, prefix="", ...)
-{
-    writeLines(paste(prefix, unclass(x), sep=""))
-    invisible()
-}
-
 bibtex.person <- function(object, ...)
 {
     if(length(grep(" ", object$name["last"]))>0)
