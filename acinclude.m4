@@ -33,7 +33,7 @@ fi
 ])# R_ARG_USE
 
 ## R_SH_VAR_ADD(VARIABLE, VALUE, [SEPARATOR = " "])
-## ---------------------------------------------------
+## ------------------------------------------------
 ## Set sh variable VARIABLE to VALUE if empty (or undefined), or append
 ## VALUE to the value of VARIABLE, separated by SEPARATOR.
 ## Currently, safe only if all arguments are literals.
@@ -1909,7 +1909,7 @@ if test -z "${TCLTK_LIBS}"; then
     ## Part 2.  Try finding the tk library.
     if test -n "${TK_CONFIG}"; then
       . ${TK_CONFIG}
-      TCLTK_LIBS="${TCLTK_LIBS} ${TK_LIB_SPEC} ${TK_LIBS}"
+      TCLTK_LIBS="${TCLTK_LIBS} ${TK_LIB_SPEC} ${TK_XLIBSW}"
     else
       AC_CHECK_LIB(tk, Tk_Init, , , [${TCLTK_LIBS}])
       if test "${ac_cv_lib_tk_Tk_Init}" = no; then
@@ -2603,6 +2603,7 @@ fi
 ])# R_SIZE_MAX
 
 ## R_LARGE_FILES
+## -------------
 ## Enable large file support on linux >= 2.4.0?  Idea from hdf5 configure.
 AC_DEFUN([R_LARGE_FILES],
 [case "$host_os" in
