@@ -222,6 +222,12 @@ model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
  t <- terms(formula)
  if (is.null(attr(data, "terms")))
      data <- model.frame(formula, data, xlev=xlev)
+ else {
+   reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
+   if (any(is.na(reorder))) 
+     stop("model frame and formula mismatch in model.matrix()")
+   data <- data[,reorder, drop=FALSE]
+ }
  contr.funs <- as.character(.Options$contrasts)
  isF <- sapply(data, is.factor)[-1]
  isOF <- sapply(data, is.ordered)
@@ -240,9 +246,6 @@ model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
      else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
    }
  }
- reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
- if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
- data <- data[,reorder, drop=FALSE]
  ans <- .Internal(model.matrix(t, data))
  cons <- if(any(isF))
    lapply(data[-1][isF], function(x) attr(x,  "contrasts"))
