@@ -1,4 +1,4 @@
-\name{warning}
+\name{restart}
 \title{Restart an expression}
 \usage{
 restart(on=TRUE)
