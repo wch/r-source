@@ -485,8 +485,8 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    UNPROTECT(1);
     if(sd_0)/* only in cor() */
 	warningcall(call, "The standard deviation is zero");
+    UNPROTECT(1);
     return ans;
 }

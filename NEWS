@@ -370,7 +370,8 @@ BUG FIXES
 	with(trees, Girth[1] < NA) altered 'trees' (and any copy of
 	'trees' too).
 
-
+    o   cor() could corrupt memory when standard deviation was 
+        zero (PR#7037)
 
 
 	**************************************************

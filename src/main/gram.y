@@ -729,6 +729,11 @@ static SEXP xxparen(SEXP n1, SEXP n2)
     return ans;
 }
 
+
+/* This should probably use CONS rather than LCONS, but
+   it shouldn't matter and we would rather not meddle
+   See PR#7055 */
+
 static SEXP xxsubscript(SEXP a1, SEXP a2, SEXP a3)
 {
     SEXP ans;
