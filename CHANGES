@@ -1,79 +1,99 @@
-                CHANGES IN R VERSION 0.62
+		CHANGES IN R VERSION 0.62
 
 NEW FEATURES
 
-    o   new tabular environment in Rdconv
+    o	new tabular environment in Rdconv
 
-    o  	.First.lib() now implemented; called by library() after loading
+    o	.First.lib() now implemented; called by library() after loading
 	a package.
 
-    o   print.summary.lm() now gives `significance stars' and a symbolic
-        correlation matrix.
+    o	print.summary.lm() now gives `significance stars' and a symbolic
+	correlation matrix.
 
     o	new is.R() function.
+
+    o	nlm() returns the number of iterations used [from J.Lindsey].
+
+    o	cut, diff, hist, mean, quantile, seq, trunc()  are now all generic.
+	cut() has a 'include.lowest' argument as S.
+
+    o	save.image() as short-cut to save the current session in .RData
+
+
+BUG FIXES
+
+    o	minor fix in symnum.
+
+    o	hist() now is more compatible to S, has a new `labels' argument,
+	and should work ok for non-equidistant breaks.
+
+    o	plot(-1) now labels properly.
+
+    o	Many small code changes (eliminating extraneous variables, nested comm.)
+	in C code in order to satisfy `gcc -Wall' [Doug Bates].
 
 
 		CHANGES IN R VERSION 0.61.1
 
 NEW FEATURES
 
-    o   None (by definition, x.y.z releases are bugfix releases now)
+    o	None (by definition, x.y.z releases are bugfix releases now)
 
 BUG FIXES
 
-    o   Return statements of the form return(x,y) will now return
-        a list with named components.
+    o	Return statements of the form return(x,y) will now return
+	a list with named components.
 
-    o   Parsing of nested "if" statments was broken.  This is fixed now.
+    o	Parsing of nested "if" statments was broken.  This is fixed now.
 	(Reported by Paul Gilbert).
 
-    o   Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
+    o	Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
 	in Irix (George White <gwhite@bodnext.bio.dfo.ca>)
 
-    o   if(nmatch = 0) bug in src/main/character.c fixed (Doug Bates)
+    o	if(nmatch = 0) bug in src/main/character.c fixed (Doug Bates)
 
-    o   R_alloc/S_alloc fixes. The former allocated 4 times more than
+    o	R_alloc/S_alloc fixes. The former allocated 4 times more than
 	needed, the latter zeroed half of what it got, sizeof() mistakes
 	in both cases.
 
-    o   c(ordered factor) caused segfault (uninitalised pointer), now
+    o	c(ordered factor) caused segfault (uninitalised pointer), now
 	fixed.
 
-    o   behaviour of as.numeric() on factors changed recently; now
+    o	behaviour of as.numeric() on factors changed recently; now
 	documented.
 
-    o   model.matrix() now pays attention to the names on its dataframe
+    o	model.matrix() now pays attention to the names on its dataframe
 	argument.
 
-    o   Fixes to group methods.
+    o	Fixes to group methods.
 
-    o   autoload() caused infinite loop if function  wasn't found in
+    o	autoload() caused infinite loop if function  wasn't found in
 	library on loading
 
-    o   The pager ate the rest of stdin in batch mode, now fixed. Also,
+    o	The pager ate the rest of stdin in batch mode, now fixed. Also,
 	stdout was not flushed before call to system(). "make tests"
 	should work now.
 
-    o   Empty directories now created by configure (so that it doesn't
-        matter that "CVS export" doesn't do it)
+    o	Empty directories now created by configure (so that it doesn't
+	matter that "CVS export" doesn't do it)
 
-    o   as.name() made idempotent (i.e. if is.name(x) then as.name(x)==x)
+    o	as.name() made idempotent (i.e. if is.name(x) then as.name(x)==x)
 
-    o   3 problems with glm, 2 in glm.fit and a one in print.glm fixed
+    o	3 problems with glm, 2 in glm.fit and a one in print.glm fixed
 	[Jim Lindsey]
 
-    o   binomial (family) now works when 'n=0'. [J.Lindsey]
+    o	binomial (family) now works when 'n=0'. [J.Lindsey]
 
     o	split() now also works in split(1:10,1:2)
 
     o	strsplit() now also works for strsplit(c,NULL)
 
-    o   A LANG='..' environment variable no longer affects  scan()ing of
+    o	A LANG='..' environment variable no longer affects  scan()ing of
 	numbers.
 
-    o   seq(.) doesn't segfault anymore in  gl(2,3):gl(1,6)
+    o	seq(.) doesn't segfault anymore in  gl(2,3):gl(1,6)
 
-    o   contour(.) now also works with integer arguments
+    o	contour(.) now also works with integer arguments
 
 
 		CHANGES IN R VERSION 0.61
@@ -90,26 +110,26 @@ NEW FEATURES
 	All include files now live in RHOME/src/include and are
 	copied to RHOME/include when needed.
 
-    o   The "noquote" functions are now documented.
+    o	The "noquote" functions are now documented.
 
-    o   A new `language' demo, "is.things", is provided.
+    o	A new `language' demo, "is.things", is provided.
 
-    o   symnum(.) function
+    o	symnum(.) function
 
-    o   The files in R/library/base/data have had a .R suffix added.
+    o	The files in R/library/base/data have had a .R suffix added.
 
 BUG_FIXES
 
     o	A nasty bug which showed when attempt was made to create
 	a zero length call has been fixed.
 
-    o   model.matrix(.) now allows a  contrasts argument.
+    o	model.matrix(.) now allows a  contrasts argument.
 
-    o   barplot(.) now also works for barplot(table(rpois(100,3))).
+    o	barplot(.) now also works for barplot(table(rpois(100,3))).
 
-    o   make clean ; make    now should work;  ./Makefile.in eliminated
+    o	make clean ; make    now should work;  ./Makefile.in eliminated
 
-    o   format(.) is now generic;  the default method has a `digits' argument.
+    o	format(.) is now generic;  the default method has a `digits' argument.
 
 
 		CHANGES IN R VERSION 0.60.1
@@ -126,10 +146,10 @@ NEW FEATURES
 BUG FIXES
 
     o	A file was closed multiple times if an error message occured
-	after sourcing a file.  In some versions of Linux this caused
+	after sourcing a file.	In some versions of Linux this caused
 	a core dump.
 
-    o   The inclusion <readline/history.h> was causing problems with
+    o	The inclusion <readline/history.h> was causing problems with
 	some versions of readline because the file did not exist.
 	This is now detected by configure.
 
@@ -183,25 +203,25 @@ NEW FEATURES
 	of their x or y arguments is a matrix.	Dimnames are propagated
 	in a sensible fashion.
 
-    o   New chisq.test(.) and prop.test() from Kurt Hornik.
+    o	New chisq.test(.) and prop.test() from Kurt Hornik.
 
-    o   New read.fwf(.) for reading fixed width format (KH).
+    o	New read.fwf(.) for reading fixed width format (KH).
 
-    o   New str(.) [alternative to summary(.) for programmers] (MM).
+    o	New str(.) [alternative to summary(.) for programmers] (MM).
 
-    o   New example data sets "esoph", "infert" and "anscombe" (TL),
+    o	New example data sets "esoph", "infert" and "anscombe" (TL),
 	"iris3" (KH) and "stackloss" (MM).
 
-    o   source(.) has several new arguments, notably ``echo = FALSE''.
+    o	source(.) has several new arguments, notably ``echo = FALSE''.
 	This is applied in the new function  demo(.) which runs all the
 	code in demos/ (but dynload).
 
-    o   strheight(.) is new, accompanying strwidth(.).
+    o	strheight(.) is new, accompanying strwidth(.).
 	Both now work for mathematical expressions (Paul Murrell).
 
-    o   The LaTeX version of the manual (-> doc/manual/) now has an index.
+    o	The LaTeX version of the manual (-> doc/manual/) now has an index.
 
-    o   EVERY *.Rd file in src/library/base/man/ has now at least one \keyword
+    o	EVERY *.Rd file in src/library/base/man/ has now at least one \keyword
 
     o	New package (`library(.)') "stepfun" for step functions, incl.
 	empirical distributions.
@@ -209,8 +229,8 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   Regular expression matching is now done with system versions
-	of the regexp library.  This should fix compilation problems
+    o	Regular expression matching is now done with system versions
+	of the regexp library.	This should fix compilation problems
 	on some platforms.
 
     o	"approx" and "approxfun", have had some minor adjustments.
@@ -251,26 +271,26 @@ BUG FIXES
 	the result is still not perfect (the parse() returns).
 	This will be fixed by a future parse rewrite.
 
-    o   rainbow, topo.colors, etc., now also work with n in {1,2};
+    o	rainbow, topo.colors, etc., now also work with n in {1,2};
 	don't return duplicate neighbor colors anymore.
 
-    o   legend has new `text.width' argument and now also works with
+    o	legend has new `text.width' argument and now also works with
 	mathematical expressions as text.
 
-    o   hist() now works better, has a `plot = TRUE' argument, and returns
+    o	hist() now works better, has a `plot = TRUE' argument, and returns
 	something useful.
 
-    o   barplot() improved for `names', now returns vector of midpoints.
+    o	barplot() improved for `names', now returns vector of midpoints.
 
-    o   lm(), lm.fit, lm.wfit (was `lm.w.fit'):  Made more compatible.
+    o	lm(), lm.fit, lm.wfit (was `lm.w.fit'):	 Made more compatible.
 	Dealing with (close to) collinear situations is still not flexible
 	enough.
 
-    o   internal postcript() improved (missing lines in boxplot(.)).
+    o	internal postcript() improved (missing lines in boxplot(.)).
 
-    o   Improvement to many (even most ?) documentation (.Rd) files.
+    o	Improvement to many (even most ?) documentation (.Rd) files.
 
-    o   Numerous other fixes of minor things ...
+    o	Numerous other fixes of minor things ...
 
 
 
