@@ -510,7 +510,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	return ans;
 
-na_answer:
+/* na_answer: */
 	if(complex_ans) {
 		ans = allocVector(CPLXSXP, 1);
 		COMPLEX(ans)[0].r = NA_REAL;

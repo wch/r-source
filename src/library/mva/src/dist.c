@@ -147,7 +147,7 @@ static double binary(double *x, int nr, int nc, int i1, int i2)
 void dist(double *x, int *nr, int *nc, double *d, int *method)
 {
 	double (*distfun)(double*, int, int, int, int);
-	int dc, i, j, ij;
+	int i, j, ij;
 
 	switch(*method) {
 	case EUCLIDEAN:

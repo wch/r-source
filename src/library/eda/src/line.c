@@ -10,7 +10,7 @@ static int iu(int n, double x)
 	return (int)ceil((n - 1) * x);
 }
 
-static line(double *x, double *y, double *z, double *w, int n, double *coef)
+static void line(double *x, double *y, double *z, double *w, int n, double *coef)
 {
 	int i, j, k;
 	double xb, x1, x2, xt, yt, yb, tmp1, tmp2;
@@ -69,7 +69,7 @@ static line(double *x, double *y, double *z, double *w, int n, double *coef)
 	coef[1] = slope;
 }
 
-int tukeyline(double *x, double *y, double *z, double *w, int *n, double *coef)
+void tukeyline(double *x, double *y, double *z, double *w, int *n, double *coef)
 {
 	line(x, y, z, w, *n, coef);
 }
