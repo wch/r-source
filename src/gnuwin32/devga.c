@@ -36,12 +36,18 @@
 #include "graphapp/stdimg.h"
 #include "console.h"
 #include "rui.h"
-#include "devga.h"		/* 'Public' routines from here */
 #include "windows.h"
 
 extern console RConsole;
 extern window RFrame;
 extern Rboolean AllDevicesKilled;
+
+static
+Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
+			double height, double pointsize,
+			Rboolean recording, int resize, int bg, int canvas,
+			double gamma, int xpos, int ypos, Rboolean buffered,
+			SEXP psenv);
 
 int graphicsx = -25, graphicsy = 0;
 
@@ -53,7 +59,7 @@ int graphicsx = -25, graphicsy = 0;
 /* these really are globals: per machine, not per window */
 static double user_xpinch = 0.0, user_ypinch = 0.0;
 
-void GAsetunits(double xpinch, double ypinch)
+static void GAsetunits(double xpinch, double ypinch)
 {
     user_xpinch = xpinch;
     user_ypinch = ypinch;
@@ -184,7 +190,7 @@ typedef struct {
     SEXP eventResult;  /* Result of event handler */
 } gadesc;
 
-rect getregion(gadesc *xd)
+static rect getregion(gadesc *xd)
 {
     rect r = getrect(xd->bm);
     r.x += max(0, xd->xshift);
@@ -2543,7 +2549,7 @@ static void GA_Hold(NewDevDesc *dd)
 	/********************************************************/
 
 
-
+static
 Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int bg, int canvas,
@@ -2911,6 +2917,91 @@ static void SaveAsBmp(NewDevDesc *dd,char *fn)
 	warning("processing of the plot ran out of memory");
     gsetcliprect(xd->bm, r);
     fclose(fp);
+}
+
+/* This is Guido's devga device. */
+
+SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    NewDevDesc *dev;
+    GEDevDesc* dd;
+    char *display, *vmax;
+    double height, width, ps, xpinch, ypinch, gamma;
+    int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
+    SEXP sc, psenv;
+
+    checkArity(op, args);
+    vmax = vmaxget();
+    display = CHAR(STRING_ELT(CAR(args), 0)); /* no longer need SaveString */
+    args = CDR(args);
+    width = asReal(CAR(args));
+    args = CDR(args);
+    height = asReal(CAR(args));
+    args = CDR(args);
+    if (width <= 0 || height <= 0)
+	errorcall(call, "invalid width or height");
+    ps = asReal(CAR(args));
+    args = CDR(args);
+    recording = asLogical(CAR(args));
+    if (recording == NA_LOGICAL)
+	errorcall(call, "invalid value of `recording'");
+    args = CDR(args);
+    resize = asInteger(CAR(args));
+    if (resize == NA_INTEGER)
+	errorcall(call, "invalid value of `resize'");
+    args = CDR(args);
+    xpinch = asReal(CAR(args));
+    args = CDR(args);
+    ypinch = asReal(CAR(args));
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, "invalid value of `canvas'");
+    canvas = RGBpar(sc, 0);
+    args = CDR(args);
+    gamma = asReal(CAR(args));
+    args = CDR(args);
+    xpos = asInteger(CAR(args));
+    args = CDR(args);
+    ypos = asInteger(CAR(args));
+    args = CDR(args);
+    buffered = asLogical(CAR(args));
+    if (buffered == NA_LOGICAL)
+	errorcall(call, "invalid value of `buffered'");
+    args = CDR(args);
+    psenv = CAR(args);
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, "invalid value of `bg'");
+    bg = RGBpar(sc, 0);
+    
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	/* Allocate and initialize the device driver data */
+	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
+	GAsetunits(xpinch, ypinch);
+	if (!GADeviceDriver(dev, display, width, height, ps, 
+			    (Rboolean)recording, resize, bg, canvas, gamma,
+			    xpos, ypos, (Rboolean)buffered, psenv)) {
+	    free(dev);
+	    errorcall(call, "unable to start device devga");
+	}
+	gsetVar(install(".Device"),
+		mkString(display[0] ? display : "windows"), R_NilValue);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	GEinitDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
+    vmaxset(vmax);
+    return R_NilValue;
 }
 
 #include "Startup.h"

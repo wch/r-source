@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2001   The R Development Core Team.
+ *  Copyright (C) 1998-2004   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,18 +27,6 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
-
-/* Return a non-relocatable copy of a string */
-
-static char *SaveString(SEXP sxp, int offset, SEXP gcall)
-{
-    char *s;
-    if(!isString(sxp) || length(sxp) <= offset)
-	errorcall(gcall, "invalid string argument");
-    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
-    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
-    return s;
-}
 
 /*  PostScript Device Driver Parameters:
  *  ------------------------		--> devPS.c
@@ -71,23 +59,23 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP fam, fonts;
 
     vmax = vmaxget();
-    file = SaveString(CAR(args), 0, call);  args = CDR(args);
-    paper = SaveString(CAR(args), 0, call); args = CDR(args);
+    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    paper = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
 
     /* `family' can be either one string or a 5-vector of afmpaths. */
     fam = CAR(args); args = CDR(args);
     if(length(fam) == 1) 
-	family = SaveString(fam, 0, call);
+	family = CHAR(STRING_ELT(fam, 0));
     else if(length(fam) == 5) {
 	if(!isString(fam)) errorcall(call, "invalid `family' parameter");
 	family = "User";
-	for(i = 0; i < 5; i++) afms[i] = SaveString(fam, i, call);
+	for(i = 0; i < 5; i++) afms[i] = CHAR(STRING_ELT(fam, i));
     } else 
 	errorcall(call, "invalid `family' parameter");
     
-    encoding = SaveString(CAR(args), 0, call);    args = CDR(args);
-    bg = SaveString(CAR(args), 0, call);    args = CDR(args);
-    fg = SaveString(CAR(args), 0, call);    args = CDR(args);
+    encoding = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
     height = asReal(CAR(args));	      args = CDR(args);
     horizontal = asLogical(CAR(args));args = CDR(args);
@@ -97,8 +85,8 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     onefile = asLogical(CAR(args));   args = CDR(args);
     pagecentre = asLogical(CAR(args));args = CDR(args);
     printit = asLogical(CAR(args));   args = CDR(args);
-    cmd = SaveString(CAR(args), 0, call); args = CDR(args);
-    title = SaveString(CAR(args), 0, call); args = CDR(args);    
+    cmd = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    title = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);    
     fonts = CAR(args); 
     if (!isNull(fonts) && !isString(fonts))
 	errorcall(call, "invalid `fonts' parameter");
@@ -120,58 +108,6 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, "unable to start device PostScript");
 	}
 	gsetVar(install(".Device"), mkString("postscript"), R_NilValue);
-	dd = GEcreateDevDesc(dev);
-	addDevice((DevDesc*) dd);
-	GEinitDisplayList(dd);
-    } END_SUSPEND_INTERRUPTS;
-    vmaxset(vmax);
-    return R_NilValue;
-}
-
-/*  PicTeX Device Driver Parameters
- *  --------------------		--> devPicTeX.c
- *  file    = output filename
- *  bg	    = background color
- *  fg	    = foreground color
- *  width   = width in inches
- *  height  = height in inches
- *  debug   = Rboolean; if TRUE, write TeX-Comments into output.
- */
-
-SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    NewDevDesc *dev;
-    GEDevDesc *dd;
-    char *vmax;
-    char *file, *bg, *fg;
-    double height, width;
-    Rboolean debug;
-
-    vmax = vmaxget();
-    file = SaveString(CAR(args), 0, call); args = CDR(args);
-    bg = SaveString(CAR(args), 0, call);   args = CDR(args);
-    fg = SaveString(CAR(args), 0, call);   args = CDR(args);
-    width = asReal(CAR(args));	     args = CDR(args);
-    height = asReal(CAR(args));	     args = CDR(args);
-    debug = asLogical(CAR(args));    args = CDR(args);
-    if(debug == NA_LOGICAL) debug = FALSE;
-
-    R_CheckDeviceAvailable();
-    BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dev = (NewDevDesc *) calloc(1,sizeof(NewDevDesc))))
-	    return 0;
-	/* Do this for early redraw attempts */
-	dev->displayList = R_NilValue;
-	/* Make sure that this is initialised before a GC can occur.
-	 * This (and displayList) get protected during GC
-	 */
-	dev->savedSnapshot = R_NilValue;
-	if(!PicTeXDeviceDriver((DevDesc*) dev, file, bg, fg, 
-			       width, height, debug)) {
-	    free(dev);
-	    errorcall(call, "unable to start device PicTeX");
-	}
-	gsetVar(install(".Device"), mkString("pictex"), R_NilValue);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
 	GEinitDisplayList(dd);
@@ -207,11 +143,11 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
     double height, width, ps;
 
     vmax = vmaxget();
-    file = SaveString(CAR(args), 0, call);  args = CDR(args);
-    paper = SaveString(CAR(args), 0, call); args = CDR(args);
-    family = SaveString(CAR(args), 0, call);  args = CDR(args);
-    bg = SaveString(CAR(args), 0, call);    args = CDR(args);
-    fg = SaveString(CAR(args), 0, call);    args = CDR(args);
+    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    paper = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    family = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
     height = asReal(CAR(args));	      args = CDR(args);
     horizontal = asLogical(CAR(args));args = CDR(args);
@@ -274,16 +210,16 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP fonts;
 
     vmax = vmaxget();
-    file = SaveString(CAR(args), 0, call);  args = CDR(args);
-    family = SaveString(CAR(args), 0, call);  args = CDR(args);
-    encoding = SaveString(CAR(args), 0, call);  args = CDR(args);
-    bg = SaveString(CAR(args), 0, call);    args = CDR(args);
-    fg = SaveString(CAR(args), 0, call);    args = CDR(args);
+    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    family = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    encoding = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
     height = asReal(CAR(args));	      args = CDR(args);
     ps = asReal(CAR(args));           args = CDR(args);
     onefile = asLogical(CAR(args)); args = CDR(args);
-    title = SaveString(CAR(args), 0, call); args = CDR(args);
+    title = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
     fonts = CAR(args); args = CDR(args);
     if (!isNull(fonts) && !isString(fonts))
 	errorcall(call, "invalid `fonts' parameter");

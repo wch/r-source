@@ -2,7 +2,7 @@
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001  The R Development Core Team
+ *  Copyright (C) 2001-4  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -611,10 +611,11 @@ static void PicTeX_Hold(NewDevDesc *dd)
 {
 }
 
-Rboolean internalPicTeXDeviceDriver(NewDevDesc *dd, char *filename, 
-				    char *bg, char *fg,
-				    double width, double height, 
-				    Rboolean debug)
+static
+Rboolean PicTeXDeviceDriver(NewDevDesc *dd, char *filename, 
+			    char *bg, char *fg,
+			    double width, double height, 
+			    Rboolean debug)
 {
     picTeXDesc *ptd;
 
@@ -699,10 +700,53 @@ Rboolean internalPicTeXDeviceDriver(NewDevDesc *dd, char *filename,
     return TRUE;
 }
 
-Rboolean PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
-			    double width, double height, Rboolean debug)
-{
-    return internalPicTeXDeviceDriver((NewDevDesc*) dd, filename, bg, fg,
-				      width, height, debug);
-}
+/*  PicTeX Device Driver Parameters
+ *  --------------------
+ *  file    = output filename
+ *  bg	    = background color
+ *  fg	    = foreground color
+ *  width   = width in inches
+ *  height  = height in inches
+ *  debug   = Rboolean; if TRUE, write TeX-Comments into output.
+ */
 
+SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    NewDevDesc *dev;
+    GEDevDesc *dd;
+    char *vmax;
+    char *file, *bg, *fg;
+    double height, width;
+    Rboolean debug;
+
+    vmax = vmaxget();
+    file = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    bg = CHAR(STRING_ELT(CAR(args), 0));   args = CDR(args);
+    fg = CHAR(STRING_ELT(CAR(args), 0));   args = CDR(args);
+    width = asReal(CAR(args));	     args = CDR(args);
+    height = asReal(CAR(args));	     args = CDR(args);
+    debug = asLogical(CAR(args));    args = CDR(args);
+    if(debug == NA_LOGICAL) debug = FALSE;
+
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	if (!(dev = (NewDevDesc *) calloc(1,sizeof(NewDevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
+	if(!PicTeXDeviceDriver(dev, file, bg, fg, width, height, debug)) {
+	    free(dev);
+	    errorcall(call, "unable to start device PicTeX");
+	}
+	gsetVar(install(".Device"), mkString("pictex"), R_NilValue);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	GEinitDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
+    vmaxset(vmax);
+    return R_NilValue;
+}

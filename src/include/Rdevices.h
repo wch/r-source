@@ -60,9 +60,6 @@ void freeType1Fonts(void);
  * description there;   platform-specific drivers in platform directories! */
 
 Rboolean 
-PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, Rboolean);
-
-Rboolean 
 PSDeviceDriver(DevDesc*, char*, char*, char*, char**,
 	       char*, char*, char*, double, double, Rboolean, double, 
 	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);

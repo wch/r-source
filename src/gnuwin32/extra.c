@@ -33,7 +33,6 @@
 #include <time.h>
 #include <windows.h>
 #include "graphapp/ga.h"
-#include "devga.h"
 #include "rui.h"
 
 char * R_tmpnam(const char * prefix, const char * tempdir)
