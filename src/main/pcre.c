@@ -31,6 +31,10 @@
 
 #include "Defn.h"
 
+#ifndef HAVE_PCRE
+#define HAVE_PCRE 1
+#endif
+
 #ifdef HAVE_PCRE
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>

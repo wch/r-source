@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 
 PCRE_CPPFLAGS = -I$(srcdir)
 ALL_CPPFLAGS = $(BZIP2_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
-ALL_CFLAGS = $(R_XTRA_CFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
+ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 
 SOURCES = get.c pcre.c study.c
 
@@ -24,8 +24,7 @@ OBJECTS = $(SOURCES:.c=.o)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = LICENCE Makefile.in Makefile.win dftables.c maketables.c \
   chartables.h.win $(SOURCES) $(HEADERS)
-#noinst_LIBRARIES = @BUILD_PCRE_TRUE@ libpcre.a
-noinst_LIBRARIES = libpcre.a
+noinst_LIBRARIES = @BUILD_PCRE_TRUE@ libpcre.a
 libpcre_a_SOURCES = $(SOURCES)
 libpcre_a_OBJECTS = $(OBJECTS)
 
@@ -52,7 +51,7 @@ dftables: dftables.o maketables.c internal.h pcre.h
 	$(MAIN_LINK) -o dftables $(CFLAGS) dftables.o
 
 libpcre.a: $(libpcre_a_OBJECTS)
-	$(AR) cr $@ $(libprce_a_OBJECTS)
+	$(AR) cr $@ $(libpcre_a_OBJECTS)
 	$(RANLIB) $@
 
 

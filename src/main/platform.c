@@ -997,6 +997,10 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#if defined(Unix) && !defined(HAVE_PCRE)
+#define HAVE_PCRE 1
+#endif
+
 SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
