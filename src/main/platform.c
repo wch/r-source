@@ -53,9 +53,9 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     VECTOR(value)[2] = mkString(R_DynLoadExt);
     VECTOR(value)[3] = mkString(R_GUIType);
 #ifdef WORDS_BIGENDIAN
-    VECTOR(value)[4] = mkChar("big");
+    VECTOR(value)[4] = mkString("big");
 #else
-    VECTOR(value)[4] = mkChar("little");
+    VECTOR(value)[4] = mkString("little");
 #endif
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
