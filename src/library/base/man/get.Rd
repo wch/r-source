@@ -13,9 +13,13 @@ get(x, pos=-1, envir=pos.to.env(pos), mode="any", inherits=TRUE)
   \item{pos}{position in search list, can be numerical or a quoted
     string.}
   \item{envir}{the environment to be used.}
-  \item{mode}{the type of object sought.}
+  \item{mode}{the mode of object sought.}
   \item{inherits}{should the enclosing frames of the environment be
     inspected?}
+}
+\details{
+   The \code{mode} includes collections such as \code{"numeric"} and
+   \code{"function"}: any member of the collection will suffice. 
 }
 \value{
   This function searches the specified environment for a bound variable

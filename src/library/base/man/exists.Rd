@@ -10,7 +10,7 @@ exists(x, where = NULL, envir = sys.frame(sys.parent()),
   \item{where, envir, frame}{an environment to be searched.
     By default this is the
     environment where the call to \code{envir} takes place.}
-  \item{mode}{the type of interest for the object.}
+  \item{mode}{the mode of interest for the object.}
   \item{inherits}{should the enclosing frames of the environment be inspected.}
 }
 \description{
@@ -26,6 +26,9 @@ exists(x, where = NULL, envir = sys.frame(sys.parent()),
   If \code{mode} is specified then only objects of that mode are sought.
   The function returns \code{TRUE} if the variable is encountered and
   \code{FALSE} if not.
+
+  The \code{mode} includes collections such as \code{"numeric"} and
+  \code{"function"}: any member of the collection will suffice.
 }
 \seealso{
   \code{\link{get}}.
