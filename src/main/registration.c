@@ -299,8 +299,8 @@ static R_FortranMethodDef fortranMethods[] = {
 void
 R_init_base(DllInfo *dll)
 {
-    R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, cMethods, callMethods,
 		       fortranMethods, externalMethods);
+    R_useDynamicSymbols(dll, FALSE);
 }
 
