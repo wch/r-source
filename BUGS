@@ -222,6 +222,10 @@ none
 
 Directory:  incoming
 
+* PR# 655 *
+Subject: Installing R from source 
+From: jniesch@gwdg.de
+Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
 * PR# 653 *
 Subject: bug in spline()?
 From: Ian White <imsw@holyrood.ed.ac.uk>
