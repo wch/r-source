@@ -195,7 +195,17 @@ All.eq(pz,		 pnorm(-z, lower=FALSE))
 All.eq(log(pz[z.ok]),  pnorm(z[z.ok], log=TRUE))
 y <- seq(-70,0, by = 10)
 cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE))
+y <- c(1:15, seq(20,40, by=5))
+cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE),
+      "log(pnorm(-y))"= log(pnorm(-y)), "pnorm(-y, log=T)"= pnorm(-y, log=TRUE))
+## Symmetry:
+y <- c(1:50,10^c(3:10,20,50,150,250))
+y <- c(-y,0,y)
+for(L in c(FALSE,TRUE))
+    stopifnot(identical(pnorm(-y, log= L),
+                        pnorm(+y, log= L, lower=FALSE)))
 
+## Log norm
 All.eq(pz, plnorm(exp(z)))
 
 
