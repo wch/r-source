@@ -1152,7 +1152,7 @@ void de_mousedown(control c, int buttons, point xy)
 	    crow = wrow;
 	    highlightrect();
 	    find_coords(crow, ccol, &x, &y);
-	    bw = BOXW(crow+colmin-1);
+	    bw = BOXW(ccol + colmin - 1);
 	    rr = rect(x + text_xoffset, y - text_yoffset - 1,
 		      bw - text_xoffset - 2,
 		      box_h - text_yoffset - 2);
