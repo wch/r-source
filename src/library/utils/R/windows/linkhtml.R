@@ -41,7 +41,7 @@ make.packages.html <- function(lib.loc=.libPaths())
             cat("<p><h3>Packages in ", libname, "</h3>\n",
                 sep = "", file = out)
         if(libname != "the standard library")
-            cat("<p>Cross-links from this library to other libraries may not work.\n\n",file = out)
+            cat("<p>Cross-links from this library to other libraries may not work.\n\n", file = out)
         cat("<p>\n<table width=\"100%\">\n", file = out)
         for (i in  pg) {
             title <- package.description(i, fields="Title", lib.loc = lib)[1]
@@ -61,7 +61,12 @@ make.packages.html <- function(lib.loc=.libPaths())
 make.search.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(R.home(), "doc/html/search/index.txt")
-    out <- file(f.tg, open = "w")
+    if(file.access(f.tg, mode=2) == -1) {
+        warning("cannot update HTML search index")
+        return()
+    }
+    ## next ought to succeed, but be cautious.
+    out <- try(file(f.tg, open = "w"), silent = TRUE)
     if(inherits(out, "try-error")) {
         warning("cannot update HTML search index")
         return()
@@ -122,9 +127,9 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     stats <- paste(top, "/library/stats", sep="")
     for(f in files) {
         page <- readLines(f)
-        try(out <- file(f, open = "w"))
+        out <- try(file(f, open = "w"), silent = TRUE)
         if(inherits(out, "try-error")) {
-            warning("cannot update", f)
+            warning("cannot update", sQuote(f))
             next
         }
         page <- gsub(olddoc, doc, page)

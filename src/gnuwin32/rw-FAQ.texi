@@ -373,7 +373,8 @@ You can find this from R code by @code{Sys.getenv("R_USER")}.
 @node How do I set environment variables?, R can't find my file, What are HOME and working directories?, Installation and Usage
 @section How do I set environment variables?
 
-Environment variables can be set in R in three different ways.
+Environment variables can be set for @code{RGui.exe} and
+@code{Rterm.exe} in three different ways.
 @enumerate
 @item
 On the command line as name=value pairs.  For example in the shortcut to
@@ -629,7 +630,9 @@ package, run at the R prompt.
 
 This is done automatically when installing from the Packages menu or
 by @code{install.packages()}, and when @code{help.start} is run,
-provided you have write permission in @file{@RWVER@}.
+@emph{provided} you have write permission in @file{@RWVER@}.  If you do not
+have sufficient permission, you will get warnings and the packages you
+install will not appear in the list of packages or the search system.
 
 
 @node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
@@ -638,25 +641,26 @@ provided you have write permission in @file{@RWVER@}.
 The following conditions need to hold for functions in a package you installed.
 
 @itemize @bullet
-@item the package is installed in @file{@RWVER@\library}.
 @item the package contains a @file{CONTENTS} file in its top-level directory.
 @item you updated the indices as described in the answer to Q3.3 after
 installing the package.
 @end itemize
 @noindent
-If those all hold true, this works for us.
+If those hold, this works for us.  Note that if you were unable to
+update the indices (for which you need write permission in the
+@file{@RWVER@} directory), only the functions in packages installed in
+the main library will be found.
 
 If the help search system does not work @emph{at all}, this probably
 indicates that Java support is either not installed or not enabled in
-your browser.  Recent versions of browsers have made Java support
-optional: for example it is optional in Netscape 6/7 and in Opera, and
-may not be installed for IE6 on Windows XP.  You also need JavaScript
-enabled.
+your browser.  The search page contains a link to the appropriate
+section in the `R Installation and Administration' manual.
+
 
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
 @section Loading a package fails.
 
-Is the package compiled for this version of R?  Many of the packages
+Is the package compiled for this version of R?   Many of the packages
 need to be compiled for a fairly recent version.
 
 You can tell the version the package was compiled for by looking at the
@@ -1176,14 +1180,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 February 25 by Professor B. D. Ripley
+Last edited 2004 March 14 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 February 25 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 March 14 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
