@@ -45,8 +45,16 @@ NEW FEATURES
 	axes) are now consistent with other plot functions.  The key symbol
 	is not clipped anymore into the plot region by default.
 
-    o	Date-time quantities are now printed with the timezone, if known.
+    o	On startup, file .RData is now restored *after* the site and
+	user profiles are loaded (if at all).
 
+    o	Date-time quantities are now printed with the timezone, if
+	known.
+    
+    o	R CMD build now ignores all files specified (via Perl regexps)
+	in file `.Rbuildignore' in the top-level source	directory of a
+	package.
+    
 
 BUG FIXES
     
@@ -402,7 +410,7 @@ NEW FEATURES
 	`date' and `chron'; unlike those packages these support
 	functions know about time zones (if the OS does).
 
-    o	tcltk library now has tkpager() which is designed to be used
+    o	tcltk package now has tkpager() which is designed to be used
 	by file.show() and shows help pages etc. in separate text
 	widgets. 
 
@@ -410,7 +418,7 @@ NEW FEATURES
 	representing widgets in the R workspace when the windows are
 	destroyed (e.g. using window manager controls)	
 
-    o	tcltk library has had several canvas functions implemented.
+    o	tcltk package has had several canvas functions implemented.
     
     o	tcltk now wraps callbacks to R in a try() construct - the
 	nonlocal return from R's error handling could bring the Tk
