@@ -94,6 +94,9 @@ BUG FIXES
 
     o   Workaround for NetBSD bug in compiling dounzip.c. (PR#1565/6)
 
+    o   real conversions in type.convert were always treating "NA" as
+	missing whatever the setting of na.strings. (PR#1568)
+
 
 
 		CHANGES IN R VERSION 1.5.0
