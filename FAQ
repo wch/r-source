@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-7, 2003-05-02
+Version 1.7-8, 2003-05-11
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -87,6 +87,7 @@ R FAQ
   7.21 How do I produce PNG graphics in batch mode?
   7.22 How can I get command line editing to work?
   7.23 How can I turn a string into a variable?
+  7.24 Why do lattice/trellis graphics not work?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -1315,11 +1316,6 @@ distributions of R.)
 *RmSQL*
      An interface between R and the mSQL database system.
 
-*Rmpi*
-     an interface (wrapper) to MPI (Message-Passing Interface) APIs.  It
-     also provides interactive R slave functionalities to make MPI
-     programming easier in R than in C(++) or FORTRAN.
-
 *Rwave*
      An environment for the time-frequency analysis of 1-D signals (and
      especially for the wavelet and Gabor transforms of noisy signals),
@@ -1604,11 +1600,6 @@ distributions of R.)
 
 *gld*
      Basic functions for the generalised (Tukey) lambda distribution.
-
-*gllm*
-     Routines for log-linear models of incomplete contingency tables,
-     including some latent class models via EM and Fisher scoring
-     approaches.
 
 *glmmML*
      A Maximum Likelihood approach to generalized linear models with random
@@ -1945,12 +1936,6 @@ distributions of R.)
      Functions for manipulating skew-normal probability distributions and
      for fitting them to data, in the scalar and the multivariate case.
 
-*sna*
-     A range of tools for social network analysis, including node and
-     graph-level indices, structural distance and covariance methods,
-     structural equivalence detection, p* modeling, and network
-     visualization.
-
 *snow*
      Simple Network of Workstations: support for simple parallel computing
      in R.
@@ -2069,6 +2054,11 @@ these a try, of course.  This area of CRAN currently contains
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
 
+*Rmpi*
+     An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It
+     also provides interactive R slave functionalities to make MPI
+     programming easier in R than in C(++) or FORTRAN.
+
 *dseplus*
      Extensions to *dse*, the Dynamic Systems Estimation multivariate time
      series package.  Contains PADI, juice and monitoring extensions.
@@ -2076,11 +2066,22 @@ these a try, of course.  This area of CRAN currently contains
 *ensemble*
      Ensembles of tree classifiers.
 
+*gllm*
+     Routines for log-linear models of incomplete contingency tables,
+     including some latent class models via EM and Fisher scoring
+     approaches.
+
 *pls*
      Univariate Partial Least Squares Regression.
 
 *runStat*
      Running median and mean.
+
+*sna*
+     A range of tools for social network analysis, including node and
+     graph-level indices, structural distance and covariance methods,
+     structural equivalence detection, p* modeling, and network
+     visualization.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
@@ -3048,6 +3049,17 @@ and then you can easily index it by name
      vars[["a"]]
 
 without any of this messing about.
+
+7.24 Why do lattice/trellis graphics not work?
+==============================================
+
+   The most likely reason is that you forgot to tell R to display the
+graph.  Lattice functions such as `xyplot()' create a graph object, but do
+not display it (the same is true of Trellis graphics in S-PLUS).  The
+`print()' method for the graph object produces the actual display.  When
+you use these functions interactively at the command line, the result is
+automatically printed, but in `source()' or inside your own functions you
+will need an explicit `print()' statement.
 
 8 R Programming
 ***************

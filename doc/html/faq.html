@@ -20,7 +20,7 @@ Up:<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
    <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.7-7, 2003-05-02</h2>
+<h2>Version 1.7-8, 2003-05-11</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1601,10 +1601,6 @@ balloon-borne instrument).
      <dd>Creating random fields using various methods. 
 <br><dt><strong>RmSQL</strong>
      <dd>An interface between R and the mSQL database system. 
-<br><dt><strong>Rmpi</strong>
-     <dd>an interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
-provides interactive R slave functionalities to make MPI programming
-easier in R than in C(++) or FORTRAN. 
 <br><dt><strong>Rwave</strong>
      <dd>An environment for the time-frequency analysis of 1-D signals (and
 especially for the wavelet and Gabor transforms of noisy signals), based
@@ -1824,9 +1820,6 @@ methods.
      <dd>Functions for inference in generalised linear spatial models. 
 <br><dt><strong>gld</strong>
      <dd>Basic functions for the generalised (Tukey) lambda distribution. 
-<br><dt><strong>gllm</strong>
-     <dd>Routines for log-linear models of incomplete contingency tables,
-including some latent class models via EM and Fisher scoring approaches. 
 <br><dt><strong>glmmML</strong>
      <dd>A Maximum Likelihood approach to generalized linear models with random
 intercept. 
@@ -2076,11 +2069,6 @@ A. W. Bowman and A. Azzalini (1997), Oxford University Press.
 <br><dt><strong>sn</strong>
      <dd>Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case. 
-<br><dt><strong>sna</strong>
-     <dd>A range of tools for social network analysis, including node and
-graph-level indices, structural distance and covariance methods,
-structural equivalence detection, p* modeling, and network
-visualization. 
 <br><dt><strong>snow</strong>
      <dd>Simple Network of Workstations: support for simple parallel computing in
 R. 
@@ -2168,23 +2156,45 @@ currently contains
 
      <dl>
 <dt><strong>Dopt</strong>
-     <dd>Finding D-optimal experimental designs. 
-<br><dt><strong>PHYLOGR</strong>
+     <dd>Finding D-optimal experimental designs.
+
+     <br><dt><strong>PHYLOGR</strong>
      <dd>Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
-analyses using GLS. 
-<br><dt><strong>RPgSQL</strong>
-     <dd>Provides methods for accessing data stored in PostgreSQL tables. 
-<br><dt><strong>dseplus</strong>
+analyses using GLS.
+
+     <br><dt><strong>RPgSQL</strong>
+     <dd>Provides methods for accessing data stored in PostgreSQL tables.
+
+     <br><dt><strong>Rmpi</strong>
+     <dd>An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
+provides interactive R slave functionalities to make MPI programming
+easier in R than in C(++) or FORTRAN.
+
+     <br><dt><strong>dseplus</strong>
      <dd>Extensions to <strong>dse</strong>, the Dynamic Systems Estimation multivariate
-time series package.  Contains PADI, juice and monitoring extensions. 
-<br><dt><strong>ensemble</strong>
-     <dd>Ensembles of tree classifiers. 
-<br><dt><strong>pls</strong>
-     <dd>Univariate Partial Least Squares Regression. 
-<br><dt><strong>runStat</strong>
-     <dd>Running median and mean. 
-<br><dt><strong>write.snns</strong>
+time series package.  Contains PADI, juice and monitoring extensions.
+
+     <br><dt><strong>ensemble</strong>
+     <dd>Ensembles of tree classifiers.
+
+     <br><dt><strong>gllm</strong>
+     <dd>Routines for log-linear models of incomplete contingency tables,
+including some latent class models via EM and Fisher scoring approaches.
+
+     <br><dt><strong>pls</strong>
+     <dd>Univariate Partial Least Squares Regression.
+
+     <br><dt><strong>runStat</strong>
+     <dd>Running median and mean.
+
+     <br><dt><strong>sna</strong>
+     <dd>A range of tools for social network analysis, including node and
+graph-level indices, structural distance and covariance methods,
+structural equivalence detection, p* modeling, and network
+visualization.
+
+     <br><dt><strong>write.snns</strong>
      <dd>Function for writing a <small>SNNS</small> pattern file from a data frame or
 matrix. 
 </dl>
@@ -2768,6 +2778,7 @@ Up:<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#How%20do%20I%20produce%20PNG%20graphics%20in%20batch%20mode%3f">How do I produce PNG graphics in batch mode?</a>: 
 <li><a href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>: 
 <li><a href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>: 
+<li><a href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>: 
 </ul>
 
 <div class="node">
@@ -3431,6 +3442,7 @@ packages such as <code>libreadline-dev</code> (Debian) or
 <div class="node">
 <p><hr>
 Node:<a name="How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
+Next:<a rel="next" accesskey="n" href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
 Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20get%20command%20line%20editing%20to%20work%3f">How can I get command line editing to work?</a>,
 Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -3482,6 +3494,25 @@ and then you can easily index it by name
      </pre>
 
 <p>without any of this messing about.
+
+<div class="node">
+<p><hr>
+Node:<a name="Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
+Previous:<a rel="previous" accesskey="p" href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>,
+Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.24 Why do lattice/trellis graphics not work?</h3>
+
+   <p>The most likely reason is that you forgot to tell R to display the
+graph.  Lattice functions such as <code>xyplot()</code> create a graph object,
+but do not display it (the same is true of Trellis graphics in
+<small>S-PLUS</small>).  The <code>print()</code> method for the graph object produces the
+actual display.  When you use these functions interactively at the
+command line, the result is automatically printed, but in
+<code>source()</code> or inside your own functions you will need an explicit
+<code>print()</code> statement.
 
 <div class="node">
 <p><hr>
