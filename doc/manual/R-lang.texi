@@ -68,19 +68,19 @@ The current version of this document is @value{VERSION} @b{DRAFT}.
 @end ifnottex
 
 @menu
-* Introduction::
-* Objects::
-* Evaluation of expressions::
-* Functions::
-* Object-oriented programming::
-* Computing on the language::
-* System and foreign language interfaces::
-* Exception handling::
-* Debugging::
-* Parser::
-* Function and Variable Index::
-* Concept Index::
-* References::
+* Introduction::                
+* Objects::                     
+* Evaluation of expressions::   
+* Functions::                   
+* Object-oriented programming::  
+* Computing on the language::   
+* System and foreign language interfaces::  
+* Exception handling::          
+* Debugging::                   
+* Parser::                      
+* Function and Variable Index::  
+* Concept Index::               
+* References::                  
 @end menu
 
 @node Introduction, Objects, Top, Top
@@ -211,6 +211,7 @@ arguments
 @c </FIXME>
 @item @code{externalptr} @tab an external pointer object
 @item @code{weakref} @tab a weak reference object
+@item @code{raw} @tab a vector containing bytes
 @end multitable
 @end quotation
 
@@ -261,9 +262,9 @@ languages or the operating system it is often necessary to ensure that
 an object is of the correct type.
 
 @menu
-* Basic types::
-* Attributes::
-* Special compound objects::
+* Basic types::                 
+* Attributes::                  
+* Special compound objects::    
 @end menu
 
 @node Basic types, Attributes, Objects, Objects
@@ -272,18 +273,18 @@ an object is of the correct type.
 
 
 @menu
-* Vector objects::
-* List objects::
-* Language objects::
-* Expression objects::
-* Function objects::
-* NULL object::
-* Built-in objects and special forms::
-* Promise objects::
-* Dot-dot-dot::
-* Environment objects::
-* Pairlist objects::
-* Any-type::
+* Vector objects::              
+* List objects::                
+* Language objects::            
+* Expression objects::          
+* Function objects::            
+* NULL object::                 
+* Built-in objects and special forms::  
+* Promise objects::             
+* Dot-dot-dot::                 
+* Environment objects::         
+* Pairlist objects::            
+* Any-type::                    
 @end menu
 
 @node Vector objects, List objects, Basic types, Basic types
@@ -299,8 +300,8 @@ indexing operations such as
 
 @cindex type
 @cindex mode
-@R{} has five basic vector types: logical, integer, real, complex, and
-string (or character).  The modes and storage modes for the different
+@R{} has six basic vector types: logical, integer, real, complex, string
+(or character) and raw.  The modes and storage modes for the different
 vector types are listed in the following table.
 
 @quotation
@@ -311,6 +312,7 @@ vector types are listed in the following table.
 @item @code{double}    @tab @code{numeric}   @tab @code{double}
 @item @code{complex}   @tab @code{complex}   @tab @code{complex}
 @item @code{character} @tab @code{character} @tab @code{character}
+@item @code{raw}       @tab @code{raw}       @tab @code{raw}
 @end multitable
 @end quotation
 
@@ -367,7 +369,7 @@ parse tree can be extracted using the standard
 indexing operations.
 
 @menu
-* Symbol objects::
+* Symbol objects::              
 @end menu
 
 @node Symbol objects,  , Language objects, Language objects
@@ -658,11 +660,11 @@ evaluation.  The class structure in @R{} is described in detail
 in @ref{Object-oriented programming}.
 
 @menu
-* Names::
-* Dimensions::
-* Dimnames::
-* Classes::
-* Time series attributes::
+* Names::                       
+* Dimensions::                  
+* Dimnames::                    
+* Classes::                     
+* Time series attributes::      
 @end menu
 
 @node Names, Dimensions, Attributes, Attributes
@@ -738,8 +740,8 @@ series with periodic substructure such as monthly or quarterly data.
 @section Special compound objects
 
 @menu
-* Factors::
-* Data frame objects::
+* Factors::                     
+* Data frame objects::          
 @end menu
 
 @node Factors, Data frame objects, Special compound objects, Special compound objects
@@ -878,21 +880,21 @@ be sufficient documentation.
 Users can construct expressions and invoke the evaluator on them.
 
 @menu
-* Simple evaluation::
-* Control structures::
-* Elementary arithmetic operations::
-* Indexing::
-* Scope of variables::
+* Simple evaluation::           
+* Control structures::          
+* Elementary arithmetic operations::  
+* Indexing::                    
+* Scope of variables::          
 @end menu
 
 @node Simple evaluation, Control structures, Evaluation of expressions, Evaluation of expressions
 @section Simple evaluation
 
 @menu
-* Constants::
-* Symbol lookup::
-* Function calls::
-* Operators::
+* Constants::                   
+* Symbol lookup::               
+* Function calls::              
+* Operators::                   
 @end menu
 
 @node Constants, Symbol lookup, Simple evaluation, Simple evaluation
@@ -1200,12 +1202,12 @@ block.
 @end smallexample
 
 @menu
-* if::
-* Looping::
-* repeat::
-* while::
-* for::
-* switch::
+* if::                          
+* Looping::                     
+* repeat::                      
+* while::                       
+* for::                         
+* switch::                      
 @end menu
 
 @node if, Looping, Control structures, Control structures
@@ -1429,10 +1431,10 @@ via @code{eval(x[[condition]])}.
 @section Elementary arithmetic operations
 
 @menu
-* Recycling rules::
-* Propagation of names::
-* Dimensional attributes::
-* NA handling::
+* Recycling rules::             
+* Propagation of names::        
+* Dimensional attributes::      
+* NA handling::                 
 @end menu
 
 In this section, we discuss the finer points of the rules that apply to
@@ -1560,10 +1562,10 @@ to find the index, use @code{x[[expr]]}.  When @code{$} is applied to a
 non-list object the result is always @code{NULL}.
 
 @menu
-* Indexing by vectors::
-* Indexing matrices and arrays::
-* Indexing other structures::
-* Subset assignment::
+* Indexing by vectors::         
+* Indexing matrices and arrays::  
+* Indexing other structures::   
+* Subset assignment::           
 @end menu
 
 @node Indexing by vectors, Indexing matrices and arrays, Indexing, Indexing
@@ -1894,10 +1896,10 @@ allows dynamic creation and manipulation of functions and language
 objects, and has additional features reflecting this fact.
 
 @menu
-* Global environment::
-* Lexical environment::
-* Stacks::
-* Search path::
+* Global environment::          
+* Lexical environment::         
+* Stacks::                      
+* Search path::                 
 @end menu
 
 @node Global environment, Lexical environment, Scope of variables, Scope of variables
@@ -2072,10 +2074,10 @@ environment or in other packages.
 @chapter Functions
 
 @menu
-* Writing functions::
-* Functions as objects::
-* Evaluation::
-* Closures::
+* Writing functions::           
+* Functions as objects::        
+* Evaluation::                  
+* Closures::                    
 @end menu
 
 @node Writing functions, Functions as objects, Functions, Functions
@@ -2094,8 +2096,8 @@ functions that you have created.  @xref{Writing R documentation, , ,
 R-exts, Writing R Extensions}.
 
 @menu
-* Syntax and examples::
-* Arguments::
+* Syntax and examples::         
+* Arguments::                   
 @end menu
 
 @node Syntax and examples, Arguments, Writing functions, Writing functions
@@ -2201,10 +2203,10 @@ arguments to functions and returned as values from functions.
 @section Evaluation
 
 @menu
-* Evaluation environment::
-* Argument matching::
-* Argument evaluation::
-* Scope::
+* Evaluation environment::      
+* Argument matching::           
+* Argument evaluation::         
+* Scope::                       
 @end menu
 
 @node Evaluation environment, Argument matching, Evaluation, Evaluation
@@ -2565,13 +2567,13 @@ when it exists.
 @c </FIXME>
 
 @menu
-* Definition::
-* Inheritance::
-* Method dispatching::
-* UseMethod::
-* NextMethod::
-* Group methods::
-* Writing methods::
+* Definition::                  
+* Inheritance::                 
+* Method dispatching::          
+* UseMethod::                   
+* NextMethod::                  
+* Group methods::               
+* Writing methods::             
 @end menu
 
 @node Definition, Inheritance, Object-oriented programming, Object-oriented programming
@@ -3060,12 +3062,12 @@ In this chapter, we give an introduction to the set of facilities that
 are available for computing on the language.
 
 @menu
-* Direct manipulation of language objects::
-* Substitutions::
-* More on evaluation::
-* Evaluation of expression objects::
-* Manipulation of function calls::
-* Manipulation of functions::
+* Direct manipulation of language objects::  
+* Substitutions::               
+* More on evaluation::          
+* Evaluation of expression objects::  
+* Manipulation of function calls::  
+* Manipulation of functions::   
 @end menu
 
 @node Direct manipulation of language objects, Substitutions, Computing on the language, Computing on the language
@@ -3653,9 +3655,9 @@ set.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Foreign language interfaces::
-* .Internal and .Primitive::
+* Operating system access::     
+* Foreign language interfaces::  
+* .Internal and .Primitive::    
 @end menu
 
 @node Operating system access, Foreign language interfaces, System and foreign language interfaces, System and foreign language interfaces
@@ -3761,11 +3763,10 @@ called directly or options such as @code{"warn"} can be used to control
 the handling of problems.
 
 @menu
-* stop::
-* warning::
-* on.exit::
-* restart::
-* Error options::
+* stop::                        
+* warning::                     
+* on.exit::                     
+* Error options::               
 @end menu
 
 @node stop, warning, Exception handling, Exception handling
@@ -3794,7 +3795,7 @@ finished evaluating.  If there are more than 10 then a message
 indicating how many warnings occurred is printed.  In either case
 @code{last.warning} contains the vector of messages.
 
-@node on.exit, restart, warning, Exception handling
+@node on.exit, Error options, warning, Exception handling
 @section on.exit
 @findex on.exit
 
@@ -3813,33 +3814,33 @@ immediate jump to top-level without further processing of the
 @code{on.exit} takes a single argument which is an expression to be
 evaluated when the function is exited.
 
-@node restart, Error options, on.exit, Exception handling
-@section restart
-@findex restart
+@c @node restart, Error options, on.exit, Exception handling
+@c @section restart
+@c @findex restart
 
-A call to @code{restart} effectively makes the function a possible point
-of return if an error occurs during the evaluation of that function (or
-one of the functions it calls).
+@c A call to @code{restart} effectively makes the function a possible point
+@c of return if an error occurs during the evaluation of that function (or
+@c one of the functions it calls).
 
-@code{restart} takes a single argument which is a logical variable.  If
-the value of the logical is @code{TRUE} then a jump-point is
-established.  If the value is @code{FALSE} then the jump-point is
-removed.
+@c @code{restart} takes a single argument which is a logical variable.  If
+@c the value of the logical is @code{TRUE} then a jump-point is
+@c established.  If the value is @code{FALSE} then the jump-point is
+@c removed.
 
-When a jump is executed the jump-point is removed.
+@c When a jump is executed the jump-point is removed.
 
-When an error occurs and one or more jump points are active then control
-is returned to the innermost function that has a jump-point established.
-Execution begins with the first statement in the body of the selected
-function.  The
-@cindex environment
-environment for subsequent
-@cindex evaluation
-evaluation is the environment
-that was in effect at the time that the error that triggered the jump
-was signalled.
+@c When an error occurs and one or more jump points are active then control
+@c is returned to the innermost function that has a jump-point established.
+@c Execution begins with the first statement in the body of the selected
+@c function.  The
+@c @cindex environment
+@c environment for subsequent
+@c @cindex evaluation
+@c evaluation is the environment
+@c that was in effect at the time that the error that triggered the jump
+@c was signalled.
 
-@node Error options,  , restart, Exception handling
+@node Error options,  , on.exit, Exception handling
 @section Error options
 
 There are a number of @code{options} variables that can be used to
@@ -3916,10 +3917,10 @@ next statement that is evaluated in @R{}. A symbolic debugger such as
 @code{gdb} can be used to debug compiled code.
 
 @menu
-* browser::
-* debug/undebug::
-* trace/untrace::
-* traceback::
+* browser::                     
+* debug/undebug::               
+* trace/untrace::               
+* traceback::                   
 @end menu
 
 @node browser, debug/undebug, Debugging, Debugging
@@ -4035,10 +4036,10 @@ is itself an @R{} object and can be saved and otherwise manipulated
 within the @R{} system.
 
 @menu
-* The parsing process::
-* Comments::
-* Tokens::
-* Expressions::
+* The parsing process::         
+* Comments::                    
+* Tokens::                      
+* Expressions::                 
 @end menu
 
 @node The parsing process, Comments, Parser, Parser
@@ -4046,9 +4047,9 @@ within the @R{} system.
 @section The parsing process
 
 @menu
-* Modes of parsing::
-* Internal representation::
-* Deparsing::
+* Modes of parsing::            
+* Internal representation::     
+* Deparsing::                   
 @end menu
 
 @node Modes of parsing, Internal representation, The parsing process, The parsing process
@@ -4147,14 +4148,14 @@ at least) takes place prior to the syntactic analysis performed by the
 parser itself.
 
 @menu
-* Literal constants::
-* Identifiers::
-* Reserved words::
-* Special operators::
-* Separators::
-* Operator tokens::
-* Grouping::
-* Indexing tokens::
+* Literal constants::           
+* Identifiers::                 
+* Reserved words::              
+* Special operators::           
+* Separators::                  
+* Operator tokens::             
+* Grouping::                    
+* Indexing tokens::             
 @end menu
 
 @node Literal constants, Identifiers, Tokens, Tokens
@@ -4377,12 +4378,12 @@ The following sections detail the various syntactical constructs that
 are available.
 
 @menu
-* Function calls (expressions)::
-* Infix and prefix operators::
-* Index constructions::
-* Compound expressions::
-* Flow control elements::
-* Function definitions::
+* Function calls (expressions)::  
+* Infix and prefix operators::  
+* Index constructions::         
+* Compound expressions::        
+* Flow control elements::       
+* Function definitions::        
 @end menu
 
 @c  need "(expressions)" or something to differentiate from node
@@ -4480,12 +4481,11 @@ operator precedence (e.g., @code{a * (b + c)}).
 
 Notice that the
 @cindex assignment
-assignment symbols are operators just like the
-arithmetic, relational, and logical ones.  Any expressions is allowed
-also on the target side of an assignment, as far as the parser is
-concerned (@code{2 + 2 <- 5} is a valid expression as far as the parser
-is concerned.  The evaluator will object, though).  Similar comments
-apply to the model formula operator.
+assignment symbols are operators just like the arithmetic, relational,
+and logical ones.  Any expressions is allowed also on the target side of
+an assignment, as far as the parser is concerned (@code{2 + 2 <- 5} is a
+valid expression as far as the parser is concerned.  The evaluator will
+object, though).  Similar comments apply to the model formula operator.
 
 @node Index constructions, Compound expressions, Infix and prefix operators, Expressions
 @subsection Index constructions
