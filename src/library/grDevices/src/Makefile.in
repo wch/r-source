@@ -20,6 +20,7 @@ SHLIB = $(pkg)@SHLIB_EXT@
 
 # need Defn.h etc, and config.h
 PKG_CPPFLAGS =-I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
+@BUILD_AQUA_TRUE@PKG_LIBS=-framework AppKit
 
 all: Makefile Makedeps
 	@$(MAKE) Makedeps
