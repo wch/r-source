@@ -37,8 +37,11 @@
 #endif
 
 #include "config.h"
+
 #include "Rinternals.h"		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
+#include "R_Internal.h" /* do_FOO */
+
 #include "Rconfig.h"
 #include "Errormsg.h"
 
@@ -61,7 +64,7 @@
 # include <setjmp.h>
 #endif
 
-/* 
+/*
 #include <time.h>
 
 #ifdef HAVE_LOCALE_H
