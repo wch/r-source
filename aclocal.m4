@@ -930,6 +930,10 @@ if test "${r_cv_prog_f77_append_underscore}" = yes; then
 else
   dgemm_func=dgemm
 fi
+if test -z "${with_blas}"; then
+  with_blas=yes
+fi
+
 if test "$with_blas" = "no"; then
   BLAS_LIBS=" "
 elif test "$with_blas" != "yes"; then
@@ -960,17 +964,17 @@ if test "x$BLAS_LIBS" = x; then
 fi
 
 if test "x$BLAS_LIBS" = x; then
-case "${host}" in
-  *solaris*)
-  # Check for BLAS in Sun Performance library:
-  if test $CC = "cc"; then 
-  AC_CHECK_LIB(sunmath, acosp, 
+  case "${host}" in
+    *solaris*)
+      # Check for BLAS in Sun Performance library:
+      if test ${GCC} != "yes"; then
+	AC_CHECK_LIB(sunmath, acosp, 
 	      AC_CHECK_LIB(sunperf, $dgemm_func, 
 			   BLAS_LIBS="-xlic_lib=sunperf -lsunmath", ,
                            [-lsunmath $FLIBS]))
-  fi
-  ;;
-esac
+      fi
+      ;;
+  esac
 fi
 
 if test "x$BLAS_LIBS" = x; then
