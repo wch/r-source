@@ -448,7 +448,6 @@ void PrintValueRec(SEXP s,SEXP env)
 {
     int i;
     SEXP t;
-    char *rn, *cn;
 
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -502,14 +501,22 @@ void PrintValueRec(SEXP s,SEXP env)
 	if (TYPEOF(t) == INTSXP) {
 	    if (LENGTH(t) == 1) {
 		PROTECT(t = getAttrib(s, R_DimNamesSymbol));
-		if (t != R_NilValue && VECTOR(t)[0] != R_NilValue)
-		    printNamedVector(s, VECTOR(t)[0], R_print.quote);
+		if (t != R_NilValue && VECTOR(t)[0] != R_NilValue) {
+		    SEXP nn = getAttrib(t, R_NamesSymbol);
+		    char *title = NULL;
+		    
+		    if (!isNull(nn))
+		        title = CHAR(STRING(nn)[0]);
+
+		    printNamedVector(s, VECTOR(t)[0], R_print.quote, title);
+		}
 		else
 		    printVector(s, 1, R_print.quote);
 		UNPROTECT(1);
 	    }
 	    else if (LENGTH(t) == 2) {
 		SEXP rl, cl;
+		char *rn, *cn;
 		GetMatrixDimnames(s, &rl, &cl, &rn, &cn);
 		printMatrix(s, 0, t, R_print.quote, R_print.right, rl, cl, 
 			    rn, cn);
@@ -524,7 +531,7 @@ void PrintValueRec(SEXP s,SEXP env)
 	    UNPROTECT(1);
 	    PROTECT(t = getAttrib(s, R_NamesSymbol));
 	    if (t != R_NilValue)
-		printNamedVector(s, t, R_print.quote);
+		printNamedVector(s, t, R_print.quote, NULL);
 	    else
 		printVector(s, 1, R_print.quote);
 	}

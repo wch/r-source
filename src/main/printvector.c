@@ -374,9 +374,12 @@ static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
     Rprintf("\n");
 }
 
-void printNamedVector(SEXP x, SEXP names, int quote)
+void printNamedVector(SEXP x, SEXP names, int quote, char *title)
 {
     int n;
+
+    if (title != NULL)
+         Rprintf("%s\n", title);
 
     if ((n = LENGTH(x)) != 0)
 	switch (TYPEOF(x)) {
