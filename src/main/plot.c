@@ -544,14 +544,18 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 		REAL(at)[i] = 0;
 	}
     }
-    else { /* log axis */
+    else { /* ------ log axis ----- */
 	n = (axp[2] + 0.5);
-	/* {xy}axp[2] for 'log':
-	   GLpretty() [../graphics.c] sets
+	/* {xy}axp[2] for 'log': GLpretty() [../graphics.c] sets
 	   n < 0: very small scale ==> linear axis, above, or
 	   n = 1,2,3.  see switch() below */
 	umin = usr[0];
 	umax = usr[1];
+	/* Debugging: When does the following happen... ? */
+	if(umin > umax)
+	    warning("CreateAtVector (from axis()): usr[0] = %g > %g = usr[1] !\n",
+		    umin, umax);
+
 	/* You get the 3 cases below by
 	 *  for(y in 1e-5*c(1,2,8))  plot(y, log = "y")
 	 */
