@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001   The R Development Core Team.
+ *  Copyright (C) 2001-3   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include "eda.h"
 #include <R_ext/Rdynload.h>
 
-R_CMethodDef CEntries[] = {
+static const R_CMethodDef CEntries[] = {
     {"Rsm_3RSR", (DL_FUNC) &Rsm_3RSR, 5},  
     {"Rsm_3RSS", (DL_FUNC) &Rsm_3RSS, 5},
     {"Rsm_3RS3R", (DL_FUNC) &Rsm_3RS3R, 5},  

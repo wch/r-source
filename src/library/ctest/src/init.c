@@ -22,24 +22,24 @@
 
 #include <Rinternals.h>
 
-R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, 
+static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, 
 					   INTSXP, REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
-R_NativePrimitiveArgType d2_t[5] = {INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
-R_NativePrimitiveArgType dansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
-R_NativePrimitiveArgType pansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
-R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
+static R_NativePrimitiveArgType d2_t[5] = {INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType dansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
+static R_NativePrimitiveArgType pansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
+static R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 
-R_NativePrimitiveArgType fexact_t[10] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, 
+static R_NativePrimitiveArgType fexact_t[10] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, 
 					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP};
 
-R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
-R_NativePrimitiveArgType kendall_tau_t[4] = {INTSXP, REALSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType kendall_tau_t[4] = {INTSXP, REALSXP, REALSXP, REALSXP};
 
-R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
-R_NativePrimitiveArgType prho_t[5] = {INTSXP, INTSXP, REALSXP, INTSXP, LGLSXP};
-R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
+static R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType prho_t[5] = {INTSXP, INTSXP, REALSXP, INTSXP, LGLSXP};
+static R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
 
-R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, SINGLESXP, INTSXP, INTSXP, INTSXP,
+static R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, SINGLESXP, INTSXP, INTSXP, INTSXP,
 				       SINGLESXP, REALSXP, REALSXP, INTSXP};
 
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2   The R Development Core Team.
+ *  Copyright (C) 2001-3   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include "ts.h"
 #include <R_ext/Rdynload.h>
 
-R_CMethodDef CEntries[] = {
+static const R_CMethodDef CEntries[] = {
     {"acf", (DL_FUNC) &acf, 6},
     {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
     {"artoma", (DL_FUNC) &artoma, 4},
@@ -36,7 +36,7 @@ R_CMethodDef CEntries[] = {
     {NULL, NULL, 0}
 };
 
-R_CallMethodDef CallEntries[] = {
+static const R_CallMethodDef CallEntries[] = {
     {"setup_starma", (DL_FUNC) &setup_starma, 8},
     {"free_starma", (DL_FUNC) &free_starma, 1},
     {"set_trans", (DL_FUNC) &set_trans, 2},
@@ -61,7 +61,7 @@ R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
-R_FortranMethodDef FortEntries[] = {
+static const R_FortranMethodDef FortEntries[] = {
     {"eureka", (DL_FUNC) &F77_SUB(eureka), 6},
     {"stl", (DL_FUNC) &F77_SUB(stl), 18},
     {NULL, NULL, 0}

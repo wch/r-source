@@ -22,17 +22,17 @@
 #include "modreg.h"
 #include <R_ext/Rdynload.h>
 
-R_CallMethodDef CallEntries[] = {
+static R_CallMethodDef CallEntries[] = {
     {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
     {NULL, NULL, 0}
 };
 
-R_NativePrimitiveArgType Srunmed_t[6] = {REALSXP,REALSXP,INTSXP,INTSXP,
+static R_NativePrimitiveArgType Srunmed_t[6] = {REALSXP,REALSXP,INTSXP,INTSXP,
 					 INTSXP,INTSXP};
-R_NativePrimitiveArgType Trunmed_t[9] = {INTSXP,INTSXP, REALSXP,REALSXP,
+static R_NativePrimitiveArgType Trunmed_t[9] = {INTSXP,INTSXP, REALSXP,REALSXP,
 					 INTSXP,INTSXP, REALSXP,INTSXP,INTSXP};
 
-R_CMethodDef CEntries[] = {
+static R_CMethodDef CEntries[] = {
     {"BDRksmooth", (DL_FUNC) &BDRksmooth, 8},
     {"loess_raw", (DL_FUNC) &loess_raw, 24},
     {"loess_dfit", (DL_FUNC) &loess_dfit, 13},
@@ -44,7 +44,7 @@ R_CMethodDef CEntries[] = {
     {NULL, NULL, 0}
 };
 
-R_FortranMethodDef FortEntries[] = {
+static R_FortranMethodDef FortEntries[] = {
     {"lowesw", (DL_FUNC) &F77_SUB(lowesw), 4},
     {"lowesp", (DL_FUNC) &F77_SUB(lowesp), 7},
     {"setppr", (DL_FUNC) &F77_SUB(setppr), 6},
