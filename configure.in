@@ -754,7 +754,7 @@ case "${host}" in
         shlib_cxxldflags="-shared"
       fi
     else
-      cxxpicflags="-PIC"
+      cxxpicflags="-KPIC"
     fi
     ;;
 esac
@@ -801,7 +801,7 @@ if test -z "${CPICFLAGS}"; then
 fi
 
 : ${FPICFLAGS=${fpicflags}}
-if test -z "${FPICFLAGS}"\
+if test -z "${FPICFLAGS}" \
     && test -z "${F2C}"; then
   case "${host}" in
     *aix4.[[2-9]]*)
