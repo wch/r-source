@@ -1,4 +1,4 @@
-#
+ #
 # ${R_HOME}/doc/manual/Makefile
 
 VPATH = @srcdir@
@@ -98,7 +98,7 @@ pkg-%.tex: FORCE
 FORCE:
 
 R-external.dvi: R-external.texi $(srcdir)/texinfo.tex
-	$(TEXI2DVI) $<
+	$(TEXI2DVI) R-external.texi
 
 info: R-external.info
 
