@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy.c,v 1.8 2001/11/26 13:13:53 pd Exp $
+ *  $Id: rproxy.c,v 1.9 2001/12/06 01:47:57 murrell Exp $
  */
 
 #define NONAMELESSUNION
@@ -431,7 +431,7 @@ int SYSCALL R_query_info (R_Proxy_Object_Impl* object,
   return SC_PROXY_OK;
 }
 // 01-01-25 | baier | new parameters
-int R_Proxy_Graphics_Driver (DevDesc* pDD,
+int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     char* pDisplay,
 			     double pWidth,
 			     double pHeight,
@@ -480,12 +480,12 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
 
   // add the graphics device to the set of drivers
   {
-    DevDesc* lDD = (DevDesc*) calloc (1, sizeof (DevDesc));
+    NewDevDesc* lDev = (NewDevDesc*) calloc (1, sizeof (NewDevDesc));
+    GEDevDesc *lDD;
 
     /* Do this for early redraw attempts */
-    lDD->displayList = R_NilValue;
-    GInit(&lDD->dp);
-    R_Proxy_Graphics_Driver (lDD,
+    lDev->displayList = R_NilValue;
+    R_Proxy_Graphics_Driver (lDev,
 			     "ActiveXDevice 1",
 			     100.0,
 			     100.0,
@@ -495,8 +495,9 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
 			     device);
     gsetVar(install(".Device"),
 	    mkString("ActiveXDevice 1"), R_NilValue);
-    addDevice(lDD);
-    initDisplayList(lDD);
+    lDD = GEcreateDevDesc(lDev);
+    addDevice((DevDesc*) lDD);
+    GEinitDisplayList(lDD);
   }
   return SC_PROXY_OK;
 }

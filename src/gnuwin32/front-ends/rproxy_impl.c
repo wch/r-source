@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.13 2001/08/25 19:12:23 ripley Exp $
+ *  $Id: rproxy_impl.c,v 1.14 2001/12/06 01:47:57 murrell Exp $
  */
 
 #define NONAMELESSUNION
@@ -66,7 +66,7 @@ extern char *getRHOME();
 extern void end_Rmainloop(), R_ReplDLLinit();
 extern void askok(char *);
 
-int R_Proxy_Graphics_Driver (DevDesc* pDD,
+int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     char* pDisplay,
 			     double pWidth,
 			     double pHeight,
