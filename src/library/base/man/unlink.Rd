@@ -28,7 +28,7 @@
 }
 \note{
   Prior to \R version 1.2.0 the default on Unix was \code{recursive =
-    TRUE}, and on Windows wmpty directories could be deleted.
+    TRUE}, and on Windows empty directories could be deleted.
 }
 \seealso{\code{\link{tempfile}} for file creation.}
 %Examples: tempfile has an 'unlink' example
