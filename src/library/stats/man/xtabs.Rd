@@ -35,8 +35,7 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
   There is a \code{summary} method for contingency table objects created
   by \code{table} or \code{xtabs}, which gives basic information and
   performs a chi-squared test for independence of factors (note that the
-  function \code{\link{chisq.test}} in package \pkg{ctest}
-  currently only handles 2-d tables).
+  function \code{\link{chisq.test}} currently only handles 2-d tables).
 
   If a left hand side is given in \code{formula}, its entries are simply
   summed over the cells corresponding to the right hand side; this also

@@ -44,8 +44,7 @@ is.table(x)
   There is a \code{summary} method for objects created by \code{table}
   or \code{\link{xtabs}}, which gives basic information and performs a
   chi-squared test for independence of factors (note that the function
-  \code{\link{chisq.test}} in package \pkg{ctest} currently only
-  handles 2-d tables).
+  \code{\link{chisq.test}} currently only handles 2-d tables).
 
   \code{as.table} and \code{is.table} coerce to and test for contingency
   table, respectively.
