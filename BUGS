@@ -297,3 +297,7 @@ Date: Fri, 14 May 1999 12:32:14 +0200
 Subject: glm crash
 From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
 Date: Fri, 21 May 1999 19:44:23 +0200
+* PR# 198 *
+Subject: Bug in loglin with variable called "c"
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sun, 23 May 1999 07:58:40 +0100 (BST)
