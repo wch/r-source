@@ -398,7 +398,7 @@ static pager pagercreate()
     setdata(p->mcopy, c);
     MCHECK(p->mpaste = newmenuitem("Paste to console", 'V', pagerpaste));
     setdata(p->mpaste, c);
-    MCHECK(m = newmenuitem("Select all", 0, pagerselectall));
+    MCHECK(m = newmenuitem("Select all", 'A', pagerselectall));
     setdata(m, c);
     if (!pagerMultiple) {
 	MCHECK(newmenu("View"));
