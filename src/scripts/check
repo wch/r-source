@@ -2,7 +2,7 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
-revision='$Revision: 1.14 $'
+revision='$Revision: 1.14.2.1 $'
 version=`set - ${revision}; echo ${2}`
 version="R package checker ${version}
 
@@ -63,9 +63,9 @@ while test -n "${1}"; do
     --library=*)
       lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --nsize=*)
-      R_opts="{R_opts} ${1}" ;;
+      R_opts="${R_opts} ${1}" ;;
     --vsize=*)
-      R_opts="{R_opts} ${1}" ;;
+      R_opts="${R_opts} ${1}" ;;
     *)
       pkgs="${pkgs} ${1}" ;;
   esac

@@ -35,6 +35,9 @@ BUG FIXES
  
     o   Matrix multiplication in cases such as 1:3 %*% t(1:2) is accepted.
 
+    o   Options --nsize and --vsize to R CMD check gave warning
+	messages and only one was accepted. 
+
 
 		CHANGES IN R VERSION 1.0.0
 
