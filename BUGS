@@ -83,6 +83,10 @@ Date: Thu, 13 Jun 2002 08:21:50 +0200
 --The supplementary (table of sum one) is fixed for 1.5.1.
 --Detection code for the first problem has been added to 1.5.1 which will stop
 --the crash, but the underlying cause is still open.
+* PR# 1716 *
+Subject: rdiscrete in e1071 fails when n==1
+From: "John Aitchison" <jaitchis@hwy.com.au>
+Date: Fri, 28 Jun 2002 10:28:17 +1000
 
 Directory:  Analyses
 
@@ -490,6 +494,12 @@ From: drew.tyre@csiro.au
 Date: Fri, 3 May 2002 04:26:07 +0200 (MET DST)
 --report on 1.4.0, about copying of graphics.
 --Awaiting test under 1.5.0.
+* PR# 1711 *
+Subject: GUI bug
+From: socrates@mail.ru
+Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
+--A crash that is *very* hard to trigger (after several
+--minutes of continuous resizing)
 
 Directory:  incoming
 
@@ -497,11 +507,25 @@ Directory:  incoming
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1682 *
-Subject: overzealous help-links.sh script!
-From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
-Date: Mon, 17 Jun 2002 15:10:18 +0200
-* PR# 1695 *
-Subject: Possible bug with glm.nb and starting values 
-From: bcooper@hsph.harvard.edu
-Date: Thu, 20 Jun 2002 18:59:35 +0200 (MET DST)
+* PR# 1713 *
+Subject: data.frame does not recycle consistently
+From: Kevin.Wright@pioneer.com
+Date: Thu, 27 Jun 2002 18:13:51 +0200 (MET DST)
+--same as 1193, where it causes problems for cbind.
+* PR# 1715 *
+Subject: package `methods' has persistent effects even if detached
+From: ripley@stats.ox.ac.uk
+Date: Thu, 27 Jun 2002 20:01:29 +0100 (BST)
+* PR# 1717 *
+Subject: Problem in optim(method="L-BFGS-B")
+From: polzehl@wias-berlin.de
+Date: Fri, 28 Jun 2002 11:53:13 +0200 (MET DST)
+* PR# 1718 *
+Subject: integrate function fails! 
+From: jechacon@unex.es
+Date: Fri, 28 Jun 2002 13:53:05 +0200 (MET DST)
+--Perhaps a warning could be added?
+* PR# 1719 *
+Subject: rw1051 binary dist missing dyn.load documentation
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Fri, 28 Jun 2002 10:36:30 -0400
