@@ -107,7 +107,7 @@ NEW FEATURES
     o	Ops(), cbind(), diff() and na.omit() methods for time series
 	objects moved from package ts to package base.
 
-    o	Started work on new package management system: package.status()
+    o	Started work on new package management system: packageStatus()
 	and friends.
 
     o	A package `methods' has been added, containing formal classes
