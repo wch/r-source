@@ -42,6 +42,7 @@ OBJS=		arithmetic.o \
 		eval.o \
 		format.o \
 		fourier.o \
+		iosupport.o \
 		gram.o \
 		list.o \
 		logic.o \
