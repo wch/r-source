@@ -508,8 +508,8 @@ int internal_ShowFile(char *file, char *header)
 
     /*
        This function can be used to open the named files in text editors, with the
-       given titles and overall title.  
-       If the file does not exist then the editor should be opened to create a new file. 
+       given titles and overall title.
+       If the file does not exist then the editor should be opened to create a new file.
     */
 
     /*
@@ -518,7 +518,7 @@ int internal_ShowFile(char *file, char *header)
      *     editor  = editor to be used.
      */
 
-int R_EditFiles(int nfile, char **file, char *editor)
+int R_EditFiles(int nfile, char **file, char **title, char *editor)
 {
     int   i;
     char  buf[1024];
@@ -528,7 +528,7 @@ int R_EditFiles(int nfile, char **file, char *editor)
 	    editor = "internal";
 	for (i = 0; i < nfile; i++) {
 	    if (!strcmp(editor, "internal")) {
-		Rgui_Edit(file[i], 0);
+		Rgui_Edit(file[i], title[i], 0);
 	    } else {
 		/* Quote path if necessary */
 		if (editor[0] != '"' && strchr(editor, ' '))
@@ -894,7 +894,7 @@ int cmdlineoptions(int ac, char **av)
 	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
 	strcpy(RUser, p);
 	p = getenv("HOMEPATH");
-	if(!p || strlen(RUser) + strlen(p) >= MAX_PATH) 
+	if(!p || strlen(RUser) + strlen(p) >= MAX_PATH)
 	    R_Suicide("Invalid HOMEDRIVE");
 	strcat(RUser, p);
     } else

@@ -8,9 +8,9 @@
         stop("fix requires a name")
     parent <- parent.frame()
     if (exists(subx, envir=parent, inherits = TRUE))
-        x <- edit(get(subx, envir=parent), ...)
+        x <- edit(get(subx, envir=parent), title = subx, ...)
     else {
-        x <- edit(function(){},...)
+        x <- edit(function(){}, title = subx, ...)
         environment(x) <- .GlobalEnv
     }
     assign(subx, x, env = .GlobalEnv)

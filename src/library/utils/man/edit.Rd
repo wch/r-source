@@ -11,7 +11,7 @@
   Invoke a text editor on an \R object.
 }
 \usage{
-\method{edit}{default}(name = NULL, file = "", editor = getOption("editor"), \dots)
+\method{edit}{default}(name = NULL, file = "", title = NULL, editor = getOption("editor"), \dots)
 vi(name = NULL, file = "")
 emacs(name = NULL, file = "")
 pico(name = NULL, file = "")
@@ -22,6 +22,7 @@ xedit(name = NULL, file = "")
   \item{name}{a named object that you want to edit. If name is missing
     then the file specified by \code{file} is opened for editing.}
   \item{file}{a string naming the file to write the edited version to.}
+  \item{title}{a display name for the object being edited.}
   \item{editor}{a string naming the text editor you want to use.  On
     Unix the default is set from the environment variables \env{EDITOR}
     or \env{VISUAL} if either is set, otherwise \code{vi} is used.  On
@@ -51,6 +52,10 @@ xedit(name = NULL, file = "")
   Should an error occur in parsing, possibly due to incorrect syntax, no
   value is returned. Calling \code{edit()}, with no arguments, will
   result in the temporary file being reopened for further editing.
+  
+  Currently only the internal editor in Windows makes use of the 
+  \code{title} option; it displays the given name in the window 
+  header.
 }
 \seealso{
   \code{\link{edit.data.frame}},

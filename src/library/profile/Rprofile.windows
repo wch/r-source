@@ -13,7 +13,7 @@ if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
 }
 if(interactive()) options(device="windows") else options(device = "postscript")
 options(graphics.record=FALSE)
-if(any(grep("Rgui", commandArgs()))) options(editor="internal") else options(editor="notepad")
+if(any(grep("Rgui", commandArgs(), TRUE))) options(editor="internal") else options(editor="notepad")
 if(any(grep("--ess", commandArgs()))) options(pager="console") else options(pager="internal")
 options(unzip="internal")
 options(mailer="none")

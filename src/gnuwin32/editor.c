@@ -55,6 +55,7 @@ static EditorData neweditordata (int file, char *filename)
     p->filename = (char *) malloc(_MAX_PATH*sizeof(char));
     if (filename)
 	strncpy(p->filename, filename, _MAX_PATH);
+    p->title = NULL;
     return p;
 }
 
@@ -62,12 +63,18 @@ void deleditordata(EditorData p){
     if (p->stealconsole)
 	fix_editor_up = FALSE;
     free(p->filename);
+    free(p->title);
     free(p);
 }
 
-static void editor_set_title(editor c, char *filename) {
+static void editor_set_title(editor c, char *title) {
     char wtitle[EDITORMAXTITLE+1];
-    strncpy(wtitle, filename, EDITORMAXTITLE);
+    textbox t = getdata(c);
+    EditorData p = getdata(t);
+    free(p->title);
+    strncpy(wtitle, title, EDITORMAXTITLE);
+    p->title = (char *) malloc(strlen(wtitle)+1);
+    strcpy(p->title, wtitle);
     strncat(wtitle, " - R Editor", EDITORMAXTITLE);
     settext(c, wtitle);
 }
@@ -253,7 +260,7 @@ int editorchecksave(editor c) {
     char buf[EDITORMAXTITLE + 100];
     if (ggetmodified(t)) {
 	snprintf(buf, EDITORMAXTITLE + 100, "\"%s\" has been modified.  Do you want to save the changes?",
-		 (p->file ? p->filename : "Untitled"));
+		 (p->title ? p->title : "Untitled"));
 	save = askyesnocancel(buf);
 	switch (save) {
 	case YES:
@@ -294,7 +301,7 @@ void editorcleanall()
 
 static void editornew()
 {
-    Rgui_Edit("", 0);
+    Rgui_Edit("", "", 0);
 }
 
 void menueditornew(control m)
@@ -318,7 +325,7 @@ static void editoropen(char *default_name)
 		break;
 	    }
 	}
-	Rgui_Edit(name, 0);
+	Rgui_Edit(name, name, 0);
     }
 }
 
@@ -748,7 +755,7 @@ static void eventloop(editor c)
    file. If calling from fix() or edit(), then don't send events to
    the console until editor is closed.  */
 
-int Rgui_Edit(char *filename, int stealconsole)
+int Rgui_Edit(char *filename, char *title, int stealconsole)
 {
     WIN32_FIND_DATA fd;
     editor c;
@@ -765,7 +772,7 @@ int Rgui_Edit(char *filename, int stealconsole)
     if (strlen(filename) > 0) {
 	if (FindFirstFile(filename, &fd) != INVALID_HANDLE_VALUE)
 	    editor_load_file(c, filename);
-	editor_set_title(c, filename);
+	editor_set_title(c, title);
     }
     else {
 	editor_set_title(c, "Untitled");
