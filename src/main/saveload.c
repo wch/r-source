@@ -726,22 +726,6 @@ static SEXP ConvertAttributes(SEXP attrs)
     return attrs;
 }
 
-#ifdef NOTYET
-/* It may be that there are LISTXP hiding in closures. */
-/* This will convert them. */
-
-static SEXP ConvertEnvironment(SEXP env)
-{
-    SEXP frame = FRAME(env);
-    while (frame != R_NilValue) {
-	if (TYPEOF(CAR(frame)) == LISTSXP)
-	    CAR(frame) = ConvertPairToVector(CAR(frame));
-	frame = CDR(frame);
-    }
-    return env;
-}
-#endif /* NOTYET */
-
 static SEXP ConvertPairToVector(SEXP obj)
 {
     int i, n;
@@ -1096,6 +1080,8 @@ static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp, Output
 	    /* Vector Objects */
 	    NewWriteVec(s, sym_list, env_list, fp, m, d);
 	    break;
+	case BCODESXP:
+	    error("cannot save byte code objects in version 1 workspaces");
 	default:
 	    error("NewWriteItem: unknown type %i", TYPEOF(s));
 	}
@@ -1292,7 +1278,7 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp, InputRoutines
 	PROTECT(s = NewReadVec(type, sym_table, env_table, fp, m, d));
 	break;
     case BCODESXP:
-	error("this version of R cannot read byte code objects");
+	error("cannot read byte code objects from version 1 workspaces");
     default:
 	error("NewReadItem: unknown type %i", type);
     }
@@ -1819,7 +1805,9 @@ static int R_ReadMagic(FILE *fp)
 
 static int R_DefaultSaveFormatVersion = 2;
 
-static void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
+/* ----- E x t e r n a l -- I n t e r f a c e s ----- */
+
+void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 {
     SaveLoadData data = {{NULL, 0, MAXELTSIZE}};
 
@@ -1849,8 +1837,6 @@ static void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 	R_Serialize(obj, &out);
     }
 }
-
-/* ----- E x t e r n a l -- I n t e r f a c e s ----- */
 
 void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 {
