@@ -64,6 +64,18 @@ assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
 setHook("plot.new", .newplot.hook)
 setHook("persp", .newplot.hook)
 rm(.newplot.hook)
+## add some hooks to label plot pages for grid graphics
+.gridplot.hook <- function()
+{
+    push.viewport(viewport(width=unit(1, "npc") - unit(1, "lines"),
+			   x=0, just="left"))
+    grid.text(paste("help(", ..nameEx, ")"), 
+	      x=unit(1, "npc") + unit(0.5, "lines"),
+	      y=unit(0.8, "npc"), rot=90, 
+	      gp=gpar(col="orchid"))
+}
+setHook("grid.newpage", .gridplot.hook)
+rm(.gridplot.hook)
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)

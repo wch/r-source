@@ -280,8 +280,10 @@ grid.newpage <- function(recording=TRUE) {
   .Call("L_newpage", PACKAGE="grid")
   .Call("L_initGPar", PACKAGE="grid")
   .Call("L_initViewportStack", PACKAGE="grid")
-  if (recording)
+  if (recording) {
     .Call("L_initDisplayList", PACKAGE="grid")
+    for (fun in getHook("grid.newpage")) try(fun())
+  }
 }
 
 ###########
