@@ -9,7 +9,7 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE,
            paper, family, bg, fg, width, height, horizontal, pointsize,
-           pagecentre, print.it, command))
+           pagecentre, print.it, command)
 
 %  paper, horizontal, width, height, family, pointsize, bg, fg)
 ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
