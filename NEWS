@@ -29,6 +29,8 @@ BUG FIXES
 
     o   xlab=expression now works again
 
+    o   dev2bitmap() works again.
+
 
 		CHANGES IN R VERSION 1.1.0
 
