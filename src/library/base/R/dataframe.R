@@ -90,20 +90,6 @@ dimnames.data.frame <-
   }
  
 
-###  This is a generalized method dispatch mechanism descibed by
-###  Chambers.  Rather than dispatching to method just for objects
-###  with an explicit "class" attribute, this dispatches on the
-###  "data.class" of an object.  Someone (MM?) had already
-###  implemented the data.class() function.
-###
-###  We first attempt to dispatch on the class using the builtin
-###  dispatch mechanism.  If that fails, we get the "data.class"
-###  and look for a suitable method based on that.
-###
-###  In essence, we have tagged an extra class onto the end
-###  of the class attribute vector.
-
-
 as.data.frame <-
   function(x, row.names = NULL, optional = FALSE)
     UseMethod("as.data.frame")
@@ -118,10 +104,8 @@ as.data.frame.default <-
   }
 
 
-
 ###  Here are methods ensuring that the arguments to "data.frame"
 ###  are in a form suitable for combining into a data frame.
-
 
 as.data.frame.data.frame <-
   function(x, row.names = NULL, optional = FALSE)
@@ -334,8 +318,6 @@ data.frame <-
 "[.data.frame" <-
   function(x, i, j, drop = if(missing(i)) TRUE else length(cols) == 1)
   {
-    ## handle the df[] and df[j] cases ...
-    
     if (nargs() < 3) {
       if (missing(i))
         return(x)
@@ -353,6 +335,7 @@ data.frame <-
     class(x) <- attr(x, "row.names") <- NULL
 
     ## handle the column only subsetting ...
+
     if(missing(i)) {
       x <- x[j]
       cols <- names(x)
