@@ -89,9 +89,9 @@ getOption(x)
       environment variables \code{R_DefaultPackages}, or if that is
       unset to \code{c("methods", "ctest")}.  (Set
       \code{R_DEFAULT_PACKAGES} to \code{NULL} or a comma-separated list
-      of package names.) A call to \code{options} should be in your
+      of package names.)  A call to \code{options} should be in your
       \file{.Rprofile} file to ensure that the change takes effect
-      before the base package is initialized (see \code{\link{Startup).}
+      before the base package is initialized (see \code{\link{Startup}}).}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.  This is especially important
@@ -212,17 +212,16 @@ getOption(x)
 #ifdef unix
       Defaults to the value of \code{R\_UNZIPCMD}, which is set in
       \file{etc/Renviron} if an \code{unzip} command was found during
-      configuration.
+      configuration.}
 #endif
 #ifdef windows
       Defaults to \code{"internal"} when the internal unzip code is
-      used.
+      used.}
 #endif
 #ifdef mac
       Defaults to \code{"internal"} when the internal unzip code is
-      used.
+      used.}
 #endif
-    }
     
     \item{\code{de.cellwidth}:}{integer: the cell widths (number of
       characters) to be used in the data editor \code{\link{dataentry}}.
