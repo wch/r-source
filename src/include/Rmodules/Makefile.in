@@ -30,7 +30,7 @@ distclean:
 	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
-TAGS info dvi check:
+install install-strip uninstall TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
