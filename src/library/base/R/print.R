@@ -86,10 +86,10 @@ print.coefmat <-
 	stop("'P.values is TRUE, but has.Pvalue not!")
 
     if(has.Pvalue && !P.values) {# P values are there, but not wanted
-	d <- dim(xm <- as.matrix(x[,-nc]))
+	d <- dim(xm <- data.matrix(x[,-nc , drop = FALSE]))
 	nc <- nc - 1
 	has.Pvalue <- FALSE
-    } else xm <- as.matrix(x)
+    } else xm <- data.matrix(x)
 
     k <- nc - has.Pvalue - (if(missing(tst.ind)) 1 else length(tst.ind))
     if(!missing(cs.ind) && length(cs.ind) > k) stop("wrong k / cs.ind")
