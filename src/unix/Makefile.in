@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
-SOURCES = dataentry.c devX11.c dynload.c rotated.c system.c
+SOURCES = dataentry.c devX11.c dynload.c edit.c rotated.c system.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 HEADERS = dataentry.h devX11.h rotated.h

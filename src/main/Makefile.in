@@ -32,7 +32,6 @@ SOURCES = \
 	dotcode.c \
 	dstruct.c \
 	duplicate.c \
-	edit.c \
 	envir.c \
 	errors.c \
 	eval.c \
