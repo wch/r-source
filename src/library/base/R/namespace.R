@@ -6,3 +6,14 @@
     else
         stop(paste("unknown name space:", pkg))
 }
+
+topenv <- function(envir = parent.frame()) {
+    while (! is.null(envir)) {
+        if (! is.null(attr(envir, "name")) ||
+            identical(envir, .GlobalEnv) ||
+            .Internal(isNamespaceEnv(envir)))
+            return(envir)
+        else envir <- parent.env(envir)
+    }
+    return(.GlobalEnv)
+}
