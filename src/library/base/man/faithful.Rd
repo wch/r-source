@@ -17,7 +17,7 @@
 }
 \references{
   Härdle, W. (1991)
-  \emph{Smoothing Techniques with Implementation in S.}
+  \emph{Smoothing Techniques with Implementation in S}.
   New York: Springer.
 
   Azzalini, A. and Bowman, A. W. (1990).
@@ -34,18 +34,18 @@
   (1990) use a more complete version.
 }
 \seealso{
-  \code{geyser} in package \code{MASS} for the Azzalini--Bowman version.
+  \code{geyser} in package \code{MASS} for the Azzalini-Bowman version.
 }
 \examples{
 data(faithful)
 f.tit <-  "faithful data: Eruptions of Old Faithful"
 
 ne60 <- round(e60 <- 60 * faithful$eruptions)
-all.equal(e60, ne60)# relative diff. ~ 1/10000
-table(zapsmall(abs(e60 - ne60)))# 0, 0.02 or 0.04
+all.equal(e60, ne60)             # relative diff. ~ 1/10000
+table(zapsmall(abs(e60 - ne60))) # 0, 0.02 or 0.04
 faithful$better.eruptions <- ne60 / 60
 te <- table(ne60)
-te[te >= 4] #-- (too) many multiples of 5 !
+te[te >= 4]                      # (too) many multiples of 5 !
 plot(names(te), te, type="h", main = f.tit, xlab = "Eruption time (sec)")
 
 plot(faithful[, -3], main = f.tit,

@@ -3,9 +3,9 @@
 \usage{data(chickwts)}
 \alias{chickwts}
 \format{A data frame with 71 observations on 2 variables.
-  \tabular{rlll}{
-    [1,]  \tab weight  \tab numeric  \tab Chick weight \cr
-    [2,]  \tab feed    \tab factor   \tab Feed type
+  \describe{
+    \item{weight:}{a numeric variable giving the chick weight.}
+    \item{feed:}{a factor giving the feed type.}
   }
 }
 \source{

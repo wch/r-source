@@ -133,7 +133,7 @@ To make these, cd to the `doc/manual' directory and use
 You will not be able to build the info files unless you have makeinfo
 version 4 or later installed (and most Linux distributions have 3.2).
 
-The dvi versions can be previewed and printed using standard programs
+The DVI versions can be previewed and printed using standard programs
 such as `xdvi' and `dvips'.  The PDF versions can be viewed using
 Acrobat Reader or (recent versions of) ghostscript: they have
 hyperlinks that can be followed in Acrobat Reader.  The info files are
@@ -171,7 +171,7 @@ install into another directory by using
 
 	make prefix=/path/to/here install
 
-To install dvi, info and PDF versions of the manuals, use `make
+To install DVI, info and PDF versions of the manuals, use `make
 install-dvi', `make install-info' and `make install-pdf', respectively.
 
 

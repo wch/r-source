@@ -9,16 +9,15 @@
 \format{
   A data frame with 7 economical variables, observed yearly from 1947 to
   1962 (\eqn{n=16}).
-
-  \tabular{ll}{
-    GNP.deflator: \tab GNP implicit price deflator (\eqn{1954=100})\cr
-    GNP:          \tab Gross National Producr.\cr
-    Unemployed:   \tab number of unemployed \cr
-    Armed.Forces: \tab number of .. in the armed forces\cr
-    Population:   \tab `noninstitutionalized' population \eqn{\ge} 14
-    years of age.\cr
-    Year:         \tab the year (time).\cr
-    Employed:     \tab number of people employed.
+  \describe{
+    \item{GNP.deflator:}{GNP implicit price deflator (\eqn{1954=100})}
+    \item{GNP:}{Gross National Product.}
+    \item{Unemployed:}{number of unemployed.}
+    \item{Armed.Forces:}{number of people in the armed forces.}
+    \item{Population:}{`noninstitutionalized' population \eqn{\ge} 14
+      years of age.}
+    \item{Year:}{the year (time).}
+    \item{Employed:}{number of people employed.}
   }
 
   The regression \code{lm(Employed ~ .)} is known to be highly
@@ -32,7 +31,7 @@
   819--841.
 }
 \examples{
-# give the data set in the form it is used in S-plus:
+## give the data set in the form it is used in S-PLUS:
 data(longley)
 longley.x <- data.matrix(longley[, 1:6])
 longley.y <- longley[, "Employed"]

@@ -25,7 +25,7 @@ data(sunspot)
   Monthly data: Sunspot Index Data Center,
   World Data Center-C1 For Sunspot Index
   Royal Observatory of Belgium, Av. Circulaire, 3, B-1180 BRUSSELS
-  \url{http://www.oma.be/KSB-ORB/SIDC/sidc\_txt.html}
+  \url{http://www.oma.be/KSB-ORB/SIDC/sidc_txt.html}
 
   Yearly data: H. Tong (1996)
   \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p. 471. 
