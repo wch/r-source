@@ -106,7 +106,7 @@ library <-
       }
       else {
         a <- .packages(all.available = TRUE, lib.loc = lib)
-        for (i in a) {
+        for (i in sort(a)) {
           title <- system.file("TITLE", pkg=i, lib=lib)
           if (title != "") 
             file.append(libfil, title)
@@ -184,11 +184,10 @@ provide <- function(name) {
 
 .packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
     if(all.available) {
-	fsep <- .Platform$ file.sep
-	a <- strsplit(system.file("*", pkg="", lib=lib.loc), fsep)
+	fsep <- .Platform$file.sep
+        a <- list.files(lib.loc, all.files=FALSE, full.names=FALSE)
 	ans <- character(0)
-	for (i in a) {
-	    name <- i[length(i)]
+	for (name in a) {
 	    pkg <- system.file(paste("R",name, sep=fsep), pkg=name,
                                lib=lib.loc) 
 	    if (pkg != "") ans <- c(ans,name)
