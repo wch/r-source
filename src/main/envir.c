@@ -958,7 +958,11 @@ SEXP findVar(SEXP symbol, SEXP rho)
 	    return (vl);
 	rho = ENCLOS(rho);
     }
+#ifdef FANCY_BINDINGS
+	return SYMBOL_BINDING_VALUE(symbol);
+#else
     return (SYMVALUE(symbol));
+#endif
 #endif
 }
 
