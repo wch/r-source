@@ -206,6 +206,38 @@ AC_SUBST(R_BROWSER)
 
 ### * C compiler and its characteristics.
 
+## R_PROG_CPP_CPPFLAGS
+## -------------------
+## In case of gcc, check whether the C preprocessor complains about
+## having '/usr/local/include' in its header search path (no matter how
+## it came there).  GCC 3.1 and 3.2 (at least) give warnings about
+## 'changing search order for system directory "/usr/local/include" as
+## it has already been specified as a non-system directory' which are at
+## least quite annoying.
+## <NOTE>
+## We currently do not distinguish whether '/usr/local/include' was
+## added as the R default, or by an explicit CPPFLAGS arg to configure.
+## If we wanted to, we should change
+##     : ${CPPFLAGS="-I/usr/local/include"}
+## in 'configure.ac' by something like
+##     : ${CPPFLAGS=${R_default_CPPFLAGS="-I/usr/local/include"}}
+## and test whether R_default_CPPFLAGS is non-empty.
+## </NOTE>
+AC_DEFUN([R_PROG_CPP_CPPFLAGS],
+[AC_REQUIRE([AC_PROG_CC])
+AC_REQUIRE([AC_PROG_CPP])
+if test "${GCC}" = yes; then
+  AC_LANG_PUSH(C)
+  AC_LANG_CONFTEST([AC_LANG_PROGRAM()])
+  if ${CPP} ${CPPFLAGS} conftest.${ac_ext} 2>&1 1>/dev/null | \
+      grep -q 'warning:.*system directory.*/usr/local/include'; then
+    CPPFLAGS=`echo ${CPPFLAGS} | \
+      sed 's|\(.*\)-I/usr/local/include *\(.*\)|\1\2|'`
+  fi
+  rm -f conftest.${ac_ext}
+  AC_LANG_POP(C)
+fi])# R_PROG_CPP_CPPFLAGS
+
 ## R_PROG_CC_M
 ## -----------
 ## Check whether the C compiler accepts '-M' for generating dependencies.
