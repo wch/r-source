@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-18, 2002-12-04
+Version 1.6-19, 2002-12-10
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1341,6 +1341,9 @@ distributions of R.)
 *adapt*
      Adaptive quadrature in up to 20 dimensions.
 
+*ade4*
+     Multivariate data analysis and graphical display.
+
 *agce*
      Analysis of growth curve experiments.
 
@@ -1558,6 +1561,9 @@ distributions of R.)
      Routines for log-linear models of incomplete contingency tables,
      including some latent class models via EM and Fisher scoring
      approaches.
+
+*grasper*
+     Generalized Regression Analysis and Spatial Predictions for R.
 
 *gregmisc*
      Miscellaneous functions written/maintained by Gregory R. Warnes.

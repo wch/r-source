@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-18, 2002-12-04
+@set FAQ-VERSION 1.6-19, 2002-12-10
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1598,6 +1598,8 @@ VAriance Stabilization for regression) methods for selecting regression
 transformations.
 @item adapt
 Adaptive quadrature in up to 20 dimensions.
+@item ade4
+Multivariate data analysis and graphical display.
 @item agce
 Analysis of growth curve experiments.
 @item akima
@@ -1766,6 +1768,8 @@ Basic functions for the generalised (Tukey) lambda distribution.
 @item gllm
 Routines for log-linear models of incomplete contingency tables,
 including some latent class models via EM and Fisher scoring approaches.
+@item grasper
+Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
 Miscellaneous functions written/maintained by Gregory R. Warnes.
 @item grid
