@@ -16,6 +16,7 @@ SSPKG=$(SPKG)/$(SRC)
 
 LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f)
 ifeq ($(strip $(LSOURCES)),)
+  LOBJS=
   DYNLIB=
 else
   LOBJS=$(foreach i,$(LSOURCES),$(basename $i).o)
@@ -55,6 +56,9 @@ INSTFILES=$(wildcard $(SPKG)/inst/*)
 all:  $(DPKG)/zzzz  $(DPKG)/R/$(PKG)  $(DATA) $(DYNLIB)
 
 include ../../gnuwin32/MkRules
+
+clean:
+	$(RM) $(SSPKG)/$(DLLNAME).dll $(LOBJS)  $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def
 
 SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 

@@ -22,6 +22,7 @@ EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
 
 LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
 PKGS=$(foreach i, $(PACKAGES), pkg-$i)
+PKGCLEAN=$(foreach i, $(PACKAGES), pkgclean-$i)
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
@@ -106,6 +107,9 @@ ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help contents-$*
 endif
 
+pkgclean-%:
+	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg clean
+
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
 	-@mkdir -p ../library/$*/check
@@ -121,7 +125,7 @@ ziponly-%:
 
 bootstrap-DLLNM=boott
 
-clean: cleanwin
+clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps
 
 distclean veryclean: clean
