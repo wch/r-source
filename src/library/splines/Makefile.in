@@ -22,12 +22,16 @@ all: Makefile
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in DESCRIPTION INDEX TITLE; do \
+	@for f in INDEX TITLE; do \
 	if test -f $(srcdir)/$${f}; then \
 	  $(INSTALL_DATA) $(srcdir)/$${f} \
 	    $(top_builddir)/library/$(pkg); \
 	fi; \
 	done
+	@if test -f $(top_builddir)/$(subdir)/DESCRIPTION; then \
+	  $(INSTALL_DATA)  $(top_builddir)/$(subdir)/DESCRIPTION \
+	    $(top_builddir)/library/splines; \
+	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
 	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
