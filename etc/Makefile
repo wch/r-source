@@ -1,5 +1,8 @@
 ## ${RHOME}/etc/Makefile
 
+include ../Makeconf
+
+
 CleanMe1 = SHLIB COMPILE INSTALL REMOVE
 CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
 CleanMe3 = build-help help.pretty html2dos
@@ -53,3 +56,12 @@ moreclean: clean
 distclean realclean:
 	@rm -fr $(CleanMe)
 	@rm -f stamp-*
+
+
+install:
+	$(INSTALL) -d $(rhome)/etc
+	$(INSTALL) Makeconf COMPILE INSTALL REMOVE SHLIB $(rhome)/etc
+	$(INSTALL) Rd2dvi  Rd2txt Rdconv Rdconvlib.pl Rdindex Rman2Rd \
+		   Sd2Rd build-help buildlib.pl help.pretty \
+		   html-layout.pl $(rhome)/etc
+	$(INSTALL_PROGRAM) Rd2txt Rdconv Rdindex Sd2Rd $(bindir)

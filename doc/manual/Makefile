@@ -84,3 +84,5 @@ realclean: clean
 	@echo "'realclean'ing in manual/latex"
 	@-rm -f -r auto pkg-*.tex
 
+install:
+	@echo "Not implemented yet ..."
