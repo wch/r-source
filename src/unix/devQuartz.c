@@ -578,7 +578,7 @@ Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
     dd->canChangeFont = TRUE;
     dd->canRotateText = TRUE;
     dd->canResizeText = TRUE;
-    dd->canClip       = FALSE;
+    dd->canClip       = TRUE;
     dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;
 
