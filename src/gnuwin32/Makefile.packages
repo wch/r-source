@@ -11,16 +11,15 @@ RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 PKGD = $(shell ./Rpwd.exe $(PKGDIR))# must be absolute path
 
-ifdef DEBUG
- OPTFLAGS=-g -O2 -Wall
- DLLFLAGS=
-else
- OPTFLAGS=-O2 -Wall -pedantic
- DLLFLAGS=-s
-endif
+FLIBS+=-lRblas
 
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
+
+libRblas.a:  Rblas.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
+	  --def Rblas.def --output-lib libRblas.a
+
 
 #                          ===== Packages ======
 
@@ -28,7 +27,7 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	$(MAKE) DLLNM=$($*-DLLNM) \
+	$(MAKE) DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)

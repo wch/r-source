@@ -96,7 +96,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     atomic vector classes (logical, integer, numeric, complex and
     character), there needs to be an \code{as} method for
     conversion from \code{"character"} to the specified class, or
-    \code{NA} when \code{\link{type.convert}} is used.}
+    \code{NA} when \code{\link{type.convert}} is used.  NB: \code{as} is
+    in package \code{methods}.}
 
   \item{nrows}{the maximum number of rows to read in.  Negative values
     are ignored.}
@@ -110,7 +111,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     (by \code{\link{make.names}}) so that they are.}
 
   \item{fill}{logical. If \code{TRUE} then in case the rows have unequal
-    length, blank fields are implicitly added.}
+    length, blank fields are implicitly added.  See Details.}
 
   \item{strip.white}{logical. Used only when \code{sep} has
     been specified, and allows the stripping of leading and trailing

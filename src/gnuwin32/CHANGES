@@ -28,6 +28,9 @@ hence to circumvent it.
 
 File | Print on the menu of a windows() graphics device was not working.
 
+The binary distribution could not make packages which needed to link
+to Rblas.dll
+
 
 
 rw1050
