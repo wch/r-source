@@ -96,8 +96,13 @@ plot <- function(x, ...) {
     else UseMethod("plot")
 }
 
-plot.function <- function(fn, from=0, to=1, ...) {
-    curve(fn, from, to, ...)
+## xlim = NULL (instead of "missing", since it will be passed to plot.default:
+plot.function <- function(fn, from = 0, to = 1, xlim = NULL, ...) {
+    if(!is.null(xlim)) {
+        if(missing(from)) from <- xlim[1]
+        if(missing(to))   to   <- xlim[2]
+    }
+    curve(fn, from, to, xlim = xlim, ...)
 }
 
 ### NOTE: cex = 1 is correct, cex = par("cex") gives *square* of intended!
@@ -107,7 +112,7 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 			 ann=par("ann"), axes=TRUE, frame.plot=axes,
 			 panel.first=NULL, panel.last=NULL,
 			 col=par("col"), bg=NA, pch=par("pch"),
-			 cex=1, lty=par("lty"), lab=par("lab"),
+			 cex = 1, lty=par("lty"), lab=par("lab"),
                          lwd=par("lwd"), asp=NA, ...)
 {
     xlabel <- if (!missing(x)) deparse(substitute(x))

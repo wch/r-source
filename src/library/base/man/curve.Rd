@@ -5,7 +5,7 @@
 \usage{
 curve(expr, from, to, n = 101, add = FALSE, type = "l",
       ylab = NULL, log = NULL, \dots)
-plot.function(fn, from = 0, to = 1, n = 101, \dots)
+plot.function(fn, from = 0, to = 1, xlim, \dots)
 }
 \arguments{
 \item{expr}{an expression written as a function of \code{x}, or
@@ -14,6 +14,9 @@ plot.function(fn, from = 0, to = 1, n = 101, \dots)
 \item{from,to}{the range over which the function will be plotted.}
 \item{n}{integer; the number of x values at which to evaluate.}
 \item{add}{logical; if \code{TRUE} add to already existing plot.}
+
+\item{xlim}{numeric of length 2; if specified, it serves as default for
+  \code{c(from,to)}.}
 \item{\dots}{graphical parameters can also be specified as arguments.
   \code{plot.function} passes all these to \code{curve}.}
 }
@@ -28,12 +31,10 @@ plot.function(fn, from = 0, to = 1, n = 101, \dots)
   (with \code{x} inside) must return a numeric of the same length as
   \code{x}.
 
-  This used to be a quick hack which seems to serve a useful purpose,
+  This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
-}
-\value{
-  \code{NULL}. For ``expensive'' \code{expr}essions, you should use
-  smarter tools.
+
+  For ``expensive'' \code{expr}essions, you should use smarter tools.
 }
 \seealso{
   \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
@@ -43,8 +44,8 @@ par(mfrow=c(2,2))
 curve(x^3-3*x, -2, 2)
 curve(x^2-2, add = TRUE, col = "violet")
 
-curve(sin, -pi, 3*pi)
-plot(cos)
+plot(cos, xlim = c(-pi,3*pi), n = 1001, col = "blue")
+
 chippy <- function(x) sin(cos(x)*exp(-x/2))
 curve(chippy, -8, 7, n=2001)
 

@@ -11,7 +11,7 @@
 
 NEW FEATURES
 
-    o   hclust() takes new argument `members' allowing dissimilarity
+    o	hclust() takes new argument `members' allowing dissimilarity
 	matrices both for singletons (as until now) and clusters.
 
     o	hist() now returns a "histogram" object and calls the new
@@ -21,30 +21,30 @@ NEW FEATURES
     o	The more recent GNU regex from grep-2.4.2 is used.  This uses
 	locale-based ordering for ranges on platforms with strcoll.
 
-    o   `where' command added to debug.
+    o	`where' command added to debug.
 
-    o   inherits() is now an internal function and compatible with S.
+    o	inherits() is now an internal function and compatible with S.
 
-    o   R CMD build and check have been completely re-written in perl. In
-        addition to running examples, check now also checks the directory
-        structure and control files, makes a temporary installation and
-        runs LaTeX on the help pages. Build has been reduced to
-        cleaning, rewriting indices and creating tar files.
+    o	R CMD build and check have been completely re-written in perl. In
+	addition to running examples, check now also checks the directory
+	structure and control files, makes a temporary installation and
+	runs LaTeX on the help pages. Build has been reduced to
+	cleaning, rewriting indices and creating tar files.
 
 	The same files of Perl code are now also used under Windows.
 
-    o   Add-ons for utilities like Perl or LaTeX have now a central
-        place in $R_HOME/share. Migration of existing files might take
-        a while, though.
+    o	Add-ons for utilities like Perl or LaTeX have now a central
+	place in $R_HOME/share. Migration of existing files might take
+	a while, though.
 
-    o   --nsize up to 50M (2Gb on 64-bit Solaris) allowed.
+    o	--nsize up to 50M (2Gb on 64-bit Solaris) allowed.
 
     o	The commands history can be loaded with loadhistory(), saved
 	with savehistory() and displayed with history(), under Windows
 	and under Unix using the readline or GNOME interfaces.
 
     o	if(*) now gives a more intelligible error message
-        when "*" cannot be coerced to logical.
+	when "*" cannot be coerced to logical.
 
     o	New function Rprof() for profiling R expressions under Unix.
 	Configure with --enable-R-profiling to make this operational.
@@ -92,7 +92,7 @@ NEW FEATURES
 
     o	Configure/build variable FLIBS now only contains the Fortran 77
 	intrinsic and run-time libraries needed for linking a Fortran 77
-	program or shared library (as determined by configure).  BLAS
+	program or shared library (as determined by configure).	 BLAS
 	library detection was extended, with results saved to the Make
 	variable BLAS_LIBS which is also available to add-on packages.
 
@@ -122,8 +122,8 @@ NEW FEATURES
     o	New functions write.ftable() and read.ftable() for writing out
 	and reading in flat contingency tables.
 
-    o   Class "dendrogram" in package mva providing general support
-        for tree-like structures (plotting, cutting, ...).
+    o	Class "dendrogram" in package mva providing general support
+	for tree-like structures (plotting, cutting, ...).
 
     o	New argument `recursive' to unlink(). The default behaviour on
 	Unix is now that of rm -f, not rm -rf.
@@ -147,28 +147,31 @@ NEW FEATURES
 	visualize the residuals from a log-linear model using color and
 	outline.
 
+    o	plot.function() and curve() now take xlim as default for (from,to)
+	if the former is specified.
+
 
 BUG FIXES
 
-    o   Postscript driver no longer uses the initclip operator, which
-        was against the EPSF specifications and broke inclusion of
+    o	Postscript driver no longer uses the initclip operator, which
+	was against the EPSF specifications and broke inclusion of
 	graphics in some documents.
 
     o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
 
-    o   old.packages() now sorts version strings correctly by
+    o	old.packages() now sorts version strings correctly by
 	splitting at "." and "-".
 
-    o   Paper sizes for "a4" and "legal" were interchanged in dev.print.
+    o	Paper sizes for "a4" and "legal" were interchanged in dev.print.
 
-    o   data(state)'s  state.abb  has been corrected to use official
-        2-letter abbrevations.
+    o	data(state)'s  state.abb  has been corrected to use official
+	2-letter abbrevations.
 
-    o   c(0.099999994, 0.2) prints as 0.1 0.2 not 0.10 0.20 after
+    o	c(0.099999994, 0.2) prints as 0.1 0.2 not 0.10 0.20 after
 	correcting the precision calculations.
 
     o	Internal function fprec was overflowing for numbers around
-        1e-305.
+	1e-305.
 
     o	print.noquote("ABC") now works.
 

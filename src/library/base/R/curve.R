@@ -1,5 +1,5 @@
 curve <- function(expr, from, to, n=101, add=FALSE, type="l",
-		  ylab = NULL, log=NULL, ...)
+		  ylab=NULL, log=NULL, xlim=NULL, ...)
 {
     sexpr <- substitute(expr)
     if(is.name(sexpr)) {
@@ -12,7 +12,7 @@ curve <- function(expr, from, to, n=101, add=FALSE, type="l",
 	expr <- sexpr
 	if(is.null(ylab)) ylab <- deparse(sexpr)
     }
-    lims <- delay(par("usr"))
+    lims <- if(is.null(xlim)) delay(par("usr")) else xlim
     if(missing(from)) from <- lims[1]
     if(missing(to)) to <- lims[2]
     lg <- if(length(log)) log else ""
@@ -27,5 +27,5 @@ curve <- function(expr, from, to, n=101, add=FALSE, type="l",
     if(add)
 	lines(x, y, type=type, ...)
     else
-	plot(x, y, type=type, ylab = ylab, log=lg, ...)
+	plot(x, y, type=type, ylab = ylab, xlim = xlim, log=lg, ...)
 }
