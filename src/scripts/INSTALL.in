@@ -38,6 +38,7 @@ Options:
       --no-save         do not save the package source as an image file
       --lazy            use lazy loading
       --no-lazy         do not use lazy loading (current default)
+      --lazy-data       use lazy loading for data
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -161,6 +162,7 @@ save="CHECK"
 save_args=
 fake=false
 lazy=false
+lazy_data=false
 
 while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
@@ -179,6 +181,8 @@ while test -n "${1}"; do
       lazy=true ;;
     --no-lazy)
       lazy=false ;;
+    --lazy-data)
+      lazy_data=true ;;
     --no-save)
       save=false ;;
     -d|--debug)
@@ -468,12 +472,18 @@ do_install_source () {
     rm -f "${R_PACKAGE_DIR}/data/"*
     cp data/* "${R_PACKAGE_DIR}/data" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/data/"*
-    if test -n "${use_zip_data}" \
-        && test -n "${R_UNZIPCMD}" \
-        && test -n "${R_ZIPCMD}"; then
-      (cd "${R_PACKAGE_DIR}/data";
-        find . -type f -print > filelist
-        ${R_ZIPCMD} -q -m Rdata * -x filelist 00Index)
+    if ${lazy_data}; then
+      echo "   moving datasets to DB"
+      echo "tools:::data2LazyLoadDB(\"${pkg_name}\")" | \
+        R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla > /dev/null
+    else
+      if test -n "${use_zip_data}" \
+	  && test -n "${R_UNZIPCMD}" \
+	  && test -n "${R_ZIPCMD}"; then
+	(cd "${R_PACKAGE_DIR}/data";
+	  find . -type f -print > filelist
+	  ${R_ZIPCMD} -q -m Rdata * -x filelist 00Index)
+      fi
     fi
   fi
 

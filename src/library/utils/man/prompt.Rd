@@ -85,7 +85,7 @@ data(women) # data.frame
 prompt(women)
 unlink("women.Rd")
 
-data(sunspots, package="stats") # non-data.frame data
+data(sunspots) # non-data.frame data
 prompt(sunspots)
 unlink("sunspots.Rd")
 }

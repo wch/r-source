@@ -45,10 +45,6 @@ all: Makefile DESCRIPTION
 	    echo "$${tmp}") \
 	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
-	@for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
-	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
-	done
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo
 	@for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \

@@ -210,7 +210,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   and \code{\link{residuals}}. Further, \code{\link{lm}} for
   non-generalized \emph{linear} models.
 
-  \code{\link{esoph}}, \code{\link{infert}} and
+  \code{\link[datasets]{esoph}}, \code{\link[datasets]{infert}} and
   \code{\link{predict.glm}} have examples of fitting binomial glms.
 }
 \author{

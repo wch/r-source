@@ -9,6 +9,15 @@ function(..., list = character(0),
 
     ## Find the directories of the given packages and maybe the working
     ## directory.
+    if(!is.null(package)) {
+        if(any(package %in% "base"))
+            warning("datasets have been moved from package ",
+                    sQuote("base"), " to package ", sQuote("datasets"))
+        if(any(package %in% "stats"))
+           warning("datasets have been moved from package ",
+                    sQuote("stats"), " to package ", sQuote("datasets"))
+        package[package %in% c("base", "stats")] <- "datasets"
+    }
     paths <- .find.package(package, lib.loc, verbose = verbose)
     if(is.null(lib.loc))
         paths <- c(.path.package(package, TRUE), getwd(), paths)
@@ -113,7 +122,11 @@ function(..., list = character(0),
         found <- FALSE
         for(p in paths) {
             ## does this package have "Rdata"?
-            if(tools::file_test("-f", file.path(p, "Rdata.rds"))) {
+            ## we need to handle that separately, so for now we
+            ## will assume that a match higher up the search path
+            ## will work out and so don't look here.
+            if(!length(files) &&
+               tools::file_test("-f", file.path(p, "Rdata.rds"))) {
                 rds <- .readRDS(file.path(p, "Rdata.rds"))
                 if(name %in% names(rds)) {
                     ## found it, so copy objects from database and be done
@@ -122,10 +135,6 @@ function(..., list = character(0),
                     thispkg <- sub("_.*$", "", thispkg) # versioned installs.
                     thispkg <- paste("package:", thispkg, sep="")
                     objs <- rds[[name]]
-#                     for(obj in objs)
-#                         assign(obj,
-#                                get(obj, thispkg, inherits = FALSE),
-#                                envir = envir)
                     lazyLoad(file.path(p, "Rdata"), envir = envir,
                              filter = function(x) x %in% objs)
                     break

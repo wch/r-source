@@ -107,7 +107,7 @@ data(\dots, list = character(0), package = NULL,
 \examples{
 require(utils)
 data()                      # list all available data sets
-data(package = "base")      # list the data sets in the base package
+data(package = "datasets")  # list the data sets in the datasets package
 data(USArrests, "VADeaths") # load the data sets 'USArrests' and 'VADeaths'
 help(USArrests)             # give information on data set 'USArrests'
 }

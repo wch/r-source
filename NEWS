@@ -26,7 +26,16 @@ USER-VISIBLE CHANGES
 	R CMD INSTALL --lazy.  [This is not currently the default, but
 	it may well be so by release time.]
 
-    o	The default barplot() method now by default uses a
+    o	All the datasets formerly in packages 'base' and 'stats' have
+	been moved to a new package 'datasets'.  data() does the
+	appropriate substitution, with a warning.  However, calls to
+	data() are not normally needed as the data object are visible
+	in the 'datasets' package.
+
+	Packages can be installed to make their data objects available
+	via R CMD INSTALL --lazy-data.  [This is experimental.]
+
+    o	The default barplot() method by default uses a
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
 

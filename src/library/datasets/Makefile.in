@@ -1,20 +1,21 @@
 #
-# ${R_HOME}/src/library/stats/Makefile
+# ${R_HOME}/src/library/datasets/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../../..
-subdir = src/library/stats
+subdir = src/library/datasets
 
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = COPYRIGHTS.modreg DESCRIPTION.in Makefile.in \
-  NAMESPACE SOURCES.ts install.R
+DISTFILES = DESCRIPTION.in Makefile.in
 
-pkg = stats
+pkg = datasets
+
+RSRC = $(srcdir)/R/zzz.R
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 
@@ -22,10 +23,10 @@ all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  echo ".packageName <- \"$(pkg)\"" >  $${f}; \
-	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` >> $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
-	@for f in COPYRIGHTS.modreg SOURCES.ts NAMESPACE; do \
+	  cat $(RSRC) >> $${f}; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
+	  $(top_builddir)/library/$(pkg)/R/$(pkg))
+	@for f in COPYRIGHTS INDEX SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
@@ -41,11 +42,14 @@ all: Makefile DESCRIPTION
 	    echo "$${tmp}") \
 	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
-	@if test -d $(srcdir)/demo; then \
-	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
-	  for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
+	@if test -d $(srcdir)/data; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
+	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
 	  done; \
+	  rm -f $(top_builddir)/library/$(pkg)/data/Rdata.*; \
+	  echo "tools:::data2LazyLoadDB(\"$(pkg)\")" | \
+	    R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null; \
 	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
@@ -57,28 +61,15 @@ all: Makefile DESCRIPTION
 	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
 	fi
-	@if test -d src; then \
-	  (cd src && $(MAKE)) || exit 1; \
-	fi
-	@$(MAKE) RfilesLazy
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-RfilesLazy:
-	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
-	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
-
 mostlyclean: clean
 clean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
-	-@rm -f all.R .RData
 distclean:
-	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 

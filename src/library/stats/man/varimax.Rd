@@ -46,7 +46,7 @@ promax(x, m = 4)
   Lawley, D. N. and Maxwell, A. E. (1971) \emph{Factor Analysis as a
     Statistical Method}. Second edition. Butterworths.
 }
-\seealso{\code{\link{factanal}}, \code{\link{Harman74.cor}}.}
+\seealso{\code{\link{factanal}}, \code{\link[datasets]{Harman74.cor}}.}
 
 \examples{
 data(swiss)

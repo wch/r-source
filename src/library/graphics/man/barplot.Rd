@@ -128,7 +128,7 @@ lines(r, tN, type='h', col='red', lwd=2)
 barplot(tN, space = 1.5, axisnames=FALSE,
         sub = "barplot(..., space= 1.5, axisnames = FALSE)")
 
-data(VADeaths, package = "base")
+data(VADeaths)
 barplot(VADeaths, plot = FALSE)
 barplot(VADeaths, plot = FALSE, beside = TRUE)
 
