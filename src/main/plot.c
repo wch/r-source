@@ -1761,9 +1761,10 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(isExpression(sub))
 	    GMMathText(VECTOR(sub)[0], 1, dd->gp.mgp[0]+1.0, 0,
 		       xNPCtoUsr(adj, dd), 0, dd);
-	else
-	    GMtext(CHAR(STRING(sub)[0]), 1, dd->gp.mgp[0]+1.0, 0,
+	else {
+	    GMtext(CHAR(STRING(sub)[i]), 1, dd->gp.mgp[0]+1.0, 0,
 		   xNPCtoUsr(adj, dd), 0, dd);
+	}
     }
     if(xlab != R_NilValue) {
 	dd->gp.cex = dd->gp.cexbase * dd->gp.cexlab;
@@ -1772,9 +1773,12 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(isExpression(xlab))
 	    GMMathText(VECTOR(xlab)[0], 1, dd->gp.mgp[0], 0,
 		       xNPCtoUsr(adj, dd), 0, dd);
-	else
-	    GMtext(CHAR(STRING(xlab)[0]), 1, dd->gp.mgp[0], 0,
+	else {
+	    n = length(xlab);
+	    for(i=0 ; i<n ; i++)
+	        GMtext(CHAR(STRING(xlab)[i]), 1, dd->gp.mgp[0] + i, 0,
 		   xNPCtoUsr(adj, dd), 0, dd);
+	}
     }
     if(ylab != R_NilValue) {
 	dd->gp.cex = dd->gp.cexbase * dd->gp.cexlab;
@@ -1783,9 +1787,12 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(isExpression(ylab))
 	    GMMathText(VECTOR(ylab)[0], 2, dd->gp.mgp[0], 0,
 		       yNPCtoUsr(adj, dd), 0, dd);
-	else
-	    GMtext(CHAR(STRING(ylab)[0]), 2, dd->gp.mgp[0], 0,
+	else {
+	    n = length(ylab);
+	    for(i=0 ; i<n ; i++)
+	        GMtext(CHAR(STRING(ylab)[i]), 2, dd->gp.mgp[0] - i, 0,
 		   yNPCtoUsr(adj, dd), 0, dd);
+        }
     }
     GMode(dd, 0);
     GRestorePars(dd);
