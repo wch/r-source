@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-0, 2003-10-07
+Version 1.8-1, 2003-10-07
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1871,6 +1871,14 @@ distributions of R.)
 *lpridge*
      Local polynomial (ridge) regression.
 
+*mapdata*
+     Supplement to package *maps*, providing the larger and/or
+     higher-resolution databases.
+
+*maps*
+     Draw geographical maps.  Projection code and larger maps are in
+     separate packages.
+
 *maptools*
      Set of tools for manipulating and reading geographic data, in
      particular ESRI shapefiles.
@@ -2143,6 +2151,10 @@ distributions of R.)
 
 *seao.gui*
      Simple Evolutionary Algorithm Optimization: graphical user interface.
+
+*segmented*
+     Functions to estimate break-points of segmented relationships in
+     regression models (GLMs).
 
 *sem*
      Functions for fitting general linear Structural Equation Models (with
