@@ -11,6 +11,8 @@
 
 NEW FEATURES
 
+    o   HTML search now works for all packages (after new installation).
+
     o   R INSTALL now also copies DESCRIPTION file to target dir.
 
     o	offsets should work with lm as well as with glm now

@@ -173,8 +173,10 @@ for pkg in ${PKGS}; do
 	  echo "  ${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
 	fi
 	${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}
+	${RHOME}/bin/Rd2contents ../${pkg} > ${lib}/${pkg}/CONTENTS
 	if test ${lib} = ${RHOME}/library; then 
 	  ${RHOME}/bin/build-help --htmllists
+	  cat ${RHOME}/library/*/CONTENTS > ${RHOME}/doc/html/search/index.txt
 	fi	
       fi
     fi

@@ -361,7 +361,7 @@ sub build_htmlfctlist {
 
     open(htmlfile, ">$RHOME/doc/html/function.$HTML");
 
-    print htmlfile html_pagehead("All Installed Functions", ".",
+    print htmlfile html_pagehead("Functions installed in RHOME", ".",
 				 "index.$HTML", "Top",
 				 "packages.$HTML", "Packages");
 

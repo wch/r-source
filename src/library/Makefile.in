@@ -50,8 +50,8 @@ stamp-help: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
 	@touch $@
 stamp-html: $(srcdir)/*/man/*.Rd
 	@rm -f $@
-	@RHOME=`cd $(top_builddir); pwd`; export RHOME 
 	@OPTS="--html"  $(MAKE) DOCS
+	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	$${RHOME}/bin/build-help --htmllists
 	@touch $@
 stamp-latex: $(srcdir)/*/man/*.Rd
@@ -67,10 +67,12 @@ $(top_builddir)/library/LibIndex:
 	@if [ ! -f $@ ]; then touch $@; fi
 
 DOCS:
-	@-for pkg in $(PKGS); do \
+	@for pkg in $(PKGS); do \
 	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	  $${RHOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \
-	done
+	  $${RHOME}/bin/Rd2contents $(srcdir)/$${pkg} > $${RHOME}/library/$${pkg}/CONTENTS; \
+	done; \
+	cat $${RHOME}/library/*/CONTENTS > $${RHOME}/doc/html/search/index.txt
 
 mostlyclean: clean
 clean:

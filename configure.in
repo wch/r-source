@@ -684,7 +684,7 @@ AC_OUTPUT(Makeconf Makefile
   src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex
   src/scripts/Rman2Rd src/scripts/SHLIB src/scripts/Sd2Rd
   src/scripts/build-help src/scripts/fwf2table src/scripts/help.pretty
-  src/scripts/html2dos
+  src/scripts/html2dos src/scripts/Rd2contents
   tests/Makefile tests/Examples/Makefile
 )
 

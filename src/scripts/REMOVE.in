@@ -58,4 +58,5 @@ fi
 
 if test ${lib} = ${RHOME}/library; then
   ${RHOME}/bin/build-help --htmllists
+  cat ${RHOME}/library/*/CONTENTS > ${RHOME}/doc/html/search/index.txt
 fi
