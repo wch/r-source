@@ -8,7 +8,8 @@ summary.default <-
     else if(is.matrix(object))
 	return(summary.matrix(object, digits = digits, ...))
 
-    value <- if(is.numeric(object)) {
+    value <- if(is.logical(object)) c(Mode = "logical", table(object))
+    else if(is.numeric(object)) {
 	nas <- is.na(object)
 	object <- object[!nas]
 	qq <- quantile(object)
