@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (April 22, 1999)
+Version 0.65.0 Under development (unstable) (May 8, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -22,8 +22,8 @@ Type	"q()" to quit R.
 +     "\n\t starting with 'is.' :\t ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1070 
-Number of builtin functions:	 1049 
+Number of base objects:		 1075 
+Number of builtin functions:	 1054 
 	 starting with 'is.' :	  37 
 > ## 0.14 : 31
 > ## 0.50 : 33
@@ -283,6 +283,9 @@ is.recursive   : |
 is.symbol      : . 
 is.ts          : . 
 is.vector      : | 
+Warning messages: 
+1: is.na() applied to non-(list or vector) in: fn(obj) 
+2: is.nan() applied to non-(list or vector) in: fn(obj) 
 > ## fails (0.50-a) [is.loaded]
 > ##   is.ALL(e13, not.using=c("is.single", "is.finite", "is.na"))
 > is.ALL(y ~ x) #--> (0.49):  NA	for 'is.na' (& is.finite)

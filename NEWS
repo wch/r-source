@@ -6,6 +6,12 @@
 
 NEW FEATURES
 
+    o   expression()'s have gotten semantics that are closer to
+        those of S. They don't get evaluated except when expressedly
+        specified. Example: e<-expression(x); e[[1]]<-expression(123);
+        eval(e) now gives expression(123), not 123. This fixes some
+        problems with expressions in the list argument to do.call().
+
     o   Convenience functions parent.frame() and eval.parent()
 
     o   Function new.env() to create empty environment and local() to
