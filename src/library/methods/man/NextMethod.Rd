@@ -13,10 +13,13 @@ callNextMethod(...)
 }
 \arguments{
   \item{\dots}{
-If included, the call to the next methods uses these as its arguments
-(but note that the dispatch is as described below.)  The
-recommendation for most applications is to use \code{callNextMethod}
-with no explicit arguments.
+The arguments to the function in its next call
+(but note that the dispatch is as described below.) 
+
+Eventually, the implementation will accept a call with no arguments.
+The current (R 1.7) implementation requires arguments; typically,
+these will be the same as the arguments of the generic function
+itself, in order to pass the current arguments to the next method.
     }
 }
 \details{
@@ -78,9 +81,9 @@ setClass("B2", representation("B1", b2 = "logical"))
 
 f <- function(x) class(x)
 
-setMethod("f", "B0", function(x) c(x@b0, callNextMethod()))
+setMethod("f", "B0", function(x) c(x@b0, callNextMethod(x)))
 
-setMethod("f", "B2", function(x) c(x@b2, callNextMethod()))
+setMethod("f", "B2", function(x) c(x@b2, callNextMethod(x)))
 
 b2 <- new("B2", b2 = FALSE, b0 = 10)
 
