@@ -154,8 +154,9 @@ BUG FIXES
 	devices were shut down, so the colortype could not be changed
 	and some systems showed protocol errors. (PR#1065)
 
-    o	as.character() and reading Inf and NaN values was wupported on
-	some platforms and not others: now is handled by R itself. (PR#1072)
+    o	Converting Inf and NaN values by as.character() and reading by
+	scan() was supported by strtod on some platforms and not
+	others: these are now handled by R itself. (PR#1072)
 
 
 
