@@ -1,0 +1,462 @@
+\input texinfo
+@c %**start of header
+@setfilename MacOSX-FAQ.info
+@settitle R for Mac OS X FAQ
+@setchapternewpage on
+@set FAQ-YEAR 2004
+@set FAQ-VERSION 1.8-52 @value{FAQ-YEAR}-03-16
+@set REL-VERSION 1.8.1
+@set FAQ-ISBN 3-900051-01-1
+@documentlanguage en
+@documentencoding ISO-8859-1
+@c %**end of header
+
+@dircategory Programming
+@direntry
+* R for Mac OS X FAQ: (MacOSX-FAQ).               The FAQ on R for Mac OS X
+@end direntry
+
+@finalout
+
+@macro SPLUS{}
+@sc{S-Plus}
+@end macro
+
+@macro CRAN{}
+@acronym{CRAN}
+@end macro
+
+@macro HTML{}
+@acronym{HTML}
+@end macro
+
+@macro FORTRAN{}
+FORTRAN
+@end macro
+
+@macro XML{}
+@acronym{XML}
+@end macro
+
+@macro XSL{}
+@acronym{XSL}
+@end macro
+
+@titlepage
+@title R for Mac OS X @acronym{FAQ}
+@subtitle Frequently Asked Questions on R for Mac OS X
+@subtitle Version @value{FAQ-VERSION}
+@author Stefano M. Iacus
+@end titlepage
+
+@ifinfo
+@c We do not really see this in info, but in plain text output.
+R for Mac OS X FAQ						 @*
+Frequently Asked Questions on R for Mac OS X@*
+Version @value{FAQ-VERSION}      @*
+Stefano M. Iacus                 @*
+
+@sp 2
+@end ifinfo
+
+@ifnothtml
+@contents
+@end ifnothtml
+
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top R for Mac OS X FAQ
+@ifhtml
+@html
+<h2>Frequently Asked Questions on R for Mac OS X</h2>
+<h2>Version @value{FAQ-VERSION}</h2>
+<address>Stefano M. Iacus</address>
+<p><p><hr><p>
+@end html
+@end ifhtml
+@end ifnottex
+
+@menu
+* Introduction::                    
+* Building R from sources::
+* Command line version of R::                     
+* R with Aqua GUI::                     
+* How to install packages::                     
+* R and external applications::                 
+* The near future of the Aqua GUI::               
+* Aqua GUI Bugs::       
+* Quartz device::               
+* Additional resources::
+* Acknowledgments::             
+@end menu
+
+@node Introduction, , Top, Top
+@chapter Introduction
+This is a very first try of writing a R for Mac OS X. I hope to finish it in time for R-1.9.0.
+In any case, please send me requests/questions you would like answers on.
+
+ 
+@menu
+* How many versions of R for Mac OS X?::                  
+* What machines does R for Mac OS X run on?::  
+* How can R for Mac OS X be obtained and installed?::      
+@end menu
+
+@node How many versions of R for Mac OS X?, What machines does R for Mac OS X run on?, Aqua GUI for R for Mac OS X, Top
+@section How many versions of R for Mac OS X?
+
+There is currently only one version of R for Mac OS X.
+But R on Mac OS X can be used as a command-line application (@pxref{Command line version of R}), like on any
+other unix-like system, or via the Aqua GUI (@pxref{R with Aqua GUI}). This second approach in using R
+for Mac OS X is mostly preferred by "traditional" Macintosh users.
+
+@node What machines does R for Mac OS X run on?, How many versions of R for Mac OS X?, Aqua GUI for R for Mac OS X, Top
+@section What machines does R for Mac OS X run on?
+
+R for Mac OS X requires Mac OS X version 10.2 or higher to run. The latest version of the system is
+always preferable though. We do not support Mac OS X version 10.1.
+
+@section Building R from sources
+@menu
+* What is needed to build R::
+* How to configure and build R::
+* How to install R::
+@end menu
+
+@node What is needed to build R
+@section What is needed to build R
+@menu
+* the C/C++ compiler gcc 3.3::
+* the Fortran compiler g77 for gcc 3.3::
+* the libreadline 4.3 (optional)::
+* the X11 window server (optional)::
+* the TclTk 8.4 headers and libraries (optional)::
+* a TeX suite of tools for documentation (optional)::
+@end menu
+
+@node the C/C++ compiler gcc 3.3
+@subsection the C/C++ compiler gcc 3.3
+If you have Mac OS X 10.3 (aka Panther) you just need to install the software inside the Xcode Tools CD 
+(which is CD number 4). This is only true if you bought Panther. In most of the cases you have 
+Panther already installed on your brand new machine, which means that you don't have the forth 
+Developer CD. You should take it from Apple Developer Connection site (@pxref{Apple Developer Connection}): in the
+download section, look for Xcode Tools v 1.1 or above.
+
+If you are using Mac OS X 10.2 (aka Jaguar) then you should download and install the 
+Apple Developers Tools Dec 2002 including the latest updates which dates August 2003. Either it comes 
+on a separate CD with your Mac, either you can download these  from the Apple Developer Connection site (@pxref{Apple Developer Connection})
+In either cases be sure you have gcc version 3.3 just by typing in a Terminal window 
+@example
+gcc -vv
+@end example
+
+@node the Fortran compiler g77 for gcc 3.3
+@subsection the Fortran compiler g77 for gcc 3.3
+You need to install a version of the g77 Fortran compiler which is built for gcc 3.3. 
+The following instructions apply to binaries coming from  HPC for Mac OS X page @uref{http://hpc.sourceforge.net}. 
+Please take care: there are two versions of the g77 binaries, one for Jaguar and one for Panther. 
+Use the appropriate one.
+
+Once you have the binaries, please do the following (you'll be asked for a root password):
+cd to the download folder and type
+@example
+sudo tar -zxvf g77v3.4-bin.tar.gz -C /
+rehash
+@end example
+It installs everything in @emph{/usr/local}. The name of the .tar.gz archive can be different, see the related web page.
+
+
+@node the libreadline 4.3 (optional)
+@subsection the libreadline 4.3 (optional)
+This library is optional. 
+You need this library to be able to retrive history using use arrow keys or for tab completion of filenames
+when you run R as a command line tool. The original source archive is located at GNU Org web page @uref{ftp://www.gnu.org}. 
+You need to modify the original file @emph{shlib/Makefile.in} in order to make it
+work under MacOS X 10.2.x and later (this is because libreadline needs to be linked against
+@emph{-lncurses -lcc_dynamic}). If you can do better at configure time working on the original archive 
+let me know. I suggest you to download my patched version from @uref{http://www.economia.unimi.it/R}. 
+Once you have done, please do the following (you'll be asked for a root password):
+uncompress the archive, cd inside the folder and type the following
+@example
+./configure
+make
+sudo make install
+@end example
+It installs everything in @emph{/usr/local}.
+These instructions apply to both Jaguar and Panther.
+
+@node the X11 window server (optional)
+@subsection the X11 window server (optional)
+If you have Panther, you probably have the X11 Window server already installed on your system. 
+This is what you need to run a version of R with the capability of using the X11 device, but it isn't sufficient
+if you want to build it.
+You need to install the additional X11 SDK package from the Xcode Tools CD. 
+Please note: the installer on the Xcode Tools CD does not install the X11 SDK by default: 
+you should look inside the Xcode Tools CD and install manually the X11 SDK.
+
+If you have Jaguar, you'll need to install both the X11 Window server and the X11 SDK package from 
+the XFree86 web page.  Apple site only supports the latest version of his OS (at the moment Panther).
+Users report that other version of X11 Window Servers (other than the one distributed by Apple) work as well.
+
+@node the TclTk 8.4 headers and libraries (optional)
+@subsection the TclTk 8.4 headers and libraries (optional)
+You need to download the sources of the Tcl and Tk 8.4.x packages to build yourself the sources. 
+The original sources can be found on the official TclTk web page @uref{http://www.tcl.tk/software/tcltk/8.4.html}.
+Please do the following respecting the sequence (you'll be asked for a root password). These are examples for version 8.4.4
+of the Tcl and Tk sources, you'll probably find new version on the web page, thus only the name of the .tar.gz archives
+changes.
+
+
+For Tcl: download the tlc 8.4 sources, cd inside the folder where you have downloaded the archive and
+type:
+@example
+tar zxf tcl8.4.4-src.tar.gz
+cd tcl8.4.4/unix/
+./configure
+make
+sudo make install
+@end example
+
+For Tk: download the tk 8.4 sources, cd inside the folder where you have downloaded the archive and type:
+@example
+tar zxf tk8.4.4-src.tar.gz
+cd tk8.4.4/unix/
+./configure
+make
+sudo make install
+@end example
+
+@node a TeX suite of tools for documentation (optional)
+@subsection a TeX suite of tools for documentation (optional)
+There is a nice installer, called the i-installer II, that allows you to install a complete 
+teTeX distribution. You can find details on the i-installer at @uref{http://www.rna.nl/ii.html}. 
+The teTeX is one of the i-Packages.
+
+@section How to configure and build R
+Download the latest sources of R from @CRAN{}. Unpack the archive with tar -zxf @emph{name_of_R_sources_archive} and cd
+inside the R sources directory. Then you need to configure R for your system and build R. 
+Just type
+@example
+./configure --with-blas='-framework vecLib' --with-lapack --with-aqua 
+make
+@end example
+This will configure R to be built as a Framework to be installed inside your @emph{/Library/Frameworks} directory with the name 
+@emph{R.framework}. You can change the default location of the @emph{R.framework} 
+installation at configure time by specifying the flag @emph{--enable-R-framework[=DIR]}, i.e. 
+with something like
+@example
+./configure --with-blas='-framework vecLib' --with-lapack 
+            --with-aqua --enable-R-framework=FOO
+@end example
+and the final destination of the @emph{R.framework} will be @emph{FOO/R.framework}, which means that you 
+don't have to specify the @emph{R.framework} text in the path. 
+
+@node How to install R
+@section How to install R
+A standard installation of R requires you have built it as a Framework. At this point just type (a root 
+password will be required):
+@example
+sudo make install
+@end example
+and all will be installed in @emph{/Library/Frameworks}.
+You can decide to change the R.framework destination by using the @emph{--prefix} option specifying the final destination.
+As in the above, you don't need to specify the name @emph{R.framework} in the path.
+
+@node  How to build and install the Aqua GUI
+@section How to build and install the Aqua GUI
+At the moment, there is nothing to  do to build the Aqua GUI.
+You just need to install it using
+@example
+make install-aqua
+@end example
+and it will install the @emph{R.app} application in the @emph{Applications} folder on your system.
+
+
+
+@node Command line version of R
+@chapter Command line version of R
+The command line version of R is nothing but a classic unix-like implementation of R. So general documentation for R applies
+to this version as well.
+On each release (and patched-release) ready to use binaries are distributed through @CRAN{}.
+Thies binaries come with a common installer used by R with Aqua GUI so please read
+the releated notes (@pxref{How to get R with Aqua GUI}).
+To use R you probably need to add a symbolic link on your System as the R binary is located inside the framework.
+Suppose you have the @emph{/usr/local/bin} directory on your System, than you should just type in your Terminal (a root password is required)
+@example
+sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R 
+           /usr/local/bin/R
+@end example
+Assuming that you have @emph{/usr/local/bin} in your @emph{PATH} environment variable, you'll be able to launch R from any location
+on your System just by typing @emph{R}.
+In this way, when you install a new version of the @emph{R.framework} this link will point to the latest R binary.
+
+@node R with Aqua GUI
+@chapter R with Aqua GUI
+@menu
+* How to get R with Aqua GUI::
+* How to install the Aqua GUI::
+* The R Console::
+* The Menus::
+* Preferences::
+* The near future of the Aqua GUI::
+* Aqua GUI Bugs::
+@end menu
+
+@node How to get R with Aqua GUI
+@section How to get R with Aqua GUI
+The @file{bin/macosx} directory of a @CRAN{} site contains a standard
+Apple installer package named @file{R.dmg.sit} compressed in Aladdin
+Stuffit format.  Once downloaded, uncompressed and executed, the
+installer will install the current non-developer release of R.  R  is
+a native Mac OS X Darwin version of R with an Aqua GUI. 
+Inside
+@file{bin/macosx/@var{x}.@var{y}} there are prebuilt binary packages to
+be used with R corresponding to the ``@var{x}.@var{y}'' release of
+R. The installation of these packages is available through the
+``Package'' menu of the Aqua GUI (@pxref{Packages Menu}). 
+
+@section How to install the Aqua GUI
+
+@section The R Console
+@menu 
+* The Input and the Output::
+* Copy and Paste::
+* The current and startup working directories::
+* Resizing the R Console::
+* Input and Output text colors::
+@end menu
+
+
+@node The Input and the Output
+@subsection The Input and the Output
+The current desing of the R Console is to have separate frames for input (user) and output (R).
+The user is supposed to type command into the bottom frame of the R Console, this input is echoed
+into the upper frame and R will give any related output in the upper frame.
+The output frame (the upper one) is a read-only frame. 
+
+@node Copy and Paste
+@subsection  Copy and Paste
+Copy and paste works in R as in any other Macintosh application.
+But when two selection are active: one in the output frame and one in the input frame, the output frame takes precedence 
+when copying to the clipboard.
+You can also copy from the @emph{quartz()} graphic device (@pxref{Quartz device}) to the clipboard. In this case a bitmap image is
+created. If you want high resolution graphic exports, you should better save the image using the @emph{File/Save as} menu item (@pxref{Quartz device}).
+
+
+@node The current and startup working directories
+@subsection The current and startup working directories
+If not otherwise specified in the Preferences (@pxref{Preferences}), or if the specified path is no longer available, then
+the default working directory at startup is the user home.
+The working directory can be changed using the @emph{setwd} R command or using the @emph{Tools} menut item @emph{Change working directory}.
+The current working directory is displayed on the main bar of the R Console window.
+ 
+@node Resizing the R Console
+@subsection Resizing the R Console
+When the R Console Window is resized, the R option @emph{width} is set appropriately so that any future
+output will fit the window size. This behaviour can be inihibited using the Preferences settings (@pxref{Preferences}).
+On closing the R application, the position and the size of the R Console window are saved in the Preferences and reused
+next time you launch R. You can inihibit R to do this using the appropriate Preferences settings.
+
+@node Input and Output text colors
+@subsection Input and Output text colors
+Text windows and frames are divided in Read-Only and Read and Write ones. Text colors can be set separately
+for the two kinds of windows. This happens as well for their respectives backgrounds. Use the Preferences window to set these 
+colors (@pxref{Preferences}).
+
+@node The Menus
+@section The Menus
+@menu
+* Tools Menu::
+* Workspace Menu::
+* Packages Menu::
+* The Help menu::
+@end menu
+
+@node Tools Menu
+@subsection Tools Menu
+
+@node Workspace Menu
+@subsection Workspace Menu
+
+@node Packages Menu
+@subsection Packages Menu
+
+
+@node The Help menu
+@subsection The Help menu
+Using this menu you can open the on-line manuals (@emph{R Help}), read this FAQ and  review the latest changes, bug fixes and new features of R for Mac OS X (@emph{What's new in this version}).
+There are also interfaces to the R @emph{help} and @emph{help.search} functions as well as the @emph{example} function. 
+
+@node Preferences
+@section Preferences
+@menu
+* Text Windows tab::
+* Quartz device tab::
+* Packages tab::
+* Misc tab::
+@end menu
+
+@node Text Windows tab
+@subsection Text Windows tab
+
+@node Quartz device tab
+@subsection Quartz device tab
+
+@node Packages tab
+@subsection Packages tab
+
+@node Misc tab
+@subsection Misc tab
+
+
+@node The near future of the Aqua GUI
+@section The near future of the Aqua GUI
+Jointly with Simon Urbanek we are currently working to replace the current Aqua GUI, which is Carbon-based,
+with a pure Cocoa GUI. This will allow for a better integration of R with Mac OS X and
+a fully Aqua-compliant GUI.
+A preview of the Cocoa GUI for Darwin R can be obtained after the official
+release of R 1.9.0 is out from @uref{http://www.economia.unimi.it/R}.
+@section Aqua GUI Bugs
+On Unix systems a bug report can be generated using the function
+@code{bug.report()}.  This automatically includes the version
+information and sends the bug to the correct address.  Alternatively the
+bug report can be emailed to @email{R-bugs@@R-project.org} or submitted
+to the Web page at @uref{http://bugs.R-project.org/}.
+
+You can also send specific Aqua GUI bugs directly to @email{stefano.iacus@@unimi.it}
+
+In any circumstances, in case of a crash, please report the 
+crash.log for the @emph{R.bin} application. You can get this
+crash.log using the @emph{Console.app} located inside @emph{/Applications/Utilities}.
+
+
+@node Quartz device
+@chapter Quartz device
+
+@node Additional resources
+@chapter Additional resources
+Here are few references that can be of interest for Mac OS X and/or developers.
+
+@node Apple Developer Connection
+@section Apple Developer Connection
+The Apple Developer Connection (can be reached at @uref{http://developer.apple.com}) is the main source
+of information for Apple products (OS, hardware, software) for developers. You can subscribe for free to
+ADC and get the latest up-to-date tools from Apple (compilers for example).
+
+@node The R for Mac OS X Developer page
+@section The R for Mac OS X Developer page
+There is a page dedicated to the latest R-devel version of R. This page is located at
+@uref{http://www.economia.unimi.it/R} and is mantained by Stefano M. Iacus.
+This page is inteded to give additional documentation for building  the latest R-devel
+version of R. From time to time, snapshots of R-devel binaries are available for testing purposes.
+
+@chapter Acknowledgments
+
+Special thanks go to Simon Urbanek, Jan de Leeuw, Byron Ellis and Thomas Lumley
+in random order. Last but not least Apple for amazing OS and GUI.
+
+@bye
+
+@c Local Variables: ***
+@c mode: TeXinfo ***
+@c End: ***

@@ -159,7 +159,7 @@ void GraphicCopy(WindowPtr window);
 #define kRHelpOnTopic		'rhot'
 #define kRSearchHelpOn		'rsho'
 #define kRExampleRun		'rexr'
-#define kRAquaFAQ		'rfaq'
+#define kRMacOSXFAQ		'rfaq'
 #define kRAquaWhatsNew		'rwsn'
 
 #define kRDlog	  'RDLG'
@@ -904,7 +904,7 @@ void SetUpRAquaMenu(void){
 		AppendMenu(HelpMenu, menuStr);
 		
 		RAquaFAQMenuItem = CountMenuItems(HelpMenu);
-		SetMenuItemCommandID(HelpMenu, RAquaFAQMenuItem, kRAquaFAQ); 
+		SetMenuItemCommandID(HelpMenu, RAquaFAQMenuItem, kRMacOSXFAQ); 
 		
 		CopyCStringToPascal("What's new in this version", menuStr);
 		AppendMenu(HelpMenu, menuStr);
@@ -2153,8 +2153,8 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 							consolecmd("help.start()");
 							break;
 							
-						case kRAquaFAQ:
-							consolecmd("system(\"open $R_HOME/RAqua-FAQ.html\")");
+						case kRMacOSXFAQ:
+							consolecmd("system(\"open $R_HOME/RMacOSX-FAQ.html\")");
 							break;
 							
 						case kRAquaWhatsNew:
