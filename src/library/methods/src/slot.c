@@ -2,6 +2,7 @@
 #include <R.h>
 #include <Rdefines.h>
 #include <Rinternals.h>
+#include "methods.h"
 
 SEXP R_get_slot(SEXP obj, SEXP name)
 {

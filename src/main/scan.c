@@ -18,9 +18,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8> 
+/* <UTF8-FIXME> 
    byte-level access needed checks.
-   I think it is OK provided quotes, comment, sep and dec chars are ASCII
+   I think it is mainly OK provided quotes, comment, sep and dec 
+   chars are ASCII.
+   It does use isspace, and there are non-ASCII Unicode space chars.
+   There is also the possibility of other digits.
 */
 
 #ifdef HAVE_CONFIG_H
@@ -130,7 +133,7 @@ static SEXP insertString(char *str, HashData *d)
 }
 
 
-#define NO_COMCHAR 100000 /* won't occur even in unicode */
+#define NO_COMCHAR 100000 /* won't occur even in Unicode */
 
 static int ConsoleGetchar()
 {
@@ -183,7 +186,7 @@ static int Strtoi(const char *nptr, int base)
     return(res);
 }
 
-/* Like R_strtod, but allow NA to be a failure if NA is false */
+/* Like R_strtod, but allow NA to be a failure if NA arg is false */
 static double Rs_strtod(const char *c, char **end, Rboolean NA)
 {
     double x;
@@ -319,7 +322,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 /* The basic reader function, called from scanVector() and scanFrame().
    Reads into _buffer_	which later will be read out by extractItem().
 
-   bch is used to distinguish \n and EOF from more input available.
+   bch is used to distinguish \r, \n and EOF from more input available.
 */
     char *bufp;
     int c, quote, filled, nbuf = MAXELTSIZE, m;
@@ -344,8 +347,15 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		if (c == '\\') {
 		    c = scanchar(TRUE, d);
 		    if (c == R_EOF) break;
-		    else if (c == 'n') c = '\n';
-		    else if (c == 'r') c = '\r';
+		    switch(c) {
+		    case 'a': c = '\a'; break;
+		    case 'b': c = '\b'; break;
+		    case 'f': c = '\f'; break;
+		    case 'n': c = '\n'; break;
+		    case 'r': c = '\r'; break;
+		    case 't': c = '\t'; break;
+		    case 'v': c = '\v'; break;
+		    }
 		}
 		buffer->data[m++] = c;
 	    }
@@ -357,7 +367,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 	    else
 		unscanchar(c, d);
 	}
-	else { /* not a char string */
+	else { /* not a quoted char string */
 	    do {
 		if (m >= nbuf - 2) {
 		    nbuf *= 2;
@@ -380,8 +390,8 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		/* eat white space */
 		if (type != STRSXP)
 		    while (c == ' ' || c == '\t')
-			if ((c = scanchar(FALSE, d)) == d->sepchar || c == '\n' ||
-			    c == '\r' || c == R_EOF) {
+			if ((c = scanchar(FALSE, d)) == d->sepchar 
+			    || c == '\n' || c == '\r' || c == R_EOF) {
 			    filled = c;
 			    goto donefill;
 			}
@@ -1107,8 +1117,8 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* This is a horrible hack which is used in read.table to take a
    character variable, if possible to convert it to a logical,
    integer, numeric or complex variable.  If this is not possible,
-   the result is a character
-   string if as.is == TRUE or a factor if as.is == FALSE. */
+   the result is a character string if as.is == TRUE 
+   or a factor if as.is == FALSE. */
 
 
 SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)

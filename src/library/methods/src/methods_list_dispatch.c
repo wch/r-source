@@ -7,6 +7,7 @@
 #include <Rinternals.h>
 
 #include "RSMethods.h"
+#include "methods.h"
 
 /* from Defn.h */
 #define type2str		Rf_type2str

@@ -67,7 +67,7 @@ setGeneric <-
             fdeflt <- useAsDefault
         else if(identical(useAsDefault, FALSE))
             fdeflt <- NULL
-        else 
+        else
             fdeflt <- prevDefault
         if(is.function(fdeflt))
             fdeflt <- .derivedDefaultMethod(fdeflt)
@@ -171,9 +171,9 @@ getMethods <-
              class(f), "\"")
     if(is.null(fdef))
         NULL
-    else 
+    else
         getMethodsForDispatch(f, fdef)
-        
+
 }
 
 getMethodsForDispatch <-
@@ -355,7 +355,7 @@ setMethod <-
                 stop("Primitive functions cannot be methods; they must be enclosed in a regular function")
            },
            "NULL" = {
-            
+
            },
            stop("Invalid method definition: expected a function, got an object of class \"",
                 class(definition), "\""))
@@ -445,7 +445,7 @@ getMethod <-
         ## process the implicit remaining "ANY" elements
         if(is(mlist, "MethodsList"))
             mlist <- finalDefaultMethod(mlist)
-        if(is(mlist, "function"))       
+        if(is(mlist, "function"))
             return(mlist) # the only successful outcome
     }
     if(optional)
@@ -872,7 +872,8 @@ callGeneric <- function(...)
 }
 
 initMethodDispatch <- function(where = topenv(parent.frame()))
-    .C("R_initMethodDispatch", as.environment(where), PACKAGE = "methods")# C-level initialization
+    .Call("R_initMethodDispatch", as.environment(where),
+          PACKAGE = "methods")# C-level initialization
 
 isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = where), where = topenv(parent.frame())) {
     fNonGen <- getFunction(f, FALSE, FALSE, where = where)
@@ -887,7 +888,7 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = whe
         TRUE # default method for primitive
     else {
         sealed <- !is.na(match(signature[[1]], .BasicClasses))
-        if(sealed && 
+        if(sealed &&
            (!is.na(match("Ops", c(f, getGroup(f, TRUE))))
             || !is.na(match(f, c("%*%", "crossprod")))))
             ## Ops methods are only sealed if both args are basic classes

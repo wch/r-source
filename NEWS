@@ -453,6 +453,9 @@ BUG FIXES
     o	p.adjust(p, ..) now correctly works when `p' contains NAs (or when
 	it is of length 0 or length 2 for method = "hommel").
 
+    o	'methods' initialization was calling a function intended for
+	.Call() with .C().
+
 
 
 
