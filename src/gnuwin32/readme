@@ -222,7 +222,7 @@ The cygwin-B20.x set of tools available from
 http://sourceware.cygnus.com/cygwin and several mirrors, the Fortran
 additions ecgs-1.1-f77.tar.gz from that page or directly from
 http://www.xraylith.wisc.edu/~khan/software/gnu-win32/ and the Fortran
-library libg2c.mingw32.a.bz2 from CRAN/bin/windows/windows-NT/etc.
+library libg2c.mingw32.a.bz2 from CRAN/bin/windows/windows-NT/base/etc.
 You can also use the egcs-1.1.2 compilers upgrade from Mumit Khan's
 site.
 
@@ -230,16 +230,16 @@ Do remember to set MAKE_MODE to UNIX.
 
 OR
 
-The mingw32 port of egcs-1.1 (or 1.1.2) from
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32/egcs-1.1/, the
+The mingw32 port of egcs-1.1.2  from
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32, the
 ld.exe and cygwin1.dll from the B20 set in your path ahead of the
 mingw32 binaries (if you don't want to download all the B20 distribution,
 you can find the two files in 
-CRAN/bin/windows/windows-NT/etc/ld.cygwin.zip).
+CRAN/bin/windows/windows-NT/base/etc/ld.cygwin.zip).
 
 
 Suitable versions of rm, sed, mkdir, echo, cp and cat, for example
-(Win 9x) from the djtools set at CRAN/bin/windows/windows-NT/etc
+(Win 9x) from the djtools set at CRAN/bin/windows/windows-NT/base/etc
 or (Win 9x or NT) a cygwin set.
 
 perl5, available via http://www.perl.com/CPAN/ports.
@@ -254,7 +254,7 @@ unzip5.40.zip from any Info-Zip mirror.
 
 Then: untar R-0.64.1.tgz somewhere (ignore warnings about the aux directory),
 
-	cd /somewhere/R-0.64.0/src/gnuwin32 
+	cd /somewhere/R-0.64.1/src/gnuwin32 
 
 edit MkRules to set the appropriate paths as needed
 
@@ -262,7 +262,7 @@ and run
 
 	make BUILD=EGCS or CYGWIN
 
-Note: the file rw0641\unzip\unzip32.dll is not in the source
+Note 1: the file rw0641\unzip\unzip32.dll is not in the source
 distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
@@ -272,6 +272,11 @@ shell used that the Makefiles do not work unchanged on all the possible
 combinations of tools, compilers and OSes.  We use the Cygwin make and 
 shell under NT, and cross-building (see below), and with small changes the 
 djtools make under Windows 95.
+
+Note 3: building libR.a is highly disk intensive and can take several
+minutes even on a local disc. We have seen times from 30 secs to 20
+minutes. Using a network file system is likely to take longer.
+
 
 Cross-building on Linux
 -----------------------
@@ -283,12 +288,12 @@ http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 and ensure that these are in your path. You also need Perl and nroff
 installed.
 
-You also need: the R source (R-0.64.0.tgz) and rw0641s.zip.
+You also need: the R source (R-0.64.1.tgz), and to build the installer,
+unzip5.40.zip from any Info-Zip mirror.
 
-Then: untar R-0.64.0.tgz somewhere 
-unzip -a rw0641s.zip in /somewhere/R-0.64.0,
+Then: untar R-0.64.1.tgz somewhere 
 
-	cd /somewhere/R-0.64.0/src/gnuwin32 
+	cd /somewhere/R-0.64.1/src/gnuwin32 
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Set the environment variable TEMP to, say, /tmp, and make.
