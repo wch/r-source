@@ -13,32 +13,52 @@ topo.colors(n)
 \arguments{
 \item{n}{the number of colors to be in the palette.}
 \item{s,v}{the ``saturation'' and ``value'' to be used to
-complete the HSV color descriptions.}
+  complete the HSV color descriptions.}
 \item{start}{the (corrected) hue at which the rainbow begins.}
 \item{end}{the (corrected) hue at which the rainbow ends.}
 }
 \description{
-This function creates a ``rainbow'' of \code{n} colors.
+These functions create a vector of \code{n} ``contiguous'' colors.
+Conceptually, all of these functions actually use (parts of) a line
+cut out of the 3-dimensional color space, parametrized by
+\code{\link{hsv}(r,g,b)}.
 Equispaced hues in RGB space tend to cluster at
 the red, green and blue primaries.
 
-Some applications such as contouring require a pallette
+Some applications such as contouring require a palette
 of colors which do not ``wrap around'' to give a final
 color close to the starting one.
-The parameters \code{start} and \code{end} can be used
+With \code{rainbow}, the parameters \code{start} and \code{end} can be used
 to specify particular subranges of hues.
 The following values can be used when generating
 such a subrange:
 red=0, yellow=1/6, green=2/6, cyan=3/6, blue=4/6 and magenta=5/6.
-
-The values returned by \code{rainbow} can be used with a
-\code{col=} specification in graphics functions or in \code{par}.
+}
+\value{A character vector, \code{cv}, of color names.  This can be used
+  either to create a user--defined color palette for subsequent
+  graphics by \code{\link{palette}(cv)}, a \code{col=} specification
+  in graphics functions or in \code{par}.
 }
 \seealso{
-\code{\link{colors}}, \code{\link{rgb}}, \code{\link{hsv}}, \code{\link{gray}},
-\code{\link{heat.colors}}.
+\code{\link{colors}}, \code{\link{palette}},  \code{\link{hsv}},
+\code{\link{rgb}}, \code{\link{gray}}.
 }
 \examples{
 # A Color Wheel
 piechart(rep(1,12), col=rainbow(12))
+
+##------ Some palettes ------------
+n <- if(.Device == "postscript") 64 else 16
+## For screen, larger n may give color allocation problem
+i <- 1:n
+d <- n/20; dy <- 2*d; j <- n%/%4
+plot(i,i+d, type='n', main=paste("color palettes;  n=",n))
+rect(i-.5,   dy,   i+.4,   j, col=rainbow(n, start=.7, end=.1))
+text(2*j,   j+dy/4, "rainbow(n, start= .7, end= .1)")
+rect(i-.5, j+dy,   i+.4, 2*j, col=heat.colors(n))
+text(2*j, 2*j+dy/4, "heat.colors(n)")
+rect(i-.5, 2*j+dy, i+.4, 3*j, col=terrain.colors(n))
+text(2*j, 3*j+dy/4, "terrain.colors(n)")
+rect(i-.5, 3*j+dy, i+.4, 4*j, col=topo.colors(n))
+text(2*j, 4*j+dy/4, "topo.colors(n)")
 }
