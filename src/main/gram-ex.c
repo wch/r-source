@@ -11,7 +11,7 @@ int R_fgetc(FILE *fp)
 {
 #ifdef Win32
     int c;
-    static nexteof=0;
+    static int nexteof=0;
     if (nexteof) {
        nexteof = 0;
        return R_EOF;
