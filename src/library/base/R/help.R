@@ -1,11 +1,12 @@
-index.search <- function(topic, path, file, html = FALSE)
-    .Internal(index.search(topic, path, file, .Platform$file.sep, html))
+index.search <- function(topic, path, file="AnIndex", type="help")
+    .Internal(index.search(topic, path, file, .Platform$file.sep, type))
 
 "help" <-
 function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
           lib.loc = .lib.loc, verbose = .Options$verbose,
           htmlhelp = .Options$htmlhelp)
 {
+    htmlhelp <- is.logical(htmlhelp) && htmlhelp
     if (!missing(package))
         if (is.name(y <- substitute(package)))
             package <- as.character(y)
@@ -26,9 +27,12 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
             topic <- "Logic"
         else if (!is.na(match(topic, c("%*%"))))
             topic<- "matmult"
+        type <- "help"
+        if(offline) type <- "latex"
+        else if (htmlhelp) type <- "html"
         topic <- gsub("\\[","\\\\[", topic)
         INDICES <- system.file(pkg=package, lib=lib.loc)
-        file <- index.search(topic, INDICES, "AnIndex")
+        file <- index.search(topic, INDICES, "AnIndex", type)
         if (file == "") {
             # try data .doc -- this is OUTDATED
             file <- system.file(file.path("data", paste(topic, ".doc",
@@ -39,13 +43,9 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                 cat("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
                     ".Rd'\n", sep = "")
             if (!offline) {
-                if (!is.null(htmlhelp) && htmlhelp) {
-                    ## replace the last occurence of /help/ in the
-                    ## path with /html/, then append .html
-                    hfile <- sub("/help/([^/]*)$", "/html/\\1", file)
-                    hfile <- paste(hfile, ".html", sep = "")
-                    if(file.exists(hfile)) {
-                        hfile <- paste("file:", hfile, sep="")
+                if (htmlhelp) {
+                    if(file.exists(file)) {
+                        file <- paste("file:", hfile, sep="")
                         if (is.null(.Options$browser))
                             stop("options(\"browser\") not set")
                         browser <- .Options$browser
@@ -55,10 +55,12 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                         cat("help() for", topic, " is shown in browser",
                             browser, "...\n")
                         return(invisible())
-                    } else
-                    if(verbose)
-                        cat("no HTML help for `", topic, "' is available\n",
-                            sep = "")
+                    } else {
+                        if(verbose)
+                            cat("no HTML help for `", topic,
+                                "' is available\n", sep = "")
+                        file <- index.search(topic, INDICES, "AnIndex", "help")
+                    }
                 }
                 ## experimental code
                 zfile <- zip.file.extract(file, "Rhelp.zip")
@@ -67,10 +69,9 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                 return(invisible())
             }
             else {
-                ltxfile <- paste(sub("help/", "latex/", file), ".tex", sep = "")
                 ## experimental code
-                zfile <- zip.file.extract(ltxfile, "Rhelp.zip")
-                if(zfile != ltxfile) on.exit(unlink(ltxfile))
+                zfile <- zip.file.extract(file, "Rhelp.zip")
+                if(zfile != file) on.exit(unlink(zfile))
                 ## end of experimental code
                 if(file.exists(zfile)) {
                     FILE <- tempfile()

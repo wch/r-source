@@ -135,17 +135,15 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
     topic <- substitute(topic)
     if (!is.character(topic))
         topic <- deparse(topic)[1]
-    INDICES <- system.file(pkg=package, lib=lib.loc)
-    file <- index.search(topic, INDICES, "AnIndex")
+    INDICES <- system.file(pkg = package, lib = lib.loc)
+    file <- index.search(topic, INDICES, "AnIndex", "R-ex")
     if (file == "")
         stop(paste("No help file found for'", topic, "'", sep = ""))
     comp <- strsplit(file, .Platform$file.sep)[[1]]
     pkg <- comp[length(comp) - 2]
     if(length(file) > 1)
         warning(paste("More than one help file found: using package", pkg))
-    lib <- sub(file.path("", pkg, "help", topic), "", file[1])
-#    file <- paste(file.path(lib, pkg, "R-ex", topic), "R", sep=".")
-    file <- paste(sub("/help/([^/]*)$", "/R-ex/\\1", file), ".R", sep = "")
+    lib <- sub(file.path("", pkg, "R-ex", ".*\\.R"), "", file[1])
     ## experimental code
     zfile <- zip.file.extract(file, "Rex.zip")
     if(zfile != file) on.exit(unlink(zfile))
