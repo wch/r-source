@@ -35,9 +35,9 @@ As you might expect \code{\link{setGeneric}} and
     \item{\code{group}:}{Object of class \code{"list"}, the group or
         groups to which this generic function belongs.  Empty by default. }
     \item{\code{valueClass}:}{Object of class \code{"character"}; if
-        not an empty character vector, the name of a class.  It is
+        not an empty character vector, identifies one or more classes.  It is
         asserted that all methods for this function return objects
-        from the named class (or from classes that extend that class). }
+        from these class (or from classes that extend them). }
     \item{\code{signature}:}{Object of class \code{"character"}, the
         vector of formal argument names that can appear in the
         signature of methods for this generic function.  By default,
@@ -48,7 +48,8 @@ As you might expect \code{\link{setGeneric}} and
         the default method for this function.  Generated
         automatically and used to initialize method dispatch. }
     \item{\code{skeleton}:}{Object of class \code{"call"}, a slot used
-        internally in method dispatch.  Don't expect to use it directly.}
+        internally in method dispatch.  Don't expect to use it
+        directly.}
   }
 }
 \section{Extends}{

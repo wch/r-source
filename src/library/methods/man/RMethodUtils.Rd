@@ -25,7 +25,6 @@
 \alias{cacheMetaData}
 \alias{cacheGenericsMetaData}
 \alias{setPrimitiveMethods}
-\alias{copyEnvironment}
 \alias{printNoClass}
 \alias{print.default}
 \alias{missingArg}
@@ -85,11 +84,9 @@ MethodAddCoerce(method, argName, thisClass, methodClass)
 
 is.primitive(fdef)
 
-copyEnvironment(object, exceptions)
+cacheMetaData(where, attach = TRUE)
 
-cacheMetaData(envir, attach = TRUE)
-
-cacheGenericsMetaData(generics, attach = TRUE, envir)
+cacheGenericsMetaData(generics, attach = TRUE, where, package)
 
 setPrimitiveMethods(f, fdef, code, generic, mlist)
 

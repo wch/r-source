@@ -87,8 +87,12 @@ callGeneric(\dots)
       defined for it.
     }
   
-    \item{\code{removeGeneric}:}{ 
-      Remove the generic function of this name.  
+    \item{\code{removeGeneric}, \code{removeMethods}:}{ 
+      Remove the all the methods for the generic function of this
+      name.  In addition, \code{removeGeneric} removes the function
+      itself; \code{removeMethods} restores the non-generic function
+      which was the default method.   If there was no default method,
+      \code{removeMethods} leaves a generic function with no methods.
     }
     \item{\code{standardGeneric}:}{ 
       Dispatches a method from the current function call for the generic
@@ -269,23 +273,29 @@ callGeneric(\dots)
       \code{FALSE} (silently) otherwise.
   
       If there is a default method, the function will be re-assigned as
-      a simple function with this definition; otherwise, it will be
-      removed.  The assignment or removal can be controlled by optional
-      argument \code{where}, which defaults to the first element of the
-      search list having a function called \code{f}.
+      a simple function with this definition.
+      Otherwise, the generic function remains but with no methods (so
+      any call to it will generate an error).  In either case, a
+      following call to \code{setMethod} will consistently
+      re-establish the same generic function as before.
     }
   }
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \seealso{
   \code{\link{setGeneric}},

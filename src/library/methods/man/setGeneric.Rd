@@ -107,7 +107,7 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers,
   there is not direct or inherited method on call to the function).
 
   The same no-default situation occurs if there is no non-generic form of the function, and
-  \code{useAsDefault} does not supply one.  Remember, though, you can
+  \code{useAsDefault=FALSE}.  Remember, though, you can
   also just assign the default you want (even one that generates an
   error) rather than relying on the prior situation.
 
@@ -118,7 +118,7 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers,
   the new one; see \code{\link{removeGeneric}}).  There is one
   absolute restriction:  you cannot create an explicit generic for the
   primitive functions in the base library.  These are dispatched from
-  C code for efficiency and, also, are implicitly not to be redefined
+  C code for efficiency and are not to be redefined
   in any case.
 
   As mentioned, the body of a generic function usually does nothing
@@ -127,29 +127,20 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers,
   computation in the generic function itself.  As long as your
   function eventually calls \code{standardGeneric} that is permissible
   (though perhaps not a good idea, in that it makes the behavior of
-  your function different from the usual S model).  If your function
+  your function different from the usual S model).  If your explicit
+  definition of the generic function
   does \emph{not} call \code{standardGeneric} you are in trouble,
   because none of the methods for the function will ever be
-  dispatched.  The computations in \code{setGeneric} look for such a
-  call, and normally ignore the body of a \code{def} argument that
-  has no such call.  If you really need to supply such a definition
-  (perhaps because you call something else that calls
-  \code{standardGeneric}), you can force the use of \code{def} by
-  supplying \code{myDispatch = TRUE}.
+  dispatched. 
+
       By default, the generic function can return any object.
-    
-   If \code{valueClass} is supplied, it can be either a vector of
-   class names or an unevaluated expression.  If an unevaluated expression is supplied (e.g., by using
-   \code{\link{quote}}), the expression will be evaluated in the frame
-   of the call to the generic function, after the method is
-   dispatched.  Therefore, the expression can involve any argument or
-   locally defined object in that frame.
-   The test is done in the form
-   \code{is(object, class)}, so that a value from a class that extends
-   a supplied value class will be accepted.
+   If \code{valueClass} is supplied, it should be a vector of
+   class names; the value returned by a method is then required to
+   satisfy \code{is(object, Class)} for one of the specified classes.
    An empty (i.e., zero length) vector of classes means anything is
-   allowed (but it would be clearer programming to have an expression that
-   evaluated to \code{"ANY"}).
+   allowed.
+   Note that more complicated requirements on the result can be
+   specified explicitly, by defining a non-standard generic function.
 
   The \code{setGroupGeneric} function behaves like \code{setGeneric} except that
   it constructs a group generic function, differing in two ways from an
@@ -198,18 +189,54 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers,
   \code{name}.
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \examples{
-\dontrun{
+\testonly{
+setClass("track",
+            representation(x="numeric", y="numeric"))
+}
+
+###   A non-standard generic function.  It insists that the methods
+###   return a non-empty character vector (a stronger requirement than
+###    valueClass = "character" in the call to setGeneric)
+
+setGeneric("authorNames", 
+    function(text) {
+      value <- standardGeneric("authorNames")
+      if(!(is(value, "character") && any(nchar(value)>0)))
+        stop("authorNames methods must return non-empty strings")
+      value
+      })
+
+\testonly{
+
+setMethod("authorNames", "character", function(text)text)
+
+stopifnot(identical(authorNames(c("me", "you")), c("me", "you")))
+
+stopifnot(is(trySilent(authorNames(character())), "try-error")) # empty value
+
+stopifnot(is(trySilent(authorNames(NULL)), "try-error")) # no default method
+
+stopifnot(is(trySilent(setGeneric("[", function(x,...)standardGeneric("["))),
+           "try-error")) # trying setGeneric on a primitive
+
+}
+
 ## An example of group generic methods, using the class
 ## "track"; see the documentation of setClass for its definition
 
@@ -221,19 +248,24 @@ setMethod("Arith", c("track", "numeric"),
   e1
 })
 
-# But -- we must turn on method dispatch for the members
-# of this group if there are no specific methods for "+", etc.
-
-setGroupGeneric("Arith")
+setMethod("Arith", c("numeric", "track"), 
+ function(e1, e2){
+  e2@y <- callGeneric(e1, e2@y)
+  e2
+})
 
 # now arithmetic operators  will dispatch methods:
 
+t1 <- new("track", x=1:10, y=sort(rnorm(10)))
+
 t1 - 100
 
-t1/2.5
+1/t1
 
-# where t1 is an object of class "track"
-
+\testonly{
+removeGeneric("authorNames")
+removeClass("track")
+removeMethods("Arith")
 }
 }
 \seealso{
