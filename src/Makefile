@@ -14,21 +14,22 @@ install:	build
 		@cd front; make
 
 clean:
-		@cd graphics; make clean
-		@cd library; make clean
-		@cd main; make clean
-		@cd math; make clean
-		@cd appl; make clean
-		@cd unix; make clean
+		@cd graphics; make $@
+		@cd library; make $@
+		@cd main; make $@
+		@cd math; make $@
+		@cd appl; make $@
+		@cd unix; make $@
+		@cd regex; make $@
 		@-rm -f lib/*.a
 
 realclean:
-		@cd front; make realclean
-		@cd graphics; make realclean
+		@cd front; make $@
+		@cd graphics; make $@
 		@cd library; make clean
-		@cd main; make realclean
-		@cd math; make realclean
-		@cd appl; make realclean
-		@cd unix; make realclean
+		@cd main; make $@
+		@cd math; make $@
+		@cd appl; make $@
+		@cd unix; make $@
 		@-rm -f include/FFDecl.h include/FFTab.h include/Platform.h
 		@-rm -f lib/*.a
