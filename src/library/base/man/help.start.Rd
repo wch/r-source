@@ -31,8 +31,10 @@ help.start(gui = "irrelevant", browser = "irrelevant")
   interface include Netscape 4.x, 6.2 (but not 6.0/1), Opera 5 and
   Mozilla 0.9.5.
 
-  All future help requests are sent to the browser specified by
-  \code{options("browser")} (the default for the \code{browser} argument).
+  If the browser given by the \code{browser} argument is different from
+  the default browser as specified by \code{options("browser")}, the
+  default is changed to the given browser so that it gets used for all
+  future help requests.
 #endif
 #ifdef windows
   The Windows file association mechanism is used to send the HTML file
