@@ -42,10 +42,10 @@ BUG FIXES
 
     o	identify() failed when x is a structure/matrix. (PR#1238)
 
-    o	getMethod returns NULL when optional=TRUE as promised in the
+    o	getMethod() returns NULL when optional=TRUE as promised in the
 	documentation.
 
-    o	setMethod allows "..." to be one of the arguments omitted in
+    o	setMethod() allows "..." to be one of the arguments omitted in
 	the method definition (but so far no check for ... being missing)
 
     o	Allow round() to work again on very large numbers (introduced
@@ -84,6 +84,10 @@ BUG FIXES
 	involved an offset.
 
     o	detach() on package:base would crash R. (PR#1271)
+
+    o	print or summary on a manova() object with no terms, no names on
+	the response and intercept = FALSE (which is not sensible)
+	would give an error.
 
 
 

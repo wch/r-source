@@ -466,6 +466,14 @@ stopifnot(all.equal(p1, p2$fit), all.equal(p1, p3), all.equal(p2, p4))
 ## PR 1271  detach("package:base") crashes R.
 try(detach("package:base"))
 
+## reported by PD 2002-01-24
+Y <- matrix(rnorm(20), , 2)
+fit <- manova(Y ~ 1)
+fit # failed
+print(fit, intercept = TRUE)
+summary(fit) # failed
+summary(fit, intercept = TRUE)
+
 
 ## This example last ##
 
