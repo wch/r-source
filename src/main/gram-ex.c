@@ -71,15 +71,11 @@ int R_fgetc(FILE *fp)
 
 #ifdef __MRC__
 char *R_fgets(char *buf, int i, FILE *fp);
-extern Boolean RunningOnCarbonX(void);
 
 char * R_fgets(char * s, int n, FILE * file)
 {
 	char *	p = s;
 	int			c;
-	
-	if( !RunningOnCarbonX() )
- 	 return(fgets(s,n,file));
 	
 	if (--n < 0)
 		return(NULL);
