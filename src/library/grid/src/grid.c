@@ -41,15 +41,7 @@ Rboolean deviceChanged(double devWidthCM, double devHeightCM,
  */
 SEXP L_initGrid() 
 {
-    SEXP globalstate;
-    /* 64 comes from the maximum number of R devices allowed
-     * to be open at one time 
-     * See:  R_MaxDevices in Graphics.h
-     */
-    PROTECT(globalstate = allocVector(VECSXP, 64));
-    setSymbolValue(".GRID.STATE", globalstate);
     GEregisterSystem(gridCallback, &gridRegisterIndex);
-    UNPROTECT(1);
     return R_NilValue;
 }
 
