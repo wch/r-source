@@ -32,12 +32,14 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 ## allow for small mismatches, e.g. OS version number.
                 m <- agrep(platform, R.version$platform)
                 if(!length(m))
-                    error(paste("package", fields[1, "Package"],
-                                "was built for", platform),
-                          call. = FALSE)
+                    stop(paste("package", fields[1, "Package"],
+                               "was built for", platform),
+                         call. = FALSE)
             }
-        } else if(.Platform$OS.type == "mac")
-            error("This package has not been installed properly\n  See the Note in ?library")
+        }
+        else if(.Platform$OS.type == "mac")
+            stop(paste("This package has not been installed properly\n",
+                       "See the Note in ?library"))
     }
 
     sQuote <- function(s) paste("`", s, "'", sep = "")
