@@ -306,7 +306,7 @@ function(pattern, fields = c("alias", "title"),
 
     i <- NULL
     for(f in fields) i <- c(i, searchDbField(f))
-    print(i)
+    ## print(i)
     db <- dbBase[sort(unique(i)),
 		 c("topic", "title", "Package", "LibPath"),
 		 drop = FALSE]
