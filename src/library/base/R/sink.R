@@ -2,8 +2,9 @@ sink <- function(file=NULL, append = FALSE, type = c("output", "message"))
 {
     type <- match.arg(type)
     if(type == "message") {
-        if(!inherits(file, "connection") || !isopen(connection))
-            error("`file' must be an already open connection")
+        if(is.null(file)) file <- stderr()
+        else if(!inherits(file, "connection") || !isOpen(file))
+           stop("`file' must be NULL or an already open connection")
         .Internal(sink(file, FALSE, TRUE))
     } else {
         closeOnExit <- FALSE
@@ -20,5 +21,5 @@ sink <- function(file=NULL, append = FALSE, type = c("output", "message"))
 sink.number <- function(type = c("output", "message"))
 {
     type <- match.arg(type)
-    .Internal(sink.number(type == "message"))
+    .Internal(sink.number(type != "message"))
 }

@@ -241,10 +241,10 @@ NEW FEATURES
     o	New Fortran entry points rwarn() and rexit() for warnings and
 	error exits from compiled Fortran code.
 
-
     o   substring() and substring()<- do nothing silently on a
         character vector of length 0, rather than generating an
-        error.  This is consistent with other functions and with S-Plus.
+        error.  This is consistent with other functions and with S.
+
 
 
 BUG FIXES
@@ -303,6 +303,13 @@ BUG FIXES
     o	frac(,) {and others} now adds a gap appropriately (PR#1101)
 
     o	logLik.lm() now uses the correct "df" (nlme legacy code).
+
+    o	closeAllConnections() works again, and closes all sink() diversions.
+
+    o	sink(type="message") works again.
+
+    o	sink.number was (accidentally) returning the result invisibly.
+
 
 
 	**************************************************

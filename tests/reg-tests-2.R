@@ -182,6 +182,7 @@ format(a, justify="right")
 ## PR 963
 svd(rbind(1:7))## $v lost dimensions in 1.2.3
 
+
 ## Make sure  on.exit() keeps being evaluated in the proper env [from PD]:
 ## A more complete example:
 g1 <- function(fitted) { on.exit(remove(fitted)); return(function(foo) foo) }
@@ -216,7 +217,7 @@ f(structure(1,class = "bar"))
 e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
 
 
-## some tests that R supports logical variables in formula
+## some tests that R supports logical variables in formulae
 ## it coerced them to numeric prior to 1.4.0
 ## they should appear like 2-level factors, following S
 
@@ -252,7 +253,7 @@ as.numeric(as.character(Inf))
 rowsum(matrix(1:12, 3,4), c("Y","X","Y"))
 ## rownames were 1,2 in <= 1.3.1.
 
-## PR#1115 (saving strings with ascii=T)
+## PR#1115 (saving strings with ascii=TRUE)
 x <- y <- unlist(as.list(
     parse(text=paste("\"\\",
           as.character(structure(0:255,class="octmode")),
@@ -261,4 +262,30 @@ save(x, ascii=T, file=(fn <- tempfile()))
 load(fn)
 all(x==y)
 ## 1.3.1 had trouble with \
+
+
+## Some tests of sink() and connections()
+## capture all the output to a file.
+zz <- file("all.Rout", open="wt")
+sink(zz)
+sink(zz, type="message")
+try(log("a"))
+## back to the console
+sink(type="message")
+sink()
+try(log("a"))
+
+## capture all the output to a file.
+zz <- file("all.Rout", open="wt")
+sink(zz)
+sink(zz, type="message")
+try(log("a"))
+
+## bail out
+closeAllConnections()
+(foo <- showConnections())
+stopifnot(nrow(foo) == 0)
+try(log("a"))
+unlink("all.Rout")
+## many of these were untested before 1.4.0.
 
