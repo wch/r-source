@@ -84,7 +84,7 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	if ((p = strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';
 	/* check for wildcard matches */
 	fh = FindFirstFile(tmp, &find_data);
-	if (fh) {
+	if (fh != INVALID_HANDLE_VALUE) {
 	    strcpy(tmp, dir); strcat(tmp, find_data.cFileName);
 	    failures += (unlink(tmp) !=0);
 	    while(FindNextFile(fh, &find_data)) {
