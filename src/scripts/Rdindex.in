@@ -5,7 +5,7 @@
 # The titles are nicely formatted between two columns (defaults are 25
 # and 72, respectively).
 
-# Copyright (C) 1997-2000 The R Core Development Team
+# Copyright (C) 1997-2001 The R Core Development Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ use Getopt::Long;
 use R::Utils;
 use R::Rd;
 
-my $revision = ' $Revision: 1.14 $ ';
+my $revision = ' $Revision: 1.15 $ ';
 my $version;
 my $name;
 
@@ -77,59 +77,65 @@ $OSdir = $opt_os if $opt_os;
 my $l1 = $opt_l - 2;
 my $l2 = $opt_r - $opt_l;
 
+my ($rdname, $rdtitle);
+
 my $cmd = "format short =\n";
 $cmd .= "@" . rep("<", $l1) . " ^" . rep("<", $l2) . "\n";
-$cmd .= "\$name, \$desc\n";
+$cmd .= "\$rdname, \$rdtitle\n";
 $cmd .= ".\n";
 eval($cmd);
 
 $cmd = "format long =\n";
 $cmd .= "@" . rep("<", $opt_r) . "\n";
-$cmd .= "\$name\n";
+$cmd .= "\$rdname\n";
 $cmd .= ".\n";
 eval($cmd);
 
 $cmd = "format cont =\n";
 $cmd .= "~" . rep(" ", $l1) . " ^" . rep("<", $l2) . "\n";
-$cmd .= "\$desc\n";
+$cmd .= "\$rdtitle\n";
 $cmd .= ".\n";
 eval($cmd);
     
-my $dir;
-if ($#ARGV == 0 && -d $ARGV[0]) {
-    $dir = $ARGV[0];
-    if (-d "$dir/man") {
- 	$dir = "$dir/man";
+my @Rdfiles;
+my $only_data_set_docs = 0;
+
+if($#ARGV == 0 && -d $ARGV[0]) {
+    $only_data_set_docs = 1 if($opt_d);
+    my $dir = $ARGV[0];
+    if(-d &file_path($dir, "man")) {
+	$dir = &file_path($dir, "man");
     }
-    @Rdfiles = sort(glob("$dir/*.[Rr]d"), glob("$dir/$OSdir/*.[Rr]d"));
-    if ($opt_d) {
-	my @tmp = ();
-	foreach $f (@Rdfiles) {
-	    @tmp = (@tmp, `grep -l '\\\\keyword{datasets}' $f`);
-	}
-	@Rdfiles = @tmp;
+    @Rdfiles = &list_files_with_exts($dir, "[Rr]d");
+    $dir = &file_path($dir, $OSdir);
+    if(-d $dir) {
+	@Rdfiles = (@Rdfiles,
+		    &list_files_with_exts($dir, "[Rr]d"));
     }
 } else {
-    @Rdfiles = ();
-    foreach $arg (@ARGV) {
+    foreach my $arg (@ARGV) {
 	@Rdfiles = (@Rdfiles, glob($arg));
     }
 }
 
-foreach $file (@Rdfiles) {
-    my $rdinfo = R::Rd->info($file);
-    $name = $rdinfo->{"name"};
-    my $l = length($name);
+foreach my $rdfile (sort @Rdfiles) {
+    my $rdinfo = R::Rd->info($rdfile, $OSdir);
+
+    next if($only_data_set_docs &&
+	    grep(!/^datasets$/, @{$rdinfo->{"keywords"}}));
+    
+    $rdname = $rdinfo->{"name"};
+    my $l = length($rdname);
     if ($l <= $l1) {
 	$~ = short;
     }
     else {
 	$~ = long;
     }
-    $desc = $rdinfo->{"title"};
+    $rdtitle = $rdinfo->{"title"};
     write;
     $~ = cont;
-    while ($desc) {
+    while ($rdtitle) {
 	write;
     }
 }
