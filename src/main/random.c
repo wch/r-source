@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
- *  Copyright (C) 2003	      The R Foundation
+ *  Copyright (C) 2003-4      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include <Defn.h>
 #include <R_ext/Random.h>
 #include <R_ext/Applic.h>	/* for rcont2() */
-#include <Rmath.h>		/* for rxxx functions, MATH_CHECK  */
+#include <Rmath.h>		/* for rxxx functions */
 
 static void invalid(SEXP call)
 {
@@ -42,7 +42,7 @@ static Rboolean random1(double (*f) (), double *a, int na, double *x, int n)
     errno = 0;
     for (i = 0; i < n; i++) {
 	ai = a[i % na];
-	x[i] = MATH_CHECK(f(ai));
+	x[i] = f(ai);
 	if (!R_FINITE(x[i])) naflag = 1;
     }
     return(naflag);
@@ -114,7 +114,7 @@ static Rboolean random2(double (*f) (), double *a, int na, double *b, int nb,
     for (i = 0; i < n; i++) {
 	ai = a[i % na];
 	bi = b[i % nb];
-	x[i] = MATH_CHECK(f(ai, bi));
+	x[i] = f(ai, bi);
 	if (!R_FINITE(x[i])) naflag = 1;
     }
     return(naflag);
@@ -198,7 +198,7 @@ static Rboolean random3(double (*f) (), double *a, int na, double *b, int nb,
 	ai = a[i % na];
 	bi = b[i % nb];
 	ci = c[i % nc];
-	x[i] = MATH_CHECK(f(ai, bi, ci));
+	x[i] = f(ai, bi, ci);
 	if (!R_FINITE(x[i])) naflag = TRUE;
     }
     return(naflag);

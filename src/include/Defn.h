@@ -445,9 +445,6 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 # define INI_as(v)
 #endif
 
-/* Formerly in Arith.h */
-#define MATH_CHECK(call)	(call)
-
 /* extern int	errno; already have errno.h ! */
 extern int	gc_inhibit_torture INI_as(1);
 

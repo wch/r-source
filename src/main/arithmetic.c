@@ -684,7 +684,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 		REAL(ans)[i] = NA_REAL;
 	    else {
-		REAL(ans)[i] = MATH_CHECK(R_pow((double) x1, (double) x2));
+		REAL(ans)[i] = R_pow((double) x1, (double) x2);
 	    }
 	}
 	break;
@@ -835,7 +835,7 @@ static SEXP math1(SEXP sa, double(*f)(), SEXP lcall)
 	if (ISNAN(a[i]))
 	    y[i] = a[i];
 	else {
-	    y[i] = MATH_CHECK(f(a[i]));
+	    y[i] = f(a[i]);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -955,7 +955,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(), SEXP lcall)
 	bi = b[ib];
 	if_NA_Math2_set(y[i], ai, bi)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi));
+	    y[i] = f(ai, bi);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -998,7 +998,7 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)(), SEXP lcall)
 	bi = b[ib];
 	if_NA_Math2_set(y[i], ai, bi)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, m_opt));
+	    y[i] = f(ai, bi, m_opt);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -1025,7 +1025,7 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2, double (*f)(), SEXP lc
 	bi = b[ib];
 	if_NA_Math2_set(y[i], ai, bi)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, i_1, i_2));
+	    y[i] = f(ai, bi, i_1, i_2);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -1206,7 +1206,7 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)(), SEXP lcall)
 	ci = c[ic];
 	if_NA_Math3_set(y[i], ai,bi,ci)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, ci));
+	    y[i] = f(ai, bi, ci);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -1252,7 +1252,7 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)(), SEXP lcal
 	ci = c[ic];
 	if_NA_Math3_set(y[i], ai,bi,ci)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, ci, i_1));
+	    y[i] = f(ai, bi, ci, i_1);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -1280,7 +1280,7 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ, double (*f)(), 
 	ci = c[ic];
 	if_NA_Math3_set(y[i], ai,bi,ci)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, ci, i_1, i_2));
+	    y[i] = f(ai, bi, ci, i_1, i_2);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -1423,7 +1423,7 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)(), SEXP lcall)
 	di = d[id];
 	if_NA_Math4_set(y[i], ai,bi,ci,di)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, ci, di));
+	    y[i] = f(ai, bi, ci, di);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -1474,7 +1474,7 @@ static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)(), 
 	di = d[id];
 	if_NA_Math4_set(y[i], ai,bi,ci,di)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, ci, di, i_1));
+	    y[i] = f(ai, bi, ci, di, i_1);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -1503,7 +1503,7 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
 	di = d[id];
 	if_NA_Math4_set(y[i], ai,bi,ci,di)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, ci, di, i_1, i_2));
+	    y[i] = f(ai, bi, ci, di, i_1, i_2);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }
@@ -1630,7 +1630,7 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 	ei = e[ie];
 	if_NA_Math5_set(y[i], ai,bi,ci,di,ei)
 	else {
-	    y[i] = MATH_CHECK(f(ai, bi, ci, di, ei));
+	    y[i] = f(ai, bi, ci, di, ei);
 	    if (ISNAN(y[i])) naflag = 1;
 	}
     }

@@ -208,7 +208,7 @@ static Rboolean iprod(int *x, int n, double *value, Rboolean narm)
     s = 1;
     for (i = 0; i < n; i++) {
 	if (x[i] != NA_INTEGER) {
-	    s = MATH_CHECK(s * x[i]);
+	    s = s * x[i];
 	    if(!updated) updated = 1;
 	}
 	else if (!narm) {
@@ -235,7 +235,7 @@ static Rboolean rprod(double *x, int n, double *value, Rboolean narm)
     for (i = 0, s = 1; i < n; i++) {
 	if (!ISNAN(x[i])) {
 	    if(!updated) updated = 1;
-	    s = MATH_CHECK(s * x[i]);
+	    s = s * x[i];
 	}
 	else if (!narm) {
 	    if(!updated) updated = 1;
@@ -259,8 +259,8 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 	    if(!updated) updated = 1;
 	    t.r = s.r;
 	    t.i = s.i;
-	    s.r = MATH_CHECK(t.r * x[i].r - t.i * x[i].i);
-	    s.i = MATH_CHECK(t.r * x[i].i + t.i * x[i].r);
+	    s.r = t.r * x[i].r - t.i * x[i].i;
+	    s.i = t.r * x[i].i + t.i * x[i].r;
 	}
     }
     value->r = s.r;
@@ -463,8 +463,8 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(updated) {
 			z.r = zcum.r;
 			z.i = zcum.i;
-			zcum.r = MATH_CHECK(z.r * ztmp.r - z.i * ztmp.i);
-			zcum.i = MATH_CHECK(z.r * ztmp.i + z.i * ztmp.r);
+			zcum.r = z.r * ztmp.r - z.i * ztmp.i;
+			zcum.i = z.r * ztmp.i + z.i * ztmp.r;
 		    }
 		    break;
 		default:
