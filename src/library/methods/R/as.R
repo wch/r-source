@@ -17,11 +17,7 @@ as <-
         coe(object)
     }
     else if(coerceFlag) {
-        f <- elNamed(asFunctions, Class)
-        if(is.function(f))
-            f(object)
-        else
-            coerce(object, new(Class, .Force=TRUE))
+        coerce(object, new(Class, .Force=TRUE))
     }
     else
         NULL
@@ -33,7 +29,11 @@ coerce <-
   function(object, to)
 {
     toClass <- data.class(to)
-    if(!is.na(match(toClass, .BasicVectorClasses)))
+    value <- NULL
+    f <- elNamed(asFunctions, toClass) ## the predefined as.* functions
+    if(is.function(f))
+            value <- f(object)
+    else if(!is.na(match(toClass, .BasicVectorClasses)))
         value <- as.vector(object, toClass)
     else if(isClass(toClass)) {
         value <- NULL

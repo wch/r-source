@@ -336,11 +336,28 @@ selectMethod <-
     if(is.null(selection)) {
         if(inherited) {
             selection <- elNamed(slot(mlist, "allMethods"), thisClass)
-            if(is.null(selection))
+            if(is.null(selection)) {
                 ## do the inheritance calculations
-                selection <- matchArgClass(thisClass, names(methods), methods, defaultMethod)
-        }
-    }
+                allSelections <- matchArgClass(thisClass, names(methods), methods)
+                for(cl in names(allSelections)) {
+                  method <- elNamed(allSelections, cl)
+                  if(is(method, "MethodsList"))
+                    ## try completing the selection
+                    method <- Recall(mlist = method, signature = signature[-1],
+                                     optional = TRUE)
+                  if(is(method, "function")) {
+                    thisClass <- cl
+                    selection <- method
+                    break
+                  }
+                  ## else, try the next possibility
+                }
+                ## on exiting the loop, selection will still be NULL unless
+                ## one of the Recall's successfully found a single method
+                
+              }
+          }
+      }
     if(is(selection, "function"))
         selection
     else if(is(selection, "MethodsList")) {

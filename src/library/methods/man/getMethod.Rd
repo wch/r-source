@@ -2,6 +2,7 @@
 \alias{getMethod}
 \alias{getMethods}
 \alias{selectMethod}
+\alias{MethodsListSelect}
 \title{ Get the Definition of a Method }
 \description{
   A call to \code{getMethod} or \code{selectMethod} returns the method
@@ -16,6 +17,8 @@ getMethod(f, signature=character(), where=-1, optional=FALSE)
 selectMethod(f, signature, optional=False, mlist=getMethods(f))
 
 getMethods(f, where=-1)
+
+MethodsListSelect(f, ev, mustFind = TRUE, ...)
 }
 \arguments{
   \item{f}{ The character-string name of the generic function }
@@ -35,6 +38,11 @@ getMethods(f, where=-1)
   \item{mlist}{In \code{selectMethod}, the \code{MethodsList} object
       can be explicitly supplied.  (Unlikely to be used, except in the
       recursive call that finds matches to more than one argument.)}
+
+  \item{ev}{The environment in which argument evaluations are done in
+    \code{MethodsListSelect}.  Currently must be supplied, but should
+    usually be \code{sys.frame(sys.parent())} when calling the function explicitly
+    for debugging purposes.}
 }
 \details{
   The functions \code{getMethod} and \code{selectMethod} usually
@@ -65,7 +73,21 @@ getMethods(f, where=-1)
   calls itself recursively, with that object as the \code{mlist}
   argument.
 
-  Note that the statement that \code{selectMethod} corresponds to the
+  The function \code{MethodsListSelect} returns the method selected by
+  the evaluator for the specified function, being called from the
+  supplied environment.  This is usually, but not always, the same as
+  that returned by \code{selectMethod} given the equivalent set of
+  classes (i.e., the classes of the arguments used in defining methods
+  for this function).  The differences come because inheritance
+  relations can be conditional, and \code{selectMethod} does not  have
+  that information, since it uses classes rather than actual objects
+  from those classes.
+
+  Normally you won't call \code{MethodsListSelect} directly, but it is
+  possible to use it for debugging purposes (only for distinctly
+  advanced users!).
+
+  Note that the statement that \code{MethodsListSelect} corresponds to the
   selection done by the evaluator is a fact, not an assertion, in the
   sense that the evaluator code constructs and executes a call to
   \code{selectMethod} when it does not already have a cached method

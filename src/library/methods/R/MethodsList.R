@@ -297,21 +297,19 @@ matchArg <-
 
 matchArgClass <-
   ## utility function to match the superClasses of the specified class to the elements of a methods list.
-  function(Class, classes, methods, defaultMethod)
+  function(Class, classes, methods)
 {
     ## test for Class extending one of the classes.  Corresponds to matchArg
-    ## and to a depth-first search for inherited methods.  Note that the first element
-    ## of the superClasses found in the methods is used.  Because the extension is
-    ## returned in depth-first order, depth-first search is obtained.
+    ## and to a depth-first search for inherited methods, because the elements
+  ## are returned in the order of the extends (asserted to correspond to depth-first traversal
+  ## of the tree of is relations).
     superClasses <- names(getExtends(getClass(Class)))
     which <- match(superClasses, classes)
-    ok <- which[!is.na(which)]
-    if(any(ok)) {
-        foundClass <- superClasses[ok][[1]]
-        elNamed(methods, foundClass)
-    }
-    else
-        defaultMethod
+    foundClasses <- superClasses[!is.na(which)] ## here's where the order is depth-first
+    value <- list()
+    for(cl in foundClasses)
+      elNamed(value, cl) <- elNamed(methods, cl)
+    value
 }
 
 matchSignature <-
