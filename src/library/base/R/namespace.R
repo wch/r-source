@@ -221,21 +221,23 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         # process exports, seal, and clear on.exit action
         exports <- nsInfo$exports
+
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pat = p, all = TRUE), exports)
         if(hadMethods) {
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
             if(length(expClasses)>0) {
-                missingClasses <- !sapply(expClasses, isClass, where = ns)
+                missingClasses <- !sapply(expClasses, methods:::isClass, where = ns)
                 if(any(missingClasses))
                     stop("Classes for export not defined: ",
                          paste(expClasses[missingClasses], collapse = ", "))
-                expClasses <- paste(classMetaName(""), expClasses, sep="")
+                expClasses <- paste(methods:::classMetaName(""), expClasses, sep="")
             }
             ## process methods metadata explicitly exported or
             ## implied by exporting the generic function.
-            allMethods <- unique(c(getGenerics(ns), getGenerics(parent.env(ns))))
+            allMethods <- unique(c(methods:::getGenerics(ns),
+                                   methods:::getGenerics(parent.env(ns))))
             expMethods <- nsInfo$exportMethods
             if(length(allMethods)>0) {
                 expMethods  <- unique(c(expMethods,
@@ -252,7 +254,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                     if(!(mi %in% exports) &&
                        exists(mi, envir = ns, mode = "function", inherits = FALSE))
                         exports <- c(exports, mi)
-                    expMethods[[i]] <- mlistMetaName(mi, ns)
+                    expMethods[[i]] <- methods:::mlistMetaName(mi, ns)
                 }
             }
             else if(length(expMethods) > 0)
@@ -442,7 +444,7 @@ namespaceImportFrom <- function(self, ns, vars) {
         expMethods <- get(metaname, envir = expenv)
         if(exists(metaname, envir = impenv, inherits = FALSE)) {
             impMethods <- get(metaname, envir = impenv)
-            assign(metaname, mergeMethods(impMethods, expMethods), envir = impenv)
+            assign(metaname, methods:::mergeMethods(impMethods, expMethods), envir = impenv)
             TRUE
         }
         else
@@ -451,7 +453,7 @@ namespaceImportFrom <- function(self, ns, vars) {
     whichMethodMetaNames <- function(impvars) {
         if(!.isMethodsDispatchOn())
             return(numeric())
-        mm <- mlistMetaName()
+        mm <- methods:::mlistMetaName()
         seq(along = impvars)[substr(impvars, 1, nchar(mm)) == mm]
     }
     if (is.character(self))
@@ -506,15 +508,15 @@ namespaceImportFrom <- function(self, ns, vars) {
 }
 namespaceImportClasses <- function(self, ns, vars) {
     for(i in seq(along = vars))
-        vars[[i]] <- classMetaName(vars[[i]])
+        vars[[i]] <- methods:::classMetaName(vars[[i]])
     namespaceImportFrom(self, asNamespace(ns), vars)
 }
 namespaceImportMethods <- function(self, ns, vars) {
     allVars <- character()
-    allMlists <- getGenerics(ns)
+    allMlists <- methods:::getGenerics(ns)
     if(any(is.na(match(vars, allMlists))))
         stop("Requested methods objects not found in environment/package \"",
-                getPackageName(ns), "\": ",
+                methods:::getPackageName(ns), "\": ",
                 paste(vars[is.na(match(vars, allMlists))], collapse = ", "))
     for(i in seq(along = allMlists)) {
         ## import methods list objects if asked for
@@ -522,9 +524,10 @@ namespaceImportMethods <- function(self, ns, vars) {
         g <- allMlists[[i]]
         if(exists(g, envir=self, inherits = FALSE) # already imported
            || g %in% vars) # requested explicitly
-            allVars <- c(allVars, mlistMetaName(g, ns))
+            allVars <- c(allVars, methods:::mlistMetaName(g, ns))
         if(g %in% vars && !exists(g, envir=self, inherits = FALSE) &&
-           exists(g, envir=ns, inherits = FALSE) && is(get(g, envir = ns), "genericFunction"))
+           exists(g, envir=ns, inherits = FALSE) &&
+           methods:::is(get(g, envir = ns), "genericFunction"))
             allVars <- c(allVars, g)
     }
     namespaceImportFrom(self, asNamespace(ns), allVars)
@@ -564,20 +567,6 @@ namespaceExport <- function(ns, vars) {
             names(old) <- new
             old
         }
-        mergeExportMethods <- function(new, ns) {
-            if(!(.isMethodsDispatchOn() && exists("mlistMetaName")))
-                return(FALSE)
-            mm = mlistMetaName()
-            newMethods <- new[substr(new, 1, nchar(mm)) == mm]
-            nsimports <- parent.env(ns)
-            for(what in newMethods) {
-                if(exists(what, envir = nsimports, inherits = FALSE)) {
-                    m1 <- get(what, envir = nsimports)
-                    m2 <- get(what, envir = ns)
-                    assign(what, envir = ns, mergeMethods(m1, m2))
-                }
-            }
-        }
         new <- makeImportExportNames(vars)
         if (any(duplicated(new)))
             stop("duplicate export names ",
@@ -587,8 +576,22 @@ namespaceExport <- function(ns, vars) {
            undef <- do.call("paste", as.list(c(undef, sep=", ")))
             stop(paste("undefined exports:", undef))
         }
-        mergeExportMethods(new, ns)
+        .mergeExportMethods(new, ns)
         addExports(ns, new)
+    }
+}
+.mergeExportMethods <- function(new, ns) {
+    if(!.isMethodsDispatchOn())
+        return(FALSE)
+    mm = methods:::mlistMetaName()
+    newMethods <- new[substr(new, 1, nchar(mm)) == mm]
+    nsimports <- parent.env(ns)
+    for(what in newMethods) {
+        if(exists(what, envir = nsimports, inherits = FALSE)) {
+            m1 <- get(what, envir = nsimports)
+            m2 <- get(what, envir = ns)
+            assign(what, envir = ns, methods:::mergeMethods(m1, m2))
+        }
     }
 }
 packageHasNamespace <- function(package, package.lib) {
@@ -712,3 +715,30 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
     if (isNamespace(envir) && ! identical(envir, .BaseNamespaceEnv))
         addNamespaceS3method(envir, genname, class, method)
 }
+
+# export <- function(expr, where = topenv(parent.frame()),
+#                    exclusions = c("last.dump", "last.warning", ".Last.value",
+#                        ".Random.seed", ".packageName", ".noGenerics", ".required")) {
+#     ns <- as.environment(where)
+#     if(isNamespace(ns)) {
+#         expEnv <- new.env(hash = TRUE, parent =ns)
+#         ## copy .packageName (will also make this qualify as topenv()
+#         ## for class & method assignment
+#         assign(".packageName", get(".packageName", envir = ns), envir = expEnv)
+#         eval(substitute(expr), expEnv)
+#         ## objects assigned will be exported.
+#         allObjects  <- objects(expEnv, all=TRUE)
+#         newExports <- allObjects[!(allObjects %in% exclusions)]
+#         ## Merge any methods lists with existing versions in ns == parent.env(expEnv)
+#         .mergeExportMethods(newExports, expEnv)
+#         ## copy the objects
+#         for(what in allObjects)
+#             assign(what, get(what, envir = expEnv), envir = ns)
+#         ## and update the exports information
+#         exports <- getNamespaceInfo(ns, "exports")
+#         for(what in newExports)
+#             assign(what, what, envir = exports)
+#     }
+#     else
+#         eval(substitute(expr), ns)
+# }

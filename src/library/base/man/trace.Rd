@@ -17,7 +17,7 @@
 }
 \usage{
 trace(what, tracer, exit, at, print = TRUE, signature = NULL, where)
-untrace(what, signature = NULL)
+untrace(what, signature = NULL, where)
 
 tracingState(on)
 }
@@ -44,6 +44,15 @@ tracingState(on)
     signature for a method for function \code{what}.  In this case, the
     method, and \emph{not} the function itself, is traced. }
 
+<<<<<<< trace.Rd
+\item{where}{the environment from which to look for the function to be
+  traced; by default, the top-level environment of the call to
+  \code{trace}.  If you put a call to \code{trace} into code in a
+  package, you may need to specify \code{where=.GlobalEnv} if
+  the package containing the call has a namespace, but the function
+  you want to trace is somewhere on the search list.
+  }
+=======
   \item{where}{the environment from which to look for the function to be
     traced.  By default, will look for the top environment of the call
     to \code{trace}.  If you put a call to \code{trace} into code in a
@@ -51,6 +60,7 @@ tracingState(on)
     package has a namespace.  Otherwise you are likely to find the
     function in a locked namespace, and be unable to insert the traced
     version.}
+>>>>>>> 1.14
 
   \item{on}{A call to \code{tracingState} returns \code{TRUE} if
      tracing is globally turned on, \code{FALSE} otherwise.  An
@@ -145,11 +155,9 @@ tracingState(on)
   (because it uses special classes of objects to store and restore
   versions of the traced functions).
 
-  In rare cases, this may change some behavior.  In particular, although
-  the \pkg{methods} package generally supports older styles of classes
-  and methods, it is stricter in treating class attributes.  Just
-  occasionally, older code may stop on an error with the \pkg{methods}
-  package attached, but not otherwise. 
+  If methods dispatch is not currently on, \code{trace} will load the
+  methods namespace, but will not put the methods package on the
+  search list.
   }
 \value{
   The traced function(s) name(s).  The relevant consequence is the
