@@ -36,12 +36,12 @@ clean:
 
 # section for JR software installer.
 
-RECOMMENDED=KernSmooth Matrix VR boot cluster foreign mgcv nlme rpart survival5
+RECOMMENDED=KernSmooth Matrix VR boot cluster foreign mgcv nlme rpart survival
 IS: SetupR.exe
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
 # location where binary packages are kept
-PKGS=C:/R/Rdist/libs
+PKGS=C:/R/Rdist/libs1030
 
 R.iss: JRins.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip ../$(PREFIX)h.zip \
 ../$(PREFIX)ch.zip ../$(PREFIX)d1.zip ../$(PREFIX)d2.zip \
