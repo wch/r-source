@@ -9,8 +9,8 @@ assign(x, value, pos = -1, envir = sys.frame(sys.parent()),
   \item{x}{a variable name (given as a quoted string).}
   \item{value}{a value to be assigned to \code{x}.}
   \item{pos}{???}
-  \item{envir}{the environent in which to assign.  The default is the
-    environment where the call to \code{assign} takes place.}
+  \item{envir}{the \code{\link{environent}} in which to assign.  The
+    default is the environment where the call to \code{assign} takes place.}
   \item{inherits}{should the enclosing frames of the environment be
     inspected?}
   \item{immediate}{an ignored compatibility feature.}
@@ -29,5 +29,19 @@ assign(x, value, pos = -1, envir = sys.frame(sys.parent()),
 
   If \code{inherits} is \code{FALSE}, assigment takes place in the
   initial frame of \code{envir}.
+}
+\seealso{\code{\link{get}}, \code{\link{environment}}.}
+\examples{
+for(in 1:6) { #-- Create objects  'r1', 'r2', ... 'r6' --
+ nam <- paste("r",i, sep=".")
+ assign(nam, 1:i)
+}
+##-- Global assignment within a function:
+myf <- function(x) {
+ innerf <- function(x) assign("Global.res", x^2, env = .GlobalEnv)
+ innerf(x+1)
+}
+myf(3)
+Global.res # 16
 }
 \keyword{data}
