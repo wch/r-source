@@ -86,9 +86,28 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
         hi <- min(k, m)
         NVAL <- or
         names(NVAL) <- "odds ratio"
+
         ## Note that in general the conditional distribution of x given
         ## the marginals is a non-central hypergeometric distribution H
         ## with non-centrality parameter ncp, the odds ratio.
+        support <- lo : hi
+        ## Density of the *central* hypergeometric distribution on its
+        ## support: store for once as this is needed quite a bit.
+        logdc <- dhyper(support, m, n, k, log = TRUE)
+        dnhyper <- function(ncp) {
+            ## Does not work for boundary values for ncp (0, Inf) but it
+            ## does not need to.
+            d <- logdc + log(ncp) * support
+            d <- exp(d - max(d))        # beware of overflow
+            d / sum(d)
+        }
+        mnhyper <- function(ncp) {
+            if(ncp == 0)
+                return(lo)
+            if(ncp == Inf)
+                return(hi)
+            sum(support * dnhyper(ncp))
+        }
         pnhyper <- function(q, ncp = 1, upper.tail = FALSE) {
             if(ncp == 1) {
                 if(upper.tail)
@@ -108,15 +127,14 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                 else
                     return(as.numeric(q >= hi))
             }
-            u <- lo : hi
-            d <- dhyper(u, m, n, k, log=TRUE) + log(ncp) * u
-            d <- exp(d - max(d)) # beware of overflow
-            d <- d / sum(d)
+            d <- dnhyper(ncp)
             if(upper.tail)
-                sum(d[u >= q])
+                sum(d[support >= q])
             else
-                sum(d[u <= q])
+                sum(d[support <= q])
         }
+
+        ## Determine the p-value (if still necessary).
         if(is.null(PVAL)) {
             PVAL <-
                 switch(alternative,
@@ -130,16 +148,13 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                            else {
                                ## Note that we need a little fuzz.
                                relErr <- 1 + 10 ^ (-7)
-                               u <- lo : hi
-                               d <- dhyper(u, m, n, k, log=TRUE)
-                                     + log(or) * u
-                               d <- exp(d - max(d))
-                               d <- d / sum(d)
+                               d <- dnhyper(or)
                                sum(d[d <= d[x - lo + 1] * relErr])
                            }
                        })
             RVAL <- list(p.value = PVAL)
         }
+        
         ## Determine the MLE for ncp by solving E(X) = x, where the
         ## expectation is with respect to H.
         mle <- function(x) {
@@ -147,16 +162,6 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                 return(0)
             if(x == hi)
                 return(Inf)
-            mnhyper <- function(ncp) {
-                if(ncp == 0)
-                    return(lo)
-                if(ncp == Inf)
-                    return(hi)
-                q <- lo : hi
-                d <- dhyper(q, m, n, k, log=TRUE) + log(ncp) * q
-                d <- exp(d - max(d))
-                sum(q * d) / sum(d)
-            }
             mu <- mnhyper(1)
             if(mu > x)
                 uniroot(function(t) mnhyper(t) - x, c(0, 1))$root
@@ -168,16 +173,18 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
         }
         ESTIMATE <- mle(x)
         names(ESTIMATE) <- "odds ratio"
+        
         ## Determine confidence intervals for the odds ratio.
         ncp.U <- function(x, alpha) {
             if(x == hi)
                 return(Inf)
             p <- pnhyper(x, 1)
             if(p < alpha)
-                uniroot(function(t) pnhyper(x, t) - alpha, c(0,1))$root
+                uniroot(function(t) pnhyper(x, t) - alpha,
+                        c(0, 1))$root
             else if(p > alpha)
                 1 / uniroot(function(t) pnhyper(x, 1/t) - alpha,
-                            c(.Machine$double.eps,1))$root
+                            c(.Machine$double.eps, 1))$root
             else
                 1
         }
@@ -186,12 +193,13 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                 return(0)
             p <- pnhyper(x, 1, upper = TRUE)
             if(p > alpha)
-                uniroot(function(t) pnhyper(x, t, upper = TRUE) - alpha,
-                        c(0,1))$root
-            else if (p < alpha)
-                1 / uniroot(function(t) pnhyper(x, 1/t, upper = TRUE) -
-                            alpha,
-                            c(.Machine$double.eps,1))$root
+                uniroot(function(t)
+                        pnhyper(x, t, upper = TRUE) - alpha,
+                        c(0, 1))$root
+            else if(p < alpha)
+                1 / uniroot(function(t)
+                            pnhyper(x, 1/t, upper = TRUE) - alpha,
+                            c(.Machine$double.eps, 1))$root
             else
                 1
         }
@@ -203,6 +211,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                            c(ncp.L(x, alpha), ncp.U(x, alpha))
                        })
         attr(CINT, "conf.level") <- conf.level
+        
         RVAL <- c(RVAL,
                   list(conf.int = CINT,
                        estimate = ESTIMATE,
