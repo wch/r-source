@@ -51,8 +51,11 @@
   \code{\link{show}} for methods with formal classes if called
   with no optional arguments.
 }
-\seealso{The generic \code{\link{print}}, \code{\link{options}}.
+\seealso{
+  The generic \code{\link{print}}, \code{\link{options}}.
   The \code{"\link{noquote}"} class and print method.
+
+  \code{\link{encodeString}}.
 }
 \examples{
 pi

@@ -165,6 +165,9 @@ NEW FEATURES
     o	all/any() now attempt to coerce their arguments to logical, as
 	documented in the Blue Book.  This means e.g. any(list()) works.
 
+    o	New function encodeString() to encode character strings in the
+	same way that printing does.
+
 
 UTILITIES
 
@@ -304,6 +307,12 @@ BUG FIXES
 
     o	.install_package_vignette_index() created an index even in an
 	empty 'doc' directory.
+
+    o	The print() method for factors now escapes characters in the  
+	levels in the same way as they are printed.
+
+    o	str() no longer interprets control characters in character
+	strings and factor levels.
 
 
 

@@ -189,11 +189,12 @@ str.default <-
 		warning(paste(sQuote("object"),
 			      "does not have valid levels()!"))
 		nl <- 0
-	    }
+	    } else lev.att <- encodeString(lev.att, na = FALSE, quote = '"')
 	    ord <- is.ordered(object)
 	    object <- unclass(object)
 	    if(nl) {
-		lenl <- cumsum(3 + nchar(lev.att))# level space
+                ## as from 2.1.0, quotes are included here.
+		lenl <- cumsum(3 + (nchar(lev.att) - 2))# level space
 		ml <- if(nl <= 1 || lenl[nl] <= 13)
 		    nl else which(lenl > 13)[1]
 		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
@@ -205,10 +206,10 @@ str.default <-
 
 	    lsep <- if(ord) "<" else ","
 	    str1 <- P0(if(ord)" Ord.f" else " F",
-		       "actor w/ ", nl, " level",if(nl != 1) "s",
+		       "actor w/ ", nl, " level", if(nl != 1) "s",
 		       if(nl) " ",
-		       if(nl) P0(pasteCh(lev.att[1:ml]), collapse = lsep),
-		       if(ml < nl) P0(lsep,".."), ":")
+		       if(nl) P0(lev.att[1:ml], collapse = lsep),
+		       if(ml < nl) P0(lsep, ".."), ":")
 
 	    std.attr <- c("levels", "class")
 	} else if (typeof(object) %in% c("externalptr", "weakref", "environment")) {
@@ -328,20 +329,24 @@ str.default <-
 	if(is.na(le)) { warning("'str.default': 'le' is NA !!"); le <- 0}
 
 	if(char.like) {
+            en_object <- encodeString(as.character(object))
 	    v.len <-
 		if(missing(vec.len))
-		    max(1,sum(cumsum(3 + if(le>0) nchar(object) else 0) <
+		    max(1,sum(cumsum(3 + if(le>0) nchar(en_object) else 0) <
 			      wid - (4 + 5*nest.lev + nchar(str1))))
 	    ## `5*ne..' above is fudge factor
 		else round(v.len)
 	    ile <- min(le, v.len)
 	    if(ile >= 1) { # have LONG char ?!
-		nc <- nchar(object[1:ile])
+		nc <- nchar(en_object[1:ile])
 		if(any((ii <- nc > nchar.max)))
-		    object[ii] <- P0(substr(object[ii], 1, nchar.max),
+		    object[ii] <- P0(substr(en_object[ii], 1, nchar.max),
 				     "| __truncated__")
 	    }
-	    formObj <- function(x) P0(pasteCh(x), collapse=" ")
+	    formObj <- function(x) paste(encodeString(as.character(x),
+                                                      quote='"',
+                                                      na=FALSE),
+                                         collapse=" ")
 	}
 	else {
 	    if(!exists("format.fun", inherits=TRUE)) #-- define one --

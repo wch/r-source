@@ -1428,3 +1428,17 @@ foo(1:10)
 foo(pi)
 foo(matrix(1:10, 2, 5))
 ##
+
+
+## str() interpreted escape sequences prior to 2.1.0
+x <- "ab\bc\ndef"
+str(x)
+str(factor(x))
+
+x <- c("a", NA, "b")
+factor(x)
+factor(x, exclude="")
+str(x)
+str(factor(x))
+str(factor(x, exclude=""))
+##

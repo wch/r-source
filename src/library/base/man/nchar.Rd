@@ -24,9 +24,11 @@
 \note{
   This does \strong{not} give the number of characters that will be used
   to print the string, although it was documented to do so up to \R
-  2.0.1.  Because of escape sequences for non-printable characters, the
-  latter may be greater.  Also, it is possible (but unsupported) that
-  multichar sequences might be displayed as a single character.
+  2.0.1.  Use \code{\link{encodeString}} to find the characters used to
+  print the string.
+
+  It is possible (but unsupported) that multichar sequences might be
+  displayed as a single character.
 
   As from \R 2.1.0 embedded \code{nul} characters are included in the
   count (but not the final \code{nul}): previously the count stopped

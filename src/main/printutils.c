@@ -225,15 +225,10 @@ int Rstrlen(SEXP s, int quote)
 	if(isprint((int)*p)) {
 	    switch(*p) {
 	    case '\\':
-#ifdef ESCquote
-	    case '\'':
-#endif
 		 len += 2; break;
-#ifdef ESC_BARE_QUOTE
-	    case '\"': len += 2; break;
-#else
-	    case '\"': len += quote ? 2 : 1; break;
-#endif
+	    case '\'': 
+	    case '"': 
+		len += (quote == *p)? 2 : 1; break;
 	    default: len += 1; break;
 	    }
 	} else switch(*p) {
@@ -290,14 +285,9 @@ char *EncodeString(SEXP s, int w, int quote, int right)
 	if(isprint((int)*p)) {
 	    switch(*p) {
 	    case '\\': *q++ = '\\'; *q++ = '\\'; break;
-#ifdef ESCquote
-	    case '\'': *q++ = '\\'; *q++ = '\''; break;
-#endif
-#ifdef ESC_BARE_QUOTE
-	    case '\"': *q++ = '\"'; break;
-#else
-	    case '\"': if(quote) *q++ = '\\'; *q++ = '\"'; break;
-#endif
+	    case '\'': 
+	    case '"':  
+		if(quote == *p)  *q++ = '\\'; *q++ = *p; break;
 	    default: *q++ = *p; break;
 	    }
 	}

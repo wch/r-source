@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-12-06), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-12-18), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4345,5 +4345,28 @@ integer arg
 double arg
 > foo(matrix(1:10, 2, 5))
 integer arg
+> ##
+> 
+> 
+> ## str() interpreted escape sequences prior to 2.1.0
+> x <- "ab\bc\ndef"
+> str(x)
+ chr "ab\bc\ndef"
+> str(factor(x))
+ Factor w/ 1 level "ab\bc\ndef": 1
+> 
+> x <- c("a", NA, "b")
+> factor(x)
+[1] a    <NA> b   
+Levels: a b
+> factor(x, exclude="")
+[1] a    <NA> b   
+Levels: a b <NA>
+> str(x)
+ chr [1:3] "a" NA "b"
+> str(factor(x))
+ Factor w/ 2 levels "a","b": 1 NA 2
+> str(factor(x, exclude=""))
+ Factor w/ 3 levels "a","b",NA: 1 3 2
 > ##
 > 

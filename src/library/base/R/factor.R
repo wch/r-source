@@ -79,7 +79,7 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
         print(as.character(x), quote = quote, ...)
     maxl <- if(is.null(max.levels)) TRUE else max.levels
     if (maxl) {
-        n <- length(lev <- levels(x))
+        n <- length(lev <- encodeString(levels(x)))
         colsep <- if(ord) " < " else " "
         T0 <- "Levels: "
         if(is.logical(maxl))

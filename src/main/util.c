@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1059,6 +1059,41 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans);
 }
 
+
+/* encodeString(x, w, quote, right) */
+SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, x, s;
+    int i, len, w, quote = 0, right, na;
+    char *cs;
+
+    checkArity(op, args);
+    if (TYPEOF(x = CAR(args)) != STRSXP)
+	errorcall(call, "a character vector argument expected");
+    w = asInteger(CADR(args));
+    if(w == NA_INTEGER) errorcall(call, "invalid value for 'w'");
+    s = CADDR(args);
+    if(LENGTH(s) != 1 || TYPEOF(s) != STRSXP)
+	errorcall(call, "invalid value for 'quote'");
+    cs = CHAR(STRING_ELT(s, 0));
+    if(strlen(cs) > 0) quote = cs[0];
+    if(strlen(cs) > 1)
+	warningcall(call, "only the first character of 'quote' will be used");
+    right = asLogical(CADDDR(args));
+    if(right == NA_LOGICAL) errorcall(call, "invalid value for 'right'");
+    na = asLogical(CAD4R(args));
+    if(na == NA_LOGICAL) errorcall(call, "invalid value for 'na'");
+    
+    len = LENGTH(x);
+    PROTECT(ans = duplicate(x));
+    for(i = 0; i < len; i++) {
+	s = STRING_ELT(x, i);
+	if(na || s != NA_STRING)
+	    SET_STRING_ELT(ans, i, mkChar(EncodeString(s, 0, quote, right)));
+    }
+    UNPROTECT(1);
+    return ans;
+}
 
 
 void F77_SYMBOL(rexitc)(char *msg, int *nchar)
