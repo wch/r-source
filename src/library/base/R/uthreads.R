@@ -58,9 +58,9 @@ EventLoop <- function() .Internal(EventLoop())
     if (exists("MainThread"))
         stop("can't call .Main twice")
     ThreadsEnabled(TRUE)
-    MainThread <<- ActiveThreads()[[1]]  ### need CurrentThread
+    assign("MainThread", CurrentThread(), env=NULL)
     SetThreadName(MainThread, "Main Thread")
-    EventLoopThread <<- NewThread(EventLoop)
+    assign("EventLoopThread", NewThread(EventLoop), env=NULL)
     SetThreadName(EventLoopThread, "Event Loop Thread")
     while(! is.null(try({ ReplConsole(); NULL}))) {}
 }
