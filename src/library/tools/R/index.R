@@ -126,7 +126,7 @@ function(contents, packageName, libDir)
     ## named 'packageName' (to be) installed in 'libDir', in a form
     ## useful for help.search().
 
-    dbAliases <- dbKeywords <- matrix(character(), nc = 3)
+    dbAliases <- dbConcepts <- dbKeywords <- matrix(character(), nc = 3)
     
     if((nr <- NROW(contents)) > 0) {
         ## IDs are used for indexing the Rd objects in the help.search
@@ -162,15 +162,23 @@ function(contents, packageName, libDir)
         ## If there are no aliases at all, cbind() below would give
         ## matrix(packageName, nc = 1).  (Of course, Rd objects without
         ## aliases are useless ...)
-        if(length(a <- unlist(aliases)) > 0)
+        if(length(tmp <- unlist(aliases)) > 0)
             dbAliases <-
-                cbind(a, rep.int(IDs, sapply(aliases, length)),
+                cbind(tmp, rep.int(IDs, sapply(aliases, length)),
                       packageName)
         ## And similarly if there are no keywords at all.
-        if(length(k <- unlist(keywords)) > 0)
+        if(length(tmp <- unlist(keywords)) > 0)
             dbKeywords <-
-                cbind(k, rep.int(IDs, sapply(keywords, length)),
+                cbind(tmp, rep.int(IDs, sapply(keywords, length)),
                       packageName)
+        ## Finally, concepts are a feature added in R 1.8 ...
+        if("Concepts" %in% colnames(contents)) {
+            concepts <- contents[, "Concepts"]
+            if(length(tmp <- unlist(concepts)) > 0)
+                dbConcepts <-
+                    cbind(tmp, rep.int(IDs, sapply(concepts, length)),
+                          packageName)
+        }
     }
     else {
         dbBase <- matrix(character(), nc = 6)
@@ -182,8 +190,10 @@ function(contents, packageName, libDir)
         c("Aliases", "ID", "Package")
     colnames(dbKeywords) <-
         c("Keywords", "ID", "Package")
+    colnames(dbConcepts) <-
+        c("Concepts", "ID", "Package")
 
-    list(dbBase, dbAliases, dbKeywords)
+    list(dbBase, dbAliases, dbKeywords, dbConcepts)
 }
 
 

@@ -1,5 +1,5 @@
 help.search <-
-function(pattern, fields = c("alias", "title"),
+function(pattern, fields = c("alias", "concept", "title"),
 	 apropos, keyword, whatis, ignore.case = TRUE,
 	 package = NULL, lib.loc = NULL,
 	 help.db = getOption("help.db"),
@@ -7,7 +7,7 @@ function(pattern, fields = c("alias", "title"),
 	 rebuild = FALSE, agrep = NULL)
 {
     ### Argument handling.
-    TABLE <- c("name", "alias", "title", "keyword")
+    TABLE <- c("alias", "concept", "keyword", "name", "title")
     if(!missing(pattern)) {
 	if(!is.character(pattern) || (length(pattern) > 1))
 	    stop(paste(sQuote("pattern"),
@@ -71,6 +71,8 @@ function(pattern, fields = c("alias", "title"),
 	## </FIXME>
 	## If not a list (pre 1.7 format), rebuild.
 	if(!is.list(db)) rebuild <- TRUE
+        ## If no information on concepts (pre 1.8 format), rebuild.
+        if(length(db) < 4) rebuild <- TRUE
 	## Need to find out whether this has the info we need.
 	## Note that when looking for packages in libraries we always
 	## use the first location found.  Hence if the library search
@@ -116,8 +118,6 @@ function(pattern, fields = c("alias", "title"),
 	## Create the help db.
 	contentsDCFFields <-
 	    c("Entry", "Aliases", "Description", "Keywords")
-	contentsRDSFields <-
-	    c("Name", "Aliases", "Title", "Keywords")
         np <- 0
 	if(verbose)
 	    cat("Packages:\n")
@@ -133,8 +133,8 @@ function(pattern, fields = c("alias", "title"),
         ## indices into its rows, and finally create the base, aliases
         ## and keyword information in rbind() calls on the columns.
         ## This is *much* more efficient than building incrementally.
-        dbMat <- vector("list", length(packagesInHelpDB) * 3)
-        dim(dbMat) <- c(length(packagesInHelpDB), 3)
+        dbMat <- vector("list", length(packagesInHelpDB) * 4)
+        dim(dbMat) <- c(length(packagesInHelpDB), 4)
         
 	for(p in packagesInHelpDB) {
             np <- np + 1
@@ -154,9 +154,7 @@ function(pattern, fields = c("alias", "title"),
                 ## files.
                 if(file.exists(contentsFile <-
                                file.path(path, "Meta", "Rd.rds"))) {
-                    contents <-
-                        .readRDS(contentsFile)[ , contentsRDSFields,
-                                               drop = FALSE]
+                    contents <- .readRDS(contentsFile)
                 }
                 else if(file.exists(contentsFile
                                     <- file.path(path, "CONTENTS"))) {
@@ -180,7 +178,7 @@ function(pattern, fields = c("alias", "title"),
             if(!is.null(hDB)) {
                 ## Put the hsearch index for the np-th package into the
                 ## np-th row of the matrix used for aggregating.
-                dbMat[np, ] <- hDB
+                dbMat[np, seq(along = hDB)] <- hDB
             }
         }
             
@@ -191,7 +189,13 @@ function(pattern, fields = c("alias", "title"),
         ## to rbind() on the columns of the matrix used for aggregating.
         db <- list(Base = do.call("rbind", dbMat[, 1]),
                    Aliases = do.call("rbind", dbMat[, 2]),
-                   Keywords = do.call("rbind", dbMat[, 3]))
+                   Keywords = do.call("rbind", dbMat[, 3]),
+                   Concepts = do.call("rbind", dbMat[, 4]))
+        if(is.null(db$Concepts))
+            db$Concepts <-
+                matrix(character(), nc = 3,
+                       dimnames = list(NULL,
+                       c("Concepts", "ID", "Package")))
         ## And finally, make the IDs globally unique by prefixing them
         ## with the number of the package in the global index.
         for(i in which(sapply(db, NROW) > 0)) {
@@ -218,6 +222,7 @@ function(pattern, fields = c("alias", "title"),
 	cat("Database of ",
 	    NROW(db$Base), " Rd objects (",
 	    NROW(db$Aliases), " aliases, ",
+            NROW(db$Concepts), " concepts, ",
 	    NROW(db$Keywords), " keywords),\n",
 	    sep = "")
     if(!is.null(package)) {
@@ -274,9 +279,16 @@ function(pattern, fields = c("alias", "title"),
 	       alias = {
 		   aliases <- db$Aliases
 		   match(aliases[searchFun(aliases[, "Aliases"]),
-				 "ID"],
+                                 "ID"],
 			 dbBase[, "ID"])
 	       },
+	       concept = {
+		   concepts <- db$Concepts
+		   match(concepts[searchFun(concepts[, "Concepts"]),
+                                  "ID"],
+			 dbBase[, "ID"])
+	       },
+               
 	       keyword = {
 		   keywords <- db$Keywords
 		   match(keywords[searchFun(keywords[, "Keywords"]),

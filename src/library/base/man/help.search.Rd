@@ -10,7 +10,7 @@
   entries are nicely displayed.
 }
 \usage{
-help.search(pattern, fields = c("alias", "title"),
+help.search(pattern, fields = c("alias", "concept", "title"),
             apropos, keyword, whatis, ignore.case = TRUE,
             package = NULL, lib.loc = NULL,
             help.db = getOption("help.db"),
@@ -23,10 +23,10 @@ help.search(pattern, fields = c("alias", "title"),
     \code{keyword}, and \code{whatis} are ignored.}
   \item{fields}{a character vector specifying the fields of the help
     data bases to be searched.  The entries must be abbreviations of
-    \code{"name"}, \code{"alias"}, \code{"title"}, and \code{"keyword"},
-    corresponding to the help page's (file) name, the topics it provides
-    documentation for, its title, and the keywords it can be classified
-    to.}
+    \code{"name"}, \code{"title"}, \code{"alias"}, \code{"concept"}, and
+    \code{"keyword"}, corresponding to the help page's (file) name, its
+    title, the topics and concepts it provides documentation for, and
+    the keywords it can be classified to.}
   \item{apropos}{a character string to be matched in the help page
     topics and title.}
   \item{keyword}{a character string to be matched in the help page
@@ -58,12 +58,14 @@ help.search(pattern, fields = c("alias", "title"),
 }
 \details{
   Upon installation of a package, a contents data base which contains
-  the information on name, aliases, title and keywords is computed from
-  the Rd files in the package and serialized as \file{Rd.rds} in the
-  \file{Meta} subdirectory of the top-level package installation
-  directory (or, prior to \R 1.7, as \file{CONTENTS} in Debian Control
-  Format with aliases and keywords collapsed to character strings in
-  the top-level package installation directory).  This is the data base
+  the information on name, title, aliases and keywords and, concepts
+  starting with \R 1.8, is computed from the Rd files in the package and
+  serialized as \file{Rd.rds} in the \file{Meta} subdirectory of the
+  top-level package installation directory (or, prior to \R 1.7, as
+  \file{CONTENTS} in Debian Control Format with aliases and keywords
+  collapsed to character strings in the top-level package installation
+  directory).  This, or a pre-built help.search index serialized as
+  \file{hsearch.rds} in the \file{Meta} directory, is the data base
   searched by \code{help.search()}.
 
   The arguments \code{apropos} and \code{whatis} play a role similar to
