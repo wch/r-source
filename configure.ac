@@ -1322,6 +1322,8 @@ AC_CONFIG_FILES(
   etc/Renviron
   m4/Makefile
   share/Makefile
+  share/perl/Makefile
+  share/perl/build-help.pl
   src/Makefile
   src/appl/Makefile
   src/extra/Makefile
@@ -1399,7 +1401,6 @@ AC_CONFIG_FILES(
   src/scripts/check
   src/scripts/f77
   src/unix/Makefile
-  share/perl/build-help.pl
   tests/Makefile
   tests/Embedding/Makefile
   tests/Examples/Makefile

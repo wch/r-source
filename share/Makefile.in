@@ -29,6 +29,7 @@ R: FORCE
 	@if test "$(BUILDDIR_IS_SRCDIR)" = "no" ; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
+	@(cd perl; $(MAKE)) || exit 1
 FORCE:
 
 docs:

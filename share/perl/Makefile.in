@@ -1,0 +1,35 @@
+#
+# ${R_HOME}/share/perl/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../..
+subdir = share/perl
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in build-help.pl.in
+
+all: Makefile R
+R: build-help.pl
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+build-help.pl: $(srcdir)/build-help.pl.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+docs:
+
+install:
+
+mostlyclean:
+clean:
+distclean:
+	-@rm -f Makefile build-help.pl
+maintainer-clean: distclean
+
+distdir:
