@@ -132,6 +132,14 @@ NEW FEATURES
 	related functions.  The old names are deprecated.  Argument
 	`package' must now specify a single package.
 
+    o	New function strwrap() for formatting character strings into
+	paragraphs.
+
+    o	New function formatDL() for formatting description lists.
+
+    o	New function write.dcf() for writing data in Debian Control File
+	format.
+
 
 BUG FIXES
 
