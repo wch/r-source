@@ -95,8 +95,11 @@ formatC <- function (x, digits = NULL, width = NULL,
 
     if (!(n <- length(x))) return("")
     if (missing(mode))	  mode <- storage.mode(x)
-    else if (any(mode == c("double", "real", "integer")))
-	storage.mode(x) <- if(mode=="real")"double" else mode
+    else if (any(mode == c("double", "real", "integer")))  {
+      ## for .C call later on
+        if(mode=="real") mode <- "double"
+	storage.mode(x) <- mode
+    }
     else stop("\"mode\" must be \"double\" (\"real\") or \"integer\"")
     if (mode == "character" || (!is.null(format) && format == "s")) {
 	if (mode != "character") {
