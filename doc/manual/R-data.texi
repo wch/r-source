@@ -1293,7 +1293,8 @@ spreadsheet by
 @end smallexample
 @noindent
 Notice that the specification of the table is different from the name
-returned by @code{sqlTables}: this precludes the use of @code{sqlFetch}.
+returned by @code{sqlTables}: as from version 0.9-1 @code{sqlFetch} is
+able to map the differences.
 
 @node RMySQL, RmSQL, RODBC, R interface packages
 @subsection Package RMySQL
