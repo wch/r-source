@@ -11,11 +11,12 @@ MANSRC = ../src/library/*/man/*.Rd
 MANbaseDIR = ../src/library/base/man
 
 ##--------------------------------- TARGETS ------------------------------
+DVI = ../doc/manual/Man.dvi
 
 build-help: stamp-help
 build-html: stamp-html
-build-latex: stamp-latex
-build-docs: stamp-docs
+build-latex: stamp-latex $(DVI)
+build-docs: stamp-docs $(DVI)
 tests: test-Examples
 
 test-Examples: $(Ex_Tests)
@@ -45,6 +46,9 @@ stamp-docs: $(MANSRC)
 	@touch stamp-help
 	@touch stamp-html
 	@touch stamp-latex
+
+../doc/manual/Man.dvi: stamp-latex
+	(cd ../doc/manual; make Man.dvi)
 
 $(Ex_Tests):
 	@if [ ! -d $@ ]; then mkdir -p $@ ; fi
