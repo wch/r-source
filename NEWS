@@ -227,6 +227,20 @@ NEW FEATURES
 	\method{GENERIC}{CLASS} markup for indicating the usage of S3
 	methods, providing the CLASS info in a comment.
 
+    o   GC timing is not enabled until the first call to gc.time; it
+	can be disabled by calling gc.time(FALSE).  This can speed up
+	the garbage collector and reduce system calls on some
+	platforms.
+
+    o   On Unix-like systems interrupt signals now set a flag that is
+	checked periodically rather than calling longjmp from the
+	signal handler.  This is analogous to the behavior on Windows.
+	This reduces responsiveness to interrupts but prevents bugs
+	caused by interrupting computations in a way that leaves the
+	system in an inconsistent state.  It also reduces the number
+	of system calls, which can speed up computations on some
+	platforms and make R more usable with systems like Mosix.
+
 
 DEPRECATED & DEFUNCT
 
