@@ -20,6 +20,10 @@ NEW FEATURES
     o   Some of the t, F, and chisq distribution/probability functions
 	now allow a noncentrality parameter `ncp'.
 
+    o   Functions ptukey and qtukey provide the distribution and
+	quantile functions for the maximum of several studentized
+	ranges.
+
     o   system.file()  [now documented] returns all files matched by
 	wildcards.
 
