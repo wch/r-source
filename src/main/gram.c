@@ -2920,6 +2920,8 @@ int isValidName(char *name)
     for (i = 0; keywords[i].name != NULL; i++)
         if (strcmp(keywords[i].name, name) == 0)
                 return 0;
+    
+    return 1;
 }
 
 
