@@ -512,7 +512,7 @@ interfere with those used by R (currently, @file{R}, @file{data},
 copying of the @file{inst} happens after @file{src} is built so its
 @file{Makefile} can create files to be installed.  Note that with the
 exceptions of @file{INDEX} and @file{COPYING}, information files at the
-top level of the package will @emph{not} be installled and so not be
+top level of the package will @emph{not} be installed and so not be
 known to users of Windows and MacOS X compiled packages (and not seen by
 those who use @command{R CMD INSTALL} or @command{install.packages} on
 the tarball).  So any information files you wish an end user to see
@@ -2063,7 +2063,7 @@ and value @code{\item}s.  @code{\describe} commands are mapped to
 The @code{\tabular} command takes two arguments.  The first gives for
 each of the columns the required alignment (@samp{l} for
 left-justification, @samp{r} for right-justification or @samp{c} for
-centering.)  The second argument consists of an arbitrary number of
+centring.)  The second argument consists of an arbitrary number of
 lines separated by @code{\cr}, and with fields separated by @code{\tab}.
 For example:
 
@@ -2388,10 +2388,10 @@ dump(ls(all = TRUE), file = "new.myfuns.R")
 
 @noindent
 and run @R{} with this as the source file, for example by @kbd{R
---vanilla < tidy.R} (Unix) or @kbd{Rterm --vanilla < tidy.R} (Windows)
-or by pasting into an @R{} session.  Then the file @file{new.myfuns.R}
-will contain the functions in alphabetical order in the standard layout.
-You may need to move comments to more appropriate places.
+--vanilla < tidy.R} or by pasting into an @R{} session.  Then the file
+@file{new.myfuns.R} will contain the functions in alphabetical order in
+the standard layout.  You may need to move comments to more appropriate
+places.
 
 The standard format provides a good starting point for further tidying.
 Most package authors use a version of Emacs (on Unix or Windows) to edit
@@ -6145,7 +6145,7 @@ c(formals(foo.default), alist(... = ))}.)
 Note that this cannot be used for functions in another package, as the
 order of packages on the search path cannot be controlled, except that
 all precede the base package.  Where the name of the package is known
-and it is in a namespace another way to access the orignal form is
+and it is in a namespace another way to access the original form is
 
 @smallexample
 foo.default <- base::foo
