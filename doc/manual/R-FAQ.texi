@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-21, @value{FAQ-YEAR}-06-28
+@set FAQ-VERSION 1.7-22, @value{FAQ-YEAR}-07-01
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -244,8 +244,8 @@ Since mid-1997 there has been a core group (the ``R Core Team'') who can
 modify the R source code CVS archive.  The group currently consists of
 Doug Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt
 Hornik, Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley,
-Martin Maechler, Guido Masarotto, Duncan Murdoch, Paul Murrell, Martyn
-Plummer, Brian Ripley, Duncan Temple Lang, and Luke Tierney.
+Martin Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian
+Ripley, Duncan Temple Lang, and Luke Tierney.
 
 R has a home page at @uref{http://www.r-project.org/}.  It is free
 software distributed under a @acronym{GNU}-style copyleft, and an
