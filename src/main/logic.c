@@ -355,7 +355,8 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    checkValues(LOGICAL(t), LENGTH(t), &haveFalse, &haveTrue, &haveNA);
 	}
 	else if(!isNull(t))
-	    errorcall(call, "incorrect argument type");
+	    errorcall(call,
+		      "argument(s) must be logical, integer, numeric or complex");
     }
     if (narm)
 	haveNA = FALSE;

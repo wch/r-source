@@ -8,7 +8,7 @@ any(\dots, na.rm = FALSE)
   Given a set of logical vectors, are any of the values true?
 }
 \arguments{
-  \item{\dots}{one or more logical vectors.}
+  \item{\dots}{one or more logical vectors.  See also Details.}
   \item{na.rm}{logical. If true \code{NA} values are removed before
     the result is computed.}
 }
@@ -26,6 +26,9 @@ any(\dots, na.rm = FALSE)
 \details{
   This is a generic function: methods can be defined for it
   directly or via the \code{\link{Summary}} group generic.
+
+  Integer, numeric and complex arguments are allowed and coerced to
+  logical (with non-zero values being true).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
