@@ -279,7 +279,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    R_FlushConsole();
 	    wprog = newwindow("Download progress", rect(0, 0, 540, 100),
 			      Titlebar | Centered);
-	    setbackground(wprog, LightGrey);
+	    setbackground(wprog, dialog_bg());
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
 		strcat(buf, "... ");
