@@ -129,12 +129,19 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	if(!character.only)
 	    package <- as.character(substitute(package))
 
-        if(package %in% c("ctest", "eda", "mle", "modreg", "mva",
-                          "nls", "stepfun", "ts")) {
+        if(package %in% c("ctest", "eda", "modreg", "mva", "nls",
+                          "stepfun", "ts")) {
             have.stats <- "package:stats" %in% search()
             if(!have.stats) require("stats")
             warning("package ", sQuote(package), " has been merged into ",
                 sQuote("stats"), call. = FALSE)
+            return(if (logical.return) TRUE else invisible(.packages()))
+        }
+        if(package  == "mle") {
+            have.stats4 <- "package:stats4" %in% search()
+            if(!have.stats4) require("stats4")
+            warning("package ", sQuote(package), " has been merged into ",
+                sQuote("stats4"), call. = FALSE)
             return(if (logical.return) TRUE else invisible(.packages()))
         }
         if(package == "lqs") {
@@ -143,8 +150,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(!have.VR) {
                 if(require(MASS, quietly=TRUE))
                     cat("Package 'MASS' has now been loaded\n")
-                else
-                    stop("Package 'MASS' seems to be missing from this R installation\n")
+                else {
+                    if(logical.return) return(FALSE)
+                    else
+                        stop("Package 'MASS' seems to be missing from this R installation\n")
+                }
             }
             return(if (logical.return) TRUE else invisible(.packages()))
         }
