@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-36, 2001-03-14
+@set FAQ-VERSION 1.2-37, 2001-03-28
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -219,9 +219,9 @@ by sending code and bug reports.
 Since mid-1997 there has been a core group (the ``R Core Team'') who can
 modify the R source code CVS archive.  The group currently consists of
 Doug Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt
-Hornik, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin Maechler,
-Guido Masarotto, Paul Murrell, Brian Ripley, Duncan Temple Lang, and
-Luke Tierney.
+Hornik, Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley,
+Martin Maechler, Guido Masarotto, Paul Murrell, Brian Ripley, Duncan
+Temple Lang, and Luke Tierney.
 
 R has a home page at @uref{http://www.r-project.org/}.  It is free
 software distributed under a @acronym{GNU}-style copyleft, and an
@@ -714,6 +714,7 @@ Please always use the @acronym{URL} of the master site when referring to
 * What is S-PLUS?::             
 * What are the differences between R and S?::  
 * Is there anything R can do that S-PLUS cannot?::  
+* What is R-plus?::             
 @end menu
 
 @node What is S?, What is S-PLUS?, R and S, R and S
@@ -1256,7 +1257,7 @@ documenting the difference as you see it).  Of course, it would be
 useful if you were to implement the change yourself and make sure it
 works.
 
-@node Is there anything R can do that S-PLUS cannot?,  , What are the differences between R and S?, R and S
+@node Is there anything R can do that S-PLUS cannot?, What is R-plus?, What are the differences between R and S?, R and S
 @section Is there anything R can do that @sc{S-Plus} cannot?
 
 Since almost anything you can do in R has source code that you could
@@ -1274,6 +1275,11 @@ and Ross Ihaka (2000), ``An Approach to Providing Mathematical
 Annotation in Plots'', @uref{http://www.amstat.org/publications/jcgs/, ,
 @emph{Journal of Computational and Graphical Statistics}}, @strong{9},
 582--599.
+
+@node What is R-plus?,  , Is there anything R can do that S-PLUS cannot?, R and S
+@section What is R-plus?
+
+There is no such thing.
 
 @node R Web Interfaces, R Add-On Packages, R and S, Top
 @chapter R Web Interfaces
