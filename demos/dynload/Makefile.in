@@ -21,12 +21,16 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R: zero.$(SHLIBEXT)
+R:
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install; \
 	fi
-zero.$(SHLIBEXT): zero.c
-	@$(top_builddir)/bin/R SHLIB -o $@ $(srcdir)/zero.c
+	$(MAKE) zero.$(SHLIBEXT)
+zero.$(SHLIBEXT): $(srcdir)/zero.c
+	@if [ "$(srcdir)" != "." ]; then \
+	  $(INSTALL_DATA) $(srcdir)/zero.c zero.c; \
+	fi
+	@$(top_builddir)/bin/R SHLIB -o $@ zero.c
 	@rm -f zero.o
 
 docs:
