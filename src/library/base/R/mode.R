@@ -18,6 +18,8 @@ mode <- function(x) {
     atr <- attributes(x)
     x <- eval(call(mde,x), sys.frame(sys.parent()))
     attributes(x) <- atr
+    if(value == "single") attr(x, "Csingle") <- TRUE
+    else attr(x, "Csingle") <- NULL
     x
 }
 storage.mode <- function(x) {

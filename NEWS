@@ -6,6 +6,9 @@
 
 NEW FEATURES
 
+    o   storage.mode<- can be used to set "single", and if setting
+	anything other than "single" it removes the "Csingle" attribute.
+
     o   New subroutine REALPR callable from Fortran (like DBLEPR but
 	for real arguments): useful if as.single is in use.
 

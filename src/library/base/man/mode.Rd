@@ -26,6 +26,15 @@ storage.mode(x) <- "<mode>"
   \code{\link{typeof}} for the R-internal ``mode'',
   \code{\link{attributes}}.
 }
+\details{
+    As storage mode "single" is only a pseudo-mode in \R, it will not be
+    reported by \code{mode} or \code{storage.mode}: use
+    \code{attr(object, "Csingle")} to examine this. However, the
+    assignment versions can be used to set the mode to \code{"single"},
+    which sets the real mode to \code{"double"} and the \code{"Csingle"}
+    attribute to \code{TRUE}. Setting any other mode will remove the
+    \code{"Csingle"} attribute.
+}
 \examples{
 sapply(options(),mode)
 
