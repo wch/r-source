@@ -11,8 +11,8 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   \item{x, y}{numeric vectors of coordinates where the text
     \code{labels} should be written.  If the length of \code{x} and
     \code{y} differs, the shorter one is recycled.}
-  \item{labels}{character or expression with the \emph{text} to be
-    written.}
+  \item{labels}{one or more character strings or expressions specifying
+    the \emph{text} to be written.}
   \item{adj}{one or two values in \eqn{[0,1]} which specify the x
     (and optionally y) adjustment of the labels.}
   \item{pos}{a position specifier for the text.  If specified this

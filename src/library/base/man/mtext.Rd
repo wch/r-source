@@ -1,32 +1,60 @@
 \name{mtext}
 \title{Write Text into the Margins of a Plot}
 \usage{
-mtext(text, side = 3, line = 0, outer = FALSE, at = NULL, adj = NA, \dots)
+mtext(text, side = 3, line = 0, outer = FALSE, at = NULL,
+      adj = NA, \dots)
 }
 \alias{mtext}
 \arguments{
-\item{text}{character string to be written.}
-\item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
-\item{line}{on which MARgin line, starting at 0 counting outwards.}
-\item{outer}{use outer margins if available.}
-\item{at}{give location in user-coordinates.  If \code{length(at)==0}
-  (default), the location will correspond to \code{par("adj")}.}
-\item{adj}{length = 1 or 2 : adjustment in x- (and optionally y-)
-  direction.  If \code{adj} isn't finite (default), a default is setup,
-  using \code{par("las")} (and \emph{not} \code{par("adj")}!}
-\item{\dots}{Further graphical parameters; currently supported are:}
-\item{cex}{character expansion factor (default = 1).}
-\item{col}{color to use.}
-\item{font}{font for text.}
+  \item{text}{one or more character strings or expressions.}
+  \item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
+  \item{line}{on which MARgin line, starting at 0 counting outwards.}
+  \item{outer}{use outer margins if available.}
+  \item{at}{give location in user-coordinates.  If \code{length(at)==0}
+    (the default), the location will be determined by \code{adj}.
+  }
+  \item{adj}{adjustment for each string. For strings parallel
+    to the axes, \code{adj=0} means left or bottom alignment, and
+    \code{adj=1} means right or top aligment.
+    If \code{adj} is not a finite value (the default), the value
+    \code{par("las")} determines the adjustment. For strings plotted
+    parallel to the axis the default is to centre the string.}
+  \item{\dots}{Further graphical parameters; currently supported are:}
+  \item{cex}{character expansion factor (default = 1).}
+  \item{col}{color to use.}
+  \item{font}{font for text.}
 }
  %  --- mtext is defined via do_mtext(.) in  src/main/plot.c ---
 \description{
-\code{text} is written in one of the four margins (\code{side}) of the plot.
-\code{line} measures the distance outwardly in character size units.
+  Text is written in one of the four margins of the current figure region
+  or one of the outer margins of the device region.
+}
+\details{
+  The ``user coordinates'' in the outer margins always range from zero to
+  one, and are not affected by the user coordinates in the figure
+  region(s).
+
+  The arguments \code{side}, \code{line}, \code{at}, \code{at},
+  \code{adj}, the further graphical parameters and even \code{outer} can
+  be vectors, and recycling will take place to plot as many strings as
+  the longest of the vector arguments.  Note that a vector \code{adj}
+  has a different meaning from \code{\link{text}}.
+
+  \code{adj = 0.5} will centre the string, but for \code{outer=TRUE} on
+  the device region rather than the plot region.
+
+  Parameter \code{las} will determine the orientation of the string(s).
+  For strings plotted perpendicular to the axis the default justifcation
+  is to place the end of the string nearest the axis on the specified line.
+
+  Note that if the text is to be plotted perpendicular to the axis,
+  \code{adj} determines the justification of the string \emph{and} the
+  position along the axis unless \code{at} is specified.
 }
 \section{Side Effects}{The given text is written onto the current plot.}
 \seealso{
-  \code{\link{title}}, \code{\link{text}}, \code{\link{plot}};
+  \code{\link{title}}, \code{\link{text}}, \code{\link{plot}},
+  \code{\link{par}};
   \code{\link{plotmath}} for details on mathematical annotation.
 }
 \examples{
