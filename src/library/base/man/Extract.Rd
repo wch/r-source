@@ -8,6 +8,9 @@
 \alias{[<-}
 \alias{[[<-}
 \alias{$<-}
+%- methods not documented elsewhere
+\alias{[.formula}
+\alias{[.ts}
 \alias{.subset}
 \alias{.subset2}
 \description{

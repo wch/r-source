@@ -2,6 +2,7 @@
 \alias{t}
 \alias{t.default}
 \alias{t.data.frame}
+\alias{t.ts}
 \title{Matrix Transpose}
 \description{
   Given a matrix or \code{\link{data.frame}} \code{x},
