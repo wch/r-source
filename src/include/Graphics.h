@@ -494,6 +494,7 @@ void GRestorePars(DevDesc*);
 		/* More Programmer GPar functions */
 
 void ProcessInlinePars(SEXP, DevDesc*);
+void Specify2(char*, SEXP, DevDesc*);
 
 SEXP FixupPch(SEXP, DevDesc*);
 SEXP FixupLty(SEXP, DevDesc*);
@@ -615,6 +616,7 @@ unsigned int RGBpar(SEXP, int, DevDesc*);
  *  line texture representation.
  */
 unsigned int LTYpar(SEXP, int);
+SEXP LTYget(unsigned int);
 
 
 /*----------------------------------------------------------------------

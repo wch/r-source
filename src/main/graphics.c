@@ -1748,16 +1748,17 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	    max =  1;
 	}
 	else {
-	    min = 0.6 * min;
-	    max = 1.4 * max;
+	    temp = .4 * fabs(min);
+	    min -= temp;
+	    max += temp;
 	}
     }
 
     switch(style) {
     case 'r':
 	temp = 0.04 * (max-min);
-	min = min - temp;
-	max = max + temp;
+	min -= temp;
+	max += temp;
 	break;
     case 'i':
 	break;
@@ -2615,23 +2616,24 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
 }
 
 
-/* Draw a box about one of several regions. */
+/* Draw a box about one of several regions:  box(which) */
 void GBox(int which, DevDesc *dd)
 {
-    double x[5], y[5];
+    double x[6], y[6];
     GClip(dd);
-    if (which == 1) {
-	x[0] = dd->gp.plt[1]; y[0] = dd->gp.plt[2];
-	x[1] = dd->gp.plt[1]; y[1] = dd->gp.plt[3];
-	x[2] = dd->gp.plt[0]; y[2] = dd->gp.plt[3];
-	x[3] = dd->gp.plt[0]; y[3] = dd->gp.plt[2];
-	x[4] = dd->gp.plt[1]; y[4] = dd->gp.plt[2];
+    if (which == 1) {/* plot */
+	x[0] = dd->gp.plt[0]; y[0] = dd->gp.plt[2];/* <- , __ */
+	x[1] = dd->gp.plt[1]; y[1] = dd->gp.plt[2];/* -> , __ */
+	x[2] = dd->gp.plt[1]; y[2] = dd->gp.plt[3];/* -> , ^  */
+	x[3] = dd->gp.plt[0]; y[3] = dd->gp.plt[3];/* <- , ^  */
+	x[4] = x[0];	      y[4] = y[0];	   /* <- , __ */
+	x[5] = x[1];	      y[5] = y[1];	   /* -> , __ */
     }
-    else {
-	x[0] = 0.0; y[0] = 0.0;
-	x[1] = 1.0; y[1] = 0.0;
-	x[2] = 1.0; y[2] = 1.0;
-	x[3] = 0.0; y[3] = 1.0;
+    else {/* "figure", "inner", or "outer" */
+	x[0] = 0.; y[0] = 0.;
+	x[1] = 1.; y[1] = 0.;
+	x[2] = 1.; y[2] = 1.;
+	x[3] = 0.; y[3] = 1.;
     }
     switch(which) {
     case 1: /* Plot */
@@ -2642,17 +2644,25 @@ void GBox(int which, DevDesc *dd)
 	    break;
 	case 'l':
 	case 'L':
-	    GPolyline(3, x+2, y+2, NFC, dd);
+	    GPolyline(3, x+3, y+3, NFC, dd);
 	    break;
 	case '7':
-	    GPolyline(3, x, y, NFC, dd);
+	    GPolyline(3, x+1, y+1, NFC, dd);
 	    break;
 	case 'c':
 	case 'C':
-	    GPolyline(4, x+1, y+1, NFC, dd);
+	case '[':
+	    GPolyline(4, x+2, y+2, NFC, dd);
+	    break;
+	case ']':/* new */
+	    GPolyline(4, x, y, NFC, dd);
+	    break;
+	case 'n':
+	case 'N': /* nothing */
 	    break;
 	default:
-	    break;
+	    warning("invalid par(\"bty\") = '%c'; no box() drawn.",
+		    dd->gp.bty);
 	}
 	break;
     case 2: /* Figure */
@@ -2661,7 +2671,7 @@ void GBox(int which, DevDesc *dd)
     case 3: /* Inner Region */
 	GPolygon(4, x, y, NIC, NA_INTEGER, dd->gp.col, dd);
 	break;
-    case 4: /* Device border */
+    case 4: /* "outer": Device border */
 	GPolygon(4, x, y, NDC, NA_INTEGER, dd->gp.col, dd);
 	break;
     default:
@@ -2806,7 +2816,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	str[0] = pch;
 	str[1] = '\0';
 	GText(x, y, coords, str,
-	      dd->gp.xCharOffset, dd->gp.yCharOffset, 0.0, dd);
+	      dd->gp.xCharOffset, dd->gp.yCharOffset, 0., dd);
 	/*--- FIXME --- *MUST* adjust not only with [xy]CharOffset,
 	 *--- ===== --- but also depending on  pch -- to *CENTER* the symbol!
 	 *---  e.g. for	 pch = '.'
@@ -2844,7 +2854,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	    break;
 
 	case 3: /* S plus */
-	    xc = sqrt(2.0)*RADIUS*GStrWidth("0", INCHES, dd);
+	    xc = sqrt(2.)*RADIUS*GStrWidth("0", INCHES, dd);
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    GLine(x-xc, y, x+xc, y, INCHES, dd);
 	    GLine(x, y-xc, x, y+xc, INCHES, dd);
@@ -2858,7 +2868,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	    break;
 
 	case 5: /* S diamond */
-	    xc = sqrt(2.0) * RADIUS * GStrWidth("0", INCHES, dd);
+	    xc = sqrt(2.) * RADIUS * GStrWidth("0", INCHES, dd);
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+xc;
@@ -2893,13 +2903,13 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
 	    GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
-	    xc = sqrt(2.0) * xc;
+	    xc = sqrt(2.) * xc;
 	    GLine(x-xc, y, x+xc, y, INCHES, dd);
 	    GLine(x, y-xc, x, y+xc, INCHES, dd);
 	    break;
 
 	case 9: /* S diamond and plus superimposed */
-	    xc = sqrt(2.0) * RADIUS * GStrWidth("0", INCHES, dd);
+	    xc = sqrt(2.) * RADIUS * GStrWidth("0", INCHES, dd);
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+xc;
