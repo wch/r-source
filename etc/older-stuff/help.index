@@ -1,0 +1,12 @@
+#!/bin/sh
+
+(
+cd ../man
+grep 'ALIAS([A-Za-z.]' `ls | sed /CVS/d` | sed '
+s/\(.*\):ALIAS(\(.*\))$/\2	\1/
+'
+ls | sed '
+/CVS/d
+s/^\(.*\)$/\1	\1/
+'
+) | sort > ../../help/AnIndex

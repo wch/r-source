@@ -1,0 +1,44 @@
+\documentclass[@R_PAPERSIZE@paper]{book}
+
+\usepackage{Rd}
+\usepackage{makeidx}
+
+\makeindex
+\sloppy{}
+
+\begin{document}\pagenumbering{roman}
+
+\title{(A Start of the) \R\ Manual\\}
+
+\date{\vspace*{15ex}\textsc{\small\input{Version}}}
+
+\author{The \R\ Development Core Team}
+
+\maketitle
+\pagestyle{empty}
+%%-- for ``2 pages on 1'' printing (make Manbooks):
+\ \ \clearpage \ \ \clearpage
+
+\pagestyle{headings}
+\pagenumbering{roman}
+\tableofcontents
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+\chapter{Writing \R\ Documentation}
+\input{writing-Rd}
+
+\chapter{Mathematical Annotation in \R\ Graphics}
+\input{plotmath}
+
+\chapter{Programming}
+\input{programming.tex}
+
+\chapter{\R\ (Internal)Programming Miscellania}
+\input{primitive-funs}
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+\end{document}

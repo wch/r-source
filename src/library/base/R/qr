@@ -1,0 +1,180 @@
+is.qr <- function(x) !is.null(x$qr)
+
+qr <- function(x, tol= 1e-07)
+{
+	x <- as.matrix(x)
+	p <- as.integer(ncol(x))
+	n <- as.integer(nrow(x))
+	if(!is.double(x))
+		storage.mode(x) <- "double"
+	.Fortran("dqrdc2",
+		qr=x,
+		n,
+		n,
+		p,
+		as.double(tol),
+		rank=integer(1),
+		qraux = double(p),
+		pivot = as.integer(1:p),
+		double(2*p))[c(1,6,7,8)]
+}
+
+qr.coef <- function(qr, y)
+{
+	if( !is.qr(qr) )
+		stop("first argument must be a QR decomposition")
+	n <- nrow(qr$qr)
+	p <- ncol(qr$qr)
+	k <- as.integer(qr$rank)
+	y <- as.matrix(y)
+	ny <- as.integer(ncol(y))
+	storage.mode(y) <- "double"
+	if( nrow(y) != n )
+		stop("qr and y must have the same number of rows")
+	z <- .Fortran("dqrcf",
+		as.double(qr$qr),
+		n, k,
+		as.double(qr$qraux),
+		y,
+		ny,
+		coef=matrix(0,nr=k,nc=ny),
+		info=integer(1),
+		NAOK = TRUE)[c("coef","info")]
+	if(z$info != 0) stop("exact singularity in qr.coef")
+	if(k < p) {
+		coef <- matrix(as.double(NA),nr=p,nc=ny)
+		coef[qr$pivot[1:k],] <- z$coef
+	}
+	else coef <- z$coef
+	if(ncol(y) == 1)
+		dim(coef) <- NULL
+	return(coef)
+}
+
+qr.qy <- function(qr, y)
+{
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	n <- as.integer(nrow(qr$qr))
+	p <- as.integer(ncol(qr$qr))
+	k <- as.integer(qr$rank)
+	y <- as.matrix(y)
+	ny <- as.integer(ncol(y))
+	storage.mode(y) <- "double"
+	if( nrow(y) != n )
+		stop("qr and y must have the same number of rows")
+	.Fortran("dqrqy",
+		as.double(qr$qr),
+		n, k,
+		as.double(qr$qraux),
+		y,
+		ny,
+		qy=mat.or.vec(n,ny))$qy
+}
+
+qr.qty <- function(qr, y)
+{
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	n <- as.integer(nrow(qr$qr))
+	p <- as.integer(ncol(qr$qr))
+	k <- as.integer(qr$rank)
+	y <- as.matrix(y)
+	ny <- as.integer(ncol(y))
+	storage.mode(y) <- "double"
+	if( nrow(y) != n )
+		stop("qr and y must have the same number of rows")
+	.Fortran("dqrqty",
+		as.double(qr$qr),
+		n, k,
+		as.double(qr$qraux),
+		y,
+		ny,
+		qty=mat.or.vec(n,ny))$qty
+}
+
+qr.resid <- function(qr, y)
+{
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	n <- as.integer(nrow(qr$qr))
+	p <- as.integer(ncol(qr$qr))
+	k <- as.integer(qr$rank)
+	y <- as.matrix(y)
+	ny <- as.integer(ncol(y))
+	storage.mode(y) <- "double"
+	if( nrow(y) != n )
+		stop("qr and y must have the same number of rows")
+	.Fortran("dqrrsd",
+		as.double(qr$qr),
+		n, k,
+		as.double(qr$qraux),
+		y,
+		ny,
+		rsd=mat.or.vec(n,ny))$rsd
+}
+
+qr.fitted <- function(qr, y, k=qr$rank)
+{
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	n <- as.integer(nrow(qr$qr))
+	p <- as.integer(ncol(qr$qr))
+	k <- as.integer(k)
+	if(k > qr$rank) stop("k is too large")
+	y <- as.matrix(y)
+	ny <- as.integer(ncol(y))
+	storage.mode(y) <- "double"
+	if( nrow(y) != n )
+		stop("qr and y must have the same number of rows")
+	.Fortran("dqrxb",
+		as.double(qr$qr),
+		n, k,
+		as.double(qr$qraux),
+		y,
+		ny,
+		xb=mat.or.vec(n,ny))$xb
+}
+
+## qr.solve is defined in 'solve'
+
+##---- The next three are from Doug Bates ('st849'):
+qr.Q <- function (qr, complete = FALSE,
+		  Dvec = rep(if (cmplx) 1 + 0i else 1,
+			     if (complete) dqr[1] else min(dqr)))
+{
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	dqr <- dim(qr$qr)
+	cmplx <- mode(qr$qr) == "complex"
+	D <-
+	  if (complete) diag(Dvec, dqr[1])
+	  else {
+		ncols <- min(dqr)
+		diag(Dvec[1:ncols], nrow = dqr[1], ncol = ncols)
+	  }
+	qr.qy(qr, D)
+}
+
+qr.R <- function (qr, complete = FALSE)
+{
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	R <- qr$qr
+	if (!complete)
+	  R <- R[seq(min(dim(R))), , drop = FALSE]
+	R[row(R) > col(R)] <- 0
+	R
+}
+
+qr.X <- function (qr, complete = FALSE,
+		  ncol = if (complete) nrow(R) else min(dim(R)))
+{
+
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	R <- qr.R(qr, complete = TRUE)
+	cmplx <- mode(R) == "complex"
+	p <- dim(R)[2]
+	if (ncol < p)
+	  R <- R[, 1:ncol, drop = FALSE]
+	else if (ncol > p) {
+		tmp <- diag(if (!cmplx) 1 else 1 + 0i, nrow(R), ncol)
+		tmp[, 1:p] <- R
+		R <- tmp
+	}
+	qr.qy(qr, R)
+}

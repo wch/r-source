@@ -1,0 +1,26 @@
+
+WARPBREAKS - The Number of Breaks in Yarn during Weaving
+
+DESCRIPTION
+
+This data set gives the number of warp breaks per loom, where a
+loom corresponds to a fixed length of yarn.
+
+FORMAT
+
+A data frame with 54 observations on 3 variables.
+
+  [,1]  breaks   numeric  The number of breaks
+  [,2]  wool     factor   The type of wool (A or B)
+  [,3]  tension  factor   The level of tension (L, M, H)
+
+SOURCE
+
+L. H. C. Tippet (1950).  Technological Applications of Statistics,
+Wiley, page 106.
+
+REFERENCES
+
+Tukey, J. W. (1977).  Exploratory Data Analysis.  Addison-Wesley.
+McNeil, D. (1977).  Interactive Data Analysis.  Wiley.
+

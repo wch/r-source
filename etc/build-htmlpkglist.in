@@ -1,0 +1,21 @@
+#! @PERL@
+#-*- perl -*-
+
+use File::Basename;
+use Cwd;
+
+$cwd=getcwd();
+if($ENV{"RHOME"}){
+    $RHOME=$ENV{"RHOME"};
+}
+else{
+    chdir(dirname($0) . "/..");
+    $RHOME=getcwd();
+}
+chdir($cwd);
+
+require "$RHOME/etc/buildlib.pl";
+
+build_htmlpkglist("$RHOME/library");
+
+

@@ -1,0 +1,11 @@
+\documentclass[@R_PAPERSIZE@paper,11pt]{article}
+\usepackage{Rd}
+
+\title{\textbf{Writing \R\ Documentation}}
+\author{\textit{Ross Ihaka, Martin Maechler and Kurt Hornik}}
+\date{1996 -- November 1998}
+
+\begin{document}
+\maketitle
+\input{writing-Rd}
+\end{document}

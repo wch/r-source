@@ -1,0 +1,52 @@
+include ../../Makeconf
+
+INCLUDES= -I../include
+
+OBJ= \
+	approx.o \
+	bakslv.o \
+	binning.o \
+	$(BLAS) \
+	ch2inv.o \
+	chol.o \
+	cpoly.o \
+	cumsum.o \
+	distance.o \
+	dpoco.o \
+	dpodi.o \
+	dpofa.o \
+	dposl.o \
+	dqrdc.o \
+	dqrdc2.o \
+        dqrls.o \
+	dqrsl.o \
+	dqrutl.o \
+	dsvdc.o \
+	dtrsl.o \
+	eigen.o \
+	fortran.o \
+	fft.o \
+	fmin.o \
+	lminfl.o \
+	lowess.o \
+	machar.o \
+	massdist.o \
+	pretty.o \
+	splines.o \
+	stem.o \
+	strsignif.o \
+	tabulate.o \
+	uncmin.o \
+	zeroin.o
+
+LIB=		../lib/libappl.a
+
+$(LIB):		$(OBJ)
+		$(AR) cr $(LIB) $(OBJ)
+		$(RANLIB) $(LIB)
+
+clean:
+		@echo Cleaning in src/appl
+		@-rm -f *.o *.a
+
+realclean:	clean

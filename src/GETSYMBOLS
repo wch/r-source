@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# This code assembles the table of statically loaded C and Fortran
+# code which is to be accessed via .C and .Fortran calls.
+
+ROUTINES="appl/ROUTINES"
+
+sed '
+s/F77_SUBROUTINE(\(.*\))/int F77_SYMBOL(\1)();/
+s/C_FUNCTION(\(.*\))/int \1();/
+' ${ROUTINES} > /tmp/FFDecl.h
+
+if test ! -f include/FFDecl.h
+then
+	cp /tmp/FFDecl.h include/FFDecl.h
+else
+	if diff /tmp/FFDecl.h include/FFDecl.h
+	then
+	:
+	else
+		cp /tmp/FFDecl.h include/FFDecl.h
+	fi
+fi
+
+
+sed '
+s/F77_SUBROUTINE(\(.*\))/       { F77_QSYMBOL(\1),        F77_SYMBOL(\1)},/
+s/C_FUNCTION(\(.*\))/	{ "\1",	\1 },/
+' ${ROUTINES} > /tmp/FFTab.h
+
+if test ! -f include/FFTab.h
+then
+	cp /tmp/FFTab.h include/FFTab.h
+else
+	if diff /tmp/FFTab.h include/FFTab.h
+	then
+	:
+	else
+		cp /tmp/FFTab.h include/FFTab.h
+	fi
+fi
+rm -f /tmp/FFTab.h /tmp/FFDecl.h

@@ -1,0 +1,26 @@
+
+ACID - Determination of Formaldehyde
+
+DESCRIPTION
+
+These data are from an chemical experiment to prepare a standard curve
+for the determination of formaldehyde by the addition of chromatropic
+acid and concentrated sulpuric acid and the reading of the resulting
+purple color on a spectophotometer.
+
+FORMAT
+
+A data frame with 6 observations on 2 variables.
+
+  [,1]  carb  numeric  Carbohydrate (ml)
+  [,2]  opt   numeric  Optical Density
+
+SOURCE
+
+Bennett, N. A. and N. L. Franklin (1954).  Statistical analysis in
+Chemistry and the Chemical Industry.  New York: Wiley
+
+REFERENCES
+
+McNeil, D. R. (1977).  Interactive Data Analysis.  New York: Wiley.
+

@@ -1,0 +1,2 @@
+options <-
+function(...) .Internal(options(...))

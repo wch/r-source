@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# ${RHOME}/etc/BATCH
+
+OPTS="--restore --save"
+
+while test -n "${1}"; do
+    case ${1} in
+	--) shift; break ;;
+	-v|-n)
+	    OPTS="${OPTS} ${1} ${2}"; shift 2 ;;
+	-*) OPTS="${OPTS} ${1}"; shift ;;
+	*)  break ;;
+    esac
+done
+
+IN=${1}
+OUT=${2-`basename ${1} .R`.Rout}
+
+(echo "invisible(options(echo = TRUE))"; \
+    cat ${IN}; \
+    echo "proc.time()") \
+    | ${RHOME}/bin/R ${OPTS} >${OUT} 2>&1

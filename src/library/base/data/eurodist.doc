@@ -1,0 +1,18 @@
+
+EURODIST - Distances Between Cities in Europe
+
+DESCRIPTION
+
+The data give the road distances (in km) between 21 cities in Europe.
+The data are taken from a table in ``The Cambridge Encyclopaedia''.
+
+FORMAT
+
+A dist object based on 21 objects.  (You must have the mva library
+loaded to have the methods for this kind of objcet available).
+
+SOURCE
+
+Crystal, D. Ed. (1990).  ``The Cambridge Encyclopaedia''.
+Cambridge: Cambridge University Press,
+

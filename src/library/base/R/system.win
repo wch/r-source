@@ -1,0 +1,76 @@
+data <- function(..., list = character(0), package = .packages(),
+                 lib.loc = .lib.loc) {
+  # FIXME add support for package and lib.loc args
+  names <- c(as.character(substitute(list(...))[-1]), list)
+  if (length(names) == 0) {
+    datafile<-system.file("data","index.doc")
+    if( datafile == "" )
+      stop("no index file for data")
+    xx<-scan(datafile,skip=3,what="",sep="\t")
+    cat("   R DATA SETS \n")
+    cat(t(matrix(xx[!is.na(xx)],nc=2,byrow=T)),sep=c("\t\t","\n"))
+  }
+  else
+    for (name in names) {
+      file <- system.file("data", name)
+      if(file == "") stop(paste("no data set called", name))
+      else source(file)
+    }
+  invisible(names)
+}
+
+getenv <-function(names) .Internal(getenv(names))
+
+help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
+  cat("Please use the Help menu.\n")
+}
+
+library <- function(name, help, lib.loc = .lib.loc,
+		    character.only = FALSE, logical.return = FALSE) {
+  .not.yet.implemented()
+}
+
+library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
+  # FIXME
+  if (!exists(".Dyn.libs"))
+    assign(".Dyn.libs", character(0), envir = .GlobalEnv)
+  LEN <- nchar(name)
+  if (substr(name, LEN - 2, LEN) == ".so") {
+    name <- substr(name, 1, LEN - 3)
+  }
+  if (is.na(match(name, .Dyn.libs))) {
+    file <- system.file(paste("libs", "\\", name, ".", "dll", sep = ""),
+			package, lib.loc)
+    if (file == "") {
+      stop(paste("dynamic library `", name, "' not found", sep = ""))
+    }
+    .Internal(dyn.load(file))
+    assign(".Dyn.libs", c(.Dyn.libs, name), envir = .GlobalEnv)
+  }
+  invisible(.Dyn.libs)
+}
+    
+system <- function(call, intern = FALSE) 
+  .Internal(system(call, intern))
+
+system.date <- function() {
+    .not.yet.implemented()
+}
+
+system.file <- function(file, pkg = .packages(), lib = .lib.loc) {
+  .not.yet.implemented()
+  ## UPDATE THE INTERNAL !!!
+  .Internal(system.file(dir, name))
+}
+
+system.time <- function(expr) {
+  .not.yet.implemented()
+}
+
+tempfile <- function(pattern = "file") {
+  .not.yet.implemented()
+}
+
+unlink <- function(x) {
+  .not.yet.implemented()
+}

@@ -22,7 +22,7 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
 	   true - approx)     # absolute error (e.g. when true=0)
 }
 ## Short cut:
-All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 1e-14)
+All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 100*.Machine$double.eps)
 
 if(!interactive())
     .Random.seed <- c(0,rep(7654, 3))
@@ -134,7 +134,7 @@ is.sym
 
 ###-------- Continuous Distributions ----------
 
-##---  Gamma (incl. chi^2) Density :
+##---  Gamma (incl. central chi^2) Density :
 x <- round(rgamma(100, shape = 2),2)
 for(sh in round(rlnorm(30),2)) {
     Ga <- gamma(sh)
@@ -151,9 +151,13 @@ for(sh in round(rlnorm(30),2)) {
 		"\n  shape,scale=",formatC(c(sh, sig)),"\n")
     }
 }
-pgamma(1,Inf,Inf) == 0
-all(is.nan(c(pgamma(Inf,1,Inf), pgamma(Inf,Inf,1), pgamma(Inf,Inf,Inf))))
-pgamma(Inf,1,xMax) == 1 && pgamma(xMax,1,Inf) == 0
+pgamma(1,Inf,scale=Inf) == 0
+all(is.nan(c(pgamma(Inf,1,scale=Inf), pgamma(Inf,Inf,scale=1), pgamma(Inf,Inf,scale=Inf))))
+pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
+##-- non central Chi^2 :
+xB <- c(2000,1e6,1e50,Inf)
+for(df in c(0.1, 1, 10))
+    for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
 
 ##--- Beta (need more):
 
@@ -191,7 +195,17 @@ All.eq(pz,		 pnorm(-z, lower=FALSE))
 All.eq(log(pz[z.ok]),  pnorm(z[z.ok], log=TRUE))
 y <- seq(-70,0, by = 10)
 cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE))
+y <- c(1:15, seq(20,40, by=5))
+cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE),
+      "log(pnorm(-y))"= log(pnorm(-y)), "pnorm(-y, log=T)"= pnorm(-y, log=TRUE))
+## Symmetry:
+y <- c(1:50,10^c(3:10,20,50,150,250))
+y <- c(-y,0,y)
+for(L in c(FALSE,TRUE))
+    stopifnot(identical(pnorm(-y, log= L),
+                        pnorm(+y, log= L, lower=FALSE)))
 
+## Log norm
 All.eq(pz, plnorm(exp(z)))
 
 

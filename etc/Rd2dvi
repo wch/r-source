@@ -1,0 +1,38 @@
+#!/bin/sh
+#  Rd2dvi -- 'check' man pages (help files) by  'LaTeX'..
+#
+# Example (in $RHOME):
+#    etc/Rd2dvi src/library/base/man/Normal
+#    etc/Rd2dvi `grep -l 'KEYWORD(distr' src/library/base/man/* |sort|uniq`
+#
+Pwd=`dirname $0`
+RHOME=${Pwd}/..
+MANTEXDIR=${RHOME}/doc/manual
+D2L="${Pwd}/Rdconv -t latex"
+#
+call_dir=`pwd`
+
+if [ -f Rd0.tex ]
+then
+    echo "'Rd0.tex' already exists -- renaming it to  Rd0.tex.Older"
+    echo " -------- "
+    mv Rd0.tex Rd0.tex.Older
+fi
+$D2L $@ > Rd0.tex
+echo "MANTEXDIR= '$MANTEXDIR'"
+if [ ! -f Man0.tex ]; then ln -s ${MANTEXDIR}/Man0.tex . ; fi
+if [ ! -f Rd.sty ]; then
+ sed 's/markright{#1}/markboth{#1}{#1}/' ${MANTEXDIR}/Rd.sty > Rd0.sty
+fi
+#exit
+#---------------------
+latex Man0
+makeindex Man0
+latex Man0
+if [ -x `/usr/bin/which xdvi` ]
+then  xdvi Man0 &
+fi
+echo ''
+echo 'Rd2dvi: You may want to clean up by'
+echo '    rm Man0.* Rd0.sty Rd0.tex'
+echo ''

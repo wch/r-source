@@ -1,0 +1,1103 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@setfilename external.info
+@settitle Guide to using .Call and .External in R
+@set VERSION 1.0
+@set CVS-version $Id: R-external.texi,v 1.3 1999/11/14 15:02:48 ripley Exp $
+@setchapternewpage on
+@c %**end of header
+
+@finalout
+
+@macro R {}
+@strong{R}
+@end macro
+
+@macro Sl {}
+@strong{S}
+@end macro
+
+@ifinfo
+     This is a guide to using the .Call and .External interfaces in R
+
+     Copyright 1999 R Development Core Team
+
+     Permission is granted to make and distribute verbatim
+     copies of this manual provided the copyright notice and
+     this permission notice are preserved on all copies.
+
+@ignore
+     Permission is granted to process this file through TeX
+     and print the results, provided the printed document
+     carries a copying permission notice identical to this
+     one except for the removal of this paragraph (this
+     paragraph not being relevant to the printed manual).
+
+@end ignore
+     Permission is granted to copy and distribute modified
+     versions of this manual under the conditions for
+     verbatim copying, provided that the entire resulting derived work
+     is distributed under the terms of a permission notice identical
+     to this one.
+
+     Permission is granted to copy and distribute
+     translations of this manual into another language,
+     under the above conditions for modified versions,
+     except that this permission notice may be stated in a
+     translation approved by the Free Software Foundation.
+@end ifinfo
+
+@titlepage
+@title Guide to using .Call and .External in R
+@subtitle Version @value{VERSION}
+@author R Development Core Team
+@page
+@vskip 0pt plus 1filll
+     Permission is granted to make and distribute verbatim
+     copies of this manual provided the copyright notice and
+     this permission notice are preserved on all copies.
+
+     Permission is granted to copy and distribute modified
+     versions of this manual under the conditions for
+     verbatim copying, provided that the entire resulting derived work
+     is distributed under the terms of a permission notice identical
+     to this one.
+
+     Permission is granted to copy and distribute
+     translations of this manual into another language,
+     under the above conditions for modified versions,
+     except that this permission notice may be stated in a
+     translation approved by the Free Software Foundation.
+
+     Copyright @copyright{} 1999 R Development Core Team
+
+     The contributions of Saikat DebRoy (who wrote the first draft) are
+     gratefully acknowledged.
+@end titlepage
+
+@contents
+@node    Top, Overview, (dir), (dir)
+
+@menu
+* Overview::
+* Background::
+* Interface Functions .Call and .External::
+* Handling R Objects in C::
+* Evaluating R Expressions from C::
+@end menu
+
+@node    Overview, Background, Top, Top
+@chapter Overview
+@cindex Overview
+
+Using C code to speed up the execution of an @R{} function is often very
+fruitful. Traditionally this has been done via the @code{.C} function in @R{}.
+@c (for details, see the @R{} documentation on @code{.C}).
+One restriction of this interface is that the @R{} objects can not be handled
+directly in C.  This becomes more troublesome when one wishes to call @R{}
+functions from within the C code. There is a C function provided called
+@code{call_R} (also known as @code{call_S} for compatibility with S)
+that can do that, but it is cumbersome to use, and the mechanisms
+documented here are usually simpler to use, as well as more powerful.
+
+If a user really wants to write C code using internal @R{} data structures,
+then that can be done using the @code{.Call} and @code{.External}
+function. The syntax for the calling function in @R{} in each case is
+similar to that of @code{.C}, but the two functions have rather
+different C interfaces.  Generally the @code{.Call} interface (which is
+modelled on the interface of the same name in S version 4) is a little
+simpler to use, but @code{.External} is a little more general.
+
+Before you decide to use @code{.Call} or @code{.External}, you should
+look at other alternatives. First, consider working in interpreted @R{}
+code; if this is fast enough, this is normally the best option. You
+should also see if using @code{.C} is enough. If the task to be
+performed in C is simple enough requiring no call to @R{}, @code{.C}
+suffices.  The new interfaces are recent additions to S and @R{}, and a
+great deal of useful code has been written using just @code{.C} before
+they were available.  The @code{.Call} and @code{.External} interfaces
+allow much more control, but they also impose much greater
+responsibilities so need to be used with care.
+
+There are two approaches that can be taken to handling @R{} objects from
+within C code. The first (historically) is to use the macros and
+functions that have been used to implement the core parts of @R{} through
+@code{.Internal} calls. A public subset of these is defined in the
+header file @file{Rinternals.h} in the directory @file{$R_HOME/include}
+that should be available on any @R{} installation.
+
+A more recent approach is to use @R{} versions of the macros and functions
+defined for the S version 4 interface @code{.Call}, which are defined in
+the header file @file{Rdefines.h}, included by @file{S.h}.  This is a
+somewhat simpler approach, and is certainly to be preferred if the code
+might be shared with S at any stage.
+
+A substantial amount of @R{} is implemented using the functions and macros
+described here, so the @R{} source code provides a rich source of examples
+and `how to do it': indeed many of the examples here were developed by
+examining closely @R{} system functions for similar tasks. Do make use of
+the source code for inspirational examples.
+
+
+
+@node    Background, Interface Functions .Call and .External, Overview, Top
+@chapter Background
+@cindex  Background
+
+It is necessary to know something about how @R{} objects are handled in C
+code. All the @R{} objects you will deal with will be handled with
+the type @dfn{SEXP}@footnote{SEXP is an acronym for @emph{S}imple
+@emph{EXP}ression, common in LISP-like language syntaxes}, which is a
+pointer to a structure.  Think of this
+structure as a @emph{variant type} that can handle all the usual types
+of @R{} objects, that is vectors of various modes, functions, environments,
+language objects and so on.  The details are given later in this
+section, but for most purposes the programmer does not need to know
+them.  Think rather of a model such as that used by Visual Basic, in
+which @R{} objects are handed around in C code (as they are in interpreted
+@R{} code) as the variant type, and the appropriate part is extracted for,
+for example, numerical calculations, only when it is needed.  As in
+interpreted @R{} code, much use is made of coercion to force the variant
+object to the right type.
+
+@section Handling the effects of garbage collection
+
+We need to know a little about the way @R{} handles memory allocation. The
+memory allocated for @R{} objects is not freed by the user; instead, the
+memory is from time to time @dfn{garbage collected}. That is, all the
+allocated memory not being used is freed, and the objects that are in
+use may be moved. If you create an @R{} object in your C code, you must
+tell @R{} that you are using the object via call to the @code{PROTECT}
+macro. This has two effects. First it tells @R{} that the object is in use
+so it is not destroyed. Second, it ensures that the @code{SEXP} pointer
+to the object is updated if the object's structure is moved in memory
+during garbage collection.  (Because of this it is not safe to save and
+re-use pointers to parts of an object's structure.)
+
+
+The programmer is solely responsible for housekeeping the calls to
+@code{PROTECT}. There is a corresponding macro @code{UNPROTECT} that
+takes as argument an @code{int} giving the number of @code{SEXP}s to
+unprotect when they are no longer needed. The protection mechanism is
+stack-based, so @code{UNPROTECT(n)} unprotects the last @code{n} objects
+which were protected. The calls to @code{PROTECT} and @code{UNPROTECT}
+must balance when the user's code returns, even if it returns because of
+an error (calling @code{error} or @code{errorcall} for example).  @R{} will
+warn about @code{stack imbalance in .Call} (or @code{.External}) if the
+housekeeping is wrong.
+
+Here is a small example of creating an @R{} numeric vector in C code. First
+we use the macros in @file{Rdefines.h}:
+@example
+#include <Rdefines.h>
+
+  SEXP ab;
+    ....
+  PROTECT(ab = NEW_NUMERIC(2));
+  NUMERIC_POINTER(ab)[0] = 123.45;
+  NUMERIC_POINTER(ab)[1] = 67.89;
+  UNPROTECT(1);
+@end example
+@noindent
+and then those in @file{Rinternals.h}:
+@example
+#include <Rinternals.h>
+
+  SEXP ab;
+    ....
+  PROTECT(ab = allocVector(REALSXP, 2));
+  REAL(ab)[0] = 123.45; REAL(ab)[1] = 67.89;
+  UNPROTECT(1);
+@end example
+
+Now, the reader may ask how the @R{} object could possibly get removed
+during those manipulations, as it is just our C code that is running.
+The answer is we do not know (nor want to know) what is hiding behind
+the @R{} macros and functions we use, and any of them might cause memory to
+be allocated, hence garbage collection and hence our object @code{ab} to
+be (re)moved. It is wise to err on the side of caution and assume that
+any of the @R{} macros and functions might (re)move the object.
+
+Protection is not needed for objects which @R{} already knows are in use.
+In particular, this applies to function arguments.
+
+There is a less-used@footnote{for historical reasons,
+@code{UNPROTECT_PTR(s)} exists only since @R{} version 0.63.0 (Nov.@: 1998)}
+macro @code{UNPROTECT_PTR(s)} that unprotects the @code{SEXP} s.
+
+
+@section Allocating storage
+
+For many purposes it is sufficient to allocate @R{} objects and manipulate
+those. There are quite a few @code{allocXxx} functions defined in
+@file{Rinternals.h} --- you may want to explore them. These allocate
+@R{} objects of various types, and for the standard vector types there are
+@code{NEW_XXX} macros defined in @file{Rdefines.h}.
+
+If storage is required for C objects during the calculations this is
+best allocating by calling @code{R_alloc}; such storage is automatically
+released once the call to @code{.C} or @code{.Call} or @code{.External}
+returns.  @code{R_alloc} is defined in @file{Memory.h} (included by
+@file{Rinternals.h} and by @file{Rdefines.h}) as
+@example
+char*  R_alloc(long, int);
+@end example
+@noindent
+so a typical usage is
+@example
+v = (double*) R_alloc(nlag, sizeof(double));
+@end example
+
+Memory allocated by @code{R_alloc} is not zeroed, but the related
+function @code{S_alloc} calls @code{R_alloc} and then zeroes the
+memory.
+
+All of these memory allocation routines do their own error-checking, so
+the programmer may assume that they will raise an error and not return
+if the memory cannot be allocated.
+
+
+
+
+@section Details of R types
+
+Users of the @file{Rinternals.h} macros will need to know how the
+@R{} types are known internally: this is more or less completely hidden if
+the @file{Rdefines.h} macros are used.
+
+The different @R{} data types are represented in C by @dfn{SEXPTYPE}. Some
+of these are familiar from @R{} and some are internal data types. The usual
+@R{} object modes are given in the table.
+
+@quotation
+@multitable {SEXPTYPE} {numeric with storage mode integer integer}
+@item @strong{SEXPTYPE} @tab @strong{@R{} equivalent / explanation}
+@item @code{REALSXP}  @tab numeric with storage mode @code{double}
+@item @code{INTSXP}   @tab integer
+@item @code{CPLXSXP}  @tab complex
+@item @code{LGLSXP}   @tab logical
+@item @code{STRSXP}   @tab character
+@item @code{VECSXP}   @tab list (generic vector)
+@item @code{LISTXP}   @tab "dotted-pair" list
+@item @code{DOTSXP}   @tab a @dots{} object
+@item @code{NILSXP}   @tab NULL
+@item @code{SYMSXP}   @tab name/symbol
+@item @code{CLOSXP}   @tab function or function closure
+@item @code{ENVSXP}   @tab environment
+@end multitable
+@end quotation
+@noindent
+Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
+@code{VECSXP}, @code{CHARSXP} etc.
+
+Unless you are very sure about the type of the arguments, the code
+should check the data types. Sometimes it may also be necessary to check
+data types of objects created by evaluating an @R{} expression in the C
+code. You can use functions like @code{isReal}, @code{isInteger} and
+@code{isString} to do type checking. See the header file
+@file{Rinternals.h} for definitions of other such functions. All of
+these take a @code{SEXP} as argument and return 1 or 0 to indicate
+@var{TRUE} or @var{FALSE}.  Once again there are two ways to do this,
+and @file{Rdefines.h} has macros such as @code{IS_NUMERIC}.
+
+What happens if the @code{SEXP} is not of the correct type? Sometimes
+you have no other option except to generate an error. You can use the
+function @code{error} for this. It is usually better to coerce the
+object to the correct type. For example, if you find that an @code{SEXP}
+is of the type @code{INTEGER}, but you need a @code{REAL} object, you
+can change the type by using, equivalently,
+@example
+  PROTECT(@var{newSexp} = coerceVector(@var{oldSexp}, REALSXP));
+@end example
+@noindent
+or
+@example
+  PROTECT(@var{newSexp} = AS_NUMERIC(@var{oldSexp}));
+@end example
+@noindent
+Protection is needed as a new @code{SEXP} is created; if the old
+@code{SEXP} is re-used it should already be protected.
+
+All the coercion functions do their own error-checking, and generate
+@code{NA}s with a warning or stop with an error as appropriate.
+
+
+
+
+@node    Interface Functions .Call and .External, Handling R Objects in C, Background, Top
+@chapter Interface Functions @code{.Call} and @code{.External}
+@cindex  Interface Functions @code{.Call} and @code{.External}
+
+In this chapter we consider the details of the @R{} / C interfaces.
+
+To fix ideas, let us consider a very simple example which convolves two
+finite sequences. (This is hard to do fast in interpreted @R{} code, but
+easy in C code.)  We could do this using @code{.C} by
+@example
+void convolve(double *a, long *na, double *b, long *nb, double *ab)
+@{
+  int i, j, nab = *na + *nb - 1;
+
+  for(i = 0; i < nab; i++) ab[i] = 0.0;
+  for(i = 0; i < *na; i++)
+    for(j = 0; j < *nb; j++) ab[i + j] += a[i] * b[j];
+@}
+@end example
+@noindent
+called from @R{} by
+@example
+conv <- function(a, b)
+  .C("convolve", as.double(a), as.integer(length(a)),
+     as.double(b), as.integer(length(b)),
+     ab = double(length(a) + length(b) - 1))$ab
+@end example
+
+@section Calling @code{.Call}
+
+Now let us do the same thing via @code{.Call}, first using the
+@file{Rdefines.h} macros. The calling function in @R{} is
+@example
+conv <- function(a, b) .Call("convolve2", a, b)
+@end example
+@noindent
+which could hardly be simpler, but as we shall see all the type checking
+must be transferred to the C code, which is
+@example
+#include <S.h>
+
+SEXP convolve2(SEXP a, SEXP b)
+@{
+  int i, j, na, nb, nab;
+  double *xa, *xb, *xab;
+  SEXP ab;
+
+  a = AS_NUMERIC(a); b = AS_NUMERIC(b);
+  na = LENGTH(a); nb = LENGTH(b); nab = na + nb - 1;
+  PROTECT(ab = NEW_NUMERIC(nab));
+  xa = NUMERIC_POINTER(a); xb = NUMERIC_POINTER(b);
+  xab = NUMERIC_POINTER(ab);
+  for(i = 0; i < nab; i++) xab[i] = 0.0;
+  for(i = 0; i < na; i++)
+    for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
+  UNPROTECT(1);
+  return(ab);
+@}
+@end example
+The reader might have spotted that we have not protected @code{a} and
+@code{b}: as these are arguments we do not need to even though we may have
+changed their values by coercion.
+
+Note that unlike the macros in S version 4, the @R{} versions of these
+macros do check that coercion can be done and raise an error if it
+fails. They will raise warnings if missing values are introduced
+by coercion.
+
+Now for the version in @R{}-internal style. Only the C code changes.
+@example
+#include <Rinternals.h>
+
+SEXP convolve2(SEXP a, SEXP b)
+@{
+  int i, j, na, nb, nab;
+  double *xa, *xb, *xab;
+  SEXP ab;
+
+  a = coerceVector(a, REALSXP); b = coerceVector(b, REALSXP);
+  na = length(a); nb = length(b); nab = na + nb - 1;
+  PROTECT(ab = allocVector(nab, REALSXP));
+  xa = REAL(a); xb = REAL(b);
+  xab = REAL(ab);
+  for(i = 0; i < nab; i++) xab[i] = 0.0;
+  for(i = 0; i < na; i++)
+    for(j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
+  UNPROTECT(1);
+  return(ab);
+@}
+@end example
+@noindent
+This is called in exactly the same way.
+
+@section Calling @code{.External}
+
+We can use the same example to illustrate @code{.External}.
+The @R{} code changes only by replacing @code{.Call} by @code{.External}
+@example
+conv <- function(a, b) .External("convolve2", a, b)
+@end example
+@noindent
+but the main change is how the arguments are passed to the C code, this
+time as a single SEXP. The only change to the C code is how we
+handle the arguments.
+@example
+#include <Rinternals.h>
+
+SEXP convolve2(SEXP args)
+@{
+  int i, j, na, nb, nab;
+  double *xa, *xb, *xab;
+  SEXP a, b, ab;
+
+  a = coerceVector(CADR(args), REALSXP));
+  b = coerceVector(CADDR(args), REALSXP));
+    ...
+@}
+@end example
+@noindent
+Once again we do not need to protect the arguments, as in the @R{} side of
+the interface they are objects that are already in use. The macros
+@example
+  first = CADR(args);
+  second = CADDR(args);
+  third = CADDDR(args);
+  fourth = CAD4R(args);
+@end example
+@noindent
+provide convenient ways to access the first four arguments. More
+generally we can use the @code{CDR} and @code{CAR} macros as in
+@example
+  args = CDR(args); a = CAR(args);
+  args = CDR(args); b = CAR(args);
+@end example
+@noindent
+which clearly allows us to extract an unlimited number of arguments
+(whereas @code{.Call} has a limit, albeit at 65 not a small one).
+
+More usefully, the @code{.External} interface provides an easy way
+to handle calls with a variable number of arguments, as
+@code{length(args)} will give the number of arguments supplied (of which
+the first is ignored). We may need to know the names (`tags') given to
+the actual arguments, which we can by using the @code{TAG} macro and
+using something like the following example, that print the names and the
+first value of its arguments if they are vector types.
+@example
+SEXP showArgs(SEXP args)
+@{
+  int i, nargs;
+  complex cpl;
+  char *name;
+
+  if((nargs = length(args) - 1) > 0) @{
+    for(i = 0; i < nargs; i++) @{
+      args = CDR(args);
+      name = CHAR(PRINTNAME(TAG(args)));
+      switch(TYPEOF(CAR(args))) @{
+      case REALSXP:
+        printf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
+      break;
+      case LGLSXP:
+      case INTSXP:
+        printf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
+      break;
+      case CPLXSXP:
+        cpl = COMPLEX(CAR(args))[0];
+        printf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
+        break;
+      case STRSXP:
+        printf("[%d] '%s' %s\n", i+1, name,
+               CHAR(STRING(CAR(args))[0]));
+        break;
+      default:
+        printf("[%d] '%s' R type\n", i+1, name);
+      @}
+    @}
+  @}
+  return(R_NilValue);
+@}
+@end example
+This can be called by the wrapper function
+@example
+showArgs <- function(...) .External("showArgs", ...)
+@end example
+@noindent
+Note that this style of programming is convenient but not necessary, as
+an alternative style is
+@example
+showArgs <- function(...) .Call("showArgs1", list(...))
+@end example
+
+
+
+@section Missing and special values
+
+One piece of error-checking the @code{.C} call does (unless @code{NAOK}
+is true) is to check for missing (@code{NA}) and IEEE special values
+(@code{Inf}, @code{-Inf} and @code{NaN}) and give an error if any are
+found. With the @code{.Call} interface these will be passed to our
+code. In this example the special values are no problem, as IEEE
+arithmetic will handle them correctly.  In the current implementation
+this is also true of @code{NA} as it is a type of @code{NaN}, but it is
+unwise to rely on such details. Thus we will re-write the code to handle
+@code{NA}s using macros defined in @file{Arith.h}.
+
+The code changes are the same in any of the versions of @code{convolve2}:
+@example
+    ...
+  for(i = 0; i < na; i++)
+    for(j = 0; j < nb; j++)
+        if(ISNA(xa[i]) || ISNA(xb[j]) || ISNA(xab[i + j]))
+          xab[i + j] = NA_REAL;
+        else
+          xab[i + j] += xa[i] * xb[j];
+    ...
+@end example
+
+Note that the @code{ISNA} macro, and the similar macros @code{ISNAN}
+(which checks for @code{NaN} or @code{NA}) and @code{R_FINITE} (which is
+false for @code{NA} and all the special values), only apply to numeric
+values of type @code{double}.  Missingness of integers, logicals and character
+strings can be tested by equality to the constants @code{NA_INTEGER},
+@code{NA_LOGICAL} and @code{NA_STRING}. These and @code{NA_REAL} can be
+used to set elements of @R{} vectors to @code{NA}.
+
+The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
+@code{R_NaReal} can be used to set @code{double}s to the special values.
+
+
+@node Handling R Objects in C, Evaluating R Expressions from C, Interface Functions .Call and .External, Top
+
+@chapter Handling R Objects in C
+@cindex Handling R Objects in C
+
+So far we have only seen how to create and coerce @R{} objects from C code,
+and how to extract the numeric data from numeric @R{} vectors. These can
+suffice to take us a long way in interfacing @R{} objects to numerical
+algorithms, but we may need to know a little more to create useful
+return objects.
+
+@section Attributes
+
+Many @R{} objects have attributes: some of the most useful are classes and
+the @code{dim} and @code{dimnames} that mark objects as matrices or
+arrays.  It can also be helpful to work with the @code{names} attribute
+of vectors.
+
+To illustrate this, let us write code to take the outer product of two
+vectors (which @code{outer} and @code{%o%} already do). As usual the
+@R{} code is simple
+@example
+out <- function(x, y) .Call("out", x, y)
+@end example
+@noindent
+where we expect @code{x} and @code{y} to be numeric vectors, possibly
+with names.
+@*
+C code to do the computations is
+@example
+#include <Rinternals.h>
+
+SEXP out(SEXP x, SEXP y)
+@{
+  int i, j, nx, ny;
+  double tmp;
+  SEXP ans;
+
+  x = coerceVector(x, REALSXP); y = coerceVector(y, REALSXP);
+  nx = length(x); ny = length(y);
+  PROTECT(ans = allocMatrix(REALSXP, nx, ny));
+  for(i = 0; i < nx; i++) @{
+    tmp = REAL(x)[i];
+    for(j = 0; j < ny; j++)
+      REAL(ans)[i + nx*j] = tmp * REAL(y)[j];
+  @}
+  UNPROTECT(1);
+  return(ans);
+@}
+@end example
+@noindent
+but we would like to set the @code{dimnames} of the result. Although
+@code{allocMatrix} provides a short cut, we will show how to set the
+@code{dim} attribute directly.
+
+@example
+#include <Rinternals.h>
+
+SEXP out(SEXP x, SEXP y)
+@{
+  int i, j, nx, ny;
+  double tmp;
+  SEXP ans, dim, dimnames;
+
+  x = coerceVector(x, REALSXP); y = coerceVector(y, REALSXP);
+  nx = length(x); ny = length(y);
+  PROTECT(ans = allocVector(nx*ny, REALSXP));
+  for(i = 0; i < nx; i++) @{
+    tmp = REAL(x)[i];
+    for(j = 0; j < ny; j++)
+      REAL(ans)[i + nx*j] = tmp * REAL(y)[j];
+  @}
+  PROTECT(dim = allocVector(INTSXP, 2));
+  INTEGER(dim)[0] = nx; INTEGER(dim)[1] = ny;
+  setAttrib(ans, R_DimSymbol, dim);
+
+  PROTECT(dimnames = allocVector(VECSXP, 2));
+  VECTOR(dimnames)[0] = getAttrib(x, R_NamesSymbol);
+  VECTOR(dimnames)[1] = getAttrib(y, R_NamesSymbol);
+  setAttrib(ans, R_DimNamesSymbol, dimnames);
+  UNPROTECT(3);
+  return(ans);
+@}
+@end example
+
+This example introduces several new features. The @code{getAttrib} and
+@code{setAttrib} functions get and set individual attributes. Their
+second argument is a @code{SEXP} defining the name in the symbol table
+of the attribute we want; these and many such symbols are defined
+in the header file @file{Rinternals.h}.
+
+There are shortcuts here too: the functions @code{namesgets},
+@code{dimgets} and @code{dimnamesgets} are the internal versions of
+@code{names<-}, @code{dim<-} and @code{dimnames<-}, and there are
+functions such as @code{GetMatrixDimnames} and @code{GetArrayDimnames}.
+
+What happens if we want to add an attribute that is not pre-defined? We
+need to add a symbol for it @emph{via} a call to @code{install}. Suppose
+for illustration we wanted to add an attribute @code{"version"} with
+value @code{3.0}. We could use
+@example
+  @{ SEXP version;
+  PROTECT(version = allocVector(REALSXP, 1));
+  REAL(vector) = 3.0;
+  setAttrib(ans, install("version"), version);
+  UNPROTECT(1);
+  @}
+@end example
+
+Using @code{install} when it is not needed is harmless and provides a
+simple way to retrieve the symbol from the symbol table if it is already
+installed.
+
+@section Classes
+
+In @R{} the class is just the attribute names @code{"class"} so it can be
+handled as such, but there is a shortcut @code{classgets}. Suppose we
+want to give the return value in our example the class @code{"mat"}. We
+can use
+@example
+#include <Rdefines.h>
+    ....
+  SEXP ans, dim, dimnames, class;
+    ....
+  PROTECT(class = allocVector(STRSXP, 1));
+  STRING(class)[0] = COPY_TO_USER_STRING("mat");
+  classgets(ans, class);
+  UNPROTECT(4);
+  return(ans);
+@}
+@end example
+@noindent
+As the value is a character vector, we have to know how to create that
+from a C character array, which we do using the macro
+@code{COPY_TO_USER_STRING} defined in @file{Rdefines.h}.
+
+@section Handling lists
+
+Some care is needed with lists, as @R{} has moved from using LISP-like
+lists (now called `pairlists') to S-like generic vectors. As a result,
+the appropriate test for a object of mode @code{list} is
+@code{isNewList}, and we need @code{allocVector(VECSXP, n}) and
+@emph{not} @code{allocList(n)}.
+
+List elements can be retrieved or set by direct access to the elements
+of the generic vector. Suppose we have a list object
+@example
+a <- list(f=1, g=2, h=3)
+@end example
+@noindent
+Then we can access @code{a$g} as @code{a[[2]]} by
+@example
+  double g;
+    ....
+  g = REAL(VECTOR(a)[1])[0];
+@end example
+
+This can rapidly become tedious, and the following function (based on
+one in package @code{nls}) is very useful:
+@example
+/* get the list element named str, or return NULL */
+
+SEXP getListElement(SEXP list, char *str)
+@{
+  SEXP elmt = R_NilValue, names = getAttrib(a, R_NamesSymbol);
+  int i;
+
+  for (i = 0; i < length(list); i++)
+    if(strcmp(CHAR(STRING(names)[i]), str) == 0) @{
+      elmt = VECTOR(list)[i];
+      break;
+    @}
+  return elmt;
+@}
+@end example
+@noindent
+and enables us to say
+@example
+  double g;
+  g = REAL(getListElement(a, "g"))[0];
+@end example
+@noindent
+
+
+@section Finding and setting variables
+
+It will be usual that all the @R{} objects needed in our C computations are
+passed as arguments to @code{.Call} / @code{.External}, but it is
+possible to find the values of @R{} objects from within the C given their
+names. The following code is the equivalent of @code{get(name, envir=rho)}.
+@example
+SEXP getvar(SEXP name, SEXP rho)
+@{
+  SEXP ans;
+
+  if(!isString(name) || length(name) != 1)
+     error("name is not a single string");
+  if(!isEnvironment(rho))
+    error("rho should be an environment");
+  ans = findVar(install(CHAR(STRING(name)[0])), rho);
+  printf("first value is %f\n", REAL(ans)[0]);
+  return(R_NilValue);
+@}
+@end example
+
+The main work is done by @code{findVar}, but to use it we need to
+install @code{name} as a name in the symbol table. As we wanted the
+value for internal use, we return @code{NULL}.
+
+Similar functions with syntax
+@example
+void defineVar(SEXP symbol, SEXP value, SEXP rho)
+void setVar(SEXP symbol, SEXP value, SEXP rho)
+@end example
+@noindent
+can be used to assign values to @R{} objects, in the specified environment
+frame and to perform the equivalent of @code{assign(x, value, envir=rho,
+inherits=TRUE)} respectively.
+
+
+@node    Evaluating R Expressions from C,  , Handling R Objects in C, Top
+@chapter Evaluating R Expressions from C
+@cindex Evaluating R Expressions from C
+
+We noted in the introduction that the @code{call_R} interface could be
+used to evaluate @R{} expressions from C code, but the current interfaces
+are much more convenient to use. The main function we will
+use is
+@example
+SEXP eval(SEXP expr, SEXP rho);
+@end example
+@noindent
+the equivalent of the interpreted @R{} code @code{eval(expr, envir=rho)},
+although we can also make use of @code{findVar}, @code{defineVar} and
+@code{findFun} (which restricts the search to functions).
+
+To see how this might be applied, here is a simplified internal version
+of @code{lapply} for expressions, used as
+@example
+a <- list(a = 1:5, b = rnorm(10), test = runif(100))
+.Call("lapply", a, quote(sum(x)), new.env())
+@end example
+@noindent
+with C code
+@example
+SEXP lapply(SEXP list, SEXP expr, SEXP rho)
+@{
+  int i, n = length(list);
+  SEXP ans;
+
+  if(!isNewList(list)) error("`list' must be a list");
+  if(!isEnvironment(rho)) error("`rho' should be an environment");
+  PROTECT(ans = allocVector(VECSXP, n));
+  for(i = 0; i < n; i++) @{
+    defineVar(install("x"), VECTOR(list)[i], rho);
+    VECTOR(ans)[i] = eval(expr, rho);
+  @}
+  setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
+  UNPROTECT(1);
+  return(ans);
+@}
+@end example
+
+It would be closer to @code{lapply} if we could pass in a function
+rather than an expression. One way to do this is @emph{via} interpreted
+@R{} code as in the next example, but it is possible (if obscure) to do
+this in C code.  The following is based on the code in
+@file{src/main/optimize.c}.
+@example
+SEXP lapply2(SEXP list, SEXP expr, SEXP rho)
+@{
+  int i, n = length(list);
+  SEXP R_fcall, s, ans;
+
+  if(!isNewList(list)) error("`list' must be a list");
+  if(!isFunction(fn)) error("`fn' must be a function");
+  if(!isEnvironment(rho)) error("`rho' should be an environment");
+  PROTECT(R_fcall = lang2(fn, R_NilValue));
+  PROTECT(ans = allocVector(VECSXP, n));
+  for(i = 0; i < n; i++) @{
+    CADR(R_fcall) = VECTOR(list)[i];
+    VECTOR(ans)[i] = eval(expr, rho);
+  @}
+  setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
+  UNPROTECT(1);
+  return(ans);
+@}
+@end example
+@noindent
+used by
+@example
+.Call("lapply2", a, sum, new.env())
+@end example
+@noindent
+Function @code{lang2} creates an executable `list' of two elements, but
+this will only be clear to those with a knowledge of a LISP-like
+language.
+
+@section Zero-finding
+
+In this section we re-work the example in @file{demos/dynload} of
+@code{call_R} (based on that for @code{call_S} in Becker, Chambers &
+Wilks (1988)) on finding a zero of a univariate function. The @R{} code and
+an example are
+@example
+zero <- function(f, guesses, tol = 1e-7) @{
+  f.check <- function(x) @{
+    x <- f(x)
+    if(!is.numeric(x)) stop("Need a numeric result")
+    as.double(x)
+  @}
+  .Call("zero", body(f.check), as.double(guesses), as.double(tol),
+        new.env())
+@}
+
+cube1 <- function(x) (x^2 + 1) * (x - 1.5)
+zero(cube1, c(0, 5))
+@end example
+@noindent
+where this time we do the coercion and error-checking in the @R{} code.
+The C code is
+@example
+SEXP mkans(double x)
+@{
+    SEXP ans;
+    PROTECT(ans = allocVector(REALSXP, 1));
+    REAL(ans)[0] = x;
+    UNPROTECT(1);
+    return ans;
+@}
+
+double feval(double x, SEXP f, SEXP rho)
+@{
+    defineVar(install("x"), mkans(x), rho);
+    return(REAL(eval(f, rho))[0]);
+@}
+
+SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
+@{
+    double x0 = REAL(guesses)[0], x1 = REAL(guesses)[1],
+           tol = REAL(stol)[0];
+    double f0, f1, fc, xc;
+    SEXP res;
+
+    if(tol <= 0.0) error("non-positive tol value");
+    f0 = feval(x0, f, rho); f1 = feval(x1, f, rho);
+    if(f0 == 0.0) return mkans(x0);
+    if(f1 == 0.0) return mkans(x1);
+    if(f0*f1 > 0.0) error("x[0] and x[1] have the same sign");
+    for(;;) @{
+        xc = 0.5*(x0+x1);
+        if(fabs(x0-x1) < tol) return  mkans(xc);
+        fc = feval(xc, f, rho);
+        if(fc == 0) return  mkans(xc);
+        if(f0*fc > 0.0) @{
+            x0 = xc; f0 = fc;
+        @} else @{
+            x1 = xc; f1 = fc;
+        @}
+    @}
+@}
+@end example
+@noindent
+The C code is essentially unchanged for the @code{call_R} version, just
+using a couple of functions to convert from @code{double} to @code{SEXP}
+and to evaluate @code{f.check}.
+
+@section A longer example: calculating numerical derivatives
+
+We will use a longer example (by Saikat DebRoy) to illustrate the use of
+evaluation and @code{.External}. This calculates numerical derivatives,
+something that could be done as effectively in interpreted @R{} code but may
+be needed as part of a larger C calculation.
+
+An interpreted @R{} version and an example are
+@example
+numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
+@{
+  eps <- sqrt(.Machine$double.eps)
+  ans <- eval(substitute(expr), rho)
+  grad <- matrix(,length(ans), length(theta),
+                 dimnames=list(NULL, theta))
+  for (i in seq(along=theta)) @{
+    old <- get(theta[i], envir=rho)
+    delta <- eps * min(1, abs(old))
+    assign(theta[i], old+delta, envir=rho)
+    ans1 <- eval(substitute(expr), rho)
+    assign(theta[i], old, envir=rho)
+    grad[, i] <- (ans1 - ans)/delta
+  @}
+  attr(ans, "gradient") <- grad
+  ans
+@}
+omega <- 1:5; x <- 1; y <- 2
+numeric.deriv(sin(omega*x*y), c("x", "y"))
+@end example
+@noindent
+where @code{expr} is an expression, @code{theta} a character vector of
+variable names and @code{rho} the environment to be used.
+
+
+For the compiled version the call from @R{} will be
+@example
+.External("numeric_deriv", @var{expr}, @var{theta}, @var{rho})
+@end example
+@noindent
+with example usage
+@example
+.External("numeric_deriv", quote(sin(omega*x*y)),
+          c("x", "y"), .GlobalEnv)
+@end example
+@noindent
+Note the need to quote the expression to stop it being evaluated.
+
+Here is the complete C code which we will explain section by section.
+@example
+#include <S.h> /* for DOUBLE_EPS */
+#include <Rinternals.h>
+
+SEXP numeric_deriv(SEXP args)
+@{
+  SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
+  double tt, xx, delta, eps = sqrt(DOUBLE_EPS);
+  int start, i, j;
+
+  expr = CADR(args);
+  if(!isString(theta = CADDR(args)))
+    error("theta should be of type character");
+  if(!isEnvironment(rho = CADDR(args)))
+    error("rho should be an environment");
+
+  PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
+  PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
+
+  for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
+    PROTECT(par = findVar(install(CHAR(STRING(theta)[i])), rho));
+    tt = REAL(par)[0];
+    xx = fabs(tt);
+    delta = (xx < 1) ? eps : xx*eps;
+    REAL(par)[0] += delta;
+    PROTECT(ans1 = coerceVector(eval(expr, rho), REALSXP));
+    for(j = 0; j < LENGTH(ans); j++)
+      REAL(gradient)[j + start] =
+        (REAL(ans1)[j] - REAL(ans)[j])/delta;
+    REAL(par)[0] = tt;
+    UNPROTECT(2); /* par, ans1 */
+  @}
+
+  PROTECT(dimnames = allocVector(VECSXP, 2));
+  VECTOR(dimnames)[1] = theta;
+  dimnamesgets(gradient, dimnames);
+  setAttrib(ans, install("gradient"), gradient);
+  UNPROTECT(3); /* ans  gradient  dimnames */
+  return ans;
+@}
+@end example
+
+The code to handle the arguments is
+@example
+  expr = CADR(args);
+  if(!isString(theta = CADDR(args)))
+    error("theta should be of type character");
+  if(!isEnvironment(rho = CADDR(args)))
+    error("rho should be an environment");
+@end example
+@noindent
+Note that we check for correct types of @code{theta} and @code{rho}
+but do not check the type of @code{expr}. That is because @code{eval}
+can handle many types of @R{} objects other than @code{EXPRSXP}.
+There is no useful coercion we can do, so we stop with an error message
+if the arguments are not of the correct mode.
+
+The first step in the code is to evaluate the expression in the
+environment @code{rho}, by
+@example
+  PROTECT(ans = eval(expr, rho));
+@end example
+@noindent
+We then allocate space for the calculated derivative by
+@example
+  PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
+@end example
+@noindent
+The first argument to @code{allocMatrix} gives the @code{SEXPTYPE} of
+the matrix: here we want it to be @code{REALSXP}. The other two
+arguments are the numbers of rows and columns.
+
+@example
+  for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
+    PROTECT(par = findVar(install(CHAR(STRING(theta)[i])), rho));
+@end example
+@noindent
+Here, we are entering a for loop. We loop through each of the
+variables. In the @code{for} loop, we first create a symbol
+corresponding to the @code{i}'th element of the @code{STRSXP}
+@code{theta}. Here, @code{STRING(theta)[i]} accesses the @code{i}'th
+element of the @code{STRSXP} @code{theta}. Macro @code{CHAR( )} extracts
+the actual character representation of it: it returns a pointer. We then
+install the name and use @code{findVar} to find its value.
+
+@example
+    tt = REAL(par)[0];
+    xx = fabs(tt);
+    delta = (xx < 1) ? eps : xx*eps;
+    REAL(par)[0] += delta;
+    PROTECT(ans1 = eval(expr, rho));  /* not currently needed */
+@end example
+@noindent
+We first extract the real value of the parameter, then calculate delta, the
+increment to be used for approximating the numerical derivative. Then we
+change the value stored in @code{par} (in environment @code{rho}) by
+@code{delta} and evaluate @code{expr} in environment @code{rho}
+again. Because we are directly dealing with original @R{} memory locations
+here, @R{} does the evaluation for the changed parameter value.
+
+@example
+    for(j = 0; j < LENGTH(ans); j++)
+      REAL(gradient)[j + start] =
+        (REAL(ans1)[j] - REAL(ans)[j])/delta;
+    REAL(par)[0] = tt;
+    UNPROTECT(2);
+  @}
+@end example
+@noindent
+Now, we compute the @code{i}'th column of the gradient matrix. Note
+how it is accessed: @R{} stores matrices by column (like Fortran).
+
+@example
+  PROTECT(dimnames = allocVector(VECSXP, 2));
+  VECTOR(dimnames)[1] = theta;
+  dimnamesgets(gradient, dimnames);
+  setAttrib(ans, install("gradient"), gradient);
+  UNPROTECT(3);
+  return ans;
+@}
+@end example
+@noindent
+First we add column names to the gradient matrix. This is done
+by allocating a list (a @code{VECSXP}) whose first element, the
+row names, is @code{NULL} (the default) and the second element, the
+column names, is set as @code{theta}. This list is then assigned as the
+attribute having the symbol @code{R_DimNamesSymbol}. Finally
+we set the gradient matrix as the gradient attribute of @code{ans},
+unprotect the remaining protected locations and return the answer
+@code{ans}.
+
+
+@bye
