@@ -414,9 +414,9 @@ bindist: tcl bitmapdll docfiles
 	$(CP) -p ../../doc/manual/*.html $(RPREFIX)/doc/manual
 	$(CP) -pr ../../share/texmf $(RPREFIX)/share
 	$(CP) -p ../../AUTHORS ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
-		../../THANKS ../../Y2K $(RPREFIX)
+		../../README ../../RESOURCES ../../THANKS ../../Y2K $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
+	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README.$(RPREFIX)
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
 	$(CP) -p CHANGES README.Rterm $(RPREFIX)
 	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
