@@ -24,8 +24,8 @@ use our tool set.
 
 We recommend that you use a recent snapshot of the mingw port of gcc
 from http://downloads.sourceforge.net/mingw/.  For example, at the
-time of writing, Mingw-1.0.1-20010726.tar.gz based on gcc-2.95.3.
-Just unpack this somewhere and put its bin directory in your path.
+time of writing, MinGW-1.1.tar.gz based on gcc-2.95.3.  Just unpack
+this somewhere and put its bin directory in your path.
 
 You may also be able to use the mingw port of gcc-2.95.2-1 by Mumit
 Khan linked from http://www.mingw.org/, but you *cannot* use earlier
@@ -42,7 +42,7 @@ If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
 
 http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
-http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
+and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
 
 You may need this on the same drive as the other tools. (Although we
 have successfully used it elsewhere, others have reported problems).
