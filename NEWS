@@ -627,6 +627,9 @@ BUG FIXES
 
     o	demo() was using `topic' as a regexp rather than an exact match.
 
+    o	dotchart() now does recycle the `color' argument and better
+	documents the `bg' one (PR#4343).
+
     o	file.copy() ignored the overwrite argument.  (PR#3529)
 
     o	filter(method="recursive") was unnecessarily requiring the
