@@ -90,7 +90,11 @@
 #include <config.h>
 #endif
 
-#include <math.h>
+/*#include <math.h>
+*/
+#ifdef macintosh /* Jago */
+#include <fp.h>
+#endif
 #include "R_ext/Applic.h"
 
 void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
