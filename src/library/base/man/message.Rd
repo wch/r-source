@@ -29,7 +29,8 @@ suppressMessages(expr)
 }  
 \seealso{
   \code{\link{warning}} and \code{\link{stop}} for generating warnings
-  and errors.
+  and errors; \code{\link{condition}} for condition handling and
+  recovery.
   
   \code{\link{gettext}} for the mechanisms for the automated translation
   of messages.

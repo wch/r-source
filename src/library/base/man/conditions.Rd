@@ -1,4 +1,5 @@
 \name{conditions}
+\alias{condition}
 \alias{computeRestarts}
 \alias{conditionCall}
 \alias{conditionMessage}
