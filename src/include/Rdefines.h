@@ -104,6 +104,7 @@
 
 #define SET_ELEMENT(x, i, val)	(VECTOR(x)[i] = (val))
 #define GET_ATTR(x,what)       	getAttrib(x, what)
+#define GET_CLASS(x)       	getAttrib(x, R_ClassSymbol)
 #define GET_DIM(x)       	getAttrib(x, R_DimSymbol)
 #define GET_DIMNAMES(x)       	getAttrib(x, R_DimNamesSymbol)
 #define GET_COLNAMES(x)       	GetColNames(x)
@@ -111,6 +112,7 @@
 #define GET_LEVELS(x)       	getAttrib(x, R_LevelsSymbol)
 #define GET_TSP(x)       	getAttrib(x, R_TspSymbol)
 #define GET_NAMES(x)		getAttrib(x, R_NamesSymbol)
+#define SET_CLASS(x, n)     	setAttrib(x, R_ClassSymbol, n)
 #define SET_DIM(x, n)     	setAttrib(x, R_DimSymbol, n)
 #define SET_DIMNAMES(x, n)     	setAttrib(x, R_DimNamesSymbol, n)
 #define SET_LEVELS(x, l)       	setAttrib(x, R_LevelsSymbol, l)
