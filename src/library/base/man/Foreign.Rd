@@ -1,15 +1,18 @@
 \name{Foreign}
+\alias{.C}
+\alias{.Fortran}
+\alias{.External}
+\alias{.Call}
 \title{Foreign Function Interface}
+\description{
+  Functions to make calls to compiled code that has been loaded into \R.
+}
 \usage{
        .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
  .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
 .External(name, \dots)
     .Call(name, \dots)
 }
-\alias{.C}
-\alias{.Fortran}
-\alias{.External}
-\alias{.Call}
 \arguments{
   \item{name}{a character string giving the name of a C function or
     Fortran subroutine.}
@@ -27,8 +30,15 @@
     override their external symbols by using this argument.  Use
     \code{PACKAGE="base"} for symbols linked in to \R.} 
 }
-\description{
-  Function to make calls to compiled code that has been loaded into \R.
+\value{
+  The functions \code{.C} and \code{.Fortran} return a list similar to
+  the \code{\dots} list of arguments passed in, but reflecting any
+  changes made by the C or Fortran code.
+
+  \code{.External} and \code{.Call} return an \R object.
+
+  These calls are typically made in conjunction with
+  \code{\link{dyn.load}} which links DLLs to \R.
 }
 \details{
   The functions \code{.C} and \code{.Fortran} can be used to make calls
@@ -41,67 +51,59 @@
   internal \R objects.  The arguments are passed to the C code as a
   sequence of \R objects.  It is included to provide compatibility with
   S version 4.
-}
-\details{
+
   For details about how to write code to use with \code{.Call} and
-  \code{.External} see the \file{R-external} manual which can be made
-  from files in the \R source tree.
-}
-\value{
-  The functions \code{.C} and \code{.Fortran} return a list similar to
-  the \code{\dots} list of arguments passed in, but reflecting any
-  changes made by the C or Fortran code.
-
-  \code{.External} and \code{.Call} return an \R object.
-
-  These calls are typically made in conjunction with
-  \code{\link{dyn.load}} which links DLLs to \R.
+  \code{.External}, see the chapter on ``System and foreign language
+  interfaces'' in ``Writing \R Extensions'' in the \file{doc/manual}
+  subdirectory of the \R source tree).
 }
 %%-- This note based on BDR's understanding, edited TSL
 \section{Argument types}{
-    The mapping of the types of \R arguments to C or Fortran arguments
-    in \code{.C} or \code{.Fortran} is
-    \tabular{lll}{
-\    R \tab     C \tab     Fortran\cr
-integer \tab int * \tab integer\cr
-numeric \tab double * \tab double precision\cr
--- or -- \tab float * \tab real\cr
-complex \tab Rcomplex * \tab double complex\cr
-logical \tab int * \tab integer \cr
-character \tab char ** \tab [see below]\cr
-list \tab SEXP *\tab not allowed\cr
-other \tab SEXP\tab not allowed\cr
-}
+  The mapping of the types of \R arguments to C or Fortran arguments
+  in \code{.C} or \code{.Fortran} is
 
-Numeric vectors in \R will be passed as type \code{double *} to C
-(and as \code{double precision} to Fortran) unless (i) \code{.C} or
-\code{.Fortran} is used, (ii) \code{DUP} is false and (iii) the argument
-has attribute \code{Csingle} set to \code{TRUE} (use \code{\link{as.single}}
-or \code{\link{single}}).  This mechanism is only intended to be use to
-facilitate the interfacing of existing C and Fortran code.
+  \tabular{lll}{
+    \R \tab     C \tab     Fortran\cr
+    integer \tab int * \tab integer\cr
+    numeric \tab double * \tab double precision\cr
+    -- or -- \tab float * \tab real\cr
+    complex \tab Rcomplex * \tab double complex\cr
+    logical \tab int * \tab integer \cr
+    character \tab char ** \tab [see below]\cr
+    list \tab SEXP *\tab not allowed\cr
+    other \tab SEXP\tab not allowed\cr
+  }
 
-The C type \code{complex} is defined in \file{Complex.h} as a
-\code{typedef struct {double r; double i;}}. Fortran type
-\code{double complex} is an extension to the Fortran standard, and
-the availability of a mapping of \code{complex} to Fortran may be
-compiler dependent.
+  Numeric vectors in \R will be passed as type \code{double *} to C (and
+  as \code{double precision} to Fortran) unless (i) \code{.C} or
+  \code{.Fortran} is used, (ii) \code{DUP} is false and (iii) the
+  argument has attribute \code{Csingle} set to \code{TRUE} (use
+  \code{\link{as.single}} or \code{\link{single}}).  This mechanism is
+  only intended to be use to facilitate the interfacing of existing C
+  and Fortran code.
 
-\emph{Note:} The C types corresponding to \code{integer} and
-\code{logical} are \code{int}, not \code{long} as in S.
+  The C type \code{complex} is defined in \file{Complex.h} as a
+  \code{typedef struct {double r; double i;}}.  Fortran type
+  \code{double complex} is an extension to the Fortran standard, and the
+  availability of a mapping of \code{complex} to Fortran may be compiler
+  dependent.
 
-The first character string of a character vector is passed as a C
-character array to Fortran: that string may be usable
-as \code{character*255} if its true length is passed separately. Only up
-to 255 characters of the string are passed back.
+  \emph{Note:} The C types corresponding to \code{integer} and
+  \code{logical} are \code{int}, not \code{long} as in S.
 
-Functions, expressions, environments and other language
-elements are passed as the internal \R pointer type \code{SEXP}. This type is
-defined in \code{Rinternals.h} or the arguments can be declared
-as generic pointers, \code{void *}. Lists are passed as C arrays of
-\code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
+  The first character string of a character vector is passed as a C
+  character array to Fortran: that string may be usable as
+  \code{character*255} if its true length is passed separately.  Only up
+  to 255 characters of the string are passed back. 
 
-R functions can be invoked using \code{call_S} or \code{call_R} and
-can be passed lists or the simple types as arguments.
+  Functions, expressions, environments and other language elements are
+  passed as the internal \R pointer type \code{SEXP}.  This type is
+  defined in \file{Rinternals.h} or the arguments can be declared as
+  generic pointers, \code{void *}.  Lists are passed as C arrays of 
+  \code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
+
+  \R functions can be invoked using \code{call_S} or \code{call_R} and
+  can be passed lists or the simple types as arguments.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM):
 \note{\emph{\code{DUP=FALSE} is dangerous.}

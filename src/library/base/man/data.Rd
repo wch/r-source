@@ -1,12 +1,16 @@
 \name{data}
+\alias{data}
+\alias{show.data}
 \title{Data Sets}
+\description{
+  \code{data} loads a data set or lists (via \code{show.data})
+  the available data sets.
+}
 \usage{
 data(\dots, list = character(0), package = c(.packages(),.Autoloaded),
      lib.loc = .lib.loc)
 show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
 }
-\alias{data}
-\alias{show.data}
 \arguments{
   \item{\dots}{a sequence of \code{name}s or character strings}
   \item{list}{a character vector}
@@ -15,9 +19,9 @@ show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
     path are used.} 
   \item{lib.loc}{a character vector of directory names of \R
     libraries.  Defaults to all libraries currently known.}}
-\description{
-  \code{data} loads a data set or lists (via \code{show.data})
-  the available data sets.
+\value{
+  \code{data()} returns a character vector of all data sets specified,
+  an empty character vector if none were specified.
 }
 \details{
   Currently, four formats of data files are supported:
@@ -38,12 +42,7 @@ show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
     \code{\link{read.table}(\dots, header = TRUE, sep = ";")},
     and also result in a data frame.
   }
-}
-\value{
-  A character vector of all data sets specified, an empty character
-  vector if none were specified.
-}
-\details{
+
   The data sets to be loaded can be specified as a sequence of
   \code{name}s or character strings, or as the character vector
   \code{list}, or as both.  If no data sets are specified or
@@ -59,7 +58,7 @@ show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
 }
 
 \seealso{
-\code{\link{help}} for obtaining documentation on data sets.
+  \code{\link{help}} for obtaining documentation on data sets.
 }
 \examples{
 data()                       # list all available data sets
