@@ -1,53 +1,55 @@
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
+			   _
+    o	par(bty = "]") for _| box(.) in plots.
 
     o	New standard package `modreg' (smoothing and local MODern
 	REGression methods) contributed by B. D. Ripley.
 
-    o   par() has a `no.readonly = FALSE' argument which allows more
+    o	par() has a `no.readonly = FALSE' argument which allows more
 	sensible  op <- par(no.readonly = TRUE);  on.exit(par(op)).
 
-    o   Real Bessel functions of 1st to 3rd kind, of arbitrary order:
+    o	Real Bessel functions of 1st to 3rd kind, of arbitrary order:
 	besselI(), besselK(), besselJ(), besselY() are the I(), K(),
 	J(), and Y() Bessel functions.
 
-    o   uniroot has a new `maxiter' argument and returns #{iter} and
+    o	uniroot has a new `maxiter' argument and returns #{iter} and
 	precision.
 
-    o   New option `show.coef.Pvalue' (default: TRUE).  If FALSE,
+    o	New option `show.coef.Pvalue' (default: TRUE).	If FALSE,
 	print.summary.[g]lm does not print P values.
 
-    o   New `R --vanilla' is equivalent to
+    o	New `R --vanilla' is equivalent to
 	  R --no-save --no-restore --no-site-file --no-init-file
 
-    o   gc() has now a `verbose' argument and returns a matrix with free
+    o	gc() has now a `verbose' argument and returns a matrix with free
 	and total n- and v-cells(heap).
 
-    o   New example(<foo>) function runs the \emph{Examples} R code of
-	<foo>.  example() calls source() which now has a `verbose'
+    o	New example(<foo>) function runs the \emph{Examples} R code of
+	<foo>.	example() calls source() which now has a `verbose'
 	instead of `debug' argument.
 
-    o   experimental functions [as.|is.|]pairlist() for the few old-style
+    o	experimental functions [as.|is.|]pairlist() for the few old-style
 	dotted pair lists [undocumented].
 
-    o   options(check.bounds = TRUE) makes sub-assignments which
+    o	options(check.bounds = TRUE) makes sub-assignments which
 	"stretch" a vector give a warning [dropped undocumented
 	check.bounds() function].
 
-    o   Makefiles should now conform (mostly) with the GNU Coding
+    o	Makefiles should now conform (mostly) with the GNU Coding
 	Standards.  In particular, `make install', `make uninstall'
 	and `make install-strip' now work.
 	Also, it is now possible to build R in a non-source directory.
 
-    o   which() preserves names and has a new `arr.ind' argument
+    o	which() preserves names and has a new `arr.ind' argument
 	allowing for array indices.
 
-    o   New functions {d,p,q,r}signrank for the Wilcoxon signed rank
+    o	New functions {d,p,q,r}signrank for the Wilcoxon signed rank
 	distribution, and {d,p,q,r}wilcox for the Wilcoxon (rank sum)
 	distribution.
 
-    o   Command line options GNUified a bit further.
+    o	Command line options GNUified a bit further.
 	New command line option `--verbose' for printing more
 	information about progress.
 	Command line options `--vsize' and `--hsize' as replacements
@@ -55,10 +57,10 @@ NEW FEATURES
 	Added `--silent' as synonym for `--quiet'.
 	Short-style option `-V' obsolete.
 
-    o   Added bug.report() to generate & send bug reports from
-        within R.
+    o	Added bug.report() to generate & send bug reports from
+	within R.
 
-    o   The PostScript device driver now uses the ISO Latin1 font
+    o	The PostScript device driver now uses the ISO Latin1 font
 	encoding.  This should allow Western Europeans to render
 	their languages correctly.  It is likely that additional
 	encodings will be added (e.g. Latin2) when we figure out
@@ -73,7 +75,7 @@ NEW FEATURES
 	sampled.  The present implementation is based on some code
 	from E. S. Venkatraman <venkat@biosta.mskcc.org>.
 
-    o   The internal data structure used to represent lists has
+    o	The internal data structure used to represent lists has
 	changed from being based on dotted pairs to generic vectors.
 	Users should see no changes as a result (with the exception
 	of some efficiency gains in list operations).
@@ -88,18 +90,21 @@ NEW FEATURES
     o	Added split.screen etc functions for manipulating multiple
 	screens on a single device
 
-    o   After help.start() the HTML help system is used for all help()
-        requests. The name of the browser is now controlled by
-        options("browser").
+    o	After help.start() the HTML help system is used for all help()
+	requests. The name of the browser is now controlled by
+	options("browser").
 
-    o   Added kmeans to package mva (donated by B. Ripley)
+    o	Added kmeans to package mva (donated by B. Ripley)
 
     o	New persp function added.  It is NOT compatible with S (yet)
 	and is subject to internal and interface changes.
 
 BUG FIXES
 
-    o   seq(a,a, by=b) now works properly.
+    o	several fixes in internal axis and tickmarks setup for
+	"extreme" ranges and values, especially for "log" scaling.
+
+    o	seq(a,a, by=b) now works properly.
 
     o	print.data.frame(.) now calls print.matrix instead of print(.)
 	which finally enables the 'right = TRUE' argument.
@@ -108,145 +113,145 @@ BUG FIXES
 
     o	postscript() now uses 'hyphen' instead of 'plusminus' for a minus.
 
-    o   source(..., echo=TRUE) now puts a `"' if necessary after truncation.
+    o	source(..., echo=TRUE) now puts a `"' if necessary after truncation.
 
     o	Changes to the PostScript device driver mean that the volume
 	of output has been reduced to about a third of what it was.
 
-    o   Fixes and restructuring to name generation in connection with
+    o	Fixes and restructuring to name generation in connection with
 	unlist() and c().
 
 
 		CHANGES IN R VERSION 0.62.4
 BUG FIXES
 
-    o   plot.default(.) has now 'sub' argument which eliminates
+    o	plot.default(.) has now 'sub' argument which eliminates
 	"Warning: parameter "sub" couldn't be set in high-level plot() function"
 
     o	formatC(numeric(0)) now works.
 
     o	menu(.) works for empty imput
 
-    o   0i ^ 2  now gives  0+0i as it should.
+    o	0i ^ 2	now gives  0+0i as it should.
 
-    o   ppoints() now behaves like S, and has additional argument 'a'
+    o	ppoints() now behaves like S, and has additional argument 'a'
 
-    o   seq(1,6,by=3) and similar "by" calls now work okay
+    o	seq(1,6,by=3) and similar "by" calls now work okay
 
-    o   mahalanobis(.) now fixed; does *NOT* have default arguments for
+    o	mahalanobis(.) now fixed; does *NOT* have default arguments for
 	center and cov anymore.
 
-    o   diag(.) doesn't return non-sensical dimnames anymore.
+    o	diag(.) doesn't return non-sensical dimnames anymore.
 
 
 		CHANGES IN R VERSION 0.62.3
 
 NEW FEATURES
 
-    o   preserve factor levels and contrast settings in model objects
+    o	preserve factor levels and contrast settings in model objects
 
-    o   factor[...,drop=T] reduces level set
+    o	factor[...,drop=T] reduces level set
 
-    o   added dblepr, intpr
+    o	added dblepr, intpr
 
-    o   do_modelmatrix(model.c): Set rownames from data argument.
+    o	do_modelmatrix(model.c): Set rownames from data argument.
 
-    o   New generic function preplot().
+    o	New generic function preplot().
 
     o	A new R BATCH interface for non-interactive execution.
 
-    o   Added `offline' argument to help() for producing hardcopy via
+    o	Added `offline' argument to help() for producing hardcopy via
 	latex and dvips.
 
-    o   glm.fit.null now calculates AIC and print.glm.null prints it
+    o	glm.fit.null now calculates AIC and print.glm.null prints it
 
-    o   effects.lm implemented
+    o	effects.lm implemented
 
-    o   new class "mlm" for multivariate "lm", predict.mlm to go with it
+    o	new class "mlm" for multivariate "lm", predict.mlm to go with it
 
-    o   "Details" section added to .Rd format
+    o	"Details" section added to .Rd format
 
-    o   R_PRINTCMD and R_PAPERSIZE can now be set via users' environment,
+    o	R_PRINTCMD and R_PAPERSIZE can now be set via users' environment,
 	overriding setting in startup script.
 
-    o   enhanced identify()
+    o	enhanced identify()
 
-    o   new function print.coefmat()
+    o	new function print.coefmat()
 
-    o   added unix() as .Deprecated("system")
+    o	added unix() as .Deprecated("system")
 
-    o   date() replacing system.date()
+    o	date() replacing system.date()
 
 
 BUG FIXES
 
-    o   substitute would re-substitute after expanding ...
+    o	substitute would re-substitute after expanding ...
 
-    o   indexing modified object in some cases
+    o	indexing modified object in some cases
 
-    o   sweep should work again on dataframes
+    o	sweep should work again on dataframes
 
-    o   minor changes in aov()
+    o	minor changes in aov()
 
     o	builds should now actually work on systems that do not add
 	underscores to Fortran symbols
 
-    o   biplot[.default]() was redundant in "base" package; now only in "mva".
+    o	biplot[.default]() was redundant in "base" package; now only in "mva".
 
     o	unix(..) now helps the user to find  system(..) instead.
 
-    o   apropos("[") and methods("[") now both work (even though "[" is not
+    o	apropos("[") and methods("[") now both work (even though "[" is not
 	a valid regular expression).
 
-    o   row.names<-.default now exists. Converts object to data
-        frame and then adds row names
+    o	row.names<-.default now exists. Converts object to data
+	frame and then adds row names
 
     o	codes() now distinguishes between ordered and unordered factors
 
     o	codes() had *opposite* semantics of Splus. Now it's the same.
 
-    o   replicating factors now yields factors (again)
+    o	replicating factors now yields factors (again)
 
-    o   print.summary.xxx  functions more consistent, using new function
+    o	print.summary.xxx  functions more consistent, using new function
 	print.coefmat().
 
-    o   Changed many `T' to `TRUE'  and  `F' to `FALSE' in the base package.
+    o	Changed many `T' to `TRUE'  and	 `F' to `FALSE' in the base package.
 
-    o   binary operation on 1x1 matrix lost dimension
+    o	binary operation on 1x1 matrix lost dimension
 
-    o   fix anova.glm for null model
+    o	fix anova.glm for null model
 
-    o   glm.fit.null: ensure df.residual == df.null for a null model
+    o	glm.fit.null: ensure df.residual == df.null for a null model
 
-    o   summary.glm: correlations in saturated cases
+    o	summary.glm: correlations in saturated cases
 
-    o   stat.anova: use match.arg and labeled switch statement
+    o	stat.anova: use match.arg and labeled switch statement
 
-    o   Major cleanup of glm iteration code
+    o	Major cleanup of glm iteration code
 
-    o   Correct reordering of glm coefficients if pivoting
+    o	Correct reordering of glm coefficients if pivoting
 
-    o   Rownames on contrast matrices
+    o	Rownames on contrast matrices
 
-    o   factor() and [.factor preserves class "ordered"
+    o	factor() and [.factor preserves class "ordered"
 
-    o   Code rearrangement in predict.lm (avoid unnecessary computation)
-        + let rownames through on predictions
+    o	Code rearrangement in predict.lm (avoid unnecessary computation)
+	+ let rownames through on predictions
 
-    o   model.matrix.default: Initial code to define model frame
-        simplified considerably after defaulting data argument to
-        sys.frame(sys.parent()).  This also removes the problem where
-        data.frame mangles I(x^2) and similar names, so that the
-        "reorder" sanity check at the end fails.
+    o	model.matrix.default: Initial code to define model frame
+	simplified considerably after defaulting data argument to
+	sys.frame(sys.parent()).  This also removes the problem where
+	data.frame mangles I(x^2) and similar names, so that the
+	"reorder" sanity check at the end fails.
 
     o	The handling of extra FORTRAN libraries (f2c-related and BLAS)
-	should now be correct.  Via SHLIBLDFLAGS, add-ons will also be
+	should now be correct.	Via SHLIBLDFLAGS, add-ons will also be
 	linked against these libraries.
 
-    o   Modified makefiles so configure followed by "make distclean"
-        should restore the source tree to its original form.
+    o	Modified makefiles so configure followed by "make distclean"
+	should restore the source tree to its original form.
 
-    o   a leftover "colours <- colors" caused trouble when collating
+    o	a leftover "colours <- colors" caused trouble when collating
 	sequence changes caused files to go into the "base" file in a
 	different order
 
@@ -258,12 +263,12 @@ who is also responsible for finding and/or fixing a lot of the bugs)
 
 NEW FEATURES
 
-    o   predict.glm() added.
+    o	predict.glm() added.
 
-    o   text() is generic.
+    o	text() is generic.
 
-    o   update.default() (replaces update.glm() and update.lm()).
-        (This will only work if you comment out update.lm and
+    o	update.default() (replaces update.glm() and update.lm()).
+	(This will only work if you comment out update.lm and
 	update.glm in the sources, or disable them with
 	update.lm<-function(object,...)NextMethod(), etc.)
 
@@ -290,74 +295,74 @@ NEW FEATURES
 
     o	new  src/library/profile/Common.R   for	 OS-independent intialization.
 
-    o   new date stamp mechanism (ensures that prerelease versions carry
-        correct date)
+    o	new date stamp mechanism (ensures that prerelease versions carry
+	correct date)
 
 BUG FIXES
 
-    o   abbreviate() now always retains the first letter.
+    o	abbreviate() now always retains the first letter.
 
-    o   attr() partial matches for attribute name.
+    o	attr() partial matches for attribute name.
 
-    o   axis() accepts graphical parameters.
+    o	axis() accepts graphical parameters.
 
-    o   binomial() accepts factor responses.
+    o	binomial() accepts factor responses.
 
-    o   cbind() works with data frames.
+    o	cbind() works with data frames.
 
-    o   contrasts() gives simpler labels (like S) for factors with
-        two levels.
+    o	contrasts() gives simpler labels (like S) for factors with
+	two levels.
 
-    o   contrasts<-() now has a how.many= argument.
+    o	contrasts<-() now has a how.many= argument.
 
-    o   contour() and image() can accept a list to specify the matrix.
+    o	contour() and image() can accept a list to specify the matrix.
 
-    o   contr.poly() uses orthogonal polynomials (like S) not raw
-        polynomials.
+    o	contr.poly() uses orthogonal polynomials (like S) not raw
+	polynomials.
 
-    o   data() could fail with a partial match to the dataset name.
+    o	data() could fail with a partial match to the dataset name.
 
-    o   density() works correctly if from= or to= are used.
-            n= can now take any value, not just a large power of 2.
+    o	density() works correctly if from= or to= are used.
+	    n= can now take any value, not just a large power of 2.
 
-    o   expand.grid() now accepts more than two arguments,
-        or a list of factors.
+    o	expand.grid() now accepts more than two arguments,
+	or a list of factors.
 
-    o   factor() and ordered() handle their levels argument better.
+    o	factor() and ordered() handle their levels argument better.
 
-    o   family.glm() now returns the correct family (including link etc).
+    o	family.glm() now returns the correct family (including link etc).
 
-    o   legend() now knows about lwd.
+    o	legend() now knows about lwd.
 
-    o   match.args() works correctly for default arguments.
+    o	match.args() works correctly for default arguments.
 
-    o   model.frame.lm() did not invoke `lm'.
+    o	model.frame.lm() did not invoke `lm'.
 
-    o   model.matrix() calls model.frame() if needed.
+    o	model.matrix() calls model.frame() if needed.
 
-    o   model.response() now returns names, so glm() gives names to
-        residuals, fitted values, etc.
+    o	model.response() now returns names, so glm() gives names to
+	residuals, fitted values, etc.
 
-    o   quasi() works in glm() (was missing aic component).
+    o	quasi() works in glm() (was missing aic component).
 
-    o   seq() sometimes omitted the final value due to rounding error.
+    o	seq() sometimes omitted the final value due to rounding error.
 
-    o   terms.formula() and update.formula() now resolve `.' in formulae
-        and tidy up `(a + b) - b' etc.
+    o	terms.formula() and update.formula() now resolve `.' in formulae
+	and tidy up `(a + b) - b' etc.
 
-    o   ... is now passed down correctly to functions inside functions.
+    o	... is now passed down correctly to functions inside functions.
 
-    o   save.image didn't work (Martyn Plummer)
+    o	save.image didn't work (Martyn Plummer)
 
-    o   abs() instead of fabs() in seq.c crashed R on Digital Unix
+    o	abs() instead of fabs() in seq.c crashed R on Digital Unix
 
-    o   model.matrix() gagged on variables with complicated names
+    o	model.matrix() gagged on variables with complicated names
 
-    o   saturated models acting up in glm
+    o	saturated models acting up in glm
 
-    o   various improvement of build procedures
+    o	various improvement of build procedures
 
-    o   rbind(NULL, matrix) core dump
+    o	rbind(NULL, matrix) core dump
 
     o	density() default 'bw' now 0.9*(...) instead of 1.06*(...)
 				[=Silverman's rule of thumb].
@@ -376,7 +381,7 @@ BUG FIXES
 	Fortran_underscores.
 
     o	Tick marks acting up on log axes in postscript (fix from Martyn
-	Plummer) 
+	Plummer)
 
     o	The Rd format has a new section \details{} (needed for proper
 	Sd2Rd translation). \R was not understood for nroff
