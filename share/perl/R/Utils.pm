@@ -145,15 +145,14 @@ sub get_exclude_patterns {
     ## Return list of file patterns excluded by R CMD build and check.
     ## Kept here so that we ensure that the lists are in sync, but not
     ## exported.
+    ## <FIXME>
+    ## Has Unix-style '/' path separators hard-coded.
     my @exclude_patterns = ("^.Rbuildignore\$", "^.DS_Store\$",
 			    "\~\$", "\\.swp\$", "\\.bak\$",
 			    "^.*/\\.#[^/]*\$", "^.*/#[^/]*#\$",
-			    "^TITLE\$");
-    ## <FIXME>
-    ## Add
-    ##   "^data/00Index\$"
-    ##   "^inst/doc/00Index.dcf\$"
-    ## once 1.7 is out ...
+			    "^TITLE\$", "^data/00Index\$",
+			    "^inst/doc/00Index.dcf\$"
+			    );
     ## </FIXME>
     @exclude_patterns;
 }
