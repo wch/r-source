@@ -880,10 +880,12 @@ DF <- data.frame(speed=4)
 stopifnot(all.equal(predict(cars.1, DF), predict(cars1, DF)))
 ## error in 1.5.1
 
+
 ## Ops.data.frame (PR#1889)
 d <- data.frame(1:10)
 d > list(5)
 ## failed in 1.5.1
+
 
 ## order(na.last = NA) (PR#1913 / 1906)
 x <- 1
@@ -893,10 +895,37 @@ order(x, x, x, na.last=NA)
 order(c(1,2,3,NA), na.last=NA, decreasing=TRUE)
 ## ignored `decreasing' in 1.5.1
 
+
 ## as.list() coerced logical to integer (PR#1926)
 x <- c(TRUE,FALSE,NA)
 stopifnot(identical(x, unlist(as.list(x))))
 ## the 2nd was 1:1 in before 1.6
+
+
+## test of long Error expression in aov(): PR#1315 and later,
+## and also a cross-check of deparse(, cutoff = 500)
+AA <- structure(list(Y2 = c(10, 9, 0, 0, 5, 6, 0, 0, 8, 9, 0, 0, 4,
+4, 0, 0, 12, 11, 2, 0, 6, 7, 0, 0), P2 = structure(c(1, 1, 1,
+1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3
+), .Label = c("1", "2", "3"), class = "factor"), AAAAAAAA = structure(c(1,
+1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2,
+2, 2), .Label = c("E1", "E2"), class = "factor"), B2 = structure(c(1,
+1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1,
+2, 2), .Label = c("Red", "Unred"), class = "factor"), C2 = structure(c(1,
+2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
+1, 2), .Label = c("Agent", "Patient"), class = "factor")), .Names = c("Y2",
+"P2", "AAAAAAAA", "B2", "C2"), class = "data.frame", row.names = c("1",
+"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13",
+"14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"
+))
+AK2anova.out <-
+    aov(Y2 ~ AAAAAAAA * B2 * C2 +
+        Error(P2 + P2:AAAAAAAA + P2:B2 + P2:C2 + P2:AAAAAAAA:B2 +
+              P2:AAAAAAAA:C2 + P2:B2:C2 + P2:AAAAAAAA:B2:C2),
+        data=AA)
+## failed in 1.5.1
+
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
