@@ -103,8 +103,8 @@ screen <- function(n = cur.screen, new = TRUE)
 	stop("Invalid screen number\n")
     split.screens <- .SSget("sp.screens")
     split.screens[[cur.screen]] <- par(get("par.list", envir=.SSenv))
-    assign("sp.screens", split.screens, envir=.SSenv)
-    assign("sp.cur.screen", n, envir=.SSenv)
+    .SSassign("sp.screens", split.screens)
+    .SSassign("sp.cur.screen", n)
     par(split.screens[[n]])
     if (new)
 	erase.screen(n)
@@ -149,10 +149,11 @@ close.screen <- function(n, all.screens=FALSE)
 	.SSassign("sp.valid.screens",
                   valid.screens[-sort(match(n, valid.screens))])
 	temp <- .SSget("sp.cur.screen")
-	if (temp %in% n)
-	    temp <- min(valid.screens[valid.screens>temp])
-	if (temp > max(valid.screens)) temp <- min(valid.screens)
+	if (temp %in% n) {
+            poss <- valid.screens[valid.screens>temp]
+	    temp <- if(length(poss)) min(poss) else min(valid.screens)
+        }
 	screen(temp, new=FALSE)
-	return(valid.screens)
+	.SSget("sp.valid.screens")
     }
 }

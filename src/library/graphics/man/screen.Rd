@@ -22,7 +22,8 @@ close.screen(n, all.screens = FALSE)
   \item{erase}{logical: should be selected screen be cleared?}
   \item{n}{A number indicating which screen to prepare for drawing
     (\code{screen}), erase (\code{erase.screen}), or close
-    (\code{close.screen}).}
+    (\code{close.screen}).  (\code{close.screen} will accept a vector of
+    screen numbers.)}
   \item{new}{A logical value indicating whether the screen should be
     erased as part of the preparation for drawing in the screen.}
   \item{all.screens}{A logical value indicating whether all of the
@@ -48,6 +49,10 @@ close.screen(n, all.screens = FALSE)
   While in this mode, certain other commands should be avoided (see the
   Warnings section below).  Split-screen mode is exited by the command
   \code{close.screen(all = TRUE)}.
+
+  If the current screen is closed, \code{close.screen} sets the current
+  screen to be the next larger screen number if there is one, otherwise
+  to the first available screen.
 }
 \value{
   \code{split.screen} returns a vector of screen numbers for the
