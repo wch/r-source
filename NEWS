@@ -289,8 +289,10 @@ BUG FIXES
 
     o   unsplit() failed if f was a list of factors. (PR#1843)
 
-    o   the methods package generic version of primitives is now "sealed"
+    o   The methods package generic version of primitives is now "sealed"
         and cannot be redefined (it was always a bad idea to do so).
+
+    o   quantile() gave -Inf not NaN in some examples. (Related to PR#1852)
 
 
 

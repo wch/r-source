@@ -478,3 +478,12 @@ lm(y ~ A:U + A:V - 1)$coef  # 1.5.1 used dummies coding for V
 lm(y ~ (A + B) : (U + V) - 1) # 1.5.1 used dummies coding for A:V but not B:V
 options(oldcon)
 ## 1.5.1 miscomputed the first factor in the formula.
+
+
+## quantile extremes, MM 13 Apr 2000 and PR#1852
+for(k in 0:5)
+    print(quantile(c(rep(-Inf,k+1), 0:k, rep(Inf, k)), pr=seq(0,1, .1)))
+x <- c(-Inf, -Inf, Inf, Inf)
+median(x)
+quantile(x)
+## 1.5.1 had -Inf not NaN in several places
