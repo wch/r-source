@@ -57,7 +57,7 @@ La.eigen <- function (x, symmetric, only.values = FALSE)
 
 La.svd <- function(x, nu = min(n, p), nv = min(n, p))
 {
-    if(!is.numeric(x))
+    if(!is.numeric(x) && !is.complex(x))
 	stop("argument to svd must be numeric")
     x <- as.matrix(x)
     n <- nrow(x)
@@ -94,5 +94,11 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
     else
         stop("nv must be 0, nrow(x) or ncol(x)")
 
-    .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v, package="base")
+    if(is.complex(x)) {
+        u[] <- as.complex(u)
+        v[] <- as.complex(v)
+        .Call("La_svd_cmplx", jobu, jobv, x, double(min(n,p)), u, v,
+              package="base")
+    } else
+        .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v, package="base")
 }

@@ -250,9 +250,11 @@ NEW FEATURES
 	and this may lead to sign reversals in some of the output of
 	those functions.
 
-    o	solve.default() now handles complex arguments, based on
-	LAPACK, where Fortran compilers can handle COMPLEX*16 well enough.
+    o   Provided the Fortran compiler have handle COMPLEX*16, the
+	following routines now handle complex arguments, based on
+ 	LAPACK code.
 
+	qr, qr.coef, qr.solve, qr.qy, qr.qty, solve.default, La.svd.
 
 
 BUG FIXES

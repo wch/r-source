@@ -31,7 +31,8 @@ as.qr(x)
 }
 \description{
   \code{qr} computes the QR decomposition of a matrix.  It provides an
-  interface to the techniques used in the LINPACK routine DQRDC.
+  interface to the techniques used in the LINPACK routine DQRDC
+  or the LAPACK routine ZGEQP3.
 }
 \details{
   The QR decomposition plays an important role in many
@@ -56,7 +57,7 @@ as.qr(x)
   either are QR decompositions or they are not.
 }
 \value{
-  The QR decomposition of the matrix as computed by LINPACK.
+  The QR decomposition of the matrix as computed by LINPACK or LAPACK.
   The components in the returned value correspond directly
   to the values returned by DQRDC.
   \item{qr}{a matrix with the same dimensions as \code{x}.
@@ -65,17 +66,25 @@ as.qr(x)
     the decomposition (stored in compact form).}
   \item{qraux}{a vector of length \code{ncol(x)} which contains
     additional information on \eqn{\bold{Q}}.}
-  \item{rank}{the rank of \code{x} as computed by the decomposition.}
+  \item{rank}{the rank of \code{x} as computed by the decomposition:
+    always full rank in the complex case.}
   \item{pivot}{information on the pivoting strategy used during
     the decomposition.}
 }
-\note{To compute the determinant of a matrix (do you \emph{really} need it?),
-    the QR decomposition is much more efficient than using Eigen values
-    (\code{\link{eigen}}).  See \code{det2} in the examples below.
+\note{
+  To compute the determinant of a matrix (do you \emph{really} need it?),
+  the QR decomposition is much more efficient than using Eigen values
+  (\code{\link{eigen}}).  See \code{\link{det}}.
+
+  The complex case uses column pivoting and does not attempt to detect
+  rank-deficient matrices.  
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
+
+  Anderson. E. and ten others (1995)
+  \emph{LAPACK Users' Guide}. Second Edition. SIAM.
 }
 \seealso{
   \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for
@@ -97,6 +106,14 @@ x <- qr.solve(h9, y, tol = 1e-10) # or equivalently :
 x <- qr.coef(qrh9, y) #-- is == but much better than
                       #-- solve(h9) \%*\% y
 h9 \%*\% x              # = y
+
+\testonly{## tests of complex case
+set.seed(1)
+A <- matrix(rnorm(25), 5, 5, dimnames=list(1:5, letters[1:5]))
+qr.solve(A, 1:5)
+A[] <- as.complex(A)
+qr.coef(qr(A), 1:5)
+qr.solve(A, 1:5)}
 }
 \keyword{algebra}
 \keyword{array}

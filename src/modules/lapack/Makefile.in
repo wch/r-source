@@ -25,11 +25,19 @@ SOURCES_F = \
   dormbr.f dorml2.f dormlq.f dormqr.f drscl.f dsteqr.f dsterf.f dsyev.f \
   dsytd2.f dsytrd.f dtrevc.f dtrexc.f dtrsen.f dtrsna.f dtrsyl.f \
   ieeeck.f ilaenv.f @COMPILE_DOUBLE_COMPLEX_FALSE@ \
-  zgesv.f zgetf2.f zgetrf.f zgetrs.f zlaswp.f
+  zgeqp3.f zgeqr2.f zgeqrf.f zgeru.f zgesv.f zgetf2.f zgetrf.f zgetrs.f \
+  dlapy3.f zlacgv.f zladiv.f zlaqp2.f zlaqps.f zlarf.f zlarfb.f zlarfg.f \
+  zlarft.f zlaswp.f ztrtrs.f zunm2r.f zunmqr.f \
+  zgesvd.f zbdsqr.f zdrot.f zgebd2.f zgebrd.f zgelqf.f zgelq2.f zlabrd.f \
+  zlacpy.f \
+  zlange.f zlascl.f zlaset.f zlasr.f zlassq.f zungbr.f zunglq.f zungl2.f \
+  zungqr.f zungrq.f zungr2.f zung2r.f zunmbr.f zunmlq.f zunml2.f
 
 SOURCES_BLAS = \
    dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f \
-   @COMPILE_DOUBLE_COMPLEX_FALSE@ izamax.f zswap.f zscal.f zgeru.f zgemm.f ztrsm.f
+   @COMPILE_DOUBLE_COMPLEX_FALSE@ dznrm2.f izamax.f \
+   zcopy.f zdscal.f zgemm.f zgemv.f zgerc.f zswap.f zscal.f \
+   ztrmm.f ztrmv.f ztrsm.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \

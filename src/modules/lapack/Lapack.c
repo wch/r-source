@@ -261,3 +261,196 @@ SEXP La_zgesv(SEXP A, SEXP B)
     return R_NilValue; /* -Wall */
 #endif
 }
+
+SEXP La_zgeqp3(SEXP Ain)
+{
+#ifdef HAVE_DOUBLE_COMPLEX
+    int m, n, *Adims, info, lwork;
+    Rcomplex *work, tmp;
+    double *rwork;
+    SEXP val, nm, jpvt, tau, rank, A;
+   
+    if (!(isMatrix(Ain) && isComplex(Ain))) {
+	error("A must be a complex matrix");
+    }
+    PROTECT(A = duplicate(Ain));
+    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    m = Adims[0];
+    n = Adims[1];
+    rwork = Calloc((size_t) 2*n, double);
+    
+    jpvt = PROTECT(allocVector(INTSXP, n));
+    tau = PROTECT(allocVector(CPLXSXP, m < n ? m : n));
+    lwork = -1;
+    F77_CALL(zgeqp3)(&m, &n, COMPLEX(A), &m, INTEGER(jpvt), COMPLEX(tau), 
+		     &tmp, &lwork, rwork, &info);
+    lwork = (int) tmp.r;
+    work = Calloc((size_t) lwork, Rcomplex);
+    F77_CALL(zgeqp3)(&m, &n, COMPLEX(A), &m, INTEGER(jpvt), COMPLEX(tau), 
+		     work, &lwork, rwork, &info);
+    Free(work); Free(rwork);
+    if (info != 0) {
+	UNPROTECT(3);
+	error("error code %d from Lapack routine zqeqp3", info);
+    }
+    val = PROTECT(allocVector(VECSXP, 4));
+    nm = PROTECT(allocVector(STRSXP, 4));
+    rank = PROTECT(allocVector(INTSXP, 1));
+    INTEGER(rank)[0] = m < n ? m : n;
+    SET_STRING_ELT(nm, 0, mkChar("qr"));
+    SET_STRING_ELT(nm, 1, mkChar("rank"));
+    SET_STRING_ELT(nm, 2, mkChar("qraux"));
+    SET_STRING_ELT(nm, 3, mkChar("pivot"));
+    setAttrib(val, R_NamesSymbol, nm);
+    SET_VECTOR_ELT(val, 0, A);
+    SET_VECTOR_ELT(val, 1, rank);
+    SET_VECTOR_ELT(val, 2, tau);
+    SET_VECTOR_ELT(val, 3, jpvt);
+    UNPROTECT(6);
+    return val;
+#else
+    error("Fortran complex functions are not available on this platform");
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+SEXP qr_coef_cmplx(SEXP Q, SEXP Bin)
+{
+#ifdef HAVE_DOUBLE_COMPLEX
+    int n, nrhs, lwork, info, k, *Bdims;
+    SEXP B, qr=VECTOR_ELT(Q, 0), tau=VECTOR_ELT(Q, 2);
+    Rcomplex *work, tmp;
+    
+    k = LENGTH(tau);
+    if (!(isMatrix(Bin) && isComplex(Bin))) {
+	error("B must be a complex matrix");
+    }
+
+    PROTECT(B = duplicate(Bin));
+    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    n = Bdims[0];
+    nrhs = Bdims[1];
+    lwork = -1;
+    F77_CALL(zunmqr)("L", "C", &n, &nrhs, &k, 
+		     COMPLEX(qr), &n, COMPLEX(tau), COMPLEX(B), &n,
+		     &tmp, &lwork, &info);
+    lwork = (int) tmp.r;
+    work = Calloc((size_t) lwork, Rcomplex);
+    F77_CALL(zunmqr)("L", "C", &n, &nrhs, &k, 
+		     COMPLEX(qr), &n, COMPLEX(tau), COMPLEX(B), &n,
+		     work, &lwork, &info);
+    Free(work);
+    if (info != 0) {
+	UNPROTECT(1);
+	error("error code %d from Lapack routine zunmqr", info);
+    }
+    F77_CALL(ztrtrs)("U", "N", "N", &n, &nrhs, 
+		     COMPLEX(qr), &n,
+		     COMPLEX(B), &n,
+		     &info);
+    if (info != 0) {
+	UNPROTECT(1);
+	error("error code %d from Lapack routine ztrtrs", info);
+    }
+    UNPROTECT(1);
+    return B;
+#else
+    error("Fortran complex functions are not available on this platform");
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+SEXP qr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
+{
+#ifdef HAVE_DOUBLE_COMPLEX
+    int n, nrhs, lwork, info, k, *Bdims, tr;
+    SEXP B, qr=VECTOR_ELT(Q, 0), tau=VECTOR_ELT(Q, 2);
+    Rcomplex *work, tmp;
+    
+    k = LENGTH(tau);
+    if (!(isMatrix(Bin) && isComplex(Bin))) {
+	error("B must be a complex matrix");
+    }
+    tr = asLogical(trans);
+    if(tr == NA_LOGICAL) error("invalid `trans' parameter");
+
+    PROTECT(B = duplicate(Bin));
+    Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
+    n = Bdims[0];
+    nrhs = Bdims[1];
+    lwork = -1;
+    F77_CALL(zunmqr)("L", tr ? "C" : "N", &n, &nrhs, &k, 
+		     COMPLEX(qr), &n, COMPLEX(tau), COMPLEX(B), &n,
+		     &tmp, &lwork, &info);
+    lwork = (int) tmp.r;
+    work = Calloc((size_t) lwork, Rcomplex);
+    F77_CALL(zunmqr)("L", tr ? "C" : "N", &n, &nrhs, &k, 
+		     COMPLEX(qr), &n, COMPLEX(tau), COMPLEX(B), &n,
+		     work, &lwork, &info);
+    Free(work);
+    if (info != 0) {
+	UNPROTECT(1);
+	error("error code %d from Lapack routine zunmqr", info);
+    }
+    UNPROTECT(1);
+    return B;
+#else
+    error("Fortran complex functions are not available on this platform");
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+{
+#ifdef HAVE_DOUBLE_COMPLEX
+    int *xdims, n, p, lwork, info;
+    double *rwork;
+    Rcomplex *work, tmp;
+    SEXP val, nm;
+
+    if (!(isString(jobu) && isString(jobv))) {
+	error("jobu and jobv must be character objects");
+	return R_NilValue;
+    }
+    if (!(isMatrix(x) && isMatrix(u) && isMatrix(v))) {
+	error("x and u and v must be matrices");
+	return R_NilValue;
+    }
+    xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
+    n = xdims[0]; p = xdims[1];
+    rwork = Calloc((size_t) 5*(n < p ? n:p), double);
+    /* ask for optimal size of work array */
+    lwork = -1;
+    F77_CALL(zgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
+		     &n, &p, COMPLEX(x), &n, REAL(s),
+		     COMPLEX(u), INTEGER(getAttrib(u, R_DimSymbol)),
+		     COMPLEX(v), INTEGER(getAttrib(v, R_DimSymbol)),
+		     &tmp, &lwork, rwork, &info);
+    lwork = (int) tmp.r;
+    work = Calloc((size_t) lwork, Rcomplex);
+    F77_CALL(zgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
+		     &n, &p, COMPLEX(x), &n, REAL(s),
+		     COMPLEX(u), INTEGER(getAttrib(u, R_DimSymbol)),
+		     COMPLEX(v), INTEGER(getAttrib(v, R_DimSymbol)),
+		     work, &lwork, rwork, &info);
+    Free(work); Free(rwork);
+    if (info != 0) {
+	error("error code %d from Lapack routine dgesvd", info);
+	return R_NilValue;
+    }
+    val = PROTECT(allocVector(VECSXP, 3));
+    nm = PROTECT(allocVector(STRSXP, 3));
+    SET_STRING_ELT(nm, 0, mkChar("d"));
+    SET_STRING_ELT(nm, 1, mkChar("u"));
+    SET_STRING_ELT(nm, 2, mkChar("vt"));
+    setAttrib(val, R_NamesSymbol, nm);
+    SET_VECTOR_ELT(val, 0, s);
+    SET_VECTOR_ELT(val, 1, u);
+    SET_VECTOR_ELT(val, 2, v);
+    UNPROTECT(2);
+    return val;
+#else
+    error("Fortran complex functions are not available on this platform");
+    return R_NilValue; /* -Wall */
+#endif
+}

@@ -25,13 +25,18 @@
 #include "R_ext/Rdynpriv.h"
 
 typedef SEXP  (*sDL_FUNC)();
-static sDL_FUNC ptr_svd, ptr_rs, ptr_rg, ptr_zgesv;
+static sDL_FUNC ptr_svd, ptr_rs, ptr_rg, ptr_zgesv, ptr_zgeqp3,
+    ptr_qr_coef_cmplx, ptr_qr_qy_cmplx, ptr_svd_cmplx;
 
 /*
 SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 SEXP La_rs(SEXP x, SEXP only_values)
 SEXP La_rg(SEXP x, SEXP only_values)
 SEXP La_zgesv(SEXP A, SEXP B)
+SEXP La_zgeqp3(SEXP A)
+SEXP qr_coef_cmplx(SEXP Q, SEXP B)
+SEXP qr_qy_cmplx(SEXP Q, SEXP B, SEXP trans)
+SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 */
 
 static int initialized = 0;
@@ -42,10 +47,18 @@ static void La_Init(void)
     initialized = -1;
     if(!res) return;
     
-    if(!(ptr_svd =  (sDL_FUNC)R_FindSymbol("La_svd", "lapack"))) return;
+    if(!(ptr_svd = (sDL_FUNC)R_FindSymbol("La_svd", "lapack"))) return;
     if(!(ptr_rs = (sDL_FUNC)R_FindSymbol("La_rs", "lapack"))) return;
     if(!(ptr_rg = (sDL_FUNC)R_FindSymbol("La_rg", "lapack"))) return;
     if(!(ptr_zgesv = (sDL_FUNC)R_FindSymbol("La_zgesv", "lapack"))) return;
+    if(!(ptr_zgeqp3 = (sDL_FUNC)R_FindSymbol("La_zgeqp3", "lapack"))) return;
+    if(!(ptr_qr_coef_cmplx = 
+	 (sDL_FUNC)R_FindSymbol("qr_coef_cmplx", "lapack"))) return;
+    if(!(ptr_qr_qy_cmplx = 
+    (sDL_FUNC)R_FindSymbol("qr_qy_cmplx", "lapack"))) return;
+    if(!(ptr_svd_cmplx =  
+	 (sDL_FUNC)R_FindSymbol("La_svd_cmplx", "lapack"))) return;
+
     initialized = 1;    
     return;
 }
@@ -55,6 +68,17 @@ SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
     if(!initialized) La_Init();
     if(initialized > 0)
 	return (*ptr_svd)(jobu, jobv, x, s, u, v);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
+
+SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr_svd_cmplx)(jobu, jobv, x, s, u, v);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -88,6 +112,39 @@ SEXP La_zgesv(SEXP A, SEXP B)
     if(!initialized) La_Init();
     if(initialized > 0)
 	return (*ptr_zgesv)(A, B);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
+
+SEXP La_zgeqp3(SEXP A)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr_zgeqp3)(A);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
+
+SEXP qr_coef_cmplx(SEXP Q, SEXP B)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr_qr_coef_cmplx)(Q, B);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
+
+SEXP qr_qy_cmplx(SEXP Q, SEXP B, SEXP trans)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr_qr_qy_cmplx)(Q, B, trans);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;

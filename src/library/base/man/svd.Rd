@@ -24,7 +24,10 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
 
   \code{La.svd} is preferred to \code{svd} for new projects, but it
   returns the transpose of the right singular vector matrix, and the
-  signs of the singular vectors may differ from those given by \code{svd}.
+  signs of the singular vectors may differ from those given by
+  \code{svd}.
+
+  \code{La.svd}, only, handles complex matrices.
 }
 \value{
   The SVD decomposition of the matrix as computed by LINPACK,
@@ -42,7 +45,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
     \code{x}.}
 
   For \code{La.svd} the return value replaces \code{v} by \code{vt}, the
-  transpose of \code{v}.
+  (conjugate) transpose of \code{v}.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
@@ -74,6 +77,12 @@ stopifnot(abs(D - t(s$u) \%*\% X \%*\% s$v) < Eps)#  D = U' X V
 str(s <- La.svd(X)); D <- diag(s$d)
 stopifnot(abs(X - s$u \%*\% D \%*\% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) \%*\% X \%*\% t(s$vt)) < Eps)#  D = U' X V
+
+X <- cbind(1, 1:7+(-3:3)*1i)
+str(s <- La.svd(X)); D <- diag(s$d)
+stopifnot(abs(X - s$u \%*\% D \%*\% s$vt) < Eps)
+stopifnot(abs(D - Conj(t(s$u)) \%*\% X \%*\% Conj(t(s$vt))) < Eps)
 }
 \keyword{algebra}
 \keyword{array}
+
