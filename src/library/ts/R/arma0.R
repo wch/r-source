@@ -102,7 +102,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(!any(mask)) stop("all parameters were fixed")
     .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
     if(!("parscale" %in% names(optim.control)))
-       optim.control$parscale <- parscale
+       optim.control$parscale <- parscale[mask]
     res <- optim(init[mask], arma0f, method = "BFGS",
                  hessian = TRUE, control = optim.control)
     if((code <- res$convergence) > 0)
@@ -112,25 +112,31 @@ arima0 <- function(x, order = c(0, 0, 0),
 
     if(transform.pars) {
         ## enforce invertibility
+        cf <- fixed
+        cf[mask] <- coef
         if(arma[2] > 0) {
             ind <- arma[1] + 1:arma[2]
-            coef[ind] <- maInvert(coef[ind])
+            if(all(mask[ind]))
+                cf[ind] <- maInvert(cf[ind])
         }
         if(arma[4] > 0) {
             ind <- sum(arma[1:3]) + 1:arma[4]
-            coef[ind] <- maInvert(coef[ind])
+            if(all(mask[ind]))
+                cf[ind] <- maInvert(cf[ind])
         }
-        if(coef != res$par)  {  # need to re-fit
-            res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE,
+        if(cf[mask] != res$par)  {  # need to re-fit
+            res <- optim(cf[mask], arma0f, method = "BFGS", hessian = TRUE,
                          control = list(maxit = 0,
                          parscale = optim.control$parscale))
             coef <- res$par
         }
+        cf <- fixed
+        cf[mask] <- coef
         ## do it this way to ensure hessian was computed inside
         ## stationarity region
-        A <- .Call("Gradtrans", G, as.double(coef), PACKAGE = "ts")
+        A <- .Call("Gradtrans", G, as.double(cf), PACKAGE = "ts")[mask, mask]
         var <- t(A) %*% solve(res$hessian*length(x)) %*% A
-        coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
+        coef <- .Call("Dotrans", G, as.double(cf), PACKAGE = "ts")[mask]
         .Call("set_trans", G, 0, PACKAGE = "ts")
     } else var <- solve(res$hessian*length(x))
     arma0f(coef)  # reset pars
