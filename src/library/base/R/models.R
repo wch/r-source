@@ -283,11 +283,13 @@ model.matrix.default <- function(object, data = environment(object),
 	    stop("model frame and formula mismatch in model.matrix()")
 	data <- data[,reorder, drop=FALSE]
     }
+    int <- attr(t, "response")
     contr.funs <- as.character(getOption("contrasts"))
-    isF <- sapply(data, function(x) is.factor(x) || is.logical(x) )[-1]
+    isF <- sapply(data, function(x) is.factor(x) || is.logical(x) )
+    isF[int] <- FALSE
     isOF <- sapply(data, is.ordered)
     namD <- names(data)
-    for(nn in namD[-1][isF]) # drop response
+    for(nn in namD[isF]) # drop response
 	if(is.null(attr(data[[nn]], "contrasts")))
 	    contrasts(data[[nn]]) <- contr.funs[1 + isOF[nn]]
     ## it might be safer to have numerical contrasts:
@@ -303,7 +305,7 @@ model.matrix.default <- function(object, data = environment(object),
     }
     ans <- .Internal(model.matrix(t, data))
     cons <- if(any(isF))
-	lapply(data[-1][isF], function(x) attr(x,  "contrasts"))
+	lapply(data[isF], function(x) attr(x,  "contrasts"))
     else NULL
     attr(ans, "contrasts") <- cons
     ans

@@ -111,6 +111,10 @@ BUG FIXES
 	expressions between explicit calls to `return' and falling off
 	the end returns.
 
+    o	The code in model.matrix.default() handling constrasts was
+	assuming a response was present, and so failing to record
+	the contrasts for the first variable if it were a factor.
+
 
 
 

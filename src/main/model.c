@@ -1747,7 +1747,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    if (!first)
 			bufp = AppendString(bufp, ":");
 		    first = 0;
-		    if (isFactor(var_i)) {
+		    if (isFactor(var_i) || isLogical(var_i)) {
 			if (ll == 1) {
 			    x = ColumnNames(VECTOR_ELT(contr1, i));
 			    ll = ncols(VECTOR_ELT(contr1, i));
@@ -1837,9 +1837,10 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		if (jnext == jstart) {
 		    if (INTEGER(nlevs)[i] > 0) {
+			int adj = isLogical(var_i)?1:0;
 			firstfactor(&REAL(x)[jstart * n], n, jnext - jstart,
 				    REAL(contrast), nrows(contrast),
-				    ncols(contrast), INTEGER(var_i));
+				    ncols(contrast), INTEGER(var_i)+adj);
 			jnext = jnext + ncols(contrast);
 		    }
 		    else {
@@ -1850,9 +1851,10 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		else {
 		    if (INTEGER(nlevs)[i] > 0) {
+			int adj = isLogical(var_i)?1:0;
 			addfactor(&REAL(x)[jstart * n], n, jnext - jstart,
 				  REAL(contrast), nrows(contrast),
-				  ncols(contrast), INTEGER(var_i));
+				  ncols(contrast), INTEGER(var_i)+adj);
 			jnext = jnext + (jnext - jstart)*(ncols(contrast) - 1);
 		    }
 		    else {
