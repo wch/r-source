@@ -161,10 +161,10 @@ NEW FEATURES
     o	dev.print() now prints if possible, and takes the size from
 	the device being copied.
 
-    o	New function dev.copy2eps copies the current device to an eps
+    o	New function dev.copy2eps() copies the current device to an eps
 	file, taking the size from that of the device.
 
-    o	residuals.lm() also allows type = "partial" & "response"
+    o	residuals.lm() also allows types "partial" and "response"
 	as residuals.glm().
 
     o	New functions which.min() & which.max().
@@ -306,6 +306,8 @@ BUG FIXES
 
     o	The x11() device no longer crashes R if a font is not found,
 	and will warn if there is a size mismatch of more than 10%.
+
+    o	call_R will now correctly handle character vector arguments.
 
 
 
