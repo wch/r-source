@@ -23,7 +23,7 @@ RSRC = $(RSRC0) @BUILD_AQUA_TRUE@ `LC_COLLATE=C ls $(srcdir)/R/aqua/*.R`
 RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(srcdir)/man/aqua/*.Rd
 NSFILES = $(srcdir)/NAMESPACE @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
 
-all: Makefile DESCRIPTION
+all: Makefile DESCRIPTION $(top_builddir)/library/$(pkg)/iconvlist
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
@@ -74,12 +74,14 @@ all: Makefile DESCRIPTION
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
-	-@iconv -l > $(top_builddir)/library/$(pkg)/iconvlist
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+$(top_builddir)/library/$(pkg)/iconvlist:
+	@iconv -l > $@ 2> /dev/null || touch $@
 
 
 mostlyclean: clean
