@@ -30,18 +30,6 @@ Subject: BUG: polyroot()
 From: "Li Dongfeng" <mavip1@inet.polyu.edu.hk>
 Date: Tue, 28 Nov 2000 13:24:33 +0800
 --Numerical instability. We may want a better algorithm!
-* PR# 630 *
-Subject: lda and svd error
-From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
-Date: Thu, 10 Aug 2000 15:13:38 +0200 (CEST)
-* PR# 594 *
-Subject: svd() (Linpack) problems/bug for ill-conditioned matrices
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
-* PR# 631 *
-Subject: svd error 
-From: =?iso-8859-1?Q?J=F6rg?= Polzehl <polzehl@wias-berlin.de>
-Date: Thu, 10 Aug 2000 16:54:46 +0200
 
 Directory:  Add-ons
 
@@ -73,10 +61,7 @@ Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
 
 Directory:  Documentation
 
-* PR# 773 *
-Subject: INSTALL should have info on make check
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 18 Dec 2000 16:13:59 +0100
+none
 
 Directory:  Graphics
 
@@ -206,11 +191,6 @@ Date: Wed, 08 Nov 2000 11:01:48 -0800
 
 Directory:  Low-level
 
-* PR# 762 *
-Subject: nmath bug
-From: spoon <spoon@hilbert.maths.utas.edu.au>
-Date: Fri, 8 Dec 2000 18:29:22 +1100 (EST)
---Compiler trouble, probably not bug
 * PR# 551 *
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
@@ -268,10 +248,11 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
-* PR# 732 *
-Subject: R with redhat 7
-From: hyu@stats.uwo.ca
-Date: Wed, 8 Nov 2000 22:32:48 +0100 (MET)
+* PR# 762 *
+Subject: nmath bug
+From: spoon <spoon@hilbert.maths.utas.edu.au>
+Date: Fri, 8 Dec 2000 18:29:22 +1100 (EST)
+--RedHat 7 has known compiler trouble, probably not bug
 * PR# 521 *
 Subject: akima core dumps on loading
 From: santini@dsi.unimi.it
@@ -292,11 +273,6 @@ Subject: acepack, akima and tripack will not load
 From: mallen@tntech.edu
 Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
 --related to PR#521: probably compiler-specific
-* PR# 592 *
-Subject: tseries bug
-From: przemat@itti.com.pl
-Date: Tue, 4 Jul 2000 14:52:17 +0200 (MET DST)
---Still broken?
 * PR# 547 *
 Subject: system(.., ignore.stderr = TRUE)  problem on Solaris
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -308,6 +284,15 @@ Subject: eigen broken on AIX with R-devel?
 From: Thomas J Vogels <tov@ece.cmu.edu>
 Date: 08 May 2000 12:01:04 -0400
 --AIX, probably compiler-specific
+* PR# 732 *
+Subject: R with redhat 7
+From: hyu@stats.uwo.ca
+Date: Wed, 8 Nov 2000 22:32:48 +0100 (MET)
+* PR# 592 *
+Subject: tseries bug
+From: przemat@itti.com.pl
+Date: Tue, 4 Jul 2000 14:52:17 +0200 (MET DST)
+--Still broken?
 
 Directory:  TooMuchAtOnce
 
@@ -319,4 +304,11 @@ none
 
 Directory:  incoming
 
-none
+* PR# 795 *
+Subject: Re: [Rd] some (may be related) problems with windows(rescale=)
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 28 Dec 2000 20:22:51 +0000 (GMT)
+* PR# 794 *
+Subject: some (may be related) problems with windows(rescale=)
+From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
+Date: Thu, 28 Dec 2000 17:54:47 +0100
