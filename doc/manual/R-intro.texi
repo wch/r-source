@@ -1128,12 +1128,15 @@ advanced part of @R{} which will not be discussed in this guide, except
 indirectly when we discuss @emph{formulae} used with modeling in @R{}.
 
 By the @emph{mode} of an object we mean the basic type of its
-fundamental constituents.  This is a special case of an @emph{attribute}
-of an object.  The @emph{attributes} of an object provide specific
-information about the object itself.  Another attribute of every object
-is its @emph{length}.  The functions @code{mode(@var{object})} and
-@code{length(@var{object})} can be used to find out the mode and length
-of any defined structure.
+fundamental constituents.  This is a special case of a ``property''
+of an object.  Another property of every object is its @emph{length}.  The
+functions @code{mode(@var{object})} and @code{length(@var{object})} can be
+used to find out the mode and length of any defined structure.
+
+Further properties of an object are usually provided by
+@code{attributes(@var{object})}, see @ref{Getting and setting attributes}.
+Because of this, @emph{mode} and @emph{length} are also called ``intrinsic
+attributes'' of an object.
 @findex mode
 @findex length
 
