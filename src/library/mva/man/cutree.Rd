@@ -3,14 +3,16 @@
 \title{Cut a tree into groups of data}
 \description{
   Cuts a tree, e.g., as resulting from \code{\link{hclust}}, into several
-  groups either by specifying the desired number of groups or the cut
-  height.
+  groups either by specifying the desired number(s) of groups or the cut
+  height(s).
 }
 \usage{
 cutree(tree, k=NULL, h=NULL)
 }
 \arguments{
- \item{tree}{a tree as produced by \code{\link{hclust}}}
+ \item{tree}{a tree as produced by \code{\link{hclust}}. \code{cutree()}
+   only expects a list with components \code{merge}, \code{height}, and
+   \code{labels}, of appropriate content each.}
  \item{k}{an integer scalar or vector with the desired number of groups}
  \item{h}{numeric scalar or vector with heights where the tree should
    be cut.}
