@@ -7,16 +7,11 @@ as.ts(x)
 is.ts(x)
 
 print(ts.obj, calendar, \dots)
-plot(ts.obj, plot.type=c("multiple", "single"), \dots)
-lines(ts.obj, \dots)
 }
 \alias{ts}
 \alias{as.ts}
 \alias{is.ts}
 \alias{print.ts}
-\alias{plot.ts}
-\alias{plot.mts}
-\alias{lines.ts}
 \arguments{
   \item{data}{a vector or matrix of the observed time-series values.}
 
@@ -50,9 +45,7 @@ lines(ts.obj, \dots)
     month names, quarter names or year when printing. The default is
     \code{TRUE} for a frequency of 4 or 12, \code{FALSE} otherwise.}
 
-  \item{plot.type}{for multivariate time series, should the series by
-    plotted separately (with a common time axis) or on a single plot?}
-  \item{\dots}{additional arguments to print or plot.}
+  \item{\dots}{additional arguments to print.}
 }
 \description{
   The function \code{ts} is used to create time-series objects.
@@ -92,6 +85,7 @@ lines(ts.obj, \dots)
   \code{\link{time}},
   \code{\link{window}}
 
+  \code{\link{plot.ts}}, the plotting method for \code{"ts"} objects.
   Standard package \code{ts} for many additional time-series functions.
 }
 \examples{
@@ -104,6 +98,7 @@ plot(gnp) # using `plot.ts' for time-series plot
 
 ## Multivariate
 z <- ts(matrix(rnorm(300), 100, 3), start=c(1961, 1), frequency=12)
+class
 plot(z)
 plot(z, plot.type="single", lty=1:3)
 

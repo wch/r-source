@@ -279,10 +279,13 @@ NEW FEATURES
     o   scan() and read.table() have a new argument blank.lines.skip
 	to allow blank lines to be read.
 
-    o   scan() now reads empty character fields as "" not "NA" unless
+    o	scan() now reads empty character fields as "" not "NA" unless
 	"" is included in na.strings.
 
-    o   New readLines() function to read a file line-by-line.
+    o	New readLines() function to read a file line-by-line.
+
+    o	plot.ts(x,y) now allows to suppress labels and lines; 
+	it is better documented.
 
 
 BUG FIXES
@@ -461,16 +464,17 @@ BUG FIXES
 	install (e.g. on vanilla Solaris).
 
     o   Nasty bug caused rpois to generate biased variables in some
-        cases.
+	cases.
 
-    o   median of empty vector is now NA.
+    o	median of empty vector is now NA.
 
-    o   Trimmed means and medians are no longer attempted for complex
-        data.
+    o	Trimmed means and medians are no longer attempted for complex
+	data.
 
-    o   t.test() allows an input vector of length 2.
+    o	t.test() allows an input vector of length 2.
 
-
+    o	help() has an additional `pager' argument which may be passed to
+	file.show().
 
 
 	**************************************************
