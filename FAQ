@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-18 2004-05-22
+Version 1.9-19 2004-05-26
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1127,14 +1127,6 @@ same time being as compatible as possible with S.
      character value.
 
    * R disallows repeated formal arguments in function calls.
-   
-   * In S, dump(), dput() and deparse() are essentially different
-     interfaces to the same code.  In R from version 2.0.0, this is only
-     true if the same values are passed in the forDisplay and useSource
-     arguments, but by default they are not.  By default dump() tries to
-     write code that will evaluate  to reproduce the object, whereas
-     dput() and deparse() default to options for producing deparsed code
-     that is readable.
 
 
    There are also differences which are not intentional, and result from
@@ -1644,6 +1636,10 @@ distributions of R.)
 
 *chron*
      A package for working with chronological objects (times and dates).
+
+*circular*
+     Circular statistics, from "Topics in Circular Statistics" by Rao
+     Jammalamadaka and A. SenGupta, 2001, World Scientific.
 
 *class*
      Functions for classification (k-nearest neighbor and LVQ).  Contained
