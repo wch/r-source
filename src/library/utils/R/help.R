@@ -1,6 +1,3 @@
-index.search <- function(topic, path, file = "AnIndex", type = "help")
-    .Internal(index.search(topic, path, file, .Platform$file.sep, type))
-
 help <-
 function(topic, offline = FALSE, package = NULL, lib.loc = NULL,
          verbose = getOption("verbose"),
