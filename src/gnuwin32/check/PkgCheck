@@ -32,7 +32,7 @@ run: $(PKG)-Ex.R
 	fi
 
 
-$(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*
+$(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/* $(RHOME)/bin/massage-Examples
 	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
 	@if test -f $(RLIB)/$(PKG)/R-ex/Rex.zip; then \
 	  (cd $(RLIB)/$(PKG)/R-ex; unzip -oq Rex); \
