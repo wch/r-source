@@ -995,13 +995,20 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(*p == '\\') *p = '/';
 #endif
     /* remove trailing file separator(s) */
-    while ( *(p = buf + strlen(buf) - 1) == fsp ) *p = '\0';
+    while ( *(p = buf + strlen(buf) - 1) == fsp  && p > buf
+#ifdef Win32
+	    && *(p-1) != ':'
+#endif
+	) *p = '\0';
     p = strrchr(buf, fsp);
     if(p == NULL)
 	strcpy(buf, ".");
     else {
-	while(p > buf && *p == fsp)
-	    --p;
+	while(p > buf && *p == fsp
+#ifdef Win32
+	      && *(p-1) != ':'
+#endif
+	    ) --p;
 	p[1] = '\0';
     }
     return(mkString(buf));
