@@ -4,6 +4,7 @@
 lockEnvironment(env, bindings = FALSE)
 environmentIsLocked(env)
 lockBinding(sym, env)
+unlockBinding(sym, env)
 bindingIsLocked(sym, env)
 makeActiveBinding(sym, fun, env)
 bindingIsActive(sym, env)
@@ -12,6 +13,7 @@ bindingIsActive(sym, env)
 \alias{lockEnvironment}
 \alias{environmentIsLocked}
 \alias{lockBinding}
+\alias{unlockBinding}
 \alias{makeActiveBinding}
 \alias{bindingIsLocked}
 \alias{bindingIsActive}
@@ -63,6 +65,9 @@ assign("x",1, env=e)
 get("x",env=e)
 lockBinding("x", e)
 try(assign("x",2, env=e)) # error
+unlockBinding("x", e)
+assign("x",2, env=e)
+get("x",env=e)
 
 # active bindings
 f<-local({
