@@ -116,19 +116,19 @@ static int MatchVar(SEXP var1, SEXP var2)
 static int InstallVar(SEXP var)
 {
     SEXP v;
-    int index;
+    int indx;
     /* Check that variable is legitimate */
     if (!isSymbol(var) && !isLanguage(var) && !isZeroOne(var))
 	error("invalid term in model formula");
     /* Lookup/Install it */
-    index = 0;
+    indx = 0;
     for (v = varlist; CDR(v) != R_NilValue; v = CDR(v)) {
-	index++;
+	indx++;
 	if (MatchVar(var, CADR(v)))
-	    return index;
+	    return indx;
     }
     SETCDR(v, CONS(var, R_NilValue));
-    return index + 1;
+    return indx + 1;
 }
 
 
@@ -1482,7 +1482,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP count, contrast, contr1, contr2, nlevs, ordered, columns, x;
     SEXP variable, var_i;
     int fik, first, i, j, k, kk, ll, n, nc, nterms, nvar;
-    int intercept, jstart, jnext, response, index, rhs_response;
+    int intercept, jstart, jnext, response, indx, rhs_response;
     char buf[BUFSIZE], *bufp, *addp;
 
     checkArity(op, args);
@@ -1730,7 +1730,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (j == rhs_response) continue;
 	for (kk = 0; kk < INTEGER(count)[j]; kk++) {
 	    first = 1;
-	    index = kk;
+	    indx = kk;
 	    bufp = &buf[0];
 	    for (i = 0; i < nvar; i++) {
 		ll = INTEGER(factors)[i + j * nvar];
@@ -1755,11 +1755,11 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    warningcall(call, "term names will be truncated");
 			if (x == R_NilValue) {
 			    if(strlen(buf) + 10 < BUFSIZE)
-				bufp = AppendInteger(bufp, index % ll + 1);
+				bufp = AppendInteger(bufp, indx % ll + 1);
 			    else 
 				warningcall(call, "term names will be truncated");
 			} else {
-			    addp = CHAR(STRING_ELT(x, index % ll));
+			    addp = CHAR(STRING_ELT(x, indx % ll));
 			    if(strlen(buf) + strlen(addp) < BUFSIZE)
 				bufp = AppendString(bufp, addp);
 			    else 
@@ -1777,11 +1777,11 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			if (ll > 1) {
 			    if (x == R_NilValue) {
 				if(strlen(buf) + 10 < BUFSIZE)
-				    bufp = AppendInteger(bufp, index % ll + 1);
+				    bufp = AppendInteger(bufp, indx % ll + 1);
 				else 
 				    warningcall(call, "term names will be truncated");		
 			    } else {
-				addp = CHAR(STRING_ELT(x, index % ll));
+				addp = CHAR(STRING_ELT(x, indx % ll));
 				if(strlen(buf) + strlen(addp) < BUFSIZE)
 				    bufp = AppendString(bufp, addp);
 				else 
@@ -1789,7 +1789,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    }
 			}
 		    }
-		    index = index / ll;
+		    indx /= ll;
 		}
 	    }
 	    SET_STRING_ELT(xnames, k++, mkChar(buf));
