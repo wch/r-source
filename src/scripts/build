@@ -1,0 +1,242 @@
+#!/bin/sh
+#
+# ${R_HOME}/bin/build
+
+REVISION='$Revision: 1.1 $'
+VERSION=`set - ${REVISION}; echo ${2}`
+VERSION="R package builder version ${VERSION}
+
+Copyright (C) 1999 R Development Core Team.
+There is NO warranty.  You may redistribute this software under the
+terms of the GNU General Public License.
+For more information about these matters, see the files named COPYING."
+
+USAGE_MSG="Usage: R CMD build [options] pkgdir_1 ... pkgdir_n
+
+Build R packages from package sources in the PKGDIR_i directories.
+A variety of diagnostic checks and cleanups are performed prior to
+building the packages.
+
+Options:
+  -h, --help       Display this help and exit successfully.
+  -v, --version    Display version information and exit successfully.
+  --vsize=N        Set R's vector heap size to N bytes.
+  --nsize=N        Set R's number of cons cells to N.
+
+Email bug reports to <r-bugs@lists.r-project.org>."
+
+R_opts="--vanilla"
+DEBUG=false
+PKGS=
+
+START_DIR=`pwd`
+
+## Parse argument command line
+while test -n "${1}"; do
+  case ${1} in
+    -h|--help)
+      echo "${USAGE_MSG}"; exit 0 ;;
+    -v|--version)
+      echo "${VERSION}"; exit 0 ;;
+    -d|--debug)
+      DEBUG=true ;;
+    --nsize=*)
+      R_NSIZE=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    --vsize=*)
+      R_VSIZE=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    *)
+      PKGS="${PKGS} ${1}" ;;
+  esac
+  shift
+done
+
+## Determine whether echo can suppress newlines.
+if echo "testing\c" | grep c >/dev/null; then
+  if echo -n "testing" | sed s/-n/xn/ | grep xn >/dev/null; then
+    ECHO_N= ECHO_C= ECHO_T='	'
+  else
+    ECHO_N=-n ECHO_C= ECHO_T=
+  fi
+else
+  ECHO_N= ECHO_C='\c' ECHO_T=
+fi
+
+## A few useful output functions
+checking () { echo ${ECHO_N} "* checking $@ ...${ECHO_C}"; }
+message () { echo "* $@"; }
+result () { echo "${ECHO_T} $@"; }
+
+## The work horse
+buildpkg () {
+  echo "Building package \`${1}' ..."
+
+  cd ${START_DIR}
+
+  checking "package dir"
+  if test -d ${1}; then
+    dir=`cd ${1}; pwd`
+  else
+    result "ERROR: package dir \`${1}' does not exist"
+    exit 1
+  fi
+  result "OK"
+
+  ## Check whether `DESCRIPTION' exists and contains required fields
+  checking "for \`DESCRIPTION'"
+  if test -r ${dir}/DESCRIPTION; then
+    cd ${dir}
+  else
+    result "ERROR: file \`DESCRIPTION' not found"
+    exit 1
+  fi
+  result "OK"
+  checking "\`DESCRIPTION' license entry"
+  foo=`grep ^License DESCRIPTION`
+  foo=`set - ${foo}; echo ${2}`
+  if test -z ${foo}; then
+    result "ERROR: no license entry in \`DESCRIPTION'"
+    exit 1
+  fi
+  result "OK"
+  checking "\`DESCRIPTION' package entry"
+  foo=`grep ^Package DESCRIPTION`
+  package=`set - ${foo}; echo ${2}`
+  if test -z ${package}; then
+    result "ERROR: no package entry in \`DESCRIPTION'"
+    exit 1
+  fi
+  if test "${package}" != `basename ${dir}`; then
+    result "ERROR: package field in \`DESCRIPTION' differs from dir name"
+    exit 1
+  fi
+  result "OK"
+  checking "\`DESCRIPTION' version entry"
+  foo=`grep ^Version DESCRIPTION`
+  version=`set - ${foo}; echo ${2}`
+  if test -z ${version}; then
+    result "ERROR: no version entry in \`DESCRIPTION'"
+    exit 1
+  fi
+  result "OK"
+
+  ## Check for `TITLE'
+  checking "for \`TITLE'"
+  if test -r TITLE; then
+    result "OK"
+  else
+    result "ERROR: file \`TITLE' not found"
+    exit 1
+  fi
+
+  ## Check R documentation files
+  if test -d man; then
+    Rdfiles=`find man -name "*.[Rr]d" -print`
+    checking "Rd files"
+    any=
+    for tag in name alias title description keyword; do
+      badfiles=`grep -L "^\\\\\\\\${tag}" ${Rdfiles} 2>/dev/null`
+      if test -n "${badfiles}"; then
+	if test -z "${any}"; then
+	  result "WARNING:"
+	fi
+	any="${any} ${tag}"
+	echo "Rd files without ${tag}: ${badfiles}"
+      fi
+    done
+    if test -z "${any}"; then
+      result "OK"
+    fi
+  else
+    result "WARNING: no Rd files found"
+  fi
+  ## Update `INDEX'
+  if test -n "${Rdfiles}"; then
+    message "creating \`INDEX' from Rd files"
+    R CMD Rdindex ${Rdfiles} > INDEX
+  else
+    checking "for \`INDEX'"
+    if test -r INDEX; then
+      result "WARNING: cannot update \`INDEX'"
+    else
+      result "ERROR: file \`INDEX' not found"
+      exit 1
+    fi
+  fi
+  ## Update `data/00Index'
+  if test -d data; then
+    if test -n "${Rdfiles}"; then
+      message "creating \`data/00Index' from Rd files"
+      Rdfiles=`grep -l "\\\\keyword{datasets}" ${Rdfiles}`
+      R CMD Rdindex ${Rdfiles} > data/00Index
+    else
+      checking "for \`data/00Index'"
+      if test -r data/00Index; then
+	result "WARNING: cannot update \`data/00Index'"
+      else
+	result "ERROR: file \`data/00Index' not found"
+	exit 1
+      fi
+    fi
+  fi
+
+  ## Check for undocumented objects 
+  checking "for undocumented objects"
+  if test -n "${R_NSIZE}"; then
+    R_opts="${R_opts} --nsize ${R_NSIZE}"
+  fi
+  if test -n "${R_VSIZE}"; then
+    R_opts="${R_opts} --vsize ${R_VSIZE}"
+  fi
+  out=`echo "undoc(dir = \"${dir}\")" | R ${R_opts} | \
+    grep "^Error\\|^ *\\["`
+  err=`echo ${out} | grep "^Error"`
+  if test -z "${err}"; then
+    if test -n "${out}"; then
+      result "WARNING:"
+      echo ${out};
+    else
+      result "OK"
+    fi
+  else
+    err=`echo ${err} | sed -e 's/^Error *//'`
+    result "ERROR:"
+    echo ${err}
+    exit 1
+  fi
+
+  ## Clean up `src'
+  if test -d src; then
+    message "cleaning \`src'"
+    if test -r src/Makefile; then
+      (cd src && make clean)
+    else
+      rm -f *.o *.s[lo]
+    fi
+  fi
+
+  ## Other cleanups
+  for f in .Rdata .Rhistory; do
+    junk=`find . -name ${f}`
+    if test -n "${junk}"; then
+      message "removing left-over \`${f}' files"
+      rm -f ${junk}
+    fi
+  done
+  if test -x cleanup; then
+    message "running \`cleanup'"
+    ./cleanup
+  fi
+
+  ## And finally build the package
+  cd ..
+  message "building \`${START_DIR}/${package}_${version}.tar.gz'"
+  tar zcf ${START_DIR}/${package}_${version}.tar.gz ${package}
+}
+
+## The main loop
+for p in ${PKGS}; do buildpkg ${p}; echo; done
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***
