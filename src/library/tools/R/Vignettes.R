@@ -164,7 +164,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
     invisible(NULL)
 }
 
-### .buildVignetteIndex
+### * .buildVignetteIndex
 
 .buildVignetteIndex <-
 function(vignetteFiles)
@@ -176,12 +176,42 @@ function(vignetteFiles)
                function(file) {
                    lines <- grep(vignetteIndexEntryRE, readLines(file),
                                  value = TRUE)
-                   lines <- gsub(vignetteIndexEntryRE, "\\1", lines[1])
+                   c(gsub(vignetteIndexEntryRE, "\\1", lines), "")[1]
                })
     vignetteFiles <-
         paste(basename(gsub("\\.[[:alpha:]]+$", "", vignetteFiles)),
               ".pdf", sep = "")
     cbind(vignetteFiles, vignetteTitles)
+}
+
+### * .checkVignetteIndex
+
+.checkVignetteIndex <-
+function(vignetteDir)
+{
+    ## <NOTE>
+    ## Currently, there is no check whether the PDF files listed in the
+    ## index actually exist ...
+    ## </NOTE>
+    if(!.fileTest("-d", vignetteDir))
+        stop(paste("directory", sQuote(vignetteDir), "does not exist"))
+    vignetteIndex <-
+        .buildVignetteIndex(.listFilesWithType(vignetteDir, "vignette"))
+    badEntries <-
+        vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, 2]), 1]
+    class(badEntries) <- "checkVignetteIndex"
+    badEntries
+}
+
+print.checkVignetteIndex <-
+function(x, ...)
+{
+    if(length(x) > 0) {
+        writeLines(paste("Vignettes with missing or empty",
+                         "\\VignetteIndexEntry:"))
+        print(gsub("\\.[[:alpha:]]+$", "", unclass(x)), ...)
+    }
+    invisible(x)
 }
 
 ### Local variables: ***
