@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-0 2004-04-10
+Version 1.9-1 2004-04-13
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -631,7 +631,7 @@ and is currently being mirrored daily at
      `http://cran.hu.R-project.org/'  (Semmelweis U, Hungary)
      `http://cran.uk.R-project.org/'  (U of Bristol, United
                                       Kingdom)
-     `http://cran.us.R-project.org/'  (U of Wisconsin, USA)
+     `http://cran.us.R-project.org/'  (pair Networks, USA)
      `http://cran.za.R-project.org/'  (Rhodes U, South Africa)
 
 Please use the CRAN site closest to you to reduce network load.

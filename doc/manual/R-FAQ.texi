@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-0 @value{FAQ-YEAR}-04-10
+@set FAQ-VERSION 1.9-1 @value{FAQ-YEAR}-04-13
 @set REL-VERSION 1.9.0
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -767,7 +767,7 @@ and is currently being mirrored daily at
 @item @uref{http://cran.uk.R-project.org/}
 @tab (U of Bristol, United Kingdom)
 @item @uref{http://cran.us.R-project.org/}
-@tab (U of Wisconsin, USA)
+@tab (pair Networks, USA)
 @item @uref{http://cran.za.R-project.org/}
 @tab (Rhodes U, South Africa)
 @end multitable
