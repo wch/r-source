@@ -665,6 +665,7 @@ FILE* R_OpenLibraryFile(char *);
 void R_RestoreGlobalEnv(void);
 void R_SaveGlobalEnv(void);
 void R_SaveToFile(SEXP, FILE*, int);
+int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
 SEXP rownamesgets(SEXP,SEXP);
