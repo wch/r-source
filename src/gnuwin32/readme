@@ -248,7 +248,7 @@ MAKE_MODE to UNIX.
 
 Then: untar R-0.65.0.tgz somewhere,
 
-	cd /somewhere/R-0.50.0/src/gnuwin32
+	cd /somewhere/R-0.65.0/src/gnuwin32
 
 edit MkRules to set the appropriate paths as needed
 

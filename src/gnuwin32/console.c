@@ -620,7 +620,7 @@ FVOIDEND
 #define PREVHISTORY 6
 #define KILLRESTOFLINE 7
 #define BACKCHAR  8
-#define DELETECHAR 9
+#define DELETECHAR 22 /* ^I is printable in some systems */
 #define KILLLINE 21
 
 static void storekey(control c,int k)
