@@ -63,6 +63,7 @@ SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
 
 #if Win32
 SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
+SEXP do_chooseFiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);

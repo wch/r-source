@@ -67,7 +67,8 @@ The BLAS library Rblas.dll is no longer automatically linked against
 when building a package: as on Unix PKG_LIBS=$(BLAS_LIBS) is required
 in Makevars(.win).
 
-
+Added choose.files() function for interactive multiple file selection; 
+modified local zip file installer to use it.
 
 rw1062
 ======

@@ -81,6 +81,8 @@ void 	setuserfilter(char *);
 void    askchangedir();
 char *	askcdstring(char *question, char *default_string);
 char *	askfilesavewithdir(char *title, char *default_name, char *dir);
+char *  askfilenames(char *title, char *default_name, char *strbuf, int bufsize);
+int	    countFilenames(char *strbuf); /* Note that first name is path when there are multiple names */
 
 /*  rgb.c */
 rgb     nametorgb(char *colourname);
@@ -129,13 +131,13 @@ void  gscroll(drawing d, point dp, rect r);
 void  ginvert(drawing d, rect r);
 rgb   ggetpixel(drawing d, point p);
 void  gsetpixel(drawing d, point p, rgb c);
-void  gdrawline(drawing d, int width, int style, rgb c, point p1, point p2, 
+void  gdrawline(drawing d, int width, int style, rgb c, point p1, point p2,
 		int fast);
 void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast);
 void  gfillrect(drawing d, rgb fill, rect r);
 void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast);
 void  gfillellipse(drawing d, rgb fill, rect r);
-void  gdrawpolyline(drawing d, int width, int style, rgb c, 
+void  gdrawpolyline(drawing d, int width, int style, rgb c,
                     point *p, int n, int closepath, int fast);
 #define gdrawpolygon(d,w,s,c,p,n,f) gdrawpolyline(d,w,s,c,p,n,1,f)
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
@@ -167,7 +169,7 @@ void BringToTop(window w);
 #define HWINSB 0
 #define VWINSB 1
 #define CONTROLSB 2
-void 	gchangescrollbar(scrollbar sb, int which, int where, int max, 
+void 	gchangescrollbar(scrollbar sb, int which, int where, int max,
 			 int pagesize, int disablenoscroll);
 void 	gsetcursor(drawing d, cursor c);
 control newtoolbar(int height);

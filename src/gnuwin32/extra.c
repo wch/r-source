@@ -1003,3 +1003,29 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
+
+SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans,mask,caption;
+    char *temp,list[32016];
+    int i,count;
+    checkArity(op, args);
+    mask = CAR(args);
+    caption = CDR(args);
+    if(!isString(mask) || length(mask) != 1 )
+		errorcall(call, "mask must be a character string");
+    if(!isString(caption) || length(caption) != 1 )
+		errorcall(call, "caption must be a character string");
+    askfilenames(CHAR(STRING_ELT(caption, 0)), CHAR(STRING_ELT(mask, 0)),
+                 list,32000);  /* list declared larger to protect against overwrites */
+    Rwin_fpset();
+    count = countFilenames(list);
+    PROTECT(ans = allocVector(STRSXP, count));
+    temp = list;
+    for (i = 0; i < count; i++) {
+		SET_STRING_ELT(ans, i, mkChar(temp));
+		temp += strlen(temp)+1;
+	}
+	UNPROTECT(1);
+	return ans;
+}
