@@ -34,3 +34,10 @@ getWindowsHandle <- function(which = "Console") {
     }
     .Internal(getWindowHandle(which))
 }
+
+menuShowCRAN <- function()
+{
+    CRAN <- getOption("CRAN")
+    if(!nchar(CRAN)) CRAN <- "http://cran.r-project.org"
+    shell.exec(CRAN)
+}

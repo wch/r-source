@@ -253,17 +253,18 @@ chooseCRANmirror <- function()
 {
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
     URL <- m[m[, 1] == select.list(m[,1],,FALSE, "CRAN mirror"), 'URL']
-    if(!is.na(URL)) options(CRAN=gsub("/$", "", URL))
+    if(length(URL)) options(CRAN = gsub("/$", "", URL[1]))
 }
 
 contrib.url <- function(CRAN)
 {
-    if(!nchar(CRAN) && .Platform$OS.type == "windows") {
+    if(interactive() && !nchar(getOption("CRAN"))) {
         cat("--- Please select a CRAN mirror for use in this session ---\n")
         flush.console()
         chooseCRANmirror()
-        CRAN <- getOption("CRAN")
     }
+    ## now evaluate CRAN after setting options.
+    if(all(nchar(CRAN) == 0)) stop("no CRAN mirror is set")
     ver <- paste(R.version$major, substring(R.version$minor,1,1), sep=".")
     file.path(gsub("/$", "", CRAN), "bin", "windows", "contrib", ver)
 }

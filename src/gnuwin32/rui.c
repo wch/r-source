@@ -524,7 +524,7 @@ static void menuRhome(control m)
 static void menuCRAN(control m)
 {
     if (!ConsoleAcceptCmd) return;
-    consolecmd(RConsole, "shell.exec(getOption('CRAN'))");
+    consolecmd(RConsole, "utils:::menuShowCRAN()");
 }
 
 
@@ -963,7 +963,7 @@ int RguiCommonHelp(menu m)
     MCHECK(mapropos = newmenuitem("Apropos...", 0, menuapropos));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("R Project home page", 0, menuRhome));
-    MCHECK(mCRAN = newmenuitem("CRAN", 0, menuCRAN));
+    MCHECK(mCRAN = newmenuitem("CRAN home page", 0, menuCRAN));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("About", 0, menuabout));
     return 0;
