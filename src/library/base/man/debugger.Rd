@@ -51,7 +51,9 @@ debugger(dump = last.dump)
   produce and save the dump, for example if it has run out of workspace.
 }
 \seealso{
-  \code{\link{options}} for setting \code{error} options.
+  \code{\link{options}} for setting \code{error} options;
+  \code{\link{recover}} is an interactive debugger working similarly to
+  \code{debugger} but directly after the error occurs.
 }
 \examples{
 \dontrun{
