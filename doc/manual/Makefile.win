@@ -92,9 +92,9 @@ refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
   refman.top refman.bot
 	@echo "DVI/LaTeX documentation: reference index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
-	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	@(opt="$(R_PAPERSIZE)paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
+	  opt="$(R_RD4DVI)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
@@ -120,9 +120,9 @@ fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
   refman.top refman.bot
 	@echo "DVI/LaTeX documentation: reference index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
-	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	@(opt="$(R_PAPERSIZE)paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
+	  opt="$(R_RD4DVI)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  echo "\\part{}"; \
 	  cat refman.top; \
@@ -195,9 +195,9 @@ pdf: refman.pdf $(OBJECTS_PDF)
 refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
    refman.top refman.bot
 	@echo " PDF/LaTeX documentation: reference index ..."
-	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	@(opt="$(R_PAPERSIZE)paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
+	  opt="$(R_RD4PDF)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
@@ -226,9 +226,9 @@ endif
 fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
    refman.top refman.bot
 	@echo " PDF/LaTeX documentation: reference index ..."
-	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	@(opt="$(R_PAPERSIZE)paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
-	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
+	  opt="$(R_RD4PDF)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat refman.top; \
 	  echo "\\part{}"; \
@@ -324,7 +324,7 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=$(shell perl $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
-	if test "$${R_PAPERSIZE:-$(R_PAPERSIZE)}" = "a4"; then \
+	if test "$(R_PAPERSIZE)" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \
 	fi
 
