@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000, 2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@
 
 double qnchisq(double p, double n, double lambda, int lower_tail, int log_p)
 {
-    static const double acu = 1.0e-12;
+    const double acu = 1e-12;
+    const double Eps = 1e-6; /* must be > acu */
 
     double ux, lx, nx;
 
@@ -44,12 +45,23 @@ double qnchisq(double p, double n, double lambda, int lower_tail, int log_p)
     /* Invert pnchisq(.) finding an upper and lower bound;
        then interval halfing : */
 
-    /* FIXME: Use less precision here (see pnchisq() !) */
-    for (ux = 1.0; pnchisq(ux, n, lambda, lower_tail, log_p) < p; ux *= 2);
-    for (lx = ux;  pnchisq(lx, n, lambda, lower_tail, log_p) > p; lx *= 0.5);
+    p = R_D_qIv(p);
+    if(lower_tail) {
+        for(ux = 1.; pnchisq_raw(ux, n, lambda, Eps, 128) < p * (1 + Eps); 
+	    ux *= 2);
+        for(lx = ux; pnchisq_raw(lx, n, lambda, Eps, 128) > p * (1 - Eps); 
+	    lx *= 0.5);
+    }
+    else {
+        for(ux = 1.; pnchisq_raw(ux, n, lambda, Eps, 128) + p < 1 + Eps; 
+	    ux *= 2);
+        for(lx = ux; pnchisq_raw(lx, n, lambda, Eps, 128) + p > 1 - Eps; 
+	    lx *= 0.5);
+    }
+    p = R_D_Lval(p);
     do {
 	nx = 0.5 * (lx + ux);
-	if (pnchisq(nx, n, lambda, lower_tail, log_p) > p)
+	if (pnchisq_raw(nx, n, lambda, acu, 1000) > p)
 	    ux = nx;
 	else
 	    lx = nx;
@@ -57,3 +69,5 @@ double qnchisq(double p, double n, double lambda, int lower_tail, int log_p)
     while ((ux - lx) / nx > acu);
     return 0.5 * (ux + lx);
 }
+
+
