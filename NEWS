@@ -40,7 +40,11 @@ BUG FIXES
 	returned a vector of NAs, not a matrix, for the eigenvectors.)
 
     o	stepfun(x,y) now gives an error when `x' has length 0 instead
-	of an invalid result (that could lead to a segmentation fault).
+	of an invalid result (that could lead to a segmentation
+	fault).
+
+    o   buildVignettes() uses file.remove() instead of unlink() to
+        remove temporary files.
 
 
 
