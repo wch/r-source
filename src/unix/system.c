@@ -173,11 +173,11 @@
 #include <unistd.h>
 #endif
 
-/*-- necessary for some (older, i.e., ~ <= 1997) Linuxen:*/
-#ifdef linux
+/* necessary for some (older, i.e., ~ <= 1997) Linuxen, and apparently
+   also some AIX systems.
+   */
 #ifndef FD_SET
 #include <sys/time.h>
-#endif
 #endif
 
 static int UsingReadline = 1;
@@ -197,9 +197,9 @@ static int DebugInitFile = 0;
 	 */
 
 
-/* block on select until either stdin or X11 connection is */
-/* ready to read (return 1 if X11 connection ready to read, */
-/* 2 if stdin ready to read) */
+/* block on select until either stdin or X11 connection is ready to read
+   (return 1 if X11 connection ready to read, 2 if stdin ready to read)
+   */
 
 #define XActivity 1
 #define StdinActivity 2
@@ -226,7 +226,7 @@ static int waitForActivity()
 	    return XActivity;
     if (FD_ISSET(stdinfd, &readMask))
 	return StdinActivity;
-    return 0;/* for -Wall*/
+    return 0;			/* for -Wall*/
 }
 
 
@@ -362,7 +362,7 @@ char *tilde_expand(char*);
 
 char *R_ExpandFileName(char *s)
 {
-    return tilde_expand(s);
+    return(tilde_expand(s));
 }
 #else
 char *R_ExpandFileName(char *s)
@@ -373,7 +373,7 @@ char *R_ExpandFileName(char *s)
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
-	return( fopen(filename, mode) );
+    return(fopen(filename, mode) );
 }
 
 FILE *R_OpenLibraryFile(char *file)
@@ -454,8 +454,8 @@ static struct tms timeinfo;
 #include <fpu_control.h>
 #endif
 
-#define Max_Nsize 20000000   /* must be < LONG_MAX (= 2^32 - 1 =) 2147483647 = 2.1e9 */
-#define Max_Vsize (2048*Mega)/* must be < LONG_MAX */
+#define Max_Nsize 20000000	/* must be < LONG_MAX (= 2^32 - 1 =) 2147483647 = 2.1e9 */
+#define Max_Vsize (2048*Mega)	/* must be < LONG_MAX */
 
 #define Min_Nsize 200000
 #define Min_Vsize (2*Mega)
