@@ -60,6 +60,7 @@ ObjFiles-PPC    =   dblcen.o ¶
 ### Libraries ###
 
 LibFiles-PPC    =  ¶
+ 				  "{PPCLibraries}CarbonStdCLib.o" ¶
 				  "{SharedLibraries}CarbonLib" ¶
 				  "{PPCLibraries}PPCCRuntime.o" ¶
 				  "{SharedLibraries}StdCLib" ¶
