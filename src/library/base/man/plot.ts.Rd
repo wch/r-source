@@ -81,7 +81,7 @@ plot(nhtemp, lag(nhtemp, 1), cex = .8, col="blue",
      main = "Lag plot of New Haven temperatures")
 }
 
-library(ts)
+library(ts)  # normally loaded
 
 data(sunspots)
 ## xy.lines and xy.labels are FALSE for large series:
@@ -92,8 +92,6 @@ SMI <- EuStockMarkets[, "SMI"]
 plot(lag(SMI,  1), SMI, pch = ".")
 plot(lag(SMI, 20), SMI, pch = ".", log = "xy",
      main = "4 weeks lagged SMI stocks -- log scale", xy.lines= TRUE)
-
-detach("package:ts") 
 }
 \keyword{hplot}
 \keyword{ts}
