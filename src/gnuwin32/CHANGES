@@ -407,11 +407,12 @@ but can be made from the sources.  It is no longer tested.
 
 Make targets such as test-Reg have been moved to directory rw1030\tests.
 
+[ DO NOT DO THIS: see ?download.file or rw1040 above:
 The default internet module modules\internet.dll is built using basic
 WinSock calls.  There is an alternative modules\internet2.dll which uses
 WinInet calls (and so needs Internet Explorer installed) which can be
 used as a replacement.  (Remove modules\internet.dll and then
-rename modules\internet2.dll to modules\internet.dll.)
+rename modules\internet2.dll to modules\internet.dll.)]
 
 
 
