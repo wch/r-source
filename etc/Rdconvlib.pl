@@ -905,10 +905,6 @@ sub code2latex {
     $text =~ s/\\dots/.../go;
 
     $text =~ s/\\\\/\\bsl{}/go;
-    $text =~ s/<<-([ ]+)/\\SIIs{}$1/go;
-    $text =~ s/<-([ ]+)/\\SIs{}$1/go;
-    $text =~ s/->([ ]+)/\\Sbecomes{}$1/go;
-
     if($hyper) {
       while($text =~ /\\link/) {
 	my ($id, $arg) = get_arguments("link", $text, 1);
@@ -1053,6 +1049,12 @@ sub latex_code_alias {
       $c =~ s/[$LATEX_SPECIAL]/\\$&/go;  #- escape them (not the "bsl" \)
       $c =~ s/\|/\\mid{}/go; # "|" is special in '\index' !!
       $c =~ s/\!/\\\!/go;
+      $c =~ s/\\\^/\\hat{}/go;# ^ is SPECIAL
+      $c =~ s/\\~/\\tilde{}/go;
+      $c =~ s/<<-([ ]*)/<\\leftarrow /go;
+      $c =~ s/<-([ ]*)/\\leftarrow /go;
+      $c =~ s/->([ ]*)/\\rightarrow /go;
+      #-
       $c =~ s/$BSL/\\bsl{}/go;
       $c =~ s/$Dollar/\\\$/g;
       $c =~ s/$MD/$Math_del/go;
