@@ -272,6 +272,9 @@ NEW FEATURES
 
     o	R now by default uses GNU libtool to deal with shared libraries.
 
+    o   Formatting (and printing) of data.frames with complex objects is
+        improved. toString was added as a new function.
+
 
 BUG FIXES
 
