@@ -225,6 +225,12 @@ BUG FIXES
 	dash lengths are scaled up for lwd > 1 but not reduced for
 	0 <= lwd < 1.
 
+    o   F distributions with huge DF now behave more sensibly
+
+    o   Crashes could occur if there was an error in inline
+        parameters, because the call was not being recorded. It is
+        now. 
+
 
 	**************************************************
 	*						 *

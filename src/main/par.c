@@ -50,6 +50,10 @@
 
 static SEXP gcall;
 
+void RecordGraphicsCall(SEXP call)
+{
+    gcall = call;
+}
 
 static void par_error(char *what)
 {

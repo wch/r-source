@@ -620,6 +620,7 @@ void GRestorePars(DevDesc*);
 
 void ProcessInlinePars(SEXP, DevDesc*);
 void Specify2(char*, SEXP, DevDesc*);
+void RecordGraphicsCall(SEXP);
 
 SEXP FixupPch(SEXP, int);
 SEXP FixupLty(SEXP, int);

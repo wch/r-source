@@ -2246,6 +2246,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GSetState(1, dd);
     GSavePars(dd);
+    RecordGraphicsCall(call);
     ProcessInlinePars(args, dd);
     if (length(border) > 1)
 	dd->gp.fg = INTEGER(border)[0];
