@@ -34,7 +34,7 @@ setGeneric <-
     ## The S-Plus definition claims to return an object of class "Generic", which we don't
     ## have, but in fact just returns name.  The R  function returns the
     ## definition of the generic.
-    fdef
+    name
 }
 
 ##
@@ -467,3 +467,7 @@ resetGeneric <-
     assign(".Methods", envir = environment(fdef), methods)
     return(TRUE)
 }
+
+setReplaceMethod <-
+  function(f, ...)
+  setMethod(paste(f, "<-", sep=""), ...)

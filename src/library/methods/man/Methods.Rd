@@ -9,6 +9,7 @@
 \alias{showMethods}
 \alias{removeMethods}
 \alias{signature}
+\alias{setReplaceMethod}
 \title{Defining Methods and Generic Functions}
 \usage{
 isGeneric(f, where = -1, fdef, getName = FALSE)
@@ -31,6 +32,8 @@ signature(...)
 showMethods(f, where, classes, includeDefs=FALSE, inherited = TRUE)
 
 removeMethods(f, where)
+
+setReplaceMethod(f, ...)
 
 }
 \description{
@@ -91,7 +94,14 @@ The argument \code{classes} is included for consistency with S-Plus, but current
 Similarly, omitting \code{f} is not currently supported.  
   
   \code{removeMethods}: 
-  removes all the methods defined for this generic function.  
+  removes all the methods defined for this generic function.
+
+  \code{setReplaceMethod}:
+  defines a method for \code{f}, used as a replacement function on the
+  left of an assignment, by calling \code{\link{setMethod}} for the
+  corresponding generic replacement function.  The \code{...} arguments
+  are passed to \code{\link{setMethod}}.
+  
 }
 \details{
   
