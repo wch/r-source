@@ -552,3 +552,35 @@ Date: Thu, 11 Jul 2002 18:27:33 +0800 (CST)
 Subject: dyn.load tcl/tk
 From: Patrick =?iso-8859-15?q?J=F6ckel?= <joeckel@mpch-mainz.mpg.de>
 Date: Thu, 11 Jul 2002 21:07:14 +0200
+* PR# 1775 *
+Subject: Unsubscribe, visit
+From: jason <jason@php.net>
+Date: Fri, 12 Jul 2002 02:15:15 +0200 (CEST)
+* PR# 1776 *
+Subject: Worm Klez.E immunity
+From: fmiller <fmiller@tamut.edu>
+Date: Fri, 12 Jul 2002 08:52:33 +0200 (CEST)
+* PR# 1777 *
+Subject: A  WinXP patch
+From: hholzgra <hholzgra@php.net>
+Date: Fri, 12 Jul 2002 11:24:11 +0200 (CEST)
+* PR# 1778 *
+Subject: W32.Elkern  removal tools
+From: dmitry <dmitry@sinet.ru>
+Date: Fri, 12 Jul 2002 20:22:30 +0200 (CEST)
+* PR# 1779 *
+Subject: Majordomo results: Worm Klez.E immunity
+From: Majordomo@stat.math.ethz.ch
+Date: Fri, 12 Jul 2002 21:39:49 +0200 (MET DST)
+* PR# 1780 *
+Subject:  
+From: r-devel-request <r-devel-request@stat.math.ethz.ch>
+Date: Fri, 12 Jul 2002 21:40:09 +0200 (CEST)
+* PR# 1781 *
+Subject: Minor bug in dlnorm
+From: Duncan Murdoch <murdoch@stats.uwo.ca>
+Date: Fri, 12 Jul 2002 15:43:11 -0400
+* PR# 1782 *
+Subject: Hi,r-bugs,the Garden of Eden
+From: jon <jon@csh.rit.edu>
+Date: Fri, 12 Jul 2002 22:33:04 +0200 (CEST)
