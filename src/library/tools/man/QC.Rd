@@ -1,22 +1,22 @@
 \name{QC}
 \alias{QC}
-\alias{checkDocArgs}
+\alias{checkDocFiles}
 \alias{checkDocStyle}
-\alias{checkMethods}
 \alias{checkReplaceFuns}
-\alias{print.checkDocArgs}
+\alias{checkS3methods}
+\alias{print.checkDocFiles}
 \alias{print.checkDocStyle}
-\alias{print.checkMethods}
 \alias{print.checkReplaceFuns}
+\alias{print.checkS3methods}
 \title{QC Checks for R Code and/or Documentation}
 \description{
   Functions for performing various quality checks.
 }
 \usage{
-checkDocArgs(package, dir, lib.loc = NULL)
+checkDocFiles(package, dir, lib.loc = NULL)
 checkDocStyle(package, dir, lib.loc = NULL)
-checkMethods(package, dir, lib.loc = NULL)
 checkReplaceFuns(package, dir, lib.loc = NULL)
+checkS3methods(package, dir, lib.loc = NULL)
 }
 \arguments{
   \item{package}{a character string naming an installed package.}
@@ -30,7 +30,7 @@ checkReplaceFuns(package, dir, lib.loc = NULL)
     to search for \code{package}.}
 }
 \details{
-  \code{checkDocArgs} checks, for all Rd files in a package, whether all
+  \code{checkDocFiles} checks, for all Rd files in a package, whether all
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the
   arguments section, and \dQuote{over-documented} arguments which are
@@ -49,7 +49,11 @@ checkReplaceFuns(package, dir, lib.loc = NULL)
   no longer necessarily a problem.  (The corresponding information is
   still contained in the object returned by \code{checkDocStyle}.)
 
-  \code{checkMethods} checks whether all S3 methods defined in the
+  \code{checkReplaceFuns} checks whether replacement functions or S3/S4
+  replacement methods in the package R code have their final argument
+  named \code{value}.
+
+  \code{checkS3methods} checks whether all S3 methods defined in the
   package R code have all arguments of the corresponding generic, with
   positional arguments of the generics in the same positions for the
   method.  As an exception, the first argument of a formula method
@@ -63,10 +67,6 @@ checkReplaceFuns(package, dir, lib.loc = NULL)
   package and then in the \pkg{base} package (but currently not in other
   packages \dQuote{used} by the given package).  
 
-  \code{checkReplaceFuns} checks whether replacement functions or S3/S4
-  replacement methods in the package R code have their final argument
-  named \code{value}.
-  
   If using an installed package, the checks needing access to all R
   objects of the package will load the package (unless it is the
   \pkg{base} package), after possibly detaching an already loaded

@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.144 $ ';
+my $revision = ' $Revision: 1.145 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -913,14 +913,14 @@ sub check_pkg {
     ## generic.
 
     if(-d "R") {
-	$log->checking("generic/method consistency");
+	$log->checking("S3 generic/method consistency");
 
 	my $Rcmd = "library(tools)\n";
 	if($opt_install) {
-	    $Rcmd .= "checkMethods(package = \"${pkgname}\")\n";
+	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
 	}
         else {
-	    $Rcmd .= "checkMethods(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "checkS3methods(dir = \"${pkgdir}\")\n";
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
@@ -1217,10 +1217,10 @@ sub check_pkg {
 	}
     }
 
-    ## Check for code/documentation mismatches.
+    ## Check for code/documentation mismatches in functions.
 
     if($opt_codoc && (-d "R") && (-d "man")) {
-	$log->checking("for code/documentation mismatches");
+	$log->checking("for code/documentation mismatches in functions");
 
 	my $Rcmd = "library(tools)\n";
 	if($opt_install) {
@@ -1246,18 +1246,19 @@ sub check_pkg {
 	## </FIXME>
     }
 
-    ## Check whether all arguments shown in \usage are documented in
-    ## \arguments.
+    ## Check Rd files, for consistency of \usage with \arguments (are
+    ## all arguments shown in \usage documented in \arguments?) and
+    ## aliases (do all functions shown in \usage have an alias?)
 
     if(-d "man") {
-	$log->checking("for undocumented arguments in \\usage");
+	$log->checking("Rd \\usage sections");
 
 	my $Rcmd = "library(tools)\n";
 	if($opt_install) {
-	    $Rcmd .= "checkDocArgs(package = \"${pkgname}\")\n";
+	    $Rcmd .= "checkDocFiles(package = \"${pkgname}\")\n";
 	}
 	else {
-	    $Rcmd .= "checkDocArgs(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "checkDocFiles(dir = \"${pkgdir}\")\n";
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet");

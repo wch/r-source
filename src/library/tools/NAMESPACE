@@ -3,8 +3,8 @@ useDynLib(tools)
 export(".installMD5sums", "Rdindex", "Rtangle", "RtangleSetup",
        "RweaveLatex", "RweaveLatexSetup", "Stangle", "Sweave",
        "SweaveSyntConv", "SweaveSyntaxLatex", "SweaveSyntaxNoweb",
-       "checkDocArgs", "checkDocStyle", "checkFF", "checkMD5sums",
-       "checkMethods", "checkReplaceFuns", "checkTnF", "checkVignettes",
+       "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
+       "checkReplaceFuns", "checkS3methods", "checkTnF", "checkVignettes",
        "codoc", "md5sum", "undoc", "filePathAsAbsolute",
        "filePathSansExt", "fileTest", "listFilesWithExts", 
        "listFilesWithType", "delimMatch")
@@ -27,11 +27,11 @@ export("pkgVignettes",
 ## </FIXME>
 
 S3method("print", "checkDemoIndex")
-S3method("print", "checkDocArgs")
+S3method("print", "checkDocFiles")
 S3method("print", "checkDocStyle")
 S3method("print", "checkFF")
-S3method("print", "checkMethods")
 S3method("print", "checkReplaceFuns")
+S3method("print", "checkS3methods")
 S3method("print", "checkTnF")
 S3method("print", "checkVignetteIndex")
 S3method("print", "checkVignettes")

@@ -266,13 +266,13 @@ test-Ts:
 	@echo "running tests of package ts functions"
 	@$(MAKE) $(test-out-ts) RVAL_IF_DIFF=0
 
-test-DocArgs:
-	@echo "checking whether arguments from usage are documented"
+test-DocFiles:
+	@echo "checking Rd usage sections"
 	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
-                echo "checkDocArgs(package = \"$${p}\")") | \
+                echo "checkDocFiles(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "$(ECHO_T) WARNING"; \
@@ -284,7 +284,7 @@ test-DocArgs:
 	  fi; \
 	done
 test-DocStyle:
-	@echo "checking usages for method documentation style"
+	@echo "checking S3 method documentation style"
 	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
@@ -315,13 +315,13 @@ test-FF:
 	    echo "$(ECHO_T) OK"; \
 	  fi; \
 	done
-test-Methods:
-	@echo "checking generic/method consistency"
+test-S3methods:
+	@echo "checking for S3 generic/method consistency"
 	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
-	        echo "checkMethods(package = \"$${p}\")") | \
+	        echo "checkS3methods(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "$(ECHO_T) WARNING"; \
@@ -333,7 +333,7 @@ test-Methods:
 	  fi; \
 	done
 test-codoc:
-	@echo "checking code/documentation mismatches"
+	@echo "checking for code/documentation mismatches in functions"
 	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
@@ -350,7 +350,7 @@ test-codoc:
 	  fi; \
 	done
 test-undoc:
-	@echo "checking undocumented objects"
+	@echo "checking for missing documentation entries"
 	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \

@@ -100,54 +100,29 @@ function(file)
 
     lines <- Rdpp(readLines(file))
 
-    aliasesRegExp <-
-        "^[[:space:]]*\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
-    aliases <- grep(aliasesRegExp, lines, value = TRUE)
-    aliases <- gsub(aliasesRegExp, "\\1", aliases)
-    aliases <- gsub("\\\\%", "%", aliases)
-
-    keywordsRegExp <-
-        "^[[:space:]]*\\\\keyword{[[:space:]]*(.*)[[:space:]]*}.*"
-    keywords <- grep(keywordsRegExp, lines, value = TRUE)
-    keywords <- gsub(keywordsRegExp, "\\1", keywords)
-    keywords <- gsub("\\\\%", "%", keywords)
-
-    ## <FIXME>
-    ## docType ...
-    RdTypeRegExp <-
-        "^[[:space:]]*\\\\docType{[[:space:]]*(.*)[[:space:]]*}.*"
-    RdType <- grep(RdTypeRegExp, lines, value = TRUE)
-    ## Could be none or more than one ... argh.
-    RdType <- c(gsub(RdTypeRegExp, "\\1", RdType), "")[1]
-    ## </FIXME>
+    aliases <- .getRdAliasesFromRdLines(lines)
+    keywords <- .getRdKeywordsFromRdLines(lines)
+    RdType <- .getRdDocTypeFromRdLines(lines)
 
     txt <- paste(lines, collapse = "\n")
 
-    start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
-    if(start == -1)
+    RdName <- .getRdName(txt)
+    if(!length(RdName))
         stop(paste("missing/empty \\name field in ",
                    sQuote(summary(file)$description), "\n",
                    "Rd files must have a non-empty \\name.\n",
                    "See chapter ", sQuote("Writing R documentation"),
                    " in manual ", sQuote("Writing R Extensions"),
                    ".", sep = ""))
-    RdName <- gsub("[[:space:]]*", " ",
-                   substr(txt,
-                          start + 6,
-                          start + attr(start, "match.length") - 2))
 
-    start <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
-    if(start == -1)
+    RdTitle <- .getRdTitle(txt)
+    if(!length(RdTitle))
         stop(paste("missing/empty \\title field in ",
                    sQuote(summary(file)$description), "\n",
                    "Rd files must have a non-empty \\title.\n",
                    "See chapter ", sQuote("Writing R documentation"),
                    " in manual ", sQuote("Writing R Extensions"),
                    ".", sep = ""))
-    RdTitle <- gsub("[[:space:]]*", " ",
-                    substr(txt,
-                           start + 7,
-                           start + attr(start, "match.length") - 2))
 
     list(name = RdName, type = RdType, title = RdTitle,
          aliases = aliases, keywords = keywords)
@@ -386,7 +361,7 @@ function(package, dir, lib.loc = NULL)
         db <- list()
         for(f in docsFiles) {
             lines <- readLines(f)
-            eofPos <- which(lines == "\\eof")
+            eofPos <- grep("\\eof$", lines)
             db <- c(db, split(lines,
                               rep(seq(along = eofPos),
                                   times = diff(c(0, eofPos)))))
@@ -468,7 +443,128 @@ function(txt, type, predefined = TRUE)
     }
     out
 }
-                
+
+### * getRdItems
+
+getRdItems <-
+function(txt)
+{
+    ## Extract names of Rd \item{}{} markup in the character string
+    ## 'txt'.
+    out <- character()
+    if(length(txt) != 1) 
+        stop("'txt' must be a character string")
+    pattern <- "(^|\n)[[:space:]]*\\\\item{"
+    while((pos <- regexpr(pattern, txt)) != -1) {
+        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
+        if((pos <- tools::delimMatch(txt)) == -1)
+            stop("unmatched \\item name")
+        out <- c(out,
+                 substring(txt,
+                           pos + 1,
+                           pos + attr(pos, "match.length") - 2))
+        txt <- substring(txt, pos + attr(pos, "match.length"))
+        ## The next character should really be a '{'.  Let's be nice
+        ## and tolerate whitespace in between ...
+        if((pos <- regexpr("^[[:space:]]*{", txt)) == -1)
+            stop(paste("no \\item description for item",
+                       sQuote(out[length(out)])))
+        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
+        if((pos <- tools::delimMatch(txt)) == -1)        
+            stop("unmatched \\item description")
+        txt <- substring(txt, pos + attr(pos, "match.length"))
+    }
+    out
+}
+
+### * .getRdAliasesFromRdLines
+.getRdAliasesFromRdLines <-
+function(lines)
+{
+    aliasesRegExp <-
+        "^[[:space:]]*\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
+    aliases <- grep(aliasesRegExp, lines, value = TRUE)
+    aliases <- gsub(aliasesRegExp, "\\1", aliases)
+    aliases <- gsub("\\\\%", "%", aliases)
+    aliases
+}
+
+### * .getRdConceptsFromRdLines
+.getRdConceptsFromRdLines <-
+function(lines)
+{
+    conceptsRegExp <-
+        "^[[:space:]]*\\\\concept{[[:space:]]*(.*)[[:space:]]*}.*"
+    concepts <- grep(conceptsRegExp, lines, value = TRUE)
+    concepts <- gsub(conceptsRegExp, "\\1", concepts)
+    concepts <- gsub("\\\\%", "%", concepts)
+    concepts
+}
+
+### * .getRdKeywordsFromRdLines
+.getRdKeywordsFromRdLines <-
+function(lines)
+{
+    keywordsRegExp <-
+        "^[[:space:]]*\\\\keyword{[[:space:]]*(.*)[[:space:]]*}.*"
+    keywords <- grep(keywordsRegExp, lines, value = TRUE)
+    keywords <- gsub(keywordsRegExp, "\\1", keywords)
+    keywords <- gsub("\\\\%", "%", keywords)
+    keywords
+}
+
+### * .getRdDocTypeFromRdLines
+.getRdDocTypeFromRdLines <-
+function(lines)
+{
+    RdDocTypeRegExp <-
+        "^[[:space:]]*\\\\docType{[[:space:]]*(.*)[[:space:]]*}.*"
+    RdDocType <- grep(RdDocTypeRegExp, lines, value = TRUE)
+    ## Could be none or more than one ... argh.
+    RdDocType <- c(gsub(RdDocTypeRegExp, "\\1", RdDocType), "")[1]
+    RdDocType
+}
+
+### * .getRdArgumentNames
+.getRdArgumentNames <-
+function(txt)
+{
+    txt <- tools:::getRdSection(txt, "arguments")
+    txt <- unlist(sapply(txt, getRdItems))
+    if(!length(txt)) return(character())
+    txt <- unlist(strsplit(txt, ", *"))
+    txt <- gsub("\\\\l?dots", "...", txt)
+    txt <- sub("^[[:space:]]*", "", txt)
+    txt <- sub("[[:space:]]*$", "", txt)
+    txt
+}
+
+### * .getRdName
+.getRdName <-
+function(txt)
+{
+    start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
+    if(start == -1) return(character())
+    RdName <- gsub("[[:space:]]*", " ",
+                   substr(txt,
+                          start + 6,
+                          start + attr(start, "match.length") - 2))
+    RdName
+}
+
+### * .getRdTitle
+.getRdTitle <-
+function(txt)
+{
+    start <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
+    if(start == -1) return(character())
+    RdTitle <- gsub("[[:space:]]*", " ",
+                    substr(txt,
+                           start + 7,
+                           start + attr(start, "match.length") - 2))
+    RdTitle
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
