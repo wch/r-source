@@ -1181,9 +1181,9 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
-#if defined(Unix) && !defined(__APPLE_CC__)
+#ifdef Unix 
     LOGICAL(ans)[i++] = X11;
-#else
+#else /* Windows */
     LOGICAL(ans)[i++] = TRUE;
 #endif
 #else
@@ -1192,9 +1192,9 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("png"));
 #ifdef HAVE_PNG
-#if defined(Unix) && !defined(__APPLE_CC__)
+#ifdef Unix 
     LOGICAL(ans)[i++] = X11;
-#else
+#else /* Windows */
     LOGICAL(ans)[i++] = TRUE;
 #endif
 #else
