@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-03-03
+Version 2.0.2005-03-04
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -87,6 +87,7 @@ R FAQ
   7.26 Where have all the methods gone?
   7.27 How can I create rotated axis labels?
   7.28 Why is read.table() so inefficient?
+  7.29 What is the difference between package and library?
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
@@ -4528,6 +4529,17 @@ factors.  For a large data set, this takes condiderable amounts of time and
 memory.  Performance can substantially be improved by using the
 `colClasses' argument to specify the classes to be assumed for the columns
 of the table.
+
+7.29 What is the difference between package and library?
+========================================================
+
+A "package" is a standardized collection of material extending R, e.g.
+providing code, data, or documentation.  A "library" is a place (directory)
+where R knows to find packages it can use (i.e., which were _installed_).
+R is told to use a package (to "load" it and add it to the search path) via
+calls to the function `library'.
+
+   *Note R Add-On Packages::, for more details.
 
 8 R Programming
 ***************
