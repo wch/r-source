@@ -1,4 +1,4 @@
-\name{Script}
+\name{.Script}
 \title{Scripting Language Interface}
 \alias{.Script}
 \description{
