@@ -23,7 +23,9 @@
   the measurement over the course of a single experiment.
 }
 \source{
-  Weekes: A Genstat Primer.
+  A. J. Weekes (1986)
+  \emph{A Genstat Primer}.
+  London: Edward Arnold.
 }
 \examples{
 data(morley)
