@@ -6,7 +6,7 @@
   Ties, i.e., equal values, result in ranks being averaged.
 }
 \usage{
-rank(x, na.last = TRUE)
+rank(x, na.last = TRUE, ties.method = c("average", "first", "random"))
 }
 \arguments{
   \item{x}{a numeric vector.}
@@ -14,26 +14,34 @@ rank(x, na.last = TRUE)
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed; if
     \code{"keep"} they are kept.}
+  \item{ties.method}{a character string specifying how ties are treated,
+    see below; can be abbreviated.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 }
-\note{
+\details{
+  If all components are different, the ranks are well defined, with
+  values in \code{1:n} where \code{n <- length(x)} and we assume no
+  \code{NA}s for the moment.  Otherwise, with some values equal, called
+  \sQuote{ties}, the argument \code{ties.method} determines
+  the result at the corresponding indices.  The \code{"first"} method
+  results in a permutation By default, \code{"average"}, how these ranks de
   For ranks without averaging, see the examples below.
 }
 \seealso{\code{\link{order}} and \code{\link{sort}}.}
 \examples{
-(r1 <- rank(x1 <- c(3, 1, 4, 59,26)))
-(r2 <- rank(x2 <- c(3, 1, 4, 5, 9, 2, 6, 5, 3, 5))) # ties
+(r1 <- rank(x1 <- c(3, 1, 4, 15, 92)))
+(r2 <- rank(x2 <- c(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5))) # ties
 
 ## rank() is "idempotent": rank(rank(x)) == rank(x) :
 stopifnot(rank(r1) == r1, rank(r2) == r2)
 
 ## ranks without averaging
-sort.list(sort.list(x2))                 # first occurrence wins
-sort.list(order(x2, runif(length(x2))))  # ties broken at random
-sort.list(order(x2, runif(length(x2))))  # and again
+rank(x2, ties.method= "first")  # first occurrence wins
+rank(x2, ties.method= "random") # ties broken at random
+rank(x2, ties.method= "random") # and again
 }
 \keyword{univar}

@@ -184,7 +184,9 @@ NEW FEATURES
 	same way as print.summary.lm(), and both show them as NAs in
 	the table of coefficients.
 
-    o	rank(x, na.last = "keep") now preserves NAs in `x'.
+    o	rank(x, na.last = "keep") now preserves NAs in `x', and the
+	argument `ties.method' allows to use non-averaging ranks in the
+	presence of ties.
 
     o	read.table()'s 'as.is' argument can be character, naming columns
 	not to be converted.
