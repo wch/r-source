@@ -104,11 +104,16 @@
 %% \alias{col.spec}
 %% \alias{draw.all}
 %% \alias{draw.frame.child}
+%% \alias{get.gpar}
 %% \alias{get.value}
 %% \alias{get.value.default}
 %% \alias{get.value.grob}
 %% \alias{grid.Call}
 %% \alias{grid.Call.graphics}
+%% \alias{grid.top.level.vp}
+%% \alias{height}
+%% \alias{height.post}
+%% \alias{height.pre}
 %% \alias{inc.display.list}
 %% \alias{is.even}
 %% \alias{is.gpar}
@@ -173,6 +178,9 @@
 %% \alias{valid.units}
 %% \alias{valid.viewport}
 %% \alias{validGP}
+%% \alias{width}
+%% \alias{width.post}
+%% \alias{width.pre}
 %% </LIST>
 
 %% Part of the sensible export list but (currently?) documented as
@@ -192,17 +200,6 @@
 \alias{viewport.transform}
 \alias{width.post.details}
 \alias{width.pre.details}
-%% </LIST>
-%% Currently (?) exported because manipulated via C code ...
-%% <LIST>
-\alias{get.gpar}
-\alias{grid.top.level.vp}
-\alias{height}
-\alias{height.post}
-\alias{height.pre}
-\alias{width}
-\alias{width.post}
-\alias{width.pre}
 %% </LIST>
 %% Currently (?) exported as needed by Hmisc and Design ...
 %% <LIST>
