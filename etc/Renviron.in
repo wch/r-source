@@ -28,6 +28,7 @@ PAGER=${PAGER-'@PAGER@'}
 R_PDFVIEWER=${R_PDFVIEWER-'@R_PDFVIEWER@'}
 ## Use configure values
 AWK=${AWK-'@AWK@'}
+EGREP=${EGREP-'@EGREP@'}
 MAKE=${MAKE-'@MAKE@'}
 PERL=${PERL-'@PERL@'}
 TAR=${TAR-'@TAR@'}
