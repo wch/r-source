@@ -302,8 +302,8 @@ EOF
     cat << \EOF >> ${f77_rules_frag}
 .f.lo:
 	@test -d .libs || mkdir .libs
-	$(FC) $(ALL_FFLAGS_LO) -c $< -o .libs/$*.o
-	mv .libs/$*.o $*.lo
+	$(FC) $(ALL_FFLAGS_LO) -c $< -o .libs/$[*].o
+	mv .libs/$[*].o $[*].lo
 EOF
   fi
 elif test -n "${F2C}"; then
@@ -311,25 +311,25 @@ elif test -n "${F2C}"; then
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 .f.o:
-	$(F2C) $(F2CFLAGS) < $< > $*.c
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $*.c -o $[@]
-	@rm -f $*.c
+	$(F2C) $(F2CFLAGS) < $< > $[*].c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $[*].c -o $[@]
+	@rm -f $[*].c
 .f.lo:
-	$(F2C) $(F2CFLAGS) < $< > $*.c
+	$(F2C) $(F2CFLAGS) < $< > $[*].c
 EOF
   if test "${r_cv_prog_cc_c_o_lo}" = yes; then
     cat << \EOF >> ${f77_rules_frag}
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $*.c -o $[@]
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $[*].c -o $[@]
 EOF
   else
     cat << \EOF >> ${f77_rules_frag}
 	@test -d .libs || mkdir .libs
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $*.c -o .libs/$*.o
-	mv .libs/$*.o $*.lo
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $[*].c -o .libs/$[*].o
+	mv .libs/$[*].o $[*].lo
 EOF
   fi
   cat << \EOF >> ${f77_rules_frag}
-	@rm -f $*.c
+	@rm -f $[*].c
 EOF
 else
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
@@ -734,10 +734,16 @@ case "${host}" in
       if test -n "${ldoutput}"; then
 	main_ldflags="-Wl,-export-dynamic"
 	shlib_ldflags="-shared"
-        shlib_cxxldflags="-shared"
       fi
     else
       cpicflags="-KPIC"
+    fi
+    if test "${GXX}" = yes; then
+      ld=`${CXX} -print-prog-name=ld`
+      ldoutput=`${ld} -v 2>&1 | grep GNU`
+      if test -n "${ldoutput}"; then
+        shlib_cxxldflags="-shared"
+      fi
     fi
     if test "${G77}" != yes; then
       fpicflags="-PIC"
