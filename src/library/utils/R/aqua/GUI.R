@@ -121,6 +121,9 @@ if(.Platform$GUI == "AQUA") {
                                       contriburl=contrib.url(CRAN,type="mac.binary"),
                                       method)
         {
+            dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+
+            if(!dirTest(destdir)) stop("destdir is not a directory")
             localcran <- length(grep("^file:", contriburl)) > 0
             if(is.null(available))
                 available <- CRAN.packages(contriburl=contriburl, method=method)
@@ -161,7 +164,8 @@ if(.Platform$GUI == "AQUA") {
             ## then get the real package & version name, copying the
             ## dir over to the appropriate install dir.
             tmpDir <- tempfile(, lib)
-            dir.create(tmpDir)
+            if (!dir.create(tmpDir))
+                stop('Unable to create temp directory ', tmpDir)
             cDir <- getwd()
             on.exit(setwd(cDir), add = TRUE)
             res <- untar(pkg, tmpDir)
@@ -230,7 +234,8 @@ if(.Platform$GUI == "AQUA") {
         if(!localcran) {
             if (is.null(destdir)){
                 tmpd <- tempfile("Rinstdir")
-                dir.create(tmpd)
+                if (!dir.create(tmpd))
+                    stop('Unable to create temp directory ', tmpd)
             } else tmpd <- destdir
         }
 
@@ -366,7 +371,7 @@ if(.Platform$GUI == "AQUA") {
         }
         invisible(x)
     }
-    
+
 Rapp.updates <- function() {
  readLines("http://cran.r-project.org/bin/macosx/VERSION") -> cran.ver
 
@@ -378,7 +383,7 @@ Rapp.updates <- function() {
  strsplit(rapp.ver,"\\.") -> ver
  rapp.ver <- as.numeric(ver[[1]])
 
- if( sum(cran.ver - rapp.ver) > 0 ){ 
+ if( sum(cran.ver - rapp.ver) > 0 ){
   cat("\nThis version of R is",paste(rapp.ver,collapse="."))
   cat("\nThere is a newer version of R on CRAN which is",paste(cran.ver,collapse="."), "\n")
 
@@ -388,20 +393,20 @@ Rapp.updates <- function() {
   } else { cat("\nYour version of R is up to date\n")}
 
 }
-   
+
 }else{ # NOT AQUA
 
     browse.pkgs <- function(where = c("CRAN","BIOC"),
                             type = c("binary","source"), global = FALSE)
     {
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
 
     browse.update.pkgs <- function(where = c("CRAN", "BIOC"),
                                    type = c("binary", "source"),
                                    in.place = TRUE)
     {
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
 
     install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
@@ -409,37 +414,37 @@ Rapp.updates <- function() {
                                  method, available=NULL, destdir=NULL,
                                  installWithVers=FALSE)
     {
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
 
-   
+
     install.from.file <- function(pkg = file.choose(), binary=FALSE)
     {
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
 
     data.manager <- function()
     {
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
 
     package.manager <- function()
     {
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
 
     CRAN.binaries <- function(CRAN=getOption("CRAN"), method,
                               contriburl=contrib.url(CRAN, type="mac.binary"))
     {
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
 
     flush.console <- function(){
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
-    
+
     Rapp.updates <- function() {
-        warning("This function is inteded to work with the Aqua GUI") 
+        warning("This function is intended to work with the Aqua GUI")
     }
 
 }

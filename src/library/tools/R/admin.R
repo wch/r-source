@@ -141,9 +141,11 @@ function(dir, outDir)
 
     codeFiles <- file.path(codeDir, codeFiles)
 
-    if(!fileTest("-d", outDir)) dir.create(outDir)
+    if(!fileTest("-d", outDir) && !dir.create(outDir))
+        stop("cannot open directory", sQuote(outDir))
     outCodeDir <- file.path(outDir, "R")
-    if(!fileTest("-d", outCodeDir)) dir.create(outCodeDir)
+    if(!fileTest("-d", outCodeDir) && !dir.create(outCodeDir))
+        stop("cannot open directory", sQuote(outCodeDir))
     outFile <- file.path(outCodeDir, db["Package"])
     ## <NOTE>
     ## It may be safer to do
@@ -179,8 +181,8 @@ function(dir, outDir)
             stop("unable to copy INDEX to ", file.path(outDir, "INDEX"))
 
     outMetaDir <- file.path(outDir, "Meta")
-    if(!fileTest("-d", outMetaDir)) dir.create(outMetaDir)
-
+    if(!fileTest("-d", outMetaDir) && !dir.create(outMetaDir))
+         stop("cannot open directory", sQuote(outMetaDir))
     .installPackageRdIndices(dir, outDir)
     .installPackageVignetteIndex(dir, outDir)
     .installPackageDemoIndex(dir, outDir)
@@ -253,7 +255,8 @@ function(dir, outDir)
 
     packageName <- basename(dir)
     outVignetteDir <- file.path(outDir, "doc")
-    if(!fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
+    if(!fileTest("-d", outVignetteDir) && !dir.create(outVignetteDir))
+        stop("cannot open directory", sQuote(outVignetteDir))
 
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
@@ -274,7 +277,7 @@ function(dir, outDir)
                 basename(filePathSansExt(vignetteIndex$File)))
         ind <- fileTest("-f", file.path(outVignetteDir, vignettePDFs))
         vignetteIndex$PDF[ind] <- vignettePDFs[ind]
-    }        
+    }
     if(!file.exists(htmlIndex)) {
         .writeVignetteHtmlIndex(packageName, htmlIndex, vignetteIndex)
     }
@@ -290,7 +293,7 @@ function(dir, outDir)
     writeLines(formatDL(vignetteIndex, style = "list"),
                file.path(outVignetteDir, "00Index.dcf"))
     ## </FIXME>
-    
+
     invisible()
 }
 
@@ -309,7 +312,8 @@ function(dir, outDir)
 
     outDir <- filePathAsAbsolute(outDir)
     outVignetteDir <- file.path(outDir, "doc")
-    if(!fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
+    if(!fileTest("-d", outVignetteDir) && !dir.create(outVignetteDir))
+        stop("cannot open directory", sQuote(outVignetteDir))
     ## For the time being, assume that no PDFs are available in
     ## vignetteDir.
     vignettePDFs <-
@@ -319,12 +323,12 @@ function(dir, outDir)
     upToDate <- fileTest("-nt", vignettePDFs, vignetteFiles)
     if(all(upToDate))
         return(invisible())
-    
+
     ## For the time being, the primary use of this function is to
     ## install (and build) vignettes in base packages.  Hence, we build
     ## in a subdir of the current directory rather than a temp dir: this
     ## allows inspection of problems and automatic cleanup via Make.
-    cwd <- getwd()    
+    cwd <- getwd()
     buildDir <- file.path(cwd, ".vignettes")
     if(!fileTest("-d", buildDir) && !dir.create(buildDir))
         stop(paste("cannot create directory", sQuote(buildDir)))
@@ -343,7 +347,7 @@ function(dir, outDir)
                sep = envSep),
                BIBINPUTS = paste(vignetteDir, Sys.getenv("BIBINPUTS"),
                sep = envSep))
-    
+
     for(srcfile in vignetteFiles[!upToDate]) {
         texfile <-
             paste(basename(filePathSansExt(srcfile)), ".tex", sep = "")
@@ -390,7 +394,8 @@ function(dir, outDir)
     if(fileTest("-nt", nsInfoFilePath, nsFile)) return(invisible())
     nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
     outMetaDir <- file.path(outDir, "Meta")
-    if(!fileTest("-d", outMetaDir)) dir.create(outMetaDir)
+    if(!fileTest("-d", outMetaDir) && !dir.create(outMetaDir))
+        stop("cannot open directory", sQuote(outMetaDir))
     .saveRDS(nsInfo, nsInfoFilePath)
     invisible()
 }

@@ -12,7 +12,8 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
     if(!localcran) {
         if (is.null(destdir)){
             tmpd <- tempfile("Rinstdir")
-            dir.create(tmpd)
+            if (!dir.create(tmpd))
+                stop('Unable to create temp directory ', tmpd)
         } else tmpd <- destdir
     }
 
@@ -38,7 +39,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
 
 		    cmd <- paste(cmd,"-l",lib,foundpkgs[okp, 2])
                     status <- system(cmd)
-                    if(status>0){
+                    if(status > 0){
                         warning(paste("Installation of package",
                                       foundpkgs[okp, 1],
                                       "had non-zero exit status"))
@@ -67,6 +68,9 @@ download.packages <- function(pkgs, destdir, available=NULL,
                               contriburl=contrib.url(CRAN),
                               method)
 {
+    dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+
+    if(!dirTest(destdir)) stop("destdir is not a directory")
     localcran <- length(grep("^file:", contriburl)) > 0
     if(is.null(available))
         available <- CRAN.packages(contriburl=contriburl, method=method)
@@ -101,7 +105,7 @@ download.packages <- function(pkgs, destdir, available=NULL,
 
 contrib.url <- function(CRAN, type=c("source","mac.binary")){
   type<-match.arg(type)
-  switch(type, 
+  switch(type,
          source=paste(CRAN,"/src/contrib",sep=""),
          mac.binary=paste(CRAN,"/bin/macosx/",version$major, ".", substr(version$minor,1,1),sep="")
          )

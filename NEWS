@@ -726,6 +726,9 @@ BUG FIXES
     o	mle() gives a more understandable error message when its 'start'
         argument is not ok.
 
+    o	All uses of dir.create() check the return value.
+	donwload.packages() checks that destdir exists and is a directory.
+
 
 
 

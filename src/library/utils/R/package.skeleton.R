@@ -2,6 +2,13 @@ package.skeleton <-
 function(name = "anRpackage", list, environment = .GlobalEnv,
          path = ".", force = FALSE)
 {
+    safe.dir.create <- function(path)
+    {
+        dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+        if(!dirTest(path) && !dir.create(path))
+            stop("cannot create directory ", sQuote(path))
+    }
+
     if(missing(list))
         list<-ls(env=environment)
 
@@ -20,16 +27,13 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     if(file.exists(file.path(path,name)) && !force)
         stop(paste("Directory", name, "exists."))
 
-    ## <FIXME>
-    ## If these already exist we get warnings ...
-    dir.create(file.path(path, name))
-    dir.create(file.path(path, name, "man"))
-    dir.create(file.path(path, name, "src"))
-    dir.create(file.path(path, name, "R"))
-    dir.create(file.path(path, name, "data"))
-    ## </FIXME>
+    safe.dir.create(file.path(path, name))
+    safe.dir.create(file.path(path, name, "man"))
+    safe.dir.create(file.path(path, name, "src"))
+    safe.dir.create(file.path(path, name, "R"))
+    safe.dir.create(file.path(path, name, "data"))
 
-    ## Structural files
+    ## DESCRIPTION
     cat("Creating DESCRIPTION ...\n")
     description <- file(file.path(path, name, "DESCRIPTION"), "wt")
     cat("Package: the_name_of_the_package\n",
