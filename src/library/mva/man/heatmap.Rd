@@ -2,8 +2,9 @@
 \alias{heatmap}
 \title{ Draw a Heat Map }
 \description{
-  A heat map is a false color image with a dendrogram added to the left
-  side and to the top.	Typically, reordering of the rows and columns
+  A heat map is a false color image (basically
+  \code{\link{image}(t(x))}) with a dendrogram added to the left side
+  and to the top.  Typically, reordering of the rows and columns
   according to some set of values (row or column means) within the
   restrictions imposed by the dendrogram is carried out.
 }
@@ -123,8 +124,6 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
  str(hv) # the two re-ordering index vectors
 
 %% want example using the `add.exp' argument!
-
-%% other example with no reordering !!
 
  data(attitude)
  round(Ca <- cor(attitude), 2)
