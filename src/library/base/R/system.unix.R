@@ -241,7 +241,7 @@ library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
 	if (is.na(match(pkgname, search()))) {
 	    packagedir <- system.file("", name, lib.loc)
 	    if (packagedir == "") {
-		txt <- paste("There is no package called `", name, "'", sep = "")
+		txt <- paste("There is no package called `", name, "'", sep= "")
 		if (logical.return) {
 		    warning(txt)
 		    return(FALSE)
@@ -249,7 +249,7 @@ library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
 		else stop(txt)
 	    }
 	    which.lib.loc <-
-		lib.loc[match(packagedir[1], paste(lib.loc, name, "", sep = "/"))]
+		lib.loc[match(packagedir[1], paste(lib.loc, name, "", sep="/"))]
 	    if (length(packagedir) > 1) {
 		warning(paste("Package `", name, "' found more than once,\n  ",
 			      "using the one found in `", which.lib.loc, "'",
@@ -258,7 +258,7 @@ library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
 	    file <- system.file(paste("R", name, sep = "/"), name, lib.loc)
 	    env <- attach(NULL, name = pkgname)
 	    if (file == "")
-		warning(paste("Package `", name, "' contains no R code", sep = ""))
+		warning(paste("Package `",name,"' contains no R code", sep=""))
 	    else
 		lib.source(file, env)
 	    lib.fixup(env, .GlobalEnv)
