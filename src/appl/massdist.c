@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1996-2000     Robert Gentleman and Ross Ihaka and the
+ *  Copyright (C) 1996-2001     Robert Gentleman and Ross Ihaka and the
  *				R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,6 +19,7 @@
  */
 
 #include "R_ext/Arith.h"
+#include "R_ext/Applic.h"
 
 void massdist(double *x, int *nx, double *xlow, double *xhigh,
 	      double *y, int *ny)
