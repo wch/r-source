@@ -1497,7 +1497,7 @@ access to Linux on an @code{ix86} platform you can use @code{valgrind}
 To run some examples under @code{valgrind} use something like
 
 @smallexample
-R -d "valgrind --tool=memtest --leak-check=yes" --vanilla < mypkg-Ex.R
+R -d "valgrind --tool=memcheck --leak-check=yes" --vanilla < mypkg-Ex.R
 @end smallexample
 
 @noindent
@@ -1505,7 +1505,7 @@ where @file{mypkg-Ex.R} is a set of examples, e.g. the file created in
 @file{mypkg.Rcheck} by @code{R CMD check}.  Occasionally this reports
 memory reads of `uninitialised values' that are the result of compiler
 optimization, so can be worth checking under unoptimized compiles.  We
-know there will be some small memory leaks from @code{readlione} and
+know there will be some small memory leaks from @code{readline} and
 @R{} itself -- these are memory areas that are in use right up to the
 end of the @R{} session.
 
