@@ -9,7 +9,8 @@ match.fun <- function (FUN, descend = TRUE)
         ## Substitute in parent
         FUN <- eval.parent(substitute(substitute(FUN)))
         if (!is.symbol(FUN))
-            stop("not function, character, or symbol: ", sQuote(deparse(FUN)))
+            stop(gettextf("'%s' is not a function, character or symbol",
+                          deparse(FUN)), domain = NA)
     }
     envir <- parent.frame(2)
     if( descend )
@@ -17,7 +18,7 @@ match.fun <- function (FUN, descend = TRUE)
     else {
         FUN <- get(as.character(FUN), mode = "any", env=envir)
         if( !is.function(FUN) )
-           stop("found non-function: ", sQuote(FUN))
+           stop(gettextf("found non-function '%s'", FUN), domain = NA)
     }
     return(FUN)
 }

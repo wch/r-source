@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "cannot handle object of mode"
+msgid "cannot handle object of mode '%s'"
 msgstr ""
 
 msgid "cannot change names on Tcl array"

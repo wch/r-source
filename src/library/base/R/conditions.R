@@ -167,7 +167,8 @@ invokeRestart <- function(r, ...) {
     if (! isRestart(r)) {
         res <- findRestart(r)
         if (is.null(res))
-            stop("no restart ", sQuote(r), " found")
+            stop(gettextf("no restart '%s' found", as.character(r)),
+                 domain = NA)
         r <- res
     }
     .Internal(.invokeRestart(r, list(...)))
@@ -179,7 +180,8 @@ invokeRestartInteractively <- function(r) {
     if (! isRestart(r)) {
         res <- findRestart(r)
         if (is.null(res))
-            stop("no restart ", sQuote(r), " found")
+            stop(gettextf("no restart '%s' found", as.character(r)),
+                 domain = NA)
         r <- res
     }
     if (is.null(r$interactive)) {

@@ -644,9 +644,10 @@ namespaceImportMethods <- function(self, ns, vars) {
     allVars <- character()
     allMlists <- methods:::.getGenerics(ns)
     if(any(is.na(match(vars, allMlists))))
-        stop("requested 'methods' objects not found in environment/package ",
-                sQuote(methods:::getPackageName(ns)), ": ",
-                paste(vars[is.na(match(vars, allMlists))], collapse = ", "))
+        stop(gettextf("requested 'methods' objects not found in environment/package '%s': %s",
+                      methods:::getPackageName(ns),
+                      paste(vars[is.na(match(vars, allMlists))],
+                            collapse = ", ")), domain = NA)
     for(i in seq(along = allMlists)) {
         ## import methods list objects if asked for
         ## or if the corresponding generic was imported

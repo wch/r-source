@@ -23,16 +23,7 @@ msgstr ""
 msgid "need at least 2*ord -1 (=%d) knots"
 msgstr ""
 
-msgid "The x data must be in the range"
-msgstr ""
-
-msgid "to"
-msgstr ""
-
-msgid "unless you set"
-msgstr ""
-
-msgid "outer.ok = TRUE"
+msgid "the 'x' data must be in the range %f to %f unless you set 'outer.ok = TRUE'"
 msgstr ""
 
 msgid "values of 'x' must be distinct"
@@ -68,7 +59,7 @@ msgstr ""
 msgid "spline must be monotone"
 msgstr ""
 
-msgid "degree must be integer >= 1"
+msgid "'degree' must be integer >= 1"
 msgstr ""
 
 msgid "'df' was too small; have used"
