@@ -34,7 +34,7 @@ detach <- function(name, pos=2)
             if(!is.null(libpath)) try(.Last.lib(libpath))
         }
     }
-    if(!is.na(match("package:methods", search())))
+    if(!is.na(match("package:methods", search())) && pos != match("package:methods", search()))
       cacheMetaData(env, FALSE)
     .Internal(detach(pos))
 }
