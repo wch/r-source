@@ -157,11 +157,6 @@ Rm.exp1: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(CAT) exported-vars >> $@
 	$(RM) RDefs
 
-
-# avoid building globalvar.h with errors
-#../include/globalvar.h: exported-vars
-#	perl -n makeimps.pl exported-vars > $@
-
 ../../library/R.css: ../../doc/html/R.css
 	$(CP) $< $@
 
@@ -255,7 +250,7 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../../tests -f Makefile.win clean
 
 distclean veryclean: clean
-	$(RM) COPYRIGHTS R.exp Rm.exp globalvar.h 
+	$(RM) COPYRIGHTS R.exp Rm.exp 
 	$(RM) -r ../../bin ../../library ../../modules
 	$(RM) ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/version.h 
@@ -267,8 +262,7 @@ distclean veryclean: clean
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
 	../../etc/rgb.txt ../../share/make/tests.mk \
-	../include/Platform.h \
-	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
+	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
 	-$(MAKE) -C installer ISdistclean
 
@@ -399,7 +393,7 @@ endif
 #taken from ../include/Makefile.in
 SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h
 OBJ_HEADERS = Rconfig.h Rversion.h
-GW32_HEADERS = globalvar.h
+GW32_HEADERS =
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
@@ -409,7 +403,7 @@ packagedist:
 	  $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
-	$(CP) -p exported-vars MkRules MakePkg MakeDll \
+	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
 	  pwd.pl makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
