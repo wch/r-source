@@ -637,7 +637,7 @@ BUG FIXES
         non-matrix and aborted on the result.
 
     o   Fix some issues with nonsyntactical names in modelling code
-        (PR# 7202), relating to backquoting. There are likely more.
+        (PR#7202), relating to backquoting.  There are likely more.
 
 
 
