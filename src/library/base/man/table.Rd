@@ -36,6 +36,26 @@ is.table(x)
   \item{optional}{a logical controlling whether row names are set.
     Currently not used.}
 }
+\value{
+  \code{table()} returns a \emph{contingency table}, an object of
+  \code{\link[base]{class}} \code{"table"}; see the \code{\link{print}}
+  method's separate documentation.
+
+  There is a \code{summary} method for objects created by \code{table}
+  or \code{\link{xtabs}}, which gives basic information and performs a
+  chi-squared test for independence of factors (note that the function
+  \code{\link[ctest]{chisq.test}} in package \pkg{ctest} currently only
+  handles 2-d tables).
+
+  \code{as.table} and \code{is.table} coerce to and test for contingency
+  table, respectively.
+
+  The \code{as.data.frame} method for objects inheriting from class
+  \code{"table"} can be used to convert the array-based representation
+  of a contingency table to a data frame containing the classifying
+  factors and the corresponding counts (the latter as component
+  \code{Freq}).  This is the inverse of \code{\link{xtabs}}.
+}
 \details{
   If the argument \code{dnn} is not supplied, the internal function
   \code{list.names} is called to compute the \sQuote{dimname names}.  If the
@@ -46,21 +66,6 @@ is.table(x)
 
   Only when \code{exclude} is specified (i.e., not by default), will
   \code{table} drop levels of factor arguments potentially.
-
-  There is a \code{summary} method for contingency table objects created
-  by \code{table} or \code{xtabs}, which gives basic information and
-  performs a chi-squared test for independence of factors (note that the
-  function \code{\link[ctest]{chisq.test}} in package \pkg{ctest}
-  currently only handles 2-d tables).
-
-  \code{as.table} and \code{is.table} coerce to and test for contingency
-  table, respectively.
-
-  The \code{as.data.frame} method for objects inheriting from class
-  \code{"table"} can be used to convert the array-based representation
-  of a contingency table to a data frame containing the classifying
-  factors and the corresponding counts (the latter as component
-  \code{Freq}).  This is the inverse of \code{\link{xtabs}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
