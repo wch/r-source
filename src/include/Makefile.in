@@ -34,7 +34,7 @@ Platform.h: $(top_srcdir)/date-stamp
 	@touch $@
 
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
-	$(top_srcdir)/aux/GETSYMBOLS
+	$(top_srcdir)/tools/GETSYMBOLS
 
 mostlyclean:
 clean:
