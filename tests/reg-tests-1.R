@@ -189,6 +189,17 @@ dummy.coef.lm(lm(y ~ z * poly(x,1), data=DF))
 ## failed in 1.3.0.  Second one warns: deficiency of the method.
 options(contrasts=old)
 
+## PR 1050 error in ksmooth C code + patch, Hsiu-Khuern Tang, 2001-08-12
+library(modreg)
+x <- 1:4
+y <- 1:4
+z <- ksmooth(x, y, x.points=x)
+stopifnot(all.equal(z$y, y))
+detach("package:modreg")
+## did some smoothing prior to 1.3.1.
+
+
+
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
    warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")
