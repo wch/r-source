@@ -33,6 +33,11 @@ Directory:  Add-ons
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
 Date: Fri, 24 Mar 2000 03:24:45 +0000 (GMT)
+* PR# 496 *
+From: bonneau@epi.roazhon.inra.fr (en148)
+Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
+--base R has no est.variogram function.
+--This appears to be a bug report on sgeostat.
 * PR# 471 *
 Subject:  Problems with nlme 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
@@ -104,6 +109,15 @@ Subject: Conditional for XDR code left out in saveload.c
 From: hoffmann@ehmgs2.et.tu-dresden.de
 Date: Thu, 9 Mar 2000 09:43:01 +0100 (MET)
 --This seems to be a harmless warning, not an error.
+* PR# 467 *
+Subject: Re: [R] Re: R-1.0.0 is released
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 01 Mar 2000 20:26:40 +0100
+--followup to PR#466
+* PR# 466 *
+Subject: Re: R-1.0.0 is released
+From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
+Date: 01 Mar 2000 16:00:54 +0100
 
 Directory:  Language
 
@@ -145,6 +159,10 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
+* PR# 490 *
+Subject: R-1.0.0 on alpha/osf1 memory glitch
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Fri, 17 Mar 2000 11:25:30 +1300 (NZDT)
 * PR# 452 *
 Subject: problem with glm
 From: Brad McNeney <mcneney@cs.sfu.ca>
@@ -165,79 +183,23 @@ Directory:  incoming
 Subject: matlines, matpoints don't follow prototype
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Sun, 26 Mar 2000 12:51:24 -0800
-* PR# 467 *
-Subject: Re: [R] Re: R-1.0.0 is released
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 01 Mar 2000 20:26:40 +0100
-* PR# 466 *
-Subject: Re: R-1.0.0 is released
-From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
-Date: 01 Mar 2000 16:00:54 +0100
-* PR# 463 *
-Subject: Bug in read.table
-From: "E. S. Venkatraman" <venkat@biosta.mskcc.org>
-Date: Tue, 29 Feb 2000 17:47:54 -0500 (EST)
-* PR# 475 *
-Subject: Error compiling R on RS6000
-From: pgutwin@us.ibm.com
-Date: Tue, 7 Mar 2000 16:35:59 +0100 (MET)
-* PR# 474 *
-Subject: update fails after specific sequence of steps
-From: John Fox <jfox@mcmaster.ca>
-Date: Tue, 07 Mar 2000 09:06:21 -0500
-* PR# 480 *
-Subject: problem with plot(...., xlim=c(5,0))
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 12 Mar 2000 20:19:16 -0500 (EST)
-* PR# 477 *
-Subject: Printing graphs on W98 laptop
-From: P.J.Green@bristol.ac.uk
-Date: Wed, 8 Mar 2000 18:23:33 +0100 (MET)
-* PR# 482 *
-Subject: plot(1:10,c(1)$nothing)  yields index plot
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Mon, 13 Mar 2000 11:13:18 -0800
-* PR# 481 *
-Subject: check does not accept --vsize option
-From: neteler@geog.uni-hannover.de
-Date: Mon, 13 Mar 2000 19:04:50 +0100 (MET)
-* PR# 490 *
-Subject: R-1.0.0 on alpha/osf1 memory glitch
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Fri, 17 Mar 2000 11:25:30 +1300 (NZDT)
 * PR# 488 *
 Subject: Error in lme?
 From: simon.frost@ed.ac.uk
 Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
-* PR# 487 *
-Subject: Bug in sub?
-From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
-Date: Tue, 14 Mar 2000 12:15:54 +0100
-* PR# 496 *
-From: bonneau@epi.roazhon.inra.fr (en148)
-Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
-* PR# 493 *
-Subject: optim: problem with additional arguments
-From: "Dirk F. Moore" <dirk@surfer.sbm.temple.edu>
-Date: Fri, 17 Mar 2000 12:05:32 -0500
-* PR# 491 *
-Subject: lag
-From: kthaka@uta.fi
-Date: Fri, 17 Mar 2000 10:16:09 +0100 (MET)
-* PR# 501 *
-Subject: kernel {ts}, kernel.dirichlet calling with one arg
-From: santini@dsi.unimi.it
-Date: Fri, 24 Mar 2000 11:12:49 +0100 (MET)
+--No example to reproduce this.
+* PR# 463 *
+Subject: Bug in read.table
+From: "E. S. Venkatraman" <venkat@biosta.mskcc.org>
+Date: Tue, 29 Feb 2000 17:47:54 -0500 (EST)
+--looks like quote arguments to read.table/count.fields needs to be set
+* PR# 505 *
+Subject: interrupted save 
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 * PR# 498 *
 Subject: Use of Rd2txt on .Rd files from rw-1.0.0
 Subject: Use of Rd2txt on .Rd files from rw-1.0.0
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Wed, 22 Mar 2000 09:15:20 +1100 (EST)
-* PR# 505 *
-Subject: interrupted save 
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
-* PR# 502 *
-Subject: quantiles of the hypergeometric distribution
-From: Ludwig Baringhaus <lbaring@stochastik.uni-hannover.de>
-Date: Fri, 24 Mar 2000 14:21:20 +0100
+--No response from author, but does look like using CRLF files on Unix.
