@@ -536,7 +536,6 @@
 
 /* Define this to enable support for UTF-8 locales. */
 /* #undef SUPPORT_UTF8 */
-#define SUPPORT_UTF8 1
 
 /* Define if your system is SunOS4, which is famous for broken header files.
    */
