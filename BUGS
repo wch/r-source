@@ -178,6 +178,10 @@ Date: Fri, 3 Oct 2003 22:17:24 +0200 (MET DST)
 Subject: bug in fisher test---p-value cannot be Inf
 From: kjetil@entelnet.bo
 Date: Mon, 20 Oct 2003 14:17:42 -0400
+* PR# 4724 *
+Subject: Core dump when calling tclvalue
+From: mckay@gmr.com
+Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
 
 Directory:  Analyses
 
@@ -538,6 +542,12 @@ Date: Mon, 17 Mar 2003 21:32:55 +0100
 Subject: as.POSIXct Bug when used with POSIXlt arg and tz= arg
 From: Gabor Grothendieck <ggrothendieck@volcanomail.com>
 Date: Sun, 3 Aug 2003 20:08:59 -0700 (PDT)
+* PR# 4364 *
+Subject: Re: [Rd] another dump/source problem?
+From: Ross Ihaka <ihaka@stat.auckland.ac.nz>
+Date: Wed, 01 Oct 2003 07:45:41 +1200
+..dump somehow needs to recognize that expressions in lists 
+..probably need to be enclosed in quote().
 
 Directory:  Models
 
@@ -723,18 +733,6 @@ From:   "methods"       "methods" "methods" "methods"  "methods"
 From:   "methods"    "methods"
 Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 ..body<- is fixed. Should Compare and Complex show up as base?
-* PR# 4195 *
-Subject: hclust: median, centroid
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 16 Sep 2003 22:22:53 +0200 (CEST)
-* PR# 4361 *
-Subject: dump/source problem with hclust object
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 30 Sep 2003 19:28:27 +0200 (CEST)
-* PR# 4364 *
-Subject: Re: [Rd] another dump/source problem?
-From: Ross Ihaka <ihaka@stat.auckland.ac.nz>
-Date: Wed, 01 Oct 2003 07:45:41 +1200
 * PR# 4459 *
 Subject: Redhat 7.2 gcc optimisation 
 From: Paul Murrell <p.murrell@auckland.ac.nz>
@@ -743,18 +741,10 @@ Date: Wed, 08 Oct 2003 15:28:11 +1300
 Subject: Memmory Bugs
 From: "Eric R. Riehl" <eriehl@email.unc.edu>
 Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
-* PR# 4699 *
-Subject: Problem R-1.8.0 library tcltk on Tcl-8.0.5
-From: nakama@ki.rim.or.jp
-Date: Tue, 21 Oct 2003 06:29:50 +0200 (MET DST)
 * PR# 4710 *
 Subject: round behaves differently from ceiling, floor for matrices with 0 rows
 From: w.huber@dkfz-heidelberg.de
 Date: Tue, 21 Oct 2003 20:48:27 +0200 (MET DST)
-* PR# 4724 *
-Subject: Core dump when calling tclvalue
-From: mckay@gmr.com
-Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
 * PR# 4726 *
 Subject: r-bugs,PLEASE READ
 From: "Dora H. "Janet""<uthmicheal@netscape.net>
@@ -1803,3 +1793,55 @@ Date: Sat, 08 Nov 2003 14:54:12 -0400
 Subject: r-bugs How to Expand YourSize Naturally
 From: Leeann <vqleeann@cutey.com>
 Date: Sat, 8 Nov 2003 14:12:48 -0800
+* PR# 5004 *
+Subject: r-bugs How to Expand YourSize Naturally
+From: Leeann <kusileeann@cutey.com>
+Date: Sat, 8 Nov 2003 16:09:33 -0800
+* PR# 5005 *
+Subject: üS Döctörs wíll handlë yöur prescríptíons uwmey
+From: "Rory King" <kitahachijif@about.com>
+Date: Sat, 08 Nov 2003 19:46:05 -0400
+* PR# 5006 *
+Subject: Discounted OEM CD Software abuilding
+From: "Edmond Cleveland" <tho54rmqf@determinado.net>
+Date: Sun, 09 Nov 2003 10:27:32 GMT
+* PR# 5007 *
+Subject: Want a `B;IG .P:E_N-IS*?                                      `    ygiebtbgfpe
+From: "Hunter Knight" <hknight_kn@friends-partners.ru>
+Date: Sun, 09 Nov 2003 04:49:10 +0000
+* PR# 5008 *
+Subject: Try it now and Get FREE prescription!sank
+From: "Wilma Kurtz" <dya47bljmf@BolehMail.com>
+Date: Sun, 09 Nov 2003 02:54:17 GMT
+* PR# 5009 *
+Subject: You deserve this f akrgb cjtks
+From: "Pam Gallegos" <yflvsbd@aol.com>
+Date: Mon, 10 Nov 2003 06:09:24 -0100
+* PR# 5010 *
+Subject: Personal Development is truly here.  h
+From: "Clarence Hastings" <aexn6dwi@yahoo.com>
+Date: Mon, 10 Nov 2003 04:11:09 -0300
+* PR# 5011 *
+Subject:
+From: =?UNKNOWN?B?x+Owob73w7w=?= <vodlkeo23@yahoo.com>
+Date: Sun,  9 Nov 2003 02:59:21 -0500 (EST)
+* PR# 5012 *
+Subject: PRINCESS.J.MSWATI WRITE ONBEHALF OF IBRAHIM KAMARA 
+From: "princess Joy Mswati of Swaziland" <princessjoymswati@princessjoymswati.net>
+Date: 9 Nov 2003 13:34:47 -0000
+* PR# 5013 *
+Subject: --Rap star's big long story
+From: "Sanford Gaines" <luther@msn.com>
+Date: Sun, 09 Nov 03 19:25:36 GMT
+* PR# 5014 *
+Subject: /Men XMAS romance explodes with V,,I"A"G*R+A...!  gjxq emctj x btue
+From: "Vilma Dunlap" <luther@msn.com>
+Date: Sun, 09 Nov 03 15:45:38 GMT
+* PR# 5015 *
+Subject: Men what's XMAS without love? V,,I.A+G"R"A,, makes it happen!! a vjajqr ru xx  bvk
+From: "Manuel Hardy" <luther@msn.com>
+Date: Mon, 10 Nov 03 03:17:13 GMT
+* PR# 5016 *
+Subject: AWARD WINNING NOTIFICATION !
+From: AWED INTERNATIONAL LOTTO.BV <infoawed@netscape.net>
+Date: Sun, 09 Nov 2003 23:34:49 +0100
