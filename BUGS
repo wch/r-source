@@ -285,3 +285,7 @@ Date: Tue, 11 May 1999 13:43:50 +0200 (MET DST)
 Subject: matrix() can't handle NaN
 From: wsi@gcal.ac.uk
 Date: Tue, 11 May 1999 14:01:59 +0200 (MET DST)
+* PR# 194 *
+Subject: Memory crash.
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 12 May 1999 14:43:45 +0200 (MET DST)
