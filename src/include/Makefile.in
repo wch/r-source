@@ -17,8 +17,7 @@ OBJ_HEADERS = Rconfig.h Rversion.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
-	Defn.h Fileio.h Graphics.h IOStuff.h Parse.h Print.h \
-	Statdecl.h Startup.h Stattab.h \
+	Defn.h Fileio.h Graphics.h IOStuff.h Parse.h Print.h Startup.h \
 	$(SRC_HEADERS) \
 	Rconfig.h.in
 
