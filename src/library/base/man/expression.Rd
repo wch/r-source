@@ -10,12 +10,9 @@ as.expression(expr)
 \alias{is.expression}
 \alias{as.expression}
 \value{
-An ``expression'' object containing its
-unevaluated arguments.  Expression objects conceptually are
-lists of ``calls'' and so the subsetting operations which apply
-to lists also apply to them.  For compatibility with S,
-the \code{mode} function will return \code{"expression"}
-for expression objects.
+
+\code{expression} returns a vector of mode ``expression''
+containing its arguments as unevaluated ``calls''.
 
 \code{is.expression} returns \code{TRUE} if expr is
 an expression object and \code{FALSE} otherwise.
