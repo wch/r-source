@@ -35,6 +35,11 @@ the warning says "DLL attempted to change FPU control word from
 XXXXX to 8001f", that's a sign of an internal bug somewhere else:
 8001f is the R default value.
 
+The main thread is suspended briefly after Rprof() is called.  This
+ensures that the timing thread gets started: on some builds and on
+single-CPU machines this was not happening in 1.6.x (although it
+did in 1.5.x, so it must be a compiler/runtime version issue).
+
 Installation changes
 --------------------
 
