@@ -366,6 +366,8 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	len = asInteger(CADR(args));
 	s = coerceVector(CAR(args), STRSXP);
+	if (length(s) == 0)
+		error("vector: zero-length type argument\n");
 	mode = str2type(CHAR(STRING(s)[0]));
 	if (mode == -1 && streql(CHAR(STRING(s)[0]), "double"))
 		mode = REALSXP;
