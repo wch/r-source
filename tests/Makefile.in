@@ -50,7 +50,7 @@ DISTFILES = Makefile.in README \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
 	$(test-src-reg) reg-tests-2.Rout.save \
 	$(test-src-random)  p-r-random-tests.Rout.save \
-	gct-tail
+	gct-foot.R
 SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
@@ -109,7 +109,7 @@ FORCE:
 .R.Rout-gct:
 	@echo "running gctorture() + \`$<'"
 	@(echo '.ptime <- proc.time(); gctorture()' ; \
-	  cat $< $(srcdir)/gct-tail) | $(R) > $@
+	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
 	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
 	  echo @ECHO_N@ "comparing \`$@' to \`$$Ro' ...@ECHO_C@"; \
