@@ -315,7 +315,7 @@ static void RFontInit()
 	if (notdone == 1)
 	    sprintf(oops, "[%s] Error at line %d.", optfile(), optline());
 	else if (notdone == 2) {
-	    fontname[fontnum] = winstrdup(opt[0]);
+	    fontname[fontnum] = strdup(opt[0]);
 	    if (!fontname[fontnum])
 		strcpy(oops, "Insufficient memory. ");
 	    else {

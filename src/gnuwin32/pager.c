@@ -74,7 +74,7 @@ static xbuf file2xbuf(char *name, int del)
 	return NULL;
     }
     vv = GetFileSize(f, NULL);
-    p = (char *) winmalloc((size_t) vv + 1);
+    p = (char *) malloc((size_t) vv + 1);
     if (!p) {
 	CloseHandle(f);
 	warning("Insufficient memory to display %s in internal pager", name);
@@ -101,7 +101,7 @@ static xbuf file2xbuf(char *name, int del)
 		if (q[1] == '_' && q[2] == '\b') xb->user[ms] = -2;
 	    } else xbufaddc(xb, *q);
 	}
-    winfree(p);
+    free(p);
     return xb;
 }
 

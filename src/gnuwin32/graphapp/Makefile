@@ -10,9 +10,6 @@ CFLAGS=-I. -I.. -Wall $(DEBUGFLAG)  -O2 -DINDLL
 SOURCES=$(filter-out graphappmain.c, $(wildcard *.c))
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
-# Comment next line to stop substitution of malloc and friends
-#winalloc-CFLAGS=-DDANGER=1
-
 ../ga.a: $(OBJS)
 
 clean:
@@ -46,6 +43,5 @@ status.o: internal.h ga.h graphapp.h
 stdimg.o: graphapp.h
 strings.o: internal.h ga.h graphapp.h
 tooltips.o: internal.h ga.h graphapp.h
-winalloc.o: ga.h graphapp.h
 windows.o: internal.h ga.h graphapp.h
 xredef.o: internal.h ga.h graphapp.h

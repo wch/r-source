@@ -48,25 +48,25 @@ xbuf newxbuf(xlong dim, xint ms, xint shift)
 {
     xbuf  p;
 
-    p = (xbuf) winmalloc(sizeof(struct structXBUF));
+    p = (xbuf) malloc(sizeof(struct structXBUF));
     if (!p)
 	return NULL;
-    p->b = (char *) winmalloc(dim + 1);
+    p->b = (char *) malloc(dim + 1);
     if (!p->b) {
-	winfree(p);
+	free(p);
 	return NULL;
     }
-    p->user = (int *) winmalloc(ms * sizeof(int));
+    p->user = (int *) malloc(ms * sizeof(int));
     if (!p->user) {
-	winfree(p->b);
-	winfree(p);
+	free(p->b);
+	free(p);
 	return NULL;
     }
-    p->s = (char **) winmalloc(ms * sizeof(char *));
+    p->s = (char **) malloc(ms * sizeof(char *));
     if (!p->s) {
-	winfree(p->b);
-	winfree(p->user);
-	winfree(p);
+	free(p->b);
+	free(p->user);
+	free(p);
 	return NULL;
     }
     p->ns = 1;
@@ -84,10 +84,10 @@ xbuf newxbuf(xlong dim, xint ms, xint shift)
 void xbufdel(xbuf p) 
 {
    if (!p) return;
-   winfree(p->s);
-   winfree(p->b);
-   winfree(p->user);
-   winfree(p);
+   free(p->s);
+   free(p->b);
+   free(p->user);
+   free(p);
 }
 
 static void xbufshift(xbuf p)
@@ -199,20 +199,20 @@ newconsoledata(font f, int rows, int cols,
     ConsoleData p;
 
     initapp(0, 0);
-    p = (ConsoleData) winmalloc(sizeof(struct structConsoleData));
+    p = (ConsoleData) malloc(sizeof(struct structConsoleData));
     if (!p)
 	return NULL;
     p->kind = kind;
     if (kind == CONSOLE) {
 	p->lbuf = newxbuf(DIMLBUF, MLBUF, SLBUF);
 	if (!p->lbuf) {
-	    winfree(p);
+	    free(p);
 	    return NULL;
 	}
-	p->kbuf = winmalloc(NKEYS * sizeof(char));
+	p->kbuf = malloc(NKEYS * sizeof(char));
 	if (!p->kbuf) {
 	    xbufdel(p->lbuf);
-	    winfree(p);
+	    free(p);
 	    return NULL;
 	}
     } else {
@@ -549,10 +549,10 @@ FBEGIN
          (pc = (char *)GlobalLock(hglb)))
     {
         if (p->clp) {
-           new = winrealloc((void *)p->clp, strlen(p->clp) + strlen(pc) + 1);
+           new = realloc((void *)p->clp, strlen(p->clp) + strlen(pc) + 1);
         }
         else {
-           new = winmalloc(strlen(pc) + 1) ;
+           new = malloc(strlen(pc) + 1) ;
            if (new) new[0] = '\0';
            p->already = p->numkeys;
            p->pclp = 0;
@@ -835,9 +835,9 @@ void freeConsoleData(ConsoleData p)
     if (p->bm) del(p->bm);
     if (p->kind == CONSOLE) {
         if (p->lbuf) xbufdel(p->lbuf);
-	if (p->kbuf) winfree(p->kbuf);
+	if (p->kbuf) free(p->kbuf);
     }
-    winfree(p);
+    free(p);
 }
 
 static void delconsole(control c)
@@ -868,7 +868,7 @@ static char consolegetc(control c)
     {
 	ch = p->clp[p->pclp++];
 	if (!(p->clp[p->pclp])) {
-	    winfree(p->clp);
+	    free(p->clp);
 	    p->clp = NULL;
 	}
     } else {
