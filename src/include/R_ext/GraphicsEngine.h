@@ -111,7 +111,7 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev);
 void GEdestroyDevDesc(GEDevDesc* dd);
 void* GEsystemState(GEDevDesc *dd, int index);
 void GEregisterWithDevice(GEDevDesc *dd);
-int GEregisterSystem(GEcallback callback);
+void GEregisterSystem(GEcallback callback, int *systemRegisterIndex);
 void GEunregisterSystem(int registerIndex);
 
 SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data);

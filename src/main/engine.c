@@ -60,7 +60,12 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
      * device description (add graphics engine information
      * to the device description).
      */
-    GEDevDesc *dd = (GEDevDesc*) malloc(sizeof(GEDevDesc));
+    GEDevDesc *dd = (GEDevDesc*) calloc(1, sizeof(GEDevDesc));
+    /* NULL the gesd array
+     */
+    int i;
+    for (i=0; i<MAX_GRAPHICS_SYSTEMS; i++)
+	dd->gesd[i] = NULL;
     if (!dd)
 	error("Not enough memory to allocate device (in addDevice)");
     dd->newDevStruct = 1;
@@ -117,7 +122,7 @@ void* GEsystemState(GEDevDesc *dd, int index)
  */
 static void registerOne(GEDevDesc *dd, int systemNumber, GEcallback cb) {
     dd->gesd[systemNumber] =
-	(GESystemDesc*) malloc(sizeof(GESystemDesc));
+	(GESystemDesc*) calloc(1, sizeof(GESystemDesc));
     if (dd->gesd[systemNumber] == NULL)
 	error("unable to allocate memory (in GEregister)");
     cb(GE_InitState, dd, R_NilValue);
@@ -149,7 +154,7 @@ void GEregisterWithDevice(GEDevDesc *dd) {
  * Return the index of the system's information in the graphic
  * engine's register.
  */
-int GEregisterSystem(GEcallback cb) {
+void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
     int i, devNum;
     /* Bit awkward, but I leave GetDevice to return DevDesc for now
      * Can be fixed once device handling code is in here rather than
@@ -158,6 +163,11 @@ int GEregisterSystem(GEcallback cb) {
     DevDesc *dd;
     if (numGraphicsSystems + 1 == MAX_GRAPHICS_SYSTEMS)
 	error("Too many graphics systems registered");
+    /* Set the system register index so that, if there are existing
+     * devices, it will know where to put the system-specific 
+     * information in those devices
+     */
+    *systemRegisterIndex = numGraphicsSystems;
     /* Run through the existing devices and add the new information
      * to any GEDevDesc's
      */
@@ -178,7 +188,7 @@ int GEregisterSystem(GEcallback cb) {
     /* Store the information for adding to any new devices
      */
     registeredSystems[numGraphicsSystems] =
-	(GESystemDesc*) malloc(sizeof(GESystemDesc));
+	(GESystemDesc*) calloc(1, sizeof(GESystemDesc));
     if (registeredSystems[numGraphicsSystems] == NULL)
 	error("unable to allocate memory (in GEregister)");
     registeredSystems[numGraphicsSystems]->callback = cb;
@@ -257,13 +267,12 @@ void GEunregisterSystem(int registerIndex)
 SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data)
 {
     int i;
-    SEXP result = R_NilValue;
     DevDesc* dd = GetDevice(devNumber((DevDesc*) dev));
     for (i=0; i<numGraphicsSystems; i++)
 	if (registeredSystems[i] != NULL)
-	    result = (registeredSystems[i]->callback)(event, (GEDevDesc*) dd, 
-						      data);
-    return result;
+	    (registeredSystems[i]->callback)(event, (GEDevDesc*) dd, 
+					     data);
+    return R_NilValue;
 }
 
 /****************************************************************
