@@ -9,7 +9,8 @@ top_builddir = .
 
 include $(top_builddir)/Makeconf
 
-base_src = $(top_srcdir)/src/*/*.[chf] $(top_srcdir)/src/library/*/R/*.R
+base_src = `ls $(top_srcdir)/src/*/*.[chf] \
+	       $(top_srcdir)/src/library/*/R/*.R`
 
 all: R docs
 
@@ -23,6 +24,8 @@ stamp-R: $(top_builddir)/src/include/Platform.h $(base_src)
 
 $(top_builddir)/src/include/Platform.h: $(srcdir)/date-stamp
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
+
+$(base_src):
 
 docs help html latex dvi:: FORCE
 	-@cd src/library; $(MAKE) $@
