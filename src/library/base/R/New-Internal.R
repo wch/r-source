@@ -65,12 +65,14 @@ rbind <- function(..., deparse.level=1) {
 }
 
 dataentry <- function (data, modes) {
-    if(length(data) && !all(md <- sapply(data, is.vector)))
+    if(!is.list(data) || !length(data) || !all(md <- sapply(data, is.vector)))
         stop("invalid data argument")
-    if(length(modes) && !all(mm <- sapply(modes, is.character)))
+    if(!is.list(modes) ||
+       (length(modes) && !all(mm <- sapply(modes, is.character))))
         stop("invalid modes argument")
     .Internal(dataentry(data, modes))
 }
+
 deparse <-
     function(expr, width.cutoff = 60).Internal(deparse(expr, width.cutoff))
 
