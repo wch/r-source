@@ -51,7 +51,8 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     \code{small.interval} decimals \emph{after} (hence \code{small}) the
     decimal point.}
   \item{small.interval}{see \code{small.mark} above; defaults to 5.}
-  \item{decimal.mark}{ ~~Describe \code{decimal.mark} here~~ }
+  \item{decimal.mark}{the character used to indicate the numeric
+    decimal point.}
 
   \item{pv}{a numeric vector.}
   \item{eps}{a numerical tolerance: see Details.}
