@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.65-9, 1999/10/15
+Version 0.65-10, 1999/11/09
 Kurt Hornik
 
 
@@ -11,7 +11,7 @@ Table of Contents
 1 Introduction
   1.1 Legalese
   1.2 Obtaining this document
-  1.3 Citing
+  1.3 Citing this document
   1.4 Notation
   1.5 Feedback
 
@@ -26,8 +26,9 @@ Table of Contents
     2.5.3 How can R be installed (Macintosh)
   2.6 Are there Unix binaries for R?
   2.7 What documentation exists for R?
-  2.8 What mailing lists exist for R?
-  2.9 What is CRAN?
+  2.8 Citing R
+  2.9 What mailing lists exist for R?
+  2.10 What is CRAN?
 
 3 R and S
   3.1 What is S?
@@ -121,8 +122,8 @@ creating all these formats using the GNU Texinfo system
    You can also obtain the R FAQ from the `doc/FAQ' subdirectory of a CRAN
 site (*Note What is CRAN?::).
 
-1.3 Citing
-==========
+1.3 Citing this document
+========================
 
    In publications, please refer to this FAQ as Hornik (1999), "The R FAQ"
 and give the above, _official_ URL.
@@ -280,9 +281,8 @@ packages from CRAN.  The Windows version of R was created by Robert
 Gentleman, and is now being developed and maintained by Guido Masarotto
 <guido@sirio.stat.unipd.it> and Brian D. Ripley <ripley@stats.ox.ac.uk>.
 
-   Note that when uncompressing the zip files, the pkunzip program needs to
-be invoked with the `-D' flag to create subdirectories.  Also, be aware
-that some decompression programs do not preserve long file names properly.
+   For most installations the installer `rwinst.exe' will be the easiest
+tool to use.
 
    See the R Windows FAQ (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) for
 more details.
@@ -365,9 +365,14 @@ implementing R is described in:
        pages =     {299--314}
      }
 
-This is also the reference for R to use in publications.
+2.8 Citing R
+============
 
-2.8 What mailing lists exist for R?
+   To cite R in publications, use the above Ihaka & Gentleman (1996), "R: A
+Language for Data Analysis and Graphics", _Journal of Computational and
+Graphical Statistics_, *5*, 299-314.
+
+2.9 What mailing lists exist for R?
 ===================================
 
    Thanks to Martin Maechler <maechler@stat.math.ethz.ch>, there are three
@@ -420,8 +425,8 @@ archive of the lists are available via
    The R Core Team can be reached at <r-core@stat.math.ethz.ch> for
 comments and reports.
 
-2.9 What is CRAN?
-=================
+2.10 What is CRAN?
+==================
 
    The "Comprehensive R Archive Network" (CRAN) is a collection of sites
 which carry identical material, consisting of the R distribution(s), the
@@ -429,7 +434,7 @@ contributed extensions, documentation for R, and binaries.
 
    The CRAN master site can be found at the URL
 
-     `http://www.ci.tuwien.ac.at/R/'                (Austria)
+     `http://cran.r-project.org/'                   (Austria)
 
 and is currently being mirrored daily at
 
@@ -454,8 +459,8 @@ pre-formatted help pages.  CRAN also provides access to documentation on R,
 existing mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
-`ftp://ftp.ci.tuwien.ac.at/incoming' and send an email to
-<wwwadmin@ci.tuwien.ac.at>.
+`ftp://cran.r-project.org/incoming' and send an email to
+<wwwadmin@cran.r-project.org>.
 
      *Note:*  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...) in your submission.
@@ -784,10 +789,8 @@ being as compatible as possible with S.
 
    * R passes integer objects to C as `int *' rather than `long *' as in S.
 
-   * R has no single precision storage mode, and so can only pass real
-     numeric arguments to C/FORTRAN subroutines as `double *' or `DOUBLE
-     PRECISION', respectively.  (As of version 0.90 there will also be a
-     single precision interface.)
+   * R has no single precision storage mode.  However, as of version 0.65.1,
+     there is a single precision interface to C/FORTRAN subroutines.
 
    * By default, `ls()' returns the names of the objects in the current
      (under R) and global (under S) environment, respectively.  For example,
@@ -924,8 +927,7 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 
 *MASS*
      Functions and datasets from the main library of Venables and Ripley,
-     "Modern Applied Statistics with S-PLUS" (2nd edition).  Contained in
-     `VR'.
+     "Modern Applied Statistics with S-PLUS".  Contained in `VR'.
 
 *NISTnls*
      A set of test nonlinear least squares examples from NIST, the U.S.
@@ -1027,7 +1029,7 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *lmtest*
      A collection of tests on the assumptions of linear regression models
      from the book "The linear regression model under test" by W. Kraemer
-     and H. Sonnberger, 1986.
+     and H. Sonnberger, 1986, Physica.
 
 *locfit*
      Local Regression, likelihood and density estimation.
@@ -1048,6 +1050,10 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      A collection of artificial and real-world machine learning benchmark
      problems, including the Boston housing data.
 
+*multilm*
+     A basic method for fitting and testing multivariate linear models,
+     including stabilized test procedures by Laeuter et. al.
+
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
@@ -1058,6 +1064,9 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *nnet*
      Software for single hidden layer perceptrons ("feed-forward neural
      networks"), and for multinomial log-linear models.  Contained in `VR'.
+
+*norm*
+     Analysis of multivariate normal datasets with missing values.
 
 *oz*
      Functions for plotting Australia's coastline and state boundaries.
@@ -1098,12 +1107,12 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
-     Bowman and A. Azzalini.
+     Bowman and A. Azzalini (1997), Oxford University Press.
 
 *spatial*
      Functions for kriging and point pattern analysis from "Modern Applied
-     Statistics with S-PLUS" by W. Venables and B. Ripley (1997).  Contained
-     in `VR'.
+     Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
+     `VR'.
 
 *splines*
      Functions and classes for defining B-spline representations or
@@ -1133,7 +1142,7 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      Software to perform 1-d and 2-d wavelet statistics and transforms.
 
 *xgobi*
-     Interface to the XGobi program for graphical data analysis.
+     Interface to the XGobi and XGvis programs for graphical data analysis.
 
 See CRAN `src/contrib/INDEX' for more information.
 
@@ -1464,11 +1473,11 @@ variable sized objects.  The first of these is allocated as an array of
 "cons cells" (Lisp programmers will know what they are, others may think of
 them as the building blocks of the language itself, parse trees, etc.), and
 the second are thrown on a "heap".  The `--nsize' option can be used to
-specify the number of cons cells (each occupying 16 bytes) which R is to
-use (the default is 250000), and the `--vsize' option to specify the size
-of the vector heap in bytes (the default is 6 MB).  Boths options must
-either be integers or integers ending with `M', `K', or `k' meaning `Mega'
-(2^20), (computer) `Kilo' (2^10), or regular `kilo' (1000).
+specify the number of cons cells which R is to use (the default is 250000),
+and the `--vsize' option to specify the size of the vector heap in bytes
+(the default is 6 MB).  Boths options must either be integers or integers
+ending with `M', `K', or `k' meaning `Mega' (2^20), (computer) `Kilo'
+(2^10), or regular `kilo' (1000).
 
    E.g., to read in a table of 5000 observations on 40 numeric variables,
 `R --vsize 6M' should do (which currently is the default).
@@ -1655,7 +1664,7 @@ character, so that for example one can enter a newline as `\n'.  When you
 really need a `\', you have to escape it with another `\'.
 
    Thus, in filenames use something like `"c:\\data\\money.dat"'.  You can
-also rotate `\' by 90 degrees (`"c:/data/money.dat"').
+also replace `\' by `/' (`"c:/data/money.dat"').
 
 7.11 Why does plotting give a color allocation error?
 =====================================================
@@ -1728,13 +1737,13 @@ R executable.  That way `.gdbinit' can stay in the directory with the code
 and be used to set up the environment and the search paths for the source,
 e.g. as follows:
 
-     set env R_HOME /usr/share/R
+     set env R_HOME /opt/R
      set env R_PAPERSIZE letter
      set env R_PRINTCMD lpr
-     dir /usr/lib/R/src/appl
-     dir /usr/lib/R/src/main
-     dir /usr/lib/R/src/nmath
-     dir /usr/lib/R/src/unix
+     dir /opt/R/src/appl
+     dir /opt/R/src/main
+     dir /opt/R/src/nmath
+     dir /opt/R/src/unix
 
 8.3 How can I inspect R objects when debugging?
 ===============================================
@@ -1890,6 +1899,8 @@ apparently the same bug, and somewhat useful to find simple examples that
 might be expected to produce the bug but actually do not.  If you want to
 debug the problem and find exactly what caused it, that is wonderful. You
 should still report the facts as well as any explanations or solutions.
+Please include an example that reproduces the problem, preferably the
+simplest one you have found.
 
    Invoking R with the `--vanilla' option may help in isolating a bug. This
 ensures that the site profile and saved data files are not read.
@@ -1898,7 +1909,7 @@ ensures that the site profile and saved data files are not read.
 `bug.report()'. This automatically includes the version information and
 sends the bug to the correct address.  Alternatively the bug report can be
 emailed to <r-bugs@biostat.ku.dk> or submitted to the Web page at
-`http://r-bugs.biostat.ku.dk'.
+`http://bugs.r-project.org'.
 
    Bug reports on contributed packages should perhaps be sent to the
 package maintainer rather than to r-bugs.
