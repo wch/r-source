@@ -208,3 +208,22 @@ lst <- levels(attenu$station)
 levels(attenu$station)[lst == "117"] <- paste(rep(letters,3),collapse="")
 summary(attenu) # {2 + one long + 2 } variables
 ## in 1.7.0, things were split to more lines
+
+## format.default(*, nsmall > 0)  -- for real and complex
+
+sf <- function(x, N=14) sapply(0:N, function(i) format(x,nsmall=i))
+sf(2)
+sf(3.141)
+sf(-1.25, 20)
+
+oDig <- options(digits= 3)
+sf(pi)
+sf(1.2e7)
+sf(1.23e7)
+s <- -0.01234
+sf(s)
+
+sf(pi + 2.2i)
+sf(s + pi*1i)
+
+options(oDig)
