@@ -115,6 +115,27 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
 }
 
 ## "Extended" Pascal triangle:
-for (n in -4:10) cat(formatC(n,wid=2),":",choose(n, k= -2:max(3,n+2)), "\n")
+fN <- function(n) formatC(n, wid=2)
+for (n in -4:10) cat(fN(n),":", fN(choose(n, k= -2:max(3,n+2))), "\n")
+
+## R code version of choose()  [simplistic; warning for k < 0]:
+mychoose <- function(r,k)
+    ifelse(k <= 0, (k==0),
+           sapply(k, function(k) prod(r:(r-k+1))) / factorial(k))
+k <- -1:6
+cbind(k=k, choose(1/2, k), mychoose(1/2, k))
+
+## Binomial theorem for n=1/2 ;
+## sqrt(1+x) = (1+x)^(1/2) = sum_{k=0}^Inf  choose(1/2, k) * x^k :
+k <- 0:10 # 10 is sufficient for ~ 9 digit precision:
+sqrt(1.25)
+sum(choose(1/2, k)* .25^k)
+
+\dontshow{
+stopifnot(all.equal(  choose(1/2, -1:9),
+                    mychoose(1/2, -1:9)),
+          all.equal(sqrt(1.25),
+                    sum(choose(1/2, k)* .25^k)))
+}
 }
 \keyword{math}
