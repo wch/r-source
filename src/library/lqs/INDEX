@@ -1,7 +1,9 @@
 cov.rob                  Resistant Estimation of Multivariate Location and
                             Scatter
 lqs                      Resistant Regression
-predict.lqs		 Predict from an lqs Fit
+predict.lqs              Predict from an lqs Fit
 
-lmsreg, ltsreg		 Compatibility functions
-cov.mve, cov.mcd	 
+lmsreg                   Compatibility functions
+ltsreg
+cov.mve
+cov.mcd
