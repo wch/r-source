@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-08 13:44+0000\n"
+"POT-Creation-Date: 2005-03-09 07:12+0000\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: Fei Chen <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1069,7 +1069,7 @@ msgstr "矩阵的列数必需相符(见arg%d)"
 msgid "invalid add argument"
 msgstr "add变元不对"
 
-#: src/main/builtin.c:66 src/main/errors.c:955
+#: src/main/builtin.c:66 src/main/errors.c:957
 msgid "invalid number of arguments"
 msgstr "变元数目不对"
 
@@ -1357,15 +1357,15 @@ msgstr "strtrim()需要字符向量"
 msgid "invalid 'width' argument"
 msgstr "'width'这个变元不对"
 
-#: src/main/coerce.c:88 src/main/errors.c:970
+#: src/main/coerce.c:88 src/main/errors.c:972
 msgid "NAs introduced by coercion"
 msgstr "强制改变过程中产生了NA"
 
-#: src/main/coerce.c:90 src/main/errors.c:971
+#: src/main/coerce.c:90 src/main/errors.c:973
 msgid "inaccurate integer conversion in coercion"
 msgstr "强制改变整数不精确"
 
-#: src/main/coerce.c:92 src/main/errors.c:972
+#: src/main/coerce.c:92 src/main/errors.c:974
 msgid "imaginary parts discarded in coercion"
 msgstr "强制改变时丢弃了虚数部分"
 
@@ -1492,7 +1492,7 @@ msgstr "alpha层次%g不在[0,1] 之间"
 msgid "alpha level %d, not in 0:255"
 msgstr "alpha层次%d不在0:255之间"
 
-#: src/main/colors.c:84 src/main/errors.c:956 src/main/logic.c:164
+#: src/main/colors.c:84 src/main/errors.c:958 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr "变元种类不对"
 
@@ -2977,143 +2977,141 @@ msgstr "%s警告: "
 msgid "Warning: "
 msgstr "警告: "
 
-#: src/main/errors.c:327 src/main/errors.c:344 src/main/errors.c:433
+#: src/main/errors.c:327 src/main/errors.c:344 src/main/errors.c:435
 msgid "Lost warning messages\n"
 msgstr "警告信息丢失\n"
 
-#: src/main/errors.c:357
+#: src/main/errors.c:356
+#, fuzzy
 msgid "Warning message:\n"
-msgstr "警告信息:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] "警告信息:\n"
 
-#: src/main/errors.c:366
-msgid "Warning messages:\n"
-msgstr "警告信息:\n"
-
-#: src/main/errors.c:378
+#: src/main/errors.c:380
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr "共有%d个警告 (用warnings()来显示)\n"
 
-#: src/main/errors.c:381
+#: src/main/errors.c:383
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr "警告多于50个(用warnings()来显示最先的50个)\n"
 
-#: src/main/errors.c:424
+#: src/main/errors.c:426
 msgid "Error during wrapup: "
 msgstr "收捲事出错: "
 
-#: src/main/errors.c:447
+#: src/main/errors.c:449
 msgid "Error in "
 msgstr "错误在"
 
-#: src/main/errors.c:458 src/main/errors.c:461
+#: src/main/errors.c:460 src/main/errors.c:463
 #, c-format
 msgid "Error: "
 msgstr "错误: "
 
-#: src/main/errors.c:470 src/main/errors.c:1087
+#: src/main/errors.c:472 src/main/errors.c:1089
 msgid "In addition: "
 msgstr "此外: "
 
-#: src/main/errors.c:604
+#: src/main/errors.c:606
 msgid "invalid option \"error\"\n"
 msgstr "选项\"error\"不对\n"
 
-#: src/main/errors.c:680
+#: src/main/errors.c:682
 msgid "Execution halted\n"
 msgstr "停止执行\n"
 
-#: src/main/errors.c:714
+#: src/main/errors.c:716
 msgid "invalid 'string' value"
 msgstr "'string'值不对"
 
-#: src/main/errors.c:741 src/main/errors.c:832 src/main/errors.c:857
+#: src/main/errors.c:743 src/main/errors.c:834 src/main/errors.c:859
 msgid "invalid 'domain' value"
 msgstr "'domain'值不对"
 
-#: src/main/errors.c:800
+#: src/main/errors.c:802
 msgid "invalid 'n'"
 msgstr "'n'值不对"
 
-#: src/main/errors.c:802
+#: src/main/errors.c:804
 msgid "'msg1' must be a character string"
 msgstr "'msg1’必需是字符串"
 
-#: src/main/errors.c:804
+#: src/main/errors.c:806
 msgid "'msg2' must be a character string"
 msgstr "'msg2’必需是字符串"
 
-#: src/main/errors.c:862
+#: src/main/errors.c:864
 msgid "invalid 'dirname' value"
 msgstr "'dirname'值不对"
 
-#: src/main/errors.c:898
+#: src/main/errors.c:900
 msgid " [invalid string in stop(.)]"
 msgstr " [stop(.)里的字符串不对]"
 
-#: src/main/errors.c:924
+#: src/main/errors.c:926
 msgid " [invalid string in warning(.)]"
 msgstr " [warning(.)里的字符串不对]"
 
-#: src/main/errors.c:940
+#: src/main/errors.c:942
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"%s\"里的变元数目不对"
 
-#: src/main/errors.c:946 src/main/errors.c:961
+#: src/main/errors.c:948 src/main/errors.c:963
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s里的功能目前没有实现"
 
-#: src/main/errors.c:958
+#: src/main/errors.c:960
 msgid "time-series/vector length mismatch"
 msgstr "时间系列/向量长度不等"
 
-#: src/main/errors.c:959
+#: src/main/errors.c:961
 msgid "incompatible arguments"
 msgstr "不可兼容的变元"
 
-#: src/main/errors.c:962
+#: src/main/errors.c:964
 msgid "unknown error (report this!)"
 msgstr "不知是什么错误(请报告!)"
 
-#: src/main/errors.c:974
+#: src/main/errors.c:976
 msgid "unknown warning (report this!)"
 msgstr "不知是什么警告(请报告!)"
 
-#: src/main/errors.c:1052
+#: src/main/errors.c:1054
 msgid "No function to return from, jumping to top level"
 msgstr "没有可回归的函数, 跳到最高层"
 
-#: src/main/errors.c:1068
+#: src/main/errors.c:1070
 msgid "top level inconsistency?"
 msgstr "最高层不一致？"
 
-#: src/main/errors.c:1168
+#: src/main/errors.c:1170
 msgid "bad handler data"
 msgstr "处理器数据有错"
 
-#: src/main/errors.c:1316
+#: src/main/errors.c:1318
 msgid "error message not a string"
 msgstr "错误信息不是字符串"
 
-#: src/main/errors.c:1390
+#: src/main/errors.c:1392
 msgid "handler or restart stack mismatch in old restart"
 msgstr "旧重新启动中的处理器或重新启动堆叠不相配"
 
-#: src/main/errors.c:1416 src/main/errors.c:1432
+#: src/main/errors.c:1418 src/main/errors.c:1434
 msgid "bad error message"
 msgstr "错误信息不对"
 
-#: src/main/errors.c:1474
+#: src/main/errors.c:1476
 msgid "bad restart"
 msgstr "重新启动出错"
 
-#: src/main/errors.c:1506
+#: src/main/errors.c:1508
 msgid "restart not on stack"
 msgstr "不能在堆叠上重新启动"
 
-#: src/main/errors.c:1524
+#: src/main/errors.c:1526
 msgid "not in a try context"
 msgstr "不在try的上下文中"
 
@@ -3726,48 +3724,52 @@ msgstr "警告: 本R版本不支持UTF-8语言环境\n"
 msgid "unable to restore saved data in .RData\n"
 msgstr "无法用.Rdata来復原保存数据\n"
 
-#: src/main/main.c:854
+#: src/main/main.c:651
+msgid "During startup - "
+msgstr ""
+
+#: src/main/main.c:858
 #, fuzzy
 msgid "cannot quit from browser"
 msgstr "无法退出瀏覽器"
 
-#: src/main/main.c:858
+#: src/main/main.c:862
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "只能用\"yes\", \"no\", \"ask\"或\"default\"中的一个."
 
-#: src/main/main.c:863
+#: src/main/main.c:867
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr "save=\"ask\"不能在非交互型状态时使用，改用命令行缺省值"
 
-#: src/main/main.c:871
+#: src/main/main.c:875
 #, fuzzy
 msgid "unrecognized value of 'save'"
 msgstr "没有这种保存值"
 
-#: src/main/main.c:874
+#: src/main/main.c:878
 #, fuzzy
 msgid "invalid 'status', 0 assumed"
 msgstr "状态不对, 假設为0"
 
-#: src/main/main.c:879
+#: src/main/main.c:883
 #, fuzzy
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "runLast不对, 假設为FALSE"
 
-#: src/main/main.c:910
+#: src/main/main.c:914
 msgid "cannot allocate space for toplevel callback element"
 msgstr "无法为最高层回叫单元分配空间"
 
-#: src/main/main.c:988
+#: src/main/main.c:992
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex不能用负的索引值"
 
-#: src/main/main.c:1101
+#: src/main/main.c:1105
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "最高层任务回叫'%s'产生了警告信息\n"
 
-#: src/main/main.c:1161
+#: src/main/main.c:1165
 msgid "top-level task callback did not return a logical value"
 msgstr "最高层任务回叫没回覆逻辑值"
 
@@ -6132,39 +6134,39 @@ msgstr "没有这种在字符串尾的格式"
 msgid "reference to non-existent argument %d"
 msgstr "引用不存在的变元%d"
 
-#: src/main/sprintf.c:155
+#: src/main/sprintf.c:158
 msgid "coercion has changed vector length to 0"
 msgstr ""
 
-#: src/main/sprintf.c:163
+#: src/main/sprintf.c:166
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr "逻辑目标对象应用格式%d或%i"
 
-#: src/main/sprintf.c:176
+#: src/main/sprintf.c:179
 #, fuzzy, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr "整数目标对象应用格式%d,%i或%x"
 
-#: src/main/sprintf.c:189
+#: src/main/sprintf.c:192
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr "数值目标对象应用格式%f,%e或%g"
 
-#: src/main/sprintf.c:223
+#: src/main/sprintf.c:226
 #, c-format
 msgid "use format %s for character objects"
 msgstr "字符目标对象应用格式%s"
 
-#: src/main/sprintf.c:226
+#: src/main/sprintf.c:229
 msgid "Likely truncation of character string"
 msgstr "字符串很可能被缩短"
 
-#: src/main/sprintf.c:232
+#: src/main/sprintf.c:235
 msgid "unsupported type"
 msgstr "不支持这一种类"
 
-#: src/main/sprintf.c:248
+#: src/main/sprintf.c:251
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr "字符串长度超过了缓冲区的大小%d"
@@ -6434,60 +6436,61 @@ msgstr "%s()只适用于向量"
 msgid "%s() applies only to vectors"
 msgstr "%s()只适用于向量"
 
-#: src/main/unique.c:496
-msgid "match requires vector arguments"
+#: src/main/unique.c:498
+#, fuzzy
+msgid "'match' requires vector arguments"
 msgstr "match需要向量变元"
 
-#: src/main/unique.c:582
+#: src/main/unique.c:584
 msgid "invalid 'duplicates.ok' argument"
 msgstr "'duplicates.ok'变元不对"
 
-#: src/main/unique.c:585 src/main/unique.c:651
+#: src/main/unique.c:587 src/main/unique.c:653
 msgid "argument is not of mode character"
 msgstr "变元不是字符状态"
 
-#: src/main/unique.c:739
+#: src/main/unique.c:741
 msgid "... used in a situation where it doesn't exist"
 msgstr "... 用在它不存在的地方了"
 
-#: src/main/unique.c:778
+#: src/main/unique.c:780
 #, fuzzy, c-format
 msgid "'%s' is not a valid call"
 msgstr "%s调用不对"
 
-#: src/main/unique.c:835
+#: src/main/unique.c:837
 #, fuzzy, c-format
 msgid "'%s' is not a function"
 msgstr "%s不是函数"
 
-#: src/main/unique.c:843
+#: src/main/unique.c:845
 #, fuzzy, c-format
 msgid "'%s' is not a logical"
 msgstr "%s不是逻辑值"
 
-#: src/main/unique.c:979
+#: src/main/unique.c:981
 #, fuzzy
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr "rowsum()里出现了非数值矩阵：这不应该发生"
 
-#: src/main/unique.c:1010
+#: src/main/unique.c:1012
 msgid "non-numeric data frame in rowsum"
 msgstr "rowsum里不能有非数值数据框"
 
-#: src/main/unique.c:1035
+#: src/main/unique.c:1037
 #, fuzzy
 msgid "this cannot happen"
 msgstr "这不应该发生"
 
-#: src/main/unique.c:1091
+#: src/main/unique.c:1093
 msgid "'names' must be a character vector"
 msgstr "'names'必需是字符向量"
 
-#: src/main/unique.c:1095
+#: src/main/unique.c:1097
 msgid "'sep' must be a character string"
 msgstr "'sep'必需是字符串"
 
-#: src/main/unique.c:1164
+#: src/main/unique.c:1166
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated不能用于STRSXP"
 
@@ -7373,6 +7376,9 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "Warning messages:\n"
+#~ msgstr "警告信息:\n"
 
 #~ msgid "WARNING: invalid R_HISTSIZE ignored;"
 #~ msgstr "警告: R_HISTSIZE不对，略过不用;"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-08 13:44+0000\n"
+"POT-Creation-Date: 2005-03-09 07:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1032,7 +1032,7 @@ msgstr ""
 msgid "invalid add argument"
 msgstr ""
 
-#: src/main/builtin.c:66 src/main/errors.c:955
+#: src/main/builtin.c:66 src/main/errors.c:957
 msgid "invalid number of arguments"
 msgstr ""
 
@@ -1310,15 +1310,15 @@ msgstr ""
 msgid "invalid 'width' argument"
 msgstr ""
 
-#: src/main/coerce.c:88 src/main/errors.c:970
+#: src/main/coerce.c:88 src/main/errors.c:972
 msgid "NAs introduced by coercion"
 msgstr ""
 
-#: src/main/coerce.c:90 src/main/errors.c:971
+#: src/main/coerce.c:90 src/main/errors.c:973
 msgid "inaccurate integer conversion in coercion"
 msgstr ""
 
-#: src/main/coerce.c:92 src/main/errors.c:972
+#: src/main/coerce.c:92 src/main/errors.c:974
 msgid "imaginary parts discarded in coercion"
 msgstr ""
 
@@ -1442,7 +1442,7 @@ msgstr ""
 msgid "alpha level %d, not in 0:255"
 msgstr ""
 
-#: src/main/colors.c:84 src/main/errors.c:956 src/main/logic.c:164
+#: src/main/colors.c:84 src/main/errors.c:958 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr ""
 
@@ -2896,143 +2896,141 @@ msgstr ""
 msgid "Warning: "
 msgstr ""
 
-#: src/main/errors.c:327 src/main/errors.c:344 src/main/errors.c:433
+#: src/main/errors.c:327 src/main/errors.c:344 src/main/errors.c:435
 msgid "Lost warning messages\n"
 msgstr ""
 
-#: src/main/errors.c:357
+#: src/main/errors.c:356
 msgid "Warning message:\n"
-msgstr ""
+msgid_plural "Warning messages:\n"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/main/errors.c:366
-msgid "Warning messages:\n"
-msgstr ""
-
-#: src/main/errors.c:378
+#: src/main/errors.c:380
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr ""
 
-#: src/main/errors.c:381
+#: src/main/errors.c:383
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr ""
 
-#: src/main/errors.c:424
+#: src/main/errors.c:426
 msgid "Error during wrapup: "
 msgstr ""
 
-#: src/main/errors.c:447
+#: src/main/errors.c:449
 msgid "Error in "
 msgstr ""
 
-#: src/main/errors.c:458 src/main/errors.c:461
+#: src/main/errors.c:460 src/main/errors.c:463
 #, c-format
 msgid "Error: "
 msgstr ""
 
-#: src/main/errors.c:470 src/main/errors.c:1087
+#: src/main/errors.c:472 src/main/errors.c:1089
 msgid "In addition: "
 msgstr ""
 
-#: src/main/errors.c:604
+#: src/main/errors.c:606
 msgid "invalid option \"error\"\n"
 msgstr ""
 
-#: src/main/errors.c:680
+#: src/main/errors.c:682
 msgid "Execution halted\n"
 msgstr ""
 
-#: src/main/errors.c:714
+#: src/main/errors.c:716
 msgid "invalid 'string' value"
 msgstr ""
 
-#: src/main/errors.c:741 src/main/errors.c:832 src/main/errors.c:857
+#: src/main/errors.c:743 src/main/errors.c:834 src/main/errors.c:859
 msgid "invalid 'domain' value"
 msgstr ""
 
-#: src/main/errors.c:800
+#: src/main/errors.c:802
 msgid "invalid 'n'"
 msgstr ""
 
-#: src/main/errors.c:802
+#: src/main/errors.c:804
 msgid "'msg1' must be a character string"
 msgstr ""
 
-#: src/main/errors.c:804
+#: src/main/errors.c:806
 msgid "'msg2' must be a character string"
 msgstr ""
 
-#: src/main/errors.c:862
+#: src/main/errors.c:864
 msgid "invalid 'dirname' value"
 msgstr ""
 
-#: src/main/errors.c:898
+#: src/main/errors.c:900
 msgid " [invalid string in stop(.)]"
 msgstr ""
 
-#: src/main/errors.c:924
+#: src/main/errors.c:926
 msgid " [invalid string in warning(.)]"
 msgstr ""
 
-#: src/main/errors.c:940
+#: src/main/errors.c:942
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr ""
 
-#: src/main/errors.c:946 src/main/errors.c:961
+#: src/main/errors.c:948 src/main/errors.c:963
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr ""
 
-#: src/main/errors.c:958
+#: src/main/errors.c:960
 msgid "time-series/vector length mismatch"
 msgstr ""
 
-#: src/main/errors.c:959
+#: src/main/errors.c:961
 msgid "incompatible arguments"
 msgstr ""
 
-#: src/main/errors.c:962
+#: src/main/errors.c:964
 msgid "unknown error (report this!)"
 msgstr ""
 
-#: src/main/errors.c:974
+#: src/main/errors.c:976
 msgid "unknown warning (report this!)"
 msgstr ""
 
-#: src/main/errors.c:1052
+#: src/main/errors.c:1054
 msgid "No function to return from, jumping to top level"
 msgstr ""
 
-#: src/main/errors.c:1068
+#: src/main/errors.c:1070
 msgid "top level inconsistency?"
 msgstr ""
 
-#: src/main/errors.c:1168
+#: src/main/errors.c:1170
 msgid "bad handler data"
 msgstr ""
 
-#: src/main/errors.c:1316
+#: src/main/errors.c:1318
 msgid "error message not a string"
 msgstr ""
 
-#: src/main/errors.c:1390
+#: src/main/errors.c:1392
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 
-#: src/main/errors.c:1416 src/main/errors.c:1432
+#: src/main/errors.c:1418 src/main/errors.c:1434
 msgid "bad error message"
 msgstr ""
 
-#: src/main/errors.c:1474
+#: src/main/errors.c:1476
 msgid "bad restart"
 msgstr ""
 
-#: src/main/errors.c:1506
+#: src/main/errors.c:1508
 msgid "restart not on stack"
 msgstr ""
 
-#: src/main/errors.c:1524
+#: src/main/errors.c:1526
 msgid "not in a try context"
 msgstr ""
 
@@ -3625,44 +3623,48 @@ msgstr ""
 msgid "unable to restore saved data in .RData\n"
 msgstr ""
 
-#: src/main/main.c:854
-msgid "cannot quit from browser"
+#: src/main/main.c:651
+msgid "During startup - "
 msgstr ""
 
 #: src/main/main.c:858
+msgid "cannot quit from browser"
+msgstr ""
+
+#: src/main/main.c:862
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 
-#: src/main/main.c:863
+#: src/main/main.c:867
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 
-#: src/main/main.c:871
+#: src/main/main.c:875
 msgid "unrecognized value of 'save'"
 msgstr ""
 
-#: src/main/main.c:874
+#: src/main/main.c:878
 msgid "invalid 'status', 0 assumed"
 msgstr ""
 
-#: src/main/main.c:879
+#: src/main/main.c:883
 msgid "invalid 'runLast', FALSE assumed"
 msgstr ""
 
-#: src/main/main.c:910
+#: src/main/main.c:914
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 
-#: src/main/main.c:988
+#: src/main/main.c:992
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr ""
 
-#: src/main/main.c:1101
+#: src/main/main.c:1105
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 
-#: src/main/main.c:1161
+#: src/main/main.c:1165
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 
@@ -5943,39 +5945,39 @@ msgstr ""
 msgid "reference to non-existent argument %d"
 msgstr ""
 
-#: src/main/sprintf.c:155
+#: src/main/sprintf.c:158
 msgid "coercion has changed vector length to 0"
 msgstr ""
 
-#: src/main/sprintf.c:163
+#: src/main/sprintf.c:166
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr ""
 
-#: src/main/sprintf.c:176
+#: src/main/sprintf.c:179
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
 msgstr ""
 
-#: src/main/sprintf.c:189
+#: src/main/sprintf.c:192
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr ""
 
-#: src/main/sprintf.c:223
+#: src/main/sprintf.c:226
 #, c-format
 msgid "use format %s for character objects"
 msgstr ""
 
-#: src/main/sprintf.c:226
+#: src/main/sprintf.c:229
 msgid "Likely truncation of character string"
 msgstr ""
 
-#: src/main/sprintf.c:232
+#: src/main/sprintf.c:235
 msgid "unsupported type"
 msgstr ""
 
-#: src/main/sprintf.c:248
+#: src/main/sprintf.c:251
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr ""
@@ -6240,58 +6242,58 @@ msgstr ""
 msgid "%s() applies only to vectors"
 msgstr ""
 
-#: src/main/unique.c:496
-msgid "match requires vector arguments"
+#: src/main/unique.c:498
+msgid "'match' requires vector arguments"
 msgstr ""
 
-#: src/main/unique.c:582
+#: src/main/unique.c:584
 msgid "invalid 'duplicates.ok' argument"
 msgstr ""
 
-#: src/main/unique.c:585 src/main/unique.c:651
+#: src/main/unique.c:587 src/main/unique.c:653
 msgid "argument is not of mode character"
 msgstr ""
 
-#: src/main/unique.c:739
+#: src/main/unique.c:741
 msgid "... used in a situation where it doesn't exist"
 msgstr ""
 
-#: src/main/unique.c:778
+#: src/main/unique.c:780
 #, c-format
 msgid "'%s' is not a valid call"
 msgstr ""
 
-#: src/main/unique.c:835
+#: src/main/unique.c:837
 #, c-format
 msgid "'%s' is not a function"
 msgstr ""
 
-#: src/main/unique.c:843
+#: src/main/unique.c:845
 #, c-format
 msgid "'%s' is not a logical"
 msgstr ""
 
-#: src/main/unique.c:979
+#: src/main/unique.c:981
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr ""
 
-#: src/main/unique.c:1010
+#: src/main/unique.c:1012
 msgid "non-numeric data frame in rowsum"
 msgstr ""
 
-#: src/main/unique.c:1035
+#: src/main/unique.c:1037
 msgid "this cannot happen"
 msgstr ""
 
-#: src/main/unique.c:1091
+#: src/main/unique.c:1093
 msgid "'names' must be a character vector"
 msgstr ""
 
-#: src/main/unique.c:1095
+#: src/main/unique.c:1097
 msgid "'sep' must be a character string"
 msgstr ""
 
-#: src/main/unique.c:1164
+#: src/main/unique.c:1166
 msgid "csduplicated not called on a STRSXP"
 msgstr ""
 
