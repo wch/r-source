@@ -31,16 +31,19 @@ use R::Rd;
 #use strict;
 
 ## don't buffer output
-$|=1;
+$| = 1;
 
-my $revision = ' $Revision: 1.25 $ ';
+my $revision = ' $Revision: 1.25.4.1 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-$make = '@MAKE@';
+my $MAKE = '@MAKE@';
+
+my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\.swp\$",
+		       "^.*/\.#[^/]*\$", "^.*/#[^/]*#\$");
 
 my @knownoptions = ("help|h", "version|v", "binary", "no-docs",
 		    "use-zip", "use-zip-help", "use-zip-data", "force");
@@ -49,14 +52,14 @@ my $WINDOWS = (R_getenv("R_OSTYPE", "") eq "windows");
 my $tmpdir = R_getenv("TMPDIR", "/tmp");
 my $R_exe = "${R_HOME}/bin/R";
 
-if($WINDOWS){
+if($WINDOWS) {
     $tmpdir = R_getenv("TMPDIR", "/TEMP");
     die "Please set TMPDIR to a valid temporary directory\n" 
 	unless (-e $tmpdir);
     $R_exe = "Rterm.exe";
     $MAKE = "make";
     @knownoptions = ("help|h", "version|v", "binary", "docs:s",
-		    "use-zip", "use-zip-help", "use-zip-data", force);
+		    "use-zip", "use-zip-help", "use-zip-data", "force");
 }
 
 
@@ -65,7 +68,7 @@ GetOptions (@knownoptions) || usage();
 R_version("R add-on package builder", $version) if $opt_version;
 usage() if $opt_help;
 
-my $startdir=cwd();
+my $startdir = cwd();
 
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 
@@ -75,24 +78,23 @@ my $R_HOME = $ENV{'R_HOME'} ||
 my $R_CMD = $ENV{'R_CMD'} ||
     die "Error: Environment variable R_CMD not found\n";
 
-my $INS_opts = "";
-$INS_opts .= " --use-zip" if $opt_use_zip;
-$INS_opts .= " --use-zip-data" if $opt_use_zip_data;
-$INS_opts .= " --use-zip-help" if $opt_use_zip_help;
+my $INSTALL_opts = "";
+$INSTALL_opts .= " --use-zip" if $opt_use_zip;
+$INSTALL_opts .= " --use-zip-data" if $opt_use_zip_data;
+$INSTALL_opts .= " --use-zip-help" if $opt_use_zip_help;
 if($WINDOWS) {
-    $INS_opts .= " --docs=$opt_docs" if $opt_docs;
+    $INSTALL_opts .= " --docs=$opt_docs" if $opt_docs;
 } else {
-    $INS_opts .= " --no-docs" if $opt_no_docs;
+    $INSTALL_opts .= " --no-docs" if $opt_no_docs;
+}
+if(!$opt_binary && $INSTALL_opts ne "") {
+    printf "** Options $INSTALL_opts for --binary ignored\n";
 }
 
-if(!$opt_binary && $INS_opts ne "") {
-    printf "** Options $INS_opts for --binary ignored\n";
-}
-
-## this is the main loop over all packages to be checked
+## This is the main loop over all packages to be checked.
 my $pkg;
-foreach $pkg (@ARGV){
-    my $is_bundle=0;
+foreach $pkg (@ARGV) {
+    my $is_bundle = 0;
     $pkg =~ s/\/$//;
     my $pkgname = basename($pkg);
     chdir($startdir);
@@ -101,42 +103,41 @@ foreach $pkg (@ARGV){
 
     my $description;
     $log->checking("for file \`$pkg/DESCRIPTION'");
-    if(-r "$pkg/DESCRIPTION"){
+    if(-r "$pkg/DESCRIPTION") {
 	$description = new R::Dcf("$pkg/DESCRIPTION");
 	$log->result("OK");
     }
-    else{
+    else {
 	$log->result("NO");
 	exit(1);
     }
 	
-    
-    if($opt_binary){
+    if($opt_binary) {
 	my $libdir = "$tmpdir/Rbuild.$$";
 	mkdir("$tmpdir/Rbuild.$$", 0755) ||
 	    die "Cannot create directory $tmpdir/Rbuild.$$\n";
 
-	if(system("$R_CMD INSTALL -l $libdir $INS_opts $pkg")){
+	if(system("$R_CMD INSTALL -l $libdir $INSTALL_opts $pkg")) {
 	    $log->error("installation failed");
 	}
 	print("\n");
 	chdir($libdir);
 	
 	my $pkgs = $pkgname;
-	if($description->{"Contains"}){
+	if($description->{"Contains"}) {
 	    $log->message("Looks like \`${pkg}' is a package bundle");
-	    $is_bundle=1;
+	    $is_bundle = 1;
 	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
 	    $pkgs = join(" ", @bundlepkgs);
 	}
 
 	if($WINDOWS) {
-	    my $filename =  "${pkgname}_" . $description->{"Version"};
+	    my $filename = "${pkgname}_" . $description->{"Version"};
 	    $log->message("building \`$filename.zip'");
 	    system("zip -r9X $startdir/$filename.zip $pkgs");
 	    chdir($startdir);
 	} else {
-	    my $filename =  "${pkgname}_" . $description->{"Version"} .
+	    my $filename = "${pkgname}_" . $description->{"Version"} .
 		"_R_${R_platform}.tar";
 	    $log->message("building \`$filename.gz'");
 	    system("tar chf $startdir/$filename $pkgs");
@@ -146,13 +147,13 @@ foreach $pkg (@ARGV){
 
 	rmtree($libdir);
     }
-    else{
-	if($description->{"Contains"}){
+    else {
+	if($description->{"Contains"}) {
 	    $log->message("Looks like \`${pkg}' is a package bundle");
-	    $is_bundle=1;
+	    $is_bundle = 1;
 	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	    my $ppkg="";
-	    foreach $ppkg (@bundlepkgs){
+	    my $ppkg = "";
+	    foreach $ppkg (@bundlepkgs) {
 		$log->message("preparing \`$ppkg' in bundle \`$pkg':");
 		$log->setstars("**");
 		chdir($startdir);
@@ -160,8 +161,8 @@ foreach $pkg (@ARGV){
 		$log->setstars("*");
 	    }
 	}
-	else{
-	    $is_bundle=0;
+	else {
+	    $is_bundle = 0;
 	    chdir($startdir);
 	    $log->message("preparing \`$pkg':");
 	    prepare_pkg("$pkg", $is_bundle, $description, $log);
@@ -176,7 +177,6 @@ foreach $pkg (@ARGV){
 	open exclude, "> $exclude" ||
 	    die "Cannot write to \`$exclude'\n";
 	binmode exclude if $WINDOWS;
-	@excludepatterns = ("^.Rbuildignore\$", "\~\$", "\.swp\$");
 	if(-f "$pkg/.Rbuildignore") {
 	    open(RBUILDIGNORE, "$pkg/.Rbuildignore");
 	    while(<RBUILDIGNORE>) {
@@ -208,7 +208,7 @@ foreach $pkg (@ARGV){
     
 sub deleteJunkFiles {
     unlink($_) if /^(\.RData|\.Rhistory)$/;
-    if(/^DESCRIPTION$/){
+    if(/^DESCRIPTION$/) {
 	unlink($_) if (-f "DESCRIPTION.in");
     }
 }
@@ -226,7 +226,6 @@ sub findExcludeFiles {
     }
 }
 
-
 #**********************************************************
 
 sub prepare_pkg {
@@ -237,27 +236,33 @@ sub prepare_pkg {
     my $pkgdir = cwd();
     my $pkgname = basename($pkg);
 
-    if(-d "src"){
+    if(-d "src") {
 	chdir("src");
 	$log->message("cleaning src");
 	if($WINDOWS) {
 	    if(-r "Makefile.win") {
-		system("$make -f Makefile.win clean");
+		system("$MAKE -f Makefile.win clean");
 	    } else {
 		my $file;
-		foreach $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>){
+		foreach $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>) {
 		    unlink($file);
 		}
 	    }
-	} else{
-	    my $file;
-	    foreach $file (<*.o *s[lo]>){
-		unlink($file);
+	} else {
+	    if(-r "Makefile") {
+		system("$MAKE -f Makefile clean");
+	    } else {
+		my $file;
+		foreach $file (<*.o *s[lo]>) {
+		    unlink($file);
+		}
+		rmtree(".libs") if (-d ".libs");
+		rmtree("_libs") if (-d "_libs");
 	    }
 	}
     }
     chdir($pkgdir);
-    if(!$WINDOWS && -x "./cleanup"){
+    if(!$WINDOWS && -x "./cleanup") {
 	$log->message("running cleanup");
 	system("./cleanup");
     }
@@ -279,35 +284,34 @@ sub updateIndex {
     my $dataopt = "-d" if $dataset;
     system("${R_CMD} Rdindex $dataopt ${Rdfiles} > ${newindex}");
 
-    if(-r $oldindex){
-	if(compare($oldindex, $newindex) != 0){
+    if(-r $oldindex) {
+	if(compare($oldindex, $newindex) != 0) {
 	    $log->result("NO");
-	    if($opt_force){
+	    if($opt_force) {
 		$log->message("overwriting \`${oldindex}' as " .
 			      "\`--force' was given");
-		unlink $oldindex ;
+		unlink $oldindex;
 		rename($newindex, $oldindex);
 	    }
-	    else{
-		$log->message("use \`--force' to overwrite the existing \`${oldindex}'");
+	    else {
+		$log->message("use \`--force' to overwrite " .
+			      "the existing \`${oldindex}'");
 		unlink $newindex;
 	    }
 	}
-	else{
+	else {
 	    $log->result("OK");
 	    unlink $newindex;
-
 	}
     }
-    else{
+    else {
 	$log->result("NO");
 	$log->message("creating new $oldindex");
-	unlink $oldindex ;
+	unlink $oldindex;
 	rename($newindex, $oldindex);
     }
     1;
 }
-
 
 #**********************************************************
 
@@ -327,10 +331,12 @@ Options:
   --binary              build pre-compiled binary packages, with options:
 END
     if($WINDOWS) {
-    print "  --docs=TYPE           type(s) of documentation to build and install\n";
-} else {
-    print "  --no-docs             do not build and install documentation\n"
-}
+	print STDERR "  --docs=TYPE           " .
+	    "type(s) of documentation to build and install\n";
+    } else {
+	print STDERR "  --no-docs             " .
+	    "do not build and install documentation\n";
+    }
     print STDERR <<END;
   --use-zip-data        collect data files in zip archive
   --use-zip-help        collect help and examples into zip archives
