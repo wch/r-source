@@ -31,6 +31,8 @@ NEW FEATURES
     o	New utility `R CMD build' for building add-on packages along
 	with some useful testing and cleaning up.
 
+    o	The ``Introduction to R'' manual.
+
 
 
 BUG FIXES
