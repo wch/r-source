@@ -73,8 +73,8 @@ help html latex examples: FORCE
 	-@(cd src/library && $(MAKE) $@)
 FORCE:
 
-stamp-recommended: FORCE
-	-@(cd src/library/Recommended && $(MAKE) $@)
+stamp-recommended: R docs
+	-@(cd src/library/Recommended && $(MAKE) )
 
 install: installdirs
 	@for d in $(SUBDIRS); do \
@@ -120,7 +120,7 @@ maintainer-clean: distclean
 dist: dist-unix
 dist-unix: distdir
 	-chmod -R a+r $(distdir)
-	GZIP=$(GZIP) $(TAR) chzf $(distdir).tar.gz $(distdir)
+	GZIP=$(GZIP) $(TAR) czf $(distdir).tar.gz $(distdir)
 	rm -rf $(distdir)
 dist-win:
 distdir: $(DISTFILES)

@@ -14,35 +14,31 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in .cvsignore
 R = $(top_builddir)/bin/R
 
-CLEANFILES = Timestamp
+# foo.ts is the timestamp for package foo
+# foo_tgz is a symlink to foo_x.y-z.tar.gz in the source dir
+
+#  For developers: A shell script, tools/rsync-recommended, updates
+#  packages from the CRAN master directory. 
+
+.SUFFIXES: _tgz .ts
+OBJECTS=$(R_PKGS_RECOMMENDED:=.ts)
+
+CLEANFILES = $(OBJECTS)
 DISTCLEANFILES = Makefile
 
-all: Makefile @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
+all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ $(OBJECTS)
+
+_tgz.ts:
+	$(R) CMD INSTALL $<
+	touch $@
+
+# survival needs to be installed before boot
+boot.ts: survival.ts boot_tgz
+	$(R) CMD INSTALL $(srcdir)/boot_tgz
+	touch $@
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-
-## <FIXME>
-## This should have more error checking: in particular, that for each
-## recommended package we have *exactly* one corresponding .tar.gz.
-stamp-recommended: Timestamp
-	@for pkg in $(R_PKGS_RECOMMENDED); do \
-	  for file in $(srcdir)/$${pkg}_*.tar.gz; do \
-	    if test $${file} -nt Timestamp ; then \
-	      R_LIBS= $(R) CMD INSTALL $${file} || exit 1; \
-	    fi; \
-	  done; \
-	done
-	@touch Timestamp
-## </FIXME>
-## <FIXME>
-## Do we still need this?
-## If not, then in the above change the final line to '@touch $@'.
-Timestamp:
-	@touch $@
-	@sleep 1
-	@find $(srcdir) -name '*.tar.gz' -exec touch {} . \;
-## </FIXME>
 
 R docs:
 
@@ -60,7 +56,7 @@ distclean: clean
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
-	@for f in $(DISTFILES) `cd $(srcdir) && ls *.tar.gz`; do \
+	@for f in $(DISTFILES) `cd $(srcdir) && ls *.tar.gz *_tgz`; do \
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
