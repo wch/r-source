@@ -184,6 +184,9 @@ BUG FIXES
     o   step(fit, direction="both") now uses both directions even if 
 	no scope is supplied.
 
+    o	strwidth(), strheight() all now give 0 on NA strings (as they
+	are no longer plotted). (PR#1739)
+
 
 
 	**************************************************
@@ -224,9 +227,6 @@ BUG FIXES
 	and did not check for duplicated names.
 
     o	ls.str(envir = environment(F)) now works (when F is a function).
-
-    o	nchar(), strwidth(), strheight() all now give NA on NA strings.
-	(PR#1739)
 
 
 

@@ -3191,7 +3191,7 @@ SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
 					     GMapUnits(units), dd);
 	else {
 	    ch = STRING_ELT(str, i);
-	    REAL(ans)[i] = (ch == NA_STRING) ? NA_REAL :
+	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 :
 		GStrHeight(CHAR(ch), GMapUnits(units), dd);
 	}
     Rf_gpptr(dd)->cex = cexsave;
@@ -3235,7 +3235,7 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 					    GMapUnits(units), dd);
 	else {
 	    ch = STRING_ELT(str, i);
-	    REAL(ans)[i] = (ch == NA_STRING) ? NA_REAL : 
+	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 : 
 		GStrWidth(CHAR(ch), GMapUnits(units), dd);
 	}
     Rf_gpptr(dd)->cex = cexsave;

@@ -3,24 +3,30 @@
 \usage{nchar(x)}
 \alias{nchar}
 \description{
-\code{nchar} takes a character vector as an argument and
-returns a vector whose elements contain the number of characters in
-the corresponding element of \code{x}.
-It only accepts character vectors as arguments if you want to operate
-on other objects passing them through \code{deparse} first will be required.
+  \code{nchar} takes a character vector as an argument and
+  returns a vector whose elements contain the number of characters in
+  the corresponding element of \code{x}.
 }
 \arguments{
-  \item{x}{character vector.} 
+  \item{x}{character vector, or a vector to be coerced to a character
+    vector.} 
+}
+\details{
+  The internal equivalent of \code{\link{as.character}} is performed on
+  \code{x}. If you want to operate
+  on non-vector objects passing them through \code{\link{deparse}} first
+  will be required.
 }
 \value{
-  The number of characters, or integer \code{NA} for a missing string.
+  The number of characters as the string will be printed (integer
+  \code{2} for a missing string).
 }
 \seealso{
-\code{\link{strwidth}} giving width of strings for plotting;
-\code{\link{paste}}, \code{\link{substr}}, \code{\link{strsplit}}
+  \code{\link{strwidth}} giving width of strings for plotting;
+  \code{\link{paste}}, \code{\link{substr}}, \code{\link{strsplit}}
 }
 \examples{
-x<-c("asfef","qwerty","yuiop[","b","stuff.blah.yech")
+x <- c("asfef","qwerty","yuiop[","b","stuff.blah.yech")
 nchar(x)
 # 5  6  6  1 15
 

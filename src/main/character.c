@@ -38,6 +38,8 @@
 # include "Rregex.h"
 #endif
 
+#include <Print.h> /* for R_print */
+
 #include "apse.h"
 
 #ifndef MAX
@@ -60,7 +62,9 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
 	ch = STRING_ELT(x, i);
-	INTEGER(s)[i] = (ch == NA_STRING) ? NA_INTEGER : strlen(CHAR(ch));
+	/* give print width for an NA_STRING */
+	INTEGER(s)[i] = 
+	    (ch == NA_STRING) ? R_print.na_width : strlen(CHAR(ch));
     }
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
 	setAttrib(s, R_DimSymbol, d);
