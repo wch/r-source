@@ -27,22 +27,11 @@ dev.control(displaylist)
 
   \code{dev.print} copies the graphics contents of the current device
   to a new device which has been created by the function specified by
-  \code{device} and then shuts the new device.  This is most useful
-  for producing a postscript print from an on-screen device.  Unless
-  \code{file} is specified, the plot will be printed.  Unless
-  \code{width}, \code{height} and \code{pointsize} are specified
-  the plot dimensions will be taken from the current device, shrunk
-  if necessary to fit on the paper. (\code{pointsize} is rescaled if the
-  plot is shrunk.)  If \code{horizontal} is not specified and the plot
-  can be printed at full size by switching its value this is done
-  instead of shrinking the plot region.
+  \code{device} and then shuts the new device.  The default is to
+  produce and print a postscript copy.
 
   \code{dev.copy2eps} is similar to \code{dev.print} but produces an
-  EPSF output file.  Unless otherwise specified \code{width} and
-  \code{height} are taken from the current device, but \code{pointsize}
-  is taken from \code{\link{ps.options}}.  If just one of \code{width} and
-  \code{height} is specified, the other is adjusted to preserve the
-  aspect ratio of the device being copied.
+  EPSF output file.
 
   \code{dev.control} allows the user to control the recording of
   graphics operations in a device.  If \code{displaylist} is "inhibit"
@@ -54,6 +43,27 @@ dev.control(displaylist)
 
   \code{dev.print} and \code{dev.copy2eps} return the name and number of
   the device which has been copied from.
+}
+\details{
+  For \code{dev.copy2eps}, \code{width} and \code{height} are taken
+  from the current device unless otherwise specified.  If just one of
+  \code{width} and \code{height} is specified, the other is adjusted
+  to preserve the aspect ratio of the device being copied.  The default
+  file name is \code{Rplot.eps}.
+
+  \code{dev.print} is most useful for producing a postscript print
+  (its default) when the following applies.  Unless
+  \code{file} is specified, the plot will be printed.  Unless
+  \code{width}, \code{height} and \code{pointsize} are specified
+  the plot dimensions will be taken from the current device, shrunk
+  if necessary to fit on the paper. (\code{pointsize} is rescaled if the
+  plot is shrunk.)  If \code{horizontal} is not specified and the plot
+  can be printed at full size by switching its value this is done
+  instead of shrinking the plot region.
+
+  If \code{dev.print} is use with a specified device (even
+  \code{postscript}) it sets the width and height in the same way as
+  \code{dev.copy2eps}.
 }
 \note{
   Most devices (including all screen devices) have a display list
