@@ -31,13 +31,13 @@ file(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
 pipe(description, open = "", encoding = getOption("encoding"))
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
-url(description, open = "", encoding = getOption("encoding"))
+url(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
 socketConnection(host = "localhost", port, server = FALSE, blocking = TRUE,
                  open = "r", encoding = getOption("encoding"))
 
 \method{open}{connection}(con, open = "r", blocking = TRUE)
 \method{close}{connection}(con, type = "rw")
-\method{seek}{connection}(con, where = NA, origin="start", \dots)
+\method{seek}{connection}(con, where = NA, origin = "start", \dots)
 \method{truncate}{connection}(con, \dots)
 
 isOpen(con, rw = "")
@@ -48,14 +48,16 @@ isSeekable(con)
   \item{description}{character. A description of the connection. For
     \code{file} and \code{pipe} this is a path to the file to be opened.
     For \code{url} it is a complete URL, including schemes
-    (\code{http://}, \code{ftp://} or \code{file://}).
+    (\code{http://}, \code{ftp://} or \code{file://}).  \code{file} alos
+    accepts complete URLs.
   }
   \item{host}{character.  Host name for port.}
   \item{port}{integer.  The TCP port number.}
   \item{server}{logical.  Should the socket be a client or a server?}
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
-  \item{blocking}{logical.  Currently ignored.}
+  \item{blocking}{logical.  If false, operations return immediately without
+    waiting for input.}
   \item{encoding}{An integer vector of length 256.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal.  The default is a good

@@ -8,7 +8,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 \alias{source}
 \arguments{
   \item{file}{a connection or a character string giving the name
-    of the file to read from.}
+    of the file or URL to read from.}
   \item{local}{if \code{local} is \code{FALSE}, the statements scanned
     are evaluated in the user's workspace (the global environment),
     otherwise in the environment calling \code{source}.}

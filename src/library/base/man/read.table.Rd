@@ -32,11 +32,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     Each row of the table appears as one line of the file.  If it does
     not contain an \emph{absolute} path, the file name is
     \emph{relative} to the current working directory,
-    \code{\link{getwd}()}.
+    \code{\link{getwd}()}. Tilde-expansion is performed where supported.
 
     Alternatively, \code{file} can be a \code{\link{connection}}, which
     will be opened if necessary, and if so closed at the end of the
     function call.
+
+    \code{file} can also be a complete URL.
   }
 
   \item{header}{a logical value indicating whether the file contains the

@@ -13,7 +13,9 @@ NEW FEATURES
 
     o	Changes to connections:
 
-	-  New function url() to read from URLs.
+	-  New function url() to read from URLs.  file() will also
+	   accept URL specifications, as will all the functions which
+	   use it.
 
 	-  New function gzfile() to read from / write to compressed files.
 
@@ -36,6 +38,8 @@ NEW FEATURES
 
 	-  Socket connections via function socketConnection().
 	   [Not yet operational.]
+
+	-  The `blocking' argument for file connections is now operational.
 
     o	The default method for download.file() (and functions which use
 	it such as update.packages()) is now "internal", and uses code
@@ -201,7 +205,9 @@ NEW FEATURES
 
     o	Functions httpclient(), read.table.url(), scan.url() and
 	source.url() are now deprecated, and hence method="socket' in
-	download.file() is.  Use url connections instead.
+	download.file() is.  Use url connections instead: in
+	particular URLs can be specified for read.table(), scan() and 
+	source().
 
     o	Formerly deprecated function getenv() is now defunct.
 

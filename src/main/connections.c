@@ -148,7 +148,9 @@ static size_t null_write(const void *ptr, size_t size, size_t nitems,
 static void file_open(Rconnection con)
 {
     FILE *fp;
-/*    int fd, flags; */  /* fcntl does not exist on Windows */
+#ifdef HAVE_FCNTL
+    int fd, flags;
+#endif
 
     fp = R_fopen(R_ExpandFileName(con->description), con->mode);
     if(!fp) error("cannot open file `%s'",
@@ -161,12 +163,14 @@ static void file_open(Rconnection con)
     else con->text = TRUE;
     con->save = -1000;
 
-/*    if(!con->blocking) {
+#ifdef HAVE_FCNTL
+    if(!con->blocking) {
 	fd = fileno(fp);
 	flags = fcntl(fd, F_GETFL);
 	flags |= O_NONBLOCK;
 	fcntl(fd, F_SETFL, flags);
-	}*/
+	}
+#endif
 }
 
 static void file_close(Rconnection con)
@@ -292,6 +296,7 @@ static Rconnection newfile(char *description, char *mode)
     return new;
 }
 
+#ifdef UNUSED
 SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
@@ -320,6 +325,7 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
     con = Connections[ncon] = newfile(file, strlen(open) ? open : "r");
     for(i = 0; i < 256; i++)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+    con->blocking = block;
 
     /* open it if desired */
     if(strlen(open)) con->open(con);
@@ -334,6 +340,7 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ans;
 }
+#endif
 
 /* ------------------- pipe connections --------------------- */
 
@@ -1183,8 +1190,7 @@ static size_t sock_write(const void *ptr, size_t size, size_t nitems,
     return len;
 }
 
-static Rconnection newsock(char *host, int port, int server, int blocking,
-			   char *mode)
+static Rconnection newsock(char *host, int port, int server, char *mode)
 {
     Rconnection new;
 
@@ -1263,10 +1269,11 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `enc' argument");
 
     ncon = NextConnection();
-    Connections[ncon] = newsock(host, port, server, blocking, open);
+    Connections[ncon] = newsock(host, port, server, open);
     for(i = 0; i < 256; i++)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
-
+    con->blocking = blocking;
+    
     /* open it if desired */
     if(strlen(open)) con->open(con);
 
@@ -2381,10 +2388,10 @@ static int url_fgetc(Rconnection con)
 
     switch(type) {
     case HTTPsh:
-	n = R_HTTPRead(ctxt, &c, 1);
+	n = R_HTTPRead(ctxt, (char *)&c, 1);
 	break;
     case FTPsh:
-	n = R_FTPRead(ctxt, &c, 1);
+	n = R_FTPRead(ctxt, (char *)&c, 1);
 	break;
     }
     return (n == 1) ? c : R_EOF;
@@ -2459,7 +2466,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     char *url, *open, *class2 = "url";
-    int i, ncon;
+    int i, ncon, block;
     Rconnection con = NULL;
 #if defined(HAVE_LIBXML) || defined(USE_WININET)
     UrlScheme type = HTTPsh; /* -Wall */
@@ -2477,15 +2484,17 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	type = HTTPsh;
     } else if (strncmp(url, "ftp://", 6) == 0) {
 	type = FTPsh;
-    } else
+    }
 #endif
-	error("unsupported URL scheme");
 
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
-    enc = CADDR(args);
+    block = asLogical(CADDR(args));
+    if(block == NA_LOGICAL)
+	error("invalid `block' argument");
+    enc = CADDDR(args);
     if(!isInteger(enc) || length(enc) != 256)
 	error("invalid `enc' argument");
 
@@ -2499,12 +2508,19 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
        con = newurl(url, strlen(open) ? open : "r");
        ((Rurlconn)con->private)->type = type;
 #endif
-    } else
-	error("unsupported URL scheme");
-
+    } else {
+	if(PRIMVAL(op)) { /* call to file() */
+	    con = newfile(url, strlen(open) ? open : "r");
+	    class2 = "file";
+	} else {
+	    error("unsupported URL scheme");
+	}
+    }
+    
     Connections[ncon] = con;
     for(i = 0; i < 256; i++)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+    con->blocking = block;
 
     /* open it if desired */
     if(strlen(open)) con->open(con);
@@ -2743,7 +2759,6 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef HAVE_LIBXML
 #define INTERNET 1
-
 
 void *R_HTTPOpen(const char *url)
 {
@@ -2996,7 +3011,7 @@ void *R_HTTPOpen(const char *url)
     return (void *)wictxt;
 }
 
-int R_HTTPRead(void *ctx, char *dest, int len)
+int R_HTTPRead(void *ctx, void *dest, int len)
 {
     DWORD nread;
 
@@ -3018,6 +3033,7 @@ int R_HTTPRead(void *ctx, char *dest, int len)
     R_ProcessEvents();
     return (int) nread;
 }
+
 
 void R_HTTPClose(void *ctx)
 {
@@ -3113,9 +3129,7 @@ void *R_FTPOpen(const char *url)
 
 int R_FTPRead(void *ctx, char *dest, int len)
 {
-    int nread = R_HTTPRead(ctx, dest, len);
-    R_ProcessEvents();
-    return nread;
+    return R_HTTPRead(ctx, dest, len);
 }
 
 void R_FTPClose(void *ctx)

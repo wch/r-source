@@ -24,6 +24,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     Alternatively, \code{file} can be a \code{\link{connection}}, which
     will be opened if necessary, and if so closed at the end of the
     function call.
+
+    \code{file} can also be a complete URL.
   }
   \item{what}{the type of \code{what} gives the type of data to be
     read.  If \code{what} is a list, it is assumed that the lines of the
