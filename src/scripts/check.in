@@ -31,6 +31,7 @@ use File::Find;
 use File::Path;
 use Getopt::Long;
 use R::Dcf;
+use R::Logfile;
 use R::Rdtools;
 use R::Utils;
 use Text::DelimMatch;
@@ -38,15 +39,12 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.81 $ ';
+my $revision = ' $Revision: 1.82 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
-
-my $LATEX = '@LATEX@';
-my $MAKE = '@MAKE@';
 
 ## Options
 my $opt_clean = 1;
@@ -75,43 +73,12 @@ $opt_codoc = 0 if $opt_no_codoc;
 $opt_perms = 0 if $opt_no_perms;
 $opt_install = 0 if $opt_no_install;
 
-sub env_path {
-    my @args = @_;
-    my $envsep = ":";
-    $envsep = ";" if($WINDOWS);
-    join($envsep, @args);
-}
-
 my $startdir = cwd();
 $opt_outdir = $startdir unless $opt_outdir;
 chdir($opt_outdir) ||
     die "Error: cannot change to directory \`$opt_outdir'\n";
 my $outdir = cwd();
 chdir($startdir);
-
-my $R_HOME = $ENV{'R_HOME'} ||
-    die "Error: environment variable R_HOME not found\n";
-
-my $R_CMD = $ENV{'R_CMD'} ||
-    die "Error: environment variable R_CMD not found\n";
-
-## <FIXME>
-## Currently, R_OSTYPE is always set on Unix/Windows.
-my $OS = R_getenv("R_OSTYPE", "mac");
-## </FIXME>
-
-my $R_exe = "${R_HOME}/bin/R";
-my $TMPDIR = R_getenv("TMPDIR", "/tmp");
-$WINDOWS = ($OS eq "windows");
-if($WINDOWS) {
-    $TMPDIR = R_getenv("TMPDIR", "/TEMP");
-    die "Please set TMPDIR to a valid temporary directory\n" 
-      unless (-e $TMPDIR);
-    $R_exe = "Rterm.exe";
-    $LATEX = "latex";
-    $MAKE = "make";
-}
-my $cfile = "$TMPDIR/Rcheck.$$";
 
 my $R_LIBS = $ENV{'R_LIBS'};
 my $library;
@@ -129,13 +96,13 @@ my $R_opts = "--vanilla";
 if($opt_latex) {
     my $log = new R::Logfile();
     $log->checking("for working latex");
-    open(TEXFILE, "> $TMPDIR/Rtextest$$.tex")
+    open(TEXFILE, "> $R_TMPDIR/Rtextest$$.tex")
       or die "Error: cannot write to Rtextest$$.tex\n";
     print TEXFILE "\\documentclass\{article\}\\begin\{document\}" .
 	"test\\end\{document\}\n";
     close TEXFILE;
-    chdir($TMPDIR);
-    if(Rsystem("$LATEX Rtextest$$ > Rtextest$$.out")) {
+    chdir($R_TMPDIR);
+    if(R_system("$R_LATEX Rtextest$$ > Rtextest$$.out")) {
 	$log->result("NO");
 	$HAVE_LATEX = 0;
     } else {
@@ -314,7 +281,7 @@ sub check_pkg {
 	    }
 	    close(RBUILDIGNORE);
 	}
-
+	
 	## Phase A.  Directories at least 755, files at least 644.
 	sub findWrongPermsA {
 	    my $filename = $File::Find::name;
@@ -329,8 +296,8 @@ sub check_pkg {
 		push @badfiles, $File::Find::name;
 	    }
 	}
-	find(\&findWrongPermsA, ".");
-	if($#badfiles >= 0) {
+        find(\&findWrongPermsA, ".");
+        if($#badfiles >= 0) {
 	    $log->error("  Found the following files with " .
 			"insufficient permissions:");
 	    $log->message("    " . join("\n    ", @badfiles));
@@ -347,7 +314,7 @@ sub check_pkg {
 	   "\\.([Ccfh]|cc|cpp)\$",
 				# C/C++/FORTRAN sources and headers
 	   "^(DESCRIPTION|INDEX|README|TITLE)\$");
-	sub findWrongPermsB {
+         sub findWrongPermsB {
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
 	    foreach my $p (@excludepatterns) {
@@ -375,7 +342,7 @@ sub check_pkg {
     }
 
     if($in_bundle) {		# join DESCRIPTION and DESCRIPTION.in
-	if(-r "DESCRIPTION.in") {
+        if(-r "DESCRIPTION.in") {
 	    $log->checking("for file \`DESCRIPTION.in'");
 	    my $description_in = new R::Dcf("DESCRIPTION.in");
 	    foreach my $key (keys(%$description)) {
@@ -400,7 +367,7 @@ sub check_pkg {
     $log->checking("DESCRIPTION Package field");
     if(! $description->{"Package"}) {
 	$log->error("no DESCRIPTION Package field found");
-	exit(1);
+        exit(1);
     }
     my $tmp = $description->{"Package"};
     if($description->{"Package"} ne $pkgname) {
@@ -474,21 +441,11 @@ sub check_pkg {
     if(!$is_base_pkg && -d "R") {
 	$log->checking("R files for syntax errors");
 	my @Rfiles = &list_files_with_exts("R", "[RrSsq]");
-	my $Rcmd = "$TMPDIR/Rcmd.$$";
-	my $Rout = "$TMPDIR/Rout.$$";
-	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-	print RCMD "Rfiles <- c(\"", join("\", \"", @Rfiles), "\")\n";
-	print RCMD "for(f in Rfiles)\n";
-	print RCMD "if(inherits(try(parse(f)), \"try-error\")) stop(f)\n";
-        close RCMD;
-        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
-        my @out;
-        open ROUT, "< $Rout";
-        while(<ROUT>) {chomp; push(@out, $_);}
-        close ROUT;
-        unlink($Rcmd);
-        unlink($Rout);
-
+	my $Rcmd = "Rfiles <- c(\"" .
+	    join("\", \"", @Rfiles) . "\")\n" .
+		"for(f in Rfiles)\n" .
+		    "if(inherits(try(parse(f)), \"try-error\")) stop(f)\n";
+        my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(/^Error:/, @out);
 	if($#out >= 0) {
 	    my $Rfile = $out[0];
@@ -548,25 +505,15 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("generic/method consistency");
 
-	my $Rcmd = "$TMPDIR/Rcmd.$$";
-	my $Rout = "$TMPDIR/Rout.$$";
-	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-	print RCMD "library(tools)\n";
-	if($opt_install && ($OS eq "unix")) {
-	    print RCMD "checkMethods(package = \"${pkgname}\")\n";
+	my $Rcmd = "library(tools)\n";
+	if($opt_install && ($R_OSTYPE eq "unix")){
+	    $Rcmd .= "checkMethods(package = \"${pkgname}\")\n";
 	}
-	else {
-	    print RCMD "checkMethods(dir = \"${pkgdir}\")\n";
+        else {
+	    $Rcmd .= "checkMethods(dir = \"${pkgdir}\")\n";
 	}
-        close RCMD;
-        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
-        my @out;
-        open ROUT, "< $Rout";
-        while(<ROUT>) {chomp; push(@out, $_);}
-        close ROUT;
-        unlink($Rcmd);
-        unlink($Rout);
 
+        my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
 	if($#out>=0) {
 	    $log->warning();
@@ -583,25 +530,15 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("for assignment functions with final arg not " .
 		       "named \`value'");
-	my $Rcmd = "$TMPDIR/Rcmd.$$";
-	my $Rout = "$TMPDIR/Rout.$$";
-	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-	print RCMD "library(tools)\n";
-	if($opt_install && ($OS eq "unix")) {
-	    print RCMD "checkAssignFuns(package = \"${pkgname}\")\n";
+	my $Rcmd = "library(tools)\n";
+	if($opt_install && ($R_OSTYPE eq "unix")) {
+	    $Rcmd .= "checkAssignFuns(package = \"${pkgname}\")\n";
 	}
 	else {
-	    print RCMD "checkAssignFuns(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "checkAssignFuns(dir = \"${pkgdir}\")\n";
 	}
-        close RCMD;
-        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
-        my @out;
-        open ROUT, "< $Rout";
-        while(<ROUT>) {chomp; push(@out, $_);}
-        close ROUT;
-        unlink($Rcmd);
-        unlink($Rout);
 
+        my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^(\>|character)/, @out);	
 	if($#out>=0) {
             ## <FIXME>
@@ -758,25 +695,15 @@ sub check_pkg {
     if(((-d "R") || (-d "data")) && -d "man") {
 	$log->checking("for undocumented objects");
 
-	my $Rcmd = "$TMPDIR/Rcmd.$$";
-	my $Rout = "$TMPDIR/Rout.$$";
-	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-	print RCMD "library(tools)\n";
-	if($opt_install && ($OS eq "unix")) {
-	    print RCMD "undoc(package = \"${pkgname}\")\n";
+	my $Rcmd = "library(tools)\n";
+	if($opt_install && ($R_OSTYPE eq "unix")) {
+	    $Rcmd .= "undoc(package = \"${pkgname}\")\n";
 	}
 	else {
-	    print RCMD "undoc(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "undoc(dir = \"${pkgdir}\")\n";
 	}
-        close RCMD;
-        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
-        my @out;
-        open ROUT, "< $Rout";
-        while(<ROUT>) {chomp; push(@out, $_);}
-        close ROUT;
-        unlink($Rcmd);
-        unlink($Rout);
 
+        my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^(\>|character)/, @out);
 	if($#err<0) {
@@ -799,24 +726,14 @@ sub check_pkg {
     if($opt_codoc && ((-d "R") || (-d "data")) && -d "man") {
 	$log->checking("for code/documentation mismatches");
 
-	my $Rcmd = "$TMPDIR/Rcmd.$$";
-	my $Rout = "$TMPDIR/Rout.$$";
-	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-	print RCMD "library(tools)\n";
-	if($opt_install && ($OS eq "unix")) {
-	    print RCMD "codoc(package = \"${pkgname}\")\n";
+	my $Rcmd = "library(tools)\n";
+	if($opt_install && ($R_OSTYPE eq "unix")) {
+	    $Rcmd .= "codoc(package = \"${pkgname}\")\n";
 	}
 	else {
-	    print RCMD "codoc(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "codoc(dir = \"${pkgdir}\")\n";
 	}
-        close RCMD;
-        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
-        my @out;
-        open ROUT, "< $Rout";
-        while(<ROUT>) {chomp; push(@out, $_);}
-        close ROUT;
-        unlink($Rcmd);
-        unlink($Rout);
+        my @out = R_runR($Rcmd, "${R_opts} --quiet");
 
 	## <FIXME>
 	## With the current heuristics codoc() may throw an error even
@@ -839,25 +756,15 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("for undocumented arguments in \\usage");
 
-	my $Rcmd = "$TMPDIR/Rcmd.$$";
-	my $Rout = "$TMPDIR/Rout.$$";
-	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
-	print RCMD "library(tools)\n";
-	if($opt_install && ($OS eq "unix")) {
-	    print RCMD "checkDocArgs(package = \"${pkgname}\")\n";
+	my $Rcmd = "library(tools)\n";
+	if($opt_install && ($R_OSTYPE eq "unix")) {
+	    $Rcmd .= "checkDocArgs(package = \"${pkgname}\")\n";
 	}
 	else {
-	    print RCMD "checkDocArgs(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "checkDocArgs(dir = \"${pkgdir}\")\n";
 	}
-        close RCMD;
-        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
-        my @out;
-        open ROUT, "< $Rout";
-        while(<ROUT>) {chomp; push(@out, $_);}
-        close ROUT;
-        unlink($Rcmd);
-        unlink($Rout);
 
+        my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
 	if($#out>=0) {
 	    $log->warning();
@@ -923,7 +830,7 @@ sub check_pkg {
 		     "> ${pkgname}-Ex.R";
         }
 
- 	if(Rsystem($cmd)) {
+ 	if(R_system($cmd)) {
   	    $log->error();
   	    exit(1);
         }
@@ -936,13 +843,13 @@ sub check_pkg {
 
 	if($opt_use_gct) {
             $cmd = "(echo 'gctorture(TRUE)'; cat ${pkgname}-Ex.R) " .
-		      "| ${R_exe} ${R_opts} > ${pkgname}-Ex.Rout";
+		      "| ${R_EXE} ${R_opts} > ${pkgname}-Ex.Rout";
 	}
 	else {
-            $cmd = "${R_exe} ${R_opts} " .
+            $cmd = "${R_EXE} ${R_opts} " .
 		      "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout";
 	}
-	if(Rsystem($cmd)) {
+	if(R_system($cmd)) {
 	    $log->error("running examples failed");
 	    exit(1);
 	}
@@ -1003,13 +910,39 @@ sub check_pkg {
             $makevars = " -f Makevars";
         }
         print "\n";
-        if(system("$MAKE $makefiles $makevars")) {
+        if(system("$R_MAKE $makefiles $makevars")) {
             $log->error();
             exit(1);
         }
         chdir($pkgoutdir);
         $log->result("OK");
     }
+
+    chdir($pkgoutdir);
+
+    if(-d "$pkgdir/inst/doc") {
+	$log->checking("Sweave files in inst/doc");
+        my @Snwfiles = glob("$pkgdir/inst/doc/*.[rRsS]nw");
+        if($#Snwfiles >=0){
+	    foreach my $file (@Snwfiles) {
+                my $Rcmd = "library(tools)\nSweave(\"$file\")\n";
+            
+                my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	        my @err = grep(/^Error/, @out);
+	        if($#err >= 0) {
+	            $log->error();
+	            $log->print(join("\n", @out) . "\n");
+	            exit(1);
+	        }
+            }
+            $log->result("OK");
+        }
+	else {
+            $log->result("NO");
+	}
+    }
+
+
 
     ## Run LaTeX on the manual.
 
@@ -1037,7 +970,7 @@ sub check_pkg {
 	    if($HAVE_LATEX) {
 		$log->checking("${pkgname}-manual.tex");
 		print "\n";
-		if(Rsystem("$LATEX ${pkgname}-manual")) {
+		if(R_system("$R_LATEX ${pkgname}-manual")) {
 		    $log->error();
 		    exit(1);
 		}
@@ -1050,33 +983,15 @@ sub check_pkg {
 		my $Rd2dvi_opts = "--no-preview -o ${pkgname}-manual.dvi";
 		## <FIXME>
 		## Surely there is a better way?
-		$Rd2dvi_opts .= ">/dev/null 2>&1" if($OS eq "unix");
+		$Rd2dvi_opts .= ">/dev/null 2>&1" if($R_OSTYPE eq "unix");
 		## </FIXME>
-		if(Rsystem("${R_CMD} Rd2dvi ${Rd2dvi_opts} $pkgdir")) {
+		if(R_system("${R_CMD} Rd2dvi ${Rd2dvi_opts} $pkgdir")) {
 		    $log->error("installation failed");
 		    exit(1);
 		}
 		$log->result("OK");
 	    }
 	}
-    }
-}
-
-#**********************************************************
-
-sub Rsystem
-{
-    my $cmd = $_[0];
-    if($WINDOWS) {
-	open(cfile, "> $cfile")
-	  or die "Error: cannot write to \`$cfile'\n";
-	print cfile "$cmd\n";
-	close cfile;
-	$res = system("sh $cfile");
-	unlink($cfile);
-	return $res;
-    } else {
-	return system($cmd);
     }
 }
 

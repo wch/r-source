@@ -110,9 +110,15 @@ UTILITIES
     o	Sweave(), Stangle() and friends in package tools. Sweave allows
 	mixing latex documentation and R code in a single source file:
 	the R code can be replaced by its output (text, figures) to
-	allow automatic report generation.
+	allow automatic report generation. Sweave files found in
+	package subdir inst/doc are automatically tested by R CMD check.
 
-    o	Rdconv can convert to the S4 .sgml format. 
+    o	Rdconv can convert to the S4 .sgml format.
+
+    o   R::Utils.pm masks some platform dependencies in perl code by
+        providing global variables like R_OSTYPE or wrapper functions
+        like R_runR().
+
 
 
 C-LEVEL FACILITIES

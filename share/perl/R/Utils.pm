@@ -6,10 +6,40 @@ use FileHandle;
 use Exporter;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(R_getenv R_version file_path list_files_with_exts);
-
+@EXPORT = qw(R_getenv R_version file_path env_path
+	     list_files_with_exts R_tempfile R_system
+	     R_runR
+	     $R_OSTYPE $R_LATEX $R_MAKE $R_HOME $R_CMD
+	     $R_EXE $R_TMPDIR);
 
 #**********************************************************
+
+## <FIXME>
+## Currently, R_OSTYPE is always set on Unix/Windows.
+$R_OSTYPE = R_getenv("R_OSTYPE", "mac");
+## </FIXME>
+
+
+$R_LATEX = R_getenv("LATEX", "latex");
+$R_MAKE = R_getenv("MAKE", "make");
+
+$R_HOME = $ENV{'R_HOME'} ||
+    croak "Error: environment variable R_HOME not found";
+    
+$R_CMD = $ENV{'R_CMD'} ||
+    croak "Error: environment variable R_CMD not found";
+
+if($R_OSTYPE eq "windows"){
+    $R_EXE = file_path($R_HOME, "Rterm.exe");
+    $R_TMPDIR = R_getenv("TMPDIR", "/TEMP");
+}
+else{
+    $R_EXE = file_path($R_HOME, "bin", "R");
+    $R_TMPDIR = R_getenv("TMPDIR", "/tmp");
+}
+croak "Error: please set TMPDIR to a valid temporary directory\n" 
+    unless (-e $R_TMPDIR);
+
 
 ## return the value of an environment variable; or the default if no
 ## such environment variable is set or it is empty.
@@ -60,20 +90,28 @@ sub text2html {
 sub file_path {
     my @args = @_;
     my $filesep = "/";
-    $filesep = ":" if($main::OSdir eq "mac");
+    $filesep = ":" if($R_OSTYPE eq "mac");
     join($filesep, @args);
 }
 
+sub env_path {
+    my @args = @_;
+    my $envsep = ":";
+    $envsep = ";" if($R_OSTYPE eq "windows");
+    join($envsep, @args);
+}
+
+
 sub list_files_with_exts {
     my ($dir, $exts) = @_;
-	my @files;
+    my @files;
     $exts = ".*" unless $exts;
     opendir(DIR, $dir) or die "cannot opendir $dir: $!";
-    if($main::OSdir eq "mac"){
-    @files = grep { /\.$exts$/ && -f "$dir:$_" } readdir(DIR);
-	}
+    if($R_OSTYPE eq "mac"){
+	@files = grep { /\.$exts$/ && -f "$dir:$_" } readdir(DIR);
+    }
     else{
-    @files = grep { /$exts$/ && -f "$dir/$_" } readdir(DIR);
+	@files = grep { /$exts$/ && -f "$dir/$_" } readdir(DIR);
     }
     closedir(DIR);
     ## We typically want the paths to the files, see also the R variant
@@ -85,109 +123,53 @@ sub list_files_with_exts {
     @paths;
 }
 
+sub R_tempfile {
 
-#**********************************************************
-
-
-package R::Logfile;
-
-
-sub new {
-    my ($class, $file) = @_;
-    $class = ref($class) || $class;
-
-    ## if we are given a non-empty string we try to open the file for
-    ## writing
-    my $fh;
-    if($file){
-	$fh = new FileHandle("> $file") || die "open($file): $!\n";
+    my $pat = "Rutils";
+    $pat = $_[0] if $_[0];
+    my $retval = file_path($R_TMPDIR,
+			   $pat . $$ . sprintf("%05d", rand(10**5)));
+    while(-f $retval){
+	$retval = file_path($R_TMPDIR,
+			    $pat . $$ . sprintf("%05d", rand(10**5)));
     }
-    my $self = {
-	"file" => $file,
-	"handle" => $fh,
-	"stars" => "*",
-	"warnings" => 0};
-    
-    bless $self, $class;
+    $retval;
 }
 
-sub close {
-    my ($x) = @_;
-    $x->{"handle"}->close() if $x->{"handle"};
-    $x->{"file"}=$x->{"handle"}="";
-}
-
-sub print {
-    my ($x, $text) = @_;
-
-    print $text;
-    $x->{"handle"}->print($text) if $x->{"handle"};
-}
-    
-
-## setstars sets the characters at the beginning of the lines of all
-## subsequent calls to checking, creating and message. We typically use
-## * checking for whatever
-## ** this is a subtopic of whatever
-## etc.
-sub setstars {
-    my ($x, $stars) = @_;
-    $x->{"stars"} = $stars;
-}
-
-
-sub checking {
-    my ($x, $text) = @_;
-    $x->print($x->{"stars"} . " checking $text ...");
-}
-
-sub creating {
-    my ($x, $text) = @_;
-    $x->print($x->{"stars"} . " creating $text ...");
-}
-
-sub message {
-    my ($x, $text) = @_;
-    $text =~ s/\n/\n$x->{"stars"} /sg;
-    $x->print($x->{"stars"} . " $text\n");
-}
-
-sub result {
-    my ($x, $text) = @_;
-    $x->print(" $text\n");
-}
-
-sub error {
-    my ($x, $text) = @_;
-    $x->result("ERROR");
-    $x->message($text) if $text;
-}
-
-sub warning {
-    my ($x, $text) = @_;
-    $x->result("WARNING");
-    $x->message($text) if $text;
-    $x->{"warnings"}++;
-}
-
-sub summary {
-    my ($x) = @_;
-    if($x->{'warnings'} > 1) {
-	print "WARNING: There were $x->{'warnings'} warnings, see\n" .
-	    "  " . $x->{'file'} .
-		"\nfor details\n";
+sub R_system
+{
+    my $cmd = $_[0];
+    my $tmpf = R_tempfile();
+    if($R_OSTYPE eq "windows") {
+	open(tmpf, "> $tmpf")
+	  or die "Error: cannot write to \`$tmpf'\n";
+	print tmpf "$cmd\n";
+	close tmpf;
+	$res = system("sh $tmpf");
+	unlink($tmpf);
+	return $res;
+    } else {
+	return system($cmd);
     }
-    if($x->{'warnings'} == 1) {
-	print "WARNING: There was 1 warning, see\n" .
-	    "  " . $x->{'file'} .
-		"\nfor details\n";
-    }
-
 }
-	    
-    
 
-#**********************************************************
-
+sub R_runR
+{
+    my $cmd = $_[0];
+    my $Ropts = $_[1];
+    my $Rin = R_tempfile("Rin");
+    my $Rout = R_tempfile("Rout");
+    open RIN, "> $Rin" or die "Error: cannot write to \`$Rin'\n";
+    print RIN "$cmd\n";
+    close RIN;
+    R_system("${R_EXE} ${Ropts} < ${Rin} > ${Rout}");
+    my @out;
+    open ROUT, "< $Rout";
+    while(<ROUT>) {chomp; push(@out, $_);}
+    close ROUT;
+	unlink($Rcmd);
+	unlink($Rout);
+    return(@out);
+}
 
 1;
