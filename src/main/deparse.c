@@ -805,7 +805,7 @@ static void args2buff(SEXP arglist, int lineb, int formals)
 	    char tpb[120];
 	    SEXP s = TAG(arglist);
 
-	    if( isValidName(CHAR(PRINTNAME(s))) )
+	    if( s == R_DotsSymbol || isValidName(CHAR(PRINTNAME(s))) )
 		print2buff(CHAR(PRINTNAME(s)));
 	    else {
 		if( strlen(CHAR(PRINTNAME(s)))< 117 ) {
