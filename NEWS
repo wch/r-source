@@ -267,8 +267,9 @@ INTERNATIONALIZATION
     o	.C() now accepts an ENCODING= argument where re-encoding is
 	supported by the OS.  See `Writing R Extensions'.
 
-    o	delimMatch (tools) now reports match lengths in units of 
-	characters, not bytes.
+    o	delimMatch (tools) now reports match positions and lengths in
+	units of characters, not bytes.  The delimiters can be
+	strings, not just single ASCII characters.
 
     o	.Rd files can indicate via a \encoding{} argument the encoding
 	that should be assumed for non-ASCII characters they contain.
