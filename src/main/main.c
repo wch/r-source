@@ -291,10 +291,25 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
 #ifndef Macintosh
 FILE* R_OpenSysInitFile(void);
+FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
 #endif
 
 static int doneit;
+
+static int R_LoadProfile(FILE *fp) {
+  if (fp != NULL) {
+    R_Inputfile = fp;
+    doneit = 0;
+    setjmp(R_Toplevel.cjmpbuf);
+    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+    signal(SIGINT, onintr);
+    if(!doneit) {
+      doneit = 1;
+      R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
+    }
+  }
+}
 
 void mainloop()
 {
@@ -378,37 +393,12 @@ void mainloop()
 	}
 
 #ifndef Macintosh
-		/* This is where we source the system-wide */
-		/* profile file.  If there is an error */
-		/* we drop through to further processing. */
-
-	R_Inputfile = R_OpenSysInitFile();
-	if(R_Inputfile != NULL) {
-		doneit = 0;
-		setjmp(R_Toplevel.cjmpbuf);
-		R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-		signal(SIGINT, onintr);
-		if(!doneit) {
-			doneit = 1;
-			R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
-		}
-	}
-
-		/* This is where we source the user's */
-		/* profile file.  If there is an error */
-		/* we drop through to further processing. */
-
-	R_Inputfile = R_OpenInitFile();
-	if(R_Inputfile != NULL) {
-		doneit = 0;
-		setjmp(R_Toplevel.cjmpbuf);
-		R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-		signal(SIGINT, onintr);
-		if(!doneit) {
-			doneit = 1;
-			R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
-		}
-	}
+	/* This is where we source the system-wide, the site's and the
+	   user's profile (in that order).  If there is an error, we
+	   drop through to further processing. */
+	R_LoadProfile(R_OpenSysInitFile());
+	R_LoadProfile(R_OpenSiteFile());
+	R_LoadProfile(R_OpenInitFile());
 #endif
 
 		/* Initial Loading is done.  At this point */
