@@ -62,15 +62,15 @@ legend <- function(x, y, legend, fill, col="black", lty, pch,
 	## (w,h) are now the final box width/height. --> Adjust (x,y) :
 	left <- x - xjust * w
 	top <- y + (1 - yjust) * h
-	right <- x+w
-	bottom <- y-h
+	right <- left+w
+	bottom <- top-h
 	if (xlog) { left <- 10^left; right <- 10^right }
 	if (ylog) { top <- 10^top; bottom <- 10^bottom }
 	if (bty != "n")
 		rect(left, top, right, bottom, col = bg)
 	## (xt[],yt[]) := 'current' vectors of (x/y) legend text
-	xt <- rep(x, n.leg) + xchar
-	yt <- y - (1:n.leg) * ychar
+	xt <- rep(left, n.leg) + xchar
+	yt <- top - (1:n.leg) * ychar
 	if (!missing(fill)) {	#- draw filled boxes -------------
 		xx <- cbind(xt, xt + xbox)
 		if (xlog) xx <- 10^xx
