@@ -258,7 +258,11 @@ double norm_rand(void)
 	return *((double *) User_norm_fun());
 #endif
     case INVERSION:
-	return qnorm5(unif_rand(), 0.0, 1.0, 1, 0);
+#define BIG 134217728 /* 2^27 */
+	/* unif_rand() alone is not of high enough precision */
+	u1 = unif_rand();
+	u1 = (int)(BIG*u1) + unif_rand();
+	return qnorm5(u1/BIG, 0.0, 1.0, 1, 0);
     default:
 	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind)
 	    return 0.0;/*- -Wall */
