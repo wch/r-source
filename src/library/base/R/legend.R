@@ -157,10 +157,10 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)
 	if(trace)
-	    catn("  segments2(",xt[ok.l] + x.off*xchar ,",", yt[ok.l],
-		 ", dx=",seg.len*xchar,", dy=0, ...)", sep = "")
+	    catn("  segments2(",xt[ok.l] + x.off*xchar, ",", yt[ok.l],
+		 ", dx=", seg.len*xchar, ", dy=0, ...)")
 	if(plot)
-	    segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx = seg.len*xchar, dy = 0,
+	    segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx= seg.len*xchar, dy=0,
 		      lty = lty[ok.l], lwd = lwd[ok.l], col = col[ok.l])
 	# if (!merge)
 	xt <- xt + (seg.len+x.off) * xchar
@@ -174,7 +174,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 	if(trace)
 	    catn("  points2(", x1,",", y1,", pch=", pch[ok],"...)")
 	if(plot)
-	    points2(x1, y1, pch = pch[ok], col = col[ok], cex = cex, bg = pt.bg[ok])
+	    points2(x1, y1, pch = pch[ok], col= col[ok], cex=cex, bg= pt.bg[ok])
 	if (!merge) xt <- xt + dx.pch
     }
 
