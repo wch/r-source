@@ -26,19 +26,13 @@ Makefile:
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
-R: stamp-R
-stamp-R: $(top_builddir)/src/include/Platform.h \
-	  $(top_srcdir)/src/*/*.[chfy] \
-	  $(top_srcdir)/src/library/*/R/*.R \
-	  $(top_srcdir)/src/library/*/src/*.[chf]
-	@rm -f $@
+R: 
 	@for d in afm demos doc etc src; do \
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
 	@if [ ! -f src/library/stamp-docs ]; then \
 	  echo "You should \`make docs' now ..."; \
 	fi
-	@touch $@
 
 $(top_builddir)/src/include/Platform.h: $(srcdir)/date-stamp
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
@@ -110,7 +104,7 @@ clean:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@rm -f stamp-R
+
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
