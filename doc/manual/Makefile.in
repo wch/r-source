@@ -178,14 +178,13 @@ $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-admin.dvi: $(texiincludes)
 R-data.dvi: $(texiincludes)
 R-exts.dvi: $(texiincludes)
-version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp \
-	$(top_srcdir)/src/gnuwin32/RWVERSION
+version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
 	  echo "@set VERSIONno $${v}" > $@; \
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  echo "@set VERSION $${v}" >> $@; \
-	  rwv=`sed -e 1d -e 's/RPREFIX = //' $(top_srcdir)/src/gnuwin32/RWVERSION`; \
+	  rwv=`$(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION`; \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
 R-intro.dvi: stamp-images-eps $(texiincludes)
 stamp-images-eps:
