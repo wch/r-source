@@ -17,6 +17,6 @@
   \code{help("pkg-deprecated")}.
 }
 \seealso{
-  \code{\link{Deprecated}}, \code{\link{base-defunct}}
+  \code{\link{Deprecated}}
 }
-\keyword{internal}
+\keyword{misc}
