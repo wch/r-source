@@ -123,9 +123,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## returns the position of the maximum version.
         if(length(vers) == 0) return(integer(0))
         vers <- package_version(vers)
-	max <- vers[1]
-        for (i in seq(along=vers)) if (max < vers[i]) max <- vers[i]
-	which(vers == max)[1]
+        min(which(vers == max(vers)))
     }
 
     runUserHook <- function(pkgname, pkgpath) {
@@ -405,8 +403,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         for(lib in lib.loc) {
             a <- .packages(all.available = TRUE, lib.loc = lib)
             for(i in sort(a)) {
-                ## all packages installed under 2.0.0 should have package.rds
-                ## but we have not checked.
+                ## All packages installed under 2.0.0 should have
+                ## 'package.rds' but we have not checked.
                 file <- system.file("Meta", "package.rds", package = i,
                                     lib.loc = lib)
                 title <- if(file != "") {
@@ -618,18 +616,36 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     if(all.available) {
 	ans <- character(0)
         lib.loc <- lib.loc[file.exists(lib.loc)]
+        valid_package_version_regexp <-
+            .standard_regexps()$valid_package_version
         for(lib in lib.loc) {
             a <- list.files(lib, all.files = FALSE, full.names = FALSE)
             for(nam in a) {
                 ## match .find.packages as to what is a package
-                if(!file.exists(file.path(lib, nam, "DESCRIPTION"))) next
-                info <- try(read.dcf(file.path(lib, nam, "DESCRIPTION"),
-                                     c("Package", "Version"))[1, ],
-                            silent = TRUE)
-                if(inherits(info, "try-error") || any(is.na(info))) next
-                if(regexpr("([[:digit:]]+[.-]){1,}[[:digit:]]+",
-                           info["Version"]) == -1) next
+                if(!file.exists(file.path(lib, nam, "DESCRIPTION")))
+                    next
+                ## ("If there is no 'DESCRIPTION' file, it ain't a
+                ## package.  And that's the only check we have ...")
+                ## <FIXME PRE-R-NG>
+                ## All packages usable in R-ng must have 'package.rds'.
+                ## (And we do not need to validate these meta data.)
+                ## Should be simply ignore the others?
+                ## (See also above ...)
+                pfile <- file.path(lib, nam, "Meta", "package.rds")
+                info <- if(file.exists(pfile))
+                    .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
+                else
+                    try(read.dcf(file.path(lib, nam, "DESCRIPTION"),
+                                 c("Package", "Version"))[1, ],
+                        silent = TRUE)
+                ## In fact, info from 'package.rds' should be validated.
+                if(inherits(info, "try-error") || any(is.na(info)))
+                    next
+                if(regexpr(valid_package_version_regexp,
+                           info["Version"]) == -1)
+                    next
                 ans <- c(ans, nam)
+                ## </FIXME>
             }
         }
         return(unique(ans))
@@ -734,19 +750,31 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         ## valid DESCRIPTION metadata anyways.)
         if(length(paths)) {
             paths <- unique(paths)
+            valid_package_version_regexp <-
+                .standard_regexps()$valid_package_version
             db <- lapply(paths, function(p) {
-                info <- try(read.dcf(file.path(p, "DESCRIPTION"),
-                                     c("Package", "Version"))[1, ],
-                            silent = TRUE)
+                ## <FIXME PRE-R-NG>
+                ## All packages usable in R-ng must have 'package.rds'.
+                ## (And we do not need to validate these meta data.)
+                ## Should be simply ignore the others?
+                ## (See also above ...)
+                pfile <- file.path(p, "Meta", "package.rds")
+                info <- if(file.exists(pfile))
+                    .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
+                else
+                    try(read.dcf(file.path(p, "DESCRIPTION"),
+                                 c("Package", "Version"))[1, ],
+                        silent = TRUE)
                 if(inherits(info, "try-error"))
                     c(Package=NA, Version=NA) # need dimnames below
                 else
                     info
+                ## </FIXME>
             })
             db <- do.call("rbind", db)
             ok <- (apply(!is.na(db), 1, all)
                    & (db[, "Package"] == sub("_.*", "", pkg))
-                   & (regexpr("([[:digit:]]+[.-]){1,}[[:digit:]]+",
+                   & (regexpr(valid_package_version_regexp,
                               db[, "Version"])) > -1)
             paths <- paths[ok]
         }

@@ -19,8 +19,10 @@ function(x, strict = TRUE)
 {
     x <- as.character(x)
     y <- rep.int(list(integer()), length(x))
+    valid_package_version_regexp <-
+        sprintf("^%s$", .standard_regexps()$valid_package_version)
     if(length(x) > 0) {
-        ok <- (regexpr("^([[:digit:]]+[.-]){1,}[[:digit:]]+$", x) > -1)
+        ok <- (regexpr(valid_package_version_regexp, x) > -1)
         if(!all(ok) && strict) stop("invalid version spec")
         y[ok] <- lapply(strsplit(x[ok], "[.-]"), as.integer)
     }

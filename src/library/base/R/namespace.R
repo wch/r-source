@@ -204,11 +204,19 @@ loadNamespace <- function (package, lib.loc = NULL,
             stop("package ", sQuote(package), " does not have a name space")
 
         # create namespace; arrange to unregister on error
+        ## <FIXME PRE-R-NG>
+        ## Can we rely on the existence of R-ng 'nsInfo.rds' and
+        ## 'package.rds'?
         nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
         nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
         else parseNamespaceFile(package, package.lib, mustExist = FALSE)
-        version <- read.dcf(file.path(pkgpath, "DESCRIPTION"),
-                            fields = "Version")
+        packageInfoFilePath <- file.path(pkgpath, "Meta", "package.rds")
+        version <- if(file.exists(packageInfoFilePath))
+            .readRDS(packageInfoFilePath)$DESCRIPTION["Version"]
+        else
+            read.dcf(file.path(pkgpath, "DESCRIPTION"),
+                     fields = "Version")
+        ## </FIXME>
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
 
