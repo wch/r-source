@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-20, 2003-11-27
+Version 1.8-21, 2003-11-29
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1620,6 +1620,11 @@ distributions of R.)
      Color schemes for dichromats: collapse red-green distinctions to
      simulate the effects of colour-blindness.
 
+*digest*
+     Two functions for the creation of "hash" digests of arbitrary R
+     objects using the md5 and sha-1 algorithms permitting easy comparison
+     of R language objects.
+
 *diptest*
      Compute Hartigan's dip test statistic for unimodality.
 
@@ -1756,6 +1761,11 @@ distributions of R.)
 
 *gld*
      Basic functions for the generalised (Tukey) lambda distribution.
+
+*gllm*
+     Routines for log-linear models of incomplete contingency tables,
+     including some latent class models via EM and Fisher scoring
+     approaches.
 
 *glmmML*
      A Maximum Likelihood approach to generalized linear models with random
@@ -2394,11 +2404,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
-
-*gllm*
-     Routines for log-linear models of incomplete contingency tables,
-     including some latent class models via EM and Fisher scoring
-     approaches.
 
 *meanscore*
      Mean Score method for missing covariate data in logistic regression

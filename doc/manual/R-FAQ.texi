@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-20, @value{FAQ-YEAR}-11-27
+@set FAQ-VERSION 1.8-21, @value{FAQ-YEAR}-11-29
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1850,6 +1850,10 @@ or sampling grids.
 @item dichromat
 Color schemes for dichromats: collapse red-green distinctions to
 simulate the effects of colour-blindness.
+@item digest
+Two functions for the creation of ``hash'' digests of arbitrary R
+objects using the md5 and sha-1 algorithms permitting easy comparison of
+R language objects.
 @item diptest
 Compute Hartigan's dip test statistic for unimodality.
 @item dispmod
@@ -1955,6 +1959,9 @@ Functions for defining directed acyclic graphs and undirected graphs,
 finding induced graphs and fitting Gaussian Markov models.
 @item gld
 Basic functions for the generalised (Tukey) lambda distribution.
+@item gllm
+Routines for log-linear models of incomplete contingency tables,
+including some latent class models via EM and Fisher scoring approaches.
 @item glmmML
 A Maximum Likelihood approach to generalized linear models with random
 intercept.
@@ -2519,13 +2526,6 @@ Ensembles of tree classifiers.
 @c maintained.
 @c @item event.chart
 @c Package for creating event charts.
-@c </COMMENT>
-
-@c <COMMENT>
-@c Moved to Devel for 1.7 as it fails R CMD check.
-@item gllm
-Routines for log-linear models of incomplete contingency tables,
-including some latent class models via EM and Fisher scoring approaches.
 @c </COMMENT>
 
 @c <COMMENT>
