@@ -168,8 +168,8 @@ NEW FEATURES
 
     o	bxp() has new argument "frame.plot", as plot.default().
 
-    o   dump() has new argument append, argument "fileout" has been
-        renamed to "file" (for consistency with all other functions).
+    o	dump() has new argument append, argument "fileout" has been
+	renamed to "file" (for consistency with all other functions).
 
 
 BUG FIXES
@@ -255,6 +255,10 @@ BUG FIXES
     o	NULL == ... now gives logical(0) instead of an error.
 	This fixes a bug with e.g. apply(X,2,median, na.rm = TRUE) and
 	all(NULL == NULL) is now TRUE.
+
+    o	dbinom() and dpois() now use the more accurate algorithm of
+	Clive Loader.  E.g.,  1 - 2*sum(dbinom(0:999, 1999, 1/2))
+	is now zero instead of 1.0e-12.
 
 
 	**************************************************
