@@ -260,15 +260,22 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
         ## legend for the shading and outline patterns.  The code works
         ## o.k. with integer breaks in `shade'; rounding to two 2 digits
         ## will not be good enough if `shade' has length 5.
+        pin <- par("pin")
         rtxt <- "Standardized\nResiduals:"
-        rtxtWidth <- strheight(rtxt)
-        rtxtHeight <- strwidth(rtxt)
+        ## Compute cex so that the rotated legend text does not take up
+        ## more than 1/12 of the of the plot region horizontally and not
+        ## more than 1/4 vertically.
+        rtxtCex <- min(1, pin[1] / (strheight(rtxt, units = "i") * 12),
+                       pin[2] / (strwidth(rtxt, units = "i") / 4))
+        rtxtWidth <- 0.1                # unconditionally ...
         ## We put the legend to the right of the third axis.
         opar <- par(usr = c(1, 1000 * (1.1 + rtxtWidth), 1, 1000),
                     mgp = c(1, 1, 0))
-        on.exit(par(opar))
+        on.exit(par(opar))        
+        rtxtHeight <-
+            strwidth(rtxt, units = "i", cex = rtxtCex) / pin[2]
         text(1000 * (1.05 + 0.5 * rtxtWidth), 0, labels = rtxt,
-             adj = 0, srt = 90)
+             adj = c(0, 0.25), srt = 90, cex = rtxtCex)
         ## `len' is the number of positive or negative intervals of
         ## residuals (so overall, there are `2 * len')
         len <- length(shade) + 1
