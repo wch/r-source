@@ -143,6 +143,8 @@ BUG FIXES
     o	predict.lm(*, se=TRUE) {w/ weights, w/o newdata} now gives correct
 	SE's.  (PR#3043)
 
+    o	cor.test(x,y, method="spearman") now also works for n > 1290,
+	where n <- length(x).
 
 
 		CHANGES IN R VERSION 1.7.0
