@@ -43,7 +43,7 @@ stop.list[["base"]] <-
                     "read.fwf", "source",## << MM thinks "FIXME"
 		    "data.entry", "dataentry", "de", apropos("^de\."))
         if(.Platform$OS.type == "windows")
-            misc.2 <- c(misc.2, "bmp" "windows", "win.graph", "win.print",
+            misc.2 <- c(misc.2, "bmp", "windows", "win.graph", "win.print",
                         "win.metafile", "x11", "X11","file.choose",
                         "choose.files")
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
