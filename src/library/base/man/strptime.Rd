@@ -3,8 +3,7 @@
 \alias{format.POSIXlt}
 \alias{strftime}
 \alias{strptime}
-\alias{as.character.POSIXct}
-\alias{as.character.POSIXlt}
+\alias{as.character.POSIXt}
 \alias{ISOdatetime}
 \alias{ISOdate}
 \title{Date-time Conversion Functions to and from Character}

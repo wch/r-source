@@ -24,9 +24,6 @@
 \alias{as.matrix.POSIXlt}
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
-\alias{difftime}
-\alias{print.difftime}
-\alias{round.difftime}
 
 % back-compatibility functions
 \alias{-.POSIXct}
@@ -49,10 +46,8 @@ summary.POSIXlt(object, digits = 15, ...)
 time + number
 time - number
 time1 lop time2
-difftime(time1, time2, tz = "",
-         units = c("auto", "secs", "mins", "hours", "days"))
 
-c(time1, ...)
+c(time1, ..., recursive = FALSE)
 mean(time)
 }
 \arguments{
@@ -65,9 +60,6 @@ mean(time)
   \item{number}{a numeric object.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
-  \item{units}{character.  Units in which the results are desired. If
-    \code{"auto"}, a suitable set of units is chosen, the largest
-    possible in which all the absolute differences are greater than one.}
 }
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
@@ -129,10 +121,6 @@ mean(time)
   Using \code{c} on \code{"POSIXlt"} objects converts them to the
   current time zone.
 
-  Function \code{difftime} takes a difference of two date/time objects
-  (of either class) and returns an object of class \code{"difftime"}
-  with an attribute indicating the units.  There is a \code{\link{round}}
-  method for objects of this class.
 }
 \seealso{
   \code{\link{as.POSIXct}} and \code{\link{as.POSIXlt}} for conversion
@@ -142,6 +130,14 @@ mean(time)
   representations.
 
   \code{\link{Sys.time}} for clock time as a \code{"POSIXct"} object.
+
+  \code{\link{difftime}} for time intervals.
+
+  \code{\link{cut.POSIXt}}, \code{\link{seq.POSIXt}},
+  \code{\link{round.POSIXt}} and \code{\link{trunc.POSIXt}} for methods
+  for these classes.
+
+  \code{weekday.POSIXt} for convenience extraction functions.
 }
 \section{Warning}{
   Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}
@@ -152,8 +148,7 @@ mean(time)
 \examples{
 (z <- Sys.time())             # the current date, as class "POSIXct"
 
-(z <- Sys.time() - 3600)      # an hour ago
-Sys.time() - z                # just over 3600 seconds.
+Sys.time() - 3600             # an hour ago
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 format(.leap.seconds)         # all 22 leapseconds in your timezone
