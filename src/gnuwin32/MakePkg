@@ -64,12 +64,11 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS, $(wildcard $(SPKG)/exec/*))
 # Others
 INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
 
-all:  $(DPKG)/zzzz frontmatter Dynlib R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
-  indices
-bare: $(DPKG)/zzzz frontmatter R $(DPKG)/demo
+all:  $(DPKG)/zzzz frontmatter namespace Dynlib R $(DPKG)/demo \
+  $(DPKG)/exec $(DATA) mansrcs indices
 
-fake: zzzzfirst frontmatter R Rfake $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
-  indices
+fake: zzzfirst frontmatter namespacefake R Rfake $(DPKG)/demo \
+  $(DPKG)/exec $(DATA) mansrcs indices
 
 include $(RHOME)/src/gnuwin32/MkRules
 
@@ -158,10 +157,6 @@ endif
 	  $(ECHO) "A package must contain a DESCRIPTION file"; \
 	  exit 27; \
 	fi
-	@if test -f ${SPKG}/NAMESPACE; then \
-	  $(ECHO) "  installing NAMESPACE file"; \
-	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
-	fi
 ifeq ($(strip $(BUILD)),CROSS)
 	@(cat DESCRIPTION; $(ECHO); $(ECHO) "Built: R" $(RVER)\;  Win32\;  `date`) \
 	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION
@@ -169,6 +164,17 @@ else
 	@$(ECHO) ".installPackageDescription('.', '"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave  R_DEFAULT_PACKAGES=tools> /dev/null
 endif
+
+namespace:
+	@if test -f ${SPKG}/NAMESPACE; then \
+	  $(ECHO) "  installing NAMESPACE file"; \
+	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+	fi
+namespacefake:
+	@if test -f ${SPKG}/NAMESPACE; then \
+	  $(ECHO) "  installing NAMESPACE file"; \
+	  $(SED) -e '/useDynLib/d' ${SPKG}/NAMESPACE > $(DPKG)/NAMESPACE; \
+	fi
 
 
 $(DATA): $(DSOURCES)

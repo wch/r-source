@@ -19,6 +19,11 @@ pkg-% help-%:
 	  ../../../share/perl/build-help-windows.pl ${DOS} \
 	  -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
 
+pkgfake-%:
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	  ../../../share/perl/build-help-windows.pl ${DOS} \
+	  -latex $(PKGDIR)/$* $(RLIB)
+
 chm-%:
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/build-help-windows.pl ${DOS} \

@@ -11,13 +11,6 @@ profiles: ../../../library/base/R/Rprofile
 	@$(CAT)  $^ > $@
 
 
-SED0='/^\#/d'
-SED01='/Rsockfork/d'
-SED1='s/F77_SUBROUTINE(\(.*\))/void * \1_();/'
-SED2='s/C_FUNCTION(\(.*\))/void * \1();/'
-SED3='s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/'
-SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
-
 version: ../../include/Rversion.h
 fixh: version h/config.h \
   ../../include/Rconfig.h  ../../include/Rmath.h
