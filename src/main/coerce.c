@@ -366,7 +366,7 @@ static SEXP coerceToSymbol(SEXP v)
     int warn;
     if (length(v) <= 0)
 	error("Invalid data of mode \"%s\" (too short)",
-	      type2str(TYPEOF(v)));
+	      CHAR(type2str(TYPEOF(v))));
     PROTECT(v);
     switch(TYPEOF(v)) {
     case LGLSXP:

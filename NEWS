@@ -34,6 +34,9 @@ BUG FIXES
 
     o  get("attr<-")(""[0],""[0]) doesn't segfault anymore.
 
+    o  blunder in do_memoryprofile, causing segfault on Alpha machines
+
+    o  erroneous error message in coerceToSymbol
 
 		CHANGES IN R VERSION 0.90.0
 

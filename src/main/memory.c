@@ -444,7 +444,7 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, 21));
     PROTECT(nms = allocVector(STRSXP, 21));
     for (i = 0; i < 21; i++) {
-        STRING(ans)[i] = 0;
+        INTEGER(ans)[i] = 0;
         STRING(nms)[i] = R_BlankString;
     }
     STRING(nms)[NILSXP]     = mkChar("NILSXP");
