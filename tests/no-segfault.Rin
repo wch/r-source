@@ -41,7 +41,8 @@ sink("no-segfault.R")
 cat('options(pager = "cat", error=expression(NULL))',
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 
-cat("c0 <- character(0)\n",
+cat(".proctime00 <- proc.time()\n",
+    "c0 <- character(0)\n",
     "l0 <- logical(0)\n",
     "df0 <- as.data.frame(c0)\n", sep="")
 
@@ -76,3 +77,4 @@ for (pkg in core.pkgs) {
   cat("\n##__________\n\n")
 }
 
+cat("proc.time() - .proctime00\n")
