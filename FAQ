@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-03
+Version 2.0.2005-02-04
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1245,6 +1245,10 @@ The following packages are available from the CRAN `src/contrib' area.
 (Packages denoted as _Recommended_ are to be included in all binary
 distributions of R.)
 
+*AMORE*
+     A MORE flexible neural network package, providing the TAO robust neural
+     network algorithm.
+
 *AlgDesign*
      Algorithmic experimental designs.  Calculates exact and approximate
      theory experimental designs for D, A, and I criteria.
@@ -1330,6 +1334,9 @@ distributions of R.)
 *GenKern*
      Functions for generating and manipulating generalised binned kernel
      density estimates.
+
+*GeneNT*
+     Relevance or Dependency network and signaling pathway discovery.
 
 *GeneTS*
      A package for analysing multiple gene expression time series data.
