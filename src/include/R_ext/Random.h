@@ -50,7 +50,7 @@ void GetRNGstate(void);
 void PutRNGstate(void);
 
 double unif_rand(void);
-/* These are also defined in Mathlib.h */
+/* These are also defined in Rmath.h */
 double norm_rand(void);
 double exp_rand(void);
 

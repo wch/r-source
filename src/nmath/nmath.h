@@ -24,7 +24,7 @@
 
 #include <Rconfig.h>
 #define MATHLIB_PRIVATE
-#include <R_ext/Mathlib.h>
+#include <Rmath.h>
 #undef  MATHLIB_PRIVATE
 #include <R_ext/RS.h>
 
