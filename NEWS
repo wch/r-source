@@ -261,8 +261,8 @@ NEW FEATURES
 
     o	A new HIGHLY EXPERIMENTAL graphical user interface using the tcltk
 	package is provided. Currently, little more than a proof of concept.
-	It can be started by calling "R -g Tk" (this may change in later 
-	versions) or by evaluating tkStartGUI(). Only Unix-like systems 
+	It can be started by calling "R -g Tk" (this may change in later
+	versions) or by evaluating tkStartGUI(). Only Unix-like systems
 	for now.
 
     o	Logical matrix replacement indexing of data frames is now
@@ -333,14 +333,14 @@ NEW FEATURES
     o	plot.dendrogram (`mva' package) now draws leaf labels if present
 	by default.
 
+    o	New generic function reorder() with a dendrogram method;
+	new order.dendrogram() and heatmap().
+
     o	An attempt to open() an already open connection will be detected
 	and ignored with a warning.  This avoids improperly closing
 	some types of connections if they are opened repeatedly.
 
     o	New function force() to force evaluation of a formal argument.
-
-    o	New generic function reorder() with a dendrogram method;
-	new order.dendrogram() and heatmap().
 
     o	The edit.matrix() and edit.data.frame() editors can now handle
 	logical data.
@@ -352,10 +352,12 @@ NEW FEATURES
     o   unique.default() now works for POSIXct objects, and hence so
 	does factor().
 
-    o   libraries can now be loaded with version numbers. This allows
-	for multiple versions of files to be installed (and potentially 
-	loaded). Some serious testing will be going on, but it should 
-        have no effect unless specifically asked for.
+    o	packages can now be loaded with version numbers. This allows
+	for multiple versions of files to be installed (and potentially
+	loaded). Some serious testing will be going on, but it should
+	have no effect unless specifically asked for.
+
+    o	str() now shows ordered factors differently than unordered ones.
 
     o   princomp.factor() now has principal argument `formula', so
 	update() can be used.
@@ -651,7 +653,6 @@ BUG FIXES
 	tail of the asymptotic distribution (PR#2571).
 
     o   Sweave() now handles empty chunks at the end of files correctly.
-
 
 
 	**************************************************
