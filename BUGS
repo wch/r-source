@@ -33,7 +33,10 @@ Date: Wed, 10 Mar 1999 17:21:16 +0100
 
 Directory:  Add-ons
 
-none
+* PR# 443 *
+Subject: chron now fails with 4 digit year
+From: jens.oehlschlaegel-akiyoshi@mdfactory.de
+Date: Wed, 16 Feb 2000 13:03:18 +0100 (MET)
 
 Directory:  Analyses
 
@@ -47,7 +50,10 @@ Date: Thu, 18 Mar 1999 08:58:47 +0100
 
 Directory:  Documentation
 
-none
+* PR# 440 *
+Subject: html help: dev.xxx
+From: Bill Simpson <wsi@gcal.ac.uk>
+Date: Tue, 15 Feb 2000 12:27:45 +0000 (GMT)
 
 Directory:  Graphics
 
@@ -141,6 +147,18 @@ Date: Tue, 28 Dec 1999 13:28:01 +0100
 Subject: X11 troubles
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 13 Jan 2000 14:31:42 +0100
+* PR# 414 *
+Subject:  graphics bugs: steep slopes and large values beyond ylim 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Mon, 7 Feb 2000 18:28:04 -0500
+* PR# 441 *
+Subject: contour() labels
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Wed, 16 Feb 2000 16:51:27 +1300 (NZDT)
+* PR# 442 *
+Subject:  rug() extends axes instead of clipping 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Wed, 16 Feb 2000 17:37:52 +0800
 
 Directory:  In-Out
 
@@ -152,18 +170,7 @@ Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 
 Directory:  Installation
 
-* PR# 416 *
-Subject: DEC cc doesn't like c++ comments
-From: albrecht.gbehardt@uni-klu.ac.at
-Date: Tue, 8 Feb 2000 10:56:55 +0100 (MET)
-* PR# 417 *
-Subject: Re: [R] Alpha Linux compile failure with 0.99
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 8 Feb 2000 10:03:44 +0000 (GMT)
-* PR# 418 *
-Subject: Compilation problems on Digital Unix 4.0c with gcc
-From: PETER_HOPFGARTNER@memc.it
-Date: Tue, 8 Feb 2000 11:07:22 +0100
+none
 
 Directory:  Language
 
@@ -179,6 +186,28 @@ From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
 --There is a 128K limit on functions wirh keep.source set. Try modular
 --programming!
+* PR# 394 *
+Subject: formatC (bug and fix)
+From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
+Date: Tue, 4 Jan 2000 10:31:53 +0100
+* PR# 408 *
+Subject: convolution bug
+From: wsimpson@gcal.ac.uk
+Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
+* PR# 412 *
+Subject: anomalies with call objects
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Feb 2000 01:18:50 +0100
+* PR# 424 *
+Subject: strsplit
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Tue, 8 Feb 2000 12:58:09 +0100 (MET)
+--Intentional change
+* PR# 425 *
+Subject: Row subsetting of data frames
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Wed, 09 Feb 2000 18:46:07 +0100 (CET)
+--pmatch is not S-compatible
 
 Directory:  Low-level
 
@@ -268,122 +297,31 @@ Directory:  incoming
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
 Date: 29 Dec 1999 11:59:50 +0100
-* PR# 394 *
-Subject: formatC (bug and fix)
-From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
-Date: Tue, 4 Jan 2000 10:31:53 +0100
 * PR# 398 *
 Subject: a +1 shift overlaying lines/points on a boxplot
 From: acuster@nature.berkeley.edu
 Date: Tue, 11 Jan 2000 02:53:56 +0100 (MET)
-* PR# 406 *
-Subject: handling of dimension-attribute in density
-From: polzehl@wias-berlin.de
-Date: Thu, 27 Jan 2000 17:12:35 +0100 (MET)
 * PR# 407 *
 Subject: NA not printed after table
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Thu, 27 Jan 2000 18:47:38 +0100
-* PR# 408 *
-Subject: convolution bug
-From: wsimpson@gcal.ac.uk
-Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
-* PR# 412 *
-Subject: anomalies with call objects
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 06 Feb 2000 01:18:50 +0100
-* PR# 413 *
-Subject: Segmentation fault, devPS.c, 0.99.0
-From: Roger.Bivand@nhh.no
-Date: Mon, 7 Feb 2000 22:04:16 +0100 (MET)
-* PR# 414 *
-Subject:  graphics bugs: steep slopes and large values beyond ylim 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Mon, 7 Feb 2000 18:28:04 -0500
 * PR# 415 *
 Subject: fix() changes character to factor
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Tue, 8 Feb 2000 10:48:24 +0100
-* PR# 421 *
-Subject: problem with va_list type (alpha)
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Tue, 8 Feb 2000 11:29:27 +0100 (MET)
-* PR# 422 *
-Subject: printutils bug on Linux/Alpha
-Subject: Re: RPMs for R and contributed packages
-From: Martyn Plummer <plummer@iarc.fr>
-From: Tim Powers <timp@redhat.com>
-Date: Tue, 08 Feb 2000 11:07:58 +0100 (CET)
-Date: Mon, 7 Feb 2000 17:21:20 -0500
-* PR# 424 *
-Subject: strsplit
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Tue, 8 Feb 2000 12:58:09 +0100 (MET)
-* PR# 425 *
-Subject: Row subsetting of data frames
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Wed, 09 Feb 2000 18:46:07 +0100 (CET)
-* PR# 426 *
-Subject: gnome support fail on startup
-From: robert.king@mailbox.gu.edu.au
-Date: Thu, 10 Feb 2000 09:20:48 +0100 (MET)
-* PR# 429 *
-Subject: R hangs sometimes and crashes 
-From: kjetikj@astro.uio.no
-Date: Fri, 11 Feb 2000 11:54:56 +0100 (MET)
-* PR# 431 *
-Subject:  R CMD check [nlme|MASS] fails 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Fri, 11 Feb 2000 19:58:01 +0800
-* PR# 433 *
-Subject: Something strange in "?assign"?
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Fri, 11 Feb 2000 12:22:12 +0000 (GMT)
-* PR# 434 *
-Subject: Compilation Failure on Linux/Intel
-From: h089@mth.uea.ac.uk
-Date: Sat, 12 Feb 2000 00:14:31 +0100 (MET)
-* PR# 435 *
-Subject: Error report on empty matrices
-From: Ulrich.Kuesters@t-online.de (Ulrich =?iso-8859-1?Q?K=FCsters?=)
-Date: Mon, 14 Feb 2000 21:09:56 +0100
-* PR# 436 *
-Subject: Problem with expression evaluation depth
-From: jperez@cesma.usb.ve
-Date: Mon, 14 Feb 2000 22:53:15 +0100 (MET)
-* PR# 437 *
-Subject: Autocovariance function (cont.)
-From: Kelvin Lam <lamkel@yahoo.com>
-Date: Mon, 14 Feb 2000 14:37:51 -0800 (PST)
-* PR# 438 *
-Subject: Autocovariance function
-From: Kelvin Lam <lamkel@yahoo.com>
-Date: Mon, 14 Feb 2000 14:35:20 -0800 (PST)
-* PR# 439 *
-Subject: rpois gives a large number repeatedly
-From: kjetikj@astro.uio.no
-Date: Tue, 15 Feb 2000 12:18:28 +0100 (MET)
-* PR# 440 *
-Subject: html help: dev.xxx
-From: Bill Simpson <wsi@gcal.ac.uk>
-Date: Tue, 15 Feb 2000 12:27:45 +0000 (GMT)
-* PR# 441 *
-Subject: contour() labels
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Wed, 16 Feb 2000 16:51:27 +1300 (NZDT)
-* PR# 442 *
-Subject:  rug() extends axes instead of clipping 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Wed, 16 Feb 2000 17:37:52 +0800
-* PR# 443 *
-Subject: chron now fails with 4 digit year
-From: jens.oehlschlaegel-akiyoshi@mdfactory.de
-Date: Wed, 16 Feb 2000 13:03:18 +0100 (MET)
 * PR# 444 *
 Subject: rle
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Wed, 16 Feb 2000 14:17:09 +0100 (MET)
-* PR# 445 *
-Subject: Invalid .Random.seed problems:
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Wed, 16 Feb 2000 15:51:33 +0100 (CET)
+* PR# 446 *
+Subject: Axis mishandling missing values
+From: murdoch@stats.uwo.ca
+Date: Wed, 16 Feb 2000 22:35:05 +0100 (MET)
+* PR# 447 *
+Subject: "a.matrix[a.char.matrix]<- " crashes R
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Wed, 16 Feb 2000 16:12:01 -0800
+* PR# 448 *
+Subject: bug in rbinom?
+From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
+Date: Thu, 17 Feb 2000 13:08:17 +0100
