@@ -34,6 +34,9 @@
 
 #define kRAppSignature '0FFF'
 #define kRVersionInfoID 132
+#define kRCopyrightID 133
+#define kRAquaAuthorsID 134
+#define kRAquaThanksToID 135
 
 
 /* RPreferences structure */

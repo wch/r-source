@@ -43,6 +43,8 @@
 #endif
 
 #include "Defn.h"
+#include <Rversion.h>
+
 #include "Graphics.h"
 #include "Fileio.h"
 #include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
@@ -694,18 +696,42 @@ pascal void RAboutHandler(WindowRef window)
     CFStringRef	text;
     CFBundleRef	appBundle;
     ControlID	versionInfoID = {kRAppSignature, kRVersionInfoID};
+    ControlID	CopyrightID = {kRAppSignature, kRCopyrightID};
+    ControlID	AuthorsID = {kRAppSignature, kRAquaAuthorsID};
+    ControlID	ThanksToID = {kRAppSignature, kRAquaThanksToID};
     ControlRef	versionControl;
     ControlFontStyleRec	controlStyle;
     
     appBundle = CFBundleGetMainBundle();
-    text = (CFStringRef) CFBundleGetValueForInfoDictionaryKey(appBundle, CFSTR("CFBundleGetInfoString"));
-    if((text== CFSTR(" ")) || (text==NULL))
-        text = CFSTR("Nameless Application");
+    text = CFStringCreateWithFormat( NULL, NULL, CFSTR("Version %s.%s %s (%s-%s-%s)"), R_MAJOR, 
+                                        R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     GetControlByID(window, &versionInfoID, &versionControl);
     SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
     controlStyle.flags = kControlUseJustMask;
     controlStyle.just = teCenter;
-    SetControlFontStyle(versionControl, &controlStyle);
+    CFRelease(text);
+    
+    text = CFStringCreateWithFormat( NULL, NULL, CFSTR("R : Copyright %s, The R Development Core Team"), R_YEAR);
+    GetControlByID(window, &CopyrightID, &versionControl);
+    SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
+    controlStyle.flags = kControlUseJustMask;
+    controlStyle.just = teCenter;
+    CFRelease(text);
+    
+    text = CFSTR("RAqua GUI by Stefano M. Iacus (2003). Please send feedback to stefano.iacus@unimi.it");
+    GetControlByID(window, &AuthorsID, &versionControl);
+    SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
+    controlStyle.flags = kControlUseJustMask;
+    controlStyle.just = teCenter;
+    CFRelease(text);
+    
+    text = CFSTR("Thanks to: Jan de Leeuw, Simon Urbanek");
+    GetControlByID(window, &ThanksToID, &versionControl);
+    SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
+    controlStyle.flags = kControlUseJustMask;
+    controlStyle.just = teCenter;
+    CFRelease(text);
+    
     ShowWindow(window);
     SelectWindow(window);    
 }
