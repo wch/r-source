@@ -9,3 +9,4 @@ array(c(32, 38, 10, 3, 11, 50, 10, 30, 10, 25, 7, 5, 3, 15, 7, 8,
            Eye = c("Brown", "Blue", "Hazel", "Green"),
            Sex = c("Male", "Female")))
            
+class(HairEyeColor) <- "table"

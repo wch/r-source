@@ -16,3 +16,4 @@ array(c(512, 313,
       list(Admit = c("Admitted", "Rejected"),
            Gender = c("Male", "Female"),
            Dept = c("A", "B", "C", "D", "E", "F")))
+class(UCBAdmissions) <- "table"

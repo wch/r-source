@@ -13,3 +13,4 @@ array(c(  0,   0,  35,   0,
            Sex = c("Male", "Female"),
            Age = c("Child", "Adult"),
            Survived = c("No", "Yes")))
+class(Titanic) <- "table"
