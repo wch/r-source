@@ -53,11 +53,7 @@ Date: Sun, 12 Mar 2000 12:03:45 -0200
 
 Directory:  Analyses
 
-* PR# 582 *
-Subject: lm.{w}fit(x,y,*) : fails when x has no column names
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 26 Jun 2000 15:50:58 +0200 (CEST)
---fixed in "R-(release-)patched, i.e., for 1.1.1
+none
 
 Directory:  Documentation
 
@@ -65,15 +61,10 @@ none
 
 Directory:  Graphics
 
-* PR# 603 *
-Subject: pairs(), "cex" argument has no effect
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Wed, 12 Jul 2000 19:08:11 -0400 (EDT)
-* PR# 565 *
-Subject: Postscript device ignores title if it is too long.
-From: Stephen Eglen <stephen@anc.ed.ac.uk>
-Date: Fri, 9 Jun 2000 09:17:09 +0100 (BST)
---documentation point was fixed for 1.1.0
+* PR# 584 *
+Subject: par(lty = "1") -- lty storage-etc bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 27 Jun 2000 09:11:36 +0200 (CEST)
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -81,14 +72,6 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 584 *
-Subject: par(lty = "1") -- lty storage-etc bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 27 Jun 2000 09:11:36 +0200 (CEST)
-* PR# 580 *
-Subject: dotplot() colors reversed
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 25 Jun 2000 15:36:00 -0400 (EDT)
 
 Directory:  In-Out
 
@@ -248,4 +231,8 @@ none
 
 Directory:  incoming
 
-none
+* PR# 613 *
+Subject: maketitle garbles the title in package nnet
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sat, 22 Jul 2000 06:39:32 +0100 (BST)
+Date: 2000/07/11
