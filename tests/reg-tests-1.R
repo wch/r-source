@@ -286,7 +286,7 @@ stopifnot(4 == nrow(merge(x, y, all = TRUE)))
 
 
 ## PR 1155. On some system strptime was not setting the month or day.
-library(MASS)
+if(require(MASS)) {
 data(beav1)
 attach(beav1[90:94,])
 tmp <- strptime(paste(day, time %/% 100, time %% 100), "%j %H %M")
@@ -294,6 +294,7 @@ detach()
 detach("package:MASS")
 stopifnot(all(tmp$mon == 11))
 stopifnot(tmp$mday == c(12, 12, 13, 13, 13))
+}
 ## failed on glibc-based systems in 1.3.1, including Windows.
 
 
