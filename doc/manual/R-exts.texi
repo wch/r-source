@@ -271,7 +271,7 @@ to be called by the user.  See e.g.@: the sources for package
 @pkg{tools} in the @R{} distribution for an example.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
-subdirectories named @file{unix}, @file{windows} or @file{mac}.
+subdirectories named @file{unix} or @file{windows}.
 
 The C, C++, or FORTRAN@footnote{Note that Ratfor is not supported.  If
 you have Ratfor source code, you need to convert it to FORTRAN.  On many
@@ -387,7 +387,7 @@ Description: Functions for kriging and point pattern analysis.
 @section Configure and cleanup
 
 Note that most of this section is Unix-specific: see the comments
-later on about the Windows and classic MacOS ports of R.
+later on about the Windows port of R.
 
 If your package needs some system-dependent configuration before
 installation you can include a (Bourne shell) script @file{configure} in
@@ -519,9 +519,6 @@ by Autoconf, although simple shell scripts do work).  If your package is
 to be made publicly available, please give enough information for a user
 on a non-Unix platform to configure it manually, or provide a
 @file{configure.win} script to be used on that platform.
-
-It is essential to provide manual configuration information if the
-package is to be usable on classic MacOS.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
@@ -1731,9 +1728,9 @@ and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @section Platform-specific documentation
 @cindex Platform-specific documentation
 
-Sometimes the documentation needs to differ by platform.  Currently
-three OS-specific options are available, @samp{unix}, @samp{windows} and
-@samp{mac}, and lines in the help source file can be enclosed in
+Sometimes the documentation needs to differ by platform.  Currently two
+OS-specific options are available, @samp{unix} and @samp{windows}, and
+lines in the help source file can be enclosed in
 
 @smallexample
 @group
@@ -1759,7 +1756,7 @@ for OS-specific inclusion or exclusion.
 
 If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
-can be put in a @file{unix}, @file{windows} or @file{mac} subdirectory.
+can be put in a @file{unix} or @file{windows} subdirectory.
 
 @node Processing Rd format,  , Platform-specific sections, Writing R help files
 @section Processing Rd format
@@ -1892,7 +1889,7 @@ recommended for the source code of @R{} itself.
 It is possible to profile @R{} code on most Unix-like versions of @R{},
 @R{} has to be built to enable this, by supplying the option
 @option{--enable-R-profiling}, profiling being enabled in a default
-build.  Profiling is also available on Windows, but not on the Macintosh.
+build.  Profiling is also available on Windows.
 
 The command @command{Rprof} is used to control profiling, and its help
 page can be consulted for full details.  Profiling works by recording at

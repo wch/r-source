@@ -94,9 +94,8 @@ getOption(x)
       before the base package is initialized (see \code{\link{Startup}}).}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
-      expressions that will be evaluated.  This is especially important
-      on the Macintosh since stack overflow is likely if this is set too
-      high.  Valid values are 25\dots100000 with default 500.}
+      expressions that will be evaluated.
+      Valid values are 25\dots100000 with default 500.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored in their
@@ -221,10 +220,6 @@ getOption(x)
       configuration.}
 #endif
 #ifdef windows
-      Defaults to \code{"internal"} when the internal unzip code is
-      used.}
-#endif
-#ifdef mac
       Defaults to \code{"internal"} when the internal unzip code is
       used.}
 #endif

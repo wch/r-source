@@ -20,7 +20,6 @@ proc.time()
   It is most useful for ``timing'' the evaluation of \R expressions,
   which can be done conveniently with \code{\link{system.time}}.
 }
-#ifndef mac
 \note{
 #ifdef unix
   It is possible to compile \R without support for \code{proc.time},
@@ -28,11 +27,10 @@ proc.time()
 #endif
 #ifdef windows
   CPU times will be returned as \code{NA} on Windows 9x/ME systems, but
-  are genuine times on NT4 and 2000 systems. Times of child processes are
+  are genuine times on NT4/2000/XP systems. Times of child processes are
   not available and will always be given as \code{NA}.
 #endif
 }
-#endif
 \seealso{
   \code{\link{system.time}} for timing a valid \R expression,
   \code{\link{gc.time}} for how much of the time was spent in garbage

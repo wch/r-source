@@ -46,10 +46,6 @@ The identification process is terminated by clicking the second button
 and selecting `Stop' from the menu, or from the `Stop' menu on the
 graphics window.
 #endif
-#ifdef mac
-The identification process is terminated by clicking outside the
-graphics window.
-#endif
  
   If the window is resized or hidden and then exposed before the identification
   process has terminated, any labels drawn by \code{identify}

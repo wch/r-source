@@ -5214,8 +5214,8 @@ most cases, interactive use is more productive.  Interactive use is also
 easy because at startup time @R{} initiates a graphics @emph{device
 driver} which opens a special @emph{graphics window} for the display of
 interactive graphics.  Although this is done automatically, it is useful
-to know that the command used is @code{X11()} under UNIX,
-@code{windows()} under Windows and @code{macintosh()} on MacOS 8/9.
+to know that the command used is @code{X11()} under UNIX and 
+@code{windows()} under Windows.
 
 Once the device driver is running, @R{} plotting commands can be used to
 produce a variety of graphical displays and to create entirely new kinds
@@ -5651,8 +5651,7 @@ information to a plot using a mouse.  The simplest of these is the
 @findex locator
 Waits for the user to select locations on the current plot using the
 left mouse button.  This continues until @code{n} (default 512) points
-have been selected, or another mouse button is pressed (Unix, Windows)
-or the mouse is clicked outside the graphics window (Mac).  The
+have been selected, or another mouse button is pressed.  The
 @code{type} argument allows for plotting at the selected points and has
 the same effect as for high-level graphics commands; the default is no
 plotting.  @code{locator()} returns the locations of the points selected
@@ -5681,8 +5680,7 @@ Allow the user to highlight any of the points defined by @code{x} and
 @code{y} (using the left mouse button) by plotting the corresponding
 component of @code{labels} nearby (or the index number of the point if
 @code{labels} is absent).  Returns the indices of the selected points
-when another button is pressed (unix, Windows) or the mouse is clicked
-outside the graphics window (Mac).
+when another button is pressed.
 @end table
 
 Sometimes we want to identify particular @emph{points} on a plot, rather
@@ -6145,8 +6143,6 @@ meanings are as follows:
 [Unix]
 @item windows()
 [Windows]
-@item Macintosh()
-[MacOS 8/9]
 @item postscript()
 @itemx pictex()
 @itemx @dots{}
@@ -6218,8 +6214,8 @@ Windows, and @R{} interfaces are available for each.
 The following session is intended to introduce to you some features of
 the @R{} environment by using them.  Many features of the system will be
 unfamiliar and puzzling at first, but this puzzlement will soon
-disappear.  This is written for the UNIX user.  Those using Windows or
-MacOS Classic will need to adapt the discussion slightly.
+disappear.  This is written for the UNIX user.  Those using Windows will
+need to adapt the discussion slightly.
 
 @table @code
 @item
@@ -6450,7 +6446,6 @@ want to save it.
 @menu
 * Invoking R under UNIX::       
 * Invoking R under Windows::    
-* Invoking R under MacOS Classic::  
 @end menu
 
 @node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
@@ -6675,7 +6670,7 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-@node Invoking R under Windows, Invoking R under MacOS Classic, Invoking R under UNIX, Invoking R
+@node Invoking R under Windows,  , Invoking R under UNIX, Invoking R
 @appendixsec Invoking R under Windows
 
 The startup procedure under Windows is very similar to that under UNIX,
@@ -6691,7 +6686,7 @@ Windows.  If the environment variable @env{R_USER} is defined, that
 gives the home directory. Next, if the environment variable @env{HOME}
 is defined, that gives the home directory. If not, and environment
 variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined (and they
-normally are under Windows NT/2000) these define the home
+normally are under Windows NT/2000/XP) these define the home
 directory. Failing all those, the home directory is taken to be the
 starting directory.
 
@@ -6874,134 +6869,6 @@ Rcmd @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{Rcmd} interface.
 
-@node Invoking R under MacOS Classic,  , Invoking R under Windows, Invoking R
-@appendixsec Invoking R under MacOS Classic
-
-This section applies to the classic MacOS port, and not to ports of the
-Unix version to MacOS X.
-
-The @R{} application startup is similar to that of UNIX and Windows
-systems.  Only a console-based version of @R{} for Macintosh exists, and
-there is no equivalent to the @code{R CMD} engine.
-
-When you double-click on the @R{} application icon a small window will
-appear.  This is equivalent to the command line under other ports.  You
-can enter the startup options, or simply press @key{RET} on the keyboard
-to start @R{} running with default options.  The main @R{} program can be
-started with a variety of options in the form
-
-@display
-@code{R} [@var{options}]
-@end display
-
-@noindent
-as listed later in this section.  Using [@code{<}@var{infile}]
-[@code{>}@var{outfile}] equivalent to UNIX can be selected at startup
-using the standard Macintosh interface but they are not currently fully
-implemented, so you can ignore these.
-
-Most options control what happens at the beginning and at the end of an
-@R{} session.  The startup mechanism is as follows (see also the on-line
-help for topic @samp{Startup} for more information).
-
-@itemize @bullet
-@item
-Unless @option{--no-environ} was given, @R{} looks for the file
-@file{.Renviron} in the @file{etc} subdirectory of @R{} application
-folder. The file found is processed to set environment variables. It
-should contain lines of the form @samp{@var{name}=@var{value}}.  (See
-@code{help(Startup)} for a precise description.)
-
-@item
-Then, unless @option{--no-init-file} was given, @R{} looks for a file
-called @file{.Rprofile} in the @file{etc} subdirectory of @R{}
-application folder and processes it (as @R{} code).
-
-@item
-It then loads a saved image from file @file{.RData} if there is one (unless
-@option{--no-restore} or @option{--no-restore-data} was specified).
-This file looked for in the @file{etc} subdirectory of @R{}
-application folder.
-
-@item
-Finally, if a function @code{.First} exists, it is executed.  This
-function (as well as @code{.Last} which is executed at the end of the
-@R{} session) can be defined in the appropriate startup profiles, or
-reside in @file{.RData}.
-@end itemize
-
-In addition, there are options for controlling the memory available to
-the @R{} process (see the on-line help for topic @samp{Memory} for more
-information).  Users will not normally need to use these unless they are
-trying to limit the amount of memory used by @R{}.  Please note that
-under MacOS, you have to reserve in advance the amount of memory
-assigned to the @R{} application from the `Finder/Information' menu as
-it is usually done for any Macintosh software.  An amount of 32000k is
-sufficient to run all the demos and examples in the base distribution.
-
-@R{} accepts the following command-line options.
-
-@table @option
-@item --version
-Print version information to standard output and exit successfully.
-
-@item --save
-@itemx --no-save
-Control whether data sets should be saved or not at the end of the @R{}
-session.  If neither is given in an interactive session, the user is
-asked for the desired behavior when ending the session with @kbd{q()};
-in batch mode, one of these must be specified.
-
-@item --no-init-file
-Do not read the user's profile at startup.
-
-@item --restore
-@itemx --no-restore
-@itemx --no-restore-data
-Control whether saved images (file @file{:etc:.RData} in the directory
-where @R{} was started) should be restored at startup or not.  The
-default is to restore. (@option{--no-restore} implies all the specific
-@option{--no-restore-*} options.)
-
-@item --no-restore-history
-Control whether the history file (normally file @file{.Rhistory} in the
-directory where @R{} was started, but can be set by the environment
-variable @env{R_HISTFILE}) should be restored at startup or not.  The
-default is to restore.
-
-@item --vanilla
-Combine @option{--no-save}, @option{--no-environ},
-@option{--no-init-file} and @option{--no-restore}.
-
-@item --min-vsize=@var{N}
-@itemx --max-vsize=@var{N}
-Specify the minimum or maximum amount of memory used for variable size
-objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
-@var{N} must either be an integer or an integer ending with @samp{G},
-@samp{M}, @samp{K}, or @samp{k}, meaning `Giga' (2^30), `Mega' (2^20),
-(computer) `Kilo' (2^10), or regular `kilo' (1000).
-
-@item --min-nsize=@var{N}
-@itemx --max-nsize=@var{N}
-Specify the amount of memory used for fixed size objects by setting the
-number of ``cons cells'' to @var{N}.  See the previous option for
-details on @var{N}.  A cons cell takes 28 bytes on a 32-bit machine, and
-usually 56 bytes on a 64-bit machine.
-
-@item --quiet
-@itemx --silent
-@itemx -q
-Do not print out the initial copyright and welcome messages.
-
-@item --slave
-Make @R{} run as quietly as possible.
-
-@item --verbose
-Print more information about progress, and in particular set @R{}'s
-option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
-control the printing of diagnostic messages.
-
-@end table
 
 
 @node The command line editor, Function and variable index, Invoking R, Top

@@ -33,10 +33,6 @@ The identification process can be terminated by clicking the second button
 and selecting `Stop' from the menu, or from the `Stop' menu on the
 graphics window.
 #endif
-#ifdef mac
-The identification process can be terminated by clicking outside the
-graphics window.
-#endif
 
   The current graphics parameters apply just as if \code{plot.default}
   has been called with the same value of \code{type}. The plotting of

@@ -121,8 +121,7 @@ Some of the packages described are still under development but they
 already provide useful functionality.
 
 Unless otherwise stated, everything described in this manual is
-available for both Unix/Linux and Windows versions of @R{}.  (Much is not
-yet available for the classic Macintosh port.)
+available for both Unix/Linux and Windows versions of @R{}.
 
 In general, statistical systems like @R{} are not particularly well
 suited to manipulations of large-scale data.  Some other systems are
@@ -152,7 +151,7 @@ approach, using @code{perl} to manipulate its databases of help files
 rather than @R{} itself, and the function @code{read.fwf} used a call to
 a @code{perl} script until it was decided not to require @code{perl} at
 run-time.  The traditional Unix tools are now much more widely
-available, including on Windows (but not on classic Macintosh).
+available, including on Windows.
 
 @menu
 * Imports::                     
@@ -1658,9 +1657,8 @@ will also accept these as the file specification and call @code{url}.
 @findex socketConnection
 Sockets can also be used as connections via function
 @code{socketConnection} on platforms which support Berkeley-like sockets
-(most Unix systems, Linux and Windows but not currently classic
-Macintosh).  Sockets can be written to or read from, and both client and
-server sockets can be used.
+(most Unix systems, Linux and Windows).  Sockets can be written to or
+read from, and both client and server sockets can be used.
 
 
 @node Output to connections, Input from connections, Types of connections, Connections

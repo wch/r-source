@@ -132,10 +132,6 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 
   If the timezone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
-#ifdef mac
-  Under MacOS only the current timezone \code{""} and UTC (or GMT)
-  are supported.
-#endif
 
   OS facilities will probably not print years before 1CE (aka 1AD)
   correctly.

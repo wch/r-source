@@ -17,13 +17,6 @@ browseURL(url, browser = getOption("browser"))
     Under Windows \code{NULL} is also allowed (and is the default), and
     implies that the file association mechanism will be used.
 #endif
-#ifdef mac
-    
-    Under Macintosh the browser should be the complete name of
-    the application but without path, i.e., \code{"Internet Explorer"}.
-    The \code{NULL} is allowed (and is the default) which implies
-    that the standard system browser will be used.
-#endif
   }
 }
 #ifdef unix

@@ -16,9 +16,6 @@ help(topic, offline = FALSE, package = .packages(),
 #ifdef unix
      htmlhelp = getOption("htmlhelp"),
 #endif
-#ifdef mac
-     htmlhelp = getOption("htmlhelp"),
-#endif
 #ifdef windows
      chmhelp = getOption("chmhelp"),
      htmlhelp = getOption("htmlhelp"), winhelp = getOption("winhelp"),
@@ -49,10 +46,6 @@ type?topic
    \code{options("browser")}.  See \code{\link{browseURL}} for details
    of the browsers that are supported.  Where possible an existing
    browser window is re-used.}
-#endif
-#ifdef mac
-  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
-    version of the help will be shown in a browser.}
 #endif
 #ifdef windows
   \item{chmhelp}{logical (or \code{NULL}).  If \code{TRUE} the
@@ -93,9 +86,6 @@ type?topic
   the file \file{R\_HOME/bin/helpPRINT.bat} which contains an example.
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
-#endif
-#ifdef mac
-  Offline printing is not currently supported by the Macintosh port.
 #endif
 
   %% \code{topicName} computes the string used internally to find

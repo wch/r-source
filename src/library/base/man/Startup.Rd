@@ -2,10 +2,8 @@
 \alias{Startup}
 \alias{Rprofile}
 \alias{.Rprofile}
-#ifndef mac
 \alias{Rprofile.site}
 \alias{Renviron.site}
-#endif
 \alias{.Renviron}
 \alias{.First}
 \alias{.First.sys}
@@ -18,7 +16,6 @@
 \description{
   In \R, the startup mechanism is as follows.
 
-#ifndef mac
   Unless \code{--no-environ} was given on the command line,
   \R searches for user and site
   files to process for setting environment variables.  The name of the
@@ -45,16 +42,6 @@
   called \file{.Rprofile} in the current directory or in the user's
   home directory (in that order) and sources it into the user
   workspace.
-#endif
-#ifdef mac
-  Unless \code{--no-environ} was given, \R reads the file
-  \file{.Renviron} in the \file{etc} subdirectory of the \R application
-  folder.  See \bold{Details} for how the file is read.
-
-  Then, unless \code{--no-init-file} was given, \R looks for a file
-  called \file{.Rprofile} in the \file{etc} subdirectory of \R
-  application folder and sources it into the user workspace.
-#endif
 
   It then loads a saved image of the user workspace from \file{.RData}
   if there is one (unless \code{--no-restore-data} was specified, or

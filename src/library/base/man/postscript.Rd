@@ -69,9 +69,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
 #ifdef windows
 "WinAnsi.enc"
 #endif
-#ifdef mac
-"MacRoman.enc"
-#endif
     in the \file{R\_HOME/afm} directory, which is used
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.}
