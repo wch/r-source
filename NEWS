@@ -31,6 +31,9 @@ NEW FEATURES
         separator (SPSS/Windows and probably others want commas in
 	continental European locales).
 
+    o   Advance warning: save(, oldstyle=TRUE) will no longer be
+	available after this release.
+
 
 BUG FIXES
 
@@ -141,7 +144,7 @@ BUG FIXES
         to begin with  dd<-edit(data.frame())  or
 	dd<-data.frame() ; fix(dd)
 
-    o	optim(): nomore segfault for REPORT=0; corrected error msg; ..
+    o	optim(): no more segfault for REPORT=0; corrected error msg; ..
 	maxit default is now okay also when "L-*-B" is chosen automatically.
         Using (abs|rel)tol with that method now gives a warning.
 
@@ -150,6 +153,7 @@ BUG FIXES
 
     o	polygon() had an incorrect documentation and silently disregarded
 	"..." arguments.
+
 
 
 		CHANGES IN R VERSION 1.1.0

@@ -15,7 +15,8 @@ save.image(file = ".Rdata", oldstyle = FALSE)
     written.  This is useful for transporting data between machines of
     different types.  The default value of \code{ascii} is \code{FALSE}
     which leads to a more compact binary file being written.}
-  \item{oldstyle}{logical. Should the old (0.90.1 or earlier) format be used?}
+  \item{oldstyle}{logical. Should the old (0.90.1 or earlier) format be
+    used? \bold{Warning}: this will be removed from \R version 1.2.0 on.}
 }
 \description{
   \code{save} writes a external representation of \R objects to the
@@ -26,6 +27,11 @@ save.image(file = ".Rdata", oldstyle = FALSE)
   environment'',
   i.e., \code{save(list = ls(all=TRUE), file = ".RData")}. It is what also
   happens with \code{\link{q}("yes")}.
+}
+\details{
+  Almost all current \R platforms (including Windows) use the XDR
+  representation of binary objects in binary save-d files, and these are
+  portable across all XDR-compliant implementations.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}}.
