@@ -627,6 +627,9 @@ and @code{zlib} (version 1.1.3 or later) respectively.
 The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
 (@uref{http://www.cs.wisc.edu/~ghost}).
 
+@code{bzfile} connections make use of @code{libbz2}, part of
+@code{bzip2} (@uref{http://sources.redhat.com/bzip2}).
+
 @menu
 * Tcl/Tk::
 * Linear algebra::
