@@ -291,6 +291,9 @@ BUG FIXES
     o	Rdconv now reports if an invalid type is specified (rather
 	than using latex).
 
+    o	na.omit now handles vectors and matrices as well as data
+        frames.
+
 
 
 		CHANGES IN R VERSION 1.0.1
