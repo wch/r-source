@@ -21,10 +21,10 @@ update.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-   
+
     if(is.null(available))
         available <- CRAN.packages(contriburl=contriburl, method=method)
-    
+
     old <- old.packages(lib.loc=lib.loc,
                         contriburl=contriburl,
                         method=method,
@@ -64,7 +64,7 @@ old.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-    
+
     instp <- installed.packages(lib.loc=lib.loc)
     if(is.null(available))
         available <- CRAN.packages(contriburl=contriburl, method=method)
@@ -110,7 +110,7 @@ old.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
     }
 
     for(k in 1:nrow(instp)){
-        ok <- (instp[k, "Priority"] != "base") &
+        ok <- (!(instp[k, "Priority"] %in% "base")) &
                 (available[,"Package"] == instp[k, "Package"])
         if(any(ok))
             ok[ok] <- sapply(available[ok, "Version"], newerVersion,
@@ -132,7 +132,7 @@ package.contents <- function(pkg, lib.loc=NULL)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-    
+
     file <- system.file("CONTENTS", package = pkg, lib.loc = lib.loc)
     if(file == "") {
         warning(paste("Cannot find CONTENTS file of package", pkg))
