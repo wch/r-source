@@ -19,6 +19,8 @@ BUG FIXES
     o	pchisq(*, ncp) and qchisq(*, ncp) work in more cases for large ncp
 	or quantile and give warning or error messages otherwise.
 
+    o	str(x) now also works when x is an "externalptr" (or "weakref").
+
 
 
 		CHANGES IN R VERSION 1.7.0
