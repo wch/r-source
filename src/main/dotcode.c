@@ -395,11 +395,34 @@ SEXP do_dotTk(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("Tk interface is not available");
     cmd = CHAR(STRING(CAR(args))[0]);
     val = tk_eval(cmd);
-    ans = PROTECT(allocVector(STRSXP, 1));
-    STRING(ans)[0] = mkChar(val);
-    UNPROTECT(1);
+    ans = mkString(val);
     return ans;
 }
+
+SEXP do_Tkcallback(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, closure = CAR(args), formals;
+
+    char buf[256], tmp[20];
+
+    if (!isFunction(closure))
+    	errorcall(call, "argument is not a function");
+
+    formals = FORMALS(closure);
+
+    sprintf(buf, "{ R_call %lx", (unsigned long) closure);
+
+    while ( formals != R_NilValue )
+    {
+	sprintf(tmp, " %%%s", CHAR(PRINTNAME(TAG(formals))));
+	strcat(buf, tmp);
+	formals = CDR(formals);
+    }
+    strcat(buf, " }");
+    ans = mkString(buf);
+    return ans;
+}
+
 #endif
 
 /*   Call dynamically loaded "internal" functions */

@@ -58,6 +58,33 @@ static int R_eval(ClientData clientData,
     return TCL_OK;
 }
 
+static int R_call(ClientData clientData,
+		  Tcl_Interp *interp,
+		  int argc,
+		  char *argv[])
+{
+    int i;
+    SEXP expr, ans, fun, alist;
+
+    alist = R_NilValue;
+    for (i = argc - 1 ; i > 1 ; i--){
+	PROTECT(alist);
+	alist = LCONS(mkString(argv[i]), alist);
+	UNPROTECT(1);
+    }
+
+    fun = (SEXP) strtoul(argv[1], NULL, 16);
+
+    expr = LCONS(fun, alist);
+
+    ans = eval(expr, R_GlobalEnv);
+
+    return TCL_OK;
+}
+
+
+
+
 static void stdin_setflag(int dummy) {stdin_activity = 1;}
 
 void tcltk_init()
@@ -85,6 +112,12 @@ void tcltk_init()
     Tcl_CreateCommand(Tcl_interp,
 		      "R_eval", 
 		      R_eval, 
+		      (ClientData) NULL, 
+		      (Tcl_CmdDeleteProc *) NULL);
+    
+    Tcl_CreateCommand(Tcl_interp,
+		      "R_call", 
+		      R_call, 
 		      (ClientData) NULL, 
 		      (Tcl_CmdDeleteProc *) NULL);
     
