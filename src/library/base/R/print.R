@@ -125,7 +125,7 @@ print.coefmat <-
 		Signif <- symnum(pv, corr = FALSE, na = FALSE,
 				 cutpoints = c(0,  .001,.01,.05, .1, 1),
 				 symbols   =  c("***","**","*","."," "))
-		Cf <- cbind(Cf, Signif)
+		Cf <- cbind(Cf, format.char(Signif)) #format.ch: right=TRUE
 	    }
 	} else signif.stars <- FALSE
     } else signif.stars <- FALSE
