@@ -30,7 +30,7 @@ extern int (*ptr_gnome_start)();
 
 static Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
 
-#ifndef win32
+#ifndef Win32
 /* R event structure */
 typedef struct {
     Tcl_EventProc *proc;
