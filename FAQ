@@ -166,8 +166,20 @@ Becker, Chambers & Wilks' S (*note What is S?::) and Sussman's Scheme
 (http://www.cs.indiana.edu/scheme-repository/home.html).  Whereas the
 resulting language is very similar in appearance to S, the underlying
 implementation and semantics are derived from Scheme.  *Note What are the
-differences between R and S?::, for a discussion of the differences between
-R and S.
+differences between R and S?::, for further details.
+
+   The core of R is an interpreted computer language which allows branching
+and looping as well as modular programming using functions.  Most of the
+user-visible functions in R are written in R.  It is possible for the user
+to interface to procedures written in the C, C++, or Fortran languages for
+efficiency.  The R distribution contains functionality for a large number
+of statistical procedures.  Among these are: linear and generalized linear
+models, nonlinear regression models, time series analysis, classical
+parametric and nonparametric tests, clustering and smoothing.  There is
+also a large set of functions which provide a flexible graphical
+environment for creating various kinds of data presentations.  Additional
+modules ("add-on packages") are available for a variety of specific
+purposes (*note R Add-On Packages::).
 
    R was initially written by Ross Ihaka <Ross.Ihaka@r-project.org> and
 Robert Gentleman <Robert.Gentleman@r-project.org>, who are Senior Lecturers
@@ -201,7 +213,7 @@ sparc-linux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix/Windows version is 1.1.0, the unstable one is
+   The current stable Unix/Windows version is 1.1.1, the unstable one is
 1.2.0.  Typically, new features are introduced in the development versions;
 updates of stable versions are for bug fixes mostly.  The version for the
 Mac is pre-alpha.
@@ -329,8 +341,8 @@ sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and Vin
 Everett, respectively), SuSE 5.3/6.4 i386 packages by Albrecht Gebhardt,
 and Linuxppc 5.0 RPMs by Alex Buerkle.
 
-   The `bin/osf' directory of a CRAN site contains RPMs for alpha systems
-running Digital Unix 4.0 by Albrecht Gebhardt.
+   The `bin/osf' directory of a CRAN site contains RPMs by Albrecht
+Gebhardt for alpha systems running Digital Unix 4.0.
 
    No other binary distributions have thus far been made publically
 available.
@@ -520,53 +532,63 @@ Tracking system.
 ==============
 
    S is a very high level language and an environment for data analysis and
-graphics.  S was written by Richard A. Becker, John M. Chambers, and Allan
-R. Wilks of AT&T Bell Laboratories Statistics Research Department.
+graphics.  In 1998, the Association for Computing Machinery (ACM) presented
+its Software System Award to John M. Chambers, the principal designer of S,
+for
 
-   The primary references for S are two books by the creators of S.
+     the S system, which has forever altered the way people analyze,
+     visualize, and manipulate data ...
+
+     S is an elegant, widely accepted, and enduring software system, with
+     conceptual integrity, thanks to the insight, taste, and effort of John
+     Chambers.
+
+   The evolution of the S language is characterized by four books by John
+Chambers and coauthors, which are also the primary references for S.
+
+   * Richard A. Becker and John M. Chambers (1984), "S.  An Interactive
+     Environment for Data Analysis and Graphics," Monterey: Wadsworth and
+     Brooks/Cole.
+
+     This is also referred to as the "_Brown Book_", and of historical
+     interest only.
 
    * Richard A. Becker, John M. Chambers and Allan R. Wilks (1988), "The New
-     S Language," Chapman & Hall, London.
+     S Language," London: Chapman & Hall.
 
-     This book is often called the "_Blue Book_".
+     This book is often called the "_Blue Book_", and introduced what is
+     now known as S version 2.
 
    * John M. Chambers and Trevor J. Hastie (1992), "Statistical Models in
-     S," Chapman & Hall, London.
+     S,"  London: Chapman & Hall.
 
-     This is also called the "_White Book_".
+     This is also called the "_White Book_", and introduced S version 3,
+     which added structures to facilitate statistical modeling in S.
 
-   Version 4 of S, a major revision of S designed by John Chambers to
-improve its usefulness at every stage of the programming process, is
-described in "Programming with Data"
-(http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/) by John M. Chambers
-(1998), Springer: New York, ISBN 0-387-98503-4.
+   * John M. Chambers (1998), "Programming with Data," New York: Springer,
+     ISBN 0-387-98503-4
+     (<http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/>).
 
-   In 1998, the Association for Computing Machinery (ACM) presented its
-Software System Award to John Chambers for the design of the S system.  The
-ACM citation stated that "S has forever altered the way people analyze,
-visualize, and manipulate data ....  S is an elegant, widely accepted, and
-enduring software system, with conceptual integrity, thanks to the insight,
-taste, and effort of John Chambers."  See
-`http://cm.bell-labs.com/cm/ms/departments/sia/S/history.html' for "Stages
-in the Evolution of S".
+     This "_Green Book_" describes version 4 of S, a major revision of S
+     designed by John Chambers to improve its usefulness at every stage of
+     the programming process.
+
+   See `http://cm.bell-labs.com/cm/ms/departments/sia/S/history.html' for
+further information on "Stages in the Evolution of S".
 
    There is a huge amount of user-contributed code for S, available at the
 S Repository (http://lib.stat.cmu.edu/S/) at CMU.
 
-   The "Frequently Asked Questions about S" (http://lib.stat.cmu.edu/S/faq)
-contains further information about S, but is not up-to-date.
-
 3.2 What is S-PLUS?
 ===================
 
-   S-PLUS is a value-added version of S sold by Statistical Sciences, Inc.
-(now a division of Mathsoft, Inc.).  Based on the S language, S-PLUS
-provides functionality in a wide variety of areas, including robust
-regression, modern non-parametric regression, time series, survival
-analysis, multivariate analysis, classical statistical tests, quality
-control, and graphics drivers.  Add-on modules add additional capabilities
-for wavelet analysis, spatial statistics, GARCH models, and design of
-experiments.
+   S-PLUS is a value-added version of S sold by Mathsoft, Inc.  Based on
+the S language, S-PLUS provides functionality in a wide variety of areas,
+including robust regression, modern non-parametric regression, time series,
+survival analysis, multivariate analysis, classical statistical tests,
+quality control, and graphics drivers.  Add-on modules add additional
+capabilities for wavelet analysis, spatial statistics, GARCH models, and
+design of experiments.
 
    See the MathSoft S-PLUS page (http://www.mathsoft.com/splus/) for
 further information.
@@ -574,12 +596,21 @@ further information.
 3.3 What are the differences between R and S?
 =============================================
 
+   We can regard S as a language with three current implementations or
+"engines", the "old S engine" (S version 3; S-PLUS 3.x and 4.x), the "new S
+engine" (S version 4; S-PLUS 5.x and above), and R.  Given this
+understanding, asking for "the differences between R and S" really amounts
+to asking for the specifics of the R implementation of the S language,
+i.e., the difference between the R and S engines.
+
+   For the remainder of this section, "S" refers to the S engines and not
+the S language.
+
 3.3.1 Lexical scoping
 ---------------------
 
-   Whereas the developers of R have tried to stick to the S language as
-defined in "The New S Language" (Blue Book, see *Note What is S?::), they
-have adopted the evaluation model of Scheme.
+   Contrary to other implementations of the S language, R has adopted the
+evaluation model of Scheme.
 
    This difference becomes manifest when _free_ variables occur in a
 function.  Free variables are those which are neither formal parameters
@@ -783,11 +814,11 @@ read in using `source()'.
 ------------
 
    Apart from lexical scoping and its implications, R follows the S
-language definition in the Blue Book as much as possible, and hence really
-is an "implementation" of S.  There are some intentional differences where
-the behavior of S is considered "not clean".  In general, the rationale is
-that R should help you detect programming errors, while at the same time
-being as compatible as possible with S.
+language definition in the Blue and White Books as much as possible, and
+hence really is an "implementation" of S.  There are some intentional
+differences where the behavior of S is considered "not clean".  In general,
+the rationale is that R should help you detect programming errors, while at
+the same time being as compatible as possible with S.
 
    Some known differences are the following.
 
@@ -1419,10 +1450,10 @@ respectively.
 ==================================
 
    A package consists of a subdirectory containing the files `DESCRIPTION'
-and `INDEX', and the subdirectories `R', `data', `exec', `inst', `man', and
-`src' (some of which can be missing).  Optionally the package can also
-contain script files `configure' and `cleanup' which are executed before
-and after installation.
+and `INDEX', and the subdirectories `R', `data', `exec', `inst', `man',
+`src', and `tests' (some of which can be missing).  Optionally the package
+can also contain script files `configure' and `cleanup' which are executed
+before and after installation.
 
    See section "Creating R packages" in `Writing R Extensions', for details.
 This manual is included in the R distribution, *note What documentation
@@ -1824,7 +1855,7 @@ to get the numbers back.  More efficient, but harder to remember, is
 
      as.numeric(levels(f))[as.integer(f)]
 
-   In any case, do not call `as.numeric' or their likes directly.
+   In any case, do not call `as.numeric()' or their likes directly.
 
 7.14 Are Trellis displays implemented in R?
 ===========================================
