@@ -200,6 +200,21 @@ void GEMetricInfo(int c, int font, double cex, double ps,
 double GEStrWidth(char *str, int font, double cex, double ps, GEDevDesc *dd);
 double GEStrHeight(char *str, int font, double cex, double ps, GEDevDesc *dd);
 
+/* From plotmath.c 
+ */
+double GEExpressionWidth(SEXP expr, 
+			 int font, double cex, double ps,
+			 GEDevDesc *dd);
+double GEExpressionHeight(SEXP expr, 
+			  int font, double cex, double ps,
+			  GEDevDesc *dd);
+void GEMathText(double x, double y, SEXP expr,
+		double xc, double yc, double rot, 
+		int col, double gamma, int font, double cex, double ps,
+		GEDevDesc *dd);
+/* (End from plotmath.c)
+ */
+
 #define	DEG2RAD 0.01745329251994329576
 
 GEDevDesc* GEcurrentDevice();

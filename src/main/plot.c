@@ -2038,10 +2038,15 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 		    GVText(xx, yy, INCHES, CHAR(string),
 			   INTEGER(vfont)[0], INTEGER(vfont)[1],
 			   adjx, adjy, Rf_gpptr(dd)->srt, dd);
-	    } else if (isExpression(txt))
-		GMathText(xx, yy, INCHES, VECTOR_ELT(txt, i % ntxt),
-			  adjx, adjy, Rf_gpptr(dd)->srt, dd);
-	    else {
+	    } else if (isExpression(txt)) {
+		GEMathText(toDeviceX(xx, GE_INCHES, (GEDevDesc*) dd), 
+			   toDeviceY(yy, GE_INCHES, (GEDevDesc*) dd), 
+			   VECTOR_ELT(txt, i % ntxt),
+			   adjx, adjy, Rf_gpptr(dd)->srt, 
+			   Rf_gpptr(dd)->col, Rf_gpptr(dd)->gamma,
+			   Rf_gpptr(dd)->font, Rf_gpptr(dd)->cex,
+			   Rf_gpptr(dd)->ps, (GEDevDesc*) dd);
+	    } else {
 		string = STRING_ELT(txt, i % ntxt);
 		if(string != NA_STRING)
 		    GText(xx, yy, INCHES, CHAR(string),
@@ -2440,8 +2445,12 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    where = MAR3;
 	}
 	if (isExpression(Main)) {
-	    GMathText(hpos, vpos, where,
-		      VECTOR_ELT(Main, 0), adj, 0.5, 0.0, dd);
+	    GConvert(&hpos, &vpos, where, DEVICE, dd);
+	    GEMathText(hpos, vpos,
+		      VECTOR_ELT(Main, 0), adj, 0.5, 0.0, 
+		       Rf_gpptr(dd)->col, Rf_gpptr(dd)->gamma,
+		       Rf_gpptr(dd)->font, Rf_gpptr(dd)->cex,
+		       Rf_gpptr(dd)->ps, (GEDevDesc*) dd);
 	}
 	else {
 	  n = length(Main);
