@@ -572,6 +572,8 @@ AC_OUTPUT(Makeconf cmd/fwf2table doc/keyword-test etc/COMPILE
   etc/SHLIB etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
   doc/manual/lib2tex
+  src/appl/Makefile src/graphics/Makefile src/main/Makefile
+  src/nmath/Makefile src/unix/Makefile
 )
 
 AC_OUTPUT_COMMANDS(
