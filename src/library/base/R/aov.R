@@ -474,9 +474,8 @@ summary.aovlist <- function(object, ...)
     }
     x <- vector(length = length(strata), mode = "list")
     names(x) <- paste("Error:", strata)
-    for(i in seq(along = strata)) {
-        x[[i]] <- do.call("summary", append(list(object = object[[i]]), dots))
-    }
+    for(i in seq(along = strata))
+        x[[i]] <- do.call("summary", c(list(object = object[[i]]), dots))
     class(x) <- "summary.aovlist"
     x
 }
@@ -514,12 +513,11 @@ se.contrast.aov <-
         nmeffect <- c("(Intercept)",
                       attr(object$terms, "term.labels"))[1 + uasgn]
         effects <- as.matrix(qr.qty(object$qr, contrast))
-        effect.sq <- effects[seq(along=asgn), , drop = FALSE]^2
         res <- matrix(0, nrow = nterms, ncol = ncol(effects),
                       dimnames = list(nmeffect, colnames(contrast)))
         for(i in seq(nterms)) {
             select <- (asgn == uasgn[i])
-            res[i,] <- rep(1, sum(select)) %*% effect.sq[select, , drop = FALSE]
+            res[i,] <- colSums(effects[seq(along=asgn)[select], , drop = FALSE]^2)
         }
         res
     }
@@ -561,7 +559,7 @@ se.contrast.aovlist <-
     function(object, contrast.obj, coef = contr.helmert(ncol(contrast))[, 1],
              data = NULL, ...)
 {
-    contrast.weight.aovlist <- function(object, contrast, onedf = TRUE)
+    contrast.weight.aovlist <- function(object, contrast)
     {
         e.qr <- attr(object, "error.qr")
         if(!is.qr(e.qr))
@@ -580,15 +578,14 @@ se.contrast.aovlist <-
                 effects <- as.matrix(qr.qty(strata$qr, scontrast))
                 asgn <- strata$assign[strata$qr$pivot[1:strata$rank]]
                 uasgn <- unique(asgn)
-                browser()
                 nm <- c("(Intercept)", attr(strata$terms, "term.labels"))
                 res.i <-
                     matrix(0, length(asgn), ncol(effects),
                            dimnames = list(nm[1 + uasgn], colnames(contrast)))
                 for(i in seq(along = asgn)) {
                     select <- (asgn == uasgn[i])
-                    res.i[i, ] <- rep(1, sum(select)) %*%
-                        effects[seq(along=asgn)[select], , drop = FALSE]^2
+                    res.i[i, ] <-
+                        colSums(effects[seq(along=asgn)[select], , drop = FALSE]^2)
                 }
                 res[[j]] <- res.i
             }
@@ -639,7 +636,7 @@ se.contrast.aovlist <-
         if(length(colnames(contrast)) == 0)
             colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
     }
-    weights <- contrast.weight.aovlist(object, contrast, onedf = FALSE)
+    weights <- contrast.weight.aovlist(object, contrast)
     weights <- weights[-match("(Intercept)", names(weights))]
     effic <- eff.aovlist(object)
     ## Need to identify the lowest stratum where each nonzero term appears
