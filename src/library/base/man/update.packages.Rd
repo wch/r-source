@@ -47,8 +47,7 @@ parse.description <- function(desc)
 \description{
     These functions can be used to automatically compare the version
     numbers of installed packages with the newest available version on
-    CRAN and update outdated packages on the fly. This currently works
-    only on Unix systems.}
+    CRAN and update outdated packages on the fly.}
 }
 \details{
   \code{installed.packages()} scans the DESCRIPTION files of each
