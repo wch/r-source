@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 10:15+0000\n"
+"POT-Creation-Date: 2005-02-08 12:43+0000\n"
 "PO-Revision-Date: 2005-02-05 13:45+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -24,7 +24,7 @@ msgstr "Non c'è abbastanza memoria"
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Memoria insufficiente: il testo non può essere copiato negli appunti"
 
-#: console.c:985
+#: console.c:985 graphapp/clipboard.c:54 graphapp/clipboard.c:80
 msgid "Unable to open the clipboard"
 msgstr "Non è possibile aprire gli appunti"
 
@@ -40,6 +40,150 @@ msgid ""
 msgstr ""
 "Carattere %s-%d-%d  non trovato.\n"
 "Utilizzo il carattere di sistema a spaziatura fissa"
+
+#: console.c:1743
+msgid "Text files (*.txt)"
+msgstr ""
+
+#: console.c:1745
+msgid "Save selection to"
+msgstr ""
+
+#: console.c:1747
+msgid "Save console contents to"
+msgstr ""
+
+#: console.c:1845
+msgid "Scrolling.\n"
+msgstr ""
+
+#: console.c:1846
+msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
+msgstr ""
+
+#: console.c:1847
+msgid ""
+"  Mouse: use the scrollbar(s).\n"
+"\n"
+msgstr ""
+
+#: console.c:1848
+#, fuzzy
+msgid "Editing.\n"
+msgstr "Modifica."
+
+#: console.c:1849
+msgid "  Moving the cursor: \n"
+msgstr ""
+
+#: console.c:1850
+msgid "     Left arrow or Ctrl+B: move backward one character;\n"
+msgstr ""
+
+#: console.c:1851
+msgid "     Right arrow or Ctrl+F: move forward one character;\n"
+msgstr ""
+
+#: console.c:1852
+msgid "     Home or Ctrl+A: go to beginning of line;\n"
+msgstr ""
+
+#: console.c:1853
+msgid "     End or Ctrl+E: go to end of line;\n"
+msgstr ""
+
+#: console.c:1854
+msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
+msgstr ""
+
+#: console.c:1855
+msgid "  Deleting:\n"
+msgstr ""
+
+#: console.c:1856
+msgid "     Del or Ctrl+D: delete current character;\n"
+msgstr ""
+
+#: console.c:1857
+msgid "     Backspace: delete preceding character;\n"
+msgstr ""
+
+#: console.c:1858
+msgid ""
+"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr ""
+
+#: console.c:1859
+msgid "     Ctrl+U: delete all text from current line.\n"
+msgstr ""
+
+#: console.c:1860
+#, fuzzy
+msgid "  Copy and paste.\n"
+msgstr "  Copia e incolla.\n"
+
+#: console.c:1861
+msgid ""
+"     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr ""
+
+#: console.c:1862
+msgid ""
+"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr ""
+
+#: console.c:1863
+msgid ""
+"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
+"(if any)  \n"
+msgstr ""
+
+#: console.c:1864
+msgid "     to the console, Ctrl+X first copy then paste\n"
+msgstr ""
+
+#: console.c:1865
+#, fuzzy
+msgid "  Misc:\n"
+msgstr " Varie:"
+
+#: console.c:1866
+msgid "     Ctrl+L: Clear the console.\n"
+msgstr ""
+
+#: console.c:1867
+msgid "     Ctrl+O: Toggle overwrite mode: initially off.\n"
+msgstr ""
+
+#: console.c:1868
+msgid "     Ctrl+T: Interchange current char with one to the left.\n"
+msgstr ""
+
+#: console.c:1869
+msgid ""
+"\n"
+"Note: Console is updated only when some input is required.\n"
+msgstr ""
+
+#: console.c:1870
+msgid ""
+"  Use Ctrl+W to toggle this feature off/on.\n"
+"\n"
+msgstr ""
+
+#: console.c:1871
+msgid ""
+"Use ESC to stop the interpreter.\n"
+"\n"
+msgstr ""
+
+#: console.c:1872
+msgid "Standard Windows hotkeys can be used to switch to the\n"
+msgstr ""
+
+#: console.c:1873
+msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
+msgstr ""
 
 #: dataentry.c:217
 msgid "invalid argument"
@@ -68,6 +212,23 @@ msgstr "errore interno di tipo per l'inserimento dati"
 #: dataentry.c:919
 msgid "dataentry: expression too long"
 msgstr "inserimento dati: espressione troppo lunga"
+
+#: dataentry.c:1347
+msgid "column names cannot be blank"
+msgstr ""
+
+#: dataentry.c:1391
+#, fuzzy
+msgid "Variable editor"
+msgstr "Editor dei variabile"
+
+#: dataentry.c:1396
+msgid "variable name"
+msgstr ""
+
+#: dataentry.c:1398
+msgid "type"
+msgstr ""
 
 #: dataentry.c:1502
 msgid "Cell width(s)"
@@ -140,7 +301,8 @@ msgstr "Incolla le celle selezionate"
 msgid "Autosize column"
 msgstr "Adatta colonna"
 
-#: dataentry.c:1561 pager.c:293
+#: dataentry.c:1561 pager.c:293 rui.c:868
+#: ../library/grDevices/src/devWindows.c:1593
 msgid "Stay on top"
 msgstr "Resta in primo piano"
 
@@ -153,6 +315,7 @@ msgid "Data Editor"
 msgstr "Editor dei dati"
 
 #: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1065
+#: ../library/grDevices/src/devWindows.c:1538
 msgid "File"
 msgstr "File"
 
@@ -241,11 +404,12 @@ msgstr "Annulla"
 msgid "Cut"
 msgstr "Taglia"
 
-#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:1030 rui.c:1087
+#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:858 rui.c:1030
+#: rui.c:1087
 msgid "Copy"
 msgstr "Copia"
 
-#: editor.c:567 editor.c:689 rui.c:1034 rui.c:1088
+#: editor.c:567 editor.c:689 rui.c:859 rui.c:1034 rui.c:1088
 msgid "Paste"
 msgstr "Incolla"
 
@@ -253,7 +417,7 @@ msgstr "Incolla"
 msgid "Delete"
 msgstr "Elimina"
 
-#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:1092
+#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:865 rui.c:1092
 msgid "Select all"
 msgstr "Seleziona tutti"
 
@@ -274,6 +438,7 @@ msgid "Print script"
 msgstr "Stampa script"
 
 #: editor.c:645 pager.c:429 rui.c:1046
+#: ../library/grDevices/src/devWindows.c:1500
 msgid "Print"
 msgstr "Stampa"
 
@@ -294,6 +459,7 @@ msgid "Save as..."
 msgstr "Salva con nome..."
 
 #: editor.c:673 pager.c:453 rui.c:1081
+#: ../library/grDevices/src/devWindows.c:1596
 msgid "Print..."
 msgstr "Stampa..."
 
@@ -402,7 +568,7 @@ msgstr "Seleziona un'immagine da aprire"
 msgid "Save image in"
 msgstr "Salva l'immagine in"
 
-#: rui.c:158 rui.c:172 rui.c:1150
+#: rui.c:158 rui.c:172 rui.c:1150 graphapp/dialogs.c:358
 msgid "All files (*.*)"
 msgstr "Tutti i file (*.*)"
 
@@ -452,6 +618,23 @@ msgstr "Errore alla linea %d del file %s"
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "Non è possibile trascinare file .R, .RData e .rda"
 
+#: rui.c:860 rui.c:1089
+msgid "Paste commands only"
+msgstr "Incolla solo i comandi"
+
+#: rui.c:861 rui.c:1038
+msgid "Copy and paste"
+msgstr "Copia e incolla"
+
+#: rui.c:863
+#, fuzzy
+msgid "Clear window"
+msgstr "Pulisci console"
+
+#: rui.c:867 rui.c:1105
+msgid "Buffered output"
+msgstr "Risultato nel buffer"
+
 #: rui.c:907
 msgid "Packages"
 msgstr "Pacchetti"
@@ -498,11 +681,11 @@ msgstr "Manuali (in PDF)"
 
 #: rui.c:951
 msgid "An &Introduction to R"
-msgstr "&Introduzione a R"
+msgstr "Introduzione a R"
 
 #: rui.c:954
 msgid "R &Reference Manual"
-msgstr "Manuale di riferimento per &R"
+msgstr "Manuale di riferimento per R"
 
 #: rui.c:957
 msgid "R Data Import/Export"
@@ -556,10 +739,6 @@ msgstr "Carica immagine"
 msgid "Save image"
 msgstr "Salva immagine"
 
-#: rui.c:1038
-msgid "Copy and paste"
-msgstr "Copia e incolla"
-
 #: rui.c:1042
 msgid "Stop current computation"
 msgstr "Interrompi l'attuale computazione"
@@ -592,10 +771,6 @@ msgstr "Salva cronologia..."
 msgid "Change dir..."
 msgstr "Cambia directory..."
 
-#: rui.c:1089
-msgid "Paste commands only"
-msgstr "Incolla solo i comandi"
-
 #: rui.c:1091
 msgid "Copy and Paste"
 msgstr "Copia e incolla"
@@ -615,10 +790,6 @@ msgstr "Interrompi l'attuale computazione           \tESC"
 #: rui.c:1103
 msgid "Break to debugger"
 msgstr "Interrompi il debugger"
-
-#: rui.c:1105
-msgid "Buffered output"
-msgstr "Risultato nel buffer"
 
 #: rui.c:1107
 msgid "List objects"
@@ -693,23 +864,300 @@ msgstr "menu non trovato"
 msgid "menu or item does not exist"
 msgstr "il menu o la voce non esistono"
 
-#: system.c:393
-#, fuzzy
+#: system.c:403
 msgid "Save workspace image?"
-msgstr "Salva area di lavoro..."
+msgstr "Salva area di lavoro?"
 
-#: graphapp/gmenus.c:47
+#: graphapp/clipboard.c:70 graphapp/clipboard.c:74
+#, fuzzy
+msgid "Insufficient memory: cell not copied to the clipboard"
+msgstr "Memoria insufficiente: il testo non può essere copiato negli appunti"
+
+#: graphapp/dialogs.c:102 graphapp/dialogs.c:119
+msgid "Question"
+msgstr ""
+
+#: graphapp/dialogs.c:139
+msgid " Change working directory to:"
+msgstr ""
+
+#: graphapp/dialogs.c:142
+#, c-format
+msgid "Unable to set '%s' as working directory"
+msgstr ""
+
+#: graphapp/dialogs.c:367
+msgid "Select working directory"
+msgstr ""
+
+#: graphapp/dialogs.c:571
+msgid "User"
+msgstr ""
+
+#: graphapp/dialogs.c:572
+msgid "Password"
+msgstr ""
+
+#: graphapp/dialogs.c:733 graphapp/dialogs.c:739
+#, c-format
+msgid "\"%s\" not found"
+msgstr "\"%s\" non trovato"
+
+#: graphapp/gmenus.c:48
 msgid "Windows"
 msgstr "Finestre"
 
-#: graphapp/gmenus.c:48
+#: graphapp/gmenus.c:49
 msgid "Cascade"
 msgstr "Cascata"
 
-#: graphapp/gmenus.c:49
+#: graphapp/gmenus.c:50
 msgid "Tile"
 msgstr "Affianca"
 
-#: graphapp/gmenus.c:50
+#: graphapp/gmenus.c:51
 msgid "Arrange Icons"
 msgstr "Allinea icone"
+
+#: ../library/grDevices/src/devWindows.c:845
+msgid "Png files (*.png)"
+msgstr "Png file (*.png)"
+
+#: ../library/grDevices/src/devWindows.c:846
+msgid "Portable network graphics file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:848
+msgid "Windows bitmap files (*.bmp)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:849
+msgid "Windows bitmap file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:851
+msgid "Jpeg files (*.jpeg,*jpg)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:852
+msgid "Jpeg file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:873
+msgid "Postscript files (*.ps)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:874
+msgid "Postscript file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:886
+msgid "PDF files (*.pdf)"
+msgstr "PDF file (*.pdf)"
+
+#: ../library/grDevices/src/devWindows.c:887
+msgid "PDF file"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:899
+msgid "Enhanced metafiles (*.emf)"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:900
+msgid "Enhanced metafiles"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:904
+#: ../library/grDevices/src/devWindows.c:2678
+msgid "file path selected is too long: only 512 bytes are allowed"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1120
+msgid "No plot to replace!"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1166
+msgid "Variable name"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1173
+msgid "Variable doesn't exist or doesn't contain any plots!"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1189
+msgid "Name of variable to save to"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1494
+msgid "Copy to the clipboard as a metafile"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1506
+msgid "Return focus to console"
+msgstr "Restituisci il focus alla Console"
+
+#: ../library/grDevices/src/devWindows.c:1512
+#: ../library/grDevices/src/devWindows.c:1523
+msgid "Stop locator"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1522
+#: ../library/grDevices/src/devWindows.c:1526
+msgid "Stop"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1528
+msgid "Continue"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1532
+msgid "Next"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1533
+msgid "Next plot"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1539
+msgid "Save as"
+msgstr "Salva con nome..."
+
+#: ../library/grDevices/src/devWindows.c:1540
+msgid "Metafile..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1541
+msgid "Postscript..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1542
+msgid "PDF..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1543
+msgid "Png..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1544
+msgid "Bmp..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1545
+msgid "Jpeg"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1546
+#, c-format
+msgid "50% quality..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1547
+#, c-format
+msgid "75% quality..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1548
+#, c-format
+msgid "100% quality..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1549
+msgid "Copy to the clipboard"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1550
+msgid "as a Bitmap\tCTRL+C"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1551
+msgid "as a Metafile\tCTRL+W"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1554
+msgid "Print...\tCTRL+P"
+msgstr "Stampa...\tCTRL+P"
+
+#: ../library/grDevices/src/devWindows.c:1556
+msgid "close Device"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1557
+msgid "History"
+msgstr "Salva cronologia..."
+
+#: ../library/grDevices/src/devWindows.c:1558
+msgid "Recording"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1561
+msgid "Add\tINS"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1562
+msgid "Replace"
+msgstr "Sostituisci..."
+
+#: ../library/grDevices/src/devWindows.c:1564
+msgid "Previous\tPgUp"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1565
+msgid "Next\tPgDown"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1567
+msgid "Save to variable..."
+msgstr "Salva su variabile..."
+
+#: ../library/grDevices/src/devWindows.c:1568
+msgid "Get from variable..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1570
+msgid "Clear history"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1571
+msgid "Resize"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1572
+msgid "R mode"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1574
+msgid "Fit to window"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1576
+msgid "Fixed size"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1583
+msgid "Copy as metafile"
+msgstr "Copia e metafile"
+
+#: ../library/grDevices/src/devWindows.c:1585
+msgid "Copy as bitmap"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:1588
+#, fuzzy
+msgid "Save as metafile..."
+msgstr "Salva su metafile..."
+
+#: ../library/grDevices/src/devWindows.c:1590
+msgid "Save as postscript..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:2422
+msgid "Locator is active"
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:2982
+msgid "Waiting to confirm page change..."
+msgstr ""
+
+#: ../library/grDevices/src/devWindows.c:2994
+msgid "Click or hit ENTER for next page"
+msgstr ""

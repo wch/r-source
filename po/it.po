@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 09:45+0000\n"
+"POT-Creation-Date: 2005-02-08 12:23+0000\n"
 "PO-Revision-Date: 2005-02-05 13:45+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -335,69 +335,69 @@ msgstr ""
 msgid "character string expected as third argument"
 msgstr ""
 
-#: src/gnuwin32/system.c:112
+#: src/gnuwin32/system.c:122
 #, c-format
 msgid "Fatal error: %s\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:282 src/unix/sys-std.c:588
+#: src/gnuwin32/system.c:292 src/unix/sys-std.c:588
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr ""
 
-#: src/gnuwin32/system.c:288 src/unix/sys-std.c:594
+#: src/gnuwin32/system.c:298 src/unix/sys-std.c:594
 msgid "<ERROR: invalid input in encoding> "
 msgstr ""
 
-#: src/gnuwin32/system.c:486
+#: src/gnuwin32/system.c:496
 #, c-format
 msgid "Unable to open file '%s'"
 msgstr ""
 
-#: src/gnuwin32/system.c:499
+#: src/gnuwin32/system.c:509
 #, c-format
 msgid "file.show(): file %s does not exist\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:846
+#: src/gnuwin32/system.c:856
 msgid "WARNING: no max-mem-size given\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:852
+#: src/gnuwin32/system.c:862
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:854
+#: src/gnuwin32/system.c:864
 #, c-format
 msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:859
+#: src/gnuwin32/system.c:869
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:869 src/unix/system.c:230
+#: src/gnuwin32/system.c:879 src/unix/system.c:230
 #, c-format
 msgid "WARNING: unknown option %s\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:894 src/unix/system.c:234
+#: src/gnuwin32/system.c:904 src/unix/system.c:234
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:912 src/unix/system.c:272
+#: src/gnuwin32/system.c:922 src/unix/system.c:272
 msgid "you must specify `--save', `--no-save' or `--vanilla'"
 msgstr ""
 
-#: src/gnuwin32/system.c:917
+#: src/gnuwin32/system.c:927
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
 
-#: src/gnuwin32/system.c:926
+#: src/gnuwin32/system.c:936
 msgid "WARNING: invalid R_HISTSIZE ignored;"
 msgstr ""
 

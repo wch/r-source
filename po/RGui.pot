@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 12:24+0000\n"
+"POT-Creation-Date: 2005-02-08 12:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr ""
 
-#: console.c:985
+#: console.c:985 graphapp/clipboard.c:54 graphapp/clipboard.c:80
 msgid "Unable to open the clipboard"
 msgstr ""
 
@@ -49,6 +49,135 @@ msgstr ""
 
 #: console.c:1747
 msgid "Save console contents to"
+msgstr ""
+
+#: console.c:1845
+msgid "Scrolling.\n"
+msgstr ""
+
+#: console.c:1846
+msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
+msgstr ""
+
+#: console.c:1847
+msgid ""
+"  Mouse: use the scrollbar(s).\n"
+"\n"
+msgstr ""
+
+#: console.c:1848
+msgid "Editing.\n"
+msgstr ""
+
+#: console.c:1849
+msgid "  Moving the cursor: \n"
+msgstr ""
+
+#: console.c:1850
+msgid "     Left arrow or Ctrl+B: move backward one character;\n"
+msgstr ""
+
+#: console.c:1851
+msgid "     Right arrow or Ctrl+F: move forward one character;\n"
+msgstr ""
+
+#: console.c:1852
+msgid "     Home or Ctrl+A: go to beginning of line;\n"
+msgstr ""
+
+#: console.c:1853
+msgid "     End or Ctrl+E: go to end of line;\n"
+msgstr ""
+
+#: console.c:1854
+msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
+msgstr ""
+
+#: console.c:1855
+msgid "  Deleting:\n"
+msgstr ""
+
+#: console.c:1856
+msgid "     Del or Ctrl+D: delete current character;\n"
+msgstr ""
+
+#: console.c:1857
+msgid "     Backspace: delete preceding character;\n"
+msgstr ""
+
+#: console.c:1858
+msgid ""
+"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr ""
+
+#: console.c:1859
+msgid "     Ctrl+U: delete all text from current line.\n"
+msgstr ""
+
+#: console.c:1860
+msgid "  Copy and paste.\n"
+msgstr ""
+
+#: console.c:1861
+msgid ""
+"     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr ""
+
+#: console.c:1862
+msgid ""
+"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr ""
+
+#: console.c:1863
+msgid ""
+"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
+"(if any)  \n"
+msgstr ""
+
+#: console.c:1864
+msgid "     to the console, Ctrl+X first copy then paste\n"
+msgstr ""
+
+#: console.c:1865
+msgid "  Misc:\n"
+msgstr ""
+
+#: console.c:1866
+msgid "     Ctrl+L: Clear the console.\n"
+msgstr ""
+
+#: console.c:1867
+msgid "     Ctrl+O: Toggle overwrite mode: initially off.\n"
+msgstr ""
+
+#: console.c:1868
+msgid "     Ctrl+T: Interchange current char with one to the left.\n"
+msgstr ""
+
+#: console.c:1869
+msgid ""
+"\n"
+"Note: Console is updated only when some input is required.\n"
+msgstr ""
+
+#: console.c:1870
+msgid ""
+"  Use Ctrl+W to toggle this feature off/on.\n"
+"\n"
+msgstr ""
+
+#: console.c:1871
+msgid ""
+"Use ESC to stop the interpreter.\n"
+"\n"
+msgstr ""
+
+#: console.c:1872
+msgid "Standard Windows hotkeys can be used to switch to the\n"
+msgstr ""
+
+#: console.c:1873
+msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 
 #: dataentry.c:217
@@ -77,6 +206,22 @@ msgstr ""
 
 #: dataentry.c:919
 msgid "dataentry: expression too long"
+msgstr ""
+
+#: dataentry.c:1347
+msgid "column names cannot be blank"
+msgstr ""
+
+#: dataentry.c:1391
+msgid "Variable editor"
+msgstr ""
+
+#: dataentry.c:1396
+msgid "variable name"
+msgstr ""
+
+#: dataentry.c:1398
+msgid "type"
 msgstr ""
 
 #: dataentry.c:1502
@@ -689,6 +834,10 @@ msgstr ""
 
 #: system.c:403
 msgid "Save workspace image?"
+msgstr ""
+
+#: graphapp/clipboard.c:70 graphapp/clipboard.c:74
+msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr ""
 
 #: graphapp/dialogs.c:102 graphapp/dialogs.c:119
