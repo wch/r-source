@@ -1,7 +1,7 @@
 \name{system}
 \title{Invoke a System Command}
 \usage{
-system(command, intern=FALSE)
+system(command, intern = FALSE, ignore.errors = FALSE)
 .Platform
 }
 \alias{system}
@@ -11,6 +11,9 @@ system(command, intern=FALSE)
 \item{command}{the system command to be invoked, as a string.}
 \item{intern}{a logical, indicates whether to make the output of the
 command an \R object.}
+\item{ignore.errors}{a logical indicating whether error messages (written
+    to \file{stderr}) should be ignored.  This probably only affects
+    Unix-like systems and is ignored otherwise.}
 }
 \description{
     \code{system} invokes the system command specified by \code{command}.
@@ -39,6 +42,8 @@ backwards compatibility reasons.
 # t1 contains a vector of strings, each one
 # representing a separate line of output from who
 t1 <- system("who", TRUE)
+
+system("ls fizzlipuzzli",TRUE,TRUE)# empty since file doesn't exist
 }
 \keyword{interface}
 \keyword{file}

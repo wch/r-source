@@ -6,7 +6,7 @@
              system(paste(options("pager")[[1]], file))
          },
 	 append.file = function(f1, f2) {# append to `f1' the file `f2':
-	     system(paste("cat", f2, ">>", f1), trash.errors= TRUE)
+	     system(paste("cat", f2, ">>", f1), ignore.errors= TRUE)
 	 },
 	 show.data = function(package, lib.loc, fsep) {
              ## give `index' of all possible data sets
@@ -220,9 +220,9 @@ help.start <- function (gui = "irrelevant", browser = .Options$browser,
     options(htmlhelp=TRUE)
 }
 
-system <- function(call, intern = FALSE, trash.errors = FALSE)
-    .Internal(system(if(trash.errors) paste(call, "2>/dev/null") else call,
-		     intern))
+system <- function(command, intern = FALSE, ignore.errors = FALSE)
+    .Internal(system(if(ignore.errors) paste(command, "2>/dev/null") else
+                     command, intern))
 
 unix <- function(call, intern = FALSE) {
     .Deprecated("system"); system(call,intern)

@@ -47,6 +47,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   system(command, intern=FALSE, ignore.errors=FALSE) 
+	changed 1st & 3rd argument names and is better documented.
+
     o   "/Font5 /Symbol findfont definefont" confused some printers
 
     o   Bounding box rotated 90 deg for landscape (shouldn't be)
