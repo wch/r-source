@@ -38,7 +38,8 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     located. Possible values are \code{"simple"}, \code{"edge"} and
     \code{"flattest"} (the default). See the Details section.}
   \item{vfont}{if a character vector of length 2 is specified, then Hershey
-    vector fonts are used.  The first element of the vector
+    vector fonts are used for the contour labels.  
+    The first element of the vector
     selects a typeface and the second element selects a fontindex 
     (see \code{\link{text}} for more information).} 
   \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot.}
@@ -61,8 +62,8 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
   contour line, with no labels overlapping).  The second and third may
   not draw a label on every contour line.
 
-  For information about vector fonts, see the Details section of the
-  help for \code{\link{text}}.
+  For information about vector fonts, see the
+  help for \code{\link{text}} and \code{\link{Hershey}}.
 }
 \seealso{
   \code{\link{filled.contour}} for ``color-filled'' contours,
