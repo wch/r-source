@@ -157,6 +157,7 @@ data(lh)
 ar(lh)
 ar(lh, method="burg")
 ar(lh, method="ols")
+ar(lh, F, 4) # fit ar(4)
 
 data(LakeHuron)
 ar(LakeHuron)

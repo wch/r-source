@@ -19,6 +19,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 	nseries <- 1
 	ndata <- length(data)
     }
+    if(ndata == 0) stop("ts object must have one or more observations")
 
     if(missing(frequency)) frequency <- 1/deltat
     else if(missing(deltat)) deltat <- 1/frequency
