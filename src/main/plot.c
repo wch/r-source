@@ -1425,6 +1425,7 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     /* polygon(x, y, col, border) */
     SEXP sx, sy, col, border, lty;
     int nx=1, ny=1, ncol, nborder, nlty, xpd, i, start=0;
+    int num = 0;
     double *x, *y, xx, yy, xold, yold;
 
     SEXP originalArgs = args;
@@ -1484,14 +1485,18 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	    start = i; /* first valid point of current segment */
 	else if ((FINITE(xold) && FINITE(yold)) &&
 		 !(FINITE(xx) && FINITE(yy))) {
-	    if (i-start > 1)
+	    if (i-start > 1) {
 		GPolygon(i-start, x+start, y+start, USER,
-			 INTEGER(col)[0], INTEGER(border)[0], dd);
+			 INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
+		num++;
+	    }
 	}
 	else if ((FINITE(xold) && FINITE(yold)) &&
-		 (i == nx-1))/* very last */
+		 (i == nx-1)) { /* very last */
 	    GPolygon(nx-start, x+start, y+start, USER,
-		     INTEGER(col)[0], INTEGER(border)[0], dd);
+		     INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
+	    num++;
+	}
 	xold = xx;
 	yold = yy;
     }
