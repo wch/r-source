@@ -461,7 +461,9 @@ int main(int ac, char **av)
 #endif
 
 #ifdef linux
+#ifdef HAVE___SETFPUCW
     __setfpucw(_FPU_IEEE);
+#endif
 #endif
 
     R_gtk_terminal_new();
@@ -581,7 +583,9 @@ Choose Yes to save an image and exit,\nchoose No to exit without saving,\nor cho
 #endif
 
 #ifdef linux
+#ifdef HAVE___SETFPUCW
     __setfpucw(_FPU_DEFAULT);
+#endif
 #endif
 
     exit(0);
