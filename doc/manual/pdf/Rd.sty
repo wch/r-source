@@ -154,6 +154,39 @@
 \definecolor{Blue}{rgb}{0,0,0.8}
 \definecolor{Red}{rgb}{0.7,0,0}
 \RequirePackage{hyperref}
+% next line needed in hyperref > 6.56
+\def\Hy@writebookmark#1#2#3#4#5{}%
+
+\renewcommand\tableofcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+    \pdfbookmark{Contents}{contents}
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+    }
+\renewenvironment{theindex}
+               {\if@twocolumn
+                  \@restonecolfalse
+                \else
+                  \@restonecoltrue
+                \fi
+                \columnseprule \z@
+                \columnsep 35\p@
+                \twocolumn[\@makeschapterhead{\indexname}]%
+                \@mkboth{\MakeUppercase\indexname}%
+                        {\MakeUppercase\indexname}%
+                \pdfbookmark{Index}{index}
+                \thispagestyle{plain}\parindent\z@
+                \parskip\z@ \@plus .3\p@\relax
+                \let\item\@idxitem}
+               {\if@restonecol\onecolumn\else\clearpage\fi}
+
 % next one is not an index hyperlink.
 \renewcommand{\Link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1|textit}}
 \renewcommand{\link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1}}

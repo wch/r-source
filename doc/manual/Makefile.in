@@ -43,7 +43,7 @@ MAKEINFO = makeinfo
 TEXI2DVI = $(top_srcdir)/tools/texi2dvi
 
 .SUFFIXES:
-.SUFFIXES: .dvi .info .texi
+.SUFFIXES: .dvi .info .texi .pdf
 
 all: Makefile R lib2tex dvi
 
@@ -79,6 +79,8 @@ Reference.tex: $(srcdir)/Reference.tex.in $(top_builddir)/config.status
 	$(TEXI2DVI) $<
 .texi.info:
 	$(MAKEINFO) $<
+.texi.pdf:
+	$(TEXI2DVI) --pdf $<
 
 dvi: Manual.dvi Reference.dvi R-external.dvi
 
@@ -117,11 +119,10 @@ info: R-external.info
 R-external.info: R-external.texi
 
 PDFLATEX = pdflatex
-PDFTEX = pdftex
 
 pdf: Manual.pdf Reference.pdf R-external.pdf
 
-Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
+Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/pdf/Rd.sty
 	@echo "Making PDF LaTeX documentation ..."
 	@$(RM) -f *.aux Manual.toc
 	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
@@ -130,7 +131,7 @@ Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
 	$(PDFLATEX) '\nonstopmode\input{Manual.tex}'
 
-Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
+Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/pdf/Rd.sty
 	@echo "PDF LaTeX documentation: Reference Index ..."
 	@$(RM) -f *.aux Reference.toc Reference.ind
 	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
@@ -139,10 +140,7 @@ Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
 	$(PDFLATEX) '\nonstopmode\input{Reference.tex}'
 
-R-external.pdf: R-external.texi
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(PDFTEX) R-external.texi
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(PDFTEX) R-external.texi
-
+R-external.pdf: R-external.texi $(srcdir)/texinfo.tex
 
 install: installdirs
 	@echo "Installing doc/manual ..."
