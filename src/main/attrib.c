@@ -114,6 +114,27 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 		return installAttrib(vec, name, val);
 }
 
+	/* This is called in the case of binary operations to copy */
+	/* most attributes from (one of) the input arguments to */
+	/* the output.  Note that the Dim and Names attributes */
+	/* should have been assigned elsewhere. */
+
+SEXP copyMostAttrib(SEXP inp, SEXP ans)
+{
+	SEXP s, t, u;
+	PROTECT(ans);
+	PROTECT(inp);
+	for (s=ATTRIB(inp); s!=R_NilValue; s=CDR(s)) {
+		if ( (TAG(s) != R_NamesSymbol) &&
+		(TAG(s) != R_DimSymbol) &&
+		(TAG(s) != R_DimNamesSymbol) ) {
+			installAttrib(ans, TAG(s), CAR(s));
+		}
+	}
+	UNPROTECT(2);
+	return;
+}
+
 static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 {
 	SEXP s, t;

@@ -109,10 +109,10 @@ SEXP complex_binary(int code, SEXP s1, SEXP s2)
     n1 = LENGTH(s1);
     n2 = LENGTH(s2);
     n = (n1 > n2) ? n1 : n2;
-    PROTECT(s1);
-    PROTECT(s2);
+
+    /* Note: "s1" and "s1" are protected in the calling code. */
+
     ans = allocVector(CPLXSXP, n);
-    UNPROTECT(2);
 
     if (n1 < 1 || n2 < 1) {
 	for (i = 0; i < n; i++) {
@@ -213,6 +213,18 @@ SEXP complex_binary(int code, SEXP s1, SEXP s2)
     default:
 	error("unimplemented complex operation\n");
     }
+
+    /* Copy attributes from longest argument. */
+
+    if (n1 > n2)
+	copyMostAttrib(s1, ans);
+    else if (n1 == n2) {
+	copyMostAttrib(s2, ans);
+	copyMostAttrib(s1, ans);
+    }
+    else
+	copyMostAttrib(s2, ans);
+
     return ans;
 }
 
