@@ -1,6 +1,5 @@
 \name{packageStatus}
 \title{Package Management Tools}
-\alias{compareVersion}
 \alias{newestVersion}
 \alias{packageStatus}
 \alias{print.packageStatus}
