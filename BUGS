@@ -29,12 +29,11 @@ none
 
 Directory:  Add-ons
 
-* PR# 538 *
-Subject: no $method from as.hclust
-From: Denis White <denis@mercury.cor.epa.gov>
-Date: Wed, 10 May 2000 15:00:05 -0700 (PDT)
---Appears to relate to as.hclust in package cluster.
---I can't find anything in R that uses $method, though.
+* PR# 534 *
+Subject: wsfe bug report just made
+From: mallen@tntech.edu
+Date: Thu, 4 May 2000 19:20:35 +0200 (MET DST)
+--follow up to PR#533
 * PR# 488 *
 Subject: Error in lme?
 From: simon.frost@ed.ac.uk
@@ -49,11 +48,6 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
-* PR# 534 *
-Subject: wsfe bug report just made
-From: mallen@tntech.edu
-Date: Thu, 4 May 2000 19:20:35 +0200 (MET DST)
---follow up to PR#533
 * PR# 533 *
 Subject: acepack, akima and tripack will not load 
 From: mallen@tntech.edu
