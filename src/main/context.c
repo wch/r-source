@@ -165,8 +165,6 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
     UNPROTECT(1);
     R_Visible = savevis;
 
-    R_restore_globals(cptr);
-
     R_ReturnedValue = val;
     R_GlobalContext = cptr; /* this used to be set to
                                cptr->nextcontext for non-toplevel
@@ -176,6 +174,8 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
                                context should simplify some code and
                                perhaps allow loops to be handled with
                                fewer SETJMP's.  LT */
+    R_restore_globals(R_GlobalContext);
+
     LONGJMP(cptr->cjmpbuf, mask);
 }
 

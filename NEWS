@@ -623,6 +623,9 @@ BUG FIXES
     o	Interrupt of Sys.sleep() on UNIX no longer causes subsequent
 	Sys.sleep() calls to segfault due to infinite recusion.
 
+    o   Eliminated a race condition that could cause segfaults when a SIGINT
+	was received while handling an earlier SIGINT.
+
 
 
 	**************************************************
