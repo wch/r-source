@@ -5,8 +5,16 @@ HELP=YES
 PACKAGES=base eda lqs modreg mva stepfun
 RPREFIX=rw0641-3
 
+ifdef DEBUG
+ OPTFLAGS=-g -O2
+ DLLFLAGS=
+else
+ OPTFLAGS=-O2 -Wall
+ DLLFLAGS=-s 
+endif
+
 DIRS=  . ../nmath ../appl ../main
-R-DLLFLAGS=-s -mwindows
+R-DLLFLAGS= $(STRIPFLAG) -mwindows
 R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32
 SOURCES=$(foreach  i,$(DIRS),$(wildcard $i/*.c $i/*.f))
 UFILES= ../unix/devPS.c ../unix/devPicTeX.c ../unix/sock.c ../unix/Rsock.c
@@ -23,7 +31,6 @@ EXTRALIBS=rx.a ga.a gl.a xdr.a
 
 all: rbuild rdemo rpackage
 
-OPTFLAGS=-O2 -Wall
 CFLAGS=$(OPTFLAGS) -I../include
 FFLAGS=$(OPTFLAGS)
 

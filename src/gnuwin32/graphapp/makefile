@@ -1,6 +1,12 @@
 include ../MkRules
 
-CFLAGS=-I. -Wall -O2 -DINDLL
+ifdef DEBUG
+  DEBUGFLAG=-g
+else
+  DEBUGFLAG=
+endif
+
+CFLAGS=-I. -Wall $(DEBUGFLAG)  -O2 -DINDLL
 SOURCES=$(filter-out graphappmain.c, $(wildcard *.c))
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 

@@ -1,5 +1,13 @@
 include ../MkRules
 
+ifdef DEBUG
+  DEBUGFLAG=-g
+  LINKFLAGS=
+else
+  DEBUGFLAG=
+  LINKFLAGS=-s
+endif
+
 all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe
 
 
@@ -12,10 +20,9 @@ all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe
 	$(CP) $^ $@	
 
 graphappmain.o: ../graphapp/graphappmain.c
-	$(CC) -c -o $@ -I../graphapp $(CFLAGS) $^
+	$(CC) -c -o $@ -I../graphapp $(DEBUGFLAG) $(CFLAGS) $^
 
 LIBS=-L.. -lR
-LINKFLAGS=-s
 
 Rgui-LINKFLAGS=-mwindows 
 rgui-CFLAGS=-I../../include 
@@ -28,3 +35,5 @@ rgui.c rterm.c: ../../include/Platform.h
 
 clean:
 	$(RM) *.o *.exe *~ *.exp
+
+
