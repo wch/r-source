@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.67 $'
+revision='$Revision: 1.68 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -27,6 +27,8 @@ Options:
   -v, --version		print version info and exit
       --configure-args=ARGS
                         set args for package's configure script (if any)
+      --configure-vars=VARS
+                        set variables for the configure script (if any)
   -c, --clean		remove all files created during installation
   -s, --save            save the package source as an image file, and
                         arrange for this file to be loaded when the
@@ -90,6 +92,8 @@ build_help_opts=
 use_configure=true
 use_zip_data=
 use_zip_help=
+configure_args=
+configure_vars=
 
 save="CHECK"
 
@@ -135,6 +139,8 @@ while test -n "${1}"; do
       lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --configure-args=*)
       configure_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    --configure-vars=*)
+      configure_vars=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     *)
       if test -f "${1}"; then
         mkdir -p ${tmpdir}
@@ -234,7 +240,7 @@ do_install () {
     export R_PACKAGE_NAME
 
     if ${use_configure} && test -x ./configure ; then
-      ./configure ${configure_args}
+      eval ${configure_vars} ./configure ${configure_args}
       if test ${?} -ne 0; then
 	echo "ERROR: configuration failed for package \`${pkg}'"
 	exit 4

@@ -202,6 +202,8 @@ NEW FEATURES
 	attached.  This saves time, but also uses a more standard way
 	of source-ing the package.  Packages that do more than just
 	assign object definitions may need to install with `--save'.
+	There is also a new command line option `--configure-vals' for
+	passing variables to the configure script of a package.
 
     o	scan() has a new argument `multi.line' for S compatibility,
 	but the default remains the opposite of S (records can cross
