@@ -491,11 +491,13 @@ void VectorIndex(int i, int w)
 void MatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
+    SEXP tmp = STRING_ELT(cl, j);
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING_ELT(cl, j)), 0);
+	if(tmp == NA_STRING) l = R_print.na_width_noquote;
+	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("%*s%s", w-l, "",
-		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_left));
+		EncodeString(CHAR(tmp), l, 0, Rprt_adj_left));
     }
     else {
 	Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", j+1);
@@ -505,11 +507,13 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
 void RightMatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
+    SEXP tmp = STRING_ELT(cl, j);
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING_ELT(cl, j)), 0);
+	if(tmp == NA_STRING) l = R_print.na_width_noquote;
+	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("%*s", R_print.gap+w,
-		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_right));
+		EncodeString(CHAR(tmp), l, 0, Rprt_adj_right));
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
@@ -519,11 +523,13 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
 void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
+    SEXP tmp = STRING_ELT(cl, j);
 
     if (!isNull(cl)) {
-	l = Rstrlen(CHAR(STRING_ELT(cl, j)), 0);
+	if(tmp == NA_STRING) l = R_print.na_width_noquote;
+	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("%*s%s%*s", R_print.gap, "",
-		EncodeString(CHAR(STRING_ELT(cl, j)), l, 0, Rprt_adj_left), w-l, "");
+		EncodeString(CHAR(tmp), l, 0, Rprt_adj_left), w-l, "");
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
@@ -533,11 +539,13 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
 {
     int l;
+    SEXP tmp = STRING_ELT(rl, i);
 
     if (!isNull(rl)) {
-	l = Rstrlen(CHAR(STRING_ELT(rl, i)), 0);
+	if(tmp == NA_STRING) l = R_print.na_width_noquote;
+	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("\n%*s%s%*s", lbloff, "",
-		EncodeString(CHAR(STRING_ELT(rl, i)), l, 0, Rprt_adj_left),
+		EncodeString(CHAR(tmp), l, 0, Rprt_adj_left), 
 		rlabw-l-lbloff, "");
     }
     else {
