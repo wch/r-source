@@ -69,16 +69,13 @@ then
     cp ${src}/*.so ${lib}/${pkg}/libs
 fi
 
-if test -d R
+if test -d R ; then dir=R ;elif test -d funs; then dir=funs; fi
+if test "$dir"
 then
-    echo "R"
-    test -d ${lib}/${pkg}/R || mkdir ${lib}/${pkg}/R
-    cat R/[a-z]* > ${lib}/${pkg}/R/${pkg}
-elif test -d funs
-then
-    echo "funs"
-    test -d ${lib}/${pkg}/R || mkdir ${lib}/${pkg}/R
-    cat funs/[a-z]* > ${lib}/${pkg}/R/${pkg}
+ echo "${dir}"
+ test -d ${lib}/${pkg}/R || mkdir ${lib}/${pkg}/R
+ cat `ls ${dir}/[a-z]* | sed '/CVS/d; /~$/d; /\.orig$/d; /\.bak$/d; \
+		/^core$/d; /system.*/d'` > ${lib}/${pkg}/R/${pkg}
 fi
 
 if test -d data
