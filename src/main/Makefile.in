@@ -38,7 +38,6 @@ SOURCES_C = \
 SOURCES_F = \
 	xxxpr.f
 EXTRA_SOURCES_C = \
-	Rmain.c Rembedded.c \
 	alloca.c acosh.c asinh.c atanh.c \
 	snprintf.c strdup.c strncasecmp.c \
 	vsnprintf.c
@@ -61,7 +60,6 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_F) \
 	gram.y
 
-## these are built with CPICFLAGS so safe to use in libR.so
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
 PCRE_CPPFLAGS = @BUILD_PCRE_TRUE@ -I$(top_srcdir)/src/extra/pcre
@@ -69,50 +67,9 @@ PCRE_CPPFLAGS = @BUILD_PCRE_TRUE@ -I$(top_srcdir)/src/extra/pcre
 ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
   $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
-## use an explicit library: there might be an unsatisfactory -lz around
-R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
-R_BZLIBS = @BUILD_BZLIB_TRUE@ ../extra/bzip2/libbz2.a
-R_PCRE = @BUILD_PCRE_TRUE@ ../extra/pcre/libpcre.a
-R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
-
-## <FIXME>
-## Names in here should use '$(top_builddir)' instead ...
-RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a $(R_XDR)
-## </FIXME>
-
-R_binary = R.bin
-Rexecbin_PROGRAMS = $(R_binary)
-R_bin_SOURCES = $(SOURCES)
-R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@ $(OBJECTS)
-## <FIXME>
-## This will not be good enough on AIX, where we need to play also with
-## -export-symbols SYMFILE.
-@USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
-## </FIXME>
-R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE)
-## <NOTE>
-## Automake would figure this out itself.
-R_bin_DEPENDENCIES = @WANT_R_SHLIB_FALSE@ @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
-## </NOTE>
-
-## <FIXME>
-## Change to 'libR.la' when using libtool for shlibs.
-## Remove when using automake ... also fix target 'install' then.
-libR_la = libR$(DYLIB_EXT)
-## </FIXME>
-Rexeclib_LTLIBRARIES = $(libR_la)
-libR_la_SOURCES = $(SOURCES)
-libR_la_LDFLAGS =
-libR_la_OBJECTS = Rembedded.lo $(OBJECTS:.o=.lo)
-## <FIXME>
-## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
-## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = @LTLIBOBJS@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) \
-  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_XDR)
-libR_la_DEPENDENCIES = @LTLIBOBJS@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
-## </FIXME>
-@USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
-LIBR_LDFLAGS = @LIBR_LDFLAGS@
+noinst_LIBRARIES = libmain.a
+@WANT_R_SHLIB_FALSE@libmain_a_OBJECTS = $(OBJECTS)
+@WANT_R_SHLIB_TRUE@libmain_a_OBJECTS = $(OBJECTS:.o=.lo)
 
 all: Makefile Makedeps R
 
@@ -127,48 +84,17 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-## This target has been changed to ensure that R.bin and libR get
-## installed in the build tree if necessary, even if the corresponding 
-## objects are not re-made.
-## Note that dependencies in the test Makefiles depend on these objects,
-## so copy-if-change is used.
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_TRUE@	@$(MAKE) install-lib-local
-	@$(MAKE) install-bin-local
+	@$(MAKE) $(noinst_LIBRARIES)
 
+
+libmain.a: $(libmain_a_OBJECTS)
+	rm -rf $@
+	$(AR) cr $@ $(libmain_a_OBJECTS)
+	$(RANLIB) $@
 
 ../include/config.h ../include/Rversion.h:
-	(cd $(@D); $(MAKE) $(@F))
-
-$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
-@WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
-@WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L../../lib -lR
-
-install-bin-local: $(R_binary)
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-bin
-
-$(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
-	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
-
-$(RLIBS):
-	(cd $(@D); $(MAKE) $(@F))
-
-libR: $(libR_la)
-$(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
-## <FIXME>
-## This used to have $(SHLIB_LINK), but this uses $(SHLIB_LDFLAGS) which
-## is really for loadable modules and not shared libraries for linking
-## against ... the definition of $(SHLIB_LINK) in the top level Makeconf
-## has a libtool conditional which we do not have here (as we currently
-## cannot use libtool anyway).
-	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo  2>/dev/null` $(libR_la_LIBADD) $(LIBS)
-## </FIXME>
-
-install-lib-local: $(libR_la)
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
-
-../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo:
 	(cd $(@D); $(MAKE) $(@F))
 
 $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
@@ -176,41 +102,10 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
 	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
 
-install: installdirs
-	@$(MAKE) install-bin
-	@if test -f $(libR_la); then $(MAKE) install-lib; fi
-installdirs:
-	@$(MKINSTALLDIRS) $(Rexecbindir) $(Rexecbindir)/exec
-	@$(MKINSTALLDIRS) $(Rexeclibdir)
-install-bin:installdirs
-## <FIXME> Temporary precautionary clearout 
-	@rm -f $(Rexecbindir)/R.bin
-## </FIXME>
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) $(Rexecbindir)/exec/R
-install-lib: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
-## <FIXME>
-## This is just a temporary expedient for backwards compatibility.
-## May have an actual libR.so file in R_HOME/bin from earlier builds
-	@rm -f $(Rexecbindir)/$(libR_la)
-	@ln -s $(Rexeclibdir)/$(libR_la) $(Rexecbindir)
-## </FIXME>
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
-uninstall:
-	@rm -f $(Rexecbindir)/exec/R $(Rexecbindir)/R.bin
-	@rmdir $(Rexecbindir) 2>/dev/null \
-	  || echo "  subdir $(Rexecbindir) not removed"
-	@rm -f $(Rexeclibdir)/libR$(DYLIB_EXT)
-	@rmdir $(Rexeclibdir) 2>/dev/null \
-	  || echo "  subdir $(Rexeclibdir) not removed"
-
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(DYLIB_EXT) \
-	  $(Rexecbin_PROGRAMS)
+	@-rm -f Makedeps *.d *.o *.lo *.a *.la
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
@@ -223,7 +118,7 @@ TAGS: $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)
 	etags $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)
 
 ## Unused targets
-info dvi check:
+install install-strip uninstall info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

@@ -51,16 +51,8 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README lowess.doc \
 
 noinst_LIBRARIES = libappl.a
 libappl_a_SOURCES = $(SOURCES)
-libappl_a_OBJECTS = $(OBJECTS)
-
-## <FIXME>
-## We most likely will not want a separate shared library.
-## If we have a final decision, remove libappl.la target.
-noinst_LTLIBRARIES = libappl.la
-## </FIXME>
-libappl_la_SOURCES = $(SOURCES)
-libappl_la_OBJECTS = $(OBJECTS:.o=.lo)
-@USE_LIBTOOL_TRUE@libappl_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+@WANT_R_SHLIB_FALSE@libappl_a_OBJECTS = $(OBJECTS)
+@WANT_R_SHLIB_TRUE@libappl_a_OBJECTS = $(OBJECTS:.o=.lo)
 
 all: Makefile Makedeps R
 
@@ -73,18 +65,12 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_FALSE@	@$(MAKE) $(noinst_LIBRARIES)
-@WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
+	@$(MAKE) $(noinst_LIBRARIES)
 
 libappl.a: $(libappl_a_OBJECTS)
 	rm -f $@
 	$(AR) cr $@ $(libappl_a_OBJECTS)
 	$(RANLIB) $@
-
-stamp-lo: $(libappl_la_OBJECTS)
-	@touch $@
-libappl.la: stamp-lo
-	$(SHLIB_LINK) -o $@ $(libappl_la_LDFLAGS) $(libappl_la_OBJECTS)
 
 mostlyclean: clean
 clean:

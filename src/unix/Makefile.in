@@ -16,6 +16,7 @@ SOURCES_C_BASE = devices.c dynload.c edit.c gnome.c stubs.c system.c \
   sys-unix.c sys-common.c sys-std.c \
   X11.c devQuartz.c aqua.c
 SOURCES_C_DARWIN = dlfcn-darwin.c
+EXTRA_SOURCES_C = Rmain.c Rembedded.c $(SOURCES_C_DARWIN)
 SOURCES = $(SOURCES_C_BASE) @BUILD_DLFCN_DARWIN_TRUE@ $(SOURCES_C_DARWIN)
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
@@ -23,21 +24,51 @@ HEADERS = Runix.h devUI.h hpdlfcn.h dlfcn-darwin.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-  Makefile.in PSPAPER $(SOURCES_C_BASE) $(SOURCES_C_DARWIN) \
+  Makefile.in PSPAPER $(SOURCES_C_BASE) $(EXTRA_SOURCES_C) \
   $(HEADERS) hpdlfcn.c system.txt
 
-noinst_LIBRARIES = libunix.a
-libunix_a_SOURCES = $(SOURCES)
-libunix_a_OBJECTS = $(OBJECTS)
+## use an explicit library: there might be an unsatisfactory -lz around
+R_ZLIB = @BUILD_ZLIB_TRUE@ $(top_builddir)/src/extra/zlib/libz.a
+R_BZLIB = @BUILD_BZLIB_TRUE@ $(top_builddir)/src/extra/bzip2/libbz2.a
+R_PCRE = @BUILD_PCRE_TRUE@ $(top_builddir)/src/extra/pcre/libpcre.a
+R_XDR = @BUILD_XDR_TRUE@ $(top_builddir)/src/extra/xdr/libxdr.a
+R_EXTRAS = $(R_ZLIB) $(R_BZLIB) $(R_PCRE) $(R_XDR)
+
+# These will all contain .lo objects if building R-shlib
+RLIBS = $(top_builddir)/src/main/libmain.a \
+	$(top_builddir)/src/appl/libappl.a \
+	$(top_builddir)/src/nmath/libnmath.a \
+	$(R_EXTRAS)
+
+R_binary = R.bin
+Rexecbin_PROGRAMS = $(R_binary)
+R_bin_SOURCES = $(SOURCES)
+R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@ $(OBJECTS)
+## <FIXME>
+## This will not be good enough on AIX, where we need to play also with
+## -export-symbols SYMFILE.
+@USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
+## </FIXME>
+R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+## <NOTE>
+## Automake would figure this out itself.
+R_bin_DEPENDENCIES = @WANT_R_SHLIB_FALSE@ @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+## </NOTE>
 
 ## <FIXME>
-## We most likely will not want a separate shared library.
-## If we have a final decision, remove libunix.la target.
+## Change to 'libR.la' when using libtool for shlibs.
+## Remove when using automake ... also fix target 'install' then.
+libR_la = libR$(DYLIB_EXT)
 ## </FIXME>
-noinst_LTLIBRARIES = libunix.la
-libunix_la_SOURCES = $(SOURCES)
-libunix_la_OBJECTS = $(OBJECTS:.o=.lo)
-@USE_LIBTOOL_TRUE@libunix_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+Rexeclib_LTLIBRARIES = $(libR_la)
+libR_la_SOURCES = $(SOURCES)
+libR_la_LDFLAGS =
+libR_la_OBJECTS = Rembedded.lo $(OBJECTS:.o=.lo)
+libR_la_LIBADD = @LTLIBOBJS@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+libR_la_DEPENDENCIES = @LTLIBOBJS@ $(RLIBS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
+@USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+LIBR_LDFLAGS = @LIBR_LDFLAGS@
+
 
 all: Makefile Makedeps R
 
@@ -53,31 +84,80 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_FALSE@	@$(MAKE) $(noinst_LIBRARIES)
-@WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
+@WANT_R_SHLIB_TRUE@	@$(MAKE) install-lib-local
+	@$(MAKE) install-bin-local
+
+$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
+@WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
+@WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L../../lib -lR
+
+install-bin-local: $(R_binary)
+	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-bin
+
+$(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
+	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
+
+$(RLIBS):
+	(cd $(@D); $(MAKE) $(@F))
+
+libR: $(libR_la)
+$(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
+## <FIXME>
+## This used to have $(SHLIB_LINK), but this uses $(SHLIB_LDFLAGS) which
+## is really for loadable modules and not shared libraries for linking
+## against ... the definition of $(SHLIB_LINK) in the top level Makeconf
+## has a libtool conditional which we do not have here (as we currently
+## cannot use libtool anyway).
+	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) $(libR_la_LIBADD) $(LIBS)
+## </FIXME>
+
+install-lib-local: $(libR_la)
+	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
 
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
 
-libunix.a: $(libunix_a_OBJECTS)
-	rm -rf $@
-	$(AR) cr $@ $(libunix_a_OBJECTS)
-	$(RANLIB) $@
-
-stamp-lo: $(libunix_la_OBJECTS)
-	@touch $@
-libunix.la: stamp-lo
-	$(SHLIB_LINK) -o $@ $(libunix_la_LDFLAGS) $(libunix_la_OBJECTS)
-
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
+	@-rm -f Makedeps *.d *.o *.lo *.la *$(DYLIB_EXT) \
+	  $(Rexecbin_PROGRAMS)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
 
-install install-strip uninstall TAGS info dvi check:
+
+install: installdirs
+	@$(MAKE) install-bin
+	@if test -f $(libR_la); then $(MAKE) install-lib; fi
+installdirs:
+	@$(MKINSTALLDIRS) $(Rexecbindir) $(Rexecbindir)/exec
+	@$(MKINSTALLDIRS) $(Rexeclibdir)
+install-bin:installdirs
+## <FIXME> Temporary precautionary clearout 
+	@rm -f $(Rexecbindir)/R.bin
+## </FIXME>
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) $(Rexecbindir)/exec/R
+install-lib: installdirs
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
+## <FIXME>
+## This is just a temporary expedient for backwards compatibility.
+## May have an actual libR.so file in R_HOME/bin from earlier builds
+	@rm -f $(Rexecbindir)/$(libR_la)
+	@ln -s $(Rexeclibdir)/$(libR_la) $(Rexecbindir)
+## </FIXME>
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@rm -f $(Rexecbindir)/exec/R $(Rexecbindir)/R.bin
+	@rmdir $(Rexecbindir) 2>/dev/null \
+	  || echo "  subdir $(Rexecbindir) not removed"
+	@rm -f $(Rexeclibdir)/libR$(DYLIB_EXT)
+	@rmdir $(Rexeclibdir) 2>/dev/null \
+	  || echo "  subdir $(Rexeclibdir) not removed"
+
+TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
