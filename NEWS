@@ -181,9 +181,11 @@ BUG FIXES
 	MacOS) warning/error messages longer than 8192 chars could
 	crash R. (PR#1651)
 
+    o   Comparisons between objects of mode "call" using "==" now return
+        TRUE if both sides deparse to the same string (as always intended).
+
     o	HoltWinters() now initializes correctly in the exponential
 	smoothing case, and plot.HoltWinters() allows lty to be set. 
-
 
 
 		CHANGES IN R VERSION 1.5.0
