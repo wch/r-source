@@ -103,12 +103,13 @@ BUG FIXES
     o	pbinom() and pbinom() were misssing the "fuzz" that other discrete
 	distributions have in order to guard against truncation.
 
-    o   The "=" assignment operator behaved as "<<-" in some constructions 
+    o   The "=" assignment operator behaved as "<<-" in some constructions
 	with composite left-hand sides.
 
     o   Added print.AsIs() method to ensure "AsIs" objects are printed
 	by the method for their real class. (PR#1587)
 
+    o	mosaicplot(*, color = v) now recycles v[] if needed.
 
 
 		CHANGES IN R VERSION 1.5.0

@@ -242,10 +242,13 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
 
     ncolors <- length(tabulate(Ind[,dimd]))
     if(!shade && ((is.null(color) || length(color) != ncolors))) {
-        color <- if (is.null(color) || !color[1])
-            rep(0, ncolors)
-        else
-            heat.colors(ncolors)
+        color <-
+            if (is.logical(color) && color[1])
+                heat.colors(ncolors)
+            else if (is.null(color) || (is.logical(color) && !color[1]))
+                rep(0, ncolors)
+            else ## recycle
+                rep(color, length = ncolors)
     }
 
     ##-- Plotting
