@@ -7,7 +7,7 @@
   A graphics device for BMP, JPEG or PNG format bitmap files.
 }
 \usage{
-bmp(filename="Rplot.jpg", width=480, height=480, pointsize=12)
+bmp(filename="Rplot.bmp", width=480, height=480, pointsize=12)
 jpeg(filename="Rplot.jpg", width=480, height=480, pointsize=12, quality=75)
 png(filename="Rplot.png", width=480, height=480, pointsize=12)
 }
@@ -15,7 +15,8 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
  \item{filename}{the name of the output file.}
  \item{width}{the width of the device in pixels.}
  \item{height}{the height of the device in pixels.}
- \item{pointsize}{the default pointsize of plotted text.}
+ \item{pointsize}{the default pointsize of plotted text, intepreted at
+   72 dpi, so one point is approximately one pixel.}
  \item{quality}{the `quality' of the JPEG image, as a
    percentage. Smaller values will give more compression but also more
    degradation of the image.}
