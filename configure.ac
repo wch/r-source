@@ -533,23 +533,17 @@ case "${host_cpu}" in
     ;;
   alpha*)
     ## <NOTE>
-    ## Not clear whether we should use '-ieee' or '-ieee_with_inexact'
-    ## (or there GCC variants).  The GCC docs say for '-mieee' that
-    ##   <QUOTE>
-    ##   The resulting code is less efficient but is able to correctly
-    ##   support denormalized numbers and exceptional IEEE values such
-    ##   as not-a-number and plus/minus infinity.  Other Alpha compilers
-    ##   call this option `-ieee_with_no_inexact'.
-    ##   </QUOTE>
-    ## which should be good enough?
+    ## We really need to use '-ieee_with_inexact' ('-mieee-with-inexact'
+    ## for GCC) for the C compiler: '-ieee'/'-mieee' are not enough.
+    ## What about the FORTRAN 77 and C++ compilers?
     ## According to <Albrecht.Gebhardt@uni-klu.ac.at>, native FORTRAN
     ## on Alpha/OSF maps '-ieee' to '-fpe3' which was used previously.
     if test "${GCC}" = yes; then
-      R_PROG_CC_FLAG([-mieee],
-                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee"])
+      R_PROG_CC_FLAG([-mieee-with-inexact],
+                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-with-inexact"])
     else
-      R_PROG_CC_FLAG([-ieee],
-                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee"])
+      R_PROG_CC_FLAG([-ieee_with_inexact],
+                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"])
     fi
     if test "${G77}" = yes; then
       R_PROG_F77_FLAG([-mieee],
