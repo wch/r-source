@@ -899,9 +899,12 @@ export(f,g)
 
 @noindent
 specifies that the variables @code{f} and @code{g} are to be exported.
+(Note that variable names may be quoted, and non-standard names such as
+@code{[<-.fractions} must be.)
+
 For packages with many variables to export it may be more convenient to
 specify the names to export with a regular expression using
-@code{exportPatters}.  The directive
+@code{exportPattern}.  The directive
 
 @smallexample
 exportPattern("^[^\\.]")
@@ -951,11 +954,11 @@ to be used as a @code{print} method for class @code{foo}, then the
 directive
 
 @smallexample
-S3method(print,foo)
+S3method(print, foo)
 @end smallexample
 
 @noindent
-insures that the method is registered and available for @code{UseMethod}
+ensures that the method is registered and available for @code{UseMethod}
 dispatch.  The function @code{print.foo} does not need to be exported.
 
 Packages with name spaces do not use the @code{.First.lib} function.
@@ -963,9 +966,11 @@ Since loading and attaching are distinct operations when a name space is
 used, separate hooks are provided for each.  These hook functions are
 called @code{.onLoad} and @code{.onAttach}.  They take the same
 arguments as @code{.First.lib}; they should be defined in the package
-but not exported.  Packages are not likely to need @code{.onAttach};
-code to set options and load shared libraries should be placed in
-@code{.onLoad} or use the @code{useDynLib} directive described next.
+but not exported.  Packages are not likely@footnote{for an exception see
+package @code{spatial} in the @code{VR} bundle} to need
+@code{.onAttach}; code to set options and load shared libraries should
+be placed in a @code{.onLoad} function, or use made of the
+@code{useDynLib} directive described next.
 
 The @code{useDynLib} directive allows shared libraries that need to be
 loaded to be specified in the @file{NAMESPACE} file.  The directive
@@ -996,8 +1001,8 @@ print.foo <- function(x, ...) cat("<a foo>\n")
 @end quotation
 
 @noindent
-Some C code defines a C function @code{foo}.  The @file{NAMESPACE} file
-for this package is
+Some C code defines a C function compiled into DLL @code{foo} (with an
+appropriate extension).  The @file{NAMESPACE} file for this package is
 
 @quotation
 @cartouche
@@ -1036,8 +1041,8 @@ export(g, h)
 
 @noindent
 Calling @code{library(bar)} loads @code{bar} and attaches its exports to
-the search path.  @code{foo} is also loaded but not attached to the
-search path.  A call to @code{g} produces
+the search path.  Package @code{foo} is also loaded but not attached to
+the search path.  A call to @code{g} produces
 
 @smallexample
 > g(6)
