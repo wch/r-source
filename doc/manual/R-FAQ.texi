@@ -179,10 +179,10 @@ In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and MacOS X ports of R are
 described in the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R
 for Windows @acronym{FAQ}''} and the
-@uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
-Macintosh @acronym{FAQ}/DOC''}.  If you have information on Macintosh or
-Windows systems that you think should be added to this document, please
-let me know.
+@uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
+MacOS X @acronym{FAQ}}.  If you have information on Macintosh or Windows
+systems that you think should be added to this document, please let me
+know.
 
 @c <FIXME>
 @c Should we maybe have direct links inside the R tree to the various
@@ -438,8 +438,8 @@ be used with RAqua corresponding to the ``@var{x}.@var{y}'' release of
 R. The installation of these packages is available through the
 ``Package'' menu of the RAqua GUI.  This port of R for MacOSX is
 maintained by @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
-@uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
-Macintosh @acronym{FAQ}/DOC''} has more details.
+@uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
+MacOS X @acronym{FAQ}} has more details.
 
 The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
 (@file{hqx}) and stuffit (@file{sit}) archives for a base distribution
