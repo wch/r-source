@@ -167,6 +167,8 @@ BUG FIXES
 
     o	aggregate applied to multiple time series lost the series names.
 
+    o	Linpack.h now makes clear which routines are actually in R.
+
 
 		CHANGES IN R VERSION 1.0.1
 
