@@ -843,6 +843,10 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
 	errorcall(call, R_MSG_IA);
 
+#ifdef SUPPORT_UTF8
+    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+	errorcall(call, "regular expression is invalid in this locale");
+#endif
     n = length(vec);
     nmatches = 0;
     PROTECT(ind = allocVector(LGLSXP, n));
@@ -869,6 +873,12 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0 ; i < n ; i++) {
 	    LOGICAL(ind)[i] = 0;
 	    if (STRING_ELT(vec, i) != NA_STRING) {
+#ifdef SUPPORT_UTF8
+		if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(vec, i))))
+		    errorcall(call, 
+			      "input string %d is invalid in this locale",
+			      i+1);
+#endif
 		if (fixed_opt) LOGICAL(ind)[i] =
 				   fgrep_one(CHAR(STRING_ELT(pat, 0)),
 					     CHAR(STRING_ELT(vec, i))) >= 0;
@@ -1002,6 +1012,12 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt) eflags = eflags | REG_EXTENDED;
     if (igcase_opt) eflags = eflags | REG_ICASE;
 
+#ifdef SUPPORT_UTF8
+    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+	errorcall(call, "'pattern' is invalid in this locale");
+    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
+	errorcall(call, "'replacement' is invalid in this locale");
+#endif
     if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
 	errorcall(call, "invalid regular expression '%s'",
 		  CHAR(STRING_ELT(pat, 0)));
@@ -1039,6 +1055,10 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	t = CHAR(STRING_ELT(rep, 0));
 	ns = strlen(s);
 
+#ifdef SUPPORT_UTF8
+	if(mbcslocale && !mbcsValid(s))
+	    errorcall(call, "input string %d is invalid in this locale", i+1);
+#endif
 	if(fixed_opt) {
 	    st = fgrep_one(spat, s);
 	    if(st < 0)
@@ -1143,6 +1163,10 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     eflags = extended_opt ? REG_EXTENDED : 0;
 
+#ifdef SUPPORT_UTF8
+    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+	errorcall(call, "regular expression is invalid in this locale");
+#endif
     if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
 	errorcall(call, "invalid regular expression '%s'",
 		  CHAR(STRING_ELT(pat, 0)));
@@ -1155,6 +1179,11 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(text, i) == NA_STRING) {
 	    INTEGER(matchlen)[i] = INTEGER(ans)[i] = R_NaInt;
 	} else {
+#ifdef SUPPORT_UTF8
+	    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i))))
+		errorcall(call, "input string %d is invalid in this locale", 
+			  i+1);
+#endif
 	    if (fixed_opt) {
 		st = fgrep_one(spat, CHAR(STRING_ELT(text, i)));
 		INTEGER(ans)[i] = (st > -1)?(st +1):-1;

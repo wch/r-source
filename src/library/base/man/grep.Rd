@@ -77,17 +77,16 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
   is none, with attribute \code{"match.length"} giving the length of the
   matched text (or \eqn{-1} for no match).
 
-  If the input is invalid in a multi-byte locale, the results differ by
-  the arguments so perhaps no match will be found or the match length
-  may be \code{NA} or an error may be generated.
+  If in a multi-byte locale any part of the input is invalid,
+  an error is thrown.
 }
 \section{Warning}{
   The standard regular-expression code has been reported to be very slow
   when applied to extremely long character strings
   (tens of thousands of characters or more): the code used when
-  \code{perl=TRUE} seems much faster and more reliable for such usages.
+  \code{perl = TRUE} seems much faster and more reliable for such usages.
 
-  The \code{perl = TRUE} option is only implemented for singlebyte and
+  The \code{perl = TRUE} option is only implemented for single-byte and
   UTF-8 encodings, and will warn if used in a non-UTF-8 multibyte locale.
 }
 \references{
