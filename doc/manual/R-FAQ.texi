@@ -2244,6 +2244,8 @@ Survival analysis for recurrent event data.
 Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
 Three-Stage Least Squares (3SLS).
+@item tapiR
+Tools for accessing (UK) parliamentary information in R.
 @item tensor
 Tensor product of arrays.
 @item tkrplot

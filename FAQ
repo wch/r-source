@@ -2107,6 +2107,9 @@ distributions of R.)
      Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
      Three-Stage Least Squares (3SLS).
 
+*tapiR*
+     Tools for accessing (UK) parliamentary information in R.
+
 *tensor*
      Tensor product of arrays.
 
