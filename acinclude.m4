@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2003 R Core Team
+### Copyright (C) 1998-2004 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -726,20 +726,6 @@ for arg in ${FLIBS}; do
   esac
 done
 FLIBS="${flibs}"
-## Versions of g77 up to 3.0.x only have a non-PIC (static) -lg2c which
-## on some platforms means one cannot build dynamically loadable modules
-## containing Fortran code.  (g77 3.1 will have a shared -lg2c too.)  As
-## a workaround, Debian provides -lg2c-pic which holds pic objects only,
-## and we should use in case we can find it ...
-if test "${G77}" = yes; then
-  r_save_LIBS="${LIBS}"
-  flibs=`echo "${FLIBS}" | sed 's/-lg2c/-lg2c-pic/'`
-  LIBS="${flibs} ${LIBS}"
-  AC_LANG_PUSH(C)
-  AC_LINK_IFELSE([AC_LANG_PROGRAM()], [FLIBS="${flibs}"], [])
-  AC_LANG_POP(C)
-  LIBS="${r_save_LIBS}"
-fi
 ])# R_PROG_F77_FLIBS
 
 ## R_PROG_F77_APPEND_UNDERSCORE
