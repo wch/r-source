@@ -23,6 +23,9 @@ Added function getWindowsHandle().
 windows() device has new 'bg' argument to set the background colour
 (which still defaults to "transparent").
 
+bmp(), jpeg() and png() devices have an argument 'res' to set the
+nominal resolution.
+
 
 
 rw1091

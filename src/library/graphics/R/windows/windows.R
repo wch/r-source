@@ -37,22 +37,22 @@ win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
                     as.integer(NA), as.integer(NA), FALSE, .PSenv, NA))
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
-                pointsize = 12, bg = "white")
+                pointsize = 12, bg = "white", res = NA)
     .Internal(devga(paste("png:", filename, sep=""),
                     width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                    as.integer(NA), as.integer(NA), FALSE, .PSenv))
+                    as.integer(res), as.integer(NA), FALSE, .PSenv, NA))
 
 bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
-                pointsize = 12, bg = "white")
+                pointsize = 12, bg = "white", res = NA)
     .Internal(devga(paste("bmp:", filename, sep=""),
                     width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                    as.integer(NA), as.integer(NA), FALSE, .PSenv, NA))
+                    as.integer(res), as.integer(NA), FALSE, .PSenv, NA))
 
 jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
-                 pointsize = 12, quality=75, bg = "white")
+                 pointsize = 12, quality=75, bg = "white", res = NA)
     .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
                     width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                    as.integer(NA), as.integer(NA), FALSE, .PSenv, NA))
+                    as.integer(res), as.integer(NA), FALSE, .PSenv, NA))
 
 bringToTop <- function(which = dev.cur(), stay = FALSE)
 {

@@ -8,11 +8,11 @@
 }
 \usage{
 bmp(filename = "Rplot\%03d.bmp", width = 480, height = 480, pointsize = 12,
-    bg = "white")
+    bg = "white", res = NA)
 jpeg(filename = "Rplot\%03d.jpg", width = 480, height = 480, pointsize = 12,
-     quality = 75, bg = "white")
+     quality = 75, bg = "white", res = NA)
 png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
-    bg = "white")
+    bg = "white", res = NA)
 }
 \arguments{
   \item{filename}{the name of the output file, up to 511 characters.
@@ -28,6 +28,8 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
  \item{quality}{the \sQuote{quality} of the JPEG image, as a
    percentage. Smaller values will give more compression but also more
    degradation of the image.}
+ \item{res}{The nominal resolution in dpi which will be recorded in the
+   bitmap file, if a positive integer.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
