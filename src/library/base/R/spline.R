@@ -14,8 +14,7 @@ spline <-
     method <- match(method, c("periodic", "natural", "fmm"))
     if(is.na(method))
 	stop("spline: invalid interpolation method")
-    dx <- diff(x)
-    if(any(dx < 0)) {
+    if(is.unsorted(x)) {
 	o <- order(x)
 	x <- x[o]
 	y <- y[o]

@@ -38,8 +38,10 @@ xy.coords(x, y, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
     \item{matrix with two columns:}{the first is assumed to contain the
       x values and the second the y values.}
   }
-  In any other case, the \code{x}argument is coerced to a vector and
-  the values plotted against their indices.
+  In any other case, the \code{x} argument is coerced to a vector and
+  returned as \bold{y} component where the resulting \code{x} is just
+  the index vector \code{1:n}.  In this case, the resulting \code{xlab}
+  component is set to \code{"Index"}.
 
   If \code{x} (after transformation as above) inherits from class
   \code{"POSIXt"} it is coerced to class \code{"POSIXct"}.
