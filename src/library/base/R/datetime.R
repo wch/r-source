@@ -399,6 +399,16 @@ round.difftime <- function (x, digits = 0)
    structure(NextMethod(), units=units, class="difftime")
 }
 
+"[.difftime" <- function(x, ..., drop = TRUE)
+{
+    cl <- class(x)
+    class(x) <- NULL
+    val <- NextMethod("[")
+    class(val) <- cl
+    attr(val, "units") <- attr(x, "units")
+    val
+}
+
 Ops.difftime <- function(e1, e2)
 {
     coerceTimeUnit <- function(x)

@@ -55,7 +55,7 @@ NEW FEATURES
 
     o	prcomp() is now fast for n x m inputs with m >> n.
 
-    o	medpolish {eda} now has an `na.rm' argument (PR#2298).
+    o	medpolish() {eda} now has an `na.rm' argument (PR#2298).
 
     o	The internal random number generators will now never return
 	values of 0 or 1 for runif.  This might affect simulation
@@ -71,8 +71,8 @@ NEW FEATURES
      o	ts() now allows arbitrary values for y in start/end = c(x, y):
 	it always allowed y < 1 but objected to y > frequency.
 
-     o	Add `difftime' methods for the group generics. (Thereby fixing
-	PR#2345)
+     o	Add `difftime' subscript method and methods for the group
+	generics. (Thereby fixing PR#2345)
 
      o	When assigning names to a vector, a value that is too short is
 	padded by character NAs. (Wishlist part of PR#2358)
@@ -85,8 +85,8 @@ NEW FEATURES
      o	New convenience function loadURL() to allow loading data files
 	from URLs (requested by Frank Harrell).
 
-     o	biplot.default() allows `xlab' and `ylab' parameters to be set
-	(without partially matching to `xlabs' and `ylabs').
+     o	biplot.default() {mva} allows `xlab' and `ylab' parameters to
+	be set (without partially matching to `xlabs' and `ylabs').
 	(Thanks to Uwe Ligges.)
 
      o	On Unix(-alike) systems the default PDF viewer is now determined
