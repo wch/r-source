@@ -60,7 +60,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   }
 
   \item{quote}{the set of quoting characters as a single character
-    string or \code{NULL}.  In a UTF-8 locale the quoting characters
+    string or \code{NULL}.  In a multibyte locale the quoting characters
     must be ASCII (single-byte).}
 
   \item{dec}{decimal point character.  This should be a character string

@@ -3496,7 +3496,19 @@ x <- model.matrix(~f)
 stopifnot(x == c(1,1,1,0,1,2))
 ## gave machine-dependendent silly numbers in 2.0.1
 
+
+## *** no description ***
 x <- 2^-seq(67, 1067, length=20)
 plot(x^.9, x, type="l", log="xy") # still warning and ugly labels because
                                  ## e.g., 10^-323 |==> 9.881313e-324 numerically
 ## gave error "log - axis(), 'at' creation, _LARGE_ range..." in 2.0.1
+
+
+## torture test of scan() with allowEscape=TRUE
+tf <- tempfile()
+x <- c('ABC', '"123"', "a'b")
+cat(shQuote(x, "cmd"), sep="\n", file=tf)
+(x2 <- scan(tf, ""))
+unlink(tf)
+stopifnot(identical(x, x2))
+## At one point pre-2.1.0 got confused
