@@ -15,7 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/main/version.c:34
-#, fuzzy
 msgid ""
 "R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
 "You are welcome to redistribute it under certain conditions.\n"

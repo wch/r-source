@@ -48,7 +48,7 @@ POFILES = @POFILES@
 GMOFILES = @GMOFILES@
 UPDATEPOFILES = @UPDATEPOFILES@
 DUMMYPOFILES = @DUMMYPOFILES@
-DISTFILES.common = Makefile.in.in remove-potcdate.sin \
+DISTFILES.common = README Makefile.in.in remove-potcdate.sin \
 $(DISTFILES.common.extra1) $(DISTFILES.common.extra2) $(DISTFILES.common.extra3)
 DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot stamp-po \
 $(POFILES) $(GMOFILES) \
@@ -275,7 +275,7 @@ maintainer-clean: distclean
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 dist distdir:
-	$(MAKE) update-po
+#	$(MAKE) update-po
 	@$(MAKE) dist2
 # This is a separate target because 'update-po' must be executed before.
 dist2: $(DISTFILES)

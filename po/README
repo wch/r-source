@@ -1,0 +1,18 @@
+The Makefile.in.in here was originally produced by gettextize, and seems not
+fully correct for our usage.
+
+If you convert a C file for use with gettext, add it to POTFILES.in, and
+then run
+
+make update-po
+
+to recreate R.pot.  You then need to update the en.po file here by
+
+msgmerge en.po R.pot > en.po.new
+
+and after checking, copy en.po.new over en.po.  Then delete stamp-po and run
+`make', and a new en.gmo should be created.
+
+To add a new translation, add the lang.po file to this directory and add
+the language to LINGUAS.  Hopefully `make' will do the rest 
+(create lang.gmo and install it as required).
