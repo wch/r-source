@@ -362,10 +362,6 @@ newBasic <-
   value
 }
 
-## to get around R disallowing attr's on a NULL data object, we
-## use .NullObject as a placeholder
-.NullObject <- newBasic("NULL")
-
 makeExtends <-
   ## convert the argument to a list defining the extension mechanism.
   function(extends) {
