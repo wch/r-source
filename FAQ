@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-58 2004-04-06
+Version 1.9-0 2004-04-10
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -247,7 +247,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-The current released version is 1.8.1.  Based on this
+The current released version is 1.9.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -1192,49 +1192,30 @@ and one without) as well as the original code are available from
 5.1.1 Add-on packages in R
 --------------------------
 
-The R distribution comes with the following extra packages:
+The R distribution comes with the following packages:
 
-*ctest*
-     A collection of Classical TESTs, including the Ansari-Bradley,
-     Bartlett, chi-squared, Fisher, Kruskal-Wallis, Kolmogorov-Smirnov, t,
-     and Wilcoxon tests.
+*base*
+     Base R functions and datasets.
 
-*eda*
-     Exploratory Data Analysis.  Currently only contains functions for
-     robust line fitting, and median polish and smoothing.
+*graphics*
+     R functions for base graphics.
 
 *grid*
      A rewrite of the graphics layout capabilities, plus some support for
-     interaction.  (Added in R 1.8.0).
-
-*lqs*
-     Resistant regression and covariance estimation.
+     interaction.
 
 *methods*
      Formally defined methods and classes for R objects, plus other
      programming tools, as described in the Green Book.
 
-*mle*
-     Generic (smooth) likelihood maximization and profiling.  (Added in R
-     1.8.0).
-
-*modreg*
-     MODern REGression: smoothing and local methods.
-
-*mva*
-     MultiVariate Analysis.  Currently contains code for principal
-     components, canonical correlations, metric multidimensional scaling,
-     factor analysis, and hierarchical and k-means clustering.
-
-*nls*
-     Nonlinear regression routines.
-
 *splines*
      Regression spline functions and classes.
 
-*stepfun*
-     Code for dealing with STEP FUNctions, including empirical cumulative
-     distribution functions.
+*stats*
+     R statistical functions.
+
+*stats4*
+     Statistical functions using S4 classes.
 
 *tcltk*
      Interface and language bindings to Tcl/Tk GUI elements.
@@ -1242,13 +1223,13 @@ The R distribution comes with the following extra packages:
 *tools*
      Tools for package development and administration.
 
-*ts*
-     Time Series.
-   In R 1.9, *base* will be split into the four packages *base*,
-*graphics*, *stats*, and *utils*.  Packages *ctest*, *eda*, *modreg*, *mva*,
-*nls*, *stepfun* and *ts* will be merged into *stats*, package *lqs*
-returned to the recommended package *MASS*, and package *mle* moved to
-*stats4*.
+*utils*
+     R utility functions.
+   These "base packages" were substantially reorganized in R 1.9.  The
+former *base* was split into the four packages *base*, *graphics*, *stats*,
+and *utils*.  Packages *ctest*, *eda*, *modreg*, *mva*, *nls*, *stepfun*
+and *ts* were merged into *stats*, package *lqs* returned to the
+recommended package *MASS*, and package *mle* moved to *stats4*.
 
 5.1.2 Add-on packages from CRAN
 -------------------------------
@@ -1974,7 +1955,7 @@ distributions of R.)
 
 *kernlab*
      Kernel-based machine learning methods including support vector
-     machines.  (Currently in `1.9.0/Other'.)
+     machines.
 
 *knnTree*
      Construct or predict with k-nearest-neighbor classifiers, using
@@ -3037,34 +3018,29 @@ at the R prompt.
      Packages in `/usr/local/lib/R/library':
      
      KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
-     MASS          Main Library of Venables and Ripley's MASS
+     MASS          Main Package of Venables and Ripley's MASS
      base          The R base package
      boot          Bootstrap R (S-Plus) Functions (Canty)
-     class         Functions for classification
+     class         Functions for Classification
      cluster       Functions for clustering (by Rousseeuw et al.)
-     ctest         Classical Tests
-     eda           Exploratory Data Analysis
      foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+     graphics      The R Graphics Package
      grid          The Grid Graphics Package
      lattice       Lattice Graphics
-     lqs           Resistant Regression and Covariance Estimation
      methods       Formal Methods and Classes
-     mle           Maximum likelihood estimation
      mgcv          Multiple smoothing parameter estimation and GAMs by GCV
-     modreg        Modern Regression: Smoothing and Local Methods
-     mva           Classical Multivariate Analysis
      nlme          Linear and nonlinear mixed effects models
-     nls           Nonlinear regression
-     nnet          Feed-forward neural networks and multinomial log-linear
-                   models
+     nnet          Feed-forward Neural Networks and Multinomial Log-Linear
+                   Models
      rpart         Recursive partitioning
-     spatial       functions for kriging and point pattern analysis
+     spatial       Functions for Kriging and Point Pattern Analysis
      splines       Regression Spline Functions and Classes
-     stepfun       Step Functions, including Empirical Distributions
+     stats         The R Stats Package
+     stats4        Statistical functions using S4 classes
      survival      Survival analysis, including penalised likelihood
      tcltk         Tcl/Tk Interface
-     tools         Tools for Package Development and Administration
-     ts            Time series functions
+     tools         Tools for Package Development
+     utils         The R Utils Package
 
    You can "load" the installed package PKG by
 

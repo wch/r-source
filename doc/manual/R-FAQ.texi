@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-58 @value{FAQ-YEAR}-04-06
-@set REL-VERSION 1.8.1
+@set FAQ-VERSION 1.9-0 @value{FAQ-YEAR}-04-10
+@set REL-VERSION 1.9.0
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -1518,56 +1518,39 @@ available from @uref{http://www.ms.uky.edu/~statweb}.
 @node Add-on packages in R, Add-on packages from CRAN, Which add-on packages exist for R?, Which add-on packages exist for R?
 @subsection Add-on packages in R
 
-The R distribution comes with the following extra packages:
+The R distribution comes with the following packages:
 
-@c <FIXME 1.9.0>
 @table @strong
-@item ctest
-A collection of Classical TESTs, including the Ansari-Bradley, Bartlett,
-chi-squared, Fisher, Kruskal-Wallis, Kolmogorov-Smirnov, @math{t}, and
-Wilcoxon tests.
-@item eda
-Exploratory Data Analysis.  Currently only contains functions for robust
-line fitting, and median polish and smoothing.
+@item base
+Base R functions and datasets.
+@item graphics
+R functions for base graphics.
 @item grid
 A rewrite of the graphics layout capabilities, plus some support for
 interaction.
-(Added in R 1.8.0).
-@item lqs
-Resistant regression and covariance estimation.
 @item methods
 Formally defined methods and classes for R objects, plus other
 programming tools, as described in the Green Book.
-@item mle
-Generic (smooth) likelihood maximization and profiling.
-(Added in R 1.8.0).
-@item modreg
-MODern REGression: smoothing and local methods.
-@item mva
-MultiVariate Analysis.  Currently contains code for principal
-components, canonical correlations, metric multidimensional scaling,
-factor analysis, and hierarchical and @math{k}-means clustering.
-@item nls
-Nonlinear regression routines.
 @item splines
 Regression spline functions and classes.
-@item stepfun
-Code for dealing with STEP FUNctions, including empirical cumulative
-distribution functions.
+@item stats
+R statistical functions.
+@item stats4
+Statistical functions using S4 classes.
 @item tcltk
 Interface and language bindings to Tcl/Tk @acronym{GUI} elements.
 @item tools
 Tools for package development and administration.
-@item ts
-Time Series.
+@item utils
+R utility functions.
 @end table
-In R 1.9, @strong{base} will be split into the four packages
-@strong{base}, @strong{graphics}, @strong{stats}, and @strong{utils}.
-Packages @strong{ctest}, @strong{eda}, @strong{modreg}, @strong{mva},
-@strong{nls}, @strong{stepfun} and @strong{ts} will be merged into
+These ``base packages'' were substantially reorganized in R 1.9.  The
+former @strong{base} was split into the four packages @strong{base},
+@strong{graphics}, @strong{stats}, and @strong{utils}.  Packages
+@strong{ctest}, @strong{eda}, @strong{modreg}, @strong{mva},
+@strong{nls}, @strong{stepfun} and @strong{ts} were merged into
 @strong{stats}, package @strong{lqs} returned to the recommended package
 @strong{MASS}, and package @strong{mle} moved to @strong{stats4}.
-@c </FIXME>
 
 @node Add-on packages from CRAN, Add-on packages from Omegahat, Add-on packages in R, Which add-on packages exist for R?
 @subsection Add-on packages from @acronym{CRAN}
@@ -2124,9 +2107,6 @@ order statistics, peaks over thresholds and point processes.
 An S4 class for handling irregular time series.
 @item kernlab
 Kernel-based machine learning methods including support vector machines.
-@c <FIXME 1.9.0>
-(Currently in @file{1.9.0/Other}.)
-@c </FIXME>
 @item knnTree
 Construct or predict with @math{k}-nearest-neighbor classifiers, using
 cross-validation to select @math{k}, choose variables (by forward or
@@ -3079,6 +3059,7 @@ at the R prompt.
 This produces something like
 
 @smallexample
+@group
 Packages in `/home/me/lib/R':
 
 mystuff       My own R functions, nicely packaged but not documented
@@ -3086,34 +3067,30 @@ mystuff       My own R functions, nicely packaged but not documented
 Packages in `/usr/local/lib/R/library':
 
 KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
-MASS          Main Library of Venables and Ripley's MASS
+MASS          Main Package of Venables and Ripley's MASS
 base          The R base package
 boot          Bootstrap R (S-Plus) Functions (Canty)
-class         Functions for classification
+class         Functions for Classification
 cluster       Functions for clustering (by Rousseeuw et al.)
-ctest         Classical Tests
-eda           Exploratory Data Analysis
 foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+graphics      The R Graphics Package
 grid          The Grid Graphics Package
 lattice       Lattice Graphics
-lqs           Resistant Regression and Covariance Estimation
 methods       Formal Methods and Classes
-mle           Maximum likelihood estimation
 mgcv          Multiple smoothing parameter estimation and GAMs by GCV
-modreg        Modern Regression: Smoothing and Local Methods
-mva           Classical Multivariate Analysis
 nlme          Linear and nonlinear mixed effects models
-nls           Nonlinear regression
-nnet          Feed-forward neural networks and multinomial log-linear
-              models
+nnet          Feed-forward Neural Networks and Multinomial Log-Linear
+              Models
 rpart         Recursive partitioning
-spatial       functions for kriging and point pattern analysis
+spatial       Functions for Kriging and Point Pattern Analysis
 splines       Regression Spline Functions and Classes
-stepfun       Step Functions, including Empirical Distributions
+stats         The R Stats Package
+stats4        Statistical functions using S4 classes
 survival      Survival analysis, including penalised likelihood
 tcltk         Tcl/Tk Interface
-tools         Tools for Package Development and Administration
-ts            Time series functions
+tools         Tools for Package Development
+utils         The R Utils Package
+@end group
 @end smallexample
 
 You can ``load'' the installed package @var{pkg} by
