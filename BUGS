@@ -876,3 +876,15 @@ Date: Tue, 02 Mar 2004 12:56:23 +0800
 Subject: ^_^ meay-meay!
 From: ESS-bugs@stat.math.ethz.ch
 Date: Tue, 02 Mar 2004 12:39:58 -0800
+* PR# 6640 *
+Subject: Bug in plot.lm 
+From: Berwin A Turlach <berwin@maths.uwa.edu.au>
+Date: Wed, 03 Mar 2004 18:10:00 +0800
+* PR# 6641 *
+Subject: cor(...,method="spearman") or cor(...,method="kendall")
+From: "Joe Ritter" <JRitter@hhh.umn.edu>
+Date: Wed, 03 Mar 2004 13:59:01 -0600
+* PR# 6642 *
+Subject: 80% D1SC0UNT ON V.1.AGRA!!
+From: "Maude Stanford" <rbjeavmkeqsli@india.com>
+Date: Thu, 04 Mar 2004 08:53:20 -0300
