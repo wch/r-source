@@ -1975,7 +1975,7 @@ is either loaded or unloaded.  This can be used, for example, to
 register native routines with R's dynamic symbol mechanism, initialize
 some data in the native code, or initialize a third party library.  On
 loading a DLL, R will look for a routine within that DLL named
-@code{R_init_<lib>} where @code{<lib>} is the name of the DLL file with
+@code{R_init_@var{lib}} where @var{lib} is the name of the DLL file with
 the extension removed.  For example, in the command
 
 @smallexample
@@ -1985,7 +1985,7 @@ library.dynam("mylib", package, lib.loc)
 @noindent
 R looks for the symbol named @code{R_init_mylib}.  Similarly, when
 unloading the library, R looks for a routine named
-@code{R_unload_<lib>}, e.g., @code{R_init_mylib}.  In either case, if
+@code{R_unload_@var{lib}}, e.g., @code{R_init_mylib}.  In either case, if
 the routine is present, R will invoke it and pass it a single argument
 describing the DLL.  This is a value of type @code{DllInfo} which is
 defined in the @file{Rdynload.h} file in the @file{R_ext} directory.
@@ -2037,7 +2037,7 @@ name.  In the future, registration may be used to implement a form of
 
 To register routines with R, one calls the C routine
 @code{R_registerRoutines}.  This is typically done when the DLL is first
-loaded within the initialization routine @code{R_init_<dll name>}
+loaded within the initialization routine @code{R_init_@var{dll name}}
 described in @ref{dyn.load and dyn.unload}.  @code{R_registerRoutines}
 takes 5 arguments.  The first is the @code{DllInfo} object passed by R
 to the initialization routine. This is where R stores the information
@@ -2087,10 +2087,13 @@ Routines for use with the @code{.C} and @code{.Fortran} interfaces are
 described with similar data structures, but which have two additional
 fields for describing the type and ``style'' of each argument.  Each
 of these can be omitted. However, if specified, each should be an
-array with the same number of elements as the number of parameters
-for the routine.  The types array should contain the @code{SEXP} types
-describing the expected type of the argument.  The S types and
-corresponding type identifiers are provided in the following table:
+array with the same number of elements as the number of parameters for
+the routine.  The types array should contain the @code{SEXP} types
+describing the expected type of the argument. (Technically, the
+elements of the types array are of type
+@code{R_NativePrimitiveArgType} which is just an unsigned integer.)
+The S types and corresponding type identifiers are provided in the
+following table:
 
 @quotation
 @multitable {@code{character  }} {@code{SINGLESXP}}
@@ -2126,6 +2129,32 @@ description of a method is used for this.  The purpose is to allow R to
 more efficiently transfer values across the S-C/Fortran interface by
 avoiding copying values when it is not necessary. Typically, one omits
 this information in the registration data.
+
+Having created the arrays describing each routine, the last step is to
+actually register them with R.  We do this by calling
+@code{R_registerRoutines}.  For example, if we have the descriptions
+above for the routines accessed by the @code{.C} and @code{.Call}
+we would use the following code:
+
+@smallexample
+void
+R_init_myLib(DllInfo *info)
+@{
+   R_registerRoutines(info, cMethods, callMethods, NULL, NULL);
+@}
+@end smallexample
+
+This routine will be invoked when R loads the shared library/DLL named
+@code{myLib}.  The last two arguments in the call to
+@code{R_registerRoutines} are for the routines accessed by
+@code{.Fortran} and @code{.External} interfaces.  In our example, these
+are given as @code{NULL} since we don't have any routines of these
+types.
+
+When R unloads a shared library/DLL, any registered routines are
+automatically removed. There is no (direct) facility for unregistering
+a symbol.
+
 
 Examples of registering routines can be found in the different packages
 in the R source tree (e.g., @pkg{mva}, @pkg{ctest}, @pkg{lqs}).  Also,
