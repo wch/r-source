@@ -8,14 +8,14 @@
   recovered for a model using \code{sin(x)} as a predictor.
 }
 \usage{
-expand.model.frame(model, extras, enclos = parent.frame(),
+expand.model.frame(model, extras, envir=environment(formula(model)),
                    na.expand = FALSE)
 }
 \arguments{
   \item{model}{a fitted model}
   \item{extras}{one-sided formula or vector of character strings
     describing new variables to be added}
-  \item{enclos}{an environment to evaluate things in}
+  \item{envir}{an environment to evaluate things in}
   \item{na.expand}{logical; see below}
 }
 \details{
