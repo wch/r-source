@@ -394,10 +394,11 @@ work.
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-The simplest way is to use @file{rw1070.exe} or @file{miniR.exe}.  Just
-double-click on the icon and follow the instructions.  If you installed
-R this way you can uninstall it from the Control Panel or Start Menu
-(unless you suppressed making a group for @R{}).
+The simplest way is to use @file{@value{RWVERSION}.exe} or
+@file{miniR.exe}.  Just double-click on the icon and follow the
+instructions.  If you installed R this way you can uninstall it from the
+Control Panel or Start Menu (unless you suppressed making a group for
+@R{}).
 
 See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
