@@ -277,6 +277,14 @@ BUG FIXES
     o	Calling a method that uses NextMethod() no longer produces the
 	erroneous error message 'function is not a closure'.
 
+    o	chisq.test(x, simulate.p.value = TRUE) could hang in an infinite
+	loop or segfault, as r2dtable() did, when the entries in x where
+	large. (PR#5701)
+
+    o	fisher.test(x) could give a P-value of 'Inf' in similar cases which
+	now result in an error (PR#4688).  It silently truncated
+	non-integer 'x' instead of rounding.
+
 
 
 		CHANGES IN R VERSION 1.8.1

@@ -1,3 +1,4 @@
+
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
 ## Comments: moved from aggregate.Rd
@@ -2792,6 +2793,7 @@ stopifnot(identical(dim(x), as.integer(c(0, 3))))
 library(stepfun)
 try(stepfun(c(), 1)(2))# > Error
 ## segfaults in 1.8.1 and earlier
+<<<<<<< reg-tests-1.R
 
 
 ## PR#4955 now allow embedded newlines in quoted fields in read.table
@@ -2843,9 +2845,24 @@ stopifnot(is.na(NA %*% 0), is.na(0 %*% NA))
 ## depended on the BLAS in use.
 
 
+## PR#4688
+reli <- cbind(Si = c(2121, 100, 27, 0),
+              av = c(4700, 216, 67, 0),
+              Nc = c(6234,2461,502,14))
+stopifnot(inherits(try(fisher.test(reli, workspace=2000000)), "try-error"))
+## gave p.value = Inf ; now gives FEXACT error 501
+
+
+## PR#5701
+chisq.test(matrix(23171,2,2), simulate=TRUE)
+## gave infinite loop in 1.8.1 and earlier
+
+
 ## as.matrix on an all-logical data frame
 ll <- data.frame(a = rpois(10,1) > 0, b = rpois(10,1) > 0)
 stopifnot(mode(as.matrix(ll)) == "logical")
 lll <- data.frame(a = LETTERS[1:10], b = rpois(10,1) > 0)
 stopifnot(mode(as.matrix(lll)) == "character")
 ## both were char before 1.9.0
+
+
