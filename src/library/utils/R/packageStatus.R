@@ -11,12 +11,10 @@ packageStatus <- function(lib.loc = NULL,
 
     newestVersion <- function(x)
     {
-        ## only used for length(x) >= 2
-        for(k in 1:length(x)){
-            if(length(x) == 1) return(k)
-            y <- sapply(x[-1], compareVersion, b=x[1])
-            if(all(y <= 0)) return(k) else x <- x[-1]
-        }
+        vers <- package_version(x)
+	max <- vers[1]
+        for (i in seq(along=vers)) if (max < vers[i]) max <- vers[i]
+	which(vers == max)[1]
     }
 
     if(is.null(lib.loc))
@@ -110,19 +108,14 @@ packageStatus <- function(lib.loc = NULL,
     attr(z, "row.names") <- z$Package
 
     for(k in 1:nrow(y)){
-        pkg <- ifelse(is.na(y$Bundle[k]),
-                      y[k,"Package"],
-                      y[k,"Bundle"])
-
-        if(pkg %in% z$Package){
-            if(compareVersion(y[k,"Version"],
-                              z[pkg,"Version"]) < 0){
-                y[k,"Status"] <- "upgrade"
+        pkg <- ifelse(is.na(y$Bundle[k]), y[k, "Package"], y[k, "Bundle"])
+        if(pkg %in% z$Package) {
+            if(package_version(y[k, "Version"]) <
+               package_version(z[pkg, "Version"])) {
+                y[k, "Status"] <- "upgrade"
             }
-        }
-        else{
-            if(!(y[k,"Priority"] %in% "base"))
-                y[k,"Status"] <- "unavailable"
+        } else {
+            if(!(y[k, "Priority"] %in% "base")) y[k, "Status"] <- "unavailable"
         }
     }
 

@@ -245,3 +245,20 @@ remove.packages <- function(pkgs, lib, version) {
     }
     done
 }
+
+## used in some BioC packages and their support in tools.
+compareVersion <- function(a, b)
+{
+    if(is.na(a)) return(-1)
+    if(is.na(b)) return(1)
+    a <- as.integer(strsplit(a, "[\\.-]")[[1]])
+    b <- as.integer(strsplit(b, "[\\.-]")[[1]])
+    for(k in 1:length(a)) {
+        if(k <= length(b)) {
+            if(a[k] > b[k]) return(1) else if(a[k] < b[k]) return(-1)
+        } else {
+            return(1)
+        }
+    }
+    if(length(b) > length(a)) return(-1) else return(0)
+}
