@@ -760,6 +760,9 @@ ls.str(envir = environment(Fn))
 detach("package:stepfun")
 ## failed in 1.5.1
 
+## PR 1767 all.equal.character for non-matching NAs
+all.equal(c("A", "B"), c("A", NA))
+## failed in 1.5.1
 
 ## related to PR 1577/1608, conversions to character
 DF <- data.frame(b = LETTERS[1:3])
