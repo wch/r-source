@@ -50,7 +50,7 @@
  */
 
 static int gc_reporting = 0;
-
+	
 void installIntVector(SEXP, int, FILE *);
 
 SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -620,4 +620,54 @@ void unprotect(int l)
 void initStack(void)
 {
 	R_PPStackTop = 0;
+}
+
+
+	/* Wrappers for malloc/alloc/free */
+	/* These allow automatic freeing of malloc-ed */
+	/* blocks during error recovery. */
+
+#define MAXPOINTERS 100
+static char *C_Pointers[MAXPOINTERS];
+
+void Init_C_alloc()
+{
+	int i;
+	for(i=0 ; i<MAXPOINTERS ; i++)
+		C_Pointers[i] = NULL;
+}
+
+void Reset_C_alloc()
+{
+	int i;
+	for(i=0 ; i<MAXPOINTERS ; i++) {
+		if(C_Pointers[i] != NULL)
+			free(C_Pointers[i]);
+		C_Pointers[i] = NULL;
+	}
+}
+
+char *C_alloc(long nelem, int eltsize)
+{
+	int i;
+	for(i=0 ; i<MAXPOINTERS ; i++) {
+		if(C_Pointers[i] == NULL) {
+			C_Pointers[i] == malloc(nelem * eltsize);
+			if(C_Pointers[i] == NULL)
+				error("unable to malloc memory in C_alloc\n");
+			else return C_Pointers[i];
+		}
+	}
+	error("all C_alloc pointers in use (sorry)\n");
+}
+
+void C_free(char *p)
+{
+	int i;
+	for(i=0 ; i<MAXPOINTERS ; i++) {
+		if(C_Pointers[i] == p)
+			free(p);
+		C_Pointers[i] = NULL;
+	}
+	error("attempt free pointer not allocated by C_alloc()\n");
 }

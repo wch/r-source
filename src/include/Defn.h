@@ -429,6 +429,13 @@ void	R_StartUp(void);
 
 char	*R_PromptString(int, int);
 
+		/* C Memory Management Interface */
+
+void Init_C_alloc(void);
+void Reset_C_alloc(void);
+char *C_alloc(long, int);
+void C_free(char *);
+
 		/* Internally Used Functions */
 
 SEXP allocArray(SEXPTYPE, SEXP);
