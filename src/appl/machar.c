@@ -90,10 +90,10 @@
 #include <config.h>
 #endif
 
-/*#include <math.h>
-*/
-#ifdef macintosh /* Jago */
+#ifdef macintosh
 #include <fp.h>
+#else
+#include <math.h>
 #endif
 #include "R_ext/Applic.h"
 
