@@ -33,7 +33,8 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   Cross-library links do not work on this platform.
   \code{fixup.package.URLs} attempts to correct links in the
   named package to the \code{doc} directory (usually to icons) and to the
-  \code{base}, \code{utils}, \code{graphics} and \code{stats} packages,
+  \code{base}, \code{datasets}, \code{utils}, \code{grDevices},
+  \code{graphics} and \code{stats} packages,
   and then stamps a file \file{fixedHTMLlinks} in the package directory.
   If that file is found, no correction is attempted unless \code{force =
     TRUE} or the \R installation directory (recorded in the stamp) has been
