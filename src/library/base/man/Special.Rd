@@ -47,7 +47,7 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
   if (is.deriv) dy <- diff(y) / dx
   nm <- paste(ch, "gamma", sep = "")
   y <- get(nm)(x)
-  plot(x, y, type = "l"', main = nm, col = "red")
+  plot(x, y, type = "l", main = nm, col = "red")
   abline(h = 0, col = "lightgray")
   if (is.deriv) lines(x[-1], dy, col = "blue", lty = 2)
 }
