@@ -257,7 +257,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
-   known ofset from the node SEXP. */
+   known offset from the node SEXP. */
 #define DATAPTR(x)	(((SEXPREC_ALIGN *) (x)) + 1)
 #define CHAR(x)		((char *) DATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
