@@ -10,23 +10,22 @@ CSOURCES2=nanoftp.c nanohttp.c
 CFLAGS=$(OPTFLAGS) -I../../include -I../../gnuwin32 -DHAVE_CONFIG_H -include ../../include/globalvar.h
 
 DLLLIBS=-L../../gnuwin32 -lRm -lwsock32
-internet-DLLLIBS=-lwininet
-internet-CFLAGS=-DUSE_WININET
+internet2-DLLLIBS=-lwininet
 
 ../../../modules/internet.dll: internet.dll
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
-internet.dll: internet.o sockconn.o Rsock.o sock.o dllversion.o
+internet.dll: internet.o sockconn.o Rsock.o sock.o $(CSOURCES2:.c=.o) dllversion.o
 
 ../../../modules/internet2.dll: internet2.dll
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
-internet2.dll: internet2.o sockconn.o Rsock.o sock.o $(CSOURCES2:.c=.o) dllversion.o
+internet2.dll: internet2.o sockconn.o Rsock.o sock.o dllversion.o
 
 internet2.o: internet.c
-	$(CC)  $(CFLAGS)  -c $< -o $@
+	$(CC)  $(CFLAGS) -DUSE_WININET -c $< -o $@
 
 clean:
 	@$(RM) Makedeps *.d *.o *.def *.dll

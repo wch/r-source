@@ -33,12 +33,6 @@ Support for earlier (pre-Feb 2000) mingw compilers has been dropped:
 you must use a compiler system that supports --shared and has an
 in-memory dlltool.
 
-The DLL wininet.dll installed with Internet Explorer (and perhaps
-other apps) is required the for DLL modules\internet.dll.  If this is
-not available (you will see a message about internet functions not
-being available), replace modules\internet.dll by internet2.dll from
-the same directory.
-
 Rcmd check has been changed to be more robust to reported problems
 with Perl's system() command under 16-bit versions of Windows.  It now
 works for us under Windows 98.  (It has always worked under NT4 and
@@ -59,6 +53,11 @@ but can be made from the sources.
 
 Make targets such as test-Reg have been moved to directory rw1030/tests.
 
+The default internet module modules\internet.dll is built using basic
+WinSock calls.  There is an alternative modules\internet2.dll which uses
+WinInet calls (and so needs Internet Explorer installed) which can be
+used as an alternative.
+ 
 
 
 rw1023
