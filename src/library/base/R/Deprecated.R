@@ -8,3 +8,14 @@
 		  "See ?Deprecated.",
 		  sep = ""), call. = FALSE)
 }
+
+## consider keeping one (commented) entry here, for easier additions
+
+## <entry>
+## Deprecated in 1.6.0
+print.ordered <- function (x, ...)
+{
+    .Deprecated("print.factor")
+    invisible(NextMethod("print", x))
+}
+## </entry>

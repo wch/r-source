@@ -4,9 +4,10 @@
 \alias{Deprecated}
 \alias{.Deprecated}
 %------ PLEASE: put \alias{.} here for EACH !
+\alias{print.ordered}
 \description{
   These functions are provided for compatibility with older versions of
-  \R only, and may be defunct as soon as of the next release. 
+  \R only, and may be defunct as soon as of the next release.
 }
 \usage{
 .Deprecated(new)
