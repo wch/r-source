@@ -57,7 +57,7 @@ fixbin: ../../../bin/massage-Examples ../../../bin/build \
 	@$(ECHO) done > fixbin
 
 cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
-ifneq ($(strip $(BUILD)),CROSS)
+ifeq ($(strip $(BUILD)),CROSS)
 	@zip -ql bins $^
 	@unzip -oq bins -d  ../../..
 else
