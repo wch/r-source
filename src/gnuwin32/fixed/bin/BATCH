@@ -22,7 +22,7 @@ use File::Basename;
 #use R::Utils;
 
 
-my $revision = ' $Revision: 1.4 $ ';
+my $revision = ' $Revision: 1.5 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -72,7 +72,10 @@ $outfile = basename($infile, ".R"). ".Rout"  unless defined $outfile;
 
 die "input file `$infile' cannot be opened\n" unless -f ${infile};
 
-system("Rterm.exe $R_opts < $infile > $outfile 2>&1");
+my $cmd ="Rterm.exe $R_opts < $infile > $outfile";
+## W95's command.com cannot redirect stderr
+$cmd .= " 2>&1" if $ENV{"ComSpec"} =~ /cmd.exe$/;
+system($cmd);
 
 sub usage {
     print STDERR <<END;

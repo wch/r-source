@@ -26,6 +26,9 @@ BUFFERED is defined in src/gnuwin32/devga.c.]
 The search for a directory for temporary files now checks that TMP and
 TEMP point to actual writeable directories.
 
+Rcmd BATCH no longer attempts to redirect stderr on 16-bit versions of
+Windows, and so should work again there.
+
 
 
 rw1072
