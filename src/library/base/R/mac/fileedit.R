@@ -1,3 +1,7 @@
+# Set of functions to open or create a new
+# file in a editable window
+# Nov 2001, Stefano M. Iacus
+
 file.edit <-
     function(file){
          
