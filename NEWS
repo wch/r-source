@@ -150,6 +150,10 @@ BUG FIXES
 	characters: the internal limit (from the deparse code) is now the
 	maximum possible 500.
 
+    o	X11() device was failing to re-initialize correctly after all
+	devices were shut down, so the colortype could not be changed
+	and some systems showed protocol errors.
+
 
 
 
