@@ -30,7 +30,7 @@ slotNames(x)
     as the value of this slot.  You should never set this to
     \code{FALSE} in normal use, since the result can create invalid objects.
     }
-    
+
   }
 \details{
   The \code{"@"} operator and the \code{slot} function extract or
@@ -44,8 +44,8 @@ slotNames(x)
   expression that evaluates to a valid slot in the class definition.
   Generally, the only reason to use the functional form rather than
   the simpler operator is \emph{because} the slot name has to be computed.
-  
-  The definition of the class contains the names of all slots diretly
+
+  The definition of the class contains the names of all slots directly
   and indirectly defined.  Each slot has a name and an associated
   class.  Extracting a slot returns an object from that class.  Setting
   a slot first coerces the value to the specified slot and then stores
@@ -66,7 +66,7 @@ slotNames(x)
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }
