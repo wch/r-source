@@ -435,6 +435,7 @@ fi
 if test -z "${R_PRINTCMD}"; then
   AC_CHECK_PROGS(R_PRINTCMD, lpr lp)
 fi
+AC_DEFINE_UNQUOTED(R_PRINTCMD,"${R_PRINTCMD}")
 
 if test -z "${R_PAPERSIZE}"; then
   R_PAPERSIZE=a4

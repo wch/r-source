@@ -3607,6 +3607,10 @@ test -n "$R_PRINTCMD" && break
 done
 
 fi
+cat >> confdefs.h <<EOF
+#define R_PRINTCMD "${R_PRINTCMD}"
+EOF
+
 
 if test -z "${R_PAPERSIZE}"; then
   R_PAPERSIZE=a4
