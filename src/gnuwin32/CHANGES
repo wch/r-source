@@ -16,6 +16,10 @@ you will need the full set of tools from tools.zip in your path.
 Other versions of Tcl/Tk may be used by setting TCL_VERSION in 
 MkRules (but only 8.31 has been tested).
 
+Setting cell widths from the menu in the data editor now works reliably.
+
+Having an empty line at the beginning of .Rhistory no longer breaks the
+history-recall mechanism in Rgui.
 
 
 rw1010
