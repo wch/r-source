@@ -20,9 +20,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{file}{a character string giving the name of the file.}
   \item{width, height}{the width and height of the graphics region in
     inches.}
-  \item{onefile}{logical: if \code{TRUE} (the default) allow multiple
-    figures in one file.  If \code{FALSE}, generate a file name
-    containing the page number.} 
+  \item{onefile}{logical: if true (the default) allow multiple figures
+    in one file.  If false, generate a file name containing the page
+    number.} 
   \item{family}{the font family to be used, one of \code{"AvantGarde"},
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
