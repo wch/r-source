@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.4.1 Patched (2002-02-05)
+Version 1.5.0 Patched (2002-05-07)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -144,4 +144,17 @@ Warning in xy.coords(x, NULL, log = log) : 1 y value <= 0 omitted from logarithm
 Warning in xy.coords(x = matrix(rep(tx, k), ncol = k), y = x, log = log) : 
 	 7 y values <= 0 omitted from logarithmic plot
 > stopifnot(par("usr")[4] > 3) # log10: ylim[2] = 1000
+> 
+> 
+> ## This one needs to be looked at.
+> ## lty = "blank" killed the fill colour too.
+> plot(1:10, type="n")
+> polygon(c(1, 3, 3, 1), c(1, 1, 3, 3), col="yellow", border="red", lty="blank")
+> rect(6, 6, 10, 10,  col="blue", border="red", lty="blank")
+> ## in 1.5.0 all omit the fill colours.
+> data(trees)
+> with(trees, symbols(Height, Volume, circles=Girth/24, inches=FALSE,
++                     lty="blank", bg="blue"))
+> ## in 1.5.0 ignored the lty.
+> 
 > 
