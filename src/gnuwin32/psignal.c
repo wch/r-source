@@ -13,16 +13,12 @@
 
 
 /* Define stuff ************************************************************ */
-
 #ifndef TRUE
   #define TRUE 1
 #endif
 #ifndef FALSE
   #define FALSE 0
 #endif
-
-
-
 
 /* Signal groupings ======================================================== */
 #define SIGNAL_DEFAULT_EXIT         case SIGABRT:               \
@@ -151,10 +147,11 @@ static BOOL CALLBACK hwIntrHandler (DWORD type)
     */    
     raise(SIGBREAK);
     ret = TRUE;
+    break;
   default:
     ret = FALSE;
   }
-  return ret; 
+  return ret ; 
 }
 
 static int downhill_Signal_Init(void)

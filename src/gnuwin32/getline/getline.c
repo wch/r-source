@@ -237,7 +237,7 @@ gl_char_init()			/* turn off input echo */
    if (!Win32InputStream)  
        Win32InputStream = GetStdHandle(STD_INPUT_HANDLE);
    GetConsoleMode(Win32InputStream,&OldWin32Mode);
-   SetConsoleMode(Win32InputStream, ENABLE_PROCESSED_INPUT );
+   SetConsoleMode(Win32InputStream, 0);
    AltIsDown = 0;
 #endif      
    
@@ -545,6 +545,12 @@ int  buflen;
 	      case '\001': gl_fixup(gl_prompt, -1, 0);		/* ^A */
 		break;
 	      case '\002': gl_fixup(gl_prompt, -1, gl_pos-1);	/* ^B */
+		break;
+	      case '\003':                                      /* ^C */
+                gl_fixup(gl_prompt,-1,gl_cnt);
+		gl_puts("^C\n");
+                gl_kill(0);
+                gl_fixup(gl_prompt,-2,BUF_SIZE);
 		break;
 	      case '\004':					/* ^D */
 		if (gl_cnt == 0) {
