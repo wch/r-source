@@ -12,7 +12,7 @@ buildpng:
 
 # jconfig.h and Makefile obtained running 'CC="gcc -mno-cygwin" ./configure'
 # under CYGWIN. They are here since the configure script doesn't run 
-# (I suspect) using the reduced that of tools we distribuite.
+# (I suspect) using the reduced set of tools we distribuite.
 buildjpeg: $(JPEGDIR)/jconfig.h Makefile.jpeg
 	$(MAKE) CC="$(CC)" -C $(JPEGDIR) -f ../Makefile.jpeg libjpeg.a
 
