@@ -1,7 +1,7 @@
 include MkRules
 
 HELP=YES
-WINHELP=BOTH # NO, CHM, BOTH
+WINHELP=CHM # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw1010
@@ -305,7 +305,7 @@ test: test-Specific pkgtests
 
 test-Specific:
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
-	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME)
 
 PKGS-CHK=$(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
