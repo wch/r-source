@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-39, @value{FAQ-YEAR}-08-29
+@set FAQ-VERSION 1.7-40, @value{FAQ-YEAR}-09-12
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1480,11 +1480,22 @@ Wilcoxon tests.
 @item eda
 Exploratory Data Analysis.  Currently only contains functions for robust
 line fitting, and median polish and smoothing.
+@c <FIXME 1.8.0>
+@item grid
+A rewrite of the graphics layout capabilities, plus some support for
+interaction.
+(Added in R 1.8.0).
+@c </FIXME>
 @item lqs
 Resistant regression and covariance estimation.
 @item methods
 Formally defined methods and classes for R objects, plus other
 programming tools, as described in the Green Book.
+@c <FIXME 1.8.0>
+@item mle
+Generic (smooth) likelihood maximization and profiling.
+(Added in R 1.8.0).
+@c </FIXME>
 @item modreg
 MODern REGression: smoothing and local methods.
 @item mva
@@ -1895,6 +1906,9 @@ Functions to perform geostatistical data analysis including model-based
 methods.
 @item geoRglm
 Functions for inference in generalised linear spatial models.
+@item ggm
+Functions for defining directed acyclic graphs and undirected graphs,
+finding induced graphs and fitting Gaussian Markov models.
 @item gld
 Basic functions for the generalised (Tukey) lambda distribution.
 @item glmmML
@@ -2420,8 +2434,12 @@ including some latent class models via EM and Fisher scoring approaches.
 @c general linear hypothesis.
 @c </COMMENT>
 
-@item pls
-Univariate Partial Least Squares Regression.
+@c <COMMENT>
+@c Moved to Attic on 2003-09-12 as requested by the package maintainer,
+@c "kjetil brinchmann halvorsen" <kjetil@@entelnet.bo>.
+@c @item pls
+@c Univariate Partial Least Squares Regression.
+@c </COMMENT>
 
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer needed.

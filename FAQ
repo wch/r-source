@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-39, 2003-08-29
+Version 1.7-40, 2003-09-12
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1156,12 +1156,20 @@ The R distribution comes with the following extra packages:
      Exploratory Data Analysis.  Currently only contains functions for
      robust line fitting, and median polish and smoothing.
 
+*grid*
+     A rewrite of the graphics layout capabilities, plus some support for
+     interaction.  (Added in R 1.8.0).
+
 *lqs*
      Resistant regression and covariance estimation.
 
 *methods*
      Formally defined methods and classes for R objects, plus other
      programming tools, as described in the Green Book.
+
+*mle*
+     Generic (smooth) likelihood maximization and profiling.  (Added in R
+     1.8.0).
 
 *modreg*
      MODern REGression: smoothing and local methods.
@@ -1689,6 +1697,10 @@ distributions of R.)
 
 *geoRglm*
      Functions for inference in generalised linear spatial models.
+
+*ggm*
+     Functions for defining directed acyclic graphs and undirected graphs,
+     finding induced graphs and fitting Gaussian Markov models.
 
 *gld*
      Basic functions for the generalised (Tukey) lambda distribution.
@@ -2256,9 +2268,6 @@ these a try, of course.  This area of CRAN currently contains
      Routines for log-linear models of incomplete contingency tables,
      including some latent class models via EM and Fisher scoring
      approaches.
-
-*pls*
-     Univariate Partial Least Squares Regression.
 
 *runStat*
      Running median and mean.
