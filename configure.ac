@@ -1190,6 +1190,7 @@ R_AQUA
 if test "${use_aqua}" = yes; then
   R_SH_VAR_ADD(R_GUIS, [aqua]);
 fi
+AM_CONDITIONAL(BUILD_AQUA, [test "x${use_aqua}" = xyes])
 
 ## Tcl/Tk.
 R_TCLTK
