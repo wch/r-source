@@ -99,7 +99,7 @@ void BZ2_bz__AssertH__fail ( int errcode )
    );
 
    if (errcode == 1007) {
-   fprintf(stderr,
+       fprintf(stderr, "%s%s%s",
       "\n*** A special note about internal error number 1007 ***\n"
       "\n"
       "Experience suggests that a common cause of i.e. 1007\n"
@@ -107,7 +107,7 @@ void BZ2_bz__AssertH__fail ( int errcode )
       "just happens to cross-check the results of huge numbers of\n"
       "memory reads/writes, and so acts (unintendedly) as a stress\n"
       "test of your memory system.\n"
-      "\n"
+       "\n",
       "I suggest the following: try compressing the file again,\n"
       "possibly monitoring progress in detail with the -vv flag.\n"
       "\n"
@@ -117,7 +117,7 @@ void BZ2_bz__AssertH__fail ( int errcode )
       "  (www.memtest86.com).  At the time of writing it is free (GPLd).\n"
       "  Memtest86 tests memory much more thorougly than your BIOSs\n"
       "  power-on test, and may find failures that the BIOS doesn't.\n"
-      "\n"
+      "\n",
       "* If the error can be repeatably reproduced, this is a bug in\n"
       "  bzip2, and I would very much like to hear about it.  Please\n"
       "  let me know, and, ideally, save a copy of the file causing the\n"
