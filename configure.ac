@@ -1511,9 +1511,6 @@ AC_CONFIG_FILES(
   src/main/Makefile
   src/modules/Makefile
   src/modules/X11/Makefile
-  src/modules/aqua/Makefile
-  src/modules/aqua/Info.plist
-  src/modules/aqua/Contents/Info.plist
   src/modules/gnome/Makefile
   src/modules/internet/Makefile
   src/modules/lapack/Makefile

@@ -32,6 +32,12 @@ DOCUMENTATION
 	linked to.)
 
 
+DEPRECATED & DEFUNCT
+
+    o	The aqua module for MacOS X has been removed: --with-aqua now
+	refers to the unbundled Cocoa GUI.
+
+
 INSTALLATION CHANGES
 
     o	-D__NO_MATH_INLINES is only used on older ix86 glibc-based

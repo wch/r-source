@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win
 
-SUBDIRS = X11 aqua gnome internet lapack vfonts
+SUBDIRS = X11 gnome internet lapack vfonts
 
 MODULES = $(R_GUIS) internet lapack vfonts
 
