@@ -1,6 +1,7 @@
 \name{factanal}
 \alias{factanal}
 \alias{factanal.fit.mle}
+\encoding{latin1}
 \title{Factor Analysis}
 \description{
   Perform maximum-likelihood factor analysis on a covariance matrix or
