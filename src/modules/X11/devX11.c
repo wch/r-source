@@ -183,6 +183,8 @@ static int SetBaseFont(newX11Desc*);
 static void SetColor(int, NewDevDesc*);
 static void SetFont(int, int, NewDevDesc*);
 static void SetLinetype(int, double, NewDevDesc*);
+static void X11_Close_bitmap(newX11Desc *xd);
+
 
 
 	/************************/
@@ -1072,13 +1074,16 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     Rboolean DisplayOpened = FALSE;
 
     if (!strncmp(dsp, "png::", 5)) {
+	char buf[512];
 	FILE *fp;
 #ifndef HAVE_PNG
 	warning("No png support in this version of R");
 	return FALSE;
 #endif
-	if (!(fp = R_fopen(R_ExpandFileName(dsp+5), "w"))) {
-	    warning("could not open PNG file `%s'", dsp+6);
+	strcpy(xd->filename, dsp+5);
+	sprintf(buf, dsp+5, 1); /* page 1 to start */
+	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
+	    warning("could not open PNG file `%s'", buf);
 	    return FALSE;
 	}
 	xd->fp = fp;
@@ -1086,6 +1091,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	p = "";
     }
     else if (!strncmp(dsp, "jpeg::", 6)) {
+	char buf[512];
 	FILE *fp;
 #ifndef HAVE_JPEG
 	warning("No jpeg support in this version of R");
@@ -1093,8 +1099,10 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 #endif
 	p = strchr(dsp+6, ':'); *p='\0';
 	xd->quality = atoi(dsp+6);
-	if (!(fp = R_fopen(R_ExpandFileName(p+1), "w"))) {
-	    warning("could not open JPEG file `%s'", p+1);
+	strcpy(xd->filename, p+1);
+	sprintf(buf, p+1, 1); /* page 1 to start */
+	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
+	    warning("could not open JPEG file `%s'", buf);
 	    return FALSE;
 	}
 	xd->fp = fp;
@@ -1331,8 +1339,26 @@ static void newX11_NewPage(int fill, double gamma, NewDevDesc *dd)
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     if (xd->type > WINDOW) {
-	if (xd->npages++)
-	    error("attempt to draw second page on pixmap device");
+	if (xd->npages++) {
+	    /* try to preserve the page we do have */
+	    if (xd->type != XIMAGE) X11_Close_bitmap(xd);
+	    if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
+	    if (xd->type == PNG) {
+		char buf[512];
+		sprintf(buf, xd->filename, xd->npages);
+		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
+		if (!xd->fp)
+		    error("could not open PNG file `%s'", buf);
+	    }
+	    if (xd->type == JPEG) {
+		char buf[512];
+		sprintf(buf, xd->filename, xd->npages);
+		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
+		if (!xd->fp)
+		    error("could not open JPEG file `%s'", buf);
+	    }
+	    /* error("attempt to draw second page on pixmap device");*/
+	}
 /* we want to override the default bg="transparent" */
 /*	xd->fill = R_OPAQUE(dd->bg) ? dd->bg : xd->canvas; */
 	xd->fill = R_OPAQUE(fill) ? fill: PNG_TRANS;
@@ -1361,6 +1387,7 @@ extern int R_SaveAsPng(void  *d, int width, int height,
 extern int R_SaveAsJpeg(void  *d, int width, int height,
 			unsigned long (*gp)(XImage *, int, int),
 			int bgr, int quality, FILE *outfile);
+
 
 static long knowncols[512];
 
@@ -1402,6 +1429,36 @@ static unsigned long bitgp(XImage *xi, int x, int y)
     return 0; /* not reached, needed for some compilers */
 }
 
+static void X11_Close_bitmap(newX11Desc *xd)
+{
+    int i;
+    XImage *xi;
+    for (i = 0; i < 512; i++) knowncols[i] = -1;
+    xi = XGetImage(display, xd->window, 0, 0,
+		   xd->windowWidth, xd->windowHeight,
+		   AllPlanes, ZPixmap);
+    if (xd->type == PNG) {
+	unsigned int pngtrans = PNG_TRANS;
+	if(model == TRUECOLOR) {
+	    int i, r, g, b;
+	    /* some `truecolor' displays distort colours */
+	    i = GetX11Pixel(R_RED(PNG_TRANS),
+			    R_GREEN(PNG_TRANS),
+			    R_BLUE(PNG_TRANS));
+	    r = ((i>>RShift)&RMask) * 255 /(RMask);
+	    g = ((i>>GShift)&GMask) * 255 /(GMask);
+	    b = ((i>>BShift)&BMask) * 255 /(BMask);
+	    pngtrans = (r<<16) | (g<<8) | b;
+	}
+	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
+		    bitgp, 0, xd->fp,
+		    (xd->fill != PNG_TRANS) ? 0 : pngtrans);
+    } else if (xd->type == JPEG)
+	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
+		     bitgp, 0, xd->quality, xd->fp);
+    XDestroyImage(xi);
+}
+
 static void newX11_Close(NewDevDesc *dd)
 {
 #ifdef OLD
@@ -1419,34 +1476,7 @@ static void newX11_Close(NewDevDesc *dd)
 	XDestroyWindow(display, xd->window);
 	XSync(display, 0);
     } else {
-	if (xd->npages && xd->type != XIMAGE) {
-	    int i;
-	    XImage *xi;
-	    for (i = 0; i < 512; i++) knowncols[i] = -1;
-	    xi = XGetImage(display, xd->window, 0, 0,
-			   xd->windowWidth, xd->windowHeight,
-			   AllPlanes, ZPixmap);
-	    if (xd->type == PNG) {
-		unsigned int pngtrans = PNG_TRANS;
-		if(model == TRUECOLOR) {
-		    int i, r, g, b;
-		    /* some `truecolor' displays distort colours */
-		    i = GetX11Pixel(R_RED(PNG_TRANS),
-					   R_GREEN(PNG_TRANS),
-					   R_BLUE(PNG_TRANS));
-		    r = ((i>>RShift)&RMask) * 255 /(RMask);
-		    g = ((i>>GShift)&GMask) * 255 /(GMask);
-		    b = ((i>>BShift)&BMask) * 255 /(BMask);
-		    pngtrans = (r<<16) | (g<<8) | b;
-		}
-		R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
-			    bitgp, 0, xd->fp,
-			    (xd->fill != PNG_TRANS) ? 0 : pngtrans);
-	    } else if (xd->type == JPEG)
-		R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
-			     bitgp, 0, xd->quality, xd->fp);
-	    XDestroyImage(xi);
-	}
+	if (xd->npages && xd->type != XIMAGE) X11_Close_bitmap(xd);
 	XFreeGC(display, xd->wgc);
 	XFreePixmap(display, xd->window);
 	if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);

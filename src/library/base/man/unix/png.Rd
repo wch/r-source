@@ -6,21 +6,22 @@
   A graphics device for JPEG or PNG format bitmap files.
 }
 \usage{
-jpeg(filename = "Rplot.jpeg", width = 480, height = 480,
+jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480,
      pointsize = 12, quality = 75, bg = "white", \dots)
-png(filename ="Rplot.png", width = 480, height = 480,
+png(filename ="Rplot\%03d.png", width = 480, height = 480,
     pointsize = 12, bg = "white", \dots)
 }
 \synopsis{
-jpeg(filename = "Rplot.jpeg", width = 480, height = 480, pointsize = 12,
+jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, pointsize = 12,
      quality = 75, gamma = 1,
      colortype = getOption("X11colortype"), maxcubesize = 256, bg = "white")
-png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
+png(filename ="Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
     gamma = 1, colortype = getOption("X11colortype"), maxcubesize = 256,
     bg = "white")
 }
 \arguments{
- \item{filename}{the name of the output file.}
+ \item{filename}{the name of the output file.  The page number is
+   substituted if an integer format is included in the character string.}
  \item{width}{the width of the device in pixels.}
  \item{height}{the height of the device in pixels.}
  \item{pointsize}{the default pointsize of plotted text.}
