@@ -1,7 +1,10 @@
 package R::Utils;
 
 use Carp;
+use File::Basename;
+use File::Path;
 use FileHandle;
+use IO::File;
 use Exporter;
 use R::Vars;
 use Text::Wrap;
@@ -322,6 +325,64 @@ sub text2html {
     s/>/&gt;/g;
     s/</&lt;/g;
     $_;
+}
+
+## This is currently shared between build and check.
+sub check_package_description {
+    my ($pkgdir, $pkgname, $log, $in_bundle, $is_base_pkg) = @_;
+    my ($dfile, $dir);
+    if($is_base_pkg) {
+	$dfile = "DESCRIPTION.in";
+    }
+    elsif(!$in_bundle) {
+	$dfile = "DESCRIPTION";
+    }
+    else {
+	## Bundles are a bit tricky, as their package (DESCRIPTION)
+	## metadata come from merging the bundle DESCRIPTION file
+	## with the package DESCRIPTION.in one.  Hence, we
+	## concatenate these files to a temporary one.
+	$log->checking("for file 'DESCRIPTION.in'");
+	if(-r "DESCRIPTION.in") {
+	    $log->result("OK");
+	}
+	else {
+	    $log->result("NO");
+	    exit(1);
+	}
+	## Checking metadata currently also includes verifying that
+	## the package name and "directory name" are the same.
+	$dir = &file_path(${R::Vars::TMPDIR}, "check$$");
+	mkdir($dir, 0755)
+	    or die ("Error: cannot create directory '$dir'\n");
+	$dir = &file_path($dir, $pkgname);
+	mkdir($dir, 0755)
+	    or die ("Error: cannot create directory '$dir'\n");
+	$dfile = &file_path($dir, "DESCRIPTION");
+	my $fh = new IO::File($dfile, "w")
+	    or die "Error: cannot open file '$dpath' for writing\n";
+	my @lines = (&read_lines(&file_path(dirname($pkgdir),
+					    "DESCRIPTION")),
+		     &read_lines("DESCRIPTION.in"));
+	@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+	$fh->print(join("\n", @lines), "\n");
+	$fh->close();
+    }
+    
+    $log->checking("DESCRIPTION meta-information");
+    
+    my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
+    my @out = R_runR($Rcmd, "--vanilla --quiet",
+		     "R_DEFAULT_PACKAGES=NULL");
+    rmtree(dirname($dir)) if($in_bundle);
+    @out = grep(!/^\>/, @out);
+    if(scalar(@out) > 0) {
+	$log->error();
+	$log->print(join("\n", @out) . "\n");
+	exit(1);
+    }
+    
+    $log->result("OK");
 }
 
 

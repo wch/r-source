@@ -404,6 +404,9 @@ sub prepare_pkg {
     my $pkgdir = R_cwd();
     my $pkgname = basename($pkg);
 
+    &R::Utils::check_package_description($pkgdir, $pkgname, $log,
+					 $in_bundle, 0);
+
     if(-d "src") {
 	chdir("src");
 	$log->message("cleaning src");
