@@ -253,7 +253,6 @@ AC_DEFUN([R_PROG_CXX_M],
 	else
 	  r_cv_prog_cxx_m=no
 	fi
-	AC_LANG_RESTORE
       ])
     if test "${r_cv_prog_cxx_m}" = yes; then
       cat << \EOF >> ${depend_rules_frag}
