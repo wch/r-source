@@ -18,7 +18,7 @@ R = $(top_builddir)/bin/R --vanilla
 EX_IN_BASE = $(R_PKGS_BASE:=-Ex.R)
 EX_OUT_BASE = $(EX_IN_BASE:.R=.Rout)
 
-EX_IN_RECOMMENDED = $(R_PKGS_RECOMMENDED_EXPANDED:=-Ex.R)
+EX_IN_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-Ex.R)
 EX_OUT_RECOMMENDED = $(EX_IN_RECOMMENDED:.R=.Rout)
 
 RDIFF = $(top_builddir)/bin/R CMD Rdiff

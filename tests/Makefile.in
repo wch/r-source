@@ -367,7 +367,7 @@ test-undoc:
 
 test-Packages-Recommended:
 	@test -d Packages || mkdir Packages
-	@for p in $(R_PKGS_RECOMMENDED); do \
+	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd Packages && $(TAR) xf -) ; \
 	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \

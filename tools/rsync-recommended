@@ -13,7 +13,8 @@ if test ${TOOLS_DIR} = ${0} ; then
 fi
 (cd "${TOOLS_DIR}"/..
   version=`cut -f1 -d' ' VERSION`
-  PKGS=`grep '^R_PKGS_RECOMMENDED *=' Makeconf.in | sed 's/.*=//'`
+  PKGS=`grep '^R_PKGS_RECOMMENDED_SOURCES *=' share/make/vars.mk | \
+    sed 's/.*=//'`
   cd src/library/Recommended
 
   ## The purpose of the rsync options is to get the timestamps on the
