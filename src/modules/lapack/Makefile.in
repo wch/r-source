@@ -80,7 +80,7 @@ $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
 ## AIX support is untested
 ## </FIXME>
 $(Rlapack_la): $(Rlapack_la_OBJECTS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/Rlapack.exp
-	$(SHLIB_LD) @RLAPACK_LDFLAGS@ $(LDFLAGS) -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@ $(FLIBS)
+	$(DYLIB_LINK) @RLAPACK_LDFLAGS@ -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@ $(FLIBS)
 
 $(top_builddir)/etc/Rlapack.exp: $(Rlapack_la_OBJECTS)
 	@$(top_srcdir)/tools/ldAIX4 -o $@ $(Rlapack_la_OBJECTS)

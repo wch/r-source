@@ -56,6 +56,10 @@ INSTALLATION CHANGES
 
     o	The regression checks now have to be passed exactly.
 
+    o	There are new macros DYLIB_* for building dynamic libraries,
+	and these are used for the dynamic Rmath library (which was
+	previously built as a shared object).
+
 
 BUG FIXES
 

@@ -311,6 +311,11 @@ AC_ARG_VAR([SHLIB_LD],
             files from a C or Fortran compiler only])
 AC_ARG_VAR([SHLIB_LDFLAGS],
            [special flags used by SHLIB_LD])
+AC_ARG_VAR([DYLIB_LD],
+           [command for linking dynamic libraries which contain object
+            files from a C or Fortran compiler only])
+AC_ARG_VAR([DYLIB_LDFLAGS],
+           [special flags used for make a dynamic library])
 AC_ARG_VAR([CXXPICFLAGS],
            [special flags for compiling C++ code to be turned into a
             shared library])
@@ -678,6 +683,8 @@ AC_SUBST(R_XTRA_LIBS)
 ## SHLIB_LD, SHLIB_LDFLAGS
 ##   command and flags for creating DLLs (which contain object files
 ##   from a C or Fortran compiler).
+## DYLIB_LD, DYLIB_LDFLAGS
+##   ditto for dynamic libraries (where different.)
 ## SHLIB_CXXLD, SHLIB_CXXLDFLAGS
 ##   command and flags for creating DLLs which contain object files from
 ##   a C++ compiler.  According to Autoconf, the C++ compiler/linker
@@ -991,16 +998,18 @@ fi
 ##
 ## Also need flags to build the Rlapack shared library on some platforms.
 DYLIB_EXT="${SHLIB_EXT}"
-LIBR_LDFLAGS="${SHLIB_LDFLAGS}"
-RLAPACK_LDFLAGS="${SHLIB_LDFLAGS}"
+dylib_ldflags="${SHLIB_LDFLAGS}"
+LIBR_LDFLAGS=""
+RLAPACK_LDFLAGS=""
 case "${host_os}" in
   aix*)
     ## Pure guesswork so far
-    RLAPACK_LDFLAGS="${SHLIB_LDFLAGS} ${wl}-bE:\$(top_builddir)/etc/Rlapack.exp"
+    RLAPACK_LDFLAGS="${wl}-bE:\$(top_builddir)/etc/Rlapack.exp"
     LAPACK_LDFLAGS="${wl}-bI:\$(R_HOME)/etc/Rlapack.exp"
     ;;
   darwin*)
     DYLIB_EXT=".dylib"
+    dylib_ldflags="-dynamiclib"
     ## <NOTE>
     ## Earlier versions had '-flat_namespace -undefined suppress' in
     ## LIBR_LDFLAGS ... not clear whether needed or in fact wanted.
@@ -1012,7 +1021,7 @@ case "${host_os}" in
     ## Change once the driver is modularized.
     R_SH_VAR_ADD(LIBR_LDFLAGS, [-framework Carbon])
     ## </FIXME>
-    RLAPACK_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libRlapack.dylib"
+    RLAPACK_LDFLAGS="-install_name \$(Rexeclibdir)/libRlapack.dylib"
     ;;
   hpux*)
     ## Needs to avoid embedding a relative path ../../../bin.
@@ -1026,10 +1035,21 @@ case "${host_os}" in
     ;;
 esac
 
+if test -z "${DYLIB_LD}"; then
+  DYLIB_LD="${SHLIB_LD}"
+  R_SH_VAR_ADD(DYLIB_LDFLAGS, [${dylib_ldflags}])
+else
+  if test -z "${DYLIB_LDFLAGS}"; then
+    DYLIB_LDFLAGS="${dylib_ldflags}"
+  fi
+fi
+
 AC_SUBST(MAIN_LD)
 AC_SUBST(MAIN_LDFLAGS)
 AC_SUBST(CPICFLAGS)
 AC_SUBST(CXXPICFLAGS)
+AC_SUBST(DYLIB_LD)
+AC_SUBST(DYLIB_LDFLAGS)
 AC_SUBST(FPICFLAGS)
 AC_SUBST(SHLIB_CXXLD)
 AC_SUBST(SHLIB_CXXLDFLAGS)

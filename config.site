@@ -113,17 +113,21 @@
 ## value by configure.
 ## FPICFLAGS=
 
-## The command to be used to load shared libraries which contain object
+## The command to be used to create shared objects which contain object
 ## files from a C or FORTRAN 77 compiler only.  This is usually the C
 ## compiler or 'ld', but the automatic choice can be overridden by means
 ## of this variable.
 ## SHLIB_LD=
 
 ## Any special flags which are required by the linker when creating
-## shared libraries containing object files from a C or FORTRAN 77
+## shared objects containing object files from a C or FORTRAN 77
 ## compiler only.  This is usually automatically detected by configure,
 ## and anything set here will be in addition unless SHLIB_LD is given.
 ## SHLIB_LDFLAGS=
+
+## ditto for a dynamic library: DYLIB_LDFLAGS defaults to SHLIB_LDFLAGS
+## DYLIB_LD=
+## DYLIB_LDFLAGS=
 
 ## Stripping ('-s'), path ('-L'), and any other miscellaneous options
 ## for the linker.
