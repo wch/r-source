@@ -30,10 +30,12 @@ bw.SJ(x, nb=1000, lower, upper, method=c("ste", "dpi"))
   It defaults to 0.9 times the
   minimum of the standard deviation and the interquartile range divided by
   1.34 times the sample size to the negative one-fifth power
-  (= Silverman's ``rule of thumb'') \emph{unless} the quartiles
-  coincide when a positive result will be guaranteed.
+  (= Silverman's ``rule of thumb'', Silverman(1986, page 48, eqn (3.31))
+  \emph{unless} the quartiles coincide when a positive result
+  will be guaranteed.
 
-  \code{bw.nrd} is the more common variation given by Scott (1992).
+  \code{bw.nrd} is the more common variation given by Scott (1992),
+  using factor 1.06.
 
   \code{bw.ucv} and \code{bw.bcv} implement unbiased and
   biased cross-validation respectively.
@@ -62,6 +64,10 @@ Sheather, S. J. and Jones, M. C. (1991) A reliable data-based bandwidth
 selection method for kernel density estimation.
 \emph{Journal of the Royal Statistical Society series B}
 \bold{53}, 683--690.
+
+Silverman, B. W. (1986)
+\emph{Density Estimation}.
+London: Chapman and Hall.
 
 Venables, W. N. and Ripley, B. D. (1999)
 \emph{Modern Applied Statistics with S-PLUS.}

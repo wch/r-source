@@ -3,7 +3,7 @@
 \alias{print.density}
 \title{Kernel Density Estimation}
 \usage{
-density(x, bw = "nrd", adjust = 1,
+density(x, bw = "nrd0", adjust = 1,
         kernel = c("gaussian", "epanechnikov", "rectangular", "triangular",
                    "biweight", "cosine", "optcosine"),
         window = kernel, width,
@@ -15,9 +15,10 @@ density(x, bw = "nrd", adjust = 1,
 
   \item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
     such that this is the standard deviation of the smoothing kernel.
+    (Note this differs from the reference books cited below, and from S-PLUS.)
 
     \code{bw} can also be a character string giving a rule to choose the
-    bandwidth (but only for gaussian kernels).
+    bandwidth.  See \code{\link{bw.nrd}}.
   
     The specified (or computed) value of \code{bw} is multiplied by
     \code{adjust}.
@@ -101,14 +102,6 @@ density(x, bw = "nrd", adjust = 1,
   \item{has.na}{logical, for compatibility (always FALSE).}
 }
 \references{
-  Silverman, B. W. (1986)
-  \emph{Density Estimation}.
-  London: Chapman and Hall.
-
-  Venables, W. N. and Ripley, B. D. (1999)
-  \emph{Modern Applied Statistics with S-PLUS}.
-  New York: Springer.
-
   Scott, D. W. (1992)
   \emph{Multivariate Density Estimation. Theory, Practice and Visualization}.
   New York: Wiley.
@@ -117,6 +110,14 @@ density(x, bw = "nrd", adjust = 1,
   A reliable data-based bandwidth selection method for kernel density
   estimation.
   \emph{J. Roy. Statist. Soc.} \bold{B}, 683--690.
+
+  Silverman, B. W. (1986)
+  \emph{Density Estimation}.
+  London: Chapman and Hall.
+
+  Venables, W. N. and Ripley, B. D. (1999)
+  \emph{Modern Applied Statistics with S-PLUS}.
+  New York: Springer.
 }
 \seealso{
   \code{\link{bw.nrd}},
@@ -165,7 +166,7 @@ legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 data(precip)
 bw <- bw.SJ(precip) ## sensible automatic choice
 plot(density(precip, bw = bw, n = 2^13),
-main="same sd bandwidths, 7 different kernels")
+     main = "same sd bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
    lines(density(precip, bw = bw, kern =  kernels[i], n = 2^13), col = i)
 
@@ -175,7 +176,7 @@ h.f <- sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))
 ## -> 1, 1.01, .995, 1.007,... close to 1 => adjustment barely visible..
 
 plot(density(precip, bw = bw, n = 2^13),
-main="equivalent bandwidths, 7 different kernels")
+     main = "equivalent bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
    lines(density(precip, bw = bw, adjust = h.f[i], kern =  kernels[i],
          n = 2^13), col = i)
