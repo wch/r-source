@@ -29,6 +29,11 @@ USER-VISIBLE CHANGES
 	and oldClass<-() get and set the "class" attribute as R
 	without `methods' used to.
 
+    o	The default random number generators have been changed to
+	`Mersenne-Twister' and `Inversion'.  A new RNGversion()
+	function allows you to restore the generators of an earlier R
+	version if reproducibility is required.
+
     o	Namespaces can now be defined for packages other than `base':
 	see `Writing R Extensions'.  This hides some internal objects
 	and changes the search path from objects in a namespace.  All
@@ -41,11 +46,6 @@ USER-VISIBLE CHANGES
 	original form rather than the equivalent simplified form
 	(which may have reordered the terms): the results are now
 	much closer to those of S.
-
-    o	The default random number generators have been changed to
-	`Mersenne-Twister' and `Inversion'.  A new RNGversion()
-	function allows you to restore the generators of an earlier R
-	version if reproducibility is required.
 
     o	The tables for plotmath, Hershey and Japanese have been moved
 	from the help pages (example(plotmath) etc) to demo(plotmath) etc.
@@ -101,7 +101,6 @@ NEW FEATURES
 
     o	The postscript output makes use of relative moves, and so is
 	somewhat more compact.
- 
 
     o	%*% and crossprod() for complex arguments make use of BLAS
 	routines and so may be much faster on some platforms.
@@ -173,7 +172,7 @@ NEW FEATURES
     o	hist.default() now returns the nominal break points, not those
 	adjusted for numerical tolerances.
 
-    	To guard against unthinking use, `include.lowest' in
+	To guard against unthinking use, `include.lowest' in
 	hist.default() is now ignored, with a warning, unless `breaks'
 	is a vector.  (It either generated an error or had no effect,
 	depending how prettification of the range operated.)
@@ -731,8 +730,11 @@ BUG FIXES
     o	The data.frame method for rbind() was
 	- converting character columns to factors,
 	- converting ordered factor columns to unordered factors,
-	- failing to append correctly a factor to a character column 
+	- failing to append correctly a factor to a character column
 	  and vice versa.
+
+    o	as.hclust.twins() now does provide proper `labels', `method' and
+	`call' components.
 
 
 
