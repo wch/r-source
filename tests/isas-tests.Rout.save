@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-01-29), ISBN 3-900051-00-3
+Version 1.9.0 alpha (2004-03-08), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -295,6 +295,8 @@ IS: [1] TRUE
 > f <- try(as.dendrogram( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
 > f <- try(as.dist( x ), silent = TRUE)
+Warning message: 
+non-square matrix in: as.dist(x) 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
 [1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
@@ -850,6 +852,8 @@ IS: [1] TRUE
 > f <- try(as.dendrogram( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
 > f <- try(as.dist( x ), silent = TRUE)
+Warning message: 
+non-square matrix in: as.dist(x) 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
 [1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
@@ -2310,6 +2314,8 @@ Error: x is not TRUE
 > f <- try(as.dendrogram( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
 > f <- try(as.dist( x ), silent = TRUE)
+Warning message: 
+non-square matrix in: as.dist(x) 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
 [1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
@@ -2322,6 +2328,6 @@ Error: x is not TRUE
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.36 0.03 0.39 NA NA 
+Time elapsed:  0.36 0 0.35 0 0 
 > 
 > 
