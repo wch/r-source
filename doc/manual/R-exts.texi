@@ -2917,7 +2917,7 @@ so you may need to test that they have not been generated inadvertently.
 
 @node Printing, Calling C from Fortran, Missing and IEEE values, The R API
 @section Printing
-@section Printing from C
+@cindex Printing from C
 @findex Rprintf
 @findex REprintf
 @findex Rvprintf
@@ -2980,7 +2980,7 @@ to access a Fortran common block from C
 
 @node Numerical analysis subroutines, Distribution functions, Calling C from Fortran, The R API
 @section Numerical analysis subroutines
-@section Numerical analysis subroutines from C
+@cindex Numerical analysis subroutines from C
 
 @R{} contains a large number of mathematical functions for its own use,
 for example numerical linear algebra computations and special functions.
@@ -3036,11 +3036,11 @@ by @code{d}, @code{p}, @code{q} or @code{r} apart from the exceptions
 noted) and distribution-specific arguments for the complete set of
 distributions.
 @quotation
-@multitable @columnfractions .28 .18 .30
+@multitable @columnfractions .28 .22 .30
 @item beta @tab @code{nbeta} @tab @code{a, b}
 @item non-central beta @tab @code{beta} @tab @code{a, b, lambda}
 @item binomial @tab @code{binom} @tab @code{n, p}
-@item Cauchy @tab @code{cauchy} @tab @code{loation, scale}
+@item Cauchy @tab @code{cauchy} @tab @code{location, scale}
 @item chi-square @tab @code{chisq} @tab @code{df}
 @item non-central chi-square @tab @code{@{p,q@}nchisq} @tab @code{df, lambda}
 @item exponential @tab @code{exp} @tab @code{scale}
