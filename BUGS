@@ -125,6 +125,15 @@ Subject: simplex
 From: george@lecompte.org
 Date: Sat, 23 Nov 2002 17:30:37 +0100 (MET)
 ..report on boot, I think (not mentioned, though)
+* PR# 2349 *
+Subject: [R] NA in first panel of xyplot causes error
+From: Wolfram Fischer <wolfram@fischer-zim.ch>
+Date: Thu, 5 Dec 2002 15:32:32 +0100
+..Lattice
+* PR# 2352 *
+Subject: avas: segmentation fault on empty args
+From: vograno@arbitrade.com
+Date: Fri, 6 Dec 2002 19:41:48 +0100 (MET)
 
 Directory:  Analyses
 
@@ -612,27 +621,11 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
 Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
-* PR# 2345 *
-Subject: difftime arithmetic
-From: B.Rowlingson@lancaster.ac.uk
-Date: Wed, 4 Dec 2002 17:58:49 +0100 (MET)
-* PR# 2348 *
-Subject: baby boomers, set back the clock iqbqf
-From: cyawinston <ncmdevin@hotmail.com>
-Date: Wed, 4 Dec 2002 15:43:49 -0800
-* PR# 2349 *
-Subject: [R] NA in first panel of xyplot causes error
-From: Wolfram Fischer <wolfram@fischer-zim.ch>
-Date: Thu, 5 Dec 2002 15:32:32 +0100
-* PR# 2350 *
-Subject: Bugs in Version 1.6.1  (2002-11-01), Windows Edition
-From: "Li, James [PRDUS Non-J&J]" <JLi2@prdus.jnj.com>
-Date: Thu, 5 Dec 2002 10:13:42 -0500 
-* PR# 2351 *
-Subject: Re: [Rd] Bugs in Version 1.6.1  (2002-11-01), Windows Edition
-From: ripley@stats.ox.ac.uk
-Date: Thu, 5 Dec 2002 16:21:08 +0000 (GMT)
-* PR# 2352 *
-Subject: avas: segmentation fault on empty args
-From: vograno@arbitrade.com
-Date: Fri, 6 Dec 2002 19:41:48 +0100 (MET)
+* PR# 2353 *
+Subject: GOOD-DAY
+From: "ekiomo150" <ekiomo150@netscape.net>
+Date: Sat, 07 Dec 02 08:16:41 W. Central Africa Standard Time
+* PR# 2354 *
+Subject: Bug in logLik.nls
+From: Arni Magnusson <arnima@u.washington.edu>
+Date: Sat, 7 Dec 2002 15:28:24 -0800 (PST)
