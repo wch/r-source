@@ -17,9 +17,6 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   system.time() has a new argument gcFirst which, when TRUE,
-        forces a garbage collection before timing begins.
-
     o	file.edit() function added:  like file.show(), but allows editing.
 
     o	edit() and fix() use the object name in the window caption on
@@ -83,7 +80,7 @@ NEW FEATURES
 	whole string, and non-printable characters are represented by
 	octal escape sequences.
 
-    o	str(obj) now more reasonably displays the STRucture of S4 objects.
+    o	str(obj) now displays more reasonably the STRucture of S4 objects.
 
     o	fisher.test(*, conf.int=FALSE) allows to skip the confidence
 	interval computation
@@ -91,9 +88,13 @@ NEW FEATURES
     o	formula() methods for classes "lm" and "glm" used the expanded
 	formula (with '.' expanded) from the terms component.
 
-    o   eapply - apply for environments has been added. The supplied function 
-        is applied to each element of the environment; order of application is
-        not specified.
+    o	eapply() - apply for environments has been added. The supplied
+        function is applied to each element of the environment; order
+        of application is not specified.
+
+    o   system.time() has a new argument gcFirst which, when TRUE,
+        forces a garbage collection before timing begins.
+
 
 UTILITIES
 
