@@ -169,7 +169,7 @@ rdocs:
 Rblas: ../../bin/Rblas.dll
 
 Rblas-clean:
-	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o blas2.o cmplxblas.o
+	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o
 
 Rblas-DLLLIBS=-L. -lR
 
@@ -186,13 +186,11 @@ ifeq ($(strip $(USE_ATLAS)),YES)
 blas00.o: blas00.c
 	$(CC) -O2  -c $< -o $@
 else
-../../bin/Rblas.dll: blas.o blas2.o cmplxblas.o dllversion.o
+../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared -o $@ Rblas.def $^ -L. -lR
 
 blas.o: ../appl/blas.f
-	$(F77) $(FFLAGS) -c $< -o $@
-blas2.o: ../modules/lapack/blas2.f
 	$(F77) $(FFLAGS) -c $< -o $@
 cmplxblas.o: ../modules/lapack/cmplxblas.f
 	$(F77) $(FOPTFLAGS) -c $< -o $@
