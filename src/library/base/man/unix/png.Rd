@@ -36,7 +36,7 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
 
 \seealso{\code{\link{Devices}}, \code{\link{dev.print}}}
 \examples{
-## copy current plot to a (large) PNG file
-\dontrun{dev.print(png, file="myplot.png", width=11, height=8}
+## copy current plot to a PNG file
+\dontrun{dev.print(png, file="myplot.png", width=480, height=480)}
 }
 \keyword{device}
