@@ -12,7 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES = aquaconsole.c DataBrowser.c aquaprefs.c dataentry.c \
-          browsepkgs.c print.c datamanager.c packagemanager.c ## helpsearch.c
+          browsepkgs.c print.c datamanager.c packagemanager.c  helpsearch.c
 HEADERS = DataBrowser.h Raqua.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.lo)
