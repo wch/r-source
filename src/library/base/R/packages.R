@@ -6,9 +6,9 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
         tmpf <- paste(substring(contriburl,6), "PACKAGES", sep="/")
     else{
         tmpf <- tempfile()
+        on.exit(unlink(tmpf))
         download.file(url=paste(contriburl, "PACKAGES", sep="/"),
                       destfile=tmpf, method=method)
-        on.exit(unlink(tmpf))
     }
     parse.dcf(file=tmpf, fields=c("Package", "Version",
                          "Priority", "Bundle"),
@@ -17,10 +17,51 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
 
 update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
                             contriburl=contrib.url(CRAN),
-                            method="auto", instlib=NULL)
+                            method="auto", instlib=NULL, ask=TRUE,
+                            available=NULL)
+{
+    if(is.null(available))
+        available <- CRAN.packages(contriburl=contriburl, method=method)
+
+    old <- old.packages(lib.loc=lib.loc,
+                        contriburl=contriburl,
+                        method=method)
+
+    update <- NULL
+    if(ask & !is.null(old)){
+        for(k in 1:nrow(old)){
+            cat(old[k, "Package"], ":\n",
+                "Version", old[k, "Installed"],
+                "in", old[k, "LibPath"], "\n",
+                "Version", old[k, "CRAN"], "on CRAN")
+            cat("\n")
+            answer <- substr(readline("Update (y/N)?  "), 1, 1)
+            if(answer == "y" | answer == "Y")
+                update <- rbind(update, old[k,])
+        }
+    }
+    else
+        update <- old
+    
+    
+    if(!is.null(update)){
+        if(is.null(instlib))
+            instlib <-  update[,"LibPath"]
+        
+        install.packages(update[,"Package"], instlib,
+                         contriburl=contriburl,
+                         method=method,
+                         available=available)
+    }
+}
+
+old.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
+                         contriburl=contrib.url(CRAN),
+                         method="auto", available=NULL)
 {
     instp <- installed.packages(lib.loc=lib.loc)
-    cranp <- CRAN.packages(contriburl=contriburl, method=method)
+    if(is.null(available))
+        available <- CRAN.packages(contriburl=contriburl, method=method)
 
     ## for bundles it is sufficient to install the first package
     ## contained in the bundle, as this will install the complete bundle
@@ -36,37 +77,25 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
     ## for packages contained in bundles use bundle names from now on
     ok <- !is.na(instp[,"Bundle"])
     instp[ok,"Package"] <- instp[ok,"Bundle"]
-    ok <- !is.na(cranp[,"Bundle"])
-    cranp[ok,"Package"] <- cranp[ok,"Bundle"]
+    ok <- !is.na(available[,"Bundle"])
+    available[ok,"Package"] <- available[ok,"Bundle"]
 
     update <- NULL
     for(k in 1:nrow(instp)){
         ok <- (instp[k, "Priority"] != "base") &
-              (cranp[,"Package"] == instp[k, "Package"])
-        if(any(cranp[ok, "Version"] > instp[k, "Version"]))
+              (available[,"Package"] == instp[k, "Package"])
+        if(any(available[ok, "Version"] > instp[k, "Version"]))
         {
-            cat(instp[k, "Package"], ":\n",
-                "Version", instp[k, "Version"],
-                "in", instp[k, "LibPath"], "\n",
-                "Version", cranp[ok, "Version"], "on CRAN")
-            cat("\n")
-            answer <- substr(readline("Update (y/N)?  "), 1, 1)
-            if(answer == "y" | answer == "Y")
-                update <- rbind(update, instp[k, c("Package", "LibPath")])
-            cat("\n")
+            update <- rbind(update,
+                            c(instp[k, c("Package", "LibPath", "Version")],
+                              available[ok, "Version"]))
         }
     }
-
-    if(!is.null(update)){
-        if(is.null(instlib))
-            instlib <-  update[,"LibPath"]
-
-        install.packages(update[,"Package"], instlib,
-                         contriburl=contriburl,
-                         method=method, available=cranp)
-    }
+    if(!is.null(update))
+        colnames(update) <- c("Package", "LibPath",
+                              "Installed", "CRAN")
+    update
 }
-
 
 package.contents <- function(pkg, lib=.lib.loc){
 
