@@ -65,9 +65,8 @@ lines(x, \dots)
 
 ## Multivariate
 z <- ts(matrix(rt(300, df = 3), 100, 3), start=c(1961, 1), frequency=12)
-plot(z)                # multiple
-plot(z, panel=points)  # same with points instead of lines
-plot(z, plot.type="single", lty=1:3)
+plot(z, type = "b")    # multiple
+plot(z, plot.type="single", lty=1:3, col=4:2)
 
 ## A phase plot:
 data(nhtemp)
