@@ -791,7 +791,7 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
     print nroffout ".po 3\n";
     print nroffout ".na\n";
     print nroffout ".tl '", $blocks{"name"},
-          "($pkgname)''R Documentation'\n\n" if $pkgname;
+          " {$pkgname}''R Documentation'\n\n" if $pkgname;
     print nroffout ".SH\n";
     print nroffout $blocks{"title"}, "\n";
     nroff_print_block("description", "Description");
