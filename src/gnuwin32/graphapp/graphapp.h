@@ -691,6 +691,8 @@ void  textselection(textbox t, long *start, long *end);
 #define NO    -1
 #define CANCEL 0
 
+unsigned int TopmostDialogs;
+
 void	apperror(char *errstr);
 void	askok(char *info);
 int 	askokcancel(char *question);

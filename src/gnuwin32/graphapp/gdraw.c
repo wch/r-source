@@ -668,6 +668,12 @@ int isTopmost(window c)
     return GetWindowLong(c->handle, GWL_EXSTYLE) & WS_EX_TOPMOST;
 }
 
+static void setMessageBoxTopmost(window obj)
+{
+	if ((obj->kind == WindowObject) && (isTopmost(obj)))
+		TopmostDialogs |= MB_TOPMOST;
+}
+
 void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for toggle */
 {
     SetForegroundWindow(c->handle); /* needed in Rterm */
@@ -679,4 +685,6 @@ void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for 
     				SWP_NOMOVE | SWP_NOSIZE);
     else SetWindowPos(c->handle, HWND_NOTOPMOST, 0, 0, 0, 0,
     				SWP_NOMOVE | SWP_NOSIZE);
+    TopmostDialogs &= !MB_TOPMOST;
+    apply_to_list(c->parent->child, setMessageBoxTopmost);
 }
