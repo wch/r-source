@@ -114,7 +114,9 @@ SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    return(ptr_do_flushconsole(call, op, args, env));
+	if(ptr_do_flushconsole)
+		ptr_do_flushconsole(call, op, args, env);
+	return R_NilValue; 
 }
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP env)
