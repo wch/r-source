@@ -213,6 +213,11 @@ BUG FIXES
     o   c() was converting NA names to "NA": now proper NA strings are
 	used wherever possible. (PR#2358)
 
+    o   A typo was causing segfaults when using data.entry under SuSE.
+
+    o   mostattributes<-() was failing to copy across dimnames when
+	one component was NULL, affecting pmax() and pmin() when the
+	first argument was a matrix.  (root cause of PR#2357)
 
 
 		CHANGES IN R VERSION 1.6.1
