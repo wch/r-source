@@ -17,7 +17,9 @@ sort <- function(x, partial = NULL, na.last = NA, decreasing = FALSE,
     if(index.return && !is.na(na.last))
         stop("index.return only for na.last = NA")
     if(!is.null(partial)) {
-        if(!all(is.finite(partial))) stop("non-finite `partial'")
+        if(index.return || decreasing || isfact || !missing(method))
+	    stop("unsupported options for partial sorting")
+        if(!all(is.finite(partial))) stop("non-finite 'partial'")
 	y <- .Internal(psort(x, partial))
     }
     else {
