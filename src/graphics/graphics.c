@@ -503,7 +503,7 @@ static int oldstate = -99;		/*  Interpretation  */
 
 void GMode(int state)
 {
-        if(!DevInit)
+	if(!DevInit)
 		error("No graphics device is active\n");
 	if(state != oldstate)
 		DevMode(state);
@@ -1605,6 +1605,26 @@ double GStrWidth(char *str, int units)
 			break;
 	}
 	return w;
+}
+
+
+double GStrHeight(char *str, int units)
+{
+	double h = GP->cex * GP->cra[1];
+	switch(units) {
+		case 1: /* user == world */
+			h = (h / GP->fig2dev.bx) / GP->win2fig.bx;
+			break;
+		case 2: /* figure */
+			h = h / GP->fig2dev.bx;
+			break;
+		case 3: /* inches */
+			h = h * GP->ipr[0];
+			break;
+		case 4: /* rasters */
+			break;
+	}
+	return h;
 }
 
 
