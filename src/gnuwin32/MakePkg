@@ -62,7 +62,7 @@ OFILES0=$(wildcard $(SPKG)/*)
 OFILES1= INDEX TITLE
 OFILES-NO= R r chm data man src src-c demo Makefile.in inst check orig tests \
 	DESCRIPTION DESCRIPTION.in INDEX TITLE index title \
-	configure configure.in configure.win cleanup CVS cvs
+	configure configure.ac configure.in configure.win cleanup CVS cvs
 OFILES3=$(foreach i, $(OFILES1), $(SPKG)/$i)
 OFILES2=$(foreach i, $(OFILES-NO), $(SPKG)/$i)
 OFILES=$(filter-out $(OFILES2),$(OFILES0))
@@ -121,7 +121,7 @@ ifeq ($(SPKG0),$(DPKG0))
 endif
 	@$(ECHO) "---------- Making package $(PKG) ------------"
 	@if test -f ${SPKG}/configure.win; then \
-	  sh -c configure.win; \
+	  sh ${SPKG}/configure.win; \
 	else if test -f ${SPKG}/configure; then \
 	    echo ; \
 	    echo "   **********************************************" ; \

@@ -901,3 +901,24 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
+
+int Rwin_rename(char *from, char *to)
+{
+    int res = 0;
+    OSVERSIONINFO verinfo;
+
+    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&verinfo);
+    switch(verinfo.dwPlatformId) {
+    case VER_PLATFORM_WIN32_NT:
+	res = (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING) == 0);
+	break;
+    default:         
+	if (!DeleteFile(from) && GetLastError () != ERROR_FILE_NOT_FOUND) 
+	    return 1;
+	res = (MoveFile(from, to) == 0);
+    }
+    return res;
+}
+
+
