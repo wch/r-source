@@ -45,7 +45,7 @@ static SEXP stripAttrib(SEXP tag, SEXP lst)
 /* NOTE: For environments serialize.c calls this function to find if
    there is a class attribute in order to reconstruct the object bit
    if needed.  This means the function cannot use OBJECT(vec) == 0 to
-   conclude that the class attribute is R_NilVaule.  If you want to
+   conclude that the class attribute is R_NilValue.  If you want to
    rewrite this function to use such a pre-test, be sure to adjust
    serialize.c accordingly.  LT */
 SEXP getAttrib(SEXP vec, SEXP name)
@@ -94,7 +94,7 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	    return R_NilValue;
 	}
     }
-    /* This is where the old/new list ajustment happens. */
+    /* This is where the old/new list adjustment happens. */
     for (s = ATTRIB(vec); s != R_NilValue; s = CDR(s))
 	if (TAG(s) == name) {
 	    if (name == R_DimNamesSymbol && TYPEOF(CAR(s)) == LISTSXP) {
@@ -579,8 +579,12 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 		SET_VECTOR_ELT(val, i, R_NilValue);
 	    }
 	    else if (!isString(VECTOR_ELT(val, i))) {
-		SET_VECTOR_ELT(val, i,
-			       coerceVector(VECTOR_ELT(val, i), STRSXP));
+		SEXP this;
+		PROTECT(this = coerceVector(VECTOR_ELT(val, i), STRSXP));
+		SET_ATTRIB(this, R_NilValue);
+		SET_OBJECT(this, 0);
+		SET_VECTOR_ELT(val, i, this);
+		UNPROTECT(1);
 	    }
 	}
     }
