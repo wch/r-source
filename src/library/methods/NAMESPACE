@@ -1,5 +1,6 @@
 useDynLib(methods)
 
+importFrom(utils, find)
 S3method(print, MethodsList)
 S3method(print, classRepresentation)
 

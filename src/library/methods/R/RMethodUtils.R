@@ -579,7 +579,7 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.
         else {
             code <- "clear"
             if(!missing(where)) {
-                dbs <- utils::find(mlistMetaName(f))
+                dbs <- find(mlistMetaName(f))
                 if(is.numeric(where))
                     where <- search()[where]
                 ## are there other methods for f still left?

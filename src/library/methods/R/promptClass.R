@@ -98,7 +98,7 @@ function (clName, filename = NULL, type = "class",
         paste("(", paste(xn, "\"", x, "\"", sep="", collapse = ", "),
         ")", sep = "")
     }
-    whereClass <- utils::find(classMetaName(clName))
+    whereClass <- find(classMetaName(clName))
     if(length(whereClass) == 0)
         stop(paste0("No definition of class \"", clName,"\" found"))
     else if(length(whereClass) > 1) {
@@ -115,7 +115,7 @@ function (clName, filename = NULL, type = "class",
                      where, "; definition(s) on :", paste(whereClass, collapse = ", "))
         }
     }
-    fullName <- topicName("class", clName)
+    fullName <- utils::topicName("class", clName)
     clDef <- getClass(clName)
     .name <- paste0("\\name{", fullName, "}")
     .type <- paste0("\\docType{", type, "}")
