@@ -1,3 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+#include <tcl.h>
+#include <tk.h>
+
+#if (TCL_MAJOR_VERSION==8 && TCL_MINOR_VERSION==0)
+#define TCL80
+#endif
+
+/* TclCmdProc was redefined to include const in Tcl 8.4 */
+#ifndef CONST84
+#define CONST84
+#endif
+
+#include <Rinternals.h>
+#include <R_ext/PrtUtil.h>
+#ifndef Win32
+#include <R_ext/eventloop.h>
+#endif
+
+#include <R_ext/Parse.h>
+
 /* Globals exported from  ./tcltk.c : */
 
 void tcltk_init(void);
