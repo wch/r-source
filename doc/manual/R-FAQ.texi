@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-26, @value{FAQ-YEAR}-12-10
+@set FAQ-VERSION 1.8-27, @value{FAQ-YEAR}-12-19
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1920,6 +1920,9 @@ regression models using the EM algorithm.
 @item foreign
 Functions for reading and writing data stored by statistical software
 like Minitab, SAS, SPSS, Stata, etc.  @emph{Recommended}.
+@item fork
+Functions for handling multiple processes: simple wrappers around the
+Unix process management API calls.
 @item forward
 Forward search approach to robust analysis in linear and generalized
 linear regression models.
