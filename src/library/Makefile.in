@@ -36,19 +36,22 @@ R:
 docs:
 	@echo "building all R object docs (help, HTML, LaTeX, examples)"
 	@$(MAKE) DOCS
-	@R_HOME=`cd $(top_builddir); pwd`; export R_HOME; \
-	  $${R_HOME}/bin/build-help --htmllists
+	@$(MAKE) indices
 	@touch stamp-docs
 help:
 	@OPTS="--txt"   $(MAKE) DOCS
 html:
 	@OPTS="--html"    $(MAKE) DOCS
-	@R_HOME=`cd $(top_builddir); pwd`; export R_HOME; \
-	  $${R_HOME}/bin/build-help --htmllists
+	@$(MAKE) indices
 latex:
 	@OPTS="--latex"   $(MAKE) DOCS
 examples:
 	@OPTS="--example" $(MAKE) DOCS
+
+indices:
+	@R_HOME=`cd $(top_builddir); pwd`; export R_HOME; \
+          PERL5LIB=$${R_HOME}/share/perl:$${PERL5LIB}; export PERL5LIB; \
+	  $${R_HOME}/bin/build-help --htmllists
 
 $(top_builddir)/library/LibIndex:
 	@if [ ! -f $@ ]; then touch $@; fi
@@ -60,6 +63,7 @@ DOCS:
 	fi
 	@for pkg in $(R_PKGS); do \
 	  R_HOME=`cd $(top_builddir); pwd`; export R_HOME; \
+          PERL5LIB=$${R_HOME}/share/perl:$${PERL5LIB}; export PERL5LIB; \
 	  $${R_HOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \
 	  $${R_HOME}/bin/Rd2contents $(srcdir)/$${pkg} \
 	    > $${R_HOME}/library/$${pkg}/CONTENTS; \

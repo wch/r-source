@@ -23,10 +23,9 @@
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
 use Getopt::Long;
-use File::Basename;
-use Cwd;
+use R::Rdconv;
 
-my $revision = ' $Revision: 1.15 $ ';
+my $revision = ' $Revision: 1.16 $ ';
 my $version;
 my $name;
 
@@ -74,18 +73,6 @@ END
 
 $OSdir ="unix";
 
-$cwd=getcwd();
-if($ENV{"R_HOME"}){
-    $R_HOME=$ENV{"R_HOME"};
-}
-else{
-    $R_HOME = `R RHOME`;
-    $R_HOME =~ s/(.*)\n*/$1/;
-}
-
-chdir($cwd);
-
-require "$R_HOME/etc/Rdconvlib.pl";
 
 @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
 		 "o|output-file:s", "os|OS:s");
@@ -102,7 +89,6 @@ if(defined $opt_o) {
 $out = 0 if $out eq "-";
 
 usage() if $opt_help;
-print stderr "R_HOME: '$R_HOME';  cwd='$cwd'\n" if $opt_debug;
 
 if($opt_type =~ /html/i){
     if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".html"; }

@@ -23,8 +23,10 @@
 use File::Basename;
 use Cwd;
 use Getopt::Long;
+use R::Rdconv;
+use R::Rdlists;
 
-my $revision = ' $Revision: 1.23 $ ';
+my $revision = ' $Revision: 1.24 $ ';
 my $version;
 my $name;
 
@@ -42,7 +44,11 @@ usage() if $opt_help;
 
 $OSdir ="unix";
 
-$cwd=getcwd();
+$dir_mod = 0755;#- Permission ('mode') of newly created directories.
+
+if($opt_dosnames){$HTML="htm";} else{$HTML="html";}
+
+my $cwd = getcwd();
 if($opt_rhome){
     $R_HOME=$opt_rhome;
     print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
@@ -57,10 +63,6 @@ else{
 }
 chdir($cwd);
 print STDERR "Current directory (cwd): `$cwd'\n" if $opt_debug;
-
-
-require "$R_HOME/etc/Rdconvlib.pl";
-require "$R_HOME/etc/buildlib.pl";
 
 # if option --htmllists is set we only rebuild some list files and
 # exit
@@ -88,7 +90,7 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
 $dest = "$lib/$pkg";
 print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
 
-build_index();
+build_index($lib, $dest, "");
 if ($opt_latex) {
     $latex_d="$dest/latex";
     mkdir "$latex_d", $dir_mod || die "Could not create $latex_d: $!\n";
@@ -200,7 +202,6 @@ if($opt_html){
 	$destfilebase = basename($destfile, (".html"));
 	if($destfile eq "." || $destfile eq ".." ||
 	   $destfile eq "00Index.html") { next; }
-#	print "$dest/html/$destfile\n" unless defined $manfiles{$destfilebase};
 	unlink "$dest/html/$destfile" unless defined $manfiles{$destfilebase};
     }
 }
@@ -212,7 +213,6 @@ if($opt_latex){
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".tex"));
 	if($destfile eq "." || $destfile eq "..") { next; }
-#	print "$dest/latex/$destfile\n" unless defined $manfiles{$destfilebase};
 	unlink "$dest/latex/$destfile" unless defined $manfiles{$destfilebase};
     }
 }
@@ -224,7 +224,6 @@ if($opt_example){
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".R"));
 	if($destfile eq "." || $destfile eq "..") { next; }
-#	print "$dest/R-ex/$destfile\n" unless defined $manfiles{$destfilebase};
 	unlink "$dest/R-ex/$destfile" unless defined $manfiles{$destfilebase};
     }
 }
