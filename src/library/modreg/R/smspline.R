@@ -182,7 +182,8 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
 
 predict.smooth.spline <- function(object, x, deriv = 0, ...)
 {
-    if(missing(x)) return(object[c("x", "y")])
+    if(missing(x) && deriv == 0)
+	return(object[c("x", "y")])
     fit <- object$fit
     if(is.null(fit)) stop("not a valid smooth.spline object")
     else predict(fit, x, deriv, ...)

@@ -202,7 +202,7 @@ usage.  The limit can be raised by calling @code{memory.limit} from a
 running R session.
 
 We have found that starting R with too large a value of
-@code{--max-mem-size} may fail: the limit seemed to be about 1.7Mb on
+@code{--max-mem-size} may fail: the limit seemed to be about 1.7Gb on
 Windows 2000 Professional.
 
 R can be compiled to use a different memory manager which might be better

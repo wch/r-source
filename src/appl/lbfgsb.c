@@ -47,18 +47,18 @@ static void timer(double * ttime)
 #endif
 
 /* Constants -- needed only as pointer arguments to the BLAS routines
- * --------- Declaring them "const" would give compiler warnings 
+ * --------- Declaring them "const" would give compiler warnings
  * unless the F77_CALL(d....) headers were changed too */
 static int c__1 = 1;
 static int c__11 = 11;
 
 /*
-extern double F77_CALL(ddot)(int *, double *, int *, double *, int *);
-extern void F77_CALL(dscal)(int *, double *, double *, int *);
-extern void F77_CALL(dcopy)(int *, double *, int *, double *, int *);
-extern void F77_CALL(daxpy)(int *, double *, double *, int *, double *, int *);
-extern void F77_CALL(dpofa)(double *, int *, int *, int *);
-extern void F77_CALL(dtrsl)(double *, int *, int *, double *, int *, int *);
+extern double F77_NAME(ddot)(int *, double *, int *, double *, int *);
+extern void F77_NAME(dscal)(int *, double *, double *, int *);
+extern void F77_NAME(dcopy)(int *, double *, int *, double *, int *);
+extern void F77_NAME(daxpy)(int *, double *, double *, int *, double *, int *);
+extern void F77_NAME(dpofa)(double *, int *, int *, int *);
+extern void F77_NAME(dtrsl)(double *, int *, int *, double *, int *, int *);
 */
 
 static void active(int, double *, double *, int *, double *, int *,
@@ -75,9 +75,9 @@ static void cmprlb(int, int, double *,
 		   double *, double *, double *, double *, int *,
 		   double *, int *, int *, int *, int *,
 		   int *);
-static void dcsrch(double *, double *, double *, 
+static void dcsrch(double *, double *, double *,
 		   double, double, double,
-		   double, double, 
+		   double, double,
 		   char *, int *, double *);
 static void dcstep(double *, double *,
 		   double *, double *, double *, double *,
@@ -367,22 +367,22 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
     ld = isave[14];
     lt = isave[15];
     lwa = isave[16];
-    mainlb(n, m, x, l, u, nbd, f, g, factr, pgtol, 
-	   &wa[lws], &wa[lwy], &wa[lsy],&wa[lss], &wa[lwt],&wa[lwn], 
-	   &wa[lsnd], &wa[lz], &wa[lr], &wa[ld], &wa[lt], &wa[lwa], 
-	   iwa, &iwa[n], &iwa[n << 1], task, iprint, 
+    mainlb(n, m, x, l, u, nbd, f, g, factr, pgtol,
+	   &wa[lws], &wa[lwy], &wa[lsy],&wa[lss], &wa[lwt],&wa[lwn],
+	   &wa[lsnd], &wa[lz], &wa[lr], &wa[ld], &wa[lt], &wa[lwa],
+	   iwa, &iwa[n], &iwa[n << 1], task, iprint,
 	   csave, lsave, &isave[22], dsave);
     return;
 } /* setulb */
 /* ======================= The end of setulb ============================= */
 
 static void mainlb(int n, int m, double *x,
-		   double *l, double *u, int *nbd, double *f, double *g, 
-		   double factr, double *pgtol, double *ws, double * wy, 
+		   double *l, double *u, int *nbd, double *f, double *g,
+		   double factr, double *pgtol, double *ws, double * wy,
 		   double *sy, double *ss, double *wt, double *wn,
 		   double *snd, double *z, double *r, double *d,
 		   double *t, double *wa, int *indx, int *iwhere,
-		   int *indx2, char *task, int iprint, 
+		   int *indx2, char *task, int iprint,
 		   char *csave, int *lsave, int *isave, double *dsave)
 {
 /*     ************
@@ -2658,7 +2658,7 @@ static void lnsrlb(int n, double *l, double *u,
 	**********
 */
 
-    /* For dcsrch(): */ 
+    /* For dcsrch(): */
     const double stpmin = 0.;
     const double ftol = .001;
     const double gtol = .9;
@@ -2740,9 +2740,9 @@ L556:
 	    return;
 	}
     }
-    dcsrch(f, gd, stp, 
-	   ftol, gtol, xtol, 
-	   stpmin, *stpmx, 
+    dcsrch(f, gd, stp,
+	   ftol, gtol, xtol,
+	   stpmin, *stpmx,
 	   csave, isave, dsave);
     *xstep = *stp * *dnorm;
     if (strncmp(csave, "CONV", 4) != 0 && strncmp(csave, "WARN", 4) != 0) {
@@ -2936,7 +2936,7 @@ static void subsm(int n, int m, int *nsub, int *ind,
 
 	      subject to l <= x <= u
 			 x_i = xcp_i   for all i in A(xcp)
- 
+
 	along the subspace unconstrained Newton direction
 
 	   d = -(Z'BZ)^(-1) r.
@@ -3643,7 +3643,7 @@ static void dcstep(double *stx, double *fx, double *dx,
     } else if (sgnd < 0.) {
 	theta = (*fx - *fp) * 3. / (*stp - *stx) + *dx + *dp;
 /* Computing MAX */
-	d__1 = fabs(theta), d__2 = fabs(*dx), 
+	d__1 = fabs(theta), d__2 = fabs(*dx),
 	    d__1 = max(d__1,d__2), d__2 = fabs(*dp);
 	s = max(d__1,d__2);
 /* Computing 2nd power */
