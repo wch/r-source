@@ -21,7 +21,8 @@ browser()
 
   Typing \code{n} causes the step-through-debugger, to start and it is
   possible to step through the remainder of the function one line at a
-  time.
+  time.  In this mode \code{c} will continue to the end of the current
+  context (to the next loop iteration if within a loop).
 
   Typing \code{Q} quits the current execution and returns you to the
   top-level prompt.

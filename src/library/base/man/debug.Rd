@@ -17,13 +17,10 @@ undebug(fun)
   is suspended and the body of function is executed one statement at a time.
   A new browser context is initiated for each step (and the previous one
   destroyed).
-  Currently you can only debug functions that have bodies enclosed in braces.
-  This is a bug and will be fixed soon.
-% -when was this "soon" written? [MM. 1998.9.4]
   You take the next step by typing carriage return, \code{n} or \code{next}.
   You can see the values of variables by typing their names.
   Typing \code{c} or \code{cont} causes the debugger to continue to the
-  end of the function.
+  end of the function (or loop if within a loop).
   You can \code{debug} new functions before you step in to them from inside
   the debugger.
   Typing \code{Q} quits the current execution and returns you to the
