@@ -322,10 +322,6 @@ function(package, dir, lib.loc = NULL,
     ## Improvements worth considering:
     ## * Parallelize the actual checking (it is not necessary to loop
     ##   over the Rd files);
-    ## * In case of a namespace, always use the namespace for codoc
-    ##   computations (as it is also used for determining the usages for
-    ##   which no corresponding object in the package exists), rather
-    ##   than just the exported objects.
     ## </FIXME>
 
     has_namespace <- FALSE
@@ -356,8 +352,15 @@ function(package, dir, lib.loc = NULL,
         ## Does the package have a namespace?
         if(packageHasNamespace(package, dirname(dir))) {
             has_namespace <- TRUE
+            ns_env <- asNamespace(package)
+            S3Table <- get(".__S3MethodsTable__.", envir = ns_env)
+            functions_in_S3Table <- ls(S3Table, all.names = TRUE)
+            objects_in_ns <-
+                objects(envir = ns_env, all.names = TRUE) %w/o%
+            c(".__NAMESPACE__.", ".__S3MethodsTable__.")
             objects_in_code_or_namespace <-
-                objects(envir = asNamespace(package), all.names = TRUE)
+                unique(c(objects_in_code, objects_in_ns))
+            objects_in_ns <- objects_in_ns %w/o% objects_in_code
         }
         else
             objects_in_code_or_namespace <- objects_in_code
@@ -395,8 +398,12 @@ function(package, dir, lib.loc = NULL,
         ## Does the package have a NAMESPACE file?  Note that when
         ## working on the sources we (currently?) cannot deal with the
         ## (experimental) alternative way of specifying the namespace.
+        ## Also, do not attempt to find S3 methods.
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             has_namespace <- TRUE
+            objects_in_ns <- objects_in_code
+            functions_in_S3Table <- character(0)
+            ns_env <- code_env
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
             ## Look only at exported objects.
             OK <- objects_in_code[objects_in_code %in% nsInfo$exports]
@@ -439,6 +446,29 @@ function(package, dir, lib.loc = NULL,
         lapply(functions_in_code,
                function(f) formals(get(f, envir = code_env)))
     names(function_args_in_code) <- functions_in_code
+    if(has_namespace) {
+        functions_in_ns <-
+            objects_in_ns[sapply(objects_in_ns,
+                                 function(f) {
+                                     f <- get(f, envir = ns_env)
+                                     is.function(f) && (length(formals(f)) > 0)
+                                 }) == TRUE]
+        function_args_in_ns <-
+            lapply(functions_in_ns,
+                   function(f) formals(get(f, envir = ns_env)))
+        names(function_args_in_ns) <- functions_in_ns
+
+        function_args_in_S3Table <-
+            lapply(functions_in_S3Table,
+                   function(f) formals(get(f, envir = S3Table)))
+        names(function_args_in_S3Table) <- functions_in_S3Table
+
+        tmp <- c(function_args_in_code, function_args_in_S3Table,
+                 function_args_in_ns)
+        keep <- !duplicated(names(tmp))
+        function_args_in_code <- tmp[keep]
+        functions_in_code <- names(function_args_in_code)
+    }
     if(.isMethodsDispatchOn()) {
         ## <NOTE>
         ## There is no point in worrying about exportMethods directives
@@ -922,11 +952,13 @@ function(package, lib.loc = NULL)
        stop(paste("directory", sQuote(dir),
                   "does not contain Rd sources"))
     is_base <- basename(dir) == "base"
+    has_namespace <- !is_base && packageHasNamespace(package, dirname(dir))
 
     ## Load package into code_env.
     if(!is_base)
         .load_package_quietly(package, lib.loc)
     code_env <- .package_env(package)
+    if(has_namespace) ns_env <- asNamespace(package)
 
     ## Could check here whether the package has any variables or data
     ## sets (and return if not).
@@ -988,7 +1020,9 @@ function(package, lib.loc = NULL)
 
     data_env <- new.env()
     data_dir <- file.path(dir, "data")
-    hasData <- file_test("-d", data_dir)
+    ## with lazy data we have data() but don't need to use it.
+    hasData <- file_test("-d", data_dir) &&
+        !file_test("-f", file.path(data_dir, "Rdata.rdb"))
     data_exts <- .make_file_exts("data")
 
     ## Now go through the aliases.
@@ -1001,8 +1035,10 @@ function(package, lib.loc = NULL)
         if(exists(al, envir = code_env, mode = "list",
                   inherits = FALSE)) {
             al <- get(al, envir = code_env, mode = "list")
-        }
-        else if(hasData) {
+        } else if(has_namespace && exists(al, envir = ns_env, mode = "list",
+                  inherits = FALSE)) {
+            al <- get(al, envir = ns_env, mode = "list")
+        } else if(hasData) {
             ## Should be a data set.
             if(!length(dir(data_dir)
                        %in% paste(al, data_exts, sep = "."))) {

@@ -59,6 +59,12 @@ codocData(package, lib.loc = NULL)
   values of the argument \code{use.values}.  Synopsis sections are used
   if present; their occurrence is reported if \code{verbose} is true.
 
+  If a package has a namespace both exported and unexported objects are
+  checked, as well as registered S3 methods.  (In the unlikely event of
+  differences the order is exported objects in the package, registered
+  S3 methods and finally objects in the namespace and only the first
+  found is checked.)
+
   Currently, the R documentation format has no high-level markup for the
   basic \dQuote{structure} of classes and data sets (similar to the usage
   sections for function synopses).  Variable names for data frames in
