@@ -54,31 +54,31 @@
 
 typedef struct {
     /* R Graphics Parameters */
-    /* local device copy so that we can detect */
-    /* when parameter changes */
+    /* Local device copy so that we can detect */
+    /* when parameter changes. */
 
     double cex;				/* Character expansion */
     double srt;				/* String rotation */
     int lty;				/* Line type */
     double lwd;
     int col;				/* Color */
-    int fg;					/* Foreground */
-    int bg;					/* Background */
-    int fontface;				/* Typeface */
-    int fontsize;				/* Size in points */
+    int fg;				/* Foreground */
+    int bg;				/* Background */
+    int fontface;			/* Typeface */
+    int fontsize;			/* Size in points */
 
     /* X11 Driver Specific */
-    /* parameters with copy per x11 device */
+    /* Parameters with copy per X11 device. */
 
     int windowWidth;			/* Window width (pixels) */
     int windowHeight;			/* Window height (pixels) */
     int resize;				/* Window resized */
-    Window window;				/* Graphics Window */
-    GC wgc;					/* GC for window */
-    Cursor gcursor;				/* Graphics Cursor */
+    Window window;			/* Graphics Window */
+    GC wgc;				/* GC for window */
+    Cursor gcursor;			/* Graphics Cursor */
     XSetWindowAttributes attributes;	/* Window attributes */
-    XColor fgcolor;				/* Foreground color */
-    XColor bgcolor;				/* Background color */
+    XColor fgcolor;			/* Foreground color */
+    XColor bgcolor;			/* Background color */
     XRectangle clip;			/* The clipping rectangle */
 
     int usefixed;
@@ -173,24 +173,14 @@ static void SetFont(int, int, DevDesc*);
 static void SetLinetype(int, double, DevDesc*);
 
 
-        /*****************************************/
-        /* Unified X11 Color Management Software */
-        /*****************************************/
+        /************************/
+        /* X11 Color Management */
+        /************************/
 
+static double RedGamma   = 0.6;
+static double GreenGamma = 0.6;
+static double BlueGamma  = 0.6;
 
-#undef GAMMA
-#ifdef GAMMA
-static double RedGamma   = 0.75;
-static double GreenGamma = 0.75;
-static double BlueGamma  = 0.75;
-#endif
-#ifdef GAMMA
-static unsigned short ColorLevel(int level, int maxlevel, double gamma)
-{
-    double tmp = (level * 0xffff) / ((maxlevel - 1) * 65536.0);
-    return 65536.0 * pow(tmp, gamma);
-}
-#endif
 
 /* Variables Used To Store Colormap Information */
 static struct { int red; int green; int blue; } RPalette[512];
@@ -388,6 +378,9 @@ static void SetupTrueColor()
 
 static unsigned GetTrueColorPixel(int r, int g, int b)
 {
+    r = pow((r / 255.0), RedGamma) * 255;
+    g = pow((g / 255.0), GreenGamma) * 255;
+    b = pow((b / 255.0), BlueGamma) * 255;
     return
 	(((r * RMask) / 255) << RShift) |
 	(((g * GMask) / 255) << GShift) |
@@ -799,6 +792,11 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
     if (!displayOpen) {
 	if ((display = XOpenDisplay(dsp)) == NULL)
 	    return 0;
+#ifdef SETGAMMA
+	RedGamma   = dd->gp.gamma;
+	GreenGamma = dd->gp.gamma;
+	BlueGamma  = dd->gp.gamma;
+#endif
 	screen = DefaultScreen(display);
 	rootwin = DefaultRootWindow(display);
 	depth = DefaultDepth(display, screen);
