@@ -418,3 +418,27 @@ Date: Tue, 15 Jan 2002 21:43:17 +0100 (MET)
 Subject: bug in survival package basehaz function
 From: Nicholas Lewin-Koh <kohnicho@comp.nus.edu.sg>
 Date: Wed, 16 Jan 2002 14:15:21 +0800 (GMT-8)
+* PR# 1267 *
+Subject: hashing NaN
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Wed, 16 Jan 2002 16:29:35 -0800 (PST)
+* PR# 1268 *
+Subject: Solaris 2.6 Compile
+From: gm81640@development.nssmb.com
+Date: Thu, 17 Jan 2002 06:28:26 +0100 (MET)
+* PR# 1269 *
+Subject: Solaris 2.6 Compile
+From: gm81640@development.nssmb.com
+Date: Thu, 17 Jan 2002 06:28:49 +0100 (MET)
+* PR# 1270 *
+Subject: Notification:  You are hereby.....
+From: angelus@truthmail.com (Administrator)
+Date: Thu, 17 Jan 2002 01:34:20 -0500
+* PR# 1271 *
+Subject: detach(package:base) kills R
+From: david.heffernan@orcina.com
+Date: Thu, 17 Jan 2002 09:54:14 +0100 (MET)
+* PR# 1272 *
+Subject: eigen segfault with GCC 3 on Solaris
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Thu, 17 Jan 2002 15:14:33 -0500
