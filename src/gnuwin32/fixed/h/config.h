@@ -9,7 +9,7 @@
 /* Define to 1 if using `alloca.c'. */
 /* #undef C_ALLOCA */
 
-/* Define to dummy `main' function (if any) required to link to the Fortran 77
+/* Define to dummy `main' function (if any) required to link to the Fortran
    libraries. */
 /* #undef F77_DUMMY_MAIN */
 
@@ -19,6 +19,9 @@
 
 /* As F77_FUNC, but for C identifiers containing underscores. */
 #define F77_FUNC_(name,NAME) name ## __
+
+/* Define if F77 and FC dummy `main' functions are identical. */
+/* #undef FC_DUMMY_MAIN_EQ_F77 */
 
 /* Define to 1 if you have the `access' function. */
 #define HAVE_ACCESS 1
@@ -172,6 +175,9 @@
 
 /* Define to 1 if you have the `isascii' function. */
 #define HAVE_ISASCII 1
+
+/* Define to 1 if you have the `isfinite' function. */
+/* #undef HAVE_ISFINITE */
 
 /* Define to 1 if you have the `isnan' function. */
 #define HAVE_ISNAN 1
@@ -382,13 +388,16 @@
 /* Define if finite() is correct for -Inf/NaN/Inf. */
 #define HAVE_WORKING_FINITE 1
 
+/* Define if isfinite() is correct for -Inf/NaN/Inf. */
+/* #undef HAVE_WORKING_ISFINITE */
+
 /* Define if log() is correct for 0/-1. */
 #define HAVE_WORKING_LOG 1
 
 /* Define if log1p() exists and is accurate enough. */
 #define HAVE_WORKING_LOG1P 1
 
-/* Define if strptime() exists and does not fail pre-1970. */
+/* Define if strptime() exists, validates and does not fail pre-1970. */
 /* #undef HAVE_WORKING_STRPTIME */
 
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
@@ -417,13 +426,13 @@
 #define PACKAGE_NAME "R"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "R 1.8.0"
+#define PACKAGE_STRING "R 2.0.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "R"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.8.0"
+#define PACKAGE_VERSION "2.0.0"
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #define RETSIGTYPE void
@@ -468,9 +477,9 @@
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be
    automatically deduced at run-time.
-        STACK_DIRECTION > 0 => grows toward higher addresses
-        STACK_DIRECTION < 0 => grows toward lower addresses
-        STACK_DIRECTION = 0 => direction of growth unknown */
+	STACK_DIRECTION > 0 => grows toward higher addresses
+	STACK_DIRECTION < 0 => grows toward lower addresses
+	STACK_DIRECTION = 0 => direction of growth unknown */
 /* #undef STACK_DIRECTION */
 
 /* Define to 1 if you have the ANSI C header files. */
@@ -497,7 +506,7 @@
 /* #undef Unix */
 
 /* Version number of package */
-#define VERSION "1.8.0"
+#define VERSION "2.0.0"
 
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */
