@@ -32,6 +32,12 @@ contour(x=, y=, z, nlevels = 10,
   \code{demo(graphics)}.
 }
 \examples{
+## Persian Rug Art:
+x <- y <- seq(-4*pi, 4*pi, len=27)
+r <- sqrt(outer(x^2, y^2, "+"))
+par(mfrow=c(2,2), mar=rep(0,4))
+for(f in pi^(0:3)) contour(z= cos(r^2)*exp(-r/f))
+
 data("volcano")
 rx <- range(x <- 10*1:nrow(volcano))
 ry <- range(y <- 10*1:ncol(volcano))
