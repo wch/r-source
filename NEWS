@@ -325,6 +325,9 @@ C-LEVEL FACILITIES
 
 BUG FIXES
 
+    o	The calculation of which axes to label on a persp() plot was
+	incorrect in some cases.
+
     o	Insufficient information was being recorded in the display list
 	for the identify() function.  In particular, the "plot="
 	argument was ignored when replaying the display list. (PR#1157)
