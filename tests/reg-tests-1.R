@@ -2657,6 +2657,7 @@ stopifnot(identical(TRUE, attr(as.dist(m, diag=TRUE), "Diag")))
 stopifnot(1:2 == ave(1:2,factor(2:3,levels=1:3)))
 ## gave "2 NA" previous to 1.8.0, because unused levels weren't dropped
 
+
 ## PR#4092: arrays with length(dim(.)) = 1
 z <- array(c(-2:1, 1.4),5)
 cz <- crossprod(as.vector(z))
@@ -2668,9 +2669,11 @@ stopifnot(crossprod(z) == cz,# the first has NULL dimnames
           identical(crossprod(z), crossprod(z,z0)))
 ## crossprod(z) segfaulted (or gave silly error message) before 1.8.0
 
+
 ## PR#4431
 stopifnot(!is.na(rmultinom(12,100, c(3, 4, 2, 0,0))))
 ## 3rd line was all NA before 1.8.0
+
 
 ## PR#4275: getAnywhere with extra "."
 g0 <- getAnywhere("predict.loess")
@@ -2682,6 +2685,7 @@ stopifnot(is.S3meth(g0), is.S3meth(g1),
           is.S3meth(g2), is.S3meth(g3))
 ## all but g0 failed until 1.8.0 (Oct 6)
 
+
 ## symnum(x) for length 0 and some logical arrays:
 sm <- symnum(m <- matrix(1:8 %% 3 == 0, 2))
 stopifnot(identical(symnum(FALSE[FALSE]), noquote(""[FALSE])),
@@ -2689,6 +2693,15 @@ stopifnot(identical(symnum(FALSE[FALSE]), noquote(""[FALSE])),
           dim(sm) == dim(m), class(sm) == "noquote")
 ## symnum(<length 0>) gave noquote("()") before 1.8.1
 
+
 ## abbreviate with leading (or trailing) space differences (PR#4564)
 abbreviate(c("A"," A"), 4)
 ## this gave infinite loop before 1.8.1
+
+
+## crossprod on 0-extent matrices
+a <- matrix(,0,5)
+stopifnot(crossprod(a) == 0)
+stopifnot(crossprod(a,a) == 0)
+stopifnot(crossprod(a+0i) == 0+0i)
+## were random areas in <= 1.8.0
