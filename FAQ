@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-11, 2002-06-19
+Version 1.5-12, 2002-06-20
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1594,6 +1594,9 @@ works, was published in the Journal of Statistical Software
 
 *muhaz*
      Hazard function estimation in survival analysis.
+
+*multcomp*
+     Multiple comparison procedures for the one-way layout.
 
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
