@@ -707,7 +707,7 @@ An ATLAS `tuned' BLAS can also be used on Windows: see
 * Using FORTRAN::               
 * Compile and load flags::      
 * Building the GNOME interface::  
-* Platform notes::
+* Platform notes::              
 @end menu
 
 @node Configuration options, Configuration variables, Configuration on Unix, Configuration on Unix
@@ -903,7 +903,7 @@ possible issue is the alignment of doubles, another is the way
 structures are passed.
 
 
-@node Building the GNOME interface,  Platform notes, Compile and load flags, Configuration on Unix
+@node Building the GNOME interface, Platform notes, Compile and load flags, Configuration on Unix
 @section Building the @acronym{GNOME} interface
 
 This interface is experimental and incomplete.  It provides a console
@@ -973,20 +973,49 @@ specify location of @command{libglade-config}
 @node Platform notes,  , Building the GNOME interface, Configuration on Unix
 @section Platform notes
 This section provides some notes on building R on different Unix
-platforms.  These notes are based on tests a run on one or two systems
+platforms.  These notes are based on tests run on one or two systems
 in each case with particular sets of compilers and support libraries.
 Success in building R depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
-of compilers and support libraries,
+of compilers and support libraries.
 
 @menu
-* HPUX::                      
-* IRIX::              
-* Alpha/OSF1::
-* Alpha/FreeBSD::
+* Solaris::                     
+* HPUX::                        
+* IRIX::                        
+* Alpha/OSF1::                  
+* Alpha/FreeBSD::               
 @end menu
 
-@node HPUX, IRIX, Platform notes, Platform notes, Platform notes
+@node Solaris, HPUX, Platform notes, Platform notes
+@subsection Solaris on Sparc
+
+R has been built successfully on Solaris 2.7 and 8 using
+@code{gcc}/@code{g77} and the SunPro WorkShop 6 compilers.
+When using the SunPro compilers do @emph{not} specify @code{-fast}, as
+this disables IEEE arithmetic.  The maximal set of optimization
+options known to work is
+@smallexample
+-xlibmil -xO5 -dalign
+@end smallexample
+
+To compile for a 64-bit target on Solaris (which needs an UltraSparc
+chip and for support to be enabled in the OS) we used
+@smallexample
+CC="cc -xarch=v9"
+CFLAGS="-xO5 -xlibmil -dalign"
+FC="f95 -xarch=v9"
+FFLAGS="-xO5 -xlibmil -dalign"
+CXX=CC
+CXXFLAGS="-xO5 -xlibmil -dalign -xarch=v9"
+@end smallexample
+@noindent
+in @file{config.site}.  Note that using @code{f95} allows the Sun
+performance library to be selected: it will not work with @code{f77},
+nor with @code{g77}.
+
+
+@node HPUX, IRIX, Solaris, Platform notes
 @subsection HPUX
 R has been built successfully on HPUX 10.2 and HPUX 11.0 using both
 native compilers and @code{gcc}.  By default, R is configured to use
@@ -1044,7 +1073,7 @@ env CC=cc ./configure --with-f77=fort77
 @end smallexample
 
 
-@node IRIX,  Alpha/OSF1, HPUX, Platform notes
+@node IRIX, Alpha/OSF1, HPUX, Platform notes
 @subsection IRIX
 
 R has been built successfully on IRIX64 6.5 using both the GNU compilers
@@ -1059,7 +1088,7 @@ explicitly omit Tcl/Tk because @code{configure} would find the 32-bit
 version but not detect that is was incompatible with a 64-bit build.
 
 
-@node Alpha/OSF1,  Alpha/FreeBSD, IRIX, Platform notes
+@node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
 @subsection Alpha/OSF1
 
 @node Alpha/FreeBSD,  , Alpha/OSF1, Platform notes
