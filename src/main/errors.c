@@ -436,7 +436,7 @@ void jump_to_toplevel()
 
     /* find the jump target; do the jump if target is a CTXT_RESTART */
     for (c = R_GlobalContext; c; c = c->nextcontext) {
-	if (c->callflag == CTXT_RETURN || c->callflag == CTXT_GENERIC )
+	if (c->callflag & CTXT_FUNCTION )
 	    nback++;
 	if (IS_RESTART_BIT_SET(c->callflag)) {
 	    inError=0;
@@ -457,7 +457,9 @@ void jump_to_toplevel()
 
     PROTECT(s = allocList(nback));
     t = s;
-    for (c = R_GlobalContext ; c ; c = c->nextcontext)
+    for (c = R_GlobalContext ;
+	 c != NULL && c->callflag != CTXT_TOPLEVEL;
+	 c = c->nextcontext)
 	if (c->callflag & CTXT_FUNCTION ) {
 	    SETCAR(t, deparse1(c->call, 0));
 	    t = CDR(t);
@@ -761,8 +763,10 @@ SEXP R_GetTraceback(int skip)
     RCNTXT *c;
     SEXP s, t;
 
-    for (c = R_GlobalContext, ns = skip; c; c = c->nextcontext)
-        if (c->callflag == CTXT_RETURN || c->callflag == CTXT_GENERIC ) {
+    for (c = R_GlobalContext, ns = skip;
+	 c != NULL && c->callflag != CTXT_TOPLEVEL;
+	 c = c->nextcontext)
+	if (c->callflag & CTXT_FUNCTION ) {
 	    if (ns > 0)
 		ns--;
 	    else
@@ -771,7 +775,9 @@ SEXP R_GetTraceback(int skip)
 
     PROTECT(s = allocList(nback));
     t = s;
-    for (c = R_GlobalContext ; c ; c = c->nextcontext)
+    for (c = R_GlobalContext ;
+	 c != NULL && c->callflag != CTXT_TOPLEVEL;
+	 c = c->nextcontext)
 	if (c->callflag & CTXT_FUNCTION ) {
 	    if (skip > 0)
 		skip--;
