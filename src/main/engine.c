@@ -477,6 +477,16 @@ static void getClipRectToDevice(double *x1, double *y1, double *x2, double *y2,
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd)
 {
     dd->dev->clip(x1, x2, y1, y2, dd->dev);
+    /* This needs to be uncommented once R 1.4 is out 
+     * Also take the setting of these values out of devX11.c
+     * The problem is that these settings are not happening in
+     * devices other than X11
+     */
+    /*    dd->dev->clipLeft = fmin2(x1, x2);
+     *    dd->dev->clipRight = fmax2(x1, x2);
+     *    dd->dev->clipTop = fmax2(y1, y2);
+     *    dd->dev->clipBottom = fmin2(y1, y2); 
+     */
 }
 
 /****************************************************************
@@ -1849,7 +1859,7 @@ void GEinitDisplayList(GEDevDesc *dd)
 
 void GEplayDisplayList(GEDevDesc *dd)
 {
-    int i, savedDevice;
+    int i, savedDevice, plotok;
     SEXP theList;
     /* Get each graphics system to restore state required for 
      * replaying the display list
@@ -1860,10 +1870,11 @@ void GEplayDisplayList(GEDevDesc *dd)
     /* Play the display list
      */
     theList = dd->dev->displayList;
+    plotok = 1;
     if (theList != R_NilValue) {
 	savedDevice = curDevice();
 	selectDevice(deviceNumber((DevDesc*) dd));
-	while (theList != R_NilValue) {
+	while (theList != R_NilValue && plotok) {
 	    SEXP theOperation = CAR(theList);
 	    SEXP op = CAR(theOperation);
 	    SEXP args = CDR(theOperation);
@@ -1874,7 +1885,7 @@ void GEplayDisplayList(GEDevDesc *dd)
 		if (dd->gesd[i] != NULL)
 		    if (!LOGICAL((dd->gesd[i]->callback)(GE_CheckPlot, dd, 
 							 R_NilValue))[0])
-			break;
+			plotok = 0;
 	    theList = CDR(theList);
 	}
 	selectDevice(savedDevice);
