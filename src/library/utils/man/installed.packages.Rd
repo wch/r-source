@@ -23,13 +23,15 @@ installed.packages(lib.loc = NULL, priority = NULL)
   \code{installed.packages} scans the \file{DESCRIPTION} files of each
   package found along \code{lib.loc} and returns a matrix of package
   names, library paths and version numbers.
+
+  \strong{Note:} this works with package names, not bundle names.
 }
 \value{
   A matrix with one row per package, row names the package names and
   column names \code{"Package"}, \code{"LibPath"}, \code{"Version"},
-  \code{"Priority"}, \code{"Bundle"}, \code{"Depends"},
-  \code{"Suggests"} and \code{"Built"} (the \R version the package was
-  built under).
+  \code{"Priority"}, \code{"Bundle"}, \code{"Contains"}, \code{"Depends"},
+  \code{"Suggests"}, \code{"Imports"} and \code{"Built"}
+  (the \R version the package was built under).
 }
 \seealso{
   \code{\link{update.packages}}

@@ -66,8 +66,12 @@ install.packages(pkgs, lib, repos = CRAN,
   \item{method}{Download method, see \code{\link{download.file}}.}
   \item{pkgs}{character vector of the short names of packages whose
     current versions should be downloaded from \code{CRAN}.
+    If \code{repos = NULL}, a vector of file names of
 #ifdef windows
-    If \code{repos = NULL}, a vector of file names of \code{.zip} files.
+    \code{.zip} files.
+#endif
+#ifdef unix
+    \code{.tar.gz} files.
 #endif
   }
   \item{destdir}{directory where downloaded packages are stored.}
@@ -85,15 +89,15 @@ install.packages(pkgs, lib, repos = CRAN,
     install the packages.}
   \item{dependencies}{logical indicating to also install uninstalled
     packages on which these packages depend/suggest/import
-    (and so on recursively).
-#ifdef windows
-    Not used if \code{repos = NULL}.
-#endif
+    (and so on recursively).  Not used if \code{repos = NULL}.
   }
 }
 \details{
-  \code{CRAN.packages} returns a matrix of package details corresponding
-  to packages/bundles currently available in the \code{contrib} section of
+  All of these functions work with the names of a package or bundle (and
+  not the component packages of a bundle).
+  
+  \code{CRAN.packages} returns a matrix of details corresponding to
+  packages/bundles currently available in the \code{contrib} section of
   CRAN, the comprehensive R archive network.  The current list of
   packages is downloaded over the internet (or copied from a local CRAN
   mirror).  \code{available.packages} does the same for one or more
@@ -104,24 +108,26 @@ install.packages(pkgs, lib, repos = CRAN,
   \code{\link{installed.packages}} and reports installed
   packages/bundles that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
-  version of \R (for example under 2.0.x and running \R 2.1.1).
+  version of \R (for example built under 2.0.x when running \R 2.1.1).
 
   \code{new.packages} does the same comparison but reports uninstalled
-  packages that are available at the repositories.
+  packages/bundles that are available at the repositories.  It will also
+  give warnings about incompletely installed bundles (provided the
+  information is available) and bundles whose contents has changed.
 
   \code{download.packages} takes a list of package/bundle names and a
-  destination directory, downloads the newest versions of the package
-  sources and saves them in \code{destdir}.  If the list of available
-  packages is not given as argument, it is also directly obtained from
-  repositories.  If a repository is local, i.e., the URL starts
-  with \code{"file:"}, then the packages are not downloaded but used
-  directly.
+  destination directory, downloads the newest versions and saves them in
+  \code{destdir}.  If the list of available packages is not given as
+  argument, it is obtained from repositories.  If a repository is local,
+  i.e., the URL starts with \code{"file:"}, then the packages are not
+  downloaded but used directly.
 
-  The main function of the bundle is \code{update.packages}.  First a
-  list of all packages found in \code{lib.loc} is created and compared
-  with the packages available at the repostories.  If \code{ask = TRUE}
-  (the default) packages with a newer version are reported and for each
-  one the user can specify if it should be updated.
+  The main function of the set is \code{update.packages}.  First a list
+  of all packages/bundles found in \code{lib.loc} is created and
+  compared with those available at the repostories.  If \code{ask =
+    TRUE} (the default) packages/bundles with a newer version are
+  reported and for each one the user can specify if it should be
+  updated.
 #ifdef unix
   If so, the package sources are downloaded from the repositories and
   installed in the respective library path (or \code{instlib}
@@ -133,11 +139,11 @@ install.packages(pkgs, lib, repos = CRAN,
   specified).
 #endif
 
-  \code{install.packages} can be used to install new packages.  It
-  takes a vector of package names and a destination library, downloads
-  the packages from the repositories and installs them. If the library
-  is omitted it defaults to the first directory in \code{.libPaths()}, with
-  a warning if there is more than one.
+  \code{install.packages} can be used to install new packages/bundles.
+  It takes a vector of names and a destination library, downloads the
+  packages from the repositories and installs them.  (If the library is
+  omitted it defaults to the first directory in \code{.libPaths()}, with
+  a warning if there is more than one.)
 %  The first argument can be an unquoted name, as in
 %  \code{install.packages(nlme)}.
 #ifdef windows
@@ -169,8 +175,9 @@ install.packages(pkgs, lib, repos = CRAN,
   \code{"Contains"} and \code{"Repository"}.
 
   For \code{old.packages}, \code{NULL} or a matrix with one row per
-  package/bundle and column names \code{"Package"}, \code{"LibPath"},
-  \code{"Installed"} (the version), \code{"Built"}, \code{"ReposVer"} and
+  package/bundle, row names the package names and column names
+  \code{"Package"}, \code{"LibPath"}, \code{"Installed"} (the version),
+  \code{"Built"} (the version built under), \code{"ReposVer"} and
   \code{"Repository"}.
   
   For \code{new.packages} a character vector of package/bundle names.

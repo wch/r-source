@@ -49,7 +49,8 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
         lib.loc <- .libPaths()
 
     if(is.null(available))
-        available <- CRAN.packages(contriburl = contriburl, method = method)
+        available <- available.packages(contriburl = contriburl,
+                                        method = method)
 
     old <- old.packages(lib.loc = lib.loc,
                         contriburl = contriburl,
@@ -103,7 +104,8 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
     if(is.null(dim(instp)))
         stop("no installed.packages for (invalid?) lib.loc=",lib.loc)
     if(is.null(available))
-        available <- CRAN.packages(contriburl = contriburl, method = method)
+        available <- available.packages(contriburl = contriburl,
+                                        method = method)
 
     ## For bundles it is sufficient to install the first package
     ## contained in the bundle, as this will install the complete bundle
@@ -150,6 +152,7 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
     if(!is.null(update))
         colnames(update) <- c("Package", "LibPath", "Installed", "Built",
                               "ReposVer", "Repository")
+    rownames(update) <- update[, "Package"]
     update
 }
 
@@ -164,15 +167,33 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
     if(is.null(dim(instp)))
         stop("no installed.packages for (invalid?) lib.loc=", lib.loc)
     if(is.null(available))
-        available <- CRAN.packages(contriburl = contriburl, method = method)
+        available <- available.packages(contriburl = contriburl,
+                                        method = method)
     ## For packages contained in bundles use bundle names from now on.
-    ## We don't have enough information to know if they are complete,
+    ## We used not to have enough information to know if they are complete,
     ## as they may be out of date and the contents may have changed
-    ok <- !is.na(instp[,"Bundle"])
-    instp[ok,"Package"] <- instp[ok,"Bundle"]
+    ## However, as from 2.1.0 we install the Contains: field.
+    ok <- !is.na(instp[, "Bundle"])
+    if(any(ok)) { # we have at least one bundle installed
+        for(b in unique(instp[ok, "Bundle"]))
+            if(!is.na(b)) {
+                ok <- which(instp[, "Bundle"] == b)
+                contains <- instp[ok[1], "Contains"]
+                if(!is.na(contains)) {
+                    contains <- strsplit(contains, "[:space]+")
+                    if(!all(contains %in% instp[ok, "Package"]))
+                        warning("bundle ", sQuote(b),
+                                " is incompletely installed")
+                }
+                new <- setdiff(strsplit(available[b, "Contains"], "[:space]+"),
+                               instp[ok, "Package"])
+                if(length(new))
+                    warning("bundle ", sQuote(b), " has extra contents ",
+                            paste(sQuote(new), collapse = ", "))
+            }
+    }
+    instp[ok, "Package"] <- instp[ok, "Bundle"]
     installed <- unique(instp[, "Package"])
-    ok <- !is.na(available[,"Bundle"])
-    available[ok,"Package"] <- available[ok,"Bundle"]
     poss <- sort(unique(available[ ,"Package"])) # sort in local locale
     setdiff(poss, installed)
 }
@@ -181,8 +202,8 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-    pkgFlds <- c("Version", "Priority", "Bundle", "Depends", "Suggests",
-                 "Built")
+    pkgFlds <- c("Version", "Priority", "Bundle", "Contains", "Depends",
+                 "Suggests", "Imports", "Built")
     if(!is.null(priority)) {
         if(!is.character(priority))
             stop("`priority' must be character or NULL")

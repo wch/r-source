@@ -67,8 +67,12 @@ NEW FEATURES
 	a package from the first repository on the list in which it is
 	found.	The argument 'CRAN' is still accepted, but deprecated.
 
+    	install.packages() on Unix can now install from local .tar.gz
+	files via repos = NULL.
+
 	New function new.packages() to report uninstalled packages
-	available at the requested repositories.
+	available at the requested repositories.  This also reports
+	incomplete bundles.
 
 	New function available.packages(), similar to CRAN.packages()
 	but for use with multiple repositories.

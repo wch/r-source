@@ -4,12 +4,31 @@ install.packages <- function(pkgs, lib, repos = CRAN,
                              method, available = NULL, destdir = NULL,
                              installWithVers = FALSE, dependencies = FALSE)
 {
+    if(missing(pkgs) || !length(pkgs))
+        stop("no packages were specified")
+
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
             warning(paste("argument", sQuote("lib"),
                           "is missing: using", lib))
     }
+
+    if(is.null(repos) & missing(contriburl)) {
+        update <- cbind(pkgs, lib) # for side-effect of recycling to same length
+        cmd0 <- paste(file.path(R.home(),"bin","R"), "CMD INSTALL")
+        if (installWithVers)
+            cmd0 <- paste(cmd0, "--with-package-versions")
+        for(i in 1:nrow(update)) {
+            cmd <- paste(cmd0, "-l", dQuote(update[i, 2]),
+                         dQuote(update[i, 1]))
+            if(system(cmd) > 0)
+                warning(paste("Installation of package", sQuote(update[i, 1]),
+                              "had non-zero exit status"))
+        }
+        return(invisible())
+    }
+
     oneLib <- length(lib) == 1
     tmpd <- destdir
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
@@ -77,7 +96,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         for(i in 1:nrow(update)) {
-            cmd <- paste(cmd0, "-l", update[i, 2], update[i, 3])
+            cmd <- paste(cmd0, "-l", dQuote(update[i, 2]), update[i, 3])
             status <- system(cmd)
             if(status > 0)
                 warning(paste("Installation of package", update[i, 1],
