@@ -457,10 +457,14 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
         regs <- c(regs, list(list(generic, class, method)))
         setNamespaceInfo(ns, "S3methods", regs)
     }
-    genfun <- get(genname, envir = envir)
-    if (typeof(genfun) == "closure")
-        defenv <- environment(genfun)
-    else defenv <- .BaseNamespaceEnv
+    groupGenerics <- c("Ops", "Math", "Summary")
+    if(genname %in% groupGenerics) defenv <- .BaseNamespaceEnv
+    else {
+        genfun <- get(genname, envir = envir)
+        if (typeof(genfun) == "closure")
+            defenv <- environment(genfun)
+        else defenv <- .BaseNamespaceEnv
+    }
     if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
         assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
                envir = defenv)
