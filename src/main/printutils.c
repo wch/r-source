@@ -440,13 +440,15 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
     }
 }
 
-void MatrixRowLabel(SEXP rl, int i, int rlabw)
+void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
 {
     int l;
 
     if (!isNull(rl)) {
 	l = Rstrlen(CHAR(STRING(rl)[i]));
-	Rprintf("\n%s%*s", EncodeString(CHAR(STRING(rl)[i]), l, 0, adj_left), rlabw-l, "");
+	Rprintf("\n%*s%s%*s", lbloff, "", 
+		EncodeString(CHAR(STRING(rl)[i]), l, 0, adj_left), 
+		rlabw-l-lbloff, "");
     }
     else {
 	Rprintf("\n%*s[%ld,]", rlabw-3-IndexWidth(i + 1), "", i+1);

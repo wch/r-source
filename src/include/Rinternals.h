@@ -293,7 +293,7 @@ SEXP extendEnv(SEXP, SEXP, SEXP);
 SEXP findVar(SEXP, SEXP);
 SEXP findFun(SEXP, SEXP);
 SEXP getAttrib(SEXP, SEXP);
-void GetMatrixDimnames(SEXP, SEXP*, SEXP*);
+void GetMatrixDimnames(SEXP, SEXP*, SEXP*, char**, char**);
 SEXP GetArrayDimnames(SEXP);
 SEXP GetColNames(SEXP);
 SEXP GetOption(SEXP, SEXP);

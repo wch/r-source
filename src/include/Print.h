@@ -45,12 +45,12 @@ char *EncodeElement(SEXP, int, int);
 void MatrixColumnLabel(SEXP, int, int);
 void RightMatrixColumnLabel(SEXP, int, int);
 void LeftMatrixColumnLabel(SEXP, int, int);
-void MatrixRowLabel(SEXP, int, int);
+void MatrixRowLabel(SEXP, int, int, int);
 
 /* In Defn.h (and MUST be there):
    CustomPrintValue,  PrintValue, PrintValueRec */
 void printArray(SEXP, SEXP, int, SEXP);
-void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP);
+void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP, char*, char*);
 void printNamedVector(SEXP, SEXP, int);
 void printVector(SEXP, int, int);
 
