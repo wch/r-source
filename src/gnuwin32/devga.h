@@ -17,6 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include "Graphics.h"
 /* Declarations (for devX11.c) which are not only there,
  * ------------ but also, e.g., in  system.c  [event loop]
  */

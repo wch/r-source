@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  file console.c
+ *  file extra.c
  *  Copyright (C) 1998--1999  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -28,125 +28,14 @@
 #include <windows.h>
 #include "graphapp/ga.h"
 
-SEXP  do_sysfile(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP  do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP  do_unlink(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP  do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP  do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env);
-
-
-static void changename(char *s,int maxlen)
-{
-    char *p, *q;
-    char *l = "+-.";
-    int   i;
-
-    for (p = s, i = 0; *p; p++) {
-	i += 1;
-	if (i > maxlen) {
-	    *p = '\0';
-	    break;
-	}
-	for (q = l; *q; q++)
-	    if (*q == *p) {
-		*p = '_';
-		break;
-	    }
-    }
-}
-
-char *to83name(char *fname)
-{
-    static char shortname[MAX_PATH];
-    char  fshortname[MAX_PATH];
-    char  drv[MAX_PATH], dir[MAX_PATH], name[MAX_PATH], ext[MAX_PATH];
-    char  ddrv[MAX_PATH], ddir[MAX_PATH], dname[MAX_PATH], dext[MAX_PATH];
-
-    _splitpath(fname, drv, dir, name, ext);
-    changename(name, 8);
-    if (strlen(ext) > 1)
-	changename(&ext[1], 3);
-    sprintf(shortname, "%s%s", name, ext);
-    strcpy(ddir, dir);
-    ddir[strlen(ddir) - 1] = '\0';
-    for (; strlen(ddir) > 0;) {
-	_splitpath(ddir, ddrv, dir, dname, dext);
-	changename(dname, 8);
-	if (strlen(ext) > 1)
-	    changename(&dext[1], 3);
-	sprintf(fshortname, "%s%s/%s", dname, dext, shortname);
-	strcpy(shortname, fshortname);
-	strcpy(ddir, dir);
-	ddir[strlen(ddir) - 1] = '\0';
-    }
-    if (strlen(drv) > 0) {
-	sprintf(fshortname, "%s/%s", drv, shortname);
-	strcpy(shortname, fshortname);
-    } else if ((fname[0] == '/') || (fname[0] == '\\')) {
-	sprintf(fshortname, "/%s", shortname);
-	strcpy(shortname, fshortname);
-    }
-    return shortname;
-}
-
-
-/*
-SEXP do_sysfile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-        SEXP ans;
-	SEXP tlist = R_NilValue, tchar;
-        char tmp[MAX_PATH], *p;
-        int done,handle,i,j,k;
-        struct _finddata_t fdd;
-        checkArity(op, args);
-        if( !isString(CAR(args)) || LENGTH(CAR(args)) != 1 )
-                errorcall(call, "invalid file name argument\n");
-        strcpy(tmp,CHAR(STRING(CAR(args))[0]));
-        if ( (handle = _findfirst(tmp,&fdd)) == -1) {
-	   p=to83name(tmp);
-           handle = _findfirst(p,&fdd);
-	   if (handle != -1) strcpy(tmp,p);
-	}
-        i = 0;
-        if (handle != -1) {
-	     PROTECT(tlist);
-             for (k=strlen(tmp);k > 0; k--)
-	       if ((tmp[k-1]=='/')||(tmp[k-1]=='\\')) break;
-	     for(done=0;!done;done=_findnext(handle,&fdd)) {
-		if (strcmp(fdd.name,".") && strcmp(fdd.name,"..")){
-		  tmp[k]='\0';
-		  strcat(tmp,fdd.name);
-		  tchar = mkChar(tmp);
-		  UNPROTECT(1);
-		  PROTECT(tlist = CONS(tchar, tlist));
-                  i += 1;
-	        }
-	     }
-	     _findclose(handle);
-	     if (!i) UNPROTECT(1);
-	}
-        if (i) {
-	       PROTECT(ans = allocVector(STRSXP, i));
-	       for (j = (i - 1); j >= 0; j--) {
-		 STRING(ans)[j] = CAR(tlist);
-		 tlist = CDR(tlist);
-	       }
-	       UNPROTECT(2);
-	}
-        else {
-            PROTECT(ans = allocVector(STRSXP,1));
-            STRING(ans)[0]=mkChar("");
-	    UNPROTECT(1);
-	}
-        return (ans);
-}
-*/
 
 SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans;
-    char *tmp, tm[MAX_PATH], *tn;
-
+    char *tmp, *tn, tm[MAX_PATH];
+    unsigned int n;
+    WIN32_FIND_DATA fd;
+    HANDLE h;
     checkArity(op, args);
     PROTECT(ans = allocVector(STRSXP, 1));
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
@@ -154,36 +43,46 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     tn = CHAR(STRING(CAR(args))[0]);
     /* try to get a new file name */
     tmp = getenv("TMP");
-    if (!tmp)
-	tmp = getenv("TEMP");
-    if (!tmp)
-	getenv("R_HOME");
-    if ((strlen(tmp) + strlen(tn)) <= MAX_PATH - 8) {
-	sprintf(tm, "%s\\%sXXXXXX", tmp, tn);
-	tn = mktemp(tm);
-    } else
-	tn = NULL;
-    if (tn) {
-	STRING(ans)[0] = mkChar(tn);
-	free(tn);
-    } else
-	STRING(ans)[0] = mkChar("");
+    if (!tmp) tmp = getenv("TEMP");
+    if (!tmp) tmp = getenv("R_HOME");
+    for (n = 1; n < 32000; n++) { 
+        sprintf(tm, "%s\\%s%d", tmp, tn, n);
+        if ((h = FindFirstFile(tm, &fd)) == INVALID_HANDLE_VALUE) break;
+        FindClose(h);
+        tm[0] = '\0';             
+    }
+    STRING(ans)[0] = mkChar(tm);
     UNPROTECT(1);
     return (ans);
 }
 
 SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  ans;
+    SEXP  fn, ans;
     char *tmp;
+    WIN32_FIND_DATA find_data;
+    HANDLE fh;
+    int i, nfiles, failures = 0;
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(STRSXP, 1));
-    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
+    fn = CAR(args);
+    nfiles = length(fn);
+    if (!isString(fn) || nfiles < 1)
 	errorcall(call, "invalid file name argument\n");
-    tmp = CHAR(STRING(CAR(args))[0]);
-    /* try to unlink file */
-    if (!unlink(tmp))
+    for(i = 0; i < nfiles; i++) {
+	tmp = CHAR(STRING(fn)[i]);
+	/* check for wildcard matches */
+	fh = FindFirstFile(tmp, &find_data);
+	if (fh) {
+	    failures += (unlink(find_data.cFileName) !=0);
+	    while(FindNextFile(fh, &find_data))
+		failures += (unlink(find_data.cFileName) !=0);
+	    unlink(find_data.cFileName);
+	    FindClose(fh);
+	} else failures++;
+    }
+    PROTECT(ans = allocVector(STRSXP, 1));
+    if (!failures)
 	STRING(ans)[0] = mkChar("0");
     else
 	STRING(ans)[0] = mkChar("1");

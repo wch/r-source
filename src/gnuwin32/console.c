@@ -248,7 +248,8 @@ struct structConsoleData {
     char *kbuf;
     int   already;              /* number of keys in buffer to be processed
 				   before clipb. */
-    char *clp,*pclp;            /*data from the clipboard */
+    char *clp;            /*data from the clipboard */
+    int  pclp;
 
     int   lazyupdate, needredraw, newfv, newfc;	/* updating and redrawing */
     bitmap bm;
@@ -645,17 +646,28 @@ FVOIDEND
 void consolepaste(control c)
 FBEGIN
     HGLOBAL hglb;
-    char *pc;
+    char *pc, *new = NULL;
     if (p->kind == PAGER) FVOIDRETURN;
     if ( OpenClipboard(NULL) &&
          (hglb = GetClipboardData(CF_TEXT)) &&
          (pc = (char *)GlobalLock(hglb)))
     {
-        if ((p->clp = winmalloc(strlen(pc)+1))) {
-            strcpy(p->clp, pc);
-            p->pclp = p->clp;
-            p->already = p->numkeys;
+        if (p->clp) {
+           new = winrealloc((void *)p->clp, strlen(p->clp) + strlen(pc) + 1);
         }
+        else {
+           new = winmalloc(strlen(pc) + 1) ;   
+           if (new) new[0] = '\0';
+           p->already = p->numkeys;
+           p->pclp = 0;
+        }
+        if (new) {
+           p->clp = new;
+           strcat(p->clp, pc);
+        }
+        else {
+           askok("Not enough memory");
+        }   
         GlobalUnlock(hglb);
     }
     CloseClipboard();
@@ -663,7 +675,7 @@ FVOIDEND
 
 int consolecanpaste(control c)
 FBEGIN
-   return (!p->clp) && IsClipboardFormatAvailable(CF_TEXT);
+   return IsClipboardFormatAvailable(CF_TEXT);
 FVOIDEND
 
 static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
@@ -953,9 +965,8 @@ static char consolegetc(control c)
     }
     if (!p->already && p->clp)
     {
-	ch = *p->pclp;
-	p->pclp++;
-	if (!(*p->pclp)) {
+	ch = p->clp[p->pclp++];
+	if (!(p->clp[p->pclp])) {
 	    winfree(p->clp);
 	    p->clp = NULL;
 	}
@@ -1314,7 +1325,7 @@ FBEGIN
    cur = currentcursor();
    setcursor(WatchCursor);
    while ((cl < NUMLINES) || (*s)) {
-     if (clinp+fh>=rr) {
+     if (clinp + fh >= rr) {
        if (cp > 1) nextpage(lpr);
        gdrawstr(lpr, f, Black, pt(left, top), title);
        sprintf(msg, "Pag.%d", cp++);
@@ -1477,11 +1488,16 @@ static void pagerpaste(control m)
 {
     control c = getdata(m);
 
-    if (consolecancopy(c)) {
-	consolecopy(c);
+    if (!consolecancopy(c)) {
+        askok("No selection");
+        return;
+    } else {
+        consolecopy(c);
+    }
+    if (consolecanpaste(RConsole)) {
 	consolepaste(RConsole);
 	show(RConsole);
-    } else askok("No selection");
+    } 
 }
 
 static void pagerselectall(control m)
@@ -1562,8 +1578,9 @@ static int pageraddfile(char *wtitle, char *filename, int deleteonexit)
 static MenuItem PagerPopup[] = {
     {"Copy", pagercopy, 0},
     {"Paste to console", pagerpaste, 0},
-    {"-", 0, 0},
     {"Select all", pagerselectall, 0},
+     {"-", 0, 0},
+    {"Close", pagerclose, 0},
     LASTMENUITEM
 };
 
@@ -1574,14 +1591,11 @@ static void pagermenuact(control m)
     if (consolecancopy(c)) {
         enable(p->mcopy);
         enable(p->mpopcopy);
-    } else {
-        disable(p->mcopy);
-        disable(p->mpopcopy);
-    }
-    if (consolecancopy(c) && consolecanpaste(RConsole)) {    
         enable(p->mpaste);
         enable(p->mpoppaste);
     } else {
+        disable(p->mcopy);
+        disable(p->mpopcopy);
         disable(p->mpaste);
         disable(p->mpoppaste);
     }
@@ -1610,9 +1624,14 @@ static pager pagercreate()
 	x = (devicewidth(NULL) - w) / 2;
 	y = (deviceheight(NULL) - h) / 2 ;
     }
-    MCHECK(c = (pager) newwindow("PAGER", rect(x, y, w, h),
+    c = (pager) newwindow("PAGER", rect(x, y, w, h),
 				 Document | StandardWindow | Menubar |
-				 VScrollbar | TrackMouse));
+				 VScrollbar | TrackMouse);
+    if (!c) {
+         freeConsoleData(p);
+         return NULL;
+    }         
+    setdata(c, p);
     if(h == 0) HEIGHT = getheight(c);
     if(w == 0) WIDTH  = getwidth(c);
     COLS = WIDTH / FW - 1;
@@ -1628,20 +1647,29 @@ static pager pagercreate()
         control tb, bt;
         addto(c);
         MCHECK(tb = newtoolbar(btsize + 4));
+	gsetcursor(tb, ArrowCursor);
         addto(tb);
+        MCHECK(bt = newimagebutton(copy1_image, r, pagerpaste));
+        MCHECK(addtooltip(bt, "Paste to console"));
+	gsetcursor(bt, ArrowCursor);
+        setdata(bt, (void *) c);
+        r.x += (btsize + 6) ;
         MCHECK(bt = newimagebutton(print_image, r, pagerprint));
         MCHECK(addtooltip(bt, "Print"));
+	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
         MCHECK(bt = newimagebutton(console_image, r, pagerconsole));
         MCHECK(addtooltip(bt, "Return focus to Console"));
+	gsetcursor(bt, ArrowCursor);
     }
     addto(c);
     MCHECK(m = gpopup(pagermenuact, PagerPopup));
     setdata(m, c);
     setdata(p->mpopcopy = PagerPopup[0].m, c); 
     setdata(p->mpoppaste = PagerPopup[1].m, c); 
-    setdata(PagerPopup[3].m, c); 
+    setdata(PagerPopup[2].m, c); 
+    setdata(PagerPopup[4].m, c); 
     MCHECK(m = newmenubar(pagermenuact));
     setdata(m, c);
     MCHECK(newmenu("File"));

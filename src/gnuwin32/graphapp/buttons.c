@@ -138,7 +138,7 @@ static object newchildwin(char *kind, char *text,
 	obj->flags = ChildWindow;
 	obj->text = new_string(text);
 	set_new_winproc(obj); /* set custom winproc */
-
+	settextfont(obj, SystemFont);
 	return obj;
 }
 
@@ -909,6 +909,7 @@ field newpassword(char *text, rect r)
 			| ES_PASSWORD, r, NULL);
 	if (obj) {
 		obj->kind = FieldObject;
+		settextfont(obj, SystemFont);
 		settext(obj, text);
 	}
 	return obj;

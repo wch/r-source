@@ -72,7 +72,6 @@ static void handle_mouse(object obj, HWND hwnd, UINT message,
 		buttons |= RightButton;
 
 	/* dispatch the mouse event to the relevent handler */
-        drawto(obj);
 	if (obj && obj->drawstate && obj->drawstate->crsr) 
                  SetCursor((HCURSOR)obj->drawstate->crsr->handle);
 

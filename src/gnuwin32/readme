@@ -6,9 +6,10 @@ Windows 95, 98 and NT4 (at least) on Intel/clone chips. It is designed to
 be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
 many important contributions by Brian Ripley (including almost
-all the updating from 0.63.x to 0.64.x).
+all the updating from 0.63.x to 0.64.0).
 
 See Announce or CHANGES for the new features of this version.
+
 
 Installation
 ============
@@ -140,7 +141,7 @@ file .Rprofile. In particular:
 - The pager is set by options(pager=). The default is "internal" which
   brings up a separate console-like window. The internal pager can use
   a single window or a different window for each topic shown 
-  (option configurable in etc\Rconsole). Other possibilities we have 
+  (configurable in etc\Rconsole). Other possibilities we have 
   used are "notepad" and "pfe32 /v".
 
 - The location of the unzip program is set by options(unzip=). If you
@@ -230,6 +231,8 @@ http://sourceware.cygnus.com/cygwin and several mirrors, the Fortran
 additions ecgs-1.1-f77.tar.gz from that page or directly from
 http://www.xraylith.wisc.edu/~khan/software/gnu-win32/ and the Fortran
 library libg2c.mingw32.a.bz2 from CRAN/bin/windows/windows-NT/etc.
+You can also use the egcs-1.1.2 compilers upgrade from Mumit Khan's
+site.
 
 Do remember to set MAKE_MODE to UNIX.
 
@@ -270,6 +273,11 @@ Note: the file rw0641\unzip\unzip.exe is not in the source distribution,
 nor are the sources (it the standard Info-Zip unzip 5.40). You will need to
 copy it from a binary distribution.
 
+Note2: we are aware that because of limitations in line length or in the
+shell used that the Makefiles do not work unchanged on all the possible
+combinations of tools, compilers and OSes.  We use the Cygwin make and 
+shell under NT, and cross-building (see below), and with small changes the 
+djtools make under Windows 95.
 
 Cross-building on Linux
 -----------------------
@@ -288,7 +296,7 @@ unzip -a rw0641s.zip in /somewhere/R-0.64.0,
 	cd /somewhere/R-0.64.0/src/gnuwin32 
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
-Set TEMP to , say, /tmp, and make.
+Set the environment variable TEMP to, say, /tmp, and make.
 
 Packages can be made in the same way as natively: see the file
 readme.packages.

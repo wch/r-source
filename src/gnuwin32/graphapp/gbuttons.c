@@ -43,9 +43,14 @@ gchangescrollbar(scrollbar obj, int which, int where, int max, int pagesize,
 
 void gsetcursor(drawing d, cursor c)
 {
+    POINT pt;
+
     decrease_refcount(d->drawstate->crsr);
     d->drawstate->crsr = c;
     increase_refcount(c);
+    /* ensure new cursor is shown */
+    GetCursorPos(&pt);
+    SetCursorPos(pt.x, pt.y);
 }
 
 control newtoolbar(int height)
@@ -54,7 +59,7 @@ control newtoolbar(int height)
     if (!ismdi() || !c || (c==MDIFrame)) return NULL;
     addto(MDIFrame);
     c->toolbar = newwindow("TOOLBAR", rect(0, 0, 100, height),
-			   ChildWindow | Border | TrackMouse);
+			   ChildWindow | Border);
     if (c->toolbar) {
 	hide(c->toolbar);
 	setbackground(c->toolbar, GetSysColor(COLOR_MENU));

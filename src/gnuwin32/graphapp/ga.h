@@ -53,11 +53,15 @@ typedef menu popup;
 popup newpopup();
 menubar gmenubar(actionfn fn, MenuItem []);
 popup gpopup(actionfn fn, MenuItem []);
+void gchangepopup(window w, popup p);
+/* next is limited to current window... */
+void gchangemenubar(menubar mb);
 
 /* winalloc.c */
-void *winmalloc(long size);
+#include <stddef.h> /* for size_t */
+void *winmalloc(size_t size);
 void  winfree(void *block);
-void *winrealloc(void *block, long newsize);
+void *winrealloc(void *block, size_t newsize);
 char *winstrdup(char *s);
 
 /* tooltips.c */

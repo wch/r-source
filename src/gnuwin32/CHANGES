@@ -6,43 +6,51 @@ There is a choice of interface for Rgui:
 o  SDI, single document interface. This is like the previous version,
    with separate windows for the console, graphics and pager(s).
 
-o  MDI, multiple document interface.  There the console, graphics and
+o  MDI, multiple document interface.  Here the console, graphics and
    pagers are subwindows of one main `frame' window.
 
 You can set your preference (and details of the MDI) in the Rconsole
 file: this can also be overriden on the command line by --mdi or
 --sdi.
 
-If you use multiple files in the SDI pager, the (row) positions are
-remembered and re-used.
+If you use multiple files in a single SDI pager, the (row) positions
+are remembered and re-used when you switch views in the pager.
 
-For MDI pagers, the size is chosen by the system, and only multiple pagers
-are supported.
+For MDI pagers, the pager size is chosen by the system, and only
+multiple pagers are supported.
 
 When pagers are re-sized the strategy is now to keep the middle line
 in the middle.
 
 The option `setwidthonresize' in Rconsole automatically generates an
-internal call to options("width") if you resize the console width.
-This is the default, but we suggest you do not resize whilst R is
-outputting.
+internal call to options("width") if you resize the console and change
+its width.  This is the default, but we suggest you do not resize
+while R is outputting.
 
-Both console and pagers now have right-click popup menus, and you can paste
-from a pager to the console directly.
+The console, pagers and graphics devices now have right-click popup
+menus, and you can paste from a pager to the console directly.
 
 There is a new console menu item to show a file in a pager. This is
 intended to allow lines to be selected in an script file displayed in 
 a pager and submitted to to the R engine.
 
+`Busy' cursors are used where appropriate: a cross-hair cursor is
+used on a graphics device to indicator that locator() (or identify())
+is in use.
+
 The file HOME\.Renviron is now read. This can contain environment
 variables in NAME=value form, one per line. This is useful for setting
-R_VSIZE, R_NSIZE, RLIBS and R_PAPERSIZE, amongst others.
+R_VSIZE, R_NSIZE, RLIBS and R_PAPERSIZE, for example.
 
 You can now paste in more to the console: the limit (which was 2048
-chars) is now that of the clipboard.
+chars) is now that of the clipboard. Pasting can take place whilst
+the console is busy.
 
-The command make pkgcheck-pkgname will do the equivalent of `R CMD
+The command `make pkgcheck-pkgname' will do the equivalent of `R CMD
 check', that is run all the examples in the help pages for that package.
+
+unlink can now handle wildcards and a vector argument of length more than
+one.
 
 
 rw0640

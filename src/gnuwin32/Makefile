@@ -212,7 +212,8 @@ dynload.o: 		../include/FFDecl.h ../include/FFTab.h
 edit.o: 		run.h
 extra.o: 		graphapp/ga.h
 rhome.o: 		../include/Platform.h
-rui.o: 			console.h opt.h rui.h graphapp/ga.h graphapp/stdimg.h
+rui.o: 			console.h opt.h rui.h ../include/Platform.h \
+			graphapp/ga.h graphapp/stdimg.h
 run.o: 			run.h graphapp/ga.h
 system.o: 		devga.h run.h console.h rui.h graphapp/ga.h \
                         ../include/Defn.h ../include/Platform.h

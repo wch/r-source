@@ -77,7 +77,9 @@ typedef struct {
     int   windowHeight;		/* Window height (pixels) */
     int   resize;		/* Window resized */
     window gawin;		/* Graphics window */
-    menubar mbar;
+    popup locpopup, grpopup;
+    button  stoploc;
+    menubar mbar, mbarloc;
     menu  msubsave;
     menuitem mgif, mps, mwm, mclpbm, mclpwm, mprint, mclose;
     menuitem mrec, madd, mreplace, mprev, mnext, mclear, msvar, mgvar;
@@ -471,7 +473,7 @@ static void HelpExpose(window w,rect r)
     }
 }
 
-static void HelpMouseClick(window w,int button,point pt)
+static void HelpMouseClick(window w, int button, point pt)
 {
     if (AllDevicesKilled) return;
     {
@@ -488,6 +490,15 @@ static void HelpMouseClick(window w,int button,point pt)
 	} else
 	    xd->clicked = 2;
     }
+}
+
+static void menustop(control m) 
+{
+  DevDesc *dd = (DevDesc *) getdata(m);
+  x11Desc *xd = (x11Desc *) dd->deviceSpecific;
+  if (!xd->locator) 
+     return;
+  xd->clicked = 2;
 }
 
 void  fixslash(char *);
@@ -1009,31 +1020,57 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 	ih = dh + 0.5;
 	if ((xd->gawin = newwindow("R Graphics",
 				rect(devicewidth(NULL) - iw - 5, 0, iw, ih),
+
 				   Document | StandardWindow | Menubar))) {
 	    menu  m;
-
+            gsetcursor(xd->gawin, ArrowCursor);
             if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
                 int btsize = 24;
                 rect r = rect(2, 2, btsize, btsize);
-                control tb, bt;
-
+                control bt, tb;
+                
                 MCHECK(tb = newtoolbar(btsize + 4));
+		gsetcursor(tb, ArrowCursor);
                 addto(tb);
 
                 MCHECK(bt = newimagebutton(cam_image, r, menuclpwm));
                 MCHECK(addtooltip(bt, "Copy to the clipboard as a metafile"));
-                setdata(bt,(void *) dd);
+		gsetcursor(bt, ArrowCursor);
+		setdata(bt, (void *) dd);
                 r.x += (btsize + 6);
 
                 MCHECK(bt = newimagebutton(print_image, r, menuclpwm));
                 MCHECK(addtooltip(bt, "Print"));
+		gsetcursor(bt, ArrowCursor);
                 setdata(bt, (void *) dd);
                 r.x += (btsize + 6);
 
                 MCHECK(bt = newimagebutton(console_image, r, menuconsole));
                 MCHECK(addtooltip(bt, "Return focus to console"));
+		gsetcursor(bt, ArrowCursor);
                 setdata(bt, (void *) dd);
-            }
+                r.x += (btsize + 6);
+
+                MCHECK(xd->stoploc = newimagebutton(stop_image, r, menustop));
+                MCHECK(addtooltip(xd->stoploc, "Stop locator"));
+		gsetcursor(bt, ArrowCursor);
+                setdata(xd->stoploc,(void *) dd);            
+                hide(xd->stoploc);
+            } else
+                xd->stoploc = NULL;
+
+	    /* First we prepare 'locator' menubar and popup */
+            addto(xd->gawin);
+	    MCHECK(xd->mbarloc = newmenubar(NULL));
+	    MCHECK(newmenu("Stop"));
+	    MCHECK(m = newmenuitem("Stop locator", 0, menustop));
+            setdata(m, (void *) dd);
+	    MCHECK(xd->locpopup = newpopup(NULL));
+	    MCHECK(m = newmenuitem("Stop", 0, menustop));
+            setdata(m, (void *) dd);
+	    MCHECK(newmenuitem("Continue", 0, NULL));
+
+	    /* Normal menubar */
 	    MCHECK(xd->mbar = newmenubar(mbarf));
 	    MCHECK(m = newmenu("File"));
 	    MCHECK(xd->msubsave = newsubmenu(m, "Save as"));
@@ -1064,6 +1101,22 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 	    MCHECK(newmenuitem("-", 0, NULL));
 	    MCHECK(xd->mclear = newmenuitem("Clear history", 0, menuclear));
 	    newmdimenu();
+
+	    /* Normal popup */
+	    MCHECK(xd->grpopup = newpopup(NULL));
+	    MCHECK(m = newmenuitem("Copy as metafile", 0, menuclpwm));
+            setdata(m, (void *) dd);
+	    MCHECK(m = newmenuitem("Copy as bitmap", 0, menuclpbm));
+            setdata(m, (void *) dd);
+	    MCHECK(newmenuitem("-", 0, NULL));
+	    MCHECK(m = newmenuitem("Save as metafile", 0, menuwm));
+            setdata(m, (void *) dd);
+	    MCHECK(m = newmenuitem("Save as postscript", 0, menups));
+            setdata(m, (void *) dd);
+	    MCHECK(newmenuitem("-", 0, NULL));
+	    MCHECK(m = newmenuitem("Print", 0, menuprint));
+            setdata(m, (void *) dd);
+            gchangepopup(xd->gawin, xd->grpopup);
 	}
     } else if (!strcmp(dsp, "win.print")) {
 	xd->kind = 1;
@@ -1621,13 +1674,26 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
     xd->clicked = 0;
     show(xd->gawin);
     addto(xd->gawin);
+    gchangemenubar(xd->mbarloc);
+    if (xd->stoploc) {
+      show(xd->stoploc);
+      show(xd->gawin);
+    }
+    gchangepopup(xd->gawin, xd->locpopup);
     gsetcursor(xd->gawin, CrossCursor);
-    setstatus("To exit click with the second button");
+    setstatus("Locator is active");
     while (!xd->clicked) {
 	SHOW;
 	doevent();
     }
+    addto(xd->gawin);
+    gchangemenubar(xd->mbar);
+    if (xd->stoploc) {
+      hide(xd->stoploc);
+      show(xd->gawin);
+    }    
     gsetcursor(xd->gawin, ArrowCursor);
+    gchangepopup(xd->gawin, xd->grpopup);
     addto(xd->gawin);
     setstatus("R Graphics");
     xd->locator = 0;

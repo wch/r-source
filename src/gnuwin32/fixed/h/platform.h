@@ -140,7 +140,7 @@ extern int _finite(double);
 #define R_MINOR		"64.0"
 #define R_STATUS	"Patched"
 #define R_STATUS_REV	"0"
-#define R_DAY		"26"
+#define R_DAY		"30"
 #define R_MONTH		"April"
 #define R_YEAR		"1999"
 
