@@ -49,11 +49,12 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     be rebuilt.}
   \item{agrep}{if \code{NULL} (the default) and the character string to
     be matched consists of alphanumeric characters, whitespace or a dash
-    only, approximate (fuzzy) matching via \code{\link{agrep}} is used;
-    otherwise, it is taken to contain a regular expression to be matched
-    via \code{\link{grep}}.  If \code{FALSE}, approximate matching is
-    not used.  Otherwise, one can give a numeric or a list specifying
-    the maximal distance for the approximate match, see argument
+    only, approximate (fuzzy) matching via \code{\link{agrep}} is used
+    unless the string has fewer than 5 characters; otherwise, it is
+    taken to contain a regular expression to be matched via
+    \code{\link{grep}}.  If \code{FALSE}, approximate matching is not
+    used.  Otherwise, one can give a numeric or a list specifying the
+    maximal distance for the approximate match, see argument
     \code{max.distance} in the documentation for \code{\link{agrep}}.}
 }
 \details{

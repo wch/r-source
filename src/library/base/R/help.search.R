@@ -245,13 +245,15 @@ function(pattern, fields = c("alias", "concept", "title"),
     ## 'pattern' contains no characters special to regular expressions.
     ## We use the following crude approximation: if pattern contains
     ## only alphanumeric characters or whitespace or a '-', it is taken
-    ## 'as is', and fuzzy matching is used unless turned off explicitly.
+    ## 'as is', and fuzzy matching is used unless turned off explicitly,
+    ## or pattern has very few (currently, less than 5) characters.
     if(is.null(agrep) || is.na(agrep))
 	agrep <-
-	    (regexpr("^([[:alnum:]]|[[:space:]]|-)+$", pattern) > 0)
+	    ((regexpr("^([[:alnum:]]|[[:space:]]|-)+$", pattern) > 0)
+             && (nchar(pattern) > 4))
     if(is.logical(agrep)) {
 	if(agrep)
-	    max.distance <- 0.15
+	    max.distance <- 0.1
     }
     else if(is.numeric(agrep) || is.list(agrep)) {
 	max.distance <- agrep
