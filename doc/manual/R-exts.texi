@@ -3800,6 +3800,7 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 @item @code{M_SQRT_3}       @tab = sqrt(3)         @tab 1.7320508
 @item @code{M_SQRT_32}      @tab = sqrt(32)        @tab 5.6568542
 @item @code{M_LOG10_2}      @tab = log10(2)        @tab 0.3010300
+@item @code{M_2PI}          @tab = 2 pi            @tab 6.2831853
 @item @code{M_SQRT_PI}      @tab = sqrt(pi)        @tab 1.7724539
 @item @code{M_1_SQRT_2PI}   @tab = 1/sqrt(2pi)     @tab 0.3989423
 @item @code{M_SQRT_2dPI}    @tab = sqrt(2/pi)      @tab 0.7978846

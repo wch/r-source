@@ -49,8 +49,3 @@
 	MATHLIB_WARNING("non-integer x = %f", x);	\
 	return R_D__0;					\
    }
-
-#ifndef M_2PI
-#define M_2PI		6.283185307179586476925286766559	/* 2*pi */
-#endif
-
