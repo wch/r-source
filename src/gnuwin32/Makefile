@@ -152,6 +152,10 @@ ziponly-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
+zipdata-%:
+	(cd $(RLIB)/$*/data; ls -1 > filelist; \
+	  zip -rmq9X Rdata * -x filelist 00Index)
+
 bootstrap-DLLNM=boott
 
 clean: cleanwin $(PKGCLEAN)
