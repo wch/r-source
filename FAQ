@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-1, 2000-12-13
+Version 1.2-2, 2000-12-13
 Kurt Hornik
 
 
@@ -391,9 +391,9 @@ available for web browsing at `http://stat.ethz.ch/R/manual/'.
    * "R Data Import/Export" (`R-data') is a guide to importing and
      exporting data to and from R.
 
-   * "The R Language Definition" (`R-lang'), the "Kernighan & Ritchie of
-     R", explains evaluation, parsing, object oriented programming,
-     computing on the language, and so forth.
+   * "The R Language Definition" (`R-lang'), a first version of the
+     "Kernighan & Ritchie of R", explains evaluation, parsing, object
+     oriented programming, computing on the language, and so forth.
 
    In addition to material written specifically for R, documentation for
 S/S-PLUS (see *Note R and S::) can be used in combination with this FAQ
