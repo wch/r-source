@@ -1211,9 +1211,9 @@ AC_CHECK_TYPES([off_t])
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate getcwd \
   getgrgid getpwuid getuid hypot iconv isascii log1p \
-  matherr mbrtowc mbsrtowcs mkfifo \
+  matherr mbrtowc mbsrtowcs mbstowcs mkfifo \
   popen putenv rint setenv strcoll stat strptime symlink \
-  system times unsetenv wcrtomb wcscoll wcsrtombs wcswidth)
+  system times unsetenv wcrtomb wcscoll wcsrtombs wcstombs wcswidth)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## <NOTE>
