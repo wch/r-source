@@ -217,13 +217,13 @@
 #define HAVE_ACCESS 1
 
 /* Define if you have the acosh function.  */
-#define HAVE_ACOSH 1
+#undef HAVE_ACOSH
 
 /* Define if you have the asinh function.  */
-#define HAVE_ASINH 1
+#undef HAVE_ASINH
 
 /* Define if you have the atanh function.  */
-#define HAVE_ATANH 1
+#undef HAVE_ATANH
 
 /* Define if you have the bcopy function.  */
 #undef HAVE_BCOPY
