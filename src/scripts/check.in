@@ -34,7 +34,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.55 $ ';
+my $revision = ' $Revision: 1.56 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -285,7 +285,7 @@ sub check_pkg {
     ## check for sufficient file permissions (Unix only).
     
     if($OS eq "unix") {
-	$log->checking("for sufficient file permissions");
+	$log->checking("for sufficient/correct file permissions");
 	my @badfiles = ();
 	my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\.swp\$",
 			       "^.*/\.#[^/]*\$", "^.*/#[^/]*#\$");
@@ -297,6 +297,8 @@ sub check_pkg {
 	    }
 	    close(RBUILDIGNORE);
 	}
+
+	## Phase 1.  Directories at least 755, files at least 644.
 	sub findWrongPerms {
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
@@ -318,7 +320,41 @@ sub check_pkg {
 	    $log->message("  Please fix permissions and try again.");
 	    exit(1);
 	}
-	$log->result("OK");
+
+	## Phase 2.  Text files (as determined by their extensions)
+	## should really be mode 644.
+	@badfiles = ();
+	my @textfile_patterns =
+	  ("\.[RSdq]\$",	# R source code
+	   "\.[Rr]d\$",		# Rd files
+	   "\.([Ccfh]|cc|cpp)\$",
+				# C/C++/FORTRAN sources and headers
+	   "^(DESCRIPTION|INDEX|TITLE)\$");
+	sub findWrongPerms {
+	    my $filename = $File::Find::name;
+	    $filename =~ s/^[^\/]*\///;
+	    foreach my $p (@excludepatterns) {
+		return 0 if($filename =~ /$p/);
+	    }
+	    if(-f $_ && (((stat $_)[2] & 00777) != oct("644"))) {
+		foreach my $p (@textfile_patterns) {
+		    if($filename =~ /$p/) {
+			push @badfiles, $File::Find::name;
+			last;
+		    }
+		}
+	    }
+	}
+	find(\&findWrongPerms, ".");
+	if($#badfiles >= 0) {
+	    $log->warning("  Found the following text files with " .
+			  "incorrect permissions:");
+	    $log->message("    " . join("\n    ", @badfiles));
+	    $log->message("  Please fix permissions.");
+	}
+	else {
+	    $log->result("OK");
+	    }
     }
 
     if($in_bundle) {		# join DESCRIPTION and DESCRIPTION.in
@@ -717,6 +753,33 @@ sub check_pkg {
 	if($#out>=0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+
+    ## check C sources/headers for CRLF line endings
+    if(-d "src") {
+	$log->checking("for CRLF line endings in C sources/headers");
+	my @srcfiles = glob("src/*.[ch]");
+	my @badfiles = ();
+	foreach my $file (@srcfiles) {
+	    open(SRCFILE, "< $file")
+	      or die "cannot open \`$file' for reading\n";
+	    while(<SRCFILE>) {
+		chop;
+		if($_ =~ /\r$/) {
+		    push(@badfiles, $file);
+		    last;
+		}
+	    }
+	    close(SRCFILE);
+	}
+	if($#badfiles >= 0) {
+	    $log->warning("  Found the following C sources/headers with " .
+			  "CRLF line endings:");
+	    $log->message("    " . join("\n    ", @badfiles));
 	}
 	else {
 	    $log->result("OK");
