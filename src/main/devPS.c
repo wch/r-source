@@ -1763,7 +1763,10 @@ static void PS_Polygon(int n, double *x, double *y,
 	fprintf(pd->psfp, "np\n");
 	fprintf(pd->psfp, " %.2f %.2f m\n", x[0], y[0]);
 	for(i = 1 ; i < n ; i++)
-	    PostScriptRLineTo(pd->psfp, x[i-1], y[i-1], x[i], y[i]);
+	    if (i % 100 == 0)
+		fprintf(pd->psfp, "%.2f %.2f lineto\n", x[i], y[i]);
+	    else
+		PostScriptRLineTo(pd->psfp, x[i-1], y[i-1], x[i], y[i]);
 	fprintf(pd->psfp, "cp p%d\n", code);
     }
 }
@@ -1785,7 +1788,10 @@ static void PS_Polyline(int n, double *x, double *y,
 	    /* split up solid lines (only) into chunks of size 1000 */
 	    if(gc->lty == 0 && i%1000 == 0)
 		fprintf(pd->psfp, "currentpoint o m\n");
-	    PostScriptRLineTo(pd->psfp, x[i-1], y[i-1], x[i], y[i]);
+	    if (i % 100 == 0)
+		fprintf(pd->psfp, "%.2f %.2f lineto\n", x[i], y[i]);
+	    else
+		PostScriptRLineTo(pd->psfp, x[i-1], y[i-1], x[i], y[i]);
 	}
 	fprintf(pd->psfp, "o\n");
     }

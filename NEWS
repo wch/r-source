@@ -82,6 +82,10 @@ NEW FEATURES
 	lines (but not draw anything).  This makes the CRAN package
 	clines (with its clines() function) redundant.
 
+    o   postscript() device output has been modified to work around
+	rounding errors in low-precision calculations in gs >= 8.11.
+	(PR#5285, which is not a bug in R.)
+
 
 UTILITIES
 
