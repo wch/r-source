@@ -348,7 +348,7 @@ clean: cleanwin $(PKGCLEAN)
 	done
 
 distclean veryclean: clean clean-recommended
-	$(RM) -r ../../bin ../../lib ../../library ../../modules
+	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
