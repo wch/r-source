@@ -72,6 +72,9 @@ install: all installdirs
 	@for f in include/*.h; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/include; \
 	done
+	@for f in include/R_ext/*.h; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/include/R_ext; \
+	done
 	@echo "installing library ..."
 	@cp -r library $(rhome) || \
 	  (cd library; \
@@ -84,6 +87,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(bindir)
 	@$(MKINSTALLDIRS) $(rhome)/bin
 	@$(MKINSTALLDIRS) $(rhome)/include
+	@$(MKINSTALLDIRS) $(rhome)/include/R_ext
 	@$(MKINSTALLDIRS) $(rhome)/library
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
