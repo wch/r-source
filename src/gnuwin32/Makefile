@@ -17,8 +17,8 @@ ALLPACKAGES = $(PACKAGES) tcltk
 
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
-RHOME = $(shell Rpwd.exe ../..)
-PKGD = $(shell Rpwd.exe $(PKGDIR))
+RHOME = $(shell ./Rpwd.exe ../..)
+PKGD = $(shell ./Rpwd.exe $(PKGDIR))
 else
 RHOME = $(shell perl pwd.pl ../..)
 PKGD = $(shell perl pwd.pl $(PKGDIR))
