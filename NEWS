@@ -368,7 +368,7 @@ NEW FEATURES
 
     o	symnum() has a new logical argument `abbr.colnames'.
 
-    o   added "[" method for terms objects.
+    o	added "[" method for terms objects.
 
     o	summary(<logical>) now mentions NA's as suggested by
 	Göran Broström.
@@ -678,6 +678,8 @@ BUG FIXES
     o	[<- lost the object bit if coercion was involved.
 
     o	package::object wasn't being deparsed properly.
+
+    o	rank(c("B",NA)) no longer returns character.
 
 
 

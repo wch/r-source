@@ -119,10 +119,11 @@ rank <- function(x, na.last = TRUE) {
     nas <- is.na(x)
     y <- .Internal(rank(x[!nas]))
     if(!is.na(na.last) && any(nas)) {
+        x <- numeric(length(x))
         if(na.last) {
             ## NOTE that the internal code gets NAs reversed
             x[!nas] <- y
-            x[nas] <- seq(from = length(y) + 1, to = length(x))
+            x[nas] <- (length(y) + 1:1):length(x)
         }
         else {
             len <- sum(nas)
