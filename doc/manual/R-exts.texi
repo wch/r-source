@@ -981,8 +981,8 @@ usage information.
 * Creating shared libraries::   
 * Interfacing C++ code::        
 * Handling R objects in C::     
-* Interface Functions .Call and .External::  
-* Evaluating R Expressions from C::  
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
 * Debugging::                   
 @end menu
 
@@ -1298,7 +1298,7 @@ Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
 
-@node Handling R objects in C, Interface Functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
+@node Handling R objects in C, Interface functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
 @section Handling R objects in C
 @cindex Handling R objects in C
 
@@ -1857,8 +1857,8 @@ can be used to assign values to @R{} objects, in the specified
 environment frame and to perform the equivalent of @code{assign(x,
 value, envir = rho, inherits = TRUE)} respectively.
 
-@node Interface Functions .Call and .External, Evaluating R Expressions from C, Handling R objects in C, System and foreign language interfaces
-@section Interface Functions @code{.Call} and @code{.External}
+@node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
+@section Interface functions @code{.Call} and @code{.External}
 @cindex Interfaces to compiled code
 
 In this section we consider the details of the @R{}/C interfaces.
@@ -1874,7 +1874,7 @@ complex but allows a variable number of arguments.
 * Missing and special values::  
 @end menu
 
-@node Calling .Call, Calling .External, Interface Functions .Call and .External, Interface Functions .Call and .External
+@node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
 @subsection Calling @code{.Call}
 
 @findex .Call
@@ -1947,7 +1947,7 @@ SEXP convolve2(SEXP a, SEXP b)
 @noindent
 This is called in exactly the same way.
 
-@node Calling .External, Missing and special values, Calling .Call, Interface Functions .Call and .External
+@node Calling .External, Missing and special values, Calling .Call, Interface functions .Call and .External
 @subsection Calling @code{.External}
 
 @findex .External
@@ -2064,7 +2064,7 @@ an alternative style is
 showArgs <- function(...) .Call("showArgs1", list(...))
 @end example
 
-@node Missing and special values,  , Calling .External, Interface Functions .Call and .External
+@node Missing and special values,  , Calling .External, Interface functions .Call and .External
 @subsection Missing and special values
 @cindex Missing values
 @cindex IEEE special values
@@ -2107,8 +2107,8 @@ character strings can be tested by equality to the constants
 The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
 @code{R_NaReal} can be used to set @code{double}s to the special values.
 
-@node Evaluating R Expressions from C, Debugging, Interface Functions .Call and .External, System and foreign language interfaces
-@section Evaluating R Expressions from C
+@node Evaluating R expressions from C, Debugging, Interface functions .Call and .External, System and foreign language interfaces
+@section Evaluating R expressions from C
 @cindex Evaluating R expressions from C
 
 We noted that the @code{call_R} interface could be
@@ -2464,7 +2464,7 @@ having the symbol @code{R_DimNamesSymbol}.  Finally we set the gradient
 matrix as the gradient attribute of @code{ans}, unprotect the remaining
 protected locations and return the answer @code{ans}.
 
-@node Debugging,  , Evaluating R Expressions from C, System and foreign language interfaces
+@node Debugging,  , Evaluating R expressions from C, System and foreign language interfaces
 @section Debugging compiled code
 @cindex Debugging
 
