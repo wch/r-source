@@ -887,7 +887,7 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 
     HGLOBAL hglb;
     int ll, i, j;
-    char ch, *s;
+    char *s;
 
 #ifdef SUPPORT_MBCS
     int w0 = 0 /* -Wall */, used=0, x00, x11=100000;
@@ -913,7 +913,6 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 	if(w0 < x11) ll += 2;  /* \r\n */
 	i++;
     }
-    Rprintf(" copied %d chars, w0 %d, x11 %d\n", ll, w0, x11);
 #else
     i = y0; j = x0; ll = 1; /* terminator */
     while ((i < y1) || ((i == y1) && (j <= x1))) {
@@ -958,7 +957,7 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 #else
     i = y0; j = x0;
     while ((i < y1) || ((i == y1) && (j <= x1))) {
-	ch = LINE(i)[j];
+	char ch = LINE(i)[j];
 	if (ch) {
  	    *s++ = ch;
 	    j++;
