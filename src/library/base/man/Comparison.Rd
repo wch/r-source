@@ -18,6 +18,13 @@ x >= y
 x == y
 x != y
 }
+\details{
+  Comparison of strings in character vectors is lexicographic within the
+  strings using the collating sequence of the locale in use: see
+  \code{\link{locales}}.  The collating sequence of locales such as
+  \code{en_US} is normally different from \code{C} (which should use
+  ASCII) and can be surprising.
+}
 \value{
   A vector of logicals indicating the result of the element by element
   comparison.  The elements of shorter vectors are recycled as

@@ -18,13 +18,16 @@ is.unsorted(x, na.rm = FALSE)
   \item{na.rm}{logical. Should missing values be removed?}
 }
 \details{
-  If \code{partial} is non \code{NULL}, it is taken to contain indexes
+  If \code{partial} is not \code{NULL}, it is taken to contain indexes
   of elements of \code{x} which are to be placed in their correct
   positions by partial sorting.  After the sort, the values specified in
   \code{partial} are in their correct position in the sorted array.  Any
   values smaller than these values are guaranteed to have a smaller
   index in the sorted array and any values which are greater are
   guaranteed to have a bigger index in the sorted array.
+
+  The sort order for character vectors will depend on the collating
+  sequence of the locale in use: see \code{\link{Comparison}}.
 
   \code{is.unsorted} returns a logical indicating if \code{x} is sorted
   increasingly, i.e. \code{is.unsorted(x)} is true if \code{any(x !=
