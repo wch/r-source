@@ -268,10 +268,10 @@ none
 
 Directory:  incoming
 
-* PR# 899 *
-Subject: documentation problems in str.Rd
-From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
-Date: Sat, 7 Apr 2001 23:08:23 +0200
+* PR# 901 *
+Subject: syntax error in datetime.c
+From: ntakebay@bio.indiana.edu
+Date: Mon, 9 Apr 2001 20:07:47 +0200 (MET DST)
 * PR# 898 *
 Subject: silent extern error
 From: bellis@hsph.harvard.edu
@@ -280,3 +280,11 @@ Date: Sat, 7 Apr 2001 23:32:50 +0200 (MET DST)
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
 Date: Wed, 14 Mar 2001 17:45:25 +0100
+* PR# 900 *
+Subject: Bug in help for profile; more general problem?
+From: Duncan Murdoch <dmurdoch@pair.com>
+Date: Mon, 09 Apr 2001 08:54:48 -0400
+* PR# 899 *
+Subject: documentation problems in str.Rd
+From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
+Date: Sat, 7 Apr 2001 23:08:23 +0200
