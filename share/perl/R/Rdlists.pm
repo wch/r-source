@@ -547,7 +547,7 @@ sub html_pagehead
     my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext) = @_;
 
     my $retval = "<html><head><title>R: $title</title>\n" .
-	"<link rel=\"stylesheet\" type=\"text/css\" href=\"$top/R.css\">\n" .
+	"<link rel=\"stylesheet\" type=\"text/css\" href=\"../../R.css\">\n" .
 	"</head><body>\n" .
 	"<h1>$title " .
 	"<img class=\"toplogo\" src=\"$top/logo.jpg\" alt=\"[R logo]\"></h1>\n\n" .
