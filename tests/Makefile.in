@@ -21,6 +21,7 @@ TESTsrc-strict-1 = \
 	eval-etc.R \
 	is-things.R \
 	primitive-funs.R \
+#	mode-methods.R \
 	simple-tests.R \
 	simple-true.R
 TESTsrc-strict-auto = \
@@ -28,7 +29,7 @@ TESTsrc-strict-auto = \
 TESTsrc-sloppy-1 = \
 	print-tests.R
 TESTsrc-sloppy-auto = \
-#try!	no-segfault.R
+	no-segfault.R
 
 TESTsrc-strict = $(TESTsrc-strict-1) $(TESTsrc-strict-auto)
 TESTsrc-sloppy = $(TESTsrc-sloppy-1) $(TESTsrc-sloppy-auto)
@@ -38,8 +39,10 @@ TESTsrc-NO-diff = no-segfault.R
 
 TESTsrc = $(TESTsrc-strict) $(TESTsrc-sloppy)
 TESTsrc-auto = $(TESTsrc-strict-auto) $(TESTsrc-sloppy-auto)
+
 TESTout-strict = $(TESTsrc-strict:.R=.Rout)
 TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
+TESTout = $(TESTsrc:.R=.Rout)
 TESTout-Rdiff = $(TESTsrc-Rdiff:.R=.Rout)
 TESTout-NO-diff = $(TESTsrc-NO-diff:.R=.Rout)
 
