@@ -5,8 +5,9 @@
 <title>R for Windows FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R for Windows FAQ">
-<meta name="generator" content="makeinfo 4.1">
-<link href="http://texinfo.org/" rel="generator-home">
+<meta name="generator" content="makeinfo 4.2">
+<link href="http://www.gnu.org/software/texinfo/" rel=
+"generator-home">
 </head>
 <body>
 <h1>R for Windows FAQ</h1>
@@ -59,8 +60,8 @@ print from R?</a></li>
 BATCH</code>?</a></li>
 
 <li><a href=
-"#Can%20I%20use%20rw1050%20with%20ESS%20and%20emacs%3f">2.10 Can I
-use rw1050 with ESS and emacs?</a></li>
+"#Can%20I%20use%20rw1050%20with%20ESS%20and%20(X)emacs%3f">2.10 Can
+I use rw1050 with ESS and (X)emacs?</a></li>
 
 <li><a href="#What%20are%20HOME%20and%20working%20directories%3f">
 2.11 What are HOME and working directories?</a></li>
@@ -313,7 +314,15 @@ installation.</p>
 
 <p>If you want to set up another project, make a new shortcut or
 use the existing one and change the `Start in' field of the
-Properties. <a name="How%20do%20I%20UNinstall%20R%3f"></a></p>
+Properties.</p>
+
+<p>You may if you prefer run R from the command line of any shell
+you use, for example an `MS-DOS window' (Windows 9x/ME), a `Command
+Prompt' (Windows 2000/XP) or a port of a Unix shell such as <code>
+tcsh</code> or <code>bash</code>. (The command line can be anything
+you would put in the Target field of a shortcut, and the starting
+directory will be the currect working directory of the shell.) <a
+name="How%20do%20I%20UNinstall%20R%3f"></a></p>
 
 <h3>2.4 How do I UNinstall R?</h3>
 
@@ -425,13 +434,13 @@ line)<br>
 path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
 </pre>
 
-<a name="Can%20I%20use%20rw1050%20with%20ESS%20and%20emacs%3f"></a>
+<a name=
+"Can%20I%20use%20rw1050%20with%20ESS%20and%20(X)emacs%3f"></a> 
 
+<h3>2.10 Can I use rw1050 with ESS and (X)emacs?</h3>
 
-<h3>2.10 Can I use rw1050 with ESS and emacs?</h3>
-
-<p>Yes. The latest versions of ESS (e.g. 5.1.19) come with support
-for this version of R, and there is support for interrupting the R
+<p>Yes. Recent versions of ESS (e.g. 5.1.20) come with support for
+this version of R, and there is support for interrupting the R
 process from ESS (by <code>C-c C-c</code>).</p>
 
 <p>For help with ESS, please send email to <a href=
@@ -515,9 +524,10 @@ behaviour.</p>
 <p>This fix has solved other problems too, for example incorrect
 results in the date-time functions.</p>
 
-<p>It seems that on some versions of Windows you also need to put
-the <code>rw1050\bin</code> directory early in your path. <a name=
-"The%20internet%20download%20functions%20fail."></a></p>
+<p>It seems that on some versions of Windows (but not 2000/XP) you
+also need to put the <code>rw1050\bin</code> directory early in
+your path. <a name="The%20internet%20download%20functions%20fail.">
+</a></p>
 
 <h3>2.15 The internet download functions fail.</h3>
 
@@ -579,9 +589,10 @@ just run <code>Rcmd INSTALL pkgname</code>. To check the package
 test suite, if any) use <code>Rcmd check pkgname</code>: see the
 <em>`Writing R Extensions'</em> manual.</p>
 
-<p>Note that this is rather tricky; please do ensure that you have
-followed the instructions <strong>exactly</strong>. At least 90% of
-the questions asked are because people have not done so. <a name=
+<p>Note that this is rather so tricky; please do ensure that you
+have followed the instructions <strong>exactly</strong>. At least
+90% of the questions asked are because people have not done so. <a
+name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1050%5clibrary%20directory">
 </a></p>
 
@@ -706,13 +717,14 @@ library(tcltk)</code>) you need to have Tcl installed. Download
 ActiveTcl 8.3.x from <a href=
 "http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/">
 http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/</a> and
-install it. (Most versions of the installer will put the <code>
-bin</code> directory containing the Tcl and Tk DLLs in your path,
-but you should check.) You then need to set the environment
-variable <code>TCL_LIBRARY</code>, to something like <code>
-c:/Program Files/Tcl/lib/tcl8.3</code>. (The startup code for the
-package will warn you if this is unset, and Q3.2 explains how to
-set them. NB: do not quote the path, even if as here it contains
+install it. (Most of the installers that ActiveTcl uses will put
+the <code>bin</code> directory containing the Tcl and Tk DLLs in
+your path, but you should check. From R, run <code>
+Sys.getenv("PATH")</code> to do so.) You then need to set the
+environment variable <code>TCL_LIBRARY</code>, to something like
+<code>c:/Program Files/Tcl/lib/tcl8.3</code>. (The startup code for
+the package will warn you if this is unset, and Q3.2 explains how
+to set them. NB: do not quote the path, even if as here it contains
 spaces. If you forget, you can set the variable inside R by
 something like<br>
 </p>
@@ -908,8 +920,12 @@ example in ?text.</h3>
 <p>You need to specify a font in Rconsole (see Q4.2) that supports
 Latin1 encoding. The default, <code>Courier New</code>, does on our
 systems, as does <code>FixedSys</code>. This may be a problem in
-other locales, especially for non-Western European languages. <a
-name=
+other locales, especially for non-Western European languages.</p>
+
+<p>Support for these characters within <code>Rterm</code> depends
+on the environment (the terminal window and shell, including locale
+settings) within which it is run as well as the font used by the
+terminal window. <a name=
 "The%20output%20to%20the%20console%20seems%20to%20be%20delayed">
 </a></p>
 
@@ -986,7 +1002,7 @@ are located. You will need to make the libraries yourself: none of
 the binaries we have seen are compiled for the correct
 compiler.</p>
 
-<p>The BLAS support is compiled into just the DLL <code>
+<p>BLAS support is supplied by the single DLL <code>
 R_HOME\bin\Rblas.dll</code>, and you can add a fast BLAS just by
 replacing that. <a name=
 "How%20do%20I%20include%20compiled%20C%20code%3f"></a></p>
@@ -1176,7 +1192,7 @@ console, call <code>R_FlushConsole()</code> and then <code>
 R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2002 April 01 by Professor B. D. Ripley <code>
+<address>Last edited 2002 April 13 by Professor B. D. Ripley <code>
 <a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>

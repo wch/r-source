@@ -20,7 +20,7 @@ Table of Contents
   2.7 How can I keep workspaces for different projects in different directories?
   2.8 How do I print from R?
   2.9 Can I use `R BATCH'?
-  2.10 Can I use rw1050 with ESS and emacs?
+  2.10 Can I use rw1050 with ESS and (X)emacs?
   2.11 What are HOME and working directories?
   2.12 R can't find my file, but I know it is there!
   2.13 Does R use the Registry?
@@ -143,6 +143,13 @@ Just double-click on the shortcut you prepared at installation.
 If you want to set up another project, make a new shortcut or use the
 existing one and change the `Start in' field of the Properties.
 
+You may if you prefer run R from the command line of any shell you use,
+for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
+(Windows 2000/XP) or a port of a Unix shell such as `tcsh' or `bash'.
+(The command line can be anything you would put in the Target field of
+a shortcut, and the starting directory will be the currect working
+directory of the shell.)
+
 2.4 How do I UNinstall R?
 =========================
 
@@ -237,12 +244,12 @@ batch file might contain (as one line)
 
      path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 
-2.10 Can I use rw1050 with ESS and emacs?
-=========================================
+2.10 Can I use rw1050 with ESS and (X)emacs?
+============================================
 
-Yes.  The latest versions of ESS (e.g. 5.1.19) come with support for
-this version of R, and there is support for interrupting the R process
-from ESS (by `C-c C-c').
+Yes.  Recent versions of ESS (e.g. 5.1.20) come with support for this
+version of R, and there is support for interrupting the R process from
+ESS (by `C-c C-c').
 
 For help with ESS, please send email to <ESS-help@stat.ethz.ch>, not
 the R mailing lists.
@@ -312,8 +319,8 @@ reverts to the standard behaviour.
 This fix has solved other problems too, for example incorrect results in
 the date-time functions.
 
-It seems that on some versions of Windows you also need to put the
-`rw1050\bin' directory early in your path.
+It seems that on some versions of Windows (but not 2000/XP) you also
+need to put the `rw1050\bin' directory early in your path.
 
 2.15 The internet download functions fail.
 ==========================================
@@ -328,7 +335,7 @@ _all_ of our machines.  There are two known possible fixes.
 Internet Explorer internals (and so needs Internet Explorer 4 or later
 installed).
 
-(b)  A proxy needs to be set up: see `?download.file'.
+(b) A proxy needs to be set up: see `?download.file'.
 
 
 3 Packages
@@ -361,9 +368,9 @@ have done so, just run `Rcmd INSTALL pkgname'.  To check the package
 suite, if any) use `Rcmd check pkgname': see the _`Writing R
 Extensions'_ manual.
 
-Note that this is rather tricky; please do ensure that you have followed
-the instructions *exactly*.  At least 90% of the questions asked are
-because people have not done so.
+Note that this is rather so tricky; please do ensure that you have
+followed the instructions *exactly*.  At least 90% of the questions
+asked are because people have not done so.
 
 3.2 I don't have permission to write to the `rw1050\library' directory.
 =======================================================================
@@ -454,13 +461,14 @@ For package `tcltk' to work (try `demo(tkdensity)' or `demo(tkttest)'
 after `library(tcltk)') you need to have Tcl installed.  Download
 ActiveTcl 8.3.x from
 `http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/' and install it.
-(Most versions of the installer will put the `bin' directory
-containing the Tcl and Tk DLLs in your path, but you should check.)  You
-then need to set the environment variable `TCL_LIBRARY', to something
-like `c:/Program Files/Tcl/lib/tcl8.3'.  (The startup code for the
-package will warn you if this is unset, and Q3.2 explains how to set
-them.  NB: do not quote the path, even if as here it contains spaces.
-If you forget, you can set the variable inside R by something like
+(Most of the installers that ActiveTcl uses will put the `bin'
+directory containing the Tcl and Tk DLLs in your path, but you should
+check.  From R, run `Sys.getenv("PATH")' to do so.)  You then need to
+set the environment variable `TCL_LIBRARY', to something like
+`c:/Program Files/Tcl/lib/tcl8.3'.  (The startup code for the package
+will warn you if this is unset, and Q3.2 explains how to set them.  NB:
+do not quote the path, even if as here it contains spaces. If you
+forget, you can set the variable inside R by something like
          Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 .)
 
@@ -611,6 +619,10 @@ encoding.  The default, `Courier New', does on our systems, as does
 `FixedSys'.  This may be a problem in other locales, especially for
 non-Western European languages.
 
+Support for these characters within `Rterm' depends on the environment
+(the terminal window and shell, including locale settings) within which
+it is run as well as the font used by the terminal window.
+
 6.3 When using Rgui the output to the console seems to be delayed.
 ==================================================================
 
@@ -671,8 +683,8 @@ Set `USE_ATLAS = YES' and `ATLAS_PATH' to where the ATLAS libraries are
 located.  You will need to make the libraries yourself: none of the
 binaries we have seen are compiled for the correct compiler.
 
-The BLAS support is compiled into just the DLL `R_HOME\bin\Rblas.dll',
-and you can add a fast BLAS just by replacing that.
+BLAS support is supplied by the single DLL `R_HOME\bin\Rblas.dll', and
+you can add a fast BLAS just by replacing that.
 
 7.3 How do I include compiled C code?
 =====================================
@@ -817,6 +829,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2002 April 01 by Professor B. D. Ripley
+Last edited 2002 April 13 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 

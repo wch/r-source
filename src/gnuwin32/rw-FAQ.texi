@@ -97,7 +97,7 @@ The information here applies only to recent versions of R for Windows,
 * How can I keep workspaces for different projects in different directories?::  
 * How do I print from R?::      
 * Can I use R BATCH?::          
-* Can I use @RWVER@ with ESS and emacs?::  
+* Can I use @RWVER@ with ESS and (X)emacs?::  
 * What are HOME and working directories?::  
 * R can't find my file::        
 * Does R use the Registry?::    
@@ -163,7 +163,6 @@ field, for example @code{--sdi --max-mem-size=40M}.  You can also set
 environment variables at the end of the Target field, for example
 @code{R_LIBS=P:/R/library}.
 
-
 @node How do I run it?, How do I UNinstall R?, How do I install R for Windows?, Installation and Usage
 @section How do I run it?
 
@@ -171,6 +170,14 @@ Just double-click on the shortcut you prepared at installation.
 
 If you want to set up another project, make a new shortcut or use the
 existing one and change the `Start in' field of the Properties.
+
+You may if you prefer run R from the command line of any shell you use,
+for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
+(Windows 2000/XP) or a port of a Unix shell such as @code{tcsh} or
+@code{bash}. (The command line can be anything you would put in the
+Target field of a shortcut, and the starting directory will be the
+currect working directory of the shell.)
+
 
 @node How do I UNinstall R?, What's the best way to upgrade?, How do I run it?, Installation and Usage
 @section How do I UNinstall R?
@@ -260,7 +267,7 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @end itemize
 
 
-@node Can I use R BATCH?, Can I use @RWVER@ with ESS and emacs?, How do I print from R?, Installation and Usage
+@node Can I use R BATCH?, Can I use @RWVER@ with ESS and (X)emacs?, How do I print from R?, Installation and Usage
 @section Can I use @code{R BATCH}?
 
 Yes, if you have Perl and the files for making source packages (from
@@ -276,10 +283,10 @@ path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 @end example
 
 
-@node Can I use @RWVER@ with ESS and emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
-@section Can I use @RWVER@ with ESS and emacs?
+@node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
+@section Can I use @RWVER@ with ESS and (X)emacs?
 
-Yes.  The latest versions of ESS (e.g. 5.1.19) come with support for this
+Yes.  Recent versions of ESS (e.g. 5.1.20) come with support for this
 version of R, and there is support for interrupting the R process from
 ESS (by @code{C-c C-c}).
 
@@ -287,7 +294,7 @@ For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
 
 
-@node What are HOME and working directories?, R can't find my file, Can I use @RWVER@ with ESS and emacs?, Installation and Usage
+@node What are HOME and working directories?, R can't find my file, Can I use @RWVER@ with ESS and (X)emacs?, Installation and Usage
 @section What are HOME and working directories?
 
 Several places in the documentation use these terms.
@@ -354,8 +361,8 @@ and put it in the @code{@RWVER@\bin} directory.  Removing
 This fix has solved other problems too, for example incorrect results in
 the date-time functions.
 
-It seems that on some versions of Windows you also need to put
-the @code{@RWVER@\bin} directory early in your path.
+It seems that on some versions of Windows (but not 2000/XP) you also
+need to put the @code{@RWVER@\bin} directory early in your path.
 
 @node The internet download functions fail.,  , Entering certain characters crashes Rgui., Installation and Usage
 @section The internet download functions fail.
@@ -370,7 +377,7 @@ We have had several reports of this, although they do work for us on
 the Internet Explorer internals (and so needs Internet Explorer 4 or
 later installed).
 
-(b)  A proxy needs to be set up: see @code{?download.file}.
+(b) A proxy needs to be set up: see @code{?download.file}.
 
 
 @newchap{}
@@ -418,9 +425,9 @@ running all the examples on its help pages and in its test suite, if
 any) use @code{Rcmd check pkgname}: see the @emph{`Writing R
 Extensions'} manual.
 
-Note that this is rather tricky; please do ensure that you have followed
-the instructions @strong{exactly}.  At least 90% of the questions asked
-are because people have not done so.
+Note that this is rather so tricky; please do ensure that you have
+followed the instructions @strong{exactly}.  At least 90% of the
+questions asked are because people have not done so.
 
 
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
@@ -526,14 +533,14 @@ For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
 installed.  Download ActiveTcl 8.3.x from
 @uref{http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/} and install
-it.  (Most versions of the installer will put the @file{bin} directory
-containing the Tcl and Tk DLLs in your path, but you should check.)  You
-then need to set the environment variable @code{TCL_LIBRARY}, to
-something like @code{c:/Program Files/Tcl/lib/tcl8.3}.  (The startup
-code for the package will warn you if this is unset, and Q3.2 explains
-how to set them.  NB: do not quote the path, even if as here it contains
-spaces. If you forget, you can set the variable inside R by something
-like
+it.  (Most of the installers that ActiveTcl uses will put the @file{bin}
+directory containing the Tcl and Tk DLLs in your path, but you should
+check.  From R, run @code{Sys.getenv("PATH")} to do so.)  You then need
+to set the environment variable @code{TCL_LIBRARY}, to something like
+@code{c:/Program Files/Tcl/lib/tcl8.3}.  (The startup code for the
+package will warn you if this is unset, and Q3.2 explains how to set
+them.  NB: do not quote the path, even if as here it contains spaces. If
+you forget, you can set the variable inside R by something like
 @smallexample
     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 @end smallexample
@@ -577,7 +584,7 @@ Console' will give details.  For @code{Rterm.exe} see file
 requests to the browser: use @code{options(htmlhelp=TRUE)} to turn this on.
 
 @item The HTML help system can only access packages installed in the standard
-place.
+library.
 
 @item Paths to files (e.g. in @code{source()}) can be specified with
 either "/" or "\\".
@@ -725,6 +732,9 @@ encoding.  The default, @code{Courier New}, does on our systems, as does
 @code{FixedSys}.  This may be a problem in other locales, especially for
 non-Western European languages.
 
+Support for these characters within @code{Rterm} depends on the
+environment (the terminal window and shell, including locale settings)
+within which it is run as well as the font used by the terminal window.
 
 @node The output to the console seems to be delayed, Long lines seem to be truncated., I don't see characters with accents at the R console, The R Console and Fonts
 @section When using Rgui the output to the console seems to be delayed.
@@ -804,9 +814,8 @@ where the ATLAS libraries are located.  You will need to make the
 libraries yourself: none of the binaries we have seen are compiled for
 the correct compiler.
 
-The BLAS support is compiled into just the DLL
-@file{R_HOME\bin\Rblas.dll}, and you can add a fast BLAS just by
-replacing that.
+BLAS support is supplied by the single DLL @file{R_HOME\bin\Rblas.dll},
+and you can add a fast BLAS just by replacing that.
 
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
@@ -986,14 +995,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2002 April 01 by Professor B. D. Ripley
+Last edited 2002 April 13 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2002 April 01 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2002 April 13 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
