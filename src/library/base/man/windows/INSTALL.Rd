@@ -43,8 +43,8 @@
 
 \section{Packages using the methods package}{
 Packages that require the methods package, and that use functions such as
-\code{\link{setMethod}} or \code{\link{setClass}}, should be installed
-by creating a binary image.
+\code{\link[methods]{setMethod}} or \code{\link[methods]{setClass}},
+should be installed by creating a binary image.
 
 The package should require the methods package, both during installation
 and when the user attaches the package.  A good solution for most
