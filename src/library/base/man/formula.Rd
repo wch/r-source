@@ -13,6 +13,7 @@ as.formula(object, env = parent.frame())
 \alias{formula.data.frame}
 \alias{as.formula}
 \alias{print.formula}
+\alias{[.formula}
 \description{
   The generic function \code{formula} and its specific methods provide a
   way of extracting formulae which have been included in other objects.

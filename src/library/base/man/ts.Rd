@@ -6,6 +6,8 @@
 \alias{Ops.ts}
 \alias{cbind.ts}
 \alias{is.mts}
+\alias{[.ts}
+\alias{t.ts}
 \description{
   The function \code{ts} is used to create time-series objects.
 
