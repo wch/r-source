@@ -439,6 +439,8 @@ BUG FIXES
     o	The math functions now (again!) return NaN when the warning
 	message says so (e.g. gamma(-1)).
 
+    o	qt(*, log = TRUE) has a somewhat extended working range.
+
 
 	**************************************************
 	*						 *
