@@ -20,7 +20,7 @@
 #ifndef PRINT_H_
 #define PRINT_H_
 
-
+#define COMPLEX_DATA/* as in ./Defn.h */
 #define PRINT_GAP	print_gap
 #define PRINT_WIDTH	R_print_width
 

@@ -73,7 +73,7 @@ static little_endian;
 static int hw;
 static int lw;
 
-static establish_endianness()
+static void establish_endianness()
 {
 	ieee_double x;
 	x.value = 1;
@@ -272,6 +272,7 @@ SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	error("operator with more than two arguments\n");
     }
+    return ans;/* never used; to keep -Wall happy */
 }
 
 
@@ -301,7 +302,7 @@ static SEXP binary(SEXP op, SEXP args)
     /*if either x or y is a matrix with length 1 and the other
       is a vector we want to coerce the matrix to be a vector
       */
-    if( xarray || yarray && !(xarray*yarray) ) {
+    if( xarray || (yarray && !(xarray*yarray)) ) {
 	if(xarray && length(x)==1) {
 	    x = CAR(args)=duplicate(x);
 	    setAttrib(x,R_DimSymbol,R_NilValue);
@@ -467,6 +468,7 @@ static SEXP unary(SEXP op, SEXP s1)
     default:
 	errorcall(lcall, "Invalid argument to unary operator\n");
     }
+    return s1;/* never used; to keep -Wall happy */
 }
 
 static SEXP integer_unary(int code, SEXP s1)
@@ -489,12 +491,12 @@ static SEXP integer_unary(int code, SEXP s1)
     default:
 	error("illegal unary operator\n");
     }
+    return s1;/* never used; to keep -Wall happy */
 }
 
 static SEXP real_unary(int code, SEXP s1)
 {
     int i, n;
-    double x;
     SEXP ans;
 
     switch(code) {
@@ -515,7 +517,9 @@ static SEXP real_unary(int code, SEXP s1)
     default:
 	errorcall(lcall, "illegal unary operator\n");
     }
+    return s1;/* never used; to keep -Wall happy */
 }
+
 /* i1 = i % n1; i2 = i % n2;
  * this macro is quite a bit faster than having real modulo calls
  * in the loop (tested on Intel and Sparc)
@@ -636,7 +640,6 @@ static double myfmod(double x1, double x2)
 static SEXP real_binary(int code, SEXP s1, SEXP s2)
 {
     int i, i1, i2, n, n1, n2;
-    double x1, x2;
     SEXP ans;
 
     n1 = LENGTH(s1);
@@ -765,6 +768,7 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 static double unavailable(double x)
 {
     errorcall(lcall, "function unavailable in this R\n");
+    return 0.;/* never used; to keep -Wall happy */
 }
 
 #ifndef HAVE_ASINH
@@ -815,6 +819,7 @@ static SEXP math1(SEXP op, SEXP sa, double(*f)())
 	return sy;
     }
     else errorcall(lcall, "Non-numeric argument to mathematical function\n");
+    return sa;/* never used; to keep -Wall happy */
 }
 
 SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -863,6 +868,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(lcall, "unimplemented real function\n");
     }
+    return s;/* never used; to keep -Wall happy */
 }
 
 static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
@@ -970,6 +976,7 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(lcall, "unimplemented real function\n");
     }
+    return op;/* never used; to keep -Wall happy */
 }
 
 SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -992,6 +999,7 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	error("%d arguments passed to \"atan\" which requires 1 or 2\n", n);
     }
+    return s;/* never used; to keep -Wall happy */
 }
 
 SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1044,6 +1052,7 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	error("%d arguments passed to \"log\" which requires 1 or 2\n", n);
     }
+    return s;/* never used; to keep -Wall happy */
 }
 
 SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1220,7 +1229,9 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(lcall, "unimplemented real function\n");
     }
+    return op;/* never used; to keep -Wall happy */
 }
+
 #define mod_iterate4(n1,n2,n3,n4,i1,i2,i3,i4) for (i=i1=i2=i3=i4=0; i<n; \
 (++i1, (i1==n1)&&(i1=0), ++i2, (i2==n2)&&(i2=0),\
  ++i3, (i3==n3)&&(i3=0), ++i4, (i4==n4)&&(i4=0), ++i))
@@ -1337,4 +1348,5 @@ SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(lcall, "unimplemented real function\n");
     }
+    return op;/* never used; to keep -Wall happy */
 }

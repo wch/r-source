@@ -48,7 +48,7 @@ static unsigned char2col(char *s)
         else return name2col(s);
 }
 
-static setpalette(char **palette)
+static void setpalette(char **palette)
 {
         int i;
         for(i=0 ; (i<COLOR_TABLE_SIZE)&&palette[i] ; i++)
