@@ -32,10 +32,10 @@ options(\dots)
 \item{pager}{the (standalone) program used for displaying ASCII files on
   \R's console.  Defaults to \file{\$R\_HOME/bin/pager}.}
 \item{papersize}{the paper format used for graphics printing; currently
-  \bold{read-only}, set by environment variable R\_PAPERSIZE, or in
+  \bold{read-only}, set by environment variable \code{R_PAPERSIZE}, or in
   \file{config.site}.}
 \item{printcmd}{the command used for graphics printing; currently
-  \bold{read-only}, set by environment variable R\_PRINTCMD, or in
+  \bold{read-only}, set by environment variable \code{R_PRINTCMD}, or in
   \file{config.site}.}
 \item{show.signif.stars, show.coef.Pvalues}{logical, affecting P value
     printing, see \code{\link{print.coefmat}}.}
