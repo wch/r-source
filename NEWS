@@ -47,14 +47,15 @@ NEW FEATURES
     o	New functions dump.frames() and debugger() allow post-mortem
 	debugging.  See the help on debugger().
 
+    o   Generic methods now do "match before dispatch", so
+        plot(pch=2,y~x) invokes plot.formula. Notice that this will
+        break user code if it has renamed the dispatch argument and
+        uses the original name for a different argument.
 
 BUG FIXES
 
     o	printutils.c compiles on platforms where va_list is not
 	a pointer.
-
-    o	The internal code for strsplit no longer destroys other
-	internal structures, e.g. postscript file output on Linux.
 
     o	nlm had a conversion-to-C error that could cause an infinite
 	loop.
@@ -68,6 +69,26 @@ BUG FIXES
 	one of the libraries given in .lib.loc.	 Autoloads are no
 	longer included in the search (as they searched whole objects,
 	not the autoloaded objects).
+
+    o   (0.99.0a) The internal code for strsplit no longer destroys
+	other internal structures, e.g. postscript file output on
+	Linux.
+
+    o   (0.99.0a) nlm() no longer segfaults with Hessian specified
+
+    o   (0.99.0a) Gnome version plotmath works, kind of
+
+    o   (0.99.0a) edit.data.frame() now handles character vectors
+        better, provided they were generated with I().
+
+    o   (0.99.0a) attempt to special-case printing with no arguments
+        was abandoned, since there is no portable way of doing it and
+        it caused compile problem on Alpha.
+
+    o	The search semantics of data() and example() have changed
+	(see the help pages). In particular, they will normally
+	look in the package which was loaded, even if it is not in
+	one of the libraries given in .lib.loc.
 
     o	The documentation for .Rd files said & must be entered as \&
 	but only the unescaped form was processed correctly. Now both
@@ -88,6 +109,10 @@ BUG FIXES
     o   rpois sometimes had problems with mu=0, now special-cased
 
     o   --nsize and --vsize arguments to R CMD check now work
+
+    o   plot.stepfun had renamed the dispatch argument and used the
+        original name "x" for a different argument which broke on the
+        new "match & dispatch" code. Changed to "xval".
 
 
 	**************************************************

@@ -28,15 +28,64 @@
 
 static SEXP GetObject(RCNTXT *cptr)
 {
-    SEXP s;
+    SEXP s, sysp, b, formals, funcall, tag;
+#ifdef OLD
     s = CAR(cptr->promargs);
+#else
+    sysp = R_GlobalContext->sysparent;
+
+    PROTECT(funcall = R_syscall(0, cptr));
+
+    if ( TYPEOF(CAR(funcall)) == SYMSXP )
+	PROTECT(b = findFun(CAR(funcall), sysp));
+    else
+	PROTECT(b = eval(CAR(funcall), sysp));
+    formals = FORMALS(b);
+
+    tag = TAG(formals);
+    if (tag != R_NilValue && tag != R_DotsSymbol) {
+	s = R_NilValue;
+	/** exact matches **/
+	for (b = cptr->promargs ; b != R_NilValue ; b = CDR(b)) 
+	    if (TAG(b) != R_NilValue && pmatch(tag, TAG(b), 1)) { 
+		if ( s != R_NilValue) 
+		    error("formal argument \"%s\" matched by multiple actual arguments", tag);
+		else 
+		    s = CAR(b);
+	    }
+
+	if ( s == R_NilValue )
+	    /** partial matches **/
+	    for (b = cptr->promargs ; b != R_NilValue ; b = CDR(b)) 
+		if (TAG(b) != R_NilValue && pmatch(tag, TAG(b), 0)) { 
+		    if ( s != R_NilValue)
+			error("formal argument \"%s\" matched by multiple actual arguments", tag);
+		    else 
+			s = CAR(b);
+		}
+	if ( s == R_NilValue )
+	    /** first untagged argument **/
+	    for (b = cptr->promargs ; b != R_NilValue ; b = CDR(b)) 
+		if (TAG(b) == R_NilValue ) 
+		{
+		    s = CAR(b);
+		    break;
+		}
+	if ( s == R_NilValue )
+	    s = CAR(cptr->promargs);
+/*
+	    error("failed to match argument for dispatch");
+*/
+    }
+    else
+	s = CAR(cptr->promargs);
+
+    UNPROTECT(2);
+#endif
     if (TYPEOF(s) == PROMSXP) {
-	if (PRVALUE(s) == R_UnboundValue) {
-	    s = eval(PREXPR(s), PRENV(s));
-	    PRVALUE(CAR(cptr->promargs)) = s;
-	}
-	else
-	    s = PRVALUE(s);
+	if (PRVALUE(s) == R_UnboundValue)
+	    PRVALUE(s) = eval(PREXPR(s), PRENV(s));
+	s = PRVALUE(s);
     }
     return(s);
 }
