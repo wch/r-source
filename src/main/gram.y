@@ -153,7 +153,8 @@ static int	xxvalue(SEXP, int);
 %left		':'
 %left		UMINUS UPLUS
 %right		'^'
-%left		'$' '@' NS_GET
+%left		'$' '@'
+%left		NS_GET
 %nonassoc	'(' '[' LBB
 
 %%

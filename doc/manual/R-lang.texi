@@ -4306,7 +4306,8 @@ g(tag = value, , 5)
 The order of precedence (highest first) of the operators are
 
 @smallexample
-:: $ @@
+::
+$ @@
 ^
 - +                @r{(unary)}
 :
