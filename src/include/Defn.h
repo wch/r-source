@@ -277,10 +277,11 @@ typedef struct {
 
 
 /* Evaluation Context Structure */
+/* Note: JMP_BUF is defined in Platform.h */
 typedef struct RCNTXT {
     struct RCNTXT *nextcontext;	/* The next context up the chain */
     int callflag;		/* The context "type" */
-    sigjmp_buf cjmpbuf;		/* C stack and register information */
+    JMP_BUF cjmpbuf;		/* C stack and register information */
     int cstacktop;		/* Top of the pointer protection stack */
     SEXP promargs;		/* Promises supplied to closure */
     SEXP sysparent;		/* environment the closure was called from */

@@ -33,6 +33,7 @@
 
 #ifdef Macintosh
 # include <fp.h>
+# define finite(x) isfinite(x)
 #else
 # include <math.h>
 # ifndef HAVE_FINITE

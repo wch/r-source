@@ -102,7 +102,7 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 	R_GlobalContext = cptr->nextcontext;
     else
 	R_GlobalContext = R_ToplevelContext;
-    siglongjmp(cptr->cjmpbuf, mask);
+    LONGJMP(cptr->cjmpbuf, mask);
 }
 
 

@@ -67,6 +67,18 @@
 #undef HAVE_MEMCPY
 #undef HAVE_BCOPY
 
+/* Comptibility for setjmp / longjmp */
+#ifdef HAVE_SIGSETJMP
+#define JMP_BUF sigjmp_buf
+#define SETJMP(x) sigsetjmp(x,1)
+#define LONGJMP(x,i) siglongjmp(x,i)
+#else
+#define JMP_BUF jmp_buf
+#define SETJMP(x) setjmp(x)
+#define LONGJMP(x,i) setlongjmp(x,i)
+#endif
+
+
 /* Fortran and C Links */
 #undef HAVE_F77_UNDERSCORE
 

@@ -317,7 +317,7 @@ static void R_LoadProfile(FILE *fp)
     if (fp != NULL) {
 	R_Inputfile = fp;
 	doneit = 0;
-	sigsetjmp(R_Toplevel.cjmpbuf, 1);
+	SETJMP(R_Toplevel.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 	signal(SIGINT, onintr);
 	if (!doneit) {
@@ -384,7 +384,7 @@ void mainloop(void)
     }
 
     doneit = 0;
-    sigsetjmp(R_Toplevel.cjmpbuf, 1);
+    SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);
     if (!doneit) {
@@ -401,7 +401,7 @@ void mainloop(void)
     /* on the application */
 
     doneit = 0;
-    sigsetjmp(R_Toplevel.cjmpbuf, 1);
+    SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);
     if (!doneit) {
@@ -425,7 +425,7 @@ void mainloop(void)
     /* If there is an error we continue */
 
     doneit = 0;
-    sigsetjmp(R_Toplevel.cjmpbuf, 1);
+    SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);
     if (!doneit) {
@@ -447,7 +447,7 @@ void mainloop(void)
     /* We handle the console until end-of-file. */
 
     R_IoBufferInit(&R_ConsoleIob);
-    sigsetjmp(R_Toplevel.cjmpbuf, 1);
+    SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);
     R_ReplConsole(R_GlobalEnv, 0, 0);
@@ -530,10 +530,10 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     begincontext(&returncontext, CTXT_BROWSER, call, rho,
 		 R_NilValue, R_NilValue);
-    if (!sigsetjmp(returncontext.cjmpbuf, 1)) {
+    if (!SETJMP(returncontext.cjmpbuf)) {
 	begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
-	sigsetjmp(thiscontext.cjmpbuf, 1);
+	SETJMP(thiscontext.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &thiscontext;
 	R_BrowseLevel = savebrowselevel;
 	R_ReplConsole(rho, savestack, R_BrowseLevel);

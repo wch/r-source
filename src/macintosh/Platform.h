@@ -4,8 +4,9 @@
 #define Macintosh
 
 /* Floating Point Arithmetic */
-#define HAVE_MATHERR		/* System V */
-#define HAVE_ISNAN		/* IEEE Arith indicator */
+#define HAVE_MATHERR 1		/* SysV-like */
+#define HAVE_ISNAN   1		/* IEEE isnan function */
+#define HAVE_FINITE  1		/* IEEE finite function */
 
 /* Signal Handler Type */
 #define RETSIGTYPE int
@@ -51,12 +52,12 @@
 #define R_CPU		"PPC"
 #define R_VENDOR	"Apple"
 #define R_OS		"MACOS"
-#define R_MAJOR		"16"
+#define R_MAJOR		"64"
 #define R_MINOR		"0"
 #define R_STATUS	"Alpha"
 #define R_STATUS_REV	"0"
 #define R_DAY		"1"
 #define R_MONTH		"Jan"
-#define R_YEAR		"1997"
+#define R_YEAR		"1999"
 
 #endif
