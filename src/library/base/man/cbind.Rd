@@ -17,8 +17,8 @@ rbind(\dots)
   The functions \code{cbind} and \code{rbind} are generic, with methods
   for data frames.  The data frame method will be used if an
   argument is a data frame and the rest are vectors or matrices. There
-  can be other methods, for example \code{\link{cbind.ts}} in package
-  \code{ts}.
+  can be other methods, for example \code{\link[ts:ts.union]{cbind.ts}}
+  in package \code{ts}.
 
   If there are several matrix arguments, they must all have the same
   number of columns (or rows) and this will be the number of columns (or
@@ -39,7 +39,7 @@ rbind(\dots)
   Therefore, there's no need for, e.g., \code{rbind.default}.
 
   The dispatch algorithm is described in the source file
-  (@file{.../src/main/bind.c} as
+  (\file{.../src/main/bind.c} as
 
   \enumerate{
     \item For each argument we get the list of possible class
@@ -53,7 +53,7 @@ rbind(\dots)
      If it is identical, we proceed, otherwise we immediately
      drop through to the default code.
    }
-   If you want to combine other objects with data frames, it may wee me
+   If you want to combine other objects with data frames, it may be
    necessary to coerce them to data frames first.
 }
 \seealso{
