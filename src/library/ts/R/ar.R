@@ -1,21 +1,25 @@
 ## based on, especially multivariate case, code by Martyn Plummer
 ar <-
     function (x, aic = TRUE, order.max = NULL, method=c("yule-walker","burg"),
-              na.action = na.fail)
+              na.action = na.fail, series = deparse(substitute(x)))
 {
-    switch(match.arg(method),
+    res <- switch(match.arg(method),
         "yule-walker" = ar.yw(x, aic=aic, order.max=order.max,
-                              na.action = na.action),
-	"burg" = stop("burg method for ar not yet implemented.")
+                              na.action = na.action, series=series),
+	"burg" = ar.burg(x, aic=aic, order.max=order.max,
+                              na.action = na.action, series=series)
     )
+    res$call <- match.call()
+    res
 }
 
-ar.burg <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail)
+ar.burg <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
+                   series = deparse(substitute(x)))
     .NotYetImplemented()
 
-ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail)
+ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
+                   series = deparse(substitute(x)))
 {
-    series <- deparse(substitute(x))
     x <- na.action(x)
     xfreq <- frequency(as.ts(x))
     if(ists <- is.ts(x)) xtsp <- tsp(x)
@@ -30,6 +34,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail)
     xacf <- acf(x, type = "covariance", lag.max = order.max, plot=FALSE)$acf
     if(nser > 1) {
         ## multivariate case
+        snames <- colnames(x)
         A <- B <- array(0, dim = c(order.max + 1, nser, nser))
         A[1, , ] <- B[1, , ] <- diag(nser)
         EA <- EB <- xacf[1, , , drop = TRUE]
@@ -85,6 +90,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail)
             }
             resid[(order + 1):n.used, ] <-
                 x[(order + 1):n.used, , drop = FALSE] - fitted
+            colnames(resid) <- snames
             return(resid)
         }
         ar.list <- vector("list", order.max)
@@ -101,6 +107,9 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail)
         names(xaic) <- 0:order.max
         order <- if (aic) (0:order.max)[xaic == 0] else order.max
         ar <- if (order > 0) ar.list[[order]] else array(0, dim = c(1, nser, nser))
+        dimnames(ar) <- list(1:order, snames, snames)
+        dimnames(var.pred) <- list(snames, snames)
+        dimnames(partialacf) <- list(1:order.max, snames, snames)
         resid <- cal.resid()
     } else {
         ## univariate case
@@ -133,8 +142,29 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail)
     res <- list(order=order, ar=ar, var.pred=var.pred, aic = xaic,
                 n.used=n.used, order.max=order.max,
                 partialacf=partialacf, resid=resid, method = "Yule-Walker",
-                series=series, frequency=xfreq)
+                series=series, frequency=xfreq, call=match.call())
     if(nser == 1)
         res$asy.var.coef <- solve(toeplitz(drop(xacf)[1:order]))*var.pred/n.used
+    class(res) <- "ar.fit"
     res
+}
+
+print.ar.fit <- function(x, digits = max(3, .Options$digits - 3), ...)
+{
+    cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
+    nser <- NCOL(x$var.pred)
+    if(nser > 1) {
+        res <- x[c("ar", "var.pred")]
+        res$ar <- aperm(res$ar, c(2,3,1))
+        print(res, digits=digits)
+    } else {
+        cat("Coefficients:\n")
+        coef <- round(x$ar, digits = digits)
+        names(coef) <- 1:x$order
+        print.default(coef, print.gap = 2)
+        cat("\nOrder selected", x$order, " sigma^2 estimated as ",
+            format(x$var.pred, digits = digits),"\n")
+
+    }
+    invisible(x)
 }

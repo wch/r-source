@@ -16,8 +16,8 @@ ccf(x, y, lag.max = NULL, plot = TRUE,
     type = c("correlation", "covariance", na.action, ...)
 }
 \arguments{
- \item{x,y}{a time series object, univariate or multivariate, or a numeric
-   vector or matrix.}
+ \item{x, y}{a univariate or multivariate (not \code{ccf}) time series
+     object or a numeric vector or matrix.}
 
  \item{lag.max}{maximum lag at which to calculate the acf. Default is
      10*log10(N) where N is the number of observations.}
@@ -42,7 +42,7 @@ ccf(x, y, lag.max = NULL, plot = TRUE,
     for the partial autocorrelations.
 
     Function \code{ccf} computes and (by default) plots the
-    cross-correlation or cross-correlation of two univariate series.
+    cross-correlation or cross-covariance of two univariate series.
 
     The generic function \code{plot} has a method for acf objects.
 }
@@ -65,6 +65,8 @@ ccf(x, y, lag.max = NULL, plot = TRUE,
   \item{n.used}{The number of observations in the time series.}
   \item{series}{The name of the series \code{x}.}
   \item{snames}{The series names for multivariate time series.}
+
+  The result is returned invisibly if \code{plot} is true.
 }
 \author{Original: Paul Gilbert, Martyn Plummer.  Extensive modifications and
 univariate case of \code{pacf} by B.D. Ripley.}
@@ -85,5 +87,6 @@ pacf(lh)
 data(deaths)
 acf(deaths)
 acf(ts.union(mdeaths, fdeaths))
+ccf(mdeaths, fdeaths) # just the cross-correlations.
 }
 \keyword{ts}

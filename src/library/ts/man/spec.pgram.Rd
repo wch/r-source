@@ -56,6 +56,8 @@ spec.pgram(x, spans=NULL, kernel, taper=0.1, demean=FALSE, detrend=TRUE,
    \item{pad}{The value of the \code{pad} argument.}
    \item{detrend}{The value of the \code{detrend} argument.}
    \item{demean}{The value of the \code{demean} argument.}
+
+  The result is returned invisibly if \code{plot} is true.
 }
 
 \references{

@@ -2,12 +2,13 @@
 \alias{ar}
 \alias{ar.burg}
 \alias{ar.yw}
+\alias{print.ar.fit}
 \title{Fit Autoregressive Models to Time Series}
 \usage{
 ar(x, aic=TRUE, order.max=NULL, method=c("yule-walker", "burg"),
-   na.action)
-ar.burg(x, aic=TRUE, order.max=NULL, na.action)
-ar.yw(x, aic=TRUE, order.max=NULL, na.action)
+   na.action, series)
+ar.burg(x, aic=TRUE, order.max=NULL, na.action, series)
+ar.yw(x, aic=TRUE, order.max=NULL, na.action, series)
 }
 \arguments{
  \item{x}{A univariate or multivariate time series}
@@ -19,6 +20,8 @@ ar.yw(x, aic=TRUE, order.max=NULL, na.action)
  \item{method}{Character string giving the method used to fit the model.
      Must be one of \code{"yule-walker"} or \code{"burg"} (the first few
      characters are sufficient). Defaults to \code{"yule-walker"}.}
+ \item{na.action}{function called to remove missing values.}
+ \item{series}{name for the series. Defaults to \code{deparse(substitute(x))}.}
 }
 \description{
     Fit an autoregressive time series model to the data, by default
@@ -32,13 +35,14 @@ Order selection is done by AIC if \code{aic} is true. This is
 problematic, as the methods here do not perform true maximum likelihood
 estimation. In \code{ar.yw} the variance matrix of the innovation is
 computed from the fitted coefficients and the autocovariance of
-\code{x}, and the AIC is computed as if the estimate were the MLE.
+\code{x}, and the AIC is computed as if the estimate were the MLE,
+omitting the determinant term from the likelihood.
 
 Remember that \code{ar} removes the overall mean of \code{x} before
 fitting the AR model.
 }
 \value{
-  A list with the following elements:
+  A list of class \code{"ar.fit"} with the following elements:
   \item{order}{The order of the fitted model.  This is chosen by
      minimizing the AIC if \code{aic=TRUE}, otherise it is \code{order.max}.}
   \item{ar}{Estimated autoregression coefficients for the fitted model.}
@@ -83,5 +87,8 @@ ar(lh)
 
 data(sunspot)
 ar(sunspot.year)
+
+data(sales)
+ar(ts.union(sales, sales.lead))
 }
 \keyword{ts}

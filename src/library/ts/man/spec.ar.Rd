@@ -20,6 +20,7 @@ spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action, ...)
 }
 \value{
     An object of class \code{\link{spec}}.
+    The result is returned invisibly if \code{plot} is true.
 }
 \references{
     Thompson, D.J. (1990) Time series analysis of Holocene climate data.
@@ -29,7 +30,7 @@ spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action, ...)
 	Statistics with S-PLUS.} Second edition. Springer. (Especially
         p. 448.)
     }
-\section{Warning}{Some authors, for example Thomson (1990) warn strongly
+\section{Warning}{Some authors, for example Thomson (1990), warn strongly
     that AR spectra can be misleading.}
 
 \author{B.D. Ripley}
