@@ -105,7 +105,7 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 strftime <- format.POSIXlt
 
 strptime <- function(x, format)
-    .Internal(strptime(x, format))
+    .Internal(strptime(as.character(x), format))
 
 
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
