@@ -6,15 +6,15 @@ run on Windows 95, 98, NT4 and 2000 on Intel/clone chips. See readme
 for fuller details, including how to install the binary versions.
 
 
-Building From Source
-====================
+Building From Source on Windows
+===============================
 
 [Some further details, including how to debug, are given in the rw-FAQ.]
 
 First collect the tools that you need.
 
-Building on Windows
--------------------
+Collect the tools
+-----------------
 
 We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
 from http://www.mingw.org/ or
@@ -56,17 +56,21 @@ ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
+Building
+--------
+
 You also need: the R source (R-1.1.0.tgz), and to build the
-installer, unzip541.zip from any Info-Zip mirror.  Do remember to set
-MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line)
-if using a cygwin version of make.
+installer, unzip541.zip from any Info-ZIP mirror.
 
 Then: untar R-1.1.0.tgz somewhere (with no spaces in the path names),
 
 	cd /somewhere/R-1.1.0/src/gnuwin32
 
-edit MkRules to set the appropriate paths as needed
-edit Makefile to set the type(s) of help that you want built.
+IMPORTANT: edit MkRules to set the appropriate paths as needed.
+If you have Mingw32 and gcc-2.95.2.1 or later you can set
+HAVE_SHARED=YES which will speed up the process considerably.
+
+Edit Makefile to set the type(s) of help that you want built.
 
 and run
 
@@ -74,7 +78,7 @@ and run
 
 
 Note 1: the file rw1010\unzip\unzip32static.dll is not in the source
-distribution. It can be found in file unz541dN.zip at any INFO-ZIP
+distribution. It can be found in file unz541dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
 The file rw1010\bin\Rchtml.dll is only built if CHM help is specifed
@@ -84,29 +88,49 @@ to build it under VC++6, and it is preferable to use that as the
 VC++ library will check versions of the components needed. You can just
 copy this from a binary distribution.
 
-The file rw1010\bin\Rbitmap.dll is not built automatically:
-instructions on how to build it are in the file bitmap\INSTALL.  You
-can just copy this from a binary distribution.
-
-
 Note 2: we are aware that because of limitations in line length or in
 the shell used that the Makefiles do not work unchanged on all the
 possible combinations of tools, compilers and OSes.  We have tested
 the tools in tools.zip under NT with the mingw32 and cygwin 1.1
 compilers, and cross-building (see below).
 
-
 Note 3: building libR.a is highly disk intensive and can take several
 minutes even on a local disc. We have seen times from 30 secs to 20
-minutes. Using a network file system is likely to take longer.
+minutes. Using a network file system is likely to take longer.  It is
+done in memory and *much* faster with gcc-2.95.2.1 or later on
+mingw32.
 
 
-You can test a build by `make check': expect some differences in the tests
-of the print routines.
+You can test a build by `make check': expect some differences in the
+tests of the print routines.
+
+
+Building bitmap device support
+------------------------------
+
+The file rw1010\bin\Rbitmap.dll is not built automatically:
+instructions on how to build it are in the file bitmap\INSTALL.  You
+can just copy this from a binary distribution.
+
+
+Building Tcl/Tk support
+-----------------------
+
+The TclTk support library is not built automatically.  To use this you
+need to install tcl831.exe from dev.scriptics.com, and set TCL_HOME in
+MkRules to where you installed it (perhaps c:/Program Files/Tcl).
+Then
+
+	make tcl
+
+will make the library.  This will make import libraries or use the
+(VC++5) libraries supplied with Tcl/Tk if your version of ld supports
+this.
+
 
 
 Cross-building on ix86 Linux
-----------------------------
+============================
 
 You will need i386-mingw32 cross-compilers installed and in your path.
 
@@ -179,7 +203,8 @@ There is no provision to make DVI versions of the manuals, although
 The fptex distribution of TeX (from
 ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4alpha3/ at present)
 includes both pdftex and makeinfo 4.0 (in texinfo.zip).  (The cygwin
-makeinfo, even in release 1.1, is 3.12.)
+makeinfo, even in release 1.1, is 3.12, but the fptex version is
+supplied in our tools.zip.)
 
 
 

@@ -11,7 +11,7 @@ There is now a GUI preferences editor on the Edit menu in Rgui.
 
 A data entry editor is now implemented.  This is similar to the Unix
 one (see ?dataentry: that has itself been considerably enhanced in
-parallel with the Windows version) with the additional feature that
+parallel with the Windows version) with the additional features that
 double-clicking in a cell turns it into an editable field (entered as
 a new value by navigating away from the cell), and there is a
 right-click popup menu.
@@ -26,14 +26,15 @@ from the current Windows colour scheme. (The preferences editor will
 save the actual colour, though.)
 
 The placement of multiple pagers is now `random' (so they will not
-always appear in the centre of the screen) and under the MDI interface
-the pager rows and columns settings are respected.
+always appear in the exact centre of the screen) and under the MDI
+interface the pager rows and columns settings are now used.
 
 The postscript() device can now spool plots to a printer. You will
 need a suitable program to send a file to the spooler (or even to send
 it to ghostscript to interpret PostScript for the printer): the RedMon
-suite available from http://www.cs.wisc.edu/~ghost/rjl.html should
-provide suitable tools.  See ?postscript for further details.
+suite available from http://www.cs.wisc.edu/~ghost/rjl.html and
+GhostScript distribution sites should provide suitable tools.  See
+?postscript for further details.
 
 The new xfig() device can be used, and a port of xfig to Windows (with
 an X server and the Cygwin B20.1 environment and X11R6.4 installed) is at
@@ -58,6 +59,11 @@ distribution that shows how to use graphapp to build dialog boxes to
 be called from menus, with a worked example of a t test done in three
 ways.  More details of graphapp, including a tutorial and a reference
 manual, are at http://www.cs.usyd.edu.au/~loki/GraphApp.
+
+Optional support for the Tcl/Tk interface.  To use this you need to
+install tcl831.exe from dev.scriptics.com, and you will need the Tcl
+and Tk dlls in your path.  Also, you need to set the environment
+variable TCL_LIBRARY, to something like c:/Program Files/Tcl/lib/tcl8.3.
 
 Rdconv.bat no longer depends on having a Unix-compatible `cat' program
 in your path.
