@@ -52,18 +52,23 @@ function(..., list = character(0),
         for(path in paths) {
             entries <- NULL
             ## <NOTE>
-            ## Check for new-style '00Index.rds' (and intermediate
-            ## '00Index.dcf'), then for '00Index'. 
+            ## Check for new-style 'Meta/data.rds' (and intermediate
+            ## 'data/00Index.rds' and 'data/00Index.dcf'), then for
+            ## '00Index'.
             ## Earlier versions also used to check for 'index.doc'.
             ## </NOTE>
             if(file.exists(INDEX <-
-                           file.path(path, "data", "00Index.rds"))) {
+                           file.path(path, "Meta", "data.rds"))) {
                 entries <- .readRDS(INDEX)
             }
             ## <FIXME>
             ## Remove this once 1.7.0 is out.
-            ## (The 1.7 development versions for some time used an index
-            ## serialized in DCF.)
+            ## (The 1.7 development versions for some time used indices
+            ## serialized as 'data/00Index.rds' and 'data/00Index.dcf'.)
+            else if(file.exists(INDEX <-
+                                file.path(path, "data", "00Index.rds"))) {
+                entries <- .readRDS(INDEX)
+            }
             else if(file.exists(INDEX <-
                                 file.path(path, "data", "00Index.dcf"))) {
                 entries <- read.dcf(INDEX)

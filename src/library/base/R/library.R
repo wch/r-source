@@ -173,8 +173,16 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         ## This is a bit ugly, but in the future we might also have
         ## DESCRIPTION or INDEX files as serialized R objects ...
         if(file.exists(vignetteIndexRDS <-
-                       file.path(pkgPath, "doc", "00Index.rds")))
+                       file.path(pkgPath, "Meta", "vignette.rds")))
             docFiles <- c(docFiles, vignetteIndexRDS)
+        ## <FIXME>
+        ## Remove this once 1.7.0 is out.
+        ## (The 1.7 development versions for some time used vignette
+        ## indices serialized into 'doc/00Index.rds'.)
+        else if(file.exists(vignetteIndexRDS <-
+                            file.path(pkgPath, "doc", "00Index.rds")))
+            docFiles <- c(docFiles, vignetteIndexRDS)
+        ## <FIXME>
         else
             docFiles <- c(docFiles,
                           file.path(pkgPath, "doc", "00Index.dcf"))
@@ -198,8 +206,12 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 else
                     NULL
             }
-            else if(basename(f) == "00Index.rds")
+            ## <FIXME>
+            ## Remove the '00Index.rds' once 1.7.0 is out.
+            else if(basename(f) %in% c("vignette.rds", "00Index.rds")) {
                 txt <- .readRDS(f)
+            }
+            ## </FIXME>
             else
                 txt <- readLines(f)
             txt

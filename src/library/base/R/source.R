@@ -155,17 +155,22 @@ function(topic, device = getOption("device"),
         for(path in paths) {
             entries <- NULL
             ## <NOTE>
-            ## Check for new-style '00Index.rds' (and intermediate
-            ## '00Index.dcf'), then for '00Index'.
+            ## Check for new-style 'Meta/demo.rds' (and intermediate
+            ## 'demo/00Index.rds' and 'demo/00Index.dcf'), then for
+            ## '00Index'.
             ## </NOTE>
             if(file.exists(INDEX <-
-                           file.path(path, "demo", "00Index.rds"))) {
+                           file.path(path, "Meta", "demo.rds"))) {
                 entries <- .readRDS(INDEX)
             }
             ## <FIXME>
             ## Remove this once 1.7.0 is out.
-            ## (The 1.7 development versions for some time used an index
-            ## serialized in DCF.)
+            ## (The 1.7 development versions for some time used indices
+            ## serialized as 'demo/00Index.rds' and 'demo/00Index.dcf'.)
+            else if(file.exists(INDEX <-
+                           file.path(path, "demo", "00Index.rds"))) {
+                entries <- .readRDS(INDEX)
+            }
             else if(file.exists(INDEX <-
                            file.path(path, "demo", "00Index.dcf"))) {
                 entries <- read.dcf(INDEX)
@@ -176,7 +181,7 @@ function(topic, device = getOption("device"),
                                 file.path(path, "demo", "00Index")))
                 entries <- read.00Index(INDEX)
             else {
-                ## no index: check whether subdir 'demo' contains files.
+                ## No index: check whether subdir 'demo' contains files.
                 if(length(list.files(file.path(path, "demo"))) > 0)
                     noindex <- c(noindex, basename(path))
             }

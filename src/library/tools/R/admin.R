@@ -61,6 +61,9 @@ function(dir, outDir)
         file.copy(file.path(dir, "INDEX"),
                   file.path(outDir, "INDEX"),
                   overwrite = TRUE)
+
+    outMetaDir <- file.path(outDir, "Meta")
+    if(!.fileTest("-d", outMetaDir)) dir.create(outMetaDir)
     
     .installPackageRdIndices(dir, outDir)
     .installPackageVignetteIndex(dir, outDir)
@@ -79,7 +82,7 @@ function(dir, outDir)
     dataDir <- file.path(dir, "data")
     packageName <- basename(dir)
     
-    indices <- c("CONTENTS.rds", "CONTENTS", "INDEX")
+    indices <- c(file.path("Meta", "Rd.rds"), "CONTENTS", "INDEX")
     upToDate <- .fileTest("-nt", file.path(outDir, indices), docsDir)
     if(.fileTest("-d", dataDir)) {
         ## Note that the data index is computed from both the package's
@@ -87,14 +90,14 @@ function(dir, outDir)
         upToDate <-
             c(upToDate,
               .fileTest("-nt",
-                        file.path(outDir, "data", "00Index.rds"),
+                        file.path(outDir, "Meta", "data.rds"),
                         c(dataDir, docsDir)))
     }
     if(all(upToDate)) return()
 
     contents <- Rdcontents(.listFilesWithType(docsDir, "docs"))
 
-    .writeContentsRDS(contents, file.path(outDir, "CONTENTS.rds"))
+    .writeContentsRDS(contents, file.path(outDir, "Meta", "Rd.rds"))
 
     .writeContentsDCF(contents, packageName,
                       file.path(outDir, "CONTENTS"))
@@ -103,16 +106,14 @@ function(dir, outDir)
     ## build one.
     ## <FIXME>
     ## Maybe also save this in RDS format then?
-    ## </FIXME>
     if(!.fileTest("-f", file.path(dir, "INDEX")))
         writeLines(formatDL(.buildRdIndex(contents)),
                    file.path(outDir, "INDEX"))
+    ## </FIXME>
 
     if(.fileTest("-d", dataDir)) {
-        outDataDir <- file.path(outDir, "data")
-        if(!.fileTest("-d", outDataDir)) dir.create(outDataDir)
         .saveRDS(.buildDataIndex(dataDir, contents),
-                 file.path(outDataDir, "00Index.rds"))
+                 file.path(outDir, "Meta", "data.rds"))
     }
     
 }
@@ -125,16 +126,18 @@ function(dir, outDir)
     vignetteDir <- file.path(dir, "inst", "doc")
     if(!.fileTest("-d", vignetteDir)) return()
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
-    outVignetteDir <- file.path(outDir, "doc")
-    if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
+
     ## <FIXME>
     ## Compatibility code for BioC vignette tools.
     ## Remove eventually ...
+    outVignetteDir <- file.path(outDir, "doc")
+    if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
     writeLines(formatDL(vignetteIndex, style = "list"),
                file.path(outVignetteDir, "00Index.dcf"))
     ## </FIXME>
+    
     .saveRDS(vignetteIndex,
-             file = file.path(outVignetteDir, "00Index.rds"))
+             file = file.path(outDir, "Meta", "vignette.rds"))
 }
 
 ### * .installPackageDemoIndex
@@ -145,10 +148,8 @@ function(dir, outDir)
     demoDir <- file.path(dir, "demo")
     if(!.fileTest("-d", demoDir)) return()
     demoIndex <- .buildDemoIndex(demoDir)
-    outDemoDir <- file.path(outDir, "demo")
-    if(!.fileTest("-d", outDemoDir)) dir.create(outDemoDir)
     .saveRDS(demoIndex,
-             file = file.path(outDemoDir, "00Index.rds"))
+             file = file.path(outDir, "Meta", "demo.rds"))
 }
 
 ### Local variables: ***
