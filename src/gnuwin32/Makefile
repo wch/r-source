@@ -514,14 +514,20 @@ clean-recommended:
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 ifeq ($(strip $(BUILD)),CROSS)
-        @for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-          $(R_EXE) CMD XINSTALL --unsafe --lazy --docs=normal ../library/$${p} || exit 1; \
+	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
+          $(R_EXE) CMD perl XINSTALL --unsafe --lazy --docs=normal ../library/$${p} || exit 1; \
         done
 else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-	 $(RHOME)/bin/rcmd.exe INSTALL --unsafe --lazy ../library/$${p} || exit 1; \
+	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe --lazy ../library/$${p} || exit 1; \
 	done
 endif
+recommended1: unpack-recommended
+	@$(ECHO) "--- Making recommended packages"
+	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
+          Rdev CMD perl XINSTALL --unsafe --lazy --docs=normal ../library/$${p} || exit 1; \
+        done
+
 
 # this is really tricky for a bundle.
 # also note that as we are not using Rcmd INSTALL we do not get info

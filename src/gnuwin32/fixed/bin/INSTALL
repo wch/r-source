@@ -54,12 +54,12 @@ R_version($name, $version) if $opt_version;
 
 my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
-my $Rversion = $ENV{'R_VERSION'} ||
-    die "Error: Environment variable R_VERSION not found\n";
+
 usage() if $opt_help;
 
 ## ===== to allow to be converted for use when cross-compiling =====
 my $BUILD = "MINGW";
+my $Rversion;
 if($BUILD == "CROSS") {
     my $startdir = cwd();
     chdir("../..");
@@ -69,6 +69,9 @@ if($BUILD == "CROSS") {
     $Rversion = <FILE>;
     close FILE;
     $Rversion =~ s/ .*\n$//;
+} else {
+    $Rversion = $ENV{'R_VERSION'} ||
+    die "Error: Environment variable R_VERSION not found\n";
 }
 ## ===== end =====
 
