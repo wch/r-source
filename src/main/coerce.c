@@ -1115,6 +1115,9 @@ SEXP do_typeof(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* Define many of the <primitive> "is.xxx" functions :
+   Note that  isNull, isNumeric, etc are defined in ./util.c
+*/
 SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
