@@ -253,8 +253,15 @@ RweaveLatexSetup <-
                    "Processing code chunks ...\n", sep="")
     output <- file(output, open="w+")
     
-    if(stylepath)
+    if(stylepath){
         styfile <- file.path(R.home(),"share","texmf","Sweave")
+        if(.Platform$OS.type == "windows")
+            styfile <- gsub("\\\\", "/", styfile)
+        if(any(grep(" ", styfile)))
+            warning(paste("Path '", styfile, "' contains spaces,\n",
+                          "this may cause problems when running latex.",
+                          sep=""))
+    }
     else
         styfile <- "Sweave"
 
