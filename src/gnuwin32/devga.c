@@ -2515,25 +2515,28 @@ static void SaveAsBitmap(NewDevDesc *dd)
     rect r, r2;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     unsigned char *data;
+    int row_bytes;
     
     r = ggetcliprect(xd->gawin);
     gsetcliprect(xd->gawin, r2 = getrect(xd->gawin));
     if(xd->fp) {
-	if (getdepth(xd->gawin) == 32) {
-	    data = (unsigned char *) malloc(r2.width * r2.height * sizeof(rgb));
-	    getbitmapdata(xd->gawin, data);
-	    png_rows = r2.width;
-	    if (xd->kind == PNG)
-		R_SaveAsPng(data, xd->windowWidth, xd->windowHeight,
-			    privategetpixel2, 0, xd->fp,
-			    R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
-	    else if (xd->kind == JPEG)
-		R_SaveAsJpeg(data, xd->windowWidth, xd->windowHeight,
-			     privategetpixel2, 0, xd->quality, xd->fp) ;
-	    else
-		R_SaveAsBmp(data, xd->windowWidth, xd->windowHeight,
-			    privategetpixel2, 0, xd->fp);
-	    free(data);
+	if (getdepth(xd->gawin) > 8) {
+	    getbitmapdata2(xd->gawin, &data, &row_bytes);
+	    if(data) {
+		png_rows = r2.width;
+		if (xd->kind == PNG)
+		    R_SaveAsPng(data, xd->windowWidth, xd->windowHeight,
+				privategetpixel2, 0, xd->fp,
+				R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
+		else if (xd->kind == JPEG)
+		    R_SaveAsJpeg(data, xd->windowWidth, xd->windowHeight,
+				 privategetpixel2, 0, xd->quality, xd->fp) ;
+		else
+		    R_SaveAsBmp(data, xd->windowWidth, xd->windowHeight,
+				privategetpixel2, 0, xd->fp);
+		free(data);
+	    } else
+		warning("processing of the plot ran out of memory");
 	} else {
 	    if (xd->kind == PNG)
 		R_SaveAsPng(xd->gawin, xd->windowWidth, xd->windowHeight,

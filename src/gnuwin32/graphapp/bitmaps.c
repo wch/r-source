@@ -397,3 +397,30 @@ bitmap createbitmap(int width, int height, int depth, unsigned char *data)
 	return obj;
 }
 
+void getbitmapdata2(bitmap obj, unsigned char **data, int *row_bytes)
+{
+	rect r = obj->rect;
+	int depth = 32, size, ret;
+	BITMAPINFO bmi;
+
+	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	bmi.bmiHeader.biWidth = r.width;
+	bmi.bmiHeader.biHeight = -r.height;
+	bmi.bmiHeader.biPlanes = 1;
+	bmi.bmiHeader.biBitCount = depth;
+	bmi.bmiHeader.biCompression = BI_RGB;
+	bmi.bmiHeader.biClrUsed = 0;
+
+	*row_bytes = ((depth * r.width) + 7) / 8;
+	size = *row_bytes * r.height;
+	*data = (unsigned char *) malloc(size);
+	if(*data) {
+	    ret = GetDIBits(get_context(obj), (HBITMAP)obj->handle, 
+			    1, r.height, (LPSTR)*data, &bmi, DIB_RGB_COLORS);
+	    if(!ret) {
+		free(*data);
+		*data = NULL;
+	    }
+	}
+}
+

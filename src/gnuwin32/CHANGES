@@ -20,8 +20,8 @@ is updated only when there has been no plotting for 0.1sec or if the
 plot has not been updated for 0.5sec.  This is optional (but on by
 default) and the timings can be changed: see ?windows.
 
-The bmp/png/jpeg devices are around 10x faster when used on a 32-bit
-(`truecolor') display (but use more memory than before).
+The bmp/png/jpeg devices are around 10x faster when used on >8-bit
+displays (but use more memory than before).
 
 Rterm reverts to sending warning/error messages to stdout on Windows
 95/98/ME.
