@@ -292,3 +292,11 @@ Date: Tue, 13 Apr 1999 18:28:53 +0100 (BST)
 Subject: R's UseMethod() does not dispatch on changed class()
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Wed, 14 Apr 1999 11:22:10 +0200
+* PR# 168 *
+Subject: Segfault from evalq(return())
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 16 Apr 1999 14:05:12 +0200
+* PR# 169 *
+Subject: deparse drops () sometimes
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 16 Apr 1999 14:10:39 +0200
