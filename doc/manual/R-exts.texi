@@ -1008,7 +1008,8 @@ import.  A fully qualified reference to the function @code{f} in package
 @pkg{foo} is of the form @code{foo::f}.  This is less efficient than a
 formal import and also loses the advantage of recording all dependencies
 in the @file{NAMESPACE} file, so this approach is usually not
-recommended.
+recommended.  Evaluating @code{foo::f} will cause package @pkg{foo} to
+be loaded, but not attached, if it was not loaded already.
 
 The standard method for S3-style @code{UseMethod} dispatching might fail
 to locate methods defined in a package that is imported but not attached
