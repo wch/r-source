@@ -558,7 +558,12 @@ sub text2html {
 	}
 	else {
 	    $misslink = $misslink . " " . $arg;
-	    $text =~ s/\\link$id.*$id/$arg/s;
+	    if($using_chm){
+		$misslink = $misslink . " " . $arg;
+	    }
+	    else{
+		$text =~ s/\\link$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;
+	    }
 	}
     }
 
@@ -654,7 +659,12 @@ sub code2html {
 	}
 	else{
 	    $misslink = $misslink . " " . $argkey;
-	    $text =~ s/\\link$id.*$id/$arg/s;
+	    if($using_chm){
+		$misslink = $misslink . " " . $arg;
+	    }
+	    else{
+		$text =~ s/\\link$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;
+	    }
 	}
     }
 
