@@ -13,9 +13,9 @@
 # Steve Atkins, Nov '97
 
 $Font{"P"} = "\\f0\\fs22";
-$Font{"H1"} = "\\f0\\fs48";
+$Font{"H1"} = "\\f0\\fs48\\cf13";
 $Font{"H2"} = "\\f0\\fs36\\cf1";
-$Font{"H3"} = "\\f0\\fs30";
+$Font{"H3"} = "\\f0\\fs30\\cf14";
 $Font{"H4"} = "\\f0\\fs26";
 $Font{"H5"} = "\\f0\\fs20";
 $Font{"H6"} = "\\f0\\fs18";
@@ -95,6 +95,7 @@ $End{"H6"} = "end_header";
 sub begin_header {
     local ($element, $tag, %attributes) = @_;
     print RTF $Font{$element}, " ";
+    $inheader = 1;
     if($attributes{"align"} eq "center") {
 	print RTF "\\qc "
     }
@@ -103,6 +104,7 @@ sub begin_header {
 sub end_header {
     local ($element) = @_;
     print RTF "\\sa240\\par\\ql\\pard\\plain\n";
+    $inheader = 0;
 }
 
 $Begin{"BR"} = "line_break";
@@ -293,12 +295,20 @@ sub end_b {
 
 sub begin_tt {
     local ($element, $tag) = @_;
-    print RTF $Font{"PRE"}, " ";
+    if($inheader > 0) {
+	print RTF "\\f1\\b", " ";
+    } else {
+	print RTF $Font{"PRE"}, " ";
+    }
 }
 
 sub end_tt {
     local ($element) = @_;
-    print RTF $Font{"P"}, " ";
+    if($inheader > 0) {
+	print RTF "\\f0\\b0", " ";
+    } else {
+	print RTF $Font{"P"}, " ";
+    }
 }
 
 

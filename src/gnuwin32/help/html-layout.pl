@@ -72,12 +72,18 @@ sub html_pagehead
 
 sub html_functionhead
 {
-    my $title = $_[0];
+    my ($title, $pkgname, $name) = @_;
 
     my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
 	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
 	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
 	"BACKGROUND=\"white\">\n\n";
+
+    if($pkgname){
+	$retval .= "<table width=100%><tr>" .
+	    "<td>$name($pkgname)</td>" .
+	    "<td align=right>R Documentation</td></tr></table><p>";
+    }
     
     $retval .= html_title2($title);
 
@@ -177,12 +183,18 @@ sub chm_pagehead
 
 sub chm_functionhead
 {
-    my ($title)  = @_;
+    my ($title, $pkgname, $name) = @_;
 
     my $retval = "<HTML><HEAD><TITLE>$title</TITLE></HEAD>\n" .
 	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
 	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
 	"BACKGROUND=\"white\">\n\n";
+
+    if($pkgname){
+	$retval .= "<table width=100%><tr>" .
+	    "<td>$name($pkgname)</td>" .
+	    "<td align=right>R Documentation</td></tr></table><p>";
+    }
     
     $retval .= "<OBJECT TYPE=\"application/x-oleobject\" CLASSID=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n";
     foreach(@aliases) {

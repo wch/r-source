@@ -462,12 +462,13 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
       if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
     }
     $using_chm = 0;
-    print htmlout html_functionhead($blocks{"title"});
+    print htmlout html_functionhead($blocks{"title"}, $pkgname,
+				    $blocks{"name"});
 
+    html_print_block("description", "Description");
     html_print_codeblock("usage", "Usage");
     html_print_argblock("arguments", "Arguments");
     html_print_block("format", "Format");
-    html_print_block("description", "Description");
     html_print_block("details", "Details");
     html_print_argblock("value", "Value");
 
@@ -820,14 +821,14 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
     print nroffout ".pl 100i\n";
     print nroffout ".po 3\n";
     print nroffout ".na\n";
-    print nroffout $blocks{"name"}, "($pkgname)\n\n" if $pkgname;
+    print nroffout ".tl '", $blocks{"name"},
+          "($pkgname)''R Documentation'\n\n" if $pkgname;
     print nroffout ".SH\n";
     print nroffout $blocks{"title"}, "\n";
-
+    nroff_print_block("description", "Description");
     nroff_print_codeblock("usage", "");
     nroff_print_argblock("arguments", "Arguments");
     nroff_print_block("format", "Format");
-    nroff_print_block("description", "Description");
     nroff_print_block("details", "Details");
     nroff_print_argblock("value", "Value");
 
@@ -867,8 +868,6 @@ sub text2nroff {
     ## be done first
     $text = nroff_tables($text);
     $text =~ s/\\cr\n?/\n.br\n/sgo;
-
-
 
     $text =~ s/\n\s*\n/\n.IP \"\" $indent\n/sgo;
     $text =~ s/\\dots/\\&.../go;
@@ -1371,10 +1370,10 @@ sub rdoc2latex {# (filename)
       printf latexout "\\keyword\{%s\}\{%s\}\n", $_, $blocks{"name"}
       unless /^$/ ;
     }
+    latex_print_block("description", "Description");
     latex_print_codeblock("usage", "Usage");
     latex_print_argblock("arguments", "Arguments");
     latex_print_block("format", "Format");
-    latex_print_block("description", "Description");
     latex_print_block("details", "Details");
     latex_print_argblock("value", "Value");
 
@@ -1624,7 +1623,8 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
       if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
     }
     $using_chm = 1;
-    print htmlout chm_functionhead($blocks{"title"});
+    print htmlout chm_functionhead($blocks{"title"}, $pkgname,
+				   $blocks{"name"});
 
     html_print_codeblock("usage", "Usage");
     html_print_argblock("arguments", "Arguments");
