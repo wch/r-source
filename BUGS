@@ -88,23 +88,6 @@ Subject:  Bug report
 From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
 Date: Thu, 12 Oct 2000 14:08:31 +1100
 --grid problem: note a report on 0.90.1 and nothing to reproduce this
-* PR# 202 *
-Subject: persp box occlusion bug
-From: wsi@gcal.ac.uk
-Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
---The persp algorithm does not apply the occlusion rules to the frame, 
---which is always plotted first. 
---A bug, but not very simple to fix.
-* PR# 639 *
-Subject: symbols: xlim and ylim cannot be specified
-From: Werner Stahel <stahel@stat.math.ethz.ch>
-Date: Mon, 21 Aug 2000 15:54:08 +0200 (CEST)
---Fixed for 1.1.2 (?)
-* PR# 625 *
-Subject: Re: [Rd] Re: [R] problem clipping R postscript plots within latex
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 2 Aug 2000 21:38:31 +0100 (GMT Daylight Time)
---Believed to be fixed in 1.2. Patch on r-bugs website.
 * PR# 662 *
 Subject: phantom(0) doesn't do what I expect it to [plotmath]
 From: M.B.Gillies@pharm.uu.nl
@@ -113,6 +96,13 @@ Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
 Subject: identify.default ignores any setting of cex.
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
+* PR# 202 *
+Subject: persp box occlusion bug
+From: wsi@gcal.ac.uk
+Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
+--The persp algorithm does not apply the occlusion rules to the frame, 
+--which is always plotted first. 
+--A bug, but not very simple to fix.
 
 Directory:  In-Out
 
@@ -284,7 +274,4 @@ none
 
 Directory:  incoming
 
-* PR# 710 *
-Subject: problem with "breaks" in histogram
-From: mcw@ln.nimh.nih.gov
-Date: Wed, 25 Oct 2000 20:49:19 +0200 (MET DST)
+none
