@@ -13912,7 +13912,8 @@ trap 'rm -fr `echo "Makeconf
   src/main/Makefile
   src/modules/Makefile
   src/modules/X11/Makefile
-  src/modules/gnome/Makefile    
+  src/modules/gnome/Makefile
+  src/modules/lapack/Makefile
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile
@@ -14212,7 +14213,8 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/main/Makefile
   src/modules/Makefile
   src/modules/X11/Makefile
-  src/modules/gnome/Makefile    
+  src/modules/gnome/Makefile
+  src/modules/lapack/Makefile
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile
