@@ -538,3 +538,24 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+void R_ProcessEvents(void); /* from system.c */
+
+SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    DWORD mtime;
+    int ntime;
+    double time;
+    
+    checkArity(op, args);
+    time = asReal(CAR(args));
+    if (ISNAN(time) || time < 0)
+	errorcall(call, "invalid time value");
+    ntime = 1000*(time) + 0.5;
+    while (ntime > 0) {
+	mtime = min(500, ntime);
+	ntime -= mtime;
+	Sleep(mtime);
+	R_ProcessEvents();
+    }
+    return R_NilValue;
+}

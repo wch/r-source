@@ -611,6 +611,7 @@ FUNTAB R_FunTab[] =
 {"basename",	do_basename,	0,	11,	1,	PP_FUNCALL},
 {"dirname",	do_dirname,	0,	11,	1,	PP_FUNCALL},
 {"Sys.info",	do_sysinfo,	0,	11,	0,	PP_FUNCALL},
+{"Sys.sleep",	do_syssleep,	0,	11,	1,	PP_FUNCALL},
 
 /* Complex Valued Functions */
 {"fft",		do_fft,		0,	11,	2,	PP_FUNCALL},

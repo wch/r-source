@@ -117,3 +117,6 @@ dirname <- function(path)
 Sys.info <- function()
     .Internal(Sys.info())
 
+Sys.sleep <- function(time)
+    invisible(.Internal(Sys.sleep(time)))
+
