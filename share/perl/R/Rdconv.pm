@@ -1,7 +1,7 @@
 ## Subroutines for converting R documentation into text, HTML, LaTeX and
 ## R (Examples) format
 
-## Copyright (C) 1997-2003 R Development Core Team
+## Copyright (C) 1997-2005 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -584,6 +584,38 @@ sub transform_S3method {
 	    $text =~
 		s/$S3method_RE/$1\#\# S3 method for class '$4':\n$1$3/s;
 	}
+    }
+    ## Also try to handle markup for S3 methods for subscripting and
+    ## subassigning.  (Still nothing for S3 Ops group methods.)
+    $S3method_RE = "([ \t]*)\\\\(S3)?method" .
+	"\{(\\\$|\\\[\\\[?)\}\{([\\w.]+)\}\\\(([^)]+)\\\)";
+    my ($str, $name, @args);
+    while($text =~ /$S3method_RE/) {
+	## <NOTE>
+	## The hard part is to rewrite the argument list, because
+	## although something like
+	##   Method for class 'foo':
+	##   `[`(x, i, ..., drop = FALSE)
+	## is correct, the majority will certainly prefer something like
+	##   Method for class 'foo':
+	##   x[i, ..., drop = FALSE]
+	## This can be tricky if the argument list contains embedded
+	## parentheses (e.g., in default argument strings), so that a
+	## refined Text::DelimMatch analysis would be needed.  For the
+	## time being, let us be happy with what we have ...
+	## </NOTE>
+	$str = "$1\#\# S3 method for class '$4':\n$1";
+	$name = $3;
+	@args = split(/,\s*/, $5);
+	if($name eq "\$") {
+	    ## Should really check on scalar(@args) to be 2 ...
+	    $str .= "$args[0]\$$args[1]";
+	}
+	else {
+	    $str .= "$args[0]$name" . join(", ", @args[1..$#args]);
+	    $str .= "]" x length($name);
+	}
+	$text =~ s/$S3method_RE/$str/s;
     }
     $text;
 }
