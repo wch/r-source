@@ -809,9 +809,11 @@ static void SortNodes(void)
 
 static SEXP R_fin_registered = NULL;
 
-#define SET_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp = 1)
-#define CLEAR_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp = 0)
-#define IS_READY_TO_FINALIZE(s) (s)->sxpinfo.gp
+#define READY_TO_FINALIZE_MASK 1
+
+#define SET_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp |= READY_TO_FINALIZE_MASK)
+#define CLEAR_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp &= ~READY_TO_FINALIZE_MASK)
+#define IS_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp & READY_TO_FINALIZE_MASK)
 
 static void CheckFinalizers(void)
 {
