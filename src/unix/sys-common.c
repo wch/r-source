@@ -103,6 +103,13 @@ FILE *R_OpenSiteFile(void)
 
 	/* Saving and Restoring the Global Environment */
 
+static char workspace_name[100] = ".Rdata";
+
+void set_workspace_name(char *fn)
+{
+    strcpy(workspace_name, fn);
+}
+
 void R_RestoreGlobalEnv(void)
 {
     FILE *fp;
@@ -110,7 +117,7 @@ void R_RestoreGlobalEnv(void)
     int i;
 
     if(RestoreAction == SA_RESTORE) {
-	if(!(fp = R_fopen(".RData", "rb"))) { /* binary file */
+	if(!(fp = R_fopen(workspace_name, "rb"))) { /* binary file */
 	    /* warning here perhaps */
 	    return;
 	}
