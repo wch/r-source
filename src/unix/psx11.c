@@ -84,12 +84,13 @@ void psx11_SetFont(int face, int size)
 	}
 }
 
-static char *fontname[] = {
-	"","","Helvetica","",
-	"Helvetica-Bold","",
-	"Helvetica-Oblique","",
-	"Helvetica-BoldOblique","",
-	"Symbol"
+static char *fontname[][6][2] = {
+	{ { "Helvetica",				"Helvetica",},
+	  { "Helvetica",				"Helv",},
+	  { "Helvetica-Bold",				"HelvB",},
+	  { "Helvetica-Oblique",			"HelvO",},
+	  { "Helvetica-BoldOblique",			"HelvBO",},
+	  { "Symbol",					"Symbol",}, },
 };
  
 static char* a4paper = "A4";
@@ -179,7 +180,7 @@ void psx11_NewPlot(int xsize, int ysize, double pw, double ph,
 
 	if(pageorient == LANDSCAPE)
 		PostScriptFileHeader(psfp,
-			&(fontname[0]),
+			&(fontname[0][0][0]),
 			papername,
 			truepagewidth,
 			truepageheight,
@@ -190,7 +191,7 @@ void psx11_NewPlot(int xsize, int ysize, double pw, double ph,
 			xoffset+plotwidth);
 	else
 		PostScriptFileHeader(psfp,
-			&(fontname[0]),
+			&(fontname[0][0][0]),
 			papername,
 			pagewidth,
 			pageheight,

@@ -339,11 +339,11 @@ void PostScriptFileHeader(
 	fprintf(fp, "       closepath clip newpath } def\n");
 	fprintf(fp, "/rgb { setrgbcolor } def\n");
 	fprintf(fp, "/s   { scalefont setfont } def\n");
-	fprintf(fp, "/R   { /%s findfont } def\n", font[0]);
-	fprintf(fp, "/B   { /%s findfont } def\n", font[1]);
-	fprintf(fp, "/I   { /%s findfont } def\n", font[2]);
-	fprintf(fp, "/BI  { /%s findfont } def\n", font[3]);
-	fprintf(fp, "/S   { /%s findfont } def\n", font[4]);
+	fprintf(fp, "/R   { /%s findfont } def\n", font[1]);
+	fprintf(fp, "/B   { /%s findfont } def\n", font[2]);
+	fprintf(fp, "/I   { /%s findfont } def\n", font[3]);
+	fprintf(fp, "/BI  { /%s findfont } def\n", font[4]);
+	fprintf(fp, "/S   { /%s findfont } def\n", font[5]);
 	fprintf(fp, "%%%%EndProlog\n");
 }
 
