@@ -1,6 +1,6 @@
 abline <-
     function(a=NULL, b=NULL, h=NULL, v=NULL, reg=NULL, coef=NULL,
-	     col=par("col"), lty=par("lty"), lwd=NULL, ...)
+	     untf=FALSE, col=par("col"), lty=par("lty"), lwd=NULL, ...)
 {
     if(!is.null(reg)) a <- reg
     if(!is.null(a) && is.list(a)) {
@@ -18,6 +18,6 @@ abline <-
 	a <- coef[1]
 	b <- coef[2]
     }
-    .Internal(abline(a, b, h, v, col, lty, lwd, ...))
+    .Internal(abline(a, b, h, v, untf, col, lty, lwd, ...))
     invisible()
 }

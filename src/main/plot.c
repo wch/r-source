@@ -2070,7 +2070,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP a, b, h, v, col, lty, lwd;
+    SEXP a, b, h, v, untf, col, lty, lwd;
     int i, ncol, nlines, nlty, nlwd;
     double aa, bb, x[2], y[2];
     SEXP originalArgs = args;
@@ -2095,6 +2095,11 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((v = CAR(args)) != R_NilValue)
 	CAR(args) = v = coerceVector(v, REALSXP);
     args = CDR(args);
+    
+    if ((untf = CAR(args)) != R_NilValue)
+	CAR(args) = untf = coerceVector(untf, LGLSXP);
+    args = CDR(args);
+
 
     PROTECT(col = FixupCol(CAR(args), NA_INTEGER));	args = CDR(args);
     ncol = LENGTH(col);
@@ -2132,7 +2137,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	x[0] = dd->gp.usr[0];
 	x[1] = dd->gp.usr[1];
 	if (R_FINITE(dd->gp.lwd)) {
-	    if (dd->gp.xlog || dd->gp.ylog) {
+	    if (LOGICAL(untf)[0] == 1 && (dd->gp.xlog || dd->gp.ylog)) {
 		double xx[101], yy[101];
 		int i;
 		double xstep = (x[1] - x[0])/100;
@@ -2145,8 +2150,20 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 		GPolyline(101, xx, yy, USER, dd);
 	    }
 	    else {
-		y[0] = aa + dd->gp.usr[0] * bb;
-		y[1] = aa + dd->gp.usr[1] * bb;
+		double x0, x1;
+
+		x0 = ( dd->gp.xlog ) ?  log10(x[0]) : x[0];
+		x1 = ( dd->gp.xlog ) ?  log10(x[1]) : x[1];
+
+
+		y[0] = aa + x0 * bb;
+		y[1] = aa + x1 * bb;
+
+		if ( dd->gp.ylog ){
+		    y[0] = pow(10.,y[0]);
+		    y[1] = pow(10.,y[1]);
+		}
+
 		GLine(x[0], y[0], x[1], y[1], USER, dd);
 	    }
 	}

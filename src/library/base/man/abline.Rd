@@ -4,6 +4,7 @@
 abline(a, b, \dots)
 abline(h=, \dots)
 abline(v=, \dots)
+abline(untf=, \dots)
 abline(coef=, \dots)
 abline(reg=, \dots)
 }
@@ -21,7 +22,12 @@ abline(reg=, \dots)
   it is of length 1 then the value is taken to be the slope of a line
   through the origin, otherwise, the first 2 values are taken to be the
   slope and intercept.
-
+  
+  If \code{untf} is true, and one or both axes are log-transformed, then
+  a curve is drawn corresponding to a line in original coordinates,
+  otherwise a line is drawn in the transformed coordinate system. The
+  \code{h} and \code{v} parameters alway refer to original coordinates. 
+  
   The graphical parameters \code{col} and \code{lty} can be specified as
   arguments to \code{abline}; see \code{par} for details.
 }
