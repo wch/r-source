@@ -191,8 +191,7 @@ sub listFiles {
 	    if (m/R-admin.pdf/ || m/R-exts.pdf/ || m/R-lang.pdf/) {
 		$mini = 0;
 	    }
-	} elsif (m/^library\\[^\\]*\\latex/
-		 || m/^share\\texmf/) {
+	} elsif (m/^library\\[^\\]*\\latex/) {
 	    	$component = "latex";
 	    	$mini = 0;
 	} elsif (m/^Tcl/) {
@@ -206,6 +205,7 @@ sub listFiles {
 		 || m/^share\\make/
 		 || m/^share\\perl/
 		 || m/^share\\R/
+		 || m/^share\\texmf/
 		 || m/^lib\\/) {
 	    $component = "devel";
 	    $mini = 0;
