@@ -6,7 +6,7 @@
 
 # @configure_input@
 
-VERSION="0.1-5"
+VERSION="0.1-6"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 CLEAN=false
@@ -69,10 +69,10 @@ while test -n "${1}"; do
     -l|--library)
       lib=${2}; shift ;;
     *)
-      if test -d ${1}; then
-	PKGS="${PKGS} `cd ${1}; pwd`"
+      if test -d "${1}"; then
+	PKGS="${PKGS} \"`cd "${1}"; pwd`\""
       else
-	echo "WARNING: package \`${1}' does not exist"
+	echo "WARNING: package \`"${1}"' does not exist"
       fi
       ;;
   esac
@@ -109,9 +109,9 @@ elif ${DEBUG}; then
   BUILD_HELP_OPTS="--debug ${BUILD_HELP_OPTS}"
 fi
 
-for pkg in ${PKGS}; do
-  cd ${pkg}
-  pkg=`basename ${pkg}`
+do_install () {
+  cd "${1}"
+  pkg=`basename "${1}"`
 
   mkdir -p ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
@@ -227,7 +227,9 @@ for pkg in ${PKGS}; do
 
   echo " DONE (${pkg})"
   echo
-done
+}
+
+eval "for pkg in ${PKGS}; do do_install \"\${pkg}\"; done"
 
 echo "DONE (INSTALL)"
 
