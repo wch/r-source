@@ -2122,7 +2122,7 @@ int R_XDRDecodeInteger(void *buf)
 
 void R_SaveGlobalEnvToFile(const char *name)
 {
-    SEXP sym = install("Sys.save.image");
+    SEXP sym = install("sys.save.image");
     if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
 	FILE *fp = R_fopen(name, "wb"); /* binary file */
 	if (!fp)
@@ -2141,7 +2141,7 @@ void R_SaveGlobalEnvToFile(const char *name)
 
 void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
 {
-    SEXP sym = install("Sys.load.image");
+    SEXP sym = install("sys.load.image");
     if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
 	FILE *fp = R_fopen(name, "rb"); /* binary file */
 	if(fp != NULL) { 
@@ -2263,13 +2263,15 @@ SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    /* loadFromConn(conn, environment) */
+
     struct R_inpstream_st in;
     Rconnection con;
     SEXP aenv;
 
     checkArity(op, args);
 
-    con = getConnection(asInteger(CADR(args)));
+    con = getConnection(asInteger(CAR(args)));
     aenv = CADR(args);
     if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
 	error("invalid envir argument");
