@@ -18,6 +18,8 @@ applescript(path, scriptname)
 }
 \examples{
 applescript("", "demo")
+## expand all examples and help files
+applescript("", "zip.expand") 
 }
 \keyword{interface}
 
