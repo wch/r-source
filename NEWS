@@ -15,6 +15,12 @@ NEW FEATURES
     o   the underlying code for nlm has been translated from Fortran
         to C and made re-entrant (changes contributed by Saikat DebRoy).
 
+    o   R now compiles in the GNU version of regex, so regular
+	expressions (grep, sub, gsub, regexpr, "pattern" in ls) are
+	always available. The class of regular expressions supported
+	will be slightly wider on some Unix platforms.
+
+
 BUG FIXES
 
     o	adding matrices to data frames now happens column by column as

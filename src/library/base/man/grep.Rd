@@ -58,10 +58,6 @@ regexpr(pattern, text,  extended=TRUE)
     if there is none, with attribute \code{"match.length"} giving the
     length of the matched text (or -1 for no match).
 }
-\note{
-  It is possible to compile \R without support for regular
-  expressions, and then these functions are not operational.
-}
 \seealso{
   \code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
   \code{\link{apropos}} uses regexps and has nice examples.

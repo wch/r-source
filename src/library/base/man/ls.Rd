@@ -31,10 +31,6 @@ When invoked with no argument inside a function,
 \code{ls} returns the names of the functions local variables.
 This is useful in conjunction with \code{browser}.
 }
-\note{
-    It is possible to compile \R so that \code{grep} and hence argument
-    \code{pattern} and not operational.
-}
 \seealso{
 \code{\link{apropos}} (or \code{\link{find}}) for finding objects in the
 whole search path; \code{\link{grep}} for more details on ``regular

@@ -1,9 +1,0 @@
-#-*- Makefile -*-
-include ../gnuwin32/MkRules
-
-CFLAGS = $(OPTFLAGS) -I../include -DHAVE_CONFIG_H
-
-rx.a: regex.o
-
-clean:
-	$(RM) regex.o *~ rx.a

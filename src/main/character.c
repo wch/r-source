@@ -361,21 +361,13 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-#ifdef HAVE_REGCOMP
 #ifndef Macintosh
 #include <sys/types.h>
 #endif
 #include "regex.h"
-#else
-#define NO_REGEX_ERROR() \
-	errorcall(call, "POSIX regular expressions not available.\nSee " \
-		"R../src/regex/README, install it; then ./configure and make R.");\
-	return R_NilValue;
-#endif
 
 SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifdef HAVE_REGCOMP
     SEXP pat, vec, ind, ans;
     regex_t reg;
     int i, j, n, nmatches;
@@ -432,12 +424,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     UNPROTECT(1);
     return ans;
-#else
-    NO_REGEX_ERROR();
-#endif
 }
-
-#ifdef HAVE_REGCOMP
 
 /* The following R functions do substitution for regular expressions,
  * either once or globally.
@@ -497,11 +484,9 @@ static char *string_adj(char *target, char *orig, char *repl,
     return t;
 }
 
-#endif
 
 SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifdef HAVE_REGCOMP
     SEXP pat, rep, vec, ans;
     regex_t reg;
     regmatch_t regmatch[10];
@@ -586,13 +571,10 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     regfree(&reg);
     UNPROTECT(1);
     return ans;
-#else
-    NO_REGEX_ERROR();
-#endif
 }
+
 SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifdef HAVE_REGCOMP
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
@@ -629,7 +611,4 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     setAttrib(ans, install("match.length"), matchlen);
     UNPROTECT(2);
     return ans;
-#else
-    NO_REGEX_ERROR();
-#endif
 }
