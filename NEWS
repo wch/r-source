@@ -260,6 +260,9 @@ BUG FIXES
 	Clive Loader.  E.g.,  1 - 2*sum(dbinom(0:999, 1999, 1/2))
 	is now zero instead of 1.0e-12.
 
+    o	library.dynam no longer fails if the library appears more than
+	once in lib.loc.
+
 
 	**************************************************
 	*						 *
