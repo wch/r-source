@@ -189,6 +189,11 @@ void InitMemory()
     CDR(&R_NHeap[R_NSize - 1]) = NULL;
     R_FreeSEXP = &R_NHeap[0];
 
+#if 0 
+
+/* This can't be right! R_NilValue is defined by the first allocSExp
+   call so is undefined here -pd Apr 1, 2000 */
+
     /* This is not making the mess smaller, but it has to be done
        somewhere between the creation of R_NilValue and the first
        garbage collection... -pd */
@@ -199,6 +204,8 @@ void InitMemory()
        will persist across garbage collects... -ihaka */
 
     R_PreciousList =  R_NilValue;
+
+#endif
 }
 
 
@@ -420,7 +427,7 @@ void R_gc(void)
     sigaddset(&mask,SIGINT);
     sigprocmask(SIG_BLOCK, &mask, &omask);
 #endif
-    unmarkPhase();
+    /* unmarkPhase(); */ 
     markPhase();
     compactPhase();
     scanPhase();
@@ -442,7 +449,6 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, nms;
     int i;
-    unmarkPhase();
     markPhase();
     PROTECT(ans = allocVector(INTSXP, 21));
     PROTECT(nms = allocVector(STRSXP, 21));
@@ -472,6 +478,7 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < R_NSize; i++)
 	if(MARK(&R_NHeap[i]))
             INTEGER(ans)[TYPEOF(&R_NHeap[i])] += 1;
+    unmarkPhase(); /* could be done smarter */
     setAttrib(ans, R_NamesSymbol, nms);
     UNPROTECT(2);
     return ans;
@@ -481,9 +488,9 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 
 void unmarkPhase(void)
 {
-    int i;
-    for (i = 0; i < R_NSize; i++)
-	MARK(&R_NHeap[i]) = 0;
+    int i; SEXP p = R_NHeap;
+    for (i = R_NSize; i-- ; )
+	MARK(p++) = 0;
 }
 
 
@@ -501,7 +508,7 @@ void markPhase(void)
     markSExp(R_MissingArg);
     markSExp(R_CommentSxp);
 
-    markSExp(R_GlobalEnv);	           /* Global environent */
+    markSExp(R_GlobalEnv);	           /* Global environment */
     markSExp(R_Warnings);	           /* Warnings, if any */
 
     for (i = 0; i < HSIZE; i++)	           /* Symbol table */
@@ -531,6 +538,7 @@ void markPhase(void)
 void markSExp(SEXP s)
 {
     int i;
+    
     if (s && !MARK(s)) {
 	MARK(s) = 1;
 	if (ATTRIB(s) != R_NilValue)
@@ -631,18 +639,22 @@ void compactPhase(void)
 
 void scanPhase(void)
 {
-    int i;
+    register int i;
+    register SEXP p = R_NHeap, tmp = NULL;
 
-    R_FreeSEXP = NULL;
+    tmp = NULL;
     R_Collected = 0;
-    for (i = 0; i < R_NSize; i++) {
-	if (!MARK(&R_NHeap[i])) {
+    for (i = R_NSize; i--; ) {
+	if (!MARK(p)) {
 	    /* Call Destructors Here */
-	    CDR(&R_NHeap[i]) = R_FreeSEXP;
-	    R_FreeSEXP = &R_NHeap[i];
+	    CDR(p) = tmp;
+	    tmp = p++;
 	    R_Collected++;
-	}
+	} else {
+            MARK(p++) = 0;
+        }
     }
+    R_FreeSEXP = tmp;
 }
 
 
@@ -656,8 +668,7 @@ SEXP protect(SEXP s)
 {
     if (R_PPStackTop >= R_PPStackSize)
 	errorcall(R_NilValue,"protect(): stack overflow");
-    R_PPStack[R_PPStackTop] = s;
-    R_PPStackTop++;
+    R_PPStack[R_PPStackTop++] = s;
     return s;
 }
 
@@ -666,8 +677,8 @@ SEXP protect(SEXP s)
 
 void unprotect(int l)
 {
-    if (R_PPStackTop > 0)
-	R_PPStackTop = R_PPStackTop - l;
+    if (R_PPStackTop >=  l)
+	R_PPStackTop -= l;
     else
 	error("unprotect(): stack imbalance");
 }

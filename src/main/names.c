@@ -771,6 +771,8 @@ static void SymbolShortcuts()
     R_SourceSymbol = install("source");
 }
 
+extern SEXP framenames;
+
 /* initialize the symbol table */
 void InitNames()
 {
@@ -818,6 +820,7 @@ void InitNames()
 	installFunTab(i);
     /*  Unbound values which are to be preserved through GCs */
     R_PreciousList = R_NilValue;
+    framenames = R_NilValue;
 }
 
 
