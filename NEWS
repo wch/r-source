@@ -154,6 +154,11 @@ BUG FIXES
     o	polygon() had an incorrect documentation and silently disregarded
 	"..." arguments.
 
+    o	predict.loess was giving incorrect results (those for the
+	non-robust fit) in the case of a fit with family = "symmetric"
+	and surface = "direct" and prediction with se = FALSE.  The
+	fitted values were missing for such fits.
+
 
 
 		CHANGES IN R VERSION 1.1.0
