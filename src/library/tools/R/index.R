@@ -31,9 +31,8 @@ function(dataDir, contents)
     dataTopics <- list_data_in_pkg(dataDir=dataDir)
     names(dataTopics) <- paste(names(dataTopics), "/", sep="")
     datasets <- unlist(dataTopics)
+    if(!length(datasets)) return(matrix("", 0, 2))
     names(datasets) <- sub("/[^/]*$", "", names(datasets))
-
-    if(!length(datasets)) return(matrix("", 0, 3))
     datasets <- sort(datasets)
     dataIndex <- cbind(datasets, "")
     ## Note that NROW(contents) might be 0.
