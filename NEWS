@@ -68,6 +68,9 @@ DEPRECATED & DEFUNCT
 
     o	restart() is defunct.  Use try(), as has long been recommended.
 
+    o	The deprecated arguments `pkg' and `lib' of system.file have
+	been removed.
+
 
 UTILITIES
 
