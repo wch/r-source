@@ -641,6 +641,8 @@ BUG FIXES
     o	ks.test() in package ctest had numerical problems in the lower
 	tail of the asymptotic distribution (PR#2571).
 
+    o   Sweave() now handles empty chunks at the end of files correctly.
+
 
 
 	**************************************************

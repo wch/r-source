@@ -81,8 +81,10 @@ Sweave <- function(file, driver=RweaveLatex(),
                 chunk <- c(chunk, line)
         }
     }
-    if(mode=="doc") driver$writedoc(drobj, chunk)
-    else drobj <- driver$runcode(drobj, chunk, chunkopts)
+    if(!is.null(chunk)){
+        if(mode=="doc") driver$writedoc(drobj, chunk)
+        else drobj <- driver$runcode(drobj, chunk, chunkopts)
+    }
 
     on.exit()
     driver$finish(drobj)
