@@ -439,7 +439,7 @@ TypeTable[] = {
 	{ "char",		CHARSXP    },
 	{ "logical",		LGLSXP     },
 	{ "integer",		INTSXP     },
-	{ "real",		REALSXP    },
+	{ "double",		REALSXP    },/*- was "real", for R <= 0.61.x */
 	{ "complex",		CPLXSXP    },
 	{ "character",		STRSXP     },
 	{ "...",		DOTSXP     },

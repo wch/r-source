@@ -25,7 +25,7 @@
  *  Integer arguments changed from "long" to "int"
  *  Bus error due to non-writable strings fixed
  *
- *	type	"real" or "integer" (R - numeric `mode').
+ *	type	"double" or "integer" (R - numeric `mode').
  *
  *	width	The total field width; width < 0 means to left justify
  *		the number in this field (equivalent to flag = "-").
@@ -107,7 +107,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 			form, wid, dig);
 		if(do_fg) fprintf(stderr, "\t\"fg\": f0=«%s».", f0);
 #endif
-		if (strcmp("real", *type) == 0)
+		if (strcmp("double", *type) == 0)
 		  if(do_fg) /* do smart "f" : */
 		    for (i=0; i < nn; i++) {
 		      xx = ((double *)x)[i];
