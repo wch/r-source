@@ -11,7 +11,7 @@ CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 
-ifndef DBUG
+ifndef DEBUG
   DLLFLAGS=-s
 endif
 

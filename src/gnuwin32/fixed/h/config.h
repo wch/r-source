@@ -91,7 +91,7 @@
 
 /* Define if your C compiler does not prepend an underscore to external
    names. */
-#undef HAVE_NO_SYMBOL_UNDERSCORE
+#define HAVE_NO_SYMBOL_UNDERSCORE 1
 
 /* Define if you have the PNG headers and libraries. */
 #define HAVE_PNG 1

@@ -7,8 +7,7 @@ CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 CSOURCES=$(wildcard *.c)
 FSOURCES=$(wildcard *.f)
-OBJS=$(CSOURCES:.c=.o) $(CSOURCES:.f=.o)
-
+OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
 
 ../gnuwin32/libmath.a: $(OBJS)
 

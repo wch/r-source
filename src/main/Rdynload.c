@@ -94,10 +94,6 @@
 # endif /* HAVE_NO_SYMBOL_UNDERSCORE */
 #endif
 
-#ifdef Win32
-# define HAVE_NO_SYMBOL_UNDERSCORE 
-#endif
-
 #ifdef Macintosh
   extern char *strdup(); 
 # define HAVE_NO_SYMBOL_UNDERSCORE 
