@@ -153,22 +153,28 @@ function(topic, device = getOption("device"),
         db <- matrix(character(0), nr = 0, nc = 4)
         noindex <- character(0)
         for(path in paths) {
-            INDEX <- file.path(path, "demo", "00Index")
-            if(file.exists(INDEX)) {
-                entries <- read.00Index(INDEX)
-                if(NROW(entries) > 0) {
-                    db <- rbind(db,
-                                cbind(basename(path),
-                                      dirname(path),
-                                      entries))
-                }
+            entries <- NULL
+            ## <NOTE>
+            ## Check for new-style '00Index.dcf', then for '00Index'.
+            ## </NOTE>
+            if(file.exists(INDEX <-
+                           file.path(path, "demo", "00Index.dcf"))) {
+                entries <- read.dcf(INDEX)
+                entries <- cbind(colnames(entries), c(entries))
             }
+            else if(file.exists(INDEX <-
+                                file.path(path, "demo", "00Index")))
+                entries <- read.00Index(INDEX)
             else {
                 ## no index: check whether subdir 'demo' contains files.
                 if(length(list.files(file.path(path, "demo"))) > 0)
                     noindex <- c(noindex, basename(path))
             }
-
+            if(NROW(entries) > 0) {
+                db <- rbind(db,
+                            cbind(basename(path), dirname(path),
+                                  entries))
+            }
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
 
