@@ -1,5 +1,5 @@
-//#include "globalvar.h" /* for ArrowCursor */
-#include "graphapp.h"
+#include <windows.h>
+#include "ga.h"
 #include <stdlib.h> /* atof */
 #include <ctype.h> /* tolower */
 
@@ -45,7 +45,7 @@ static void create_dialog()
     setcursor(ArrowCursor);  /* not `busy' cursor */
     win = newwindow("t-test entry", rect(0, 0, 200, 200),
 			Titlebar | Centered | Modal);
-    setbackground(win, LightGrey);
+    setbackground(win, myGetSysColor(COLOR_MENU));
     setkeydown(win, hit_key);
     bApply = newbutton("Apply", rect(20, 160, 50, 25), apply);
     bCancel = newbutton("Cancel", rect(120, 160, 50, 25), NULL);
@@ -161,16 +161,18 @@ SEXP menu_ttest3()
     hide(win);
     delobj(bApply);
     delobj(win);
-    PROTECT(cmdSexp = allocVector(STRSXP, 1));
-    SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
-    cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status));
-    if (status != PARSE_OK) {
+    if(done == 1) {
+	PROTECT(cmdSexp = allocVector(STRSXP, 1));
+	SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
+	cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status));
+	if (status != PARSE_OK) {
+	    UNPROTECT(2);
+	    error("invalid call %s", cmd);
+	}
+	/* Loop is needed here as EXPSEXP will be of length > 1 */
+	for(i = 0; i < length(cmdexpr); i++)
+	    ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
 	UNPROTECT(2);
-	error("invalid call %s", cmd);
     }
-    /* Loop is needed here as EXPSEXP will be of length > 1 */
-    for(i = 0; i < length(cmdexpr); i++)
-	ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
-    UNPROTECT(2);
     return ans;
 }
