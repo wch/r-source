@@ -39,12 +39,15 @@ table <- function (..., exclude = c(NA, NaN),
 	if (is.null(lens)) lens <- length(a)
 	else if (length(a) != lens)
 	    stop("all arguments must have the same length")
-	if (is.factor(a)) { ## R 1.7.0: allow `excludes' also for factor arg
-	    ll <- levels(a)
-	    cat <- factor(a, levels = ll[!(ll %in% exclude)],
-			  exclude = if(is.null(exclude)) NULL else NA)
-	} else
-	cat <- factor(a, exclude = exclude)
+        cat <-
+            if (is.factor(a)) {
+                if (!missing(exclude)) {
+                    ll <- levels(a)
+                    factor(a, levels = ll[!(ll %in% exclude)],
+                           exclude = if(is.null(exclude)) NULL else NA)
+                } else a
+            } else factor(a, exclude = exclude)
+
 	nl <- length(ll <- levels(cat))
 	dims <- c(dims, nl)
 	dn <- c(dn, list(ll))
@@ -61,7 +64,6 @@ table <- function (..., exclude = c(NA, NaN),
 }
 
 print.table <-
-					# na.print = "" (why is this good)?
 function(x, digits = getOption("digits"), quote = FALSE, na.print = "", ...)
 {
     print.default(unclass(x), digits = digits, quote = quote,

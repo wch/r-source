@@ -22,10 +22,10 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
     character strings), or a list (or data frame) whose components can
     be so interpreted}
   \item{exclude}{values to use in the exclude argument of \code{factor}
-    when interpreting non-factor objects; levels to remove from all
-    factors in \dots}
-  \item{dnn}{the names to be given to the dimensions in the result (`the
-    dimname names').}
+    when interpreting non-factor objects; if specified, levels to remove
+    from all factors in \dots.}
+  \item{dnn}{the names to be given to the dimensions in the result (the
+    \emph{dimnames names}).}
   \item{deparse.level}{controls how the default \code{dnn} is
     constructed.  See details.}
   \item{x}{an arbitrary \R object.}
@@ -41,6 +41,9 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
   remaining arguments, \code{deparse.level = 0} gives an empty name,
   \code{deparse.level = 1} uses the supplied argument if it is a symbol,
   and \code{deparse.level = 2} will deparse the argument.
+
+  Only when \code{exclude} is specified (i.e., not by default), will
+  \code{table} drop levels of factor arguments potentially.
 
   There is a \code{summary} method for contingency table objects created
   by \code{table} or \code{xtabs}, which gives basic information and
