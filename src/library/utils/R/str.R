@@ -75,7 +75,7 @@ str.default <-
     } else if (is.null(object))
 	cat(" NULL\n")
     else if(has.class && S4) {
-        a <- sapply(slotNames(object), slot, object=object)
+        a <- sapply(slotNames(object), slot, object=object, simplify = FALSE)
 	cat("Formal class", " '", paste(cl, collapse = "', '"),
 	    "' [package \"", attr(cl,"package"), "\"] with ",
 	    length(a)," slots\n", sep="")

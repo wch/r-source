@@ -582,6 +582,8 @@ BUG FIXES
 
     o   eval() was not handling values from return() correctly.
 
+    o	str(<S4.object>) was misleading for the case of a single slot.
+
 
 
 
