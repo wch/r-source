@@ -1414,6 +1414,9 @@ AC_CONFIG_FILES(
   src/extra/pcre/Makefile
   src/extra/xdr/Makefile
   src/extra/zlib/Makefile
+  src/gnuwin32/Makefile
+  src/gnuwin32/front-ends/Makefile
+  src/gnuwin32/graphapp/Makefile
   src/include/Makefile
   src/include/Rmath.h0
   src/include/R_ext/Makefile
