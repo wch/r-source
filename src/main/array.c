@@ -646,31 +646,31 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 	    }
 
-#define YDIMS_ET_CETERA
-	    if (ydims != R_NilValue) {						\
-		if (ldy == 2) {							\
-		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));		\
-		    dny = getAttrib(ydims, R_NamesSymbol);			\
-		    if(!isNull(dny))						\
-			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 1));	\
-		} else if (nry == 1) {						\
-		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));		\
-		    dny = getAttrib(ydims, R_NamesSymbol);			\
-		    if(!isNull(dny))						\
-			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0));	\
-		}								\
-	    }									\
-										\
-	    /* We sometimes attach a dimnames attribute				\
-	     * whose elements are all NULL ...					\
-	     * This is ugly but causes no real damage.				\
-	     * Now (2.1.0 ff), we don't anymore: */				\
-	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||				\
-		VECTOR_ELT(dimnames,1) != R_NilValue) {				\
-		if (dnx != R_NilValue || dny != R_NilValue)			\
-		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);		\
-		setAttrib(ans, R_DimNamesSymbol, dimnames);			\
-	    }									\
+#define YDIMS_ET_CETERA							\
+	    if (ydims != R_NilValue) {					\
+		if (ldy == 2) {						\
+		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));	\
+		    dny = getAttrib(ydims, R_NamesSymbol);		\
+		    if(!isNull(dny))					\
+			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 1)); \
+		} else if (nry == 1) {					\
+		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));	\
+		    dny = getAttrib(ydims, R_NamesSymbol);		\
+		    if(!isNull(dny))					\
+			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0)); \
+		}							\
+	    }								\
+									\
+	    /* We sometimes attach a dimnames attribute			\
+	     * whose elements are all NULL ...				\
+	     * This is ugly but causes no real damage.			\
+	     * Now (2.1.0 ff), we don't anymore: */			\
+	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||			\
+		VECTOR_ELT(dimnames,1) != R_NilValue) {			\
+		if (dnx != R_NilValue || dny != R_NilValue)		\
+		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);	\
+		setAttrib(ans, R_DimNamesSymbol, dimnames);		\
+	    }								\
 	    UNPROTECT(2)
 
 	    YDIMS_ET_CETERA;
@@ -725,7 +725,6 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 #undef YDIMS_ET_CETERA
-
 
 SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
