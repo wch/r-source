@@ -20,9 +20,6 @@ Sys.getenv(x)
   On most platforms \code{Sys.getenv()} will return a named vector giving
   the values of all the environment variables.
 }
-\note{
-  \code{getenv} is an alias for backwards compatibility.
-}
 \seealso{
   \code{\link{Sys.putenv}},
   \code{\link{getwd}} for the working directory.

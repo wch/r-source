@@ -24,15 +24,15 @@ gl(n, k, length = n*k, labels = 1:n, ordered = FALSE)
   \code{gl} is modelled on the \emph{GLIM} function of the same name.
 }
 \seealso{
-  The underlying \code{\link{factor}(.)}.}
+  The underlying \code{\link{factor}()}.
+}
 \examples{
-# First control, then treatment:
-gl(2,8, label=c("Control","Treat"))
-# 20 alternating 1s and 2s
+## First control, then treatment:
+gl(2, 8, label = c("Control", "Treat"))
+## 20 alternating 1s and 2s
 gl(2, 1, 20)
-# alternating pairs of 1s and 2s
+## alternating pairs of 1s and 2s
 gl(2, 2, 20)
-
 }
 \keyword{category}
 \keyword{arith}
