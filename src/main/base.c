@@ -59,6 +59,7 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp));
 	break;
     case GE_CopyState:
+	sd = dd->gesd[baseRegisterIndex];
 	curdd = GEcurrentDevice();
 	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dpSaved),
 		 &(((baseSystemState*) 
