@@ -57,6 +57,12 @@ ltsreg(\ldots)
   required variable.  (NOTE: If given, this argument must be named
   exactly.)
 }
+\item{model}{logical. If \code{TRUE} the model frame is returned.
+}
+\item{contrasts}{
+  an optional list. See the \code{contrasts.arg}
+  of \code{model.matrix.default}.
+}
 \item{x}{
   a matrix or data frame containing the explanatory variables.
 }
@@ -82,6 +88,7 @@ ltsreg(\ldots)
   the seed to be used for random sampling: see \code{.Random.seed}. The
   current value of \code{.Random.seed} will be preserved if it is set..
 }
+
 \item{\dots}{
   arguments to be passed to \code{lqs.default} or \code{lqs.control}.
 }}
