@@ -979,6 +979,43 @@ if test "x${r_cv_func_log_works}" = xyes; then
 fi
 ])# R_FUNC_LOG
 
+AC_DEFUN([R_FUNC_LOG1P],
+[AC_CACHE_CHECK([for working log1p], [r_cv_func_log1p_works],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <math.h>
+#include "confdefs.h"
+int main () {
+#ifdef HAVE_LOG1P
+  int k;
+  double d;
+  double x;
+  /* log(1+x) = x - (1/2)x^2 + (1/3)x^3 - (1/4)x^4 ... */
+  /*          = x for x sufficiently small */
+  for(k = -54; k > -1074; --k) {	
+    x = pow(2.0, (double)(k));
+    if(x == 0.0)
+      exit(0);			/* OK: reached underflow limit */
+    d = log1p(x);
+    if(d == 0.0)
+      exit(1);			/* ERROR: inaccurate log1p() */
+    if(d != x)
+      exit(1);			/* ERROR: inaccurate log1p() */
+  }	
+  exit(0);
+#else
+  exit(1);
+#endif
+}
+]])],
+               [r_cv_func_log1p_works=yes],
+               [r_cv_func_log1p_works=no],
+               [r_cv_func_log1p_works=no])])
+if test "x${r_cv_func_log1p_works}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_LOG1P, 1,
+            [Define if log1p() exists and is accurate enough.])
+fi
+])# R_FUNC_LOG1P
+
 AC_DEFUN([R_FUNC_STRPTIME],
 [AC_CACHE_CHECK([for working strptime], [r_cv_func_strptime_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[

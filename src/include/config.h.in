@@ -378,6 +378,9 @@
 /* Define if log() is correct for 0/-1. */
 #undef HAVE_WORKING_LOG
 
+/* Define if log1p() exists and is accurate enough. */
+#undef HAVE_WORKING_LOG1P
+
 /* Define if strptime() exists and does not fail pre-1970. */
 #undef HAVE_WORKING_STRPTIME
 
