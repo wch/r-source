@@ -37,6 +37,9 @@ else
 RHOME=$(shell perl ../../src/gnuwin32/pwd.pl ../..)
 endif
 
+MAKEINFO_HTML_OPTS = --html --no-split
+TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
+
 R_PAPERSIZE = a4
 R_RD4DVI = ae
 # omit 'hyper' to omit the hyperlinks
@@ -66,7 +69,7 @@ all: pdf
 	$(TEX) $<
 
 .texi.html:
-	$(MAKEINFO) -D UseExternalXrefs --no-split --html $< -o $@ || touch $@
+	$(TEXI2HTML) -D UseExternalXrefs $< -o $@ || touch $@
 
 .texi.info:
 	$(MAKEINFO) -D UseExternalXrefs $<
@@ -83,7 +86,7 @@ R-admin.html:
 	if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
 	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
 	else \
-	  $(MAKEINFO) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
+	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
 	fi
 
 dvi: refman.dvi $(OBJECTS_DVI)

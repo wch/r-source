@@ -35,7 +35,7 @@
 
 /* These are used in ../gnuwin32/system.c, ../unix/sys-std.c */
 SA_TYPE SaveAction = SA_SAVEASK;
-static SA_TYPE	RestoreAction = SA_RESTORE;
+SA_TYPE	RestoreAction = SA_RESTORE;
 static Rboolean LoadSiteFile = TRUE;
 Rboolean LoadInitFile = TRUE;  /* Used in R_OpenInitFile */
 static Rboolean DebugInitFile = FALSE;
