@@ -1,3 +1,6 @@
+[This is here for historical reasons only;  
+ please read ./INSTALL for Installation instructions !]
+
 Macintosh porting of R
 ======================
 
@@ -70,7 +73,3 @@ stefano.iacus@unimi.it
 Milano, Jan 7 2001
 
            Stefano M. Iacus
-
-
-
-
