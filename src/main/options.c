@@ -159,20 +159,23 @@ static SEXP SetOption(SEXP tag, SEXP value)
 void InitOptions(void)
 {
     SEXP t, val, v;	
-    PROTECT(v = val = allocList(7));
+    PROTECT(v = val = allocList(8));
     TAG(v) = install("prompt"); CAR(v) = mkString("> "); v = CDR(v);
     TAG(v) = install("continue"); CAR(v) = mkString("+ "); v = CDR(v);
     TAG(v) = install("editor"); CAR(v) = mkString("vi"); v = CDR(v);
     TAG(v) = install("expressions"); CAR(v) = optInteger(100); v = CDR(v);
     TAG(v) = install("width"); CAR(v) = optInteger(80); v = CDR(v);
     TAG(v) = install("digits"); CAR(v) = optInteger(7); v = CDR(v);
-    TAG(v) = install("contrasts"); CAR(v) = allocVector(STRSXP,2);
+    TAG(v) = install("contrasts"); CAR(v) = allocVector(STRSXP, 2);
     STRING(CAR(v))[0] = mkChar("contr.treatment");
     STRING(CAR(v))[1] = mkChar("contr.poly");
-    PROTECT(t = allocVector(STRSXP,2));
+    PROTECT(t = allocVector(STRSXP, 2));
     STRING(t)[0] = mkChar("unordered");
     STRING(t)[1] = mkChar("ordered");
-    namesgets(CAR(v), t);
+    namesgets(CAR(v), t); v = CDR(v);
+    TAG(v) = install("verbose");
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = R_Verbose;
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
 }
