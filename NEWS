@@ -203,6 +203,18 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.7.2
+
+
+BUG FIXES
+
+    o	cut.POSIXt() now passes on ... to cut.default(), as documented.
+
+    o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
+	the length incorrectly.
+
+
+
 		CHANGES IN R VERSION 1.7.1
 
 
@@ -407,11 +419,6 @@ BUG FIXES
 
     o	qbeta() now has slightly improved C code in two places, as suggested
 	in the 2nd followup to PR#2894.
-
-    o	cut.POSIXt() now passes on ... to cut.default(), as documented.
-
-    o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
-	the length incorrectly.
 
 
 
