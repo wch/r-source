@@ -134,14 +134,3 @@ plot.new <- function(ask=NA)
 	.Internal(plot.new(ask))
 
 frame <- plot.new
-
-save.plot <- function(...)
-{
-	stop("save.plot() is deprecated, use dev.copy() instead")
-}
-
-print.plot <- function(...)
-{
-	stop("print.plot() is deprecated, use dev.print() instead")
-}
-
