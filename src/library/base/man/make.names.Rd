@@ -34,6 +34,10 @@ make.names(names, unique = FALSE, allow_ = TRUE)
   Prior to \R version 1.9.0, underscores were not valid in variable names,
   and code that relies on them being converted to dots will no longer
   work. Use \code{allow_ = FALSE} for back-compatibility.
+
+  \code{allow_ = FALSE} is also useful when creating names for export to
+  applications which do not allow underline in names (for example,
+  S-PLUS and some DBMSs).
 }
 \seealso{
   \code{\link{make.unique}},
