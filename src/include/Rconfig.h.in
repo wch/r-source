@@ -1,5 +1,5 @@
-#ifndef PLATFORM_H_
-#define PLATFORM_H_
+#ifndef RCONFIG_H_
+#define RCONFIG_H_
 
 #define Unix
 
@@ -27,6 +27,8 @@
 #undef HAVE_ISNAN		/* IEEE Arith indicator */
 #undef HAVE_FINITE
 
+#undef HAVE_FLOATINGPOINT_H
+#undef HAVE_FPU_CONTROL_H
 #undef HAVE_IEEEFP_H		/* "-Wall" */
 #undef HAVE_IEEE754_H		/* Linux */
 
@@ -56,12 +58,12 @@
 
 /* Process Timing */
 #undef HAVE_TIMES
-#undef HAVE_TIMES_H
 #undef HAVE_SYS_TIME_H
 #undef HAVE_SYS_TIMES_H
 #undef TIME_WITH_SYS_TIME
 
 /* XDR Library Available */
+#undef HAVE_RPC_RPC_H
 #undef HAVE_RPC_XDR_H
 
 /* HDF5 Library Available */
@@ -121,9 +123,19 @@
 /* GNU Readline Library */
 #undef HAVE_LIBREADLINE
 #undef HAVE_READLINE_HISTORY_H
+#undef HAVE_READLINE_READLINE_H
 
+/* Miscellaneous */ 
 #undef HAVE_LOCALE_H
+#undef HAVE_SYS_STAT_H
+#undef HAVE_SYS_TYPES_H
 #undef HAVE_UNISTD_H
+
+/* Dirent stuff */
+#undef HAVE_DIRENT_H
+#undef HAVE_SYS_NDIR_H
+#undef HAVE_SYS_DIR_H
+#undef HAVE_NDIR_H
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
@@ -153,32 +165,9 @@
 
 /* Getting the working directory */
 #undef HAVE_GETCWD
-#if defined(HAVE_GETCWD)
-#define R_GETCWD(x, y) getcwd(x, y)
-#elif defined(Win32)
-#define R_GETCWD(x, y) GetCurrentDirectory(y, x)
-#else
-#undef R_GETCWD
-#endif
 
 /* Maximal length of an entire file name */
-#undef HAVE_LIMITS_H
 #undef HAVE_SYS_PARAM_H
-#if defined(HAVE_LIMITS_H)
-#  include <limits.h>
-#endif
-#if !defined(PATH_MAX)
-#  if defined(HAVE_SYS_PARAM_H)
-#    include <sys/param.h>
-#  endif
-#  if defined(MAXPATHLEN) && !defined(PATH_MAX)
-#    define PATH_MAX MAXPATHLEN
-#  elif defined(Win32)
-#    define PATH_MAX 260
-#  else
-#    define PATH_MAX 255
-#  endif
-#endif
 
 /* for platform.c to put in .Platform */
 #ifdef Unix

@@ -69,11 +69,32 @@
 #endif
 */
 
+/* Getting the working directory */
+#if defined(HAVE_GETCWD)
+#define R_GETCWD(x, y) getcwd(x, y)
+#elif defined(Win32)
+#define R_GETCWD(x, y) GetCurrentDirectory(y, x)
+#else
+#undef R_GETCWD
+#endif
+
+/* Maximal length of an entire file name */
+#if !defined(PATH_MAX)
+#  if defined(HAVE_SYS_PARAM_H)
+#    include <sys/param.h>
+#  endif
+#  if defined(MAXPATHLEN) && !defined(PATH_MAX)
+#    define PATH_MAX MAXPATHLEN
+#  elif defined(Win32)
+#    define PATH_MAX 260
+#  else
+#    define PATH_MAX 255
+#  endif
+#endif
+
 #define HSIZE	   4119	/* The size of the hash table for symbols */
 #define MAXELTSIZE 8192 /* The largest string size */
 #define MAXIDSIZE   256	/* Largest symbol size possible */
-
-
 
 /* The type of the do_xxxx functions. */
 /* These are the built-in R functions. */
