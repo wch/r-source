@@ -394,13 +394,17 @@ static void deparse2buff(SEXP s)
 	print2buff("<environment>");
 	break;
     case VECSXP:
+	fop = 0;
 	if(length(s) <= 0) print2buff("NULL");
 	else {
-	    attr1(s);
+    	    if(length(ATTRIB(s)) > 1 || TAG(ATTRIB(s)) != R_NamesSymbol) {
+	        attr1(s); 
+		fop = 1;
+	    }
 	    print2buff("list(");
 	    vec2buff(s);
 	    print2buff(")");
-	    attr2(s);
+	    if (fop) attr2(s);
 	}
 	break;
     case EXPRSXP:
