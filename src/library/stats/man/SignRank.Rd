@@ -46,13 +46,13 @@ rsignrank(nn, n)
   used to do the calculations for all combinations of the two up to
   the length of the longer vector.
 }
-\author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
+\author{Kurt Hornik}
 \seealso{
   \code{\link{wilcox.test}} to calculate the statistic from data, find p
   values and so on.
   
-  \code{\link{dwilcox}} etc, for the distribution of \emph{two-sample} Wilcoxon
-  rank sum statistic.
+  \code{\link{dwilcox}} etc, for the distribution of \emph{two-sample}
+  Wilcoxon rank sum statistic.
 }
 \examples{
 par(mfrow=c(2,2))
