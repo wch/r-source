@@ -1903,25 +1903,29 @@ variable @code{MAKE} at configure time, for example
 @section Using FORTRAN
 @cindex FORTRAN
 
+@menu
+* Using gfortran::              
+@end menu
+
 To compile @R{}, you need a FORTRAN compiler or @command{f2c}, the
 FORTRAN-to-C converter (@url{http://www.netlib.org/f2c}).  The default
 is to search for @command{g77}, @command{f77}, @command{xlf},
-@command{frt}, @command{pgf77}, @command{fl32}, @command{af77},
-@command{fort77}, @command{f90}, @command{xlf90}, @command{pgf90},
+@command{frt}, @command{pgf77}, @command{fort77}, @command{fl32},
+@command{af77},@command{f90}, @command{xlf90}, @command{pgf90},
 @command{epcf90}, @command{f95}, @command{fort}, @command{xlf95},
-@command{lf95}, @command{g95}, and @command{fc} (in that
-order)@footnote{On HP-UX @command{fort77} is the @acronym{POSIX}
-compliant FORTRAN compiler, and comes second in the search list.}, and
-then for @command{f2c}, and use whichever is found first; if none is
-found, @R{} cannot be compiled.  The search mechanism can be changed
-using the configure variables @code{F77} and @code{F2C} which specify
-the commands that run the FORTRAN 77 compiler and FORTRAN-to-C
-converter, respectively.  If @code{F77} is given, it is used to compile
-FORTRAN; otherwise, if @code{F2C} is given, f2c is used even if a
-FORTRAN compiler would be be available.  If your FORTRAN compiler is in
-a non-standard location, you should set the environment variable
-@env{PATH} accordingly before running @command{configure}, or use the
-configure variable @code{F77} to specify its full path.
+@command{ifc}, @command{efc}, @command{pgf95} @command{lf95}, and
+@command{gfortran} (in that order)@footnote{On HP-UX @command{fort77} is
+the @acronym{POSIX} compliant FORTRAN compiler, and comes second in the
+search list.}, and then for @command{f2c}, and use whichever is found
+first; if none is found, @R{} cannot be compiled.  The search mechanism
+can be changed using the configure variables @code{F77} and @code{F2C}
+which specify the commands that run the FORTRAN 77 compiler and
+FORTRAN-to-C converter, respectively.  If @code{F77} is given, it is
+used to compile FORTRAN; otherwise, if @code{F2C} is given, f2c is used
+even if a FORTRAN compiler would be be available.  If your FORTRAN
+compiler is in a non-standard location, you should set the environment
+variable @env{PATH} accordingly before running @command{configure}, or
+use the configure variable @code{F77} to specify its full path.
 
 If your FORTRAN libraries are in slightly peculiar places, you should
 also look at @env{LD_LIBRARY_PATH} or your system's equivalent to make
@@ -1950,6 +1954,29 @@ If you use @command{f2c} you may need to ensure that the FORTRAN type
 @code{integer} is translated to the C type @code{int}.  Normally
 @file{f2c.h} contains @samp{typedef long int integer;}, which will work
 on a 32-bit platform but not on a 64-bit platform.
+
+@node Using gfortran,  , Using FORTRAN, Using FORTRAN
+@subsection Using gfortran
+
+@command{gfortran} is the F95 compiler that is part of @code{gcc
+4.x.y}.@footnote{unreleased at the time of writing (April 2005) but
+already part of several Linux distributions. @command{gfortran} has also
+been available separately.}  At least on @code{ix86} and @code{x86_64}
+Linux and MacOS X there is a problem with using the dynamic version of
+the Fortran runtime @code{libgfortran}: if this is loaded redirection of
+C @file{stdin} (which @R{} uses in many of its scripts) becomes
+non-functional.  The workaround is to use the static version of
+@code{libgfortran} if possible.@footnote{On some platforms this will not
+have been compiled with PIC flags and so it will not be possible.}  One
+way to do so is to set @code{FLIBS} @emph{before} configuration, for
+example by including
+@example
+FLIBS=/usr/local/lib/libgfortran.a
+@end example
+on the @command{configure} command-line.
+
+Note: loading a package linked against the dynamic version of
+@code{libgfortran} is sufficient to cause the problem.
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
@@ -2075,9 +2102,13 @@ this was really an alias for the linker flag @option{-lieee}.  Neither
 are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
 could conceivably be needed on an older version.
 
-Experiments with using @code{gfortran} are currently (Nov 2004)
-unsuccessful.
-
+Several Linux distributions have shipped versions of the currently
+unreleased @code{gcc 4.0.0} and its Fortran compiler @command{gfortran}
+(see the separate comments).  Some versions of @code{gcc4} such as that
+in Fedora Core 3 produce incorrect code, and those of April 2005 were
+unable to compile some parts of R with full optimization.  In our
+experiments @code{gcc 3.4.3} always produced faster and more reliable
+code.
 
 @node Mac OS X, Solaris, Linux, Platform notes
 @subsection Mac OS X
@@ -2125,9 +2156,10 @@ failure with @command{gcc 3.3}.)
 @R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
 5.8 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
 Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
-7), and less regularly on Solaris 2.6, 2.7 and 9.  @acronym{GNU}
+7), and less regularly on Solaris 9 and 10.  @acronym{GNU}
 @command{make} was needed prior to Solaris 2.7 for building other than
-in the source tree, and perhaps even then.
+in the source tree, and is sometimes needed to establish the correct
+dependencies when rebuilding.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -2238,6 +2270,8 @@ only with the Forte compiler (and not with @command{gcc}) as of Tcl/Tk 8.4.5.
 @subsection HP-UX
 @cindex HP-UX
 
+The reports on HP-UX here predate @R{} 2.0.0.
+
 @R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
 native compilers and @command{gcc}.  However, 10.2 has not been tested
 since @R{} 1.4.0.  By default, @R{} is configured to use @command{gcc} and
@@ -2333,6 +2367,8 @@ LDFLAGS=/opt/fortran90/lib}).
 @node IRIX, Alpha/OSF1, HP-UX, Platform notes
 @subsection IRIX
 @cindex IRIX
+
+The reports on IRIX here predate @R{} 2.0.0.
 
 @R{} has been built successfully on IRIX64 6.5 using
 @command{gcc}/@command{f77} or @command{cc}/@command{f77} for 32-bit
