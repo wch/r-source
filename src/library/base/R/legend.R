@@ -73,7 +73,7 @@ function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     }
     if(!merge) w <- w + (dx.pch <- x.intersp/2 * xchar)
   }
-  do.lines <- (!missing(lty) && any(ok.l <- lty > 0)) || !missing(lwd)
+  do.lines <- (!missing(lty) && any(lty > 0)) || !missing(lwd)
   if(do.lines)
     if(!merge) w <- w + x.intersp * xchar
 
@@ -118,7 +118,8 @@ function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     if (!merge) xt <- xt + dx.pch
   }
   if (do.lines) {                       #- draw lines ---------------------
-    if(missing(lty)) lty <- 1
+    if(missing(lty)) { lty <- 1; ok.l <- TRUE }
+    else ok.l <- lty > 0
     if(missing(lwd)) lwd <- 1
     lty <- rep(lty, length.out = n.leg)
     lwd <- rep(lwd, length.out = n.leg)
@@ -131,9 +132,6 @@ function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     if (!merge) xt <- xt + 3 * xchar
   }
   if (merge) xt <- xt + x.intersp * xchar
-
-  ## text(.)  works itself in log-coordinates
-  ## -------  however, the adj in y-direction looks wrong :
 
   ## adj = (x,y) text-box adjustment
   if(trace)
