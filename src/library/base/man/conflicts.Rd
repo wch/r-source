@@ -33,6 +33,6 @@ conflicts(, TRUE)
 # [1] "lm"
 
 ## Remove things from your "workspace" that mask others:
-remove(list = conflicts())
+remove(list = conflicts(detail=TRUE)$.GlobalEnv)
 }
 \keyword{utilities}
