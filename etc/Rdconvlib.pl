@@ -783,9 +783,9 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
 }
 
 
-# Convert a Rdoc text string to nroff
-#   $_[0]: text to be converted
-#   $_[1]: (optional) indentation of paragraphs. default = $INDENT
+### Convert a Rdoc text string to nroff
+###   $_[0]: text to be converted
+###   $_[1]: (optional) indentation of paragraphs. default = $INDENT
 
 sub text2nroff {
 
@@ -798,7 +798,9 @@ sub text2nroff {
     }
 
     $text =~ s/^\.|([\n\(])\./$1\\\&./g;
-    $text =~ s/\s/ /g;
+
+    ## TABs are just whitespace
+    $text =~ s/\t/ /g;
 
     ## tables are pre-processed by the tbl(1) command, so this has to
     ## be done first
