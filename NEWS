@@ -222,6 +222,8 @@ BUG FIXES
     o	Using `destroy' or `close' on the X11 dataentry window frame
 	killed R.
 
+    o	Multiple `destroy' events or X11 errors killed R (PR#400).
+
 
 		CHANGES IN R VERSION 1.0.1
 

@@ -1133,6 +1133,20 @@ void closewin()
     XCloseDisplay(iodisplay);
 }
 
+static int R_X11Err(Display *dsp, XErrorEvent *event)
+{
+    char buff[1000];
+    XGetErrorText(dsp, event->error_code, buff, 1000);
+    warning("X11 protocol error: %s", buff);
+    return 0;
+}
+
+static int R_X11IOErr(Display *dsp)
+{
+    error("X11 fatal IO error: please save work and shut down R");
+    return 0; /* but should never get here */
+}
+
 /* set up the window, print the grid and column/row labels */
 
 int initwin()
@@ -1147,8 +1161,9 @@ int initwin()
     XSetWindowAttributes winattr;
     XWindowAttributes attribs;
 
-    if ((iodisplay = XOpenDisplay(NULL)) == NULL)
-	return (1);
+    if ((iodisplay = XOpenDisplay(NULL)) == NULL) return (1);
+    XSetErrorHandler(R_X11Err);
+    XSetIOErrorHandler(R_X11IOErr);	
 
     /* Get Font Loaded if we can */
 
