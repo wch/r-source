@@ -33,9 +33,10 @@ princomp <- function(x, cor = FALSE, scores = TRUE, covmat = NULL,
     }
     cn <- paste("Comp.", 1:ncol(cv), sep = "")
     names(ev) <- cn
-    dimnames(edc$vectors) <- list(dimnames(x)[[2]], cn)
+    dimnames(edc$vectors) <- if(missing(x))
+        list(dimnames(cv)[[2]], cn) else list(dimnames(x)[[2]], cn)
     sdev <- sqrt(ev)
-    sc <- if (cor) sds else rep(1, ncol(z))
+    sc <- if (cor) sds else rep(1, ncol(cv))
     names(sc) <- colnames(cv)
     scr <- if (scores && !missing(x))
         scale(z, center = TRUE, scale = sc) %*% edc$vectors
