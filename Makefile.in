@@ -9,6 +9,17 @@ top_builddir = .
 
 include $(top_builddir)/Makeconf
 
+distdir = $(PACKAGE)-$(VERSION)
+DISTFILES = COPYING COPYRIGHTS INSTALL MIRROR-SITES NEWS PLATFORMS \
+	PROJECTS README RESOURCES TASKS \
+	Makeconf.in Makefile.in \
+	config.site configure configure.in configure.mac configure.win \
+	date-stamp
+SUBDIRS = afm demos doc etc src tests
+
+GZIP = --best
+TAR = tar
+
 all: Makefile R docs
 
 Makefile:
@@ -20,6 +31,7 @@ R: stamp-R
 stamp-R: $(top_builddir)/src/include/Platform.h \
 	  $(top_srcdir)/src/*/*.[chf] \
 	  $(top_srcdir)/src/library/*/R/*.R
+	@rm -f $@
 	@for d in afm demos doc etc src; do \
 	  (cd $$d && $(MAKE) R); \
 	done
@@ -59,7 +71,7 @@ install: all installdirs
 	  $(INSTALL_DATA) $$f $(rhome)/include; \
 	done
 	@echo "Installing library ..."
-	@cd library; tar cf - [a-z]* | (cd $(rhome)/library; tar xf -)
+	@cd library; $(TAR) cf - [a-z]* | (cd $(rhome)/library; tar xf -)
 	@echo "  Building help index ..."
 	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
 	@echo "  Building HTML index ..."
@@ -95,20 +107,48 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@for d in afm demos doc etc src; do \
+	@for d in $(SUBDIRS); do \
 	  (cd $$d && $(MAKE) $@); \
 	done
 	@rm -f stamp-R
 distclean: clean
-	@for d in afm demos doc etc src; do \
-	  (cd $$d && $(MAKE) $@); \
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@); \
 	done
 	@rm -rf bin/* include/* library/*
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.f77 \
 	  config.cache config.log config.status
 maintainer-clean: distclean
 
-dist:
+dist: dist-unix
+dist-unix: distdir
+	-chmod -R a+r $(distdir)
+	GZIP=$(GZIP) $(TAR) chozf $(distdir).tar.gz $(distdir)
+	rm -rf $(distdir)
+dist-win:
+distdir: $(DISTFILES)
+	@rm -rf $(distdir)
+	@mkdir $(distdir)
+	@-chmod 755 $(distdir)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+            || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in $(SUBDIRS); do \
+	  test -d $(distdir)/$${d} \
+	    || mkdir $(distdir)/$${d} \
+	    || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
+        done
+	@for d in aux debian; do \
+	  (cd $(srcdir); \
+	    FILES=`find $${d} | sed '/CVS/d'`; \
+	    tar cf - $${FILES} | (cd $(distdir); tar xf -)) \
+	    || exit 1; \
+	done
 
 dvi:
 	-@(cd doc && $(MAKE) $@)
