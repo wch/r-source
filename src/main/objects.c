@@ -261,7 +261,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(matchedarg = cptr->promargs);
     PROTECT(newcall = duplicate(cptr->call));
 
-    class = R_data_class(obj, FALSE);
+    PROTECT(class = R_data_class(obj, FALSE));
     nclass = length(class);
     for (i = 0; i < nclass; i++) {
 	if(strlen(generic) + strlen(CHAR(STRING_ELT(class, i))) + 2 > 512)
@@ -299,7 +299,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 	    R_GlobalContext->callflag = CTXT_GENERIC;
 	    *ans = applyMethod(t, sxp, matchedarg, rho, newrho);
 	    R_GlobalContext->callflag = CTXT_RETURN;
-	    UNPROTECT(4);
+	    UNPROTECT(5);
 	    return 1;
 	}
     }
@@ -325,10 +325,10 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 	R_GlobalContext->callflag = CTXT_GENERIC;
 	*ans = applyMethod(t, sxp, matchedarg, rho, newrho);
 	R_GlobalContext->callflag = CTXT_RETURN;
-	UNPROTECT(4);
+	UNPROTECT(5);
 	return 1;
     }
-    UNPROTECT(4);
+    UNPROTECT(5);
     cptr->callflag = CTXT_RETURN;
     return 0;
 }
