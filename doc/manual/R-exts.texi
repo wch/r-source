@@ -1635,7 +1635,7 @@ We need to know a little about the way @R{} handles memory allocation.
 The memory allocated for @R{} objects is not freed by the user; instead,
 the memory is from time to time @dfn{garbage collected}.  That is, some
 or all of the allocated memory not being used is freed.  (Prior to
-@R{} 1.2, objects could be moved, to.)
+@R{} 1.2, objects could be moved, too.)
 
 The @R{} object types are represented by a C structure defined by a
 typedef @code{SEXPREC} in @file{Rinternals.h}.  It contains several
