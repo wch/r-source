@@ -25,12 +25,10 @@ hist.default <-
 		    stop("invalid number of breaks")
 		breaks
 	    }
-	breaks <- pretty (rx + c(-1,1)/1000 * dx, n = nnb)
+	breaks <- pretty (rx, n = nnb, min.n=1, eps.corr = 2)
 	nB <- length(breaks)
-	if(nB == 1) {##	 search anew for breaks; dx is (always ?) 0.
-	    breaks <-
-		if(abs(breaks) > 1e-20) sort(breaks * c(.8, 1.2)) else c(-.2,.2)
-	    nB <- length(breaks)
+	if(nB <= 1) { ##-- Impossible !
+	    stop(paste("hist.default: pretty() error, breaks=",format(breaks)))
 	}
     }
     storage.mode(x) <- "double"
