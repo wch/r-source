@@ -188,7 +188,11 @@ getAllMethods <-
     ## a skeleton version is assigned to prevent recursive loops:  remove this
     ## in case of errros in getAllMethods
     on.exit(resetGeneric(f, fdef))
-    methods <- NULL
+    ## initialize with a check for basic functions (primitives)
+      ## For all others, the initial value of methods will be NULL
+    methods <- elNamed(.BasicFunsList, f)
+      if(!is.null(methods))  # it better be a genericFunction object
+          methods <- methods@default
     funs <- c(fdef, groups)
     for(fun in rev(funs))
       for(where in rev(libs)) {
@@ -450,6 +454,8 @@ assignMethodsMetaData <-
     resetGeneric(f, fdef)
     if(is.primitive(deflt))
         setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
+    if(is(fdef, "groupGenericFunction")) # reset or turn on members of group
+        cacheGenericsMetaData(fdef@generic, package = fdef@package)
   }
 
 mlistMetaName <-
@@ -486,76 +492,78 @@ is.primitive <-
     
 
 cacheMetaData <-
-  function(envir, attach = TRUE) {
+  function(where, attach = TRUE) {
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
-    generics <- getGenerics(envir)
+    generics <- getGenerics(where)
     if(length(generics)>0)
-      cacheGenericsMetaData(generics, attach, envir)
+      cacheGenericsMetaData(generics, attach, where)
   }
 
-cacheGenericsMetaData <-
-  function(generics, attach = TRUE, envir = NULL) {
-      if(is(generics, "ObjectsWithPackage"))
-          packages <- generics@package
-      else
-          packages <- rep("<unknown>", length(generics))
+cacheGenericsMetaData <- function(generics, attach = TRUE, where, package) {
+    if(missing(package)) {
+        if(is(generics, "ObjectsWithPackage"))
+            package <- generics@package
+        else
+            package <- character(length(generics))
+    }
     for(i in seq(along=generics)) {
         f <- generics[[i]]
-        pkg <- packages[[i]]
-        if(nchar(pkg) == 0){
-            lib <- getPackageName(envir)
-            warning("The methods object stored for \"", f,
-                    "\" has no package name in the metadata name (may need to re-install ",
-                    lib, ")")
-        }
+        ## FIXME:  should use package information in getGeneric call: pkg <- package[[i]]
         ## Some tests: don't cache generic if no methods defined
         fdef <- getGeneric(f)
         if(!is(fdef, "genericFunction"))
             next
         if(attach) {
-            if(!isGeneric(fdef@generic))
-                next
-            methods <- getMethods(f)
-            if(is.null(methods))
-                next
-            methods <- methods@methods
-            if(length(methods)==0)
-                next
+            if(is.null(elNamed(.BasicFunsList, f))) {
+                if( !isGeneric(fdef@generic))
+                    next
+                methods <- getMethods(f)
+                if(is.null(methods))
+                    next
+                methods <- methods@methods
+                if(length(methods)==0)
+                    next
+            }
+            ## else, this is a primitive generic, so the assertion is that we
+            ## found methods for it, or for one of its group generics.  So go
+            ## ahead and turn method dispatch on
         }
-      ## find the function.  It may be a generic, but will be a primitive
-      ## if the internal C code is being used to dispatch methods for primitives.
-      ## It may also be NULL, if no function is found (when detaching the only
-      ## package defining this function, for example).
-      deflt <- finalDefaultMethod(fdef@default)
-      if(is.primitive(deflt)) {
-        if(attach) code <- "reset"
+        ## find the function.  It may be a generic, but will be a primitive
+        ## if the internal C code is being used to dispatch methods for primitives.
+        ## It may also be NULL, if no function is found (when detaching the only
+        ## package defining this function, for example).
+        deflt <- finalDefaultMethod(fdef@default)
+        if(is.primitive(deflt)) {
+            if(attach) code <- "reset"
+            else {
+                code <- "clear"
+                if(!missing(where)) {
+                    dbs <- find(mlistMetaName(f))
+                    if(is.numeric(where))
+                        where <- search()[where]
+                    ## are there other methods for f still left?
+                    if((is.environment(where) && length(dbs)>1) ||
+                       (any(is.na(match(dbs, where)))))
+                        code <- "reset"
+                }
+            }
+            switch(code,
+                   reset = setPrimitiveMethods(f, deflt, code, fdef, NULL),
+                   clear = setPrimitiveMethods(f, deflt, code, NULL, NULL))
+        }
         else {
-          code <- "clear"
-          for(i in search()) {
-            envi <- as.environment(i)
-            if(identical(envi, envir))
-              next
-            if(!is.null(getMethodsMetaData(f, envi)))
-              {code <- "reset"; break}
-          }
+            resetGeneric(f, fdef)
+            if(isGroup(f, fdef = fdef)) {
+                members <- fdef@groupMembers
+                ## do the computations for the members as well; important if the
+                ## members are primitive functions.
+                if(length(members)>0)
+                    Recall(members, attach, where)
+            }
         }
-        switch(code,
-               reset = setPrimitiveMethods(f, deflt, code, fdef, NULL),
-               clear = setPrimitiveMethods(f, deflt, code, NULL, NULL))
-      }
-      else {
-          resetGeneric(f, fdef)
-          if(isGroup(f, fdef = fdef)) {
-              members <- fdef@groupMembers
-              ## do the computations for the members as well; important if the
-              ## members are primitive functions.
-              if(length(members)>0)
-                  Recall(members, attach, envir)
-          }
-      }
     }
-  }
+}
 
 setPrimitiveMethods <-
   function(f, fdef, code, generic, mlist = get(".Methods", envir = environment(generic)))

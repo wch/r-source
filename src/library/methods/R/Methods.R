@@ -17,6 +17,15 @@ setGeneric <-
         message("Function \"", name, "\" is already a generic; no change")
         return(name)
     }
+    if(exists(name, "package:base") &&
+         typeof(get(name, "package:base")) != "closure") {
+        msg <- paste("\"",name, "\" is a primitive function; its generic definition is built in and automatically included.", sep="")
+        if(nargs() == 1)
+            warning(msg)
+        else
+            stop(msg)
+        return(name)
+    }
     if(is.null(def)) {
         ## get the current function which may already be a generic
         fdef <- getFunction(name, mustFind = FALSE)
@@ -50,12 +59,7 @@ setGeneric <-
     ## there are two assignment steps.  First, assign the methods metadata
     assignMethodsMetaData(name, methods, fdef, where)
     ## Second, the generic version of the function.
-    ## special treatment for primitives on base.  These MUST not
-    ## be assigned as formal generics, because they are dispatched from the main
-    ## C code.
-    if(!(exists(name, "package:base") &&
-         typeof(get(name, "package:base")) != "closure"))
-        assign(name, fdef, where)
+    assign(name, fdef, where)
     name
 }
 
@@ -196,14 +200,14 @@ setMethod <-
 {
     whereString <- if(is.environment(where)) deparse(where) else where
     ## Methods are stored in metadata in database where.  A generic function will be
-    ## assigned if there is no current generic, and the function is NOT a special.
-    ## Specials are dispatched from the main C code, and an explicit generic NEVER
-    ## exists for them (but getGeneric constructs one if needed).
+    ## assigned if there is no current generic, and the function is NOT a primitive.
+    ## Primitives are dispatched from the main C code, and an explicit generic NEVER
+    ## is assigned for them.
 
     ## slight subtlety:  calling getGeneric vs calling isGeneric
     ## For primitive functions, getGeneric returns the (hidden) generic function,
     ## even if no methods have been defined.  An explicit generic MUST NOT be
-    ## created for these functions, dispatch is done inside the evaluator.
+    ## for these functions, dispatch is done inside the evaluator.
     fdef <- getGeneric(f)
     deflt <- getFunction(f, generic = FALSE, mustFind = FALSE)
     hasMethods <- !is.null(fdef)
@@ -554,18 +558,14 @@ removeMethods <-
     value <- removeMethodsObject(f, where)
     ## call below is done to clear primitive methods if there
     ## are none for this generic on other databases.
-    cacheGenericsMetaData(f, FALSE)
+    cacheGenericsMetaData(f, FALSE, where)
     for(db in where) {
         if(isGeneric(f, db)) {
             if(is.function(default)) {
                 if(is(default, "MethodDefinition"))
-                    attributes(default) <- NULL ## would be better if as(..,"function") worked
+                    default <- as(default, "function") # strict, removes slots
                 cat("Restoring default function definition of", f, "\n")
                 assign(f, default, db)
-            }
-            else {
-                cat("No default method for ", f, "; removing generic function\n")
-                rm(list=f, pos=db)
             }
             break
         }

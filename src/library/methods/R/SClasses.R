@@ -35,8 +35,8 @@ setClass <-
     msg <- trySilent(completeClassDefinition(Class, classDef))
     if(is(msg, "try-error")) {
         removeClass(Class, where=where)
-        stop(paste("Cannot complete class definition for \"", name, "\" (",
-                   msg, ")", sep=""))
+        warning("Cannot complete class definition for \"", Class, "\" (",
+                   msg, ") -- may conflict with previous definitions")
     }
     Class
 }
