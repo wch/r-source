@@ -32,7 +32,7 @@ double dbinom(double x, double n, double p, int give_log)
     if (ISNAN(x) || ISNAN(n) || ISNAN(p)) return x + n + p;
 #endif
     n = floor(n + 0.5);
-    if(n <= 0 || p < 0 || p > 1) ML_ERR_return_NAN;
+    if(n < 0 || p < 0 || p > 1) ML_ERR_return_NAN;
 
     if(fabs(x - floor(x + 0.5)) > 1e-7) {
 	MATHLIB_WARNING("non-integer x = %f", x);
@@ -40,13 +40,13 @@ double dbinom(double x, double n, double p, int give_log)
     }
     if (x < 0 || x > n)
 	return R_D__0;
-    if (p == 0)
-	return (x == 0) ? R_D__1 : R_D__0;
-    if (p == 1)
-	return (x == n) ? R_D__1 : R_D__0;
     if (x == 0)
-	return R_D_exp(n*log1p(-p));
-    if (x == n)
-	return R_D_exp(n*log(p));
-    return R_D_exp(lfastchoose(n, x) + log(p) * x + (n - x) * log1p(-p));
+	return (n == 0 || p == 0) ? R_D__1
+	    : (p == 1) ? R_D__0 : R_D_exp(n*log1p(-p));
+    /* x > 0 : */
+    if (p == 0 || p == 1)
+	return (x == n && p == 1) ? R_D__1 : R_D__0;
+    /* 0 < p < 1 : */
+    return R_D_exp((x == n) ? n*log(p) :
+		   lfastchoose(n, x) + log(p) * x + (n - x) * log1p(-p));
 }
