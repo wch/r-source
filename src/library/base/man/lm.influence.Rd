@@ -1,13 +1,21 @@
 \name{lm.influence}
 \title{Regression Diagnostics}
 \usage{
-lm.influence(lm.obj, do.coef = TRUE)
+influence(model, \dots)
+influence.lm (model, do.coef = TRUE, \dots)
+influence.glm(model, do.coef = TRUE, \dots)
+
+lm.influence(model, do.coef = TRUE)
 }
 \alias{lm.influence}
+\alias{influence}
+\alias{influence.lm}
+\alias{influence.glm}
 \arguments{
-  \item{lm.obj}{an object as returned by \code{\link{lm}}.}
+  \item{model}{an object as returned by \code{\link{lm}}.}
   \item{do.coef}{logical indicating if the changed \code{coefficients}
     (see below) are desired.  These need \eqn{O(n^2 p)} computing time.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   This function provides the basic quantities which are
@@ -17,10 +25,12 @@ lm.influence(lm.obj, do.coef = TRUE)
 \details{
   The \code{\link{influence.measures}()} and other functions listed in
   \bold{See Also} provide a more user oriented way of computing a
-  variety of regression diagnostics.
+  variety of regression diagnostics.  These all build on
+  \code{lm.influence}.
 }
 \value{
-  A list containing the following components:
+  A list containing the following components of the same length or
+  number of rows \eqn{n}, which is the number of non-zero weights.
   \item{hat}{a vector containing the diagonal of the ``hat'' matrix.}
   \item{coefficients}{(unless \code{do.coef} is false) a matrix whose
     i-th row contains the change in the estimated coefficients which
@@ -28,6 +38,8 @@ lm.influence(lm.obj, do.coef = TRUE)
   \item{sigma}{a vector whose i-th element contains the estimate
     of the residual standard deviation obtained when the i-th
     case is dropped from the regression.}
+  \item{wt.res}{a vector of \emph{weighted} (or for class \code{glm}
+    rather \emph{deviance}) residuals.}
 }
 \note{
   The \code{coefficients} returned by the \R version

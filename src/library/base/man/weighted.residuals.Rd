@@ -5,7 +5,8 @@
 weighted.residuals(obj, drop0 = TRUE)
 }
 \arguments{
-  \item{obj}{\R object, typically of class \code{\link{lm}} or \code{\link{glm}}.}
+  \item{obj}{\R object, typically of class \code{\link{lm}} or
+    \code{\link{glm}}.}
   \item{drop0}{logical.  If \code{TRUE}, drop all cases with
     \code{\link{weights} == 0}.}
 }
@@ -18,14 +19,14 @@ weighted.residuals(obj, drop0 = TRUE)
   \code{weights} as specified in \code{\link{lm}}'s call.
 
   Dropping cases with weights zero is compatible with
-  \code{\link{lm.influence}} and related functions.
+  \code{\link{influence}} and related functions.
 }
 \value{
   Numeric vector of length \eqn{n'}, where \eqn{n'} is the number of
   of non-0 weights (\code{drop0 = TRUE}) or the number of
   observations, otherwise.
 }
-\seealso{\code{\link{residuals}},\code{\link{lm.influence}}, etc.}
+\seealso{\code{\link{residuals}}, \code{\link{lm.influence}}, etc.}
 \examples{
 example("lm")
 all.equal(weighted.residuals(lm.D9),

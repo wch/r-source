@@ -20,17 +20,20 @@ weights(object, \dots)
   \item{type}{the type of residuals which should be returned.}
 }
 \description{
-All these functions are \code{\link{methods}} for class \code{"lm"}  objects.
+  All these functions are \code{\link{methods}} for class \code{"lm"}  objects.
 }
 \details{
-The generic accessor functions \code{coef}, \code{effects},
-\code{fitted} and \code{residuals} can be used to extract
-various useful features of the value returned by \code{lm}.
+  The generic accessor functions \code{coef}, \code{effects},
+  \code{fitted} and \code{residuals} can be used to extract
+  various useful features of the value returned by \code{lm}.
 
-The working and response residuals are ``observed - fitted''.  The
-deviance and pearson residuals are weighted residuals, scaled by the
-square root of the weights used in fitting.  The partial residuals
-are a matrix with each column formed by omitting a term from the model.
+  The working and response residuals are ``observed - fitted''.  The
+  deviance and pearson residuals are weighted residuals, scaled by the
+  square root of the weights used in fitting.  The partial residuals
+  are a matrix with each column formed by omitting a term from the
+  model.  In all these, zero weight cases are never omitted (as opposed
+  to the standardized \code{\link{rstudent}} and \code{}similarobservations
+
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{anova.lm}}.
@@ -39,7 +42,7 @@ are a matrix with each column formed by omitting a term from the model.
   \code{\link{df.residual}},
   \code{\link{effects}}, \code{\link{fitted}},
   \code{\link{glm}} for \bold{generalized} linear models,
-  \code{\link{lm.influence}} for regression diagnostics,
+  \code{\link{influence}} (etc on that page) for regression diagnostics,
   \code{\link{weighted.residuals}},
   \code{\link{residuals}}, \code{\link{residuals.glm}},
   \code{\link{summary.lm}}.

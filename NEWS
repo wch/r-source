@@ -382,9 +382,15 @@ NEW FEATURES
     o	The tempfile() function now takes an optional second argument
 	giving the directory name.
 
-    o   New function capture.output to send printed output from an expression
-        to a connection or a text string.
-   
+    o	New function capture.output to send printed output from an expression
+	to a connection or a text string.
+
+    o	New generic functions influence(), hatvalues() and dfbeta()
+	with lm and glm methods; the previously normal functions rstudent(),
+	rstandard(), cooks.distance() and dfbetas() became generic.
+	These have changed behavior for glm objects -- all originating from
+	John Fox' car package.
+
 
 INSTALLATION CHANGES
 

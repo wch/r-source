@@ -56,7 +56,7 @@
   \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
   where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
 % bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help :
-  \code{\link{lm.influence}()}\code{$hat}, see also \code{\link{hat}}.
+  \code{\link{influence}()}\code{$hat}, see also \code{\link{hat}}.
 }
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)

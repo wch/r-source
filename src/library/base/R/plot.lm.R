@@ -12,6 +12,7 @@ function(x, which = 1:4,
 	stop("Use only with 'lm' objects")
     if(!is.numeric(which) || any(which < 1) || any(which > 4))
         stop("`which' must be in 1:4")
+    isGlm <- inherits(x, "glm")
     show <- rep(FALSE, 4)
     show[which] <- TRUE
     r <- residuals(x)
@@ -22,16 +23,14 @@ function(x, which = 1:4,
         hii <- lm.influence(x, do.coef=FALSE)$hat
     }
     if (any(show[2:3])) {
-        ylab23 <- if(inherits(x, "glm"))
-          "Std. deviance resid." else "Standardized residuals"
+        ylab23 <- if(isGlm) "Std. deviance resid." else "Standardized residuals"
         w <- weights(x)
         # r.w := weighted.residuals(x):
         r.w <- if(is.null(w)) r else (sqrt(w)*r)[w!=0]
         rs <- r.w/(s * sqrt(1 - hii))
     }
     if (any(show[c(1,3)]))
-        l.fit <- if(inherits(x,"glm"))
-            "Predicted values" else "Fitted values"
+        l.fit <- if(isGlm) "Predicted values" else "Fitted values"
     if (is.null(id.n))
 	id.n <- 0
     else {
@@ -98,7 +97,9 @@ function(x, which = 1:4,
 	    text.id(yhn0[show.rs], sqrtabsr[show.rs], show.rs, adj.x = TRUE)
     }
     if (show[4]) {
-	cook <- cooks.distance(x, sd=s, res = r)
+	cook <-
+            if(isGlm) cooks.distance(x)
+            else cooks.distance(x, sd=s, res = r)
 	if(id.n > 0) {
 	    show.r <- order(-cook)[iid]# index of largest `id.n' ones
 	    ymx <- cook[show.r[1]] * 1.075

@@ -1,3 +1,6 @@
+### "lm"  *and*	 "glm"	 leave-one-out influence measures
+
+## this is mainly for back-compatibility (from "lsfit" time) -- use hatvalues()!
 hat <- function(x, intercept = TRUE)
 {
     if(is.qr(x)) n <- nrow(x$qr)
@@ -13,99 +16,167 @@ weighted.residuals <- function(obj, drop0 = TRUE)
 {
     w <- weights(obj)
     r <- residuals(obj)
-    if(is.null(w)) r
-    else if(drop0) (sqrt(w)*r)[w != 0]
-    else sqrt(w)*r
+    if(is.null(w))
+	r
+    else if(drop0)
+	(sqrt(w)*r)[w != 0]
+    else
+	sqrt(w)*r
 }
 
-lm.influence <- function (lm.obj, do.coef = TRUE)
+lm.influence <- function (model, do.coef = TRUE)
 {
-    if (is.empty.model(lm.obj$terms)) {
-	warning("Can\'t compute influence on an empty model")
+    if (is.empty.model(model$terms)) {
+	warning("Can't compute influence on an empty model")
 	return(NULL)
     }
-    n <- as.integer(nrow(lm.obj$qr$qr))
-    k <- as.integer(lm.obj$qr$rank)
-    ## in na.exclude case, omit NAs.
-    e <- na.omit(weighted.residuals(lm.obj))
+    n <- as.integer(nrow(model$qr$qr))
+    k <- as.integer(model$qr$rank)
+    ## in na.exclude case, omit NAs; also drop 0-weight cases
+    e <- na.omit(if(inherits(model, "glm"))
+		 residuals(model, type="deviance")[model$prior.weights != 0]
+		 else weighted.residuals(model))
     if(length(e) != n)
-        stop("non-NA residual length does not match cases used in fitting")
+	stop("non-NA residual length does not match cases used in fitting")
     do.coef <- as.logical(do.coef)
     res <- .Fortran("lminfl",
-                    lm.obj$qr$qr,
-                    n,
-                    n,
-                    k,
-                    as.integer(do.coef),
-                    lm.obj$qr$qraux,
-                    e,
-                    hat = double(n),
-                    coefficients= if(do.coef) matrix(0, n, k) else double(1),
-                    sigma = double(n),
-                    DUP = FALSE, PACKAGE="base")[c("hat", "coefficients", "sigma")]
-    if(!is.null(lm.obj$na.action)) {
-        hat <- naresid(lm.obj$na.action, res$hat)
-        hat[is.na(hat)] <- 0 # omitted cases have 0 leverage
-        res$hat <- hat
-        if(do.coef) {
-            coefficients <- naresid(lm.obj$na.action, res$coefficients)
-            coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
-            res$coefficients <- coefficients
-        }
-        sigma <- naresid(lm.obj$na.action, res$sigma)
-        sigma[is.na(sigma)] <- sqrt(deviance(lm.obj)/df.residual(lm.obj))
-        res$sigma <- sigma
+		    model$qr$qr,
+		    n,
+		    n,
+		    k,
+		    as.integer(do.coef),
+		    model$qr$qraux,
+		    wt.res = e,
+		    hat = double(n),
+		    coefficients= if(do.coef) matrix(0, n, k) else double(1),
+		    sigma = double(n),
+		    DUP = FALSE, PACKAGE="base")[
+				 c("hat", "coefficients", "sigma","wt.res")]
+    if(!is.null(model$na.action)) {
+	hat <- naresid(model$na.action, res$hat)
+	hat[is.na(hat)] <- 0 # omitted cases have 0 leverage
+	res$hat <- hat
+	if(do.coef) {
+	    coefficients <- naresid(model$na.action, res$coefficients)
+	    coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
+	    res$coefficients <- coefficients
+	}
+	sigma <- naresid(model$na.action, res$sigma)
+	sigma[is.na(sigma)] <- sqrt(deviance(model)/df.residual(model))
+	res$sigma <- sigma
+	res$wt.res <- naresid(model$na.action, res$wt.res)
     }
-    if(!do.coef) ## drop them
-        res$coefficients <- NULL
+    if(!do.coef) ## drop it
+	res$coefficients <- NULL
     res
 }
 
-rstandard <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
-                      res = weighted.residuals(lm.obj),
-                      sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)),
-                      hat = infl$hat)
-    res / (sd * sqrt(1 - hat))
-## OLD (<= 0.90.1); fails for glm objects:
-##  res / (summary(lm.obj)$sigma * sqrt(1 - infl$hat))
-
-rstudent <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
-                     res = weighted.residuals(lm.obj))
-    res / (infl$sigma * sqrt(1 - infl$hat))
-
-dffits <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
-                   res = weighted.residuals(lm.obj))
-    res * sqrt(infl$hat)/(infl$sigma*(1-infl$hat))
-
-dfbetas <- function (lm.obj, infl = lm.influence(lm.obj, do.coef=TRUE))
-{
-    xxi <- chol2inv(lm.obj$qr$qr, lm.obj$qr$rank)
-    d <- infl$coefficients/(outer(infl$sigma, sqrt(diag(xxi))))
-    dimnames(d) <- list(case.names(lm.obj), variable.names(lm.obj))
-    d
+## The following is adapted from John Fox's  "car" :
+influence <- function(model, ...) UseMethod("influence")
+influence.lm  <- function(model, do.coef = TRUE, ...)
+    lm.influence(model, do.coef = do.coef, ...)
+influence.glm <- function(model, do.coef = TRUE, ...) {
+    res <- lm.influence(model, do.coef = do.coef, ...)
+    pRes <- na.omit(residuals(model, type = "pearson"))[model$prior.weights != 0]
+    if(!is.null(model$na.action)) pRes <- naresid(model$na.action, pRes)
+    names(res)[names(res) == "wt.res"] <- "dev.res"
+    c(res, list(pear.res = pRes))
 }
 
-covratio <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
-                     res = weighted.residuals(lm.obj))
+hatvalues <- function(model, ...) UseMethod("hatvalues")
+hatvalues.lm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...)
 {
-    n <- nrow(lm.obj$qr$qr)
-    p <- lm.obj$rank
+    hat <- infl$hat
+    names(hat) <- names(infl $ wt.res)
+    hat
+}
+
+rstandard <- function(model, ...) UseMethod("rstandard")
+rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
+                         sd = sqrt(deviance(model)/df.residual(model)), ...)
+    infl$wt.res / (sd * sqrt(1 - infl$hat))
+
+## FIXME ! -- make sure we are following "the literature":
+rstandard.glm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...)
+{
+    res <- infl$wt.res # = "dev.res"  really
+    res / (summary(model)$dispersion * sqrt(1 - infl$hat))
+}
+
+rstudent <- function(model, ...) UseMethod("rstudent")
+rstudent.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
+			res = infl$wt.res, ...)
+    res / (infl$sigma * sqrt(1 - infl$hat))
+
+rstudent.glm <- function(model, infl = influence(model, do.coef=FALSE), ...)
+{
+    r <- infl$dev.res
+    r <- sign(r) * sqrt(r^2 + (infl$hat * infl$pear.res^2)/(1 - infl$hat))
+    if (any(family(model)$family == c("binomial", "poisson")))
+	r else r/infl$sigma
+}
+
+### FIXME for glm (see above) ?!?
+dffits <- function(model, infl = lm.influence(model, do.coef=FALSE),
+		   res = weighted.residuals(model))
+    res * sqrt(infl$hat)/(infl$sigma*(1-infl$hat))
+
+
+dfbeta <- function(model, ...) UseMethod("dfbeta")
+
+dfbeta.lm <- function(model, infl = lm.influence(model, do.coef=TRUE), ...)
+{
+    ## for lm & glm
+    b <- infl$coefficients
+    dimnames(b) <- list(names(infl$wt.res), variable.names(model))
+    b
+}
+
+dfbetas <- function(model, ...) UseMethod("dfbetas")
+
+dfbetas.lm <- function (model, infl = lm.influence(model, do.coef=TRUE), ...)
+{
+    ## for lm & glm
+    xxi <- chol2inv(model$qr$qr, model$qr$rank)
+    dfbeta(model, infl) / outer(infl$sigma, sqrt(diag(xxi)))
+}
+
+covratio <- function(model, infl = lm.influence(model, do.coef=FALSE),
+		     res = weighted.residuals(model))
+{
+    n <- nrow(model$qr$qr)
+    p <- model$rank
     omh <- 1-infl$hat
     e.star <- res/(infl$sigma*sqrt(omh))
     1/(omh*(((n - p - 1)+e.star^2)/(n - p))^p)
 }
 
+cooks.distance <- function(model, ...) UseMethod("cooks.distance")
+
 ## Used in plot.lm(); allow passing of known parts; `infl' used only via `hat'
-cooks.distance <- function(lm.obj, infl = lm.influence(lm.obj, do.coef=FALSE),
-                           res = weighted.residuals(lm.obj),
-                           sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)),
-                           hat = infl$hat)
+cooks.distance.lm <-
+function(model, infl = lm.influence(model, do.coef=FALSE),
+	 res = weighted.residuals(model),
+	 sd = sqrt(deviance(model)/df.residual(model)),
+	 hat = infl$hat, ...)
 {
-    p <- lm.obj$rank
+    p <- model$rank
     ((res/(sd * (1 - hat)))^2 * hat)/p
 }
 
-influence.measures <- function(lm.obj)
+cooks.distance.glm <-
+function(model, infl = influence(model, do.coef=FALSE),
+	 res = infl$pear.res,
+	 dispersion = summary(model)$dispersion, hat = infl$hat, ...)
+{
+    p <- model$rank
+    (res/(1-hat))^2 * hat/(dispersion* p)
+}
+
+## FIXME: The following needs partial adapation for glm
+## -----  (whenever there's an extra glm method above!)
+
+influence.measures <- function(model)
 {
     is.influential <- function(infmat, n)
     {
@@ -123,24 +194,24 @@ influence.measures <- function(lm.obj)
 	dimnames(result) <- dimnames(infmat)
 	result
     }
-    infl <- lm.influence(lm.obj)
-    p <- lm.obj$rank
-    e <- weighted.residuals(lm.obj)
-    s <- sqrt(sum(e^2, na.rm=TRUE)/df.residual(lm.obj))
-    xxi <- chol2inv(lm.obj$qr$qr, lm.obj$qr$rank)
+    infl <- lm.influence(model)
+    p <- model$rank
+    e <- weighted.residuals(model)
+    s <- sqrt(sum(e^2, na.rm=TRUE)/df.residual(model))
+    xxi <- chol2inv(model$qr$qr, model$qr$rank)
     si <- infl$sigma
     h <- infl$hat
     dfbetas <- infl$coefficients / outer(infl$sigma, sqrt(diag(xxi)))
-    vn <- variable.names(lm.obj); vn[vn == "(Intercept)"] <- "1_"
+    vn <- variable.names(model); vn[vn == "(Intercept)"] <- "1_"
     colnames(dfbetas) <- paste("dfb",abbreviate(vn),sep=".")
     dffits <- e*sqrt(h)/(si*(1-h))
     cov.ratio <- (si/s)^(2 * p)/(1 - h)
     cooks.d <- ((e/(s * (1 - h)))^2 * h)/p
-    dn <- dimnames(lm.obj$qr$qr)
+    dn <- dimnames(model$qr$qr)
     infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
 		    cook.d = cooks.d, hat=h)
     is.inf <- is.influential(infmat, sum(h>0))
-    ans <- list(infmat = infmat, is.inf = is.inf, call = lm.obj$call)
+    ans <- list(infmat = infmat, is.inf = is.inf, call = model$call)
     class(ans) <- "infl"
     ans
 }
