@@ -51,8 +51,8 @@ double expm1(double x)
     if (a < DBL_EPSILON) return x;
 
     if (a > 1e-6) {
-	y = exp (x) - 1;
-	if (y > 10000)
+	y = exp(x) - 1;
+	if (y > 1.) /* no cancellation */
 	    return y;
     }
     else /* Taylor expansion */
