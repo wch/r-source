@@ -1,7 +1,7 @@
 \input texinfo
 @c %**start of header
 @setfilename R-exts.info
-@settitle R Extension Writer's Manual
+@settitle Writing R Extensions
 @set VERSION 0.0-0
 @setchapternewpage on
 @c %**end of header
@@ -10,7 +10,7 @@
 
 @dircategory Programming
 @direntry
-* R Extensions: (R-exts).      The R Extension Writer's Manual.
+* R Extensions: (R-exts).      Writing R Extensions.
 @end direntry
 
 @finalout
@@ -45,7 +45,7 @@ approved by the Free Software Foundation.
 @end ifinfo
 
 @titlepage
-@title R Extension Writer's Manual
+@title Writing R Extensions
 @subtitle Version @value{VERSION}
 @author R Development Core Team
 @page
