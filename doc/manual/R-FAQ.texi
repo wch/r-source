@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-10
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-12
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -3026,6 +3026,9 @@ Robust statistical inference via a weighted likelihood approach.
 Interface to the XGobi and XGvis programs for graphical data analysis.
 @item xtable
 Export data to La@TeX{} and @HTML{} tables.
+@item zicounts
+Fit classical, zero-inflated and interval censored count data regression
+models.
 @item zoo
 A class with methods for totally ordered indexed observations such as
 irregular time series.
