@@ -40,4 +40,4 @@ fm2 <- nls(demand ~ (1-exp(-exp(lrc)*Time)), data = BOD,
 fm3 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 summary( fm3 )
 }
-\keyword(datasets)
+\keyword{datasets}
