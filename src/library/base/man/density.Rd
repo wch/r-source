@@ -4,17 +4,10 @@
 density(x, n=512, kernel="gaussian", bw, adjust=1, width,
         from, to, cut=3)
 
-bw.ucv(x, samples=100)
-bw.bcv(x, samples=100)
-bw.sj(x, samples=100)
-
 print(dobj)
 plot(dobj, \dots)
 }
 \alias{density}
-\alias{bw.ucv}
-\alias{bw.bcv}
-\alias{bw.sj}
 \alias{print.density}
 \alias{plot.density}
 \arguments{
@@ -47,15 +40,6 @@ data set is used.}
 The function \code{density} computes kernel density estimates
 with the given kernel and bandwidth
 (which is the standard deviation of the kernel).
-
-The functions \code{bw.ucv}, \code{bw.bcv} and \code{bw.sj}
-provide automated ways of selecting a bandwith for density
-estimates (assuming a Gaussian kernel).
-The techniques used are as follows; \code{bw.ucv} uses unbiased
-cross-validation, \code{bw.bcv} uses biased cross-validation and
-\code{bw.sj} uses the technique of Sheather and Jones.
-These cross-validation techniques are based on code from the
-Venables and Ripley MASS package.
 
 The generic functions \code{plot} and \code{print} have
 methods for density objects.
