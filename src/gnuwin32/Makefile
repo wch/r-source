@@ -6,26 +6,23 @@ PACKAGES=base eda lqs modreg mva stepfun
 RPREFIX=rw0650
 
 ifdef DEBUG
- OPTFLAGS=-g -O2
+ OPTFLAGS="-g -O2"
  DLLFLAGS=
 else
- OPTFLAGS=-O2 -Wall
+ OPTFLAGS="-O2 -Wall"
  DLLFLAGS=-s 
 endif
 
-DIRS=  . ../nmath ../appl ../main
 R-DLLFLAGS= $(STRIPFLAG) -mwindows
 R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32
-SOURCES=$(foreach i, $(DIRS), $(wildcard $i/*.c $i/*.f))
-UFILES= ../unix/devPS.c ../unix/devPicTeX.c ../unix/sock.c ../unix/Rsock.c
-LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
+SOURCES=$(wildcard *.c *.f)
+OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
-OBJSO=$(foreach i, $(SOURCES) $(UFILES) $(EXTRAFILES), $(basename $i).o)
-OBJS-NO=
-OBJS=$(filter-out $(OBJS-NO),$(OBJSO))
-PKGS=$(foreach i, $(PACKAGES), pkg-$i)
-DIRSOBJ=$(foreach i, $(DIRS) ../unix , $i/*.o)
+MAINLIBS=main.a appl.a nmath.a unix.a
 EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
+
+LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
+PKGS=$(foreach i, $(PACKAGES), pkg-$i)
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
@@ -33,12 +30,6 @@ all: rbuild rdemo rpackage
 
 CFLAGS=$(OPTFLAGS) -I../include -I.
 FFLAGS=$(OPTFLAGS)
-
-../main/saveload-CFLAGS=-Ixdr
-../main/character-CFLAGS=-Iregex
-../main/platform-CFLAGS=-Iregex
-../unix/sock-CFLAGS=-DWin32
-../unix/Rsock-CFLAGS=-DWin32
 
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a \
 	../include/globalvar.h front-ends COPYRIGHTS
@@ -51,7 +42,11 @@ rinstaller:
 rdemo:  libR.a
 	make -C ../../demos/dynload -f ../../src/gnuwin32/MkDyndemo
 
-rlibs $(EXTRALIBS):
+rlibs: 
+	$(MAKE) -C ../appl OPTFLAGS=$(OPTFLAGS)
+	$(MAKE) -C ../main OPTFLAGS=$(OPTFLAGS)
+	$(MAKE) -C ../nmath OPTFLAGS=$(OPTFLAGS)
+	$(MAKE) -C ../unix OPTFLAGS=$(OPTFLAGS)
 	$(MAKE) -C ./regex
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
@@ -67,7 +62,7 @@ fixfiles:
 	$(CP) -pr unzip ../..
 	$(RM) ../../unzip/*.h
 
-R.dll: R.a $(EXTRALIBS)
+R.dll: R.a $(MAINLIBS) $(EXTRALIBS)
 
 ../../bin/R.dll: fixfiles rlibs R.dll
 	$(MKDIR) -p ../../bin
@@ -78,7 +73,7 @@ front-ends: libR.a
 
 R.a: $(OBJS)
 	@$(ECHO) -------- Building $@ --------
-	$(AR) cr R.a $(DIRSOBJ)
+	$(AR) cr R.a $^
 	$(RANLIB) R.a
 
 
@@ -92,17 +87,12 @@ libR.a:  R.exp
 R.exp: R.exp1
 	(diff R.exp R.exp1 > /dev/null) || $(CP) R.exp1 R.exp
 
-R.exp1: R.a $(EXTRALIBS) exported-vars
+R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(ECHO) EXPORTS > $@
-	$(NM) R.a $(EXTRALIBS) > RDefs
+	$(NM) R.a $(MAINLIBS) $(EXTRALIBS) > RDefs
 	$(SED) -n "/^........ [T] _/s/^........ [T] _/ /p" RDefs >> $@
 	$(CAT) exported-vars >> $@
 	$(RM) RDefs
-
-../main/gram.c: ;
-
-../nmath/fround.o: ../nmath/fround.c
-	$(CC) -I../include  -o $@ -c $^
 
 # avoid building globalvar.h with errors
 ../include/globalvar.h: exported-vars
@@ -134,7 +124,7 @@ ziponly-%:
 bootstrap-DLLNM=boott
 
 clean: cleanwin
-	$(RM) -f $(OBJS) $(WINOBJS) *.a ../*/*.d
+	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps
 
 distclean veryclean: clean
 	$(RM) -rf R.exp ../../bin ../../library
@@ -223,10 +213,9 @@ packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/src $(RPREFIX)/src/include 
 	$(MKDIR) $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 
-	$(MKDIR) $(RPREFIX)/src/gnuwin32/help
 	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
-	$(CP) -p help/* $(RPREFIX)/src/gnuwin32/help
+	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
 	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
 	$(CP) -p $(foreach i,$(SRC_HEADERS),../include/$i) $(RPREFIX)/src/include
 	$(CP) readme.packages $(RPREFIX)
@@ -242,7 +231,7 @@ test: stricttests pkgtests
 
 stricttests:
 	-@$(MAKE) -C ../../tests -f ../src/gnuwin32/check/Maketests clean
-	-@$(MAKE) -C ../../tests -f ../src/gnuwin32/check/Maketests
+	-@$(MAKE) -k -C ../../tests -f ../src/gnuwin32/check/Maketests
 
 PKGS-CHK=$(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
@@ -255,8 +244,8 @@ pkgcheck-base:
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
 # Dependencies
-CSOURCES=$(foreach i, $(DIRS), $(wildcard $i/*.c))
-DEPS=$(foreach i, $(CSOURCES) $(UFILES), $(basename $i).d)
+CSOURCES=$(wildcard *.c)
+DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
 
 .c.d:
 	@echo "making $@ from $<"
