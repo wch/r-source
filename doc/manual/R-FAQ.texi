@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-53 @value{FAQ-YEAR}-03-18
+@set FAQ-VERSION 1.8-54 @value{FAQ-YEAR}-03-20
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2602,6 +2602,8 @@ Data'' by Michael Friendly.
 @item vegan
 Various help functions for vegetation scientists and community
 ecologists.
+@item verify
+Construction of test suites using verify objects.
 @item waveslim
 Basic wavelet routines for time series analysis.
 @item wavethresh
