@@ -6,7 +6,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = NULL,
     if(is.character(file))
         if(file == "") file <- stdin()
         else {
-            file <- file(file, "rt")
+            file <- file(file, "r")
             on.exit(close(file))
         }
     .Internal(parse(file, n, text, prompt))

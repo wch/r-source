@@ -18,7 +18,7 @@ writeLines <- function(text, con = stdout(), sep = "\n")
 open <- function(con, ...)
     UseMethod("open")
 
-open.default <- function(con, open = "rt", blocking = TRUE)
+open.default <- function(con, open = "r", blocking = TRUE)
     invisible(.Internal(open(con, open, blocking)))
 
 isOpen <- function(con, rw = "")

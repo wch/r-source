@@ -37,7 +37,7 @@ read.table <-
     if(rlabp && missing(header))
 	header <- TRUE
 
-    open(file, "rt")
+    open(file, "r")
     if(skip > 0) readLines(file, skip)
     if (header) { # read in the header
         colnm <- scan(file, what="", sep=sep, quote=quote, nlines=1,
