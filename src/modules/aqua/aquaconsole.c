@@ -87,6 +87,8 @@ extern SA_TYPE RestoreAction;
 #define kRCmdBrowseWSpace	'shwb'
 #define kRCmdLoadWSpace		'ldws'
 #define kRCmdSaveWSpace		'svws'
+#define kRCmdLoadWSpaceFile	'lwsf'
+#define kRCmdSaveWSpaceFile	'swsf'
 #define kRCmdLoadHistory	'hstl'
 #define kRCmdSaveHistory	'hsts'
 #define kRCmdShowHistory	'hstw'
@@ -145,6 +147,8 @@ extern FMFontSize              fontSize;
 void RSetTab(void);
 void RSetFontSize(void);
 void RSetFont(void);
+NavUserAction YesOrNot(char *title, char *msg, char *action, char *cancel);
+NavUserAction WantToSave(WindowRef window, char *title, char *msg);
 
 void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast);
 void Raqua_Suicide(char *s);
@@ -237,13 +241,13 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 void RescaleInOut(double prop);
 
 
-OSErr DoSelectDirectory( void );
+OSErr DoSelectDirectory( char *buf, char *title );
 OSStatus SelectFile(FSSpec *outFSSpec,  char *Title, Boolean saveit, Boolean HaveFName);
 OSStatus FSPathMakeFSSpec(const UInt8 *path, FSSpec *spec, Boolean *isDirectory);
 OSStatus FSMakePath(SInt16 volRefNum, SInt32 dirID, ConstStr255Param name, UInt8 *path,
 	UInt32 maxPathSize);
 OSErr FSMakeFSRef(FSVolumeRefNum volRefNum, SInt32 dirID, ConstStr255Param name, FSRef *ref);
-OSErr DoSelectPackageDirectory(char* buf);
+
 
 int 	Raqua_ShowFiles(int nfile, char **fileName, char **title,
 		char *WinTitle, Rboolean del, char *pager);
@@ -888,14 +892,14 @@ void InitAboutWindow(void){
     controlStyle.just = teCenter;
     CFRelease(text);
     
-    text = CFSTR("RAqua GUI by Stefano M. Iacus (2003). Please send feedback to stefano.iacus@unimi.it");
+    text = CFSTR("RAqua GUI by Stefano M. Iacus and Thomas Lumley (2003).\rPlease send feedback to stefano.iacus@unimi.it");
     GetControlByID(RAboutWindow, &AuthorsID, &versionControl);
     SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
     controlStyle.flags = kControlUseJustMask;
     controlStyle.just = teCenter;
     CFRelease(text);
     
-    text = CFSTR("Thanks to: Jan de Leeuw, Simon Urbanek");
+    text = CFSTR("Thanks to: Jan de Leeuw, Simon Urbanek, Byron Ellis");
     GetControlByID(RAboutWindow, &ThanksToID, &versionControl);
     SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
     controlStyle.flags = kControlUseJustMask;
@@ -950,8 +954,7 @@ pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event,
  
  
 
-NavUserAction WantToSave(WindowRef window, char *msg);
-NavUserAction WantToSave(WindowRef window, char *msg){
+NavUserAction WantToSave(WindowRef window, char *title, char *msg){
     OSStatus			err = noErr;
     NavDialogCreationOptions	dialogOptions;
     NavAskSaveChangesAction	action 	= 0;
@@ -964,6 +967,9 @@ NavUserAction WantToSave(WindowRef window, char *msg){
     if( (err = NavGetDefaultDialogCreationOptions(&dialogOptions)) == noErr){
         if(msg != NULL)
             dialogOptions.message = CFStringCreateWithFormat( NULL, NULL, CFSTR("%s"), msg);
+        if(title != NULL)
+            dialogOptions.windowTitle = CFStringCreateWithFormat( NULL, NULL, CFSTR("%s"), title);   
+    
         if( (err = NavCreateAskSaveChangesDialog(&dialogOptions, action, NULL,
                                     NULL, &WantDialog)) == noErr){
             if( (err = NavDialogRun(WantDialog)) == noErr)
@@ -973,14 +979,15 @@ NavUserAction WantToSave(WindowRef window, char *msg){
   
         if( dialogOptions.message ) 
             CFRelease(dialogOptions.message);
+        if( dialogOptions.windowTitle ) 
+            CFRelease(dialogOptions.windowTitle);    
     }  
     
     return(userAction);      
 }
 
 
-NavUserAction YesOrNot(char *title, char *msg);
-NavUserAction YesOrNot(char *title, char *msg){
+NavUserAction YesOrNot(char *title, char *msg, char *actionlab, char *canclab){
     OSStatus			err = noErr;
     NavDialogCreationOptions	dialogOptions;
     NavAskSaveChangesAction	action 	= 0;
@@ -992,16 +999,37 @@ NavUserAction YesOrNot(char *title, char *msg){
     
     if( (err = NavGetDefaultDialogCreationOptions(&dialogOptions)) == noErr){
         if(msg != NULL)
-            dialogOptions.message = CFStringCreateWithFormat( NULL, NULL, CFSTR("%s"), msg);
+            dialogOptions.message = CFStringCreateWithCString(NULL, msg, kCFStringEncodingASCII);  
+        if(title != NULL){
+            if(dialogOptions.windowTitle) CFRelease(dialogOptions.windowTitle);
+            dialogOptions.windowTitle = CFStringCreateWithCString(NULL, title, kCFStringEncodingASCII);  
+            }
+        if(actionlab != NULL){
+            if(dialogOptions.actionButtonLabel) CFRelease(dialogOptions.actionButtonLabel);
+            dialogOptions.actionButtonLabel = CFStringCreateWithCString(NULL, actionlab, kCFStringEncodingASCII);  
+        }
+        if(canclab != NULL)
+            dialogOptions.cancelButtonLabel = CFStringCreateWithCString(NULL, canclab, kCFStringEncodingASCII);  
+
+       dialogOptions.clientName = CFSTR("RAqua");
+       
         if( (err = NavCreateAskSaveChangesDialog(&dialogOptions, action, NULL,
                                     NULL, &WantDialog)) == noErr){
             if( (err = NavDialogRun(WantDialog)) == noErr)
                 userAction =  NavDialogGetUserAction(WantDialog);
             NavDialogDispose(WantDialog);              
         }
-  
+        if( dialogOptions.clientName ) 
+            CFRelease(dialogOptions.clientName);
         if( dialogOptions.message ) 
             CFRelease(dialogOptions.message);
+         if( dialogOptions.windowTitle ) 
+            CFRelease(dialogOptions.windowTitle);    
+         if( dialogOptions.actionButtonLabel ) 
+            CFRelease(dialogOptions.actionButtonLabel);    
+         if( dialogOptions.cancelButtonLabel ) 
+            CFRelease(dialogOptions.cancelButtonLabel);    
+            
     }  
     
     return(userAction);      
@@ -1075,15 +1103,16 @@ void RSetTab(void){
 static pascal OSStatus
 RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 {
-	OSStatus 		err = eventNotHandledErr, result = noErr;
-	HICommand		command;
-	UInt32			eventKind = GetEventKind( inEvent );
-        FSSpec 			tempfss;
-        char			buf[300],cmd[2500];
-        WindowRef		window = NULL; 
-        int len;
-        TXNObject		tmpObj;
-
+	OSStatus 	err = eventNotHandledErr, result = noErr;
+	HICommand	command;
+	UInt32		eventKind = GetEventKind( inEvent );
+        FSSpec 		tempfss;
+        char		buf[300],cmd[2500];
+        WindowRef	window = NULL; 
+        int 		len;
+        TXNObject	tmpObj;
+        NavUserAction	userAction;
+        
         window = FrontWindow();
 	switch ( GetEventClass( inEvent ) )
 	{
@@ -1262,8 +1291,10 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                consolecmd("ls()");              
               break;          		
 
-	      case kRCmdClearWSpace:  /* Shouldn't this have a confirmation dialog? */
-		consolecmd("rm(list=ls())");              
+	      case kRCmdClearWSpace:  
+                userAction = YesOrNot("Clear Workspace", "All objects in the workspace will be removed. Are you sure you want to proceed?","Yes","No");
+              if(userAction == kNavUserActionSaveChanges)
+                consolecmd("rm(list=ls())");              
               break;          		
 
               case kRCmdBrowseWSpace:
@@ -1274,8 +1305,21 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                 consolecmd("load(\".RData\")");
               break;
 
+              case kRCmdLoadWSpaceFile:
+                consolecmd("load(file.choose())");
+              break;
+
               case kRCmdSaveWSpace:
                 consolecmd("save.image()");
+              break;
+
+              case kRCmdSaveWSpaceFile:
+              CopyCStringToPascal("image.rda", tempfss.name);
+              if( SelectFile(&tempfss,"Choose File Where to Save Image", true, true) == noErr)
+               if( FSMakePath(tempfss.vRefNum, tempfss.parID, tempfss.name, buf, 300) == noErr){  
+                sprintf(cmd,"save.image(file=\"%s\")",buf);
+                consolecmd(cmd);
+                }
               break;
 
               case kRCmdLoadHistory:
@@ -1291,7 +1335,8 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
 
               case kRCmdChangeWorkDir:
-               DoSelectDirectory();
+               if( DoSelectDirectory(buf,"Choose R Working Directory") == noErr)
+                chdir(buf);
               break;
 
               case kRCmdShowWorkDir:
@@ -1349,9 +1394,10 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	       break;
 
 	     case kRCmdInstallFromSrcDir:
-		DoSelectPackageDirectory(buf);
-		sprintf(cmd, "install.from.file(pkg=\"%s\")\r", buf);
-		consolecmd(cmd);
+		if(DoSelectDirectory(buf,"Choose Package Directory") == noErr){
+                    sprintf(cmd, "install.from.file(pkg=\"%s\")\r", buf);
+                    consolecmd(cmd);
+                }   
               break;
 
 /* Help Menu */
@@ -1690,7 +1736,7 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
                     err = GetWindowProperty(EventWindow, 'REDT', 'chgs', sizeof(ItemCount), NULL, &changes);
                     TXNGetActionChangeCount(REdtObj,  kTXNAllCountMask, &newchanges);      
                     if( changes != newchanges ){
-                     userAction = WantToSave(EventWindow, NULL);
+                     userAction = WantToSave(EventWindow, NULL, NULL);
                      if(userAction == kNavUserActionSaveChanges)
                         SaveWindow(EventWindow,false);
                     }
@@ -1732,7 +1778,7 @@ void consolecmd(char *cmd)
  
 
 
-OSErr DoSelectDirectory( void )
+OSErr DoSelectDirectory( char *buf, char *title )
 {	
 	NavReplyRecord		theReply;
 	NavDialogOptions	dialogOptions;
@@ -1740,12 +1786,13 @@ OSErr DoSelectDirectory( void )
 	NavEventUPP		eventUPP = nil; 
 	SInt16 			pathLen;
         Handle 			pathName=NULL;
-        char 			path[300],buf[300];
+        char 			path[300];
 	OSErr               	anErr = noErr,err;
         
 	theErr = NavGetDefaultDialogOptions( &dialogOptions );
-		
-        CopyCStringToPascal("Choose R Working Directory",dialogOptions.message);
+
+	if(title != NULL)	
+            CopyCStringToPascal(title,dialogOptions.message);
 
 	theErr = NavChooseFolder(NULL,&theReply,&dialogOptions,eventUPP,NULL,nil);
 
@@ -1761,7 +1808,6 @@ OSErr DoSelectDirectory( void )
 		         &finalFSSpec, sizeof( FSSpec ), &actualSize )) == noErr )		
 		{
                         err = FSMakePath(finalFSSpec.vRefNum, finalFSSpec.parID, finalFSSpec.name, buf, 300);
-     		        chdir(buf);	
     		}
 		
 		theErr = NavDisposeReply( &theReply );
@@ -1771,42 +1817,7 @@ OSErr DoSelectDirectory( void )
 }
 
 
-OSErr DoSelectPackageDirectory(char* buf )
-{	
-	NavReplyRecord		theReply;
-	NavDialogOptions	dialogOptions;
-	OSErr			theErr = noErr;
-	NavEventUPP		eventUPP = nil; 
-	SInt16 			pathLen;
-        Handle 			pathName=NULL;
-        char 			path[300];
-	OSErr               	anErr = noErr,err;
-        
-	theErr = NavGetDefaultDialogOptions( &dialogOptions );
-		
-        CopyCStringToPascal("Choose Package Directory",dialogOptions.message);
 
-	theErr = NavChooseFolder(NULL,&theReply,&dialogOptions,eventUPP,NULL,nil);
-
-	if ( theReply.validRecord && theErr == noErr)
-	{
-		FSSpec		finalFSSpec,tempSpec;	
-		AEKeyword 	keyWord;
-		DescType 	typeCode;
-                WDPBRec		wdpb;
-		Size 		actualSize = 0;
-
-		if (( theErr = AEGetNthPtr( &(theReply.selection), 1, typeFSS, &keyWord, &typeCode, 
-		         &finalFSSpec, sizeof( FSSpec ), &actualSize )) == noErr )		
-		{
-                        err = FSMakePath(finalFSSpec.vRefNum, finalFSSpec.parID, finalFSSpec.name, buf, 300);
-    		}
-		
-		theErr = NavDisposeReply( &theReply );
-	}
-		
-	return theErr;
-}
 
 
 int Raqua_Edit(char *filename)
@@ -2593,7 +2604,7 @@ void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast)
 
     if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
-	    switch (WantToSave(ConsoleWindow,"Save workspace image?")) {
+	    switch (WantToSave(ConsoleWindow,"Closing R Session","Save workspace image?")) {
 	    case kNavUserActionSaveChanges:
 		saveact = SA_SAVE;
 		break;
@@ -2681,7 +2692,7 @@ void CloseAllEditWindows(void){
                      GetWTitle( EditWindowsList[i], wintitle );
                      CopyPascalStringToC(wintitle, winname);
                      sprintf(msg, "Do you want to save changes for window %s?",winname);
-                     userAction = YesOrNot(NULL, msg);
+                     userAction = YesOrNot(NULL, msg,NULL,NULL);
                      if(userAction == kNavUserActionSaveChanges)
                         SaveWindow(EditWindowsList[i],false);
                     }
