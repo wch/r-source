@@ -111,7 +111,7 @@ typedef struct {
     menubar mbar, mbarloc;
     menu  msubsave;
     menuitem mpng, mbmp, mjpeg50, mjpeg75, mjpeg100;
-    menuitem mps, mwm, mclpbm, mclpwm, mprint, mclose;
+    menuitem mps, mpdf, mwm, mclpbm, mclpwm, mprint, mclose;
     menuitem mrec, madd, mreplace, mprev, mnext, mclear, msvar, mgvar;
     menuitem mR, mfit, mfix;
     Rboolean recording, replaying, needsave;
@@ -290,6 +290,57 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 		       (double)0, dd->gp.ps, 0, 1, 0, ""))
 	/* horizontal=F, onefile=F, pagecentre=T, print.it=F */
 	PrivateCopyDevice(dd, ndd, "postscript");
+}
+
+
+static void SaveAsPDF(DevDesc *dd, char *fn)
+{
+    SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
+    DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
+    char family[256], encoding[256], bg[256], fg[256];
+
+    if (!ndd) {
+	R_ShowMessage("Not enough memory to copy graphics window");
+	return;
+    }
+    if(!R_CheckDeviceAvailableBool()) {
+	free(ndd);
+	R_ShowMessage("No device available to copy graphics window");
+	return;
+    }
+
+    ndd->displayList = R_NilValue;
+    GInit(&ndd->dp);
+
+    /* Set default values... */
+    strcpy(family, "Helvetica");
+    strcpy(encoding, "ISOLatin1.enc");
+    strcpy(bg, "white");
+    strcpy(fg, "black");
+    /* and then try to get it from .PostScript.Options */
+    if ((s!=R_UnboundValue) && (s!=R_NilValue)) {
+	SEXP names = getAttrib(s, R_NamesSymbol);
+	int i,done;
+	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
+	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
+		strcpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		done += 1;
+	    }
+	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
+		strcpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		done += 1;
+	    }
+	    if(!strcmp("fg", CHAR(STRING_ELT(names, i)))) {
+		strcpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		done += 1;
+	    }
+	}
+    }
+    if (PDFDeviceDriver(ndd, fn, family, encoding, bg, fg,
+			GConvertXUnits(1.0, NDC, INCHES, dd),
+			GConvertYUnits(1.0, NDC, INCHES, dd),
+			dd->gp.ps, 1))
+	PrivateCopyDevice(dd, ndd, "PDF");
 }
 
 
@@ -636,7 +687,20 @@ static void menups(control m)
     fn = askfilesave("Postscript file", "");
     if (!fn) return;
     fixslash(fn);
-    SaveAsPostscript(dd,fn);
+    SaveAsPostscript(dd, fn);
+}
+
+
+static void menupdf(control m)
+{
+    DevDesc *dd = (DevDesc *) getdata(m);
+    char  *fn;
+
+    setuserfilter("PDF files (*.pdf)\0*.pdf\0All files (*.*)\0*.*\0\0");
+    fn = askfilesave("PDF file", "");
+    if (!fn) return;
+    fixslash(fn);
+    SaveAsPDF(dd, fn);
 }
 
 
@@ -650,15 +714,14 @@ static void menuwm(control m)
     if (!fn) return;
     fixslash(fn);
     sprintf(display, "win.metafile:%s", fn);
-    SaveAsWin(dd,display);
+    SaveAsWin(dd, display);
 }
-
 
 
 static void menuclpwm(control m)
 {
     DevDesc *dd = (DevDesc *) getdata(m);
-    SaveAsWin(dd,"win.metafile");
+    SaveAsWin(dd, "win.metafile");
 }
 
 static void menuclpbm(control m)
@@ -675,7 +738,7 @@ static void menuclpbm(control m)
 static void menuprint(control m)
 {
     DevDesc *dd = (DevDesc *) getdata(m);
-    SaveAsWin(dd,"win.print");
+    SaveAsWin(dd, "win.print");
 }
 
 
@@ -1034,6 +1097,7 @@ static void mbarf(control m)
 	enable(xd->mjpeg100);
 	enable(xd->mwm);
 	enable(xd->mps);
+	enable(xd->mpdf);
 	enable(xd->mclpwm);
 	enable(xd->mclpbm);
     } else {
@@ -1047,6 +1111,7 @@ static void mbarf(control m)
 	disable(xd->mjpeg100);
 	disable(xd->mwm);
 	disable(xd->mps);
+	disable(xd->mpdf);
 	disable(xd->mclpwm);
 	disable(xd->mclpbm);
     }
@@ -1187,6 +1252,7 @@ setupScreenDevice(DevDesc *dd, gadesc *xd, double w, double h,
     MCHECK(xd->msubsave = newsubmenu(m, "Save as"));
     MCHECK(xd->mwm = newmenuitem("Metafile", 0, menuwm));
     MCHECK(xd->mps = newmenuitem("Postscript", 0, menups));
+    MCHECK(xd->mpdf = newmenuitem("PDF", 0, menupdf));
     MCHECK(xd->mpng = newmenuitem("Png", 0, menufilebitmap));
     MCHECK(xd->mbmp = newmenuitem("Bmp", 0, menufilebitmap));
     MCHECK(newsubmenu(xd->msubsave,"Jpeg"));
@@ -1252,6 +1318,7 @@ setupScreenDevice(DevDesc *dd, gadesc *xd, double w, double h,
     setdata(xd->mjpeg75, (void *) dd);
     setdata(xd->mjpeg100, (void *) dd);
     setdata(xd->mps, (void *) dd);
+    setdata(xd->mpdf, (void *) dd);
     setdata(xd->mwm, (void *) dd);
     setdata(xd->mclpwm, (void *) dd);
     setdata(xd->mclpbm, (void *) dd);
