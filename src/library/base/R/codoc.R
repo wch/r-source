@@ -41,8 +41,6 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     unlinkOnExitFiles <- c(unlinkOnExitFiles, codeFile)
     codeExts <- c("R", "r", "S", "s", "q")
     files <- listFilesWithExts(codeDir, codeExts, path = FALSE)
-    if(any(i <- grep("^zzz\\.", files)))
-        files <- files[-i]
     files <- file.path(codeDir, files)
     if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
         files <- c(files, listFilesWithExts(codeOSDir, codeExts))
@@ -112,14 +110,16 @@ function(dir, use.values = FALSE, use.positions = TRUE,
 
     funs <- sapply(lsCode,
                    function(f) is.function(get(f, envir = .CodeEnv)))
-    ## Undocumented variables?
+    ## Variables without usage information.
+    ## Could still be documented via \alias.
     vars <- lsCode[funs == FALSE]
     undocVars <- vars[!vars %in% lsDocs]
     if(verbose) {
         cat("\nVariables without usage information:\n")
         print(undocVars)
     }
-    ## Undocumented functions?
+    ## Functions without usage information.
+    ## Could still be documented via \alias.
     funs <- lsCode[funs]
     undocFuns <- funs[!funs %in% lsDocs]
     if(verbose) {
@@ -160,5 +160,35 @@ function(dir, use.values = FALSE, use.positions = TRUE,
                           function(u) {
                               all(all.equal(u$code, u$docs) == TRUE)
                           }) == FALSE]
+    class(wrongfuns) <- "codoc"
     wrongfuns
+}
+
+print.codoc <-
+function(x, ...)
+{
+    if(length(x) == 0)
+        return(invisible())
+    hasOnlyNames <- is.character(x[[1]][[1]])
+    formatArgs <- function(s) {
+        if(hasOnlyNames) {
+            paste("function(", paste(s, collapse = ", "), ")", sep = "")
+        }
+        else {
+            s <- paste(deparse(s), collapse = "")
+            s <- gsub(" = \([,\\)]\)", "\\1", s)
+            gsub("^list", "function", s)
+        }
+    }
+    for(fun in names(x)) {
+        writeLines(c(fun,
+                     strwrap(paste("Code:",
+                                   formatArgs(x[[fun]][["code"]])),
+                             indent = 2, exdent = 17),
+                     strwrap(paste("Docs:",
+                                   formatArgs(x[[fun]][["docs"]])),
+                             indent = 2, exdent = 17),
+                     ""))
+    }
+    invisible(x)
 }

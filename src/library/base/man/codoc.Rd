@@ -1,5 +1,6 @@
 \name{codoc}
 \alias{codoc}
+\alias{print.codoc}
 \title{Check Code/Documentation Consistency}
 \usage{
 codoc(dir, use.values = FALSE, use.positions = TRUE,
