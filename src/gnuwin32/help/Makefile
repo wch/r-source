@@ -71,8 +71,8 @@ zipit: help/Rhelp.zip
 unzipit:
 	-$(MAKE) -C latex -f ../../../src/gnuwin32/help/Makefile uz-Rhelp
 
-help/Rhelp.zip: ../../src/library/$(PKG)/man/*.Rd \
-../../src/library/$(PKG)/man/windows/*.Rd
+help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
+../../src/library/$(PKG)/man/windows/*.Rd)
 	-$(MAKE) -C help  -f ../../../src/gnuwin32/help/Makefile uz-Rhelp
 	-$(MAKE) -C R-ex  -f ../../../src/gnuwin32/help/Makefile uz-Rex
 	-$(MAKE) -C latex -f ../../../src/gnuwin32/help/Makefile uz-Rhelp
