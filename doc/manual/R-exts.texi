@@ -1478,6 +1478,14 @@ does not build without intervention it is unlikely to be easily
 available to a high proportion of @R{} users.
 
 @item
+Make use of the abilities of your compilers to check the
+standards-conformance of your code.  For example, @code{gcc} can be used
+with options @option{-Wall -pedantic} to alert you to potential
+problems.  Do not be tempted to assume that these are pure pedantry: for
+example @R{} is regularly used on platforms where the C compiler does
+not accept C++ comments.
+
+@item
 Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
 on most @R{} platforms (including those used by the @acronym{CRAN}
@@ -1507,7 +1515,23 @@ memory reads of `uninitialised values' that are the result of compiler
 optimization, so can be worth checking under unoptimized compiles.  We
 know there will be some small memory leaks from @code{readline} and
 @R{} itself -- these are memory areas that are in use right up to the
-end of the @R{} session.
+end of the @R{} session.  Expect this to run around 20x slower than
+without @code{valgrind}, and in some cases even slower than that.
+@code{valgrind} is not happy with many optimized BLASes that use
+cpu-specific instructions (3D nox, SSE2 and similar) so you may need to
+build a version of @R{} specifically to use with @code{valgrind}.
+
+
+It is possible to run all the examples, tests and vignettes covered by
+@code{R CMD check} under @code{valgrind} by using the option
+@code{--use-valgrind}.  If you do this you will need to select the
+@code{valgrind} options some other way, for example by having a
+@file{~/.valgrindrc} file containing
+@smallexample
+--tool=memcheck
+--memcheck:leak-check=yes
+@end smallexample
+
 
 @item
 The Mac OS X linker has some restrictions not found on other platforms.
