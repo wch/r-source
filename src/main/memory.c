@@ -1089,9 +1089,9 @@ SEXP do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != ENVSXP && TYPEOF(CAR(args)) != EXTPTRSXP)
-	errorcall(call, _("first arg must be environment or external pointer"));
+	errorcall(call, _("first argument must be environment or external pointer"));
     if (TYPEOF(CADR(args)) != CLOSXP)
-	errorcall(call, _("second arg must be a function"));
+	errorcall(call, _("second argument must be a function"));
     
     R_RegisterFinalizer(CAR(args), CADR(args));
     return R_NilValue;

@@ -1186,7 +1186,7 @@ void mbcsToLatin1(char *in, char *out)
     if(!wbuff) error(_("allocation failure in mbcsToLatin1"));
     mres = mbstowcs(wbuff, in, res+1);
     if(mres == (size_t)-1)
-	error(_("invalid input found in mbcsToLatin1"));
+	error(_("invalid input in mbcsToLatin1"));
     for(i = 0; i < res; i++) {
 	/* here we do assume Unicode wchars */
 	if(wbuff[i] > 0xFF) out[i] = '.'; 

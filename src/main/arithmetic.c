@@ -1129,7 +1129,7 @@ SEXP do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if (length(CADR(args)) == 0)
-	errorcall(call, _("illegal 2nd arg of length 0"));
+	errorcall(call, _("illegal second argument of length 0"));
     return do_math2(call, op, args, env);
 }
 
@@ -1690,7 +1690,7 @@ SEXP do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     default:
 	errorcall(call, 
-		  _("unimplemented real function of %d numeric args"), 5);
+		  _("unimplemented real function of %d numeric arguments"), 5);
     }
     return op;			/* never used; to keep -Wall happy */
 } /* do_math5() */
