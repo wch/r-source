@@ -172,6 +172,7 @@ typedef struct SEXPREC {
 #define CDDR(e)		CDR(CDR(e))
 #define CADDR(e)	CAR(CDR(CDR(e)))
 #define CADDDR(e)	CAR(CDR(CDR(CDR(e))))
+#define CAD4R(e)	CAR(CDR(CDR(CDR(CDR(e)))))
 #define CONS(a, b)	cons((a), (b))		/* data lists */
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
 #define MISSING(x)	((x)->sxpinfo.gp)	/* for closure calls */
