@@ -1,4 +1,9 @@
-svd <- function(x, nu=min(n,p), nv=min(n,p)) {
+svd <- function(x, nu=min(n,p), nv=min(n,p))
+{
+    if (is.complex(x)) {
+        res <- La.svd(x, nu.nv)
+        return(list(d = res$d, u = if(nu) res$u, v = if(nv) Conj(t(res$vt))))
+    }
     if(!is.numeric(x))
 	stop("argument to svd must be numeric")
     x <- as.matrix(x)

@@ -1,64 +1,36 @@
 La.eigen <- function (x, symmetric, only.values = FALSE)
 {
+    if(!is.numeric(x) && !is.complex(x))
+	stop("argument to La.eigen must be numeric or complex")
     x <- as.matrix(x)
-    n <- nrow(x)
-    if (n != ncol(x))
-        stop("non-square matrix in eigen")
+    if (nrow(x) != ncol(x)) stop("non-square matrix in eigen")
     complex.x <- is.complex(x)
-    if (complex.x) {
-        if (missing(symmetric)) {
-            test <- all.equal.numeric(x, Conj(t(x)), 100 * .Machine$double.eps)
-            symmetric <- is.logical(test) && test
-        }
+    if (missing(symmetric)) {
+        tx <- if(complex.x) Conj(t(x)) else t(x)
+        test <- all.equal.numeric(x, tx, 100 * .Machine$double.eps)
+        symmetric <- is.logical(test) && test
     }
-    else if (is.numeric(x)) {
-        storage.mode(x) <- "double"
-        if (missing(symmetric)) {
-            test <- all.equal.numeric(x, t(x), 100 * .Machine$double.eps)
-            symmetric <- is.logical(test) && test
-        }
-    }
-    else stop("numeric or complex values required in eigen")
-    dbl.n <- double(n)
+    if (is.numeric(x)) storage.mode(x) <- "double"
     if (symmetric) {
-        if(!complex.x) return(.Call("La_rs", x, only.values, PACKAGE = "base"))
-        xr <- Re(x)
-        xi <- Im(x)
-        z <- .Fortran("ch", n, n, xr, xi, values = dbl.n,
-                      !only.values, vectors = xr, ivectors = xi, dbl.n,
-                      dbl.n, double(2 * n), ierr = integer(1),
-                      PACKAGE = "base")
-        if (z$ierr)
-            stop(paste("ch returned code ", z$ierr, " in eigen"))
-        if (!only.values)
-            z$vectors <- matrix(complex(re = z$vectors, im = z$ivectors),
-                                nc = n)
+        z <- if(!complex.x)
+            .Call("La_rs", x, only.values, PACKAGE = "base")
+        else
+            .Call("La_rs_cmplx", x, only.values, PACKAGE = "base")
+        ord <- rev(seq(along = z$values))
     } else {
-        if(!complex.x) {
-            z <-.Call("La_rg", x, only.values, PACKAGE = "base")
-        } else {
-            xr <- Re(x)
-            xi <- Im(x)
-            z <- .Fortran("cg", n, n, xr, xi, values = dbl.n,
-                          ivalues = dbl.n, !only.values, vectors = xr,
-                          ivectors = xi, dbl.n, dbl.n, dbl.n, ierr = integer(1),
-                          PACKAGE = "base")
-            if (z$ierr)
-                stop(paste("cg returned code ", z$ierr, " in eigen"))
-            z$values <- complex(re = z$values, im = z$ivalues)
-            if (!only.values)
-                z$vectors <- matrix(complex(re = z$vectors, im = z$ivectors),
-                                    nc = n)
-        }
+        z <- if(!complex.x)
+            .Call("La_rg", x, only.values, PACKAGE = "base")
+        else
+            .Call("La_rg_cmplx", x, only.values, PACKAGE = "base")
+        ord <- rev(order(Mod(z$values)))
     }
-    ord <- rev(order(Mod(z$values)))
     list(values = z$values[ord], vectors = if (!only.values) z$vectors[, ord])
 }
 
 La.svd <- function(x, nu = min(n, p), nv = min(n, p))
 {
     if(!is.numeric(x) && !is.complex(x))
-	stop("argument to svd must be numeric")
+	stop("argument to La.svd must be numeric or complex")
     x <- as.matrix(x)
     n <- nrow(x)
     p <- ncol(x)
@@ -97,8 +69,10 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
     if(is.complex(x)) {
         u[] <- as.complex(u)
         v[] <- as.complex(v)
-        .Call("La_svd_cmplx", jobu, jobv, x, double(min(n,p)), u, v,
-              package="base")
+        res <- .Call("La_svd_cmplx", jobu, jobv, x, double(min(n,p)), u, v,
+                     package="base")
     } else
-        .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v, package="base")
+        res <- .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v,
+                     package="base")
+    res[c("d", if(nu) "u", if(nv) "vt")]
 }

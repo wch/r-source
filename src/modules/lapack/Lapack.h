@@ -76,3 +76,20 @@ void F77_NAME(zgesvd)(const char *jobu, const char *jobvt,
 		      Rcomplex *vt, const int *ldvt,
 		      Rcomplex *work, const int *lwork, double *rwork,
 		      int *info);
+
+/* ZGHEEV - compute all eigenvalues and, optionally, eigenvectors   */
+/* of a Hermitian matrix A                                    */
+void F77_NAME(zheev)(const char *jobz, const char *uplo,
+		     const int *n, Rcomplex *a, const int *lda,
+		     double *w, Rcomplex *work, const int *lwork,
+		     double *rwork, int *info);
+
+/* ZGGEEV - compute all eigenvalues and, optionally, eigenvectors   */
+/* of a complex non-symmetric matrix A                                    */
+void F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
+		     const int *n, Rcomplex *a, const int *lda,
+		     Rcomplex *wr,
+		     Rcomplex *vl, const int *ldvl,
+		     Rcomplex *vr, const int *ldvr,
+		     Rcomplex *work, const int *lwork, 
+		     double *rwork, int *info);

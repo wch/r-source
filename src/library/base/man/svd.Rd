@@ -17,17 +17,18 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   Compute the singular-value decomposition of a rectangular matrix.
 }
 \details{
-  \code{svd} provides an interface to the LINPACK routine DSVDC.
-  \code{La.svd} provides an interface to the LAPACK routine DGESVD.
   The singular value decomposition plays an important role in many
   statistical techniques.
 
-  \code{La.svd} is preferred to \code{svd} for new projects, but it
-  returns the transpose of the right singular vector matrix, and the
-  signs of the singular vectors may differ from those given by
-  \code{svd}.
+  \code{svd} provides an interface to the LINPACK routine DSVDC.
+  \code{La.svd} provides an interface to the LAPACK routine DGESVD.
 
-  \code{La.svd}, only, handles complex matrices.
+  \code{La.svd} is preferred to \code{svd} for new projects, but it is
+  not an exact replacement as it returns the transpose of the right
+  singular vector matrix, and the signs of the singular vectors may differ
+  from those given by \code{svd}.
+
+  Both functions handle complex matrices via LAPACK routine ZGESVD.
 }
 \value{
   The SVD decomposition of the matrix as computed by LINPACK,
@@ -45,7 +46,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
     \code{x}.}
 
   For \code{La.svd} the return value replaces \code{v} by \code{vt}, the
-  (conjugate) transpose of \code{v}.
+  (conjugated if complex) transpose of \code{v}.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)

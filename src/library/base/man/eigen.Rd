@@ -21,8 +21,8 @@ La.eigen(x, symmetric, only.values = FALSE)
   interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
   and \code{CG}.
 
-  Function \code{La.eigen} uses the LAPACK routines DSYEV and DGEEV for
-  real matrices, and the EISPACK routines for complex ones.
+  Function \code{La.eigen} uses the LAPACK routines DSYEV, DGEEV, ZHEEV
+  and ZGEEV.
 }
 \details{
   If \code{symmetric} is unspecified, the code attempts to
@@ -42,10 +42,15 @@ La.eigen(x, symmetric, only.values = FALSE)
   }
   \item{vectors}{a \eqn{p\times p}{p * p} matrix whose columns contain the
     eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
-    \code{TRUE}.  For \code{La.eigen} and for \code{eigen} when
-    \code{symmetric = TRUE} the vectors are
-    normalized to unit length.  Otherwise the choice of length of the
-    eigenvectors is not defined in the underlying Fortran code.}
+    \code{TRUE}.
+    
+    For \code{eigen(, symmetric = FALSE)} the choice of length of the
+    eigenvectors is not defined by LINPACK. In all other cases the
+    vectors are normalized to unit length.
+
+    Recall that the eigenvectors are only defined up to a constant: even
+    when the length is specified they are still only defined up to a
+    scalar of modulus one (the sign for real matrices).
   }
 }
 \references{
@@ -139,21 +144,15 @@ stopifnot(
 
 em <- La.eigen(sm, symmetric = FALSE); V2 <- em$vect
 print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
-                         # and V2 is not normalized (where V is):
 print(i <- rev(order(lam2)))
 stopifnot(abs(1 - lam2[i] / lam) < 60 * Meps)
 
-zapsmall(Diag <- t(V2) \%*\% V2) # orthogonal, but not normalized
+zapsmall(Diag <- t(V2) \%*\% V2) # orthonormal
 print(norm2V <- apply(V2 * V2, 2, sum))
 stopifnot( abs(1- norm2V / diag(Diag)) < 60*Meps)
 
-V2n <- sweep(V2,2, STATS= sqrt(norm2V), FUN="/")## V2n are now Normalized EV
-apply(V2n * V2n, 2, sum)
-##[1] 1 1 1 1 1
-
-## Both are now TRUE:
-stopifnot(abs(sm \%*\% V2n - V2n \%*\% diag(lam2))            < 60*Meps,
-          abs(sm         - V2n \%*\% diag(lam2) \%*\% t(V2n)) < 60*Meps)
+stopifnot(abs(sm \%*\% V2 - V2 \%*\% diag(lam2))            < 60*Meps,
+          abs(sm         - V2 \%*\% diag(lam2) \%*\% t(V2)) < 60*Meps)
 
 ## Re-ordered as with symmetric:
 sV <- V2n[,i]

@@ -4,8 +4,9 @@ include ../../gnuwin32/MkRules
 MODULE=lapack
 all: makeMakedeps ../../../modules/$(MODULE).dll
 
-CSOURCES=Lapack.c
-FSOURCES= \
+CSOURCES = Lapack.c
+
+SOURCES_F_BASE = \
   dbdsqr.f dgebak.f dgebal.f dgebd2.f dgebrd.f dgecon.f dgees.f dgeesx.f \
   dgeev.f dgeevx.f dgehd2.f dgehrd.f dgelq2.f dgelqf.f dgeqr2.f dgeqrf.f \
   dgesc2.f dgesvd.f dhseqr.f dlabad.f dlabrd.f dlacon.f dlacpy.f dladiv.f \
@@ -17,10 +18,27 @@ FSOURCES= \
   dorgbr.f dorghr.f dorgl2.f dorglq.f dorgql.f dorgqr.f dorgtr.f dorm2r.f \
   dormbr.f dorml2.f dormlq.f dormqr.f drscl.f dsteqr.f dsterf.f dsyev.f \
   dsytd2.f dsytrd.f dtrevc.f dtrexc.f dtrsen.f dtrsna.f dtrsyl.f \
-  ieeeck.f ilaenv.f \
-  dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f \
-  zgesv.f zgetf2.f zgetrf.f zgetrs.f zlaswp.f \
-  izamax.f zswap.f zscal.f zgeru.f zgemm.f ztrsm.f
+  ieeeck.f ilaenv.f
+SOURCES_F_DOUBLE_COMPLEX = \
+  zgeqp3.f zgeqr2.f zgeqrf.f zgeru.f zgesv.f zgetf2.f zgetrf.f zgetrs.f \
+  dlapy3.f zlacgv.f zladiv.f zlaqp2.f zlaqps.f zlarf.f zlarfb.f zlarfg.f \
+  zlarft.f zlaswp.f ztrtrs.f zunm2r.f zunmqr.f \
+  zgesvd.f zbdsqr.f zdrot.f zgebd2.f zgebrd.f zgelqf.f zgelq2.f zlabrd.f \
+  zlacpy.f zlange.f \
+  zlanhe.f zlascl.f zlaset.f zlasr.f zlassq.f zungbr.f zunglq.f zungl2.f \
+  zungqr.f zungrq.f zungr2.f zung2r.f zunmbr.f zunmlq.f zunml2.f \
+  zheev.f zhetrd.f zhetd2.f zlatrd.f zsteqr.f zung2l.f zungql.f zungtr.f \
+  zgeev.f zgebak.f zgebal.f zgehd2.f zgehrd.f zhseqr.f zlahqr.f zlahrd.f \
+  zlarfx.f zlanhs.f zlatrs.f ztrevc.f zunghr.f
+SOURCES_BLAS_BASE = \
+  dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f
+SOURCES_BLAS_DOUBLE_COMPLEX = \
+  dzasum.f dznrm2.f izamax.f zaxpy.f zcopy.f zdotc.f zdotu.f zdscal.f \
+  zgemm.f  zgemv.f zgerc.f zhemv.f zher2.f zher2k.f zswap.f zscal.f \
+  ztrmm.f ztrmv.f ztrsm.f ztrsv.f
+
+FSOURCES = $(SOURCES_F_BASE) $(SOURCES_BLAS_BASE) \
+   $(SOURCES_F_DOUBLE_COMPLEX) $(SOURCES_BLAS_DOUBLE_COMPLEX)
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -include ../../include/globalvar.h
 FFLAGS=$(FOPTFLAGS)

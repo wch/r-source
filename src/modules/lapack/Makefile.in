@@ -30,18 +30,21 @@ SOURCES_F_DOUBLE_COMPLEX = \
   dlapy3.f zlacgv.f zladiv.f zlaqp2.f zlaqps.f zlarf.f zlarfb.f zlarfg.f \
   zlarft.f zlaswp.f ztrtrs.f zunm2r.f zunmqr.f \
   zgesvd.f zbdsqr.f zdrot.f zgebd2.f zgebrd.f zgelqf.f zgelq2.f zlabrd.f \
-  zlacpy.f \
-  zlange.f zlascl.f zlaset.f zlasr.f zlassq.f zungbr.f zunglq.f zungl2.f \
-  zungqr.f zungrq.f zungr2.f zung2r.f zunmbr.f zunmlq.f zunml2.f
+  zlacpy.f zlange.f \
+  zlanhe.f zlascl.f zlaset.f zlasr.f zlassq.f zungbr.f zunglq.f zungl2.f \
+  zungqr.f zungrq.f zungr2.f zung2r.f zunmbr.f zunmlq.f zunml2.f \
+  zheev.f zhetrd.f zhetd2.f zlatrd.f zsteqr.f zung2l.f zungql.f zungtr.f \
+  zgeev.f zgebak.f zgebal.f zgehd2.f zgehrd.f zhseqr.f zlahqr.f zlahrd.f \
+  zlarfx.f zlanhs.f zlatrs.f ztrevc.f zunghr.f
 SOURCES_F = $(SOURCES_F_BASE) \
   @COMPILE_DOUBLE_COMPLEX_FALSE@ $(SOURCES_F_DOUBLE_COMPLEX)
 
 SOURCES_BLAS_BASE = \
-   dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f
+  dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f
 SOURCES_BLAS_DOUBLE_COMPLEX = \
-   dznrm2.f izamax.f \
-   zcopy.f zdscal.f zgemm.f zgemv.f zgerc.f zswap.f zscal.f \
-   ztrmm.f ztrmv.f ztrsm.f
+  dzasum.f dznrm2.f izamax.f zaxpy.f zcopy.f zdotc.f zdotu.f zdscal.f \
+  zgemm.f  zgemv.f zgerc.f zhemv.f zher2.f zher2k.f zswap.f zscal.f \
+  ztrmm.f ztrmv.f ztrsm.f ztrsv.f
 SOURCES_BLAS = $(SOURCES_BLAS_BASE) \
   @COMPILE_DOUBLE_COMPLEX_FALSE@ $(SOURCES_BLAS_DOUBLE_COMPLEX)
 
