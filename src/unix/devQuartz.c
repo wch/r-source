@@ -1075,43 +1075,26 @@ static void Quartz_SetFont(char *family,
 	 
     GetPort(&savePort);
     SetPortWindowPort(xd->window);
-    
-    switch(style){
-     case 5:
-/*      strcpy(CurrFont,"Symbol");
-	  if(WeAreOnPanther)
- 	   CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingFontSpecific);
-	  else 
- 	   CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingMacRoman);
-     break;
-*/
-	 strcpy(CurrFont,"Symbol");
-	 if(WeAreOnPanther)
+//    fprintf(stderr,"style=%d,family=%s\n",style,family);
+
+	fontFamily = translateFontFamily(family, style, xd);
+	 if (fontFamily)
+	     strcpy(CurrFont,fontFamily);//xd->family);
+	 else
+	     strcpy(CurrFont,"Helvetica");
+
+	if(strcmp(fontFamily,"Symbol")==0){
+		 if(WeAreOnPanther)
 	     CGContextSelectFont( GetContext(xd), CurrFont, size, 
 				  kCGEncodingFontSpecific);
 	 else 
 	     CGContextSelectFont( GetContext(xd), CurrFont, size, 
 				  kCGEncodingMacRoman);
-	 break;
-
-     default:
-/*        if(xd->family)
-            strcpy(CurrFont,xd->family);
-        else
-            strcpy(CurrFont,"Helvetica");
-		    CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingMacRoman);	
-	 break;
-*/
-	 fontFamily = translateFontFamily(family, style, xd);
-//	 fprintf(stderr,"fam=%s,fontfam=%s\n",fontFamily,xd->family);
-	 if (fontFamily)
-	     strcpy(CurrFont,fontFamily);//xd->family);
-	 else
-	     strcpy(CurrFont,"Helvetica");
-	 CGContextSelectFont( GetContext(xd), CurrFont, size, 
+	}
+	else CGContextSelectFont( GetContext(xd), CurrFont, size, 
 			      kCGEncodingMacRoman);	
-     break;
-    }
+
+
 
 /* This is needed for test only purposes 
     if(strcmp(CurrFont,"Symbol")==0)
