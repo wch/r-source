@@ -29,10 +29,14 @@
 #define HAVE_ACOSH 1
 
 /* Define if you have `alloca', as a function or macro. */
+#ifdef __MRC__
 #define HAVE_ALLOCA 1
+#endif
 
 /* Define if you have <alloca.h> and it should be used (not on Ultrix). */
+#ifndef __MRC__
 #define HAVE_ALLOCA_H 1
+#endif
 
 /* Define if you have the <arpa/inet.h> header file. */
 #undef HAVE_ARPA_INET_H
@@ -147,7 +151,7 @@
 #undef HAVE_GETPWUID
 
 /* Define if you have the `getuid' function. */
-#define HAVE_GETUID 1
+#undef HAVE_GETUID 1
 
 /* Define if you have the GNU C library version >= 2. This is needed to fix a
    problem with getting the prototype of strptime(). */
@@ -334,16 +338,16 @@
 #undef HAVE_SYS_SOCKET_H
 
 /* Define if you have the <sys/stat.h> header file. */
-#undef HAVE_SYS_STAT_H
+#define HAVE_SYS_STAT_H 1
 
 /* Define if you have the <sys/times.h> header file. */
 #undef HAVE_SYS_TIMES_H
 
 /* Define if you have the <sys/time.h> header file. */
-#undef HAVE_SYS_TIME_H
+#undef HAVE_SYS_TIME_H 1
 
 /* Define if you have the <sys/types.h> header file. */
-#undef HAVE_SYS_TYPES_H
+#define HAVE_SYS_TYPES_H 1
 
 /* Define if you have the <sys/utsname.h> header file. */
 #undef HAVE_SYS_UTSNAME_H
@@ -359,13 +363,15 @@
 #define HAVE_TIMES 1
 
 /* Define if you have the <unistd.h> header file. */
+#ifndef __MRC__
 #define HAVE_UNISTD_H 1
+#endif
 
 /* Define if you have the `unsetenv' function. */
 #undef HAVE_UNSETENV
 
 /* Define if you have the `vsnprintf' function. */
-#define HAVE_VSNPRINTF 1
+#undef HAVE_VSNPRINTF 
 
 /* Define if calloc(0) returns a null pointer. */
 #define HAVE_WORKING_CALLOC 1
@@ -390,10 +396,11 @@
 #undef HAVE_ZLIB
 
 /* Define if you have IEEE 754 floating point arithmetic. */
-#undef IEEE_754
+#define IEEE_754 1
 
 /* Define if you have 32 bit ints. */
-#undef INT_32_BITS
+#define INT_32_BITS 1
+
 
 /* Define according to your operating system type. */
 #define Macintosh 1
@@ -486,7 +493,9 @@
 #define WORDS_BIGENDIAN 1
 
 /* Define according to your operating system type. */
+#undef Unix
 #undef Win32
+#define Macintosh 1
 
 /* Define if the X Window System is missing or not being used. */
 #define X_DISPLAY_MISSING 1
@@ -510,6 +519,9 @@
 
 /* Define to `unsigned' if <sys/types.h> does not define. */
 #undef size_t
+
+#define	SIGUSR1 30	/* user defined signal 1 */
+#define	SIGUSR2 31	/* user defined signal 2 */
 
 
 #endif /* not _CONFIG_H */
