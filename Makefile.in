@@ -34,7 +34,7 @@ R:
 	  echo "You should \`make docs' now ..."; \
 	fi
 
-$(top_builddir)/src/include/Platform.h: $(srcdir)/date-stamp
+src/include/Platform.h: $(srcdir)/date-stamp
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
 
 docs help html latex examples:: FORCE

@@ -30,8 +30,7 @@ R: Platform.h FFDecl.h FFTab.h
 	done
 
 Platform.h: $(top_srcdir)/date-stamp
-	@cd $(top_builddir) && \
-	  $(top_srcdir)/configure --srcdir $(top_srcdir)
+	@cd $(top_builddir) && $(MAKE) src/include/Platform.h
 	@touch $@
 
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
