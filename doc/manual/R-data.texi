@@ -525,6 +525,23 @@ X11        P 23646  50333  V2
 Function @code{unstack} goes in the opposite direction, and may be
 useful for exporting data.
 
+@findex reshapeLong
+Another way to do this is to use the (experimental) function
+@code{reshapeLong}, by
+@smallexample
+> reshapeLong(zz, V1:V4)
+   Status   Age reshape.i reshape.j reshape.v
+1       P 23646         1        V1     45190
+2       P 23646         1        V2     50333
+3       P 23646         1        V3     55166
+4       P 23646         1        V4     56271
+5      CC 26174         2        V1     35535
+6      CC 26174         2        V2     38227
+7      CC 26174         2        V3     37911
+8      CC 26174         2        V4     41184
+...
+@end smallexample
+
 
 @node Flat contingency tables,  , Re-shaping data, Spreadsheet-like data
 @section Flat contingency tables
