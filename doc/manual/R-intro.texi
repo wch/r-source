@@ -133,7 +133,7 @@ been digested.
 * R and the window system::
 * Using R interactively::
 * Getting help::
-* Case sensitivity::
+* R commands; case sensitivity etc::
 * Recall and correction of previous commands::
 * Executing commands from or diverting output to a file::
 * Data permanency and removing objects::
@@ -316,7 +316,7 @@ Readers wishing to get a feel for @R{} at a computer before proceeding
 are strongly advised to work through the introductory session
 given in @ref{A sample session}.
 
-@node Getting help, Case sensitivity, Using R interactively, Introduction and preliminaries
+@node Getting help, R commands; case sensitivity etc, Using R interactively, Introduction and preliminaries
 @section Getting help with functions and features
 @findex help
 
@@ -367,8 +367,8 @@ Windows versions of @R{} have other optional help systems: use
 @noindent
 for further details.
 
-@node Case sensitivity, Recall and correction of previous commands, Getting help, Introduction and preliminaries
-@section R commands and case sensitivity
+@node R commands; case sensitivity etc, Recall and correction of previous commands, Getting help, Introduction and preliminaries
+@section R commands, case sensitivity, etc.
 
 Technically @R{} is an @emph{expression language} with a very simple
 syntax.  It is @emph{case sensitive} as are most UNIX based packages, so
@@ -382,12 +382,19 @@ an expression and passes the value to a variable but the result is not
 automatically printed.
 
 Commands are separated either by a semi-colon (@samp{@code{;}}), or by a
-newline.  If a command is not complete at the end of a line, @R{} will
+newline.  Elementary commands can be grouped together into one compound
+expression by braces (@samp{@code{@{}} .. @samp{@code{@}}}).
+@emph{Comments} can be put almost@footnote{@strong{not} inside strings,
+nor within the argument list of a function definition} anywhere,
+starting with a hashmark (@samp{@code{#}}), everything to the end of the
+line is a comment.
+
+If a command is not complete at the end of a line, @R{} will
 give a different prompt, by default
 
-@example
+@smallexample
 +
-@end example
+@end smallexample
 
 @noindent
 on second and subsequent lines and continue to read input until the
@@ -395,7 +402,7 @@ command is syntactically complete.  This prompt may be changed by the
 user.  We will generally omit the continuation prompt
 and indicate continuation by simple indenting.
 
-@node Recall and correction of previous commands, Executing commands from or diverting output to a file, Case sensitivity, Introduction and preliminaries
+@node Recall and correction of previous commands, Executing commands from or diverting output to a file, R commands; case sensitivity etc, Introduction and preliminaries
 @section Recall and correction of previous commands
 
 Under many versions of UNIX and on Windows, @R{} provides a mechanism
@@ -803,8 +810,8 @@ The logical operators are @code{<}, @code{<=}, @code{>}, @code{>=},
 @findex ==
 @findex !=
 In addition if @code{c1} and @code{c2} are logical expressions, then
-@w{@code{c1 & c2}} is their intersection (@emph{``and''}), @w{@code{c1 |
-$c2}} is their union (@emph{``or''}), and @code{!c1} is the negation of
+@w{@code{c1 & c2}} is their intersection (@emph{``and''}), @w{@code{c1 | c2}}
+is their union (@emph{``or''}), and @code{!c1} is the negation of
 @code{c1}.
 @findex !
 @findex |
@@ -1286,9 +1293,9 @@ classification (grouping) of the components of other vectors of the same length.
 
 Suppose, for example, we have a sample of 30 tax accountants from all
 the states and territories@footnote{Foreign readers should note that
-there are eight states and territories in Australia, namely the
-Australian Capital Territory, New South Wales, the Northern Territory,
-Queensland, South Australia, Tasmania, Victoria and Western Australia.}
+ there are eight states and territories in Australia, namely the
+ Australian Capital Territory, New South Wales, the Northern Territory,
+ Queensland, South Australia, Tasmania, Victoria and Western Australia.}
 and their individual state of origin is specified by a character vector
 of state mnemonics as
 
@@ -1365,7 +1372,12 @@ giving a means vector with the components labelled by the levels
 The function @code{tapply()} is used to apply a function, here
 @code{mean()}, to each group of components of the first argument, here
 @code{incomes}, defined by the levels of the second component, here
-@code{statef}, as if they were separate vector structures.  The result
+@code{statef}@footnote{Note that @code{tapply()} also works in this case
+ when its second argument is not a factor, e.g.,
+ @samp{@code{taply(incomes,state)}}, and this is true for quite a few
+ other functions, since arguments are @emph{coerced} to @code{factor}s when
+ necessary (using @code{as.factor(.)}).},
+as if they were separate vector structures.  The result
 is a structure of the same length as the levels attribute of the factor
 containing the results.  The reader should consult the help document for
 more details.
@@ -1405,12 +1417,12 @@ more with the @code{length()} function to find the sample sizes, and the
 @math{t}-distributions.
 
 The function @code{tapply()} can be used to handle more complicated
-indexing of a vector by multiple categories.  For example, we might wish
-to split the tax accountants by both state and sex.  However in this
-simple instance what happens can be thought of as follows.  The values
-in the vector are collected into groups corresponding to the distinct
-entries in the category.  The function is then applied to each of these
-groups individually.  The value is a vector of function results,
+indexing of a vector by multiple categories.  For example, we might wish to
+split the tax accountants by both state and sex.  However in this simple
+instance (just one category) what happens can be thought of as follows.  The
+values in the vector are collected into groups corresponding to the
+distinct entries in the category.  The function is then applied to each of
+these groups individually.  The value is a vector of function results,
 labelled by the levels attribute of the category.
 
 The combination of a vector and a labelling factor is an example of what
@@ -1464,7 +1476,8 @@ creating and handling arrays, and in particular the special case of
 matrices.
 
 A dimension vector is a vector of positive integers.  If its length is
-@math{k} then the array is @math{k}-dimensional.  The values in the
+@math{k} then the array is @math{k}-dimensional, i.e., a matrix is a
+@math{2}-dimensional array.  The values in the
 dimension vector give the upper limits for each of the @math{k}
 subscripts.  The lower limits are always 1.
 
@@ -2825,6 +2838,7 @@ have @code{log}.  This allows, e.g., getting the cumulative (or ``integrated'')
 @smallexample
  - p@var{xxx}(t, ..., lower.tail = FALSE, log.p = TRUE)
 @end smallexample
+@noindent
 or more accurate log-likelihoods (by @code{d@var{xxx}(..., log = TRUE)}),
 directly.
 
@@ -5368,7 +5382,7 @@ Figure title, placed at the top of the plot in a large font.
 Sub-title, placed just below the @math{x}-axis in a smaller font.
 @end table
 
-@node Low-level plotting commands, Mathematical annotation, High-level plotting commands, Graphics
+@node Low-level plotting commands, Interacting with graphics, High-level plotting commands, Graphics
 @section Low-level plotting commands
 
 Sometimes the high-level plotting functions don't produce exactly the
@@ -5499,7 +5513,7 @@ obtained from within @R{} using the commands:
 > example(plotmath)
 @end smallexample
 
-@node Hershey vector fonts, Interacting with graphics, Mathematical annotation, Low-level plotting commands
+@node Hershey vector fonts,  , Mathematical annotation, Low-level plotting commands
 @subsection Hershey vector fonts
 
 It is possible to specify Hershey vector fonts for rendering text when using
@@ -5528,7 +5542,7 @@ within @R{} using the commands:
 > example(Japanese)
 @end smallexample
 
-@node Interacting with graphics, Using graphics parameters, Hershey vector fonts, Graphics
+@node Interacting with graphics, Using graphics parameters, Low-level plotting commands, Graphics
 @section Interacting with graphics
 
 @R{} also provides functions which allow users to extract or add
