@@ -13,7 +13,8 @@ stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
 
 ## -- Stop List for "base" :
-edit.int <- c("fix", "edit", "edit.data.frame", "edit.default", "vi",
+edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
+              "edit.default", "vi",
               "emacs", "pico", "xemacs", "xedit")
 misc.int <- c("browser", "bug.report", "menu", "repeat")
 stop.list[["base"]] <-
