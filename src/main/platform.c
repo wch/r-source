@@ -59,7 +59,7 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(names = allocVector(STRSXP, 3));
     STRING(names)[0] = mkChar("OS.type");
     STRING(names)[1] = mkChar("file.sep");
-    STRING(names)[2] = mkChar("dynload.ext");
+    STRING(names)[2] = mkChar("dynlib.ext");
     VECTOR(value)[0] = mkString(R_OSType);
     VECTOR(value)[1] = mkString(R_FileSep);
     VECTOR(value)[2] = mkString(R_DynLoadExt);
