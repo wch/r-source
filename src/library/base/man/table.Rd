@@ -76,11 +76,11 @@ attach(warpbreaks)
 table(wool, tension)
 data(state)
 table(state.division, state.region)
+detach()
 
 data(airquality)
-attach(airquality)
 # simple two-way contingency table
-table(cut(Temp, quantile(Temp)), Month)
+with(airquality, table(cut(Temp, quantile(Temp)), Month))
 
 a <- letters[1:3]
 table(a, sample(a))                    # dnn is c("a", "")
