@@ -29,9 +29,9 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 		else stop(txt)
             }
             which.lib.loc <- dirname(pkgpath)
-            # if the name space mechanism is available and the package
-            # has a name space, then the name space loading mechanism
-            # takes over.
+            ## if the name space mechanism is available and the package
+            ## has a name space, then the name space loading mechanism
+            ## takes over.
             if (exists("packageHasNamespace") &&
                 packageHasNamespace(package, which.lib.loc))
                 return(doNamespaceLibrary(package, which.lib.loc, lib.loc,
@@ -169,18 +169,19 @@ library.dynam <-
 function(chname, package = .packages(), lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
-    if(!exists(".Dyn.libs")) {
-        ## <FIXME>
-        ## This used to assign to .AutoloadEnv?
+    ## <FIXME>
+    ## Versions of R prior to 1.4.0 had .Dyn.libs in .AutoloadEnv
+    ## (and did not always ensure getting it from there).
+    ## We now consistently use the base environment.
+    if(!exists(".Dyn.libs", envir = NULL)) {
         assign(".Dyn.libs", character(0), envir = NULL)
-        ## </FIXME>
     }
     if(missing(chname) || (LEN <- nchar(chname)) == 0)
-        return(.Dyn.libs)
+        return(get(".Dyn.libs", envir = NULL))
     nc.ext <- nchar(file.ext)
     if(substr(chname, LEN - nc.ext + 1, LEN) == file.ext)
         chname <- substr(chname, 1, LEN - nc.ext)
-    if(is.na(match(chname, .Dyn.libs))) {
+    if(is.na(match(chname, get(".Dyn.libs", envir = NULL)))) {
         ## <FIXME>
         ## Do we really want `quiet = TRUE'?
         for(pkg in .find.package(package, lib.loc, quiet = TRUE,
@@ -199,12 +200,12 @@ function(chname, package = .packages(), lib.loc = NULL, verbose =
         if(verbose)
             cat("now dyn.load(", file, ")..\n", sep = "")
         dyn.load(file, ...)
-        ## <FIXME>
-        ## This used to assign to .AutoloadEnv?
-        assign(".Dyn.libs", c(.Dyn.libs, chname), envir = NULL)
-        ## </FIXME>
+        assign(".Dyn.libs",
+               c(get(".Dyn.libs", envir = NULL), chname),
+               envir = NULL)
     }
-    invisible(.Dyn.libs)
+    invisible(get(".Dyn.libs", envir = NULL))
+    ## </FIXME>
 }
 
 require <-
@@ -266,16 +267,17 @@ function(package = .packages(), quiet = FALSE)
 function(package, lib.loc = NULL, use.attached, quiet = FALSE,
          verbose = getOption("verbose"))
 {
+    sQuote <- function(s) paste("`", s, "'", sep = "")
+    
     if(!missing(use.attached))
-        warning("argument `use.attached' is deprecated")
+        warning(paste("argument", sQuote("use.attached"),
+                      "is deprecated"))
     use.attached <- FALSE
     if(is.null(lib.loc)) {
         use.attached <- TRUE
         lib.loc <- .libPaths()
     }
     
-    sQuote <- function(s) paste("`", s, "'", sep = "")
-
     n <- length(package)
     if(n == 0) return(character(0))
 
