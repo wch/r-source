@@ -1,5 +1,5 @@
-#
-# ${R_HOME}/src/appl/Makefile
+##
+## ${R_HOME}/src/appl/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -70,15 +70,13 @@ LIB = libappl.a
 
 all: Makefile R
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(DEPS)
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
+	@cat $(DEPS) >> $@
 
-R: Makefile Makedeps $(LIB)
-
-Makedeps: $(DEPS)
-	@cat $(DEPS) > $@
+R: Makefile $(LIB)
 
 $(LIB):	$(OBJS)
 	$(AR) cr $(LIB) $(OBJS)
@@ -99,4 +97,5 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 
-@MAKE_INCLUDE_DEPS@ ./Makedeps
+## Automagically generated dependencies:
+

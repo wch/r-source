@@ -34,15 +34,17 @@ ALL_GNOME_LIBS = $(RGNOMELIBS) $(LIBS) $(GNOMEUI_LIBS)
 
 all: Makefile R
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+Makefile: $(srcdir)/Makefile.in \
+  $(top_builddir)/config.status \
+  ../include/Platform.h \
+  ../include/FFDecl.h \
+  $(DEPS)
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
+	@cat $(DEPS) >> $@
 
-R: Makefile Makedeps $(top_builddir)/bin/R.binary @RGNOMEBIN@
-
-Makedeps: ../include/Platform.h ../include/FFDecl.h $(DEPS)
-	@cat $(DEPS) > $@
+R: Makefile $(top_builddir)/bin/R.binary @RGNOMEBIN@
 
 ../include/Platform.h:
 	(cd ../include; $(MAKE) $(@F))
@@ -94,4 +96,5 @@ distdir: $(DISTFILES)
 
 install install-strip uninstall info dvi check::
 
-@MAKE_INCLUDE_DEPS@ ./Makedeps
+## Automagically generated dependencies:
+
