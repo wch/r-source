@@ -232,7 +232,7 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w");
 	if (!fp)
 	    errorcall(call, "unable to open file");
-    }
+    }/* else: "Stdout" */
     for (i = 0; i < LENGTH(tval); i++)
 	if (fp == NULL)
 	    Rprintf("%s\n", CHAR(STRING(tval)[i]));
