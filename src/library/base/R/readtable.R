@@ -40,10 +40,15 @@ read.table <-
     nlines <- 0
     lines <- NULL
     while(nlines < 5) {
+        ## read up to five non-blank and non-comment lines.
         line <- readLines(file, 1, ok = TRUE)
         if(length(line) == 0) break
-        if(length(grep("^[ \\t]*#", line))) next
         if(blank.lines.skip && length(grep("^[ \\t]*$", line))) next
+        if(length(comment.char) && nchar(comment.char)) {
+            pattern <- paste("^[ \\t]*", substring(comment.char,1,1),
+                             sep ="")
+            if(length(grep(pattern, line))) next
+        }
         lines <- c(lines, line)
     }
     nlines <- length(lines)

@@ -217,5 +217,18 @@ logical(0)
 5     3           0.8           3
 > unlink("test.dat")
 > 
+> cat('%comment\n\n%another\n%\n%\n',
++     'C1\tC2\tC3\n"Panel"\t"Area Examined"\t"% Blemishes"\n',
++     '"1"\t"0.8"\t"3"\n', '"2"\t"0.6"\t"2"\n', '"3"\t"0.8"\t"3"\n',
++     file = "test.dat", sep="")
+> read.table("test.dat", comment.char = "%")
+     V1            V2          V3
+1    C1            C2          C3
+2 Panel Area Examined % Blemishes
+3     1           0.8           3
+4     2           0.6           2
+5     3           0.8           3
+> unlink("test.dat")
+> 
 > ## end of tests
 > 
