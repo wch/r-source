@@ -1,7 +1,7 @@
 \name{postscript}
 \alias{postscript}
 \alias{ps.options}
-\alias{.PostScript.Options}
+%\alias{.PostScript.Options}
 \alias{.ps.prolog}
 \title{PostScript Graphics}
 \description{
@@ -31,7 +31,6 @@ ps.options(paper, horizontal, width, height, family, encoding,
            pointsize, bg, fg,
            onefile = TRUE, print.it = FALSE, append = FALSE,
            reset = FALSE, override.check = FALSE)
-.PostScript.Options
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
@@ -280,7 +279,6 @@ yy <- sin(xx)/xx; yy[1] <- 1
 plot(xx,yy)                     # produce the desired graph(s)
 }
 
-stopifnot(unlist(ps.options()) == unlist(.PostScript.Options))
 ps.options(bg = "pink")
 str(ps.options(reset = TRUE))
 

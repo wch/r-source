@@ -168,6 +168,7 @@ typedef struct {
     unsigned int pngtrans; /* what PNG_TRANS get mapped to */
     Rboolean buffered;
     int timeafter, timesince;
+    SEXP psenv;
 } gadesc;
 
 rect getregion(gadesc *xd)
@@ -321,16 +322,18 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, White, 1, NA_INTEGER, NA_INTEGER, FALSE))
+		       0, 1, White, 1, NA_INTEGER, NA_INTEGER, FALSE, 
+		       R_GlobalEnv))
         PrivateCopyDevice(dd, ndd, display);
 }
 
 
 static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 {
-    SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
+    SEXP s;
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
+    gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], paper[256], bg[256], fg[256],
 	**afmpaths = NULL;
 
@@ -344,6 +347,7 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	return;
     }
 
+    
     ndd->displayList = R_NilValue;
 
     /* Set default values... */
@@ -353,7 +357,8 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
     strcpy(bg, "transparent");
     strcpy(fg, "black");
     /* and then try to get it from .PostScript.Options */
-    if ((s!=R_UnboundValue) && (s!=R_NilValue)) {
+    s = findVar(install(".PostScript.Options"), xd->psenv);
+    if ((s != R_UnboundValue) && (s != R_NilValue)) {
 	SEXP names = getAttrib(s, R_NamesSymbol);
 	int i,done;
 	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
@@ -390,9 +395,10 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 
 static void SaveAsPDF(NewDevDesc *dd, char *fn)
 {
-    SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
+    SEXP s;
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
+    gadesc *xd = (gadesc *) dd->deviceSpecific;
     char family[256], encoding[256], bg[256], fg[256];
 
     if (!ndd) {
@@ -408,12 +414,13 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
     ndd->displayList = R_NilValue;
 
     /* Set default values... */
+    s = findVar(install(".PostScript.Options"), xd->psenv);
     strcpy(family, "Helvetica");
     strcpy(encoding, "ISOLatin1.enc");
     strcpy(bg, "transparent");
     strcpy(fg, "black");
     /* and then try to get it from .PostScript.Options */
-    if ((s!=R_UnboundValue) && (s!=R_NilValue)) {
+    if ((s != R_UnboundValue) && (s != R_NilValue)) {
 	SEXP names = getAttrib(s, R_NamesSymbol);
 	int i,done;
 	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
@@ -2290,7 +2297,8 @@ static void GA_Hold(NewDevDesc *dd)
 Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int canvas,
-			double gamma, int xpos, int ypos, Rboolean buffered)
+			double gamma, int xpos, int ypos, Rboolean buffered,
+			SEXP psenv)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -2411,6 +2419,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     xd->resize = (resize == 3);
     xd->locator = FALSE;
     xd->buffered = buffered;
+    xd->psenv = psenv;
     {
 	SEXP timeouts = GetOption(install("windowsTimeouts"), R_NilValue);
 	if(isInteger(timeouts)){

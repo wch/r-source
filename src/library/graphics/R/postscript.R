@@ -1,4 +1,9 @@
-.PostScript.Options <-
+## An environment not exported from namespace:graphics used to
+## pass .PostScript.Options to the windows() device for use in its menus.
+## and also to hide the variable.
+.PSenv <- new.env()
+
+assign(".PostScript.Options",
     list(paper	= "default",
 	 horizontal = TRUE,
 	 width	= 0,
@@ -12,7 +17,7 @@
 	 print.it   = FALSE,
 	 append	    = FALSE,
 	 pagecentre = TRUE,
-	 command    = "default")
+	 command    = "default"), envir = .PSenv)
 
 check.options <-
     function(new, name.opt, reset = FALSE, assign.opt = FALSE,
@@ -87,7 +92,8 @@ check.options <-
 ps.options <- function(..., reset=FALSE, override.check= FALSE)
 {
     l... <- length(new <- list(...))
-    old <- check.options(new = new, name.opt = ".PostScript.Options",
+    old <- check.options(new = new, envir = .PSenv,
+                         name.opt = ".PostScript.Options",
 			 reset = as.logical(reset), assign.opt = l... > 0,
 			 override.check= override.check)
     if(reset || l... > 0) invisible(old)
@@ -101,7 +107,8 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
                         title = "R Graphics Output", ...)
 {
     new <- list(onefile=onefile, ...)# eval
-    old <- check.options(new = new, name.opt = ".PostScript.Options",
+    old <- check.options(new = new, envir = .PSenv,
+                         name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
 
     if(is.null(old$command) || old$command == "default")
@@ -125,7 +132,8 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
                   onefile = FALSE, ...)
 {
     new <- list(onefile=onefile, ...)# eval
-    old <- check.options(new = new, name.opt = ".PostScript.Options",
+    old <- check.options(new = new, envir = .PSenv,
+                         name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
 
     .Internal(XFig(file, old$paper, old$family, old$bg, old$fg,
@@ -138,7 +146,8 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                  title = "R Graphics Output", ...)
 {
     new <- list(onefile=onefile, ...)# eval
-    old <- check.options(new = new, name.opt = ".PostScript.Options",
+    old <- check.options(new = new, envir = .PSenv,
+                         name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- switch(.Platform$OS.type,

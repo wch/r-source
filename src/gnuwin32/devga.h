@@ -20,6 +20,6 @@
 #include <Graphics.h>
 #include <R_ext/Boolean.h>
 Rboolean GADeviceDriver(NewDevDesc*, char*, double, double, double, 
-			Rboolean, int, int, double, int, int, Rboolean);
+			Rboolean, int, int, double, int, int, Rboolean, SEXP);
 void GAsetunits(double, double);
 
