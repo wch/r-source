@@ -94,6 +94,7 @@ The information here applies only to recent versions of R for Windows,
 * How do I install R for Windows?::
 * Can I customize the installation?::
 * How do I run it?::
+* Can I run R from a CD or USB drive?::
 * How do I UNinstall R?::
 * What's the best way to upgrade?::
 * There seems to be a limit on the memory it uses!::
@@ -131,7 +132,7 @@ files and the @emph{An Introduction to R} and @emph{Data Import/Export}
 manuals in PDF.  There is no support for @code{tcltk} in this version,
 and no documentation for packages @code{grid} or @code{survival}.
 
-There are also links on that page to the @code{r-patched} and 
+There are also links on that page to the @code{r-patched} and
 @code{r-devel} releases.  These are frequently updated builds of development
 versions of R.  The @code{r-patched} build includes bug fixes to the
 current release, and @code{r-devel} contains changes that will eventually
@@ -206,8 +207,11 @@ A successful installation has exit code 0: unsuccessful ones may give 1,
 2, 3, 4 or 5.  See the help for Inno Setup 4
 (@uref{http://jrsoftware.org/isinfo.php}) for details.
 
+We have some facilities for building a customized installer, in
+particular to add packages to the installer.  See the file
+@file{src/gnuwin32/INSTALL} in the R sources.
 
-@node How do I run it?, How do I UNinstall R?, Can I customize the installation?, Installation and Usage
+@node How do I run it?, Can I run R from a CD or USB drive?, Can I customize the installation?, Installation and Usage
 @section How do I run it?
 
 Just double-click on the shortcut you prepared at installation.
@@ -222,8 +226,28 @@ for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
 Target field of a shortcut, and the starting directory will be the
 currect working directory of the shell.)
 
+@node Can I run R from a CD or USB drive?, How do I UNinstall R?, How do I run it?, Installation and Usage
+@section Can I run R from a CD or USB drive?
 
-@node How do I UNinstall R?, What's the best way to upgrade?, How do I run it?, Installation and Usage
+Yes, with care.  A basic R installation is relocatable, so you can burn
+an image on the R installation on your hard disc or install directly
+onto a removable storage device such as a Zip drive on USB drive.  (If
+you have installed packages into a private library, their absolute paths
+will appear in the HTML packages list.)
+
+Running R does need access to a writable temporary directory and to a
+home directory, and in the last resort these are taken to be the current
+directory.  This should be no problem on a properly configured NT-based
+version of Windows, but otherwise does mean that it may not be possible
+to run R without creating a shortcut in a writable folder.
+
+R will run more slowly from a slow storage medium, and will access it
+through the session.  Some tests in late 2004 showed it was acceptable
+run from a desktop CD drive or from a USB 2.0 thumbdrive, but was
+noticeably slow when run from a older laptop CD drive and unacceptably
+slow from a USB 1.1 thumbdrive.
+
+@node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
 @section How do I UNinstall R?
 
 Normally you can do this from the R group on the Start Menu or from the
@@ -233,7 +257,7 @@ in the top-level installation directory.  (There should be a separate
 uninstall item in the R group for each installed version of R.)
 
 Uninstalling R only removes files from the initial installation, not
-(for example) packages you have installed.
+(for example) packages you have installed or updated.
 
 If all else fails, you can just delete the whole directory in which R
 was installed.
