@@ -28,6 +28,11 @@
 
 #define RTLD_LAZY (BIND_DEFERRED | BIND_NONFATAL)
 
+/* these are added to shut up warnings that cause make check to fail. */
+#define RTLD_LOCAL 0
+#define RTLD_GLOBAL 0
+#define RTLD_NOW 0
+
 #include "hpdlfcn.h"
 
 /*
