@@ -8,14 +8,22 @@
 ## in ../src/library/base/man/demo.Rd }:
 dont <- list(base = c("nlm", "lm.glm")
              )
-for(pkg in c("base")) { ## maybe other packages; 
+for(pkg in c("base", "eda")) {
 
     demos <- list.files(file.path(system.file(package = pkg), "demo"),
                         pattern = "\\.R$")
     demos <- demos[is.na(match(demos, paste(dont[[pkg]], "R",sep=".")))]
 
-    for(nam in sub("\\.R$", "", demos))
-        demo(nam, character.only = TRUE)
+    if(length(demos)) {
+        if(need <- pkg != "base" &&
+           !any((fpkg <- paste("package", pkg, sep=":")) == search()))
+            library(pkg, character.only = TRUE)
+
+        for(nam in sub("\\.R$", "", demos))
+            demo(nam, character.only = TRUE)
+
+        if(need) detach(pos = which(fpkg == search()))
+    }
 }
 
 cat("Time elapsed: ", proc.time() - .ptime, "\n")
