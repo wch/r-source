@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.138 $'
+revision='$Revision: 1.139 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -126,8 +126,12 @@ get_packages () {
     for p in ${bundlepkg}; do
       pkgs="${pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
       if test -f "${1}/${p}/DESCRIPTION.in"; then
-        cat "${1}/${p}/DESCRIPTION.in"  > "${1}/${p}/DESCRIPTION"
-        grep -v "^Contains:" "${1}/DESCRIPTION" >> "${1}/${p}/DESCRIPTION"
+        ## Try being defensive about missing final newlines, or extra
+	## empty lines.
+        (cat "${1}/${p}/DESCRIPTION.in"
+	  echo
+          grep -v "^Contains:" "${1}/DESCRIPTION"
+	  echo) | sed '/^ *$/d' > "${1}/${p}/DESCRIPTION"
       fi
     done
   else 
