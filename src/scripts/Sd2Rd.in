@@ -22,7 +22,7 @@
 use Getopt::Long;
 use R::Utils;
 
-my $revision = ' $Revision: 1.15.2.2 $ ';
+my $revision = ' $Revision: 1.15.2.3 $ ';
 my $version;
 my $name;
 
@@ -61,17 +61,17 @@ if(@lines[0] =~ /^<!doctype/) { doS4(); } else { doS3(); }
 exit 0;
  
 sub doS3 {
-  my $braceLevel = 0;
-  my $inReferences = 0;
-  my $inVerbatim = 0;
-  my $inSeeAlso = 0;
-  my $inCode = 0;
-  my $isDataSet = 0;
-  my $doprint = 1;
-  my $needArg = 1;
-  my $needVal = 0;
-  my $underlineNext = 0;
-  my $output = "";
+  $braceLevel = 0;
+  $inReferences = 0;
+  $inVerbatim = 0;
+  $inSeeAlso = 0;
+  $inCode = 0;
+  $isDataSet = 0;
+  $doprint = 1;
+  $needArg = 1;
+  $needVal = 0;
+  $underlineNext = 0;
+  $output = "";
 
   foreach $_ (@lines) {
     chop;
@@ -176,7 +176,7 @@ sub doS3 {
       } elsif ($word[1] =~ /SUMMARY/) {
 	&section(0, "\\description\{");
       } elsif ($word[1] =~ /Warning/) {
-	&section(0, "\\secion{Warning}\{");
+	&section(0, "\\section{Warning}\{");
       } elsif (join(" ", @word[1..2]) =~ /DATA DESCRIPTION/) {
 	&section(0, "\\usage\{\ndata($fun)");
 	&section(0, "\\format\{");
