@@ -128,7 +128,9 @@ RGui.pot-update:
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
 	   -o - console.c dataentry.c editor.c pager.c preferences.c rui.c \
-	    system.c graphapp/dialogs.c graphapp/gmenus.c \
+	    system.c \
+	    graphapp/clipboard.c graphapp/dialogs.c graphapp/gmenus.c \
+	    graphapp/metafile.c graphapp/printer.c \
 	    ../library/grDevices/src/devWindows.c) \
 	  > RGui.po
 	test ! -f RGui.po || { \
