@@ -79,12 +79,6 @@ NEW FEATURES
     o	R CMD check will now work on a source tarball and prints out
 	information about the version of R and the package.
 
-    o	warnings() now looks only in the workspace for `last.warning'
-	(suggested by PR#7363).
-
-    o	The search for browsers now starts with firefox, and has mozilla
-	ahead of netscape.
-
 
 UTILITIES
 
@@ -184,6 +178,16 @@ BUG FIXES
 
 
 		CHANGES IN R VERSION 2.0.1 patched
+
+
+
+NEW FEATURES
+
+    o	warnings() now looks only in the workspace for `last.warning'
+	(suggested by PR#7363).
+
+    o	The search for browsers now starts with firefox, and has mozilla
+	ahead of netscape.
 
 
 BUG FIXES
@@ -392,7 +396,7 @@ BUG FIXES
 	errors.
 
     o   The ave() function had trouble if the grouping contained
-        unused levels.
+	unused levels.
 
     o   read.fwf() got confused by skip > 0 and could infinite loop
 	under some circumstances.  (PR#7350)
