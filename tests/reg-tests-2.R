@@ -1384,3 +1384,9 @@ write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "")
 # printed all as complex in 2.0.0.
 write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "", dec=",")
 ## used '.' not ',' in 2.0.0
+
+## splinefun() value test
+(x <- seq(0,6, length=25))
+mx <- sapply(c("fmm", "nat", "per"),
+             function(m) splinefun(1:5, c(1,2,4,3,1), method = m)(x))
+cbind(x,mx)

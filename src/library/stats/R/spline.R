@@ -4,25 +4,25 @@ spline <-
     x <- xy.coords(x, y)
     y <- x$y
     x <- x$x
-    ## ensured by  xy.coords(.) :
-    ##	if (!is.numeric(x) || !is.numeric(y))
-    ##		stop("spline: x and y must be numeric")
-    nx <- length(x)
-    ## ensured by  xy.coords(.) :
-    ##	if (nx != length(y))
-    ##		stop("x and y must have equal lengths")
-    method <- match(method, c("periodic", "natural", "fmm"))
+    method <- pmatch(method, c("periodic", "natural", "fmm"))
     if(is.na(method))
 	stop("spline: invalid interpolation method")
+    if(any(o <- is.na(x) | is.na(y))) {
+	o <- !o
+	x <- x[o]
+	y <- y[o]
+    }
     if(is.unsorted(x)) {
 	o <- order(x)
 	x <- x[o]
 	y <- y[o]
     }
-    if(method == 1 && y[1] != y[nx]) {
-	warning("spline: first and last y values differ - using y[1] for both")
-	y[nx] <- y[1]
+    nx <- length(x)# = length(y), ensured by xy.coords(.)
+    if(method == 1 && y[1] != y[nx]) { # periodic
+        warning("spline: first and last y values differ - using y[1] for both")
+        y[nx] <- y[1]
     }
+    if(nx == 0) stop("zero non-NA points")
     z <- .C("spline_coef",
 	    method=as.integer(method),
 	    n=as.integer(nx),
@@ -32,11 +32,8 @@ spline <-
 	    c=double(nx),
 	    d=double(nx),
 	    e=double(if(method == 1) nx else 0),
-            PACKAGE="base")
+	    PACKAGE="base")
     u <- seq(xmin, xmax, length.out=n)
-    ##-	 cat("spline(.): result of  .C(\"spline_coef\",...):\n")
-    ##-	 str(z, vec.len=10)
-    ##-	 cat("spline(.): now calling .C(\"spline_eval\", ...)\n")
 
     .C("spline_eval",
        z$method,
@@ -51,5 +48,3 @@ spline <-
        z$d,
        PACKAGE="base")[c("x","y")]
 }
-
-

@@ -21,7 +21,7 @@ NEW FEATURES
 	renamed to 'object'.
 
    o	Plotmath now allows underline in expressions.  (PR#7286,
-        contributed by Uwe Ligges.)
+	contributed by Uwe Ligges.)
 
 
 DOCUMENTATION
@@ -53,13 +53,13 @@ BUG FIXES
 	recent versions of Tk, but conceivably not for old
 	tkConfig.sh files.
 
-   o    Slots in prototype objects can inherit from locally defined
-        classes (which were not being found correctly before).
+   o	Slots in prototype objects can inherit from locally defined
+	classes (which were not being found correctly before).
 
-   o    Several fixes to the behavior of as() when there are either
-        coerce= or replace= methods supplied in a call to
-        setIs(). Related fixes to setIs() to handle correctly previous
-        methods, if there were any.
+   o	Several fixes to the behavior of as() when there are either
+	coerce= or replace= methods supplied in a call to
+	setIs(). Related fixes to setIs() to handle correctly previous
+	methods, if there were any.
 
 
 
@@ -75,10 +75,10 @@ BUG FIXES
 
 INSTALLATION CHANGES
 
-    o   Building on Alpha OSF/1 no longer forces the C flag -std1,
+   o	Building on Alpha OSF/1 no longer forces the C flag -std1,
 	which appears to be no longer needed.  (PR#7257)
 
-    o	The compiler flag -mieee-fp is no longer used on i386 Linux
+   o	The compiler flag -mieee-fp is no longer used on i386 Linux
 	(these days it is only passed to the linker and was only
 	invoked for compilation steps).
 
@@ -92,57 +92,60 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
-    o	model.frame.default() takes row names from the response
+   o	model.frame.default() takes row names from the response
 	variable if that has suitable names and there is no 'data'
 	argument.  (This follows S but was not previously implemented
 	in R.)
 
-    o	write.table() was not respecting the 'dec' argument for complex
+   o	write.table() was not respecting the 'dec' argument for complex
 	numbers.
 
-    o	write.table() printed a mixture of numeric and complex numbers
-	as all complex.  (PR#7260)
+   o	write.table() printed a mixture of numeric and complex numbers
+	as all complex.	 (PR#7260)
 
-    o   R CMD INSTALL failed with versioned installs on packages which
+   o	R CMD INSTALL failed with versioned installs on packages which
 	save images (only).
 
-    o   dlogis() gave NaN not 0 for large negative arguments.
+   o	dlogis() gave NaN not 0 for large negative arguments.
 
-    o   Importing from another namespace was broken for versioned
-	installs, incorrectly reporting something like 
+   o	Importing from another namespace was broken for versioned
+	installs, incorrectly reporting something like
 	"package 'imported_from' does not have a name space".
 
-    o   The GNOME interface under Linux/Unix was broken. (PR#7276)
+   o	The GNOME interface under Linux/Unix was broken. (PR#7276)
 
-    o	For the jpeg/png devices under Linux/Unix, under certain rare
+   o	For the jpeg/png devices under Linux/Unix, under certain rare
 	circumstances clipping needed to be cleared before starting a
 	new page.  (PR#7270, which has been the case since the devices
 	were introduced in 1.1.0.)
 
-    o	First lattice plot (first grid.newpage() call) did not start
+   o	First lattice plot (first grid.newpage() call) did not start
 	a new page IF there had been a previous traditional graphics
 	plot (on the same device).
 
-    o	Using install.packages() to install the same package to more
+   o	Using install.packages() to install the same package to more
 	than one library gave an incorrect warning message.
 
-    o   .packages(all.available=TRUE) returned packages with an invalid
+   o	.packages(all.available=TRUE) returned packages with an invalid
 	version field in their DESCRIPTION whereas .find.packages() and
 	packageDescription() did not.  Now all do not.
 
-    o   packageDescription() now correctly reports that a package does
+   o	packageDescription() now correctly reports that a package does
 	not exist, rather than that its DESCRIPTION file is 'missing
 	or broken'.
 
-    o   'make dist' from builddir != sourcedir was copying not linking
+   o	'make dist' from builddir != sourcedir was copying not linking
 	recommended packages to *.tgz.
 
+   o	splinefun(1[0], 1[0])(1) doesn't segfault anymore (PR#7290).
+	spline() and splinefun() now also work with missing values by
+	omiting them.
 
 
 
-        *********************************************************
-        *                                                       *
-        *       News of 1.x.y and 2.0.0 is in file `ONEWS'      *
-        *       News of 1.0.0 and earlier is in file `OONEWS'   *
-        *                                                       *
-        *********************************************************
+	*********************************************************
+	*							*
+	*	News of 1.x.y and 2.0.0 is in file `ONEWS'	*
+	*	News of 1.0.0 and earlier is in file `OONEWS'	*
+	*							*
+	*********************************************************
