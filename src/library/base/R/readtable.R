@@ -101,3 +101,14 @@ read.table <-
     row.names(data) <- row.names
     data
 }
+
+read.csv <-
+    function (file, header = TRUE, sep = ",", quote="\"", dec=".",
+              row.names, col.names, as.is=FALSE, na.strings="", skip=0)
+    read.table(file, header, sep, quote, dec, row.names, col.names,
+               as.is, na.strings, skip)
+read.csv2 <-
+    function (file, header = TRUE, sep = ";", quote="\"", dec=",",
+              row.names, col.names, as.is=FALSE, na.strings="", skip=0)
+    read.table(file, header, sep, quote, dec, row.names, col.names,
+               as.is, na.strings, skip)

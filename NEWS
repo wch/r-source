@@ -193,7 +193,8 @@ NEW FEATURES
         files. This should make it easier to read the "continental
         CSV" format (fields separated by semicolon and using comma as
         decimal point).  The set of quoting characters has also been
-        made optional.
+        made optional. Variants of read.table(), read.csv() and
+        read.csv2() have been defined
 
     o	HDF5 support is gone from the R distribution, and provided by an
 	add-on package available from CRAN.

@@ -1,5 +1,7 @@
 \name{read.table}
 \alias{read.table}
+\alias{read.csv}
+\alias{read.csv2}
 \title{Data Input}
 \description{
   Reads a file in table format and creates a data frame from it, with
@@ -9,7 +11,18 @@
 read.table(file, header = FALSE, sep = "", dec = ".", quote = "\"\'",
            row.names, col.names, as.is = FALSE, na.strings = "NA",
            skip = 0)
+
+read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
+         row.names, col.names, as.is=FALSE, na.strings="", skip=0)
+
+read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",",
+          row.names, col.names, as.is=FALSE, na.strings="", skip=0)
 }
+\details{\code{read.csv} and \code{read.csv2} are identical to
+  \code{read.table} except for the defaults. They are intended for
+  reading "comma separated variable" files (.csv) or the variant used in
+  countries that use comma as decimal point and consequently semicolon
+  as field separator. Notice that \code{header=TRUE} in these variants.}
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
     Each row of the table appears as one line of the file.  If it does
