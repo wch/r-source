@@ -11,9 +11,9 @@
   \code{ncp}).
 }
 \usage{
-df(x, df1, df2)
-pf(q, df1, df2, ncp=0)
-qf(p, df1, df2)
+df(x, df1, df2, log = FALSE)
+pf(q, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE)
+qf(p, df1, df2,        lower.tail = TRUE, log.p = FALSE)
 rf(n, df1, df2)
 }
 \arguments{
@@ -22,6 +22,9 @@ rf(n, df1, df2)
   \item{n}{number of observations to generate.}
   \item{df1, df2}{degrees of freedom.}
   \item{ncp}{non-centrality parameter.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{df} gives the density,

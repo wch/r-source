@@ -10,9 +10,9 @@
   \code{location} and scale parameter \code{scale}.
 }
 \usage{
-dcauchy(x, location = 0, scale = 1)
-pcauchy(q, location = 0, scale = 1)
-qcauchy(p, location = 0, scale = 1)
+dcauchy(x, location = 0, scale = 1, log = FALSE)
+pcauchy(q, location = 0, scale = 1, lower.tail = TRUE, log.p = FALSE)
+qcauchy(p, location = 0, scale = 1, lower.tail = TRUE, log.p = FALSE)
 rcauchy(n, location = 0, scale = 1)
 }
 \arguments{
@@ -20,13 +20,16 @@ rcauchy(n, location = 0, scale = 1)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations to generate.}
   \item{location, scale}{location and scale parameters.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dcauchy}, \code{pcauchy}, and \code{qcauchy} are respectively
   the density, distribution function and quantile function of the Cauchy
   distribution.  \code{rcauchy} generates random deviates from the
   Cauchy.
-}  
+}
 \details{
   If \code{location} or \code{scale} are not specified, they assume
   the default values of \code{0} and \code{1} respectively.

@@ -9,9 +9,9 @@
   generation for the hypergeometric distribution.
 }
 \usage{
-dhyper(x, m, n, k)
-phyper(q, m, n, k)
-qhyper(p, m, n, k)
+dhyper(x, m, n, k, log = FALSE)
+phyper(q, m, n, k, lower.tail = TRUE, log.p = FALSE)
+qhyper(p, m, n, k, lower.tail = TRUE, log.p = FALSE)
 rhyper(nn, m, n, k)
 }
 \arguments{
@@ -23,6 +23,9 @@ rhyper(nn, m, n, k)
   \item{k}{the number of balls drawn from the urn.}
   \item{p}{probability, it must be between 0 and 1.}
   \item{nn}{the number of observations to be generated.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dhyper} gives the density,

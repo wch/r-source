@@ -1,21 +1,24 @@
 \name{Tukey}
 \title{The Studentized Range Distribution}
 \usage{
-ptukey(q, nmeans, df, nranges = 1)
-qtukey(p, nmeans, df, nranges = 1)
+ptukey(q, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
+qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
 }
 \alias{ptukey}
 \alias{qtukey}
 \arguments{
-\item{q}{vector of quantiles.}
-\item{p}{vector of probabilities.}
-\item{nmeans}{sample size for range (same for each group).}
-\item{df}{degrees of freedom for \eqn{s} (see below).}
-\item{nranges}{number of \emph{groups} whose \bold{maximum} range is
-  considered.}
+  \item{q}{vector of quantiles.}
+  \item{p}{vector of probabilities.}
+  \item{nmeans}{sample size for range (same for each group).}
+  \item{df}{degrees of freedom for \eqn{s} (see below).}
+  \item{nranges}{number of \emph{groups} whose \bold{maximum} range is
+    considered.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \description{
-  These functions provide information about the distribution of
+  Functions on the distribution of
   the studentized range, \eqn{R/s}, where \eqn{R} is the range of a
   standard normal sample of size \eqn{n} and \eqn{s^2} is independently
   distributed as chi-squared with \eqn{df} degrees of freedom, see
@@ -44,8 +47,8 @@ qtukey(p, nmeans, df, nranges = 1)
   \emph{Journal of Statistical Computation and Simulation}, \bold{30}, 1--15.
 }
 \seealso{
-\code{\link{pnorm}} and \code{\link{qnorm}} for the corresponding
-functions for the normal distribution.
+  \code{\link{pnorm}} and \code{\link{qnorm}} for the corresponding
+  functions for the normal distribution.
 }
 \examples{
 system.time(curve(ptukey(x, nm=6, df=5), from=-1, to=8, n=101))

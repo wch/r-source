@@ -10,9 +10,9 @@
   obtained from samples with size \code{m} and \code{n}, respectively.
 }
 \usage{
-dwilcox(x, m, n)
-pwilcox(q, m, n)
-qwilcox(p, m, n)
+dwilcox(x, m, n, log = FALSE)
+pwilcox(q, m, n, lower.tail = TRUE, log.p = FALSE)
+qwilcox(p, m, n, lower.tail = TRUE, log.p = FALSE)
 rwilcox(nn, m, n)
 }
 \arguments{
@@ -21,6 +21,9 @@ rwilcox(nn, m, n)
   \item{nn}{number of observations to generate.}
   \item{m, n}{numbers of observations in the first and second sample,
     respectively.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dwilcox} gives the density,

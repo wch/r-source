@@ -10,9 +10,9 @@
   (and optional noncentrality parameter \code{ncp}).
 }
 \usage{
-dt(x, df)
-pt(q, df, ncp=0)
-qt(p, df)
+dt(x, df, log = FALSE)
+pt(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE)
+qt(p, df,        lower.tail = TRUE, log.p = FALSE)
 rt(n, df)
 }
 \arguments{
@@ -22,6 +22,9 @@ rt(n, df)
   \item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).}
   \item{ncp}{non-centrality parameter \eqn{\delta};
     currently \code{ncp <= 37.62}.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dt} gives the density,

@@ -11,9 +11,9 @@
   \code{ncp}.
 }
 \usage{
-dchisq(x, df, ncp=0)
-pchisq(q, df, ncp=0)
-qchisq(p, df, ncp=0)
+dchisq(x, df, ncp=0, log = FALSE)
+pchisq(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE)
+qchisq(p, df, ncp=0, lower.tail = TRUE, log.p = FALSE)
 rchisq(n, df)
 }
 \arguments{
@@ -22,6 +22,9 @@ rchisq(n, df)
   \item{n}{number of observations to generate.}
   \item{df}{degrees of freedom.}
   \item{ncp}{non-centrality parameter.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dchisq} gives the density, \code{pchisq} gives the distribution
@@ -37,7 +40,7 @@ rchisq(n, df)
 
   The non-central chi-square distribution with \code{df}\eqn{= n}
   degrees of freedom and non-centrality parameter \code{ncp} \eqn{=
-    \lambda} has density 
+    \lambda} has density
   \deqn{
     f(x) = e^{-\lambda / 2}
       \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{%

@@ -10,9 +10,9 @@
   and \code{prob}.
 }
 \usage{
-dbinom(x, size, prob)
-pbinom(q, size, prob)
-qbinom(p, size, prob)
+dbinom(x, size, prob, log = FALSE)
+pbinom(q, size, prob, lower.tail = TRUE, log.p = FALSE)
+qbinom(p, size, prob, lower.tail = TRUE, log.p = FALSE)
 rbinom(n, size, prob)
 }
 \arguments{
@@ -21,6 +21,9 @@ rbinom(n, size, prob)
   \item{n}{number of observations to generate.}
   \item{size}{number of trials.}
   \item{prob}{probability of success on each trial.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dbinom} gives the density, \code{pbinom} gives the distribution

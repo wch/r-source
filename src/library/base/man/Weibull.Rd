@@ -10,9 +10,9 @@
   and \code{scale}.
 }
 \usage{
-dweibull(x, shape, scale = 1)
-pweibull(q, shape, scale = 1)
-qweibull(p, shape, scale = 1)
+dweibull(x, shape, scale = 1, log = FALSE)
+pweibull(q, shape, scale = 1, lower.tail = TRUE, log.p = FALSE)
+qweibull(p, shape, scale = 1, lower.tail = TRUE, log.p = FALSE)
 rweibull(n, shape, scale = 1)
 }
 \arguments{
@@ -20,6 +20,9 @@ rweibull(n, shape, scale = 1)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations to generate.}
   \item{shape, scale}{shape and scale parameters.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dweibull} gives the density,
@@ -40,7 +43,7 @@ rweibull(n, shape, scale = 1)
 }
 \seealso{
   \code{\link{dexp}} for the Exponential which is a special case of a
-  Weibull distribution. 
+  Weibull distribution.
 }
 \examples{
 x <- 1:10

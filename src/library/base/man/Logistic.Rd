@@ -10,9 +10,9 @@
   \code{location} and \code{scale}.
 }
 \usage{
-dlogis(x, location = 0, scale = 1)
-plogis(q, location = 0, scale = 1)
-qlogis(p, location = 0, scale = 1)
+dlogis(x, location = 0, scale = 1, log = FALSE)
+plogis(q, location = 0, scale = 1, lower.tail = TRUE, log.p = FALSE)
+qlogis(p, location = 0, scale = 1, lower.tail = TRUE, log.p = FALSE)
 rlogis(n, location = 0, scale = 1)
 }
 \arguments{
@@ -20,6 +20,9 @@ rlogis(n, location = 0, scale = 1)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations to generate.}
   \item{location, scale}{location and scale parameters.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 
 \value{

@@ -10,9 +10,9 @@
   (i.e., mean \code{1/rate}).
 }
 \usage{
-dexp(x, rate = 1)
-pexp(q, rate = 1)
-qexp(p, rate = 1)
+dexp(x, rate = 1, log = FALSE)
+pexp(q, rate = 1, lower.tail = TRUE, log.p = FALSE)
+qexp(p, rate = 1, lower.tail = TRUE, log.p = FALSE)
 rexp(n, rate = 1)
 }
 \arguments{
@@ -20,6 +20,9 @@ rexp(n, rate = 1)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations to generate.}
   \item{rate}{vector of rates.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
 }
 \value{
   \code{dexp} gives the density,
@@ -27,10 +30,10 @@ rexp(n, rate = 1)
   \code{qexp} gives the quantile function, and
   \code{rexp} generates random deviates.
 }
-\details{ 
+\details{
   If \code{rate} is not specified, it assumes the default value of
   \code{1}.
-  
+
   The exponential distribution with rate \eqn{\lambda} has density
   \deqn{
     f(x) = \lambda {e}^{- \lambda x}}{
