@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
   ## Method to 'str' for  'data.frame' objects
-  ## $Id: str,v 1.2 1997/10/31 18:23:04 maechler Exp $
+  ## $Id: str.R,v 1.1 1998/03/06 07:38:21 hornik Exp $
   if(! is.data.frame(object)) {
     warning("str.data.frame(.) called with non-data.frame. Trying to coerce it")
     object <- data.frame(object)
@@ -44,7 +44,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
   ## Author: Martin Maechler <maechler@stat.math.ethz.ch>     1990--1997
   ## ------ Please send Bug-reports, -fixes and improvements !
   ## -------------------------------------------------------------------------
-  ## $Id: str,v 1.2 1997/10/31 18:23:04 maechler Exp $
+  ## $Id: str.R,v 1.1 1998/03/06 07:38:21 hornik Exp $
 
 
   oo <- options(digits = digits.d)
