@@ -29,9 +29,12 @@ CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/src/include -include $(RHOME)/src/include/gl
 CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG)
-DLLLIBS=$(PKG_LIBS) $(FLIBS) $(RHOME)/bin/R.dll 
 RESFLAGS=--include-dir $(RHOME)/src/include
-
+ifeq ($(strip $(BUILD)),CROSS)
+DLLLIBS=-L$(RHOME)/src/gnuwin32 $(PKG_LIBS) $(FLIBS) -lR 
+else
+DLLLIBS=$(PKG_LIBS) $(FLIBS) $(RHOME)/bin/R.dll 
+endif
 
 AA=$(wildcard Makefile)
 ifeq ($(AA),Makefile)

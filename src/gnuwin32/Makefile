@@ -63,8 +63,11 @@ tcl:
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
 
-rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll CHTML \
-	 ../include/globalvar.h front-ends COPYRIGHTS rmodules
+rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll \
+ifeq ($(strip $(BUILD)),CROSS)
+	 libR.a \
+endif
+	 CHTML ../include/globalvar.h front-ends COPYRIGHTS rmodules
 
 rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)
@@ -119,6 +122,7 @@ R.a: $(OBJS)
 
 # R.dll exports all global symbols BUT import library (libR.a)
 # only (all functions) + (global vars listed in exported-vars))
+# Only used in the cross-compilation case.
 
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
@@ -133,7 +137,8 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(CAT) exported-vars >> $@
 	$(RM) RDefs
 
-# A version needed for the modules that uses R.dll's malloc/.../free:
+# A version needed for the modules that uses R.dll's malloc/.../free
+# Used in all cases.
 
 libRm.a:  Rm.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def Rm.exp --output-lib libRm.a
