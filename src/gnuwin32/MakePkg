@@ -194,14 +194,7 @@ nmspace:
 ifeq ($(strip $(BUILD)),CROSS)
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(ECHO) -n "  installing NAMESPACE file"; \
-	  if test -f ${SPKG}/NAMESPACE.windows ; then \
-	  cat ${SPKG}/NAMESPACE ${SPKG}/NAMESPACE.windows > $(DPKG)/NAMESPACE; \
-	  else \
-	    $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
-          fi ; \
-	  $(ECHO) " and metadata"; \
-	  $(ECHO) "tools:::.install_package_namespace_info('$(DPKG)', '$(DPKG)')" | \
-	    R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null; \
+	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
 	fi
 else
 	@if test -f ${SPKG}/NAMESPACE; then \
