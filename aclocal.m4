@@ -445,6 +445,9 @@ for arg in ${FLIBS}; do
   case "${arg}" in
     -lcrt?.o)
       ;;
+    -l:*)
+      flibs="${flibs} -Wl,${arg}"
+      ;;
     *)
       flibs="${flibs} ${arg}"
       ;;
