@@ -53,6 +53,7 @@ R: Makefile
 	@$(MAKE) $(noinst_LIBRARIES)
 
 libxdr.a: $(libxdr_a_OBJECTS)
+	rm -f $@
 	$(AR) cr $@ $(libxdr_a_OBJECTS)
 	$(RANLIB) $@
 

@@ -46,6 +46,7 @@ R: Makefile
 	@$(MAKE) $(noinst_LIBRARIES)
 
 libbz2.a: $(libbz2_a_OBJECTS)
+	rm -f $@
 	$(AR) cr $@ $(libbz2_a_OBJECTS)
 	$(RANLIB) $@
 

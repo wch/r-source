@@ -47,6 +47,7 @@ R: Makefile
 	@$(MAKE) $(noinst_LIBRARIES)
 
 libz.a: $(libz_a_OBJECTS)
+	rm -f $@
 	$(AR) cr $@ $(libz_a_OBJECTS)
 	$(RANLIB) $@
 

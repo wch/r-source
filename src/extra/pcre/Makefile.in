@@ -52,6 +52,7 @@ dftables: dftables.o
 	$(MAIN_LD) $(LDFLAGS) -o dftables dftables.o
 
 libpcre.a: $(libpcre_a_OBJECTS)
+	rm -f $@
 	$(AR) cr $@ $(libpcre_a_OBJECTS)
 	$(RANLIB) $@
 
