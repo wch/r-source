@@ -1048,7 +1048,7 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "a character vector argument expected");
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	p = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
+	p = R_ExpandFileName(CHAR(STRING_ELT(s, i)));
 	if (strlen(p) > PATH_MAX - 1)
 	    errorcall(call, "path too long");
 	strcpy (buf, p);
