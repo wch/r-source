@@ -88,6 +88,12 @@ NextMethod(generic = NULL, object = NULL, \dots)
   the S4 method dispatch has been turned on in the evaluator. It is
   meant for \R internal use only.
 }
+\section{Warning}{
+  \code{UseMethod} accepts a call with no arguments and tries to deduce
+  the generic from the context.  This was undocumented on the help page
+  and is now deprecated.  It is allowed but \sQuote{strongly discouraged} in
+  S-PLUS.
+}
 \seealso{
   \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{getS3method}}
 }
