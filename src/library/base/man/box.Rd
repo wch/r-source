@@ -1,13 +1,15 @@
 \name{box}
 \title{Draw a Box around a Plot}
 \usage{
-box(\dots)
+box(which="plot", lty="solid", \dots)
 }
 \alias{box}
 \arguments{
-\item{\dots}{the graphical parameters \code{bty},
-\code{lty} and \code{col} can be specified as arguments
-to this function.}
+\item{which}{character, one of \code{"plot"}, \code{"figure"},
+  \code{"inner"} and \code{"outer"}.}
+\item{lty}{line type of the box.}
+\item{\dots}{the graphical parameters \code{bty} and \code{col} can be
+  specified as arguments to this function.}
 }
 \value{
 This function is invoked for its side effect which is to
