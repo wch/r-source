@@ -189,7 +189,7 @@ print.ts <- function(x, calendar, ...)
             }
         } else { ##-- no `calendar' --
             header(x)
-            attr(x, "class") <- attr(x, "tsp") <- NULL
+            attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
         }
     } else { # multi-column matrix
         if(calendar && fr.x > 1) {
@@ -209,7 +209,7 @@ print.ts <- function(x, calendar, ...)
             if(!calendar) header(x)
             rownames(x) <- format(time(x))
         }
-        attr(x, "class") <- attr(x, "tsp") <- NULL
+        attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
     }
     NextMethod("print", x, quote = FALSE, right = TRUE, ...)
     invisible(x.orig)
