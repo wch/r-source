@@ -293,7 +293,7 @@ SEXP do_makefactor(SEXP call, SEXP op, SEXP args, SEXP rho)
 	checkArity(op, args);
 	x = CAR(args) = coerceVector(CAR(args), INTSXP);
 	nl = asInteger(CADR(args));
-	if (nl == NA_INTEGER || nl < 1)
+	if (nl == NA_INTEGER || nl < 0)
 		errorcall(call, "invalid number of factor levels\n");
 	ord = asLogical(CADDR(args));
 	if(ord == NA_LOGICAL) ord = 0;
