@@ -677,7 +677,8 @@ static void setMessageBoxTopmost(window obj)
 void BringToTop(window c, int stay) /* stay=0 for regular, 1 for topmost, 2 for toggle */
 {
     SetForegroundWindow(c->handle); /* needed in Rterm */
-    BringWindowToTop(c->handle);    /* needed in Rgui --mdi */
+    if (ismdi()) BringWindowToTop(hwndFrame);
+    BringWindowToTop(c->handle);
 
     if (stay == 2) stay = !isTopmost(c);
 
