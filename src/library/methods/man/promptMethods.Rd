@@ -6,26 +6,29 @@
   function.
 }
 \usage{
-promptMethods(f, filename, addTo = FALSE, inherited=FALSE, type = "methods")
+promptMethods(f, filename, methods)
 }
 \arguments{
   \item{f}{ The name of the generic function whose methods are to be
     documented.}
-  \item{filename}{ Optional file on which to write the documentation shell.
-    If \code{FALSE}, the text is returned, presumably to be used in the
-    documentation of the generic function itself (see
-    \code{\link{prompt}}).  By default, this is the same as the coded
-    topic name for these methods (currently \code{"NAME-methods.Rd"},
-    where \code{NAME} is the function name, argument \code{f}).
+  \item{filename}{ Optional file on which to write the documentation
+    shell. If supplied, it can be the name of a file, a connection, or \code{FALSE}.
+    
+    If \code{FALSE}, the text is returned, presumably to be inserted
+    some other documentation file, such as the documentation of the
+    generic function itself (see \code{\link{prompt}}).
+
+    The default file name is the same as the coded
+    topic name for these methods (currently \code{"f-methods.Rd"}.
   }
-  \item{addTo}{
-    Optionally, text to add to the shell.  This would typically be part
-    of the contents of the documentation file for the generic function,
-    if you want the generic and the methods documented together.
+  \item{methods}{Optional methods list object giving the methods to be
+    documented. By default, the first methods object for this generic is
+    used (for example, if the current global environment has some
+    methods for \code{f}, these would be documented).
+
+    If this argument is supplied, it is likely to be \code{getMethods(f,
+      where)}, with \code{where} some package containing methods for \code{f}.
   }
-  \item{inherited}{ Should inherited methods be included?  Default
-    \code{FALSE}. }
-  \item{type}{The documentation type to be declared in the output file.}
 }
 \value{
   If \code{filename} is \code{FALSE}, the text generated; otherwise, the
@@ -36,15 +39,20 @@ promptMethods(f, filename, addTo = FALSE, inherited=FALSE, type = "methods")
   \code{\link{promptClass}}
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \keyword{programming}
 \keyword{methods}

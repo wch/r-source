@@ -780,4 +780,42 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     new("ObjectsWithPackage", value, package = pkg)
 }
 
+.recursiveCallTest <- function(x, fname) {
+    if(is(x, "call")) {
+        if(identical(x[[1]], quote(standardGeneric))) {
+            if(!identical(x[[2]], fname))
+                warning("The body of the generic function for \"",
+                        fname, "\" calls standardGeneric to dispatch on a different name (\"",
+                        paste(as.character(x[[2]]), collapse = "\\n"),
+                        "\")!")
+            TRUE
+        }
+        else {
+            for(i in seq(from=2, length = length(x)-1)) {
+                if(Recall(x[[i]], fname))
+                    return(TRUE)
+            }
+            FALSE
+        }
+    }
+    else if(is(x, "language")) {
+        for(i in seq(from=2, length = length(x)-1)) {
+            if(Recall(x[[i]], fname))
+                return(TRUE)
+        }
+        FALSE
+    }
+    else
+        FALSE
+}
+
+.NonstandardGenericTest <- function(body, fname, stdBody){
+    if(identical(body, stdBody))
+        FALSE
+    else {
+        if(!.recursiveCallTest(body, fname))
+            warning("The supplied generic function definition does not seem to call standardGeneric; no methods will be dispatched!")
+        TRUE
+    }
+}
     

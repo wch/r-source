@@ -496,31 +496,38 @@ promptMethods <-
   ## `filename' can be a logical or the name of a file to print to.  If `file' is `FALSE',
   ## the methods skeleton is returned, to be included in other printing (typically,
   ## the output from `prompt'.
-  function(f, filename = TRUE, addTo = FALSE, inherited = FALSE, type = "methods") {
+  function(f, filename = TRUE, methods) {
       paste0 <- function(...)paste(..., sep="")
-      object <- linearizeMlist(getMethods(f), inherited)
+      packageString = ""
+      if(missing(methods)) {
+          where <- find(mlistMetaName(f))
+          if(length(where) == 0)
+              stop("No methods found for generic \"", f, "\"")
+          where <- where[1]
+          methods <- getMethods(f, where)
+          if(where != 1)
+              packageString <- paste("in package", getPackageName(where))
+      }
+      object <- linearizeMlist(methods, FALSE)
       methods <- object@methods; n <- length(methods)
       args <- object@arguments
       signatures <- object@classes
       labels <- character(n)
-      fullName <- topicName(type, f)
-      for(i in seq(length = n))
+      aliases <- character(n)
+      fullName <- topicName("methods", f)
+      for(i in seq(length = n)) {
           labels[[i]] <- paste(args[[i]], signatures[[i]], collapse = ", ", sep = " = ")
-      text <- paste0("\\item{", labels, "}{ ~~describe this method here }")
+          aliases[[i]] <- paste0("\\alias{", topicName("method", c(f, signatures[[i]])),
+                                "}")
+      }
+      text <- paste0(aliases, "\n\\item{", labels, "}{ ~~describe this method here }")
       text <- c("\\section{Methods}{\\describe{", text, "}}")
       aliasText <- paste0("\\alias{", fullName, "}")
       endText <- c("\\keyword{methods}", "\\keyword{ ~~ other possible keyword(s)}")
       if(identical(filename, FALSE))
           return(c(aliasText, text))
-      if(identical(addTo, TRUE))
-          beginText <- readLines(paste0(f, ".Rd"))
-      else if(is(addTo, "character")) {
-          beginText <- addTo
-      }
-      else {
-          beginText <-  c(paste0("\\name{", fullName, "}"), paste0("\\docType{", type, "}"),
-                paste0("\\title{ ~~ Methods for Function ", f, " ~~}"))
-      }
+      beginText <-  c(paste0("\\name{", fullName, "}"), paste0("\\docType{methods}"),
+                paste("\\title{ ~~ Methods for Function", f, packageString, "~~}"))
       if(identical(filename, TRUE))
           filename <- paste0(fullName, ".Rd")
       text <-c(beginText, aliasText, text, endText)

@@ -11,6 +11,7 @@
         list(properties=properties, prototype = prototype, extends = extends)
     }, envir)
     setClass("VIRTUAL", sealed = TRUE, where = envir)
+    setClass("oldClass", sealed = TRUE, where = envir)
     setClass("ANY", sealed = TRUE, where = envir)
     setClass("vector", sealed = TRUE, where = envir)
     setClass("missing", sealed = TRUE, where = envir)

@@ -44,7 +44,7 @@ setGeneric <-
     }
     else {
         fdef <- def
-        if(is.null(genericFunction) && !identical(body(fdef), stdGenericBody))
+        if(is.null(genericFunction) && .NonstandardGenericTest(body(fdef), name, stdGenericBody))
             genericFunction <- new("nonstandardGenericFunction")
         if(is.null(package))
             package <- getPackageName(where)
@@ -630,12 +630,13 @@ setGroupGeneric <-
                                             paste("Function \"", name,
                                                   "\" is a group generic; don't call it directly",
                                                   sep ="")))
-    def <- makeGeneric(name, def, group = group, valueClass = valueClass,
-                       package = package)
     if(is.character(knownMembers))
         knownMembers <- as.list(knownMembers) # ? or try to find them?
-    def <- new("groupGenericFunction", def, groupMembers = knownMembers)
-    setGeneric(name, def, where = where)
+    setGeneric(name, def, group = group, valueClass = valueClass,
+               package = package,
+               genericFunction =
+                 new("groupGenericFunction", def, groupMembers = knownMembers),
+               where = where)
     name
 }
 
