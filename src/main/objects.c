@@ -1212,6 +1212,7 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   method table.	The entries will be preserved via
 	   R_preserveobject, so later we can just grab mlist from
 	   prim_mlist */
+	do_set_prim_method(op, "suppressed", R_NilValue, mlist);
 	PROTECT(mlist = get_primitive_methods(op, rho));
 	do_set_prim_method(op, "set", R_NilValue, mlist);
 	current = prim_methods[offset]; /* as revised by do_set_prim_method */
