@@ -8,6 +8,13 @@ NEW FEATURES
 
     o   Added kmeans to package mva (donated by B. Ripley)
 
+    o	New persp function added.  It is NOT compatible with S (yet)
+	and is subject to internal and interface changes.
+
+BUG FIXES
+
+    o	Changes to the PostScript device driver mean that the volume
+	of output has been reduced to about a third of what it was.
 
 
 		CHANGES IN R VERSION 0.62.2
