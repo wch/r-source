@@ -159,7 +159,7 @@ glm.fit(x, y, weights = rep(1, nobs),
     saturated model has deviance zero.}
   \item{aic}{Akaike's \emph{An Information Criterion}, minus twice the
     maximized log-likelihood plus twice the number of coefficients (so
-    assuming that the dispersion is known.}
+    assuming that the dispersion is known).}
   \item{null.deviance}{The deviance for the null model, comparable with
     \code{deviance}. The null model will include the offset, and an
     intercept if there is one in the model}
