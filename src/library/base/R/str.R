@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.26 2003/03/12 16:23:15 maechler Exp $
+    ## $Id: str.R,v 1.27 2003/03/15 17:38:48 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -41,7 +41,7 @@ str.default <-
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.26 2003/03/12 16:23:15 maechler Exp $
+    ## $Id: str.R,v 1.27 2003/03/15 17:38:48 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -257,9 +257,10 @@ str.default <-
 	    format.fun <- format
 	}
 
+        ## Not sure, this is ever triggered:
+	if(is.na(le)) { warning("'str.default': 'le' is NA !!"); le <- 0}
+
 	if(char.like) {
-	    bracket <- if (le>0) '"' else ""
-	    format.fun <- function(x)x
 	    v.len <-
 		if(missing(vec.len))
 		    max(1,sum(cumsum(3 + if(le>0) nchar(object) else 0) <
@@ -273,21 +274,26 @@ str.default <-
 		    object[ii] <- P0(substr(object[ii], 1, nchar.max),
                                      "| __truncated__")
 	    }
-	} else {
-	    bracket <- ""
+	    ## bracket <- if (le>0) '"' else ""
+            ## formObj < - function(x)
+            ##    P0(bracket, paste(x, collapse = P0(bracket, " ", bracket)),
+            ##       bracket)
+            formObj <- function(x)
+                P0(sapply(x, function(a)if(is.na(a)) "NA" else P0('"',a,'"'),
+                          USE.NAMES=FALSE), collapse=" ")
+	}
+        else {
 	    if(!exists("format.fun", inherits=TRUE)) #-- define one --
 		format.fun <-
 		    if(mod == 'num' || mod == 'cplx') format else as.character
+            ## v.len <- max(1,round(v.len))
+            ile <- min(v.len, le)
+            formObj <- function(x) paste(format.fun(x), collapse = " ")
 	}
-	if(is.na(le)) { warning("'str.default': 'le' is NA !!"); le <- 0}
 
-	## v.len <- max(1,round(v.len))
-	ile <- min(v.len, le)
-	cat(str1, " ", bracket,
-	    paste(format.fun(if(ile >= 1) object[1:ile] else
-			     if(v.len > 0) object),
-		  collapse = P0(bracket, " ", bracket)),
-	    bracket, if(le > v.len) " ...", "\n", sep="")
+	cat(str1, " ", formObj(if(ile >= 1) object[1:ile] else
+                               if(v.len > 0) object),
+            if(le > v.len) " ...", "\n", sep="")
 
     } ## else (not function nor list)----------------------------------------
 

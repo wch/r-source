@@ -94,6 +94,9 @@ need.dev <- !exists(".Device") || is.null(.Device)
 if(need.dev) postscript()
 str(par()); if(need.dev) graphics.off()
 
+ch <- letters[1:12]; is.na(ch) <- 3:5
+str(ch) # character NA's
+
 nchar(longch <- paste(rep(letters,100), collapse=""))
 str(longch)
 str(longch, nchar.max = 52)

@@ -358,6 +358,7 @@ NEW FEATURES
 	have no effect unless specifically asked for.
 
     o	str() now shows ordered factors different from unordered ones.
+	It also differentiates "NA" and as.character(NA).
 
     o	princomp.factor() now has principal argument `formula', so
 	update() can be used.
