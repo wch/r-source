@@ -631,15 +631,11 @@ From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 ..Not a bug, but perhaps a useful feature: should the attributes of environments
 ..be copied on assignment?
-* PR# 2255 *
-Subject: cape of good hope
-From: "mabacha@ecplaza.net" <mabacha20@eircom.net>
-Date: Mon, 4 Nov 2002 18:30:53 +0000
-* PR# 2256 *
-Subject: arima.sim
-From: "Philippe Choquette" <pchoquet@mat.ulaval.ca>
-Date: Mon, 4 Nov 2002 14:02:35 -0500
-* PR# 2257 *
-Subject: cape of good hope[mabacha20@ecplaza.net
-From: "mabacha20@ecplaza.net" <mabacha20@eircom.net>
-Date: Mon, 4 Nov 2002 19:09:58 +0000
+* PR# 2259 *
+Subject: [R] grid(): defaults of nx and ny do not correspond with axis()
+From: Wolfram Fischer <wolfram@fischer-zim.ch>
+Date: Tue, 5 Nov 2002 15:36:45 +0100
+* PR# 2260 *
+Subject: [성인광고]...화끈한성인싸이트 구경함해보아요
+From: "여우" <khk9933@dreamwiz.com>
+Date: Wed, 6 Nov 2002 06:37:45 +0900
