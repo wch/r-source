@@ -454,7 +454,7 @@ the Start menu). You can also set them on the command line, for
 example in the shortcut you could have</p>
 
 <pre>
-path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
+path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
 </pre>
 
 <p>and you can set variables in a file <code>.Renviron</code> in
@@ -462,13 +462,10 @@ the working directory or your home directory, for example</p>
 
 <pre>
 R_LIBS=e:/R/library
-R_VSIZE=10M
-R_NSIZE=400k
 </pre>
 
-<p>The order of precedence is the command line (flags before
-variables) then <code>.Renviron</code> then the inherited
-environment. <a name=
+<p>The order of precedence is the command line then <code>
+.Renviron</code> then the inherited environment. <a name=
 "The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
 </a></p>
 

@@ -269,17 +269,15 @@ use the System Configuration Utility (under Programs, Accessories,
 System Tools on the Start menu).  You can also set them on the command
 line, for example in the shortcut you could have
 
-     path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
+     path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
 
 and you can set variables in a file `.Renviron' in the working directory
 or your home directory, for example
 
      R_LIBS=e:/R/library
-     R_VSIZE=10M
-     R_NSIZE=400k
 
-The order of precedence is the command line (flags before variables)
-then `.Renviron' then the inherited environment.
+The order of precedence is the command line then `.Renviron' then the
+inherited environment.
 
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================

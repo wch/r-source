@@ -335,7 +335,7 @@ Accessories, System Tools on the Start menu).  You can also set them on
 the command line, for example in the shortcut you could have
 
 @example
-path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
+path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
 @end example
 @noindent
 and you can set variables in a file @file{.Renviron} in the working directory
@@ -343,12 +343,10 @@ or your home directory, for example
 
 @example
 R_LIBS=e:/R/library
-R_VSIZE=10M
-R_NSIZE=400k
 @end example
 
-The order of precedence is the command line (flags before variables)
-then @file{.Renviron} then the inherited environment.
+The order of precedence is the command line then @file{.Renviron} then
+the inherited environment.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the rwXxxx/library directory, Packages
