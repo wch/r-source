@@ -899,11 +899,9 @@ static SEXP mfindVarInFrame(SEXP rho, SEXP symbol)
 
 /*----------------------------------------------------------------------
 
-  do_assign
+  do_assign : .Internal(assign(x, value, envir, inherits))
 
-
- */
-
+*/
 SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name, val, aenv;
@@ -912,18 +910,18 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     name = findVar(CAR(args), rho);
     PROTECT(args = evalList(args, rho));
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
-	error("assign: invalid first argument");
+	error("invalid first argument");
     else
 	name = install(CHAR(STRING(CAR(args))[0]));
     PROTECT(val = CADR(args));
     R_Visible = 0;
     aenv = CAR(CDDR(args));
     if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
-	error("invalid envir argument");
+	errorcall(call, "invalid `envir' argument");
     if (isLogical(CAR(nthcdr(args, 3))))
 	ginherits = LOGICAL(CAR(nthcdr(args, 3)))[0];
     else
-	error("get: invalid inherits argument");
+	errorcall(call, "invalid `inherits' argument");
     if (ginherits)
 	setVar(name, val, aenv);
     else
@@ -968,6 +966,8 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
 
 SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    /* .Internal(remove(list, envir, inherits)) */
+
     SEXP name, envarg, tsym, tenv;
     int ginherits = 0;
     int done, i, hashcode;
@@ -975,13 +975,13 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     name = CAR(args);
     if (!isString(name))
-	error("invalid first argument to remove.");
+	errorcall(call, "invalid first argument to remove.");
     args = CDR(args);
 
     envarg = CAR(args);
     if (envarg != R_NilValue) {
 	if (TYPEOF(envarg) != ENVSXP)
-	    error("invalid envir argument");
+	    errorcall(call, "invalid `envir' argument");
     }
     else envarg = R_GlobalContext->sysparent;
     args = CDR(args);
@@ -989,7 +989,7 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isLogical(CAR(args)))
 	ginherits = asLogical(CAR(args));
     else
-	error("get: invalid inherits argument");
+	errorcall(call, "invalid `inherits' argument");
 
     for (i = 0; i < LENGTH(name); i++) {
 	done = 0;
@@ -1048,8 +1048,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* The first arg is the object name */
     /* It must be present and a string */
 
-    if (!isString(CAR(args)) || length(CAR(args)) < 1
-	|| strlen(CHAR(STRING(CAR(args))[0])) == 0) {
+    if (!isValidStringF(CAR(args))) {
 	errorcall(call, "invalid first argument");
 	t1 = R_NilValue;
     }
@@ -1239,7 +1238,7 @@ SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("attach: pos must be an integer");
 
     name = CADDR(args);
-    if (!isString(name) || length(name) != 1)
+    if (!isValidStringF(name))
 	error("attach: invalid object name");
 
     for (x = CAR(args); x != R_NilValue; x = CDR(x))
