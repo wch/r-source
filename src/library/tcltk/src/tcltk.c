@@ -186,6 +186,49 @@ SEXP dotTcl(SEXP args)
     return ans;
 }
 
+SEXP dotTclObjv(SEXP args)
+{
+    SEXP ans, t, 
+	avec = CADR(args), 
+	nm = getAttrib(avec, R_NamesSymbol);
+    int objc, i, r;
+    Tcl_Obj **objv;
+    
+    for (objc = 0, i = 0; i < length(avec); i++){
+	if (!isNull(VECTOR_ELT(avec, i)))
+	    objc++;
+	if (!isNull(nm) && strlen(CHAR(STRING_ELT(nm, i))))
+	    objc++;
+    }
+
+    objv = (Tcl_Obj **) R_alloc(objc, sizeof(Tcl_Obj *)); 
+
+    for (objc = i = 0; i < length(avec); i++){
+	char *s, *tmp;
+	if (!isNull(nm) && strlen(s = CHAR(STRING_ELT(nm, i)))){
+	    tmp = calloc(strlen(s)+2, sizeof(char));
+	    *tmp = '-';
+	    strcpy(tmp+1, s);
+	    objv[objc++] = Tcl_NewStringObj(tmp, -1);
+	    free(tmp);
+	}
+	if (!isNull(t = VECTOR_ELT(avec, i)))
+	    objv[objc++] = (Tcl_Obj *) R_ExternalPtrAddr(t);
+    }
+
+    if (Tcl_EvalObjv(RTcl_interp, objc, objv, 0) == TCL_ERROR)
+    {
+	char p[512];
+	if (strlen(Tcl_GetStringResult(RTcl_interp))>500)
+	    strcpy(p,"tcl error.\n");
+	else
+	    sprintf(p,"[tcl] %s.\n",Tcl_GetStringResult(RTcl_interp));
+	error(p);
+    }
+
+    return makeRTclObject(Tcl_GetObjResult(RTcl_interp));
+}
+
 
 SEXP RTcl_ObjFromVar(SEXP args)
 {
@@ -321,6 +364,16 @@ SEXP RTcl_ObjAsDoubleVector(SEXP args)
     return ans;
 }
 
+static Tcl_Obj *NewIntOrDoubleObj(double x)
+{
+    /* This function works around two quirks: (1) that numeric values
+       in R are generally stored as doubles, even small integer
+       constants and (2) that Tcl stringifies a double constant like 2
+       into the form 2.0, which will not work ins some connections */
+    int i = (int) x;
+    return ((double) i == x) ? Tcl_NewIntObj(i) : Tcl_NewDoubleObj(x);
+}
+
 SEXP RTcl_ObjFromDoubleVector(SEXP args)
 {
     int count;
@@ -335,10 +388,10 @@ SEXP RTcl_ObjFromDoubleVector(SEXP args)
 
     count = length(val);
     if (count == 1 && LOGICAL(drop)[0])
-	tclobj = Tcl_NewDoubleObj(REAL(val)[0]);
+	tclobj = NewIntOrDoubleObj(REAL(val)[0]);
     else
 	for ( i = 0 ; i < count ; i++) {
-	    elem = Tcl_NewDoubleObj(REAL(val)[i]);
+	    elem = NewIntOrDoubleObj(REAL(val)[i]);
 	    Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
 	}
 
@@ -401,6 +454,54 @@ SEXP RTcl_ObjFromIntVector(SEXP args)
     return makeRTclObject(tclobj);
 }
 
+SEXP RTcl_GetArrayElem(SEXP args)
+{
+    SEXP x, i;
+    char *xstr, *istr;
+    Tcl_Obj *tclobj;
+
+    x = CADR(args);
+    i = CADDR(args);
+
+    xstr = CHAR(STRING_ELT(x, 0));
+    istr = CHAR(STRING_ELT(i, 0));
+    tclobj = Tcl_GetVar2Ex(RTcl_interp, xstr, istr, 0);
+
+    if (tclobj == NULL)
+	return R_NilValue;
+    else
+	return makeRTclObject(tclobj);
+}
+
+SEXP RTcl_SetArrayElem(SEXP args)
+{
+    SEXP x, i;
+    char *xstr, *istr;
+    Tcl_Obj *value;
+
+    x = CADR(args);
+    i = CADDR(args);
+    value = (Tcl_Obj *) R_ExternalPtrAddr(CADDDR(args));
+
+    xstr = CHAR(STRING_ELT(x, 0));
+    istr = CHAR(STRING_ELT(i, 0));
+    Tcl_SetVar2Ex(RTcl_interp, xstr, istr, value, 0);
+}
+
+SEXP RTcl_RemoveArrayElem(SEXP args)
+{
+    SEXP x, i;
+    char *xstr, *istr;
+
+    x = CADR(args);
+    i = CADDR(args);
+
+    xstr = CHAR(STRING_ELT(x, 0));
+    istr = CHAR(STRING_ELT(i, 0));
+    Tcl_UnsetVar2(RTcl_interp, xstr, istr, 0);
+
+    return R_NilValue;
+}
 
 /* Warning: These two functions return a pointer to internal static
    data. Copy immediately. */

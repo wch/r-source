@@ -3,8 +3,10 @@
 %
 \alias{TclInterface}
 \alias{.Tcl}
+\alias{.Tcl.objv}
 \alias{.Tcl.callback}
 \alias{.Tcl.args}
+\alias{.Tcl.args.objv}
 \alias{$.tclvar}
 \alias{$<-.tclvar}
 \alias{tclvar}
@@ -45,7 +47,9 @@
 }
 \usage{
 .Tcl(...)
+.Tcl.objv(objv)
 .Tcl.args(...)
+.Tcl.args.objv(...)
 .Tcl.callback(...)
 .Tk.ID(win)
 .Tk.newwin(ID)
@@ -85,6 +89,7 @@ addTclPath(path = ".")
 tclRequire(package, warn = TRUE)
 }
 \arguments{
+  \item{objv}{a named vector of Tcl objects}
   \item{win}{a window structure}
   \item{x}{an object}
   \item{drop}{logical. Indicates whether a single-element vector should
@@ -104,7 +109,9 @@ tclRequire(package, warn = TRUE)
   internally by the commands that create and manipulate Tk widgets and
   Tcl objects.  At the lowest level \code{.Tcl} sends a command as a text
   string to the Tcl interpreter and returns the result as an object of
-  class \code{tclObj} (see below).
+  class \code{tclObj} (see below). A newer variant \code{.Tcl.objv}
+  accepts arguments in the form of a named list of \code{tclObj}
+  objects. 
 
   \code{.Tcl.args} converts an R argument list of \code{tag=value} pairs
   to the Tcl \code{-option value} style, thus
@@ -117,6 +124,11 @@ tclRequire(package, warn = TRUE)
   result of \code{.Tcl.callback}. Tags are converted to option flags
   simply by prepending a \code{-}
 
+  \code{.Tcl.args.objv} serves a similar purpose as \code{.Tcl.args} but
+  produces a list of \code{tclObj} objects suitable for passing to
+  \code{.Tcl.objv}. The names of the list are converted to Tcl option
+  style internally by \code{.Tcl.objv}. 
+  
   Callbacks can be either \emph{atomic callbacks} handled by
   \code{.Tcl.callback} or expressions. An expression is treated as a
   list of atomic callbacks, with the following exceptions: if an
@@ -178,14 +190,20 @@ tclRequire(package, warn = TRUE)
   converted using \code{as.tclObj}. There is an ambiguity as to what
   should happen for length one vectors, controlled by the \code{drop}
   argument; there are cases where the distiction matters to Tcl,
-  although mostly it treats them equivalently.
+  although mostly it treats them equivalently. Notice that
+  \code{tclvalue} and \code{as.character} differ on an object whose
+  string representation has embedded spaces, the former is sometimes to
+  be preferred, in particular when applied to the result of
+  \code{tkread}, \code{tkgetOpenFile}, and similar functions. 
 
   The object behind a \code{tclVar} object
   is extracted using \code{tclObj(x)} which also allows an assignment
   form, in which the right hand side of the assignment is automatically
   converted using \code{as.tclObj}. There is a print method for
   \code{tclObj} objects; it prints \code{<Tcl>} followed by the string
-  representation of the object.
+  representation of the object. Notice that \code{as.character} on a
+  \code{tclVar} object is the \emph{name} of the corresponding Tcl
+  variable and not the value. 
   
   Tcl packages can be loaded with \code{tclRequire}; it may be necessary
   to add the directory where they are found to the Tcl search path with
@@ -211,7 +229,7 @@ tclRequire(package, warn = TRUE)
 ## These cannot be run by example() but should be OK when pasted
 ## into an interactive R session with the tcltk package loaded
 .Tcl("format \"\%s\\n\" \"Hello, World!\"")
-f <- function()"HI!"
+f <- function()cat("HI!\n")
 .Tcl.callback(f)
 .Tcl.args(text="Push!", command=f) # NB: Different address
 

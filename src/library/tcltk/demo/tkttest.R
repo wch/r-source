@@ -25,10 +25,14 @@ local({
 
         build <- function()
         {
+            ## notice that tclvalue() is correct here, since it is the
+            ## string representation of xvar and yvar that is being
+            ## displayed in the entry fields
+            
             x  <- parse(text=tclvalue(xvar))[[1]]
             y  <- parse(text=tclvalue(yvar))[[1]]
             a <- tclvalue(alt)
-            vv <- as.logical(as.numeric(tclvalue(eqvar)))
+            vv <- as.logical(tclObj(eqvar))
             substitute(t.test(x,y,alternative=a,var.equal=vv))
         }
         var.cbut <- tkcheckbutton(tt,text="Equal variance", variable=eqvar)

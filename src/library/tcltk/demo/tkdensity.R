@@ -12,9 +12,9 @@ local({
 
     replot <- function(...) {
         if (is.null(y)) return() # too early...
-        bw.sav <<- b <- as.numeric(tclvalue(bw))
-        k <- tclvalue(kernel)
-        sz <- as.numeric(tclvalue(size))
+        bw.sav <<- b <- as.numeric(tclObj(bw))
+        k <- as.character(tclObj(kernel))
+        sz <- as.numeric(tclObj(size))
         eval(substitute(plot(density(y, bw=b,
                      kernel=k),xlim=xlim)))
         points(y,rep(0,sz))
@@ -22,12 +22,12 @@ local({
 
     replot.maybe <- function(...)
     {
-        if (as.numeric(tclvalue(bw)) != bw.sav) replot()
+        if (as.numeric(tclObj(bw)) != bw.sav) replot()
     }
 
     regen <- function(...) {
-        if (tclvalue(dist)==1) y<<-rnorm(as.numeric(tclvalue(size)))
-        else y<<-rexp(as.numeric(tclvalue(size)))
+        if (tclvalue(dist)=="1") y<<-rnorm(as.numeric(tclObj(size)))
+        else y<<-rexp(as.numeric(tclObj(size)))
         xlim <<- range(y) + c(-2,2)
         replot()
     }
