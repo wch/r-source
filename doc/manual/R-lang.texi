@@ -102,7 +102,13 @@ at a higher level of abstraction.  In such cases we shall indicate the
 preferred usage.
 
 Some familiarity with @R{} is assumed.  This is not an introduction to
-@R{} but rather a programmers' reference manual.
+@R{} but rather a programmers' reference manual.  Other manuals provide
+complementary information: in particular @ref{Preface, , , R-intro, R
+Introduction} provides an introduction to @R{} and @ref{System and
+foreign language interfaces, , , R-ext, Writing R Extensions} details
+how to extend @R{} using compiled code.
+
+
 
 @node Objects, Evaluation of expressions, Introduction, Top
 @chapter Objects
@@ -417,7 +423,7 @@ access either the value or the expression associated with the promise.
 Within the @R{} language, promise objects are almost only seen
 implicitly.  Actual function arguments are of this type (which is the
 whole point of lazy evaluation).  @code{substitute} will extract the
-content of the expression slot, and there's a @code{delay} function
+content of the expression slot, and there is a @code{delay} function
 that will make a promise out of an expression.  There is no fail-safe
 way of checking whether an object is a promise or not.
 
@@ -426,7 +432,15 @@ way of checking whether an object is a promise or not.
 
 The @samp{...} object type is stored as a type of list.  The components
 of @samp{...} can be accessed in the usual list manner from C code, but
-is not easily accessed as an object within the @R{}.
+is not easily accessed as an object within the @R{}.  However, the
+object can be captured as a list, so for example in @code{table} one sees
+
+@smallexample
+    args <- list(...)
+## ....
+    for (a in args) @{
+## ....
+@end smallexample
 
 If a function has @samp{...} as a formal argument then any actual
 arguments that do not match a formal argument are matched with
@@ -600,10 +614,10 @@ series with periodic substructure such as monthly or quarterly data.
 
 @menu
 * Factors::                     
-* Data Frame objects::          
+* Data frame objects::          
 @end menu
 
-@node Factors, Data Frame objects, Special compound objects, Special compound objects
+@node Factors, Data frame objects, Special compound objects, Special compound objects
 @subsection Factors
 
 Factors are used to describe items that can have a finite number of
@@ -623,10 +637,10 @@ implementation in order to make some calculations easier.  This,
 however, is an implementation issue and is not guaranteed to hold in all
 implementations of @R{}.
 
-@node Data Frame objects,  , Factors, Special compound objects
-@subsection Data Frame objects
+@node Data frame objects,  , Factors, Special compound objects
+@subsection Data frame objects
 
-Data Frames are the @R{} structures which most closely mimic the SAS or
+Data frames are the @R{} structures which most closely mimic the SAS or
 SPSS data set, i.e.@: a ``cases by variables'' matrix of data.
 
 A data frame is a list of vectors, factors, and/or matrices all having
@@ -942,8 +956,8 @@ below.
 
 Except for the syntax, there is no difference between applying an
 operator and calling a function.  In fact, @code{x + y} can equivalently
-be written @code{"+"(x, y)}.  Notice that since @samp{+} is a ``weird''
-function name, it needs to be quoted.
+be written @code{"+"(x, y)}.  Notice that since @samp{+} is a
+non-standard function name, it needs to be quoted.
 
 @R{} deals with entire vectors of data at a time, and most of the
 elementary operators and basic mathematical functions like @code{log}
@@ -997,7 +1011,7 @@ Whenever the evaluator is presented with a syntactically complete
 statement that statement is evaluated and the @emph{value} returned.
 The result of evaluating a statement can be referred to as the value of
 the statement@footnote{Evaluation always takes place in an environment.
-See Section @ref{Scope of variables} for more details.}  The value can
+See @ref{Scope of variables} for more details.}  The value can
 always be assigned to a symbol.
 
 Both semi-colons and new lines can be used to separate statements.  A
@@ -1115,7 +1129,7 @@ permitted.
 @R{} has three statements that provide explicit
 looping.@footnote{Looping is the repeated evaluation of a statement or
 block of statements.}  They are @code{for}, @code{while} and
-@code{repeat}.  The two built in constructs, @code{next} and
+@code{repeat}.  The two builtin constructs, @code{next} and
 @code{break}, provide additional control over the evaluation.  Each of
 the three statements returns the value of the last statement that was
 evaluated.  It is possible, although uncommon, to assign the result of
@@ -1132,7 +1146,7 @@ The @code{break} statement causes an exit from the innermost loop that
 is currently being executed.  The @code{next} statement immediately
 causes control to return to the start of the loop.  The next iteration
 of the loop (if there is one) is then executed.  No statement below
-@code{next} is evaluated.
+@code{next} in the current loop is evaluated.
 
 
 @node repeat, while, Looping, Control structures
@@ -1499,7 +1513,7 @@ a list of vectors of similar length.
 subassignment
 
 what is really going on is that... something about *tmp* (internally, @R{}
-tries to avoid duplication as far as possible)
+tries to avoid duplication as far as possible).
 
 @c  Example session sketch
 @c  @example
@@ -1859,7 +1873,7 @@ Each named supplied argument is compared to the remaining formal
 arguments using partial matching.  If the name of the supplied argument
 matches exactly with the first part of a formal argument then the two
 arguments are considered to be matched.  It is an error to have multiple
-partial matches as well.  Notice that if @code{f <- function(fumble,
+partial matches.  Notice that if @code{f <- function(fumble,
 fooey) fbody}, then @code{f(f = 1, fo = 2)} is illegal, even though the
 2nd actual argument only matches @code{fooey}.  @code{f(f = 1, fooey =
 2)} @emph{is} legal though since the second argument matches exactly and
@@ -3147,14 +3161,11 @@ set.
 
 @menu
 * Operating system access::     
-* .C/.Fortran::                 
-* dyn.load/dyn.unload::         
-* .Internal::                   
-* .Call/.External::             
-* .Primitive::                  
+* Foreign language interfaces::  
+* .Internal and .Primitive::    
 @end menu
 
-@node Operating system access, .C/.Fortran, System and foreign language interfaces, System and foreign language interfaces
+@node Operating system access, Foreign language interfaces, System and foreign language interfaces, System and foreign language interfaces
 @section Operating system access
 
 Access to operating system functions is via the @R{} function
@@ -3167,198 +3178,41 @@ by a shell) and the second argument will be @code{internal} which if
 true will collect the output of the command into an @R{} character
 vector.
 
-The function @code{unix.time} is available for timing (even on non-Unix
-platforms, although the information available may be limited there).
-@findex unix.time
+The function @code{system.time}
+@findex system.time
+is available for timing (although the information available may be
+limited on non-Unix-like platforms).
 
-@node .C/.Fortran, dyn.load/dyn.unload, Operating system access, System and foreign language interfaces
-@section .C/.Fortran
 
+@node Foreign language interfaces, .Internal and .Primitive, Operating system access, System and foreign language interfaces
+@section Foreign language interfaces
 @findex .C
 @findex .Fortran
-
-These two functions provide a standard interface to compiled code that
-has been linked into @R{}, either at build time or via @code{dyn.load}
-(q.v.).  They are primarily intended for compiled @C{} and FORTRAN code
-respectively, but the @code{.C} function can be used with other
-languages which can generate C interfaces, for example C++.
-
-The first argument to each function is a character string given the
-symbol name as known to @C{} or FORTRAN, that is the function or
-subroutine name.  (The mapping to the symbol name in the load table is
-given by the functions @code{symbol.C} and @code{symbol.For};
-@findex symbol.C
-@findex symbol.For
-that the symbol is loaded can be tested by, for example,
-@code{is.loaded(symbol.C("loglin"))}.)
-
-There can be up to 65 further arguments giving @R{} objects to be passed
-to compiled code.  Normally these are copied before being passed in, and
-copied again to an @R{} list object when the compiled code returns.  If
-the arguments are given names, these are used as names for the
-components in the returned list object.
-
-The following table gives the mapping between the modes of @R{} vectors
-and the types of arguments to a C function or FORTRAN subroutine.
-
-@quotation
-@multitable @columnfractions 0.2 0.2 0.3
-@item @R{} storage mode @tab C type            @tab FORTRAN type
-@item @code{logical}    @tab @code{int *}      @tab @code{INTEGER}
-@item @code{integer}    @tab @code{int *}      @tab @code{INTEGER}
-@item @code{double}     @tab @code{double *}   @tab @code{DOUBLE PRECISION}
-@item @code{complex}    @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
-@item @code{character}  @tab @code{char **}    @tab @code{CHARACTER*255}
-@end multitable
-@end quotation
-
-C type @code{Rcomplex} is a structure with @code{double} members
-@code{r} and @code{i} defined in the header file @file{R_ext/Complex.h}.
-Only a single character string can be passed to or from FORTRAN, and the
-success of this is compiler-dependent.  Other @R{} objects can be passed
-to @code{.C}, but it is better to use one of the other interfaces.  An
-exception is passing an @R{} function for use with @code{call_R}, when
-the object can be handled as @code{void *} en route to @code{call_R}.
-
-It is possible to pass numeric vectors of storage mode @code{double} to
-C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
-@code{Csingle}, most conveniently by using the @R{} functions
-@code{as.single} and @code{single}.  This is intended only to be used to
-aid interfacing to existing C or FORTRAN code.
-
-Unless formal argument @code{NAOK} is true, all the other arguments are
-checked for missing values @code{NA} and for the @acronym{IEEE} special
-values @code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any
-of these generates an error.  If it is true, these values are passed
-unchecked.
-
-Argument @code{DUP} can be used to suppress copying.  It is dangerous:
-see the on-line help for arguments against its use.
-
-Note that the compiled code should not return anything except through
-its arguments: C functions should be of type @code{void} and FORTRAN
-subprograms should be subroutines.
-
-@node dyn.load/dyn.unload, .Internal, .C/.Fortran, System and foreign language interfaces
-@section dyn.load/dyn.unload
-@findex dyn.load
-@findex dyn.unload
-
-Compiled code to be used with @R{} is loaded as a shared library (Unix)
-or DLL (Windows).  The library/DLL is loaded by @code{dyn.load} and
-unloaded by @code{dyn.unload}.  Unloading is not normally necessary, but
-it is needed to allow the DLL to be re-built on some platforms,
-including Windows.
-
-The first argument to both functions is a character string giving the
-path to library.  Programmers should not assume a specific file
-extension for the library (such as @file{.so}) but use a construction
-like
-
-@smallexample
-file.path(path, paste("mylib", .Platform$dynlib.ext, sep = ""))
-@end smallexample
-
-@noindent
-for platform independence.
-
-Loading is most often done via a call to @code{library.dynam} in the
-@code{.First.lib} function of a package.
-
-Under some Unix systems there is a choice of how the symbols are
-resolved when the library is loaded, governed by the arguments
-@code{local} and @code{now}.  Only use these if really necessary: in
-particular using @code{now = FALSE} and then calling an unresolved
-symbol will terminate @R{} unceremoniously.
-
-@node .Internal, .Call/.External, dyn.load/dyn.unload, System and foreign language interfaces
-@section .Internal
-@findex .Internal
-
-The @code{.Internal} interface is used to call C code compiled into @R{}
-at build time.  A typical call is
-
-@smallexample
-.Internal(dyn.load(x, as.logical(local), as.logical(now)))
-@end smallexample
-
-@noindent
-This interface can only be used for adding functionality to @R{}, either
-for private versions of @R{} or for contributing functionality to @R{}.
-For the first purpose the @code{.Call} and @code{.External} interfaces
-are preferable, so most programmers will be reading and not writing
-@code{.Internal} functions.
-
-The @code{.Internal} interface is very similar to the @code{.External}
-interface except in syntax.  The function name (here @code{dyn.load}) is
-looked up in a table (in file @file{src/main/names.c}) which gives the
-names of the function to call (conventionally @code{do_dynload}), the
-number of arguments and other details.  The arguments are handled in a
-similar way to @code{.External}.
-
-Functions defined via @code{.Internal} are implicitly generic.
-
-@node .Call/.External, .Primitive, .Internal, System and foreign language interfaces
-@section .Call/.External
 @findex .Call
 @findex .External
 
-These two interfaces have almost the same functionality.  @code{.Call}
-is based on the interface of the same name in @Sl{} version 4, and
-@code{.External} is based on @code{.Internal}.  @code{.External} is more
-complex but allows a variable number of arguments.
+See @ref{System and foreign language interfaces, , , R-ext, Writing R
+Extensions} for the details of adding functionality to @R{} via compiled
+code.
 
-A call to @code{.Call} is very similar to @code{.C}, for example
+Functions @code{.C} and @code{.Fortran} provide a standard interface to
+compiled code that has been linked into @R{}, either at build time or
+via @code{dyn.load}.  They are primarily intended for compiled @C{} and
+FORTRAN code respectively, but the @code{.C} function can be used with
+other languages which can generate C interfaces, for example C++.
 
-@smallexample
-.Call("convolveC", a, b)
-@end smallexample
+Functions @code{Call} and @code{External} provide interfaces which allow
+compiled code (primarily compiled @C{} code) to mainipulate @R{} objects.
 
-@noindent
-The first argument should be a character string giving a C symbol name
-of code that has already been loaded into @R{}.  Up to 65 @R{} objects
-can passed as arguments.  The C side of the interface is
-
-@smallexample
-#include <S.h>
-
-SEXP convolveC(SEXP a, SEXP b)
- ......
-@end smallexample
-
-A call to @code{.External} is almost identical
-
-@smallexample
-.External("convolveE", a, b)
-@end smallexample
-
-@noindent
-but the C side of the interface is different, having only one argument
-
-@smallexample
-#include <Rinternals.h>
-
-SEXP convolveE(SEXP args)
- ......
-@end smallexample
-
-@noindent
-Here @code{args} is a @code{LISTSXP}, a Lisp-style list from which the
-arguments can be extracted.
-
-In each case the @R{} objects are available for manipulation via a set
-of functions and macros defined in the header file @file{Rinternals.h}
-or some higher-level macros defined in @file{Rdefines.h} (included by
-@file{S.h}).  @xref{Interface functions .Call and .External, , , R-exts,
-Writing R Extensions}, for details.
-
-@node .Primitive,  , .Call/.External, System and foreign language interfaces
-@section .Primitive
+@node .Internal and .Primitive,  , Foreign language interfaces, System and foreign language interfaces
+@section .Internal and .Primitive
+@findex .Internal
 @findex .Primitive
 
-@c [ Who knows about this? ]
+The @code{.Internal} and @code{.Primitive} interfaces are used to call
+@C{} code compiled into @R{} at build time.
+@xref{.Internal and .Primitive, , , R-ext, Writing R Extensions}.
 
-Functions defined via @code{.Primitive} are implicitly generic.
 
 @node Exception handling, Debugging, System and foreign language interfaces, Top
 @chapter Exception handling
