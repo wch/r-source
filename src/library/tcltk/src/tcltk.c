@@ -430,6 +430,7 @@ SEXP RTcl_ObjFromIntVector(SEXP args)
     return makeRTclObject(tclobj);
 }
 
+#ifndef TCL80
 SEXP RTcl_GetArrayElem(SEXP args)
 {
     SEXP x, i;
@@ -480,6 +481,7 @@ SEXP RTcl_RemoveArrayElem(SEXP args)
 
     return R_NilValue;
 }
+#endif TCL80
 
 /* Warning: These two functions return a pointer to internal static
    data. Copy immediately. */

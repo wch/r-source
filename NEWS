@@ -101,7 +101,9 @@ BUG FIXES
 	documented, the call to texi2dvi is wrapped in the new
 	function texi2dvi() which also works on Windows.
 
-    o   A build error with Tcl version 8.0 has been corrected.
+    o   Build errors with Tcl version 8.0 has been corrected. (Notice that
+        some features are simply not implemented for this ancient version, 
+        so upgrade if you can.)
 
 
 
