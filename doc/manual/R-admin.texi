@@ -169,6 +169,14 @@ last released version, and @samp{R-devel.tar.gz} that of the next minor
 to execute @command{tools/link-recommended} from the top level of the
 sources to make the requisite links in @file{src/library/Recommended}.
 
+One way to download the package sources is to use @command{wget}.  A
+suitable incantation from the top level of the R sources might be
+@smallexample
+wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
+  http://cran.r-project.org/src/contrib/@var{x}.@var{y}.@var{z}/Recommended
+tools/link-recommended
+@end smallexample
+
 
 @node Using rsync,  , Getting patched and development versions, Obtaining R
 @section Using rsync
