@@ -3127,7 +3127,7 @@ void SymbolSize(double *x, int n, double *xmax, double *xmin)
         }
 }
 
-CheckSymbolPar(SEXP call, SEXP p, int *nr, int *nc)
+static void CheckSymbolPar(SEXP call, SEXP p, int *nr, int *nc)
 {
     SEXP dim = getAttrib(p, R_DimSymbol);
     switch(length(dim)) {
@@ -3151,7 +3151,7 @@ CheckSymbolPar(SEXP call, SEXP p, int *nr, int *nc)
 	errorcall(call, "invalid symbol parameter vector");
 }
 
-do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
+void do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, p, fg, bg;
     double pmax, pmin, inches, rx, ry;
