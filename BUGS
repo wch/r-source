@@ -109,6 +109,10 @@ Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 Subject: documentation of `las' on `par' help page
 From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
 Date: Fri, 11 Jan 2002 12:30:20 +0100
+* PR# 1323 *
+Subject: bug in options() - help page
+From: Ole Christensen <o.christensen@lancaster.ac.uk>
+Date: Sat, 23 Feb 2002 16:56:56 +0000
 
 Directory:  Graphics
 
@@ -424,6 +428,10 @@ Date: Thu, 31 Jan 2002 18:00:55 +0100 (MET)
 Subject: shared libraries on AIX
 From: lio@hpss1.ccs.ornl.gov
 Date: Mon, 18 Feb 2002 18:53:41 +0100 (MET)
+* PR# 1321 *
+Subject: Gnome causes different behaviour of some R functions 
+From: alobo@ija.csic.es
+Date: Fri, 22 Feb 2002 14:41:17 +0100 (MET)
 
 Directory:  TooMuchAtOnce
 
@@ -453,35 +461,7 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject: latitude <-> longitude in quake.tab
 From: ckhung@cyut.edu.tw
 Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
-* PR# 1321 *
-Subject: Gnome causes different behaviour of some R functions 
-From: alobo@ija.csic.es
-Date: Fri, 22 Feb 2002 14:41:17 +0100 (MET)
-* PR# 1322 *
-Subject: wish: postscript-device - LaTeX ec-fonts
-From: stud8351@ma.tum.de
-Date: Sat, 23 Feb 2002 04:56:14 +0100 (MET)
-* PR# 1323 *
-Subject: bug in options() - help page
-From: Ole Christensen <o.christensen@lancaster.ac.uk>
-Date: Sat, 23 Feb 2002 16:56:56 +0000
-* PR# 1324 *
-Subject: did you see this???
-From: "" <laurie-martin@excite.com>
-Date: Mon, 25 Feb 2002 10:32:06 +0100 (MET)
-* PR# 1325 *
-Subject:  delete.response() incorrectly handles terms-objects without response 
-From: David Meyer <meyer@ci.tuwien.ac.at>
-Date: Mon, 25 Feb 2002 11:33:37 +0100
-* PR# 1326 *
-Subject: Re: [Rd] delete.response() incorrectly handles terms-objects without
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Mon, 25 Feb 2002 14:39:00 +0000 (GMT Standard Time)
-* PR# 1327 *
-Subject: Re: [Rd] delete.response() incorrectly handles terms-objects 
-From: David Meyer <david.meyer@ci.tuwien.ac.at>
-Date: Mon, 25 Feb 2002 16:44:10 +0100
-* PR# 1328 *
-Subject: Re: [Rd] delete.response() incorrectly handles terms-objects 
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Mon, 25 Feb 2002 15:50:51 +0000 (GMT Standard Time)
+* PR# 1330 *
+Subject:  itemize/item crashes R CMD check 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Tue, 26 Feb 2002 15:13:04 -0500
