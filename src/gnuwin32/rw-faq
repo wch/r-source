@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw1010
+Version for rw1011
 Brian Ripley
 
 
@@ -62,7 +62,7 @@ that version. The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows,
 (`rw1000' or later); the current version is often called something like
-`rw1010' (although not officially).
+`rw1011' (although not officially).
 
 
 2 Installation and Usage
