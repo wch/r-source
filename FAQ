@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-15, 2001-01-09
+Version 1.2-16, 2001-01-10
 Kurt Hornik
 
 
@@ -1277,6 +1277,9 @@ works, was published in the Journal of Statistical Software
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
+
+*mvnlme*
+     ML estimation for multivariate normal data with missing values.
 
 *mvtnorm*
      Multivariate normal and t distributions.
