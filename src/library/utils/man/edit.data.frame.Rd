@@ -20,8 +20,8 @@
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
-  At present, this only works on simple data frames containing numeric, 
-  logical or character vectors and factors. Factors are represented in the
+  At present, this only works on simple data frames containing numeric,
+  logical or character vectors and factors.  Factors are represented in the
   spreadsheet as either numeric vectors (which is more suitable for data
   entry) or character vectors (better for browsing). After editing,
   vectors are padded with \code{NA} to have the same length and
@@ -36,6 +36,10 @@
   frame.  Changing any column in a numerical matrix to character will
   cause the result to be coerced to a character matrix.  Changing 
   the mode of logical columns is not supported.
+
+  The columns are coerced on input to numeric unless logical, character
+  or factor (which may well not be what you want), and character columns
+  not protected by \code{\link{I}()} will be coerced to factor on return.
 }
 \value{
   The edited data frame.
