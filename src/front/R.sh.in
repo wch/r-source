@@ -46,6 +46,12 @@ then
 	DEBUGGER=gdb
 fi
 
+if [ "$1" = -ddd ]
+then
+	shift
+	DEBUGGER=ddd
+fi
+
 # Default Printer Paper Size
 # Choose one of the following
 # R_PAPERSIZE="a4"
