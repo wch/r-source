@@ -14,12 +14,13 @@ PKGS=`ls|sed '
 /profile/d
 '`
 
-# Install packages without documentation if no R source code for
-# package is installed
+# Install packages without documentation
 for pkg in ${PKGS}; do
-    if test ! -f ${RHOME}/library/${pkg}/R/${pkg}; then
-	sh ${RHOME}/etc/INSTALL --no-docs ${pkg}
-    fi
+#    if test -f ${RHOME}/library/${pkg}/R/${pkg}; then
+#	sh ${RHOME}/etc/REMOVE ${pkg}
+#    fi
+    sh ${RHOME}/etc/INSTALL --no-docs ${pkg}
 done
+
 
 

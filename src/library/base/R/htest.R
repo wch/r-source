@@ -8,7 +8,7 @@ print.htest<-function(x, digits = 4, quote = T, prefix = "")
 	if(!is.null (x$parameter))	
 		cat(paste(names(x$parameter), " = ", format(round(x$parameter,
 			3)), ",", sep = ""), "")
-        cat("p-value =", format(round(x$p.value, 4)), "\n")
+        cat("p-value =", format.pval(x$p.value, digits= digits), "\n")
         if(!is.null(x$alternative)) {
                 if(!is.null(x$null.value)) {
                         if(length(x$null.value) == 1) {

@@ -1,76 +1,46 @@
 contrasts <-
-function(x, contrasts=TRUE)
+function (x, contrasts = TRUE) 
 {
- if (!is.factor(x))
-	stop("contrasts apply only to factors")
- ctr <- attr(x,"contrasts")
- if(is.null(ctr)) {
-	ctr <- get(options("contrasts")[[1]][[if(is.ordered(x))2 else 1]]
-		   )(levels(x), contrasts=contrasts)
-	dimnames(ctr) <- list(levels(x), dimnames(ctr)[[2]])
- } else if(is.character(ctr))
-	ctr <- get(ctr)(levels(x), contrasts=contrasts)
- ctr
+  if (!is.factor(x)) 
+    stop("contrasts apply only to factors")
+  ctr <- attr(x, "contrasts")
+  if (is.null(ctr)) {
+    ctr <- get(options("contrasts")[[1]] [[if (is.ordered(x)) 2 else 1]])(levels(x), contrasts = contrasts)
+    dimnames(ctr) <- list(levels(x), dimnames(ctr)[[2]])
+  }
+  else if (is.character(ctr)) 
+    ctr <- get(ctr)(levels(x), contrasts = contrasts)
+  if(ncol(ctr)==1) dimnames(ctr) <- list(dimnames(ctr)[[1]], "")
+  ctr
 }
 
 "contrasts<-" <-
-function(x, value)
+function(x, how.many, value)
 {
  if(!is.factor(x))
 	stop("contrasts apply only to factors")
  if(is.numeric(value)) {
-	value <- as.matrix(value)
-	nlevs <- nlevels(x)
-	if(nrow(value) != nlevs || (nc <- ncol(value)) >= nlevs)
-		stop("invalid contrast matrix extents")
-	cm <- qr(cbind(1,value))
-	if(cm$rank != nc+1) stop("singular contrast matrix")
-	cm <- qr.qy(cm, diag(nlevs))[,2:nlevs]
-	cm[,1:nc] <- value
-	dimnames(cm) <- list(levels(x),NULL)
+   value <- as.matrix(value)
+   nlevs <- nlevels(x)
+   if(nrow(value) != nlevs)
+     stop("wrong number of contrast matrix rows")
+   n1 <- if(missing(how.many)) nlevs - 1 else how.many
+   nc <- ncol(value)
+   if(nc  < n1) {
+     cm <- qr(cbind(1,value))
+     if(cm$rank != nc+1) stop("singular contrast matrix")
+     cm <- qr.qy(cm, diag(nlevs))[,2:nlevs]
+     cm[,1:nc] <- value
+     dimnames(cm) <- list(levels(x),NULL)
+     if(!is.null(nmcol <- dimnames(value)[[2]]))
+       dimnames(cm)[[2]] <- c(nmcol, rep("", n1-nc))
+   } else cm <- value[, 1:n1, drop=F]
  }
- else if(is.character(value))
-	cm <- value
- else if(is.null(value))
-	cm <- NULL
+ else if(is.character(value)) cm <- value
+ else if(is.null(value)) cm <- NULL
  else stop("numeric contrasts or contrast name expected")
  attr(x, "contrasts") <- cm
  x
-}
-
-contr.poly <-
-function(n, contrasts=TRUE)
-{
-	normalize <- function(x) x/sqrt(sum(x^2))
-	if(is.numeric(n) && length(n) == 1)
-		levs <- 1:n
-	else {
-		levs <- n
-		n <- length(n)
-	}
-	if(n < 2)
-		stop(paste("Contrasts not defined for", n - 1,
-			"degrees of freedom"))
-	contr <- matrix(0, n, n)
-	x <- 1:n
-	d <- x - mean(x)
-	contr[,1] <- rep(1/sqrt(n),n)
-	contr[,2] <- normalize(d)
-
-	if(n > 2)
-	 for(i in 3:n) {
-		a1 <- sum(d*contr[,i-1]*contr[,i-1])
-		a2 <- sum(d*contr[,i-1]*contr[,i-2])
-		contr[,i] <- normalize((d-a1)*contr[,i-1]-a2*contr[,i-2])
-	 }
-	dimnames(contr) <- list(levs, paste("^", 0:(n-1), sep=""))
-	if(contrasts) {
-		contr[, -1, drop=FALSE]
-	}
-	else {
-		contr[, 1] <- 1
-		contr
-	}
 }
 
 contr.helmert <-

@@ -10,7 +10,8 @@ image(x, y, z, zlim, col = heat.colors(12),
     measured.  These must be in ascending order.  By default, equally
     spaced values from 0 to 1 are used.  If \code{x} is a \code{list},
     its components \code{x$x} and \code{x$y} are used for \code{x}
-    and \code{y}, respectively.}
+    and \code{y}, respectively. If the list has component \code{z} this
+    is used for \code{z}.}
   \item{z}{a matrix containing the values to be plotted (\code{NA}s are
     allowed).  Note that \code{x} can be used instead of \code{z} for
     convenience.}

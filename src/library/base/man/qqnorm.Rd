@@ -2,7 +2,7 @@
 \title{Quantile-Quantile Plots}
 \usage{
 qqnorm(y, ylim, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles",
-       ylab = "Sample Quantiles", ...)
+       ylab = "Sample Quantiles", plot.it = TRUE, ...)
 qqline(y, \dots)
 qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
        ylab = deparse(substitute(y)), ...)
@@ -10,14 +10,26 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
 \alias{qqnorm}
 \alias{qqplot}
 \alias{qqline}
+
+\arguments{
+ \item{x}{The first sample for \code{qqplot}.}
+ \item{y}{The second or only data sample.}
+}
 \description{
   \code{qqnorm} produces a normal QQ plot of the values in \code{y}.
   \code{qqline} adds a line to a normal quantile-quantile plot which
-  passes through the quartiles.
+  passes through the first and third quartiles.
+
+  \code{qqplot} produces a QQ plot of two datasets.
 
   Graphical parameters may be given as arguments to \code{qqnorm},
-  \code{qqnorm} and \code{qqline}.
+  \code{qqplot} and \code{qqline}.
 }
+\value{
+  For \code{qqnorm} and \code{qqplot}, a list with components
+  \item{x}{The x coordinates of the points that were/would be plotted}
+  \item{y}{The corresponding y coordinates}
+  }
 \seealso{
 \code{\link{ppoints}}.
 }

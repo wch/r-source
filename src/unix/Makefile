@@ -20,6 +20,9 @@ $(LIB):		$(OBJ)
 		$(AR) cr $(LIB) $(OBJ)
 		$(RANLIB) $(LIB)
 
+dynload.o:	dynload.c ../include/FFTab.h ../include/FFDecl.h
+		$(CC) $(CFLAGS) $(INCLUDES) -c $<
+
 dataentry.o:	dataentry.h dataentry.c ../include/Defn.h
 		$(CC) $(CFLAGS) $(X_CFLAGS) $(INCLUDES) -c dataentry.c
 

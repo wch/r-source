@@ -61,27 +61,38 @@ drop.terms <-function(termobj, dropx=NULL, keep.response=FALSE)
  }
 }
 
-terms.formula <-
-function (x, specials = NULL, abb = NULL, data = NULL, keep.order = FALSE)
+terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
+                          neg.out = TRUE, keep.order = FALSE) 
 {
-	if(!is.null(data) && !is.environment(data) && !is.data.frame(data))
-		data <- as.data.frame(data)
-	new.specials <- unique(c(specials, "offset"))
-	terms <-.Internal(terms.formula(x, new.specials, abb, data, keep.order))
-	offsets <- attr(terms,"specials")$offset
-	if(!is.null(offsets)) {
-		names <- dimnames(attr(terms,"factors"))[[1]][offsets]
-		offsets <- match(names, dimnames(attr(terms,"factors"))[[2]])
-		offsets <- offsets[!is.na(offsets)]
-		if(length(offsets) > 0) {
-			attr(terms, "factors") <- attr(terms,"factors")[,-offsets, drop=FALSE]
-			attr(terms, "term.labels") <- attr(terms, "term.labels")[-offsets]
-			attr(terms, "order") <- attr(terms, "order")[-offsets]
-			attr(terms, "offset") <- attr(terms,"specials")$offset
-		}
-	}
-	attr(terms, "specials")$offset <- NULL
-	terms
+  fixFormulaObject <- function(object) {
+    tmp <- attr(terms(object), "term.labels")
+    form <- formula(object)
+    lhs <- if(length(form) == 2) NULL else deparse(form[[2]])
+    rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
+    if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
+    formula(paste(lhs, "~", rhs))
+  }
+  if (!is.null(data) && !is.environment(data) && !is.data.frame(data)) 
+    data <- as.data.frame(data)
+  new.specials <- unique(c(specials, "offset"))
+  tmp <- .Internal(terms.formula(x, new.specials, abb, data, keep.order))
+  # need to fix up . in formulae in R
+  terms <- fixFormulaObject(tmp)
+  attributes(terms) <- attributes(tmp)
+  offsets <- attr(terms, "specials")$offset
+  if (!is.null(offsets)) {
+    names <- dimnames(attr(terms, "factors"))[[1]][offsets]
+    offsets <- match(names, dimnames(attr(terms, "factors"))[[2]])
+    offsets <- offsets[!is.na(offsets)]
+    if (length(offsets) > 0) {
+      attr(terms, "factors") <- attr(terms, "factors")[, -offsets, drop = FALSE]
+      attr(terms, "term.labels") <- attr(terms, "term.labels")[-offsets]
+      attr(terms, "order") <- attr(terms, "order")[-offsets]
+      attr(terms, "offset") <- attr(terms, "specials")$offset
+    }
+  }
+  attr(terms, "specials")$offset <- NULL
+  terms
 }
 
 coef <- function(x, ...) UseMethod("coef")
@@ -190,6 +201,8 @@ model.matrix.default <- function(formula, data, contrasts = NULL)
 	vars[[1]] <- as.name("data.frame")
 	data <- eval(vars, sys.frame(sys.parent()))
  }
+ else if (is.null(attr(data, "terms")))
+     data <- model.frame(formula, data)
  contrastsL <- contrasts
  rm(contrasts)
  if (!is.null(contrastsL)) {
@@ -210,25 +223,43 @@ model.matrix.default <- function(formula, data, contrasts = NULL)
  data <- data[,reorder, drop=FALSE]
  .Internal(model.matrix(t, data))
 }
-
-model.response <- function (data, type = "any")
+model.response <- function (data, type = "any") 
 {
-	if (attr(attr(data, "terms"), "response")) {
-		if (is.list(data) | is.data.frame(data)) {
-			v <- data[[1]]
-			if (type == "numeric" | type == "double") {
-				storage.mode(v) <- "double"
-			}
-			else if (type != "any")
-				stop("invalid response type")
-			if (is.matrix(v) && ncol(v) == 1)
-				dim(v) <- NULL
-			return(v)
-		}
-		else stop("invalid data argument")
-	}
-	else return(NULL)
+  if (attr(attr(data, "terms"), "response")) {
+    if (is.list(data) | is.data.frame(data)) {
+      v <- data[[1]]
+      if (type == "numeric" | type == "double") storage.mode(v) <- "double"
+      else if (type != "any") stop("invalid response type")
+      if (is.matrix(v) && ncol(v) == 1) dim(v) <- NULL
+      rows <- attr(data, "row.names")
+      if (nrows <- length(rows)) {
+        if (length(v) == nrows) names(v) <- rows
+        else if (length(dd <- dim(v)) == 2) 
+          if (dd[1] == nrows && !length((dn <- dimnames(v))[[1]])) 
+            dimnames(v) <- list(rows, dn[[2]])
+      }
+      return(v)
+    } else stop("invalid data argument")
+  } else return(NULL)
 }
+#model.response <- function (data, type = "any")
+#{
+#	if (attr(attr(data, "terms"), "response")) {
+#		if (is.list(data) | is.data.frame(data)) {
+#			v <- data[[1]]
+#			if (type == "numeric" | type == "double") {
+#				storage.mode(v) <- "double"
+#			}
+#			else if (type != "any")
+#				stop("invalid response type")
+#			if (is.matrix(v) && ncol(v) == 1)
+#				dim(v) <- NULL
+#			return(v)
+#		}
+#		else stop("invalid data argument")
+#	}
+#	else return(NULL)
+#}
 
 model.extract <- function (frame, component)
 {

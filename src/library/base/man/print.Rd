@@ -11,6 +11,7 @@ print.ordered(x, quote = FALSE)
 \alias{print.ordered}
 \alias{print.matrix}
 \alias{print.htest}
+\alias{print.listof}
 \alias{print.table}
 \alias{print.tabular}
 \description{

@@ -4,6 +4,8 @@
 # Usage:
 #	R INSTALL [options] [-l lib] pkg_1 ... pkg_n
 
+# @configure_input@
+
 VERSION="0.1-0"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
@@ -28,6 +30,8 @@ NO_PERL5_MSG="\
 
 PKGS=
 lib=${RHOME}/library
+
+MAKE=${MAKE-@MAKE@}
 
 umask 022
 
@@ -90,15 +94,16 @@ fi
 for pkg in ${PKGS}; do
   cd ${pkg}
   pkg=`basename ${pkg}`
-  ${INSTALL} -d ${lib}/${pkg} || exit 3
+
+  mkdir -p ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
 
   if test -d src; then
     echo "libs"
-    mkdir ${lib}/${pkg}/libs
+    mkdir -p ${lib}/${pkg}/libs
     if test -f src/Makefile; then
       (cd src;
-	make -f ${RHOME}/etc/Makeconf -f Makefile;
+	${MAKE} -f ${RHOME}/etc/Makeconf -f Makefile;
 	cp *.so ${lib}/${pkg}/libs)
     else
       (cd src;
@@ -109,19 +114,19 @@ for pkg in ${PKGS}; do
   if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
   if test "${dir}"; then
     echo "${dir}"
-    mkdir ${lib}/${pkg}/R
+    mkdir -p ${lib}/${pkg}/R
     cat `ls ${dir}/*.[RSqrs]` > ${lib}/${pkg}/R/${pkg}
   fi
 
   if test -d data; then
     echo "data"
-    mkdir ${lib}/${pkg}/data
+    mkdir -p ${lib}/${pkg}/data
     cp data/* ${lib}/${pkg}/data
   fi
 
   if test -d exec; then
     echo "exec"
-    mkdir ${lib}/${pkg}/exec
+    mkdir -p ${lib}/${pkg}/exec
     cp exec/* ${lib}/${pkg}/exec
     chmod 755 ${lib}/${pkg}/exec/*
   fi

@@ -1,28 +1,21 @@
-####
+#### Testing print(), format()  and the like --- mainly with numeric()
 ####
 #### to be run as
 ####
 ####	R < print-tests.R  >&  print-tests.out-__version__
+####                       == (csh)
 
-options(echo = T, warn = 1)#-- for Splus
-print(search())#---- for Splus
+
+if(!is.R())
+  options(echo = T, warn = 1)#-- for Splus
+
+print(search())
 
 DIG <- function(d) if(missing(d)) options('digits')$dig else
                                 options(digits=as.integer(d))
 
 .Options$digits <- 7; DIG(7)#-- the default; just to make sure ...
-
-## ?print.default   in  S-plus  (3.4)  contains
-
-##?p> digits:   the number of significant digits that should be printed
-##?p>        in  numeric  data.   Since  all  numbers in any vector are
-##?p>        printed in the  same  format,  this  may  mean  that  some
-##?p>        numbers  will be printed with more than digits significant
-##?p>        digits.  Use digits=17 to print  all  of  the  significant
-##?p>        digits  of  a double precision number.  If the argument is
-##?p>        omitted, the digits option is used; see options.
-
-
+options(width = 128)
 
 n1 <- 2^(4*1:7)
 i1 <- as.integer(n1)
@@ -33,14 +26,14 @@ v2 <- v1^(63/64)
 v3 <- pi*100^(-1:3)
 v4 <- (0:2)/1000 + 1e-10 #-- tougher one
 
-digs1 <- c(1,2*(1:5),11:16,20)# ,30 gives 'warning' everytime !
-digs2 <- c(1:20)#,30) gives 'error' in R  (should give WARNING!)
+digs1 <- c(1,2*(1:5),11:16,20)# 30 gives ERROR : options(digits=30)
+digs2 <- c(1:20)#,30) gives 'error' in R: ``print.default(): invalid digits..''
 
 all(i1 == n1)# TRUE
 i1# prints nicely
-n1# does not
+n1# did not; does now (same as 'i1')
 
-round(v3,3)#S+ & R 0.49:
+round (v3, 3)#S+ & R 0.49:
 ##[1]    0.031       3.142     314.159   31415.927 3141592.654
 signif(v3, 3)
 ##R.49:[1] 0.0314       3.1400     314.0000   31400.0000 3140000.0000
@@ -57,48 +50,37 @@ signif(v3, 3)
 ##- however, they have been annoying me for too long ... ;-)
 ##-
 ##- 1)
-print(2^30, digits = 12) #-  exponential form; unnecessarily!
-
+print  (2^30, digits = 12) #-  WAS exponential form, unnecessarily -- now ok
 formatC(2^30, digits = 12) #- shows you what you'd want above
 
-## S-plus is okay here; note that the problem also affects
+## S and R are now the same here;  note that the problem also affects
 ##	paste(.)  & format(.) :
 
 DIG(10); paste(n1); DIG(7)
-##-  S-plus gives
-##-
-##- [1] "16"        "256"       "4096"      "65536"     "1048576"
-##- [6] "16777216"  "268435456"
-
-##-  whereas R 0.49 gives
-##-
-##- [1] "16"              "256"             "4096"            "65536"
-##- [5] "1048576"         "1.6777216e+07"   "2.68435456e+08"
 
 
-
-
-## .Options$digits works for  print(.) &  cat(.)
+## Assignment to .Options$digits: Does NOT work for  print(.)
+##				  bur DOES work for cat(.):
 for(i in digs1) { .Options$digits <- i; cat(i,":"); print (v1[-1])}
 for(i in digs1) { .Options$digits <- i; cat(i,":", formatC(v1[-1], digits=i, width=8),"\n")}
 
-for(i in digs1) { .Options$digits <- i; cat(i,":"); print (v3)}
-for(i in digs1) { .Options$digits <- i; cat(i,":", formatC(v3, digits=i, width=8),"\n")}
+for(i in digs1) { DIG(i); cat(i,":"); print (v3)}
+for(i in digs1) { DIG(i); cat(i,":", formatC(v3, digits=i, width=8),"\n")}
 
 
-for(i in digs1) { cat(i,":");  print(v1, digits=i)}#-R0.50: switches to NON-exp
-					# at 14, but should only at 15...
-					# S-plus: does not switch at all..
+##-R0.50: switches to NON-exp at 14, but should only at 15...
+## S-plus: does not switch at all..
+for(i in digs1) { cat(i,":");  print(v1, digits=i)}
+
+## R 0.50-a1: switches at 10 inst. 11
 for(i in digs1) { cat(i,":");  print(v1[-1], digits=i)}
-					# R 0.50-a1: switches at 10 inst. 11
-					# S-plus: does not switch at all..
 
-for(i in digs1) { .Options$digits <- i; cat(i,":", formatC(v2, digits=i, width=8),"\n")}
+for(i in digs1) { DIG(i); cat(i,":", formatC(v2, digits=i, width=8),"\n")}
 
 for(i in digs2) { cat(i,":");  print(v2, digits=i)} #-- exponential all thru
 for(i in digs2) { cat(i,":", formatC(v2, digits=i, width=8),"\n")}
 
-.Options$digits <- 7; options(digits = 7)#-- the default; just to make sure ...
+DIG(7)#-- the default; just to make sure ...
 
 N1 <- 10; N2 <- 7; n <- 8
 x <- 0:N1
@@ -165,9 +147,9 @@ for(dig in 1:15)
   cat(formatC(dig,w=2), formatC(signif(txn, d=dig), dig=dig+2, wid=-20),"\n")
 
 ##-- Testing  'print' / digits :
-for(dig in 1:18) { cat("dig=",formatC(dig,w=2),": "); print(signif(txp, d=dig),dig=dig+2) }
+for(dig in 1:18) {
+  cat("dig=",formatC(dig,w=2),": "); print(signif(txp, d=dig),dig=dig+2) }
 
-
 ##-- Wrong alignment when printing character matrices with  quote = FALSE
 m1 <- matrix(letters[1:24],6,4)
 m1

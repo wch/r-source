@@ -186,7 +186,8 @@ print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 {
 	cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
 	cat("Coefficients:\n")
-	print(coef(x))
+	print.default(format(coef(x), digits=digits),
+		      print.gap = 2, quote = FALSE)
 	cat("\n")
 	invisible(x)
 }
@@ -249,7 +250,8 @@ summary.lm <- function (object, correlation = FALSE)
 }
 
 print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
-			      symbolic.cor = p > 4, signif.stars= TRUE, ...)
+	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
+	...)
 {
 	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -468,41 +470,53 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 	invisible(x)
 }
 
-predict.lm <- function (object, newdata = model.frame(object),
-			conf.level=0.95, tol.level=conf.level)
+predict.lm <- function(object, newdata = model.frame(object),
+    se.fit = FALSE, scale = NULL, df = Inf,
+    interval=c("none","confidence","prediction"), level=.95)
 {
-	form <- delete.response(terms(object))
-	X <- model.matrix(form,newdata)
-	n <- NROW(object$qr$qr)
-	p <- object$rank
-	p1 <- 1:p
-	piv <- object$qr$pivot[p1]
-	r <- resid(object)
-	f <- fitted(object)
-	w <- weights(object)
-	rss <- sum(if(is.null(w)) r^2 else w*r^2)
-	R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
-	est <- object$coefficients[piv]
-	predictor <- c(X[,piv,drop=F] %*% est)
-	ip <- real(NROW(X))
-	resvar <- rss/(n - p)
-	vcov <- resvar * R
-	for (i in (1:NROW(X))) {
-		xi <- X[i,piv]
-		ip[i] <- xi %*% vcov %*% xi
-	}
-	stderr1 <- sqrt(ip)
-	stderr2 <- sqrt(resvar + ip)
-	tt1 <- qt((1-conf.level)/2, n - p)
-	tt2 <- qt((1- tol.level)/2, n - p)
-	conf.l <- predictor + tt1 * stderr1
-	conf.u <- predictor - tt1 * stderr1
-	pred.l <- predictor + tt2 * stderr2
-	pred.u <- predictor - tt2 * stderr2
-	data.frame(predictor=predictor, conf.l=conf.l, conf.u=conf.u,
-	pred.l=pred.l,pred.u=pred.u,row.names=rownames(newdata))
+  X <- model.matrix(delete.response(terms(object)), newdata)
+  n <- NROW(object$qr$qr)
+  p <- object$rank
+  p1 <- 1:p
+  piv <- object$qr$pivot[p1]
+  if (is.null(scale)){
+    r <- resid(object)
+    f <- fitted(object)
+    w <- weights(object)
+    if (is.null(w)) rss <- sum(r^2)
+    else rss <- sum(r^2 * w)
+    df <- n - p
+    res.var <- rss/df
+  } else
+    res.var <- scale^2
+  R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
+  vcov <- res.var * R
+  est <- object$coefficients[piv]
+  predictor <- c(X[, piv, drop = F] %*% est)
+  interval <- match.arg(interval)
+  if(se.fit || interval != "none") {
+    ip <- real(NROW(X))
+    for (i in (1:NROW(X))) {
+      xi <- X[i, piv]
+      ip[i] <- xi %*% vcov %*% xi
+    }
+  }
+  if (interval != "none")
+  {
+    tfrac <- qt((1 - level)/2,df)
+    w <- tfrac * switch(interval,
+      	confidence=sqrt(ip),
+	prediction=sqrt(ip+res.var)
+    )
+    predictor<-cbind(predictor,predictor+
+      w %o% c(1,-1))
+    colnames(predictor) <- c("fit","lwr","upr")
+  }
+  if (se.fit)
+    list(fit = predictor, se.fit = sqrt(ip),
+      df = df, residual.scale = sqrt(res.var))
+  else predictor
 }
-
 
 effects.lm <- function(...) .NotYetImplemented()
 

@@ -16,7 +16,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *
+ *  EXPORTS	printVector()
+ *	     	printNamedVector()
+ *	     	printRealVector()
+ *	     	printComplexVector()
  *
  *  See ./printutils.c	 for remarks on Printing and the Encoding utils.
  *  See ./format.c	 for the formatXXXX functions used below.

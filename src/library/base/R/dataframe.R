@@ -290,7 +290,6 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
 ###  Subsetting and mutation methods
 ###  These are a little less general than S
 
-
 "[.data.frame" <-
   function(x, i, j, drop = if(missing(i)) TRUE else length(cols) == 1)
   {
@@ -818,4 +817,87 @@ as.matrix.data.frame <- function (x)
   ##NO! don't copy buggy S-plus!  either all matrices have class or none!!
   ##NO class(X) <- "matrix"
   X
+}
+
+Math.data.frame <- function(x, ...)
+{
+  X <- x
+  class(X) <- NULL
+  f <- get(.Generic, mode = "function")
+  call <- match.call(f, sys.call())
+  call[[1]] <- as.name(.Generic)
+  arg <- names(formals(f))[[1]]
+  call[[arg]] <- as.name("xx")
+  for(j in names(X)) {
+    xx <- X[[j]]
+    if(!is.numeric(xx) && mode(xx) != "complex")
+      stop(paste("Non-numeric variable:", j))
+    X[[j]] <- eval(call)
+  }
+  attr(X, "class") <- class(x)
+  X
+}
+
+Ops.data.frame <- function(e1, e2 = NULL)
+{
+  isList <- function(x) !is.null(x) && is.list(x)
+  unary <- nargs() == 1
+  lclass <- nchar(.Method[1]) > 0
+  rclass <- !unary && (nchar(.Method[2]) > 0)
+  value <- list()
+  ## set up call as op(left, right)
+  f <- sys.call()
+  f[[1]] <- as.name(.Generic)
+  f[[2]] <- as.name("left")
+  if(!unary) f[[3]] <- as.name("right")
+  lscalar <- rscalar <- FALSE
+  if(lclass && rclass) {
+    rn <- row.names(e1)
+    cn <- names(e1)
+    if(any(dim(e2) != dim(e1)))
+      stop(paste(.Generic, "only defined for equally-sized data frames"))
+  } else if(lclass) {
+    ## e2 is not a data frame, but e1 is.
+    rn <- row.names(e1)
+    cn <- names(e1)
+    rscalar <- length(e2) <= 1 # e2 might be null
+    if(isList(e2)) {
+      if(scalar) e2 <- e2[[1]]
+      else if(length(e2) != ncol(e1))
+        stop(paste("list of length", length(e2), "not meaningful"))
+    } else {
+      if(!rscalar)
+        e2 <- split(rep(as.vector(e2), length = prod(dim(e1))),
+                    rep(1:ncol(e1), rep(nrow(e1), ncol(e1))))
+    }
+  } else {
+    ## e1 is not a data frame, but e2 is.
+    rn <- row.names(e2)
+    cn <- names(e2)
+    lscalar <- length(e1) <= 1
+    if(isList(e1)) {
+      if(lscalar) e1 <- e1[[1]]
+      else if(length(e1) != ncol(e2))
+        stop(paste("list of length", length(e1), "not meaningful"))
+    } else {
+      if(!lscalar)
+        e1 <- split(rep(as.vector(e1), length = prod(dim(e2))),
+                    rep(1:ncol(e2), rep(nrow(e2), ncol(e2))))
+    }
+  }
+  for(j in seq(along=cn)) {
+    left <- if(!lscalar) e1[[j]] else e1
+    right <-if(!rscalar) e2[[j]] else e2
+    value[[j]] <- eval(f)
+  }
+  names(value) <- cn
+  data.frame(value, row.names=rn)
+}
+
+Summary.data.frame <- function(x, ...)
+{
+  x <- as.matrix(x)
+  if(!is.numeric(x) && mode(x) != "complex")
+    stop("only defined on a data frame with all numeric or complex variables")
+  NextMethod(.Generic)
 }

@@ -24,7 +24,7 @@
 
 # Bug reports to Kurt.Hornik@ci.tuwien.ac.at
 
-$VERSION = "0.2-a5";
+$VERSION = "0.3-1";
 ($NAME = $0) =~ s|.*/||;
 
 $\ = "\n";
@@ -59,8 +59,8 @@ while (<>) {
     &section(0, "\\usage\{");
     $inVerbatim = 1;
   }
-  if (/^\.DN/) { $doprint = 0; }
-  if (/^\.DT/) { &section(0, "\\description\{"); }
+  if (/^\.DN/) { &section(0, "\\description\{"); }
+  if (/^\.DT/) { &section(0, "\\details\{"); }
   if (/^\.EX/) {
     &section(0, "\\examples\{");
     $inVerbatim = 1;	
@@ -143,6 +143,14 @@ while (<>) {
     output("described under \\code\{\\link\{par\}\} and the arguments to");
     output("\\code\{\\link\{title\}\} may be supplied to this function.");
   }
+  ## Added by BDR 1998/06/20
+  if (/^\.ul/) {
+    $_ = <>;
+    &substitute;
+    chomp;
+    output("\\emph{".$_."\}");
+  }
+  ## End
 }
 
 sub substitute {
@@ -150,6 +158,19 @@ sub substitute {
     s/\{/\\\{/g;
     s/\}/\\\}/g;
     s/&/\\&/g;
+    ## Added by BDR 1998/06/20
+    s/\\\(aa/'/g;		# extra ' for highlight matching
+    s/\\\(em/--/g;		# em dash
+    s/\\\(tm/ (TM) /g;		# Trademark
+    s/\\\(mu/ x /g;		# multiply sign
+    s/\\\(\*a/\alpha/g;		# greek
+    s/\\\(\*b/\beta/g;
+    s/\\\(\*e/\epsilon/g;
+    s/\\\(\*l/\lambda/g;
+    s/\\\(\*m/\mu/g;
+    s/\\\(\*p/\pi/g;
+    s/\\\(\*s/\sigma/g;
+    ## End
   }
   if ($inVerbatim) {
     s/\.\.\./\\dots/g;
@@ -158,6 +179,10 @@ sub substitute {
   }
   s/\\fB/\\bold\{/g;
   s/\\fR/\}/g;
+  ## Added by BDR 1998/06/20
+  s/\\fI/\\emph\{/g;
+  s/\\fP/\}/g;
+  ## End
   s/\%/\\%/g;
   s/\\\.(.*)$/# $1)/g;
   if ($inSeeAlso) {

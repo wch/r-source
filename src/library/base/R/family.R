@@ -1,4 +1,4 @@
-family <- function(x, ...) UseMethod("family")
+family <- function(object, ...) UseMethod("family")
 
 print.family <- function(x, ...)
 {
@@ -187,7 +187,10 @@ binomial <- function (link = "logit")
 		-2*sum((lchoose(n,n*y)+n*(y*log(mu)+(1-y)*log(1-mu)))*wt/n)
 	initialize <- expression({
 		if (NCOL(y) == 1) {
-			n <- rep(1, nobs)
+                  # allow factors as responses
+                  # added BDR 29/5/98
+                  if (is.factor(y)) y <- y != levels(y)[1]
+                  n <- rep(1, nobs)
 			if (any(y < 0 | y > 1))
 				stop("y values must be 0 <= y <= 1")
 		}
@@ -350,7 +353,7 @@ quasi <- function (link = "identity", variance = "constant")
 			variance <- function(mu) mu^2
 			validmu<-function(mu) all(mu!=0)
 			dev.resids <- function(y, mu, wt)
-				-2 * wt * (log(y/mu) - (y - mu)/mu)
+				pmax(-2 * wt * (log(y/mu) - (y - mu)/mu), 0)
 		      },
 	       "mu^3" = {
 			variance <- function(mu) mu^3
@@ -363,15 +366,17 @@ quasi <- function (link = "identity", variance = "constant")
 	       )# end switch(.)
 
 	initialize <- expression({ n <- rep(1, nobs); mustart <- y })
+            aic <- function(y, n, mu, wt, dev) NA
 	structure(list(family = "quasi",
-			link = linktemp,
-			linkfun = stats$linkfun,
-			linkinv = stats$linkinv,
-			variance = variance,
-			dev.resids = dev.resids,
-			mu.eta = stats$mu.eta,
-			initialize = initialize,
-			validmu = validmu,
-			valideta = stats$valideta),
+                       link = linktemp,
+                       linkfun = stats$linkfun,
+                       linkinv = stats$linkinv,
+                       variance = variance,
+                       dev.resids = dev.resids,
+                       aic = aic,
+                       mu.eta = stats$mu.eta,
+                       initialize = initialize,
+                       validmu = validmu,
+                       valideta = stats$valideta),
 		  class = "family")
 }

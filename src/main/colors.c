@@ -95,10 +95,11 @@ SEXP do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = 0;
 	while(ColorDataBase[n].name!=NULL)
 		n++;
-	ans = allocVector(STRSXP, n);
+	PROTECT(ans = allocVector(STRSXP, n));
 	n = 0;
-	while(ColorDataBase[n].name!=NULL)
+	while(ColorDataBase[n].name!=NULL) 
 		STRING(ans)[n++] = mkChar(ColorDataBase[n].name);
+	UNPROTECT(1);
 	return ans;
 }
 

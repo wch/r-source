@@ -32,6 +32,9 @@ binary-arch: build
 	dh_clean -k
 	dh_installdirs
 	make install prefix=`pwd`/debian/tmp/usr
+	sed -e '/^RHOME=.*/s::RHOME=/usr/lib/R:' \
+	    -e '/R.binary  /s::R.binary -v 8 -n 400000 :'\
+	  < bin/R > debian/tmp/usr/bin/R
 	dh_installdocs
 	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/html . &&\
 	  ln -s ../../lib/R/library .)

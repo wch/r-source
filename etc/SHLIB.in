@@ -2,17 +2,20 @@
 #
 # ${RHOME}/etc/SHLIB
 
+# @configure_input@
+
 OBJS=
+MAKE=${MAKE-@MAKE@}
 
 if [ ${1} = "-o" ]; then
   lib=${2}; shift 2
 else
-  lib=${1%.*}.@SHLIBEXT@
+  lib=`echo $1|sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`
 fi
 
 for i in ${*}; do
-  obj=${i%.*}.o
-  make -f ${RHOME}/etc/Makeconf ${obj}
+  obj=`echo $i|sed 's/\.[^\.][^\.]*$/.o/'`
+  ${MAKE} -f ${RHOME}/etc/Makeconf ${obj}
   OBJS="${OBJS} ${obj}"
 done
 

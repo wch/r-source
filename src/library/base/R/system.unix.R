@@ -34,18 +34,23 @@ function(..., list = character(0), package =c(.packages(),.Autoloaded),
 	  cat("name=",name,":\t file= .../",sub(".*/","",file),"::\t",sep="")
 	if (found) break
 	found <- TRUE
-	switch(sub(".*\\.", "", file),
-	       "R" =, "r" = source(file),
-	       "RData" =, "rdata" =, "rda" = load(file),
-	       "TXT" =, "txt" =, "tab" =
-	       assign(name, read.table(file, header = TRUE),
-		      env = .GlobalEnv),
-	       "CSV" =, "csv" =
-	       assign(name, read.table(file, header = TRUE, sep = ";"),
-		      env = .GlobalEnv),
-	       ## otherwise
-	       found <- FALSE)
-	if(trace) cat(if(!found) "*NOT* ", "found\n")
+        ext <- sub(".*\\.", "", file)
+        ## make sure the match is really for `name.ext'
+        if (sub(".*/", "", file) != paste(name, ".", ext, sep = ""))
+          found <- FALSE
+        else
+          switch(ext,
+                 "R" =, "r" = source(file),
+                 "RData" =, "rdata" =, "rda" = load(file),
+                 "TXT" =, "txt" =, "tab" =
+                 assign(name, read.table(file, header = TRUE),
+                        env = .GlobalEnv),
+                 "CSV" =, "csv" =
+                 assign(name, read.table(file, header = TRUE, sep = ";"),
+                        env = .GlobalEnv),
+                 ## otherwise
+                 found <- FALSE)
+	if (trace) cat(if(!found) "*NOT* ", "found\n")
       }
     }
     if (!found)
@@ -129,16 +134,21 @@ function (name, help, lib.loc = .lib.loc, character.only = FALSE,
     }
     pkgname <- paste("package", name, sep = ":")
     if (is.na(match(pkgname, search()))) {
-      packagedir<-system.file("",name,lib.loc)
-      which.lib.loc<-lib.loc[match(packagedir,paste(lib.loc,name,"",sep="/"))]
+      packagedir <- system.file("", name, lib.loc)
       if (packagedir == "") {
-	txt <- paste("There is no package called `",
-		     name, "'", sep = "")
+	txt <- paste("There is no package called `", name, "'", sep = "")
 	if (logical.return) {
 	  warning(txt)
 	  return(FALSE)
 	}
 	else stop(txt)
+      }
+      which.lib.loc <-
+        lib.loc[match(packagedir[1], paste(lib.loc, name, "", sep = "/"))]
+      if (length(packagedir) > 1) {
+        warning(paste("Package `", name, "' found more than once,\n  ",
+                      "using the one found in `", which.lib.loc, "'",
+                      sep = ""))
       }
       file <- system.file(paste("R", name, sep = "/"), name, lib.loc)
       env <- attach(NULL, name = pkgname)

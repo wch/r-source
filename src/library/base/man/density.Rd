@@ -3,7 +3,6 @@
 \usage{
 density(x, bw, adjust = 1, kernel="gaussian", window = kernel,
         n = 512, width, from, to, cut = 3, na.rm = FALSE)
-
 print(dobj)
 plot(dobj, \dots)
 }
@@ -11,18 +10,19 @@ plot(dobj, \dots)
 \alias{print.density}
 \alias{plot.density}
 \arguments{
-\item{x}{the values for which the estimate is to be computed.}
+\item{x}{the data from which the estimate is to be computed.}
 \item{n}{the number of equally spaced points at which the density
-  is to be estimated.  This is rounded up to the next power of 2,
-  with a minimum value of 512.}
+  is to be estimated.  When \code{n > 512}, it is rounded up to the next
+  power of 2 for efficieny reasons (\code{\link{fft}}).}
 \item{kernel,window}{a character string giving the smoothing kernel to be used.
   This must be one of \code{"gaussian"}, \code{"rectangular"},
   \code{"triangular"}, or \code{"cosine"}, and may be abbrevited to a
   single letter.}
 \item{bw}{the smoothing bandwith to be used.  This is the standard
-  deviation of the smoothing kernel.  It defaults to 1.06 times the
+  deviation of the smoothing kernel.  It defaults to 0.9 times the
   minimum of the standard deviation and the interquartile range divided by
-  1.34 times the sample size to the negative one fifth power.
+  1.34 times the sample size to the negative one fifth power
+  (= Silverman's ``rule of thumb'').
   The specified value of \code{bw} is multiplied by \code{adjust}.}
 \item{adjust}{the bandwith used is actually \code{adjust*bw}.
   This makes it easy to specify values like ``half the default'' bandwidth.}
@@ -30,7 +30,8 @@ plot(dobj, \dots)
 \item{from,to}{the left and right-most points of the grid at which the
   density is to be estimated.}
 \item{cut}{by default, the values of \code{left} and \code{right} are
-  \code{cut} bandwiths beyond the extremes of the data.}
+  \code{cut} bandwidths beyond the extremes of the data. This allows the
+  estimated density to drop to approximately zero at the extremes.}
 %%-\item{samples}{the sample size to take in the bandwidth
 %%-selection functions. If \code{samples} is non-positive, the entire
 %%-data set is used.}
@@ -48,19 +49,23 @@ The generic functions \code{plot} and \code{print} have
 methods for density objects.
 
 The algorithm used in \code{density} disperses the mass of the
-empirical distribution function over a regular grid and then
+empirical distribution function over a regular grid of at least 512
+points and then
 uses the fast Fourier transform to convolve this approximation
-with a discretized version of the kernel.
+with a discretized version of the kernel and then uses linear
+approximation to evaluate the density at the specified points.
 }
 \value{
 An object with class ``density''.
 The underlying structure is a list containing the following components.
-\item{x}{the coordinates of the points where the density is estimated.}
+\item{x}{the \code{n} coordinates of the points where the density is estimated.}
 \item{y}{the estimated density values.}
 \item{bw}{the bandwidth used.}
-\item{n}{the sample size \code{length(x)}.}
+\item{N}{the sample size \code{length(x)}.}
 \item{call}{the call which produced the result.}
 \item{data.name}{the deparsed name of the \code{x} argument.}
+\item{has.na}{logical, indicating if there were \code{\link{NA}}s in the
+  sample \emph{and} \code{na.rm == FALSE}.}
 }
 \references{
 Silverman, B. W. (1986).

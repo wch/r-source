@@ -43,7 +43,10 @@ function(object, filename = paste0(name, ".Rd"), force.function = FALSE)
 	  fn.def[br] <- paste(" ", fn.def[br])
 	file <- c(file,
 	"\\description{",
-	" ~~ A precise description of what the function does. ~~",
+	" ~~ A concise (1-5 lines) description of what the function does. ~~",
+	"}",
+	"\\details{",
+	" ~~ If necessary, more details than the __description__  above ~~",
 	"}",
 	"\\value{",
 	"  ~Describe the value returned",
