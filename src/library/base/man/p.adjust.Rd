@@ -19,7 +19,7 @@ p.adjust.methods
   (\code{"bonferroni"}) in which the p-values are multiplied by the
   number of comparisons.  Four less conservative corrections are also
   included by Holm (1979) (\code{"holm"}), Hochberg (1988)
-  (\code{"hochberg"}), Hommel (1988) (\code{"holm"}) and Benjamini &
+  (\code{"hochberg"}), Hommel (1988) (\code{"hommel"}) and Benjamini &
   Hochberg (1995) (\code{"fdr"}), respectively. 
   A pass-through option (\code{"none"}) is also included.
   The set of methods are contained in the \code{p.adjust.methods} vector
@@ -92,8 +92,17 @@ p.adjust.methods
 }
 
 \examples{
-p <- runif(50)
-p.adjust(p)
+
+x<-rnorm(50, m=c(rep(0,25),rep(3,25)))
+p<-2*pnorm( -abs(x))
+
+round(p, 3)
+
+round(p.adjust(p), 3)
+round(p.adjust(p,"bonferroni"), 3)
+
+round(p.adjust(p,"fdr"), 3)
+
 }
 
 \keyword{htest}
