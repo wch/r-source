@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = KEYWORDS KEYWORDS.db
-DISTFILES = Makefile.in $(INSTFILES) R.1 R.aux
+DISTFILES = CRAN_mirrors.csv Makefile.in $(INSTFILES) R.1 R.aux
 SUBDIRS = html manual
 
 HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl
