@@ -214,7 +214,8 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 	    fcnptr = (DL_FUNC) GetProcAddress(LoadedDLL[i].dlh, name);
 	    if (fcnptr != (DL_FUNC)0) return fcnptr;
 	}
-	if(doit > 1) return (DL_FUNC)0;  /* Only look in the first-matching DLL    }
+	if(doit > 1) return (DL_FUNC)0;/* Only look in the first-matching DLL*/
+    }
     if (!NumStatic && (all || !strcmp(pkg, "base"))) {
 	char *tname;
 	DL_FUNC tfunc;
