@@ -19,6 +19,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Non-blank separated data files didn't have their 1st field
+    	handled properly.
+
     o	"aux" directory moved to "tools" to avoid difficulties on 
     	Windows
 

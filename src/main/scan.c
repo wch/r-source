@@ -624,9 +624,9 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    continue;
 	}
 	else if (sepchar) {
-	    if (c == sepchar)
+	    if (nfields == 0)
 		nfields++;
-	    else if (nfields == 0)
+	    if (c == sepchar)
 		nfields++;
 	}
 	else if (!isspace(c)) {
