@@ -300,14 +300,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 939 *
-Subject: Windows, RCMD INSTALL and path
-From: david.firth@nuf.ox.ac.uk
-Date: Fri, 11 May 2001 17:59:29 +0200 (MET DST)
-* PR# 938 *
-Subject: name creation with index arrays
-From: sint@oeaw.ac.at
-Date: Thu, 10 May 2001 23:39:53 +0200 (MET DST)
+* PR# 940 *
+Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
+From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
+Date: Tue, 15 May 01 23:34:17 +0100
 * PR# 937 *
 Subject: name creation with index arrays
 From: sint@oeaw.ac.at
@@ -316,3 +312,11 @@ Date: Thu, 10 May 2001 23:31:58 +0200 (MET DST)
 Subject: scoping error in xy.coords
 From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
 Date: Fri, 04 May 2001 11:20:57 -0400
+* PR# 939 *
+Subject: Windows, RCMD INSTALL and path
+From: david.firth@nuf.ox.ac.uk
+Date: Fri, 11 May 2001 17:59:29 +0200 (MET DST)
+* PR# 938 *
+Subject: name creation with index arrays
+From: sint@oeaw.ac.at
+Date: Thu, 10 May 2001 23:39:53 +0200 (MET DST)
