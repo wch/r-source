@@ -6,6 +6,10 @@ cutree <- function(tree, k=NULL, h=NULL)
     if(is.null(k) && is.null(h))
         stop("Either k or h must be specified")
     if(is.null(k)) {
+        if(is.unsorted(tree$height))
+            stop(paste("The", sQuote("height"), "component of", sQuote("tree"),
+                       "is not sorted\n",
+                       " (increasingly); consider apply as.hclust() first"))
         ## h |--> k
         k <- integer(length(h))
         ## S+6 help(cutree) says k(h) = k(h+), but does k(h-) [continuity]
