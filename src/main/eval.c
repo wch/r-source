@@ -729,7 +729,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 		if(deflt == R_NilValue)
 		    error(_("Symbol \"%s\" not in environment of method"),
 			  CHAR(PRINTNAME(symbol)));
-		PRCODE(val) = CAR(deflt);
+		SET_PRCODE(val, CAR(deflt));
 	    }
 	}
     }

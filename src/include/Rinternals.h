@@ -711,6 +711,7 @@ SEXP (PRVALUE)(SEXP x);
 int (PRSEEN)(SEXP x);
 void (SET_PRENV)(SEXP x, SEXP v);
 void (SET_PRVALUE)(SEXP x, SEXP v);
+void (SET_PRCODE)(SEXP x, SEXP v);
 void (SET_PRSEEN)(SEXP x, int v);
 
 /* Hashing Macros */
