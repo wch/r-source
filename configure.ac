@@ -395,6 +395,8 @@ AC_PROG_YACC
 R_PROG_AR
 R_PROG_INSTALL
 AC_PATH_PROG(JAVAC, javac)
+## we would like a POSIX sed, and need one on Solaris
+AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
 ## Make
 : ${MAKE=make}
 AC_SUBST(MAKE)

@@ -127,6 +127,9 @@ INSTALLATION CHANGES
 	src/extra/bzip2 code now (potentially) uses inlining where 
 	available and not just under gcc.
 
+    o	The XPG4 sed is used on Solaris for forming dependencies,
+	which should now be done correctly.
+
 
 BUG FIXES
 
