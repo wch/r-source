@@ -100,7 +100,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   is not installed in a ``standard'' location).  \code{.First.lib}
   is invoked after the search path interrogated by \code{search()}
   has been updated, so
-  \code{pos.to.env(match("package:name"), search())} will return the
+  \code{as.environment(match("package:name"), search())} will return the
   environment in which the package is stored.  If calling
   \code{.First.lib} gives an error the loading of the package is
   abandoned, and the package will be unavailable.  Similarly, if the

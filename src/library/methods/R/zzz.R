@@ -17,7 +17,7 @@
             warning(paste("Not a package name: ",pkgname))
             return()
         }
-        where <- pos.to.env(where)
+        where <- as.environment(where)
     }
     ## assign a pointer to the environment in the environment!
     ## (Fortunately, environments are references, not true objects)
@@ -30,7 +30,7 @@
     assign("__MethodMetaData", table, envir = where)
     .Call("R_initialize_methods_metadata", table, PACKAGE = "methods")
     if(!get(".saveImage", envir = where)) {
-        cat("Initializing class and method definitions now\n")
+        cat("initializing class and method definitions now\n")
         .InitBasicClasses(where)
         .InitMethodsListClass(where)
         .makeBasicFunsList(where)

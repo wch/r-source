@@ -5,7 +5,7 @@ attach <- function(what, pos=2, name=deparse(substitute(what)))
             stop(paste("File", what, " not found.", sep=""))
         name<-paste("file:", what, sep="")
         .Internal(attach(NULL, pos, name))
-        load(what, envir=pos.to.env(pos))
+        load(what, envir=as.environment(pos))
     }
     else
         .Internal(attach(what, pos, name))
@@ -25,7 +25,7 @@ detach <- function(name, pos=2)
     if(exists(".Last.lib", where = pos, inherits=FALSE)) {
         .Last.lib <- get(".Last.lib", pos = pos, inherits=FALSE)
         if(is.function(.Last.lib)) {
-            libpath <- attr(pos.to.env(pos), "path")
+            libpath <- attr(as.environment(pos), "path")
             if(!is.null(libpath)) try(.Last.lib(libpath))
         }
     }

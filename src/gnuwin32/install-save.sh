@@ -26,7 +26,7 @@ if ${R_SAVE_IMAGE}; then
       cat > ${lib}/${pkg}/R/${pkg} <<EOF
 .First.lib <- function(libname, pkgname) {
   fullName <- paste("package", pkgname, sep=":")
-  myEnv <- pos.to.env(match(fullName, search()))
+  myEnv <- as.environment(match(fullName, search()))
   dataFile <- file.path(libname, pkgname, "R", "all.rda")
   rm(.First.lib, envir = myEnv)
   load(dataFile, myEnv)

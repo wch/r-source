@@ -1,33 +1,32 @@
-autoload <- function (name, package, ...)
+autoload <- function(name, package, ...)
 {
-    if (exists(name,envir=.GlobalEnv,inherits=FALSE))
+    if (exists(name, envir = .GlobalEnv, inherits = FALSE))
 	stop("Object with that name already exists")
-    m<-match.call()
-    m[[1]]<-as.name("list")
-    newcall<-eval(m,parent.frame())
-    newcall<-as.call(c(as.name("autoloader"),newcall))
-    if (is.na(match(package,.Autoloaded)))
-	assign(".Autoloaded",c(package,.Autoloaded),env=.AutoloadEnv)
-    assign(name, do.call("delay",list(newcall)), env = .AutoloadEnv)
+    m <- match.call()
+    m[[1]] <- as.name("list")
+    newcall <- eval(m, parent.frame())
+    newcall <- as.call(c(as.name("autoloader"), newcall))
+    if (is.na(match(package, .Autoloaded)))
+	assign(".Autoloaded", c(package, .Autoloaded), env =.AutoloadEnv)
+    assign(name, do.call("delay", list(newcall)), env = .AutoloadEnv)
 }
 
-autoloader <- function (name,package,...)
+autoloader <- function (name, package, ...)
 {
-    name<-paste(name,"",sep="")
-    rm(list=name,envir=.AutoloadEnv,inherits=FALSE)
-    m<-match.call()
-    m$name<-NULL
-    m[[1]]<-as.name("library")
+    name <- paste(name, "", sep = "")
+    rm(list = name, envir = .AutoloadEnv, inherits = FALSE)
+    m <- match.call()
+    m$name <- NULL
+    m[[1]] <- as.name("library")
     ## load the package
-    eval(m,.GlobalEnv)
+    eval(m, .GlobalEnv)
     ## reset the autoloader
-    autoload(name,package,...)
+    autoload(name, package, ...)
     ## reevaluate the object
-    where<-match(paste("package",package,sep=":"),search())
-    if (exists(name,where=where,inherits=FALSE))
-	eval(as.name(name), pos.to.env(where))
+    where <- match(paste("package", package, sep = ":"), search())
+    if (exists(name, where = where, inherits = FALSE))
+	eval(as.name(name), as.environment(where))
     else
-	stop(paste("autoloader didn't find `",name,"' in `",package,"'.",sep=""))
+	stop(paste("autoloader didn't find `", name, "' in `", package,
+                   "'.", sep = ""))
 }
-
-

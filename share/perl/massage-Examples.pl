@@ -34,7 +34,7 @@ $PKG = shift @ARGV;
 ## 1) ---- Header ----
 print <<_EOF_;
 attach(NULL, name = "CheckExEnv")
-assign(".CheckExEnv", pos.to.env(2), pos = length(search())) # base
+assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
 ## This plot.new() patch has no effect yes for persp();
 ## layout() & filled.contour() are no ok
 assign("plot.new", function() { .Internal(plot.new())

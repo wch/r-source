@@ -150,7 +150,8 @@ search <- function().Internal(search())
 searchpaths <- function()
 {
     s <- search()
-    paths <- lapply(1:length(s), function(i) attr(pos.to.env(i), "path"))
+    paths <-
+        lapply(1:length(s), function(i) attr(as.environment(i), "path"))
     paths[[length(s)]] <- system.file()
     m <- grep("^package:", s)
     if(length(m)) paths[-m] <- as.list(s[-m])

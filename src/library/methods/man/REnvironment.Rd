@@ -63,7 +63,7 @@ defaultMetaEnvironment()
 ## need to set any class or methods in your package, called "MyPkg"
 ## in this example.
 options(packageEnvironment = 
-   pos.to.env(match("package:MyPkg", search())))
+   as.environment(match("package:MyPkg", search())))
 
 ## Now you can source in calls to setClass, setMethod, setGeneric
 ## and other functions that define classes and methods.

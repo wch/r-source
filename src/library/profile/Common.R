@@ -8,7 +8,7 @@
 
 .GlobalEnv <- globalenv()
 attach(NULL, name = "Autoloads")
-.AutoloadEnv <- pos.to.env(2)
+.AutoloadEnv <- as.environment(2)
 assign(".Autoloaded", NULL, env = .AutoloadEnv)
 T <- TRUE
 F <- FALSE
@@ -35,6 +35,5 @@ options(download.info = 2)
 options(encoding = native.enc)
 
 .First <- function() {
-    require("ctest", quietly=TRUE)
+    require("ctest", quietly = TRUE)
 }
-
