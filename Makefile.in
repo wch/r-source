@@ -18,6 +18,7 @@ DISTFILES = $(INSTFILES) \
 	config.site configure configure.ac \
 	date-stamp
 SUBDIRS = m4 tools afm doc etc share src tests
+SUBDIRS_WITH_NO_BUILD = debian
 
 GZIP = --best
 
@@ -136,9 +137,9 @@ distdir: $(DISTFILES)
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
 	done
-	@for d in debian; do \
+	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
 	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
-	    | (cd $(distdir); $(TAR) -x -f -)) \
+	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
 

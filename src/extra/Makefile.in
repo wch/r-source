@@ -14,6 +14,8 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 SUBDIRS = xdr zlib
+SUBDIRS_WITH_NO_BUILD = bzip2 pcre
+
 LIBZ = @BUILD_ZLIB_TRUE@ zlib
 LIBXDR = @BUILD_XDR_TRUE@ xdr
 EXTRA_LIBS = $(LIBZ) $(LIBXDR)
@@ -54,5 +56,10 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  chmod 755 $(distdir)/$${d}; \
 	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
+	done
+	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
+	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done

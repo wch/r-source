@@ -14,9 +14,9 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 ## subdirectories of R_HOME/share
-SUBDIRS = R glade make perl sh texmf
+SUBDIRS_WITH_NO_BUILD = R glade make perl sh texmf
 ## subdirectories of R_HOME/share/perl
-SUBDIRS_PERL = R Text
+SUBDIRS_SHARE_PERL = R Text
 
 GNOME_IF_FILES = @GNOME_IF_FILES@
 
@@ -42,7 +42,7 @@ installdirs:
 	fi
 	@$(MKINSTALLDIRS) $(rhome)/share/make
 	@$(MKINSTALLDIRS) $(rhome)/share/perl
-	@for d in $(SUBDIRS_PERL); do \
+	@for d in $(SUBDIRS_SHARE_PERL); do \
 	  $(MKINSTALLDIRS) $(rhome)/share/perl/$${d}; \
 	done
 	@$(MKINSTALLDIRS) $(rhome)/share/sh
@@ -61,7 +61,7 @@ install-sources: installdirs
 	@for f in $(srcdir)/make/*.mk; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/share/make; \
 	done
-	@for d in $(SUBDIRS_PERL); do \
+	@for d in $(SUBDIRS_SHARE_PERL); do \
 	  for f in $(srcdir)/perl/$${d}/*.pm; do \
 	    $(INSTALL_DATA) $${f} $(rhome)/share/perl/$${d}; \
 	  done; \
@@ -86,7 +86,7 @@ uninstall:
 mostlyclean:
 clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -rf $(SUBDIRS); \
+	  rm -rf $(SUBDIRS_WITH_NO_BUILD); \
 	fi
 distclean:
 	-@rm -f Makefile
@@ -98,7 +98,8 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@((cd $(srcdir); \
-	      $(TAR) -c -f - --exclude=CVS $(SUBDIRS)) \
-	    | (cd $(distdir); $(TAR) -x -f -)) \
-	  || exit 1
+	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
+	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	      | (cd $(distdir); $(TAR) -x -f -)) \
+	    || exit 1; \
+	done

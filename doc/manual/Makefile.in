@@ -22,7 +22,7 @@ DISTFILES = \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
 	ISBN
-SUBDIRS = images
+SUBDIRS_WITH_NO_BUILD = images
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
@@ -333,10 +333,8 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in $(SUBDIRS); do \
-	  if test -d $(srcdir)/$${d}; then \
-	    ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
-	        | (cd $(distdir); $(TAR) -x -f -)) \
-	      || exit 1; \
-	  fi; \
+	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
+	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	      | (cd $(distdir); $(TAR) -x -f -)) \
+	    || exit 1; \
 	done

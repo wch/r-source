@@ -102,16 +102,10 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS); do \
-	  if test -f $${d}/Makefile; then \
-	    test -d $(distdir)/$${d} \
-	      || mkdir $(distdir)/$${d} \
-	      || exit 1; \
-	    chmod 755 $(distdir)/$${d}; \
-	    (cd $${d} && $(MAKE) distdir) \
-	      || exit 1; \
-	  else \
-	    ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
-	        | (cd $(distdir); $(TAR) -x -f -)) \
-	      || exit 1; \
-	  fi; \
+	  test -d $(distdir)/$${d} \
+	    || mkdir $(distdir)/$${d} \
+	    || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
 	done
