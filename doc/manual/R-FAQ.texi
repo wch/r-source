@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-17, @value{FAQ-YEAR}-06-11
-@set REL-VERSION 1.7.0
+@set FAQ-VERSION 1.7-18, @value{FAQ-YEAR}-06-13
+@set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -1774,6 +1774,8 @@ and generalised linear models.
 A package for survival and event history analysis.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
+@item emme2
+Functions to read from and write to an EMME/2 databank.
 @item emplik
 Empirical likelihood ratio for means/quantiles/hazards from possibly
 right censored data.
@@ -2108,6 +2110,8 @@ Simple interfce for serializing to connections.
 Functions for interacting with, saving and restoring R sessions.
 @item sgeostat
 An object-oriented framework for geostatistical modeling.
+@item shapefiles
+Functions to read and write ESRI shapefiles.
 @item sm
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
