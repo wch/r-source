@@ -821,3 +821,11 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: qchisq hang
 From: statho3@web.de
 Date: Wed,  7 Jan 2004 21:45:11 +0100 (CET)
+* PR# 6422 *
+Subject: strange behaviour when converting from char to POSIX
+From: christoph.schmutz@meteoschweiz.ch
+Date: Fri,  9 Jan 2004 18:00:58 +0100 (CET)
+* PR# 6423 *
+Subject: Re: [Rd] strange behaviour when converting from char to POSIX
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 9 Jan 2004 17:48:54 +0000 (GMT Standard Time)
