@@ -287,11 +287,11 @@ glm.fit <-
     names(residuals) <- ynames
     names(mu) <- ynames
     names(eta) <- ynames
-    names(w) <- ynames
+    names(w) <- ynames[good]
     names(weights) <- ynames
     names(y) <- ynames
     names(fit$effects) <-
-	c(xxnames[seq(fit$rank)], rep("", nobs - fit$rank))
+	c(xxnames[seq(fit$rank)], rep("", sum(good) - fit$rank))
     ## calculate null deviance
     wtdmu <-
 	if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
