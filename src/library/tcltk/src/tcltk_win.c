@@ -6,7 +6,7 @@ void tcltk_init();
 typedef void (* DL3)();
 extern __declspec(dllimport) void (* R_tcldo)();
 
-void _R_tcldo()
+static void _R_tcldo()
 {
     Tcl_ServiceAll();
 }
@@ -17,7 +17,7 @@ void tcltk_start()
 {
     tcltk_init(); /* won't return on error */
     old_R_tcldo = R_tcldo;
-    R_tcldo = (DL3) R_FindSymbol("_R_tcldo", "TclTk", NULL);
+    R_tcldo = &_R_tcldo;
 }
 
 void tcltk_end()
