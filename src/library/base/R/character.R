@@ -65,29 +65,27 @@ make.names <- function(names, unique = FALSE)
     names
 }
 
-make.unique <- function(names, sep = ".")
+make.unique<-function (names, sep = ".")
 {
-    if(!is.character(names))
+    if (!is.character(names))
         stop("names must be a character vector")
+    cnt<-1
     repeat {
         i <- which(duplicated(names))
-        if(length(i) == 0) break
-        ## loop duplicates
-        for(j in i) {
-            ## for each duplicate, find the lowest value of cnt which makes it
-            ## different from previous names.
-            cnt <- 1
-            repeat {
-                newnam <- paste(names[j], cnt, sep = sep)
-                ## compare to previous elements only
-                if(!any(newnam %in% names[1:j])) break
-                cnt <- cnt + 1
-            }
-            names[j] <- newnam
-        }
-    }
+        j <- i[!duplicated(names[i])]
+        if (length(i) == 0)
+            break
+        newnames<-paste(names[j],cnt,sep=sep)
+        ok<- !(newnames %in% names) & !duplicated(newnames)
+        names[j][ok]<-newnames[ok]
+        if (identical(i,j) && all(ok))
+          break
+        cnt<-cnt+1
+      }
     names
-}
+  }
+
+
 
 chartr <- function(old, new, x) .Internal(chartr(old, new, x))
 tolower <- function(x) .Internal(tolower(x))
