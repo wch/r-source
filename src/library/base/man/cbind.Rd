@@ -5,9 +5,9 @@
 \alias{rbind.data.frame}
 \title{Combine R Objects by Rows or Columns}
 \description{
-  Take a sequence of vector, matrix or data frames arguments and combine by
-  \emph{c}olumns or \emph{r}ows, respectively.  There may be methods for
-  other \R classes.
+  Take a sequence of vector, matrix or data frames arguments and combine
+  by \emph{c}olumns or \emph{r}ows, respectively.  There may be methods
+  for other \R classes.
 }
 \usage{
 cbind(\dots, deparse.level = 1)
@@ -15,15 +15,15 @@ rbind(\dots, deparse.level = 1)
 }
 \arguments{
   \item{\dots}{vectors or matrices.}
-  \item{deparse.level}{integer controlling the construnction of labels;
+  \item{deparse.level}{integer controlling the construction of labels;
     currently, \code{1} is the only possible value.}
 }
 \details{
   The functions \code{cbind} and \code{rbind} are generic, with methods
-  for data frames.  The data frame method will be used if an
-  argument is a data frame and the rest are vectors or matrices. There
-  can be other methods, for example \code{\link[ts:ts.union]{cbind.ts}}
-  in package \code{ts}.
+  for data frames.  The data frame method will be used if an argument is
+  a data frame and the rest are vectors or matrices.  There can be other
+  methods, for example \code{\link[ts:ts.union]{cbind.ts}} in package
+  \code{ts}.
 
   If there are several matrix arguments, they must all have the same
   number of columns (or rows) and this will be the number of columns (or
@@ -40,8 +40,8 @@ rbind(\dots, deparse.level = 1)
 }
 \note{
   The method dispatching is \emph{not} done via
-  \code{\link{UseMethod}(..)}, but by C-internal dispatching.
-  Therefore, there's no need for, e.g., \code{rbind.default}.
+  \code{\link{UseMethod}()}, but by C-internal dispatching.
+  Therefore, there is no need for, e.g., \code{rbind.default}.
 
   The dispatch algorithm is described in the source file
   (\file{.../src/main/bind.c}) as
@@ -63,10 +63,11 @@ rbind(\dots, deparse.level = 1)
 }
 \seealso{
   \code{\link{c}} to combine vectors (and lists) as vectors,
-  \code{\link{data.frame}} to combine vectors and matrices as a data frame.
+  \code{\link{data.frame}} to combine vectors and matrices as a data
+  frame.
 }
 \examples{
-cbind(1, 1:7) # the '1' (= shorter vector) is recycled
+cbind(1, 1:7) # the `1' (= shorter vector) is recycled
 cbind(1:7, diag(3))# vector is subset -> warning
 
 cbind(0, rbind(1, 1:3))
