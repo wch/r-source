@@ -1035,29 +1035,28 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
 }
 
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
-    SEXP input = name; int nprotect = 0;
-    PROTECT(obj); nprotect++;
-    PROTECT(value); nprotect++;
-    if(isSymbol(name) ) {
-	input = PROTECT(allocVector(STRSXP, 1)); nprotect++;
-	SET_STRING_ELT(input, 0, PRINTNAME(name));
-    }
-    else if(!(isString(name) && LENGTH(name) == 1))
+    PROTECT(obj); PROTECT(value);
+				/* Ensure that name is a symbol */
+    if(isString(name) && LENGTH(name) == 1)
+	name = install(CHAR(STRING_ELT(name, 0)));
+    if(TYPEOF(name) == CHARSXP)
+	name = install(CHAR(name));
+    if(!isSymbol(name) ) 
 	error("invalid type or length for slot name");
-    if(!s_dot_Data)
+			
+    if(!s_dot_Data)		/* initialize */
 	init_slot_handling();
-    if(isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
-    if(name == s_dot_Data) {
+
+    if(name == s_dot_Data) {	/* special handling */
 	obj = set_data_part(obj, value);
-        UNPROTECT(nprotect);
-	return(obj); 
+        UNPROTECT(2);
+	return obj; 
     }
-    if(isNull(value))
-	/* slots, but not attributes, can be NULL.  Store a special symbol
-	   instead. */
-	value = pseudo_NULL;
-    setAttrib(obj, input, value);
-    UNPROTECT(nprotect);
+    if(isNull(value))		/* Slots, but not attributes, can be NULL.*/
+	value = pseudo_NULL;	/* Store a special symbol instead. */ 
+    
+    setAttrib(obj, name, value);
+    UNPROTECT(2);
     return obj;
 }
 
