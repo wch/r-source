@@ -18,6 +18,8 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#undef HASHING
+
 #ifdef HAVE_CONFIG_H
 #include <Rconfig.h>
 #endif
@@ -227,13 +229,22 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     savedrho = CLOENV(op);
     nargs = length(arglist);
 
-    /*set up a context with the call in it so error has access to it */
+    /*  Set up a context with the call in it so error has access to it */
+
     begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
+
+    /*  Build a list which matches the actual (unevaluated) arguments
+	to the formal paramters.  Build a new environment which
+	contains the matched pairs.  Ideally this environment sould be
+	hashed.  */
 
     PROTECT(actuals = matchArgs(formals, arglist));
     PROTECT(newrho = NewEnvironment(formals, actuals, savedrho));
 
-    /* Use default code for unbound formals */
+    /*  Use the default code for unbound formals.  FIXME: It looks like
+	this code should preceed the building of the environment so that
+        this will also go into the hash table.  */
+
     f = formals;
     a = actuals;
     while (f != R_NilValue) {
@@ -245,13 +256,14 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	a = CDR(a);
     }
 
-    /* Fix up any extras that were supplied by usemethod. */
-    if( suppliedenv != R_NilValue ) {
-	for( tmp=FRAME(suppliedenv); tmp!=R_NilValue ; tmp=CDR(tmp) ){
-	    for( a=actuals; a!=R_NilValue; a=CDR(a) )
-		if( TAG(a) == TAG(tmp) )
+    /*  Fix up any extras that were supplied by usemethod. */
+
+    if (suppliedenv != R_NilValue) {
+	for (tmp = FRAME(suppliedenv); tmp != R_NilValue; tmp = CDR(tmp)) {
+	    for (a = actuals; a != R_NilValue; a = CDR(a))
+		if (TAG(a) == TAG(tmp))
 		    break;
-	    if(a == R_NilValue) {
+	    if (a == R_NilValue) {
 		FRAME(newrho) = CONS(CAR(tmp), FRAME(newrho));
 		TAG(FRAME(newrho)) = TAG(tmp);
 	    }
@@ -259,15 +271,14 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     }
     NARGS(newrho) = nargs;
 
-    /* Terminate the previous context and start */
-    /* a new one with the correct environment. */
+    /*  Terminate the previous context and start a new one with the
+        correct environment. */
 
     endcontext(&cntxt);
 
-    /* If we have a generic function we need to use the */
-    /* sysparent of the generic as the sysparent of the */
-    /* method because the method is a straight substitution */
-    /* of the generic. */
+    /*  If we have a generic function we need to use the sysparent of
+	the generic as the sysparent of the method because the method
+	is a straight substitution of the generic.  */
 
     if( R_GlobalContext->callflag == CTXT_GENERIC )
 	begincontext(&cntxt, CTXT_RETURN, call,
@@ -275,38 +286,58 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     else
 	begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
 
-    /* The default return value */
+    /* The default return value is NULL.  FIXME: Is this really needed
+       or do we always get a sensible value returned?  */
 
     tmp = R_NilValue;
 
     /* Debugging */
 
     DEBUG(newrho) = DEBUG(op);
-    if( DEBUG(op) ) {
+    if (DEBUG(op)) {
 	Rprintf("debugging in: ");
 	PrintValueRec(call,rho);
-	/* now find out if the body is function with only one statement */
+	/* Find out if the body is function with only one statement. */
 	if (isSymbol(CAR(body)))
 	    tmp = findFun(CAR(body), rho);
 	else
 	    tmp = eval(CAR(body), rho);
 	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
-	    && !strcmp( PRIMNAME(tmp), "for" ) && !strcmp( PRIMNAME(tmp),
-	    "{" ) && !strcmp( PRIMNAME(tmp),"repeat" ) &&
-	    !strcmp( PRIMNAME(tmp), "while" ))
+	   && !strcmp( PRIMNAME(tmp), "for")
+	   && !strcmp( PRIMNAME(tmp), "{")
+	   && !strcmp( PRIMNAME(tmp), "repeat")
+	   && !strcmp( PRIMNAME(tmp), "while")
+	   )
 	    goto regdb;
 	Rprintf("debug: ");
 	PrintValue(body);
 	do_browser(call,op,arglist,newrho);
     }
-regdb:
-    /* Set a longjmp target which will catch any */
-    /* explicit returns from the function body. */
 
-    if ( (i= SETJMP(cntxt.cjmpbuf))) {
-	if(R_ReturnedValue == R_DollarSymbol) {
-	    cntxt.callflag = CTXT_RETURN; /* turn restart off */
-	    R_GlobalContext = &cntxt;  /* put the context back */
+ regdb:
+
+    /*  It isn't completely clear that this is the right place to do
+	this, but maybe (if the matchArgs above reverses the
+	arguments) it might just be perfect.  */
+
+#ifdef  HASHING
+#define HASHTABLEGROWTHRATE  1.2
+    {
+	SEXP R_NewHashTable(int, double);
+	SEXP R_HashEnv2Hash(SEXP);
+	HASHTAB(newrho) = R_NewHashTable(nargs, HASHTABLEGROWTHRATE);
+	newrho = R_HashEnv2Hash(newrho);
+    }
+#endif
+#undef  HASHING
+
+    /*  Set a longjmp target which will catch any explicit returns
+	from the function body.  */
+
+    if ((i = SETJMP(cntxt.cjmpbuf))) {
+	if (R_ReturnedValue == R_DollarSymbol) {
+	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
+	    R_GlobalContext = &cntxt;      /* put the context back */
 	    PROTECT(tmp = eval(body, newrho));
 	}
 	else
@@ -318,9 +349,9 @@ regdb:
 
     endcontext(&cntxt);
 
-    if( DEBUG(op) ) {
+    if (DEBUG(op)) {
 	Rprintf("exiting from: ");
-	PrintValueRec(call,rho);
+	PrintValueRec(call, rho);
     }
     UNPROTECT(3);
     return (tmp);
@@ -520,7 +551,7 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, "missing value where logical needed\n");
 	else if (!cond)
 	    break;
-	if( bgn && DEBUG(rho) ) {
+	if (bgn && DEBUG(rho)) {
 	    Rprintf("debug: ");
 	    PrintValue(CAR(args));
 	    do_browser(call,op,args,rho);
@@ -620,9 +651,10 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, v, vals;
     int nv = 0;
-    /* We do the evaluation here so that we */
-    /* can tag any untagged return values if */
-    /* they are specified by symbols */
+
+    /* We do the evaluation here so that we can tag any untagged
+       return values if they are specified by symbols. */
+
     PROTECT(vals = evalList(args, rho));
     a = args;
     v = vals;
@@ -724,22 +756,41 @@ SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     expr = CAR(args);
 
-    /* it's important that the rhs get evaluated first */
-    /* because assignment is right associative i.e. */
-    /* a <- b <- c is parsed as a <- (b <- c) */
+    /*  It's important that the rhs get evaluated first because
+	assignment is right associative i.e.  a <- b <- c is parsed as
+	a <- (b <- c).  */
 
     PROTECT(saverhs = rhs = eval(CADR(args), rho));
+
+    /*  FIXME: We need to ensure that this works for hashed
+        environments.  This code only works for unhashed ones.  the
+        syntax error here is a delibrate marker so I don't forget that
+        this needs to be done.  The code used in "missing" will help
+        here.  */
+
+    /*  FIXME: This strategy will not work when we are working in the
+	data frame defined by the system hash table.  The structure there
+	is different.  Should we special case here?  */
+
+#ifdef HASHING
+@@@@@@
+#endif
+
+    /*  We need a temporary variable to hold the intermediate values
+	in the computation.  For efficiency reasons we record the
+	location where this variable is stored.  */
+
     tmpsym = install("*tmp*");
     defineVar(tmpsym, R_NilValue, rho);
     tmploc = FRAME(rho);
     while(tmploc != R_NilValue && TAG(tmploc) != tmpsym)
 	tmploc = CDR(tmploc);
 
-    /* do a partial evaluation down through the lhs */
+    /*  Do a partial evaluation down through the LHS. */
     lhs = evalseq(CADR(expr), rho, PRIMVAL(op)==1, tmploc);
 
     PROTECT(lhs);
-    PROTECT(rhs); /*just to get the loop right */
+    PROTECT(rhs); /* To get the loop right ... */
 
     while (isLanguage(CADR(expr))) {
 	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));

@@ -681,12 +681,12 @@ double xDevtoMAR1(double x, DevDesc *dd)
 
 double yDevtoMAR1(double y, DevDesc *dd)
 {
-    return dd->gp.mar[0] - yDevtoLine(y, dd);
+    return dd->gp.oma[0] + dd->gp.mar[0] - yDevtoLine(y, dd);
 }
 
 double xDevtoyMAR2(double x, DevDesc *dd)
 {
-    return dd->gp.mar[1] - xDevtoLine(x, dd);
+    return dd->gp.oma[1] + dd->gp.mar[1] - xDevtoLine(x, dd);
 }
 
 double yDevtoxMAR2(double y, DevDesc *dd)
