@@ -375,6 +375,10 @@ SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     message = CAR(args);
+    if(!isString(message) || length(message) != 1)
+	error("invalid `message' argument");
+    if(!isString(def) || length(def) != 1)
+	error("invalid `default' argument");
     def = CADR(args);
     string = askstring(CHAR(STRING(message)[0]), CHAR(STRING(def)[0]));
     if (string) {
@@ -399,6 +403,8 @@ SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
     if (CharacterMode != RGui)
 	errorcall(call, "Menu functions can only be used in the GUI");
     smenu = CAR(args);
+    if(!isString(menu) || length(menu) != 1)
+	error("invalid `menuname' argument");
     sitem = CADR(args);
     if (isNull(sitem)) { /* add a menu */
 	res = winaddmenu (CHAR(STRING(smenu)[0]), errmsg);
@@ -408,6 +414,8 @@ SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	
     } else { /* add an item */
+	if(!isString(sitem) || length(sitem) != 1)
+	    error("invalid `itemname' argument");
 	res = winaddmenuitem (CHAR(STRING(sitem)[0]),
 			      CHAR(STRING(smenu)[0]),
 			      CHAR(STRING(CADDR(args))[0]),
@@ -430,12 +438,16 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
     if (CharacterMode != RGui)
 	errorcall(call, "Menu functions can only be used in the GUI");
     smenu = CAR(args);
+    if(!isString(menu) || length(menu) != 1)
+	error("invalid `menuname' argument");
     sitem = CADR(args);
     if (isNull(sitem)) { /* delete a menu */
 	res = windelmenu (CHAR(STRING(smenu)[0]), errmsg);
 	if (res > 0) 
 	    errorcall(call, "menu does not exist");
     } else { /* delete an item */
+	if(!isString(sitem) || length(sitem) != 1)
+	    error("invalid `itemname' argument");
 	res = windelmenuitem (CHAR(STRING(sitem)[0]),
 			      CHAR(STRING(smenu)[0]), errmsg);
 	if (res > 0) {
