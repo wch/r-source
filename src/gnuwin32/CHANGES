@@ -21,18 +21,18 @@ Alternative installers based on Inno Setup 2.0.x, either SetupR.exe or
 miniR.* (which fits on four floppies).
 
 The location of R_HOME and the version can optionally be recorded in
-the Registry (and will be used by the DCOM interface).  The
-alternative installers register the installation, and unregister on
-uninstallation.  rwinst.exe will optionally register.  Program
-rw1023\bin\RSetReg.exe will register, and RSetReg.exe /U will
-unregister.
+the Registry (and will be used by the DCOM interface).  The Inno Setup
+installers register the installation, and unregister on
+uninstallation.  rwinst.exe has an option to register.  Program
+rw1023\bin\RSetReg.exe will register, and rw1023\bin\RSetReg.exe /U
+will unregister.
 
 The windows() device no longer rounds width and height to the nearest inch.
 
 File `extract-usage' needed for codoc was missing from rw1022sp.zip.
 
 The default memory limit (as reset by --max-mem-size) is set to at
-least 16Mb, to allow R to start on 8Mb machines.
+least 16Mb, to allow R to start on machines wiht 8Mb of RAM.
 
 link.html.help() has been re-written using connections and so is
 several times faster.
@@ -44,6 +44,10 @@ are no longer supported.
 
 A Windows-specific bug in bitmap() which caused output to appear twice
 has been fixed.
+
+Rcmd check now stops when package-specific tests fail (not just
+reports on the console).
+
 
 
 rw1022
