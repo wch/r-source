@@ -19,8 +19,8 @@ OBJ_HEADERS = Rconfig.h Rversion.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
-	Defn.h Internal.h Errormsg.h Fileio.h Fortran.h Graphics.h IOStuff.h \
-	Parse.h Print.h Startup.h \
+	Defn.h Errormsg.h Fileio.h Fortran.h Graphics.h IOStuff.h \
+	Internal.h Parse.h Print.h Startup.h \
 	$(SRC_HEADERS) \
 	config.h.in
 SUBDIRS = R_ext
