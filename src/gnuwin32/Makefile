@@ -291,7 +291,7 @@ bindist: docfiles
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p ../../AUTHORS ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
-		,../../THANKS ../../Y2K $(RPREFIX)
+		../../THANKS ../../Y2K $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
