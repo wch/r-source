@@ -392,3 +392,10 @@ From: edd@debian.org
 From: "Stephen J. Turnbull" <turnbull@sk.tsukuba.ac.jp>
 Date: Sun, 11 Nov 2001 18:23:33 +0100 (MET)
 Date: Mon, 18 Sep 2000 19:48:11 +0900 (JST)
+* PR# 1167 *
+Subject: r-gnome: plots go blank directly after R is finished plotting
+Subject: r-gnome: plots go blank directly after R is finished plotting
+From: edd@debian.org
+From: Egon Willighagen <egonw@sci.kun.nl>
+Date: Tue, 13 Nov 2001 04:01:07 +0100 (MET)
+Date: Mon, 22 Oct 2001 23:44:41 +0200
