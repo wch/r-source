@@ -224,7 +224,9 @@ function(package, dir, lib.loc = NULL,
                                  "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
-            S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE) ]
+            S3reg <- if(length(S3reg))
+                S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE) ]
+            else character(0) # sapply gives list()
         }
     }
     else {
@@ -277,7 +279,8 @@ function(package, dir, lib.loc = NULL,
                       function(x) {
                           if(length(x) > 2) x[3] else paste(x, collapse=".")
                       })
-        if(length(S3m)) S3reg <- S3m[! S3m %in% lsCode]
+        # S3m = list() if empty
+        S3reg <- if(length(S3m)) S3m[! S3m %in% lsCode] else character(0)
     }
 
     ## Find the function objects to work on.
@@ -462,6 +465,7 @@ function(package, dir, lib.loc = NULL)
                                  "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
+            if(!length(S3reg)) S3reg <- character(0)
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
             S3reg <- grep("<-", S3reg, value = TRUE)
             if(length(S3reg) > 0) {
@@ -991,6 +995,7 @@ function(package, dir, lib.loc = NULL)
                                  "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
+            if(!length(S3reg)) S3reg <- character(0)
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
         }
     }
