@@ -1,4 +1,4 @@
-lm <-
+plm <-
     function(formula, data = list(), subset, weights, na.action,
 	     method = "qr", model = TRUE, x = FALSE, y = FALSE,
 	     qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
@@ -231,8 +231,8 @@ summary.lm <- function (object, correlation = FALSE)
     ans <- z[c("call", "terms")]
     ans$residuals <- r
     ans$coefficients <- cbind(est, se, tval, 2*(1 - pt(abs(tval), rdf)))
-    dimnames(ans$coefficients)<-list(names(z$coefficients)[Qr$pivot[p1]],
-				     c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
+    dimnames(ans$coefficients)<- list(names(z$coefficients)[Qr$pivot[p1]],
+                                      c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
     ans$sigma <- sqrt(resvar)
     ans$df <- c(p, rdf, NCOL(Qr$qr))
     if (p != attr(z$terms, "intercept")) {
@@ -380,8 +380,8 @@ anova.lm <- function(object, ...)
     p <- 1 - pf(f,df,dfr)
     table <- cbind(df,ss,ms,f,p)
     table[length(p),4:5] <- NA
-    dimnames(table) <- list(c(attr(object$terms,"term.labels"), "Residual"),
-			    c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
+    dimnames(table) <- list(c(attr(object$terms,"term.labels"), "Residuals"),
+			    c("Df","Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
 
     structure(table, heading = c("Analysis of Variance Table\n",
                      paste("Response:", formula(object)[[2]])),
@@ -426,7 +426,7 @@ anovalist.lm <- function (object, ..., test = NULL)
     }
     table <- cbind(df.r,ss.r,df,ss,f,p)
     dimnames(table) <- list(1:nmodels, c("Res.Df", "Res.Sum-Sq", "Df",
-					 "Sum-Sq", "F", "Pr(>F)"))
+					 "Sum-Sq", "F value", "Pr(>F)"))
 
     ## construct table and title
     title <- "Analysis of Variance Table\n"

@@ -1,7 +1,6 @@
 #### copyright (C) 1998 W. N. Venables and B. D. Ripley
-aov <-
-    function(formula, data = sys.parent(), projections = FALSE, contrasts =
-	     NULL, ...)
+aov <- function(formula, data = sys.parent(),
+                projections = FALSE, contrasts = NULL, ...)
 {
     if(projections) stop("projections are not implemented")
     lmcall <- Call <- match.call()
@@ -14,8 +13,7 @@ aov <-
     fit
 }
 
-print.aov <-
-    function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
+print.aov <- function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n   ")
@@ -67,8 +65,8 @@ print.aov <-
     if(is.null(rdf)) rdf <- nobs - rank
     cat("\n")
     if(rdf > 0)
-	cat("Residual standard error:", format(sqrt(sum(x$residuals^2)/
-						    rdf)), "\n")
+	cat("Residual standard error:",
+            format(sqrt(sum(x$residuals^2)/ rdf)), "\n")
     coef <- x$coef
     R <- x$qr$qr
     R <- R[1:ncol(R), ]
@@ -126,13 +124,13 @@ summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
 	ms <- rep(NA, nterms)
 	ms[ok] <- ss[ok]/df[ok]
     }
-    x <- list(Df = df, "Sum of Sq" = ss, "Mean Sq" = ms)
+    x <- list(Df = df, "Sum Sq" = ss, "Mean Sq" = ms)
     if(df.res > 0) {
 	TT <- ms/ms[nterms]
 	TP <- 1 - pf(TT, df, df.res)
 	TT[nterms] <- TP[nterms] <- NA
 	x$"F Value" <- TT
-	x$"Pr(F)" <- TP
+	x$"Pr(>F)" <- TP
     }
     class(x) <- c("anova", "data.frame")
     row.names(x) <- format(nmrows)
@@ -154,8 +152,7 @@ alias.formula <- function(object, data, ...)
     alias(lm.obj, ...)
 }
 
-alias.lm <-
-    function(object, complete = TRUE, partial = FALSE, ...)
+alias.lm <- function(object, complete = TRUE, partial = FALSE, ...)
 {
     pattern <- function(x, ...) {
 	x[abs(x) < 1e-6] <- 0
