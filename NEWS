@@ -34,6 +34,10 @@ BUG FIXES
 	installs, incorrectly reporting something like 
 	"package 'imported_from' does not have a name space".
 
+    o	The compiler flag -mieee-fp is no longer used on i386 Linux
+	(these days it is only passed to the linker and was only
+	invoked for compilation steps).
+
 
 
 
