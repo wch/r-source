@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-14, 2003-11-08
+Version 1.8-15, 2003-11-12
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1496,6 +1496,10 @@ distributions of R.)
 
 *ash*
      David Scott's ASH routines for 1D and 2D density estimation.
+
+*asypow*
+     A set of routines that calculate power and related quantities utilizing
+     asymptotic likelihood ratio methods.
 
 *aws*
      Functions to perform adaptive weights smoothing.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-14, @value{FAQ-YEAR}-11-08
+@set FAQ-VERSION 1.8-15, @value{FAQ-YEAR}-11-12
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1757,6 +1757,9 @@ minimum spanning tree, or the population parameter theta based on
 various approaches.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
+@item asypow
+A set of routines that calculate power and related quantities utilizing
+asymptotic likelihood ratio methods.
 @item aws
 Functions to perform adaptive weights smoothing.
 @item bim
