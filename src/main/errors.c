@@ -162,7 +162,7 @@ void warning(const char *format, ...)
     warningcall(R_NilValue, buf);
 }
 
-void warningcall(SEXP call, char *format, ...)
+void warningcall(SEXP call, const char *format, ...)
 {
     int w;
     SEXP names, s;
@@ -290,7 +290,7 @@ void PrintWarnings(void)
 
 static char errbuf[BUFSIZE];
 
-void errorcall(SEXP call, char *format,...)
+void errorcall(SEXP call, const char *format,...)
 {
     char *p, *dcall;
 
@@ -532,23 +532,23 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* Error recovery for incorrect argument count error. */
-void WrongArgCount(char *s)
+void WrongArgCount(const char *s)
 {
     error("incorrect number of arguments to \"%s\"", s);
 }
 
 
-void UNIMPLEMENTED(char *s)
+void UNIMPLEMENTED(const char *s)
 {
     error("Unimplemented feature in %s", s);
 }
 
 /* ERROR_.. codes in Errormsg.h */
 static struct {
-    R_WARNING code;
-    char* format;
+    const R_WARNING code;
+    const char* const format;
 }
-ErrorDB[] = {
+const ErrorDB[] = {
     { ERROR_NUMARGS,		"invalid number of arguments"		},
     { ERROR_ARGTYPE,		"invalid argument type"			},
 

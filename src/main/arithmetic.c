@@ -40,7 +40,7 @@ static RETSIGTYPE handle_fperror(int dummy)
     errno = ERANGE;
     signal(SIGFPE, handle_fperror);
 }
-#endif
+#endif /* Unix */
 #endif /* not IEEE_754 */
 
 #ifdef HAVE_MATHERR
@@ -66,7 +66,7 @@ int matherr(struct exception *exc)
 #endif
 
 #ifdef IEEE_754
-double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
+const double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
 
 typedef union
 {
@@ -74,27 +74,25 @@ typedef union
   unsigned int word[2];
 } ieee_double;
 
-static int hw;
-static int lw;
+/* These variables hw and lw are only used if IEEE_754 is defined.
+   The value of each is fixed once we determine the endiannes
+   of the machine, and this cna be done via WORDS_BIGENDIAN.
 
-#ifdef OLD
-static void establish_endianness()
-{
-    ieee_double x;
-    x.value = 1;
-    if (x.word[0] == 0x3ff00000) {
-	little_endian = 0;
-	hw = 0;
-	lw = 1;
-    }
-    else if (x.word[1] == 0x3ff00000) {
-	little_endian = 1;
-	hw = 1;
-	lw = 0;
-    }
-    else R_Suicide("couldn't determine endianness for IEEE 754!\n");
-}
-#endif
+   Earlier code used to use establish_endianness()
+   to compute these, but this is uncessary and makes them
+   non-constant, but initialize once. This would involve
+   a song and dance in a threaded application (e.g pthread_once(), 
+   etc.).
+ */
+#  ifdef WORDS_BIGENDIAN
+static const int hw = 0;
+static const int  lw = 1;
+#  else  /* WORDS_BIGENDIAN */
+static const int hw = 1;
+static const int lw = 0;
+#  endif /* WORDS_BIGENDIAN */
+
+
 
 static double R_ValueOfNA(void)
 {
@@ -201,13 +199,6 @@ void InitArithmetic()
 
 #ifdef IEEE_754
     /* establish_endianness(); */
-#  ifdef WORDS_BIGENDIAN
-    hw = 0;
-    lw = 1;
-#  else
-    hw = 1;
-    lw = 0;
-#  endif
     R_NaN = 0.0/R_Zero_Hack;
     R_NaReal = R_ValueOfNA();
     R_PosInf = 1.0/R_Zero_Hack;
@@ -378,12 +369,14 @@ static double logbase(double x, double base)
 SEXP R_unary(SEXP, SEXP, SEXP);
 SEXP R_binary(SEXP, SEXP, SEXP, SEXP);
 static SEXP integer_unary(ARITHOP_TYPE, SEXP);
-static SEXP real_unary(ARITHOP_TYPE, SEXP);
+static SEXP real_unary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP real_binary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP integer_binary(ARITHOP_TYPE, SEXP, SEXP);
 
+#if 0
 static int naflag;
 static SEXP lcall;
+#endif
 
 
 /* Unary and Binary Operators */
@@ -411,9 +404,9 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 {
     SEXP class, dims, tsp, xnames, ynames;
     int mismatch, nx, ny, xarray, yarray, xts, yts;
+    SEXP lcall = call;
     PROTECT_INDEX xpi, ypi;
 
-    lcall = call;
 
     PROTECT_WITH_INDEX(x, &xpi);
     PROTECT_WITH_INDEX(y, &ypi);
@@ -555,17 +548,16 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 
 SEXP R_unary(SEXP call, SEXP op, SEXP s1)
 {
-    lcall = call;
     switch (TYPEOF(s1)) {
     case LGLSXP:
     case INTSXP:
 	return integer_unary(PRIMVAL(op), s1);
     case REALSXP:
-	return real_unary(PRIMVAL(op), s1);
+	return real_unary(PRIMVAL(op), s1, call);
     case CPLXSXP:
 	return complex_unary(PRIMVAL(op), s1);
     default:
-	errorcall(lcall, "Invalid argument to unary operator");
+	errorcall(call, "Invalid argument to unary operator");
     }
     return s1;			/* never used; to keep -Wall happy */
 }
@@ -593,7 +585,7 @@ static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1)
     return s1;			/* never used; to keep -Wall happy */
 }
 
-static SEXP real_unary(ARITHOP_TYPE code, SEXP s1)
+static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
 {
     int i, n;
     SEXP ans;
@@ -906,11 +898,12 @@ static double unavailable(double x)
 #endif
 #endif
 
-static SEXP math1(SEXP sa, double(*f)())
+static SEXP math1(SEXP sa, double(*f)(), SEXP lcall)
 {
     SEXP sy;
     double *y, *a;
     int i, n;
+    int naflag;
 
     if (!isNumeric(sa))
 	errorcall(lcall, R_MSG_NONNUM_MATH);
@@ -950,39 +943,39 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (isComplex(CAR(args)))
 	return complex_math1(call, op, args, env);
-    lcall = call;
 
+#define MATH1(x) math1(CAR(args), x, call);
     switch (PRIMVAL(op)) {
-    case 1: return math1(CAR(args), floor);
-    case 2: return math1(CAR(args), ceil);
-    case 3: return math1(CAR(args), sqrt);
-    case 4: return math1(CAR(args), sign);
-    case 5: return math1(CAR(args), trunc);
+    case 1: return MATH1(floor);
+    case 2: return MATH1(ceil);
+    case 3: return MATH1(sqrt);
+    case 4: return MATH1(sign);
+    case 5: return MATH1(trunc);
 
-    case 10: return math1(CAR(args), exp);
-    case 12: return math1(CAR(args), log1p);
-    case 20: return math1(CAR(args), cos);
-    case 21: return math1(CAR(args), sin);
-    case 22: return math1(CAR(args), tan);
-    case 23: return math1(CAR(args), acos);
-    case 24: return math1(CAR(args), asin);
-
-    case 30: return math1(CAR(args), cosh);
-    case 31: return math1(CAR(args), sinh);
-    case 32: return math1(CAR(args), tanh);
-    case 33: return math1(CAR(args), acosh);
-    case 34: return math1(CAR(args), asinh);
-    case 35: return math1(CAR(args), atanh);
-
-    case 40: return math1(CAR(args), lgammafn);
-    case 41: return math1(CAR(args), gammafn);
-
-    case 42: return math1(CAR(args), digamma);
-    case 43: return math1(CAR(args), trigamma);
-    case 44: return math1(CAR(args), tetragamma);
-    case 45: return math1(CAR(args), pentagamma);
-
-    case 46: return math1(CAR(args), gamma_cody);
+    case 10: return MATH1(exp);
+    case 12: return MATH1(log1p);
+    case 20: return MATH1(cos);
+    case 21: return MATH1(sin);
+    case 22: return MATH1(tan);
+    case 23: return MATH1(acos);
+    case 24: return MATH1(asin);
+			  
+    case 30: return MATH1(cosh);
+    case 31: return MATH1(sinh);
+    case 32: return MATH1(tanh);
+    case 33: return MATH1(acosh);
+    case 34: return MATH1(asinh);
+    case 35: return MATH1(atanh);
+			  
+    case 40: return MATH1(lgammafn);
+    case 41: return MATH1(gammafn);
+			  
+    case 42: return MATH1(digamma);
+    case 43: return MATH1(trigamma);
+    case 44: return MATH1(tetragamma);
+    case 45: return MATH1(pentagamma);
+			  
+    case 46: return MATH1(gamma_cody);
 
     default:
 	errorcall(call, "unimplemented real function (of 1 arg.)");
@@ -996,11 +989,12 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	if      (ISNA (a) || ISNA (b)) y = NA_REAL;	\
 	else if (ISNAN(a) || ISNAN(b)) y = R_NaN;
 
-static SEXP math2(SEXP sa, SEXP sb, double (*f)())
+static SEXP math2(SEXP sa, SEXP sb, double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
+    int naflag;
 
     if (!isNumeric(sa) || !isNumeric(sb))
 	errorcall(lcall, R_MSG_NONNUM_MATH);
@@ -1050,12 +1044,13 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)())
     return sy;
 } /* math2() */
 
-static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)())
+static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
     int m_opt;
+    int naflag;
 
     if (!isNumeric(sa) || !isNumeric(sb))
 	errorcall(lcall, R_MSG_NONNUM_MATH);
@@ -1076,13 +1071,13 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)())
     return sy;
 } /* math2_1() */
 
-static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2, double (*f)())
+static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2, double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, n, na, nb;
     double ai, bi, *a, *b, *y;
     int i_1, i_2;
-
+    int naflag;
     if (!isNumeric(sa) || !isNumeric(sb))
 	errorcall(lcall, R_MSG_NONNUM_MATH);
 
@@ -1103,9 +1098,9 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2, double (*f)())
     return sy;
 } /* math2_2() */
 
-#define Math2(A, FUN)	  math2(CAR(A), CADR(A), FUN);
-#define Math2_1(A, FUN)	math2_1(CAR(A), CADR(A), CADDR(A), FUN);
-#define Math2_2(A, FUN) math2_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN)
+#define Math2(A, FUN)	  math2(CAR(A), CADR(A), FUN, call);
+#define Math2_1(A, FUN)	math2_1(CAR(A), CADR(A), CADDR(A), FUN, call);
+#define Math2_2(A, FUN) math2_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN, call)
 
 SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1113,9 +1108,10 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (isComplex(CAR(args)))
 	return complex_math2(call, op, args, env);
-    lcall = call;
+    
 
     switch (PRIMVAL(op)) {
+
     case  0: return Math2(args, atan2);
     /*case 1: return Math2(args, prec); */
 
@@ -1127,23 +1123,23 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case  6: return Math2_1(args, dchisq);
     case  7: return Math2_2(args, pchisq);
     case  8: return Math2_2(args, qchisq);
-
+		     
     case  9: return Math2_1(args, dexp);
     case 10: return Math2_2(args, pexp);
     case 11: return Math2_2(args, qexp);
-
+		     
     case 12: return Math2_1(args, dgeom);
     case 13: return Math2_2(args, pgeom);
     case 14: return Math2_2(args, qgeom);
-
+		     
     case 15: return Math2_1(args, dpois);
     case 16: return Math2_2(args, ppois);
     case 17: return Math2_2(args, qpois);
-
+		     
     case 18: return Math2_1(args, dt);
     case 19: return Math2_2(args, pt);
     case 20: return Math2_2(args, qt);
-
+			    
     case 21: return Math2_1(args, dsignrank);
     case 22: return Math2_2(args, psignrank);
     case 23: return Math2_2(args, qsignrank);
@@ -1164,18 +1160,18 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
-    lcall = call;
+
     switch (n = length(args)) {
     case 1:
 	if (isComplex(CAR(args)))
 	    return complex_math1(call, op, args, env);
 	else
-	    return math1(CAR(args), atan);
+	    return math1(CAR(args), atan, call);
     case 2:
 	if (isComplex(CAR(args)) || isComplex(CDR(args)))
 	    return complex_math2(call, op, args, env);
 	else
-	    return math2(CAR(args), CADR(args), atan2);
+	    return math2(CAR(args), CADR(args), atan2, call);
     default:
 	error("%d arguments passed to \"atan\" which requires 1 or 2", n);
     }
@@ -1189,7 +1185,7 @@ SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
     b = R_NilValue;	/* -Wall */
-    lcall = call;
+
     switch (n = length(args)) {
     case 1:
 	PROTECT(a = CAR(args));
@@ -1210,7 +1206,7 @@ SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
 	a = complex_math2(call, op, args, env);
     }
     else
-	a = math2(a, b, rround);
+	a = math2(a, b, rround, call);
     UNPROTECT(2);
     return a;
 }
@@ -1221,20 +1217,20 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
-    lcall = call;
+
     switch (n = length(args)) {
     case 1:
 	if (isComplex(CAR(args)))
 	    return complex_math1(call, op, args, env);
 	else
-	    return math1(CAR(args), R_log);
+	    return math1(CAR(args), R_log, call);
     case 2:
 	if (length(CADR(args)) == 0)
 	    errorcall(call, "illegal 2nd arg of length 0");
 	if (isComplex(CAR(args)) || isComplex(CDR(args)))
 	    return complex_math2(call, op, args, env);
 	else
-	    return math2(CAR(args), CADR(args), logbase);
+	    return math2(CAR(args), CADR(args), logbase, call);
     default:
 	error("%d arguments passed to \"log\" which requires 1 or 2", n);
     }
@@ -1248,7 +1244,7 @@ SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
     b = R_NilValue;		/* -Wall */
-    lcall = call;
+
     switch (n = length(args)) {
     case 1:
 	PROTECT(a = CAR(args));
@@ -1269,7 +1265,7 @@ SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
 	a = complex_math2(call, op, args, env);
     }
     else
-	a = math2(a, b, prec);
+	a = math2(a, b, prec, call);
     UNPROTECT(2);
     return a;
 }
@@ -1286,11 +1282,12 @@ SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
 	i3 = (++i3==n3) ? 0 : i3,				\
 	++i)
 
-static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)())
+static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *a, *b, *c, *y;
+    int naflag;
 
 #define SETUP_Math3						\
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc))	\
@@ -1350,12 +1347,13 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)())
     return sy;
 } /* math3 */
 
-static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)())
+static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *a, *b, *c, *y;
     int i_1;
+    int naflag;
 
     SETUP_Math3;
     i_1 = asInteger(sI);
@@ -1375,12 +1373,13 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)())
     return sy;
 } /* math3_1 */
 
-static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ, double (*f)())
+static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ, double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, ic, n, na, nb, nc;
     double ai, bi, ci, *a, *b, *c, *y;
     int i_1,i_2;
+    int naflag;
 
     SETUP_Math3;
     i_1 = asInteger(sI);
@@ -1401,14 +1400,13 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ, double (*f)())
     return sy;
 } /* math3_2 */
 
-#define Math3(A, FUN)   math3  (CAR(A), CADR(A), CADDR(A), FUN);
-#define Math3_1(A, FUN)	math3_1(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN);
-#define Math3_2(A, FUN) math3_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), CAD4R(A), FUN)
+#define Math3(A, FUN)   math3  (CAR(A), CADR(A), CADDR(A), FUN, call);
+#define Math3_1(A, FUN)	math3_1(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN, call);
+#define Math3_2(A, FUN) math3_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), CAD4R(A), FUN, call)
 
 SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    lcall = call;
 
     switch (PRIMVAL(op)) {
 
@@ -1498,11 +1496,12 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 	i4 = (++i4==n4) ? 0 : i4,					\
 	++i)
 
-static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
+static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
+    int naflag;
 
 #define SETUP_Math4							\
     if(!isNumeric(sa)|| !isNumeric(sb)|| !isNumeric(sc)|| !isNumeric(sd))\
@@ -1571,12 +1570,13 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
     return sy;
 } /* math4() */
 
-static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)())
+static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int i_1;
+    int naflag;
 
     SETUP_Math4;
     i_1 = asInteger(sI);
@@ -1597,12 +1597,13 @@ static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)())
 } /* math4_1() */
 
 static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
-		    double (*f)())
+		    double (*f)(), SEXP lcall)
 {
     SEXP sy;
     int i, ia, ib, ic, id, n, na, nb, nc, nd;
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int i_1, i_2;
+    int naflag;
 
     SETUP_Math4;
     i_1 = asInteger(sI);
@@ -1628,17 +1629,17 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
 /* This is not (yet) in Rinternals.h : */
 #define CAD5R(e)	CAR(CDR(CDR(CDR(CDR(CDR(e))))))
 
-#define Math4(A, FUN)   math4  (CAR(A), CADR(A), CADDR(A), CAD3R(A), FUN)
+#define Math4(A, FUN)   math4  (CAR(A), CADR(A), CADDR(A), CAD3R(A), FUN, call)
 #define Math4_1(A, FUN) math4_1(CAR(A), CADR(A), CADDR(A), CAD3R(A), CAD4R(A), \
-				FUN)
+				FUN, call)
 #define Math4_2(A, FUN) math4_2(CAR(A), CADR(A), CADDR(A), CAD3R(A), CAD4R(A), \
-				CAD5R(A), FUN)
+				CAD5R(A), FUN, call)
 
 
 SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    lcall = call;
+
 
     switch (PRIMVAL(op)) {
 

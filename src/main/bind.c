@@ -28,21 +28,23 @@
 #include <Defn.h>
 #include <Rmath.h>/* imax2 */
 
-#define LIST_ASSIGN(x) {SET_VECTOR_ELT(ans_ptr, ans_length, x); ans_length++;}
+#define LIST_ASSIGN(x) {SET_VECTOR_ELT(data->ans_ptr, data->ans_length, x); data->ans_length++;}
 
-static SEXP cbind(SEXP, SEXP, SEXPTYPE);
-static SEXP rbind(SEXP, SEXP, SEXPTYPE);
+static SEXP cbind(SEXP, SEXP, SEXPTYPE, SEXP);
+static SEXP rbind(SEXP, SEXP, SEXPTYPE, SEXP);
 
 /* The following code establishes the return type for the */
 /* functions  unlist, c, cbind, and rbind and also determines */
 /* whether the returned object is to have a names attribute. */
 
-static int  ans_flags;
-static SEXP ans_ptr;
-static int  ans_length;
-static SEXP ans_names;
-static int  ans_nnames;
-static int  deparse_level = 1;
+struct BindData {
+ int  ans_flags;
+ SEXP ans_ptr;
+ int  ans_length;
+ SEXP ans_names;
+ int  ans_nnames;
+ int  deparse_level; /* Initialize to 1. */
+};
 
 static int HasNames(SEXP x)
 {
@@ -59,71 +61,71 @@ static int HasNames(SEXP x)
     return 0;
 }
 
-static void AnswerType(SEXP x, int recurse, int usenames)
+static void AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
 {
     switch (TYPEOF(x)) {
     case NILSXP:
 	break;
     case LGLSXP:
-	ans_flags |= 1;
-	ans_length += LENGTH(x);
+	data->ans_flags |= 1;
+	data->ans_length += LENGTH(x);
 	break;
     case INTSXP:
-	ans_flags |= 8;
-	ans_length += LENGTH(x);
+	data->ans_flags |= 8;
+	data->ans_length += LENGTH(x);
 	break;
     case REALSXP:
-	ans_flags |= 16;
-	ans_length += LENGTH(x);
+	data->ans_flags |= 16;
+	data->ans_length += LENGTH(x);
 	break;
     case CPLXSXP:
-	ans_flags |= 32;
-	ans_length += LENGTH(x);
+	data->ans_flags |= 32;
+	data->ans_length += LENGTH(x);
 	break;
     case STRSXP:
-	ans_flags |= 64;
-	ans_length += LENGTH(x);
+	data->ans_flags |= 64;
+	data->ans_length += LENGTH(x);
 	break;
     case VECSXP:
     case EXPRSXP:
 	if (recurse) {
 	    int i, n;
 	    n = length(x);
-	    if (usenames && !ans_names && !isNull(getAttrib(x, R_NamesSymbol)))
-		ans_nnames = 1;
+	    if (usenames && !data->ans_names && !isNull(getAttrib(x, R_NamesSymbol)))
+		data->ans_nnames = 1;
 	    for (i = 0; i < n; i++) {
-		if (usenames && !ans_nnames)
-		    ans_nnames = HasNames(VECTOR_ELT(x, i));
-		AnswerType(VECTOR_ELT(x, i), recurse, usenames);
+		if (usenames && !data->ans_nnames)
+		    data->ans_nnames = HasNames(VECTOR_ELT(x, i));
+		AnswerType(VECTOR_ELT(x, i), recurse, usenames, data);
 	    }
 	}
 	else {
 	    if (TYPEOF(x) == EXPRSXP)
-		ans_flags |= 256;
+		data->ans_flags |= 256;
 	    else
-		ans_flags |= 128;
-	    ans_length += length(x);
+		data->ans_flags |= 128;
+	    data->ans_length += length(x);
 	}
 	break;
     case LISTSXP:
 	if (recurse) {
 	    while (x != R_NilValue) {
-		if (usenames && !ans_nnames) {
-		    if (!isNull(TAG(x))) ans_nnames = 1;
-		    else ans_nnames = HasNames(CAR(x));
+		if (usenames && !data->ans_nnames) {
+		    if (!isNull(TAG(x))) data->ans_nnames = 1;
+		    else data->ans_nnames = HasNames(CAR(x));
 		}
-		AnswerType(CAR(x), recurse, usenames);
+		AnswerType(CAR(x), recurse, usenames, data);
 		x = CDR(x);
 	    }
 	}
 	else {
-	    ans_flags |= 128;
-	    ans_length += length(x);
+	    data->ans_flags |= 128;
+	    data->ans_length += length(x);
 	}
 	break;
     default:
-	ans_flags |= 128;
-	ans_length += 1;
+	data->ans_flags |= 128;
+	data->ans_length += 1;
 	break;
     }
 }
@@ -132,7 +134,7 @@ static void AnswerType(SEXP x, int recurse, int usenames)
 /* The following functions are used to coerce arguments to */
 /* the appropriate type for inclusion in the returned value. */
 
-static void ListAnswer(SEXP x, int recurse)
+static void ListAnswer(SEXP x, int recurse, struct BindData *data)
 {
     int i;
 
@@ -163,7 +165,7 @@ static void ListAnswer(SEXP x, int recurse)
     case EXPRSXP:
 	if (recurse) {
 	    for (i = 0; i < LENGTH(x); i++)
-		ListAnswer(VECTOR_ELT(x, i), recurse);
+		ListAnswer(VECTOR_ELT(x, i), recurse, data);
 	}
 	else {
 	    for (i = 0; i < LENGTH(x); i++)
@@ -173,7 +175,7 @@ static void ListAnswer(SEXP x, int recurse)
     case LISTSXP:
 	if (recurse) {
 	    while (x != R_NilValue) {
-		ListAnswer(CAR(x), recurse);
+		ListAnswer(CAR(x), recurse, data);
 		x = CDR(x);
 	    }
 	}
@@ -189,7 +191,7 @@ static void ListAnswer(SEXP x, int recurse)
     }
 }
 
-static void StringAnswer(SEXP x)
+static void StringAnswer(SEXP x, struct BindData *data)
 {
     int i, n;
     switch(TYPEOF(x)) {
@@ -197,26 +199,26 @@ static void StringAnswer(SEXP x)
 	break;
     case LISTSXP:
 	while (x != R_NilValue) {
-	    StringAnswer(CAR(x));
+	    StringAnswer(CAR(x), data);
 	    x = CDR(x);
 	}
 	break;
     case VECSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    StringAnswer(VECTOR_ELT(x, i));
+	    StringAnswer(VECTOR_ELT(x, i), data);
 	break;
     default:
 	PROTECT(x = coerceVector(x, STRSXP));
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    SET_STRING_ELT(ans_ptr, ans_length++, STRING_ELT(x, i));
+	    SET_STRING_ELT(data->ans_ptr, data->ans_length++, STRING_ELT(x, i));
 	UNPROTECT(1);
 	break;
     }
 }
 
-static void IntegerAnswer(SEXP x)
+static void IntegerAnswer(SEXP x, struct BindData *data)
 {
     int i, n;
     switch(TYPEOF(x)) {
@@ -224,24 +226,24 @@ static void IntegerAnswer(SEXP x)
 	break;
     case LISTSXP:
 	while (x != R_NilValue) {
-	    IntegerAnswer(CAR(x));
+	    IntegerAnswer(CAR(x), data);
 	    x = CDR(x);
 	}
 	break;
     case VECSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    IntegerAnswer(VECTOR_ELT(x, i));
+	    IntegerAnswer(VECTOR_ELT(x, i), data);
 	break;
     default:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    INTEGER(ans_ptr)[ans_length++] = INTEGER(x)[i];
+	    INTEGER(data->ans_ptr)[data->ans_length++] = INTEGER(x)[i];
 	break;
     }
 }
 
-static void RealAnswer(SEXP x)
+static void RealAnswer(SEXP x, struct BindData *data)
 {
     int i, n, xi;
     switch(TYPEOF(x)) {
@@ -249,33 +251,33 @@ static void RealAnswer(SEXP x)
 	break;
     case LISTSXP:
 	while (x != R_NilValue) {
-	    RealAnswer(CAR(x));
+	    RealAnswer(CAR(x), data);
 	    x = CDR(x);
 	}
 	break;
     case VECSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    RealAnswer(VECTOR_ELT(x, i));
+	    RealAnswer(VECTOR_ELT(x, i), data);
 	break;
     case REALSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    REAL(ans_ptr)[ans_length++] = REAL(x)[i];
+	    REAL(data->ans_ptr)[data->ans_length++] = REAL(x)[i];
 	break;
     default:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++) {
 	    xi = INTEGER(x)[i];
 	    if (xi == NA_INTEGER)
-		REAL(ans_ptr)[ans_length++] = NA_REAL;
-	    else REAL(ans_ptr)[ans_length++] = xi;
+		REAL(data->ans_ptr)[data->ans_length++] = NA_REAL;
+	    else REAL(data->ans_ptr)[data->ans_length++] = xi;
 	}
 	break;
     }
 }
 
-static void ComplexAnswer(SEXP x)
+static void ComplexAnswer(SEXP x, struct BindData *data)
 {
     int i, n, xi;
     switch(TYPEOF(x)) {
@@ -283,41 +285,41 @@ static void ComplexAnswer(SEXP x)
 	break;
     case LISTSXP:
 	while (x != R_NilValue) {
-	    ComplexAnswer(CAR(x));
+	    ComplexAnswer(CAR(x), data);
 	    x = CDR(x);
 	}
 	break;
     case VECSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    ComplexAnswer(VECTOR_ELT(x, i));
+	    ComplexAnswer(VECTOR_ELT(x, i), data);
 	break;
     case REALSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++) {
-	    COMPLEX(ans_ptr)[ans_length].r = REAL(x)[i];
-	    COMPLEX(ans_ptr)[ans_length].i = 0.0;
-	    ans_length++;
+	    COMPLEX(data->ans_ptr)[data->ans_length].r = REAL(x)[i];
+	    COMPLEX(data->ans_ptr)[data->ans_length].i = 0.0;
+	    data->ans_length++;
 	}
 	break;
     case CPLXSXP:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++)
-	    COMPLEX(ans_ptr)[ans_length++] = COMPLEX(x)[i];
+	    COMPLEX(data->ans_ptr)[data->ans_length++] = COMPLEX(x)[i];
 	break;
     default:
 	n = LENGTH(x);
 	for (i = 0; i < n; i++) {
 	    xi = INTEGER(x)[i];
             if (xi == NA_INTEGER) {
-                COMPLEX(ans_ptr)[ans_length].r = NA_REAL;
-                COMPLEX(ans_ptr)[ans_length].i = NA_REAL;
+                COMPLEX(data->ans_ptr)[data->ans_length].r = NA_REAL;
+                COMPLEX(data->ans_ptr)[data->ans_length].i = NA_REAL;
             }
             else {
-                COMPLEX(ans_ptr)[ans_length].r = xi;
-                COMPLEX(ans_ptr)[ans_length].i = 0.0;
+                COMPLEX(data->ans_ptr)[data->ans_length].r = xi;
+                COMPLEX(data->ans_ptr)[data->ans_length].i = 0.0;
             }
-            ans_length++;
+            data->ans_length++;
 	}
 	break;
     }
@@ -389,10 +391,15 @@ SEXP ItemName(SEXP names, int i)
  * and then we do the recursion.
  *	If we have a vector, we just create the tags for each element. */
 
-static int count, seqno;
-static int firstpos;
+struct NameData {
+ int count;
+ int seqno;
+ int firstpos;
+}; 
 
-static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
+
+static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse, 
+                             struct BindData *data, struct NameData *nameData)
 {
     SEXP names, namei;
     int i, n, savecount=0, saveseqno, savefirstpos=0;
@@ -402,12 +409,12 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 
     if (tag != R_NilValue) {
 	PROTECT(base = NewBase(base, tag));
-	savefirstpos = firstpos;
-	saveseqno = seqno;
-	savecount = count;
-	count = 0;
-	seqno = 0;
-	firstpos = -1;
+	savefirstpos = nameData->firstpos;
+	saveseqno = nameData->seqno;
+	savecount = nameData->count;
+	nameData->count = 0;
+	nameData->seqno = 0;
+	nameData->firstpos = -1;
     }
     else saveseqno = 0;
 
@@ -421,14 +428,14 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
 	    if (recurse) {
-		NewExtractNames(CAR(v), base, namei, recurse);
+		NewExtractNames(CAR(v), base, namei, recurse, data, nameData);
 	    }
 	    else {
-		if (namei == R_NilValue && count == 0)
-		    firstpos = ans_nnames;
-		count++;
-		namei = NewName(base, namei, i, n, ++seqno);
-		SET_STRING_ELT(ans_names, ans_nnames++, namei);
+		if (namei == R_NilValue && nameData->count == 0)
+		    nameData->firstpos = data->ans_nnames;
+		nameData->count++;
+		namei = NewName(base, namei, i, n, ++(nameData->seqno));
+		SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
 	    }
 	    v = CDR(v);
 	}
@@ -438,14 +445,14 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
 	    if (recurse) {
-		NewExtractNames(VECTOR_ELT(v, i), base, namei, recurse);
+		NewExtractNames(VECTOR_ELT(v, i), base, namei, recurse, data, nameData);
 	    }
 	    else {
-		if (namei == R_NilValue && count == 0)
-		    firstpos = ans_nnames;
-		count++;
-		namei = NewName(base, namei, i, n, ++seqno);
-		SET_STRING_ELT(ans_names, ans_nnames++, namei);
+		if (namei == R_NilValue && nameData->count == 0)
+		    nameData->firstpos = data->ans_nnames;
+		nameData->count++;
+		namei = NewName(base, namei, i, n, ++(nameData->seqno));
+		SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
 	    }
 	}
 	break;
@@ -456,28 +463,28 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
     case STRSXP:
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
-	    if (namei == R_NilValue && count == 0)
-		firstpos = ans_nnames;
-	    count++;
-	    namei = NewName(base, namei, i, n, ++seqno);
-	    SET_STRING_ELT(ans_names, ans_nnames++, namei);
+	    if (namei == R_NilValue && nameData->count == 0)
+		nameData->firstpos = data->ans_nnames;
+	    nameData->count++;
+	    namei = NewName(base, namei, i, n, ++(nameData->seqno));
+	    SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
 	}
 	break;
     default:
-	if (count == 0)
-	    firstpos = ans_nnames;
-	count++;
-	namei = NewName(base, R_NilValue, 0, 1, ++seqno);
-	SET_STRING_ELT(ans_names, ans_nnames++, base);
+	if (nameData->count == 0)
+	    nameData->firstpos = data->ans_nnames;
+	nameData->count++;
+	namei = NewName(base, R_NilValue, 0, 1, ++(nameData->seqno));
+	SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, base);
     }
     if (tag != R_NilValue) {
-	if (firstpos >= 0 && count == 1)
-	    SET_STRING_ELT(ans_names, firstpos, base);
-	firstpos = savefirstpos;
-	count = savecount;
+	if (nameData->firstpos >= 0 && nameData->count == 1)
+	    SET_STRING_ELT(data->ans_names, nameData->firstpos, base);
+	nameData->firstpos = savefirstpos;
+	nameData->count = savecount;
 	UNPROTECT(1);
     }
-    seqno = seqno + saveseqno;
+    nameData->seqno = nameData->seqno + saveseqno;
 }
 
 /* Code to extract the optional arguments to c().  We do it this */
@@ -546,7 +553,10 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, t;
     int mode, recurse, usenames;
+    struct BindData data;
+    struct NameData nameData;
 
+    data.deparse_level = 1; /* Initialize this early. */
     R_Visible = 1;
 
     /* Method dispatch has failed; run the default code. */
@@ -564,16 +574,16 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     /* The strategy here is appropriate because the */
     /* object being operated on is a pair based list. */
 
-    ans_flags  = 0;
-    ans_length = 0;
-    ans_nnames = 0;
+    data.ans_flags  = 0;
+    data.ans_length = 0;
+    data.ans_nnames = 0;
 
     for (t = args; t != R_NilValue; t = CDR(t)) {
-	if (usenames && !ans_nnames) {
-	    if (!isNull(TAG(t))) ans_nnames = 1;
-	    else ans_nnames = HasNames(CAR(t));
+	if (usenames && !data.ans_nnames) {
+	    if (!isNull(TAG(t))) data.ans_nnames = 1;
+	    else data.ans_nnames = HasNames(CAR(t));
 	}
-	AnswerType(CAR(t), recurse, usenames);
+	AnswerType(CAR(t), recurse, usenames, &data);
     }
 
     /* If a non-vector argument was encountered (perhaps a list if */
@@ -581,74 +591,74 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     /* we use the natural coercion for vector types. */
 
     mode = NILSXP;
-    if (ans_flags & 256)      mode = EXPRSXP;
-    else if (ans_flags & 128) mode = VECSXP;
-    else if (ans_flags &  64) mode = STRSXP;
-    else if (ans_flags &  32) mode = CPLXSXP;
-    else if (ans_flags &  16) mode = REALSXP;
-    else if (ans_flags &   8) mode = INTSXP;
-    else if (ans_flags &   1) mode = LGLSXP;
+    if (data.ans_flags & 256)      mode = EXPRSXP;
+    else if (data.ans_flags & 128) mode = VECSXP;
+    else if (data.ans_flags &  64) mode = STRSXP;
+    else if (data.ans_flags &  32) mode = CPLXSXP;
+    else if (data.ans_flags &  16) mode = REALSXP;
+    else if (data.ans_flags &   8) mode = INTSXP;
+    else if (data.ans_flags &   1) mode = LGLSXP;
 
     /* Allocate the return value and set up to pass through */
     /* the arguments filling in values of the returned object. */
 
-    PROTECT(ans = allocVector(mode, ans_length));
-    ans_ptr = ans;
-    ans_length = 0;
+    PROTECT(ans = allocVector(mode, data.ans_length));
+    data.ans_ptr = ans;
+    data.ans_length = 0;
     t = args;
 
     if (mode == VECSXP || mode == EXPRSXP) {
 	if (!recurse) {
 	    while (args != R_NilValue) {
-		ListAnswer(CAR(args), 0);
+		ListAnswer(CAR(args), 0, &data);
 		args = CDR(args);
 	    }
 	}
-	else ListAnswer(args, recurse);
-	ans_length = length(ans);
+	else ListAnswer(args, recurse, &data);
+	data.ans_length = length(ans);
     }
     else if (mode == STRSXP)
-	StringAnswer(args);
+	StringAnswer(args, &data);
     else if (mode == CPLXSXP)
-	ComplexAnswer(args);
+	ComplexAnswer(args, &data);
     else if (mode == REALSXP)
-	RealAnswer(args);
+	RealAnswer(args, &data);
     else
-	IntegerAnswer(args);
+	IntegerAnswer(args, &data);
     args = t;
 
     /* Build and attach the names attribute for the returned object. */
 
-    if (ans_nnames && ans_length > 0) {
+    if (data.ans_nnames && data.ans_length > 0) {
 #ifdef OLD
 	PROTECT(ans_names = allocVector(STRSXP, ans_length));
-	ans_nnames = 0;
-	ExtractNames(args, recurse, 1, R_NilValue);
+	data.ans_nnames = 0;
+	ExtractNames(args, recurse, 1, R_NilValue, &data);
 	setAttrib(ans, R_NamesSymbol, ans_names);
 	UNPROTECT(1);
 #else
-	PROTECT(ans_names = allocVector(STRSXP, ans_length));
-	ans_nnames = 0;
+	PROTECT(data.ans_names = allocVector(STRSXP, data.ans_length));
+	data.ans_nnames = 0;
 #ifdef EXPT
 	if (!recurse) {
 #endif
 	    while (args != R_NilValue) {
-		seqno = 0;
-		firstpos = 0;
-		count = 0;
-		NewExtractNames(CAR(args), R_NilValue, TAG(args), recurse);
+		nameData.seqno = 0;
+		nameData.firstpos = 0;
+		nameData.count = 0;
+		NewExtractNames(CAR(args), R_NilValue, TAG(args), recurse, &data, &nameData);
 		args = CDR(args);
 	    }
 #ifdef EXPT
 	}
 	else {
-	    seqno = 0;
-	    firstpos = 0;
-	    count = 0;
+	    nameData.seqno = 0;
+	    nameData.firstpos = 0;
+	    nameData.count = 0;
 	    NewExtractNames(args, R_NilValue, TAG(args), recurse);
 	}
 #endif/*EXPT*/
-	setAttrib(ans, R_NamesSymbol, ans_names);
+	setAttrib(ans, R_NamesSymbol, data.ans_names);
 	UNPROTECT(1);
 #endif/* (not) OLD */
     }
@@ -662,7 +672,9 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, t;
     int mode, recurse, usenames;
     int i, n;
-
+    struct BindData data;
+    struct NameData nameData;
+      data.deparse_level = 1;
     checkArity(op, args);
 
     /* Attempt method dispatch. */
@@ -685,28 +697,28 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     /* The strategy here is appropriate because the */
     /* object being operated on is a generic vector. */
 
-    ans_flags  = 0;
-    ans_length = 0;
-    ans_nnames = 0;
+    data.ans_flags  = 0;
+    data.ans_length = 0;
+    data.ans_nnames = 0;
 
     n = 0;			/* -Wall */
     if (isNewList(args)) {
 	n = length(args);
 	if (usenames && getAttrib(args, R_NamesSymbol) != R_NilValue)
-	    ans_nnames = 1;
+	    data.ans_nnames = 1;
 	for (i = 0; i < n; i++) {
-	    if (usenames && !ans_nnames)
-		ans_nnames = HasNames(VECTOR_ELT(args, i));
-	    AnswerType(VECTOR_ELT(args, i), recurse, usenames);
+	    if (usenames && !data.ans_nnames)
+		data.ans_nnames = HasNames(VECTOR_ELT(args, i));
+	    AnswerType(VECTOR_ELT(args, i), recurse, usenames, &data);
 	}
     }
     else if (isList(args)) {
 	for (t = args; t != R_NilValue; t = CDR(t)) {
-	    if (usenames && !ans_nnames) {
-		if (!isNull(TAG(t))) ans_nnames = 1;
-		else ans_nnames = HasNames(CAR(t));
+	    if (usenames && !data.ans_nnames) {
+		if (!isNull(TAG(t))) data.ans_nnames = 1;
+		else data.ans_nnames = HasNames(CAR(t));
 	    }
-	    AnswerType(CAR(t), recurse, usenames);
+	    AnswerType(CAR(t), recurse, usenames, &data);
 	}
     }
     else {
@@ -720,19 +732,19 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     /* the natural coercion for vector types. */
 
     mode = NILSXP;
-    if	    (ans_flags & 128) mode = VECSXP;
-    else if (ans_flags &  64) mode = STRSXP;
-    else if (ans_flags &  32) mode = CPLXSXP;
-    else if (ans_flags &  16) mode = REALSXP;
-    else if (ans_flags &   8) mode = INTSXP;
-    else if (ans_flags &   1) mode = LGLSXP;
+    if	    (data.ans_flags & 128) mode = VECSXP;
+    else if (data.ans_flags &  64) mode = STRSXP;
+    else if (data.ans_flags &  32) mode = CPLXSXP;
+    else if (data.ans_flags &  16) mode = REALSXP;
+    else if (data.ans_flags &   8) mode = INTSXP;
+    else if (data.ans_flags &   1) mode = LGLSXP;
 
     /* Allocate the return value and set up to pass through */
     /* the arguments filling in values of the returned object. */
 
-    PROTECT(ans = allocVector(mode, ans_length));
-    ans_ptr = ans;
-    ans_length = 0;
+    PROTECT(ans = allocVector(mode, data.ans_length));
+    data.ans_ptr = ans;
+    data.ans_length = 0;
     t = args;
 
     /* FIXME : The following assumes one of pair or vector */
@@ -748,64 +760,64 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	else ListAnswer(args, recurse);
-	ans_length = length(ans);
+	data.ans_length = length(ans);
     }
 #else
     if (mode == VECSXP) {
 	if (!recurse) {
 	    for (i = 0; i < n; i++)
-		ListAnswer(VECTOR_ELT(args, i), 0);
+		ListAnswer(VECTOR_ELT(args, i), 0, &data);
 	}
-	else ListAnswer(args, recurse);
-	ans_length = length(ans);
+	else ListAnswer(args, recurse, &data);
+	data.ans_length = length(ans);
     }
 #endif
     else if (mode == STRSXP)
-	StringAnswer(args);
+	StringAnswer(args, &data);
     else if (mode == CPLXSXP)
-	ComplexAnswer(args);
+	ComplexAnswer(args, &data);
     else if (mode == REALSXP)
-	RealAnswer(args);
+	RealAnswer(args, &data);
     else
-	IntegerAnswer(args);
+	IntegerAnswer(args, &data);
     args = t;
 
     /* Build and attach the names attribute for the returned object. */
 
-    if (ans_nnames && ans_length > 0) {
-	PROTECT(ans_names = allocVector(STRSXP, ans_length));
+    if (data.ans_nnames && data.ans_length > 0) {
+	PROTECT(data.ans_names = allocVector(STRSXP, data.ans_length));
 	if (!recurse) {
 	    if (TYPEOF(args) == VECSXP) {
 		SEXP names = getAttrib(args, R_NamesSymbol);
-		ans_nnames = 0;
-		seqno = 0;
-		firstpos = 0;
-		count = 0;
+		data.ans_nnames = 0;
+		nameData.seqno = 0;
+		nameData.firstpos = 0;
+		nameData.count = 0;
 		for (i = 0; i < n; i++) {
 		    NewExtractNames(VECTOR_ELT(args, i), R_NilValue,
-				    ItemName(names, i), recurse);
+				    ItemName(names, i), recurse, &data, &nameData);
 		}
 	    }
 	    else if (TYPEOF(args) == LISTSXP) {
-		ans_nnames = 0;
-		seqno = 0;
-		firstpos = 0;
-		count = 0;
+		data.ans_nnames = 0;
+		nameData.seqno = 0;
+		nameData.firstpos = 0;
+		nameData.count = 0;
 		while (args != R_NilValue) {
 		    NewExtractNames(CAR(args), R_NilValue,
-				    TAG(args), recurse);
+				    TAG(args), recurse, &data, &nameData);
 		    args = CDR(args);
 		}
 	    }
 	}
 	else {
-	    ans_nnames = 0;
-	    seqno = 0;
-	    firstpos = 0;
-	    count = 0;
-	    NewExtractNames(args, R_NilValue, R_NilValue, recurse);
+	    data.ans_nnames = 0;
+	    nameData.seqno = 0;
+	    nameData.firstpos = 0;
+	    nameData.count = 0;
+	    NewExtractNames(args, R_NilValue, R_NilValue, recurse, &data, &nameData);
 	}
-	setAttrib(ans, R_NamesSymbol, ans_names);
+	setAttrib(ans, R_NamesSymbol, data.ans_names);
 	UNPROTECT(1);
     }
     UNPROTECT(2);
@@ -814,8 +826,6 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 #define LNAMBUF 100
-
-static SEXP rho;
 
 SEXP FetchMethod(char *generic, char *classname, SEXP env)
 {
@@ -835,6 +845,9 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP a, t, obj, class, classlist, classname, method, classmethod;
     char *generic;
     int mode = ANYSXP;
+    struct BindData data;
+    SEXP rho;
+      data.deparse_level = 1;
 
     /* Lazy evaluation and method dispatch based on argument types are
      * fundamentally incompatible notions.  The results here are
@@ -900,7 +913,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	return args;
     }
 
-    /* Despatch based on class membership has failed. */
+    /* Dispatch based on class membership has failed. */
     /* The default code for rbind/cbind.default follows */
     /* First, extract the evaluated arguments. */
 #ifdef OLD
@@ -909,30 +922,30 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     rho = env; /* GLOBAL */
-    ans_flags = 0;
-    ans_length = 0;
-    ans_nnames = 0;
+    data.ans_flags = 0;
+    data.ans_length = 0;
+    data.ans_nnames = 0;
 
     for (t = args; t != R_NilValue; t = CDR(t))
-	AnswerType(PRVALUE(CAR(t)), 0, 0);
+	AnswerType(PRVALUE(CAR(t)), 0, 0, &data);
 
     /* zero-extent matrices shouldn't give NULL, anymore :
        if (ans_length == 0)
        return R_NilValue;
     */
-    if (ans_flags >= 128) {
-	if (ans_flags & 128)
+    if (data.ans_flags >= 128) {
+	if (data.ans_flags & 128)
 	    mode = LISTSXP;
     }
-    else if (ans_flags >= 64) {
-	if (ans_flags & 64)
+    else if (data.ans_flags >= 64) {
+	if (data.ans_flags & 64)
 	    mode = STRSXP;
     }
     else {
-	if (ans_flags & 1)	mode = LGLSXP;
-	if (ans_flags & 8)	mode = INTSXP;
-	if (ans_flags & 16)	mode = REALSXP;
-	if (ans_flags & 32)	mode = CPLXSXP;
+	if (data.ans_flags & 1)	mode = LGLSXP;
+	if (data.ans_flags & 8)	mode = INTSXP;
+	if (data.ans_flags & 16)	mode = REALSXP;
+	if (data.ans_flags & 32)	mode = CPLXSXP;
     }
 
     switch(mode) {
@@ -948,9 +961,9 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (PRIMVAL(op) == 1)
-	a = cbind(call, args, mode);
+	a = cbind(call, args, mode, rho);
     else
-	a = rbind(call, args, mode);
+	a = rbind(call, args, mode, rho);
     UNPROTECT(1);
     R_Visible = 1; /* assignment in arguments would set this to zero */
     return a;
@@ -973,7 +986,7 @@ static void SetColNames(SEXP dimnames, SEXP x)
 	SETCADR(dimnames, x);
 }
 
-static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
+static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho)
 {
     int i, j, k, idx, n;
     int have_rnames, have_cnames;
@@ -981,6 +994,8 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
     int rows, cols, mrows;
     int warned;
     SEXP dn, t, u, result, dims, expr;
+    struct BindData data;
+      data.deparse_level = 1;
 
     have_rnames = 0;
     have_cnames = 0;
@@ -1042,7 +1057,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 		}
 		dn = getAttrib(u, R_NamesSymbol);
 		if (k && (TAG(t) != R_NilValue || 
-		    ((deparse_level == 1) && 
+		    ((data.deparse_level == 1) && 
 		     isSymbol(substitute(CAR(t),R_NilValue)))))
 		    have_cnames = 1;
 		nnames = imax2(nnames, length(dn));
@@ -1147,7 +1162,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 
 		    if (TAG(t) != R_NilValue) 
 			SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
-		    else if ((deparse_level == 1) && 
+		    else if ((data.deparse_level == 1) && 
 			     isSymbol(expr = substitute(CAR(t), R_NilValue)))
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (have_cnames) 
@@ -1162,7 +1177,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
     return result;
 } /* cbind */
 
-static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
+static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho)
 {
     int i, j, k, n;
     int have_rnames, have_cnames;
@@ -1170,6 +1185,8 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
     int rows, cols, mcols, mrows,have_mcols;
     int warned;
     SEXP dn, t, u, result, dims, expr;
+    struct BindData data;
+      data.deparse_level = 1;
 
     have_rnames = 0;
     have_cnames = 0;
@@ -1236,7 +1253,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 		}
 		dn = getAttrib(u, R_NamesSymbol);
 		if (k && (TAG(t) != R_NilValue || 
-		    ((deparse_level == 1) && 
+		    ((data.deparse_level == 1) && 
 		     isSymbol(substitute(CAR(t),R_NilValue)))))
 		    have_rnames = 1;
 		nnames = imax2(nnames, length(dn));
@@ -1366,7 +1383,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 
 		    if (TAG(t) != R_NilValue) 
 			SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
-		    else if ((deparse_level == 1) && 
+		    else if ((data.deparse_level == 1) && 
 			     isSymbol(expr = substitute(CAR(t), R_NilValue)))
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (have_rnames)

@@ -32,7 +32,7 @@
 /* routines to ensure consistency. */
 
 
-static char *truenames[] = {
+const static char * const truenames[] = {
     "T",
     "True",
     "TRUE",
@@ -40,7 +40,7 @@ static char *truenames[] = {
     (char *) 0,
 };
 
-static char *falsenames[] = {
+const static char * const falsenames[] = {
     "F",
     "False",
     "FALSE",

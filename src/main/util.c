@@ -69,7 +69,7 @@ SEXP ScalarString(SEXP x)
     return ans;
 }
 
-static char *truenames[] = {
+const static char * const truenames[] = {
     "T",
     "True",
     "TRUE",
@@ -77,7 +77,7 @@ static char *truenames[] = {
     (char *) 0,
 };
 
-static char *falsenames[] = {
+const static char * const falsenames[] = {
     "F",
     "False",
     "FALSE",
@@ -217,7 +217,7 @@ SEXP asChar(SEXP x)
 }
 
 
-static char type_msg[] = "invalid type passed to internal function\n";
+const static char type_msg[] = "invalid type passed to internal function\n";
 
 
 void internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
@@ -592,9 +592,9 @@ double realNA()
 }
 #endif
 
-static struct {
-    char *str;
-    int type;
+const static struct {
+    const char * const str;
+    const int type;
 }
 TypeTable[] = {
     { "NULL",		NILSXP	   },  /* real types */

@@ -677,8 +677,8 @@ void unmarkPhase(void);
 #endif
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
 /* ../main/errors.c : */
-void errorcall(SEXP, char*, ...);
-void warningcall(SEXP, char*,...);
+void errorcall(SEXP, const char*, ...);
+void warningcall(SEXP, const char*,...);
 void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 
