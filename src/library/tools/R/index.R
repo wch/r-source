@@ -28,8 +28,7 @@ function(dataDir, contents)
     if(!.fileTest("-d", dataDir))
         stop(paste("directory", sQuote(dataDir), "does not exist"))
     dataFiles <- .listFilesWithType(dataDir, "data")
-    dataTopics <-
-        unique(basename(gsub("\\.[[:alpha:]]+$", "", dataFiles)))
+    dataTopics <- unique(basename(.filePathSansExt(dataFiles)))
     if(!length(dataTopics)) return(matrix("", 0, 2))
     dataIndex <- cbind(dataTopics, "")
     ## <FIXME>
@@ -54,6 +53,7 @@ function(dataDir, contents)
         dataIndex[which(idx != 0), 2] <-
             contents[aliasIndices[idx], "Title"]
     }
+    dimnames(dataIndex) <- NULL
     dataIndex
 }
 
@@ -77,8 +77,7 @@ function(demoDir)
     if(!.fileTest("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
     demoFiles <- .listFilesWithType(demoDir, "demo")
-    demoTopics <-
-        unique(basename(gsub("\\.[[:alpha:]]+$", "", demoFiles)))
+    demoTopics <- unique(basename(.filePathSansExt(demoFiles)))
     if(!length(demoTopics)) return(matrix("", 0, 2))
     demoIndex <- cbind(demoTopics, "")
     if(.fileTest("-f", INDEX <- file.path(demoDir, "00Index"))) {
@@ -89,6 +88,7 @@ function(demoDir)
         idx <- match(demoTopics, demoEntries[ , 1], 0)
         demoIndex[which(idx != 0), 2] <- demoEntries[idx, 2]
     }
+    dimnames(demoIndex) <- NULL
     demoIndex
 }
 
