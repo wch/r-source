@@ -1005,6 +1005,12 @@ static void PSFileHeader(FILE *fp, char* encname,
 	/* if no object is visible, look in the graphics namespace */
 	SEXP graphicsNS = R_FindNamespace(ScalarString(mkChar("graphics")));
 	prolog = findVar(install(".ps.prolog"), graphicsNS);
+	/* under lazy loading this will be a promise on first use */
+	if(TYPEOF(prolog) == PROMSXP) {
+	    PROTECT(prolog);
+	    prolog = eval(prolog, graphicsNS);
+	    UNPROTECT(1);
+	}
     }
     if(!isString(prolog))
 	error("Object .ps.prolog is not a character vector");
