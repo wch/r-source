@@ -78,6 +78,14 @@ if(!defined($ENV{'R_CHECK_WITH_T_N_F_AS_NULL'})
 		  pos = .CheckExEnv)
 	   assign("F", delay(stop("F used instead of FALSE")),
 		  pos = .CheckExEnv)
+	   sch <- search()
+	   newitems <- sch[! sch %in% .oldSearch]
+	   for(item in rev(newitems))
+               eval(substitute(detach(item), list(item=item)))
+	   missitems <- .oldSearch[! .oldSearch %in% sch]
+	   if(length(missitems))
+	       warning("items ", paste(missitems, collapse=", "),
+		       " have been removed from the search path")
 _EOF_
 }
 print <<_EOF_;
@@ -95,6 +103,7 @@ if($PKG eq "tcltk") {
 } elsif($PKG ne "base") {
     print "library('$PKG')\n\n";
 }
+print "assign(\".oldSearch\", search(), env = .CheckExEnv)\n";
 
 ### * Loop over all R files, and edit a few of them ...
 foreach my $file (@Rfiles) {

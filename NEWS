@@ -37,7 +37,7 @@ USER-VISIBLE CHANGES
 	library(graphics) or called as graphics::ps.options.
 
     o	There has been a concerted effort to speed up the startup of
-	an R session: it now takes about 2/3rds of the time.
+	an R session: it now takes about 2/3rds of the time of 1.8.1.
 
 
 NEW FEATURES
@@ -155,6 +155,9 @@ UTILITIES
 	NULL' which produces a warning whenever the default values of
 	function arguments differ between documentation and code.
 	Note that this affects "R CMD check" as well.
+
+    o	Testing examples via massge-examples.pl (as used by R CMD
+	check) now restores the search path after every help file.
 
 
 C-LEVEL FACILITIES
