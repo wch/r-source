@@ -36,7 +36,8 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
 
     update <- NULL
     for(k in 1:nrow(instp)){
-        ok <- cranp[,"Package"] == instp[k, "Package"]
+        ok <- (instp[k, "Priority"] != "base") &
+              (cranp[,"Package"] == instp[k, "Package"])
         if(any(cranp[ok, "Version"] > instp[k, "Version"]))
         {
             cat(instp[k, "Package"], ":\n",
