@@ -45,7 +45,9 @@ nchar(x, type = c("bytes", "chars", "width"))
   Not all platforms will return a non-missing value for \code{type="width"}.
 
   If the string is invalid in a multi-byte character set such as UTF-8,
-  the number of characters and the width will be \code{NA}.
+  the number of characters and the width will be \code{NA}.  Otherwise
+  the number of characters will be non-negative, so
+  \code{!is.na(nchar(x, "chars"))} is a test of validity.
 }
 \note{
   This does \strong{not} by default give the number of characters that
