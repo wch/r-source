@@ -208,10 +208,12 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     else havefile = 0;
 
     nobjs = length(objs);
+    /*
     for (i = 0; i < nobjs; i++) {
 	if (!isVector(VECTOR(objs)[i]) && !isNull(VECTOR(objs)[i]))
 	    errorcall(call, "argument %d has invalid type\n", i + 1);
     }
+    */
     width = 0;
     ntot = 0;
     nlines = 0;
@@ -221,7 +223,8 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    cat_printsep(sepr, 0);
 	n = length(s);
 	if (n > 0) {
-	    if (labs != R_NilValue && (iobj == 0)) {
+	    if (labs != R_NilValue && (iobj == 0)
+		&& (asInteger(fill) > 0)) {
 		Rprintf("%s ", CHAR(STRING(labs)[nlines]));
 		width += strlen(CHAR(STRING(labs)[nlines % lablen])) + 1;
 		nlines++;
