@@ -1,6 +1,6 @@
 include ../MkRules
 
-CFLAGS=-O2 -I. -DWIN32
+CFLAGS=-O2 -I. -DWIN32 -D_X86_
 
 ../xdr.a: xdr.o xdr_float.o xdr_stdio.o
 
