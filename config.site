@@ -129,3 +129,11 @@
 # an attempt is made to automatically detect the correct value by
 # configure.
 # CXXPICFLAGS=
+
+# Tcl/Tk settings.
+# Use TCLTK_LIBS for all ALL `-L' and `-l' options needed for linking
+# against the Tcl and Tk library.
+# TCLTK_LIBS=
+# Use TCLTK_CPPFLAGS for all `-I' options needed for finding the tcl.h
+# and tk.h headers.
+# TCLTK_CPPFLAGS=

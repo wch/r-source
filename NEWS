@@ -20,6 +20,11 @@ NEW FEATURES
 	path and this is TRUE then a search is made of all packages 
 	for possible matches.
 
+    o	Improved detection of Tcl/Tk at configure time.  One can either
+	set configure variables TCLTK_CPPFLAGS and TCLTK_LIBS, or give
+	the locations of the tclConfig.sh and tkConfig.sh scripts via
+	the `--with-tcl-config' and `--with-tk-config' arguments.
+
 
 BUG FIXES
 
