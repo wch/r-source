@@ -218,7 +218,11 @@ tkplace.slaves(...)
 ## Standard dialogs
 tkgetOpenFile(...)
 tkgetSaveFile(...)
+tkchooseDirectory(...)
 tkmessageBox(...)
+tkdialog(...)
+tkpopup(...)
+
 
 ## File handling functions
 tkfile.tail(...)
@@ -226,6 +230,7 @@ tkfile.dir(...)
 tkopen(...)
 tkclose(...)
 tkputs(...)
+tkread(...)
 }
 \arguments{
   \item{x}{A window object}
