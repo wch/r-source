@@ -3,7 +3,7 @@
 \alias{print.integrate}
 \title{Integration of One-Dimensional Functions}
 \description{
-  Adaptive quadrature of functions of one variable over a finit or
+  Adaptive quadrature of functions of one variable over a finite or
   infinite interval.
 }
 \usage{
@@ -49,12 +49,15 @@ integrate(f, lower, upper, subdivisions=100,
   Based on QUADPACK routines \code{dqags} and \code{dqagi} by
   R. Piessens and E. deDoncker-Kapenga, available from Netlib.
 
-  See\\
-  R. Piessens, E. deDoncker-Kapenga, C. Uberhuber, D. Kahaner
-  \emph{Quadpack: a Subroutine Package for Automatic Integration.}
-  Springer Verlag, 1983.
+  See\cr
+  R. Piessens, E. deDoncker-Kapenga, C. Uberhuber, D. Kahaner (1983)
+  \emph{Quadpack: a Subroutine Package for Automatic Integration};
+  Springer Verlag.
 }
-
+\seealso{
+  The function \code{\link[adapt]{adapt}} in the \code{adapt} package on
+  CRAN, for multivariate integration.
+}
 \examples{
 integrate(dnorm, -1.96, 1.96)
 integrate(dnorm, -Inf, Inf)
@@ -71,4 +74,3 @@ integrate(function(x) rep(2, length(x)), 0, 1)  ## correct
 }
 \keyword{math}
 \keyword{utilities}
-
