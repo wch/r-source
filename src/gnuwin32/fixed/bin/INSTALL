@@ -185,9 +185,7 @@ foreach $pkg (@ARGV){
 	    }
 	    open bundledesc, "< $pkg/DESCRIPTION"
 		|| die "no DESCRIPTION found for bundle";
-	    while(<bundledesc>) {
-		if(!/^Contains:/) {print pkgdesc $_;}
-	    }
+	    while(<bundledesc>) {print pkgdesc $_;}
 	    close bundledesc;
 	    close pkgdesc;
 	}
