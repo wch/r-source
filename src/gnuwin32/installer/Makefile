@@ -34,6 +34,8 @@ imagedir:
 	$(MKDIR) -p $(RPREFIX)/etc
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc
 # copy info and documentation files
+	$(MKDIR) -p $(RPREFIX)/doc
+	$(CP) -p $(R_HOME)/doc/CRAN_mirrors.csv $(RPREFIX)/doc
 	$(MKDIR) -p $(RPREFIX)/doc/manual
 	$(CP) -pr $(R_HOME)/doc/html $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/manual/*.html $(R_HOME)/doc/manual/*.pdf \
