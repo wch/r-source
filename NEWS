@@ -15,6 +15,8 @@ BUG FIXES
 
     o	Setting the normal RNG was not always recorded in .Random.seed.
 
+    o	\link[pkg]{foo} links were wrongly translated to HTML.
+
 
 		CHANGES IN R VERSION 1.0.0
 
