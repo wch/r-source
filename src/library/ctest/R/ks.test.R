@@ -34,11 +34,11 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
                             "greater" = max(z),
                             "less" = - min(z))
         if(exact && alternative == "two.sided" && !TIES)
-            PVAL <- .C("psmirnov2x",
-                       p = as.double(STATISTIC),
-                       as.integer(n.x),
-                       as.integer(n.y),
-                       PACKAGE = "ctest")$p
+            PVAL <- 1 - .C("psmirnov2x",
+                           p = as.double(STATISTIC),
+                           as.integer(n.x),
+                           as.integer(n.y),
+                           PACKAGE = "ctest")$p
     }
     else {
         if(is.character(y))
