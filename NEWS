@@ -36,6 +36,8 @@ NEW FEATURES
 
     o	New capabilities() option "cledit".
 
+    o	Modified restore code to give clearer error messages in some cases.
+
 
 
 BUG FIXES
