@@ -89,11 +89,11 @@ RESCOMP=$(BINPREF)windres
 lib%.a: %.def
 	@$(ECHO) -------- Building $@ from $^ --------
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib lib$*.a
- 
+
 lib%.a: %.exp
 	@$(ECHO) -------- Building $@ from $^ --------
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.exe --def $*.exp --output-lib lib$*.a	 
- 
+
 %.a:    
 	@$(ECHO) -------- Building $@ from $^ --------
 	$(AR) cr $@ $^

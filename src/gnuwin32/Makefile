@@ -219,9 +219,9 @@ bindist:
 	unzip anindex.zip
 	$(RM) anindex.zip
 	zip -rm9X $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
-	zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml  $(RPREFIX)/bin/Rchtml.dll
+	-zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml  $(RPREFIX)/bin/Rchtml.dll
 	$(RM)  $(RPREFIX)/library/*/winhlp/*.GID
-	zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
+	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
 	$(RM) -r $(RPREFIX)/doc
 	zip -rm9X $(RPREFIX)b2.zip $(RPREFIX)/library
@@ -272,7 +272,7 @@ packagedist:
 	$(RM) -r $(RPREFIX)
 
 
-distribution: bindist packagedist
+distribution: bindist packagedist docsdist
 
 # tests
 check: all test

@@ -1968,7 +1968,7 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
     fixslash(fn);
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
-	errorcall(call, "invalid filename argument");
+	errorcall(call, "invalid type argument");
     tp = CHAR(STRING(type)[0]);
 
     if(!strcmp(tp, "png")) {

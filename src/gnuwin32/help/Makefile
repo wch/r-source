@@ -27,8 +27,10 @@ winhlp-%: chm-%
 	mkdir -p $(RLIB)/$*/winhlp
 	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp
 
+# need not have HTML installed when building packages
 contents-%:
 	$(PERL) Rd2contents $(PKGDIR)/$* $(RLIB)/$*/CONTENTS
+	@mkdir -p $(RHOME)/doc/html/search
 	$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
 
 ziphelp-%:
