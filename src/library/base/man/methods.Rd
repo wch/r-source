@@ -68,7 +68,9 @@ methods(generic.function, class)
   arguments matched as they came in to the generic.  Any local variables
   defined before the call to \code{UseMethod} are retained (!?).  Any
   statements after the call to \code{UseMethod} will not be evaluated as
-  \code{UseMethod} does not return.
+  \code{UseMethod} does not return.  \code{UseMethod} can be called with
+  more than two arguments: a warning will be given and additional
+  arguments ignored. (They are not completely ignored in S.)
 
   \code{NextMethod} invokes the next method (determined by the
   class).  It does this by creating a special call frame for that

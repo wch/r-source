@@ -385,6 +385,8 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	meth = R_MissingArg;
 
+    if (nargs > 2)  /* R-lang says there should be a warning */
+	warningcall(call, "Arguments after the first two are ignored");
     if (nargs >= 2)
 	PROTECT(obj = eval(CADR(args), env));
     else {

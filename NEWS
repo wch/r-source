@@ -11,8 +11,10 @@
 
 USER-VISIBLE CHANGES
 
-    o   sub,gsub,grep,regexpr,chartr,tolower,toupper,substr,substring,
-        abbreviate and strsplit now handle missing values differently from "NA".
+    o   sub, gsub, grep, regexpr, chartr, tolower, toupper, substr,
+        substring, abbreviate and strsplit now handle missing values
+        differently from "NA".
+
 
 NEW FEATURES
 
@@ -83,9 +85,13 @@ NEW FEATURES
     o   plot.mts() has a new argument `nc' controlling the number of
 	columns (with default the old behaviour).
 
-    o	capture.output takes arbitrary connections for `file' argument.
+    o	capture.output() takes arbitrary connections for `file' argument.
 
-    o	Package tcltk is now in a namespace.
+    o	Package tcltk is now in a namespace.  To remove it you will
+	now need to use unloadNamespace("tcltk").
+
+    o	Using UseMethod() with more than two arguments now gives a 
+	warning (as R-langs.texi has long claimed it did).
 
 
 DEPRECATED & DEFUNCT
