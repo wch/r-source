@@ -10,24 +10,18 @@
   in an object.
 }
 \usage{
-object@name
-object@name <- value
-
-
 slot(object, name)
 slot(object, name) <- value
 
 slotNames(x)
-
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
-  \item{object}{ An object from a formally defined class }
+  \item{object}{ An object from a formally defined class.}
   \item{name}{ The character-string name of the slot.  In the case of
     the \code{@} operator, this name is a literal, and is \emph{not}
     evaluated. If you need to compute the slot name, use the function
     \code{slot}, rather than the \code{@} opertor.  The name must be a valid
-    slot name:  see Details below. }
+    slot name:  see Details below.}
   \item{value} { A new value for the named slot.  The value must be
     valid for this slot in this object's class.}
 
@@ -47,11 +41,11 @@ slotNames(x)
   
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
-
-The functions in this package emulate the facility for classes and methods described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  Chambers, J. M. (1998)
+  \emph{Programming with Data}, Springer.
+  
+  The web page \url{http://www.omegahat.org/RSMethods/index.html}
+  is the primary documentation.
 }
 \author{
   John Chambers
@@ -65,9 +59,7 @@ for further details and examples.
   slot(myTrack, "y") <- log(slot(myTrack, "x"))
 
   slotNames("track")
-}
-
-}
+}}
 \keyword{programming}
 \keyword{classes}
 
