@@ -84,6 +84,15 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     REprintf("\tnew z=%7g >=? p = %7g\n", z,p);
 #endif
 
+
+    if (y>n){
+	y=n;
+	z = pbinom(y, n, pr, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
+    }
+    else if (y<0){
+	y=0;
+	z = pbinom(y, n, pr, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
+    }
 #ifdef maybe_future
     if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
 #else
