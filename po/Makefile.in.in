@@ -128,7 +128,7 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 
 # This rule has no dependencies: we don't need to update $(DOMAIN).pot at
 # every "make" invocation, only create it when it is missing.
-# Only "make $(DOMAIN).pot-update" or "make dist" will force an update.
+# Only "make $(DOMAIN).pot-update" or "make update-po" will force an update.
 $(srcdir)/$(DOMAIN).pot:
 	$(MAKE) $(DOMAIN).pot-update
 
