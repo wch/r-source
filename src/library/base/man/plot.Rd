@@ -2,7 +2,7 @@
 \title{Generic X-Y Plotting}
 \alias{plot}
 \synopsis{
-plot(x, \dots)
+plot(x, y, \dots)
 }
 \usage{
 plot(x, y, xlim=range(x), ylim=range(y), type="p",

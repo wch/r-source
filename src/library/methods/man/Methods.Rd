@@ -176,15 +176,6 @@ superclasses, then the superclasses of these classes.
       does \emph{not} have a formally defined class, including honoring
       old-style print methods.  So far, no exceptions are known.
     }
-
-    \item{\code{plot}}{
-      A version of the \code{plot} function is included in the current
-      methods package, differing from the one in the base package in
-      that it has a \code{y} argument (necessary if methods for plot are
-      to be defined for the \code{y} data; see the examples for
-      \code{\link{setMethod}}).  This version will move into base as
-      soon as it is tested.
-    }
   }
 }
 \references{
