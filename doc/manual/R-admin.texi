@@ -601,7 +601,7 @@ The TclTk support files are in
 @item
 You need @code{libpng} and @code{jpeg} sources (available, e.g., from
 @url{http://www.libpng.org}, @url{ftp://ftp.uu.net/graphics/}[png,jpeg].
-You will need files @file{libpng-1.2.5.tar.gz} and
+You will need files @file{libpng-1.2.8.tar.gz} and
 @file{jpegsrc.v6b.tar.gz} or later.
 
 @item
