@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (April 20, 2000)
+Version 1.2.0 Under development (unstable) (2000-09-18)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -125,9 +125,9 @@ NaNs produced in: log(x)
 [1] TRUE
 > 
 > x <- 1:99/100
-> all(abs(1 - x / asin(sin(x))) <= Meps)
+> all(abs(1 - x / asin(sin(x))) <= 2*Meps)# "== 2*" for HP-UX
 [1] TRUE
-> all(abs(1 - x / atan(tan(x))) <= Meps)
+> all(abs(1 - x / atan(tan(x))) <  2*Meps)
 [1] TRUE
 > 
 > ## Complex Trig.:

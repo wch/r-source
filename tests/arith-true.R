@@ -75,8 +75,8 @@ all( sin(-x) == - sin(x))
 all( cos(-x) == cos(x))
 
 x <- 1:99/100
-all(abs(1 - x / asin(sin(x))) <= Meps)
-all(abs(1 - x / atan(tan(x))) <= Meps)
+all(abs(1 - x / asin(sin(x))) <= 2*Meps)# "== 2*" for HP-UX
+all(abs(1 - x / atan(tan(x))) <  2*Meps)
 
 ## Complex Trig.:
 abs(Im(cos(acos(1i))) -	 1) < 2*Meps
