@@ -999,13 +999,19 @@ double yNPCtoUsr(double y, DevDesc *dd)
 double xDevtoUsr(double x, DevDesc *dd)
 {
   double nfc = xDevtoNFC(x, dd);
-  return (nfc - dd->gp.win2fig.ax)/dd->gp.win2fig.bx;
+  if (dd->gp.xlog)
+     return pow(10, (nfc - dd->gp.win2fig.ax)/dd->gp.win2fig.bx);
+  else
+     return (nfc - dd->gp.win2fig.ax)/dd->gp.win2fig.bx;
 }
 
 double yDevtoUsr(double y, DevDesc *dd)
 {
   double nfc = yDevtoNFC(y, dd);
-  return (nfc - dd->gp.win2fig.ay)/dd->gp.win2fig.by;
+  if (dd->gp.ylog)
+    return pow(10, (nfc - dd->gp.win2fig.ay)/dd->gp.win2fig.by);
+  else
+    return (nfc - dd->gp.win2fig.ay)/dd->gp.win2fig.by;
 }
 
 double xDevtoMAR1(double x, DevDesc *dd)
