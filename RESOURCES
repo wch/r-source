@@ -9,7 +9,9 @@ found at the URL
 
 	http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html
 
-A text version is in file FAQ in this directory.
+A text version is in file FAQ in this directory, and an HTML version
+is available as file doc/html/faq.html and via the on-line help (on
+the index page given by help.start()).
 
 
 2. MAILING LISTS
@@ -37,6 +39,11 @@ To subscribe (or unsubscribe) to these mailing list send
 	r-help-request@stat.math.ethz.ch
 	r-devel-request@stat.math.ethz.ch
 
+Archives of the mailing lists are made available monthly; see the
+doc/mail/mail.html file on any CRAN node.  An HTML archive is
+available via http://www.ens.gu.edu.au/robertk/R/.
+
+
 
 3. ARCHIVES
 
@@ -46,13 +53,13 @@ the contributed extensions, documentation for R, and binaries.
 
 The CRAN master site can be found at the URLs
 
-    http://www.ci.tuwien.ac.at/R
-or  ftp://ftp.ci.tuwien.ac.at/pub/R/                  (Austria)
+    http://cran.r-project.org/
+or  ftp://cran.r-project.org/pub/R/                  (Austria)
 
 and mirrored at many sites: see the list in the file MIRROR-SITES or
 on-line at
 
-    http://www.ci.tuwien.ac.at/R/mirrors.html
+    http://cran.r-project.org/mirrors.html
 
 
 
@@ -61,7 +68,7 @@ on-line at
 R has a bug-tracking system (or perhaps a bug-filing system is a more
 precise description) available on the net at 
 
-    http://r-bugs.biostat.ku.dk
+    http:///bugs.r-project.org
 
 and via e-mail to r-bugs@biostat.ku.dk. The R function bug.report()
 can be used to invoke an editor from a within an R session and send

@@ -2,13 +2,6 @@
 			R SOURCE CODE MIRROR SITES
 
 
-The primary R distribution site is
-
-	ftp://stat.auckland.ac.nz/pub/R/
-
-However, due to high internet fees in NZ, please don't use this server
-unless it is absolutely necessary.
-
 The "Comprehensive R Archive Network" (CRAN) is a collection of sites
 which carry identical material, consisting of the R distribution(s),
 the contributed extensions, documentation for R, and binaries.
@@ -17,22 +10,21 @@ CRAN also contains a DAILY snapshot of the latest R sources.
 
 The CRAN master site can be found at the URLs
 
-    http://www.ci.tuwien.ac.at/R
-or  ftp://ftp.ci.tuwien.ac.at/pub/R/                  (Austria)
+    http://cran.r-project.org/
+or  ftp://cran.r-project.org/pub/R/                   (Austria)
 
 and is currently being mirrored at
 
     http://mirror.aarnet.edu.au/CRAN                  (Australia)
-    http://SunSITE.auc.dk/R/                          (Denmark)
-    http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/ (Italy)
+    http://cran.dk.r-project.org/		      (Denmark)
+    http://cran.it.r-project.org/		      (Italy)
     ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/           (Japan)
     ftp://dola.snu.ac.kr/pub/R/CRAN/                  (South Korea)
-    http://stat.ethz.ch/CRAN/			      (Switzerland)
-    http://www.stats.bris.ac.uk/R/		      (UK)
+    http://cran.ch.r-project.org/		      (Switzerland)
+    http://cran.uk.r-project.org/		      (UK)
     http://lib.stat.cmu.edu/R/CRAN/                   (USA/Pennsylvania)
-    http://cran.stat.wisc.edu/	                      (USA/Wisconsin)
+    http://cran.us.r-project.org/                     (USA/Wisconsin)
 
 
-In the interests of preserving international bandwidth (and of
-keeping our internet bills under control) please use a site near
-you if possible.
+In the interests of preserving international bandwidth please use a
+site near you if possible.
