@@ -2487,7 +2487,8 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GELine(x1, y1, x2, y2, &gc, (GEDevDesc*) dd);
+    if(R_FINITE(x1) && R_FINITE(y1) && R_FINITE(x2) && R_FINITE(y2))
+	GELine(x1, y1, x2, y2, &gc, (GEDevDesc*) dd);
 }
 
 /* Read the current "pen" position. */
