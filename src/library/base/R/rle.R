@@ -10,7 +10,9 @@ rle <- function(x) {
               class = "rle")
 }
 
-print.rle <- function(x, digits = getOption("digits"), ...) {
+print.rle <- function(x, digits = getOption("digits"), ...)
+{
+    if(is.null(digits)) digits <- getOption("digits")
     cat("Run Length Encoding\n  lengths:")
     str(x$lengths)
     cat("  values :")
