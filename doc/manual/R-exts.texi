@@ -107,7 +107,8 @@ help pages
 
 @noindent
 before reading on.  If the package you are writing uses the
-@code{methods} package, look at the corresponding section in @code{?INSTALL}.
+@code{methods} package, look at the corresponding section in
+@code{?INSTALL}.
 
 @menu
 * Package structure::
@@ -175,8 +176,8 @@ start with a space or tab.  The @samp{Package}, @samp{Version},
 The @samp{Package} and @samp{Version} fields given the name and the
 version of the package, respectively.  The name should consist of
 letters, numbers, and the dot character and start with a letter.  The
-version is a sequence of at least non-negative integers separated by
-single @samp{.} or @samp{-} characters.
+version is a sequence of at least @emph{two} non-negative integers
+separated by single @samp{.} or @samp{-} characters.
 
 The @samp{License} field should contain an explicit statement or a
 well-known abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
@@ -292,7 +293,7 @@ make use of extra functionality provided by the package, so that the
 data file can also be used without having to load the package.  It is no
 longer necessary to provide a @file{00Index} file in the @file{data}
 directory---the corresponding information is generated automatically
-from the documentation sources when installing from source and when
+from the documentation sources when installing from source, or when
 using the package builder (@pxref{Checking and building packages}).
 
 The @file{demo} subdirectory is for @R{} scripts (for running via
@@ -466,7 +467,7 @@ CFLAGS=`$@{R_HOME@}/bin/R CMD config CFLAGS`
 @noindent
 (using @samp{$@{R_HOME@}/bin/R} rather than just @samp{R} is necessary
 in order to use the `right' version of @R{} when running the script as
-part of @code{R CMD INSTALL}.
+part of @code{R CMD INSTALL}.)
 
 @findex R CMD config
 Note that earlier versions of this document recommended obtaining the
@@ -477,12 +478,12 @@ getting the value of the basic configuration variables, or the header
 and library flags necessary for linking against @R{}, see @kbd{R CMD
 config --help} for more information.
 
-If @R{} was configured to use the FORTRAN-to-C converter, configure
-variable @code{F77} is set to a shell script wrapper to compile/link
-FORTRAN 77 code based on f2c which for the purpose of Autoconf qualifies
-as a FORTRAN 77 compiler.  E.g., to check for an exteral BLAS library
-using the @code{ACX_BLAS} macro from the Official Autoconf Macro
-Archive, one can simply do
+If @R{} was configured to use the FORTRAN-to-C converter (f2c),
+configure variable @code{F77} is set to a shell script wrapper to
+compile/link FORTRAN 77 code based on f2c which for the purpose of
+Autoconf qualifies as a FORTRAN 77 compiler.  E.g., to check for an
+external BLAS library using the @code{ACX_BLAS} macro from the Official
+Autoconf Macro Archive, one can simply do
 
 @smallexample
 @group
@@ -522,7 +523,7 @@ variable, but that the secondary library is automatically resolved.
 Another example is when a package installs support files that are
 required at run time, and their location is substituted into an @R{}
 data structure at installation time. (This happens with the Java Archive
-files in the Java package.)
+files in the @pkg{SJava} package.)
 
 @vindex R_LIBRARY_DIR
 @vindex R_PACKAGE_DIR
@@ -650,7 +651,7 @@ sections of Rd files are documented in the corresponding
 @code{\arguments} section.
 
 @item
-C source and header files are tested for correct (CR-only) line
+C source and header files are tested for correct (LF-only) line
 endings.
 
 @item
@@ -786,9 +787,9 @@ and contributed code, especially @R{} packages.  Users of @R{} are
 encouraged to join in the collaborative project and to submit their own
 packages to @acronym{CRAN}.
 
-Before submitting a package @strong{mypkg}, do run the following steps
-to test it is complete and will install properly.  (Unix procedures
-only, run from the directory containing @file{mypkg} as a subdirectory.)
+Before submitting a package @pkg{mypkg}, do run the following steps to
+test it is complete and will install properly.  (Unix procedures only,
+run from the directory containing @file{mypkg} as a subdirectory.)
 
 @enumerate
 @item
@@ -857,12 +858,11 @@ OOP_0.1-3_Splus6_sparc-sun-solaris.tar.gz
 is a binary package for installation under Splus6 on the given
 platform.
 
-This naming scheme has been adopted to ensure usability of code across
-S engines.  R code and utilities operating on package @file{.tar.gz}
-files can only be assumed to work provided that this naming scheme is
-respected.  E.g., @code{R CMD INSTALL} will not work on
-@file{@var{package}.tgz} files.  Of course, @code{R CMD build}
-automatically creates valid file names.
+This naming scheme has been adopted to ensure usability of code across S
+engines.  R code and utilities operating on package @file{.tar.gz} files
+can only be assumed to work provided that this naming scheme is
+respected.  Of course, @code{R CMD build} automatically creates valid
+file names.
 
 
 @node Package name spaces,  , Submitting a package to CRAN, Creating R packages
@@ -924,8 +924,8 @@ import(foo, bar)
 @end smallexample
 
 @noindent
-specifies that all exported variables in the packages @code{foo} and
-@code{bar} are to be imported.  If only some of the variables from a
+specifies that all exported variables in the packages @pkg{foo} and
+@pkg{bar} are to be imported.  If only some of the variables from a
 package are needed, then they can be imported using @code{importFrom}.
 The directive
 
@@ -935,24 +935,23 @@ importFrom(foo, f, g)
 
 @noindent
 specifies that the exported variables @code{f} and @code{g} of the
-package @code{foo} are to be imported.
+package @pkg{foo} are to be imported.
 
 If a package only needs one function from another package it can use a
 fully qualified variable reference in the code instead of a formal
 import.  A fully qualified reference to the function @code{f} in package
-@code{foo} is of the form @code{foo::f}.  This is less efficient than a
+@pkg{foo} is of the form @code{foo::f}.  This is less efficient than a
 formal import and also loses the advantage of recording all dependencies
 in the @file{NAMESPACE} file, so this approach is usually not
 recommended.
 
-The standard dispatching method for S3-style @code{UseMethod}
-dispatching might fail to locate methods defined in a package that is
-imported but not attached to the search path.  To ensure that these
-methods are available the packages defining the methods should ensure
-that the generics are imported and register the methods using
-@code{S3method} directives.  If a package defines a function
-@code{print.foo} intended to be used as a @code{print} method for class
-@code{foo}, then the directive
+The standard method for S3-style @code{UseMethod} dispatching might fail
+to locate methods defined in a package that is imported but not attached
+to the search path.  To ensure that these methods are available the
+packages defining the methods should ensure that the generics are
+imported and register the methods using @code{S3method} directives.  If
+a package defines a function @code{print.foo} intended to be used as a
+@code{print} method for class @code{foo}, then the directive
 
 @smallexample
 S3method(print, foo)
@@ -961,12 +960,12 @@ S3method(print, foo)
 @noindent
 ensures that the method is registered and available for @code{UseMethod}
 dispatch.  The function @code{print.foo} does not need to be exported.
-Since the generic @code{print} is defined in base it does not need to be
-imported explicitly.  This mechanism is intended for use with generics
-that are defined in a name space.  Any methods for a generic defined in
-a package that does not use a name space should be exported, and the
-package defining and exporting the method should be attached to the
-search path if the methods are to be found.
+Since the generic @code{print} is defined in @pkg{base} it does not need
+to be imported explicitly.  This mechanism is intended for use with
+generics that are defined in a name space.  Any methods for a generic
+defined in a package that does not use a name space should be exported,
+and the package defining and exporting the method should be attached to
+the search path if the methods are to be found.
 
 Packages with name spaces do not use the @code{.First.lib} function.
 Since loading and attaching are distinct operations when a name space is
@@ -992,8 +991,8 @@ package code has been loaded and before running the load hook function.
 Packages that would only need a load hook function to load a shared
 library can use the @code{useDynLib} directive instead.
 
-As an example consider two packages named @code{foo} and @code{bar}.
-The @R{} code for package @code{foo} in file @file{foo.R} is
+As an example consider two packages named @pkg{foo} and @pkg{bar}.  The
+@R{} code for package @pkg{foo} in file @file{foo.R} is
 
 @quotation
 @cartouche
@@ -1021,7 +1020,7 @@ S3method(print, foo)
 @end quotation
 
 @noindent
-The second package @code{bar} has code file @file{bar.R}
+The second package @pkg{bar} has code file @file{bar.R}
 
 @quotation
 @cartouche
@@ -1046,8 +1045,8 @@ export(g, h)
 @end quotation
 
 @noindent
-Calling @code{library(bar)} loads @code{bar} and attaches its exports to
-the search path.  Package @code{foo} is also loaded but not attached to
+Calling @code{library(bar)} loads @pkg{bar} and attaches its exports to
+the search path.  Package @pkg{foo} is also loaded but not attached to
 the search path.  A call to @code{g} produces
 
 @smallexample
@@ -1057,9 +1056,9 @@ the search path.  A call to @code{g} produces
 
 @noindent
 This is consistent with the definitions of @code{c} in the two settings:
-in @code{bar} the function @code{c} is defined to be equivalent to
-@code{sum}, but in @code{foo} the variable @code{c} refers to the
-standard function @code{c} in base.
+in @pkg{bar} the function @code{c} is defined to be equivalent to
+@code{sum}, but in @pkg{foo} the variable @code{c} refers to the
+standard function @code{c} in @pkg{base}.
 
 
 To summarize, converting an existing package to use a name space involves
