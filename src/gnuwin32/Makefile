@@ -157,12 +157,13 @@ bindist:
 	$(CP) -p ../../COPYING ../../COPYRIGHTS  ../../FAQ ../../NEWS $(RPREFIX)
 	$(CP) -p readme $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-faq
-	$(CP) -p announce $(RPREFIX)/Announce
+	$(CP) -p Announce $(RPREFIX)/Announce
 	$(CP) -p CHANGES $(RPREFIX)/CHANGES
 	$(RM) -rf $(RPREFIX)b.zip $(RPREFIX)h.zip $(RPREFIX)w.zip $(RPREFIX)l.zip
 	$(RM) anindex.zip
 	zip -mr anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
-	zip -mr $(RPREFIX)h.zip $(RPREFIX)/library/*/help
+	zip -mr $(RPREFIX)h.zip $(RPREFIX)/library/*/help \
+		$(RPREFIX)/library/*/R-ex
 	unzip anindex.zip
 	$(RM) anindex.zip
 	zip -rm $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
@@ -177,6 +178,7 @@ srcdist:
 	$(MKDIR) ../src
 	$(MKDIR)  ../src/gnuwin32
 	$(CP)  -pr ./* ../src/gnuwin32
+	$(RM) -r ../src/gnuwin32/old ../src/gnuwin32/*.zip
 	$(MAKE) -C ../src/gnuwin32 cleanwin
 	mv ../src .
 	$(RM) $(RPREFIX)s.zip
