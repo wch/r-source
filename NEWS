@@ -307,6 +307,9 @@ BUG FIXES
     o	backsolve(r, x, k) now allows k < nrow(x) - as its documentation
 	always claimed.
 
+    o	update.packages("mgcv") and old.packages(*) now give a better error
+        message; and installed.packages("mgcv") properly returns <empty>.
+
 
 
 		CHANGES IN R VERSION 1.9.0

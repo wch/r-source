@@ -3050,6 +3050,9 @@ info <- x[1:2]
 x[, names(info)] <-  info[1,]
 ##
 
+## invalid 'lib.loc'
+stopifnot(length(installed.packages("mgcv")) == 0)
+## gave a low-level error message
 
 ### end of tests added in 1.9.1 ###
 
