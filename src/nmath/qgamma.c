@@ -96,8 +96,8 @@ double qgamma(double p, double alpha, double scale)
     /* test arguments and initialise */
 
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(alpha) || ISNAN(scale))
-	return x + alpha + scale;
+    if (ISNAN(p) || ISNAN(alpha) || ISNAN(scale))
+	return p + alpha + scale;
 #endif 
     if (p < pmin || p > pmax || alpha <= 0) {
 	ML_ERROR(ME_DOMAIN);
