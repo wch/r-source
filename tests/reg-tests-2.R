@@ -960,6 +960,11 @@ sw
 make.names("")
 make.names(".aa")
 ## was "X.aa" in 1.7.1
+make.names(".2")
+make.names(".2a") # not valid in R
+make.names(as.character(NA))
+##
+
 
 ## strange names in data frames
 as.data.frame(list(row.names=17))  # 0 rows in 1.7.1

@@ -2595,6 +2595,14 @@ corrupt data frame: columns will be truncated or padded with NAs in: format.data
 > make.names(".aa")
 [1] ".aa"
 > ## was "X.aa" in 1.7.1
+> make.names(".2")
+[1] "X.2"
+> make.names(".2a") # not valid in R
+[1] "X.2a"
+> make.names(as.character(NA))
+[1] "NA."
+> ##
+> 
 > 
 > ## strange names in data frames
 > as.data.frame(list(row.names=17))  # 0 rows in 1.7.1

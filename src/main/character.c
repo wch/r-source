@@ -485,9 +485,10 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP arg, ans, this;
+    SEXP arg, ans;
     int i, l, n;
-    char *p;
+    char *p, *this;
+    Rboolean need_prefix = FALSE;
 
     checkArity(op ,args);
     arg = CAR(args);
@@ -496,16 +497,21 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     n = length(arg);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
-	l = strlen(CHAR(STRING_ELT(arg, i)));
-	this = CHAR(STRING_ELT(arg, i))[0];
-	if (isalpha((int) this) || this == '.') {
-	    SET_STRING_ELT(ans, i, allocString(l));
-	    strcpy(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
-	}
-	else {
+	this = CHAR(STRING_ELT(arg, i));
+	l = strlen(this);
+	/* need to prefix names not beginning with alpha or ., as
+	   well as . followed by a number */
+	if (this[0] == '.') {
+	    if (l >= 1 && isdigit((int) this[1])) need_prefix = TRUE;
+	} else if (!isalpha((int) this[0])) need_prefix = TRUE;
+	if (need_prefix) {
 	    SET_STRING_ELT(ans, i, allocString(l + 1));
 	    strcpy(CHAR(STRING_ELT(ans, i)), "X");
 	    strcat(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
+	    
+	} else {
+	    SET_STRING_ELT(ans, i, allocString(l));
+	    strcpy(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
 	}
 	p = CHAR(STRING_ELT(ans, i));
 	while (*p) {
