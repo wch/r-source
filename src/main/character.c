@@ -1306,6 +1306,8 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+#define isRaw(x) (TYPEOF(x) == RAWSXP)
+
 SEXP do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x = CAR(args);
@@ -1328,7 +1330,7 @@ SEXP do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, nc = LENGTH(x), multiple, len;
     char buf[2];
 
-    if(TYPEOF(x) != RAWSXP)
+    if(!isRaw(x))
 	errorcall(call, "argument 'x' must be a raw vector");
     multiple = asLogical(CADR(args));
     if(multiple == NA_LOGICAL)
@@ -1355,3 +1357,110 @@ SEXP do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+SEXP do_rawShift(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x = CAR(args);
+    int i, shift = asInteger(CADR(args));
+    
+    if(!isRaw(x))
+	errorcall(call, "argument 'x' must be a raw vector");
+    if(shift == NA_INTEGER || shift < -8 || shift > 8)
+	errorcall(call, "argument 'shift' must be a small integer");
+    PROTECT(ans = duplicate(x));
+    if (shift > 0)
+	for(i = 0; i < LENGTH(x); i++)
+	    RAW(ans)[i] <<= shift;
+    else
+	for(i = 0; i < LENGTH(x); i++)
+	    RAW(ans)[i] >>= (-shift);
+    UNPROTECT(1);
+    return ans;    
+}
+
+SEXP do_rawToBits(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x = CAR(args);
+    int i, j = 0, k;
+    unsigned int tmp;
+    
+    if(!isRaw(x))
+	errorcall(call, "argument 'x' must be a raw vector");
+    PROTECT(ans = allocVector(RAWSXP, 8*LENGTH(x)));
+    for(i = 0; i < LENGTH(x); i++) {
+	tmp = (unsigned int) RAW(x)[i];
+	for(k = 0; k < 8; k++, tmp >>= 1)
+	    RAW(ans)[j++] = tmp & 0x1;
+    }
+    UNPROTECT(1);
+    return ans;    
+}
+
+SEXP do_intToBits(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x = CAR(args);
+    int i, j = 0, k;
+    unsigned int tmp;
+    
+    if(!isInteger(x))
+	errorcall(call, "argument 'x' must be a integer vector");
+    PROTECT(ans = allocVector(RAWSXP, 32*LENGTH(x)));
+    for(i = 0; i < LENGTH(x); i++) {
+	tmp = (unsigned int) INTEGER(x)[i];
+	for(k = 0; k < 32; k++, tmp >>= 1)
+	    RAW(ans)[j++] = tmp & 0x1;
+    }
+    UNPROTECT(1);
+    return ans;    
+}
+
+SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x = CAR(args), stype = CADR(args);
+    Rboolean useRaw;
+    int i, j, k, fac, len = LENGTH(x), slen;
+    unsigned int itmp;
+    Rbyte btmp;
+    
+    if (TYPEOF(x) != RAWSXP && TYPEOF(x) != RAWSXP && TYPEOF(x) != INTSXP)
+	errorcall(call, "argument 'x' must be raw, integer or logical");
+    if (!isString(stype)  || LENGTH(stype) != 1)
+	errorcall(call, "argument 'type' must be a character string");
+    useRaw = strcmp(CHAR(STRING_ELT(stype, 0)), "integer");
+    fac = useRaw ? 8 : 32;
+    if (len% fac)
+	errorcall(call, "argument 'x' must be a multiple of %d long", fac);
+    slen = len/fac;
+    PROTECT(ans = allocVector(useRaw ? RAWSXP : INTSXP, slen));
+    for(i = 0; i < slen; i++)
+	if(useRaw) {
+	    btmp = 0;
+	    for(k = 7; k >= 0; k--) {
+		btmp <<= 1;
+		if(isRaw(x)) 
+		    btmp |= RAW(x)[8*i + k] & 0x1;
+		else if(isLogical(x) || isInteger(x)) {
+		    j = INTEGER(x)[8*i+k];
+		    if(j == NA_INTEGER)
+			errorcall(call, "argument 'x' must not contain NAs");
+		    btmp |= j & 0x1;
+		}
+	    }
+	    RAW(ans)[i] = btmp;
+	} else {
+	    itmp = 0;
+	    for(k = 31; k >= 0; k--) {
+		itmp <<= 1;
+		if(isRaw(x)) 
+		    itmp |= RAW(x)[32*i + k] & 0x1;
+		else if(isLogical(x) || isInteger(x)) {
+		    j = INTEGER(x)[32*i+k];
+		    if(j == NA_INTEGER)
+			errorcall(call, "argument 'x' must not contain NAs");
+		    itmp |= j & 0x1;
+		}
+	    }
+	    INTEGER(ans)[i] = (int) itmp;
+	}
+    UNPROTECT(1);
+    return ans;    
+}
