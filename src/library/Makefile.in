@@ -31,37 +31,21 @@ R:
 	@(cd $(top_builddir)/library; \
 	  cat */TITLE > LibIndex 2> /dev/null)
 
-docs: stamp-docs
-help: stamp-help
-html: stamp-html
-latex: stamp-latex
-examples: stamp-examples
-
-stamp-docs: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
-	@rm -f $@ stamp-help stamp-html stamp-latex stamp-examples
-	@echo "Building ALL documentation (help, HTML, LaTeX, R-Examples)"
+docs:
+	@echo "Building ALL documentation (help, HTML, LaTeX, examples)"
 	@$(MAKE) DOCS
 	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
-	$${RHOME}/bin/build-help --htmllists
-	@touch $@ stamp-help stamp-html stamp-latex stamp-examples
-stamp-help: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
-	@rm -f $@
-	@OPTS="--nroff" $(MAKE) DOCS
-	@touch $@
-stamp-html: $(srcdir)/*/man/*.Rd
-	@rm -f $@
-	@OPTS="--html"  $(MAKE) DOCS
+	  $${RHOME}/bin/build-help --htmllists
+help:
+	@OPTS="--nroff"   $(MAKE) DOCS
+html:
+	@OPTS="--html"    $(MAKE) DOCS
 	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
-	$${RHOME}/bin/build-help --htmllists
-	@touch $@
-stamp-latex: $(srcdir)/*/man/*.Rd
-	@rm -f $@
-	@OPTS="--latex" $(MAKE) DOCS
-	@touch $@
-stamp-examples: $(srcdir)/*/man/*.Rd
-	@rm -f $@
+	  $${RHOME}/bin/build-help --htmllists
+latex:
+	@OPTS="--latex"   $(MAKE) DOCS
+examples:
 	@OPTS="--example" $(MAKE) DOCS
-	@touch $@
 
 $(top_builddir)/library/LibIndex:
 	@if [ ! -f $@ ]; then touch $@; fi
@@ -70,9 +54,11 @@ DOCS:
 	@for pkg in $(PKGS); do \
 	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	  $${RHOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \
-	  $${RHOME}/bin/Rd2contents $(srcdir)/$${pkg} > $${RHOME}/library/$${pkg}/CONTENTS; \
+	  $${RHOME}/bin/Rd2contents $(srcdir)/$${pkg} \
+	    > $${RHOME}/library/$${pkg}/CONTENTS; \
 	done; \
-	cat $${RHOME}/library/*/CONTENTS > $${RHOME}/doc/html/search/index.txt
+	cat $${RHOME}/library/*/CONTENTS \
+	  > $${RHOME}/doc/html/search/index.txt
 
 mostlyclean: clean
 clean:
