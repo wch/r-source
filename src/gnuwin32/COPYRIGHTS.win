@@ -30,11 +30,6 @@ strings, windows, xredef}.c, {graphapp, internal}.h are
 
 	 Copyright (C) 1993-1998 Lachlan Patrick
 
-
-src/gnuwin32/regex/*
-
-	Copyright (C) 1985, 1993 Free Software Foundation, Inc.
-
 src/gnuwin32/unzip/*
 
 	Various copyrights, see the file src/gnuwin32/unzip/copying
