@@ -22,7 +22,7 @@ alternative ordination techniques.
 A list containing the following components.
 \item{points}{a matrix with \code{k} columns whose rows give the
 coordinates of the points chosen to represent the dissimilarities.}
-\item{eig}{if requested,pthe eigenvalues computed during the scaling process.}
+\item{eig}{if requested, the eigenvalues computed during the scaling process.}
 }
 \references{
 Seber, G. A. F. (1984).
@@ -37,9 +37,9 @@ The S version of this function provides for computing an additional
 ``fiddle'' factor suggested by Togerson.  \R does not provide this option.
 }
 \seealso{
-\code{\link{dist}},
-\code{\link{isomds}},
-\code{\link{sammon}}.
+\code{\link{dist}}. Also
+\code{\link{isoMDS}} and
+\code{\link{sammon}} in package \file{MASS}.
 }
 \examples{
 data(eurodist)
