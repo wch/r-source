@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (June 15, 1999)
+Version 0.65.0 Under development (unstable) (June 17, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -45,7 +45,7 @@ Type	"q()" to quit R.
 > is.nan(log(-1))# TRUE and warning
 [1] TRUE
 Warning message: 
-NaNs produced in: -1 
+NaNs produced in: log(x) 
 > 
 > rp <- c(1:2,Inf); rn <- rev(- rp)
 > r <- c(rn, 0, rp)
