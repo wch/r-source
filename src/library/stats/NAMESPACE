@@ -19,7 +19,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        dgamma, dgeom, dhyper, diff.ts, dlnorm, dlogis, dmultinom,
        dnbinom, dnorm, dpois, drop.scope, drop.terms, drop1,
        dsignrank, dt, dummy.coef, dunif, dweibull, dwilcox,
-       eff.aovlist, effects, end, expand.model.frame, extractAIC,
+       eff.aovlist, effects, estVar, end, expand.model.frame, extractAIC,
        factor.scope, family, fft, fitted, fitted.values, fivenum,
        formula, frequency, ftable, Gamma, gaussian, glm, glm.control,
        glm.fit, hasTsp, hat, hatvalues, hatvalues.lm, influence,
@@ -27,7 +27,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        inverse.gaussian, IQR, is.empty.model, is.mts, is.ts, lines.ts,
        lm, lm.fit, lm.influence, lm.wfit, logLik, loglin, lowess,
        ls.diag, ls.print, lsfit, mad, mahalanobis, make.link,
-       makepredictcall, manova, median, model.extract, model.frame,
+       makepredictcall, manova, mauchley.test, median, model.extract, model.frame,
        model.frame.aovlist, model.frame.default, model.frame.glm,
        model.frame.lm, model.matrix, model.matrix.default,
        model.matrix.lm, model.offset, model.response, model.tables,
@@ -53,7 +53,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        rmultinom, rnbinom, rnorm, rpois, rsignrank, rstandard,
        rstandard.glm, rstandard.lm, rstudent, rstudent.glm,
        rstudent.lm, rt, runif, rweibull, rwilcox, sd, se.contrast,
-       spline, splinefun, start, stat.anova, step, summary.aov,
+       spline, splinefun, SSD, start, stat.anova, step, summary.aov,
        summary.aovlist, summary.glm, summary.infl, summary.lm,
        summary.manova, summary.mlm, symnum, termplot, terms,
        terms.aovlist, terms.default, terms.formula, terms.terms, time,
@@ -112,6 +112,8 @@ S3method(dummy.coef, lm)
 S3method(effects, glm)
 S3method(effects, lm)
 S3method(end, default)
+S3method(estVar, SSD)
+S3method(estVar, mlm)
 S3method(extractAIC, aov)
 S3method(extractAIC, coxph)
 S3method(extractAIC, glm)
@@ -138,6 +140,8 @@ S3method(logLik, glm)
 S3method(logLik, lm)
 S3method(makepredictcall, default)
 S3method(makepredictcall, poly)
+S3method(mauchley.test, SSD)
+S3method(mauchley.test, mlm)
 S3method(model.tables, aov)
 S3method(model.tables, aovlist)
 S3method(na.action, default)
@@ -213,6 +217,7 @@ S3method(summary, infl)
 S3method(summary, lm)
 S3method(summary, manova)
 S3method(summary, mlm)
+S3method(SSD, mlm)
 S3method(start, default)
 S3method(str, logLik)
 S3method(t, ts)

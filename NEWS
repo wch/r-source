@@ -312,6 +312,9 @@ NEW FEATURES
     o	Added delayedAssign() function to replace delay(), which is now
     	deprecated.
 
+    o   New functions for multivariate linear models: anova.mlm,
+        SSD, estVar, mauchley.test (for sphericity)
+
 
 INTERNATIONALIZATION
 
