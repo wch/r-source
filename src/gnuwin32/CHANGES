@@ -4,6 +4,30 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1050
+======
+
+BLAS support is now in a separate DLL, Rblas.dll.  This means that any
+packages using BLAS (KernSmooth, bqtl, fracdiff, gss, quadprog and
+quantreg amongst those on CRAN) need to be re-built.  The advantage is
+that less space is taken up overall, and ATLAS can be used just by
+rebuilding Rblas.dll.
+
+The installers now use bzip compression, so make smaller packages
+(which take a little longer to install).
+
+Cross-building automatically uses STAMP=NO for packages.
+
+R and packages can now be built in a directory whose path contains
+spaces (although we still don't recommend it).
+
+Rcmd INSTALL and make pkg-foo test for attempted installation into the
+source directory.
+
+All the configuration options are now in file MkRules.
+
+
+
 rw1041
 ======
 
