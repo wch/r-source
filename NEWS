@@ -41,6 +41,7 @@ NEW FEATURES
 
     o	hist has an "nclass" argument purely for S compatibility.
 
+
 BUG FIXES
 
     o	centering in text() will be more accurate, particularly on devices
@@ -69,6 +70,9 @@ BUG FIXES
     o	weighted lm fits with 1 diml x failed if any weight was zero.
 
     o	lm.influence failed when there were undetermined coefficients, PR#280.
+
+    o	improvements to generation of HTML help files: should work
+	better on viewers other than Netscape.
 
 
 		CHANGES IN R VERSION 0.65.0
