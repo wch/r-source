@@ -675,6 +675,11 @@ Optimized versions of LAPACK are available, but no provision is made for
 using them with @R{} as the likely performance gains are thought to be
 small.
 
+As with all libraries, you need to ensure that they are @R{} were
+compiled with compatible compilers and flags.  For example, this means
+that on Sun Sparc using the native compilers the flag @option{-dalign} is
+needed so @code{libsunperf} can be used.
+
 @node Configuration on Unix, New platforms, Essential and useful other programs, Top
 @appendix Configuration on Unix
 
@@ -867,6 +872,11 @@ To compile a profiling version of @R{}, one might for example want to
 use @samp{MAIN_CFLAGS=-pg}, @samp{MAIN_FFLAGS=-pg},
 @samp{MAIN_LDFLAGS=-pg} on platforms where @samp{-pg} cannot be used
 with position-independent code.
+
+@strong{Beware:} it may be necessary to set @code{CFLAGS} and
+@code{FFLAGS} in ways compatible with the libraries to be used: one
+possible issue is the alignment of doubles, another is the way
+structures are passed.
 
 
 @node Building the GNOME interface,  , Compile and load flags, Configuration on Unix
