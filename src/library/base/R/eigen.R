@@ -37,7 +37,7 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
             ord <- sort.list(Mod(z$values), decreasing = TRUE)
         }
         return(list(values = z$values[ord],
-                    vectors = if (!only.values) z$vectors[, ord]))
+                    vectors = if (!only.values) z$vectors[, ord, drop = FALSE]))
     }
 
     dbl.n <- double(n)
@@ -137,5 +137,5 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 	ord <- sort.list(Mod(z$values), decreasing = TRUE)
     }
     list(values = z$values[ord],
-	 vectors = if(!only.values) z$vectors[,ord])
+	 vectors = if(!only.values) z$vectors[,ord, drop = FALSE])
 }

@@ -22,12 +22,13 @@ subset.data.frame(x, subset, select, \dots)
   For ordinary vectors, the result is simply
   \code{x[subset & !is.na(subset)]}.
 
-  For dataframes, the \code{subset} argument works similarly on the
-  rows.  Note that \code{subset} will be evaluated in the dataframe.
+  For data frames, the \code{subset} argument works similarly on the
+  rows.  Note that \code{subset} will be evaluated in the data frame.
 
-  The \code{select} argument exists only for dataframes.  It works by
+  The \code{select} argument exists only for the method for data frames.
+  It works by
   first replacing variable names in the selection expression with the
-  corresponding column numbers in the dataframe and then using the
+  corresponding column numbers in the data frame and then using the
   resulting integer vector to index the columns.  This allows the use
   of the standard indexing conventions so that for examples ranges of
   variables can be specified easily.

@@ -6,7 +6,7 @@
   \code{x}.
   If \code{na.rm} is \code{TRUE} then missing values are removed before
   computation proceeds.
-  If \code{x} is a matrix or a dataframe, a vector of the standard
+  If \code{x} is a matrix or a data frame, a vector of the standard
   deviation of the columns is returned.
 }
 \usage{
