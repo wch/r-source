@@ -5343,6 +5343,7 @@ unsigned int LTYpar(SEXP value, int ind)
 {
     char *p;
     int i, code, shift, digit, len;
+    double rcode;
 
     if(isString(value)) {
 	for(i = 0; linetype[i].name; i++) { /* is it the i-th name ? */
@@ -5365,17 +5366,18 @@ unsigned int LTYpar(SEXP value, int ind)
     }
     else if(isInteger(value)) {
 	code = INTEGER(value)[ind];
-#define LTY_do_int				\
-	if(code==NA_INTEGER || code < 0)	\
-	    return NA_INTEGER;			\
-	if (code > 0)				\
-	    code = (code-1) % nlinetype + 1;	\
+	if(code == NA_INTEGER || code < 0) error("invalid line type");
+	if (code > 0)
+	    code = (code-1) % nlinetype + 1;
 	return linetype[code].pattern;
-	LTY_do_int;
     }
     else if(isReal(value)) {
-	code = REAL(value)[ind];
-	LTY_do_int;
+	rcode = REAL(value)[ind];
+	if(!R_FINITE(rcode) || rcode < 0) error("invalid line type");
+	code = rcode;
+	if (code > 0)
+	    code = (code-1) % nlinetype + 1;
+	return linetype[code].pattern;
     }
     else {
 	error("invalid line type"); /*NOTREACHED, for -Wall : */ return 0;

@@ -356,6 +356,8 @@ par(\dots, no.readonly = FALSE)
 
   The five standard dash-dot line types (\code{lty = 2:6}) correspond to
   \code{c("44", "13", "1343", "73", "2262")}.
+
+  Note that \code{NA} is not a valid value for \code{lty}.
 }
 
 \note{

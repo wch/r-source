@@ -663,6 +663,10 @@ BUG FIXES
     o	readBin(what = "foo") didn't convert `what' to its type. 
 	(PR#4043)
     
+    o   Using lty=as.integer(NA) and as.double(NA) was being accepted
+	but giving nonsensical results.  Those are not documented
+	valid values for lty. (PR#3217)
+    
 
 
 
