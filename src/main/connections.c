@@ -1550,6 +1550,126 @@ SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+static SEXP readFixedString(Rconnection con, int len)
+{
+    char *buf, *p;
+    int  pos, m;
+
+    buf = (char *) R_alloc(len+1, sizeof(char));
+    buf[len] = '\0';
+    for(pos = 0; pos < len; pos++) {
+	p = buf + pos;
+	m = con->read(p, sizeof(char), 1, con);
+	if(!m) return R_NilValue;
+    }
+    return mkChar(buf);
+}
+
+
+/* readChar(con, nchars) */
+SEXP do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans = R_NilValue, onechar, nchars;
+    int i, len, n, m = 0;
+    Rboolean wasopen;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    i = asInteger(CAR(args));
+    if(i == NA_INTEGER || !(con = Connections[i]))
+	error("invalid connection");
+    if(!con->canread)
+	error("cannot read from this connection");
+    nchars = CADR(args);
+    n = LENGTH(nchars);
+    if(n == 0) return allocVector(STRSXP, 0);
+
+    wasopen = con->isopen;
+    if(!wasopen) con->open(con);
+
+    PROTECT(ans = allocVector(STRSXP, n));
+    for(i = 0, m = i+1; i < n; i++) {
+	len = INTEGER(nchars)[i];
+	if(len == NA_INTEGER || len < 0)
+	    error("supplied length is invalid");
+	onechar = readFixedString(con, len);
+	if(onechar != R_NilValue) {
+	    SET_STRING_ELT(ans, i, onechar);
+	    m++;
+	} else break;
+    }
+    if(!wasopen) con->close(con);
+    if(m < n) {
+	PROTECT(ans = lengthgets(ans, m));
+	UNPROTECT(1);
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+/* writeChar(object, con, nchars, sep) */
+SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP object, nchars, sep;
+    int i, len, n, nwrite=0, slen, tlen;
+    char *s, *buf, *ssep = "";
+    Rboolean wasopen, usesep;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    object = CAR(args);
+    i = asInteger(CADR(args));
+    if(i == NA_INTEGER || !(con = Connections[i]))
+	error("invalid connection");
+    if(!con->canwrite)
+	error("cannot write to this connection");
+
+    nchars = CADDR(args);
+    sep = CADDDR(args);
+    if(isNull(sep)) {
+	usesep = FALSE;
+	slen = 0;
+    } else {
+	usesep = TRUE;
+	if (!isString(sep) || length(sep) != 1)
+	    error("invalid value of `sep'");
+	ssep = CHAR(STRING_ELT(sep, 0));
+	slen = strlen(ssep) + 1;
+    }
+    n = LENGTH(nchars);
+    if(n == 0) return R_NilValue;
+
+    len = 0;
+    for(i = 0; i < n; i++) {
+	tlen = strlen(CHAR(STRING_ELT(object, i)));
+	if (tlen > len) len = tlen;
+    }
+    buf = (char *) R_alloc(len + slen, sizeof(char));
+
+    wasopen = con->isopen;
+    if(!wasopen) con->open(con);
+
+    if(TYPEOF(object) == STRSXP) {
+	for(i = 0; i < n; i++) {
+	    len = INTEGER(nchars)[i];
+	    s = CHAR(STRING_ELT(object, i));
+	    memset(buf, '\0', len + slen);
+	    strncpy(buf, s, len);
+	    if (usesep) {
+		strcat(buf, ssep);
+		len += slen;
+	    }
+	    nwrite = con->write(buf, sizeof(char), len, con);
+	    if(!nwrite) {
+		warning("problem writing to connection");
+		break;
+	    }
+	}
+    }
+    if(!wasopen) con->close(con);
+    return R_NilValue;
+}
+
 /* ------------------- push back text  --------------------- */
 
 
@@ -1613,7 +1733,24 @@ SEXP do_pushbacklength(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* ------------------- sink functions  --------------------- */
 
+static int R_SinkNumber, R_SinkErrNumber;
+
+SEXP do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans;
+    int errcon;
+    checkArity(op, args);
+
+    errcon = asLogical(CAR(args));
+    if(errcon == NA_LOGICAL)
+	error("invalid value for type");
+    PROTECT(ans = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = errcon ? R_SinkNumber : R_SinkErrNumber;
+    UNPROTECT(1);
+    return ans;
+}
 /* ------------------- admin functions  --------------------- */
 
 void InitConnections()

@@ -21,8 +21,18 @@ writeLines(text, con = stdout(), sep = "\n")
   If the connection is open it is written from its current position.
   If it is not open, it is opened for the duration of the call and then
   closed again.
+
+  Normally \code{writeLines} is used with a text connection, and the
+  default separator is converted to the normal separator for that
+  platform (LF on Unix/Linux, CRLF on Windows, LF on Macintosh).  For
+  more control, open a binary connection and specify the precise value
+  you want written to the file in \code{sep}.  For even more control,
+  use \code{\link{writeChar}} on a binary connection.
 }
-\seealso{\code{\link{connections}}, \code{\link{readLines}}, \code{\link{cat}}}
+\seealso{
+  \code{\link{connections}}, \code{\link{writeChar}},
+  \code{\link{readLines}}, \code{\link{cat}}
+}
 
 \keyword{file}
 \keyword{connection}

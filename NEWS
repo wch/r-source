@@ -11,6 +11,14 @@
 
 NEW FEATURES
 
+    o	Changes to connections:
+
+	-  New functions readChar() and writeChar() to read
+           character strings with known lengths and no terminators,
+	   and to write used-specified lengths from strings.
+
+	-  More to come.
+
     o	hessian argument added to deriv and its methods.  A new function
 	deriv3 provides identical capabilities to deriv except that
 	hessian is TRUE by default.
@@ -73,7 +81,7 @@ NEW FEATURES
 	outer product (by Jonathan Rougier).
 
     o	aperm() uses strides in the internal C code and so is substantially
-	sped up (by Jonathan Rougier).
+	faster (by Jonathan Rougier).
 
     o	sort(x) now produces an error when x is not atomic instead of 
 	just returning x.

@@ -1,6 +1,8 @@
 \name{readBin}
 \alias{readBin}
 \alias{writeBin}
+\alias{readChar}
+\alias{writeChar}
 \title{Transfer Binary Data To and From Connections}
 \description{
   Read binary data from a connection, or write binary data to a connection.
@@ -8,6 +10,9 @@
 \usage{
 readBin(con, what, n = 1, size = NA, endian = .Platform$endian)
 writeBin(object, con, size = NA, endian = .Platform$endian)
+
+readChar(con, nchars)
+writeChar(object, con, nchars = nchar(object), eos = "")
 }
 \arguments{
   \item{con}{A connection object or a character string.}
@@ -25,6 +30,11 @@ writeBin(object, con, size = NA, endian = .Platform$endian)
     target system for the file.  Using \code{"swap"} will force swapping
     endian-ness.}
   \item{object}{An \R object to be written to the connection.}
+  \item{nchars}{integer, giving the lengths of (unterminated) character
+    strings to be read or written.}
+  \item{eos}{character. The terminator to be written after each string,
+    followed by an ASCII \code{nul}; use \code{NULL} for no terminator
+    at all.}
 }
 \details{
   If the \code{con} is a character string, the functions call
@@ -42,7 +52,13 @@ writeBin(object, con, size = NA, endian = .Platform$endian)
   for numeric vectors.  (Note that coercion occurs as signed types.)
   Changing sizes is unlikely to preserve \code{NA}s, and the extended
   precision sizes are unlikely to be portable across platforms.
+
+  \code{readBin} and \code{writeBin} read and write C-style
+  zero-terminated character strings.  \code{readChar} and
+  \code{writeChar} allow more flexibility, and can also be used on
+  text-mode connections.
 }
+
 \note{
   Integer read/writes of size 8 will be available if either C type
   \code{long} is of size 8 bytes or C type \code{long long} exists and
@@ -51,12 +67,24 @@ writeBin(object, con, size = NA, endian = .Platform$endian)
   Real read/writes of size \code{sizeof(long double)} (usually 12 or 16
   bytes) will be available only if that type is available and different
   from \code{double}.
+
+  Note that as \R character strings cannot contain ASCII \code{nul},
+  strings read by \code{readChar} which contain such characters will
+  appear to be shorted than requested, but the additional bytes are read
+  from the file.
+
+  If the character length requested for \code{readChar} is longer than
+  the string, \code{nul}-padding is used.
 }
+
 \value{
-  For \code{readBin}, a vector of appropriate mode and the number of
+  For \code{readBin}, a vector of appropriate mode and length the number of
+  items read (which might be less than \code{length(nchars)}).
+
+  For \code{readChar}, a character vector of length the number of
   items read (which might be less than \code{n}).
 
-  For \code{writeBin}, none.
+  For \code{writeBin} and \code{writeChar}, none.
 }
 \seealso{
   \code{\link{connections}}, \code{\link{readLines}},
@@ -95,6 +123,20 @@ if((s <-.Machine$sizeof.longdouble) > 8) readBin(zz, numeric(), 10, size = s)
 close(zz)
 unlink("testbin")
 stopifnot(z2 == z)
+
+## test fixed-length strings
+zz <- file("testbin", "wb")
+x <- c("a", "this will be truncated", "abc")
+nc <- c(3, 10, 3)
+writeChar(x, zz, nc, eos=NULL)
+writeChar(x, zz, eos="\r\n")
+close(zz)
+
+zz <- file("testbin", "rb")
+readChar(zz, nc)
+readChar(zz, nchar(x)+3) # need to read the terminator explicitly
+close(zz)
+unlink("testbin")
 }
 \keyword{file}
 \keyword{connection}

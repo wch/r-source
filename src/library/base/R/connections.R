@@ -141,3 +141,23 @@ writeBin <- function(object, con, size = NA, endian = .Platform$endian)
 ## encoding vectors
 native.enc <- 0:255
 # rest in Rprofile.*
+
+readChar <- function(con, nchars)
+{
+    if(is.character(con)) {
+        con <- file(con, "rb")
+        on.exit(close(con))
+    }
+    .Internal(readChar(con, as.integer(nchars)))
+}
+
+writeChar <- function(object, con, nchars = nchar(object), eos = "")
+{
+    if(!is.character(object))
+        stop("can only write character objects")
+    if(is.character(con)) {
+        con <- file(con, "wb")
+        on.exit(close(con))
+    }
+    invisible(.Internal(writeChar(object, con, as.integer(nchars), eos)))
+}

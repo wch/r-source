@@ -86,7 +86,7 @@ principal authors of the packages mentioned are
 @multitable {stataread  xxxx} {A longggggggggggggggggggggggggggggggggg description}
 @item @pkg{CORBA} @tab Duncan Temple Lang
 @item @pkg{e1071} @tab Friedrich Leisch
-@item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy and Douglas Bates 
+@item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates and Duncan Murdoch
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{Java} @tab John Chambers and Duncan Temple Lang
 @item @pkg{netCDF} @tab Thomas Lumley
@@ -663,60 +663,56 @@ written by another statistical system.  This is often best avoided, but
 may be unavoidable if the originating system is not available.
 
 @menu
-* Minitab SAS SPSS Stata::      
-* S-PLUS::                      
+* Minitab SAS S-PLUS SPSS Stata::  
 * Octave::                      
 @end menu
 
-@node Minitab SAS SPSS Stata, S-PLUS, Importing from other statistical systems, Importing from other statistical systems
-@section Minitab, SAS, SPSS, Stata
+@node Minitab SAS S-PLUS SPSS Stata, Octave, Importing from other statistical systems, Importing from other statistical systems
+@section Minitab, S-PLUS, SAS, SPSS, Stata
+
+The recommended package @pkg{foreign} provides import facilities for
+files produced by these statistical systems, and for export to Stata.
+
 @cindex Stata
-@cindex Minitab
-@cindex SAS
-@cindex SPSS
-
-Package @pkg{foreign} on @acronym{CRAN} provides import facilities for
-files produced by these four statistical systems, and for export to Stata.
-
 @findex read.dta
 @findex write.dta
 Stata @file{.dta} files are a binary file format. Files from
 versions 5.0 and 6.0 of Stata can be read and written by functions
 @code{read.dta} and @code{write.dta}.
 
+@cindex Minitab
 @findex read.mtp
 Function @code{read.mtp} imports a `Minitab Portable Worksheet'.  This
 returns the components of the worksheet as an @R{} list.
 
+@cindex SAS
 @findex read.xport
 Function @code{read.xport} reads a file in SAS Transport (XPORT) format and
 return a list of data frames.
 
+@cindex SPSS
 @findex read.spss
 Function @code{read.spss} can read files created by the `save' and
 `export' commands in @acronym{SPSS}.  It returns a list with one
 component for each variable in the saved data set.
 
 
-@node S-PLUS, Octave, Minitab SAS SPSS Stata, Importing from other statistical systems
-@section S-PLUS
 @cindex S-PLUS
-@findex readSfile
+@findex read.S
 @findex data.restore
 
-Package @pkg{Rstreams} on @acronym{CRAN} contains a function
-@code{readSfile} which can read binary objects produced by S-PLUS 3.x,
-4.x or 2000 on Unix or Windows (and can read them on a different
-OS).  This is able to read many but not all @Sl{} objects: in particular
-it can read vectors, matrices and data frames and lists containing
-those.
+Function @code{read.S} which can read binary objects produced by S-PLUS
+3.x, 4.x or 2000 on (32-bit) Unix or Windows (and can read them on a
+different OS).  This is able to read many but not all @Sl{} objects: in
+particular it can read vectors, matrices and data frames and lists
+containing those.
 
-Package @pkg{Rstreams} also contains a function @code{data.restore} to
-read S-PLUS data dumps (created by @code{data.dump}) with the same
-restrictions.  It may be possible to read data dumps from S-PLUS 5.x and
-6.x written with @code{data.dump(oldStyle=T)}.
+Function @code{data.restore} to read S-PLUS data dumps (created by
+@code{data.dump}) with the same restrictions (except that dumps from the
+Alpha platform can also be read).  It should be possible to read data
+dumps from S-PLUS 5.x and 6.x written with @code{data.dump(oldStyle=T)}.
 
-@node Octave,  , S-PLUS, Importing from other statistical systems
+@node Octave,  , Minitab SAS S-PLUS SPSS Stata, Importing from other statistical systems
 @section Octave
 @cindex Octave
 @findex read.octave
@@ -1336,6 +1332,11 @@ lengthy, but there is one in the @file{Example} directory of the package.
 * Binary data formats::         
 @end menu
 
+Binary connections (@ref{Connections}) are now the preferred way to
+handle binary files, and package @pkg{Rstreams} will be withdrawn in
+late 2001.
+
+
 @node Package Rstreams, Binary data formats, Binary files, Binary files
 @section Package Rstreams
 
@@ -1423,10 +1424,11 @@ all data after that point is lost.
 @cindex Hierarchical Data Format
 @cindex network Common Data Form
 
-Packages @pkg{hdf5} (in the Devel area) and @pkg{netCDF} on @acronym{CRAN}
-provide experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical
-Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
-netCDF data files (network Common Data Form, see
+Packages @pkg{hdf5} (in the Devel area, and not currently updated for
+@R{} versions 1.2.x) and @pkg{netCDF} on @acronym{CRAN} provide
+experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data
+Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF
+data files (network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
 
 Both of these are systems to store scientific data in array-oriented
@@ -1444,8 +1446,7 @@ The @R{} interface can only read netCDF, not write it (yet).
 @emph{Connections} are used in @R{} in the sense of Chambers (1998), a
 set of functions to replace the use of file names by a flexible
 interface to file-like objects.  Connections were introduced to @R{} in
-version 1.2.0, and the details are still experimental and subject to
-change.  Their potential is not yet fully realised.
+version 1.2.0, are still under development.
 
 
 @menu
@@ -1683,7 +1684,7 @@ Unfortunately it depends on OS facilities which may be unreliable
 
 @findex readBin
 @findex writeBin
-@R{} version 1.2.1 adds functions @code{readBin} and @code{writeBin} to
+@R{} version 1.2.1 added functions @code{readBin} and @code{writeBin} to
 read and write from binary connections.  A connection is opened in
 binary mode by appending @code{"b"} to the mode specification, that is
 using mode @code{"rb"} for reading, and mode @code{"wb"} or @code{"ab"}
@@ -1729,9 +1730,11 @@ integers and logicals, and sizes 4, 8 and perhaps 12 or 16 for reals.
 Transferring at different sizes can lose precision, and should not be
 attempted for vectors containing @code{NA}'s.
 
+@findex readChar
+@findex writeChar
 Character strings are read and written in C format, that is as a string
-of bytes terminated by a zero byte.  Package @pkg{Rstreams} provides
-more flexibility, for files.
+of bytes terminated by a zero byte.  Functions @code{readChar} and
+@code{writeChar} (added in 1.3.0) provide greater flexibility.
 
 @node Network interfaces, References, Connections, Top
 @chapter Network interfaces
