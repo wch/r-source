@@ -100,6 +100,12 @@ BUG FIXES
     o	R CMD check now deals correctly with package names containing a
 	'.' in the Depends field of a DESCRIPTION file. (PR#1591)
 
+    o	pbinom() and pbinom() were misssing the "fuzz" that other discrete
+	distributions have in order to guard against truncation.
+
+    o   The "=" assignment operator behaved as "<<-" in some constructions 
+	with composite left hand sides 
+
 
 
 		CHANGES IN R VERSION 1.5.0
