@@ -309,6 +309,9 @@ BUG FIXES
 
     o	pmax() and pmin() sometimes used NAs in internal subassignments,
 	and sometimes these failed.
+
+    o	Subassigning an expression, e.g. expr[2] <- 1, could leave an
+	invalid object and so cause a segfault. (PR#7326)
 	
 
 
