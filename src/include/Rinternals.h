@@ -57,6 +57,7 @@
 /*  the withdrawal of native "factor" and "ordered" types.  */
 
 /*			--> TypeTable[] in ../main/util.c for  typeof() */
+
 typedef unsigned int SEXPTYPE;
 
 #define NILSXP	     0	  /* nil = NULL */

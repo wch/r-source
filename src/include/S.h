@@ -58,67 +58,9 @@ extern void *R_chk_calloc(size_t, size_t);
 extern void *R_chk_realloc(void *, size_t);
 extern void R_chk_free(void *);
 
-#ifdef OLD_MACROS
-#define R_PROBLEM_BUFSIZE 4096
-char R_problem_buf[R_PROBLEM_BUFSIZE];
-#define NULL_ENTRY
-#define PROBLEM		sprintf(R_problem_buf,
-#define RECOVER(x)	), error(R_problem_buf)
-#define WARNING(x)	), warning(R_problem_buf)
-#else
-/*
- *  Some of this is from Doug Bates.
- *  Most is from Chambers' "Programming With Data".
- *
- *  It is presented here to support:
- *    1. Duncan Temple Lang's CORBA code.
- *    2. John Chambers' Java Code.
- */
-#define NULL_USER_OBJECT	R_NilValue
+/* Macros for S/R Compatibility */
 
-#define AS_LOGICAL(x)		coerceVector(x, LGLSXP)
-#define AS_INTEGER(x)		coerceVector(x, INTSXP)
-#define AS_NUMERIC(x)		coerceVector(x, REALSXP)
-#define AS_CHARACTER(x)		coerceVector(x, STRSXP)
-#define AS_COMPLEX(x)		coerceVector(x, CPLXSXP)
-#define AS_VECTOR(x)		coerceVector(x, VECSXP)
-
-#define NEW_LIST(n)		allocVectpr(VECSXP, n)
-#define NEW_LOGICAL(n)		allocVector(LGLSXP, n)
-#define NEW_INTEGER(n)		allocVector(INTSXP,n)
-#define NEW_NUMERIC(n)		allocVector(REALSXP, n)
-#define NEW_COMPLEX(n)		allocVector(CPLXSXP, n)
-#define NEW_CHARACTER(n)	allocVector(STRSXP, n)
-#define NEW_STRING(n)		NEW_CHARACTER(n)
-
-#define GET_LENGTH(x)		length(x)
-
-#define LOGICAL_DATA(x)		LOGICAL(x)
-#define INTEGER_DATA(x)		INTEGER(x)
-#define NUMERIC_DATA(x)		REAL(x)
-#define COMPLEX_DATA(x)		COMPLEX(x)
-#define STRING_DATA(x)		STRING(x)
-
-#define R_PROBLEM_BUFSIZE	4096
-#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
-#define ERROR			),error(R_problem_buf);}
-#define RECOVER(x)		),error(R_problem_buf);}
-#define WARNING(x)		),warning(R_problem_buf);}
-#define LOCAL_EVALUATOR		/**/
-#define NULL_ENTRY		/**/
-#define WARN			WARNING(NULL)
-
-#define COPY_TO_USER_STRING(a)	mkChar(a)
-
-#define RECURSIVE_DATA(x)	VECTOR(x)
-#define CHARACTER_DATA(x)	STRING(x)
-
-#define CREATE_FUNCTION_CALL(name, argList) createFunctionCall(name, argList)
-
-#define EVAL(x)			eval(x, R_GlobalEnv)
-
-#define CREATE_STRING_VECTOR(x)	mkChar(x)
-#endif
+#include "Rdefines.h"
 
 #define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
 #define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
