@@ -8,6 +8,7 @@
   The expression \code{options(error=recover)} will make this
   the error option.
 }
+\synopsis{recover()}
 \usage{
 recover()
 options(error=recover)% is mentioned below as in "Usage"
