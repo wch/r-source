@@ -6,7 +6,7 @@
 
 # @configure_input@
 
-VERSION="0.1-0"
+VERSION="0.1-1"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 DEBUG=false
@@ -58,7 +58,7 @@ while test -n "${1}"; do
       if test -d ${1}; then
 	PKGS="${PKGS} `cd ${1}; pwd`"
       else
-	echo "Warning:  package \`${1}' does not exist"
+	echo "WARNING: package \`${1}' does not exist"
       fi
       ;;
   esac
@@ -100,7 +100,7 @@ for pkg in ${PKGS}; do
   echo "Installing package \`${pkg}' ..."
 
   if test -d src; then
-    echo "libs"
+    echo " libs"
     if ${DEBUG}; then set -x ;fi
     mkdir -p ${lib}/${pkg}/libs
     if test -f src/Makefile; then
@@ -116,19 +116,19 @@ for pkg in ${PKGS}; do
 
   if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
   if test "${dir}"; then
-    echo "${dir}"
+    echo " ${dir}"
     mkdir -p ${lib}/${pkg}/R
     cat `ls ${dir}/*.[RSqrs]` > ${lib}/${pkg}/R/${pkg}
   fi
 
   if test -d data; then
-    echo "data"
+    echo " data"
     mkdir -p ${lib}/${pkg}/data
     cp data/* ${lib}/${pkg}/data
   fi
 
   if test -d exec; then
-    echo "exec"
+    echo " exec"
     mkdir -p ${lib}/${pkg}/exec
     cp exec/* ${lib}/${pkg}/exec
     chmod 755 ${lib}/${pkg}/exec/*
@@ -143,22 +143,22 @@ for pkg in ${PKGS}; do
   (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
 
   if test -d man; then
-    echo "help"
+    echo " help"
     if ${BUILD_HELP}; then
       if ${NO_PERL5}; then
 	echo "${NO_PERL5_MSG}"
       else
 	if ${DEBUG}; then
-	  echo "${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
+	  echo "  ${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
 	fi
 	${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}
       fi
     fi
   else
-    echo "No man pages found in package \`${pkg}'"
+    echo "  No man pages found in package \`${pkg}'"
   fi
 
-  echo "DONE (${pkg})"
+  echo " DONE (${pkg})"
   echo
 done
 
