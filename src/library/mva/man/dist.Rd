@@ -1,7 +1,7 @@
 \name{dist}
 \title{Distance Matrix Computation}
 \usage{
-dist(x, method = "euclidian", diag = FALSE, upper=FALSE)
+dist(x, method = "euclidean", diag = FALSE, upper=FALSE)
 
 print.dist(dist.obj, diag = NULL, upper = NULL)
 as.matrix.dist(dist.obj)
@@ -15,7 +15,7 @@ as.matrix.dist(dist.obj)
   \item{x}{a matrix or (data frame).  Distances between the rows of
     \code{x} will be computed.}
   \item{method}{the distance measure to be used. This must be one of
-    \code{"euclidian"}, \code{"maximum"}, \code{"manhattan"}, 
+    \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, 
     \code{"canberra"} or \code{"binary"}.
     Any unambiguous substring can be given.}
   \item{diag}{a logical value indicating whether the diagonal of the
