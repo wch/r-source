@@ -925,10 +925,15 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
+#ifdef Win32
+#define _(String) libintl_gettext (String)
+#undef gettext /* needed for graphapp */
+#else
 #define _(String) gettext (String)
+#endif
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
-#else
+#else /* not NLS */
 #define _(String) (String)
 #define N_(String) String
 #endif

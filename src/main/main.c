@@ -442,12 +442,12 @@ void setup_Rmainloop(void)
     setlocale(LC_COLLATE, "");/*- alphabetically sorting */
     setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
     setlocale(LC_MONETARY, "");/*- currency units */
+#endif
 #ifdef ENABLE_NLS
     setlocale(LC_MESSAGES,"");
     textdomain(PACKAGE);
     strcpy(localedir, getenv("R_HOME")); strcat(localedir, "/share/locale");
     bindtextdomain(PACKAGE, localedir);
-#endif
 #endif
 #endif
 
