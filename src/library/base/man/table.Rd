@@ -38,8 +38,7 @@ is.table(x)
 }
 \value{
   \code{table()} returns a \emph{contingency table}, an object of
-  \code{\link[base]{class}} \code{"table"}; see the \code{\link{print}}
-  method's separate documentation.
+  \code{\link[base]{class}} \code{"table"}, an array of integer values.
 
   There is a \code{summary} method for objects created by \code{table}
   or \code{\link[stats]{xtabs}}, which gives basic information and performs a
