@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,6 +20,9 @@
  */
 
 /* <UTF8> used XTextWidth and XDrawText, so need to use fontsets */
+
+/* The version for R 2.1.0 is partly based on patches by 
+   Eiji Nakama <nakama@ki.rim.or.jp> for use in Japanese. */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

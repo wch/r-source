@@ -22,6 +22,9 @@
  * Protoized (ANSI C, no longer old K&R C):  Martin Maechler, R core team.
  */
 
+/* The version for R 2.1.0 is based on patches by 
+   Eiji Nakama <nakama@ki.rim.or.jp> for use in Japanese. */
+
 /* ********************************************************************** */
 
 #ifdef HAVE_CONFIG_H

@@ -19,6 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* The version for R 2.1.0 is partly based on patches by 
+   Eiji Nakama <nakama@ki.rim.or.jp> for use in Japanese. */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
