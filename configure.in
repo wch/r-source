@@ -924,6 +924,13 @@ AC_SUBST(shlibpath_var)
 
 AM_CONDITIONAL(WANT_R_SHLIBS, test "${want_R_shlibs}" = yes)
 
+## FIXME:
+## This will no longer be necessary in Autoconf 2.49b or better.
+LTLIBOBJS=`echo $LIBOBJS | sed 's/\.o/\.lo/g'`
+AC_SUBST(LTLIBOBJS)
+LTALLOCA=`echo "$ALLOCA" | sed 's/\.o/.lo/g'`
+AC_SUBST(LTALLOCA)
+
 if test "${PERL}" = false; then
   PERL="/bin/sh false"
 fi
