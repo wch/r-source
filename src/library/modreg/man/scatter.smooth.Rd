@@ -2,21 +2,16 @@
 % copyright (C) 1998 B. D. Ripley
 %
 \name{scatter.smooth}
-\name{panel.smooth}
-\name{loess.smooth}
 \title{Scatter Plot with Smooth Curve Fitted by Loess}
 \usage{
 scatter.smooth(x, y, span=2/3, degree=1,
     family=c("symmetric", "gaussian"),
     xlab=deparse(substitute(x)), ylab=deparse(substitute(y)),
     evaluation=50, ...)
-panel.smooth(x, y, span=2/3, degree=1,
-    family=c("symmetric", "gaussian"), zero.line=F, evaluation=50, ...)
 loess.smooth(x, y, span=2/3, degree=1,
     family=c("symmetric", "gaussian"), zero.line=F, evaluation=50, ...)
 }
 \alias{scatter.smooth}
-\alias{panel.smooth}
 \alias{loess.smooth}
 \arguments{
  \item{x}{x coordinates for scatter plot.}
