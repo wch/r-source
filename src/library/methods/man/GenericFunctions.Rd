@@ -280,7 +280,7 @@ findFuncStrict <- function(fName) {
 try(findFuncStrict("myFun"))# no version
 lm <- function(x) x+1
 try(findFuncStrict("lm"))# 2 versions
-findFuncStrict("findFuncStrict"))# just 1 version
+findFuncStrict("findFuncStrict")# just 1 version
 
 \dontshow{
 ## because nosegfault runs standardGeneric w/o the methods package, nothing
