@@ -80,12 +80,14 @@ z <- cbind(a, b)
 (o <- order(a, b, na.last = NA)); z[o, ]
 
 \dontrun{
+##  speed examples for long vectors:
+##  the differences are much less dramatic for 1e5.
 x <- factor(sample(letters, 1e6, replace=TRUE))
 system.time(o <- sort.list(x)) ## very slow 12 mins
 stopifnot(!is.unsorted(x[o]))
 system.time(o <- order(x, seq(along=x))) # 11 secs
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(unclass(x), method="quick", na.last=NA)) # 0.4 sec
+system.time(o <- sort.list(x, method="quick", na.last=NA)) # 0.4 sec
 stopifnot(!is.unsorted(x[o]))
 system.time(o <- sort.list(x, method="radix")) # 0.04 sec
 stopifnot(!is.unsorted(x[o]))

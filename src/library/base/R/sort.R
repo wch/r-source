@@ -82,11 +82,13 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
         stop("`x' must be atomic")
     if(!is.null(partial))
         .NotYetUsed("partial != NULL")
-    if(method == "quick")
+    if(method == "quick") {
+        if(is.factor(x)) x <- as.integer(x) # sort the internal codes
         if(is.numeric(x))
             return(sort(x, na.last = na.last, decreasing = decreasing,
                         method = "quick", index.return = TRUE)$ix)
         else stop("method=\"quick\" is only for numeric x")
+    }
     if(method == "radix") {
         if(!is.integer(x)) stop("method=\"radix\" is only for integer x")
         if(is.na(na.last))
