@@ -1,5 +1,33 @@
 /*
-	WASTE Demo Project:
+ *  R : A Computer Language for Statistical Data Analysis
+ *  File RIntf.h
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the R core team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  This file is adapted from the public demos coming with the Waste library
+ *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
+ *   
+ *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
+ *   updated to last version of WasteLib library: Stefano M. Iacus, 2001
+ *
+ *  Original file was:
+ *
+ *	WASTE Demo Project:
 	Demo Header
 
 	Copyright © 1993-1998 Marco Piovanelli
@@ -16,11 +44,6 @@
 	majority of this file comes from the WEDemoIntf.p file (the declarations, constants, etc).
 	There still is a WEDemoIntf.c file in the project tho since the .p file had a few
 	utility functions declared and defined in it.
-*/
-
-/*#ifndef __CONDITIONALMACROS__
-#include <ConditionalMacros.h>
-#endif
 */
 
 /*	make sure TARGET_API_MAC_CARBON is #defined

@@ -1,9 +1,32 @@
-Macintosh porting of R-1.2.2,  beta 3, (Jan 31 2001).
------------------------------------------------------
+Macintosh porting of R-1.2.2,  beta 3, (Feb 6 2001).
+=====================================================
+* sources have been merged with the standard distribution
+* the InfoZip code has been eliminated. Now it is assumed
+  that the external MacZip application is avalaible. If
+  not, R asks the user to install it.
+* implemented the startup command line
+* re-direction of stdin/stdout implemented. Useful to 
+  make checks.
+* several bugs fixed.
 
-What's new from R for Mac R-1.2.0,  beta 2, (Jan 14 2001).
+Macintosh porting of R-1.2.1,  beta 2, (Jan 19 2001).
+=====================================================
+* getenv() in now working. The .Renviron file is assumed
+  to be in "etc" directory 
+* "etc" is assumed to contain the history file, the image
+  session and the environments variables
+* a new command line has been added. It is possible to
+  specify options as in the Unix/Win implementations
+* packages have been recompiled
+* few other bugs fixed
+
+What's new from R for Mac R-1.2.0,  beta 1, (Jan 07 2001).
 ==========================================================
-sources have been merged with the standard distribution
+* dir.create() now implemented
+* help.start() now works. It launches the default browser associated to the
+   file extension "htm" and/or "html". The same behaviour as nder Windows
+   systems.
+* internal unzip implemented using InfoZip
 
 
 What's new from R for Mac R-1.2.0,  beta 1, (Jan 07 2001).

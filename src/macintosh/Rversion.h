@@ -7,6 +7,6 @@
 #define R_MINOR		"2.2"
 #define R_STATUS	"beta"
 #define R_STATUS_REV	"3.0"
-#define R_DAY		"31"
-#define R_MONTH		"January"
+#define R_DAY		"6"
+#define R_MONTH		"February"
 #define R_YEAR		"2001"

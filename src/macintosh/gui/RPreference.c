@@ -1,8 +1,45 @@
 /*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  File RPreference.c
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the R core team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  This file is adapted from the public demos coming with the Waste library
+ *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
+ *   
+ *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
+ *   updated to last version of WasteLib library: Stefano M. Iacus, 2001
+ *
+ *  Original file was:
+ *
+ *	WASTE Demo Project:
+ *	Preferences
+ *
+ *	Copyright © 1993-1998 Marco Piovanelli
+ *	All Rights Reserved
+ *
+ *	C port by John C. Daub
+
 	************************************************************************************************ 
 	 
 	RPreference
 	by wing kwong (Tiki), WAN 3/2/99
+	Temporarily removed preferences because using Environments.
 	
 	************************************************************************************************ 
 	Description
@@ -15,12 +52,6 @@
     as you didn't change the resource ID, you can feel free to change the appearence of the dialog 
     box without recomplies the codes	
 	************************************************************************************************ 
-	Description of WASTE and WASTE Demo :
-	
-	??? Is it necessary in here  ???
-	
-	************************************************************************************************
-
 */
 
 
@@ -28,7 +59,6 @@
 /*                                    INCLUDE HEADER FILE                                           */
 /* ************************************************************************************************ */
 #include "RIntf.h"
-#include "StandardGetFolder.h"
 #include "WETabs.h"
 #include "WETabHooks.h"
 #include <ColorPicker.h>
@@ -87,10 +117,7 @@ You need to add the corresponding item in here.
 typedef struct
 {
    char                        tabSize[3];
-   char                        HistRecordSize[4];
    char                        textSize[3];
-   char                        R_Vsize[5];
-   char                        R_Nsize[5];
    char                        ScreenR[5];
    RGBColor	                   TypeColour;
    RGBColor                    FinishedColour;
@@ -190,16 +217,17 @@ void DoPreference ( SInt16 dialogID )
    SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
     
    // Handle History size
-   GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
+/* GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
    sprintf(tempSpace, "%d", storeHistory);   
    SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
+*/
    
    //Handle Text Size
    GetDialogItem(PreferenceBox, kTextSize, &type, &itemHandle, &itemRect);
    sprintf(tempSpace, "%d", gTextSize);
    SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
  
-   
+/*   
    //Handle R_NSize
    GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
    sprintf(tempSpace, "%d", (PR_NSize)); 
@@ -209,7 +237,7 @@ void DoPreference ( SInt16 dialogID )
    GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
    sprintf(tempSpace, "%d", (PR_VSize));
    SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
- 
+ */
    //Handle Screen Resolution
    GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
    sprintf(tempSpace, "%d", (gScreenRes));
@@ -251,14 +279,14 @@ void DoPreference ( SInt16 dialogID )
          }
          
          // Handle History Length
-         GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
+   /*      GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
          // Didn't allow you to use a tab with size bigger than 999
          if (buf[0] > 3){
             GWdoErrorAlert(eHistorySize);
             break;
          }
-         
+     */    
          //Handle Global Text Size
          GetDialogItem(PreferenceBox, kTextSize, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
@@ -268,7 +296,7 @@ void DoPreference ( SInt16 dialogID )
             break;
          }         
          
-         //Handle R_NSize
+/*         //Handle R_NSize
          GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
          buf[buf[0] + 1] = '\0';
@@ -276,8 +304,8 @@ void DoPreference ( SInt16 dialogID )
             GWdoErrorAlert(eR_NSize);
             break;
          }           
-         
-         //Handle R_VSize
+  */       
+    /*     //Handle R_VSize
          GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
          buf[buf[0] + 1] = '\0';
@@ -294,7 +322,7 @@ void DoPreference ( SInt16 dialogID )
             GWdoErrorAlert(eScreenRes);  //???
             break;
          }            
-         
+      */   
          gTypeColour = tempTypeColour;
          gComputerColour = tempComputerColour;
          gFinishedColour = tempFinishedColour;
@@ -351,15 +379,16 @@ void doSavePreference(DialogPtr PreferenceBox){
    gtabSize = atoi(tempSpace);
    SetTab();
    //It is used to save the history size
-   GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
+/*   GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
    GetDialogItemText(itemHandle, buf);
    for (i=0; i<buf[0]; i++)
       tempSpace[i] = buf[i+1];
    tempSpace[i] = '\0';
-      
+  */    
    // After you change History length, you can only have effect after you restart the program
    // it is because you need to allocate memory for history record when you start the computer.
-   storeHistory = atoi(tempSpace);
+/*   storeHistory = atoi(tempSpace);
+  */
    
    //Handle textSize
    GetDialogItem(PreferenceBox, kTextSize, &type, &itemHandle, &itemRect);
@@ -370,7 +399,7 @@ void doSavePreference(DialogPtr PreferenceBox){
    gTextSize = atoi(tempSpace);
    SetTextSize();
    //Handle R_Nsize
-   GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
+/*   GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
    GetDialogItemText(itemHandle, buf);
    for (i=0; i<buf[0]; i++)
       tempSpace[i] = buf[i+1];
@@ -385,7 +414,7 @@ void doSavePreference(DialogPtr PreferenceBox){
       tempSpace[i] = buf[i+1];
    tempSpace[i] = '\0';
    PR_VSize = atoi(tempSpace);
-   
+  */ 
    
    // Handle Screen Resolution
    GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
@@ -413,6 +442,7 @@ unsigned char* StrToPStr(char* buf, SInt8 size){
 }
 
 
+char *mac_getenv(const char *name);
 
 /* ************************************************************************************************
 doGetPreferences : This function will be called at the beginning when your application start to
@@ -427,7 +457,39 @@ void  doGetPreferences(void)
    FSSpec               fileSSpec;
    SInt16               fileRefNum;
    appPrefsHandle       appPrefsHdl;
+   char 				hist[50];
+   
+      gtabSize = 3;
+      strcpy(genvString, ".Renviron");
+      SetTab();
+      storeHistory = 500;
+      HISTORY = storeHistory +1;
+      Cmd_Hist = malloc(HISTORY * sizeof(Ptr));
+      gTextSize = 12;
+      gScreenRes = 72;
+      
+      tempTypeColour.red = gTypeColour.red =  0xffff;
+      tempTypeColour.green = gTypeColour.green =  0x0000;
+      tempTypeColour.blue = gTypeColour.blue =  0x0000;
+      tempFinishedColour.red = gFinishedColour.red = 0x0000;
+      tempFinishedColour.green = gFinishedColour.green = 0x0000;
+      tempFinishedColour.blue = gFinishedColour.blue = 0xffff;
+ 
+      tempComputerColour.red = gComputerColour.red = 0x0000;
+      tempComputerColour.green = gComputerColour.green = 0x0000;
+      tempComputerColour.blue = gComputerColour.blue = 0x0000;
+}
 
+void  doGetPreferences1(void)
+{
+   Str255               prefsFileName;
+   OSErr                osError;
+   SInt16               volRefNum;
+   long                 directoryID;
+   FSSpec               fileSSpec;
+   SInt16               fileRefNum;
+   appPrefsHandle       appPrefsHdl;
+   char 				hist[50];
    GetIndString(prefsFileName,rPreStringList,iPrefsFileName);
 
    osError = FindFolder(kOnSystemDisk,kPreferencesFolderType,kDontCreateFolder,&volRefNum,
@@ -476,26 +538,37 @@ void  doGetPreferences(void)
          
       //Insert NULL character at the end of the String.
       (*appPrefsHdl)->tabSize[2] = '\0';
-      (*appPrefsHdl)->HistRecordSize[3] = '\0';
+    //  (*appPrefsHdl)->HistRecordSize[3] = '\0';
       (*appPrefsHdl)->textSize[2] = '\0';
-      (*appPrefsHdl)->R_Vsize[4] = '\0';
-      (*appPrefsHdl)->R_Nsize[4] = '\0';
+//      (*appPrefsHdl)->R_Vsize[4] = '\0';
+ //     (*appPrefsHdl)->R_Nsize[4] = '\0';
       (*appPrefsHdl)->ScreenR[4] = '\0';
       gHelpFile = (*appPrefsHdl)->sfFile;
       gtabSize = atoi((*appPrefsHdl)->tabSize);
       strcpy(genvString, (*appPrefsHdl)->envString);
       SetTab();
-      storeHistory = atoi((*appPrefsHdl)->HistRecordSize);
-      HISTORY = atoi((*appPrefsHdl)->HistRecordSize) + 1;
-      Cmd_Hist = malloc(HISTORY * sizeof(Ptr));
+ //     storeHistory = atoi((*appPrefsHdl)->HistRecordSize);
+      /*HISTORY = atoi((*appPrefsHdl)->HistRecordSize) + 1;
+      */
       
+      storeHistory = 100;
+  /*    strcpy(hist,mac_getenv("R_HISTSIZE"));
+       
+      if(hist)
+       HISTORY=atoi(hist);
+      else 
+    */   HISTORY = storeHistory +1;
+       
+        
+      Cmd_Hist = malloc(HISTORY * sizeof(Ptr));
+            
       gTextSize = atoi((*appPrefsHdl)->textSize);
       
-      PR_NSize =  atoi((*appPrefsHdl)->R_Nsize);
+/*      PR_NSize =  atoi((*appPrefsHdl)->R_Nsize);
 //      R_NSize = PR_NSize * (1 <<10);
       PR_VSize =  atoi((*appPrefsHdl)->R_Vsize);
 //      R_VSize = PR_VSize * (1 << 20);
-      gScreenRes = gScreenRes = atoi((*appPrefsHdl)->ScreenR);
+*/      gScreenRes = gScreenRes = atoi((*appPrefsHdl)->ScreenR);
       
       gPrefsFileRefNum = fileRefNum;
       gsfr = (*appPrefsHdl)->sfr;
@@ -550,12 +623,17 @@ OSErr  doCopyResource(ResType resType,SInt16 resID,SInt16 sourceFileRefNum,
    return(osError);
 }
 
+void savePreference(void){
+   
+   return;
+}
+
 
 /* ************************************************************************************************
 savePreference: This function is used to save the global variable into the preference without 
 prompt out the preference dialog.
 ************************************************************************************************ */
-void savePreference(void){
+void savePreference1(void){
    appPrefsHandle     appPrefsHdl;
    Handle             existingResHdl;
    Str255             resourceName = "\pPreferences";
@@ -570,13 +648,13 @@ void savePreference(void){
    sprintf(buf, "%d", gtabSize);
    strncpy((*appPrefsHdl)->tabSize, buf, 3);
    sprintf(buf, "%d", storeHistory );
-   strncpy((*appPrefsHdl)->HistRecordSize,buf, 4);
+//   strncpy((*appPrefsHdl)->HistRecordSize,buf, 4);
    sprintf(buf, "%d", gTextSize);
    strncpy((*appPrefsHdl)->textSize, buf, 3);
-   sprintf(buf, "%d", PR_NSize);
-   strncpy((*appPrefsHdl)->R_Nsize, buf, 5);
-   sprintf(buf, "%d", PR_VSize);
-   strncpy((*appPrefsHdl)->R_Vsize, buf, 5);
+//   sprintf(buf, "%d", PR_NSize);
+//   strncpy((*appPrefsHdl)->R_Nsize, buf, 5);
+//   sprintf(buf, "%d", PR_VSize);
+//   strncpy((*appPrefsHdl)->R_Vsize, buf, 5);
    sprintf(buf, "%d", gScreenRes);
    strncpy((*appPrefsHdl)->ScreenR, buf, 5);
       

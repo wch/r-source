@@ -16,6 +16,22 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  This file is adapted from the public demos coming with the Waste library
+ *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
+ *
+ *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
+ *  This file is used some small routines which is used to link with the internal R.
+ *
+ *  Original file was:
+ *
+ *	WASTE Demo Project:
+ *
+ *	Copyright © 1993-1998 Marco Piovanelli
+ *	All Rights Reserved
+ *
+ *	C port by John C. Daub
  */
 
 #include <stdio.h>
@@ -75,7 +91,7 @@ OSErr  doRSaveAs(Boolean *haveCancel) {
     SInt16 pathLen;
     Handle pathName;
     char path[FILENAME_MAX], cur_path[FILENAME_MAX];
-    
+
     StandardPutFile("\pSave as:","\p.RData", &fileReply);
     *haveCancel = !(fileReply.sfGood);
     if(fileReply.sfGood) {
@@ -87,7 +103,7 @@ OSErr  doRSaveAs(Boolean *haveCancel) {
 		return(osError);
 	}
 
-	
+
 	FSpGetFullPath(&fileReply.sfFile, &pathLen, &pathName);
 	HLock((Handle) pathName);
 	strncpy(InitFile, *pathName, pathLen);
@@ -104,7 +120,7 @@ OSErr  doRSaveAs(Boolean *haveCancel) {
 	    R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
 	fclose(fp);
     }
- 
+
     return(osError);
 }
 
@@ -115,7 +131,7 @@ OSErr  doSaveGraCommand(void)
     WindowPtr windowPtr;
     SInt16 WinIndex;
     OSErr osError = 0;
-	
+
     windowPtr = FrontWindow();
     WinIndex = isGraphicWindow(windowPtr);
 
@@ -241,13 +257,13 @@ OSErr  doCopyAppNameResource(WindowPtr windowPtr)
 				    fsRdWrPerm);
 
     if(fileRefNum > 0)
-	osError = doCopyGraResource('STR ', -16396, gAppResFileRefNum, 
+	osError = doCopyGraResource('STR ', -16396, gAppResFileRefNum,
 				    fileRefNum);
     else
 	osError = ResError();
 
     if(osError == noErr)
-	CloseResFile(fileRefNum); 
+	CloseResFile(fileRefNum);
 
     osError = ResError();
     return(osError);
@@ -300,7 +316,7 @@ OSErr  doWriteFile(WindowPtr windowPtr)
 
     GetDateTime(&currentTime);
     NumToString((SInt32) currentTime,tempFileName);
-	
+
     osError = FindFolder(fileSpecActual.vRefNum, kTemporaryFolderType,
 			 kCreateFolder, &tempFileVolNum,&tempFileDirID);
     if(osError == noErr)
@@ -321,7 +337,7 @@ OSErr  doWriteFile(WindowPtr windowPtr)
     if(osError == noErr)
 	osError = FSpDelete(&fileSpecTemp);
     if(osError == noErr)
-	osError = FSpOpenDF(&fileSpecActual, fsRdWrPerm, 
+	osError = FSpOpenDF(&fileSpecActual, fsRdWrPerm,
 			    &gGReference[WinIndex].fileRefNum);
 
 /*	if(osError == noErr)

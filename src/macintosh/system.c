@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  file system.c
  *  Copyright (C) 1998--1999  Tiki Wan, Ross Ihaka
- *                2000-1  Stefano Iacus
+ *                2000-1  Stefano M. Iacus
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +17,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *  The R application now handles redirection files "<" and ">" if
+ *  the user specifies them. It also accept command line options.
+ *  Implemented in R 1.2.2., Stefano M.Iacus, Feb 2001
  */
  
 
@@ -27,15 +32,14 @@
 #include "TFLaunch.h"
 #include <Rdevices.h>
 
+extern long start_Time;
+extern long last_Time;
+char genvString[256];
 
-
-#include "Defn.h" // Jago
-
-#ifdef Macintosh // Jago
- int     pclose(FILE *fp); 
- int pclose(FILE *fp){
-  return(fclose(fp));
-  }
+#ifdef Macintosh 
+int pclose(FILE *fp) {
+    return(fclose(fp));
+}
 #endif
 
 void R_Suicide(char *s);
@@ -52,8 +56,8 @@ void R_Suicide(char *s);
 #include <Files.h>
 #include <Folders.h>
 
-#include "pathname.h"
-#include "helpers.h"
+#include <sioux.h>
+
 
 typedef struct _EnviromentPair {
     char *key;
@@ -65,8 +69,6 @@ char *load_entry(FILE *file);
 EnviromentPair *ParseLine(char *line);
 
 
-//#include "devMacintosh.h"
-
 static int DefaultSaveAction = 0;
 static int DefaultRestoreAction = 1;
 
@@ -77,53 +79,91 @@ Rboolean LoadSiteFile = TRUE;
 Rboolean LoadInitFile = TRUE;
 Rboolean DebugInitFile = FALSE;
 
-long                   start_Time, last_Time;
-SInt16		           gAppResFileRefNum;
-char                   testBuf[ALLOW_INPUT_LENGTH];
-extern WindowPtr	   gWindowPtrArray[kMaxWindows + 2];
-extern void            doGetPreferences(void);
+long start_Time, last_Time;
+SInt16 gAppResFileRefNum;
+char testBuf[ALLOW_INPUT_LENGTH];
+extern WindowPtr gWindowPtrArray[kMaxWindows + 2];
+extern void doGetPreferences(void);
 
-extern char    InitFile[256];
+extern char InitFile[256];
 extern WindowPtr Console_Window;
-extern SInt16  gTextSize;
-void  R_doErrorAlert(Str255	labelText);
+extern SInt16 gTextSize;
+void  R_doErrorAlert(Str255 labelText);
 void  StrToStr255(char* sourceText, Str255 targetText);
 void R_ShowMessage(char *);
 
-
 extern void R_Edit(char** lines, int nlines);
 extern void main_1 ( void );
-	/* Fill a text buffer with user typed console input. */
-//extern void R_WriteConsole1(Ptr buf, SInt32 buflen);
-//extern void R_ReadConsole1(char*, char*, int, int);
-//extern void RWrite(char*);
-//extern void DRWrite(long);
 
 
 char *mac_getenv(const char *name);
 
 void R_setStartTime(void);
 
-int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
+int R_ReadConsoleXX(char *prompt, unsigned char *buf, int len, 
+		    int addtohistory)
 {
-  /* Fill a text buffer with user typed console input. */
+    /* Fill a text buffer with user typed console input. */
 
-  char buffo[1000];
+    char buffo[1000];
    
-  R_ReadConsole1(prompt, buf, len, addtohistory); 
+    R_ReadConsole1(prompt, buf, len, addtohistory); 
 
-  buf[strlen(buf)-1] = '\n';
-  buf[strlen(buf)] = '\0';
+    buf[strlen(buf)-1] = '\n';
+    buf[strlen(buf)] = '\0';
 
-  return 1;
+    return 1;
 }
+
+int R_ReadConsole(char *prompt, unsigned char *buf, int len,int addtohistory)
+{
+    char buffo[1000];
+	 
+    if(fileno(stdin) > 1) {
+	return( FileReadConsole(prompt, buf, len, addtohistory) ); 
+    }
+    else 
+	R_ReadConsole1(prompt, buf, len, addtohistory); 
+
+    buf[strlen(buf)-1] = '\n';
+    buf[strlen(buf)] = '\0';
+
+    return 1;
+
+}
+
+static int
+FileReadConsole(char *prompt, char *buf, int len, int addhistory)
+{
+    int ll;
+    if (!R_Slave) {
+     RWrite(prompt);
+    }
+    if (fgets(buf, len, stdin) == NULL)
+	return 0;
+/* according to system.txt, should be terminated in \n, so check this
+   at eof */
+    ll = strlen((char *)buf);
+    if (feof(stdin) && buf[ll - 1] != '\n' && ll < len) {
+	buf[ll++] = '\n'; buf[ll] = '\0';
+    }
+    if (!R_Interactive && !R_Slave)
+	 RWrite(buf);
+    return 1;
+}
+
+
 
 	/* Write a text buffer to the console. */
 	/* All system output is filtered through this routine. */
 
+
 void R_WriteConsole(char *buf, int len)
 {
-  R_WriteConsole1(buf, len);
+    if(fileno(stdout) > 1)
+	fputs(buf,stdout);
+    else
+	R_WriteConsole1(buf, len);
 }
 
 
@@ -135,18 +175,20 @@ void R_ResetConsole()
 }
 
 	/* Make sure that pending output is flushed */
-	/* Unneeded for the Macintosh */
 
 void R_FlushConsole()
 {
+    if(fileno(stdin) > 1)
+	fflush(stdin);
 }
 
 
 	/* Clear Console EOF */
-	/* Unneeded for the Macintosh */
 
 void R_ClearerrConsole()
 {
+    if(fileno(stdin) > 1)
+	clearerr(stdin);
 }
 
 
@@ -163,27 +205,16 @@ char	*R_ExpandFileName(char *s)
 }
 
 
-	/* RHOME is the Folder where the R binary resides */
-
-FILE *R_OpenLibraryFile(char *file)
-{
-    /* This code finds where the R application was invoked */
-    /* and descends from there to "library:base:R and opens */
-    /* the specified file within that directory.  It returns */
-    /* the resulting file pointer. */
-    return R_OpenLibraryFile1(file);
-    /* ... */
-}
-
 FILE *R_OpenSysInitFile(void)
 {
-    /* This code finds where the R application was invoked */
-    /* and descends from there to the folder "library:base:R" */
-    /* and opens the file "Rprofile" within that directory. */
-    /* It returns the resulting file pointer. */
-   
-    return R_OpenSysInitFile1();
+    char buf[256];
+    FILE *fp;
+
+    sprintf(buf, "%s:library:base:R:Rprofile", R_Home);
+    fp = R_fopen(buf, "r");
+    return fp;
 }
+
 
 FILE *R_OpenSiteFile(void)
 {
@@ -191,15 +222,69 @@ FILE *R_OpenSiteFile(void)
     /* and descends from there to the folder "etc" and opens */
     /* the file "Rprofile" within that directory.  It returns */
     /* the resulting file pointer. */
+    return NULL;
 }
 
-FILE *R_OpenInitFile(void)
-{
     /* This code attempts to open the file ".Rprofile" in the */
     /* current folder and returns the resulting file pointer. */
     /* Does thos make sense on the Mac.  Probably not. */
-    return NULL;
+
+FILE *R_OpenInitFile(void)
+{
+    char  buf[256];
+    FILE *fp;
+
+    fp = NULL;
+    if (LoadInitFile) {
+	if ((fp = R_fopen(".Rprofile", "r")))
+	    return fp;
+	sprintf(buf, "%s:.Rprofile", getenv("R_USER"));
+	if ((fp = R_fopen(buf, "r")))
+	    return fp;
+    }
+    return fp;
+
 }
+
+
+
+/* doCopyPString
+*/
+void  doCopyPString(Str255 sourceString,Str255 destinationString)
+{
+    SInt16   stringLength;
+
+    stringLength = sourceString[0];
+    BlockMove(sourceString + 1,destinationString + 1,stringLength);
+    destinationString[0] = stringLength;
+}
+
+
+
+
+/* R_OpenFile
+*/
+FILE* R_OpenFile1(char *file)
+{
+    FILE*                fp;
+    /* Max file length is 256 characters */
+    fp = fopen(file, "r");
+
+    return fp;
+}
+
+
+
+FILE *R_OpenLibraryFile(char *file)
+{
+    char buf[256];
+    FILE *fp;
+
+    sprintf(buf, "%s:library:base:R:%s", R_Home, file);
+    fp = R_fopen(buf, "r");
+    return fp;
+}
+
 
 #define MAC_FILE_SIZE FILENAME_MAX
 
@@ -215,17 +300,18 @@ void GetHomeLocation(void)
 
 char *R_HomeDir()
 {
-	return R_HomeLocation;
+    return R_HomeLocation;
 }
 
 Rboolean R_HiddenFile(char *filename)
 {
-	int len = strlen(filename);
-	if (filename[len - 1] == '\r')
-		return 1;
-  else
+    int len = strlen(filename);
+    if (filename[len - 1] == '\r')
+	return 1;
+    else
   	return 0;
 }
+
 	/*--- Initialization Code ---*/
 
 	/* NOTE: The timing code below will have to be adpated */
@@ -244,24 +330,15 @@ int main(int ac, char **av)
     
 
     SIOUXSettings.standalone = false;  // I only use SIOUX to have command line
-	SIOUXSettings.setupmenus = false;  // I'll set up the menus
-	SIOUXSettings.initializeTB = false;  // I manage the ToolBox
-	SIOUXSettings.asktosaveonclose = false;
+    SIOUXSettings.setupmenus = false;  // I'll set up the menus
+    SIOUXSettings.initializeTB = false;  // I manage the ToolBox
+    SIOUXSettings.asktosaveonclose = false;
     SIOUXSettings.autocloseonquit = true;
-  /* Show the status line */
+    /* Show the status line */
 /*   SIOUXSettings.showstatusline = true;
-*/
-	ac = ccommand(&av);  // This must be the first  command after variables initializations !!!
+ */
+    ac = ccommand(&av);  // This must be the first  command after variables initializations !!!
 	
-/*	InstallConsole();
-	printf("");
-	Console_Window = FrontWindow ( );
-
-	if(SIOUXIsAppWindow(Console_Window))
-	 printf("\n YES, Sioux is Console_Window");
-	else
-	 printf("\n NO :(");
-*/	  
     /* FIXME HERE: record the time at which the program started. */
     /* This is probably zero on the mac as we have direct */
     /* access to the number of ticks since process start */
@@ -279,14 +356,6 @@ int main(int ac, char **av)
 
     R_Quiet = 0;
     R_Interactive = 1;		/* On the Mac we must be interactive */
-//    R_Consolefile = NULL;	/* We don't use a file for console input. */
-//    R_Outputfile = NULL;	/* We don't use a file for console output. */
-//    R_Sinkfile = NULL;		/* We begin writing to the console. */
-
-   
- 
-//	R_HistoryFile = ".Rhistory";
-	
 
     /* ... */
  
@@ -294,7 +363,7 @@ int main(int ac, char **av)
 
 
 /* *** */    
-	Mac_initialize_R ( ac, av );
+    Mac_initialize_R ( ac, av );
 	
 /* *** */
 
@@ -313,16 +382,14 @@ int Mac_initialize_R(int ac, char **av)
     structRstart rstart;
     Rstart Rp = &rstart;
 
-    if ( Initialize() == noErr ){
-     
-       gAppResFileRefNum = CurResFile();
-	   doGetPreferences();
-	   
-	   for(i=0;i<kMaxWindows+2;i++)
-		   gWindowPtrArray[i] = NULL;
-     }
-     else
-      return(1);
+    if ( Initialize() == noErr ) {
+	gAppResFileRefNum = CurResFile();
+	doGetPreferences();
+	for(i = 0; i < kMaxWindows+2; i++)
+	    gWindowPtrArray[i] = NULL;
+    }
+    else
+	return(1);
 
     GetHomeLocation();
     
@@ -339,7 +406,7 @@ int Mac_initialize_R(int ac, char **av)
     /* Store the command line arguments before they are processed
        by the R option handler. These are stored in Rp and then moved
        to the global variable CommandLineArgs in R_SetParams.
-     */
+    */
 
     R_set_command_line_arguments(ac, av, Rp);
 
@@ -366,10 +433,18 @@ int Mac_initialize_R(int ac, char **av)
  
     /* On Unix the console is a file; we just use stdio to write on it */
 
- /*   R_Interactive = isatty(0);
-*/
-    R_Consolefile = NULL;	/* We don't use a file for console input. */
-    R_Outputfile = NULL;	/* We don't use a file for console output. */
+    if(fileno(stdin) > 1){
+	R_Consolefile = stdin;	/* We get input from file specified by the user */
+	R_Interactive = false;
+    }
+    else
+	R_Consolefile = NULL;	/* We get the input from the GUI console*/
+
+    if(fileno(stdout) > 1)
+	R_Outputfile = stdout;	/* We send output to the file specified by the user */
+    else
+	R_Outputfile = NULL;	/* We send the output to the GUI console*/
+
     R_Sinkfile = NULL;		/* We begin writing to the console. */
 
 /*
@@ -380,7 +455,7 @@ int Mac_initialize_R(int ac, char **av)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
     if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
- 	 R_HistoryFile = ":etc:.Rhistory";
+	R_HistoryFile = ":etc:.Rhistory";
  	 
     R_HistorySize = 512;
     if ((p = getenv("R_HISTSIZE"))) {
@@ -392,14 +467,11 @@ int Mac_initialize_R(int ac, char **av)
     }
 
 
- if (R_RestoreHistory)
+    if (R_RestoreHistory)
 	mac_loadhistory(R_HistoryFile);
 
     return(0);
 }
-
-
-
 
 void R_InitialData(void)
 {
@@ -418,18 +490,20 @@ extern void MacFinalCleanup(void);
 
 void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
- 	unsigned char buf[128];
+    unsigned char buf[128];
 
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
 	saveact = SaveAction;
 
+    if(fileno(stdin) > 1) 
+	R_Interactive = false;
+    
     if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
 	qask:
 	    R_ClearerrConsole();
 	    R_FlushConsole();
-	    R_ReadConsole("Save workspace image? [y/n/c]: ", 
-			  buf, 128, 0);
+	    R_ReadConsole("Save workspace image? [y/n/c]: ", buf, 128, 0);
 	    switch (buf[0]) {
 	    case 'y':
 	    case 'Y':
@@ -452,16 +526,12 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     switch (saveact) {
     case SA_SAVE:
 	if(runLast) R_dot_Last();
-
 	if(R_DirtyImage) R_SaveGlobalEnv();
-
 	if(R_Interactive) 
-	 mac_savehistory(R_HistoryFile);
-
+	    mac_savehistory(R_HistoryFile);
 	break;
     case SA_NOSAVE:
 	if(runLast) R_dot_Last();
-
 	break;
     case SA_SUICIDE:
     default:
@@ -489,14 +559,14 @@ void R_Busy(int which)
 
 void R_SaveGlobalEnv(void)
 {
-  OSErr err;
-  Boolean haveCancel;
+    OSErr err;
+    Boolean haveCancel;
 
-  err = doRSave(&haveCancel);
+    err = doRSave(&haveCancel);
 //  err = doRSaveAs(&haveCancel);
-  if (haveCancel){
-      jump_to_toplevel();
-  }
+    if (haveCancel){
+	jump_to_toplevel();
+    }
 }
 
 
@@ -565,7 +635,7 @@ void R_getProcTime(double *data)
 
 double R_getClockIncrement(void)
 {
-  return 1.0 / (double) CLOCKS_PER_SEC;
+    return 1.0 / (double) CLOCKS_PER_SEC;
 }
 
 SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -574,13 +644,7 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     R_getProcTime(REAL(ans));
     return ans;
 }
-#endif /* HAVE_TIMES */
-
-
-
-static char CompleteEnvPath[NAME_MAX];   
-   
-   
+#endif /* HAVE_TIMES */   
    
 SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -602,62 +666,62 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     i = LENGTH(CAR(args));
     if (i == 0) {
     
-    strcpy(temp_path,"etc:.Renviron");
+	sprintf(temp_path,"%s:etc:.Renviron",R_Home);
 
-    GetCompletePath(CompleteEnvPath,temp_path,&spec,&err);
+	err = FSpLocationFromFullPath(strlen(temp_path),temp_path,&spec);
     
-/* try open the file in the current folder */
-    fp = FSp_fopen(&spec,"r");
-    if (fp == NULL)
-      { /* Okey, lets try open the file in the preference folder */
-        FSpFindFolder_Name(
-                   kOnSystemDisk,
-                   kPreferencesFolderType,
-                   kDontCreateFolder,
-                   &spec,
-                   "\p.Renviron");
+	/* try open the file in the R_Home:etc folder */
+	fp = FSp_fopen(&spec,"r");
+	if (fp == NULL)
+	{ /* Okey, lets try open the file in the preference folder */
+	    FSpFindFolder_Name(
+		kOnSystemDisk,
+		kPreferencesFolderType,
+		kDontCreateFolder,
+		&spec,
+		"\p.Renviron");
     
-    fp = FSp_fopen(&spec,"r");
-    if (fp == NULL)
-        {
-        errorcall(call,"There is no environment file");
-        return R_NilValue; /* there is no enviroment-file */
-        }
-    }
+	    fp = FSp_fopen(&spec,"r");
+	    if (fp == NULL)
+	    {
+		errorcall(call,"There is no environment file");
+		return R_NilValue; /* there is no enviroment-file */
+	    }
+	}
 
-    s = load_entry(fp);
-    while (s != NULL)
-    {   /* parse the file line by line */
-     Env1 = ParseLine(s);
-     if (strlen(Env1->value) > 0) 
-       i++;
-     s = load_entry(fp);  /* read next line */
-    }
-    if(i==0) {
-     fclose(fp);
-     errorcall(call,"The environment file is empty");
-     return R_NilValue;
-     }
+	s = load_entry(fp);
+	while (s != NULL)
+	{   /* parse the file line by line */
+	    Env1 = ParseLine(s);
+	    if (strlen(Env1->value) > 0) 
+		i++;
+	    s = load_entry(fp);  /* read next line */
+	}
+	if(i==0) {
+	    fclose(fp);
+	    errorcall(call,"The environment file is empty");
+	    return R_NilValue;
+	}
     
-    PROTECT(ans = allocVector(STRSXP, i));
+	PROTECT(ans = allocVector(STRSXP, i));
     
-    i=0;
-    fseek(fp,0,0);
+	i=0;
+	fseek(fp,0,0);
     
-    s = load_entry(fp);
+	s = load_entry(fp);
     
-    while (s != NULL)
-    {   /* parse the file line by line */
-    Env1 = ParseLine(s);
-    if (strlen(Env1->value) > 0)
-        {       /* we found a key/value pair */
-           sprintf(env_buff,"%s=%s",Env1->key,Env1->value);
-           SET_STRING_ELT(ans, i, mkChar(env_buff));
-           i++;
-        }
-    s = load_entry(fp);  /* read next line */
-    }
-   fclose(fp);
+	while (s != NULL)
+	{   /* parse the file line by line */
+	    Env1 = ParseLine(s);
+	    if (strlen(Env1->value) > 0)
+	    {       /* we found a key/value pair */
+		sprintf(env_buff,"%s=%s",Env1->key,Env1->value);
+		SET_STRING_ELT(ans, i, mkChar(env_buff));
+		i++;
+	    }
+	    s = load_entry(fp);  /* read next line */
+	}
+	fclose(fp);
     } else {
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (j = 0; j < i; j++) {
@@ -819,26 +883,24 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     fclose(ff);
 
-
     if (strlen(buf) < 254)
-    strcpy((char *) HelpFileName, buf);
-  else {
-    error("file name too long");
-    return R_NilValue;
-       }
-  CtoPstr((char *) HelpFileName);
-  err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);
-  if (err != noErr) {
-    sprintf(errbuf, "error code %d creating file spec for help file %s",
-            err, buf);
-    error(errbuf);        
-    return R_NilValue;
-  }
-  
+	strcpy((char *) HelpFileName, buf);
+    else {
+	error("file name too long");
+	return R_NilValue;
+    }
+    CtoPstr((char *) HelpFileName);
+    err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);
+    if (err != noErr) {
+	sprintf(errbuf, "error code %d creating file spec for help file %s",
+		err, buf);
+	error(errbuf);        
+	return R_NilValue;
+    }
           
     err = FinderLaunch(1, &fileSpec);
     if(err!=noErr)
-     error("Cannot launch browser");
+	error("Cannot launch browser");
     
     return R_NilValue;
 }
@@ -898,14 +960,14 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error("Cannot lauch browser");    
     }
     else
-	 warning("type not yet implemented");
+	warning("type not yet implemented");
     return R_NilValue;
 }
 
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	errorcall(call, "unimplemented function\n");
+    errorcall(call, "unimplemented function\n");
 }
 
 
@@ -926,11 +988,11 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = length(x);
     lines = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
-			lines[i] = CHAR( STRING_ELT(x,i) );
-			}
+	lines[i] = CHAR( STRING_ELT(x,i) );
+    }
     for (i = 0; i < n; i++) {
     	Rprintf("%s\n", lines[i]);
-			}
+    }
     R_Edit(lines, n);
     vmaxset(vmaxsave);
     UNPROTECT(1);
@@ -976,9 +1038,9 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcpy(dir, tmp);
 	if ((p = strrchr(dir, ':'))) *(++p) = '\0'; else *dir = '\0';
 	/* wildcard not allowed */
-	   // strcpy(tmp, dir); //strcat(tmp, find_data.cFileName);
-	    failures += (unlink(tmp) !=0);
-   }
+	// strcpy(tmp, dir); //strcat(tmp, find_data.cFileName);
+	failures += (unlink(tmp) !=0);
+    }
     PROTECT(ans = allocVector(INTSXP, 1));
     if (!failures)
 	INTEGER(ans)[0] = 0;
@@ -1000,9 +1062,9 @@ void R_Suicide(char *s)
   
     msglen = strlen(s);
 
-   for(i=1;i<msglen;i++)
-    if(s[i]==0x0A)
-     s[i]=0x0D;
+    for(i = 1; i < msglen; i++)
+	if(s[i] == 0x0A)
+	    s[i] = 0x0D;
 
     StrToStr255(s, LabelText);
     R_doErrorAlert(LabelText);
@@ -1011,41 +1073,37 @@ void R_Suicide(char *s)
     /* SA_NOSAVE means don't save anything and it's an unrecoverable abort */
 }
 
-void  StrToStr255(char* sourceText, Str255 targetText){
-   SInt16 StringLength, Counter;
-   StringLength = strlen(sourceText);
-   if (StringLength > 254) 
-      StringLength = 254;
-   targetText[0] = StringLength;
-   for (Counter = 1; Counter <=StringLength; Counter ++){
-      targetText[Counter] = sourceText[Counter-1];
-   }   
-}
-void  R_doErrorAlert(Str255	labelText)
+void StrToStr255(char* sourceText, Str255 targetText)
 {
-	AlertStdAlertParamRec	paramRec;
-	//Str255								labelText;
-	Str255								narrativeText;
-	SInt16								itemHit;
-		
-	paramRec.movable				= false;
-	paramRec.helpButton			= false;
-	paramRec.filterProc			= NULL;
-	paramRec.defaultText		= (StringPtr) kAlertDefaultOKText;
-	paramRec.cancelText			= NULL;
-	paramRec.otherText			= NULL;
-	paramRec.defaultButton	= kAlertStdAlertOKButton;
-	paramRec.cancelButton		= 0;
-	paramRec.position				= kWindowAlertPositionMainScreen;
-
-  Do_StandardAlert(labelText);
-  //(kAlertStopAlert,labelText,0,&paramRec,&itemHit);
-
+    SInt16 StringLength, Counter;
+    StringLength = strlen(sourceText);
+    if (StringLength > 254) 
+	StringLength = 254;
+    targetText[0] = StringLength;
+    for (Counter = 1; Counter <=StringLength; Counter ++){
+	targetText[Counter] = sourceText[Counter-1];
+    }   
 }
+void  R_doErrorAlert(Str255 labelText)
+{
+    AlertStdAlertParamRec paramRec;
+    //Str255 labelText;
+    Str255 narrativeText;
+    SInt16 itemHit;
+		
+    paramRec.movable			= false;
+    paramRec.helpButton			= false;
+    paramRec.filterProc			= NULL;
+    paramRec.defaultText		= (StringPtr) kAlertDefaultOKText;
+    paramRec.cancelText			= NULL;
+    paramRec.otherText			= NULL;
+    paramRec.defaultButton		= kAlertStdAlertOKButton;
+    paramRec.cancelButton		= 0;
+    paramRec.position			= kWindowAlertPositionMainScreen;
 
-
-
-
+    Do_StandardAlert(labelText);
+    //(kAlertStopAlert,labelText,0,&paramRec,&itemHit);
+}
 
 
 	/* Declarations to keep f77 happy */
@@ -1053,9 +1111,6 @@ void  R_doErrorAlert(Str255	labelText)
 int MAIN_()  {return 0;}
 int MAIN__() {return 0;}
 int __main() {return 0;}
-
-
-
 
 
 
@@ -1178,19 +1233,16 @@ SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 void R_ShowMessage(char *msg)
 {
-  Str255 LabelText;
-  int msglen,i;
+    Str255 LabelText;
+    int msglen,i;
   
-  msglen = strlen(msg);
-   
-  
-  for(i=1;i<msglen;i++)
-   if(msg[i]==0x0A)
-    msg[i]=0x0D;
-
+    msglen = strlen(msg);  
+    for(i = 1; i < msglen; i++)
+	if(msg[i] == 0x0A)
+	    msg[i] = 0x0D;
       
-  StrToStr255(msg, LabelText);
-  R_doErrorAlert(LabelText);
+    StrToStr255(msg, LabelText);
+    R_doErrorAlert(LabelText);
 }
 
 void R_DefParams(Rstart Rp)
@@ -1300,14 +1352,14 @@ void R_SetParams(Rstart Rp)
 void
 R_set_command_line_arguments(int argc, char **argv, Rstart Rp)
 {
- int i;
+    int i;
 
-  Rp->NumCommandLineArgs = argc;
-  Rp->CommandLineArgs = (char**) calloc(argc, sizeof(char*));
+    Rp->NumCommandLineArgs = argc;
+    Rp->CommandLineArgs = (char**) calloc(argc, sizeof(char*));
 
-  for(i = 0; i < argc; i++) {
-    Rp->CommandLineArgs[i] = strdup(argv[i]);
-  }
+    for(i = 0; i < argc; i++) {
+	Rp->CommandLineArgs[i] = strdup(argv[i]);
+    }
 }
 
 
@@ -1318,15 +1370,15 @@ R_set_command_line_arguments(int argc, char **argv, Rstart Rp)
 SEXP
 do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
- int i;
- SEXP vals;
+    int i;
+    SEXP vals;
 
-  vals = allocVector(STRSXP, NumCommandLineArgs);
-  for(i = 0; i < NumCommandLineArgs; i++) {
-    SET_STRING_ELT(vals, i, mkChar(CommandLineArgs[i]));
-  }
+    vals = allocVector(STRSXP, NumCommandLineArgs);
+    for(i = 0; i < NumCommandLineArgs; i++) {
+	SET_STRING_ELT(vals, i, mkChar(CommandLineArgs[i]));
+    }
 
- return(vals);
+    return(vals);
 }
 
 void
@@ -1487,9 +1539,9 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, "WARNING: --nsize value is invalid: ignored\n");
 		    else
-		    sprintf(msg, "WARNING: --nsize=%ld`%c': too large and ignored\n",
-			    value,
-			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
+			sprintf(msg, "WARNING: --nsize=%ld`%c': too large and ignored\n",
+				value,
+				(ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(msg);
 		} else
 		    Rp->nsize = value;

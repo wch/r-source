@@ -1,39 +1,55 @@
-/* 
-	************************************************************************************************ 
-	 
-	RMenus.c
-	by wing kwong (Tiki), WAN 3/2/99
-	
-	Code cleanup and fix for q() based quiting.
-	Ihaka 30/6/99
-	
-	************************************************************************************************ 
-	Description
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  file RMenus.c
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the R core team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  This file is adapted from the public demos coming with the Waste library
+ *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
+ *   
+ *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
+ *  Code cleanup and fix for q() based quiting.	Ihaka 30/6/99
+ *  Updated to last version of WasteLib library and complete control
+ *  over different windows. Menu 'Windows' implemented correctly: Stefano M. Iacus, 2001
+ *
+ *  Original file was:
+ *  WEDemoMenus.c
+ *
+ *  WASTE Demo Project:
+ *  Macintosh Controls with Long Values
+ *
+ *  Copyright © 1993-1998 Marco Piovanelli
+ *  All Rights Reserved
+ *
+ *  C port by John C. Daub
+ *
+ * 	Description
+ *
+ *   This file is based on the WASTE and WASTE demo, I had do some modification to make it function
+ *   as the way R want. The routine in here is used to handle event (high or low level event.)
+ *   There have a lot of function which is related to the Menu of Console and edit window in here.
+ *   We will not suing them, however, it is pretty good to leave it in here. Cause it is fully
+ *   function, and it function correctly, when you feel that you need to add a size, font or color
+ *   Menu..., what you need to do is to change the R.rsrc file ('MBAR' resource), You can simply
+ *   overwrite the resource with ID 130 to ID 128. Then, a fullly function Menu will appear again.
+ *   	
+ */
 
-    This file is based on the WASTE and WASTE demo, I had do some modification to make it function
-    as the way R want. The routine in here is used to handle event (high or low level event.)
-    There have a lot of function which is related to the Menu of Console and edit window in here.
-    We will not suing them, however, it is pretty good to leave it in here. Cause it is fully
-    function, and it function correctly, when you feel that you need to add a size, font or color
-    Menu..., what you need to do is to change the R.rsrc file ('MBAR' resource), You can simply
-    overwrite the resource with ID 130 to ID 128. Then, a fullly function Menu will appear again.
-    	
-	************************************************************************************************ 
-	Description of WASTE and WASTE Demo :
-	
-	??? Is it necessary in here  ??? I think we need
-
-	WASTE Demo Project:
-	Macintosh Controls with Long Values
-
-	Copyright © 1993-1998 Marco Piovanelli
-	All Rights Reserved
-
-	C port by John C. Daub
-
-	************************************************************************************************
-
-*/
 
 /* ************************************************************************************************ */
 /*                                    INCLUDE HEADER FILE                                           */
@@ -339,8 +355,8 @@ void PrepareMenus(void)
 	if (isGraphicWindow(window)) {
 		EnableItem (menu, kItemCopy);
 	}
-	EnableItem(menu, kItemPreference);
-	
+/*	EnableItem(menu, kItemPreference);
+*/	
 	/* by default, the Undo menu item should read "Can't Undo"
  */
 	GetIndString(itemText, kUndoStringsID, 1);
@@ -1396,10 +1412,11 @@ void DoEditChoice(SInt16 menuItem)
 	case kItemLineTo:
 		DoLineTo();
 		break; 
-
+/*
 	case kItemPreference:
 		DoPreference(kDialogAboutBox);      
 		break;   
+*/
 	}
 }
 

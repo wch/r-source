@@ -1,12 +1,40 @@
 /*
-	WASTE Demo Project:
-	Initialization and Finalization Routines
-
-	Copyright © 1993-1998 Marco Piovanelli
-	All Rights Reserved
-
-	C port by John C. Daub
-*/
+ *  R : A Computer Language for Statistical Data Analysis
+ *  file RInit.c
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the R core team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  This file is adapted from the public demos coming with the Waste library
+ *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
+ *   
+ *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
+ *   updated to last version of WasteLib library: Stefano M. Iacus, 2001
+ *
+ *  Original file was:
+ * 
+ *	WASTE Demo Project:
+ *	Initialization and Finalization Routines
+ *
+ *	Copyright © 1993-1998 Marco Piovanelli
+ *	All Rights Reserved
+ *
+ *	C port by John C. Daub
+ */
 
 
 #ifndef __DIALOGS__
@@ -57,11 +85,13 @@ OSErr Initialize( void )
 
 	/* allocate some extra master pointer blocks
 */
-	for ( i = 0; i < 10; i++ )
+	for ( i = 0; i < 20; i++ )
 	{
 		MoreMasters( );
 	}
 
+   if((fileno(stdin)==0) || (fileno(stdout)==1)){
+   
 	/* initialize the Toolbox
 */
 	InitGraf( &qd.thePort );
@@ -193,7 +223,7 @@ cleanup:
 	if ( err != noErr )
 		ErrorAlert( err );
 
-
+}
 	return err;
 }
 

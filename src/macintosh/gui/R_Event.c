@@ -51,9 +51,7 @@
 #include "RIntf.h"
 #endif
 #include "Graphics.h"
-#include "StandardGetFolder.h"
-
-#include "Startup.h" // Jago
+#include "Startup.h" /* Jago */
 #include <Rdevices.h>
 
 SEXP R_LoadFromFile(FILE*, int);
@@ -68,6 +66,14 @@ PicHandle                          WinPic;
 Boolean                            fstart = true;
 SInt16                      Help_Window = 1;
 WindowPtr                   Help_Windows[MAX_NUM_H_WIN + 1];
+
+AEIdleUPP gAEIdleUPP;
+EventRecord gERecord;
+Boolean gQuit, gInBackground;
+EventRecord gERecord;
+
+#define kResumeMask             1       /* bit of message field for resume vs. suspend */
+
 
 /* ************************************************************************************************ */
 /*                                Extern  Global variables                                          */
@@ -87,6 +93,8 @@ extern char                        InitFile[256];
 extern SInt16                      gTextSize;
 extern RGBColor	                   gTypeColour;
 
+#define	kCMDEventClass	'DCMD'  /* Event class command for MacZip */
+#define	kCMDEvent    	'DCMD'  /* Event command                  */
 
 /* ************************************************************************************************ */
 /*                                        Protocol                                                  */
@@ -96,6 +104,9 @@ extern pascal	OSErr	FSpGetFullPath (const FSSpec*, short*, Handle*);
 extern int R_SetOptionWidth(int w);
 extern int R_ChooseFile(int isNewFile, char *fileBuf, int buflen);
 extern OSErr   OpenSelection                    (FSSpecPtr theDoc);
+
+pascal Boolean idleProc(EventRecord *eventIn, long *sleep, RgnHandle *mouseRgn);
+
 /*
 ************************************************************************************************
 AdjustCursor routine :
@@ -613,8 +624,16 @@ void ProcessEvent( void )
 
 	case keyDown:
 	case autoKey:
+   	
+     if ((event.modifiers & cmdKey) && ((event.message & charCodeMask) == '.'))
+           {
+              Rprintf("\n\n <- User Canceled -> \n");
+          /*    DoQuit();*/
+           }
+      else   
 		DoKeyDown( &event );
-		break;
+	
+	break;
 
 	case updateEvt:
 		windowPtr = (WindowPtr) (&event)->message;
@@ -643,13 +662,44 @@ void ProcessEvent( void )
 	case kHighLevelEvent:
 		DoHighLevelEvent( &event );
 		break;
-			
+		
+  			
 	} // switch
 
 	if (gotEvent) {
 		sSleepTime = 0;  // force early idle after non-idle event
 	}
 }
+
+
+/* My IdleProc for AESend */
+
+pascal Boolean idleProc(EventRecord *eventIn, long *sleep, RgnHandle *mouseRgn)
+{
+    switch (eventIn->what) {
+        case nullEvent:
+            /* no nul processing in this sample */
+            *sleep = 0;
+            mouseRgn = nil;
+            break;
+        case updateEvt:
+        case activateEvt:
+            //DrawMain((WindowPtr)eventIn->message);          /* draw whatever window needs an update */
+            break;
+        case app4Evt:
+            switch ((gERecord.message >> 24) & 0x0FF) {     /* high byte of message */
+                case suspendResumeMessage:                  /* suspend/resume is also an activate/deactivate */
+                    gInBackground = (gERecord.message & kResumeMask) == 0;
+                    break;
+            }
+            break;
+            
+            
+            
+    }
+return(false);	/* I'll wait forever */
+}
+
 
 /*
 ************************************************************************************************
@@ -836,14 +886,31 @@ cleanup:
 	return err;
 }
 
+/* InitializeEvents: modified to let R intercart with other processes
+                     such as UnZip tools, Browsers, etc.
+                     AppleEvents handlers are now installed only if
+                     the System allow this (i.e. System v. > 7.0)
+                     Stefano M.Iacus, 2/2/2001
+*/
+
 OSErr InitializeEvents( void )
 {
 	OSErr	err;
-
+    Boolean gHasAppleEvents = false;
+    long aLong = 0;
+    
 	// allocate space for the mouse region
 
 	sMouseRgn = NewRgn( );
 
+    gHasAppleEvents = ((err = Gestalt(gestaltAppleEventsAttr, &aLong)) == noErr);
+    /* The following series of calls installs all our AppleEvent Handlers.
+    *   These handlers are added to the application event handler list that 
+    *   the AppleEvent manager maintains.  So, whenever an AppleEvent happens
+    *   and we call AEProcessEvent, the AppleEvent manager will check our
+    *   list of handlers and dispatch to it if there is one.
+    */
+    if (gHasAppleEvents) {
 	// install AppleEvent handlers for the Required Suite
 
 	if ( ( err = AEInstallEventHandler( kCoreEventClass, kAEOpenDocuments, NewAEEventHandlerProc( HandleOpenDocument ), kDoOpen, false ) ) != noErr )
@@ -863,6 +930,11 @@ OSErr InitializeEvents( void )
 	// install Apple event handlers for inline input
 	if ( ( err = WEInstallTSMHandlers( ) ) != noErr )
 		goto cleanup;
+	
+	gAEIdleUPP = NewAEIdleProc(idleProc);
+   }
+   else
+     goto cleanup;
 
 cleanup:
 	return err;
@@ -879,4 +951,5 @@ void R_startBrowser(char *fileName){
    OpenSelection(&HelpFile);
 
 }
+
 

@@ -1,5 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  file devMacintosh.c
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the R core team
  *

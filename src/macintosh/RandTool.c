@@ -16,17 +16,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  This file is adapted from the public demos coming with the Waste library
+ *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
+ *   
+ *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
+ *  This file is used some small routines which is used to link with the internal R.
+ *
+ *  Original file was:
+ *
+ *	WASTE Demo Project:
+ *
+ *	Copyright © 1993-1998 Marco Piovanelli
+ *	All Rights Reserved
+ *
+ *	C port by John C. Daub
  */
-/*
-	 
-	RandTool.c
-	by wing kwong (Tiki), WAN 3/2/99
-	
-	Description
-	
-  This file is used some small routines which are used to link 
-  with the internal R.
-*/
+ 
 
 
 #include "RIntf.h"
@@ -62,28 +69,12 @@ FILE* R_OpenFile1(char *file)
 
 /* R_OpenLibraryFile
 */
-FILE* R_OpenLibraryFile1(char *file){
-   FILE* fp;
-   SInt16 totLen;
-   char str[256] = ":library:base:R:";
-
-   /* Max file length is 256 characters */
-   strcpy(&str[16], file);
-   totLen = strlen(file) + 16;
-   str[totLen] = '\0';
-   fp = fopen(str, "rt");
-   return fp;
-}
-
-
-/* R_OpenSysInitFile
-*/
-FILE* R_OpenSysInitFile1(void)
+FILE *R_OpenLibraryFile(char *file)
 {
-    return R_OpenLibraryFile1("Rprofile");
+    char buf[256];
+    FILE *fp;
+
+    sprintf(buf, "%s:library:base:R:%s", R_Home, file);
+    fp = R_fopen(buf, "r");
+    return fp;
 }
-
-
-
-
-
