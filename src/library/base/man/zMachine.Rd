@@ -1,20 +1,16 @@
 \name{Machine}
-\title{Machine Characteristics}
+\title{Numerical Characteristics of the Machine}
 \usage{
-Machine()
 .Machine
 }
-\alias{Machine}
 \alias{.Machine}
 \description{
-  \code{Machine()} returns information on numeric characteristics of the
-  machine \R is running on, such as the largest double or integer and the
-  machine's precision.
-
-  \code{.Machine} is a variable holding this information.
+  \code{.Machine} is a variable holding information on the numerical
+  characteristics of the machine \R is running on, such as the largest
+  double or integer and the machine's precision.
 }
 \value{
-  \code{Machine()} returns a list with components (for simplicity, the
+  A list with components (for simplicity, the
   prefix ``double'' is omitted in the explanations)
   \item{double.eps}{the smallest positive floating-point number
     \code{x} such that \code{1 + x != 1}.  It equals
@@ -86,8 +82,8 @@ Machine()
   \code{\link{.Platform}} for details of the platform.
 }
 \examples{
-str(Machine())
-(Meps <- .Machine $ double.eps)
+str(.Machine)
+(Meps <- .Machine$double.eps)
 
 ## All the following relations must hold :
 stopifnot(

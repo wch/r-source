@@ -502,7 +502,7 @@ FUNTAB R_FunTab[] =
 {"gc.time",	do_gctime,	0,	1,	0,	PP_FUNCALL},
 {"Version",	do_version,	0,	11,	0,	PP_FUNCALL},
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
-{"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},
+/*{"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},*/
 {"commandArgs", do_commandArgs, 0,	11,	0,	PP_FUNCALL},
 {"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
 #ifdef Win32
@@ -654,7 +654,7 @@ FUNTAB R_FunTab[] =
 {"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
 {"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
-{"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},
+/*{"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},*/
 {"index.search",do_indexsearch, 0,	11,	5,	PP_FUNCALL},
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 {"putenv",	do_putenv,	0,	11,	1,	PP_FUNCALL},

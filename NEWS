@@ -115,10 +115,14 @@ DEPRECATED & DEFUNCT
         print.factor() and hence deprecated.
 
     o	machine() is deprecated in favour of .Platform$OS.type.
+	Machine() and Platform() are deprecated in favour of .Machine
+	and .Platform.
 
     o	arima0.diag() (package ts) is defunct.
 
     o	piechart() is defunct.
+
+    o	print.ordered() has been removed.
 
 
 DOCUMENTATION CHANGES

@@ -24,8 +24,78 @@
 
 #include <Defn.h>
 #include <Fileio.h>
+#include <R_ext/Applic.h>		/* machar */
 
 #include <time.h>
+
+/* Machine Constants */
+
+static void Init_R_Machine(SEXP rho)
+{
+    int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
+    double eps, epsneg, xmin, xmax;
+    SEXP ans, nms;
+
+    machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
+	   &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
+
+    PROTECT(ans = allocVector(VECSXP, 17));
+    PROTECT(nms = allocVector(STRSXP, 17));
+    SET_STRING_ELT(nms, 0, mkChar("double.eps"));
+    SET_VECTOR_ELT(ans, 0, ScalarReal(eps));
+
+    SET_STRING_ELT(nms, 1, mkChar("double.neg.eps"));
+    SET_VECTOR_ELT(ans, 1, ScalarReal(epsneg));
+
+    SET_STRING_ELT(nms, 2, mkChar("double.xmin"));
+    SET_VECTOR_ELT(ans, 2, ScalarReal(xmin));
+
+    SET_STRING_ELT(nms, 3, mkChar("double.xmax"));
+    SET_VECTOR_ELT(ans, 3, ScalarReal(xmax));
+
+    SET_STRING_ELT(nms, 4, mkChar("double.base"));
+    SET_VECTOR_ELT(ans, 4, ScalarInteger(ibeta));
+
+    SET_STRING_ELT(nms, 5, mkChar("double.digits"));
+    SET_VECTOR_ELT(ans, 5, ScalarInteger(it));
+
+    SET_STRING_ELT(nms, 6, mkChar("double.rounding"));
+    SET_VECTOR_ELT(ans, 6, ScalarInteger(irnd));
+
+    SET_STRING_ELT(nms, 7, mkChar("double.guard"));
+    SET_VECTOR_ELT(ans, 7, ScalarInteger(ngrd));
+
+    SET_STRING_ELT(nms, 8, mkChar("double.ulp.digits"));
+    SET_VECTOR_ELT(ans, 8, ScalarInteger(machep));
+
+    SET_STRING_ELT(nms, 9, mkChar("double.neg.ulp.digits"));
+    SET_VECTOR_ELT(ans, 9, ScalarInteger(negep));
+
+    SET_STRING_ELT(nms, 10, mkChar("double.exponent"));
+    SET_VECTOR_ELT(ans, 10, ScalarInteger(iexp));
+
+    SET_STRING_ELT(nms, 11, mkChar("double.min.exp"));
+    SET_VECTOR_ELT(ans, 11, ScalarInteger(minexp));
+
+    SET_STRING_ELT(nms, 12, mkChar("double.max.exp"));
+    SET_VECTOR_ELT(ans, 12, ScalarInteger(maxexp));
+
+    SET_STRING_ELT(nms, 13, mkChar("integer.max"));
+    SET_VECTOR_ELT(ans, 13, ScalarInteger(INT_MAX));
+
+    SET_STRING_ELT(nms, 14, mkChar("sizeof.long"));
+    SET_VECTOR_ELT(ans, 14, ScalarInteger(SIZEOF_LONG));
+
+    SET_STRING_ELT(nms, 15, mkChar("sizeof.longlong"));
+    SET_VECTOR_ELT(ans, 15, ScalarInteger(SIZEOF_LONG_LONG));
+
+    SET_STRING_ELT(nms, 16, mkChar("sizeof.longdouble"));
+    SET_VECTOR_ELT(ans, 16, ScalarInteger(SIZEOF_LONG_DOUBLE));
+    setAttrib(ans, R_NamesSymbol, nms);
+    defineVar(install(".Machine"), ans, rho);
+    UNPROTECT(2);
+}
+
 
 /*  Platform
  *
@@ -36,11 +106,10 @@
 static const char  * const R_OSType = OSTYPE;
 static const char  * const R_FileSep = FILESEP;
 
-SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
+static void Init_R_Platform(SEXP rho)
 {
     SEXP value, names;
-    char *tmp;
-    checkArity(op, args);
+
     PROTECT(value = allocVector(VECSXP, 5));
     PROTECT(names = allocVector(STRSXP, 5));
     SET_STRING_ELT(names, 0, mkChar("OS.type"));
@@ -50,12 +119,7 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(names, 4, mkChar("endian"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
-    tmp = (char *) malloc(strlen(SHLIB_EXT) + 1);
-    if(!tmp) {
-	error("Could not allocate memory");
-    }
-    sprintf(tmp, "%s", SHLIB_EXT);
-    SET_VECTOR_ELT(value, 2, mkString(tmp));
+    SET_VECTOR_ELT(value, 2, mkString(SHLIB_EXT));
     SET_VECTOR_ELT(value, 3, mkString(R_GUIType));
 #ifdef WORDS_BIGENDIAN
     SET_VECTOR_ELT(value, 4, mkString("big"));
@@ -63,9 +127,16 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_VECTOR_ELT(value, 4, mkString("little"));
 #endif
     setAttrib(value, R_NamesSymbol, names);
+    defineVar(install(".Platform"), value, rho);
     UNPROTECT(2);
-    return value;
 }
+
+void Init_R_Variables(SEXP rho)
+{
+    Init_R_Machine(rho);
+    Init_R_Platform(rho);
+}
+
 
 /*  date
  *

@@ -1,5 +1,5 @@
-Platform <- function()
-.Internal(Platform())
+#Platform <- function()
+#.Internal(Platform())
 
 R.home <- function()
 .Internal(R.home())

@@ -29,6 +29,7 @@
 \alias{reshapeLong}
 \alias{reshapeWide}
 \alias{piechart}
+\alias{print.ordered}
 %
 \description{
   The functions listed here are no longer part of \R as they are not
@@ -78,6 +79,7 @@ reshapeLong(x,jvars,  ilev = row.names(x),
 % Removed in 1.6.0
 piechart(x, labels = names(x), edges = 200, radius = 0.8,
          density = NULL, angle = 45, col = NULL, main = NULL, ...)
+print.ordered(.)
 % </Removed 1.6.0>
 }
 \details{

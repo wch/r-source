@@ -402,6 +402,8 @@ void setup_Rmainloop(void)
 #else
     baseEnv = R_NilValue;
 #endif
+    /* Set up some global variables */
+    Init_R_Variables(baseEnv);
 
     /* On initial entry we open the base language package and begin by
        running the repl on it.

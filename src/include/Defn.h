@@ -654,6 +654,7 @@ SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP);
 void InitMemory(void);
 void InitNames(void);
 void InitOptions(void);
+void Init_R_Variables(SEXP);
 void initStack(void);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 int isValidName(char *);

@@ -2,20 +2,15 @@
 \title{Platform Specific Variables}
 \usage{
 .Platform
-Platform()
 }
 \alias{.Platform}
-\alias{Platform}
 \description{
-  \code{.Platform} is a list with functions and variables as
-  components.  This provides means to write OS portable \R
+  \code{.Platform} is a list with some details of the platform under
+  which \R was built.  This provides means to write OS portable \R
   code.
 }
-\details{
-  Currently, \code{.Platform <- Platform()} when \R starts up.
-}
 \value{
-  \code{.Platform} is list with at least the following components:
+  A list with at least the following components:
   
   \item{OS.type}{
     character, giving the \bold{O}perating \bold{S}ystem

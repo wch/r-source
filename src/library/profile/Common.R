@@ -20,9 +20,6 @@ R.version.string <-
           paste(version[c("year", "month","day")], collapse = "-"),
           sep=", ", collapse=" ")
 
-.Machine <- Machine()
-.Platform <- Platform()
-
 options(na.action = "na.omit")
 options(show.signif.stars = TRUE)
 options(show.coef.Pvalues = TRUE)

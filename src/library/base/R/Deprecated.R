@@ -13,14 +13,21 @@
 
 ## <entry>
 ## Deprecated in 1.6.0
-print.ordered <- function (x, ...)
+machine <- function()
 {
-    .Deprecated("print.factor")
-    invisible(NextMethod("print", x))
-}
-
-machine <- function() {
     .Deprecated(".Platform$OS.type")
     .Internal(machine())
+}
+
+Machine <- function()
+{
+    .Deprecated(".Machine")
+    get(".Machine", "package:base")
+}
+
+Platform <- function()
+{
+    .Deprecated(".Platform")
+    get(".Platform", "package:base")
 }
 ## </entry>

@@ -252,7 +252,7 @@ SEXP do_logic(SEXP, SEXP, SEXP, SEXP);
 SEXP do_logic2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_logic3(SEXP, SEXP, SEXP, SEXP);
 SEXP do_ls(SEXP, SEXP, SEXP, SEXP);
-SEXP do_Machine(SEXP, SEXP, SEXP, SEXP);
+/* SEXP do_Machine(SEXP, SEXP, SEXP, SEXP);*/
 SEXP do_machine(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makelist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makenames(SEXP, SEXP, SEXP, SEXP);
@@ -297,7 +297,7 @@ SEXP do_pause(SEXP, SEXP, SEXP, SEXP);
 SEXP do_persp(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pgrep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pgsub(SEXP, SEXP, SEXP, SEXP);
-SEXP do_Platform(SEXP, SEXP, SEXP, SEXP);
+/* SEXP do_Platform(SEXP, SEXP, SEXP, SEXP);*/
 SEXP do_plot_new(SEXP, SEXP, SEXP, SEXP);
 SEXP do_plot_window(SEXP, SEXP, SEXP, SEXP);
 SEXP do_plot_xy(SEXP, SEXP, SEXP, SEXP);
