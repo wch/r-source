@@ -49,11 +49,11 @@
 # CFLAGS=
 
 # The command which runs the the FORTRAN compiler.
-# If unspecified, a search is made for g77, f77, f90, xlf, cf77, and fc
-# (in that order).  If none of these is found, f2c is used if found;
-# otherwise, R cannot be compiled.  The search mechanism can be changed
-# using the `--with-g77', `--with-f77', and `--with-f2c' command line
-# options to configure.
+# If unspecified, a search is made for g77, fort77, f77, f90, xlf, cf77,
+# and fc (in that order).  If none of these is found, f2c is used if
+# found; otherwise, R cannot be compiled.  The search mechanism can be
+# changed using the `--with-g77', `--with-f77', and `--with-f2c' command
+# line options to configure.
 # FC=
 
 # Options for the FORTRAN compiler.

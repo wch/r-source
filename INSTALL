@@ -53,12 +53,13 @@ Now type R and reach for your S manuals ...
 USING FORTRAN
 
 To compile R, you need a FORTRAN compiler or f2c, the FORTRAN-to-C
-converter.  The default is to search for g77, f77, f90, xlf, cf77, and
-fc (in that order), and then for f2c, and use whichever is found first;
-if none is found, R cannot be compiled.  The search mechanism can be
-changed using the `--with-g77', `--with-f77', and `--with-f2c' command
-line options to configure.  If your FORTRAN compiler is in a
-non-standard location, you can specify it via `--with-f77=path.to.f77'.
+converter.  The default is to search for g77, fort77, f77, f90, xlf,
+cf77, and fc (in that order), and then for f2c, and use whichever is
+found first; if none is found, R cannot be compiled.  The search
+mechanism can be changed using the `--with-g77', `--with-f77', and
+`--with-f2c' command line options to configure.  If your FORTRAN
+compiler is in a non-standard location, you can specify it via
+`--with-f77=path.to.f77'.
 
 
 NEW PLATFORMS (Standards Hah!)
