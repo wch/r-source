@@ -44,6 +44,7 @@ static double private_rint(double x)
 {
     static double biggest = BIGGEST;
     double tmp;
+    long ltmp;
 
     if (x != x) return x;			/* NaN */
 
@@ -51,12 +52,27 @@ static double private_rint(double x)
 	return x;
 
     if(x >= 0) {
-	tmp = x + biggest;
-	return tmp - biggest;
+	if(x < (double) LONG_MAX) {
+	    ltmp = x + 0.5;
+	    /* implement round to even */
+	    if(fabs(x + 0.5 - ltmp) < 10*DBL_EPSILON 
+	       && (ltmp % 2 == 1)) ltmp--;
+	    return (double) ltmp;
+	} else {
+	    tmp = x + biggest;
+	    return tmp - biggest;
+	}
     }
     else {
-	tmp = x - biggest;
-	return tmp + biggest;
+	if(-x < (double) LONG_MAX) {
+	    ltmp = (-x) + 0.5;
+	    if(fabs((-x) + 0.5 - ltmp) < 10*DBL_EPSILON 
+	       && (ltmp % 2 == 1)) ltmp--;
+	    return (- (double) ltmp);
+	} else {
+	    tmp = x - biggest;
+	    return tmp + biggest;
+	}
     }
 }
 
