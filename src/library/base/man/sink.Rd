@@ -1,6 +1,7 @@
 \name{sink}
 \alias{sink}
 \alias{sink.number}
+\concept{tee}
 \title{Send R Output to a File}
 \usage{
 sink(file = NULL, append = FALSE, type = c("output", "message"),
@@ -17,7 +18,7 @@ sink.number(type = c("output", "message"))
   \item{type}{character. Either the output stream or the messages
     stream.}
   \item{split}{logical: if \code{TRUE}, output will be sent to the new
-    sink and to the current output stream.}
+    sink and to the current output stream, like the Unix program \code{tee}.}
 }
 \description{
   \code{sink} diverts \R output to a connection.
@@ -37,10 +38,9 @@ sink.number(type = c("output", "message"))
   The latter can diverted by \code{type = "message"} (see below).
 
   \code{sink()} or \code{sink(file=NULL)} ends the last diversion (of
-  the specified type).  As from \R version 1.3.0 there is a stack of
-  diversions for normal output, so output reverts to the previous
-  diversion (if there was one).  The stack is of up to 21 connections
-  (20 diversions).
+  the specified type).  There is a stack of diversions for normal
+  output, so output reverts to the previous diversion (if there was
+  one).  The stack is of up to 21 connections (20 diversions).
 
   If \code{file} is a connection if will be opened if necessary.
 
