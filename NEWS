@@ -37,7 +37,7 @@ NEW FEATURES
 	only when it is printed as a quoted string.  This makes
 	print(, quote=FALSE) and cat() consistent.
 
-    o   model.frame() now uses the environment of its formula argument,
+    o	model.frame() now uses the environment of its formula argument,
 	rather than the parent environment, to evaluate variables not
 	found in the data argument. See help(formula).
 
@@ -335,7 +335,7 @@ NEW FEATURES
     o	R CMD build and check have been completely re-written in Perl.
 	In addition to running examples, check now also checks the
 	directory structure and control files, makes a temporary
-	installation and runs LaTeX on the help pages.  Build has been
+	installation and runs LaTeX on the help pages.	Build has been
 	reduced to cleaning, rewriting indices and creating tar files.
 
 	The same files of Perl code are now also used under Windows.
@@ -352,6 +352,13 @@ NEW FEATURES
 	There is also a linker front-end `R CMD LINK' which is useful
 	for creating executable programs linked against the R shared
 	library.
+
+    o	plot.hclust() allows arguments main, sub, etc, and has non-empty
+	defaults for these.
+
+    o	smooth() has a better default (3RS3R instead of 3RSR) and
+	more arguments, e.g. `twiceit' for some S compatibility and
+	kind = "3R" for running medians of 3.
 
 
 
@@ -534,7 +541,6 @@ BUG FIXES
     o	The math functions now (again!) return NaN (not NA)
 	when the warning message says so (e.g. gamma(-1)).
 
-
     o	polylines with more than 64K pieces will now work on more X
 	servers with the x11 device.
 
@@ -548,8 +554,10 @@ BUG FIXES
 
     o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
 
-    o   NA || x , NA && y (etc) do not give errors anymore, but work as
-        the "|" and "&" operators and as documented (PR#749).
+    o	NA || x , NA && y (etc) do not give errors anymore, but work as
+	the "|" and "&" operators and as documented (PR#749).
+
+    o	eda's smooth() now computes Tukey's endrule properly.
 
 
 	**************************************************
