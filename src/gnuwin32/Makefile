@@ -90,7 +90,6 @@ rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
-	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
 	@$(MAKE) --no-print-directory libR.a
@@ -158,12 +157,13 @@ endif
 
 
 rlibs:
+	$(MAKE) --no-print-directory -C ../extra/intl -f Makefile.win
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp
 	$(MAKE) --no-print-directory -C ./getline
-	@for ex in pcre bzip2 zlib xdr intl; do \
+	@for ex in pcre bzip2 zlib xdr; do \
 	  $(MAKE) --no-print-directory -C ../extra/$${ex} -f Makefile.win || exit 1; \
 	done
 
@@ -191,6 +191,7 @@ Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 ../../bin/R.dll: FORCE
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory rlibs
+	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory R.dll
 	@$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
