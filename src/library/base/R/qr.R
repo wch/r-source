@@ -36,7 +36,7 @@ qr.coef <- function(qr, y)
         if(!is.complex(y)) y[] <- as.complex(y)
 	coef <- matrix(as.double(NA),nr=p,nc=ny)
         coef[qr$pivot,] <- .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")
-        return(coef)
+        if(im) return(coef) else return drop(coef)
     }
     if (k==0) return( if (im) matrix(NA,p,ny) else rep(NA,p))
     storage.mode(y) <- "double"
