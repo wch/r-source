@@ -2,7 +2,7 @@
 @c %**start of header
 @setfilename R-intro.info
 @settitle An Introduction to R
-@set VERSION $Revision: 1.3 $
+@set VERSION $Revision: 1.4 $
 @setchapternewpage on
 @c %**end of header
 
@@ -6409,7 +6409,7 @@ If @R{} was configured to use @code{readline} command-line editing,
 switch it off.
 @end table
 
-@node Invoking R under Windows,  , Invoking R under UNIX, Invoking R
+@node Invoking R under Windows,  , Invoking R, Invoking R
 @section Invoking R under Windows
 
 The startup procedure under Windows is very similar to that under UNIX,

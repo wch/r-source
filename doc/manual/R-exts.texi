@@ -209,7 +209,7 @@ The @file{man} subdirectory should contain documentation files for the
 objects in the package in ``R documentation'' (Rd) format.  The
 documentation files to be installed must also start with a (lower or
 upper case) letter and have the extension @file{.Rd} (the default) or
-@file{.rd}.  @xref{Writing R documentation} for more information.
+@file{.rd}.  @pxref{Writing R documentation} for more information.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @code{unix}, @code{windows} or @code{mac}.
