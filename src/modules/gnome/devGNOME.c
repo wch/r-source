@@ -295,7 +295,7 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event,
       GNOME_Resize(dd); 
     }
   
-  GEHandleEvent(GE_Redraw, dd, R_NilValue);
+  GEplayDisplayList((GEDevDesc*) GetDevice(devNumber((DevDesc*)dd)));
 
   return FALSE;
 }
