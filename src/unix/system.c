@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@
  *  This function prints the given prompt at the console and then
  *  does a gets(3)-like operation, transfering up to "buflen" characters
  *  into the buffer "buf".  The last two characters are set to "\n\0"
- *  to preserve sanity.  If "hist" is non-zero, then the line is added
+ *  to preserve sanity.	 If "hist" is non-zero, then the line is added
  *  to any command history which is being maintained.  Note that this
  *  is one natural place from which to run an event loop.
  *
@@ -56,7 +56,7 @@
  *  This function clears any errors associated with reading from the
  *  console.  In Unix is is used to clear any EOF condition associated
  *  with stdin.
- *  
+ *
  *    void  R_Suicide(char *msg)
  *
  *  This function displays the given message and the causes R to
@@ -73,7 +73,7 @@
  *    void  R_CleanUp(int ask)
  *
  *  This function invokes any actions which occur at system termination.
- *  
+ *
  *    char* R_ExpandFileName(char *s)
  *
  *  This is a utility function which can be used to expand special
@@ -81,19 +81,19 @@
  *  and "~"s which occur in filenames (and then only when the readline
  *  library is available.  The minimal action is to return the argument
  *  unaltered.
- *  
+ *
  *    void  R_InitialData(void)
  *    FILE* R_OpenInitFile(void)
  *    FILE* R_OpenLibraryFile(char *file)
  *    FILE* R_OpenSysInitFile(void)
- *  
+ *
  *  The following two functions save and restore the user's global
  *  environment.  The system specific aspect of this what files
  *  are used for this.
  *
  *    void  R_RestoreGlobalEnv(void)
  *    void  R_SaveGlobalEnv(void)
- *  
+ *
  *  Platform dependent functions.
  *
  *    SEXP  do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -110,6 +110,13 @@
 #include <readline/readline.h>
 #ifdef HAVE_READLINE_HISTORY_H
 #include <readline/history.h>
+#endif
+#endif
+
+/*-- necessary for some (older, i.e., ~ <= 1997) Linuxen:*/
+#ifdef linux
+#ifndef FD_SET
+#include <sys/time.h>
 #endif
 #endif
 
@@ -165,17 +172,21 @@ static int waitForActivity()
 static int readline_gotaline;
 static int readline_addtohistory;
 static int readline_len;
+static int readline_eof;
 static char *readline_buf;
 
-static void readline_handler() 
-{ 
+static void readline_handler(char *line)
+{
 	int l;
-	if (rl_line_buffer[0]) {
-		if (strlen(rl_line_buffer) && readline_addtohistory)
-			add_history(rl_line_buffer);
-		l = (((readline_len-2) > strlen(rl_line_buffer))? 
-			strlen(rl_line_buffer): (readline_len-2));
-		strncpy(readline_buf, rl_line_buffer, l);
+	rl_callback_handler_remove();
+	if ((readline_eof = !line)) /* Yes, I don't mean ==...*/
+	       return;
+	if (line[0]) {
+		if (strlen(line) && readline_addtohistory)
+		       add_history(line);
+		l = (((readline_len-2) > strlen(line))?
+		       strlen(line): (readline_len-2));
+		strncpy(readline_buf, line, l);
 		readline_buf[l] = '\n';
 		readline_buf[l+1] = '\0';
 	}
@@ -183,7 +194,6 @@ static void readline_handler()
 		readline_buf[0] = '\n';
 		readline_buf[1] = '\0';
 	}
-	rl_callback_handler_remove();
 	readline_gotaline = 1;
 }
 #endif
@@ -201,12 +211,21 @@ int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 	}
 	else {
 #ifdef HAVE_LIBREADLINE
-		readline_gotaline = 0;
-		readline_buf = buf;
-		readline_addtohistory = addtohistory;
-		readline_len = len;
-		rl_callback_handler_install(prompt, readline_handler);
+		if (UsingReadline) {
+			readline_gotaline = 0;
+			readline_buf = buf;
+			readline_addtohistory = addtohistory;
+			readline_len = len;
+			readline_eof = 0;
+			rl_callback_handler_install(prompt, readline_handler);
+		}
+		else
 #endif
+		{
+			fputs(prompt, stdout);
+			fflush(stdout);
+		}
+
 		for (;;) {
 			int what = waitForActivity();
 			switch (what) {
@@ -217,16 +236,18 @@ int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 #ifdef HAVE_LIBREADLINE
 					if (UsingReadline) {
 						rl_callback_read_char();
-						if (readline_gotaline) 
+						if (readline_eof)
+							return 0;
+						if (readline_gotaline)
 							return 1;
 					}
 					else
 #endif
 					{
-						if(!R_Quiet) fputs(prompt, stdout);
 						if(fgets(buf, len, stdin) == NULL)
 							return 0;
-						else return 1;
+						else
+							return 1;
 					}
 			}
 		}
@@ -316,7 +337,7 @@ FILE *R_OpenSiteFile(void) {
     if(fp = R_fopen(buf, "r"))
       return fp;
   }
-  
+
   return fp;
 }
 
@@ -393,7 +414,7 @@ int main(int ac, char **av)
       }
       else if (!strcmp(*av, "--slave") || !strcmp(*av, "-s")) {
 	R_Quiet = 1;
-        R_Slave = 1;
+	R_Slave = 1;
 	DefaultSaveAction = 2;
       }
       else if (!strcmp(*av, "--no-site-file")) {
@@ -443,7 +464,7 @@ int main(int ac, char **av)
       printf("ARGUMENT %s\n", *av);
     }
   }
-  
+
   /* On Unix the console is a file; we just use stdio to write on it */
 
   R_Interactive = isatty(0);
@@ -453,7 +474,7 @@ int main(int ac, char **av)
 
   if(!R_Interactive && DefaultSaveAction == 0)
     R_Suicide("you must specify `--save' or `--no-save'");
-  
+
 #ifdef __FreeBSD__
   fpsetmask(0);
 #endif
@@ -469,7 +490,7 @@ int main(int ac, char **av)
   mainloop();
   /*++++++  in ../main/main.c */
   return 0;
-  
+
 badargs:
   REprintf("invalid argument passed to R\n");
   exit(1);
@@ -592,13 +613,13 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env) {
   int i, j;
   char *s;
   char **e;
-  SEXP ans;  
+  SEXP ans;
 
   checkArity(op, args);
 
   if(!isString(CAR(args)))
     errorcall(call, "wrong type for argument\n");
-    
+
   i = LENGTH(CAR(args));
   if (i == 0) {
     for (i = 0, e = environ; *e != NULL; i++, e++);
@@ -607,7 +628,7 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env) {
       STRING(ans)[i] = mkChar(*e);
   } else {
     PROTECT(ans = allocVector(STRSXP,i));
-    for (j = 0; j < i; j++) {   
+    for (j = 0; j < i; j++) {
       s = getenv(CHAR(STRING(CAR(args))[j]));
       if (s == NULL)
 	STRING(ans)[j] = mkChar("");
