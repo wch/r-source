@@ -324,9 +324,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 #define HASHTABLEGROWTHRATE  1.2
     {
 	SEXP R_NewHashTable(int, double);
-	SEXP R_HashEnv2Hash(SEXP);
+	SEXP R_HashFrame(SEXP);
 	HASHTAB(newrho) = R_NewHashTable(nargs, HASHTABLEGROWTHRATE);
-	newrho = R_HashEnv2Hash(newrho);
+	newrho = R_HashFrame(newrho);
     }
 #endif
 #undef  HASHING

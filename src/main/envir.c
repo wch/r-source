@@ -312,22 +312,22 @@ int R_HashSizeCheck(SEXP table)
 
 /*----------------------------------------------------------------------
 
-  R_HashEnv2Hash
+  R_HashFrame
 
-  Hashing for environments frames.  This function ensures that the
-  first frame in the given environment hash been hashed.
-
-  FIXME: This name is much too obscure.
+  Hashing for environment frames.  This function ensures that the
+  first frame in the given environment has been hashed.  Ultimately
+  all enironments should be created in hashed form.  At that point
+  this function will be redundant.
 
 */
 
-SEXP R_HashEnv2Hash(SEXP rho)
+SEXP R_HashFrame(SEXP rho)
 {
     int hashcode;
     SEXP frame, chain, tmp_chain, table;
   
     /* Do some checking */
-    if (TYPEOF(rho) != ENVSXP){
+    if (TYPEOF(rho) != ENVSXP) {
 	error("1st arg (table) not of type ENVSXP, from R_HashVector2Hash\n");
     }
     table = HASHTAB(rho);
@@ -958,7 +958,7 @@ SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 	hsize = length(s);
 
     HASHTAB(s) = R_NewHashTable(hsize, HASHTABLEGROWTHRATE);
-    s = R_HashEnv2Hash(s);
+    s = R_HashFrame(s);
 
     /* FIXME: A little inefficient */
     while (R_HashSizeCheck(HASHTAB(s))) {
