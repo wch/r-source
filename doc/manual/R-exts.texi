@@ -3691,19 +3691,11 @@ format to plain text, HTML, La@TeX{}, and to extract the examples.  In
 addition, several other tools, in particular @command{check} and
 @command{build} (@pxref{Checking and building packages}), require Perl.
 
-In a nutshell, the current view is that Perl (version 5) is required for
-@R{} developers, but not for @R{} users.  However, this distinction is
-not a clear one.  Without Perl, installing an add-on package leaves it
-without documentation, and thus in fact mostly useless.  (Note that CRAN
-no longer provides pre-built documentation.  This decision was partially
-motivated by the fact that Perl is needed anyway for updating the HTML
-index.)
-
-The @R{} Core Team is currently investigating the following possible
-scenarios.  Either declare Perl 5 as ``generally safe'' (also at
-run-time), or have the add-on packages contain all pre-built
-documentation files and rewrite the tools for updating the indices so
-that they no longer use Perl (e.g., by using @R{} itself instead).
+The @R{} Core Team has decided that Perl (version 5) can safely be
+assumed for building @R{} from source, building and checking add-on
+packages, and for installing add-on packages from source.  On the other
+hand, Perl cannot be assumed at all for installing @emph{binary}
+(pre-built) versions of add-on packages, or at run time.
 
 @item
 Makeinfo version 4 is needed to build the Info files for the @R{}
