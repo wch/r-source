@@ -27,7 +27,7 @@
 \examples{
 noquote(strsplit("A text I want to display with spaces", NULL)[[1]])
 
-x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")
+x <- c(as = "asfef", qu = "qwerty", "yuiop[", "b", "stuff.blah.yech")
 # split x on the letter e
 strsplit(x,"e")
 

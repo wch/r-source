@@ -40,17 +40,23 @@ NEW FEATURES
     o	contr.poly() has a new `scores' argument to use as the base set
 	for the polynomials.
 
-    o   The defaults for glm.control(epsilon=1e-8, maxit=25) have been
+    o	The defaults for glm.control(epsilon=1e-8, maxit=25) have been
 	tightened: this will produce more accurate results, slightly
 	slower.
 
-    o   The data editor is no longer limited to 65535 rows, and will
+    o	The data editor is no longer limited to 65535 rows, and will
 	be substantially faster for large numbers of columns.
 
-    o   prcomp() now accepts complex matrices, and there is biplot()
+    o	prcomp() now accepts complex matrices, and there is biplot()
 	method for its output (in the real case).
 
-    o   A new entry, sizeof.pointer, has been added to .Machine.
+    o	A new entry, sizeof.pointer, has been added to .Machine.
+
+    o	strsplit(x,*) now preserves names() but won't work for
+        non-character `x' anymore {formerly used as.character(x),
+        destroying names(x)}.
+
+    o	which.min(x) and which.max(x) now preserve names.
 
 
 DEPRECATED & DEFUNCT
@@ -180,12 +186,12 @@ BUG FIXES
     o	expand.grid(x) {the rare case of one argument} now treats factor
 	levels as in the typical case of two or more arguments.
 
-    o   Some implicit coercions to lists could cause segfaults, e.g.
-          x <- matrix(nrow=20000, ncol=20); x$any <- numeric(0)
-        due to a PROTECT bug. (PR#2923)
+    o	Some implicit coercions to lists could cause segfaults, e.g.
+	  x <- matrix(nrow=20000, ncol=20); x$any <- numeric(0)
+	due to a PROTECT bug. (PR#2923)
 
     o	The replacement functions for colnames() and rownames() did not
-	work for arrays with more than two dimensions.  They could
+	work for arrays with more than two dimensions.	They could
 	create dimnames of the form list(NULL, NULL) rather than
 	remove the dimnames attribute.
 
@@ -193,8 +199,8 @@ BUG FIXES
 	partial=TRUE for factors whose levels were not in
 	lexicographical order.
 
-    o   A serious performance flaw in as() computations was fixed (the
-        methods were not being cached properly.)
+    o	A serious performance flaw in as() computations was fixed (the
+	methods were not being cached properly.)
 
     o	model.frame(~1, data) always returned 1 row. (PR#2958)
 
@@ -203,20 +209,20 @@ BUG FIXES
 	and objects cannot be extended beyond that row. This restriction
 	will be removed in 1.8.0.  (PR#2962)
 
-    o   A bug could produce apparent loops in formal method selection when
-        inheritance was restricted (used for the as() function).
+    o	A bug could produce apparent loops in formal method selection when
+	inheritance was restricted (used for the as() function).
 
     o	Empty expressions as in return(x,) could generate subsequent
-	segfaults: they are now errors.  (PR#2880)
+	segfaults: they are now errors.	 (PR#2880)
 
-    o   The Kinderman-Ramage Normal Random Generator had several
-        problems leading to not-quite normally distributed variates 
-        (PR#2846). One problem was traced to an error in the original 
-        1976 JASA paper! Thanks to Josef Leydold and his team for 
-        investigating this. The old generator has been retained for
-        reproducibility of older results, under the name 
-        "Buggy Kinderman-Ramage". A warning is issued if you select it 
-        (also indirectly via RNGversion()).
+    o	The Kinderman-Ramage Normal Random Generator had several
+	problems leading to not-quite normally distributed variates
+	(PR#2846). One problem was traced to an error in the original
+	1976 JASA paper! Thanks to Josef Leydold and his team for
+	investigating this. The old generator has been retained for
+	reproducibility of older results, under the name
+	"Buggy Kinderman-Ramage". A warning is issued if you select it
+	(also indirectly via RNGversion()).
 
 
 

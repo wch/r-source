@@ -371,7 +371,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     iop = PRIMVAL(op);
     switch(iop) {
     case 0:/* sum */
-    /* we need to find out if _all_ the arguments are integer in advance, 
+    /* we need to find out if _all_ the arguments are integer in advance,
        as we might overflow before we find out */
 	a = args;
 	int_a = 1;
@@ -383,7 +383,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    a = CDR(a);
 	}
 	ans_type = int_a ? INTSXP: REALSXP; /* try to keep if possible.. */
-	zcum.r = zcum.i = 0.; icum = 0; 
+	zcum.r = zcum.i = 0.; icum = 0;
 	break;
 
     case 2:/* min */
@@ -394,7 +394,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	zcum.r = NA_REAL;
 #endif
-	icum = INT_MAX; 
+	icum = INT_MAX;
 	break;
 
     case 3:/* max */
@@ -572,7 +572,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    }/* switch(iop) */
 
-	} else { /*len(a)=0*/ 
+	} else { /*len(a)=0*/
 	    if(TYPEOF(a) == CPLXSXP && (iop == 2 || iop == 3)) goto badmode;
 	    if(ans_type < TYPEOF(a) && ans_type != CPLXSXP) {
 		if(!empty && ans_type == INTSXP)
@@ -590,7 +590,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     if(empty && (iop == 2 || iop == 3)) {
 	if(iop == 2)
 	    warning("no finite arguments to min; returning Inf");
-	else 
+	else
 	    warning("no finite arguments to max; returning -Inf");
 	ans_type = REALSXP;
     }
@@ -636,52 +636,62 @@ SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 /* which.min(x) : The index (starting at 1), of the first min(x) in x */
 SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP sx, ans;
-    double s;
-    int i, n, indx;
-
-    checkArity(op, args);
-
-    PROTECT(sx = coerceVector(CAR(args), REALSXP));
-    if (!isNumeric(sx))
-      errorcall(call, "non-numeric argument");
-    n = LENGTH(sx);
+#define Beg_do_first					\
+    SEXP sx, ans;					\
+    double s;						\
+    int i, n, indx;					\
+							\
+    checkArity(op, args);				\
+							\
+    PROTECT(sx = coerceVector(CAR(args), REALSXP));	\
+    if (!isNumeric(sx))					\
+      errorcall(call, "non-numeric argument");		\
+    n = LENGTH(sx);					\
     indx = NA_INTEGER;
+
+    Beg_do_first
+
     s = R_PosInf;
     for (i = 0; i < n; i++)
 	if (!ISNAN(REAL(sx)[i]) && REAL(sx)[i] < s) {
 	    s = REAL(sx)[i]; indx = i;
 	}
-    UNPROTECT(1);
-    ans = allocVector(INTSXP, (i = (indx != NA_INTEGER)) ? 1 : 0);
-    if (i) INTEGER(ans)[0] = indx + 1;
+
+#define End_do_first							\
+    i = (indx != NA_INTEGER);						\
+    ans = allocVector(INTSXP, i ? 1 : 0);				\
+    if (i) {								\
+	INTEGER(ans)[0] = indx + 1;					\
+	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* keep name */\
+	    SEXP ansnam;						\
+	    PROTECT(ansnam = allocVector(STRSXP, 1));			\
+	    SET_STRING_ELT(ansnam, 0,					\
+			   STRING_ELT(getAttrib(sx, R_NamesSymbol), indx));\
+	    setAttrib(ans, R_NamesSymbol, ansnam);			\
+	    UNPROTECT(1);						\
+	}								\
+    }									\
+    UNPROTECT(1);							\
     return ans;
+
+    End_do_first
 }
 
 /* which.max(x) : The index (starting at 1), of the first max(x) in x */
 SEXP do_first_max(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP sx, ans;
-    double s;
-    int i, n, indx;
+    Beg_do_first
 
-    checkArity(op, args);
-
-    PROTECT(sx = coerceVector(CAR(args), REALSXP));
-    if (!isNumeric(sx))
-      errorcall(call, "non-numeric argument");
-    n = LENGTH(sx);
-    indx = NA_INTEGER;
     s = R_NegInf;
     for (i = 0; i < n; i++)
 	if (!ISNAN(REAL(sx)[i]) && REAL(sx)[i] > s) {
 	    s = REAL(sx)[i]; indx = i;
 	}
-    UNPROTECT(1);
-    ans = allocVector(INTSXP, (i = (indx != NA_INTEGER)) ? 1 : 0);
-    if (i) INTEGER(ans)[0] = indx + 1;
-    return ans;
+
+    End_do_first
 }
+#undef Beg_do_first
+#undef End_do_first
 
 
 /* complete.cases(.) */

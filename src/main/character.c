@@ -309,6 +309,9 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
 	SET_VECTOR_ELT(s, i, t);
     }
+
+    if (getAttrib(x, R_NamesSymbol) != R_NilValue)
+	namesgets(s, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
     AllocBuffer(-1);
     free(pt);
