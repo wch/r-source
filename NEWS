@@ -310,6 +310,10 @@ UTILITIES
     o	massage-Examples.pl now attempts to unload any namespaces
 	loaded by the example.
 
+    o	tools::codoc() (and hence R CMD check) now checks any documentation
+	for registered S3 methods and unexported objects in packages
+	with namespaces.
+
 
 DOCUMENTATION
 
