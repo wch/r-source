@@ -234,7 +234,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 } else pos <- npos
             }
             if(newpackage) {
-                .getRequiredPackages(descfile)
+                ## temporary kludge
+                if(! pkgname %in% c("package:lattice", "package:nlme"))
+                    .getRequiredPackages(descfile)
 		## If the name space mechanism is available and the package
 		## has a name space, then the name space loading mechanism
 		## takes over.
