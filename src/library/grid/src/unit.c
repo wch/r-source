@@ -510,8 +510,6 @@ double transform(double value, int unit, SEXP data,
      * or somesuch.
      */
     case L_CHAR:
-	result = result*gc->fontsize*gc->cex/(72*thisCM/2.54);
-	break;	
     case L_MYCHAR:  /* FIXME: Remove this when I can */
 	result = result*gc->fontsize*gc->cex/(72*thisCM/2.54);
 	break;	
