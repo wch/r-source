@@ -8,44 +8,42 @@ NextMethod <- function(generic=NULL, object=NULL, ...)
 
 methods <- function (generic.function, class)
 {
-    ## this list is taken from .makeS3MethodsStopList in tools/R/utils.R
-    S3MethodsStopList <-
-        c("boxplot.stats", "close.screen", "close.socket",
-          "flush.console", "format.char", "format.info", "format.pval",
-          "influence.measures", "plot.new", "plot.window", "plot.xy",
-          "print.coefmat", "rep.int", "split.screen", "update.packages",
-          "text.SAX", "solve.QP", "solve.QP.compact", "print.graph",
-          "lag.plot")
-    groupGenerics <- c("Ops", "Math", "Summary")
+    S3MethodsStopList <- tools::.makeS3MethodsStopList("all")
+    S3groupGenerics <- c("Ops", "Math", "Summary")
 
     an <- lapply(seq(along=(sp <- search())), ls)
     names(an) <- sp
     an <- unlist(an)
+    visible <- rep.int(TRUE, length(an))
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
         genfun <- get(generic.function)
         gf <- paste(deparse(genfun), collapse="\n")
-        if(!length(grep("UseMethod", gf)))
-            stop(generic.function, "does not contain a call to UseMethod")
-        truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
-        if(truegf != generic.function) {
-            warning(paste("Generic `", generic.function,
-                          "' dispatches methods for generic `",
-                          truegf, "'", sep=""))
-            genfun <- get(generic.function <- truegf)
+        if(length(grep("UseMethod", gf))) {
+            truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
+            if(truegf != generic.function) {
+                warning(paste("Generic `", generic.function,
+                              "' dispatches methods for generic `",
+                              truegf, "'", sep=""))
+                genfun <- get(generic.function <- truegf)
+            }
         }
 	name <- paste("^", generic.function, ".", sep = "")
         ## also look for registered methods in namespaces
-        if(generic.function %in% groupGenerics)
+        if(generic.function %in% S3groupGenerics)
             defenv <- .BaseNamespaceEnv
         else {
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }
         S3reg <- ls(get(".__S3MethodsTable__.", envir = defenv))
+        visible <- c(visible, rep.int(FALSE, length(S3reg)))
+        an <- c(an, S3reg)
         ## might both export and register a method
-        an <- unique(c(an, S3reg))
+        dups <- duplicated(an)
+        an <- an[!dups]
+        visible <- visible[!dups]
     }
     else if (!missing(class)) {
 	if (!is.character(class))
@@ -53,8 +51,26 @@ methods <- function (generic.function, class)
 	name <- paste(".", class, "$", sep = "")
     }
     else stop("must supply generic.function or class")
-    res <- sort(grep(gsub("([.[])", "\\\\\\1", name), an, value = TRUE))
-    res[! res %in% S3MethodsStopList]
+    keep <- grep(gsub("([.[])", "\\\\\\1", name), an)
+    res <- an[keep]; visible <- visible[keep]
+    keep <- ! res %in% S3MethodsStopList
+    res <- res[keep]; visible <- visible[keep]
+    ord <- sort.list(res)
+    res <- res[ord]; visible <- visible[ord]
+    class(res) <- "MethodsFunction"
+    info <- list(visible=visible)
+    attr(res, "info") <- info
+    res
+}
+
+print.MethodsFunction <- function(x, ...)
+{
+    visible <- attr(x, "info")$visible
+    z <- paste(x, ifelse(visible, "", "*"), sep="")
+    print(z, quote=FALSE, ...)
+    if(any(!visible))
+        cat("\n    Non-visible functions are asterisked\n")
+    invisible(x)
 }
 
 data.class <- function(x) {
@@ -85,7 +101,7 @@ getS3method <-  function(f, class, optional = FALSE)
         else .BaseNamespaceEnv
         S3Table <- get(".__S3MethodsTable__.", envir = defenv)
         S3reg <- ls(S3Table)
-        if(length(grep(sub("\\[", "\\\\[", method), S3reg)))
+        if(length(grep(gsub("\\[", "\\\\[", method), S3reg)))
             return(get(method, envir = S3Table))
     }
     if(optional) NULL

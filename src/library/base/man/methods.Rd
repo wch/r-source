@@ -3,6 +3,7 @@
 \alias{UseMethod}
 \alias{NextMethod}
 \alias{methods}
+\alias{print.MethodsFunction}
 \alias{S3Methods}
 \alias{.isMethodsDispatchOn}
 \description{
@@ -25,6 +26,13 @@ methods(generic.function, class)
     generic function.}
   \item{class}{a symbol or character string naming a class: only used if
     \code{generic.function} is not supplied.}
+}
+\value{
+  \code{methods} returns an object of class \code{"MethodsFunction"}, a
+  character vector of function names with an \code{"info"} attribute.
+  There is a \code{print} method which marks with an asterisk any
+  methods which are not visible: such functions can be examined by
+  \code{\link{getS3method}} or \code{\link{getAnywhere}}.
 }
 \details{
   An \R ``object'' is a data object which has a \code{class} attribute.
@@ -97,11 +105,8 @@ methods(generic.function, class)
 }
 \examples{
 methods(summary)
-
+methods(class = "aov")
+methods("[[")  ##- does not list the C-internal ones...
 \dontrun{methods(print)
-
-methods(class = data.frame)
-
-methods("[")  ##- does not list the C-internal ones...
 }}
 \keyword{methods}

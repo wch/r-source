@@ -52,7 +52,7 @@ NEW FEATURES
 
     o	A new entry, sizeof.pointer, has been added to .Machine.
 
-    o	strsplit(x,*) now preserves names() but won't work for
+    o	strsplit(x, *) now preserves names() but won't work for
 	non-character `x' anymore {formerly used as.character(x),
 	destroying names(x)}.
 
@@ -62,6 +62,9 @@ NEW FEATURES
 
     o   New option `locatorBell' to control the confirmation beep
 	during the use of locator() and identify().
+
+    o   methods() has a print method which asterisks functions which
+	are not user-visible.
 
 
 DEPRECATED & DEFUNCT

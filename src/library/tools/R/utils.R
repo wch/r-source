@@ -215,8 +215,7 @@ function(package)
 {
     ## Return a character vector with the names of the functions in
     ## @code{package} which 'look' like S3 methods, but are not.
-    switch(package,
-	   base = c("boxplot.stats",
+    stopList <- list(base = c("boxplot.stats",
 	   "close.screen", "close.socket",
 	   "flush.console",
 	   "format.char", "format.info", "format.pval",
@@ -228,8 +227,10 @@ function(package)
            XML = "text.SAX",
 	   quadprog = c("solve.QP", "solve.QP.compact"),
 	   sm = "print.graph",
-	   ts = "lag.plot",
-	   character(0))
+	   ts = "lag.plot")
+    if(package == "all") return(unlist(stopList))
+    thisPkg <- stopList[[package]]
+    if(!length(thisPkg)) character(0) else thisPkg
 }
 
 ### * .sourceAssignments
