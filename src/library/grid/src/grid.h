@@ -499,6 +499,10 @@ double viewportHJust(SEXP v);
 
 double viewportVJust(SEXP vp);
 
+SEXP viewportLayoutPosRow(SEXP vp);
+
+SEXP viewportLayoutPosCol(SEXP vp);
+
 SEXP viewportLayout(SEXP vp);
 
 SEXP viewportParent(SEXP vp);
@@ -535,6 +539,8 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 void initVP(GEDevDesc *dd);
 
 /* From layout.c */
+Rboolean checkPosRowPosCol(SEXP viewport, SEXP parent);
+
 void calcViewportLayout(SEXP viewport,
 			double parentWidthCM,
 			double parentHeightCM,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-10 09:31+0000\n"
+"POT-Creation-Date: 2005-02-11 09:57+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,14 @@ msgstr ""
 
 #: grid.c:1784
 msgid "Invalid circle radius (must be non-negative)"
+msgstr ""
+
+#: layout.c:520
+msgid "invalid layout.pos.row"
+msgstr ""
+
+#: layout.c:524
+msgid "invalid layout.pos.col"
 msgstr ""
 
 #: state.c:170

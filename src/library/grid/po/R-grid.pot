@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 12:36\n"
+"POT-Creation-Date: 2005-02-11 09:57\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -381,6 +381,12 @@ msgid "Invalid angle in viewport"
 msgstr ""
 
 msgid "Invalid layout in viewport"
+msgstr ""
+
+msgid "Invalid layout.pos.row in viewport"
+msgstr ""
+
+msgid "Invalid layout.pos.col in viewport"
 msgstr ""
 
 msgid "Only viewports allowed in vpList"

@@ -34,14 +34,21 @@ valid.viewport <- function(x, y, width, height, just,
   if (!is.numeric(yscale) || length(yscale) != 2 ||
       any(!is.finite(yscale)))
     stop("Invalid yscale in viewport")
-  if (!is.numeric(angle) || length(angle) != 1)
+  if (!is.numeric(angle) || length(angle) != 1 ||
+      !is.finite(angle))
     stop("Invalid angle in viewport")
   if (!(is.null(layout) || is.layout(layout)))
     stop("Invalid layout in viewport")
-  if (!is.null(layout.pos.row))
-    layout.pos.row <- as.integer(rep(range(layout.pos.row), length.out=2))
-  if (!is.null(layout.pos.col))
-    layout.pos.col <- as.integer(rep(range(layout.pos.col), length.out=2))
+  if (!is.null(layout.pos.row)) {
+    layout.pos.row <- as.integer(range(layout.pos.row))
+    if (any(!is.finite(layout.pos.row)))
+      stop("Invalid layout.pos.row in viewport")
+  }
+  if (!is.null(layout.pos.col)) {
+    layout.pos.col <- as.integer(range(layout.pos.col))
+    if (any(!is.finite(layout.pos.col)))
+      stop("Invalid layout.pos.col in viewport")
+  }
   # If name is NULL then we give it a default
   # Otherwise it should be a valid R name
   if (is.null(name))
