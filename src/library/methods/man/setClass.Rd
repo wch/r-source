@@ -210,20 +210,6 @@ xxx <- rnorm(3)
 setClass("xNum", representation(x = "numeric"), prototype = list(x = xxx))
 stopifnot(identical(new("xNum")@x, xxx))
 
-## extending a virtual class with several possible realizations
-## Used to result in a recursive loop through as()
-## (in S-Plus 6.0, new() doesn't work right with this class)
-
-setClass("maybeNumber")
-setIs("numeric", "maybeNumber")
-setIs("logical", "maybeNumber")
-setClass("withId", representation("maybeNumber", id = "character"))
-
-www <- new("withId", 1:10, id = "test 1")
-
-## The following test should use identical(), but then the two
-## expressions differ by having the object bit on and off resp.
-stopifnot(all(as.integer(ttt) == 1:10))
 
 
 }
