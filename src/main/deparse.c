@@ -1006,7 +1006,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			deparse2buff(CADDR(s), d);
 		    }
 		    else if ( isSymbol(CAR(s))
-		      && TYPEOF(SYMVALUE(val)) == CLOSXP
+		      && TYPEOF(val) == CLOSXP
 		      && streql(CHAR(PRINTNAME(CAR(s))), ":::") ){ /*  ::: is special case */
 		    	deparse2buff(CADR(s), d);
 		    	print2buff(":::", d);
