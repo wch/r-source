@@ -1,11 +1,10 @@
 \name{solve}
 \title{Solve a System of Equations}
 \usage{
-\method{solve}{default}(a, b, tol = 1e-7, LINPACK = FALSE, ...)
+\method{solve}{default}(a, b, tol = 1e-7, LINPACK = FALSE, \dots)
 }
 \alias{solve}
 \alias{solve.default}
-\alias{solve.qr}
 \arguments{
   \item{a}{a square numeric or complex matrix containing the coefficients of
     the linear system.}
@@ -39,6 +38,7 @@
   \code{\link{qr.solve}} can handle non-square systems.
 }
 \seealso{
+  \code{\link{solve.qr}} for the \code{qr} method,
   \code{\link{backsolve}}, \code{\link{qr.solve}}.
 }
 \examples{

@@ -1,7 +1,7 @@
-solve.qr <- function(a, b, tol = 1e-7, ...)
+solve.qr <- function(a, b, ...)
 {
     if( !is.qr(a) )
-	a <- qr(a, tol = tol)
+	stop("this is the qr method for the solve generic")
     nc <- ncol(a$qr)
     if( a$rank != nc )
 	stop("singular matrix `a' in solve")
@@ -60,4 +60,19 @@ solve.default <- function(a, b, tol = 1e-7, LINPACK = FALSE, ...)
 }
 
 solve <- function(a, b, ...) UseMethod("solve")
-qr.solve <- function(a, b, tol = 1e-7) solve.qr(a, b, tol)
+
+qr.solve <- function(a, b, tol = 1e-7)
+{
+    if( !is.qr(a) )
+	a <- qr(a, tol = tol)
+    nc <- ncol(a$qr)
+    if( a$rank != nc )
+	stop("singular matrix `a' in solve")
+    if( missing(b) ) {
+	if( nc != nrow(a$qr) )
+	    stop("only square matrices can be inverted")
+	b <- diag(1, nc)
+    }
+    return(qr.coef(a, b))
+}
+

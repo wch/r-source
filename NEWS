@@ -279,6 +279,9 @@ NEW FEATURES
 
     o	summary.{lm,glm} now default to symbolic.cor = FALSE.
 
+    o	QR objects now have class "qr", and solve.qr() is now just the
+	method for solve() for the class.
+
 
 INSTALLATION CHANGES
 

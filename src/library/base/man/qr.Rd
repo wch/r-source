@@ -1,17 +1,4 @@
 \name{qr}
-\title{The QR Decomposition of a Matrix}
-\usage{
-qr(x, tol = 1e-07 , LAPACK = TRUE)
-qr.coef(qr, y)
-qr.qy(qr, y)
-qr.qty(qr, y)
-qr.resid(qr, y)
-qr.fitted(qr, y, k = qr$rank)
-qr.solve(a, b, tol = 1e-7)
-
-is.qr(x)
-as.qr(x)
-}
 \alias{qr}
 \alias{qr.coef}
 \alias{qr.qy}
@@ -21,16 +8,32 @@ as.qr(x)
 \alias{qr.solve}
 \alias{is.qr}
 \alias{as.qr}
+\alias{solve.qr}
+\title{The QR Decomposition of a Matrix}
+\usage{
+qr(x, tol = 1e-07 , LAPACK = TRUE)
+qr.coef(qr, y)
+qr.qy(qr, y)
+qr.qty(qr, y)
+qr.resid(qr, y)
+qr.fitted(qr, y, k = qr$rank)
+qr.solve(a, b, tol = 1e-7)
+\method{solve}{qr}(a, b, \dots)
+
+is.qr(x)
+as.qr(x)
+}
 \arguments{
   \item{x}{a matrix whose QR decomposition is to be computed.}
   \item{tol}{the tolerance for detecting linear dependencies in the
     columns of \code{x}. Only used in \code{LINPACK} is true.}
   \item{qr}{a QR decomposition of the type computed by \code{qr}.}
   \item{y, b}{a vector or matrix of right-hand sides of equations.}
-  \item{a}{A matrix or QR decomposition.}
+  \item{a}{A QR decomposition or (\code{qr.solve} only) a rectangular matrix.}
   \item{k}{effective rank.}
   \item{LAPACK}{logical. For real \code{x}, if true use LAPACK
     otherwise use LINPACK.}
+  \item{\dots}{further arguments passed to or from other methods}
 }
 \description{
   \code{qr} computes the QR decomposition of a matrix.  It provides an
@@ -53,7 +56,13 @@ as.qr(x)
   All the above functions keep \code{dimnames} (and \code{names}) of
   \code{x} and \code{y} if there are.
 
-  \code{qr.solve} solves systems of equations via the QR decomposition.
+  \code{solve.qr} is the method for \code{solve} for \code{qr} objects.
+  \code{qr.solve} solves systems of equations via the QR decomposition:
+  if \code{a} is a QR decomposition it is the same as \code{solve.qr},
+  but if \code{a} is a rectangular matrix the QR decomposition is
+  computed first.  Either will handle over- and under-determined
+  systems, providing a minimal-length solution or a least-squares fit
+  if appropriate.
 
   \code{is.qr} returns \code{TRUE} if \code{x} is a \code{\link{list}}
   with components named \code{qr}, \code{rank} and \code{qraux} and

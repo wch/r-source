@@ -1,5 +1,7 @@
 is.qr <- function(x) !is.null(x$qr) && !is.null(x$rank) && !is.null(x$qraux)
 
+iq.qr <- function(x) inherits(x, "qr")
+
 qr <- function(x, tol = 1e-07, LAPACK = FALSE)
 {
     x <- as.matrix(x)
@@ -7,6 +9,7 @@ qr <- function(x, tol = 1e-07, LAPACK = FALSE)
     if(LAPACK) {
         res <- .Call("La_dgeqp3", x, PACKAGE = "base")
         attr(res, "useLAPACK") <- TRUE
+        class(res) <- "qr"
         return(res)
     }
 
@@ -14,7 +17,7 @@ qr <- function(x, tol = 1e-07, LAPACK = FALSE)
     n <- nrow(x)
     if(!is.double(x))
 	storage.mode(x) <- "double"
-    .Fortran("dqrdc2",
+    res <- .Fortran("dqrdc2",
 	     qr=x,
 	     n,
 	     n,
@@ -25,6 +28,8 @@ qr <- function(x, tol = 1e-07, LAPACK = FALSE)
 	     pivot = as.integer(1:p),
 	     double(2*p),
 	     PACKAGE="base")[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
+    class(res) <- "qr"
+    res
 }
 
 qr.coef <- function(qr, y)
