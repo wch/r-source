@@ -2798,7 +2798,7 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 GUnit units, DevDesc *dd)
 {
     if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, gpptr(dd)->font,
+	((GEDevDesc*) dd)->dev->metricinfo(c & 0xFF, gpptr(dd)->font,
 					   gpptr(dd)->cex, 
 					   (double) gpptr(dd)->ps,
 					   ascent, descent, width, 
