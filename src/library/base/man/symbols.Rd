@@ -33,10 +33,10 @@ symbols(x, y, circles, squares, rectangles, stars,
         columns are taken as proportions.  The thermometers are filled
         between these two proportions of their heights.}
   \item{boxplots}{a matrix with five columns.  The first two columns
-        give the width and height of the boxes and the third the
-        proportion of the way up the box that the median line is
-	drawn.  The last two columns give the lengths of the lower and
-        upper whiskers.}
+        give the width and height of the boxes, the next two columns
+        give the lengths of the lower and upper whiskers and the fifth
+	the proportion (with a warning if not in [0,1]) of the way up
+	the box that the median line is drawn.}
   \item{inches}{If \code{inches} is \code{FALSE}, the units are taken
         to be those of the x axis.  If \code{inches} is \code{TRUE},
         the symbols are scaled so that the largest symbol is one
@@ -73,17 +73,26 @@ symbols(x, y, circles, squares, rectangles, stars,
 }
 \examples{
 x <- 1:10
-y <- runif(10)
+y <- sort(10*runif(10))
 z <- runif(10)
-symbols(x, y, thermometers=cbind(.5, 1, z), inches=.5)
+z3 <- cbind(z, 2*runif(10), runif(10))
+symbols(x, y, thermometers=cbind(.5, 1, z), inches=.5, fg = 1:10)
+symbols(x, y, thermometers = z3, inches=FALSE)
+text(x,y, apply(format(round(z3, dig=2)), 1, paste, collapse = ","),
+     adj = c(-.2,0), cex = .75, col = "purple", xpd=NA)
 
 data(trees)
 ## Note that  example(trees)  shows more sensible plots!
+N <- nrow(trees)
 attach(trees)
 ## Girth is diameter in inches
 symbols(Height, Volume, circles=Girth/24, inches=FALSE,
         main="Trees' Girth")# xlab and ylab automatically
-detach()
+## Colors too:
+palette(rainbow(N, end = 0.9))
+symbols(Height, Volume, circles=Girth/16, inches=FALSE, bg = 1:N,
+        fg="gray30", main="symbols(*, circles=Girth/16, bg = 1:N)")
+palette("default"); detach()
 }
 \keyword{aplot}
 \keyword{hplot}

@@ -329,7 +329,8 @@ NEW FEATURES
     o	.Alias has been removed from all R sources and deprecated.
 
     o	symbols() now has automatical xlab and ylab and a main argument
-	which eliminates an incorrect warning.
+	which eliminates an incorrect warning.	It better checks wrongly
+	scaled arguments.
 
     o	hist.default() allows `breaks' to specify a rule to choose the
         number of classes, and rules "Sturges" (the previous default,
@@ -421,7 +422,7 @@ BUG FIXES
 
     o	Fixed share/perl/massage-examples.pl to detect instances of
 	par() at the very start of a line.
-	
+
     o   Fixed Pearson residuals for glms with non-canonical
 	link.(PR#1123). Fixed them again for weights (PR#1175).
 

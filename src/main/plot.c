@@ -3634,7 +3634,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		R_FINITE(REAL(p)[i])) {
 		rx = REAL(p)[i];
 		if (inches > 0)
-		    rx *= inches / pmax;
+		    rx *= inches / pmax;/* <-- no GConvert ?? */
 		else/* FIXME : INCHES in the following ??? */
 		    rx = GConvertXUnits(rx, USER, INCHES, dd);
 		GCircle(REAL(x)[i], REAL(y)[i],	USER, rx,
@@ -3700,7 +3700,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     case 4: /* stars */
 	if (nc < 3)
 	    errorcall(call, "invalid stars data");
-	if (!SymbolRange(REAL(p), nc, &pmax, &pmin))
+	if (!SymbolRange(REAL(p), nc * nr, &pmax, &pmin))
 	    errorcall(call, "invalid symbol parameter");
 	vmax = vmaxget();
 	pp = (double*)R_alloc(nc, sizeof(double));
@@ -3741,8 +3741,14 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     case 5: /* thermometers */
 	if (nc != 3 && nc != 4)
 	    errorcall(call, "invalid thermometers data (need 3 or 4 columns)");
+	SymbolRange(REAL(p)+2*nr/* <-- pointer arith*/, 2 * nr, &pmax, &pmin);
+	if (pmax < pmin)
+	    errorcall(call, "invalid thermometers[,%s]",(nc == 4)? "3:4" : "3");
+	if (pmin < 0. || pmax > 1.) /* S-PLUS has an error here */
+	    warningcall(call,"thermometers[,%s] not in [0,1] -- may look funny",
+			(nc == 4)? "3:4" : "3");
 	if (!SymbolRange(REAL(p), 2 * nr, &pmax, &pmin))
-	    errorcall(call, "invalid symbol parameter");
+	    errorcall(call, "invalid thermometers[,1:2]");
 	for (i = 0; i < nr; i++) {
 	    xx = REAL(x)[i];
 	    yy = REAL(y)[i];
@@ -3779,32 +3785,29 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	break;
-    case 6: /* boxplots */
+    case 6: /* boxplots (wid, hei, loWhsk, upWhsk, medProp) */
 	if (nc != 5)
 	    errorcall(call, "invalid boxplots data (need 5 columns)");
 	pmax = -DBL_MAX;
 	pmin =	DBL_MAX;
 	for(i = 0; i < nr; i++) {
-	    p1 = REAL(p)[i + nr];
-	    p3 = REAL(p)[i + 3 * nr];
-	    p4 = REAL(p)[i + 4 * nr];
-	    if (R_FINITE(p1) && R_FINITE(p3) && R_FINITE(p4)) {
-		p0 = p1 + p3 + p4;
-		if (pmax < p0) pmax = p0;
-		if (pmin > p0) pmin = p0;
-	    }
+	    p4 = REAL(p)[i + 4 * nr];	/* median proport. in [0,1] */
+	    if (pmax < p4) pmax = p4;
+	    if (pmin > p4) pmin = p4;
 	}
-	if (pmin > pmax || pmin <= 0)
-	    errorcall(call, "invalid symbol parameter");
+	if (pmin < 0. || pmax > 1.) /* S-PLUS has an error here */
+	    warningcall(call, "boxplots[,5] outside [0,1] -- may look funny");
+	if (!SymbolRange(REAL(p), 4 * nr, &pmax, &pmin))
+	    errorcall(call, "invalid boxplots[, 1:4]");
 	for (i = 0; i < nr; i++) {
 	    xx = REAL(x)[i];
 	    yy = REAL(y)[i];
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
-		p0 = REAL(p)[i];
-		p1 = REAL(p)[i + nr];
-		p2 = REAL(p)[i + 2 * nr];
-		p3 = REAL(p)[i + 3 * nr];
-		p4 = REAL(p)[i + 4 * nr];
+		p0 = REAL(p)[i];	/* width */
+		p1 = REAL(p)[i + nr];   /* height */
+		p2 = REAL(p)[i + 2 * nr];/* lower whisker */
+		p3 = REAL(p)[i + 3 * nr];/* upper whisker */
+		p4 = REAL(p)[i + 4 * nr];/* median proport. in [0,1] */
 		if (R_FINITE(p0) && R_FINITE(p1) &&
 		    R_FINITE(p2) && R_FINITE(p3) && R_FINITE(p4)) {
 		    GConvert(&xx, &yy, USER, NDC, dd);
