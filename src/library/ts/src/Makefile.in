@@ -14,9 +14,12 @@ R_HOME = $(top_builddir)
 OBJS = PPsum.o burg.o eureka.o filter.o pacf.o starma.o stl.o \
        carray.o mburg.o myw.o qr.o
 SHLIB = $(pkg).@SHLIB_EXT@
+
 ## FIXME:
-## Add $(LIBM)?
-SHLIB_LIBADD = $(FLIBS)
+## We should really add FLIBS to SHLIB_LIBADD, but we need to include
+## the shlib Makeconf at a later stage, and its default value would
+## override our setting.
+PKG_LIBS = @FLIBS@
 ## </FIXME>
 
 all: Makefile $(SHLIB)
