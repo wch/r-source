@@ -10,3 +10,5 @@ base:
 ##	@cat $(FUNS) STARTUP |sed  '/^$$/d;/^[ 	]*#/d'  > ../../../library/base
 ##					      ^^ = TAB + Space
 	@cp INDEX TITLE ../../../library/base
+	@mkdir -p ../../../library/base/data
+	@cp `ls data/[a-z]*` ../../../library/base/data
