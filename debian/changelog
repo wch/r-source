@@ -1,9 +1,38 @@
-r-base (1.4.1.cvs20020414-2) unstable; urgency=low
+r-base (1.5.1-1) unstable; urgency=low
 
+  * Upgraded to new upstream release 1.5.1
+  * debian/rules: Also create link from libRmath.so to libRmath.so.1
+  * debian/rules: Include test.c example in r-mathlib (Closes: #149723)
+  * debian/README.mathlib: Added, includes src/nmath/standalone/README
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 17 Jun 2002 19:24:59 -0500
+
+r-base (1.5.0-3) unstable; urgency=low
+
+  * debian/r-doc-html.links: Link into /usr/lib/R/doc/manual (Closes: #148628)
+  * debian/r-doc-pdf.links: Idem
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat,  8 Jun 2002 11:52:14 -0500
+
+r-base (1.5.0-2) unstable; urgency=low
+
+  * debian/rules: Remove usr/share/info/dir{,.old} (Closes: #148054)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 27 May 2002 15:31:22 -0500
+
+r-base (1.5.0-1) unstable; urgency=low
+
+  * Upgraded to new upstream release 1.5.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 29 Apr 2002 18:23:59 -0500
+
+r-base (1.4.1.cvs20020421-1) unstable; urgency=low
+
+  * Upgraded to new release candidate 2002-04-21 of R 1.5.0
   * debian/control: Added virtual fortran77-compiler, c-compiler to the
     list of alternative compilers that r-base-dev Depends: on
 
- --
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 21 Apr 2002 19:01:57 -0500
 
 r-base (1.4.1.cvs20020414-1) unstable; urgency=low
 

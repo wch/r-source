@@ -3,7 +3,7 @@
 # Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
 # Copyright 2001-2002 by Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.40 2002/04/22 22:05:38 bates Exp $
+# $Id: rules,v 1.41 2002/06/20 17:52:55 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -11,6 +11,7 @@ pdfpackage	= r-doc-pdf
 htmlpackage	= r-doc-html
 gnomepackage	= r-gnome
 nmathpackage	= r-mathlib
+infopackage	= r-doc-info
 
 # for the standalone library, no sonames are assigned in the upstream Makefiles
 somaj		= 1
@@ -255,7 +256,8 @@ endif
 	install -m 0644 src/nmath/standalone/libRmath.so    \
 			$(debmat)//usr/lib/libRmath.so.$(libver)
 	(cd $(debmat)/usr/lib; \
-			ln -s libRmath.so.$(libver) libRmath.so.$(somaj))
+			ln -s libRmath.so.$(libver) libRmath.so.$(somaj); \
+			ln -s libRmath.so.$(somaj)  libRmath.so)
         # and create a link for Rmath.h 
 	(cd $(debmat)/usr/include; \
 			ln -s ../lib/R/include/Rmath.h .)
@@ -282,7 +284,10 @@ install-indep-stamp:
 	dh_movefiles	-p$(htmlpackage)		
 	touch install-indep-stamp
         # move files for r-doc-info
-	dh_movefiles	-pr-doc-info
+	dh_movefiles	-p$(infopackage)
+        # but clean up dir and old.dir	
+	rm -vf 		$(debbase)/$(infopackage)/usr/share/info/dir \
+			$(debbase)/$(infopackage)/usr/share/info/dir.old
 
 # Build architecture-independent files here.
 binary-indep: build-indep install-indep
@@ -324,8 +329,10 @@ binary-arch: build-arch install-arch check
 	dh_link -a
 	dh_installdocs -p$(corepackage) AUTHORS BUGS  NEWS ONEWS README \
 					RESOURCES THANKS Y2K \
-					debian/README.Atlas
+					debian/README.Atlas \
+					debian/README.mathlib
 	dh_installexamples -a
+	dh_installexamples -p$(corepackage)	src/nmath/standalone/test.c
 	dh_installmenu -a
         #dh_installemacsen -a
         #dh_installpam -a
