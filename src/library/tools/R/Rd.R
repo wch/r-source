@@ -313,7 +313,8 @@ Rd2contents <-
 function(dir, outFile = "")
 {
     ## <NOTE>
-    ## This is based on the Perl code in R_HOME/share/Rd2contents.pl.
+    ## Based on the defunct Perl code in R_HOME/share/Rd2contents.pl
+    ## (now removed).
     ## </NOTE>
 
     if(!fileTest("-d", dir))

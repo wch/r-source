@@ -688,9 +688,9 @@ function(x, ...)
     ## E.g., for generic functions with just a default and a formula
     ## method we typically do not have \usage for the generic itself.
     ## (This will change now with the new \method{}{} transformation.)
-    ## Also, earlier versions od codoc() based on extract-usage.pl only
-    ## dealt with the *functions* so all variables would come out as
-    ## 'without usage information' ...
+    ## Also, earlier versions of codoc() based on the defunct Perl code
+    ## in extract-usage.pl (now removed) only dealt with the *functions*
+    ## so all variables would come out as 'without usage information' ...
     ## As we can always access the information via
     ##    attr(codoc("foo"), "codeNotInUsages")
     ## disable reporting this for the time being ...
