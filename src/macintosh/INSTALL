@@ -54,7 +54,7 @@ REQUIREMENTS:
 5) A copy ofthe package "MoreFiles 1.5.2" or later.
    This is usually distributed along with the Carbon SDK 
    kit (developer.apple.com)
-6) A copy of the Waste 2.x distribution. Please refer to the
+6) A copy of the Waste 2.1x distribution. Please refer to the
    official Waste site:
    http://www.merzwaren.com/waste
 7) a copy of the "zlibLib" runtime library. 
@@ -238,7 +238,7 @@ or just
 
 
 
-July 13th, 2002		Stefano M. Iacus
+Sep 7th, 2002		Stefano M. Iacus
 						(stefano.iacus@unimi.it)
 
 
