@@ -105,26 +105,26 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Preface::
-* Introduction and preliminaries::
-* Simple manipulations numbers and vectors::
-* Objects::
-* Factors::
-* Arrays and matrices::
-* Lists and data frames::
-* Reading data from files::
-* Probability distributions::
-* Loops and conditional execution::
-* Writing your own functions::
-* Statistical models in R::
-* Graphics::
-* Packages::
-* A sample session::
-* Invoking R::
-* The command line editor::
-* Function and variable index::
-* Concept index::
-* References::
+* Preface::                     
+* Introduction and preliminaries::  
+* Simple manipulations numbers and vectors::  
+* Objects::                     
+* Factors::                     
+* Arrays and matrices::         
+* Lists and data frames::       
+* Reading data from files::     
+* Probability distributions::   
+* Loops and conditional execution::  
+* Writing your own functions::  
+* Statistical models in R::     
+* Graphics::                    
+* Packages::                    
+* A sample session::            
+* Invoking R::                  
+* The command-line editor::     
+* Function and variable index::  
+* Concept index::               
+* References::                  
 @end menu
 
 @node Preface, Introduction and preliminaries, Top, Top
@@ -162,16 +162,16 @@ been digested.
 @chapter Introduction and preliminaries
 
 @menu
-* The R environment::
-* Related software and documentation::
-* R and statistics::
-* R and the window system::
-* Using R interactively::
-* Getting help::
-* R commands; case sensitivity etc::
-* Recall and correction of previous commands::
-* Executing commands from or diverting output to a file::
-* Data permanency and removing objects::
+* The R environment::           
+* Related software and documentation::  
+* R and statistics::            
+* R and the window system::     
+* Using R interactively::       
+* Getting help::                
+* R commands; case sensitivity etc::  
+* Recall and correction of previous commands::  
+* Executing commands from or diverting output to a file::  
+* Data permanency and removing objects::  
 @end menu
 
 @node The R environment, Related software and documentation, Introduction and preliminaries, Introduction and preliminaries
@@ -193,10 +193,10 @@ analysis,
 graphical facilities for data analysis and display either directly at
 the computer or on hardcopy, and
 @item
-a well developed, simple and effective programming language which
-includes conditionals, loops, user defined recursive functions and input
-and output facilities.  (Indeed most of the system supplied functions
-are themselves written in the @Sl{} language.)
+a well developed, simple and effective programming language (called `S')
+which includes conditionals, loops, user defined recursive functions and
+input and output facilities.  (Indeed most of the system supplied
+functions are themselves written in the @Sl{} language.)
 @end itemize
 
 The term ``environment'' is intended to characterize it as a fully
@@ -205,13 +205,10 @@ very specific and inflexible tools, as is frequently the case with other
 data analysis software.
 
 @R{} is very much a vehicle for newly developing methods of interactive
-data analysis.  As such it is very dynamic, and new releases have not
-always been fully backwards compatible with previous releases.  Some
-users welcome the changes because of the bonus of new technology and new
-methods that come with new releases; others seem to be more worried by
-the fact that old code no longer works.  Although @R{} is intended as a
-programming language, one should regard most programs written in @R{} as
-essentially ephemeral.
+data analysis.  It has developed rapidly, and has been extended by a
+large collection of @emph{packages}.  However, most programs written in
+@R{} are essentially ephemeral, written for a single piece of data
+analysis.
 
 @node Related software and documentation, R and statistics, The R environment, Introduction and preliminaries
 @section Related software and documentation
@@ -224,15 +221,19 @@ The evolution of the @Sl{} language is characterized by four books by
 John Chambers and coauthors.  For @R{}, the basic reference is @emph{The
 New @Sl{} Language: A Programming Environment for Data Analysis and
 Graphics} by Richard A.@: Becker, John M.@: Chambers and Allan R.@:
-Wilks.  The new features of the 1991 release of @Sl{} (@Sl{} version 3)
+Wilks.  The new features of the 1991 release of @Sl{} 
+@c (@Sl{} version 3) JMC says the 1988 version is S3.
 are covered in @emph{Statistical Models in @Sl{}} edited by John M.@:
-Chambers and Trevor J.@: Hastie.  @xref{References}, for precise
+Chambers and Trevor J.@: Hastie.  The formal methods and classes of the
+@pkg{methods} package are based on those described in @emph{Programming
+with Data} by John M.@: Chambers.  @xref{References}, for precise
 references.
 
-In addition, documentation for @Sl{}/@SPLUS{} can typically be used with
-@R{}, keeping the differences between the @Sl{} implementations in mind.
-@xref{What documentation exists for R?, , , R-FAQ, The R statistical
-system FAQ}.
+There are now a number of books which describe how to use @R{} for data
+analysis and statistics, and documentation for @Sl{}/@SPLUS{} can
+typically be used with @R{}, keeping the differences between the @Sl{}
+implementations in mind.  @xref{What documentation exists for R?, , ,
+R-FAQ, The R statistical system FAQ}.
 
 @node R and statistics, R and the window system, Related software and documentation, Introduction and preliminaries
 @section R and statistics
@@ -241,17 +242,16 @@ system FAQ}.
 Our introduction to the @R{} environment did not mention
 @emph{statistics}, yet many people use @R{} as a statistics system.  We
 prefer to think of it of an environment within which many classical and
-modern statistical techniques have been implemented.  Some of these are
+modern statistical techniques have been implemented.  A few of these are
 built into the base @R{} environment, but many are supplied as
-@emph{packages}. (Currently the distinction is largely a matter of
-historical accident.)  There are about 10 packages supplied with @R{}
-(called ``standard'' packages) and many more are available through the
-@acronym{CRAN} family of Internet sites (via
-@uref{http://cran.r-project.org}).  More details on packages are given
-later (@pxref{Packages}).
+@emph{packages}.  There are about 25 packages supplied with @R{} (called
+``standard'' and ``recommended'' packages) and many more are available
+through the @acronym{CRAN} family of Internet sites (via
+@uref{http://cran.r-project.org}) and elsewhere.  More details on
+packages are given later (@pxref{Packages}).
 
 Most classical statistics and much of the latest methodology is
-available for use with @R{}, but users will need to be prepared to do a
+available for use with @R{}, but users may need to be prepared to do a
 little work to find it.
 
 There is an important difference in philosophy between @Sl{} (and hence
@@ -274,8 +274,8 @@ generally to any implementation of the @R{} environment.
 Most users will find it necessary to interact directly with the
 operating system on their computer from time to time.  In this guide, we
 mainly discuss interaction with the operating system on UNIX machines.
-If you are running @R{} under Windows you will need to make some small
-adjustments.
+If you are running @R{} under Windows or MacOS you will need to make
+some small adjustments.
 
 Setting up a workstation to take full advantage of the customizable
 features of @R{} is a straightforward if somewhat tedious procedure, and
@@ -324,10 +324,12 @@ To quit the @R{} program the command is
 @end example
 
 At this point you will be asked whether you want to save the data from
-your @R{} session.  You can respond @kbd{yes}, @kbd{no} or @kbd{cancel}
-(a single letter abbreviation will do) to save the data before quitting,
-quit without saving, or return to the @R{} session.  Data which is saved
-will be available in future @R{} sessions.
+your @R{} session.  On some systems this will bring up a dialog box, and
+on others you will receive a text prompt to which you can respond
+@kbd{yes}, @kbd{no} or @kbd{cancel} (a single letter abbreviation will
+do) to save the data before quitting, quit without saving, or return to
+the @R{} session.  Data which is saved will be available in future @R{}
+sessions.
 
 @end enumerate
 
@@ -402,14 +404,13 @@ running
 @findex help.start
 
 @noindent
-which will launch a Web browser (@code{netscape} on UNIX) that allows
-the help pages to be browsed with hyperlinks.  On UNIX, subsequent help
-requests are sent to the @HTML{}-based help system.  The `Search Engine
-and Keywords' link in the page loaded by @code{help.start()} is
-particularly useful as it is contains a high-level concept list which
-searches though available functions.  It can be a great way to get you
-bearings quickly and to understand the breadth of what @R{} has to
-offer.
+which will launch a Web browser that allows the help pages to be browsed
+with hyperlinks.  On UNIX, subsequent help requests are sent to the
+@HTML{}-based help system.  The `Search Engine and Keywords' link in the
+page loaded by @code{help.start()} is particularly useful as it is
+contains a high-level concept list which searches though available
+functions.  It can be a great way to get your bearings quickly and to
+understand the breadth of what @R{} has to offer.
 
 @findex help.search
 The @code{help.search} command allows searching for help in various
@@ -481,7 +482,7 @@ keys on the keyboard can be used to scroll forward and backward through
 a @emph{command history}.  Once a command is located in this way, the
 cursor can be moved within the command using the horizontal arrow keys,
 and characters can be removed with the @key{DEL} key or added with the
-other keys.  More details are provided later: @pxref{The command line
+other keys.  More details are provided later: @pxref{The command-line
 editor}.
 
 The recall and editing capabilities under UNIX are highly customizable.
@@ -541,9 +542,9 @@ discuss this process in the next session).  The @R{} command
 @end example
 
 @noindent
-(alternatively, @code{ls()} can be used to display the names of the
-objects which are currently stored within @R{}.  The collection of
-objects currently stored is called the @emph{workspace}.
+(alternatively, @code{ls()}) can be used to display the names of (most
+of) the objects which are currently stored within @R{}.  The collection
+of objects currently stored is called the @emph{workspace}.
 @cindex Workspace
 
 To remove objects the function @code{rm} is available:
@@ -560,10 +561,12 @@ you are given the opportunity to save all the currently available
 objects.  If you indicate that you want to do this, the objects are
 written to a file called @file{.RData}@footnote{The leading ``dot'' in
 this file name makes it @emph{invisible} in normal file listings in
-UNIX.} in the current directory.
+UNIX.} in the current directory, and the command lines used in the
+session are saved to a file called @file{.Rhistory}.
 
-When @R{} is started at later time it reloads the workspace from this
-file.  At the same time the associated command history is reloaded.
+When @R{} is started at later time from the same directory it reloads
+the workspace from this file.  At the same time the associated commands
+history is reloaded.
 
 It is recommended that you should use separate working directories for
 analyses conducted with @R{}.  It is quite common for objects with names
@@ -577,14 +580,14 @@ been conducted in the same directory.
 @cindex Vectors
 
 @menu
-* Vectors and assignment::
-* Vector arithmetic::
-* Generating regular sequences::
-* Logical vectors::
-* Missing values::
-* Character vectors::
-* Index vectors::
-* Other types of objects::
+* Vectors and assignment::      
+* Vector arithmetic::           
+* Generating regular sequences::  
+* Logical vectors::             
+* Missing values::              
+* Character vectors::           
+* Index vectors::               
+* Other types of objects::      
 @end menu
 
 @node Vectors and assignment, Vector arithmetic, Simple manipulations numbers and vectors, Simple manipulations numbers and vectors
@@ -612,11 +615,11 @@ different.  See @ref{Concatenating lists}.}
 A number occurring by itself in an expression is taken as a vector of
 length one.
 
-Notice that the assignment operator (@samp{@code{<-}}) is @strong{not}
-the usual @samp{@code{=}} operator, which is reserved for another
-purpose.  It consists of the two characters @samp{@code{<}} (``less
-than'') and @samp{@code{-}} (``minus'') occurring strictly side-by-side
-and it `points' to the object receiving the value of the expression.
+Notice that the assignment operator (@samp{@code{<-}}), which consists
+of the two characters @samp{@code{<}} (``less than'') and
+@samp{@code{-}} (``minus'') occurring strictly side-by-side and it
+`points' to the object receiving the value of the expression.
+In most contexts the @samp{@code{=}} operator can be used as a alternative.
 @c In this text, the assignment operator is printed as @samp{<-}, rather
 @c than ``@code{<-}''.
 @cindex Assignment
@@ -642,7 +645,7 @@ using
 
 If an expression is used as a complete command, the value is printed
 @emph{and lost}@footnote{Actually, it is still available as
-@code{.Last.value} before any other statements are executed}.  So now if we
+@code{.Last.value} before any other statements are executed.}.  So now if we
 were to use the command
 
 @example
@@ -839,7 +842,6 @@ empty (as it can be).
 A related function is @code{rep()}
 @findex rep
 which can be used for replicating an object in various complicated ways.
-
 The simplest form is
 
 @example
@@ -847,7 +849,16 @@ The simplest form is
 @end example
 
 @noindent
-which will put five copies of @code{x} end-to-end in @code{s5}.
+which will put five copies of @code{x} end-to-end in @code{s5}.  Another
+useful version is
+
+@example
+> s6 <- rep(x, each=5)
+@end example
+
+@noindent
+which repeats each element of @code{x} five times before moving on to
+the next.
 
 @node Logical vectors, Missing values, Generating regular sequences, Simple manipulations numbers and vectors
 @section Logical vectors
@@ -951,6 +962,9 @@ In summary, @code{is.na(xx)} is @code{TRUE} @emph{both} for @code{NA}
 and @code{NaN} values.  To differentiate these, @code{is.nan(xx)} is only
 @code{TRUE} for @code{NaN}s.
 @findex is.nan
+
+Missing values are sometimes printed as @code{<NA>}, when character
+vectors are printed without quotes.
 
 @node Character vectors, Index vectors, Missing values, Simple manipulations numbers and vectors
 @section Character vectors
@@ -1177,10 +1191,10 @@ extend @R{}.  @xref{Writing your own functions}.
 @c intrinsic attribute `mode'.
 
 @menu
-* The intrinsic attributes mode and length::
-* Changing the length of an object::
-* Getting and setting attributes::
-* The class of an object::
+* The intrinsic attributes mode and length::  
+* Changing the length of an object::  
+* Getting and setting attributes::  
+* The class of an object::      
 @end menu
 
 @node The intrinsic attributes mode and length, Changing the length of an object, Objects, Objects
@@ -1193,14 +1207,15 @@ logical values and vectors of character strings.  These are known as
 or @emph{mode}, namely @emph{numeric}@footnote{@emph{numeric} mode is
 actually an amalgam of two distinct modes, namely @emph{integer} and
 @emph{double} precision, as explained in the manual.}, @emph{complex},
-@emph{logical} and @emph{character} respectively.
+@emph{logical}, @emph{character} and @emph{raw}.
 
 Vectors must have their values @emph{all of the same mode}.  Thus any
 given vector must be unambiguously either @emph{logical},
-@emph{numeric}, @emph{complex} or @emph{character}.  The only mild
-exception to this rule is the special ``value'' listed as @code{NA} for
-quantities not available.  Note that a vector can be empty and still
-have a mode.  For example the empty character string vector is listed as
+@emph{numeric}, @emph{complex}, @emph{character} or @emph{raw}.  (The
+only apparent exception to this rule is the special ``value'' listed as
+@code{NA} for quantities not available, but in fact there are several
+types of @code{NA}).  Note that a vector can be empty and still have a
+mode.  For example the empty character string vector is listed as
 @code{character(0)} and the empty numeric vector as @code{numeric(0)}.
 
 @R{} also operates on objects called @emph{lists}, which are of mode
@@ -1308,7 +1323,15 @@ to do so.  Hence if @code{alpha} is an object of length 10, then
 
 @noindent
 makes it an object of length 5 consisting of just the former components
-with even index.  The old indices are not retained, of course.
+with even index.  (The old indices are not retained, of course.)  We can
+then retain just the first three values by
+
+@example
+> length(alpha) <- 3
+@end example
+
+@noindent
+and vectors can be extended (by missing values) in the same way.
 
 @node Getting and setting attributes, The class of an object, Changing the length of an object, Objects
 @section Getting and setting attributes
@@ -1334,7 +1357,7 @@ either to associate a new attribute with @code{@var{object}} or to
 change an existing one.  For example
 
 @example
-> attr(z,"dim") <- c(10,10)
+> attr(z, "dim") <- c(10,10)
 @end example
 
 @noindent
@@ -1344,14 +1367,20 @@ allows @R{} to treat @code{z} as if it were a 10-by-10 matrix.
 @section The class of an object
 @cindex Classes
 
-A special attribute known as the @emph{class} of the object is used to
-allow for an object oriented style of programming in @R{}.
+All objects in @R{} have a @emph{class}, reported by the function
+@code{class}.  For simple vectors this is just the mode, for example
+@code{"numeric"}, @code{"logical"}, @code{"character"} or @code{"list"},
+but @code{"matrix"}, @code{"array"}, @code{"factor"} and
+@code{"data.frame"} are other possible values.
 
-For example if an object has class @code{"data.frame"}, it will be
-printed in a certain way, the @code{plot()} function will display it
-graphically in a certain way, and other so-called generic functions such
-as @code{summary()} will react to it as an argument in a way sensitive
-to its class.
+A special attribute known as the @emph{class} of the object is used to
+allow for an object-oriented style@footnote{A different style using
+`formal' or `S4' classes is provided in package @code{methods}.} of
+programming in @R{}.  For example if an object has class
+@code{"data.frame"}, it will be printed in a certain way, the
+@code{plot()} function will display it graphically in a certain way, and
+other so-called generic functions such as @code{summary()} will react to
+it as an argument in a way sensitive to its class.
 
 To remove temporarily the effects of class, use the function
 @code{unclass()}.
@@ -1391,12 +1420,12 @@ While the ``real'' application of factors is with model formulae
 @section A specific example
 
 Suppose, for example, we have a sample of 30 tax accountants from all
-the states and territories of Australia@footnote{Foreign readers should
-note that there are eight states and territories in Australia, namely
-the Australian Capital Territory, New South Wales, the Northern
-Territory, Queensland, South Australia, Tasmania, Victoria and Western
-Australia.}  and their individual state of origin is specified by a
-character vector of state mnemonics as
+the states and territories of Australia@footnote{Readers should note
+that there are eight states and territories in Australia, namely the
+Australian Capital Territory, New South Wales, the Northern Territory,
+Queensland, South Australia, Tasmania, Victoria and Western Australia.}
+and their individual state of origin is specified by a character vector
+of state mnemonics as
 
 @example
 > state <- c("tas", "sa",  "qld", "nsw", "nsw", "nt",  "wa",  "wa",
@@ -1435,8 +1464,8 @@ used.
 @end example
 
 @menu
-* The function tapply() and ragged arrays::
-* Ordered factors::
+* The function tapply() and ragged arrays::  
+* Ordered factors::             
 @end menu
 
 @node The function tapply() and ragged arrays, Ordered factors, Factors, Factors
@@ -1492,8 +1521,11 @@ is a very simple one liner, specified by the assignment:
 
 @noindent
 (Writing functions will be considered later in @ref{Writing your own
-functions}.)  After this assignment, the standard errors are calculated
-by
+functions}, and in this case was unnecessary as @R{} also has a builtin
+function @code{sd()}.)
+@findex sd
+@findex var
+After this assignment, the standard errors are calculated by
 
 @example
 > incster <- tapply(incomes, statef, stderr)
@@ -1512,16 +1544,18 @@ As an exercise you may care to find the usual 95% confidence limits for
 the state mean incomes.  To do this you could use @code{tapply()} once
 more with the @code{length()} function to find the sample sizes, and the
 @code{qt()} function to find the percentage points of the appropriate
-@math{t}-distributions.
+@math{t}-distributions.  (You could also investigate @R{}'s facilities
+for @math{t}-tests.)
 
-The function @code{tapply()} can be used to handle more complicated
-indexing of a vector by multiple categories.  For example, we might wish to
-split the tax accountants by both state and sex.  However in this simple
-instance (just one category) what happens can be thought of as follows.  The
-values in the vector are collected into groups corresponding to the
-distinct entries in the category.  The function is then applied to each of
-these groups individually.  The value is a vector of function results,
-labelled by the levels attribute of the category.
+The function @code{tapply()} can also be used to handle more complicated
+indexing of a vector by multiple categories.  For example, we might wish
+to split the tax accountants by both state and sex.  However in this
+simple instance (just one factor) what happens can be thought of as
+follows.  The values in the vector are collected into groups
+corresponding to the distinct entries in the factor.  The function is
+then applied to each of these groups individually.  The value is a
+vector of function results, labelled by the levels attribute of the
+factor.
 
 The combination of a vector and a labelling factor is an example of what
 is sometimes called a @emph{ragged array}, since the subclass sizes are
@@ -1551,16 +1585,16 @@ linear models are different.
 @chapter Arrays and matrices
 
 @menu
-* Arrays::
-* Array indexing::
-* Index arrays::
-* The array() function::
-* The outer product of two arrays::
-* Generalized transpose of an array::
-* Matrix facilities::
-* Forming partitioned matrices::
-* The concatenation function c() with arrays::
-* Frequency tables from factors::
+* Arrays::                      
+* Array indexing::              
+* Index arrays::                
+* The array() function::        
+* The outer product of two arrays::  
+* Generalized transpose of an array::  
+* Matrix facilities::           
+* Forming partitioned matrices::  
+* The concatenation function c() with arrays::  
+* Frequency tables from factors::  
 @end menu
 
 @node Arrays, Array indexing, Arrays and matrices, Arrays and matrices
@@ -1573,11 +1607,10 @@ entries, for example numeric.  @R{} allows simple facilities for
 creating and handling arrays, and in particular the special case of
 matrices.
 
-A dimension vector is a vector of positive integers.  If its length is
-@math{k} then the array is @math{k}-dimensional, i.e., a matrix is a
-@math{2}-dimensional array.  The values in the
-dimension vector give the upper limits for each of the @math{k}
-subscripts.  The lower limits are always 1.
+A dimension vector is a vector of non-negative integers.  If its length is
+@math{k} then the array is @math{k}-dimensional, e.g. a matrix is a
+@math{2}-dimensional array.  The dimensions are indexed from one up to
+the values given in the dimension vector.
 
 A vector can be used by @R{} as an array only if it has a dimension
 vector as its @emph{dim} attribute.  Suppose, for example, @code{z} is a
@@ -1601,26 +1634,30 @@ order as they would occur in FORTRAN, that is ``column major order,''
 with the first subscript moving fastest and the last subscript slowest.
 
 For example if the dimension vector for an array, say @code{a}, is
-@code{c(3,4,2)} then there are @math{3 * 4 * 2 = 24} entries in @code{a}
-and the data vector holds them in the order @code{a[1,1,1], a[2,1,1],
-@dots{}, a[2,4,2], a[3,4,2]}.
+@code{c(3,4,2)} then there are @eqn{3 \times 4 \times 2 = 24, 3 * 4 * 2
+= 24} entries in @code{a} and the data vector holds them in the order
+@code{a[1,1,1], a[2,1,1], @dots{}, a[2,4,2], a[3,4,2]}.
+
+Arrays can be one-dimensional: such arrays are usually treated in the
+same way as vectors (including when printing), but the exceptions can
+cause confusion.
 
 @node Array indexing, Index arrays, Arrays, Arrays and matrices
 @section Array indexing.  Subsections of an array
 @cindex Indexing of and by arrays
 
-Individual elements of an array may be referenced, as above, by giving
-the name of the array followed by the subscripts in square brackets,
-separated by commas.
+Individual elements of an array may be referenced by giving the name of
+the array followed by the subscripts in square brackets, separated by
+commas.
 
 More generally, subsections of an array may be specified by giving a
 sequence of @emph{index vectors} in place of subscripts; however
 @emph{if any index position is given an empty index vector, then the
 full range of that subscript is taken}.
 
-Continuing the previous example, @code{a[2,,]} is a @math{4 * 2} array
-with dimension vector @code{c(4,2)} and data vector containing the
-values
+Continuing the previous example, @code{a[2,,]} is a @eqn{4 \times 2, 4 *
+2} array with dimension vector @code{c(4,2)} and data vector containing
+the values
 
 @example
 c(a[2,1,1], a[2,2,1], a[2,3,1], a[2,4,1],
@@ -1671,14 +1708,14 @@ In this case we need a @math{3} by @math{2} subscript array, as in the
 following example.
 
 @example
-> x <- array(1:20,dim=c(4,5))   # @r{Generate a 4 by 5 array.}
+> x <- array(1:20, dim=c(4,5))   # @r{Generate a 4 by 5 array.}
 > x
      [,1] [,2] [,3] [,4] [,5]
 [1,]    1    5    9   13   17
 [2,]    2    6   10   14   18
 [3,]    3    7   11   15   19
 [4,]    4    8   12   16   20
-> i <- array(c(1:3,3:1),dim=c(3,2))
+> i <- array(c(1:3,3:1), dim=c(3,2))
 > i                             # @r{@code{i} is a 3 by 2 index array.}
      [,1] [,2]
 [1,]    1    3
@@ -1739,7 +1776,7 @@ form
 > Z <- array(@var{data_vector}, @var{dim_vector})
 @end example
 
-For example, if the vector @code{h} contains 24, or fewer, numbers then
+For example, if the vector @code{h} contains 24 or fewer, numbers then
 the command
 
 @example
@@ -1788,7 +1825,7 @@ concerning mixed array and vector calculations has to be considered a
 little more carefully.
 
 @menu
-* The recycling rule::
+* The recycling rule::          
 @end menu
 
 @node The recycling rule,  , The array() function, The array() function
@@ -1823,11 +1860,11 @@ been precipitated, the result is an array structure with the common
 
 An important operation on arrays is the @emph{outer product}.  If
 @code{a} and @code{b} are two numeric arrays, their outer product is an
-array whose dimension vector is got by concatenating their two dimension
-vectors (order is important), and whose data vector is got by forming
-all possible products of elements of the data vector of @code{a} with
-those of @code{b}.  The outer product is formed by the special operator
-@code{%o%}:
+array whose dimension vector is obtained by concatenating their two
+dimension vectors (order is important), and whose data vector is got by
+forming all possible products of elements of the data vector of @code{a}
+with those of @code{b}.  The outer product is formed by the special
+operator @code{%o%}:
 @findex %o%
 
 @example
@@ -1859,7 +1896,7 @@ the outer product operator is of course non-commutative.  Defining your
 own @R{} functions will be considered further in @ref{Writing your own
 functions}.
 
-@subsubheading An example: Determinants of 2 by 2 digit matrices
+@subsubheading An example: Determinants of 2 by 2 single-digit matrices
 
 As an artificial but cute example, consider the determinants of @math{2}
 by @math{2} matrices @math{[a, b; c, d]} where each entry is a
@@ -1935,11 +1972,11 @@ number of rows and columns in the matrix @code{A} respectively.
 @findex ncol
 
 @menu
-* Multiplication::
-* Linear equations and inversion::
-* Eigenvalues and eigenvectors::
-* Singular value decomposition and determinants::
-* Least squares fitting and the QR decomposition::
+* Multiplication::              
+* Linear equations and inversion::  
+* Eigenvalues and eigenvectors::  
+* Singular value decomposition and determinants::  
+* Least squares fitting and the QR decomposition::  
 @end menu
 
 @node  Multiplication, Linear equations and inversion, Matrix facilities, Matrix facilities
@@ -1978,13 +2015,14 @@ is the matrix product.  If @code{x} is a vector, then
 
 @noindent
 is a quadratic form.@footnote{Note that @code{x %*% x} is ambiguous, as
-it could mean either @xTx{} or @xxT{}, where @eqn{@strong{x},x} is
-the column form.  In such cases the smaller matrix seems implicitly to be the
-interpretation adopted, so the scalar @xTx{} is in
-this case the result.  The matrix @xxT{} may be
-calculated either by @code{cbind(x) %*% x} or @code{x %*% rbind(x)}
-since the result of @code{rbind()} or @code{cbind()} is always a
-matrix.}
+it could mean either @xTx{} or @xxT{}, where @eqn{@strong{x},x} is the
+column form.  In such cases the smaller matrix seems implicitly to be
+the interpretation adopted, so the scalar @xTx{} is in this case the
+result.  The matrix @xxT{} may be calculated either by @code{cbind(x)
+%*% x} or @code{x %*% rbind(x)} since the result of @code{rbind()} or
+@code{cbind()} is always a matrix.  However, the best way to compute
+@xTx{} or @xxT{} is @code{crossprod(x)} or @code{x %o% x}
+respectively.}
 
 @findex crossprod
 The function @code{crossprod()} forms ``crossproducts'', meaning that
@@ -2035,13 +2073,17 @@ solve(A)
 @end example
 
 @noindent
-but rarely is needed.  Numerically, it is both inefficient and unstable
-to compute @code{x <- solve(A) %*% b} instead of @code{solve(A,b)}.
+but rarely is needed.  Numerically, it is both inefficient and
+potentially unstable to compute @code{x <- solve(A) %*% b} instead of
+@code{solve(A,b)}.
 
-The quadratic form
-@eqn{@strong{x' A^{-1} x},@ @code{x %*% A^@{-1@} %*% x} @ }
-which is used in multivariate computations, should be computed by something like
-@code{x %*% solve(A,x)}, rather than computing the inverse of @code{A}.
+The quadratic form @eqn{@strong{x' A^{-1} x},@ @code{x %*% A^@{-1@} %*%
+x} @ } which is used in multivariate computations, should be computed by
+something like@footnote{Even better would be to form a matrix square
+root @eqn{B, B} with @eqn{A = BB', A = BB'} and find the squared length of the
+solution of @eqn{By = x, By = x}, perhaps using the Cholesky or
+eigendecomposition of @eqn{A, A}.} @code{x %*% solve(A,x)}, rather than
+computing the inverse of @code{A}.
 
 @node Eigenvalues and eigenvectors, Singular value decomposition and determinants, Linear equations and inversion, Matrix facilities
 @subsection Eigenvalues and eigenvectors
@@ -2077,7 +2119,13 @@ component is discarded.  If the expression
 
 @noindent
 is used by itself as a command the two components are printed, with
-their names.
+their names.  For large matrices it is better to avoid computing the
+eigenvectors if they are not needed by using the expression
+
+@example
+> evals <- eigen(Sm, only.values = TRUE)$values
+@end example
+
 
 @node Singular value decomposition and determinants, Least squares fitting and the QR decomposition, Eigenvalues and eigenvectors, Matrix facilities
 @subsection Singular value decomposition and determinants
@@ -2116,6 +2164,12 @@ As a further trivial but potentially useful example, you might like to
 consider writing a function, say @code{tr()}, to calculate the trace of
 a square matrix.  [Hint: You will not need to use an explicit loop.
 Look again at the @code{diag()} function.]
+
+@findex det
+@findex determinant
+@R{} has a builtin function @code{det} to calculate a determinant,
+including the sign, and another, @code{determinant}, to give the sign
+and modulus (optionally on log scale),
 
 @c Functions will be discussed formally later in these notes.
 
@@ -2163,7 +2217,7 @@ that is, @code{b} is essentially the result of the @sc{Matlab}
 It is not assumed that @code{X} has full column rank.  Redundancies will
 be discovered and removed as they are found.
 
-This alternative is the older, low level way to perform least squares
+This alternative is the older, low-level way to perform least squares
 calculations.  Although still useful in some contexts, it would now
 generally be replaced by the statistical models features, as will be
 discussed in @ref{Statistical models in R}.
@@ -2251,7 +2305,7 @@ Recall that a factor defines a partition into groups.  Similarly a pair
 of factors defines a two way cross classification, and so on.
 @findex table
 The function @code{table()} allows frequency tables to be calculated
-from equal length factors.  If there are @math{k} category arguments,
+from equal length factors.  If there are @math{k} factor arguments,
 the result is a @math{k}-way array of frequencies.
 
 Suppose, for example, that @code{statef} is a factor giving the state
@@ -2264,14 +2318,14 @@ code for each entry in a data vector.  The assignment
 @noindent
 gives in @code{statefr} a table of frequencies of each state in the
 sample.  The frequencies are ordered and labelled by the levels
-attribute of the category.  This simple case is equivalent to, but more
+attribute of the factor.  This simple case is equivalent to, but more
 convenient than,
 
 @example
 > statefr <- tapply(statef, statef, length)
 @end example
 
-Further suppose that @code{incomef} is a category giving a suitably
+Further suppose that @code{incomef} is a factor giving a suitably
 defined ``income class'' for each entry in the data vector, for example
 with the @code{cut()} function:
 
@@ -2292,15 +2346,15 @@ incomef   act nsw nt qld sa tas vic wa
   (65,75]   0   1  0   0  0   0   1  0
 @end example
 
-Extension to higher way frequency tables is immediate.
+Extension to higher-way frequency tables is immediate.
 
 @node Lists and data frames, Reading data from files, Arrays and matrices, Top
 @chapter Lists and data frames
 
 @menu
-* Lists::
-* Constructing and modifying lists::
-* Data frames::
+* Lists::                       
+* Constructing and modifying lists::  
+* Data frames::                 
 @end menu
 
 @node Lists, Constructing and modifying lists, Lists and data frames, Lists and data frames
@@ -2368,12 +2422,12 @@ component to be extracted is stored in another variable as in
 
 It is very important to distinguish @code{Lst[[1]]} from @code{Lst[1]}.
 @samp{@code{[[@var{@dots{}}]]}} is the operator used to select a single
-element, whereas @samp{@code{[@var{@dots{}}]}} is a general
-subscripting operator.  Thus the former is the @emph{first object in the
-list} @code{Lst}, and if it is a named list the name is @emph{not}
-included.  The latter is a @emph{sublist of the list @code{Lst}
-consisting of the first entry only.  If it is a named list, the name is
-transferred to the sublist.}
+element, whereas @samp{@code{[@var{@dots{}}]}} is a general subscripting
+operator.  Thus the former is the @emph{first object in the list}
+@code{Lst}, and if it is a named list the name is @emph{not} included.
+The latter is a @emph{sublist of the list @code{Lst} consisting of the
+first entry only.  If it is a named list, the names are transferred to
+the sublist.}
 
 The names of components may be abbreviated down to the minimum number of
 letters needed to identify them uniquely.  Thus @code{Lst$coefficients}
@@ -2410,7 +2464,7 @@ additional components.  For example
 @end example
 
 @menu
-* Concatenating lists::
+* Concatenating lists::         
 @end menu
 
 @node Concatenating lists,  , Constructing and modifying lists, Constructing and modifying lists
@@ -2462,11 +2516,11 @@ matrix form, and its rows and columns extracted using matrix indexing
 conventions.
 
 @menu
-* Making data frames::
-* attach() and detach()::
-* Working with data frames::
-* Attaching arbitrary lists::
-* Managing the search path::
+* Making data frames::          
+* attach() and detach()::       
+* Working with data frames::    
+* Attaching arbitrary lists::   
+* Managing the search path::    
 @end menu
 
 @node Making data frames, attach() and detach(), Data frames, Data frames
@@ -2548,13 +2602,6 @@ the list notation as @code{lentils$u} and so on.  Entities at positions
 greater than 2 on the search path can be detached by giving their number
 to @code{detach}, but it is much safer to always use a name, for example
 by @code{detach(lentils)} or @code{detach("lentils")}
-
-@quotation
-@strong{Note}: With the current release of @R{} the search path can
-contain at most 20 items.  Avoid attaching the same data frame more than
-once.  Always detach the data frame as soon as you have finished using
-its variables.
-@end quotation
 
 @quotation
 @strong{Note}: With the current release of @R{} lists and data frames
@@ -2667,10 +2714,10 @@ For more details on importing data into @R{} and also exporting data,
 see the @emph{R Data Import/Export} manual.
 
 @menu
-* The read.table() function::
-* The scan() function::
-* Accessing builtin datasets::
-* Editing data::
+* The read.table() function::   
+* The scan() function::         
+* Accessing builtin datasets::  
+* Editing data::                
 @end menu
 
 @node The read.table() function, The scan() function, Reading data from files, Reading data from files
@@ -2813,31 +2860,35 @@ detailed in the manuals.
 @cindex Accessing builtin datasets
 @findex data
 
-Over fifty datasets are supplied with @R{}, and others are available in
-packages (including the standard packages supplied with @R{}).  Unlike
-@SPLUS{}, these datasets have to be loaded explicitly, using the function
-@code{data}.  To see the list of datasets in the base system use
+Around 100 datasets are supplied with @R{} (in package @pkg{datasets}),
+and others are available in packages (including the recommended packages
+supplied with @R{}).  To see the list of datasets currently available
+use
 
 @example
 data()
 @end example
 
 @noindent
-and to load one of these use, for example,
+As from @R{} version 2.0.0 all the datasets suppied with @R{} are
+available directly by name.  However, many packages still use the
+earlier convention in which @code{data} was also used to load datasets
+into @R{}, for example
 
 @example
 data(infert)
 @end example
 
 @noindent
-In most cases this will load an @R{} object of the same name, usually a
-data frame.  However, in a few cases it loads several objects, so see the
-on-line help for the object to see what to expect.  
+and this can still be used with the standard packages (as in this
+example).  In most cases this will load an @R{} object of the same name.
+However, in a few cases it loads several objects, so see the on-line
+help for the object to see what to expect.
 
 @subsection Loading data from other R packages
 
-To access data from another package, use the @code{package} argument,
-for example
+To access data from a particular package, use the @code{package}
+argument, for example
 
 @example
 data(package="rpart")
@@ -2845,18 +2896,7 @@ data(Puromycin, package="datasets")
 @end example
 
 If a package has been attached by @code{library}, its datasets are
-automatically included in the search, so that
-
-@example
-library(stats) # normally attached
-data()
-data(Puromycin)
-@end example
-
-@noindent
-will list all the datasets in all the currently attached packages (at
-least @pkg{base} and @pkg{stats}) and then load @code{Puromycin} from the
-first package in which such a dataset is found.
+automatically included in the search.
 
 User-contributed packages can be a rich source of datasets.
 
@@ -2868,13 +2908,15 @@ When invoked on a data frame or matrix, @code{edit} brings up a separate
 spreadsheet-like environment for editing.  This is useful for making
 small changes once a data set has been read.  The command
 
-@smallexample
+@example
 > xnew <- edit(xold)
-@end smallexample
+@end example
 
 @noindent
 will allow you to edit your data set @code{xold}, and on completion the
-changed object is assigned to @code{xnew}.
+changed object is assigned to @code{xnew}.  If you want to alter the
+original dataset @code{xold}, the simplest way is to use
+@code{fix(xold)}, which is equivalent to @code{xold <- edit(xold)}.
 
 Use
 
@@ -2891,9 +2933,9 @@ to enter new data via the spreadsheet interface.
 @cindex Probability distributions
 
 @menu
-* R as a set of statistical tables::
-* Examining the distribution of a set of data::
-* One- and two-sample tests::
+* R as a set of statistical tables::  
+* Examining the distribution of a set of data::  
+* One- and two-sample tests::   
 @end menu
 
 @node R as a set of statistical tables, Examining the distribution of a set of data, Probability distributions, Probability distributions
@@ -2941,8 +2983,7 @@ CDF, @samp{q} for the quantile function and @samp{r} for simulation
 @code{q@var{xxx}} and @code{n} for @code{r@var{xxx}} (except for
 @code{rhyper} and @code{rwilcox}, for which it is @code{nn}).  The
 non-centrality parameter @code{ncp} is currently only available for the
-CDFs and a few other functions: see the on-line help for current
-details.
+CDFs, most pdfs and a few other cases: see the on-line help for details.
 
 The @code{p@var{xxx}} and @code{q@var{xxx}} functions all have logical
 arguments @code{lower.tail} and @code{log.p} and the @code{d@var{xxx}}
@@ -2950,9 +2991,9 @@ ones have @code{log}.  This allows, e.g., getting the cumulative (or
 ``integrated'') @emph{hazard} function, @eqn{H(t) = - \log(1 - F(t)),
 H(t) = - log(1 - F(t))}, by
 
-@smallexample
+@example
  - p@var{xxx}(t, ..., lower.tail = FALSE, log.p = TRUE)
-@end smallexample
+@end example
 
 @noindent
 or more accurate log-likelihoods (by @code{d@var{xxx}(..., log =
@@ -2984,7 +3025,6 @@ and a display of the numbers by @code{stem} (a ``stem and leaf'' plot).
 @findex stem
 
 @example
-> data(faithful)
 > attach(faithful)
 > summary(eruptions)
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
@@ -3032,21 +3072,20 @@ A stem-and-leaf plot is like a histogram, and @R{} has a function
 More elegant density plots can be made by @code{density}, and we added a
 line produced by @code{density} in this example.  The bandwidth
 @code{bw} was chosen by trial-and-error as the default gives too much
-smoothing (it usually does for ``interesting'' densities).  (Automated
-methods of bandwidth choice are implemented in packages @pkg{MASS} and
-@pkg{KernSmooth}.)
+smoothing (it usually does for ``interesting'' densities).  (Better
+automated methods of bandwidth choice are available, and in this example
+@code{bw = "SJ"} gives a good result.)
 
 @iftex
 @image{images/hist,9cm}
 @end iftex
 
 We can plot the empirical cumulative distribution function by using the
-function @code{ecdf} in the standard package @pkg{stepfun}.
+function @code{ecdf}.
 @findex ecdf
 @cindex Empirical CDFs
 
 @example
-> library(stepfun)
 > plot(ecdf(eruptions), do.points=FALSE, verticals=TRUE)
 @end example
 
@@ -3071,7 +3110,7 @@ Quantile-quantile (Q-Q) plots can help us examine this more carefully.
 @findex qqline
 
 @example
-par(pty="s")
+par(pty="s")       # arrange for a square figure region
 qqnorm(long); qqline(long)
 @end example
 
@@ -3095,12 +3134,12 @@ expected for a normal.  We can make a Q-Q plot against the generating
 distribution by
 
 @example
-qqplot(qt(ppoints(250), df=5), x, xlab="Q-Q plot for t dsn")
+qqplot(qt(ppoints(250), df = 5), x, xlab = "Q-Q plot for t dsn")
 qqline(x)
 @end example
 
 Finally, we might want a more formal test of agreement with normality
-(or not).  The standard package @pkg{stats} provides the Shapiro-Wilk test
+(or not).  @R{} provides the Shapiro-Wilk test
 @cindex Shapiro-Wilk test
 @findex shapiro.test
 
@@ -3119,7 +3158,7 @@ and the Kolmogorov-Smirnov test
 @findex ks.test
 
 @example
-> ks.test(long, "pnorm", mean=mean(long), sd=sqrt(var(long)))
+> ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long)))
 
          One-sample Kolmogorov-Smirnov test
 
@@ -3140,7 +3179,7 @@ sample.)
 So far we have compared a single sample to a normal distribution.  A
 much more common operation is to compare aspects of two samples.  Note
 that in @R{}, all ``classical'' tests including the ones used below are
-in package @pkg{stats}.
+in package @pkg{stats} which is normally loaded.
 
 Consider the following sets of data on the latent heat of the fusion of
 ice (@emph{cal/gm}) from Rice (1995, p.490)
@@ -3267,7 +3306,6 @@ There are several ways to compare graphically the two samples.  We have
 already seen a pair of boxplots.  The following
 
 @example
-> library(stepfun)
 > plot(ecdf(A), do.points=FALSE, verticals=TRUE, xlim=range(A, B))
 > plot(ecdf(B), do.points=FALSE, verticals=TRUE, add=TRUE)
 @end example
@@ -3296,8 +3334,8 @@ cannot compute correct p-values with ties in: ks.test(A, B)
 @cindex Loops and conditional execution
 
 @menu
-* Grouped expressions::
-* Control statements::
+* Grouped expressions::         
+* Control statements::          
 @end menu
 
 @node Grouped expressions, Control statements, Loops and conditional execution, Loops and conditional execution
@@ -3321,8 +3359,8 @@ parentheses and used a part of an even larger expression, and so on.
 @cindex Control statements
 
 @menu
-* Conditional execution::
-* Repetitive execution::
+* Conditional execution::       
+* Repetitive execution::        
 @end menu
 
 @node Conditional execution, Repetitive execution, Control statements, Control statements
@@ -3338,16 +3376,16 @@ The language has available a conditional construction of the form
 @findex else
 
 @noindent
-where @var{expr_1} must evaluate to a logical value and the result of
-the entire expression is then evident.
+where @var{expr_1} must evaluate to a single logical value and the
+result of the entire expression is then evident.
 
 @findex &&
 @findex ||
 The ``short-circuit'' operators @code{&&} and @code{||} are often used
-as the condition in an @code{if} statement.  Whereas @code{&} and
-@code{|} apply element-wise to vectors, @code{&&} and @code{||} apply to
-vectors of length one, and only evaluate their second argument if
-necessary.
+as part of the condition in an @code{if} statement.  Whereas @code{&}
+and @code{|} apply element-wise to vectors, @code{&&} and @code{||}
+apply to vectors of length one, and only evaluate their second argument
+if necessary.
 
 @findex ifelse
 There is a vectorized version of the @code{if}/@code{else} construct,
@@ -3377,9 +3415,10 @@ of @var{expr_1}.
 
 As an example, suppose @code{ind} is a vector of class indicators and we
 wish to produce separate plots of @code{y} versus @code{x} within
-classes.  One possibility here is to use @code{coplot()} to be discussed
-later, which will produce an array of plots corresponding to each level
-of the factor.  Another way to do this, now putting all plots on the one
+classes.  One possibility here is to use @code{coplot()},@footnote{to be
+discussed later, or use @code{xyplot} from package @pkg{lattice}.}
+which will produce an array of plots corresponding to each level of the
+factor.  Another way to do this, now putting all plots on the one
 display, is as follows:
 
 @example
@@ -3393,10 +3432,10 @@ display, is as follows:
 
 @findex split
 
-(Note the function @code{split()} which produces a list of vectors got
-by splitting a larger vector according to the classes specified by a
-category.  This is a useful function, mostly used in connection with
-boxplots.  See the @code{help} facility for further details.)
+(Note the function @code{split()} which produces a list of vectors
+obtained by splitting a larger vector according to the classes specified
+by a factor.  This is a useful function, mostly used in connection
+with boxplots.  See the @code{help} facility for further details.)
 
 @quotation
 @strong{Warning}: @code{for()} loops are used in @R{} code much less
@@ -3469,15 +3508,15 @@ A call to the function then usually takes the form
 anywhere a function call is legitimate.
 
 @menu
-* Simple examples::
-* Defining new binary operators::
-* Named arguments and defaults::
-* The ellipsis argument (...)::
-* Assignment within functions::
-* More advanced examples::
-* Scope::
-* Customizing the environment::
-* Object orientation::
+* Simple examples::             
+* Defining new binary operators::  
+* Named arguments and defaults::  
+* The ellipsis argument (...)::  
+* Assignment within functions::  
+* More advanced examples::      
+* Scope::                       
+* Customizing the environment::  
+* Object orientation::          
 @end menu
 
 @node Simple examples, Defining new binary operators, Writing your own functions, Writing your own functions
@@ -3512,7 +3551,7 @@ As a second example, consider a function to emulate directly the
 @sc{Matlab} backslash command, which returns the coefficients of the
 orthogonal projection of the vector @math{y} onto the column space of
 the matrix, @math{X}.  (This is ordinarily called the least squares
-estimates of the regression coefficients.)  This would ordinarily be
+estimate of the regression coefficients.)  This would ordinarily be
 done with the @code{qr()} function; however this is sometimes a bit
 tricky to use directly and it pays to have a simple function such as the
 following to use it safely.
@@ -3534,8 +3573,7 @@ is a generalized inverse of @math{X'X}.
 @}
 @end example
 
-After this object is created it is permanent and may be used in
-statements such as
+After this object is created it may be used in statements such as
 
 @example
 > regcoeff <- bslash(Xmat, yvar)
@@ -3687,9 +3725,9 @@ in @R{}.  These are discussed further in @ref{Scope}.
 @section More advanced examples
 
 @menu
-* Efficiency factors in block designs::
-* Dropping all names in a printed array::
-* Recursive numerical integration::
+* Efficiency factors in block designs::  
+* Dropping all names in a printed array::  
+* Recursive numerical integration::  
 @end menu
 
 @node Efficiency factors in block designs, Dropping all names in a printed array, More advanced examples, More advanced examples
@@ -3997,14 +4035,14 @@ in later files will mask definitions in earlier files.
   x11()                                 # @r{for graphics}
   par(pch = "+")                        # @r{plotting character}
   source(file.path(Sys.getenv("HOME"), "R", "mystuff.R"))
-                                        # @r{my personal package}
-  library(stepfun)                      # @r{attach the step function tools}
+                                        # @r{my personal functions}
+  library(MASS)                         # @r{attach a package}
 @}
 @end example
 @findex .First
 
-Similarly a function @code{.Last()}, if defined, is executed at the very end
-of the session.  An example is given below.
+Similarly a function @code{.Last()}, if defined, is (normally) executed
+at the very end of the session.  An example is given below.
 
 @example
 > .Last <- function() @{
@@ -4040,7 +4078,7 @@ some fashion objects of class @code{"data.frame"} include
 
 @example
 [     [[<-    any    as.matrix
-[<-   model   plot   summary
+[<-   mean    plot   summary
 @end example
 
 A currently complete list can be got by using the @code{methods()}
@@ -4084,14 +4122,14 @@ basic output is minimal, and one needs to ask for the details by calling
 extractor functions.
 
 @menu
-* Formulae for statistical models::
-* Linear models::
-* Generic functions for extracting model information::
-* Analysis of variance and model comparison::
-* Updating fitted models::
-* Generalized linear models::
-* Nonlinear least squares and maximum likelihood models::
-* Some non-standard models::
+* Formulae for statistical models::  
+* Linear models::               
+* Generic functions for extracting model information::  
+* Analysis of variance and model comparison::  
+* Updating fitted models::      
+* Generalized linear models::   
+* Nonlinear least squares and maximum likelihood models::  
+* Some non-standard models::    
 @end menu
 
 @node Formulae for statistical models, Linear models, Statistical models in R, Statistical models in R
@@ -4289,8 +4327,8 @@ arithmetic meaning, and that term appears in the model matrix.
 
 Note that inside the parentheses that usually enclose function arguments
 all operators have their normal arithmetic meaning.  The function
-@code{I()} is an identity function used only to allow terms in model
-formulae to be defined using arithmetic operators.
+@code{I()} is an identity function used to allow terms in model formulae
+to be defined using arithmetic operators.
 
 Note particularly that the model formulae specify the @emph{columns
 of the model matrix}, the specification of the parameters being
@@ -4298,7 +4336,7 @@ implicit.  This is not the case in other contexts, for example in
 specifying nonlinear models.
 
 @menu
-* Contrasts::
+* Contrasts::                   
 @end menu
 
 @node Contrasts,  , Formulae for statistical models, Formulae for statistical models
@@ -4356,9 +4394,9 @@ products of the columns introduced for their component terms.
 
 Although the details are complicated, model formulae in @R{} will
 normally generate the models that an expert statistician would expect,
-provided that marginality is preserved.  Fitting, for example, model with
-interaction but not the corresponding main effects will in general lead
-to surprising results, and is for experts only.
+provided that marginality is preserved.  Fitting, for example, a model
+with an interaction but not the corresponding main effects will in
+general lead to surprising results, and is for experts only.
 
 
 @node Linear models, Generic functions for extracting model information, Formulae for statistical models, Statistical models in R
@@ -4414,10 +4452,10 @@ variance table.
 
 @findex coefficients
 @findex coef
-@item coefficients(@var{object})
+@item coef(@var{object})
 Extract the regression coefficient (matrix).
 
-Short form: @code{coef(@var{object})}.
+Long form: @code{coefficients(@var{object})}.
 
 @findex deviance
 @item deviance(@var{object})
@@ -4509,7 +4547,7 @@ would typically be used to describe an experiment with mean model
 ``within farms, between blocks'' and ``within blocks''.
 
 @menu
-* ANOVA tables::
+* ANOVA tables::                
 @end menu
 
 @node ANOVA tables,  , Analysis of variance and model comparison, Analysis of variance and model comparison
@@ -4683,8 +4721,8 @@ reference works on the subject for full details, such as McCullagh &
 Nelder (1989) or Dobson (1990).
 
 @menu
-* Families::
-* The glm() function::
+* Families::                    
+* The glm() function::          
 @end menu
 
 @node Families, The glm() function, Generalized linear models, Generalized linear models
@@ -4708,10 +4746,10 @@ shown in the following table:
 
 @item Family name @tab Link functions
 
-@item @code{binomial} @tab @code{logit}, @code{probit}, @code{cloglog}
-@item @code{gaussian} @tab @code{identity}
+@item @code{binomial} @tab @code{logit}, @code{probit}, @code{log}, @code{cloglog}
+@item @code{gaussian} @tab @code{identity}, @code{log}, @code{inverse}
 @item @code{Gamma} @tab @code{identity}, @code{inverse}, @code{log}
-@item @code{inverse.gaussian} @tab @code{1/mu^2}
+@item @code{inverse.gaussian} @tab @code{1/mu^2}, @code{identity}, @code{inverse}, @code{log}
 @item @code{poisson} @tab @code{identity}, @code{log}, @code{sqrt}
 @item @code{quasi} @tab @code{logit}, @code{probit}, @code{cloglog},
 @code{identity}, @code{inverse}, @code{log}, @code{1/mu^2}, @code{sqrt}
@@ -4836,7 +4874,7 @@ The first step is to set the data up as a data frame
                          y = c(6,17,26,37,44))
 @end example
 
-To fit a binomial model using @code{glm()} there are two possibilities
+To fit a binomial model using @code{glm()} there are three possibilities
 for the response:
 
 @itemize @bullet
@@ -4845,9 +4883,13 @@ If the response is a @emph{vector} it is assumed to hold @emph{binary}
 data, and so must be a @math{0/1} vector.
 
 @item
-If the response is a @emph{two column matrix} it is assumed that the
+If the response is a @emph{two-column matrix} it is assumed that the
 first column holds the number of successes for the trial and the second
 holds the number of failures.
+
+@item
+If the response is a @emph{factor}, its first level is taken as failure
+(0) and all other levels as `success' (1).
 @end itemize
 
 Here we need the second of these conventions, so we add a matrix to our
@@ -4961,9 +5003,10 @@ information, as needed.
 Certain forms of nonlinear model can be fitted by Generalized Linear
 Models (@code{glm()}).  But in the majority of cases we have to approach
 the nonlinear curve fitting problem as one of nonlinear optimization.
-@R{}'s nonlinear optimization routine is @code{nlm()},
+@R{}'s nonlinear optimization routines are @code{optim()} and @code{nlm()},
 @findex nlm
-which takes the place of @SPLUS{}'s @code{ms()} and @code{nlmin()}.  We
+@findex optim
+which take the place of @SPLUS{}'s @code{ms()} and @code{nlminb()}.  We
 seek the parameter values that minimize some index of lack-of-fit, and
 @code{nlm()} does that by trying out various parameter values
 iteratively.  Unlike linear regression for example, there is no
@@ -4973,8 +5016,8 @@ try, and convergence depends critically upon the quality of the initial
 guesses.
 
 @menu
-* Least squares::
-* Maximum likelihood::
+* Least squares::               
+* Maximum likelihood::          
 @end menu
 
 @node Least squares, Maximum likelihood, Nonlinear least squares and maximum likelihood models, Nonlinear least squares and maximum likelihood models
@@ -5009,7 +5052,7 @@ parameter values, and superimpose the model curve using those values.
 > lines(spline(xfit, yfit))
 @end example
 
-We could do better, but these starting values of 200 and .1 seem
+We could do better, but these starting values of 200 and 0.1 seem
 adequate.  Now do the fit:
 
 @example
@@ -5169,22 +5212,9 @@ in package @pkg{acepack} and functions @code{bruto} and @code{mars}
 @findex bruto
 @findex mars
 in package @pkg{mda} provide some examples of these techniques in
-user-contributed packages to @R{}.
-
-@c  @item
-@c  @cindex Generalized additive models
-@c  @strong{Generalized additive models.}  This technique aims to construct
-@c  a regression function from smooth additive functions of the determining
-@c  variables, usually one for each determining variable.  The function
-@c  @code{gam()} is in many ways similar to the other model fitting
-@c  functions outlined above.  In addition there are other model fitting
-@c  functions that do a similar job.  These include @code{avas()} and
-@c  @code{ace()}.  On the other hand @code{ppreg()} is available for
-@c  projection pursuit regression, but this technique is still very much in
-@c  need of a complete theoretical treatment and further practical
-@c  experience.  These latter functions are again conforming to an older
-@c  protocol for model fitting functions and lack the convenience of the
-@c  newer functions.
+user-contributed packages to @R{}.  An extension is @strong{Generalized
+Additive Models}, implemented in user-contributed packages @pkg{gam} and
+@pkg{mgcv}.
 
 @item
 @cindex Tree-based models
@@ -5253,13 +5283,13 @@ it is more powerful but harder to use.  There is a recommended package
 multi-panel plots akin to those in the @emph{Trellis} system in @Sl{}.
 
 @menu
-* High-level plotting commands::
-* Low-level plotting commands::
-* Interacting with graphics::
-* Using graphics parameters::
-* Graphics parameters::
-* Device drivers::
-* Dynamic graphics::
+* High-level plotting commands::  
+* Low-level plotting commands::  
+* Interacting with graphics::   
+* Using graphics parameters::   
+* Graphics parameters::         
+* Device drivers::              
+* Dynamic graphics::            
 @end menu
 
 @node High-level plotting commands, Low-level plotting commands, Graphics, Graphics
@@ -5272,10 +5302,10 @@ otherwise.) High-level plotting commands always start a new plot,
 erasing the current plot if necessary.
 
 @menu
-* The plot() function::
-* Displaying multivariate data::
-* Display graphics::
-* Arguments to high-level plotting functions::
+* The plot() function::         
+* Displaying multivariate data::  
+* Display graphics::            
+* Arguments to high-level plotting functions::  
 @end menu
 
 @node The plot() function, Displaying multivariate data, High-level plotting commands, High-level plotting commands
@@ -5597,8 +5627,8 @@ valid input.  In this way functions such as @code{locator()} (see below)
 may be used to specify positions on a plot interactively.
 
 @menu
-* Mathematical annotation::
-* Hershey vector fonts::
+* Mathematical annotation::     
+* Hershey vector fonts::        
 @end menu
 
 @node Mathematical annotation, Hershey vector fonts, Low-level plotting commands, Low-level plotting commands
@@ -5611,8 +5641,7 @@ or @code{title}.   For example, the following code draws the formula for
 the Binomial probability function:
 
 @smallexample
-> text(x, y, expression(paste(bgroup("(", atop(n, x), ")"),
-                              p^x, q^@{n-x@})))
+> text(x, y, expression(paste(bgroup("(", atop(n, x), ")"), p^x, q^@{n-x@})))
 @end smallexample
 
 More information, including a full listing of the features available can
@@ -5621,6 +5650,7 @@ obtained from within @R{} using the commands:
 @smallexample
 > help(plotmath)
 > example(plotmath)
+> demo(plotmath)
 @end smallexample
 
 @node Hershey vector fonts,  , Mathematical annotation, Low-level plotting commands
@@ -5647,9 +5677,9 @@ within @R{} using the commands:
 
 @smallexample
 > help(Hershey)
-> example(Hershey)
+> demo(Hershey)
 > help(Japanese)
-> example(Japanese)
+> demo(Japanese)
 @end smallexample
 
 @node Interacting with graphics, Using graphics parameters, Low-level plotting commands, Graphics
@@ -5682,9 +5712,8 @@ informative text near an outlying point, the command
 @end example
 
 @noindent
-may be useful.  @code{locator()} will still work if the current device
-does not support a mouse; in this case the user will be prompted for
-@math{x} and @math{y} coordinates.
+may be useful.  (@code{locator()} will be ignored if the current device,
+such as @code{postscript} does not support interactive pointing.)
 
 @table @code
 @item identify(x, y, labels)
@@ -5710,12 +5739,12 @@ the @code{identify()} function as follows:
 
 The @code{identify()} functions performs no plotting itself, but simply
 allows the user to move the mouse pointer and click the left mouse
-button near a point.  The point nearest the mouse pointer will be
-highlighted with its index number (that is, its position in the
+button near a point.  If there is a point near the mouse pointer it will
+be marked with its index number (that is, its position in the
 @code{x}/@code{y} vectors) plotted nearby.  Alternatively, you could use
 some informative string (such as a case name) as a highlight by using
-the @code{labels} argument to @code{identify()}, or disable highlighting
-altogether with the @code{plot=FALSE} argument.  When the process is
+the @code{labels} argument to @code{identify()}, or disable marking
+altogether with the @code{plot = FALSE} argument.  When the process is
 terminated (see above), @code{identify()} returns the indices of the
 selected points; you can use these indices to extract the selected
 points from the original vectors @code{x} and @code{y}.
@@ -5724,13 +5753,13 @@ points from the original vectors @code{x} and @code{y}.
 @section Using graphics parameters
 
 When creating graphics, particularly for presentation or publication
-purposes, @R{} does not always produce exactly that which is required.
-You can, however, customize almost every aspect of the display using
-@emph{graphics parameters}.  @R{} maintains a list of a large number of
-graphics parameters which control things such as line style, colors,
-figure arrangement and text justification among many others.  Every
-graphics parameter has a name (such as `@code{col}', which controls
-colors,) and a value (a color number, for example.)
+purposes, @R{}'s defaults do not always produce exactly that which is
+required.  You can, however, customize almost every aspect of the
+display using @emph{graphics parameters}.  @R{} maintains a list of a
+large number of graphics parameters which control things such as line
+style, colors, figure arrangement and text justification among many
+others.  Every graphics parameter has a name (such as `@code{col}',
+which controls colors,) and a value (a color number, for example.)
 
 A separate list of graphics parameters is maintained for each active
 device, and each device has a default set of parameters when
@@ -5739,8 +5768,8 @@ permanently, affecting all graphics functions which access the current
 device; or temporarily, affecting only a single graphics function call.
 
 @menu
-* The par() function::
-* Arguments to graphics functions::
+* The par() function::          
+* Arguments to graphics functions::  
 @end menu
 
 @node The par() function, Arguments to graphics functions, Using graphics parameters, Using graphics parameters
@@ -5786,6 +5815,18 @@ complete.
 > par(oldpar)
 @end example
 
+@noindent
+To save and restore @emph{all} settable@footnote{Some graphics
+parameters such as the size of the current device are for information
+only.} graphical parameters use
+
+@example
+> oldpar <- par(no.readonly=TRUE)
+  @r{@dots{} plotting commands @dots{}}
+> par(oldpar)
+@end example
+
+
 @node Arguments to graphics functions,  , The par() function, Using graphics parameters
 @subsection Temporary changes: Arguments to graphics functions
 
@@ -5801,6 +5842,11 @@ duration of the function call.  For example:
 @noindent
 produces a scatterplot using a plus sign as the plotting character,
 without changing the default plotting character for future plots.
+
+Unfortunately, this is not implemented entirely consistently and it is
+sometimes necessary to set and reset graphics parameters using
+@code{par()}.
+
 
 @node Graphics parameters, Device drivers, Using graphics parameters, Graphics
 @section Graphics parameters list
@@ -5820,11 +5866,14 @@ a graphics function.  @var{value} is a typical value you might use when
 setting the parameter.
 @end table
 
+Note that @code{axes} is @strong{not} a graphics parameter but an
+argument to a few @code{plot} methods: see @code{xaxt} and @code{yaxt}.
+
 @menu
-* Graphical elements::
-* Axes and tick marks::
-* Figure margins::
-* Multiple figure environment::
+* Graphical elements::          
+* Axes and tick marks::         
+* Figure margins::              
+* Multiple figure environment::  
 @end menu
 
 @node Graphical elements, Axes and tick marks, Graphics parameters, Graphics parameters
@@ -5849,35 +5898,50 @@ position unless you use @code{"."} as the plotting character, which
 produces centered points.
 
 @item pch=4
-When @code{pch} is given as an integer between 0 and 18 inclusive, a
+When @code{pch} is given as an integer between 0 and 25 inclusive, a
 specialized plotting symbol is produced.  To see what the symbols are,
 use the command
 
 @example
-> legend(locator(1), as.character(0:18), pch = 0:18)
+> legend(locator(1), as.character(0:25), pch = 0:25)
 @end example
+
+@noindent
+Those from 21 to 25 may appear to duplicate earlier symbols, but can be
+coloured in different ways: see the help on @code{points} and its
+examples.
+
+In addition, @code{pch} can be a character or a number in the range
+@code{32:255} representing a character in the current font.
 
 @item lty=2
 Line types.  Alternative line styles are not supported on all graphics
 devices (and vary on those that do) but line type 1 is always a solid
-line, and line types 2 and onwards are dotted or dashed lines, or some
-combination of both.
+line, line type 0 is always invisible, and line types 2 and onwards are
+dotted or dashed lines, or some combination of both.
 
 @item lwd=2
 Line widths.  Desired width of lines, in multiples of the ``standard''
 line width.  Affects axis lines as well as lines drawn with
-@code{lines()}, etc.
+@code{lines()}, etc.  Not all devices support this, and some have
+restrictions on the widths that can be used.
 
 @item col=2
 Colors to be used for points, lines, text, filled regions and images.
-Each of these graphic elements has a list of possible colors, and the
-value of this parameter is an index to that list.  Obviously, this
-parameter applies only to a limited range of devices.
+A number from the current palette (see @code{?palette}) or a named colour.
+
+@item col.axis
+@itemx col.lab
+@itemx col.main
+@itemx col.sub
+The color to be used for axis annotation, @math{x} and @math{y} labels,
+main and sub-titles, respectively.
 
 @item font=2
 An integer which specifies which font to use for text.  If possible,
 device drivers arrange so that @code{1} corresponds to plain text,
-@code{2} to bold face, @code{3} to italic and @code{4} to bold italic.
+@code{2} to bold face, @code{3} to italic, @code{4} to bold italic
+and @code{5} to a symbol font (which include Greek letters).
 
 @item font.axis
 @itemx font.lab
@@ -5915,7 +5979,7 @@ parameters.
 The first two numbers are the desired number of tick intervals on the
 @math{x} and @math{y} axes respectively.  The third number is the
 desired length of axis labels, in characters (including the decimal
-point.) Choosing a too-small value for this parameter may result in all
+point.)  Choosing a too-small value for this parameter may result in all
 tick labels being rounded to the same number!
 
 @item las=1
@@ -5939,21 +6003,18 @@ grid lines.  Negative values give tick marks outside the plotting
 region.  Use @code{tck=0.01} and @code{mgp=c(1,-1.5,0)} for internal
 tick marks.
 
-@item xaxs="s"
-@itemx yaxs="d"
-Axis styles for the @math{x} and @math{y} axes, respectively.  With
-styles @code{"s"} (standard) and @code{"e"} (extended) the smallest and
-largest tick marks always lie outside the range of the data.  Extended
-axes may be widened slightly if any points are very near the edge.  This
-style of axis can sometimes leave large blank gaps near the edges.  With
+@item xaxs="r"
+@itemx yaxs="i"
+Axis styles for the @math{x} and @math{y} axes, respectively.   With
 styles @code{"i"} (internal) and @code{"r"} (the default) tick marks
 always fall within the range of the data, however style @code{"r"}
-leaves a small amount of space at the edges.
+leaves a small amount of space at the edges.  (@Sl{} has other styles
+not implemented in @R{}.)
 
-Setting this parameter to @code{"d"} (direct axis) @emph{locks in} the
-current axis and uses it for all future plots (or until the parameter is
-set to one of the other values above, at least.) Useful for generating
-series of fixed-scale plots.
+@c Setting this parameter to @code{"d"} (direct axis) @emph{locks in} the
+@c current axis and uses it for all future plots (or until the parameter is
+@c set to one of the other values above, at least.) Useful for generating
+@c series of fixed-scale plots.
 @end table
 
 @node Figure margins, Multiple figure environment, Axes and tick marks, Graphics parameters
@@ -5990,8 +6051,8 @@ labels.  Furthermore, the default is chosen without regard to the size
 of the device surface: for example, using the @code{postscript()} driver
 with the @code{height=4} argument will result in a plot which is about
 50% margin unless @code{mar} or @code{mai} are set explicitly.  When
-multiple figures are in use (see below) the margins are reduced by half,
-however this may not be enough when many figures share the same page.
+multiple figures are in use (see below) the margins are reduced, however
+this may not be enough when many figures share the same page.
 
 @node Multiple figure environment,  , Figure margins, Graphics parameters
 @subsection Multiple figure environment
@@ -6056,7 +6117,8 @@ however, so you must create them explicitly using @code{oma} or
 @code{omi}.
 
 More complicated arrangements of multiple figures can be produced by the
-@code{split.screen()} and @code{layout()} functions.
+@code{split.screen()} and @code{layout()} functions, as well as by the
+@pkg{grid} and @pkg{lattice} packages.
 
 @node Device drivers, Dynamic graphics, Graphics parameters, Graphics
 @section Device drivers
@@ -6116,11 +6178,12 @@ driver by issuing the command
 
 This ensures that the device finishes cleanly; for example in the case
 of hardcopy devices this ensures that every page is completed and has
-been sent to the printer.
+been sent to the printer.  (This will happen automatically at the normal
+end of a session.)
 
 @menu
-* PostScript diagrams for typeset documents::
-* Multiple graphics devices::
+* PostScript diagrams for typeset documents::  
+* Multiple graphics devices::   
 @end menu
 
 @node PostScript diagrams for typeset documents, Multiple graphics devices, Device drivers, Device drivers
@@ -6175,6 +6238,8 @@ meanings are as follows:
 @item X11()
 [UNIX]
 @item windows()
+@itemx win.printer()
+@itemx win.metafile()
 [Windows]
 @item quartz()
 [MacOS X]
@@ -6238,9 +6303,11 @@ available in the system XGobi by Swayne, Cook and Buja available from
 
 @noindent
 and these can be accessed from @R{} via the package @pkg{xgobi}.
-
 XGobi currently runs under the X Windows system on either UNIX or
 Windows, and @R{} interfaces are available for each.
+
+A development of XGobi called GGobi is under development: see
+@uref{http://www.ggobi.org}.
 
 @node Packages, A sample session, Graphics, Top
 @chapter Packages
@@ -6296,9 +6363,9 @@ to start the @HTML{} help system, and then navigate to the package
 listing in the @code{Reference} section.
 
 @menu
-* Standard packages::
-* Contributed packages and CRAN::
-* Namespaces::
+* Standard packages::           
+* Contributed packages and CRAN::  
+* Namespaces::                  
 @end menu
 
 @node Standard packages, Contributed packages and CRAN, Packages, Packages
@@ -6306,10 +6373,10 @@ listing in the @code{Reference} section.
 
 The standard (or @emph{base}) packages are considered part of the @R{}
 source code.  They contain the basic functions that allow @R{} to work,
-and the standard statistical and graphical functions that are described
-in this manual.  They should be automatically available in any @R{}
-installation.  @xref{Which add-on packages exist for R?, , R packages,
-R-FAQ, R FAQ}, for a complete list.
+and the datasets and standard statistical and graphical functions that
+are described in this manual.  They should be automatically available in
+any @R{} installation.  @xref{Which add-on packages exist for R?, , R
+packages, R-FAQ, R FAQ}, for a complete list.
 
 @node Contributed packages and CRAN, Namespaces, Standard packages, Packages
 @section Contributed packages and @acronym{CRAN}
@@ -6326,19 +6393,19 @@ repositories such as Bioconductor (@uref{http://www.bioconductor.org/}).
 The @emph{R FAQ} contains a list that was current at the time of
 release, but the collection of available packages changes frequently.
 
-@node Namespaces, , Contributed packages and CRAN, Packages
+@node Namespaces,  , Contributed packages and CRAN, Packages
 @section Namespaces
 @cindex Namespace
 @findex ::
 @findex :::
 
 Packages can have @emph{namespaces}, and currently all of the base and
-most of the recommended packages do.  Namespaces do three things: they
-allow the package writer to hide functions and data that are meant only
-for internal use, they prevent functions from breaking when a user
-(or other package writer) picks a name that clashes with one in the
-package, and they provide a way to refer to an object within a
-particular package.
+recommended packages do expect the @code{datasets} package.  Namespaces
+do three things: they allow the package writer to hide functions and
+data that are meant only for internal use, they prevent functions from
+breaking when a user (or other package writer) picks a name that clashes
+with one in the package, and they provide a way to refer to an object
+within a particular package.
 
 For example, @code{t()} is the transpose function in @R{}, but users
 might define their own function named @code{t}.  Namespaces prevent
@@ -6370,8 +6437,9 @@ list.
 The following session is intended to introduce to you some features of
 the @R{} environment by using them.  Many features of the system will be
 unfamiliar and puzzling at first, but this puzzlement will soon
-disappear.  This is written for the UNIX user.  Those using Windows will
-need to adapt the discussion slightly.
+disappear.  
+@c This is written for the UNIX user.  Those using Windows will
+@c need to adapt the discussion slightly.
 
 @table @code
 @item
@@ -6596,13 +6664,13 @@ workspace, and for an exploratory session like this, you probably do not
 want to save it.
 @end table
 
-@node Invoking R, The command line editor, A sample session, Top
+@node Invoking R, The command-line editor, A sample session, Top
 @appendix Invoking R
 
 @menu
-* Invoking R from the command line::
-* Invoking R under Windows::
-* Invoking R under Mac OS X::
+* Invoking R from the command line::  
+* Invoking R under Windows::    
+* Invoking R under Mac OS X::   
 @end menu
 
 @node Invoking R from the command line, Invoking R under Windows, Invoking R, Invoking R
@@ -6636,7 +6704,7 @@ Unless @option{--no-environ} was given, @R{} searches for user and site
 files to process for setting environment variables.  The name of the
 site file is the one pointed to by the environment variable
 @env{R_ENVIRON}; if this is unset, @file{$R_HOME/etc/Renviron.site} is
-used (if it exists).  The user files searched for are @file{.Renviron}
+used (if it exists).  The user file searched for is @file{.Renviron}
 in the current or in the user's home directory (in that order).  These
 files should contain lines of the form @samp{@var{name}=@var{value}}.
 (See @code{help(Startup)} for a precise description.)  Variables you
@@ -6693,7 +6761,7 @@ into this directory.
 Control whether data sets should be saved or not at the end of the @R{}
 session.  If neither is given in an interactive session, the user is
 asked for the desired behavior when ending the session with @kbd{q()};
-in batch mode, one of these must be specified.
+in non-interactive use one of these must be specified.
 
 @item --no-environ
 Do not read any user file to set environment variables.
@@ -6725,7 +6793,7 @@ Combine @option{--no-save}, @option{--no-environ}
 @item --no-readline
 (UNIX only) Turn off command-line editing via @strong{readline}.  This is useful
 when running @R{} from within Emacs using the @acronym{ESS} (``Emacs
-Speaks Statistics'') package.  @xref{The command line editor}, for more
+Speaks Statistics'') package.  @xref{The command-line editor}, for more
 information.
 
 @item --ess
@@ -6792,7 +6860,8 @@ skipped: this can be useful to retrieve values from it with
 @end table
 
 Note that input and output can be redirected in the usual way (using
-@samp{<} and @samp{>}).
+@samp{<} and @samp{>}).  Warning and error messages are sent to the
+error channel (@code{stderr}) except on Windows 9X/ME.
 
 The command @code{R CMD} allows the invocation of various tools which
 are useful in conjunction with @R{}, but not intended to be called
@@ -6910,20 +6979,20 @@ added to @code{TEXINPUTS}.
 @node Invoking R under Mac OS X,  , Invoking R under Windows, Invoking R
 @appendixsec Invoking R under Mac OS X
 
-There are two ways to run @R{} under Mac OS X.  Within a Terminal.app window
-by invoking @code{R}. The methods described in the previous sections apply.
-There is also console-based GUI (@code{R.app}) that by default
-is installed in the @code{Applications} folder on your system. It is a standard
-double-clickable Mac OS X application.
+There are two ways to run @R{} under Mac OS X.  Within a Terminal.app
+window by invoking @code{R}, the methods described in the previous
+sections apply.  There is also console-based GUI (@code{R.app}) that by
+default is installed in the @code{Applications} folder on your
+system. It is a standard double-clickable Mac OS X application.
 
 The startup procedure under Mac OS X is very similar to that under UNIX.
-The `home directory' is the one inside the R.framework. But the startup
-and current working directory is set as the user's home directory unless
-a different startup directory is given in the Preferences window accessible
-from within the GUI.
+The `home directory' is the one inside the R.framework, but the startup
+and current working directory are set as the user's home directory
+unless a different startup directory is given in the Preferences window
+accessible from within the GUI.
 
-@node The command line editor, Function and variable index, Invoking R, Top
-@appendix The command line editor
+@node The command-line editor, Function and variable index, Invoking R, Top
+@appendix The command-line editor
 
 @appendixsection Preliminaries
 
@@ -6933,9 +7002,9 @@ line editor allowing recall, editing and re-submission of prior commands
 is used.  Note: this appendix does @strong{not} apply to the @acronym{GNOME}
 interface under UNIX, only to the standard command-line interface.
 
-It can be disabled (useful for usage with @acronym{ESS}@footnote{The
+It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}
-@uref{http://ess.stat.wisc.edu/}}) using the startup option
+@uref{http://ESS.R-project.org}}) using the startup option
 @option{--no-readline}.
 
 Windows versions of @R{} have somewhat simpler command-line editing: see
@@ -6950,35 +7019,36 @@ Many of these use either Control or Meta characters.  Control
 characters, such as @kbd{Control-m}, are obtained by holding the
 @key{CTRL} down while you press the @key{m} key, and are written as
 @kbd{C-m} below.  Meta characters, such as @kbd{Meta-b}, are typed by
-holding down @key{META} and pressing @key{b}, and written as @kbd{M-b}
-in the following.  If your terminal does not have a @key{META} key, you
-can still type Meta characters using two-character sequences starting
-with @kbd{ESC}.  Thus, to enter @kbd{M-b}, you could type
-@key{ESC}@key{b}.  The @kbd{ESC} character sequences are also allowed on
-terminals with real Meta keys.  Note that case is significant for Meta
-characters.
+holding down @key{META}@footnote{On a PC keyboard this is usually the
+Alt key, occasionally the `Windows' key.} and pressing @key{b}, and
+written as @kbd{M-b} in the following.  If your terminal does not have a
+@key{META} key, you can still type Meta characters using two-character
+sequences starting with @kbd{ESC}.  Thus, to enter @kbd{M-b}, you could
+type @key{ESC}@key{b}.  The @kbd{ESC} character sequences are also
+allowed on terminals with real Meta keys.  Note that case is significant
+for Meta characters.
 
 @appendixsection Editing actions
 
-The @R{} program keeps a history of the commands you type, including the
-error lines, and commands in your history may be recalled, changed if
-necessary, and re-submitted as new commands.  In Emacs style command
-line editing any straight typing you do while in this editing phase
-causes the characters to be inserted in the command you are editing,
-displacing any characters to the right of the cursor.  In @emph{vi} mode
-character insertion mode is started by @kbd{M-i} or @kbd{M-a},
-characters are typed and insertion mode is finished by typing a further
-@key{ESC}.
+The @R{} program keeps a history of the command lines you type,
+including the erroneous lines, and commands in your history may be
+recalled, changed if necessary, and re-submitted as new commands.  In
+Emacs-style command-line editing any straight typing you do while in
+this editing phase causes the characters to be inserted in the command
+you are editing, displacing any characters to the right of the cursor.
+In @emph{vi} mode character insertion mode is started by @kbd{M-i} or
+@kbd{M-a}, characters are typed and insertion mode is finished by typing
+a further @key{ESC}.
 
 Pressing the @key{RET} command at any time causes the command to be
 re-submitted.
 
 Other editing actions are summarized in the following table.
 
-Unfortunately it does not seem to be possible to bind the motion keys,
-for example, to the arrow keys, which is something of a nuisance.
+@c Unfortunately it does not seem to be possible to bind the motion keys,
+@c for example, to the arrow keys, which is something of a nuisance.
 
-@appendixsection Command line editor summary
+@appendixsection Command-line editor summary
 
 @subheading Command recall and vertical motion
 
@@ -7043,7 +7113,7 @@ Re-submit the command to @R{}.
 
 The final @key{RET} terminates the command line editing sequence.
 
-@node Function and variable index, Concept index, The command line editor, Top
+@node Function and variable index, Concept index, The command-line editor, Top
 @appendix Function and variable index
 
 @printindex vr
@@ -7059,26 +7129,38 @@ The final @key{RET} terminates the command line editing sequence.
 D.@: M.@: Bates and  D.@: G.@: Watts (1988), @emph{Nonlinear Regression
 Analysis and Its Applications.} John Wiley & Sons, New York.
 
+@noindent
 Richard A.@: Becker, John M.@: Chambers and Allan R.@: Wilks (1988),
 @emph{The New S Language.} Chapman & Hall, New York.
 This book is often called the ``@emph{Blue Book}''.
 
+@noindent
 John M.@: Chambers and Trevor J.@: Hastie eds. (1992),
 @emph{Statistical Models in S.} Chapman & Hall, New York.
 This is also called the ``@emph{White Book}''.
 
+@noindent
+John M.@: Chambers (1998)
+@emph{Programming with Data}. Springer, New York.
+This is also called the ``@emph{Green Book}''.
+
+@noindent
 A.@: C.@: Davison and D.@: V.@: Hinkley (1997), @emph{Bootstrap Methods
 and Their Applications}, Cambridge University Press.
 
+@noindent
 Annette J.@: Dobson (1990), @emph{An Introduction to Generalized Linear
 Models}, Chapman and Hall, London.
 
+@noindent
 Peter McCullagh and John A.@: Nelder (1989), @emph{Generalized Linear
 Models.} Second edition, Chapman and Hall, London.
 
+@noindent
 John A.@ Rice (1995), @emph{Mathematical Statistics and Data Analysis.}
 Second edition.  Duxbury Press, Belmont, CA.
 
+@noindent
 S.@: D.@: Silvey (1970), @emph{Statistical Inference.} Penguin, London.
 
 @bye

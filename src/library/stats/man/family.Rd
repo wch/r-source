@@ -33,7 +33,7 @@ quasipoisson(link = "log")
      and \code{"log"};
     the \code{poisson} family the links \code{"log"}, \code{"identity"}, 
     and \code{"sqrt"} and the \code{inverse.gaussian} family the links
-    \code{"1/mu^2"}, \code{"inverse"}, \code{"inverse"} and \code{"log"}.
+    \code{"1/mu^2"}, \code{"inverse"}, \code{"identity"} and \code{"log"}.
     
     The \code{quasi} family allows the links \code{"logit"}, \code{"probit"},
     \code{"cloglog"},  \code{"identity"}, \code{"inverse"},
