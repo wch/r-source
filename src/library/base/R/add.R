@@ -396,14 +396,14 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     scope <- c("<none>", scope)
     dfs <- c(object$rank, dfs)
     dev <- c(chisq, dev)
-    if (is.null(scale) || scale == 0)
-	dispersion <- summary(object, dispersion = NULL)$dispersion
-    else dispersion <- scale
+    dispersion <- if (is.null(scale) || scale == 0)
+	summary(object, dispersion = NULL)$dispersion
+    else scale
     fam <- object$family$family
-    if(fam == "gaussian") {
-	if(scale > 0) loglik <- dev/scale - n
-	else loglik <- n * log(dev/n)
-    } else loglik <- dev/dispersion
+    loglik <-
+        if(fam == "gaussian") {
+            if(scale > 0) dev/scale - n else n * log(dev/n)
+        } else dev/dispersion
     aic <- loglik + k * dfs
     dfs <- dfs[1] - dfs
     dfs[1] <- NA
@@ -437,7 +437,8 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     }
     head <- c("Single term deletions", "\nModel:",
 	      deparse(as.vector(formula(object))),
-	      if(!is.null(scale) && scale > 0)  paste("\nscale: ", format(scale), "\n"))
+	      if(!is.null(scale) && scale > 0)
+	      paste("\nscale: ", format(scale), "\n"))
     class(aod) <- c("anova", "data.frame")
     attr(aod, "heading") <- head
     aod
@@ -471,11 +472,11 @@ factor.scope <- function(factor, scope)
 	    nmfac <- colnames(factor)
 	    where <- match(nmdrop, nmfac, 0)
 	    if(any(!where)) stop("lower scope is not included in model")
-	    nmdrop <- nmfac[-where]
 	    facs <- factor[, -where, drop = FALSE]
+	    nmdrop <- nmfac[-where]
 	} else nmdrop <- colnames(factor)
 	if(ncol(facs) > 1) {
-					# now check no interactions will be left without margins.
+            ## check no interactions will be left without margins.
 	    keep <- rep(TRUE, ncol(facs))
 	    f <- crossprod(facs > 0)
 	    for(i in seq(keep)) keep[i] <- max(f[i, - i]) != f[i, i]
@@ -493,8 +494,7 @@ factor.scope <- function(factor, scope)
 	    nmadd <- nmadd[-where]
 	    add <- add[, -where, drop = FALSE]
 	}
-	if(ncol(add) > 1) {
-					# now check marginality:
+	if(ncol(add) > 1) {             # check marginality:
 	    keep <- rep(TRUE, ncol(add))
 	    f <- crossprod(add > 0)
 	    for(i in seq(keep)) keep[-i] <- keep[-i] & (f[i, -i] < f[i, i])
@@ -554,7 +554,9 @@ step <- function(object, scope, scale = 0,
                           "Resid. Df" = rdf, "Resid. Dev" = rd, AIC = AIC,
                           check.names = FALSE)
         if(usingCp) {
-            cn <- colnames(aod); cn[cn == "AIC"] <- "Cp"; colnames(aod) <- cn
+            cn <- colnames(aod)
+            cn[cn == "AIC"] <- "Cp"
+            colnames(aod) <- cn
         }
 	attr(aod, "heading") <- heading
         ##stop gap attr(aod, "class") <- c("anova", "data.frame")
@@ -568,21 +570,23 @@ step <- function(object, scope, scale = 0,
     object$call$formula <- object$formula
     attributes(Terms) <- attributes(object$terms)
     object$terms <- Terms
-    if(missing(direction)) direction <- "both"
-    else direction <- match.arg(direction)
+    ## not needed: if(missing(direction)) direction <- "both" else
+    direction <- match.arg(direction)
     backward <- direction == "both" | direction == "backward"
-    forward <- direction == "both" | direction == "forward"
+    forward  <- direction == "both" | direction == "forward"
     if(missing(scope)) {
 	fdrop <- numeric(0)
 	fadd <- NULL
-    } else {
+    }
+    else {
 	if(is.list(scope)) {
 	    fdrop <- if(!is.null(fdrop <- scope$lower))
 		attr(terms(update.formula(object, fdrop)), "factors")
 	    else numeric(0)
 	    fadd <- if(!is.null(fadd <- scope$upper))
 		attr(terms(update.formula(object, fadd)), "factors")
-	} else {
+	}
+        else {
 	    fadd <- if(!is.null(fadd <- scope))
 		attr(terms(update.formula(object, scope)), "factors")
 	    fdrop <- numeric(0)
@@ -644,8 +648,8 @@ step <- function(object, scope, scale = 0,
                     else rbind(aod, aodf[-1, , drop = FALSE])
 	    }
 	    attr(aod, "heading") <- NULL
-	    # need to remove any terms with zero df from consideration
-	    nzdf <- if( !is.null(aod$Df) )
+	    ## need to remove any terms with zero df from consideration
+	    nzdf <- if(!is.null(aod$Df))
 		aod$Df != 0 | is.na(aod$Df)
 	    aod <- aod[nzdf, ]
 	    if(is.null(aod) || ncol(aod) == 0) break
