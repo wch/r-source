@@ -22,12 +22,11 @@ while test -n "${1}"; do
       DEBUG=true ;;
     -o)
       lib=${2}; shift ;;
-    *)
-      if [ x$lib = x ]; then
-	lib=`echo ${1}|sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`
-      else
-	OBJS="${OBJS} `echo ${1}|sed 's/\.[^\.][^\.]*$/.o/'`"
+    *.?)
+      if test -z "${lib}"; then
+	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`"
       fi
+	OBJS="${OBJS} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
       ;;
   esac
   shift
