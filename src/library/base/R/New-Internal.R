@@ -86,11 +86,6 @@ deparse <-
 
 do.call <- function(what,args).Internal(do.call(what,args))
 drop <- function(x).Internal(drop(x))
-duplicated <- function(x, incomparables = FALSE) {
-    if(!is.logical(incomparables) || incomparables)
-	.NotYetUsed("incomparables != FALSE")
-    .Internal(duplicated(x))
-}
 format.info <- function(x).Internal(format.info(x))
 gc <- function(verbose = getOption("verbose"))
 {

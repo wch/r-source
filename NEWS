@@ -282,8 +282,13 @@ NEW FEATURES
     o   New function reg.finalizer() to provide R interface to
         finalization.  
 
-    o   new function reshape() extends reshape{Long,Wide} to multiple
-        variables. 
+    o   New function reshape() extends reshape{Long,Wide} to multiple
+        variables.
+
+    o   duplicated() and unique() are now generic functions with
+	methods for data frames (as well as atomic vectors).
+
+
 
 BUG FIXES
 

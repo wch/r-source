@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-09-10)
+Version 1.4.0 Under development (unstable) (2001-11-04)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -209,7 +209,10 @@ Error in as.character.octmode(x) : calling wrong method
 [10] "Component 1: Attributes: < target is NULL, current is list >"                  
 [11] "Component 1: target is numeric, current is data.frame"                         
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
+[2] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
+[3] "Component 1: Lengths: 0, 1"                                                    
+[4] "Component 1: names for current but not for target"                             
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
  [1] "Names: 1 string mismatches"                                                    
  [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
@@ -1330,7 +1333,9 @@ Error in as.character.octmode(x) : calling wrong method
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Attributes: < Component 2: 1 string mismatches >" 
+[2] "Component 1: names for current but not for target"
+[3] "Component 1: NA mismatches: 1"                    
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
 [1] "Names: 1 string mismatches"                                       
 [2] "Attributes: < Component 2: 1 string mismatches >"                 
@@ -1687,7 +1692,9 @@ Error in as.character.octmode(x) : calling wrong method
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is numeric, current is data.frame"            
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Attributes: < Component 2: 1 string mismatches >" 
+[2] "Component 1: names for current but not for target"
+[3] "Component 1: NA mismatches: 1"                    
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
 [1] "Names: 1 string mismatches"                                       
 [2] "Attributes: < Component 2: 1 string mismatches >"                 
@@ -2044,7 +2051,9 @@ Error in as.character.octmode(x) : calling wrong method
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is character, current is data.frame"          
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] "Attributes: < Component 2: 1 string mismatches >" 
+[2] "Component 1: names for current but not for target"
+[3] "Component 1: NA mismatches: 1"                    
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
 [1] "Names: 1 string mismatches"                                       
 [2] "Attributes: < Component 2: 1 string mismatches >"                 
@@ -2235,7 +2244,7 @@ Error in as.environment(x) : Invalid object for as.environment
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
-Error in unique(x) : unique() applies only to vectors
+Error in unique.default(x) : unique() applies only to vectors
 > is.function(as.function( x ))
 [1] TRUE
 > is.integer(as.integer( x ))
@@ -2253,7 +2262,7 @@ Error in as.name(x) : invalid type/length (1/1) in vector allocation
 > is.numeric(as.numeric( x ))
 [1] TRUE
 > is.ordered(as.ordered( x ))
-Error in unique(x) : unique() applies only to vectors
+Error in unique.default(x) : unique() applies only to vectors
 > is.pairlist(as.pairlist( x ))
 [1] TRUE
 > is.qr(as.qr( x ))
@@ -2297,7 +2306,7 @@ Error in as.environment(x) : Invalid object for as.environment
 [1] TRUE
 > if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
 + } else   !isall.equal(x, as.factor( x ))
-Error in unique(x) : unique() applies only to vectors
+Error in unique.default(x) : unique() applies only to vectors
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
 [1] TRUE
@@ -2324,7 +2333,7 @@ Error in as.name(x) : invalid type/length (1/1) in vector allocation
 [1] TRUE
 > if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
 + } else   !isall.equal(x, as.ordered( x ))
-Error in unique(x) : unique() applies only to vectors
+Error in unique.default(x) : unique() applies only to vectors
 > if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
 + } else   !isall.equal(x, as.pairlist( x ))
 [1] TRUE
@@ -2401,7 +2410,7 @@ Error in as.character.octmode(x) : calling wrong method
 [8] "Component 1: Component 1: names for current but not for target"                
 [9] "Component 1: Component 1: target is numeric, current is list"                  
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+Error in unique.default(x) : unique() applies only to vectors
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
 [1] "Names: 1 string mismatches"                                                    
 [2] "Attributes: < Component 2: 1 string mismatches >"                              
@@ -2505,7 +2514,7 @@ Error in as.environment(x) : Invalid object for as.environment
 > f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
 [1] TRUE
 > f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+Error in unique.default(x) : unique() applies only to vectors
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
@@ -2547,7 +2556,7 @@ Error in as.name(x) : invalid type/length (1/1) in vector allocation
 > f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
 [1] TRUE
 > f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+Error in unique.default(x) : unique() applies only to vectors
 > f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
 [1] TRUE
 > f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
@@ -2593,7 +2602,7 @@ Error in as.environment(x) : Invalid object for as.environment
 > is.expression(as.expression( x ))
 [1] TRUE
 > is.factor(as.factor( x ))
-Error in unique(x) : unique() applies only to vectors
+[1] TRUE
 > is.function(as.function( x ))
 [1] TRUE
 > is.integer(as.integer( x ))
@@ -2611,7 +2620,7 @@ Error in as.name(x) : invalid type/length (1/1) in vector allocation
 > is.numeric(as.numeric( x ))
 [1] TRUE
 > is.ordered(as.ordered( x ))
-Error in unique(x) : unique() applies only to vectors
+[1] TRUE
 > is.pairlist(as.pairlist( x ))
 [1] TRUE
 > is.qr(as.qr( x ))
@@ -2656,7 +2665,7 @@ Error in as.environment(x) : Invalid object for as.environment
 [1] TRUE
 > if(is.factor(x)) { cat('IS: ');all.equal(x, as.factor( x ), tol=0)
 + } else   !isall.equal(x, as.factor( x ))
-Error in unique(x) : unique() applies only to vectors
+[1] TRUE
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
 [1] TRUE
@@ -2685,7 +2694,7 @@ Error in as.name(x) : invalid type/length (1/1) in vector allocation
 [1] TRUE
 > if(is.ordered(x)) { cat('IS: ');all.equal(x, as.ordered( x ), tol=0)
 + } else   !isall.equal(x, as.ordered( x ))
-Error in unique(x) : unique() applies only to vectors
+[1] TRUE
 > if(is.pairlist(x)) { cat('IS: ');all.equal(x, as.pairlist( x ), tol=0)
 + } else   !isall.equal(x, as.pairlist( x ))
 [1] TRUE
@@ -2755,7 +2764,7 @@ Error in as.character.octmode(x) : calling wrong method
 [5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
 [6] "Component 1: Component 1: `current' is not a factor"                                        
 > f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] TRUE
 > f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
 [1] "Names: 1 string mismatches"                                                                 
 [2] "Attributes: < Component 2: 1 string mismatches >"                                           
@@ -2836,7 +2845,7 @@ Error in as.environment(x) : Invalid object for as.environment
 > f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
 [1] TRUE
 > f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] TRUE
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 [1] TRUE
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
@@ -2877,7 +2886,7 @@ Error in as.name(x) : invalid type/length (1/1) in vector allocation
 > f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
 [1] TRUE
 > f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
-Error in unique(x) : unique() applies only to vectors
+[1] TRUE
 > f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
 [1] TRUE
 > f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
@@ -2903,6 +2912,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.98 0.04 2.02 0 0 
+Time elapsed:  1.26 0.06 1.33 0 0 
 > 
 > 
