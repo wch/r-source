@@ -72,6 +72,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
 
+all: test-Specific test-Reg test-Demo
 
 .Rin.R:
 	@echo "creating \`$@'"
@@ -79,18 +80,33 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo "running \`$<'"
+	@echo -n "running \`$<' ..."
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
+	@echo "OK"
 	@if test -f $(srcdir)/$@.save  ; then \
 	  mv $@ $@.fail; \
-	  echo -n \
-	    "Comparing \`$@' to \`$(srcdir)/$@.save' ..."; \
+	  echo -n "Comparing \`$@' to \`$(srcdir)/$@.save' ..."; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
 	  echo "OK"; \
 	fi
 
-all: test-Specific test-Reg test-Demo
+reg-plot.Rout: reg-plot.R
+	@rm -f $@ $@.fail
+	@echo -n "running '$<' ..."
+	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
+	@echo "OK"
+	@if test -f $(srcdir)/$@.save ; then \
+	  mv $@ $@.fail; \
+	  echo -n "comparing '$@' to '$(srcdir)/$@.save' ..."; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "OK"; \
+	fi
+	@echo -n "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ..."
+	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	@echo "OK"
+
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
@@ -139,6 +155,11 @@ test-Reg:
 test-Ts:
 	@echo "running tests of package ts functions"
 	@$(MAKE) -f Makefile.win $(test-out-ts) RVAL_IF_DIFF=0
+
+test-Standalone:
+	@echo "testing building standalone Rmath"
+	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
+	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
 
 clean:
 	@rm -f *.Rout *.Rout.fail *.Rout2 Rplots.ps reg-plot.ps reg-tests-2.ps $(test-src-auto)
