@@ -223,6 +223,7 @@ SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 			RAND2(8, rnorm);
 			RAND2(9, runif);
 			RAND2(10, rweibull);
+			RAND2(11, rwilcox);
 		default:
 			error("internal error in do_random2\n");
 		}

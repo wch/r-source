@@ -1191,6 +1191,10 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
     case 39:  return math3(op, CAR(args), CADR(args), CADDR(args), qnt);
 #endif
 
+    case 40:  return math3(op, CAR(args), CADR(args), CADDR(args), dwilcox);
+    case 41:  return math3(op, CAR(args), CADR(args), CADDR(args), pwilcox);
+    case 42:  return math3(op, CAR(args), CADR(args), CADDR(args), qwilcox);
+
     default:
 	errorcall(lcall, "unimplemented real function\n");
     }

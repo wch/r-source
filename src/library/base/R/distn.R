@@ -105,13 +105,20 @@ rpois <- function(n, lambda) .Internal(rpois(n, lambda))
 
 dt <- function(x, df) .Internal(dt(x, df))
 pt <- function(q, df, ncp) {
-	if(missing(ncp)) .Internal(pt(q, df))
-	else .Internal(pnt(q, df, ncp))
+  if(missing(ncp))
+    .Internal(pt(q, df))
+  else
+    .Internal(pnt(q, df, ncp))
 }
 qt <- function(p, df) .Internal(qt(p, df))
 rt <- function(n, df) .Internal(rt(n, df))
 
 ptukey <- function(q, nmeans, df, nranges=1)
-.Internal(ptukey(q, nranges, nmeans, df))
+  .Internal(ptukey(q, nranges, nmeans, df))
 qtukey <- function(p, nmeans, df, nranges=1)
-.Internal(qtukey(p, nranges, nmeans, df))
+  .Internal(qtukey(p, nranges, nmeans, df))
+
+dwilcox <- function(x, m, n) .Internal(dwilcox(x, m, n))
+pwilcox <- function(q, m, n) .Internal(pwilcox(q, m, n))
+qwilcox <- function(p, m, n) .Internal(qwilcox(p, m, n))
+rwilcox <- function(nn, m, n) .Internal(rwilcox(nn, m, n))

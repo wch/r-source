@@ -318,4 +318,13 @@ double	ptukey(double, double, double, double);
 double	qtukey(double, double, double, double);
 double	rtukey(double, double, double);
 
+	/* Wilcoxon Distribution */
+
+#define WILCOX_MMAX 50
+#define WILCOX_NMAX 50
+double dwilcox(double, double, double);
+double pwilcox(double, double, double);
+double qwilcox(double, double, double);
+double rwilcox(double, double);
+
 #endif

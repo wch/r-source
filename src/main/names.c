@@ -323,6 +323,10 @@ FUNTAB R_FunTab[] =
 {"pnt",		do_math3,	38,	11,	3,	PP_FUNCALL,	0},
 {"qnt",		do_math3,	39,	11,	3,	PP_FUNCALL,	0},
 
+{"dwilcox",	do_math3,	40,	11,	3,	PP_FUNCALL,	0},
+{"pwilcox",	do_math3,	41,	11,	3,	PP_FUNCALL,	0},
+{"qwilcox",	do_math3,	42,	11,	3,	PP_FUNCALL,	0},
+
 /* Mathematical Functions of Four Variables */
 
 {"dhyper",	do_math4,	1,	11,	4,	PP_FUNCALL,	0},
@@ -360,6 +364,7 @@ FUNTAB R_FunTab[] =
 {"rnorm",	do_random2,	8,	11,	3,	PP_FUNCALL,	0},
 {"runif",	do_random2,	9,	11,	3,	PP_FUNCALL,	0},
 {"rweibull",	do_random2,	10,	11,	3,	PP_FUNCALL,	0},
+{"rwilcox",	do_random2,	11,	11,	3,	PP_FUNCALL,	0},
 
 {"rhyper",	do_random3,	0,	11,	4,	PP_FUNCALL,	0},
 
