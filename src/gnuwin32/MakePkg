@@ -226,7 +226,7 @@ md5sums:
 ifneq ($(strip $(PKG)),base)
 	@$(ECHO) "  adding MD5 sums"
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)")" | \
+	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)"')" | \
 	  $(R_EXE) --vanilla  --no-dotFirst --slave > /dev/null
 else
 	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)"')" | \
