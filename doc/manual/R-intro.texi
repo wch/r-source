@@ -6881,7 +6881,19 @@ Rcmd @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{Rcmd} interface.
 
+You may also specify your own @code{*.bat} or @code{*.exe} file instead of one of the built-in
+commands.  It will be run with the following environment variables set appropriately:
+@code{R_HOME}, @code{R_VERSION}, @code{R_CMD}, @code{R_OSTYPE}, @code{PATH},
+@code{PERL5LIB}, and @code{TEXINPUTS}.  For example, if you already have @code{latex.exe} 
+on your path, then 
 
+@example
+Rcmd latex.exe mydoc
+@end example
+
+@noindent
+will run LaTeX on mydoc.tex, with the path to @R{}'s @code{share/texmf} macros 
+added to @code{TEXINPUTS}.
 
 @node The command line editor, Function and variable index, Invoking R, Top
 @appendix The command line editor

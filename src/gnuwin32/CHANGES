@@ -25,6 +25,9 @@ Rterm reverts to sending warning/error messages to stdout on Windows
 
 Rcmd BATCH is now handled in C, and works again on Windows 95/98/ME.
 
+Rcmd now sets the TEXINPUTS environment variable so that LaTeX 
+macros in share/texmf are available via e.g. "Rcmd latex.exe mydoc".
+
 Calling dev.off() (or ending a session) when a windows() device is
 open and recording plots automatically saves the current plot as the
 last saved plot.
