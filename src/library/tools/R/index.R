@@ -1,11 +1,40 @@
 ### Miscellaneous indexing functions.
 
+### * .buildDataIndex
+
+.buildDataIndex <-
+function(dataDir, contents)
+{
+    ## Build an index with information about all available data sets.
+    ## See .buildDemoIndex() for an explanation of what we do here.
+    
+    ## <NOTE>
+    ## We could also have an interface like
+    ##   .buildDataIndex(dir, contents = NULL)
+    ## where @code{dir} is the path to a package's root source dir and
+    ## contents is .listFilesWithType(file.path(dir, "man"), "docs").
+    ## </NOTE>
+    
+    if(!.fileTest("-d", dataDir))
+        stop(paste("directory", sQuote(dataDir), "does not exist"))
+    dataFiles <- .listFilesWithType(dataDir, "data")
+    dataTopics <-
+        unique(basename(gsub("\\.[[:alpha:]]+$", "", dataFiles)))
+    dataIndex <- cbind(dataTopics, "")
+    dataEntries <- .buildRdIndex(contents, type = "data")
+    idx <- match(dataTopics, dataEntries[ , 1], 0)
+    dataIndex[which(idx != 0), 2] <- dataEntries[idx, 2]
+    dataIndex
+}
+
 ### * .buildDemoIndex
 
 .buildDemoIndex <-
 function(demoDir)
 {
-    ## <FIXME>
+    ## Build an index with information about all available demos.
+    
+    ## <NOTE>
     ## We use both the contents of @file{00Index} (if possible) and the
     ## information which demos are actually available to build the real
     ## demo index.
@@ -13,20 +42,19 @@ function(demoDir)
     ## if some might be 'undocumented', i.e., without index information.
     ## Use .checkDemoIndex() to check whether available demo code and
     ## docs are in sync.
-    ## We should really do the same for data sets: i.e., have a function
-    ## .buildDataIndex() which uses .buildRdIndex(type = "data") to
-    ## build an index with information about available data sets.
-    ## </FIXME>
+    ## </NOTE>
+    
     if(!.fileTest("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
     demoFiles <- .listFilesWithType(demoDir, "demo")
-    demoTopics <- basename(gsub("\\.[[:alpha:]]+$", "", demoFiles))
+    demoTopics <-
+        unique(basename(gsub("\\.[[:alpha:]]+$", "", demoFiles)))
     demoIndex <- cbind(demoTopics, "")
-    if(.fileTest("-f", index <- file.path(demoDir, "00Index"))) {
-        demoEntries <- try(read.00Index(index))
+    if(.fileTest("-f", INDEX <- file.path(demoDir, "00Index"))) {
+        demoEntries <- try(read.00Index(INDEX))
         if(inherits(demoEntries, "try-error"))
             warning(paste("cannot read index information in file",
-                          sQuote(index)))
+                          sQuote(INDEX)))
         idx <- match(demoTopics, demoEntries[ , 1], 0)
         demoIndex[which(idx != 0), 2] <- demoEntries[idx, 2]
     }

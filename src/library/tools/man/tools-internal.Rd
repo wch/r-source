@@ -38,6 +38,7 @@
 \alias{.buildRdIndex}
 \alias{.buildVignetteIndex}
 \alias{.buildDemoIndex}
+\alias{.buildDataIndex}
 \alias{.checkVignetteIndex}
 \alias{print.checkVignetteIndex}
 \alias{.checkDemoIndex}
@@ -67,6 +68,7 @@ Rd2contents(dir, outFile = "")
 .buildRdIndex(contents, type = NULL)
 .buildVignetteIndex(vignetteFiles)
 .buildDemoIndex(demoDir)
+.buildDataIndex(dataDir, contents)
 .installPackageDescription(dir, outDir)
 .installPackageIndices(dir, outDir)
 .installPackageRdIndices(dir, outDir)

@@ -70,14 +70,22 @@ function(dir, outDir)
     if(!.fileTest("-d", docsDir))
         stop(paste("directory", sQuote(dir),
                    "does not contain Rd sources"))
-
+    
+    dataDir <- file.path(dir, "data")
     packageName <- basename(dir)
     
     indices <- c("CONTENTS.rda", "CONTENTS", "INDEX")
-    if(.fileTest("-d", file.path(dir, "data")))
-        indices <- c(indices, file.path("data", "00Index.dcf"))
-    if(all(.fileTest("-nt", file.path(outDir, indices), docsDir)))
-        return()
+    upToDate <- .fileTest("-nt", file.path(outDir, indices), docsDir)
+    if(.fileTest("-d", dataDir)) {
+        ## Note that the data index is computed from both the package's
+        ## Rd files and the data sets actually available.
+        upToDate <-
+            c(upToDate,
+              .fileTest("-nt",
+                        file.path(outDir, "data", "00Index.dcf"),
+                        c(dataDir, docsDir)))
+    }
+    if(all(upToDate)) return()
 
     contents <- Rdcontents(.listFilesWithType(docsDir, "docs"))
 
@@ -95,10 +103,10 @@ function(dir, outDir)
                    file.path(outDir, "INDEX"))
     ## </FIXME>
 
-    if(.fileTest("-d", file.path(dir, "data"))) {
+    if(.fileTest("-d", dataDir)) {
         outDataDir <- file.path(outDir, "data")
         if(!.fileTest("-d", outDataDir)) dir.create(outDataDir)
-        writeLines(formatDL(.buildRdIndex(contents, type = "data"),
+        writeLines(formatDL(.buildDataIndex(dataDir, contents),
                             style = "list"),
                    file.path(outDataDir, "00Index.dcf"))
     }
