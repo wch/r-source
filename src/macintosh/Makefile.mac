@@ -52,13 +52,13 @@ mainfiles Ä fixdesc
 	  if ! `Exists -d {RHOME}:library:{pkg}`
 	   NewFolder {RHOME}:library:{pkg}
 	  end
-	  if ! `Exists ::library:{pkg}:DESCRIPTION`
+	  if  `Exists ::library:{pkg}:DESCRIPTION`
 	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}:library:{pkg}
 	  end
-	  if ! `Exists ::library:{pkg}:INDEX`
+	  if  `Exists ::library:{pkg}:INDEX`
 	   Duplicate -y ::library:{pkg}:INDEX {RHOME}:library:{pkg}
 	  end 
-	  if ! `Exists ::library:{pkg}:TITLE`
+	  if  `Exists ::library:{pkg}:TITLE`
 	     Duplicate -y ::library:{pkg}:TITLE {RHOME}:library:{pkg}
       end
 	  echo "installing R files in {pkg}"
