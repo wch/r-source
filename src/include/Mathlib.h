@@ -9,7 +9,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-/* (>=) 30 Decimal-place constants computed with bc (scale=32; proper round) */
+/* 30 Decimal-place constants computed with bc -l (scale=32; proper round) */
 
 #ifndef M_SQRT_2
 #define M_SQRT_2	1.4142135623730950488016887242097
@@ -62,10 +62,10 @@
 
 #ifdef IEEE_754
 #ifdef HAVE_IEEE754_H
-#include <ieee754.h>
+#include <ieee754.h> /* newer Linuxen */
 #else
 #ifdef HAVE_IEEEFP_H
-#include <ieeefp.h>
+#include <ieeefp.h> /* others [Solaris 2.5.x], .. */
 #endif
 #endif
 
