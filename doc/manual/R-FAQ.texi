@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-50 @value{FAQ-YEAR}-09-14
+@set FAQ-VERSION 1.9-51 @value{FAQ-YEAR}-09-15
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @c <FIXME>
@@ -1906,6 +1906,9 @@ A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
 @item aws
 Functions to perform adaptive weights smoothing.
+@item bayesSurv
+Bayesian survival regression with flexible error and (later on also
+random effects) distributions. 
 @item bayesmix
 Bayesian mixture models of univariate Gaussian distributions using JAGS.
 @item betareg
