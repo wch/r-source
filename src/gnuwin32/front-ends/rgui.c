@@ -18,6 +18,7 @@
  */
 
 #include <windows.h>
+#include <stdio.h>
 #include "Rversion.h"
 #include "Startup.h"
 
@@ -48,4 +49,5 @@ int AppMain (int argc, char **argv)
     cmdlineoptions(argc, argv);
     setupui();
     mainloop();
+    return 0;
 }

@@ -19,6 +19,7 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include <io.h> /* for isatty */
 #include "Rversion.h"
 #include "Startup.h"
 #define PSIGNAL
@@ -65,4 +66,5 @@ int AppMain (int argc, char **argv)
     setup_term_ui();
     mainThreadId = GetCurrentThreadId();
     mainloop();
+    return 0;
 }
