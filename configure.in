@@ -1,4 +1,4 @@
-dnl configure.in
+Dnl configure.in
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
@@ -27,7 +27,7 @@ AC_CONFIG_HEADER(src/include/Platform.h)
 
 . ./config.site
 
-AC_CONFIG_AUX_DIR(etc)
+AC_CONFIG_AUX_DIR(`pwd`/etc)
 
 ### Platform
 ###
