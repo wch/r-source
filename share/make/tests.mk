@@ -1,10 +1,6 @@
-# -*- Makefile -*-
-#
-# ${R_HOME}/share/make/tests.mk
+## ${R_HOME}/share/make/tests.mk
 
-ECHO_C =
-ECHO_N = -n
-ECHO_T =
+include $(R_HOME)/etc/Makeconf
 
 makevars =
 srcdir = .
@@ -12,8 +8,8 @@ srcdir = .
 test-src = $(test-src-1) $(test-src-auto)
 test-out = $(test-src:.R=.Rout)
 
-R = srcdir=$(srcdir) $(R_HOME)/bin/Rterm.exe --vanilla
-RDIFF = $(R_HOME)/bin/Rcmd Rdiff.sh
+R = srcdir=$(srcdir) $(R_HOME)/bin/R --vanilla
+RDIFF = $(R_HOME)/bin/Rdiff
 USE_GCT = 0
 
 .SUFFIXES:
@@ -27,9 +23,9 @@ USE_GCT = 0
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
 	@if test "$(USE_GCT)" = 0; then \
-	  $(R) R_LIBS="$(R_LIBS)" < $< > $@; \
+	  R_LIBS=$(R_LIBS) $(R) < $< > $@; \
 	else \
-	  (echo "gctorture(TRUE)"; cat $<) | $(R) R_LIBS="$(R_LIBS)" > $@; \
+	  (echo "gctorture(TRUE)"; cat $<) | R_LIBS=$(R_LIBS) $(R) > $@; \
 	fi
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
