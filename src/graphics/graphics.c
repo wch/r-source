@@ -3462,7 +3462,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
   if(outer) {
     switch(side) {
     case 1:
-      line = line+1;
+      /* line = line+1; */
       a = 0.0;
       xadj = dd->gp.adj;
       yadj = 0.0;
@@ -3481,7 +3481,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
       coords = OMA3;
       break;
     case 4:
-      line = line+1;
+      /* line = line+1; */
       a = 90.0;
       xadj = dd->gp.adj;
       yadj = 0.0;
