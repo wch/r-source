@@ -1,7 +1,6 @@
 \name{match.arg}
 \title{Argument Verification Using Partial Matching}
 \usage{
-match.arg(arg)
 match.arg(arg, choices)
 }
 \alias{match.arg}
@@ -14,10 +13,9 @@ match.arg(arg, choices)
   values as specified by \code{choices}.
 }
 \details{
-  In the one-argument form
-  \code{match.arg(arg)}, the choices are obtained from a default setting
-  for the formal argument \code{arg} of the function from which
-  \code{match.arg} was called.
+  In the one-argument form \code{match.arg(arg)}, the choices are
+  obtained from a default setting for the formal argument \code{arg} of
+  the function from which \code{match.arg} was called.
 
   Matching is done using \code{\link{pmatch}}, so \code{arg} may be
   abbreviated.
@@ -27,7 +25,9 @@ match.arg(arg, choices)
   otherwise, an error is signalled.
 }
 \seealso{
-  \code{\link{pmatch}}, \code{\link{match.fun}}, \code{\link{match.call}}.
+  \code{\link{pmatch}},
+  \code{\link{match.fun}},
+  \code{\link{match.call}}.
 }
 \examples{
 ## Extends the example for `switch'

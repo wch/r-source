@@ -1,7 +1,6 @@
 \name{log}
 \title{Logarithms and Exponentials}
 \usage{
-log(x)
 log(x, base)
 log10(x)
 log2(x)
@@ -15,7 +14,7 @@ log1p(x)
 \alias{exp}
 \arguments{
   \item{x}{a numeric or complex vector.}
-  \item{base}{positive number. The base with respect to which
+  \item{base}{positive number.  The base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
   }
 \description{
@@ -35,7 +34,10 @@ log1p(x)
   A vector of the same length as \code{x} containing the transformed
   values.  \code{log(0)} gives \code{-Inf} (when available).
 }
-\seealso{\code{\link{Trig}}, \code{\link{sqrt}}, \code{\link{Arithmetic}}.
+\seealso{
+  \code{\link{Trig}},
+  \code{\link{sqrt}},
+  \code{\link{Arithmetic}}.
 }
 \examples{
 log(exp(3))
