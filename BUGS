@@ -135,24 +135,19 @@ Subject: Bug in args with no defaults
 From: dmurdoch@pair.com (Duncan Murdoch)
 Date: Sun, 26 Nov 2000 20:14:30 GMT
 --Probably not a bug, but a logical consequence of "missing" semantics.
-* PR# 412 *
-Subject: anomalies with call objects
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 06 Feb 2000 01:18:50 +0100
 * PR# 408 *
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
-* PR# 669 *
-Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 25 Sep 2000 10:17:15 +0200
---status of AsIs columns
 * PR# 587 *
 Subject: dim(a <- ...) sets invisible flag erronously
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
 --Not specific to dim: R differs from S for most functions here.
+* PR# 412 *
+Subject: anomalies with call objects
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Feb 2000 01:18:50 +0100
 * PR# 734 *
 Subject:  Assigning into a dataframe 
 From: J.C.Rougier@durham.ac.uk
@@ -163,10 +158,11 @@ Date: Fri, 10 Nov 2000 16:00:31 GMT
 Subject:  syntax confusion with function/non-function objects 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
-* PR# 674 *
-Subject: all.equal.list() sometimes fails with unnamed and named components
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Fri, 29 Sep 2000 14:20:47 -0700 (PDT)
+* PR# 669 *
+Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 25 Sep 2000 10:17:15 +0200
+--status of AsIs columns
 
 Directory:  Low-level
 
