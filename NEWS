@@ -246,6 +246,9 @@ NEW FEATURES
 
     o	New function vignette() for viewing or listing vignettes.
 
+    o   arima.sim() now checks for inconsistent order specification
+	(as requested in PR#3495: it was previously documented not to).
+
 
 DEPRECATED & DEFUNCT
 

@@ -12,7 +12,7 @@ arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, \dots),
   \item{model}{A list with component \code{ar} and/or \code{ma} giving
     the AR and MA coeffcients respectively.  Optionally a component
     \code{order} can be used.}
-  \item{n}{length of output series.}
+  \item{n}{length of output series, before un-differencing.}
   \item{rand.gen}{optional: a function to generate the innovations.}
   \item{innov}{an optional times series of innovations.  If not
     provided, \code{rand.gen} is used.}
@@ -29,7 +29,10 @@ arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, \dots),
 
   ARIMA models are specified via the \code{order} component of
   \code{model}, in the same way as for \code{\link{arima}}.  Other
-  aspects of the \code{order} component are ignored.
+  aspects of the \code{order} component are ignored, but inconsistent
+  specifications of the MA and AR orders are detected.  The
+  un-differencing assumes previous values of zero, and to remind the
+  user of this, those values are returned. 
 }
 \value{
   A time-series object of class \code{"ts"}.
