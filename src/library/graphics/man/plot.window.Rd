@@ -26,6 +26,10 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   \code{asp > 1} can be used to produce more accurate maps when using
   latitude and longitude.
 
+  The function attempts to produce a plausible set of scales if one or
+  both of \code{xlim} and \code{ylim} is of length one or the two values
+  given are identical, but it is better to avoid that case.
+
   Usually, one should rather use the higher level functions such as
   \code{\link{plot}}, \code{\link{hist}}, \code{\link{image}}, \dots,
   instead and refer to their help pages for explanation of the
