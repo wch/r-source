@@ -1,8 +1,0 @@
-TITLE(barcharts @@ Barcharts of Matrix Columns)
-USAGE(
-barcharts(x)
-)
-DESCRIPTION(
-LANG(barcharts) draws barcharts of the column proportions for the
-contingency table stored in the matrix LANG(x).
-)
