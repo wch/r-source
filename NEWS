@@ -82,6 +82,9 @@ NEW FEATURES
     o	glm drops 0-weight observations when fitting so that the
 	output is compatible with lm.influence() and plot.lm().
 
+    o	New function ftable() for creating and manipulating flat
+	contingency tables.
+
 
 BUG FIXES
 
