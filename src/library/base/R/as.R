@@ -68,7 +68,11 @@ as.array <- function(x)
     if(length(n)) dimnames(x) <- list(n)
     return(x)
 }
-as.name <- function(x) .Internal(as.vector(x, "name"))
+
+as.symbol <- function(x) .Internal(as.vector(x, "symbol"))
+as.name <- .Alias(as.symbol)
+## would work too: as.name <- function(x) .Internal(as.vector(x, "name"))
+
 ## as.call <- function(x) stop("type call cannot be assigned")
 as.numeric <- as.double
 as.qr <- function(x) stop("you cannot be serious")

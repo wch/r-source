@@ -183,8 +183,11 @@ NEW FEATURES
 	(the example in ?qr did not seem to be sufficient).
 
     o	par() returns elements in alphabetical order, and "ann" as a
-        logical (not integer).
+	logical (not integer).
 
+    o	new as.symbol(), identical to as.name().
+	is.symbol & is.name() are now identical too, by definition;
+	before, they were identical by implementation.
 
 
 BUG FIXES
@@ -263,9 +266,9 @@ BUG FIXES
     o	lqs(, method="S") rounded k0 on passing to C.
 
     o	add1.glm and drop1.glm gave incorrect results in the "Chisq"
-        test option when the scale was estimated.
+	test option when the scale was estimated.
 
-    o   rgeom(, prob=1) gives 0 rather than NA
+    o	rgeom(, prob=1) gives 0 rather than NA
 
 
 

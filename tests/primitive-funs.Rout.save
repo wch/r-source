@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 0.99.0 Under development (unstable) (January 29, 2000)
+Version 1.1.0 Under development (unstable) (May 15, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -23,14 +23,14 @@ Type	"q()" to quit R.
 > bpos <- match("package:base",search())
 > nn <- ls(pos=bpos)
 > length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
-[1] 1155
+[1] 1207
 > 
 > is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 > is.special <- function(obj) typeof(obj) == "special"
 > 
 > Primf <- nn[sapply(nn, function(N) is.primitive(get(N, pos=bpos)))]
 > length(Primf) ## 195  R 0.62.0, March 25, 1998
-[1] 136
+[1] 137
 > ## 132	R 0.62.2+
 > Real.primitives <-
 +     list(
@@ -129,7 +129,7 @@ Type	"q()" to quit R.
 > table(ncpf)
 ncpf
  5  6  7  8  9 10 11 12 13 14 
- 1  1  5  1  7  4  4  2  1  1 
+ 1  1  5  1  8  4  4  2  1  1 
 > prim.f[ncpf <= 6]#  only is.na, is.nan
 [1] "is.na"  "is.nan"
 > 
@@ -140,7 +140,7 @@ ncpf
 [13] "is.language"    "is.list"        "is.loaded"      "is.logical"    
 [17] "is.matrix"      "is.na"          "is.name"        "is.nan"        
 [21] "is.null"        "is.numeric"     "is.object"      "is.pairlist"   
-[25] "is.real"        "is.recursive"   "is.single"     
+[25] "is.real"        "is.recursive"   "is.single"      "is.symbol"     
 > 
 > length(prim.f2 <- prim.f[! p.isis]) # down to 87   [R 0.62.0, March 25, 1998]
 [1] 0

@@ -457,7 +457,7 @@ FUNTAB R_FunTab[] =
 {"is.double",	do_is,		REALSXP,1,	1,	PP_FUNCALL},
 {"is.complex",	do_is,		CPLXSXP,1,	1,	PP_FUNCALL},
 {"is.character",do_is,		STRSXP,	1,	1,	PP_FUNCALL},
-{"is.name",	do_is,		SYMSXP,	1,	1,	PP_FUNCALL},
+{"is.symbol",	do_is,		SYMSXP,	1,	1,	PP_FUNCALL},
 {"is.environment",do_is,	ENVSXP,	1,	1,	PP_FUNCALL},
 {"is.list",	do_is,		VECSXP,	1,	1,	PP_FUNCALL},
 {"is.pairlist",	do_is,		LISTSXP,1,	1,	PP_FUNCALL},

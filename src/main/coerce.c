@@ -985,7 +985,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
 	errorcall_return(call, R_MSG_mode);
 
-    if (!strcmp("function", (CHAR(STRING(CADR(args))[0]))))
+    if (!strcmp("function", CHAR(STRING(CADR(args))[0])))
 	type = CLOSXP;
     else
 	type = str2type(CHAR(STRING(CADR(args))[0]));
@@ -1137,7 +1137,7 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
     case STRSXP:	/* is.character */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == STRSXP);
 	break;
-    case SYMSXP:	/* is.name */
+    case SYMSXP:	/* is.symbol === is.name */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == SYMSXP);
 	break;
     case ENVSXP:	/* is.environment */
