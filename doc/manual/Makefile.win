@@ -5,7 +5,7 @@
 srcdir = .
 top_srcdir = ../..
 
-SOURCES_TEXI = R-FAQ.texi R-exts.texi
+SOURCES_TEXI = R-FAQ.texi R-exts.texi R-intro.texi
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
@@ -74,6 +74,11 @@ R-exts.pdf: R-exts.texi version.texi
 	$(PDFTEX) R-exts.texi
 	$(TEXINDEX) R-exts.cp R-exts.fn R-exts.vr
 	$(PDFTEX) R-exts.texi
+
+R-intro.pdf: R-intro.texi version.texi 
+	$(PDFTEX) R-intro.texi
+	$(TEXINDEX) R-intro.cp R-intro.fn R-intro.vr
+	$(PDFTEX) R-intro.texi
 
 version.texi: $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
