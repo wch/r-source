@@ -42,6 +42,9 @@ int main (int argc, char **argv)
     for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';
     putenv(RHOME);
 
+    putenv("R_CMD=Rcmd");
+    putenv("R_UNDER_WINDOWS=1");
+
     strcpy(PATH, "PATH=");
     strcat(PATH, RHome); strcat(PATH, "\\bin;");
     strcat(PATH, getenv("PATH"));

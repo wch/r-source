@@ -17,6 +17,9 @@ R_binary="R.bin"
 : ${R_PLATFORM=@R_PLATFORM@}
 export R_PLATFORM
 
+R_CMD="${R_HOME}/bin/R CMD"
+export R_CMD
+
 # Default printer paper size
 # Choose one of the following:
 # R_PAPERSIZE="a4"

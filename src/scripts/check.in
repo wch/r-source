@@ -1,6 +1,25 @@
 #! @PERL@
 #-*- perl -*-
 
+# Copyright (C) 2000 R Development Core Team
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# writing to the Free Software Foundation, Inc., 59 Temple Place,
+# Suite 330, Boston, MA  02111-1307  USA.
+
+# Send any bug reports to R-bugs@lists.r-project.org
+
 use Cwd;
 use File::Basename;
 use File::Path;
@@ -11,15 +30,15 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.11 $ ';
+my $revision = ' $Revision: 1.12 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-$latex = "@LATEX@";
-$make = "@MAKE@";
+my $LATEX = "@LATEX@";
+my $MAKE = "@MAKE@";
 
 $opt_clean = $opt_examples = $opt_tests = $opt_latex = 1;
 my @knownoptions = ("help|h", "version|v", "outdir|o:s",
@@ -37,17 +56,29 @@ chdir($opt_outdir) || die "Cannot change to directory $opt_outdir\n";
 my $outdir=getcwd();
 chdir($startdir);
 
-my $tmpdir = R_getenv("TMPDIR", "/tmp");
 my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
 
-my $R_libs = $ENV{'R_LIBS'};
+my $R_CMD = $ENV{'R_CMD'} ||
+    die "Error: Environment variable R_CMD not found\n";
+
+my $WINDOWS = R_getenv("R_UNDER_WINDOWS", 0);
+my $TMPDIR = R_getenv("TMPDIR", "/tmp");
+my $R_exe = "${R_HOME}/bin/R";
+if($WINDOWS){
+    $TMPDIR = R_getenv("TMPDIR", "/TEMP");
+    $R_exe = "Rterm.exe";
+    $MAKE = "make";
+    $LATEX = "latex";
+}
+
+my $R_LIBS = $ENV{'R_LIBS'};
 my $library;
 if($opt_library){
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
     $library=getcwd();
-    $ENV{'R_LIBS'} = "$library:$R_libs";
+    $ENV{'R_LIBS'} = "$library:$R_LIBS";
     chdir($startdir);
 }
 
@@ -55,8 +86,9 @@ my $R_opts = "--vanilla";
 $R_opts .= " --nsize=$opt_nsize" if $opt_nsize;
 $R_opts .= " --vsize=$opt_vsize" if $opt_vsize;
 
-## this is the main loop over all packages that shall be checked
+## this is the main loop over all packages to be checked
 my $pkg;
+$#ARGV <=1 || die "no packages were specified";
 foreach $pkg (@ARGV){
     my $is_bundle=0;
     $pkg =~ s/\/$//;
@@ -77,11 +109,11 @@ foreach $pkg (@ARGV){
 
     if(! $opt_library){
 	$library = $pkgoutdir;
-	$ENV{'R_LIBS'} = "$library:$R_libs";
+	$ENV{'R_LIBS'} = "$library:$R_LIBS";
     }
 
     print "\n";
-    if(system("${R_HOME}/bin/R INSTALL -l $library $pkg")){
+    if(system("${R_CMD} INSTALL -l $library $pkg")){
 	$log->error("installation failed");
     }
     print("\n");
@@ -136,8 +168,8 @@ foreach $pkg (@ARGV){
 sub updateIndex {
 
     my ($oldindex, $Rdfiles) = @_;
-    my $newindex = "$tmpdir/Rcheck.$$";
-    system("${R_HOME}/bin/Rdindex ${Rdfiles} > ${newindex}");
+    my $newindex = "$TMPDIR/Rcheck.$$";
+    system("${R_CMD} Rdindex ${Rdfiles} > ${newindex}");
     my $diff = `diff -b $oldindex $newindex`;
     if($diff){
 	$log->result("NO");
@@ -308,18 +340,19 @@ sub check_pkg {
 	$log->result("OK") unless $any;
     }
 
-
-
-      
-    
-    
+          
     ## Check for undocumented objects
 
     if(-d "R" && -d "man"){
 	$log->checking("for undocumented objects");
-	my @out = split(/\n/,
-			`echo \"undoc(dir = \\\"${dir}\\\")\" | \
-                         ${R_HOME}/bin/R ${R_opts}`);
+
+	my $Rcmd = "$TMPDIR/Rcmd.$$";
+	open Rcmd, "> $Rcmd" || die "Cannot write to \`$Rcmd'\n";
+        print Rcmd "undoc(dir = \"${dir}\")\n";
+        close Rcmd;
+        my @out = split(/\n/, `${R_exe} ${R_opts} < ${Rcmd}`);
+        unlink($Rcmd);
+
 	my @err = grep {s/^Error *//} @out;
 	@out = grep {/^ *\[/} @out;
 	if($#err<0){
@@ -332,7 +365,7 @@ sub check_pkg {
 	    }
 	}
 	else{
-	    $log->error(" " . join("\n ", @err));
+	    $log->error("  " . join("\n ", @err));
 	    exit(1);
 	}
     }
@@ -341,15 +374,28 @@ sub check_pkg {
 
     if($opt_examples && (-d "$library/$pkgname/R-ex")){
 	$log->creating("${pkgname}-Ex.R");
-	if(system("${R_HOME}/bin/massage-Examples ".
-		  "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
-		  "> ${pkgname}-Ex.R")){
-	    $log->error();
-	    exit(1);
-	}
+        my $iszipped = 0;
+        my $massage = "massage-Examples";
+        $massage .= ".sh" if($WINDOWS);
+        if(-e "${library}/${pkgname}/R-ex/R-ex.zip") {
+            $iszipped = 1;
+            system("unzip ${library}/${pkgname}/R-ex/R-ex.zip " .
+                   "-d ${library}/${pkgname}/R-ex");
+        }
+  	if(system("${R_CMD} ${massage} ".
+  		  "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
+  		  "> ${pkgname}-Ex.R")){
+  	    $log->error();
+  	    exit(1);
+  	}
+        if($iszipped) {
+            system("rm ${library}/${pkgname}/R-ex/*.R")
+        }
+
 	$log->result("OK");
 	$log->checking("examples");
-	if(system("${R_HOME}/bin/R BATCH $R_opts ${pkgname}-Ex.R")){
+	if(system("${R_exe} ${R_opts} " .
+                  "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout")){
 	    $log->error("running examples failed");
 	    exit(1);
 	}
@@ -361,16 +407,24 @@ sub check_pkg {
         $log->checking("tests");
         my $makefiles="-f ${R_HOME}/etc/Makeconf-tests";
         my $makevars="";
-        if(-r "$testdir/Makefile"){
+        if($WINDOWS && (-r "$testdir/Makefile.win")){
+            $makefiles .= " -f $testdir/Makefile.win";
+        }
+        elsif(-r "$testdir/Makefile"){
             $makefiles .= " -f $testdir/Makefile";
         }
-        if(-r "$testdir/Makevars"){
+        if($WINDOWS && (-r "$testdir/Makevars.win")){
+            $makevars = " -f $testdir/Makevars.win";
+        }
+        elsif(-r "$testdir/Makevars"){
             $makevars = " -f $testdir/Makevars";
         }
         else{
             open makevars, "> Makevars";
             print makevars "makevars = -f Makevars\n";
             print makevars "srcdir = $testdir\n";
+            ## unix passes R_LIBS correctly through environment
+            print makevars "R_LIBS = $library\n" if $WINDOWS; 
             print makevars "VPATH = \$(srcdir)\n\n";
             print makevars "test-src-1=";
             while(<$testdir/*.R>){
@@ -387,7 +441,7 @@ sub check_pkg {
             $makevars = " -f Makevars";
         }
         print "\n";
-        if(system("$make $makefiles $makevars")){
+        if(system("$MAKE $makefiles $make vars")){
             $log->error();
             exit(1);
         }
@@ -399,11 +453,16 @@ sub check_pkg {
 
             
     if($opt_latex && (-d "$library/$pkgname/latex")){
-        $ENV{'TEXINPUTS'}="$R_HOME/doc/manual:$ENV{'TEXINPUTS'}";
+        if($WINDOWS){
+            $ENV{'TEXINPUTS'}="$R_HOME/doc/manual;$ENV{'TEXINPUTS'}";
+        }
+        else{
+            $ENV{'TEXINPUTS'}="$R_HOME/doc/manual:$ENV{'TEXINPUTS'}";
+        }
         $log->creating("${pkgname}-manual.tex");
         open manual, "> ${pkgname}-manual.tex";
         print manual "\\documentclass\{article\}\n" .
-            "\\usepackage\{Rd\}\n".
+            "\\usepackage[ae, hyper]\{Rd\}\n".
                 "\\begin\{document\}\n";
         while(<$library/$pkgname/latex/*.tex>){
             my $file=$_;
@@ -416,10 +475,10 @@ sub check_pkg {
         print manual "\\end\{document\}\n";
         close manual;
         $log->result("OK");
-        if(-x $latex){
+        if((-x $LATEX) || $WINDOWS){
             $log->checking("${pkgname}-manual.tex");
             print "\n";
-            if(system("$latex ${pkgname}-manual")){
+            if(system("$LATEX ${pkgname}-manual")){
                 $log->error();
                 exit(1);
             }
