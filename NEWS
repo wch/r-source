@@ -97,6 +97,8 @@ NEW FEATURES
         is returned.  New function promptData() for documenting objects
         as data sets.
 
+     o	New argument `local' for example() (suggested by Andy Liaw).
+
 
 INSTALLATION CHANGES
 

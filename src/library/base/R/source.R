@@ -10,7 +10,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 		  parent.frame())
 	.Internal(eval.with.vis(expr, envir, enclos))
     sQuote <- function(s) paste("'", s, "'", sep = "")
-    
+
     envir <- if (local)
 	parent.frame()
     else .GlobalEnv
@@ -94,7 +94,7 @@ function(file, envir = NULL, chdir = FALSE,
          keep.source = getOption("keep.source.pkgs"))
 {
     sQuote <- function(s) paste("'", s, "'", sep = "")
-    
+
     if(!(is.character(file) && file.exists(file)))
 	stop(paste(sQuote(file), "is not an existing file"))
     oop <- options(keep.source = as.logical(keep.source))
@@ -257,7 +257,7 @@ function(topic, device = getOption("device"),
 
 example <-
 function(topic, package = .packages(), lib.loc = NULL,
-         echo = TRUE, verbose = getOption("verbose"),
+         echo = TRUE, verbose = getOption("verbose"), local = FALSE,
          prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
     sQuote <- function(s) paste("'", s, "'", sep = "")
@@ -288,6 +288,6 @@ function(topic, package = .packages(), lib.loc = NULL,
     }
     if(pkg != "base")
 	library(pkg, lib = lib, character.only = TRUE)
-    source(zfile, echo = echo, prompt.echo = prompt.echo, verbose =
-	   verbose, max.deparse.length = 250)
+    source(zfile, local, echo = echo, prompt.echo = prompt.echo,
+           verbose = verbose, max.deparse.length = 250)
 }

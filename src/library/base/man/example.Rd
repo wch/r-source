@@ -2,7 +2,7 @@
 \title{Run an Examples Section from the Online Help}
 \usage{
 example(topic, package = .packages(), lib.loc = NULL,
-        echo = TRUE, verbose = getOption("verbose"),
+        local = FALSE, echo = TRUE, verbose = getOption("verbose"),
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
 }
 \alias{example}
@@ -15,6 +15,8 @@ example(topic, package = .packages(), lib.loc = NULL,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
     packages are searched before the libraries.}
+  \item{local}{logical: if \code{TRUE} evaluate locally, if \code{FALSE}
+    evaluate in the workspace.}
   \item{echo}{logical;  if \code{TRUE}, show the \R input when sourcing.}
   \item{verbose}{logical;  if \code{TRUE}, show even more when running
     example code.}
@@ -36,6 +38,11 @@ example(topic, package = .packages(), lib.loc = NULL,
 
   An attempt is made to load the package before running the examples,
   but this will not replace a package loaded from another location.
+
+  If \code{local=TRUE} objects are not created in the workspace and so
+  not available for examination after \code{example} completes: on the
+  other hand they cannot clobber objects of the same name in the
+  workspace.
 
   As detailed in the manual \emph{Writing \R Extensions}, the author of
   the help page can markup parts of the examples for two exception rules
