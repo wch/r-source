@@ -895,4 +895,16 @@ void R_RunWeakRefFinalizer(SEXP w);
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
+
+/* Environment and Binding Features */
+#define ENVIRONMENT_LOCKING
+#define FANCY_BINDINGS
+#ifdef ENVIRONMENT_LOCKING
+void R_LockEnvironment(SEXP env, Rboolean bindings);
+#endif
+#ifdef FANCY_BINDINGS
+void R_LockBinding(SEXP sym, SEXP env);
+void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env);
+Rboolean R_HasFancyBindings(SEXP rho);
+#endif
 #endif /* _R_INTERNALS_H_ */

@@ -90,7 +90,6 @@
 
 #include "Defn.h"
 
-#define ENVIRONMENT_LOCKING
 #ifdef ENVIRONMENT_LOCKING
 #define FRAME_LOCK_MASK (1<<14)
 #define FRAME_IS_LOCKED(e) (ENVFLAGS(e) & FRAME_LOCK_MASK)
@@ -98,7 +97,6 @@
 /*#define UNLOCK_FRAME(e) SET_ENVFLAGS(e, ENVFLAGS(e) & (~ FRAME_LOCK_MASK))*/
 #endif
 
-#define FANCY_BINDINGS
 #ifdef FANCY_BINDINGS
 #ifndef NEW_BINDING_FLAGS
 #error need NEW_BINDING_FLAGS to be defined
@@ -2178,6 +2176,32 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	    error("can't change active binding if binding is locked");
 	else
 	    SETCAR(binding, fun);
+    }
+}    
+
+Rboolean R_HasFancyBindings(SEXP rho)
+{
+    if (IS_HASHED(rho)) {
+	SEXP table, chain;
+	int i, size;
+
+	table = HASHTAB(rho);
+	size = HASHSIZE(rho);
+	for (i = 0; i < size; i++)
+	    for (chain = VECTOR_ELT(table, i);
+		 chain != R_NilValue;
+		 chain = CDR(chain))
+		if (IS_ACTIVE_BINDING(chain) || BINDING_IS_LOCKED(chain))
+		    return TRUE;
+	return FALSE;
+    }
+    else {
+	SEXP frame;
+
+	for (frame = FRAME(rho); frame != R_NilValue; frame = CDR(frame))
+	    if (IS_ACTIVE_BINDING(frame) || BINDING_IS_LOCKED(frame))
+		return TRUE;
+	return FALSE;
     }
 }    
 #endif

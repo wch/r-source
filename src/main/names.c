@@ -528,7 +528,7 @@ FUNTAB R_FunTab[] =
 {"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
-{"save",	do_save,	0,	111,	4,	PP_FUNCALL},
+{"save",	do_save,	0,	111,	5,	PP_FUNCALL},
 {"load",	do_load,	0,	111,	2,	PP_FUNCALL},
 {"deparse",	do_deparse,	0,	11,	2,	PP_FUNCALL},
 {"dput",	do_dput,	0,	111,	2,	PP_FUNCALL},

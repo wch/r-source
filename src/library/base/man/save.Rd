@@ -1,7 +1,7 @@
 \name{save}
 \title{Save R Objects}
 \usage{
-save(\dots, list = character(0), file = "", ascii = FALSE, version = NULL)
+save(\dots, list = character(0), file = "", ascii = FALSE, version = NULL, envir = parent.frame())
 save.image(file = ".RData")
 }
 \alias{save}
@@ -17,6 +17,7 @@ save.image(file = ".RData")
     which leads to a more compact binary file being written.}
   \item{version}{the workspace format version to use.  NULL specifies
     the current default format.  Other values are not used yet.}
+  \item{envir}{environment so search for objects to be saved.}
   }
 }
 \description{

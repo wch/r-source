@@ -877,6 +877,12 @@ static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
     case ENVSXP:
 	if (NewLookup(obj, env_list))
 	    return;
+	if (obj == R_BaseNamespace)
+	    warning("base namespace is not preserved in version 1");
+#ifdef FANCY_BINDINGS
+	if (R_HasFancyBindings(obj))
+	    error("cannot save environment with locked/active bindings");
+#endif
 	HashAdd(obj, env_list);
 	/* FALLTHROUGH */
     case LISTSXP:
@@ -898,6 +904,8 @@ static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
 	for (count = 0; count < length; ++count)
 	    NewMakeLists(VECTOR_ELT(obj, count), sym_list, env_list);
 	break;
+    case WEAKREFSXP:
+	error("cannot save weak references");
     }
     NewMakeLists(ATTRIB(obj), sym_list, env_list);
 }
@@ -1039,17 +1047,31 @@ static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
  *  symbols or environments are encountered, references to them are
  *  made instead of writing them out totally.  */
 
+static void newdatasave_cleanup(void *data)
+{
+    FILE *fp = data;
+    OutTerm(fp);
+}
+
 static void NewDataSave (SEXP s, FILE *fp)
 {
     SEXP sym_table, env_table, iterator;
     int sym_count, env_count;
+    RCNTXT cntxt;
 
     PROTECT(sym_table = MakeHashTable());
     PROTECT(env_table = MakeHashTable());
     NewMakeLists(s, sym_table, env_table);
     FixHashEntries(sym_table);
     FixHashEntries(env_table);
+
     OutInit(fp);
+    /* set up a context which will call OutTerm if there is an error */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+		 R_NilValue);
+    cntxt.cend = &newdatasave_cleanup;
+    cntxt.cenddata = fp;
+
     OutInteger(fp, sym_count = HASH_TABLE_COUNT(sym_table)); OutSpace(fp, 1);
     OutInteger(fp, env_count = HASH_TABLE_COUNT(env_table)); OutNewline(fp);
     for (iterator = HASH_TABLE_KEYS_LIST(sym_table);
@@ -1068,6 +1090,11 @@ static void NewDataSave (SEXP s, FILE *fp)
 	NewWriteItem(TAG(CAR(iterator)), sym_table, env_table, fp);
     }
     NewWriteItem(s, sym_table, env_table, fp);
+
+    /* end the context after anything that could raise an error but before
+       calling OutTerm so it doesn't get called twice */
+    endcontext(&cntxt);
+
     OutTerm(fp);
     UNPROTECT(2);
 }
@@ -1205,12 +1232,25 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp)
     return s;
 }
 
+static void newdataload_cleanup(void *data)
+{
+    FILE *fp = data;
+    InTerm(fp);
+}
+
 static SEXP NewDataLoad (FILE *fp)
 {
     int sym_count, env_count, count;
     SEXP sym_table, env_table, obj;
+    RCNTXT cntxt;
 
     InInit(fp);
+
+    /* set up a context which will call InTerm if there is an error */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+		 R_NilValue);
+    cntxt.cend = &newdataload_cleanup;
+    cntxt.cenddata = fp;
 
     /* Read the table sizes */
     sym_count = InInteger(fp);
@@ -1238,6 +1278,10 @@ static SEXP NewDataLoad (FILE *fp)
 
     /* Read the actual object back */
     obj =  NewReadItem(sym_table, env_table, fp);
+
+    /* end the context after anything that could raise an error but before
+       calling InTerm so it doesn't get called twice */
+    endcontext(&cntxt);
 
     /* Wrap up */
     InTerm(fp);
@@ -1782,13 +1826,20 @@ SEXP R_LoadFromFile(FILE *fp, int startup)
     }
 }
 
+static void saveload_cleanup(void *data)
+{
+    FILE *fp = data;
+    fclose(fp);
+}
+
 SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-/* save(list, file, ascii, oldstyle) */
+    /* save(list, file, ascii, version, environment) */
 
-    SEXP s, t;
+    SEXP s, t, source;
     int len, j;
     FILE *fp;
+    RCNTXT cntxt;
 
     checkArity(op, args);
 
@@ -1799,10 +1850,19 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "`file' must be non-empty string");
     if (TYPEOF(CADDR(args)) != LGLSXP)
 	errorcall(call, "`ascii' must be logical");
+    source = CAR(nthcdr(args,4));
+    if (source != R_NilValue && TYPEOF(source) != ENVSXP)
+	error("bad environment");
 
     fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(CADR(args), 0))), "wb");
     if (!fp)
 	errorcall(call, "unable to open file");
+
+    /* set up a context which will close the file if there is an error */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+		 R_NilValue);
+    cntxt.cend = &saveload_cleanup;
+    cntxt.cenddata = fp;
 
     len = length(CAR(args));
     PROTECT(s = allocList(len));
@@ -1810,7 +1870,7 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     t = s;
     for (j = 0; j < len; j++, t = CDR(t)) {
 	SET_TAG(t, install(CHAR(STRING_ELT(CAR(args), j))));
-	SETCAR(t, findVar(TAG(t), R_GlobalContext->sysparent));
+	SETCAR(t, findVar(TAG(t), source));
 	if (CAR(t) == R_UnboundValue)
 	    error("Object \"%s\" not found", CHAR(PRINTNAME(TAG(t))));
     }
@@ -1818,6 +1878,9 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     R_SaveToFile(s, fp, INTEGER(CADDR(args))[0]);
 
     UNPROTECT(1);
+    /* end the context after anything that could raise an error but before
+       closing the file so it doesn't get done twice */
+    endcontext(&cntxt);
     fclose(fp);
     return R_NilValue;
 }
@@ -1865,6 +1928,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP fname, aenv;
     FILE *fp;
+    RCNTXT cntxt;
 
     checkArity(op, args);
 
@@ -1882,7 +1946,18 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(fname, 0))), "rb");
     if (!fp)
 	errorcall(call, "unable to open file");
+
+    /* set up a context which will close the file if there is an error */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+		 R_NilValue);
+    cntxt.cend = &saveload_cleanup;
+    cntxt.cenddata = fp;
+
     R_LoadSavedData(fp, aenv);
+
+    /* end the context after anything that could raise an error but before
+       closing the file so it doesn't get done twice */
+    endcontext(&cntxt);
     fclose(fp);
     return R_NilValue;
 }
