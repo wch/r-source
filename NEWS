@@ -360,6 +360,10 @@ NEW FEATURES
 	more arguments, e.g. `twiceit' for some S compatibility and
 	kind = "3R" for running medians of 3.
 
+    o   The R manuals (R-intro, R-exts, ...) are converted to HTML
+        format (if the necessary texinfo tools are available) and
+	linked into the top HTML help page.
+
 
 
 BUG FIXES

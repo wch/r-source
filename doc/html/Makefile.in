@@ -16,7 +16,6 @@ INSTFILES = \
 	left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
 	about.html \
 	faq.html \
-	index.html \
 	packages-foot.html \
 	packages-head.html \
 	resource.html \
@@ -25,6 +24,10 @@ INSTFILES = \
 DISTFILES = Makefile.in $(INSTFILES)
 SUBDIRS = search
 
+OBJECTS = \
+        index.html \
+
+
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -32,7 +35,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R: Makefile
+R: Makefile $(OBJECTS)
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
@@ -40,7 +43,16 @@ R: Makefile
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 
+index.html: FORCE
+	@$(PERL) $(top_srcdir)/tools/linkcheck.pl \
+	  $(top_srcdir)/doc/html/index-default.html > $@ || \
+	  $(INSTALL_DATA) $(top_srcdir)/doc/html/index-default.html $@
+FORCE:
+
 install: install-message installdirs install-sources
+	@for f in $(OBJECTS); do \
+	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir); \
+	done
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done

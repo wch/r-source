@@ -143,6 +143,8 @@ stamp-images-eps:
 R-lang.dvi: $(texiincludes)
 
 html: $(OBJECTS_HTML)
+	@(cd ../html; $(MAKE) index.html)
+
 R-data.html: $(texiincludes)
 R-exts.html: $(texiincludes)
 R-intro.html: $(texiincludes)
