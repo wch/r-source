@@ -502,10 +502,6 @@ Date: Sun, 21 Jul 2002 20:26:12 +0200 (MET DST)
 Subject: Mac Save As... bug
 From: Tim Cole <tjc1@cam.ac.uk>
 Date: Sun, 8 Sep 2002 13:47:00 +0100
-* PR# 2276 *
-Subject: Mac specific - quartz leads to crash
-From: h95mr@mun.ca
-Date: Fri, 8 Nov 2002 16:28:50 +0100 (MET)
 * PR# 2550 *
 Subject: eigen() error: R Version 1.6.1 on Mac OS X
 From: "Daniel E. Weeks" <dweeks@watson.hgen.pitt.edu>
@@ -518,15 +514,6 @@ Date: Fri, 4 Apr 2003 06:04:48 +0200 (MET DST)
 Subject: Search Engine
 From: leroy@ucsd.edu
 Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
-* PR# 2875 *
-Subject: configure succeeds without dlfcn.h, but fails to compile (OS X)
-From: buerkla@uwec.edu
-Date: Tue, 29 Apr 2003 20:24:12 +0200 (MET DST)
-* PR# 2876 *
-Subject: Re: [Rd]  configure succeeds without dlfcn.h, but fails to compile
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Tue, 29 Apr 2003 13:02:25 -0700 (PDT)
-..follow up to 2875
 * PR# 3602 *
 Subject: Mac OS 10 (not X11) failure to rotate symbols
 From: "p.b.pynsent" <p.b.pynsent@bham.ac.uk>
@@ -721,11 +708,6 @@ Date: Mon, 21 Apr 2003 17:01:53 -0400
 Subject: optim with constraints 
 From: aa@tango.stat.unipd.it (Adelchi Azzalini)
 Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
-* PR# 3486 *
-Subject: The two chisq.test p values differ when the contingency table is transposed!
-From: shitao@ucla.edu
-Date: Wed, 16 Jul 2003 01:27:25 +0200 (MET DST)
-..Rounding error in ctest/R/chisq.test.R
 * PR# 3671 *
 Subject: model.frame() call from inside a function
 From: Jerome Asselin <jerome@hivnet.ubc.ca>
@@ -734,10 +716,6 @@ Date: Wed, 6 Aug 2003 15:41:16 -0700
 Subject: Bug in numericDeriv (was: [R] nls confidence intervals)
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Thu, 14 Aug 2003 12:54:34 -0400
-* PR# 3754 *
-Subject: xtabs to dataframe fails
-From: daniel.frey@switzerland.org
-Date: Sat, 16 Aug 2003 00:40:43 +0200 (MET DST)
 * PR# 3763 *
 Subject: round.POSIXt sometimes crashes R
 From: andrea.capodicasa@albacom.it
@@ -751,7 +729,26 @@ From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 19 Aug 2003 16:25:18 -0400 (EDT)
 Date: Mon, 28 Jul 2003 14:30:03 -0400 (EDT)
 ..Misdirected from ess-bugs?
-* PR# 3864 *
-Subject: Re: Details
-From: <oil120@nwu.edu>
-Date: Wed, 20 Aug 2003 20:30:56 +0200
+* PR# 3905 *
+Subject: Re: Wicked screensaver
+From: <fvc1001@hermes.cam.ac.uk>
+Date: Thu, 21 Aug 2003 18:47:12 --0300
+* PR# 3906 *
+Subject: Mail delivery failed: returning message to sender
+Subject: Re: Thank you!
+From: Mail Delivery System <Mailer-Daemon@city.ac.uk>
+From: <r-bugs@biostat.ku.dk>
+Date: Thu, 21 Aug 2003 22:50:34 +0100
+Date: Thu, 21 Aug 2003 18:53:25 --0300
+* PR# 3907 *
+Subject: Add size to your Penis  comprise
+From: "James Lambert" <emn92usniid@netease.com>
+Date: Thu, 21 Aug 03 21:57:50 GMT
+* PR# 3908 *
+Subject: [WebAssign #54755] Re: Approved
+From: "PAS" <pas@webassign.net>
+Date: Thu, 21 Aug 2003 18:11:13 -0400 (EDT)
+* PR# 3909 *
+Subject: Thank you!
+From: <macewicz@ia.pw.edu.pl>
+Date: Thu, 21 Aug 2003 19:13:22 --0300
