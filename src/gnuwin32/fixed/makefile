@@ -1,6 +1,6 @@
 include ../MkRules
 
-MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd
+MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd
 
 all: profiles fixh fixr fixRd fixbin 
 
