@@ -2,11 +2,12 @@
 \alias{standardGeneric}
 \alias{objWithClass}
 \alias{dataClass}
-\title{ Formal Method System Placeholders }
+\alias{topicName}
+\title{Formal Method System Placeholders}
 \description{
   These routines are primitives used with the \code{methods} package.
-  They should not be used without
-  it and do not need to be called directly in any case.
+  They should not be used without it and do not need to be called
+  directly in any case.
 
   \describe{
     \item{\code{standardGeneric}:}{
