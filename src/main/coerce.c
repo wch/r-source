@@ -962,6 +962,8 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 	STRING(v)[0] = PRINTNAME(u);
 	return v;
     }
+    else if (isSymbol(u) && type == SYMSXP)
+	return u;
     else errorcall(call, "cannot coerce to vector");
     return u;/* -Wall */
 }
