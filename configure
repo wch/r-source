@@ -8798,7 +8798,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-char *p = alloca(2 * sizeof(int));
+void *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:8805: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -10590,7 +10590,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x;
+typedef int charset[2]; const charset x = {0,0};
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
@@ -14107,14 +14107,12 @@ trap 'rm -fr `echo "Makeconf
   src/scripts/INSTALL
   src/scripts/REMOVE
   src/scripts/R.sh
-  src/scripts/Rd2contents
   src/scripts/Rdconv
   src/scripts/Rdindex
   src/scripts/Rprof
   src/scripts/SHLIB
   src/scripts/Sd2Rd
   src/scripts/build
-  src/scripts/build-help
   src/scripts/check
   src/unix/Makefile
   tests/Makefile
@@ -14414,14 +14412,12 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/scripts/INSTALL
   src/scripts/REMOVE
   src/scripts/R.sh
-  src/scripts/Rd2contents
   src/scripts/Rdconv
   src/scripts/Rdindex
   src/scripts/Rprof
   src/scripts/SHLIB
   src/scripts/Sd2Rd
   src/scripts/build
-  src/scripts/build-help
   src/scripts/check
   src/unix/Makefile
   tests/Makefile
