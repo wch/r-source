@@ -322,7 +322,10 @@ EOF
   fi
 ])
 AC_DEFUN([R_PROG_F77_CC_COMPAT],
- [AC_CHECK_LIB(m, sin, LIBM="-lm", LIBM=)
+ [## FIXME:
+  ## This should be in a separate macro, a la libtool AC_CHECK_LIBM
+  AC_CHECK_LIB(m, sin, LIBM="-lm", LIBM=)
+  ## </FIXME>
   AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on int and double])
   AC_CACHE_VAL(r_cv_prog_f77_cc_compat,
     [ cat > conftestf.f <<EOF
@@ -415,6 +418,10 @@ EOF
 ])
 AC_DEFUN([R_PROG_F2C_FLIBS],
  [AC_REQUIRE([AC_PROG_RANLIB])
+  ## FIXME:
+  ## This should be in a separate macro, a la libtool AC_CHECK_LIBM
+  AC_CHECK_LIB(m, sin, LIBM="-lm", LIBM=)
+  ## </FIXME>
   AC_CACHE_VAL(r_cv_f2c_flibs,
     [## This seems to be necessary on some Linux system. -- you bet! -pd
       cat > conftest.${ac_ext} << EOF
@@ -428,10 +435,11 @@ EOF
 	fi
       fi
       AC_DEFINE(HAVE_F77_UNDERSCORE)
-      AC_CHECK_LIB(f2c, f_open, flibs=-lf2c, flibs=, [-L. -lconftest])
+      AC_CHECK_LIB(f2c, f_open, flibs=-lf2c, flibs=,
+	[-L. -lconftest ${LIBM}])
       rm -f libconftest*
       if test -z "${flibs}"; then
-	AC_CHECK_LIB(F77, d_sin, flibs=-lF77, flibs=)
+	AC_CHECK_LIB(F77, d_sin, flibs=-lF77, flibs=, ${LIBM})
 	if test -n "${flibs}"; then
 	  AC_CHECK_LIB(I77, f_rew, flibs="${flibs} -lI77", flibs=, -lF77)
 	fi
