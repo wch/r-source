@@ -15,7 +15,7 @@
 */
 
 void rowsum(dim, na_x, x, group)
-long    *dim;
+int     *dim;
 double  *na_x;
 double  *x,
 	*group;

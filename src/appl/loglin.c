@@ -14,24 +14,24 @@
 #define	min(a, b) 		((a) > (b) ? (b) : (a))
 #define	abs(x)			((x) >= 0 ? (x) : -(x))
 
-static int collap(long *nvar, double *x, double *y, long *locy,
-		   long *nx, long *ny, long *dim, long
+static void collap(int *nvar, double *x, double *y, int *locy,
+		   int *nx, int *ny, int *dim, int
 		   *config);
-static int adjust(long *nvar, double *x, double *y, double *z, long
-		  *locz, long *nx, long *ny, long *nz, long *dim, long
+static void adjust(int *nvar, double *x, double *y, double *z, int
+		  *locz, int *nx, int *ny, int *nz, int *dim, int
 		  *config, double *d);
-static long *lvector(long n);
+static int *lvector(int n);
 
 /* Table of constant values */
 
-static long c__1 = 1;
+static int c__1 = 1;
 
-int loglin(long *nvar, long *dim, long *ncon, long *config, long *ntab,
-	   double *table, double *fit, long *locmar, long *nmar, double
-	   *marg, long *nu, double *u, double *maxdev, long *maxit,
-	   double *dev, long *nlast, long *ifault)
+void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
+	    double *table, double *fit, int *locmar, int *nmar, double
+	    *marg, int *nu, double *u, double *maxdev, int *maxit,
+	    double *dev, int *nlast, int *ifault)
 {
-    long i, j, k, n, point, size, *icon, *check;
+    int i, j, k, n, point, size, *icon, *check;
     double x, y, xmax;
 
     check = lvector(*nvar);    
@@ -60,7 +60,7 @@ int loglin(long *nvar, long *dim, long *ncon, long *config, long *ntab,
     }
 L5:
     *ifault = 4;
-    return 0;
+    return;
 
     /* Look at table and fit constants */
 
@@ -77,7 +77,7 @@ L10:
     }
 L35:
     *ifault = 2;
-    return 0;
+    return;
 L40:
     x = 0.;
     y = 0.;
@@ -100,7 +100,7 @@ L40:
 	fit[i] = x * fit[i];
     }
     if (*ncon <= 0 || config[*nvar + 1] == 0) {
-	return 0;
+	return;
     }
 
     /* Allocate marginal tables */
@@ -131,7 +131,7 @@ L40:
 	    }
 L95:
 	    *ifault = 1;
-	    return 0;
+	    return;
 	    /* Check for duplication */
 L100:
 	    if (check[k - 1]) {
@@ -201,13 +201,13 @@ L160:
 	goto L230;
     }
     *nlast = 1;
-    return 0;
+    return;
 
     /* No convergence */
 L230:
     *ifault = 3;
     *nlast = *maxit;
-    return 0;
+    return;
 
     /* Normal termination */
 L240:
@@ -216,7 +216,7 @@ L240:
     Free(icon);
     Free(check);
     
-    return 0;
+    return;
 }
 
 /* Algorithm AS 51.1 Appl. Statist. (1972), vol. 21, p. 218 
@@ -227,10 +227,10 @@ L240:
    The larger table is X and the smaller one is Y.
    */
 
-int collap(long *nvar, double *x, double *y, long *locy, long *nx, long
-	   *ny, long *dim, long *config)
+void collap(int *nvar, double *x, double *y, int *locy, int *nx, int
+	   *ny, int *dim, int *config)
 {
-    long i, j, k, l, n, locu, *coord, *size;
+    int i, j, k, l, n, locu, *coord, *size;
 
     size = lvector(*nvar + 1);
     coord = lvector(*nvar);
@@ -296,7 +296,7 @@ L60:
     Free(coord);
     Free(size);
     
-    return 0;
+    return;
 }
 
 
@@ -306,10 +306,10 @@ L60:
    All parameters are assumed valid without test. 
    */
 
-int adjust(long *nvar, double *x, double *y, double *z, long *locz, long
-	   *nx, long *ny, long *nz, long *dim, long *config, double *d)
+void adjust(int *nvar, double *x, double *y, double *z, int *locz, int
+	   *nx, int *ny, int *nz, int *dim, int *config, double *d)
 {
-    long i, j, k, l, n, *coord, *size;
+    int i, j, k, l, n, *coord, *size;
     double e;    
 
     size = lvector(*nvar + 1);
@@ -394,15 +394,15 @@ L50:
     Free(coord);
     Free(size);
 
-    return 0;
+    return;
 }
 
 /* Auxiliary routine to get rid of limitations on the number of factors
    in the model. */
 
-static long *lvector(long n) {
-    long *v;
-    v = Calloc(n, long);
+static int *lvector(int n) {
+    int *v;
+    v = Calloc(n, int);
     if (!v)
 	PROBLEM "allocation failure" RECOVER(NULL_ENTRY);
     return v;

@@ -12,8 +12,8 @@ static double dokern(double x, int kern)
 }
 
 void BDRksmooth(double *x, double *y, int *n,
-		double *xp, double *yp, long *np,
-		long *kern, double *bandwidth)
+		double *xp, double *yp, int *np,
+		int *kern, double *bandwidth)
 {
     int i, imin=0, j;
     double cutoff=0.0, num, den, x0, w, bw=*bandwidth;
