@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.13 $'
+revision='$Revision: 1.14 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -220,11 +220,17 @@ buildpkg () {
   ## Check R documentation files
   if test -d man; then
     checking "Rd files"    
-    Rdfiles=`find man -name "*.[Rr]d" -print | sort`
+    all_file=${TMPDIR:-/tmp}/Rall${$}
+    tag_file=${TMPDIR:-/tmp}/Rtag${$}
+    rm -f ${all_file} 2>/dev/null
+    find man -name "*.[Rr]d" -print | sort > ${all_file}
+    Rdfiles=`cat ${all_file}`
     if test -n "${Rdfiles}"; then
       any=
       for tag in name alias title description keyword; do
-	badfiles=`grep -L "^\\\\\\\\${tag}" ${Rdfiles} 2>/dev/null`
+	rm -f ${tag_file} 2>/dev/null
+	grep -l "^\\\\${tag}" ${Rdfiles} > ${tag_file} 2>/dev/null
+	badfiles=`comm -2 -3 ${all_file} ${tag_file}`
 	if test -n "${badfiles}"; then
 	  if test -z "${any}"; then
 	    result "WARNING:"
@@ -240,6 +246,7 @@ buildpkg () {
     else
       result "WARNING: no Rd files found"
     fi
+    rm -f ${all_file} ${tag_file} 2>/dev/null
   fi
 
   ## Check for `INDEX'
