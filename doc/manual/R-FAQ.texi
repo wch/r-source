@@ -489,6 +489,17 @@ A. Krause and M. Olsen (1997), ``The Basics of S and @SPLUS{}'',
 Springer.
 @end quotation
 
+The book
+@quotation
+J. C. Pinheiro and D. M. Bates (2000), ``Mixed-Effects Models in S and
+@SPLUS{}'', Springer, ISBN 0-387-98957-0
+@end quotation
+
+@noindent
+provides a comprehensive guide to the use of the @strong{nlme} package
+for linear and nonlinear mixed-effects models.  This has a home page at
+@uref{http://nlme.stat.wisc.edu/MEMSS}.
+
 Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
 
