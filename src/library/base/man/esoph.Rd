@@ -33,9 +33,11 @@
 \examples{
 data(esoph)
 summary(esoph)
-attach(esoph)
-table(alcgp, agegp, tobgp)
-detach()
-%%- really, we'd want to see a glm / gee (?) model! [MM]
+## effects of alcohol, tobacco and interaction, age-adjusted
+model1<-glm(cbind(cases,controls)~agegp+tobgp*alcgp,data=esoph,family=binomial())
+anova(model1)
+## Try a linear effect of alcohol and tobacco
+model2<-glm(cbind(cases,controls)~agegp+codes(tobgp)+codes(alcgp),data=esoph,family=binomial())
+summary(model2)
 }
 \keyword{datasets}
