@@ -134,8 +134,19 @@ sub get_usages {
 			## However, there are really only two functions
 			## with justified multiple usage (abline and
 			## seq), so we simply warn about multiple usage
-			## in case it was not shadowed by a \synopsis.
-			print("Multiple usage for $prefix() in $name\n");
+			## in case it was not shadowed by a \synopsis
+			## unless in mode `args', where we can cheat.
+			if($mode eq "args") {
+			    my $save_prefix = $prefix . "0";
+			    while($usages{$save_prefix}) {
+				$save_prefix .= "0";
+			    }
+			    $usages{$save_prefix} = $match;
+			}
+			else {
+			    print("Multiple usage for $prefix() " .
+				  "in $name\n");
+			}
 		    } else {
 			$usages{$prefix} = $match;
 		    }
