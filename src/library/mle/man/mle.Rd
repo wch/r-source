@@ -22,7 +22,7 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
   parameters is obtained by inverting the Hessian matrix at the optimum.
 }
 \value{
-  An object of class \code{"mle"}
+  An object of class \code{"mle"}.
 }
 \note{
   Be careful to note that the argument is -log L (not -2 log L). It
@@ -38,7 +38,7 @@ y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
 ll <- function(ymax=15, xhalf=6)
     -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
 (fit <- mle(ll))
-mle(ll, fixed=list(xhalf=6))
+update(fit, fixed=list(xhalf=6))
 
 summary(fit)
 logLik(fit)
