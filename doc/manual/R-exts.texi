@@ -1942,7 +1942,7 @@ searches the index data base consisting of all aliases.
 @findex \concept
 In addition, it is possible to provide ``concept index entries'' using
 @code{\concept}, which can be used for @code{help.search()} lookups.
-E.g., file @file{cor.test.Rd} in the standard add-on package @pkg{ctest}
+E.g., file @file{cor.test.Rd} in the standard package @pkg{stats}
 contains
 
 @smallexample
@@ -2632,9 +2632,9 @@ a symbol.
 
 
 Examples of registering routines can be found in the different packages
-in the R source tree (e.g., @pkg{mva}, @pkg{ctest}, @pkg{lqs}).  Also,
-there is a brief, high-level introduction in @emph{R News} (volume 1/3,
-September 2001, pages 20-23).
+in the R source tree (e.g., @pkg{mva}, @pkg{stats}).  Also, there is a
+brief, high-level introduction in @emph{R News} (volume 1/3, September
+2001, pages 20-23).
 
 Additionally, there are (experimental) tools that can be used to
 automate the generation of the code to register the routines for a

@@ -32,7 +32,7 @@ del.ttest <- function() winMenuDel("Statistics")
 
 .First.lib <- function(lib, pkg)
 {
-    require(ctest) # for t.test
+    require(stats) # for t.test
     library.dynam("windlgs", pkg, lib)
     winMenuAdd("Statistics")
     winMenuAdd("Statistics/Classical tests")

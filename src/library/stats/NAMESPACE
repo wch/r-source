@@ -1,3 +1,5 @@
+useDynLib(stats)
+
 # exportPattern("^[^\\.]")
 export(.cbind.ts, .checkMFClasses, .getXlevels, .MFclass)
 
@@ -99,3 +101,32 @@ S3method("[", terms)
 S3method("[", ts)
 S3method(print, htest)
 
+## from ctest
+exportPattern("\\.test$")
+export(pairwise.table)
+
+# documented but not exported
+# export(print.power.htest)
+
+S3method(ansari.test, default)
+S3method(ansari.test, formula)
+S3method(bartlett.test, default)
+S3method(bartlett.test, formula)
+S3method(cor.test, default)
+S3method(cor.test, formula)
+S3method(fligner.test, default)
+S3method(fligner.test, formula)
+S3method(friedman.test, default)
+S3method(friedman.test, formula)
+S3method(kruskal.test, default)
+S3method(kruskal.test, formula)
+S3method(mood.test, default)
+S3method(mood.test, formula)
+S3method(quade.test, default)
+S3method(quade.test, formula)
+S3method(t.test, default)
+S3method(t.test, formula)
+S3method(var.test, default)
+S3method(var.test, formula)
+S3method(wilcox.test, default)
+S3method(wilcox.test, formula)

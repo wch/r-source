@@ -3094,12 +3094,11 @@ qqline(x)
 @end example
 
 Finally, we might want a more formal test of agreement with normality
-(or not).  Package @pkg{ctest} provides the Shapiro-Wilk test
+(or not).  Standard package @pkg{stats} provides the Shapiro-Wilk test
 @cindex Shapiro-Wilk test
 @findex shapiro.test
 
 @example
-> library(ctest)
 > shapiro.test(long)
 
          Shapiro-Wilk normality test
@@ -3135,8 +3134,7 @@ sample.)
 So far we have compared a single sample to a normal distribution.  A
 much more common operation is to compare aspects of two samples.  Note
 that in @R{}, all ``classical'' tests including the ones used below are
-in package @pkg{ctest}, which may need to be loaded explicitly using
-@code{library(ctest)} to make the tests available.
+in package @pkg{stats}.
 
 Consider the following sets of data on the latent heat of the fusion of
 ice (@emph{cal/gm}) from Rice (1995, p.490)
@@ -3179,7 +3177,6 @@ an @emph{unpaired} @math{t}-test by
 @findex t.test
 
 @example
-> library(ctest)
 > t.test(A, B)
 
          Welch Two Sample t-test

@@ -41,7 +41,7 @@
   \url{http://www.math.yorku.ca/SCS/Papers/asa92.html}
 }
 \seealso{
-  \code{\link[ctest]{chisq.test}},
+  \code{\link[stats]{chisq.test}},
   \code{\link[stats]{loglin}},
   \code{\link[graphics]{mosaicplot}}
 }

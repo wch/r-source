@@ -88,7 +88,7 @@ cov2cor(V)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link[ctest]{cor.test}} (package \pkg{ctest}) for confidence
+  \code{\link{cor.test}} (package \pkg{ctest}) for confidence
   intervals (and tests).\cr
   \code{\link{cov.wt}} for \emph{weighted} covariance
   computation, \code{\link{sd}} for standard deviation (vectors).

@@ -1,5 +1,5 @@
 require(tcltk) || stop("tcltk support is absent")
-require(ctest)
+require(stats)
 
 local({
 
@@ -28,7 +28,7 @@ local({
             ## notice that tclvalue() is correct here, since it is the
             ## string representation of xvar and yvar that is being
             ## displayed in the entry fields
-            
+
             x  <- parse(text=tclvalue(xvar))[[1]]
             y  <- parse(text=tclvalue(yvar))[[1]]
             a <- tclvalue(alt)

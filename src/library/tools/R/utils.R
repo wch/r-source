@@ -323,7 +323,6 @@ function(package)
              MASS = c("frequency.polygon", "gamma.dispersion", "gamma.shape",
              "hist.FD", "hist.scott"),
              XML = "text.SAX",
-             ctest = "t.test",
              graphics = c("boxplot.stats", "close.screen",
              "plot.design", "plot.new",
              "plot.window", "plot.xy", "split.screen"),
@@ -331,7 +330,7 @@ function(package)
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
              sm = "print.graph",
-             stats = "influence.measures",
+             stats = c("influence.measures", "t.test"),
              ts = "lag.plot",
              utils = c("close.socket", "flush.console", "update.packages")
              )

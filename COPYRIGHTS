@@ -128,10 +128,10 @@ src/unix/rotated.[ch]
 
 
 src/appl/loglin.c
-src/library/ctest/src/chisqsim.c
-src/library/ctest/src/nscor.c
-src/library/ctest/src/prho.c
-src/library/ctest/src/swilk.c
+src/library/stats/src/chisqsim.c
+src/library/stats/src/nscor.c
+src/library/stats/src/prho.c
+src/library/stats/src/swilk.c
 src/library/mva/src/kmns.f
 src/library/ts/src/starma.c
 src/nmath/pgamma.c

@@ -36,7 +36,7 @@ options(scipen = 0)
 options(locatorBell = TRUE)
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        if(identical(dp, "")) # marginally faster to do methods last
-           dp <- c("utils", "stats", "graphics", "ts", "nls", "modreg", "mva", "ctest", "methods")
+           dp <- c("utils", "stats", "graphics", "ts", "nls", "modreg", "mva", "methods")
        else if(identical(dp, "NULL")) dp <- character(0)
        else dp <- strsplit(dp, ",")[[1]]
        dp <- sub("[[:blank:]]*([[:alnum:]]+)", "\\1", dp) # strip whitespace
