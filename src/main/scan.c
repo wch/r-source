@@ -529,7 +529,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		    n++;
 		    ii = 0;
 		    colsread = 0;
-		} else if (!badline)
+		} else if (!badline && !multiline)
 		    badline = linesread;
 		if(badline && !multiline)
 		error("line %d did not have %d elements", badline, nc);
@@ -580,13 +580,6 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     }
 
  done:
-    if (badline) {
-	if(multiline)
-	    warning("line %d did not have %d elements", badline, nc);
-	else
-	    error("line %d did not have %d elements", badline, nc);
-    }
-
     if (colsread != 0) {
 	if (!fill) 
 	    warning("number of items read is not a multiple of the number of columns");
