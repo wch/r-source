@@ -1,22 +1,23 @@
 p.adjust.methods <-
-    c("holm", "hochberg", "hommel", "bonferroni", "yh", "bh", "fdr", "none")
+    c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")
 
 p.adjust <-
     function(p, method = p.adjust.methods, n = length(p))
 {
-    ## Methods 'Hommel', 'BH', 'YH' and speed improvements contributed by
+    ## Methods 'Hommel', 'BH', 'BY' and speed improvements contributed by
     ## Gordon Smyth <smyth@wehi.edu.au>.
-
     method <- match.arg(method)
-    if(method == "fdr") method <- "bh"
+    if(method == "fdr") method <- "BH" # back compatibility
+
     p0 <- p
     if(all(nna <- !is.na(p))) nna <- TRUE
     p <- as.vector(p[nna])
- ## n <- length(p)
+ ## n <- length(p) ## -- maybe deprecate `n' argument ?
+    stopifnot(n >= length(p))
     if (n <= 1) return(p0)
     if (n == 2 && method == "hommel") method <- "hochberg"
-    
-    p0[nna] <- 
+
+    p0[nna] <-
       switch(method,
              bonferroni = pmin(1, n * p),
              holm = {
@@ -25,7 +26,7 @@ p.adjust <-
                ro <- order(o)
                pmin(1, cummax( (n - i + 1) * p[o] ))[ro]
              },
-             hommel = { ## needs n-1 >= 2, i.e. n > 2 in for() below
+             hommel = { ## needs n-1 >= 2 in for() below
                i <- 1:n
                o <- order(p)
                p <- p[o]
@@ -45,13 +46,13 @@ p.adjust <-
                ro <- order(o)
                pmin(1, cummin( (n - i + 1) * p[o] ))[ro]
              },
-             bh = {
+             BH = {
                i <- n:1
                o <- order(p, decreasing = TRUE)
                ro <- order(o)
                pmin(1, cummin( n / i * p[o] ))[ro]
              },
-             yh = {
+             BY = {
                i <- n:1
                o <- order(p, decreasing = TRUE)
                ro <- order(o)

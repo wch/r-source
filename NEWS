@@ -196,7 +196,7 @@ NEW FEATURES
     o	as.data.frame.table() has a new argument 'responseName'
 	(contributed by Bill Venables).
 
-    o	p.adjust() has a new method.
+    o	p.adjust() has a new method "BY".
 
     o	scan() has a new argument 'allowEscapes' (default TRUE) that
 	controls when C-style escapes in the input are interpreted.

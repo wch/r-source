@@ -8,12 +8,13 @@
 p.adjust(p, method = p.adjust.methods, n = length(p))
 
 p.adjust.methods
-# c("holm", "hochberg", "hommel", "bonferroni", "yh", "bh", "fdr", "none")
+# c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")
 }
 \arguments{
   \item{p}{vector of p-values (possibly with \code{\link{NA}}s).}
   \item{method}{correction method}
-  \item{n}{number of comparisons}
+  \item{n}{number of comparisons, must be at least \code{length(p)};
+    only set this (to non-default) when you know what you are doing!}
 }
 \value{A vector of corrected p-values (same length as \code{p}).}
 \details{
@@ -22,8 +23,8 @@ p.adjust.methods
   number of comparisons.  Less conservative corrections are also
   included by Holm (1979) (\code{"holm"}), Hochberg (1988)
   (\code{"hochberg"}), Hommel (1988) (\code{"hommel"}), Benjamini &
-  Hochberg (1995) (\code{"bh"}), and Benjamini & Yekutieli (2001)
-  (\code{"yh"}), respectively.
+  Hochberg (1995) (\code{"BH"}), and Benjamini & Yekutieli (2001)
+  (\code{"BY"}), respectively.
   A pass-through option (\code{"none"}) is also included.
   The set of methods are contained in the \code{p.adjust.methods} vector
   for the benefit of methods that need to have the method as an option
@@ -40,11 +41,16 @@ p.adjust.methods
   Hochberg's, but the difference is usually small and the Hochberg
   p-values are faster to compute.
 
-  The \code{"bh"} and \code{"yh"} method of Benjamini, Hochberg, and
+  The \code{"BH"} and \code{"BY"} method of Benjamini, Hochberg, and
   Yekutieli control the false discovery rate, the expected proportion of
   false discoveries amongst the rejected hypotheses.  The false
   discovery rate is a less stringent condition than the family wise
   error rate, so these methods are more powerful than the others.
+
+  Note that you can set \code{n} larger than \code{length(p)} which
+  means the unobserved p-values are assumed to be greater than all the
+  observed p   for "bonferonni" and "holm" methods and equal to 1 for
+  the other methods.
 }
 
 \references{
@@ -57,7 +63,7 @@ p.adjust.methods
   Benjamini, Y., and Yekutieli, D. (2001).
   The control of the false discovery rate in multiple testing under
   dependency.
-  \emph{Annals of Statistics} \bold{29}, 1165--1188. 
+  \emph{Annals of Statistics} \bold{29}, 1165--1188.
 
   Holm, S. (1979).
   A simple sequentially rejective multiple test procedure.
@@ -105,10 +111,10 @@ p <- 2*pnorm( sort(-abs(x)))
 
 round(p, 3)
 round(p.adjust(p), 3)
-round(p.adjust(p,"bh"), 3)
+round(p.adjust(p,"BH"), 3)
 
-## or all of them at once:
-p.adjust.M <- p.adjust.methods[p.adjust.methods != "fdr"] # just an alias
+## or all of them at once (dropping the "fdr" alias):
+p.adjust.M <- p.adjust.methods[p.adjust.methods != "fdr"]
 p.adj <- sapply(p.adjust.M, function(meth) p.adjust(p, meth))
 round(p.adj, 3)
 ## or a bit nicer:
