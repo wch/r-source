@@ -62,6 +62,9 @@ NEW FEATURES
     o	ppr() has a `model' argument to allow the model frame to be
 	returned as part of the fitted object.
 
+    o	glm() arguments `etastart' and `mustart' are now evaluated in
+	the same way as `subset' and `weights'.
+
 
 UTILITIES
 

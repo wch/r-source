@@ -24,11 +24,13 @@ model.weights(x)
 }
 \details{
   \code{model.extract} is provided for compatibility with S, which does
-  not have the more specific functions.
+  not have the more specific functions.  It is also useful to extract
+  e.g. the \code{etastart} and \code{mustart} components of a
+  \code{\link{glm}} fit.
 
-  \code{model.offset} and
-  \code{model.response} are equivalent to \code{model.frame(, "offset")}
-  and \code{model.frame(, "response")} respectively.
+  \code{model.offset} and \code{model.response} are equivalent to
+  \code{model.frame(, "offset")} and \code{model.frame(, "response")}
+  respectively.
 
   \code{model.weights} is slightly different from
   \code{model.frame(, "weights")} in not naming the vector it returns.

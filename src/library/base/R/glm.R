@@ -25,9 +25,12 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 #    mt <- terms(formula, data=data)
     if(missing(data)) data <- environment(formula)
     mf <- match.call(expand.dots = FALSE)
-    mf$family <- mf$start <- mf$control <- mf$maxit <- NULL
-    mf$model <- mf$method <- mf$x <- mf$y <- mf$contrasts <- NULL
-    mf$... <- NULL
+#     mf$family <- mf$start <- mf$control <- mf$maxit <- NULL
+#     mf$model <- mf$method <- mf$x <- mf$y <- mf$contrasts <- NULL
+#     mf$... <- NULL
+    m <- match(c("formula", "data", "subset", "weights", "na.action",
+                 "etastart", "mustart", "offset"), names(mf), 0)
+    mf <- mf[c(1, m)]
     mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, parent.frame())
@@ -57,6 +60,9 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     if(!is.null(offset) && length(offset) != NROW(Y))
 	stop("Number of offsets is ", length(offset),
 	     ", should equal ", NROW(Y), " (number of observations)")
+    ## these allow starting values to be expressed in terms of other vars.
+    mustart <- model.extract(mf, "mustart")
+    etastart <- model.extract(mf, "etastart")
 
     ## fit model via iterative reweighted least squares
     fit <- glm.fit(x=X, y=Y, weights=weights, start=start,

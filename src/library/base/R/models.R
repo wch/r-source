@@ -421,12 +421,9 @@ model.extract <- function (frame, component)
     component <- as.character(substitute(component))
     rval <- switch(component,
 		   response = model.response(frame),
-		   offset = model.offset(frame), weights = frame$"(weights)",
-		   start = frame$"(start)")
-    if (is.null(rval)) {
-	name <- paste("frame$\"(", component, ")\"", sep = "")
-	rval <- eval(parse(text = name)[1])
-    }
+		   offset = model.offset(frame),
+                   frame[[paste("(", component, ")", sep = "")]]
+                   )
     if(!is.null(rval)){
 	if (length(rval) == nrow(frame))
 	    names(rval) <- attr(frame, "row.names")

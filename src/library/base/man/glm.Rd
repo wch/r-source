@@ -37,9 +37,9 @@ glm.fit(x, y, weights = rep(1, nobs),
     family functions.)}
 
   \item{data}{an optional data frame containing the variables
-    in the model.  By default the variables are taken from
-    \code{environment(formula)}, typically the environment from which
-    \code{glm} is called.}
+    in the model.  If not found in \code{data}, the variables are taken
+    from \code{environment(formula)}, typically the environment from
+    which \code{glm} is called.}
 
   \item{weights}{an optional vector of weights to be used
     in the fitting process.}
@@ -118,6 +118,11 @@ glm.fit(x, y, weights = rep(1, nobs),
 
   If more than one of \code{etastart}, \code{start} and \code{mustart}
   is specified, the first in the list will be used.
+
+  All of \code{weights}, \code{subset}, \code{offset}, \code{etastart}
+  and \code{mustart} are evaluated in the same way as variables in
+  \code{formula}, that is first in \code{data} and then in the
+  environment of \code{formula}.
 }
 \value{
   \code{glm} returns an object of class inheriting from \code{"glm"}

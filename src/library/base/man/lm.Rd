@@ -20,8 +20,8 @@ lm(formula, data, subset, weights, na.action,
     The details of model specification are given below.}
 
   \item{data}{an optional data frame containing the variables
-    in the model.  By default the variables are taken from
-    \code{environment(formula)}, typically the environment from which
+    in the model.  If not found in \code{data}, the variables are taken
+    from \code{environment(formula)}, typically the environment from which
     \code{lm} is called.}
 
   \item{subset}{an optional vector specifying a subset of observations
@@ -78,6 +78,10 @@ lm(formula, data, subset, weights, na.action,
   \code{lm} calls the lower level functions \code{\link{lm.fit}}, etc,
   see below, for the actual numerical computations.  For programming
   only, you may consider doing likewise.
+
+  All of \code{weights}, \code{subset} and \code{offset} are evaluated
+  in the same way as variables in \code{formula}, that is first in
+  \code{data} and then in the environment of \code{formula}.
 }
 \value{
   \code{lm} returns an object of \code{\link[base]{class}} \code{"lm"} or for

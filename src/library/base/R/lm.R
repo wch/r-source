@@ -5,11 +5,13 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 {
     ret.x <- x
     ret.y <- y
-##    mt <- terms(formula, data = data)
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
-    mf$singular.ok <- mf$model <- mf$method <- NULL
-    mf$x <- mf$y <- mf$qr <- mf$contrasts <- mf$... <- NULL
+#    mf$singular.ok <- mf$model <- mf$method <- NULL
+#    mf$x <- mf$y <- mf$qr <- mf$contrasts <- mf$... <- NULL
+    m <- match(c("formula", "data", "subset", "weights", "na.action",
+                 "offset"), names(mf), 0)
+    mf <- mf[c(1, m)]
     mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, parent.frame())
