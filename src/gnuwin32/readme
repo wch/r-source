@@ -14,10 +14,14 @@ See Announce or CHANGES for the new features of this version.
 Installation
 ============
 
-Unpack rw0641b.zip anywhere you like. It will unpack to a directory
-tree under rw0641. The help, HTML and latex help files are in separate
-files rw0641h.zip, rw0641w.zip and rw0641l.zip which should be
-unpacked in the same directory you unpacked rw0641b.zip.
+The simplest way is to run the installer (double-click on the icon for
+rwinst.exe and navigate its wizard-like pages).
+
+To install manually, unpack rw0641b.zip anywhere you like. It will
+unpack to a directory tree under rw0641. The help, HTML and latex help
+files are in separate files rw0641h.zip, rw0641w.zip and rw0641l.zip
+which should be unpacked in the same directory you unpacked
+rw0641b.zip.
 
 The source-change file rw0641s.zip is unpacked inside rw0641.
 
@@ -72,7 +76,7 @@ Window running the standard shells, command.com (9x) and cmd.exe (NT),
 as well as the ports of bash and tcsh that we use.  Its primary
 purpose is to allow batch operation, but it does provide all the
 facilities needed for interactive use, including simple command-line
-editing. (If you type too fast you the command-line editor will miss
+editing. (If you type too fast the command-line editor will miss
 keystrokes).
 
 Batch use: At it simplest, rterm.exe can be used in a batch mode by
@@ -159,7 +163,9 @@ Adding packages
 
 Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in rw0641\library. They are then available for use.
+be unpacked in rw0641\library. They are then available for use. You
+can also use the installer rwinst.exe to selectively unpack the zip
+files.
 
 The list of packages and functions given by HTML help and used by the
 search engine can be updated from a running R process by the command

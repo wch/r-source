@@ -85,7 +85,7 @@ Using Visual C++
 You may if you prefer use Visual C++ to make the DLLs. First build the
 import library R.lib by
 
-	lib /def:R.def
+	lib /def:R.exp
 
 Then you can compile the objects and build the DLL by
 

@@ -87,7 +87,7 @@ First, you need Windows 95 or 98 or NT4 (or possibly earlier): Windows
 is likely except perhaps for some network-mounted systems).
 
 The simplest way is to run the installer (double-click on the icon for
-rwinst.exe and navigate its wizard-like pages.
+rwinst.exe and navigate its wizard-like pages).
 Alternatively, choose a location and unzip the zip files (with a tool that
 preserves long file names and the directory structure: we recommend the
 INFO-ZIP project's unzip). All the files will unpack into a directory called
