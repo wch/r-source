@@ -471,8 +471,14 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
             home <- home      # force evaluation
             delay(get(method, env = envir), env = environment())
         }
-        assign(paste(genname, class, sep = "."), wrap(method, envir),
-               envir = table)
+        if(!exists(method, env = envir)) {
+            warning("S3 method `", method,
+                    "' was declared in NAMESPACE but not found",
+                    call. = FALSE)
+        } else {
+            assign(paste(genname, class, sep = "."), wrap(method, envir),
+                   envir = table)
+        }
     }
     else if (is.function(method))
         assign(paste(genname, class, sep = "."), method, envir = table)

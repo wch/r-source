@@ -1048,7 +1048,12 @@ function(package, dir, lib.loc = NULL)
             ## see registerS3method in namespaces.R
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
-            get(m, envir = get(".__S3MethodsTable__.", envir = defenv))
+            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            if(!exists(m, envir = S3Table)) {
+                warning("declared S3 method `", m, "' not found",
+                        call. = FALSE)
+                return(NULL)
+            } else get(m, envir = S3Table)
         } else get(m, envir = codeEnv)
         mArgs <- omArgs <- names(formals(gm))
         ## If m is a formula method, its first argument *may* be called
