@@ -146,7 +146,9 @@ OSErr	AddFileToDesc(FSSpec theFSSpec, AEDesc *theDesc);
    Two arguments: foldername and scriptname. If "foldername"
    is not given, than it assumed that the script resides in
    R_Home:script folder.
+   Now, it creates dataforks if the file has not one
    Jago June 2001, Stefano M. Iacus   
+   Lat Mod: Aug 8 2002, Jago.
 */
 
 SEXP do_applescript(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -211,6 +213,7 @@ back:
   All rights reserved.
   
   written by Donald Olson
+  Modified, Aug 2002, Jago, Stefano M. Iacus
 */
 
 OSErr	ExecuteScript(FSSpec theFileToExecute, AEDesc *result)
@@ -229,15 +232,19 @@ OSErr	ExecuteScript(FSSpec theFileToExecute, AEDesc *result)
 	gASComponent = OpenDefaultComponent(kOSAComponentType, kOSAGenericScriptingComponentSubtype);
 	
 	// Check errors here!! 
-/*	if((gASComponent == badComponentInstance) || (gASComponent == badComponentSelector))
-		return invalidComponentID; 	// Is this the right error??
-*/		
+
 	curResFile = CurResFile();		// Save current res chain
 	
-	// Open our resource file  for reading
+	// Open our resource file  for reading, if it has none, create one for us
 	ourFileRef = FSpOpenResFile(&theFileToExecute, fsRdWrPerm);
-	if(ResError())
+	if(ResError()){
+		FSpCreateResFile ( &theFileToExecute, 'ttxt', kTypeText, smSystemScript ) ;
+  	    ourFileRef = FSpOpenResFile(&theFileToExecute, fsRdWrPerm);
+	    if(ResError()){
+   	     Rprintf("\n nienet res");
 		return ResError();
+		}
+	}
 	
 	UseResFile(ourFileRef);
 	
