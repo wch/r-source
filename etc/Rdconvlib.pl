@@ -1,5 +1,5 @@
 # Subroutines for converting R documentation into HTML, LaTeX and
-# nroff format  
+# nroff format
 
 # Copyright (C) 1997 Friedrich Leisch
 #
@@ -7,14 +7,14 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details. 
-# 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
 # A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
 # writing to the Free Software Foundation, Inc., 675 Mass Ave,
 # Cambridge, MA 02139, USA.
 
@@ -22,8 +22,8 @@
 
 $VERSION = "0.1.6";
 
-# names of unique text blocks, these may NOT appear MORE THAN ONCE! 
-@blocknames = ("name", "title", "usage", "arguments", "description", 
+# names of unique text blocks, these may NOT appear MORE THAN ONCE!
+@blocknames = ("name", "title", "usage", "arguments", "description",
 	       "value", "references", "seealso", "examples", "author", "note");
 # These may appear multiply but are of simple structure:
 @multiblocknames = ("alias", "keyword");
@@ -43,15 +43,15 @@ sub Rdconv {
 
     $type = $_[1];
     $debug = $_[2];
-    
+
     $max_bracket = 0;
     $max_section = 0;
-    
+
     undef $complete_text;
     undef %blocks;
     undef @section_body;
     undef @section_title;
-    
+
 
     #-- remove comments (everything after a %)
     while(<rdfile>){
@@ -71,20 +71,20 @@ sub Rdconv {
 	@keywords= get_multi($complete_text,"keyword");
     }
 
-    rdoc2html()  if $type =~ /html/i;
+    rdoc2html()	 if $type =~ /html/i;
     rdoc2nroff() if $type =~ /nroff/i;
     rdoc2latex() if $type =~ /tex/i;
-    rdoc2ex()    if $type =~ /example/i;
-}    
+    rdoc2ex()	 if $type =~ /example/i;
+}
 
 
 # Mark each matching opening and closing bracket with a unique id.
 # Idea and original code from latex2html
 sub mark_brackets {
-    
+
     $complete_text =~ s/^\\{|([^\\])\\{/$1$EOB/gso;
     $complete_text =~ s/^\\}|([^\\])\\}/$1$ECB/gso;
-    
+
     while($complete_text =~ /{([^{}]*)}/s){
 	my $id = $NB . ++$max_bracket . $BN;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
@@ -112,17 +112,17 @@ sub unmark_brackets {
 
 sub escape_codes {
     while($complete_text =~ /\\code/){
-	my ($id, $arg)  = get_arguments("code", $complete_text, 1);
+	my ($id, $arg)	= get_arguments("code", $complete_text, 1);
 	$complete_text =~ s/\\code$id(.*)$id/$ECODE$id/s;
 	$ecodes{$id} = $1;
     }
 }
 
-    
+
 # Write documentation blocks such as title, usage, etc. into the
 # global hash array %blocks
 sub get_blocks {
-    
+
     my $text = $_[0];
 
     my $id="";
@@ -138,7 +138,7 @@ sub get_blocks {
 		$blocks{$block} =~ s/^\s*(\S)/$1/;
 		$blocks{$block} =~ s/\n[ \t]*(\S)/\n$1/g;
 	    }
-	}	    
+	}
     }
     print stderr "---\n" if $debug;
 }
@@ -146,14 +146,14 @@ sub get_blocks {
 # Get  ALL  multiblock things -- their simple arg. is put in array:
 #
 sub get_multi {
-   
+
     my $text = $_[0];
     my $name = $_[1]; # "alias" or "keyword"
     my @res, $k=0;
     print stderr "--- Multi: $name\n" if $debug;
     while($text =~ /\\$name($ID)/) {
 	my $id = $1;
-	my ($endid, $arg) = 
+	my ($endid, $arg) =
 	    get_arguments($name, $text, 1);
 	print stderr "found:" if $debug && $k==0;
 	print stderr " $k:$arg" if $debug;
@@ -166,10 +166,10 @@ sub get_multi {
     @res;
 }
 
-# Write the user defined sections into the 
+# Write the user defined sections into the
 # global hashs @section_body and @section_title
 sub get_sections {
-    
+
     my $text = $_[0];
 
     print stderr "--- Sections\n" if $debug;
@@ -186,23 +186,23 @@ sub get_sections {
     }
     print stderr "---\n" if $debug;
 }
-	
+
 
 # Get the arguments of a command.
 # Arguments of get_arguments:
 #  1: next occurence of $_[0] is searched
 #  2: $_[1] is the text containing the command
 #  3: $_[2] is the optional number of arguments to be extracted,
-#     default is to extract 1 argument 
+#     default is to extract 1 argument
 # Returns a list with the id of the last closing bracket and
-# the arguments. 
+# the arguments.
 sub get_arguments {
-    
+
     my $command = $_[0];
     my $text = $_[1];
     my $nargs = $_[2];
     my @retval;
-    
+
     if($text =~ /\\($command)($ID)/){
 	$id = $2;
 	$text =~ /$id(.*)$id/s;
@@ -220,19 +220,19 @@ sub get_arguments {
 
 # Print a short vector of strings  (utility).
 sub print_vec {
-    my($F, $nam, $do_nam, $sep, $end) = @_;    
+    my($F, $nam, $do_nam, $sep, $end) = @_;
     my($i)=0;
-    $sep = ', '  unless $sep;
+    $sep = ', '	 unless $sep;
     $end = ".\n" unless $end;
     print $F "\@$nam = " if $do_nam;
     foreach (@$nam) { print $F ($i>0 ? $sep : '') . "'$_'"; $i++ }
     print $F $end;
 }
 
-	    
-	
+
+
 # Print the hash %blocks ... for debugging only (I just insert this
-# function manually at places where I need it :-) 
+# function manually at places where I need it :-)
 sub print_blocks {
 
     while(($block,$text) = each %blocks) {
@@ -259,15 +259,15 @@ sub undefined_command {
 
     my $text = $_[0];
     my $cmd = $_[1];
-    
+
     while($text =~ /\\$cmd/){
-	my ($id, $arg)  = get_arguments($cmd, $text, 1);
+	my ($id, $arg)	= get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$1/s;
     }
 
     $text;
 }
-    
+
 
 sub replace_command {
 
@@ -277,7 +277,7 @@ sub replace_command {
     my $after = $_[3];
 
     while($text =~ /\\$cmd/){
-	my ($id, $arg)  = get_arguments($cmd, $text, 1);
+	my ($id, $arg)	= get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$before$1$after/s;
     }
 
@@ -299,7 +299,7 @@ sub rdoc2html {
 
     print htmlout "[ <A HREF=\"../../../html/index.html\">top</A>";
     print htmlout " | <A HREF=\"00Index.html\">up</A> ]\n";
-    
+
     print htmlout "<H2 align=center><I>";
     print htmlout $blocks{"title"};
     print htmlout "</I></H2>\n";
@@ -316,7 +316,7 @@ sub rdoc2html {
     html_print_block("references", "References");
     html_print_block("seealso", "See Also");
     html_print_codeblock("examples", "Examples");
-        
+
     print htmlout "</BODY></HTML>\n";
 }
 
@@ -332,7 +332,7 @@ sub text2html {
     $text =~ s/\\le/&lt;=/go;
     $text =~ s/\\ge/&gt;=/go;
     $text =~ s/\\%/%/go;
-    
+
     $text =~ s/\n\s*\n/\n<P>\n/sgo;
     $text =~ s/\\dots/.../go;
     $text =~ s/\\ldots/.../go;
@@ -351,13 +351,13 @@ sub text2html {
     $text =~ s/\\right\)/\)/go;
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
-			
+
     $text = replace_command($text, "emph", "<EM>", "</EM>");
     $text = replace_command($text, "bold", "<B>", "</B>");
     $text = replace_command($text, "file", "`", "'");
-    
+
     while($text =~ /\\link/){
-	my ($id, $arg)  = get_arguments("link", $text, 1);
+	my ($id, $arg)	= get_arguments("link", $text, 1);
 	$htmlfile = $htmlindex{$arg};
 	if($htmlfile){
 	    $text =~ s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
@@ -368,12 +368,12 @@ sub text2html {
     }
 
     while($text =~ /\\email/){
-	my ($id, $arg)  = get_arguments("email", $text, 1);
+	my ($id, $arg)	= get_arguments("email", $text, 1);
 	$text =~ s/\\email$id.*$id/<A HREF=\"mailto:$arg\">$arg<\/A>/s;
     }
 
     while($text =~ /\\url/){
-	my ($id, $arg)  = get_arguments("url", $text, 1);
+	my ($id, $arg)	= get_arguments("url", $text, 1);
 	$text =~ s/\\url.*$id/<A HREF=\"$arg\">$arg<\/A>/s;
     }
 
@@ -406,9 +406,9 @@ sub code2html {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-			
+
     while($text =~ /\\link/){
-	my ($id, $arg)  = get_arguments("link", $text, 1);
+	my ($id, $arg)	= get_arguments("link", $text, 1);
 	$htmlfile = $htmlindex{$arg};
 	if($htmlfile){
 	    $text =~ s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
@@ -424,7 +424,7 @@ sub code2html {
 
 # Print a standard block
 sub html_print_block {
-    
+
     my $block = $_[0];
     my $title = $_[1];
 
@@ -436,7 +436,7 @@ sub html_print_block {
 
 # Print a code block (preformatted)
 sub html_print_codeblock {
-    
+
     my $block = $_[0];
     my $title = $_[1];
 
@@ -453,7 +453,7 @@ sub html_print_argblock {
 
     my $block = $_[0];
     my $title = $_[1];
-    
+
     if(defined $blocks{$block}){
 	print htmlout "<H3><I>$title</I></H3>\n";
 
@@ -519,14 +519,14 @@ sub rdoc2nroff {
 
     $INDENT = "0.5i";
     $TAGOFF = "1i";
-    
+
     print ".ND\n";
     print ".pl 100i\n";
     print ".po 3\n";
     print ".na\n";
     print ".SH\n";
     print $blocks{"title"}, "\n";
-    
+
     nroff_print_codeblock("usage", "");
     nroff_print_argblock("arguments", "Arguments");
     nroff_print_block("description", "Description");
@@ -555,9 +555,9 @@ sub text2nroff {
     else{
 	my $indent = $INDENT;
     }
-    
+
     $text =~ s/^\.|([\n\(])\./$1\\\&./g;
-     
+
     $text =~ s/\n\s*\n/\n.IP \"\" $indent\n/sgo;
     $text =~ s/\\dots/\\&.../go;
     $text =~ s/\\ldots/\\&.../go;
@@ -584,7 +584,7 @@ sub text2nroff {
 
     $text = undefined_command($text, "link");
     $text = undefined_command($text, "emph");
-    $text = undefined_command($text, "bold");    
+    $text = undefined_command($text, "bold");
     $text = undefined_command($text, "textbf");
     $text = undefined_command($text, "mathbf");
     $text = undefined_command($text, "email");
@@ -617,7 +617,7 @@ sub code2nroff {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
     $text =~ s/\\n/\\\\n/g;
-     
+
 
     $text = undefined_command($text, "link");
 
@@ -626,7 +626,7 @@ sub code2nroff {
 
 # Print a standard block
 sub nroff_print_block {
-    
+
     my $block = $_[0];
     my $title = $_[1];
 
@@ -644,7 +644,7 @@ sub nroff_print_block {
 
 # Print a code block (preformatted)
 sub nroff_print_codeblock {
-    
+
     my $block = $_[0];
     my $title = $_[1];
 
@@ -667,7 +667,7 @@ sub nroff_print_argblock {
 
     my $block = $_[0];
     my $title = $_[1];
-    
+
     if(defined $blocks{$block}){
 
 	print "\n";
@@ -745,7 +745,7 @@ sub rdoc2ex {
 
     get_blocks($complete_text);
 
-    ##--- Here, I should also put everything which belongs to 
+    ##--- Here, I should also put everything which belongs to
     ##--- ./massage-Examples ---- depending on 'name' !!!
 
     print "###--- >>> `"; print $blocks{"name"};
@@ -759,7 +759,7 @@ sub rdoc2ex {
     }
 
     ex_print_exampleblock("examples", "Examples");
-    
+
     if(@keywords) {
 	print "## Keywords: ";
 	&print_vec(STDOUT, 'keywords');
@@ -768,7 +768,7 @@ sub rdoc2ex {
 }
 
 sub ex_print_exampleblock {
-    
+
     my $block = $_[0];
     my $env = $_[1];
 
@@ -780,7 +780,7 @@ sub ex_print_exampleblock {
 }
 
 sub code2examp {
-    #-  currently identical to   `code2latex'.
+    #-	currently identical to	 `code2latex'.
     my $text = $_[0];
 
     $text =~ s/\\%/%/go;
@@ -790,7 +790,7 @@ sub code2examp {
     $text = undefined_command($text, "link");
     unmark_brackets($text);
 }
-    
+
 
 
 
@@ -821,7 +821,7 @@ sub rdoc2latex {
     latex_print_block("references", "References");
     latex_print_block("seealso", "SeeAlso");
     latex_print_exampleblock("examples", "Examples");
-    
+
     print "\n";
 
 }
@@ -829,15 +829,15 @@ sub rdoc2latex {
 sub text2latex {
 
     my $text = $_[0];
-    
+
     $text =~ s/$EOB/\\\{/go;
     $text =~ s/$ECB/\\\}/go;
-    
+
     while($text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$text =~ s/\\eqn.*$id/\\eeeeqn\{$eqn\}\{$ascii\}/s;
     }
-    
+
     while($text =~ /\\deqn/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{$ascii\}/s;
@@ -846,13 +846,14 @@ sub text2latex {
     $text =~ s/\\eeeeqn/\\eqn/go;
     $text =~ s/\\dddeqn/\\deqn/og;
 
-	
+
+    $text =~ s/\\R /\\R\\ /go;
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\cr/\\\\/go;
     $text = latex_unescape_codes($text);
     unmark_brackets($text);
 }
-    
+
 sub code2latex {
 
     my $text = $_[0];
@@ -865,11 +866,11 @@ sub code2latex {
     $text = undefined_command($text, "link");
     unmark_brackets($text);
 }
-    
+
 
 
 sub latex_print_block {
-    
+
     my $block = $_[0];
     my $env = $_[1];
 
@@ -881,7 +882,7 @@ sub latex_print_block {
 }
 
 sub latex_print_codeblock {
-    
+
     my $block = $_[0];
     my $env = $_[1];
 
@@ -895,7 +896,7 @@ sub latex_print_codeblock {
 }
 
 sub latex_print_exampleblock {
-    
+
     my $block = $_[0];
     my $env = $_[1];
 
@@ -912,10 +913,10 @@ sub latex_print_argblock {
 
     my $block = $_[0];
     my $env = $_[1];
-    
+
     if(defined $blocks{$block}){
 
- 	print "\\begin\{$env\}\n";
+	print "\\begin\{$env\}\n";
 
 	my $text = $blocks{$block};
 
@@ -941,14 +942,14 @@ sub latex_print_argblock {
 	else{
 	    print text2latex($text);
 	}
- 	print "\\end\{$env\}\n";
+	print "\\end\{$env\}\n";
     }
 }
 
 sub latex_print_sections {
-    
+
     my $section;
-    
+
     for($section=0; $section<$max_section; $section++){
 	print "\\begin\{Section\}\{" . $section_title[$section] . "\}\n";
 	print text2latex($section_body[$section]);
@@ -972,7 +973,7 @@ sub latex_unescape_codes {
 sub latex_code_cmd {
 
     my $code = $_[0];
-    
+
     if($code =~ /[$LATEX_SPECIAL]/){
 	if($code =~ /@/){
 	    die("\nERROR: found `\@' in \\code{...\}\n");
@@ -982,6 +983,6 @@ sub latex_code_cmd {
     else {
 	$code = "\\texttt\{" . $code . "\}";
     }
-    
+
     $code;
 }
