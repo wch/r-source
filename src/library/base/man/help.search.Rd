@@ -1,12 +1,12 @@
 \name{help.search}
 \alias{help.search}
+\alias{print.hsearch}
 \title{Search the Help System}
 \description{
   Allows for searching the help system for documentation matching a
   given regular expression in the (file) name, alias, title, or keyword
   entries (or any combination thereof).  Topics and titles of the
-  matched help entries are nicely displayed; currently, nothing is
-  returned.
+  matched help entries are nicely displayed.
 }
 \usage{
 help.search(pattern, fields = c("alias", "title"),
