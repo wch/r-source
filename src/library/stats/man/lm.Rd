@@ -78,6 +78,10 @@ lm(formula, data, subset, weights, na.action,
   followed by the interactions, all second-order, all third-order and so
   on: to avoid this pass a \code{terms} object as the formula.
 
+  A formula was an implied intercept term.  To remove this use either
+  \code{y ~ x - 1} or \code{y ~ 0 + x}.  See \code{\link{formula}} for
+  more details of allowed formulae.
+  
   \code{lm} calls the lower level functions \code{\link{lm.fit}}, etc,
   see below, for the actual numerical computations.  For programming
   only, you may consider doing likewise.
