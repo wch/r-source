@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-10, 2000-09-02
+@set FAQ-VERSION 1.1-11, 2000-09-17
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1358,6 +1358,9 @@ Functions for cluster analysis.
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
+@item conf.design
+A series of simple tools for constructing and manipulating confounded
+and fractional factorial designs.
 @item date
 Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
@@ -1543,6 +1546,8 @@ statistics.
 Read data from netCDF files.
 @item syskern
 Functions for writing code that is OS and R/S independent.
+@item tensor
+Tensor product of arrays.
 @item tframe
 Functions for writing code that is independent of the representation of
 time.
