@@ -302,6 +302,16 @@ int main(int ac, char **av)
 	else
 	    R_NSize = value;
     }
+    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
+	R_HistoryFile = ".Rhistory";
+    R_HistorySize = 512;
+    if ((p = getenv("R_HISTSIZE"))) {
+	value = Decode2Long(p, &ierr);
+	if (ierr != 0 || value < 0)
+	    fprintf(stderr, "WARNING: invalid R_HISTSIZE ignored;");
+	else
+	    R_HistorySize = value;
+    }
 
     /* Load saved preferences */
     R_gnome_load_prefs();
@@ -332,16 +342,6 @@ int main(int ac, char **av)
     R_gtk_terminal_new();
 
     /* restore command history */
-    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
-	R_HistoryFile = ".Rhistory";
-    R_HistorySize = 512;
-    if ((p = getenv("R_HISTSIZE"))) {
-	value = Decode2Long(p, &ierr);
-	if (ierr != 0 || value < 0)
-	    fprintf(stderr, "WARNING: invalid R_HISTSIZE ignored;");
-	else
-	    R_HistorySize = value;
-    }
     gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), R_HistoryFile, R_HistorySize, NULL);
 
     /* start main loop */
