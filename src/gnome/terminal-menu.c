@@ -7,6 +7,7 @@
 #include "Fileio.h"
 #include "IOStuff.h"
 #include "Parse.h"
+#include "Version.h"
 
 #include "gnome-find-dialog.h"
 #include "terminal.h"
