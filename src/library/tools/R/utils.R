@@ -309,7 +309,10 @@ function(package)
 {
     ## Return a character vector with the names of the functions in
     ## @code{package} which 'look' like S3 methods, but are not.
-    ## using package=NULL returns all known examples
+    ## Using package=NULL returns all known examples
+
+    ## round.POSIXt is a method for S3 and S4 group generics with
+    ## deliberately different arg names.
     stopList <-
         list(base = c("all.names", "all.vars", "anova.lmlist",
              "fitted.values",
@@ -317,7 +320,7 @@ function(package)
              "kappa.tri",
              "max.col",
              "print.atomic", "print.coefmat",
-             "rep.int"),
+             "rep.int", "round.POSIXt"),
              Hmisc = "t.test.cluster",
              HyperbolicDist = "log.hist",
              MASS = c("frequency.polygon", "gamma.dispersion", "gamma.shape",
