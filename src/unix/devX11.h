@@ -2,19 +2,19 @@
  * ------------ but also, e.g., in  system.c  [event loop]
  */
 
-int  (*X11ConnectionNumber)();
-void (*pR_ProcessEvents)(void);
 int  (*X11DeviceDriver)(DevDesc*, char*, double, double, double, double,
 			int, int);
 SEXP (*ptr_dataentry)(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 int (*GnomeDeviceDriver)(DevDesc*, char*, double, double, double);
 
-int stub_X11ConnectionNumber();
-void stub_R_ProcessEvents(void);
+int (*GTKDeviceDriver)(DevDesc*, char*, double, double, double);
+
 int stub_X11DeviceDriver(DevDesc*, char*, double, double, double, double, 
 			 int, int);
 int stub_GnomeDeviceDriver(DevDesc*, char*, double, double, double);
+
+int stub_GTKDeviceDriver(DevDesc*, char*, double, double, double);
 
 SEXP stub_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
 

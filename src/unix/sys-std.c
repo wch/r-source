@@ -94,16 +94,16 @@ InputHandler *InputHandlers = &BasicInputHandler;
   Initialize the input source handlers used to check for input on the 
   different file descriptors.
  */
-InputHandler *
-initStdinHandler(void)
+InputHandler * initStdinHandler(void)
 {
- InputHandler *inputs;
- extern void R_processEvents(void);
+    InputHandler *inputs;
+    extern void R_processEvents(void);
  
-  inputs = addInputHandler(InputHandlers, fileno(stdin), NULL, StdinActivity);
+    inputs = addInputHandler(InputHandlers, fileno(stdin), NULL, 
+			     StdinActivity);
     /* Defer the X11 registration until it is loaded and actually used. */
 
- return(inputs);
+    return(inputs);
 }
 
 /*
@@ -113,29 +113,30 @@ initStdinHandler(void)
   BasicInputHandler object.
  */
 InputHandler *
-addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, int activity)
+addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, 
+		int activity)
 {
- InputHandler *input, *tmp;
+    InputHandler *input, *tmp;
     input = (InputHandler*) calloc(1, sizeof(InputHandler));
 
-  input->activity = activity;
-  input->fileDescriptor = fd;
-  input->handler = handler;
+    input->activity = activity;
+    input->fileDescriptor = fd;
+    input->handler = handler;
 
-  tmp = handlers;
+    tmp = handlers;
 
-  if(handlers == NULL) {
-     InputHandlers = input;
-     return(input);
-  }
+    if(handlers == NULL) {
+	InputHandlers = input;
+	return(input);
+    }
 
     /* Go to the end of the list to append the new one.  */
-  while(tmp->next != NULL) {
-    tmp = tmp->next;
-  }
-  tmp->next = input;
+    while(tmp->next != NULL) {
+	tmp = tmp->next;
+    }
+    tmp->next = input;
 
- return(handlers);
+    return(handlers);
 }
 
 /*
@@ -146,43 +147,43 @@ addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, int ac
 int
 removeInputHandler(InputHandler **handlers, InputHandler *it)
 {
-  InputHandler *tmp;
+    InputHandler *tmp;
 
-  /* If the handler is the first one in the list, move the list to point
-     to the second element. That's why we use the address of the first element
-     as the first argument.
-   */
-  if(*handlers == it) {
-    *handlers = (*handlers)->next;
-    return(1);
-  }
-
-  tmp = *handlers;
-
-  while(tmp) {
-    if(tmp->next == it) {
-      tmp->next = it->next;
-      return(1);
+    /* If the handler is the first one in the list, move the list to point
+       to the second element. That's why we use the address of the first 
+       element as the first argument.
+    */
+    if(*handlers == it) {
+	*handlers = (*handlers)->next;
+	return(1);
     }
-  }
 
-  return(0);
+    tmp = *handlers;
+
+    while(tmp) {
+	if(tmp->next == it) {
+	    tmp->next = it->next;
+	    return(1);
+	}
+    }
+
+    return(0);
 }
 
 
 InputHandler *
 getInputHandler(InputHandler *handlers, int fd)
 {
-  InputHandler *tmp;
-  tmp = handlers;
+    InputHandler *tmp;
+    tmp = handlers;
 
-  while(tmp != NULL) {
-    if(tmp->fileDescriptor == fd)
-      return(tmp);
-    tmp = tmp->next;
-  }
+    while(tmp != NULL) {
+	if(tmp->fileDescriptor == fd)
+	    return(tmp);
+	tmp = tmp->next;
+    }
 
-  return(tmp);
+    return(tmp);
 }
 
 /*
@@ -198,17 +199,20 @@ getInputHandler(InputHandler *handlers, int fd)
  device connection.  This allows more than one X11 device to be open on a different 
  connection. Also, it allows connections a la S4 to be developed on top of this 
  mechanism. The return type of this routine has changed.
- */
+*/
+
+static int setSelectMask(InputHandler *, fd_set *);
+
 static InputHandler* waitForActivity()
 {
-  int maxfd;
-  fd_set readMask;
+    int maxfd;
+    fd_set readMask;
 
     maxfd = setSelectMask(InputHandlers, &readMask);
 
     select(maxfd+1, &readMask, NULL, NULL, NULL);
 
-  return(getSelectedHandler(InputHandlers, &readMask));
+    return(getSelectedHandler(InputHandlers, &readMask));
 }
 
 /*
@@ -220,21 +224,22 @@ static InputHandler* waitForActivity()
   then we set its file descriptor to the current value of stdin - its
   file descriptor.
  */
-int
+
+static int
 setSelectMask(InputHandler *handlers, fd_set *readMask)
 {
-  int maxfd = -1;
+    int maxfd = -1;
     InputHandler *tmp = handlers;
     FD_ZERO(readMask);
 
-      /* If we are dealing with BasicInputHandler Always put stdin */
+    /* If we are dealing with BasicInputHandler Always put stdin */
     if(handlers == &BasicInputHandler) 
-       handlers->fileDescriptor = fileno(stdin);
+	handlers->fileDescriptor = fileno(stdin);
     
     while(tmp) {
-      FD_SET(tmp->fileDescriptor, readMask);
-      maxfd = maxfd < tmp->fileDescriptor ? tmp->fileDescriptor : maxfd;
-      tmp = tmp->next;
+	FD_SET(tmp->fileDescriptor, readMask);
+	maxfd = maxfd < tmp->fileDescriptor ? tmp->fileDescriptor : maxfd;
+	tmp = tmp->next;
     }
 
     return(maxfd);
@@ -252,23 +257,23 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 {
     InputHandler *tmp = handlers;
 
-      /*
-          Temporarily skip the first one if a) there is another one, and
-           b) thi is the BasicInputHandler.
-        */
+    /*
+      Temporarily skip the first one if a) there is another one, and
+      b) thi is the BasicInputHandler.
+    */
     if(handlers == &BasicInputHandler && handlers->next)
-      tmp = handlers->next;
+	tmp = handlers->next;
    
     while(tmp) {
-      if(FD_ISSET(tmp->fileDescriptor, readMask))
-        return(tmp);
-      tmp = tmp->next;
+	if(FD_ISSET(tmp->fileDescriptor, readMask))
+	    return(tmp);
+	tmp = tmp->next;
     }
-       /* Now deal with the first one. */
+    /* Now deal with the first one. */
     if(FD_ISSET(handlers->fileDescriptor, readMask))
-       return(handlers);
+	return(handlers);
 
-  return((InputHandler*) NULL);
+    return((InputHandler*) NULL);
 }
 
 

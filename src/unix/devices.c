@@ -111,6 +111,36 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd;
+    char *display, *vmax;
+    double height, width, ps;
+    gcall = call;
+    vmax = vmaxget();
+    display = SaveString(CAR(args), 0); args = CDR(args);
+    width = asReal(CAR(args));	args = CDR(args);
+    height = asReal(CAR(args)); args = CDR(args);
+    if (width <= 0 || height <= 0)
+	errorcall(call, "invalid width or height");
+    ps = asReal(CAR(args));
+    /* Allocate and initialize the device driver data */
+    if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	return 0;
+    /* Do this for early redraw attempts */
+    dd->displayList = R_NilValue;
+    GInit(&dd->dp);
+    if (!GTKDeviceDriver(dd, display, width, height, ps)) {
+	free(dd);
+	errorcall(call, "unable to start device gtk");
+    }
+    gsetVar(install(".Device"), mkString("GTK"), R_NilValue);
+    addDevice(dd);
+    initDisplayList(dd);
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
 SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
@@ -132,9 +162,9 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
     GInit(&dd->dp);
     if (!GnomeDeviceDriver(dd, display, width, height, ps)) {
 	free(dd);
-	errorcall(call, "unable to start device Gnome");
+	errorcall(call, "unable to start device gtk");
     }
-    gsetVar(install(".Device"), mkString("Gnome"), R_NilValue);
+    gsetVar(install(".Device"), mkString("gnome"), R_NilValue);
     addDevice(dd);
     initDisplayList(dd);
     vmaxset(vmax);

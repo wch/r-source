@@ -441,8 +441,7 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #include "Runix.h"
 
-extern DL_FUNC X11ConnectionNumber, pR_ProcessEvents, 
-    X11DeviceDriver, ptr_dataentry;
+extern DL_FUNC X11DeviceDriver, ptr_dataentry;
 
 void R_load_X11_shlib()
 {
@@ -461,10 +460,6 @@ void R_load_X11_shlib()
 	printf("error was %s\n", dlerror());fflush(stdout);
 	R_Suicide("Cannot load the X11 shared library");
     }
-    X11ConnectionNumber = R_dlsym(handle, "X11ConnectionNumber");
-    if(!X11ConnectionNumber) R_Suicide("Cannot load X11ConnectionNumber");
-    pR_ProcessEvents = R_dlsym(handle, "R_ProcessEvents");
-    if(!pR_ProcessEvents) R_Suicide("Cannot load R_ProcessEvents");
     X11DeviceDriver = R_dlsym(handle, "X11DeviceDriver");
     if(!X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
     ptr_dataentry = R_dlsym(handle, "RX11_dataentry");
@@ -474,7 +469,7 @@ void R_load_X11_shlib()
 extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
     ptr_R_WriteConsole, ptr_R_ResetConsole, ptr_R_FlushConsole,
     ptr_R_ClearerrConsole, ptr_R_Busy, ptr_R_CleanUp, ptr_R_ShowFiles,
-    ptr_R_ChooseFile, gnome_start, GnomeDeviceDriver;
+    ptr_R_ChooseFile, gnome_start, GnomeDeviceDriver, GTKDeviceDriver;
 
 
 void R_load_gnome_shlib()
@@ -518,12 +513,14 @@ void R_load_gnome_shlib()
     if(!ptr_R_ChooseFile) R_Suicide("Cannot load R_ChooseFile");
     gnome_start = R_dlsym(handle, "gnome_start");
     if(!gnome_start) R_Suicide("Cannot load gnome_start");
-    X11DeviceDriver = R_dlsym(handle, "X11DeviceDriver");
+    GTKDeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
+    if(!GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
+/*    GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
+      if(!GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
+/*    X11DeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
     if(!X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
-    GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
-    if(!GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");
     ptr_dataentry = R_dlsym(handle, "RX11_dataentry");
-    if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
+    if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry"); */
 }
 
 

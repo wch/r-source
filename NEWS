@@ -81,6 +81,10 @@ NEW FEATURES
 	and the code is now in a separate shared library.  Both
 	--gui=GNOME and --gui=gnome are allowed.
 
+	The main GNOME device is now called gtk(); the x11() device
+	from the X11 support can also be used.  (The gnome() device
+	remains unreliable.)
+
     o	New device xfig() to produce XFig files.
 
     o	Added ability to use the graphics device driver to perform
@@ -100,6 +104,9 @@ NEW FEATURES
 	new function  stopifnot(.) -- to be used in "make check".
 
     o	list.files() [aka dir()]: path argument has now default = "."
+
+    o	.Platform has a new component GUI specifying the GUI in use
+	(which might be "unknown").
 
 
 BUG FIXES
@@ -130,8 +137,7 @@ BUG FIXES
     o	Support for Rd conversion to Sd has been reinstated (it was
 	unintentionally removed along with nroff-based conversion to text).
 
-
-    o	strheight("X") with no active device would segfault
+    o	strheight("X") with no active device would segfault.
 
 
 		CHANGES IN R VERSION 1.0.1

@@ -959,102 +959,103 @@ static void GTK_Hold(DevDesc *dd)
 
 
 /* Device driver entry point */
-int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, double pointsize)
+int GTKDeviceDriver(DevDesc *dd, char *display, double width, 
+		    double height, double pointsize)
 {
-  int ps;
-  gchar tmp[2];
-  gint cumwidth, c, rbearing, lbearing;
-  double max_rbearing, min_lbearing;
-  gtkDesc *gtkd;
+    int ps;
+    gchar tmp[2];
+    gint cumwidth, c, rbearing, lbearing;
+    double max_rbearing, min_lbearing;
+    gtkDesc *gtkd;
 
-  if(!(gtkd = (gtkDesc *) malloc(sizeof(gtkDesc))))
-    return 0;
+    if(!(gtkd = (gtkDesc *) malloc(sizeof(gtkDesc))))
+	return 0;
 
-  dd->deviceSpecific = (void *) gtkd;
+    dd->deviceSpecific = (void *) gtkd;
 
-  /* font loading */
-  ps = pointsize;
-  if(ps < 6 || ps > 24) ps = 12;
-  ps = 2 * (ps / 2);
-  gtkd->fontface = -1;
-  gtkd->fontsize = -1;
-  dd->dp.font = 1;
-  dd->dp.ps = ps;
+    /* font loading */
+    ps = pointsize;
+    if(ps < 6 || ps > 24) ps = 12;
+    ps = 2 * (ps / 2);
+    gtkd->fontface = -1;
+    gtkd->fontsize = -1;
+    dd->dp.font = 1;
+    dd->dp.ps = ps;
 
-  /* device driver start */
-  if(!GTK_Open(dd, gtkd, display, width, height)) {
-    free(gtkd);
-    return 0;
-  }
+    /* device driver start */
+    if(!GTK_Open(dd, gtkd, display, width, height)) {
+	free(gtkd);
+	return 0;
+    }
 
-  /* setup data structure */
-  dd->dp.open = GTK_Open;
-  dd->dp.close = GTK_Close;
-  dd->dp.activate = GTK_Activate;
-  dd->dp.deactivate = GTK_Deactivate;
-  dd->dp.resize = GTK_Resize;
-  dd->dp.newPage = GTK_NewPage;
-  dd->dp.clip = GTK_Clip;
-  dd->dp.strWidth = GTK_StrWidth;
-  dd->dp.text = GTK_Text;
-  dd->dp.rect = GTK_Rect;
-  dd->dp.circle = GTK_Circle;
-  dd->dp.line = GTK_Line;
-  dd->dp.polyline = GTK_Polyline;
-  dd->dp.polygon = GTK_Polygon;
-  dd->dp.locator = GTK_Locator;
-  dd->dp.mode = GTK_Mode;
-  dd->dp.hold = GTK_Hold;
-  dd->dp.metricInfo = GTK_MetricInfo;
+    /* setup data structure */
+    dd->dp.open = GTK_Open;
+    dd->dp.close = GTK_Close;
+    dd->dp.activate = GTK_Activate;
+    dd->dp.deactivate = GTK_Deactivate;
+    dd->dp.resize = GTK_Resize;
+    dd->dp.newPage = GTK_NewPage;
+    dd->dp.clip = GTK_Clip;
+    dd->dp.strWidth = GTK_StrWidth;
+    dd->dp.text = GTK_Text;
+    dd->dp.rect = GTK_Rect;
+    dd->dp.circle = GTK_Circle;
+    dd->dp.line = GTK_Line;
+    dd->dp.polyline = GTK_Polyline;
+    dd->dp.polygon = GTK_Polygon;
+    dd->dp.locator = GTK_Locator;
+    dd->dp.mode = GTK_Mode;
+    dd->dp.hold = GTK_Hold;
+    dd->dp.metricInfo = GTK_MetricInfo;
 
-  dd->dp.left = 0;
-  dd->dp.right = gtkd->windowWidth;
-  dd->dp.bottom = gtkd->windowHeight;
-  dd->dp.top = 0;
+    dd->dp.left = 0;
+    dd->dp.right = gtkd->windowWidth;
+    dd->dp.bottom = gtkd->windowHeight;
+    dd->dp.top = 0;
 
-  /* nominal character sizes */
-  cumwidth = 0;
-  max_rbearing = 0;
-  min_lbearing = 10000; /* just a random big number */
-  for(c = 0; c <= 255; c++) {
-    g_snprintf(tmp, 2, "%c", (gchar) c);
-    gdk_string_extents(gtkd->font, tmp,
-		       &lbearing, &rbearing,
-		       NULL, NULL, NULL);
-    if(lbearing < min_lbearing || c == 0)
-      min_lbearing = lbearing;
-    if(rbearing > max_rbearing)
-      max_rbearing = rbearing;
-  }
+    /* nominal character sizes */
+    cumwidth = 0;
+    max_rbearing = 0;
+    min_lbearing = 10000; /* just a random big number */
+    for(c = 0; c <= 255; c++) {
+	g_snprintf(tmp, 2, "%c", (gchar) c);
+	gdk_string_extents(gtkd->font, tmp,
+			   &lbearing, &rbearing,
+			   NULL, NULL, NULL);
+	if(lbearing < min_lbearing || c == 0)
+	    min_lbearing = lbearing;
+	if(rbearing > max_rbearing)
+	    max_rbearing = rbearing;
+    }
 
-  dd->dp.cra[0] = max_rbearing - min_lbearing;
-  dd->dp.cra[1] = (double) gtkd->font->ascent + (double) gtkd->font->descent;
+    dd->dp.cra[0] = max_rbearing - min_lbearing;
+    dd->dp.cra[1] = (double) gtkd->font->ascent + (double) gtkd->font->descent;
 
-  /* character addressing offsets */
-  dd->dp.xCharOffset = 0.4900;
-  dd->dp.yCharOffset = 0.3333;
-  dd->dp.yLineBias = 0.1;
+    /* character addressing offsets */
+    dd->dp.xCharOffset = 0.4900;
+    dd->dp.yCharOffset = 0.3333;
+    dd->dp.yLineBias = 0.1;
 
-  /* inches per raster unit */
-  dd->dp.ipr[0] = pixelWidth();
-  dd->dp.ipr[1] = pixelHeight();
+    /* inches per raster unit */
+    dd->dp.ipr[0] = pixelWidth();
+    dd->dp.ipr[1] = pixelHeight();
 
-  /* device capabilities */
-  dd->dp.canResizePlot = 1;
-  dd->dp.canChangeFont = 0;
-  dd->dp.canRotateText = 1;
-  dd->dp.canResizeText = 1;
-  dd->dp.canClip = 0;
-  dd->dp.canHAdj = 0;
+    /* device capabilities */
+    dd->dp.canResizePlot = 1;
+    dd->dp.canChangeFont = 0;
+    dd->dp.canRotateText = 1;
+    dd->dp.canResizeText = 1;
+    dd->dp.canClip = 0;
+    dd->dp.canHAdj = 0;
 
-  /* gtk device description stuff */
-  gtkd->cex = 1.0;
-  gtkd->srt = 0.0;
-  gtkd->resize = 0;
+    /* gtk device description stuff */
+    gtkd->cex = 1.0;
+    gtkd->srt = 0.0;
+    gtkd->resize = 0;
 
-  dd->displayListOn = 1;
+    dd->displayListOn = 1;
 
-  /* finish */
-  return 1;
+    /* finish */
+    return 1;
 }
 

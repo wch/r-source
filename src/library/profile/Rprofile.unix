@@ -10,7 +10,7 @@ options(unzip = as.vector(getenv("R_UNZIPCMD")))
 options(editor = as.vector(getenv("EDITOR")))
 if(interactive() && getenv("DISPLAY") != "") {
     options(device = switch(.Platform$GUI,
-            "X11" = "X11", "GNOME" = "X11", "postscript"))
+            "X11" = "X11", "GNOME" = "gtk", "postscript"))
     options(X11colortype = "true")
 } else options(device = "postscript")
 options(pager = "${R_HOME}/bin/pager")
