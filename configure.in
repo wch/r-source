@@ -9,12 +9,12 @@ dnl Copyright (C) 1998 R Core Team
 ### R is free software; you can redistribute it and/or modify it under
 ### the terms of the GNU General Public License as published by the Free
 ### Software Foundation; either version 2 of the License, or (at your
-### option) any later version. 
+### option) any later version.
 ###
 ### R is distributed in the hope that it will be useful, but WITHOUT ANY
 ### WARRANTY; without even the implied warranty of MERCHANTABILITY or
 ### FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
-### License for more details. 
+### License for more details.
 ###
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, you can obtain it via the World Wide Web at
@@ -190,7 +190,7 @@ else
   fi
   if test -z "${F77}"; then
     AC_CHECK_PROG(F2C, f2c)
-  fi    
+  fi
 fi
 
 if test -n "${F77}"; then
@@ -260,7 +260,7 @@ fi
 
 if test "${FC}" = g77; then
   FFLAGS=${FFLAGS-"-O2"}
-fi  
+fi
 
 AC_SUBST(FC)
 AC_SUBST(F2C)
@@ -293,13 +293,8 @@ AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isnan matherr memcpy \
 ### Header files
 
 AC_HEADER_STDC
-<<<<<<< configure.in
-AC_CHECK_HEADERS(dl.h dlfcn.h elf.h fcntl.h limits.h locale.h \
-  readline/history.h rpc/xdr.h sys/times.h time.h ieeefp.h)
-=======
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h locale.h readline/history.h \
   rpc/xdr.h sys/times.h time.h)
->>>>>>> 1.38
 
 ### Typedefs
 
