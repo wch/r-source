@@ -63,9 +63,9 @@ static char problem_buf[PROBLEM_BUFSIZE];
 #define RECOVER(x)	), error(problem_buf)
 #define WARNING(x)	), warning(problem_buf)
 
-#define Calloc(n, t)   (t *) calloc( (size_t) (n), sizeof(t) )
-#define Realloc(p,n,t) (t *) realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
-#define Free(p)        free( (void *)(p) )
+#define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
+#define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
+#define Free(p)        R_chk_free( (void *)(p) )
 #define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
 
 #define F77_CALL(x)    F77_SYMBOL(x)

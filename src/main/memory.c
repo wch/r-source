@@ -758,3 +758,27 @@ void C_free(char *p)
     }
     error("C_free(): attempt to free pointer not allocated by C_alloc()\n");
 }
+
+/* S-like wrappers for calloc, realloc and free that check for error
+   conditions */
+
+void *R_chk_calloc(size_t nelem, size_t elsize)
+{
+  void *p;
+  p = calloc(nelem, elsize);
+  if(!p) error("Calloc could not allocate memory");
+  return(p);
+}
+void *R_chk_realloc(void *ptr, size_t size)
+{
+  void *p;
+  p = realloc(ptr, size);
+  if(!p) error("Realloc could not re-allocate memory");
+  return(p);
+}
+void *R_chk_free(void *ptr)
+{
+  if(!ptr) warning("attempt to free NULL pointer by Free");
+  free(ptr);
+  return;
+}
