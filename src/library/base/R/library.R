@@ -6,7 +6,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 {
     testRversion <- function(descfile)
     {
-        current <- paste(R.Version()[c("major", "minor")], collapse = ".")
+        current <- paste(R.version[c("major", "minor")], collapse = ".")
         fields <- read.dcf(descfile, fields =
                            c("Package", "Depends", "Built"))
         ## depends on R version?
