@@ -215,6 +215,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    if(*bufp != '\0')
 		SET_STRING_ELT(t, ntok, mkChar(bufp));
+	    regfree(&reg);
 	}
 	else {
 	    char bf[2];
@@ -231,6 +232,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     UNPROTECT(1);
     AllocBuffer(-1);
+    free(pt);
     return s;
 }
 
