@@ -3,12 +3,22 @@
 \usage{
 assign(x, value, pos = -1, envir = sys.frame(sys.parent()),
        inherits = FALSE, immediate = TRUE)
+x <- value
+x <<- value
+value -> x
+value ->> x
 }
 \alias{assign}
+\alias{<-}
+\alias{<<-}
+\alias{->}
+\alias{->>}
 \arguments{
   \item{x}{a variable name (given as a quoted string).}
   \item{value}{a value to be assigned to \code{x}.}
-  \item{pos}{???}
+  \item{pos}{an index into the search list which determines which
+    environment the assignment is to take place in. The environment
+    can also be specified directly with \code{envir}.}
   \item{envir}{the \code{\link{environent}} in which to assign.  The
     default is the environment where the call to \code{assign} takes place.}
   \item{inherits}{should the enclosing frames of the environment be
@@ -29,6 +39,18 @@ assign(x, value, pos = -1, envir = sys.frame(sys.parent()),
 
   If \code{inherits} is \code{FALSE}, assigment takes place in the
   initial frame of \code{envir}.
+
+  The arrow forms of assignment provide shortcut ways to carry out
+  assignment.  The \code{<-} and \code{->} forms carry out assignment
+  in the local environment frame, while the \code{<<-} and \code{->>}
+  forms cause a search to made through the environment for an existing
+  definition of the variable being assigned.  If such a variable is
+  found then its value is redefined, otherwise assignment takes place
+  globally.
+
+  Note that the action of \code{<<-} and \code{->>} differs from
+  that in the S language, but is useful in conjunction with the
+  scoping rules of R.
 }
 \seealso{\code{\link{get}}, \code{\link{environment}}.}
 \examples{
