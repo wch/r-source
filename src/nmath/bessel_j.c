@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka and the R Development Core team.
+ *  Copyright (C) 1998-2000 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ double bessel_j(double x, double alpha)
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	MATHLIB_WARNING4("bessel_j(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
+	MATHLIB_WARNING4("bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n",
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2("bessel_j(%g,nu=%g): precision lost in result\n",

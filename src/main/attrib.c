@@ -159,6 +159,8 @@ void copyMostAttrib(SEXP inp, SEXP ans)
 static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 {
     SEXP s, t;
+    if (vec == R_NilValue)
+	error("attempt to set an attribute on NULL");
     PROTECT(vec);
     PROTECT(name);
     PROTECT(val);

@@ -18,7 +18,7 @@ mingw32 one in your path. (We believe this is solved in gcc-2.95.2,
 but have no way of testing this as we now use NT.)
 
 It is also possible to use earlier mingw32 compilers or cygwin-b20.1
-with the --no-cygwin flag, but we suggest you do so only if you have a
+with the -mno-cygwin flag, but we suggest you do so only if you have a
 working setup from building earlier versions of R. We have also
 successfully used the variant of mingw32 that uses the MSVCRT run-time
 system (under gcc-2.95.x but not earlier versions), and in the case of
@@ -29,7 +29,8 @@ installed.
 (If you want to use cygwin, we suggest you upgrade to gcc-2.95.2 by
 installing the files gcc-2.95.2-cygb20.tar.gz and
 gcc-2.95.2-mingw-extra.tar.gz from
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.  You will
+need to do so to compile Fortran.)
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
@@ -38,21 +39,23 @@ Microsoft HTML Help Workshop, available for download at
 http://msdn.microsoft.com/workshop/author/htmlhelp.
 
 If you want to make Window help files you will need hcrtf.exe from a
-Windows compiler installation (this is available for download at
-ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE), or hcp505.exe.
+Windows compiler installation (this has been available for download at
+ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe), or hcp505.exe.
 
 For large packages it is helpful to make zipped help files: for that
 you need zip from the Info-ZIP project 
 (ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors).
 
 All of these need to be installed and in your path, and the
-appropriate environment variables set.  Edit MkRules to set target and
-the appropriate paths as needed. Then
+appropriate environment variables set.  Edit MkRules to set BUILD and
+the appropriate paths as needed.  (IMPORTANT: if you use cygwin you
+must edit MkRules and set BUILD=CYGWIN.)  Do remember to set MAKE_MODE
+to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
+
+
+Then
 
 	cd RHOME\src\gnuwin32
-
-and run
-
 	make libR.a
 
 which may take several minutes. (We have seen times from 30 secs to 20
@@ -67,9 +70,18 @@ mypkg, in RHOME\src\library, and run
 	make pkg-mypkg
 
 The Makefiles can be customized: in particular the name of the DLL can
-be set (see the line integrate-DLLNM=adapt), the compile flags can
-be set (see the examples in MakeDll) and the types of help (if any) to be
-generated can be chosen (variables HELP and WINHELP).
+be set (for example we once needed integrate-DLLNM=adapt), the compile
+flags can be set (see the examples in MakeDll) and the types of help
+(if any) to be generated can be chosen (variables HELP and WINHELP).
+The simplest way to customize the compilation steps is to set variables in
+a file src/Makevars, which will automatically be included by MakeDLL.
+For example, for RODBC src/Makevars could include the line
+
+DLLLIBS+=-lodbc32
+
+or, equivalently,
+
+RODBC-DLLLIBS=-lodbc32
 
 
 Using zipped help files

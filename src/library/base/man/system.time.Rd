@@ -34,8 +34,8 @@ unix.time(expr)
 #endif
 
   The resolution of the times will be system-specific; it is common for
-  the elapsed time to be recorded to the nearest second, and CPU times
-  to of the order of 1/100 second.
+  them to be recorded to of the order of 1/100 second, and elapsed
+  time is rounded to the nearest 1/100.
 }
 #ifdef unix
 \note{

@@ -1,78 +1,152 @@
 #!/usr/bin/make -f
 # debian/rules file for the Debian GNU/Linux r-base package
-# Copyright 1997-1999 by Douglas M. Bates <bates@stat.wisc.edu>
+# Copyright 1997-2000 by Douglas M. Bates <bates@stat.wisc.edu>
 
-package=r-base
+package		= r-base
+pdfpackage	= r-doc-pdf
+gnomepackage	= r-gnome
 
 debbase		:= $(shell pwd)/debian
 debtmp		:= $(debbase)/tmp
 debdoc		:= $(debtmp)/usr/share/doc/$(package)
 
 # edd 10 Feb 98	See section 4.1 of Policy Manual
-arch 		= $(shell dpkg --print-architecture)-linux
+arch		:= $(shell dpkg --print-architecture)-linux
 
-build:
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+build: build-stamp
+build-stamp:
 	dh_testdir
 	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip\
-	LIBS='-L/usr/lib/atlas'
+	LIBS='-L/usr/lib/atlas'\
 	CFLAGS='-Wall -O2' FFLAGS='-Wall -O2'\
 	PATH=${PATH}:/usr/bin/X11\   # so /usr/bin/X11/imake is found
-	SHLIBLDFLAGS='-shared -lc' ./configure --prefix=/usr 		 \
+	SHLIBLDFLAGS='-shared -lc' ./configure --prefix=/usr		 \
 					--with-g77			 \
 					--mandir=$(debtmp)/usr/share/man \
+					--with-gnome			 \
 					--host $(arch)
 	make 
 	make help
 	make html
+	make info 
+	make pdf
 
-	touch build
+	touch build-stamp
 
 clean:
 	dh_testdir
-	-rm -f build
+	dh_testroot
+	rm -f build-stamp 
 	-make distclean
 	-rm -f `find . -name "*~"`
 	-rm -rf debian/tmp debian/files* core debian/substvars
 	-rm -f doc/html/function.html doc/html/packages.html
+	dh_clean
 
-# Build architecture-independent files here.
-binary-indep: build
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build
+install: DH_OPTIONS=
+install: build
 	dh_testdir
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	make; make check info pdf; make install prefix=`pwd`/debian/tmp/usr
+
+	# Add here commands to install the package into debian/tmp.
+	#$(MAKE) prefix=`pwd`/debian/tmp/usr install
+	make 
+	make check 
+	make install		prefix=`pwd`/debian/tmp/usr
+	make install-pdf	prefix=`pwd`/debian/tmp/usr
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/bin/R
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/lib/R/bin/R
-# remove unneeded license files
-	rm -v $(debtmp)/usr/lib/R/library/base/help/license     	\
-	      $(debtmp)/usr/lib/R/library/base/latex/license.tex	\
-	      $(debtmp)/usr/lib/R/COPYING  
-	dh_installdocs BUGS Y2K 
-	dh_installinfo doc/manual/R-*.info*
-	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
-	(cd $(debdoc) && ln -s ../../../lib/R/library .)
+	# remove unneeded license file
+	rm -v $(debtmp)/usr/lib/R/COPYING  
+
+	# move the pdf files into the arch-indep. package
+	dh_movefiles	-p$(pdfpackage)	usr/lib/R/doc/manual/*.pdf 
+
+	# move the GNOME version to the r-gnome package
+	dh_movefiles	-p$(gnomepackage) usr/lib/R/bin/R.GNOME
+
+# Build architecture-independent files here.
+# Pass -i to all debhelper commands in this target to reduce clutter.
+binary-indep: DH_OPTIONS=-i
+binary-indep: build install
+	# Need this version of debhelper for DH_OPTIONS to work.
+	dh_testversion 1.1.17
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs
+	dh_installexamples
 	dh_installmenu
-	dh_installmanpages re_format.7 regex.3 getline.3
-	dh_installchangelogs NEWS 
-	dh_strip
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+	dh_installcron
+#	dh_installmanpages
+	dh_installinfo
+#	dh_undocumented
+	dh_installchangelogs	NEWS 
+	dh_link
 	dh_compress
 	dh_fixperms
+	# You may want to make some executables suid here.
+#	dh_suidregister
 	dh_installdeb
-	dh_shlibdeps
+#	dh_perl
 	dh_gencontrol
-	dh_makeshlibs
-	dh_md5sums -X'usr/bin/R'  -XLibIndex -Xindex.txt -Xfunction.html -Xpackages.html
+	dh_md5sums
 	dh_builddeb
 
-# Below here is fairly generic really
+# Build architecture-dependent files here.
+# Pass -a to all debhelper commands in this target to reduce clutter.
+binary-arch: DH_OPTIONS=-a
+binary-arch: build install
+	# Need this version of debhelper for DH_OPTIONS to work.
+	dh_testversion 1.1.17
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs		BUGS Y2K 
+	dh_installexamples
+	dh_installmenu
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+	dh_installcron
+	dh_installmanpages	-N$(gnomepackage) -p$(package) getline.3
+	dh_installinfo		-n doc/manual/R-*.info*
+	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
+	(cd $(debdoc) && ln -s ../../../lib/R/library .)
+#	dh_undocumented
+	dh_installchangelogs	NEWS 
+	dh_strip
+	dh_link
+	dh_compress
+	dh_fixperms
+	# You may want to make some executables suid here.
+	dh_suidregister
+	dh_installdeb
+#	dh_makeshlibs
+#	dh_perl
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums		-X'usr/bin/R'  -XLibIndex -Xindex.txt \
+					-Xfunction.html -Xpackages.html
+	dh_builddeb
 
-binary:		binary-indep binary-arch
-
-.PHONY: binary binary-arch binary-indep clean checkroot
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

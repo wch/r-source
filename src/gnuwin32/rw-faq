@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw1000
+Version for rw1001
 Brian Ripley
 
 
@@ -61,7 +61,7 @@ that version. The main R FAQ can be found at
 
 There have been two versions of R for Windows, but only is under active
 development, that described here. It is often called something like
-`rw1000' (although not officially). The information here applies only
+`rw1001' (although not officially). The information here applies only
 to recent versions (`rw0901' or later).
 
 There is also information on the use of R for Windows in the Venables &
@@ -154,9 +154,9 @@ file might contain (as one line)
 2.7 Can I use rwXxxx with ESS and emacs?
 ========================================
 
-Yes. The latest versions of ESS (e.g. 5.1.11) come with support for this
-version of R, and `rw0650' and later have support for interrupting the
-R process from ESS (by `C-c C-c').
+Yes. The latest versions of ESS (e.g. 5.1.13) come with support for this
+version of R, and there is support for interrupting the R process from
+ESS (by `C-c C-c').
 
 For help with ESS, please send email to `ESS-help@stat.ethz.ch', not
 the R mailing lists.
@@ -171,7 +171,7 @@ launched, unless a shortcut was used when it is given by the `Start in'
 field of the shortcut's properties. You can find this from R code by
 the call `getwd()'.
 
-The home directory is set as follows (`rw0650' on):
+The home directory is set as follows:
 If environment variable `R_USER' is set, its value is used.
 Otherwise if environment variable `HOME' is set, its value is used.
 Otherwise if environment variables `HOMEDRIVE' and `HOMEPATH' are set,
@@ -209,8 +209,7 @@ You can install packages anywhere and use the environment variable
 `R_LIBS' to point to the library location(s). You can also set the R
 variable `.lib.loc' in your `.Rprofile' or when running R.
 
-Suppose your packages are in installed in `p:\mylibs'. Then you can
-EITHER
+Suppose your packages are installed in `p:\mylibs'. Then you can EITHER
 
      set R_LIBS to p:\mylibs
 
@@ -225,8 +224,8 @@ OR use a package by, e.g.
 
 How you set an environment variable is system specific: in Windows 9x
 you can set them in autoexec.bat or in an MS-DOS window from which you
-launch `Rgui' / `Rterm'. Under Windows NT you can use the control panel
-or the properties of `My Computer'. You can also set them on the
+launch `Rgui' / `Rterm'. Under Windows NT/2000 you can use the control
+panel or the properties of `My Computer'. You can also set them on the
 command line, for example in the shortcut you could have
 
      path_to_R\bin\rgui.exe --vsize=10M R_LIBS=e:/R/library
@@ -241,8 +240,8 @@ or your home directory, for example
 The order of precedence is the command line (flags before variables)
 then `.Renviron' then the inherited environment.
 
-You can also build packages anywhere, but it is simpler to install a
-private copy of R to do the building.
+You can also build packages from anywhere to anywhere, but may be
+simpler to install a private copy of R to do the building.
 
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================
@@ -414,10 +413,10 @@ scrollbar.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources. Suppose you want to compile R-1.0.0.
+Get the R sources. Suppose you want to compile R-1.0.1.
 
-     tar zxvf R-1.0.0.tgz
-     cd R-1.0.0
+     tar zxvf R-1.0.1.tgz
+     cd R-1.0.1
      cd src\gnuwin32
 
 Now read the `INSTALL' file and set up all the tools needed. Then you
@@ -509,7 +508,7 @@ the DLL by (`gcc-2.95.x')
 or (VC++)
 
      cl /MT /c X.cpp X_R.cpp
-     ink /dll /out:XX.dll /export:X_main X.obj X_R.obj
+     link /dll /out:XX.dll /export:X_main X.obj X_R.obj
 
 and call the entry point(s) in `X_R'.  Construction of static variables
 will occur when the DLL is loaded, and destruction when the DLL is
@@ -520,7 +519,8 @@ unloaded, usually when R terminates.
 
 The `Rgui.exe' console is a Windows application: writing to `stdout' or
 `stderr' will not produce output in the console. (This will work with
-`Rterm.exe'.)  Use `Rprintf' or `REprintf' instead.
+`Rterm.exe'.)  Use `Rprintf' or `REprintf' instead. These are declared
+in header file `R_ext/PrtUtil.h'.
 
 7.5 The output from my Fortran code disappears. Why?
 ====================================================
@@ -531,5 +531,5 @@ the _`Writing R Extensions'_ manual.
 
 
 
-Last edited 2000 February 4 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 2000 April 6 by Brian Ripley <ripley@stats.ox.ac.uk>
 

@@ -19,9 +19,9 @@ FFLAGS=-O2 $(DEBUGFLAG)
 DLLLIBS=-L$(RHOME)/src/gnuwin32  $(FLIBS) -lR 
 
 
-#ifeq ($(PKG),modreg)
-#  FFLAGS+=-ffloat-store
-#endif 
+ifeq ($(PKG),RODBC)
+  DLLLIBS+=-lodbc32
+endif 
 
 
 AA=$(wildcard Makefile)
@@ -30,6 +30,7 @@ ifeq ($(AA),Makefile)
 else
  OBJS=$(filter-out $(OBJS-NO),$(OBJSA))
 endif
+-include Makevars
 
 $(DLLNAME).a: $(OBJS) #
 	$(RM) -f $@

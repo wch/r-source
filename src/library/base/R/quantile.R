@@ -19,7 +19,9 @@ quantile.default <-
 	x <- sort(x, partial = unique(c(lo, hi)))
 	i <- index > lo
 	qs <- x[lo]
-	qs[i] <- qs[i] + (x[hi[i]] - x[lo[i]]) * (index[i] - lo[i])
+        .minus <- function(x,y) ifelse(x == y,    0, x - y)# ok for Inf - Inf
+        .addI  <- function(x,y) ifelse(x == -Inf, x, x + y)# -Inf"+"Inf = -Inf
+	qs[i] <- .addI(qs[i], .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i]))
     } else {
 	qs <- rep(as.numeric(NA), np)
     }

@@ -63,7 +63,7 @@ double pnorm5(double x, double mu, double sigma, int lower_tail, int log_p)
 
     x = (x - mu) / sigma;
     if(!R_FINITE(x)) {
-	if(ISNAN(x)) /* e.g. x=mu=Inf */ return(R_NaN);
+	if(ISNAN(x)) /* e.g. x=mu=Inf */ return(ML_NAN);
 	if(x < 0) return R_DT_0;
 	else return R_DT_1;
     }

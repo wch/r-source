@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 0.99.0 Under development (unstable) (February 7, 2000)
+Version 1.0.0 Patched (February 29, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -23,6 +23,7 @@ Type	"q()" to quit R.
 > ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 > opt.conformance <- 0
 > Meps <- .Machine $ double.eps
+> xMax <- .Machine $ double.xmax
 > options(rErr.eps = 1e-30)
 > rErr <- function(approx, true, eps = .Options$rErr.eps)
 + {
@@ -123,6 +124,16 @@ n= 50 : ......................
 +                 "\n  shape,scale=",formatC(c(sh, sig)),"\n")
 +     }
 + }
+> pgamma(1,Inf,Inf) == 0
+[1] TRUE
+> all(is.nan(c(pgamma(Inf,1,Inf), pgamma(Inf,Inf,1), pgamma(Inf,Inf,Inf))))
+[1] TRUE
+Warning messages: 
+1: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
+2: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
+3: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
+> pgamma(Inf,1,xMax) == 1 && pgamma(xMax,1,Inf) == 0
+[1] TRUE
 > 
 > ##--- Normal (& Lognormal) :
 > 
@@ -158,6 +169,7 @@ n= 50 : ......................
 > 
 > All.eq(pz, plnorm(exp(z)))
 [1] TRUE
+> 
 > 
 > ###==========  p <-> q  Inversion consistency =====================
 > ok <- 1e-5 < pz & pz < 1 - 1e-5
@@ -170,7 +182,6 @@ n= 50 : ......................
 +           "pois","signrank","t","unif","weibull","wilcox")
 > PQonly <- c("tukey")
 > 
-> 
 > ###===== Random numbers -- first, just output:
 > 
 > .Random.seed <- c(0, 17292, 29447, 24113)

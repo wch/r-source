@@ -1206,6 +1206,7 @@ static void NewMakeLists (SEXP obj, SEXP *sym_list, SEXP *env_list)
     case LANGSXP:
     case CLOSXP:
     case PROMSXP:
+    case DOTSXP:
 	NewMakeLists(TAG(obj), sym_list, env_list);
 	NewMakeLists(CAR(obj), sym_list, env_list);
 	NewMakeLists(CDR(obj), sym_list, env_list);
@@ -1310,6 +1311,7 @@ static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
 	case LANGSXP:
 	case CLOSXP:
 	case PROMSXP:
+	case DOTSXP:
 	    /* Dotted pair objects */
 	    NewWriteItem(TAG(s), sym_list, env_list, fp);
 	    NewWriteItem(CAR(s), sym_list, env_list, fp);
@@ -1452,6 +1454,7 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp)
     case LANGSXP:
     case CLOSXP:
     case PROMSXP:
+    case DOTSXP:
 	PROTECT(s = allocSExp(type));
 	TAG(s) = NewReadItem(sym_table, env_table, fp);
 	CAR(s) = NewReadItem(sym_table, env_table, fp);
@@ -1572,7 +1575,7 @@ static void OutStringAscii(FILE *fp, char *x)
             case '\?': fprintf(fp, "\\?");  break;
             case '\'': fprintf(fp, "\\'");  break;
             case '\"': fprintf(fp, "\\\""); break;
-            default  : fprintf(fp, "\\%o", x[i]); break;
+            default  : fprintf(fp, "\\%03o", x[i]); break;
             }
         }
         else fputc(x[i], fp);

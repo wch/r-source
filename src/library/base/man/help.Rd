@@ -38,7 +38,7 @@ help(topic, offline = FALSE, package = .packages()
     version of the help will be shown in a browser.}
   \item{winhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
     \code{.hlp} file will be used if one is available.}
-#endif  
+#endif
 }
 \description{
   These functions provide access to documentation.
@@ -66,7 +66,7 @@ help(topic, offline = FALSE, package = .packages()
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through
   \code{latex} (note that LaTeX 2e is needed). You need to customize
-  the file \file{R\_HOME/bin/helpPRINT.bat} which contains an example.  
+  the file \file{R\_HOME/bin/helpPRINT.bat} which contains an example.
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
 #endif
@@ -86,7 +86,7 @@ help(topic, offline = FALSE, package = .packages()
   \file{latex} directory can be zipped to \file{Rhelp.zip}.
 }
 \seealso{
-  \code{\link{help.search}()} for finding help pages on a `vague' topic.
+  \code{\link{help.search}()} for finding help pages on a ``vague'' topic.
   \code{\link{help.start}()} which opens the HTML version of the \R
   Manual;
   \code{\link{library}()} for listing available packages and the

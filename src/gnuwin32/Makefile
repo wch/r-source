@@ -1,15 +1,16 @@
 include MkRules
 
 HELP=YES
-WINHELP=CHM # NO, CHM, BOTH
+WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
-RPREFIX=rw1000
+RPREFIX=rw1001
+RVER=$(shell cut -d' ' -f1 ../../VERSION)
 
-RHOME=$(shell cd ../..; pwd)# must be absolute path
+RHOME=$(shell cd ../..; perl src/gnuwin32/pwd.pl)# must be absolute path
 RLIB=$(RHOME)/library
 PKGDIR=$(RHOME)/src/library
-PKGD=$(shell cd $(PKGDIR); pwd)# must be absolute path
+PKGD=$(shell cd $(PKGDIR); perl $(RHOME)/src/gnuwin32/pwd.pl)# must be absolute path
 
 ifdef DEBUG
  OPTFLAGS=-g -O2 -Wall
@@ -38,7 +39,7 @@ CFLAGS=$(OPTFLAGS) -I../include -I../include/R_ext -I. -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
-	../include/globalvar.h front-ends COPYRIGHTS
+	../include/globalvar.h front-ends docfiles
 
 rpackage: fixed/fixdesc $(PKGS)
 
@@ -57,8 +58,26 @@ rlibs:
 	$(MAKE) -C ./xdr
 	$(MAKE) -C ./math
 
+
+docfiles: INSTALL COPYRIGHTS FAQs
+SEDVER= -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
+
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
+
+INSTALL: INSTALL.in ../../VERSION
+	$(SED) $(SEDVER) INSTALL.in > INSTALL
+
+FAQs: rw-faq fixed/r/rw-FAQ.html
+
+fixed/r/rw-FAQ.html: rw-FAQ.texi ../../VERSION
+	$(SED) $(SEDVER) $< | \
+	  makeinfo --html --no-headers --number-sections -o $@
+
+rw-faq: rw-FAQ.texi ../../VERSION
+	$(SED) $(SEDVER) $< | \
+	  makeinfo --no-headers --number-sections -o $@
+
 
 fixfiles:
 	$(MKDIR) -p ../../bin 
@@ -188,7 +207,6 @@ cleanwin:
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
 
-
 bindist:
 	$(RM) -rf $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
@@ -207,9 +225,9 @@ bindist:
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
 		../../Y2K $(RPREFIX)
-	$(CP) -p readme $(RPREFIX)/README
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
-#	$(CP) -p Announce $(RPREFIX)/Announce
 	$(CP) -p CHANGES $(RPREFIX)/CHANGES
 	zip docs.zip $(RPREFIX)/*
 	unzip -a -o docs.zip
@@ -262,7 +280,7 @@ packagedist:
 	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll \
-	  maketitle $(RPREFIX)/src/gnuwin32
+	  maketitle pwd.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32

@@ -1,6 +1,8 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--2000  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -97,6 +99,8 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, j,len, nprotect;
     RCNTXT cntxt;
 
+    if (!isNewList(CAR(args))) error("invalid data argument");
+    if (!isNewList(CADR(args))) error("invalid modes argument");
     nprotect = 0;/* count the PROTECT()s */
     PROTECT(indata = VectorToPairList(CAR(args))); nprotect++;
     PROTECT(colmodes = VectorToPairList(CADR(args))); nprotect++;

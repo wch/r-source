@@ -1,12 +1,12 @@
 #-*- Makefile -*-
 .SUFFIXES: .c .f .o .a .def .exp .dll .exe .d
 
-# Alternatives CYGWIN (--no-cygwin), MINGW32 (mingw32 gcc), CROSS (Linux)
+# Alternatives CYGWIN (-mno-cygwin), MINGW32 (mingw32 gcc), CROSS (Linux)
 BUILD=MINGW32
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
-# not requested. No spaces allowed.)
-HHWDIR=C:/PROGRA~1/HTMLHE~1
+# not requested. Spaces allowed.)
+HHWDIR=C:/Program Files/HTML Help Workshop
 
 ifeq ($(strip $(BUILD)),CYGWIN)
 BINPREF=

@@ -447,3 +447,9 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+void Rwin_fpset()
+{
+    _fpreset();
+    _controlfp(_MCW_EM, _MCW_EM);    
+}
+

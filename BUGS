@@ -29,7 +29,26 @@ none
 
 Directory:  Add-ons
 
-none
+* PR# 503 *
+Subject: dmvnorm() bug in e1071
+From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
+Date: Fri, 24 Mar 2000 03:24:45 +0000 (GMT)
+* PR# 496 *
+From: bonneau@epi.roazhon.inra.fr (en148)
+Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
+--base R has no est.variogram function.
+--This appears to be a bug report on sgeostat.
+* PR# 488 *
+Subject: Error in lme?
+From: simon.frost@ed.ac.uk
+Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
+--No example to reproduce this.
+* PR# 471 *
+Subject:  Problems with nlme 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Tue, 7 Mar 2000 15:28:00 +0800
+--Problem 1) was a subscripting bug introduced in 1.0.0 and fixed for 1.0.1
+--Problem 2) (mssing datasets) needs a revised nlme
 
 Directory:  Analyses
 
@@ -37,10 +56,17 @@ none
 
 Directory:  Documentation
 
-none
+* PR# 497 *
+Subject: par help wrong: xlog & ylog
+From: wsi@gcal.ac.uk
+Date: Tue, 21 Mar 2000 14:57:57 +0100 (MET)
 
 Directory:  Graphics
 
+* PR# 512 *
+Subject: x11 colortype problems ('gray' is broken?)
+From: Thomas J Vogels <tov@ece.cmu.edu>
+Date: 07 Apr 2000 11:53:39 -0400
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -48,18 +74,28 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 400 *
-Subject: X11 troubles
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 13 Jan 2000 14:31:42 +0100
---a) We don't handle multiple window closes well
---b) X11 errors should be caught by an error handler, not kill R
 * PR# 414 *
 Subject:  graphics bugs: steep slopes and large values beyond ylim 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Mon, 7 Feb 2000 18:28:04 -0500
 --Followup on R-devel showed this was due to generating integer coordinates 
 --outside +/- 2^15 in the X11 driver.
+* PR# 400 *
+Subject: X11 troubles
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 13 Jan 2000 14:31:42 +0100
+--a) We don't handle multiple window closes well
+--b) X11 errors should be caught by an error handler, not kill R
+* PR# 510 *
+Subject:  Strange behaviour of image 
+From: J.C.Rougier@durham.ac.uk
+Date: Thu, 6 Apr 2000 19:15:19 +0100 (BST)
+--At least an inaccurate description.
+--To be changed (with a back-compatibility option) in 1.1.0
+* PR# 495 *
+Subject: barplot
+From: skala@incoma.cz
+Date: Tue, 21 Mar 2000 09:20:33 +0100 (MET)
 
 Directory:  In-Out
 
@@ -67,21 +103,42 @@ none
 
 Directory:  Installation
 
-none
+* PR# 485 *
+Subject: Install R1.0.0
+From: Lynn Zhang <lyzhang@umich.edu>
+Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
+* PR# 478 *
+Subject: Conditional for XDR code left out in saveload.c
+From: hoffmann@ehmgs2.et.tu-dresden.de
+Date: Thu, 9 Mar 2000 09:43:01 +0100 (MET)
+--This seems to be a harmless warning, not an error.
+* PR# 467 *
+Subject: Re: [R] Re: R-1.0.0 is released
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 01 Mar 2000 20:26:40 +0100
+--followup to PR#466
+* PR# 466 *
+Subject: Re: R-1.0.0 is released
+From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
+Date: 01 Mar 2000 16:00:54 +0100
 
 Directory:  Language
 
-* PR# 408 *
-Subject: convolution bug
-From: wsimpson@gcal.ac.uk
-Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 06 Feb 2000 01:18:50 +0100
+* PR# 408 *
+Subject: convolution bug
+From: wsimpson@gcal.ac.uk
+Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 
 Directory:  Low-level
 
+* PR# 505 *
+Subject: interrupted save 
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 * PR# 391 *
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
@@ -98,10 +155,19 @@ none
 
 Directory:  Startup
 
-none
+* PR# 486 *
+Subject: Re: autoload error in profile {was anova-bug in R-version  1.0.0?}
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
+--workaround to the origin problem in 1.0.1
+--New report: try does not work from the profile.
 
 Directory:  System-specific
 
+* PR# 490 *
+Subject: R-1.0.0 on alpha/osf1 memory glitch
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Fri, 17 Mar 2000 11:25:30 +1300 (NZDT)
 * PR# 452 *
 Subject: problem with glm
 From: Brad McNeney <mcneney@cs.sfu.ca>

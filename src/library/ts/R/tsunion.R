@@ -53,7 +53,7 @@ cbind.ts <- function(..., dframe = FALSE, union = TRUE)
         tsps <- sapply(sers, tsp)
     }
     if(dframe) {
-        x <- vector("list", n)
+        x <- vector("list", nser)
         names(x) <- nmsers
     } else {
         ns <- sum(nsers)

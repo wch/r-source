@@ -10,5 +10,5 @@ $(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*.R
 	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
 	@$(SED) -e s/@PKG@/$(PKG)/ -e s+@RLIB@+$(RLIB)+ \
 	  $(RHOME)/src/gnuwin32/check/makeRex.R > MakeRex.R
-	@$(RHOME)/bin/rterm  --quiet --vanilla < makeRex.R > nul
+	@$(RHOME)/bin/Rterm  --quiet --vanilla < makeRex.R > nul
 	@$(RM) makeRex.R

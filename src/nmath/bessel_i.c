@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka and the R Development Core team.
+ *  Copyright (C) 1998-2000 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ double bessel_i(double x, double alpha, double expo)
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */
 	if(ncalc < 0)
-	    MATHLIB_WARNING4("bessel_i(%g): ncalc (=%d) != nb (=%d); alpha=%g."
+	    MATHLIB_WARNING4("bessel_i(%g): ncalc (=%ld) != nb (=%ld); alpha=%g."
 			     " Arg. out of range?\n",
 			     x, ncalc, nb, alpha);
 	else
