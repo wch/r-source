@@ -11,7 +11,7 @@ help <- function(topic, offline = FALSE, package = .packages(),
         if (is.name(y <- substitute(package)))
             package <- as.character(y)
     if (!missing(topic)) {
-        ischar<-try(is.character(topic))
+        ischar<-try(is.character(topic), silent=TRUE)
         if (inherits(ischar, "try-error")) ischar<-FALSE
         if (!ischar) topic <- deparse(substitute(topic))
         # for cmd/help ..
