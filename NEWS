@@ -186,6 +186,12 @@ NEW FEATURES
 	ahead of netscape.
 
 
+PACKAGE INSTALLATION CHANGES
+
+    o	A package DESCRIPTION file which contains a Built field (it
+	should not!) is now worked around, with loud warnings.
+
+
 BUG FIXES
 
     o	split() was accepting raw and list vectors as input, but

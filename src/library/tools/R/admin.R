@@ -21,6 +21,14 @@ function(dir, outDir)
     }
 
     db <- .read_description(file.path(dir, "DESCRIPTION"))
+    ## should not have a Built: field, so ignore it if it is there
+    nm <- names(db)
+    if("Built" %in% nm) {
+        db <- db[-match("Built", nm)]
+        warning("*** someone has corrupted the Built field in package ",
+                sQuote(db["Package"]), " ***", call.=FALSE)
+    }
+
     OS <- Sys.getenv("R_OSTYPE")
     OStype <- if(nchar(OS) && OS == "windows")
         "i386-pc-mingw32"
@@ -64,9 +72,15 @@ function(db)
 {
     if(!is.na(Built <- db["Built"])) {
         Built <- as.list(strsplit(Built, "; ")[[1]])
-        names(Built) <- c("R", "Platform", "Date", "OStype")
-        Built[["R"]] <- package_version(sub("^R ([0-9.]+)", "\\1",
-                                            Built[["R"]]))
+        if(length(Built) != 4) {
+            warning("*** someone has corrupted the Built field in package ",
+                    sQuote(db["Package"]), " ***", call.=FALSE)
+            Built <- NULL
+        } else {
+            names(Built) <- c("R", "Platform", "Date", "OStype")
+            Built[["R"]] <- package_version(sub("^R ([0-9.]+)", "\\1",
+                                                Built[["R"]]))
+        }
     } else Built <- NULL
     ## might perhaps have multiple entries
     Depends <- .split_dependencies(db[names(db) %in% "Depends"])
