@@ -428,34 +428,6 @@ Date: Tue, 13 Apr 2004 01:45:28 +0200 (CEST)
 Subject: postscript image problem
 From: jonathan_lees@unc.edu
 Date: Tue, 13 Apr 2004 23:38:56 +0200 (CEST)
-* PR# 6776 *
-Subject: barplot() does not draw bars correctly in R 1.9.0
-From: "Philippe Grosjean" <phgrosjean@sciviews.org>
-Date: Fri, 16 Apr 2004 11:40:00 +0200
-* PR# 6777 *
-Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
-From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
-Date: Fri, 16 Apr 2004 15:44:52 +0200
-..part of 6776
-* PR# 6778 *
-Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
-From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
-Date: Fri, 16 Apr 2004 16:53:03 +0200
-..part of 6776
-* PR# 6894 *
-Subject: plot.factor does not work properly
-From: x.sole@iconcologia.catsalut.net
-Date: Tue, 18 May 2004 16:46:21 +0200 (CEST)
-* PR# 6947 *
-Subject: Re: [R] Printing Lattice Graphs from Windows
-From: Spencer Graves <spencer.graves@pdf.com>
-Date: Sun, 06 Jun 2004 13:32:00 -0700
-..An intermittent bug in copying displaylists in grid graphics in 1.9.x
-* PR# 6948 *
-Subject: Re: [R] Printing Lattice Graphs from Windows
-From: Spencer Graves <spencer.graves@pdf.com>
-Date: Sun, 06 Jun 2004 14:02:12 -0700
-..A not very relevant comment on PR#6947
 
 Directory:  In-Out
 
@@ -889,6 +861,10 @@ From: martin.noellenburg@stud.uni-karlsruhe.de
 Date: Mon,  5 Apr 2004 17:51:13 +0200 (CEST)
 ..This is saving from the windows() device menu.
 ..Not reproducible
+* PR# 6955 *
+Subject: strange apparently data-dependent crash with large data
+From: Tony Plate <tplate@blackmesacapital.com>
+Date: Mon, 07 Jun 2004 10:57:26 -0600
 
 Directory:  incoming
 
@@ -909,15 +885,3 @@ Date: Fri, 21 May 2004 15:04:10 +0100
 Subject: a fault in the "hist" - function
 From: stephanschlueter@gmx.de
 Date: Wed,  2 Jun 2004 11:34:00 +0200 (CEST)
-* PR# 6953 *
-Subject: WINNING NOTIFICATION !!!
-From: joyce_vandersar@telstra.com
-Date: Mon, 07 Jun 2004 13:54:47 +0200
-* PR# 6954 *
-Subject: 
-From: "Tasha Bruner" <Deloresvd@surfinbox.com>
-Date: Mon, 07 Jun 2004 22:28:44 +0500
-* PR# 6955 *
-Subject: strange apparently data-dependent crash with large data
-From: Tony Plate <tplate@blackmesacapital.com>
-Date: Mon, 07 Jun 2004 10:57:26 -0600
