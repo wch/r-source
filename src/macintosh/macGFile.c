@@ -416,4 +416,3 @@ OSErr DoSelectDirectory( void )
 		
 	return theErr;
 }
-
