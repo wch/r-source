@@ -68,6 +68,40 @@ at http://www.merzwaren.com/waste/#legalese as follows:
     respect to this license, whereas shareware costing more than $10 is
     treated as commercial software.
 
+The WASTE DOCUMENTATION version 1.3 (a PDF file) says:
+
+    I, Marco Piovanelli, retain all rights on the library and on the
+    original source code.
+
+    You expressly acknowledge and agree that use of this software is at
+    your sole risk. This software and the related documentation are
+    provided AS IS and without warranty of any kind, express or implied,
+    including, but not limited to, the implied warranties of
+    merchantability and fitness for a particular purpose. Under no
+    circumstances including negligence, shall I be liable for any
+    incidental, special or consequential damages that result from the use
+    or inability to use the software or related documentation, even if
+    advised of the possibility of such damages.
+
+    You give me credit in your program s about box and/or in the printed
+    documentation (if any), by including the following line: 
+
+	    WASTE text engine © 1993-1998 Marco Piovanelli
+
+    You notify me that you are using my code. This allows me to keep the
+    list of WASTE-using programs up-to-date.
+
+    I have the right to request one complimentary copy of the finished
+    product, either electronically or by postal mail. For shareware and
+    commercial programs, this means that I get a fully registered copy of
+    the complete package. This item does not apply to in-house
+    applications.
+
+    The WASTE 1.3 package can be freely distributed in electronic form on
+    computer networks. It cannot, however, be distributed by other means
+    (such as in printed form, on magnetic media or on CD-ROM) without
+    permission from the author.
+
 Regretably, we are at present unable to ascertain which version of
 WASTE the following files came from:
 
@@ -103,3 +137,7 @@ waste/WEObjectHandlers.[ch]
 
 	Copyright © 1993-2000 Marco Piovanelli
 	All Rights Reserved
+
+Until these issues are clarified, users should assume that the
+more restrictive of the two WASTE licences applies to any use of the
+WASTE-derived files.
