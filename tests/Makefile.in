@@ -69,7 +69,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	nanbug.rda
 SUBDIRS = Embedding Examples Native
 
-R = LC_ALL=C SRCDIR=$(srcdir) $(top_builddir)/bin/R --vanilla
+R = LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
 
 test-out-strict = $(test-src-strict:.R=.Rout)
