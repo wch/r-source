@@ -45,6 +45,9 @@ NEW FEATURES
     o	barplot.default() has new `axisnames' (and `sub') arguments, easily
 	allowing suppression of bar labeling.
 
+    o   predict.{g}lm has a type="terms" option, and residual.glm has
+	type="partial" as a step towards plot.gam()
+
 
 BUG FIXES
 
