@@ -148,7 +148,9 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun, R_RegisteredNativeSymbol *symbol, 
 	    if(!fun) {
 		errorcall(call, "cannot resolve native routine");
 	    }
-	} else if (!(*fun = R_FindSymbol(buf, dll.DLLname, symbol))) {
+	} 
+
+	if (!*fun && !(*fun = R_FindSymbol(buf, dll.DLLname, symbol))) {
 	    if(strlen(dll.DLLname))
 		errorcall(call, "%s function name not in DLL for package %s",
 			   symbol->type == R_FORTRAN_SYM ? "Fortran" : "C", 
