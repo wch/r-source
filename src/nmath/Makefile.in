@@ -46,9 +46,10 @@ SOURCES = \
 	signrank.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
+HEADERS = dpq.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in $(SOURCES)
+DISTFILES = Makefile.in Makefile.win $(SOURCES) $(HEADERS)
 
 LIB = libmath.a
 
