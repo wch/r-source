@@ -111,6 +111,15 @@ BUG FIXES
     o	Empty expressions as in return(x,) could generate subsequent
 	segfaults: they are now errors.  (PR#2880)
 
+    o   The Kinderman-Ramage Normal Random Generator had several
+        problems leading to not-quite normally distributed variates 
+        (PR#2846). One problem was traced to an error in the original 
+        1976 JASA paper! Thanks to Josef Leydold and his team for 
+        investigating this. The old generator has been retained for
+        reproducibility of older results, under the name 
+        "Buggy Kinderman-Ramage". A warning is issued if you select it 
+        (also indirectly via RNGversion()).
+
 
 
 		CHANGES IN R VERSION 1.7.0
