@@ -10,7 +10,7 @@
 data.matrix(frame)
 }
 \arguments{
-  \item{frame}{a data frame whose components are either logical vectors,
+  \item{frame}{a data frame whose components are logical vectors,
     factors or numeric vectors.}
 }
 \seealso{

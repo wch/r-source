@@ -36,8 +36,14 @@ is.matrix(x)
   \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix (i.e., it
   is \emph{not} a \code{\link{data.frame}} and has a \code{\link{dim}}
   attribute of length 2) and \code{FALSE} otherwise.
+
+  \code{as.matrix} is a generic function. The method for data frames
+  will convert any non-numeric column into a character vector using
+  \code{\link{format}} and so return a character matrix. 
 }
-\seealso{\code{\link{data.matrix}}.}
+\seealso{
+  \code{\link{data.matrix}}, which attempts to convert to a numeric matrix.
+}
 \examples{
 is.matrix(as.matrix(1:10))
 data(warpbreaks)
