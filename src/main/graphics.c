@@ -3581,7 +3581,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
     if(' ' <= pch && pch <= 255) {
 	if (pch == '.') {
 	    GConvert(&x, &y, coords, DEVICE, dd);
-	    GRect(x-.5, y-.5, x+.5, y+.5, DEVICE, NA_INTEGER, dd->gp.col, dd);
+	    GRect(x-.5, y-.5, x+.5, y+.5, DEVICE, dd->gp.col, NA_INTEGER, dd);
 	} else {
 	    str[0] = pch;
 	    str[1] = '\0';
