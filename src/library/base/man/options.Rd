@@ -23,7 +23,10 @@ options(\dots)
 \item{editor}{sets the default text editor, e.g., for \code{\link{edit}}.}
 \item{browser}{default HTML browser used by \code{\link{help.start}()}.}
 \item{contrasts}{the default \code{\link{contrasts}} used in model
-    fitting such as with \code{\link{aov}} or \code{\link{lm}}.}
+    fitting such as with \code{\link{aov}} or \code{\link{lm}}.  A
+    character vector of length two, the first giving the function to be
+    used with unordered factors and the second the function to be used
+    with ordered factors.}
 \item{expressions}{sets a limit on the number of nested expressions that
   will be evaluated.  This is especially important on the Macintosh
   since stack overflow is likely if this is set too high.}
@@ -95,6 +98,9 @@ old.o
 options(op)     # reset (all) initial options
 options('digits')
 
+\dontrun{## set contrast handling to be like S
+options(contrasts=c("contr.helmert", "contr.poly"))
+}
 \dontrun{## on error, terminate the R session with error status 66
 options(error=quote(q("no", status=66, runLast=FALSE)))
 stop("test it")
