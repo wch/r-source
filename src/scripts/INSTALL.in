@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.122 $'
+revision='$Revision: 1.123 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -76,6 +76,7 @@ NO_PERL5_MSG="\
 *** get the PDF reference manual from the nearest CRAN server.
 *** The CRAN master site can be found at
 ***    http://cran.r-project.org/"
+startdir=`${GETWD}`
 tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
 
 : ${R_OSTYPE=unix}
@@ -149,6 +150,8 @@ with_package_versions=false
 save="CHECK"
 save_args="--no-site-file --no-init-file";
 
+safe=yes
+
 while test -n "${1}"; do
   case ${1} in
     -h|--help)
@@ -211,16 +214,16 @@ while test -n "${1}"; do
 	## than the modification date for the new sources as recorded in
 	## the tarball ...
 	gzip -dc "${1}" | (cd "${tmpdir}" && tar -mxf -)
-	if test -d "${tmpdir}/${pkgname}"; then
+	if test -f "${tmpdir}/${pkgname}/DESCRIPTION"; then
 	  get_packages "${tmpdir}/${pkgname}"
 	else
 	  echo "ERROR: cannot extract package from '${1}'"
 	  exit 1
 	fi    
-      elif test -d "${1}"; then
+      elif test -f "${1}/DESCRIPTION"; then
         get_packages "${1}"
       else
-	echo "WARNING: package '${1}' does not exist"
+	echo "WARNING: invalid package '${1}'"
       fi
       ;;
   esac
@@ -237,6 +240,19 @@ if test -d "${lib}" -a -w "${lib}" || mkdir "${lib}" 2> /dev/null; then
 else
   echo "ERROR: cannot write to or create directory '${lib}'"
   exit 2
+fi
+lockdir="${lib}/00LOCK"
+if test -e "${lockdir}"; then
+  echo "ERROR: failed to lock directory '${lib}' for modifying"
+  echo "Try removing '${lockdir}'"
+  exit 3
+else
+  mkdir -p "${lockdir}"
+  if test ${?} -ne 0; then
+    ## This should not really happen ...
+    echo "ERROR: failed to lock directory '${lib}' for modifying"
+    exit 3
+  fi
 fi
 
 if ${build_text}; then
@@ -292,19 +308,29 @@ do_install_source () {
     message "Installing *source* package '${pkg}' ..."
   else
     message "Installing *source* package '${pkg}' as '${R_PACKAGE_NAME}' ..."
-  fi  
+  fi
+
   stars="**"
 
-  if test -f DESCRIPTION; then :; else
-    echo "ERROR: no DESCRIPTION file found"
-    exit 1
-  fi 
+  if test "${safe}" = yes; then
+    if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
+      ## Back up previous version.
+      mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
+      ## Preserve man pages to speed up installation?  Only makes sense
+      ## if we install from a non-temporary directory.
+      if test `dirname "${pkg}"` = "${tempdir}"; then :; else
+        mkdir -p "${R_PACKAGE_DIR}"
+        (cd "${lockdir}/${R_PACKAGE_NAME}" && tar cf - R-ex help html latex) |
+	  (cd "${R_PACKAGE_DIR}" && tar xf -)
+      fi
+    fi
+  fi
 
   if ${use_configure} && test -x ./configure ; then
     eval ${configure_vars} ./configure ${configure_args}
     if test ${?} -ne 0; then
       echo "ERROR: configuration failed for package '${pkg}'"
-      exit 4
+      do_exit_on_error
     fi
   fi
 
@@ -347,7 +373,7 @@ do_install_source () {
     fi
     if ${error}; then
       echo "ERROR: compilation failed for package '${pkg}'"
-      exit 5
+      do_exit_on_error
     fi
     if ${debug}; then set +x; fi
   fi
@@ -420,7 +446,7 @@ do_install_source () {
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     echo "ERROR: installing package DESCRIPTION failed"
-    exit 1
+    do_exit_on_error
   fi
 
   if ${R_SAVE_IMAGE}; then
@@ -451,7 +477,7 @@ do_install_source () {
       ${code_cmd}) | ${R_SAVE_EXE} ${save_args}
     if test ${?} -ne 0; then
       echo "ERROR: execution of package source for '${pkg}' failed"
-      exit 1
+      do_exit_on_error
     fi
     if test ! -f NAMESPACE; then
         mv .RData ${rda_file}
@@ -489,11 +515,8 @@ do_install_source () {
 	  ${build_help_opts} "../${pkg}" "${lib}" "${R_PACKAGE_DIR}"
 	if test ${?} -ne 0; then
 	  echo "ERROR: building help failed for package '${pkg}'"
-	  exit 6
+	  do_exit_on_error
         fi
-	if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
-	  ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
-	fi
       fi
       if test -n "${use_zip_help}" \
 	  -a -n "${R_UNZIPCMD}" \
@@ -519,7 +542,7 @@ do_install_source () {
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     echo "ERROR: installing package indices failed"
-    exit 1
+    do_exit_on_error
   fi
 
   ## <FIXME>
@@ -577,19 +600,19 @@ do_install () {
       if test ${dep_ok} -eq 0; then
         echo "ERROR: This R is version ${R_VERSION}"
         echo "       package '${pkg}' depends on R ${dep_version}"
-        exit 1;
+        do_exit_on_error;
       fi
     else
       echo "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
     fi
   fi
 
-  mkdir -p "${R_PACKAGE_DIR}" || exit 2
+  mkdir -p "${R_PACKAGE_DIR}" || do_exit_on_error no
 
   ## Make sure we do not attempt installing to srcdir.
   if test "`cd \"${R_PACKAGE_DIR}\" && ${GETWD}`" = "`${GETWD}`"; then
     echo "ERROR: cannot install to srcdir"
-    exit 3
+    do_exit_on_error no
   fi  
 
   ## Figure out whether this is a source or binary package.
@@ -623,38 +646,58 @@ do_install () {
 
   chmod -R a+r "${R_PACKAGE_DIR}"
 
-  ## <FIXME>
-  ## This is really something we should do once at the end, and not for
-  ## each package.  However, attempting to install a package can result
-  ## in a non-local exit without any cleanups ...
-  if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
-    cat "${R_HOME}"/library/*/CONTENTS \
-      > "${R_HOME}"/doc/html/search/index.txt
-  fi
-  ## </FIXME>
-
   message "DONE (${pkg})"
   echo
 }
 
 ### 
-### Main loop and cleanup.
+### Exit and cleanup.
 
-startdir=`${GETWD}`
+do_exit_on_error () {
+  remove_R_package_dir=${1-yes}
+  if test "${remove_R_package_dir}" = yes; then
+    message "Removing '${R_PACKAGE_DIR}'"
+    rm -rf "${R_PACKAGE_DIR}"
+  fi
+  if test "${safe}" = yes; then
+    if test -d "${lockdir}/${R_PACKAGE_NAME}"; then
+      message "Restoring previous '${R_PACKAGE_DIR}'"
+      mv "${lockdir}/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}"
+    fi
+  fi
+  do_cleanup
+  exit 1
+}
+
+do_cleanup () {
+  ## Solaris will not remove any directory in the current path
+  cd "${startdir}"
+  if test -d "${tmpdir}"; then
+    rm -rf "${tmpdir}"
+  fi
+
+  ## <NOTE>
+  ## In theory, we should only do this in case we successfully installed
+  ## at least *one* package ...
+  cp "${R_HOME}/doc/html/R.css" "${lib}"
+  if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
+    cat "${R_HOME}"/library/*/CONTENTS \
+      > "${R_HOME}"/doc/html/search/index.txt
+    if ${build_help} && test "${NO_PERL5}" = "false"; then
+      ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
+    fi
+  fi
+
+  rm -rf "${lockdir}"
+}
+
+### 
+### Main loop.
+
 eval "for pkg in ${pkgs}; do do_install \"\${pkg}\"; done"
-
-cp "${R_HOME}/doc/html/R.css" "${lib}"
-
-## Solaris will not remove any directory in the current path
-cd "${startdir}"
-if test -d "${tmpdir}"; then
-  rm -rf "${tmpdir}"
-fi
-
-message "DONE (INSTALL)"
+do_cleanup
 
 ### Local Variables: ***
 ### mode: sh ***
 ### sh-indentation: 2 ***
 ### End: ***
-
