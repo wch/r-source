@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-13, 2002-02-01
+@set FAQ-VERSION 1.4-14, 2002-02-08
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -419,11 +419,11 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c
 @c debian   2.2 i386  1.3.1  Dirk Eddelbuettel <edd@debian.org>
 @c          3.0 i386  1.4.1  Dirk Eddelbuettel <edd@debian.org>
-@c linuxppc 5.0 ppc   1.4.0  Alex Buerkle <buerkla@uwec.edu>
+@c linuxppc 5.0 ppc   1.4.1  Alex Buerkle <buerkla@uwec.edu>
 @c mandrake 7.x i386  1.3.0  Maximino Ameneiro Gomez <maximino.ameneiro@metropoli2000.com>
-@c          8.1 i386  1.4.0  Michele Alzetta <mikalzet@libero.it>
-@c redhat   6.x i386  1.4.0  Stephen Eglen <stephen@gnu.org>
-@c          7.x alpha 1.4.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c          8.1 i386  1.4.1  Michele Alzetta <mikalzet@libero.it>
+@c redhat   6.x i386  1.4.1  Stephen Eglen <stephen@gnu.org>
+@c          7.x alpha 1.4.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.4.1  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.2 i386  1.3.0  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
@@ -1498,6 +1498,10 @@ Provides methods for accessing data stored in PostgreSQL tables.
 @item RSQLite
 Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R.
+@item RadioSonde
+A collection of programs for reading and plotting SKEW-T,log p diagrams
+and wind profiles for data collected by radiosondes (the typical weather
+balloon-borne instrument).
 @item RandomFields
 Creating random fields using various methods.
 @item RmSQL
@@ -1672,6 +1676,10 @@ Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
 @c  @item integrate
 @c  Adaptive quadrature in up to 20 dimensions.
+@item lasso2
+Routines and documentation for solving regression problems while
+imposing an L1 constraint on the estimates, based on the algorithm of
+Osborne et al.@: (1998)
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @item leaps
