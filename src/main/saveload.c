@@ -224,7 +224,7 @@ static SEXP AsciiLoadOld(FILE *fp, int version)
 
 /* ----- L o w l e v e l -- X D R -- I / O ----- */
 
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
 
 #include <rpc/rpc.h>
 
@@ -291,7 +291,7 @@ static SEXP XdrLoad(FILE *fp)
     InTerm = XdrInTerm;
     return DataLoad(fp);
 }
-#endif
+#endif /* HAVE_XDR */
 
 
 /* ----- L o w l e v e l -- B i n a r y -- I / O ----- */
@@ -677,7 +677,7 @@ static SEXP ConvertEnvironment(SEXP env)
     }
     return env;
 }
-#endif
+#endif /* NOTYET */
 
 static SEXP ConvertPairToVector(SEXP obj)
 {
@@ -716,7 +716,7 @@ static SEXP ConvertPairToVector(SEXP obj)
 #else
 /* The line below requires an ANSI C preprocessor (stringify operator) */
 #define R_assert(e) ((e) ? (void) 0 : error("assertion `%s' failed: file `%s', line %d\n", #e, __FILE__, __LINE__))
-#endif
+#endif /* NDEBUG */
 
 
 static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp);
@@ -1393,7 +1393,7 @@ static SEXP NewBinaryLoad(FILE *fp)
     return NewDataLoad(fp);
 }
 
-#ifndef HAVE_RPC_XDR_H
+#ifndef HAVE_XDR
 static void OutIntegerBinary(FILE *fp, int i)
 {
     if (fwrite(&i, sizeof(int), 1, fp) != 1)
@@ -1432,11 +1432,11 @@ static void NewBinarySave(SEXP s, FILE *fp)
     OutTerm = DummyTerm;
     NewDataSave(s, fp);
 }
-#endif /* not HAVE_RPC_XDR_H */
+#endif /* not HAVE_XDR */
 
 /* ----- L o w l e v e l -- X D R -- I / O ----- */
 
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
 
 static void InInitXdr(FILE *fp)
 {
@@ -1565,7 +1565,7 @@ static SEXP NewXdrLoad(FILE *fp)
     InTerm = InTermXdr;
     return NewDataLoad(fp);
 }
-#endif /* HAVE_RPC_XDR_H */
+#endif /* HAVE_XDR */
 
 
 /* ----- F i l e -- M a g i c -- N u m b e r s ----- */
@@ -1624,13 +1624,13 @@ void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 	R_WriteMagic(fp, R_MAGIC_ASCII_V1);
 	NewAsciiSave(obj, fp);
     } else {
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
 	R_WriteMagic(fp, R_MAGIC_XDR_V1);
 	NewXdrSave(obj, fp);
 #else
 	R_WriteMagic(fp, R_MAGIC_BINARY_V1);
 	NewBinarySave(obj, fp);
-#endif
+#endif /* HAVE_XDR */
     }
 }
 
@@ -1638,10 +1638,10 @@ SEXP R_LoadFromFile(FILE *fp, int startup)
 {
     DLstartup = startup; /* different handling of errors */
     switch(R_ReadMagic(fp)) {
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
     case R_MAGIC_XDR:
 	return(XdrLoad(fp));
-#endif
+#endif /* HAVE_XDR */
     case R_MAGIC_BINARY:
 	return(BinaryLoad(fp));
     case R_MAGIC_ASCII:
@@ -1654,10 +1654,10 @@ SEXP R_LoadFromFile(FILE *fp, int startup)
 	return(NewAsciiLoad(fp));
     case R_MAGIC_BINARY_V1:
 	return(NewBinaryLoad(fp));
-#ifdef HAVE_RPC_XDR_H
+#ifdef HAVE_XDR
     case R_MAGIC_XDR_V1:
 	return(NewXdrLoad(fp));
-#endif
+#endif /* HAVE_XDR */
     default:
 	fclose(fp);
 	error("restore file corrupted -- no data loaded");
@@ -1739,7 +1739,7 @@ static void R_LoadSavedData(FILE *fp, SEXP aenv)
 #else
         defineVar(TAG(a), ConvertPairToVector(CAR(a)), aenv);
         a = CDR(a);
-#endif
+#endif /* OLD */
     }
     UNPROTECT(1);
 }
