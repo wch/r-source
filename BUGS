@@ -366,3 +366,11 @@ Date: Tue, 18 Dec 2001 11:10:41 +0100 (CET)
 Subject: isoMDS: core dump
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Tue, 18 Dec 2001 11:16:49 +0100 (CET)
+* PR# 1222 *
+Subject: configure: sed: Function s%@PDFLATEX@%/usr/local/bin/pdflatex%g
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Thu, 20 Dec 2001 14:09:42 +0100 (CET)
+* PR# 1223 *
+Subject: [±¤ °?] ?????ü?­???? µ???, ???¦?? ???­
+From: "????????" <pao@hellotel.co.kr>
+Date: Thu, 20 Dec 2001 23:05:42 +0900
