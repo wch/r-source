@@ -16,6 +16,8 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
 	   1 - approx / true, # relative error
 	   true - approx)     # absolute error (e.g. when true=0)
 }
+## Short cut:
+All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 1e-14)
 
 if(!interactive())
     .Random.seed <- c(0,rep(7654, 3))
@@ -31,7 +33,7 @@ for(n in rpois(5, lam=6))
         fx <- dwilcox(x, n, m)
         Fx <- pwilcox(x, n, m)
         is.sym <- is.sym & all(fx == dwilcox(x, m, n))
-        eq <- all.equal(Fx, cumsum(fx), tol= 1e-14)
+        eq <- All.eq(Fx, cumsum(fx))
         if(!is.logical(eq) || !eq) print(eq)
     }
 is.sym
@@ -83,8 +85,7 @@ for(sh in round(rlnorm(30),2)) {
         if(!(is.logical(tst) && tst))
             cat("ERROR: dgamma() doesn't scale:",tst,"\n",
                 "  x =", formatC(x),"\n  shape,scale=",formatC(c(sh, sig)),"\n")
-        tst <- all.equal(d1, (d3 <- 1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig)),
-                         tol= 1e-14)
+        tst <- All.eq(d1, (d3 <- 1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig)))
         if(!(is.logical(tst) && tst))
             cat("NOT Equal:",tst,"\n x =", formatC(x),
                 "\n  shape,scale=",formatC(c(sh, sig)),"\n")
@@ -102,13 +103,13 @@ z <- c(-Inf,Inf,NA,NaN, rt(1000, df=2))
 zsml <- z > -37.5 || !is.finite(z)
 for(df in 1:10) if(!is.logical(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
     cat("ERROR -- df = ", df, "\n")
-all.equal(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE), tol= 1e-14)
-all.equal(pz,               pnorm(-z, lower=FALSE),  tol= 1e-14)
-all.equal(log(pz[zsml]),  pnorm(z[zsml], log=TRUE),  tol= 1e-14)
+All.eq(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE))
+All.eq(pz,               pnorm(-z, lower=FALSE))
+All.eq(log(pz[zsml]),  pnorm(z[zsml], log=TRUE))
 y <- seq(-70,0, by = 10)
 cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE))
 
-all.equal(pz, plnorm(exp(z)), tol = 1e-14)
+All.eq(pz, plnorm(exp(z)))
 
 ###==========  p <-> q  Inversion consistency =====================
 ok <- 1e-5 < pz & pz < 1 - 1e-5
@@ -120,161 +121,153 @@ PDQR <- c("beta", "binom", "cauchy", "chisq", "exp", "f",
           "pois","signrank","t","unif","weibull","wilcox")
 PQonly <- c("tukey")
 
-###===== Random numbers -- just output
+
+###===== Random numbers -- first, just output:
 
 .Random.seed <- c(0, 17292, 29447, 24113)
 n <- 20
 ## for(pre in PDQR) { n <- paste("r",pre,sep=""); cat(n,": "); str(get(n))}
 (Rbeta    <- rbeta    (n, shape1 = .8, shape2 = 2) )
 (Rbinom   <- rbinom   (n, size = 55, prob = .25) )
-(Rcauchy  <- rcauchy  (n, location = 0, scale = 1) )
+(Rcauchy  <- rcauchy  (n, location = 12, scale = 2) )
 (Rchisq   <- rchisq   (n, df = 3) )
-(Rexp     <- rexp     (n, rate = 1) )
+(Rexp     <- rexp     (n, rate = 2) )
 (Rf       <- rf       (n, df1 = 12, df2 = 6) )
-(Rgamma   <- rgamma   (n, shape = 2, scale = 1) )
-(Rgeom    <- rgeom    (n, prob = .4) )
+(Rgamma   <- rgamma   (n, shape = 2, scale = 5) )
+(Rgeom    <- rgeom    (n, prob = .25) )
 (Rhyper   <- rhyper   (n, m = 40, n = 30, k = 20) )
-(Rlnorm   <- rlnorm   (n, meanlog = 0, sdlog = 1) )
-(Rlogis   <- rlogis   (n, location = 0, scale = 1) )
+(Rlnorm   <- rlnorm   (n, meanlog = -1, sdlog = 3) )
+(Rlogis   <- rlogis   (n, location = 12, scale = 2) )
 (Rnbinom  <- rnbinom  (n, size = 7, prob = .01) )
-(Rnorm    <- rnorm    (n, mean = 0, sd = 1) )
+(Rnorm    <- rnorm    (n, mean = -1, sd = 3) )
 (Rpois    <- rpois    (n, lambda = 12) )
 (Rsignrank<- rsignrank(n, n = 47) )
 (Rt       <- rt       (n, df = 11) )
-(Runif    <- runif    (n, min = 0, max = 1) )
-(Rweibull <- rweibull (n, shape = 3, scale = 1) )
+(Runif    <- runif    (n, min = .2, max = 2) )
+(Rweibull <- rweibull (n, shape = 3, scale = 2) )
 (Rwilcox  <- rwilcox  (n, m = 13, n = 17) )
 
 (Pbeta    <- pbeta    (Rbeta, shape1 = .8, shape2 = 2) )
 (Pbinom   <- pbinom   (Rbinom, size = 55, prob = .25) )
-(Pcauchy  <- pcauchy  (Rcauchy, location = 0, scale = 1) )
+(Pcauchy  <- pcauchy  (Rcauchy, location = 12, scale = 2) )
 (Pchisq   <- pchisq   (Rchisq, df = 3) )
-(Pexp     <- pexp     (Rexp, rate = 1) )
+(Pexp     <- pexp     (Rexp, rate = 2) )
 (Pf       <- pf       (Rf, df1 = 12, df2 = 6) )
-(Pgamma   <- pgamma   (Rgamma, shape = 2, scale = 1) )
-(Pgeom    <- pgeom    (Rgeom, prob = .4) )
+(Pgamma   <- pgamma   (Rgamma, shape = 2, scale = 5) )
+(Pgeom    <- pgeom    (Rgeom, prob = .25) )
 (Phyper   <- phyper   (Rhyper, m = 40, n = 30, k = 20) )
-(Plnorm   <- plnorm   (Rlnorm, meanlog = 0, sdlog = 1) )
-(Plogis   <- plogis   (Rlogis, location = 0, scale = 1) )
+(Plnorm   <- plnorm   (Rlnorm, meanlog = -1, sdlog = 3) )
+(Plogis   <- plogis   (Rlogis, location = 12, scale = 2) )
 (Pnbinom  <- pnbinom  (Rnbinom, size = 7, prob = .01) )
-(Pnorm    <- pnorm    (Rnorm, mean = 0, sd = 1) )
+(Pnorm    <- pnorm    (Rnorm, mean = -1, sd = 3) )
 (Ppois    <- ppois    (Rpois, lambda = 12) )
 (Psignrank<- psignrank(Rsignrank, n = 47) )
 (Pt       <- pt       (Rt, df = 11) )
-(Punif    <- punif    (Runif, min = 0, max = 1) )
-(Pweibull <- pweibull (Rweibull, shape = 3, scale = 1) )
+(Punif    <- punif    (Runif, min = .2, max = 2) )
+(Pweibull <- pweibull (Rweibull, shape = 3, scale = 2) )
 (Pwilcox  <- pwilcox  (Rwilcox, m = 13, n = 17) )
 
 dbeta    (Rbeta, shape1 = .8, shape2 = 2)
 dbinom   (Rbinom, size = 55, prob = .25)
-dcauchy  (Rcauchy, location = 0, scale = 1)
+dcauchy  (Rcauchy, location = 12, scale = 2)
 dchisq   (Rchisq, df = 3)
-dexp     (Rexp, rate = 1)
+dexp     (Rexp, rate = 2)
 df       (Rf, df1 = 12, df2 = 6)
-dgamma   (Rgamma, shape = 2, scale = 1)
-dgeom    (Rgeom, prob = .4)
+dgamma   (Rgamma, shape = 2, scale = 5)
+dgeom    (Rgeom, prob = .25)
 dhyper   (Rhyper, m = 40, n = 30, k = 20)
-dlnorm   (Rlnorm, meanlog = 0, sdlog = 1)
-dlogis   (Rlogis, location = 0, scale = 1)
+dlnorm   (Rlnorm, meanlog = -1, sdlog = 3)
+dlogis   (Rlogis, location = 12, scale = 2)
 dnbinom  (Rnbinom, size = 7, prob = .01)
-dnorm    (Rnorm, mean = 0, sd = 1)
+dnorm    (Rnorm, mean = -1, sd = 3)
 dpois    (Rpois, lambda = 12)
 dsignrank(Rsignrank, n = 47)
 dt       (Rt, df = 11)
-dunif    (Runif, min = 0, max = 1)
-dweibull (Rweibull, shape = 3, scale = 1)
+dunif    (Runif, min = .2, max = 2)
+dweibull (Rweibull, shape = 3, scale = 2)
 dwilcox  (Rwilcox, m = 13, n = 17)
 
 ## Check q*(p*(.)) = identity
-all.equal(Rbeta,     qbeta    (Pbeta, shape1 = .8, shape2 = 2), tol = 1e-14)
-all.equal(Rbinom,    qbinom   (Pbinom, size = 55, prob = .25), tol = 1e-14)
-all.equal(Rcauchy,   qcauchy  (Pcauchy, location = 0, scale = 1), tol = 1e-14)
-all.equal(Rchisq,    qchisq   (Pchisq, df = 3), tol = 1e-14)
-all.equal(Rexp,      qexp     (Pexp, rate = 1), tol = 1e-14)
-all.equal(Rf,        qf       (Pf, df1 = 12, df2 = 6), tol = 1e-14)
-all.equal(Rgamma,    qgamma   (Pgamma, shape = 2, scale = 1), tol = 1e-14)
-all.equal(Rgeom,     qgeom    (Pgeom, prob = .4), tol = 1e-14)
-all.equal(Rhyper,    qhyper   (Phyper, m = 40, n = 30, k = 20), tol = 1e-14)
-all.equal(Rlnorm,    qlnorm   (Plnorm, meanlog = 0, sdlog = 1), tol = 1e-14)
-all.equal(Rlogis,    qlogis   (Plogis, location = 0, scale = 1), tol = 1e-14)
-all.equal(Rnbinom,   qnbinom  (Pnbinom, size = 7, prob = .01), tol = 1e-14)
-all.equal(Rnorm,     qnorm    (Pnorm, mean = 0, sd = 1), tol = 1e-14)
-all.equal(Rpois,     qpois    (Ppois, lambda = 12), tol = 1e-14)
-all.equal(Rsignrank, qsignrank(Psignrank, n = 47), tol = 1e-14)
+All.eq(Rbeta,     qbeta    (Pbeta, shape1 = .8, shape2 = 2))
+All.eq(Rbinom,    qbinom   (Pbinom, size = 55, prob = .25))
+All.eq(Rcauchy,   qcauchy  (Pcauchy, location = 12, scale = 2))
+All.eq(Rchisq,    qchisq   (Pchisq, df = 3))
+All.eq(Rexp,      qexp     (Pexp, rate = 2))
+All.eq(Rf,        qf       (Pf, df1 = 12, df2 = 6))
+All.eq(Rgamma,    qgamma   (Pgamma, shape = 2, scale = 5))
+All.eq(Rgeom,     qgeom    (Pgeom, prob = .25))
+All.eq(Rhyper,    qhyper   (Phyper, m = 40, n = 30, k = 20))
+All.eq(Rlnorm,    qlnorm   (Plnorm, meanlog = -1, sdlog = 3))
+All.eq(Rlogis,    qlogis   (Plogis, location = 12, scale = 2))
+All.eq(Rnbinom,   qnbinom  (Pnbinom, size = 7, prob = .01))
+All.eq(Rnorm,     qnorm    (Pnorm, mean = -1, sd = 3))
+All.eq(Rpois,     qpois    (Ppois, lambda = 12))
+All.eq(Rsignrank, qsignrank(Psignrank, n = 47))
 all.equal(Rt,        qt       (Pt, df = 11), tol = 1e-7 )## << !!
-all.equal(Runif,     qunif    (Punif, min = 0, max = 1), tol = 1e-14)
-all.equal(Rweibull,  qweibull (Pweibull, shape = 3, scale = 1), tol = 1e-14)
-all.equal(Rwilcox,   qwilcox  (Pwilcox, m = 13, n = 17), tol = 1e-14)
+All.eq(Runif,     qunif    (Punif, min = .2, max = 2))
+All.eq(Rweibull,  qweibull (Pweibull, shape = 3, scale = 2))
+All.eq(Rwilcox,   qwilcox  (Pwilcox, m = 13, n = 17))
 
 ## Same with "upper tail":
-all.equal(Rbeta,     qbeta    (1- Pbeta, shape1 = .8, shape2 = 2,
-                               lower=F), tol = 1e-14)
-all.equal(Rbinom,    qbinom   (1- Pbinom, size = 55, prob = .25,
-                               lower=F), tol = 1e-14)
-all.equal(Rcauchy,   qcauchy  (1- Pcauchy, location = 0, scale = 1,
-                               lower=F), tol = 1e-14)
-all.equal(Rchisq,    qchisq   (1- Pchisq, df = 3, lower=F), tol = 1e-14)
-all.equal(Rexp,      qexp     (1- Pexp, rate = 1, lower=F), tol = 1e-14)
-all.equal(Rf,        qf       (1- Pf, df1 = 12, df2 = 6, lower=F), tol = 1e-14)
-all.equal(Rgamma,    qgamma   (1- Pgamma, shape = 2, scale = 1,
-                               lower=F), tol = 1e-14)
-all.equal(Rgeom,     qgeom    (1- Pgeom, prob = .4, lower=F), tol = 1e-14)
-all.equal(Rhyper,    qhyper   (1- Phyper, m = 40, n = 30, k = 20,
-                               lower=F), tol = 1e-14)
-all.equal(Rlnorm,    qlnorm   (1- Plnorm, meanlog = 0, sdlog = 1,
-                               lower=F), tol = 1e-14)
-all.equal(Rlogis,    qlogis   (1- Plogis, location = 0, scale = 1,
-                               lower=F), tol = 1e-14)
-all.equal(Rnbinom,   qnbinom  (1- Pnbinom, size = 7, prob = .01,
-                               lower=F), tol = 1e-14)
-all.equal(Rnorm,     qnorm    (1- Pnorm, mean = 0, sd = 1,lower=F), tol = 1e-14)
-all.equal(Rpois,     qpois    (1- Ppois, lambda = 12,
-                               lower=F), tol = 1e-14)
-all.equal(Rsignrank, qsignrank(1- Psignrank, n = 47, lower=F), tol = 1e-14)
+All.eq(Rbeta,     qbeta    (1- Pbeta, shape1 = .8, shape2 = 2, lower=F))
+All.eq(Rbinom,    qbinom   (1- Pbinom, size = 55, prob = .25, lower=F))
+All.eq(Rcauchy,   qcauchy  (1- Pcauchy, location = 12, scale = 2, lower=F))
+All.eq(Rchisq,    qchisq   (1- Pchisq, df = 3, lower=F))
+All.eq(Rexp,      qexp     (1- Pexp, rate = 2, lower=F))
+All.eq(Rf,        qf       (1- Pf, df1 = 12, df2 = 6, lower=F))
+All.eq(Rgamma,    qgamma   (1- Pgamma, shape = 2, scale = 5, lower=F))
+All.eq(Rgeom,     qgeom    (1- Pgeom, prob = .25, lower=F))
+All.eq(Rhyper,    qhyper   (1- Phyper, m = 40, n = 30, k = 20, lower=F))
+All.eq(Rlnorm,    qlnorm   (1- Plnorm, meanlog = -1, sdlog = 3, lower=F))
+All.eq(Rlogis,    qlogis   (1- Plogis, location = 12, scale = 2, lower=F))
+All.eq(Rnbinom,   qnbinom  (1- Pnbinom, size = 7, prob = .01, lower=F))
+All.eq(Rnorm,     qnorm    (1- Pnorm, mean = -1, sd = 3,lower=F))
+All.eq(Rpois,     qpois    (1- Ppois, lambda = 12, lower=F))
+All.eq(Rsignrank, qsignrank(1- Psignrank, n = 47, lower=F))
 all.equal(Rt,        qt       (1- Pt, df = 11, lower=F), tol = 1e-7)
-all.equal(Runif,     qunif    (1- Punif, min = 0, max = 1,
-                               lower=F), tol = 1e-14)
-all.equal(Rweibull,  qweibull (1- Pweibull, shape = 3, scale = 1,
-                               lower=F), tol = 1e-14)
-all.equal(Rwilcox,   qwilcox  (1- Pwilcox, m = 13, n = 17,
-                               lower=F), tol = 1e-14)
+All.eq(Runif,     qunif    (1- Punif, min = .2, max = 2, lower=F))
+All.eq(Rweibull,  qweibull (1- Pweibull, shape = 3, scale = 2, lower=F))
+All.eq(Rwilcox,   qwilcox  (1- Pwilcox, m = 13, n = 17, lower=F))
+
+### Check q*(p* ( log ), log) = identity
+All.eq(Rbeta,     qbeta    (log(Pbeta), shape1 = .8, shape2 = 2, log=TRUE))
+All.eq(Rbinom,    qbinom   (log(Pbinom), size = 55, prob = .25, log=TRUE))
+All.eq(Rcauchy,   qcauchy  (log(Pcauchy), location = 12, scale = 2, log=TRUE))
+all.equal(Rchisq,    qchisq   (log(Pchisq), df = 3, log=TRUE),tol=1e-14)
+All.eq(Rexp,      qexp     (log(Pexp), rate = 2, log=TRUE))
+All.eq(Rf,        qf       (log(Pf), df1= 12, df2= 6, log=TRUE))
+All.eq(Rgamma,    qgamma   (log(Pgamma), shape = 2, scale = 5, log=TRUE))
+All.eq(Rgeom,     qgeom    (log(Pgeom), prob = .25, log=TRUE))
+All.eq(Rhyper,    qhyper   (log(Phyper), m = 40, n = 30, k = 20, log=TRUE))
+All.eq(Rlnorm,    qlnorm   (log(Plnorm), meanlog = -1, sdlog = 3, log=TRUE))
+All.eq(Rlogis,    qlogis   (log(Plogis), location = 12, scale = 2, log=TRUE))
+All.eq(Rnbinom,   qnbinom  (log(Pnbinom), size = 7, prob = .01, log=TRUE))
+All.eq(Rnorm,     qnorm    (log(Pnorm), mean = -1, sd = 3, log=TRUE))
+All.eq(Rpois,     qpois    (log(Ppois), lambda = 12, log=TRUE))
+All.eq(Rsignrank, qsignrank(log(Psignrank), n = 47, log=TRUE))
+all.equal(Rt,        qt       (log(Pt), df = 11, log=TRUE), tol = 1e-7)
+All.eq(Runif,     qunif    (log(Punif), min = .2, max = 2, log=TRUE))
+All.eq(Rweibull,  qweibull (log(Pweibull), shape = 3, scale = 2, log=TRUE))
+All.eq(Rwilcox,   qwilcox  (log(Pwilcox), m = 13, n = 17, log=TRUE))
+
 
 ## Check log( upper.tail ):
-all.equal(log(1 - Pbeta),     pbeta    (Rbeta, shape1 = .8, shape2 = 2,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pbinom),    pbinom   (Rbinom, size = 55, prob = .25,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pcauchy),   pcauchy  (Rcauchy, location = 0, scale = 1,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pchisq),    pchisq   (Rchisq, df = 3,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pexp),      pexp     (Rexp, rate = 1,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pf),        pf       (Rf, df1 = 12, df2 = 6,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pgamma),    pgamma   (Rgamma, shape = 2, scale = 1,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pgeom),     pgeom    (Rgeom, prob = .4,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Phyper),    phyper   (Rhyper, m = 40, n = 30, k = 20,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Plnorm),    plnorm   (Rlnorm, meanlog = 0, sdlog = 1,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Plogis),    plogis   (Rlogis, location = 0, scale = 1,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pnbinom),   pnbinom  (Rnbinom, size = 7, prob = .01,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pnorm),     pnorm    (Rnorm, mean = 0, sd = 1,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Ppois),     ppois    (Rpois, lambda = 12,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Psignrank), psignrank(Rsignrank, n = 47,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pt),        pt       (Rt, df = 11,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Punif),     punif    (Runif, min = 0, max = 1,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pweibull),  pweibull (Rweibull, shape = 3, scale = 1,
-                                        lower=F, log=T), tol = 1e-14)
-all.equal(log(1 - Pwilcox),   pwilcox  (Rwilcox, m = 13, n = 17,
-                                        lower=F, log=T), tol = 1e-14)
+All.eq(log(1 - Pbeta),     pbeta    (Rbeta, shape1 = .8, shape2 = 2, lower=F, log=T))
+All.eq(log(1 - Pbinom),    pbinom   (Rbinom, size = 55, prob = .25, lower=F, log=T))
+All.eq(log(1 - Pcauchy),   pcauchy  (Rcauchy, location = 12, scale = 2, lower=F, log=T))
+All.eq(log(1 - Pchisq),    pchisq   (Rchisq, df = 3, lower=F, log=T))
+All.eq(log(1 - Pexp),      pexp     (Rexp, rate = 2, lower=F, log=T))
+All.eq(log(1 - Pf),        pf       (Rf, df1 = 12, df2 = 6, lower=F, log=T))
+All.eq(log(1 - Pgamma),    pgamma   (Rgamma, shape = 2, scale = 5, lower=F, log=T))
+All.eq(log(1 - Pgeom),     pgeom    (Rgeom, prob = .25, lower=F, log=T))
+All.eq(log(1 - Phyper),    phyper   (Rhyper, m = 40, n = 30, k = 20, lower=F, log=T))
+All.eq(log(1 - Plnorm),    plnorm   (Rlnorm, meanlog = -1, sdlog = 3, lower=F, log=T))
+All.eq(log(1 - Plogis),    plogis   (Rlogis, location = 12, scale = 2, lower=F, log=T))
+All.eq(log(1 - Pnbinom),   pnbinom  (Rnbinom, size = 7, prob = .01, lower=F, log=T))
+All.eq(log(1 - Pnorm),     pnorm    (Rnorm, mean = -1, sd = 3, lower=F, log=T))
+All.eq(log(1 - Ppois),     ppois    (Rpois, lambda = 12, lower=F, log=T))
+All.eq(log(1 - Psignrank), psignrank(Rsignrank, n = 47, lower=F, log=T))
+All.eq(log(1 - Pt),        pt       (Rt, df = 11, lower=F, log=T))
+All.eq(log(1 - Punif),     punif    (Runif, min = .2, max = 2, lower=F, log=T))
+All.eq(log(1 - Pweibull),  pweibull (Rweibull, shape = 3, scale = 2, lower=F, log=T))
+All.eq(log(1 - Pwilcox),   pwilcox  (Rwilcox, m = 13, n = 17, lower=F, log=T))
