@@ -10,6 +10,8 @@ subdir = src/nmath/standalone
 
 include $(top_builddir)/Makeconf
 
+includedir = ${prefix}/include
+
 SOURCES_NMATH = \
 	mlutils.c \
 	d1mach.c i1mach.c \
@@ -119,6 +121,22 @@ $(libRmath_la): $(libRmath_la_OBJECTS)
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c \
 	  -L. -lRmath -lm
+
+install: installdirs install-header
+	@!(test -f $(libRmath_la)) || $(SHELL) $(top_srcdir)/tools/copy-if-change $(libRmath_la) $(libdir)/$(libRmath_la)
+	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(libdir)/libRmath.a
+
+install-header:
+	@(cd ../../include; $(MAKE) Rmath.h)
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(includedir)/Rmath.h
+
+
+installdirs:
+	@$(MKINSTALLDIRS) $(includedir)
+	@$(MKINSTALLDIRS) $(libdir)
+
+uninstall:
+	@rm -f $(includedir)/Rmath.h $(libdir)/$(libRmath_la) $(libdir)/libRmath.a
 
 mostlyclean: clean
 clean:

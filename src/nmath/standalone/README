@@ -68,3 +68,17 @@ facilities work best on IEEE 754 machines, but are available for all.
 
 There is no support for R's notion of missing values, in particular
 not for NA_INTEGER nor the distinction between NA and NaN for doubles.
+
+
+Installation (not Windows)
+==========================
+
+The targets
+
+make install
+make uninstall
+
+will (un)install the header Rmath.h and shared and static libraries
+(if built) under ${prefix} (default /usr/local).  Add prefix=/path/to/here
+to the command line to change the installation directory.
+
