@@ -53,6 +53,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Default editor files (e.g. from fix()) are now removed at termination.
+
+    o	.Last() is called when terminating with q() (not just with EOF).
+
     o	x ^ y  gives proper results when x or y are infinite.
 
     o	log(0) gives -Inf on all architectures.

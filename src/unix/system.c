@@ -144,13 +144,12 @@
  *  Get the R ``home directory'' as a string.
  *
  *
- *  7) PLATFORM INDEPENDENT FUNCTIONS
+ *  7) PLATFORM DEPENDENT FUNCTIONS
  *
  *    SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP rho)
  *    SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
  *    SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP rho)
  *    SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP rho)
- *    SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
  *    SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
  *
  */
@@ -673,9 +672,13 @@ void R_InitialData(void)
 	/* user is asked their preference, if ask=2 the answer is */
 	/* assumed to be "no" and if ask=3 the answer is assumed to */
 	/* be "yes".  When R is being used non-interactively, and */
-	/* ask=1, the value is changed to 3.  The philosophy is */
+	/* ask=1, the value is changed to DefaultSaveAction, usually 3.  
+	/* The philosophy is */
 	/* that saving unwanted data is less bad than non saving */
 	/* data that is wanted. */
+
+
+void R_dot_Last(void); /* in main.c */
 
 void R_CleanUp(int ask)
 {
@@ -700,6 +703,7 @@ void R_CleanUp(int ask)
 	switch (buf[0]) {
 	case 'y':
 	case 'Y':
+	    R_dot_Last();
 	    R_SaveGlobalEnv();
 #ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
@@ -711,6 +715,7 @@ void R_CleanUp(int ask)
 	    break;
 	case 'n':
 	case 'N':
+	    R_dot_Last();
 	    break;
 	case 'c':
 	case 'C':
@@ -720,6 +725,7 @@ void R_CleanUp(int ask)
 	    goto qask;
 	}
     }
+    CleanEd();
     KillAllDevices();
 
 #ifdef __FreeBSD__
@@ -885,30 +891,6 @@ SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
     return rval;
 }
 
-SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    char *tmp;
-    int ask=0;
-
-    if(R_BrowseLevel) {
-	warning("can't quit from browser\n");
-	return R_NilValue;
-    }
-    if( !isString(CAR(args)) )
-	errorcall(call,"one of \"yes\", \"no\" or \"ask\" expected.\n");
-    tmp = CHAR(STRING(CAR(args))[0]);
-    if( !strcmp(tmp,"ask") )
-	ask=1;
-    else if( !strcmp(tmp,"no") )
-	ask=2;
-    else if( !strcmp(tmp,"yes") )
-	ask=3;
-    else
-	errorcall(call,"unrecognized value of ask\n");
-    R_CleanUp(ask);
-    exit(0);
-    /*NOTREACHED*/
-}
 
 void R_Suicide(char *s)
 {

@@ -867,6 +867,8 @@ void R_InitialData(void)
 	/* that saving unwanted data is less bad than non saving */
 	/* data that is wanted. */
 
+void R_dot_Last(void); /* in main.c */
+
 void R_CleanUp(int ask)
 {
     int   ans = 0;
@@ -885,15 +887,18 @@ void R_CleanUp(int ask)
 
 	switch (ans) {
 	  case YES:
+	    R_dot_Last();
 	    R_SaveGlobalEnv();
 	    break;
 	  case NO:
+	    R_dot_Last();
 	    break;
 	  case CANCEL:
 	    jump_to_toplevel();
 	    break;
 	}
     }
+    CleanEd();
     closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = 1;

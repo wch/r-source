@@ -22,16 +22,19 @@ it is saved and in the third the user is prompted and can also decide
 \emph{not} to quit.
 
 Immediately \emph{before} terminating, the function \code{.Last()} is
-executed if it exists.
+executed if it exists. If in interactive use there are errors in the
+\code{.Last} function, control will be returned to the command prompt,
+so do test the function thoroughly.
 }
 \seealso{\code{\link{.First}} for setting things on startup.
 }
 \examples{
+## Unix-flavour example
 .Last <- function() {
-  cat("Now printing  PostScript graphic:\n")
+  cat("Now sending PostScript graphics to the printer:\n")
   system("lpr Rplots.ps")
   cat("bye bye...\n")
 }
-## Not really:  quit("yes")
+\dontrun{quit("yes")}
 }
 \keyword{environment}

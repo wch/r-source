@@ -360,6 +360,8 @@ int main(int ac, char **av)
 	/* that saving unwanted data is less bad than non saving */
 	/* data that is wanted. */
 
+void R_dot_Last(void); /* in main.c */
+
 void R_CleanUp(int ask)
 {
     GtkWidget *dialog;
@@ -421,12 +423,14 @@ Choose Yes to save an image and exit,\nchoose No to exit without saving,\nor cho
 
 	switch (which) {
 	case 0:
+	    R_dot_Last();
 	    R_SaveGlobalEnv();
 
 	    if(R_Interactive)
 	      gtk_console_save_history(GTK_CONSOLE(R_gtk_terminal_text), R_HistoryFile, R_HistorySize, NULL);
 	    break;
 	case 1:
+	    R_dot_Last();
 	    break;
 	default:
 	    jump_to_toplevel();

@@ -69,7 +69,7 @@
 #endif
 */
 
-#define HSIZE	    211	/* The size of the hash table for symbols */
+#define HSIZE	   4119	/* The size of the hash table for symbols */
 #define MAXELTSIZE 8192 /* The largest string size */
 #define MAXIDSIZE   256	/* Largest symbol size possible */
 
@@ -326,6 +326,7 @@ void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
 SEXP classgets(SEXP, SEXP);
+void CleanEd(void);
 #ifdef Macintosh
 	void CleanUpMemory( void );
 #endif

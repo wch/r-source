@@ -28,30 +28,39 @@
 #  include "run.h"
 #endif
 
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>  /* for unlink() */
+#endif
+
 /*
  * ed, vi etc have 3 parameters. the data, a file and an editor
  * 
- * if file is specified then the given file is used (and not removed on
- * exit) if file is not specified then a temporary file is used; since
+ * If `file' is specified then the given file is used (and not removed on
+ * exit). If `file' is not specified then a temporary file is used; since
  * only one temporary file is used for an entire session previous
- * editing is lost 
+ * editing is lost. That file is removed at the end of the R session.
  * 
- * if data is specified then it is passed out to be edited; if data is not
- * specified then either file (if specified) or the temporary file is used
- * (thus errors can be re-editied by calling edit a second time with no
+ * If `data' is specified then it is passed out to be edited; if `data' is not
+ * specified then either `file' (if specified) or the temporary file is used
+ * (thus errors can be re-edited by calling edit a second time with no
  * arguments).
  * 
- * if the editor is specified then the specified editor is invoked if
+ * If the editor is specified then the specified editor is invoked if
  * possible and an error message reported otherwise
  */
 
 static char *DefaultFileName;
+static int  EdFileUsed = 0;
 
 void InitEd()
 {
     DefaultFileName = tmpnam(NULL);
 }
 
+void CleanEd()
+{
+    if(EdFileUsed) unlink(DefaultFileName);
+}
 
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -82,8 +91,9 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (x != R_NilValue) {
 	if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
 	    errorcall(call, "unable to open file\n");
+	if (LENGTH(STRING(fn)[0]) == 0) EdFileUsed++;
 	x = deparse1(x, 0);
-	for (i=0; i<LENGTH(x); i++)
+	for (i = 0; i < LENGTH(x); i++)
 	    fprintf(fp, "%s\n", CHAR(STRING(x)[i]));
 	fclose(fp);
     }

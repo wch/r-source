@@ -443,19 +443,7 @@ void end_Rmainloop(void)
     SEXP cmd;
 
     Rprintf("\n");
-    /* We have now exited from the read-eval loop. */
-    /* Now we run the .Last function and exit. */
-    /* Errors here should kick us back into the repl. */
-
-    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    PROTECT(cmd = install(".Last"));
-    R_CurrentExpr = findVar(cmd, R_GlobalEnv);
-    if (R_CurrentExpr != R_UnboundValue && TYPEOF(R_CurrentExpr) == CLOSXP) {
-	PROTECT(R_CurrentExpr = lang1(cmd));
-	R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
-	UNPROTECT(1);
-    }
-    UNPROTECT(1);
+    /* Run the .Last function. */
     R_CleanUp(1);	/* query save */
 }
 
@@ -553,5 +541,50 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_EvalDepth = saveEvalDepth;
     R_BrowseLevel--;
     return R_ReturnedValue;
+}
+
+void R_dot_Last(void)
+{
+    SEXP cmd;
+
+    /* Run the .Last function. */
+    /* Errors here should kick us back into the repl. */
+
+    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+    PROTECT(cmd = install(".Last"));
+    R_CurrentExpr = findVar(cmd, R_GlobalEnv);
+    if (R_CurrentExpr != R_UnboundValue && TYPEOF(R_CurrentExpr) == CLOSXP) {
+	PROTECT(R_CurrentExpr = lang1(cmd));
+	R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+	UNPROTECT(1);
+    }
+    UNPROTECT(1);
+}
+
+SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    char *tmp;
+    int ask=0;
+
+    if(R_BrowseLevel) {
+	warning("can't quit from browser\n");
+	return R_NilValue;
+    }
+    if( !isString(CAR(args)) )
+	errorcall(call,"one of \"yes\", \"no\" or \"ask\" expected.\n");
+    tmp = CHAR(STRING(CAR(args))[0]);
+    if( !strcmp(tmp,"ask") )
+	ask=1;
+    else if( !strcmp(tmp,"no") )
+	ask=2;
+    else if( !strcmp(tmp,"yes") )
+	ask=3;
+    else
+	errorcall(call,"unrecognized value of ask\n");
+    /* run the .Last function. If if gives an error, will drop back to main
+       loop. */
+    R_CleanUp(ask);
+    exit(0);
+    /*NOTREACHED*/
 }
 #undef __MAIN__
