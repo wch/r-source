@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.5.0 (2002-03-21).
+<p>The current version of this document is 1.5.0 (2002-03-24).
 
 </ul>
 
@@ -24,7 +24,8 @@
 
 <p>Sources, binaries and documentation for R can be obtained via
 <small>CRAN</small>, the "Comprehensive R Archive Network".  See the file
-<code>RESOURCES</code> for information on <small>CRAN</small>.
+<code>RESOURCES</code> in the R distribution for information on
+<small>CRAN</small>.
 
 </ul>
 
@@ -57,9 +58,8 @@ users, set <code>umask</code> before unpacking so that the files will be
 readable by the target group (e.g., <code>umask 022</code> to be usable by all
 users).
 
-<p>Finally, for minor-minor releases (<code><var>x</var>.<var>y</var>.<var>z</var></code> with
-<var>z</var> != 0), a patch against the preceding release is made available
-in
+<p>Finally, for patch releases (<code><var>x</var>.<var>y</var>.<var>z</var></code> with <var>z</var>
+!= 0), a patch against the preceding release is made available in
 <code>R-<var>x</var>.<var>y</var>.<var>{z-1}</var>-<var>x</var>.<var>y</var>.<var>z</var>.diff.gz</code>
 (e.g., <code>R-1.2.2-1.2.3.diff.gz</code>), which is generally a much smaller
 file that the <code>.tgz</code> files.  Such a file can be applied to the
@@ -122,7 +122,7 @@ need.
 
 <p>Choose a place to install the R tree (R is not just a binary, but
 has additional data sets, help files, font metrics etc).  Let us call
-this place <code>R_HOME</code>.  Untar the source code.  This should create
+this place <var>R_HOME</var>.  Untar the source code.  This should create
 directories <code>src</code>, <code>doc</code>, and several more.  Issue the
 following commands:
 
@@ -140,11 +140,12 @@ make
 <p>Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
 discrepancies.  To re-run the tests you would need
+
 <br><pre>make check FORCE=FORCE
 </pre>
 
 <p>If these commands execute successfully, the R binary will be copied
-to the <code>${R_HOME}/bin</code> directory.  In addition, a shell-script
+to the <code><var>R_HOME</var>/bin</code> directory.  In addition, a shell-script
 front-end called <code>R</code> will be created and copied to the same
 directory.  You can copy this script to a place where users can invoke
 it, for example to <code>/usr/local/bin/R</code>.  You could also copy the man
@@ -240,15 +241,15 @@ to your system by typing
 <p>This will install to the following directories:
 
 <dl>
-<dt><code>${prefix}/bin</code>
+<dt><code><var>prefix</var>/bin</code>
 <dd>the front-end shell script
-<br><dt><code>${prefix}/man/man1</code>
+<br><dt><code><var>prefix</var>/man/man1</code>
 <dd>the man page
-<br><dt><code>${prefix}/lib/R</code>
+<br><dt><code><var>prefix</var>/lib/R</code>
 <dd>all the rest (libraries, on-line help system, <small>...</small>)
 </dl>
 
-<p>where <code>prefix</code> is determined during configuration (typically
+<p>where <var>prefix</var> is determined during configuration (typically
 <code>/usr/local</code>) and can be set by running <code>configure</code> with
 the option <code>--prefix</code>, as in
 
@@ -349,10 +350,10 @@ of a <small>CRAN</small> site.
 to the Classic MacOS port.
 
 <p>It is helpful to use the correct terminology.  A <em>package</em> is
-loaded from a <em>library</em> by the function <code>library</code>.  Thus a
+loaded from a <em>library</em> by the function <code>library()</code>.  Thus a
 library is a directory containing installed packages; the main library
-is <code>R_HOME/library</code>, but others can be used, for example by setting
-the environment variable <code>R_LIBS</code> or using the R function
+is <code><var>R_HOME</var>/library</code>, but others can be used, for example by
+setting the environment variable <code>R_LIBS</code> or using the R function
 <code>.libPaths()</code>.
 
 <a name="Installing%20packages"></a>
@@ -370,7 +371,7 @@ more than one library, of course.
 
 <p>The part <code>-l /path/to/library</code> can be omitted, when the first
 library in <code>R_LIBS</code> is used if set, otherwise the main library
-<code>R_HOME/library</code>.
+<code><var>R_HOME</var>/library</code>.
 
 <p>The Windows equivalent is<a rel=footnote href="#fn-1"><sup>1</sup></a>
 
@@ -450,13 +451,17 @@ can be removed by
 <p>Finally, in most installations one can just remove the package directory
 from the library.
 
+<p><strong>Note:</strong> whereas it is currently possible to install package
+<em>bundles</em>, one cannot remove these as such--the packages contained
+in the bundle have to removed individually.
+
 <a name="Essential%20and%20useful%20other%20programs"></a>
 
 <h2>Appendix A Essential and useful other programs</h1>
 
 <p>This appendix gives details of programs you will need to build R on
 Unix-like platforms, or which will be used by R if found by
-<code>./configure</code>.
+<code>configure</code>.
 
 </ul>
 
@@ -464,8 +469,7 @@ Unix-like platforms, or which will be used by R if found by
 
 <h3>A.1 Essential programs</h2>
 
-<p>You need a means of compiling C and FORTRAN (see <a href="#Using%20FORTRAN">Using FORTRAN</a>). 
-Some add-on packages also need a C++ compiler.
+<p>You need a means of compiling C and FORTRAN 77 (see <a href="#Using%20FORTRAN">Using FORTRAN</a>).  Some add-on packages also need a C++ compiler.
 
 <p>You will need Perl version 5.004 or later, available via
 <a href="http://www.perl.com/CPAN/">http://www.perl.com/CPAN/</a>, to build any of the on-line
@@ -519,6 +523,11 @@ of the Tcl/Tk files you may need the configuration options
 <dd>specify location of <code>tkConfig.sh</code>
 </dl>
 
+<p>or use the configure variables <code>TCLTK_LIBS</code> and
+<code>TCLTK_CPPFLAGS</code> to specify the flags needed for linking against
+the Tcl and Tk libraries and for finding the <code>tcl.h</code> and
+<code>tk.h</code> headers, respectively.
+
 <a name="Linear%20algebra"></a>
 
 <h4>A.2.2 Linear algebra</h3>
@@ -527,7 +536,7 @@ of the Tcl/Tk files you may need the configuration options
 Linear Algebra Subprograms, <a href="http://www.netlib.org/blas/faq.html">http://www.netlib.org/blas/faq.html</a>)
 routines.  Some are compiler-system-specific (<code>libsunperf</code> on Sun
 Sparc<a rel=footnote href="#fn-2"><sup>2</sup></a>, <code>libessl</code> on IBM) but ATLAS
-(<a href="http://www.netlib.org/atlas/">http://www.netlib.org/atlas/</a>) is a `tuned' BLAS that runs on a
+(<a href="http://www.netlib.org/atlas/">http://www.netlib.org/atlas/</a>) is a "tuned" BLAS that runs on a
 wide range of Unix-alike platforms.  If no more specific library is
 found, a <code>libblas</code> library in the library path will be used.  You
 can specify a specific BLAS library by the configuration option
@@ -612,28 +621,39 @@ other than their default, you can do that by either editing the file
 <code>config.site</code> (which documents all the variables you might want to
 set) or on the command line as
 
-<br><pre>VAR="..." ./configure              # Bourne shell compatibles
-(setenv VAR "..."; ./configure)	   # C shell
+<br><pre>./configure VAR=<var>value</var>
 </pre>
+
+<p>These variables are <em>precious</em>, implying that they do not have to
+be exported to the environment, are kept in the cache even if not
+specified on the command line and checked for consistency between two
+configure runs (provided that caching is used), and are kept during
+automatic reconfiguration as if having been passed as command line
+arguments, even if no cache is used.
+
+<p>See the variable output section of <code>configure --help</code> for a list of
+all these variables.
 
 <p>One common variable to change is <code>R_PAPERSIZE</code>, which defaults to
 <code>a4</code>, not <code>letter</code>.
 
 <p>If you have libraries and header files, e.g., for GNU readline, in
-non-system directories, use the variables <code>LIBS</code> (for libraries)
-and <code>CPPFLAGS</code> (for header files), respectively, to specify these
-locations.  These default to <code>/usr/local/lib</code> and
-<code>/usr/local/include</code> to catch the most common cases.  If libraries
-are still not found, then maybe your compiler/linker does not support
-re-ordering of <code>-L</code> and <code>-l</code> flags (this has been reported
-to be a problem on HP-UX with the native <code>cc</code>).  In this case,
-use a different compiler (or a front end shell script which does the
-re-ordering).
+non-system directories, use the variables <code>LDFLAGS</code> (for libraries,
+using <code>-L</code> flags to be passed to the linker) and <code>CPPFLAGS</code>
+(for header files, using <code>-I</code> flags to be passed to the C/C++
+preprocessors), respectively, to specify these locations.  These default
+to <code>/usr/local/lib</code> and <code>/usr/local/include</code> to catch the most
+common cases.  If libraries are still not found, then maybe your
+compiler/linker does not support re-ordering of <code>-L</code> and
+<code>-l</code> flags (this has been reported to be a problem on HP-UX with
+the native <code>cc</code>).  In this case, use a different compiler (or a
+front end shell script which does the re-ordering).
 
 <p>If you find you need to alter configure variables, it is worth noting
-that some settings may be cached in the file <code>config.cache</code>, and
-it is a good idea to remove that file (if it exists) before
-re-configuring.
+that some settings may be cached in the file <code>config.cache</code>, and it
+is a good idea to remove that file (if it exists) before re-configuring. 
+Note that caching is turned <em>off</em> by default; use the command line
+option <code>--config-cache</code> (or <code>-C</code>) to enable caching.
 
 <a name="Using%20make"></a>
 
@@ -650,11 +670,10 @@ Irix 6.5.
 <code>make</code> on Solaris 2.7/8 (but not earlier).
 
 <p>If you want to use a <code>make</code> by another name, for example if your
-GNU <code>make</code> is called <code>gmake</code>, you need to set the
-environment variable <code>MAKE</code> at configure time, for example
+GNU <code>make</code> is called <code>gmake</code>, you need to set the variable
+<code>MAKE</code> at configure time, for example
 
-<br><pre>MAKE=gmake ./configure        (sh, bash)
-env MAKE=gmake ./configure    (csh)
+<br><pre>./configure MAKE=gmake
 </pre>
 
 <a name="Using%20FORTRAN"></a>
@@ -671,11 +690,11 @@ is to search for <code>g77</code>, <code>f77</code>, <code>xlf</code>,
 order)<a rel=footnote href="#fn-3"><sup>3</sup></a>, and
 then for <code>f2c</code>, and use whichever is found first; if none is
 found, R cannot be compiled.  The search mechanism can be changed
-using the <code>--with-g77</code>, <code>--with-f77</code>, and
-<code>--with-f2c</code> command line options to <code>configure</code>.  If
-your FORTRAN compiler is in a non-standard location, you should set the
-environment variable <code>PATH</code> accordingly before running
-<code>configure</code>.
+using the <code>--with-f77</code> and <code>--with-f2c</code> command line
+options to <code>configure</code>.  If your FORTRAN compiler is in a
+non-standard location, you should set the environment variable
+<code>PATH</code> accordingly before running <code>configure</code>, or use the
+configure variable <code>F77</code> to specify its full path.
 
 <p>If your FORTRAN libraries are in slightly peculiar places, you should
 also look at <code>LD_LIBRARY_PATH</code> or your system's equivalent to make
@@ -696,21 +715,23 @@ FORTRAN 77 compliance.
 
 <p>If you use <code>f2c</code> you may need to ensure that the FORTRAN type
 <code>integer</code> is translated to the C type <code>int</code>.  Normally
-<code>f2c.h</code> contains <code>typedef long int integer;</code>, which will
-work on a 32-bit platform but not on a 64-bit platform.
+<code>f2c.h</code> contains <code>typedef long int integer;</code>, which will work
+on a 32-bit platform but not on a 64-bit platform.
 
 <a name="Compile%20and%20load%20flags"></a>
 
 <h3>B.5 Compile and load flags</h2>
 
-<p>A wide range of flags can be set in the file <code>config.site</code> or via
-environment variables.  We have already mentioned
+<p>A wide range of flags can be set in the file <code>config.site</code> or as
+configure variables on the command line.  We have already mentioned
 
 <dl>
 <dt><code>CPPFLAGS</code>
-<dd>extra include flags
-<br><dt><code>LIBS</code>
-<dd>libraries and <code>-L/lib/path</code> flags
+<dd>header file search directory (<code>-I</code>) and any other miscellaneous
+options for the C and C++ preprocessors and compilers
+<br><dt><code>LDFLAGS</code>
+<dd>path (<code>-L</code>), stripping (<code>-s</code>) and any other miscellaneous
+options for the linker
 </dl>
 
 <p>and others include
@@ -734,7 +755,7 @@ environment variables.  We have already mentioned
 <dd>additional flags for linking the shared libraries
 </dl>
 
-<p>Library paths specified as <code>-L/lib/path</code> in <code>LIBS</code> are
+<p>Library paths specified as <code>-L/lib/path</code> in <code>LDFLAGS</code> are
 collected together and prepended to <code>LD_LIBRARY_PATH</code> (or your
 system's equivalent), so there should be no need for <code>-R</code> or
 <code>-rpath</code> flags.
@@ -770,7 +791,7 @@ run
 <br><pre>./configure --with-gnome
 </pre>
 
-<p>but please check you have all the requirements first. The
+<p>but please check you have all the requirements first.  The
 <small>GNOME</small> interface for R is currently being developed under
 <small>GNOME</small> 1.4, and is not guaranteed to work with previous
 versions.  You therefore need at least the following libraries installed
@@ -794,10 +815,10 @@ popular Linux distributions and for Solaris.
 
 <p>Remember that some package management systems (such as <small>RPM</small> and
 deb) make a distinction between the user version of a package and the
-developer version. The latter usually has the same name but with the
-extension "-devel". If you use a pre-packaged version of <small>GNOME</small>
-then you must have the developer versions of the above packages in order
-to compile the R-GNOME interface.
+developer version.  The latter usually has the same name but with the
+extension <code>-devel</code>.  If you use a pre-packaged version of
+<small>GNOME</small> then you must have the developer versions of the above
+packages in order to compile the R-GNOME interface.
 
 <p>The full list of <small>GNOME</small> options to configure is
 
@@ -817,8 +838,8 @@ to compile the R-GNOME interface.
 <h3>B.7 Platform notes</h2>
 
 <p>This section provides some notes on building R on different Unix-like
-platforms.  These notes are based on tests run on one or two systems
-in each case with particular sets of compilers and support libraries. 
+platforms.  These notes are based on tests run on one or two systems in
+each case with particular sets of compilers and support libraries. 
 Success in building R depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
@@ -840,13 +861,14 @@ and support libraries are available from the Fink project
 <code>f2c</code> and <code>g77</code> were not available as part of the Fink
 binary distribution and needed to be installed directly; for example for
 <code>g77</code> use
+
 <br><pre>fink install g77
 </pre>
 
-<p>Fink prefers to install in <code>/sw</code> so <code>CPPFLAGS</code>, <code>LDFLAGS</code>
-need to be set accordingly.  If you want to use Tcl/Tk, also available
-from Fink, then you will also need to use the <code>configure</code>
-options to specify the Tcl and Tk config locations.
+<p>Fink prefers to install in <code>/sw</code> so <code>CPPFLAGS</code> and
+<code>LDFLAGS</code> need to be set accordingly.  If you want to use Tcl/Tk,
+also available from Fink, then you will also need to use the
+<code>configure</code> options to specify the Tcl and Tk config locations.
 
 <a name="Solaris"></a>
 
@@ -871,9 +893,10 @@ compiler: the <code>gcc</code>/<code>f77</code> combination works well.
 
 <p>To compile for a 64-bit target on Solaris (which needs an UltraSparc
 chip and for support to be enabled in the OS) we used
+
 <br><pre>CC="cc -xarch=v9"
 CFLAGS="-xO5 -xlibmil -dalign"
-FC="f95 -xarch=v9"
+F77="f95 -xarch=v9"
 FFLAGS="-xO5 -xlibmil -dalign"
 CXX=CC
 CXXFLAGS="-xO5 -xlibmil -dalign -xarch=v9"
@@ -883,21 +906,21 @@ CXXFLAGS="-xO5 -xlibmil -dalign -xarch=v9"
 performance library to be selected: it will not work with <code>f77</code>,
 nor with <code>g77</code>.
 
-<p>Some care is needed to ensure that libraries found by <code>configure</code>
-are compatible with the R executable and modules, as the testing
-process will not detect many of the possible problems.  For 32-bit
-builds under <code>cc</code> the flag <code>-dalign</code> is needed for some of
-the Sun libraries: fortunately the equivalent flag for <code>gcc</code>,
-<code>-munaligned-doubles</code>, is the default.  In theory, libraries such
-as <code>libpng</code>, <code>libjpeg</code>, <code>zlib</code> and the ATLAS libraries
-need to be built with a <code>pic</code> or <code>PIC</code> flag, which could be
-a problem if static libraries are used.  In practice this seems to
-give little problem for 32-bit builds, but seems essential for 64-bit
-builds.
+<p>Some care is needed to ensure that libraries found by
+<code>configure</code> are compatible with the R executable and modules, as
+the testing process will not detect many of the possible problems.  For
+32-bit builds under <code>cc</code> the flag <code>-dalign</code> is needed for
+some of the Sun libraries: fortunately the equivalent flag for
+<code>gcc</code>, <code>-munaligned-doubles</code>, is the default.  In theory,
+libraries such as <code>libpng</code>, <code>libjpeg</code>, <code>zlib</code> and the
+ATLAS libraries need to be built with a <code>pic</code> or <code>PIC</code> flag,
+which could be a problem if static libraries are used.  In practice this
+seems to give little problem for 32-bit builds, but seems essential for
+64-bit builds.
 
-<p>For a 64-bit build, 64-bit libraries must be used.  As the
-configuration process starts with <code>LIBS=/usr/local/lib</code> you may
-need to reset it to avoid finding 32-bit addons.
+<p>For a 64-bit build, 64-bit libraries must be used.  As the configuration
+process starts by default sets <code>LDFLAGS</code> to <code>-L/usr/local/lib</code>
+you may need to reset it to avoid finding 32-bit addons.
 
 <a name="HPUX"></a>
 
@@ -913,12 +936,12 @@ position independent code (<small>PIC</small>).  This will result in
 <code>make</code> failing with a linker error complaining that code needs
 to be compiled with a <code>+z</code> or <code>+Z</code> flag, the native
 <code>cc</code> <small>PIC</small> flag.  If this is the case you either need to
-modify your <code>g77</code> installation or configure with the
+modify your <code>g77</code> installation or configure with
 
-<br><pre>--with-f77=fort77
+<br><pre>F77=fort77
 </pre>
 
-<p>flag to specify use of the native <small>POSIX</small>-compliant FORTRAN 77
+<p>to specify use of the native <small>POSIX</small>-compliant FORTRAN 77
 compiler.
 
 <p>You may find that <code>configure</code> detects other libraries, such as
@@ -928,6 +951,7 @@ to tell <code>configure</code> not to use these libraries.
 
 <p>Some versions of <code>gcc</code> may contain what appears to be a bug at
 the <code>-O2</code> optimization level that causes
+
 <br><pre>&gt; 2 %/% 2
 [1] 1
 &gt; 1:2 %/% 2
@@ -953,9 +977,17 @@ alternative work-around is to add <code>-DIEEE_754</code> to the
 <code>CFLAGS</code> variable.
 
 <p>You can configure R to use both the native <code>cc</code> and
-<code>fort77</code> with (assuming you are using a <code>csh</code> shell)
-<br><pre>env CC=cc ./configure --with-f77=fort77
+<code>fort77</code> with
+
+<br><pre>./configure CC=cc F77=fort77
 </pre>
+
+<p><code>f90</code> insists on linking against a static <code>libF90.a</code> which
+typically resides in a non-standard directory (e.g.,
+<code>/opt/fortran90/lib</code>).  Hence, to use <code>f90</code> one needs to
+add this directory to the linker path via the configure variable
+<code>LDFLAGS</code> (e.g., <code>./configure F77=f90
+LDFLAGS=/opt/fortran90/lib</code>).
 
 <a name="IRIX"></a>
 
@@ -965,7 +997,8 @@ alternative work-around is to add <code>-DIEEE_754</code> to the
 <code>gcc</code>/<code>f77</code> or <code>cc</code>/<code>f77</code> for 32-bit
 executables and the native compilers for a 64-bit executable.  The
 command
-<br><pre>env CC="cc -64" ./configure --with-f77="f77 -64" --with-tcltk=no
+
+<br><pre>./configure CC="cc -64" F77="f77 -64" --with-tcltk=no
 </pre>
 
 <p>was used to create the 64-bit executable.  It was necessary to
@@ -994,6 +1027,7 @@ test-all-extras</code> in the <code>tests</code> directory fails at the end of
 <code>reg-tests-1.R</code> since this system does not have <code>vsnprintf</code>. 
 As currently written, the test at the end of <code>reg-tests-1.R</code> causes
 a segfault in this case.  You can complete the tests by executing
+
 <br><pre>touch reg-tests-1.Rout
 </pre>
 
@@ -1042,9 +1076,9 @@ first interrogate the X window system about what it does (using
 <code>xmkmf</code>), and then override this in situations where we know
 better (for tools from the GNU Compiler Collection and/or platforms we
 know about).  This typically works, but you may have to manually
-override the results.  Scanning the <code>cc(1)</code> and <code>ld(1)</code>
-manual entries usually reveals the correct incantation.  Once you know
-the recipe you can modify the file <code>config.site</code> (following the
+override the results.  Scanning the manual entries for <code>cc</code> and
+<code>ld</code> usually reveals the correct incantation.  Once you know the
+recipe you can modify the file <code>config.site</code> (following the
 instructions therein) so that the build will use these options.
 
 <p>If you do manage to get R running on a new platform please let us
@@ -1052,7 +1086,7 @@ know about it so we can modify the configuration procedures to include
 that platform.
 
 <p>If you are having trouble getting R to work on your platform please
-feel free to get in touch to ask questions.  We've had a fair amount
+feel free to get in touch to ask questions.  We have had a fair amount
 of practice at porting R to new platforms <small>...</small>.
 
 <a name="Function%20and%20variable%20index"></a>
