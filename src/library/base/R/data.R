@@ -3,8 +3,6 @@ function(..., list = character(0),
          package = .packages(), lib.loc = NULL,
          verbose = getOption("verbose"))
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
-
     names <- c(as.character(substitute(list(...))[-1]), list)
     if(!missing(package))
         if(is.name(y <- substitute(package)))

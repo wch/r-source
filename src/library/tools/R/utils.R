@@ -1,9 +1,5 @@
 ### Internal utility functions.
 
-### * sQuote
-
-sQuote <- function(s) paste("'", s, "'", sep = "")
-
 ### * .convertFilePathToAbsolute
 
 .convertFilePathToAbsolute <-

@@ -112,8 +112,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	out
     }
 
-    sQuote <- function(s) paste("'", s, "'", sep = "")
-
     if (is.null(lib.loc)) lib.loc <- .libPaths()
 
     if(!missing(package)) {
@@ -143,7 +141,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
 
         if(length(package) != 1)
-            stop("argument `package' must be of length 1")
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
 	pkgname <- paste("package", package, sep = ":")
 	newpackage <- is.na(match(pkgname, search()))
 	if(newpackage) {
@@ -194,8 +193,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(is.character(pos)) {
                 npos <- match(pos, search())
                 if(is.na(npos)) {
-                    warning("`", pos,
-                            "' not found on search path, using pos=2")
+                    warning(paste(sQuote(pos),
+                                  "not found on search path, using",
+                                  sQuote("pos=2")))
                     pos <- 2
                 } else pos <- npos
             }
@@ -380,8 +380,6 @@ library.dynam <-
 function(chname, package = .packages(), lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
-
     .Dyn.libs <- .dynLibs()
     if(missing(chname) || (ncChname <- nchar(chname)) == 0)
         return(.Dyn.libs)
@@ -475,8 +473,6 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     function(package, lib.loc = NULL, quiet = FALSE,
              verbose = getOption("verbose"))
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
-
     useAttached <- FALSE
     if(is.null(lib.loc)) {
         useAttached <- TRUE
@@ -524,7 +520,6 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
 print.packageInfo <- function(x, ...)
 {
     if(!inherits(x, "packageInfo")) stop("wrong class")
-    sQuote <- function(s) paste("'", s, "'", sep = "")
     outFile <- tempfile("RpackageInfo")
     outConn <- file(outFile, open = "w")
     vignetteMsg <-

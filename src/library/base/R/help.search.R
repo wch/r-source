@@ -6,8 +6,6 @@ function(pattern, fields = c("alias", "title"),
 	 verbose = getOption("verbose"),
 	 rebuild = FALSE, agrep = NULL)
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
-
     ### Argument handling.
     TABLE <- c("name", "alias", "title", "keyword")
     if(!missing(pattern)) {
@@ -316,7 +314,6 @@ function(pattern, fields = c("alias", "title"),
 print.hsearch <-
 function(x, ...)
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
     fields <- paste(x$fields, collapse = " or ")
     type <- switch(x$type, fuzzy = "fuzzy", "regular expression")
     db <- x$matches

@@ -9,7 +9,6 @@
 % \alias{.makeFileExts}
 \alias{.makeS3MethodsStopList}
 % \alias{.sourceAssignments}
-% \alias{sQuote}
 % \alias{SweaveParseOptions}
 % \alias{SweaveHooks}
 % \alias{RweaveLatexRuncode}
@@ -48,7 +47,6 @@
   Internal tools functions.
 }
 \usage{
-% sQuote(s)
 % .convertFilePathToAbsolute(path)
 % .delimMatch(x, delim = c("{", "}"), syntax = "Rd")
 % .fileTest(op, x, y)

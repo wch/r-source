@@ -7,7 +7,6 @@ function(object, filename = NULL, name = NULL,
          force.function = FALSE, ...)
 {
     paste0 <- function(...) paste(..., sep = "")
-    sQuote <- function(s) paste("'", s, "'", sep = "")
     
     is.missing.arg <- function(arg)
         typeof(arg) == "symbol" && deparse(arg) == ""
@@ -156,7 +155,6 @@ promptData <-
 function(object, filename = NULL, name = NULL)
 {
     paste0 <- function(...) paste(..., sep = "")
-    sQuote <- function(s) paste("'", s, "'", sep = "")
 
     if(missing(name))
         name <-

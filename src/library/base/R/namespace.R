@@ -108,7 +108,6 @@ loadNamespace <- function (package, lib.loc = NULL,
                     stop(paste(hookname, "failed"))
             }
         }
-        sQuote <- function(s) paste("'", s, "'", sep = "")
         makeNamespace <- function(name, version = NULL, lib = NULL) {
             impenv <- new.env(parent = .BaseNamespaceEnv, hash = TRUE)
             env <- new.env(parent = impenv, hash = TRUE)
@@ -410,7 +409,6 @@ packageHasNamespace <- function(package, package.lib) {
 parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     namespaceFilePath <- function(package, package.lib)
         file.path(package.lib, package, "NAMESPACE")
-    sQuote <- function(s) paste("'", s, "'", sep = "")
     nsFile <- namespaceFilePath(package, package.lib)
     if (file.exists(nsFile))
         directives <- parse(nsFile)
@@ -476,13 +474,14 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
     table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
     if (is.character(method)) {
         wrap <- function(method, home) {
-            method <- method  # force evaluation
-            home <- home      # force evaluation
+            method <- method            # force evaluation
+            home <- home                # force evaluation
             delay(get(method, env = home), env = environment())
         }
         if(!exists(method, env = envir)) {
-            warning("S3 method `", method,
-                    "' was declared in NAMESPACE but not found",
+            warning(paste("S3 method",
+                          sQuote(method),
+                          "was declared in NAMESPACE but not found"),
                     call. = FALSE)
         } else {
             assign(paste(genname, class, sep = "."), wrap(method, envir),

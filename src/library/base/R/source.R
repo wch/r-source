@@ -9,7 +9,6 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 		  enclos = if (is.list(envir) || is.pairlist(envir))
 		  parent.frame())
 	.Internal(eval.with.vis(expr, envir, enclos))
-    sQuote <- function(s) paste("'", s, "'", sep = "")
 
     envir <- if (local)
 	parent.frame()
@@ -93,8 +92,6 @@ sys.source <-
 function(file, envir = NULL, chdir = FALSE,
          keep.source = getOption("keep.source.pkgs"))
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
-
     if(!(is.character(file) && file.exists(file)))
 	stop(paste(sQuote(file), "is not an existing file"))
     oop <- options(keep.source = as.logical(keep.source))
@@ -118,8 +115,6 @@ function(topic, device = getOption("device"),
          package = .packages(), lib.loc = NULL,
          character.only = FALSE, verbose = getOption("verbose"))
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
-
     paths <- .find.package(package, lib.loc, verbose = verbose)
 
     ## Find the directories with a 'demo' subdirectory.
@@ -247,8 +242,6 @@ function(topic, package = .packages(), lib.loc = NULL, local = FALSE,
          echo = TRUE, verbose = getOption("verbose"),
          prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
-
     topic <- substitute(topic)
     if(!is.character(topic))
 	topic <- deparse(topic)[1]
