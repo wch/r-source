@@ -33,7 +33,7 @@
   This section covers the regular expressions allowed
   if \code{extended = TRUE} in \code{grep}, \code{regexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.  They use the GNU implementation of
-  the standard POSIX 1003.2.
+  the POSIX 1003.2 standard.
 
   Regular expressions are constructed analogously to arithmetic
   expressions, by using various operators to combine smaller expressions.
@@ -42,7 +42,7 @@
   a single character.  Most characters, including all letters and
   digits, are regular expressions that match themselves.  Any
   metacharacter with special meaning may be quoted by preceding it with
-  a backslash.
+  a backslash.  The metacharacters are \code{. \\ | ( ) [ \{ ^ $ * + ?}.
 
   A \emph{character class} is a list of characters enclosed by \code{[}
   and \code{]} matches any single character in that list; if the first
@@ -69,7 +69,7 @@
 
     \item{\code{[:cntrl:]}}{
       Control characters.  In ASCII, these characters have octal codes
-      000 through 037, and 177 (\code{DEL}).  In other character set,
+      000 through 037, and 177 (\code{DEL}).  In another character set,
       these are the equivalent characters, if any.}
 
     \item{\code{[:digit:]}}{Digits: \code{0 1 2 3 4 5 6 7 8 9}.}
@@ -105,11 +105,12 @@
   include a literal \code{]}, place it first in the list.  Similarly, to
   include a literal \code{^}, place it anywhere but first.  Finally, to
   include a literal \code{-}, place it first or last. (Only these and
-  \code{\\} remain special.)
+  \code{\\} remain special inside character classes.)
 
   The period \code{.} matches any single character.  The symbol
-  \code{\\w} is a synonym for \code{[[:alnum:]]} and \code{\\W} is a
-  synonym for \code{[^[:alnum]]}.
+  \code{\\w} is documented to be synonym for \code{[[:alnum:]]} and
+  \code{\\W} is its negation.  However, \code{\\w} also
+  matches underscore in the GNU grep code used in \R.
 
   The caret \code{^} and the dollar sign \code{$} are metacharacters
   that respectively match the empty string at the beginning and end of a
@@ -167,16 +168,17 @@
 }
 \section{Basic Regular Expressions}{
   This section covers the regular expressions allowed if
-  \code{extended = FALSE} in \code{grep}, \code{regexpr}, \code{sub}
+  \code{extended = FALSE} in \code{grep}, \code{regexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.
 
   In basic regular expressions the metacharacters \code{?}, \code{+},
   \code{\{}, \code{|}, \code{(}, and \code{)} lose their special meaning;
   instead use the backslashed versions \code{\\?}, \code{\\+},
-  \code{\\ \{}, \code{\\|}, \code{\\(}, and \code{\\)}.
+  \code{\\ \{}, \code{\\|}, \code{\\(}, and \code{\\)}.  Thus the
+  metacharacters are \code{. \\ [ ^ $ *}.
 }
 \section{Perl Regular Expressions}{
-  The \code{perl=TRUE} argument to \code{grep}, \code{regexpr}, \code{sub}
+  The \code{perl = TRUE} argument to \code{grep}, \code{regexpr}, \code{sub}
   and \code{gsub} switches to the PCRE library that \sQuote{implements regular
     expression pattern matching using the same syntax and semantics as Perl
     5.6 or later, with just a few differences}.
@@ -212,7 +214,7 @@
   within patterns, and then apply to the remainder of the pattern.
   Additional options not in Perl include \code{(?U)} to set
   \sQuote{ungreedy} mode (so matching is minimal unless \code{?} is used,
-  when it is greedy).
+  when it is greedy).  Initially none of these options are set.
 
   If you want to remove the special meaning from a sequence of
   characters, you can do so by putting them between \code{\\Q} and
@@ -221,18 +223,18 @@
   Perl, \code{$} and \code{@} cause variable interpolation.
 
   The escape sequences \code{\\d}, \code{\\s} and \code{\\w} represent any
-  decimal digit, and space character and and \sQuote{word} character
+  decimal digit, space character and \sQuote{word} character
   (letter, digit or underscore in the current locale) respectively, and
   their upper-case versions represent their negation.
   Unlike POSIX and earlier versions of Perl and PCRE, vertical tab is
   not regarded as a whitespace character.
 
-  Escape sequence \code{\\a} is BEL, \code{\\e} ESC, \code{\\f}
-  FF, \code{\\n} LF, \code{\\r} CR and \code{\\t} is TAB.  In addition
-  \code{\\cx} is \code{cntrl-x} for any \code{x}, \code{\\ddd} is the
-  octal character \code{ddd} (for up to three digits unless
-  interpretable as a backreference), and \code{\\xhh} specifies a
-  character in hex.
+  Escape sequence \code{\\a} is \code{BEL}, \code{\\e} is \code{ESC},
+  \code{\\f} is \code{FF}, \code{\\n} is \code{LF}, \code{\\r} is
+  \code{CR} and \code{\\t} is \code{TAB}.  In addition \code{\\cx} is
+  \code{cntrl-x} for any \code{x}, \code{\\ddd} is the octal character
+  \code{ddd} (for up to three digits unless interpretable as a
+  backreference), and \code{\\xhh} specifies a character in hex.
 
   Outside a character class, \code{\\b} matches a word boundary,
   \code{\\B} is its negation, \code{\\A} matches at start of subject (even
@@ -272,7 +274,7 @@
 \author{
   This help page is based on the documentation of GNU grep 2.4.2, from
   which the C code used by \R has been taken, the \code{pcre} man
-  page in PCRE 3.9 and the \code{pcrepattern} man page from PCRE 4.4.
+  page from PCRE 3.9 and the \code{pcrepattern} man page from PCRE 4.4.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
