@@ -29,9 +29,9 @@
  * However, in S and here, we allow  *lo == *up, and *ndiv = 0.
  * Note however, that we are NOT COMPLETELY COMPATIBLE to S. [Martin M.]
  *
- * There is a 'parameter' (hardcoded, here), which determines
- * if the interval (up - lo) is ``small'' [<==>	 i_small == 1, below],
- * the variable "Small" := 1e-10, below, underlined by "~~~"
+ * We determine
+ * if the interval (up - lo) is ``small'' [<==>	 i_small == 1, below].
+ * In that case integer overflow might occur in *lo/unit[k] or *up/unit[k].
 
  * For the ``i_small'' situation, there is a NEW PARAMETER `shrink_sml',
  * the factor by which the "scale" is shrunk.		    ~~~~~~~~~~
@@ -56,8 +56,7 @@ int pretty(double *lo, double *up, int *ndiv, double *shrink_sml)
 		cell = i_small = 1;
 	} else {
 		cell = fmax2(fabs(*lo),fabs(*up));
-		i_small = dx < 1e-10 * cell;
-		/*	       ~~~~~ */
+		i_small = dx < cell * 10/(double)INT_MAX;
 	}
 
 	/*OLD: cell = FLT_EPSILON+ dx / *ndiv; FLT_EPSILON = 1.192e-07 */
