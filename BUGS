@@ -239,6 +239,11 @@ Date: Mon, 27 Aug 2001 08:44:22 -0400
 Subject: Re: [R] appending similar data frames?
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Mon, 3 Dec 2001 13:46:35 -0800 (PST)
+* PR# 1214 *
+Subject: syntax questtion, maybe a bug
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
+--Is .2logl meant to be a valid name in R? It is S
 
 Directory:  Low-level
 
@@ -293,6 +298,10 @@ Directory:  Models
 Subject: ltsreg warnings
 From: charlie@stat.umn.edu
 Date: Thu, 29 Nov 2001 17:02:33 +0100 (MET)
+--This has no data to reproduce the problem, nor a system 
+--on which it was done (bug.report was *not* used)
+--
+--More likely a numerical problem on the particular machine used.
 
 Directory:  Startup
 
@@ -325,6 +334,11 @@ From: Gordon Lack <gml4410@ggr.co.uk>
 Date: Fri, 26 Oct 2001 19:04:04 +0100
 --error from using SGI libblas (not reported on other systems?)
 --use --without-blas
+* PR# 1215 *
+Subject: Error when library() called with no arguments
+From: rpeng@stat.ucla.edu
+Date: Thu, 13 Dec 2001 20:51:21 +0100 (MET)
+--not reproducible even on other RH7.1 systems
 
 Directory:  TooMuchAtOnce
 
@@ -348,19 +362,7 @@ Directory:  incoming
 Subject: a patch to tapply
 From: Vadim Ogranovich <vograno@arbitrade.com>
 Date: Thu, 29 Nov 2001 14:48:35 -0600
-* PR# 1212 *
-Subject: sample
-From: possolo@crd.ge.com
-Date: Thu, 13 Dec 2001 15:41:06 +0100 (MET)
-* PR# 1214 *
-Subject: syntax questtion, maybe a bug
-From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
-* PR# 1215 *
-Subject: Error when library() called with no arguments
-From: rpeng@stat.ucla.edu
-Date: Thu, 13 Dec 2001 20:51:21 +0100 (MET)
-* PR# 1216 *
-Subject: binomial null model
-From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
-Date: Fri, 14 Dec 2001 11:55:18 -0400
+* PR# 1217 *
+Subject: problem
+From: "Jean-Michel Barani" <jmbarani@wanadoo.fr>
+Date: Sat, 15 Dec 2001 16:54:16 +0100
