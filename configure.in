@@ -501,6 +501,7 @@ case "${host}" in
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee")
     ;;
   *hpux*)
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     AC_DEFINE(USE_BUILTIN_RINT)
     case "${CC}" in
       cc|c89)
