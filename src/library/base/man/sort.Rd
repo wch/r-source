@@ -49,6 +49,8 @@ is.unsorted(x, na.rm = FALSE)
   \code{partial} is \code{NULL}.  It is normally somewhat faster than
   Shellsort (perhaps twice as fast on vectors of length a million) but
   has poor performance in the rare worst case.
+  (Peto's modification using a pseudo-random midpoint is used to make
+  the worst case rarer.)
 }
 \value{
   For \code{sort} the sorted vector unless

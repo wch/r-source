@@ -276,10 +276,12 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* faster versions of shellsort, following Sedgewick (1986) */
 
-#define hinit(n) ((n)>=4)?(n)/4:1
+static int incs[16] = {1073790977, 268460033, 67121153, 16783361, 4197377,
+		       1050113, 262913, 65921, 16577, 4193, 1073, 281, 77, 
+		       23, 8, 1};
 
 #define sort2_body \
-    for (h = hinit(n); t > 0; t /= 2, h = t*t - (3*t)/2 + 1) \
+    for (h = incs[t]; t < 16; h = incs[++t]) \
 	for (i = h; i < n; i++) { \
 	    v = x[i]; \
 	    j = i; \
@@ -293,7 +295,7 @@ static void R_isort2(int *x, int n, Rboolean decreasing)
     int v;
     int i, j, h, t;
 
-    for (t = 1; 4*t*t <= n; t += t);
+    for (t = 0; incs[t] > n; t++);
     if(decreasing)
 #define less <
 	sort2_body
@@ -309,7 +311,7 @@ static void R_rsort2(double *x, int n, Rboolean decreasing)
     double v;
     int i, j, h, t;
 
-    for (t = 1; 4*t*t <= n; t += t);
+    for (t = 0; incs[t] > n; t++);
     if(decreasing)
 #define less <
 	sort2_body
@@ -325,8 +327,8 @@ static void R_csort2(Rcomplex *x, int n, Rboolean decreasing)
     Rcomplex v;
     int i, j, h, t;
 
-    for (t = 1; 4*t*t <= n; t += t);
-    for (h = hinit(n); t > 0; t /= 2, h = t*t - (3*t)/2 + 1)
+    for (t = 0; incs[t] > n; t++);
+    for (h = incs[t]; t < 16; h = incs[++t])
 	for (i = h; i < n; i++) {
 	    v = x[i];
 	    j = i;
@@ -347,8 +349,8 @@ void ssort2(SEXP *x, int n, Rboolean decreasing)
     SEXP v;
     int i, j, h, t;
 
-    for (t = 1; 4*t*t <= n; t += t);
-    for (h = hinit(n); t > 0; t /= 2, h = t*t - (3*t)/2 + 1)
+    for (t = 0; incs[t] > n; t++);
+    for (h = incs[t]; t < 16; h = incs[++t])
 	for (i = h; i < n; i++) {
 	    v = x[i];
 	    j = i;
@@ -576,8 +578,8 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
     int i, j, h, t;
     int itmp;
 
-    for (t = 1; 4*t*t <= n; t += t);
-    for (h = hinit(n); t > 0; t /= 2, h = t*t - (3*t)/2 + 1)
+    for (t = 0; incs[t] > n; t++);
+    for (h = incs[t]; t < 16; h = incs[++t])
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
 	    j = i;
@@ -592,7 +594,7 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 }
 
 #define sort2_with_index \
-	    for (h = hinit(hi-lo); t > 0; t /= 2, h = t*t - (3*t)/2 + 1) \
+            for (h = incs[t]; t < 16; h = incs[++t]) \
 		for (i = lo + h; i <= hi; i++) { \
 		    itmp = indx[i]; \
 		    j = i; \
@@ -643,7 +645,7 @@ static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 	case REALSXP:
     case STRSXP:
 	    if (!nalast) for (i = 0; i < n; i++) isna[i] = !isna[i];
-	    for (t = 1; 4*t*t <= n; t += t);
+	    for (t = 0; incs[t] > n; t++);
 #define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
 	    sort2_with_index
 #undef less
@@ -654,7 +656,7 @@ static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
        to run a final insertion sort to re-order runs of ties when
        comparison is cheap.
     */
-    for (t = 1; 4*t*t <= hi-lo; t += t);
+    for (t = 0; incs[t] > hi-lo; t++);
     switch (TYPEOF(key)) {
     case LGLSXP:
     case INTSXP:

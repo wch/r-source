@@ -10,6 +10,7 @@
 
  * This is a modification of CACM algorithm #347 by R. C. Singleton,
  * which is a modified Hoare quicksort.
+ * This version incorporates the modification in the remark by Peto.
 */
 
     int il[31], iu[31];
@@ -18,6 +19,7 @@
      * now        k = 31 -> n_max = 4294'967'295
      */
     NUMERIC vt, vtt;
+    double R = 0.375;
     int ii, ij, k, l, m;
 #ifdef qsort_Index
     int it, tt;
@@ -35,10 +37,11 @@
 
   L10:
     if (i < j) {
-
+	if (R < 0.5898437) R += 0.0390625; else R -= 0.21875;
       L20:
 	k = i;
-	ij = (j + i) >> 1;/* midpoint */
+	/* ij = (j + i) >> 1; midpoint */
+	ij = i + (int)((j - i)*R);
 #ifdef qsort_Index
 	it = I[ij];
 #endif
