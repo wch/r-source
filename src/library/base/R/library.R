@@ -407,7 +407,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 ## but we have not checked.
                 file <- system.file("Meta", "package.rds", package = i,
                                     lib.loc = lib)
-                title <- if(file != "") .readRDS(file)["Title"] else NA
+                title <- if(file != "") {
+                    tmp <- .readRDS(file)
+                    if(is.list(tmp)) tmp <- tmp$DESCRIPTION
+                    tmp["Title"]
+                } else NA
 #                 if(title == "") {
 #                     file <- system.file("DESCRIPTION", package = i,
 #                                         lib.loc = lib)
