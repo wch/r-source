@@ -81,7 +81,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
     SET_VECTOR_ELT(val, 0, s);
     SET_VECTOR_ELT(val, 1, u);
     SET_VECTOR_ELT(val, 2, v);
-    UNPROTECT(3);
+    UNPROTECT(2);
     return val;
 }
 
