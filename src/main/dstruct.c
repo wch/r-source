@@ -106,7 +106,7 @@ SEXP mkChar(const char *name)
 /*  mkSYMSXP - return a symsxp with the string  */
 /*             name inserted in the name field  */
 
-static int ddVal(SEXP name)
+static int isDDName(SEXP name)
 {
     char *buf, *endp;
 
@@ -129,7 +129,7 @@ SEXP mkSYMSXP(SEXP name, SEXP value)
     int i;
     PROTECT(name);
     PROTECT(value);
-    i = ddVal(name);
+    i = isDDName(name);
     c = allocSExp(SYMSXP);
     SET_PRINTNAME(c, name);
     SET_SYMVALUE(c, value);
