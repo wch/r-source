@@ -30,7 +30,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.15 $ ';
+my $revision = ' $Revision: 1.16 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -138,7 +138,12 @@ foreach $pkg (@ARGV){
 
     if(! $opt_library){
 	$library = $pkgoutdir;
-	$ENV{'R_LIBS'} = "$library:$R_LIBS";
+	if($WINDOWS){
+	    $ENV{'R_LIBS'} = "$library;$R_LIBS";
+	}
+	else{
+	    $ENV{'R_LIBS'} = "$library:$R_LIBS";
+	}
     }
 
     print "\n";
@@ -533,25 +538,25 @@ Usage: $name [options] pkgdirs
 Check R packages from package sources in the directories specified by
 pkgdirs.  A variety of diagnostic checks on directory structure, index
 and control files are performed. All examples provided by the
-packages' documentation are tested if they run succesfully. Finally,
+packages\' documentation are tested if they run succesfully. Finally,
 the package is installed into the log directory (which includes the
 translation of all Rd files into several formats), and the Rd files are
 tested by LaTeX (if available).
 
-If necessary for passing the checks, use the \`--vsize' and \`--nsize'
-options to increase R's memory (\`--vanilla' is used by default).
+If necessary for passing the checks, use the \`--vsize\' and \`--nsize\'
+options to increase R's memory (\`--vanilla\' is used by default).
 
 Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
 
-  --vsize=N             set R's vector heap size to N bytes
-  --nsize=N             set R's number of cons cells to N
+  --vsize=N             set R\'s vector heap size to N bytes
+  --nsize=N             set R\'s number of cons cells to N
   -l, --library         library directory used for test installation
                         of packages (default is outdir)
 
   -o, --outdir=dir      directory used for logfiles, R output, etc.
-                        (default is \`pkg.Rcheck' in current directory)
+                        (default is \`pkg.Rcheck\' in current directory)
   --clean --noclean     Clean outdir before using it?
 
   --examples --noexamples    Run all examples in the Rd files?

@@ -1,5 +1,23 @@
 #! @PERL@
 #-*- perl -*-
+# Copyright (C) 2000 R Development Core Team
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# writing to the Free Software Foundation, Inc., 59 Temple Place,
+# Suite 330, Boston, MA  02111-1307  USA.
+
+# Send any bug reports to R-bugs@lists.r-project.org
 
 use Cwd;
 use File::Basename;
@@ -14,17 +32,30 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.7 $ ';
+my $revision = ' $Revision: 1.8 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-$make = "@MAKE@";
+$make = '@MAKE@';
 
 my @knownoptions = ("help|h", "version|v", "binary", "no-docs",
 		    "use-zip", "use-zip-help", "use-zip-data");
+
+my $WINDOWS = R_getenv("R_UNDER_WINDOWS", 0);
+my $tmpdir = R_getenv("TMPDIR", "/tmp");
+my $R_exe = "${R_HOME}/bin/R";
+
+if($WINDOWS){
+    $tmpdir = R_getenv("TMPDIR", "/TEMP");
+    $R_exe = "Rterm.exe";
+    $MAKE = "make";
+    @knownoptions = ("help|h", "version|v", "binary", "docs:s",
+		    "use-zip", "use-zip-help", "use-zip-data");
+}
+
 
 GetOptions (@knownoptions) || usage();
 
@@ -33,22 +64,29 @@ usage() if $opt_help;
 
 my $startdir=getcwd();
 
-my $tmpdir = R_getenv("TMPDIR", "/tmp");
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
+
 my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
+
+my $R_CMD = $ENV{'R_CMD'} ||
+    die "Error: Environment variable R_CMD not found\n";
 
 my $INS_opts = "";
 $INS_opts .= " --use-zip" if $opt_use_zip;
 $INS_opts .= " --use-zip-data" if $opt_use_zip_data;
 $INS_opts .= " --use-zip-help" if $opt_use_zip_help;
-$INS_opts .= " --no-docs" if $opt_no_docs;
+if($WINDOWS) {
+    $INS_opts .= " --docs=$opt_docs" if $opt_docs;
+} else {
+    $INS_opts .= " --no-docs" if $opt_no_docs;
+}
 
 if(!$opt_binary && $INS_opts ne "") {
     printf "** Options $INS_opts for --binary ignored\n";
 }
 
-## this is the main loop over all packages that shall be checked
+## this is the main loop over all packages to be checked
 my $pkg;
 foreach $pkg (@ARGV){
     my $is_bundle=0;
@@ -75,14 +113,11 @@ foreach $pkg (@ARGV){
 	mkdir("$tmpdir/Rbuild.$$", 0755) ||
 	    die "Cannot create directory $tmpdir/Rbuild.$$\n";
 
-	if(system("${R_HOME}/bin/R INSTALL -l $libdir $INS_opts $pkg")){
+	if(system("$R_CMD INSTALL -l $libdir $INS_opts $pkg")){
 	    $log->error("installation failed");
 	}
 	print("\n");
 	chdir($libdir);
-	my $filename =  "${pkgname}_" . $description->{"Version"} .
-	    "_${R_platform}.tar";
-	$log->message("building \`$filename.gz'");
 	
 	my $pkgs = $pkg;
 	if($description->{"Contains"}){
@@ -90,10 +125,22 @@ foreach $pkg (@ARGV){
 	    $is_bundle=1;
 	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
 	    $pkgs = join(" ", @bundlepkgs);
-	}	
-	system("tar -c -h -f $startdir/$filename $pkgs");
-	chdir($startdir);
-	system("gzip -9f $filename");
+	}
+
+	if($WINDOWS) {
+	    my $filename =  "${pkgname}_" . $description->{"Version"};
+	    $log->message("building \`$filename.zip'");
+	    system("zip -r9X $startdir/$filename.zip $pkgs");
+	    chdir($startdir);
+	} else {
+	    my $filename =  "${pkgname}_" . $description->{"Version"} .
+		"_${R_platform}.tar";
+	    $log->message("building \`$filename.gz'");
+	    system("tar -c -h -f $startdir/$filename $pkgs");
+	    chdir($startdir);
+	    system("gzip -9f $filename");
+	}
+
 	rmtree($libdir);
     }
     else{
@@ -149,6 +196,7 @@ sub deleteJunkFiles {
 sub findExcludeFiles {
 
     print exclude "$File::Find::name\n" if (-d $_ && /^check$/);
+    print exclude "$File::Find::name\n" if (-d $_ && /^chm$/);
     print exclude "$File::Find::name\n" if (-d $_ && /[Oo]ld$/);
     print exclude "$File::Find::name\n" if /^GNUMakefile$/;
     print exclude "$File::Find::name\n" if /^CVS$/;
@@ -166,21 +214,24 @@ sub prepare_pkg {
 
     chdir($pkg);
     my $pkgdir = getcwd();
+    my $pkgname = basename($pkg);
+
     if(-d "src"){
 	chdir("src");
 	$log->message("cleaning src");
-	if(-r "Makefile"){
-	    system("$make clean");
+	if($WINDOWS && -r "Makefile.win"){
+	    system("$make -f Makefile.win clean");
 	}
 	else{
 	    my $file;
-	    foreach $file (<*.o *s[lo]>){
+	    foreach $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>){
+#	    foreach $file (<*.o *s[lo]>){
 		unlink($file);
 	    }
 	}
     }
     chdir($pkgdir);
-    if(-x "./cleanup"){
+    if(!$WINDOWS && -x "./cleanup"){
 	$log->message("running cleanup");
 	system("./cleanup");
     }
@@ -204,16 +255,18 @@ Options:
   -v, --version		print version info and exit
 
   --binary              build pre-compiled binary packages, with options:
-  --no-docs             do not build and install documentation
+END
+    if($WINDOWS) {
+    print "  --docs=TYPE	   type(s) of documentation to build and install\n";
+} else {
+    print "  --no-docs             do not build and install documentation\n"
+}
+    print STDERR <<END;
   --use-zip-data        collect data files in zip archive
   --use-zip-help        collect help and examples into zip archives
-  --use-zip             combine `--use-zip-data' and `--use-zip-help'
+  --use-zip             combine \`--use-zip-data\' and \`--use-zip-help\'
 
 Email bug reports to <r-bugs\@lists.r-project.org>.
 END
     exit 0;
 }
-
-
-
-

@@ -30,6 +30,8 @@ NEW FEATURES
         runs LaTeX on the help pages. Build has been reduced to
         cleaning, rewriting indices and creating tar files.
 
+	The same files of Perl code are now also used under Windows.
+
     o   Add-ons for utilities like perl or LaTeX have now a central
         place in $R_HOME/share. Migration of existing files might take
         a while, though.

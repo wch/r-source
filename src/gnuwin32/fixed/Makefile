@@ -30,21 +30,26 @@ fixh: h/config.h ../../include/FFDecl.h ../../include/FFTab.h \
 	$(ECHO) done > fixh
 
 ../../include/Rconfig.h: h/config.h
-#	sh ./GETCONFIG > ../../include/Rconfig.h
-	sed -e 1d ../../../tools/GETCONFIG > GC
+	$(SED) -e 1d ../../../tools/GETCONFIG > GC
 	(cd h; sh ../GC > ../../../include/Rconfig.h)
-	rm GC
+	$(RM) GC
 
 ../../include/Rversion.h: ../../../date-stamp ../../../VERSION
-#	sh ./GETVERSION > ../../include/Rversion.h
-	sed -e 1d ../../../tools/GETVERSION > ../../../tools/GV
+	$(SED) -e 1d ../../../tools/GETVERSION > ../../../tools/GV
 	sh ../../../tools/GV > $@
-	rm ../../../tools/GV
+	$(RM) ../../../tools/GV
 
 ../../../bin/massage-Examples.sh: ../../scripts/massage-Examples
 	sed -e 1d $< > $@
 
-fixbin: ../../../bin/massage-Examples.sh cp2bin
+../../../bin/check: ../../scripts/check.in
+	$(CP) $< $@
+
+../../../bin/build: ../../scripts/build.in
+	$(CP) $< $@
+
+fixbin: ../../../bin/massage-Examples.sh ../../../bin/build \
+	 ../../../bin/check  cp2bin
 	$(ECHO) done > fixbin
 
 cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
