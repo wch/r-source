@@ -56,17 +56,16 @@ file.copy <- function(from, to, overwrite=FALSE)
     if (!(nt <- length(to)))   stop("no files to copy to")
     if (nt == 1 && file.exists(to) && file.info(to)$isdir)
         to <- file.path(to, from)
-    else if (nf > nt)
-        stop(paste("more", sQuote("from"), "files than", sQuote("to"),
-                   "files"))
-    if(!overwrite) {
-        if(nt > nf) from <- rep(from, length = nt)
-        exists <- file.exists(from)
-        from <- from[exists]
-        to <- to[exists]
+    else if (nf > nt)  stop("more `from' files than `to' files")
+    if(nt > nf) from <- rep(from, length = nt)
+    if (!overwrite) okay <- !file.exists(to)
+    else okay <- rep(TRUE, length(to))
+    if (any(from[okay] %in% to[okay])) stop("file can't be copied both from and to")
+    if (any(okay)) { 
+    	file.create(to[okay])
+    	okay[okay] <- file.append(to[okay], from[okay])
     }
-    file.create(to)
-    file.append(to, from)
+    okay
 }
 
 file.symlink <- function(from, to) {
