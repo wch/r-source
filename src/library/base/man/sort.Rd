@@ -13,7 +13,7 @@ sort(x, partial = NULL, na.last = NA, decreasing = FALSE,
 is.unsorted(x, na.rm = FALSE)
 }
 \arguments{
-  \item{x}{a numeric or complex vector.}
+  \item{x}{a numeric, complex, character or logical vector, or a factor.}
   \item{partial}{a vector of indices for partial sorting.}
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
@@ -22,7 +22,7 @@ is.unsorted(x, na.rm = FALSE)
   \item{method}{character specifying the algorithm used.}
   \item{index.return}{logical indicating if the ordering index vector should
     be returned as well; this is only available for the default
-  \code{na.last = NA}.}
+    \code{na.last = NA} and non-factors.}
   \item{na.rm}{logical.  Should missing values be removed?}
 }
 \details{
@@ -41,7 +41,7 @@ is.unsorted(x, na.rm = FALSE)
   increasingly, i.e., \code{is.unsorted(x)} is true if \code{any(x !=
     sort(x))} (and there are no \code{NA}s).
 
-  \code{method = "shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant
+  Method \code{"shell"} uses Shellsort (an \eqn{O(n^{4/3})} variant
   from Sedgewick (1996)).  If \code{x} has names a stable sort is used,
   so ties are not reordered.  (This only matters if names are present.)
 
