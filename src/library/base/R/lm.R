@@ -225,7 +225,7 @@ summary.lm <- function (z, correlation = FALSE)
 	ans$residuals <- r
 	ans$coefficients <- cbind(est, se, tval, 2*(1 - pt(abs(tval), n - p)))
 	dimnames(ans$coefficients)<-list(names(z$coefficients)[z$qr$pivot[p1]],
-		c("Estimate", "Std.Error", "t Value", "Pr(>|t|)"))
+		c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
 	ans$sigma <- sqrt(resvar)
 	ans$df <- c(p, n - p, NCOL(z$qr$qr))
 	if (p != attr(z$terms, "intercept")) {
@@ -377,7 +377,7 @@ function(obj, full=FALSE)
 case.names.lm <- function(obj, full=FALSE)
 {
 	w <- weights(obj)
-	dn <- .Alias(dimnames(obj$qr$qr)[[1]])
+	dn <- .Alias(names(obj$residuals))
 	if(full || is.null(w)) dn else dn[w!=0]
 }
 

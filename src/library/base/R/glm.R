@@ -521,22 +521,20 @@ summary.glm <- function(object, dispersion = NULL,
 		s.err <- sqrt(var.cf)
 		tvalue <- coef.p/s.err
 	}
+        dn <- c("Estimate", "Std. Error")
 	if(est.disp) {
 		pvalue <- 2*pt(-abs(tvalue), df.r)
 		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
 		dimnames(coef.table) <- list(names(coef.p),
-				     c("Value","Std.error","t value","P(>|t|)"))
-	}
-	else if(df.r > 0) {
+				     c(dn, "t value","Pr(>|t|)"))
+	} else if(df.r > 0) {
 		pvalue <- 2*pnorm(-abs(tvalue))
 		coef.table <- cbind(coef.p, s.err, tvalue, pvalue)
 		dimnames(coef.table) <- list(names(coef.p),
-				     c("Value","Std.error","z value","P(>|z|)"))
-	}
-	else { ## df.r == 0
+				     c(dn, "z value","Pr(>|z|)"))
+	} else { ## df.r == 0
 		coef.table <- cbind(coef.p, Inf)
-		dimnames(coef.table) <- list(names(coef.p),
-				     c("Value","Std.error"))
+		dimnames(coef.table) <- list(names(coef.p), dn)
 	}
 	## return answer
 
