@@ -41,6 +41,9 @@ names.dist <- function(d) attr(d, "Labels")
     d
 }
 
+## Because names(d) != length(d) for "dist"-object d, we need
+format.dist <- function(x, ...) format(as.vector(x), ...)
+
 as.matrix.dist <- function(x)
 {
     size <- attr(x, "Size")
@@ -79,9 +82,9 @@ as.dist <- function(m, diag = FALSE, upper=FALSE)
 print.dist <- function(x, diag = NULL, upper = NULL, ...)
 {
     if(is.null(diag))
-	diag <- if(is.null(attr(x, "Diag"))) FALSE else attr(x, "Diag")
+	diag <-  if(is.null(a <- attr(x, "Diag"))) FALSE else a
     if(is.null(upper))
-	upper <- if(is.null(attr(x,"Upper"))) FALSE else attr(x, "Upper")
+	upper <- if(is.null(a <- attr(x,"Upper"))) FALSE else a
 
     size <- attr(x, "Size")
     df <- as.matrix.dist(x)
@@ -92,5 +95,3 @@ print.dist <- function(x, diag = NULL, upper = NULL, ...)
     print(if(diag || upper) df else df[-1, -size], na = "")
     invisible(x)
 }
-
-

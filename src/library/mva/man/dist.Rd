@@ -9,6 +9,7 @@ as.dist(m, diag = NULL, upper = NULL)
 }
 \alias{dist}
 \alias{print.dist}
+\alias{format.dist}
 \alias{as.matrix.dist}
 \alias{names.dist}
 \alias{names<-.dist}
@@ -35,18 +36,17 @@ as.dist(m, diag = NULL, upper = NULL)
 \details{
   Available distance measures are (written for two vectors \eqn{x} and
   \eqn{y}): 
-  \itemize{
-    \item Euclidean: Usual square distance between the two vectors (2 norm).
-    \item Maximum: Maximum distance between two components of \eqn{x}
-    and \eqn{y} (supremum norm)
-    \item Manhattan: Absolute distance between the two vectors (1
-    norm).
-    \item Canberra: \eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{sum(|x_i - y_i| / |x_i + y_i|)}
-    \item Count the number of different bits in \eqn{x} and \eqn{y}
-    where at least one of the two bits is 1, i.e., components where both
-    bits are zero are ignored.
+  \describe{
+    \item{\code{euclidean}:}{Usual square distance between the two vectors (2 norm).}
+    \item{\code{maximum}:}{Maximum distance between two components of \eqn{x}
+    and \eqn{y} (supremum norm)}
+    \item{\code{manhattan}:}{Absolute distance between the two vectors (1 norm).}
+    \item{\code{canberra}:}{\eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{%
+	                           sum(|x_i - y_i| / |x_i + y_i|)}}
+    \item{\code{binary}:}{(aka \emph{asymmetric binary}): Count the number of
+    different bits in \eqn{x} and \eqn{y} where at least one of the two
+    bits is 1, i.e., components where both bits are zero are ignored.}
   }
-  
   The functions \code{as.matrix.dist()} and \code{as.dist()} can be used
   for conversion between objects of class \code{"dist"} and conventional
   distance matrices and vice versa.
