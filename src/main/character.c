@@ -29,7 +29,11 @@
 
 #include "Defn.h"
 /* The next must come after other header files to redefine RE_DUP_MAX */
-#include "regex.h"
+#ifdef USE_SYSTEM_REGEX
+#include <regex.h>
+#else
+#include "Rregex.h"
+#endif
 
 #ifndef MAX
 #define MAX(a, b) ((a) > (b) ? (a) : (b))

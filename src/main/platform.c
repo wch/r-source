@@ -276,8 +276,12 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #elif HAVE_NDIR_H
 # include <ndir.h>
 #endif
-#include "regex.h"
 
+#ifdef USE_SYSTEM_REGEX
+#include <regex.h>
+#else
+#include "Rregex.h"
+#endif
 
 static SEXP filename(char *dir, char *file)
 {

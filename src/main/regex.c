@@ -19,18 +19,21 @@
    write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
    Boston, MA 02111-1307, USA.  */
 
-#ifndef USE_SYSTEM_REGEX
+
 /* AIX requires this to be the first thing in the file. */
 #if defined _AIX && !defined REGEX_MALLOC
   #pragma alloca
 #endif
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
+#ifndef USE_SYSTEM_REGEX
+
 #undef	_GNU_SOURCE
 #define _GNU_SOURCE
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #ifndef PARAMS
 # if defined __GNUC__ || (defined __STDC__ && __STDC__)
@@ -167,7 +170,7 @@ char *realloc ();
 #endif /* not emacs */
 
 /* Get the interface, including the syntax bits.  */
-#include "regex.h"
+#include "Rregex.h"
 
 /* isalpha etc. are used for the character classes.  */
 #include <ctype.h>
