@@ -39,6 +39,14 @@ identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
 
   The identification process is terminated by pressing any mouse button
   other than the first, or by clicking outside the graphics window.
+
+  If the window is resized or hidden and then exposed before the identification
+  process has terminated, any labels drawn by \code{identify}
+  will disappear.  These will reappear once the identification process has 
+  terminated and the window is resized or hidden and exposed again.
+  This is because the labels drawn by \code{identify} are not
+  recorded in the device's display list until the identification process has
+  terminated.
 }
 \value{
   If \code{pos} is \code{FALSE}, an integer

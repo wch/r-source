@@ -29,5 +29,13 @@ locator(n = 512, type = "n")
   has been called with the same value of \code{type}. The plotting of
   the points and lines is subject to clipping, but locations outside the
   current clipping rectangle will be returned.
+
+  If the window is resized or hidden and then exposed before the input 
+  process has terminated, any lines or points drawn by \code{locator}
+  will disappear.  These will reappear once the input process has 
+  terminated and the window is resized or hidden and exposed again.
+  This is because the points and lines drawn by \code{locator} are not
+  recorded in the device's display list until the input process has
+  terminated.
 }
 \keyword{iplot}
