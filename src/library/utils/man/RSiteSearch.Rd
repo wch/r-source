@@ -7,7 +7,7 @@
 \description{
   Search for key words or phrases in the R-help mailing list
   archives, or \R manuals and help pages, using the search engine at
-  \url{http://finzi.psych.upenn.edu} and view them in a web browser.
+  \url{http://search.r-project.org} and view them in a web browser.
 }
 \usage{
 RSiteSearch(string,
@@ -40,8 +40,9 @@ RSiteSearch(string,
 }
 \details{
   This function is designed to work with the search site at
-  \url{http://finzi.psych.upenn.edu}, and depends on that site
-  continuing to be made available (thanks to Jon Baron).
+  \url{http://search.r-project.org}, and depends on that site
+  continuing to be made available (thanks to Jonathan Baron and the
+  School of Arts and Sciences of the University of Pennslyvania).
 
   Unique partial matches will work for all arguments.  Each new
   browser window will stay open unless you close it.

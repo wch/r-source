@@ -2,7 +2,7 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
                         format = "normal", sortby = "score",
                         matchesPerPage = 20)
 {
-    string <- paste("http://finzi.psych.upenn.edu/cgi-bin/namazu.cgi?query=",
+    string <- paste("http://search.r-project.org/cgi-bin/namazu.cgi?query=",
                     gsub(" ", "+", string), sep = "")
     mpp <- paste("max=", matchesPerPage, sep = "")
 
@@ -47,7 +47,7 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
 
     qstring <- paste(string, mpp, format, sortby, res, sep = "&")
     browseURL(qstring)
-    cat("A search query has been submitted to http://finzi.psych.upenn.edu\n")
+    cat("A search query has been submitted to http://search.r-project.org\n")
     cat("The results page should open in your browser shortly\n")
     invisible(qstring)
 }
