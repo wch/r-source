@@ -3191,6 +3191,19 @@ static Rboolean gzcon_open(Rconnection con)
     return TRUE;
 }
 
+static void putLong(Rconnection con, uLong x)
+{
+    int n;
+    unsigned char buf[4];
+    
+    for (n = 0; n < 4; n++) {
+	buf[n] = (x & 0xff);
+        x >>= 8;
+    }
+    con->write(&buf, 4, 1, con);
+}
+
+
 static void gzcon_close(Rconnection con)
 {
     Rgzconn priv = (Rgzconn)con->private;
@@ -3223,8 +3236,9 @@ static void gzcon_close(Rconnection con)
 	    if (priv->z_err != Z_OK && priv->z_err != Z_STREAM_END) break;
 	}
 	err = deflateEnd(&(priv->s));
-        icon->write(&(priv->crc), 1, sizeof(uLong), icon);
-        icon->write(&(priv->s.total_in), 1, sizeof(uLong), icon);
+	/* NB: these must be little-endian */
+	putLong(icon, priv->crc);
+	putLong(icon, priv->s.total_in);
     } else err = inflateEnd(&(priv->s));
     if(priv->inbuf) {free(priv->inbuf); priv->inbuf = Z_NULL;}
     if(priv->outbuf) {free(priv->outbuf); priv->outbuf = Z_NULL;}
@@ -3237,8 +3251,9 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 {
     Rgzconn priv = (Rgzconn)con->private;
     Rconnection icon = priv->con;
-    Bytef *start = (Bytef*)ptr;
+    Bytef *start = (Bytef*)ptr, buf[4];
     uLong crc;
+    int n;
 
     priv->s.next_out = (Bytef*)ptr;
     priv->s.avail_out = size*nitems;
@@ -3256,8 +3271,10 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    priv->crc = crc32(priv->crc, start, 
 			      (uInt)(priv->s.next_out - start));
 	    start = priv->s.next_out;
-	    icon->read(&crc, 1, sizeof(uLong), icon);
-	    
+	    /* CRC is little-endian on file */
+	    icon->read(&buf, 1, sizeof(uLong), icon);
+	    crc = 0;
+	    for (n = 0; n < 4; n++) {crc <<= 8; crc += buf[n];}
 	    if (crc != priv->crc) priv->z_err = Z_DATA_ERROR;
 	}
 	if (priv->z_err != Z_OK || priv->z_eof) break;
