@@ -1,4 +1,5 @@
-#!/usr/local/bin/perl
+#! @PERL@
+#-*- perl -*- (for *.in)
 #
 # Show those *.Rd files which do  NOT have a \keyword{.}
 #
