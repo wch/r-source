@@ -28,8 +28,9 @@ as.dendrogram.hclust(object, \dots)
          nodePar = NULL, edgePar = list(), xlab="", ylab="",
          horiz = FALSE, \dots)
 \method{cut}{dendrogram}(x, h, \dots)
-\method{str}{dendrogram}(x, \dots)
-\method{print}{dendrogram}(x, \dots)
+%\method{str}{dendrogram}(x, \dots)% codoc warning; MM: hate to document
+% all arguments : user should rather look at ?str
+\method{print}{dendrogram}(x, digits, \dots)
 }
 \arguments{
   \item{object}{any \R object that can be made into a class
@@ -54,6 +55,8 @@ as.dendrogram.hclust(object, \dots)
   \item{h}{height at which the tree is cut.}
   \item{\dots, xlab, ylab}{graphical parameters, or arguments for
     other methods.}
+  \item{digits}{integer specifiying the precision for printing, see
+    \code{\link{print.default}}.}
 }
 \details{
   Warning: This documentation is preliminary.
