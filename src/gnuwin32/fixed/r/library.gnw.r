@@ -154,7 +154,7 @@ library.dynam <-
     }
     if (verbose)
       cat("now dyn.load(", file, ")..\n", sep = "")
-    .Internal(dyn.load(file))
+    .Internal(dyn.load(file, TRUE, TRUE))
     assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
   }
   invisible(.Dyn.libs)

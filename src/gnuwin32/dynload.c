@@ -1,7 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997  The R Core Team
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997-1999 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,8 +50,8 @@
  *  2. The dlopen interface is not available.
  *
  *  In this case we use the table "CFunTabEntry" to locate functions
- *  in the executable.  We do this by straight linear search through
- *  the table.  Note that the content of the table is created at
+ *  in the executable.	We do this by straight linear search through
+ *  the table.	Note that the content of the table is created at
  *  system build time from the list in ../appl/ROUTINES.
  */
 
@@ -70,14 +70,13 @@ typedef int (*DL_FUNC) ();
 typedef struct {
     char *name;
     DL_FUNC func;
-}     CFunTabEntry;
+} CFunTabEntry;
 
 #include "FFDecl.h"
-#include "FFDecl.h"
 
-        /* This provides a table of built-in C and Fortran functions */
-        /* We include this table, even when we have dlopen and friends */
-        /* This is so that the functions are actually loaded at link time */
+/* This provides a table of built-in C and Fortran functions.
+   We include this table, even when we have dlopen and friends.
+   This is so that the functions are actually loaded at link time. */
 
 static CFunTabEntry CFunTab[] =
 {
@@ -102,9 +101,9 @@ static struct {
 
 LoadedDLL[MAX_NUM_DLLS];
 
-        /* Remove the specified DLL from the current DLL list */
-        /* Returns 1 if the DLL was found and removed from */
-        /* the list and returns 0 otherwise. */
+	/* Remove the specified DLL from the current DLL list */
+	/* Returns 1 if the DLL was found and removed from */
+	/* the list and returns 0 otherwise. */
 
 static int DeleteDLL(char *path)
 {
@@ -250,7 +249,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "character argument expected\n");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
-    if (!AddDLL(buf,LOGICAL(CADR(args))[0]),LOGICAL(CADR(args))[1])))
+    if (!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
 	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
 		  buf, DLLerror);
     return R_NilValue;
