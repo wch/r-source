@@ -45,7 +45,7 @@ BUG FIXES
 
     o   RweaveLatex.Rd had unbalanced braces in section "Supported
         Options".
-    
+
     o   merge() with multiple and differently-named match columns
         failed. (PR#1510)
 
@@ -73,6 +73,8 @@ BUG FIXES
     o   On systems (e.g. Windows) using R's own code for expm1, the
 	values were wrong for large negative x, and this affected
 	pweibull, for example.
+
+    o	prettyNum(*, bigmark=*) added extra marks in some cases (PR#1548).
 
 
 

@@ -685,3 +685,6 @@ ddf <- rbind(df, df)
 stopifnot(!is.factor(ddf$b))
 ## 1.5.0 had b as a factor.
 
+## PR 1548 : prettyNum inserted leading commas
+stopifnot(prettyNum(123456, big.mark=",") == "123,456")
+
