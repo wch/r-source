@@ -195,6 +195,9 @@ ifeq ($(strip $(BUILD)),CROSS)
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(ECHO) -n "  installing NAMESPACE file"; \
 	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+	  $(ECHO) " and metadata"; \
+	  $(ECHO) "tools:::.install_package_namespace_info('$(DPKG)', '$(DPKG)')" | \
+	  R_DEFAULT_PACKAGES=tools R_OSTYPE=windows $(R_EXE) --vanilla --slave  > /dev/null; \
 	fi
 else
 	@if test -f ${SPKG}/NAMESPACE; then \
