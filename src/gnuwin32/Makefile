@@ -44,9 +44,9 @@ rdemo:  libR.a
 	make -C ../../demos/dynload -f ../../src/gnuwin32/MkDyndemo
 
 rlibs: 
-	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)"
-	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS)"
-	$(MAKE) -C ../nmath OPTFLAGS="$(OPTFLAGS)"
+	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
+	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
+	$(MAKE) -C ../nmath OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ./regex
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
