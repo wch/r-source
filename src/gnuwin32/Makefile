@@ -262,8 +262,8 @@ INSTALL: INSTALL.in ../../VERSION
 FAQs: rw-faq fixed/r/rw-FAQ.html
 
 fixed/r/rw-FAQ.html: rw-FAQ.texi ../../VERSION
-	$(SED) $(SEDVER) $< | \
-	  makeinfo --html --no-headers --number-sections -o $@
+	-$(SED) $(SEDVER) $< | \
+	  makeinfo --html --no-headers --number-sections | tidy > $@ 2> nul
 
 rw-faq: rw-FAQ.texi ../../VERSION
 	$(SED) $(SEDVER) $< | \
