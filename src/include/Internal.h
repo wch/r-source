@@ -474,5 +474,7 @@ SEXP do_bndIsActive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mkUnbound(SEXP, SEXP, SEXP, SEXP);
 #endif
 #ifdef EXPERIMENTAL_NAMESPACES
-SEXP do_useNSDisp(SEXP, SEXP, SEXP, SEXP);
+SEXP do_regNS(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 #endif

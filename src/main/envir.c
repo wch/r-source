@@ -616,8 +616,9 @@ void InitGlobalEnv()
     SET_SYMVALUE(install(".BaseNamespaceEnv"), R_BaseNamespace);
     R_BaseNamespaceName = ScalarString(mkChar("base"));
     R_PreserveObject(R_BaseNamespaceName);
-    /**** need to properly initialize the name space */
-    /**** need to create namespace registry */
+    R_NamespaceRegistry = R_NewHashedEnv(R_NilValue);
+    R_PreserveObject(R_NamespaceRegistry);
+    /**** need to properly initialize the base name space */
     /**** need to enter base namespace in registry */
 #endif
 }
@@ -2648,10 +2649,56 @@ SEXP R_FindNamespace(SEXP info)
     }
 }
 
-SEXP do_useNSDisp(SEXP call, SEXP op, SEXP args, SEXP rho)
+static SEXP checkNSname(SEXP call, SEXP name)
 {
+    switch (TYPEOF(name)) {
+    case STRSXP:
+	if (LENGTH(name) == 1)
+	    name = install(CHAR(STRING_ELT(name, 0)));
+	/* fall through */
+    case SYMSXP: break;
+    default: errorcall(call, "bad name space name");
+    }
+    return name;
+}
+
+SEXP do_regNS(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP name, val;
     checkArity(op, args);
-    R_SetUseNamespaceDispatch(asLogical(CAR(args)));
+    name = checkNSname(call, CAR(args));
+    val = CADR(args);
+    if (findVarInFrame(R_NamespaceRegistry, name) != R_UnboundValue)
+	errorcall(call, "name space already registered");
+    defineVar(name, val, R_NamespaceRegistry);
     return R_NilValue;
+}
+
+SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP name;
+    int hashcode;
+    checkArity(op, args);
+    name = checkNSname(call, CAR(args));
+    if (findVarInFrame(R_NamespaceRegistry, name) == R_UnboundValue)
+	errorcall(call, "name space not registered");
+    if( !HASHASH(PRINTNAME(name)))
+	hashcode = R_Newhashpjw(CHAR(PRINTNAME(name)));
+    else
+	hashcode = HASHVALUE(PRINTNAME(name));
+    RemoveVariable(name, hashcode, R_NamespaceRegistry);
+    return R_NilValue;
+}
+
+SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP name, val;
+    checkArity(op, args);
+    name = checkNSname(call, CAR(args));
+    val = findVarInFrame(R_NamespaceRegistry, name);
+    if (val == R_UnboundValue)
+	return R_NilValue;
+    else
+	return val;
 }
 #endif
