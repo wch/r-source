@@ -18,7 +18,8 @@ suppressWarnings(expr)
   \item{immediate.}{logical, indicating if the call should be output
     immediately, even if \code{\link{getOption}(warn) = 0}.}
   \item{expr}{expression to evaluate.}
-  \item{domain}{see \code{\link{gettext}}.}
+  \item{domain}{see \code{\link{gettext}}. If \code{NA}, messages will
+    not be translated.}
 }
 \details{
   The result \emph{depends} on the value of

@@ -12,7 +12,8 @@ stop <- function(..., call. = TRUE, domain = NULL)
         if (length(args) > 0) {
             args <- lapply(list(...), as.character)
             ## don't simplify this, as call sequence matters.
-            args <- .Internal(gettext(domain, unlist(args)))
+            if(!is.na(domain))
+                args <- .Internal(gettext(domain, unlist(args)))
             message <- paste(args, collapse = "")
         }
         else message <- ""
@@ -48,7 +49,8 @@ warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
         if (length(args) > 0) {
             args <- lapply(list(...), as.character)
             ## don't simplify this, as call sequence matters.
-            args <- .Internal(gettext(domain, unlist(args)))
+            if(!is.na(domain))
+                args <- .Internal(gettext(domain, unlist(args)))
             message <- paste(args, collapse = "")
         } else message <- ""
         .Internal(warning(as.logical(call.), as.logical(immediate.), message))

@@ -11,7 +11,8 @@ geterrmessage()
     separator), a condition object, or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     error message.}
-  \item{domain}{see \code{\link{gettext}}.}
+  \item{domain}{see \code{\link{gettext}}. If \code{NA}, messages will
+    not be translated.}
 }
 \description{
   \code{stop} stops execution of the current expression and executes
