@@ -88,7 +88,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 	    ## source file into loadenv
 	    if(file.exists(codeFile))
                 sys.source(codeFile, loadenv, keep.source = keep.source)
-            else
+            else if(verbose)
 		warning(paste("Package ",
                               sQuote(package),
                               "contains no R code"))

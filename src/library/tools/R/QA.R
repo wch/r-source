@@ -36,15 +36,13 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
     outConn <- textConnection("out", "w")
     sink(outConn, type = "output")
     sink(outConn, type = "message")
-    warn <- getOption("warn")
-    options(warn = -1)
     yy <- try({
         pos <- match(paste("package", package, sep = ":"), search())
         if(!is.na(pos))
             detach(pos = pos)
-        library(package, lib.loc = lib.loc, character.only = TRUE)
+        library(package, lib.loc = lib.loc, character.only = TRUE,
+                verbose = FALSE)
     })
-    options(warn = warn)
     if(inherits(yy, "try-error"))
         stop(yy)
     sink(type = "message")
@@ -240,6 +238,9 @@ function(package, dir, lib.loc = NULL)
 
     if(!is.na(match("package:methods", search()))) {
         S4ClassObjs <- getClasses(codeEnv)
+        ## Note that currently, topicName() is not vectorized in its
+        ## 'topic' argument (so that it can perform mangling for S4
+        ## methods), hence the unlist/lapply construction.
         undocObjs <-
             c(undocObjs,
               list("S4 class" =
