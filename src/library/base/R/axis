@@ -1,2 +1,2 @@
-axis <- function(which, at=NULL, labels=NULL, ...)
-.Internal(axis(which, at, labels,...))
+axis <- function(side, at=NULL, labels=NULL, ...)
+.Internal(axis(side, at, labels,...))

@@ -1,11 +1,11 @@
 \name{axis}
 \title{Add an Axis to a Plot}
 \usage{
-axis(which, at, labels=TRUE, \dots)
+axis(side, at, labels=TRUE, \dots)
 }
 \alias{axis}
 \arguments{
-\item{which}{an integer specifying which side of the plot
+\item{side}{an integer specifying which side of the plot
 the axis is to be drawn on.}
 \item{at}{the points at which tick-marks are to be drawn.}
 \item{labels}{this can either be a logical value specifying
