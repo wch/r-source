@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw1062
+Version for rw1063
 Brian Ripley
 
 
@@ -20,7 +20,7 @@ Table of Contents
   2.7 How can I keep workspaces for different projects in different directories?
   2.8 How do I print from R?
   2.9 Can I use `R BATCH'?
-  2.10 Can I use rw1062 with ESS and (X)emacs?
+  2.10 Can I use rw1063 with ESS and (X)emacs?
   2.11 What are HOME and working directories?
   2.12 How do I set environment variables?
   2.13 R can't find my file, but I know it is there!
@@ -31,7 +31,7 @@ Table of Contents
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
-  3.2 I don't have permission to write to the `rw1062\library' directory.
+  3.2 I don't have permission to write to the `rw1063\library' directory.
   3.3 The packages I installed do not appear in the HTML help system.
   3.4 My functions are not found by the HTML help search system.
   3.5 Loading a package fails.
@@ -79,7 +79,7 @@ that version.  The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows,
 (`1.4.0' or later); the current version is often called something like
-`rw1062' (although not officially).
+`rw1063' (although not officially).
 
 
 2 Installation and Usage
@@ -92,7 +92,7 @@ Go to any CRAN site (see `http://cran.r-project.org/mirrors.html' for a
 list), navigate to the `bin/windows/base' directory and collect the
 files you need.  There are two versions of the distribution.
 
-1) `rw1062.exe' is about 19Mb and gives a complete installation.
+1) `rw1063.exe' is about 19Mb and gives a complete installation.
 
 2) Directory `miniR' contains `miniR.exe' and eight files
 `miniR-?.bin'.  You can put `miniR.exe' and `miniR-1.bin' on one floppy
@@ -112,13 +112,13 @@ If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
 in will probably work, but is little-tested.)
 
-To use `rw1062.exe' or `miniR.exe'.  Just double-click on the icon and
+To use `rw1063.exe' or `miniR.exe'.  Just double-click on the icon and
 follow the instructions.  If you installed R this way you can uninstall
 it from the Control Panel or Start Menu (unless you supressed making a
 group for R).
 
 Choose a working directory for R.  If you installed manually, make a
-shortcut to `rw1062\bin\Rgui.exe' on your desktop or somewhere on the
+shortcut to `rw1063\bin\Rgui.exe' on your desktop or somewhere on the
 Start menu file tree.  Right-click the shortcut, select Properties...
 and change the `Start in' field to your working directory.
 
@@ -228,7 +228,7 @@ It depends what you want to print.
 ========================
 
 Yes, if you have Perl and the files for making source packages (from
-`rw1062.exe') installed.  The Windows analogue is `Rcmd BATCH': use
+`rw1063.exe') installed.  The Windows analogue is `Rcmd BATCH': use
 `Rcmd BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'.  A sample
@@ -236,7 +236,7 @@ batch file might contain (as one line)
 
      path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 
-2.10 Can I use rw1062 with ESS and (X)emacs?
+2.10 Can I use rw1063 with ESS and (X)emacs?
 ============================================
 
 Yes.  Recent versions of ESS (e.g. 5.1.20) come with support for this
@@ -299,7 +299,7 @@ which these options are listed, that is the command line then
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-`"d:\\rw1062\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+`"d:\\rw1063\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
 for yourself by using forward slashes as path separators: they do work
 under Windows.
 
@@ -337,9 +337,9 @@ installed a workaround as from `rw1051' that seems to avoid this.
 If it still happens, try extracting the one to be found in the
 self-extracting archive
 `ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe' and put it in the
-`rw1062\bin' directory.  Removing `msvcrt.dll' from that directory
+`rw1063\bin' directory.  Removing `msvcrt.dll' from that directory
 reverts to the standard behaviour.  It seems that on some versions of
-Windows (but not 2000/XP) you also need to put the `rw1062\bin'
+Windows (but not 2000/XP) you also need to put the `rw1063\bin'
 directory early in your path.
 
 This fix has solved other problems too, for example incorrect results in
@@ -399,7 +399,7 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, make sure you installed the necessary
-files from `rw1062.exe'.  Then read the file `readme.packages'.  You
+files from `rw1063.exe'.  Then read the file `readme.packages'.  You
 will need to collect and install several tools to use this: you can
 download them via the portal at
 `http://www.stats.ox.ac.uk/pub/Rtools/'.  Once you have done so, just
@@ -411,7 +411,7 @@ Note that this is rather so tricky; please do ensure that you have
 followed the instructions *exactly*.  At least 90% of the questions
 asked are because people have not done so.
 
-3.2 I don't have permission to write to the `rw1062\library' directory.
+3.2 I don't have permission to write to the `rw1063\library' directory.
 =======================================================================
 
 You can install packages anywhere and use the environment variable
@@ -429,7 +429,7 @@ OR use a package by, e.g.
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================
 
-The HTML search only works for packages installed in `rw1062\library'.
+The HTML search only works for packages installed in `rw1063\library'.
 
 To update the HTML indices after you have installed a pre-compiled
 package, run at the R prompt.
@@ -438,7 +438,7 @@ package, run at the R prompt.
 
 This is done automatically when installing from the Packages menu or by
 `install.packages()', and when `help.start' is run, provided you have
-write permission in `rw1062\library'.
+write permission in `rw1063\library'.
 
 3.4 My functions are not found by the HTML help search system.
 ==============================================================
@@ -446,7 +446,7 @@ write permission in `rw1062\library'.
 The following conditions need to hold for functions in a package you
 installed.
 
-   * the package is installed in `rw1062\library'.
+   * the package is installed in `rw1063\library'.
 
    * the package contains a `CONTENTS' file in its top-level directory.
 
@@ -548,7 +548,7 @@ with `--vanilla' to be able to update package `foo'.
 4.2 I hear about some nifty features: please tell me about them!
 ================================================================
 
-You have read the `README.rw1062'? There are file menus on the R
+You have read the `README.rw1063'? There are file menus on the R
 console, pager and graphics windows.  You can source and save from
 those menus, and copy the graphics to `png', `jpeg', `bmp',
 `postscript', `PDF' or `metafile'.  There are right-click menus giving
@@ -558,7 +558,7 @@ shortcuts to frequent operations.
 If you resize the R console the `options(width=)' is automatically set
 to the console width (unless disabled in the configuration file).
 
-The graphics has a history mechanism.  As `README.rw1062' says:
+The graphics has a history mechanism.  As `README.rw1063' says:
 
      `The History menu allows the recording of plots.  When plots have
      been recorded they can be reviewed by <PgUp> and <PgDn>, saved and
@@ -731,7 +731,7 @@ compiled for the correct compiler.
 
 We strongly encourage you to do this _via_ building an R package: see
 the _`Writing R Extensions'_ manual.  In any event you should install
-the parts of the R system for building R packages (in `rw1062.exe'),
+the parts of the R system for building R packages (in `rw1063.exe'),
 and get and install the tools (including Perl) and compilers mentioned
 in the file `readme.packages' contained therein.  Then you can use
      ...\bin\Rcmd SHLIB foo.c bar.f
@@ -765,13 +765,13 @@ and make a debug version of your package by
 
 Then you can debug by
 
-     gdb /path/to/rw1062/bin/Rgui.exe
+     gdb /path/to/rw1063/bin/Rgui.exe
 
 However, note
 
    * `gdb' will only be able to find the source code if we run in the
-     location where the source was compiled (`rw1062/src/gnuwin32' for
-     the main system, `rw1062/src/library/mypkg/src' for a package),
+     location where the source was compiled (`rw1063/src/gnuwin32' for
+     the main system, `rw1063/src/library/mypkg/src' for a package),
      unless told otherwise by the `directory' command.  It is most
      convenient to set a list of code locations via `directory' commands
      in the file `.gdbinit' in the directory from which `gdb' is run.
