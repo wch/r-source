@@ -7,20 +7,20 @@
   Specify a scatterplot or add points or lines via a formula.
 }
 \usage{
-\method{plot}{formula}(formula, \dots, data = parent.frame(), subset,
+\method{plot}{formula}(formula, data = parent.frame(), \dots, subset,
              ylab = varnames[response], ask = TRUE)
-\method{points}{formula}(formula, \dots, data = parent.frame(), subset)
-\method{lines}{formula}(formula, \dots, data = parent.frame(), subset)
+\method{points}{formula}(formula, data = parent.frame(), \dots, subset)
+\method{lines}{formula}(formula, data = parent.frame(), \dots, subset)
 }
 \arguments{
   \item{formula}{a \code{\link{formula}}, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
+  \item{\dots}{Further graphical parameters may also be passed as
+    arguments, see \code{\link{par}}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}
   \item{ylab}{the y label of the plot(s).}
-  \item{\dots}{Further graphical parameters may also be passed as
-    arguments, see \code{\link{par}}.}
   \item{ask}{logical, see \code{\link{par}}.}
 }
 \details{

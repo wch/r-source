@@ -183,8 +183,9 @@ plot.table <- function(x, type = "h", ylim = c(0, max(x)), lwd = 2,
 	mosaicplot(x, ...)
 }
 
-plot.formula <- function(formula, ..., data = parent.frame(), subset,
-			 ylab=varnames[response], ask = TRUE)
+plot.formula <-
+function(formula, data = parent.frame(), ..., subset,
+         ylab = varnames[response], ask = TRUE)
 {
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, parent.frame())))
@@ -262,7 +263,9 @@ plot.formula <- function(formula, ..., data = parent.frame(), subset,
     }
     else plot.data.frame(mf)
 }
-lines.formula <- function(formula, ..., data = parent.frame(), subset)
+
+lines.formula <-
+function(formula,  data = parent.frame(), ..., subset)
 {
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, parent.frame())))
@@ -297,7 +300,8 @@ lines.formula <- function(formula, ..., data = parent.frame(), subset)
 	stop("must have a response variable")
 }
 
-points.formula <- function(formula, ..., data = parent.frame(), subset)
+points.formula <-
+function(formula, data = parent.frame(), ..., subset)
 {
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, parent.frame())))
