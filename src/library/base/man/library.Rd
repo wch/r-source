@@ -45,8 +45,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{character.only}{a logical indicating whether \code{package} or
     \code{help} can be assumed to be character strings.}
   \item{version}{A character string denoting a version number of the
-     package to be loaded.  If no version is given, a suitable default
-     is chosen.}
+     package to be loaded, for use with \emph{versioned installs}: see
+     the section later in this document.}
   \item{logical.return}{logical.  If it is \code{TRUE},  \code{FALSE} or
     \code{TRUE} is returned to indicate success.}
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
@@ -146,7 +146,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   names are used to require these packages when the new package is
   attached.
 }
-
 \section{Formal methods}{
   \code{library} takes some further actions when package \pkg{methods}
   is attached (as it is by default).  Packages may define formal generic
@@ -158,6 +157,25 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   defining an object \code{.noGenerics}
   (with any value) in the package.  Naturally, if the package
   \emph{does} have any such methods, this will prevent them from being used.
+}
+\section{Versioned installs}{
+  Packages can be installed with version information by \code{R CMD
+    \link{INSTALL} --with-package-versions} or
+  \code{\link{install.packages}(installWithVers = TRUE)}.  This allows
+  more than one version of a package to be installed in a library
+  directory, using package directory names like \code{foo_1.5-1}.  When
+  such packages are loaded, it is this \emph{versioned}  name
+  that \code{\link{search}()} returns.  Some utility functions require
+  the versioned name and some the unversioned name (here \code{foo}).
+
+  If \code{version} \emph{is not} specified, \code{library} looks first
+  for a packages of that name, and then for versioned installs of the
+  package, selecting the one with the latest version number.  If
+  \code{version} \emph{is} specified, a versioned install with an
+  exactly matching version is looked for.
+  
+  Loading more than one version of a package into an \R session is not
+  currently supported.  Support for versioned installs is patchy.
 }
 \note{
   \code{library} and \code{require} can only load an \emph{installed}
