@@ -486,7 +486,8 @@ dnl
 dnl R_PROG_F2C_FLIBS
 dnl
 AC_DEFUN(R_PROG_F2C_FLIBS,
- [AC_CACHE_VAL(r_cv_f2c_flibs,
+ [AC_REQUIRE([AC_PROG_RANLIB])
+  AC_CACHE_VAL(r_cv_f2c_flibs,
     [## This seems to be necessary on some Linux system. -- you bet! -pd
       cat > conftest.${ac_ext} << EOF
 int MAIN_ () { return 0; }

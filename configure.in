@@ -227,6 +227,33 @@ esac
 R_PROG_CC_M
 R_PROG_CC_C_O_LO
 
+### Programs.
+
+AC_PROG_AWK
+AC_PROG_LN_S
+AC_PROG_RANLIB
+AC_PROG_YACC
+R_PROG_AR
+R_PROG_ECHO_N
+R_PROG_INSTALL
+## Libtool
+AM_DISABLE_STATIC
+AM_PROG_LIBTOOL
+AC_SUBST(LIBTOOL_DEPS)
+## Make
+: ${MAKE=make}
+AC_SUBST(MAKE)
+## Perl
+R_PROG_PERL
+## Tar
+: ${TAR=tar}
+AC_SUBST(TAR)
+## TeXMF stuff
+R_PROG_TEXMF
+## Unzip && zip
+AC_PATH_PROGS(R_UNZIPCMD, [${UNZIP} unzip], "")
+AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
+
 ### FORTRAN compiler
 
 ## If we have not been forced to use a particular FORTRAN compiler, try
@@ -338,33 +365,6 @@ fi
 AC_SUBST(FC)
 AC_SUBST(F2C)
 AC_SUBST_FILE(f77_rules_frag)
-
-### Programs.
-
-AC_PROG_AWK
-AC_PROG_LN_S
-AC_PROG_RANLIB
-AC_PROG_YACC
-R_PROG_AR
-R_PROG_ECHO_N
-R_PROG_INSTALL
-## Libtool
-AM_DISABLE_STATIC
-AM_PROG_LIBTOOL
-AC_SUBST(LIBTOOL_DEPS)
-## Make
-: ${MAKE=make}
-AC_SUBST(MAKE)
-## Perl
-R_PROG_PERL
-## Tar
-: ${TAR=tar}
-AC_SUBST(TAR)
-## TeXMF stuff
-R_PROG_TEXMF
-## Unzip && zip
-AC_PATH_PROGS(R_UNZIPCMD, [${UNZIP} unzip], "")
-AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
 
 ### Libraries.
 
