@@ -345,9 +345,9 @@ function(package, dir, lib.loc = NULL)
         for(f in docsFiles) {
             lines <- readLines(f)
             eofPos <- grep("\\eof$", lines)
-            db <- c(db, split(lines,
+            db <- c(db, split(lines[-eofPos],
                               rep(seq(along = eofPos),
-                                  times = diff(c(0, eofPos)))))
+                                  times = diff(c(0, eofPos)))[-eofPos]))
         }
         ## If this was installed using a recent enough version of R CMD
         ## INSTALL, information on source file names is available, and
@@ -434,12 +434,16 @@ function(file, text = NULL)
     ## lines starting with a command tag as top-level).  Also, it is not
     ## clear whether this is what we *really* want (or what Rdconv()
     ## should do).
-    pattern <- "(^|\n)[[:space:]]*\\\\([[:alpha:]])+{"
+    ## <NOTE>
+    ## We try to catch \non_function{} here, even though it is at least
+    ## deprecated.
+    ## </NOTE>
+    pattern <- "(^|\n)[[:space:]]*\\\\([[:alpha:]]|non_function)+{"
     while((pos <- regexpr(pattern, txt)) != -1) {
         otag <- tag
         start <- substring(txt, 1, pos + attr(pos, "match.length") - 2)
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        pos <- regexpr("\\\\([[:alpha:]])+$", start)
+        pos <- regexpr("\\\\([[:alpha:]]|non_function)+$", start)
         tag <- substring(start, pos + 1)
         start <- substring(start, 1, pos - 1)
         pos <- delimMatch(txt)
