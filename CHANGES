@@ -2,6 +2,11 @@
 
 NEW FEATURES
 
+    o	quantile.default() now handles Inf's correctly.
+
+    o	New command line options `--enable-blas' and `--enable-readline'
+	to configure.
+
     o   pretty(x) is more reasonable when max(x)-min(x) < 1e-10 max(|x|),
 	and has a new argument "shrink.sml" for that case.
 
