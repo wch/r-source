@@ -5,6 +5,7 @@ subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
     else {
 	e <- substitute(subset)
 	r <- eval(e, x, parent.frame())
+        if(!is.logical(r)) stop("'subset' must evaluate to logical")
 	r <- r & !is.na(r)
     }
     if(missing(select))
@@ -17,9 +18,12 @@ subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
     x[r, vars, drop = drop]
 }
 
-subset<- function(x, ...) UseMethod("subset")
+subset <- function(x, ...) UseMethod("subset")
 
-subset.default <- function(x, subset, ...) x[subset & !is.na(subset)]
+subset.default <- function(x, subset, ...) {
+    if(!is.logical(subset)) stop("'subset' must be logical")
+    x[subset & !is.na(subset)]
+}
 
 subset.matrix <- function(x, subset, select, drop = FALSE, ...)
 {
@@ -30,6 +34,7 @@ subset.matrix <- function(x, subset, select, drop = FALSE, ...)
 	names(nl) <- colnames(x)
 	vars <- eval(substitute(select), nl, parent.frame())
     }
+    if(!is.logical(subset)) stop("'subset' must be logical")
     x[subset & !is.na(subset), vars, drop = drop]
 }
 

@@ -66,6 +66,9 @@ subset(airquality, select = Ozone:Wind)
 
 with(airquality, subset(Ozone, Temp > 80))
 
-subset(state.x77, 1:5, Illiteracy:Murder)
+## sometimes requiring a logical 'subset' argument is a nuisance
+nm <- rownames(state.x77)
+start_with_M <- nm \%in\% grep("^M", nm, value=TRUE)
+subset(state.x77, start_with_M, Illiteracy:Murder)
 }
 \keyword{manip}

@@ -150,6 +150,10 @@ BUG FIXES
 	namespaces; this is now done automatically.
 	Note that is.primitive() is now in "base", not "methods" anymore.
 
+    o	subset() now throws an error if its 'subset' argument is not
+	logical whereas it could appear to work and give wrong answers
+	with e.g. a numeric 'subset' argument.
+
 
 
 	**************************************************
