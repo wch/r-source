@@ -492,6 +492,9 @@ BUG FIXES
     o   length<- now works correctly on factors (and is now generic
 	with a method for factors).
 
+    o   x <- 2^32; x:(x+3) no longer generates an error (but gives a
+	result of type "double").
+
 
 
 

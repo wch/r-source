@@ -76,8 +76,9 @@ static SEXP
 seq(SEXP call, SEXP s1, SEXP s2)
 {
     int i, n, in1;
-    double n1, n2;
+    double n1, n2, r;
     SEXP ans;
+    Rboolean useInt;
 
     n1 = length(s1);
     if( n1 > 1 )
@@ -90,12 +91,15 @@ seq(SEXP call, SEXP s1, SEXP s2)
     if (ISNAN(n1) || ISNAN(n2))
 	errorcall(call, "NA/NaN argument");
 
-    if (n1 <= INT_MIN || n2 <= INT_MIN || n1 > INT_MAX || n2 > INT_MAX
-	|| fabs(n2 - n1) >= INT_MAX)
-	errorcall(call, "argument too large in magnitude");
+    in1 = (int)(n1);
+    useInt = (n1 == in1);
+    if (n1 <= INT_MIN || n2 <= INT_MIN || n1 > INT_MAX || n2 > INT_MAX)
+	useInt = FALSE;
+    r = fabs(n2 - n1);
+    if(r >= INT_MAX) errorcall(call, "result would be too long a vector");
 
-    n = fabs(n2 - n1) + 1 + FLT_EPSILON;
-    if (n1 == (in1 = (int)(n1))) {
+    n = r + 1 + FLT_EPSILON;
+    if (useInt) {
 	ans = allocVector(INTSXP, n);
 	if (n1 <= n2)
 	    for (i = 0; i < n; i++) INTEGER(ans)[i] = in1 + i;
