@@ -99,15 +99,15 @@ print.octmode <- function(x, ...)
 system.file <- function (..., pkg = .packages(), lib = .lib.loc)
 {
     flist <- list(...)
-    if(length(flist) > 1 || (length(flist) == 1 && nchar(flist[[1]]) > 0)) {
-        FILES <- file.path(t(outer(lib, pkg, paste, sep = .Platform$file.sep)),
-                           file.path(...))
+    if((length(flist) > 1)
+       || (length(flist) == 1 && nchar(flist[[1]]) > 0)) {
+        FILES <- file.path(t(outer(lib, pkg, file.path)), ...)
     } else {
         if(missing(pkg)) pkg <- "base"
-        FILES <- outer(lib, pkg, paste, sep = .Platform$file.sep)
+        FILES <- outer(lib, pkg, file.path)
     }
     present <- file.exists(FILES)
-    if (any(present)) FILES[present]
+    if(any(present)) FILES[present]
     else ""
 }
 
