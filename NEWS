@@ -66,14 +66,20 @@ NEW FEATURES
     o	read.fwf() has a new argument `n' for specifying the number of
 	records (lines) read in.
 
-    o   plot.mts() has a new argument `panel' providing the same
-        functionality as in coplot().
+    o	plot.mts() has a new argument `panel' providing the same
+	functionality as in coplot().
 	
-    o   outer() has a speed-up in the default case of a matrix 
+    o	outer() has a speed-up in the default case of a matrix 
 	outer product (by Jonathan Rougier).
 
     o	aperm() uses strides in the internal C code and so is substantially
 	sped up (by Jonathan Rougier).
+
+    o	sort(x) now produces an error when x is not atomic instead of 
+	just returning x.
+
+    o	new function is.unsorted() the C version of which also
+	speeds up .Internal(sort()) for sorted input.
 
 
 BUG FIXES
@@ -117,8 +123,8 @@ BUG FIXES
     o	Various strangeness with match.call() and "..." has been fixed
 	(PR#813).
 
-    o   sys.function() could return an unevaluated promise, messing up
-        formals() and match.arg() (PR#872)
+    o	sys.function() could return an unevaluated promise, messing up
+	formals() and match.arg() (PR#872)
 
     o	Deparsing or dumping attributes with non-standard names was
 	not quoting the name (PR#871).
@@ -142,7 +148,7 @@ BUG FIXES
 
     o	rt() could give different results on different platforms as
 	the order of evaluation of calls to random numbers was not
-	fully defined.  This affected the Mac port.
+	fully defined.	This affected the Mac port.
 
     o	ppr() inside nested calls sometimes failed to find objects
 	due to a typo in the eval call in ppr.formula.
@@ -150,11 +156,11 @@ BUG FIXES
     o	dchisq with integer x, df and ncp sometimes gave incorrect
 	results on i686 Linux.
 
-    o   cancelling a quit caused quit() not to ask next time it was called.
+    o	cancelling a quit caused quit() not to ask next time it was called.
 
-    o   some complicated operations with "..." didn't work.
+    o	some complicated operations with "..." didn't work.
 
-    o   missingness was not correctly propagated in some cases.
+    o	missingness was not correctly propagated in some cases.
 
     o	eigen() segfaulted on 0-dimensional matrices.
 

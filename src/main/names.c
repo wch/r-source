@@ -44,7 +44,7 @@
  * printname:	The function name in R
  *
  * c-entry:	The name of the corresponding C function,
- *		actually declared in names.h.
+ *		actually declared in ../include/Internal.h .
  *		Convention:
  *		 - all start with "do_",
  *		 - all return SEXP.
@@ -66,7 +66,7 @@
  *
  * arity:	How many arguments are required/allowed;  "-1"	meaning ``any''
  *
- * pp-info:	Deparsing Info (-> names.h )
+ * pp-info:	Deparsing Info (-> PPinfo in ../include/Defn.h )
  *
  */
 FUNTAB R_FunTab[] =
@@ -186,7 +186,6 @@ FUNTAB R_FunTab[] =
 {"unique",	do_duplicated,	1,	11,	1,	PP_FUNCALL},
 {"which.min",	do_first_min,	1,	11,	1,	PP_FUNCALL},
 {"which.max",	do_first_max,	1,	11,	1,	PP_FUNCALL},
-{"unique",	do_duplicated,	1,	11,	1,	PP_FUNCALL},
 {"match",	do_match,	0,	11,	3,	PP_FUNCALL},
 {"pmatch",	do_pmatch,	0,	11,	3,	PP_FUNCALL},
 {"charmatch",	do_charmatch,	0,	11,	2,	PP_FUNCALL},
@@ -567,6 +566,7 @@ FUNTAB R_FunTab[] =
 {"sys.function",do_sys,		9,	10,	-1,	PP_FUNCALL},
 {"parent.frame",do_parentframe,	0,	10,	-1,	PP_FUNCALL},
 {"sort",	do_sort,	1,	11,	1,	PP_FUNCALL},
+{"is.unsorted",	do_isunsorted,	0,	11,	1,	PP_FUNCALL},
 {"psort",	do_psort,	0,	11,	2,	PP_FUNCALL},
 {"order",	do_order,	0,	11,	-1,	PP_FUNCALL},
 {"rank",	do_rank,	0,	11,	1,	PP_FUNCALL},

@@ -97,6 +97,17 @@ gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
 gray <- function(level).Internal(gray(level))
 grey <- .Alias(gray)
 
+is.unsorted <- function(x, na.rm = FALSE) {
+    if(is.null(x)) return(FALSE)
+    if(!is.atomic(x) ||
+       (!na.rm && any(is.na(x))))
+	return(NA)
+    ## else
+    if(na.rm && any(ii <- is.na(x)))
+	x <- x[!ii]
+    .Internal(is.unsorted(x))
+}
+
 mem.limits <- function(nsize=NA, vsize=NA)
 {
     structure(.Internal(mem.limits(as.integer(nsize), as.integer(vsize))),

@@ -646,6 +646,7 @@ Rboolean isReal(SEXP);
 Rboolean isString(SEXP);
 Rboolean isSymbol(SEXP);
 Rboolean isTs(SEXP);
+Rboolean isunsorted(SEXP);
 Rboolean isUnordered(SEXP);
 Rboolean isUserBinop(SEXP);
 Rboolean isValidString(SEXP);

@@ -69,22 +69,74 @@ static int scmp(SEXP x, SEXP y)
 #endif
 }
 
+Rboolean isunsorted(SEXP x)
+{
+    int n, i;
+
+    if (!isVectorAtomic(x))
+	error("only atomic vectors can be tested to be sorted");
+    n = LENGTH(x);
+    if(n >= 2) 
+	switch (TYPEOF(x)) { 
+	    
+	    /* NOTE: x must have no NAs {is.na(.) in R}; 
+	       hence be faster than `rcmp()', `icmp()' for these two cases */
+
+	case LGLSXP:
+	case INTSXP:
+	    for(i = 0; i+1 < n ; i++) 
+		if(INTEGER(x)[i] > INTEGER(x)[i+1])
+		    return TRUE;
+	    break;
+	case REALSXP:
+	    for(i = 0; i+1 < n ; i++) 
+		if(REAL(x)[i] > REAL(x)[i+1])
+		    return TRUE;
+	    break;
+	case CPLXSXP:
+	    for(i = 0; i+1 < n ; i++) 
+		if(ccmp(COMPLEX(x)[i], COMPLEX(x)[i+1]) > 0)
+		    return TRUE;
+	    break;
+	case STRSXP:
+	    for(i = 0; i+1 < n ; i++) 
+		if(scmp(STRING_ELT(x, i ), 
+			STRING_ELT(x,i+1)) > 0)
+		    return TRUE;
+	    break;
+	default:
+	    error("unknown atomic type in isunsorted() -- should not happen");
+	}
+    return FALSE;/* sorted */
+}
+
+SEXP do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans;
+
+    checkArity(op, args);
+    ans = allocVector(LGLSXP, 1);
+    LOGICAL(ans)[0] = isunsorted(CAR(args));
+    return ans;
+}
+
+
 			/*--- Part II: Complete (non-partial) Sorting ---*/
 
 
 /* SHELLsort -- corrected from R. Sedgewick `Algorithms in C' 
  *		(version of BDR's lqs():*/
-#define sort_body \
-    int i, j, h;\
-\
-    for (h = 1; h <= n / 9; h = 3 * h + 1);\
-    for (; h > 0; h /= 3)\
-	for (i = h; i < n; i++) {\
-	    v = x[i];\
-	    j = i;\
-	    while (j >= h && TYPE_CMP(x[j - h], v) > 0)\
-		 { x[j] = x[j - h]; j -= h; }\
-	    x[j] = v;\
+#define sort_body					\
+    int i, j, h;					\
+							\
+    for (h = 1; h <= n / 9; h = 3 * h + 1);		\
+    for (; h > 0; h /= 3)				\
+	for (i = h; i < n; i++) {			\
+	    v = x[i];					\
+	    j = i;					\
+	    while (j >= h && TYPE_CMP(x[j - h], v) > 0)	\
+		 { x[j] = x[j - h]; j -= h; }		\
+	    x[j] = v;					\
 	}
 
 void R_isort(int *x, int n)
@@ -190,10 +242,8 @@ void revsort(double *a, int *ib, int n)
 
 void sortVector(SEXP s)
 {
-    int n;
-
-    n = LENGTH(s);
-    if (n >= 2)
+    int n = LENGTH(s);
+    if (n >= 2 && isunsorted(s))
 	switch (TYPEOF(s)) {
 	case LGLSXP:
 	case INTSXP:
@@ -217,11 +267,15 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if (!isVector(CAR(args)))
-	errorcall(call, "only vectors can be sorted");
-    ans = duplicate(CAR(args));
-    sortVector(ans);
-    return ans;
+    if(CAR(args) == R_NilValue) return R_NilValue;
+    if(!isVectorAtomic(CAR(args)))
+	errorcall(call, "only atomic vectors can be sorted");
+    if (isunsorted(CAR(args))) { /* do not duplicate if sorted */
+	ans = duplicate(CAR(args));
+	sortVector(ans);
+	return(ans);
+    } 
+    else return(CAR(args));
 }
 
 			/*--- Part III: Partial Sorting ---*/
@@ -233,18 +287,18 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
    NOTA BENE:  k < n  required, and *not* checked here but in do_psort();
                -----  infinite loop possible otherwise!
  */
-#define psort_body \
-    int L, R, i, j;\
-\
-    for (L = 0, R = n - 1; L < R; ) {\
-	v = x[k];\
-	for(i = L, j = R; i <= j;) {\
-	    while (TYPE_CMP(x[i], v) < 0) i++;\
-	    while (TYPE_CMP(v, x[j]) < 0) j--;\
+#define psort_body						\
+    int L, R, i, j;						\
+								\
+    for (L = 0, R = n - 1; L < R; ) {				\
+	v = x[k];						\
+	for(i = L, j = R; i <= j;) {				\
+	    while (TYPE_CMP(x[i], v) < 0) i++;			\
+	    while (TYPE_CMP(v, x[j]) < 0) j--;			\
 	    if (i <= j) { w = x[i]; x[i++] = x[j]; x[j--] = w; }\
-	}\
-	if (j < k) L = i;\
-	if (k < i) R = j;\
+	}							\
+	if (j < k) L = i;					\
+	if (k < i) R = j;					\
     }
 
 

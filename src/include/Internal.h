@@ -207,6 +207,7 @@ SEXP do_isinfinite(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isloaded(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isna(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isnan(SEXP, SEXP, SEXP, SEXP);
+SEXP do_isunsorted(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isvector(SEXP, SEXP, SEXP, SEXP);
 #if 0
 SEXP do_visibleflag(SEXP, SEXP, SEXP, SEXP);
