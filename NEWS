@@ -15,7 +15,7 @@ NEW FEATURES
 
     o	mean() has a method for "difftime" objects and so summary() works.
 
-    o	legend() has an argument 'pt.cex'.
+    o	legend() has a new argument 'pt.cex'.
 
 
 BUG FIXES
@@ -53,7 +53,7 @@ BUG FIXES
     o   The L-BFGS-B option of optim() apparently needs part of its
 	workspace zeroed.  (PR#6720)
 
-    o   extractAIC.survreg needed updating.
+    o   extractAIC.survreg() needed updating.
 
     o   When using the header Rmath.h in standalone mode, the case where
         TRUE, FALSE are already defined is now handled correctly.
@@ -65,13 +65,16 @@ BUG FIXES
 	(and often random) answers, and is now an error.
 
     o	The C-level function ncols was returning a random answer
-	(often 0) for a 1D array.  This caused model.matrix to
+	(often 0) for a 1D array.  This caused model.matrix to()
 	misbehave (perhaps segfault) if a term was a 1D array.  (PR#6838)
 
     o   The configure script now finds the pdf viewers ggv and gpdf.
 
-    o   Workaround the problems strptime on MacOS X has with dates
+    o   Workaround for the problems strptime on MacOS X has with dates
 	before 1900.
+
+    o   'R CMD build' works in a directory whose path contains spaces.
+	(PR#6830 under Unix/Linux: it already worked under Windows.)
 
 
 
