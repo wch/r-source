@@ -147,20 +147,27 @@ plclust <- function(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
 }
 
 
-
 as.hclust <- function(x, ...) UseMethod("as.hclust")
+## need *.default for idempotency:
+as.hclust.default <- function(x, ...) {
+    if(inherits(x, "hclust")) x
+    else
+	stop("argument `x' cannot be coerced to class `hclust'.",
+             if(!is.null(class(x)))
+             "\n Consider providing an as.hclust.",class(x)[1],"() method")
+}
 
 as.hclust.twins <- function(x, ...)
 {
-    retval <- list(merge = x$merge,
-                   height = sort(x$height),
-                   order = x$order,
-                   call = match.call(),
-                   method = NA,
-                   dist.method = attr(x$diss, "Metric"),
-                   labels = rownames(x$data))
-    class(retval) <- "hclust"
-    retval
+    r <- list(merge = x$merge,
+              height = sort(x$height),
+              order = x$order,
+              call = match.call(),
+              method = NA,
+              dist.method = attr(x$diss, "Metric"),
+              labels = rownames(x$data))
+    class(r) <- "hclust"
+    r
 }
 
 print.hclust <- function(x, ...)
@@ -171,8 +178,29 @@ print.hclust <- function(x, ...)
         cat("Cluster method   :", x$method, "\n")
     if(!is.null(x$dist.method))
         cat("Distance         :", x$dist.method, "\n")
-        cat("Number of objects:", length(x$height)+1, "\n")
+    cat("Number of objects:", length(x$height)+1, "\n")
     cat("\n")
 }
 
+cophenetic <- function(x) {
+    x <- as.hclust(x)
+    nobs <- length(x$order)
+    ilist <- vector("list", length=nobs)
+    names(ilist) <- 1:nobs # FIXME: do better when you can!
+    rmat <- matrix(NA, nr=nobs, nc=nobs)
+    for( i in 1:(nobs-1)) {
+        inds <- x$merge[i,]
+        ids1 <- if(inds[1] < 0) -inds[1] else ilist[[inds[1]]]
+        ids2 <- if(inds[2] < 0) -inds[2] else ilist[[inds[2]]]
+        ilist[[i]] <- c(ids1, ids2)
+        for( ival1 in ids1)
+            for( ival2 in ids2 ){
+                if( ival1 > ival2 )
+                    rmat[ival1, ival2] <- x$height[i]
+                else
+                    rmat[ival2, ival1] <- x$height[i]
+            }
+    }
+    return(as.dist(rmat))
+}
 
