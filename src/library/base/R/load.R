@@ -52,6 +52,15 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     if (! is.character(file) || file == "")
         stop("`file' must be non-empty string")
 
+    opts <- getOption("save.image.defaults")
+    if (missing(safe) && ! is.null(opts$safe))
+        safe <- opts$safe
+    if (missing(compress) && ! is.null(opts$compress))
+        compress <- opts$compress
+    if (missing(ascii) && ! is.null(opts$ascii))
+        ascii <- opts$ascii
+    if (missing(version)) version <- opts$version
+	
     if (safe) {
         # find a temporary file name in the same directory so we can
         # rename it to the final output file on success

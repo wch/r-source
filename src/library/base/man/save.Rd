@@ -47,6 +47,10 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   Almost all current \R platforms (including Windows and Macintosh)
   use the XDR representation of binary objects in binary save-d files,
   and these are portable across all XDR-compliant implementations.
+
+  Default values for \code{save.image} options can be modified with
+  the \code{save.image.opitons} option.  This mechanism is experimental
+  and subject to change.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}}.
@@ -57,6 +61,11 @@ y <- list(a = 1, b = TRUE, c = "oops")
 save(x, y, file = "xy.Rdata")
 save.image()
 unlink("xy.Rdata")
+unlink(".RData")
+
+# set save.image dafaults using option:
+options(save.image.defaults=list(ascii=TRUE, safe=FALSE))
+save.image()
 unlink(".RData")
 }
 \keyword{file}

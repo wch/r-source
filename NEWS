@@ -298,6 +298,9 @@ NEW FEATURES
 	  preserves an existing workspace if the save fails, but at
 	  the cost of using extra disk space during the save.
 
+    	- save.image() default arguments can be specified in the
+	  save.image.defaults option.
+
 
     o   New function reg.finalizer() to provide R interface to
         finalization.
