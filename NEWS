@@ -200,8 +200,9 @@ NEW FEATURES
 	it does with type !="n").
 
     o	New function quade.test() for the Quade test for unreplicated
-	blocked data.
+	blocked data, in package ctest.
 
+    o	New function interaction.plot().
 
 
 BUG FIXES
