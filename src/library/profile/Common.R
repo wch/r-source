@@ -22,6 +22,12 @@ R.version.string <- local({
 .Machine <- Machine()
 .Platform <- Platform()
 
+## The next 3 were in base:
+autoload("t.test","ctest")
+autoload("chisq.test","ctest")
+autoload("prop.test","ctest")
+autoload("wilcox.test","ctest")# for MM
+
 options(na.action = "na.omit")
 options(show.signif.stars = TRUE)
 options(show.coef.Pvalues = TRUE)
