@@ -19,7 +19,7 @@ fix(x)
  ## now my.fun is changed
 }
 \testonly{
- if(machine() =! "Macintosh") {
+ if(machine() != "Macintosh") {
   oo <- options(editor="touch") # not really changing anything
   fix(pi)
   if(!is.numeric(pi) || length(pi)!=1 ||
