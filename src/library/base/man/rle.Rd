@@ -1,6 +1,8 @@
 \name{rle}
-\alias{rle}
 \title{Run Length Encoding}
+\alias{rle}
+\alias{inverse.rle}
+\alias{print.rle}
 \description{
   Compute the lengths and values of runs of equal values in a vector
   -- or the reverse operation.
