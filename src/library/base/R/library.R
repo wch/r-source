@@ -46,7 +46,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     checkNoGenerics <- function(env, pkg)
     {
         nenv <- env
-        ns <- .Internal(getRegisteredNamespace(as.name(pkg)))
+        ns <- .Internal(getRegisteredNamespace(as.name(libraryPkgName(pkg))))
         if(!is.null(ns)) nenv <- asNamespace(ns)
         if (exists(".noGenerics", envir = nenv, inherits = FALSE))
             TRUE
@@ -123,8 +123,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
 	if (!missing(version)) {
 	     package <- manglePackageName(package, version)
-        }
-	else {
+        } else {
 	   ## Need to find the proper package to install
 	   pkgDirs <- list.files(lib.loc,
                                  pattern = paste("^", package, sep=""))
@@ -137,15 +136,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		   ## Need to find the highest version available
 		   vers <- unlist(lapply(pkgDirs, libraryPkgVersion))
 		   pos <- libraryMaxVersPos(vers)
-		   if (length(pos) > 0)
-			   package <- pkgDirs[pos]
+		   if (length(pos) > 0) package <- pkgDirs[pos]
                }
            }
         }
 
+        ## NB from this point on `package' is either the original name or
+        ## something like ash_1.0-8
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(paste("argument", sQuote("package"), "must be of length 1"))
 	pkgname <- paste("package", package, sep = ":")
 	newpackage <- is.na(match(pkgname, search()))
 	if(newpackage) {
@@ -175,7 +174,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             	stop("This is not a valid package -- no DESCRIPTION exists")
 
             descfields <- read.dcf(descfile, fields =
-                           c("Package", "Depends", "Built"))
+                                   c("Package", "Depends", "Built"))
             testRversion(descfields)
 
             ## Check for inconsistent naming
@@ -229,7 +228,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		    }
 		}
 		codeFile <- file.path(which.lib.loc, package, "R",
-				      package)
+				      libraryPkgName(package))
 		## create environment (not attached yet)
 		loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
 		## save the package name in the environment

@@ -100,8 +100,8 @@ attachNamespace <- function(ns, pos = 2) {
 }
 
 loadNamespace <- function (package, lib.loc = NULL,
-                            keep.source = getOption("keep.source.pkgs"),
-                            partial = FALSE, declarativeOnly = FALSE) {
+                           keep.source = getOption("keep.source.pkgs"),
+                           partial = FALSE, declarativeOnly = FALSE) {
     # eventually allow version as second component; ignore for now.
     package <- as.character(package)[[1]]
 
@@ -195,16 +195,15 @@ loadNamespace <- function (package, lib.loc = NULL,
                                                   c(lib.loc, .libPaths()),
                                                   keep.source), i[[2]])
         }
-        for(imp in nsInfo$importClasses) {
+        for(imp in nsInfo$importClasses)
             namespaceImportClasses(ns, loadNamespace(imp[[1]],
                                                      c(lib.loc, .libPaths()),
-                                                  keep.source), imp[[2]])
-        }
-        for(imp in nsInfo$importMethods) {
+                                                     keep.source), imp[[2]])
+        for(imp in nsInfo$importMethods)
             namespaceImportMethods(ns, loadNamespace(imp[[1]],
                                                      c(lib.loc, .libPaths()),
-                                                  keep.source), imp[[2]])
-        }
+                                                     keep.source), imp[[2]])
+
 
         # dynamic variable to allow/disable .Import and friends
         "__NamespaceDeclarativeOnly__" <- declarativeOnly
@@ -218,7 +217,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         assign(".packageName", package, envir = env)
 
         # load the code
-        codeFile <- file.path(package.lib, package, "R", package)
+        codename <- strsplit(package, "_", fixed=TRUE)[[1]][1]
+        codeFile <- file.path(package.lib, package, "R", codename)
         if (file.exists(codeFile))
             sys.source(codeFile, env, keep.source = keep.source)
         else warning(paste("Package ", sQuote(package), "contains no R code"))
