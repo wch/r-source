@@ -28,6 +28,11 @@
 #include "Defn.h"
 #include "Fileio.h"
 
+/* HP-UX headers need this before CLK_TCK */
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_READLINE_H
 #include <readline/readline.h>
@@ -195,9 +200,6 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 static char * Runix_tmpnam(char * prefix)
 {
     char *tmp, tm[PATH_MAX], tmp1[PATH_MAX], *res;
