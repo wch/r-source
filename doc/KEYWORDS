@@ -42,7 +42,8 @@ Programming, Input/Ouput, and Miscellaneous
 	methods		&	Methods and Generic Functions
 	print		&	Printing
 	file		&	Input/Output--Files
-	error		&	Error Handling				7
+	connections	&	Input/Output--Connections
+	error		&	Error Handling				8
 
 	environment	&	Session Environment
 	utilities	&	Utilities
