@@ -81,8 +81,11 @@ optim(par, fn, gr = NULL,
   The \code{control} argument is a list that can supply any of the
   following components:
   \describe{
-    \item{\code{trace}}{Logical. If true, tracing information on the
-      progress of the optimization is produced.}
+    \item{\code{trace}}{Integer. If positive, tracing information on the
+      progress of the optimization is produced. Higher values may
+      produce more tracing information: for method \code{"L-BFGS-B"}
+      there are six levels of tracing.  (To understand exactly what
+      these do see the source code: hisgher levels give more detail.)}
     \item{\code{fnscale}}{An overall scaling to be applied to the value
       of \code{fn} and \code{gr} during optimization. If negative,
       turns the problem into a maximization problem. Optimization is
@@ -110,7 +113,7 @@ optim(par, fn, gr = NULL,
       factor (default 1.0), \code{beta} the contraction factor (0.5) and
       \code{gamma} the expansion factor (2.0).}
     \item{\code{REPORT}}{The frequency of reports for the \code{"BFGS"}
-      method in \code{control$trace} is positive.
+      and \code{"L-BFGS-B"} methods if \code{control$trace} is positive.
       Defaults to every 10 iterations.}
     \item{\code{type}}{for the conjugate-gradients method. Takes value
       \code{1} for the Fletcher--Reeves update, \code{2} for

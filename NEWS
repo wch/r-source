@@ -178,6 +178,10 @@ NEW FEATURES
     o	New function fourfoldplot() for producing fourfold displays of
 	2 by 2 by k contingency tables.
 
+    o	The L-BFGS-B method of optim() now support tracing, at several
+	levels of detail.
+
+
 
 BUG FIXES
 
@@ -280,6 +284,12 @@ BUG FIXES
 	p <- pretty(x) now again fulfills  p[1] <= x[] <= p[length(p)].
 
     o	model.matrix() can now handle NAs in factors.
+
+    o	optim() has several new precautions against bugs, one of which was
+	an infinite loop in the L-BFGS-B method if the derivatives
+	were inaccurate (or if numerical derivatives were used and the
+	problem was badly scaled).
+
 
 
 	**************************************************

@@ -27,6 +27,7 @@
 #include <string.h>
 #include "R.h" /* for F77_CALL */
 #include "Linpack.h"
+#include "PrtUtil.h" /* for Rprintf */
 
 static void timer(double * ttime)
 {
@@ -118,6 +119,17 @@ static void subsm(int, int, int *, int *, double *, double *,
 		  double *, int *, int *, int *, double *,
 		  double *, int, int *);
 
+static void prn1lb(int n, int m, double *l, double *u, double *x, 
+		   int iprint, double epsmch);
+static void prn2lb(int n, double *x, double *f, double *g, int iprint, 
+		   int iter, int nfgv, int nact, double sbgnrm,
+		   int nint, char *word, int iword, int iback, 
+		   double stp, double xstep);
+static void prn3lb(int n, double *x, double *f, char *task, int iprint, 
+		   int info, int iter, int nfgv, int nintol, int nskip, 
+		   int nact, double sbgnrm, int nint, 
+		   char *word, int iback, double stp, double xstep, 
+		   int k);
 
 
 /* ================    L-BFGS-B (version 2.3)	========================== */
@@ -670,8 +682,14 @@ static void mainlb(int n, int m, double *x,
 /*	  Check the input arguments for errors. */
 	errclb(n, m, factr, &l[1], &u[1], &nbd[1], task, &info, &k);
 	if (strncmp(task, "ERROR", 5) == 0) {
+	    prn3lb(n, x+1, f, task, iprint, info,
+		   iter, nfgv, nintol, nskip, nact, sbgnrm,
+		   nint, word, iback, stp, xstep, k);
 	    return;
 	}
+
+	prn1lb(n, m, l+1, u+1, x+1, iprint, epsmch);
+	
 /*	  Initialize iwhere & project x onto the feasible set. */
 	active(n, &l[1], &u[1], &nbd[1], &x[1], &iwhere[1], iprint, &prjctd,
 		&cnstnd, &boxed);
@@ -745,6 +763,11 @@ L111:
     nfgv = 1;
 /*     Compute the infinity norm of the (-) projected gradient. */
     projgr(n, &l[1], &u[1], &nbd[1], &x[1], &g[1], &sbgnrm);
+
+    if (iprint >= 1)
+	Rprintf("At iterate %5d  f= %12.5g  |proj g|= %12.5g\n",
+		iter, *f, sbgnrm);
+
     if (sbgnrm <= *pgtol) {
 /*				  terminate the algorithm. */
 	strcpy(task, "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL");
@@ -752,6 +775,7 @@ L111:
     }
 /* ----------------- the beginning of the loop -------------------------- */
 L222:
+    if (iprint >= 99) Rprintf("Iteration %5d\n", iter);
     iword = -1;
 
     if (! cnstnd && col > 0) {
@@ -774,6 +798,9 @@ L222:
 	    sbgnrm, &info, &epsmch);
     if (info != 0) {
 /*	   singular triangular system detected; refresh the lbfgs memory. */
+	if (iprint >= 1)
+	    Rprintf("%s\n%s\n", "Singular triangular system detected;",
+		    "   refresh the lbfgs memory and restart the iteration.");
 	info = 0;
 	col = 0;
 	head = 1;
@@ -817,6 +844,10 @@ L333:
     if (info != 0) {
 /*	    nonpositive definiteness in Cholesky factorization; */
 /*	    refresh the lbfgs memory and restart the iteration. */
+	if (iprint >= 0)
+	    Rprintf("%s\n%s\n",
+		    "Nonpositive definiteness in Cholesky factorization in formk;",
+		    "   refresh the lbfgs memory and restart the iteration.");
 	info = 0;
 	col = 0;
 	head = 1;
@@ -843,6 +874,9 @@ L444:
     if (info != 0) {
 /*	    singular triangular system detected; */
 /*	    refresh the lbfgs memory and restart the iteration. */
+	if (iprint >= 1)
+	    Rprintf("%s\n%s\n", "Singular triangular system detected;",
+		    "   refresh the lbfgs memory and restart the iteration.");
 	info = 0;
 	col = 0;
 	head = 1;
@@ -892,6 +926,9 @@ L666:
 	    goto L999;
 	} else {
 /*	       refresh the lbfgs memory and restart the iteration. */
+	    if (iprint >= 1)
+		Rprintf("%s\n%s\n", "Bad direction in the line search;",
+		    "   refresh the lbfgs memory and restart the iteration.");
 	    if (info == 0) {
 		--nfgv;
 	    }
@@ -917,6 +954,8 @@ L666:
 /*	  Compute the infinity norm of the projected (-)gradient. */
 	projgr(n, &l[1], &u[1], &nbd[1], &x[1], &g[1], &sbgnrm);
 /*	  Print iteration information. */
+	prn2lb(n, x+1, f, g+1, iprint, iter, nfgv, nact,
+	       sbgnrm, nint, word, iword, iback, stp, xstep);
 	goto L1000;
     }
 L777:
@@ -932,9 +971,7 @@ L777:
     if (fold - *f <= tol * ddum) {
 /*					  terminate the algorithm. */
 	strcpy(task, "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH");
-	if (iback >= 10) {
-	    info = -5;
-	}
+	if (iback >= 10) info = -5;
 /*	     i.e., to issue a warning if iback>10 in the line search. */
 	goto L999;
     }
@@ -957,6 +994,8 @@ L777:
 /*			      skip the L-BFGS update. */
 	++nskip;
 	updatd = FALSE_;
+	if (iprint >= 1)
+	    Rprintf("ys=%10.3e  -gs=%10.3e, BFGS update SKIPPED\n", dr, ddum);
 	goto L888;
     }
 /* ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc */
@@ -979,6 +1018,10 @@ L777:
     if (info != 0) {
 /*	    nonpositive definiteness in Cholesky factorization; */
 /*	    refresh the lbfgs memory and restart the iteration. */
+	if (iprint >= 0)
+	    Rprintf("%s\n%s\n",
+		    "Nonpositive definiteness in Cholesky factorization in formk;",
+		    "   refresh the lbfgs memory and restart the iteration.");
 	info = 0;
 	col = 0;
 	head = 1;
@@ -1036,6 +1079,9 @@ L1000:
     dsave[14] = stp;
     dsave[15] = gdold;
     dsave[16] = dtd;
+    prn3lb(n, x+1, f, task, iprint, info,
+	   iter, nfgv, nintol, nskip, nact, sbgnrm,
+	   nint, word, iback, stp, xstep, k);
     return;
 } /* mainlb */
 /* ======================= The end of mainlb ============================= */
@@ -1126,6 +1172,14 @@ static void active(int n, double *l, double *u,
 	    }
 	}
     }
+    if (iprint >= 0) {
+	if (*prjctd)
+	    Rprintf("The initial X is infeasible.  Restart with its projection.\n");
+	if (!*cnstnd) Rprintf("This problem is unconstrained.\n");
+    }
+    if (iprint > 0)
+	Rprintf("At X0, %d variables are exactly at the bounds\n", nbdd);
+
     return;
 } /* active */
 /* ======================= The end of active ============================= */
@@ -1504,6 +1558,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
  */
 
     if (*sbgnrm <= 0.) {
+	if (iprint >= 0) Rprintf("Subgnorm = 0.  GCP = X.\n");
 	F77_CALL(dcopy)(&n, &x[1], &c__1, &xcp[1], &c__1);
 	return;
     }
@@ -1514,6 +1569,9 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     bkmin = 0.;
     col2 = *col << 1;
     f1 = 0.;
+    if (iprint >= 99)
+	Rprintf("\n---------------- CAUCHY entered-------------------\n\n");
+
 /*     We set p to zero and build it up as we determine d. */
     for (i__ = 1; i__ <= col2; ++i__)
 	p[i__] = 0.;
@@ -1607,6 +1665,12 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     F77_CALL(dcopy)(&n, &x[1], &c__1, &xcp[1], &c__1);
     if (nbreak == 0 && nfree == n + 1) {
 /*		    is a zero vector, return with the initial xcp as GCP. */
+	if (iprint > 100) {
+	    int i;
+	    Rprintf("Cauchy X =  ");
+	    for(i = 1; i <= n; i++) Rprintf("%g ", xcp[i]);
+	    Rprintf("\n");
+	}
 	return;
     }
 /*     Initialize c = W'(xcp - x) = 0. */
@@ -1626,6 +1690,8 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     dtm = -f1 / f2;
     tsum = 0.;
     *nint = 1;
+    if (iprint >= 99) Rprintf("There are %d  breakpoints\n", nbreak);
+
 /*     If there are no breakpoints, locate the GCP and return. */
     if (nbreak == 0) {
 	goto L888;
@@ -1661,6 +1727,14 @@ L777:
 	ibp = iorder[nleft];
     }
     dt = tj - tj0;
+
+    if (dt != 0 && iprint >=  100) {
+	Rprintf("\nPiece    %3i f1, f2 at start point %11.4e %11.4e\n",
+		*nint, f1, f2);
+	Rprintf("Distance to the next break point =  %11.4e\n", dt);
+	Rprintf("Distance to the stationary point =  %11.4e\n", dtm);
+    }
+
 /*     If a minimizer is within this interval, */
 /*	 locate the GCP and return. */
     if (dtm < dt) {
@@ -1682,6 +1756,7 @@ L777:
 	xcp[ibp] = l[ibp];
 	iwhere[ibp] = 1;
     }
+    if (iprint >= 100) Rprintf("Variable  %d  is fixed.\n", ibp);
     if (nleft == 0 && nbreak == n) {
 /*					       all n variables are fixed, */
 /*						  return with xcp as GCP. */
@@ -1737,6 +1812,13 @@ L777:
     }
 /* ------------------- the end of the loop ------------------------------- */
 L888:
+    if (iprint >= 99) {
+	Rprintf("\nGCP found in this segment\n");
+	Rprintf("Piece    %3i f1, f2 at start point %11.4e %11.4e\n",
+		*nint,f1,f2);
+	Rprintf("Distance to the stationary point =  %11.4e\n", dtm);
+    }
+
     if (dtm <= 0.) {
 	dtm = 0.;
     }
@@ -1750,6 +1832,15 @@ L999:
     if (*col > 0) {
 	F77_CALL(daxpy)(&col2, &dtm, &p[1], &c__1, &c__[1], &c__1);
     }
+    if (iprint >= 100) {
+	int i;
+	Rprintf("Cauchy X =  ");
+	for(i = 1; i <= n; i++) Rprintf("%g ", xcp[i]);
+	Rprintf("\n");
+    }
+
+    if (iprint >= 99)
+	Rprintf("\n---------------- exit CAUCHY----------------------\n\n");
     return;
 } /* cauchy */
 /* ====================== The end of cauchy ============================== */
@@ -2407,6 +2498,9 @@ static void freev(int n, int *nfree, int *index,
 	    if (iwhere[k] > 0) {
 		--(*ileave);
 		indx2[*ileave] = k;
+		if (iprint >= 100)
+		    Rprintf("Variable %d leaves the set of free variables\n",
+			    k);
 	    }
 /* L20: */
 	}
@@ -2415,8 +2509,14 @@ static void freev(int n, int *nfree, int *index,
 	    if (iwhere[k] <= 0) {
 		++(*nenter);
 		indx2[*nenter] = k;
+		if (iprint >= 100)
+		    Rprintf("Variable %d enters the set of free variables\n",
+			    k);
 	    }
 /* L22: */
+         if (iprint >= 100)
+	     Rprintf("%d variables leave; %d variables enter\n",
+		     n + 1 - *ileave, *nenter);
 	}
     }
     *wrk = *ileave < n + 1 || *nenter > 0 || *updatd;
@@ -2432,6 +2532,9 @@ static void freev(int n, int *nfree, int *index,
 	    index[iact] = i__;
 	}
     }
+    if (iprint >= 99)
+	Rprintf("%d  variables are free at GCP on iteration %d\n",
+		*nfree, *iter + 1);
     return;
 } /* freev */
 /* ======================= The end of freev ============================== */
@@ -3756,6 +3859,78 @@ static void dcstep(double *stx, double *fx, double *dx,
     return;
 } /* dcstep */
 /* ====================== The end of dcstep ============================== */
+
+static void pvector(char *title, double *x, int n)
+{
+    int i;
+    Rprintf("%s ", title);
+    for (i = 0; i < n; i++) Rprintf("%g ", x[i]);
+    Rprintf("\n");
+}
+
+
+static void prn1lb(int n, int m, double *l, double *u, double *x, 
+		   int iprint, double epsmch)
+{
+    if (iprint >=  0) {
+	Rprintf("N = %d, M = %d machine precision = %g\n", n, m, epsmch);
+	if (iprint >= 100){
+	    pvector("L =", l, n);
+	    pvector("X0 =",x, n);
+	    pvector("U =", u, n);
+	}
+    }
+}
+
+
+static void prn2lb(int n, double *x, double *f, double *g, int iprint, 
+		   int iter, int nfgv, int nact, double sbgnrm,
+		   int nint, char *word, int iword, int iback, 
+		   double stp, double xstep)
+{
+    if (iprint >=  99) {
+	Rprintf("LINE SEARCH %d times; norm of step = %g\n", iback, xstep);
+	if (iprint > 100) {
+	    pvector("X =", x, n);
+	    pvector("G =", g, n);
+	}
+    } else if (iprint > 0 && iter%iprint == 0) {
+	Rprintf("At iterate %5d  f = %12.5g  |proj g|=  %12.5g\n", 
+		iter, *f, sbgnrm);
+    }
+}
+
+static void prn3lb(int n, double *x, double *f, char *task, int iprint, 
+		   int info, int iter, int nfgv, int nintol, int nskip, 
+		   int nact, double sbgnrm, int nint, 
+		   char *word, int iback, double stp, double xstep, 
+		   int k)
+{
+    if(strncmp(task, "CONV", 4) == 0) {
+	if (iprint >= 0) {
+	    Rprintf("\niterations %d\nfunction evaluations %d\nsegments explored during Cauchy searches %d\nBFGS updates skipped %d\nactive bounds at final generalized Cauchy point %d\nnorm of the final projected gradient %g\nfinal function value %g\n\n", iter, nfgv, nintol, nskip, nact, sbgnrm, *f);
+	}
+	if (iprint >= 100) pvector("X =", x, n);
+	if (iprint >= 1) Rprintf("F = %g\n", *f);
+    }
+    if (iprint >= 0) {
+	switch(info) {
+	case -1: Rprintf("Matrix in 1st Cholesky factorization in formk is not Pos. Def."); break;
+	case -2: Rprintf("Matrix in 2st Cholesky factorization in formk is not Pos. Def."); break;
+	case -3: Rprintf("Matrix in the Cholesky factorization in formt is not Pos. Def."); break;
+	case -4: Rprintf("Derivative >= 0, backtracking line search impossible."); break;
+	case -5: Rprintf("l(%d) > u(%d).  No feasible solution", k, k); break;
+	case -6: Rprintf("Input nbd(%d) is invalid", k); break;
+	case -7: Rprintf("Warning:  more than 10 function and gradient evaluations\n   in the last line search\n"); break;
+	case -8: Rprintf("The triangular system is singular."); break;
+	case -9: Rprintf("%s\n%s\n", "Line search cannot locate an adequate point after 20 function", "and gradient evaluations"); break;
+	default: break;
+	}
+    }
+}
+
+
+
 
 #ifdef NOT_USING_DBL_EPSILON
 
