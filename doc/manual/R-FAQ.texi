@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-40, 2003-03-19
-@set REL-VERSION 1.6.2
+@set FAQ-VERSION 1.7-0, 2004-04-10
+@set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -1913,6 +1913,9 @@ multiple smoothing parameter selection by GCV or UBRE.
 @emph{Recommended}.
 @item mimR
 An R interface to MIM for graphical modeling in R.
+@item mix
+Estimation/multiple imputation programs for mixed categorical and
+continuous data.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
@@ -1981,6 +1984,8 @@ Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pixmap
 Functions for import, export, plotting and other manipulations of
 bitmapped images.
+@item pls.pcr
+Multivariate regression by PLS and PCR.
 @c <COMMENT>
 @c Outdated on CRAN along with 1.5.0 release as we do not have an active
 @c maintainer to fix outstanding quality problems.
