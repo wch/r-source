@@ -13,8 +13,8 @@ profiles: ../../../library/base/R/Rprofile
 
 SED0='/^\#/d'
 SED01='/Rsockfork/d'
-SED1='s/F77_SUBROUTINE(\(.*\))/int \1_();/'
-SED2='s/C_FUNCTION(\(.*\))/int \1();/'
+SED1='s/F77_SUBROUTINE(\(.*\))/void * \1_();/'
+SED2='s/C_FUNCTION(\(.*\))/void * \1();/'
 SED3='s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/'
 SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
