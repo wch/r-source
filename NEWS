@@ -350,6 +350,9 @@ BUG FIXES
 	
     o   The ave() function had trouble if the grouping contained 
         unused levels. 
+	
+    o   read.fwf got confused by skip > 0 and could infinite loop
+	under some circumstances.  (PR#7350)
 
 
 
