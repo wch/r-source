@@ -300,3 +300,15 @@ Directory:  incoming
 Subject: bug in histogram rendering
 From: ljlehou@sandia.gov
 Date: Thu, 30 Aug 2001 01:40:13 +0200 (MET DST)
+* PR# 1081 *
+Subject: problems installing R on Solaris 2.8 machine
+From: Paivio Pollari <pollari@sun3.oulu.fi>
+Date: Fri, 31 Aug 2001 08:54:23 +0300 (EET DST)
+* PR# 1082 *
+Subject: =?big5?B?tfizpbZWrMm3c67RqHQgLS2hbanKvKShQsV2pE+hQrRjpua7ULdMr7otLb9ztfg=?=
+From: "=?big5?B?s8Gu5sO5p8a6uA==?=" <replypro@mcgraw-hill.com.tw>
+Date: Fri, 31 Aug 2001 18:48:20 +0800
+* PR# 1083 *
+Subject: --quiet flag sets echo option to TRUE
+From: "David Kane  <David Kane" <a296180@mica.fmr.com>
+Date: Fri, 31 Aug 2001 13:07:19 -0400
