@@ -57,6 +57,9 @@ The manual way of building packages is now deprecated, and it is no
 longer possible to use it to build bundles (which was never documented).
 Cross-building of packages is now done by the XINSTALL script.
 
+bringToTop() in MDI mode now brings the whole MDI frame to the top
+before raising the chosen window within it.
+
 
 
 rw1091
