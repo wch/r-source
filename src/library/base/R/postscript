@@ -37,29 +37,29 @@ function(file="Rplots.ps", ..., reset=F)
 	else old
 }
 
-postscript <-
-function (file="Rplots.ps", ...)
+postscript <- function (file = "Rplots.ps", ...)
 {
 	new <- list(...)
-	if(length(new) != length(names(new)))
+	if (length(new) != length(names(new)))
 		stop("invalid arguments to postscript (need NAMED args)")
-	old <- get(".PostScript.Options", envir=.GlobalEnv)
-	if(!is.list(old))
+	old <- get(".PostScript.Options", envir = .GlobalEnv)
+	if (!is.list(old))
 		stop("invalid postscript options")
 	oldnames <- names(old)
 	newnames <- names(new)
-	if(length(new) > 0) {
+	if (length(new) > 0) {
 		matches <- pmatch(newnames, oldnames)
-		if(any(is.na(matches)))
+		if (any(is.na(matches)))
 			stop("invalid postscript options")
-		else if(any(matches==0))
+		else if (any(matches == 0))
 			stop("ambiguous postscript option")
-		else
-			old[oldnames[matches]] <- new
+		else old[oldnames[matches]] <- new
 	}
 	cpars <- old[c("paper", "family", "bg", "fg")]
 	npars <- old[c("width", "height", "horizontal", "pointsize")]
-	cpars <- c(file, as.character(unlist(lapply(cpars, "[", 1))))
+	cpars <- c(file, as.character(unlist(lapply(cpars, "[",
+		1))))
 	npars <- as.numeric(unlist(lapply(npars, "[", 1)))
-	.Internal(device("postscript", cpars, npars))
+	.Internal(PS(file, old$paper, old$family, old$bg, old$fg,
+		old$width, old$height, old$horizontal, old$pointsize))
 }

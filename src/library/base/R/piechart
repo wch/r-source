@@ -14,7 +14,7 @@ function (x, labels=names(x), edges=200, radius=0.8, col=NULL, main=NULL, ...)
 	plot.new()
 	plot.window(xlim, ylim, "")
 	for (i in 1:length(dx)) {
-		n <- floor(edges * dx[i])
+		n <- max(2, floor(edges * dx[i]))
 		t2p <- 2*pi * seq(x[i], x[i + 1], length = n)
 		xc <- c(cos(t2p), 0) * radius
 		yc <- c(sin(t2p), 0) * radius
