@@ -298,6 +298,21 @@ if test -n "${F77}"; then
   FC=${F77}
   AC_PROG_F77
   AC_F77_LIBRARY_LDFLAGS
+  ## Currently g77 on Darwin links against -lcrt1.o, which (unlike
+  ## -lcrt0.o) is not stripped by AC_F77_LIBRARY_LDFLAGS.  This in
+  ## particular causes R_PROG_F77_CC_COMPAT to fail.  Hence, we make
+  ## sure all -lcrt?.o are removed.
+  flibs=
+  for arg in ${FLIBS}; do
+    case "${arg}" in
+      -lcrt?.o)
+        ;;
+      *)
+        flibs="${flibs} ${arg}"
+	;;
+    esac
+  done
+  FLIBS="${flibs}"
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
   R_PROG_F77_CC_COMPAT_COMPLEX
