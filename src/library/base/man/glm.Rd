@@ -97,7 +97,7 @@ extract various useful features of the value returned by \code{glm}.
   non-generalized \emph{linear} models.
 }
 \examples{
-## Annette Dobson (1990) "An Introduction to Statistical Modelling".
+## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
 ## Page 93: Randomized Controlled Trial :
 counts <- c(18,17,15,20,10,20,25,13,12)
 outcome <- gl(3,1,9)
