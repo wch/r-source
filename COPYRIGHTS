@@ -49,6 +49,13 @@ src/library/mva/R/princomp-add.R
 
 	Copyright (C) 1998 W. N. Venables and B. D. Ripley
 
+src/library/ts/R/kernel.R
+src/library/ts/man/kernel.Rd
+src/library/ts/src/PPsum.c
+
+	Copyright (C) 1997-1999  Adrian Trapletti
+
+
 src/regex/* [Only used on Macintosh]
 
 	Copyright (c) 1992, 1993, 1994 Henry Spencer
