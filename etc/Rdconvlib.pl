@@ -60,16 +60,18 @@ sub Rdconv {
     #-- remove comments (everything after a %)
     while(<rdfile>){
 	while(s/^\\%|([^\\])\\%/$1escaped_percent_sign/go){};
+	next if /^\s*%/o;#- completely drop full comment lines
 	s/^([^%]*)%.*$/$1/o;
 	s/escaped_percent_sign/\\%/go;
 	$complete_text = "$complete_text$_";
     }
-
+    printf stderr "-- read file '%s';\n",$_[0] if $debug;
 
     mark_brackets();
+    ##HARD Debug: print "$complete_text\n"; exit;
     escape_codes();
     if($debug) {
-      print stderr "--------------\nescape codes: '\@ecodes' =\n";
+      print stderr "\n--------------\nescape codes: '\@ecodes' =\n";
 
       while(my($id,$code) = each %ecodes) {
 	print stderr "\t\$ec{$id}='$code'\n";
@@ -96,9 +98,11 @@ sub mark_brackets {
     $complete_text =~ s/^\\{|([^\\])\\{/$1$EOB/gso;
     $complete_text =~ s/^\\}|([^\\])\\}/$1$ECB/gso;
 
+    print stderr "\n-- mark_brackets:" if $debug;
     while($complete_text =~ /{([^{}]*)}/s){
 	my $id = $NB . ++$max_bracket . $BN;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
+	print stderr "." if $debug;
     }
 }
 
@@ -115,17 +119,18 @@ sub unmark_brackets {
 	    return $text;
 	}
     }
-
     $text =~ s/$EOB/\{/gso;
     $text =~ s/$ECB/\}/gso;
     $text;
 }
 
 sub escape_codes {
+    print stderr "\n-- escape_codes:" if $debug;
     while($complete_text =~ /\\code/){
 	my ($id, $arg)	= get_arguments("code", $complete_text, 1);
 	$complete_text =~ s/\\code$id(.*)$id/$ECODE$id/s;
 	$ecodes{$id} = $1;
+	print stderr "," if $debug;
     }
 }
 
@@ -160,7 +165,7 @@ sub get_blocks {
 		    die($msg);
 		}
 	    }
-		
+
 	}
     }
     print stderr "---\n" if $debug;
@@ -209,19 +214,17 @@ sub get_sections {
     print stderr "---\n" if $debug;
 }
 
-
 # Get the arguments of a command.
-# Arguments of get_arguments:
-#  1: next occurence of $_[0] is searched
-#  2: $_[1] is the text containing the command
-#  3: $_[2] is the optional number of arguments to be extracted,
-#     default is to extract 1 argument
-# Returns a list with the id of the last closing bracket and
-# the arguments.
 sub get_arguments {
 
     my ($command, $text, $nargs) = @_;
+    # Arguments of get_arguments:
+    #  1, command: next occurence of `command' is searched
+    #  2, text	 : `text' is the text containing the command
+    #  3, nargs	 : the optional number of arguments to be extracted; default 1
     my @retval;
+    # Returns a list with the id of the last closing bracket and
+    # the arguments.
 
     if($text =~ /\\($command)($ID)/){
 	$id = $2;
@@ -851,7 +854,7 @@ sub rdoc2latex {
     foreach (@aliases) {
       $c= code2latex($_,0);
       $a= latex_code_alias($c);
-      printf stderr "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
+      print stderr "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
 	if $debug;
       printf latexout "\\alias\{%s\}\{%s\}\n", $a, $blocks{"name"}
         unless /^$blocks{"name"}$/;
@@ -1031,9 +1034,9 @@ sub latex_code_cmd {
 
     if($code =~ /[$LATEX_SPECIAL]/){
         die("\nERROR: found `\@' in \\code{...\}\n")
-	    if $code =~ /@/;
+	  if $code =~ /@/;
         die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
-	    if $code =~ /HYPERLINK\(/;
+	  if $code =~ /HYPERLINK\(/;
 	$code = "\\verb@" . $code . "@";
     }
     else {
