@@ -39,6 +39,7 @@ NEW FEATURES
     o	barplot has a "plot = TRUE" argument and now returns locations of
 	all bars even when "beside = TRUE".
 
+    o	hist has an "nclass" argument purely for S compatibility.
 
 BUG FIXES
 
@@ -59,12 +60,13 @@ BUG FIXES
 	par(mfrow/mfcol = c(nr, nc)) followed by par(mfg=c(i,j)) is
 	the preferred style.
 
-    o	plot( <aov.object> ) failed after 2nd plot, PR #279
+    o	plot( <aov.object> ) failed after 2nd plot, PR#279
 
     o	Several patches for systems with long != int.
 
     o   approx failed if inputs contained NAs.
 
+    o	lm.influence failed when there were indetermined coefficients, PR#280.
 
 
 		CHANGES IN R VERSION 0.65.0

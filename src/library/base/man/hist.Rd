@@ -8,15 +8,16 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
      main = paste("Histogram of" , deparse(substitute(x))),
      xlim = range(breaks),  ylim = range(counts, 0),
      xlab = deparse(substitute(x)),  ylab,
-     axes = TRUE, plot = TRUE, labels = FALSE, \dots)
+     axes = TRUE, plot = TRUE, labels = FALSE,
+     nclass = NULL, \dots)
 }
 \alias{hist}
 \alias{hist.default}
 \arguments{
 \item{x}{a vector of values for which the histogram is desired.}
-\item{breaks}{either a single number giving the
-approximate number of cells for the histogram
-or a vector giving the breakpoints between histogram cells.}
+\item{breaks}{either a single number giving the approximate number of
+  cells for the histogram or a vector giving the breakpoints between
+  histogram cells.}
 \item{freq}{logical; if \code{TRUE}, the
   histogram graphic is to present a representation of frequencies, i.e,
   the \code{counts} component of the result; if \code{FALSE},
@@ -38,6 +39,8 @@ or a vector giving the breakpoints between histogram cells.}
 \item{plot}{logical.  If \code{TRUE} (default), a histogram is
   plotted, otherwise a list of breaks and counts is returned.}
 \item{labels}{logical.  Additionally draw labels on top of bars, if \code{TRUE}.}
+\item{nclass}{numeric (integer).  For S compatibility only,
+  \code{nclass=n} is equivalent to \code{breaks=n} (n scalar).}
 \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
