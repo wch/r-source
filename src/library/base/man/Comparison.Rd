@@ -26,6 +26,13 @@ x != y
   Objects such as arrays or time-series can be compared this way
   provided they are conformable.
 }
+\note{
+ Don't use \code{==} and \code{!=} for tests, such as in \code{if}
+  expressions, where you must get a single \code{TRUE} or
+  \code{FALSE}.  Unless you are absolutely sure that nothing unusual
+  can happen, you should use the \code{\link{identical}} function
+  instead.
+}
 \examples{
 x <- rnorm(20)
 x < 1

@@ -28,7 +28,9 @@ all.equal.numeric(target, current,
     \code{all.equal(x,y)} is a utility to compare \R objects \code{x}
     and \code{y} testing ``near equality''.  If they are different,
     comparison is still made to some extent, and a report of the
-    differences is returned.
+    differences is returned.  Don't use \code{all.equal} directly in
+    \code{if} expressions---either use \code{\link{identical}} or combine
+    the two, as shown in the documentation for \code{identical}.
 }
 \details{
     There are several methods available, most of which are dispatched by

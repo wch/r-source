@@ -26,6 +26,7 @@ stop.list[["base"]] <-
     } else {
 	inet.list <- c(apropos("download\."),
 		       apropos("^url\."), apropos("\.url"),
+                       apropos("packageStatus"),
 		       paste(c("CRAN", "install", "update", "old"),
                              "packages",sep="."))
 	socket.fun <- apropos("socket")
