@@ -92,14 +92,16 @@ packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 In the following, we assume that you know the
 @samp{library()} command, including its @samp{lib.loc} argument,
-and we also assume basic knowledge of @samp{R INSTALL}.
+and we also assume basic knowledge of @samp{R CMD INSTALL}.
 Otherwise, please look at @R{}'s help pages
+
 @quotation
 @smallexample
  ?library
  ?INSTALL
 @end smallexample
 @end quotation
+
 @noindent
 before reading on.
 
