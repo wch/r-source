@@ -13,9 +13,12 @@ quantreg amongst those on CRAN) need to be re-built.  The advantage is
 that less space is taken up overall, and ATLAS can be used just by
 rebuilding Rblas.dll.
 
+The installers now use bzip compression, so make smaller packages
+(which take a little longer to install).
+
 Cross-building automatically uses STAMP=NO for packages.
 
-R can now be built is a directory whose path contains spaces (although
+R can now be built in a directory whose path contains spaces (although
 we still don't recommend it).
 
 

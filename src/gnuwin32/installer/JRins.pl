@@ -57,6 +57,7 @@ OutputBaseFilename=SetupR
 WizardSmallImageFile=R.bmp
 UsePreviousAppDir=no
 ChangesAssociations=yes
+Compression=bzip
 
 [Types]
 Name: "user"; Description: "User installation"
@@ -91,7 +92,6 @@ Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWor
 Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey 
 Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0" 
 Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1""" 
-
 
 [Files]
 END

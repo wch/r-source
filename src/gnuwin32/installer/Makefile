@@ -16,7 +16,7 @@ IS: SetupR.exe
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
 # location where binary packages are kept
-PKGS=C:/R/Rdist/libs/rw1040
+PKGS=C:/R/Rdist/libs
 
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
