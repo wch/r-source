@@ -49,21 +49,17 @@ double qhyper(double p, double NR, double NB, double n,
     if(p == R_DT_0) return xstart;
     if(p == R_DT_1) return xend;
 
-    /* FIXME */
-    if(!lower_tail || log_p) {
-	warning("lower_tail & log_p not yet implemented in ptukey()");
-	return ML_NAN;
-    }
-
     xr = xstart;
     xb = n - xr;
 
-    term = exp(lfastchoose(NR, xr) + lfastchoose(NB, xb)
-	       - lfastchoose(N, n));
+    term = exp(lfastchoose(NR, xr) + lfastchoose(NB, xb) - lfastchoose(N, n));
     NR = NR - xr;
     NB = NB - xb;
     sum = term;
-    p *= 1 - 1e-7;
+    if(!lower_tail || log_p) {
+	p = R_D_qIv(R_D_Lval(p));
+    }
+    p *= 1 - 64*DBL_EPSILON;
     while(sum < p && xr < xend) {
 	xr++;
 	NB++;
