@@ -86,7 +86,7 @@ local({
     tclvar$bw    <- 1
     cat("******************************************************\n",
         "The source for this demo can be found in the file:\n", 
-        paste(R.home(),"demos","tkdensity.R", sep=.Platform$file.sep),
+        paste(R.home(),"demos","tcltk","tkdensity.R", sep=.Platform$file.sep),
         "\n******************************************************\n")
 
     regen()

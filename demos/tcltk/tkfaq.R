@@ -21,7 +21,7 @@ local({
 
     cat("******************************************************\n",
         "The source for this demo can be found in the file:\n", 
-        paste(R.home(),"demos","tkfaq.R", sep=.Platform$file.sep),
+        paste(R.home(),"demos","tcltk","tkfaq.R", sep=.Platform$file.sep),
         "\n******************************************************\n")
 })
 
