@@ -38,7 +38,7 @@ daytime<-function(host="localhost"){
   on.exit(close.socket(a))
   read.socket(a)
 }
-daytime()  ## only works if your computer runs this service
+\dontrun{daytime()}  ## only works if your computer runs this service
 daytime("chime.cac.washington.edu")
 }
 \keyword{ ~keyword }%-- one or more ...
