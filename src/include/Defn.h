@@ -795,10 +795,8 @@ int yywrap(void);
     Rboolean __oldsusp__ = R_interrupts_suspended; \
     R_interrupts_suspended = TRUE;
 #define END_SUSPEND_INTERRUPTS R_interrupts_suspended = __oldsusp__; \
-    if (R_interrupts_pending && ! R_interrupts_suspended) { \
-        R_interrupts_pending = 0; \
+    if (R_interrupts_pending && ! R_interrupts_suspended) \
         onintr(); \
-    } \
 } while(0)
 
 #endif /* DEFN_H_ */
