@@ -424,7 +424,7 @@ packagedist:
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
 	$(CP) ../../share/make/tests.mk $(RPREFIX)/share/make
-	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
+	$(CP) -p graphapp/graphapp.h graphapp/ga.h $(RPREFIX)/src/include
 	$(MAKE) PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;
