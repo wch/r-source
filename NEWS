@@ -25,6 +25,21 @@ USER-VISIBLE CHANGES
     o	formatC has new arguments (see below) and formatC(*, d = <dig>) 
 	is no longer valid and must be written as formatC(*, digits = <dig>).
 
+[Changes to NA strings are currently in progress:
+
+    o	"NA" is no longer automatically coerced to a missing value
+	for a character string.  Use as.character(NA) where a missing
+	value is required, and test via is.na(x) not x == "NA".
+	String "NA" is still converted to missing by scan() and
+	read.table() unless `na.strings' is changed from the default.
+
+	text.default() omits missing string values (rather than
+	plotting "NA").
+
+	Missing character strings are treated as missing much more
+	consistently, e.g. in logical comparisons and in sorts.
+	identical() now differentiates "NA" from the missing string.
+]
 
 NEW FEATURES
 
@@ -476,6 +491,9 @@ BUG FIXES
     o	sort.list() and order() were treating NA_STRING as "NA".
 
     o	sort.list(na.last = NA) was not implemented.
+
+    o	seq.default() was returning only one element for a relative
+	range of less than about 1e-8, which was excessively conservative.
 
 
 	**************************************************

@@ -1386,11 +1386,10 @@ provided to check specifically for @code{NaN}, @code{is.na} also returns
 type gives an @code{NA} of the appropriate type.
 @findex is.nan
 
-The @code{NA} of character type is currently the string @code{"NA"}, so
-this string cannot be used as a character value (eg as an abbreviation
-for "North America"). This may change in the future. Programmers who
-need to specify an explicit string @code{NA} should use
-@samp{as.character(NA)} rather than @code{"NA"}.
+The @code{NA} of character type is as from R 1.5.0 distinct from the
+string @code{"NA"}.  Programmers who need to specify an explicit string
+@code{NA} should use @samp{as.character(NA)} rather than @code{"NA"}, or
+set elements to @code{NA} using @code{is.na<-}.
 
 
 @node Indexing, Scope of variables, Elementary arithmetic operations, Evaluation of expressions
