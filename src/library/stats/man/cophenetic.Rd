@@ -8,8 +8,8 @@
 cophenetic(x)
 }
 \arguments{
-  \item{x}{an object of class \code{\link[mva]{hclust}} or with a method
-    for \code{\link[mva]{as.hclust}()} such as \code{\link[cluster]{agnes}}.}
+  \item{x}{an object of class \code{\link{hclust}} or with a method
+    for \code{\link{as.hclust}()} such as \code{\link[cluster]{agnes}}.}
 }
 \details{
   The cophenetic distance between two observations that have been
