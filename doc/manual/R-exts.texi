@@ -47,10 +47,10 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 
 @contents
 
-@node Top, Acknowledgments, (dir), (dir)
+@node Top, Acknowledgements, (dir), (dir)
 
 @menu
-* Acknowledgments::
+* Acknowledgements::
 * Creating R packages::
 * Writing R documentation::
 * System and foreign language interfaces::
@@ -61,15 +61,15 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 * Concept index::
 @end menu
 
-@node Acknowledgments, Creating R packages, Top, Top
-@unnumbered Acknowledgments
+@node Acknowledgements, Creating R packages, Top, Top
+@unnumbered Acknowledgements
 
 
 The contributions of Saikat DebRoy (who wrote the first draft of a guide
 to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
 provided information on the C++ interface) are gratefully acknowledged.
 
-@node Creating R packages, Writing R documentation, Acknowledgments, Top
+@node Creating R packages, Writing R documentation, Acknowledgements, Top
 @chapter Creating R packages
 @cindex Packages
 @cindex Creating packages
@@ -320,7 +320,7 @@ configure script which checks for the library, sets variable
 @code{HAVE_FOO} to @code{TRUE} if it was found and with @code{FALSE}
 otherwise, and then substitutes this value into output files (by
 replacing instances of @samp{@@HAVE_FOO@@} in input files with the value
-of @code{HAVE_FOO}).  for example, if a function named @code{bar} is to
+of @code{HAVE_FOO}).  For example, if a function named @code{bar} is to
 be made available by linking against library @code{foo} (i.e., using
 @option{-lfoo}), one could use
 
@@ -729,7 +729,7 @@ info).
 
 @item \keyword@{@var{key}@}
 Each @code{\keyword} entry should specify one of the standard keywords
-(as listed in thefile @file{$R_HOME/doc/KEYWORDS}).  There must be at
+(as listed in the file @file{$R_HOME/doc/KEYWORDS}).  There must be at
 least one @code{\keyword} entry, but can be more that one if the @R{}
 object being documented falls into more than one category.
 @end table
@@ -826,7 +826,7 @@ For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
 upper case).
 
-Note that the additonal named sections are always inserted at fixed
+Note that the additional named sections are always inserted at fixed
 positions in the output (before @code{\note}, @code{\seealso} and the
 examples), no matter where they appear in the input.
 
@@ -1084,7 +1084,7 @@ provides two user-level programs for processing Rd format.
 file, and is particularly useful as a previewer when writing Rd format
 documentation within Emacs.  @code{R CMD Rd2dvi} generates DVI (or, if
 option @option{--pdf} is given, PDF) output from documentation in
-Rd files, which can be specified either explictly or by the path to a
+Rd files, which can be specified either explicitly or by the path to a
 directory with the sources of a package.  In the latter case, a
 reference manual for all documented objects in the package is created.
 Future versions will also add the information in the @file{DESCRIPTION}
@@ -1101,7 +1101,7 @@ used to automatically create these indices when building a package.
 @findex R CMD Sd2Rd
 Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files
 (which use an extended Nroff format) to Rd format.  This is useful when
-porting a package orginally written for the @Sl{} system to @R{}.
+porting a package originally written for the @Sl{} system to @R{}.
 
 The exact usage and a detailed list of available options for each of the
 above commands can be obtained by running @code{R CMD command --help},
@@ -1454,7 +1454,7 @@ Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
 
-The R for Windows FAQ (@file{rw-FAQ}) contains details of how to compie
+The R for Windows FAQ (@file{rw-FAQ}) contains details of how to compile
 this example under various Windows compilers.
 
 Using C++ iostreams, as in this example, is best avoided.  There is no
@@ -2146,8 +2146,8 @@ SEXP convolveE(SEXP args)
   double *xa, *xb, *xab;
   SEXP a, b, ab;
 
-  PROTECT(a = coerceVector(CADR(args), REALSXP)));
-  PROTECT(b = coerceVector(CADDR(args), REALSXP)));
+  PROTECT(a = coerceVector(CADR(args), REALSXP));
+  PROTECT(b = coerceVector(CADDR(args), REALSXP));
     ...
 @}
 @end example
@@ -2509,7 +2509,7 @@ SEXP numeric_deriv(SEXP args)
   expr = CADR(args);
   if(!isString(theta = CADDR(args)))
     error("theta should be of type character");
-  if(!isEnvironment(rho = CADDR(args)))
+  if(!isEnvironment(rho = CADDDR(args)))
     error("rho should be an environment");
 
   PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
@@ -2544,7 +2544,7 @@ The code to handle the arguments is
   expr = CADR(args);
   if(!isString(theta = CADDR(args)))
     error("theta should be of type character");
-  if(!isEnvironment(rho = CADDR(args)))
+  if(!isEnvironment(rho = CADDDR(args)))
     error("rho should be an environment");
 @end example
 
@@ -2819,7 +2819,7 @@ $7 = 5
 * Random numbers::
 * Missing and IEEE values::
 * Printing::
-* Calling C from Fortran::
+* Calling C from Fortran and vice versa::
 * Numerical analysis subroutines::
 * Distribution functions::
 * Mathematical Utilities::
@@ -3067,7 +3067,7 @@ which could occur in ordinary computations which run out of control,
 so you may need to test that they have not been generated inadvertently.
 
 
-@node Printing, Calling C from Fortran, Missing and IEEE values, The R API
+@node Printing, Calling C from Fortran and vice versa, Missing and IEEE values, The R API
 @section Printing
 @cindex Printing from C
 @findex Rprintf
@@ -3115,9 +3115,9 @@ line and then print @var{data} as if it were an @R{} vector on
 subsequent line(s).  They work with zero @var{ndata}, and so can be used
 to print a label alone.
 
-@node Calling C from Fortran, Numerical analysis subroutines, Printing, The R API
-@section Calling C from Fortran
-@cindex Calling C from Fortran
+@node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
+@section Calling C from Fortran and vice versa
+@cindex Calling C from Fortran and vice versa
 
 Naming conventions for symbols generated by Fortran differ by platform:
 it is not safe to assume that Fortran names appear to C with a trailing
@@ -3138,7 +3138,7 @@ to access a Fortran common block from C
 @end table
 
 
-@node Numerical analysis subroutines, Distribution functions, Calling C from Fortran, The R API
+@node Numerical analysis subroutines, Distribution functions, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
@@ -3686,7 +3686,7 @@ When you (as @R{} developer) add new functions to the R base (all the
 packages distributed with @R{}), be careful to check if @code{make
 test-Specific} or particularly, @code{cd tests; make no-segfault.Rout}
 still works (without interactive user intervention, and on a standalone
-computer).  If the new function, for example, accesses the internet, or
+computer).  If the new function, for example, accesses the Internet, or
 requires GUI interaction, please add its name to the ``stop list'' in
 @file{tests/make-no-segfault.R}.
 
