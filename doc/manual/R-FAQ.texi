@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-22, @value{FAQ-YEAR}-07-01
+@set FAQ-VERSION 1.7-23, @value{FAQ-YEAR}-07-04
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1997,6 +1997,9 @@ Read data from netCDF files.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @emph{Recommended}.
+@item nlmeODE
+Combine the @strong{nlme} and @strong{odesolve} packages for
+mixed-effects modelling using differential equations.
 @item nlrq
 Nonlinear quantile regression.
 @item nnet
@@ -2134,6 +2137,11 @@ Functions for exploratory (statistical) microarray analysis.
 @item sn
 Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case.
+@item sna
+A range of tools for social network analysis, including node and
+graph-level indices, structural distance and covariance methods,
+structural equivalence detection, p* modeling, and network
+visualization.
 @c <COMMENT>
 @c Removed ...
 @c @item snns
@@ -2340,15 +2348,6 @@ Univariate Partial Least Squares Regression.
 
 @item runStat
 Running median and mean.
-
-@c <NOTE>
-@c Moved to Devel for 1.7 as it fails R CMD check.
-@item sna
-A range of tools for social network analysis, including node and
-graph-level indices, structural distance and covariance methods,
-structural equivalence detection, p* modeling, and network
-visualization.
-@c </NOTE>
 
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
