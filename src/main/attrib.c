@@ -46,6 +46,11 @@ SEXP getAttrib(SEXP vec, SEXP name)
     SEXP s;
     int len, i, any;
 
+    /* pre-test to avoid expensive operations if clearly not needed -- LT */
+    if (ATTRIB(vec) == R_NilValue &&
+	! (TYPEOF(vec) == LISTSXP || TYPEOF(vec) == LANGSXP))
+	return R_NilValue;
+
     if (isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
 
     if (name == R_NamesSymbol) {
