@@ -12,7 +12,7 @@ plot(x, y, \dots)
       if \code{x} is an appropriate structure.}
   \item{\dots}{graphical parameters can be given as arguments to
     \code{plot}.  Many methods will also accept the following arguments:
-    
+
     \item{type}{what type of plot should be drawn.  Possible types are
       \itemize{
 	\item \code{"p"} for \bold{p}oints,
@@ -67,7 +67,7 @@ plot(sin, -pi, 2*pi)
 plot(table(rpois(100,5)), type = "h", col = "red", lwd=10,
      main="rpois(100,lambda=5)")
 
-## Simple quantiles/ECDF, see ecdf() {library(stepfun)} for a better one:
+## Simple quantiles/ECDF, see ecdf() {library(stats)} for a better one:
 plot(x <- sort(rnorm(47)), type = "s", main = "plot(x, type = \"s\")")
 points(x, cex = .5, col = "dark red")
 }
