@@ -1623,28 +1623,44 @@ SEXP allocVector(SEXPTYPE type, int length)
     case INTSXP:
 	if (length <= 0)
 	    size = 0;
-	else
+	else {
+	    if (length > INT_MAX / sizeof(int))
+		errorcall(R_GlobalContext->call,
+			  "cannot allocate vector of length %d", length);
 	    size = INT2VEC(length);
+	}
 	break;
     case REALSXP:
 	if (length <= 0)
 	    size = 0;
-	else
+	else {
+	    if (length > INT_MAX / sizeof(double))
+		errorcall(R_GlobalContext->call,
+			  "cannot allocate vector of length %d", length);
 	    size = FLOAT2VEC(length);
+	}
 	break;
     case CPLXSXP:
 	if (length <= 0)
 	    size = 0;
-	else
+	else {
+	    if (length > INT_MAX / sizeof(Rcomplex))
+		errorcall(R_GlobalContext->call,
+			  "cannot allocate vector of length %d", length);
 	    size = COMPLEX2VEC(length);
+	}
 	break;
     case STRSXP:
     case EXPRSXP:
     case VECSXP:
 	if (length <= 0)
 	    size = 0;
-	else
+	else {
+	    if (length > INT_MAX / sizeof(SEXP))
+		errorcall(R_GlobalContext->call,
+			  "cannot allocate vector of length %d", length);
 	    size = PTR2VEC(length);
+	}
 	break;
     case LANGSXP:
 	if(length == 0) return R_NilValue;
