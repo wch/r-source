@@ -20,7 +20,7 @@ INSTFILES = \
 	pobi____.afm poi_____.afm por_____.afm tib_____.afm tibi____.afm \
 	tii_____.afm tir_____.afm \
 	sy______.afm
-DISTFILES = Makefile.in $(INSTFILES)
+DISTFILES = Makefile.in $(INSTFILES) README
 
 all: Makefile R
 
