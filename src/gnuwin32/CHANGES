@@ -9,7 +9,7 @@ rw1081
 
 Files in inst/ are installed later in the process of installing a
 package (at the request of Ray Brownrigg: the build process was as
-documented in `Writing R Extensions').
+documented in `Writing R Extensions').  CVS files will not be installed.
 
 The fast bmp/png/jpeg code introduced in R 1.8.0 is used for saving
 from menus (and savePlot()) as well as for the devices.
@@ -23,6 +23,8 @@ for png/jpeg/bmp device plots (as the Windows GDI function used was
 incorrectly documented).
 
 File src/nmath/dnt.c was not being built for the standalone Rmath library.
+
+packageStatus() now works under Windows.
 
 
 

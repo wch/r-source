@@ -131,6 +131,7 @@ $(DPKG)/inst: $(INSTFILES)
 ifneq ($(strip $(INSTFILES)),)
 	@$(ECHO) "  installing inst files"
 	-@$(CP) -r inst/* $(DPKG)
+	@$(RM) -rf $(DPKG)/CVS $(DPKG)/*/CVS
 endif
 
 
