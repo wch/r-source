@@ -954,7 +954,7 @@ struct mallinfo mALLINFo();
   Quite heavily modified to make compile and remove redundant code,
   and to coalesce adjacent blocks.  This version does not always
   allocate contiguous space, and it cannot return space from other
-  than the currently allocation block.
+  than the current allocation block.
 
   BDR 2000-8-20.
  */
@@ -977,6 +977,8 @@ static int PageSize=0;
 static unsigned int gNextAddress = 0;
 static unsigned int gAddressBase = 0;
 static unsigned int gReservedSize = 0;
+static unsigned int totalAllocated = 0;
+extern unsigned int R_max_memory;
 
 static
 int getpagesize(void)
@@ -1030,6 +1032,10 @@ void *wsbrk (long size)
     if (PageSize == 0) PageSize = getpagesize();
 
     if (size > 0) {
+	/* will this take us over the limit? */
+	if (totalAllocated + size > R_max_memory) 
+	    return (void*)-1;
+
 	/* first check if request fits in reserved space, and if not
 	   try to reserve the address space (never unreserved) */
 	if (gAddressBase == 0) {
@@ -1078,6 +1084,7 @@ void *wsbrk (long size)
 	}
 	tmp = (void*)gNextAddress;
 	gNextAddress = (unsigned int)tmp + size;
+	totalAllocated += size + gNextAddress - AlignPage(gNextAddress);
 	return tmp;
     } else if (size < 0) {
 	unsigned int alignedGoal = AlignPage(gNextAddress + size);
@@ -1087,6 +1094,7 @@ void *wsbrk (long size)
 	    VirtualFree ((void*)alignedGoal, gNextAddress - alignedGoal,
 			 MEM_DECOMMIT);
 	    gNextAddress = gNextAddress + size;
+	    totalAllocated -= gNextAddress - alignedGoal;
 	    return (void*)gNextAddress;
 	}
 	else /* requested release of more than we have in this block */
@@ -1094,6 +1102,7 @@ void *wsbrk (long size)
 	    VirtualFree ((void*)gAddressBase, gNextAddress - gAddressBase,
 			 MEM_DECOMMIT);
 	    gNextAddress = gAddressBase;
+	    totalAllocated -= gNextAddress - gAddressBase;
 	    return (void*)-1;
 	}
     } else { /* size = 0 */

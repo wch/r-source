@@ -124,6 +124,10 @@ usage will usually grow slowly over the course of a session.  Memory
 used for transient large objects will normally be returned at garbage
 collection.
 
+New command-line option --max-mem-size to limit the maximum memory
+allocation: it is be default unlimited (except by system constraints)
+and has a minimum allowed value of 10M.
+
 DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this
 version.  (Use the Version tab on the Properties dialog box to see it,

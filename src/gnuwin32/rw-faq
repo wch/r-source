@@ -106,7 +106,7 @@ file tree. Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the
-Target field, for example `--vsize=10M --nsize=400k'. You can also set
+Target field, for example `--max-mem-size=40M'. You can also set
 environment variables at the end of the Target field, for example
 `R_LIBS=e:/R/library'.
 

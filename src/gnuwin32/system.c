@@ -37,6 +37,8 @@
 #include "run.h"
 #include "Startup.h"
 
+int R_max_memory = INT_MAX;
+
 int SaveAction = SA_DEFAULT;
 int RestoreAction = SA_RESTORE;
 int LoadSiteFile = TRUE;
@@ -621,7 +623,8 @@ static void env_command_line(int *pac, char **argv)
 
 int cmdlineoptions(int ac, char **av)
 {
-    int   i;
+    int   i, ierr;
+    long value;
     char *p;
     char  s[1024];
     structRstart rstart;
@@ -702,6 +705,30 @@ int cmdlineoptions(int ac, char **av)
 		MDIset = 1;
 	    } else if (!strcmp(*av, "--sdi") || !strcmp(*av, "--no-mdi")) {
 		MDIset = -1;
+	    } else if (!strncmp(*av, "--max-mem-size", 14)) {
+		if(strlen(*av) < 16) {
+		    ac--; av++; p = *av;
+		}
+		else
+		    p = &(*av)[15];
+		if (p == NULL) {
+		    R_ShowMessage("WARNING: no max-mem-size given\n");
+		    break;
+		}
+		value = Decode2Long(p, &ierr);
+		if(ierr) {
+		    if(ierr < 0)
+			sprintf(s, "WARNING: --max-mem-size value is invalid: ignored\n");
+		    else
+		    sprintf(s, "WARNING: --max-mem-size=%ld`%c': too large and ignored\n",
+			    value,
+			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
+		    R_ShowMessage(s);
+		} else if (value < 10*1024*1024) {
+		    sprintf(s, "WARNING: max-mem-size =%4.1fM too small and ignored\n", value/(1024.0 * 1024.0));
+		    R_ShowMessage(s);
+		} else
+		    R_max_memory = value;
 	    } else {
 		sprintf(s, "WARNING: unknown option %s\n", *av);
 		R_ShowMessage(s);
