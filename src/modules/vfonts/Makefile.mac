@@ -51,10 +51,13 @@ ObjFiles-PPC    =  ¶
 ### Libraries ###
 
 LibFiles-PPC    =  ¶
+		          "{PPCLibraries}CarbonStdCLib.o" ¶
 				  "{SharedLibraries}CarbonLib" ¶
 				  "{SharedLibraries}StdCLib" ¶
-				  "::::R"  ¶
-				  "{PPCLibraries}PPCCRuntime.o" 
+				  "{PPCLibraries}StdCRuntime.o" ¶
+				  "{PPCLibraries}PPCCRuntime.o" ¶
+				  "{PPCLibraries}PPCToolLibs.o" ¶
+			      "::::R"
 
 
 ### Default Rules ###
