@@ -75,7 +75,7 @@ typedef struct {
 } gtkDesc;
 
 /* routines from here */
-Rboolean GTKDeviceDriver(DevDesc *dd, char *display, double width, 
+Rboolean GTKDeviceDriver(DevDesc *dd, char *display, double width,
 			 double height, double pointsize);
 
 /* Device driver actions */
@@ -83,7 +83,7 @@ static void GTK_Activate(NewDevDesc *dd);
 static void GTK_Circle(double x, double y, double r,
 		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd);
-static void GTK_Clip(double x0, double x1, double y0, double y1, 
+static void GTK_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void GTK_Close(NewDevDesc *dd);
 static void GTK_Deactivate(NewDevDesc *dd);
@@ -97,10 +97,10 @@ static void GTK_MetricInfo(int c, int font, double cex, double ps,
 			      double* width, NewDevDesc *dd);
 static void GTK_Mode(int mode, NewDevDesc *dd);
 static void GTK_NewPage(int fill, double gamma, NewDevDesc *dd);
-static void GTK_Polygon(int n, double *x, double *y, 
+static void GTK_Polygon(int n, double *x, double *y,
 			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd);
-static void GTK_Polyline(int n, double *x, double *y, 
+static void GTK_Polyline(int n, double *x, double *y,
 			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd);
 static void GTK_Rect(double x0, double y0, double x1, double y1,
@@ -111,8 +111,8 @@ static void GTK_Size(double *left, double *right,
 		     NewDevDesc *dd);
 static double GTK_StrWidth(char *str, int font,
 			      double cex, double ps, NewDevDesc *dd);
-static void GTK_Text(double x, double y, char *str, 
-		     double rot, double hadj, 
+static void GTK_Text(double x, double y, char *str,
+		     double rot, double hadj,
 		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd);
 static Rboolean GTK_Open(NewDevDesc*, gtkDesc*, char*, double, double);
@@ -184,7 +184,7 @@ static gint SetBaseFont(gtkDesc *gtkd)
 	font_htab = g_hash_table_new(g_str_hash, g_str_equal);
     }
 
-    fontname = g_strdup_printf(fontname_R6, weight[0], slant[0], 
+    fontname = g_strdup_printf(fontname_R6, weight[0], slant[0],
 			       gtkd->fontsize * 10);
     gtkd->font = RGTKLoadFont(fontname);
     g_free(fontname);
@@ -261,12 +261,12 @@ static void SetLineType(NewDevDesc *dd, int newlty, double nlwd)
     gint i, j, newlwd;
     gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
-    newlwd = nlwd;
+    newlwd = nlwd;/*cast*/
     if(newlty != gtkd->lty || newlwd != gtkd->lwd) {
 	gtkd->lty = newlty;
 	gtkd->lwd = newlwd;
 
-	if(newlty == 0) {
+	if(newlty == 0) {/* solid */
 	    if(newlwd <= 1)
 		newlwd = 0;
 
@@ -366,10 +366,10 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
     g_return_val_if_fail(GTK_IS_DRAWING_AREA(gtkd->drawing), FALSE);
 
     if(gtkd->resize != 0) {
-	GTK_resize(dd); 
+	GTK_resize(dd);
     }
 
-  
+
     gdk_draw_pixmap(gtkd->drawing->window, gtkd->wgc, gtkd->pixmap,
 		    event->area.x, event->area.y, event->area.x, event->area.y,
 		    event->area.width, event->area.height);
@@ -481,7 +481,7 @@ static Rboolean GTK_Open(NewDevDesc *dd, gtkDesc *gtkd, char *dsp, double w, dou
 
     /* show everything */
     gtk_widget_show_all(gtkd->window);
-  
+
     /* initialise line params */
     gtkd->lty = -1;
     gtkd->lwd = -1;
@@ -812,7 +812,7 @@ static void GTK_Line(double x1, double y1, double x2, double y2,
     }
 }
 
-static void GTK_Polyline(int n, double *x, double *y, 
+static void GTK_Polyline(int n, double *x, double *y,
 			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd)
 {
@@ -843,7 +843,7 @@ static void GTK_Polyline(int n, double *x, double *y,
     g_free(points);
 }
 
-static void GTK_Polygon(int n, double *x, double *y, 
+static void GTK_Polygon(int n, double *x, double *y,
 			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd)
 {
@@ -883,8 +883,8 @@ static void GTK_Polygon(int n, double *x, double *y,
     g_free(points);
 }
 
-static void GTK_Text(double x, double y, char *str, 
-		     double rot, double hadj, 
+static void GTK_Text(double x, double y, char *str,
+		     double rot, double hadj,
 		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd)
 {
@@ -907,7 +907,7 @@ static void GTK_Text(double x, double y, char *str,
 			  gtkd->windowWidth, gtkd->windowHeight,
 			  str, strlen(str), rrot);
 	gdk_draw_text_rot(gtkd->pixmap,
-			  gtkd->font, gtkd->wgc, 
+			  gtkd->font, gtkd->wgc,
 			  (int) x, (int) y,
 			  gtkd->windowWidth, gtkd->windowHeight,
 			  str, strlen(str), rrot);
@@ -992,7 +992,7 @@ static void GTK_Hold(NewDevDesc *dd)
 
 /* Device driver entry point */
 Rboolean
-GTKDeviceDriver(DevDesc *odd, char *display, double width, 
+GTKDeviceDriver(DevDesc *odd, char *display, double width,
 		double height, double pointsize)
 {
     NewDevDesc *dd;
@@ -1015,11 +1015,11 @@ GTKDeviceDriver(DevDesc *odd, char *display, double width,
     ps = 2 * (ps / 2);
     gtkd->fontface = -1;
     gtkd->fontsize = -1;
-    dd->startfont = 1; 
+    dd->startfont = 1;
     dd->startps = ps;
     dd->startcol = 0;
     dd->startfill = NA_INTEGER;
-    dd->startlty = LTY_SOLID; 
+    dd->startlty = LTY_SOLID;
     dd->startgamma = 1;
 
     /* device driver start */
