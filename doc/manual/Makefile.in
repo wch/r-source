@@ -272,7 +272,6 @@ uninstall-pdf:
 
 mostlyclean: clean
 clean:
-	@echo "cleaning in $(subdir)"
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf Rd.sty images; \
 	fi

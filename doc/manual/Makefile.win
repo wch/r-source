@@ -165,7 +165,6 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 
 mostlyclean: clean
 clean:
-	@echo cleaning in doc/manual
 	@-rm -f *.aux *.toc refman.i?? *.out *.log
 	@-rm -f *.cp *.cps *.fn *.fns *.ky *.kys \
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
