@@ -141,18 +141,29 @@ Date: 1999/06/07
 Author: Compiled by Fritz Leisch <Friedrich.Leisch@@ci.tuwien.ac.at>.
 Description: Miscellaneous functions used at the Department of
         Statistics at TU Wien (E1071). 
-Depends:
 License: GPL version 2 or later
+Depends:
+URL: http://www.ci.tuwien.ac.at, http://www.tuwien.ac.at
 @end smallexample
 
 @noindent
 Continuation lines (e.g., for descriptions longer than one line) start
-with a whitespace character.  The license field should contain an
-explicit statement or a well-known abbreviation (such as @samp{GPL},
-@samp{LGPL}, @samp{BSD}, or @samp{Artistic}), perhaps followed by a
-reference to the actual license file.  It is very important that you
-include this information!  Otherwise, it may not even be legally correct
-for others to distribute copies of the package.
+with a whitespace character. The package, version, author and
+description fields are mandatory, the remaining fields(date, depends,
+url, @ldots) are optional. The author field should contain an email
+address in angle brackets (for sending bug reports etc.).
+
+The license field should contain an explicit statement or a well-known
+abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
+@samp{Artistic}), perhaps followed by a reference to the actual license
+file.  It is very important that you include this information!
+Otherwise, it may not even be legally correct for others to distribute
+copies of the package.
+
+The optional URL field may give a comma (or whitespace)-separated list
+of URL's, e.g., the homepage of the author or a page where additional
+material describing the software can be found. These URL's are converted
+to active hyperlinks on CRAN.
 
 The @file{TITLE} file contains a line giving the name of the package and
 a brief description.  @file{INDEX} contains a line for each sufficiently
