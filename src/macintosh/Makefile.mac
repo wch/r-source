@@ -76,6 +76,7 @@ mainfiles Ä fixdesc
 	    Duplicate :::library:{pkg}:R:Rprofile :::library:{pkg}:R:Rprofile.ux
         translate ¶0x0a ¶0x0d <:::library:{pkg}:R:Rprofile.ux >:::library:{pkg}:R:Rprofile
         delete -y :::library:{pkg}:R:Rprofile.ux
+        catenate funclist.txt >:::library:{pkg}:help:AnIndex
       end
 	 end
     end 
@@ -127,6 +128,7 @@ help Ä $OutOfDate
 html Ä $OutOfDate
 	Duplicate -y :html:rmac-FAQ.html {RHOME}doc:html:rmac-FAQ.html
 	Duplicate -y :html:rmac.html {RHOME}doc:html:index.html
+	Duplicate -y :html:macfuncs.html {RHOME}doc:html:macfuncs.html
      	
 
 
