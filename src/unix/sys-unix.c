@@ -37,11 +37,7 @@
 #endif
 #endif
 
-extern int SaveAction;
-extern int RestoreAction;
-extern int LoadSiteFile;
 extern int LoadInitFile;
-extern int DebugInitFile;
 
 /*
  *  4) INITIALIZATION AND TERMINATION ACTIONS

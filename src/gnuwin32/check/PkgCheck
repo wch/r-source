@@ -3,11 +3,11 @@ include ../../../gnuwin32/MkRules
 
 run: $(PKG)-Ex.R
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
-	../../../../bin/rterm < $(PKG)-Ex.R > $(PKG)-Ex.Rout
+	../../../../bin/rterm --vanilla < $(PKG)-Ex.R > $(PKG)-Ex.Rout
 
 
 $(PKG)-Ex.R: ../../../../library/$(PKG)/R-ex/*.R
 	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
 	@$(SED) s/@PKG@/$(PKG)/ ../../../gnuwin32/check/makeRex.R > MakeRex.R
-	@../../../../bin/rterm  --quiet --no-save < makeRex.R > nul
+	@../../../../bin/rterm  --quiet --vanilla < makeRex.R > nul
 	@$(RM) makeRex.R
