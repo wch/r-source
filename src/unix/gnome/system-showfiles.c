@@ -144,7 +144,7 @@ static GnomeUIInfo pager_toolbar[] =
 };
 
 int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
-		     int del, char *pager) 
+		     Rboolean del, char *pager) 
 {
   pager_data_t *pager_data;
   GtkWidget *table, *vscrollbar;

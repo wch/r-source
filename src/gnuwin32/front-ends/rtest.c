@@ -31,16 +31,6 @@
 #define PSIGNAL
 #include "psignal.h"
 
-/* From Defn.h, which is not distributed */
-#define SA_NORESTORE 0
-#define SA_RESTORE   1
-
-#define SA_DEFAULT   1
-#define SA_NOSAVE    2
-#define SA_SAVE      3
-#define SA_SAVEASK   4
-#define SA_SUICIDE   5
-
 /* one way to allow user interrupts: called in ProcessEvents */
 #ifdef _MSC_VER
 __declspec(dllimport) int UserBreak;
@@ -136,8 +126,8 @@ int main (int argc, char **argv)
     Rp->yesnocancel = askyesnocancel;
     Rp->busy = myBusy;
 
-    Rp->R_Quiet = 1;
-    Rp->R_Interactive = 0;
+    Rp->R_Quiet = TRUE;
+    Rp->R_Interactive = FALSE;
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
     Rp->CommandLineArgs = NULL;

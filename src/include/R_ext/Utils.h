@@ -24,6 +24,7 @@
 #ifndef R_EXT_UTILS_H_
 #define R_EXT_UTILS_H_
 
+#include "R_ext/Boolean.h"
 #include "R_ext/Complex.h"
 
 #ifndef R_NO_REMAP
@@ -55,9 +56,11 @@ int	Rstrlen(char*);
 char*	R_ExpandFileName(char*);
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
-int	StringFalse(char*);
-int	StringTrue(char*);
-int	isBlankString(unsigned char *);
+Rboolean StringFalse(char*);
+Rboolean StringTrue(char*);
+Rboolean isBlankString(unsigned char *);
+
+double 	R_strtod(char *c, char **end);
 
 void	hsv2rgb(double *h, double *s, double *v,/* in */
 		double *r, double *g, double *b);/* out */

@@ -50,24 +50,7 @@
 #include "R_ext/Memory.h" /* vmaxget */
 #include "Devices.h"
 
-/* These are the currently supported device "models" */
-typedef enum {
-    MONOCHROME = 0,
-    GRAYSCALE,
-    PSEUDOCOLOR1,
-    PSEUDOCOLOR2,
-    TRUECOLOR
-} X_COLORTYPE;
-
-typedef enum {
-    WINDOW, /* NB: have "type > WINDOW" below ... */
-    PNG,
-    JPEG
-} X_GTYPE;
-
-/* routines from here */
-Rboolean X11DeviceDriver(DevDesc*, char*, double, double, double, double, 
-			 X_COLORTYPE, int);
+#include "devX11.h"
 
 	/********************************************************/
 	/* This device driver has been documented so that it be	*/

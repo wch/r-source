@@ -200,6 +200,9 @@ SEXP do_isloaded(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isna(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isnan(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isvector(SEXP, SEXP, SEXP, SEXP);
+#if 0
+SEXP do_visibleflag(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_lapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_layout(SEXP, SEXP, SEXP, SEXP);
 SEXP do_length(SEXP, SEXP, SEXP, SEXP);
@@ -282,6 +285,7 @@ SEXP do_recall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rect(SEXP, SEXP, SEXP, SEXP);
 SEXP do_regexpr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_relop(SEXP, SEXP, SEXP, SEXP);
+SEXP do_relop_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_remove(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_repeat(SEXP, SEXP, SEXP, SEXP);

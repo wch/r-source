@@ -355,17 +355,6 @@ typedef enum {
 #define R_MAGIC_BINARY_VERSION16 1971
 #define R_MAGIC_ASCII_VERSION16	 1972
 
-/* Startup Actions */
-typedef enum {
-    SA_NORESTORE,/* = 0 */
-    SA_RESTORE,
-    SA_DEFAULT,
-    SA_NOSAVE,
-    SA_SAVE,
-    SA_SAVEASK,
-    SA_SUICIDE
-} SA_TYPE;
-
 
 /*--- Global Variables ---------------------------------------------------- */
 
@@ -424,7 +413,7 @@ extern int	R_EvalCount	INI_as(0);	/* Evaluation count */
 extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 extern int	R_Expressions	INI_as(500);	/* options(expressions) */
-extern int	R_KeepSource	INI_as(0);	/* options(keep.source) */
+extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 
 /* File Input/Output */
 extern Rboolean	R_Interactive	INI_as(TRUE);	/* TRUE during interactive use*/
@@ -488,6 +477,8 @@ extern char*	R_GUIType	INI_as("unknown");
 #define duplicated		Rf_duplicated
 #define dynamicfindVar		Rf_dynamicfindVar
 #define endcontext		Rf_endcontext
+#define errorcall		Rf_errorcall
+#define ErrorMessage		Rf_ErrorMessage
 #define factorsConform		Rf_factorsConform
 #define FetchMethod		Rf_FetchMethod
 #define findcontext		Rf_findcontext
@@ -549,6 +540,8 @@ extern char*	R_GUIType	INI_as("unknown");
 #define type2str		Rf_type2str
 #define unbindVar		Rf_unbindVar
 #define usemethod		Rf_usemethod
+#define warningcall		Rf_warningcall
+#define WarningMessage		Rf_WarningMessage
 #define yyerror			Rf_yyerror
 #define yyinit			Rf_yyinit
 #define yylex			Rf_yylex
@@ -569,15 +562,13 @@ void	R_ResetConsole(void);
 void	R_FlushConsole(void);
 void	R_ClearerrConsole(void);
 void	R_Busy(int);
-void	R_CleanUp(int, int, int);
-void	R_StartUp(void);
 int	R_ShowFile(char*, char*);
-int	R_ShowFiles(int, char **, char **, char *, int, char *);
+int	R_ShowFiles(int, char **, char **, char *, Rboolean, char *);
 int	R_ChooseFile(int, char*, int);
-char*	R_HomeDir(void);
-int	R_HiddenFile(char*);
 char*	R_Date(void);
-int	R_FileExists(char*);
+char*	R_HomeDir(void);
+Rboolean R_FileExists(char*);
+Rboolean R_HiddenFile(char*);
 
 /* Other Internally Used Functions */
 
@@ -668,7 +659,7 @@ SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
-int tsConform(SEXP,SEXP);
+Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2str(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
@@ -676,10 +667,17 @@ void unbindVar(SEXP, SEXP);
 void unmarkPhase(void);
 #endif
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
+/* ../main/errors.c : */
+void errorcall(SEXP, char*, ...);
+void warningcall(SEXP, char*,...);
+void ErrorMessage(SEXP, int, ...);
+void WarningMessage(SEXP, R_WARNING, ...);
+
 int R_GetMaxVSize(void);
 void R_SetMaxVSize(int);
 int R_GetMaxNSize(void);
 void R_SetMaxNSize(int);
+
 
 /* gram.y & gram.c : */
 void yyerror(char *);

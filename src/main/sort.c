@@ -120,7 +120,7 @@ void ssort(SEXP *x, int n)
 #undef TYPE_CMP
 }
 
-void rsort_with_index(double *x, int *index, int n)
+void rsort_with_index(double *x, int *indx, int n)
 {
     double v;
     int i, j, h, iv;
@@ -128,11 +128,11 @@ void rsort_with_index(double *x, int *index, int n)
     for (h = 1; h <= n / 9; h = 3 * h + 1);
     for (; h > 0; h /= 3)
 	for (i = h; i < n; i++) {
-	    v = x[i]; iv = index[i];
+	    v = x[i]; iv = indx[i];
 	    j = i;
 	    while (j >= h && rcmp(x[j - h], v) > 0)
-		 { x[j] = x[j - h]; index[j] = index[j-h]; j -= h; }
-	    x[j] = v; index[j] = iv;
+		 { x[j] = x[j - h]; indx[j] = indx[j-h]; j -= h; }
+	    x[j] = v; indx[j] = iv;
 	}
 }
 
@@ -406,7 +406,7 @@ static int listgreater(int i, int j, SEXP key)
     return 1;
 }
 
-static void orderVector(int *index, int n, SEXP key, int greater())
+static void orderVector(int *indx, int n, SEXP key, int greater_sub())
 {
     int i, j, h;
     int itmp;
@@ -419,15 +419,15 @@ static void orderVector(int *index, int n, SEXP key, int greater())
     do {
 	h = h / 3;
 	for (i = h; i < n; i++) {
-	    itmp = index[i];
+	    itmp = indx[i];
 	    j = i;
-	    while (greater(index[j - h], itmp, key)) {
-		index[j] = index[j - h];
+	    while (greater_sub(indx[j - h], itmp, key)) {
+		indx[j] = indx[j - h];
 		j = j - h;
 		if (j < h)
 		    goto next_h;
 	    }
-	next_h:	index[j] = itmp;
+	next_h:	indx[j] = itmp;
 	}
     }
     while (h != 1);
@@ -465,7 +465,7 @@ SEXP do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* FUNCTION: rank(x) */
 SEXP do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP rank, index, x;
+    SEXP rank, indx, x;
     int *in;
     double *rk;
     int i, j, k, n;
@@ -477,11 +477,11 @@ SEXP do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isVector(x))
 	errorcall(call, "Argument is not a vector");
     n = LENGTH(x);
-    PROTECT(index = allocVector(INTSXP, n));
+    PROTECT(indx = allocVector(INTSXP, n));
     PROTECT(rank = allocVector(REALSXP, n));
     UNPROTECT(2);
     if (n > 0) {
-	in = INTEGER(index);
+	in = INTEGER(indx);
 	rk = REAL(rank);
 	for (i = 0; i < n; i++)
 	    in[i] = i;

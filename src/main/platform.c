@@ -121,13 +121,15 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl, hd, pg;
     char **f, **h, *t, *vm, *pager;
-    int i, n, dl;
+    Rboolean dl;
+    int i, n;
+
     checkArity(op, args);
     vm = vmaxget();
     fn = CAR(args); args = CDR(args);
     hd = CAR(args); args = CDR(args);
     tl = CAR(args); args = CDR(args);
-    dl = asLogical(CAR(args)); args = CDR(args);
+    dl = (Rboolean)asLogical(CAR(args)); args = CDR(args);
     pg = CAR(args);
     n = 0;			/* -Wall */
     if (!isString(fn) || (n = length(fn)) < 1)

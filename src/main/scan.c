@@ -31,10 +31,23 @@
 #define CONSOLE_BUFFER_SIZE	1024
 #define CONSOLE_PROMPT_SIZE	32
 
-static char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
-static char *ConsoleBufp;
+static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
+static unsigned char *ConsoleBufp;
 static int  ConsoleBufCnt;
-static char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
+static unsigned char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
+
+
+static int save = 0;
+static int sepchar = 0;
+static int decchar = '.';
+static char *quoteset;
+static char *quotesave = NULL;
+static FILE *fp;
+static int ttyflag;
+static int quiet;
+static SEXP NAstrings;
+
+static char convbuf[100];
 
 #ifdef NOT_used
 static void InitConsoleGetchar()
@@ -59,18 +72,6 @@ static int ConsoleGetchar()
     }
     return *ConsoleBufp++;
 }
-
-static int save = 0;
-static int sepchar = 0;
-static int decchar = '.';
-static char *quoteset;
-static char *quotesave = NULL;
-static FILE *fp;
-static int ttyflag;
-static int quiet;
-static SEXP NAstrings;
-
-static char convbuf[100];
 
 static double Strtod (const char *nptr, char **endptr) 
 {

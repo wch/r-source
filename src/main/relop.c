@@ -35,7 +35,6 @@ static SEXP rcall;/* global, for error messages */
 SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    SEXP do_relop_dflt(SEXP, SEXP, SEXP, SEXP);
 
     if (DispatchGroup("Ops", call, op, args, env, &ans))
 	return ans;

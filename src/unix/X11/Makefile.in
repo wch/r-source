@@ -19,7 +19,7 @@ ALL_LIBS = $(ALL_X_LIBS) $(LIBPATHS) $(BITMAP_LIBS) -lm
 SOURCES = dataentry.c devX11.c rotated.c rbitmap.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = dataentry.h rotated.h
+HEADERS = rotated.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \

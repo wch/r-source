@@ -31,7 +31,7 @@
 #include "Fileio.h"
 #include "Startup.h"
 
-extern int LoadInitFile;
+extern Rboolean LoadInitFile;
 extern UImode  CharacterMode;
 
 /*

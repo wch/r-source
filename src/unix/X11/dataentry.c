@@ -23,21 +23,137 @@
 #include <config.h>
 #endif
 
+#include <stdlib.h>
+
 #include "Defn.h"
 #include "Print.h"
 
-#include "dataentry.h"
-#include <stdlib.h>
+/* don't use X11 function prototypes (which tend to ...): */
+#define NeedFunctionPrototypes 0
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/keysym.h>
+#include <X11/cursorfont.h>
+
+#define KeySym int
+#define DEEvent XEvent
+
+typedef enum { UP, DOWN, LEFT, RIGHT } DE_DIRECTION;
+
+typedef enum {UNKNOWNN, NUMERIC, CHARACTER} CellType;
+
+/* EXPORTS : */
+SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+/* Local Function Definitions */
+ 
+static void advancerect(DE_DIRECTION);
+static int  CheckControl(DEEvent*);
+static int  CheckShift(DEEvent*);
+static int  checkquit(int);
+static void clearrect(void);
+static void clearwindow(void);
+static void closerect(void);
+static void closewin(void);
+static void copycell(void);
+static void doControl(DEEvent*);
+static int  doMouseDown(DEEvent*);
+static void eventloop(void);
+static void doSpreadKey(int, DEEvent*);
+static void downlightrect(void);
+static void drawwindow(void);
+static void drawcol(int);
+static void drawrow(int);
+static void find_coords(int, int, int*, int*);
+static int  findcell(void);
+static char GetCharP(DEEvent*);
+static KeySym GetKey(DEEvent*);
+static void handlechar(char*);
+static void highlightrect(void);
+static Rboolean initwin(void);
+static void jumppage(DE_DIRECTION);
+static void jumpwin(int, int);
+static void pastecell(int, int);
+static void popdownmenu(void);
+static void popupmenu(int, int, int, int);
+static void printlabs(void);
+static void printrect(int, int);
+static void printstring(char*, int, int, int, int);
+static void printelt(SEXP, int, int, int);
+static void RefreshKeyboardMapping(DEEvent*);
+ 
+/* Functions to hide Xlib calls */
+static void bell(void);
+static void cleararea(int, int, int, int);
+static void copyH(int, int, int);
+static void copyarea(int, int, int, int);
+static void doConfigure(DEEvent *ioevent);
+#if 0
+static void drawline(int, int, int, int);
+#endif
+static void drawrectangle(int, int, int, int, int, int);
+static void drawtext(int, int, char*, int);
+static int  NextEvent(DEEvent *ioevent);
+static void RefreshKeyboardMapping(DEEvent *ioevent);
+static void Rsync(void);
+static int textwidth(char*, int);
+static int WhichEvent(DEEvent ioevent);
+
+
+/* Global variables needed for the graphics */
+ 
+static int box_w;                       /* width of a box */
+static int boxw[100];
+static int box_h;                       /* height of a box */
+static int windowWidth;                 /* current width of the window */
+static int fullwindowWidth;
+static int windowHeight;                /* current height of the window */
+static int fullwindowHeight;
+static int currentexp;                  /* boolean: whether an cell is active */
+static int crow;                        /* current row */
+static int ccol;                        /* current column */
+static int nwide, nhigh;
+static int colmax, colmin, rowmax, rowmin;
+static int ndecimal;                    /* count decimal points */
+static int ne;                          /* count exponents */
+static int nneg;			/* indicate whether its a negative */
+static int clength;                     /* number of characters currently entered */
+static char buf[30];
+static char *bufp;
+static int bwidth;			/* width of the border */
+static int hwidth;			/* width of header  */
+static int text_offset;
+ 
+static SEXP inputlist;  /* each element is a vector for that row */
+static SEXP ssNewVector(SEXPTYPE, int);
+static SEXP ssNA_STRING;
+static double ssNA_REAL;
+
 static Atom _XA_WM_PROTOCOLS, protocol;
 
-
-static int newcol, nboxchars;
+static Rboolean newcol, CellModified;
+static int nboxchars;
 static int xmaxused, ymaxused;
-static int CellModified;
 static int box_coords[6];
 static char copycontents[30] = "";
 
 
+/* Xwindows Globals */
+ 
+static Display          *iodisplay;
+static Window           iowindow, menuwindow, menupanes[4];
+static GC               iogc;
+static XSizeHints       iohint;
+static Cursor           hand_cursor;
+static char             *font_name="9x15";
+static XFontStruct      *font_info;
+
+#define mouseDown 	ButtonPress
+#define keyDown		KeyPress
+#define activateEvt	MapNotify
+#define updateEvt	Expose
+  
 #ifndef max
 #define max(a, b) (((a)>(b))?(a):(b))
 #endif
@@ -115,7 +231,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isList(indata) || !isList(colmodes))
 	errorcall(call, "invalid argument");
 
-    /* initialize the constants */
+    /* initialize the global constants */
 
     bufp = buf;
     ne = 0;
@@ -235,7 +351,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Window Drawing Routines */
 
-static void setcellwidths()
+static void setcellwidths(void)
 {
     int i, w, dw;
 
@@ -251,7 +367,7 @@ static void setcellwidths()
     }
 }
 
-void drawwindow()
+static void drawwindow(void)
 {
     int i, st;
     XWindowAttributes attribs;
@@ -365,7 +481,7 @@ static void jumpwin(int wcol, int wrow)
     } else highlightrect();
 }
 
-static void advancerect(int which)
+static void advancerect(DE_DIRECTION which)
 {
 
     /* if we are in the header, changing a name then only down is
@@ -457,8 +573,6 @@ static int get_col_width(int col)
     }
     return box_w;
 }
-
-typedef enum {UNKNOWNN, NUMERIC, CHARACTER} CellType;
 
 static CellType get_col_type(int col)
 {
@@ -584,7 +698,7 @@ static void drawelt(int whichrow, int whichcol)
     Rsync();
 }
 
-static void jumppage(int dir)
+static void jumppage(DE_DIRECTION dir)
 {
     int i, w, oldcol, wcol;
 
@@ -634,18 +748,18 @@ static void printrect(int lwd, int fore)
     Rsync();
 }
 
-static void downlightrect()
+static void downlightrect(void)
 {
     printrect(2, 0);
     printrect(1, 1);
 }
 
-static void highlightrect()
+static void highlightrect(void)
 {
     printrect(2, 1);
 }
 
-static SEXP getccol()
+static SEXP getccol(void)
 {
     SEXP tmp, tmp2;
     int i, len, newlen, wcol, wrow;
@@ -658,9 +772,9 @@ static SEXP getccol()
 	inputlist = listAppend(inputlist,
 			       allocList(wcol - length(inputlist)));
     tmp = nthcdr(inputlist, wcol - 1);
-    newcol = 0;
+    newcol = FALSE;
     if (CAR(tmp) == R_NilValue) {
-	newcol = 1;
+	newcol = TRUE;
 	xmaxused = wcol;
 	len = max(100, wrow);
 	SETCAR(tmp, ssNewVector(REALSXP, len));
@@ -693,9 +807,7 @@ static SEXP getccol()
 /* close up the entry to a cell, put the value that has been entered
    into the correct place and as the correct type */
 
-extern double R_strtod(char *c, char **end); /* in coerce.c */
-
-static void closerect()
+static void closerect(void)
 {
     SEXP cvec, c0vec, tvec;
     int wcol = ccol + colmin - 1, wrow = rowmin + crow - 1, wrow0;
@@ -728,7 +840,7 @@ static void closerect()
 	    /* do it this way to ensure NA, Inf, ...  can get set */
 	    char *endp;
 	    double new = R_strtod(buf, &endp);
-	    int warn = !isBlankString(endp);
+	    Rboolean warn = !isBlankString((unsigned char *)endp);
 	    if (TYPEOF(cvec) == STRSXP) {
 		tvec = allocString(strlen(buf));
 		strcpy(CHAR(tvec), buf);
@@ -754,7 +866,7 @@ static void closerect()
 	if(wrow > wrow0) drawcol(wcol); /* to fill in NAs */
     }
 }
-    CellModified = 0;
+    CellModified = FALSE;
 
     downlightrect();
 
@@ -775,13 +887,13 @@ static void closerect()
 static void printstring(char *ibuf, int buflen, int row, int col, int left)
 {
     int i, x_pos, y_pos, bw, bufw;
-    char buf[201], *pc = buf;
+    char pbuf[201], *pc = pbuf;
 
     find_coords(row, col, &x_pos, &y_pos);
     if (col == 0) bw = boxw[0]; else bw = BOXW(col+colmin-1);
     cleararea(x_pos + 2, y_pos + 2, bw - 3, box_h - 3);
     bufw = (buflen > 200) ? 200 : buflen;
-    strncpy(buf, ibuf, bufw);
+    strncpy(pbuf, ibuf, bufw);
     if(left) {
 	for (i = bufw; i > 1; i--) {
 	    if (textwidth(pc, i) < (bw - text_offset)) break;
@@ -789,15 +901,15 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
 	}
     } else {
 	for (i = bufw; i > 1; i--) {
-	    if (textwidth(buf, i) < (bw - text_offset)) break;
-	    *(buf + i - 2) = '>';
+	    if (textwidth(pbuf, i) < (bw - text_offset)) break;
+	    *(pbuf + i - 2) = '>';
 	}
     }
     drawtext(x_pos + text_offset, y_pos + box_h - text_offset, pc, i);
     Rsync();
 }
 
-static void clearrect()
+static void clearrect(void)
 {
     int x_pos, y_pos;
 
@@ -817,12 +929,12 @@ static void handlechar(char *text)
     int c = text[0];
 
     if ( c == '\033' ) {
-	CellModified = 0;
+	CellModified = FALSE;
 	clength = 0;
 	drawelt(crow, ccol);
 	return;
     } else
-	CellModified = 1;
+	CellModified = TRUE;
 
     if (clength == 0) {
 
@@ -893,7 +1005,7 @@ static void handlechar(char *text)
     bell();
 }
 
-static void printlabs()
+static void printlabs(void)
 {
     char clab[10], *p;
     int i;
@@ -925,7 +1037,7 @@ static int checkquit(int xw)
    findcell return an int which is zero if we should quit and one
    otherwise */
 
-static int findcell()
+static int findcell(void)
 {
 
     int xw, yw, xr, yr, wcol=0, wrow, i, w;
@@ -1004,7 +1116,7 @@ static int findcell()
 
 /* Event Loop Functions */
 
-static void eventloop()
+static void eventloop(void)
 {
     int done;
     DEEvent ioevent;
@@ -1042,7 +1154,7 @@ static void eventloop()
     }
 }
 
-int doMouseDown(DEEvent * event)
+static int doMouseDown(DEEvent * event)
 {
     return findcell();
 }
@@ -1057,8 +1169,8 @@ static void doSpreadKey(int key, DEEvent * event)
 
     if (CheckControl(event))
 	doControl(event);
-    else if ((iokey == XK_Return) || (iokey == XK_KP_Enter)
-	     || (iokey == XK_Linefeed) || (iokey == XK_Down))
+    else if ((iokey == XK_Return)  || (iokey == XK_KP_Enter) || 
+	     (iokey == XK_Linefeed)|| (iokey == XK_Down))
 	advancerect(DOWN);
     else if (iokey == XK_Left)
 	advancerect(LEFT);
@@ -1194,7 +1306,7 @@ static void RefreshKeyboardMapping(DEEvent * event)
 
 /* Initialize/Close Windows */
 
-void closewin()
+void closewin(void)
 {
     XFreeGC(iodisplay, iogc);
     XDestroyWindow(iodisplay, iowindow);
@@ -1217,7 +1329,7 @@ static int R_X11IOErr(Display *dsp)
 
 /* set up the window, print the grid and column/row labels */
 
-int initwin()
+static Rboolean initwin(void) /* TRUE = Error */
 {
     int i, twidth, w, minwidth;
     int ioscreen;
@@ -1229,14 +1341,16 @@ int initwin()
     XSetWindowAttributes winattr;
     XWindowAttributes attribs;
 
-    if ((iodisplay = XOpenDisplay(NULL)) == NULL) return (1);
+    if ((iodisplay = XOpenDisplay(NULL)) == NULL) 
+	return TRUE;
     XSetErrorHandler(R_X11Err);
     XSetIOErrorHandler(R_X11IOErr);
 
     /* Get Font Loaded if we can */
 
     font_info = XLoadQueryFont(iodisplay, font_name);
-    if (font_info == NULL) return 1;		/* ERROR */
+    if (font_info == NULL) 
+	return TRUE; /* ERROR */
 
     /* find out how wide the input boxes should be and set up the
        window size defaults */
@@ -1292,7 +1406,7 @@ int initwin()
 	bwidth,
 	ioblack,
 	iowhite)) == 0)
-	return 1;
+	return TRUE;
 
     XSetStandardProperties(iodisplay, iowindow, ioname, ioname, None,
 			   ioname, 0, &iohint);
@@ -1358,13 +1472,13 @@ int initwin()
     /* set the active rectangle to be the upper left one */
     crow = 1;
     ccol = 1;
-    CellModified = 0;
-    return 0;
+    CellModified = FALSE;
+    return FALSE;/* success */
 }
 
 /* MAC/X11 BASICS */
 
-static void bell()
+static void bell(void)
 {
     XBell(iodisplay, 20);
 }
@@ -1374,7 +1488,7 @@ static void cleararea(int xpos, int ypos, int width, int height)
     XClearArea(iodisplay, iowindow, xpos, ypos, width, height, 0);
 }
 
-static void clearwindow()
+static void clearwindow(void)
 {
     XClearWindow(iodisplay, iowindow);
 }
@@ -1536,13 +1650,13 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
     highlightrect();
 }
 
-void popdownmenu()
+void popdownmenu(void)
 {
     XUnmapWindow(iodisplay, menuwindow);
     XUnmapSubwindows(iodisplay, menuwindow);
 }
 
-static void copycell()
+static void copycell(void)
 {
     int i, whichrow = crow + colmin - 1, whichcol = ccol + colmin -1;
     SEXP tmp;
@@ -1578,7 +1692,7 @@ static void pastecell(int row, int col)
 	strcpy(buf, copycontents);
 	clength = strlen(copycontents);
 	bufp = buf + clength;
-	CellModified = 1;
+	CellModified = TRUE;
     }
     closerect();
     highlightrect();

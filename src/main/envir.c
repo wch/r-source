@@ -1658,13 +1658,13 @@ static int FrameSize(SEXP frame, int all)
     return count;
 }
 
-static void FrameNames(SEXP frame, int all, SEXP names, int *index)
+static void FrameNames(SEXP frame, int all, SEXP names, int *indx)
 {
     while (frame != R_NilValue) {
 	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
 				      CAR(frame) != R_UnboundValue) {
-	    SET_STRING_ELT(names, *index, PRINTNAME(TAG(frame)));
-	    (*index)++;
+	    SET_STRING_ELT(names, *indx, PRINTNAME(TAG(frame)));
+	    (*indx)++;
 	}
 	frame = CDR(frame);
     }
@@ -1680,12 +1680,12 @@ static int HashTableSize(SEXP table, int all)
     return count;
 }
 
-static void HashTableNames(SEXP table, int all, SEXP names, int *index)
+static void HashTableNames(SEXP table, int all, SEXP names, int *indx)
 {
     int n = length(table);
     int i;
     for (i = 0; i < n; i++)
-	FrameNames(VECTOR_ELT(table, i), all, names, index);
+	FrameNames(VECTOR_ELT(table, i), all, names, indx);
 }
 
 static int BuiltinSize(int all, int intern)
@@ -1709,7 +1709,7 @@ static int BuiltinSize(int all, int intern)
 }
 
 static void
-BuiltinNames(int all, int intern, SEXP names, int *index)
+BuiltinNames(int all, int intern, SEXP names, int *indx)
 {
     SEXP s;
     int j;
@@ -1717,11 +1717,11 @@ BuiltinNames(int all, int intern, SEXP names, int *index)
 	for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s)) {
 	    if (intern) {
 		if (INTERNAL(CAR(s)) != R_NilValue)
-		    SET_STRING_ELT(names, (*index)++, PRINTNAME(CAR(s)));
+		    SET_STRING_ELT(names, (*indx)++, PRINTNAME(CAR(s)));
 	    }
 	    else {
 		if (SYMVALUE(CAR(s)) != R_UnboundValue)
-		    SET_STRING_ELT(names, (*index)++, PRINTNAME(CAR(s)));
+		    SET_STRING_ELT(names, (*indx)++, PRINTNAME(CAR(s)));
 	    }
 	}
     }
@@ -1789,7 +1789,7 @@ SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
     int intern, nelts;
     checkArity(op, args);
-    intern = asInteger(CAR(args));
+    intern = asLogical(CAR(args));
     if (intern == NA_INTEGER) intern = 0;
     nelts = BuiltinSize(1, intern);
     ans = allocVector(STRSXP, nelts);

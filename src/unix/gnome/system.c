@@ -25,6 +25,13 @@
 #include <config.h>
 #endif
 
+#include <gnome.h>
+#include <glade/glade.h>
+#include <libgnome/libgnome.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include "Defn.h"
 #include "Fileio.h"
 #include "Devices.h"
@@ -40,20 +47,10 @@
 #include "terminal.h"
 #include "terminal-prefs.h"
 
-#include <gnome.h>
-#include <glade/glade.h>
-#include <libgnome/libgnome.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-
-void fpu_setup(int);		/* in src/unix/sys-unix.c */
-
-
 	/*--- Initialization Code ---*/
 
-int SaveAction;
-int RestoreAction;
+SA_TYPE SaveAction;
+SA_TYPE RestoreAction;
 
 static gboolean R_gnome_initialised = FALSE; /* true once gnome_init has been called */
 
@@ -123,7 +120,7 @@ void Rgnome_Busy(int which)
 
 void R_dot_Last(void);		/* in main.c */
 
-void Rgnome_CleanUp(int saveact, int status, int runLast)
+void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     GtkWidget *dialog;
     gint which; /* yes = 0, no = 1, cancel = 2 || -1 */
@@ -139,12 +136,17 @@ void Rgnome_CleanUp(int saveact, int status, int runLast)
 	if(R_Interactive) {
 	    R_ClearerrConsole();
 	    R_FlushConsole();
-	    dialog = gnome_message_box_new("Do you want to save your workspace image?\n\nChoose Yes to save an image and exit, choose\nNo to exit without saving, or choose Cancel to\nreturn to R.",
-					   GNOME_MESSAGE_BOX_QUESTION,
-					   GNOME_STOCK_BUTTON_YES,
-					   GNOME_STOCK_BUTTON_NO,
-					   GNOME_STOCK_BUTTON_CANCEL,
-					   NULL);
+	    dialog = gnome_message_box_new(
+		"Do you want to save your workspace image?\n\n"
+
+		"Choose Yes to save an image and exit, choose\n"
+		"No to exit without saving, or choose Cancel to\n"
+		"return to R.",
+		GNOME_MESSAGE_BOX_QUESTION,
+		GNOME_STOCK_BUTTON_YES,
+		GNOME_STOCK_BUTTON_NO,
+		GNOME_STOCK_BUTTON_CANCEL,
+		NULL);
 	    
 	    gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
 	    gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
@@ -227,7 +229,7 @@ void Rgnome_ShowMessage(char *s)
     }
 }
 
-void R_ShowQueuedMessages()
+void R_ShowQueuedMessages(void)
 {
     GList *l;
 

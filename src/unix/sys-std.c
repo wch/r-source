@@ -29,10 +29,7 @@
 #include "Fileio.h"
 #include "Devices.h"		/* for KillAllDevices */
 #include "Runix.h"
-
-extern int SaveAction;
-
-void fpu_setup(int);     /* in sys-unix.c */
+#include "Startup.h"
 
 #ifdef HAVE_LIBREADLINE
 #include <readline/readline.h>
@@ -49,7 +46,7 @@ void fpu_setup(int);     /* in sys-unix.c */
 #include <sys/time.h> /* for struct timeval */
 #endif
 
-
+extern SA_TYPE SaveAction;
 extern Rboolean UsingReadline;
 
 /*
@@ -102,7 +99,6 @@ InputHandler *R_InputHandlers = &BasicInputHandler;
 InputHandler * initStdinHandler(void)
 {
     InputHandler *inputs;
-    extern void R_processEvents(void);
 
     inputs = addInputHandler(R_InputHandlers, fileno(stdin), NULL,
 			     StdinActivity);
@@ -449,9 +445,9 @@ void Rstd_Busy(int which)
 
 void R_dot_Last(void);		/* in main.c */
 
-void Rstd_CleanUp(int saveact, int status, int runLast)
+void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
-    char buf[128];
+    unsigned char buf[128];
 
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
 	saveact = SaveAction;
@@ -461,7 +457,8 @@ void Rstd_CleanUp(int saveact, int status, int runLast)
 	qask:
 	    R_ClearerrConsole();
 	    R_FlushConsole();
-	    R_ReadConsole("Save workspace image? [y/n/c]: ", buf, 128, 0);
+	    R_ReadConsole("Save workspace image? [y/n/c]: ", 
+			  buf, 128, 0);
 	    switch (buf[0]) {
 	    case 'y':
 	    case 'Y':
@@ -505,7 +502,7 @@ void Rstd_CleanUp(int saveact, int status, int runLast)
     KillAllDevices();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings(); /* from device close and .Last */
-    fpu_setup(0);
+    fpu_setup(FALSE);
 
     exit(status);
 }
@@ -514,25 +511,23 @@ void Rstd_CleanUp(int saveact, int status, int runLast)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-    /*
-       This function can be used to display the named files with the
-       given titles and overall title.  On GUI platforms we could
-       use a read-only window to display the result.  Here we just
-       make up a temporary file and invoke a pager on it.
-    */
+int Rstd_ShowFiles(int nfile, 		/* number of files */
+		   char **file,		/* array of filenames */
+		   char **headers,	/* the `headers' args of file.show. 
+					   Printed before each file. */
+		   char *wtitle,	/* title for window 
+					   = `title' arg of file.show */
+		   Rboolean del,	/* should files be deleted after use? */
+		   char *pager)		/* pager to be used */
 
-    /*
-     *     nfile   = number of files
-     *     file    = array of filenames
-     *     headers = the `headers' args of file.show. Printed before each file.
-     *     wtitle  = title for window: the `title' arg of file.show
-     *     del     = flag for whether files should be deleted after use
-     *     pager   = pager to be used.
-     */
-
-int Rstd_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
-		   int del, char *pager)
 {
+/*
+	This function can be used to display the named files with the
+	given titles and overall title.	 On GUI platforms we could
+	use a read-only window to display the result.  Here we just
+	make up a temporary file and invoke a pager on it.
+*/
+
     int c, i, res;
     char *filename;
     FILE *fp, *tfp;
@@ -574,11 +569,13 @@ int Rstd_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
        a dialog box so a user can choose files that way.
     */
 
+
+
 int Rstd_ChooseFile(int new, char *buf, int len)
 {
     int namelen;
     char *bufp;
-    R_ReadConsole("Enter file name: ", buf, len, 0);
+    R_ReadConsole("Enter file name: ", (unsigned char *)buf, len, 0);
     namelen = strlen(buf);
     bufp = &buf[namelen - 1];
     while (bufp >= buf && isspace((int)*bufp))

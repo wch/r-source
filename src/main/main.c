@@ -28,6 +28,7 @@
 #include "Devices.h"		/* for InitGraphics */
 #include "IOStuff.h"
 #include "Parse.h"
+#include "Startup.h"
 
 #ifdef HAVE_LOCALE_H
 # include <locale.h>

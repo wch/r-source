@@ -25,31 +25,31 @@
 #include "Devices.h"
 #include "devUI.h"
 
-int stub_X11DeviceDriver(DevDesc *dd,
+Rboolean stub_X11DeviceDriver(DevDesc *dd,
 		    char *display,
 		    double width,
 		    double height,
 		    double pointsize,
 		    double gamma,
-		    int colormodel,
+		    X_COLORTYPE colormodel,
                     int maxcube)
 {
     error("the x11 device has not been loaded");
-    return 0;
+    return FALSE;
 }
 
-int stub_GnomeDeviceDriver(DevDesc *dd, char *display, 
+Rboolean stub_GnomeDeviceDriver(DevDesc *dd, char *display, 
 			   double width, double height, double pointsize)
 {
     error("the gnome device is not loaded in this version of R");
-    return 0;
+    return FALSE;
 }
 
-int stub_GTKDeviceDriver(DevDesc *dd, char *display, double width, 
+Rboolean stub_GTKDeviceDriver(DevDesc *dd, char *display, double width, 
 			  double height, double pointsize)
 {
     error("the gtk device is only available with --gui=GNOME");
-    return 0;
+    return FALSE;
 }
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)

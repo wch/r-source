@@ -39,11 +39,11 @@
 
 int R_max_memory = INT_MAX;
 
-int SaveAction = SA_DEFAULT;
-int RestoreAction = SA_RESTORE;
-int LoadSiteFile = TRUE;
-int LoadInitFile = TRUE;
-int DebugInitFile = FALSE;
+SA_TYPE SaveAction = SA_DEFAULT;
+SA_TYPE RestoreAction = SA_RESTORE;
+Rboolean LoadSiteFile = TRUE;
+Rboolean LoadInitFile = TRUE;
+Rboolean DebugInitFile = FALSE;
 
 UImode  CharacterMode;
 int ConsoleAcceptCmd;
@@ -416,7 +416,7 @@ void R_CleanUp(int saveact, int status, int runLast)
      */
 
 int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
-		int del, char *pager)
+		Rboolean del, char *pager)
 {
     int   i;
     char  buf[1024];

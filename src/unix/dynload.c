@@ -107,10 +107,10 @@ static CFunTabEntry CFunTab[] =
 
 #ifdef HAVE_DLFCN_H
 #ifndef RTLD_LAZY
-#define RTLD_LAZY 1
+# define RTLD_LAZY 1
 #endif
 #ifndef RTLD_NOW
-#define RTLD_NOW  2
+# define RTLD_NOW  2
 #endif
 
 #undef CACHE_DLL_SYM
@@ -454,7 +454,7 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, 
     ptr_R_loadhistory, ptr_R_savehistory;
 
-void R_load_X11_shlib()
+void R_load_X11_shlib(void)
 {
     char X11_DLL[PATH_MAX], buf[1000], *p;
     void *handle;
@@ -493,7 +493,7 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
     ptr_GnomeDeviceDriver, ptr_GTKDeviceDriver;
 
 
-void R_load_gnome_shlib()
+void R_load_gnome_shlib(void)
 {
     char gnome_DLL[PATH_MAX], buf[1000], *p;
     void *handle;

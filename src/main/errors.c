@@ -24,6 +24,7 @@
 
 #include "Defn.h"
 /* -> Errormsg.h */
+#include "Startup.h" /* rather cleanup ..*/
 
 /* limit on call length at which errorcall/warningcall is split over
    two lines */
@@ -109,7 +110,6 @@ void onsigusr1()
 	}
     }
 	R_CleanUp(SA_SAVE, 2, 1); /* quit, save,  .Last, status=2 */
-
 }
 
 

@@ -584,6 +584,9 @@ FUNTAB R_FunTab[] =
 {"apply",	do_apply,	0,	11,	3,	PP_FUNCALL},
 {"Rprof",	do_Rprof,	0,	11,	3,	PP_FUNCALL},
 {"object.size",	do_objectsize,	0,	11,	1,	PP_FUNCALL},
+#if 0
+{"visibleflag", do_visibleflag,	0,	1,	0,	PP_FUNCALL},
+#endif
 
 /* Functions To Interact with the Operating System */
 

@@ -27,6 +27,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
+#include "Runix.h"
 
 /* HP-UX headers need this before CLK_TCK */
 #ifdef HAVE_UNISTD_H
@@ -42,7 +43,7 @@
 #endif
 #endif
 
-extern int LoadInitFile;
+extern Rboolean LoadInitFile;
 
 /*
  *  4) INITIALIZATION AND TERMINATION ACTIONS
@@ -334,7 +335,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 #endif
 
-void fpu_setup(int start)
+void fpu_setup(Rboolean start)
 {
     if (start) {
 #ifdef __FreeBSD__

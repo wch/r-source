@@ -441,7 +441,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(names, i, STRING_ELT(argi, 0));
 	    R_Visible = 1;
 	}
-    }
+    } /* for() */
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;

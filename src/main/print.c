@@ -118,10 +118,12 @@ SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+#if 0
 SEXP do_visibleflag(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     return ScalarLogical(R_Visible);
 }
+#endif
 
 SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

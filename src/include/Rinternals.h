@@ -416,8 +416,6 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define elt			Rf_elt
 #define emptyEnv		Rf_emptyEnv
 #define EnsureString		Rf_EnsureString
-#define errorcall		Rf_errorcall
-#define ErrorMessage		Rf_ErrorMessage
 #define eval			Rf_eval
 #define EvalArgs		Rf_EvalArgs
 #define evalList		Rf_evalList
@@ -532,8 +530,6 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define unprotect		Rf_unprotect
 #define unprotect_ptr		Rf_unprotect_ptr
 #define VectorToPairList	Rf_VectorToPairList
-#define warningcall		Rf_warningcall
-#define WarningMessage		Rf_WarningMessage
 #endif
 
 /* Type Coercions of all kinds */
@@ -584,7 +580,7 @@ int asLogical(SEXP);
 double asReal(SEXP);
 SEXP arraySubscript(int, SEXP, SEXP);
 SEXP classgets(SEXP, SEXP);
-int conformable(SEXP, SEXP);
+Rboolean conformable(SEXP, SEXP);
 SEXP cons(SEXP, SEXP);
 void copyListMatrix(SEXP, SEXP, Rboolean);
 void copyMatrix(SEXP, SEXP, Rboolean);
@@ -598,8 +594,6 @@ SEXP dimnamesgets(SEXP, SEXP);
 SEXP duplicate(SEXP);
 SEXP elt(SEXP, int);
 SEXP emptyEnv(void);
-void errorcall(SEXP, char*, ...);
-void ErrorMessage(SEXP, int, ...);
 SEXP eval(SEXP, SEXP);
 SEXP EvalArgs(SEXP, SEXP, int);
 SEXP evalList(SEXP, SEXP);
@@ -617,40 +611,40 @@ int GetOptionWidth(SEXP);
 SEXP GetPar(char*, SEXP);
 SEXP GetRowNames(SEXP);
 void gsetVar(SEXP, SEXP, SEXP);
-int inherits(SEXP, char*);
+Rboolean inherits(SEXP, char*);
 SEXP install(char*);
-int isArray(SEXP);
-int isComplex(SEXP);
-int isEnvironment(SEXP);
-int isExpression(SEXP);
-int isExpressionObject(SEXP);
-int isFactor(SEXP);
-int isFrame(SEXP);
-int isFree(SEXP);
-int isFunction(SEXP);
-int isInteger(SEXP);
-int isLanguage(SEXP);
-int isList(SEXP);
-int isLogical(SEXP);
-int isMatrix(SEXP);
-int isNewList(SEXP);
-int isNull(SEXP);
-int isNumeric(SEXP);
-int isObject(SEXP);
-int isOrdered(SEXP);
-int isPairList(SEXP);
-int isReal(SEXP);
-int isString(SEXP);
-int isSymbol(SEXP);
-int isTs(SEXP);
-int isUnordered(SEXP);
-int isUserBinop(SEXP);
-int isValidString(SEXP);
-int isValidStringF(SEXP);
-int isVector(SEXP);
-int isVectorizable(SEXP);
-int isVectorAtomic(SEXP);
-int isVectorList(SEXP);
+Rboolean isArray(SEXP);
+Rboolean isComplex(SEXP);
+Rboolean isEnvironment(SEXP);
+Rboolean isExpression(SEXP);
+Rboolean isExpressionObject(SEXP);
+Rboolean isFactor(SEXP);
+Rboolean isFrame(SEXP);
+Rboolean isFree(SEXP);
+Rboolean isFunction(SEXP);
+Rboolean isInteger(SEXP);
+Rboolean isLanguage(SEXP);
+Rboolean isList(SEXP);
+Rboolean isLogical(SEXP);
+Rboolean isMatrix(SEXP);
+Rboolean isNewList(SEXP);
+Rboolean isNull(SEXP);
+Rboolean isNumeric(SEXP);
+Rboolean isObject(SEXP);
+Rboolean isOrdered(SEXP);
+Rboolean isPairList(SEXP);
+Rboolean isReal(SEXP);
+Rboolean isString(SEXP);
+Rboolean isSymbol(SEXP);
+Rboolean isTs(SEXP);
+Rboolean isUnordered(SEXP);
+Rboolean isUserBinop(SEXP);
+Rboolean isValidString(SEXP);
+Rboolean isValidStringF(SEXP);
+Rboolean isVector(SEXP);
+Rboolean isVectorizable(SEXP);
+Rboolean isVectorAtomic(SEXP);
+Rboolean isVectorList(SEXP);
 SEXP ItemName(SEXP, int);
 SEXP lang1(SEXP);
 SEXP lang2(SEXP, SEXP);
@@ -693,12 +687,10 @@ SEXP ScalarString(SEXP);
 SEXP setAttrib(SEXP, SEXP, SEXP);
 void setSVector(SEXP*, int, SEXP);
 void setVar(SEXP, SEXP, SEXP);
-int StringBlank(SEXP);
+Rboolean StringBlank(SEXP);
 SEXP substitute(SEXP,SEXP);
 void unprotect(int);
 void unprotect_ptr(SEXP);
-void warningcall(SEXP, char*,...);
-void WarningMessage(SEXP, R_WARNING, ...);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
