@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-22, 2002-03-08
+@set FAQ-VERSION 1.4-23, 2002-03-11
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1538,6 +1538,9 @@ Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
 maximum F ratio, the Pearson product moment correlation coefficiant,
 Johnson distributions, normal scores and generalized hypergeometric
 distributions).
+@item VLMC
+Functions, classes & methods for estimation, prediction, and simulation
+(bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item XML
 Facilities for reading @acronym{XML} documents and DTDs.
 @item acepack
@@ -1873,6 +1876,10 @@ data analysis.
 @c Read and write Stata v5 and v6 @file{.dta} files.
 @item strucchange
 Various tests on structural change in linear regression models.
+@item subselect
+A collection of functions which assess the quality of variable subsets
+as surrogates for a full data set, and search for subsets which are
+optimal under various criteria.
 @c @item survival4
 @c Functions for survival analysis, version 4 (requires
 @c @strong{splines}).
