@@ -106,11 +106,11 @@ simpleLoess <-
     for(j in 1:iterations) {
 	robust <- weights * robust
 	if(j > 1) statistics <- "none"
-	if(surface == "interpolate" && statistics == "approximate")
-	    statistics <- if(trace.hat == "approximate") "2.approx"
-	    else if(trace.hat == "exact") "1.approx"
+	else if(surface == "interpolate" && statistics == "approximate")
+	    statistics <- if(trace.hat == "exact") "1.approx"
+            else "2.approx" # trace.hat == "approximate"
 	surf.stat <- paste(surface, statistics, sep="/")
-	z <- .C("loess_raw",
+	z <- .C("loess_raw", # ../src/loessc.c
 		as.double(y),
 		as.double(x),
 		as.double(weights),
