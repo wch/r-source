@@ -63,6 +63,7 @@ BUG FIXES
     o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
 	have been removed.
 
+    o   A problem with "..." substitutions has been fixed. 
 
 
 	**************************************************
