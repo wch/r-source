@@ -74,7 +74,8 @@ parse.description <- function(desc)
     destination directory, downloads the newest versions of the package
     sources and saves the in \code{destdir}. If the list of available
     packages is not given as argument, it is also directly
-    obtained from CRAN.
+    obtained from CRAN. If CRAN is local, i.e., the URL starts with
+    \code{"file:"}, then the packages are not downloaded but used directly.
     
     The main function of the bundle is \code{update.packages()}. First a
     list of all packages found in \code{lib.loc} is created and compared
