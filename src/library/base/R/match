@@ -1,8 +1,7 @@
-match <- function(x, table, nomatch=NA)
-		.Internal(match(x, table, nomatch))
+match <- function(x, table, nomatch=NA) .Internal(match(x, table, nomatch))
 
-match.call <- function(definition=NULL,call=sys.call(sys.parent()),
-expand.dots=T)
+match.call <-
+function(definition=NULL,call=sys.call(sys.parent()),expand.dots=T)
         .Internal(match.call(definition,call,expand.dots))
 
 pmatch <- function(x, table, nomatch=NA) {
