@@ -294,6 +294,7 @@ BUG FIXES
     o   method "gnudoit" of bug.report() was incorrectly documented as
         "gnuclient" (PR#1108)
 
+    o   saving with ascii=TRUE mangled backslashes (PR#1115)
 
 
 	**************************************************
