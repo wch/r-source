@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-62, 2001-06-01
+Version 1.2-63, 2001-06-05
 Kurt Hornik
 
 
@@ -1303,10 +1303,6 @@ works, was published in the Journal of Statistical Software
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.
 
-*hpower*
-     A suite of functions to compute power and sample size for tests of the
-     general linear hypothesis.
-
 *ineq*
      Inequality, concentration and poverty measures, and Lorenz curves
      (empirical and theoretic).
@@ -1560,6 +1556,10 @@ these a try, of course.  This area of CRAN currently contains
 *hdf5*
      Interface to the NCSA HDF5 library.
 
+*hpower*
+     A suite of functions to compute power and sample size for tests of the
+     general linear hypothesis.
+
 *lattice*
      Lattice graphics, an implementation of Trellis Graphics functions.
 
@@ -1588,9 +1588,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *strucchange*
      Various tests on structural change in linear regression models.
-
-*survival*
-     Functions for survival analysis.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
