@@ -50,7 +50,8 @@ transparent backgrounds, but this is not accessible through the
 menus nor the savePlot() function.
 
 Building under (repaired) Cygwin -mno-cygwin environments is no longer
-supported.
+supported.  You probably do need the compiler system recommended for
+rw1031 or later.
 
 The console pop-up was checking the wrong item for `Buffered output'.
 
