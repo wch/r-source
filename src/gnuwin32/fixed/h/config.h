@@ -27,7 +27,7 @@
 #define HAVE_ACCESS 1
 
 /* Define to 1 if you have the `acosh' function. */
-/* #undef HAVE_ACOSH */
+#define HAVE_ACOSH 1
 
 /* Define to 1 if you have `alloca', as a function or macro. */
 #define HAVE_ALLOCA 1
@@ -44,10 +44,10 @@
 /* #undef HAVE_ARPA_INET_H */
 
 /* Define to 1 if you have the `asinh' function. */
-/* #undef HAVE_ASINH */
+#define HAVE_ASINH 1
 
 /* Define to 1 if you have the `atanh' function. */
-/* #undef HAVE_ATANH */
+#define HAVE_ATANH 1
 
 /* Define if you have BSD networking headers and libraries. */
 /* #undef HAVE_BSD_NETWORKING */
@@ -583,7 +583,7 @@
 #define SUPPORT_LIBXML 1
 
 /* Define this to enable support for MBCS locales. */
-#undef SUPPORT_MBCS
+/* #undef SUPPORT_MBCS */
 
 /* Define this to enable support for UTF-8 locales. */
 /* #undef SUPPORT_UTF8 */
