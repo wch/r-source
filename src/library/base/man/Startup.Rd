@@ -60,7 +60,8 @@
   file.  For example, \code{options(defaultPackages = character())} will
   attach no extra packages on startup.  Alternatively, set
   \code{R_DEFAULT_PACKAGES=NULL} as an environment variable before
-  running \R.
+  running \R.  Using \code{options(defaultPackages = "")} or
+  \code{R_DEFAULT_PACKAGES=""} enforces the R \emph{system} default.
 
   The commands history is read from the file specified by the
   environment variable \env{R\_HISTFILE} (default \file{.Rhistory})
