@@ -593,6 +593,31 @@ AC_DEFUN(R_HEADER_GLIBC2,
     AC_DEFINE(HAVE_GLIBC2)
   fi])
 dnl
+dnl
+dnl R_C_IEEE_754
+dnl
+AC_DEFUN(R_C_IEEE_754,
+ [AC_CHECK_FUNCS(finite isnan)
+  AC_CACHE_CHECK([whether you have IEEE 754 floating-point arithmetic],
+    r_cv_c_ieee_754,
+    dnl FIXME: This fails is finite() or isnan() are defined as macros
+    dnl rather than exist as library functions ...
+    AC_EGREP_CPP(yes,
+      changequote(<<, >>)dnl
+      <<
+#include "conftest.h"
+#if defined(HAVE_FINITE) && defined(HAVE_ISNAN)
+  yes
+#endif
+      >>,
+      changequote([, ])dnl
+      r_cv_c_ieee_754=yes,
+      r_cv_c_ieee_754=no,
+      r_cv_c_ieee_754=no))
+  if test "${r_cv_c_ieee_754}" = yes; then
+    AC_DEFINE(IEEE_754)
+  fi])
+dnl
 dnl R_C_OPTIEEE
 dnl
 AC_DEFUN(R_C_OPTIEEE,
