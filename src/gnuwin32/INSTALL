@@ -244,6 +244,18 @@ port of pdftex.  Please read the section in R-admin.html about how to
 make 'refman.pdf' and set the environment variables R_RD4DVI and
 R_RD4PDF suitably and ensure you have the required fonts installed.
 
+By default the manuals are made for the ISO standard a4 paper size.
+Users living in N. America might want to use
+
+	cd ../../doc/manual
+	make -f Makefile.win R_PAPERSIZE=letter pdf 
+
+or set R_PAPERSIZE in the environment and use make -e, for example
+
+	R_PAPERSIZE=letter make -e manuals
+
+See the R-admin manuals for fuller details.
+
 
 Building the installers
 =======================

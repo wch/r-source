@@ -161,23 +161,26 @@ The tarballs are available from
 section.  
 
 These versions do not contain the current sources for the recommended
-packages, which can be obtained by rsync or from CRAN.  Do ensure that
-you have the correct versions of the recommended packages: if the number
-in the file @file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to
-download the contents of
-@samp{http://cran.r-project.org/src/contrib/@var{dir}}, where @var{dir}
-is @samp{@var{x}.@var{y}.@var{z}/Recommended} for r-devel or
-@file{@var{x}.@var{y}.@var{z}-patched/Recommended} for r-patched,
-respectively, to directory @file{src/library/Recommended} in the sources
-you have unpacked.  Normally @samp{R-patched.tar.gz} will have the
-number of the last released version, and @samp{R-devel.tar.gz} that of
-the next minor (@samp{@var{x}.@var{y}.0}) or major release.  After
-downloading manually you need to execute
-@command{tools/link-recommended} from the top level of the sources to
-make the requisite links in @file{src/library/Recommended}.
+packages, which can be obtained by @code{rsync} or downloaded from CRAN.
+To use @code{rsync} to install the appropriate sources for the
+recommended packages, run @command{./tools/rsync-recommended} from the
+top-level of the @R{} sources.
 
-One way to download the package sources is to use @command{wget}.  A
-suitable incantation from the top level of the R sources might be
+If downloading manually from CRAN, do ensure that you have the correct
+versions of the recommended packages: if the number in the file
+@file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
+the contents of @samp{http://cran.r-project.org/src/contrib/@var{dir}},
+where @var{dir} is @samp{@var{x}.@var{y}.@var{z}/Recommended} for
+r-devel or @file{@var{x}.@var{y}.@var{z}-patched/Recommended} for
+r-patched, respectively, to directory @file{src/library/Recommended} in
+the sources you have unpacked.  Normally @samp{R-patched.tar.gz} will
+have the number of the last released version, and @samp{R-devel.tar.gz}
+that of the next minor (@samp{@var{x}.@var{y}.0}) or major release.
+After downloading manually you need to execute
+@command{tools/link-recommended} from the top level of the sources to
+make the requisite links in @file{src/library/Recommended}.  A suitable
+incantation from the top level of the R sources using @command{wget}
+might be
 
 @smallexample
 wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
@@ -221,7 +224,7 @@ svn checkout https://svn.r-project.org/R/trunk/ @var{path}
 @noindent
 to check out r-devel into directory @var{path}.
 
-Note that https is required, and that the SSL certificate for the
+Note that @code{https} is required, and that the SSL certificate for the
 Subversion server of the R project is
 
 @smallexample
@@ -236,10 +239,8 @@ Certificate information:
 (currently, there is no ``trusted certificate'').  You can accept this
 certificate permanently and will not be asked about it anymore.
 
-Note also that the recommended packages are only included in the
-tarballs of released versions.  To install the appropriate sources for
-the recommended packages, run @command{./tools/rsync-recommended} from
-the top-level of the @R{} sources.
+The sources for the recommended packages need to be downloaded
+separately, as described earlier in this section.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
@@ -249,10 +250,10 @@ the top-level of the @R{} sources.
 @R{} will configure and build under a number of common Unix platforms
 including i386-freebsd, @var{cpu}-linux-gnu for the i386, alpha, amd64,
 arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.@:
-@uref{http://buildd.debian.org/build.php?&pkg=r-base}) and
-sparc-sun-solaris, as well as probably (it is tested less frequently on
-these) i386-netbsd, i386-openbsd, i386-sun-solaris,
-powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4, rs6000-ibm-aix and
+@uref{http://buildd.debian.org/build.php?&pkg=r-base}),
+powerpc-apple-darwin and sparc-sun-solaris, as well as probably (it is
+tested less frequently on these) i386-netbsd, i386-openbsd,
+i386-sun-solaris, mips-sgi-irix, alpha-dec-osf4, rs6000-ibm-aix and
 hppa-hp-hpux.
 
 @cindex Linux
@@ -260,8 +261,8 @@ hppa-hp-hpux.
 In addition, binary distributions are available for most common Linux
 distributions, and for Mac OS X (Darwin) with and without X11.  See the
 @acronym{FAQ} for current details.  These are installed in
-platform-specific ways.  So for the rest of this chapter we consider
-only building from the sources.
+platform-specific ways, so for the rest of this chapter we consider only
+building from the sources.
 
 @menu
 * Simple compilation::          
@@ -281,8 +282,9 @@ unset or points to a valid temporary directory.
 Choose a place to install the @R{} tree (@R{} is not just a binary, but
 has additional data sets, help files, font metrics etc).  Let us call
 this place @var{R_HOME}.  Untar the source code.  This should create
-directories @file{src}, @file{doc}, and several more.  Issue the
-following commands:
+directories @file{src}, @file{doc}, and several more.  (At this point
+North American readers should consult @ref{Setting paper size}.)  Issue
+the following commands:
 
 @findex configure
 
@@ -420,10 +422,11 @@ viewed using Acrobat Reader or (fairly recent versions of)
 @command{ghostscript}: they have hyperlinks that can be followed in
 Acrobat Reader.  The info files are suitable for reading online with
 Emacs or the standalone GNU Info.  The DVI and PDF versions will be
-created using the papersize selected by @env{R_PAPERSIZE} (default ISO
-a4 but selected at configuration): this can be overridden by setting
-@env{R_PAPERSIZE} on the @command{make} command line.  (If re-making the
-manuals for a different papersize, you should first delete the file
+created using the papersize selected at configuration (default ISO a4):
+this can be overridden by setting @env{R_PAPERSIZE} on the
+@command{make} command line, or setting @env{R_PAPERSIZE} in the
+environment and using @command{make -e}.  (If re-making the manuals for
+a different papersize, you should first delete the file
 @file{doc/manual/version.texi}.)
 
 There are some issues with making the reference manual, and in
@@ -726,13 +729,13 @@ from a local @file{zip} file by setting argument @code{CRAN} to
 interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
-
+@findex install.binaries
 On Mac OS X @code{install.packages} works as it does on other Unix
 systems, but there is an additional function @code{install.binaries}
-that will download and install binary packages from
-@acronym{CRAN}. These Macintosh binary package files have the
-extension @code{tgz}. The Aqua GUI provides for installation of either
-binary or source packages, from @acronym{CRAN} or local files.
+that will download and install binary packages from @acronym{CRAN}.
+These Macintosh binary package files have the extension @code{tgz}. The
+Aqua GUI provides for installation of either binary or source packages,
+from @acronym{CRAN} or local files.
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
@@ -751,10 +754,11 @@ command @code{packageStatus()}, which returns an object with information
 on all installed packages and packages available at multiple
 repositories (CRAN, local archive, @dots{}). The @code{print} and
 @code{summary} methods give an overview of installed and available
-packages, the @code{upgrade} method offers to fetch and install outdated
-packages.  This allows @R{} to fetch packages from several repositories and
-keep in sync with all of them, instead of only one CRAN mirror, and is
-intended to become the default package manager for future versions of R.
+packages, the @code{upgrade} method offers to fetch and install the
+latest versions of outdated packages.  This allows @R{} to fetch
+packages from several repositories and keep in sync with all of them,
+instead of only one CRAN mirror, and is intended to become the default
+package manager for future versions of R.
 
 
 @node Removing packages,  , Updating packages, Add-on packages
@@ -871,7 +875,7 @@ or use the configure variables @code{TCLTK_LIBS} and
 the Tcl and Tk libraries and for finding the @file{tcl.h} and
 @file{tk.h} headers, respectively.
 
-Versions of Tcl/TK from 8.3 to 8.4.4 have been used successfully: 8.0 is
+Versions of Tcl/Tk from 8.3 to 8.4.7 have been used successfully: 8.0 is
 no longer supported.
 
 
@@ -935,7 +939,8 @@ well as for @R{} itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the @R{}
 executable and each BLAS-using package.  In any case, the BLAS library
 must be usable with dynamically-loadable code: this can be a problem
-with ATLAS that is not by default built with position-independent code.
+with ATLAS on some platforms as it is not by default built with
+position-independent code.
 
 You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
@@ -1087,9 +1092,34 @@ arguments, even if no cache is used.
 See the variable output section of @code{configure --help} for a list of
 all these variables.
 
+If you find you need to alter configure variables, it is worth noting
+that some settings may be cached in the file @file{config.cache}, and it
+is a good idea to remove that file (if it exists) before re-configuring.
+Note that caching is turned @emph{off} by default: use the command line
+option @option{--config-cache} (or @option{-C}) to enable caching.
+
+@menu
+* Setting paper size::          
+* Setting the browser::         
+* Compilation flags::           
+* Making manuals::              
+@end menu
+
+@node Setting paper size, Setting the browser, Configuration variables, Configuration variables
+@subsection Setting paper size
 One common variable to change is @env{R_PAPERSIZE}, which defaults to
 @samp{a4}, not @samp{letter}.  (Valid values are @samp{a4},
 @samp{letter}, @samp{legal} and @samp{executive}.)
+
+@node Setting the browser, Compilation flags, Setting paper size, Configuration variables
+@subsection Setting the browser
+
+Another precious variable is @env{R_BROWSER}, the default browser, which
+should take a value of an executable in the user's path or specify
+a full path.
+
+@node Compilation flags, Making manuals, Setting the browser, Configuration variables
+@subsection Compilation flags
 
 If you have libraries and header files, e.g., for GNU readline, in
 non-system directories, use the variables @code{LDFLAGS} (for libraries,
@@ -1103,18 +1133,13 @@ compiler/linker does not support re-ordering of @option{-L} and
 the native @command{cc}).  In this case, use a different compiler (or a
 front end shell script which does the re-ordering).
 
-Another precious variable is @env{R_BROWSER}, the default browser, which
-should take a value of an executable in the user's path or specify
-a full path.
-
-If you find you need to alter configure variables, it is worth noting
-that some settings may be cached in the file @file{config.cache}, and it
-is a good idea to remove that file (if it exists) before re-configuring.
-Note that caching is turned @emph{off} by default: use the command line
-option @option{--config-cache} (or @option{-C}) to enable caching.
+@node Making manuals,  , Compilation flags, Configuration variables
+@subsection Making manuals
 
 The default settings for making the manuals are controlled by
-@env{R_RD4PDF} and @env{R_RD4DVI}.
+@env{R_RD4PDF}, @env{R_RD4DVI} and @env{R_PAPERSIZE}.
+
+
 
 @node Using make, Using FORTRAN, Configuration variables, Configuration on Unix
 @section Using make
