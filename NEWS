@@ -240,6 +240,9 @@ NEW FEATURES
 
     o	New cophenetic() in "mva" as utility for hierarchical clustering.
 
+    o	p.adjust() has two new methods, 'Hommel' and 'FDR', contributed
+	by Gordon Smyth <smyth@wehi.edu.au>.
+
 
 DEPRECATED & DEFUNCT
 
