@@ -23,7 +23,7 @@
 	/*--- I / O -- S u p p o r t -- C o d e ---*/
 
 	/* These routines provide hooks for supporting console */
-	/* I/O.  Under raw Unix these routines simply provide a */
+	/* I/O.	 Under raw Unix these routines simply provide a */
 	/* connection to the stdio library.  Under a Motif */
 	/* interface the routines would be considerably more */
 	/* complex. */
@@ -43,7 +43,7 @@ int ReadKBD(char *buf, int len)
 	char *rline;
 	if(!isatty(0)) {
 		if(!R_Quiet && *R_prompt_buf) fputs(R_prompt_buf, stdout);
-		if (fgets(buf, len, stdin) == NULL) 
+		if (fgets(buf, len, stdin) == NULL)
 			return 0;
 		else {
 			if(!R_Quiet) fputs(buf,stdout);
@@ -135,7 +135,7 @@ void Consolegets(char *buf, int buflen)
 }
 
 
-	/*--- F i l e    H an d l i n g    C o d e ---*/
+	/*--- F i l e	 H an d l i n g	   C o d e ---*/
 
 FILE *R_OpenLibraryFile(char *file)
 {
@@ -205,48 +205,47 @@ int main(int ac, char **av)
 	R_Quiet = 0;
 
 	while(--ac) {
-		if(**++av == '-') {
-			switch((*av)[1]) {
-			case 'v':
-				if((*av)[2] == '\0') {
-					ac--; av++; p = *av;
-				}
-				else p = &(*av)[2];
-				value = strtol(p, &p, 10);
-				if(*p) goto badargs;
-				if(value < 1 || value > 1000)
-					REprintf("warning: invalid vector heap size ignored\n");
-				else
-					R_VSize = value * 1048576;  /* Mb */
-				break;
-			case 'n':
-				if((*av)[2] == '\0') {
-					ac--; av++; p = *av;
-				}
-				else p = &(*av)[2];
-				value = strtol(p, &p, 10);
-				if(*p) goto badargs;
-				if(value < R_NSize || value > 1000000)
-					REprintf("warning: invalid language heap size ignored\n");
-				else
-					R_NSize = value;
-				break;
-			case 'q':
-				R_Quiet = 1;
-				break;
-			default:
-				REprintf("warning: unknown option %s\n", *av);
-				break;
+	 if(**++av == '-') {
+		switch((*av)[1]) {
+		case 'v':
+			if((*av)[2] == '\0') {
+				ac--; av++; p = *av;
 			}
+			else p = &(*av)[2];
+			value = strtol(p, &p, 10);
+			if(*p) goto badargs;
+			if(value < 1 || value > 1000)
+			 REprintf("warning: invalid vector heap size ignored\n");
+			else
+			  R_VSize = value * 1048576; /* 1 MByte := 2^20 Bytes*/
+			break;
+		case 'n':
+			if((*av)[2] == '\0') {
+				ac--; av++; p = *av;
+			}
+			else p = &(*av)[2];
+			value = strtol(p, &p, 10);
+			if(*p) goto badargs;
+			if(value < R_NSize || value > 1000000)
+			 REprintf("warning: invalid language heap size ignored\n");
+			else
+			 R_NSize = value;
+			break;
+		case 'q':
+			R_Quiet = 1;
+			break;
+		default:
+			REprintf("warning: unknown option %s\n", *av);
+			break;
 		}
-		else {
-			printf("ARGUMENT %s\n", *av);
-		}
+	 }
+	 else {
+		printf("ARGUMENT %s\n", *av);
+	 }
 
 	}
-	
-		/* On Unix the console is a file */
-		/* we just use stdio to write on it */
+
+	/* On Unix the console is a file; we just use stdio to write on it */
 
 	R_Interactive = isatty(0);
 	R_Consolefile = stdout;
@@ -266,6 +265,7 @@ int main(int ac, char **av)
 		read_history(".Rhistory");
 #endif
 	mainloop();
+	/*++++++  in ../main/main.c */
 	return 0;
 
 badargs:
@@ -335,7 +335,7 @@ void RBusy(int which)
 {
 }
 
-        /* Saving and Restoring the Global Environment */
+	/* Saving and Restoring the Global Environment */
 
 void R_SaveGlobalEnv(void)
 {
@@ -368,7 +368,7 @@ void R_RestoreGlobalEnv(void)
 #else
 #define CLK_TCK	60
 #endif
-  
+
 #endif
 
 SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -435,8 +435,8 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP rval;
- 
-	rval=allocVector(LGLSXP, 1); 
+
+	rval=allocVector(LGLSXP, 1);
 	if( isatty(0) )
 		LOGICAL(rval)[0]=1;
 	else
@@ -446,34 +446,34 @@ SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-        char *tmp;
-        int ask;
- 
-        if(R_BrowseLevel) {
-                warning("can't quit from browser\n"); 
-                return R_NilValue;
-        }
-        if( !isString(CAR(args)) ) 
-                errorcall(call,"one of \"yes\", \"no\" or \"ask\" expected.\n");
-        tmp = CHAR(STRING(CAR(args))[0]);
-        if( !strcmp(tmp,"ask") )
-                ask=1;
-        else if( !strcmp(tmp,"no") )
-                ask=2;
-        else if( !strcmp(tmp,"yes") )
-                ask=3;
-        else
-                errorcall(call,"unrecognized value of ask\n");
-        RCleanUp(ask);
-        exit(0);
-        /*NOTREACHED*/
+	char *tmp;
+	int ask;
+
+	if(R_BrowseLevel) {
+		warning("can't quit from browser\n");
+		return R_NilValue;
+	}
+	if( !isString(CAR(args)) )
+		errorcall(call,"one of \"yes\", \"no\" or \"ask\" expected.\n");
+	tmp = CHAR(STRING(CAR(args))[0]);
+	if( !strcmp(tmp,"ask") )
+		ask=1;
+	else if( !strcmp(tmp,"no") )
+		ask=2;
+	else if( !strcmp(tmp,"yes") )
+		ask=3;
+	else
+		errorcall(call,"unrecognized value of ask\n");
+	RCleanUp(ask);
+	exit(0);
+	/*NOTREACHED*/
 }
 
-void suicide(char *s) 
-{  
-        REprintf("Fatal error: %s\n", s);
-        RCleanUp(2);    /* 2 means don't save anything and it's an unrecoverabl
-e abort */
+void suicide(char *s)
+{
+	REprintf("Fatal error: %s\n", s);
+	RCleanUp(2);
+	/*	 2 means don't save anything and it's an unrecoverable abort */
 }
 
 
