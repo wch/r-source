@@ -24,6 +24,7 @@
 #endif
 
 #include "Defn.h"
+#include "Fileio.h" /* for R_fopen */
 #include "unzip.h"
 #ifdef HAVE_SYS_STAT_H
 # ifndef Macintosh
