@@ -8,23 +8,18 @@
 \alias{[<-}
 \alias{[[<-}
 \alias{$<-}
-%- methods
-\alias{[.data.frame}
-\alias{[[.data.frame}
-\alias{[<-.data.frame}
-\alias{[[<-.data.frame}
+%- methods not documented elsewhere
 \alias{[.formula}
 \alias{[.ts}
 \alias{[.noquote}
 \alias{.subset}
 \alias{.subset2}
 \description{
-  Operators act on vectors, arrays, data frames and lists to extract or
+  Operators act on vectors, arrays and lists to extract or
   replace subsets.
 }
 \usage{
 x[i]
-x[i, j, \dots]
 x[i, j, \dots , drop=TRUE]
 x[[i]]
 x[[i, j, \dots]]
@@ -33,12 +28,13 @@ x$name
 .subset2(x, \dots)
 }
 \arguments{
-  \item{x}{object from which to extract elements}
-  \item{i,j,\dots,name}{elements to extract or replace. \code{i,j} are
-    either \code{numeric} or \code{character} where \code{name} must be
+  \item{x}{object from which to extract elements or in which to replace
+    elements.}
+  \item{i, j, \dots, name}{elements to extract or replace. \code{i, j} are
+    \code{numeric} or \code{character} or empty whereas \code{name} must be
     character or an (unquoted) name.  Numeric values are coerced to
-    integer as by \code{\link{as.integer}(i)}.}
-  \item{drop}{For data frames, matrices, and arrays.  If \code{TRUE} the
+    integer as by \code{\link{as.integer}}.}
+  \item{drop}{For matrices, and arrays.  If \code{TRUE} the
     result is coerced to the lowest possible dimension (see examples
     below).}
 }
@@ -48,7 +44,8 @@ x$name
   of the assignment.
 
   These operators are generic. You can write methods to handle subsetting
-  of specific classes of objects, see \link{InternalMethods}.
+  of specific classes of objects, see \link{InternalMethods} as well as
+  \code{\link{[.data.frame}} and \code{\link{[.factor}}.
 
   The \code{[[} operator requires all relevant subscripts to be supplied.
   With the \code{[} operator a comma separated blank indicates that all
@@ -57,16 +54,6 @@ x$name
   Indexing by factors is allowed and is equivalent to indexing by the
   numeric codes (see \code{\link{factor}}) and not by the character
   values which are printed (for which use \code{[as.character(i)]}).
-
-  When \code{[.data.frame} is used for subsetting rows of a
-  \code{\link{data.frame}}, it returns a data frame with unique
-  (and non-missing)row names, if necessary transforming the names using
-  \code{\link{make.names}( * , unique = TRUE)}. See the \code{swiss}
-  example below.
-
-  Using \code{[.data.frame} with only one index uses list-like indexing,
-  with the single index being taken to refer to columns.  In this usage
-  the \code{drop} argument is ignored, with a warning.
 
   When operating on a list, the \code{[[} operator gives the specified
   element of the list while the \code{[} operator returns a list with
@@ -94,7 +81,9 @@ x$name
 }
 \seealso{
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
-  \code{\link{factor}} for the behaviour of \code{[} applied to factors.
+
+  \code{\link{[.data.frame}} and \code{\link{[.factor}} for the
+  behaviour when applied to data.frame and factors.
 
   \code{\link{Syntax}} for operator precedence, and the
   \emph{R Language} reference manual about indexing details.
@@ -110,9 +99,6 @@ li[[1]]               # the first element of list li
 y <- list(1,2,a=4,5)
 y[c(3,4)]             # a list containing elements 3 and 4 of y
 y$a                   # the element of y named a
-
-data(swiss)
-swiss[ c(1, 1:2), ]   # duplicate row, unique row names
 
 ## non-integer indices are truncated:
 (i <- 3.999999999) # "4" is printed

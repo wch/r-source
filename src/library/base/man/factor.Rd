@@ -1,5 +1,21 @@
 \name{factor}
 \title{Factors}
+\alias{factor}
+\alias{ordered}
+\alias{is.factor}
+\alias{is.ordered}
+\alias{as.factor}
+\alias{as.ordered}
+\alias{is.na<-.factor}
+\description{
+  The function \code{factor} is used to encode a vector as a factor (the
+  names category and enumerated type are also used for factors).  If
+  \code{ordered} is \code{TRUE}, the factor levels are assumed to be ordered.
+  For compatibility with S there is also a function \code{ordered}.
+
+  \code{is.factor}, \code{is.ordered}, \code{as.factor} and \code{as.ordered}
+  are the membership and coercion functions for these classes.
+}
 \usage{
 factor(x, levels = sort(unique.default(x), na.last = TRUE),
        labels = levels, exclude = NA, ordered = is.ordered(x))
@@ -12,24 +28,6 @@ as.factor(x)
 as.ordered(x)
 
 a.factor[i, drop = FALSE]
-}
-\alias{factor}
-\alias{ordered}
-\alias{is.factor}
-\alias{is.ordered}
-\alias{as.factor}
-\alias{as.ordered}
-\alias{is.na<-.factor}
-\alias{[.factor}
-\alias{[<-.factor}
-\description{
-  The function \code{factor} is used to encode a vector as a factor (the
-  names category and enumerated type are also used for factors).  If
-  \code{ordered} is \code{TRUE}, the factor levels are assumed to be ordered.
-  For compatibility with S there is also a function \code{ordered}.
-
-  \code{is.factor}, \code{is.ordered}, \code{as.factor} and \code{as.ordered}
-  are the membership and coercion functions for these classes.
 }
 \arguments{
   \item{x}{a vector of data, usually taking a small number of distinct values}
@@ -46,10 +44,6 @@ a.factor[i, drop = FALSE]
     as ordered (in the order given).}
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
-
-  \item{a.factor}{a factor}
-  \item{i}{a specification of indices -- see \code{\link{Extract}}.}
-  \item{drop}{logical.  If true, unused levels are dropped.}
 }
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a
@@ -58,6 +52,10 @@ a.factor[i, drop = FALSE]
   (or \code{ordered} is used) the result has class
   \code{c("ordered", "factor")}.
 
+  Applying \code{factor} to an ordered or unordered factor returns a
+  factor (of the same type) with just the levels which occur: see also
+  \code{\link{[.factor}} for a more transparent way to achieve this.
+ 
   \code{is.factor} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of type factor or not.  Correspondingly,
   \code{is.ordered} returns \code{TRUE} when its
@@ -104,10 +102,6 @@ a.factor[i, drop = FALSE]
 
   \code{is.factor} is generic: you can write methods to handle
   of specific classes of objects, see \link{InternalMethods}.
-
-  There are methods for \code{[} and \code{[<-} for factors: the
-  extraction method has an additional argument \code{drop} which, note,
-  defaults to \code{FALSE}.
 }
 \section{Warning}{
   The interpretation of a factor depends on both the codes and the
@@ -126,18 +120,19 @@ a.factor[i, drop = FALSE]
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{[.factor]} for subsetting of factors.
+  
   \code{\link{gl}} for construction of ``balanced'' factors and
   \code{\link{C}} for factors with specified contrasts.
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
   levels,  and \code{\link{codes}} to get integer codes.
 }
 \examples{
-ff <- factor(substring("statistics", 1:10, 1:10), levels=letters)
-ff
+(ff <- factor(substring("statistics", 1:10, 1:10), levels=letters))
 as.integer(ff) # the internal codes
 factor(ff)      # drops the levels that do not occur
-ff[, drop=TRUE] # the same
-factor(factor(letters[7:10])[2:3]) # exercise indexing and reduction
+ff[, drop=TRUE] # the same, more transparently
+
 factor(letters[1:20], label="letter")
 
 class(ordered(4:1))# "ordered", inheriting from "factor"
