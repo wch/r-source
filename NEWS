@@ -22,7 +22,8 @@ NEW FEATURES
 	to do some rather nifty things with buttons and entry fields
 	and so forth in very few lines of code.  It is still somewhat
 	experimental so don't go churning out thousands of lines of
-	GUI code and then blame us for changing the API later on.
+	GUI code and then blame us for changing the API later on. It does
+	not currently work with GNOME because of event loop differences.
 	See demo(tkttest) and demo(tkdensity). 
 
     o	Internally using global R_Expressions [getOption("expressions")]

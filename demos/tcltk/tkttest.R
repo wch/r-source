@@ -51,7 +51,7 @@ dialog.t.test <- function(){
 
     tkdestroy(tt)
     cmd <- build()
-    cat("### Command excuted via Tk ###\n")
+    cat("### Command executed via Tk ###\n")
     cat(deparse(build()),sep="\n")
     cat("### -----\n")
     eval(cmd)
