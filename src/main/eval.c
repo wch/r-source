@@ -21,6 +21,8 @@
 
 #include "Defn.h"
 
+SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
+
 #ifdef Macintosh
 	/*  The universe will end if the Stack on the Mac grows
 	 *  until it hits the heap.  This code places a limit

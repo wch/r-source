@@ -21,10 +21,6 @@
 #include "Mathlib.h"
 #include "Graphics.h"
 
-#ifdef HAVE_LIBREADLINE
-char *tilde_expand (char *);
-#endif
-
 	/* Coordinate Mappings */
 	/* Linear/Logarithmic Scales */
 
@@ -43,13 +39,9 @@ static double Ident(double x)
 
 void NewFrameConfirm()
 {
-	int c;
-	REprintf("Hit <Return> to see next plot: ");
-	yyprompt("");
-	while((c = cget()) != '\n' && c != R_EOF)
-		;
+	char buf[16];
+	R_ReadConsole("Hit <Return> to see next plot: ", buf, 16, 0);
 }
-
 
 	/* Device Startup */
 
@@ -1739,13 +1731,10 @@ SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	GCheckState(); 
 
-	if(!isString(CAR(args)) || length(CAR(args)) < 1 || *CHAR(STRING(CAR(args))[0]) == '\0')
+	if(!isString(CAR(args)) || length(CAR(args)) < 1
+	  || *CHAR(STRING(CAR(args))[0]) == '\0')
 		errorcall(call, "file name expected as argument\n");
-#ifdef HAVE_LIBREADLINE
-	GSavePlot(tilde_expand(CHAR(STRING(CAR(args))[0])));
-#else	
-	GSavePlot(CHAR(STRING(CAR(args))[0]));
-#endif	
+	GSavePlot(R_ExpandFileName(CHAR(STRING(CAR(args))[0])));
 	return R_NilValue;
 }
 

@@ -19,6 +19,8 @@
 
 #include "Defn.h"
 #include "Graphics.h"
+#include "IOSupport.h"
+#include "Parse.h"
 
 /*--- The `real'  main() program is in	../<SYSTEM>/system.c,
  *---		  ======	e.g.,	../unix/system.c
@@ -72,6 +74,7 @@ int	R_EvalCount = 0;		/* Evaluation count */
 int	R_Interactive = 1;		/* Interactive? */
 int	R_Quiet = 0;			/* Be Quiet */
 int	R_Console;			/* Console active flag */
+IoBuffer R_ConsoleIob;			/* Console IO Buffer */
 FILE*	R_Inputfile = NULL;		/* Current input flag */
 FILE*	R_Consolefile = NULL;		/* Console output file */
 FILE*	R_Outputfile = NULL;		/* Output file */
@@ -143,36 +146,32 @@ void InitGlobalEnv()
 
 
 
-	/* This is the R read-eval-print loop.	If R_Console */
-	/* is zero, it is assumed that R_Inputfile contains */
-	/* a file descriptor which is to be read to end of file */
-	/* If R_Console is one, input is taken from the console. */
+	/* Read-Eval-Print loop with input from a file */
 
-#ifdef NEW
-static void R_FileRepl(FILE *fp, SEXP rho, int savestack, int browselevel)
+static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 {
 	SEXP expr;
 	int status;
 
 	for(;;) {
 		R_PPStackTop = savestack;
-		R_CurrentExpr = R_ParseFile(fp, &status);
+		R_CurrentExpr = R_Parse1File(fp, 1, &status);
 		switch(status) {
 		    case PARSE_NULL:
 			break;
 		    case PARSE_OK:
-			if (R_CurrentExpr) {
-				R_Visible = 0;
-				R_EvalDepth = 0;
-				PROTECT(R_CurrentExpr);
-				RBusy(1);
-				R_CurrentExpr = eval(R_CurrentExpr, rho);
-				SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
-				UNPROTECT(1);
-				if (R_Visible)
-					PrintValueEnv(R_CurrentExpr, rho);
-			}
+			R_Visible = 0;
+			R_EvalDepth = 0;
+			PROTECT(R_CurrentExpr);
+			R_Busy(1);
+			R_CurrentExpr = eval(R_CurrentExpr, rho);
+			SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
+			UNPROTECT(1);
+			if (R_Visible)
+				PrintValueEnv(R_CurrentExpr, rho);
+			break;
 		    case PARSE_ERROR:
+			error("syntax error\n");
 			break;
 		    case PARSE_EOF:
 			return;
@@ -180,55 +179,101 @@ static void R_FileRepl(FILE *fp, SEXP rho, int savestack, int browselevel)
 		}
 	}
 }
-#endif
 
-static void R_Repl(SEXP rho, int savestack, int browselevel)
+	/* Read-Eval-Print loop with interactive input */
+
+static int prompt_type;
+static char BrowsePrompt[20];
+
+char *R_PromptString(int browselevel, int type)
 {
-	int pflag = 1;
-	R_CommentSxp = CONS(R_NilValue, R_NilValue);
-	CAR(R_CommentSxp) = R_CommentSxp;
-
-	for (;;) {
-		R_PPStackTop = savestack;
-		if (R_Console == 1 && pflag <= 3) {
-			if(browselevel)
-				yyprompt("Browse[%d]> ", browselevel);
-			else
-				yyprompt((char*) CHAR(STRING(GetOption(install("prompt"), R_NilValue))[0]));
-		}
-		R_CurrentExpr = NULL;
-		yyinit();
-		pflag = yyparse();
-		if (pflag == 0) {
-			if (R_Console == 0) {
-				fclose(R_Inputfile);
-				ResetConsole();
-			}
-			return;
-		}
+	if(type == 1) {
 		if(browselevel) {
-			if( !R_CurrentExpr )
-				return;
-			if( ParseBrowser(R_CurrentExpr, rho) ) {
-				if (R_Console == 0) {
-					fclose(R_Inputfile);
-					ResetConsole();
-				}
-				return;
+			sprintf(BrowsePrompt, "Browse[%d]> ", browselevel);
+			return BrowsePrompt;
+		}
+		return (char*)CHAR(STRING(GetOption(install("prompt"),
+				R_NilValue))[0]);
+	}
+	else {
+		return (char*)CHAR(STRING(GetOption(install("continue"),
+			R_NilValue))[0]);
+	}
+}
+
+static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
+{
+	SEXP expr;
+	int c, status, prompt;
+	char *bufp, buf[1024];
+
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	prompt_type = 1;
+	buf[0] = '\0';
+	bufp = buf;
+	for(;;) {
+		if(!*bufp) {
+			if(R_ReadConsole(R_PromptString(browselevel,
+					prompt_type),
+				buf, 1024, 1) == 0) return;
+			bufp = buf;
+		}
+		while(c = *bufp++) {
+			R_IoBufferPutc(c, &R_ConsoleIob);
+			if(c == ';' || c == '\n') {
+				prompt = (c == '\n');
+				break;
 			}
 		}
-		if(pflag != 1 && pflag != 2) {
-			if (R_CurrentExpr) {
-				R_Visible = 0;
-				R_EvalDepth = 0;
-				PROTECT(R_CurrentExpr);
-				RBusy(1);
-				R_CurrentExpr = eval(R_CurrentExpr, rho);
-				SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
-				UNPROTECT(1);
-				if (R_Visible)
-					PrintValueEnv(R_CurrentExpr, rho);
-			}
+		R_PPStackTop = savestack;
+		R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status);
+
+		switch(status) {
+
+		    case PARSE_NULL:
+
+			if(browselevel)
+				return;
+			R_IoBufferWriteReset(&R_ConsoleIob);
+			prompt_type = 1;
+			break;
+
+		    case PARSE_OK:
+
+			R_IoBufferReadReset(&R_ConsoleIob);
+			R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status);
+			if(browselevel && ParseBrowser(R_CurrentExpr, rho))
+				return;
+			R_Visible = 0;
+			R_EvalDepth = 0;
+			PROTECT(R_CurrentExpr);
+			R_Busy(1);
+			R_CurrentExpr = eval(R_CurrentExpr, rho);
+			SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
+			UNPROTECT(1);
+			if (R_Visible)
+				PrintValueEnv(R_CurrentExpr, rho);
+			R_IoBufferWriteReset(&R_ConsoleIob);
+			prompt_type = 1;
+			break;
+
+		    case PARSE_ERROR:
+
+			error("syntax error\n");
+			R_IoBufferWriteReset(&R_ConsoleIob);
+			prompt_type = 1;
+			break;
+
+		    case PARSE_INCOMPLETE:
+
+			R_IoBufferReadReset(&R_ConsoleIob);
+			prompt_type = 2;
+			break;
+
+		    case PARSE_EOF:
+
+			return;
+			break;
 		}
 	}
 }
@@ -260,7 +305,6 @@ void mainloop()
 	if(!R_Quiet)
 		PrintGreeting();
 
-
 		/* Initialize the interpreter's */
 		/* internal structures. */
 
@@ -289,11 +333,6 @@ void mainloop()
 	R_Toplevel.cend = NULL;
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 
-
-		/* Initialize the input streams */
-
-	R_SetInput(0);
-
 		/* On initial entry we open the base language */
 		/* package and begin by running the repl on it. */
 		/* If there is an error we pass on to the repl. */
@@ -303,14 +342,14 @@ void mainloop()
 	if(R_Inputfile == NULL) {
 		suicide("unable to open the base package\n");
 	}
-	R_SetInput(R_FILE);
+
 	doneit = 0;
 	setjmp(R_Toplevel.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 	signal(SIGINT, onintr);
 	if(!doneit) {
 		doneit = 1;
-		R_Repl(R_NilValue, 0, 0);
+		R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
 	}
 
 		/* This is where we try to load a user's */
@@ -321,7 +360,6 @@ void mainloop()
 		/* might have been double clicked on or dropped */
 		/* on the application */
 
-	R_SetInput(R_CONSOLE);
 	doneit = 0;
 	setjmp(R_Toplevel.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
@@ -338,14 +376,13 @@ void mainloop()
 
 	R_Inputfile = R_OpenSysInitFile();
 	if(R_Inputfile != NULL) {
-		R_SetInput(R_FILE);
 		doneit = 0;
 		setjmp(R_Toplevel.cjmpbuf);
 		R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 		signal(SIGINT, onintr);
 		if(!doneit) {
 			doneit = 1;
-			R_Repl(R_NilValue, 0, 0);
+			R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
 		}
 	}
 
@@ -355,14 +392,13 @@ void mainloop()
 
 	R_Inputfile = R_OpenInitFile();
 	if(R_Inputfile != NULL) {
-		R_SetInput(R_FILE);
 		doneit = 0;
 		setjmp(R_Toplevel.cjmpbuf);
 		R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 		signal(SIGINT, onintr);
 		if(!doneit) {
 			doneit = 1;
-			R_Repl(R_GlobalEnv, 0, 0);
+			R_ReplFile(R_Inputfile, R_NilValue, 0, 0);
 		}
 	}
 #endif
@@ -371,7 +407,6 @@ void mainloop()
 		/* we try to invoke the .First Function. */
 		/* If there is an error we continue */
 
-	R_SetInput(R_CONSOLE);
 	doneit = 0;
 	setjmp(R_Toplevel.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
@@ -391,11 +426,11 @@ void mainloop()
 		/* Here is the real R read-eval-loop. */
 		/* We handle the console until end-of-file. */
 
-	R_SetInput(R_CONSOLE);
+	R_IoBufferInit(&R_ConsoleIob);
 	setjmp(R_Toplevel.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 	signal(SIGINT, onintr);
-	R_Repl(R_GlobalEnv, 0, 0);
+	R_ReplConsole(R_GlobalEnv, 0, 0);
 	Rprintf("\n");
 
 
@@ -412,7 +447,7 @@ void mainloop()
 		UNPROTECT(1);
 	}
 	UNPROTECT(1);
-	RCleanUp(1);	/* query save */
+	R_CleanUp(1);	/* query save */
 }
 
 int R_BrowseLevel = 0;
@@ -481,7 +516,7 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 		setjmp(thiscontext.cjmpbuf);
 		R_GlobalContext = R_ToplevelContext = &thiscontext;
 		R_BrowseLevel = savebrowselevel;
-		R_Repl(rho, savestack, R_BrowseLevel);
+		R_ReplConsole(rho, savestack, R_BrowseLevel);
 		endcontext(&thiscontext);
 	}
 	endcontext(&returncontext);

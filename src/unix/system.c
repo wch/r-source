@@ -20,6 +20,11 @@
 #include "Defn.h"
 #include "Fileio.h"
 
+#ifdef HAVE_LIBREADLINE
+#include <readline/readline.h>
+#include <readline/history.h>
+#endif
+
 	/*--- I / O -- S u p p o r t -- C o d e ---*/
 
 	/* These routines provide hooks for supporting console */
@@ -30,87 +35,66 @@
 
 
 	/* Fill a text buffer with user typed console input. */
-	/* This routine is only called when R_Console == 1. */
 
-#ifdef HAVE_LIBREADLINE
+static int R_UsingReadline = 1;
 
-char *readline(char *);
-char R_prompt_buf[512];
-
-int ReadKBD(char *buf, int len)
+int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
 	int l;
 	char *rline;
+
 	if(!isatty(0)) {
-		if(!R_Quiet && *R_prompt_buf) fputs(R_prompt_buf, stdout);
+		if(!R_Quiet) fputs(prompt, stdout);
 		if (fgets(buf, len, stdin) == NULL)
 			return 0;
-		else {
-			if(!R_Quiet) fputs(buf,stdout);
-			return 1;
-		}
-	}
-	else {
-		if( *R_prompt_buf) {
-			rline = readline(R_prompt_buf);
-			if (rline) {
-				if (strlen(rline) && *R_prompt_buf)
-					add_history(rline);
-				l = (((len-2) > strlen(rline)) ? strlen(rline) : (len-2));
-				strncpy(buf, rline, l);
-				buf[l] = '\n'; buf[l+1]= '\0';
-				free(rline);
-				return 1;
-			}
-			else return 0;
-		}
-		else {
-			if(fgets(buf, len, stdin) == NULL)
-				return 0;
-			else
-				return 1;
-		}
-	}
-}
-
-#else /* not HAVE_LIBREADLINE */
-
-int ReadKBD(char *buf, int len)
-{
-	if (fgets(buf, len, stdin) == NULL)
-		return 0;
-	else {
-		if(!R_Quiet && !isatty(0) )
-			fputs(buf,stdout);
+		if(!R_Quiet) fputs(buf,stdout);
 		return 1;
 	}
-}
+#ifdef HAVE_LIBREADLINE
+	else if(R_UsingReadline) {
+		rline = readline(prompt);
+		if (rline) {
+			if (strlen(rline) && addtohistory)
+				add_history(rline);
+			l = (((len-2) > strlen(rline))?strlen(rline):(len-2));
+			strncpy(buf, rline, l);
+			buf[l] = '\n';
+			buf[l+1]= '\0';
+			free(rline);
+			return 1;
+		}
+		else return 0;
+	}
 #endif
+	else {
+		if(fgets(buf, len, stdin) == NULL)
+			return 0;
+		else
+			return 1;
+	}
+}
 
 	/* Write a text buffer to the console. */
 	/* All system output is filtered through this routine. */
 
-int RWriteConsole(char *buf, int len)
+void R_WriteConsole(char *buf, int len)
 {
 	printf("%s", buf);
 }
 
 
-	/* Reset so that input comes from the console This is used */
-	/* after error messages so that if the system was reading */
-	/* from a file, input is redirected from the console */
+	/* Indicate that input is redirected from the console */
 
-void ResetConsole()
+void R_ResetConsole()
 {
-	R_SetInput(R_CONSOLE);
-	R_Inputfile = stdin;
+	R_Console = 1;
 }
 
 
 	/* This is stdio support to ensure that console file buffers */
 	/* are flushed. */
 
-void FlushConsole()
+void R_FlushConsole()
 {
 	if (R_Console == 1)
 		fflush(stdin);
@@ -120,22 +104,30 @@ void FlushConsole()
 	/* This is stdio support to reset if the used types EOF */
 	/* on the console. */
 
-void ClearerrConsole()
+void R_ClearerrConsole()
 {
 	if (R_Console == 1)
 		clearerr(stdin);
 }
 
 
-void Consolegets(char *buf, int buflen)
-{
-	fgets(buf, buflen, stdin);
-	if( !isatty(0) )
-		fputs(buf,stdout);
-}
-
-
 	/*--- F i l e	 H an d l i n g	   C o d e ---*/
+
+	/* Note: Readline has code to do expansion of ~ */
+
+#ifdef HAVE_LIBREADLINE
+char *tilde_expand(char*);
+
+char *R_ExpandFileName(char *s)
+{
+	return tilde_expand(s);
+}
+#else
+char *R_ExpandFileName(char *s)
+{
+	return s;
+}
+#endif
 
 FILE *R_OpenLibraryFile(char *file)
 {
@@ -278,20 +270,21 @@ void R_InitialData(void)
 	R_RestoreGlobalEnv();
 }
 
-void RCleanUp(int ask)
+void R_CleanUp(int ask)
 {
 	char buf[128];
 
 	if( R_DirtyImage ) {
 qask:
-		ClearerrConsole();
-		FlushConsole();
+		R_Console = 1;
+		R_ClearerrConsole();
+		R_FlushConsole();
 		if(!isatty(0) && ask==1)
 			ask = 3;
 
 		if( ask==1 ) {
-			REprintf("Save workspace image? [y/n/c]: ");
-			Consolegets(buf, 128);
+			R_ReadConsole("Save workspace image? [y/n/c]: ",
+				buf, 128, 0);
 		}
 		else if(ask == 2)
 			buf[0] = 'n';
@@ -331,7 +324,7 @@ qask:
 	exit(0);
 }
 
-void RBusy(int which)
+void R_Busy(int which)
 {
 }
 
@@ -462,7 +455,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ask=3;
 	else
 		errorcall(call,"unrecognized value of ask\n");
-	RCleanUp(ask);
+	R_CleanUp(ask);
 	exit(0);
 	/*NOTREACHED*/
 }
@@ -470,7 +463,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 void suicide(char *s)
 {
 	REprintf("Fatal error: %s\n", s);
-	RCleanUp(2);
+	R_CleanUp(2);
 	/*	 2 means don't save anything and it's an unrecoverable abort */
 }
 

@@ -19,104 +19,97 @@
  */
 
 #include "Defn.h"
+#include "IOSupport.h"
+#include "Parse.h"
 
-extern SEXP R_CommentSxp;
+	/* Useful defines so editors don't get confused ... */
 
-/* static */ void ResetComment(void);
-static void AddComment(SEXP);
-static void PushComment(void);
-static void PopComment(void);
-static int isComment(SEXP);
-static void ifpush(void);
-static void CheckFormalArgs(SEXP, SEXP);
-static int KeywordLookup(char*);
+#define LBRACE	'{'
+#define RBRACE	'}'
 
-SEXP listAppend(SEXP,SEXP);
-SEXP newlist(void);
-SEXP growlist(SEXP, SEXP);
-SEXP firstarg(SEXP, SEXP);
-SEXP nextarg(SEXP, SEXP, SEXP);
-SEXP tagarg(SEXP, SEXP);
+static void	ResetComment(void);
+static void	AddComment(SEXP);
+static void	PushComment(void);
+static void	PopComment(void);
+static int	isComment(SEXP);
+static void	ifpush(void);
+static void	CheckFormalArgs(SEXP, SEXP);
+static int	KeywordLookup(char*);
 
-		/* These routines allocate constants */
+SEXP		listAppend(SEXP,SEXP);
+static SEXP	newlist(void);
+static SEXP	growlist(SEXP, SEXP);
+static SEXP	firstarg(SEXP, SEXP);
+static SEXP	nextarg(SEXP, SEXP, SEXP);
+static SEXP	tagarg(SEXP, SEXP);
 
-SEXP mkString(char *);
-SEXP mkInteger(char *);
-SEXP mkFloat(char *);
-SEXP mkComplex(char *);
-SEXP mkNA(void);
-SEXP mkTrue(void);
-SEXP mkFalse(void);
 
-		/* Internal lexer / parser state variables */
+	/* These routines allocate constants */
 
-static int EatLines;
-static int GenerateCode = 0;
-static int EndOfFile = 0;
-static FILE *InputFile = NULL;
-static int (*xxgetc)();
-static void (*xxungetc)();
+SEXP		mkString(char *);
+SEXP		mkInteger(char *);
+SEXP		mkFloat(char *);
+SEXP		mkComplex(char *);
+SEXP		mkNA(void);
+SEXP		mkTrue(void);
+SEXP		mkFalse(void);
 
-static int newline = 0;			/* Used only for prompting */
+	/* Internal lexer / parser state variables */
 
+static int	EatLines = 0;
+static int	GenerateCode = 0;
+static int	EndOfFile = 0;
+static int	(*xxgetc)();
+static int	(*xxungetc)();
 
 	/* Soon to be defunct entry points */
 
-void	R_SetInput(int);
-int	R_fgetc(FILE*);
-void	uncget(void);
-
-void	yyinit(void);
-int	yylex(void);
-int	yyerror(char*);
-void	yyprompt(char *, ...);
-int	yywrap();
+void		R_SetInput(int);
+int		R_fgetc(FILE*);
 
 	/* Routines used to build the parse tree */
 
-static SEXP xxnullformal(void);
-static SEXP xxfirstformal0(SEXP);
-static SEXP xxfirstformal1(SEXP, SEXP);
-static SEXP xxaddformal0(SEXP, SEXP);
-static SEXP xxaddformal1(SEXP, SEXP, SEXP);
-static SEXP xxexprlist0();
-static SEXP xxexprlist1(SEXP);
-static SEXP xxexprlist2(SEXP, SEXP);
-static SEXP xxsub0(void);
-static SEXP xxsub1(SEXP);
-static SEXP xxsymsub0(SEXP);
-static SEXP xxsymsub1(SEXP, SEXP);
-static SEXP xxnullsub0();
-static SEXP xxnullsub1(SEXP);
-static SEXP xxsublist1(SEXP);
-static SEXP xxsublist2(SEXP, SEXP);
-static SEXP xxcond(SEXP);
-static SEXP xxifcond(SEXP);
-static SEXP xxif(SEXP, SEXP, SEXP);
-static SEXP xxifelse(SEXP, SEXP, SEXP, SEXP);
-static SEXP xxforcond(SEXP, SEXP);
-static SEXP xxfor(SEXP, SEXP, SEXP);
-static SEXP xxwhile(SEXP, SEXP, SEXP);
-static SEXP xxrepeat(SEXP, SEXP);
-static SEXP xxnxtbrk(SEXP);
-static SEXP xxfuncall(SEXP, SEXP);
-static SEXP xxdefun(SEXP, SEXP, SEXP);
-static SEXP xxunary(SEXP, SEXP);
-static SEXP xxbinary(SEXP, SEXP, SEXP);
-static SEXP xxparen(SEXP, SEXP);
-static SEXP xxsubscript(SEXP, SEXP, SEXP);
-static SEXP xxexprlist(SEXP, SEXP);
-static int xxvalue(SEXP, int);
+static SEXP	xxnullformal(void);
+static SEXP	xxfirstformal0(SEXP);
+static SEXP	xxfirstformal1(SEXP, SEXP);
+static SEXP	xxaddformal0(SEXP, SEXP);
+static SEXP	xxaddformal1(SEXP, SEXP, SEXP);
+static SEXP	xxexprlist0();
+static SEXP	xxexprlist1(SEXP);
+static SEXP	xxexprlist2(SEXP, SEXP);
+static SEXP	xxsub0(void);
+static SEXP	xxsub1(SEXP);
+static SEXP	xxsymsub0(SEXP);
+static SEXP	xxsymsub1(SEXP, SEXP);
+static SEXP	xxnullsub0();
+static SEXP	xxnullsub1(SEXP);
+static SEXP	xxsublist1(SEXP);
+static SEXP	xxsublist2(SEXP, SEXP);
+static SEXP	xxcond(SEXP);
+static SEXP	xxifcond(SEXP);
+static SEXP	xxif(SEXP, SEXP, SEXP);
+static SEXP	xxifelse(SEXP, SEXP, SEXP, SEXP);
+static SEXP	xxforcond(SEXP, SEXP);
+static SEXP	xxfor(SEXP, SEXP, SEXP);
+static SEXP	xxwhile(SEXP, SEXP, SEXP);
+static SEXP	xxrepeat(SEXP, SEXP);
+static SEXP	xxnxtbrk(SEXP);
+static SEXP	xxfuncall(SEXP, SEXP);
+static SEXP	xxdefun(SEXP, SEXP, SEXP);
+static SEXP	xxunary(SEXP, SEXP);
+static SEXP	xxbinary(SEXP, SEXP, SEXP);
+static SEXP	xxparen(SEXP, SEXP);
+static SEXP	xxsubscript(SEXP, SEXP, SEXP);
+static SEXP	xxexprlist(SEXP, SEXP);
+static int	xxvalue(SEXP, int);
 
 #define YYSTYPE		SEXP
 
 %}
 
-%token		END_OF_INPUT
-
-%token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION LEX_ERROR
-%token		LBB ERROR
-%token		LEFT_ASSIGN RIGHT_ASSIGN
+%token		END_OF_INPUT ERROR
+%token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION
+%token		LEFT_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR
 
@@ -264,7 +257,10 @@ static SEXP xxfirstformal0(SEXP sym)
 {
 	SEXP ans;
 	UNPROTECT(1);
-	PROTECT(ans = firstarg(R_MissingArg, sym));
+	if(GenerateCode)
+		PROTECT(ans = firstarg(R_MissingArg, sym));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -272,7 +268,10 @@ static SEXP xxfirstformal1(SEXP sym, SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	PROTECT(ans = firstarg(expr, sym));
+	if(GenerateCode)
+		PROTECT(ans = firstarg(expr, sym));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -280,8 +279,12 @@ static SEXP xxaddformal0(SEXP formlist, SEXP sym)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	CheckFormalArgs(formlist ,sym);
-	PROTECT(ans = nextarg(formlist, R_MissingArg, sym));
+	if(GenerateCode) {
+		CheckFormalArgs(formlist ,sym);
+		PROTECT(ans = nextarg(formlist, R_MissingArg, sym));
+	}
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -289,15 +292,22 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(3);
-	CheckFormalArgs(formlist, sym);
-	PROTECT(ans = nextarg(formlist, expr, sym));
+	if(GenerateCode) {
+		CheckFormalArgs(formlist, sym);
+		PROTECT(ans = nextarg(formlist, expr, sym));
+	}
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
 static SEXP xxexprlist0()
 {
 	SEXP ans;
-	PROTECT(ans = newlist());
+	if(GenerateCode)
+		PROTECT(ans = newlist());
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -306,7 +316,10 @@ static SEXP xxexprlist1(SEXP expr)
 	SEXP ans;
 	AddComment(expr);
 	UNPROTECT(1);
-	PROTECT(ans = growlist(newlist(), expr));
+	if(GenerateCode)
+		PROTECT(ans = growlist(newlist(), expr));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -315,14 +328,20 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 	SEXP ans;
 	AddComment(expr);
 	UNPROTECT(2);
-	PROTECT(ans = growlist(exprlist, expr));
+	if(GenerateCode)
+		PROTECT(ans = growlist(exprlist, expr));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
 static SEXP xxsub0(void)
 {
 	SEXP ans;
-	PROTECT(ans = lang2(R_MissingArg,R_NilValue));
+	if(GenerateCode)
+		PROTECT(ans = lang2(R_MissingArg,R_NilValue));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -330,7 +349,10 @@ static SEXP xxsub1(SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(1);
-	PROTECT(ans = tagarg(expr, R_NilValue));
+	if(GenerateCode)
+		PROTECT(ans = tagarg(expr, R_NilValue));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -338,7 +360,10 @@ static SEXP xxsymsub0(SEXP sym)
 {
 	SEXP ans;
 	UNPROTECT(1);
-	PROTECT(ans = tagarg(R_MissingArg, sym));
+	if(GenerateCode)
+		PROTECT(ans = tagarg(R_MissingArg, sym));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -346,7 +371,10 @@ static SEXP xxsymsub1(SEXP sym, SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	PROTECT(ans = tagarg(expr, sym));
+	if(GenerateCode)
+		PROTECT(ans = tagarg(expr, sym));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -354,7 +382,10 @@ static SEXP xxnullsub0()
 {
 	SEXP ans;
 	UNPROTECT(1);
-	PROTECT(ans = tagarg(R_MissingArg, install("NULL")));
+	if(GenerateCode)
+		PROTECT(ans = tagarg(R_MissingArg, install("NULL")));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -362,7 +393,10 @@ static SEXP xxnullsub1(SEXP expr)
 {
 	SEXP ans = install("NULL");
 	UNPROTECT(2);
-	PROTECT(ans = tagarg(expr, ans));
+	if(GenerateCode)
+		PROTECT(ans = tagarg(expr, ans));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -371,7 +405,10 @@ static SEXP xxsublist1(SEXP sub)
 {
 	SEXP ans;
 	UNPROTECT(1);
-	PROTECT(ans = firstarg(CAR(sub),CADR(sub)));
+	if(GenerateCode)
+		PROTECT(ans = firstarg(CAR(sub),CADR(sub)));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -379,7 +416,10 @@ static SEXP xxsublist2(SEXP sublist, SEXP sub)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	PROTECT(ans = nextarg(sublist, CAR(sub), CADR(sub)));
+	if(GenerateCode)
+		PROTECT(ans = nextarg(sublist, CAR(sub), CADR(sub)));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -391,7 +431,6 @@ static SEXP xxcond(SEXP expr)
 
 static SEXP xxifcond(SEXP expr)
 {
-	ifpush();
 	EatLines = 1;
 	return expr;
 }
@@ -400,7 +439,10 @@ static SEXP xxif(SEXP ifsym, SEXP cond, SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	PROTECT(ans = lang3(ifsym, cond, expr));
+	if(GenerateCode)
+		PROTECT(ans = lang3(ifsym, cond, expr));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -408,16 +450,22 @@ static SEXP xxifelse(SEXP ifsym, SEXP cond, SEXP ifexpr, SEXP elseexpr)
 {
 	SEXP ans;
 	UNPROTECT(3);
-	PROTECT(ans = lang4(ifsym, cond, ifexpr, elseexpr));
+	if(GenerateCode)
+		PROTECT(ans = lang4(ifsym, cond, ifexpr, elseexpr));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
 static SEXP xxforcond(SEXP sym, SEXP expr)
 {
 	SEXP ans;
+	EatLines = 1;
 	UNPROTECT(2);
-	PROTECT(ans = LCONS(sym, expr));
-	EatLines=1;
+	if(GenerateCode)
+		PROTECT(ans = LCONS(sym, expr));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -425,7 +473,10 @@ static SEXP xxfor(SEXP forsym, SEXP forcond, SEXP body)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	PROTECT(ans = lang4(forsym, CAR(forcond), CDR(forcond), body));
+	if(GenerateCode)
+		PROTECT(ans = lang4(forsym, CAR(forcond), CDR(forcond), body));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -433,7 +484,10 @@ static SEXP xxwhile(SEXP whilesym, SEXP cond, SEXP body)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	PROTECT(ans = lang3(whilesym, cond, body));
+	if(GenerateCode)
+		PROTECT(ans = lang3(whilesym, cond, body));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -441,27 +495,39 @@ static SEXP xxrepeat(SEXP repeatsym, SEXP body)
 {
 	SEXP ans;
 	UNPROTECT(1);
-	PROTECT(ans = lang2(repeatsym, body));
+	if(GenerateCode)
+		PROTECT(ans = lang2(repeatsym, body));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
 static SEXP xxnxtbrk(SEXP keyword)
 {
-	PROTECT(keyword = lang1(keyword));
+	if(GenerateCode)
+		PROTECT(keyword = lang1(keyword));
+	else
+		PROTECT(keyword = R_NilValue);
 	return keyword;
 }
 
 static SEXP xxfuncall(SEXP expr, SEXP args)
 {
 	SEXP ans;
-	if(isString(expr))
-		expr = install(CHAR(STRING(expr)[0])); 
-	UNPROTECT(2);
-	if(length(CDR(args)) == 1 && CADR(args) == R_MissingArg )
-		ans = lang1(expr);
-	else    
-		ans = LCONS(expr, CDR(args));   
-	PROTECT(ans);
+	if(GenerateCode) {
+		if(isString(expr))
+			expr = install(CHAR(STRING(expr)[0])); 
+		UNPROTECT(2);
+		if(length(CDR(args)) == 1 && CADR(args) == R_MissingArg )
+			ans = lang1(expr);
+		else    
+			ans = LCONS(expr, CDR(args));   
+		PROTECT(ans);
+	}
+	else {
+		UNPROTECT(2);
+		PROTECT(ans = R_NilValue);
+	}
 	return ans;
 }       
 
@@ -470,8 +536,10 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	SEXP ans;
 	AddComment(body);
 	UNPROTECT(2);
-	ans = lang3(fname, CDR(formals), body); 
-	PROTECT(ans);
+	if(GenerateCode)
+		PROTECT(ans = lang3(fname, CDR(formals), body)); 
+	else
+		PROTECT(ans = R_NilValue);
 	PopComment();
 	return ans;
 }
@@ -480,7 +548,10 @@ static SEXP xxunary(SEXP op, SEXP arg)
 {
 	SEXP ans;
 	UNPROTECT(1);
-	PROTECT(ans = lang2(op, arg));
+	if(GenerateCode)
+		PROTECT(ans = lang2(op, arg));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -488,7 +559,10 @@ static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	PROTECT(ans = lang3(n1, n2, n3));
+	if(GenerateCode)
+		PROTECT(ans = lang3(n1, n2, n3));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -496,7 +570,10 @@ static SEXP xxparen(SEXP n1, SEXP n2)
 {
 	SEXP ans;
 	UNPROTECT(1);
-	PROTECT(ans = lang2(n1, n2));
+	if(GenerateCode)
+		PROTECT(ans = lang2(n1, n2));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -504,8 +581,10 @@ static SEXP xxsubscript(SEXP a1, SEXP a2, SEXP a3)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	ans = LCONS(a2, LCONS(a1, CDR(a3)));
-	PROTECT(ans);
+	if(GenerateCode)
+		PROTECT(ans = LCONS(a2, LCONS(a1, CDR(a3))));
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
@@ -513,16 +592,20 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 {
 	SEXP ans;
 	UNPROTECT(1);
-	TYPEOF(a2) = LANGSXP;
-	CAR(a2) = a1;
-	PROTECT(ans = a2);
 	EatLines = 0;
+	if(GenerateCode) {
+		TYPEOF(a2) = LANGSXP;
+		CAR(a2) = a1;
+		PROTECT(ans = a2);
+	}
+	else
+		PROTECT(ans = R_NilValue);
 	return ans;
 }
 
 /*----------------------------------------------------------------------------*/
 
-SEXP tagarg(SEXP arg, SEXP tag)
+static SEXP tagarg(SEXP arg, SEXP tag)
 {
 	switch (TYPEOF(tag)) {
 	case NILSXP:
@@ -546,7 +629,7 @@ SEXP tagarg(SEXP arg, SEXP tag)
 
 	/* Create a stretchy-list dotted pair */
 
-SEXP newlist(void)
+static SEXP newlist(void)
 {
 	SEXP s = CONS(R_NilValue, R_NilValue);
 	CAR(s) = s;
@@ -555,7 +638,7 @@ SEXP newlist(void)
 
 	/* Add a new element at the end of a stretchy list */
 
-SEXP growlist(SEXP l, SEXP s)
+static SEXP growlist(SEXP l, SEXP s)
 {
 	SEXP tmp;
 	PROTECT(l);
@@ -578,19 +661,21 @@ SEXP growlist(SEXP l, SEXP s)
  *  That reference should be removed.
  */
 
-/* static */ void ResetComment(void)
+static void ResetComment(void)
 {
 	R_CommentSxp = CONS(R_NilValue, R_NilValue);
 }
 
 static void PushComment(void)
 {
-	R_CommentSxp = CONS(R_NilValue, R_CommentSxp);
+	if(GenerateCode)
+		R_CommentSxp = CONS(R_NilValue, R_CommentSxp);
 }
 
 static void PopComment(void)
 {
-	R_CommentSxp = CDR(R_CommentSxp);
+	if(GenerateCode)
+		R_CommentSxp = CDR(R_CommentSxp);
 }
 
 int isComment(SEXP l)
@@ -607,31 +692,33 @@ static void AddComment(SEXP l)
 	SEXP tcmt, cmt;
 	int i, ncmt;
 
-	tcmt = CAR(R_CommentSxp);
+	if(GenerateCode) {
+		tcmt = CAR(R_CommentSxp);
 
-		/* Return if there are no comments */
+			/* Return if there are no comments */
 
-	if (tcmt == R_NilValue || l == R_NilValue)
-		return;
+		if (tcmt == R_NilValue || l == R_NilValue)
+			return;
 
-		/* Attach the comments as a comment attribute */
+			/* Attach the comments as a comment attribute */
 
-	ncmt = length(tcmt);
-	cmt = allocVector(STRSXP, ncmt);
-	for(i=0 ; i<ncmt ; i++) {
-		STRING(cmt)[i] = CAR(tcmt);
-		tcmt = CDR(tcmt);
-	}
-	PROTECT(cmt);
-	setAttrib(l, R_CommentSymbol, cmt);
-	UNPROTECT(1);
+		ncmt = length(tcmt);
+		cmt = allocVector(STRSXP, ncmt);
+		for(i=0 ; i<ncmt ; i++) {
+			STRING(cmt)[i] = CAR(tcmt);
+			tcmt = CDR(tcmt);
+		}
+		PROTECT(cmt);
+		setAttrib(l, R_CommentSymbol, cmt);
+		UNPROTECT(1);
 	
-		/* Reset the comment accumulator */
+			/* Reset the comment accumulator */
 
-	CAR(R_CommentSxp) = R_NilValue;
+		CAR(R_CommentSxp) = R_NilValue;
+	}
 }
 
-SEXP firstarg(SEXP s, SEXP tag)
+static SEXP firstarg(SEXP s, SEXP tag)
 {
 	SEXP tmp;
 	PROTECT(s);
@@ -643,7 +730,7 @@ SEXP firstarg(SEXP s, SEXP tag)
 	return tmp;
 }
 
-SEXP nextarg(SEXP l, SEXP s, SEXP tag)
+static SEXP nextarg(SEXP l, SEXP s, SEXP tag)
 {
 	PROTECT(tag);
 	l = growlist(l, s);
@@ -658,6 +745,7 @@ SEXP nextarg(SEXP l, SEXP s, SEXP tag)
 
 	/* This code is here because at this particular instant it */
 	/* seems closely related to cget(), which appears below.  */
+	/* But now it doesn't.  Move this to iosupport.c or trash it */
 
 int R_fgetc(FILE *fp)
 {
@@ -666,200 +754,424 @@ int R_fgetc(FILE *fp)
 }
 
 
-static char *buf;		/* The input stream buffer */
-static char *bufp;		/* Pointer within current buffer */
-static int cnt = 0;		/* Pointer to character count */
-
-static char buf1[MAXELTSIZE];	/* File or text buffer */
-
-static char buf0[MAXELTSIZE];	/* Console buffer */
-static char *bufp0;		/* Pointer within the console buffer */
-static int cnt0 = 0;		/* Characters in the console buffer */
-
-static current_input;
-
-/*
-//	Set the input stream for the parser
-//	    input = 0	initialize
-//	    input = 1	console
-//	    input = 2	file
-//	    input = 3	text
-*/
-
-void R_SetInput(int input)
-{
-	xxgetc = cget;
-	xxungetc = uncget;
-
-	switch (input) {
-
-	case 0:			/* Initialization / Reset */
-		cnt = cnt0 = 0;
-		buf = buf0;
-		bufp = buf0;
-		break;
-
-	case 1:			/* Restore console values */
-		cnt = cnt0;
-		buf = buf0;
-		bufp = bufp0;
-		R_Console = 1;
-		break;
-
-	case 2:			/* Text or file input */
-	case 3:
-		if(R_Console == 1) {
-			cnt0 = cnt;
-			bufp0 = bufp;
-		}
-		cnt = 0;
-		buf = buf1;
-		bufp = buf1;
-		R_Console = 0;
-		break;
-	}
-	current_input = input;
-}
-
-
-/*
-//	Fetch a single character from the current input stream.
-//	The stream has been set by a call to R_SetInput().
-*/
-
-int cget()
-{
-	if (--cnt < 0) {
-		switch(current_input) {
-
-		case 1:
-			if (ReadKBD(buf, MAXELTSIZE) == 0) {
-				ClearerrConsole();
-				return R_EOF;
-			}
-			break;
-
-		case 2:
-			if (fgets(buf, MAXELTSIZE, R_Inputfile) == NULL) {
-				ResetConsole();
-				return R_EOF;
-			}
-			break;
-
-		case 3:
-			if (R_ParseCnt < LENGTH(R_ParseText)) {
-				strcpy(buf, CHAR(STRING(R_ParseText)[(R_ParseCnt)]));
-				strcat(buf, "\n");
-			}
-			else return R_EOF;
-			break;
-
-		}
-		R_ParseCnt++;
-		bufp = buf;
-		cnt = strlen(buf);
-		cnt--;
-	}
-	return *bufp++;
-}
-
-
-/*
-//	Push n characters back onto the input stream.
-//	This is only called when the characters are
-//	currently in the input buffer so pushing back
-//	beyond the start of the buffer is impossible.
-*/
-
-void uncget()
-{
-	cnt += 1;
-	bufp -= 1;
-}
-
 /*----------------------------------------------------------------------------*/
-
-/* TODO:
-   The function "parse" in source.c needs to be moved here.
-   It should work by calling these functions.
-   With that change, "newlist" and "growlist" can become
-   static local functions */
 
 /*
  *  Parsing Entry Points:
  *
- *  The Following extry points provide language parsing facilities.
+ *  The Following entry points provide language parsing facilities.
  *  Note that there are separate entry points for parsing IOBuffers
  *  (i.e. interactve use), files and R character strings.
- *
- *	SEXP R_ParseFile(FILE *fp, int gencode, int *status)
- *
- *	SEXP R_ParseVector(SEXP *text, int gencode, int *status)
- *
- *	SEXP R_ParseBuffer(IOBuffer *buffer, int gencode, int *status)
- *	
+
  *  The entry points provide the same functionality, they just
  *  set things up in slightly different ways.
  *
- *	status = 0 - there was no statement to parse
- *		 1 - complete statement
- *		 2 - incomplete statement
- *		 3 - syntax error
+ *  The following routines parse a single expression:
+ *
+ *	SEXP R_Parse1File(FILE *fp, int gencode, int *status)
+ *
+ *	SEXP R_Parse1Vector(TextBuffer *text, int gencode, int *status)
+ *
+ *	SEXP R_Parse1Buffer(IOBuffer *buffer, int gencode, int *status)
+ *	
+ *  The success of the parse is indicated as folllows:
+ *
+ *	status = PARSE_NULL       - there was no statement to parse
+ *		 PARSE_OK	 - complete statement
+ *		 PARSE_INCOMPLETE - incomplete statement
+ *		 PARSE_ERROR      - syntax error
+ *		 PARSE_EOF	- end of file
+ *
+ *  The following routines parse several expressions and return
+ *  their values in a single expression vector.
+ *
+ *	SEXP R_ParseFile(FILE *fp, int n, int *status)
+ *
+ *	SEXP R_ParseVector(TextBuffer *text, int n, int *status)
+ *
+ *	SEXP R_ParseBuffer(IOBuffer *buffer, int n, int *status)
+ *
+ *  Here, status is 1 for a successful parse and 0 if parsing
+ *  failed for some reason.
  */
 
-SEXP R_ParseFile(FILE *fp, int gencode, int *status)
-{
-	GenerateCode = gencode;
-	EndOfFile = 0;
-	R_ParseError = 0;
-	ResetComment();
+static int	SavedToken;
+static SEXP	SavedLval;
+static char	contextstack[50], *contextp;
 
-	xxgetc = cget;
-	xxungetc = uncget;
+static SEXP ParseInit()
+{
+	contextp = contextstack;
+	*contextp = ' ';
+	SavedToken = 0;
+	SavedLval = R_NilValue;
+	EatLines = 0;
+	EndOfFile = 0;
+	ResetComment();
+}
+
+static int file_getc(void)
+{
+	int c = R_fgetc(R_Inputfile);
+	if(c == EOF) {
+		EndOfFile = 1;
+		return R_EOF;
+	}
+	if(c == '\n') R_ParseError += 1;
+	return c;
+}
+
+static int file_ungetc(int c)
+{
+	if(c == '\n') R_ParseError -= 1;
+	return ungetc(c, R_Inputfile);
+}
+
+SEXP R_Parse1File(FILE *fp, int gencode, int *status)
+{
+	ParseInit();
+	GenerateCode = gencode;
+	R_Inputfile = fp;
+	xxgetc = file_getc;
+	xxungetc = file_ungetc;
 
 	switch(yyparse()) {
-	    case 0:		/* End of file */
-		*status = 2;
+	    case 0:			/* End of file */
+		*status = PARSE_EOF;
 		break;
-	    case 1:		/* Syntax error / incomplete */
-		if(EndOfFile) *status = 2;
-		else *status = 3;
+	    case 1:			/* Syntax error / incomplete */
+		*status = PARSE_ERROR;
+		if(EndOfFile) *status = PARSE_INCOMPLETE;
 		break;
-	    case 2:		/* Empty Line */
-		*status = 0;
+	    case 2:			/* Empty Line */
+		*status = PARSE_NULL;
 		break;
-	    case 3:		/* Valid expression '\n' terminated */
-	    case 4:		/* Valid expression ';' terminated */
-		*status = 1;
+	    case 3:			/* Valid expr '\n' terminated */
+	    case 4:			/* Valid expr ';' terminated */
+		*status = PARSE_OK;
 		break;
 	}
 	return R_CurrentExpr;
 }
 
-SEXP R_ParseVector(SEXP *text, int gencode, int *status)
+static IoBuffer *iob;
+
+static int buffer_getc()
 {
-	GenerateCode = gencode;
-	EndOfFile = 0;
-	R_ParseError = 0;
-	ResetComment();
-	xxgetc = cget;
-	xxungetc = uncget;
-	return R_NilValue;
+	int c = R_IoBufferGetc(iob);
+	if(c == EOF) {
+		EndOfFile = 1;
+		return R_EOF;
+	}
+	else return c;
 }
 
-SEXP R_ParseBuffer(void *buffer, int gencode, int *status)
+static int buffer_ungetc(int c)
 {
-	GenerateCode = gencode;
-	EndOfFile = 0;
-	R_ParseError = 0;
-	ResetComment();
-	xxgetc = cget;
-	xxungetc = uncget;
-	return R_NilValue;
+	return R_IoBufferUngetc(c, iob);
 }
 
-/*----------------------------------------------------------------------------*/
-/*
+SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, int *status)
+{
+	ParseInit();
+	GenerateCode = gencode;
+	iob = buffer;
+	xxgetc = buffer_getc;
+	xxungetc = buffer_ungetc;
+
+	switch(yyparse()) {
+	    case 0:			/* End of file */
+		*status = PARSE_EOF;
+		break;
+	    case 1:			/* Syntax error / incomplete */
+		*status = PARSE_ERROR;
+		if(EndOfFile) *status = PARSE_INCOMPLETE;
+		break;
+	    case 2:			/* Empty Line */
+		*status = PARSE_NULL;
+		break;
+	    case 3:			/* Valid expr '\n' terminated */
+	    case 4:			/* Valid expr ';' terminated */
+		*status = PARSE_OK;
+		break;
+	}
+	return R_CurrentExpr;
+}
+
+static TextBuffer *txtb;
+
+static int text_getc()
+{
+	int c = R_TextBufferGetc(txtb);
+	if(c == EOF) {
+		EndOfFile = 1;
+		return R_EOF;
+	}
+	else return c;
+}
+
+static int text_ungetc(int c)
+{
+	return R_TextBufferUngetc(c, txtb);
+}
+
+SEXP R_Parse1Vector(TextBuffer *textb, int gencode, int *status)
+{
+	ParseInit();
+	GenerateCode = gencode;
+	txtb = textb;
+	xxgetc = text_getc;
+	xxungetc = text_ungetc;
+
+	switch(yyparse()) {
+	    case 0:			/* End of file */
+		*status = PARSE_EOF;
+		break;
+	    case 1:			/* Syntax error / incomplete */
+		*status = PARSE_ERROR;
+		if(EndOfFile) *status = PARSE_INCOMPLETE;
+		break;
+	    case 2:			/* Empty Line */
+		*status = PARSE_NULL;
+		break;
+	    case 3:			/* Valid expr '\n' terminated */
+	    case 4:			/* Valid expr ';' terminated */
+		*status = PARSE_OK;
+		break;
+	}
+	return R_CurrentExpr;
+}
+
+SEXP R_ParseFile(FILE *fp, int n, int *status)
+{
+	SEXP rval, t;
+	int i;
+
+	R_ParseError = 1;
+	if(n >= 0) {
+		PROTECT(rval = allocVector(EXPRSXP, n));
+		for(i=0 ; i<n ; i++) {
+		    try_again:
+			t = R_Parse1File(fp, 1, status);
+			switch(*status) {
+			    case PARSE_NULL:
+				goto try_again;
+				break;
+			    case PARSE_OK:
+				VECTOR(rval)[i] = t;
+				break;
+			    case PARSE_INCOMPLETE:
+			    case PARSE_ERROR:
+			    case PARSE_EOF:
+				rval = R_NilValue;
+				break;
+			}
+		}
+		UNPROTECT(1);
+		return rval;
+	}
+	else {
+		PROTECT(t = newlist());
+		for(;;) {
+			rval = R_Parse1File(fp, 1, status);
+			switch(*status) {
+			case PARSE_NULL:
+				break;
+			case PARSE_OK:
+				t = growlist(t, rval);
+				break;
+			case PARSE_INCOMPLETE:
+			case PARSE_ERROR:
+				UNPROTECT(1);
+				return R_NilValue;
+				break;
+			case PARSE_EOF:
+				t = CDR(t);
+				rval = allocVector(EXPRSXP, length(t));
+				for(n=0 ; n<LENGTH(rval) ; n++) {
+					VECTOR(rval)[n] = CAR(t);
+					t = CDR(t);
+				}
+				UNPROTECT(1);
+				*status = PARSE_OK;
+				return rval;
+				break;
+			}
+		}
+	}
+}
+
+SEXP R_ParseVector(SEXP text, int n, int *status)
+{
+	SEXP rval, t;
+	TextBuffer textb;
+	int i;
+
+	R_TextBufferInit(&textb, text);
+	if(n >= 0) {
+		PROTECT(rval = allocVector(EXPRSXP, n));
+		for(i=0 ; i<n ; i++) {
+		    try_again:
+			t = R_Parse1Vector(&textb, 1, status);
+			switch(*status) {
+			    case PARSE_NULL:
+				goto try_again;
+				break;
+			    case PARSE_OK:
+				VECTOR(rval)[i] = t;
+				break;
+			    case PARSE_INCOMPLETE:
+			    case PARSE_ERROR:
+			    case PARSE_EOF:
+				rval = R_NilValue;
+				break;
+			}
+		}
+		UNPROTECT(1);
+		R_TextBufferFree(&textb);
+		return rval;
+	}
+	else {
+		PROTECT(t = newlist());
+		for(;;) {
+			rval = R_Parse1Vector(&textb, 1, status);
+			switch(*status) {
+			case PARSE_NULL:
+				break;
+			case PARSE_OK:
+				t = growlist(t, rval);
+				break;
+			case PARSE_INCOMPLETE:
+			case PARSE_ERROR:
+				R_TextBufferFree(&textb);
+				UNPROTECT(1);
+				return R_NilValue;
+				break;
+			case PARSE_EOF:
+				R_TextBufferFree(&textb);
+				t = CDR(t);
+				rval = allocVector(EXPRSXP, length(t));
+				for(n=0 ; n<LENGTH(rval) ; n++) {
+					VECTOR(rval)[n] = CAR(t);
+					t = CDR(t);
+				}
+				UNPROTECT(1);
+				*status = PARSE_OK;
+				return rval;
+				break;
+			}
+		}
+	}
+}
+
+static int prompt_type;
+
+static char *Prompt(SEXP prompt, int type)
+{
+	if(type == 1) {
+		if(length(prompt) <= 0) {
+			return (char*)CHAR(STRING(GetOption(install("prompt"),
+				R_NilValue))[0]);
+		}
+		else
+			return CHAR(STRING(prompt)[0]);
+	}
+	else {
+		return (char*)CHAR(STRING(GetOption(install("continue"),
+			R_NilValue))[0]);
+	}
+}
+
+SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
+{
+	SEXP rval, t;
+	char *bufp, buf[1024];
+	int c, i, prompt_type = 1;
+
+	R_IoBufferWriteReset(buffer);
+	buf[0] = '\0';
+	bufp = buf;
+	if(n >= 0) {
+		PROTECT(rval = allocVector(EXPRSXP, n));
+		for(i=0 ; i<n ; i++) {
+		    try_again:
+			if(!*bufp) {
+				if(R_ReadConsole(Prompt(prompt, prompt_type),
+					buf, 1024, 1) == 0) return;
+				bufp = buf;
+			}
+			while(c = *bufp++) {
+				R_IoBufferPutc(c, buffer);
+				if(c == ';' || c == '\n') {
+					break;
+				}
+			}
+			t = R_Parse1Buffer(buffer, 1, status);
+			switch(*status) {
+			    case PARSE_NULL:
+				goto try_again;
+				break;
+			    case PARSE_OK:
+				VECTOR(rval)[i] = t;
+				break;
+			    case PARSE_INCOMPLETE:
+			    case PARSE_ERROR:
+			    case PARSE_EOF:
+				rval = R_NilValue;
+				break;
+			}
+		}
+		UNPROTECT(1);
+		R_IoBufferWriteReset(buffer);
+		return rval;
+	}
+	else {
+		PROTECT(t = newlist());
+		for(;;) {
+			if(!*bufp) {
+				if(R_ReadConsole(Prompt(prompt, prompt_type),
+					buf, 1024, 1) == 0) return;
+				bufp = buf;
+			}
+			while(c = *bufp++) {
+				R_IoBufferPutc(c, buffer);
+				if(c == ';' || c == '\n') {
+					break;
+				}
+			}
+			rval = R_Parse1Buffer(buffer, 1, status);
+			switch(*status) {
+			case PARSE_NULL:
+				break;
+			case PARSE_OK:
+				t = growlist(t, rval);
+				break;
+			case PARSE_INCOMPLETE:
+			case PARSE_ERROR:
+				R_IoBufferWriteReset(buffer);
+				UNPROTECT(1);
+				return R_NilValue;
+				break;
+			case PARSE_EOF:
+				R_IoBufferWriteReset(buffer);
+				t = CDR(t);
+				rval = allocVector(EXPRSXP, length(t));
+				for(n=0 ; n<LENGTH(rval) ; n++) {
+					VECTOR(rval)[n] = CAR(t);
+					t = CDR(t);
+				}
+				UNPROTECT(1);
+				*status = PARSE_OK;
+				return rval;
+				break;
+			}
+		}
+	}
+}
+
+
+/*----------------------------------------------------------------------------
+ *
  *  Lexical Analyzer:
  *
  *  Basic lexical analysis is performed by the following
@@ -874,53 +1186,49 @@ SEXP R_ParseBuffer(void *buffer, int gencode, int *status)
  *  The fact that if statements need to parse differently
  *  depending on whether the statement is being interpreted or
  *  part of the body of a function causes the need for ifpop
- *  and ifpush. When an if statement is encountered an 'i' is
+ *  and ifpush.  When an if statement is encountered an 'i' is
  *  pushed on a stack (provided there are parentheses active).
  *  At later points this 'i' needs to be popped off of the if
  *  stack.
- */
-
-static int reset = 1;
-#ifndef DEBUG_LEX
-static
-#endif
-char *parenp, parenstack[50];
+ *
+ *----------------------------------------------------------------------------*/
 
 static void ifpush(void)
 {
-	if (*parenp=='{' || *parenp=='[' || *parenp=='(' || *parenp == 'i')
-		*++parenp = 'i';
+	if ( *contextp==LBRACE || *contextp=='['
+	  || *contextp=='(' || *contextp == 'i')
+		*++contextp = 'i';
 }
 
 static void ifpop(void)
 {
-	if (*parenp=='i')
-		parenp--;
+	if (*contextp=='i')
+		*contextp-- = 0;
 }
 
 static int typeofnext(void)
 {
 	int k, c;
 
-	c = cget();
+	c = xxgetc();
 	if (isdigit(c))
 		k = 1;
 	else if (isalpha(c) || c == '.')
 		k = 2;
 	else
 		k = 3;
-	uncget();
+	xxungetc(c);
 	return k;
 }
 
 static int nextchar(int expect)
 {
-	int c = cget();
+	int c = xxgetc();
 
 	if (c == expect)
 		return 1;
 	else
-		uncget();
+		xxungetc(c);
 	return 0;
 }
 
@@ -950,7 +1258,6 @@ keywords[] = {
 	{ 0,		0		}
 };
 
-
 	/* KeywordLookup has side effects, it sets yylval */
 
 static int KeywordLookup(char *s)
@@ -962,7 +1269,6 @@ static int KeywordLookup(char *s)
 			switch (keywords[i].token) {
 			case NULL_CONST:
 				PROTECT(yylval = R_NilValue);
-				EatLines = 0;
 				break;
 			case NUM_CONST:
 				switch(i) {
@@ -978,31 +1284,21 @@ static int KeywordLookup(char *s)
 				case 4:
 					PROTECT(yylval = R_GlobalEnv);
 				}
-				EatLines = 0;
 				break;
 			case FUNCTION:
 			case WHILE:
 			case REPEAT:
 			case FOR:
 			case IF:
-				EatLines = 1;
+			case NEXT:
+			case BREAK:
 				yylval = install(s);
 				break;
 			case IN:
-				EatLines = 1;
-				break;
 			case ELSE:
-				ifpop();
-				EatLines = 1;
-				break;
-			case NEXT:
-			case BREAK:
-				EatLines = 0;
-				yylval = install(s);
 				break;
 			case SYMBOL:
 				PROTECT(yylval = install(s));
-				EatLines = 0;
 				break;
 			}
 			return keywords[i].token;
@@ -1011,11 +1307,6 @@ static int KeywordLookup(char *s)
 	return 0;
 }
 
-static void prompt()
-{
-	if (R_ParseText == R_NilValue && R_Console == 1)
-		yyprompt(CHAR(STRING(GetOption(install("continue"), R_NilValue))[0]));
-}
 
 SEXP mkString(char *s)
 {
@@ -1063,58 +1354,8 @@ SEXP mkFalse(void)
 	return s;
 }
 
-void yyinit(void)
-{
-	newline = 0;
-	reset = 1;
-}
-
-int yywrap()
-{
-	return feof(R_Inputfile);
-}
-
-#ifdef HAVE_LIBREADLINE
-extern char R_prompt_buf[512];
-#endif
-
-
-void yyprompt(char *format, ...)
-{
-	va_list(ap);
-	va_start(ap, format);
-#ifdef HAVE_LIBREADLINE
-	vsprintf(R_prompt_buf, format, ap);
-#else
-	REvprintf(format, ap);
-#endif
-	va_end(ap);
-	fflush(stdout);
-	RBusy(0);
-}
-
 int yyerror(char *s)
 {
-	int i;
-
-	R_CommentSxp = R_NilValue;
-	REprintf("%s", buf);
-	for (i = 1; i < bufp - buf; i++) {
-		REprintf(" ");
-	}
-	REprintf("^\n");
-	if (R_Console == 0 && R_Inputfile != NULL) {
-		fclose(R_Inputfile);
-		ResetConsole();
-	}
-	else {
-		FlushConsole();
-		REprintf("Error: %s\n", s);
-	}
-	newline = 0;
-	reset = 1;
-	cnt = 0;
-	return 0;
 }
 
 static void CheckFormalArgs(SEXP formlist, SEXP new)
@@ -1123,123 +1364,182 @@ static void CheckFormalArgs(SEXP formlist, SEXP new)
 
 	while( formlist != R_NilValue ) {
 		if(TAG(formlist) == new ) {
-			REprintf("%s", buf);
-			for (i = 2; i < bufp - buf; i++) 
-				REprintf(" ");
-			REprintf("^\n");
-			newline = 0;
-			reset = 1;
-			cnt = 0;
 			error("Repeated formal argument.\n");
 		}
 		formlist=CDR(formlist);
 	}
 }
 
-int yylex()
+static char yytext[MAXELTSIZE];
+
+static int SkipSpace(void)
 {
+	int c;
+	while ((c = xxgetc()) == ' ' || c == '\t' || c == '')
+		/* nothing */;
+	return c;
+}
+
+static int SkipComment(void)
+{
+	char *p;
 	SEXP f;
-	int c, quote, kw;
-	char *p, yytext[MAXELTSIZE];
+	int c;
 
-	if (newline) {
-		newline = 0;
-		prompt();
-	}
-
-    again:
-	if (reset) {
-		parenp = parenstack;
-		*parenp = ' ';
-		reset = 0;
-		EatLines = 0;
-		ResetComment();
-	}
-
-	while ((c = xxgetc()) == ' ' || c == '\t' || c == '');
-
-	if (c == '#') {
-		p = yytext;
+	p = yytext;
+	*p++ = c;
+	while ((c = xxgetc()) != '\n' && c != R_EOF)
 		*p++ = c;
-		while ((c = xxgetc()) != '\n' && c != R_EOF)
+	*p = '\0';
+	if(R_CommentSxp != R_NilValue) {
+		f = mkChar(yytext);
+		f = CONS(f, R_NilValue);
+		CAR(R_CommentSxp) = listAppend(CAR(R_CommentSxp), f);
+	}
+	return c;
+}
+
+static int NumericValue(int c)
+{
+	int seendot = (c == '.');
+	int seenexp = 0;
+	char *p = yytext;
+	*p++ = c;
+	while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E') {
+		if (c == 'E' || c == 'e') {
+			if (seenexp)
+				break;
+			seenexp = 1;
+			seendot = 1;
 			*p++ = c;
-		*p = '\0';
-		if(R_CommentSxp != R_NilValue) {
-			f = mkChar(yytext);
-			f = CONS(f, R_NilValue);
-			CAR(R_CommentSxp) = listAppend(CAR(R_CommentSxp), f);
+			c = xxgetc();
+			if (!isdigit(c) && c != '+' && c != '-')
+				break;
 		}
-	}
-
-
-	if (c == R_EOF) return END_OF_INPUT;
-
-		/* This code deals with context sensitivity to      */
-		/* newlines.  The main problem is finding out       */
-		/* whether a newline is followed by an ELSE clause. */
-		/* This is only of importance if we are inside one  */
-		/* of "(", "[", or "{".			     */
-
-	if (c == '\n') {
-		if (EatLines || *parenp == '[' || *parenp == '(') {
-			prompt();
-			goto again;
+		if (c == '.') {
+			if (seendot)
+				break;
+			seendot = 1;
 		}
-		if (*parenp == 'i') {
-			prompt();
-			while ((c = xxgetc()) == ' ' || c == '\t');
-			if (c == R_EOF) {
-				error("unexpected end-of-file in parse\n");
-			}
-			if (c == '#') {
-				p = yytext;
-				*p++ = c;
-				while ((c = xxgetc()) != '\n' && c != R_EOF)
-					*p++ = c;
-				*p = '\0';
-				if(R_CommentSxp != R_NilValue) {
-					f = mkChar(yytext);
-					f = CONS(f, R_NilValue);
-					CAR(R_CommentSxp) = listAppend(CAR(R_CommentSxp), f);
-				}
-			}
-			if (c == '\n') {
-				prompt();
-				xxungetc();
-				goto again;
-			}
-			if (c == '}' || c == ')' || c == ']' ) {
-				while (*parenp == 'i')
-					ifpop();
-				parenp--;
-				return c;
-			}
-			if (c == ',') {
-				ifpop();
-				return c;
-			}
-			xxungetc();
-			if (!strncmp(bufp, "else", 4) && !isalnum(bufp[4]) && bufp[4] != '.') {
-				EatLines = 1;
-				bufp += 4;
-				cnt -= 4;
-				ifpop();
-				return ELSE;
-			}
-			ifpop();
-	 	   }
-		else newline = 1;
-		return '\n';
+		*p++ = c;
 	}
+	*p = '\0';
+	if(c == 'i') {
+		yylval = mkComplex(yytext);
+	}
+	else {
+		xxungetc(c);
+		yylval = mkFloat(yytext);
+	}
+	PROTECT(yylval);
+	return NUM_CONST;
+}
 
-		/* These are needed because both ";" and "," can */
-		/* end an "if" clause without a newline.  Ifpop  */
-		/* only does its thing in the right context.     */
+static int StringValue(int c)
+{
+	int quote = c;
+	char *p = yytext;
+	while ((c = xxgetc()) != R_EOF && c != quote) {
+		if (c == '\n') {
+			xxungetc(c);
+			return ERROR;
+		}
+		if (c == '\\') {
+			c = xxgetc();
+			switch (c) {
+			case 'a':
+				c = '\a';
+				break;
+			case 'b':
+				c = '\b';
+				break;
+			case 'f':
+				c = '\f';
+				break;
+			case 'n':
+				c = '\n';
+				break;
+			case 'r':
+				c = '\r';
+				break;
+			case 't':
+				c = '\t';
+				break;
+			case 'v':
+				c = '\v';
+				break;
+			case '\\':
+				c = '\\';
+				break;
+			}
+		}
+		*p++ = c;
+	}
+	*p = '\0';
+	PROTECT(yylval = mkString(yytext));
+	return STR_CONST;
+}
 
-	if (c == ';' || c == ',') {
-		ifpop();
+static int SpecialValue(int c)
+{
+	char *p = yytext;
+	*p++ = c;
+	while ((c = xxgetc()) != R_EOF && c != '%') {
+		if (c == '\n') {
+			xxungetc(c);
+			return ERROR;
+		}
+		*p++ = c;
+	}
+	if (c == '%')
+		*p++ = c;
+	*p++ = '\0';
+	yylval = install(yytext);
+	return SPECIAL;
+}
+
+static int SymbolValue(int c)
+{
+	int kw;
+	char *p = yytext;
+	do {
+		*p++ = c;
+	}
+	while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.'));
+	xxungetc(c);
+	*p = '\0';
+	if ((kw = KeywordLookup(yytext))) {
+		if(kw == FUNCTION) PushComment();
+		return kw;
+	}
+	PROTECT(yylval = install(yytext));
+	return SYMBOL;
+}
+
+	/* Split the input stream into tokens. */
+	/* This is the lowest of the parsing levels. */
+
+
+static int token()
+{
+	int c, kw;
+	char *p;
+
+	if(SavedToken) {
+		c = SavedToken;
+		yylval = SavedLval;
+		SavedLval = R_NilValue;
+		SavedToken = 0;
 		return c;
 	}
+		
+    again:
+
+	c = SkipSpace();
+
+	if (c == '#') c = SkipComment();
+
+	if (c == R_EOF) return END_OF_INPUT;
 
 		/* Either digits or symbols can start with a "." */
 		/* so we need to decide which it is and jump to  */
@@ -1252,141 +1552,33 @@ int yylex()
 
 		/* literal numbers */
 
-	if (c == '.' || isdigit(c)) {
-		int seendot = (c == '.');
-		int seenexp = 0;
-		p = yytext;
-		*p++ = c;
-		while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E') {
-			if (c == 'E' || c == 'e') {
-				if (seenexp)
-					break;
-				seenexp = 1;
-				seendot = 1;
-				*p++ = c;
-				c = xxgetc();
-				if (!isdigit(c) && c != '+' && c != '-')
-					break;
-			}
-			if (c == '.') {
-				if (seendot)
-					break;
-				seendot = 1;
-			}
-			*p++ = c;
-		}
-		*p = '\0';
-		if(c == 'i') {
-			PROTECT(yylval = mkComplex(yytext));
-		}
-		else {
-			PROTECT(yylval = mkFloat(yytext));
-			xxungetc();
-		}
-		EatLines = 0;
-		return NUM_CONST;
-	}
+	if (c == '.' || isdigit(c)) return NumericValue(c);
 
-	/* literal strings */
+		/* literal strings */
 
-	if (c == '\"' || c == '\'') {
-		quote = c;
-		p = yytext;
-		while ((c = xxgetc()) != R_EOF && c != quote) {
-			if (c == '\n') {
-				xxungetc();
-				return ERROR;
-			}
-			if (c == '\\') {
-				c = xxgetc();
-				switch (c) {
-				case 'a':
-					c = '\a';
-					break;
-				case 'b':
-					c = '\b';
-					break;
-				case 'f':
-					c = '\f';
-					break;
-				case 'n':
-					c = '\n';
-					break;
-				case 'r':
-					c = '\r';
-					break;
-				case 't':
-					c = '\t';
-					break;
-				case 'v':
-					c = '\v';
-					break;
-				case '\\':
-					c = '\\';
-					break;
-				}
-			}
-			*p++ = c;
-		}
-		*p = '\0';
-		PROTECT(yylval = mkString(yytext));
-		EatLines = 0;
-		return STR_CONST;
-	}
+	if (c == '\"' || c == '\'') return StringValue(c);
 
-	/* special functions */
-	if (c == '%') {
-		p = yytext;
-		*p++ = c;
-		while ((c = xxgetc()) != R_EOF && c != '%') {
-			if (c == '\n') {
-				xxungetc();
-				return ERROR;
-			}
-			*p++ = c;
-		}
-		if (c == '%')
-			*p++ = c;
-		*p++ = '\0';
-		yylval = install(yytext);
-		EatLines=1;
-		return SPECIAL;
-	}
+		/* special functions */
 
+	if (c == '%') return SpecialValue(c);
 
-	/* functions, constants and variables */
+		/* functions, constants and variables */
 
-	/* gag, barf, but the punters want it */
+    symbol:
+
+	if (c == '.' || isalpha(c)) return SymbolValue(c);
+
+		/* gag, barf, but the punters want it */
+
 	if (c == '_') {
-		EatLines = 1;
 		yylval = install("<-");
 		return LEFT_ASSIGN;
 	}
 
-    symbol:
-	if (c == '.' || isalpha(c)) {
-		p = yytext;
-		do {
-			*p++ = c;
-		} while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.'));
-		xxungetc();
-		*p = '\0';
-
-		if ((kw = KeywordLookup(yytext))) {
-			if(kw == FUNCTION) PushComment();
-			return kw;
-		}
-
-		PROTECT(yylval = install(yytext));
-		EatLines = 0;
-		return SYMBOL;
-	}
-
-	/* compound tokens */
+		/* compound tokens */
 
 	switch (c) {
 	case '<':
-		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install("<=");
 			return LE;
@@ -1405,7 +1597,6 @@ int yylex()
 		yylval = install("<");
 		return LT;
 	case '-':
-		EatLines = 1;
 		if (nextchar('>'))
 			if (nextchar('>')) {
 				yylval = install("<<-");
@@ -1418,7 +1609,6 @@ int yylex()
 		yylval = install("-");
 		return '-';
 	case '>':
-		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install(">=");
 			return GE;
@@ -1426,7 +1616,6 @@ int yylex()
 		yylval = install(">");
 		return GT;
 	case '!':
-		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install("!=");
 			return NE;
@@ -1434,14 +1623,12 @@ int yylex()
 		yylval = install("!");
 		return '!';
 	case '=':
-		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install("==");
 			return EQ;
 		}
 		return '=';
 	case ':':
-		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install(":=");
 			return LEFT_ASSIGN;
@@ -1449,7 +1636,6 @@ int yylex()
 		yylval = install(":");
 		return ':';
 	case '&':
-		EatLines = 1;
 		if (nextchar('&')) {
 			yylval = install("&&");
 			return AND;
@@ -1457,54 +1643,36 @@ int yylex()
 		yylval = install("&");
 		return AND;
 	case '|':
-		EatLines = 1;
 		if (nextchar('|')) {
 			yylval = install("||");
 			return OR;
 		}
 		yylval = install("|");
 		return OR;
-	case '{':
-		*++parenp = c;
+	case LBRACE:
 		yylval = install("{");
-		PushComment();
 		return c;
-	case '}':
-		ifpop();
-		if(*parenp == '{')
-			PopComment();
-		parenp--;
+	case RBRACE:
 		return c;
 	case '(':
-		*++parenp = c;
 		yylval = install("(");
 		return c;
 	case ')':
-		EatLines = 0;
-		ifpop();
-		parenp--;
 		return c;
 	case '[':
-		*++parenp = c;
 		if (nextchar('[')) {
-			*++parenp = c;
 			yylval = install("[[");
 			return LBB;
 		}
 		yylval = install("[");
 		return c;
 	case ']':
-		ifpop();
-		EatLines = 0;
-		parenp--;
 		return c;
 	case '?':
-		EatLines = 1;
 		strcpy(yytext, "help");
 		yylval = install(yytext);
 		return c;
 	case '*':
-		EatLines=1;
 		if (nextchar('*'))
 			c='^';
 		yytext[0] = c;
@@ -1516,7 +1684,6 @@ int yylex()
 	case '^':
 	case '~':
 	case '$':
-		EatLines = 1;
 		yytext[0] = c;
 		yytext[1] = '\0';
 		yylval = install(yytext);
@@ -1524,4 +1691,199 @@ int yylex()
 	default:
 		return c;
 	}
+}
+
+int yylex()
+{
+	int tok;
+
+again:
+
+	tok = token();
+
+		/* Newlines must be handled in a context */
+		/* sensitive way.  The following block of */
+		/* deals directly with newlines in the */
+		/* body of "if" statements. */
+
+	if (tok == '\n') {
+
+		if (EatLines || *contextp == '[' || *contextp == '(')
+			goto again;
+
+		/* The essence of this is that in the body of */
+		/* an "if", any newline must be checked to */
+		/* see if it is followed by an "else". */
+		/* such newlines are discarded. */
+
+		if (*contextp == 'i') {
+
+			/* Find the next non-newline token */
+
+			while(tok == '\n')
+				tok = token();
+
+			/* If we enounter "}", ")" or "]" then */
+			/* we know that all immediately preceding */
+			/* "if" bodies have been terminated. */
+			/* The corresponding "i" values are */
+			/* popped off the context stack. */
+
+			if (tok == RBRACE || tok == ')' || tok == ']' ) {
+				while (*contextp == 'i')
+					ifpop();
+				*contextp-- = 0;
+				return tok;
+			}
+
+			/* When a "," is encountered, it terminates */
+			/* just the immediately preceding "if" body */
+			/* so we pop just a single "i" of the */
+			/* context stack. */
+
+			if (tok == ',') {
+				ifpop();
+				return tok;
+			}
+
+			/* Tricky! If we find an "else" we must */
+			/* ignore the preceding newline.  Any other */
+			/* token means that we must return the newline */
+			/* to terminate the "if" and "push back" that */
+			/* token so that we will obtain it on the next */
+			/* call to token.  In either case sensitivity */
+			/* is lost, so we pop the "i" from the context */
+			/* stack. */
+
+			if(tok == ELSE) {
+				EatLines = 1;
+				ifpop();
+				return ELSE;
+			}
+			else {
+				ifpop();
+				SavedToken = tok;
+				SavedLval = yylval;
+				return '\n';
+			}
+		}
+		else return '\n';
+	}
+
+		/* Additional context sensitivities */
+
+	switch(tok) {
+
+		/* Any newlines immediately following the */
+		/* the following tokens are discarded. The */
+		/* expressions are clearly incomplete. */
+
+	case '+':
+	case '-':
+	case '*':
+	case '/':
+	case '^':
+	case LT:
+	case LE:
+	case GE:
+	case GT:
+	case EQ:
+	case OR:
+	case AND:
+	case SPECIAL:
+	case FUNCTION:
+	case WHILE:
+	case REPEAT:
+	case FOR:
+	case IN:
+	case '?':
+	case '!':
+	case '=':
+	case ':':
+	case '~':
+	case '$':
+	case LEFT_ASSIGN:
+	case RIGHT_ASSIGN:
+		EatLines = 1;
+		break;
+
+		/* Push any "if" statements found and */
+		/* discard any immediately following newlines. */
+
+	case IF:
+		ifpush();
+		EatLines = 1;
+		break;
+
+		/* Terminate any immediately preceding "if" */
+		/* statements and discard any immediately */
+		/* following newlines. */
+
+	case ELSE:
+		ifpop();
+		EatLines = 1;
+		break;
+	
+		/* These tokens terminate any immediately */
+		/* preceding "if" statements. */
+
+	case ';':
+	case ',':
+		ifpop();
+		break;
+
+		/* Any newlines following these tokens can */
+		/* indicate the end of an expression. */
+
+	case SYMBOL:
+	case STR_CONST:
+	case NUM_CONST:
+	case NULL_CONST:
+	case NEXT:
+	case BREAK:
+		EatLines = 0;
+		break;
+
+		/* Handle brackets, braces and parentheses */
+
+	case LBB:
+		*++contextp = '[';
+		*++contextp = '[';
+		break;
+		
+	case '[':
+		*++contextp = tok;
+		break;
+
+	case LBRACE:
+		*++contextp = tok;
+		EatLines = 1;
+		PushComment();
+		break;
+
+	case '(':
+		*++contextp = tok;
+		break;
+
+	case ']':
+		ifpop();
+		*contextp-- = 0;
+		EatLines = 0;
+		break;
+
+	case RBRACE:
+		ifpop();
+		if(*contextp == LBRACE)
+			PopComment();
+		*contextp-- = 0;
+		break;
+
+	case ')':
+		ifpop();
+		*contextp-- = 0;
+		EatLines = 0;
+		break;
+
+	}
+	return tok;
 }

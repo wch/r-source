@@ -361,7 +361,7 @@ void Rprintf(char *format, ...)
 		char buf[BUFSIZE]; int len;
 		vsprintf(buf, format, ap);
 		len = strlen(buf);
-		RWriteConsole(buf, len);
+		R_WriteConsole(buf, len);
 	}
 	va_end(ap);
 }
@@ -377,7 +377,7 @@ void REprintf(char *format, ...)
 		char buf[BUFSIZE]; int len;
 		vsprintf(buf, format, ap);
 		len = strlen(buf);
-		RWriteConsole(buf, len);
+		R_WriteConsole(buf, len);
 	}
 	va_end(ap);
 }
@@ -391,7 +391,7 @@ void Rvprintf(const char *format, va_list arg)
 		char buf[BUFSIZE]; int slen;
 		vsprintf(buf, format, arg);
 		slen = strlen(buf);
-		RWriteConsole(buf, slen);
+		R_WriteConsole(buf, slen);
 	}
 }
 
@@ -404,7 +404,7 @@ void REvprintf(const char *format, va_list arg)
 		char buf[BUFSIZE]; int slen;
 		vsprintf(buf, format, arg);
 		slen = strlen(buf);
-		RWriteConsole(buf, slen);
+		R_WriteConsole(buf, slen);
 	}
 }
 
