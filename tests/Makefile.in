@@ -29,7 +29,7 @@ TESTsrc-strict-1 = \
 	is-things.R \
 	lm-tests.R \
 	primitive-funs.R \
-	mode-methods.R \
+	method-dispatch.R \
 	simple-true.R
 TESTsrc-strict-auto = \
 	isas-tests.R

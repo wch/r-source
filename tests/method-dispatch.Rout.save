@@ -1,6 +1,6 @@
 
-R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Under development (unstable) (October 22, 1999)
+R : Copyright 2000, The R Development Core Team
+Version 1.1.0 Under development (unstable) (March 13, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13,7 +13,55 @@ Type	"demo()" for some demos, "help()" for on-line help, or
     	"help.start()" for a HTML browser interface to help.
 Type	"q()" to quit R.
 
-> ### Using Method Dispatch on "mode" etc :
+> #### Testing  UseMethod() and even more NextMethod()
+> ####
+> 
+> ###-- Group methods
+> 
+> ### Arithmetic "Ops" :
+> ">.bar" <- function(...) print(">.bar")
+> ">.foo" <- function(...) print(">.foo")
+> Ops.foo <- function(...) {
++     print("Ops.foo")
++     NextMethod()
++ }
+> Ops.bar <- function(...)
++     print("Ops.bar")
+> 
+> x <- 2:4 ; class(x) <- c("foo", "bar")
+> y <- 4:2 ; class(y) <- c("bar", "foo")
+> 
+> ## The next 4 give a warning each about incompatible methods:
+> x > y
+[1] FALSE FALSE  TRUE
+Warning message: 
+Incompatible methods (">.foo", ">.bar") for ">" 
+> y < x # should be the same (warning msg not, however)
+[1] FALSE FALSE  TRUE
+Warning message: 
+Incompatible methods ("Ops.bar", "Ops.foo") for "<" 
+> x == y
+[1] FALSE  TRUE FALSE
+Warning message: 
+Incompatible methods ("Ops.foo", "Ops.bar") for "==" 
+> x <= y
+[1]  TRUE  TRUE FALSE
+Warning message: 
+Incompatible methods ("Ops.foo", "Ops.bar") for "<=" 
+> 
+> x > 3 ##[1] ">.foo"
+[1] ">.foo"
+> 
+> rm(list=">.foo")
+> x > 3 #-> "Ops.foo" and ">.bar"
+[1] "Ops.foo"
+[1] ">.bar"
+> 
+> 
+> 
+> ### ------------  was ./mode-methods.R till R ver. 1.0.x ----------------
+> 
+> ###-- Using Method Dispatch on "mode" etc :
 > 
 > abc <- function(x, ...) {
 +     if (is.null(class(x))) class(x) <- data.class(x)
