@@ -55,7 +55,6 @@ A list containing the following components:
 
     1: relative gradient is close to zero, current iterate is
     probably solution.
-
     
     2: successive iterates within tolerance, current iterate
     is probably solution.
@@ -69,7 +68,7 @@ A list containing the following components:
     5: maximum step size \code{stepmax} exceeded five consecutive
       times.  Either the function is unbounded below,
       becomes asymptotic to a finite value from above in
-      some direction, of \code{stepmax} is too small.
+      some direction or \code{stepmax} is too small.
   }
 }
 \item{iterations}{the number of iterations performed.}
