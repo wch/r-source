@@ -344,6 +344,12 @@ BUG FIXES
 
     o   max.col() only found NAs in the first column (typo).
 
+    o   Added a workaround for recent versions of glibc (e.g. RedHat 8.0)
+        with inconsistent mktime/localtime functions which caused
+        conversion to/from POSIXct times prior to 1970-01-01 to be
+        inconsistent.  On such platforms this is a run-time test to
+        allow e.g. R compiled on RH7.2 to run on RH8.0.
+
 
 
 		CHANGES IN R VERSION 1.6.1

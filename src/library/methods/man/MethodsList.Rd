@@ -127,7 +127,8 @@ loadMethod(method, fname, envir)
     \item{\code{mergeMethods}:}{
       Merges the methods in the second MethodsList object into the
       first, and returns the merged result.  Called from
-      \code{\link{getAllMethods}}.
+      \code{\link{getAllMethods}}.  For a primitive function,
+      \code{genericLabel} is supplied as the name of the generic.
     }
 
     \item{\code{loadMethod}:}{
