@@ -948,43 +948,23 @@ Date: Thu,  8 Jul 2004 01:50:10 +0200 (CEST)
 Subject: Reproducible Rterm crash.
 From: "Richard M. Heiberger" <rmh@temple.edu>
 Date: Fri, 9 Jul 2004 15:27:56 -0400
-* PR# 7073 *
-Subject: i miss you
-From: "Lashawn Annamaria" <ibt8mdlqi@netsol.net>
-Date: Sat, 10 Jul 2004 19:36:21 +0300
-* PR# 7074 *
-Subject: Charge your Mobile Phone Anywhere, Anytime
-From: "Marne Denning" <Barnett_Lubach@achildscry.org>
-Date: Sun, 11 Jul 2004 01:14:23 +0400
 * PR# 7075 *
 Subject: read.table, read.fwf, and na.strings
 From: "Richard M. Heiberger" <rmh@temple.edu>
 Date: Sat, 10 Jul 2004 17:21:01 -0400
-* PR# 7076 *
-Subject: bug in xyplot xlab, etc
-From: "Richard M. Heiberger" <rmh@temple.edu>
-Date: Sat, 10 Jul 2004 17:28:03 -0400
-* PR# 7077 *
-Subject: billboard
-From: Kristen <ddbyafamg@12move.nl>
-Date: Sun, 11 Jul 2004 13:01:42 +0200
-* PR# 7078 *
-Subject: Segfault with options()
-From: Deepayan Sarkar <deepayan@stat.wisc.edu>
-Date: Sun, 11 Jul 2004 22:47:11 -0500
-* PR# 7079 *
-Subject: Non-documentation of options(<list>)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 12 Jul 2004 19:04:37 +0200
-* PR# 7080 *
-Subject: Diaz sex video when only 19! his
-From: "Irma Bacon" <wwxioh@attbi.com>
-Date: Mon, 12 Jul 2004 16:33:52 -0400
-* PR# 7081 *
-Subject: automated response
-From: "wolfram" <wolfram@fischer-zim.ch>
-Date: Mon, 12 Jul 2004 22:41:16 +0200
 * PR# 7082 *
 Subject: names in `getAnywhere' object don't match docs
 From: rpeng@jhsph.edu
 Date: Mon, 12 Jul 2004 23:36:05 +0200 (CEST)
+* PR# 7083 *
+Subject: Re: [Rd] read.table, read.fwf, and na.strings
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Tue, 13 Jul 2004 00:06:24 -0400
+* PR# 7084 *
+Subject: text(x, y, labels) - recycling problems and RFC
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 13 Jul 2004 18:21:57 +0200
+* PR# 7085 *
+Subject: $21446
+From: "Leopoldo Rosado" <l.rosado_xk@4b.es>
+Date: Tue, 13 Jul 2004 15:05:48 -0500
