@@ -1208,11 +1208,11 @@ function(package, dir, lib.loc = NULL)
     }
 
     ## Find the replacement functions in the given package.
-    assignFuns <- c(grep("<-", lsCode, value = TRUE), S3reg)
+    replaceFuns <- c(grep("<-", lsCode, value = TRUE), S3reg)
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
     badReplaceFuns <-
-        assignFuns[sapply(assignFuns, function(f) {
+        replaceFuns[sapply(replaceFuns, function(f) {
             gf <- if(f %in% S3reg)
                 get(f, envir = S3Table)
             else
