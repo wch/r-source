@@ -10,7 +10,7 @@
 reshape(data, varying = NULL, v.names = NULL, timevar = "time",
 	idvar = "id", ids = 1:NROW(data),
 	times = seq(length = length(varying[[1]])),
-	drop = NULL, direction, fix.row.names = TRUE,
+	drop = NULL, direction, new.row.names = TRUE,
 	split = list(regexp="\\.", include=FALSE))
 }
 \arguments{
@@ -33,7 +33,7 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \item{drop}{a vector of names of variables to drop before reshaping}
   \item{direction}{\code{"wide"} to reshape to wide format,
     \code{"long"} to reshape to long format.}
-  \item{fix.row.names}{logical; if \code{TRUE} and \code{direction="wide"},
+  \item{new.row.names}{logical; if \code{TRUE} and \code{direction="wide"},
     create new row names in long format from the values of the id and
     time variables.}
   \item{split}{information for guessing the \code{varying},

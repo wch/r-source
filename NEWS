@@ -33,12 +33,12 @@ NEW FEATURES
 
 NEW FEATURES
 
-    o   Added a few "trivial and obviously missing" functions to tcltk:
-        tkchooseDirectory, tkpopup, tkdialog, tkread 
+    o	Added a few "trivial and obviously missing" functions to tcltk:
+	tkchooseDirectory, tkpopup, tkdialog, tkread
 
-    o   barplot() has a new argument `axis.lty', which if set to 1
+    o	barplot() has a new argument `axis.lty', which if set to 1
 	allows the pre-1.6.0 behaviour of plotting the axis and tick
-	marks for the categorical axis.  (This was apparently not
+	marks for the categorical axis.	 (This was apparently not
 	intentional, but axis() used to ignore lty=0.)
 
 
@@ -53,34 +53,34 @@ BUG FIXES
 
     o	seq.POSIXt(from, to, length.out= . ) could give too long results
 
-    o   summaryRprof() was counting nested calls to the same function
-        twice.
+    o	summaryRprof() was counting nested calls to the same function
+	twice.
 
-    o   Printing of objects of mode "expression" did strange things if
-        there were "%" characters in the deparsed expression (PR#2120).
+    o	Printing of objects of mode "expression" did strange things if
+	there were "%" characters in the deparsed expression (PR#2120).
 
-    o   as.matrix.data.frame converted missings to "NA" not character NA.
+    o	as.matrix.data.frame converted missings to "NA" not character NA.
 	(PR#2130)
 
-    o   spec.pgram() was only interpolating zero freq for one series. (PR#2123)
+    o	spec.pgram() was only interpolating zero freq for one series. (PR#2123)
 
-    o   help(randu) had % unescaped in the example. (PR#2141)
+    o	help(randu) had % unescaped in the example. (PR#2141)
 
-    o   Making html links would fail if packages-head.html was not
+    o	Making html links would fail if packages-head.html was not
 	writeable. (PR#2133)
 
-    o   Sweave.sty was not installed to $R_HOME/share/texmf when
-        builddir != srcdir. On Windows backslashes in latex paths have
-        to be replaced by slashes.
+    o	Sweave.sty was not installed to $R_HOME/share/texmf when
+	builddir != srcdir. On Windows backslashes in latex paths have
+	to be replaced by slashes.
 
-    o   A memory leak in deparsing was introduced when eliminating
-        static variables (thanks to Achim Zeileis for spotting this).
+    o	A memory leak in deparsing was introduced when eliminating
+	static variables (thanks to Achim Zeileis for spotting this).
 	A similar problem in loading workspaces has been corrected.
 
-    o   TclInterface.Rd incorrectly used \synopsis for \usage so that
-        the usage section wasn't output.
+    o	TclInterface.Rd incorrectly used \synopsis for \usage so that
+	the usage section wasn't output.
 
-    o   Readline stack off-by-one error. (PR#2165)
+    o	Readline stack off-by-one error. (PR#2165)
 
     o	R_ExpandFileName had a memory leak in the case libreadline was
 	used under Unix-alikes.
@@ -99,7 +99,14 @@ BUG FIXES
 	incorrectly implied it happened that way on the Windows and
 	MacOS ports.  Neither use Renviron.site, for example.
 
-    
+    o	besselK(x,*) now returns 0 instead of Inf for large x. (PR#2179)
+
+    o   The Tcl console code didn't work with Tcl/TK 8.0, and has been 
+        #ifdef'd out.
+
+    o   format.AsIs was not handling matrices.
+
+
 
 		CHANGES IN R VERSION 1.6.0
 
