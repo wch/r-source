@@ -119,6 +119,8 @@ provided information on the C++ interface) are gratefully acknowledged.
 
 @node Creating R packages, Writing R documentation, Legalese, Top
 @chapter Creating R packages
+@cindex Packages
+@cindex Creating packages
 
 Packages provide a mechanism for loading optional code and attached
 documentation as needed.  The @R{} distribution provides several
@@ -130,7 +132,7 @@ subdirectories @file{R}, @file{data}, @file{exec}, @file{inst},
 @file{man}, and @file{src} (some of which can be missing).  Optionally
 the package can also contain script files @file{configure} and
 @file{cleanup} which are executed before and after installation,
-@xref{Configure / cleanup}.
+@xref{Configure and cleanup}.
 
 The @file{DESCRIPTION} file contains basic information about the package
 in the following format:
@@ -219,6 +221,7 @@ used by any Unix package, and still experimental.
 
 @node  Package bundles, Configure and cleanup, Creating R packages, Creating R packages
 @section Package bundles
+@cindex Package bundles
 
 Sometimes it is convenient to distribute several packages as a
 @emph{bundle}.  (The main current example is @pkg{VR} which contains
@@ -310,6 +313,7 @@ information for a user on a non-Unix platform to configure it manually.
 
 @node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
 @chapter Writing R documentation
+@cindex Documentation, writing
 
 @menu
 * The documentation source tree::  
@@ -335,6 +339,7 @@ pertaining to @R{}.
 
 @node Documentation format, Sectioning, The documentation source tree, Writing R documentation
 @section Documentation format
+@cindex Documentation format
 
 The help files are written in a form and syntax---closely resembling
 @TeX{} and La@TeX{}---which can be processed into a variety of formats,
@@ -533,6 +538,7 @@ the examples), no matter where they appear in the input.
 
 @node Marking text, Cross-references, Sectioning, Writing R documentation
 @section Marking text
+@cindex Marking text in documentation
 
 The following logical markup commands are available for indicating
 specific kinds of text.
@@ -606,6 +612,7 @@ possible, not currently for text processing).
 
 @node Cross-references, Mathematics, Marking text, Writing R documentation
 @section Cross-references
+@cindex Cross-references in documentation
 
 @code{\link@{@var{foo}@}} (usually in the combination
 @code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
@@ -616,6 +623,7 @@ the @HTML{} pages used by @code{help.start()}.)
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation
 @section Mathematics
+@cindex Mathematics in documentation
 
 Mathematical formula are something we want ``perfectly'' for printed
 documentation (i.e., for the conversion to La@TeX{} and PostScript
@@ -709,6 +717,7 @@ and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 
 @node  Platform-specific sections,  , Insertions, Writing R documentation
 @section Platform-specific documentation
+@cindex Platform-specific documentation
 
 Sometimes the documentation needs to differ by platform.  Currently
 three OS-specific options are available, @code{unix}, @code{windows} and
@@ -754,6 +763,7 @@ documented are only relevant to one platform, platform-specific
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
 @section  Operating system access
+@cindex Operating system access
 
 Access to operating system functions is via the @R{} function
 @code{system}.
@@ -772,6 +782,7 @@ limited on non-Unix-like platforms).
 
 @node Interface functions .C and .Fortran, dyn.load and dyn.unload, Operating system access, System and foreign language interfaces
 @section Interface functions @code{.C} and @code{.Fortran}
+@cindex Interfaces to compiled code
 
 @findex .C
 @findex .Fortran
@@ -882,6 +893,7 @@ can lead to wrong results or hard-to-catch errors.
 
 @node dyn.load and dyn.unload, Interfacing C++ code, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}
+@cindex Dynamic loading
 
 @findex dyn.load
 @findex dyn.unload
@@ -932,6 +944,8 @@ which occurrence is meant.
 
 @node Interfacing C++ code, Handling R objects in C, dyn.load and dyn.unload, System and foreign language interfaces
 @section Interfacing C++ code
+@cindex Interfacing C++ code
+@cindex C++ code, interfacing
 
 Suppose we have the following hypothetical C++ library, consisting of
 the two files @file{X.hh} and @file{X.cc}, which we want to use in R:
@@ -1030,6 +1044,7 @@ destructor Y
 
 @node Handling R objects in C, Interface Functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
 @section Handling R objects in C
+@cindex Handling R objects in C
 
 Using C code to speed up the execution of an @R{} function is often very
 fruitful.  Traditionally this has been done via the @code{.C} function
@@ -1156,7 +1171,7 @@ right type.
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
 @subsection Handling the effects of garbage collection
-@cindex Handling the effects of garbage collection
+@cindex Garbage collection
 
 @findex PROTECT
 @findex UNPROTECT
@@ -1537,7 +1552,8 @@ and enables us to say
 
 @node Finding and setting variables,  , Handling lists, Handling R objects in C
 @subsection Finding and setting variables
-@cindex Finding and setting variables
+@cindex Finding variables
+@cindex Setting variables
 
 It will be usual that all the @R{} objects needed in our C computations
 are passed as arguments to @code{.Call} or @code{.External}, but it is
@@ -1582,6 +1598,7 @@ value, envir = rho, inherits = TRUE)} respectively.
 
 @node Interface Functions .Call and .External, Evaluating R Expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface Functions @code{.Call} and @code{.External}
+@cindex Interfaces to compiled code
 
 In this section we consider the details of the @R{}/C interfaces.
 
@@ -1788,6 +1805,8 @@ showArgs <- function(...) .Call("showArgs1", list(...))
 
 @node Missing and special values,  , Calling .External, Interface Functions .Call and .External
 @subsection Missing and special values
+@cindex Missing values
+@cindex IEEE special values
 
 One piece of error-checking the @code{.C} call does (unless @code{NAOK}
 is true) is to check for missing (@code{NA}) and IEEE special values
@@ -1829,6 +1848,7 @@ The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
 
 @node Evaluating R Expressions from C, Debugging, Interface Functions .Call and .External, System and foreign language interfaces
 @section Evaluating R Expressions from C
+@cindex Evaluating R expressions from C
 
 We noted that the @code{call_R} interface could be
 used to evaluate @R{} expressions from C code, but the current
@@ -1914,6 +1934,7 @@ this will only be clear to those with a knowledge of a LISP-like
 language.
 
 @subsection Zero-finding
+@cindex Zero-finding
 
 In this section we re-work the example in @file{demos/dynload} of
 @code{call_R} (based on that for @code{call_S} in Becker, Chambers &
@@ -1987,6 +2008,7 @@ using a couple of functions to convert from @code{double} to @code{SEXP}
 and to evaluate @code{f.check}.
 
 @subsection Calculating numerical derivatives
+@cindex Numerical derivatives
 
 We will use a longer example (by Saikat DebRoy) to illustrate the use of
 evaluation and @code{.External}.  This calculates numerical derivatives,
@@ -2103,7 +2125,7 @@ The first step in the code is to evaluate the expression in the
 environment @code{rho}, by
 
 @example
-  PROTECT(ans = eval(expr, rho));
+  PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
 @end example
 
 @noindent
@@ -2137,7 +2159,7 @@ then install the name and use @code{findVar} to find its value.
     xx = fabs(tt);
     delta = (xx < 1) ? eps : xx*eps;
     REAL(par)[0] += delta;
-    PROTECT(ans1 = eval(expr, rho));  /* not currently needed */
+    PROTECT(ans1 = coerceVector(eval(expr, rho), REALSXP));
 @end example
 
 @noindent
@@ -2187,7 +2209,7 @@ protected locations and return the answer @code{ans}.
 
 
 Sooner or later programmers will be faced with the need to debug
-compiled code loaded into @R{}.  Seom ``tricks'' are worth knowing.
+compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
@@ -2260,6 +2282,7 @@ drop control back to the debugger only works with some debuggers.
 
 @node Inspecting R objects,  , Finding entry points, Debugging
 @subsection Inspecting R objects when debugging
+@cindex Inspecting R objects when debugging
 
 The key to inspecting @R{} objects from compiled code is the function
 @code{PrintValue(SEXP s)} which uses the normal @R{} printing mechanisms
