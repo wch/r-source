@@ -647,7 +647,9 @@ if test -z "${R_PRINTCMD}"; then
 fi
 AC_DEFINE_UNQUOTED(R_PRINTCMD, "${R_PRINTCMD}")
 
-: ${R_PAPERSIZE=a4}
+AC_PATH_PROG(PAPERCONF, paperconf, false)
+papersize=`${PAPERCONF}`
+: ${R_PAPERSIZE=${papersize:-a4}}
 AC_SUBST(R_PAPERSIZE)
 
 ## Saving.

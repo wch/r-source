@@ -6476,7 +6476,44 @@ cat >> confdefs.h <<EOF
 EOF
 
 
-: ${R_PAPERSIZE=a4}
+# Extract the first word of "paperconf", so it can be a program name with args.
+set dummy paperconf; ac_word=$2
+echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+echo "configure:6483: checking for $ac_word" >&5
+if eval "test \"`echo '$''{'ac_cv_path_PAPERCONF'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  case "$PAPERCONF" in
+  /*)
+  ac_cv_path_PAPERCONF="$PAPERCONF" # Let the user override the test with a path.
+  ;;
+  ?:/*)			 
+  ac_cv_path_PAPERCONF="$PAPERCONF" # Let the user override the test with a dos path.
+  ;;
+  *)
+  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS=":"
+  ac_dummy="$PATH"
+  for ac_dir in $ac_dummy; do 
+    test -z "$ac_dir" && ac_dir=.
+    if test -f $ac_dir/$ac_word; then
+      ac_cv_path_PAPERCONF="$ac_dir/$ac_word"
+      break
+    fi
+  done
+  IFS="$ac_save_ifs"
+  test -z "$ac_cv_path_PAPERCONF" && ac_cv_path_PAPERCONF="false"
+  ;;
+esac
+fi
+PAPERCONF="$ac_cv_path_PAPERCONF"
+if test -n "$PAPERCONF"; then
+  echo "$ac_t""$PAPERCONF" 1>&6
+else
+  echo "$ac_t""no" 1>&6
+fi
+
+papersize=`${PAPERCONF}`
+: ${R_PAPERSIZE=${papersize:-a4}}
 
 
 ## Saving.
@@ -6770,6 +6807,7 @@ s%@X_PRE_LIBS@%$X_PRE_LIBS%g
 s%@X_LIBS@%$X_LIBS%g
 s%@X_EXTRA_LIBS@%$X_EXTRA_LIBS%g
 s%@R_PRINTCMD@%$R_PRINTCMD%g
+s%@PAPERCONF@%$PAPERCONF%g
 s%@R_PAPERSIZE@%$R_PAPERSIZE%g
 s%@R_BATCHSAVE@%$R_BATCHSAVE%g
 
