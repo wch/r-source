@@ -9,7 +9,7 @@ substring <- function(text,first,last=1000000)
 {
     storage.mode(text) <- "character"
     n <- max(lt <- length(text), length(first), length(last))
-    if(lt < n) text <- rep(text, length = n)
+    if(lt && lt < n) text <- rep(text, length = n)
     substr(text, first, last)
 }
 

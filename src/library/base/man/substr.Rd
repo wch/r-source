@@ -29,7 +29,7 @@ substring(text, first, last = 1000000) <- value
   \code{substring} is compatible with S, with \code{first} and
   \code{last} instead of \code{start} and \code{stop}.
   For vector arguments, it expands the arguments cyclically to the
-  length of the longest.
+  length of the longest \emph{provided} none are of zero length.
 
   When extracting, if \code{start} is larger than the string length then
   \code{""} is returned.
