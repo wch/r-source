@@ -14,13 +14,13 @@ rowsum <- function(x, group, reorder=TRUE) {
     temp <- .C("rowsum", dd= as.integer(dd),
 			 as.double(na.indicator),
 			 x = x,
-			 as.double(group))
+			 as.double(group), PACKAGE="base")
     new.n <- temp$dd[1]
     ugroup <- unique(group)
     if (is.matrix(x)){
-	new.x <- temp$x[1:new.n,]
+	new.x <- temp$x[1:new.n, , drop=FALSE]
 	dimnames(new.x) <- list(ugroup, dimnames(x)[[2]])
-	if (reorder) new.x <- new.x[order(ugroup), ]
+	if (reorder) new.x <- new.x[order(ugroup), , drop=FALSE]
 	}
     else {
 	new.x <- temp$x[1:new.n]
