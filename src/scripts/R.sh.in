@@ -4,7 +4,7 @@
 : ${R_HOME=R_HOME_DIR}
 export R_HOME
 
-: ${R_LD_LIBRARY_PATH=${R_HOME}/bin}
+: ${R_LD_LIBRARY_PATH=${R_HOME}/bin:@R_LD_LIBRARY_PATH@}
 if test -z "${@shlibpath_var@}"; then
   @shlibpath_var@="${R_LD_LIBRARY_PATH}"
 else

@@ -325,7 +325,17 @@ R_PROG_INSTALL
 ## Libtool
 AM_DISABLE_STATIC
 AM_DISABLE_SHARED
+# FIXME: this is ugly.  The libtool writers in their infinite wisdom
+# have decided that if both static and shared libs are disabled, then
+# libtool should *ALWAYS* report a `fatal configuration error'.  Well,
+# they apparently think that libtool should be used for building libs
+# and not only for querying via libtool --config.  Hence, we have to
+# tell libtool to build e.g. shared libs, but lateron undo this so that
+# shared libs are not built unless this was requested.
+ac_save_enable_shared="${enable_shared}"
+enable_shared=yes
 AM_PROG_LIBTOOL
+enable_shared="${ac_save_enable_shared}"
 AC_SUBST(LIBTOOL_DEPS)
 ## Make
 : ${MAKE=make}
@@ -343,26 +353,27 @@ AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
 
 ### Libraries.
 
+## FIXME: Should be needed for tests using AC_TRY_RUN()?
 ## Make sure that non-standard directories specified via `-L' are really
-## searched in the tests
+## searched in the tests.
 for arg in ${LIBS}; do
   case ${arg} in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
-      if test -z "${R_LD_RUN_PATH}"; then
-        R_LD_RUN_PATH="${lib}"
+      if test -z "${R_LD_LIBRARY_PATH}"; then
+        R_LD_LIBRARY_PATH="${lib}"
       else
-        R_LD_RUN_PATH="${R_LD_RUN_PATH}:${lib}"
+        R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${lib}"
       fi
       ;;
   esac
 done
-if test -z "${LD_RUN_PATH}"; then
-  LD_RUN_PATH="${R_LD_RUN_PATH}"
+if test -z "${LD_LIBRARY_PATH}"; then
+  LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}"
 else
-  LD_RUN_PATH="${R_LD_RUN_PATH}:${LD_RUN_PATH}"
+  LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}"
 fi
-export LD_RUN_PATH
+export LD_LIBRARY_PATH
 
 ## C++ compiler.
 ## Needs to follow Libraries as -lstdc++ might well be in /usr/local/lib
@@ -873,22 +884,22 @@ if test -n "${LIBS1}"; then
 fi
 AC_SUBST(LIBPATHS)
 
-# FIXME: This should not be necessary when using LD_RUN_PATH at R build
-# time, but is this really good enough?
-#
-# for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
-#   case ${arg} in
-#     -L*)
-#       lib=`echo ${arg} | sed "s/^-L//"`
-#       if test -z "${R_LD_LIBRARY_PATH}"; then
-#         R_LD_LIBRARY_PATH="${lib}"
-#       else
-#         R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${lib}"
-#       fi
-#       ;;
-#   esac
-# done
-# AC_SUBST(R_LD_LIBRARY_PATH)
+# FIXME: This should not be necessary when using libtool for linking.
+# In any case, is this really good enough?
+
+for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
+  case ${arg} in
+    -L*)
+      lib=`echo ${arg} | sed "s/^-L//"`
+      if test -z "${R_LD_LIBRARY_PATH}"; then
+        R_LD_LIBRARY_PATH="${lib}"
+      else
+        R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${lib}"
+      fi
+      ;;
+  esac
+done
+AC_SUBST(R_LD_LIBRARY_PATH)
 
 # Record name of environment variable which tells the dynamic linker
 # where to find shlibs (typically, `LD_LIBRARY_PATH').
