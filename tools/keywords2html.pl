@@ -3,9 +3,8 @@
 # Translate KEYWORDS.db to HTML
 #
 
-    
-sub searchKey {
-
+sub searchKey
+{
     my $key=$_[0];
     my $retval = "<a href=\"";
     $retval .= "javascript:searchInIndex('$key', false, true, false);";
@@ -50,6 +49,8 @@ for($k=0;$k<=$#key; $k++){
 		print "</ul>";
 	    }
 	    print "\n";
+	    print "<li>", searchKey($keywords[$#keywords]);
+	    print ": $desc</li>\n";
 	}
 	else{
 	    print "<li>", searchKey($keywords[$#keywords]);

@@ -55,5 +55,5 @@ clean:
 ../../../doc/html/search/SearchEngine.html:../../../doc/KEYWORDS.db
 	(cd ../../../doc; \
 	cat html/search/SearchEngine-head.html > html/search/SearchEngine.html; \
-	perl ../src/gnuwin32/fixed/keywords2html KEYWORDS.db >> html/search/SearchEngine.html; \
+	perl ../tools/keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \
 	cat html/search/SearchEngine-foot.html >> html/search/SearchEngine.html)

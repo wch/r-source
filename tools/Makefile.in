@@ -15,7 +15,6 @@ SCRIPT_SOURCES = \
 	help2man.in \
 	install-info.in \
 	keyword-test.in \
-	keywords2html.in \
 	pkg2tex.in
 
 SCRIPT_OBJECTS = $(SCRIPT_SOURCES:.in=)
@@ -28,6 +27,7 @@ DISTFILES = Makefile.in \
 	config.sub \
 	copy-if-change \
 	install-sh \
+	keywords2html.pl \
 	ldAIX4 \
 	mkinstalldirs \
 	move-if-change \
