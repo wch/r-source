@@ -1455,7 +1455,7 @@ AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ])# R_XDR
 
 AC_DEFUN([R_ZLIB],
-[AC_CHECK_LIB(z, gzopen, [have_zlib=yes], [have_zlib=no])
+[AC_CHECK_LIB(z, gzeof, [have_zlib=yes], [have_zlib=no])
 if test "${have_zlib}" = yes; then
   AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
 fi
