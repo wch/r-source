@@ -55,9 +55,9 @@ extern int ConsoleAcceptCmd;
 static menubar RMenuBar;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
-    mls, mrm, msearch, mhelp, mmanintro, mmanref, 
+    mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
     mmanext, mmanlang, mapropos, mhelpstart, mFAQ, mrwFAQ;
-static int lmanintro, lmanref, lmanlang, lmanext;
+static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
 static char cmd[1024];
 
@@ -303,6 +303,11 @@ static void menumainman(control m)
 static void menumainref(control m)
 {
     internal_shellexec("doc/manual/refman.pdf");
+}
+
+static void menumaindata(control m)
+{
+    internal_shellexec("doc/manual/R-data.pdf");
 }
 
 static void menumainext(control m)
@@ -735,6 +740,9 @@ int setupui()
     MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, menumainref));
     lmanref = check_doc_file("doc/manual/refman.pdf");
     if (!lmanref) disable(mmanref);
+    MCHECK(mmandata = newmenuitem("R Data Import/Export", 0, menumaindata));
+    lmandata = check_doc_file("doc/manual/R-data.pdf");
+    if (!lmandata) disable(mmandata);
     MCHECK(mmanlang = newmenuitem("R Language Manual", 0, menumainlang));
     lmanlang = check_doc_file("doc/manual/R-lang.pdf");
     if (!lmanlang) disable(mmanlang);
